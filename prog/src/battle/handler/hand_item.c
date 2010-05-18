@@ -4937,7 +4937,7 @@ static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HonooNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_HonooNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_HonooNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_HonooNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -4957,7 +4957,7 @@ static void handler_HonooNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MizuNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_MizuNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_MizuNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_MizuNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -4977,7 +4977,7 @@ static void handler_MizuNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DenkiNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_DenkiNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_DenkiNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_DenkiNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -4997,7 +4997,7 @@ static void handler_DenkiNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KusaNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_KusaNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_KusaNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_KusaNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5017,7 +5017,7 @@ static void handler_KusaNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KooriNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_KooriNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_KooriNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_KooriNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5037,7 +5037,7 @@ static void handler_KooriNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KakutouJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_KakutouJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_KakutouJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_KakutouJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5057,7 +5057,7 @@ static void handler_KakutouJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DokuNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_DokuNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_DokuNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_DokuNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5077,7 +5077,7 @@ static void handler_DokuNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_JimenNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_JimenNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_JimenNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_JimenNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5097,7 +5097,7 @@ static void handler_JimenNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HikouNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_HikouNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_HikouNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_HikouNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5117,7 +5117,7 @@ static void handler_HikouNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_EsperJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_EsperJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_EsperJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_EsperJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5137,7 +5137,7 @@ static void handler_EsperJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MusiNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_MusiNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_MusiNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_MusiNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5157,7 +5157,7 @@ static void handler_MusiNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_IwaNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_IwaNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_IwaNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_IwaNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5177,7 +5177,7 @@ static void handler_IwaNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_GhostJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_GhostJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_GhostJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_GhostJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5197,7 +5197,7 @@ static void handler_GhostJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DragonJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_DragonNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_DragonNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_DragonNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5217,7 +5217,7 @@ static void handler_DragonNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable* HAND_ADD_ITEM_AkuNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_AkuNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_AkuNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_AkuNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5237,7 +5237,7 @@ static void handler_AkuNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HaganeNoJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_HaganeNoJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_HaganeNoJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_HaganeNoJuel_Pow },
   };
   *numElems = NELEMS( HandlerTable );
@@ -5257,7 +5257,7 @@ static void handler_HaganeNoJuel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable* HAND_ADD_ITEM_NormalJuel( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,        handler_NormalJuel_Decide },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_NormalJuel_Decide },
     { BTL_EVENT_WAZA_POWER,             handler_NormalJuel_Pow    },
   };
   *numElems = NELEMS( HandlerTable );

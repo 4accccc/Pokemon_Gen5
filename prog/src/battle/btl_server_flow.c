@@ -565,6 +565,7 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
+static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, const SVFL_WAZAPARAM* wazaParam );
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
@@ -1926,14 +1927,11 @@ static u16 scEvent_CalcAgility( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attack
     {
       fx32 ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
       agi = BTL_CALC_MulRatio( agi, ratio );
-      BTL_Printf("  ハンドラ処理後の素早さ=%d, 倍率=%08x, 結果=%d\n",
-          BTL_EVENTVAR_GetValue(BTL_EVAR_AGILITY), ratio, agi);
     }
     if( BPP_GetPokeSick(attacker) == POKESICK_MAHI )
     {
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) ){
         agi = (agi * BTL_MAHI_AGILITY_RATIO) / 100;
-        BTL_Printf("    マヒで%d\n", agi);
       }
     }
     if( agi > BTL_CALC_AGILITY_MAX ){
@@ -6749,9 +6747,20 @@ static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_ITEM_REACTION );
   BTL_EVENTVAR_Pop();
 }
-
 //------------------------------------------------------------------
-// サーバーフロー：ダメージワザシーケンス終了処理
+// サーバーフロー：ダメージワザシーケンス開始
+//------------------------------------------------------------------
+static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+
+  scEvent_DamageProcStart( wk, attacker, targets, wazaParam );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+//------------------------------------------------------------------
+// サーバーフロー：ダメージワザシーケンス終了
 //------------------------------------------------------------------
 static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
@@ -6931,6 +6940,27 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
     return result;
   }
   return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ダメージワザ処理開始
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   targets
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, const SVFL_WAZAPARAM* wazaParam )
+{
+  BTL_EVENTVAR_Push();
+
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_START );
+
+  BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
 /**

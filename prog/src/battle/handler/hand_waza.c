@@ -9118,7 +9118,9 @@ static void handler_ElectBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
 
-    int quot = BPP_GetValue(bpp, BPP_AGILITY) / BPP_GetValue(target, BPP_AGILITY);
+    int  atkSpeed = BTL_SVFTOOL_CalcAgility( flowWk, bpp, FALSE );
+    int  tgtSpeed = BTL_SVFTOOL_CalcAgility( flowWk, target, FALSE );
+    int  quot = atkSpeed / tgtSpeed;
     u32 pow;
 
     // ëäéËÇÊÇËëfëÅÇ¢ÇŸÇ«à–óÕÇ™çÇÇ¢
