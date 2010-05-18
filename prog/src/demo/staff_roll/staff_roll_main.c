@@ -715,11 +715,11 @@ static void TransBmpWinChar( SRMAIN_WORK * wk )
 static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
 {
 #if	PM_VERSION == LOCAL_VERSION
-	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_b_02_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
-	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_b_02_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
 #else
-	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_w_02_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
-	{ ARCID_DEMO3D_GRA, NARC_data_demo3d_n_legend_meat_w_02_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
 #endif
 };
 
@@ -779,20 +779,20 @@ static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_d
 #define cameraFar       ( 1024 << FX32_SHIFT )
 
 // ３Ｄカメラ設定
-/*
-#define	CAMERA_POS_X			( 43354 )
-#define	CAMERA_POS_Y			( 30266 )
-#define	CAMERA_POS_Z			( 7671 )
-#define	CAMERA_TARGET_X		( 43354 )
-#define	CAMERA_TARGET_Y		( 31902 )
+#define	CAMERA_POS_X			( 0 )
+#define	CAMERA_POS_Y			( 0 )
+#define	CAMERA_POS_Z			( FX32_ONE*100 )
+#define	CAMERA_TARGET_X		( 0 )
+#define	CAMERA_TARGET_Y		( 0 )
 #define	CAMERA_TARGET_Z		( 0 )
-*/
+/*
 #define	CAMERA_POS_X			( 69939 )
 #define	CAMERA_POS_Y			( 179142 )
 #define	CAMERA_POS_Z			( -266359 )
 #define	CAMERA_TARGET_X		( -2833552 )
 #define	CAMERA_TARGET_Y		( 1208595 )
 #define	CAMERA_TARGET_Z		( -7952187 )
+*/
 /*
 POS : x = 69939, y = 179142, z = -266359
 TARGET : x = -2833552, y = 1208595, z = -7952187
@@ -862,7 +862,7 @@ static void Init3D( SRMAIN_WORK * wk )
   // ライト作成
 	wk->g3d_light = GFL_G3D_LIGHT_Create( &light3d_setup, HEAPID_STAFF_ROLL );
   GFL_G3D_LIGHT_Switching( wk->g3d_light );
-
+/*
   // カメラ初期設定
   {
     GFL_G3D_PROJECTION proj = { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 }; 
@@ -876,6 +876,22 @@ static void Init3D( SRMAIN_WORK * wk )
     wk->g3d_camera = GFL_G3D_CAMERA_CreateDefault( &pos, &target, HEAPID_STAFF_ROLL );
 		GFL_G3D_CAMERA_Switching( wk->g3d_camera );
   }
+*/
+	{
+		VecFx32 pos			= { 0, 0, FX32_ONE*100 };
+		VecFx32 up			= { 0, FX32_ONE, 0 };
+		VecFx32 target	= { 0, 0, 0 };
+
+		wk->g3d_camera = GFL_G3D_CAMERA_Create(
+											GFL_G3D_PRJPERS, 
+											FX_SinIdx( defaultCameraFovy/2 * PERSPWAY_COEFFICIENT ),
+											FX_CosIdx( defaultCameraFovy/2 * PERSPWAY_COEFFICIENT ),
+											defaultCameraAspect, 0,
+											defaultCameraNear, defaultCameraFar, 0,
+											&pos, &up, &target, HEAPID_STAFF_ROLL );
+		GFL_G3D_CAMERA_Switching( wk->g3d_camera );
+	}
+
 
 	G3X_AntiAlias( TRUE );	// セットアップ関数で作ったほうがいいけど。。。
 
@@ -991,7 +1007,7 @@ static void Main3D( SRMAIN_WORK * wk )
 	GFL_G3D_SCENE_Draw( wk->g3d_scene );
 */
 
-	CameraMoveMain( wk );
+//	CameraMoveMain( wk );
 
 	{
     GFL_G3D_OBJ * obj;
@@ -1133,7 +1149,6 @@ static void CameraMoveMain( SRMAIN_WORK * wk )
 
 	GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &mvwk->param.pos );
 	GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &mvwk->param.target );
-
 	GFL_G3D_CAMERA_Switching( wk->g3d_camera );
 }
 
