@@ -206,6 +206,7 @@ static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const 
   
   fail_bit = 0;
   my_party = GAMEDATA_GetMyPokemon( gdata );
+  btl_party = NULL;
 
   if (same){
     reg_my = PokeRegulationMatchPartialPokeParty( regulation, my_party);  //選択前のポケモンの重複OK
@@ -239,6 +240,9 @@ static GMEVENT* BtlPartySelectCheck( GAMESYS_WORK* gsys, const BOOL same, const 
   }
 
   if(reg_my != POKE_REG_OK && reg_btl != POKE_REG_OK){  //両方ダメ
+    if( btl_party != NULL ){
+      GFL_HEAP_FreeMemory(btl_party); 
+    }
     *ret_wk = SCR_BTL_PARTY_SELECT_NG;
     return NULL;
   }
