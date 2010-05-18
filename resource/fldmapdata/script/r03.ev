@@ -1130,6 +1130,9 @@ ev_r03_babygirl_thanks:
 	//アイテム入手
 	_ITEM_EVENT_KEYWAIT(ITEM_HIIRUBOORU, 3)
 	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//ベル：あっ！ヒールボール
 	_BALLOONWIN_OBJMSG( msg_r03_white_08 , R03_SUPPORT_01 )
 	_BALLOONWIN_CLOSE()
