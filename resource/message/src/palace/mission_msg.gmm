@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-13T23:44:41"/>
+	<create user="ohmori" host="W00223" date="2010-05-18T22:41:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1019" top="271" right="1724" bottom="891" maximized="no" rayout="Vertical2">
+	<dialog left="1122" top="402" right="1827" bottom="1022" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1225,12 +1225,12 @@ w=トレーナー女子（相手が）
 取り込み中の相手に話しかけたセリフ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『あっ！
-いま　てがはなせないんだ▽
-ちょっと　まってて</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あっ！
-今　手がはなせないんだ▽
-ちょっと　待ってて</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『……
+……　……▽
+とりこみちゅうの　ようだ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……
+……　……▽
+取り込み中の　ようだ</language>
 	</row>
 
 	<row id="mis_std_01_m5" back-color="#80ff80,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -1238,12 +1238,12 @@ w=トレーナー女子（相手が）
 取り込み中の相手に話しかけたセリフ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『あっ！
-いま　てがはなせないんだ▽
-ちょっと　まっててね</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あっ！
-今　手がはなせないんだ▽
-ちょっと　待っててね</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『……
+……　……▽
+とりこみちゅうの　ようだ</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……
+……　……▽
+取り込み中の　ようだ</language>
 	</row>
 
 	<row id="mis_nom_01_t1" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1356,6 +1356,102 @@ w=トレーナー女子（相手が）
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『おー！
 がんばってるね！▽
 わたしも　ミッション　やってみようかな？</language>
+	</row>
+
+	<row id="mis_sleep_01_t1" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+１=相手がカワイイポケモンのメッセージ（自分が）
+※ミッション中、スリープ状態のターゲットに話しかけたときのセリフ</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_t2" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+２＝怖いポケモンのメッセージ（自分が）
+※ミッション中、スリープ状態のターゲットに話しかけたときのセリフ</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_t3" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+３=無口なポケモンのメッセージ（自分が）
+※ミッション中、スリープ状態のターゲットに話しかけたときのセリフ</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_t4" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+４＝トレーナー男子（自分が）
+※ミッション中、スリープ状態のターゲットに話しかけたときのセリフ
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_t5" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+5＝トレーナー女子（自分が）
+※ミッション中、スリープ状態のターゲットに話しかけたときのセリフ
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_m1" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+１=相手がカワイイポケモンのメッセージ（自分が）
+※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_m2" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+２＝怖いポケモンのメッセージ（自分が）
+※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_m3" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+		<comment>
+３=無口なポケモンのメッセージ（自分が）
+※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
+	</row>
+
+	<row id="mis_sleep_01_m4" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>
+４＝トレーナー男子（自分が）
+※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『よう！
+いま　きゅうけいちゅう　なんだ▼
+せっかく　きてくれたから
+これ　あげるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『よう！
+今　休憩中　なんだ▼
+せっかく　来てくれたから
+これ　あげるよ！▼</language>
+	</row>
+
+	<row id="mis_sleep_01_m5" back-color="#ffff80,,,,,,,,,,,,,,,,,">
+		<comment>
+5＝トレーナー女子（自分が）
+※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ
+[1:00:トレーナー名:0]＝相手の名前</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
+いま　きゅうけいちゅう　なんだ▼
+せっかく　きてくれたし
+これを　あげるよ！▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
+いま　きゅうけいちゅう　なんだ▼
+せっかく　きてくれたし
+これを　あげるよ！▼</language>
 	</row>
 
 	<row id="mis_m02_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
@@ -2929,7 +3025,7 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-とつぜｍｍで　びっくりした？▽
+とつぜんで　びっくりした？▽
 ハイリンクから　あいにきたよ▼
 もし　あぶなくなったら
 すぐに　たすけにいきますね！▼
