@@ -1287,6 +1287,7 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
     }
     else
     { // 隠れていたカーソル表示
+      PMSND_PlaySystemSE( SEQ_SE_SELECT1 );
       work->isDispCursor   = TRUE;
       work->isUpdateCursor = TRUE;
       work->activeIcon = NULL;
@@ -1580,16 +1581,22 @@ static void _trans_touchbar_screen( HEAPID heapId, int bgfrm )
   //  FIELD_MENU_BG_BACK
   void *buf;
   NNSG2dScreenData* screen;
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), heapId );
+
   // パレット
-  GFL_ARC_UTIL_TransVramPalette( APP_COMMON_GetArcId(),  APP_COMMON_GetBarPltArcIdx(), 
-                                 PALTYPE_SUB_BG, TOUCHBAR_PAL_OFFSET*16*2, 
-                                 32, heapId );
+  GFL_ARCHDL_UTIL_TransVramPalette( handle,  APP_COMMON_GetBarPltArcIdx(), 
+                                    PALTYPE_SUB_BG, TOUCHBAR_PAL_OFFSET*16*2, 
+                                    32, heapId );
   // キャラ
-  GFL_ARC_UTIL_TransVramBgCharacter( APP_COMMON_GetArcId(), APP_COMMON_GetBarCharArcIdx(), 
-                                    bgfrm, FIELD_MENU_BG_OFFSET, 0, 0, heapId );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, APP_COMMON_GetBarCharArcIdx(), 
+                                        bgfrm, FIELD_MENU_BG_OFFSET, 0, 0, heapId );
   // スクリーン読み込み
-  buf = GFL_ARC_UTIL_LoadScreen( APP_COMMON_GetArcId(), APP_COMMON_GetBarScrnArcIdx(),
-                                  0, &screen, heapId );
+  buf = GFL_ARCHDL_UTIL_LoadScreen( handle, APP_COMMON_GetBarScrnArcIdx(),
+                                    0, &screen, heapId );
+
+  GFL_ARC_CloseDataHandle( handle );
+
+
   // スクリーン加工
   {
     int i;
