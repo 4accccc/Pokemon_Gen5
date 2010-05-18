@@ -54,7 +54,7 @@ INIT_EVENT_START   ev_init_t01
 
 	IF $WK_SCENE_T01_SUPPORT == 1 THEN
 		//ゲーム開始直後なら、サポートの位置を変更
-		_OBJ_POS_CHANGE( T01_SUPPORT_01, 781, 0, 753, DIR_DOWN )
+		_OBJ_POS_CHANGE( T01_SUPPORT_01, 781, 0, 751, DIR_DOWN )
 	ENDIF
 
 	IF $WK_SCENE_T01 == 1 THEN
@@ -155,7 +155,7 @@ EVENT_END
 //サポート：自宅へ向かう
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_first_support_move_01
-	_ANIME_DATA	AC_WALK_D_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 
