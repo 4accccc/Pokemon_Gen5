@@ -220,6 +220,7 @@ MMDLSYS * MMDLSYS_CreateSystem(
 void MMDLSYS_FreeSystem( MMDLSYS *mmdlsys )
 {
   mmdlsys_DeleteOBJCodeParam( mmdlsys );
+  GFL_HEAP_FreeMemory( mmdlsys->pMdlPrmWork );
   GFL_HEAP_FreeMemory( mmdlsys->pMMdlBuf );
   GFL_HEAP_FreeMemory( mmdlsys );
 }
