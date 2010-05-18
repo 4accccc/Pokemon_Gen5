@@ -9,7 +9,6 @@
 #include <gflib.h>
 
 #include "system/main.h"
-#include "system/point_sel.h"
 #include "mb_main.h"
 #include "mb_obj.h"
 #include "mb_ui.h"
