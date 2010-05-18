@@ -51,6 +51,9 @@ struct _TAG_FLDEFF_IAIGIRI
   
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm[ANIME_NUM];
+
+  GFL_TCB* vblank_task;
+  BOOL trans_finished;
 };
 
 //--------------------------------------------------------------
@@ -77,8 +80,8 @@ typedef struct
 //	プロトタイプ
 //======================================================================
 static void iaigiri_InitResource( FLDEFF_IAIGIRI *iai );
-static void iaigiri_DeleteResource( FLDEFF_IAIGIRI *iai );
-
+static void iaigiri_DeleteResource( FLDEFF_IAIGIRI *iai ); 
+static void VBlankFunc( GFL_TCB* tcb, void* wk );
 static const FLDEFF_TASK_HEADER DATA_iaigiriTaskHeader;
 
 //======================================================================
@@ -137,7 +140,9 @@ static void iaigiri_InitResource( FLDEFF_IAIGIRI *iai )
   
   iai->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_iaigiri_nsbmd );
-  GFL_G3D_TransVramTexture( iai->g3d_res_mdl );
+
+  GFL_G3D_AllocVramTexture( iai->g3d_res_mdl );
+  iai->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, iai, 0 );
 
   for( i=0; i<ANIME_NUM; i++ )
   {
@@ -161,6 +166,26 @@ static void iaigiri_DeleteResource( FLDEFF_IAIGIRI *iai )
     GFL_G3D_DeleteResource( iai->g3d_res_anm[i] );
   }
  	GFL_G3D_DeleteResource( iai->g3d_res_mdl );
+
+  GFL_TCB_DeleteTask( iai->vblank_task );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief VBlank 期間中の処理
+ *
+ * @param tcb
+ * @param wk
+ */
+//--------------------------------------------------------------
+static void VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  FLDEFF_IAIGIRI* iai = wk;
+
+  if( iai->trans_finished == FALSE ) {
+    GFL_G3D_TransOnlyTexture( iai->g3d_res_mdl );
+    iai->trans_finished = TRUE;
+  }
 }
 
 //======================================================================
