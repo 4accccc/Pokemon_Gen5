@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-08T20:20:18"/>
+	<create user="taya" host="W00146" date="2010-05-18T16:56:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -654,9 +654,9 @@
 
 	<row id="BTL_STRID_STD_UseItem_Shooter" back-color=",#00ff00,,,#00ff00,,,#00ff00,#00ff00,#00ff00,#00ff00,,,,,,,">
 		<comment>どうぐを使う  シューター</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]「いくぞ　[1:02:ポケモンニックネーム:1]！
+		<language name="JPN" width="216">[1:00:トレーナー名:0]「いくよ　[1:02:ポケモンニックネーム:1]！
 [1:09:どうぐ名:2]　シュート！！」　</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]「いくぞ　[1:02:ポケモンニックネーム:1]！
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]「いくよ　[1:02:ポケモンニックネーム:1]！
 [1:09:どうぐ名:2]　シュート！！」　</language>
 	</row>
 
