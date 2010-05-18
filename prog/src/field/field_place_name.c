@@ -531,12 +531,17 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
 //------------------------------------------------------------------------------------
 extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
 {
+  // リクエストのあったゾーンIDを更新
+  SetNowZoneID( system, zoneID ); 
+
+  // 地名表示フラグが立っていない場所では表示しない
+  if( CheckPlaceNameFlag( zoneID ) == FALSE ) { return; }
+
   // 表示中のウィンドウを退出させる
 	Cancel( system ); 
 
   // 強制的に表示
   SetForceDispFlag( system ); 
-  SetNowZoneID( system, zoneID );
 }
 
 //------------------------------------------------------------------------------------
