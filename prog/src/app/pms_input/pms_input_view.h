@@ -64,15 +64,12 @@ enum {
 //------------------------------------------------
 enum {
 	PALNUM_MAIN_EDITAREA = 0x00,
-	PALNUM_MAIN_YESNO	 = 0x03, //@TODO è¡Ç∑
 	PALNUM_MAIN_TASKMENU = 0x08,
 	PALNUM_MAIN_TOUCHBAR = 0x0a,
   PALNUM_MAIN_CATEGORY = 0x0c,
 	PALNUM_MAIN_WORDWIN  = 0x0d,
 	PALNUM_MAIN_SYSWIN   = 0x0e,
 	PALNUM_MAIN_TALKWIN  = 0x0f,
-	
-  PALNUM_MAIN_BUTTON = 0x0a, // @TODO égÇ¡ÇƒÇ»Ç¢ÇÃÇ≈è¡Ç∑
 
   PALNUM_MAIN_TASKMENU_PASSIVE  = 0x0e,
 

@@ -258,7 +258,7 @@ static void setup_actor( PMSIV_WORDWIN* wk )
 
     wk->deco_actor[i] = PMSIView_AddActor( wk->vwk, &resDeco, 0, 0, 0, NNS_G2D_VRAM_TYPE_2DMAIN );
   
-    // @TODO とりあえず直でアニメシーケンス。
+    // 直でアニメシーケンス。
     GFL_CLACT_WK_SetAnmSeq( wk->deco_actor[i], i ); 
 	  GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[i], FALSE );
   }

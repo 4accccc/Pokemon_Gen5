@@ -699,11 +699,6 @@ static void _decide_category_cancel( PMSIV_MENU* wk )
   {
       PMSIV_MENU_TaskMenuSetDecide( wk, 2, TRUE );
   }
-  else
-  {
-    // @TODO
-    // タッチバーのキャンセルボタン
-  }
 }
 
 static BOOL _wait_category_cancel( PMSIV_MENU* wk )
@@ -717,7 +712,6 @@ static BOOL _wait_category_cancel( PMSIV_MENU* wk )
   }
   else
   {
-    //@ TODO タッチバーのウェイト
     return TRUE;
   }
 
