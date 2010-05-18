@@ -432,8 +432,6 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
     _SEQ_CHECK,
     _SEQ_EVOLUTION,
     _SEQ_EVOLUTIONEND,
-    _SEQ_CALL_MAIL,
-    _SEQ_WAIT_MAIL,
     _SEQ_FIELD_IN,
     _SEQ_FADEIN,
     _SEQ_END,
@@ -459,7 +457,8 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
       if(pPTP->ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _SEQ_EVOLUTION;
       }
-      else{
+      else
+      {
         (*seq) = _SEQ_FIELD_IN;
       }
     }
@@ -482,19 +481,16 @@ static BOOL SubEvent_Trade(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELDMAP
   case _SEQ_EVOLUTIONEND:
     if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL )
     {
-      pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
-      (*seq)=_SEQ_TRADE;
-    }
-    break;
-  case _SEQ_CALL_MAIL:
-    pPTP->aMailBox.gamedata = pPTP->gamedata;
-    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &pPTP->aMailBox );
-    (*seq)++;
-    break;
-  case _SEQ_WAIT_MAIL:
-    if( GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL )
-    {
-      (*seq)=_SEQ_TRADE;
+      if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+      {
+        //ƒGƒ‰[”²‚¯
+        (*seq) = _SEQ_FIELD_IN;
+      }
+      else
+      {
+        pPTP->ret = POKEMONTRADE_MOVE_EVOLUTION;
+        (*seq)=_SEQ_TRADE;
+      }
     }
     break;
     
