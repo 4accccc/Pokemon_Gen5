@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-24T17:51:37" source="m_gstation01_00_00p19.mb"/>
+	<create user="unno" host="W00199" date="2010-05-18T16:12:14" source="m_gstation01_00_00p19.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-04-24T17:51:37" source="m_gstation01_00_00p19.mb"/>
+<original_create user="unno" host="W00199" date="2010-05-18T16:12:14" source="m_gstation01_00_00p19.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -8693,9 +8693,9 @@
 	<polygon index="27" name="polygon27"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-3.666016 0.052979 -0.092773"
-		volume_max="-3.503174 0.277588 0.248779"
-		volume_r="3.684326"
+		volume_min="-3.652100 0.052979 -0.092041"
+		volume_max="-3.489258 0.277588 0.249512"
+		volume_r="3.670654"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -8706,13 +8706,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-3.503662 0.052979 0.248779"/>
+					<pos_xyz xyz="-3.489746 0.052979 0.249512"/>
 					<tex st="32.000000 32.000000"/>
-					<pos_xz xz="-3.503174 -0.085938"/>
+					<pos_xz xz="-3.489258 -0.085205"/>
 					<tex st="32.000000 0.000000"/>
-					<pos_xyz xyz="-3.665283 0.277588 -0.092773"/>
+					<pos_xyz xyz="-3.651367 0.277588 -0.092041"/>
 					<tex st="0.000000 0.000000"/>
-					<pos_xz xz="-3.666016 0.241943"/>
+					<pos_xz xz="-3.652100 0.242676"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -8775,8 +8775,8 @@
 		<display index="7" material="7" polygon="23" priority="0"/>
 		<display index="8" material="8" polygon="24" priority="0"/>
 		<display index="9" material="9" polygon="25" priority="0"/>
-		<display index="10" material="10" polygon="26" priority="0"/>
-		<display index="11" material="11" polygon="27" priority="0"/>
+		<display index="10" material="10" polygon="27" priority="0"/>
+		<display index="11" material="11" polygon="26" priority="0"/>
 		<display index="12" material="12" polygon="28" priority="0"/>
 		<display index="13" material="13" polygon="6" priority="0"/>
 		<display index="14" material="14" polygon="12" priority="0"/>
