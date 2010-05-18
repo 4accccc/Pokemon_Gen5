@@ -2188,12 +2188,12 @@ static void TRAINER_UNIT_DrawTrainerName( TRAINER_UNIT* unit, GFL_FONT *font )
   if( unit->trsex == PM_MALE )
   {
     // ’jˆ—
-    GFL_FONTSYS_SetColor( 0x3, 0x4, 0x0 );
+    GFL_FONTSYS_SetColor( 0x5, 0x6, 0x0 );
   }
   else
   {
     // —ˆ—
-    GFL_FONTSYS_SetColor( 0x5, 0x6, 0x0 );
+    GFL_FONTSYS_SetColor( 0x3, 0x4, 0x0 );
   }
     
   PRINTSYS_Print( GFL_BMPWIN_GetBmp(unit->win_name), 1, 1, unit->str_trname, font );
