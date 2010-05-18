@@ -2473,18 +2473,20 @@ static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl )
  */
 static void wazaEffCtrl_Setup( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec )
 {
-  u32 target_cnt = BTL_POKESET_GetCountMax( rec );
+  u32 target_max = BTL_POKESET_GetCountMax( rec );
 
   ctrl->attackerPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
+  ctrl->targetPos = BTL_POS_NULL;
 
   // ターゲットが単体なら明確なターゲット位置情報を記録
-  if( target_cnt == 1 ){
-    const BTL_POKEPARAM* bpp = BTL_POKESET_Get( rec, 0 );
-    ctrl->targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
-  }
-  // ターゲットが複数体または場に効くワザなどの場合はターゲット位置情報なし
-  else{
-    ctrl->targetPos = BTL_POS_NULL;
+  if( target_max == 1 )
+  {
+    if( BTL_POKESET_GetCount(rec) )
+    {
+      const BTL_POKEPARAM* bpp = BTL_POKESET_Get( rec, 0 );
+      TAYA_Printf("rec=%p, bpp=%p\n", rec, bpp );
+      ctrl->targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(bpp) );
+    }
   }
 }
 
@@ -4744,6 +4746,7 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
     bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
+    TAYA_Printf("トリプル通常選択ワザ ... targetPos=%d, bpp=%p\n", targetPos, bpp );
     break;
   case WAZA_TARGET_ENEMY_SELECT:        ///< 敵１体（選択）
     bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, targetPos );
@@ -4815,6 +4818,8 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     if( intrPokeID != BTL_POKEID_NULL ){
       bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
     }
+    TAYA_Printf("triple bpp exist ... %p", bpp );
+    TAYA_Printf("  pokeID=%d\n", BPP_GetID(bpp) );
     BTL_POKESET_Add( rec, bpp );
     return 1;
   }
@@ -5002,7 +5007,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   // レコードデータ更新
   scproc_WazaExeRecordUpdate( wk, waza );
 
-
   // １ターン溜めワザの発動チェック
   if( scproc_Fight_TameWazaExe(wk, attacker, targetRec, waza) ){
     return TRUE;
@@ -5022,7 +5026,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
     if( fQuit ){
-      // @todo 現状、このfQuitは「がまん」でだけ利用。どうにかしたい…
+      // 現状、このfQuitは「がまん」でだけ利用。
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
       return TRUE;
     }
