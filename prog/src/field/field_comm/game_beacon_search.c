@@ -311,7 +311,8 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
     switch(target->gsid){
     case WB_NET_PALACE_SERVICEID:     //N“ü(ƒpƒŒƒX)
 //    case WB_NET_FIELDMOVE_SERVICEID:
-      if(PAD_DetectFold() == FALSE)  //ŠW‚ð•Â‚¶‚Ä‚¢‚éê‡‚ÍŒq‚¬‚És‚©‚È‚¢
+      //ŠW‚ªŠJ‚¢‚Ä‚¢‚é && ƒpƒŒƒXÚ‘±‹ÖŽ~ƒtƒ‰ƒO‚ª—§‚Á‚Ä‚¢‚È‚¢A‚È‚çŒq‚¬‚És‚­
+      if(PAD_DetectFold() == FALSE && GameCommSys_GetPalaceNotConnectFlag(gcsp) == FALSE)
       {
         u16 zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
         if(zone_id != gbs->palace_check_zoneid){
@@ -609,7 +610,8 @@ static void GameBeacon_ExitCallback_toInvasion(void *pWork)
   GFL_HEAP_FreeMemory(exw);
   exw = NULL;
   
-  if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE){
+  if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE 
+      && GameCommSys_GetPalaceNotConnectFlag(gcsp) == FALSE){
     if(GFL_NET_IsInit() == FALSE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
       FIELD_INVALID_PARENT_WORK *invalid_parent;
       

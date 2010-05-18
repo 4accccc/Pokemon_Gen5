@@ -386,6 +386,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
   };
 
   if(intcomm->error == TRUE || NetErr_App_CheckError()){
+    GFL_NET_Exit( IntrudeComm_FinishTermCallback );
     return TRUE;
   }
 
@@ -460,8 +461,9 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   int i;
   BOOL exit_ok = FALSE;
   
-  if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || intcomm->error == TRUE || NetErr_App_CheckError()){
+  if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || GFL_NET_IsExit() == TRUE){
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){  //表フィールドにいる場合は即解放
+      NetErr_ErrWorkInit();
       exit_ok = TRUE;
     }
     else{ //裏フィールドにいる場合はパレスへ戻ってから解放
@@ -528,7 +530,8 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
     }
     GFL_HEAP_FreeMemory(intcomm);
     GFL_HEAP_FreeMemory(pwk);
-    if(intcomm->error == TRUE || NetErr_App_CheckError()){
+    if((intcomm->error == TRUE || NetErr_App_CheckError()) 
+        && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
       GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
     }
     return TRUE;

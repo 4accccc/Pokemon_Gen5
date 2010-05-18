@@ -97,6 +97,7 @@ typedef struct{
 typedef struct _GAME_COMM_SYS{
   GAMEDATA *gamedata;                 ///<ゲームデータへのポインタ
   u8 exit_reserve;                      ///<終了予約
+  u8 palace_not_connect;              ///<TRUE:パレスに接続しない
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
   GAME_COMM_LAST_STATUS last_status;    ///<最後に実行していたGAME_COMM_NOの終了状態
@@ -585,6 +586,38 @@ static void GameCommSub_SeqSet(GAME_COMM_SUB_WORK *sub_work, u8 seq)
   sub_work->func_seq_clear_req = TRUE;
 }
 
+
+//==============================================================================
+//  パレス接続不許可フラグ
+//==============================================================================
+//==================================================================
+/**
+ * パレス接続に対して不許可フラグをセットする
+ *
+ * @param   gcsp		
+ * @param   not_connect		TRUE:パレスに接続しないようにする
+ * @param   not_connect		FALSE:パレスに接続してOK
+ */
+//==================================================================
+void GameCommSys_SetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp, BOOL not_connect)
+{
+  gcsp->palace_not_connect = not_connect;
+}
+
+//==================================================================
+/**
+ * パレス接続に対しての不許可フラグを取得する
+ *
+ * @param   gcsp		
+ *
+ * @retval  BOOL		TRUE:パレスに接続してはいけない
+ * @retval  BOOL		TRUE:パレスに接続してOK
+ */
+//==================================================================
+BOOL GameCommSys_GetPalaceNotConnectFlag(GAME_COMM_SYS_PTR gcsp)
+{
+  return gcsp->palace_not_connect;
+}
 
 //==============================================================================
 //  プレイヤーステータス
