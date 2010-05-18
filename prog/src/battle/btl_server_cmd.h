@@ -13,7 +13,7 @@
 #include "btl_string.h"
 
 enum {
-  BTL_SERVER_CMD_QUE_SIZE = 1200,
+  BTL_SERVER_CMD_QUE_SIZE = 2000,
   BTL_SERVERCMD_ARG_MAX = 16,
 };
 
