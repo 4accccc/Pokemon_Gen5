@@ -46,6 +46,9 @@ struct _TAG_FLDEFF_FISHING_LURE
   
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm[ANIME_NUM];
+
+  GFL_TCB* vblank_task;
+  BOOL trans_finished;
 };
 
 //--------------------------------------------------------------
@@ -76,7 +79,7 @@ typedef struct
 //======================================================================
 static void fishing_lure_InitResource( FLDEFF_FISHING_LURE *wk );
 static void fishing_lure_DeleteResource( FLDEFF_FISHING_LURE *wk );
-
+static void VBlankFunc( GFL_TCB* tcb, void* wk ); 
 static const FLDEFF_TASK_HEADER DATA_fishing_lure_TaskHeader;
 
 //======================================================================
@@ -135,7 +138,9 @@ static void fishing_lure_InitResource( FLDEFF_FISHING_LURE *wk )
   
   wk->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_fishing_lure_nsbmd );
-  GFL_G3D_TransVramTexture( wk->g3d_res_mdl );
+
+  GFL_G3D_AllocVramTexture( wk->g3d_res_mdl );
+  wk->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, wk, 0 );
 
   for( i=0; i<ANIME_NUM; i++ )
   {
@@ -160,6 +165,26 @@ static void fishing_lure_DeleteResource( FLDEFF_FISHING_LURE *wk )
   }
 	GFL_G3D_FreeVramTexture( wk->g3d_res_mdl );
  	GFL_G3D_DeleteResource( wk->g3d_res_mdl );
+
+  GFL_TCB_DeleteTask( wk->vblank_task );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief VBlank ŠúŠÔ’†‚Ìˆ—
+ *
+ * @param tcb
+ * @param work
+ */
+//--------------------------------------------------------------
+static void VBlankFunc( GFL_TCB* tcb, void* work )
+{
+  FLDEFF_FISHING_LURE* wk = work;
+
+  if( wk->trans_finished == FALSE ) {
+    GFL_G3D_TransOnlyTexture( wk->g3d_res_mdl );
+    wk->trans_finished = TRUE;
+  }
 }
 
 //======================================================================

@@ -52,6 +52,9 @@ struct _TAG_FLDEFF_IWAKUDAKI
   
   GFL_G3D_RES *g3d_res_mdl;
   GFL_G3D_RES *g3d_res_anm[ANIME_NUM];
+
+  GFL_TCB* vblank_task;
+  BOOL trans_finished;
 };
 
 //--------------------------------------------------------------
@@ -79,7 +82,7 @@ typedef struct
 //======================================================================
 static void iwakudaki_InitResource( FLDEFF_IWAKUDAKI *kemu );
 static void iwakudaki_DeleteResource( FLDEFF_IWAKUDAKI *kemu );
-
+static void VBlankFunc( GFL_TCB* tcb, void* wk ); 
 static const FLDEFF_TASK_HEADER DATA_iwakudakiTaskHeader;
 
 //======================================================================
@@ -138,7 +141,9 @@ static void iwakudaki_InitResource( FLDEFF_IWAKUDAKI *kemu )
   
   kemu->g3d_res_mdl	=
     GFL_G3D_CreateResourceHandle( handle, NARC_fldeff_iwakudaki_nsbmd );
-  GFL_G3D_TransVramTexture( kemu->g3d_res_mdl );
+
+  GFL_G3D_AllocVramTexture( kemu->g3d_res_mdl );
+  kemu->vblank_task = GFUser_VIntr_CreateTCB( VBlankFunc, kemu, 0 );
 
   for( i=0; i<ANIME_NUM; i++ )
   {
@@ -161,7 +166,29 @@ static void iwakudaki_DeleteResource( FLDEFF_IWAKUDAKI *kemu )
   {
     GFL_G3D_DeleteResource( kemu->g3d_res_anm[i] );
   }
+
+  GFL_G3D_FreeVramTexture( kemu->g3d_res_mdl );
  	GFL_G3D_DeleteResource( kemu->g3d_res_mdl );
+
+  GFL_TCB_DeleteTask( kemu->vblank_task );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief VBlank ŠúŠÔ’†‚Ìˆ—
+ *
+ * @param tcb
+ * @param wk
+ */
+//--------------------------------------------------------------
+static void VBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  FLDEFF_IWAKUDAKI* kemu = wk;
+
+  if( kemu->trans_finished == FALSE ) {
+    GFL_G3D_TransOnlyTexture( kemu->g3d_res_mdl );
+    kemu->trans_finished = TRUE;
+  }
 }
 
 //======================================================================

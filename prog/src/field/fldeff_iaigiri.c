@@ -161,10 +161,13 @@ static void iaigiri_InitResource( FLDEFF_IAIGIRI *iai )
 static void iaigiri_DeleteResource( FLDEFF_IAIGIRI *iai )
 {
   int i;
+
   for( i=0; i<ANIME_NUM; i++ )
   {
     GFL_G3D_DeleteResource( iai->g3d_res_anm[i] );
   }
+
+  GFL_G3D_FreeVramTexture( iai->g3d_res_mdl );
  	GFL_G3D_DeleteResource( iai->g3d_res_mdl );
 
   GFL_TCB_DeleteTask( iai->vblank_task );
