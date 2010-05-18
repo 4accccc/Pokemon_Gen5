@@ -74,8 +74,8 @@ extern void WifiList_GetMyFriendData( WIFI_LIST* pWifiList, DWCFriendData *pFrie
 extern int  WifiList_GetMyGSID( WIFI_LIST* pWifiList );
 extern BOOL WifiList_CheckMyGSID( WIFI_LIST* pWifiList );
 
-extern BOOL WifiList_CheckFriendMystatus( WIFI_LIST* pWifiList , const MYSTATUS *myStatus );
-extern BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , const u32 trainerId , const u32 sex );
+extern BOOL WifiList_CheckFriendMystatus( WIFI_LIST* pWifiList , const MYSTATUS *myStatus, int *dest_index );
+extern BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , const u32 trainerId , const u32 sex, int *dest_index );
 
 #ifdef PM_DEBUG
 extern void WifiList_CopyData( WIFI_LIST *list, int no, int copyNo);

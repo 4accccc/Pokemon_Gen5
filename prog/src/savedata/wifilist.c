@@ -628,19 +628,20 @@ WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv)
  * @brief	MYSTATUSが登録されているか調べる
  * @param	WIFI_LIST	WIFIリスト
  * @param	MYSTATUS	調べる対象
+ * @param dest_index  居た場合、友達手帳の何人目のデータかの代入先(NULL可)
  * @return	BOOL TRUE 居た
  */
 //---------------------------------------------------------------------------
-BOOL WifiList_CheckFriendMystatus( WIFI_LIST* pWifiList , const MYSTATUS *myStatus )
+BOOL WifiList_CheckFriendMystatus( WIFI_LIST* pWifiList , const MYSTATUS *myStatus, int *dest_index )
 {
   const u32 id = MyStatus_GetID( myStatus );
   const u32 sex = MyStatus_GetMySex( myStatus );
   const STRCODE *name = MyStatus_GetMyName( myStatus );
   
-  return WifiList_CheckFriendData( pWifiList , name , id , sex );
+  return WifiList_CheckFriendData( pWifiList , name , id , sex, dest_index );
 }
 
-BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , const u32 trainerId , const u32 sex )
+BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , const u32 trainerId , const u32 sex, int *dest_index )
 {
   u8 i;
   for( i=0;i<WIFILIST_FRIEND_MAX;i++ )
@@ -656,6 +657,9 @@ BOOL WifiList_CheckFriendData( WIFI_LIST* pWifiList , const STRCODE *name , cons
           //STRCODE *friendName = WifiList_GetFriendNamePtr( pWifiList, i );
           //if( STRTOOL_Comp(name,friendName) == TRUE )
           {
+            if(dest_index != NULL){
+              *dest_index = i;
+            }
             return TRUE;
           }
         }

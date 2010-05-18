@@ -1023,6 +1023,41 @@ static BOOL SubEvent_PokelistBattle(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys,
     (*seq)++;
     break;
   case SEQ_BATTLE_EXIT_WAIT:
+    if(NetErr_App_CheckError() == NET_ERR_CHECK_NONE){
+      //友達手帳の勝敗数を更新
+      WIFI_LIST *pWifilist = GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData( gsys ));
+      MYSTATUS *target_myst;
+      int member_max = GFL_NET_GetConnectNum();
+      int net_id, my_pos;
+      int friend_index, win_lose;
+      
+      my_pos = clsys->recvbuf.stand_position[my_net_id] & 1;
+      for(net_id = 0; net_id < member_max; net_id++){
+        if(net_id == my_net_id){
+          continue;
+        }
+        if(WifiList_CheckFriendMystatus( 
+            pWifilist, &clsys->basic_status[net_id].myst, &friend_index ) == TRUE){
+          if((clsys->recvbuf.stand_position[net_id] & 1) == my_pos){  //パートナー
+            WifiList_SetLastPlayDate(pWifilist, friend_index); //日付更新のみ
+          }
+          else{ //敵
+            switch(battle_setup->demo.result){
+            case COMM_BTL_DEMO_RESULT_WIN:
+              WifiList_SetResult(pWifilist, friend_index, 1, 0, 0);
+              break;
+            case COMM_BTL_DEMO_RESULT_LOSE:
+              WifiList_SetResult(pWifilist, friend_index, 0, 1, 0);
+              break;
+            case COMM_BTL_DEMO_RESULT_DRAW: //日付更新のみ
+              WifiList_SetLastPlayDate(pWifilist, friend_index);
+              break;
+            }
+          }
+        }
+      }
+    }
+    
     Colosseum_DeleteBattleDemoParent(&battle_setup->demo);
     (*seq) = SEQ_FINISH;  //SEQ_FIELD_OPEN; EVENT_ColosseumBattleでField復帰している
     break;

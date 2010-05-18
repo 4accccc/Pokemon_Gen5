@@ -1635,7 +1635,7 @@ static const BOOL CTVT_CALL_CheckRegistFriendData( COMM_TVT_WORK *work , CTVT_CA
   }
 #endif
   
-  return WifiList_CheckFriendData( wifiList , name , id , sex );
+  return WifiList_CheckFriendData( wifiList , name , id , sex, NULL );
 }
 
 

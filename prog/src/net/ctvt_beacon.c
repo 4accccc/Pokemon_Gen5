@@ -59,7 +59,7 @@ const BOOL CTVT_BCON_CheckCallSelf( CTVT_COMM_BEACON *beacon , WIFI_LIST *wifiLi
     if( isSame == TRUE )
     {
       //Wifiリストから名前・性別・IDのチェック
-      return  WifiList_CheckFriendMystatus( wifiList , &beacon->myStatus );
+      return  WifiList_CheckFriendMystatus( wifiList , &beacon->myStatus, NULL );
     }
   }
   return FALSE;
