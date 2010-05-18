@@ -867,7 +867,7 @@ EVENT_START   ev_pos_c02_stone_01
     DEFINE_LOCAL  LWK_PLAYER_POSX   
     DEFINE_LOCAL  LWK_PLAYER_POSZ
  	DEFINE_LOCAL  LWK_ROM_VERSION
-       
+
 //------------------------------------------------------------//
     _PLAYER_POS_GET( LWK_PLAYER_POSX  ,LWK_PLAYER_POSZ ) //自機座標取得
  	_GET_ROM_VERSION ( LWK_ROM_VERSION ) 
@@ -900,37 +900,31 @@ EVENT_START   ev_pos_c02_stone_01
     CASE 648 THEN
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_c02_guide_x648 )
         _OBJ_ANIME_WAIT()
-    DEFAULT  
+    DEFAULT
     ENDSWITCH
- 	
- 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_common_turn_u )
-	_OBJ_ANIME_WAIT()
-
+	
 	_CAMERA_START()		//カメラ操作開始
 	_CAMERA_PURGE()		//カメラのバインドを解く
-				
 	_CAMERA_MOVE(9694,0,970795,42237952,0,38240256,24 )	//一番最後の引数は移動にかかるフレーム数
+
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-
- 	_PLAYER_NAME(0)
-	//博士（娘）がプレイヤーに気づく
-	_OBJ_ANIME( C02_HAKASE2_01, anm_common_gyoe )
-	_OBJ_ANIME_WAIT()
-	
 	//博士（娘）が喋る
-	//ハーイ！　れきしてきに　センセーションで
+	//…大変なことに巻き込まれたみたいね
+	_PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_stone_01, C02_HAKASE2_01,POS_UR)
     _BALLOONWIN_CLOSE()
-    
-
+	
     //c02ジムリーダーが博物館から出てくる
-	_OBJ_ANIME( C02_LEADER02_02, anm_leader2_kuru_01 )
-	//音と動きを合わせるためのウェイト
-	_TIME_WAIT(8)
 	_SE_PLAY(SEQ_SE_KAIDAN)
+	_OBJ_ANIME( C02_LEADER02_02, anm_leader2_kuru_01 )
 	_SE_WAIT()
 	_OBJ_ANIME_WAIT()
+	
+	//c02ジムリーダーが喋る
+	//……これかい
+	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_stone_01, C02_LEADER02_02,POS_UR) 
+	_BALLOONWIN_CLOSE()
 	
 	//振り向きに差をつけるためのウェイト
 	//博士（娘）が博士（父）を振り向く
@@ -942,26 +936,14 @@ EVENT_START   ev_pos_c02_stone_01
 	_OBJ_ANIME( C02_CHAMPION_01, anm_common_turn_r )
 	_OBJ_ANIME_WAIT()
 	
-	//c02ジムリーダーが喋る
-	//……これかい
-	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_stone_01, C02_LEADER02_02,POS_UR) 
-    _BALLOONWIN_CLOSE()
-    
 	//サポートが喋る
 	//それって……　リゾートデザートで
 	_BALLOONWIN_OBJMSG_POS(msg_c02_white_stone_01, C02_SUPPORT_02,POS_DR)
-	//サポートの会話に合わせて振り向くためのウェイト
-	_TIME_WAIT(4)
-	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_r)
-	_OBJ_ANIME_WAIT()  
     _BALLOONWIN_CLOSE()
     
 	//c02ジムリーダーが喋る
 	//……ああ　そうだけど
-
-	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_d_s4)
 	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_stone_02, C02_LEADER02_02,POS_UR) 
-	_OBJ_ANIME_WAIT()
     _BALLOONWIN_CLOSE()
     
 	//博士（父）が喋る
@@ -969,63 +951,59 @@ EVENT_START   ev_pos_c02_stone_01
 	_BALLOONWIN_OBJMSG_WB(msg_c02_hakase1_stone_01w,msg_c02_hakase1_stone_01b,C02_HAKASE1_01,POS_UL)
     _BALLOONWIN_CLOSE()
 
-
 	//博士（娘）が喋る
 	//……しらべたのは　アタシ　なんですけど
 	_BALLOONWIN_OBJMSG_POS( msg_c02_hakase2_stone_02, C02_HAKASE2_01,POS_UR) 
     _BALLOONWIN_CLOSE()
 
-
 	//c02ジムリーダーが喋る
-	//……はいはい　おなじ　けんきゅうかとして
+	//さすがだね
 	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_r)
-	_TIME_WAIT(4)
-	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_stone_03, C02_LEADER02_02,POS_UR) 
     _OBJ_ANIME_WAIT()
+	_BALLOONWIN_OBJMSG_POS( msg_c02_leader2_stone_03, C02_LEADER02_02,POS_UR) 
     _BALLOONWIN_CLOSE()
     
-	//間を作るためのウェイト
-
 	//サポートが喋る
 	//それにしても　あのとき　プラズマだん　から
-	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_d)
 	_BALLOONWIN_OBJMSG_POS(msg_c02_white_stone_02, C02_SUPPORT_02,POS_DR) 
     _BALLOONWIN_CLOSE()
-    _OBJ_ANIME_WAIT()
-  	
+	
 	//アロエが主人公を振り向く
- 	_OBJ_ANIME( C02_LEADER02_02, anm_common_turn_d )
+	_OBJ_ANIME( C02_LEADER02_02, anm_common_turn_d )
 	_OBJ_ANIME_WAIT()
 	
-	//振り向きに差をつけるためのウェイト
-	_OBJ_ANIME(C02_HAKASE1_01,anm_common_turn_d)
-	_TIME_WAIT(2)
-	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_d)
-	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_d)
-	_OBJ_ANIME_WAIT()
-	
-
 	//c02ジムリーダーが喋る
 	//ああ　あのとき
 	_BALLOONWIN_OBJMSG_POS(msg_c02_leader2_stone_04, C02_LEADER02_02,POS_UR) 
     _BALLOONWIN_CLOSE()
 	
-
 	//アロエが主人公に隣接
  	_OBJ_ANIME( C02_LEADER02_02, anm_leader02_idou_01 )
+ 	_TIME_WAIT( 4 )
+	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_d)
+ 	_TIME_WAIT( 2 )
+	_OBJ_ANIME(C02_HAKASE1_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
+	
+	//じゃあ これを……
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS(msg_c02_leader2_stone_05, C02_LEADER02_02,POS_DR)
+    _BALLOONWIN_CLOSE()
 	
 	//チャンピオンが喋る
 	//ちょっと　まつんだ！
 	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_r)
-	
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l_s1)
-	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_l_s2)
-	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_l_s3)	 
-	_OBJ_ANIME(C02_HAKASE1_01,anm_common_turn_d_s4)
-	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_l_s5)
-	_BALLOONWIN_OBJMSG_WB(msg_c02_champion_stone_01w,msg_c02_champion_stone_01b, C02_CHAMPION_01, POS_DL )	
+	_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_01,C02_CHAMPION_01 ,POS_DL) 
+   	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME_WAIT()
+	
+	//ジムリーダー＆主人公：チャンピオンを見る
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_l)
+	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_l)
+	_OBJ_ANIME_WAIT()
+	
+	//その～～ストーンは
+	_BALLOONWIN_OBJMSG_WB(msg_c02_champion_stone_01w,msg_c02_champion_stone_01b, C02_CHAMPION_01, POS_DL )	
 	
 	_YES_NO_WIN(SCWK_ANSWER)
 	
@@ -1036,18 +1014,17 @@ EVENT_START   ev_pos_c02_stone_01
 	ELSE
 		_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_01n,C02_CHAMPION_01 ,POS_DL) 
 		_YES_NO_WIN(SCWK_ANSWER)	
-    	_BALLOONWIN_CLOSE()
     	
     	IF $SCWK_ANSWER == SCR_YES THEN
     	
 			_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_01_01n,C02_CHAMPION_01 ,POS_DL) 
 			_YES_NO_WIN(SCWK_ANSWER)
-    		_BALLOONWIN_CLOSE()
     		
   			WHILE $SCWK_ANSWER == SCR_NO
 				_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_01_01n,C02_CHAMPION_01 ,POS_DL) 
 				_YES_NO_WIN(SCWK_ANSWER)
 	    	ENDWHILE
+	    	
     		_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_01_01y,C02_CHAMPION_01 ,POS_DL) 
     		_BALLOONWIN_CLOSE()
     		
@@ -1058,42 +1035,36 @@ EVENT_START   ev_pos_c02_stone_01
 	
 	ENDIF
 	
-
 	//振り向きに差をつけるためのウェイト
 	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_d)
-	_TIME_WAIT(6)
+//	_TIME_WAIT(4)
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
-	_TIME_WAIT(16)
-	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_d)	
-	_TIME_WAIT(2)
-	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_d)	
-	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_d)
+//	_TIME_WAIT(16)
+//	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_d)	
+//	_TIME_WAIT(2)
+//	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_d)	
+//	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
-		
 	
+	//…そうか この～～ストーンは
 	_BALLOONWIN_OBJMSG_WB(msg_c02_leader2_stone_06w,msg_c02_leader2_stone_06b, C02_LEADER02_02, POS_DR)	
 	_MSGWIN_CLOSE()
 	
     //アイテムを受け取る動き
     _OBJ_ANIME(C02_LEADER02_02,anm_common_turn_d)
     _OBJ_ANIME_WAIT()
-	_TIME_WAIT(8)
-    _OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
-    _OBJ_ANIME_WAIT()
     
 	//ROMVerによって、ダークストーンか、ライトストーンを入手
 	IF $LWK_ROM_VERSION == VERSION_BLACK THEN
 		_ITEM_EVENT_KEYWAIT(ITEM_RAITOSUTOON, 1)
-		
 	ELSE
 		_ITEM_EVENT_KEYWAIT(ITEM_DAAKUSUTOON, 1)
-		
 	ENDIF
 	
 	//話題が切れ、大きくかわることを表現するウェイト
 	_TIME_WAIT(24)
 	_BALLOONWIN_OBJMSG_POS(msg_c02_hakase1_stone_02, C02_HAKASE1_01,POS_UL) 
-
+	
 	//おのおの喋る
 	_TIME_WAIT( 10 )
 	_SUBWIN_MSG(msg_c02_hakase2_sub_01 , 20 , 7 , 1 ) 
@@ -1103,73 +1074,78 @@ EVENT_START   ev_pos_c02_stone_01
 	_SUBWIN_MSG(msg_c02_white_sub_01 , 22 , 14 , 3 )
 	
 	//20フレーム待機した後ウィンドウを消す
-	_TIME_WAIT( 36 )
+//	_TIME_WAIT( 36 )
+	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
-	_TIME_WAIT(4)
+	
 	_SUBWIN_CLOSE( 1 )
-	_TIME_WAIT(4)
 	_SUBWIN_CLOSE( 2 )
-	_TIME_WAIT(4)
 	_SUBWIN_CLOSE( 3 )
 	
 	//アロエが思いつくまでの間を表現するウェイト
 	_TIME_WAIT(24)
+	
+	//アロエ：何か思いついてチャンピオンを見る
 	_OBJ_ANIME(C02_LEADER02_02,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
-
 	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_l)
 	_OBJ_ANIME_WAIT()
-	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_l_s2)
-	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_l_s3)
+//	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_l_s2)
+//	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_l_s3)
+	
+	//そうだよ！あいつらが…
 	_BALLOONWIN_OBJMSG_POS(msg_c02_leader2_stone_07, C02_LEADER02_02,POS_DR) 
     _BALLOONWIN_CLOSE()
 	
-
+	//チャンピオン：アロエを見て
 	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_r)
- 	_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_02, C02_CHAMPION_01,POS_DL) 
-    _BALLOONWIN_CLOSE()
-    _OBJ_ANIME_WAIT()
-    
-    _OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_d)
-    _OBJ_ANIME_WAIT()
- 	_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_03, C02_CHAMPION_01,POS_DL) 
-    _BALLOONWIN_CLOSE()
-    
-
-				
+	//そうか あいつらが おったな
+	_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_02, C02_CHAMPION_01,POS_DL) 
+	_BALLOONWIN_CLOSE()
+	_OBJ_ANIME_WAIT()
+	
+	//チャンピオン：下を見て
+	_OBJ_ANIME(C02_CHAMPION_01,anm_common_turn_d)
+	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_d)
+	_OBJ_ANIME_WAIT()
+	//～～！ソウリュウシティにむかうぞ
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS(msg_c02_champion_stone_03, C02_CHAMPION_01,POS_DL) 
+	_BALLOONWIN_CLOSE()
+	
 	//カメラ操作　チャンピオンの位置にカメラを合わせる
 	_CAMERA_MOVE( 9688,0,970752,42106880,0,38305792,24 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
 	//チャンピオン：そらをとぶアニメ
 	_CALL_NPCFLY_CUTIN(C02_CHAMPION_01)
-
+	
 	_CAMERA_MOVE(9694,0,970795,42237952,0,38240256,24 )	//一番最後の引数は移動にかかるフレーム数
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	
-
+	//博士（娘）：！マーク
 	_OBJ_ANIME(C02_HAKASE2_01,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
-
-	_OBJ_ANIME(C02_LEADER02_02,anm_common_turn_u)
+	
+	//そっか ソウリュウのジムリーダーなら…
 	_BALLOONWIN_OBJMSG_WB(msg_c02_hakase2_stone_03w,msg_c02_hakase2_stone_03b, C02_HAKASE2_01, POS_UR )
 	_MSGWIN_CLOSE()
-	_OBJ_ANIME_WAIT()
-
-
-	_BALLOONWIN_OBJMSG_POS(msg_c02_hakase1_stone_03, C02_HAKASE1_01,POS_UL) 
-    _BALLOONWIN_CLOSE()
 	
-	_OBJ_ANIME(C02_HAKASE2_01,anm_common_turn_d)
+	//～～よ おまえさんの…
+	_PLAYER_NAME( 0 )
+	_BALLOONWIN_OBJMSG_POS(msg_c02_hakase1_stone_03, C02_HAKASE1_01,POS_UL) 
+	_BALLOONWIN_CLOSE()
+	
+	//ドラゴンポケモンが…
 	_BALLOONWIN_OBJMSG_POS(msg_c02_hakase2_stone_04, C02_HAKASE2_01,POS_UR) 
     _BALLOONWIN_CLOSE()
-	_OBJ_ANIME_WAIT()
 	
 	//博士（父）（娘）の動きと主人公、サポート、アロエの振り向きを合わせるウェイト	
     //博士（父）が画面外に移動
     //博士（娘）が画面外に移動
 	_OBJ_ANIME( C02_HAKASE1_01, anm_hakase1_saru_01 )
 	_OBJ_ANIME( C02_HAKASE2_01, anm_hakase2_saru_01 )
+	//リーダーたち：見送る
 	_TIME_WAIT(42)
 	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_r)
 	_TIME_WAIT(2)
@@ -1183,22 +1159,28 @@ EVENT_START   ev_pos_c02_stone_01
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 	_TIME_WAIT(2)
 	_OBJ_ANIME(C02_SUPPORT_02,anm_common_turn_l)
-	_BALLOONWIN_OBJMSG_POS(msg_c02_leader2_stone_08, C02_LEADER02_02,POS_DR) 
-    _BALLOONWIN_CLOSE()
-    
-
-	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r_s1)
+	_OBJ_ANIME_WAIT()
+	
+	//安心しな！
+	_BALLOONWIN_OBJMSG_POS(msg_c02_leader2_stone_08, C02_LEADER02_02,POS_UR)
+	_BALLOONWIN_CLOSE()
+	
+	//サポート：主人公の横へ
+/*	_OBJ_ANIME(C02_SUPPORT_02,anm_support_come_a)
+	_TIME_WAIT( 8 )
+	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
+	_OBJ_ANIME_WAIT()
+*/	
+	//…なんだか
 	_BALLOONWIN_OBJMSG_POS(msg_c02_white_stone_03, C02_SUPPORT_02,POS_DR)
-	_LAST_KEYWAIT()
-    _BALLOONWIN_CLOSE()
-    _OBJ_ANIME_WAIT()
-    
+	_BALLOONWIN_CLOSE()
+	
 	//自機にカメラを戻す
 	_CAMERA_RECV_MOVE( 24 )	//_CAMERA_START()を使った時の座標に戻します。引数は移動にかかるフレーム数です
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド　主人公位置をカメラが追従するようになります
 	_CAMERA_END()		//カメラ操作終了
-    
+	
 	//==============フラグワーク操作==============//
 	_OBJ_DEL( C02_HAKASE1_01 )
 	_OBJ_DEL( C02_HAKASE2_01 )
@@ -1277,7 +1259,7 @@ _ANIME_LABEL	anm_common_turn_u
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_common_turn_l_s1
 	
-	_ANIME_DATA AC_WAIT_16F,1	
+	_ANIME_DATA AC_WAIT_16F,1
 	_ANIME_DATA AC_WAIT_2F,1
 	_ANIME_DATA AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
@@ -1391,7 +1373,7 @@ _ANIME_LABEL	anm_c02_guide_x648
 //アロエ（ジムリーダー2）：博物館から出てくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader2_kuru_01
-	_ANIME_DATA AC_WALK_D_8F,4,1
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -1431,10 +1413,18 @@ _ANIME_LABEL	anm_champion_saru_01
 // 博士（娘）：去っていく                           
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_hakase2_saru_01
-	_ANIME_DATA AC_WAIT_8F,1
 	_ANIME_DATA AC_WALK_D_8F,6
 	_ANIME_DATA AC_WALK_R_8F,7	
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+// サポート：主人公の横へ                           
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_support_come_a
+	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA	ACMD_END,0
+
 
 /**************************************************************/
 /*C02	サポートの会話用イベントスクリプト                    */
@@ -1442,7 +1432,7 @@ _ANIME_LABEL	anm_hakase2_saru_01
 EVENT_START   ev_c02_support_02
 	
 	_PLAYER_NAME(0)
-  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_white_stone_03 )
+  	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c02_white_stone_03a )
 
 EVENT_END
 
