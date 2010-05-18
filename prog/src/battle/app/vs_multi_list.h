@@ -25,8 +25,8 @@ enum {
 
 // 外部設定データ
 typedef struct {
-	POKEPARTY * myPP;			// 自分のポケモンデータ
-	POKEPARTY * ptPP;			// 相方のポケモンデータ
+	const POKEPARTY * myPP;			// 自分のポケモンデータ
+	const POKEPARTY * ptPP;			// 相方のポケモンデータ
 
 	u32	pos;							// 自分の立ち位置
 }VS_MULTI_LIST_PARAM;

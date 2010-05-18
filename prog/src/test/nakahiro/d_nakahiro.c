@@ -63,6 +63,8 @@ typedef struct {
   ZUKAN_PARAM zkn_data;
 
   VS_MULTI_LIST_PARAM vsl_data;
+	POKEPARTY * ppL;
+	POKEPARTY * ppR;
 
   WIFINOTE_PROC_PARAM wifi_note_data;
 
@@ -259,8 +261,8 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
   wk->gamedata  = GAMEDATA_Create( wk->heapID );
   wk->bb_party  = NULL;
 
-  wk->vsl_data.myPP = NULL;
-  wk->vsl_data.ptPP = NULL;
+	wk->ppL = NULL;
+	wk->ppR = NULL;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -313,11 +315,11 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
       BATTLE_BOX_SAVE_SetPokeParty( sv, wk->bb_party );
       GFL_HEAP_FreeMemory( wk->bb_party );
     }
-    if( wk->vsl_data.myPP != NULL ){
-      GFL_HEAP_FreeMemory( wk->vsl_data.myPP );
+    if( wk->ppL != NULL ){
+      GFL_HEAP_FreeMemory( wk->ppL );
     }
-    if( wk->vsl_data.ptPP != NULL ){
-      GFL_HEAP_FreeMemory( wk->vsl_data.ptPP );
+    if( wk->ppR != NULL ){
+      GFL_HEAP_FreeMemory( wk->ppR );
     }
 //    OS_Printf( "nakahiroデバッグ処理終了しました\n" );
     return GFL_PROC_RES_FINISH;
@@ -452,20 +454,24 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
   case MAIN_SEQ_VSMLIST_L:
     wk->vsl_data.pos = VS_MULTI_LIST_POS_LEFT;
-    wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
-    wk->vsl_data.ptPP = PokeParty_AllocPartyWork( wk->heapID );
-    SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
-    SetPokeParty( wk, wk->vsl_data.ptPP, VSMListMonsR, VSMListItemR );
+    wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
+    wk->ppR = PokeParty_AllocPartyWork( wk->heapID );
+    SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
+    SetPokeParty( wk, wk->ppR, VSMListMonsR, VSMListItemR );
+		wk->vsl_data.myPP = wk->ppL;
+		wk->vsl_data.ptPP = wk->ppR;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
     wk->main_seq = MAIN_SEQ_END;
     break;
 
   case MAIN_SEQ_VSMLIST_R:
     wk->vsl_data.pos = VS_MULTI_LIST_POS_RIGHT;
-    wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
-    wk->vsl_data.ptPP = PokeParty_AllocPartyWork( wk->heapID );
-    SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
-    SetPokeParty( wk, wk->vsl_data.ptPP, VSMListMonsR, VSMListItemR );
+    wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
+    wk->ppR = PokeParty_AllocPartyWork( wk->heapID );
+    SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
+    SetPokeParty( wk, wk->ppR, VSMListMonsR, VSMListItemR );
+		wk->vsl_data.myPP = wk->ppL;
+		wk->vsl_data.ptPP = wk->ppR;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
     wk->main_seq = MAIN_SEQ_END;
     break;
@@ -484,24 +490,24 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 			DENDOU_SAVEDATA * ex_rec;
 			RTCDate	date;
 			RTC_GetDate( &date );
-			wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
-			SetPokeParty( wk, wk->vsl_data.myPP, VSMListMonsL, VSMListItemL );
-			DendouRecord_Add( GAMEDATA_GetDendouRecord(wk->gamedata), wk->vsl_data.myPP, &date, wk->heapID );
+			wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
+			SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
+			DendouRecord_Add( GAMEDATA_GetDendouRecord(wk->gamedata), wk->ppL, &date, wk->heapID );
 		}
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_pc), &DENDOUPC_ProcData, &wk->dpc_data );
     wk->main_seq = MAIN_SEQ_END;
 		break;
 
 	case  MAIN_SEQ_DENDOU_DEMO:
-		wk->vsl_data.myPP = PokeParty_AllocPartyWork( wk->heapID );
+		wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-			SetPokeParty( wk, wk->vsl_data.myPP, &DDemoMonsList[2][0], VSMListItemL );
+			SetPokeParty( wk, wk->ppL, &DDemoMonsList[2][0], VSMListItemL );
 		}else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-			SetPokeParty( wk, wk->vsl_data.myPP, &DDemoMonsList[1][0], VSMListItemL );
+			SetPokeParty( wk, wk->ppL, &DDemoMonsList[1][0], VSMListItemL );
 		}else{
-			SetPokeParty( wk, wk->vsl_data.myPP, &DDemoMonsList[0][0], VSMListItemL );
+			SetPokeParty( wk, wk->ppL, &DDemoMonsList[0][0], VSMListItemL );
 		}
-		wk->ddemo_data.party    = wk->vsl_data.myPP;
+		wk->ddemo_data.party    = wk->ppL;
 		wk->ddemo_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
 		wk->ddemo_data.ptime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(wk->gamedata) );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &wk->ddemo_data );

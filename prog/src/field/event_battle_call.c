@@ -28,6 +28,8 @@
 
 #include "../battle/btl_net.h"
 
+#include "../battle/app/vs_multi_list.h"
+
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 #include "poke_tool/pokeparty.h"
@@ -61,6 +63,7 @@ const GFL_PROC_DATA CommBattleCommProcData =
 //==============================================================================
 typedef struct{
   GFL_PROCSYS* procsys_up; 
+	VS_MULTI_LIST_PARAM	listParam;
 }COMM_BTL_DEMO_PROC_WORK;
 
 #define BATTLE_CALL_HEAP_SIZE (0x4000) // PROC内用ヒープのサイズ
@@ -141,8 +144,16 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   {
     SEQ_CALL_START_DEMO = 0,  ///< バトル前デモ呼び出し
     SEQ_WAIT_START_DEMO,
+
+    SEQ_LIST_TIMING_INIT,
+    SEQ_LIST_TIMING_WAIT,
+
+		SEQ_CALL_LIST_DEMO,				///< マルチ用リストデモ呼び出し
+		SEQ_WAIT_LIST_DEMO,
+
     SEQ_BATTLE_TIMING_INIT,
     SEQ_BATTLE_TIMING_WAIT,
+
     SEQ_BATTLE_INIT,
     SEQ_BATTLE_WAIT,
     SEQ_BATTLE_END,
@@ -183,9 +194,54 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   
   case SEQ_WAIT_START_DEMO:
     if ( up_status != GFL_PROC_MAIN_VALID ){
-      (*seq) = SEQ_BATTLE_TIMING_INIT;
+      if( bcw->btl_setup_prm->multiMode == 0 ){
+				(*seq) = SEQ_BATTLE_TIMING_INIT;
+			}else{
+				(*seq) = SEQ_LIST_TIMING_INIT;
+			}
     }
     break;
+
+	case SEQ_LIST_TIMING_INIT:
+		GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_LIST_DEMO_TIMING );
+		OS_Printf( "ok1\n" );
+		(*seq) = SEQ_LIST_TIMING_WAIT;
+		break;
+
+	case SEQ_LIST_TIMING_WAIT:
+    if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),EVENT_BATTLE_LIST_DEMO_TIMING) ){
+			OS_Printf( "ok2\n" );
+      (*seq) = SEQ_CALL_LIST_DEMO;
+    }
+		break;
+
+	case SEQ_CALL_LIST_DEMO:	// マルチ用リストデモ呼び出し
+		if( bcw->btl_setup_prm->commPos == 0 ){
+			work->listParam.pos  = VS_MULTI_LIST_POS_LEFT;
+			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
+			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
+		}else if( bcw->btl_setup_prm->commPos == 1 ){
+			work->listParam.pos  = VS_MULTI_LIST_POS_LEFT;
+			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_D].party;
+			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_C].party;
+		}else if( bcw->btl_setup_prm->commPos == 2 ){
+			work->listParam.pos  = VS_MULTI_LIST_POS_RIGHT;
+			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
+			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
+		}else{
+			work->listParam.pos  = VS_MULTI_LIST_POS_RIGHT;
+			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_C].party;
+			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_D].party;
+		}
+    GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &work->listParam );
+		(*seq) = SEQ_WAIT_LIST_DEMO;
+		break;
+
+	case SEQ_WAIT_LIST_DEMO:
+    if ( up_status != GFL_PROC_MAIN_VALID ){
+      (*seq) = SEQ_BATTLE_TIMING_INIT;
+    }
+		break;
   
   case SEQ_BATTLE_TIMING_INIT:
     {

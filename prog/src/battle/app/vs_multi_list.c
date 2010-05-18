@@ -16,6 +16,7 @@
 #include "system/gfl_use.h"
 #include "system/wipe.h"
 #include "system/bgwinfrm.h"
+#include "sound/pm_sndsys.h"
 #include "pokeicon/pokeicon.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -529,7 +530,7 @@ static int MainSeq_Init( VSMLIST_WORK * wk )
 	InitBgWinFrame( wk );
 
 	// 通信アイコン設定
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WIFINOTE );
+	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_VS_MULTI_LIST );
 	GFL_NET_ReloadIcon();
 
 	GFL_DISP_GX_SetVisibleControl(
@@ -631,18 +632,21 @@ static int MainSeq_Main( VSMLIST_WORK * wk )
 				BGWINFRM_MoveInit( wk->wfrm, BGWF_POKE1_PARAM+i, 1, 0, BPL_COMM_BSX_PLATE );
 			}
 		}
+		PMSND_PlaySE( SEQ_SE_ROTATION_B );
 		wk->sub_seq++;
 
 	case 1:
 		if( wk->dat->pos == VS_MULTI_LIST_POS_LEFT ){
 			if( BGWINFRM_MoveCheck( wk->wfrm, BGWF_POKE4_PLATE ) == 0 ){
 				wk->sub_seq++;
+				PMSND_PlaySE( SEQ_SE_SYS_03 );
 				return SetWait( wk, END_WAIT, MAINSEQ_MAIN );
 			}
 			MoveObj( wk, 3, -8 );
 		}else{
 			if( BGWINFRM_MoveCheck( wk->wfrm, BGWF_POKE1_PLATE ) == 0 ){
 				wk->sub_seq++;
+				PMSND_PlaySE( SEQ_SE_SYS_03 );
 				return SetWait( wk, END_WAIT, MAINSEQ_MAIN );
 			}
 			MoveObj( wk, 0, 8 );
@@ -925,8 +929,8 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 //--------------------------------------------------------------------------------------------
 static void GetPokemonParam( VSMLIST_WORK * wk )
 {
-	POKEPARTY * ppL;
-	POKEPARTY * ppR;
+	const POKEPARTY * ppL;
+	const POKEPARTY * ppR;
 	u32	i;
 
 	if( wk->dat->pos == VS_MULTI_LIST_POS_LEFT ){
