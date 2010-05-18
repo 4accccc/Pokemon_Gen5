@@ -466,9 +466,25 @@ EVENT_START   ev_pos_c05_support_01
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
+	//性別が格納されるローカル変数を定義
+	DEFINE_LOCAL SCWK_SEX
+	_GET_MY_SEX(SCWK_SEX)
+	
 	//サポート：しっぽなしメッセージ表示
+	//男性だった場合
+	IF $SCWK_SEX == PM_MALE THEN
+	
 	_PLAINWIN_MSG_DOWN( msg_c05_white_01 )
 	_MSGWIN_CLOSE()
+	
+	//女性だった場合
+	ELSE
+	
+	_PLAINWIN_MSG_DOWN( msg_c05_white_01a )
+	_MSGWIN_CLOSE()
+	
+	ENDIF
+
 	
 	//主人公「！」
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_c05_player_gyoe )
