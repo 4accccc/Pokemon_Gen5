@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-17T21:55:32"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-18T16:02:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="693"/>
 		<band id="3" index="3" style="0000" width="693"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -471,7 +471,7 @@
 わくわく　ドキドキ　ですね！[BE:01:ページ切り替え（クリア）]
 ５にんまで　さんか　できるので
 ともだちと　やってみてくださいね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">ぐるぐるこうかん　は　持っている
+		<language name="JPN_KANJI" width="216" line="2">ぐるぐる交換　は　持っている
 タマゴを　みんなで　持ち寄って[BE:00:ページ切り替え（行送り）]
 交換することが　できます[BE:01:ページ切り替え（クリア）]
 いったい　どのタマゴが　くるか？
@@ -506,18 +506,18 @@
 	<row id="msg_union_info_01_09" text-color="#ff78ff,,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>説明お姉さん：説明するのメッセージ
 ・マーク</comment>
-		<language name="JPN" width="216" line="2">したにある　マークを　タッチすると
-チャットの　ことばを　えらべたり[BE:00:ページ切り替え（行送り）]
-たいせんや　こうかんなど[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="216" line="2">したがめんの　バーにある　マークを
+タッチすると　チャットの　ことばを[BE:00:ページ切り替え（行送り）]
+えらべたり　たいせんや　こうかんなど[BE:00:ページ切り替え（行送り）]
 じぶんが　やりたいことを　みんなに[BE:00:ページ切り替え（行送り）]
 つたえることが　できます[BE:01:ページ切り替え（クリア）]
 また　じぶんと　おなじマークを
 えらんでいる　ひとは　ジャンプします[BE:01:ページ切り替え（クリア）]
 マークを　タッチして　あそびたい
 あいてを　さがして　くださいね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="216" line="2">下にある　マークを　タッチすると
-チャットの　言葉を　選べたり[BE:00:ページ切り替え（行送り）]
-対戦や　交換など[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="216" line="2">下画面の　バーにある　マークを
+タッチすると　チャットの　言葉を[BE:00:ページ切り替え（行送り）]
+選べたり　対戦や　交換など[BE:00:ページ切り替え（行送り）]
 自分が　やりたいことを　みんなに[BE:00:ページ切り替え（行送り）]
 伝えることが　できます[BE:01:ページ切り替え（クリア）]
 また　自分と　同じマークを
