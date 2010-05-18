@@ -325,14 +325,16 @@ EVENT_START		 ev_bg_c02gym0201_statue_01
 	//ジムバッジを取得している場合
 	ELSE
 		_PLAYER_NAME( 0 )
-		//H01に行ったタイミングで、チェレンとベルの名前を表示する
-		IF$WK_SCENE_H01R0201 == 1 THEN
+		
+		//C03に行ったタイミングで、チェレンとベルの名前を表示する		
+		IF FLAG_ON(SYS_FLAG_ARRIVE_C03) THEN	
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_03)
 		ELSE
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_02)
-	    ENDIF
+		ENDIF
 	    _LAST_KEYWAIT()
 	    _MSGWIN_CLOSE()
+
 	ENDIF
 	
 EVENT_END
@@ -354,14 +356,15 @@ EVENT_START		ev_bg_c02gym0201_statue_02
 	//ジムバッジを取得している場合
 	ELSE
 		_PLAYER_NAME( 0 )
-		//H01に行ったタイミングで、チェレンとベルの名前を表示する
-		IF$WK_SCENE_H01R0201 == 1 THEN
+		//C03に行ったタイミングで、チェレンとベルの名前を表示する		
+		IF FLAG_ON(SYS_FLAG_ARRIVE_C03) THEN	
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_03)
 		ELSE
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_statue_02)
-	    ENDIF
+		ENDIF
 	    _LAST_KEYWAIT()
 	    _MSGWIN_CLOSE()
+	    
 	ENDIF
 	
 EVENT_END
