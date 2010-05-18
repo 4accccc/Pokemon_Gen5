@@ -124,16 +124,11 @@ def getCDAT( items )
     output += sprintf("\t{ // %s\n", item.itemname )
     output += sprintf("\t\t%3d, \n", item.id )
     output += sprintf("\t\t%d,%d, // flags\n", item.world_flag, item.revival_flag )
-    output += sprintf("\t\t%3d, // %s %s\n", item.mapid, item.mapid_name, item.mapname )
+    #output += sprintf("\t\t%3d, // %s %s\n", item.mapid, item.mapid_name, item.mapname )
+    output += sprintf("\t\tZONE_ID_%s, // %s\n", item.mapid_name.upcase, item.mapname )
     output += sprintf("\t\t%3d,%3d, // x, y\n", item.posx, item.posz )
     output += sprintf("\t},\n")
 
-=begin
-    output += sprintf("\t %3d, // %d %d %3d(%d,%d) %s %s\n",
-                      item.id,
-                      item.world_flag, item.revival_flag, 
-                      item.mapid, item.posx, item.posz, item.mapid_name, item.mapname )
-=end
   }
   output += sprintf( "}; // end of hide_item_data\n" )
   return output
