@@ -2291,7 +2291,6 @@ static void category_input(PMS_INPUT_WORK* wk,int* seq)
   }
 
   // ‰‰o’†‚ÍŽó‚¯•t‚¯‚È‚¢
-  // @TODO ‚Ç‚¤‚É‚©ŒãŸ‚¿‚É‚Å‚«‚È‚¢‚©H
   if( PMSIView_WaitCommand( wk->vwk, VCMD_INPUTWORD_UPDATE ) == FALSE )
   {
     return;

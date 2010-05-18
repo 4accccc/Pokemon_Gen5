@@ -66,6 +66,8 @@ static BOOL g_debug_loop = FALSE;
 // アプリ内でデバッグ用のパラメータをセット
 //#define DEBUG_SET_PARAM
 
+//#define DEBUG_CNT_PARTICLE
+
 #endif // PM_DEBUG
 
 //=============================================================================
@@ -75,7 +77,6 @@ static BOOL g_debug_loop = FALSE;
 //=============================================================================
 enum
 { 
-  //@TODO デカめにとってある
   COMM_BTL_DEMO_HEAP_SIZE = 0x70000,  ///< ヒープサイズ
 
   TRAINER_CNT_NORMAL = 2,
@@ -213,6 +214,21 @@ enum
 
   MULTI_POSID3_BALL_PTC_BASE_X = 0x1f00,
   MULTI_POSID3_BALL_PTC_BASE_Y = 0x300,
+
+  // リザルト文字座標
+  RESULT_POS_ME_PX = GX_LCD_SIZE_X-50,
+  RESULT_POS_ME_PY = 19*8,
+  RESULT_POS_YOU_PX = 50,
+  RESULT_POS_YOU_PY = 8*5,
+  RESULT_POS_DRAW_PX = GX_LCD_SIZE_X/2,
+  RESULT_POS_DRAW_PY = GX_LCD_SIZE_Y/2,
+  
+  // 残りポケモン数OBJ座標
+  POKENUM_POSID0_PX = GX_LCD_SIZE_X - 50,
+  POKENUM_POSID0_PY = NORMAL_POSID1_BALL_PY-16,
+  POKENUM_POSID1_PX = 50,
+  POKENUM_POSID1_PY = NORMAL_POSID0_BALL_PY-16,
+
 
 };
 
@@ -989,7 +1005,7 @@ static void _start_demo_init_rebind_multi( COMM_BTL_DEMO_MAIN_WORK* wk )
       pal = 3;
     }
 
-    // @TODO マテリアルID
+    // マテリアルID直うち
     G3D_OBJ_PaletteReBind( obj, 1+i, pal );
   }
 }
@@ -2243,8 +2259,7 @@ static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
   int i;
   int max = (type_is_normal(wk->type) ? TRAINER_CNT_NORMAL : TRAINER_CNT_MULTI ); 
 
-#if DEBUG_ONLY_FOR_genya_hosaka
-  //@TODO 
+#ifdef DEBUG_CNT_PARTICLE
   // パーティクル座標調整
   {
     static fx32 fx=0;
@@ -2410,7 +2425,6 @@ static void RESULT_UNIT_Init( RESULT_UNIT* unit, COMM_BTL_DEMO_OBJ_WORK* obj, CO
   // 勝敗結果CLWK生成
   //-----------------------------------------------------
 
-  //@TODO MN
   for( i=0; i<COMM_BTL_DEMO_RESULT_MAX; i++ )
   {
     s16 px, py;
@@ -2418,16 +2432,16 @@ static void RESULT_UNIT_Init( RESULT_UNIT* unit, COMM_BTL_DEMO_OBJ_WORK* obj, CO
     switch( i )
     {
     case RESULT_POS_ME : 
-      px = GX_LCD_SIZE_X-50;
-      py = 19*8;
+      px = RESULT_POS_ME_PX;
+      py = RESULT_POS_ME_PY;
       break;
     case RESULT_POS_YOU : 
-      px = 50;
-      py = 8*5;
+      px = RESULT_POS_YOU_PX;
+      py = RESULT_POS_YOU_PY;
       break;
     case RESULT_POS_DRAW : 
-      px = GX_LCD_SIZE_X/2;
-      py = GX_LCD_SIZE_Y/2;
+      px = RESULT_POS_DRAW_PX;
+      py = RESULT_POS_DRAW_PY;
       break;
     default : GF_ASSERT(0);
     }
@@ -2629,16 +2643,15 @@ static GFL_CLWK* OBJ_CreatePokeNum( COMM_BTL_DEMO_OBJ_WORK* obj, u8 posid, u8 po
 
   // 座標
   {
-    //@TODO MN
     if( posid == 0 )
     {
-      px = GX_LCD_SIZE_X - 50;
-      py = NORMAL_POSID1_BALL_PY-16;
+      px = POKENUM_POSID0_PX;
+      py = POKENUM_POSID0_PY;
     }
     else
     {
-      px = 50;
-      py = NORMAL_POSID0_BALL_PY-16;
+      px = POKENUM_POSID1_PX;
+      py = POKENUM_POSID1_PY;
     }
   }
 #if 0
@@ -3163,7 +3176,6 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
   return is_loop;
 }
 
-  // @TODO 汎用化
 #if 0
   // デバッグfovy
   {
