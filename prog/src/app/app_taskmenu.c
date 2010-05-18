@@ -519,6 +519,7 @@ static void APP_TASKMENU_UpdateKey( APP_TASKMENU_WORK *work )
     {
       APP_TASKMENU_SetActiveItem( work->menuWin[work->cursorPos], work->res, TRUE );
       GFL_UI_SetTouchOrKey(GFL_APP_KTST_KEY);
+      PMSND_PlaySE( SEQ_SE_SELECT1 );
     }
   }
   else
