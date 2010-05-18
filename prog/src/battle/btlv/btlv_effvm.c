@@ -442,7 +442,7 @@ static  u32   BTLV_EFFVM_GetDPDNo( BTLV_EFFVM_WORK *bevw, ARCDATID datID, DPD_TY
 #define TBL_D2A   ( 4 * 12 )
 #define TBL_D2B   ( 4 * 13 )
 #define TBL_D2C   ( 4 * 14 )
-#define TBL_MAX   ( 4 * 15 )
+#define TBL_MAX   ( 4 * 14 )
 #define TBL_ERROR ( 0xffffffff )
 
 static const int  script_table[ BTLV_MCSS_POS_MAX ][ BTLV_MCSS_POS_MAX ]={
