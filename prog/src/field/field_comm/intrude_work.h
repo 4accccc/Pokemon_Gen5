@@ -24,6 +24,14 @@ typedef enum{
 }GRAYSCALE_TYPE;
 
 
+///ライブ通信画面用：侵入状態
+typedef enum{
+  LIVE_COMM_NULL,           ///<侵入されていない
+  LIVE_COMM_INTRUDE,        ///<侵入されている
+  LIVE_COMM_INTRUDE_OUT,    ///<侵入された後、ライブ通信画面を一度抜けている
+}LIVE_COMM;
+
+
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
@@ -50,4 +58,6 @@ extern BOOL Intrude_CheckPalaceConnect(GAME_COMM_SYS_PTR game_comm);
 extern BOOL Intrude_CheckZonePalaceConnect(u16 zone_id);
 extern BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata);
 extern BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm);
+extern LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm);
+extern void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm);
 

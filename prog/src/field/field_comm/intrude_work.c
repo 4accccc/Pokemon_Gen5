@@ -567,3 +567,42 @@ BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm)
   }
   return FALSE;
 }
+
+//==================================================================
+/**
+ * ライブ通信画面用：侵入状態を取得
+ *
+ * @param   game_comm		
+ *
+ * @retval  LIVE_COMM		
+ */
+//==================================================================
+LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(intcomm == NULL){
+    return LIVE_COMM_NULL;
+  }
+  if(intcomm->live_comm_status == 0){
+    return LIVE_COMM_INTRUDE;
+  }
+  return LIVE_COMM_INTRUDE_OUT;
+}
+
+//==================================================================
+/**
+ * ライブ通信画面用：侵入状態をセット(LIVE_COMM_INTRUDE_OUT)
+ *
+ * @param   game_comm		
+ */
+//==================================================================
+void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(intcomm != NULL){
+    intcomm->live_comm_status = TRUE;
+  }
+}
+

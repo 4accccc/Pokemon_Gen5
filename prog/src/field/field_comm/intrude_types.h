@@ -295,9 +295,11 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 send_occupy_result_send_req; ///<占拠結果送信リクエスト
   u8 member_is_tutorial:1;    //自分以外の通信相手がチュートリアル中
   u8 error:1;                 ///<TRUE:エラー発生
-  u8      :6;
+  u8 live_comm_status:1;      ///<ライブ通信画面用フラグ
+  u8      :5;
   
   u32 mission_start_timeout:31;  ///<ミッション開始前までのタイムアウト時刻をカウント
   u32 mission_start_timeout_warning:1;  ///<「ミッション開始前のタイムアウトしそう」警告発生中
 }INTRUDE_COMM_SYS;
+
 
