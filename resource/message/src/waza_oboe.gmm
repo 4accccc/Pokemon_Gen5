@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-08T19:11:56"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-18T12:34:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -306,13 +306,13 @@
 	</columns>
 
 	<dialog left="16" top="159" right="721" bottom="787" maximized="no" rayout="Vertical2">
-		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
+		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="67" top="119" right="540" bottom="517" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -653,8 +653,8 @@ msg_waza_omoi_01へ
 
 	<row id="msg_waza_oboe_01_12" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<comment>特殊な威力、命中</comment>
-		<language name="JPN" font=" 1:small" width="216">―――</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">―――</language>
+		<language name="JPN" font=" 1:small" width="216">－－－</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">－－－</language>
 	</row>
 
 	<row id="msg_exp_back" back-color="#80ffff,,,,,,,,,,,,,,,,,">
