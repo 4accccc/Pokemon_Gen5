@@ -47,6 +47,7 @@ extern void BTL_FIELD_ClearWeather( void );
 extern BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont );
 extern BOOL BTL_FIELD_RemoveEffect( BtlFieldEffect state );
 extern void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID );
+extern void BTL_FIELD_BatonTouchPokeEffect( u8 oldPokeID, u8 nextPokeID );
 extern BOOL BTL_FIELD_CheckEffect( BtlFieldEffect state );
 extern u8 BTL_FIELD_GetDependPokeID( BtlFieldEffect effect );
 

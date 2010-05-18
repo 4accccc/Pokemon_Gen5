@@ -182,9 +182,9 @@ typedef struct {
   BTL_ACTION_PARAM   action;
   u32                priority;
 
-  u8                 clientID; ///< クライアントID
-  u8                 fDone;    ///< 処理終了フラグ
-  u8                 fIntr;    ///< 割り込み許可フラグ
+  u8                 clientID;    ///< クライアントID
+  u8                 fDone;       ///< 処理終了フラグ
+  u8                 fIntrCheck;  ///< 割り込みチェック中フラグ
   u8                 defaultIdx;  ///< 特殊優先処理前の処理順（0～）
 
 }ACTION_ORDER_WORK;
@@ -1735,7 +1735,7 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
 
       order[p].clientID = i;
       order[p].fDone = FALSE;
-      order[p].fIntr = FALSE;
+      order[p].fIntrCheck = FALSE;
       ++p;
     }
   }
@@ -4564,7 +4564,11 @@ static u8 registerWazaTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Btl
   u8 intrPokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
   u8 numTarget;
 
-  BTL_Printf("割り込みターゲットポケ=%d\n", intrPokeID);
+  if( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, intrPokeID) == BTL_POS_NULL ){
+    intrPokeID = BTL_POKEID_NULL;
+  }else{
+    BTL_N_Printf( DBGSTR_SVFL_IntrTargetPoke, intrPokeID);
+  }
 
   BTL_POKESET_Clear( rec );
 
@@ -10833,8 +10837,9 @@ static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* o
     {
       WazaID waza = ActOrder_GetWazaID( &wk->actOrder[i] );
       if( waza != WAZANO_NULL ){
-        BTL_HANDLER_Waza_Add( wk->actOrder[i].bpp, waza );
-        wk->actOrder[i].fIntr = TRUE;
+        if( BTL_HANDLER_Waza_Add( wk->actOrder[i].bpp, waza ) ){
+          wk->actOrder[i].fIntrCheck = TRUE;
+        }
       }
     }
   }
@@ -10849,12 +10854,13 @@ static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* o
   // 未処理ポケモンの全ワザハンドラを削除
   for(i=0; i<wk->numActOrder; ++i)
   {
-    if( wk->actOrder[i].fIntr)
-     {
+    if( wk->actOrder[i].fIntrCheck)
+    {
       WazaID waza = ActOrder_GetWazaID( &wk->actOrder[i] );
       if( waza != WAZANO_NULL ){
         BTL_HANDLER_Waza_RemoveForce( wk->actOrder[i].bpp, waza );
       }
+      wk->actOrder[i].fIntrCheck = FALSE;
     }
   }
 
@@ -15033,6 +15039,7 @@ static u8 scproc_HandEx_batonTouch( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 
   BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon, param->userPokeID );
   BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->targetPokeID );
+
 
   BPP_BatonTouchParam( target, user );
   SCQUE_PUT_OP_BatonTouch( wk->que, param->userPokeID, param->targetPokeID );

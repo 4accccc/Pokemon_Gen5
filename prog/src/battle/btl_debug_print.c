@@ -78,8 +78,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_CheckHPByLvup:            return "PPLVUP Main line:%d, HP=%d\n";
   case DBGSTR_MAIN_PerappVoiceAdded:         return "ClientID=%d のペラップデータ構築\n";
   case DBGSTR_MAIN_PerappVoiceComplete:      return "ペラップボイス相互受信完了\n";
-  case DBGSTR_MAIN_Illusion1st:              return "%d番目にいるイリュージョン持ちポケモン[%d]の参照ポケを\n";
-  case DBGSTR_MAIN_Illusion2nd:              return "     %d番目のポケ[%d]に変更";
+  case DBGSTR_MAIN_Illusion1st:              return "%d番目にいるイリュージョン持ちポケモン[%d]の参照ポケを";
+  case DBGSTR_MAIN_Illusion2nd:              return " %d番目のポケ[%d]に変更\n";
   case DBGSTR_MAIN_MultiAITrainer_SeqStart:  return "AIマルチ用トレーナーデータ送受信(idx:%d) 開始\n";
   case DBGSTR_MAIN_MultiAITrainer_SendDone:  return "AIマルチ用トレーナーデータ (ClientID=%d) 送信完了\n";
 
@@ -281,6 +281,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ReliveEndIn:         return "空きがあるので入場させる\n";
   case DBGSTR_SVFL_ReliveEndIgnore:     return "空きがないので無視する\n";
   case DBGSTR_SVFL_RankEffCore:         return "ポケ[%d]の能力ランク(%d)を %d 段階変化 (ワザ使用ポケ=%d）\n";
+  case DBGSTR_SVFL_IntrTargetPoke:      return "割り込みターゲットポケ=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
@@ -313,7 +314,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SC_ReserveCmd:            return " -> reserved cmd=%d\n";
 
 
-  case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x\n";
+  case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x, adrs=%p\n";
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";
   case DBGSTR_EV_DelFactor:             return "[DEL] DEL Factor=%p Depend=%d, Type=%d [DEL]\n";
   case DBGSTR_EV_LinkInfoHeader:        return "***** [[EV Chain]] *****\n";
@@ -333,6 +334,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
   case DBGSTR_Item_PinchReactOn:        return "反応あり";
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
+  case DBGSTR_HANDWAZA_AlreadyRegistered: return "ポケ[%d]のワザハンドラ[%d]はすでに登録済み\n";
 
   case DBGSTR_REC_ReadActStart:         return "rec seek start RP= %d\n";
   case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte\n";

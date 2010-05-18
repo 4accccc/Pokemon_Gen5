@@ -722,7 +722,7 @@ static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
  *
  * @param   pp
  *
- * @retval  BTL_EVENT_FACTOR*
+ * @retval  BOOL  新たにシステム登録された場合TRUE
  */
 //=============================================================================================
 BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
@@ -1018,14 +1018,13 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
         }
       }
       else if( fRegistered ){
-  //      BTL_Printf("ワザハンドラ[%d]はすでに登録済み\n", waza);
-        return TRUE;
+        BTL_N_Printf( DBGSTR_HANDWAZA_AlreadyRegistered, pokeID, waza);
       }
       return FALSE;
     }
   }
 
-  return TRUE;
+  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -5485,6 +5484,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
         work[WORKIDX_STICK] = 1;
         work[0] = GAMAN_STATE_2ND;
+        TAYA_Printf("Gaman EventFactor=%p, work0 adrs=%p \n", myHandle, work );
       }
       break;
     case GAMAN_STATE_2ND:
@@ -5532,10 +5532,34 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     for(t=0; t<3; ++t)
     {
       cnt = BPP_WAZADMGREC_GetCount( bpp, t );
-      if( cnt ){
+      if( cnt )
+      {
         BPP_WAZADMG_REC  rec;
+        u8 targetPokeID;
+
+        // 直近に自分を殴ったポケモンが対象
         BPP_WAZADMGREC_Get( bpp, t, 0, &rec );
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, rec.pokeID );
+        targetPokeID = rec.pokeID;
+
+        // 対象が既に場にいない場合（とんぼがえりなど）、ランダムで決定
+        if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) == BTL_POS_NULL )
+        {
+          BtlExPos  exPos;
+          u8  pokeIDAry[ BTL_POS_MAX ];
+          u8  cnt;
+
+          exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, BTL_SVFTOOL_PokeIDtoPokePos(flowWk, pokeID) );
+          cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, pokeIDAry );
+          if( cnt ){
+            u8 idx = BTL_CALC_GetRand( cnt );
+            targetPokeID = pokeIDAry[ idx ];
+          }
+          else{
+            targetPokeID = BTL_POKEID_NULL;
+          }
+        }
+
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
         break;
       }
     }
@@ -5553,7 +5577,6 @@ static void handler_Gaman_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FIX_DAMAGE, dmg_sum );
     }
     work[0] = GAMAN_STATE_END;
-//    gaman_ReleaseStick( flowWk, pokeID, work );
   }
 }
 static void handler_Gaman_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

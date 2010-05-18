@@ -23,7 +23,7 @@
 /* Debug                                                                    */
 /*--------------------------------------------------------------------------*/
 enum {
-  PRINT_LINK_FLAG = 0,    ///< リンクリスト情報表示
+  PRINT_LINK_FLAG = 1,    ///< リンクリスト情報表示
 };
 
 /*--------------------------------------------------------------------------*/
@@ -224,7 +224,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
   {
     newFactor->priority = calcFactorPriority( factorType, priority );
 
-    BTL_N_Printf( DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority);
+    BTL_N_Printf( DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority, newFactor );
 
     newFactor->factorType = factorType;
     newFactor->prev = NULL;

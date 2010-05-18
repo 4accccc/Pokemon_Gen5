@@ -190,6 +190,29 @@ void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID )
     }
   }
 }
+//=============================================================================================
+/**
+ * 特定ポケモン依存のエフェクトを別ポケモンに引き継ぎ
+ *
+ * @param   oldPokeID
+ * @param   nextPokeID
+ */
+//=============================================================================================
+void BTL_FIELD_BatonTouchPokeEffect( u8 oldPokeID, u8 nextPokeID )
+{
+  u32 i;
+  for(i=0; i<BTL_FLDEFF_MAX; ++i)
+  {
+    if( Work.factor[i] )
+    {
+      if( BPP_SICKCONT_GetPokeID(Work.cont[i]) == oldPokeID )
+      {
+        BPP_SICKCONT_SetPokeID( &(Work.cont[i]), nextPokeID );
+      }
+    }
+  }
+}
+
 
 //=============================================================================================
 /**

@@ -268,6 +268,18 @@ u8 BPP_SICKCONT_GetPokeID( BPP_SICK_CONT cont )
   return BTL_POKEID_NULL;
 }
 /*
+ *  依存ポケIDを書き換え（ポケ依存でなければ何もしないL）
+ */
+void BPP_SICKCONT_SetPokeID( BPP_SICK_CONT* cont, u8 pokeID )
+{
+  if( cont->type == WAZASICK_CONT_POKE ){
+    cont->poke.ID = pokeID;
+  }
+  else if( cont->type == WAZASICK_CONT_POKETURN ){
+    cont->poketurn.pokeID = pokeID;
+  }
+}
+/*
  *  有効ターン数を取得（ターン数制限がなければ 0）
  */
 u8 BPP_SICCONT_GetTurnMax( BPP_SICK_CONT cont )

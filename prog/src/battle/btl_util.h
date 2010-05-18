@@ -193,6 +193,12 @@ extern BOOL BPP_SICKCONT_IsMoudokuCont( BPP_SICK_CONT cont );
 extern u8 BPP_SICKCONT_GetPokeID( BPP_SICK_CONT cont );
 
 /*
+ *  依存ポケIDを書き換え（ポケ依存でなければ何もしないL）
+ */
+extern void BPP_SICKCONT_SetPokeID( BPP_SICK_CONT* cont, u8 pokeID );
+
+
+/*
  *  有効ターン数を取得（ターン数制限がなければ 0）
  */
 extern u8 BPP_SICCONT_GetTurnMax( BPP_SICK_CONT cont );
