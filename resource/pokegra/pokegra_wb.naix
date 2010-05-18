@@ -14303,7 +14303,7 @@ enum {
 	NARC_pokegra_wb_pbwb_migawari_NMCR = 14289,
 	NARC_pokegra_wb_pbwb_migawari_NMAR = 14290,
 	NARC_pokegra_wb_pbwb_migawari_NCEC = 14291,
-	NARC_pokegra_wb_pmwb_migawari_NCLR = 14292,
+	NARC_pokegra_wb_pmwb_migawari_n_NCLR = 14292,
 	NARC_pokegra_wb_pmwb_493_battle_n_NCLR = 14293,
 	NARC_pokegra_wb_pmwb_493_battle_r_NCLR = 14294,
 	NARC_pokegra_wb_pmwb_493_hikou_n_NCLR = 14295,

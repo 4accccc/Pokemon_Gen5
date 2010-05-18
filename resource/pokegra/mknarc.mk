@@ -64,7 +64,7 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	nmc ncg ncgc nce ncl $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	del_err nmc ncg ncgc nce ncl $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build:	$(TARGETDIR)/$(NARCNAME)
 endif
@@ -77,6 +77,9 @@ sub_dir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
+
+del_err:
+	#rm	err.txt
 
 #nmcデータからの生成ルール
 ncg: $(notdir $(NCGFILE:.ncg=.NCGR))
