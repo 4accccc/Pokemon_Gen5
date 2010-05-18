@@ -158,14 +158,17 @@ typedef struct{
   u32               buy_max;          // 購入できる最大数
   s16               item_multi;       // 購入する数
   u16               etc;
+
+
 } SHOP_BUY_APP_WORK;
 
 // ショップ買う起動時構造体
 typedef struct {
-  u8 seq;       // シーケンス制御ワーク
-  u8 wait;      // ウェイト用
-  u8 shopType;  // ショップタイプ(SCR_SHOPID_NULL, SHOP_TYPE_FIX, etc..)
-  u8 shopId;    // ショップの場所ID（shop_data.cdat参照。SHOP_TYOE_FIXの際に使用する)
+  u8  seq;       // シーケンス制御ワーク
+  u8  wait;      // ウェイト用
+  u8  shopType;  // ショップタイプ(SCR_SHOPID_NULL, SHOP_TYPE_FIX, etc..)
+  u8  shopId;    // ショップの場所ID（shop_data.cdat参照。SHOP_TYOE_FIXの際に使用する)
+  int camera_flag_push; // カメラの範囲制限フラグをPUSHするためのワーク
   
   SHOP_BUY_APP_WORK wk; // ショップ画面ワーク
   
@@ -302,6 +305,25 @@ enum{
   SHOP_BUY_CALL_END,
 };
 
+#if 0
+//        param.Core.Shift.x = FX32_ONE*16*6;
+//        param.Core.Shift.y = -FX32_ONE*8*7;
+//        param.Core.Shift.z = 0;
+        param.Core.CamPos.x = FX32_ONE*0xec;
+        param.Core.CamPos.y = -FX32_ONE*3;
+        param.Core.CamPos.z = -FX32_ONE*0xf7;
+        param.Core.TrgtPos.x = FX32_ONE*0x54;
+        param.Core.TrgtPos.y = -FX32_ONE*3;
+        param.Core.TrgtPos.z = -FX32_ONE*16;
+  
+//        param.Chk.Shift = TRUE;
+        param.Chk.Shift = TRUE;
+        param.Chk.Pitch = FALSE;
+        param.Chk.Yaw   = FALSE;
+        param.Chk.Dist  = FALSE;
+        param.Chk.Fovy  = FALSE;
+        param.Chk.Pos   = TRUE;
+#endif
 //----------------------------------------------------------------------------------
 /**
  * @brief ショップ買うサブシーケンス
@@ -339,6 +361,8 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     
       // カメラ移動開始
       OS_Printf("ショップ起動\n");
+      sbw->camera_flag_push = FIELD_CAMERA_GetCameraAreaActive( fieldcamera );
+      FIELD_CAMERA_SetCameraAreaActive( fieldcamera, FALSE );
       FIELD_CAMERA_SetRecvCamParam( fieldcamera );
       {
         FLD_CAM_MV_PARAM param;
@@ -346,11 +370,11 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
         param.Core.Shift.y = -FX32_ONE*8*7;
         param.Core.Shift.z = 0;
   
-        param.Chk.Shift    = TRUE;
-        param.Chk.Pitch    = FALSE;
+        param.Chk.Shift = TRUE;
+        param.Chk.Pitch = FALSE;
         param.Chk.Yaw   = FALSE;
-        param.Chk.Dist   = FALSE;
-        param.Chk.Fovy = FALSE;
+        param.Chk.Dist  = FALSE;
+        param.Chk.Fovy  = FALSE;
         param.Chk.Pos   = FALSE;
         FIELD_CAMERA_SetLinerParam( fieldcamera, &param, 10 );
       }
@@ -382,6 +406,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL_CAMERA_RETURN_WAIT:
       // カメラ移動終了待ち
       if(!FIELD_CAMERA_CheckMvFunc(fieldcamera)){
+        FIELD_CAMERA_SetCameraAreaActive( fieldcamera, sbw->camera_flag_push );
         FIELD_CAMERA_RestartTrace( fieldcamera );
         FIELD_CAMERA_ClearRecvCamParam(fieldcamera);
         FLDMSGBG_SetBlendAlpha( TRUE );  // メッセージウインドウ半透明ON
