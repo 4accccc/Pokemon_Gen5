@@ -987,8 +987,13 @@ static void Graphic3DExit( BADGEVIEW_WORK *wk )
 // ジムリーダーパネル
 static const GFL_G3D_UTIL_RES res_table_gymleader[] = 
 {
+#if PM_VERSION == VERSION_BLACK  
+  { ARCID_TRAINERCARD, NARC_trainer_case_gym_leader_b_NSBMD, GFL_G3D_UTIL_RESARC },
+  { ARCID_TRAINERCARD, NARC_trainer_case_gym_leader_b_NSBCA, GFL_G3D_UTIL_RESARC },
+#else
   { ARCID_TRAINERCARD, NARC_trainer_case_gym_leader_NSBMD, GFL_G3D_UTIL_RESARC },
   { ARCID_TRAINERCARD, NARC_trainer_case_gym_leader_NSBCA, GFL_G3D_UTIL_RESARC },
+#endif
 };
 
 
@@ -2264,6 +2269,19 @@ static void _trans_badge_pal( BADGEVIEW_WORK *wk, int no, int grade )
 }
 
 
+// ジムリーダーのパレットテーブルは0-7行の他にもう１行追加してある。
+// ８番目のジムリーダーB/Wで違うトレーナーになるので、
+// BLACKバージョンの場合は９列のパレットを適用する。
+static const pal_leader_table[] = {
+#if PM_VERSION == VERSION_BLACK
+  0,1,2,3,4,5,6,8,
+#else
+  0,1,2,3,4,5,6,7,
+#endif
+
+};
+
+
 //----------------------------------------------------------------------------------
 /**
  * @brief ジムリーダーの顔のパレットを書き換える
@@ -2295,7 +2313,8 @@ static void _trans_gymleader_pal( BADGEVIEW_WORK *wk, int no, int grade )
 
   // パレット転送(転送位置はテクスチャパレット＋オフセットで確定させる）
   NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_3D_TEX_PLTT, 
-                                      tex->plttInfo.vramKey+(texpal->offset<<3), &pal[no*16], 32);
+                                      tex->plttInfo.vramKey+(texpal->offset<<3), 
+                                      &pal[pal_leader_table[no]*16], 32);
 
 }
 
