@@ -1501,7 +1501,7 @@ void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw, BOOL fla
     MCSS_ADD_WORK maw;
     maw.arcID = POKEGRA_GetArcID();
     maw.ncbr = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NCBR : NARC_pokegra_wb_pbwb_migawari_NCBR;
-    maw.nclr = NARC_pokegra_wb_pmwb_migawari_NCLR;
+    maw.nclr = NARC_pokegra_wb_pmwb_migawari_n_NCLR;
     maw.ncer = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NCER : NARC_pokegra_wb_pbwb_migawari_NCER;
     maw.nanr = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NANR : NARC_pokegra_wb_pbwb_migawari_NANR;
     maw.nmcr = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NMCR : NARC_pokegra_wb_pbwb_migawari_NMCR;
