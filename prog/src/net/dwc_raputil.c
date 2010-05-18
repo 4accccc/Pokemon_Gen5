@@ -14,6 +14,8 @@
 #include "net/dwc_raputil.h"
 #include "net/wih_dwc.h"
 
+FS_EXTERN_OVERLAY(multiboot);
+
 //==============================================================================
 /**
  * @brief WiFi接続ユーティリティを呼び出す
@@ -55,6 +57,7 @@ static GFL_PROC_RESULT WifiUtilMainProcInit(GFL_PROC * proc, int * seq, void * p
 {
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFI, DWC_UTILITY_WORK_SIZE+0x100 );
     NET_DeviceLoad(GFL_NET_TYPE_WIFI);
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(multiboot) );
 	return GFL_PROC_RES_FINISH;
 }
 
@@ -73,6 +76,7 @@ static GFL_PROC_RESULT WifiUtilMainProcEnd(GFL_PROC * proc, int * seq, void * pw
 static GFL_PROC_RESULT WifiUtil2MainProcEnd(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
 {
   NET_DeviceUnload(GFL_NET_TYPE_WIFI);
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(multiboot) );
   GFL_HEAP_DeleteHeap( HEAPID_WIFI );
   WIH_DWC_ReloadCFG();
   return GFL_PROC_RES_FINISH;
