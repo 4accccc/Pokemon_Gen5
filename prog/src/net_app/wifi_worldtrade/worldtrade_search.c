@@ -82,6 +82,7 @@ static  int SubSeq_YesNoSelect( WORLDTRADE_WORK *wk);
 static  int SubSeq_PageChange( WORLDTRADE_WORK *wk);
 static  int SubSeq_SearchErrorMessage(WORLDTRADE_WORK *wk);
 static  int SubSeq_MessageWait( WORLDTRADE_WORK *wk );
+static  int SubSeq_MessageWaitTrg( WORLDTRADE_WORK *wk );
 static  int SubSeq_SearchResultMessageWait( WORLDTRADE_WORK *wk );
 static void SubSeq_MessagePrint( WORLDTRADE_WORK *wk, int msgno, int wait, int flag, u16 dat );
 static  int SubSeq_ServerQueryFailure( WORLDTRADE_WORK *wk );
@@ -140,6 +141,7 @@ enum{
 
 
 	SUBSEQ_MES_WAIT,
+	SUBSEQ_MES_WAIT_TRG,
 	SUBSEQ_MES_WAIT_1MIN,
 	SUBSEQ_YESNO,
 	SUBSEQ_YESNO_SELECT,
@@ -189,6 +191,7 @@ static int (*Functable[])( WORLDTRADE_WORK *wk ) = {
 
 
 	SubSeq_MessageWait,     		// SUBSEQ_MES_WAIT
+	SubSeq_MessageWaitTrg,     		// SUBSEQ_MES_WAIT_TRG
 	SubSeq_MessageWait1Min,			// SUBSEQ_MES_WAIT_1MIN
 	SubSeq_YesNo,					// SUBSEQ_YESNO
 	SubSeq_YesNoSelect,				// SUBSEQ_YESNO_SELECT
@@ -1578,8 +1581,8 @@ static int SubSeq_ServerQueryFailure( WORLDTRADE_WORK *wk )
 static int SubSeq_SearchErrorDisconnectMessage1( WORLDTRADE_WORK *wk )
 {
 	// 「ＧＴＳとのせつぞくがきれました。うけつけにもどります」
-	SubSeq_MessagePrint( wk, msg_gtc_error_006, 4, 0, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_SEARCH_ERROR_DICONNECT_MES2 );
+	SubSeq_MessagePrint( wk, msg_gtc_error_006_01, 4, 0, 0x0f0f );
+	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_TRG, SUBSEQ_SEARCH_ERROR_DICONNECT_MES2 );
 	wk->wait =0;
 	PMSND_PlaySE(SE_GTC_NG);
 
@@ -1599,7 +1602,7 @@ static int SubSeq_SearchErrorDisconnectMessage2( WORLDTRADE_WORK *wk )
 {
 	// うけつけにもどります
 	SubSeq_MessagePrint( wk, msg_gtc_error_006_02, 4, 0, 0x0f0f );
-	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_1MIN, SUBSEQ_END_ERR );
+	WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT_TRG, SUBSEQ_END_ERR );
 	WorldTrade_SubProcessChange( wk, WORLDTRADE_ENTER, MODE_WIFILOGIN_ERR );
 	PMSND_PlaySE(SE_GTC_NG);
 
@@ -2320,6 +2323,25 @@ static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 	}
 	return SEQ_MAIN;
 
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  会話終了をタッチ待ちし次のシーケンスへ
+ *
+ *	@param	WORLDTRADE_WORK *wk 
+ *
+ *	@return int 
+ */
+//-----------------------------------------------------------------------------
+static  int SubSeq_MessageWaitTrg( WORLDTRADE_WORK *wk )
+{
+	if( GF_MSG_PrintEndCheck( &wk->print )==0){
+    if( GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg() )
+    {
+      wk->subprocess_seq = wk->subprocess_nextseq;
+    }
+	}
+	return SEQ_MAIN;
 }
 
 //------------------------------------------------------------------
