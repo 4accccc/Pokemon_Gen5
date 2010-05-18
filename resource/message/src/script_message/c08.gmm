@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T16:00:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T18:10:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -492,7 +492,7 @@ WOMAN2</attribute>
 というところで
 ワタクシ　ゲーチスの　はなしを[BE:00:ページ切り替え（行送り）]
 おわらせて　いただきます[BE:01:ページ切り替え（クリア）]
-ごせいちょう　かんしゃ　いたします</language>
+ごせいちょう　かんしゃ　いたします▼</language>
 		<language name="JPN_KANJI" width="256">われわれ　プラズマ団と　ともに
 新しい　国を！[BE:01:ページ切り替え（クリア）]
 ポケモンも　人も
@@ -503,7 +503,7 @@ WOMAN2</attribute>
 というところで
 ワタクシ　ゲーチスの　話を[BE:00:ページ切り替え（行送り）]
 終わらせて　いただきます[BE:01:ページ切り替え（クリア）]
-ご清聴　感謝　いたします</language>
+ご清聴　感謝　いたします▼</language>
 	</row>
 
 	<row id="msg_c08_crowd1_03">
