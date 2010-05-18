@@ -571,8 +571,6 @@ ev_r03_ice_shop_buy:
 			_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_02 , C03P09_SHOPW_01, POS_DL )
 			_MSGWIN_CLOSE()	
 			
-			_SUBTRACT_GOLD( LWK_ICE_GOLD )
-			
 			//ÉåÉWâπçƒê∂
 			_SE_PLAY( SEQ_SE_SYS_22 )		
 			_SUBTRACT_GOLD( LWK_ICE_GOLD )
