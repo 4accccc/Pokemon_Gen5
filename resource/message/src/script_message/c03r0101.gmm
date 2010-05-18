@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-05-18T17:42:24"/>
+	<create user="nakamura_akira" host="W00161" date="2010-05-18T19:16:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -673,9 +673,9 @@ assistantm_01_06へ続く
 ⇒　choice_03○へ</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 隊長</attribute>
-		<language name="JPN" width="256">つぎに　ちょうさを　おこなう
+		<language name="JPN" width="256">では　ちょうさを　おこなう
 いらいを　えらんでくれ</language>
-		<language name="JPN_KANJI" width="256">次に　調査を　行う
+		<language name="JPN_KANJI" width="256">では　調査を　行う
 依頼を　選んでくれ</language>
 	</row>
 
