@@ -51,6 +51,10 @@ extern  void			BTLV_EFFVM_Stop( VMHANDLE *vmh );
 extern  void      BTLV_EFFVM_Restart( VMHANDLE *vmh );
 extern  BTLV_EFFVM_EXECUTE_EFF_TYPE BTLV_EFFVM_GetExecuteEffectType( VMHANDLE *vmh );
 extern  void      BTLV_EFFVM_ClearParam( BTLV_EFFVM_PARAM* param );
+extern  void      BTLV_EFFVM_SePlay( VMHANDLE* vmh, int se_no, int player, int pan, int pitch, int vol,
+                                     int mod_depth, int mod_speed, int wait );
+extern  void      BTLV_EFFVM_SeEffect( VMHANDLE* vmh, int player, int type, int param, int start, int end,
+                                       int start_wait, int frame, int wait, int count );
 
 #ifdef PM_DEBUG
 extern	void		BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM* param, BTLV_EFFVM_EXECUTE_EFF_TYPE type );
