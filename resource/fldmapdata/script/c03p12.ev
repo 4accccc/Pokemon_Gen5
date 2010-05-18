@@ -246,7 +246,6 @@ _TALK_OBJ_START()
 			
 			//ダンスチームをつくるんだよね
 			_BALLOONWIN_OBJMSG_POS(msg_c03p12_dancer2_05, C03P12_DANCER_01 ,POS_UL)
-			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
 			//画面暗転
