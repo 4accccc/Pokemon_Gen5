@@ -702,6 +702,42 @@ void  BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw )
 
 //============================================================================================
 /**
+ * @brief 正射影描画モードON
+ *
+ * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
+ */
+//============================================================================================
+void  BTLV_MCSS_SetOrthoModeByPos( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, pos );
+  if( index != BTLV_MCSS_NO_INDEX )
+  {
+    bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
+    MCSS_SetOrthoModeMcss( bmw->btlv_mcss[ index ].mcss );
+    BTLV_MCSS_SetDefaultScale( bmw, pos );
+  }
+}
+
+//============================================================================================
+/**
+ * @brief 正射影描画モードOFF
+ *
+ * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ
+ */
+//============================================================================================
+void  BTLV_MCSS_ResetOrthoModeByPos( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, pos );
+  if( index != BTLV_MCSS_NO_INDEX )
+  {
+    bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_PERSPECTIVE;
+    MCSS_ResetOrthoModeMcss( bmw->btlv_mcss[ index ].mcss );
+    BTLV_MCSS_SetDefaultScale( bmw, pos );
+  }
+}
+
+//============================================================================================
+/**
  * @brief メパチ処理
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ

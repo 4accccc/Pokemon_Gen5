@@ -62,6 +62,9 @@
 #define	BTLEFF_CAMERA_PROJECTION_ORTHO					( 0 )
 #define	BTLEFF_CAMERA_PROJECTION_PERSPECTIVE		( 1 )
 
+#define	BTLEFF_CAMERA_PROJECTION_ALL					  ( 0 )
+#define	BTLEFF_CAMERA_PROJECTION_ATTACK		      ( 1 )
+
 //パーティクル再生
 #define	BTLEFF_PARTICLE_PLAY_POS_AA				      ( 0 )
 #define	BTLEFF_PARTICLE_PLAY_POS_BB				      ( 1 )
@@ -658,16 +661,20 @@ ex)
 /**
  * @brief		射影モード
  *
- * #param_num	1
+ * #param_num	2
  * @param	type				射影タイプ
+ * @param	pos				  モード変更対象
  *
  * #param	COMBOBOX_TEXT	正射影	透視射影
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_PROJECTION_ORTHO	BTLEFF_CAMERA_PROJECTION_PERSPECTIVE
+ * #param	COMBOBOX_TEXT	すべて	攻撃側
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_PROJECTION_ALL	BTLEFF_CAMERA_PROJECTION_ATTACK
  */
 //======================================================================
-	.macro	CAMERA_PROJECTION	type
+	.macro	CAMERA_PROJECTION	type, pos
 	.short	EC_CAMERA_PROJECTION
 	.long		\type
+	.long		\pos
 	.endm
 
 //======================================================================

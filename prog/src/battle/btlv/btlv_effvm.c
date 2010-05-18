@@ -1187,15 +1187,42 @@ static VMCMD_RESULT VMEC_CAMERA_SHAKE( VMHANDLE *vmh, void *context_work )
 static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
+  int proj  = ( int )VMGetU32( vmh );
+  int pos   = ( int )VMGetU32( vmh );
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_CAMERA_PROJECTION\n");
 #endif DEBUG_OS_PRINT
 
-  //ŽË‰eƒ‚[ƒh‚ð“Ç‚Ýž‚Ý
-  bevw->camera_projection = ( int )VMGetU32( vmh );
+  if( pos == BTLEFF_CAMERA_PROJECTION_ALL )
+  { 
+    //ŽË‰eƒ‚[ƒh‚ð“Ç‚Ýž‚Ý
+    bevw->camera_projection = proj;
 
-  EFFVM_ChangeCameraProjection( bevw );
+    EFFVM_ChangeCameraProjection( bevw );
+  }
+  else
+  { 
+    BtlvMcssPos pos[ BTLV_MCSS_POS_MAX ];
+    int   pos_cnt = EFFVM_GetPokePosition( bevw, BTLEFF_POKEMON_SIDE_ATTACK, pos );
+
+    if( pos_cnt )
+    { 
+      int i;
+
+      for( i = 0 ; i < pos_cnt ; i++ )
+      {
+        if( proj == BTLEFF_CAMERA_PROJECTION_PERSPECTIVE )
+        { 
+          BTLV_MCSS_ResetOrthoModeByPos( BTLV_EFFECT_GetMcssWork(), pos[ i ] );
+        }
+        else
+        { 
+          BTLV_MCSS_SetOrthoModeByPos( BTLV_EFFECT_GetMcssWork(), pos[ i ] );
+        }
+      }
+    }
+  }
 
   return bevw->control_mode;
 }

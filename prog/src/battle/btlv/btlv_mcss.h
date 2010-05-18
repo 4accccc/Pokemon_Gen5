@@ -138,6 +138,8 @@ extern  void            BTLV_MCSS_Del( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetPosition( BTLV_MCSS_WORK *bmw, int position, fx32 pos_x, fx32 pos_y, fx32 pos_z );
 extern  void            BTLV_MCSS_SetOrthoMode( BTLV_MCSS_WORK *bmw );
 extern  void            BTLV_MCSS_ResetOrthoMode( BTLV_MCSS_WORK *bmw );
+extern  void            BTLV_MCSS_SetOrthoModeByPos( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos );
+extern  void            BTLV_MCSS_ResetOrthoModeByPos( BTLV_MCSS_WORK *bmw, BtlvMcssPos pos );
 extern  void            BTLV_MCSS_SetMepachiFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
 extern  int             BTLV_MCSS_GetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position );
 extern  void            BTLV_MCSS_SetAnmStopFlag( BTLV_MCSS_WORK *bmw, int position, int flag );
