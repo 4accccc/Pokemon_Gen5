@@ -546,7 +546,7 @@ _ANIME_LABEL	anm_common_jump_d
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_kyamome_wing
 
-	_ANIME_DATA	AC_WARP_UP,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_kyamome_wing_a
