@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T21:45:55"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T17:11:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -453,7 +453,7 @@
 
 	<row id="msg_c02gym0101_statue_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・h01到達時</comment>
+・c03ヒウンシティ到達時</comment>
 		<attribute name="キャラ指定">ポケモン像</attribute>
 		<language name="JPN" width="256">シッポウ　ポケモンジム[BE:01:ページ切り替え（クリア）]
 ジムリーダー　アロエ
