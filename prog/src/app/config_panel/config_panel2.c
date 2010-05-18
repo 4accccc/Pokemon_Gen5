@@ -2268,6 +2268,8 @@ static void UI_Main( UI_WORK *p_wk )
       {
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         p_wk->input = UI_INPUT_KEY;
+
+        PMSND_PlaySE( CONFIG_SE_MOVE );
         //ƒL[“ü—Í‚ğ‚¹‚¸‚ÉI—¹
         return ;
       } 
