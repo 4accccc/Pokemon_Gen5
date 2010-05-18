@@ -622,11 +622,13 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 
   WO_DispInit( wk );
 
+  OS_Printf("first pos = %d\n", wk->dat->pos);
+
   WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR );
   wk->next_seq = SEQ_SELECT;
 
 
-  WO_ScrollCursorPut( wk ,0, FALSE);
+//  WO_ScrollCursorPut( wk ,0, FALSE);
 
   return GFL_PROC_RES_FINISH;
 /*↑[GS_CONVERT_TAG]*/
@@ -3182,6 +3184,10 @@ static int WO_SeqPstCall( WO_WORK * wk )
   return SEQ_PST_WAIT;
 }
 
+
+// 忘れる技を選ばなかった
+#define PSTATUS_SELECT_WAZA_CANCEL    ( 4 )
+
 //--------------------------------------------------------------------------------------------
 /**
  * ステータス画面終了待ち
@@ -3198,7 +3204,11 @@ static int WO_SeqPstWait( WO_WORK * wk )
     WazaSelBgChange( wk, wk->dat->pos );
     WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
 //    WO_ScrollCursorOff( wk );
-    wk->dat->del_pos = wk->psd.ret_sel;
+    if(wk->psd.ret_mode==PST_RET_DECIDE){
+      wk->dat->del_pos = wk->psd.ret_sel;
+    }else{
+      wk->dat->del_pos = PSTATUS_SELECT_WAZA_CANCEL;
+    }
     wk->next_seq = SEQ_DEL_CHECK;
     return SEQ_FADE_WAIT;
 
@@ -3261,7 +3271,7 @@ static const CURSORMOVE_DATA ListKeyTbl[]={
   { 80, 124, 0, 0,  5, 5, 5, 5 ,  {TP_SB_PY,TP_SB_PY+TP_SB_SY-1,TP_SBU_PX,TP_SBU_PX+TP_SB_SX-1},},// 05: 上矢印
   { 224, 168, 0, 0, 3, 6, 6, 6 ,  {TP_BACK_PY,TP_BACK_PY+TP_BACK_SY-1,TP_BACK_PX,TP_BACK_PX+TP_BACK_SX-1},},// 06: もどる
   { 224, 168, 0, 0, 7, 7, 7, 7 ,  {TP_ABTN_PY,TP_ABTN_PY+TP_ABTN_SY-1,TP_ABTN_PX,TP_ABTN_PX+TP_ABTN_SX-1},},// 07: おぼえる
-  { 0, 0, 0, 0, 0, 0, 0, 0, { GFL_UI_TP_HIT_END, 0, 0, 0 } }
+  { 0, 0, 0, 0, 0, 0, 0, 0,       {GFL_UI_TP_HIT_END, 0, 0, 0 }},
 
 };
 
@@ -3464,10 +3474,11 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
 {
   if(flg==TRUE)
   {
-    wk->oboe_menu_work[0] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[0], 13, 21, 9, HEAPID_WAZAOSHIE );
-    wk->oboe_menu_work[1] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[1], 22, 21, 9, HEAPID_WAZAOSHIE );
-    wk->enter_flg = 1;
-    
+    if(wk->oboe_menu_work[0]==NULL){
+      wk->oboe_menu_work[0] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[0], 13, 21, 9, HEAPID_WAZAOSHIE );
+      wk->oboe_menu_work[1] = APP_TASKMENU_WIN_Create( wk->app_res, &wk->menuitem[1], 22, 21, 9, HEAPID_WAZAOSHIE );
+      wk->enter_flg = 1;
+    }
   }else {
     if(wk->oboe_menu_work[0]!=NULL){
       APP_TASKMENU_WIN_Delete( wk->oboe_menu_work[0] );
@@ -3475,7 +3486,7 @@ static void EnterButtonOnOff( WO_WORK * wk, BOOL flg )
       wk->oboe_menu_work[0] = NULL;
       wk->oboe_menu_work[1] = NULL;
     }
-      wk->enter_flg = 0;
+    wk->enter_flg = 0;
   }
 
 }

@@ -379,13 +379,13 @@ enum{
 
 /////////////////////////////////////////////////////////////////////
 //タッチパネル
-#define TP_WAZA_PX  (   32 )
-#define TP_WAZA_SX  ( 24*8 )
-#define TP_WAZA_SY  (   16 )
-#define TP_WAZA1_PY (   72 )
-#define TP_WAZA2_PY (TP_WAZA1_PY+TP_WAZA_SY)
-#define TP_WAZA3_PY (TP_WAZA2_PY+TP_WAZA_SY)
-#define TP_WAZA4_PY (TP_WAZA3_PY+TP_WAZA_SY)
+#define TP_WAZA_PX  (   21 )
+#define TP_WAZA_SX  (  213 )
+#define TP_WAZA_SY  (   22 )
+#define TP_WAZA1_PY (   69 )
+#define TP_WAZA2_PY (   93 )
+#define TP_WAZA3_PY (  117 )
+#define TP_WAZA4_PY (  141 )
 
 #define TP_SB_SX  (5*8)
 #define TP_SB_SY  (3*8)

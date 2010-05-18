@@ -397,9 +397,6 @@ VMCMD_RESULT EvCmdCallWazaRemindProc( VMHANDLE *core, void *wk )
   param->cfg           = NULL;
   param->gsys          = gsys;
   param->waza_tbl      = waza_tbl;
-  param->pos           = poke_pos;    // スクリプトから何匹目のポケモンを指定するか貰う
-  param->scr           = 0;    // スクロールポイント
-  param->page          = 0; // 戦闘技表示
   param->mode          = WAZAOSHIE_MODE_REMIND;  // 技思い出しモード
 
   wrwk  = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof(MAILBOX_CALLBACK_WORK) );

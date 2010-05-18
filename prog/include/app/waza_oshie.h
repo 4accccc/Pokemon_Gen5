@@ -16,17 +16,17 @@
 //  定数定義
 //============================================================================================
 typedef struct {
-  POKEMON_PARAM * pp;   // ポケモン
+  POKEMON_PARAM * pp; // ポケモン
   MYSTATUS * myst;    // 自分データ
-  CONFIG * cfg;     // コンフィグデータ
-  GAMESYS_WORK *gsys;
+  CONFIG * cfg;       // コンフィグデータ
+  GAMESYS_WORK *gsys; // 
   u16 * waza_tbl;     // 技テーブル
-  u16 pos;
-  u16 scr;
-  u8  page;
-  u8  mode;       // 処理モード
-  u8  ret;        // 戻り値
-  u8  del_pos;
+  u16 pos;            // カーソル位置（ポケモンリストとの移行用に保存しておく）
+  u16 scr;            // スクロール位置戦闘（ポケモンリストとの移行用に保存しておく）
+  u8  page;           // バトルかコンテストか
+  u8  mode;           // 処理モード
+  u8  ret;            // 戻り値
+  u8  del_pos;        // 削除する技の位置番号
 }WAZAOSHIE_DATA;
 
 enum {
