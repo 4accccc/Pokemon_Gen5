@@ -779,11 +779,11 @@ static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_d
 #define cameraFar       ( 1024 << FX32_SHIFT )
 
 // ‚R‚cƒJƒƒ‰Ý’è
-#define	CAMERA_POS_X			( 0 )
-#define	CAMERA_POS_Y			( 0 )
-#define	CAMERA_POS_Z			( FX32_ONE*100 )
+#define	CAMERA_POS_X			( 98978 )
+#define	CAMERA_POS_Y			( 177097 )
+#define	CAMERA_POS_Z			( 214916 )
 #define	CAMERA_TARGET_X		( 0 )
-#define	CAMERA_TARGET_Y		( 0 )
+#define	CAMERA_TARGET_Y		( 124745 )
 #define	CAMERA_TARGET_Z		( 0 )
 /*
 #define	CAMERA_POS_X			( 69939 )
@@ -878,9 +878,9 @@ static void Init3D( SRMAIN_WORK * wk )
   }
 */
 	{
-		VecFx32 pos			= { 0, 0, FX32_ONE*100 };
+		VecFx32 pos			= { CAMERA_POS_X, CAMERA_POS_Y, CAMERA_POS_Z };
 		VecFx32 up			= { 0, FX32_ONE, 0 };
-		VecFx32 target	= { 0, 0, 0 };
+		VecFx32 target	= { CAMERA_TARGET_X, CAMERA_TARGET_Y, CAMERA_TARGET_Z };
 
 		wk->g3d_camera = GFL_G3D_CAMERA_Create(
 											GFL_G3D_PRJPERS, 
