@@ -5,12 +5,24 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
+指定されたワークを見て条件分岐	BTL_RULE	!=	BTL_RULE_TRIPLE	START
+カメラ移動（座標指定）	追従	8.699951:7.699951:23.80005	2:3.600098:6.5	10	0	3
+エフェクト終了待ち	すべて
+ラベル	START
 ポケモン鳴き声	攻撃側	-5120	0	0	0	正再生	0
 エフェクト終了待ち	鳴き声
 SE再生	SEQ_SE_DEAD	SE1	攻撃側	0:0:127	0:0:0
+制御モード変更	継続
+射影モード	透視射影	攻撃側
 ポケモンパレットフェード	攻撃側	0	16	0	0:0:0
 ポケモンα値	攻撃側	追従	1	16	0	0
+ポケモン移動	攻撃側	追従	0	-10	32	0	0
+ポケモン影バニッシュ	攻撃側	バニッシュオン
 エフェクト終了待ち	すべて
 ポケモン削除	攻撃側
+指定されたワークを見て条件分岐	BTL_RULE	!=	BTL_RULE_TRIPLE	END
+カメラ移動	追従	初期位置	10	0	8
+エフェクト終了待ち	すべて
+ラベル	END
 エフェクト終了
 &

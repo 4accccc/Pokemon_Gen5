@@ -7,7 +7,7 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_322_cosmos.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_322_cosmos.NSCR
 #001
 %00
-射影モード	透視射影
+射影モード	透視射影	すべて
 BGのロード	bg_322_cosmos
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	0	13	1	0:0:0
@@ -34,7 +34,7 @@ BGのパレットフェード	エフェクト面	0	13	2	0:0:0
 エフェクト終了待ち	パーティクル
 ポケモン影バニッシュ	攻撃側	バニッシュオフ
 ポケモン影バニッシュ	防御側	バニッシュオフ
-射影モード	正射影
+射影モード	正射影	すべて
 BGの表示/非表示	お盆	表示
 BGの表示/非表示	フィールド	表示
 BGのパレットフェード	お盆＋フィールド	13	0	0	0:0:0

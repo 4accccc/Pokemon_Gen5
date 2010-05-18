@@ -5,7 +5,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_369_1.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_369_2.spa
 #001
 %00
-射影モード	透視射影
+射影モード	透視射影	すべて
 制御モード変更	継続
 SE再生	SEQ_SE_W295_02	SE1	攻撃側	0:0:115	0:0:0
 制御モード変更	逐次
@@ -39,7 +39,7 @@ SE再生	SEQ_SE_W051_01	SE2	攻撃側	85:0:115	0:0:0
 ポケモンバニッシュ	攻撃側	バニッシュオフ
 ポケモンアニメ	防御側	アニメスタート
 エフェクト終了待ち	すべて
-射影モード	正射影
+射影モード	正射影	すべて
 エフェクト終了待ち	すべて
 エフェクト終了
 &

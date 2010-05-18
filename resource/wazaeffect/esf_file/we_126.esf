@@ -4,7 +4,7 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_126.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_126_daimonji.NSCR
 #001
 %00
-射影モード	透視射影
+射影モード	透視射影	すべて
 エフェクト終了待ち	すべて
 パーティクルデータロード	w_126
 制御モード変更	継続
@@ -57,7 +57,7 @@ BGの表示/非表示	フィールド	表示
 BGのパレットフェード	お盆＋フィールド	13	0	0	31:0:0
 カメラ移動	追従	初期位置	16	0	8
 ポケモンアニメ	攻撃側	アニメスタート
-射影モード	正射影
+射影モード	正射影	すべて
 エフェクト終了待ち	すべて
 エフェクト終了
 &
