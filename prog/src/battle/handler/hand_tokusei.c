@@ -2591,6 +2591,7 @@ static void handler_Rinpun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( (pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF))
   &&  (pokeID != BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK))
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) != WAZASICK_BIND)
   ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
