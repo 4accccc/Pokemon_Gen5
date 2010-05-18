@@ -4649,10 +4649,10 @@
 	<row id="WAZAINFO_473">
 		<language name="JPN" width="216">ふしぎな　ねんぱを　じったいかして
 あいてを　こうげきする。
-ねんぱは　ぶつりこうげきに　なる。</language>
+ぶつりてきな　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">不思議な　念波を　実体化して
 相手を　攻撃する。
-念波は　物理攻撃に　なる。</language>
+物理的な　ダメージを　与える。</language>
 	</row>
 
 	<row id="WAZAINFO_474">
