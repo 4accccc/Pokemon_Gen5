@@ -420,28 +420,29 @@ RES_REQ_SELECT:
   // v6_3 ループフラグ
   // v6_4 調査状況
 
-  $v6_3 = TRUE
+  _CALL SELECT_REQUEST_TYPE // 調査タイプを選択
+  $v6_2 = $SCWK_ANSWER      // 選択した調査タイプを取得
 
-  // 選択するかキャンセルするまで繰り返す
-  WHILE $v6_3 == TRUE
-
-    _CALL SELECT_REQUEST_TYPE // 調査タイプを選択
-    $v6_2 = $SCWK_ANSWER      // 選択した調査タイプを取得
-
-    // 調査タイプの説明
-    SWITCH $v6_2
-    CASE RESEARCH_REQ_TYPE_COUNT THEN _CALL LEADER_SAY_It_is_count_research   // 隊長「人数調査だな？」
-    CASE RESEARCH_REQ_TYPE_TIME  THEN _CALL LEADER_SAY_It_is_time_research    // 隊長「時間調査だな？」
-    ENDSWITCH
+  // 調査タイプの説明
+  SWITCH $v6_2
+  CASE RESEARCH_REQ_TYPE_COUNT THEN _CALL LEADER_SAY_It_is_count_research   // 隊長「人数調査だな？」
+  CASE RESEARCH_REQ_TYPE_TIME  THEN _CALL LEADER_SAY_It_is_time_research    // 隊長「時間調査だな？」
+  ENDSWITCH
   
-    //『人数調査』or『時間調査』を選択
-    IF ($v6_2 == RESEARCH_REQ_TYPE_COUNT) || ($v6_2 == RESEARCH_REQ_TYPE_TIME) THEN
+  //『人数調査』or『時間調査』を選択
+  IF ($v6_2 == RESEARCH_REQ_TYPE_COUNT) || ($v6_2 == RESEARCH_REQ_TYPE_TIME) THEN
+
+    // 選択するかキャンセルするまで繰り返す
+    $v6_3 = TRUE
+    WHILE $v6_3 == TRUE
+
+      _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_35, SCWK_TARGET_OBJID, POS_DOWN ) // 隊長「調査依頼を選んでくれ」
 
       // 調査依頼の選択
       $SCWK_TEMP0 = $v6_2
       _CALL SELECT_REQUEST // 調査依頼を選択
       $v6_1 = $SCWK_ANSWER // 選択した依頼IDを取得
-    
+
       //『やめる』以外を選択
       IF ($v6_1 != RESEARCH_REQ_ID_NONE) && ($v6_1 != EV_WIN_B_CANCEL) THEN 
 
@@ -453,6 +454,7 @@ RES_REQ_SELECT:
 
         // すでに達成済み
         IF $v6_4 == RESEARCH_REQ_STATE_ACHIEVE THEN
+
           //『人数調査』
           IF $v6_2 == RESEARCH_REQ_TYPE_COUNT THEN
             _CALL LEADER_SAY_You_have_finishd_count_research // 隊長「すでに調査が完了しているじゃないか！」
@@ -460,18 +462,19 @@ RES_REQ_SELECT:
           ELSE
             _CALL LEADER_SAY_You_have_finishd_time_research // 隊長「すでに調査が完了しているじゃないか！」
           ENDIF 
+
           $SCWK_TEMP0 = $v6_1   // 調査開始
           _CALL START_RES_REQ   //
           _CALL RES_REQ_REPORT  // 報告処理
           _RET
+
         // まだ達成していない
         ELSE
 
           _CALL LEADER_SAY_Is_this_request_ok // 隊長「この調査依頼を受けるのか？」==>『はい』or『いいえ』
       
           //『はい』
-          IF $SCWK_ANSWER == SCR_YES THEN
-            
+          IF $SCWK_ANSWER == SCR_YES THEN 
             _BALLOONWIN_CLOSE() 
             $SCWK_TEMP0 = $v6_1                         // 調査開始
             _CALL START_RES_REQ                         //
@@ -481,19 +484,17 @@ RES_REQ_SELECT:
           ENDIF 
         ENDIF
 
+      //『やめる』を選択
+      ELSE
+        $v6_3 = FALSE // ループを抜ける
       ENDIF
 
-    ENDIF
-  
-    _CALL LEADER_SAY_Do_you_select_other_request //「では他の依頼を受けるのか？」==> 『はい』or『いいえ』
-  
-    //『いいえ』
-    IF $SCWK_ANSWER == SCR_NO THEN
-      _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
-      _RET
-    ENDIF
+    ENDWHILE
 
-  ENDWHILE
+  ENDIF
+  
+  _CALL LEADER_SAY_Come_again_if_you_want // 隊長「依頼を受けたくなったら また来てくれ」
+
 }
 _RET
 
@@ -1851,9 +1852,6 @@ SELECT_REQUEST:
 
   $v2_1 = $SCWK_TEMP0             // 調査タイプを取得
   _GET_RESEARCH_TEAM_RANK( v2_2 ) // 隊員ランクを取得
-
-  // 隊長「調査依頼を選んでくれ」
-  _BALLOONWIN_OBJMSG_POS( msg_c03r0101_assistantm_01_35, SCWK_TARGET_OBJID, POS_DOWN )
 
   // 依頼を選択
   SWITCH $v2_1
