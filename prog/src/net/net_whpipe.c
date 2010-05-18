@@ -422,9 +422,11 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 			return FALSE;   // サービスが異なる場合は拾わない
 		}
 	}
-	if((pGF->connectNum >= pInit->maxConnectNum) && (pInit->maxConnectNum>1)){
-		return FALSE;   // 接続人数いっぱいの場合拾わない
-	}
+  if(serviceNo != WB_NET_UNION){  //ユニオンルーム以外は
+    if((pGF->connectNum >= pInit->maxConnectNum) && (pInit->maxConnectNum>1)){
+      return FALSE;   // 接続人数いっぱいの場合拾わない
+    }
+  }
 //	NET_PRINT("_scanCheckok\n");
 	return TRUE;
 }
@@ -1111,7 +1113,9 @@ static void _stateProcess(u16 bitmap)
 	GFL_NETWL* pNetWL = _pNetWL;
 
 
-  _funcBconDataChange();      // ビーコンの中身を書き換え中
+  if(!GFL_NET_WLIsError()){
+    _funcBconDataChange();      // ビーコンの中身を書き換え中
+  }
 	if(pNetWL->errCheckBitmap == _NOT_INIT_BITMAP){
 		pNetWL->errCheckBitmap = bitmap;  // このときの接続人数を保持
 	}
