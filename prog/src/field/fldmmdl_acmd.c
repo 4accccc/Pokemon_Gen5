@@ -4502,21 +4502,29 @@ static int AC_ShinMuFlyUpper1( MMDL * mmdl )
   }
   
   work->wait++;
-   
+  
+  anmFrmIdx--; //BBDアニメ処理を行うとフレームNoは+1される
+  GF_ASSERT( (s16)anmFrmIdx >= 0 );
+  
+  KAGAYA_Printf( "FrameNo = %d\n", anmFrmIdx );
+  
   if( MMDL_GetOBJCode(mmdl) == SHIN_A ){
     if( anmIdx == DRAW_STA_SHINMU_A_ANMNO_FLY_UP ){ //shin 羽ばたき音
       if( work->setAnmFrmIdx != anmFrmIdx ){
         work->setAnmFrmIdx = anmFrmIdx;
+        KAGAYA_Printf( "更新され%dになりました\n", anmFrmIdx );
         
         switch( anmFrmIdx ){
         case 7:
         case 12:
         case 17:
+          KAGAYA_Printf( "SE Play 167\n" );
           PMSND_PlaySE( SEQ_SE_FLD_167 );
           break;
         case 10:
         case 15:
         case 20:
+          KAGAYA_Printf( "SE Play 168\n" );
           PMSND_PlaySE( SEQ_SE_FLD_168 );
           break;
         }
@@ -4676,6 +4684,9 @@ static int AC_ShinMuC_Fly1( MMDL * mmdl )
   
   work->wait++;
    
+  anmFrmIdx--; //BBDアニメ処理を行うとフレームNoは+1される
+  GF_ASSERT( (s16)anmFrmIdx >= 0 );
+  
   if( MMDL_GetOBJCode(mmdl) == SHIN_C ){
     if( anmIdx == DRAW_STA_SHINMU_C_ANMNO_FLY ){ //shin 羽ばたき音
       if( work->setAnmFrmIdx != anmFrmIdx ){
