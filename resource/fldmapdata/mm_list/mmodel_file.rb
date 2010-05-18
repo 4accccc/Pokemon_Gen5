@@ -60,6 +60,11 @@ def make_asm_text ofile, ar
 
 HEADER
 
+  if ar.length > 30 then
+    printf("ERROR:ŠÇ—‚Å‚«‚él”‚ğ’´‚¦‚Ä‚¢‚Ü‚· %d\n", ar.length);
+    exit -1
+  end
+
   ofile.printf("\t.short\t%d\n", ar.length)
 
 	ar.each{|id|
