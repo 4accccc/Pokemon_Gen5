@@ -877,7 +877,7 @@ end
   fp_lst.print( "migawari/pbwb_migawari.ncg\n" )
 	fp_lst.print( "migawari/pbwb_migawari.nce\n" )
 	fp_lst.print( "migawari/pbwb_migawari.nmc\n" )
-	fp_lst.print( "migawari/pmwb_migawari.ncl\n" )
+	fp_lst.print( "migawari/pmwb_migawari_n.ncl\n" )
 
   fp_gra.close
   fp_lst.close
@@ -979,7 +979,7 @@ end
 	fp_form.print( "\"pbwb_migawari.NMCR\"\n" )
 	fp_form.print( "\"pbwb_migawari.NMAR\"\n" )
 	fp_form.print( "\"pbwb_migawari.NCEC\"\n" )
-	fp_form.print( "\"pmwb_migawari.NCLR\"\n" )
+	fp_form.print( "\"pmwb_migawari_n.NCLR\"\n" )
 
   fp_monsnum.close
   fp_form.close
