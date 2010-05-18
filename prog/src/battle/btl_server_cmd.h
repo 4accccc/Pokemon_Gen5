@@ -56,7 +56,6 @@ typedef enum {
   SC_OP_CHANGE_TOKUSEI,     ///< とくせい書き換え
   SC_OP_SET_ITEM,           ///< アイテム書き換え
   SC_OP_UPDATE_WAZANUMBER,  ///< ワザ書き換え
-  SC_OP_HENSIN,             ///< へんしん
   SC_OP_OUTCLEAR,           ///< 退場時クリア
   SC_OP_ADD_FLDEFF,         ///< フィールドエフェクト追加
   SC_OP_REMOVE_FLDEFF,      ///< フィールドエフェクト削除
@@ -103,6 +102,7 @@ typedef enum {
   SC_ACT_RESET_MOVE,        ///< リセットムーブカットイン
   SC_ACT_MIGAWARI_CREATE,   ///< みがわり作成
   SC_ACT_MIGAWARI_DELETE,   ///< みがわり消去
+  SC_ACT_HENSIN,            ///< へんしん
   SC_ACT_WIN_BGM,           ///< 勝利BGM再生
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
@@ -301,10 +301,6 @@ static inline void SCQUE_PUT_OP_SetItem( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16
 static inline void SCQUE_PUT_OP_UpdateWaza( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx, u16 wazaID, u8 ppMax, u8 fPermanent )
 {
   SCQUE_PUT_Common( que, SC_OP_UPDATE_WAZANUMBER, pokeID, wazaIdx, ppMax, fPermanent, wazaID );
-}
-static inline void SCQUE_PUT_OP_Hensin( BTL_SERVER_CMD_QUE* que, u8 atkPokeID, u8 tgtPokeID )
-{
-  SCQUE_PUT_Common( que, SC_OP_HENSIN, atkPokeID, tgtPokeID );
 }
 static inline void SCQUE_PUT_OP_OutClear( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
@@ -526,6 +522,10 @@ static inline void SCQUE_PUT_ACT_MigawariCreate( BTL_SERVER_CMD_QUE* que, BtlPok
 static inline void SCQUE_PUT_ACT_MigawariDelete( BTL_SERVER_CMD_QUE* que, BtlPokePos pos )
 {
   SCQUE_PUT_Common( que, SC_ACT_MIGAWARI_DELETE, pos );
+}
+static inline void SCQUE_PUT_ACT_Hensin( BTL_SERVER_CMD_QUE* que, u8 atkPokeID, u8 tgtPokeID )
+{
+  SCQUE_PUT_Common( que, SC_ACT_HENSIN, atkPokeID, tgtPokeID );
 }
 static inline void SCQUE_PUT_ACT_PlayWinBGM( BTL_SERVER_CMD_QUE* que, u16 bgmNo )
 {

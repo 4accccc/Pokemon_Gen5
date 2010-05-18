@@ -344,6 +344,7 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL msgPokanCallback( u32 arg );
@@ -4886,7 +4887,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_CHANGE_TOKUSEI,     scProc_OP_ChangeTokusei   },
     { SC_OP_SET_ITEM,           scProc_OP_SetItem         },
     { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber},
-    { SC_OP_HENSIN,             scProc_OP_Hensin          },
     { SC_OP_OUTCLEAR,           scProc_OP_OutClear        },
     { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff       },
     { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff    },
@@ -4914,6 +4914,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_RESET_MOVE,        scProc_ACT_ResetMove      },
     { SC_ACT_MIGAWARI_CREATE,   scProc_ACT_MigawariCreate },
     { SC_ACT_MIGAWARI_DELETE,   scProc_ACT_MigawariDelete },
+    { SC_ACT_HENSIN,            scProc_ACT_Hensin         },
     { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM        },
   };
 
@@ -6011,6 +6012,39 @@ static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * へんしん
+ *
+ * args ..[0]: へんしんするポケID   [1]: へんしん対象のポケID
+ */
+//----------------------------------------------------------------------------------
+static BOOL scProc_ACT_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BTL_POKEPARAM* atkPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+      BTL_POKEPARAM* tgtPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[1] );
+      BtlvMcssPos  atkVpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
+      BtlvMcssPos  tgtVpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[1] );
+
+      BPP_HENSIN_Set( atkPoke, tgtPoke );
+
+      BTLV_Hensin_Start( wk->viewCore, atkVpos, tgtVpos );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_Hensin_Wait(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
 //---------------------------------------------------------------------------------------
 /**
  *  PlayBGM
@@ -6019,7 +6053,6 @@ static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args
 //---------------------------------------------------------------------------------------
 static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args )
 {
-  TAYA_Printf("BGMNo=%d\n", args[0]);
   PMSND_PlayBGM( args[0] );
   return TRUE;
 }
@@ -7070,14 +7103,6 @@ static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* arg
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
   // サーバコマンド送信時の都合で引数がヘンな並びになってる…
   BPP_WAZA_UpdateID( pp, args[1], args[4], args[2], args[3] );
-  return TRUE;
-}
-static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  BTL_POKEPARAM* atkPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BTL_POKEPARAM* tgtPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, args[1] );
-
-  BPP_HENSIN_Set( atkPoke, tgtPoke );
   return TRUE;
 }
 static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )

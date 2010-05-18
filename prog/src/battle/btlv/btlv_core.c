@@ -2199,7 +2199,6 @@ void  BTLV_ChangeForm_Start( BTLV_CORE* wk, BtlvMcssPos vpos )
 {
   BTLV_SCU_ChangeForm_Start( wk->scrnU, vpos );
 }
-
 //=============================================================================================
 /**
  * フォルムチェンジ 終了待ち
@@ -2213,6 +2212,34 @@ BOOL BTLV_ChangeForm_Wait( BTLV_CORE* wk )
 {
   return BTLV_SCU_ChangeForm_Wait( wk->scrnU );
 }
+//=============================================================================================
+/**
+ * へんしん開始
+ *
+ * @param   wk
+ * @param   atkVpos   へんしんする側 vpos
+ * @param   tgtVops   へんしん対象側 vpos
+ */
+//=============================================================================================
+void  BTLV_Hensin_Start( BTLV_CORE* wk, BtlvMcssPos atkVpos, BtlvMcssPos tgtVpos )
+{
+  BTLV_SCU_Hensin_Start( wk->scrnU, atkVpos, tgtVpos );
+}
+//=============================================================================================
+/**
+ * へんしん終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_Hensin_Wait( BTLV_CORE* wk )
+{
+  return BTLV_SCU_ChangeForm_Wait( wk->scrnU );
+}
+
+
 
 /*--------------------------------------------------------------------------------------------------*/
 /* トリプルバトル ムーブアクション関連                                                              */

@@ -277,7 +277,7 @@ static BOOL subproc_WazaEffect( int* seq, void* wk_adrs );
 static void taskPokeOutAct( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskPokeInEffect( GFL_TCBL* tcbl, void* wk_adrs );
 static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs );
-static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs );
+static void taskTransform( GFL_TCBL* tcbl, void* wk_adrs );
 static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
 static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag );
@@ -3190,36 +3190,66 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
     break;
   }
 }
+
 //==============================================================================================
-// フォルムチェンジ動作
+// へんしん・フォルムチェンジ動作
 //==============================================================================================
 
 //--------------------------------------------------------
-// フォルムチェンジ動作タスクワーク
+// へんしん・フォルムチェンジ動作タスクワーク
 //--------------------------------------------------------
 typedef struct {
 
   BTLV_SCU*    parentWork;
-  BtlPokePos   pos;
   BtlvMcssPos  vpos;
+  const POKEMON_PARAM* pp;
   u32          seq;
   u8           taskCounterDefault;
   u8*          pTaskCounter;
 
-}CHANGEFORM_ACT_WORK;
-
+}TRANSFORM_ACT_WORK;
 
 /**
- *  フォルムチェンジ 動作開始
+ *  へんしん 動作開始
+ */
+void BTLV_SCU_Hensin_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos vpos_target )
+{
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskTransform, sizeof(TRANSFORM_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  TRANSFORM_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+  BtlPokePos targetPos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, vpos_target );
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, targetPos );
+
+  twk->pp = BPP_GetSrcData( bpp );
+  twk->parentWork = wk;
+  twk->vpos = vpos;
+  twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->seq = 0;
+
+  (*(twk->pTaskCounter))++;
+}
+/**
+ *  へんしん動作終了待ち
+ */
+BOOL BTLV_SCU_Hensin_Wait( BTLV_SCU* wk )
+{
+  return ( wk->taskCounter[ TASKTYPE_DEFAULT ] == 0 );
+}
+
+/**
+ *  フォルムチェンジ動作開始
  */
 void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos )
 {
-  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskChangeForm, sizeof(CHANGEFORM_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
-  CHANGEFORM_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskTransform, sizeof(TRANSFORM_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  TRANSFORM_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
 
+  BtlPokePos targetPos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, vpos );
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, targetPos );
+
+  twk->pp = BPP_GetSrcData( bpp );
   twk->parentWork = wk;
   twk->vpos = vpos;
-  twk->pos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, vpos );
   twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
   twk->seq = 0;
 
@@ -3234,18 +3264,16 @@ BOOL BTLV_SCU_ChangeForm_Wait( BTLV_SCU* wk )
 }
 
 /**
- *  フォルムチェンジ：実行タスク
+ *  へんしん・フォルムチェンジ：実行タスク
  */
-static void taskChangeForm( GFL_TCBL* tcbl, void* wk_adrs )
+static void taskTransform( GFL_TCBL* tcbl, void* wk_adrs )
 {
-  CHANGEFORM_ACT_WORK* wk = wk_adrs;
+  TRANSFORM_ACT_WORK* wk = wk_adrs;
 
   switch( wk->seq ){
   case 0:
     {
-      const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
-      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      BTLV_EFFECT_Henge( pp, wk->vpos );
+      BTLV_EFFECT_Henge( wk->pp, wk->vpos );
       wk->seq++;
     }
     break;

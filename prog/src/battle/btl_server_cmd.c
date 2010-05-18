@@ -118,7 +118,6 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_12byte,           // SC_OP_CHANGE_TOKUSEI
   SC_ARGFMT_12byte,           // SC_OP_SET_ITEM
   SC_ARGFMT_5_3_7_1bit_2byte, // SC_OP_UPDATE_WAZANUMBER
-  SC_ARGFMT_11byte,           // SC_OP_HENSIN,
   SC_ARGFMT_1byte,            // SC_OP_OUTCLEAR
   SC_ARGFMT_12byte,           // SC_OP_ADD_FLDEFF
   SC_ARGFMT_1byte,            // SC_OP_REMOVE_FLDEFF
@@ -165,6 +164,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_5353bit,          // SC_ACT_RESET_MOVE
   SC_ARGFMT_1byte,            // SC_ACT_MIGAWARI_CREATE
   SC_ARGFMT_1byte,            // SC_ACT_MIGAWARI_DELETE
+  SC_ARGFMT_11byte,           // SC_OP_HENSIN,
   SC_ARGFMT_2byte,            // SC_ACT_WIN_BGM
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT

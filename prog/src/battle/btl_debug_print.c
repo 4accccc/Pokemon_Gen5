@@ -380,7 +380,6 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_CHANGE_TOKUSEI:  return "SC_OP_CHANGE_TOKUSEI";     ///< とくせい書き換え
   case SC_OP_SET_ITEM:  return "SC_OP_SET_ITEM";           ///< アイテム書き換え
   case SC_OP_UPDATE_WAZANUMBER:  return "SC_OP_UPDATE_WAZANUMBER";  ///< ワザ書き換え
-  case SC_OP_HENSIN:  return "SC_OP_HENSIN";             ///< へんしん
   case SC_OP_OUTCLEAR:  return "SC_OP_OUTCLEAR";           ///< 退場時クリア
   case SC_OP_ADD_FLDEFF:  return "SC_OP_ADD_FLDEFF";         ///< フィールドエフェクト追加
   case SC_OP_REMOVE_FLDEFF:  return "SC_OP_REMOVE_FLDEFF";      ///< フィールドエフェクト削除
@@ -421,6 +420,10 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_EFFECT_BYVECTOR:  return "SC_ACT_EFFECT_BYVECTOR";   ///< 指定発動位置＆終点位置でエフェクト発動
   case SC_ACT_CHANGE_FORM:  return "SC_ACT_CHANGE_FORM";       ///< フォルムナンバーチェンジ
   case SC_ACT_RESET_MOVE:  return "SC_ACT_RESET_MOVE";        ///< リセットムーブカットイン
+  case SC_ACT_MIGAWARI_CREATE: return "SC_ACT_MIGAWARI_CREATE";   ///< みがわり作成
+  case SC_ACT_MIGAWARI_DELETE: return "SC_ACT_MIGAWARI_DELETE";   ///< みがわり消去
+  case SC_ACT_HENSIN: return "SC_ACT_HENSIN";            ///< へんしん
+  case SC_ACT_WIN_BGM: return "SC_ACT_WIN_BGM";           ///< 勝利BGM再生
   case SC_TOKWIN_IN:  return "SC_TOKWIN_IN";             ///< とくせいウィンドウ表示イン [ClientID]
   case SC_TOKWIN_OUT:  return "SC_TOKWIN_OUT";            ///< とくせいウィンドウ表示アウト [ClientID]
   case SC_MSG_WAZA:  return "SC_MSG_WAZA";              ///< ワザメッセージ表示[ ClientID, wazaIdx ]

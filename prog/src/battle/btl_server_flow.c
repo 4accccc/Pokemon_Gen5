@@ -15165,15 +15165,15 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
     u8 usrPokeID = BPP_GetID( user );
     u8 tgtPokeID = BPP_GetID( target );
 
-    BTL_HANDLER_Waza_RemoveForceAll( user );
-    BTL_HANDLER_TOKUSEI_Remove( user );
-    BTL_HANDLER_TOKUSEI_Add( user );
-
-    SCQUE_PUT_OP_Hensin( wk->que, usrPokeID, tgtPokeID );
-
     if( param_header->tokwin_flag ){
       scPut_TokWin_In( wk, user );
     }
+
+    BTL_HANDLER_Waza_RemoveForceAll( user );
+    BTL_HANDLER_TOKUSEI_Remove( user );
+    BTL_HANDLER_TOKUSEI_Add( user );
+    SCQUE_PUT_ACT_Hensin( wk->que, usrPokeID, tgtPokeID );
+
     handexSub_putString( wk, &param->exStr );
     if( param_header->tokwin_flag ){
       scPut_TokWin_Out( wk, user );
