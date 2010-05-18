@@ -848,7 +848,6 @@ static void InitMsg( VSMLIST_WORK * wk )
   wk->nfnt = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_VS_MULTI_LIST );
   wk->wset = WORDSET_Create( HEAPID_VS_MULTI_LIST );
   wk->que  = PRINTSYS_QUE_CreateEx( 2048, HEAPID_VS_MULTI_LIST );
-//  wk->msg_buf = GFL_STR_CreateBuffer( TMP_MSG_BUF_SIZ, wk->dat->heap );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -867,7 +866,6 @@ static void ExitMsg( VSMLIST_WORK * wk )
   GFL_FONT_Delete( wk->nfnt );
   WORDSET_Delete( wk->wset );
   PRINTSYS_QUE_Delete( wk->que );
-//  GFL_STR_DeleteBuffer( wk->msg_buf );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -983,7 +981,6 @@ static void InitBmp( VSMLIST_WORK * wk )
 
 	for( i=0; i<TEMOTI_POKEMAX; i++ ){
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[i].win), 0 );
-//		GFL_BMPWIN_TransVramCharacter( wk->win[i].win );
 		if( wk->pp[i] != NULL ){
 			PutPokeName( wk, i );
 			PutPokeLv( wk, i );
@@ -1060,7 +1057,7 @@ static void PutPokeName( VSMLIST_WORK * wk, u32 idx )
 
   GFL_STR_DeleteBuffer( str );
   GFL_STR_DeleteBuffer( exp );
-/*
+
   // «•Ê
   if( PP_Get( wk->pp[idx], ID_PARA_nidoran_nickname, NULL ) == TRUE &&
 			PP_Get( wk->pp[idx], ID_PARA_tamago_flag, NULL ) == 0 ){
@@ -1083,7 +1080,6 @@ static void PutPokeName( VSMLIST_WORK * wk, u32 idx )
       GFL_STR_DeleteBuffer( str );
     }
 	}
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1172,27 +1168,6 @@ static void PutPokeHP( VSMLIST_WORK * wk, u32 idx )
 //--------------------------------------------------------------------------------------------
 static void PutPokeHPGage( VSMLIST_WORK * wk, u32 idx )
 {
-/*
-  BPL_POKEDATA * pd;
-  u8  col;
-  u8  dot;
-
-  dot = GAUGETOOL_GetNumDotto( pd->hp, pd->mhp, BPL_COMM_HP_DOTTO_MAX );
-
-  switch( GAUGETOOL_GetGaugeDottoColor( pd->hp, pd->mhp ) ){
-  case GAUGETOOL_HP_DOTTO_NULL:
-    return;
-  case GAUGETOOL_HP_DOTTO_GREEN:    // —Î
-    col = BPL_COMM_HP_GAGE_COL_G1;
-    break;
-  case GAUGETOOL_HP_DOTTO_YELLOW:   // ‰©
-    col = BPL_COMM_HP_GAGE_COL_Y1;
-    break;
-  case GAUGETOOL_HP_DOTTO_RED:      // Ô
-    col = BPL_COMM_HP_GAGE_COL_R1;
-    break;
-  }
-*/
   GFL_BMP_Fill(
 		GFL_BMPWIN_GetBmp(wk->win[idx].win),
 		BPL_COMM_P1_HPGAGE_PX, BPL_COMM_P1_HPGAGE_PY+3,
