@@ -73,7 +73,7 @@ struct _TAG_FIELD_DEBUG_WORK
 
   GFL_G3D_UTIL*     g3d_util;
   GFL_G3D_OBJSTATUS obj_status;
-  u16               unit_idx;
+  s16               unit_idx;
   HITCH_UNIT        unit[UNIT_MAX];
   fx32              unit_ox;
   fx32              unit_oz;
@@ -267,7 +267,6 @@ static void resetBgCont( FIELD_DEBUG_WORK *work )
 static void g3d_unit_Init( FIELD_DEBUG_WORK *work )
 {
   int i;
-  GFL_G3D_OBJ* obj;
 
   // 3D管理ユーティリティーの生成
   work->g3d_util = GFL_G3D_UTIL_Create( UNIT_RES_MAX, UNIT_MAX, work->heapID );
@@ -276,9 +275,7 @@ static void g3d_unit_Init( FIELD_DEBUG_WORK *work )
   MTX_Identity33( &work->obj_status.rotate );
   work->unit_oy = FX32_CONST(0);
 
-  work->unit_idx = GFL_G3D_UTIL_AddUnit( work->g3d_util, &sc_g3d_setup );
-  obj = GFL_G3D_UTIL_GetObjHandle( work->g3d_util, work->unit_idx );
-  GFL_G3D_OBJECT_EnableAnime( obj, 0 );
+  work->unit_idx = -1;
 
   for(i = 0;i < UNIT_MAX;i++){
     work->unit[i].draw_f = TRUE;
@@ -296,7 +293,9 @@ static void g3d_unit_Release( FIELD_DEBUG_WORK *work )
 {
   int i;
 
-  GFL_G3D_UTIL_DelUnit( work->g3d_util, work->unit_idx );
+  if( work->unit_idx >= 0 ){
+    GFL_G3D_UTIL_DelUnit( work->g3d_util, work->unit_idx );
+  }
   // 3D管理ユーティリティーの破棄
   GFL_G3D_UTIL_Delete( work->g3d_util );
 }
@@ -396,6 +395,9 @@ static void g3d_unit_Draw( FIELD_DEBUG_WORK *work )
   GFL_G3D_OBJ* obj;
   HITCH_UNIT* ph;
 
+  if( work->unit_idx < 0 ){
+    return;
+  }
   for( i = 0; i < 5; i++ )
   {
     work->obj_status.trans.z = work->unit_oz+FX32_CONST(16*i);
@@ -589,6 +591,13 @@ void FIELD_DEBUG_SetHitchCheckPrint( FIELD_DEBUG_WORK *work )
 {
   work->flag_pos_update = TRUE; //初回描画リクエスト
 	work->flag_hitch_check ^= 1;
+
+  if( work->flag_hitch_check && work->unit_idx < 0 ){
+    GFL_G3D_OBJ* obj;
+    work->unit_idx = GFL_G3D_UTIL_AddUnit( work->g3d_util, &sc_g3d_setup );
+    obj = GFL_G3D_UTIL_GetObjHandle( work->g3d_util, work->unit_idx );
+    GFL_G3D_OBJECT_EnableAnime( obj, 0 );
+  }
   work->unit_oy = FX32_CONST(0);
 }
 
