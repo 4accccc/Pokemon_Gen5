@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-05-04T11:55:14"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T14:19:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,7 +337,7 @@
 		</language>
 	</columns>
 
-	<dialog left="14" top="160" right="719" bottom="788" maximized="no" rayout="Vertical2">
+	<dialog left="1701" top="272" right="2406" bottom="900" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="787" top="36" right="1260" bottom="434" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -2490,8 +2490,8 @@ msg_connect_union_08からの分岐メッセージ
 ポケモンを　３ひきずつ　だして[BE:00:ページ切り替え（行送り）]
 ふたりで　たいせん　します[BE:01:ページ切り替え（クリア）]
 ローテーションバトルは
-ポケモンを　まえに　２ひき
-うしろに　１ひき　だしながら[BE:00:ページ切り替え（行送り）]
+ポケモンを　まえに　１ひき
+うしろに　２ひき　だしながら[BE:00:ページ切り替え（行送り）]
 ふたりで　たいせん　します[BE:01:ページ切り替え（クリア）]
 マルチバトルは　たたかいの　ばに
 ４にんで　ポケモンを[BE:00:ページ切り替え（行送り）]
@@ -2509,8 +2509,8 @@ msg_connect_union_08からの分岐メッセージ
 ポケモンを　３匹ずつ　だして[BE:00:ページ切り替え（行送り）]
 ２人で　対戦　します[BE:01:ページ切り替え（クリア）]
 ローテーションバトルは
-ポケモンを　前に　２匹
-後ろに　１匹　だしながら[BE:00:ページ切り替え（行送り）]
+ポケモンを　前に　１匹
+後ろに　２匹　だしながら[BE:00:ページ切り替え（行送り）]
 ２人で　対戦　します[BE:01:ページ切り替え（クリア）]
 マルチバトルは　戦いの場に
 ４人で　ポケモンを[BE:00:ページ切り替え（行送り）]
