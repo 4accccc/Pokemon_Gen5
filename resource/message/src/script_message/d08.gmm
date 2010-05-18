@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T15:55:32"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T18:09:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -442,7 +442,7 @@
 リュウラセンの塔って　なんですか？▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_04w" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_d08_hakase1_00_04w" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂
 ・WHITEver
 ・別方向を向いて
@@ -470,10 +470,10 @@
 伝説の　ドラゴンポケモンが▼
 真実を　追究する
 人間が　あらわれるのを▽
-待っていた……　そう　伝わっておる</language>
+待っていた……　そう　伝わっておる▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_04b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_d08_hakase1_00_04b" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
 		<comment>♂
 ・BLACKver
 ・別方向を向いて
@@ -501,7 +501,7 @@
 伝説の　ドラゴンポケモンが▼
 理想を　追究する
 人間が　あらわれるのを▽
-待っていた……　そう　伝わっておる</language>
+待っていた……　そう　伝わっておる▼</language>
 	</row>
 
 	<row id="msg_d08_hakase1_00_05" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,,">
