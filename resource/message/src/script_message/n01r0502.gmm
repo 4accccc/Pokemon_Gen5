@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-14T13:34:19"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T17:22:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1247,7 +1247,7 @@
 ポケモンなんて
 便利な　モノを　解き放って▽
 どうすると　いうのです？▼
-確かに　ポケモンを　操るで
+確かに　ポケモンを　操ることで
 人間の　可能性は　ひろがる▽
 それは　認めましょう▼
 だからこそ！　ワタクシだけが
