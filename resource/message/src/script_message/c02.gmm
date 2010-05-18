@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:15:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T12:50:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -502,18 +502,8 @@
 	<row id="msg_c02_boss_05" text-color="#000000,,,#ffffff,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">せかいには
-かずおおくの　すうしきが　ある▼
-ほとんどの　ひとは
-すうしきを　にんしき　しても▽
-その　いみは　りかいできない▼
-それと　おなじように　ボクのりそう
-だれが　りかい　できようか……[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]世の中に　幾多の　数式がある▼
-ほとんどの人は　数式自体を　認識しても
-その意味は　理解できない▼
-それと同じように　ボクの理想
-だれが　理解できようか……[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c02_boss_05w" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,,,,,,,,,,,,,,">
