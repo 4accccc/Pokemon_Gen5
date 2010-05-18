@@ -451,6 +451,12 @@ typedef struct
 	//拡大中かどうか
 	BOOL	is_scale;
 	
+  //タスク
+	GFL_TCB	*p_vblank_task;
+
+  //VBlankタスクへのリクエスト
+  BOOL is_scale_end_req;
+
 #ifdef PM_DEBUG
 	BOOL	is_arrive_debug;
 	BOOL	is_checkpos_debug;
@@ -515,7 +521,7 @@ static void CURSOR_SetPullEnable( CURSOR_WORK *p_wk, BOOL on_off );
 static void PLACE_Init( PLACE_WORK *p_wk, u16 now_zone_ID, u16 esc_zone_ID, const TOWNMAP_DATA *cp_data, const TOWNMAP_GRAPHIC_SYS *cp_grh, GAMEDATA *p_gamedata, HEAPID heapID, BOOL is_debug );
 static void PLACE_Exit( PLACE_WORK *p_wk );
 static void PLACE_Main( PLACE_WORK *p_wk );
-static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_next );
+static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_next );
 static void PLACE_SetVisible( PLACE_WORK *p_wk, BOOL is_visible );
 static void PLACE_SetVisibleForce( PLACE_WORK *p_wk, BOOL is_visible );
 static void PLACE_SetWldPos( PLACE_WORK *p_wk, const GFL_POINT *cp_pos );
@@ -551,13 +557,14 @@ static void PLACEMARK_SetVisible( PLACE_MARK *p_wk, BOOL is_visible );
 //=====================================
 static void MAP_Init( MAP_WORK *p_wk, u8 map_frm, u8 road_frm, HEAPID heapID );
 static void MAP_Exit( MAP_WORK *p_wk );
-static void MAP_Main( MAP_WORK *p_wk );
+static void MAP_Main( MAP_WORK *p_wk, PLACE_WORK *p_place );
 static void MAP_Scale( MAP_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_end );
 static BOOL MAP_IsScaleEnd( const MAP_WORK *cp_wk );
 static BOOL MAP_IsScale( const MAP_WORK *cp_wk );
 static void MAP_SetWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos );
 static void MAP_GetWldPos( const MAP_WORK *cp_wk, GFL_POINT *p_pos );
 static void MAP_AddWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos );
+static void MAP_SetVisibleRoadFrm( const MAP_WORK *cp_wk, BOOL is_visible );
 //-------------------------------------
 ///	INFO
 //=====================================
@@ -595,6 +602,8 @@ static void UI_ResetSlide( UI_WORK *p_wk );
 //=====================================
 static void BMP_DrawLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const GFL_POINT *cp_end, u8 plt_num );
 static void BMP_DrawBoldLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, const GFL_POINT *cp_end, int w, u8 plt_num );
+
+static void TownMap_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs );
 //=============================================================================
 /**
  *						DEBUG_PRINT
@@ -949,6 +958,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     GFL_NET_ReloadIcon();
   }
 
+  p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(TownMap_VBlankTask, p_wk, 0 );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -967,6 +977,10 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 static GFL_PROC_RESULT TOWNMAP_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_param_adrs, void *p_wk_adrs )
 {	
 	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+
+
+  //VBLANKTask消去
+	GFL_TCB_DeleteTask( p_wk->p_vblank_task );
 
 	//モジュール破棄-------------
 
@@ -1468,7 +1482,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 		CURSOR_Main( &p_wk->cursor, &p_wk->place );
 	}
 	PLACE_Main( &p_wk->place );
-	MAP_Main( &p_wk->map );
+	MAP_Main( &p_wk->map, &p_wk->place );
 	PLACEWND_Main( &p_wk->placewnd );
 	UI_Main( &p_wk->ui );
 
@@ -1491,25 +1505,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			GFL_POINT next_pos;
 			CURSOR_GetPos( &p_wk->cursor, &next_pos );
 
-			//中心座標より一定距離離れないように
-			//はなれすぎると、画面外が見えるので
-			{	
-				VecFx32 v;
-				fx32	distance;
-				v.x	= (next_pos.x	- sc_center_pos.x) << FX32_SHIFT;
-				v.y	= (next_pos.y - sc_center_pos.y) <<FX32_SHIFT;
-				v.z	= 0;
-				distance	= VEC_Mag(&v);
-				VEC_Normalize( &v, &v );
-
-				if( distance >> FX32_SHIFT > MAP_SCALE_CENTER_DISTANCE_UP )
-				{	
-					next_pos.x	= sc_center_pos.x + ((v.x * MAP_SCALE_CENTER_DISTANCE_UP) >> FX32_SHIFT);
-					next_pos.y	= sc_center_pos.y + ((v.y * MAP_SCALE_CENTER_DISTANCE_UP) >> FX32_SHIFT);
-				}
-			}
-
-			PLACE_Scale( &p_wk->place, FX32_CONST(2), &sc_center_pos, &next_pos );
+      //拡大
 			MAP_Scale( &p_wk->map, FX32_CONST(2), &sc_center_pos, &next_pos );
 
 
@@ -1525,7 +1521,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
         p_wk->cp_select	= NULL;
       }
 
-			PLACE_SetVisibleForce( &p_wk->place, FALSE );
+			//PLACE_SetVisibleForce( &p_wk->place, FALSE );
 
 			p_wk->is_scale	= TRUE;
 		}
@@ -1538,28 +1534,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 			src_pos.x	= src_pos.x + 256/2;
 			src_pos.y	= src_pos.y + 192/2;
 
-			//中心座標より一定距離離れないように
-			//はなれすぎると、画面外が見えるので
-			{	
-				VecFx32 v;
-				fx32	distance;
-				v.x	= (src_pos.x	- sc_center_pos.x) << FX32_SHIFT;
-				v.y	= (src_pos.y - sc_center_pos.y) <<FX32_SHIFT;
-				v.z	= 0;
-				distance	= VEC_Mag(&v);
-				VEC_Normalize( &v, &v );
-
-				if( distance >> FX32_SHIFT > MAP_SCALE_CENTER_DISTANCE_DOWN )
-				{	
-					src_pos.x	= sc_center_pos.x + ((v.x * MAP_SCALE_CENTER_DISTANCE_DOWN) >> FX32_SHIFT);
-					src_pos.y	= sc_center_pos.y + ((v.y * MAP_SCALE_CENTER_DISTANCE_DOWN) >> FX32_SHIFT);
-				}
-			}
-
-			PLACE_Scale( &p_wk->place, FX32_CONST(1), &src_pos, &sc_center_pos );
+      //縮小
 			MAP_Scale( &p_wk->map, FX32_CONST(1), &src_pos, &sc_center_pos );
 			
-
 
 			PMSND_PlaySE( TOWNMAP_SE_SCALEDOWN );
 
@@ -1573,7 +1550,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
         p_wk->cp_select	= NULL;
       }			
       
-      PLACE_SetVisibleForce( &p_wk->place, FALSE );
+      //PLACE_SetVisibleForce( &p_wk->place, FALSE );
 
 			p_wk->is_scale	= FALSE;
 		}
@@ -1583,7 +1560,8 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param_adrs )
 	//スケール終了後の場所表示処理
 	if( MAP_IsScaleEnd( &p_wk->map ) )
 	{	
-		PLACE_SetVisibleForce( &p_wk->place, TRUE );
+//    PLACE_SetVisibleForce( &p_wk->place, TRUE );
+//    p_wk->is_scale_end_req  = TRUE;
 	}
 }
 //=============================================================================
@@ -2308,21 +2286,23 @@ static void PLACE_Main( PLACE_WORK *p_wk )
  *	@param	PLACE_WORK *p_wk	ワーク
  */
 //-----------------------------------------------------------------------------
-static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_start, const GFL_POINT *cp_center_next )
+static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_next )
 {	
 
+  OS_Printf( "pla now X%d Y%d sca%f\n", cp_center_next->x, cp_center_next->y, 
+      FX_FX32_TO_F32(scale) );
 	//拡大すると動作範囲も変更
 	{	
-		if( scale == FX32_ONE )
-		{	
+    if( scale == FX32_ONE )
+    {
 			p_wk->limit_top			= 0;
 			p_wk->limit_left		= 0;
 			p_wk->limit_right		= 0;
-			p_wk->limit_bottom	= 0;
-		}
-		else
+			p_wk->limit_bottom	=	0;
+    }
+    else
 		{	
-			p_wk->limit_top			= MAP_SCALE_MOVE_LIMIT_TOP + 24;
+      p_wk->limit_top			= MAP_SCALE_MOVE_LIMIT_TOP + 24;
 			p_wk->limit_left		= MAP_SCALE_MOVE_LIMIT_LEFT;
 			p_wk->limit_right		= MAP_SCALE_MOVE_LIMIT_RIGHT;
 			p_wk->limit_bottom	=	MAP_SCALE_MOVE_LIMIT_BOTTOM + 24;
@@ -2335,17 +2315,9 @@ static void PLACE_Scale( PLACE_WORK *p_wk, fx32 scale, const GFL_POINT *cp_cente
 	{	
 		GFL_POINT	pos;
 
-		if( scale == FX32_ONE )
-		{
-			pos.x	= 0;
-			pos.y	= 0;
-		}
-		else
-		{	
-			//OBJは逆
-			pos.x	=	-(cp_center_next->x-128);
-			pos.y	=	-(cp_center_next->y-96);
-		}
+    //OBJは逆
+    pos.x	=	-(cp_center_next->x);
+    pos.y	=	-(cp_center_next->y);
 
 	/*	NAGI_Printf( "PLACE scale SX%d SY%d EX%d EY%d PX%d PY%d\n",
 				cp_center_start->x, cp_center_start->y, cp_center_next->x, cp_center_next->y,
@@ -3010,49 +2982,6 @@ static BOOL PlaceData_IsPullHit( const PLACE_DATA *cp_wk, const GFL_POINT *cp_po
 static void	PlaceData_Scale( PLACE_DATA *p_wk, fx32 scale, const GFL_POINT *cp_center_next )
 {	
 	//データを更新
-#if 0
-	{
-		//座標は差分をスケール倍
-		p_wk->param[PLACE_DATA_PARAM_POS_X]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_POS_X ) - 
-			 cp_center_next->x )* scale) >> FX32_SHIFT) + cp_center_next->x;
-
-		p_wk->param[PLACE_DATA_PARAM_POS_Y]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_POS_Y ) - 
-				cp_center_next->y )* scale) >> FX32_SHIFT) + cp_center_next->y;
-
-		p_wk->param[PLACE_DATA_PARAM_CURSOR_X]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_CURSOR_X ) - 
-				cp_center_next->x )* scale) >> FX32_SHIFT) + cp_center_next->x;
-
-		p_wk->param[PLACE_DATA_PARAM_CURSOR_Y]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_CURSOR_Y ) - 
-				cp_center_next->y) * scale) >> FX32_SHIFT) + cp_center_next->y;
-
-		p_wk->param[PLACE_DATA_PARAM_HIT_START_X]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_HIT_START_X ) - 
-				cp_center_next->x) * scale) >> FX32_SHIFT) + cp_center_next->x;
-
-		p_wk->param[PLACE_DATA_PARAM_HIT_START_Y]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_HIT_START_Y ) - 
-				cp_center_next->y) * scale) >> FX32_SHIFT) + cp_center_next->y;
-
-		p_wk->param[PLACE_DATA_PARAM_HIT_END_X]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_HIT_END_X ) - 
-				cp_center_next->x) * scale) >> FX32_SHIFT) + cp_center_next->x;
-
-		p_wk->param[PLACE_DATA_PARAM_HIT_END_Y]	= 
-			(((TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_HIT_END_Y ) - 
-				cp_center_next->y) * scale) >> FX32_SHIFT) + cp_center_next->y;
-
-		//幅は単純にスケール倍
-		p_wk->param[PLACE_DATA_PARAM_HIT_WIDTH]	= 
-			(TOWNMAP_DATA_GetParam( p_wk->cp_data, p_wk->data_idx, TOWNMAP_DATA_PARAM_HIT_WIDTH )
-			 * scale) >> FX32_SHIFT;
-	
-		p_wk->scale	= scale;
-	}
-#else
 	{	
 		int i;
 		int center;
@@ -3082,7 +3011,6 @@ static void	PlaceData_Scale( PLACE_DATA *p_wk, fx32 scale, const GFL_POINT *cp_c
 			 * scale) >> FX32_SHIFT;
 	}
 	p_wk->scale	= scale;
-#endif
 
 	//OBJを拡大
 	if( p_wk->p_clwk )
@@ -3092,7 +3020,6 @@ static void	PlaceData_Scale( PLACE_DATA *p_wk, fx32 scale, const GFL_POINT *cp_c
 		clscale.y	= scale;
 
 		GFL_CLACT_WK_SetScale( p_wk->p_clwk, &clscale );
-
 	}
 }
 
@@ -3356,9 +3283,10 @@ static void MAP_Exit( MAP_WORK *p_wk )
  *	@brief	地図	メイン処理
  *
  *	@param	MAP_WORK *p_wk	ワーク
+ *	@param	PLACE_WORK      拡大縮小の時OBJを動作させるため
  */
 //-----------------------------------------------------------------------------
-static void MAP_Main( MAP_WORK *p_wk )
+static void MAP_Main( MAP_WORK *p_wk, PLACE_WORK *p_place )
 {	
 	p_wk->is_scale_end	= FALSE;
 
@@ -3382,7 +3310,7 @@ static void MAP_Main( MAP_WORK *p_wk )
 		//NAGI_Printf( "add X%d Y%d\n", add_pos.x>> FX32_SHIFT, add_pos.y>> FX32_SHIFT );
 		p_wk->pos.x	= p_wk->init_pos.x + ((add_pos.x * p_wk->sync/MAP_SCALE_SYNC) >> FX32_SHIFT);
 		p_wk->pos.y	= p_wk->init_pos.y + ((add_pos.y * p_wk->sync/MAP_SCALE_SYNC) >> FX32_SHIFT);
-		//NAGI_Printf( "now X%d Y%d\n", p_wk->pos.x, p_wk->pos.y );
+		OS_Printf( "now X%d Y%d sca%f\n", p_wk->pos.x, p_wk->pos.y, FX_FX32_TO_F32(p_wk->now_scale) );
 
 #if 1
 		//制限計算
@@ -3420,9 +3348,8 @@ static void MAP_Main( MAP_WORK *p_wk )
 			p_wk->is_scale_req	= FALSE;
 			p_wk->now_scale		= p_wk->next_scale;
 			p_wk->pos					= p_wk->next_pos;
-
 			//道路復活
-			GFL_BG_SetVisible( p_wk->road_frm, TRUE );
+			//GFL_BG_SetVisible( p_wk->road_frm, TRUE );
 
 			//拡大すると動作範囲も変更
 			{	
@@ -3445,7 +3372,9 @@ static void MAP_Main( MAP_WORK *p_wk )
 			}
 			p_wk->is_scale_end	= TRUE;
 		}
-		
+
+    //OBJのみ１フレーム早いので、１フレーム前の座標を渡す
+    PLACE_Scale( p_place, p_wk->now_scale, &p_wk->pos );
 #if 0
     { 
       MtxFx22 mtx;
@@ -3456,23 +3385,7 @@ static void MAP_Main( MAP_WORK *p_wk )
 #endif
 
 		//反映
-#if 1
-		MAP_SetWldPos( p_wk, &p_wk->pos );
-#else
-		GFL_BG_SetScrollReq( p_wk->map_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x );
-		GFL_BG_SetScrollReq( p_wk->map_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y );
-		GFL_BG_SetRotateCenterReq( p_wk->map_frm, GFL_BG_CENTER_X_SET, sc_center_pos.x );
-		GFL_BG_SetRotateCenterReq( p_wk->map_frm, GFL_BG_CENTER_Y_SET, sc_center_pos.y );
-		GFL_BG_SetScaleReq( p_wk->map_frm, GFL_BG_SCALE_X_SET, p_wk->now_scale );
-		GFL_BG_SetScaleReq( p_wk->map_frm, GFL_BG_SCALE_Y_SET, p_wk->now_scale );
-
-		GFL_BG_SetScrollReq( p_wk->road_frm, GFL_BG_SCROLL_X_SET, p_wk->pos.x );
-		GFL_BG_SetScrollReq( p_wk->road_frm, GFL_BG_SCROLL_Y_SET, p_wk->pos.y );
-		GFL_BG_SetRotateCenterReq( p_wk->road_frm, GFL_BG_CENTER_X_SET, sc_center_pos.x );
-		GFL_BG_SetRotateCenterReq( p_wk->road_frm, GFL_BG_CENTER_Y_SET, sc_center_pos.y );
-		GFL_BG_SetScaleReq( p_wk->road_frm, GFL_BG_SCALE_X_SET, p_wk->now_scale );
-		GFL_BG_SetScaleReq( p_wk->road_frm, GFL_BG_SCALE_Y_SET, p_wk->now_scale );
-#endif
+    MAP_SetWldPos( p_wk, &p_wk->pos );
 	}
 }
 //----------------------------------------------------------------------------
@@ -3501,7 +3414,7 @@ static void MAP_Scale( MAP_WORK *p_wk, fx32 scale, const GFL_POINT *cp_center_st
   OS_FPrintf( 3, "init %f next %f\n", FX_FX32_TO_F32(p_wk->init_scale), FX_FX32_TO_F32(p_wk->next_scale) );
 
 	//道路は消す
-	GFL_BG_SetVisible( p_wk->road_frm, FALSE );
+//	GFL_BG_SetVisible( p_wk->road_frm, FALSE );
 
 }
 //----------------------------------------------------------------------------
@@ -3584,6 +3497,18 @@ static void MAP_AddWldPos( MAP_WORK *p_wk, const GFL_POINT *cp_pos )
 	p_wk->pos.x	+= cp_pos->x;
 	p_wk->pos.y	+= cp_pos->y;
 	MAP_SetWldPos( p_wk, &p_wk->pos );
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  道を表示
+ *
+ *	@param	const MAP_WORK *cp_wk ワーク
+ *	@param	is_visible            TRUEで表示  FALSEで非表示
+ */
+//-----------------------------------------------------------------------------
+static void MAP_SetVisibleRoadFrm( const MAP_WORK *cp_wk, BOOL is_visible )
+{
+  GFL_BG_SetVisible( cp_wk->road_frm, is_visible );
 }
 //=============================================================================
 /**
@@ -4249,6 +4174,29 @@ static void BMP_DrawBoldLine( GFL_BMP_DATA *p_bmp, const GFL_POINT *cp_start, co
 		}
 	}
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  VBlankタスク
+ *
+ *	@param	GFL_TCB *p_tcb  タスク
+ *	@param	*p_wk_adrs      ワークアドレス
+ */
+//-----------------------------------------------------------------------------
+static void TownMap_VBlankTask( GFL_TCB *p_tcb, void *p_wk_adrs )
+{
+	TOWNMAP_WORK	*p_wk	= p_wk_adrs;
+#if 0
+  if( p_wk->is_scale_end_req )
+  {
+    MAP_SetVisibleRoadFrm( &p_wk->map, TRUE );
+
+
+    p_wk->is_scale_end_req  = FALSE;
+  }
+#endif
+}
+
 //=============================================================================
 /**
  *			DEBUG

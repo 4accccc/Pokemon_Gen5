@@ -245,7 +245,7 @@ TOWNMAP_GRAPHIC_SYS * TOWNMAP_GRAPHIC_Init( HEAPID heapID )
 
 
 	//VBlankTask“o˜^
-	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(TownMap_Graphic_VBlankTask, p_wk, 0 );
+	p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(TownMap_Graphic_VBlankTask, p_wk, 1 );
 
 	return p_wk;
 }
