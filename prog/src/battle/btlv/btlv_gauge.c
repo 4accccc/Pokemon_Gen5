@@ -545,7 +545,8 @@ void  BTLV_GAUGE_Add( BTLV_GAUGE_WORK *bgw, const BTL_MAIN_MODULE* wk, const BTL
 
       if( ( mons_no != MONSNO_NIDORAN_M ) && ( mons_no != MONSNO_NIDORAN_F ) )
       {
-        bgw->bgcl[ pos ].sex  = BPP_GetValue( bpp, BPP_SEX );
+        //見た目にかかわるパラメータはPOKEMON_PARAM依存なので、ppから取得
+        bgw->bgcl[ pos ].sex  = PP_GetSex( BPP_GetViewSrcData( bpp ) );
       }
       else
       {
