@@ -626,6 +626,9 @@ static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POK
   if(bShu && (no == MONSNO_NIDORAN_F)){  //ã≠êßéÌë∞ñºï\é¶
     return;
   }
+  if(bShu && (no == MONSNO_NIDORAN_M)){  //ã≠êßéÌë∞ñºï\é¶
+    return;
+  }
   
   if(bGTSNEGO){
     if(sex == PM_FEMALE){
