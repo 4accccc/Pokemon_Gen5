@@ -25,8 +25,6 @@ void BTL_POKESET_Clear( BTL_POKESET* set )
 void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
 {
   GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
-  TAYA_Printf(" POKESET[%p] Copied bpp=%p, cnt=%d\n", dst, dst->bpp[0], dst->count );
-
 }
 
 /**
@@ -42,7 +40,6 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
     if( rec->count > rec->countMax ){
       rec->countMax = rec->count;
     }
-    TAYA_Printf(" POKESET[%p] Added bpp=%p, cnt=%d\n", rec, bpp, rec->count );
   }
   else
   {
@@ -73,7 +70,6 @@ void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
       }
       rec->count--;
       rec->getIdx--;
-      TAYA_Printf(" POKESET[%p] Remove bpp=%p, cnt=%d\n", rec, bpp, rec->count );
       break;
     }
   }
