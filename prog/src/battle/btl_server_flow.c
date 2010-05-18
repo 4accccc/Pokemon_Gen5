@@ -7626,7 +7626,7 @@ static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL
   // Šî–{ó‘ÔˆÙí‚Ì‚É‚Íu‚ ‚­‚Ñv‚É‚È‚ç‚È‚¢
   if( sick == WAZASICK_AKUBI )
   {
-    if( BPP_GetPokeType(target) != POKESICK_NULL ){
+    if( BPP_GetPokeSick(target) != POKESICK_NULL ){
       return BTL_ADDSICK_FAIL_OTHER;
     }
   }
