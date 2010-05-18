@@ -145,6 +145,16 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
 //--------------------------------------------------------------
 void CTVT_CAMERA_Term( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
 {
+  //BG‚ÌƒŠƒZƒbƒg
+  {
+    MtxFx22 mtx;
+    mtx._00 = FX_Inv(FX32_ONE);
+    mtx._11 = FX_Inv(FX32_ONE);
+    mtx._01 = 0;
+    mtx._10 = 0;
+    G2_SetBG3Affine(&mtx,0,0,0,0);
+  }
+  
   GFL_HEAP_FreeMemory( camWork->scrBuf );
   GFL_HEAP_FreeMemory( camWork->picBufDouble );
   GFL_HEAP_FreeMemory( camWork->picBuf );

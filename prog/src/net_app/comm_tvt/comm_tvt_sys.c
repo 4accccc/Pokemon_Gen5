@@ -326,9 +326,12 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
     }
     break;
   case CTM_ERROR: //I—¹
-    if( WIPE_SYS_EndCheck() == TRUE )
+    if( CTVT_COMM_IsExit(work,work->commWork) == TRUE )
     {
-      return TRUE;
+      if( WIPE_SYS_EndCheck() == TRUE )
+      {
+        return TRUE;
+      }
     }
     break;
   }

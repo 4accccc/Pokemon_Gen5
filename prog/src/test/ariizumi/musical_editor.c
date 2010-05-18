@@ -1073,7 +1073,7 @@ static const BOOL MusicalSetting_Main( MUS_EDIT_LOCAL_WORK *work )
   case 1:
     {
       FS_InitFile( &work->arcFile );
-      FS_OpenFileEx( &work->arcFile , "a/1/3/9" , FS_FILEMODE_R );
+      FS_OpenFileEx( &work->arcFile , "a/1/3/1" , FS_FILEMODE_R );
       work->arcSize = FS_GetFileLength( &work->arcFile );
       work->musicalArc = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( work->heapId ) , work->arcSize );
       FS_ReadFile( &work->arcFile , work->musicalArc , work->arcSize );

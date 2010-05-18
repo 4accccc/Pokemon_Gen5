@@ -214,6 +214,11 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
 static void CAMERA_SYS_SoftResetCallBack( void *pWork )
 {
   CAMERA_SYSTEM_WORK *work = pWork;
+  while( DSP_IsShutterSoundPlaying() == TRUE )
+  {
+    OS_TPrintf("Wait!\n");
+    OS_Sleep( 10 );
+  }
   DSP_UnloadG711();
   CAMERA_SYS_StopCapture( work );
   CAMERA_Stop();
@@ -225,6 +230,7 @@ void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work )
 {
   // シャッター音のためにDSPコンポーネントをアンロード。
   GFL_UI_SoftResetSetFunc( NULL , NULL );
+  DSP_StopSound();
   DSP_UnloadG711();
   CAMERA_SYS_StopCapture( work );
   CAMERA_Stop();
