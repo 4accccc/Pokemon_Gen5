@@ -524,12 +524,12 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
         case PRINTSTREAM_STATE_RUNNING:
           {
             BOOL b_input = FALSE;
-            if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+            if( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
             {
               GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
               b_input = TRUE;
             }
-            else if( GFL_UI_TP_GetTrg() )
+            else if( GFL_UI_TP_GetCont() )
             {
               GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
               b_input = TRUE;
@@ -724,12 +724,12 @@ ZUKAN_NICKNAME_RESULT ZUKAN_NICKNAME_Main( ZUKAN_NICKNAME_WORK* work )
         case PRINTSTREAM_STATE_RUNNING:
           {
             BOOL b_input = FALSE;
-            if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+            if( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
             {
               GFL_UI_SetTouchOrKey( GFL_APP_KTST_KEY );
               b_input = TRUE;
             }
-            else if( GFL_UI_TP_GetTrg() )
+            else if( GFL_UI_TP_GetCont() )
             {
               GFL_UI_SetTouchOrKey( GFL_APP_KTST_TOUCH );
               b_input = TRUE;

@@ -4974,9 +4974,41 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       PRINTSTREAM_STATE state;
       GFL_TCBL_Main( p_ps_wk->p_tcblsys );
       state = PRINTSYS_PrintStreamGetState( p_ps_wk->p_stream );
-      if( state == PRINTSTREAM_STATE_DONE )
+      switch( state )
       {
-        *p_seq = SEQ_PS_WAIT;
+      case PRINTSTREAM_STATE_RUNNING:
+        {
+          if( GFL_UI_KEY_GetCont()&(PAD_BUTTON_A|PAD_BUTTON_B) || GFL_UI_TP_GetCont() )
+          {
+            PRINTSYS_PrintStreamShortWait( p_ps_wk->p_stream, 0 );
+#ifdef NAMEIN_KEY_TOUCH
+            if( GFL_UI_KEY_GetCont()&(PAD_BUTTON_A|PAD_BUTTON_B) )
+              GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+            else
+              GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+#endif
+          }
+        }
+        break;
+      case PRINTSTREAM_STATE_DONE:
+        {
+          *p_seq = SEQ_PS_WAIT;
+        }
+        break;
+      case PRINTSTREAM_STATE_PAUSE:
+        {
+          if( GFL_UI_KEY_GetTrg()&(PAD_BUTTON_A|PAD_BUTTON_B) || GFL_UI_TP_GetTrg() )
+          {
+            PRINTSYS_PrintStreamReleasePause( p_ps_wk->p_stream );
+#ifdef NAMEIN_KEY_TOUCH
+            if( GFL_UI_KEY_GetTrg()&(PAD_BUTTON_A|PAD_BUTTON_B) )
+              GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+            else
+              GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+#endif
+          }
+        }
+        break;
       }
     }
     break;

@@ -2725,12 +2725,12 @@ static BOOL Psel_TextExplainStreamWait( PSEL_WORK* work )  // TRUE‚ª•Ô‚Á‚Ä—ˆ‚½‚ç
   switch( PRINTSYS_PrintStreamGetState( work->print_stream ) )
   {
   case PRINTSTREAM_STATE_RUNNING:
-    if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
+    if( ( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetCont() )
     {
       PRINTSYS_PrintStreamShortWait( work->print_stream, 0 );
       
-      if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
-      else                                                    work->ktst = GFL_APP_KTST_TOUCH;
+      if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ) work->ktst = GFL_APP_KTST_KEY;
+      else                                                     work->ktst = GFL_APP_KTST_TOUCH;
     }
     break;
   case PRINTSTREAM_STATE_PAUSE:

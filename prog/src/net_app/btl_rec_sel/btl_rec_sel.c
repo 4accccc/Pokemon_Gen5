@@ -1479,11 +1479,11 @@ static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
   switch( PRINTSYS_PrintStreamGetState( work->text_stream ) )
   {
   case PRINTSTREAM_STATE_RUNNING:
-    if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
+    if( ( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetCont() )
     {
       PRINTSYS_PrintStreamShortWait( work->text_stream, 0 );
 
-      if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+      if( GFL_UI_KEY_GetCont() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
       {
         // タッチorキー
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
