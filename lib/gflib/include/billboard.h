@@ -384,6 +384,10 @@ extern void	GFL_BBD_GetObjectRotate
 				( GFL_BBD_SYS* billboardSys, int objIdx, u16 *rotZ );
 extern void	GFL_BBD_SetObjectRotate
 				( GFL_BBD_SYS* billboardSys, int objIdx, const u16* rotZ );
+extern void	GFL_BBD_GetObjectPolID
+				( GFL_BBD_SYS* billboardSys, int objIdx, u8* polID );
+extern void	GFL_BBD_SetObjectPolID
+				( GFL_BBD_SYS* billboardSys, int objIdx, const u8* polID );
 
 //------------------------------------------------------------------
 /**
