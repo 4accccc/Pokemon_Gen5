@@ -18,6 +18,8 @@
 #define BTLV_INPUT_POKEMON_MAX ( 3 )            //入力するポケモンMAX
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
 #define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
+#define CANCEL_FLAG_MASK    ( 2 ) 
+#define CANCEL_FLAG_SHIFT   ( 1 )  
 
 //戦闘下画面OBJパレット内訳
 /*

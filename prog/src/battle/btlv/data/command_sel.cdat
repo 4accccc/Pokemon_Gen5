@@ -22,7 +22,7 @@ static  const BOOL  BattleMenuTouchDataCancel[] = {
   FALSE,  //たたかう
   FALSE,  //バッグ
   FALSE,  //ポケモン
-  FALSE,  //にげる
+  TRUE << CANCEL_FLAG_SHIFT,  //にげる
 };
 
 static  const int  BattleMenuTouchDataPltt[] = { 

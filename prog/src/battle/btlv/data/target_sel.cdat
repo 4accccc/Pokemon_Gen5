@@ -23,7 +23,7 @@ static const BOOL PokeSeleMenuTouch4DataCancel[] = {
   FALSE,  //ターゲットB
   FALSE,  //ターゲットC
   FALSE,  //ターゲットD
-  TRUE,   //キャンセル
+  TRUE << CANCEL_FLAG_SHIFT | TRUE,   //キャンセル
 };
 
 static const int PokeSeleMenuTouch4DataPlttNormal[] = {
@@ -334,7 +334,7 @@ static const BOOL PokeSeleMenuTouch6DataCancel[] = {
   FALSE,  //ターゲットD
   FALSE,  //ターゲットE
   FALSE,  //ターゲットF
-  TRUE,   //キャンセル
+  TRUE << CANCEL_FLAG_SHIFT | TRUE,   //キャンセル
 };
 
 static const BOOL PokeSeleMenuTouch6DataPlttNormal[] = {

@@ -774,6 +774,7 @@ static  int   BTLV_INPUT_SearchTCBIndex( BTLV_INPUT_WORK* biw, GFL_TCB* tcb );
 static  void  BTLV_INPUT_FreeTCB( BTLV_INPUT_WORK* biw, GFL_TCB* tcb );
 static  int   BTLV_INPUT_GetTCBIndex( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw );
+static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos );
 
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw );
@@ -1687,7 +1688,7 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
     {
       if( hit_tp != GFL_UI_TP_HIT_NONE )
       {
-        if( ( tp_tbl->cancel_flag[ hit ] == FALSE ) && ( biw->decide_pos_flag == 0 ) )
+        if( ( get_cancel_flag( biw, tp_tbl, hit ) == FALSE ) && ( biw->decide_pos_flag == 0 ) )
         {
           SePlayDecide( biw );
           switch( biw->scr_type ){
@@ -4496,7 +4497,7 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
       if( trg == PAD_BUTTON_A )
       {
         hit = tbl->a_button;
-        if( tp_tbl->cancel_flag[ hit ] == FALSE )
+        if( get_cancel_flag( biw, tp_tbl, hit ) == FALSE )
         {
           SePlayDecide( biw );
         }
@@ -4564,14 +4565,14 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     case BTLV_INPUT_SCRTYPE_COMMAND:
     case BTLV_INPUT_SCRTYPE_WAZA:
     case BTLV_INPUT_SCRTYPE_ROTATE:
-      if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
+      if( get_cancel_flag( biw, tp_tbl, biw->cursor_pos ) == FALSE )
       {
         biw->decide_pos[ biw->active_index ][ biw->scr_type ] = biw->cursor_pos;
       }
       biw->decide_pos_flag = 1;
       break;
     case BTLV_INPUT_SCRTYPE_DIR:
-      if( tp_tbl->cancel_flag[ biw->cursor_pos ] == FALSE )
+      if( get_cancel_flag( biw, tp_tbl, biw->cursor_pos ) == FALSE )
       {
         biw->decide_pos[ biw->active_index ][ biw->scr_type ] = biw->cursor_pos |
                                                                 ( biw->decide_pos[ biw->active_index ]
@@ -4934,6 +4935,34 @@ static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw )
     {
       BTLV_INPUT_FreeTCB( biw, biw->tcb[ i ] );
     }
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  キャンセルフラグ取得
+ *
+ *  @param[in]  biw システム管理構造体
+ *  @param[in]  tbl タッチパネルテーブル
+ *  @param[in]  pos タッチパネルポジション
+ *
+ *  @retval TRUE:キャンセルボタン　FALSE:キャンセルボタンではない
+ */
+//-----------------------------------------------------------------------------
+static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos )
+{ 
+  if( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+  { 
+    return tbl->cancel_flag[ pos ];
+  }
+  else
+  { 
+    BOOL  ret = ( tbl->cancel_flag[ pos ] & CANCEL_FLAG_MASK ) >> CANCEL_FLAG_SHIFT; 
+    if( ret == TRUE )
+    { 
+      biw->decide_pos[ biw->active_index ][ biw->scr_type ] = 0;
+    }
+    return ret;
   }
 }
 
