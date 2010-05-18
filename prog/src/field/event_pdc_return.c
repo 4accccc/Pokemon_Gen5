@@ -30,8 +30,10 @@
 // local includes --------------------
 #include "event_pdc_return.h"
 
+
 // オーバーレイ
 FS_EXTERN_OVERLAY(zukan_toroku);
+
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -230,24 +232,32 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zukan_savedata );  // TRUEのとき全国図鑑を持っている
 
         // 図鑑登録画面 or ニックネーム命名確認画面 へ
-        GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_toroku) );
         get_first = !ZUKANSAVE_GetPokeGetFlag( zukan_savedata, (u16)( PP_Get(param->pp, ID_PARA_monsno, NULL) ) );
         // 図鑑登録（捕まえた）
         {
           ZUKANSAVE_SetPokeSee( zukan_savedata, param->pp );  // 見た  // 図鑑フラグをセットする
           ZUKANSAVE_SetPokeGet( zukan_savedata, param->pp );  // 捕まえた  // 図鑑フラグをセットする
         }
+
+        // ZUKAN_TOROKU_PARAMの設定
+        {
+          wk->zukan_toroku_param.pp               = param->pp;
+          wk->zukan_toroku_param.b_zenkoku_flag   = zenkoku_flag;
+          wk->zukan_toroku_param.box_strbuf       = wk->box_strbuf;
+          wk->zukan_toroku_param.box_manager      = boxman;
+          wk->zukan_toroku_param.box_tray         = wk->box_tray;
+          wk->zukan_toroku_param.gamedata         = param->gameData;
+        }
         if( get_first )
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_TOROKU, param->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
+          wk->zukan_toroku_param.launch           = ZUKAN_TOROKU_LAUNCH_TOROKU;
         }
         else
         {
-          ZUKAN_TOROKU_SetParam( &(wk->zukan_toroku_param), ZUKAN_TOROKU_LAUNCH_NICKNAME, param->pp, zenkoku_flag, wk->box_strbuf, boxman, wk->box_tray );
+          wk->zukan_toroku_param.launch           = ZUKAN_TOROKU_LAUNCH_NICKNAME;
         }
-        wk->zukan_toroku_param.gamedata = param->gameData;
         // ローカルPROC呼び出し
-        GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
+        GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(zukan_toroku), &ZUKAN_TOROKU_ProcData, &(wk->zukan_toroku_param) );
         (*seq)++;
       }else{
         (*seq) = 4;
@@ -263,11 +273,10 @@ static GFL_PROC_RESULT PdcRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
         BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( param->gameData );
 
         BOOL nickname = FALSE;
-        if( ZUKAN_TOROKU_GetResult(&(wk->zukan_toroku_param)) == ZUKAN_TOROKU_RESULT_NICKNAME )
+        if( wk->zukan_toroku_param.result == ZUKAN_TOROKU_RESULT_NICKNAME )
         {
           nickname = TRUE;
         }
-        GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_toroku) );
 
         if( nickname )
         {

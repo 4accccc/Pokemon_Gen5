@@ -731,8 +731,9 @@ static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk )
 {
   ZONEDATA_Open( wk->heapID );
 
-    GFL_OVERLAY_Load(FS_OVERLAY_ID(zukan_toroku));
+    //GFL_OVERLAY_Load(FS_OVERLAY_ID(zukan_toroku));
     wk->pp = PP_Create( 1, 1, 0, wk->heapID );
+/*
     wk->zukan_toroku_param = ZUKAN_TOROKU_AllocParam(
         wk->heapID,
         ZUKAN_TOROKU_LAUNCH_TOROKU,
@@ -742,13 +743,28 @@ static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk )
         NULL,
         0 );
     wk->zukan_toroku_param->gamedata = wk->gamedata;
-    GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, wk->zukan_toroku_param );
+*/
+
+    wk->zukan_toroku_param = GFL_HEAP_AllocClearMemory( wk->heapID, sizeof(ZUKAN_TOROKU_PARAM) );
+    wk->zukan_toroku_param->launch           = ZUKAN_TOROKU_LAUNCH_TOROKU;
+    wk->zukan_toroku_param->pp               = wk->pp;
+    wk->zukan_toroku_param->b_zenkoku_flag   = FALSE;
+    wk->zukan_toroku_param->box_strbuf       = NULL;
+    wk->zukan_toroku_param->box_manager      = NULL;
+    wk->zukan_toroku_param->box_tray         = 0;
+    wk->zukan_toroku_param->gamedata         = wk->gamedata;
+    
+    //GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &ZUKAN_TOROKU_ProcData, wk->zukan_toroku_param );
+    GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(zukan_toroku), &ZUKAN_TOROKU_ProcData, wk->zukan_toroku_param );
 }
 static void ZukanTorokuExit( KAWADA_MAIN_WORK* wk )
 {
     GFL_HEAP_FreeMemory( wk->pp );
-    ZUKAN_TOROKU_FreeParam( wk->zukan_toroku_param );
-    GFL_OVERLAY_Unload(FS_OVERLAY_ID(zukan_toroku));
+    //ZUKAN_TOROKU_FreeParam( wk->zukan_toroku_param );
+    
+    GFL_HEAP_FreeMemory( wk->zukan_toroku_param );
+    
+    //GFL_OVERLAY_Unload(FS_OVERLAY_ID(zukan_toroku));
 
   ZONEDATA_Close();
 }
