@@ -125,9 +125,6 @@
 
 #include "pleasure_boat.h"    //for PL_BOAT_
 
-#include "../../../resource/fldmapdata/mm_list/mmlist_def.h"  //for MMLID_NOENTRY
-
-
 //======================================================================
 //	DEBUG定義
 //======================================================================
@@ -158,9 +155,6 @@ extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態
 
 
 #endif  //PM_DEBUG
-
-
-#define MMLID_MAX  (MMLID_NOENTRY)
 
 //======================================================================
 //	define
@@ -864,7 +858,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     // 天気晴れ
     FIELD_WEATHER_Set(
         fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_WEATHER );
-
+    
     //フィールドギミックセットアップ
     FLDGMK_SetUpFieldGimmick(fieldWork);
     break;
@@ -2654,17 +2648,8 @@ static void fldmapMain_MMDL_Init( FIELDMAP_WORK *fieldWork )
 	MMDL_BLACTCONT_Setup(		//動作モデルビルボード　セットアップ
 		fieldWork->fldMMdlSys, fieldWork->mainBbdActSys, 32 );
 
-	{ //ビルボードリソース登録
-	  MMDL_LIST mlist;
-	  int list_area_id = ZONEDATA_GetMvMdlID(fieldWork->location.zone_id);
-    NOZOMU_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",fieldWork->location.zone_id, list_area_id);
-    if ( list_area_id < MMLID_MAX )
-    {
-      fldmap_MMDL_InitList( &mlist, list_area_id, fieldWork->heapID );
-	    MMDL_BLACTCONT_AddResourceTex(
-	      fieldWork->fldMMdlSys, mlist.id_list, mlist.count );
-    }
-	}
+	//ビルボードリソース登録
+  MMDL_BLACTCONT_AddResourceTex( fieldWork->fldMMdlSys );
 	
   MMDL_G3DOBJCONT_Setup( //動作モデルオブジェクト　セットアップ
       fieldWork->fldMMdlSys, fieldWork->fieldG3dObjCtrl );
@@ -2707,23 +2692,30 @@ static void fldmapMain_MMDL_Finish( FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 static void fldmap_MMDL_InitList(
 		MMDL_LIST *mlist, int list_id, HEAPID heapID )
-{
-	int i = 0;
+{  
+	u16 i = 1;
+  u16 num = 0;
+  u16 count;
 	u16 *pList;
 	pList = GFL_ARC_LoadDataAlloc( ARCID_MMDL_LIST, list_id, heapID );
 	mlist->count = 0;
-	
+
+  //ヘッダ部分２バイトとばす(i=1から)
+  count = pList[0];
 	while( pList[i] != OBJCODEMAX ){
-		mlist->id_list[i] = pList[i];
+		mlist->id_list[num] = pList[i];
 		i++;
-		GF_ASSERT( i < MMDL_LIST_MAX );
+    num++;
+		GF_ASSERT( num < MMDL_LIST_MAX );
 	}
 	
-	NOZOMU_Printf( "モデルリスト総数 %d\n", i );
-	
-	mlist->count = i;
-	mlist->id_list[i] = OBJCODEMAX;
+	NOZOMU_Printf( "モデルリスト総数 %d\n", num );
+	mlist->count = num;
+	mlist->id_list[num] = OBJCODEMAX;
+
+  GF_ASSERT_MSG(count == mlist->count,"ERROR:%d_%d",count,mlist->count);
 	GFL_HEAP_FreeMemory( pList );
+ 
 }
 
 //======================================================================

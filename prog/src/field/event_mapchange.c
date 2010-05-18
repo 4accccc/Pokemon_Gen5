@@ -89,7 +89,12 @@ FS_EXTERN_OVERLAY(debug_data);
 #include "palace_warp_check.h"
 #include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_
 
+#include "../../../resource/fldmapdata/mm_list/mmlist_def.h"  //for MMLID_NOENTRY
+
 //============================================================================================
+
+#define MMLID_MAX  (MMLID_NOENTRY)
+
 //============================================================================================
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -489,6 +494,17 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
       //**上のFIELD_FLAGCONT_INIT_Continueで移動ポケモンの天気が抽選されるので、
       //必ず、その下で行う。**
       PM_WEATHER_UpdateSaveLoadWeatherNo( gamedata, cmw->continue_zone_id );
+      //エリア別動作モデルプリセット
+      {
+        int list_area_id;
+        MMDLSYS *fmmdlsys;
+        list_area_id = ZONEDATA_GetMvMdlID( cmw->continue_zone_id );
+        NOZOMU_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",
+            cmw->continue_zone_id, list_area_id);
+        fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+        if ( list_area_id < MMLID_MAX ) MMDLSYS_SetSysOBJCodeParam(fmmdlsys, list_area_id);
+        else MMDLSYS_ClearSysOBJCodeParam( fmmdlsys );
+      }
     }
     (*seq)++;
     break;
@@ -2735,6 +2751,17 @@ static void MAPCHG_updateGameData( GAMESYS_WORK * gsys, const LOCATION * loc_req
 
   // 天気更新
   PM_WEATHER_UpdateZoneChangeWeatherNo( gsys, loc.zone_id );
+
+  //エリア別動作モデルプリセット
+  {
+    int list_area_id;
+    MMDLSYS *fmmdlsys;
+    list_area_id = ZONEDATA_GetMvMdlID( loc.zone_id );
+    NOZOMU_Printf( "エリア別動作モデルリスト：zone_id = %d, mmlid = %d\n",loc.zone_id, list_area_id);
+    fmmdlsys = GAMEDATA_GetMMdlSys( gamedata );
+    if ( list_area_id < MMLID_MAX ) MMDLSYS_SetSysOBJCodeParam(fmmdlsys, list_area_id);
+    else MMDLSYS_ClearSysOBJCodeParam( fmmdlsys );
+  }
 }
 
 //--------------------------------------------------------------

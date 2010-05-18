@@ -63,6 +63,8 @@ struct _TAG_MMDLSYS
   FLDNOGRID_MAPPER *pNOGRIDMapper;  ///<FLDNOGRID_MAPPER
   void *fieldMapWork; ///<FIELDMAP_WORK <-各ワーク単位での接続が良い。
   const u16 *targetCameraAngleYaw; //グローバルで参照するカメラ
+
+  void *pMdlPrmWork;    //動作モデルパラメータポインタ
 };
 
 #define MMDLSYS_SIZE (sizeof(MMDLSYS)) ///<MMDLSYSサイズ

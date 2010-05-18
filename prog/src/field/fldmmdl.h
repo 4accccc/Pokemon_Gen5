@@ -615,6 +615,9 @@ typedef struct
 //	10	テクスチャサイズ
 //	11	アニメID
 //	12 性別
+//
+//	@note　OBJCODE_PARAM この構造体のサイズを変更するとコンバーターの修正まで変更が及びます。
+//  @note  変更する際は、関係者に通達をお願いします。　20100517 satio
 //--------------------------------------------------------------
 typedef struct
 {
@@ -1002,6 +1005,12 @@ extern BOOL MMDL_CheckSameDataIDOnly(
     const MMDL * mmdl, const MMDL_CHECKSAME_DATA *data );
 extern void MMDL_ChangeOBJCode( MMDL *mmdl, u16 code );
 
+extern void MMDLSYS_ClearSysOBJCodeParam( MMDLSYS *mmdlsys);
+extern void MMDLSYS_SetSysOBJCodeParam( MMDLSYS *mmdlsys, int list_id );
+extern void MMDLSYS_GetSysOBJCodeParam(
+    const MMDLSYS *mmdlsys, const u32 idx, OBJCODE_PARAM *outParam);
+extern u16 MMDLSYS_GetSysOBJCodeParamNum( const MMDLSYS *mmdlsys );
+
 extern void MMDLSYS_LoadOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *param );
 extern const OBJCODE_PARAM * MMDL_GetOBJCodeParam( const MMDL *mmdl );
@@ -1179,9 +1188,11 @@ extern void MMDL_BLACTCONT_ProcVBlank( MMDLSYS *mmdlsys );
 extern void MMDL_BLACTCONT_SetGlobalScaleOne( MMDLSYS *mmdlsys );
 extern BOOL MMDL_BLACTCONT_IsThereReserve( const MMDLSYS *mmdlsys );
 extern BOOL MMDL_BLACTCONT_CheckUpdateBBD( const MMDL *mmdl );
-
+/**
 extern void MMDL_BLACTCONT_AddResourceTex(
 	MMDLSYS *mmdlsys, const u16 *code, int max );
+*/
+extern void MMDL_BLACTCONT_AddResourceTex( MMDLSYS *mmdlsys );
 
 extern BOOL MMDL_BLACTCONT_AddActor(
     MMDL *mmdl, GFL_BBDACT_ACTUNIT_ID *outID );

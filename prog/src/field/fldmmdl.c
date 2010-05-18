@@ -21,6 +21,22 @@
 
 #include "fldmmdl_work.h"
 
+#include "system/main.h"
+
+#ifdef PM_DEBUG
+#ifdef _NITRO
+//@note　OBJCODE_PARAM この構造体のサイズを変更するとコンバーターの修正まで変更が及びます。
+//@note  変更する際は、関係者に通達をお願いします。　20100517 satio
+SDK_COMPILER_ASSERT(sizeof(OBJCODE_PARAM) == 28);
+#endif
+#endif		//PM_DEBUG
+
+#define DAT_HEADER_SIZE  (2)
+#define DAT_FOOTER_SIZE (2)
+#define REGULAR_MAX  (30)
+
+#define SYS_MDL_PRM_WORK_SIZE ( (sizeof(u16) * REGULAR_MAX ) + DAT_HEADER_SIZE + DAT_FOOTER_SIZE + sizeof(OBJCODE_PARAM) * REGULAR_MAX )
+
 //======================================================================
 //  define
 //======================================================================
@@ -183,6 +199,14 @@ MMDLSYS * MMDLSYS_CreateSystem(
   mmdlsys->rockpos = rockpos;
   mmdlsys->tcb_pri = MMDL_TCBPRI_STANDARD;
   mmdlsys_InitOBJCodeParam( mmdlsys, heapID );
+
+  {
+    u32 size;
+    size = SYS_MDL_PRM_WORK_SIZE;
+
+    mmdlsys->pMdlPrmWork = GFL_HEAP_AllocClearMemory( HEAPID_WORLD, size );
+  }
+
   return( mmdlsys );
 }
 
@@ -198,6 +222,20 @@ void MMDLSYS_FreeSystem( MMDLSYS *mmdlsys )
   mmdlsys_DeleteOBJCodeParam( mmdlsys );
   GFL_HEAP_FreeMemory( mmdlsys->pMMdlBuf );
   GFL_HEAP_FreeMemory( mmdlsys );
+}
+
+//--------------------------------------------------------------
+/**
+ * MMDLSYS システムが所持するモデルパラメータをクリア
+ * @param  mmdlsys  MMDLSYS*
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+void MMDLSYS_ClearSysOBJCodeParam( MMDLSYS *mmdlsys )
+{
+  u32 size;
+  size = SYS_MDL_PRM_WORK_SIZE;
+  MI_CpuClear8(mmdlsys->pMdlPrmWork, size);
 }
 
 //======================================================================
@@ -4479,6 +4517,70 @@ const OBJCODE_PARAM * MMDLSYS_GetOBJCodeParam(
 
 //--------------------------------------------------------------
 /**
+ * システムにOBJCODE_PARAMをロードする
+ * @note　　常駐でメモリを持つことでアクセススピードを高める
+ *
+ * @param   mmdlsys  MMDLSYS *
+ * @param   list_id   エリア別リストＩＤ
+ * 
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void MMDLSYS_SetSysOBJCodeParam( MMDLSYS *mmdlsys, int list_id)
+{
+  NOZOMU_Printf("list_id %d\n",list_id);
+	GFL_ARC_LoadData( mmdlsys->pMdlPrmWork, ARCID_MMDL_LIST, list_id );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムからOBJCODE_PARAMを取得する
+ * @note　　常駐でメモリを持つことでアクセススピードを高める
+ *
+ * @param   mmdlsys  MMDLSYS *
+ * @param   idx           システムが保持するパラメータテーブルのインデックス
+ * @param   outParam      パラメータ格納バッファ
+ *
+ * @retval  none
+ */
+//--------------------------------------------------------------
+void MMDLSYS_GetSysOBJCodeParam(
+    const MMDLSYS *mmdlsys, const u32 idx, OBJCODE_PARAM *outParam)
+{
+	u16 *data = (u16*)mmdlsys->pMdlPrmWork;
+  u16 num = data[0];
+  if (idx < num)
+  {
+    u16 ofs = ((num+1)/2) * 2;  //アライメントを加味したオブセット
+    OBJCODE_PARAM *prm = (OBJCODE_PARAM *)&data[ofs+2];  //+2はヘッダとフッタの分
+    *outParam = prm[idx];
+  }
+  else
+  {
+    GF_ASSERT_MSG(0,"ERROR idx=%d num = %",idx,num);
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * システムからOBJCODE_PARAMを取得する
+ * @note　　常駐でメモリを持つことでアクセススピードを高める
+ * 
+ * @param  mmdlsys  MMDLSYS *
+ *
+ * @retval  登録した項目数
+ */
+//--------------------------------------------------------------
+u16 MMDLSYS_GetSysOBJCodeParamNum( const MMDLSYS *mmdlsys)
+{
+	u16 *data = (u16*)mmdlsys->pMdlPrmWork;
+  u16 num = data[0];
+  NOZOMU_Printf("OBJ_NUM %d\n",num);
+  return num;
+}
+
+//--------------------------------------------------------------
+/**
  * MMDLSYS OBJCODE_PARAM ロード
  * @param  mmdlsys  MMDLSYS *
  * @param  code  取得するOBJコード
@@ -4503,6 +4605,26 @@ void MMDLSYS_LoadOBJCodeParam(
         D_MMDL_DPrintf(
             "MMDLSYS_LoadOBJCodeParam() CODE %xH 既存データアリ\n", code );
         return;
+      }
+    }
+  }
+
+  {
+    int i;
+    u16 *data = (u16*)mmdlsys->pMdlPrmWork;
+    u16 num = data[0];
+    if (num < REGULAR_MAX)
+    {
+      u16 ofs = ((num+1)/2) * 2; //アライメントを加味したオブセット
+      OBJCODE_PARAM *prm = (OBJCODE_PARAM *)&data[ofs+2]; //+2はヘッダとフッタの分
+      for(i=0;i<num;i++)
+      {
+        if ( code == data[1+i] )
+        {
+          NOZOMU_Printf("Find code:%d\n",code);
+          *outParam = prm[i];
+          return;
+        }
       }
     }
   }

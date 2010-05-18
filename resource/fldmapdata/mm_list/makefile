@@ -6,6 +6,7 @@
 #	@author	tamada GAME FREAK inc.
 #
 #----------------------------------------------------------------------------
+#※USERS に名前を追加する場合はfldmmdlのメイクも通るようにしてください
 USERS = kagaya lee_hyunjung takahashi saitou
 include $(PROJECT_RSCDIR)/macro_define
 
@@ -29,6 +30,12 @@ ARCLIST	=	arclist.txt
 ARCHEAD	=	mmlist_def.h
 ASMFILES	= $(wildcard mmlid_*.s)
 FMMDLHEAD = $(PROJECT_ROOT)/resource/fldmmdl/fldmmdl_objcode.h
+
+CSV_LIST = fldmmdl_list.csv
+CSV_POKE = fldmmdl_poke_list.csv
+CSV_MDL = fldmmdl_mdl_list.csv
+MMDL_XLS = fldmmdl_list.xls
+PRM_BIN	= ../../fldmmdl/fldmmdl_mdlparam.bin
 
 #Makeで生成される*.bin/*.narcはmake cleanの削除対象にする
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
@@ -59,6 +66,7 @@ do-build:  $(TARGET_DIR)/$(ARCNAME)
 	@rm $*.o
 	@rm $*.elf
 	@rm temp.s
+	@ruby rewrite_bin.rb $*
 
 #----------------------------------------------------------------------------
 #	アーカイブ生成
@@ -82,7 +90,22 @@ $(RSCTXT): $(RSCFILE)
 	
 ASMFILE:	$(ASMFILES:.s=.bin)
 
-$(ARCLIST): $(RSCTXT) $(FMMDLHEAD)
+#$(CSV_LIST): ../../fldmmdl/$(CSV_LIST)
+#	@$(COPY)  ../../fldmmdl/$(CSV_LIST) $(CSV_LIST)
+#$(CSV_POKE): ../../fldmmdl/$(CSV_POKE)
+#	@$(COPY)  ../../fldmmdl/$(CSV_POKE) $(CSV_POKE)
+#$(CSV_MDL): ../../fldmmdl/$(CSV_MDL)
+#	@$(COPY)  ../../fldmmdl/$(CSV_MDL) $(CSV_MDL)
+
+$(MMDL_XLS): ../../fldmmdl/$(MMDL_XLS)
+	@$(COPY)  ../../fldmmdl/$(MMDL_XLS) $(MMDL_XLS)
+	@echo エクセル処理･･･
+	@$(XLS2TXT) -o $(CSV_LIST) -p 1 -s csv $(MMDL_XLS)
+	@$(XLS2TXT) -o $(CSV_POKE) -p 2 -s csv $(MMDL_XLS)
+	@$(XLS2TXT) -o $(CSV_MDL) -p 3 -s csv $(MMDL_XLS)
+	@echo エクセル処理･･･終了
+
+$(ARCLIST): $(RSCTXT) $(FMMDLHEAD) $(MMDL_XLS) $(PRM_BIN)
 	@echo エリア別データ生成処理･･･
 	@$(TXT2ASM)  $(RSCTXT) $(ARCLIST) $(ARCHEAD)
 	@echo 個別アセンブラファイルコンパイル･･･

@@ -469,6 +469,7 @@ BOOL MMDL_BLACTCONT_CheckUpdateBBD( const MMDL *mmdl )
 //======================================================================
 //  フィールド動作モデル　ビルボードリソース
 //======================================================================
+#if 0
 //--------------------------------------------------------------
 /**
  * MMDL_BLACTCONT リソース追加 レギュラー、VRAM常駐型で登録
@@ -492,6 +493,31 @@ void MMDL_BLACTCONT_AddResourceTex(
     BBDResUnitIndex_AddResUnit( pBlActCont, &param, BBDRES_VRAM_REGULAR );
     code++;
     max--;
+  }
+}
+#endif
+//--------------------------------------------------------------
+/**
+ * MMDL_BLACTCONT リソース追加 レギュラー、VRAM常駐型で登録
+ * @param  mmdlsys  MMDLSYS
+ * @param  code 表示コード配列
+ * @param  max code要素数
+ * @retval  nothing
+ * @note 呼ばれたその場で読み込みが発生する。
+ * @attention アーカイブデータを連続でロードする為、処理速度は重い。
+ */
+//--------------------------------------------------------------
+void MMDL_BLACTCONT_AddResourceTex( MMDLSYS *mmdlsys )
+{
+  int i;
+  OBJCODE_PARAM param;
+  const OBJCODE_PARAM_BUF_BBD *prm_bbd;
+  MMDL_BLACTCONT *pBlActCont = MMDLSYS_GetBlActCont( mmdlsys );
+  int max = MMDLSYS_GetSysOBJCodeParamNum( mmdlsys );
+  
+  for(i=0;i<max;i++){
+    MMDLSYS_GetSysOBJCodeParam( mmdlsys, i, &param );
+    BBDResUnitIndex_AddResUnit( pBlActCont, &param, BBDRES_VRAM_REGULAR );
   }
 }
 

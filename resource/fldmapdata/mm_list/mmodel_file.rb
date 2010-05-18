@@ -60,18 +60,97 @@ def make_asm_text ofile, ar
 
 HEADER
 
+  ofile.printf("\t.short\t%d\n", ar.length)
+
 	ar.each{|id|
 		ofile.printf("\t.short\t%s\n", id)
 	}
 
 	ofile.puts "\n"
 	ofile.puts "\t.short\tOBJCODEMAX\n"
+  if ar.length % 2 != 0 then
+    #４バイトアライメントのためにダミーコードを入れる
+    ofile.puts "\t.short\tOBJCODEMAX\n"
+  end
 	ofile.puts "\n"
+end
+
+def MakePrmBinTbl(ary)
+  open_file_str = "../../fldmmdl/fldmmdl_mdlparam.bin"
+  stat = File.stat(open_file_str)
+  bin_file = File.open(open_file_str,"rb")
+
+  p "SIZE:" + stat.size.to_s
+  #4バイトはヘッダー
+  header = bin_file.read(4)
+  p "HEADER" + header
+  one_size = 28
+  data_num = stat.size / one_size
+  p "DATA NUM:" + data_num.to_s
+  for i in(0...data_num) do
+    #str = "data_" + i.to_s + ".bin"
+    #bin = File.open(str,"wb")
+    ary << bin_file.read(one_size)
+  end
+end
+
+def MakeMdlList(ary)
+  file = File.open("fldmmdl_list.csv","r")
+  #1行とばし
+  line = file.gets
+  while line = file.gets
+    #END検出
+    if line =~/^#END/ then
+		  break
+	  end
+    column = line.split ","
+    ary << column[7]
+  end
+  file.close
+
+  file = File.open("fldmmdl_poke_list.csv","r")
+  #1行とばし
+  line = file.gets
+  while line = file.gets
+    #END検出
+    if line =~/^#END/ then
+		  break
+	  end
+    column = line.split ","
+    ary << column[7]
+  end
+  file.close
+  
+  file = File.open("fldmmdl_mdl_list.csv","r")
+  #1行とばし
+  line = file.gets
+  while line = file.gets
+    #END検出
+    if line =~/^#END/ then
+		  break
+	  end
+    column = line.split ","
+    ary << column[7]
+  end
+  file.close
+end
+
+def MakeAreaMvMdlPrm(sym, b_ary, m_ary, ar )
+  printf("mmdlprm_%s make\n",sym)
+  str = sym + ".prm"
+  bin = File.open(str,"wb")
+  ar.each{|id|
+		idx = m_ary.index(id)
+    bin.write( b_ary[idx] )
+	}
 end
 
 #---------------------------------------------------
 #---------------------------------------------------
-
+bin_ary = Array.new
+MakePrmBinTbl(bin_ary)
+mmdl_ary = Array.new
+MakeMdlList(mmdl_ary)
 #入力ファイルから定義を読み込む
 infile = File.open(ARGV[0],"r")
 mml = read_table infile
@@ -109,6 +188,9 @@ mml.each{|ar|
 	archead.printf "#define	%-20s %d\n",sym.upcase, linecount
 
 	linecount += 1
+
+  #エリア別動作モデルパラメータバイナリを作成
+  MakeAreaMvMdlPrm(sym, bin_ary, mmdl_ary, ar[1..ar.length - 1] )
 }
 
 archead.puts "#endif"
