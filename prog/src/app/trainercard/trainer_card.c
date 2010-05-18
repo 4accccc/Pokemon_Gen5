@@ -1753,10 +1753,11 @@ static int CheckKey(TR_CARD_WORK* wk)
   }
   else if(keyTrg & PAD_BUTTON_DECIDE)
   {
-    // バッジ画面へ
-    PMSND_PlaySE( SND_TRCARD_DECIDE );
-    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
-    return TRC_KEY_REQ_BADGE_CALL;
+    if(wk->TrCardData->OtherTrCard==FALSE){ // 自分のカードであればバッジ画面へ
+      PMSND_PlaySE( SND_TRCARD_DECIDE );
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
+      return TRC_KEY_REQ_BADGE_CALL;
+    }
   }
 
   return TRC_KEY_REQ_NONE;
@@ -2210,8 +2211,8 @@ static void JumpInputResult( TR_CARD_WORK *wk, int req, int *seq )
     break;
   // 簡易会話呼び出し
   case TRC_KEY_REQ_PMS_CALL:
-      PMSND_PlaySE( SND_TRCARD_PMS );
     if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      PMSND_PlaySE( SND_TRCARD_PMS );
       wk->sub_seq = 0;
       *seq = SEQ_PMSINPUT;
     }
