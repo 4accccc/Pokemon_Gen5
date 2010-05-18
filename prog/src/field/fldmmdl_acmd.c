@@ -274,7 +274,7 @@ GFL_TCB * MMDL_SetAcmdList(
 	
 	{
 		int pri = MMDLSYS_GetTCBPriority(
-			MMDL_GetMMdlSys(mmdl) ) - 1;
+			MMDL_GetMMdlSys(mmdl) ) + MMDL_TCBPRI_OFFS_ANMCMD_LIST;
 		tcb = GFL_TCB_AddTask( MMDLSYS_GetTCBSYS(mmdlsys),
 			mmdl_AcmdListProcTCB, work, pri );
 		GF_ASSERT( tcb != NULL );

@@ -390,6 +390,7 @@ enum
 	MMDL_TCBPRI_STANDARD = 128,		///<基本
   
   //MMDL_TCBPRI_STANDARDに加えるプライオリティオフセット
+  MMDL_TCBPRI_OFFS_ANMCMD_LIST = -2, ///<アニメーションコマンド
   MMDL_TCBPRI_OFFS_PLAYER = -1,   ///<自機
 	MMDL_TCBPRI_OFFS_PAIR = 1,			///<ペア動作
 	MMDL_TCBPRI_OFFS_AFTER = 2,			///<フィールド動作モデルよりも後
