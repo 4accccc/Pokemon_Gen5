@@ -745,16 +745,18 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, raildata, fieldWork->heapID );  
       }
     }
+    SET_CHECK("setup: cameraArea");  //デバッグ：処理負荷計測
 
     //CAMERA_AREAの反映
     setupCameraArea( fieldWork, fieldWork->map_id, fieldWork->heapID );
     break;
 
   case 3:
-    SET_CHECK("setup: fldeff");  //デバッグ：処理負荷計測
+    SET_CHECK("setup: mmdl init");  //デバッグ：処理負荷計測
     //動作モデル初期化
     fldmapMain_MMDL_Init(fieldWork);
     
+    SET_CHECK("setup: fldeff sys");  //デバッグ：処理負荷計測
     //フィールドエフェクト初期化
     fieldWork->fldeff_ctrl = FLDEFF_CTRL_Create(
         fieldWork, FLDEFF_PROCID_MAX, fieldWork->heapID );
@@ -762,12 +764,14 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //フィールドエフェクト　パラメタ設定　タスク
     FLDEFF_CTRL_SetTaskParam( fieldWork->fldeff_ctrl, FLDEFF_TASK_MAX );
     
+    SET_CHECK("setup: fldeff grayscale");  //デバッグ：処理負荷計測
     //フィールドエフェクト　パラメタ設定 グレースケール
     {
       u8 *gray_scale = FIELD_PALACE_GetShadeTable( fieldWork->palace_sys );
       FLDEFF_CTRL_SetGrayScaleParam( fieldWork->fldeff_ctrl, gray_scale );
     }
     
+    SET_CHECK("setup: fldeff regist");  //デバッグ：処理負荷計測
     //フィールドエフェクト　登録
     FLDEFF_CTRL_RegistEffect( fieldWork->fldeff_ctrl,
       DATA_FLDEFF_RegistEffectGroundTbl, DATA_FLDEFF_RegistEffectGroundTblNum );
@@ -813,7 +817,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       TAMADA_Printf("start X,Y,Z=%d,%d,%d\n", FX_Whole(pos->x), FX_Whole(pos->y), FX_Whole(pos->z));
       TAMADA_Printf( "Start Dir = %04x\n", pw->direction );
     }
-    SET_CHECK("setup: gimmicks");  //デバッグ：処理負荷計測
+    SET_CHECK("setup: gimmick sys");  //デバッグ：処理負荷計測
 
     //ギミックテンポラリワーク初期化
     InitGmkTmpWork(&fieldWork->GmkTmpWork);
@@ -824,6 +828,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     //エッジマーキング設定セットアップ
     FIELD_EDGEMARK_Setup( fieldWork->areadata );
 
+    SET_CHECK("setup: fogs");  //デバッグ：処理負荷計測
     // フォグシステム生成
     fieldWork->fog	= FIELD_FOG_Create( fieldWork->heapID );
     
@@ -831,6 +836,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->zonefog = FIELD_ZONEFOGLIGHT_Create( fieldWork->heapID );
     FIELD_ZONEFOGLIGHT_LoadReq( fieldWork->zonefog, ZONEDATA_GetFog(fieldWork->map_id), ZONEDATA_GetLight(fieldWork->map_id), 1 );
 
+    SET_CHECK("setup: light");  //デバッグ：処理負荷計測
     // ライトシステム生成
     {
       TOMOYA_Printf( "進入を含んだ　シーズン %d 通常のシーズン %d\n", PMSEASON_GetConsiderCommSeason(gsys), GAMEDATA_GetSeasonID( fieldWork->gamedata ) );
@@ -840,6 +846,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
           fieldWork->fog, fieldWork->g3Dlightset, fieldWork->heapID );
     }
 
+    SET_CHECK("setup: weather");  //デバッグ：処理負荷計測
     // 天気システム生成
     {
       FIELD_SOUND* fsnd;
@@ -859,6 +866,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     FIELD_WEATHER_Set(
         fieldWork->weather_sys, GAMEDATA_GetWeatherNo( fieldWork->gamedata ), HEAPID_WEATHER );
     
+    SET_CHECK("setup: gimmick setup");  //デバッグ：処理負荷計測
     //フィールドギミックセットアップ
     FLDGMK_SetUpFieldGimmick(fieldWork);
     break;
@@ -2736,6 +2744,16 @@ static BOOL fldmapMain_UpdateMoveZone( FIELDMAP_WORK *fieldWork )
 			return( TRUE );
 		}
 	}
+  { //エンカウントデータはゾーンチェンジ後に遅延読み込みを行う
+    EVENTDATA_SYSTEM *evdata = GAMEDATA_GetEventData( fieldWork->gamedata );
+    if ( EVENTDATA_SYS_IsEncountLoaded( evdata ) == FALSE )
+    {
+      MI_SetMainMemoryPriority(MI_PROCESSOR_ARM9);
+      EVENTDATA_SYS_LoadEncountData(
+          evdata, fieldWork->location.zone_id, GAMEDATA_GetSeasonID(fieldWork->gamedata) );
+      MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+    }
+  }
 	
 	return( FALSE );
 }
@@ -2839,7 +2857,8 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
   SET_CHECK("zonechange:event load");
 	
 	//次のイベントデータをロード
-	EVENTDATA_SYS_Load( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
+  EVENTDATA_SYS_Clear( evdata );
+	EVENTDATA_SYS_LoadEventData( evdata, new_zone_id, GAMEDATA_GetSeasonID(gdata) );
   MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
 
   //歩いてゾーンが変更した場合のフラグ初期化

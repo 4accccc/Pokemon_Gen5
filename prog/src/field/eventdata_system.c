@@ -80,6 +80,7 @@ struct _EVDATA_SYS {
 	u16 connect_max;
 	u16 pos_max;
 
+  BOOL encount_loaded;
 	ENCOUNT_DATA encount_work;
 	u32 load_buffer[EVDATA_SIZE / sizeof(u32)];
 	u32 spscr_buffer[SPSCR_DATA_SIZE / sizeof(u32)];
@@ -188,32 +189,73 @@ void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata)
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief 読み込みデータのクリア
+ */
 //------------------------------------------------------------------
 void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 {
   clearEventDataTable( evdata );
 	GFL_STD_MemClear(evdata->spscr_buffer, SPSCR_DATA_SIZE);
+  evdata->encount_loaded = FALSE;
+  evdata->encount_work.enable_f = FALSE;
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief データ読み込み
+ */
 //------------------------------------------------------------------
-void EVENTDATA_SYS_Load( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
+void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid, u8 season_id )
 {
-	EVENTDATA_SYS_Clear(evdata);
+  EVENTDATA_SYS_Clear( evdata );
+  EVENTDATA_SYS_LoadEventData( evdata, mapid, season_id );
+  EVENTDATA_SYS_LoadEncountData( evdata, mapid, season_id );
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief イベントデータの読み込み処理
+ */
+//------------------------------------------------------------------
+void EVENTDATA_SYS_LoadEventData( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
+{
 	evdata->now_zone_id = zone_id;
 
   loadSpecialScriptData( evdata, zone_id );
   loadEventDataTableNormal(evdata, zone_id);
-  loadEncountDataTable( evdata, zone_id, season_id );
 }
 
 //------------------------------------------------------------------
+/**
+ * @brief エンカウントデータの読み込み処理
+ */
+//------------------------------------------------------------------
+void EVENTDATA_SYS_LoadEncountData( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id )
+{
+  loadEncountDataTable( evdata, zone_id, season_id );
+  evdata->encount_loaded = TRUE;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief 特殊スクリプト用データの取得
+ */
 //------------------------------------------------------------------
 void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata )
 {
   return &evdata->spscr_buffer;
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief エンカウントデータ読み込み済みフラグの取得
+ */
+//------------------------------------------------------------------
+BOOL EVENTDATA_SYS_IsEncountLoaded( const EVENTDATA_SYSTEM * evdata )
+{
+  return evdata->encount_loaded;
+}
 
 
 
