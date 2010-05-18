@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-05-16T18:22:03"/>
+	<create user="matsumiya" host="W00224" date="2010-05-18T22:31:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="63" top="215" right="1102" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="311" right="1024" bottom="710" visible="no"/>
-		<band id="0" index="0" style="0000" width="516"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="346"/>
-		<band id="3" index="3" style="0000" width="1031"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -427,9 +427,9 @@
 	</row>
 
 	<row id="POKETRADE_STR_20">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]と [1:02:ポケモンニックネーム:1]を
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]を
 こうかん　しますか？</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]と [1:02:ポケモンニックネーム:1]を
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]と　[1:02:ポケモンニックネーム:1]を
 交換しますか？</language>
 	</row>
 
@@ -590,10 +590,10 @@
 	</row>
 
 	<row id="POKETRADE_STR_49">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
+		<language name="JPN" width="256">[1:00:トレーナー名:0]から　[1:02:ポケモンニックネーム:1]が
 おくられてきた▽
 [1:02:ポケモンニックネーム:1]を　かわいがって あげてね！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から　[1:02:ポケモンニックネーム:1]が
 送られてきた▽
 [1:02:ポケモンニックネーム:1]を　可愛がって　あげてね！</language>
 	</row>
@@ -1028,16 +1028,16 @@
 	</row>
 
 	<row id="POKETRADE_STR2_28">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　おくります！！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　[1:00:トレーナー名:1]へ　おくります！！
 バイバイ　[1:02:ポケモンニックネーム:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ　送ります！！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を　[1:00:トレーナー名:1]へ　送ります！！
 バイバイ　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
 	<row id="POKETRADE_STR2_29">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　かえします！
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　[1:00:トレーナー名:1]に　かえします！
 ありがとう　[1:02:ポケモンニックネーム:0]！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を [1:00:トレーナー名:1]に　返します！
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を　[1:00:トレーナー名:1]に　返します！
 ありがとう　[1:02:ポケモンニックネーム:0]！</language>
 	</row>
 
@@ -1248,13 +1248,13 @@
 	<row id="gtsnego_info_19" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSでの台詞</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　あずけます</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を預けます</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を　預けます</language>
 	</row>
 
 	<row id="gtsnego_info_20" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSでの台詞</comment>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:1]を　ひきとった</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:1]を引き取った</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:1]を　引き取った</language>
 	</row>
 
 	<row id="gtsnego_info_21" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -1265,17 +1265,17 @@
 
 	<row id="gtsnego_info_22" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSでの相互交換時の台詞</comment>
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]を　[1:00:トレーナー名:1]へ
 おくります</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を[1:00:トレーナー名:1]へ
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]を　[1:00:トレーナー名:1]へ
 おくります</language>
 	</row>
 
 	<row id="gtsnego_info_23" back-color="#ffff00,,,,,,,,,,,,,,,,,">
 		<comment>GTSでの相互交換時の台詞</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
+		<language name="JPN" width="256">[1:00:トレーナー名:0]から　[1:02:ポケモンニックネーム:1]が
 おくられてきました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から[1:02:ポケモンニックネーム:1]が
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から　[1:02:ポケモンニックネーム:1]が
 おくられてきました</language>
 	</row>
 
