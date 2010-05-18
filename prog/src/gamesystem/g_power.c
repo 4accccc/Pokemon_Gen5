@@ -513,7 +513,7 @@ s32 GPOWER_Calc_PPRestore(POKEPARTY *party)
     pos = PokeParty_GetMemberTopIdxBattleEnable( party );
     pp = PokeParty_GetMemberPointer(party, pos);
     {
-      BOOL flag = PP_FastModeOn( pp );  //¦check PP‰ñ•œ‚Ìd•û‚ª‚ ‚Á‚Ä‚¢‚é‚©‘]‰ä•”‚³‚ñ‚ÉŠm”F
+      BOOL flag = PP_FastModeOn( pp );
       {
         u32 waza, i;
         for(i=0; i<PTL_WAZA_MAX; ++i)
