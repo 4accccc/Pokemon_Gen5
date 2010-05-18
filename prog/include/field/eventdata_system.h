@@ -20,8 +20,11 @@ extern EVENTDATA_SYSTEM * EVENTDATA_SYS_Create(HEAPID heapID);
 extern void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata);
 extern void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata);
 extern void EVENTDATA_SYS_Load(EVENTDATA_SYSTEM * evdata, u16 mapid, u8 season_id );
+extern void EVENTDATA_SYS_LoadEventData( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id );
+extern void EVENTDATA_SYS_LoadEncountData( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 season_id );
 extern void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata );
 extern void * EVENTDATA_GetEncountDataTable( EVENTDATA_SYSTEM * evdata );
+extern BOOL EVENTDATA_SYS_IsEncountLoaded( const EVENTDATA_SYSTEM * evdata );
 
 extern u32 EVENTDATA_GetBgEventNum( const EVENTDATA_SYSTEM * evdata );
 extern u32 EVENTDATA_GetNpcEventNum( const EVENTDATA_SYSTEM * evdata );
