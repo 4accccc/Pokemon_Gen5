@@ -3570,6 +3570,8 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   }
 
   
+
+  
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
 
   pWork->heapID = HEAPID_IRCBATTLE;
@@ -3597,6 +3599,8 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   // 通信テーブル追加
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_AddCommandTable(GFL_NET_CMD_IRCTRADE,_PacketTbl,NELEMS(_PacketTbl), pWork);
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
   }
   // ワークの初期化
   pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
@@ -3917,8 +3921,6 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   GFL_G3D_DRAW_End();
 
-  
-
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
       if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
@@ -3965,12 +3967,6 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   POKMEONTRADE_RemoveCoreResource(pWork);
 
-  if(GFL_NET_IsInit()){
-    GFL_NET_SetAutoErrorCheck(FALSE);
-    GFL_NET_SetNoChildErrorCheck(FALSE);
-  }
-
-  
   DEBUGWIN_ExitProc();
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);

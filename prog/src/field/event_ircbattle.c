@@ -385,7 +385,18 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     PMSND_StopBGM();
     PMSND_PlayBGM( dbw->soundNo );
     PMSND_FadeInBGM(PMSND_FADE_NORMAL);
-
+#if 0
+    if(dbw->demo_prm.result == COMM_BTL_DEMO_RESULT_WIN){
+      // バトルの記録
+      WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(gsys)),
+                         pClub->pMatchParam->friendNo-1,1,0,0);
+    }
+    else if(ep2p->demo_prm.result == COMM_BTL_DEMO_RESULT_LOSE){
+      WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(gsys)),
+                         pClub->pMatchParam->friendNo-1,0,1,0);
+    }
+#endif
+    
     (*seq) = _CALL_NET_END;
     break;
   case _CALL_TRADE:  //  ポケモン交換

@@ -290,6 +290,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
     GFL_DISP_GXS_SetVisibleControlDirect( 0 );
     POKETRADE_2D_GTSPokemonIconResetAll(pWork);
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+    POKETRADE_MESSAGE_SixStateDelete(pWork);
 
     _setNextAnim(pWork, 0);
 
