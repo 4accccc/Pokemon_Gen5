@@ -1707,7 +1707,11 @@ static void PokeDataMakeCore( BPLIST_WORK * wk, POKEMON_PARAM * pp, BPL_POKEDATA
     waza->mpp  = WAZADATA_GetMaxPP( waza->id, waza->mpp );
     waza->type = WAZADATA_GetParam( waza->id, WAZAPARAM_TYPE );
     waza->kind = WAZADATA_GetParam( waza->id, WAZAPARAM_DAMAGE_TYPE );
-    waza->hit  = WAZADATA_GetParam( waza->id, WAZAPARAM_HITPER );
+		if( WAZADATA_IsAlwaysHit(waza->id) == TRUE ){
+			waza->hit = 0;
+		}else{
+			waza->hit = WAZADATA_GetParam( waza->id, WAZAPARAM_HITPER );
+		}
     waza->pow  = WAZADATA_GetParam( waza->id, WAZAPARAM_POWER );
   }
 }

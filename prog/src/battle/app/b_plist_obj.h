@@ -49,7 +49,7 @@ extern void BattlePokeList_PageObjSet( BPLIST_WORK * wk, u32 page );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		技アイコンセット：戦闘 or コンテスト
+ * @brief		技アイコンセット
  *
  * @param wk    ワーク
  *

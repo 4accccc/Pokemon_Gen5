@@ -2122,7 +2122,7 @@ void ITEMDISP_WazaInfoWindowChange( FIELD_ITEMMENU_WORK *pWork, int wazano )
   }
 
 	// –½’†
-  if(hit==0){
+  if(hit==0||WAZADATA_IsAlwaysHit(wazano)==TRUE){
     GFL_MSG_GetString(  pWork->MsgManager, msg_bag_023, pWork->pStrBuf );
 //    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 22*8, 24, pWork->pStrBuf, pWork->fontHandle);
 		PrintStr( pWork, pwin, pWork->pStrBuf, 22*8, 24, PRINTSYS_LSB_Make(15,14,0) );
