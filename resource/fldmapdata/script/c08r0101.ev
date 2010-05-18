@@ -94,6 +94,9 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 		_OBJ_ANIME( C08R0101_LEADER8A_01 , anm_c08_leadera_look_b )
 		_OBJ_ANIME_WAIT()
 		
+		//プレイヤーネームを格納
+		_PLAYER_NAME(0)
+	
 		//シャガアイリスを促す
 		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_05w , C08R0101_LEADER8A_01)
 		_BALLOONWIN_CLOSE()
@@ -126,7 +129,10 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	
 	//blackVER（シャガがジムリーダー）
 	ELSE
-
+	
+		//プレイヤーネームを格納
+		_PLAYER_NAME(0)
+		
 		//シャガ挑戦を受ける
 		_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_05b , C08R0101_LEADER8A_01)
 		_BALLOONWIN_CLOSE()
