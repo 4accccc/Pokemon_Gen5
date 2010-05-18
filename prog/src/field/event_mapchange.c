@@ -3326,17 +3326,17 @@ static const PMS_DATA mail_pmsdata[]={
   // 「しょうぶ」してくれて　ありがとう！
   {
     PMS_TYPE_PECULIAR,  9,
-    { 1406, PMS_WORD_NULL},
+    { 1410, PMS_WORD_NULL},
   },
   // 「ドキドキ」で　とってもよかったです！
   {
     PMS_TYPE_PECULIAR,  10,
-    { 1649, PMS_WORD_NULL},
+    { 1653, PMS_WORD_NULL},
   },
   // また「しょうぶ」しようね！　「バイバイ」
   {
     PMS_TYPE_PECULIAR,  20,
-    { 1406, 2058},
+    { 1410, 2058},
     
   },
 
@@ -3382,7 +3382,7 @@ static void MailBox_SetFirstMail( GAMEDATA* gamedata )
   MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[1], 1 );
   MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[2], 2 );
   // 簡易ワード「トレーナー」セット
-  MailData_SetFormBit( mail, 1419 );
+  MailData_SetFormBit( mail, 1423 );
 
   // メールボックスにメールをセット
   {
