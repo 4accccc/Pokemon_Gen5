@@ -137,7 +137,7 @@ EVENT_START    ev_d06_stopper_01
 		//ヤーコン:これは　デンチュラという
 		_BALLOONWIN_OBJMSG( msg_d06_leader_02, D06_LEADER5_01)
 		_BALLOONWIN_CLOSE()
-		
+
 		//ヤーコンのポケモンが出現
 		_OBJ_ADD_EX( 106, 341, DIR_UP, MMDL_ID_EVENTOBJ_00, POKE20, MV_DMY )
 		
@@ -150,8 +150,10 @@ EVENT_START    ev_d06_stopper_01
 		_BALLOONWIN_OBJMSG( msg_d06_leader_03, D06_LEADER5_01)
 		_BALLOONWIN_CLOSE()
 
-		//ワルビルが巣を攻撃する動きをつくる為のウェイト
-		_TIME_WAIT(16)
+		//ワルビルの鳴き声を鳴らす
+		_VOICE_PLAY(MONSNO_505,0)
+		_VOICE_WAIT()
+
 		//ポケモンがわざを出したような処理
 		_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke2_waza_01)
 
@@ -171,12 +173,15 @@ EVENT_START    ev_d06_stopper_01
 		_OBJ_DEL( D06_STOPPER_01 )
 		_TIME_WAIT(4)
 		_SE_WAIT()
-
+		
 		//===============フラグ操作===============//
 		//デンチュラの巣を消す
 		_FLAG_SET(FV_D06_STOPPER_01)
 		//========================================//
-
+		
+		//ワルビルが振り向く
+		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_d)
+		
 		IF $LWK_HERO_POSX == 105 THEN 
 			//ヤーコンが振り向く
 			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_muku_02_a)
@@ -237,12 +242,14 @@ EVENT_START    ev_d06_stopper_01
 		_OBJ_ANIME(D06_LEADER5_01,anm_common_turn_u)
 		_OBJ_ANIME_WAIT()
 		
+		//ワルビルがヤーコンのもとに戻る
 		_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_poke2_saru_01)
 		_OBJ_ANIME_WAIT()
 		_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
-		//ワルビルをモンスターボールに格納している時間
-		_TIME_WAIT(16)
 		
+		//ワルビルをモンスターボールに格納している時間
+		_TIME_WAIT(16)	
+
 		IF $LWK_HERO_POSX == 105 THEN 
 		//ヤーコンが立ち去る
 			_OBJ_ANIME( D06_LEADER5_01,anm_leader5_saru_01_a)
@@ -471,6 +478,7 @@ _ANIME_LABEL	anm_poke2_waza_01
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_poke2_saru_01
 	_ANIME_DATA AC_WALK_L_8F,1
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 //--------------------------------------------------------------------
