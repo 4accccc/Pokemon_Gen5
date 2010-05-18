@@ -27,7 +27,7 @@ typedef struct
   u8  colorG;     // 表示カラー(G) [0, 31]
   u8  colorB;     // 表示カラー(B) [0, 31]
   u16 todayCount; // 今日の回答人数
-  u16 totalCount; // いままでの回答人数
+  u32 totalCount; // いままでの回答人数
 
 } ANSWER_DATA;
 
@@ -40,7 +40,7 @@ typedef struct
   u8  ID;         // 質問ID 
   u8  answerNum;  // 回答の数
   u16 todayCount; // 今日の回答人数
-  u16 totalCount; // いままでの回答人数
+  u32 totalCount; // いままでの回答人数
   ANSWER_DATA answerData[ MAX_ANSWER_NUM_PER_QUESTION ]; // 回答データ
 
 } QUESTION_DATA;

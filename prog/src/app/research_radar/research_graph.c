@@ -284,12 +284,12 @@ static u8 GetTopicID( const RRG_WORK* work ); // 現在表示中の調査項目ID
 static u8 GetQuestionID( const RRG_WORK* work ); // 現在表示中の質問ID
 static u8 GetAnswerNum( const RRG_WORK* work ); // 現在表示中の質問に対する回答選択肢の数
 static u16 GetAnswerID( const RRG_WORK* work ); // 現在表示中の回答ID
-static u16 GetCountOfQuestion( const RRG_WORK* work ); // 現在表示中の質問に対する, 表示中の回答人数
-static u16 GetTodayCountOfQuestion( const RRG_WORK* work ); // 現在表示中の質問に対する, 今日の回答人数
-static u16 GetTotalCountOfQuestion( const RRG_WORK* work ); // 現在表示中の質問に対する, 合計の回答人数
-static u16 GetCountOfAnswer( const RRG_WORK* work ); // 現在表示中の回答に対する, 表示中の回答人数
-static u16 GetTodayCountOfAnswer( const RRG_WORK* work ); // 現在表示中の回答に対する, 今日の回答人数
-static u16 GetTotalCountOfAnswer( const RRG_WORK* work ); // 現在表示中の回答に対する, 合計の回答人数
+static u32 GetCountOfQuestion( const RRG_WORK* work ); // 現在表示中の質問に対する, 表示中の回答人数
+static u32 GetTodayCountOfQuestion( const RRG_WORK* work ); // 現在表示中の質問に対する, 今日の回答人数
+static u32 GetTotalCountOfQuestion( const RRG_WORK* work ); // 現在表示中の質問に対する, 合計の回答人数
+static u32 GetCountOfAnswer( const RRG_WORK* work ); // 現在表示中の回答に対する, 表示中の回答人数
+static u32 GetTodayCountOfAnswer( const RRG_WORK* work ); // 現在表示中の回答に対する, 今日の回答人数
+static u32 GetTotalCountOfAnswer( const RRG_WORK* work ); // 現在表示中の回答に対する, 合計の回答人数
 static u8 GetInvestigatingTopicID( const RRG_WORK* work ); // 現在調査中の調査項目IDを取得する
 static u8 GetMyAnswerID( const RRG_WORK* work ); // 現在表示中の質問に対する, 自分の回答IDを取得する
 static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work ); // 質問『プレイ時間は？』に対する自分の回答IDを取得する
@@ -2723,7 +2723,7 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
 {
   u16 answerID;
   u8 answerRank;
-  u16 count;
+  u32 count;
   u8 percentage;
   BG_FONT* BGFont;
   STRBUF* strbuf_expand; // 展開後の文字列
@@ -2759,7 +2759,7 @@ static void UpdateBGFont_Answer( RRG_WORK* work )
     strbuf_expand = GFL_STR_CreateBuffer( 128, work->heapID );
     WORDSET_RegisterNumber( work->wordset, 0, answerRank+1, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT ); // 何番目か
     WORDSET_RegisterWord( work->wordset, 1, strbuf_answer, 0, TRUE, PM_LANG ); // 回答文字列
-    WORDSET_RegisterNumber( work->wordset, 2, count, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT ); // 人数
+    WORDSET_RegisterNumber( work->wordset, 2, count, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT ); // 人数
     WORDSET_RegisterNumber( work->wordset, 3, percentage, 3, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT ); // パーセンテージ
     WORDSET_ExpandStr( work->wordset, strbuf_expand, strbuf_plain );
   }
@@ -2854,7 +2854,7 @@ static void UpdateBGFont_Count( RRG_WORK* work )
     wordset = work->wordset;
     strbuf_plain  = GFL_MSG_CreateString( message, strID );
     strbuf_expand = GFL_STR_CreateBuffer( 128, work->heapID ); 
-    WORDSET_RegisterNumber( wordset, 0, count, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( wordset, 0, count, 6, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
     WORDSET_ExpandStr( wordset, strbuf_expand, strbuf_plain );
   }
 
@@ -3469,9 +3469,9 @@ static u16 GetAnswerID( const RRG_WORK* work )
  * @return 現在表示中の質問に対する, 表示の回答人数
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetCountOfQuestion( const RRG_WORK* work )
+static u32 GetCountOfQuestion( const RRG_WORK* work )
 {
-  u16 count = 0;
+  u32 count = 0;
 
   switch( work->graphMode ) {
   case GRAPH_DISP_MODE_TODAY:  count = GetTodayCountOfQuestion( work ); break;
@@ -3491,7 +3491,7 @@ static u16 GetCountOfQuestion( const RRG_WORK* work )
  * @return 現在表示中の質問に対する, 今日の回答人数
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTodayCountOfQuestion( const RRG_WORK* work )
+static u32 GetTodayCountOfQuestion( const RRG_WORK* work )
 {
   u8 qIdx;
 
@@ -3509,7 +3509,7 @@ static u16 GetTodayCountOfQuestion( const RRG_WORK* work )
  * @return 現在表示中の質問に対する, 合計の回答人数
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTotalCountOfQuestion( const RRG_WORK* work )
+static u32 GetTotalCountOfQuestion( const RRG_WORK* work )
 {
   u8 qIdx;
 
@@ -3527,7 +3527,7 @@ static u16 GetTotalCountOfQuestion( const RRG_WORK* work )
  * @return 現在表示中の回答に対する, 表示の回答人数
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetCountOfAnswer( const RRG_WORK* work )
+static u32 GetCountOfAnswer( const RRG_WORK* work )
 {
   switch( work->graphMode ) {
   case GRAPH_DISP_MODE_TODAY: return GetTodayCountOfAnswer( work ); break;
@@ -3549,7 +3549,7 @@ static u16 GetCountOfAnswer( const RRG_WORK* work )
  * @return 現在表示中の回答に対する, 今日の回答人数
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTodayCountOfAnswer( const RRG_WORK* work )
+static u32 GetTodayCountOfAnswer( const RRG_WORK* work )
 {
   u8 qIdx;
   u8 aIdx;
@@ -3569,7 +3569,7 @@ static u16 GetTodayCountOfAnswer( const RRG_WORK* work )
  * @return 現在表示中の回答に対する, 合計の回答人数
  */
 //-----------------------------------------------------------------------------------------
-static u16 GetTotalCountOfAnswer( const RRG_WORK* work )
+static u32 GetTotalCountOfAnswer( const RRG_WORK* work )
 {
   u8 qIdx;
   u8 aIdx;
@@ -4111,11 +4111,11 @@ static void SetupResearchData( RRG_WORK* work )
   u8 topicID;
   u8 questionID[ QUESTION_NUM_PER_TOPIC ];
   u8 answerNumOfQuestion[ QUESTION_NUM_PER_TOPIC ];
-  u16 todayCountOfQuestion[ QUESTION_NUM_PER_TOPIC ];
-  u16 totalCountOfQuestion[ QUESTION_NUM_PER_TOPIC ];
+  u32 todayCountOfQuestion[ QUESTION_NUM_PER_TOPIC ];
+  u32 totalCountOfQuestion[ QUESTION_NUM_PER_TOPIC ];
   u16 answerID[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
-  u16 todayCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
-  u16 totalCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
+  u32 todayCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
+  u32 totalCountOfAnswer[ QUESTION_NUM_PER_TOPIC ][ MAX_ANSWER_NUM_PER_QUESTION ];
   GAMEDATA* gameData;
   SAVE_CONTROL_WORK* save;
   QUESTIONNAIRE_SAVE_WORK* QSave;
