@@ -48,7 +48,6 @@
 // サウンド
 
 // オーバーレイ
-FS_EXTERN_OVERLAY(ui_common);
 
 
 /*
@@ -404,6 +403,16 @@ OSHIDASHI_DIRECT;
 #define KAISOU_COMP_SPEED  (8.0f)  // 階層変更の際のcompの速度(1フレームでこれだけ移動する)
 
 
+// OBJを差し替える際に乱れないように、2つを交互に表示する
+typedef enum
+{
+  OBJ_SWAP_0,
+  OBJ_SWAP_1,
+  OBJ_SWAP_MAX,
+}
+OBJ_SWAP;
+
+
 //=============================================================================
 /**
 *  構造体宣言
@@ -481,8 +490,11 @@ typedef struct
   // FRONT or BACK
   BOOL                        is_poke_front;  // TRUEのときFRONTを表示中、FALSEのときBACKを表示中
 
-  UI_EASY_CLWK_RES            pokeicon_res;   // pokeicon_clwkがNULLのとき、使用していない
-  GFL_CLWK*                   pokeicon_clwk;  // NULLのときなし
+  u32                         pokeicon_ncg[OBJ_SWAP_MAX];    // pokeicon_clwk[i]がNULLでないときpokeicon_ncg[i]は有効
+  u32                         pokeicon_ncl;
+  u32                         pokeicon_nce;
+  GFL_CLWK*                   pokeicon_clwk[OBJ_SWAP_MAX];   // 使っていないときはpokeicon_clwk[i]をNULLにしておく
+  OBJ_SWAP                    pokeicon_swap_curr;            // 今表示しているpokeicon_clwkはpokeicon_clwk[pokeicon_swap_curr]
 
   DIFF_INFO                   diff_info_list[DIFF_MAX];  // ここには今のフォルムも含んでいる
   u16                         diff_num;  // 最大DIFF_MAX
@@ -621,12 +633,14 @@ static void Zukan_Detail_Form_PokeMcssCallBackFunctor( u32 data, fx32 currentFra
 static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 // ポケアイコン
-static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg );
-static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
+static void PokeiconBaseInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void PokeiconBaseExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static GFL_CLWK* PokeiconInit( u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg );
+static void PokeiconExit( u32 ncg, GFL_CLWK* clwk );
 // マクロ
-#define BLOCK_POKEICON_EXIT(res,clwk)                     \
+#define BLOCK_POKEICON_EXIT(ncg,clwk)                     \
     {                                                     \
-      if( clwk ) PokeiconExit( res, clwk );               \
+      if( clwk ) PokeiconExit( ncg, clwk );               \
       clwk = NULL;                                        \
     }
 // NULLを代入し忘れないようにマクロを使うようにしておく
@@ -744,9 +758,6 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
   }
 #endif
 
-  // オーバーレイ
-  GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
-
   // ヒープ
   {
     work = ZKNDTL_PROC_AllocWork(proc, sizeof(ZUKAN_DETAIL_FORM_WORK), param->heap_id);
@@ -770,7 +781,11 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
       work->poke_mcss_wk[i].poke_call_back_data = NULL;
     }
 
-    work->pokeicon_clwk = NULL;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      work->pokeicon_clwk[i] = NULL;  // NULLで初期化
+    }
+    work->pokeicon_swap_curr = OBJ_SWAP_0;
   }
   // FRONT or BACKの初期化
   work->is_poke_front = TRUE;
@@ -830,7 +845,17 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcExit( ZKNDTL_PROC* proc, int* se
   Zukan_Detail_Form_ObjBaseDelete( param, work, cmn );
   
   // ポケアイコン
-  BLOCK_POKEICON_EXIT( &work->pokeicon_res, work->pokeicon_clwk )
+  {
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      // NULLチェックはマクロ内で行っている
+      BLOCK_POKEICON_EXIT( work->pokeicon_ncg[i], work->pokeicon_clwk[i] )
+    }
+  }
+  
+  // ポケアイコンの不変物
+  PokeiconBaseExit( param, work, cmn );
 
   // テキスト
   Zukan_Detail_Form_DeleteTextBase( param, work, cmn );
@@ -853,9 +878,6 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcExit( ZKNDTL_PROC* proc, int* se
 
   // ヒープ
   ZKNDTL_PROC_FreeWork( proc );
-
-  // オーバーレイ
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common) );
 
 #ifdef DEBUG_KAWADA
   {
@@ -932,11 +954,14 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
      
       // 違う姿情報を取得する
       Zukan_Detail_Form_GetDiffInfo( param, work, cmn );
-     
+    
+      // ポケアイコンの不変物
+      PokeiconBaseInit( param, work, cmn );
+
       // 最初のポケモンを表示する
       Zukan_Detail_Form_ChangePoke( param, work, cmn );
       // ポケアイコンの設定を変更しておく
-      GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk[work->pokeicon_swap_curr], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
 
       // ポケモンを非表示にし黒にする
       MCSS_SetVanishFlag( work->poke_mcss_wk[POKE_CURR_F].poke_wk );
@@ -2115,7 +2140,7 @@ static MCSS_WORK* PokeInit( MCSS_SYS_WORK* mcss_sys_wk,
   
   MCSS_SetAnmStopFlag( poke_wk );
   MCSS_SetScale( poke_wk, &scale );
-  PokeAdjustOfsPos( poke_wk );
+  //PokeAdjustOfsPos( poke_wk );  // 地面原点で問題ないので、オフセットしない。
 
   return poke_wk;
 }
@@ -2248,30 +2273,72 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 //-------------------------------------
 /// ポケアイコン
 //=====================================
-static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg )
+static void PokeiconBaseInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 不変物の生成
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, param->heap_id );
+
+/*
+  work->pokeicon_ncl = GFL_CLGRP_PLTT_RegisterEx(
+                           handle,
+                           POKEICON_GetPalArcIndex(),
+                           CLSYS_DRAW_SUB,
+                           OBJ_PAL_POS_S_POKEICON * 0x20,
+                           0,
+                           OBJ_PAL_NUM_S_POKEICON,
+                           param->heap_id );
+*/
+  work->pokeicon_ncl = GFL_CLGRP_PLTT_RegisterComp(  // ポケアイコンのパレットは圧縮されている
+                           handle,
+                           POKEICON_GetPalArcIndex(),
+                           CLSYS_DRAW_SUB,
+                           OBJ_PAL_POS_S_POKEICON * 0x20,
+                           param->heap_id );
+
+  work->pokeicon_nce = GFL_CLGRP_CELLANIM_Register(
+                           handle,
+                           POKEICON_GetCellSubArcIndex(),
+                           POKEICON_GetAnmSubArcIndex(),
+                           param->heap_id );
+
+  GFL_ARC_CloseDataHandle( handle );
+}
+static void PokeiconBaseExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  // 不変物の生成
+  GFL_CLGRP_CELLANIM_Release( work->pokeicon_nce );
+  GFL_CLGRP_PLTT_Release( work->pokeicon_ncl );
+}
+
+static GFL_CLWK* PokeiconInit( u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg )
 {
   GFL_CLWK* clwk;
-  
-  UI_EASY_CLWK_RES_PARAM prm;
-  prm.draw_type    = CLSYS_DRAW_SUB;
-  prm.comp_flg     = UI_EASY_CLWK_RES_COMP_NCLR;
-  prm.arc_id       = ARCID_POKEICON;
-  prm.pltt_id      = POKEICON_GetPalArcIndex();
-  prm.ncg_id       = POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg );
-  prm.cell_id      = POKEICON_GetCellArcIndex(); 
-  prm.anm_id       = POKEICON_GetAnmArcIndex();
-  prm.pltt_line    = OBJ_PAL_POS_S_POKEICON;
-  prm.pltt_src_ofs = 0;
-  prm.pltt_src_num = OBJ_PAL_NUM_S_POKEICON;
- 
-  UI_EASY_CLWK_LoadResource( res, &prm, clunit, heap_id );
-  
-  // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
-  clwk = UI_EASY_CLWK_CreateCLWK( res, clunit, pokeicon_pos[0], pokeicon_pos[1], 1, heap_id );
+  GFL_CLWK_DATA data;
 
-  // 上にアイテムアイコンを描画するので優先度を下げておく
-  GFL_CLACT_WK_SetSoftPri( clwk, 1 );
+  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, heap_id );
 
+  data.pos_x   = pokeicon_pos[0];
+  data.pos_y   = pokeicon_pos[1];
+  data.anmseq  = 1;  // アニメシーケンスで指定( 0=瀕死, 1=HP最大, 2=HP緑, 3=HP黄, 4=HP赤, 5=状態異常 )
+  data.softpri = 1;  // 上にアイテムアイコンを描画するので優先度を下げておく
+  data.bgpri   = 0;
+
+  *ncg = GFL_CLGRP_CGR_Register(
+             handle,
+             POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg ),
+             FALSE,
+             CLSYS_DRAW_SUB,
+             heap_id );
+    
+  clwk = GFL_CLACT_WK_Create(
+             clunit,
+             *ncg,
+             ncl,
+             nce,
+             &data,
+             CLSYS_DEFREND_SUB,
+             heap_id );
+   
   // オートアニメ OFF
   GFL_CLACT_WK_SetAutoAnmFlag( clwk, FALSE );
 
@@ -2285,14 +2352,16 @@ static GFL_CLWK* PokeiconInit( UI_EASY_CLWK_RES* res, GFL_CLUNIT* clunit, HEAPID
                                                         // ポケモンを変更しただけのときは、暗くしたり半透明にしたりしたくない。
                                                         // BGとともにこのOBJも暗くしたいときは、この関数の後に設定すること。
 
+  GFL_ARC_CloseDataHandle( handle );
+
   return clwk;
 }
-static void PokeiconExit( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk )
+static void PokeiconExit( u32 ncg, GFL_CLWK* clwk )
 {
   // CLWK破棄
   GFL_CLACT_WK_Remove( clwk );
   // リソース開放
-  UI_EASY_CLWK_UnLoadResource( res );
+  GFL_CLGRP_CGR_Release( ncg );
 }
 
 //-------------------------------------
@@ -2664,7 +2733,16 @@ static void Zukan_Detail_Form_PokeiconInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM*
   form_no = work->diff_info_list[diff_no].form;
   sex = work->diff_info_list[diff_no].sex;
 
-  work->pokeicon_clwk = PokeiconInit( &work->pokeicon_res, work->clunit, param->heap_id, mons, form_no, sex, 0 );
+  work->pokeicon_clwk[work->pokeicon_swap_curr] = PokeiconInit(
+                                                      &(work->pokeicon_ncg[work->pokeicon_swap_curr]),
+                                                      work->pokeicon_ncl,
+                                                      work->pokeicon_nce,
+                                                      work->clunit,
+                                                      param->heap_id,
+                                                      mons,
+                                                      form_no,
+                                                      sex,
+                                                      0 );
 }
 
 //-------------------------------------
@@ -2767,9 +2845,24 @@ static void Zukan_Detail_Form_ChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* param,
 //=====================================
 static void Zukan_Detail_Form_ChangePokeicon( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // 今表示しているものを非表示にし、次のものを表示するようスワップを入れ替える
+  {
+    // 今表示しているものを非表示にする
+    if( work->pokeicon_clwk[work->pokeicon_swap_curr] )
+    {
+      GFL_CLACT_WK_SetDrawEnable( work->pokeicon_clwk[work->pokeicon_swap_curr], FALSE );
+    }
+    // 次のものを表示するようスワップを入れ替える
+    work->pokeicon_swap_curr = ( work->pokeicon_swap_curr +1 ) %OBJ_SWAP_MAX;
+  }
+
   // 前のを破棄
-  BLOCK_POKEICON_EXIT( &work->pokeicon_res, work->pokeicon_clwk )
-  
+  if( work->pokeicon_clwk[work->pokeicon_swap_curr] )
+  {
+    // NULLチェックはマクロ内で行っている
+    BLOCK_POKEICON_EXIT( work->pokeicon_ncg[work->pokeicon_swap_curr], work->pokeicon_clwk[work->pokeicon_swap_curr] )
+  } 
+
   // 次のを生成
   Zukan_Detail_Form_PokeiconInitFromDiffInfo( param, work, cmn, work->diff_curr_no );
 }
@@ -4517,8 +4610,14 @@ static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_D
   {
     u8 i;
 
-    GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
-    
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( work->pokeicon_clwk[i] )
+      {
+        GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk[i], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+      }
+    }
+
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_RANGE], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_CURSOR], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
 
@@ -4546,7 +4645,13 @@ static void Zukan_Detail_Form_AlphaExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_D
   {
     u8 i;
 
-    GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( work->pokeicon_clwk[i] )
+      {
+        GFL_CLACT_WK_SetObjMode( work->pokeicon_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      }
+    }
 
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_RANGE], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
     GFL_CLACT_WK_SetObjMode( work->obj_clwk[OBJ_BAR_CURSOR], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので

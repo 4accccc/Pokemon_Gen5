@@ -122,18 +122,28 @@ enum
   BG_PAL_POS_S_REAR              = 1,
 };
 
+// OBJを差し替える際に乱れないように、2つを交互に表示する
+typedef enum
+{
+  OBJ_SWAP_0,
+  OBJ_SWAP_1,
+  OBJ_SWAP_MAX,
+}
+OBJ_SWAP;
+
 // サブOBJパレット
 // 本数
 enum
 {
-  OBJ_PAL_NUM_S_POKE             = 1,
+  OBJ_PAL_NUM_S_POKE             = 1,  // OBJ_PAL_NUM_S_POKE * OBJ_SWAP_MAX 本使用する
   OBJ_PAL_NUM_S_FIELD            = 1,
 };
 // 位置
 enum
 {
   OBJ_PAL_POS_S_POKE             = 0,
-  OBJ_PAL_POS_S_FIELD            = 1,
+  OBJ_PAL_POS_S_FIELD            = OBJ_PAL_POS_S_POKE + OBJ_PAL_NUM_S_POKE * OBJ_SWAP_MAX,  // 2
+  OBJ_PAL_POS_S_MAX              = OBJ_PAL_POS_S_FIELD + OBJ_PAL_NUM_S_FIELD,               // 3  // ここから空き
 };
 
 
@@ -430,10 +440,11 @@ typedef struct
 #endif  // #ifdef USE_SGRAPH
 
 
-  u32                         poke_ncl;
-  u32                         poke_ncg;
-  u32                         poke_nce;
-  GFL_CLWK*                   poke_clwk;
+  u32                         poke_ncl[OBJ_SWAP_MAX];   // poke_clwk[i]がNULLでないときpoke_ncl[i]は有効
+  u32                         poke_ncg[OBJ_SWAP_MAX];   // poke_clwk[i]がNULLでないときpoke_ncg[i]は有効
+  u32                         poke_nce[OBJ_SWAP_MAX];   // poke_clwk[i]がNULLでないときpoke_nce[i]は有効
+  GFL_CLWK*                   poke_clwk[OBJ_SWAP_MAX];  // 使っていないときはpoke_clwk[i]をNULLにしておく
+  OBJ_SWAP                    poke_swap_curr;           // 今表示しているpoke_clwkはpoke_clwk[poke_swap_curr] 
   POKE_CLWK_STATE             poke_state;
 
   u32                         voice_idx;
@@ -492,8 +503,8 @@ static void Zukan_Detail_Voice_ObjTimeDisplay( ZUKAN_DETAIL_VOICE_PARAM* param, 
                                                u16 disp_sec, u16 disp_milli );
 
 // ポケモン2D
-static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, OBJ_SWAP swap_idx );
+static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, OBJ_SWAP swap_idx );
 // ポケモンの鳴きアニメ(縦スケール拡大)
 static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Voice_PokeCryStart( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -655,6 +666,17 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcInit( ZKNDTL_PROC* proc, int* s
   // 入力可不可
   work->input_enable = TRUE;
 
+  // ポケモン2D
+  {
+    // NULLで初期化
+    u8 i;
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      work->poke_clwk[i] = NULL;
+    }
+    work->poke_swap_curr = OBJ_SWAP_0;
+  }
+
   return ZKNDTL_PROC_RES_FINISH;
 }
 
@@ -678,7 +700,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcExit( ZKNDTL_PROC* proc, int* s
            BG_FRAME_M_PANEL,
            work->panel_m_tinfo );
   // ポケモン2D
-  Zukan_Detail_Voice_DeletePoke( param, work, cmn );
+  Zukan_Detail_Voice_DeletePoke( param, work, cmn, work->poke_swap_curr );
   // ポケモン名
   Zukan_Detail_Voice_DeleteName( param, work, cmn );
   Zukan_Detail_Voice_DeleteNameBase( param, work, cmn );
@@ -760,8 +782,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
       }
 
       // ポケモン2D
-      Zukan_Detail_Voice_CreatePoke( param, work, cmn );
-      GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      Zukan_Detail_Voice_CreatePoke( param, work, cmn, work->poke_swap_curr );
+      GFL_CLACT_WK_SetObjMode( work->poke_clwk[work->poke_swap_curr], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
       // ポケモン名
       Zukan_Detail_Voice_CreateNameBase( param, work, cmn );
       Zukan_Detail_Voice_CreateName( param, work, cmn );
@@ -1318,7 +1340,7 @@ static void Zukan_Detail_Voice_ObjTimeDisplay( ZUKAN_DETAIL_VOICE_PARAM* param, 
 //-------------------------------------
 /// ポケモン2D
 //=====================================
-static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, OBJ_SWAP swap_idx )
 {
   u16 monsno = ZKNDTL_COMMON_GetCurrPoke(cmn);
 
@@ -1345,19 +1367,19 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     // ハンドル
     handle = POKE2DGRA_OpenHandle( param->heap_id );
     // リソース読みこみ
-    work->poke_ncg = POKE2DGRA_OBJ_CGR_Register(
+    work->poke_ncg[swap_idx] = POKE2DGRA_OBJ_CGR_Register(
                          handle,
                          (int)monsno, (int)form, (int)sex, (int)rare,
                          POKEGRA_DIR_FRONT, FALSE,
                          personal_rnd,
                          draw_type, param->heap_id );
-    work->poke_ncl = POKE2DGRA_OBJ_PLTT_Register(
+    work->poke_ncl[swap_idx] = POKE2DGRA_OBJ_PLTT_Register(
                          handle,
                          (int)monsno, (int)form, (int)sex, (int)rare,
                          POKEGRA_DIR_FRONT, FALSE,
                          draw_type,
-                         OBJ_PAL_POS_S_POKE * 0x20, param->heap_id );
-    work->poke_nce = POKE2DGRA_OBJ_CELLANM_Register(
+                         ( OBJ_PAL_POS_S_POKE + OBJ_PAL_NUM_S_POKE * swap_idx ) * 0x20, param->heap_id );
+    work->poke_nce[swap_idx] = POKE2DGRA_OBJ_CELLANM_Register(
                          (int)monsno, (int)form, (int)sex, (int)rare,
                          POKEGRA_DIR_FRONT, FALSE,
                          ZKNDTL_OBJ_MAPPING_S,
@@ -1377,7 +1399,7 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
           param->heap_id,
           FADE_SUB_OBJ,
           OBJ_PAL_NUM_S_POKE * 0x20,
-          OBJ_PAL_POS_S_POKE * 0x20,
+          ( OBJ_PAL_POS_S_POKE + OBJ_PAL_NUM_S_POKE * swap_idx ) * 16,  // カラー単位なので、何バイト目かではなく、何個目の色かである。
           0 );
     }
 
@@ -1420,35 +1442,39 @@ static void Zukan_Detail_Voice_CreatePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKA
     claffinedata.rotation       = 0;  // 回転角度(0～0xffff 0xffffが360度)
     claffinedata.affine_type    = CLSYS_AFFINETYPE_DOUBLE;
 
-    work->poke_clwk = GFL_CLACT_WK_CreateAffine(
+    work->poke_clwk[swap_idx] = GFL_CLACT_WK_CreateAffine(
         work->clunit,
-        work->poke_ncg,
-        work->poke_ncl,
-        work->poke_nce,
+        work->poke_ncg[swap_idx],
+        work->poke_ncl[swap_idx],
+        work->poke_nce[swap_idx],
         &claffinedata,
         CLSYS_DEFREND_SUB,
         param->heap_id );
 
     //GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
-    GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_NORMAL );  // BGとともにこのOBJも暗くしたいのは、フェードインとフェードアウトのときだけであり、
+    GFL_CLACT_WK_SetObjMode( work->poke_clwk[swap_idx], GX_OAM_MODE_NORMAL );  // BGとともにこのOBJも暗くしたいのは、フェードインとフェードアウトのときだけであり、
                                                                      // ポケモンを変更しただけのときは、暗くしたり半透明にしたりしたくない。
                                                                      // BGとともにこのOBJも暗くしたいときは、この関数の後に設定すること。
   }
 
   work->poke_state = POKE_CLWK_STATE_SILENT;
 }
-static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Voice_DeletePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn, OBJ_SWAP swap_idx )
 {
-  // OBJを破棄する
+  if( work->poke_clwk[swap_idx] )
   {
-    GFL_CLACT_WK_Remove( work->poke_clwk );
-  }
+    // OBJを破棄する
+    {
+      GFL_CLACT_WK_Remove( work->poke_clwk[swap_idx] );
+      work->poke_clwk[swap_idx] = NULL;
+    }
 
-  // リソースを破棄する
-  {
-    GFL_CLGRP_PLTT_Release( work->poke_ncl );
-    GFL_CLGRP_CGR_Release( work->poke_ncg );
-    GFL_CLGRP_CELLANIM_Release( work->poke_nce );
+    // リソースを破棄する
+    {
+      GFL_CLGRP_PLTT_Release( work->poke_ncl[swap_idx] );
+      GFL_CLGRP_CGR_Release( work->poke_ncg[swap_idx] );
+      GFL_CLGRP_CELLANIM_Release( work->poke_nce[swap_idx] );
+    }
   }
 }
 
@@ -1467,8 +1493,8 @@ static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUK
     break;
   case POKE_CLWK_STATE_CRY_OPEN:
     {
-      GFL_CLACT_WK_GetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
-      GFL_CLACT_WK_GetScale( work->poke_clwk, &scale );
+      GFL_CLACT_WK_GetPos( work->poke_clwk[work->poke_swap_curr], &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_GetScale( work->poke_clwk[work->poke_swap_curr], &scale );
       sy = FX_FX32_TO_F32( scale.y );
       sy += POKE_CLWK_SCALE_Y_INC;
       if( sy >= POKE_CLWK_SCALE_Y_MAX )
@@ -1479,8 +1505,8 @@ static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUK
       pos.y = POKE_CLWK_BASE_POS_Y - (s16)( POKE_CLWK_SIZE * ( sy - 1.0f ) / 2.0f );
       scale.y = FX_F32_TO_FX32( sy );
 
-      GFL_CLACT_WK_SetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
-      GFL_CLACT_WK_SetScale( work->poke_clwk, &scale );
+      GFL_CLACT_WK_SetPos( work->poke_clwk[work->poke_swap_curr], &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_SetScale( work->poke_clwk[work->poke_swap_curr], &scale );
     }
     break;
   case POKE_CLWK_STATE_CRY_STOP:
@@ -1489,8 +1515,8 @@ static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUK
     break;
   case POKE_CLWK_STATE_CRY_CLOSE:
     {
-      GFL_CLACT_WK_GetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
-      GFL_CLACT_WK_GetScale( work->poke_clwk, &scale );
+      GFL_CLACT_WK_GetPos( work->poke_clwk[work->poke_swap_curr], &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_GetScale( work->poke_clwk[work->poke_swap_curr], &scale );
       sy = FX_FX32_TO_F32( scale.y );
       sy -= POKE_CLWK_SCALE_Y_DEC;
       if( sy <= POKE_CLWK_BASE_SCALE_Y )
@@ -1505,8 +1531,8 @@ static void Zukan_Detail_Voice_PokeCryMain( ZUKAN_DETAIL_VOICE_PARAM* param, ZUK
       }
       scale.y = FX_F32_TO_FX32( sy );
 
-      GFL_CLACT_WK_SetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
-      GFL_CLACT_WK_SetScale( work->poke_clwk, &scale );
+      GFL_CLACT_WK_SetPos( work->poke_clwk[work->poke_swap_curr], &pos, CLSYS_DEFREND_SUB );
+      GFL_CLACT_WK_SetScale( work->poke_clwk[work->poke_swap_curr], &scale );
     }
     break;
   }
@@ -1521,8 +1547,8 @@ static void Zukan_Detail_Voice_PokeCryStart( ZUKAN_DETAIL_VOICE_PARAM* param, ZU
   scale.x = FX_F32_TO_FX32( POKE_CLWK_BASE_SCALE_X );
   scale.y = FX_F32_TO_FX32( POKE_CLWK_BASE_SCALE_Y );
 
-  GFL_CLACT_WK_SetPos( work->poke_clwk, &pos, CLSYS_DEFREND_SUB );
-  GFL_CLACT_WK_SetScale( work->poke_clwk, &scale );
+  GFL_CLACT_WK_SetPos( work->poke_clwk[work->poke_swap_curr], &pos, CLSYS_DEFREND_SUB );
+  GFL_CLACT_WK_SetScale( work->poke_clwk[work->poke_swap_curr], &scale );
 
   work->poke_state = POKE_CLWK_STATE_CRY_OPEN;
 }
@@ -1803,10 +1829,19 @@ static void Zukan_Detail_Voice_ResetTime( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
 //=====================================
 static void Zukan_Detail_Voice_ChangePoke( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN_DETAIL_VOICE_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+  // OBJ交互の表示切替
+  if( work->poke_clwk[work->poke_swap_curr] )
+  {
+    GFL_CLACT_WK_SetDrawEnable( work->poke_clwk[work->poke_swap_curr], FALSE );
+  }
+
+  // 今表示しているものを変更する
+  work->poke_swap_curr = ( work->poke_swap_curr +1 ) %OBJ_SWAP_MAX;
+
   Zukan_Detail_Voice_DeleteName( param, work, cmn );
-  Zukan_Detail_Voice_DeletePoke( param, work, cmn );
-  
-  Zukan_Detail_Voice_CreatePoke( param, work, cmn );
+  Zukan_Detail_Voice_DeletePoke( param, work, cmn, work->poke_swap_curr );
+
+  Zukan_Detail_Voice_CreatePoke( param, work, cmn, work->poke_swap_curr );
   Zukan_Detail_Voice_CreateName( param, work, cmn );
 
   Zukan_Detail_Voice_ResetTime( param, work, cmn );
@@ -2625,7 +2660,13 @@ static void Zukan_Detail_Voice_AlphaInit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
   {
     u8 i;
 
-    GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( work->poke_clwk[i] )
+      {
+        GFL_CLACT_WK_SetObjMode( work->poke_clwk[i], GX_OAM_MODE_NORMAL );  // アルファアニメーションの影響を受けないようにする
+      }
+    }
 
     for( i=OBJ_CELL_TIME_START; i<OBJ_CELL_TIME_END; i++ )
     {
@@ -2657,7 +2698,13 @@ static void Zukan_Detail_Voice_AlphaExit( ZUKAN_DETAIL_VOICE_PARAM* param, ZUKAN
   {
     u8 i;
 
-    GFL_CLACT_WK_SetObjMode( work->poke_clwk, GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+    for( i=0; i<OBJ_SWAP_MAX; i++ )
+    {
+      if( work->poke_clwk[i] )
+      {
+        GFL_CLACT_WK_SetObjMode( work->poke_clwk[i], GX_OAM_MODE_XLU );  // BGとともにこのOBJも暗くしたいので
+      }
+    }
 
     for( i=OBJ_CELL_TIME_START; i<OBJ_CELL_TIME_END; i++ )
     {
