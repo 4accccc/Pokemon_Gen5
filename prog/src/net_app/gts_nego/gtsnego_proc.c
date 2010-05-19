@@ -877,7 +877,7 @@ static int _evalcallback(int index, void* param)
 {
   GTSNEGO_WORK *pWork=param;
   EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
-  int value = -200;
+  int value = -1;
   int targetlv,targetfriend,targetmy;
   u32 profile,friendprofile;
   int i;
@@ -2162,7 +2162,16 @@ static void _checkReturnState(GTSNEGO_WORK* pWork)
     GFL_NET_SetAutoErrorCheck(FALSE);
     GFL_NET_SetNoChildErrorCheck(FALSE);
     GFL_NET_StateWifiMatchEnd(TRUE);
-pWork->dbw->result=EVENT_GTSNEGO_EXIT;
+
+    GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
+    GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
+    GFL_NET_StateWifiMatchEnd(TRUE);
+    GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
+    GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
+    GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
+
+    pWork->dbw->result=EVENT_GTSNEGO_EXIT;
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
   }
 }
@@ -2244,6 +2253,7 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
       GFL_NET_DWC_ERROR_RESULT  result;
       result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE, TRUE );
       switch( result ){
+      case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
       case GFL_NET_DWC_ERROR_RESULT_PRINT_MSG:   //メッセージを描画するだけ
         _checkReturnState(pWork);
         break;
