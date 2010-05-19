@@ -2145,57 +2145,6 @@ static void PutListItem( START_MENU_WORK * wk, u8 item, s8 py )
 
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
-
-/*	y < 64に収まるので、1列ずつ描く必要はない
-	u32	i;
-
-	if( item == LIST_ITEM_MAX ){
-		for( i=0; i<3; i++ ){
-			if( py >= LIST_SCRN_SY ){
-				py -= LIST_SCRN_SY;
-			}else if( py < 0 ){
-				py += LIST_SCRN_SY;
-			}
-			GFL_BG_FillScreen(
-				GFL_BG_FRAME2_M, 0,
-				LIST_ITEM_PX, py,
-				LIST_FRAME_SX, 1, 0 );
-			GFL_BG_FillScreen(
-				GFL_BG_FRAME1_M, 0,
-				LIST_ITEM_PX, py,
-				LIST_FRAME_SX, 1, 0 );
-			py++;
-		}
-	}else{
-		for( i=0; i<ListItemData[item].sy; i++ ){
-			if( py >= LIST_SCRN_SY ){
-				py -= LIST_SCRN_SY;
-			}else if( py < 0 ){
-				py += LIST_SCRN_SY;
-			}
-			GFL_BG_WriteScreenExpand(
-				GFL_BG_FRAME2_M,
-				LIST_ITEM_PX, py,
-				LIST_FRAME_SX, 1,
-				wk->listFrame[item],
-				0, i,
-				LIST_FRAME_SX,
-				ListItemData[item].sy );
-			GFL_BG_WriteScreenExpand(
-				GFL_BG_FRAME1_M,
-				LIST_ITEM_PX, py,
-				LIST_FRAME_SX, 1,
-				BGWINFRM_FrameBufGet(wk->wfrm,item),
-				0, i,
-				LIST_FRAME_SX,
-				ListItemData[item].sy );
-			py++;
-		}
-	}
-
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
-*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2216,29 +2165,18 @@ static void ChangeListItemPalette( START_MENU_WORK * wk, u8 item, s8 py, u8 pal 
 		GFL_BG_FRAME2_M, LIST_ITEM_PX, py, LIST_FRAME_SX, ListItemData[item].sy, pal );
 
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
-
-/*	y < 64に収まるので、1列ずつ描く必要はない
-	u32	i;
-
-	for( i=0; i<ListItemData[item].sy; i++ ){
-		if( py >= LIST_SCRN_SY ){
-			py -= LIST_SCRN_SY;
-		}else if( py < 0 ){
-			py += LIST_SCRN_SY;
-		}
-		GFL_BG_ChangeScreenPalette(
-			GFL_BG_FRAME2_M,
-			LIST_ITEM_PX, py,
-			LIST_FRAME_SX, 1,
-			pal );
-		py++;
-	}
-
-	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
-*/
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクリーン上のＹ座標を取得
+ *
+ * @param		wk		タイトルメニューワーク
+ * @param		py		画面上のＹ座標
+ *
+ * @return	スクリーン上のＹ座標
+ */
+//--------------------------------------------------------------------------------------------
 static s8 GetListPutY( START_MENU_WORK * wk, s8 py )
 {
 	return ( py + ( wk->bgScroll / 8 ) );
