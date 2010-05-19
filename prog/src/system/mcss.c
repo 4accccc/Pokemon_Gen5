@@ -1312,6 +1312,30 @@ u16  MCSS_GetSizeY( MCSS_WORK *mcss )
 
 //--------------------------------------------------------------------------
 /**
+ * @brief マルチセルのX方向のズレを取得
+ *
+ * @param[in]  mcss   MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+s16  MCSS_GetOffsetX( MCSS_WORK *mcss )
+{ 
+  return mcss->mcss_ncec->ofs_x;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief マルチセルのY方向のズレを取得
+ *
+ * @param[in]  mcss   MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+s16  MCSS_GetOffsetY( MCSS_WORK *mcss )
+{ 
+  return mcss->mcss_ncec->ofs_y;
+}
+
+//--------------------------------------------------------------------------
+/**
  * @brief 浮いてるアニメパターンなのかを取得
  *
  * @param[in]  mcss MCSSワーク構造体のポインタ
@@ -2373,6 +2397,7 @@ MCSS_WORK*	MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	
 			mcss_sys->mcss[ count ]->shadow_offset.y = 0;
 			mcss_sys->mcss[ count ]->shadow_offset.z = MCSS_DEFAULT_SHADOW_OFFSET;
 			mcss_sys->mcss[ count ]->mcss_anm_frame = FX32_ONE;
+			mcss_sys->mcss[ count ]->ortho_mode = 1;
 			MCSS_LoadResourceDebug( mcss_sys, count, madw );
 			break;
 		}
