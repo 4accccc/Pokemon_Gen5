@@ -226,7 +226,7 @@ BOOL BeaconView_CheckCommEvent( BEACON_VIEW_PTR wk )
   LIVE_COMM comm_st = Intrude_CheckLiveCommStatus( wk->game_comm );
 
   //侵入チェック
-  if( comm_st == LIVE_COMM_INTRUDE ){ //3人目の侵入者として選ばれた
+  if( comm_st == LIVE_COMM_INTRUDE_PARTNER ){ //3人目の侵入者として選ばれた
     BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR_INTRUDE );
     return TRUE;
   }
