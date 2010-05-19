@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T18:09:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T16:58:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="114" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -881,14 +881,14 @@
 		<attribute name="キャラ指定">HAKASE1
 アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『そうだな……▼
-しかも　シンを　ふっかつさせた
+しかも　レシラムを　ふっかつさせた
 Ｎという　プラズマだんの　ボスは▼
-もういっぴきの　ムを
+もういっぴきの　ゼクロムを
 さがすよう　いっていたらしい▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『そうだな……▼
-しかも　シンを　復活させた
+しかも　レシラムを　復活させた
 Ｎという　プラズマ団の　ボスは▼
-もう１匹の　ムを
+もう１匹の　ゼクロムを
 探すよう　いっていたらしい▼</language>
 	</row>
 
@@ -899,14 +899,14 @@
 		<attribute name="キャラ指定">HAKASE1
 アララギ博士父</attribute>
 		<language name="JPN" width="256">アララギ『そうだな……▼
-しかも　ムを　ふっかつさせた
+しかも　ゼクロムを　ふっかつさせた
 Ｎという　プラズマだんの　ボスは▼
-もういっぴきの　シンを
+もういっぴきの　レシラムを
 さがすよう　いっていたらしい▼</language>
 		<language name="JPN_KANJI" width="256">アララギ『そうだな……▼
-しかも　ムを　復活させた
+しかも　ゼクロムを　復活させた
 Ｎという　プラズマ団の　ボスは▼
-もう１匹の　シンを
+もう１匹の　レシラムを
 探すよう　いっていたらしい▼</language>
 	</row>
 
@@ -917,14 +917,14 @@
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……たしか　しんわでは
-シンは　ほのおを　ふきあげ▼
+レシラムは　ほのおを　ふきあげ▼
 もう１ぴきの　ポケモンと　ともに
 むかしの　イッシュを▽
 いっしゅんにして　あれはてさせた……▼
 プラズマだんは　それを　しっていて
 もう１ぴきを　まつと　いうのか？▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……たしか　神話では
-シンは　炎を　噴きあげ▼
+レシラムは　炎を　噴きあげ▼
 もう１匹の　ポケモンと　共に
 太古の　イッシュを▽
 一瞬にして　荒廃させた……▼
@@ -939,14 +939,14 @@
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
 		<language name="JPN" width="256">アデク『……たしか　しんわでは
-ムは　つよい　でんきを　はなち▼
+ゼクロムは　つよい　でんきを　はなち▼
 もう１ぴきの　ポケモンと　ともに
 むかしの　イッシュを▽
 いっしゅんにして　あれはてさせた……▼
 Ｎは　それを　しっていて
 もう１ぴきを　まつと　いうのか？▼</language>
 		<language name="JPN_KANJI" width="256">アデク『……たしか　神話では
-ムは　強力な　電撃を　放ち▼
+ゼクロムは　強力な　電撃を　放ち▼
 もう１匹の　ポケモンと　共に
 太古の　イッシュを▽
 一瞬にして　荒廃させた……▼
