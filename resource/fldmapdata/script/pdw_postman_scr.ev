@@ -74,7 +74,7 @@ sub_postman_main:
 
   IF $SCWK_ANSWER == TRUE THEN
       //「受け取った！」
-      _ME_PLAY( SEQ_ME_LVUP )
+      _ME_PLAY( SEQ_ME_ITEM )
       _SYSWIN_MSG_ALLPUT( msg_pdw_postman_04, POS_DEFAULT )
       //受け取ったアイテム内容を表示する
       _PDW_POSTMAN_REQUEST( SCR_PDW_POSTMAN_REQ_OK_INFO, SCWK_ANSWER )
