@@ -25,9 +25,11 @@
 #include "msg/msg_perap.h"
 
 
+//============================================================================================
+//	定数定義
+//============================================================================================
 
-//============================================================================================
-//============================================================================================
+// シーケンス
 enum {
   SEQ_INIT = 0,     // 初期化
   SEQ_CREATE,
@@ -47,6 +49,7 @@ enum {
   SEQ_END,
 };
 
+// ワーク
 typedef struct {
   PERAPVOICE * sv;
 
@@ -63,7 +66,6 @@ typedef struct {
   WORDSET * wset;
   STRBUF * exp;
 
-//  GFL_ARCUTIL_TRANSINFO winCgx;
   GFL_BMPWIN * pokeWin;
   TIMEICON_WORK * timeIcon;
 
@@ -77,19 +79,14 @@ typedef struct {
   s8  anmJump;
 
   u8  poke_pos;
-//  u8  recTime;
   u32 voicePlayer;
   BOOL  recFlag;
 
-//  void * testBuff;
-
 }OSYABERI_WORK;
 
-#define TMP_STR_BUFF_SIZ    ( 1024 )
+#define TMP_STR_BUFF_SIZ    ( 1024 )		// テンポラリメッセージバッファサイズ
 
-#define REC_TIME    ( 30*1 )
-
-
+// ペラップのウィンドウ定義
 #define POKEWIN_FRM   ( GFL_BG_FRAME1_M )
 #define POKEWIN_PX    ( 10 )
 #define POKEWIN_PY    ( 3 )
@@ -99,8 +96,8 @@ typedef struct {
 #define POKEWIN_CGX   ( 1 )
 
 
-
 //============================================================================================
+//	プロトタイプ宣言
 //============================================================================================
 static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work );
 static void VoiceRec_CallBack( MICResult result, void * arg );
@@ -110,13 +107,7 @@ static void PutPokeWin( OSYABERI_WORK * wk );
 static void DelPokeWin( OSYABERI_WORK * wk );
 static BOOL MainPerapAnm( OSYABERI_WORK * wk );
 
-/*
-extern u16 PMV_DBG_CustomVoicePlay( void* wave,       // [in]波形データ
-                              u32   size,       // [in]波形サイズ(MAX 26000)
-                              int   rate,       // [in]波形再生レート
-                              int   speed,      // [in]波形再生スピード
-                              s8    volume);      // [in]再生ボリューム
-*/
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -157,6 +148,17 @@ GMEVENT * EVENT_FieldSkillOsyaberi( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
   return event;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   イベントメイン
+ *
+ * @param   event
+ * @param   seq
+ * @param   work
+ *
+ * @return  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------------------------------------
 static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 {
   OSYABERI_WORK * wk = work;
@@ -247,25 +249,6 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 				GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
         *seq = SEQ_REC_ERR;   // 失敗
       }
-/*
-      MICAutoParam mic;
-      wk->testBuff = GFL_HEAP_AllocClearMemory( HEAPID_FIELDMAP, 10000 );
-      mic.type      = MIC_SAMPLING_TYPE_SIGNED_8BIT;  //サンプリング種別
-      mic.buffer    = (void*)MATH_ROUNDUP32( (int)(wk->testBuff) );
-      mic.size      = 8000;
-//      mic.rate      = MIC_SAMPLING_RATE_8K;
-      mic.rate      = MIC_SAMPLING_RATE_8180;
-      mic.loop_enable   = FALSE;
-      mic.full_callback = VoiceRec_CallBack;
-      mic.full_arg      = &wk->recFlag;
-      {
-//        MICResult ret = MIC_StartAutoSampling( &mic );
-        MICResult ret = MIC_StartLimitedSampling( &mic );
-        OS_Printf( "ret = %d\n", ret );
-        OS_Printf( "mic = 0x%08x, buf = 0x%08x\n", mic.buffer, wk->testBuff );
-      }
-      *seq = SEQ_MAIN;
-*/
     }
     break;
 
@@ -300,29 +283,16 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
   case SEQ_VOICE_PLAY:    // 再生
     {
-#if 1
       PMV_REF pmvRef;
       PMV_MakeRefDataMine( &pmvRef );
 //      OS_Printf( "addr = 0x%08x\n", wk->sv );
       wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, (u32)&pmvRef );
-#else
-      wk->voicePlayer = PMVOICE_Play( MONSNO_PERAPPU, 0, 64, FALSE, 0, 0, FALSE, NULL );
-#endif
-/*
-      wk->voicePlayer = PMV_DBG_CustomVoicePlay(
-                          (void*)MATH_ROUNDUP32( (int)(wk->testBuff) ),
-                          8000,
-                          MIC_SAMPLING_RATE_8180,//MIC_SAMPLING_RATE_8K,
-                          32768,
-                          127 );
-*/
     }
     *seq = SEQ_VOICE_WAIT;
     break;
 
   case SEQ_VOICE_WAIT:    // 鳴き声終了待ち
     if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE ){
-//      GFL_HEAP_FreeMemory( wk->testBuff );
       *seq = SEQ_RELEASE;
     }
     break;
@@ -350,13 +320,31 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
   return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   サンプリングコールバック
+ *
+ * @param   result
+ * @param   arg
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void VoiceRec_CallBack( MICResult result, void * arg )
 {
   BOOL * flg = arg;
   *flg = TRUE;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   フィールド関連一時停止
+ *
+ * @param   wk		ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void FieldPauseOn( OSYABERI_WORK * wk )
 {
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( wk->gsys );
@@ -366,6 +354,15 @@ static void FieldPauseOn( OSYABERI_WORK * wk )
 //  FIELDMAP_SetMainFuncHookFlg( fieldmap, TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   フィールド関連一時停止解除
+ *
+ * @param   wk		ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void FieldPauseOff( OSYABERI_WORK * wk )
 {
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( wk->gsys );
@@ -375,10 +372,15 @@ static void FieldPauseOff( OSYABERI_WORK * wk )
   MMDLSYS_ClearPauseMoveProc( FIELDMAP_GetMMdlSys(fieldmap) );
 }
 
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ペラップＯＢＪ作成
+ *
+ * @param   wk		ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitPerapObj( OSYABERI_WORK * wk )
 {
   ARCHANDLE * ah;
@@ -408,6 +410,15 @@ static void InitPerapObj( OSYABERI_WORK * wk )
   }
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ペラップＯＢＪ削除
+ *
+ * @param   wk		ワーク
+ *
+ * @return  none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitPerapObj( OSYABERI_WORK * wk )
 {
   GFL_CLACT_WK_Remove( wk->clwk );
@@ -417,6 +428,16 @@ static void ExitPerapObj( OSYABERI_WORK * wk )
   GFL_CLACT_UNIT_Delete( wk->clunit );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ペラップＯＢＪアニメ
+ *
+ * @param   wk		ワーク
+ *
+ * @retval	"TRUE = アニメ中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MainPerapAnm( OSYABERI_WORK * wk )
 {
   GFL_CLACTPOS  pos;
@@ -441,6 +462,15 @@ static BOOL MainPerapAnm( OSYABERI_WORK * wk )
   return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ペラップウィンドウ表示
+ *
+ * @param   wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutPokeWin( OSYABERI_WORK * wk )
 {
   GFL_ARC_UTIL_TransVramPaletteEx(
@@ -458,6 +488,15 @@ static void PutPokeWin( OSYABERI_WORK * wk )
   InitPerapObj( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   ペラップウィンドウ削除
+ *
+ * @param   wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DelPokeWin( OSYABERI_WORK * wk )
 {
   ExitPerapObj( wk );
