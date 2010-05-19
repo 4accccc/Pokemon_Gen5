@@ -263,6 +263,7 @@ static GMEVENT_RESULT CommMissionEtc_CommonEvent( GMEVENT *event, int *seq, void
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
   		(*seq)++;
   	}
+  	break;
   case SEQ_MSG_END_BUTTON_WAIT:
     if(IntrudeEventPrint_LastKeyWait() == TRUE){
       *seq = SEQ_END;
