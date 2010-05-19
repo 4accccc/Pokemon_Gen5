@@ -535,6 +535,8 @@ ev_c03p07_hakai:
 		_FLAG_SET( FV_C03P07_SUPPORT_LEADER8 )
 		_FLAG_SET( FV_C03P07_PLASMA_LEADER3 )
 		
+		//C03P15（波止場）のベルとアイリスを削除
+		_FLAG_SET(FV_C03P15_SUPPORT_LEADER8)
 		//========================================/
 
 	ENDIF
