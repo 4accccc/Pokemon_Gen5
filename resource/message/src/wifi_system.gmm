@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-04-22T22:03:33"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-19T20:44:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="257"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="515" top="177" right="1271" bottom="799" maximized="no" rayout="Vertical2">
+	<dialog left="1347" top="450" right="1856" bottom="1072" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="581"/>
+		<band id="0" index="0" style="0000" width="501"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="748"/>
-		<band id="3" index="3" style="0000" width="748"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="334"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -860,6 +860,19 @@
 ＯＦＦになっています
 本体設定で　無線通信を
 ＯＮに　してください</language>
+	</row>
+
+	<row id="dwc_message_0022" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,#ffff80,,,,,,">
+		<comment>専用ウインドウ
+相手とのタイムアウト時のメッセージ
+・ＧＴＳネゴ
+・ランダムマッチ
+・Wi-Fi大会
+・Wi-Fiクラブ</comment>
+		<language name="JPN" font=" 1:small" width="216">あいてとの　せつぞくが
+せつだん　されました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">相手との　接続が
+切断されました</language>
 	</row>
 
 	<flowchart-group-list>
