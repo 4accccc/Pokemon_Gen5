@@ -19,6 +19,7 @@
 #include "gmk_tmp_wk.h"
 #include "system/rtc_tool.h"  //for PM_RTC_GetTimeZone
 #include "field_gimmick_t01_sv.h"
+#include "field_gimmick_t01_se_def.h"
 
 #define EXPOBJ_UNIT_IDX (0)
 #define T01_TMP_ASSIGN_ID  (1)
@@ -28,6 +29,8 @@
 #define BIRD_Z  (FIELD_CONST_GRID_FX32_SIZE * 752)
 
 #define BIRD_ANM_NUM  (2)
+
+#define DAY_SE_PLAY_FRM (40 * FX32_ONE)   //１羽遅れて羽ばたくフレーム
 
 //==========================================================================================
 // ■3Dリソース
@@ -91,6 +94,7 @@ static const GFL_G3D_UTIL_SETUP SetupNight = {
 typedef struct
 { 
   BOOL Move;
+  BOOL IsNight;
 } T01_GMK_WORK;
 
 static GMEVENT_RESULT EndChkEvt( GMEVENT* event, int* seq, void* work );
@@ -134,10 +138,12 @@ void T01_GIMMICK_Setup( FIELDMAP_WORK* fieldmap )
     if ( (time_zone == TIMEZONE_NIGHT) || (time_zone == TIMEZONE_MIDNIGHT) )
     {
       FLD_EXP_OBJ_AddUnitByHandle( exobj_cnt, &SetupNight, EXPOBJ_UNIT_IDX );
+      gmk_work->IsNight = TRUE;
     }
     else
     {
       FLD_EXP_OBJ_AddUnitByHandle(exobj_cnt, &SetupMorning, EXPOBJ_UNIT_IDX);
+      gmk_work->IsNight = FALSE;
     }
   }
 
@@ -212,6 +218,14 @@ void T01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
     //アニメーション再生
     FLD_EXP_OBJ_PlayAnime( exobj_cnt );
 
+    if (!gmk_work->IsNight)
+    {
+      fx32 frm;
+      //アニメフレーム取得
+      frm = FLD_EXP_OBJ_GetObjAnmFrm( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, 0 );
+      if ( frm == DAY_SE_PLAY_FRM ) PMSND_PlaySE( T01_GMK_DAY_SE02 );      //朝2
+    }
+
     //インデックス0のアニメで終了判定する
     anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, 0);
     //終了チェック
@@ -256,6 +270,9 @@ void T01_GIMMICK_Start( FIELDMAP_WORK* fieldmap )
     //アニメ再生
     FLD_EXP_OBJ_ChgAnmStopFlg(anm, 0);
   }
+  //SE再生
+  if ( gmk_work->IsNight ) PMSND_PlaySE( T01_GMK_NIGHT_SE );    //夜
+  else PMSND_PlaySE( T01_GMK_DAY_SE01 );      //朝1
 }
 
 //------------------------------------------------------------------------------------------
