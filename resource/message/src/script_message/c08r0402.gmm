@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T21:00:44"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T19:26:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1490" top="328" right="2195" bottom="956" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -318,6 +318,7 @@
 ・はい/いいえの選択肢表示
 　はい→man1_04w
 　はい、だが条件を満たしていない→man1_05w
+  はい、だがROMのバージョンが同じ→man1_05w_a
 　いいえ→man1_03w
 ・アイテム入手するまでに
 　再度話しかけたときはここから開始</comment>
@@ -381,6 +382,25 @@
 ……って　ぼくの　お願いした
 条件を　満たした▽
 ポケモンが　いないよ！！</language>
+	</row>
+
+	<row id="msg_c08_man1_05w_a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+		<comment>♂：WHITEver
+・はい選択
+　「じゅうでん」は覚えているが
+　ROMバージョンの条件を満たしていない</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">あ　ありがとう！▼
+……って　その　ポケモン
+「じゅうでん」は　おぼえているけれど▼
+みらいのような　としが　ある
+せかいで　うまれていないよね……</language>
+		<language name="JPN_KANJI" width="256">あ　ありがとう！▼
+……って　その　ポケモン
+「じゅうでん」は　覚えているけれど▼
+未来のような　都市が　ある
+世界で　うまれていないよね……</language>
 	</row>
 
 	<row id="msg_c08_man1_06w">
@@ -513,6 +533,7 @@
 ・はい/いいえの選択肢表示
 　はい→man1_04b
 　はい、だが条件を満たしていない→man1_05b
+  はい、だがROMのバージョンが同じ→man1_05b_a
 　いいえ→man1_03b
 ・アイテム入手するまでに
 　再度話しかけたときはここから開始</comment>
@@ -576,6 +597,25 @@
 ……って　ぼくの　お願いした
 条件を　満たした▽
 ポケモンが　いないよ！！</language>
+	</row>
+
+	<row id="msg_c08_man1_05b_a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂：BLACKver
+・はい選択
+　「じゅうでん」は覚えているが
+　ROMバージョンの条件を満たしていない</comment>
+		<attribute name="キャラ指定">MAN1
+青年</attribute>
+		<language name="JPN" width="256">あ　ありがとう！▼
+……って　その　ポケモン
+「じゅうでん」は　おぼえているけれど▼
+ふるい　かんじの　としが　ある
+せかいで　うまれていないよね……</language>
+		<language name="JPN_KANJI" width="256">あ　ありがとう！▼
+……って　その　ポケモン
+「じゅうでん」は　覚えているけれど▼
+古びた感じの　都市が　ある
+世界で　うまれていないよね……</language>
 	</row>
 
 	<row id="msg_c08_man1_06b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
