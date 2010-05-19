@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-19T14:53:51"/>
+	<create user="taya" host="W00146" date="2010-05-19T16:12:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1941,9 +1941,62 @@
 
 	<row id="BTL_STRID_SET_Narikiri">
 		<comment>なりきり</comment>
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
 [1:06:とくせい名:2]を　コピーした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Narikiri_2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　やせいの　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　野生の　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Narikiri_2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいての　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手の　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Narikiri_Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Narikiri_Y2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]の▽
+[1:06:とくせい名:2]を　コピーした！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]の▽
+[1:06:とくせい名:2]を　コピーした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Narikiri_E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]の
+[1:06:とくせい名:2]を　コピーした！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_Narikiri_E2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]の▽
+[1:06:とくせい名:2]を　コピーした！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]の▽
 [1:06:とくせい名:2]を　コピーした！</language>
 	</row>
 
@@ -2006,9 +2059,62 @@
 
 	<row id="BTL_STRID_SET_LockOn">
 		<comment>ロックオン・こころのめ</comment>
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
 ねらいを　さだめた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　やせいの[1:02:ポケモンニックネーム:1]に　
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　野生の[1:02:ポケモンニックネーム:1]に　
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいての[1:02:ポケモンニックネーム:1]に　
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手の[1:02:ポケモンニックネーム:1]に　
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_Y2Y">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+やせいの　[1:02:ポケモンニックネーム:1]に▽
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+野生の　[1:02:ポケモンニックネーム:1]に▽
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　[1:02:ポケモンニックネーム:1]に
+ねらいを　さだめた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_LockOn_E2E">
+		<attribute name="コンバートタイプ"> 1:そのまま</attribute>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+あいての　[1:02:ポケモンニックネーム:1]に▽
+ねらいを　さだめた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+相手の　[1:02:ポケモンニックネーム:1]に▽
 ねらいを　さだめた！</language>
 	</row>
 
