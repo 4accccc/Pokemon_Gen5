@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-04-06T21:56:01"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T16:26:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,14 +327,14 @@
 		</language>
 	</columns>
 
-	<dialog left="592" top="482" right="1092" bottom="1110" maximized="no" rayout="Vertical2">
+	<dialog left="1668" top="167" right="2168" bottom="709" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="325"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -359,8 +359,8 @@
 		<comment>群集用</comment>
 		<language name="JPN" width="256">みんな　あるくのが
 うまいでしょ！　はやいでしょ！</language>
-		<language name="JPN_KANJI" width="256">みんな　歩くのが
-うまいでしょ！　早いでしょ！</language>
+		<language name="JPN_KANJI" width="256">みんな　人を避けて　歩くのが
+うまいでしょ！　スピーディーでしょ！</language>
 	</row>
 
 	<row id="CROWD_MSG02">
@@ -396,10 +396,10 @@
 	<row id="CROWD_MSG06">
 		<comment>群集用</comment>
 		<language name="JPN" width="256">……どこで　さぼろうかな▼
-いやいや　さばるじゃないな
+いやいや　さぼるじゃないな
 ちょっと　きゅうけい　だね</language>
 		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな▼
-いやいや　さばるじゃないな
+いやいや　さぼるじゃないな
 ちょっと　休憩だね</language>
 	</row>
 
@@ -529,16 +529,16 @@
 		<comment>群集用</comment>
 		<language name="JPN" width="256">ぼくは　じぶんの　めいしに　すきな
 ポケモンの　イラストを　いれているよ</language>
-		<language name="JPN_KANJI" width="256">ぼくは　自分の　名詞に　好きな
+		<language name="JPN_KANJI" width="256">ぼくは　自分の　名刺に　好きな
 ポケモンの　イラストを　いれているよ</language>
 	</row>
 
 	<row id="CROWD_MSG23">
 		<comment>群集用</comment>
 		<language name="JPN" width="256">いつも　ここを　あるいているからね
-ひとを　かわすのは　うまいよ</language>
+ひとを　よけるのは　うまいよ</language>
 		<language name="JPN_KANJI" width="256">いつも　ここを　歩いているからね
-人を　交わすのは　うまいよ</language>
+人を　よけるのは　うまいよ</language>
 	</row>
 
 	<row id="CROWD_MSG24">
