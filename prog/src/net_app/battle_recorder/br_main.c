@@ -129,6 +129,11 @@ static void BR_CORE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procID );
 static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs );
 
+//-------------------------------------
+///	そのた
+//=====================================
+static void Br_Music_Modify( u16 *p_default_bgm, u16 *p_win_bgm );
+
 //=============================================================================
 /**
  *          データ
@@ -549,38 +554,7 @@ static void *BR_BATTLE_AllocParam( HEAPID heapID, void *p_wk_adrs, u32 pre_procI
 
   //アッパーバージョンで増える可能性があるので、
   //今回録画される曲にすべて置換する
-
-  //戦闘曲
-  switch( p_param->musicDefault )
-  { 
-  //置換しない曲
-  case SEQ_BGM_VS_SUBWAY_TRAINER:
-  case SEQ_BGM_VS_CHAMP:
-  case SEQ_BGM_VS_TRAINER_WIFI:
-  case SEQ_BGM_WCS:
-    /* そのままなのでなにもしない */
-    break;
-  //置換するもの
-  case SEQ_BGM_VS_TRAINER_M:
-  case SEQ_BGM_VS_TRAINER_S:
-  default:
-    p_param->musicDefault = SEQ_BGM_VS_TRAINER_WIFI;
-    break;
-  }
-
-  //勝利曲
-  switch( p_param->musicWin )
-  { 
-  //置換しない曲
-  case SEQ_BGM_WIN2:
-  case SEQ_BGM_WIN5:
-    /* そのままなのでなにもしない */
-    break;
-  //置換するもの
-  default:
-    p_param->musicWin = SEQ_BGM_WIN2;
-    break;
-  }
+  Br_Music_Modify( &p_param->musicDefault, &p_param->musicWin );
 
   PMSND_PlayBGM( p_param->musicDefault );
 
@@ -630,3 +604,51 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
   SUBPROC_CallProc( &p_wk->subproc, SUBPROCID_CORE );
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  BGMを置き換え
+ *
+ *	@param	u16 *p_default_bgm  通常曲  [in/out]
+ *	@param	*p_win_bgm          勝利曲  [in/out]
+ */
+//-----------------------------------------------------------------------------
+static void Br_Music_Modify( u16 *p_default_bgm, u16 *p_win_bgm )
+{
+  const int pre_default_bgm = *p_default_bgm;
+  const int pre_win_bgm     = *p_win_bgm;
+
+  //アッパーバージョンで増える可能性があるので、
+  //今回録画される曲にすべて置換する
+
+  //戦闘曲
+  switch( pre_default_bgm )
+  { 
+  //置換しない曲
+  case SEQ_BGM_VS_SUBWAY_TRAINER:
+  case SEQ_BGM_VS_CHAMP:
+  case SEQ_BGM_VS_TRAINER_WIFI:
+  case SEQ_BGM_VS_WCS:
+    /* そのままなのでなにもしない */
+    break;
+  //置換するもの
+  case SEQ_BGM_VS_TRAINER_M:
+  case SEQ_BGM_VS_TRAINER_S:
+  default:
+    *p_default_bgm = SEQ_BGM_VS_TRAINER_WIFI;
+    break;
+  }
+
+  //勝利曲
+  switch( pre_win_bgm )
+  { 
+  //置換しない曲
+  case SEQ_BGM_WIN2:
+  case SEQ_BGM_WIN5:
+    /* そのままなのでなにもしない */
+    break;
+  //置換するもの
+  default:
+    *p_win_bgm = SEQ_BGM_WIN2;
+    break;
+  }
+}
