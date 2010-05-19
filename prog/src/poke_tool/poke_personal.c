@@ -370,7 +370,7 @@ static u16 get_personalID( u16 mons_no, u16 form_no )
   u32 data_ofs;
 
   //タマゴにはパーソナルがないので、0のダミーデータを読み込ませるようにする
-  GF_ASSERT( ( mons_no != MONSNO_TAMAGO ) && ( mons_no != MONSNO_DAMETAMAGO ) );
+  //GF_ASSERT( ( mons_no != MONSNO_TAMAGO ) && ( mons_no != MONSNO_DAMETAMAGO ) );
   if( ( mons_no == MONSNO_TAMAGO ) ||
       ( mons_no == MONSNO_DAMETAMAGO ) )
   { 
