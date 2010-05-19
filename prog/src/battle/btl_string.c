@@ -473,8 +473,6 @@ void BTL_STR_MakeStringSet( STRBUF* buf, BtlStrID_SET strID, const int* args )
 
     { BTL_STRID_SET_Tedasuke,             ms_set_default          },  // てだすけはポケモン名２体入り文字列だが標準（３セット）
     { BTL_STRID_SET_JikoAnji,             ms_set_default          },  // じこあんじも同様
-    { BTL_STRID_SET_LockOn,               ms_set_default          },  // ロックオン・こころのめも同様
-    { BTL_STRID_SET_Narikiri,             ms_set_default          },  // なりきりも
     { BTL_STRID_SET_MeromeroAct,          ms_set_default          },  // メロメロ
     { BTL_STRID_SET_SideChange,           ms_set_default          },  // サイドチェンジ
     { BTL_STRID_SET_AffGood_2,            ms_set_default          },  // 効果バツグン２体同時

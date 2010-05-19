@@ -538,6 +538,7 @@ static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_DenjiFuyuu( u32* numElems );
 static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_DenjiFuyuu_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Tedasuke( u32* numElems );
 static void handler_Tedasuke_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tedasuke_SkipAvoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -7588,11 +7589,28 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_DenjiFuyuu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_DenjiFuyuu   },  // 未分類ワザ
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_DenjiFuyuu_CheckFail  },  // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,      handler_DenjiFuyuu            },  // 未分類ワザ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// ワザ出し成否チェックハンドラ
+static void handler_DenjiFuyuu_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+
+    // ねをはる状態は失敗
+    if( BPP_CheckSick(bpp, WAZASICK_NEWOHARU) ){
+      BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER);
+    }
+  }
+}
+
+}
+// 未分類ワザハンドラ
 static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -7606,6 +7624,7 @@ static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * てだすけ
