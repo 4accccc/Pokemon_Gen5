@@ -54,7 +54,7 @@
 
 typedef enum
 {
-  PLT_OBJ,  
+  PLT_OBJ,
   PLT_RESOURCE_MAX,
   CHAR_OBJ = PLT_RESOURCE_MAX,
   CHAR_RESOURCE_MAX,
@@ -172,34 +172,34 @@ struct _CG_WIRELESS_MENU {
   GFL_MSGDATA *pMsgData;  //
   WORDSET *pWordSet;								// メッセージ展開用ワークマネージャー
   GFL_FONT* pFontHandle;
-	STRBUF*  pExpStrBuf;
+  STRBUF*  pExpStrBuf;
   STRBUF* pStrBuf;
   STRBUF* pStrBufTVTName;
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
-	u32 subchar;
+  u32 subchar;
 
   int palace_state;
   u8 BackupPalette[16 * _PALETTE_CHANGE_NUM *2];
   u8 LightPalette[16 * _PALETTE_CHANGE_NUM *2];
   u16 TransPalette[16 ];
-    GFL_CLUNIT	*cellUnit;
+  GFL_CLUNIT	*cellUnit;
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 
   GFL_BMPWIN* infoDispWin;
   PRINT_STREAM* pStream;
-	GFL_TCBLSYS *pMsgTcblSys;
+  GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*            SysMsgQue;
   APP_TASKMENU_WORK* pAppTask;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
-	APP_TASKMENU_RES* pAppTaskRes;
-//  APP_TASKMENU_WIN_WORK* pAppWin;
+  APP_TASKMENU_RES* pAppTaskRes;
+  //  APP_TASKMENU_WIN_WORK* pAppWin;
   EVENT_CG_WIRELESS_WORK * dbw;
   int windowNum;
   int tvtIndex;
   GAMEDATA* gamedata;
   GAMESYS_WORK *gsys;
   int yoffset;
-//  int anmCnt;  //決定時アニメカウント
+  //  int anmCnt;  //決定時アニメカウント
   int bttnid;
   u16 anmCos;
   GAME_COMM_STATUS_BIT bit;
@@ -295,7 +295,7 @@ static void _createSubBg(CG_WIRELESS_MENU* pWork)
     GFL_BG_ClearFrame( GFL_BG_FRAME0_M );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_M );
     GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
-		GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
+    GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_ON );
 
   }
 
@@ -375,11 +375,11 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
   for(i = 0;i < _WINDOW_MAXNUM;i++){
-		if(pWork->buttonWin[i]){
-			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
-			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
-			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-		}
+    if(pWork->buttonWin[i]){
+      GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+      BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+      GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+    }
     pWork->buttonWin[i] = NULL;
   }
 
@@ -399,9 +399,9 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
   }
 
 
-	if(pWork->pButton){
-		GFL_BMN_Delete(pWork->pButton);
-	}
+  if(pWork->pButton){
+    GFL_BMN_Delete(pWork->pButton);
+  }
   pWork->pButton = NULL;
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 }
@@ -430,8 +430,8 @@ static void _buttonWindowCreate2(int no, CG_WIRELESS_MENU* pWork, _WINDOWPOS* po
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
     frame,
-    pos[i].leftx, pos[i].lefty,
-    pos[i].width, pos[i].height,  _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+    pos[0].leftx, pos[0].lefty,
+    pos[0].width, pos[0].height,  _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
   // システムウインドウ枠描画
   PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
@@ -467,20 +467,20 @@ static void _buttonWindowDelete(CG_WIRELESS_MENU* pWork)
 {
   int i;
 
-	if(pWork->pButton){
-		GFL_BMN_Delete(pWork->pButton);
-	}
+  if(pWork->pButton){
+    GFL_BMN_Delete(pWork->pButton);
+  }
   pWork->pButton = NULL;
   for(i=0;i < _WINDOW_MAXNUM;i++){
-		if(pWork->buttonWin[i]){
-			GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
-			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-			BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
-			
-//			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
-//			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
-			GFL_BMPWIN_Delete(pWork->buttonWin[i]);
-		}
+    if(pWork->buttonWin[i]){
+      GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+      BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+
+      //			GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+      //			GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+      GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+    }
     pWork->buttonWin[i] = NULL;
   }
   pWork->windowNum = 0;
@@ -526,7 +526,7 @@ static void _lightPaletteMake(u16* pal, u16* PaletteTable, int num)
 {
   int i,j;
   u16 palr,palg,palb;
-  
+
   for(i =0 ;i< num;i++){
     for(j=0;j<16;j++){
       palr = pal[i*16+j] & 0x001f;
@@ -597,10 +597,10 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
   cellInitData.softpri = 0;
   cellInitData.bgpri = 2;
   pWork->TVTCallName = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                        pWork->cellRes[CHAR_OBJ],
-                                        pWork->cellRes[PLT_OBJ],
-                                        pWork->cellRes[ANM_OBJ],
-                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+                                            pWork->cellRes[CHAR_OBJ],
+                                            pWork->cellRes[PLT_OBJ],
+                                            pWork->cellRes[ANM_OBJ],
+                                            &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->TVTCallName , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, FALSE );
   GFL_CLACT_WK_SetObjMode(pWork->TVTCallName, GX_OAM_MODE_XLU);
@@ -612,10 +612,10 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
   cellInitData.softpri = 0;
   cellInitData.bgpri = 2;
   pWork->HiName = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                        pWork->cellRes[CHAR_OBJ],
-                                        pWork->cellRes[PLT_OBJ],
-                                        pWork->cellRes[ANM_OBJ],
-                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+                                       pWork->cellRes[CHAR_OBJ],
+                                       pWork->cellRes[PLT_OBJ],
+                                       pWork->cellRes[ANM_OBJ],
+                                       &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->HiName , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
   GFL_CLACT_WK_SetObjMode(pWork->HiName, GX_OAM_MODE_XLU);
@@ -642,7 +642,7 @@ static void _modeInit(CG_WIRELESS_MENU* pWork)
                                      _WIRLESSMAIN_TV_NAME_WIDTH, _WIRLESSMAIN_TV_NAME_HEIGHT,
                                      _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
 
-  
+
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_cg_wireless_dat, pWork->heapID );
 
@@ -693,16 +693,16 @@ static void _modeInit(CG_WIRELESS_MENU* pWork)
         p_handle , NARC_cg_comm_comm_btn_NCER, NARC_cg_comm_comm_btn_NANR , pWork->heapID  );
 
 
-    
-		GFL_ARC_CloseDataHandle(p_handle);
-	}
+
+    GFL_ARC_CloseDataHandle(p_handle);
+  }
 
 
-  
+
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME1_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-	
-	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
-																0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
+
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
   _CreateButtonObj(pWork);
 }
 
@@ -724,13 +724,13 @@ static void _modeSelectMenuInit(CG_WIRELESS_MENU* pWork)
 
   _buttonWindowCreate(NELEMS(aMsgBuff), aMsgBuff, pWork,wind_wireless);
 
-	pWork->pButton = GFL_BMN_Create( btn_wireless, _BttnCallBack, pWork,  pWork->heapID );
-	pWork->touch = &_modeSelectMenuButtonCallback;
+  pWork->pButton = GFL_BMN_Create( btn_wireless, _BttnCallBack, pWork,  pWork->heapID );
+  pWork->touch = &_modeSelectMenuButtonCallback;
 
   _ReturnButtonStart(pWork);
 
 
-	_CHANGE_STATE(pWork,_modeSelectMenuWait);
+  _CHANGE_STATE(pWork,_modeSelectMenuWait);
 
 }
 
@@ -738,7 +738,7 @@ static void _workEnd(CG_WIRELESS_MENU* pWork)
 {
   GFL_FONTSYS_SetDefaultColor();
 
-	_buttonWindowDelete(pWork);
+  _buttonWindowDelete(pWork);
   GFL_BG_FillCharacterRelease( GFL_BG_FRAME1_S, 1, 0);
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME1_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar));
@@ -750,8 +750,8 @@ static void _workEnd(CG_WIRELESS_MENU* pWork)
   GFL_STR_DeleteBuffer(pWork->pExpStrBuf);
   GFL_STR_DeleteBuffer(pWork->pStrBufTVTName);
   GFL_BMPWIN_Delete(pWork->nameWin);
-  
-//  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
+
+  //  GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
 
 }
 
@@ -764,7 +764,7 @@ static void _workEnd(CG_WIRELESS_MENU* pWork)
 
 static void _modeFadeout(CG_WIRELESS_MENU* pWork)
 {
-	if(WIPE_SYS_EndCheck()){
+  if(WIPE_SYS_EndCheck()){
     switch(pWork->selectType){
     case CG_WIRELESS_RETURNMODE_TV:
       if(GAME_COMM_NO_NULL==GameCommSys_BootCheck(GAMESYSTEM_GetGameCommSysPtr(pWork->gsys))){
@@ -775,7 +775,7 @@ static void _modeFadeout(CG_WIRELESS_MENU* pWork)
       _CHANGE_STATE(pWork, NULL);        // 終わり
       break;
     }
-	}
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -787,7 +787,7 @@ static void _modeFadeout(CG_WIRELESS_MENU* pWork)
 
 static void _modeFadeoutStart(CG_WIRELESS_MENU* pWork)
 {
-  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+  WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
   if(pWork->selectType == CG_WIRELESS_RETURNMODE_TV){
@@ -804,13 +804,13 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   CG_WIRELESS_MENU* pWork = (CG_WIRELESS_MENU*)param;
   {
-   // セーブはしない
-//    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pWork->gamedata)))){
-//      if((pWork->selectType != CG_WIRELESS_RETURNMODE_NONE) || (pWork->selectType != CG_WIRELESS_RETURNMODE_PALACE)){
-//        _CHANGE_STATE(pWork, _modeReportInit);
-//        return;
-//      }
-//    }
+    // セーブはしない
+    //    if(WIRELESSSAVE_ON == CONFIG_GetWirelessSaveMode(SaveData_GetConfig(GAMEDATA_GetSaveControlWork(pWork->gamedata)))){
+    //      if((pWork->selectType != CG_WIRELESS_RETURNMODE_NONE) || (pWork->selectType != CG_WIRELESS_RETURNMODE_PALACE)){
+    //        _CHANGE_STATE(pWork, _modeReportInit);
+    //        return;
+    //      }
+    //    }
   }
   _CHANGE_STATE(pWork, _modeFadeoutStart);        // 終わり
 }
@@ -837,9 +837,9 @@ static void _modeAppWinFlash(CG_WIRELESS_MENU* pWork)
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
   GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
-  
+
   _CHANGE_STATE(pWork,_modeAppWinFlash2);
-  
+
 #if 0
 
   //決定時アニメ
@@ -880,7 +880,7 @@ static void _modeAppWinFlash(CG_WIRELESS_MENU* pWork)
 static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
 {
   GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
-  
+
   pWork->bttnid=bttnid;
 
   switch( bttnid ){
@@ -913,7 +913,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
           {
             pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
           }
-//          OS_TPrintf("子機になった\n");
+          //          OS_TPrintf("子機になった\n");
         }
       }
     }
@@ -921,8 +921,8 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
     _CHANGE_STATE(pWork,_modeAppWinFlash);
     break;
   case _SELECTMODE_EXIT:
-		PMSND_PlaySystemSE(_SE_CANCEL);
-//    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
+    PMSND_PlaySystemSE(_SE_CANCEL);
+    //    APP_TASKMENU_WIN_SetDecide(pWork->pAppWin, TRUE);
     pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
     _CHANGE_STATE(pWork,_modeAppWinFlash);        // 終わり
     break;
@@ -944,7 +944,7 @@ static void _MessageDisp(int i,int message,int change,BOOL expand ,CG_WIRELESS_M
     GFL_BMPWIN_Delete(pWork->buttonWin[i]);
   }
 
-//  OS_TPrintf("%d %d\n",_msg_wireless[i].width, _msg_wireless[i].height);
+  //  OS_TPrintf("%d %d\n",_msg_wireless[i].width, _msg_wireless[i].height);
 
   pWork->buttonWin[i] = GFL_BMPWIN_Create(
     GFL_BG_FRAME3_S,
@@ -974,7 +974,7 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
   GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
   int no = Intrude_GetIntrudeStatus(pComm);
 
-  
+
   //Beacon変更チェック
   if( pWork->cross_change == FALSE ){
     check_count = 0;
@@ -982,9 +982,9 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
       pWork->cross_change = TRUE; // 変更あり
     }
   }
-  
+
   if( pWork->unionnum != pWork->unionnumOld ){
-     bChange = TRUE;
+    bChange = TRUE;
   }
   if(pWork->bitold != pWork->bit){
     bChange = TRUE;
@@ -1023,34 +1023,36 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
 
   if(pWork->palace_state!=no){
     switch(no){
-      case INTRUDE_CONNECT_NULL:              ///<接続されていない
+    case INTRUDE_CONNECT_NULL:              ///<接続されていない
+      GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+      GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_001, pWork->pStrBuf );
+      _buttonWindowCreate2(0,  pWork, wind_wireless1);
+      break;
+    case INTRUDE_CONNECT_INTRUDE:           ///<ハイリンク接続時(ミッションが行われていない)
+      GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+      GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_016, pWork->pStrBuf );
+      _buttonWindowCreate2(0,  pWork, wind_wireless2);
+      break;
+    case INTRUDE_CONNECT_MISSION_TARGET:    ///<ハイリンク接続時(ミッションのターゲットになっている)
+      {
+        int no2 = Intrude_GetMissionEntryNum(pComm);
         GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
-        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_001, pWork->pStrBuf );
-        _buttonWindowCreate2(0,  pWork, wind_wireless1);
-        break;
-      case INTRUDE_CONNECT_INTRUDE:           ///<ハイリンク接続時(ミッションが行われていない)
-        GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+        WORDSET_RegisterNumber( pWork->pWordSet, 0,  no2, 1,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_017, pWork->pExpStrBuf );
+        WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExpStrBuf );
+        _buttonWindowCreate2(0,  pWork, wind_wireless2);
+      }
+      break;
+    case INTRUDE_CONNECT_MISSION_PARTNER:   ///<ハイリンク接続時(協力者である)
+      GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_018, pWork->pStrBuf );
+      _buttonWindowCreate2(0,  pWork, wind_wireless2);
+      if( Intrude_GetTargetName(pComm,pWork->pStrBuf) ){
         GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_016, pWork->pStrBuf );
-        _buttonWindowCreate2(0,  pWork, wind_wireless2);
-        break;
-      case INTRUDE_CONNECT_MISSION_TARGET:    ///<ハイリンク接続時(ミッションのターゲットになっている)
-        {
-          int no2 = Intrude_GetMissionEntryNum(pComm);
-          GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
-          WORDSET_RegisterNumber( pWork->pWordSet, 0,  no2, 1,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-          GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_017, pWork->pExpStrBuf );
-          WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExpStrBuf );
-          _buttonWindowCreate2(0,  pWork, wind_wireless2);
-        }
-        break;
-      case INTRUDE_CONNECT_MISSION_PARTNER:   ///<ハイリンク接続時(協力者である)
-        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_018, pWork->pStrBuf );
-        _buttonWindowCreate2(0,  pWork, wind_wireless2);
-        if( Intrude_GetTargetName(pComm,pWork->pStrBuf) ){
-          _buttonWindowCreate2(_HI_NAMAE,  pWork, wind_wireless_name);
-          GFL_CLACT_WK_SetDrawEnable( pWork->HiName, TRUE );
-        }
-        break;
+
+        _buttonWindowCreate2(_HI_NAMAE,  pWork, wind_wireless_name);
+        GFL_CLACT_WK_SetDrawEnable( pWork->HiName, TRUE );
+      }
+      break;
     }
     pWork->palace_state=no;
   }
@@ -1067,9 +1069,9 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeSelectMenuWait(CG_WIRELESS_MENU* pWork)
 {
-	if(WIPE_SYS_EndCheck()){
-		GFL_BMN_Main( pWork->pButton );
-	}
+  if(WIPE_SYS_EndCheck()){
+    GFL_BMN_Main( pWork->pButton );
+  }
 
   _UpdatePalletAnime(pWork);
   _UpdateMessage(pWork);
@@ -1096,11 +1098,11 @@ static void _YesNoStart(CG_WIRELESS_MENU* pWork)
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 14;
-	appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
-	appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
 
 
-  
+
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_008, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
@@ -1125,10 +1127,10 @@ static void _ReturnButtonStart(CG_WIRELESS_MENU* pWork)
   GFL_MSG_GetString(pWork->pMsgData, CGEAR_WIRLESS_010, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
-//  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-//                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+  //  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+  //                                           pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
 
-  
+
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
 
 }
@@ -1173,7 +1175,7 @@ static void _infoMessageDisp(CG_WIRELESS_MENU* pWork)
 {
   GFL_BMPWIN* pwin;
 
-  
+
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_S ,
@@ -1207,13 +1209,13 @@ static void _modeReportInit(CG_WIRELESS_MENU* pWork)
 {
 
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
-//  GFL_BG_SetVisible(GFL_BG_FRAME1_S,VISIBLE_OFF);
+  //  GFL_BG_SetVisible(GFL_BG_FRAME1_S,VISIBLE_OFF);
 
   GFL_MSG_GetString( pWork->pMsgData, CGEAR_WIRLESS_011, pWork->pStrBuf );
-  
+
   _infoMessageDisp(pWork);
 
-  
+
   _CHANGE_STATE(pWork,_modeReportWait);
 }
 
@@ -1242,13 +1244,13 @@ static void _modeReporting(CG_WIRELESS_MENU* pWork)
   }
   {
     SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->gamedata);
-    
+
     if(svr == SAVE_RESULT_OK){
-			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+      BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
       GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
 
-   //   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
+      //   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, 1);
 
       _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
@@ -1299,11 +1301,11 @@ static void _modeNetworkOn3(CG_WIRELESS_MENU* pWork)
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
     if(selectno==0){
-//      GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
+      //      GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_ON);
       _CHANGE_STATE(pWork, _modeSelectMenuInit);
     }
     else{
-    //  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+      //  GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
       _CHANGE_STATE(pWork, _modeFadeoutStart);
     }
@@ -1337,10 +1339,10 @@ static void _modeNetworkOn2(CG_WIRELESS_MENU* pWork)
 static void _modeNetworkOn(CG_WIRELESS_MENU* pWork)
 {
   GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME1_S,0);
-//  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
+  //  GFL_BG_SetVisible(GFL_BG_FRAME2_S,VISIBLE_OFF);
 
   GFL_MSG_GetString( pWork->pMsgData, CGEAR_WIRLESS_011, pWork->pStrBuf );
-  
+
   _infoMessageDisp(pWork);
   _CHANGE_STATE(pWork, _modeNetworkOn2);
 }
@@ -1352,8 +1354,8 @@ static void _modeNetworkOn(CG_WIRELESS_MENU* pWork)
 static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
 {
   GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
-//  if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
-//  if(Intrude_CheckPalaceConnect(pComm)){
+  //  if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
+  //  if(Intrude_CheckPalaceConnect(pComm)){
 
   int no = Intrude_GetIntrudeStatus(pComm);
   switch(no){
@@ -1390,16 +1392,16 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     GFL_STR_SetStringCodeOrderLength(pName,
                                      CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
     if(FALSE==GFL_CLACT_WK_GetDrawEnable( pWork->TVTCallName )){
-//    if(FALSE==GFL_STR_CompareBuffer(pName, pWork->pStrBufTVTName)){
+      //    if(FALSE==GFL_STR_CompareBuffer(pName, pWork->pStrBufTVTName)){
       GFL_STR_SetStringCodeOrderLength(pWork->pStrBufTVTName,
                                        CTVT_BCON_GetName(beacon), CTVT_COMM_NAME_LEN);
       GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
       PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->nameWin), 0, 0,
-                        pWork->pStrBufTVTName, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
+                          pWork->pStrBufTVTName, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
       GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
       GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, TRUE );
-			GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
     }
     GFL_STR_DeleteBuffer(pName);
     {
@@ -1508,7 +1510,7 @@ static const GFL_CLSYS_INIT _CLSYS_Init =
 static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   EVENT_CG_WIRELESS_WORK* pParentWork =pwk;
-	
+
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x18000 );
 
   {
@@ -1522,24 +1524,24 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
     GXS_DispOn();
     GX_DispOn();
 
-		GFL_BG_Init(pWork->heapID);
-		GFL_BMPWIN_Init(pWork->heapID);
-		GFL_FONTSYS_Init();
-		GFL_DISP_SetBank( &_defVBTbl );
-		{
-			GFL_BG_SYS_HEADER BGsys_data = {
-				GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
-			};
-			GFL_BG_SetBGMode( &BGsys_data );
-		}
-		GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
-		GFL_DISP_GXS_SetVisibleControlDirect(0);
+    GFL_BG_Init(pWork->heapID);
+    GFL_BMPWIN_Init(pWork->heapID);
+    GFL_FONTSYS_Init();
+    GFL_DISP_SetBank( &_defVBTbl );
+    {
+      GFL_BG_SYS_HEADER BGsys_data = {
+        GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+      };
+      GFL_BG_SetBGMode( &BGsys_data );
+    }
+    GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
+    GFL_DISP_GXS_SetVisibleControlDirect(0);
     GFL_CLACT_SYS_Create(	&_CLSYS_Init, &_defVBTbl, pWork->heapID );
     pWork->cellUnit = GFL_CLACT_UNIT_Create( 40 , 0 , pWork->heapID );
     pWork->g3dVintr = GFUser_VIntr_CreateTCB( _VBlank, (void*)pWork, 0 );
 
-		_createSubBg(pWork);
-		_modeInit(pWork);
+    _createSubBg(pWork);
+    _modeInit(pWork);
     pWork->pWordSet = WORDSET_CreateEx( 11, 200, pWork->heapID );
 
     pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
@@ -1549,16 +1551,16 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
-		WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN , 
-									WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
-	}
+  }
   GFL_NET_ReloadIcon();
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
-  
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -1583,9 +1585,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   if(pWork->pAppTask){
     APP_TASKMENU_UpdateMenu(pWork->pAppTask);
   }
-//  if(pWork->pAppWin){
-//    APP_TASKMENU_WIN_Update( pWork->pAppWin );
-//  }
+  //  if(pWork->pAppWin){
+  //    APP_TASKMENU_WIN_Update( pWork->pAppWin );
+  //  }
 
   if(pWork->selectType != CG_WIRELESS_RETURNMODE_TV){
     _setTVTParentName(pWork);
@@ -1633,15 +1635,15 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   if(!WIPE_SYS_EndCheck()){
     return GFL_PROC_RES_CONTINUE;
   }
-  
+
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
-//  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
-  
+  //  PMSND_StopSE_byPlayerID( PMSND_GetSE_DefaultPlayerID(SEQ_SE_SYS_35) );
+
   GFL_PROC_FreeWork(proc);
 
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
-	GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
+  GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
@@ -1652,7 +1654,7 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_CLACT_WK_Remove( pWork->TVTCallName);
   GFL_CLACT_WK_Remove( pWork->HiName );
 
-  
+
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_OBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_OBJ] );
   GFL_CLGRP_CELLANIM_Release(pWork->cellRes[ANM_OBJ] );
@@ -1661,25 +1663,25 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_CLACT_SYS_Delete();
 
   WORDSET_Delete(pWork->pWordSet);
-  
+
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
-//  if(pWork->pAppWin){
-//    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-//  }
-  
+  //  if(pWork->pAppWin){
+  //    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
+  //  }
+
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
 
-	GFL_BMPWIN_Exit();
-	GFL_BG_Exit();
+  GFL_BMPWIN_Exit();
+  GFL_BG_Exit();
 
 
-	GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
+  GFL_HEAP_DeleteHeap(HEAPID_IRCBATTLE);
 
 
-	
+
   return GFL_PROC_RES_FINISH;
 }
 
