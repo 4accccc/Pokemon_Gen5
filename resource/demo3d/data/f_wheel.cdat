@@ -17,7 +17,7 @@ static const DEMO3D_SCENE_DATA data_f_wheel_scene = {
 	ZONE_ID_T01,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
-	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
+	TRUE,TRUE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
 	FALSE,FALSE,	///<1dotポリゴン描画、フォグOn/Off,エッジマーキングOn/Off
 	GX_SORTMODE_MANUAL,GX_BUFFERMODE_W,	///<SwapBuf αソートモード,バッファモード
 	FALSE,16,	///<αテストOn/Off,αテスト敷居値
