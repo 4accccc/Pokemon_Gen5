@@ -1404,10 +1404,10 @@ ev_last:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tsureteku2 )
 	_OBJ_ANIME_WAIT()
 
-	_TIME_WAIT(30)
+	_TIME_WAIT(20)
 
 	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,30 )
+	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,40 )
 	
 	_CAMERA_WAIT_MOVE()
 
@@ -1607,26 +1607,30 @@ ev_last:
 			ENDIF
 		
 		ENDIF
-}
+}	
+	//無音にする
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 180 )
+	
+	//_TIME_WAIT( 30 )
+	
 	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
 	_PLAINWIN_CLOSE()
 
-	//無音にする
-	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, BGM_FADE_VSHORT )
-
-	_TIME_WAIT( 40 )
+	_TIME_WAIT( 30 )
 
 	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_06 )
-	_PLAINWIN_CLOSE()
 	
 	_SE_PLAY(SEQ_SE_END_01)
-	_SE_WAIT()
+	
+	_TIME_WAIT( 20 )
 	
 	//Ｎのアップ絵終了
 	_CAMERA_END()
 	_END_FACEUP()
+	_PLAINWIN_CLOSE()
+	_SE_WAIT()
 	//ゲームクリア
 	_GOTO_GAMECLEAR_DEMO( 0 )
 
@@ -1858,6 +1862,7 @@ _ANIME_LABEL	anm_n_nayamu
 	_ANIME_DATA	AC_STAY_WALK_L_16F,1
 	_ANIME_DATA	AC_WAIT_16F,1
 	_ANIME_DATA	AC_WAIT_8F,1
+	_ANIME_DATA	AC_WAIT_4F,1
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -1984,8 +1989,8 @@ sub_legend_add_loop:
 /*		ボール投げる演出			  */
 /**************************************************************/
 ball_out:
-  _LEG_MOVE_BALL( N01R0502_BOSS_01, 16, 2, 7, 3, 8 )
-  _LEG_START_BALL_ANM( 16, 2, 7  )
+  _LEG_MOVE_BALL( N01R0502_BOSS_01, 16, 5, 6, 5, 10 )
+  _LEG_START_BALL_ANM( 16, 5, 6  )
   //ボール出現フレーム待ち
   _LEG_WAIT_BALL_POKE_APP()
   _WHITE_OUT()
