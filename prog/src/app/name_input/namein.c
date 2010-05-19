@@ -3445,6 +3445,7 @@ static BOOL Keyboard_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
       { 
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
+        PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
       }
     }
     else
@@ -3519,6 +3520,7 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     GFL_RECT rect;
     if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
     { 
+      PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
       GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
       return FALSE;
@@ -3704,6 +3706,7 @@ static BOOL Keyboard_Move_KeyReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
         if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
         { 
           //ˆÚ“®ƒAƒjƒ
+          PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
           GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
           KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );
         }
@@ -3767,6 +3770,7 @@ static BOOL Keyboard_Move_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p
       GFL_RECT  rect;
       if( KEYMAP_GetRange( &p_wk->keymap, &p_wk->cursor, &rect ) )
       { 
+        PMSND_PlaySE( NAMEIN_SE_MOVE_CURSOR );
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
         KEYANM_Start( &p_wk->keyanm, KEYANM_TYPE_MOVE, &rect, p_wk->is_shift, p_wk->mode );  
         return FALSE;
