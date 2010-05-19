@@ -163,8 +163,9 @@ typedef struct {
   u32             charPos;
   u8              moveTimer;
   u8              writeRaw;
-  u8              dispFlag;
-  u8              fFlash;
+  u8              dispFlag  :  1;
+  u8              fFlash    :  1;
+  u8              fHideStart : 1;
 
 }TOK_WIN;
 
@@ -3590,7 +3591,10 @@ static void tokwin_cleanupAll( BTLV_SCU* wk )
 // •\Ž¦ŠJŽn
 static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash )
 {
-  if( tokwin->dispFlag == FALSE )
+  if( tokwin->dispFlag ){
+    tokwin_hide_first( tokwin );
+  }
+
   {
     const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( tokwin->parentWk->pokeCon, pos );
     u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
@@ -3687,7 +3691,7 @@ static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
       GFL_TCBSYS* tcbSys = BTLV_EFFECT_GetTCBSYS();
       u16 palBit = 1 << (PALIDX_TOKWIN1 + tokwin->mySide );
 
-      PMSND_PlaySE( BANK_SE_WB_DECIDE2 );  // @TODO ‰¼
+      PMSND_PlaySE( BANK_SE_WB_DECIDE2 );
       PaletteFadeReq( pfd, PF_BIT_MAIN_BG, palBit, 0, 16, 0, 0x7fff, tcbSys );
       tokwin->seq++;
     }
