@@ -15,32 +15,32 @@
 
 // コマンド
 enum {
-	CDEMOCOMM_WAIT = 0,			// 00: ウェイト
+	CDEMOCOMM_WAIT = 0,						// 00: ウェイト
 
-	CDEMOCOMM_BLACK_IN,			// 01: ブラックイン
-	CDEMOCOMM_BLACK_OUT,			// 02: ブラックアウト
-	CDEMOCOMM_WHITE_IN,			// 03: ホワイトイン
-	CDEMOCOMM_WHITE_OUT,			// 04: ホワイトアウト
-	CDEMOCOMM_FADE_MAIN,			// 05: フェードメイン
+	CDEMOCOMM_BLACK_IN,						// 01: ブラックイン
+	CDEMOCOMM_BLACK_OUT,					// 02: ブラックアウト
+	CDEMOCOMM_WHITE_IN,						// 03: ホワイトイン
+	CDEMOCOMM_WHITE_OUT,					// 04: ホワイトアウト
+	CDEMOCOMM_FADE_MAIN,					// 05: フェードメイン
 
-	CDEMOCOMM_BG_LOAD,				// 06: BG読み込み
-	CDEMOCOMM_BG_VANISH,			// 07: BG表示切り替え
-	CDEMOCOMM_BG_PRI_CHG,		// 08: BGプライオリティ切り替え
-	CDEMOCOMM_ALPHA_INIT,		// 09: アルファブレンド設定
-	CDEMOCOMM_ALPHA_START,		// 10: アルファブレンド開始
-	CDEMOCOMM_ALPHA_NONE,		// 11: アルファ無効
+	CDEMOCOMM_BG_LOAD,						// 06: BG読み込み
+	CDEMOCOMM_BG_VANISH,					// 07: BG表示切り替え
+	CDEMOCOMM_BG_PRI_CHG,					// 08: BGプライオリティ切り替え
+	CDEMOCOMM_ALPHA_INIT,					// 09: アルファブレンド設定
+	CDEMOCOMM_ALPHA_START,				// 10: アルファブレンド開始
+	CDEMOCOMM_ALPHA_NONE,					// 11: アルファ無効
 
-	CDEMOCOMM_BGM_SAVE,			// 12: 再生中のBGMを記憶
-	CDEMOCOMM_BGM_STOP,			// 13: 再生中のBGMを停止
-	CDEMOCOMM_BGM_PLAY,			// 14: BGM再生
+	CDEMOCOMM_BGM_SAVE,						// 12: 再生中のBGMを記憶
+	CDEMOCOMM_BGM_STOP,						// 13: 再生中のBGMを停止
+	CDEMOCOMM_BGM_PLAY,						// 14: BGM再生
 
-	CDEMOCOMM_OBJ_VANISH,		// 15: OBJ表示切り替え
-	CDEMOCOMM_OBJ_PUT,			// 16: OBJ座標設定
+	CDEMOCOMM_OBJ_VANISH,					// 15: OBJ表示切り替え
+	CDEMOCOMM_OBJ_PUT,						// 16: OBJ座標設定
 	CDEMOCOMM_OBJ_BG_PRI_CHANGE,	// 17: OBJとBGのプライオリティ設定
 
-	CDEMOCOMM_BG_FRM_ANIME,
+	CDEMOCOMM_BG_FRM_ANIME,				// 18: BGスクリーンアニメ
 
-	CDEMOCOMM_DEBUG_PRINT,		// 18: デバッグプリント
+	CDEMOCOMM_DEBUG_PRINT,				// 19: デバッグプリント
 
 	CDEMOCOMM_END				// 終了
 };
@@ -69,5 +69,17 @@ enum {
 };
 
 
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メイン処理
+ *
+ * @param		wk		ワーク
+ *
+ * @return	処理内容
+ */
+//--------------------------------------------------------------------------------------------
 extern int CDEMOCOMM_Main( CDEMO_WORK * wk );

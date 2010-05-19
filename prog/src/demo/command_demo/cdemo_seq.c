@@ -101,21 +101,6 @@ BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 		return FALSE;
 	}
 
-/*
-	LDA_WORK * awk;
-
-	wk->main_seq = MainSeq[wk->main_seq]( wk );
-
-	if( wk->main_seq == MAINSEQ_END ){
-		return 0;
-	}
-
-	awk = wk->work;
-
-//	ObjAnmMain( awk );
-//	CATS_Draw( awk->crp );
-*/
-
 	return TRUE;
 }
 
@@ -131,40 +116,6 @@ BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Init( CDEMO_WORK * wk )
 {
-/*
-	LDA_WORK * awk;
-
-	// 割り込み停止
-	sys_VBlankFuncChange( NULL, NULL );
-	sys_HBlankIntrStop();
-	// 表示初期化
-	GF_Disp_GX_VisibleControlDirect( 0 );
-	GF_Disp_GXS_VisibleControlDirect( 0 );
-	// ブレンド初期化
-	G2_BlendNone();
-	G2S_BlendNone();
-	// 上画面をメインに
-	GX_SetDispSelect( GX_DISP_SELECT_MAIN_SUB );
-
-	wk->work = sys_AllocMemory( HEAPID_LEGEND_DEMO, sizeof(LDA_WORK) );
-	MI_CpuClear8( wk->work, sizeof(LDA_WORK) );
-
-	awk = wk->work;
-
-	awk->comm = CommandData;
-	awk->ah   = ArchiveDataHandleOpen( ARC_LD_ARCEUS, HEAPID_LEGEND_DEMO );
-
-#ifdef	PM_DEBUG
-	awk->debug_count = 0;
-	awk->debug_count_frm = 0;
-#endif	// PM_DEBUG
-
-	VramBankSet();
-	BgInit( awk );
-//	ObjInit( wk );
-
-	sys_VBlankFuncChange( VBlankFunc, wk->work );
-*/
 	// 表示初期化
 	GFL_DISP_GX_SetVisibleControlDirect( 0 );
 	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
@@ -192,76 +143,6 @@ static int MainSeq_Init( CDEMO_WORK * wk )
 	wk->init_flg = TRUE;
 
 	return CDEMOSEQ_MAIN_FADE;
-
-
-
-/*
-	FS_EXTERN_OVERLAY(ui_common);
-
-	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
-
-	// 割り込み停止
-//	sys_VBlankFuncChange( NULL, NULL );
-//	sys_HBlankIntrStop();
-	// 表示初期化
-	GFL_DISP_GX_SetVisibleControlDirect( 0 );
-	GFL_DISP_GXS_SetVisibleControlDirect( 0 );
-	// ブレンド初期化
-	G2_BlendNone();
-	G2S_BlendNone();
-	// サブ画面をメインに
-	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
-
-	// アプリヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_BOX_APP, 0x80000 );
-	syswk->app = GFL_HEAP_AllocClearMemory( HEAPID_BOX_APP, sizeof(BOX2_APP_WORK) );
-
-//	syswk->app->ppd_ah      = GFL_ARC_OpenDataHandle( ARCID_PERSONAL, HEAPID_BOX_APP );
-	syswk->app->pokeicon_ah = GFL_ARC_OpenDataHandle( ARCID_POKEICON, HEAPID_BOX_APP );
-
-	BOX2MAIN_VramBankSet();
-	BOX2MAIN_BgInit( syswk );
-	BOX2MAIN_PaletteFadeInit( syswk );
-
-	BOX2MAIN_BgGraphicLoad( syswk );
-
-	BOX2MAIN_MsgInit( syswk );
-
-	BOX2BMP_Init( syswk );
-
-	BOX2OBJ_Init( syswk );
-	BOX2OBJ_TrayPokeIconChange( syswk );
-	BOX2OBJ_PartyPokeIconChange( syswk );
-
-	BOX2MAIN_WallPaperSet(
-		syswk, BOX2MAIN_GetWallPaperNumber( syswk, syswk->tray ), BOX2MAIN_TRAY_SCROLL_NONE );
-
-	BOX2BGWFRM_Init( syswk );
-
-	if( syswk->dat->callMode != BOX_MODE_TURETEIKU && syswk->dat->callMode != BOX_MODE_AZUKERU ){
-		BOX2BGWFRM_ButtonPutTemochi( syswk );
-		BOX2BGWFRM_ButtonPutIdou( syswk );
-	}
-	BOX2BGWFRM_ButtonPutModoru( syswk );
-
-	BOX2BMP_TitlePut( syswk );
-	BOX2BMP_DefStrPut( syswk );
-
-	BOX2OBJ_TrayIconCgxMakeAll( syswk );
-
-	BOX2UI_CursorMoveInit( syswk );
-
-	BOX2MAIN_YesNoWinInit( syswk );
-
-//	syswk->app->vtask = VIntrTCB_Add( BOX2MAIN_VBlank, syswk, 0 );
-
-	BOX2MAIN_SetBlendAlpha( TRUE );
-
-	BOX2MAIN_InitVBlank( syswk );
-
-	return syswk->next_seq;
-*/
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -286,22 +167,6 @@ static int MainSeq_Release( CDEMO_WORK * wk )
 		CDEMOMAIN_CommDataDelete( wk );
 		CDEMOMAIN_BgExit();
 	}
-
-/*
-	LDA_WORK * awk = wk->work;
-
-	sys_VBlankFuncChange( NULL, NULL );
-
-//	ObjExit( awk );
-	BgExit( awk );
-
-	ArchiveDataHandleClose( awk->ah );
-
-//	Snd_BgmStop( SEQ_GS_E_ARCEUS, 0 );
-//	Snd_BgmPlay( awk->bgm );
-
-	sys_FreeMemoryEz( wk->work );
-*/
 
 	return CDEMOSEQ_MAIN_END;
 }
@@ -375,40 +240,6 @@ static int MainSeq_AlphaBlend( CDEMO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Main( CDEMO_WORK * wk )
 {
-/*
-	LDA_WORK * awk = wk->work;
-
-	while(1){
-		int	ret;
-		
-		if( awk->comm[0] == COMM_END ){
-			return MAINSEQ_RELEASE;
-		}
-		
-		ret = CommFunc[awk->comm[0]]( wk, awk->comm );
-
-		if( ret == COMM_RET_TRUE ){
-			break;
-		}else if( ret == COMM_RET_FALSE ){
-			awk->comm = &awk->comm[ CommandSize[awk->comm[0]] ];
-//			awk->d_cnt++;
-//			OS_Printf( "d_cnt++ %d\n", awk->d_cnt );
-		}else if( ret == COMM_RET_NEXT ){
-			awk->comm = &awk->comm[ CommandSize[awk->comm[0]] ];
-//			awk->d_cnt++;
-//			OS_Printf( "d_cnt++ %d\n", awk->d_cnt );
-			break;
-		}
-	}
-*/
-/*
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-		return CDEMOSEQ_MAIN_RELEASE;
-	}
-	return CDEMOSEQ_MAIN_MAIN;
-*/
-
-
 	while(1){
 		int	ret;
 		
@@ -427,7 +258,15 @@ static int MainSeq_Main( CDEMO_WORK * wk )
 	return wk->main_seq;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：BGスクリーンアニメ
+ *
+ * @param		wk		デモワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 {
 	const BGFRM_ANM_DATA * dat = &ModeData[wk->dat->mode];
