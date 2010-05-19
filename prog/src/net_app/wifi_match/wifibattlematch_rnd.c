@@ -1540,7 +1540,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       }
     }
   }
-
 }
 //----------------------------------------------------------------------------
 /**
@@ -2501,6 +2500,19 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       {
         *p_seq  = SEQ_START_CANCEL;
       }
+
+      //エラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_TIMEOUT:
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Free_CupContinue );
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+        break;
+      }
     }
   }
 
@@ -3200,6 +3212,7 @@ static void Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE b
 //-----------------------------------------------------------------------------
 static void Util_SaveFreeScore( RNDMATCH_DATA *p_rndmatch, WIFIBATTLEMATCH_BTLRULE btl_rule, BtlResult btl_result )
 { 
+  OS_TFPrintf( 3, "スコア戦闘結果 %d", btl_result );
   switch( btl_result )
   {
   case BTL_RESULT_WIN:
@@ -3622,6 +3635,7 @@ static UTIL_CANCEL_STATE Util_Cancel_Seq( WIFIBATTLEMATCH_RND_WORK *p_wk, BOOL i
  *    DEBUG
  */
 //=============================================================================
+#ifdef DEBUGWIN_USE
 static void DEBUGWIN_VisiblePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBUGWIN_VisibleMatchInfo( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBUGWIN_ChangePlayerInfo( void* userWork , DEBUGWIN_ITEM* item );
@@ -3629,7 +3643,6 @@ static void DEBUGWIN_ChangeMatchInfo( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBUGWIN_ChangeWaitIcon( void* userWork , DEBUGWIN_ITEM* item );
 
 
-#ifdef DEBUGWIN_USE
 static void DEBUGWIN_CARD_Init( WIFIBATTLEMATCH_RND_WORK *p_wk )
 { 
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_CARD, "カード", HEAPID_WIFIBATTLEMATCH_CORE );
