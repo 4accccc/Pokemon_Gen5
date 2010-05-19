@@ -24,7 +24,6 @@ _EVENT_DATA    ev_pos_d01r0101_support_01
 _EVENT_DATA    ev_d01r0101_support_02
 _EVENT_DATA    ev_pos_d01r0101_support_03
 _EVENT_DATA    ev_pos_d01r0101_support_04
-_EVENT_DATA    ev_d01r0101_item_01
 _EVENT_DATA    ev_init_d01r0101
 _EVENT_DATA    ev_pos_d01r0101_sage5_01
 _EVENT_DATA_END
@@ -881,7 +880,7 @@ EVENT_START   ev_pos_d01r0101_support_04
 	
 	//======================================//
 	
-	//夢イベント終了フラグ
+	//夢イベント進行フラグ（R03到達まで4）
 	$WK_SCENE_D01R0101_POKE = 4
 	
 	//夢ポケモン非表示
@@ -890,6 +889,9 @@ EVENT_START   ev_pos_d01r0101_support_04
 	_FLAG_SET( FV_D01R0101_ITEM_01 )
 	//ゲーヂス非表示
 	_FLAG_SET(FV_D01R0101_GCIS_01)
+	
+	//ゆめのけむりイベント終了フラグセット
+	_FLAG_SET(FE_D01R0101_POKE_END)
 	
 	//======================================//
 
@@ -1223,29 +1225,6 @@ _ANIME_LABEL	anm_d01r0101_support_to_player02
 	_ANIME_DATA	AC_STAY_WALK_R_8F,0
 	_ANIME_DATA	ACMD_END,0
 	
-/**************************************************************/
-/*   D01R0101　だいじなもの入手                               */
-/**************************************************************/
-EVENT_START   ev_d01r0101_item_01
-
-	//プレイヤーネームを格納
-	_PLAYER_NAME(0)
-
-	//サポート駆け寄って来る
-	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_05)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_05,D01R0101_SUPPORT)
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
-	//======================================//
-
-	//夢イベント終了フラグ起動
-	$WK_SCENE_D01R0101_POKE = 4
-	
-	//======================================//
-	
-EVENT_END
 
 //--------------------------------------------------------------
 //	R01　夢イベント用：いあい切り後にサポート来る  
