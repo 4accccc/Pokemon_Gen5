@@ -270,13 +270,13 @@ extern BOOL	PMSND_CheckPlayingSEIdx( u32 soundIdx );
 extern void PMSND_PlayerSetVolume( SEPLAYER_ID sePlayerID, u32 vol );
 //SEイニシャルボリュームセット
 extern void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol );
-
+#if 0
 //============================================================================================
 /**
  *
  *
  * @brief	プリセット関数ラッパー
- *					とりあえずシステムでハンドルを１つだけ用意し簡易登録可能にする
+ *					システムでハンドルを１つだけ用意し簡易登録可能にする
  *
  *
  */
@@ -284,6 +284,7 @@ extern void PMSND_PlayerSetInitialVolume( SEPLAYER_ID sePlayerID, u32 vol );
 extern void	PMDSND_PresetSoundTbl( const u32* soundIdxTbl, u32 tblNum );
 extern void	PMSND_PresetGroup( u32 groupIdx );
 extern void	PMSND_ReleasePreset( void );
+#endif
 
 //============================================================================================
 /**
