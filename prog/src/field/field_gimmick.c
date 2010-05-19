@@ -64,6 +64,7 @@ FS_EXTERN_OVERLAY(field_gimmick_t01);
 
 const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
+  NULL,
   FS_OVERLAY_ID(field_gimmick_h01),
   FS_OVERLAY_ID(field_gym_elec),
   FS_OVERLAY_ID(field_gym_normal),
@@ -122,6 +123,7 @@ const static FSOverlayID FldGimmickOverlay[FLD_GIMMICK_MAX] = {
 
 const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
+  NULL,
   H01_GIMMICK_Setup,
   GYM_ELEC_Setup,
   GYM_NORMAL_Setup,
@@ -180,6 +182,7 @@ const static FLD_GMK_SETUP_FUNC FldGimmickSetupFunc[FLD_GIMMICK_MAX] = {
 
 const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
+  NULL,
   H01_GIMMICK_End,
   GYM_ELEC_End,
   GYM_NORMAL_End,
@@ -238,6 +241,7 @@ const static FLD_GMK_END_FUNC FldGimmickEndFunc[FLD_GIMMICK_MAX] = {
 
 const static FLD_GMK_MOVE_FUNC FldGimmickMoveFunc[FLD_GIMMICK_MAX] = {
 	NULL,					//0:–³‚µ
+  NULL,
   H01_GIMMICK_Move,
   GYM_ELEC_Move,
   GYM_NORMAL_Move,
