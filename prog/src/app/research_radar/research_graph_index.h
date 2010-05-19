@@ -11,19 +11,20 @@
 
 // グラフ画面の状態
 typedef enum {
-  RRG_STATE_SETUP,            // 準備
-  RRG_STATE_INTRUDE_SHUTDOWN, // 侵入切断
-  RRG_STATE_STANDBY,          // 最初のキー入力待ち
-  RRG_STATE_KEYWAIT,          // キー入力待ち
-  RRG_STATE_ANALYZE,          // 解析
-  RRG_STATE_PERCENTAGE,       // ％表示
-  RRG_STATE_FLASHOUT,         // 画面フラッシュ ( アウト )
-  RRG_STATE_FLASHIN,          // 画面フラッシュ ( イン )
-  RRG_STATE_UPDATE,           // 更新
-  RRG_STATE_FADEOUT,          // フェードアウト
-  RRG_STATE_WAIT,             // フレーム経過待ち
-  RRG_STATE_CLEANUP,          // 後片付け
-  RRG_STATE_FINISH,           // 終了
+  RRG_STATE_SETUP,             // 準備
+  RRG_STATE_INTRUDE_SHUTDOWN,  // 侵入切断
+  RRG_STATE_STANDBY,           // 最初のキー入力待ち
+  RRG_STATE_KEYWAIT,           // キー入力待ち
+  RRG_STATE_ANALYZE,           // 解析
+  RRG_STATE_PERCENTAGE,        // ％表示
+  RRG_STATE_FLASHOUT,          // 画面フラッシュ ( アウト )
+  RRG_STATE_FLASHIN,           // 画面フラッシュ ( イン )
+  RRG_STATE_UPDATE_AT_STANDBY, // 更新 ( 最初のキー入力待ち時 )
+  RRG_STATE_UPDATE_AT_KEYWAIT, // 更新 ( キー入力待ち時 )
+  RRG_STATE_FADEOUT,           // フェードアウト
+  RRG_STATE_WAIT,              // フレーム経過待ち
+  RRG_STATE_CLEANUP,           // 後片付け
+  RRG_STATE_FINISH,            // 終了
 } RRG_STATE;
 
 // 選択項目

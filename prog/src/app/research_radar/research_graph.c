@@ -152,7 +152,8 @@ static void MainSeq_ANALYZE( RRG_WORK* work ); // RRG_STATE_ANALYZE
 static void MainSeq_PERCENTAGE( RRG_WORK* work ); // RRG_STATE_PERCENTAGE
 static void MainSeq_FLASHOUT( RRG_WORK* work ); // RRG_STATE_FLASHOUT
 static void MainSeq_FLASHIN( RRG_WORK* work ); // RRG_STATE_FLASHIN
-static void MainSeq_UPDATE( RRG_WORK* work ); // RRG_STATE_UPDATE
+static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work ); // RRG_STATE_UPDATE_AT_STANDBY
+static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work ); // RRG_STATE_UPDATE_AT_KEYWAIT
 static void MainSeq_FADEOUT( RRG_WORK* work ); // RRG_STATE_FADEOUT
 static void MainSeq_WAIT( RRG_WORK* work ); // RRG_STATE_WAIT
 static void MainSeq_CLEANUP( RRG_WORK* work ); // RRG_STATE_CLEANUP 
@@ -439,18 +440,19 @@ void RRG_Main( RRG_WORK* work )
 {
   // 状態ごとの処理
   switch( work->state ) {
-  case RRG_STATE_SETUP:            MainSeq_SETUP( work );             break;
-  case RRG_STATE_INTRUDE_SHUTDOWN: MainSeq_INTRUDE_SHUTDOWN( work );  break;
-  case RRG_STATE_STANDBY:          MainSeq_STANDBY( work );           break;
-  case RRG_STATE_KEYWAIT:          MainSeq_KEYWAIT( work );           break;
-  case RRG_STATE_ANALYZE:          MainSeq_ANALYZE( work );           break;
-  case RRG_STATE_PERCENTAGE:       MainSeq_PERCENTAGE( work );        break;
-  case RRG_STATE_FLASHOUT:         MainSeq_FLASHOUT( work );          break;
-  case RRG_STATE_FLASHIN:          MainSeq_FLASHIN( work );           break;
-  case RRG_STATE_UPDATE:           MainSeq_UPDATE( work );            break;
-  case RRG_STATE_FADEOUT:          MainSeq_FADEOUT( work );           break;
-  case RRG_STATE_WAIT:             MainSeq_WAIT( work );              break;
-  case RRG_STATE_CLEANUP:          MainSeq_CLEANUP( work );           break;
+  case RRG_STATE_SETUP:             MainSeq_SETUP( work );             break;
+  case RRG_STATE_INTRUDE_SHUTDOWN:  MainSeq_INTRUDE_SHUTDOWN( work );  break;
+  case RRG_STATE_STANDBY:           MainSeq_STANDBY( work );           break;
+  case RRG_STATE_KEYWAIT:           MainSeq_KEYWAIT( work );           break;
+  case RRG_STATE_ANALYZE:           MainSeq_ANALYZE( work );           break;
+  case RRG_STATE_PERCENTAGE:        MainSeq_PERCENTAGE( work );        break;
+  case RRG_STATE_FLASHOUT:          MainSeq_FLASHOUT( work );          break;
+  case RRG_STATE_FLASHIN:           MainSeq_FLASHIN( work );           break;
+  case RRG_STATE_UPDATE_AT_STANDBY: MainSeq_UPDATE_AT_STANDBY( work ); break;
+  case RRG_STATE_UPDATE_AT_KEYWAIT: MainSeq_UPDATE_AT_KEYWAIT( work ); break;
+  case RRG_STATE_FADEOUT:           MainSeq_FADEOUT( work );           break;
+  case RRG_STATE_WAIT:              MainSeq_WAIT( work );              break;
+  case RRG_STATE_CLEANUP:           MainSeq_CLEANUP( work );           break;
   case RRG_STATE_FINISH:           return;                            
   default: GF_ASSERT(0);
   }
@@ -651,6 +653,31 @@ static void MainSeq_STANDBY( RRG_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
+  // TEST: 更新処理
+#ifdef PM_DEBUG
+  if( trg & PAD_BUTTON_DEBUG ) {
+    FinishCurrentState( work );                             // RRG_STATE_STANDBY 状態を終了
+    RegisterNextState( work, RRG_STATE_UPDATE_AT_STANDBY ); // => RRG_STATE_UPDATE_AT_STANDBY
+    RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
+    RegisterNextState( work, RRG_STATE_FLASHIN );           // ===> RRG_STATE_FLASHIN
+    RegisterNextState( work, RRG_STATE_PERCENTAGE );        // ====> RRG_STATE_PERCENTAGE
+    RegisterNextState( work, RRG_STATE_STANDBY );           // =====> RRG_STATE_STANDBY
+    return;
+  }
+#endif
+
+  //------------------------
+  // 調査データの更新を検出
+  if( (work->analyzeFlag == TRUE) && (GAMEBEACON_Get_NewEntry() == TRUE) ) {
+    FinishCurrentState( work );                              // RRG_STATE_STANDBY 状態を終了
+    RegisterNextState( work, RRG_STATE_UPDATE_AT_STANDBY );  // => RRG_STATE_UPDATE_AT_STANDBY
+    RegisterNextState( work, RRG_STATE_FLASHOUT );           // ==> RRG_STATE_FLASHOUT
+    RegisterNextState( work, RRG_STATE_FLASHIN );            // ===> RRG_STATE_FLASHIN
+    RegisterNextState( work, RRG_STATE_PERCENTAGE );         // ====> RRG_STATE_PERCENTAGE
+    RegisterNextState( work, RRG_STATE_STANDBY );            // =====> RRG_STATE_STANDBY
+    return;
+  } 
+
   //-----------------------
   //『戻る』ボタンをタッチ
   if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
@@ -836,24 +863,24 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   //------------------------
   // 調査データの更新を検出
   if( (work->analyzeFlag == TRUE) && (GAMEBEACON_Get_NewEntry() == TRUE) ) {
-    FinishCurrentState( work );                      // RRG_STATE_KEYWAIT 状態を終了
-    RegisterNextState( work, RRG_STATE_UPDATE );     // => RRG_STATE_UPDATE
-    RegisterNextState( work, RRG_STATE_FLASHOUT );   // ==> RRG_STATE_FLASHOUT
-    RegisterNextState( work, RRG_STATE_FLASHIN );    // ===> RRG_STATE_FLASHIN
-    RegisterNextState( work, RRG_STATE_PERCENTAGE ); // ====> RRG_STATE_PERCENTAGE
-    RegisterNextState( work, RRG_STATE_KEYWAIT );    // =====> RRG_STATE_KEYWAIT
+    FinishCurrentState( work );                             // RRG_STATE_KEYWAIT 状態を終了
+    RegisterNextState( work, RRG_STATE_UPDATE_AT_KEYWAIT ); // => RRG_STATE_UPDATE_AT_KEYWAIT
+    RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
+    RegisterNextState( work, RRG_STATE_FLASHIN );           // ===> RRG_STATE_FLASHIN
+    RegisterNextState( work, RRG_STATE_PERCENTAGE );        // ====> RRG_STATE_PERCENTAGE
+    RegisterNextState( work, RRG_STATE_KEYWAIT );           // =====> RRG_STATE_KEYWAIT
     return;
   } 
 
   // TEST: 更新処理
 #ifdef PM_DEBUG
   if( trg & PAD_BUTTON_DEBUG ) {
-    FinishCurrentState( work );                      // RRG_STATE_KEYWAIT 状態を終了
-    RegisterNextState( work, RRG_STATE_UPDATE );     // => RRG_STATE_UPDATE
-    RegisterNextState( work, RRG_STATE_FLASHOUT );   // ==> RRG_STATE_FLASHOUT
-    RegisterNextState( work, RRG_STATE_FLASHIN );    // ===> RRG_STATE_FLASHIN
-    RegisterNextState( work, RRG_STATE_PERCENTAGE ); // ====> RRG_STATE_PERCENTAGE
-    RegisterNextState( work, RRG_STATE_KEYWAIT );    // =====> RRG_STATE_KEYWAIT
+    FinishCurrentState( work );                             // RRG_STATE_KEYWAIT 状態を終了
+    RegisterNextState( work, RRG_STATE_UPDATE_AT_KEYWAIT ); // => RRG_STATE_UPDATE_AT_KEYWAIT
+    RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
+    RegisterNextState( work, RRG_STATE_FLASHIN );           // ===> RRG_STATE_FLASHIN
+    RegisterNextState( work, RRG_STATE_PERCENTAGE );        // ====> RRG_STATE_PERCENTAGE
+    RegisterNextState( work, RRG_STATE_KEYWAIT );           // =====> RRG_STATE_KEYWAIT
     return;
   }
 #endif
@@ -1146,12 +1173,88 @@ static void MainSeq_FLASHIN( RRG_WORK* work )
 
 //-----------------------------------------------------------------------------------------
 /**
- * @brief 調査項目確定の確認状態への準備状態 ( RRG_STATE_UPDATE ) の処理
+ * @brief 調査項目確定の確認状態への準備状態 ( RRG_STATE_UPDATE_AT_STANDBY ) の処理
  *
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void MainSeq_UPDATE( RRG_WORK* work )
+static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work )
+{
+  switch( GetStateSeq(work) ) {
+  case 0:
+    // 更新開始
+    work->updateFlag = TRUE;
+
+    // 調査データを再セットアップ
+    SetupResearchData( work );
+
+    // 表示を更新
+    UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
+    UpdateBGFont_Answer( work );        //「回答」文字列の表示を更新する
+    UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+    UpdateArrow( work );                // 矢印の表示を更新する
+    UpdateControlCursor( work );        // 左右のカーソル表示を更新する
+    VanishAllPercentage( work );        // ％表示を消去する
+
+    // サブ円グラフ作成
+    SetupSubCircleGraph( work, GRAPH_DISP_MODE_TODAY );
+    SetupSubCircleGraph( work, GRAPH_DISP_MODE_TOTAL );
+
+    // 円グラフの重なり方を調整
+    AdjustCircleGraphLayer( work );
+
+    // 円グラフ表示開始
+    CIRCLE_GRAPH_SetDrawEnable( GetSubGraph(work), TRUE );
+    CIRCLE_GRAPH_UpdateReq( GetSubGraph(work) );
+
+    IncStateSeq( work );
+    break;
+
+  case 1:
+    // SE が停止している
+    if( PMSND_CheckPlaySE() == FALSE ) { 
+      // 一定時間が経過
+      if( STATE_UPDATE_FRAMES <= work->stateCount ) {
+        IncStateSeq( work );
+      } 
+      else { 
+        PMSND_PlaySE( SEQ_SE_SYS_81 ); // データ受信中SEをループさせる
+      }
+    }
+    break;
+
+  case 2:
+    // 更新終了
+    work->updateFlag = FALSE;
+
+    // 表示を更新
+    InterchangeCircleGraph( work ); // サブ円グラフとメイン円グラフを入れ替える
+    CIRCLE_GRAPH_SetDrawEnable( GetSubGraph(work), FALSE ); // サブ円グラフ ( 元メイン ) 表示終了
+    UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
+    UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+    UpdateBGFont_Answer( work );        // 回答を更新する
+    UpdateBGFont_Count( work );         // 回答人数を更新する
+    UpdateArrow( work );                // 矢印を更新する
+    UpdateControlCursor( work );        // 左右のカーソル表示を更新する
+    DispAllPercentage( work );          // ％表記を表示する
+    UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
+
+    // 更新完了SE
+    PMSND_PlaySE( SEQ_SE_SYS_82 );
+
+    FinishCurrentState( work );
+    break;
+  } 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 調査項目確定の確認状態への準備状態 ( RRG_STATE_UPDATE_AT_KEYWAIT ) の処理
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work )
 {
   switch( GetStateSeq(work) ) {
   case 0:
