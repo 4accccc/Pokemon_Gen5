@@ -1057,13 +1057,7 @@ static int BPL_SeqWazaDelMain( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqWazaDelError( BPLIST_WORK * wk )
 {
-  // 技マシンを持っていない
-  if( BPL_HidenCheck( wk ) == FSCR_NO_MACHINE ){
-    BPL_HidenMsgPut( wk, 0 );
-  // 使用中
-  }else{
-    BPL_HidenMsgPut( wk, 1 );
-  }
+	BPL_HidenMsgPut( wk );
   wk->talk_win_clear = 1;
   wk->ret_seq = SEQ_BPL_WAZADEL_MAIN;
   return SEQ_BPL_MSG_WAIT;

@@ -1874,24 +1874,15 @@ static void BPL_WasureruStrPut( BPLIST_WORK * wk, u32 idx )
  * @brief		技忘れエラーメッセージ表示
  *
  * @param		wk	    ワーク
- * @param		mode		エラー状況
  *
  * @return  none
  *
  *  ページ６で使用
  */
 //--------------------------------------------------------------------------------------------
-void BPL_HidenMsgPut( BPLIST_WORK * wk, u32 mode )
+void BPL_HidenMsgPut( BPLIST_WORK * wk )
 {
-	STRBUF * str;
-
-	// 技マシンを持っていない
-	if( mode == 0 ){
-		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_002 );
-	// 使用中
-	}else{
-		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_003 );
-	}
+	STRBUF * str = GFL_MSG_CreateString( wk->mman, mes_b_plist_05_002 );
   WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
   GFL_STR_DeleteBuffer( str );
 	BattlePokeList_TalkMsgSet( wk );

@@ -97,14 +97,13 @@ extern void BPLISTBMP_DeadSelInfoMesPut( BPLIST_WORK * wk );
  * @brief		技忘れエラーメッセージ表示
  *
  * @param		wk	    ワーク
- * @param		mode		エラー状況
  *
  * @return  none
  *
  *  ページ６で使用
  */
 //--------------------------------------------------------------------------------------------
-extern void BPL_HidenMsgPut( BPLIST_WORK * wk, u32 mode );
+extern void BPL_HidenMsgPut( BPLIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
