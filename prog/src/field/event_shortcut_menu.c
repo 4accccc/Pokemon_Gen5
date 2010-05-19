@@ -44,6 +44,14 @@
 //外部参照
 #include "event_shortcut_menu.h"
 
+//-------------------------------------
+///	
+//=====================================
+#ifdef PM_DEBUG
+
+static int s_cnt  = 0;
+#endif //PM_DEBUG
+
 //=============================================================================
 /**
  *					定数宣言
@@ -76,6 +84,7 @@ typedef struct
 	EVENT_PROCLINK_PARAM	*p_link;		//リンクイベントパラメータ
 	HEAPID								heapID;			//常駐ヒープID
 	BOOL									is_empty;		//メニューを空にしたフラグ
+  u32                   exit_seq;
 } EVENT_SHORTCUTMENU_WORK;
 
 //=============================================================================
@@ -93,6 +102,7 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 //メニュー作成
 static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *p_wk );
 static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk );
+static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk );
 
 //コールバック
 static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
@@ -284,10 +294,12 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 				call_type = ShortCutMenu_SetCallType( p_wk->p_link, shortcutID );
 
 				if(reverse_use == FALSE 
-				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE){
+				    && GAMEDATA_GetIntrudeReverseArea( GAMESYSTEM_GetGameData(p_wk->p_gamesys) ) == TRUE)
+        {
           item_use_err = TRUE;
         }
-				else if(check_item == TRUE){
+				else if(check_item == TRUE)
+        {
 					ITEMCHECK_WORK	icwk;
 					ITEMUSE_InitCheckWork( &icwk, p_wk->p_gamesys, p_wk->p_fieldmap );
 					if( ITEMUSE_GetItemUseCheck( &icwk, enable ) == FALSE ){
@@ -368,15 +380,17 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 		break;
 
 	case SEQ_EXIT:
-		ShortCutMenu_Exit( p_wk );
-
-		//終了なので、メモリ破棄
-		GFL_HEAP_FreeMemory( p_wk->p_link );
-		{
-   		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
-      MMDLSYS_ClearPauseMoveProc( p_fldmdl );
-		}
-		return GMEVENT_RES_FINISH;	
+		if( ShortCutMenu_ExitSeq( p_wk ) )
+    {
+      //終了なので、メモリ破棄
+      GFL_HEAP_FreeMemory( p_wk->p_link );
+      {
+        MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+        MMDLSYS_ClearPauseMoveProc( p_fldmdl );
+      }
+      return GMEVENT_RES_FINISH;	
+    }
+    break;
 
 	case SEQ_RESTART:
 		ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
@@ -425,18 +439,20 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			u32 item;
 
 			//MENU破棄
-			ShortCutMenu_Exit( p_wk );
+			if( ShortCutMenu_ExitSeq( p_wk ) )
+      {
 
-			//メモリ解放まえに情報を受け取る
-			item	= p_wk->p_link->select_param;
-			GFL_HEAP_FreeMemory( p_wk->p_link );
-			p_wk->p_link	= NULL;
+        //メモリ解放まえに情報を受け取る
+        item	= p_wk->p_link->select_param;
+        GFL_HEAP_FreeMemory( p_wk->p_link );
+        p_wk->p_link	= NULL;
 
-			// アイテムコール
-			p_item_event	= EVENT_FieldItemUse( item, p_wk->p_gamesys, p_wk->p_fieldmap );
-			GMEVENT_CallEvent(p_event, p_item_event );
+        // アイテムコール
+        p_item_event	= EVENT_FieldItemUse( item, p_wk->p_gamesys, p_wk->p_fieldmap );
+        GMEVENT_CallEvent(p_event, p_item_event );
 
-			*p_seq	= SEQ_ITEM_RETURN;
+        *p_seq	= SEQ_ITEM_RETURN;
+      }
 		}
 		break;
 
@@ -446,27 +462,28 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			u32 item;
 
 			//MENU破棄
-			ShortCutMenu_Exit( p_wk );
+			if( ShortCutMenu_ExitSeq( p_wk ) )
+      {
+        //メモリ解放まえに情報を受け取る
+        item	= p_wk->p_link->select_param;
+        GFL_HEAP_FreeMemory( p_wk->p_link );
+        p_wk->p_link	= NULL;
 
-			//メモリ解放まえに情報を受け取る
-			item	= p_wk->p_link->select_param;
-			GFL_HEAP_FreeMemory( p_wk->p_link );
-			p_wk->p_link	= NULL;
+        // アイテムコール
+        if( item == EVENT_ITEMUSE_CALL_CYCLE ){
+          PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
+          if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
+            p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 1 );
+          }else{
+            p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
+          }
+        }else{
+          p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
+        }
+        GMEVENT_CallEvent(p_event, p_item_event );
 
-			// アイテムコール
-			if( item == EVENT_ITEMUSE_CALL_CYCLE ){
-				PLAYER_WORK * plwk = GAMEDATA_GetMyPlayerWork( GAMESYSTEM_GetGameData(p_wk->p_gamesys) );
-				if( PLAYERWORK_GetMoveForm( plwk ) == PLAYER_MOVE_FORM_CYCLE ){
-					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 1 );
-				}else{
-					p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
-				}
-			}else{
-				p_item_event = EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 0 );
-			}
-			GMEVENT_CallEvent(p_event, p_item_event );
-
-			*p_seq	= SEQ_ITEM_RETURN;
+        *p_seq	= SEQ_ITEM_RETURN;
+      }
 		}
 		break;
 
@@ -482,14 +499,14 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 
   case SEQ_RIBBON_ERROR:
 		{	
-
 			//MENU破棄
-			ShortCutMenu_Exit( p_wk );
+			if( ShortCutMenu_ExitSeq( p_wk ) )
+      {
+        //NGメッセージ表示
+        GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
 
-      //NGメッセージ表示
-			GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
-
-			*p_seq	= SEQ_RIBBON_RETURN;
+        *p_seq	= SEQ_RIBBON_RETURN;
+      }
 		}
     break;
 
@@ -584,7 +601,6 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		break;
 
 	case SEQ_EXIT:
-
 		//終了なので、メモリ破棄
 		GFL_HEAP_FreeMemory( p_wk->p_link );
 		{
@@ -598,6 +614,8 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		//=====================================
 	case SEQ_EVENT_CALL:
 		{	
+
+      GFL_BG_SetVisible( FLDBG_MFRM_MSG, VISIBLE_OFF );
 			ShortCutMenu_Exit( p_wk );
 
 			GMEVENT_CallEvent( p_event, EVENT_ProcLink( p_wk->p_link, p_wk->heapID ) );
@@ -904,6 +922,63 @@ static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk )
 		p_msgbg	= FIELDMAP_GetFldMsgBG( p_wk->p_fieldmap );
 		FLDMSGBG_ResetBGResource( p_msgbg );
 	}
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief	MENUを破棄し、FLDMSGBGを割り当て
+ *	        ShortCutMenu_Exitが重いため、フィールド上で破棄するときはこちらをつかう
+ *
+ *	@param	EVENT_SHORTCUTMENU_WORK *p_wk ワーク
+ *
+ *	@return TRUE処理終了  FALSE処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
+{
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+
+	if( p_wk->is_empty == FALSE )
+	{
+    switch( p_wk->exit_seq )
+    {
+    case SEQ_INIT:
+      if( p_wk->p_menu )
+      {
+        GFL_BG_SetVisible( FLDBG_MFRM_MSG, VISIBLE_OFF );
+        SHORTCUTMENU_Exit( p_wk->p_menu );
+        p_wk->p_menu	= NULL;
+        p_wk->exit_seq  = SEQ_MAIN;
+      }
+      else
+      {
+        p_wk->exit_seq  = SEQ_EXIT;
+      }
+      break;
+
+    case SEQ_MAIN:
+      {
+        FLDMSGBG *p_msgbg	= FIELDMAP_GetFldMsgBG( p_wk->p_fieldmap );
+        FLDMSGBG_ResetBGResource( p_msgbg );
+      }
+      p_wk->exit_seq  = SEQ_EXIT;
+      break;
+
+    case SEQ_EXIT:
+      p_wk->exit_seq  = 0;
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+  else
+  {
+    return TRUE;
+  }
 }
 //=============================================================================
 /**

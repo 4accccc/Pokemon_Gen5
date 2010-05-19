@@ -410,6 +410,7 @@ void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk )
 {	
 	//レジスタクリア
 	G2_BlendNone();
+  GFL_BG_SetVisible( BG_FRAME_SCROLL_M, VISIBLE_OFF );
 
 	//モジュール破棄
 	{	
@@ -448,7 +449,7 @@ void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk )
 	//BG破棄
 	{	
 		GFL_BG_FillCharacterRelease( BG_FRAME_SCROLL_M, 1, 0 );
-		GFL_BG_ClearFrame( BG_FRAME_SCROLL_M );
+//		GFL_BG_ClearFrame( BG_FRAME_SCROLL_M );
 		GFL_BG_FreeBGControl( BG_FRAME_SCROLL_M );
 	}
 
