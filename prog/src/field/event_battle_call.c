@@ -216,23 +216,13 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
 		break;
 
 	case SEQ_CALL_LIST_DEMO:	// マルチ用リストデモ呼び出し
-		if( bcw->btl_setup_prm->commPos == 0 ){
+		if( bcw->btl_setup_prm->commPos == 0 || bcw->btl_setup_prm->commPos == 1 ){
 			work->listParam.pos  = VS_MULTI_LIST_POS_LEFT;
-			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
-			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
-		}else if( bcw->btl_setup_prm->commPos == 1 ){
-			work->listParam.pos  = VS_MULTI_LIST_POS_LEFT;
-			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_D].party;
-			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_C].party;
-		}else if( bcw->btl_setup_prm->commPos == 2 ){
-			work->listParam.pos  = VS_MULTI_LIST_POS_RIGHT;
-			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
-			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
 		}else{
 			work->listParam.pos  = VS_MULTI_LIST_POS_RIGHT;
-			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_C].party;
-			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_D].party;
 		}
+		work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
+		work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &work->listParam );
 		(*seq) = SEQ_WAIT_LIST_DEMO;
 		break;
