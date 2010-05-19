@@ -184,7 +184,7 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk );
 static void InitSlideMove( FRAMELIST_WORK * wk, int pos );
 static BOOL MainSlideMove( FRAMELIST_WORK * wk );
 static BOOL SetSlideScroll( FRAMELIST_WORK * wk, int pos );
-static void InitSledeAutoScroll( FRAMELIST_WORK * wk );
+static BOOL InitSledeAutoScroll( FRAMELIST_WORK * wk );
 static BOOL CheckSledeAutoScrollRepeat( FRAMELIST_WORK * wk );
 
 static void WriteItemFrame( FRAMELIST_WORK * wk, u32 itemNum, u32 frmNum );
