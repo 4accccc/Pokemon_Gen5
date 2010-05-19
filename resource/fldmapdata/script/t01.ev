@@ -307,7 +307,7 @@ EVENT_START	ev_scene_t01_mama_01
 
 	//‚¨‚¤‚¢‘Ò‚Á‚Ä‚æ‚¤
 	_PLAYER_NAME( 0 )
-	_BALLOONWIN_OBJMSG_POS( msg_t01_white_01a, T01_SUPPORT_01, POS_UR )
+	_BALLOONWIN_OBJMSG_MF( msg_t01_white_01a, msg_t01_white_01b, T01_SUPPORT_01, POS_UR )
 	_MSGWIN_CLOSE()
 	_SE_WAIT()
 
@@ -381,6 +381,7 @@ EVENT_START	ev_scene_t01_mama_01
 	_OBJ_ANIME_WAIT()
 
 	//‚ ‚Æ•”‰®‚Ì‚±‚Æ‚Í‹C‚É‚µ‚È‚¢‚Å
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS( msg_t01_mama_06, T01_MAMA_01, POS_DR )
 	_MSGWIN_CLOSE()
 
