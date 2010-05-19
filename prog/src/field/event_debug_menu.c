@@ -58,6 +58,7 @@
 #include "event_debug_rewrite_poke.h"
 #include "event_debug_menu_zone_jump.h"
 #include "event_debug_menu_mmdl_list.h"
+#include "event_debug_livecomm.h"
 
 #include "savedata/box_savedata.h"  //デバッグアイテム生成用
 #include  "item/itemsym.h"  //ITEM_DATA_MAX
@@ -285,6 +286,7 @@ static BOOL debugMenuCallProc_SymbolPokeCountup( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
 
 
 //======================================================================
@@ -366,6 +368,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
   { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
   { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
+  { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
 
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
@@ -3336,6 +3339,22 @@ static BOOL debugMenuCallProc_Geonet( DEBUG_MENU_EVENT_WORK * p_wk )
   GMEVENT_ChangeEvent( p_wk->gmEvent, EVENT_Geonet( p_wk->gmSys ) );
   return TRUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　ライブ通信デバッグ 
+ * @param wk  DEBUG_MENU_EVENT_WORK*  ワーク
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT* event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+              FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveCommFromField, NULL );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  return TRUE;
+}
+
 //======================================================================
 //  バトルレコーダー
 //======================================================================

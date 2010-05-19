@@ -1458,6 +1458,23 @@ GAMEBEACON_INFO * DEBUG_SendBeaconInfo_GetPtr(void)
   GF_ASSERT(GameBeaconSys != NULL);
   return &GameBeaconSys->send.info;
 }
+
+//==================================================================
+/**
+ * デバッグ用：現在の受信ログバッファのコピーを取得
+ */
+//==================================================================
+void DEBUG_GetBeaconRecvLogCopy( void* log_buf, s8* log_num, s8* start_log, s8* end_log )
+{
+  GAMEBEACON_SYSTEM *bsys = GameBeaconSys;
+  GF_ASSERT( bsys != NULL);
+
+  MI_CpuCopy32( bsys->log, log_buf, sizeof( GAMEBEACON_LOG )*GAMEBEACON_SYSTEM_LOG_MAX);
+  *log_num = bsys->log_num;
+  *start_log = bsys->start_log;
+  *end_log = bsys->end_log;
+}
+
 //==================================================================
 /**
  * デバッグ用：自分のビーコン送信キャンセル
@@ -1492,6 +1509,9 @@ void DEBUG_SendBeaconPriorityEgnoreFlagSet( BOOL flag )
 void DEBUG_RecvBeaconBufferClear(void)
 {
   GFL_STD_MemClear(GameBeaconSys->log, sizeof(GAMEBEACON_LOG) * GAMEBEACON_SYSTEM_LOG_MAX);
+  GameBeaconSys->log_num = 0;
+  GameBeaconSys->start_log = 0;
+  GameBeaconSys->end_log = -1;
 }
 
 #endif  //PM_DEBUG

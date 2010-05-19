@@ -15,6 +15,7 @@ FS_EXTERN_OVERLAY( d_livecomm );
 
 
 extern GMEVENT* DEBUG_EVENT_LiveComm( GAMESYS_WORK* gsys, void* parent_work );
+extern GMEVENT* DEBUG_EVENT_LiveCommFromField( GAMESYS_WORK* gsys,void* parent_work );
 
 
 

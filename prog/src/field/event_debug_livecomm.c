@@ -50,6 +50,7 @@
 
 #include "gamesystem/game_beacon.h"
 #include "gamesystem/game_beacon_types.h"
+#include "gamesystem/game_beacon_local.h" //許可なく他でinclude禁止
 #include "field/beacon_view.h"
 #include "field/field_comm/beacon_view_local.h"
 #include "event_debug_livecomm.h"
@@ -73,7 +74,8 @@ enum{
  MENU_THANKS_NUM,
  MENU_STACK_CLEAR,
  MENU_MEMBER_CLEAR,
- MENU_COMM_BUF_CLEAR,
+ MENU_RECV_BUF_CHECK,
+ MENU_RECV_BUF_CLEAR,
  MENU_EXIT,
 };
 
@@ -274,14 +276,31 @@ static const FLDMENUFUNC_LIST DATA_DebugLiveCommMenuList[] =
   { dlc_menu_05, (void*)MENU_THANKS_NUM },
   { dlc_menu_06, (void*)MENU_STACK_CLEAR },
   { dlc_menu_07, (void*)MENU_MEMBER_CLEAR },
-  { dlc_menu_08, (void*)MENU_COMM_BUF_CLEAR },
-  { dlc_menu_09, (void*)MENU_EXIT },
+  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK },
+  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR },
+  { dlc_menu_10, (void*)MENU_EXIT },
+};
+
+static const FLDMENUFUNC_LIST DATA_DebugLiveCommFromFieldMenuList[] =
+{
+  { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK },
+  { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR },
+  { dlc_menu_10, (void*)MENU_EXIT },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
   NARC_message_d_livecomm_dat,
   NELEMS(DATA_DebugLiveCommMenuList),
   DATA_DebugLiveCommMenuList,
+  &DATA_DebugMenuList_Default, //流用
+  1, 1, 24, 17,
+  NULL,
+  NULL
+};
+static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFieldMenuData = {
+  NARC_message_d_livecomm_dat,
+  NELEMS(DATA_DebugLiveCommFromFieldMenuList),
+  DATA_DebugLiveCommFromFieldMenuList,
   &DATA_DebugMenuList_Default, //流用
   1, 1, 24, 17,
   NULL,
@@ -446,6 +465,7 @@ static const u16 DATA_FieldWazaTbl[BREQ_FWAZA_MAX] = {
 //======================================================================
 
 static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work);
+static GMEVENT_RESULT event_LiveCommFromFieldMain( GMEVENT * event, int *seq, void * work);
 static void dmenu_WorkInit( DMENU_LIVE_COMM* wk );
 static void dmenu_WorkRelease( DMENU_LIVE_COMM* wk );
 
@@ -457,7 +477,7 @@ static void sub_BeaconParamWordset( DMENU_LIVE_COMM* wk, u8 idx, int value, BPRM
 
 static GMEVENT* event_CreateEventNumInput( DMENU_LIVE_COMM* wk, int key, int min, int max, NINPUT_SET_FUNC set_func, NINPUT_GET_FUNC get_func );
 static GMEVENT* event_CreateEventNumInputRetWork( DMENU_LIVE_COMM* wk, int key, int min, int max, int* ret_wk, BPRM_WSET_TYPE wset_type );
-static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk );
+static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk, GAMEBEACON_INFO_TBL* info_tbl );
 static GMEVENT* event_CreateEventBeaconReq( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk );
 
 static int ninput_GetMiscCount( DMENU_LIVE_COMM* wk, int param );
@@ -501,6 +521,39 @@ GMEVENT* DEBUG_EVENT_LiveComm( GAMESYS_WORK* gsys, void* parent_work )
   return event;
 }
 
+//--------------------------------------------------------------
+/**
+ * すれ違い通信デバッグメニュー トップメニューイベント生成
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ */
+//--------------------------------------------------------------
+GMEVENT* DEBUG_EVENT_LiveCommFromField( GAMESYS_WORK* gsys,void* parent_work )
+{
+  DMENU_LIVE_COMM* wk;
+  GMEVENT* event;
+
+  event = GMEVENT_Create( gsys, NULL, event_LiveCommFromFieldMain, sizeof(DMENU_LIVE_COMM) );
+
+  wk = GMEVENT_GetEventWork( event );
+  wk->gsys = gsys; 
+  wk->gdata = GAMESYSTEM_GetGameData( gsys ); 
+  wk->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  wk->save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
+  wk->int_sv = SaveData_GetIntrude( wk->save );
+  wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
+  wk->misc_sv = (MISC*)SaveData_GetMiscConst( wk->save );
+  wk->my_status = GAMEDATA_GetMyStatus( wk->gdata );
+
+  wk->view_wk = NULL; //(BEACON_VIEW*)parent_work;
+
+  wk->heapID = FIELDMAP_GetHeapID( wk->fieldmap );
+  wk->tmpHeapID = GFL_HEAP_LOWID( wk->heapID );
+  
+  dmenu_WorkInit( wk );
+
+  return event;
+}
+
 //-----------------------------------------------------------------
 /*
  *  @brief  すれ違いデバッグメニューワーク初期化
@@ -512,7 +565,7 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
 
   wk->fontHandle = FLDMSGBG_GetFontHandle( FIELDMAP_GetFldMsgBG( wk->fieldmap ) );
 
-  wk->wset = WORDSET_Create( wk->heapID );
+  wk->wset = WORDSET_CreateEx( 16,64,wk->heapID );
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_d_livecomm_dat, wk->heapID );
   
@@ -523,6 +576,8 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
 
   wk->beacon_nickname = GFL_STR_CreateBuffer( BUFLEN_BEACON_MSG, wk->heapID );
   wk->beacon_fword = GFL_STR_CreateBuffer( BUFLEN_BEACON_MSG, wk->heapID );
+
+  wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
 
   //すれ違いデータ初期化
   {
@@ -567,7 +622,6 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
     wk->fake_prm[TR_PAT_FAKE][FAKE_NAME] = 1; //GFUser_GetPublicRand0( 0xFFFF );
     MI_CpuCopy8( &(wk->fake_prm[TR_PAT_FAKE][0]), &(wk->fake_prm[TR_PAT_RND][0]),sizeof(int)*FAKE_DATA_MAX);
   }
-  wk->tmpInfo = GAMEBEACON_Alloc( wk->heapID );
   
   //送信バッファを初期化しておく
   GAMEBEACON_Setting( wk->gdata );
@@ -637,7 +691,7 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
         GMEVENT_CallEvent( event, event_CreateEventBeaconReq( wk->gsys, wk ) );
         break;
       case MENU_STACK_CHECK:
-        GMEVENT_CallEvent( event, event_CreateEventStackCheck( wk->gsys, wk ) );
+        GMEVENT_CallEvent( event, event_CreateEventStackCheck( wk->gsys, wk, wk->view_wk->infoStack ) );
         break;
       case MENU_SURETIGAI_NUM:
         GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 0, wk->view_wk->ctrl.max, CROSS_COMM_SURETIGAI_COUNT_MAX,
@@ -653,7 +707,10 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
       case MENU_MEMBER_CLEAR:
         DEBUG_BEACON_VIEW_MemberListClear( wk->view_wk );
         break;
-      case MENU_COMM_BUF_CLEAR:
+      case MENU_RECV_BUF_CHECK:
+        GMEVENT_CallEvent( event, event_CreateEventStackCheck( wk->gsys, wk, NULL) );
+        break;
+      case MENU_RECV_BUF_CLEAR:
         DEBUG_RecvBeaconBufferClear();
         break;
       }
@@ -668,6 +725,55 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
   return GMEVENT_RES_CONTINUE;
 }
 
+//--------------------------------------------------------------
+/*
+ *  @brief  すれ違いデバッグメニュー トップメインイベント
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT event_LiveCommFromFieldMain( GMEVENT * event, int *seq, void * work)
+{
+  GAMESYS_WORK * gsys = GMEVENT_GetGameSysWork(event);
+  DMENU_LIVE_COMM* wk = (DMENU_LIVE_COMM*)work;
+
+  switch(*seq)
+  {
+  case SEQ_MENU_INIT:
+    wk->menuFunc = DEBUGFLDMENU_Init( wk->fieldmap, wk->heapID,  &DebugLiveCommFromFieldMenuData );
+    (*seq)++;
+    break;
+  case SEQ_MENU_MAIN:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( wk->menuFunc );
+
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+
+      FLDMENUFUNC_DeleteMenu( wk->menuFunc );
+
+      if( ret == FLDMENUFUNC_CANCEL || ret == MENU_EXIT ){  //キャンセル
+        *seq = SEQ_EXIT; 
+        break;
+      }
+      switch( ret ){
+      case MENU_RECV_BUF_CHECK:
+        GMEVENT_CallEvent( event, event_CreateEventStackCheck( wk->gsys, wk, NULL ) );
+        break;
+      case MENU_RECV_BUF_CLEAR:
+        DEBUG_RecvBeaconBufferClear();
+        break;
+      }
+      *seq = SEQ_MENU_INIT; 
+    }
+    break;
+  case SEQ_EXIT:
+  default:
+    dmenu_WorkRelease( wk );
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
 
 //-----------------------------------------------------------------
 /*
@@ -1053,13 +1159,22 @@ static void ninput_PrintNumWin( DMENU_LIVE_COMM* wk, EVWK_NINPUT* evwk, BMP_WIN*
 //===================================================================================
 typedef struct _EVWK_STACK_CHECK{
   DMENU_LIVE_COMM* dlc_wk;
+  GAMEBEACON_INFO_TBL *info_tbl;
+
+  GAMEBEACON_LOG recv_log[GAMEBEACON_SYSTEM_LOG_MAX]; ///<受信ログ退避用バッファ
+  s8      start_log;
+  s8      end_log;
+  s8      log_num;
+  RTCTime recv_time;
+  u32     recv_time_ct;
 
   u8      page;
   BMP_WIN win;
 }EVWK_STACK_CHECK;
 
 static GMEVENT_RESULT event_StackCheckMain( GMEVENT * event, int *seq, void * work);
-static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line );
+static void scheck_GetBeaconRecvLogUpdate( EVWK_STACK_CHECK* evwk );
+static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line, GAMEBEACON_INFO* info, u16 time, u16 time_sec );
 static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 page );
 
 //--------------------------------------------------------------
@@ -1068,7 +1183,7 @@ static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 pag
  * @param wk  DEBUG_MENU_EVENT_WORK*
  */
 //--------------------------------------------------------------
-static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk )
+static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM* wk, GAMEBEACON_INFO_TBL* info_tbl )
 {
   EVWK_STACK_CHECK* evwk;
   GMEVENT* event;
@@ -1077,6 +1192,9 @@ static GMEVENT* event_CreateEventStackCheck( GAMESYS_WORK* gsys, DMENU_LIVE_COMM
 
   evwk = GMEVENT_GetEventWork( event );
   evwk->dlc_wk = wk; 
+  evwk->info_tbl = info_tbl;
+
+  scheck_GetBeaconRecvLogUpdate( evwk );
 
   return event;
 }
@@ -1103,6 +1221,12 @@ static GMEVENT_RESULT event_StackCheckMain( GMEVENT * event, int *seq, void * wo
       int trg = GFL_UI_KEY_GetTrg();
       if( trg & PAD_BUTTON_B){
         (*seq)++;
+      }else if( trg & PAD_BUTTON_START ){
+        if( evwk->info_tbl == NULL ){
+          scheck_GetBeaconRecvLogUpdate( evwk );
+          evwk->page = 0;
+          scheck_PageDraw( wk, evwk, evwk->page );
+        }
       }else if( trg & PAD_KEY_LEFT ){
         evwk->page = (evwk->page+(SCHECK_PAGE_MAX-1))%SCHECK_PAGE_MAX;
         scheck_PageDraw( wk, evwk, evwk->page );
@@ -1120,38 +1244,107 @@ static GMEVENT_RESULT event_StackCheckMain( GMEVENT * event, int *seq, void * wo
 }
 
 //--------------------------------------------------------------
+/**
+ * デバッグ用：現在の受信ログバッファのコピーを取得
+ */
+//--------------------------------------------------------------
+static void scheck_GetBeaconRecvLogUpdate( EVWK_STACK_CHECK* evwk )
+{
+  DEBUG_GetBeaconRecvLogCopy( evwk->recv_log, &evwk->log_num, &evwk->start_log, &evwk->end_log );
+
+  GFL_RTC_GetTime(&evwk->recv_time);
+  //秒変換して覚えておく
+  evwk->recv_time_ct = evwk->recv_time.hour*3600+evwk->recv_time.minute*60+evwk->recv_time.second;
+}
+
+//--------------------------------------------------------------
 /*
  *  @brief  スタック情報書き出し
  */
 //--------------------------------------------------------------
-static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line )
+static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 idx, u8 line, GAMEBEACON_INFO* info, u16 time, u16 time_sec )
 {
+  int val;
   u8 msg_id;
   GAMEBEACON_ACTION action;
 
   WORDSET_RegisterNumber( wk->wset, 0, idx, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
-  if( GAMEBEACON_InfoTbl_GetBeacon( wk->view_wk->infoStack, wk->tmpInfo, &wk->tmpTime, idx)){
+  if( info != NULL ){
     msg_id = dlc_stack_check_param01;
   
     //プレイヤー名取得
-    GAMEBEACON_Get_PlayerNameToBuf( wk->tmpInfo, wk->str_tmp );
+    GAMEBEACON_Get_PlayerNameToBuf( info, wk->str_tmp );
     sub_FreeWordset( wk->wset, 1, wk->str_tmp );
 
     //トレーナーID
-    WORDSET_RegisterNumber( wk->wset, 2, GAMEBEACON_Get_TrainerID( wk->tmpInfo ), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 2, GAMEBEACON_Get_TrainerID( info ), 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
 
     //アクション
-    action = GAMEBEACON_Get_Action_ActionNo( wk->tmpInfo );
+    action = GAMEBEACON_Get_Action_ActionNo( info );
     WORDSET_RegisterNumber( wk->wset, 3, action, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
-    GFL_MSG_GetString( wk->msgman, dlc_action_00+action, wk->str_tmp);
+    if( action < 2 ){
+      GFL_MSG_GetString( wk->msgman, dlc_action_null+action, wk->str_tmp);
+    }else{
+      GFL_MSG_GetString( wk->msgman, dlc_action_00+action, wk->str_tmp);
+    }
     sub_FreeWordset( wk->wset, 4, wk->str_tmp );
 
+    //タイム
+    WORDSET_RegisterNumber( wk->wset, 5, time>>8, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    WORDSET_RegisterNumber( wk->wset, 6, time&0xFF, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+
+    //カラー
+    val = GAMEBEACON_Get_FavoriteColorIndex( info );
+    WORDSET_RegisterNumber( wk->wset, 7, val, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
+    
+    //経過時間
+    WORDSET_RegisterNumber( wk->wset, 8, time_sec, 4, STR_NUM_DISP_ZERO, STR_NUM_CODE_HANKAKU );
   }else{
     msg_id = dlc_stack_check_param02;
   }
   sub_GetMsgToBuf( wk, msg_id );
 	PRINTSYS_PrintColor( evwk->win.bmp, 0, line*SCHECK_LINE_OY, wk->str_expand, wk->fontHandle, FCOL_WIN_W );
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグ用：指定オフセット位置の受信ログバッファの内容を取得
+ */
+//--------------------------------------------------------------
+static BOOL scheck_GetBeaconRecvLog( EVWK_STACK_CHECK* evwk, int idx, GAMEBEACON_INFO* info, u16* pTime, u16* pTimeSec )
+{
+  u16 id;
+  u32 time_ct;
+  u8  hour,min;
+
+  MI_CpuClear8( info, sizeof( GAMEBEACON_INFO ));
+  *pTime = 0;
+
+  if( idx >= evwk->log_num ){
+    return FALSE;
+  }
+  if( evwk->start_log <= evwk->end_log ){
+    id = evwk->start_log+idx;
+    if( id > evwk->end_log ){
+      return FALSE;
+    }
+  }else{
+    id = (evwk->start_log+idx)%GAMEBEACON_SYSTEM_LOG_MAX; 
+    if( id > evwk->end_log && id < evwk->start_log ){
+      return FALSE;  
+    }
+  }
+  *info = evwk->recv_log[id].info;
+  time_ct = (evwk->recv_log[id].time)/60; //秒単位に変換
+  *pTimeSec = time_ct;
+
+  time_ct = evwk->recv_time_ct-time_ct;
+  hour = (time_ct/3600)%24;
+  min = (time_ct/60)%60;
+  *pTime = ((hour<<8)|(min));
+
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1161,15 +1354,33 @@ static void scheck_ParamDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 id
 //--------------------------------------------------------------
 static void scheck_PageDraw( DMENU_LIVE_COMM* wk, EVWK_STACK_CHECK* evwk, u8 page )
 {
-  int i,idx;
+  int i,idx,ofs;
+  u16 time_sec = 0;
   GFL_BMP_Clear( evwk->win.bmp, FCOL_WIN_BASE );
 
-  idx = page*SCHECK_LINE_MAX;
+  ofs = page*SCHECK_LINE_MAX;
+
   for(i = 0;i < SCHECK_LINE_MAX;i++){
-    if( idx+i >= BS_LOG_MAX ){
+    BOOL ret;
+    idx = ofs+i;
+    if( idx >= BS_LOG_MAX ){
       break;
     }
-    scheck_ParamDraw( wk, evwk, idx+i, i );
+    if( evwk->info_tbl != NULL ){
+      ret = GAMEBEACON_InfoTbl_GetBeacon( evwk->info_tbl, wk->tmpInfo, &wk->tmpTime, idx);
+      if( ret ){
+        time_sec = GAMEBEACON_Get_RecvBeaconTime(GAMEBEACON_Get_TrainerID( wk->tmpInfo ));
+      }else{
+        time_sec = 0;
+      }
+    }else{
+      ret = scheck_GetBeaconRecvLog( evwk, idx, wk->tmpInfo, &wk->tmpTime, &time_sec );
+    }
+    if(ret){
+      scheck_ParamDraw( wk, evwk, idx, i, wk->tmpInfo, wk->tmpTime, time_sec );
+    }else{
+      scheck_ParamDraw( wk, evwk, idx, i, NULL, 0, 0 );
+    }
   }
 	GFL_BMPWIN_TransVramCharacter( evwk->win.win );
 	GFL_BG_LoadScreenV_Req( evwk->win.frm );
@@ -1398,8 +1609,10 @@ static void breq_BeaconSend( DMENU_LIVE_COMM* wk, EVWK_BEACON_REQ* evwk, u8 dire
     evwk->b_prm = &DATA_DebugBeaconParam[ action ];
     evwk->b_prm_set = &DATA_DebugBeaconParamSet[ evwk->b_prm->prm_type ];
 
-    if( evwk->action == 1 ){
-      if( evwk->b_prm_set->max >= 0 ){
+    if( evwk->b_prm_set->max >= 0 ){
+      if( evwk->action == 0 ){
+        value = wk->beacon_prm[ evwk->b_prm->prm_type ];
+      }else{
         range = (evwk->b_prm_set->max-evwk->b_prm_set->min)+1;
         value = GFUser_GetPublicRand0( 0xFFFF )%range+evwk->b_prm_set->min;
       }

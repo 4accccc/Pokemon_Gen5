@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-04-26T15:22:01"/>
+	<create user="iwasawa" host="W00157" date="2010-05-19T15:32:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,9 +305,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1588" top="304" right="2293" bottom="924" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="799" top="128" right="1269" bottom="735" visible="yes"/>
+		<tag-palette left="799" top="128" right="1269" bottom="735" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -370,13 +370,13 @@
 	</row>
 
 	<row id="dlc_menu_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">じゅしんログクリア</language>
-		<language name="JPN_KANJI" width="256">じゅしんログクリア</language>
+		<language name="JPN" width="256">じゅしんログかくにん</language>
+		<language name="JPN_KANJI" width="256">受信ログ確認</language>
 	</row>
 
 	<row id="dlc_menu_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">やめる</language>
-		<language name="JPN_KANJI" width="256">やめる</language>
+		<language name="JPN" width="256">じゅしんログクリア</language>
+		<language name="JPN_KANJI" width="256">じゅしんログクリア</language>
 	</row>
 
 	<row id="dlc_menu_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -413,15 +413,17 @@
 
 	<row id="dlc_stack_check_param01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>スタックチェック</comment>
-		<language name="JPN" width="256">[2:01:２桁:0]：[1:00:トレーナー名:1]　id= [2:04:５桁:2]
- no=[2:01:２桁:3]　[1:1C:簡易会話単語:4]</language>
-		<language name="JPN_KANJI" width="256">[2:01:２桁:0]：[1:00:トレーナー名:1]　id= [2:04:５桁:2]
- no=[2:01:２桁:3]　[1:1C:簡易会話単語:4]</language>
+		<language name="JPN" width="256">[FF:00:色:2][2:01:２桁:0]：[1:00:トレーナー名:1]　id= [2:04:５桁:2] time=[2:01:２桁:5]:[2:01:２桁:6][FF:00:色:0]
+ no=[2:01:２桁:3]　[1:1C:簡易会話単語:4]
+ col=[2:01:２桁:7] t_sec=[2:03:４桁:8]</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2][2:01:２桁:0]：[1:00:トレーナー名:1]　id= [2:04:５桁:2] time=[2:01:２桁:5]:[2:01:２桁:6][FF:00:色:0]
+ no=[2:01:２桁:3]　[1:1C:簡易会話単語:4]
+ col=[2:01:２桁:7] t_sec=[2:03:４桁:8]</language>
 	</row>
 
 	<row id="dlc_stack_check_param02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[2:01:２桁:0]：なし</language>
-		<language name="JPN_KANJI" width="256">[2:01:２桁:0]：なし</language>
+		<language name="JPN" width="256">[FF:00:色:1][2:01:２桁:0]：なし</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:1][2:01:２桁:0]：なし</language>
 	</row>
 
 	<row id="dlc_beacon_req_trainer01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -872,6 +874,16 @@
 	<row id="dlc_action_50" back-color="#80ffff,,,,,,,,,,,,,,,,,">
 		<language name="JPN" width="256">デルパワーはいふ</language>
 		<language name="JPN_KANJI" width="256">デルパワー配布</language>
+	</row>
+
+	<row id="dlc_action_null" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">NULLアクション</language>
+		<language name="JPN_KANJI" width="256">NULLアクション</language>
+	</row>
+
+	<row id="dlc_action_search" back-color="#80ffff,,,,,,,,,,,,,,,,,">
+		<language name="JPN" width="256">サーチ</language>
+		<language name="JPN_KANJI" width="256">サーチ</language>
 	</row>
 
 	<flowchart-group-list>
