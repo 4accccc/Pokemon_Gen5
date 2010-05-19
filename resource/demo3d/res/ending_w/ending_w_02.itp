@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-18T19:08:54" source="ending_w_006.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="361"
+	tool_start_frame="0"
+	tool_end_frame="360"
+	compress_material="on" material_size="10 10"
+/>
+
+<tex_pattern_list_data image_size="3" palette_size="3">
+	<image_name index="0" name="umih.1"/>
+	<image_name index="1" name="umih.2"/>
+	<image_name index="2" name="umih.3"/>
+	<palette_name index="0" name="umih.1_pl"/>
+	<palette_name index="1" name="umih.2_pl"/>
+	<palette_name index="2" name="umih.3_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="73">
+		0 3 6 9 12 15 18 21 24 27
+		30 33 36 39 42 45 48 51 54 57
+		60 63 66 69 72 75 78 81 84 87
+		90 93 96 99 102 105 108 111 114 117
+		120 123 126 129 132 135 138 141 144 147
+		150 153 156 159 162 165 168 171 174 177
+		180 183 186 189 192 195 198 201 204 207
+		210 213 216
+	</frame_idx>
+	<image_idx size="73">
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0 1 2 0 1 2 0 1
+		2 0 1 2 0 1 2 0 1 2
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0 1 2 0 1 2 0 1
+		2 0 1 2 0 1 2 0 1 2
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0
+	</image_idx>
+	<palette_idx size="73">
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0 1 2 0 1 2 0 1
+		2 0 1 2 0 1 2 0 1 2
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0 1 2 0 1 2 0 1
+		2 0 1 2 0 1 2 0 1 2
+		0 1 2 0 1 2 0 1 2 0
+		1 2 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="umih_1" data_size="73" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
