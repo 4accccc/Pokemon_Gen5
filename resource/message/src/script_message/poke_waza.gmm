@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T17:54:52"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T19:41:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -639,17 +639,13 @@ msg_waza_omoi_01へ</comment>
 ポケモンが　せいちょうして　おぼえる
 わざを　すべて　しっていてね▼
 その　わざを　ポケモンに
-おもいださせることが　できるのよ！▼
-もし　ハートのウロコを　くれたら
-わざを　おもいださせるわ！▼</language>
+おもいださせることが　できるのよ！▼</language>
 		<language name="JPN_KANJI" width="256">みんな　あたしの　ことを　
 メモリアルガール　と　呼ぶの▼
 ポケモンが　成長して　覚える
 技を　すべて　知っていてね▼
 その技を　ポケモンに
-思い出させることが　できるのよ！▼
-もし　ハートのウロコを　くれたら
-技を　思い出させるわ！▼</language>
+思い出させることが　できるのよ！▼</language>
 	</row>
 
 	<row id="msg_waza_omoi_13" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
