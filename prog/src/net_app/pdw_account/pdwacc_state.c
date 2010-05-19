@@ -205,12 +205,29 @@ static void _networkClose(PDWACC_WORK* pWork)
 
 
 
-static void _createAccount8(PDWACC_WORK* pWork)
+static void _createAccount9(PDWACC_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg()){
+
     PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
 
     _CHANGE_STATE(_networkClose);
+  }
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ƒQ[ƒ€ƒVƒ“ƒNŠ®—¹
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _createAccount8(PDWACC_WORK* pWork)
+{
+  if(GFL_UI_KEY_GetTrg()){
+    PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork, pWork->profileID, pWork->profileID);
+    PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008_02);
+    _CHANGE_STATE(_createAccount9);
   }
 }
 
@@ -226,7 +243,7 @@ static void _createAccount7(PDWACC_WORK* pWork)
 {
   
   PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork, pWork->profileID, pWork->profileID);
-  PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008);
+  PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008_01);
   
   _CHANGE_STATE(_createAccount8);
 }
