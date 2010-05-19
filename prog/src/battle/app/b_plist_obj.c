@@ -859,7 +859,9 @@ static void BPL_Page1ObjSet( BPLIST_WORK * wk )
     BPL_StIconPut(
       wk->poke[pos].st, wk->clwk[BPL_CA_STATUS1+pos], &P1_StatusPos[i] );
     // ＨＰゲージ枠
-    BPL_ClactOn( wk->clwk[BPL_CA_HPGAUGE1+pos], &P1_HPGaugePos[i] );
+		if( wk->poke[pos].egg == 0 ){
+			BPL_ClactOn( wk->clwk[BPL_CA_HPGAUGE1+pos], &P1_HPGaugePos[i] );
+		}
     // アイテムアイコン
     {
       GFL_CLACTPOS  actpos = P1_PokePos[i];
