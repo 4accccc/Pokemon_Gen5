@@ -4,7 +4,7 @@
 
 	This file was created by NINTENDO TWL-System Archiver.
 
-	Update:2010-05-11T18:12:15
+	Update:2010-05-19T15:52:10
  *****************************************************************************/
 
 #ifndef NARC_LEGEND_GMK_NAIX_
@@ -16,7 +16,11 @@ enum {
 	NARC_legend_gmk_shin_mu_p_nsbma = 2,
 	NARC_legend_gmk_shin_mu_p_nsbta = 3,
 	NARC_legend_gmk_shin_p_nsbtp = 4,
-	NARC_legend_gmk_mu_p_nsbtp = 5
+	NARC_legend_gmk_mu_p_nsbtp = 5,
+	NARC_legend_gmk_mb_out2_nsbmd = 6,
+	NARC_legend_gmk_mb_out2_nsbca = 7,
+	NARC_legend_gmk_mb_out2_nsbma = 8,
+	NARC_legend_gmk_mb_out2_nsbtp = 9
 };
 
 /* NARC_LEGEND_GMK_NAIX_ */
