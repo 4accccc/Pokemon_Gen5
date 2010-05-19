@@ -10603,10 +10603,10 @@
 	</row>
 
 	<row id="TRID_RIVAL_10_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">どうぐの　つかいどころが
-しょうぶの　わかれめ　か……</language>
-		<language name="JPN_KANJI" width="216">道具の　使いどころが
-勝負の　分かれ目か……</language>
+		<language name="JPN" width="216">ポケモンに　どの　どうぐを
+もたせるのかは　だいじ　だね……</language>
+		<language name="JPN_KANJI" width="216">ポケモンに　どの道具を
+持たせるのかは　大事だね……</language>
 	</row>
 
 	<row id="TRID_RIVAL_10_TRMSG_FIGHT_LOSE">
@@ -10628,10 +10628,10 @@
 	</row>
 
 	<row id="TRID_RIVAL_11_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">どうぐの　つかいどころが
-しょうぶの　わかれめ　か……</language>
-		<language name="JPN_KANJI" width="216">道具の　使いどころが
-勝負の　分かれ目か……</language>
+		<language name="JPN" width="216">ポケモンに　どの　どうぐを
+もたせるのかは　だいじ　だね……</language>
+		<language name="JPN_KANJI" width="216">ポケモンに　どの道具を
+持たせるのかは　大事だね……</language>
 	</row>
 
 	<row id="TRID_RIVAL_11_TRMSG_FIGHT_LOSE">
@@ -10653,10 +10653,10 @@
 	</row>
 
 	<row id="TRID_RIVAL_12_TRMSG_FIGHT_POKE_LAST">
-		<language name="JPN" width="216">どうぐの　つかいどころが
-しょうぶの　わかれめ　か……</language>
-		<language name="JPN_KANJI" width="216">道具の　使いどころが
-勝負の　分かれ目か……</language>
+		<language name="JPN" width="216">ポケモンに　どの　どうぐを
+もたせるのかは　だいじ　だね……</language>
+		<language name="JPN_KANJI" width="216">ポケモンに　どの道具を
+持たせるのかは　大事だね……</language>
 	</row>
 
 	<row id="TRID_RIVAL_12_TRMSG_FIGHT_LOSE">
@@ -14251,7 +14251,7 @@ puo accadere ancora di tutto!</language>
 		<language name="JPN" width="216">３びきの　バランス……
 それぞれの　やくわり……▽
 まだまだ　けんきゅう　だな</language>
-		<language name="JPN_KANJI" width="216">３びきの　バランス……
+		<language name="JPN_KANJI" width="216">３匹の　バランス……
 それぞれの　役割……▽
 まだまだ　試行錯誤だな</language>
 	</row>
@@ -14291,7 +14291,7 @@ puo accadere ancora di tutto!</language>
 		<language name="JPN" width="216">３びきの　バランス……
 それぞれの　やくわり……▽
 まだまだ　けんきゅう　だな</language>
-		<language name="JPN_KANJI" width="216">３びきの　バランス……
+		<language name="JPN_KANJI" width="216">３匹の　バランス……
 それぞれの　役割……▽
 まだまだ　試行錯誤だな</language>
 	</row>
