@@ -134,16 +134,9 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
 
   case 2:
     // リフトのアニメーション開始
-    for( i=0; i<LIFT_ANM_NUM; i++ )
-    {
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i, TRUE );
-    }
+    LEAGUE_FRONT_02_GIMMICK_StartLiftAnime( work->fieldmap );
     // リフト稼動エフェクトを表示する
-    FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, FALSE );
-    for( i=0; i<LIFT_EFFECT_ANM_NUM; i++ )
-    {
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i, TRUE );
-    }
+    LEAGUE_FRONT_02_GIMMICK_ShowLiftEffect( work->fieldmap );
     // フェードイン
     {
       GMEVENT* new_event;
@@ -193,12 +186,9 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
   // 終了処理
   case 4:
     // リフトのアニメを止める
-    for( i=0; i<LIFT_ANM_NUM; i++ )
-    {
-      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i, FALSE );
-    }
+    LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( work->fieldmap );
     // リフト稼動エフェクトを消す
-    FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, TRUE );
+    LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( work->fieldmap );
     // 自機を着地させる
     {
       VecFx32 pos;

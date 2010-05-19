@@ -191,6 +191,91 @@ void LEAGUE_FRONT_02_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
   }
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト本体のアニメーションを開始する
+ *
+ * @param fieldmap
+ */
+//------------------------------------------------------------------------------------------
+void LEAGUE_FRONT_02_GIMMICK_StartLiftAnime( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  for( i=0; i<LIFT_ANM_NUM; i++ )
+  {
+    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i, TRUE );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト本体のアニメーションを停止する
+ *
+ * @param fieldmap
+ */
+//------------------------------------------------------------------------------------------
+void LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  for( i=0; i<LIFT_ANM_NUM; i++ )
+  {
+    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i, FALSE );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト稼動エフェクトを消去する
+ *
+ * @param fieldmap
+ */
+//------------------------------------------------------------------------------------------
+void LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, TRUE );
+
+  for( i=0; i<LIFT_EFFECT_ANM_NUM; i++ )
+  {
+    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i,  FALSE );
+  }
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト稼動エフェクトを表示する
+ *
+ * @param fieldmap
+ */
+//------------------------------------------------------------------------------------------
+void LEAGUE_FRONT_02_GIMMICK_ShowLiftEffect( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, FALSE );
+
+  for( i=0; i<LIFT_EFFECT_ANM_NUM; i++ )
+  {
+    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i,  TRUE );
+  }
+}
+
+
 
 //==========================================================================================
 // ■ 非公開関数
@@ -269,17 +354,10 @@ static void InitGimmick( LF02WORK* work, FIELDMAP_WORK* fieldmap )
   }
 
   // リフトを初期化
-  for( i=0; i<LIFT_ANM_NUM; i++ )
-  {
-    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i,  FALSE );
-  }
+  LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( fieldmap );
 
   // リフトの稼動エフェクトを初期化
-  FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, TRUE );
-  for( i=0; i<LIFT_EFFECT_ANM_NUM; i++ )
-  {
-    FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i,  FALSE );
-  }
+  LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( fieldmap );
 }
 
 //------------------------------------------------------------------------------------------
