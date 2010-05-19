@@ -548,6 +548,12 @@ void Regulation_GetShooterItem( const REGULATION* cp_reg, SHOOTER_ITEM_BIT_WORK 
 { 
   GFL_STD_MemClear( p_wk, sizeof(SHOOTER_ITEM_BIT_WORK) );
   p_wk->shooter_use = Regulation_GetParam( cp_reg , REGULATION_SHOOTER );
+
+  if(p_wk->shooter_use >= REGULATION_SHOOTER_MANUAL)
+  {
+    p_wk->shooter_use = REGULATION_SHOOTER_VALID;
+  }
+
   GFL_STD_MemCopy( cp_reg->VETO_SHOOTER_ITEM, p_wk->bit_tbl, SHOOTER_ITEM_BIT_TBL_MAX );
 }
 
