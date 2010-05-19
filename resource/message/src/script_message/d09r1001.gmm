@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00207" date="2010-01-08T16:46:17"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T23:07:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,33 +292,11 @@
 	</lock>
 
 
-	<row id="msg_d091001_doctor_01">
-		<comment>♂
-・戦闘後、フィールドに復帰すると
-　自動でこのメッセージ表示
-・表示後、画面暗転＋回復SE＋回復処理</comment>
-		<attribute name="キャラ指定">トレーナー
-doctor_01</attribute>
-		<language name="JPN" width="256">では　やくそくどおり
-ポケモンを　げんきに　しますよ！▼</language>
-		<language name="JPN_KANJI" width="256">では　約束どおり
-ポケモンを　元気に　しますよ！▼</language>
-	</row>
-
-	<row id="msg_d091001_doctor_02">
-		<comment>♂
-・回復処理後
-・以降、繰り返し</comment>
-		<attribute name="キャラ指定">トレーナー
-doctor_01</attribute>
-		<language name="JPN" width="256">わたしが　めざすのは
-せかいいちの　ドクター！▼
-まずは　トレーナーとしての　つよさで
-せかいいちに　なる　つもりです</language>
-		<language name="JPN_KANJI" width="256">わたしが　目指すのは
-世界一の　ドクター！▼
-まずは　トレーナーとしての　強さで
-世界一に　なる　つもりです</language>
+	<row id="msg_mapscript_dummy">
+		<comment>？？？</comment>
+		<attribute name="キャラ指定">？？？</attribute>
+		<language name="JPN" width="256">テストメッセージ</language>
+		<language name="JPN_KANJI" width="256">仮メッセージ</language>
 	</row>
 
 	<flowchart-group-list>
