@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="james_turner" host="W00212" date="2010-05-17T18:11:04" source="n_legend_meat_b_OK.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="551"
+	tool_start_frame="0"
+	tool_end_frame="550"
+	compress_material="on" material_size="21 21"
+/>
+
+<tex_pattern_list_data image_size="3" palette_size="1">
+	<image_name index="0" name="n_b.1"/>
+	<image_name index="1" name="n_b.2"/>
+	<image_name index="2" name="n_b.3"/>
+	<palette_name index="0" name="n_b"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="138">
+		0 4 8 12 17 20 24 28 32 36
+		40 44 48 52 56 60 64 68 72 76
+		80 84 88 92 96 100 104 108 112 116
+		120 124 128 132 136 140 144 148 152 156
+		160 164 168 172 176 180 184 188 192 196
+		200 204 208 212 216 220 224 228 232 236
+		240 244 248 252 256 260 264 268 272 276
+		280 284 288 292 296 300 304 308 312 316
+		320 324 328 332 336 340 344 348 352 356
+		360 364 368 372 376 380 384 388 392 396
+		400 404 408 412 416 420 424 428 432 436
+		440 444 448 452 456 460 464 468 472 476
+		480 484 488 492 496 500 504 508 512 516
+		520 524 528 532 536 540 544 548
+	</frame_idx>
+	<image_idx size="138">
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1 0 2
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1 0 2
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1 0 2
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1 0 2
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1 0 2
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1 0 2
+		0 1 0 2 0 1 0 2 0 1
+		0 2 0 1 0 2 0 1
+	</image_idx>
+	<palette_idx size="138">
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0 0 0
+		0 0 0 0 0 0 0 0
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="n" data_size="138" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>

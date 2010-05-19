@@ -69,6 +69,8 @@ static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_w_data[] = {
  { DEMO3D_CMD_TYPE_SE_PLAY, 987, { SEQ_SE_FLD_131, 100, 0, 0, 1, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_SE_PLAY, 1000, { SEQ_SE_SDEMO_03, 70, 0, -200, 2, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_SE_PLAY, 1005, { SEQ_SE_DUMMY5, 0, 0, 0, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1120-10, { MASK_MAIN_DISPLAY, 10, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
+ { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1141-20, { MASK_MAIN_DISPLAY, 20, -16, 0, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_BRIGHTNESS_REQ, 1250-30, { MASK_MAIN_DISPLAY, 30, 0, -16, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
  { DEMO3D_CMD_TYPE_END, 0, { DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, DEMO3D_CMD_PARAM_NULL, } },
 };
@@ -92,11 +94,12 @@ static const DEMO3D_CMD_DATA demo3d_cmd_n_legend_come_w_end_data[] = {
 static const u16 res_n_legend_come_w_file_n_legend_come_w_01[] = {
  NARC_data_demo3d_n_legend_come_w_01_nsbmd,
  NARC_data_demo3d_n_legend_come_w_01_nsbtp,
+ NARC_data_demo3d_n_legend_come_w_01_nsbta,
  NARC_data_demo3d_n_legend_come_w_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_n_legend_come_w_file_unit_n_legend_come_w_01[] = {
- { res_n_legend_come_w_file_n_legend_come_w_01, 3 },
+ { res_n_legend_come_w_file_n_legend_come_w_01, 4 },
 };
 
 ///==================================
