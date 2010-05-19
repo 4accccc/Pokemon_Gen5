@@ -179,6 +179,9 @@ EVENT_START   ev_pos_r10_rival_01
 	//アイテム入手処理、げんきのかたまり×2
 	_ITEM_EVENT_KEYWAIT ( ITEM_GENKINOKATAMARI , 2  )
 	
+	//プレイヤーネームを格納
+	_PLAYER_NAME(0)
+	
 	//サポート離れる
 	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_gift_02 )
 	_OBJ_ANIME( MMDL_ID_PLAYER , anm_r10_support_look_rival_02 )
