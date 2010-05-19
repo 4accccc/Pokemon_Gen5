@@ -31,9 +31,6 @@
 //--------------------------------------------------------------
 //  debug
 //--------------------------------------------------------------
-#ifdef DEBUGDEBUG_ONLY_FOR_kagaya
-//#define DEBUG_REFLECT_CHECK //定義で映り込みチェック
-#endif
 
 //--------------------------------------------------------------
 ///  ステータスビット
@@ -714,7 +711,7 @@ static void MMdl_MapAttrFootMarkProc_1( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 /**
  * 水飛沫　動作開始 0
- * @param  mmdl  MMDL *
+ * @param  mmdl  MMDL 
  * @param  now    現在のアトリビュート
  * @param  old    過去のアトリビュート
  * @retval  nothing
@@ -1035,23 +1032,15 @@ static void MMdl_MapAttrReflect_01( MMDL *mmdl, ATTRDATA *data )
   if( MMDL_CheckMoveBitReflect(mmdl) == FALSE )
   {
     MAPATTR attr = MAPATTR_ERROR;
-    MAPATTR_FLAG flag = MAPATTR_FLAGBIT_NONE;
-    
-    #ifdef DEBUG_REFLECT_CHECK
-    now = MAPATTR_FLAGBIT_REFLECT << 16;
-    #endif
     
     if( (data->attr_flag_now & MAPATTR_FLAGBIT_REFLECT) )
     {
       attr = data->attr_now;
-      #ifdef DEBUG_REFLECT_CHECK
-      attr = 0;
-      #endif
     }
     else
     {
       MAPATTR next = MMDL_GetMapDirAttr( mmdl, DIR_DOWN );
-      flag = MAPATTR_GetAttrFlag( next );
+      MAPATTR_FLAG flag = MAPATTR_GetAttrFlag( next );
       
       if( (flag & MAPATTR_FLAGBIT_REFLECT) )
       {
@@ -1096,10 +1085,6 @@ static void MMdl_MapAttrReflect_2( MMDL *mmdl, ATTRDATA *data )
   {
     MAPATTR_FLAG flag = MAPATTR_FLAGBIT_NONE;
     MAPATTR attr = MMDL_GetMapDirAttr( mmdl, DIR_DOWN );
-    
-    #ifdef DEBUG_REFLECT_CHECK
-    attr = MAPATTR_FLAGBIT_REFLECT << 16;
-    #endif
     
     if( attr == MAPATTR_ERROR ){
       MMDL_SetMoveBitReflect( mmdl, FALSE );
@@ -1899,13 +1884,16 @@ void MMDL_UpdateGridPosCurrent( MMDL * mmdl )
 //--------------------------------------------------------------
 MAPATTR MMDL_GetMapDirAttr( MMDL * mmdl, u16 dir )
 {
-  MAPATTR attr = MAPATTR_ERROR;
   VecFx32 pos;
+  MAPATTR attr = MAPATTR_ERROR;
+  s16 gx = MMDL_GetGridPosX( mmdl );
+  s16 gz = MMDL_GetGridPosZ( mmdl );
   
-  MMDL_GetVectorPos( mmdl, &pos );
+  MMDL_TOOL_GetCenterGridPos( gx, gz, &pos );
+  pos.y = MMDL_GetVectorPosY( mmdl );
   MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-  MMDL_GetMapPosAttr( mmdl, &pos, &attr );
   
+  MMDL_GetMapPosAttr( mmdl, &pos, &attr );
   return( attr );
 }
 

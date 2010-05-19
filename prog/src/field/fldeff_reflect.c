@@ -342,6 +342,79 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   GFL_BBD_SYS *bbdsys = GFL_BBDACT_GetBBDSystem( bbdactsys );
   u32 m_actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
   
+  if( actID == MMDL_BLACTID_NULL ){ //親モデルビルボード無し。
+    GF_ASSERT( 0 );
+    return;
+  }
+  
+  ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
+  GFL_BBDACT_SetDrawEnable( bbdactsys, actID, ret );
+  GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, FALSE );
+  
+  {
+    fx32 y;
+    VecFx32 pos,offs;
+    const MMDL *mmdl;
+    const OBJCODE_PARAM *param;
+    
+    mmdl = work->head.mmdl;
+    param = MMDL_GetOBJCodeParam( mmdl );
+    
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos.z += data_offsetZ[param->mdl_size];
+    
+    MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
+    pos.x += offs.x;
+    pos.z -= offs.z;
+    
+	  if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == TRUE ){  //高さ取得
+      pos.y = y;
+    }
+    
+    pos.y += data_offsetY[work->head.type];
+    
+    MMDL_GetVectorOuterDrawOffsetPos( mmdl, &offs );
+    pos.x += offs.x;
+    pos.y -= offs.y;
+    pos.z -= offs.z;
+    
+    GFL_BBD_SetObjectTrans( bbdsys, actID, &pos );
+  }
+  
+  {
+    BOOL flip = TRUE;
+    int m_idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, m_actID );
+    int idx = GFL_BBDACT_GetBBDActIdxResIdx( bbdactsys, actID );
+    fx16 sx = work->scale_x;
+    fx16 sy = work->scale_y_org;
+    
+    {
+      u16 res_idx = 0;
+      u16 cell_idx = 0;
+      GFL_BBD_GetObjectResIdx( bbdsys, m_idx, &res_idx );
+      GFL_BBD_SetObjectResIdx( bbdsys, idx, &res_idx );
+      
+			GFL_BBD_GetObjectCelIdx( bbdsys, m_idx, &cell_idx );
+			GFL_BBD_SetObjectCelIdx( bbdsys, idx, &cell_idx );
+    }
+    
+    GFL_BBD_SetObjectSiz( bbdsys, idx, &sx, &sy );
+    GFL_BBD_SetObjectFlipT( bbdsys, idx, &flip );
+    
+    flip = GFL_BBD_GetObjectFlipS( bbdsys, m_idx ); //横Flip受け継ぐ
+    GFL_BBD_SetObjectFlipS( bbdsys, idx, &flip );
+  }
+}
+
+#if 0 //old
+static void reflectTask_UpdateBlAct( u16 actID, void *wk )
+{
+  u16 ret;
+  TASKWORK_REFLECT *work = wk;
+  GFL_BBDACT_SYS *bbdactsys = work->head.bbdactsys;
+  GFL_BBD_SYS *bbdsys = GFL_BBDACT_GetBBDSystem( bbdactsys );
+  u32 m_actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
+  
   GF_ASSERT( actID != MMDL_BLACTID_NULL ); //親モデルビルボード無し。
   
   ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
@@ -429,6 +502,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   }
   #endif
 }
+#endif
 
 static void reflectBlAct_Update(
     GFL_BBDACT_SYS *bbdactsys, int actID, void *wk )
@@ -456,9 +530,9 @@ static const FLDEFF_TASK_HEADER data_reflectTaskHeader =
 //--------------------------------------------------------------
 static const fx32 data_offsetY[REFLECT_TYPE_MAX] =
 {
-  NUM_FX32(12*2)+NUM_FX32(1),
-  NUM_FX32(16*2)+NUM_FX32(1),
-  NUM_FX32(12*2)+NUM_FX32(1),
+  -(NUM_FX32(12*2)+NUM_FX32(1)),
+  -(NUM_FX32(16*2)+NUM_FX32(1)),
+  -(NUM_FX32(12*2)+NUM_FX32(1)),
 };
 
 static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
