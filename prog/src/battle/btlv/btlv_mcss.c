@@ -2737,6 +2737,8 @@ void  BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, 
     }
   }
 
+  bmw->btlv_mcss[ index ].mcss_proj_mode = BTLV_MCSS_PROJ_ORTHO;
+
   GF_ASSERT( index < BTLV_MCSS_POS_TOTAL );
   GF_ASSERT_MSG( BTLV_MCSS_GetIndex( bmw, position ) == BTLV_MCSS_NO_INDEX, "pos=%d", position );
 
