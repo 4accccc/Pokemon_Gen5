@@ -212,6 +212,10 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
     pWork->anmCount = 0;
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
   }
+  else if(POKETRADE_MESSAGE_EndCheck(pWork)){
+    pWork->anmCount = 0;
+    _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
+  }
 }
 
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
