@@ -1589,28 +1589,33 @@ const BOOL FIELDMAP_IsReady( const FIELDMAP_WORK *fieldWork )
 //--------------------------------------------------------------
 BOOL FIELDMAP_SetPlayerItemCycle( FIELDMAP_WORK *fieldWork )
 {
+  BOOL ret = FALSE;
   PLAYER_MOVE_FORM form;
     
   form = FIELD_PLAYER_GetMoveForm( fieldWork->field_player );
 
   if( form == PLAYER_MOVE_FORM_CYCLE )
   {
+    ret = TRUE;
     FIELD_PLAYER_SetRequest( fieldWork->field_player, FIELD_PLAYER_REQBIT_NORMAL );
-    return( TRUE );
   }
   else if( form == PLAYER_MOVE_FORM_NORMAL )
   {
+    ret = TRUE;
     PMSND_PlaySE( SEQ_SE_BICYCLE );
     FIELD_PLAYER_SetRequest( fieldWork->field_player, FIELD_PLAYER_REQBIT_CYCLE );
+
 		{	// レコードデータ＋
 			RECORD * rec = GAMEDATA_GetRecordPtr( fieldWork->gamedata );
 			RECORD_Inc( rec, RECID_RIDE_CYCLE );
 		}
-    return( TRUE );
   }
-
   
-  return( FALSE );
+  if( ret == TRUE ){
+    FIELD_PLAYER_UpdateRequest( fieldWork->field_player );
+  }
+  
+  return( ret );
 }
 
 //======================================================================
