@@ -547,7 +547,7 @@ void BEACONINFO_Set_Escape(GAMEBEACON_INFO *info)
 {
   info->action.action_no = GAMEBEACON_ACTION_ESCAPE;
 
-//  詳細は直前のを維持
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -577,7 +577,7 @@ void BEACONINFO_Set_HPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
   info->action.action_no = GAMEBEACON_ACTION_HP_LITTLE;
   GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
-//  詳細は直前のを維持
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -607,7 +607,7 @@ void BEACONINFO_Set_PPLittle(GAMEBEACON_INFO *info, const STRBUF *nickname)
   info->action.action_no = GAMEBEACON_ACTION_PP_LITTLE;
   GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
-//  詳細は直前のを維持
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -637,7 +637,7 @@ void BEACONINFO_Set_Dying(GAMEBEACON_INFO *info, const STRBUF *nickname)
   info->action.action_no = GAMEBEACON_ACTION_DYING;
   GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
-//  詳細は直前のを維持
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -667,7 +667,7 @@ void BEACONINFO_Set_StateIsAbnormal(GAMEBEACON_INFO *info, const STRBUF *nicknam
   info->action.action_no = GAMEBEACON_ACTION_STATE_IS_ABNORMAL;
   GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
-//  詳細は直前のを維持
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -689,7 +689,6 @@ void GAMEBEACON_Set_FieldSkill(u16 wazano)
  * ビーコンセット：フィールド技を使用
  *
  * @param   info		
- * @param   wazano		技番号
  */
 //==================================================================
 void BEACONINFO_Set_FieldSkill(GAMEBEACON_INFO *info, u16 wazano)
@@ -1056,6 +1055,8 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
   info->action.thanks.thankyou_message, GAMEBEACON_THANKYOU_MESSAGE_LEN);
   info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
   info->action.thanks.target_trainer_id = target_trainer_id;
+
+//  詳細は直前のを維持
 }
 
 //==================================================================
@@ -1085,6 +1086,8 @@ void BEACONINFO_Set_FreeWord(GAMEBEACON_INFO *info, const STRBUF *free_word)
 {
   GFL_STR_GetStringCode(free_word, info->action.freeword_message, GAMEBEACON_FREEWORD_MESSAGE_LEN);
   info->action.action_no = GAMEBEACON_ACTION_FREEWORD;
+  
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================

@@ -1024,6 +1024,8 @@ void BEACONINFO_Set_PokemonLevelUp(GAMEBEACON_INFO *info, const STRBUF *nickname
 {
   info->action.action_no = GAMEBEACON_ACTION_POKE_LVUP;
   GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
+
+  //フィールドと戦闘、両方から呼ばれるため、詳細は直前を維持
 }
 
 //==================================================================
@@ -1233,7 +1235,6 @@ void BEACONINFO_Set_CriticalHit(GAMEBEACON_INFO *info, const STRBUF *nickname)
   GAMEBEACON_SUB_StrbufNicknameCopy(nickname, info->action.normal.nickname);
 
 //  詳細は直前のを維持
-//  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
@@ -1293,7 +1294,7 @@ void BEACONINFO_Set_UseItem(GAMEBEACON_INFO *info, u16 item_no)
   info->action.action_no = GAMEBEACON_ACTION_USE_ITEM;
   info->action.itemno = item_no;
   
-//  詳細は直前のを維持
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
