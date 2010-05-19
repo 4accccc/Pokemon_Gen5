@@ -1047,6 +1047,7 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
         }
         break;
       case INTRUDE_CONNECT_MISSION_PARTNER:   ///<ƒnƒCƒŠƒ“ƒNÚ‘±Žž(‹¦—ÍŽÒ‚Å‚ ‚é)
+        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_018, pWork->pStrBuf );
         _buttonWindowCreate2(0,  pWork, wind_wireless2);
         if( Intrude_GetTargetName(pComm,pWork->pStrBuf) ){
           _buttonWindowCreate2(_HI_NAMAE,  pWork, wind_wireless_name);
