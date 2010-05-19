@@ -1,6 +1,7 @@
 "g3d/intro_bg.nsbca"
 "g3d/intro_bg.nsbma"
 "g3d/intro_bg.nsbmd"
+"g3d/intro_bg.nsbtp"
 "g3d/intro_bg_b.nsbca"
 "g3d/intro_bg_b.nsbma"
 "g3d/intro_bg_b.nsbmd"

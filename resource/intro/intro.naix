@@ -37,16 +37,17 @@ enum {
 	NARC_intro_intro_bg_nsbca = 23,
 	NARC_intro_intro_bg_nsbma = 24,
 	NARC_intro_intro_bg_nsbmd = 25,
-	NARC_intro_intro_bg_b_nsbca = 26,
-	NARC_intro_intro_bg_b_nsbma = 27,
-	NARC_intro_intro_bg_b_nsbmd = 28,
-	NARC_intro_intro_doctor_NANR = 29,
-	NARC_intro_intro_doctor_NCBR = 30,
-	NARC_intro_intro_doctor_NCEC = 31,
-	NARC_intro_intro_doctor_NCER = 32,
-	NARC_intro_intro_doctor_NCLR = 33,
-	NARC_intro_intro_doctor_NMAR = 34,
-	NARC_intro_intro_doctor_NMCR = 35
+	NARC_intro_intro_bg_nsbtp = 26,
+	NARC_intro_intro_bg_b_nsbca = 27,
+	NARC_intro_intro_bg_b_nsbma = 28,
+	NARC_intro_intro_bg_b_nsbmd = 29,
+	NARC_intro_intro_doctor_NANR = 30,
+	NARC_intro_intro_doctor_NCBR = 31,
+	NARC_intro_intro_doctor_NCEC = 32,
+	NARC_intro_intro_doctor_NCER = 33,
+	NARC_intro_intro_doctor_NCLR = 34,
+	NARC_intro_intro_doctor_NMAR = 35,
+	NARC_intro_intro_doctor_NMCR = 36
 };
 
 /* NARC_INTRO_NAIX_ */
