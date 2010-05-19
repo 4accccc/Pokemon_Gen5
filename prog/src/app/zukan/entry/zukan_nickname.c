@@ -881,8 +881,8 @@ static void Zukan_Nickname_BssInit( ZUKAN_NICKNAME_WORK* work )
     //PaletteFadeWorkAllocSet( work->bss_pfd, FADE_MAIN_BG,  0x200, work->heap_id );  // これを用意すると上画面のパレットが真っ黒になってしまったのでなし
     PaletteFadeWorkAllocSet( work->bss_pfd, FADE_SUB_BG,   0x1e0, work->heap_id );
     //PaletteFadeWorkAllocSet( work->bss_pfd, FADE_MAIN_OBJ, 0x200, work->heap_id );  // これを用意すると上画面のパレットが真っ黒になってしまったのでなし
-    //PaletteFadeWorkAllocSet( work->bss_pfd, FADE_SUB_OBJ,  0x1e0, work->heap_id );  // これだと通信アイコンが真っ黒になってしまうので、ワークを減らす
-    PaletteFadeWorkAllocSet( work->bss_pfd, FADE_SUB_OBJ,  0x1c0, work->heap_id );
+    PaletteFadeWorkAllocSet( work->bss_pfd, FADE_SUB_OBJ,  0x1e0, work->heap_id );  // これだと通信アイコンが真っ黒になってしまうので、ワークを減らす
+    //PaletteFadeWorkAllocSet( work->bss_pfd, FADE_SUB_OBJ,  0x1c0, work->heap_id );  // →通信アイコンもパレットフェードの対象になったので、こちらをコメントアウト
   }
 
   work->bss_wk = BTLV_INPUT_InitEx( work->gamedata, BTLV_INPUT_TYPE_SINGLE, work->bss_pfd, work->font, &work->bss_cursor_flag, work->heap_id );
