@@ -399,6 +399,9 @@ static const u16 sc_PANEL_TYPE_TO_COLOR[] = {
 ///	OAMパレットフェード
 //=====================================
 #define OAM_PFADE_NORMAL_MSK  ( (1<<0x1) | (1<<0x2) | (1<<0x3) | (1<<0x5) | (1<<0x6) | (1<<0x7) | (1<<0x8) | (1<<0x9) | (1<<0xB) | (1<<0xC) | (1<<0xD) | (1<<0xE) | (1<<0xF) )
+
+#define OAM_PFADE_READER_CROSS_MSK  ( (1<<0x6) | (1<<0x7) | (1<<0x8) | (1<<0x9) )
+
 //-------------------------------------
 ///	BGパレットフェード
 //=====================================
@@ -791,6 +794,8 @@ struct _C_GEAR_WORK {
   u8 ex_col_flag;  // wireless強制カラー変更
   u8 tvt_snd;    // 
   u8 intrude;    // 
+  u8 ir_wifi_off;
+  u8 ex_reader_cross_bttn_col_change;  // wireless強制カラー変更
 };
 
 
@@ -864,7 +869,7 @@ static BOOL _PaletteSetColType( C_GEAR_WORK* pWork, int panel,int type, int anim
 static void _PaletteMake(C_GEAR_WORK* pWork,const u16* pltt,int type);
 static void _PanelPaletteChange(C_GEAR_WORK* pWork);
 static void _PanelPaletteUpdate( C_GEAR_WORK* pWork );
-static void _PanelPalette_EXSet( C_GEAR_WORK* pWork, BOOL flag );
+static void _PanelPalette_EXSet( C_GEAR_WORK* pWork, BOOL flag, BOOL ir_wifi_off );
 static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int panel_type, BOOL set_first, BOOL ex_col_flag );
 static BOOL _PanelPalette_IsExMode( const C_GEAR_WORK* cpWork );
 
@@ -927,10 +932,14 @@ static void SleepMode_ColorUpdate( C_GEAR_WORK* pWork );
 static void SleepMode_ColorUpdateEx( C_GEAR_WORK* pWork );
 static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork );
 
+// レーダー、すれ違いボタンの色のみ黒く
+static void ReaderCrossBttn_Off( C_GEAR_WORK* pWork );
+
 // パレットフェード
 static void _PFadeSetDefaultPal( C_GEAR_WORK* pWork, BOOL comm );
 static void _PFadeSetBlack( C_GEAR_WORK* pWork );
 static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag );
+static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL on_flag );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
 static BOOL _PFadeIsFade( const C_GEAR_WORK* cpWork );
@@ -1329,6 +1338,7 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
   u32 bit = 0;
   u32 beacon_bit = 0;
   BOOL ret = TRUE;
+  INTRUDE_CONNECT intrude_status;
 
   u32 anime_type_normal = _CGEAR_NET_CHANGEPAL_ANM_TYPE_NORMAL;
   u32 anime_type_off = _CGEAR_NET_CHANGEPAL_ANM_TYPE_OFF;
@@ -1358,11 +1368,12 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
   }
 #endif
 
+  intrude_status = Intrude_GetIntrudeStatus( pGC );
 
   if( ex_col_flag ){
     // 次のアニメーション確定処理
-    if(Intrude_CheckPalaceConnect(pGC)){
-      beacon_bit |= _CGEAR_NET_BIT_WIRELESS;
+    if(intrude_status == INTRUDE_CONNECT_MISSION_PARTNER){
+      //beacon_bit |= _CGEAR_NET_BIT_WIRELESS;ほかもアニメするようにコメントあうと・
       _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIRELES, _CGEAR_NET_PALTYPE_GREEN, 
           anime_type_high, anime_type, panel_type );
     }else if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // ライブキャスター
@@ -1423,7 +1434,14 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
     }
 
     // Wirelesカラー
-    {
+    if( intrude_status != INTRUDE_CONNECT_NULL ){
+      if( intrude_status != INTRUDE_CONNECT_MISSION_PARTNER ){
+        _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_WIRELES, _CGEAR_NET_PALTYPE_GREEN, 
+            anime_type_beacon_catch, anime_type, panel_type );
+      }
+      
+    }else{
+      
       // トランシーバー以外は順番に
       static const u32 WIRELES_COUNT_MASK[ _CGEAR_NET_WIRELES_TYPE_MAX ] = 
       {
@@ -1465,7 +1483,6 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
   }
 
   if( ret == FALSE ){
-
     // IRCカラー　つねに
     _PaletteSetColType( pWork, _CGEAR_NET_CHANGEPAL_IRC, _CGEAR_NET_PALTYPE_DARK_RED, 
         anime_type_normal, anime_type, panel_type );
@@ -1503,7 +1520,10 @@ static void _PanelPaletteColorSetUp( C_GEAR_WORK* pWork, int anime_type, int pan
 //-----------------------------------------------------------------------------
 static BOOL _PanelPalette_IsExMode( const C_GEAR_WORK* cpWork )
 {
-  return cpWork->ex_col_flag;
+  if( (cpWork->ir_wifi_off == TRUE) && (cpWork->ex_col_flag == TRUE) ){
+    return TRUE;
+  }
+  return FALSE;
 }
 
 
@@ -1562,7 +1582,7 @@ static void _PanelPaletteUpdate( C_GEAR_WORK* pWork )
  *	@param	pWork 
  */
 //-----------------------------------------------------------------------------
-static void _PanelPalette_EXSet( C_GEAR_WORK* pWork, BOOL flag )
+static void _PanelPalette_EXSet( C_GEAR_WORK* pWork, BOOL flag, BOOL ir_wifi_off )
 {
   int  i, j;
   for(i = 0 ; i < _CGEAR_NET_CHANGEPAL_MAX; i++)
@@ -1580,6 +1600,8 @@ static void _PanelPalette_EXSet( C_GEAR_WORK* pWork, BOOL flag )
 
   pWork->ex_col_flag = flag;
   pWork->ex_col_change = TRUE;
+  pWork->ex_reader_cross_bttn_col_change = TRUE;
+  pWork->ir_wifi_off  = ir_wifi_off;
 }
 
 
@@ -2338,6 +2360,29 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag )
     pWork->pfade_ptr, PF_BIT_SUB_BG, BG_PFADE_NORMAL_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  特殊状態、　レーダー　crossボタン　OFF
+ *
+ *	@param	pWork
+ *	@param	on_flag 
+ */
+//-----------------------------------------------------------------------------
+static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL on_flag )
+{
+  int evy;
+  if(on_flag){
+    evy = 8;
+  }else{
+    evy = 0;
+  }
+  // 黒く
+  PaletteFadeReq(
+    pWork->pfade_ptr, PF_BIT_SUB_OBJ, OAM_PFADE_READER_CROSS_MSK,   -120, 0, evy, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
+    );
+}
+
 
 static void _PFadeToBlack( C_GEAR_WORK* pWork )
 {
@@ -3386,6 +3431,10 @@ static void _gearCrossObjMain(C_GEAR_WORK* pWork)
     return ;
   }
 
+  if( _PanelPalette_IsExMode(pWork) ){
+    return ;
+  }
+
   log_count = GAMEBEACON_Get_LogCount();
   
   //Beacon変更チェック
@@ -3718,6 +3767,9 @@ static void _modeSelectMenuWaitCore(C_GEAR_WORK* pWork)
   
   // スリープカラー反映
   SleepMode_ColorUpdate( pWork );
+
+  // ボタン特殊状態のカラー反映
+  ReaderCrossBttn_Off( pWork );
   
   _timeAnimation(pWork);
 
@@ -4207,17 +4259,32 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
   if( !SleepMode_IsSleep( pWork ) )
   {
-    if( !Intrude_CheckPalaceConnect(GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys)) ){ // 進入チェック
-      
-      // トランシーバー反応処理
-      u32 bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
-      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+    INTRUDE_CONNECT intrude_status = Intrude_GetIntrudeStatus(GAMESYSTEM_GetGameCommSysPtr(pWork->pGameSys));
 
-      // 進入は終わった
+    
+    // 進入チェック
+    if( intrude_status == INTRUDE_CONNECT_MISSION_PARTNER ){
+
+      if( pWork->intrude == FALSE ){
+        // 強制的にアニメーションをリセット
+        _PanelPalette_EXSet( pWork, TRUE, FALSE );
+        pWork->intrude = TRUE;
+      }
+    }else{
+
+      // 進入ミッション参加は終わった
       if(pWork->intrude == TRUE){
-        _PanelPalette_EXSet( pWork, FALSE );
+        _PanelPalette_EXSet( pWork, FALSE, FALSE );
         pWork->intrude = FALSE;
       }
+    }
+
+    
+    // トランシーバー反応処理
+    if( intrude_status == INTRUDE_CONNECT_NULL ){ 
+      
+      u32 bit = WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pWork->pGameSys)));
+      FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
 
       // トランシーバー再生処理
       if(bit & GAME_COMM_STATUS_BIT_WIRELESS_TR){ // トランシーバー
@@ -4225,7 +4292,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
           //OS_TPrintf("よびだし\n");
           pWork->tvt_snd = TRUE;
           // 強制的にアニメーションをリセット
-          _PanelPalette_EXSet( pWork, TRUE );
+          _PanelPalette_EXSet( pWork, TRUE, TRUE );
         }
         FSND_RequestTVTRingTone( fsnd);
 
@@ -4235,17 +4302,12 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
         if( pWork->tvt_snd ){
           FSND_StopTVTRingTone( fsnd );
           pWork->tvt_snd = FALSE;
-          _PanelPalette_EXSet( pWork, FALSE );
+          _PanelPalette_EXSet( pWork, FALSE, FALSE );
         }
       }
-    }else{
-
-      if( pWork->intrude == FALSE ){
-        // 強制的にアニメーションをリセット
-        _PanelPalette_EXSet( pWork, TRUE );
-        pWork->intrude = TRUE;
-      }
     }
+
+    
   }
   if( pWork->GetOpenTrg ){
     pWork->GetOpenTrg=FALSE;
@@ -4357,13 +4419,23 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
     event = EVENT_ButtonEffectWaitCall( pWork, pWork->createEvent );
     break;
     
-  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
-  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
   case FIELD_SUBSCREEN_ACTION_CGEAR_HELP:
   case FIELD_SUBSCREEN_ACTION_CGEAR_POWER:
     PMSND_PlaySE( SEQ_SE_MSCL_07 );
     event = EVENT_ButtonEffectWaitCall( pWork, pWork->createEvent );
     break;
+
+  case FIELD_SUBSCREEN_ACTION_SCANRADAR:
+  case FIELD_SUBSCREEN_ACTION_CHANGE_SCREEN_BEACON_VIEW:
+    if( _PanelPalette_IsExMode( pWork ) == FALSE ){
+      PMSND_PlaySE( SEQ_SE_MSCL_07 );
+      event = EVENT_ButtonEffectWaitCall( pWork, pWork->createEvent );
+    }else{
+      PMSND_PlaySystemSE( SEQ_SE_SYS_100 ); // NGオン
+      event = NULL;
+    }
+    break;
+
   }
   if( event ){
     pWork->doEvent      = pWork->createEvent;
@@ -4715,6 +4787,33 @@ static BOOL SleepMode_IsSleep( const C_GEAR_WORK* cpWork )
   }
   return FALSE;
 
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  レーダーcrossボタン　OFF
+ *
+ *	@param	pWork   ワーク
+ */
+//-----------------------------------------------------------------------------
+static void ReaderCrossBttn_Off( C_GEAR_WORK* pWork )
+{
+  // もしスリープ状態ではなく、
+  // リクエストがきたら、パレットを変える。
+  if( SleepMode_IsSleep( pWork ) == FALSE ){
+    
+    if( pWork->ex_reader_cross_bttn_col_change ){
+      if( _PanelPalette_IsExMode(pWork) ){
+        // レーダー　crossボタンの色を黒くする。
+        _PFadeSetExBttnBlack( pWork, TRUE );
+      }else{
+        // 元に戻す。
+        _PFadeSetExBttnBlack( pWork, FALSE );
+      }
+      pWork->ex_reader_cross_bttn_col_change = FALSE;
+    }
+  }
 }
 
 
