@@ -4534,10 +4534,10 @@ static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u16 tokID = BTL_EVENT_FACTOR_GetSubID( myHandle );
     u16 strID;
 
-    if( (tokID == POKETOKUSEI_TAABOBUREIZU) || (tokID == POKETOKUSEI_TERABORUTEEZI) ){
-      strID = BTL_STRID_SET_TurboBraze;
-    }else{
-      strID = BTL_STRID_SET_Katayaburi;
+    switch( tokID ){
+    case POKETOKUSEI_TAABOBUREIZU:  strID = BTL_STRID_SET_TurboBraze; break;
+    case POKETOKUSEI_TERABORUTEEZI: strID = BTL_STRID_SET_TeraVoltage; break;
+    default:  strID = BTL_STRID_SET_Katayaburi; break;
     }
 
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
