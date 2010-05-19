@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-19T10:56:29"/>
+	<create user="taya" host="W00146" date="2010-05-19T13:43:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1642,12 +1642,20 @@
 調子を　取り戻した！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_TeraVoltage">
+		<comment>テラボルテージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+はじける　オーラを　はなっている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+弾ける　オーラを　放っている！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_TurboBraze">
-		<comment>テラボルテージ・ターボブレイズ</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　とくべつな
-オーラを　はなっている！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　特別な
-オーラを　はなっている！</language>
+		<comment>ターボブレイズ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+もえさかる　オーラを　はなっている！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+燃え盛る　オーラを　放っている！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_SkillSwap" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
