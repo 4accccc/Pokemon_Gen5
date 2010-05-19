@@ -8,8 +8,7 @@
  */
 //============================================================================================
 
- //MAKEを通すための暫定定義（そのうち多重定義でエラーになるかも）
-#include "item/itemsym.h"  //ITEM_MONSTERBALL
+#include  "item/itemsym.h"
 #define	EOM_				( 0xff )
 
 #ifndef __POKE_TOOL_DEF_H_
