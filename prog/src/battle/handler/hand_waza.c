@@ -5421,6 +5421,7 @@ static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDEX_PARAM_TURNFLAG* flagParam;
+    BTL_HANDEX_PARAM_MESSAGE*  msgParam;
 
     flagParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
     flagParam->pokeID = pokeID;
@@ -5428,6 +5429,10 @@ static void handler_Mamoru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 
     // 守る効果発動したらカウンタをインクリメント
     IncrementMamoruCounter( flowWk, pokeID );
+
+    msgParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &msgParam->str, BTL_STRTYPE_SET, BTL_STRID_SET_MamoruReady );
+    HANDEX_STR_AddArg( &msgParam->str, pokeID );
   }
 }
 /**
