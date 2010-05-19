@@ -2282,7 +2282,10 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 
   for( i=0; i<4; i++ ){
     waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i];
-    if( waza->id == 0 ){ continue; }
+    if( waza->id == 0 ){
+      wk->add_win[WIN_P5_SKILL1+i].transReq = TRUE;
+			continue;
+		}
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P5_SKILL1+i,
@@ -2376,7 +2379,10 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
 
   for( i=0; i<4; i++ ){
     waza = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].waza[i];
-    if( waza->id == 0 ){ continue; }
+    if( waza->id == 0 ){
+      wk->add_win[WIN_P7_SKILL1+i].transReq = TRUE;
+			continue;
+		}
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P7_SKILL1+i,
