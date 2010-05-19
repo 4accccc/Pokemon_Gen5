@@ -318,7 +318,12 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
   }
 
   switch( wk->event_id ){
+  case EV_RETURN_CGEAR_INTRUDE:
+    Intrude_SetLiveCommStatus_IntrudeOut( wk->game_comm );
+    //ブレイクスルー
   case EV_RETURN_CGEAR:
+  case EV_RETURN_CGEAR_WIRELESS_TR:
+
     BEACON_STATUS_SetViewTopOffset( wk->b_status, 0 );
     call_event = EVENT_ChangeSubScreen( wk->gsys, wk->fieldWork, FIELD_SUBSCREEN_NORMAL);
     event = event_EventStart( wk, call_event, EVWAIT_MENU_ANM, MENU_RETURN );
@@ -504,13 +509,18 @@ static void tcb_VInter( GFL_TCB* tcb, void * work)
 static int seq_Main( BEACON_VIEW_PTR wk )
 {
   int ret;
-  
+ 
   //特殊ポップアップ起動チェック
   if( BeaconView_CheckSpecialPopup( wk ) ){
     wk->io_interval = 30*3; //インターバルを設定
     return SEQ_VIEW_UPDATE;
   }
-
+  
+  //通信関連特殊イベント発動チェック
+  if( BeaconView_CheckCommEvent( wk )){
+    return SEQ_MAIN;
+  }
+ 
   //メイン入力チェック
   ret = BeaconView_CheckInput( wk );
   if( ret != SEQ_MAIN ){
@@ -702,6 +712,9 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 #endif
     wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
+  wk->game_comm = GAMESYSTEM_GetGameCommSysPtr( wk->gsys );
+  wk->wifi_list = GAMEDATA_GetWiFiList( wk->gdata );
+  
   wk->item_sv = GAMEDATA_GetMyItem( wk->gdata );
   wk->misc_sv = (MISC*)SaveData_GetMiscConst( save );
   wk->log_count = MISC_CrossComm_GetSuretigaiCount( wk->misc_sv );

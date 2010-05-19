@@ -218,6 +218,28 @@ int BeaconView_CheckInoutTouchUpDown( BEACON_VIEW_PTR wk )
 }
 
 /*
+ *  @brief  通信関連特殊イベント起動チェック 
+ */
+BOOL BeaconView_CheckCommEvent( BEACON_VIEW_PTR wk )
+{
+  u32 bit;
+  LIVE_COMM comm_st = Intrude_CheckLiveCommStatus( wk->game_comm );
+
+  //侵入チェック
+  if( comm_st == LIVE_COMM_INTRUDE ){ //3人目の侵入者として選ばれた
+    BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR_INTRUDE );
+    return TRUE;
+  }
+  //ライブキャスター呼び出しチェック
+  bit = WIH_DWC_GetAllBeaconTypeBit( wk->wifi_list );
+  if( bit & GAME_COMM_STATUS_BIT_WIRELESS_TR ){
+    BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR_WIRELESS_TR );
+    return TRUE;
+  }
+  return FALSE;
+}
+
+/*
  *  @brief  特殊ポップアップ起動チェック 
  */
 BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk )

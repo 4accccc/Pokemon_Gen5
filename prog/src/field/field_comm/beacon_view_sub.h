@@ -28,6 +28,11 @@ extern int BeaconView_CheckInoutTouchUpDown( BEACON_VIEW_PTR wk );
 extern int BeaconView_CheckInputThanks( BEACON_VIEW_PTR wk );
 
 /*
+ *  @brief  通信関連特殊イベント起動チェック 
+ */
+extern BOOL BeaconView_CheckCommEvent( BEACON_VIEW_PTR wk );
+
+/*
  *  @brief  特殊ポップアップ起動チェック 
  */
 extern BOOL BeaconView_CheckSpecialPopup( BEACON_VIEW_PTR wk );

@@ -12,6 +12,8 @@
 #include "gamesystem/game_beacon_accessor.h"
 #include "gamesystem/beacon_status.h"
 #include "gamesystem/g_power.h"
+#include "net/wih_dwc.h"
+#include "field/field_comm/intrude_work.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
 #include "system/bmp_oam.h"
@@ -138,6 +140,8 @@ typedef struct _BEACON_VIEW{
   FIELD_SUBSCREEN_WORK *subscreen;
   MISC* misc_sv;
   MYITEM_PTR item_sv;
+  GAME_COMM_SYS_PTR game_comm;
+  WIFI_LIST*  wifi_list;
   POWER_CONV_DATA* gpower_data;
 
   ////////////////////////////////////////
