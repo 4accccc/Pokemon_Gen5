@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T11:29:40"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T11:44:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -481,11 +481,11 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『あと　[1:00:トレーナー名:0]の　へやは
 あたしが　かたづけて　おくから▽
-ベルたちは　きにしなくて　いいのよ▽
+ベルたちは　きにしなくて　いいのよ▼
 ねっ　[1:00:トレーナー名:0]▼</language>
 		<language name="JPN_KANJI" width="256">ママ『あと　[1:00:トレーナー名:0]の　部屋は
 あたしが　かたづけて　おくから▽
-ベルたちは　気にしなくて　いいのよ▽
+ベルたちは　気にしなくて　いいのよ▼
 ねっ　[1:00:トレーナー名:0]▼</language>
 	</row>
 
@@ -497,14 +497,14 @@
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ママ『それにしても　ポケモンって
 ほんとうに　すごいのね！▼
-ちいさくても　へやを
+こんなに　かわいいのに　へやを
 ふきとばすほどの　とんでもない▽
 パワーを　ひめているんだもの！▼
 そんな　ポケモンと　いっしょなら
 どこに　いくのだって　あんしんよね！▼</language>
 		<language name="JPN_KANJI" width="256">ママ『それにしても　ポケモンって
 ほんとうに　すごいのね！▼
-小さくても　部屋を
+こんなに　可愛いのに　部屋を
 ふきとばすほどの　とんでもない▽
 パワーを　秘めているんだもの！▼
 そんな　ポケモンと　一緒なら
