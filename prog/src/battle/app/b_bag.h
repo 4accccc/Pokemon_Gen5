@@ -61,6 +61,8 @@ typedef struct {
 
   BOOL time_out_flg;    // 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
 
+	BOOL comm_err_flg;		// 通信エラー時の強制終了フラグ
+
   BBagBallUse   ball_use;       // ボールを投げられるか
 
   u8  ret_page;       // 使用したアイテムのポケット

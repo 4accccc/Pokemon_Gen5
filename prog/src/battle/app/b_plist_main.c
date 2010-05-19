@@ -349,6 +349,10 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
 {
   BPLIST_WORK * wk = (BPLIST_WORK *)work;
 
+	if( wk->dat->comm_err_flg == TRUE ){
+		wk->seq = SEQ_BPL_END;
+	}
+
   if( wk->seq != SEQ_BPL_END ){
     wk->seq = MainSeqFunc[wk->seq]( wk );
   }
@@ -1328,6 +1332,7 @@ static int BPL_SeqMsgWait( BPLIST_WORK * wk )
 {
   if( PRINTSYS_PrintStreamGetState(wk->stream) == PRINTSTREAM_STATE_DONE ){
     PRINTSYS_PrintStreamDelete( wk->stream );
+		wk->stream = NULL;
     return SEQ_BPL_TRG_WAIT;
   }
   return SEQ_BPL_MSG_WAIT;
@@ -1428,6 +1433,13 @@ static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
   if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
     return FALSE;
   }
+
+	if( wk->stream != NULL ){
+		PRINTSYS_PrintStreamDelete( wk->stream );
+	}
+	if( wk->chg_wfrm != NULL ){
+		BGWINFRM_Exit( wk->chg_wfrm );
+	}
 
   wk->dat->end_flg = 1;
   if( wk->cursor_flg == TRUE ){
@@ -2752,6 +2764,7 @@ static BOOL MoveDeadChangeMain( BPLIST_WORK * wk )
 
   case 5:
     BGWINFRM_Exit( wk->chg_wfrm );
+		wk->chg_wfrm = NULL;
     wk->btn_seq = 0;
     return FALSE;
   }

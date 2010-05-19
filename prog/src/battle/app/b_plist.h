@@ -68,6 +68,8 @@ typedef struct {
 
   BOOL time_out_flg;    // 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
 
+	BOOL comm_err_flg;		// 通信エラー時の強制終了フラグ
+
   u8  skill_item_use[ TEMOTI_POKEMAX ]; // 技で使用不可
 
 	BOOL	commFlag;			// 通信対戦かどうか　TRUE = 通信対戦
