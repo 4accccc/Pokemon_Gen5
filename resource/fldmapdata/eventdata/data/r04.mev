@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/13 11:00:26
+#save date:2010/05/19 18:23:40
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r04.wms
 #SECTION START:OBJ_EVENT
@@ -173,7 +173,7 @@ TR_WORKER2_02
 #OBJ CODE Number
 WORKMAN2
 #MOVE CODE Number
-MV_RND_UR
+MV_LEFT
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -181,9 +181,9 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_WORKER2_02
 #Direction Type Number
-DIR_RIGHT
+DIR_LEFT
 #Parameter 0 Number
-3
+4
 #Parameter 1 Number
 0
 #Parameter 2 Number
@@ -195,39 +195,8 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 -16 -920
+200 -16 -840
 #event number: 6
-#type
-1
-#ID name
-TR_WORKER2_03
-#OBJ CODE Number
-WORKMAN2
-#MOVE CODE Number
-MV_RIGHT
-#EVENT TYPE Number
-EV_TYPE_TRAINER
-#Flag Name
-0
-#Event Script Name
-SCRID_TRID_WORKER2_03
-#Direction Type Number
-DIR_RIGHT
-#Parameter 0 Number
-3
-#Parameter 1 Number
-0
-#Parameter 2 Number
-0
-#Move Limit X Number
-0
-#Move Limit Z Number
-0
-#Pos Type
-EVENTDATA_POSTYPE_GRID
-#position
-152 -16 -792
-#event number: 7
 #type
 1
 #ID name
@@ -258,7 +227,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 440 0 -248
-#event number: 8
+#event number: 7
 #type
 1
 #ID name
@@ -289,7 +258,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 520 0 -776
-#event number: 9
+#event number: 8
 #type
 1
 #ID name
@@ -320,7 +289,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 504 0 -1096
-#event number: 10
+#event number: 9
 #type
 1
 #ID name
@@ -351,7 +320,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 0 -552
-#event number: 11
+#event number: 10
 #type
 1
 #ID name
@@ -382,7 +351,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 472 0 -568
-#event number: 12
+#event number: 11
 #type
 1
 #ID name
@@ -413,7 +382,7 @@ DIR_UP
 EVENTDATA_POSTYPE_GRID
 #position
 488 0 -1416
-#event number: 13
+#event number: 12
 #type
 1
 #ID name
@@ -444,7 +413,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 344 0 -1512
-#event number: 14
+#event number: 13
 #type
 1
 #ID name
@@ -475,7 +444,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -88 0 -1272
-#event number: 15
+#event number: 14
 #type
 1
 #ID name
@@ -506,7 +475,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 568 0 -984
-#event number: 16
+#event number: 15
 #type
 1
 #ID name
@@ -537,7 +506,7 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 232 0 -648
-#event number: 17
+#event number: 16
 #type
 1
 #ID name
@@ -568,7 +537,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 24 0 -1224
-#event number: 18
+#event number: 17
 #type
 1
 #ID name
@@ -599,7 +568,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 264 0 -920
-#event number: 19
+#event number: 18
 #type
 1
 #ID name
@@ -630,7 +599,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 88 0 -696
-#event number: 20
+#event number: 19
 #type
 1
 #ID name
@@ -661,7 +630,7 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 120 0 -1112
-#event number: 21
+#event number: 20
 #type
 1
 #ID name
@@ -692,7 +661,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 440 0 -1544
-#event number: 22
+#event number: 21
 #type
 1
 #ID name
@@ -723,7 +692,7 @@ DIR_LEFT
 EVENTDATA_POSTYPE_GRID
 #position
 536 0 -968
-#event number: 23
+#event number: 22
 #type
 1
 #ID name
@@ -754,6 +723,37 @@ DIR_RIGHT
 EVENTDATA_POSTYPE_GRID
 #position
 24 0 -1064
+#event number: 23
+#type
+1
+#ID name
+TR_WORKER2_03
+#OBJ CODE Number
+WORKMAN2
+#MOVE CODE Number
+MV_RND_UD
+#EVENT TYPE Number
+EV_TYPE_TRAINER
+#Flag Name
+0
+#Event Script Name
+SCRID_TRID_WORKER2_03
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+3
+#Parameter 1 Number
+0
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+88 0 -632
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
