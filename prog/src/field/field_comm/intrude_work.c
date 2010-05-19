@@ -606,3 +606,90 @@ void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm)
   }
 }
 
+//==================================================================
+/**
+ * 侵入の接続状況を取得
+ *
+ * @param   game_comm		
+ *
+ * @retval  INTRUDE_CONNECT		
+ */
+//==================================================================
+INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(intcomm == NULL){
+    return INTRUDE_CONNECT_NULL;
+  }
+  
+  if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
+    if(MISSION_CheckTargetIsMine(intcomm) == TRUE){
+      return INTRUDE_CONNECT_MISSION_TARGET;
+    }
+    return INTRUDE_CONNECT_MISSION_PARTNER;
+  }
+  return INTRUDE_CONNECT_INTRUDE;
+}
+
+//==================================================================
+/**
+ * ミッションに参加している人数を取得
+ *
+ * @param   game_comm		
+ *
+ * @retval  int		      参加人数
+ */
+//==================================================================
+int Intrude_GetMissionEntryNum(GAME_COMM_SYS_PTR game_comm)
+{
+  NetID net_id;
+  int entry_num = 0;
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  
+  if(intcomm == NULL){
+    return 0;
+  }
+  if(MISSION_RecvCheck(&intcomm->mission) == FALSE){
+    return 0;
+  }
+  
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(intcomm->intrude_status[net_id].mission_entry == TRUE){
+      entry_num++;
+    }
+  }
+  if(entry_num == 0){
+    //通信の順番的にステータスがミッションデータ受信後にセットされるものなので0がありえる。
+    //その場合は受注した人分のカウントとして1を返す
+    return 1;
+  }
+  return entry_num;
+}
+
+//==================================================================
+/**
+ * ミッションのターゲットとなっているプレイヤーの名前を取得
+ *
+ * @param   game_comm		
+ * @param   dest_buf		名前代入先
+ *
+ * @retval  BOOL		TRUE:名前代入成功　FALSE:代入失敗
+ */
+//==================================================================
+BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  NetID target_netid;
+  MYSTATUS *target_myst;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
+  
+  if(intcomm == NULL || MISSION_RecvCheck(&intcomm->mission) == FALSE){
+    return FALSE;
+  }
+  
+  target_netid = MISSION_GetMissionTargetNetID(intcomm, &intcomm->mission);
+  target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, target_netid);
+  MyStatus_CopyNameString( target_myst, dest_buf );
+  return TRUE;
+}

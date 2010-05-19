@@ -32,6 +32,15 @@ typedef enum{
 }LIVE_COMM;
 
 
+///侵入の接続状況
+typedef enum{
+  INTRUDE_CONNECT_NULL,              ///<接続されていない
+  INTRUDE_CONNECT_INTRUDE,           ///<ハイリンク接続時(ミッションが行われていない)
+  INTRUDE_CONNECT_MISSION_TARGET,    ///<ハイリンク接続時(ミッションのターゲットになっている)
+  INTRUDE_CONNECT_MISSION_PARTNER,   ///<ハイリンク接続時(協力者である)
+}INTRUDE_CONNECT;
+
+
 //==============================================================================
 //  外部関数宣言
 //==============================================================================
@@ -60,4 +69,7 @@ extern BOOL Intrude_CheckTutorialComplete(GAMEDATA *gamedata);
 extern BOOL Intrude_CheckStartTimeoutMsgON(INTRUDE_COMM_SYS_PTR intcomm);
 extern LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm);
 extern void Intrude_SetLiveCommStatus_IntrudeOut(GAME_COMM_SYS_PTR game_comm);
+extern INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm);
+extern int Intrude_GetMissionEntryNum(GAME_COMM_SYS_PTR game_comm);
+extern BOOL Intrude_GetTargetName(GAME_COMM_SYS_PTR game_comm, STRBUF *dest_buf);
 
