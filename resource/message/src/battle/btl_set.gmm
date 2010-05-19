@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-19T13:43:23"/>
+	<create user="taya" host="W00146" date="2010-05-19T14:53:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5512,174 +5512,174 @@
 	<row id="BTL_STRID_SET_Simetukeru_Start">
 		<comment>しめつける</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Simetukeru_Start_2Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]に▼
+やせいの　[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]に▼
+野生の　[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Simetukeru_Start_2E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]に▼
+あいての　[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]に▼
+相手の　[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Simetukeru_Start_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Simetukeru_Start_Y2Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]に▼
+やせいの　[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]に▼
+野生の　[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Simetukeru_Start_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Simetukeru_Start_E2E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]に▼
+あいての　[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]に▼
+相手の　[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Makituku_Start">
 		<comment>まきつく</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Makituku_Start_2Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]に▼
+やせいの　[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]に▼
+野生の　[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Makituku_Start_2E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]に▼
+あいての　[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]に▼
+相手の　[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Makituku_Start_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Makituku_Start_Y2Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]に▼
+やせいの　[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]に▼
+野生の　[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Makituku_Start_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_Makituku_Start_E2E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]に▼
+あいての　[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]に▼
+相手の　[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_KaradeHasamu_Start">
 		<comment>からではさむ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_KaradeHasamu_Start_2Y">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]の　からに▼
+やせいの　[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]の　からに▼
+野生の　[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_KaradeHasamu_Start_2E">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]の　からに▼
+あいての　[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]の　からに▼
+相手の　[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_KaradeHasamu_Start_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_KaradeHasamu_Start_Y2Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-やせいの　[1:02:ポケモンニックネーム:1]の　からに▼
+やせいの　[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-野生の　[1:02:ポケモンニックネーム:1]の　からに▼
+野生の　[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_KaradeHasamu_Start_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 	<row id="BTL_STRID_SET_KaradeHasamu_Start_E2E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-あいての　[1:02:ポケモンニックネーム:1]の　からに▼
+あいての　[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-相手の　[1:02:ポケモンニックネーム:1]の　からに▼
+相手の　[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 

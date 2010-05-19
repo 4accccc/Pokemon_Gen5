@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-19T13:43:23"/>
+	<create user="taya" host="W00146" date="2010-05-19T14:53:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2429,10 +2429,10 @@
 		<comment>しめつける</comment>
 		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 しめつけられた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 締めつけられた！</language>
 	</row>
 
@@ -2440,10 +2440,10 @@
 		<comment>まきつく</comment>
 		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 まきつかれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]に▼
+[1:02:ポケモンニックネーム:1]に▽
 巻きつかれた！</language>
 	</row>
 
@@ -2451,10 +2451,10 @@
 		<comment>からではさむ</comment>
 		<attribute name="コンバートタイプ"> 2:ポケ名２連続</attribute>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 はさまれた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:02:ポケモンニックネーム:1]の　からに▼
+[1:02:ポケモンニックネーム:1]の　からに▽
 挟まれた！</language>
 	</row>
 
