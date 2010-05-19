@@ -1237,6 +1237,7 @@ EVENT_START   ev_scene_c08_gymclear_01
 	//マスターボール入手
 	_ITEM_EVENT_KEYWAIT ( ITEM_MASUTAABOORU , 1  )
 	
+	_PLAYER_NAME(0)
 	//アララギ：そのマスターボールは
 	_BALLOONWIN_OBJMSG(msg_c08_hakase2_08,MMDL_ID_EVENTOBJ_00)
 	_BALLOONWIN_CLOSE()
