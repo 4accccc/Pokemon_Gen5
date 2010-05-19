@@ -630,7 +630,7 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
 static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target,
   BOOL fForceChange, BOOL* fFailMsgDisped, u16 effectNo, BOOL fIgnoreLevel, BTL_HANDEX_STR_PARAMS* succeedMsg );
 static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk );
-static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
+static int get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk );
 static BOOL scEvent_CheckPushOutFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void scput_Fight_FieldEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker );
 static BOOL scproc_ChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8 turn );
@@ -8428,16 +8428,6 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
       return FALSE;
     }
 
-    // 対象の方がレベル上だったら失敗
-    if( !fIgnoreLevel )
-    {
-      u8 atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
-      u8 tgtLevel = BPP_GetValue( target, BPP_LEVEL );
-      if( tgtLevel > atkLevel ){
-        return FALSE;
-      }
-    }
-
     // 特殊要因で失敗
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -8464,18 +8454,15 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
       if( eff == PUSHOUT_EFFECT_CHANGE )
       {
         SVCL_WORK* clwk;
-        clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
-        if( BTL_PARTY_GetAliveMemberCount(clwk->party) <= clwk->numCoverPos )
-        {
-          return FALSE;
-        }
-        else
-        {
-          u8 nextPokeIdx = get_pushout_nextpoke_idx( wk, clwk );
-          BTL_POKEPARAM* nextPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, nextPokeIdx );
-          u8 nextPokeID;
+        int nextPokeIdx;
 
-          nextPokeID = BPP_GetID( nextPoke );
+        clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
+        nextPokeIdx = get_pushout_nextpoke_idx( wk, clwk );
+
+        if( nextPokeIdx >= 0 )
+        {
+          BTL_POKEPARAM* nextPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, clientID, nextPokeIdx );
+          u8 nextPokeID = BPP_GetID( nextPoke );
 
           scproc_MemberOutCore( wk, target, effectNo );
           if( succeedMsg != NULL ){
@@ -8486,11 +8473,25 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
           SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PushOutChange, nextPokeID );
           scproc_AfterMemberIn( wk );
         }
+        else{
+          return FALSE;
+        }
       }
       // バトル離脱効果
       else
       {
         u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(attacker) );
+
+        // 対象の方がレベル上だったら失敗
+        if( !fIgnoreLevel )
+        {
+          u8 atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
+          u8 tgtLevel = BPP_GetValue( target, BPP_LEVEL );
+          if( tgtLevel > atkLevel ){
+            return FALSE;
+          }
+        }
+
         BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
 
         scproc_MemberOutCore( wk, target, effectNo );
@@ -8526,33 +8527,40 @@ static PushOutEffect check_pushout_effect( BTL_SVFLOW_WORK* wk )
 /**
  * 「ふきとばし」系のワザで強制入れかえが発生した時、
  * 次に出すポケモンのパーティ内インデックスをランダムで決める
+ * 出せるポケモンが控えに居ない場合、-1 を返す
  *
  * @param   wk
  * @param   clwk
  *
- * @retval  u8
+ * @retval  int  次に出すポケモンのパーティ内Index : 出せるポケが居ない場合 -1
  */
 //--------------------------------------------------------------------------
-static u8 get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk )
+static int get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk )
 {
   const BTL_POKEPARAM* bpp;
-  u32 i, count, members;
+  u32 i, startIdx, count, members;
   u8 list[ BTL_PARTY_MEMBER_MAX ];
 
   members = BTL_PARTY_GetMemberCount( clwk->party );
-  for(i=clwk->numCoverPos, count=0; i<members; ++i)
+  startIdx = BTL_MAIN_GetClientBenchPosIndex( wk->mainModule, clwk->myID );
+
+  TAYA_Printf("開始Index=%d\n", startIdx );
+
+  for(i=startIdx, count=0; i<members; ++i)
   {
     bpp = BTL_PARTY_GetMemberDataConst( clwk->party, i );
     if( BPP_IsFightEnable(bpp) ){
       list[count++] = i;
     }
   }
-  GF_ASSERT( count );
 
+  if( count )
   {
     i = BTL_CALC_GetRand( count );
     return list[ i ];
   }
+
+  return -1;
 }
 
 //--------------------------------------------------------------------------
@@ -10766,7 +10774,7 @@ static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 
   if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_PP_CONST) )
   {
     u8 pokeID = BPP_GetID( attacker );
-    BPP_PPMinus( attacker, wazaIdx, vol );
+    BPP_WAZA_DecrementPP( attacker, wazaIdx, vol );
     BPP_WAZA_SetUsedFlag( attacker, wazaIdx );
     SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, vol );
   }
@@ -10786,7 +10794,7 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  BPP_PPPlus( bpp, wazaIdx, volume );
+  BPP_WAZA_IncrementPP( bpp, wazaIdx, volume );
   SCQUE_PUT_OP_PPPlus( wk->que, pokeID, wazaIdx, volume );
   if( itemID != ITEM_DUMMY_DATA )
   {
@@ -14168,7 +14176,7 @@ static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 
     if( !BPP_IsDead(pp_target) )
     {
-      if( !BPP_IsPPFull(pp_target, param->wazaIdx) ){
+      if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx) ){
         scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID );
         handexSub_putString( wk, &param->exStr );
         return 1;

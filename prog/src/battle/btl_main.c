@@ -4055,6 +4055,25 @@ u8 BTL_MAIN_GetClientFrontPosCount( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   return CheckNumFrontPos( wk, clientID );
 }
+//=============================================================================================
+/**
+ * 指定クライアントの控えポケモンIndex開始値を返す
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BTL_MAIN_GetClientBenchPosIndex( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  u8 index = CheckNumFrontPos( wk, clientID );
+  if( BTL_MAIN_GetRule(wk) == BTL_RULE_ROTATION )
+  {
+    index += BTL_ROTATION_BACKPOS_NUM;
+  }
+  return index;
+}
 
 
 //=============================================================================================

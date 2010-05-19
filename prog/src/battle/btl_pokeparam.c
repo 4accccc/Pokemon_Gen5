@@ -172,6 +172,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
 static u32 setupWazaFromSrcPP( BPP_WAZA* waza, const POKEMON_PARAM* pp );
 static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
 static void clearHensin( BTL_POKEPARAM* bpp );
+static void reflectWazaPP( BTL_POKEPARAM* bpp );
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp );
 static void clearCounter( BTL_POKEPARAM* bpp );
 static void Effrank_Init( BPP_VARIABLE_PARAM* rank );
@@ -377,6 +378,28 @@ static void clearHensin( BTL_POKEPARAM* bpp )
 }
 //----------------------------------------------------------------------------------
 /**
+ * へんしん状態でなければワザPP値を ppSrc に反映
+ *
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void reflectWazaPP( BTL_POKEPARAM* bpp )
+{
+  if( !(bpp->coreParam.fHensin) )
+  {
+    u32 i;
+    for(i=0; i<NELEMS(bpp->waza); ++i)
+    {
+      if( bpp->waza[i].number != WAZANO_NULL )
+      {
+        PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_pp1+i, bpp->waza[i].pp );
+      }
+    }
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
  * ワザ使用フラグのクリア
  *
  * @param   bpp
@@ -503,6 +526,8 @@ u16 BPP_GetMonsNo( const BTL_POKEPARAM* bpp )
 {
   return bpp->coreParam.monsno;
 }
+
+
 /**
  *  ワザ所持数を返す
  */
@@ -510,6 +535,7 @@ u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* bpp )
 {
   return bpp->wazaCnt;
 }
+
 /**
  *  生きている間に使ったワザの数を返す（死んだらリセットされる）
  */
@@ -524,6 +550,7 @@ u8 BPP_WAZA_GetUsedCountInAlive( const BTL_POKEPARAM* bpp )
   }
   return cnt;
 }
+
 /**
  *  使ったワザの数を返す（死んでもカウントアップ）
  */
@@ -600,6 +627,183 @@ u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx )
   GF_ASSERT(idx < bpp->wazaCnt);
   return (bpp->waza[idx].ppMax - bpp->waza[idx].pp);
 }
+//=============================================================================================
+/**
+ * ワザPP値を取得
+ *
+ * @param   pp
+ * @param   wazaIdx
+ *
+ */
+//=============================================================================================
+u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
+{
+  if( wazaIdx < bpp->wazaCnt ){
+    return  bpp->waza[wazaIdx].pp;
+  }else{
+    GF_ASSERT_MSG(0,"wazaIdx:%d, wazaCnt:%d", wazaIdx, bpp->wazaCnt);
+    return 0;
+  }
+}
+//=============================================================================================
+/**
+ * ワザPP値が満タンかどうかチェック
+ *
+ * @param   pp
+ * @param   wazaIdx
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_WAZA_IsPPFull( const BTL_POKEPARAM* bpp, u8 wazaIdx )
+{
+  GF_ASSERT(wazaIdx < bpp->wazaCnt);
+  return  bpp->waza[wazaIdx].pp == bpp->waza[wazaIdx].ppMax;
+}
+//=============================================================================================
+/**
+ * ワザPP値を減少
+ *
+ * @param   pp
+ * @param   wazaIdx
+ * @param   value
+ *
+ */
+//=============================================================================================
+void BPP_WAZA_DecrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
+{
+  GF_ASSERT(wazaIdx < bpp->wazaCnt);
+
+  if( bpp->waza[wazaIdx].pp >= value )
+  {
+    bpp->waza[wazaIdx].pp -= value;
+  }
+  else
+  {
+    bpp->waza[wazaIdx].pp = 0;
+  }
+}
+//=============================================================================================
+/**
+ * ワザPP値を増加
+ *
+ * @param   pp
+ * @param   wazaIdx
+ * @param   value
+ *
+ */
+//=============================================================================================
+void BPP_WAZA_IncrementPP( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
+{
+  GF_ASSERT(wazaIdx < pp->wazaCnt);
+
+  pp->waza[wazaIdx].pp += value;
+  if( pp->waza[wazaIdx].pp > pp->waza[wazaIdx].ppMax )
+  {
+    pp->waza[wazaIdx].pp = pp->waza[wazaIdx].ppMax;
+  }
+}
+//=============================================================================================
+/**
+ * 使用したワザフラグを立てる
+ *
+ * @param   pp
+ * @param   wazaIdx
+ */
+//=============================================================================================
+void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* bpp, u8 wazaIdx )
+{
+  BPP_WAZA* pWaza = &bpp->waza[ wazaIdx ];
+
+  if( pWaza->usedFlagFix == FALSE ){
+    pWaza->usedFlagFix = TRUE;
+    bpp->usedWazaCount++;
+  }
+  pWaza->usedFlag = TRUE;
+}
+//=============================================================================================
+/**
+ * ワザナンバー上書き
+ *
+ * @param   pp
+ * @param   wazaIdx       何番目のワザ[0-3]？
+ * @param   waza          上書き後ワザナンバー
+ * @param   ppMax         PP最大値の上限（最大でもデフォルト値まで。0ならデフォルト値になる）
+ * @param   fPermenent    永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
+ */
+//=============================================================================================
+void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent )
+{
+  BPP_WAZA* pWaza = &pp->waza[ wazaIdx ];
+
+  if( !fPermenent ){
+    pWaza->recoverNumber = pWaza->number;
+  }else{
+    pWaza->recoverNumber = waza;
+  }
+  pWaza->number = waza;
+  pWaza->usedFlag = FALSE;
+  pWaza->usedFlagFix = FALSE;
+  pWaza->ppMax = WAZADATA_GetMaxPP( waza, 0 );
+
+  if( (ppMax != 0)
+  &&  (pWaza->ppMax > ppMax)
+  ){
+    pWaza->ppMax = ppMax;
+  }
+  pWaza->pp = pWaza->ppMax;
+}
+//=============================================================================================
+/**
+ * 指定ワザを覚えているかチェック
+ *
+ * @param   bpp
+ * @param   waza
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza )
+{
+  int i;
+  for(i=0; i<NELEMS(bpp->waza); ++i)
+  {
+    if( bpp->waza[i].number == waza ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//=============================================================================================
+/**
+ * 指定ワザのindexを返す（自分が持っていないワザならPTL_WAZA_MAXを返す)
+  *
+ * @param   pp
+ * @param   waza
+ *
+ * @retval  u8
+ */
+//=============================================================================================
+u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza )
+{
+  if( waza != WAZANO_NULL )
+  {
+    u32 i;
+    for(i=0; i<PTL_WAZA_MAX; ++i){
+      if( pp->waza[i].number == waza ){
+        return i;
+      }
+    }
+  }
+  return PTL_WAZA_MAX;
+}
+
+
+
+
+
+
+
 
 static void splitTypeCore( const BTL_POKEPARAM* bpp, PokeType* type1, PokeType* type2 )
 {
@@ -902,39 +1106,6 @@ BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp )
 
 //=============================================================================================
 /**
- * ワザPP値を取得
- *
- * @param   pp
- * @param   wazaIdx
- *
- */
-//=============================================================================================
-u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
-{
-  if( wazaIdx < bpp->wazaCnt ){
-    return  bpp->waza[wazaIdx].pp;
-  }else{
-    GF_ASSERT_MSG(0,"wazaIdx:%d, wazaCnt:%d", wazaIdx, bpp->wazaCnt);
-    return 0;
-  }
-}
-//=============================================================================================
-/**
- * ワザPP値が満タンかどうかチェック
- *
- * @param   pp
- * @param   wazaIdx
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BPP_IsPPFull( const BTL_POKEPARAM* bpp, u8 wazaIdx )
-{
-  GF_ASSERT(wazaIdx < bpp->wazaCnt);
-  return  bpp->waza[wazaIdx].pp == bpp->waza[wazaIdx].ppMax;
-}
-//=============================================================================================
-/**
  * 継続して場に出ているターン数を返す
  *
  * @param   pp
@@ -1035,29 +1206,6 @@ fx32 BPP_GetHPRatio( const BTL_POKEPARAM* pp )
 {
   double r = (double)(pp->coreParam.hp * 100) / (double)(pp->coreParam.hpMax);
   return FX32_CONST( r );
-}
-//=============================================================================================
-/**
- * 指定ワザのindexを返す（自分が持っていないワザならPTL_WAZA_MAXを返す)
-  *
- * @param   pp
- * @param   waza
- *
- * @retval  u8
- */
-//=============================================================================================
-u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza )
-{
-  if( waza != WAZANO_NULL )
-  {
-    u32 i;
-    for(i=0; i<PTL_WAZA_MAX; ++i){
-      if( pp->waza[i].number == waza ){
-        return i;
-      }
-    }
-  }
-  return PTL_WAZA_MAX;
 }
 
 //-----------------------------
@@ -1421,120 +1569,6 @@ void BPP_HpPlus( BTL_POKEPARAM* pp, u16 value )
 void BPP_HpZero( BTL_POKEPARAM* pp )
 {
   pp->coreParam.hp = 0;
-}
-//=============================================================================================
-/**
- * ワザPP値を減少
- *
- * @param   pp
- * @param   wazaIdx
- * @param   value
- *
- */
-//=============================================================================================
-void BPP_PPMinus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
-{
-  GF_ASSERT(wazaIdx < pp->wazaCnt);
-
-  if( pp->waza[wazaIdx].pp >= value )
-  {
-    pp->waza[wazaIdx].pp -= value;
-  }
-  else
-  {
-    pp->waza[wazaIdx].pp = 0;
-  }
-}
-//=============================================================================================
-/**
- * ワザPP値を増加
- *
- * @param   pp
- * @param   wazaIdx
- * @param   value
- *
- */
-//=============================================================================================
-void BPP_PPPlus( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
-{
-  GF_ASSERT(wazaIdx < pp->wazaCnt);
-
-  pp->waza[wazaIdx].pp += value;
-  if( pp->waza[wazaIdx].pp > pp->waza[wazaIdx].ppMax )
-  {
-    pp->waza[wazaIdx].pp = pp->waza[wazaIdx].ppMax;
-  }
-}
-//=============================================================================================
-/**
- * 使用したワザフラグを立てる
- *
- * @param   pp
- * @param   wazaIdx
- */
-//=============================================================================================
-void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* bpp, u8 wazaIdx )
-{
-  BPP_WAZA* pWaza = &bpp->waza[ wazaIdx ];
-
-  if( pWaza->usedFlagFix == FALSE ){
-    pWaza->usedFlagFix = TRUE;
-    bpp->usedWazaCount++;
-  }
-  pWaza->usedFlag = TRUE;
-}
-//=============================================================================================
-/**
- * ワザナンバー上書き
- *
- * @param   pp
- * @param   wazaIdx       何番目のワザ[0-3]？
- * @param   waza          上書き後ワザナンバー
- * @param   ppMax         PP最大値の上限（最大でもデフォルト値まで。0ならデフォルト値になる）
- * @param   fPermenent    永続フラグ（TRUEならバトル後まで引き継ぐ／FALSEなら瀕死・入れかえで元に戻る）
- */
-//=============================================================================================
-void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent )
-{
-  BPP_WAZA* pWaza = &pp->waza[ wazaIdx ];
-
-  if( !fPermenent ){
-    pWaza->recoverNumber = pWaza->number;
-  }else{
-    pWaza->recoverNumber = waza;
-  }
-  pWaza->number = waza;
-  pWaza->usedFlag = FALSE;
-  pWaza->usedFlagFix = FALSE;
-  pWaza->ppMax = WAZADATA_GetMaxPP( waza, 0 );
-
-  if( (ppMax != 0)
-  &&  (pWaza->ppMax > ppMax)
-  ){
-    pWaza->ppMax = ppMax;
-  }
-  pWaza->pp = pWaza->ppMax;
-}
-//=============================================================================================
-/**
- * 指定ワザを覚えているかチェック
- *
- * @param   bpp
- * @param   waza
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza )
-{
-  int i;
-  for(i=0; i<NELEMS(bpp->waza); ++i)
-  {
-    if( bpp->waza[i].number == waza ){
-      return TRUE;
-    }
-  }
-  return FALSE;
 }
 //=============================================================================================
 /**
@@ -2052,6 +2086,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
+  reflectWazaPP( bpp );
   clearHensin( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
@@ -2084,6 +2119,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
    * 退場時に継続フラグクリアはさせてはいけない
    */
 
+  reflectWazaPP( bpp );
   clearHensin( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );

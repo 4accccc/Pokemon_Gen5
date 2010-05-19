@@ -6934,7 +6934,7 @@ static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args )
   u8 value = args[2];
 
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-  BPP_PPMinus( pp, wazaIdx, value );
+  BPP_WAZA_DecrementPP( pp, wazaIdx, value );
 
   return TRUE;
 }
@@ -6950,7 +6950,7 @@ static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  BPP_PPPlus( bpp, args[1], args[2] );
+  BPP_WAZA_IncrementPP( bpp, args[1], args[2] );
   return TRUE;
 }
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
