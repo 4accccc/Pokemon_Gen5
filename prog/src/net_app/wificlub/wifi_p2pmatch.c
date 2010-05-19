@@ -4935,24 +4935,24 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
   if(wk->cancelEnableTimer < 0  ){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT);
   }
-  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT ){
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-  }
-  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL){
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-  }
-  else if((GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_DISCONNECTING) || (GFL_NET_StateIsWifiDisconnect())){
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-  }
-  else if(GFL_NET_StateIsWifiError()){
-    _errorDisp(wk);
-  }
+//  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT ){
+//    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+//  }
+//  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL){
+ //   _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+ //   WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
+ //   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+ // }
+//  else if((GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_DISCONNECTING) || (GFL_NET_StateIsWifiDisconnect())){
+//    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+ //   WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+//  }
+//  else if(GFL_NET_StateIsWifiError()){
+//    _errorDisp(wk);
+ // }
   else if(GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED){  // ‘ŠŽè‚ÉÚ‘±‚µ‚½
 
     // ‚Q`‚Sl•åW‚Å‚È‚¢‚Æ‚«
@@ -4966,6 +4966,8 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
       CommCommandWFP2PMF_MatchStartInitialize(wk);
       wk->timer = 30;
 
+      GFL_NET_SetAutoErrorCheck(TRUE);
+      GFL_NET_SetNoChildErrorCheck(TRUE);
     }
   }
   return seq;
