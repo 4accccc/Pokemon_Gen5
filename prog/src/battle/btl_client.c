@@ -2750,8 +2750,14 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   }
   #endif
 
+  // 入れ替え可否判定のみ「きれいなぬけがら」チェック
   if( fCheckChange ){
     if( BPP_GetItem(procPoke) == ITEM_KIREINANUKEGARA ){
+      return BTL_CANTESC_NULL;
+    }
+  // 逃げ可否判定のみ「けむりだま」チェック
+  }else{
+    if( BPP_GetItem(procPoke) == ITEM_KEMURIDAMA ){
       return BTL_CANTESC_NULL;
     }
   }
