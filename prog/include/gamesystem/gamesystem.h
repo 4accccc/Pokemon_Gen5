@@ -271,7 +271,7 @@ extern BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys);
 extern BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys );
 
 #ifdef PM_DEBUG
-extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);
+//extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);
 #endif
 
 #ifdef	__cplusplus

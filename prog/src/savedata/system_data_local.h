@@ -30,7 +30,7 @@ struct SYSTEMDATA {
 	GMTIME gametime;		///<ゲーム内時間データへのポインタ
 	u8 WiFiMPOpenFlag;		///<Wi-Fi不思議な贈り物オープンフラグ
 	u8 BeaconMPOpenFlag;	///<ビーコン不思議な贈り物オープンフラグ
-	s32 profileId;			///< GTS・Wifiバトルタワーログイン用GameSpyID（初めて取得したGameSpyIdを保存する）
+	s32 dummy_profileId;			///< GTS・Wifiバトルタワーログイン用GameSpyID（初めて取得したGameSpyIdを保存する） 使われていない
 	u32 reserve[3];			///<予約領域
 };
 

@@ -405,10 +405,15 @@ static void _keyWait(SAVEADDR_WORK* pWork)
     }
 
     {//システム
-      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
+//      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
 
-      pAddr = (u8*)&pSys->profileId;
-      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
+//      pAddr = (u8*)&pSys->profileId;
+//      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PROFILE_ID", (u32)pAddr-(u32)topAddr, sizeof(pSys->profileId));
+      MYSTATUS* pMy = SaveData_GetMyStatus(pWork->pSaveData);
+
+      pAddr = (u8*)&pMy->profileID;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "PROFILE_ID",(u32)pAddr-(u32)topAddr,sizeof(pMy->profileID));
+
     }
 
     {//アイテム
