@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T16:50:53"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T22:13:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,7 +424,7 @@
 	<row id="msg_r08_stop1_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ストッパー
-・GRIDX=243、GRIDZ=179、下向き（仮
+・GRIDX=243、GRIDZ=179、下向き
 ・リュウラセンの塔イベント前
 ・話しかけても下向きのまま</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
@@ -454,7 +454,7 @@
 	<row id="msg_r08_stop2_01" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♂
 ・ストッパー
-・GRIDX=243、GRIDZ=180、上向き（仮
+・GRIDX=243、GRIDZ=180、上向き
 ・リュウラセンの塔イベント前
 ・話しかけても下向きのまま</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
@@ -506,6 +506,89 @@
 		<language name="JPN_KANJI" width="256">からげんき！　からげんき！
 どく　まひ　やけどの　ときは▽
 なんと！　攻撃力が　２倍なの！</language>
+	</row>
+
+	<row id="msg_r08_rock_ambrella_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・GRIDX=237、GRIDZ=176
+・1日1回アイテムがもらえる
+・朝→rock_ambrella_02
+　昼→rock_ambrella_03
+　夕方→rock_ambrella_04
+　夜＋深夜→rock_ambrella_05</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">そうね……▼
+いわを　みつける
+そして　プレゼントする……▽
+それが　わたしの　シンプルライフ▽
+いいわ　あなた……▼</language>
+		<language name="JPN_KANJI" width="256">そうね……▼
+いわを　みつける
+そして　プレゼントする……▽
+それが　わたしの　シンプルライフ▽
+いいわ　あなた……▼</language>
+	</row>
+
+	<row id="msg_r08_rock_ambrella_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・朝
+・アイテム入手処理
+　No285「しめったいわ」</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">あさに　みつけた
+しめったいわ　を　あげるわ▼</language>
+		<language name="JPN_KANJI" width="256">朝に　みつけた
+しめったいわ　を　あげるわ▼</language>
+	</row>
+
+	<row id="msg_r08_rock_ambrella_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・昼
+・アイテム入手処理
+　No28４「あついいわ」</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">ひるに　みつけた
+あついいわ　を　あげるわ▼</language>
+		<language name="JPN_KANJI" width="256">昼に　みつけた
+あついいわ　を　あげるわ▼</language>
+	</row>
+
+	<row id="msg_r08_rock_ambrella_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・夕方
+・アイテム入手処理
+　No283「さらさらいわ」</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">ゆうがたにに　みつけた
+さらさらいわ　を　あげるわ▼</language>
+		<language name="JPN_KANJI" width="256">夕方に　みつけた
+さらさらいわ　を　あげるわ▼</language>
+	</row>
+
+	<row id="msg_r08_rock_ambrella_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・夜＋深夜
+・アイテム入手処理
+　No282「つめたいいわ」</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">よるに　みつけた
+つめたいいわ　を　あげるわ▼</language>
+		<language name="JPN_KANJI" width="256">夜に　みつけた
+つめたいいわ　を　あげるわ▼</language>
+	</row>
+
+	<row id="msg_r08_rock_ambrella_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・アイテム入手後、日付が変わるまで</comment>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
+		<language name="JPN" width="256">そうね……▼
+いわが　すきなら　あした……
+できれば　べつの　じかんたいに▽
+ここに　くると　いいわ</language>
+		<language name="JPN_KANJI" width="256">そうね……▼
+いわが　好きなら　明日……
+できれば　別の　時間帯に▽
+ここに　来ると　いいわ</language>
 	</row>
 
 	<row id="msg_r08_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
