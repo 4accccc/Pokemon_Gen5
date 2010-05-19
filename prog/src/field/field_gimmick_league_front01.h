@@ -19,6 +19,7 @@
 //-------------
 typedef enum {
   LF01_EXOBJ_LIFT,         // リフト
+  LF01_EXOBJ_LIFT_EFFECT,  // リフトの稼動エフェクト
   LF01_EXOBJ_LIGHT_FIGHT,  // ライト(格闘)
   LF01_EXOBJ_LIGHT_EVIL,   // ライト(悪)
   LF01_EXOBJ_LIGHT_GHOST,  // ライト(ゴースト)

@@ -26,12 +26,7 @@
 #include "sound/pm_sndsys.h" // for PMSND_xxxx
 #include "event_league_front01.h"
 #include "event_league_front02.h"
-#include "field_task.h"  
-#include "field_task_manager.h"
-#include "field_task_camera_zoom.h"
-#include "field_task_camera_rot.h"
-#include "field_task_target_offset.h"
-#include "field_task_target_pos.h"
+#include "field_task_manager.h"  // for FIELD_TASK_MAN
 #include "field_camera_anime.h"
 
 
@@ -86,18 +81,6 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
   switch( *seq ) {
   // カメラ移動開始
   case 0:
-#if 0
-  {
-    FIELD_TASK* pitch;
-    FIELD_TASK* length; 
-    // タスクを生成
-    pitch  = FIELD_TASK_CameraRot_Pitch( fieldmap, LIFT_UP_FRAME, LIFT_UP_PITCH );
-    //length = FIELD_TASK_CameraLinearZoom( fieldmap, LIFT_UP_FRAME, LIFT_UP_LENGTH ); 
-    // タスクを登録
-    FIELD_TASK_MAN_AddTask( taskMan, pitch, NULL );
-    //FIELD_TASK_MAN_AddTask( taskMan, length, pitch );
-  }
-#endif
     FCAM_ANIME_SetupCamera( work->FCamAnimeWork );
     FCAM_PARAM_GetCurrentParam( work->camera, &work->FCamAnimeData.startParam );
     FCAM_ANIME_StartAnime( work->FCamAnimeWork );
