@@ -421,7 +421,7 @@
 	</row>
 
 	<row id="TRID_MINI_01_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">わたし　ポケモンしょうぶが
+		<language name="JPN" width="216">アタシ　ポケモンしょうぶが
 とっても　だいすき　なの！▼
 だって　かわいい　ポケモンが
 さらに　かわいく　がんばるんだもん！▼</language>
@@ -432,26 +432,26 @@
 	</row>
 
 	<row id="TRID_MINI_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まけても　わたしの　ポケモン
+		<language name="JPN" width="216">まけても　アタシの　ポケモン
 かわいいんだもん……！</language>
 		<language name="JPN_KANJI" width="216">負けても　アタシの　ポケモン
 かわいいんだもん……！</language>
 	</row>
 
 	<row id="TRID_MINI_01_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">わたしね　いろんな　トレーナーと
+		<language name="JPN" width="216">アタシね　いろんな　トレーナーと
 ポケモンしょうぶ　して▽
-ポケモンを　つよくするんだ！</language>
+ポケモンを　そだてるんだ！</language>
 		<language name="JPN_KANJI" width="216">アタシね　いろんな　トレーナーと
 ポケモン勝負　して▽
-ポケモンを　強くするんだ！</language>
+ポケモンを　育てるんだ！</language>
 	</row>
 
 	<row id="TRID_TANPAN_04_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">おまえ！　どんな　ポケモンを
-つれているのか　みせてくれよ！▼</language>
-		<language name="JPN_KANJI" width="216">おまえ！　どんな　ポケモンを
-連れているのか　みせてくれよ！▼</language>
+		<language name="JPN" width="216">ヨーテリー　ヨーテリー
+ぼくの　ヨーテリー！　ゴー！▼</language>
+		<language name="JPN_KANJI" width="216">ヨーテリー　ヨーテリー
+ぼくの　ヨーテリー！　ゴー！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_04_TRMSG_FIGHT_LOSE">
@@ -464,10 +464,10 @@
 	<row id="TRID_TANPAN_04_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">いろんな　トレーナーが
 いろんな　ポケモンを　くりだす！▽
-それを　みるのも　おもしろい！</language>
+それを　みるのって　おもしろいよな！</language>
 		<language name="JPN_KANJI" width="216">いろんな　トレーナーが
 いろんな　ポケモンを　くりだす！▽
-それを　みるのも　おもしろい！</language>
+それを　みるのって　おもしろいよな！</language>
 	</row>
 
 	<row id="TRID_BREEDERM_01_TRMSG_FIGHT_START">
