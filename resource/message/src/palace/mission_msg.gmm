@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-19T19:11:12"/>
+	<create user="ohmori" host="W00223" date="2010-05-19T23:32:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1122" top="402" right="1827" bottom="1022" maximized="no" rayout="Vertical2">
+	<dialog left="1122" top="402" right="1827" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1429,14 +1429,22 @@ w=トレーナー女子（相手が）
 ４＝トレーナー男子（自分が）
 ※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『よう！
-いま　きゅうけいちゅう　なんだ▼
-せっかく　きてくれたから
-これ　あげるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『よう！
-今　休憩中　なんだ▼
-せっかく　来てくれたから
-これ　あげるよ！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『……
+……　……　……は！▼
+い　いま
+ぼく　ねてたね……▼
+そうだ！
+すぐに　でかけなくちゃ！▽
+おこして　くれて　ありがとうね！▽
+おれいに　これ　あげるよ▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……
+……　……　……は！▼
+い　いま
+ぼく　寝てたね……▼
+そうだ！
+すぐに　出かけなくちゃ！▽
+起こして　くれて　ありがとうね！▽
+お礼に　これ　あげるよ▼</language>
 	</row>
 
 	<row id="mis_sleep_01_m5" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -1444,14 +1452,22 @@ w=トレーナー女子（相手が）
 5＝トレーナー女子（自分が）
 ※ミッション中、スリープ状態のミッション参加者に話しかけたときのセリフ
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『こんにちは！
-いま　きゅうけいちゅう　なんだ▼
-せっかく　きてくれたし
-これを　あげるよ！▼</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『こんにちは！
-いま　きゅうけいちゅう　なんだ▼
-せっかく　きてくれたし
-これを　あげるよ！▼</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『……
+……　……　……は！▼
+い　いま
+わたし　ねてたわ……▼
+そうだ！
+すぐに　でかけなくちゃ！▽
+おこして　くれて　ありがとう！▽
+おれいに　これ　あげるね▼</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『……
+……　……　……は！▼
+い　いま
+わたし　寝てたわ……▼
+そうだ！
+すぐに　出かけなくちゃ！▽
+起こして　くれて　ありがとう！▽
+お礼に　これ　あげるね▼</language>
 	</row>
 
 	<row id="mis_m02_01_t1" back-color="#00ff00,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
