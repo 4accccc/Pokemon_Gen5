@@ -300,7 +300,10 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                            ZUKAN_INFO_DISP_M, 0,
                                            ZUKAN_TOROKU_GRAPHIC_GetClunit(work->graphic),
                                            work->font,
-                                           work->print_que );
+                                           work->print_que,
+                                           NULL,
+                                           NULL,
+                                           NULL );
 
   // ã‰æ–Ê•‰º‰æ–Ê
   work->zukan_nickname_work = ZUKAN_NICKNAME_Init( work->heap_id, param->pp,
@@ -457,7 +460,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcMain( GFL_PROC* proc, int* seq, void* pw
                                     work->brightness - 16 );
           if( work->brightness == 0 )
           {
-            ZUKAN_INFO_DeleteOthers( work->zukan_info_work );
+            ZUKAN_INFO_DeleteOthersOutside( work->zukan_info_work );
             Zukan_Toroku_CreateBG( work );
             work->step = ZUKAN_TOROKU_TOROKU_STEP_FADE_IN_BG;
           }

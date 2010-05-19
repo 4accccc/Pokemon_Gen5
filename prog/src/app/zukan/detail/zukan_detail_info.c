@@ -28,6 +28,8 @@
 
 // アーカイブ
 #include "arc_def.h"
+#include "message.naix"
+#include "font/font.naix"
 #include "zukan_gra.naix"
 
 // サウンド
@@ -176,6 +178,14 @@ typedef struct
   int           pal_anime_lang_count;
   
   BOOL          pal_anime_lang_pltt_offs_req;  // 押しアニメしているときは、パレットアニメをしないように、パレットアニメの開始を遅らせる
+
+  // フォント
+  GFL_FONT*     font;  // 独自にフォントを用意する(全文字をメモリに常駐させておく)
+
+  // メッセージデータ
+  GFL_MSGDATA*  msgdata_kind;    // 上画面と下画面で2度読みしないように
+  GFL_MSGDATA*  msgdata_height;
+  GFL_MSGDATA*  msgdata_weight;
 }
 ZUKAN_DETAIL_INFO_WORK;
 
@@ -345,6 +355,20 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcExit( ZKNDTL_PROC* proc, int* se
   // 言語ボタン
   Zukan_Detail_Info_DeleteLangButton( param, work, cmn );
 
+  // フォント
+  {
+    // 独自にフォントを用意していたので削除
+    GFL_FONT_Delete( work->font );
+  }
+
+  // メッセージデータ
+  {
+    // 上画面と下画面で2度読みしないように、ここで読み込んでいたので削除
+    GFL_MSG_Delete( work->msgdata_weight );
+    GFL_MSG_Delete( work->msgdata_height );
+    GFL_MSG_Delete( work->msgdata_kind );
+  }
+
   // フェード
   {
     ZKNDTL_COMMON_FadeExit( work->fade_wk_s );
@@ -386,6 +410,20 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
   case SEQ_START:
     {
       *seq = SEQ_PREPARE;
+
+      // フォント
+      {
+        // 独自にフォントを用意しておく
+        work->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_MEMORY, FALSE, param->heap_id );
+      }
+
+      // メッセージデータ
+      {
+        // 上画面と下画面で2度読みしないように、ここで読み込んでおく
+        work->msgdata_kind   = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_zkn_type_dat, param->heap_id );
+        work->msgdata_height = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_zkn_height_dat, param->heap_id );
+        work->msgdata_weight = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_zkn_weight_dat, param->heap_id );
+      }
 
       // BG
       {
@@ -483,8 +521,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
                         ZUKAN_INFO_DISP_M,
                         1,
                         clunit,
-                        ZKNDTL_COMMON_GetFont(cmn),
-                        ZKNDTL_COMMON_GetPrintQue(cmn) );
+                        //ZKNDTL_COMMON_GetFont(cmn),
+                        work->font,  // 独自に用意したフォントを使う
+                        ZKNDTL_COMMON_GetPrintQue(cmn),
+                        work->msgdata_kind, 
+                        work->msgdata_height, 
+                        work->msgdata_weight );
 
           work->info_wk_s = ZUKAN_INFO_InitFromMonsno(
                         param->heap_id,
@@ -499,8 +541,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
                         ZUKAN_INFO_DISP_S,
                         1,
                         clunit,
-                        ZKNDTL_COMMON_GetFont(cmn),
-                        ZKNDTL_COMMON_GetPrintQue(cmn) );
+                        //ZKNDTL_COMMON_GetFont(cmn),
+                        work->font,  // 独自に用意したフォントを使う
+                        ZKNDTL_COMMON_GetPrintQue(cmn),
+                        work->msgdata_kind, 
+                        work->msgdata_height, 
+                        work->msgdata_weight );
         }
      
         // 直ちに何も表示しないとき用の背景のみを表示する
@@ -977,7 +1023,7 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 
     if( b_sub_off )
     {
-      ZUKAN_INFO_ChangePoke( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag );
+      //何も表示しないのでポケモンを変更する必要もない。ZUKAN_INFO_ChangePoke( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag );
 
       //// 直ちに黒にする
       //ZKNDTL_COMMON_FadeSetBlackImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
@@ -1005,14 +1051,37 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
 {
   if( work->lang == lang ) return;
  
-  ZUKAN_INFO_ChangeLang( work->info_wk_s, lang );
-
   if( work->lang == ZUKAN_INFO_LANG_NONE )
   {
+    u16  monsno;
+    u16  formno;
+    u16  sex;
+    u16  rare;
+    u32  personal_rnd;
+    BOOL b_get_flag;
+    BOOL lang_exist[ZUKAN_INFO_LANG_MAX];
+
+    // 現在表示するポケモンの情報を得る
+    Zukan_Detail_Info_GetCurrPokeInfo(
+                  param, work, cmn,
+                  &monsno,
+                  &formno,
+                  &sex,
+                  &rare,
+                  &personal_rnd,
+                  &b_get_flag,
+                  lang_exist );
+
+    ZUKAN_INFO_ChangePokeAndLang( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag, lang );  //何も表示していないときはポケモンを更新していないので、ポケモンを変更する必要がある。
+    
     //// 直ちに見えるようにする
     //ZKNDTL_COMMON_FadeSetColorlessImmediately( ZKNDTL_COMMON_FADE_DISP_S, work->fade_wk_s );
     // 直ちに通常の表示にする
     ZUKAN_INFO_DisplayNormal( work->info_wk_s );
+  }
+  else
+  {
+    ZUKAN_INFO_ChangeLang( work->info_wk_s, lang );
   }
 
   // 言語ボタンのパレットアニメ

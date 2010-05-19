@@ -98,7 +98,10 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
                             u8                      a_bg_priority,
                             GFL_CLUNIT*             a_clunit,
                             GFL_FONT*               a_font,
-                            PRINT_QUE*              a_print_que );  // 独自のprint_queを生成することにしたので使用しない
+                            PRINT_QUE*              a_print_que,     // 独自のprint_queを生成することにしたので使用しない
+                            GFL_MSGDATA*            a_msgdata_kind,      // 日本語の○○ポケモン
+                            GFL_MSGDATA*            a_msgdata_height,    // 日本語の高さ
+                            GFL_MSGDATA*            a_msgdata_weight );  // 日本語の重さ
 
 extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             HEAPID                 a_heap_id,
@@ -114,7 +117,10 @@ extern ZUKAN_INFO_WORK* ZUKAN_INFO_InitFromMonsno(
                             u8                     a_bg_priority,
                             GFL_CLUNIT*            a_clunit,
                             GFL_FONT*              a_font,
-                            PRINT_QUE*             a_print_que );  // 独自のprint_queを生成することにしたので使用しない
+                            PRINT_QUE*             a_print_que,      // 独自のprint_queを生成することにしたので使用しない
+                            GFL_MSGDATA*           a_msgdata_kind,      // 日本語の○○ポケモン
+                            GFL_MSGDATA*           a_msgdata_height,    // 日本語の高さ
+                            GFL_MSGDATA*           a_msgdata_weight );  // 日本語の重さ
 
 //-------------------------------------
 /// 終了処理
@@ -129,7 +135,7 @@ extern void ZUKAN_INFO_Main( ZUKAN_INFO_WORK* work );
 //-------------------------------------
 /// ポケモン2D以外のものを破棄する
 //=====================================
-extern void ZUKAN_INFO_DeleteOthers( ZUKAN_INFO_WORK* work );
+extern void ZUKAN_INFO_DeleteOthersOutside( ZUKAN_INFO_WORK* work );
 
 //-------------------------------------
 /// ポケモン2Dの移動開始許可フラグを立てる
