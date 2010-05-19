@@ -6,20 +6,23 @@
  * @date 2009.12.01
  */
 //////////////////////////////////////////////////////////////////////////////////////////// 
-#include "fieldmap.h"
-#include "field_gimmick_league_front01.h"
-#include "gmk_tmp_wk.h"
-#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P01
-#include "fld_exp_obj.h"        // for FLD_EXP_OBJ
-#include "field/eventwork.h"    // for EVENTWORK_
-
+#include <gflib.h>
 #include "gamesystem/gamesystem.h"
 #include "savedata/gimmickwork.h"  // for GIMMICKWORK
 #include "system/ica_anime.h"      // for ICA_ANIME
 #include "field/field_const.h"     // for FIELD_CONST_GRID_SIZE
+#include "field/eventwork.h"       // for EVENTWORK_
+
+#include "gmk_tmp_wk.h"
+#include "fieldmap.h"
+#include "field_gimmick_def.h"  // for FLD_GIMMICK_C09P01
+#include "fld_exp_obj.h"        // for FLD_EXP_OBJ 
+
+#include "field_gimmick_league_front01.h"
 
 #include "arc/league_front.naix"                               // for NARC_xxxx
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" // for SYS_FLAG_BIGFOUR_xxxx
+
 
 
 //==========================================================================================
@@ -31,12 +34,6 @@
 // ギミックデータのアーカイブID
 #define ARCID (ARCID_LEAGUE_FRONT_GIMMICK)  
 
-// ギミックワークのデータインデックス
-typedef enum{
-  GIMMICKWORK_DATA_NUM,
-  GIMMICKWORK_DATA_MAX = GIMMICKWORK_DATA_NUM - 1
-} GIMMICKWORK_DATA_INDEX;
-
 
 //==========================================================================================
 // ■3Dリソース
@@ -44,7 +41,7 @@ typedef enum{
 //----------
 // リソース
 //----------
-typedef enum{
+typedef enum {
   RES_LIFT_NSBMD,             // リフトのモデル
   RES_LIFT_ON_NSBTA,          // リフトのita ( ON )
   RES_LIFT_EFFECT_NSBMD,      // リフト稼動エフェクトのモデル
@@ -63,46 +60,51 @@ typedef enum{
   RES_LIGHT_ESPER_ON_NSBTA,   // ライト(エスパー)ON
   RES_NUM
 } RES_INDEX;
-static const GFL_G3D_UTIL_RES res_table[RES_NUM] = 
+
+static const GFL_G3D_UTIL_RES res_table[ RES_NUM ] = 
 {
-  {ARCID, NARC_league_front_pl_ele_00_nsbmd,     GFL_G3D_UTIL_RESARC},  // リフトのモデル
-  {ARCID, NARC_league_front_pl_ele_00_on_nsbta,  GFL_G3D_UTIL_RESARC},  // リフトのita ( ON )
-  {ARCID, NARC_league_front_pl_efect_00_nsbmd,   GFL_G3D_UTIL_RESARC},  // リフト稼動エフェクトのモデル
-  {ARCID, NARC_league_front_pl_efect_00_nsbta,   GFL_G3D_UTIL_RESARC},  // リフト稼動エフェクトのモデル
-  {ARCID, NARC_league_front_pl_lite1_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(格闘)    モデル
-  {ARCID, NARC_league_front_pl_lite1_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(格闘)    OFF
-  {ARCID, NARC_league_front_pl_lite1_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(格闘)    ON
-  {ARCID, NARC_league_front_pl_lite2_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(悪)      モデル
-  {ARCID, NARC_league_front_pl_lite2_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(悪)      OFF
-  {ARCID, NARC_league_front_pl_lite2_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(悪)      ON
-  {ARCID, NARC_league_front_pl_lite3_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(ゴースト)モデル
-  {ARCID, NARC_league_front_pl_lite3_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(ゴースト)OFF
-  {ARCID, NARC_league_front_pl_lite3_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(ゴースト)ON
-  {ARCID, NARC_league_front_pl_lite4_nsbmd,      GFL_G3D_UTIL_RESARC},  // ライト(エスパー)モデル
-  {ARCID, NARC_league_front_pl_lite4_off_nsbta,  GFL_G3D_UTIL_RESARC},  // ライト(エスパー)OFF
-  {ARCID, NARC_league_front_pl_lite4_on_nsbta,   GFL_G3D_UTIL_RESARC},  // ライト(エスパー)ON
+  {ARCID, NARC_league_front_pl_ele_00_nsbmd,     GFL_G3D_UTIL_RESARC},  // [ RES_LIFT_NSBMD ]
+  {ARCID, NARC_league_front_pl_ele_00_on_nsbta,  GFL_G3D_UTIL_RESARC},  // [ RES_LIFT_ON_NSBTA ]
+  {ARCID, NARC_league_front_pl_efect_00_nsbmd,   GFL_G3D_UTIL_RESARC},  // [ RES_LIFT_EFFECT_NSBMD ]
+  {ARCID, NARC_league_front_pl_efect_00_nsbta,   GFL_G3D_UTIL_RESARC},  // [ RES_LIFT_EFFECT_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite1_nsbmd,      GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_FIGHT_NSBMD ]
+  {ARCID, NARC_league_front_pl_lite1_off_nsbta,  GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_FIGHT_OFF_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite1_on_nsbta,   GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_FIGHT_ON_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite2_nsbmd,      GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_EVIL_NSBMD ]
+  {ARCID, NARC_league_front_pl_lite2_off_nsbta,  GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_EVIL_OFF_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite2_on_nsbta,   GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_EVIL_ON_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite3_nsbmd,      GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_GHOST_NSBMD ]
+  {ARCID, NARC_league_front_pl_lite3_off_nsbta,  GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_GHOST_OFF_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite3_on_nsbta,   GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_GHOST_ON_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite4_nsbmd,      GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_ESPER_NSBMD ]
+  {ARCID, NARC_league_front_pl_lite4_off_nsbta,  GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_ESPER_OFF_NSBTA ]
+  {ARCID, NARC_league_front_pl_lite4_on_nsbta,   GFL_G3D_UTIL_RESARC},  // [ RES_LIGHT_ESPER_ON_NSBTA ]
 }; 
+
 //------------------------
 // アニメーション(リフト)
 //------------------------
 typedef enum {
   LIFT_ANM_ON_TA,  // テクスチャ アニメーション ( ON )
-  LIFT_ANM_NUM
+  LIFT_ANM_NUM     // 総数
 } LIFT_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_lift[LIFT_ANM_NUM] = 
+
+static const GFL_G3D_UTIL_ANM anm_table_lift[ LIFT_ANM_NUM ] = 
 {
-  {RES_LIFT_ON_NSBTA,  0},  // テクスチャ アニメーション ( ON )
+  {RES_LIFT_ON_NSBTA,  0},  // [ LIFT_ANM_ON_TA ]
 }; 
+
 //-------------------------------------------
 // アニメーション ( リフトの稼動エフェクト )
 //-------------------------------------------
 typedef enum {
   LIFT_EFFECT_ANM_ON_TA,  // テクスチャ アニメーション ( ON )
-  LIFT_EFFECT_ANM_NUM
+  LIFT_EFFECT_ANM_NUM     // 総数
 } LIFT_EFFECT_ANM_INDEX;
+
 static const GFL_G3D_UTIL_ANM anm_table_lift_effect[ LIFT_EFFECT_ANM_NUM ] = 
 {
-  {RES_LIFT_EFFECT_NSBTA,  0},
+  {RES_LIFT_EFFECT_NSBTA,  0}, // [ LIFT_EFFECT_ANM_ON_TA ]
 }; 
 //------------------------
 // アニメーション(ライト)
@@ -111,42 +113,49 @@ static const GFL_G3D_UTIL_ANM anm_table_lift_effect[ LIFT_EFFECT_ANM_NUM ] =
 typedef enum {
   LIGHT_FIGHT_ANM_OFF,  // OFF
   LIGHT_FIGHT_ANM_ON,   // ON
-  LIGHT_FIGHT_ANM_NUM
+  LIGHT_FIGHT_ANM_NUM   // 総数
 } LIGHT_FIGHT_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_fight[LIGHT_FIGHT_ANM_NUM] = 
+
+static const GFL_G3D_UTIL_ANM anm_table_light_fight[ LIGHT_FIGHT_ANM_NUM ] = 
 {
   {RES_LIGHT_FIGHT_OFF_NSBTA, 0},
   {RES_LIGHT_FIGHT_ON_NSBTA,  0},
 };
+
 // 悪
-typedef enum{
+typedef enum {
   LIGHT_EVIL_ANM_OFF,  // OFF
   LIGHT_EVIL_ANM_ON,   // ON
-  LIGHT_EVIL_ANM_NUM
+  LIGHT_EVIL_ANM_NUM   // 総数
 } LIGHT_EVIL_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_evil[LIGHT_EVIL_ANM_NUM] = 
+
+static const GFL_G3D_UTIL_ANM anm_table_light_evil[ LIGHT_EVIL_ANM_NUM ] = 
 {
   {RES_LIGHT_EVIL_OFF_NSBTA, 0},
   {RES_LIGHT_EVIL_ON_NSBTA,  0},
 };
 // ゴースト
-typedef enum{
+//
+typedef enum {
   LIGHT_GHOST_ANM_OFF,  // OFF
   LIGHT_GHOST_ANM_ON,   // ON
-  LIGHT_GHOST_ANM_NUM
+  LIGHT_GHOST_ANM_NUM   // 総数
 } LIGHT_GHOST_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_ghost[LIGHT_GHOST_ANM_NUM] = 
+
+static const GFL_G3D_UTIL_ANM anm_table_light_ghost[ LIGHT_GHOST_ANM_NUM ] = 
 {
   {RES_LIGHT_GHOST_OFF_NSBTA, 0},
   {RES_LIGHT_GHOST_ON_NSBTA,  0},
 };
+
 // エスパー
-typedef enum{
+typedef enum {
   LIGHT_ESPER_ANM_OFF,  // OFF
   LIGHT_ESPER_ANM_ON,   // ON
-  LIGHT_ESPER_ANM_NUM
+  LIGHT_ESPER_ANM_NUM   // 総数
 } LIGHT_ESPER_ANM_INDEX;
-static const GFL_G3D_UTIL_ANM anm_table_light_esper[LIGHT_ESPER_ANM_NUM] = 
+
+static const GFL_G3D_UTIL_ANM anm_table_light_esper[ LIGHT_ESPER_ANM_NUM ] = 
 {
   {RES_LIGHT_ESPER_OFF_NSBTA, 0},
   {RES_LIGHT_ESPER_ON_NSBTA,  0},
@@ -164,6 +173,7 @@ static const GFL_G3D_UTIL_OBJ obj_table[ LF01_EXOBJ_NUM ] =
   {RES_LIGHT_GHOST_NSBMD, 0, RES_LIGHT_GHOST_NSBMD, anm_table_light_ghost, LIGHT_GHOST_ANM_NUM},
   {RES_LIGHT_ESPER_NSBMD, 0, RES_LIGHT_ESPER_NSBMD, anm_table_light_esper, LIGHT_ESPER_ANM_NUM},
 }; 
+
 //----------
 // ユニット
 //----------
@@ -232,6 +242,12 @@ typedef struct
   HEAPID heapID;  // 使用するヒープID
 
 } LF01WORK;
+
+// ワークのデータインデックス
+typedef enum {
+  GIMMICKWORK_DATA_NUM,
+  GIMMICKWORK_DATA_MAX = GIMMICKWORK_DATA_NUM - 1
+} GIMMICKWORK_DATA_INDEX;
 
 
 //==========================================================================================
