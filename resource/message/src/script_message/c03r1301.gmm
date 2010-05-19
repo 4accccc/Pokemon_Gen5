@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T14:27:36"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T14:45:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -323,25 +323,16 @@
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">どうやら　あやしい　モノは
 もっていない　ようだな▽
-よし！　とおって　いいぞ</language>
+よし！　とおって　いいぞ▼</language>
 		<language name="JPN_KANJI" width="256">どうやら　あやしい　モノは
 持っていない　ようだな▽
-よし！　通って　いいぞ</language>
+よし！　通って　いいぞ▼</language>
 	</row>
 
 	<row id="msg_c03r1301_sunglasses_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・はい＋主人公♀
-・メッセージ表示後、右か左のどちらかに移動</comment>
-		<attribute name="キャラ指定">SUNGLASSES</attribute>
-		<language name="JPN" width="256">よし！　とおって　いいぞ▼</language>
-		<language name="JPN_KANJI" width="256">よし！　通って　いいぞ▼</language>
-	</row>
-
-	<row id="msg_c03r1301_sunglasses_04a" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
-		<comment>♂
-・はい＋主人公♀
-・sunglasses_04表示後、マップを出るまで繰り返し</comment>
+・移動後</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">よし！　とおって　いいぞ</language>
 		<language name="JPN_KANJI" width="256">よし！　通って　いいぞ</language>
