@@ -34,6 +34,7 @@ typedef struct {
   BOOL isEndProc;
   int selectType;
   int soundNo;
+  int hilinkStateNo;
   BOOL push;
   BOOL bPalaceJump;
 } EVENT_CG_WIRELESS_WORK;

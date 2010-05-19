@@ -145,6 +145,11 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
           intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01);
           GMEVENT_CallEvent(event,intrude_event);
         }
+
+
+
+
+        
       }
     }
     (*seq) ++;

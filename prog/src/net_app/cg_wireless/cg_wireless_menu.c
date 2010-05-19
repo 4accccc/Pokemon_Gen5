@@ -85,14 +85,14 @@ typedef enum
 // 画面構成定義
 //--------------------------------------------
 
-#define _UNIONROOM_MSG (5)
-#define _UNIONROOM_NUM (6)
-#define _FUSHIGI_MSG (7)
-#define _FUSHIGI_ONOFF (8)
-#define _SURE_MSG   (9)
-#define _SURE_ONOFF (10)
-#define _HI_NAMAE (11)
-#define _WINDOW_MAXNUM (12)   //ウインドウのパターン数
+#define _UNIONROOM_MSG (4)
+#define _UNIONROOM_NUM (5)
+#define _FUSHIGI_MSG (6)
+#define _FUSHIGI_ONOFF (7)
+#define _SURE_MSG   (8)
+#define _SURE_ONOFF (9)
+#define _HI_NAMAE (10)
+#define _WINDOW_MAXNUM (11)   //ウインドウのパターン数
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
@@ -879,20 +879,17 @@ static void _modeAppWinFlash(CG_WIRELESS_MENU* pWork)
 //------------------------------------------------------------------------------
 static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
 {
+  GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
   
   pWork->bttnid=bttnid;
 
   switch( bttnid ){
   case _SELECTMODE_PALACE:
     {
-//      if(pWork->dbw->bPalaceJump){
-        pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
-        PMSND_PlaySystemSE(_SE_DESIDE);
-        _CHANGE_STATE(pWork,_modeAppWinFlash);
-//      }
-  //    else{
-    //    PMSND_PlaySystemSE(_SE_CANCEL);
-//      }
+      pWork->dbw->hilinkStateNo = Intrude_GetIntrudeStatus(pComm);
+      pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
+      PMSND_PlaySystemSE(_SE_DESIDE);
+      _CHANGE_STATE(pWork,_modeAppWinFlash);
     }
     break;
   case _SELECTMODE_TV:
