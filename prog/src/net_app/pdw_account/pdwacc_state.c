@@ -438,6 +438,12 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
 
 static void _dispAccCode2(PDWACC_WORK* pWork)
 {
+  if(GFL_UI_KEY_GetTrg()){
+
+    PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
+
+    _CHANGE_STATE(_networkClose);
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -450,15 +456,10 @@ static void _dispAccCode2(PDWACC_WORK* pWork)
 static void _dispAccCode(PDWACC_WORK* pWork)
 {
 
-  
+  PDWACC_MESSAGE_NoMessageDisp(pWork->pMessageWork, pWork->profileID, pWork->profileID);
   PDWACC_MESSAGE_SystemMessageDisp(pWork->pMessageWork,PDWACC_008);
-  
   _CHANGE_STATE(_dispAccCode2);
-
-
-
 }
-
 
 
 
@@ -511,7 +512,7 @@ static GFL_PROC_RESULT PDWACCProc_Init( GFL_PROC * proc, int * seq, void * pwk, 
     _CHANGE_STATE(_createAccount1);
     break;
   case PDWACC_DISPPASS:
-    _CHANGE_STATE(_createAccount7);
+    _CHANGE_STATE(_dispAccCode);
     break;
   }
 
