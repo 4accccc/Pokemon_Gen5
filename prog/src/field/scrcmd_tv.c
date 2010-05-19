@@ -37,8 +37,6 @@
 #define VARIETY_TV_MAX (80)
 #define NOTBADGE_RETRY_TV_MAX   (12)    //バッジ持っていなかったときの再抽選番組数
 
-#define TV_MAX ( RECORD_TV_MAX+LECTURE_TV_MAX+VARIETY_TV_MAX )  //29+50+80=159
-
 #define REC_TAG_MAX (2)
 
 #define NO_REC_ID (0xffffffff)
@@ -48,6 +46,8 @@
 #ifdef PM_DEBUG
 //デバッグテレビ用番組番号 実体はmisc.c
 extern u32 DebugTvNo;
+#define TV_MAX ( (RECORD_TV_SEX_MAX*2)+RECORD_TV_COMMON_MAX+LECTURE_TV_MAX+VARIETY_TV_MAX )  //11*2+18+50+80=170
+
 #endif //PM_DEBUG
 
 static const u32 RecordTbl[RECORD_TV_MAX][REC_TAG_MAX+2] = {    //{ レコードＩＤ1、レコードＩＤ2、ＩＤ1の表示桁、ＩＤ2の表示桁 }
@@ -217,6 +217,30 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
     }
     else{
       msg = DebugTvNo-1;
+    }
+
+    if ( msg < RECORD_TV_SEX_MAX*2)
+    {
+      u8 idx = msg % RECORD_TV_SEX_MAX;
+      //タグ展開
+      int rec1 = 0;
+      int rec2 = 0;
+      RECORD * rec = GAMEDATA_GetRecordPtr(gdata);
+      if ( RecordTbl[idx][0] != NO_REC_ID )
+      {
+        rec1 = RECORD_Get(rec, RecordTbl[idx][0]);
+        //タグ展開
+        WORDSET_RegisterNumber( wordset, 1, rec1, RecordTbl[idx][2], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      }
+      if ( RecordTbl[idx][1] != NO_REC_ID )
+      {
+        rec2 = RECORD_Get(rec, RecordTbl[idx][1]);
+        //タグ展開
+        WORDSET_RegisterNumber( wordset, 2, rec1, RecordTbl[idx][3], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+      }
+
+      OS_Printf("レコード1 %d\n",rec1);
+      OS_Printf("レコード2 %d\n",rec2);
     }
   }
 #endif  //PM_DEBUG
