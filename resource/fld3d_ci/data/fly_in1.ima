@@ -3,7 +3,7 @@
 <ima version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-26T19:15:41" source="fly_in11.mb"/>
+	<create user="unno" host="W00199" date="2010-05-19T17:21:22" source="fly_in.mb"/>
 	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -23,22 +23,22 @@
 
 <mat_color_data size="122">
 	25 0 31 31 31 31 31 31 31 31
-	31 31 31 31 31 31 31 31 23 16
-	8 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 0 0 0 0 0 0 0 0
-	0 0 31 31 31 31 31 31 31 31
 	31 31 31 31 31 21 10 0 0 3
 	7 10 14 17 21 24 28 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
 	31 31 31 31 31 31 31 31 31 31
-	31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 23 16
+	8 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0 0 0 0 0 0 0 0 0
+	0 0
 </mat_color_data>
 
 <mat_color_anm_array size="3">
-	<mat_color_anm index="0" material_name="aa:aa:f_effect_a">
+	<mat_color_anm index="0" material_name="bird02_line">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -53,7 +53,7 @@
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
 		<polygon_alpha frame_step="1" data_size="60" data_head="2"/>
 	</mat_color_anm>
-	<mat_color_anm index="1" material_name="aa:aa:f_effect_b">
+	<mat_color_anm index="1" material_name="f_effect_a">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
@@ -66,9 +66,9 @@
 		<emission_r frame_step="1" data_size="1" data_head="1"/>
 		<emission_g frame_step="1" data_size="1" data_head="1"/>
 		<emission_b frame_step="1" data_size="1" data_head="1"/>
-		<polygon_alpha frame_step="1" data_size="60" data_head="2"/>
+		<polygon_alpha frame_step="1" data_size="60" data_head="62"/>
 	</mat_color_anm>
-	<mat_color_anm index="2" material_name="bird02_line">
+	<mat_color_anm index="2" material_name="f_effect_b">
 		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
 		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
