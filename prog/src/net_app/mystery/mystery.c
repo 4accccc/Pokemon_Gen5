@@ -52,6 +52,8 @@
 //デバッグ
 #include "mystery_debug.h"
 #include "debug/debug_str_conv.h"
+#include "debug/debugwin_sys.h"
+#include "debug/debug_ui.h"
 
 //外部公開
 #include "net_app/mystery.h"
@@ -65,10 +67,13 @@ FS_EXTERN_OVERLAY(dpw_common);
 ///	デバッグ
 //=====================================
 #ifdef PM_DEBUG
+
 //#define MYSTERY_SAVEDATA_CLEAR
 #define MYSTERY_MOVIE_DEMO  //Rボタン押せば強制映画デモ
+#define MYSTERY_PRINT_ON    //デバッグ出力
 
-#define MYSTERY_PRINT_ON
+//#define MYSTERY_AUTO_DEBUG  //オートデバッグ
+
 #endif //PM_DEBUG
 
 #ifdef MYSTERY_PRINT_ON
@@ -76,6 +81,12 @@ FS_EXTERN_OVERLAY(dpw_common);
 #else
 #define MYSTERY_Printf(...)  /*  */
 #endif
+
+
+#ifdef MYSTERY_AUTO_DEBUG  //オートデバッグ
+static int s_debug_flag = 0;
+static int s_debug_cnt = 0;
+#endif // MYSTERY_AUTO_DEBUG
 
 //=============================================================================
 /**
@@ -676,6 +687,9 @@ static GFL_PROC_RESULT MYSTERY_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
   PMSND_PlayBGM( SEQ_BGM_WIFI_PRESENT );
 
+#ifdef PM_DEBUG
+  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
+#endif //PM_DEBUG
   return GFL_PROC_RES_FINISH;
 }
 //----------------------------------------------------------------------------
@@ -694,6 +708,10 @@ static GFL_PROC_RESULT MYSTERY_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
 { 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
   MYSTERY_PARAM *p_param  = p_param_adrs;
+
+#ifdef PM_DEBUG
+  DEBUGWIN_ExitProc();
+#endif
 
   //モジュール破棄
   MYSTERY_EFFECT_Exit( &p_wk->effect );
@@ -1844,6 +1862,17 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
   MYSTERY_WORK  *p_wk     = p_wk_adrs;
 
+#ifdef MYSTERY_AUTO_DEBUG
+  if( *p_seq == SEQ_SEARCH && s_debug_cnt-- == 0 )
+  {
+    if( (OS_GetConsoleType() & (OS_CONSOLE_ISDEBUGGER|OS_CONSOLE_TWLDEBUGGER)) )
+    {
+      DEBUG_UI_SetUp( DEBUG_UI_AUTO_MYSTERY, DEBUG_UI_PLAY_ONE );
+      s_debug_flag  = 0;
+    }
+  }
+#endif //MYSTERY_AUTO_DEBUG
+
   switch( *p_seq )
   { 
   case SEQ_INIT:
@@ -1859,6 +1888,9 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
       MYSTERY_NET_ChangeStateReq( p_wk->p_net, MYSTERY_NET_STATE_START_IRC_DOWNLOAD );
       break;
     }
+#ifdef MYSTERY_AUTO_DEBUG
+    s_debug_cnt = GFUser_GetPublicRand0( 16 );
+#endif //MYSTERY_AUTO_DEBUG
 
     //さがしています
     MYSTERY_TEXT_Print( p_wk->p_text, p_wk->p_msg, syachi_mystery_01_010, MYSTERY_TEXT_TYPE_QUE );
@@ -1908,7 +1940,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
             *p_seq  = SEQ_DIRTY_MSG;
           }
         }
-        else
+        else if( ret == MYSTERY_NET_RECV_STATUS_FAILED )
         { 
           MYSTERY_Printf( "取得できなかった\n" );
           *p_seq = SEQ_NO_GIFT_INIT;
@@ -2683,15 +2715,15 @@ static void SEQFUNC_WifiLogin( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk
     p_wk->p_wifilogin_param->bg           = WIFILOGIN_BG_NORMAL;
     p_wk->p_wifilogin_param->display      = WIFILOGIN_DISPLAY_UP;
     p_wk->p_wifilogin_param->pSvl         = NULL;
-    p_wk->p_wifilogin_param->bgm           = WIFILOGIN_BGM_NORMAL;
+    p_wk->p_wifilogin_param->bgm          = WIFILOGIN_BGM_NORMAL;
     if( MYSTERY_DATA_TYPE_OUTSIDE == MYSTERY_DATA_GetDataType( p_wk->p_sv ) )
     { 
       //管理外セーブならば、WIFILOGINはセーブへ行かない
-      p_wk->p_wifilogin_param->mode         = WIFILOGIN_MODE_NOTSAVE;
+      p_wk->p_wifilogin_param->mode       = WIFILOGIN_MODE_NOTSAVE;
     }
     else
     { 
-      p_wk->p_wifilogin_param->mode         = WIFILOGIN_MODE_NORMAL;
+      p_wk->p_wifilogin_param->mode       = WIFILOGIN_MODE_NORMAL;
     }
 
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, p_wk->p_wifilogin_param );

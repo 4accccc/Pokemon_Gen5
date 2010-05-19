@@ -1094,7 +1094,6 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     p_nd_data->target = 0;
     p_nd_data->p_buffer     = p_wk->buffer;
     p_wk->recv_status = MYSTERY_NET_RECV_STATUS_NONE;
-
     if( DWC_NdInitAsync( NdCallback, GF_DWC_ND_LOGIN, WIFI_ND_LOGIN_PASSWD ) == FALSE )
     {
       OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
