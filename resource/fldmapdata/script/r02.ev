@@ -110,9 +110,17 @@ EVENT_START   ev_pos_r02_support_01
 	
 	//プレイヤーの名前を格納する
 	_PLAYER_NAME(0)
+	_GET_MY_SEX( SCWK_ANSWER )
 	
-	//サポートが呼びかける
-	_PLAINWIN_MSG_DOWN(msg_r02_white_01)
+	//主人公が♂の場合
+	IF $SCWK_ANSWER == PM_MALE THEN
+		//サポートが呼びかける
+		_PLAINWIN_MSG_DOWN(msg_r02_white_01)
+	//主人公が♀の場合
+	ELSE
+		//サポートが呼びかける
+		_PLAINWIN_MSG_DOWN(msg_r02_white_01a)
+	ENDIF
 	_MSGWIN_CLOSE()
 	
 	//プレイヤーがビックリする
