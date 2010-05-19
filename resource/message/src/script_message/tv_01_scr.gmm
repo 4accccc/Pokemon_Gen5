@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T17:48:35"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-19T19:18:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -807,7 +807,7 @@
 その　１ねんご　には
 [2:08:９桁:1]かいの▽
 かいもので▼
-[2:08:９桁:2]円を
+[2:08:９桁:2]えんを
 つかうのだった！</language>
 		<language name="JPN_KANJI" width="256">アニメ『ポケモントレーナー
 [1:00:トレーナー名:0]！』　第４話▼
@@ -2117,7 +2117,7 @@
 さて　ガードシェア　ですが
 これは　おたがいの　みを　まもる▽
 のうりょく　すべて　たしてから▽
-はんぶんに　わって　おたがいの
+はんぶんに　わって　おたがいの▽
 まもる　ちからと　する▽
 じつに　びょうどうな　わざです▼
 にちじょうでの　こうかてきな
@@ -6461,7 +6461,7 @@ SEE YOU SOON！</language>
 クルル『ハイッ！　ELECTCHU！』▼
 イルル『ハイッ！　PIKAMOUSE！』▼
 ズルル『ホイッ！　PIKAPIKA！』▼
-しかい『ハイ　残念！
+司会『ハイ　残念！
 正解は　PIKACHU！▽
 ピカチュウだ！▼
 世界の　どこに　いっても
@@ -6510,7 +6510,7 @@ SEE YOU SOON！</language>
 クルル『ハイッ！　HOOTです！▼
 イルル『ハイッ！　HOWHOWです！▼
 ズルル『ホイッ！　HOWAREYOUです！▼
-しかい『うーん　惜しい！▼
+司会『うーん　惜しい！▼
 正解は　HOOTHOOT！
 フートフートだね！▼
 『ホーホー』という　鳴き声を
@@ -6597,7 +6597,7 @@ TOUNGEが　舌って　意味なんですね！▼
 せいかいしゃには　イーブイに
 そっくりの　ぬいぐるみを　プレゼント！▼
 ……それでは　ごきげんよう！
-また　来週！</language>
+また　らいしゅう！</language>
 		<language name="JPN_KANJI" width="256">司会『英語は　苦手だけど
 ポケモンなら　好き▼
 そんな　わがままキッズの
@@ -6608,7 +6608,7 @@ TOUNGEが　舌って　意味なんですね！▼
 クルル『ハイッ！　EEBUI！▼
 イルル『ハイッ！　EVE！▼
 ズルル『ホイッ！　EEVEE！▼
-しかい『な……　なんと……！
+司会『な……　なんと……！
 せいかいっ！▼
 せいかいは　EEVEE！　イーブイです！
 おめでとうございます！▼
@@ -6651,9 +6651,7 @@ TWIGは　えだ　といういみですよ▽
 クルル『……NAETORUですかぁ？▼
 イルル『……TORUNAEですかぁ？▼
 ズルル『……TORNADOですかぁ？▼
-しかい『もういい
-君たち　寝てなさい▼
-正解は　TURTWIG！
+司会『正解は　TURTWIG！
 TWIGは　枝　という意味ですよ▽
 勉強に　なりましたか？▼
 それでは　みなさん
@@ -6696,7 +6694,7 @@ SQUIRTというんですよ▼
 クルル『ハイッ　ZENIGAMEです！▼
 イルル『ハイッ　GAMEZENIです！▼
 ズルル『ホイッ　ZENIZENIです！▼
-しかい『ハイ　ダメ！▼
+司会『ハイ　ダメ！▼
 正解は　SQUIRTLE！
 スクァートルです！▼
 水を　ふきかけることを
@@ -6745,7 +6743,7 @@ DUDEは　やつ　って　いみなんですよ▼
 クルル『ハイッ　ISHITUBUTEです！』▼
 イルル『ハイッ　METUBUTTEです！』▼
 ズルル『ホイッ　METSUBUSHIです！』▼
-しかい　『正解は　GEODUDE！
+司会『正解は　GEODUDE！
 ジオドゥード　です！▼
 GEOは　地理に　関すること
 DUDEは　奴　って意味なんですよ▼
@@ -6844,7 +6842,7 @@ CHOPは　チョップ！▽
 クルル『ハイッ！WANRIKYです！』▼
 イルル『ハイッ！WANRIKEEです！』▼
 ズルル『ホイッ！WANWANです！』▼
-しかい『ハイ　ハズレ！▼
+司会『ハイ　ハズレ！▼
 正解は　MACHOP！
 マチョップ　です！▼
 MACHOは　マッチョ
@@ -7436,7 +7434,7 @@ BEAUTIFULは　美しいという　意味
 ピッピにんぎょう！▽
 いまなら　なんと！▼
 キズぐすりとの　おトクセットで
-２８００００００円で　かえちゃいます！▽
+２８００００００えんで　かえちゃいます！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">ここに　とりだしました
 今日の　オススメ品！▼
@@ -7478,7 +7476,7 @@ BEAUTIFULは　美しいという　意味
 そんな　フローラル　むしよけスプレー！
 いまだと　なんと！▼
 ゴールドスプレーと
-セットで　３５０００００円！▽
+セットで　３５０００００えん！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">ここに　とりだしました
 今日の　オススメ品！▼
@@ -7517,7 +7515,7 @@ BEAUTIFULは　美しいという　意味
 いまなら　なんと！▼
 こうかの　たかい
 ふつうの　キズぐすりと　おトクセットで▽
-な　なんと！　３００００００円です！▽
+な　なんと！　３００００００えんです！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">ここに　とりだしました
 今日の　オススメ品！▼
@@ -7563,7 +7561,7 @@ BEAUTIFULは　美しいという　意味
 いまなら　なんと！▼
 ほかくようの　モンスターボールとの
 おトク　セットで
-わずか　２０００００００円！▽
+わずか　２０００００００えん！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">ここに　取り出しました
 今日の　オススメ品！▼
@@ -7611,7 +7609,7 @@ BEAUTIFULは　美しいという　意味
 むすばれた　あなぬけのヒモ！▼
 いまなら　かんたんに　つかえる
 あなぬけのヒモとの　おトク　セットで▽
-なんと　３００００００円！▽
+なんと　３００００００えん！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">ここに　取り出しました
 今日の　オススメ品！▼
