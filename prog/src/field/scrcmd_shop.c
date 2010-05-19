@@ -304,25 +304,59 @@ enum{
   SHOP_BUY_CALL_END,
 };
 
-#if 0
-//        param.Core.Shift.x = FX32_ONE*16*6;
-//        param.Core.Shift.y = -FX32_ONE*8*7;
-//        param.Core.Shift.z = 0;
-        param.Core.CamPos.x = FX32_ONE*0xec;
-        param.Core.CamPos.y = -FX32_ONE*3;
-        param.Core.CamPos.z = -FX32_ONE*0xf7;
-        param.Core.TrgtPos.x = FX32_ONE*0x54;
-        param.Core.TrgtPos.y = -FX32_ONE*3;
-        param.Core.TrgtPos.z = -FX32_ONE*16;
+// ショップで買い物を開始するときのカメラ移動のオフセットデータ
+static const VecFx32 shopcamera_move_tbl[4]={
+  {  FX32_ONE*16*4,  -FX32_ONE*8*0,   -FX32_ONE*16*1  },   // 上
+  {  FX32_ONE*16*4,  -FX32_ONE*8*4,   0  },   // 下
+  {  FX32_ONE*16*4,  -FX32_ONE*8*0,   0  },   // 左
+  {  FX32_ONE*16*5,  -FX32_ONE*8*4,   0  },   // 右
+};
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief カメラ移動処理開始設定
+ *
+ * @param   sbw         SHOP_BUY_CALL_WORK
+ * @param   fieldmap    フィールドマップワーク
+ * @param   fieldcamera カメラ設定
+ */
+//----------------------------------------------------------------------------------
+static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, FIELD_CAMERA *fieldcamera )
+{
+  FLD_CAM_MV_PARAM param;
+  FIELD_PLAYER *fld_player;
+  int dir;
+
+  // カメラ移動制限処理を解除（ただし解除前の設定を保存しておく）
+  sbw->camera_flag_push = FIELD_CAMERA_GetCameraAreaActive( fieldcamera );
+  FIELD_CAMERA_SetCameraAreaActive( fieldcamera, FALSE );
+  FIELD_CAMERA_SetRecvCamParam( fieldcamera );
+
+  // 主人公の向きを取得
+  fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
+  dir        = FIELD_PLAYER_GetDir( fld_player );  
   
-//        param.Chk.Shift = TRUE;
-        param.Chk.Shift = TRUE;
-        param.Chk.Pitch = FALSE;
-        param.Chk.Yaw   = FALSE;
-        param.Chk.Dist  = FALSE;
-        param.Chk.Fovy  = FALSE;
-        param.Chk.Pos   = TRUE;
-#endif
+  // カメラ現在位置を取得
+  FIELD_CAMERA_GetCameraPos( fieldcamera, &param.Core.CamPos);
+  FIELD_CAMERA_GetTargetPos( fieldcamera, &param.Core.TrgtPos );
+  FIELD_CAMERA_FreeTarget(fieldcamera);
+
+  // 向きに合わせて移動オフセット値の足しこみ
+  param.Core.TrgtPos.x += shopcamera_move_tbl[dir].x;
+  param.Core.TrgtPos.y += shopcamera_move_tbl[dir].y;
+  param.Core.TrgtPos.z += shopcamera_move_tbl[dir].z;
+
+  param.Chk.Shift = FALSE;
+  param.Chk.Pitch = FALSE;
+  param.Chk.Yaw   = FALSE;
+  param.Chk.Dist  = FALSE;
+  param.Chk.Fovy  = FALSE;
+  param.Chk.Pos   = TRUE;
+
+  // カメラ移動開始
+  FIELD_CAMERA_SetLinerParam( fieldcamera, &param, 10 );
+
+}
 //----------------------------------------------------------------------------------
 /**
  * @brief ショップ買うサブシーケンス
@@ -343,7 +377,6 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FIELD_CAMERA *fieldcamera = FIELDMAP_GetFieldCamera( fieldmap );
 
-
   // ショップ呼び出しイベントシーケンス
   switch(sbw->seq)
   {
@@ -357,33 +390,9 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
       }
       break;
     case SHOP_BUY_CALL_CAMERA_MOVE:
-    
-      // カメラ移動開始
       OS_Printf("ショップ起動\n");
-      sbw->camera_flag_push = FIELD_CAMERA_GetCameraAreaActive( fieldcamera );
-      FIELD_CAMERA_SetCameraAreaActive( fieldcamera, FALSE );
-      FIELD_CAMERA_SetRecvCamParam( fieldcamera );
-      {
-        FLD_CAM_MV_PARAM param;
-
-        // カメラ現在位置を取得
-        FIELD_CAMERA_GetCameraPos( fieldcamera, &param.Core.CamPos);
-        FIELD_CAMERA_GetTargetPos( fieldcamera, &param.Core.TrgtPos );
-        FIELD_CAMERA_FreeCamera(fieldcamera);
-
-        param.Core.CamPos.x += FX32_ONE*16*6;
-        param.Core.CamPos.y += -FX32_ONE*8*7;
-        param.Core.TrgtPos.x += FX32_ONE*16*6;
-        param.Core.TrgtPos.y += -FX32_ONE*8*7;
-  
-        param.Chk.Shift = FALSE;
-        param.Chk.Pitch = FALSE;
-        param.Chk.Yaw   = FALSE;
-        param.Chk.Dist  = FALSE;
-        param.Chk.Fovy  = FALSE;
-        param.Chk.Pos   = TRUE;
-        FIELD_CAMERA_SetLinerParam( fieldcamera, &param, 10 );
-      }
+      // カメラ移動開始
+      Start_CameraMove( sbw, fieldmap, fieldcamera );   
       sbw->seq++;
       break;
     case SHOP_BUY_CALL_CAMERA_MOVE_WAIT:
@@ -403,7 +412,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL_CAMERA_RETURN:
       // 移動カメラ戻す処理
       {
-        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,FALSE,FALSE,TRUE,};
+        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,FALSE,FALSE,FALSE,TRUE,};
         FIELD_CAMERA_RecvLinerParam(fieldcamera, &chk, 8);
       }
       sbw->seq++;
