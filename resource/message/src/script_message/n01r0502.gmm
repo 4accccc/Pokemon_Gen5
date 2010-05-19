@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T14:47:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T17:16:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="119" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -472,7 +472,7 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクと　たたかうつもりで
 ここまで　キミは　やってきた……▼
-……だのに　ムは
+……だのに　ゼクロムは
 はんのう　しないんだね▼
 まだ　キミを
 えいゆうと　みとめていないのか▼
@@ -484,7 +484,7 @@
 トレーナーかも　とかんじたのに！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクと　雌雄を　決する　覚悟で
 ここまで　キミは　やってきた……▼
-……だのに　ムは
+……だのに　ゼクロムは
 反応しないんだね▼
 まだ　キミを
 英雄と　認めていないのか▼
@@ -505,7 +505,7 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ボクと　たたかうつもりで
 ここまで　キミは　やってきた……▼
-……だのに　シンは
+……だのに　レシラムは
 はんのう　しないんだね▼
 まだ　キミを
 えいゆうと　みとめていないのか▼
@@ -517,7 +517,7 @@
 トレーナーかも　とかんじたのに！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ボクと　雌雄を　決する　覚悟で
 ここまで　キミは　やってきた……▼
-……だのに　シンは
+……だのに　レシラムは
 反応しないんだね▼
 まだ　キミを
 英雄と　認めていないのか▼
@@ -605,8 +605,8 @@
 ・メッセージ表示前に、芝居（片手上げ）
 ・メッセージ表示後、シン登場デモ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　シン！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　シン！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　レシラム！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　レシラム！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_05b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -615,8 +615,8 @@
 ・メッセージ表示前に、芝居（片手上げ）
 ・メッセージ表示後、ム登場デモ</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　ム！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　ム！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　ゼクロム！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]おいで　ゼクロム！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -651,9 +651,9 @@
 ・続けてstone_03w</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]キミの　ダークストーンが……！▼
-いや　ムが！[BE:09:速度コントロール:0]▼</language>
+いや　ゼクロムが！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]キミの　ダークストーンが……！▼
-いや　ムが！[BE:09:速度コントロール:0]▼</language>
+いや　ゼクロムが！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_07b" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
@@ -662,9 +662,9 @@
 ・続けてstone_03b</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]キミの　ライトストーンが……！▼
-いや　シンが！[BE:09:速度コントロール:0]▼</language>
+いや　レシラムが！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]キミの　ライトストーンが……！▼
-いや　シンが！[BE:09:速度コントロール:0]▼</language>
+いや　レシラムが！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -707,22 +707,22 @@
 ・ム復活デモ後、フィールドに戻るとこのメッセージ
 　続けて_boss_09w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]レシラムと　ゼクロムは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
 せいはんたい　にして
 まったく　おなじ　そんざい▼
-シンも　ムも　えいゆうと
+レシラムと　ゼクロムも　えいゆうと
 みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
 やはり　キミも[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ムは……▼
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]レシラムと　ゼクロムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
 正反対にして
 まったく　同じ　存在▼
-シンも　ムも　英雄と
+レシラムと　ゼクロムも　英雄と
 認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
@@ -735,22 +735,22 @@
 ・ム復活デモ後、フィールドに戻るとこのメッセージ
 　続けて_boss_09b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ゼクロムと　レシラムは……▼
 もとは　ひとつの　いのち……
 いっぴきの　ポケモンだった▼
 せいはんたい　にして
 まったく　おなじ　そんざい▼
-ムも　シンも　えいゆうと
+ゼクロムと　レシラムも　えいゆうと
 みとめた　じんぶつの　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
 やはり　キミも[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シンは……▼
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ゼクロムと　レシラムは……▼
 もとは　ひとつの　命……
 一匹の　ポケモンだった▼
 正反対にして
 まったく　同じ　存在▼
-ムも　シンも　英雄と
+ゼクロムと　レシラムも　英雄と
 認めた　人物の　もとに▽
 あらわれる　ポケモン……▼
 ……そうか
@@ -772,7 +772,7 @@
 キミが　りそうを　もとめたいのか▽
 たしかめる　つもり　なんだね▼
 ボクも　キミのちからを　しりたい……
-さあ！　ムを　つかまえ▽
+さあ！　ゼクロムを　つかまえ▽
 キミの　なかまに　するんだ！！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
@@ -783,7 +783,7 @@
 キミが　理想を　求めたいのか▽
 確かめる　つもり　なんだね▼
 ボクも　キミの　力を　知りたい……
-さあ！　ムを　捕まえ▽
+さあ！　ゼクロムを　捕まえ▽
 キミの　仲間に　するんだ！！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
@@ -802,7 +802,7 @@
 キミが　しんじつを　もとめたいのか▽
 たしかめる　つもり　なんだね▼
 ボクも　キミのちからを　しりたい……
-さあ！　シンを　つかまえ▽
+さあ！　レシラムを　つかまえ▽
 キミの　なかまに　するんだ！！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]その　ポケモンが
 なんと　いっているか▽
@@ -813,7 +813,7 @@
 キミが　真実を　求めたいのか▽
 確かめる　つもり　なんだね▼
 ボクも　キミの　力を　知りたい……
-さあ！　シンを　捕まえ▽
+さあ！　レシラムを　捕まえ▽
 キミの　仲間に　するんだ！！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
@@ -829,7 +829,7 @@
 　　　　　　ポケモンに話しかけこのメッセージから再開
 　逃走→ポケモンに話しかけこのメッセージから再開</comment>
 		<attribute name="キャラ指定">ポケモン
-ム</attribute>
+ゼクロム</attribute>
 		<language name="JPN" width="256">ババリバリッシュ！！▼</language>
 		<language name="JPN_KANJI" width="256">ババリバリッシュ！！▼</language>
 	</row>
@@ -846,7 +846,7 @@
 　　　　　　ポケモンに話しかけこのメッセージから再開
 　逃走→ポケモンに話しかけこのメッセージから再開</comment>
 		<attribute name="キャラ指定">ポケモン
-シン</attribute>
+レシラム</attribute>
 		<language name="JPN" width="256">ンバーニンガガッ！！▼</language>
 		<language name="JPN_KANJI" width="256">ンバーニンガガッ！！▼</language>
 	</row>
@@ -857,10 +857,10 @@
 　このメッセージを自動で表示
 ・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">ポケモン
-ム</attribute>
-		<language name="JPN" width="256">ムは　つかまえてみろ！　と
+ゼクロム</attribute>
+		<language name="JPN" width="256">ゼクロムは　つかまえてみろ！　と
 [1:00:トレーナー名:0]を　みつめている……</language>
-		<language name="JPN_KANJI" width="256">ムは　捕まえてみろ！　と
+		<language name="JPN_KANJI" width="256">ゼクロムは　捕まえてみろ！　と
 [1:00:トレーナー名:0]を　みつめている……</language>
 	</row>
 
@@ -870,10 +870,10 @@
 　このメッセージを自動で表示
 ・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">ポケモン
-シン</attribute>
-		<language name="JPN" width="256">シンは　つかまえてみろ！　と
+レシラム</attribute>
+		<language name="JPN" width="256">レシラムは　つかまえてみろ！　と
 [1:00:トレーナー名:0]を　みつめている……</language>
-		<language name="JPN_KANJI" width="256">シンは　捕まえてみろ！　と
+		<language name="JPN_KANJI" width="256">レシラムは　捕まえてみろ！　と
 [1:00:トレーナー名:0]を　みつめている……</language>
 	</row>
 
@@ -886,12 +886,12 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 りそうを　おいもとめる　えいゆうに
 その　ちからを　かすと　いわれている▽
-ムが　キミの　ちからを　みとめ▽
+ゼクロムが　キミの　ちからを　みとめ▽
 ともに　あゆむことを　きめたか……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 理想を　追い求める　英雄に
 その力を　貸すと　いわれている▽
-ムが　キミの　力を　認め▽
+ゼクロムが　キミの　力を　認め▽
 ともに　歩むことを　決めたか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
@@ -904,12 +904,12 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 しんじつを　おいもとめる　えいゆうに
 その　ちからを　かすと　いわれている▽
-シンが　キミの　ちからを　みとめ▽
+レシラムが　キミの　ちからを　みとめ▽
 ともに　あゆむことを　きめたか……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……そうか▼
 真実を　追い求める　英雄に
 その力を　貸すと　いわれている▽
-シンが　キミの　力を　認め▽
+レシラムが　キミの　力を　認め▽
 ともに　歩むことを　決めたか……[BE:09:速度コントロール:0]▼</language>
 	</row>
 
@@ -956,12 +956,12 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
-……ボクと　シンが　やぶれた▼
+……ボクと　レシラムが　やぶれた▼
 キミの　おもい……　りそう……
 それが　ボクたちを　うわまわったか……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
-……ボクと　シンが　敗れた▼
+……ボクと　レシラムが　敗れた▼
 キミの　思い……　理想……
 それが　ボクたちを　上回ったか……[BE:09:速度コントロール:0]▼</language>
 	</row>
@@ -974,12 +974,12 @@
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
-……ボクと　ムが　やぶれた▼
+……ボクと　ゼクロムが　やぶれた▼
 キミの　おもい……　しんじつ……
 それが　ボクたちを　うわまわったか……[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……　……　……
 ……　……　……▼
-……ボクと　ムが　敗れた▼
+……ボクと　ゼクロムが　敗れた▼
 キミの　思い……　真実……
 それが　ボクたちを　上回ったか……[BE:09:速度コントロール:0]▼</language>
 	</row>
@@ -989,7 +989,7 @@
 ・WHITEver
 ・続けてboss_12_01w</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シン……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ゼクロムと　レシラム……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
 こんなことも　あるのか▼
@@ -997,7 +997,7 @@
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
 ともに　ただしいと　いうのか？[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ムと　シン……▼
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ゼクロムと　レシラム……▼
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
@@ -1035,7 +1035,7 @@
 ・BLACKver
 ・続けてboss_12_01b</comment>
 		<attribute name="キャラ指定">N</attribute>
-		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ム……▼
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]レシラムと　ゼクロム……▼
 ２ひきが　それぞれ　ことなる
 えいゆうを　えらんだ……▽
 こんなことも　あるのか▼
@@ -1043,7 +1043,7 @@
 りそうを　もとめる　もの▽
 しんじつを　もとめる　もの▽
 ともに　ただしいと　いうのか？[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]シンと　ム……▼
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]レシラムと　ゼクロム……▼
 ２匹が　それぞれ　異なる
 英雄を　選んだ……▽
 こんなことも　あるのか▼
@@ -1329,7 +1329,7 @@
 		<comment>ポケモン
 ・ゲーチス戦に負けた場合用</comment>
 		<attribute name="キャラ指定">ポケモン
-ム</attribute>
+ゼクロム</attribute>
 		<language name="JPN" width="256">……バルバル</language>
 		<language name="JPN_KANJI" width="256">……バルバル</language>
 	</row>
@@ -1338,7 +1338,7 @@
 		<comment>ポケモン
 ・ゲーチス戦に負けた場合用</comment>
 		<attribute name="キャラ指定">ポケモン
-シン</attribute>
+レシラム</attribute>
 		<language name="JPN" width="256">……シュボ</language>
 		<language name="JPN_KANJI" width="256">……シュボ</language>
 	</row>
