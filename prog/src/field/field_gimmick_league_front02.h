@@ -84,5 +84,7 @@ extern void LEAGUE_FRONT_02_GIMMICK_Move( FIELDMAP_WORK* fieldmap );
 
 extern void LEAGUE_FRONT_02_GIMMICK_StartLiftAnime( FIELDMAP_WORK* fieldmap );
 extern void LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( FIELDMAP_WORK* fieldmap );
+extern BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftAnimeEnd( FIELDMAP_WORK* fieldmap );
 extern void LEAGUE_FRONT_02_GIMMICK_ShowLiftEffect( FIELDMAP_WORK* fieldmap );
 extern void LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( FIELDMAP_WORK* fieldmap );
+extern BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftEffectEnd( FIELDMAP_WORK* fieldmap );

@@ -242,6 +242,37 @@ void LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( FIELDMAP_WORK* fieldmap )
 
 //------------------------------------------------------------------------------------------
 /**
+ * @brief リフト本体のアニメーションの終了をチェックする
+ *
+ * @param fieldmap
+ *
+ * @return アニメーションが終了した場合 TRUE
+ */
+//------------------------------------------------------------------------------------------
+BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftAnimeEnd( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  for( i=0; i<LIFT_ANM_NUM; i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR anime_controller;
+
+    anime_controller = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i );
+
+    // 終了していないアニメを発見
+    if( FLD_EXP_OBJ_ChkAnmEnd( anime_controller ) == FALSE ) {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
+//------------------------------------------------------------------------------------------
+/**
  * @brief リフト稼動エフェクトを消去する
  *
  * @param fieldmap
@@ -294,6 +325,37 @@ void LEAGUE_FRONT_02_GIMMICK_ShowLiftEffect( FIELDMAP_WORK* fieldmap )
   }
 }
 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief リフト稼動エフェクトのアニメーションの終了をチェックする
+ *
+ * @param fieldmap
+ *
+ * @return アニメーションが終了した場合 TRUE
+ */
+//------------------------------------------------------------------------------------------
+BOOL LEAGUE_FRONT_02_GIMMICK_CheckLiftEffectEnd( FIELDMAP_WORK* fieldmap )
+{
+  int i;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( fieldmap );
+
+  for( i=0; i<LIFT_EFFECT_ANM_NUM; i++ )
+  {
+    EXP_OBJ_ANM_CNT_PTR anime_controller;
+
+    anime_controller = FLD_EXP_OBJ_GetAnmCnt( 
+        exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i );
+
+    // 終了していないアニメを発見
+    if( FLD_EXP_OBJ_ChkAnmEnd( anime_controller ) == FALSE ) {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
 
 
 //==========================================================================================

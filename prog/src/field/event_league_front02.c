@@ -191,13 +191,20 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       } 
     }
     break;
+    
+  // リフトのアニメ終了待ち
+  case 4:
+    // リフト本体とエフェクトのアニメが終了
+    if( LEAGUE_FRONT_02_GIMMICK_CheckLiftAnimeEnd( work->fieldmap ) &&
+        LEAGUE_FRONT_02_GIMMICK_CheckLiftEffectEnd( work->fieldmap ) ) {
+      LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( work->fieldmap ); // リフトのアニメを止める
+      LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( work->fieldmap ); // リフト稼動エフェクトを消す
+      (*seq)++;
+    }
+    break;
 
   // 終了処理
-  case 4:
-    // リフトのアニメを止める
-    LEAGUE_FRONT_02_GIMMICK_StopLiftAnime( work->fieldmap );
-    // リフト稼動エフェクトを消す
-    LEAGUE_FRONT_02_GIMMICK_HideLiftEffect( work->fieldmap );
+  case 5:
     // 自機を着地させる
     {
       VecFx32 pos;
@@ -214,7 +221,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     (*seq)++;
     break;
 
-  case 5:
+  case 6:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
