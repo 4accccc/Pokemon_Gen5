@@ -84,7 +84,7 @@ enum {
 
 #define END_AUTO_TIME   ( 30*5 )    // セーブ後、自動終了までの時間
 
-
+// ワーク
 struct _REPORT_EVENT_LOCAL {
   GFL_TCBLSYS * tcbl;
 
@@ -132,7 +132,7 @@ static s32 MainReportYesNo( FMENU_REPORT_EVENT_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * メイン処理
+ * @brief		メイン処理
  *
  * @param   wk    ワーク
  * @param   seq   シーケンス
@@ -426,7 +426,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ワーク削除
+ * @brief		ワーク削除
  *
  * @param   wk    ワーク
  *
@@ -447,7 +447,7 @@ static void ReleaseLocalWork( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 下画面会話ウィンドウ作成
+ * @brief		下画面会話ウィンドウ作成
  *
  * @param   wk    ワーク
  *
@@ -469,7 +469,7 @@ static void InitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 下画面会話ウィンドウ削除
+ * @brief		下画面会話ウィンドウ削除
  *
  * @param   wk    ワーク
  *
@@ -483,7 +483,7 @@ static void ExitReportBmpWin( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ描画
+ * @brief		メッセージ描画
  *
  * @param   wk        ワーク
  * @param   strIdx    文字列インデックス
@@ -499,7 +499,7 @@ static void SetReportMsg( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ描画（バッファ）
+ * @brief		メッセージ描画（バッファ）
  *
  * @param   wk      ワーク
  *
@@ -528,7 +528,7 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ表示メイン
+ * @brief		メッセージ表示メイン
  *
  * @param   wk      ワーク
  *
@@ -573,7 +573,7 @@ static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ一括描画
+ * @brief		メッセージ一括描画
  *
  * @param   wk      ワーク
  * @param   strIdx  文字列インデックス
@@ -597,7 +597,7 @@ static void MsgPrint( FMENU_REPORT_EVENT_WORK * wk, u32 strIdx )
 
 //--------------------------------------------------------------------------------------------
 /**
- * メッセージ一括描画待ち
+ * @brief		メッセージ一括描画待ち
  *
  * @param   wk      ワーク
  *
@@ -615,7 +615,7 @@ static BOOL CheckMsgPrint( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「はい・いいえ」初期化
+ * @brief		「はい・いいえ」初期化
  *
  * @param   wk      ワーク
  *
@@ -646,7 +646,7 @@ static void InitReportYesNo( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「はい・いいえ」削除
+ * @brief		「はい・いいえ」削除
  *
  * @param   wk      ワーク
  *
@@ -663,7 +663,7 @@ static void ExitReportYesNo( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「はい・いいえ」開始
+ * @brief		「はい・いいえ」開始
  *
  * @param   wk      ワーク
  *
@@ -688,7 +688,7 @@ static void SetReportYesNo( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 「はい・いいえ」メイン
+ * @brief		「はい・いいえ」メイン
  *
  * @param   wk      ワーク
  *
@@ -713,8 +713,15 @@ static s32 MainReportYesNo( FMENU_REPORT_EVENT_WORK * wk )
   return -1;
 }
 
-
-// 自機レポートに
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		自機レポートに
+ *
+ * @param   wk      ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 {
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
@@ -728,7 +735,15 @@ static void SetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
   }
 }
 
-// 自機元に戻す
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		自機元に戻す
+ *
+ * @param   wk      ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 {
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
@@ -738,7 +753,16 @@ static void ResetReportPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
   }
 }
 
-// 自機アニメチェック
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		自機アニメチェック
+ *
+ * @param   wk      ワーク
+ *
+ * @retval	"TRUE = アニメ終了"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
 {
   FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( wk->fieldWork );
@@ -748,23 +772,30 @@ static BOOL CheckPlayerAnime( FMENU_REPORT_EVENT_WORK * wk )
   return TRUE;
 }
 
-
-//----------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
 /**
- *  @brief  レポートBGアニメーション    ON
+ * @brief		レポートBGアニメーション    ON
+ *
+ * @param   wk      ワーク
+ *
+ * @return	none
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
 static void SetReportBgAnime( FMENU_REPORT_EVENT_WORK * work )
 {
   work->local->bgAnime = FIELD_SAVEANIME_Create( work->heapID, work->fieldWork );
   FIELD_SAVEANIME_Start( work->local->bgAnime );
 }
 
-//----------------------------------------------------------------------------
-/** 
- *  @brief  レポートBGアニメーション  OFF
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		レポートBGアニメーション    OFF
+ *
+ * @param   wk      ワーク
+ *
+ * @return	none
  */
-//-----------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
 static void ResetReportBgAnime( FMENU_REPORT_EVENT_WORK * work )
 {
   FIELD_SAVEANIME_End( work->local->bgAnime );

@@ -29,21 +29,6 @@ typedef struct {
   HEAPID	heapID;
 	void * resultAddr;
 
-/*
-	// ↓内部で設定
-	GFL_TCBLSYS * tcbl;
-
-  GFL_MSGDATA * msgData;
-	GFL_BMPWIN * win;
-	PRINT_STREAM * stream;
-	STRBUF * strBuff;
-
-	APP_TASKMENU_ITEMWORK	ynList[2];
-	APP_TASKMENU_RES * ynRes;
-	APP_TASKMENU_WORK * ynWork;
-
-	TIMEICON_WORK * timeIcon;
-*/
 	REPORT_EVENT_LOCAL * local;		// ローカルワーク（内部で作成されます）
 
 }FMENU_REPORT_EVENT_WORK;
@@ -60,7 +45,7 @@ enum {
 
 //--------------------------------------------------------------------------------------------
 /**
- * メイン処理
+ * @brief		メイン処理
  *
  * @param		wk		ワーク
  * @param		seq		シーケンス
