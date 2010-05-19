@@ -129,6 +129,13 @@ _RET
 ship_in:
 {
   DEFINE_LOCAL dir
+
+  //é©ì]é‘Ç…èÊÇ¡ÇƒÇÈÇ»ÇÁï‡çsèÛë‘Ç÷
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+
   _PLAYER_DIR_GET( dir )
 
   IF $dir == DIR_DOWN THEN
