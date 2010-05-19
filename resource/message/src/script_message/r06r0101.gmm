@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-19T11:05:28"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-19T20:45:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="62" top="586" right="617" bottom="1214" maximized="no" rayout="Vertical2">
+	<dialog left="62" top="586" right="617" bottom="1200" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="547"/>
@@ -429,7 +429,10 @@ assistantm3_06
 assistantm3_06
 
 いいえ↓
-assistantm3_07</comment>
+assistantm3_07
+
+シキジカ以外を見せた場合↓
+assistantm3_11</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 助手♂</attribute>
 		<language name="JPN" width="256">いかがでしょうか？▼
@@ -445,28 +448,7 @@ assistantm3_07</comment>
 	<row id="msg_r06r0101_assistantm3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・四季イベント
-
-はい↓
-季節が春（春フォルムの場合）
-assistantm3_03
-
-はい↓
-季節が夏（夏フォルムの場合）
-assistantm3_04
-
-はい↓
-季節が春（秋フォルムの場合）
-assistantm3_05
-
-はい↓
-季節が春（冬フォルムの場合）
-assistantm3_06
-
-すでにフォルムを見せている場合↓
-assistantm3_06
-
-いいえ↓
-assistantm3_07</comment>
+・イベント終了</comment>
 		<attribute name="キャラ指定">ASSISTANTM
 助手♂</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]の　はるの　すがた！▼
@@ -649,6 +631,22 @@ assistantm3_07</comment>
 世界で　ここだけ　ですからね▼
 今じゃ　ちょっとした　ウチの
 マスコットに　なってますよ</language>
+	</row>
+
+	<row id="msg_r06r0101_assistantm3_11" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・四季イベント
+・シキジカ以外を見せた場合
+
+・イベント終了</comment>
+		<attribute name="キャラ指定">ASSISTANTM
+助手♂</attribute>
+		<language name="JPN" width="256">もうしあげにくいのですが……
+そのポケモンは　[1:01:ポケモン種族名:0]とは▽
+ちがいますよ……</language>
+		<language name="JPN_KANJI" width="256">申し上げにくいのですが……
+そのポケモンは　[1:01:ポケモン種族名:0]とは▽
+違いますよ……</language>
 	</row>
 
 	<row id="msg_r06r0101_poke01_01">
