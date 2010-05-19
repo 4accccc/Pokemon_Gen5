@@ -177,6 +177,7 @@ struct _CG_WIRELESS_MENU {
   u32 bgchar;  //GFL_ARCUTIL_TRANSINFO
 	u32 subchar;
 
+  int palace_state;
   u8 BackupPalette[16 * _PALETTE_CHANGE_NUM *2];
   u8 LightPalette[16 * _PALETTE_CHANGE_NUM *2];
   u16 TransPalette[16 ];
@@ -210,6 +211,7 @@ struct _CG_WIRELESS_MENU {
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
   GFL_CLWK* TVTCall;
   GFL_CLWK* TVTCallName;
+  GFL_CLWK* HiName;
 
 };
 
@@ -404,6 +406,42 @@ static void _buttonWindowCreate(int num,int* pMsgBuff,CG_WIRELESS_MENU* pWork, _
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   受け取った数のウインドウを等間隔に作る 幅は3char
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _buttonWindowCreate2(int no, CG_WIRELESS_MENU* pWork, _WINDOWPOS* pos)
+{
+  int i = no;
+  u32 cgx;
+  int frame = GFL_BG_FRAME3_S;
+
+
+  if(pWork->buttonWin[i]){
+    GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+    BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+    GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+    pWork->buttonWin[i] = NULL;
+  }
+
+  pWork->buttonWin[i] = GFL_BMPWIN_Create(
+    frame,
+    pos[i].leftx, pos[i].lefty,
+    pos[i].width, pos[i].height,  _SUBLIST_NORMAL_PAL,GFL_BMP_CHRAREA_GET_F);
+  GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0 );
+  // システムウインドウ枠描画
+  PRINTSYS_PrintColor(GFL_BMPWIN_GetBmp(pWork->buttonWin[i]), 0, 0,
+                      pWork->pStrBuf, pWork->pFontHandle, APP_TASKMENU_ITEM_MSGCOLOR);
+  GFL_BMPWIN_TransVramCharacter(pWork->buttonWin[i]);
+  GFL_BMPWIN_MakeScreen(pWork->buttonWin[i]);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
+}
+
+
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ボタンイベントコールバック
@@ -555,6 +593,21 @@ static void _CreateButtonObj(CG_WIRELESS_MENU* pWork)
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->TVTCallName , TRUE );
   GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, FALSE );
   GFL_CLACT_WK_SetObjMode(pWork->TVTCallName, GX_OAM_MODE_XLU);
+
+
+  cellInitData.pos_x = 128;
+  cellInitData.pos_y = 192/2;
+  cellInitData.anmseq = 25;
+  cellInitData.softpri = 0;
+  cellInitData.bgpri = 2;
+  pWork->HiName = GFL_CLACT_WK_Create( pWork->cellUnit ,
+                                        pWork->cellRes[CHAR_OBJ],
+                                        pWork->cellRes[PLT_OBJ],
+                                        pWork->cellRes[ANM_OBJ],
+                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+  GFL_CLACT_WK_SetAutoAnmFlag( pWork->HiName , TRUE );
+  GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+  GFL_CLACT_WK_SetObjMode(pWork->HiName, GX_OAM_MODE_XLU);
 
 
 }
@@ -948,6 +1001,43 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
     _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
   }
 
+
+  {
+    GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
+    int no = Intrude_GetIntrudeStatus(pComm);
+    if(pWork->palace_state!=no){
+      switch(no){
+      case INTRUDE_CONNECT_NULL:              ///<接続されていない
+        GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_001, pWork->pStrBuf );
+        _buttonWindowCreate2(0,  pWork, wind_wireless1);
+        break;
+      case INTRUDE_CONNECT_INTRUDE:           ///<ハイリンク接続時(ミッションが行われていない)
+        GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_016, pWork->pStrBuf );
+        _buttonWindowCreate2(0,  pWork, wind_wireless2);
+        break;
+      case INTRUDE_CONNECT_MISSION_TARGET:    ///<ハイリンク接続時(ミッションのターゲットになっている)
+        {
+          int no2 = Intrude_GetMissionEntryNum(pComm);
+          GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+          WORDSET_RegisterNumber( pWork->pWordSet, 0,  no2, 1,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+          GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_017, pWork->pExpStrBuf );
+          WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExpStrBuf );
+          _buttonWindowCreate2(0,  pWork, wind_wireless2);
+        }
+        break;
+      case INTRUDE_CONNECT_MISSION_PARTNER:   ///<ハイリンク接続時(協力者である)
+        _buttonWindowCreate2(0,  pWork, wind_wireless2);
+        if( Intrude_GetTargetName(pComm,pWork->pStrBuf) ){
+          _buttonWindowCreate2(2,  pWork, wind_wireless_name);
+          GFL_CLACT_WK_SetDrawEnable( pWork->HiName, TRUE );
+        }
+        break;
+      }
+      pWork->palace_state=no;
+    }
+  }
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
 
@@ -1247,17 +1337,24 @@ static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
 {
   GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
 //  if(GAME_COMM_STATUS_BIT_WIRELESS_TR & pWork->bit){
-  if(Intrude_CheckPalaceConnect(pComm)){
-    if(12 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[0])){
-      GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[0],TRUE);
-      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 20 );
-    }
-  }
-  else{
+//  if(Intrude_CheckPalaceConnect(pComm)){
+
+  int no = Intrude_GetIntrudeStatus(pComm);
+  switch(no){
+  case INTRUDE_CONNECT_NULL:              ///<接続されていない
+  case INTRUDE_CONNECT_INTRUDE:           ///<ハイリンク接続時(ミッションが行われていない)
     if(20 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[0])){
       GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[0],FALSE);
       GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 12 );
     }
+    break;
+  case INTRUDE_CONNECT_MISSION_TARGET:    ///<ハイリンク接続時(ミッションのターゲットになっている)
+  case INTRUDE_CONNECT_MISSION_PARTNER:   ///<ハイリンク接続時(協力者である)
+    if(12 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[0])){
+      GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[0],TRUE);
+      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 20 );
+    }
+    break;
   }
 }
 
@@ -1537,6 +1634,8 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   }
   GFL_CLACT_WK_Remove( pWork->TVTCall);
   GFL_CLACT_WK_Remove( pWork->TVTCallName);
+  GFL_CLACT_WK_Remove( pWork->HiName );
+
   
   GFL_CLGRP_PLTT_Release(pWork->cellRes[PLT_OBJ] );
   GFL_CLGRP_CGR_Release(pWork->cellRes[CHAR_OBJ] );
