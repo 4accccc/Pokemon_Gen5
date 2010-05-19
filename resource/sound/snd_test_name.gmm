@@ -5073,13 +5073,13 @@
 		<language name="JPN" width="256">BGM-WIN6</language>
 		<language name="JPN_KANJI" width="256">BGM-WIN6</language>
 	</row>
-	<row id="msg_seq_bgm_03">
-		<language name="JPN" width="256">BGM-03</language>
-		<language name="JPN_KANJI" width="256">BGM-03</language>
+	<row id="msg_seq_bgm_n_room">
+		<language name="JPN" width="256">BGM-N-ROOM</language>
+		<language name="JPN_KANJI" width="256">BGM-N-ROOM</language>
 	</row>
-	<row id="msg_seq_bgm_04">
-		<language name="JPN" width="256">BGM-04</language>
-		<language name="JPN_KANJI" width="256">BGM-04</language>
+	<row id="msg_seq_bgm_e_epirogue">
+		<language name="JPN" width="256">BGM-E-EPIROGUE</language>
+		<language name="JPN_KANJI" width="256">BGM-E-EPIROGUE</language>
 	</row>
 	<row id="msg_seq_bgm_05">
 		<language name="JPN" width="256">BGM-05</language>
