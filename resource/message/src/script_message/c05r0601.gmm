@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T19:57:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T20:13:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -437,13 +437,83 @@
 ぜーんぶ　買ってっちゃったの</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_01">
-		<comment>♂</comment>
+	<row id="msg_c05r0601_sunglasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・アイテム入手前
+・はい/いいえの選択肢表示
+・はい→sunglasses_02
+　いいえ→sunglasses_05</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">あなたー　よくきたー！
-いっぱい　みていけー！</language>
+いいもの　ほしいかー？</language>
 		<language name="JPN_KANJI" width="256">あなたー　よく来たー！
-いっぱい　見ていけー！</language>
+いいもの　欲しいかー？</language>
+	</row>
+
+	<row id="msg_c05r0601_sunglasses_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択
+・レベル３０以上のポケモンが
+　いる→sunglasses_03
+　いない→sunglasses_04</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">だったら　レベル３０いじょうの
+ポケモン　みせてくれー！▼</language>
+		<language name="JPN_KANJI" width="256">だったら　レベル３０以上の
+ポケモン　みせてくれー！▼</language>
+	</row>
+
+	<row id="msg_c05r0601_sunglasses_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No268「たつじんのおび」</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">おー！　もーれつ！▼
+あなた　すごいねー！▼
+これ　もってけー！▼</language>
+		<language name="JPN_KANJI" width="256">おー！　もーれつ！▼
+あなた　すごいねー！▼
+これ　持ってけー！▼</language>
+	</row>
+
+	<row id="msg_c05r0601_sunglasses_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・はい選択
+・レベル３０以上のポケモンがいない</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">おー！　まだまだ　これからー！▼
+ポケモン　きたえたら
+また　ここに　くると　いいー！</language>
+		<language name="JPN_KANJI" width="256">おー！　まだまだ　これからー！▼
+ポケモン　鍛えたら
+また　ここに　来ると　いいー！</language>
+	</row>
+
+	<row id="msg_c05r0601_sunglasses_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">あなたー　ひかえめー！
+いいもの　ほしがれば　いいのにー！</language>
+		<language name="JPN_KANJI" width="256">あなたー　ひかえめー！
+いいもの　欲しがれば　いいのにー！</language>
+	</row>
+
+	<row id="msg_c05r0601_sunglasses_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+		<comment>♂
+・アイテム入手後
+</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
+		<language name="JPN" width="256">あなたー　よくきたー！
+たつじんのおび　つかいこなせー！▼
+たつじんのおび　もっていると
+こうかバツグンの　ときに▽
+ちょっと　いりょく　あがるー！</language>
+		<language name="JPN_KANJI" width="256">あなたー　よく来たー！
+たつじんのおび　使いこなせー！▼
+たつじんのおび　持っていると
+こうかバツグンの　ときに▽
+ちょっと　威力　あがるー！</language>
 	</row>
 
 	<row id="msg_c05r0601_trainerw_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
