@@ -10,9 +10,6 @@
 
 #include "arc\arc_def.h"	// アーカイブデータ
 
-#include "mapdatafunc/field_func_mapeditor_file.h"
-#include "mapdatafunc/field_func_pmcustom_file.h"
-#include "mapdatafunc/field_func_bridge_file.h"
 #include "mapdatafunc/field_func_nogrid_file.h"
 #include "mapdatafunc/field_func_wbnormal_file.h"
 #include "mapdatafunc/field_func_wbcross_file.h"
@@ -436,7 +433,7 @@ BOOL	FLDMAPPER_Main( FLDMAPPER* g3Dmapper )
 
 	// 地面アニメーション管理
 	if( g3Dmapper->granime ){
-		FIELD_GRANM_Main( g3Dmapper->granime );
+    FIELD_GRANM_Main( g3Dmapper->granime );
 	}
 
 
