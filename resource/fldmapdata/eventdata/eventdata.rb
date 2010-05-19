@@ -1056,6 +1056,7 @@ def make_depend( filename )
 
       zonename = File.basename(filename,".*").downcase
       ofilename = "../tmp/" + zonename
+      spscrname = "../../script/sp_" + zonename + ".bin"
 
       File.open("#{ofilename}.h", "w"){|file|
         door_events.dumpHeader(file)
@@ -1081,9 +1082,9 @@ def make_depend( filename )
       depend_header = depend_header.uniq()
 
       File.open( "#{ofilename}.tmp", "w" ){|file|
-        file.puts "##{ARGV[0]}"
-        file.puts "#{ofilename}.bin:#{ARGV[0]} #{depend_header}"
-        file.puts "\t@echo #{ARGV[0]}"
+        file.puts "##{filename}"
+        file.puts "#{ofilename}.bin:#{filename} #{spscrname} #{depend_header}"
+        file.puts "\t@echo #{filename}"
         file.puts "\t@ruby make_binary.rb $< #{depend_header}"
 
         file.puts ""
@@ -1110,6 +1111,7 @@ def make_binary( filename, allHeader )
     
     zonename = File.basename(filename,".*").downcase
     ofilename = "../tmp/" + zonename + ".bin"
+    spscrname = "../../script/sp_" + zonename + ".bin"
     
     headerArray = HeaderDataArray.new();
 
@@ -1140,7 +1142,9 @@ def make_binary( filename, allHeader )
       output += pos_events.dumpBinary(headerArray)
 
       File.open(ofilename, "wb"){|file|
+        file.write [ output.length ].pack("I")
         file.write output
+        file.write File.read( spscrname )
       }
     }
 

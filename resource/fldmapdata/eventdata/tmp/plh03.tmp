@@ -1,5 +1,5 @@
 #../data/plh03.mev
-../tmp/plh03.bin:../data/plh03.mev $(UNIQ_SCRIPTHEADER) ../tmp/plh03.h ../../zonetable/zone_id.h ../tmp/plr08.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr09.h ../../flagwork/work_define.h ../../script/PLH03_def.h 
+../tmp/plh03.bin:../data/plh03.mev ../../script/sp_plh03.bin $(UNIQ_SCRIPTHEADER) ../tmp/plh03.h ../../zonetable/zone_id.h ../tmp/plr08.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr09.h ../../flagwork/work_define.h ../../script/PLH03_def.h 
 	@echo ../data/plh03.mev
 	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plh03.h ../../zonetable/zone_id.h ../tmp/plr08.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plr09.h ../../flagwork/work_define.h ../../script/PLH03_def.h 
 

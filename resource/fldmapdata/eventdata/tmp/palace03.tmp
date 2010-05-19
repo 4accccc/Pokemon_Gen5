@@ -1,5 +1,5 @@
 #../data/palace03.mev
-../tmp/palace03.bin:../data/palace03.mev $(UNIQ_SCRIPTHEADER) ../tmp/palace03.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/PALACE03_def.h 
+../tmp/palace03.bin:../data/palace03.mev ../../script/sp_palace03.bin $(UNIQ_SCRIPTHEADER) ../tmp/palace03.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/PALACE03_def.h 
 	@echo ../data/palace03.mev
 	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/palace03.h ../../flagwork/work_define.h ../../../../prog/include/field/eventdata_type.h ../../script/PALACE03_def.h 
 

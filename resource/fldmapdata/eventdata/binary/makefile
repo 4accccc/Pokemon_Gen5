@@ -44,6 +44,11 @@ TOTALHEADER = ../define/total_header.h
 TMPDIR	= ../tmp
 DATADIR	= ../data
 SCRIPTDIR	= ../../script
+
+#SCRIPTFILES	=
+#include	../../script/zone_script.list
+#SRCDATA	= $(addprefix $(DATADIR)/,$(filter-out sp_%.mev,$(SCRIPTFILES:.ev=.mev)))
+
 SRCDATA = $(wildcard $(DATADIR)/*.mev)
 TGTDATA = $(basename $(notdir $(SRCDATA)))
 BINDAT = $(addprefix $(TMPDIR)/,$(addsuffix .bin,$(TGTDATA)))
@@ -53,6 +58,7 @@ include  ../../script/uniq_script.list
 #SCRBASE = $(basename $(notdir $(UNIQ_SCRIPTFILES)))
 SCRBASE = $(basename $(notdir $(UNIQ_TOP_EVENT_SCRFILES)))
 UNIQ_SCRIPTHEADER = $(addprefix $(SCRIPTDIR)/,$(addsuffix _def.h,$(SCRBASE)))
+
 
 LIST_FILE 	= list.txt
 
@@ -104,3 +110,6 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作、ここから
 	@-rm -f $(TMPDIR)/*.bin
 endif
 
+test:
+	#echo	$(addprefix $(DATADIR)/,$(filter-out sp_,$(SCRIPTFILES:.ev=.mev)))
+	#echo	$(filter-out sp_%.ev,$(SCRIPTFILES))

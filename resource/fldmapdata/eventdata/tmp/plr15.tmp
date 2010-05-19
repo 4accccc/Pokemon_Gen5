@@ -1,5 +1,5 @@
 #../data/plr15.mev
-../tmp/plr15.bin:../data/plr15.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr15.h ../../zonetable/zone_id.h ../tmp/plh05.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plc10.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLR15_def.h ../../flagwork/work_define.h 
+../tmp/plr15.bin:../data/plr15.mev ../../script/sp_plr15.bin $(UNIQ_SCRIPTHEADER) ../tmp/plr15.h ../../zonetable/zone_id.h ../tmp/plh05.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plc10.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLR15_def.h ../../flagwork/work_define.h 
 	@echo ../data/plr15.mev
 	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr15.h ../../zonetable/zone_id.h ../tmp/plh05.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../tmp/plc10.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLR15_def.h ../../flagwork/work_define.h 
 

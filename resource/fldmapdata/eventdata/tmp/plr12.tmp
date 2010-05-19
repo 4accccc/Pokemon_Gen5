@@ -1,5 +1,5 @@
 #../data/plr12.mev
-../tmp/plr12.bin:../data/plr12.mev $(UNIQ_SCRIPTHEADER) ../tmp/plr12.h ../../zonetable/zone_id.h ../tmp/plr11.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLR12_def.h ../../flagwork/work_define.h 
+../tmp/plr12.bin:../data/plr12.mev ../../script/sp_plr12.bin $(UNIQ_SCRIPTHEADER) ../tmp/plr12.h ../../zonetable/zone_id.h ../tmp/plr11.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLR12_def.h ../../flagwork/work_define.h 
 	@echo ../data/plr12.mev
 	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/plr12.h ../../zonetable/zone_id.h ../tmp/plr11.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/PLR12_def.h ../../flagwork/work_define.h 
 

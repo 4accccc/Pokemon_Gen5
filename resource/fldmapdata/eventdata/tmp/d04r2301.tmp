@@ -1,5 +1,5 @@
 #../data/d04r2301.mev
-../tmp/d04r2301.bin:../data/d04r2301.mev $(UNIQ_SCRIPTHEADER) ../tmp/d04r2301.h ../../zonetable/zone_id.h ../tmp/d04r2201.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D04R2301_def.h 
+../tmp/d04r2301.bin:../data/d04r2301.mev ../../script/sp_d04r2301.bin $(UNIQ_SCRIPTHEADER) ../tmp/d04r2301.h ../../zonetable/zone_id.h ../tmp/d04r2201.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D04R2301_def.h 
 	@echo ../data/d04r2301.mev
 	@ruby make_binary.rb $< $(UNIQ_SCRIPTHEADER) ../tmp/d04r2301.h ../../zonetable/zone_id.h ../tmp/d04r2201.h ../../../../prog/include/field/field_dir.h ../../../../prog/include/field/eventdata_type.h ../../../../prog/arc/fieldmap/fldmmdl_objcode.h ../../../../prog/src/field/fldmmdl_code.h ../../../../prog/src/field/fldmmdl.h ../../flagwork/flag_define.h ../../script/D04R2301_def.h 
 

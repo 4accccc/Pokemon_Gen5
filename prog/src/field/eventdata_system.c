@@ -48,6 +48,8 @@
 enum {
 	EVDATA_SIZE = 0x880,
 	SPSCR_DATA_SIZE = 0x100,
+
+  READ_DATA_SIZE = sizeof(u32) + EVDATA_SIZE + SPSCR_DATA_SIZE,
 };
 
 //------------------------------------------------------------------
@@ -82,8 +84,9 @@ struct _EVDATA_SYS {
 
   BOOL encount_loaded;
 	ENCOUNT_DATA encount_work;
-	u32 load_buffer[EVDATA_SIZE / sizeof(u32)];
-	u32 spscr_buffer[SPSCR_DATA_SIZE / sizeof(u32)];
+  void * spscr_pos;
+  u32 load_count;
+	u32 load_buffer[(EVDATA_SIZE + SPSCR_DATA_SIZE) / sizeof(u32)];
 };
 
 
@@ -103,8 +106,7 @@ static void debugPrint_PosData( const POS_EVENT_DATA* cp_data );
 
 //============================================================================================
 //============================================================================================
-static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id);
-static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id );
+static void loadEventDataTable( EVENTDATA_SYSTEM * evdata, u16 zone_id );
 static void clearEventDataTable( EVENTDATA_SYSTEM* evdata );
 
 
@@ -194,7 +196,7 @@ void EVENTDATA_SYS_Delete(EVENTDATA_SYSTEM * evdata)
 void EVENTDATA_SYS_Clear(EVENTDATA_SYSTEM * evdata)
 {
   clearEventDataTable( evdata );
-	GFL_STD_MemClear(evdata->spscr_buffer, SPSCR_DATA_SIZE);
+  evdata->spscr_pos = &evdata->load_buffer[EVDATA_SIZE];
   evdata->encount_loaded = FALSE;
   evdata->encount_work.enable_f = FALSE;
 }
@@ -220,8 +222,7 @@ void EVENTDATA_SYS_LoadEventData( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 sea
 {
 	evdata->now_zone_id = zone_id;
 
-  loadSpecialScriptData( evdata, zone_id );
-  loadEventDataTableNormal(evdata, zone_id);
+  loadEventDataTable( evdata, zone_id );
 }
 
 //------------------------------------------------------------------
@@ -242,7 +243,7 @@ void EVENTDATA_SYS_LoadEncountData( EVENTDATA_SYSTEM * evdata, u16 zone_id, u8 s
 //------------------------------------------------------------------
 void * EVENTDATA_GetSpecialScriptData( EVENTDATA_SYSTEM * evdata )
 {
-  return &evdata->spscr_buffer;
+  return evdata->spscr_pos;
 }
 
 //------------------------------------------------------------------
@@ -352,23 +353,7 @@ BOOL EVENTDATA_SYS_CheckPosDummyEvent( const EVENTDATA_SYSTEM *evdata, const Vec
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static void loadSpecialScriptData( EVENTDATA_SYSTEM * evdata, u16 zone_id )
-{
-  u16 sp_scr_id = ZONEDATA_GetSpScriptArcID( zone_id );
-#ifdef  PM_DEBUG
-  if ( SCRDEBUGGER_ReadSpecialScriptFile( sp_scr_id, evdata->spscr_buffer, SPSCR_DATA_SIZE ) == TRUE)
-  {
-    return;
-  }
-#endif
-
-  GFL_ARC_LoadDataOfsByHandle(
-      evdata->scriptHandle, sp_scr_id, 0, SPSCR_DATA_SIZE, evdata->spscr_buffer );
-}
-
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id)
+static void loadEventDataTable( EVENTDATA_SYSTEM * evdata, u16 zone_id )
 {
   int i;
   const EVENTDATA_TABLE* table;
@@ -378,14 +363,15 @@ static void loadEventDataTableNormal(EVENTDATA_SYSTEM * evdata, u16 zone_id)
   u32 size;
 
 #ifdef  PM_DEBUG
-  if ( SCRDEBUGGER_ReadEventFile( zone_id, evdata->load_buffer, EVDATA_SIZE ) == FALSE)
+  if ( SCRDEBUGGER_ReadEventFile( zone_id, evdata->load_buffer, READ_DATA_SIZE ) == FALSE)
 #endif
   {
     arcID = ZONEDATA_GetEventDataArcID(zone_id);
     size = GFL_ARC_GetDataSizeByHandle( evdata->eventHandle, arcID );
     // サイズオーバーチェック
-    GF_ASSERT( EVDATA_SIZE > size );
-    GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, evdata->load_buffer);
+    GF_ASSERT( READ_DATA_SIZE > size );
+    GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, &evdata->load_count );
+    evdata->spscr_pos = ((u8 *)evdata->load_buffer) + evdata->load_count;
   }
   
   table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
