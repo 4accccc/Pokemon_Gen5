@@ -2547,12 +2547,21 @@ static void	fldmap_G3D_VBlank( GFL_TCB *tcb, void *work )
 {
 	FIELDMAP_WORK * fieldWork = (FIELDMAP_WORK*)work;
   
-  if( fieldWork->fldMMdlSys != NULL ){
-    MMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
-  }
+  // 
+  // Snd読み込みをスレッド動作にすることで、
+  // Sndリソース読み込み中に、mainスレッドが動作している。
+  //
+  // SND分割読み込み　と並列にVBlank処理が動作している場合には、
+  // 処理があふれる可能性があるため３Dテクスチャの転送を行わない。
+  // 
+  if( ((OS_GetIrqMask() & OS_IE_CARD_A_DATA) == 0)  ){
+    if( fieldWork->fldMMdlSys != NULL ){
+      MMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
+    }
   
-  if( fieldWork->fieldG3dObjCtrl != NULL ){
-    FLD_G3DOBJ_CTRL_Trans( fieldWork->fieldG3dObjCtrl );
+    if( fieldWork->fieldG3dObjCtrl != NULL ){
+      FLD_G3DOBJ_CTRL_Trans( fieldWork->fieldG3dObjCtrl );
+    }
   }
 
 	GFL_CLACT_SYS_VBlankFunc();	//セルアクターVBlank
