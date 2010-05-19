@@ -8545,21 +8545,21 @@
 		<language name="JPN" width="256">TOUJOU-INTRO</language>
 		<language name="JPN_KANJI" width="256">TOUJOU-INTRO</language>
 	</row>
-	<row id="msg_seq_se_dmy_367">
-		<language name="JPN" width="256">DMY-367</language>
-		<language name="JPN_KANJI" width="256">DMY-367</language>
+	<row id="msg_seq_se_end_03">
+		<language name="JPN" width="256">END-03</language>
+		<language name="JPN_KANJI" width="256">END-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_368">
-		<language name="JPN" width="256">DMY-368</language>
-		<language name="JPN_KANJI" width="256">DMY-368</language>
+	<row id="msg_seq_se_open_01">
+		<language name="JPN" width="256">OPEN-01</language>
+		<language name="JPN_KANJI" width="256">OPEN-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_369">
-		<language name="JPN" width="256">DMY-369</language>
-		<language name="JPN_KANJI" width="256">DMY-369</language>
+	<row id="msg_seq_se_open_02">
+		<language name="JPN" width="256">OPEN-02</language>
+		<language name="JPN_KANJI" width="256">OPEN-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_370">
-		<language name="JPN" width="256">DMY-370</language>
-		<language name="JPN_KANJI" width="256">DMY-370</language>
+	<row id="msg_seq_se_open_03">
+		<language name="JPN" width="256">OPEN-03</language>
+		<language name="JPN_KANJI" width="256">OPEN-03</language>
 	</row>
 	<row id="msg_seq_se_dmy_371">
 		<language name="JPN" width="256">DMY-371</language>
