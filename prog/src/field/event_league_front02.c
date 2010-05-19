@@ -43,6 +43,7 @@
 //==========================================================================================
 typedef struct {
 
+  HEAPID         heap_id;
   GAMESYS_WORK*  gsys;
   FIELDMAP_WORK* fieldmap;
   FIELD_CAMERA*  camera;
@@ -64,20 +65,15 @@ static BOOL MoveLift( LIFTDOWN_EVENTWORK* work )
   // アニメーションを進める
   anime_end = ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE );
 
-  // リフト・ライトの座標を更新
-  if( !anime_end )
-  {
-    int obj_idx;
+  // リフトの座標を更新
+  if( !anime_end ) {
     VecFx32 trans;
+    FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+    GFL_G3D_OBJSTATUS* objstatus;
     ICA_ANIME_GetTranslate( work->liftAnime, &trans );
-    for( obj_idx=0; obj_idx<LF02_EXOBJ_NUM; obj_idx++ )
-    {
-      FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-      GFL_G3D_OBJSTATUS* objstatus;
-      exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-      objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, LF02_EXUNIT_GIMMICK, obj_idx );
-      objstatus->trans.y = trans.y; 
-    }
+    exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+    objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT );
+    objstatus->trans.y = trans.y; 
   }
   return anime_end;
 }
@@ -106,89 +102,6 @@ static void SetPlayerOnLift( LIFTDOWN_EVENTWORK* work )
   FIELD_PLAYER_SetPos( player, &pos );
 }
 
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフトのitaアニメを開始する
- */
-//------------------------------------------------------------------------------------------
-static void StartLiftOnAnime( LIFTDOWN_EVENTWORK* work )
-{
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-  EXP_OBJ_ANM_CNT_PTR exobj_anm;
-
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap ); 
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA, TRUE ); 
-
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA );
-  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフトのitaアニメを停止する
- */
-//------------------------------------------------------------------------------------------
-static void StopLiftOnAnime( LIFTDOWN_EVENTWORK* work )
-{
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-  EXP_OBJ_ANM_CNT_PTR exobj_anm;
-
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA, FALSE ); 
-
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_ON_TA ); 
-  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフトのitaアニメを開始する
- */
-//------------------------------------------------------------------------------------------
-static void StartLiftOffAnime( LIFTDOWN_EVENTWORK* work )
-{
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-  EXP_OBJ_ANM_CNT_PTR exobj_anm;
-
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap ); 
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA, TRUE ); 
-
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA );
-  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, FALSE );
-  FLD_EXP_OBJ_ChgAnmLoopFlg( exobj_anm, FALSE );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフトのitaアニメの終了をチェックする
- */
-//------------------------------------------------------------------------------------------
-static BOOL CheckLiftOffAnimeEnd( LIFTDOWN_EVENTWORK* work )
-{
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-  EXP_OBJ_ANM_CNT_PTR exobj_anm;
-
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap ); 
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA );
-  return FLD_EXP_OBJ_ChkAnmEnd( exobj_anm );
-}
-
-//------------------------------------------------------------------------------------------
-/**
- * @brief リフトのitaアニメを停止する
- */
-//------------------------------------------------------------------------------------------
-static void StopLiftOffAnime( LIFTDOWN_EVENTWORK* work )
-{
-  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-  EXP_OBJ_ANM_CNT_PTR exobj_anm;
-
-  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-  FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA, FALSE ); 
-
-  exobj_anm = FLD_EXP_OBJ_GetAnmCnt( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, LIFT_ANM_OFF_TA ); 
-  FLD_EXP_OBJ_ChgAnmStopFlg( exobj_anm, TRUE );
-}
 
 //------------------------------------------------------------------------------------------
 /**
@@ -197,18 +110,15 @@ static void StopLiftOffAnime( LIFTDOWN_EVENTWORK* work )
 //------------------------------------------------------------------------------------------
 static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
 {
+  int i;
   LIFTDOWN_EVENTWORK* work = (LIFTDOWN_EVENTWORK*)wk;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
 
   switch( *seq ) {
   case 0:
-    // アニメ開始
-    StartLiftOnAnime( work );
-    { // アニメデータ読み込み
-      HEAPID heap_id;
-      heap_id = FIELDMAP_GetHeapID( work->fieldmap );
-      work->liftAnime = ICA_ANIME_CreateAlloc( heap_id, ARCID_LEAGUE_FRONT_GIMMICK, 
-                                               NARC_league_front_pl_ele_01_ica_bin );
-    }
+    // 移動アニメデータ読み込み
+    work->liftAnime = ICA_ANIME_CreateAlloc( work->heap_id, 
+        ARCID_LEAGUE_FRONT_GIMMICK, NARC_league_front_pl_ele_01_ica_bin );
     // リフトと自機の座標を初期化
     MoveLift( work );
     SetPlayerOnLift( work );
@@ -223,6 +133,17 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 2:
+    // リフトのアニメーション開始
+    for( i=0; i<LIFT_ANM_NUM; i++ )
+    {
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i, TRUE );
+    }
+    // リフト稼動エフェクトを表示する
+    FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, FALSE );
+    for( i=0; i<LIFT_EFFECT_ANM_NUM; i++ )
+    {
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i, TRUE );
+    }
     // フェードイン
     {
       GMEVENT* new_event;
@@ -248,8 +169,6 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
         ICA_ANIME_Delete( work->liftAnime );
         PMSND_StopSE(); // エレベータ稼動音を停止
         PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
-        StopLiftOnAnime( work ); // リフトのアニメーションを停止
-        StartLiftOffAnime( work ); // 終了アニメ開始
         // カメラ振動イベントをコール
         {
           CAM_SHAKE_PARAM shakeParam;
@@ -273,6 +192,13 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
 
   // 終了処理
   case 4:
+    // リフトのアニメを止める
+    for( i=0; i<LIFT_ANM_NUM; i++ )
+    {
+      FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT, i, FALSE );
+    }
+    // リフト稼動エフェクトを消す
+    FLD_EXP_OBJ_SetVanish( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, TRUE );
     // 自機を着地させる
     {
       VecFx32 pos;
@@ -290,13 +216,6 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     break;
 
   case 5:
-    if( CheckLiftOffAnimeEnd( work ) ) { 
-      StopLiftOffAnime( work );
-      (*seq)++; 
-    }
-    break;
-
-  case 6:
     return GMEVENT_RES_FINISH;
   }
   return GMEVENT_RES_CONTINUE;
@@ -322,6 +241,7 @@ GMEVENT* EVENT_LFRONT02_LiftDown( GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
 
   // 初期化
   evwork = GMEVENT_GetEventWork( event );
+  evwork->heap_id   = FIELDMAP_GetHeapID( fieldmap );
   evwork->gsys      = gsys;
   evwork->fieldmap  = fieldmap;
   evwork->camera    = FIELDMAP_GetFieldCamera( fieldmap );

@@ -10,37 +10,37 @@
 #include <gflib.h>
 #include "field/fieldmap_proc.h"
 
-// ライトが降下するかどうか
-//#define LIGHT_DOWN
 
 //==========================================================================================
 // ■拡張オブジェクト
 //==========================================================================================
-//------------------------
+//----------------------------------------
 // アニメーション(リフト)
-//------------------------
-typedef enum{
-  LIFT_ANM_ON_TA,  // テクスチャアニメーション ( ON )
-  LIFT_ANM_OFF_TA, // テクスチャアニメーション ( OFF )
+//----------------------------------------
+typedef enum {
+  LIFT_ANM_TA, // テクスチャアニメーション
   LIFT_ANM_NUM
 } LIFT_ANM_INDEX;
+//----------------------------------------
+// アニメーション(リフトの稼動エフェクト)
+//----------------------------------------
+typedef enum {
+  LIFT_EFFECT_ANM_TA, // テクスチャアニメーション
+  LIFT_EFFECT_ANM_MA, // マテリアルアニメーション
+  LIFT_EFFECT_ANM_NUM
+} LIFT_EFFECT_ANM_INDEX;
 //-------------
 // オブジェクト
 //-------------
-typedef enum{
+typedef enum {
   LF02_EXOBJ_LIFT,         // リフト
-#ifdef LIGHT_DOWN
-  LF02_EXOBJ_LIGHT_FIGHT,  // ライト(格闘)
-  LF02_EXOBJ_LIGHT_EVIL,   // ライト(悪)
-  LF02_EXOBJ_LIGHT_GHOST,  // ライト(ゴースト)
-  LF02_EXOBJ_LIGHT_ESPER,  // ライト(エスパー)
-#endif
+  LF02_EXOBJ_LIFT_EFFECT,  // リフトの稼動エフェクト
   LF02_EXOBJ_NUM
 } OBJ_INDEX;
 //----------
 // ユニット
 //----------
-typedef enum{
+typedef enum {
   LF02_EXUNIT_GIMMICK,
   LF02_EXUNIT_NUM
 } UNIT_INDEX;
