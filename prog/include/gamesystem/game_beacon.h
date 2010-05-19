@@ -123,6 +123,7 @@ extern void GAMEBEACON_SendBeaconUpdate(void);
 //  ÉrÅ[ÉRÉìèÓïÒéÊìæ
 //--------------------------------------------------------------
 extern BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info);
+extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no);
 extern const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLog(int log_no);
 extern u32 GAMEBEACON_Get_LogCount(void);
 extern int GAMEBEACON_Get_UpdateLogNo(int *start_log_no);

@@ -56,6 +56,7 @@ GAMEBEACON_SYSTEM * GameBeaconSys = NULL;
 //==============================================================================
 static void SendBeacon_Update(GAMEBEACON_SEND_MANAGER *send);
 static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info);
+static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no);
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no);
 static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata);
 
@@ -412,6 +413,39 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
  * ログからビーコン情報を取得する
  *
  * @param   bsys		
+ * @param   log_no  ログのバッファ番号
+ *
+ * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
+ */
+//--------------------------------------------------------------
+static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_no)
+{
+  if(bsys->log_num == 0 || bsys->log_num - log_no <= 0){
+    return NULL;  //データ無し
+  }
+  
+  return &bsys->log[log_no].info;
+}
+
+//==================================================================
+/**
+ * ログからビーコン情報を取得する
+ *
+ * @param   log_no  ログのバッファ番号
+ *
+ * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
+ */
+//==================================================================
+const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no)
+{
+  return BeaconInfo_Get(GameBeaconSys, log_no);
+}
+
+//--------------------------------------------------------------
+/**
+ * ログからビーコン情報を取得する
+ *
+ * @param   bsys		
  * @param   log_no  ログ番号
  *
  * @retval  GAMEBEACON_INFO *		NULLの場合はデータ無し
@@ -419,21 +453,22 @@ BOOL GAMEBEACON_SetRecvBeacon(const GAMEBEACON_INFO *info)
 //--------------------------------------------------------------
 static GAMEBEACON_INFO * BeaconInfo_Get(GAMEBEACON_SYSTEM *bsys, int log_no)
 {
-//  int log_pos;
+  int log_pos, offset;
   
-  if(bsys->log_num == 0 || bsys->log_num - log_no <= 0){
+  if(bsys->log_count == 0 || bsys->log_count - log_no <= 0){
     return NULL;  //データ無し
   }
   
-#if 0 //直接ログ位置を見るように変更 2010.01.18(月)
-  log_pos = bsys->end_log - log_no;
+  offset = (bsys->log_count - 1) - log_no;
+  log_pos = bsys->end_log - offset;
+  if(MATH_ABS(log_pos) >= GAMEBEACON_SYSTEM_LOG_MAX){
+    return NULL;  //受信バッファ数を超えたバッファ値にアクセスしようとしている
+  }
+  
   if(log_pos < 0){
     log_pos = GAMEBEACON_SYSTEM_LOG_MAX + log_pos;
   }
   return &bsys->log[log_pos].info;
-#else
-  return &bsys->log[log_no].info;
-#endif
 }
 
 //==================================================================

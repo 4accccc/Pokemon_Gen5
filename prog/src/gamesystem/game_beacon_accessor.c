@@ -171,7 +171,7 @@ int GAMEBEACON_Stack_Update(GAMEBEACON_INFO_TBL *stack_infotbl)
     if(update_logno == GAMEBEACON_SYSTEM_LOG_MAX){
       break;  //ビーコンログ無し
     }
-    update_info = GAMEBEACON_Get_BeaconLog(update_logno);
+    update_info = GAMEBEACON_Get_BeaconLogDirect(update_logno);
     if(GAMEBEACON_InfoTbl_SetBeacon(
         stack_infotbl, update_info, time, FALSE) == GAMEBEACON_INFO_TBL_MAX){
       break;  //スタックテーブルがいっぱいになった
