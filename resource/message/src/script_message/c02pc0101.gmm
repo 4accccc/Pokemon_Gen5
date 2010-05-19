@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T12:57:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T11:57:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,10 +296,20 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL2
 少女２活発</attribute>
-		<language name="JPN" width="256">あたし　この　まちの
-ジムリーダーさん　だーいすき！</language>
-		<language name="JPN_KANJI" width="256">あたし　この街の
-ジムリーダーさん　だーいすき！</language>
+		<language name="JPN" width="256">ねえねえ　トレーナーさん
+タブンネって　ポケモン　しってる？▼
+３ばんどうろの　いろのこい
+くさむらが　ゆれたときに　でてくる▽
+ポケモン　なんだけどね▼
+たっくさん　けいけんちが　もらえるの
+なんだか　やさしい　ポケモンよね！</language>
+		<language name="JPN_KANJI" width="256">ねえねえ　トレーナーさん
+タブンネって　ポケモン　しってる？▼
+３番道路の　色の濃い　草むらが
+揺れたときに　でてくる▽
+ポケモン　なんだけどね▼
+たっくさん　経験値が　もらえるの
+なんだか　優しい　ポケモンよね！</language>
 	</row>
 
 	<row id="msg_c02pc0101_backpackerm_01">
