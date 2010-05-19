@@ -6929,7 +6929,8 @@ static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* waza
 {
   if( WAZADATA_GetCategory(wazaParam->wazaID) == WAZADATA_CATEGORY_DRAIN )
   {
-    u32 recoverHP = (WAZADATA_GetParam(wazaParam->wazaID, WAZAPARAM_DAMAGE_RECOVER_RATIO) * damage) / 100;
+    u32 ratio = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_DAMAGE_RECOVER_RATIO );
+    u32 recoverHP = BTL_CALC_MulRatioInt( damage, ratio );
 
     if( scproc_DrainCore(wk, attacker, defender, recoverHP) )
     {

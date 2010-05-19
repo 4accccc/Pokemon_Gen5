@@ -171,6 +171,7 @@ extern BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModu
 extern u32 BTL_CALC_MulRatio( u32 value, fx32 ratio );
 extern u32 BTL_CALC_MulRatio_OverZero( u32 value, fx32 ratio );
 extern u32 BTL_CALC_MulRatioInt( u32 value, u32 ratio );
+extern u32 BTL_CALC_MulRatioInt_OverZero( u32 value, u32 ratio );
 
 
 /**
