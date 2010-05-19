@@ -261,6 +261,7 @@ static void setup_actor( PMSIV_WORDWIN* wk )
     // 直でアニメシーケンス。
     GFL_CLACT_WK_SetAnmSeq( wk->deco_actor[i], i ); 
 	  GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[i], FALSE );
+    GFL_CLACT_WK_SetBgPri( wk->deco_actor[i], 1 );
   }
 }
 
@@ -436,7 +437,6 @@ BOOL PMSIV_WORDWIN_WaitFadeOut( PMSIV_WORDWIN* wk )
 		if( PMSIV_TOOL_WaitBlend( &wk->blend_work ) )
 		{
       int i;
-
       for( i=0; i<WORDWIN_DECO_ACT_NUM; i++ )
       {
         GFL_CLACT_WK_SetDrawEnable( wk->deco_actor[i], FALSE );
