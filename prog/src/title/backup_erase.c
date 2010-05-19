@@ -44,6 +44,7 @@ typedef struct {
 	GFL_TCB * vtask;					// TCB ( VBLANK )
 	GFL_FONT * font;					// 通常フォント
 	GFL_MSGDATA * mman;				// メッセージデータマネージャ
+	u8	langID;								// 現在の言語
 	STRBUF * exp;							// メッセージ展開領域
 	PRINT_STREAM * stream;		// プリントストリーム
 	GFL_TCBLSYS * tcbl;
@@ -545,6 +546,10 @@ static void ExitBg(void)
 //--------------------------------------------------------------------------------------------
 static void InitMsg( BACKUP_ERASE_WORK * wk )
 {
+	// 必ず「ひらがな」モードにする
+	wk->langID = GFL_MSGSYS_GetLangID();		// 設定退避
+	GFL_MSGSYS_SetLangID( 0 );							// ひらがな設定
+
 	wk->mman = GFL_MSG_Create(
 							GFL_MSG_LOAD_NORMAL,
 							ARCID_MESSAGE, NARC_message_backup_erase_dat, HEAPID_BACKUP_ERASE );
@@ -572,6 +577,8 @@ static void ExitMsg( BACKUP_ERASE_WORK * wk )
 	GFL_STR_DeleteBuffer( wk->exp );
 	GFL_FONT_Delete( wk->font );
 	GFL_MSG_Delete( wk->mman );
+
+	GFL_MSGSYS_SetLangID( wk->langID );		// 設定復帰
 }
 
 //--------------------------------------------------------------------------------------------
