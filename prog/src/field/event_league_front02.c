@@ -51,31 +51,38 @@ typedef struct {
 
 } LIFTDOWN_EVENTWORK;
 
-
 //------------------------------------------------------------------------------------------
 /**
- * @brief  リフトの座標を更新する
- * @return 移動が終了したら TRUE, そうでなければ　FALSE
+ * @brief リフトの移動アニメーションを更新する
+ *
+ * @return が終了したら TRUE, そうでなければ　FALSE
  */
 //------------------------------------------------------------------------------------------
-static BOOL MoveLift( LIFTDOWN_EVENTWORK* work )
+static BOOL UpdateLiftMove( LIFTDOWN_EVENTWORK* work )
 {
   BOOL anime_end;
 
   // アニメーションを進める
   anime_end = ICA_ANIME_IncAnimeFrame( work->liftAnime, FX32_ONE );
 
-  // リフトの座標を更新
-  if( !anime_end ) {
-    VecFx32 trans;
-    FLD_EXP_OBJ_CNT_PTR exobj_cnt;
-    GFL_G3D_OBJSTATUS* objstatus;
-    ICA_ANIME_GetTranslate( work->liftAnime, &trans );
-    exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
-    objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT );
-    objstatus->trans.y = trans.y; 
-  }
   return anime_end;
+}
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief  リフトの座標を更新する
+ */
+//------------------------------------------------------------------------------------------
+static void UpdateLiftPos( LIFTDOWN_EVENTWORK* work )
+{ 
+  VecFx32 trans;
+  FLD_EXP_OBJ_CNT_PTR exobj_cnt;
+  GFL_G3D_OBJSTATUS* objstatus;
+
+  ICA_ANIME_GetTranslate( work->liftAnime, &trans );
+  exobj_cnt = FIELDMAP_GetExpObjCntPtr( work->fieldmap );
+  objstatus = FLD_EXP_OBJ_GetUnitObjStatus( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT );
+  objstatus->trans.y = trans.y; 
 }
 
 //------------------------------------------------------------------------------------------
@@ -120,7 +127,7 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
     work->liftAnime = ICA_ANIME_CreateAlloc( work->heap_id, 
         ARCID_LEAGUE_FRONT_GIMMICK, NARC_league_front_pl_ele_01_ica_bin );
     // リフトと自機の座標を初期化
-    MoveLift( work );
+    UpdateLiftPos( work );
     SetPlayerOnLift( work );
     // カメラのトレース処理停止リクエスト発行
     FIELD_CAMERA_StopTraceRequest( work->camera );
@@ -152,10 +159,12 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       BOOL anime_end;
 
       // リフトを動かす
-      anime_end = MoveLift( work );
+      anime_end = UpdateLiftMove( work );
 
-      // 自機をリフトに合わせる
-      if( !anime_end ){ SetPlayerOnLift( work ); }
+      if( !anime_end ) {
+        UpdateLiftPos( work );   // リフトの位置を更新
+        SetPlayerOnLift( work ); // 自機をリフトに合わせる
+      } 
 
       // アニメ終了
       if( anime_end ) { 
