@@ -2149,8 +2149,8 @@ static void _ircExitWaitNO2(IRC_BATTLE_MATCH* pWork)
   }
   
   _ReturnButtonStart(pWork,FALSE);
-  pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_cancelButtonCallback;
+  pWork->pButton = GFL_BMN_Create( btn_irmain_leader, _BttnCallBack, pWork,  pWork->heapID );
+  pWork->touch = &_cancelButtonCallback2;
 
   _CHANGE_STATE(pWork,_nop);
 
