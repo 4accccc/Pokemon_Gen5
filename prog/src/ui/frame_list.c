@@ -185,7 +185,6 @@ static void InitSlideMove( FRAMELIST_WORK * wk, int pos );
 static BOOL MainSlideMove( FRAMELIST_WORK * wk );
 static BOOL SetSlideScroll( FRAMELIST_WORK * wk, int pos );
 static void InitSledeAutoScroll( FRAMELIST_WORK * wk );
-static BOOL InitSledeAutoScroll2( FRAMELIST_WORK * wk );
 static BOOL CheckSledeAutoScrollRepeat( FRAMELIST_WORK * wk );
 
 static void WriteItemFrame( FRAMELIST_WORK * wk, u32 itemNum, u32 frmNum );
@@ -206,6 +205,17 @@ static void PrintTransMain( FRAMELIST_WORK * wk );
 static const u8 AutoScrollCount[] = {
 //	128, 64, 32, 16, 8, 4
 	32, 24, 16, 10, 6, 4
+};
+
+// オートスクロールに必要な移動ドット幅
+static const u8 AutoScrollSpeed[6][6] =
+{
+	{  16,   8,  6,  4,  4, 4 },		// 0frm
+	{  32,  16,  8,  6,  4, 1 },		// 1frm
+	{  64,  40, 32, 16,  8, 1 },		// 2frm
+	{  96,  80, 64, 48, 32, 1 },		// 3frm
+	{ 112,  96, 80, 64, 48, 1 },		// 4frm
+	{ 128, 112, 96, 80, 64, 1 },		// 5frm
 };
 
 
@@ -1103,6 +1113,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 		return TRUE;
 	}
 
+	// スライドからの処理
 	if( wk->nextSeq == MAINSEQ_SLIDE ){
 		// オートスクロール中
 		if( wk->autoScroll == TRUE ){
@@ -1138,7 +1149,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 		}
 	}
 
-
+	// 一項目スクロール終了
 	if( wk->listBgScrollCount == 0 ){
 		// 指定回数スクロール終了
 		if( wk->listBgScrollMax == 0 ){
@@ -1177,49 +1188,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 
 		ChangeCursorPosPalette( wk, PALCHG_NONE, wk->listPos );
 
-/*
 		// スライドからの処理
-		if( wk->nextSeq == MAINSEQ_SLIDE ){
-			// オートスクロール以外
-			if( wk->autoScroll == FALSE ){
-				if( wk->listBgScrollSpeed < 0 ){
-					wk->listPos++;
-				}else{
-					wk->listPos--;
-				}
-			// オートスクロール中
-			}else{
-				int	ret = GFL_UI_TP_HitCont( wk->touch );
-				// タッチ停止処理
-				if( ret != GFL_UI_TP_HIT_NONE ){
-					if( wk->hed.touch[ret].prm == FRAMELIST_TOUCH_PARAM_SLIDE ){
-						wk->listPos = ret;
-						wk->slideStartTpy = wk->nowTpy;
-						wk->slideOldTpy   = wk->nowTpy;
-						wk->hed.cbFunc->move( wk->hed.cbWork, wk->listPos+wk->listScroll, TRUE );
-						wk->mainSeq = wk->nextSeq;
-						return FALSE;
-					}
-				}
-				// 減速処理
-				if( wk->listBgScrollMax == 1 ){
-					u32	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
-					wk->slideCnt++;
-					if( wk->slideCnt != FRAMELIST_SPEED_MAX ){
-						if( wk->listBgScrollSpeed < 0 ){
-							wk->listBgScrollSpeed = -wk->hed.scrollSpeed[wk->slideCnt];
-						}else{
-							wk->listBgScrollSpeed = wk->hed.scrollSpeed[wk->slideCnt];
-						}
-						wk->listBgScrollMax = AutoScrollCount[wk->slideCnt];
-					}
-					if( wk->listBgScrollMax > max ){
-						wk->listBgScrollMax = max;
-					}
-				}
-			}
-		}
-*/
 		if( wk->nextSeq == MAINSEQ_SLIDE ){
 			// オートスクロール以外
 			if( wk->autoScroll == FALSE ){
@@ -1231,7 +1200,7 @@ static BOOL MainListScroll( FRAMELIST_WORK * wk )
 			}else{
 				// リピート
 				if( wk->slideAutoRepeat == 1 ){
-					if( InitSledeAutoScroll2( wk ) == TRUE ){
+					if( InitSledeAutoScroll( wk ) == TRUE ){
 						wk->slideReqCount = 0;
 					}
 					wk->slideAutoRepeat = 0;
@@ -1502,7 +1471,7 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 			if( wk->slideStartTpy != 0xffffffff && wk->slideOldTpy != 0xffffffff ){
 				wk->slideVec = wk->slideOldTpy - wk->slideStartTpy;
 				wk->slideReqCount = 0;
-				if( InitSledeAutoScroll2( wk ) == TRUE ){
+				if( InitSledeAutoScroll( wk ) == TRUE ){
 					break;
 				}
 			}
@@ -1515,7 +1484,7 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 			if( wk->slideStartTpy != 0xffffffff && wk->slideOldTpy != 0xffffffff ){
 				wk->slideVec = wk->slideOldTpy - wk->slideStartTpy;
 				wk->slideReqCount = 0;
-				if( InitSledeAutoScroll2( wk ) == TRUE ){
+				if( InitSledeAutoScroll( wk ) == TRUE ){
 					break;
 				}
 			}
@@ -1544,26 +1513,12 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 		// タッチされていない
 		if( ret == GFL_UI_TP_HIT_NONE ){
 			wk->slideSeq = 0;
-/*
-			if( SetSlideScroll( wk, wk->slidePosTmp ) == TRUE ){
-				InitSledeAutoScroll( wk );
-				return TRUE;
-			}
-*/
-//			wk->slideReqCount = 0;
-			return InitSledeAutoScroll2( wk );
+			return InitSledeAutoScroll( wk );
 		}
 		// スライドエリア範囲外
 		if( wk->hed.touch[ret].prm != FRAMELIST_TOUCH_PARAM_SLIDE ){
 			wk->slideSeq = 0;
-/*
-			if( SetSlideScroll( wk, wk->slidePosTmp ) == TRUE ){
-				InitSledeAutoScroll( wk );
-				return TRUE;
-			}
-*/
-//			wk->slideReqCount = 0;
-			return InitSledeAutoScroll2( wk );
+			return InitSledeAutoScroll( wk );
 		}
 		// タイムオーバー
 		if( wk->slideReqCount == 5 ){
@@ -1581,171 +1536,20 @@ static BOOL MainSlideMove( FRAMELIST_WORK * wk )
 		break;
 	}
 
-/*
-	if( wk->nowTpy != 0xffffffff && wk->oldTpy != 0xffffffff ){
-		u32	y;
-		u32	cnt, cntMax;
-		s8	speed;
-
-		y = GFL_STD_Abs(  wk->nowTpy -  wk->oldTpy );
-
-		if( wk->listPos == 0 && wk->nowTpy < wk->oldTpy ){
-			speed = 0;
-		}else if( wk->listPos == (wk->listPosMax-1) && wk->nowTpy > wk->oldTpy ){
-			speed = 0;
-		}else if( y >= 12 ){
-			speed = wk->hed.scrollSpeed[0];
-		}else if( y >= 8 ){
-			speed = wk->hed.scrollSpeed[1];
-		}else if( y >= 4 ){
-			speed = wk->hed.scrollSpeed[2];
-		}else{
-			speed = 0;
-		}
-
-		if( wk->nowTpy > wk->oldTpy ){
-			speed *= -1;
-		}
-
-		cntMax = GetListScrollCount( wk, speed );
-		if( cntMax != 0 ){
-			cnt = y / wk->hed.itemSizY;
-			if( cnt == 0 ){
-				cnt = 1;
-			}else if( cntMax < cnt ){
-				cnt = cntMax;
-			}
-
-			if( speed != 0 ){
-				InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
-				wk->slidePos = ret;
-				return TRUE;
-			}
-		}
-	}
-
-	if( wk->slidePos != ret ){
-		u32	cnt;
-		u32	cntMax;
-		s8	speed;
-		if( ret > wk->slidePos ){
-			speed = -wk->hed.scrollSpeed[3];
-			cnt = ret - wk->slidePos;
-		}else if( ret < wk->slidePos ){
-			speed = wk->hed.scrollSpeed[3];
-			cnt = wk->slidePos - ret;
-		}
-		cntMax = GetListScrollCount( wk, speed );
-		if( cntMax != 0 ){
-			if( cntMax < cnt ){
-				cnt = cntMax;
-			}
-			InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
-			wk->slidePos = ret;
-			return TRUE;
-		}
-	}
-*/
-
 	return TRUE;
-
-
-
-/*
-	int	ret;
-	u32	x, y;
-
-	if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-		return TRUE;
-	}
-
-	ret = GFL_UI_TP_HitCont( wk->touch );
-	
-	if( ret == GFL_UI_TP_HIT_NONE ){
-		wk->autoScroll = FALSE;
-		wk->mainSeq = MAINSEQ_MAIN;
-		return FALSE;
-	}
-	if( wk->hed.touch[ret].prm != FRAMELIST_TOUCH_PARAM_SLIDE ){
-		wk->autoScroll = FALSE;
-		wk->mainSeq = MAINSEQ_MAIN;
-		return FALSE;
-	}
-
-	if( wk->autoScroll == TRUE ){
-		wk->autoScroll = FALSE;
-		wk->slidePos = ret;
-	}
-
-	if( wk->nowTpy != 0xffffffff && wk->oldTpy != 0xffffffff ){
-		u32	y;
-		u32	cnt, cntMax;
-		s8	speed;
-
-		y = GFL_STD_Abs(  wk->nowTpy -  wk->oldTpy );
-
-		if( wk->listPos == 0 && wk->nowTpy < wk->oldTpy ){
-			speed = 0;
-		}else if( wk->listPos == (wk->listPosMax-1) && wk->nowTpy > wk->oldTpy ){
-			speed = 0;
-		}else if( y >= 12 ){
-			speed = wk->hed.scrollSpeed[0];
-		}else if( y >= 8 ){
-			speed = wk->hed.scrollSpeed[1];
-		}else if( y >= 4 ){
-			speed = wk->hed.scrollSpeed[2];
-		}else{
-			speed = 0;
-		}
-
-		if( wk->nowTpy > wk->oldTpy ){
-			speed *= -1;
-		}
-
-		cntMax = GetListScrollCount( wk, speed );
-		if( cntMax != 0 ){
-			cnt = y / wk->hed.itemSizY;
-			if( cnt == 0 ){
-				cnt = 1;
-			}else if( cntMax < cnt ){
-				cnt = cntMax;
-			}
-
-			if( speed != 0 ){
-				InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
-				wk->slidePos = ret;
-				return TRUE;
-			}
-		}
-	}
-
-	if( wk->slidePos != ret ){
-		u32	cnt;
-		u32	cntMax;
-		s8	speed;
-		if( ret > wk->slidePos ){
-			speed = -wk->hed.scrollSpeed[3];
-			cnt = ret - wk->slidePos;
-		}else if( ret < wk->slidePos ){
-			speed = wk->hed.scrollSpeed[3];
-			cnt = wk->slidePos - ret;
-		}
-		cntMax = GetListScrollCount( wk, speed );
-		if( cntMax != 0 ){
-			if( cntMax < cnt ){
-				cnt = cntMax;
-			}
-			InitListScroll( wk, speed, cnt, MAINSEQ_SLIDE, TRUE );
-			wk->slidePos = ret;
-			return TRUE;
-		}
-	}
-
-	return TRUE;
-*/
 }
 
-// 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スライドスクロール設定
+ *
+ * @param		wk		ワーク
+ * @param		pos		移動先
+ *
+ * @retval	"TRUE = スクロール可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL SetSlideScroll( FRAMELIST_WORK * wk, int pos )
 {
 	u32	cntMax;
@@ -1795,46 +1599,17 @@ static BOOL SetSlideScroll( FRAMELIST_WORK * wk, int pos )
 	return FALSE;
 }
 
-static void InitSledeAutoScroll( FRAMELIST_WORK * wk )
-{
-	u32	max;
-	u32	abs;
-
-	max = GetListScrollCount( wk, wk->listBgScrollSpeed );
-	abs = GFL_STD_Abs( wk->listBgScrollSpeed );
-
-	wk->autoScroll = TRUE;
-
-	for( wk->slideCnt=0; wk->slideCnt<FRAMELIST_SPEED_MAX; wk->slideCnt++ ){
-		if( abs == wk->hed.scrollSpeed[wk->slideCnt] ){
-			wk->listBgScrollMax = AutoScrollCount[wk->slideCnt];
-			break;
-		}
-	}
-	if( wk->listBgScrollMax > max ){
-		wk->listBgScrollMax = max;
-	}
-}
-
-static const u8 AutoScrollSpeed[6][6] =
-{
-/*
-	{ 16,  8,  6,  4,  4, 4 },		// 0frm
-	{ 16,  8,  6,  4,  2, 1 },		// 1frm
-	{ 40, 32, 16,  8,  4, 1 },		// 2frm
-	{ 64, 40, 32, 16,  8, 1 },		// 3frm
-	{ 80, 64, 40, 32, 16, 1 },		// 4frm
-	{ 96, 80, 64, 40, 32, 1 },		// 5frm
-*/
-	{  16,   8,  6,  4,  4, 4 },		// 0frm
-	{  32,  16,  8,  6,  4, 1 },		// 1frm
-	{  64,  40, 32, 16,  8, 1 },		// 2frm
-	{  96,  80, 64, 48, 32, 1 },		// 3frm
-	{ 112,  96, 80, 64, 48, 1 },		// 4frm
-	{ 128, 112, 96, 80, 64, 1 },		// 5frm
-};
-
-static BOOL InitSledeAutoScroll2( FRAMELIST_WORK * wk )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		オートスクロール開始チェック
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = スクロール開始"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL InitSledeAutoScroll( FRAMELIST_WORK * wk )
 {
 	u32	max;
 	u32	abs;
@@ -1880,6 +1655,16 @@ static BOOL InitSledeAutoScroll2( FRAMELIST_WORK * wk )
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		オートスクロール再設定チェック
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = スクロール開始"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckSledeAutoScrollRepeat( FRAMELIST_WORK * wk )
 {
 	u32	max;
@@ -2044,6 +1829,17 @@ static void PutItemFrame( FRAMELIST_WORK * wk, u32 idx, s8 py )
 	GFL_BG_LoadScreenV_Req( frm );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		一項目クリア
+ *
+ * @param		wk			ワーク
+ * @param		frm			ＢＧフレーム
+ * @param		py			配置Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ClearItemFrame( FRAMELIST_WORK * wk, u8 frm, s8 py )
 {
 	u32	i;
