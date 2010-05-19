@@ -434,6 +434,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
+    _wifilistPlayData(dbw,GAMESYSTEM_GetGameData(gsys));
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
     NET_PRINT("ƒoƒgƒ‹Š®—¹\n");
@@ -441,7 +442,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     PMSND_StopBGM();
     PMSND_PlayBGM( dbw->soundNo );
     PMSND_FadeInBGM(PMSND_FADE_NORMAL);
-    _wifilistPlayData(dbw,GAMESYSTEM_GetGameData(gsys));
     
     (*seq) = _CALL_NET_END;
     break;
