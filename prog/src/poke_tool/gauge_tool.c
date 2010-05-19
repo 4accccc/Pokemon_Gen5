@@ -39,55 +39,30 @@ u8 GAUGETOOL_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   表示ドットと最大ドットからHPゲージの色を取得する
+ * @brief   HPゲージのカラーを取得
  *
- * @param   put_dot		表示ドット数
- * @param   max_dot		最大ドット数
- *
- * @retval  ゲージカラー
- */
-//--------------------------------------------------------------------------------------------
-u8 GAUGETOOL_GetGaugeDottoColor( u32 put_dot, u32 max_dot )
-{
-	put_dot <<= 8;		//割り算使用の為、小数レベルまで見れるように固定小数化
-	max_dot <<= 8;
-	
-	if( put_dot > (max_dot/2) )
-  {
-		return GAUGETOOL_HP_DOTTO_GREEN;	// 緑
-	}
-  else if( put_dot > ( max_dot / 5 ) )
-  {
-		return GAUGETOOL_HP_DOTTO_YELLOW;	// 黄
-	}
-  else if( put_dot > 0 )
-  {
-		return GAUGETOOL_HP_DOTTO_RED;		// 赤
-	}
-	return GAUGETOOL_HP_DOTTO_NULL;			// HP=0
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		HPゲージのカラーを取得
- *
- * @param		hp				現在のHP
- * @param		mhp				最大HP
- * @param		max_dot		最大ドット数
+ * @param   now			現在の値
+ * @param   max			最大値
  *
  * @return	ゲージカラー
  */
 //--------------------------------------------------------------------------------------------
-u8 GAUGETOOL_GetHPGaugeDottoColor( u16 hp, u16 mhp, u32 max_dot )
+u8 GAUGETOOL_GetGaugeDottoColor( u32 now, u32 max )
 {
-	u32 put_dot;
+	now <<= 8;		//割り算使用の為、小数レベルまで見れるように固定小数化
+	max <<= 8;
 	
-	if( hp == mhp )
+	if( now > (max/2) )
   {
-    return GAUGETOOL_HP_DOTTO_GREEN;	// 緑
-  }
-	
-	put_dot = GAUGETOOL_GetNumDotto( hp, mhp, max_dot );
-
-	return GAUGETOOL_GetGaugeDottoColor( put_dot, max_dot );
+		return GAUGETOOL_HP_DOTTO_GREEN;	// 緑
+	}
+  else if( now > (max/5) )
+  {
+		return GAUGETOOL_HP_DOTTO_YELLOW;	// 黄
+	}
+  else if( now > 0 )
+  {
+		return GAUGETOOL_HP_DOTTO_RED;		// 赤
+	}
+	return GAUGETOOL_HP_DOTTO_NULL;			// HP=0
 }

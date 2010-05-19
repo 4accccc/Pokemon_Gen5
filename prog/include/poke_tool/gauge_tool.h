@@ -43,25 +43,12 @@ extern u8 GAUGETOOL_GetNumDotto( u32 prm_now, u32 prm_max, u8 dot_max );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief   表示ドットと最大ドットからHPゲージの色を取得する
+ * @brief   HPゲージのカラーを取得
  *
- * @param   put_dot		表示ドット数
- * @param   max_dot		最大ドット数
- *
- * @retval  ゲージカラー
- */
-//--------------------------------------------------------------------------------------------
-extern u8 GAUGETOOL_GetGaugeDottoColor( u32 put_dot, u32 max_dot );
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		HPゲージのカラーを取得
- *
- * @param		hp				現在のHP
- * @param		mhp				最大HP
- * @param		max_dot		最大ドット数
+ * @param   now			現在の値
+ * @param   max			最大値
  *
  * @return	ゲージカラー
  */
 //--------------------------------------------------------------------------------------------
-extern u8 GAUGETOOL_GetHPGaugeDottoColor( u16 hp, u16 mhp, u32 max_dot );
+extern u8 GAUGETOOL_GetGaugeDottoColor( u32 now, u32 max );

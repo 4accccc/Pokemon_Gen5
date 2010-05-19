@@ -2108,7 +2108,7 @@ BOOL  BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* col
     return FALSE;
   }
 
-  *color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
+  *color = GAUGETOOL_GetGaugeDottoColor( bgw->bgcl[ pos ].hp, bgw->bgcl[ pos ].hpmax );
 
   if( GFL_CLACT_WK_GetDrawEnable( bgw->bgcl[ pos ].status_clwk ) ==  FALSE )
   { 
@@ -2180,7 +2180,7 @@ static  void  pinch_bgm_check( BTLV_GAUGE_WORK* bgw )
           ( bgw->bgcl[ i ].gauge_enable ) &&
           ( bgw->bgcl[ i ].gauge_type != BTLV_GAUGE_TYPE_SAFARI ) )
       {
-        u8  color = GAUGETOOL_GetHPGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax, BTLV_GAUGE_HP_DOTTOMAX );
+        u8  color = GAUGETOOL_GetGaugeDottoColor( bgw->bgcl[ i ].hp, bgw->bgcl[ i ].hpmax );
 
         if( color == GAUGETOOL_HP_DOTTO_RED )
         {

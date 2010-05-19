@@ -560,7 +560,7 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   { 
     int hp    = PP_Get( pp, ID_PARA_hp, NULL );
     int hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
-    bmw->btlv_mcss[ index ].param.appear_hp_color = GAUGETOOL_GetHPGaugeDottoColor( hp, hpmax, BTLV_GAUGE_HP_DOTTOMAX );
+    bmw->btlv_mcss[ index ].param.appear_hp_color = GAUGETOOL_GetGaugeDottoColor( hp, hpmax );
   }
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
