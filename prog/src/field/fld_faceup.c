@@ -118,6 +118,7 @@ static void MoveAnm(  const ANM_PAT *inPatDat,
                       const u32 inTansSize,
                       const u32 inTransWidth,
                       ANM_CNT *cnt );
+static void InitAnmCnt(ANM_CNT *cnt);
 
 //目アニメパターン
 static const ANM_PAT EyeAnmPat[EYE_ANM_MAX] = {
@@ -171,6 +172,11 @@ GMEVENT *FLD_FACEUP_Start(const int inBackNo, const int inCharNo, const BOOL inL
   ptr->BackNo = inBackNo;
   ptr->ScrCmdWork = scrCmdWork;
   ptr->Last = inLast;
+  //アニメーション管理初期化
+  {
+    InitAnmCnt(&ptr->EyeAnm);
+    InitAnmCnt(&ptr->MouthAnm);
+  }
 
   {
     GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
@@ -384,19 +390,7 @@ static void Setup(FACEUP_WK_PTR ptr, FIELDMAP_WORK *fieldmap)
       GFL_BG_LoadScreen( FLDBG_MFRM_EFF2, scr->rawData, scr->szByte, 0 );
       GFL_HEAP_FreeMemory( buf );
     }
-/**    
-    //パレット
-    {
-      NNSG2dPaletteData *pal;
-      buf = GFL_ARC_LoadDataAlloc( ARCID_FLD_FACEUP, NARC_fld_faceup_faceup_nclr, GFL_HEAP_LOWID(heapID) );
-      GF_ASSERT( buf != NULL );
-      if( NNS_G2dGetUnpackedPaletteData(buf,&pal) == FALSE ){
-        GF_ASSERT( 0 );
-      }
-      GFL_BG_LoadPalette( FLDBG_MFRM_EFF2, pal->pRawData, FACE_PLT_NUM*32, FACE_PLT_NO*32 );
-      GFL_HEAP_FreeMemory( buf );
-    }
-*/    
+    
   }
 
   //プライオリティ
@@ -635,32 +629,6 @@ static void PopDisp(FACEUP_WK_PTR ptr)
   GFL_DISP_GX_SetVisibleControlDirect(ptr->Mask);
 }
 
-
-#if 0
-static void ChangeScreenPlt( void *rawData, u8 px, u8 py, u8 sx, u8 sy, u8 pal )
-{
-  u16 * scrn;
-  u8  scr_sx, scr_sy;
-  u8  i, j;
-
-  scrn = (u16 *)rawData;
-
-  scr_sx = 32;
-  scr_sy = 32;
-
-  for( i=py; i<py+sy; i++ ){
-    if( i >= scr_sy ){ break; }
-    for( j=px; j<px+sx; j++ ){
-      if( j >= scr_sx ){ break; }
-      {
-        u16 scr_pos = i * 32 + j;
-
-        scrn[scr_pos] = ( scrn[scr_pos] & 0xfff ) | ( pal << 12 );
-      }
-    }
-  }
-}
-#endif
 //------------------------------------------------------------------------------------------
 /**
  * @brief アルファコントロール実行関数
@@ -690,60 +658,64 @@ static void MainTcbFunc( GFL_TCB* tcb, void* work )
 {
   FACEUP_WK_PTR ptr = (FACEUP_WK_PTR)work;
   
-  if (ptr->MsgEnd) return;
-  
-  //プレーンウィンドウ以外のときは処理しない
-  if ( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) )
+  if (!ptr->MsgEnd)
   {
-    FLDPLAINMSGWIN *win = SCRCMD_WORK_GetMsgWinPtr( ptr->ScrCmdWork );
-    if (win != NULL)
+    //プレーンウィンドウ以外のときは処理しない
+    if ( SCREND_CHK_CheckBit(SCREND_CHK_PLAINWIN_OPEN) )
     {
-      PRINTSTREAM_STATE state = FLDPLAINMSGWIN_GetStreamState( win );
-      if ( state == PRINTSTREAM_STATE_RUNNING )
+      FLDPLAINMSGWIN *win = SCRCMD_WORK_GetMsgWinPtr( ptr->ScrCmdWork );
+      if (win != NULL)
       {
-        NOZOMU_Printf("口パクしてＯＫ\n");
-        ptr->MouthAnm.Stop = FALSE;
-        ptr->AnmReq = FALSE;    //リクエスト消化
-      }
-      else
-      {
-        //
-        NOZOMU_Printf("口閉じる\n");
-        if ( state == PRINTSTREAM_STATE_DONE )
+        PRINTSTREAM_STATE state = FLDPLAINMSGWIN_GetStreamState( win );
+        if ( state == PRINTSTREAM_STATE_RUNNING )
         {
-          if ( ptr->AnmReq == FALSE )   //リクエスト消化済みならメッセージを終了させる
+          NOZOMU_Printf("口パクしてＯＫ\n");
+          ptr->MouthAnm.Stop = FALSE;
+          ptr->AnmReq = FALSE;    //リクエスト消化
+        }
+        else
+        {
+          //
+          NOZOMU_Printf("口閉じる\n");
+          if ( state == PRINTSTREAM_STATE_DONE )
           {
-            NOZOMU_Printf("メッセージ終了\n");
-            ptr->MsgEnd = TRUE;
+            if ( ptr->AnmReq == FALSE )   //リクエスト消化済みならメッセージを終了させる
+            {
+              NOZOMU_Printf("メッセージ終了\n");
+              ptr->MsgEnd = TRUE;
+            }
           }
         }
       }
+      else{
+        NOZOMU_Printf("NOTHING WIN\n");
+      }
     }
-    else{
-      NOZOMU_Printf("NOTHING WIN\n");
-    }
-    
-    //口パク
+  }
+
+  //口パク
+  {
     MoveAnm(  MouthAnmPat, MOUTH_ANM_MAX,
               MOUTH_SRC_TRNAS_CHR_NO,
               MOUTH_TRNAS_WIDTH*TRANS_HEIGHT,
               MOUTH_TRNAS_WIDTH,
               &ptr->MouthAnm );
+  }
 
-    //目パチ
-    {
-      if (ptr->EyeAnmWaitCount<=0){
-        ptr->EyeAnm.Stop = FALSE;
-        ptr->EyeAnmWaitCount = EYE_DEF_COUNT + GFUser_GetPublicRand( EYE_RND_COUNT );
-      }
-      else ptr->EyeAnmWaitCount--;
-      //アニメ
-      MoveAnm(  EyeAnmPat, EYE_ANM_MAX,
-                EYE_SRC_TRNAS_CHR_NO,
-                EYE_TRNAS_WIDTH*TRANS_HEIGHT,
-                EYE_TRNAS_WIDTH,
-                &ptr->EyeAnm );
+  //目パチ
+  {
+    if (ptr->EyeAnmWaitCount<=0){
+      ptr->EyeAnm.Stop = FALSE;
+      ptr->EyeAnmWaitCount = EYE_DEF_COUNT + GFUser_GetPublicRand( EYE_RND_COUNT );
     }
+    else ptr->EyeAnmWaitCount--;
+    
+    //アニメ
+    MoveAnm(  EyeAnmPat, EYE_ANM_MAX,
+              EYE_SRC_TRNAS_CHR_NO,
+              EYE_TRNAS_WIDTH*TRANS_HEIGHT,
+              EYE_TRNAS_WIDTH,
+              &ptr->EyeAnm );
   }
 }
 
@@ -839,5 +811,21 @@ static void MoveAnm( const ANM_PAT *inPatDat,
     }
     else cnt->Wait--;
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * アニメコントローラ初期化
+ * @param     cnt             アニメコントローラポインタ
+ * @return    none
+ */
+//--------------------------------------------------------------
+static void InitAnmCnt(ANM_CNT *cnt)
+{
+  cnt->Stop = TRUE;
+  cnt->TransReq = FALSE;
+  cnt->Wait = 0;
+  cnt->WaitMax = 0;
+  cnt->PatIdx = 0;
 }
 
