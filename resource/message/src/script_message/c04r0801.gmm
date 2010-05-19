@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-04-22T15:53:41"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T20:59:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1328" top="106" right="2033" bottom="726" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -326,6 +326,39 @@
 		<language name="JPN_KANJI" width="256">ゾロアークという　ポケモンが
 みんなを　化かして[BE:00:ページ切り替え（行送り）]
 すみかを　隠していたのね</language>
+	</row>
+
+	<row id="msg_c04r0801_baseballm_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・アイテム入手処理
+　No215「きょうせいギプス」</comment>
+		<attribute name="キャラ指定">BASEBALLM</attribute>
+		<language name="JPN" width="256">からだを　げんきに　いじめましょう！▼
+トレーニングが　すきな　アナタも
+トレーニングが　すきでない　アナタも▼
+これを　ポケモンに　もたせて
+レッツ　からだを　いじめよう！！▼</language>
+		<language name="JPN_KANJI" width="256">からだを　げんきに　いじめましょう！▼
+トレーニングが　すきな　アナタも
+トレーニングが　すきでない　アナタも▼
+これを　ポケモンに　もたせて
+レッツ　からだを　いじめよう！！▼</language>
+	</row>
+
+	<row id="msg_c04r0801_baseballm_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・アイテム入手後</comment>
+		<attribute name="キャラ指定">BASEBALLM</attribute>
+		<language name="JPN" width="256">きょうせいギプスを　もった
+ポケモンは　すばやさが　さがるが▽
+そのぶん　つよく　そだつ！▼
+ちょっと　つかいにくい　どうぐだが
+まっ　そんなもんだよな！</language>
+		<language name="JPN_KANJI" width="256">きょうせいギプスを　もった
+ポケモンは　すばやさが　さがるが▽
+そのぶん　つよく　そだつ！▼
+ちょっと　つかいにくい　どうぐだが
+まっ　そんなもんだよな！</language>
 	</row>
 
 	<flowchart-group-list>
