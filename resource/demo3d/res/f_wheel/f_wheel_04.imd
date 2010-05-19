@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-24T16:29:34" source="f_wheel_25.mb"/>
+	<create user="unno" host="W00199" date="2010-05-18T15:28:33" source="f_wheel_32.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-04-24T16:29:34" source="f_wheel_25.mb"/>
+<original_create user="unno" host="W00199" date="2010-05-18T15:28:33" source="f_wheel_32.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -641,7 +641,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="3 3 3"
 		shininess_table_flag="off"
 		tex_image_idx="5" tex_palette_idx="5"
 		tex_tiling="repeat repeat"
@@ -665,7 +665,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="3 3 3"
 		shininess_table_flag="off"
 		tex_image_idx="6" tex_palette_idx="7"
 		tex_tiling="repeat flip"
@@ -689,7 +689,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="3 3 3"
 		shininess_table_flag="off"
 		tex_image_idx="7" tex_palette_idx="6"
 		tex_tiling="repeat flip"
@@ -713,7 +713,7 @@
 		diffuse="25 25 25"
 		ambient="31 31 31"
 		specular="0 0 0"
-		emission="0 0 0"
+		emission="3 3 3"
 		shininess_table_flag="off"
 		tex_image_idx="8" tex_palette_idx="8"
 		tex_tiling="repeat repeat"
