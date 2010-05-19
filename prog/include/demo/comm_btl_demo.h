@@ -46,10 +46,10 @@ typedef enum {
 //==============================================================
 enum
 { 
-  COMM_BTL_DEMO_TRDATA_A = 0,    ///< マルチバトルの時、ユニオンルームで左上の位置 / 通常時は自分
-  COMM_BTL_DEMO_TRDATA_B,        ///< マルチバトルの時、ユニオンルームで左下の位置 / 通常時は相手
-  COMM_BTL_DEMO_TRDATA_C,        ///< マルチバトルの時、ユニオンルームで右上の位置
-  COMM_BTL_DEMO_TRDATA_D,        ///< マルチバトルの時、ユニオンルームで右下の位置
+  COMM_BTL_DEMO_TRDATA_A = 0,    ///< マルチバトルの時、自分のチーム / 通常時は自分
+  COMM_BTL_DEMO_TRDATA_B,        ///< マルチバトルの時、自分のチーム / 通常時は相手
+  COMM_BTL_DEMO_TRDATA_C,        ///< マルチバトルの時、相手のチーム
+  COMM_BTL_DEMO_TRDATA_D,        ///< マルチバトルの時、相手のチーム
 
   COMM_BTL_DEMO_TRDATA_MAX,
 };

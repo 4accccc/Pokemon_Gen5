@@ -122,19 +122,31 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
       MyStatus_Copy( SaveData_GetMyStatus( SaveControl_GetPointer() ), st );
 
-      if( GFUser_GetPublicRand(2) == 0 )
+      if( i == 0 )
       {
-        STRCODE debugname[8] = L"ブラック";
-        debugname[4] = GFL_STR_GetEOMCode();
-
+        STRCODE debugname[8] = L"A";
+        debugname[1] = GFL_STR_GetEOMCode();
         MyStatus_SetMySex( st, PM_MALE );
         MyStatus_SetMyName( st, debugname);
       }
-      else
+      else if ( i == 1 )
       {
-        STRCODE debugname[8] = L"ホワイト";
-        debugname[4] = GFL_STR_GetEOMCode();
-
+        STRCODE debugname[8] = L"B";
+        debugname[1] = GFL_STR_GetEOMCode();
+        MyStatus_SetMySex( st, PM_FEMALE );
+        MyStatus_SetMyName( st, debugname);
+      }
+      else if ( i == 2 )
+      {
+        STRCODE debugname[8] = L"C";
+        debugname[1] = GFL_STR_GetEOMCode();
+        MyStatus_SetMySex( st, PM_MALE );
+        MyStatus_SetMyName( st, debugname);
+      }
+      else if ( i == 3 )
+      {
+        STRCODE debugname[8] = L"D";
+        debugname[1] = GFL_STR_GetEOMCode();
         MyStatus_SetMySex( st, PM_FEMALE );
         MyStatus_SetMyName( st, debugname);
       }
@@ -165,13 +177,15 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 
       party = PokeParty_AllocPartyWork( GFL_HEAPID_APP );
 
+#if 0
       if( prm->type == COMM_BTL_DEMO_TYPE_NORMAL_END || prm->type == COMM_BTL_DEMO_TYPE_NORMAL_START )
       {
         Debug_PokeParty_MakeParty( party );
       }
       else
+#endif
       {
-        static const int pokemax=3;
+        int pokemax = 3;
         PokeParty_Init(party, pokemax);
         for (p = 0; p < pokemax; p++) 
         {
