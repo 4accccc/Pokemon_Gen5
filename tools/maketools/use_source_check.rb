@@ -9,7 +9,7 @@
 PROGDIR = ENV["PROJECT_PROGDIR"].chomp
 
 def debug_puts arg
-  puts arg
+  #puts arg
 end
 
 
