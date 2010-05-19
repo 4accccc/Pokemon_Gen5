@@ -39,6 +39,8 @@
 #define R13_MONSTERBALL_01                25
 #define R13_BACKPACKERW_01                26
 #define R13_OLDMAN1_01                    27
+#define R13_FLD_ITEM_05                   28
+#define R13_TREE_03                       29
 
 #endif //ZONE_R13_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/r13.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

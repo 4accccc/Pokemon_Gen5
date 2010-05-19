@@ -1571,10 +1571,10 @@ EVENT_START ev_fld_item_103
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r13 X=692 Y=245 ITEM=エレキブースター FLAG=104
+// MAP=r13 X=692 Y=245 ITEM=わざマシン２９ FLAG=104
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_104
-  _FLD_ITEM_EVENT ITEM_EREKIBUUSUTAA,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN29,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1662,17 +1662,17 @@ EVENT_START ev_fld_item_109
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r15 X=619 Y=421 ITEM=マックスアップ FLAG=110
+// MAP=r15 X=619 Y=421 ITEM=わざマシン０９ FLAG=110
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_110
-  _FLD_ITEM_EVENT ITEM_MAKKUSUAPPU,1
+  _FLD_ITEM_EVENT ITEM_WAZAMASIN09,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=r15 X=601 Y=443 ITEM=わざマシン０９ FLAG=275
+// MAP=r13 X=703 Y=277 ITEM=エレキブースター FLAG=275
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_275
-  _FLD_ITEM_EVENT ITEM_WAZAMASIN09,1
+  _FLD_ITEM_EVENT ITEM_EREKIBUUSUTAA,1
 EVENT_END
 
 //--------------------------------------------------------------
