@@ -481,6 +481,13 @@ RES_REQ_SELECT:
             _CALL SYSTEM_MSG_RECEIVE_REQUEST            // システム「調査依頼を受けた！」
             _CALL LEADER_SAY_Come_again_if_you_achieve  // 隊長「調査が終了したら, 報告に来てくれ」
             _RET                                        // 依頼選択処理終了
+          //『いいえ』
+          ELSE
+            _CALL LEADER_SAY_Do_you_select_other_request // 隊長「では他の依頼を受けるのか？」==>『はい』or『いいえ』
+            //『いいえ』
+            IF $SCWK_ANSWER == SCR_NO THEN
+              $v6_3 = FALSE // ループを抜ける
+            ENDIF
           ENDIF 
         ENDIF
 
