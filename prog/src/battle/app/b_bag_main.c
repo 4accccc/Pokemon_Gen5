@@ -275,7 +275,11 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
   }
   BAPPTOOL_VanishCursor( wk->cpwk, wk->cursor_flg );
 
-  BBAGUI_Init( wk, wk->page, 0 );
+	if( wk->page == BBAG_PAGE_POCKET ){
+		BBAGUI_Init( wk, wk->page, wk->used_poke );
+	}else{
+		BBAGUI_Init( wk, wk->page, 0 );
+	}
 
   GFL_NET_ReloadIcon();
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
