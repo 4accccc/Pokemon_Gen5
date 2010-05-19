@@ -311,8 +311,9 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
     switch(target->gsid){
     case WB_NET_PALACE_SERVICEID:     //侵入(パレス)
 //    case WB_NET_FIELDMOVE_SERVICEID:
-      //蓋が開いている && パレス接続禁止フラグが立っていない、なら繋ぎに行く
-      if(PAD_DetectFold() == FALSE && GameCommSys_GetPalaceNotConnectFlag(gcsp) == FALSE)
+      //蓋が開いている && パレス接続禁止フラグが立っていない && 表フィールド、なら繋ぎに行く
+      if(PAD_DetectFold() == FALSE && GameCommSys_GetPalaceNotConnectFlag(gcsp) == FALSE
+          && GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE)
       {
         u16 zone_id = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata));
         if(zone_id != gbs->palace_check_zoneid){
