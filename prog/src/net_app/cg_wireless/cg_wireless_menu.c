@@ -85,13 +85,14 @@ typedef enum
 // 画面構成定義
 //--------------------------------------------
 
-#define _UNIONROOM_MSG (4)
-#define _UNIONROOM_NUM (5)
-#define _FUSHIGI_MSG (6)
-#define _FUSHIGI_ONOFF (7)
-#define _SURE_MSG   (8)
-#define _SURE_ONOFF (9)
-#define _WINDOW_MAXNUM (10)   //ウインドウのパターン数
+#define _UNIONROOM_MSG (5)
+#define _UNIONROOM_NUM (6)
+#define _FUSHIGI_MSG (7)
+#define _FUSHIGI_ONOFF (8)
+#define _SURE_MSG   (9)
+#define _SURE_ONOFF (10)
+#define _HI_NAMAE (11)
+#define _WINDOW_MAXNUM (12)   //ウインドウのパターン数
 
 #define _MESSAGE_BUF_NUM	( 100*2 )
 
@@ -440,7 +441,17 @@ static void _buttonWindowCreate2(int no, CG_WIRELESS_MENU* pWork, _WINDOWPOS* po
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 }
 
-
+static void _buttonWindowDelete2(int no, CG_WIRELESS_MENU* pWork)
+{
+  int i=no;
+  if(pWork->buttonWin[i]){
+    GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+    BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+    GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+  }
+  pWork->buttonWin[i] = NULL;
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+}
 
 //----------------------------------------------------------------------------
 /**
@@ -963,7 +974,10 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
 {
   BOOL bChange = FALSE;
   int check_count=0;
+  GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
+  int no = Intrude_GetIntrudeStatus(pComm);
 
+  
   //Beacon変更チェック
   if( pWork->cross_change == FALSE ){
     check_count = 0;
@@ -981,32 +995,37 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
   _MessageDisp(_UNIONROOM_MSG, CGEAR_WIRLESS_003,FALSE,FALSE,pWork);
   _MessageDisp(_FUSHIGI_MSG,   CGEAR_WIRLESS_005,FALSE,FALSE,pWork);
   _MessageDisp(_SURE_MSG,      CGEAR_WIRLESS_013,FALSE,FALSE,pWork);
-  
-  {
-    WORDSET_RegisterNumber( pWork->pWordSet, 0,  pWork->unionnum, 2,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-    _MessageDisp(_UNIONROOM_NUM, CGEAR_WIRLESS_004, bChange,TRUE,pWork);
-  }
-
-  if(pWork->bit & GAME_COMM_STATUS_BIT_WIRELESS_FU){
-    _MessageDisp(_FUSHIGI_ONOFF, CGEAR_WIRLESS_006,bChange,TRUE,pWork);
-  }
-  else{
-    _MessageDisp(_FUSHIGI_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
-  }
-
-  if(pWork->cross_change){
-    _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_006,bChange,TRUE,pWork);
-  }
-  else{
-    _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
-  }
 
 
-  {
-    GAME_COMM_SYS_PTR pComm = GAMESYSTEM_GetGameCommSysPtr(pWork->gsys);
-    int no = Intrude_GetIntrudeStatus(pComm);
-    if(pWork->palace_state!=no){
-      switch(no){
+  switch(no){
+  case INTRUDE_CONNECT_NULL:              ///<接続されていない
+    {
+      WORDSET_RegisterNumber( pWork->pWordSet, 0,  pWork->unionnum, 2,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      _MessageDisp(_UNIONROOM_NUM, CGEAR_WIRLESS_004, bChange,TRUE,pWork);
+    }
+    if(pWork->bit & GAME_COMM_STATUS_BIT_WIRELESS_FU){
+      _MessageDisp(_FUSHIGI_ONOFF, CGEAR_WIRLESS_006,bChange,TRUE,pWork);
+    }
+    else{
+      _MessageDisp(_FUSHIGI_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
+    }
+    if(pWork->cross_change){
+      _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_006,bChange,TRUE,pWork);
+    }
+    else{
+      _MessageDisp(_SURE_ONOFF, CGEAR_WIRLESS_007,bChange,TRUE,pWork);
+    }
+    break;
+  default:
+    _buttonWindowDelete2(_UNIONROOM_NUM, pWork);
+    _buttonWindowDelete2(_FUSHIGI_ONOFF, pWork);
+    _buttonWindowDelete2(_SURE_ONOFF, pWork);
+    break;
+  }
+
+
+  if(pWork->palace_state!=no){
+    switch(no){
       case INTRUDE_CONNECT_NULL:              ///<接続されていない
         GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
         GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_001, pWork->pStrBuf );
@@ -1030,13 +1049,12 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
       case INTRUDE_CONNECT_MISSION_PARTNER:   ///<ハイリンク接続時(協力者である)
         _buttonWindowCreate2(0,  pWork, wind_wireless2);
         if( Intrude_GetTargetName(pComm,pWork->pStrBuf) ){
-          _buttonWindowCreate2(2,  pWork, wind_wireless_name);
+          _buttonWindowCreate2(_HI_NAMAE,  pWork, wind_wireless_name);
           GFL_CLACT_WK_SetDrawEnable( pWork->HiName, TRUE );
         }
         break;
-      }
-      pWork->palace_state=no;
     }
+    pWork->palace_state=no;
   }
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 
