@@ -212,6 +212,7 @@ EVENT_END
 /*  D12 pilot_01			                      */
 /**************************************************************/
 EVENT_START   ev_d12_pilot_01
+  _TALK_OBJ_START()
   //Ç‡Ç«ÇÈÅH
   _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_01)
 	_YES_NO_WIN( SCWK_ANSWER )
