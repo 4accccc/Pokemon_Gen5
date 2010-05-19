@@ -954,9 +954,6 @@ static void ResetFieldSoundSystem( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
   }
   PMSND_StopBGM();
   InitFieldSoundSystem( fieldSound, gameData );
-
-  // ビーコンスキャンの一時停止を解除
-  StartBeaconScan(); 
 }
 
 //---------------------------------------------------------------------------------
@@ -1957,7 +1954,6 @@ static void Main_CHANGE_out( FIELD_SOUND* fieldSound )
     if( CheckSaveNow( fieldSound ) == FALSE ) {
       DivLoadBGM_start( fieldSound );
       ChangeState( fieldSound, FSND_STATE_CHANGE_load );
-      PauseBeaconScan(); // ビーコンスキャンを一時停止
     }
   }
 }
@@ -1985,8 +1981,6 @@ static void Main_CHANGE_load( FIELD_SOUND* fieldSound )
       // フェードイン開始
       FadeInBGM( fieldSound );
       ChangeState( fieldSound, FSND_STATE_CHANGE_in );
-      // ビーコンスキャンの一時停止を解除
-      StartBeaconScan(); 
     }
   }
 }
@@ -2029,7 +2023,6 @@ static void Main_CHANGE_PUSH_out( FIELD_SOUND* fieldSound )
     if( CheckSaveNow( fieldSound ) == FALSE ) {
       DivLoadBGM_start( fieldSound );
       ChangeState( fieldSound, FSND_STATE_CHANGE_PUSH_load );
-      PauseBeaconScan(); // ビーコンスキャンを一時停止
     }
   }
 }
@@ -2052,8 +2045,6 @@ static void Main_CHANGE_PUSH_load( FIELD_SOUND* fieldSound )
     PushBGM( fieldSound );
     ChangeState( fieldSound, FSND_STATE_STOP );
     FinishRequest( fieldSound ); 
-    // ビーコンスキャンの一時停止を解除
-    StartBeaconScan(); 
   }
 }
 
@@ -2069,7 +2060,6 @@ static void Main_STAND_BY_out( FIELD_SOUND* fieldSound )
     if( CheckSaveNow( fieldSound ) == FALSE ) {
       DivLoadBGM_start( fieldSound );
       ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
-      PauseBeaconScan(); // ビーコンスキャンを一時停止
     }
   }
 }
@@ -2092,8 +2082,6 @@ static void Main_STAND_BY_load( FIELD_SOUND* fieldSound )
     PMSND_PauseBGM( TRUE );
     ChangeState( fieldSound, FSND_STATE_WAIT );
     FinishRequest( fieldSound );
-    // ビーコンスキャンの一時停止を解除
-    StartBeaconScan(); 
   }
 } 
 
@@ -2399,6 +2387,9 @@ static BOOL DivLoadBGM_start( FIELD_SOUND* fieldSound )
   fieldSound->requestBGM = BGM_NONE;
   fieldSound->currentBGM = BGM_NONE;
 
+  // ビーコンサーチを一定時間停止
+  GFL_NET_ChangeoverChangeSpeed( GFL_NET_CROSS_SPEED_PAUSE );
+
 #ifdef DEBUG_DIV_LOAD_COUNT_ON
   DivLoadCount = 0;
 #endif
@@ -2436,13 +2427,15 @@ static BOOL DivLoadBGM_load( FIELD_SOUND* fieldSound )
   // 分割ロード実行
   loadFinished = PMSND_PlayBGMdiv( fieldSound->loadBGM, &(fieldSound->loadSeq), FALSE );
 
+  // ビーコンサーチを一定時間停止
+  GFL_NET_ChangeoverChangeSpeed( GFL_NET_CROSS_SPEED_PAUSE );
+
 #ifdef DEBUG_DIV_LOAD_COUNT_ON
   DivLoadCount++;
 #endif
 
   // 分割ロード完了(再生開始)
-  if( loadFinished )
-  {
+  if( loadFinished ) {
     // 内部情報を更新
     fieldSound->currentBGM = fieldSound->loadBGM;
     fieldSound->loadBGM = BGM_NONE;
