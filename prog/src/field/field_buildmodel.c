@@ -114,6 +114,7 @@ enum {
   BMODEL_ENTRY_NG = BMODEL_ENTRY_MAX,
 
   BMANIME_NULL_ID  = 0xffff,
+  BMANIME_NULL_OFS  = 0xffffffff,
 };
 
 static const BMODEL_ID BM_SUBMODEL_NULL_ID = 0xffff;
@@ -157,7 +158,8 @@ typedef struct _FIELD_BMANIME_DATA
   u8 prg_type;  ///<BMANIME_PROG_TYPE 動作プログラムの種類指定
   u8 anmset_num; ///<アニメセット数
   u8 ptn_count; ///<パターン数
-  u16 IDs[GLOBAL_OBJ_ANMCOUNT]; ///<アニメアーカイブ指定ID
+
+  u32 ofs[GLOBAL_OBJ_ANMCOUNT]; ///<アニメbinaryデータのオフセット
 }FIELD_BMANIME_DATA;
 
 //------------------------------------------------------------------
@@ -171,6 +173,8 @@ typedef struct {
   u16 anm_id;                   ///<アニメ指定ID
   u16 pad;                ///<padding
   FIELD_BMANIME_DATA animeData; ///<アニメ指定データ
+
+  // メモリでは、この下に、アニメデータが続いています。
 }BMINFO;
 
 //------------------------------------------------------------------
@@ -247,8 +251,6 @@ struct _FIELD_BMODEL_MAN
 
   ///配置モデル登録数
 	u16 entryCount;
-  ///配置モデル情報
-  const BMINFO* bmInfo;
 
 	FLD_G3D_MAP_GLOBALOBJ	g3dMapObj;						///<共通オブジェクト
 
@@ -325,8 +327,10 @@ static void loadAreaBMData( FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id );
 static void releaseAreaBMData( FIELD_BMODEL_MAN * man );
 static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID id);
 
-static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header );
+static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header, u32 index );
 static const void* BM_AREA_HEADER_getNSBMDData( const BM_AREA_HEADER* header, u32 count );
+
+static const void* BM_ANIME_DATA_GetAnimeData( const FIELD_BMANIME_DATA* bmanime, u32 idx );
 
 static void loadBMTextureSet(FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id, u8* gray_scale);
 static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
@@ -334,8 +338,8 @@ static void freeBMTextureSet(FIELD_BMODEL_MAN * man);
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const BMINFO * BMODELMAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id);
+static const BMINFO * BMODELMAN_GetBMInfoEntry(const FIELD_BMODEL_MAN * man, u32 entryNo);
 
-static void BMINFO_Load(FIELD_BMODEL_MAN * man);
 //アニメデータの取得処理
 static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo);
 
@@ -532,9 +536,6 @@ void FIELD_BMODEL_MAN_Load(FIELD_BMODEL_MAN * man, u16 zoneid, const AREADATA * 
   //エリア別配置モデルテクスチャセットの読み込み
   loadBMTextureSet(man, bmtex_arc_id, bmlist_index, gray_scale );
 
-  //必要な配置モデルデータの読み込み
-  BMINFO_Load(man);
-
 	//ID→登録順序の変換データテーブル生成
 	makeBMIDToEntryTable( man, default_id );
 
@@ -567,7 +568,13 @@ static u8 BMODELMAN_GetEntryIndex(const FIELD_BMODEL_MAN * man, BMODEL_ID id)
 static const BMINFO * BMODELMAN_GetBMInfo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
 {
   u16 entryNo = BMIDtoEntryNo( man, bm_id );
-  return &man->bmInfo[entryNo];
+
+  return BM_AREA_HEADER_getBMINFOBuff( man->bm_areadata, entryNo );
+}
+
+static const BMINFO * BMODELMAN_GetBMInfoEntry(const FIELD_BMODEL_MAN * man, u32 entryNo)
+{
+  return BM_AREA_HEADER_getBMINFOBuff( man->bm_areadata, entryNo );
 }
 
 //------------------------------------------------------------------
@@ -793,7 +800,6 @@ static void releaseAreaBMData( FIELD_BMODEL_MAN * man )
 {
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( man->bm_areadata );
   GFL_HEAP_FreeMemory( man->bm_areadata );
-  man->bmInfo = NULL;
   man->entryCount = 0;
 }
 
@@ -810,7 +816,8 @@ static void makeBMIDToEntryTable(FIELD_BMODEL_MAN * man, BMODEL_ID default_id )
 
 	for (entryNo = 0; entryNo < man->entryCount; entryNo++)
 	{	
-		BMODEL_ID bm_id = man->bmInfo[entryNo].bm_id;
+    const BMINFO* bmInfo = BMODELMAN_GetBMInfoEntry( man, entryNo );
+		BMODEL_ID bm_id = bmInfo->bm_id;
 		man->BMIDToEntryTable[bm_id] = entryNo;
 	}
 
@@ -850,9 +857,10 @@ static u8 BMIDtoEntryNo(const FIELD_BMODEL_MAN * man, BMODEL_ID bm_id)
  *	@return BMINFO
  */
 //-----------------------------------------------------------------------------
-static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header )
+static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header, u32 index )
 {
-  return (const BMINFO*)( (u32)(header) + header->ofs[0] );
+  GF_ASSERT( index < (header->datanum/2) );
+  return (const BMINFO*)( (u32)(header) + header->ofs[index] );
 }
 
 //----------------------------------------------------------------------------
@@ -867,7 +875,27 @@ static const BMINFO* BM_AREA_HEADER_getBMINFOBuff( const BM_AREA_HEADER* header 
 //-----------------------------------------------------------------------------
 static const void* BM_AREA_HEADER_getNSBMDData( const BM_AREA_HEADER* header, u32 count )
 {
+  GF_ASSERT( count < (header->datanum/2) );
   return (const void*)( (u32)(header) + header->ofs[(header->datanum/2) + count] );
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  配置アニメデータ  インデックスのリソースを取得
+ *
+ *	@param	bmanime   アニメデータ
+ *	@param	idx       アニメインデックス
+ *
+ *	@return nsbca nsbva nsbtp nsbta nsbma
+ */
+//-----------------------------------------------------------------------------
+static const void* BM_ANIME_DATA_GetAnimeData( const FIELD_BMANIME_DATA* bmanime, u32 idx )
+{
+  GF_ASSERT( idx < GLOBAL_OBJ_ANMCOUNT );
+  GF_ASSERT( bmanime->ofs[ idx ] != BMANIME_NULL_OFS );
+
+  return (const void*)( (u32)(bmanime) + bmanime->ofs[idx] );
 }
 
 
@@ -958,31 +986,13 @@ static u32 BMANIME_getCount(const FIELD_BMANIME_DATA * data)
   u32 anmNo,count;
   for (anmNo = 0, count = 0; anmNo < GLOBAL_OBJ_ANMCOUNT; anmNo++)
   { 
-    if (data->IDs[anmNo] != BMANIME_NULL_ID)
+    if (data->ofs[anmNo] != BMANIME_NULL_OFS)
     { 
       count ++;
     }
   }
   GF_ASSERT( count == data->anmset_num * data->ptn_count );
   return count;
-}
-//------------------------------------------------------------------
-/**
- * @brief FIELD_BMANIME_DATAの初期化
- */
-//------------------------------------------------------------------
-static void BMANIME_init(FIELD_BMANIME_DATA * data)
-{ 
-  static const FIELD_BMANIME_DATA init = {  
-    BMANIME_TYPE_NONE,  //アニメ適用の種類指定
-    BMANIME_PROG_TYPE_NONE,  //動作プログラムの種類指定
-    0,  //アニメセット数
-    0,  //アニメパターン数
-    //アニメアーカイブ指定ID
-    { BMANIME_NULL_ID, BMANIME_NULL_ID, BMANIME_NULL_ID, BMANIME_NULL_ID, }
-
-  };
-  *data = init;
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -1003,18 +1013,12 @@ static void DEBUG_BMANIME_dump(const FIELD_BMANIME_DATA * data)
   TAMADA_Printf("%d %d %d\n",data->prg_type, data->anmset_num, data->ptn_count);
   for (anmNo = 0; anmNo < GLOBAL_OBJ_ANMCOUNT; anmNo++)
   {
-    TAMADA_Printf("%04x ", data->IDs[anmNo]);
+    TAMADA_Printf("%08x ", data->ofs[anmNo]);
   }
   TAMADA_Printf("\n");
 }
 #endif
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static void BMINFO_Load(FIELD_BMODEL_MAN * man)
-{
-  man->bmInfo = BM_AREA_HEADER_getBMINFOBuff(man->bm_areadata);
-}
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static const FIELD_BMANIME_DATA * BMINFO_getAnimeData(const BMINFO * bmInfo)
@@ -1115,6 +1119,7 @@ static void createAllResource(FIELD_BMODEL_MAN * man, u8 *gray_scale)
   man->objRes = GFL_HEAP_AllocClearMemory ( man->heapID, sizeof(OBJ_RES) * entryCount );
   BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( man->objRes );
 
+
   /** 配置モデルリソース登録 */
   {
     u8 entryNo;
@@ -1126,6 +1131,7 @@ static void createAllResource(FIELD_BMODEL_MAN * man, u8 *gray_scale)
       OBJRES_initialize( man, objRes, entryNo, gray_scale );
     }
   }
+
 }
 
 //------------------------------------------------------------------
@@ -1220,7 +1226,7 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 ent
 	GFL_G3D_RES* resTex;
 
   //配置モデルに対応した情報へのポインタをセット
-  objRes->bmInfo = &man->bmInfo[entryNo];
+  objRes->bmInfo = BMODELMAN_GetBMInfoEntry( man, entryNo );
 
   //モデルデータ生成
   objRes->g3DresMdl = GFL_HEAP_AllocClearMemory( man->heapID, GFL_G3D_GetResourceHeaderSize() );
@@ -1234,10 +1240,9 @@ static void OBJRES_initialize( FIELD_BMODEL_MAN * man, OBJ_RES * objRes, u16 ent
     int count = BMANIME_getCount(anmData);
     for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
       if ( anmNo < count ) {
-        objRes->g3DresAnm[anmNo] = GFL_G3D_CreateResourceArc( ARCID_BMODEL_ANIME, anmData->IDs[anmNo] );
-
+        objRes->g3DresAnm[anmNo] = GFL_HEAP_AllocClearMemory( man->heapID, GFL_G3D_GetResourceHeaderSize() );
+        GFL_G3D_CreateResourceAuto( objRes->g3DresAnm[anmNo], (void*)BM_ANIME_DATA_GetAnimeData( anmData, anmNo ) );
         BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( objRes->g3DresAnm[anmNo] );
-        BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Plus( GFL_G3D_GetResourceFileHeader( objRes->g3DresAnm[anmNo] ) );
       } else {
         objRes->g3DresAnm[anmNo] = NULL;
       }
@@ -1255,9 +1260,8 @@ static void OBJRES_finalize( OBJ_RES * objRes )
 
   for( anmNo=0; anmNo<GLOBAL_OBJ_ANMCOUNT; anmNo++ ){
     if( objRes->g3DresAnm[anmNo] != NULL ){
-      BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( GFL_G3D_GetResourceFileHeader( objRes->g3DresAnm[anmNo] ) );
       BMODEL_DEBUG_RESOURCE_MEMORY_SIZE_Minus( objRes->g3DresAnm[anmNo] );
-      GFL_G3D_DeleteResource( objRes->g3DresAnm[anmNo] );
+      GFL_HEAP_FreeMemory( objRes->g3DresAnm[anmNo] );
       objRes->g3DresAnm[anmNo] = NULL;
     }
   }
@@ -1947,11 +1951,15 @@ G3DMAPOBJST * FIELD_BMODEL_MAN_SearchObjStatusPos(
 BM_SEARCH_ID G3DMAPOBJST_getSearchID( const FIELD_BMODEL_MAN * man, const G3DMAPOBJST * obj )
 {
   u8 entryNo;
+  const BMINFO* bmInfo;
+  
   GF_ASSERT( G3DMAPOBJST_exists(obj) );
   entryNo = G3DMAPOBJST_getEntryNo( obj );
   //entryNo = obj->objSt->id;
   ENTRYNO_ASSERT( man, entryNo );
-  return BMINFO_getSearchID(&man->bmInfo[entryNo]);
+
+  bmInfo = BMODELMAN_GetBMInfoEntry( man, entryNo );
+  return BMINFO_getSearchID(bmInfo);
 }
 
 //------------------------------------------------------------------

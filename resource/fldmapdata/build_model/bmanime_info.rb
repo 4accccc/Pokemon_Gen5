@@ -85,6 +85,7 @@ class BmAnime
     if @files.length != @anmset_num * @pattern_count then
       raise InputFileError, "#{@symbol}の指定ファイル数（#{@files.length}) != #{@anmset_num} x #{@pattern_count} です"
     end
+    
 	end
 
 
@@ -142,6 +143,9 @@ begin
   str = ""
   count = 0;
   bmarray.each{|anm|
+
+    offset = (4) + (4*BmAnime.MAX_FILE);
+
     #アニメタイプ、動作指定、アニメカウント、セットカウント
     arr = [anm.anm_type, anm.prog_type, anm.anmset_num, anm.pattern_count]
     #アニメ指定ファイル
@@ -150,19 +154,57 @@ begin
       if index == nil then
           raise InputFileError, "#{anm.symbol} のファイル #{file} が存在しません"
       else
-        arr << index
+        arr << offset
+
+        binaryfile = file.sub( /ica/, "nsbca" )
+        binaryfile = binaryfile.sub( /iva/, "nsbva" )
+        binaryfile = binaryfile.sub( /ima/, "nsbma" )
+        binaryfile = binaryfile.sub( /itp/, "nsbtp" )
+        binaryfile = binaryfile.sub( /ita/, "nsbta" )
+        
+        #そのファイルのサイズからオフセットを求める。
+        offset += File.size( "anime_files/#{binaryfile}" )
       end
     }
     #アニメ指定ファイルが足りない部分をダミーで追加
     (BmAnime.MAX_FILE - anm.files.length).times do |i|
-      arr << 0xffff
+      arr << 0xffffffff
     end
 
     #1アニメデータをanmdatに出力
-    File.open( "#{ANMDATA_OUTPUT_DIR}/anmdat_#{count}.dat", "wb" ){|file| file.write(arr.pack("C C C C S4"))}
+    File.open( "#{ANMDATA_OUTPUT_DIR}/anmdat_#{count}.dat", "wb" ){|write_file|
+
+      write_file.write(arr.pack("C C C C L4"))
+
+      #各アニメbinaryを配置
+      anm.files.each{|anime_file|
+
+        binaryfile = anime_file.sub( /ica/, "nsbca" )
+        binaryfile = binaryfile.sub( /iva/, "nsbva" )
+        binaryfile = binaryfile.sub( /ima/, "nsbma" )
+        binaryfile = binaryfile.sub( /itp/, "nsbtp" )
+        binaryfile = binaryfile.sub( /ita/, "nsbta" )
+
+        #ファイル名チェック
+        if binaryfile =~ /nsbca/ then
+        elsif binaryfile =~ /nsbva/ then
+        elsif binaryfile =~ /nsbma/ then
+        elsif binaryfile =~ /nsbtp/ then
+        elsif binaryfile =~ /nsbta/ then
+        else
+          puts( "pack #{binaryfile}\n" )
+          exit(1)
+        end
+        
+
+        File.open( "anime_files/#{binaryfile}", "rb" ){|anime_readfile|
+          write_file.write( anime_readfile.read() )
+        }
+      }
+    }
     
     count += 1
-    str += arr.pack("C C C C S4")
+    str += arr.pack("C C C C L4")
   }
   #バイナリファイル生成：出力
   File.open(OUTPUT_FILE,"wb"){|file| file.write(str)}

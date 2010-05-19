@@ -120,7 +120,7 @@ class BMData
     if @anime_id != 0xffff then
       File.open( "#{INPUT_ANMDAT_DIR}/anmdat_#{@anime_id}.dat", "rb" ){|file| output += file.read() }
     else
-      output += [ 0,0,0,0, 0xffff,0xffff,0xffff,0xffff ].pack( "CCCCSSSS" )
+      output += [ 0,0,0,0, 0xffffffff,0xffffffff,0xffffffff,0xffffffff ].pack( "CCCCLLLL" )
     end
   end
   
