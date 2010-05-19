@@ -377,7 +377,7 @@
 #define FE_C03PC0101_GEONET                361 /* 0x0169 ヒウンポケセン：ジオネット誘導イベントの初回会話フラグ */
 #define FE_N01R0304_TALK                   362 /* 0x016a Nの城：ボールをくれるプラズマ団員・初回会話フラグ */
 #define FE_T05_RAILWAY_TALK                363 /* 0x016b カナワタウン：鉄道トークを聞いたことがある */
-		/* not used   364(0x016c) */
+#define FE_D01R0101_POKE_END               364 /* 0x016c 夢の跡地：ゆめのけむりイベント終了フラグ */
 		/* not used   365(0x016d) */
 		/* not used   366(0x016e) */
 		/* not used   367(0x016f) */
