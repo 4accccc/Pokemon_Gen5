@@ -273,6 +273,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
         p_param->p_demo_param->type = COMM_BTL_DEMO_TYPE_MULTI_END;
       }
 
+      OS_TFPrintf( 3, "ƒfƒ‚í“¬Œ‹‰Ê %d", p_param->p_btl_setup_param->result );
+      
       // Ÿ”sİ’è
       switch( p_param->p_btl_setup_param->result )
       {

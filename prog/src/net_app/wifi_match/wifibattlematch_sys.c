@@ -112,21 +112,20 @@ typedef struct
   BOOL  is_wificup_end;
 
   //以下システム層に置いておくデータ
-  WIFIBATTLEMATCH_ENEMYDATA   *p_player_data;
-  WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;
+  WIFIBATTLEMATCH_ENEMYDATA   *p_player_data; //自分の情報
+  WIFIBATTLEMATCH_ENEMYDATA   *p_enemy_data;  //相手の情報
   POKEPARTY                   *p_player_btl_party;//自分で決めたパーティ
   POKEPARTY                   *p_enemy_btl_party; //相手の決めたパーティ
-  POKEPARTY                   *p_player_modify_party;//レベル補正をかけたパーティ
-  POKEPARTY                   *p_enemy_modify_party; //
+  POKEPARTY                   *p_player_modify_party;//レベル補正をかけた自分のパーティ
+  POKEPARTY                   *p_enemy_modify_party; //レベル補正をかけた相手のパーティ
   DWCSvlResult                svl_result;         //WIFIログイン時に得るサービスロケータ
   BATTLEMATCH_BATTLE_SCORE    btl_score;          //バトルの成績
   u32                         server_time;        //サーバアクセス時間
   WIFIBATTLEMATCH_RECORD_DATA record_data;        //戦績
   BOOL                        is_err_return_login;//WIFILOGINにエラーで戻るとき
   DREAM_WORLD_SERVER_WORLDBATTLE_STATE_DATA gpf_data;//GPFサーバーから落としてきた選手証データ
-  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   wifi_sake_data;
-  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA    rnd_sake_data;
-
+  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA   wifi_sake_data; //WIFI用サケデータ
+  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA    rnd_sake_data;  //ランダムマッチ用サケデータ
   WIFIBATTLEMATCH_NET_DATA    net_data;   //通信が終了しても残しておくデータ
   WIFIBATTLEMATCH_RECV_DATA   recv_data;  //サーバーから落としてきたデータ
 } WIFIBATTLEMATCH_SYS;
@@ -1151,8 +1150,13 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   }
   else
   { 
-    BOOL  is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
+    int  is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
     REGULATION_BATTLE_TYPE  battle_type = Regulation_GetParam( p_reg, REGULATION_BATTLETYPE );
+
+    if( is_shooter >= REGULATION_SHOOTER_MANUAL )
+    {
+        is_shooter  = REGULATION_SHOOTER_VALID;
+    }
 
     p_param->p_demo_param->battle_mode = 
       BATTLE_MODE_COMPETITION_SINGLE + battle_type * 2 + is_shooter;
@@ -1556,8 +1560,13 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
       REGULATION_SAVEDATA *p_reg_sv   = SaveData_GetRegulationSaveData( p_sv );
       REGULATION_CARDDATA *p_reg_card = RegulationSaveData_GetRegulationCard( p_reg_sv, type );
       REGULATION          *p_reg      = RegulationData_GetRegulation( p_reg_card );
-      BOOL                is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
+      int                is_shooter  = Regulation_GetParam( p_reg, REGULATION_SHOOTER );
       REGULATION_BATTLE_TYPE  battle_type  = Regulation_GetParam( p_reg, REGULATION_BATTLETYPE );
+
+      if( is_shooter >= REGULATION_SHOOTER_MANUAL )
+      {
+        is_shooter  = REGULATION_SHOOTER_VALID;
+      }
 
       battle_mode = BATTLE_MODE_COMPETITION_SINGLE + battle_type * 2 + is_shooter;
 

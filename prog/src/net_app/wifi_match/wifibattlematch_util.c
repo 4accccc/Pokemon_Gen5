@@ -262,11 +262,13 @@ static void WBM_TEXT_PrintInner( WBM_TEXT_WORK* p_wk, WBM_TEXT_TYPE type )
   case WBM_TEXT_TYPE_WAIT:
     p_wk->p_time  = TIMEICON_Create( GFUser_VIntr_GetTCBSYS(), p_wk->p_bmpwin, p_wk->clear_chr,
         TIMEICON_DEFAULT_WAIT, p_wk->heapID );
+
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
     p_wk->print_update  = WBM_TEXT_TYPE_QUE;
     break;
 
   case WBM_TEXT_TYPE_QUE:     //プリントキューを使う
+
     PRINT_UTIL_Print( &p_wk->util, p_wk->p_que, 0, 0, p_wk->p_strbuf, p_wk->p_font );
     p_wk->print_update  = WBM_TEXT_TYPE_QUE;
     break;

@@ -1848,7 +1848,16 @@ static void SEQFUNC_BtlAfter( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       LIVEMATCH_DATA_SetFoeParam( p_wk->p_livematch, idx, LIVEMATCH_FOEDATA_PARAM_REST_HP, p_wk->param.p_btl_score->enemy_rest_hp );
 
       OS_TPrintf( "¥‘Îí‘Šè‚Ìƒf[ƒ^\n" );
-      OS_TPrintf( "mac_addr [%s]\n", p_wk->param.p_enemy_data->mac_address );
+
+      {
+        u32 hight = (p_wk->param.p_enemy_data->mac_address[0] << 0xFFFF)
+          | (p_wk->param.p_enemy_data->mac_address[1] << 0xFF)
+          | p_wk->param.p_enemy_data->mac_address[2];
+        u32 low   = (p_wk->param.p_enemy_data->mac_address[3] << 0xFFFF)
+          | (p_wk->param.p_enemy_data->mac_address[4] << 0xFF )
+          | p_wk->param.p_enemy_data->mac_address[5];
+        OS_TPrintf( "mac_addr [%d][%d]\n", hight, low );
+      }
       OS_TPrintf( "rest_poke[%d]\n", p_wk->param.p_btl_score->enemy_rest_poke );
       OS_TPrintf( "rest_hp  [%d]\n", p_wk->param.p_btl_score->enemy_rest_hp );
     }

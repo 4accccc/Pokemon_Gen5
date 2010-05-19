@@ -176,6 +176,7 @@ typedef struct
   int status;
   int bgm;
   int same_match;
+  int camera;
 } DEBUGWIN_REGULATION_DATA;
 
 static DEBUGWIN_REGULATION_DATA debug_data  = {0};
@@ -309,6 +310,24 @@ static inline void DebugWin_Reg_D_ChangeSameMatch( void* userWork , DEBUGWIN_ITE
 
 }
 
+static inline void DebugWin_Reg_U_ChangeCamera( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DebugWin_Util_ChangeData( item, &p_wk->camera, REGULATION_CAMERA_NORMAL, REGULATION_CAMERA_STOP );
+
+}
+static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  static const char *scp_tbl[]  =
+  { 
+    "‚Â‚¤‚¶‚å‚¤",
+    "‚Ç‚¤‚³",
+    "‚Ä‚¢‚µ"
+  };
+  DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "ƒJƒƒ‰[%s]", scp_tbl[p_wk->camera] );
+
+}
 
 //-------------------------------------
 ///	”½‰f
@@ -318,6 +337,8 @@ static inline void DebugWin_Reg_U_Get( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   { 
+    REGULATION  *p_reg = RegulationData_GetRegulation(p_wk->p_regulation);
+
     p_wk->cup_no  = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO );
     p_wk->start_year = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_YEAR );
     p_wk->start_month = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_MONTH );
@@ -328,6 +349,7 @@ static inline void DebugWin_Reg_U_Get( void* userWork , DEBUGWIN_ITEM* item )
     p_wk->status = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS );
     p_wk->bgm = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
     p_wk->same_match = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH );
+    p_wk->camera = Regulation_GetParam( p_reg, REGULATION_CAMERA );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -336,6 +358,8 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   { 
+    REGULATION  *p_reg = RegulationData_GetRegulation(p_wk->p_regulation);
+
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO, p_wk->cup_no );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_START_YEAR, p_wk->start_year );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_START_MONTH, p_wk->start_month );
@@ -346,6 +370,7 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS, p_wk->status );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM, p_wk->bgm );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH, p_wk->same_match );
+    Regulation_SetParam( p_reg, REGULATION_CAMERA, p_wk->camera );
   }
 }
 static inline void DebugWin_Reg_U_Clear( void* userWork , DEBUGWIN_ITEM* item )
@@ -403,6 +428,8 @@ static inline void DEBUGWIN_REG_Init( REGULATION_CARDDATA *p_regulation, HEAPID 
   DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeBgmNo, DebugWin_Reg_D_ChangeBgmNo,
       &debug_data, DEBUGWIN_GROUP_REG, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeSameMatch, DebugWin_Reg_D_ChangeSameMatch,
+      &debug_data, DEBUGWIN_GROUP_REG, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_Reg_U_ChangeCamera, DebugWin_Reg_D_ChangeCamera,
       &debug_data, DEBUGWIN_GROUP_REG, heapID );
 }
 
@@ -951,9 +978,19 @@ static inline void DebugWin_LiveScore_D_MyMacAddr( void* userWork , DEBUGWIN_ITE
 { 
   LIVEMATCH_DATA *p_sv  = userWork;
   u8 mac_address[7];
+  u32 hight, low;
+
   LIVEMATCH_DATA_GetMyMacAddr( p_sv, mac_address );
-  mac_address[6]  = '\n';
-  DEBUGWIN_ITEM_SetNameV( item , "mac[%s]", mac_address );  
+
+  hight = (mac_address[0] << 0xFFFF)
+    | (mac_address[1] << 0xFF)
+    | mac_address[2];
+
+  low   = (mac_address[3] << 0xFFFF)
+    | (mac_address[4] << 0xFF)
+    | mac_address[5];
+
+  DEBUGWIN_ITEM_SetNameV( item , "mac[%d][%d]", hight, low );  
 }
 static inline void DebugWin_LiveScore_U_MyWin( void* userWork , DEBUGWIN_ITEM* item )
 { 
