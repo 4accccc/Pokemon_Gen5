@@ -175,7 +175,8 @@ static void common_weather_recover( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeath
 static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SunPower_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunPower( u32* numElems );
-static void handler_Rinpun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Rinpun_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Rinpun_Rank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Rinpun_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Rinpun( u32* numElems );
 static void handler_TennoMegumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2586,12 +2587,21 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunPower( u32* numElems )
  *  とくせい「りんぷん」
  */
 //------------------------------------------------------------------------------
-// 追加効果（状態異常，ランク効果共通）ハンドラ
-static void handler_Rinpun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// 追加効果（状態異常）ハンドラ
+static void handler_Rinpun_Sick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( (pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF))
   &&  (pokeID != BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK))
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_SICKID) != WAZASICK_BIND)
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+// 追加効果（ランク効果）ハンドラ
+static void handler_Rinpun_Rank( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF))
+  &&  (pokeID != BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK))
   ){
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
@@ -2607,8 +2617,8 @@ static void handler_Rinpun_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Rinpun( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK,       handler_Rinpun }, // 追加効果（状態異常）チェックハンドラ
-    { BTL_EVENT_ADD_RANK_TARGET,handler_Rinpun }, // 追加効果（ランク効果）チェックハンドラ
+    { BTL_EVENT_ADD_SICK,       handler_Rinpun_Sick  }, // 追加効果（状態異常）チェックハンドラ
+    { BTL_EVENT_ADD_RANK_TARGET,handler_Rinpun_Rank  }, // 追加効果（ランク効果）チェックハンドラ
     { BTL_EVENT_SHRINK_CHECK,   handler_Rinpun_Shrink },  // ひるみチェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
