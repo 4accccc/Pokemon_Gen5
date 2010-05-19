@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:23:50"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T14:02:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="205" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="349" right="1261" bottom="747" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -346,10 +346,10 @@
 		<language name="JPN" width="256">…おや！
 リバティチケットを　おもちですね[BE:01:ページ切り替え（クリア）]
 リバティガーデンとうへ
-いかれますか？[BE:01:ページ切り替え（クリア）]</language>
+いかれますか？</language>
 		<language name="JPN_KANJI" width="256">…おや！
 リバティチケットを　お持ちですね[BE:00:ページ切り替え（行送り）]
-リバティガーデン島へ　行かれますか？[BE:01:ページ切り替え（クリア）]</language>
+リバティガーデン島へ　行かれますか？</language>
 	</row>
 
 	<row id="msg_c03p13_captain_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -372,10 +372,10 @@
 船長</attribute>
 		<language name="JPN" width="256">リバティガーデンとうへ
 いきたくなりましたら[BE:00:ページ切り替え（行送り）]
-また　こえを　かけてください</language>
+また　こえを　かけてください▼</language>
 		<language name="JPN_KANJI" width="256">リバティガーデン島へ
 行きたくなりましたら[BE:00:ページ切り替え（行送り）]
-また　声を　かけてください</language>
+また　声を　かけてください▼</language>
 	</row>
 
 	<row id="msg_c03p13_captain_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -384,14 +384,13 @@
 　・「いいえ」　→msg_c03p13_captain_04</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
-		<language name="JPN" width="256">リバティガーデンとうへ　いきますか？[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">リバティガーデン島へ　行きますか？[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">リバティガーデンとうへ
+いかれますか？</language>
+		<language name="JPN_KANJI" width="256">リバティガーデン島へ　行かれますか？</language>
 	</row>
 
-	<row id="msg_c03p13_captain_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●プラズマ団イベントが進行しているとき「はい」を選んだ場合
-●セリフ後、画面フェードアウト。
-※出航デモはカット。</comment>
+	<row id="msg_c03p13_captain_06" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">プラズマだんの　ぼうきょを
@@ -400,9 +399,8 @@
 止めなければ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p13_captain_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>●プラズマ団イベントが進行しているとき「いいえ」を選んだ場合
-</comment>
+	<row id="msg_c03p13_captain_07" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">PILOT
 船長</attribute>
 		<language name="JPN" width="256">じゅんびが　おわりましたら
