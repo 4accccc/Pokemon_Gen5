@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:49:47"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T12:23:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1410" top="181" right="2115" bottom="809" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -411,7 +411,7 @@
 	<row id="msg_t02_hakaiw_stop_02" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,,">
 		<comment>♀
 ・t02pc0101イベント終了までのストッパー
-・POSを踏んだとき
+・posを踏んだとき
 ・メッセージ後、主人公の位置をもどす</comment>
 		<attribute name="キャラ指定">プラズマ団員♀</attribute>
 		<language name="JPN" width="256">ちょっと……
@@ -425,7 +425,7 @@
 	<row id="msg_t02_black_01" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・r01イベント終了後に配置
-　POSを踏むとこのメッセージ
+　posを踏むとこのメッセージ
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『ポケモンセンターの　まえで
@@ -775,7 +775,7 @@
 チャンピオン　だけど▼</language>
 	</row>
 
-	<row id="msg_t02_boss_03" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_t02_boss_03" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>♂
 ・表示後、一歩移動
 　続けてboss_03a表示</comment>
@@ -867,9 +867,11 @@
 	<row id="msg_t01_woman1_01" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
 		<comment>♀</comment>
 		<attribute name="キャラ指定">女性１</attribute>
-		<language name="JPN" width="256">あなたと　あなたのポケモン
+		<language name="JPN" width="256">あら？▼
+あなたと　あなたのポケモン
 どことなく　にてるって　かんじ！</language>
-		<language name="JPN_KANJI" width="256">あなたと　あなたのポケモン
+		<language name="JPN_KANJI" width="256">あら？▼
+あなたと　あなたのポケモン
 どことなく　似てるって　感じ！</language>
 	</row>
 
@@ -886,16 +888,15 @@
 ポケモンは　６匹まで　なんじゃ！</language>
 	</row>
 
-	<row id="msg_t01_oldwoman1_01" text-color="#000000,,,#ff0000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_t01_oldwoman1_01" text-color="#000000,,,,,#000000,,#000000,,,#000000,,,#000000,,,#000000,,">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">老婆１</attribute>
 		<language name="JPN" width="256">ポケモンは　ひとのため
 ちからのかぎり　がんばる▼
 ひとは　そんな　ポケモンのため
 あいをもって　せっする▼
 それが　おたがいの　かんけいだよ
-わたしは　そうおもってるよ</language>
+わたしは　そう　おもってるよ</language>
 		<language name="JPN_KANJI" width="256">ポケモンは　人のため
 ちからのかぎり　がんばる▼
 人は　そんな　ポケモンのため
