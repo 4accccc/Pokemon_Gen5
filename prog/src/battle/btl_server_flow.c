@@ -8910,6 +8910,8 @@ static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
 
   scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDestract );
+
+  BPP_MIGAWARI_Delete( bpp );
   SCQUE_PUT_OP_MigawariDelete( wk->que, pokeID );
   SCQUE_PUT_ACT_MigawariDelete( wk->que, pos );
 }
@@ -12186,6 +12188,8 @@ static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_WAZA_POWER, power );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER_BASE );
+
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.0), FX32_CONST(0.01f), FX32_CONST(512) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_POWER );
     power = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
