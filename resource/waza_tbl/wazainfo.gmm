@@ -4936,11 +4936,11 @@
 
 	<row id="WAZAINFO_505">
 		<language name="JPN" width="216">いやしのはどうを　とばして
-さいだい　ＨＰの　はんぶん　じぶんや
-みかたの　ＨＰを　かいふく　する。</language>
+さいだい　ＨＰの　はんぶん
+あいての　ＨＰを　かいふく　する。</language>
 		<language name="JPN_KANJI" width="216">いやしのはどうを　飛ばして
-最大ＨＰの　半分　自分や
-味方の　ＨＰを　回復する。</language>
+最大ＨＰの　半分
+相手の　ＨＰを　回復する。</language>
 	</row>
 
 	<row id="WAZAINFO_506">
