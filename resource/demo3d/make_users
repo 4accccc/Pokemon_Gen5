@@ -3,7 +3,7 @@
 # Excel管理表しか編集しないユーザーは CMD_USERSに追加
 # 3Dリソースの編集もするユーザーは ALL_USERSに追加
 #------------------------------------------------------------------------------
-CMD_USERS	= adachi_minako kageyama_shota iwao_kazumasa
-ALL_USERS = genya_hosaka unno james_turner fujiwara_maiko lee_hyunjung ohkubo_tomohiko iwasawa
+CMD_USERS	= kageyama_shota iwao_kazumasa
+ALL_USERS = genya_hosaka unno james_turner fujiwara_maiko lee_hyunjung ohkubo_tomohiko iwasawa adachi_minako
 USERS	= $(ALL_USERS) $(CMD_USERS)
 
