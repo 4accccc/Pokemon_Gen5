@@ -276,7 +276,7 @@ static const HIDE_ITEM_DATA hide_item_data[177] = {
 		ZONE_ID_D02R0101, // ヤグルマの森
 		 14, 56, // x, y
 	},
-	{ // ふしぎなアメ
+	{ // ハイパーボール
 		 46, 
 		1,0, // flags
 		ZONE_ID_R04, // ４番道路
@@ -366,7 +366,7 @@ static const HIDE_ITEM_DATA hide_item_data[177] = {
 		ZONE_ID_D06R0101, // でんきいしのほらあな１Ｆ
 		 25, 54, // x, y
 	},
-	{ // きんのたま
+	{ // まんたんのくすり
 		 61, 
 		0,0, // flags
 		ZONE_ID_D06R0101, // でんきいしのほらあな１Ｆ
@@ -540,7 +540,7 @@ static const HIDE_ITEM_DATA hide_item_data[177] = {
 		ZONE_ID_D09R0301, // チャンピオンロード
 		  7, 11, // x, y
 	},
-	{ // ふしぎなアメ
+	{ // ハイパーボール
 		 90, 
 		0,0, // flags
 		ZONE_ID_D09R0501, // チャンピオンロード
@@ -828,7 +828,7 @@ static const HIDE_ITEM_DATA hide_item_data[177] = {
 		ZONE_ID_R08R0101, // セッカの湿原
 		 17, 51, // x, y
 	},
-	{ // ふしぎなアメ
+	{ // きんのたま
 		138, 
 		0,0, // flags
 		ZONE_ID_R08R0101, // セッカの湿原
@@ -930,7 +930,7 @@ static const HIDE_ITEM_DATA hide_item_data[177] = {
 		ZONE_ID_R06R0201, // フキヨセのほらあな１Ｆ
 		 20,  3, // x, y
 	},
-	{ // きんのたま
+	{ // インドメタシン
 		155, 
 		0,0, // flags
 		ZONE_ID_R06R0203, // フキヨセのほらあな３Ｆ
@@ -1020,7 +1020,7 @@ static const HIDE_ITEM_DATA hide_item_data[177] = {
 		ZONE_ID_D05, // れいとうコンテナ
 		202,456, // x, y
 	},
-	{ // きんのたま
+	{ // タウリン
 		170, 
 		0,0, // flags
 		ZONE_ID_R16R0201, // まよいのもり

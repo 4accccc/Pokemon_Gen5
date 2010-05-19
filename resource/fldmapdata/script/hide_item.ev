@@ -430,7 +430,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_046
 //４番道路 ( 414, 569 )
-	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_046 )// ふしぎなアメ
+	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_046 )// ハイパーボール
 EVENT_END
 
 EVENT_START ev_hide_item_047
@@ -505,7 +505,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_061
 //でんきいしのほらあな１Ｆ ( 40, 11 )
-	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_061 )// きんのたま
+	_ITEM_EVENT_HIDEITEM( 24, 1, FLAG_HIDEITEM_061 )// まんたんのくすり
 EVENT_END
 
 EVENT_START ev_hide_item_062
@@ -650,7 +650,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_090
 //チャンピオンロード ( 3, 9 )
-	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_090 )// ふしぎなアメ
+	_ITEM_EVENT_HIDEITEM( 2, 1, FLAG_HIDEITEM_090 )// ハイパーボール
 EVENT_END
 
 EVENT_START ev_hide_item_091
@@ -890,7 +890,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_138
 //セッカの湿原 ( 42, 40 )
-	_ITEM_EVENT_HIDEITEM( 50, 1, FLAG_HIDEITEM_138 )// ふしぎなアメ
+	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_138 )// きんのたま
 EVENT_END
 
 EVENT_START ev_hide_item_139
@@ -975,7 +975,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_155
 //フキヨセのほらあな３Ｆ ( 7, 9 )
-	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_155 )// きんのたま
+	_ITEM_EVENT_HIDEITEM( 48, 1, FLAG_HIDEITEM_155 )// インドメタシン
 EVENT_END
 
 EVENT_START ev_hide_item_156
@@ -1050,7 +1050,7 @@ EVENT_END
 
 EVENT_START ev_hide_item_170
 //まよいのもり ( 23, 33 )
-	_ITEM_EVENT_HIDEITEM( 92, 1, FLAG_HIDEITEM_170 )// きんのたま
+	_ITEM_EVENT_HIDEITEM( 46, 1, FLAG_HIDEITEM_170 )// タウリン
 EVENT_END
 
 EVENT_START ev_hide_item_171
