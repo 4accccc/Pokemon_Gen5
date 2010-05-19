@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-14T11:23:26"/>
+	<create user="taya" host="W00146" date="2010-05-19T10:56:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2849,6 +2849,13 @@
 張り切りだした！</language>
 	</row>
 
+	<row id="BTL_STRID_SET_UseItem_Kemuridama">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　もっていた
+[1:09:どうぐ名:1]を　つかって　にげた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　持っていた
+[1:09:どうぐ名:1]を使って　逃げた！</language>
+	</row>
+
 	<row id="BTL_STRID_SET_KoraeItem">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で　もちこたえた！</language>
@@ -2860,7 +2867,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
 ステータスを　もとに　もどした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　[1:09:どうぐ名:1]で
-ステータスを　もとに　もどした！</language>
+ステータスを　元に戻した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_PokeNotExist">
