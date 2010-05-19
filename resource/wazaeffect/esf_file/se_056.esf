@@ -1,5 +1,13 @@
 EFFSEQ
+$0001
+C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_056_rainbow.spa
 #001
 %00
+パーティクルデータロード	be_se_056_rainbow
+パーティクル再生	be_se_056_rainbow	BE_SE_056_RAINBOW_SE_056_RAINBOW	POS_AA	方向無し	3:0:0	1:1:1	1
+パーティクル再生	be_se_056_rainbow	BE_SE_056_RAINBOW_SE_056_SUN_BALL	POS_AA	方向無し	2:0:0	1:1:1	1
+パーティクル再生	be_se_056_rainbow	BE_SE_056_RAINBOW_SE_056_SUN_LINE_1	POS_AA	方向無し	2:0:0	1:1:1	1
+パーティクル再生	be_se_056_rainbow	BE_SE_056_RAINBOW_SE_056_SUN_LINE_2	POS_AA	方向無し	2:0:0	1:1:1	1
+エフェクト終了待ち	すべて
 エフェクト終了
 &
