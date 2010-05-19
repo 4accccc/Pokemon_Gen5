@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T17:26:22"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T19:14:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1332" top="165" right="2037" bottom="793" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -557,7 +557,7 @@
 ダメージを　与えた　ポケモンを▽
 その勢いで　ボールに　戻す　技▼
 つまり　相手は
-ポケモンを　入れ替えることになる</language>
+ポケモンを　入れ替えることになる▼</language>
 	</row>
 
 	<row id="msg_c08gym0101_leader_06b">
