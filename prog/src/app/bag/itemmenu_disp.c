@@ -1292,6 +1292,8 @@ void ITEMDISP_CellCreate( FIELD_ITEMMENU_WORK* pWork )
 
     GFL_CLACT_WK_SetDrawEnable( pWork->clwkScroll, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
+
+		ITEMDISP_ScrollCursorChangePos( pWork );		// 初期位置設定
   }
 
   //選択カーソル
