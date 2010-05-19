@@ -1689,7 +1689,7 @@ void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo )
     BTLV_EFFECT_AddByPos( vpos, effectNo );
   }
 }
-BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos )
+BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk )
 {
   if( !BTLV_EFFECT_CheckExecute() ){
     return TRUE;

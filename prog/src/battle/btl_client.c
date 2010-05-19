@@ -5104,7 +5104,7 @@ static u16 CheckMemberOutStrID( BTL_CLIENT* wk, u8 clientID, BOOL* fClientArg )
 
 //----------------------------------------------------------------------------------
 /**
- * メンバー引き上げアクション
+ * メンバー退場アクション
  *
  * args[0]: pos  args[1]: effectNo
  */
@@ -5115,6 +5115,7 @@ static BOOL scProc_ACT_MemberOut( BTL_CLIENT* wk, int* seq, const int* args )
   case 0:
     {
       BtlvMcssPos  vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, args[0] );
+
       BTLV_ACT_MemberOut_Start( wk->viewCore,  vpos, args[1] );
       (*seq)++;
     }
@@ -6166,7 +6167,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     }
     break;
   case SEQ_LVUP_EFFECT_WAIT:
-    if( BTLV_WaitEffectByPos(wk->viewCore, vpos) )
+    if( BTLV_WaitEffectByPos(wk->viewCore) )
     {
       (*seq) = SEQ_LVUP_INFO_START;
     }
@@ -6788,7 +6789,7 @@ static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args )
     break;
 
   default:
-    if( BTLV_WaitEffectByPos( wk->viewCore, vpos ) ){
+    if( BTLV_WaitEffectByPos( wk->viewCore) ){
       return TRUE;
     }
     break;

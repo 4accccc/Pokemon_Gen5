@@ -2856,7 +2856,7 @@ typedef struct {
 
 void BTLV_SCU_StartMemberOutAct( BTLV_SCU* wk, BtlvMcssPos vpos, u16 effectNo, BOOL fSkipMode )
 {
-  if( fSkipMode )
+  if( fSkipMode || (effectNo == 0))
   {
     BTLV_EFFECT_DelGauge( vpos );
     BTLV_EFFECT_DelPokemon( vpos );

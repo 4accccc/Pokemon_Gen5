@@ -311,7 +311,7 @@ extern void BTLV_ACT_TameWazaHide( BTLV_CORE* wk, BtlvMcssPos vpos, BTLV_MCSS_VA
 extern void BTLV_ACT_SimpleHPEffect_Start( BTLV_CORE* wk, BtlPokePos pokePos );
 extern BOOL BTLV_ACT_SimpleHPEffect_Wait( BTLV_CORE* wk );
 extern void BTLV_AddEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos, u16 effectNo );
-extern BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk, BtlvMcssPos vpos );
+extern BOOL BTLV_WaitEffectByPos( BTLV_CORE* wk );
 extern void BTLV_AddEffectByDir( BTLV_CORE* wk, BtlvMcssPos vpos_from, BtlvMcssPos vpos_to, u16 effectNo );
 extern BOOL BTLV_WaitEffectByDir( BTLV_CORE* wk );
 

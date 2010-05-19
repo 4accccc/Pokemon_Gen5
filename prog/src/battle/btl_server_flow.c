@@ -3835,7 +3835,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
 
   if( !BPP_IsDead(outPoke) )
   {
-    scproc_MemberOutCore( wk, outPoke, 0 );
+    scproc_MemberOutCore( wk, outPoke, BTLEFF_POKEMON_MODOSU );
     return TRUE;
   }
 
@@ -3847,7 +3847,7 @@ static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPo
  *
  * @param   wk
  * @param   outPoke
- * @param   effectNo   エフェクトナンバー(0=標準エフェクト）
+ * @param   effectNo   エフェクトナンバー(0=エフェクトなし）
  *
  */
 //----------------------------------------------------------------------------------
@@ -3860,9 +3860,6 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u
     BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
     if( pos != BTL_POS_NULL )
     {
-      if( effectNo == 0 ){
-        effectNo = BTLEFF_POKEMON_MODOSU;
-      }
       SCQUE_PUT_ACT_MemberOut( wk->que, pos, effectNo );
     }
   }
