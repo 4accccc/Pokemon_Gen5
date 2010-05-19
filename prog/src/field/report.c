@@ -158,8 +158,14 @@ enum {
 #define	TIMEMARK_PY		( 180 )
 #define	TIMEMARK_SX		( 12 )
 
-#define	TIMEMARK_WAIT	( 8 )
+#define	TIMEMARK_WAIT	( 8 )		// タイマーアイコンのウェイト
 
+#define	OBJ_PUT_BIT		( 1 )														// OBJ表示チェックビット
+#define	BMP_PUT_BIT		( 2 )														// BMP表示チェックビット
+#define	GRA_PUT_BIT		( OBJ_PUT_BIT | BMP_PUT_BIT )		// グラフィック表示チェックビット
+
+
+// ワーク
 struct _REPORT_WORK {
 	GAMESYS_WORK * gameSys;				// ゲームシステム
 	SAVE_CONTROL_WORK * sv;
@@ -254,7 +260,7 @@ static const GFL_CLWK_DATA	TimeMarkData = { TIMEMARK_PX, TIMEMARK_PY, 0, 0, 0 };
 
 //--------------------------------------------------------------------------------------------
 /**
- * レポート下画面初期化
+ * @brief		レポート下画面初期化
  *
  * @param		gs			GAMESYS_WORK
  * @param		heapID	ヒープＩＤ
@@ -285,7 +291,7 @@ REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 
 //--------------------------------------------------------------------------------------------
 /**
- * レポート下画面削除
+ * @brief		レポート下画面削除
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -305,7 +311,7 @@ void REPORT_Exit( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * レポート下画面アップデート処理
+ * @brief		レポート下画面アップデート処理
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -314,12 +320,24 @@ void REPORT_Exit( REPORT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void REPORT_Update( REPORT_WORK * wk )
 {
+	if( ( wk->seq & OBJ_PUT_BIT ) == 0 ){
+		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+			POKEPARTY * party;
+			u32	i;
+			party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(wk->gameSys) );
+			for( i=OBJID_POKE1; i<OBJID_POKE1+PokeParty_GetPokeCount(party); i++ ){
+				GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
+			}
+			wk->seq |= OBJ_PUT_BIT;
+		}
+	}
+
 //	OS_Printf( "レポート：アップデートきました\n" );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * レポート下画面描画処理
+ * @brief		レポート下画面描画処理
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -330,7 +348,7 @@ void REPORT_Draw( REPORT_WORK * wk )
 {
 	u32	i;
 
-	if( wk->seq == 0 ){
+	if( ( wk->seq & BMP_PUT_BIT ) == 0 ){
 		if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
 			GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
 			GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
@@ -339,14 +357,7 @@ void REPORT_Draw( REPORT_WORK * wk )
 				GFL_BMPWIN_MakeScreen( wk->win[i].win );
 			}
 			GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
-			{
-				POKEPARTY * party;
-				party = GAMEDATA_GetMyPokemon( GAMESYSTEM_GetGameData(wk->gameSys) );
-				for( i=OBJID_POKE1; i<OBJID_POKE1+PokeParty_GetPokeCount(party); i++ ){
-					GFL_CLACT_WK_SetDrawEnable( wk->clwk[i], TRUE );
-				}
-			}
-			wk->seq = 1;
+			wk->seq |= BMP_PUT_BIT;
 		}
 	}
 
@@ -360,7 +371,7 @@ void REPORT_Draw( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * 初期化終了待ち
+ * @brief		初期化終了待ち
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -370,12 +381,15 @@ void REPORT_Draw( REPORT_WORK * wk )
 //--------------------------------------------------------------------------------------------
 BOOL REPORT_CheckInit( REPORT_WORK * wk )
 {
-	return wk->seq;
+	if( wk->seq == GRA_PUT_BIT ){
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * セーブサイズ設定
+ * @brief		セーブサイズ設定
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -394,7 +408,7 @@ void REPORT_SetSaveSize( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * セーブタイプ取得（たくさん書くか）
+ * @brief		セーブタイプ取得（たくさん書くか）
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -412,7 +426,7 @@ BOOL REPORT_CheckSaveType( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * セーブ開始
+ * @brief		セーブ開始
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -434,7 +448,7 @@ void REPORT_StartSave( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * セーブ終了
+ * @brief		セーブ終了
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -449,20 +463,11 @@ BOOL REPORT_EndSave( REPORT_WORK * wk )
 		return TRUE;
 	}
 	return FALSE;
-
-/*
-	u32	i;
-
-	for( i=OBJID_TIME01; i<=OBJID_TIME10; i++ ){
-		GFL_CLACT_WK_SetAnmFrame( wk->clwk[i], 0 );
-		GFL_CLACT_WK_SetAnmSeq( wk->clwk[i], 1 );
-	}
-*/
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * セーブ強制終了
+ * @brief		セーブ強制終了
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -476,7 +481,7 @@ void REPORT_BreakSave( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＢＧ初期化
+ * @brief		ＢＧ初期化
  *
  * @param		heapID		ヒープＩＤ
  *
@@ -527,7 +532,7 @@ static void InitBg( HEAPID heapID )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＢＧ削除
+ * @brief		ＢＧ削除
  *
  * @param		none
  *
@@ -547,7 +552,7 @@ static void ExitBg(void)
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＢＧグラフィック読み込み
+ * @brief		ＢＧグラフィック読み込み
  *
  * @param		heapID		ヒープＩＤ
  *
@@ -573,7 +578,7 @@ static void LoadBgGraphic( HEAPID heapID )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＢＭＰ初期化
+ * @brief		ＢＭＰ初期化
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -715,7 +720,7 @@ static void InitBmp( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＢＭＰ削除
+ * @brief		ＢＭＰ削除
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -737,7 +742,7 @@ static void ExitBmp( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＯＢＪ初期化
+ * @brief		ＯＢＪ初期化
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -822,7 +827,7 @@ static void InitObj( REPORT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＯＢＪ削除
+ * @brief		ＯＢＪ削除
  *
  * @param		wk		レポート下画面ワーク
  *
@@ -855,7 +860,16 @@ static void ExitObj( REPORT_WORK * wk )
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );		// SUB DISP OBJ ON
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK処理
+ *
+ * @param		tcb		GFL_TCB
+ * @param		work	ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 {
 	REPORT_WORK * wk;
