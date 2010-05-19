@@ -8561,13 +8561,13 @@
 		<language name="JPN" width="256">OPEN-03</language>
 		<language name="JPN_KANJI" width="256">OPEN-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_371">
-		<language name="JPN" width="256">DMY-371</language>
-		<language name="JPN_KANJI" width="256">DMY-371</language>
+	<row id="msg_seq_se_end_04">
+		<language name="JPN" width="256">END-04</language>
+		<language name="JPN_KANJI" width="256">END-04</language>
 	</row>
-	<row id="msg_seq_se_dmy_372">
-		<language name="JPN" width="256">DMY-372</language>
-		<language name="JPN_KANJI" width="256">DMY-372</language>
+	<row id="msg_seq_se_end_05">
+		<language name="JPN" width="256">END-05</language>
+		<language name="JPN_KANJI" width="256">END-05</language>
 	</row>
 	<row id="msg_seq_se_dmy_373">
 		<language name="JPN" width="256">DMY-373</language>
