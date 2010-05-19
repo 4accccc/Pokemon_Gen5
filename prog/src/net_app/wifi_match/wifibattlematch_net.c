@@ -374,6 +374,7 @@ struct _WIFIBATTLEMATCH_NET_WORK
 //NdCallback内の情報保持（外からワーク渡せないので……）
 static u8 s_callback_flag   = FALSE;
 static DWCNdError s_callback_result = 0;
+static u8 s_cleanup_callback_flag   = FALSE;
 
 //=============================================================================
 /**
@@ -441,6 +442,7 @@ static void print_field(DWCGdbField* field); // レコードをデバッグ出力する。
 ///	ダウンロード関係
 //=====================================
 static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq );
+static void DwcRap_Nd_CleanUpNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq );
 static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror);
 
 //-------------------------------------
@@ -4316,12 +4318,13 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     SEQ_GET_FILE,
     SEQ_GETTING_FILE,
 
-    SEQ_CANCEL,
     SEQ_DOWNLOAD_COMPLETE,
     SEQ_END,
     SEQ_EMPTY_END,
+    SEQ_ERROR_END,
 
     SEQ_WAIT_CALLBACK         = 100,
+    SEQ_WAIT_CLEANUP_CALLBACK = 200,
   };
 
   switch( p_wk->seq )
@@ -4332,7 +4335,10 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       OS_TPrintf( "DWC_NdInitAsync: Failed\n" );
       return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
     }
-    DwcRap_Nd_WaitNdCallback( p_wk, SEQ_ATTR );
+    else
+    {
+      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_ATTR );
+    }
     break;
 
   case SEQ_ATTR:
@@ -4340,9 +4346,12 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     if( DWC_NdSetAttr(WIFI_FILE_ATTR1, p_wk->nd_attr2, WIFI_FILE_ATTR3) == FALSE )
     {
       OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
     }
-    p_wk->seq = SEQ_FILENUM;
+    else
+    {
+      p_wk->seq = SEQ_FILENUM;
+    }
     break;
 
 //-------------------------------------
@@ -4353,9 +4362,12 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     if( DWC_NdGetFileListNumAsync( &p_wk->server_filenum ) == FALSE )
     {
       OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
     }
-    DwcRap_Nd_WaitNdCallback( p_wk, SEQ_FILELIST );
+    else
+    {
+      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_FILELIST );
+    }
     break;
 
   case SEQ_FILELIST:
@@ -4368,9 +4380,12 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       if( DWC_NdGetFileListAsync( &p_wk->fileInfo, 0, 1 ) == FALSE)
       {
         OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-        return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+        DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
       }
-      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_GET_FILE );
+      else
+      {
+        DwcRap_Nd_WaitNdCallback( p_wk, SEQ_GET_FILE );
+      }
     }
     else
     { 
@@ -4380,7 +4395,10 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       if( !DWC_NdCleanupAsync() ){  //FALSEの場合コールバックが呼ばれない
         return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
       }
-      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_EMPTY_END );
+      else
+      {
+        DwcRap_Nd_WaitNdCallback( p_wk, SEQ_EMPTY_END );
+      }
     }
     break;
 
@@ -4391,11 +4409,14 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     // ファイル読み込み開始
     if(DWC_NdGetFileAsync( &p_wk->fileInfo, (char*)&p_wk->temp_buffer, REGULATION_CARD_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
     }
-    s_callback_flag   = FALSE;
-    s_callback_result = DWC_ND_ERROR_NONE;
-    p_wk->seq = SEQ_GETTING_FILE;
+    else
+    {
+      s_callback_flag   = FALSE;
+      s_callback_result = DWC_ND_ERROR_NONE;
+      p_wk->seq = SEQ_GETTING_FILE;
+    }
     break;
     
   case SEQ_GETTING_FILE:
@@ -4415,9 +4436,8 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
     }
     else if( s_callback_result != DWC_ND_ERROR_NONE)
     {
-      GF_ASSERT(0);
       OS_Printf("DWC_NdGetProgressでエラー\n");
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+      DwcRap_Nd_CleanUpNdCallback( p_wk, SEQ_ERROR_END );
     }
     else
     {
@@ -4426,30 +4446,20 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
         OS_Printf("DWC_NdCleanupAsyncに失敗\n");
         return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
       }
-      DwcRap_Nd_WaitNdCallback( p_wk, SEQ_CANCEL );
+      else
+      {
+        DwcRap_Nd_WaitNdCallback( p_wk, SEQ_DOWNLOAD_COMPLETE );
+      }
     }
     break;
 
 //-------------------------------------
 ///	終了・キャンセル処理
 //=====================================
-  case SEQ_CANCEL:
-    if( DWC_NdCancelAsync() == FALSE )
-    {
-      p_wk->seq = SEQ_DOWNLOAD_COMPLETE;
-    }
-    else 
-    {
-      OS_Printf("download cancel\n");
-      return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
-    }
-    break;
-
   case SEQ_DOWNLOAD_COMPLETE:
     DEBUG_NET_Printf( "●regulation card data\n" );
     DEBUG_NET_Printf( "cup no %d\n", p_wk->temp_buffer.no );
     DEBUG_NET_Printf( "status %d\n", p_wk->temp_buffer.status );
-
 
     p_wk->seq  = SEQ_END;
     break;
@@ -4469,6 +4479,9 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
   case SEQ_EMPTY_END:
     return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY;
 
+  case SEQ_ERROR_END:
+    return WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_ERROR;
+
 //-------------------------------------
 ///	コールバック待ち処理  
 //　　WIFI_DOWNLOAD_WaitNdCallbackを使ってください
@@ -4487,6 +4500,15 @@ WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET WIFIBATTLEMATCH_NET_WaitDownloadDigCard
       { 
         p_wk->seq  = p_wk->next_seq;
       }
+    }
+    break;
+
+  case SEQ_WAIT_CLEANUP_CALLBACK:
+    DWC_NdProcess();
+    if( s_cleanup_callback_flag )
+    { 
+      s_cleanup_callback_flag = FALSE;
+      p_wk->seq  = p_wk->next_seq;
     }
     break;
   }
@@ -4521,6 +4543,28 @@ static void DwcRap_Nd_WaitNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_s
   s_callback_result = DWC_ND_ERROR_NONE;
   p_wk->next_seq    = next_seq;
   p_wk->seq         = 100;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  クリーンアップ
+ *
+ *	@param	WIFIBATTLEMATCH_NET_WORK *p_wk  ワーク
+ *	@param	next_seq  次のシーケンス
+ *	@param  false_seq 失敗したときのシーケンス
+ *
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Nd_CleanUpNdCallback( WIFIBATTLEMATCH_NET_WORK *p_wk, int next_seq )
+{
+  s_callback_flag   = FALSE;
+  s_callback_result = DWC_ND_ERROR_NONE;
+  p_wk->next_seq    = next_seq;
+  p_wk->seq         = 200;
+
+  if( !DWC_NdCleanupAsync(  ) ){  //FALSEの場合コールバックが呼ばれない
+    OS_Printf("DWC_NdCleanupAsyncに失敗\n");
+    p_wk->next_seq    = next_seq;
+  }
 }
 
 /*-------------------------------------------------------------------------*
@@ -4579,8 +4623,8 @@ static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servere
   OS_Printf("errorcode = %d\n", servererror);
   s_callback_flag   = TRUE;
   s_callback_result = error;
+  s_cleanup_callback_flag = TRUE;
 
-  //NdCleanupCallback();
 }
 //=============================================================================
 /**
