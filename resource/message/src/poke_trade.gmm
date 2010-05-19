@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-19T12:35:13"/>
+	<create user="ohmori" host="W00223" date="2010-05-19T14:19:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1060,9 +1060,9 @@
 		<comment>「BOXからさしだす画面」
 初期表示メッセージ
 ※ネゴでは、ウエイト60フレーム</comment>
-		<language name="JPN" width="256">さしだすポケモンを　えらんでください
+		<language name="JPN" width="256">さしだす　ポケモンを　えらんでください
 ポケモンは　３ひきまで　えらべます</language>
-		<language name="JPN_KANJI" width="256">差し出すポケモンを　選んでください
+		<language name="JPN_KANJI" width="256">差し出す　ポケモンを　選んでください
 ポケモンは　３匹まで選べます</language>
 	</row>
 
