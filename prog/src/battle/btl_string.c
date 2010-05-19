@@ -330,6 +330,7 @@ void BTL_STR_MakeStringStdWithArgArray( STRBUF* buf, BtlStrID_STD strID, const i
     BTL_STRID_STD_Dokubisi,
     BTL_STRID_STD_DokubisiOff,
     BTL_STRID_STD_StealthRock,
+    BTL_STRID_STD_StealthRockOff,
     BTL_STRID_STD_WideGuard,
     BTL_STRID_STD_FastGuard,
     BTL_STRID_STD_Kinchoukan,
