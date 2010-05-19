@@ -585,6 +585,9 @@ LIVE_COMM Intrude_CheckLiveCommStatus(GAME_COMM_SYS_PTR game_comm)
     return LIVE_COMM_NULL;
   }
   if(intcomm->live_comm_status == 0){
+    if(Intrude_GetIntrudeStatus(game_comm) == INTRUDE_CONNECT_MISSION_PARTNER){
+      return LIVE_COMM_INTRUDE_PARTNER;
+    }
     return LIVE_COMM_INTRUDE;
   }
   return LIVE_COMM_INTRUDE_OUT;

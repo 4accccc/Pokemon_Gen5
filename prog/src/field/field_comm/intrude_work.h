@@ -26,9 +26,10 @@ typedef enum{
 
 ///ライブ通信画面用：侵入状態
 typedef enum{
-  LIVE_COMM_NULL,           ///<侵入されていない
-  LIVE_COMM_INTRUDE,        ///<侵入されている
-  LIVE_COMM_INTRUDE_OUT,    ///<侵入された後、ライブ通信画面を一度抜けている
+  LIVE_COMM_NULL,             ///<侵入されていない
+  LIVE_COMM_INTRUDE,          ///<侵入されている
+  LIVE_COMM_INTRUDE_PARTNER,  ///<協力者になった
+  LIVE_COMM_INTRUDE_OUT,      ///<協力者になった後、ライブ通信画面を一度抜けている
 }LIVE_COMM;
 
 
