@@ -1619,7 +1619,7 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
     {
       int dotto_color;
 
-      dotto_color = GAUGETOOL_GetGaugeDottoColor( put_dot, BTLV_GAUGE_HP_DOTTOMAX );
+      dotto_color = GAUGETOOL_GetGaugeDottoColor( bgcl->hp, bgcl->hpmax );
       switch(dotto_color){
       case GAUGETOOL_HP_DOTTO_GREEN:
         parts_num = GP_HPBAR_GREEN;
