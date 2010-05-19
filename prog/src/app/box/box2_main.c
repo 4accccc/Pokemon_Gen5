@@ -3813,7 +3813,13 @@ static BOX2_POKEINFO_DATA * PokeInfoDataMake( POKEMON_PASO_PARAM * ppp )
     info->mark   = PPP_Get( ppp, ID_PARA_mark, NULL );
     info->lv     = PPP_Get( ppp, ID_PARA_level, NULL );
     info->tamago = PPP_Get( ppp, ID_PARA_tamago_flag, NULL );
-    info->sex    = PPP_GetSex( ppp );
+		// ダメタマゴのときにASSERTで止まってしまうので、タマゴのときは性別を取得しないようにする
+		// 表示用なので、なくても問題なし
+		if( info->tamago == 0 ){
+	    info->sex = PPP_GetSex( ppp );
+		}else{
+	    info->sex = 0;
+		}
 
     if( PPP_CheckRare( ppp ) == TRUE ){
       info->rare = 1;
