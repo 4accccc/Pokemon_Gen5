@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-18T22:41:24"/>
+	<create user="ohmori" host="W00223" date="2010-05-19T19:11:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -585,17 +585,17 @@
 	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
 		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
-ブラックＬｖが　[2:02:３桁:0]あがった！</language>
+○ブラックＬｖが　[2:02:３桁:0]あがった！</language>
 		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
-ブラックＬｖが　[2:02:３桁:0]上がった！</language>
+○ブラックＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
 
 	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
 		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
-ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
+●ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
 		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
-ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
+●ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
 
 	<row id="mis_m01_01_t1" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -2168,10 +2168,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん？
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 てもち　２ひき　レベル　[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまってて！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 手持ち　２匹で　レベル　[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待ってて！</language>
 	</row>
@@ -2183,10 +2187,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『え？
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 てもち　２ひき　レベル　[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまっててね！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『え？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 手持ち　２匹　レベル　[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待っててね！</language>
 	</row>
@@ -2303,10 +2311,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『ん？
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 てもち　２ひき　レベル　[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまってて！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『ん？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 手持ち　２匹で　レベル　[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待ってて！</language>
 	</row>
@@ -2319,10 +2331,14 @@ mis_m02_01_1のあとのセリフ、ミッション側にでるメッセージ
 
 [1:00:トレーナー名:0]＝相手の名前
 </comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『え？
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 てもち　２ひき　レベル　[2:02:３桁:1]フラットで▽
 たいせん　したいの？　ちょっとまっててね！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『え？
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
+こんにちは！▼
+ん？
 手持ち　２匹　レベル　[2:02:３桁:1]フラットで▽
 対戦　したいの？　ちょっと待っててね！</language>
 	</row>

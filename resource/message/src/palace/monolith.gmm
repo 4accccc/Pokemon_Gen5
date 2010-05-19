@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-14T11:31:45"/>
+	<create user="ohmori" host="W00223" date="2010-05-19T19:09:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="502" top="467" right="1207" bottom="1094" maximized="no" rayout="Vertical2">
+	<dialog left="667" top="454" right="1372" bottom="1079" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="1221" top="9" right="1694" bottom="633" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -322,8 +322,8 @@
 
 	<row id="msg_mono_st_000" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">ハイルツリーのごうけいＬｖ：[2:02:３桁:0]</language>
-		<language name="JPN_KANJI" width="256">ハイルツリーの合計Ｌｖ：[2:02:３桁:0]</language>
+		<language name="JPN" width="256">ハイルツリーのごうけいＬｖ：　[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">ハイルツリーの合計Ｌｖ：　[2:02:３桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_001" back-color="#ffff80,,,#404040,,#404040,,,,,,#404040,,,,,,">
@@ -340,14 +340,14 @@
 
 	<row id="msg_mono_st_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">ホワイトＬｖ：[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="256">ホワイトＬｖ：[2:03:４桁:0]</language>
+		<language name="JPN" width="256">●ホワイトＬｖ：　[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">●ホワイトＬｖ：　[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>状態画面</comment>
-		<language name="JPN" width="256">ブラックＬｖ：[2:03:４桁:0]</language>
-		<language name="JPN_KANJI" width="256">ブラックＬｖ：[2:03:４桁:0]</language>
+		<language name="JPN" width="256">○ブラックＬｖ：　[2:03:４桁:0]</language>
+		<language name="JPN_KANJI" width="256">○ブラックＬｖ：　[2:03:４桁:0]</language>
 	</row>
 
 	<row id="msg_mono_st_005" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -571,26 +571,26 @@
 
 	<row id="msg_mono_pow_up_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">ホワイトＬｖが　[2:02:３桁:0]いじょうで
-うけとれるように　なります
+		<language name="JPN" width="256">●　ホワイトＬｖ：[2:02:３桁:0]　でうけとれます　●
 
-ブラックＬｖ：[2:02:３桁:2]　　　ホワイトＬｖ：[2:02:３桁:1]</language>
-		<language name="JPN_KANJI" width="256">ホワイトＬｖが　[2:02:３桁:0]以上で
-受け取れるように　なります
 
-ブラックＬｖ：[2:02:３桁:2]　　　ホワイトＬｖ：[2:02:３桁:1]</language>
+○ブラックＬｖ：[2:02:３桁:2]　　　●ホワイトＬｖ：[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">●　ホワイトＬｖ：[2:02:３桁:0]　で受け取れます　●
+
+
+○ブラックＬｖ：[2:02:３桁:2]　　　●ホワイトＬｖ：[2:02:３桁:1]</language>
 	</row>
 
 	<row id="msg_mono_pow_up_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">ブラックＬｖが　[2:02:３桁:0]いじょうで
-うけとれるように　なります
+		<language name="JPN" width="256">○　ブラックＬｖ：[2:02:３桁:0]　でうけとれます　○
 
-ブラックＬｖ：[2:02:３桁:2]　　　ホワイトＬｖ：[2:02:３桁:1]</language>
-		<language name="JPN_KANJI" width="256">ブラックＬｖが　[2:02:３桁:0]以上で
-受け取れるように　なります
 
-ブラックＬｖ：[2:02:３桁:2]　　　ホワイトＬｖ：[2:02:３桁:1]</language>
+○ブラックＬｖ：[2:02:３桁:2]　　　●ホワイトＬｖ：[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">○　ブラックＬｖ：[2:02:３桁:0]　で受け取れます　○
+
+
+○ブラックＬｖ：[2:02:３桁:2]　　　●ホワイトＬｖ：[2:02:３桁:1]</language>
 	</row>
 
 	<flowchart-group-list>

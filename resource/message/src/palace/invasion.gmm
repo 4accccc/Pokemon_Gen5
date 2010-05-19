@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-13T22:25:04"/>
+	<create user="ohmori" host="W00223" date="2010-05-19T19:22:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="174"/>
 		<band id="2" index="2" style="0000" width="767"/>
 		<band id="3" index="3" style="0000" width="767"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1054,7 +1054,7 @@
 あいてのせかいが　きえさり
 じぶんのハイリンクに　もどってきた</language>
 		<language name="JPN_KANJI" width="256">ミッション　失敗！
-相手に　断られたた……▼
+相手に　断られた……▼
 相手の世界は　なくなり
 自分のハイリンクに　戻ってきた</language>
 	</row>
