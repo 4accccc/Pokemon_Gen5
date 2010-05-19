@@ -25,15 +25,16 @@ use File::Basename;
 		$filename = basename( @ARGV[0], 'ncg' );
 		$filename =~ s/pfwb/pmwb/g;
 		$filename =~ s/pbwb/pmwb/g;
-		$filename =~ s/[0-9]c_m\./$1/g;
-		$filename =~ s/[0-9]c_f\./$1/g;
+		$filename =~ s/([0-9])c_m\./$1/g;
+		$filename =~ s/([0-9])c_f\./$1/g;
 		$filename =~ s/(c_)(\w*)(_m)\./_$2/g;
 		$filename =~ s/(c_)(\w*)(_f)\./_$2/g;
+    $filename =~ s/\.//g;
 		$cmd = "rm " . $filename . "_n.NCLR";
 		system $cmd;
 		$cmd = "rm " . $filename . "_r.NCLR";
 		system $cmd;
-		$cmd = "rm " . $filename . "NCLR";
+		$cmd = "rm " . $filename . ".NCLR";
 		system $cmd;
 
 		#_fÉtÉ@ÉCÉãÇ™ë∂ç›ÇµÇ»Ç¢èÍçáÇ…ê∂ê¨

@@ -4,6 +4,7 @@
 #
 #====================================================================================
 use File::Basename;
+use POSIX qw(ceil);
 
 use constant FORMAT_ID		=>	4;
 use constant BYTE_ORDER		=>	2;
@@ -77,6 +78,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 
 	open( READ_NCE, @ARGV[0] ) or die "[@ARGV[0]]", $!;
 	open( WRITE_NCE, "> $write_file") or die "[$write_file]", $!;
+	open( ERR, ">> err.txt");
 
 	binmode READ_NCE;
 	binmode WRITE_NCE;
@@ -276,6 +278,10 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 		push @write_data , pack "l l l l l l l l l l l l", $min_x, $min_y, $size_x, $size_y, $tex_s, $tex_t, $mepachi_min_x, $mepachi_min_y, $mepachi_size_x, $mepachi_size_y, $mepachi_tex_s, $mepachi_tex_t;
 #		print WRITE_NCE $write;
 #=cut
+    if( ( $tex_t >= 0x80000 ) || ( $mepachi_tex_t >= 0x80000 ) ){
+      print ERR @ARGV[0] . "\n";
+      print ERR "cell:$cell\n";
+    }
 	}
 
   #静止アニメ用データ生成
@@ -370,6 +376,8 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
  	  die;
   }
 
+  $size_max_y = -256;
+
   for( $mc = 0 ; $mc < $multi_cells ; $mc++ ){
 	  read READ_NMC, $header, 4; 
  	  ($cell_anms) = unpack "L", $header;
@@ -400,7 +408,9 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   $size_x = $size_max_x - $size_min_x;
   $size_y = $size_max_y - $size_min_y;
 
-  $write = pack "s s", $size_x, $size_y;
+  $ofs_x = ceil( $size_max_x - $size_x / 2 );
+
+  $write = pack "s s s s", $size_x, $size_y, $ofs_x, $size_max_y;
   print WRITE_NCE $write;
 
   for( $i = 0 ; $i < @write_data ; $i++ )
