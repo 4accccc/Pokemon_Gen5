@@ -19,7 +19,6 @@
 #include "field/field_const.h"  //for FIELD_CONST_GRID_FX32_SIZE
 
 #include "arc/fieldmap/legend_gmk.naix"
-#include "arc/fieldmap/sppoke.naix"
 #include "sound/pm_sndsys.h"
 #include "legend_gmk_se_def.h"
 #include "sp_poke_gimmick_se_def.h"
@@ -121,10 +120,10 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_black[] = {
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_p_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
 
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 };
 
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
@@ -135,10 +134,10 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl_white[] = {
   { ARCID_LEGEND_GMK, NARC_legend_gmk_shin_mu_p_nsbta, GFL_G3D_UTIL_RESARC }, //ITA
   { ARCID_LEGEND_GMK, NARC_legend_gmk_mu_p_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
 
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
-  { ARCID_SPPOKE_GMK, NARC_sppoke_mb_out_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbmd, GFL_G3D_UTIL_RESARC }, //IMD ボールアウト
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbca, GFL_G3D_UTIL_RESARC }, //ICA ボールアウトアニメ
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbtp, GFL_G3D_UTIL_RESARC }, //ITP
+  { ARCID_LEGEND_GMK, NARC_legend_gmk_mb_out2_nsbma, GFL_G3D_UTIL_RESARC }, //IMA
 
 };
 
@@ -197,11 +196,11 @@ void LEGEND_GMK_Setup(FIELDMAP_WORK *fieldWork)
   //必要なリソースの用意(バージョン分岐)
   if ( GetVersion() == VERSION_WHITE )
   {
-    FLD_EXP_OBJ_AddUnit(ptr, &SetupWhite, LEGEND_UNIT_IDX );
+    FLD_EXP_OBJ_AddUnitByHandle(ptr, &SetupWhite, LEGEND_UNIT_IDX );
   }
   else
   {
-    FLD_EXP_OBJ_AddUnit(ptr, &SetupBlack, LEGEND_UNIT_IDX );
+    FLD_EXP_OBJ_AddUnitByHandle(ptr, &SetupBlack, LEGEND_UNIT_IDX );
   }
   gmk_wk->Fade = GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN;
 
