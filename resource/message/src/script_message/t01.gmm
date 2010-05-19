@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-14T16:24:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T11:29:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -363,6 +363,7 @@
 
 	<row id="msg_t01_white_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：図鑑入手後
+・主人公性別：♂
 ・主人公がt01に来ると自動で表示
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♀
@@ -370,6 +371,19 @@
 		<language name="JPN" width="256">ベル『おうい！
 [1:00:トレーナー名:0]　まってよお！▼</language>
 		<language name="JPN_KANJI" width="256">ベル『おうい！
+[1:00:トレーナー名:0]　待ってよお！▼</language>
+	</row>
+
+	<row id="msg_t01_white_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>♀：図鑑入手後
+・主人公性別：♀
+・主人公がt01に来ると自動で表示
+・0＝主人公名前</comment>
+		<attribute name="キャラ指定">友達♀
+ベル</attribute>
+		<language name="JPN" width="256">ベル『ねえねえ！
+[1:00:トレーナー名:0]　まってよお！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！
 [1:00:トレーナー名:0]　待ってよお！▼</language>
 	</row>
 
