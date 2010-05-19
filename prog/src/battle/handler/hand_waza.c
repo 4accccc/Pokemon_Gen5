@@ -7609,7 +7609,6 @@ static void handler_DenjiFuyuu_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   }
 }
 
-}
 // –¢•ª—ŞƒƒUƒnƒ“ƒhƒ‰
 static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
