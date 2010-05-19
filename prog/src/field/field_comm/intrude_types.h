@@ -169,7 +169,8 @@ typedef struct{
   u16 zone_id;       ///<ゾーンID
   u16 palace_area:3; ///<パレスエリア
   u16 symbol_mapid:6;
-  u16 action_status:7; ///<実行中のアクション(INTRUDE_ACTION_???)
+  u16 action_status:6; ///<実行中のアクション(INTRUDE_ACTION_???)
+  u16 detect_fold:1;  ///<TRUE:蓋を閉じている
   
   u16 disguise_no;   ///<変装番号
   u8 disguise_type:4; ///<変装タイプ(TALK_TYPE_xxx)

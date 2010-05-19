@@ -37,6 +37,7 @@
 #include "event_mission_shop.h"
 #include "event_mission_secretitem.h"
 #include "event_comm_notarget.h"
+#include "event_comm_sleep.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
@@ -311,7 +312,31 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
 	case SEQ_INIT:
 	  {
       MISSION_TYPE mission_type = MISSION_GetMissionType(&intcomm->mission);
-      if(intcomm->intrude_status[talk->ccew.talk_netid].action_status != INTRUDE_ACTION_FIELD){
+      if(intcomm->intrude_status[talk->ccew.talk_netid].detect_fold == TRUE){
+        //話しかけた相手は蓋を閉じている場合は、相手との会話を成立させずに専用イベントを起動
+        COMMTALK_COMMON_EVENT_WORK *temp_ccew;
+        
+        //EventChangeでワークが解放されるので、引き渡す為、テンポラリにコピーする
+        temp_ccew = GFL_HEAP_AllocClearMemory(
+          GFL_HEAP_LOWID(talk->ccew.heapID), sizeof(COMMTALK_COMMON_EVENT_WORK));
+        GFL_STD_MemCopy(&talk->ccew, temp_ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
+
+
+        if(MISSION_GetResultData(&intcomm->mission) == NULL 
+            && MISSION_RecvCheck(&intcomm->mission) == TRUE
+            && MISSION_GetMissionEntry(&intcomm->mission) == TRUE
+            && MISSION_CheckMissionTargetNetID(&intcomm->mission, talk->ccew.talk_netid) == TRUE){
+          //蓋を閉じている相手はターゲットで自分はミッション実施者
+          EVENTCHANGE_CommMissionSleep_MtoT_Talk(event, temp_ccew);
+        }
+        else{
+          EVENTCHANGE_CommMissionEtc_MtoT_NotTalk_Talk(event, temp_ccew);
+        }
+
+        GFL_HEAP_FreeMemory(temp_ccew);
+        break;
+      }
+      else if(intcomm->intrude_status[talk->ccew.talk_netid].action_status !=INTRUDE_ACTION_FIELD){
         //話しかけられる状態ではないため、相手との会話の成立を確認せずに専用イベントを起動
         COMMTALK_COMMON_EVENT_WORK *temp_ccew;
         

@@ -166,6 +166,11 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   //モノリスステータス要求
   Intrude_CheckMonolithStatusReq(intcomm);
   
+  //プレイヤーステータスステータス更新
+  if(Intrude_SetSendStatus(intcomm) == TRUE){
+    intcomm->send_status = TRUE;
+  }
+
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){
     IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
@@ -740,6 +745,7 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
   PLAYER_WORK *plWork = GAMEDATA_GetMyPlayerWork( gamedata );
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   INTRUDE_STATUS *ist = &intcomm->intrude_status_mine;
+  BOOL detect_fold;
   
   send_req = CommPlayer_Mine_DataUpdate(intcomm->cps, &ist->player_pack);
   if(ist->zone_id != zone_id){
@@ -749,6 +755,12 @@ BOOL Intrude_SetSendStatus(INTRUDE_COMM_SYS_PTR intcomm)
   
   if(ist->symbol_mapid != GAMEDATA_GetSymbolMapID(gamedata)){
     ist->symbol_mapid = GAMEDATA_GetSymbolMapID(gamedata);
+    send_req = TRUE;
+  }
+  
+  detect_fold = PAD_DetectFold();
+  if(ist->detect_fold != detect_fold){
+    ist->detect_fold = detect_fold;
     send_req = TRUE;
   }
   

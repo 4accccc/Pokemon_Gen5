@@ -198,10 +198,6 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
 
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
 
-  if(Intrude_SetSendStatus(intcomm) == TRUE){
-    intcomm->send_status = TRUE;
-  }
-
   CommPlayer_Update(intcomm->cps);
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(i == my_net_id){
