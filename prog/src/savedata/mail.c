@@ -19,7 +19,6 @@
 
 #include "savedata/mail.h"
 #include "savedata/mail_util.h"
-//#include "savedata/mail_local.h"
 #include "savedata/mystatus.h"
 
 #include "poke_tool/poke_tool.h"
