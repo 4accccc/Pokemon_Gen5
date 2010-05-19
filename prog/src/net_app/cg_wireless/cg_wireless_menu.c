@@ -1047,8 +1047,7 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
       GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_018, pWork->pStrBuf );
       _buttonWindowCreate2(0,  pWork, wind_wireless2);
       if( Intrude_GetTargetName(pComm,pWork->pStrBuf) ){
-        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_016, pWork->pStrBuf );
-
+//        GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_016, pWork->pStrBuf );
         _buttonWindowCreate2(_HI_NAMAE,  pWork, wind_wireless_name);
         GFL_CLACT_WK_SetDrawEnable( pWork->HiName, TRUE );
       }
