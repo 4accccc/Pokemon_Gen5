@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-05-13T20:17:43"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-19T19:21:42"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -67,7 +67,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 2240 0422 0000 0000 0000
+			0000 0000 0000 2220 0222 0000 0000 0000
 			0000 0000 2000 ddd2 2ddd 0002 0000 0000
 			0000 0000 1200 3ddd ddd3 0021 0000 0000
 			0000 0000 91f0 3eee eee3 0f19 0000 0000
@@ -109,7 +109,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 2240 0422 0000 0000 0000
+			0000 0000 0000 2220 0222 0000 0000 0000
 			0000 0000 2000 ddd2 2ddd 0002 0000 0000
 			0000 0000 1200 3ddd ddd3 0021 0000 0000
 			0000 0000 91f0 3eee eee3 0f19 0000 0000
@@ -151,7 +151,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 2240 0422 0000 0000 0000
+			0000 0000 0000 2220 0222 0000 0000 0000
 			0000 0000 2000 ddd2 2ddd 0002 0000 0000
 			0000 0000 1200 3ddd ddd3 0021 0000 0000
 			0000 0000 91f0 3eee eee3 0f19 0000 0000
@@ -193,7 +193,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 2240 0422 0000 0000 0000
+			0000 0000 0000 2220 0222 0000 0000 0000
 			0000 0000 2000 ddd2 2ddd 0002 0000 0000
 			0000 0000 1200 3ddd ddd3 0021 0000 0000
 			0000 0000 91f0 3eee eee3 0f19 0000 0000
@@ -282,7 +282,7 @@
 			0000 0000 6400 3eee eee3 0046 0000 0000
 			0000 0000 e6f0 4ddd ddd4 0f6e 0000 0000
 			0000 0000 d1f0 dddd dddd 0f1d 0000 0000
-			0000 0000 d164 34dd dd43 461d 0000 0000
+			0000 0000 d16f 34dd dd43 f61d 0000 0000
 			0000 0000 111f 122d d221 f111 0000 0000
 			0000 2000 1114 4121 1212 2111 0002 0000
 			0000 12f0 1cfc 1211 1121 cfc1 0f21 0000
@@ -338,7 +338,7 @@
 			0000 0000 0000 56e0 00e5 0000 0000 0000
 			0000 0000 0000 45e0 0e57 0000 0000 0000
 			0000 0000 0000 2560 0e57 0000 0000 0000
-			0000 0000 0000 222f fe24 0000 0000 0000
+			0000 0000 0000 2220 0e24 0000 0000 0000
 			0000 0000 0000 a48e e634 0000 0000 0000
 			0000 0000 0000 936e e63a 0000 0000 0000
 			0000 0000 0000 3620 0e63 0000 0000 0000
@@ -429,32 +429,32 @@
 		4bdf 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="hero04.1_pl" color_size="16">
-		7e80 3573 1ca7 416b 2d08 4d47 6af5 61e8
+		2e47 3573 1ca7 416b 2d08 4d47 6af5 61e8
 		728e 7779 3a7a 5f5f 190c 35bd 7fff 0000
 	</tex_palette>
 	<tex_palette index="2" name="hero04.2_pl" color_size="16">
-		7e80 3573 1ca7 416b 2d08 4d47 6af5 61e8
+		2e47 3573 1ca7 416b 2d08 4d47 6af5 61e8
 		728e 7779 3a7a 5f5f 190c 35bd 7fff 0000
 	</tex_palette>
 	<tex_palette index="3" name="hero04.3_pl" color_size="16">
-		7e80 3573 1ca7 416b 2d08 4d47 6af5 61e8
+		2e47 3573 1ca7 416b 2d08 4d47 6af5 61e8
 		728e 7779 3a7a 5f5f 190c 35bd 7fff 0000
 	</tex_palette>
 	<tex_palette index="4" name="hero_hi.10_pl" color_size="16">
-		641f 4e37 39ae 5631 45ef 5e0e 7358 6a8f
+		2e47 4e37 39ae 5631 45ef 5e0e 7358 6a8f
 		7713 7bbb 4efc 6b9f 35f2 4e7e 7fff 2529
 	</tex_palette>
 	<tex_palette index="5" name="hero_hi.1_pl" color_size="16">
-		7ee9 4a37 39ae 5631 45ef 5e0e 7358 6a8f
-		7713 7bbb 4efc 6b9f 35f2 4a5e 7fff 2529
+		2e47 4e37 39ae 5631 45ef 5e0e 7358 6a8f
+		7713 7bbb 4efc 6b9f 35f2 4e7e 7fff 2529
 	</tex_palette>
 	<tex_palette index="6" name="hero_hi.4_pl" color_size="16">
-		7ee9 4a37 39ae 5631 45ef 5e0e 7358 6a8f
-		7713 7bbb 4efc 6b9f 35f2 4a5e 7fff 2529
+		2e47 4e37 39ae 5631 45ef 5e0e 7358 6a8f
+		7713 7bbb 4efc 6b9f 35f2 4e7e 7fff 2529
 	</tex_palette>
 	<tex_palette index="7" name="hero_hi.7_pl" color_size="16">
-		641f 4e37 39ae 5631 45ef 5e0e 7358 7713
-		7bbb 4efc 6b9f 35f2 4e7e 7fff 2529 2529
+		2e47 4e37 39ae 5631 45ef 5e0e 7358 7713
+		7bbb 4efc 6b9f 35f2 4e7e 7fff 2529 7fff
 	</tex_palette>
 	<tex_palette index="8" name="hika.1_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
@@ -1188,7 +1188,7 @@
 		<ex_tex_image index="0" disp_pos="-60.000000 360.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="3" disp_pos="-120.000000 480.000000"/>
+		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
@@ -1199,7 +1199,7 @@
 		<ex_tex_palette index="0" disp_pos="-60.000000 420.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="3" disp_pos="-120.000000 540.000000"/>
+		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
