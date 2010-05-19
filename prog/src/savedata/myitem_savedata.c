@@ -765,45 +765,6 @@ void MYITEM_CheckSafety( MYITEM_PTR myitem )
 
 //------------------------------------------------------------------
 /**
- * @brief	バッグのデータ作成
- * @param	myitem		手持ちアイテム構造体へのポインタ
- * @param	list		ポケットリスト
- * @param	heap		ヒープID
- */
-//------------------------------------------------------------------
-#if 0	//まだバッグ画面はないのでとりあえず消す 2008.12.05(金) matsuda
-void * MYITEM_MakeBagData( MYITEM_PTR myitem, const u8 * list, HEAPID heap )
-{
-	BAG_DATA * bag;
-	int i;
-
-	bag = BagSystemDataAlloc( heap );
-	for( i=0; list[i] != 0xff; i++ ){
-		switch( list[i] ){
-		case BAG_POKE_EVENT:
-			BagPocketDataMake( bag, myitem->MyEventItem, BAG_POKE_EVENT, i );
-			break;
-		case BAG_POKE_NORMAL:
-			BagPocketDataMake( bag, myitem->MyNormalItem, BAG_POKE_NORMAL, i );
-			break;
-		case BAG_POKE_NUTS:
-			BagPocketDataMake( bag, myitem->MyNutsItem, BAG_POKE_NUTS, i );
-			break;
-		case BAG_POKE_DRUG:
-			BagPocketDataMake( bag, myitem->MyDrugItem, BAG_POKE_DRUG, i );
-			break;
-		case BAG_POKE_WAZA:
-			BagPocketDataMake( bag, myitem->MySkillItem, BAG_POKE_WAZA, i );
-			break;
-		}
-	}
-	return bag;
-}
-#endif
-
-
-//------------------------------------------------------------------
-/**
  * @brief	指定ポケットの指定位置のアイテムを取得
  * @param	myitem		手持ちアイテム構造体へのポインタ
  * @param	pocket		ポケットID
