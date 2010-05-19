@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<ima version="1.6.0">
+
+<head>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-18T22:55:13" source="pl_ele_01_bunkatu00_off.mb"/>
+	<title>Material Color Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
+</head>
+
+<body>
+
+<mat_color_info
+	frame_size="181"
+	tool_start_frame="0"
+	tool_end_frame="180"
+	interpolation="frame"
+	compress_material="on" material_size="1 1"
+	frame_step_mode="1"
+	tolerance_color="2"
+/>
+
+<mat_color_data size="183">
+	25 0 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 31 31 31 31 31
+	31 31 31 31 31 30 30 29 29 28
+	27 26 25 24 23 22 21 19 18 17
+	15 14 13 11 10 9 7 6 5 3
+	2 1 0
+</mat_color_data>
+
+<mat_color_anm_array size="1">
+	<mat_color_anm index="0" material_name="out32_han3_1">
+		<diffuse_r frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_g frame_step="1" data_size="1" data_head="0"/>
+		<diffuse_b frame_step="1" data_size="1" data_head="0"/>
+		<ambient_r frame_step="1" data_size="1" data_head="1"/>
+		<ambient_g frame_step="1" data_size="1" data_head="1"/>
+		<ambient_b frame_step="1" data_size="1" data_head="1"/>
+		<specular_r frame_step="1" data_size="1" data_head="1"/>
+		<specular_g frame_step="1" data_size="1" data_head="1"/>
+		<specular_b frame_step="1" data_size="1" data_head="1"/>
+		<emission_r frame_step="1" data_size="1" data_head="1"/>
+		<emission_g frame_step="1" data_size="1" data_head="1"/>
+		<emission_b frame_step="1" data_size="1" data_head="1"/>
+		<polygon_alpha frame_step="1" data_size="181" data_head="2"/>
+	</mat_color_anm>
+</mat_color_anm_array>
+
+</body>
+
+</ima>
