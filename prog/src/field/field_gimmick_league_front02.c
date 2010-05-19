@@ -273,6 +273,16 @@ void LEAGUE_FRONT_02_GIMMICK_ShowLiftEffect( FIELDMAP_WORK* fieldmap )
   {
     FLD_EXP_OBJ_ValidCntAnm( exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, i,  TRUE );
   }
+
+  {
+    EXP_OBJ_ANM_CNT_PTR anime_controller;
+    anime_controller = FLD_EXP_OBJ_GetAnmCnt( 
+        exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, LIFT_EFFECT_ANM_TA );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( anime_controller, FALSE );
+    anime_controller = FLD_EXP_OBJ_GetAnmCnt( 
+        exobj_cnt, LF02_EXUNIT_GIMMICK, LF02_EXOBJ_LIFT_EFFECT, LIFT_EFFECT_ANM_MA );
+    FLD_EXP_OBJ_ChgAnmLoopFlg( anime_controller, FALSE );
+  }
 }
 
 
