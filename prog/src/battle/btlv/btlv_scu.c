@@ -2714,22 +2714,10 @@ BOOL BTLV_SCU_WaitWazaEffect( BTLV_SCU* wk )
 }
 
 //==============================================================================
-typedef struct {
-
-  STATUS_WIN*  statWin;
-  fx32    hpVal;
-  fx32    hpMinusVal;
-  u16     hpEnd;
-  u16     timer;
-  u8*     taskCounter;
-
-}DMG_EFF_TASK_WORK;
-
-
 
 //=============================================================================================
 /**
- *
+ *  ワザによるダメージエフェクト開始
  *
  * @param   wk
  * @param   defPos
@@ -2749,10 +2737,9 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID
     BTLV_EFFECT_CalcGaugeHPAtOnce( vpos, value );
   }
 }
-
 //=============================================================================================
 /**
- * わざエフェクト終了待ち
+ * ワザによるダメージエフェクト終了待ち
  *
  * @param   wk
  *
@@ -2762,6 +2749,35 @@ void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID
 BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk )
 {
   return !( BTLV_EFFECT_CheckExecute() | BTLV_EFFECT_CheckExecuteGauge() );
+}
+
+//=============================================================================================
+/**
+ *  みがわりへのダメージエフェクト開始
+ *
+ * @param   wk
+ * @param   defPos
+ *
+ */
+//=============================================================================================
+void BTLV_SCU_StartMigawariDamageAct( BTLV_SCU* wk, BtlPokePos pos, WazaID wazaID )
+{
+  BtlvMcssPos  vpos  = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
+
+  BTLV_EFFECT_Damage( vpos, wazaID );
+}
+//=============================================================================================
+/**
+ *  みがわりへのダメージエフェクト終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL  終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_SCU_WaitMigawariDamageAct( BTLV_SCU* wk )
+{
+  return !BTLV_EFFECT_CheckExecute();
 }
 
 //=============================================================================================

@@ -103,6 +103,7 @@ typedef enum {
   SC_ACT_MIGAWARI_CREATE,   ///< みがわり作成
   SC_ACT_MIGAWARI_DELETE,   ///< みがわり消去
   SC_ACT_HENSIN,            ///< へんしん
+  SC_ACT_MIGAWARI_DAMAGE,   ///< みがわりダメージ
   SC_ACT_WIN_BGM,           ///< 勝利BGM再生
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
@@ -526,6 +527,10 @@ static inline void SCQUE_PUT_ACT_MigawariDelete( BTL_SERVER_CMD_QUE* que, BtlPok
 static inline void SCQUE_PUT_ACT_Hensin( BTL_SERVER_CMD_QUE* que, u8 atkPokeID, u8 tgtPokeID )
 {
   SCQUE_PUT_Common( que, SC_ACT_HENSIN, atkPokeID, tgtPokeID );
+}
+static inline void SCQUE_PUT_ACT_MigawariDamage( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 affine, WazaID waza )
+{
+  SCQUE_PUT_Common( que, SC_ACT_MIGAWARI_DAMAGE, defPokeID, affine, waza );
 }
 static inline void SCQUE_PUT_ACT_PlayWinBGM( BTL_SERVER_CMD_QUE* que, u16 bgmNo )
 {

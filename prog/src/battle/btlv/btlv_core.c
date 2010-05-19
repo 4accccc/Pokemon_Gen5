@@ -110,6 +110,7 @@ static BOOL mainproc_call( BTLV_CORE* core );
 static BOOL CmdProc_SelectWaza( BTLV_CORE* core, int* seq, void* workBufer );
 static void ForceQuitSelect_Common( BTLV_CORE* core );
 static BOOL subprocDamageEffect( int* seq, void* wk_adrs );
+static BOOL subprocMigawariDamageEffect( int* seq, void* wk_adrs );
 static void PlayWazaAffSE( BTLV_CORE* wk, BtlTypeAffAbout affAbout );
 static BOOL subprocMemberIn( int* seq, void* wk_adrs );
 static void StrParamToString( const BTLV_STRPARAM* param, STRBUF* dst );
@@ -1065,14 +1066,6 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->time_out_flg = FALSE;
   plist->commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
   plist->end_flg = FALSE;
-
-  TAYA_Printf("***** Setup Plist *****\n");
-  TAYA_Printf(" MODE=%d\n", plist->mode );
-  TAYA_Printf(" fight_pos_max=%d\n", plist->fight_poke_max );
-  TAYA_Printf(" sel_poke=%d\n", plist->sel_poke );
-  TAYA_Printf(" sel_pos_index=%d\n", plist->sel_pos_index );
-  TAYA_Printf(" chg_waza_param=%d\n", plist->chg_waza );
-  TAYA_Printf("\n");
 }
 //=============================================================================================
 /**
@@ -1552,6 +1545,73 @@ static BOOL subprocDamageEffect( int* seq, void* wk_adrs )
   }
   return FALSE;
 }
+
+//=============================================================================================
+/**
+ * みがわりへのダメージエフェクト開始
+ *
+ * @param   wk
+ * @param   wazaID
+ * @param   defPokePos
+ * @param   damage
+ * @param   aff
+ */
+//=============================================================================================
+void BTLV_ACT_MigawariDamageEffect_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokePos migawariPos, BtlTypeAffAbout affAbout )
+{
+  if( !BTL_CLIENT_IsChapterSkipMode(wk->myClient) )
+  {
+    WAZA_DMG_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG_ACT_WORK));
+
+    subwk->affAbout = affAbout;
+    subwk->defPokePos = migawariPos;
+    subwk->timer = 0;
+    subwk->wazaID = wazaID;
+  }
+
+  BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMigawariDamageEffect );
+}
+//=============================================================================================
+/**
+ * みがわりへのダメージエフェクト終了待ち
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    終了したらTRUE
+ */
+//=============================================================================================
+BOOL BTLV_ACT_MigawariDamageEffect_Wait( BTLV_CORE* wk )
+{
+  return BTL_UTIL_CallProc( &wk->subProc );
+}
+/**
+ *  みがわりへのダメージエフェクトタスク
+ */
+static BOOL subprocMigawariDamageEffect( int* seq, void* wk_adrs )
+{
+  BTLV_CORE* wk = wk_adrs;
+  WAZA_DMG_ACT_WORK* subwk = getGenericWork(wk, sizeof(WAZA_DMG_ACT_WORK));
+
+  switch( *seq ){
+  case 0:
+    {
+      BTLV_SCU_StartMigawariDamageAct( wk->scrnU, subwk->defPokePos, subwk->wazaID );
+      PlayWazaAffSE( wk, subwk->affAbout );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_SCU_WaitMigawariDamageAct(wk->scrnU) )
+    {
+      return TRUE;
+    }
+    break;
+
+  }
+  return FALSE;
+}
+
 //--------------------------------------
 typedef struct {
   u8  pokePos[ BTL_POS_MAX ];

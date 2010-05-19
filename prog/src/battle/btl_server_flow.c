@@ -644,7 +644,7 @@ static void scEvent_FieldEffectCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage );
+static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage, BtlTypeAff aff, WazaID waza );
 static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* rec );
@@ -6335,7 +6335,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   u32 dmg_sum, dmg_tmp;
   u8  critical_flg[ BTL_POSIDX_MAX ];
   u8  koraeru_cause[ BTL_POSIDX_MAX ];
-  u8  poke_cnt, migawari_cnt, fFixDamage;
+  u8  poke_cnt, fFixDamage;
   int i;
   BtlPokePos atkPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
 
@@ -6362,13 +6362,13 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   }
 
   // êgë„ÇÌÇËîªíË
-  for(i=0, migawari_cnt=0; i<poke_cnt; ++i)
+  for(i=0; i<poke_cnt; ++i)
   {
     if( BPP_MIGAWARI_IsExist(bpp[i]) )
     {
       u8 j;
 
-      scproc_Migawari_Damage( wk, bpp[i], dmg[i] );
+      scproc_Migawari_Damage( wk, bpp[i], dmg[i], affAry[j], wazaParam->wazaID );
       for(j=i; j<(poke_cnt-1); ++j){
         bpp[j] = bpp[j+1];
         dmg[j] = dmg[j+1];
@@ -8886,9 +8886,12 @@ static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @retval  BOOL  Ç›Ç™ÇÌÇËÇ™è¡Ç¶ÇΩÇÁTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage )
+static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage, BtlTypeAff aff, WazaID waza )
 {
+  SCQUE_PUT_ACT_MigawariDamage( wk->que, BPP_GetID(bpp), aff, waza );
   scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDamage );
+  scPut_WazaAffinityMsg( wk, 1, &aff, &bpp, FALSE );
+
   if( BPP_MIGAWARI_AddDamage(bpp, damage) )
   {
     scproc_Migawari_Delete( wk, bpp );

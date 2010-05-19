@@ -38,6 +38,8 @@ extern BOOL BTLV_SCU_WaitBtlIn( BTLV_SCU* wk );
 extern void BTLV_SCU_StartWazaDamageAct( BTLV_SCU* wk, BtlPokePos defPos, WazaID wazaID, BOOL fChapterSkipMode );
 extern BOOL BTLV_SCU_WaitWazaDamageAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartDeadAct( BTLV_SCU* wk, BtlPokePos pos, BOOL skipFlag );
+extern void BTLV_SCU_StartMigawariDamageAct( BTLV_SCU* wk, BtlPokePos pos, WazaID wazaID );
+extern BOOL BTLV_SCU_WaitMigawariDamageAct( BTLV_SCU* wk );
 extern BOOL BTLV_SCU_WaitDeadAct( BTLV_SCU* wk );
 extern void BTLV_SCU_StartReliveAct( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_WaitReliveAct( BTLV_SCU* wk );

@@ -47,10 +47,11 @@ typedef enum {
 
   // à¯êîÇRå¬ÇÃå^
   SC_ARGFMT_53bit_1byte = SC_ARGFMT(3,0),
-  SC_ARGFMT_555bit      = SC_ARGFMT(3,1),
-  SC_ARGFMT_5_5_14bit   = SC_ARGFMT(3,2),
-  SC_ARGFMT_112byte     = SC_ARGFMT(3,3),
-  SC_ARGFMT_114byte     = SC_ARGFMT(3,4),
+  SC_ARGFMT_53bit_2byte = SC_ARGFMT(3,1),
+  SC_ARGFMT_555bit      = SC_ARGFMT(3,2),
+  SC_ARGFMT_5_5_14bit   = SC_ARGFMT(3,3),
+  SC_ARGFMT_112byte     = SC_ARGFMT(3,4),
+  SC_ARGFMT_114byte     = SC_ARGFMT(3,5),
 
   // à¯êîÇSå¬ÇÃå^
   SC_ARGFMT_53bit_12byte    = SC_ARGFMT(4,0),
@@ -164,7 +165,8 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_5353bit,          // SC_ACT_RESET_MOVE
   SC_ARGFMT_1byte,            // SC_ACT_MIGAWARI_CREATE
   SC_ARGFMT_1byte,            // SC_ACT_MIGAWARI_DELETE
-  SC_ARGFMT_11byte,           // SC_OP_HENSIN,
+  SC_ARGFMT_11byte,           // SC_ACT_HENSIN,
+  SC_ARGFMT_53bit_2byte,      // SC_ACT_MIGAWARI_DAMAGE
   SC_ARGFMT_2byte,            // SC_ACT_WIN_BGM
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
@@ -460,6 +462,10 @@ static void put_core( BTL_SERVER_CMD_QUE* que, ServerCmd cmd, ScArgFormat fmt, c
     scque_put1byte( que, pack1_2args(args[0], args[1], 5, 3) );
     scque_put1byte( que, args[2] );
     break;
+  case SC_ARGFMT_53bit_2byte:
+    scque_put1byte( que, pack1_2args(args[0], args[1], 5, 3) );
+    scque_put2byte( que, args[2] );
+    break;
   case SC_ARGFMT_555bit:
     {
       u16 pack = pack_3args( 2, args[0],args[1],args[2], 5,5,5 );
@@ -627,6 +633,13 @@ static void read_core( BTL_SERVER_CMD_QUE* que, ScArgFormat fmt, int* args )
       u8 pack = scque_read1byte( que );
       unpack1_2args( pack, 5, 3, args, 0 );
       args[2] = scque_read1byte( que );
+    }
+    break;
+  case SC_ARGFMT_53bit_2byte:
+    {
+      u8 pack = scque_read1byte( que );
+      unpack1_2args( pack, 5, 3, args, 0 );
+      args[2] = scque_read2byte( que );
     }
     break;
   case SC_ARGFMT_555bit:

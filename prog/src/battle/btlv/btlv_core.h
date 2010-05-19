@@ -299,6 +299,8 @@ extern BOOL BTLV_ACT_DamageEffectSingle_Wait( BTLV_CORE* wk );
 extern void BTLV_ACT_DamageEffectPlural_Start( BTLV_CORE* wk, u32 pokeCnt, BtlTypeAffAbout affAbout, const u8* pokeID, WazaID waza );
 extern BOOL BTLV_ACT_DamageEffectPlural_Wait( BTLV_CORE* wk );
 
+extern void BTLV_ACT_MigawariDamageEffect_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokePos migawariPos, BtlTypeAffAbout affAbout );
+extern BOOL BTLV_ACT_MigawariDamageEffect_Wait( BTLV_CORE* wk );
 
 
 extern void BTLV_StartDeadAct( BTLV_CORE* wk, BtlPokePos pokePos );

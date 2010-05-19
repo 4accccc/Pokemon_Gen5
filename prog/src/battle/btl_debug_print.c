@@ -425,6 +425,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_MIGAWARI_CREATE: return "SC_ACT_MIGAWARI_CREATE";   ///< みがわり作成
   case SC_ACT_MIGAWARI_DELETE: return "SC_ACT_MIGAWARI_DELETE";   ///< みがわり消去
   case SC_ACT_HENSIN: return "SC_ACT_HENSIN";            ///< へんしん
+  case SC_ACT_MIGAWARI_DAMAGE: return "SC_ACT_MIGAWARI_DAMAGE"; ///< みがわりダメージ
   case SC_ACT_WIN_BGM: return "SC_ACT_WIN_BGM";           ///< 勝利BGM再生
   case SC_TOKWIN_IN:  return "SC_TOKWIN_IN";             ///< とくせいウィンドウ表示イン [ClientID]
   case SC_TOKWIN_OUT:  return "SC_TOKWIN_OUT";            ///< とくせいウィンドウ表示アウト [ClientID]

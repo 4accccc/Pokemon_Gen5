@@ -345,6 +345,7 @@ static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariCreate( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_MigawariDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL msgPokanCallback( u32 arg );
@@ -4908,6 +4909,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_MIGAWARI_CREATE,   scProc_ACT_MigawariCreate },
     { SC_ACT_MIGAWARI_DELETE,   scProc_ACT_MigawariDelete },
     { SC_ACT_HENSIN,            scProc_ACT_Hensin         },
+    { SC_ACT_MIGAWARI_DAMAGE,   scProc_ACT_MigawariDamage },
     { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM        },
   };
 
@@ -6038,6 +6040,35 @@ static BOOL scProc_ACT_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * みがわりダメージ
+ *
+ * args ..[0]: みがわりを出しているポケID   [1]: ダメージ相性  [2]:ワザID
+ */
+//----------------------------------------------------------------------------------
+static BOOL scProc_ACT_MigawariDamage( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    {
+      BtlPokePos  tgtPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      BtlTypeAffAbout  affAbout = BTL_CALC_TypeAffAbout( args[1] );
+
+      BTLV_ACT_MigawariDamageEffect_Start( wk->viewCore, args[2], tgtPos, affAbout );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_ACT_MigawariDamageEffect_Wait(wk->viewCore) ){
+      return TRUE;
+    }
+    break;
+  }
+  return FALSE;
+}
+
 
 //---------------------------------------------------------------------------------------
 /**
