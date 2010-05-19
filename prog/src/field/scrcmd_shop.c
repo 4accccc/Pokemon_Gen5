@@ -169,7 +169,6 @@ typedef struct {
   u8  shopType;  // ショップタイプ(SCR_SHOPID_NULL, SHOP_TYPE_FIX, etc..)
   u8  shopId;    // ショップの場所ID（shop_data.cdat参照。SHOP_TYOE_FIXの際に使用する)
   int camera_flag_push; // カメラの範囲制限フラグをPUSHするためのワーク
-  
   SHOP_BUY_APP_WORK wk; // ショップ画面ワーク
   
 } SHOP_BUY_CALL_WORK;
@@ -366,16 +365,23 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
       FIELD_CAMERA_SetRecvCamParam( fieldcamera );
       {
         FLD_CAM_MV_PARAM param;
-        param.Core.Shift.x = FX32_ONE*16*6;
-        param.Core.Shift.y = -FX32_ONE*8*7;
-        param.Core.Shift.z = 0;
+
+        // カメラ現在位置を取得
+        FIELD_CAMERA_GetCameraPos( fieldcamera, &param.Core.CamPos);
+        FIELD_CAMERA_GetTargetPos( fieldcamera, &param.Core.TrgtPos );
+        FIELD_CAMERA_FreeCamera(fieldcamera);
+
+        param.Core.CamPos.x += FX32_ONE*16*6;
+        param.Core.CamPos.y += -FX32_ONE*8*7;
+        param.Core.TrgtPos.x += FX32_ONE*16*6;
+        param.Core.TrgtPos.y += -FX32_ONE*8*7;
   
-        param.Chk.Shift = TRUE;
+        param.Chk.Shift = FALSE;
         param.Chk.Pitch = FALSE;
         param.Chk.Yaw   = FALSE;
         param.Chk.Dist  = FALSE;
         param.Chk.Fovy  = FALSE;
-        param.Chk.Pos   = FALSE;
+        param.Chk.Pos   = TRUE;
         FIELD_CAMERA_SetLinerParam( fieldcamera, &param, 10 );
       }
       sbw->seq++;
@@ -397,7 +403,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL_CAMERA_RETURN:
       // 移動カメラ戻す処理
       {
-        FLD_CAM_MV_PARAM_CHK chk = {TRUE, FALSE,FALSE,FALSE,FALSE,};
+        FLD_CAM_MV_PARAM_CHK chk = {FALSE, FALSE,FALSE,FALSE,TRUE,};
         FIELD_CAMERA_RecvLinerParam(fieldcamera, &chk, 8);
       }
       sbw->seq++;
@@ -406,6 +412,7 @@ static BOOL EvShopBuyWait( VMHANDLE *core, void *wk )
     case SHOP_BUY_CALL_CAMERA_RETURN_WAIT:
       // カメラ移動終了待ち
       if(!FIELD_CAMERA_CheckMvFunc(fieldcamera)){
+        FIELD_CAMERA_BindDefaultTarget(fieldcamera);
         FIELD_CAMERA_SetCameraAreaActive( fieldcamera, sbw->camera_flag_push );
         FIELD_CAMERA_RestartTrace( fieldcamera );
         FIELD_CAMERA_ClearRecvCamParam(fieldcamera);
