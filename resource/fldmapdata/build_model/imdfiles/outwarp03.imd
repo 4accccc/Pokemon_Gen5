@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2009-11-26T21:57:28" source="warp03.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-18T20:20:01"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2009-11-26T21:57:28" source="warp03.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-18T18:25:14" source="warp03.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -30,12 +30,12 @@
 <box_test pos_scale="3" xyz="-2.000000 0.375000 -2.000000" whd="4.000000 0.000000 4.000000"/>
 
 <tex_image_array size="1">
-	<tex_image index="0" name="warp03"
+	<tex_image index="0" name="warp01"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
-		palette_name="gtswarp_g"
-		path="C:/home/wb_data3d/build_model/indoor/warp01/tex/warp03.tga"
+		palette_name="gtswarp_r"
+		path="C:/home/wb_data3d/build_model/indoor/warp03/tex/warp01.tga"
 	>
 		<bitmap size="256">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -75,9 +75,9 @@
 </tex_image_array>
 
 <tex_palette_array size="1">
-	<tex_palette index="0" name="gtswarp_g" color_size="16">
-		7fff 5ef7 4e73 56b5 6b39 56b5 6717 5bf3
-		3fee 2beb 2b8a 2b4a 4a52 7fff 7fff 7fff
+	<tex_palette index="0" name="gtswarp_r" color_size="16">
+		7fff 5ef7 4e73 56b5 6b39 56b5 6717 6739
+		5ef7 56b5 4e73 4a52 4a52 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
 
@@ -167,6 +167,25 @@
 
 <output_info vertex_size="4" polygon_size="1"
 	triangle_size="0" quad_size="1"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="defo" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="1">
+		<ex_tex_image index="0" disp_pos="0.000000 300.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="1">
+		<ex_tex_palette index="0" disp_pos="0.000000 360.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
