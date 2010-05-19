@@ -152,6 +152,7 @@ EVENT_START		ev_scene_c04r0201_musical_first
 	_OBJ_ANIME_WAIT()
 	
 	//Ç§Å[ÇÒ Ç«Ç§ÇµÇÊÇ§Ç©Ç»
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG( msg_c04r0201_white_03, MMDL_ID_EVENTOBJ_00 )
 	_MSGWIN_CLOSE()
 	
