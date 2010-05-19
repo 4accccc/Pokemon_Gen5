@@ -1714,11 +1714,7 @@ static void handler_Technician( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
     if( WAZADATA_GetPower(waza) <= 60 )
     {
-      TAYA_Printf("威力低いのでテクニシャン発動\n");
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, BTL_CALC_TOK_TECKNICIAN_POWRATIO );
-    }
-    else{
-      TAYA_Printf("威力高いのでテクニシャン不発\n");
     }
   }
 }

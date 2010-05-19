@@ -588,7 +588,6 @@ void BPP_WAZA_Copy( const BTL_POKEPARAM* bppSrc, BTL_POKEPARAM* bppDst )
     bppDst->waza[i] = bppSrc->waza[i];
   }
   bppDst->wazaCnt = bppSrc->wazaCnt;
-  TAYA_Printf("ワザカウント=%d\n", bppDst->wazaCnt );
 }
 
 //=============================================================================================
@@ -2087,10 +2086,12 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
   reflectWazaPP( bpp );
+  BPP_MIGAWARI_Delete( bpp );
+
   clearHensin( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
-  BPP_MIGAWARI_Delete( bpp );
+
   BPP_CombiWaza_ClearParam( bpp );
 
   clearWazaSickWork( bpp, TRUE );
@@ -2123,7 +2124,6 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
   clearHensin( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
-  BPP_MIGAWARI_Delete( bpp );
   BPP_CombiWaza_ClearParam( bpp );
 
 //  ConfrontRec_Clear( bpp );
@@ -2145,6 +2145,8 @@ void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
   setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
+  BPP_MIGAWARI_Delete( bpp );
+
   clearWazaSickWork( bpp, FALSE );
   Effrank_Init( &bpp->varyParam );
 }
@@ -2165,6 +2167,8 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
   BTL_Printf("[%d]->[%d]へバトンタッチで引き継がれた:防御ランク=%d, 特防ランク=%d\n",
     user->coreParam.myID, target->coreParam.myID,
     target->varyParam.defence, target->varyParam.sp_defence);
+
+  target->migawariHP = user->migawariHP;
 
   // 特定の状態異常をそのまま引き継ぎ
   for(i=0; i<WAZASICK_MAX; ++i)

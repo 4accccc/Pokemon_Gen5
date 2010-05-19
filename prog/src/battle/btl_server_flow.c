@@ -15123,7 +15123,11 @@ static u8 scproc_HandEx_batonTouch( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 
   BPP_BatonTouchParam( target, user );
   SCQUE_PUT_OP_BatonTouch( wk->que, param->userPokeID, param->targetPokeID );
-
+  if( BPP_MIGAWARI_IsExist(user) )
+  {
+    BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, param->userPokeID );
+    SCQUE_PUT_ACT_MigawariCreate( wk->que, pos );
+  }
   return 1;
 }
 /**
