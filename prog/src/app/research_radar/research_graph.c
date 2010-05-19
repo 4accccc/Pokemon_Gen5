@@ -125,6 +125,7 @@ struct _RESEARCH_RADAR_GRAPH_WORK
   GFL_TCB*    VBlankTask;      // VBlankタイミング中に行うタスク
 
   // フラグ
+  BOOL setupFlag;          // セットアップが完了しているかどうか
   BOOL analyzeFlag;        // 解析が済んでいるかどうか
   BOOL analyzeByTouchFlag; // タッチによる解析かどうか
   BOOL updateFlag;         // 更新中かどうか
@@ -144,6 +145,7 @@ struct _RESEARCH_RADAR_GRAPH_WORK
 //-----------------------------------------------------------------------------------------
 // 状態処理
 static void MainSeq_SETUP( RRG_WORK* work ); // RRG_STATE_SETUP
+static void MainSeq_INTRUDE_SHUTDOWN( RRG_WORK* work ); // RRG_STATE_INTRUDE_SHUTDOWN
 static void MainSeq_STANDBY( RRG_WORK* work ); // RRG_STATE_STANDBY
 static void MainSeq_KEYWAIT( RRG_WORK* work ); // RRG_STATE_KEYWAIT
 static void MainSeq_ANALYZE( RRG_WORK* work ); // RRG_STATE_ANALYZE
@@ -375,6 +377,9 @@ static void ReleaseVBlankTask( RRG_WORK* work ); // VBlank タスク 解除
 // ◇LAYER 1 ユーティリティ
 //-----------------------------------------------------------------------------------------
 static u8 Bind_u8( int num ); // u8 に収まるように丸める
+static void IntrudeShutdownRequest( const RRG_WORK* work ); // 侵入切断リクエストを発行する
+static BOOL CheckIntrudeShutdown( const RRG_WORK* work ); // 侵入切断の完了をチェックする
+static void RecoverIntrudeShutdown( const RRG_WORK* work ); // 侵入接続を許可する
 
 
 
@@ -434,32 +439,36 @@ void RRG_Main( RRG_WORK* work )
 {
   // 状態ごとの処理
   switch( work->state ) {
-  case RRG_STATE_SETUP:       MainSeq_SETUP( work );       break;
-  case RRG_STATE_STANDBY:     MainSeq_STANDBY( work );     break;
-  case RRG_STATE_KEYWAIT:     MainSeq_KEYWAIT( work );     break;
-  case RRG_STATE_ANALYZE:     MainSeq_ANALYZE( work );     break;
-  case RRG_STATE_PERCENTAGE:  MainSeq_PERCENTAGE( work );  break;
-  case RRG_STATE_FLASHOUT:    MainSeq_FLASHOUT( work );    break;
-  case RRG_STATE_FLASHIN:     MainSeq_FLASHIN( work );     break;
-  case RRG_STATE_UPDATE:      MainSeq_UPDATE( work );      break;
-  case RRG_STATE_FADEOUT:     MainSeq_FADEOUT( work );     break;
-  case RRG_STATE_WAIT:        MainSeq_WAIT( work );        break;
-  case RRG_STATE_CLEANUP:     MainSeq_CLEANUP( work );     break;
-  case RRG_STATE_FINISH:      return;
+  case RRG_STATE_SETUP:            MainSeq_SETUP( work );             break;
+  case RRG_STATE_INTRUDE_SHUTDOWN: MainSeq_INTRUDE_SHUTDOWN( work );  break;
+  case RRG_STATE_STANDBY:          MainSeq_STANDBY( work );           break;
+  case RRG_STATE_KEYWAIT:          MainSeq_KEYWAIT( work );           break;
+  case RRG_STATE_ANALYZE:          MainSeq_ANALYZE( work );           break;
+  case RRG_STATE_PERCENTAGE:       MainSeq_PERCENTAGE( work );        break;
+  case RRG_STATE_FLASHOUT:         MainSeq_FLASHOUT( work );          break;
+  case RRG_STATE_FLASHIN:          MainSeq_FLASHIN( work );           break;
+  case RRG_STATE_UPDATE:           MainSeq_UPDATE( work );            break;
+  case RRG_STATE_FADEOUT:          MainSeq_FADEOUT( work );           break;
+  case RRG_STATE_WAIT:             MainSeq_WAIT( work );              break;
+  case RRG_STATE_CLEANUP:          MainSeq_CLEANUP( work );           break;
+  case RRG_STATE_FINISH:           return;                            
   default: GF_ASSERT(0);
   }
 
-  // 2D 描画
-  GFL_CLACT_SYS_Main();             // セルアクターシステム メイン処理
-  UpdateCircleGraphs( work );       // 円グラフ メイン動作
-  ARROW_Main( work->arrow );        // 矢印 メイン動作
-  UpdateCommonPaletteAnime( work ); // 共通パレットアニメーションを更新
-  UpdatePaletteAnime( work );       // パレットアニメーション更新
+  // 描画
+  if( work->setupFlag ) { 
+    // 2D 描画
+    GFL_CLACT_SYS_Main();             // セルアクターシステム メイン処理
+    UpdateCircleGraphs( work );       // 円グラフ メイン動作
+    ARROW_Main( work->arrow );        // 矢印 メイン動作
+    UpdateCommonPaletteAnime( work ); // 共通パレットアニメーションを更新
+    UpdatePaletteAnime( work );       // パレットアニメーション更新
 
-  // 3D 描画
-  DrawCircleGraphs( work ); // 円グラフを描画
-  DrawAnswerMarker( work ); // 回答マーカーを描画
-  G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+    // 3D 描画
+    DrawCircleGraphs( work ); // 円グラフを描画
+    DrawAnswerMarker( work ); // 回答マーカーを描画
+    G3_SwapBuffers( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );
+  }
 
   // 状態を更新
   CountUpStateCount( work ); // 状態カウンタ更新
@@ -575,6 +584,9 @@ static void MainSeq_SETUP( RRG_WORK* work )
   StartPaletteAnime( work, PALETTE_ANIME_RECEIVE_BUTTON ); //「データ受信中」ボタンのパレットアニメを開始
   UpdateAnalyzeButton( work ); //『報告を見る』ボタンを更新する
 
+  // セットアップ完了
+  work->setupFlag = TRUE;
+
   // 画面フェードイン開始
   StartFadeIn();
 
@@ -583,6 +595,7 @@ static void MainSeq_SETUP( RRG_WORK* work )
     RRG_STATE next_state;
 
     next_state = GetFirstState( work ); 
+    RegisterNextState( work, RRG_STATE_INTRUDE_SHUTDOWN ); // 次の状態をセット
     RegisterNextState( work, next_state ); // 次の状態をセット
 
     if( next_state == RRG_STATE_KEYWAIT ) {
@@ -592,6 +605,31 @@ static void MainSeq_SETUP( RRG_WORK* work )
 
   // 状態終了
   FinishCurrentState( work ); 
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 侵入切断状態 ( RRG_STATE_INTRUDE_SHUTDOWN ) の処理
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void MainSeq_INTRUDE_SHUTDOWN( RRG_WORK* work )
+{ 
+  switch( GetStateSeq( work ) ) {
+  // 侵入切断
+  case 0:
+    IntrudeShutdownRequest( work );
+    IncStateSeq( work );
+    break;
+
+  // 侵入切断完了待ち
+  case 1:
+    if( CheckIntrudeShutdown( work ) ) {
+      FinishCurrentState( work ); // RRG_STATE_INTRUDE_SHUTDOWN 状態終了
+    }
+    break;
+  }
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1282,7 +1320,11 @@ static void MainSeq_CLEANUP( RRG_WORK* work )
   RegisterNextState( work, RRG_STATE_FINISH );
   FinishCurrentState( work );
 
+  // 侵入接続を許可
+  RecoverIntrudeShutdown( work );
+
   // グラフ画面終了
+  work->setupFlag  = FALSE;
   work->finishFlag = TRUE;
 }
 
@@ -3786,10 +3828,12 @@ static void InitGraphWork( RRG_WORK* work )
   int i;
 
   work->state              = RRG_STATE_SETUP;
+  work->stateSeq           = 0;
   work->stateEndFlag       = FALSE;
   work->stateCount         = 0;
   work->waitFrame          = WAIT_FRAME_BUTTON;
   work->cursorPos          = MENU_ITEM_QUESTION;
+  work->setupFlag          = FALSE;
   work->analyzeFlag        = FALSE;
   work->analyzeByTouchFlag = FALSE;
   work->updateFlag         = FALSE;
@@ -5324,4 +5368,74 @@ static u8 Bind_u8( int num )
   if( num < 0 ) { return 0; }
   if( 0xff < num ) { return 0xff; } 
   return num;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 侵入切断リクエストを発行する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void IntrudeShutdownRequest( const RRG_WORK* work )
+{
+  GAMESYS_WORK*     gameSystem = GetGameSystem( work );
+  GAME_COMM_SYS_PTR game_comm  = GAMESYSTEM_GetGameCommSysPtr( gameSystem );
+
+  GameCommSys_SetPalaceNotConnectFlag( game_comm, TRUE );
+  if(GameCommSys_BootCheck( game_comm ) == GAME_COMM_NO_INVASION ) {
+    GameCommSys_ExitReq( game_comm );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 侵入切断の完了をチェックする
+ *
+ * @param work
+ *
+ * @return 切断が完了した場合 TRUE
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL CheckIntrudeShutdown( const RRG_WORK* work )
+{
+  GAMESYS_WORK*     gameSystem = GetGameSystem( work );
+  GAME_COMM_SYS_PTR game_comm  = GAMESYSTEM_GetGameCommSysPtr( gameSystem );
+  GAME_COMM_NO      comm_no    = GameCommSys_BootCheck( game_comm );
+
+  switch( comm_no ) {
+  case GAME_COMM_NO_INVASION: // 侵入が終了されるのを待つ
+    if( GameCommSys_CheckSystemWaiting( game_comm ) == FALSE ) {
+      GF_ASSERT(0); // 切断リクエストをかけたはずが通常起動している
+      GameCommSys_ExitReq( game_comm ); //改めて切断を行う
+    }
+    break;
+
+  case GAME_COMM_NO_NULL:
+    GAMESYSTEM_CommBootAlways( gameSystem );
+    return TRUE;
+    break;
+
+  default:
+    return TRUE;
+    break;
+  }
+
+  return FALSE;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 侵入接続を許可する
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void RecoverIntrudeShutdown( const RRG_WORK* work )
+{
+  GAMESYS_WORK*     gameSystem = GetGameSystem( work );
+  GAME_COMM_SYS_PTR game_comm  = GAMESYSTEM_GetGameCommSysPtr( gameSystem );
+
+  //侵入接続許可
+  GameCommSys_SetPalaceNotConnectFlag( game_comm, FALSE );  
 }

@@ -39,13 +39,10 @@ static GMEVENT_RESULT ResearchRadarCallEvent( GMEVENT* event, int* seq, void* wk
 {
 	EVENT_WORK*    work       = wk;
 	GAMESYS_WORK*  gameSystem = work->gameSystem;
-	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSystem);
   FIELDMAP_WORK* fieldmap   = work->fieldmap;
 
   // イベント シーケンス
   enum {
-    SEQ_INTRUDE_SHUTDOWN,       // 侵入切断
-    SEQ_INTRUDE_SHUTDOWN_WAIT,  // 侵入切断完了待ち
     SEQ_FADE_OUT,           // フェードアウト
     SEQ_FIELDMAP_CLOSE,     // フィールドマップ終了
     SEQ_CALL_RESEARCH_PROC, // 調査レーダー画面呼び出し
@@ -56,37 +53,6 @@ static GMEVENT_RESULT ResearchRadarCallEvent( GMEVENT* event, int* seq, void* wk
 
 	switch( *seq ) 
   {
-  //侵入切断
-  case SEQ_INTRUDE_SHUTDOWN:
-    GameCommSys_SetPalaceNotConnectFlag(game_comm, TRUE);
-    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
-      GameCommSys_ExitReq(game_comm);
-    }
-    *seq = SEQ_INTRUDE_SHUTDOWN_WAIT;
-    break;
-  
-  //侵入切断完了待ち
-  case SEQ_INTRUDE_SHUTDOWN_WAIT:
-    {
-      GAME_COMM_NO comm_no = GameCommSys_BootCheck(game_comm);
-      
-      switch(comm_no){
-      case GAME_COMM_NO_INVASION: //侵入が終了されるのを待つ
-        if(GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
-          GF_ASSERT(0); //切断リクエストをかけたはずが通常起動している
-          GameCommSys_ExitReq(game_comm); //改めて切断を行う
-        }
-        break;
-      case GAME_COMM_NO_NULL:
-        GAMESYSTEM_CommBootAlways(gameSystem);
-        *seq = SEQ_FADE_OUT;
-        break;
-      default:
-        *seq = SEQ_FADE_OUT;
-      }
-    }
-    break;
-
   // フェードアウト
 	case SEQ_FADE_OUT: 
     GMEVENT_CallEvent( event, 
@@ -99,7 +65,7 @@ static GMEVENT_RESULT ResearchRadarCallEvent( GMEVENT* event, int* seq, void* wk
 		GMEVENT_CallEvent( event, EVENT_FieldClose( gameSystem, fieldmap ) );
     *seq = SEQ_CALL_RESEARCH_PROC;
 		break;
-  
+
   // 調査レーダー画面呼び出し
   case SEQ_CALL_RESEARCH_PROC:
     GAMESYSTEM_CallProc( gameSystem, FS_OVERLAY_ID(research_radar), &ResearchRadarProcData, work->researchParam );
@@ -121,7 +87,6 @@ static GMEVENT_RESULT ResearchRadarCallEvent( GMEVENT* event, int* seq, void* wk
 
   // イベント終了
 	case SEQ_END: 
-    GameCommSys_SetPalaceNotConnectFlag(game_comm, FALSE);  //侵入接続許可
     GFL_HEAP_FreeMemory( work->researchParam );
 		return GMEVENT_RES_FINISH; 
 	} 
