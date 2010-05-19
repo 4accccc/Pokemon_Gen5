@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-03T15:07:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-19T14:18:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,7 +342,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1452" top="281" right="2157" bottom="901" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="800" top="98" right="1273" bottom="496" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -385,7 +385,7 @@
 	<row id="START_MENU_STR_ITEM_03">
 		<comment>配布データを受け取るためのメニューです</comment>
 		<language name="JPN" width="256">ふしぎな　おくりもの</language>
-		<language name="JPN_KANJI" width="256">不思議な　贈り物</language>
+		<language name="JPN_KANJI" width="256">ふしぎな　おくりもの</language>
 	</row>
 
 	<row id="START_MENU_STR_ITEM_04">
