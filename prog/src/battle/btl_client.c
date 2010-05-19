@@ -1673,30 +1673,17 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
       BTLV_EFFECT_Add( BTLEFF_TRAINER_IN );
       BTLV_StartMsgTrainer( wk->viewCore, trainerID, wk->AITrainerMsgID );
 
-      // @todo これだとピンチBGM中にはSEQ_BGM_BATTLESUPERIORに移行しないが、これで良いのだろうか？
       if( ((wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST) || (wk->AITrainerMsgID==TRMSG_FIGHT_POKE_LAST_HP_HALF))
       ){
-        if( BTLV_EFFECT_GetPinchBGMFlag() == 0 )
-        {
-          //現状、曲変化はジムリーダーだけ
-          u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-          if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
-            //PMSND_PlayBGM( SEQ_BGM_BATTLESUPERIOR );
-            //wk->fAITrainerBGMChanged = TRUE;
+        u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
+        if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
+          BTLV_EFFECT_SetTrainerBGMChangeFlag( SEQ_BGM_BATTLESUPERIOR );
+          if( BTLV_EFFECT_GetPinchBGMFlag() == 0 )
+          { 
             PMSND_FadeOutBGM( 8 );
             (*seq) = 1;
             break;
           }
-        }
-        else
-        {
-          //現状、曲変化はジムリーダーだけ
-          u16 trType = BTL_MAIN_GetClientTrainerType( wk->mainModule, clientID );
-          if( BTL_CALC_IsTrtypeGymLeader(trType) )
-          {
-            BTLV_EFFECT_SetTrainerBGMChangeFlag( SEQ_BGM_BATTLESUPERIOR );
-          }
-          wk->fAITrainerBGMChanged = TRUE;
         }
       }
       (*seq) = 2;
