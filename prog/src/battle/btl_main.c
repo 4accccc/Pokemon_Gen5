@@ -210,6 +210,7 @@ static u8 btlPos_to_clientID( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos );
 static inline void btlPos_to_cliendID_and_posIdx( const BTL_MAIN_MODULE* wk, BtlPokePos btlPos, u8* clientID, u8* posIdx );
 static inline u8 btlPos_to_sidePosIdx( BtlPokePos pos );
 static u8 PokeID_to_ClientID( u8 pokeID );
+static void NatsukiPut( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, u32 calcID );
 static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer );
 static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon );
@@ -3600,13 +3601,37 @@ void BTL_MAIN_ReflectNatsukiDead( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp,
   ){
     if( wk->setupParam->fRecordPlay == FALSE)
     {
-      const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
       u32 calcID = (fLargeDiffLevel)? CALC_NATSUKI_LEVEL30_HINSHI : CALC_NATSUKI_HINSHI;
-      POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData(bpp);
-      NATSUKI_Calc( pp, calcID, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+      NatsukiPut( wk, bpp, calcID );
     }
   }
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * なつき度計算、サーバ・クライアント双方のsrcPPに反映させる
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   calcID
+ */
+//----------------------------------------------------------------------------------
+static void NatsukiPut( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, u32 calcID )
+{
+  u8 pokeID = BPP_GetID( bpp );
+
+  const BTL_POKEPARAM* bppServer = BTL_POKECON_GetPokeParamConst( &wk->pokeconForServer, pokeID );
+  const BTL_POKEPARAM* bppClient = BTL_POKECON_GetPokeParamConst( &wk->pokeconForClient, pokeID );
+
+  POKEMON_PARAM* ppServer = (POKEMON_PARAM*)BPP_GetSrcData( bppServer );
+  POKEMON_PARAM* ppClient = (POKEMON_PARAM*)BPP_GetSrcData( bppClient );
+
+  const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
+
+  NATSUKI_Calc( ppServer, calcID, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+  NATSUKI_Calc( ppClient, calcID, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+}
+
 
 //=============================================================================================
 /**
@@ -4908,6 +4933,23 @@ void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk )
   }
 }
 
+//=============================================================================================
+/**
+ * ポケモンレベルアップ通知をクライアントから受け取り、ゲームシステム（ビーコン）に通知
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTL_MAIN_NotifyPokemonLevelup( BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp )
+{
+  GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_COMM);
+  GF_ASSERT(wk->setupParam->competitor != BTL_COMPETITOR_SUBWAY);
+  {
+    // レベルアップでなつき度上昇
+    NatsukiPut( wk, bpp, CALC_NATSUKI_LEVELUP );
+    BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
+  }
+}
 //=============================================================================================
 /**
  * ポケモン捕獲通知をクライアントから受け取り、ゲームシステム（レコード、ビーコン）に通知

@@ -2661,7 +2661,6 @@ static BOOL scproc_Nigeru_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
   if( result )
   {
-    BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
     if( !BTL_MAINUTIL_IsFriendClientID(clientID, playerClientID) ){
       BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
     }
@@ -2770,6 +2769,12 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       }
     }
 
+    // ‚±‚±‚Ü‚Å—ˆ‚½‚ç“¦‚°Šm’è
+    {
+      u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+      BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
+    }
+
     {
       u32 hem_state = Hem_PushState( &wk->HEManager );
       if( scEvent_NigeruExMessage(wk, bpp) ){
@@ -2782,7 +2787,7 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     return TRUE;
   }
 
-  return TRUE;
+  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -15084,7 +15089,9 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 static u8 scproc_HandEx_quitBattle( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  if( scproc_NigeruCore(wk, bpp ) ){
+
+  if( scproc_NigeruCore(wk, bpp ) )
+  {
     wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
     return 1;
   }

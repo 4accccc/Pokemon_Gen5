@@ -1680,7 +1680,7 @@ static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq )
         if( BTL_CALC_IsTrtypeGymLeader(trType) && ( wk->fAITrainerBGMChanged == FALSE ) ){
           BTLV_EFFECT_SetTrainerBGMChangeFlag( SEQ_BGM_BATTLESUPERIOR );
           if( BTLV_EFFECT_GetPinchBGMFlag() == 0 )
-          { 
+          {
             PMSND_FadeOutBGM( 8 );
             (*seq) = 1;
             break;
@@ -6220,6 +6220,7 @@ static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args )
     ||  (subSeq > 80)
     ){
       subSeq = 0;
+      BTL_MAIN_NotifyPokemonLevelup( wk->mainModule, bpp );
       BTLV_LvupWin_StartDisp( wk->viewCore, bpp, &lvupInfo );
       (*seq) = SEQ_LVUP_INFO_PARAM_SEQ1;
     }
