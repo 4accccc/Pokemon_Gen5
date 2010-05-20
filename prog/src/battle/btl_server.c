@@ -33,6 +33,8 @@
 
 #include "btl_server.h"
 
+#include  "btlv/btlv_effect.h"
+
 
 
 /*--------------------------------------------------------------------------*/
@@ -646,6 +648,8 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     break;
 
   case 5:
+    //カメラワークチェックを止めてカメラをデフォルト位置にする
+    BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
     BTL_SVFLOW_StartTurn_Boot( server->flowWork );
     ResetAdapterCmd( server );
     (*seq)++;
