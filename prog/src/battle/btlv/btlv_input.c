@@ -1270,7 +1270,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         break;
       case BTLV_INPUT_SCRTYPE_YES_NO:
       default:
-        BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
         break;
       }
 
