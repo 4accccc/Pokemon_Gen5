@@ -1207,6 +1207,7 @@ void POKETRE_MAIN_ChangePokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
 {
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
   _CHANGE_STATE(pWork,POKETRE_MAIN_ChangePokemonSendDataNetwork2);
 }
 
@@ -1538,8 +1539,8 @@ static void _changeMenuWait(POKEMON_TRADE_WORK* pWork)
 
     if(selectno==0){  //交換に出す
       GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
-
       POKETRADE_MESSAGE_WindowOpen(pWork);
+      POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
 
    //   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , 8 );
 
@@ -2210,6 +2211,7 @@ static void _cancelPokemonSendDataNetwork(POKEMON_TRADE_WORK* pWork)
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_C,WB_NET_TRADE_SERVICEID);
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
+    POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
     _CHANGE_STATE(pWork,_cancelPokemonSendDataNetwork2);
   }
 }
@@ -2306,9 +2308,6 @@ static void _endWaitStateNetwork(POKEMON_TRADE_WORK* pWork)
 // おわりまち
 static void _endWaitState(POKEMON_TRADE_WORK* pWork)
 {
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
 
   if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
@@ -2371,23 +2370,32 @@ static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork)
 }
 
 
-//終了コールバック処理
-static void _recvEndReqFunc(POKEMON_TRADE_WORK *pWork)
+
+static void _recvEndReqFunc2(POKEMON_TRADE_WORK *pWork)
 {
-  //  _msgWindowCreate(pWork, POKETRADE_STR_22);
-
-  GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_07, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpen(pWork);
-
+  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
+    return;
+  }
   {
     int msg[]={POKETRADE_STR_27, POKETRADE_STR_28};
     POKETRADE_MESSAGE_AppMenuOpenCustom(pWork,msg,elementof(msg),32,12);
   }
-
-  pWork->bTouchReset=TRUE;
-
   _CHANGE_STATE(pWork, _endWaitState);
 }
+
+
+
+
+//終了コールバック処理
+static void _recvEndReqFunc(POKEMON_TRADE_WORK *pWork)
+{
+  GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_07, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  pWork->bTouchReset=TRUE;
+  _CHANGE_STATE(pWork, _recvEndReqFunc2);
+}
+
+
 
 
 
