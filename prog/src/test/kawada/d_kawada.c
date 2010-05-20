@@ -98,7 +98,7 @@ FS_EXTERN_OVERLAY(manual);
 //============================================================================================
 #define	TOP_MENU_SIZ	( 15 )
 
-#define POKE_LIST_NUM  (11)
+#define POKE_LIST_NUM  (13)
 
 
 typedef struct {
@@ -1241,6 +1241,8 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   wk->poke_list[ 8] = 584;  // MONSNO_TURUTURUDA
   wk->poke_list[ 9] = 585;  // MONSNO_SIKIZIKA
   wk->poke_list[10] = 586;  // MONSNO_ANTORESU
+  wk->poke_list[11] = 382;  // MONSNO_KAIOOGA
+  wk->poke_list[12] = 534;  // MONSNO_SIHANDON
 
   for( i=0; i<poke_list_num; i++ )
   {
@@ -1267,6 +1269,20 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
         ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
         ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
       }
+    }
+    if( wk->poke_list[i] == 382 )
+    {
+      GFL_HEAP_FreeMemory( pp );
+      pp = PP_CreateEx( wk->poke_list[i] , 1, 0, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_RARE, wk->heapID );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+    }
+    if( wk->poke_list[i] == 534 )
+    {
+      GFL_HEAP_FreeMemory( pp );
+      pp = PP_CreateEx( wk->poke_list[i] , 1, 0, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_RARE, wk->heapID );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
     }
 
     for( lc=0; lc<6; lc++ )

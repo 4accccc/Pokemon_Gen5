@@ -234,6 +234,10 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   // ユーザ指定の全体専用のアクティブフラグ
   BOOL                          user_whole_is_active;  // TRUEのときアクティブ
 
+  // BGプライオリティ
+  u8                            bg_pri;
+  BOOL                          req;     // TRUEのときVBlank中にbg_priを設定する
+
   // カスタムボタン
   // GENERAL
   u32    general_ncl;
@@ -338,6 +342,10 @@ ZUKAN_DETAIL_TOUCHBAR_WORK* ZUKAN_DETAIL_TOUCHBAR_Init( HEAPID heap_id, BOOL for
 
   // プライオリティ
   GFL_BG_SetPriority( ZKNDTL_BG_FRAME_M_TOUCHBAR, ZKNDTL_BG_FRAME_PRI_M_TOUCHBAR );
+
+  // BGプライオリティ
+  work->bg_pri = ZKNDTL_BG_FRAME_PRI_M_TOUCHBAR;
+  work->req    = FALSE;
 
   // セルアクターユニット
 	work->clunit	= GFL_CLACT_UNIT_Create( CLUNIT_WORK_NUM, 0, work->heap_id );
@@ -828,6 +836,35 @@ u32 ZUKAN_DETAIL_TOUCHBAR_GetCustomIconPlttRegIdx( ZUKAN_DETAIL_TOUCHBAR_WORK* w
   return GFL_CLGRP_REGISTER_FAILED;  // 登録失敗
 }
 
+//------------------------------------------------------------------
+/**
+ *  @brief        
+ *
+ *  @param[in,out]   
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+// BGプライオリティを設定する(OBJのBGプライオリティにもこの値が設定される)
+void ZUKAN_DETAIL_TOUCHBAR_SetBgPriority( ZUKAN_DETAIL_TOUCHBAR_WORK* work, u8 pri )
+{
+  // BG
+  //GFL_BG_SetPriority( ZKNDTL_BG_FRAME_M_TOUCHBAR, pri );
+  // ここでBGのプライオリティ変更を行うと画面が乱れるので、VBlank中に行うことにする。 
+  // OBJはここで変更しても、VBlankで変更してくれるようなので、ここで行ってよい。
+  work->bg_pri = pri;
+  work->req    = TRUE;
+
+  // OBJ
+  {
+    u8 i;
+    for( i=0; i<work->icon_set_num; i++ )
+    {
+      GFL_CLACT_WK_SetBgPri( work->icon_set[i].clwk, pri );
+    } 
+  }
+}
+
 
 //=============================================================================
 /**
@@ -840,6 +877,13 @@ u32 ZUKAN_DETAIL_TOUCHBAR_GetCustomIconPlttRegIdx( ZUKAN_DETAIL_TOUCHBAR_WORK* w
 static void Zukan_Detail_Touchbar_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   ZUKAN_DETAIL_TOUCHBAR_WORK* work = (ZUKAN_DETAIL_TOUCHBAR_WORK*)wk;
+
+  // BGプライオリティを設定する(OBJのBGプライオリティは既に変更されている)
+  if( work->req )
+  {
+    GFL_BG_SetPriority( ZKNDTL_BG_FRAME_M_TOUCHBAR, work->bg_pri );
+    work->req = FALSE;
+  }
 }
 
 //-------------------------------------

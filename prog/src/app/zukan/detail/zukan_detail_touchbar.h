@@ -120,3 +120,6 @@ extern void ZUKAN_DETAIL_TOUCHBAR_SetUserActiveWhole( ZUKAN_DETAIL_TOUCHBAR_WORK
 // カスタムボタンのパレットを読み込んだ場所を得る
 extern u32 ZUKAN_DETAIL_TOUCHBAR_GetCustomIconPlttRegIdx( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 
+// BGプライオリティを設定する(OBJのBGプライオリティにもこの値が設定される)
+extern void ZUKAN_DETAIL_TOUCHBAR_SetBgPriority( ZUKAN_DETAIL_TOUCHBAR_WORK* work, u8 pri );
+

@@ -974,6 +974,9 @@ static void ICON_Init( ICON_WORK *p_wk, GFL_CLUNIT* p_unit, const RES_WORK *cp_r
 		u32 cg, plt, cell;
 		GFL_CLWK_DATA				cldata;
 		GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    cldata.bgpri = GFL_BG_GetPriority( cp_res->bg_frm );
+
 		cldata.pos_x	= cp_setup->pos.x;
 		cldata.pos_y	= cp_setup->pos.y;
 

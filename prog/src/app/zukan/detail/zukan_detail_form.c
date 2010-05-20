@@ -106,9 +106,12 @@
 #define BG_FRAME_M_TEXT          (GFL_BG_FRAME2_M)
 #define BG_FRAME_M_REAR          (GFL_BG_FRAME3_M)
 // メインBGフレームのプライオリティ
-#define BG_FRAME_PRI_M_POKE      (1)
+#define BG_FRAME_PRI_M_POKE      (0)
 #define BG_FRAME_PRI_M_TEXT      (2)
 #define BG_FRAME_PRI_M_REAR      (3)
+
+#define BG_FRAME_PRI_M_TOUCHBAR  (2)  // この画面ではタッチバーのプライオリティを3D面のプライオリティより下げておく
+                                      // 何故か1では、タッチバーBGより手前に3Dが来るが、タッチバー上のアイコンより後ろに3Dが来てしまう。
 
 // メインBGパレット
 // 本数
@@ -832,6 +835,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcExit( ZKNDTL_PROC* proc, int* se
 {
   ZUKAN_DETAIL_FORM_PARAM*    param    = (ZUKAN_DETAIL_FORM_PARAM*)pwk;
   ZUKAN_DETAIL_FORM_WORK*     work     = (ZUKAN_DETAIL_FORM_WORK*)mywk;
+  
+  ZUKAN_DETAIL_TOUCHBAR_WORK*  touchbar = ZKNDTL_COMMON_GetTouchbar(cmn);
 
   // 最背面
   ZKNDTL_COMMON_RearExit( work->rear_wk_s );
@@ -860,6 +865,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcExit( ZKNDTL_PROC* proc, int* se
 
   // テキスト
   Zukan_Detail_Form_DeleteTextBase( param, work, cmn );
+
+  // この画面ではタッチバーのプライオリティを3D面のプライオリティより下げておいたので、元に戻しておく
+  ZUKAN_DETAIL_TOUCHBAR_SetBgPriority( touchbar, ZKNDTL_BG_FRAME_PRI_M_TOUCHBAR );
 
   // パレットフェード
   {
@@ -939,6 +947,9 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
         GFL_BG_SetPriority( BG_FRAME_S_TEXT,  BG_FRAME_PRI_S_TEXT  );
         GFL_BG_SetPriority( BG_FRAME_S_REAR,  BG_FRAME_PRI_S_REAR  );
         GFL_BG_SetPriority( BG_FRAME_S_PANEL, BG_FRAME_PRI_S_PANEL );
+
+        // この画面ではタッチバーのプライオリティを3D面のプライオリティより下げておく
+        ZUKAN_DETAIL_TOUCHBAR_SetBgPriority( touchbar, BG_FRAME_PRI_M_TOUCHBAR );
       }
 
       // 3D
