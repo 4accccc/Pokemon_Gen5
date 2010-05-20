@@ -262,7 +262,7 @@ PSTATUS_SUB_WORK* PSTATUS_SUB_Init( PSTATUS_WORK *work )
 {
   PSTATUS_SUB_WORK* subWork;
   
-  subWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PSTATUS_SUB_WORK) );
+  subWork = GFL_HEAP_AllocClearMemory( work->heapId , sizeof(PSTATUS_SUB_WORK) );
   subWork->pokeMcss = NULL;
   subWork->pokeMcssBack = NULL;
   subWork->IsHoldTp = FALSE;

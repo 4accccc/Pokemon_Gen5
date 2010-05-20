@@ -1777,7 +1777,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
           if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
           {
             const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-            const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+skillWork->cursorPos , NULL );
+            const u32 wazaNo = PP_Get( pp , ID_PARA_waza1+ret , NULL );
             const FIELD_SKILL_CHECK_RET skillRet = 
                       FIELD_SKILL_CHECK_CheckForgetSkill( work->psData->game_data , wazaNo , work->heapId );
             //忘れていいかチェック
