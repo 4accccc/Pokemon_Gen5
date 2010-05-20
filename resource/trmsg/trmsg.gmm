@@ -675,10 +675,10 @@
 	</row>
 
 	<row id="TRID_KINDERGARTENW_01_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">ちょっと　トレーナーさん
-つよしゅぎましゅ！</language>
-		<language name="JPN_KANJI" width="216">ちょっと　トレーナーさん
-つよしゅぎましゅ！</language>
+		<language name="JPN" width="216">トレーナーさん
+ちょっと　つよしゅぎ！</language>
+		<language name="JPN_KANJI" width="216">トレーナーさん
+ちょっと　つよしゅぎ！</language>
 	</row>
 
 	<row id="TRID_KINDERGARTENW_01_TRMSG_FIGHT_AFTER">
@@ -1205,10 +1205,10 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_02_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">こんな　ヤツに
-やぶれるとは……！</language>
-		<language name="JPN_KANJI" width="216">こんな　ヤツに
-敗れるとは……！</language>
+		<language name="JPN" width="216">こんな　ヤツらに
+プラズマだんが　やぶれるとは……！</language>
+		<language name="JPN_KANJI" width="216">こんな　ヤツらに
+プラズマ団が　敗れるとは……！</language>
 	</row>
 
 	<row id="TRID_RIVAL_01_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -3078,34 +3078,32 @@
 	</row>
 
 	<row id="TRID_ELITEM_04_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">ここ　すうねん
-ボクは　まけたことが　ない▼
-そんな　エリートと　たたかえること
-こうえいに　おもいたまえ！▼</language>
-		<language name="JPN_KANJI" width="216">ここ数年
-ボクは　負けたことが　ない▼
-そんな　エリートと　戦えること
-光栄に　思いたまえ！▼</language>
+		<language name="JPN" width="216">ワタクシ　エリートトレーナー！
+いってしまえば　すごく　つよいのです▼
+もしも　この　ワタクシが　やぶれれば
+この　イッシュちほうが　ゆれますよ▼</language>
+		<language name="JPN_KANJI" width="216">ワタクシ　エリートトレーナー！
+いってしまえば　すごく　強いのです▼
+もしも　この　ワタクシが　敗れれば
+この　イッシュ地方が　揺れますよ▼</language>
 	</row>
 
 	<row id="TRID_ELITEM_04_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……そういえば　さいしょの
-しょうぶも　こんなふうに　まけたな</language>
-		<language name="JPN_KANJI" width="216">……そういえば　最初の
-勝負も　こんな風に　負けたな</language>
+		<language name="JPN" width="216">……ワタクシの　そんざいかちが
+いままさに　ぐらぐらと　ゆれている！</language>
+		<language name="JPN_KANJI" width="216">……ワタクシの　存在価値が
+今まさに　ぐらぐらと　揺れている！</language>
 	</row>
 
 	<row id="TRID_ELITEM_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">まけたときに　おもいだす▼
-じぶんも　はじめは　ポケモンのこと
-よく　わからず……▼
-したがって　ぜんぜん　かてず
-くやしい　おもいを　したんだ</language>
-		<language name="JPN_KANJI" width="216">負けたときに　思い出す▼
-自分も　始めは　ポケモンのこと
-よく　わからず……▼
-従って　全然　勝てず
-悔しい　思いを　したんだ</language>
+		<language name="JPN" width="216">キミの　そんざいは　やがて
+この　イッシュちほうを　ゆるがす！▼
+まけても　キミを　たたえることで
+ワタクシを　おおきく　みせているんだ</language>
+		<language name="JPN_KANJI" width="216">キミの　存在は　やがて
+この　イッシュ地方を　揺るがす！▼
+まけても　キミを　称えることで
+ワタクシを　大きく　みせているんだ</language>
 	</row>
 
 	<row id="TRID_ELITEW_01_TRMSG_FIGHT_START">
