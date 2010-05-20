@@ -162,7 +162,9 @@ static void InitBg(void)
 			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+//		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
+		GFL_BG_SetClearCharacter( GFL_BG_FRAME1_M, 0x20, 0x20*1023, HEAPID_ZUKAN_TOP_L );
+		GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME1_M, 1023 );
 	}
 	{	// ÉÅÉCÉìâÊñ ÅF
 		GFL_BG_BGCNT_HEADER cnth = {
