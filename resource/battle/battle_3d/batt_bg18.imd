@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kitakaze_tomohiro" host="W00198" date="2010-05-06T13:19:01" source="batt_field_all18.mb"/>
+	<create user="kitakaze_tomohiro" host="W00198" date="2010-05-19T11:57:25" source="batt_field_all18.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="kitakaze_tomohiro" host="W00198" date="2010-05-06T13:19:01" source="batt_field_all18.mb"/>
+<original_create user="kitakaze_tomohiro" host="W00198" date="2010-05-19T11:57:25" source="batt_field_all18.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush18a_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush18a.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush18a.tga"
 	>
 		<bitmap size="4096">
 			0303 0303 0303 0303 0303 0303 0303 0303
@@ -555,7 +555,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush18b_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush18b.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush18b.tga"
 	>
 		<bitmap size="4096">
 			0202 0202 0202 0202 0202 0202 0202 0202
@@ -1076,7 +1076,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush18c_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush18c.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush18c.tga"
 	>
 		<bitmap size="4096">
 			0101 0101 0101 0101 0101 0101 0101 0101
@@ -1597,7 +1597,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush18d_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush18d.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush18d.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2119,7 +2119,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="batt_field18_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_field18.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_field18.tga"
 	>
 		<bitmap size="2048">
 			0000 0000 0000 0302 0303 0303 0202 0303
@@ -2385,7 +2385,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="batt_sky18_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_sky18.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_sky18.tga"
 	>
 		<bitmap size="4096">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -2997,7 +2997,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="16"
+		polygon_id="63"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3021,7 +3021,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="32"
+		polygon_id="62"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3045,7 +3045,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="24"
+		polygon_id="61"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3069,7 +3069,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="60"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3093,7 +3093,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="48"
+		polygon_id="59"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3117,7 +3117,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="40"
+		polygon_id="58"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"

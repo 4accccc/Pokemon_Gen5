@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kitakaze_tomohiro" host="W00198" date="2010-05-06T13:24:51" source="batt_field_all21.mb"/>
+	<create user="kitakaze_tomohiro" host="W00198" date="2010-05-19T12:10:11" source="batt_field_all21.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="kitakaze_tomohiro" host="W00198" date="2010-05-06T13:24:51" source="batt_field_all21.mb"/>
+<original_create user="kitakaze_tomohiro" host="W00198" date="2010-05-19T12:10:11" source="batt_field_all21.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush21a_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush21a.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush21a.tga"
 	>
 		<bitmap size="4096">
 			0101 0101 0101 0101 0101 0101 0101 0101
@@ -555,7 +555,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush21b_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush21b.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush21b.tga"
 	>
 		<bitmap size="4096">
 			0707 0707 0707 0707 0707 0707 0707 0707
@@ -1076,7 +1076,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush21c_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush21c.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush21c.tga"
 	>
 		<bitmap size="4096">
 			0202 0202 0202 0202 0202 0202 0202 0202
@@ -1597,7 +1597,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush21d_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush21d.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush21d.tga"
 	>
 		<bitmap size="4096">
 			0202 0202 0202 0202 0202 0202 0202 0202
@@ -2118,7 +2118,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush21e_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush21e.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush21e.tga"
 	>
 		<bitmap size="4096">
 			0202 0202 0202 0202 0202 0202 0202 0202
@@ -2640,7 +2640,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="batt_field21_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_field21.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_field21.tga"
 	>
 		<bitmap size="2048">
 			070d 0707 0407 0401 0808 0808 0808 0408
@@ -2906,7 +2906,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="]"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_sky21.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_sky21.tga"
 	>
 		<bitmap size="4096">
 			2727 2727 2727 2727 2727 2727 2727 2727
@@ -3534,7 +3534,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="56"
+		polygon_id="63"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3558,7 +3558,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="32"
+		polygon_id="61"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3582,7 +3582,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="48"
+		polygon_id="60"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3606,7 +3606,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="16"
+		polygon_id="59"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3630,7 +3630,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="16"
+		polygon_id="58"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3654,7 +3654,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="48"
+		polygon_id="57"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3678,7 +3678,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="36"
+		polygon_id="56"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -3702,7 +3702,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="40"
+		polygon_id="55"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"

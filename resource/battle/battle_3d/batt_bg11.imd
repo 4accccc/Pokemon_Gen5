@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="kitakaze_tomohiro" host="W00198" date="2010-05-06T13:06:04" source="batt_field_all11.mb"/>
+	<create user="kitakaze_tomohiro" host="W00198" date="2010-05-19T11:39:45" source="batt_field_all11.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="kitakaze_tomohiro" host="W00198" date="2010-05-06T13:06:04" source="batt_field_all11.mb"/>
+<original_create user="kitakaze_tomohiro" host="W00198" date="2010-05-19T11:39:45" source="batt_field_all11.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -34,7 +34,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush11a_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush11a.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush11a.tga"
 	>
 		<bitmap size="4096">
 			0707 0707 0707 0707 0707 0707 0707 0707
@@ -555,7 +555,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush11b_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush11b.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush11b.tga"
 	>
 		<bitmap size="4096">
 			0202 0202 0202 0202 0202 0202 0202 0202
@@ -1076,7 +1076,7 @@
 		width="128" height="64" original_width="128" original_height="64"
 		format="a5i3"
 		palette_name="batt_brush11c_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_brush11c.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_brush11c.tga"
 	>
 		<bitmap size="4096">
 			0202 0202 0202 0202 0202 0202 0202 0202
@@ -1598,7 +1598,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="batt_field11_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_field11.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_field11.tga"
 	>
 		<bitmap size="2048">
 			5555 5454 5454 5354 5353 5353 5353 5353
@@ -1864,7 +1864,7 @@
 		format="palette256"
 		color0_mode="color"
 		palette_name="batt_sky11_pl"
-		path="C:/Documents and Settings/kitakaze_tomohiro/デスクトップ/戦闘画面３Ｄ/batt_sky11.tga"
+		path="C:/Documents and Settings/kitakaze_tomohiro/My Documents/wb/3d_battle/tex/batt_sky11.tga"
 	>
 		<bitmap size="4096">
 			3434 3434 3434 3434 3434 3434 3434 3434
@@ -2477,7 +2477,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="16"
+		polygon_id="63"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2501,7 +2501,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="32"
+		polygon_id="62"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2525,7 +2525,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="24"
+		polygon_id="61"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -2549,7 +2549,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="40"
+		polygon_id="60"
 		fog_flag="off"
 		depth_test_decal="off"
 		translucent_update_depth="off"
