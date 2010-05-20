@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T11:20:19"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T22:01:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="195" right="1280" bottom="593" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -316,7 +316,6 @@
 
 	<row id="msg_r07r0301_oldwoman_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>・主人公をテーブルまで移動させてから、セリフ。
-
 ・「はい／いいえ」選択肢
 ●はい　→msg_r07r0301_oldwoman_02
 ●いいえ→msg_r07r0301_oldwoman_03</comment>
@@ -335,7 +334,6 @@
 
 	<row id="msg_r07r0301_oldwoman_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●「はい」の場合
-
 ・喋った後、台所まで移動。
 
 ●ｗの場合はmsg_r07r0301_oldwoman_04w
@@ -351,7 +349,6 @@
 
 	<row id="msg_r07r0301_oldwoman_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●「いいえ」の場合
-
 ・喋った後、台所まで移動。
 
 ●ｗの場合はmsg_r07r0301_oldwoman_04w
@@ -367,9 +364,7 @@
 
 	<row id="msg_r07r0301_oldwoman_04w" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●ｗのセリフ
-
-・喋ったあと主人公の隣（上）まで移動。
-</comment>
+・喋ったあと主人公の隣（上）まで移動。</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">イッシュちほう　にはなー
 こんな　らいうを　おこす[BE:00:ページ切り替え（行送り）]
@@ -389,7 +384,6 @@
 
 	<row id="msg_r07r0301_oldwoman_04b" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
 		<comment>●ｂのセリフ
-
 ・喋ったあと主人公の隣（上）まで移動。</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">イッシュちほう　にはなー
@@ -472,10 +466,10 @@
 	</row>
 
 	<row id="msg_r07r0301_oldwoman_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,#ff8080,,">
-		<comment>●移動ポケモン捕獲後～ツチノカミイベント起動
+		<comment>●移動ポケモン捕獲後～ランドロスイベント起動
 までのセリフ。
 
-●ツチノカミイベント起動後に話し掛けると、
+●ランドロスイベント起動後に話し掛けると、
 
 msg_r07r0301_oldwoman_00
 
@@ -552,10 +546,10 @@ msg_r07r0301_oldwoman_00
 
 	<row id="msg_r07r0301_oldman_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●ｗのセリフ。
-●移動ポケモン捕獲後～ツチノカミイベント起動
+●移動ポケモン捕獲後～ランドロスイベント起動
 までのセリフ。
 
-●ツチノカミイベント起動後に話し掛けると、
+●ランドロスイベント起動後に話し掛けると、
 msg_r07r0301_oldman_00
 になります。</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
@@ -573,10 +567,10 @@ msg_r07r0301_oldman_00
 
 	<row id="msg_r07r0301_oldman_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,#80ff80,,">
 		<comment>●ｂのセリフ。
-●移動ポケモン捕獲後～ツチノカミイベント起動
+●移動ポケモン捕獲後～ランドロスイベント起動
 までのセリフ。
 
-●ツチノカミイベント起動後に話し掛けると、
+●ランドロスイベント起動後に話し掛けると、
 msg_r07r0301_oldman_00
 になります。</comment>
 		<attribute name="キャラ指定">おじいさん</attribute>
