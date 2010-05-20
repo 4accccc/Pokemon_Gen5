@@ -44,6 +44,8 @@
 
 #define CAM_SHAKE_VAL   (FX32_ONE*CAM_SHAKE_WIDTH)
 
+#define HIT_WALL_SHADOW_ON_FRM  (8)
+
 //–C‘äÀ•W
 #define CAN1_X  (CAN1_GX*FIELD_CONST_GRID_FX32_SIZE + GRID_HALF_SIZE)
 #define CAN1_Y  (CAN1_GY*FIELD_CONST_GRID_FX32_SIZE)
@@ -801,6 +803,8 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
         MMDL_SetStatusBitVanish(mmdl, TRUE);
         //Ž©‹@‚Ì‚‚³Žæ“¾‚ð‹ÖŽ~
         MMDL_OnStatusBit( mmdl, MMDL_STABIT_HEIGHT_GET_OFF );
+        //‰eƒIƒt
+        MMDL_OnMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
       }
       //‘å–CƒAƒjƒÄŠJ
       {
@@ -898,7 +902,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
           pos.z = point->z * FIELD_CONST_GRID_FX32_SIZE;
           pos.z += GRID_HALF_SIZE;
           FIELD_PLAYER_SetPos( fld_player, &pos );
-        }        
+        }
       }      
       (*seq)++;
     }
@@ -1025,12 +1029,19 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
     }
 
     {
+      MMDL * mmdl;
+      IELD_PLAYER *fld_player;
       u8 shot_idx = tmp->ShotIdx;
       u8 shot_dir_idx = GetDirIdxFromDir(tmp->ShotDir);
       u16 cam_eff_idx = ShotData[shot_idx][shot_dir_idx].CamEffIdx;
+
+      fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
+      mmdl = FIELD_PLAYER_GetMMdl( fld_player );
       //’…’n‚r‚d
       if (tmp->NowIcaAnmFrmIdx == tmp->MaxIcaAnmFrm-1-StandSeFrm[cam_eff_idx]){
         if (cam_eff_idx != WALL_HIT_ANM_IDX){
+          //‰eƒIƒ“
+          MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
           PMSND_PlaySE(GYM_FLY_SE_STAND);
         }
       }
@@ -1039,14 +1050,22 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
         if (tmp->NowIcaAnmFrmIdx == WALL_HIT_FRM){
           PMSND_PlaySE(GYM_FLY_SE_WALL_HIT);
         }
+        //•Ç‚É‚Ô‚¿“–‚½‚é‘å–C‚Ì‚Æ‚«‚¾‚¯’…’n‚r‚d‚ª–³‚¢‚Ì‚ÅˆÈ‰º‚Ìˆ—‚Å‰e•œ‹A‚ðs‚¤
+        if( tmp->NowIcaAnmFrmIdx+HIT_WALL_SHADOW_ON_FRM >= tmp->MaxIcaAnmFrm ){
+          if ( MMDL_CheckMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH ) )
+          {
+            //‰eƒIƒ“
+            MMDL_OffMoveBit( mmdl, MMDL_MOVEBIT_SHADOW_VANISH );
+          }
+        }
       }
     }
-
     //ƒAƒjƒƒtƒŒ[ƒ€XV
     tmp->NowIcaAnmFrmIdx++;
-    
+
     //I—¹ƒ`ƒFƒbƒN
-    if ( tmp->NowIcaAnmFrmIdx >= tmp->MaxIcaAnmFrm ){
+    if ( tmp->NowIcaAnmFrmIdx >= tmp->MaxIcaAnmFrm )
+    {
       tmp->FrameSetStart = 0;
     }
 
