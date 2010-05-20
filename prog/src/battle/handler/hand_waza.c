@@ -1486,12 +1486,7 @@ static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFa
     if( (subID == BTL_SIDEEFF_REFRECTOR)
     ||  (subID == BTL_SIDEEFF_HIKARINOKABE)
     ){
-      u8 myPokeID = BTL_EVENT_FACTOR_GetPokeID( myHandle );
-      BtlSide mySide = BTL_MAINUTIL_PokeIDtoSide( myPokeID );
-
-      if( dependID != mySide ){
-        return TRUE;
-      }
+      return TRUE;
     }
   }
   return FALSE;
