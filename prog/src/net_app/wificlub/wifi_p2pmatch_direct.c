@@ -1363,7 +1363,7 @@ static int _playerDirectBattleStart4( WIFIP2PMATCH_WORK *wk, int seq )
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
 
-      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42);
   }
   return seq;
 }

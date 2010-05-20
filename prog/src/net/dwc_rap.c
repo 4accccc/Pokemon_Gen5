@@ -3073,6 +3073,9 @@ void GFL_NET_DWC_SetCconnectionUserData(u32 data)
 //==============================================================================
 BOOL GFL_NET_DWC_IsDisconnect(void)
 {
+  if(!_dWork){
+      return TRUE;
+  }
   if( _dWork->state == MDSTATE_DISCONNECT ||
       _dWork->state == MDSTATE_ERROR_DISCONNECT ||
       _dWork->state == MDSTATE_TIMEOUT ){

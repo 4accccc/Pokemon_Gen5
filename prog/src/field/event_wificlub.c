@@ -504,11 +504,21 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     (*seq) ++;
     break;
   case P2P_TRADE_END:
-    if(ep2p->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
+    switch(ep2p->aPokeTr.ret){
+    case POKEMONTRADE_MOVE_EVOLUTION:
       (*seq)  = P2P_EVOLUTION;
-    }
-    else{
+      break;
+    case POKEMONTRADE_MOVE_ERROR:
+      ep2p->pMatchParam->seq = WIFI_GAME_NONE;
       (*seq)  = P2P_MATCH_BOARD;
+      break;
+    default:
+      (*seq)  = P2P_MATCH_BOARD;
+      break;
+    }
+    if(!GFL_NET_IsInit()){
+      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      (*seq)  = P2P_INIT2;
     }
     break;
   case P2P_EVOLUTION:

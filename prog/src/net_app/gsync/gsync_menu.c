@@ -835,12 +835,12 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,GAMESYNC_MENU* pWork)
 
   switch( bttnid ){
   case _SELECTMODE_GSYNC:
-    if(GAME_COMM_SBIT_WIFI_ALL & pWork->bit){
-      PMSND_PlaySystemSE(_SE_DESIDE);
-      GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 14 );
-      _CHANGE_STATE(pWork,_modeAppWinFlash);
-      pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
-    }
+//    if(GAME_COMM_SBIT_WIFI_ALL & pWork->bit){
+    PMSND_PlaySystemSE(_SE_DESIDE);
+    GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[0], 14 );
+    _CHANGE_STATE(pWork,_modeAppWinFlash);
+    pWork->selectType = GAMESYNC_RETURNMODE_SYNC;
+//    }
     //    else{
     //      PMSND_PlaySystemSE(_SE_CANCEL);
     //    }

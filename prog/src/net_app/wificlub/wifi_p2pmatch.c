@@ -1187,7 +1187,8 @@ static BOOL _tradeNumCheck(WIFIP2PMATCH_WORK * wk)
     return FALSE;
   }
    */
-  if((PokeParty_GetPokeCount(GAMEDATA_GetMyPokemon(wk->pGameData))==1) && ( BOXDAT_GetPokeExistCountTotal(pManager)==0 )){
+  if(PokeParty_GetPokeCountNotEgg(GAMEDATA_GetMyPokemon(wk->pGameData)) < 2 ){
+//  if((PokeParty_GetPokeCount(GAMEDATA_GetMyPokemon(wk->pGameData))==1) && ( BOXDAT_GetPokeExistCountTotal(pManager)==0 )){
     return FALSE;
   }
   return TRUE;

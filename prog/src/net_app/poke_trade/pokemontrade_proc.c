@@ -1112,10 +1112,18 @@ BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
   POKEMON_PARAM* pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
-  BOOL bEgg1 = PP_Get(pp1,ID_PARA_tamago_flag,NULL);
-  BOOL bEgg2 = PP_Get(pp2,ID_PARA_tamago_flag,NULL);
+//  BOOL bEgg1 = PP_Get(pp1,ID_PARA_tamago_flag,NULL);
+//  BOOL bEgg2 = PP_Get(pp2,ID_PARA_tamago_flag,NULL);
 
-  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && !bEgg1 && bEgg2 && (pWork->selectBoxno == pWork->BOX_TRAY_MAX)){
+  if (PP_Get(pp1, ID_PARA_hp, NULL) == 0) {
+    return FALSE;
+  }
+  if (PP_Get(pp1, ID_PARA_tamago_flag, NULL)) {
+    return FALSE;
+  }
+  //てもち
+  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && (pWork->selectBoxno == pWork->BOX_TRAY_MAX)  ){
+//  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && !bEgg1 && bEgg2 && (pWork->selectBoxno == pWork->BOX_TRAY_MAX)){
     return TRUE;
   }
   return FALSE;

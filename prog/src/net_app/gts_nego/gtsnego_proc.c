@@ -1971,7 +1971,8 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 
   {
     POKEPARTY* party = GAMEDATA_GetMyPokemon(pWork->pGameData);
-    if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
+    if(PokeParty_GetPokeCountNotEgg(party) < 2 ){
+//    if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
       pWork->bSingle = TRUE;
     }
   }

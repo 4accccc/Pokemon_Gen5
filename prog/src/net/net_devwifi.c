@@ -356,7 +356,12 @@ static BOOL _DevIsConnectFunc(void)
 //------------------------------------------------------------------------------
 static BOOL _DevIsEndFunc(void)
 {
-  return !GFL_NET_DWC_IsInit();
+  BOOL bret = GFL_NET_DWC_IsDisconnect();
+
+  if(!GFL_NET_DWC_IsInit()){
+    bret |= TRUE;
+  }
+  return bret;
 }
 
 

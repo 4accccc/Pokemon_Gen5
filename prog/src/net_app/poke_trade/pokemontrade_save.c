@@ -503,7 +503,6 @@ static void _removeCallback(void* pW)
   }
   GFL_STD_MemClear(&pWork->aBackup,sizeof(SAVEREV_BACKUP));
 
-  pWork->bBackupStart = FALSE;
 
   // OS_TPrintf("Šª‚«–ß‚µ\n");
 }
@@ -934,6 +933,7 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
 
   PMSND_FadeOutBGM( PMSND_FADE_FAST );
   pWork->anmCount=0;
+  pWork->bBackupStart = FALSE;
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade31);
 }
 

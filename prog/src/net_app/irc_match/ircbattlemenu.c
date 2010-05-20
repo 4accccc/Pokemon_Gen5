@@ -976,7 +976,8 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
   case _SELECTMODE_POKE_CHANGE2:
     {
       POKEPARTY* party = GAMEDATA_GetMyPokemon(pWork->pGameData);
-      if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
+      if(PokeParty_GetPokeCountNotEgg(party) < 2 ){
+//      if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_45, pWork->pStrBuf );
         _infoMessageDisp(pWork);
         _CHANGE_STATE(pWork,_modeKeyWait);
