@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T12:09:00"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:38:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="445"/>
@@ -376,7 +376,6 @@
 	<row id="msg_r05_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・カミツレを見ながら
-　（カミツレは？を向いたまま）
 ・続けて</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
@@ -681,7 +680,7 @@
 
 	<row id="msg_r05_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
-・GRIDX=338、GRIDZ=&quot;431~435到達したとき
+・GRIDX=338、GRIDZ=431~435到達したとき
 　表示後、主人公が所定の位置に移動
 ・続けてleader_05</comment>
 		<attribute name="キャラ指定">友達♂
@@ -723,7 +722,7 @@
 
 	<row id="msg_r05_leader_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
-・主人公に隣接（暫定、向くだけで良いかも）して
+・主人公に隣接して
 　メッセージ表示すると、h02橋の降りるデモ開始
 ・デモ終了後、leader_08</comment>
 		<attribute name="キャラ指定">LEADER4
@@ -904,7 +903,7 @@ musician_01</attribute>
 
 	<row id="msg_r05_black_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・GRIDX=359、GRIDZ=439、下向き(適当）
+・GRIDX=359、GRIDZ=439、下向き
 ・話しかけでイベント開始
 　芝居後、下向きのままメッセージ表示
 ・続けてblack_end_02</comment>
