@@ -2264,7 +2264,7 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 	case BOX2MAIN_ERR_CODE_ROCK:			// ロックされている（バトルボックス専用）
 		PMSND_PlaySE( SE_BOX2_WARNING );
 		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
-		BOX2BMP_BattleBoxRockMsgPut( syswk );
+		BOX2BMP_BattleBoxRockMsgPut( syswk, 0 );
 		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE_ERR;
 	}
 
@@ -2727,7 +2727,7 @@ static int MainSeq_ArrangePartyPokeGetInit( BOX2_SYS_WORK * syswk )
 		// バトルボックスがロックされているとき
 		if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->dat->bbRockFlg == TRUE ){
 			PMSND_PlaySE( SE_BOX2_WARNING );
-			BOX2BMP_BattleBoxRockMsgPut( syswk );
+			BOX2BMP_BattleBoxRockMsgPut( syswk, 0 );
 			syswk->mv_cnv_mode  = 0;
 			syswk->app->sub_seq = 0;
 			syswk->next_seq     = BOX2SEQ_MAINSEQ_BATTLEBOX_ROCK;
@@ -6246,6 +6246,14 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 {
 	switch( syswk->app->sub_seq ){
 	case 0:
+		// バトルボックスがロックされている
+		if( syswk->dat->callMode == BOX_MODE_BATTLE && syswk->dat->bbRockFlg == TRUE ){
+			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
+			BOX2BGWFRM_PokeMenuOutSet( syswk->app->wfrm );
+			syswk->app->sub_seq = 3;
+			return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK );
+		}
+
 		if( BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_tamago_flag, NULL ) == 0 ){
 			u32 item = BOX2MAIN_PokeParaGet( syswk, syswk->get_pos, syswk->tray, ID_PARA_item, NULL );
 			// 何も持っていない
@@ -6286,6 +6294,15 @@ static int MainSeq_ItemMenuCheck( BOX2_SYS_WORK * syswk )
 		BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_EGG, BOX2BMPWIN_ID_MSG1 );
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
 		return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
+
+	case 3:		// バトルボックスがロックされている
+		PMSND_PlaySE( SE_BOX2_WARNING );
+//		BOX2BMP_ItemArrangeMsgPut( syswk, BOX2BMP_MSGID_ITEM_A_EGG, BOX2BMPWIN_ID_MSG1 );
+//		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEMENU_RCV;
+//		return ChangeSequence( syswk, BOX2SEQ_MAINSEQ_TRGWAIT );
+		BOX2BMP_BattleBoxRockMsgPut( syswk, 1 );
+		syswk->next_seq = BOX2SEQ_MAINSEQ_BATTLEBOX_ROCK;
+		return BOX2SEQ_MAINSEQ_TRGWAIT;
 	}
 
 	return BOX2SEQ_MAINSEQ_ITEM_MENU_CHECK;

@@ -79,13 +79,13 @@ enum {
 
 // 道具整理メッセージ表示ＩＤ
 enum {
-	BOX2BMP_MSGID_ITEM_A_SET = 0,		// どうぐを　もたせます
-	BOX2BMP_MSGID_ITEM_A_INIT,			// @0を　どうしますか？
+	BOX2BMP_MSGID_ITEM_A_SET = 0,			// どうぐを　もたせます
+	BOX2BMP_MSGID_ITEM_A_INIT,				// @0を　どうしますか？
 	BOX2BMP_MSGID_ITEM_A_RET_CHECK,		// @0を　しまいますか？
-	BOX2BMP_MSGID_ITEM_A_RET,			// @0を　バッグに　いれた！
-	BOX2BMP_MSGID_ITEM_A_MAIL,			// メールをしまうことは　できません！
-	BOX2BMP_MSGID_ITEM_A_EGG,			// タマゴは　どうぐを　もてません！
-	BOX2BMP_MSGID_ITEM_A_MAX,			// バッグが　いっぱいです！
+	BOX2BMP_MSGID_ITEM_A_RET,					// @0を　バッグに　いれた！
+	BOX2BMP_MSGID_ITEM_A_MAIL,				// メールをしまうことは　できません！
+	BOX2BMP_MSGID_ITEM_A_EGG,					// タマゴは　どうぐを　もてません！
+	BOX2BMP_MSGID_ITEM_A_MAX,					// バッグが　いっぱいです！
 	BOX2BMP_MSGID_ITEM_A_MAIL_MOVE,		// メールは　いどうできません！
 };
 
@@ -515,8 +515,9 @@ extern void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk );
  * @brief		「バトルボックス」用ロック済みメッセージ表示
  *
  * @param		syswk		ボックス画面システムワーク
+ * @param		mode		0 = ポケモン移動, 1 = 持ち物
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk );
+extern void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk, u32 mode );

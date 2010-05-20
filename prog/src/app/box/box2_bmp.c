@@ -1956,13 +1956,18 @@ void BOX2BMP_SleepSelectMsgPut( BOX2_SYS_WORK * syswk )
  * @brief		「バトルボックス」用ロック済みメッセージ表示
  *
  * @param		syswk		ボックス画面システムワーク
+ * @param		mode		0 = ポケモン移動, 1 = 持ち物
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk )
+void BOX2BMP_BattleBoxRockMsgPut( BOX2_SYS_WORK * syswk, u32 mode )
 {
-	SysMesPut( syswk, msg_boxmes_07_01, BOX2BMPWIN_ID_MSG4 );
+	if( mode == 0 ){
+		SysMesPut( syswk, msg_boxmes_07_01, BOX2BMPWIN_ID_MSG4 );
+	}else{
+		SysMesPut( syswk, msg_boxmes_07_02, BOX2BMPWIN_ID_MSG4 );
+	}
 }
 
 
