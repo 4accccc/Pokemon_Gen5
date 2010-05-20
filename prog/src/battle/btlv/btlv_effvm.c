@@ -50,6 +50,10 @@ enum{
   EFFVM_CHANGE_VOLUME_UP_FRAME_PV = EFFVM_VOLUME_UP_FRAME_PV,
 
   EFFVM_VOICEPLAYER_INDEX_NONE = 0xffffffff,
+
+  POLYID_FIX = 5,   //パーティクルの使用するポリゴンIDの固定値
+  POLYID_MIN = 6,   //パーティクルの使用するポリゴンIDのMIN
+  POLYID_MAX = 54,  //パーティクルの使用するポリゴンIDのMAX
 };
 
 enum{ 
@@ -61,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -646,6 +650,7 @@ void  BTLV_EFFVM_Exit( VMHANDLE *vmh )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
 
+  BTLV_EFFVM_Stop( vmh );
   GFL_HEAP_FreeMemory ( bevw );
   VM_Delete( vmh );
 }
@@ -1257,7 +1262,8 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
       u32*  ofs_p;
 
       heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
-      bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, GFL_HEAP_LOWID( bevw->heapID ) );
+      bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
+                                              GFL_HEAP_LOWID( bevw->heapID ) );
       ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
       ofs = ofs_p[ BTLV_EFFVM_GetDPDNo( bevw, datID, DPD_TYPE_PARTICLE ) ];
       resource = (void *)&bevw->dpd->adrs[ ofs ];
@@ -1267,7 +1273,8 @@ static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work )
     }
 #endif
     heap = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), PARTICLE_LIB_HEAP_SIZE );
-    bevw->ptc[ ptc_no ] = GFL_PTC_Create( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, GFL_HEAP_LOWID( bevw->heapID ) );
+    bevw->ptc[ ptc_no ] = GFL_PTC_CreateEx( heap, PARTICLE_LIB_HEAP_SIZE, FALSE, POLYID_FIX, POLYID_MIN, POLYID_MAX,
+                                            GFL_HEAP_LOWID( bevw->heapID ) );
     resource = GFL_PTC_LoadArcResource( ARCID_PTC, datID, GFL_HEAP_LOWID( bevw->heapID ) );
     GFL_PTC_SetResource( bevw->ptc[ ptc_no ], resource, FALSE, GFUser_VIntr_GetTCBSYS() );
     EFFVM_RegistSprMax( bevw, ptc_no, resource );
