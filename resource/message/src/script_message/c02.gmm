@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T15:34:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T18:34:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,14 +330,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2014" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
-		<band id="0" index="1" style="0000" width="532"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="545"/>
+		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="699"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -515,14 +515,14 @@
 ちからは　わかっている▼
 ……えいゆうと　ともに
 この　イッシュちほうを　つくった▽
-でんせつの　ポケモン　シン！▼
+でんせつの　ポケモン　レシラム！▼
 ボクは　えいゆうに　なり
 キミと　トモダチに　なる！▼</language>
 		<language name="JPN_KANJI" width="256">……必要な
 力は　わかっている▼
 ……英雄と　ともに
 この　イッシュ地方を　建国した▽
-伝説の　ポケモン　シン！▼
+伝説の　ポケモン　レシラム！▼
 ボクは　英雄になり
 キミと　トモダチに　なる！▼</language>
 	</row>
@@ -536,14 +536,14 @@
 ちからは　わかっている▼
 ……えいゆうと　ともに
 この　イッシュちほうを　つくった▽
-でんせつの　ポケモン　ム！▼
+でんせつの　ポケモン　ゼクロム！▼
 ボクは　えいゆうに　なり
 キミと　トモダチに　なる！▼</language>
 		<language name="JPN_KANJI" width="256">……必要な
 力は　わかっている▼
 ……英雄と　ともに
 この　イッシュ地方を　建国した▽
-伝説の　ポケモン　ム！▼
+伝説の　ポケモン　ゼクロム！▼
 ボクは　英雄になり
 キミと　トモダチに　なる！▼</language>
 	</row>
@@ -1478,7 +1478,7 @@ C02ジムリーダー</attribute>
 タウンマップを　みてね……▼</language>
 	</row>
 
-	<row id="msg_c02_white_stone_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,#000000,,,#000000,,#ff0000,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c02_white_stone_03a" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀：d04r0601イベント後
 ・white_stone_03表示後
 　別マップに行くまで繰り返し表示
