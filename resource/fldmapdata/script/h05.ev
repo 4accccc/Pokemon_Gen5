@@ -583,7 +583,6 @@ EVENT_START		ev_h05_woman2_01
 			//ミネズミショー　みていかない？
 			_BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_01 )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
 	
 			//はい選択の場合
 			IF $SCWK_ANSWER == SCR_YES THEN
@@ -618,7 +617,6 @@ ev_minezumi_show:
 
 //オッケー　おねえさん
 _BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_02 )
-_MSGWIN_CLOSE()
 
 //よーし　ミネズミちゃん
 _BALLOONWIN_TALKOBJ_MSG( msg_h05_woman2_04 )
@@ -652,7 +650,7 @@ _MSGWIN_CLOSE()
 
 //正解取得・乱数
 DEFINE_LOCAL	LWK_SHOW
-_GET_RND( LWK_SHOW,3 )
+_GET_RND( LWK_SHOW,4 )
 _ITEM_NAME( 0, ITEM_OOKINAKINOKO )
 
 //乱数分岐
@@ -785,7 +783,7 @@ ev_shuffle:
 
 //正解取得・乱数
 DEFINE_LOCAL	LWK_SHUFFLE
-_GET_RND( LWK_SHUFFLE,2 )
+_GET_RND( LWK_SHUFFLE,3 )
 
 //乱数分岐
 SWITCH	$LWK_SHUFFLE
