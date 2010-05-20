@@ -25,7 +25,6 @@
 #define BC10R0401_SHOPM1_05               13
 #define BC10R0401_BADMAN_02               14
 #define BC10R0401_BACKPACKERM_01          15
-#define BC10R0401_TRAINERW_01             16
 
 #endif //ZONE_BC10R0401_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/bc10r0401.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

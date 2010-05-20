@@ -37,7 +37,6 @@ _EVENT_DATA    ev_bc10r0401_shopm1_04
 _EVENT_DATA    ev_bc10r0401_shopm1_05
 _EVENT_DATA    ev_bc10r0401_badman_02
 _EVENT_DATA    ev_bc10r0401_backpackerm_01
-_EVENT_DATA    ev_bc10r0401_trainerw_01
 _EVENT_DATA_END
 
 
@@ -285,58 +284,6 @@ EVENT_START   ev_bc10r0401_backpackerm_01
 	//既に戦闘済み
 	ELSE
 		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_backpackerm_03 )
-	ENDIF
-}
-EVENT_END
-
-/**************************************************************/
-/* ブラックシティ：トリプルバトル                        */
-/**************************************************************/
-EVENT_START   ev_bc10r0401_trainerw_01
-{
-
-	_TALK_OBJ_START()
-	
-	_TRAINER_FLAG_CHECK( TRID_ELITEW_21, SCWK_ANSWER )
-	
-	//まだ勝利していない
-	IF $SCWK_ANSWER == FALSE THEN
-		_TALK_OBJ_START()
-		_BALLOONWIN_OBJMSG_POS( msg_bc10r0401_elitew_01 , BC10R0401_TRAINERW_01 , POS_DEFAULT )
-		_YES_NO_WIN( SCWK_ANSWER )
-		
-		//はい
-		IF $SCWK_ANSWER == 0 THEN
-			
-			_BALLOONWIN_CLOSE()
-		
-			//トリプルバトルセット
-			_TRAINER_BTL_SET( TRID_ELITEW_21, 0 )
-			//結果チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()
-			ELSE
-				_TRAINER_LOSE()
-			ENDIF
-			
-			//======================================//
-				
-				_TRAINER_FLAG_SET( TRID_ELITEW_21 )
-				
-			//======================================//
-		
-		//いいえ
-		ELSE
-			_BALLOONWIN_OBJMSG_POS( msg_bc10r0401_elitew_02 , BC10R0401_TRAINERW_01 , POS_DEFAULT )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-	
-		ENDIF
-	
-	//既に戦闘済み
-	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_bc10r0401_elitew_03 )
 	ENDIF
 }
 EVENT_END

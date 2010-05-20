@@ -15,7 +15,6 @@
 #define WC10R0101_BOY3_01                  3
 #define WC10R0101_BOY3_02                  4
 #define WC10R0101_WOMAN3_01                5
-#define WC10R0101_TRAINERW_01              6
 
 #endif //ZONE_WC10R0101_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/wc10r0101.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

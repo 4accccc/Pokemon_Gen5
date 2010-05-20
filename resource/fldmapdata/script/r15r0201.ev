@@ -22,8 +22,113 @@
 _EVENT_DATA    ev_r15r0201_veteranw_01
 _EVENT_DATA    ev_r15r0201_oldwoman1_01
 _EVENT_DATA    ev_r15r0201_assistantm_01
+_EVENT_DATA    ev_r15r0201_trainerw_01
 _EVENT_DATA_END
 
+/************************************************************/
+/*			バージョン違いバトル						*/
+/************************************************************/
+EVENT_START	ev_r15r0201_trainerw_01
+	{
+	//バージョンを取得して会話を変える
+	_GET_ROM_VERSION( SCWK_ANSWER )
+	
+	//BlackVERならトリプル
+	IF $SCWK_ANSWER == VERSION_BLACK THEN
+		_TALK_OBJ_START()
+		
+		_TRAINER_FLAG_CHECK( TRID_ELITEW_21, SCWK_ANSWER )
+		
+		//まだ勝利していない
+		IF $SCWK_ANSWER == FALSE THEN
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG_POS( msg_r15r0201_elitew_01b , R15R0201_TRAINERW_01 , POS_DEFAULT )
+			_YES_NO_WIN( SCWK_ANSWER )
+			
+			//はい
+			IF $SCWK_ANSWER == 0 THEN
+				
+				_BALLOONWIN_CLOSE()
+			
+				//トリプルバトルセット
+				_TRAINER_BTL_SET( TRID_ELITEW_21, 0 )
+				//結果チェック
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()
+				ELSE
+					_TRAINER_LOSE()
+				ENDIF
+				
+				//======================================//
+					
+					_TRAINER_FLAG_SET( TRID_ELITEW_21 )
+					
+				//======================================//
+			
+			//いいえ
+			ELSE
+				_BALLOONWIN_OBJMSG_POS( msg_r15r0201_elitew_02b , R15R0201_TRAINERW_01 , POS_DEFAULT )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+		
+			ENDIF
+		
+		//既に戦闘済み
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r15r0201_elitew_03b )
+		ENDIF
+	
+	//Whiteならローテーション
+	ELSE
+		_TALK_OBJ_START()
+	
+		_TRAINER_FLAG_CHECK( TRID_ELITEW_23, SCWK_ANSWER )
+		
+		//まだ勝利していない
+		IF $SCWK_ANSWER == FALSE THEN
+			_TALK_OBJ_START()
+			_BALLOONWIN_OBJMSG_POS( msg_r15r0201_elitew_01w , R15R0201_TRAINERW_01 , POS_DEFAULT )
+			_YES_NO_WIN( SCWK_ANSWER )
+			
+			//はい
+			IF $SCWK_ANSWER == 0 THEN
+				
+				_BALLOONWIN_CLOSE()
+			
+				//ローテーションバトルセット
+				_TRAINER_BTL_SET( TRID_ELITEW_23, 0 )
+				//結果チェック
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()
+				ELSE
+					_TRAINER_LOSE()
+				ENDIF
+				
+					//======================================//
+						
+						_TRAINER_FLAG_SET( TRID_ELITEW_23 )
+						
+					//======================================//
+			
+			//いいえ
+			ELSE
+				_BALLOONWIN_OBJMSG_POS( msg_r15r0201_elitew_02w , R15R0201_TRAINERW_01 , POS_DEFAULT )
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+		
+			ENDIF
+		
+		//既に戦闘済み
+		ELSE
+			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_r15r0201_elitew_03w )
+		ENDIF
+		
+	ENDIF
+	}
+	
+INIT_EVENT_END
 
 /**************************************************************/
 /*  veteranw_01*/
