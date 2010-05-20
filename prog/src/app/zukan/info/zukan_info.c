@@ -350,7 +350,7 @@ static const u16 dat_id_for_md[MD_MAX] =
 #if	PM_VERSION == VERSION_BLACK
   NARC_message_zkn_comment_01_dat,
 #else
-  NARC_message_zkn_comment_00_dat
+  NARC_message_zkn_comment_00_dat,
 #endif
 
   NARC_message_zkn_type_e_dat,
