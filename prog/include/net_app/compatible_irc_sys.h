@@ -89,7 +89,8 @@ typedef struct
   u8 form_no;
   u8 mons_sex;
   u8 egg;
-  u8 is_day14;
+  u8 is_day14:4;
+  u8 is_new:  4;
   u8 my_status[ COMPATIBLE_MYSTATUS_SIZE ];
 } COMPATIBLE_STATUS;
 

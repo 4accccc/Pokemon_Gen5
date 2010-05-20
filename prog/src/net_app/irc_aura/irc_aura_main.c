@@ -496,6 +496,10 @@ typedef struct
   SHAKE_SEARCH_WORK shake_left;
   SHAKE_SEARCH_WORK shake_right;
   u32       minus;
+
+  //本来オーラには関係ないのだが、２回目の通信でしか分からないため
+  //通信回数を増やさないためここにデータをおく
+  BOOL  is_new_play;
 } AURANET_RESULT_DATA;
 //ネットメイン
 typedef struct
@@ -2829,6 +2833,14 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     result.shake_left   = p_wk->shake_left[0];
     result.shake_right  = p_wk->shake_right[0];
     result.minus        = p_wk->minus;
+    if( p_wk->p_param->p_gamesys )
+    {
+      SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys ));
+      IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+      MYSTATUS  *p_youstatus  = (MYSTATUS*)p_wk->p_param->p_you_status->my_status;
+
+      result.is_new_play  = !IRC_COMPATIBLE_SV_IsPlayed( p_sv, MyStatus_GetID(p_youstatus) );
+    }
     if( AURANET_SendResultData( &p_wk->net, &result ) )
     {
       *p_seq  = SEQ_SCENE;
@@ -2867,6 +2879,7 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
       AURANET_RESULT_DATA you;
       AURANET_GetResultData( &p_wk->net, &you );
       p_wk->p_param->minus  = p_wk->minus + you.minus;
+      p_wk->p_param->you_new_play = you.is_new_play;
     }
     p_wk->p_param->result = IRCAURA_RESULT_CLEAR;
     *p_seq  = SEQ_END;

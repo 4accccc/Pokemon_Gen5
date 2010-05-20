@@ -92,6 +92,7 @@ struct _IRC_COMPATIBLE_MAIN_WORK
 	u8									rhythm_cnt_diff;
 	u8									aura_score;
   u8                  aura_minus;
+  BOOL                is_you_new_play;
 	BOOL								is_init;
 	BOOL								is_ranking_ret;
 	COMPATIBLE_STATUS	  *p_you_status;
@@ -933,6 +934,7 @@ static void SUBPROC_FREE_Aura( void *p_param_adrs, void *p_wk_adrs )
 	p_wk->aura_result	= p_param->result;
 	p_wk->aura_score	= p_param->score;
   p_wk->aura_minus  = p_param->minus;
+  p_wk->is_you_new_play = p_param->you_new_play;
 
 	GFL_HEAP_FreeMemory( p_param );
 }
@@ -1052,6 +1054,7 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
         GAMEDATA  *p_gamedata  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
         SAVE_CONTROL_WORK *p_sv_ctrl;
         IRC_COMPATIBLE_SAVEDATA *p_sv;
+        BOOL is_my_init;
 
 #ifdef PM_DEBUG
         if( p_wk->p_param->p_gamesys == NULL )
@@ -1067,8 +1070,10 @@ static void *SUBPROC_ALLOC_Result( HEAPID heapID, void *p_wk_adrs )
         p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
 
 
-        is_init  = !IRC_COMPATIBLE_SV_IsPlayed( p_sv,
+        is_my_init  = !IRC_COMPATIBLE_SV_IsPlayed( p_sv,
             MyStatus_GetID(p_youstatus) );
+
+        is_init = p_wk->is_you_new_play && is_my_init;
       }
 
       COMPATIBLE_IRC_GetStatus( p_wk->p_param->p_gamesys, &my_status );
