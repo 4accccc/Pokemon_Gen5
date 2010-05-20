@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T14:36:38"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T22:11:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1306" top="115" right="2011" bottom="743" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -385,8 +385,8 @@
 		<language name="JPN_KANJI" width="256">６番道路</language>
 	</row>
 
-	<row id="msg_r06_sign2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>看板分類：タウンマップ</comment>
+	<row id="msg_r06_sign2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">６ばんどうろ</language>
 		<language name="JPN_KANJI" width="256">６番道路</language>
