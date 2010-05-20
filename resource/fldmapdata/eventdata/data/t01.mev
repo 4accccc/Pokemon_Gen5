@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/07 12:44:52
+#save date:2010/05/20 15:55:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01.wms
 #SECTION START:OBJ_EVENT
@@ -18,7 +18,7 @@ T01_MAN3_01
 #OBJ CODE Number
 MAN3
 #MOVE CODE Number
-MV_DOWN
+MV_RND
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
@@ -34,13 +34,13 @@ DIR_DOWN
 #Parameter 2 Number
 0
 #Move Limit X Number
-0
+2
 #Move Limit Z Number
 0
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--8 0 -152
+-8 0 -136
 #event number: 1
 #type
 1
