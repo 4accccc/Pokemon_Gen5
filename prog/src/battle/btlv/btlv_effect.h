@@ -57,6 +57,10 @@ enum{
   BTLEFF_ROTATION_POS_A_TO_E,
   BTLEFF_ROTATION_POS_C_TO_A,
   BTLEFF_ROTATION_POS_E_TO_A,
+  BTLEFF_WCS_CAMERA_WORK_E_M,
+  BTLEFF_WCS_CAMERA_WORK_M_E,
+  BTLEFF_CAMERA_WORK_MIDDLE,
+  BTLEFF_CAMERA_WORK_SHORT,
 
   //ステータスエフェクト
   BTLEFF_STATUS_EFFECT_START,
@@ -115,6 +119,9 @@ enum{
   BTLEFF_RESHUFFLE_FOCUS_3vs3_POS_E,          //入れ替えカメラフォーカス3vs3POS_E
   BTLEFF_TOMOENAGE_RETURN,                    //ともえなげ戻りエフェクト
   BTLEFF_DRAGONTAIL_RETURN,                   //ドラゴンテール戻りエフェクト
+  BTLEFF_RAINBOW,                             //虹エフェクト
+  BTLEFF_BURNING,                             //火の海エフェクト
+  BTLEFF_MOOR,                                //湿地エフェクト
 
   BTLEFF_STATUS_EFFECT_END,
 };
@@ -140,6 +147,14 @@ typedef enum{
   GROUP_MCSS,
   GROUP_CLACT,
 }BTLV_EFFECT_TCB_GROUP;
+
+typedef enum{ 
+  BTLV_EFFECT_CWE_NONE = 0,
+  BTLV_EFFECT_CWE_NORMAL,       //通常動作
+  BTLV_EFFECT_CWE_NO_STOP,      //入力があってもCAMERA_INITを呼ばない
+  BTLV_EFFECT_CWE_SHIFT_NORMAL, //強制的にCAMERA_INITを呼んでNORMALに移行
+  BTLV_EFFECT_CWE_SHIFT_NONE,   //強制的にCAMERA_INITを呼んでNONEに移行
+}BTLV_EFFECT_CWE;
 
 //--------------------------------------------
 /**
@@ -298,6 +313,7 @@ extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALL
 extern  int               BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb );
 extern  void              BTLV_EFFECT_FreeTCB( GFL_TCB* tcb );
 extern  void              BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group );
+extern  void              BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );

@@ -42,6 +42,9 @@
 
 #define BTLV_EFFECT_TRAINER_INDEX_NONE  ( 0xffffffff )
 
+#define BTLV_EFFECT_CAMERA_WORK_WAIT      (120)//( 30 * 60 )   //カメラワーク開始までのウエイト（30秒）
+#define BTLV_EFFECT_WCS_CAMERA_WORK_WAIT  (  3 * 60 )   //WCSカメラワーク開始までのウエイト（5秒）
+
 #define TRTYPE_NONE ( 0xffff )
 
 enum
@@ -113,6 +116,12 @@ struct _BTLV_EFFECT_WORK
   BOOL                    trainer_bgm_change_flag;
 
   int                     trainer_index[ BTLV_MCSS_POS_MAX ];
+
+  BTLV_EFFECT_CWE         camera_work_execute;
+  int                     camera_work_seq;
+  int                     camera_work_wait;
+  int                     camera_work_wait_tmp;
+  int                     camera_work_num;
 };
 
 typedef struct
@@ -139,6 +148,15 @@ typedef struct
   int           side;
 }TCB_ROTATION;
 
+typedef struct
+{ 
+  int               seq_no;
+  BtlvMcssPos       from;
+  BtlvMcssPos       to;
+  WazaID            waza;
+  BTLV_EFFVM_PARAM* param;
+}TCB_EFFECT_START;
+
 static  BTLV_EFFECT_WORK  *bew = NULL;
 
 //============================================================================================
@@ -156,6 +174,7 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb );
 static  int   BTLV_EFFECT_GetTCBIndex( void );
 static  void  BTLV_EFFECT_FreeTCBAll( void );
+static  void  camera_work_check( void );
 
 #ifdef PM_DEBUG
 void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
@@ -214,7 +233,6 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
     tr_type[ 2 ] = 0;
     tr_type[ 3 ] = 0;
   }
-
 
   return BTLV_EFFECT_MakeSetUpParam( BTL_MAIN_GetRule( mainModule ), BTL_MAIN_GetFieldSituation( mainModule ),
                                      BTL_MAIN_IsMultiMode( mainModule ), tr_type, mainModule, viewSCU, heapID );
@@ -304,6 +322,16 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
       bew->trainer_index[ index ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
     }
   }
+  
+  //カメラワークウエイトセット
+  if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
+  { 
+    bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
+  }
+  else
+  { 
+    bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
+  }
 
 #ifdef  CAMERA_FOCUS
   OS_TPrintf("camera_focus_offset_x:0x%08x\n",&camera_focus_offset_x);
@@ -366,6 +394,8 @@ void  BTLV_EFFECT_Main( void )
 
   bew->execute_flag = BTLV_EFFVM_Main( bew->vm_core );
 
+  camera_work_check();
+
   GFL_TCB_Main( bew->tcb_sys );
 
   BTLV_MCSS_Main( bew->bmw );
@@ -381,6 +411,8 @@ void  BTLV_EFFECT_Main( void )
     GFL_G3D_DRAW_Start();
     GFL_G3D_DRAW_SetLookAt();
     {
+      BTLV_STAGE_Draw( bew->bsw );
+      BTLV_FIELD_Draw( bew->bfw );
       //ここの描画順番は、NitroSDKで描画されているもののあとにNitroSystemで描画されているものを置く
       //順番を混在させると正しく表示されず最悪フリーズする
       BTLV_MCSS_Draw( bew->bmw );
@@ -393,8 +425,6 @@ void  BTLV_EFFECT_Main( void )
 
         particle_count = G3X_GetPolygonListRamCount() - particle_count;
       }
-      BTLV_STAGE_Draw( bew->bsw );
-      BTLV_FIELD_Draw( bew->bfw );
     }
 
     GFL_G3D_DRAW_End();
@@ -451,7 +481,7 @@ void BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no )
 //=============================================================================================
 void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 {
-  BTLV_EFFVM_PARAM  effvm_param;
+  BTLV_EFFVM_PARAM effvm_param;
 
   BTLV_EFFVM_ClearParam( &effvm_param );
 
@@ -1605,6 +1635,24 @@ void  BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group )
 
 //----------------------------------------------------------------------------
 /**
+ *  @brief  カメラワークエフェクト起動フラグON
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
+{ 
+  //WCSでカメラワークオフなら何もしない
+  if( ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) &&
+      ( !BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) ) )
+  { 
+    return;
+  }
+  bew->camera_work_execute = cwe;
+  bew->camera_work_seq  = 0; 
+  bew->camera_work_wait = 0;
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  空いているTCBIndexを取得
  *
  *  @param[in]  bevw システム管理構造体
@@ -1791,6 +1839,93 @@ static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb )
   TCB_ROTATION *tr = ( TCB_ROTATION* )GFL_TCB_GetWork( tcb );
 
   bew->tcb_rotate_flag &= ( BTLV_EFFTOOL_Pos2Bit( tr->side ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+}
+
+//============================================================================================
+/**
+ * @brief  カメラワークチェック
+ */
+//============================================================================================
+static  void  camera_work_check( void )
+{ 
+  int trg = GFL_UI_KEY_GetTrg();
+  int tp = GFL_UI_TP_GetTrg();
+
+  if( bew->camera_work_execute == BTLV_EFFECT_CWE_NONE ) return;
+
+  if( ( trg ) || ( tp ) ||
+      ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL ) ||
+      ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE ) )
+  { 
+    if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
+    { 
+      BTLV_EFFECT_Stop();
+      BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, BTLEFF_CAMERA_INIT, NULL );
+    }
+    if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL )
+    { 
+      bew->camera_work_execute = BTLV_EFFECT_CWE_NORMAL;
+    }
+    if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
+    { 
+      bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
+    }
+    bew->camera_work_seq  = 0;
+    bew->camera_work_wait = 0;
+  }
+
+  switch( bew->camera_work_seq ){ 
+  case 0:
+    if( bew->camera_work_wait < bew->camera_work_wait_tmp )
+    { 
+      bew->camera_work_wait++;
+      break;
+    }
+    bew->camera_work_seq = 1;
+    /*fallthru*/
+  case 1:
+    { 
+      static  int camera_work_num[ 3 ] = {  
+        BTLEFF_CAMERA_WORK,
+        BTLEFF_CAMERA_WORK_MIDDLE,
+        BTLEFF_CAMERA_WORK_SHORT,
+      };
+      static  int wcs_camera_work_num[ 2 ] = {  
+        BTLEFF_WCS_CAMERA_WORK_E_M,
+        BTLEFF_WCS_CAMERA_WORK_M_E,
+      };
+      int eff_no;
+
+      if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
+      { 
+        eff_no = wcs_camera_work_num[ bew->camera_work_num ];
+        bew->camera_work_num ^= 1;
+      }
+      else
+      { 
+        eff_no = camera_work_num[ bew->camera_work_num ];
+        while( 1 )
+        { 
+          int no = GFL_STD_MtRand( 3 );
+          if( bew->camera_work_num != no )
+          { 
+            bew->camera_work_num = no;
+            break;
+          }
+        }
+      }
+      BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
+      bew->execute_flag = TRUE;
+      bew->camera_work_seq = 2;
+    }
+    break;
+  case 2:
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      bew->camera_work_seq  = 1;
+    }
+    break;
+  }
 }
 
 #ifdef PM_DEBUG
