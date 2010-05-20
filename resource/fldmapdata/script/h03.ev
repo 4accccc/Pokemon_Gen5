@@ -205,6 +205,9 @@ EVENT_START    ev_pos_h03_sage_01
 	DEFINE_LOCAL LWK_POSZ
 	
 	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	//ダークトリニティを主人公のそばへ移動
 	IF $LWK_POSX == 7 THEN
@@ -477,7 +480,10 @@ EVENT_START    ev_pos_h03_sage_01
 	_FLAG_SET(FV_H03_PLASMA)
 	_FLAG_SET(FV_H03_NINJA_01)
 	//==============フラグワーク操作==============//
-	
+
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
+		
 }
 EVENT_END
 
