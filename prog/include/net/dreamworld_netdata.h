@@ -58,11 +58,11 @@ struct DREAM_WORLD_SERVER_CREATE_DATA{
   u8 GameSyncID[12];   /// GameSyncID
 };
 
-#define DOWNLOADPOKE_MORE_VER (0)   //ダウンロードポケモンを増やす場合１
+#define DOWNLOADPOKE_MORE_VER (1)   //ダウンロードポケモンを増やす場合１
 
 #if DOWNLOADPOKE_MORE_VER  //新しくする構造体
 
-#define DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX (3)   //ダウンロードできるポケモン最大数
+#define DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX (10)   //ダウンロードできるポケモン最大数
 
 /// ダウンロードポケモン構造体
 typedef struct {
