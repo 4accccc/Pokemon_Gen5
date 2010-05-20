@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-12T17:28:53"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T15:37:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1484" top="321" right="2189" bottom="949" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1059,12 +1059,12 @@
 		<language name="JPN_KANJI" width="256">ゲームシンク</language>
 	</row>
 
-	<row id="msg_c01r0102_pc_select_02" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c01r0102_pc_select_02" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>選択肢
 ・選ぶとpc_04</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">ポケモンのゆめ</language>
-		<language name="JPN_KANJI" width="256">ポケモンのゆめ</language>
+		<language name="JPN_KANJI" width="256">ポケモンの夢</language>
 	</row>
 
 	<row id="msg_c01r0102_pc_select_03" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
