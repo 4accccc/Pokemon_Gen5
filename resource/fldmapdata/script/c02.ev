@@ -1172,6 +1172,7 @@ EVENT_START   ev_pos_c02_stone_01
 	_OBJ_ANIME_WAIT()
 */	
 	//ÅcÇ»ÇÒÇæÇ©
+	_PLAYER_NAME( 0 )
 	_BALLOONWIN_OBJMSG_POS(msg_c02_white_stone_03, C02_SUPPORT_02,POS_DR)
 	_BALLOONWIN_CLOSE()
 	
