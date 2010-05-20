@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-02-09T12:34:18" source="m_ncastle02_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-20T18:22:51" source="m_ncastle02_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-02-09T12:34:18" source="m_ncastle02_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-20T18:22:51" source="m_ncastle02_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="5" xyz="-1.877686 -0.500000 -1.250000" whd="4.721191 4.864990 2.500000"/>
+<box_test pos_scale="5" xyz="-1.877686 -2.184570 -1.250000" whd="4.721191 7.049561 2.500000"/>
 
 <tex_image_array size="2">
 	<tex_image index="0" name="tex001"
@@ -592,7 +592,7 @@
 		volume_max="0.250000 0.000000 0.250000"
 		volume_r="0.353516"
 		mtx_prim_size="1"
-		nrm_flag="off" clr_flag="on" tex_flag="on"
+		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">1</mtx_list>
@@ -600,7 +600,6 @@
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
 					<tex st="0.000000 32.000000"/>
-					<clr rgb="0 0 0"/>
 					<pos_s xyz="-0.250000 0.000000 0.250000"/>
 					<tex st="16.000000 32.000000"/>
 					<pos_xy xy="0.250000 0.000000"/>
@@ -787,7 +786,7 @@
 </polygon_array>
 
 <node_array size="4">
-	<node index="0" name="polySurface74" kind="mesh"
+	<node index="0" name="in39_hiko" kind="mesh"
 		parent="-1"
 		child="1"
 		brother_next="-1"
@@ -796,7 +795,7 @@
 		billboard="off"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="0.000000 0.000000 0.000000"
+		translate="0.000000 16.000000 0.000000"
 		visibility="on"
 		display_size="2"
 		vertex_size="216" polygon_size="70"
@@ -817,7 +816,7 @@
 		billboard="off"
 		scale="5.000000 5.000000 5.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="51.000000 -16.000000 0.000000"
+		translate="51.000000 -85.905762 0.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
