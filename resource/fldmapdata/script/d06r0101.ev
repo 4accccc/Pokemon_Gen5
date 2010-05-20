@@ -335,7 +335,17 @@ EVENT_START    ev_pos_d06r0101_denki_01
 	
 	//ホワイト:おーい　しってる？
 	//ホワイトが喋る
-	_PLAINWIN_MSG_DOWN(msg_d06r0101_white_01)
+	_GET_MY_SEX( SCWK_ANSWER )
+	
+	//主人公が♂の場合
+	IF $SCWK_ANSWER == PM_MALE THEN
+		//サポートが呼びかける
+		_PLAINWIN_MSG_DOWN(msg_d06r0101_white_01)
+	//主人公が♀の場合
+	ELSE
+		//サポートが呼びかける
+		_PLAINWIN_MSG_DOWN(msg_d06r0101_white_01_01)
+	ENDIF
 	_MSGWIN_CLOSE()
 	
 	//主人公がびっくり
