@@ -642,6 +642,49 @@ static u8 CheckNumFrontPos( const BTL_MAIN_MODULE* wk, u8 clientID )
   return 1;
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * スタンドアローンセットアップ関数共通（マルチ以外）：トレーナーデータ設定
+ */
+//----------------------------------------------------------------------------------
+static void setupCommon_TrainerParam( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
+{
+  if( sp->fRecordPlay == FALSE ){
+    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
+    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+  }else{
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
+    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * スタンドアローンセットアップ関数共通（マルチ以外）：クライアント録画再生モード設定
+ */
+//----------------------------------------------------------------------------------
+static void setupCommon_SetRecplayerClientMode( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
+{
+  if( sp->fRecordPlay )
+  {
+    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
+    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * スタンドアローンセットアップ関数共通（マルチ含む）
+ *  描画エンジン生成＆UIクライアントに関連付ける
+ */
+//----------------------------------------------------------------------------------
+static void setupCommon_CreateViewModule( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp, u8 bagMode )
+{
+  // 描画エンジン生成、プレイヤークライアントに関連付ける
+  BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
+  wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
+  BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
+}
+
 
 //--------------------------------------------------------------------------
 /**
@@ -673,13 +716,8 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
   wk->ImServer = TRUE;
 
-  if( sp->fRecordPlay == FALSE ){
-    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
-  }else{
-    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
-    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
-  }
+  // トレーナーデータ設定
+  setupCommon_TrainerParam( wk, sp );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 1,
@@ -688,19 +726,12 @@ static BOOL setup_alone_single( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 1,
               BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
-  if( sp->fRecordPlay )
-  {
-    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
-    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
-    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
-  }
 
-  // 描画エンジン生成、プレイヤークライアントに関連付ける
-  {
-    BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
-    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-    BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
-  }
+  // 録画再生モード設定
+  setupCommon_SetRecplayerClientMode( wk, sp );
+
+  // 描画エンジン生成＆UIクライアントに関連付ける
+  setupCommon_CreateViewModule( wk, sp, bagMode );
 
   // Server に Client を接続
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 1 );
@@ -790,13 +821,7 @@ static BOOL setup_alone_double( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
   // トレーナーデータ生成
-  if( sp->fRecordPlay == FALSE ){
-    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
-  }else{
-    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
-    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
-  }
+  setupCommon_TrainerParam( wk, sp );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -808,26 +833,11 @@ static BOOL setup_alone_double( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 2,
             BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
-  if( sp->fRecordPlay )
-  {
-    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
-    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
-    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
-  }
+  // 録画再生モード設定
+  setupCommon_SetRecplayerClientMode( wk, sp );
 
-  #if 1
-  // 描画エンジン生成＆クライアントに関連付け
-  {
-    BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
-    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-    BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
-  }
-  #else
-  // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-  // プレイヤークライアントに描画エンジンを関連付ける
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
-  #endif
+  // 描画エンジン生成＆UIクライアントに関連付ける
+  setupCommon_CreateViewModule( wk, sp, bagMode );
 
   // Server に Client を接続
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 2 );
@@ -931,6 +941,7 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
     }
   }
 
+  // 録画再生モード設定
   if( sp->fRecordPlay )
   {
     BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
@@ -943,17 +954,8 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
   }
 
 
-  #if 1
-  // 描画エンジン生成＆クライアントに関連付け
-  {
-    BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
-    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-    BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
-  }
-  #else
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
-  #endif
+  // 描画エンジン生成＆UIクライアントに関連付ける
+  setupCommon_CreateViewModule( wk, sp, bagMode );
 
 
   // Server に Client を接続
@@ -1004,14 +1006,8 @@ static BOOL setup_alone_triple( int* seq, void* work )
   PokeCon_AddParty( &wk->pokeconForServer, wk, 0 );
   PokeCon_AddParty( &wk->pokeconForServer, wk, 1 );
 
-  // トレーナーデータ生成
-  if( sp->fRecordPlay == FALSE ){
-    trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-    trainerParam_StoreNPCTrainer( &wk->trainerParam[BTL_CLIENT_ENEMY1], sp->tr_data[BTL_CLIENT_ENEMY1] );
-  }else{
-    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_PLAYER );
-    trainerParam_SetupForRecPlay( wk, BTL_CLIENT_ENEMY1 );
-  }
+  // トレーナーデータ設定
+  setupCommon_TrainerParam( wk, sp );
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
@@ -1023,28 +1019,11 @@ static BOOL setup_alone_triple( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, 3,
           BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
-  if( sp->fRecordPlay )
-  {
-    BTL_RECREADER_Init( &wk->recReader, sp->recBuffer, sp->recDataSize );
-    BTL_CLIENT_SetRecordPlayerMode( wk->client[0], &wk->recReader );
-    BTL_CLIENT_SetRecordPlayerMode( wk->client[1], &wk->recReader );
-  }
+  // 録画再生モード設定
+  setupCommon_SetRecplayerClientMode( wk, sp );
 
-  #if 1
-  // 描画エンジン生成＆クライアントに関連付け
-  {
-    BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
-    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-    BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
-  }
-  #else
-  // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-
-  // プレイヤークライアントに描画エンジンを関連付ける
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
-  #endif
-
+  // 描画エンジン生成＆UIクライアントに関連付ける
+  setupCommon_CreateViewModule( wk, sp, bagMode );
 
   // Server に Client を接続
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, 3 );
@@ -1091,8 +1070,8 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
 
-  trainerParam_StorePlayer( &wk->trainerParam[0], wk->heapID, wk->playerStatus );
-  trainerParam_StoreNPCTrainer( &wk->trainerParam[1], sp->tr_data[BTL_CLIENT_ENEMY1] );
+  // トレーナーデータ設定
+  setupCommon_TrainerParam( wk, sp );
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, ROTATION_NUM_COVER_POS,
@@ -1100,20 +1079,11 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   wk->client[1] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 1, ROTATION_NUM_COVER_POS,
     BTL_CLIENT_TYPE_AI, bagMode, sp->fRecordPlay, &wk->randomContext, wk->heapID );
 
-  #if 1
-  // 描画エンジン生成＆クライアントに関連付け
-  {
-    BTL_CLIENT* uiClient = (sp->fRecordPlay)? wk->client[sp->commPos] : wk->client[0];
-    wk->viewCore = BTLV_Create( wk, uiClient, &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
-    BTL_CLIENT_AttachViewCore( uiClient, wk->viewCore );
-  }
-  #else
-  // 描画エンジン生成
-  wk->viewCore = BTLV_Create( wk, wk->client[0], &wk->pokeconForClient, bagMode, HEAPID_BTL_VIEW );
+  // 録画再生モード設定
+  setupCommon_SetRecplayerClientMode( wk, sp );
 
-  // プレイヤークライアントに描画エンジンを関連付ける
-  BTL_CLIENT_AttachViewCore( wk->client[0], wk->viewCore );
-  #endif
+  // 描画エンジン生成＆UIクライアントに関連付ける
+  setupCommon_CreateViewModule( wk, sp, bagMode );
 
   // Server に Client を接続
   BTL_SERVER_AttachLocalClient( wk->server, BTL_CLIENT_GetAdapter(wk->client[0]), 0, ROTATION_NUM_COVER_POS );
