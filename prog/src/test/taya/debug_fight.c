@@ -2263,7 +2263,7 @@ FS_EXTERN_OVERLAY(battle);
       if( rule == BTL_RULE_SINGLE )
       {
         u16 monsno = PP_Get( PokeParty_GetMemberPointer(wk->partyEnemy1,0), ID_PARA_monsno, NULL );
-        if( (monsno == MONSNO_SIN) || (monsno == MONSNO_MU) )
+        if( (monsno == MONSNO_650) || (monsno == MONSNO_651) )
         {
           wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_LEGEND;
           wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_LEGEND_EX;
