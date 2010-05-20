@@ -491,6 +491,10 @@ static BOOL correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKE
   const SVFL_WAZAPARAM* wazaParam, BtlPokePos targetPos, BTL_POKESET* rec );
 static void scproc_WazaExeRecordUpdate( BTL_SVFLOW_WORK* wk, WazaID waza );
 static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* targetRec );
+static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+    const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage );
+static BOOL scEvent_CheckMigawariExclude( BTL_SVFLOW_WORK* wk,
+    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL fDamage );
 static void scproc_WazaExe_Effective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scproc_WazaExe_NotEffective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
 static void scproc_WazaExe_Done( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza );
@@ -5070,6 +5074,17 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       scproc_WazaExe_NotEffective( wk, pokeID, waza );
       fEnable = FALSE;
     }
+    else
+    {
+      // みがわり除外チェック
+      scproc_MigawariExclude( wk, wk->wazaParam, attacker, targetRec, fDamage );
+      // ターゲットが残っていない -> 無効イベント呼び出し後終了
+      if( BTL_POKESET_IsRemovedAll(targetRec) ){
+        scPut_WazaFail( wk, attacker, waza );
+        scproc_WazaExe_NotEffective( wk, pokeID, waza );
+        fEnable = FALSE;
+      }
+    }
   }
 
   if( fEnable )
@@ -5083,15 +5098,12 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
       switch( category ){
       case WAZADATA_CATEGORY_SIMPLE_EFFECT:
-        scproc_Migawari_CheckNoEffect( wk, wk->wazaParam, attacker, targetRec );
         scproc_Fight_SimpleEffect( wk, wk->wazaParam, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_SIMPLE_SICK:
-        scproc_Migawari_CheckNoEffect( wk, wk->wazaParam, attacker, targetRec );
         scproc_Fight_SimpleSick( wk, waza, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_EFFECT_SICK:
-        scproc_Migawari_CheckNoEffect( wk, wk->wazaParam, attacker, targetRec );
         scproc_Fight_EffectSick( wk, wk->wazaParam, attacker, targetRec );
         break;
       case WAZADATA_CATEGORY_ICHIGEKI:
@@ -5148,6 +5160,63 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   return fEnable;
 }
+//----------------------------------------------------------------------------------
+/**
+ * みがわり中のポケモンをターゲットから除外
+ *
+ * @param   wk
+ * @param   wazaParam
+ * @param   attacker
+ * @param   target
+ * @param   fDamage
+ */
+//----------------------------------------------------------------------------------
+static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+    const BTL_POKEPARAM* attacker, BTL_POKESET* target, BOOL fDamage )
+{
+  BTL_POKEPARAM* bpp;
+
+  BTL_POKESET_SeekStart( target );
+  while( (bpp = BTL_POKESET_SeekNext(target) ) != NULL )
+  {
+    if( (attacker != bpp)
+    &&  (BPP_MIGAWARI_IsExist(bpp))
+    ){
+      if( scEvent_CheckMigawariExclude(wk, attacker, bpp, wazaParam->wazaID, fDamage) ){
+        BTL_POKESET_Remove( target, bpp );
+      }
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] みがわり中ポケモンをワザ対象から除外するかチェック
+ *
+ * @param   wk
+ * @param   attacker    攻撃ポケ
+ * @param   defender    ターゲットポケ（みがわり中）
+ * @param   fDamage     ダメージを与えるワザか？
+ *
+ * @retval  BOOL    除外する場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_CheckMigawariExclude( BTL_SVFLOW_WORK* wk,
+    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza, BOOL fDamage )
+{
+  BOOL fExclude = (!fDamage); // デフォルトではダメージワザなら除外せず、それ以外は除外する
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_NOEFFECT_FLAG, fExclude );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_MIGAWARI_EXCLUDE );
+    fExclude = BTL_EVENTVAR_GetValue( BTL_EVAR_NOEFFECT_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  return fExclude;
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -9033,31 +9102,6 @@ static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   BPP_MIGAWARI_Delete( bpp );
   SCQUE_PUT_OP_MigawariDelete( wk->que, pokeID );
   SCQUE_PUT_ACT_MigawariDelete( wk->que, pos );
-}
-//----------------------------------------------------------------------------------
-/**
- * みがわり - ダメージワザ以外の無効化判定
- *
- * @param   wk
- * @param   wazaParam
- * @param   attacker    攻撃ポケモンデータ
- * @param   rec         [io] ワザ対象ポケデータ群。無効化されたら該当ポケモンデータは除去される。
- */
-//----------------------------------------------------------------------------------
-static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* attacker, BTL_POKESET* rec )
-{
-  BTL_POKEPARAM* bpp;
-
-  BTL_POKESET_SeekStart( rec );
-  while( (bpp = BTL_POKESET_SeekNext(rec)) != NULL )
-  {
-    if( (bpp != attacker)
-    &&  (BPP_MIGAWARI_IsExist(bpp))
-    ){
-      BTL_POKESET_Remove( rec, bpp );
-    }
-  }
 }
 
 //----------------------------------------------------------------------------------

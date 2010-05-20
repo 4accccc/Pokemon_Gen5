@@ -201,6 +201,7 @@ static void handler_NayamiNoTane_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static void handler_NayamiNoTane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Yumekui( u32* numElems );
 static void handler_Yumekui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Yumekui_MigawariCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Yuwaku( u32* numElems );
 static void handler_Yuwaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_TriAttack( u32* numElems );
@@ -280,6 +281,7 @@ static void handler_Juden_WazaStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static void handler_Juden_WazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_HorobiNoUta( u32* numElems );
 static void handler_HorobiNoUta_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Common_MigawariEffctive( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_YadorigiNoTane( u32* numElems );
 static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Miyaburu( u32* numElems );
@@ -1381,7 +1383,9 @@ static void handler_DoroAsobi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Kiribarai( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_Kiribarai },    // 未分類ワザハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_Kiribarai               },  // 未分類ワザハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive },  // みがわりチェック
+
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1391,29 +1395,33 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
-    BTL_HANDEX_PARAM_RANK_EFFECT* rank_param;
-    BTL_HANDEX_PARAM_SIDEEFF_REMOVE* remove_param;
+    if( !BPP_MIGAWARI_IsExist(target) )
+    {
+      BTL_HANDEX_PARAM_RANK_EFFECT* rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      rank_param->rankType = WAZA_RANKEFF_AVOID;
+      rank_param->rankVolume = -1;
+      rank_param->fAlmost = TRUE;
+      rank_param->poke_cnt = 1;
+      rank_param->pokeID[0] = targetPokeID;
+    }
 
-    rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-    rank_param->rankType = WAZA_RANKEFF_AVOID;
-    rank_param->rankVolume = -1;
-    rank_param->fAlmost = TRUE;
-    rank_param->poke_cnt = 1;
-    rank_param->pokeID[0] = targetPokeID;
+    {
+      BTL_HANDEX_PARAM_SIDEEFF_REMOVE* remove_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
 
-    remove_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
-    remove_param->side = BTL_MAINUTIL_PokeIDtoSide( targetPokeID );
-    BTL_CALC_BITFLG_Construction( remove_param->flags, sizeof(remove_param->flags) );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_REFRECTOR );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_HIKARINOKABE );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_SIROIKIRI );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_SINPINOMAMORI );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_MAKIBISI );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_DOKUBISI );
-    BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_STEALTHROCK );
-    remove_param->fExMsg = TRUE;
-    remove_param->exStrID = BTL_STRID_SET_Kiribarai;
+      remove_param->side = BTL_MAINUTIL_PokeIDtoSide( targetPokeID );
+      BTL_CALC_BITFLG_Construction( remove_param->flags, sizeof(remove_param->flags) );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_REFRECTOR );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_HIKARINOKABE );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_SIROIKIRI );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_SINPINOMAMORI );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_MAKIBISI );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_DOKUBISI );
+      BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_STEALTHROCK );
+      remove_param->fExMsg = TRUE;
+      remove_param->exStrID = BTL_STRID_SET_Kiribarai;
+    }
   }
 }
 //----------------------------------------------------------------------------------
@@ -1984,6 +1992,8 @@ static const BtlEventHandlerTable*  ADD_Yumekui( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_NOEFFECT_CHECK_L2, handler_Yumekui },    // 無効化チェックレベル２ハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Yumekui_MigawariCheck },   // みがわりチェック
+
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2002,6 +2012,15 @@ static void handler_Yumekui( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     }
   }
 }
+// みがわりチェック
+static void handler_Yumekui_MigawariCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ゆうわく
@@ -3280,7 +3299,8 @@ static void handler_Juden_WazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable*  ADD_HorobiNoUta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_START, handler_HorobiNoUta_Exe },    // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,    handler_HorobiNoUta_Exe          },   // ワザ出し確定ハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive  },   // みがわりチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3294,6 +3314,16 @@ static void handler_HorobiNoUta_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_HorobiNoUta );
   }
 }
+// みがわりチェックハンドラ（共有：自分が攻撃側なら相手がみがわりでも有効にする）
+static void handler_Common_MigawariEffctive( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) == BTL_EVENT_FACTOR_GetSubID(myHandle))
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, FALSE );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * やどりぎのたね
@@ -3326,7 +3356,9 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static const BtlEventHandlerTable*  ADD_Miyaburu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASICK_PARAM, handler_Miyaburu },    // 状態異常パラメータ調整ハンドラ
+    { BTL_EVENT_WAZASICK_PARAM,    handler_Miyaburu                },  // 状態異常パラメータ調整ハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive },  // みがわりチェック
+
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -6239,7 +6271,9 @@ static void handler_Chouhatu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Ichamon( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,     handler_Ichamon },          // 未分類ワザハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Ichamon                 },   // 未分類ワザハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,   handler_Common_MigawariEffctive },   // みがわりチェック
+
   };
 
   *numElems = NELEMS( HandlerTable );
