@@ -25,6 +25,7 @@ _EVENT_DATA   ev_item_get_player_form_return
 _EVENT_DATA   ev_item_event_hideitem
 _EVENT_DATA   ev_item_event_intrude_secret
 _EVENT_DATA   ev_item_event_prog_call
+_EVENT_DATA   ev_item_event_field_keywait
 _EVENT_DATA_END //終了
 
 
@@ -170,6 +171,19 @@ _CHG_LOCAL_SCR
 _END
 
 //====================================================================
+//	アイテム取得イベント プログラムからコールする場合専用
+//  (アイテム取得&LAST_KEYWAIT)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//====================================================================
+EVENT_START ev_item_event_prog_call
+{
+  _CALL ev_item_event_nowait_core
+}
+EVENT_END
+
+//====================================================================
 //	アイテム取得イベント(フィールドアイテム&LAST_KEYWAIT)
 //
 //	SCWK_PARAM0	アイテムナンバー
@@ -196,21 +210,9 @@ ev_item_event_hideitem:
 _CHG_LOCAL_SCR
 _END
 
-//====================================================================
-//	アイテム取得イベント プログラムからコールする場合専用
-//  (アイテム取得&LAST_KEYWAIT)
-//
-//	SCWK_PARAM0	アイテムナンバー
-//	SCWK_PARAM1	個数
-//====================================================================
-EVENT_START ev_item_event_prog_call
-{
-  _CALL ev_item_event_nowait_core
-}
-EVENT_END
 
 //--------------------------------------------------------------------
-//  アイテム取得イベント（共通処理）
+//  アイテム取得イベント（共通処理）LAST_KEYWAITで終了する
 //
 //	SCWK_PARAM0	アイテムナンバー
 //	SCWK_PARAM1	個数
@@ -218,59 +220,78 @@ EVENT_END
 ev_item_event_field_core:
 {
   DEFINE_LOCAL  i_get
-  DEFINE_LOCAL  not_illegal_code
 
-  _DEBUG_PRINT_WK( SCWK_PARAM0 )
-  _DEBUG_PRINT_WK( SCWK_PARAM1 )
   $SCWK_TEMP0 = $SCWK_PARAM0
   $SCWK_TEMP1 = $SCWK_PARAM1
 
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
-  _DEBUG_PRINT_WK( i_get )
-  
   
   IF $i_get == FALSE THEN
     _CALL sub_pocket_me_set
-    _CALL sub_item_event_get_field_msg
+    _CALL sub_item_event_field_get_msg
     _ME_WAIT()
     _AB_KEYWAIT_MARK()
     //入手失敗システムメッセージ
     _CALL   sub_item_event_fail_nowait
   ELSE
-    _CALL sub_pocket_me_set
-    _TIME_WAIT( ITEM_GET_FORM_TIMING )
-    
-    //自機の表示コードが自機専用のものかどうか
-    _CHECK_PLAYER_ILLEGAL_OBJCODE( not_illegal_code )
-
-    IF $not_illegal_code == TRUE THEN
-      _CALL sub_item_get_player_form_anime_set
-    ENDIF
-    
-    _CALL sub_item_event_get_field_msg
-    _ME_WAIT()
-    
-    IF $not_illegal_code == TRUE THEN
-      _OBJ_ANIME_WAIT()
-      _CALL sub_item_get_player_form_return
-    ENDIF
-    
-    _AB_KEYWAIT_MARK()
+    //  隠しアイテムなど取得時のME→ポーズ→MSG→ポーズ終了→キーウェイト
+    _CALL   sub_item_event_field_get
 
     //アイテム追加
     _ADD_ITEM( SCWK_PARAM0,SCWK_PARAM1,SCWK_ANSWER )
     _BEACON_SET_REQ_ITEM_GET( SCWK_PARAM0 ) 
 
-    //入手成功システムメッセージ
-    _PLAYER_NAME( 0 )
-    _ITEM_NAME( 1, SCWK_PARAM0 )
-    _GET_POCKET_ID( SCWK_TEMP0, SCWK_ANSWER )
-    _POCKET_NAME( 2, SCWK_ANSWER )
-
-    _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DEFAULT )
-    _LAST_KEYWAIT()
+    //「～にしまった」
+    _CALL   sub_item_event_pocket_msg_nowait
   ENDIF
-  _SYSWIN_CLOSE()
+  $SCWK_ANSWER = $i_get
+  _RET
+}
+
+//====================================================================
+//	アイテム取得イベント(フィールドアイテム&▼待ちあり)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//====================================================================
+ev_item_event_field_keywait:
+_CALL sub_item_event_field_keywait
+_CHG_LOCAL_SCR
+_END
+
+//--------------------------------------------------------------------
+//  アイテム取得イベント(フィールドアイテム&▼待ちあり)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//--------------------------------------------------------------------
+sub_item_event_field_keywait:
+{
+  DEFINE_LOCAL  i_get
+
+  $SCWK_TEMP0 = $SCWK_PARAM0
+  $SCWK_TEMP1 = $SCWK_PARAM1
+
+  _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, i_get)
+  
+  IF $i_get == FALSE THEN
+    _CALL sub_pocket_me_set
+    _CALL sub_item_event_field_get_msg
+    _ME_WAIT()
+    _AB_KEYWAIT_MARK()
+    //入手失敗システムメッセージ
+    _CALL   sub_item_event_fail_keywait
+  ELSE
+    //  隠しアイテムなど取得時のME→ポーズ→MSG→ポーズ終了→キーウェイト
+    _CALL   sub_item_event_field_get
+
+    //アイテム追加
+    _ADD_ITEM( SCWK_PARAM0,SCWK_PARAM1,SCWK_ANSWER )
+    _BEACON_SET_REQ_ITEM_GET( SCWK_PARAM0 ) 
+
+    //「～にしまった」
+    _CALL   sub_item_event_pocket_msg_keywait
+  ENDIF
   $SCWK_ANSWER = $i_get
   _RET
 }
@@ -318,6 +339,36 @@ _RET
 
 
 //--------------------------------------------------------------------
+//  隠しアイテムなど取得時のME→ポーズ→MSG→ポーズ終了→キーウェイト
+//	SCWK_TEMP0	アイテムナンバー
+//--------------------------------------------------------------------
+sub_item_event_field_get:
+{
+  DEFINE_LOCAL  not_illegal_code
+
+    _CALL sub_pocket_me_set
+    _TIME_WAIT( ITEM_GET_FORM_TIMING )
+    
+    //自機の表示コードが自機専用のものかどうか
+    _CHECK_PLAYER_ILLEGAL_OBJCODE( not_illegal_code )
+
+    IF $not_illegal_code == TRUE THEN
+      _CALL sub_item_get_player_form_anime_set
+    ENDIF
+    
+    _CALL sub_item_event_field_get_msg
+    _ME_WAIT()
+    
+    IF $not_illegal_code == TRUE THEN
+      _OBJ_ANIME_WAIT()
+      _CALL sub_item_get_player_form_return
+    ENDIF
+    
+    _AB_KEYWAIT_MARK()
+}
+_RET
+
+//--------------------------------------------------------------------
 //	アイテム取得イベント(成功)(送りカーソル待ちあり)
 //
 //	SCWK_TEMP0	アイテムナンバー
@@ -333,15 +384,7 @@ sub_item_event_keywait:
   _ME_WAIT()
   _AB_KEYWAIT_MARK()
 	
-  _PLAYER_NAME(	0 )
-  _ITEM_NAME(	1,SCWK_TEMP0 )
-
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
-  _POCKET_NAME(	2,SCWK_ANSWER )
-
-  _SYSWIN_MSG(	msg_item_get_pocket_keywait , POS_DEFAULT )
-  _SYSWIN_CLOSE()
+  _CALL   sub_item_event_pocket_msg_keywait
 }
 _RET
 
@@ -362,17 +405,8 @@ sub_item_event_nowait:
   _ME_WAIT()
   _AB_KEYWAIT_MARK()
 
-  _PLAYER_NAME(	0 )
-  _ITEM_NAME(	1, SCWK_TEMP0 )
-
-  //ポケットナンバーをSCWK_ANSWERに代入
-  _GET_POCKET_ID(	SCWK_TEMP0, SCWK_ANSWER )
-  _POCKET_NAME(	2, SCWK_ANSWER )
-
-  _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DEFAULT )
-  _LAST_KEYWAIT()
-
-  _SYSWIN_CLOSE()
+  //「～にしまった」
+  _CALL sub_item_event_pocket_msg_nowait
 }
 _RET
 
@@ -415,7 +449,7 @@ _RET
 //  メッセージ「～をみつけた！」
 //	SCWK_TEMP0	アイテムナンバー
 //--------------------------------------------------------------------
-sub_item_event_get_field_msg:
+sub_item_event_field_get_msg:
 {
   //ポケットナンバーをSCWK_ANSWERに代入
   _GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
@@ -445,6 +479,39 @@ sub_item_event_get_field_msg:
 }
 _RET
 
+//--------------------------------------------------------------------
+//  成功メッセージ「～を～ポケットにしまった」
+//	SCWK_TEMP0	アイテムナンバー
+//--------------------------------------------------------------------
+sub_item_event_pocket_msg_nowait:
+  _PLAYER_NAME(	0 )
+  _ITEM_NAME(	1, SCWK_TEMP0 )
+
+  //ポケットナンバーをSCWK_ANSWERに代入
+  _GET_POCKET_ID(	SCWK_TEMP0, SCWK_ANSWER )
+  _POCKET_NAME(	2, SCWK_ANSWER )
+
+  _SYSWIN_MSG(	msg_item_get_pocket_nowait , POS_DEFAULT )
+  _LAST_KEYWAIT()
+
+  _SYSWIN_CLOSE()
+_RET
+
+//--------------------------------------------------------------------
+//  成功メッセージ「～を～ポケットにしまった」「▼」待ちあり
+//	SCWK_TEMP0	アイテムナンバー
+//--------------------------------------------------------------------
+sub_item_event_pocket_msg_keywait:
+  _PLAYER_NAME(	0 )
+  _ITEM_NAME(	1,SCWK_TEMP0 )
+
+  //ポケットナンバーをSCWK_ANSWERに代入
+  _GET_POCKET_ID(	SCWK_TEMP0,SCWK_ANSWER )
+  _POCKET_NAME(	2,SCWK_ANSWER )
+
+  _SYSWIN_MSG(	msg_item_get_pocket_keywait , POS_DEFAULT )
+  _SYSWIN_CLOSE()
+  _RET
 
 //====================================================================
 //	アイテム取得MEセット
@@ -536,30 +603,24 @@ EVENT_START ev_item_event_intrude_secret
 {
   DEFINE_LOCAL  i_get
 
-  _DEBUG_PRINT_WK( SCWK_PARAM0 )
-  _DEBUG_PRINT_WK( SCWK_PARAM1 )
   $SCWK_TEMP0 = $SCWK_PARAM0
   $SCWK_TEMP1 = $SCWK_PARAM1
 
-  _CALL sub_pocket_me_set
-  _TIME_WAIT( ITEM_GET_FORM_TIMING )
-  _CALL sub_item_get_player_form_anime_set
-
-//  メッセージ「～をみつけた！」
-  _CALL sub_item_event_get_field_msg
-  _ME_WAIT()
-  _OBJ_ANIME_WAIT()
-  _CALL sub_item_get_player_form_return
-  _AB_KEYWAIT_MARK()
 
   _ADD_ITEM_CHK( SCWK_PARAM0, 1, i_get)
-  _DEBUG_PRINT_WK( i_get )
   IF $i_get == FALSE THEN
+    _CALL sub_pocket_me_set
+    _CALL sub_item_event_field_get_msg
+    _ME_WAIT()
+    _AB_KEYWAIT_MARK()
+
     //入手失敗システムメッセージ
     _SYSWIN_MSG(	msg_intrude_secret_item_fail , POS_DEFAULT )
     _LAST_KEYWAIT()
     _SYSWIN_CLOSE()
   ELSE
+    //  隠しアイテムなど取得時のME→ポーズ→MSG→ポーズ終了→キーウェイト
+    _CALL   sub_item_event_field_get
     //アイテム追加
     _ADD_ITEM( SCWK_PARAM0, 1, SCWK_ANSWER )
     _BEACON_SET_REQ_ITEM_GET( SCWK_PARAM0 ) 

@@ -158,7 +158,7 @@
   .endm
 
 //--------------------------------------------------------------
-// イベント入手イベント「▼」待ちあり◆
+// イベント入手イベント（隠しアイテム、エフェクトエンカウント共通）
 //--------------------------------------------------------------
   .macro  _ASM_ITEM_EVENT_FIELD itemno, num
   _PUSH_WORK  SCWK_PARAM0
@@ -166,6 +166,19 @@
   _ASM_LDWKVAL  SCWK_PARAM0, \itemno
   _ASM_LDWKVAL  SCWK_PARAM1, \num
   _CHG_COMMON_SCR SCRID_ITEM_EVENT_FIELD
+  _POP_WORK   SCWK_PARAM1
+  _POP_WORK   SCWK_PARAM0
+  .endm
+
+//--------------------------------------------------------------
+// イベント入手イベント（同上、ただし「▼」待ちあり）
+//--------------------------------------------------------------
+  .macro  _ASM_ITEM_EVENT_FIELD_KEYWAIT itemno, num
+  _PUSH_WORK  SCWK_PARAM0
+  _PUSH_WORK  SCWK_PARAM1
+  _ASM_LDWKVAL  SCWK_PARAM0, \itemno
+  _ASM_LDWKVAL  SCWK_PARAM1, \num
+  _CHG_COMMON_SCR SCRID_ITEM_EVENT_FIELD_KEYWAIT
   _POP_WORK   SCWK_PARAM1
   _POP_WORK   SCWK_PARAM0
   .endm
