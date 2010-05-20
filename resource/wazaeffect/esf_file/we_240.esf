@@ -5,7 +5,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_240.spa
 %00
 BGのパレットフェード	すべて	0	12	3	0:0:0
 射影モード	透視射影	すべて
-SE再生	SEQ_SE_FLD_31	SE2	攻撃側	10:0:90	0:0:0
+SE再生	SEQ_SE_FLD_31	SE2	攻撃側	10:0:127	0:0:0
 SE再生	SEQ_SE_DUMMY5	SE2	攻撃側	120:0:0	0:0:0
 SE動的変化	SE2	追従	ボリューム	90	0	80	40:0:0
 パーティクルデータロード	w_240
