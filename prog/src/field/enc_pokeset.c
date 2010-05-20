@@ -604,8 +604,8 @@ static void efp_MonsSpaCheck( ENCPOKE_FLD_PARAM* ioEfp, const WEATHER_NO weather
 /*
  *  @brief  レベル差戦闘回避チェック
  *
- *  @retval NULL  大量発生が起きていない(クリア前)
- *  @retval それ以外  発生している大量発生パラメータ
+ *  @retval TRUE  回避する 
+ *  @retval FALSE 回避しない
  */
 //--------------------------------------------------------------
 static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level )
@@ -617,10 +617,12 @@ static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level )
   if(efp->spa_low_lv_rm && (efp->spray_lv - level) >= 5){
     return TRUE;
   }
-  //スプレーチェック
-  if(efp->spray_f && (level <= efp->spray_lv)){
-    return TRUE;
-  } 
+  if( efp->fishing_f == FALSE ){
+    //スプレーチェック　WBの釣りではスプレーチェックしない
+    if(efp->spray_f && (level <= efp->spray_lv)){
+      return TRUE;
+    }
+  }
   return FALSE;
 }
 
