@@ -18,6 +18,7 @@
 #define C03R1101_LEADER3_01                6
 #define C03R1101_LEADER8W_01               7
 #define C03R1101_SUPPORT_01                8
+#define C03R1101_MONSTERBALL_01            9
 
 #endif //ZONE_C03R1101_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/c03r1101.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ

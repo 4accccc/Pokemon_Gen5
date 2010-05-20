@@ -333,6 +333,9 @@ init_flags:
 
 	//トライアルハウスの謎の女性を非表示
 	_FLAG_SET( FV_C04R0901_TRAINERW_01 )
+	
+	//c03r1101のモンスターボールを非表示
+	_FLAG_SET(FV_C03R1101_ITEM_01)
 
 }
 _RET
