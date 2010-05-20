@@ -115,13 +115,15 @@ enum {
 	NARC_zukan_gra_search_zkn_form_NANR = 101,
 	NARC_zukan_gra_top_zkn_top_bg_NCLR = 102,
 	NARC_zukan_gra_top_zkn_top_bg2_NCLR = 103,
-	NARC_zukan_gra_top_zkn_top_cover_NCGR = 104,
-	NARC_zukan_gra_top_zkn_top_dummy_NCGR = 105,
-	NARC_zukan_gra_top_zkn_top_cover_NSCR = 106,
-	NARC_zukan_gra_top_zkn_top_cover_u_NSCR = 107,
-	NARC_zukan_gra_top_zkn_top_cover_up_NSCR = 108,
-	NARC_zukan_gra_top_zkn_top_pict_NSCR = 109,
-	NARC_zukan_gra_top_zkn_top_sub_bg_NSCR = 110
+	NARC_zukan_gra_top_zkn_top_dummy_NCLR = 104,
+	NARC_zukan_gra_top_zkn_top_cover_NCGR = 105,
+	NARC_zukan_gra_top_zkn_top_dummy_NCGR = 106,
+	NARC_zukan_gra_top_zkn_top_dummy2_NCGR = 107,
+	NARC_zukan_gra_top_zkn_top_cover_NSCR = 108,
+	NARC_zukan_gra_top_zkn_top_cover_u_NSCR = 109,
+	NARC_zukan_gra_top_zkn_top_cover_up_NSCR = 110,
+	NARC_zukan_gra_top_zkn_top_pict_NSCR = 111,
+	NARC_zukan_gra_top_zkn_top_sub_bg_NSCR = 112
 };
 
 /* NARC_ZUKAN_GRA_NAIX_ */
