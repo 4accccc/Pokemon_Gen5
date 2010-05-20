@@ -6340,11 +6340,13 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     BTL_POKEPARAM* attacker, BTL_POKESET* targets, BtlTypeAff* affAry,
     const SVFL_WAZAPARAM* wazaParam, HITCHECK_PARAM* hitCheckParam, fx32 dmg_ratio, BOOL fTargetPlural )
 {
-  BTL_POKEPARAM *bpp[ BTL_POSIDX_MAX ];
-  u16 dmg[ BTL_POSIDX_MAX ];
+  static BTL_POKEPARAM *bpp[ BTL_POSIDX_MAX ];
+  static u16 dmg[ BTL_POSIDX_MAX ];
+  static u8  critical_flg[ BTL_POSIDX_MAX ];
+  static u8  koraeru_cause[ BTL_POSIDX_MAX ];
+  static u8  migawari_flag[ BTL_POSIDX_MAX ];
+
   u32 dmg_sum, dmg_tmp;
-  u8  critical_flg[ BTL_POSIDX_MAX ];
-  u8  koraeru_cause[ BTL_POSIDX_MAX ];
   u8  poke_cnt, fFixDamage;
   int i;
   BtlPokePos atkPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
@@ -6378,11 +6380,14 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     {
       scproc_Migawari_Damage( wk, attacker, bpp[i], dmg[i], affAry[i], critical_flg[i], wazaParam );
       BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], 0 );  // ダメージ0として記録
-      bpp[i] = NULL;  // 削除予定としてNULLを入れておく
+      migawari_flag[ i ] = TRUE;
+    }
+    else{
+      migawari_flag[ i ] = FALSE;
     }
   }
 
-  // 最初のヒットならダメージ確定イベントコール
+  // ダメージ確定イベントコール（複数回ヒットワザなら初回のみ）
   if( HITCHECK_IsFirstTime(hitCheckParam) )
   {
     for(i=0; i<poke_cnt; ++i){
@@ -6394,7 +6399,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   // 身代わりヒットした分は配列から削除
   for(i=0; i<poke_cnt; ++i)
   {
-    if( bpp[i] == NULL )
+    if( migawari_flag[i] )
     {
       int j;
       for(j=(i+1); j<(poke_cnt-1); ++j)

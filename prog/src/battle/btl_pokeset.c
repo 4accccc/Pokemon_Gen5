@@ -34,6 +34,14 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
 {
   if( rec->count < NELEMS(rec->bpp) )
   {
+    u32 i;
+    for(i=0; i<rec->count; ++i)
+    {
+      if( rec->bpp[i] == bpp ){
+        rec->damage[ i ] += damage;
+        return;
+      }
+    }
     rec->bpp[ rec->count ] = bpp;
     rec->damage[ rec->count ] = damage;
     rec->count++;
