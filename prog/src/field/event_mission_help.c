@@ -176,7 +176,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talk( GMEVENT *event, int *seq, void 
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -261,7 +261,7 @@ static GMEVENT_RESULT CommMissionHelp_TtoM_Talk( GMEVENT *event, int *seq, void 
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -342,7 +342,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -427,7 +427,7 @@ static GMEVENT_RESULT CommMissionHelp_TtoM_Talked( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -508,7 +508,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(intcomm == NULL){
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;

@@ -161,7 +161,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_MSG_END_BUTTON_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -248,7 +248,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_GPOWER){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_END;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -346,7 +346,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -453,7 +453,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talked( GMEVENT *event, int *seq, v
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;

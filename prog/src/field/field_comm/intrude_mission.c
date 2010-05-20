@@ -530,30 +530,6 @@ BOOL MISSION_GetMissionComplete(const MISSION_SYSTEM *mission)
 
 //==================================================================
 /**
- * ミッション結果から対応した結果メッセージIDを取得する
- *
- * @param   mission		
- *
- * @retval  u16		メッセージID
- */
-//==================================================================
-u16 MISSION_GetAchieveMsgID(const MISSION_SYSTEM *mission, int my_netid)
-{
-  const MISSION_RESULT *result = &mission->result;
-  
-  if(result->mission_data.accept_netid == INTRUDE_NETID_NULL
-      || result->mission_fail == TRUE){
-    return msg_invasion_mission_sys002;
-  }
-  
-  if(my_netid == result->achieve_netid[0]){
-    return msg_invasion_mission001_02;
-  }
-  return msg_invasion_mission001_03;
-}
-
-//==================================================================
-/**
  * ミッション結果データ取得
  *
  * @param   mission		

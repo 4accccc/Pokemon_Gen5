@@ -217,7 +217,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       shop->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -394,7 +394,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       shop->error = TRUE;
       return GMEVENT_RES_CONTINUE;

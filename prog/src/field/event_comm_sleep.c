@@ -104,6 +104,25 @@ void EVENTCHANGE_CommMissionSleep_MtoT_Talk(GMEVENT *event, const COMMTALK_COMMO
   else{
     GF_ASSERT(0);
   }
+
+  //話しかけられた事を相手に通知していないので、自分でローカル内のを振り向かせる
+  {
+    s32 mine_dir, target_dir;
+    mine_dir = intcomm->intrude_status_mine.player_pack.dir;
+    if(mine_dir == DIR_LEFT){
+      target_dir = DIR_RIGHT;
+    }
+    else if(mine_dir == DIR_RIGHT){
+      target_dir = DIR_LEFT;
+    }
+    else if(mine_dir == DIR_DOWN){
+      target_dir = DIR_UP;
+    }
+    else{
+      target_dir = DIR_DOWN;
+    }
+    intcomm->intrude_status[talk->ccew.talk_netid].player_pack.dir = target_dir;
+  }
 }
 
 //--------------------------------------------------------------

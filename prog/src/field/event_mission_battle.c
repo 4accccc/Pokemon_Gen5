@@ -233,7 +233,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -282,7 +282,6 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_OK:
-    talk->success = TRUE;
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionBattleMsgID.mission_battle_ok[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   	(*seq) = SEQ_SEND_ACHIEVE;
@@ -309,10 +308,20 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
       (*seq)++;
     }
+    else{ //同期待ちBキャンセル
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+        if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+          //ここでキャンセルしても相手には既にタイミングコマンドが届いている為、
+          //先に進んでしまう。その為、通信切断へと処理を持っていく
+          *seq = SEQ_TALK_CANCEL;
+        }
+      }
+    }
     break;
 
   case SEQ_BATTLE_COMMON_EVENT:
     // 侵入通信対戦：共通イベント呼び出し
+    talk->success = TRUE;
     GMEVENT_CallEvent(event, EVENT_IntrudeBattle_CallBattle( gsys, &talk->ibp ));
     (*seq)++;
     break;
@@ -427,7 +436,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
       return GMEVENT_RES_CONTINUE;
@@ -496,6 +505,16 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
       (*seq)++;
+    }
+    else{ //同期待ちBキャンセル
+      if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+        if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+          //ここでキャンセルしても相手には既にタイミングコマンドが届いている為、
+          //先に進んでしまう。その為、通信切断へと処理を持っていく
+          *seq = SEQ_TALK_CANCEL;
+          GameCommSys_ExitReq(game_comm);
+        }
+      }
     }
     break;
 

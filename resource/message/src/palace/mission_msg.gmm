@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-19T23:32:53"/>
+	<create user="matsuda" host="W00142" date="2010-05-20T13:14:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1122" top="402" right="1827" bottom="1020" maximized="no" rayout="Vertical2">
+	<dialog left="470" top="134" right="1176" bottom="931" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="531"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="698"/>
+		<band id="3" index="3" style="0000" width="698"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -314,6 +314,12 @@
 		<comment>相手の通信待機メッセージ</comment>
 		<language name="JPN" width="256">しばらくおまちください……</language>
 		<language name="JPN_KANJI" width="256">しばらくお待ち下さい……</language>
+	</row>
+
+	<row id="msg_intrude_004" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
+		<comment>話しかけている相手と通信がきれたとき</comment>
+		<language name="JPN" width="256">あいてとの　かいわが　きれました</language>
+		<language name="JPN_KANJI" width="256">あいてとの　かいわが　きれました</language>
 	</row>
 
 	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">

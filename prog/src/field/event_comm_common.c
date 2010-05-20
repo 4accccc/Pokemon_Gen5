@@ -266,6 +266,7 @@ static void _CommCommon_Init(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, C
 //==================================================================
 void EVENT_CommCommon_Finish(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK_COMMON_EVENT_WORK *ccew)
 {
+  IntrudeEventPrint_ExitMenu(&ccew->iem);
   IntrudeEventPrint_ExitFieldMsg(&ccew->iem);
 	if(intcomm != NULL){
   	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_FIELD);
@@ -302,7 +303,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) <= SEQ_TALK_OK){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_FINISH;
       return GMEVENT_RES_CONTINUE;
     }
@@ -425,7 +426,7 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_FINISH){
-      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_invasion_mission_sys002);
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_FINISH;
       return GMEVENT_RES_CONTINUE;
     }
