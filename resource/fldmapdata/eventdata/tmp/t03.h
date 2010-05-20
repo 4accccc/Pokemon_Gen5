@@ -22,6 +22,7 @@
 #define T03_POLICEMAN_01                   6
 #define T03_POKE_01                        7
 #define T03_MIDDLEMAN2_01                  8
+#define T03_DUMMY_ITEM_01                  9
 
 #endif //ZONE_T03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/t03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½
