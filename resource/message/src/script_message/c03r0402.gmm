@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T11:37:57"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:39:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -297,7 +297,7 @@
 ・全国版フラグ・増田部長フラグ
 　どちらもまだで話しかけた
 ※テキストはプラチナのまま</comment>
-		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
 おー！　きみは　ポケモンずかんを
@@ -324,7 +324,7 @@
 　１度聞くと、部屋を出るまでは4になる
 ・同時に3の条件を満たしていても一度部屋を出ないと
 　director_03は表示されない</comment>
-		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
 おおー！　きみは
@@ -341,11 +341,11 @@
 表彰しましょう！！▼</language>
 	</row>
 
-	<row id="msg_c03r0402_director_02a" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_director_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・02表示後1回のみ、このメッセージを表示
 ・あわせてt01r0102にイッシュ図鑑の表彰状の動作モデル追加</comment>
-		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">この　ひょうしょうじょう　ですが
 きみの　いえに　おくっておきますね！</language>
 		<language name="JPN_KANJI" width="256">この　表彰状ですが
@@ -362,7 +362,7 @@
 　ファファーレを鳴らして表彰状を表示
 　なにかボタンでフィールドへ
 ・１度聞くと、部屋を出るまでは4になる</comment>
-		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">やあ！
 ぼくは　ゲーム　ディレクター▼
 おおおー！　すごい！
@@ -386,7 +386,7 @@
 	<row id="msg_c03r0402_director_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・2か3の話を終えたら、部屋を出るまで</comment>
-		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">きみは
 あつめた　ポケモンたちと▽
 どうやって　であったの？▼
@@ -406,11 +406,11 @@
 ひとり　ひとり　違うんだね！</language>
 	</row>
 
-	<row id="msg_c03r0402_director_04a" back-color="#ffff80,,,#ffff80,,,,,,,,,,,,,,,">
+	<row id="msg_c03r0402_director_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・04表示後1回のみ、このメッセージを表示
 ・あわせてt01r0102に全国図鑑の表彰状の動作モデル追加</comment>
-		<attribute name="キャラ指定">MAN2（暫定）</attribute>
+		<attribute name="キャラ指定">MAN2</attribute>
 		<language name="JPN" width="256">この　ひょうしょうじょう　も
 きみの　いえに　おくっておきますね！</language>
 		<language name="JPN_KANJI" width="256">この　表彰状も
