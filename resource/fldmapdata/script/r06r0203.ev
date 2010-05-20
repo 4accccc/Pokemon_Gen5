@@ -39,6 +39,12 @@ EVENT_START   ev_pos_r06r0203_oldman1_01
 	//じじい主人公に気づく
 	_OBJ_ANIME(R06R0203_OLDMAN1_01,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
+
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
 	
 	//上向き以外でイベントに入った場合、上を向く
 	_PLAYER_DIR_GET( LWK_DIR )
@@ -297,6 +303,14 @@ EVENT_END
 /*                                                            */
 /**************************************************************/
 EVENT_START ev_r06r0203_legend1
+	
+	//100520　村上
+	//自転車に乗ってるなら歩行状態へ
+	_PLAYER_FORM_GET( SCWK_ANSWER )
+	IF $SCWK_ANSWER == SCR_PLAYER_FORM_CYCLE THEN
+		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
+	ENDIF
+	
     _TALK_OBJ_START()
 
     _VOICE_PLAY( MONSNO_645, 0 )
