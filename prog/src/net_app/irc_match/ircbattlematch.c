@@ -1892,7 +1892,7 @@ static void _ircstarLoop(IRC_BATTLE_MATCH* pWork)
 static void _ircstarStart(IRC_BATTLE_MATCH* pWork)
 {
   pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_cancelButtonCallback2;
+  pWork->touch = &_cancelButtonCallback;
 
 
   _ReturnButtonStart(pWork,FALSE);

@@ -1,14 +1,14 @@
 
 
 
-#define _IRMAIN_EXIT_ST_X (24-4)
-#define _IRMAIN_EXIT_ST_Y (32-10)
+#define _IRMAIN_EXIT_ST_X (32-9)
+#define _IRMAIN_EXIT_ST_Y (24-4)
 #define _IRMAIN_EXIT_WIDTH (8)
 #define _IRMAIN_EXIT_HEIGHT (3)
 
 
-#define _IRMAIN_DECIDE_ST_X (24-4)
-#define _IRMAIN_DECIDE_ST_Y (32-10-3)
+#define _IRMAIN_DECIDE_ST_X (32-9)
+#define _IRMAIN_DECIDE_ST_Y (24-7)
 #define _IRMAIN_DECIDE_WIDTH (8)
 #define _IRMAIN_DECIDE_HEIGHT (3)
 
