@@ -428,6 +428,23 @@ u16 BSUBWAY_SCOREDATA_GetBattlePoint( const BSUBWAY_SCOREDATA *bsw_score )
 
 //--------------------------------------------------------------
 /**
+ * 通信マルチ、スーパー通信マルチをマルチ、スーパーマルチに変換
+ * @param
+ * @retval
+ */
+//--------------------------------------------------------------
+static BSWAY_PLAYMODE scoreData_ChgMultiMode( BSWAY_PLAYMODE mode )
+{
+  if( mode == BSWAY_PLAYMODE_COMM_MULTI ){
+    mode = BSWAY_PLAYMODE_MULTI;
+  }else if( mode == BSWAY_PLAYMODE_S_COMM_MULTI ){
+    mode = BSWAY_PLAYMODE_S_MULTI;
+  }
+  return( mode );
+}
+
+//--------------------------------------------------------------
+/**
  * スコアデータ　連勝数増加
  * @param bsw_score BSUBWAY_SCOREDATA
  * @param mode BSWAY_PLAYMODE
@@ -437,6 +454,8 @@ u16 BSUBWAY_SCOREDATA_GetBattlePoint( const BSUBWAY_SCOREDATA *bsw_score )
 void BSUBWAY_SCOREDATA_IncRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
+  
   if( bsw_score->renshou[mode] < 65534 ){
     bsw_score->renshou[mode]++;
   }
@@ -453,6 +472,7 @@ void BSUBWAY_SCOREDATA_IncRenshou(
 void BSUBWAY_SCOREDATA_ResetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
   bsw_score->renshou[mode] = 0;
 }
 
@@ -467,6 +487,7 @@ void BSUBWAY_SCOREDATA_ResetRenshou(
 u16 BSUBWAY_SCOREDATA_GetRenshou(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
   return( bsw_score->renshou[mode] );
 }
 
@@ -480,6 +501,7 @@ u16 BSUBWAY_SCOREDATA_GetRenshou(
 u16 BSUBWAY_SCOREDATA_GetRenshouMax(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
   return bsw_score->renshou_max[mode];
 }
 
@@ -493,6 +515,7 @@ u16 BSUBWAY_SCOREDATA_GetRenshouMax(
 void BSUBWAY_SCOREDATA_SetRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
 {
+  mode = scoreData_ChgMultiMode( mode );
   bsw_score->renshou_max[mode] = count;
 }
 
@@ -506,6 +529,7 @@ void BSUBWAY_SCOREDATA_SetRenshouMax(
 void BSUBWAY_SCOREDATA_UpdateRenshouMax(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
 {
+  mode = scoreData_ChgMultiMode( mode );
   if( bsw_score->renshou_max[mode] < count ){
     bsw_score->renshou_max[mode] = count;
   }
@@ -521,6 +545,7 @@ void BSUBWAY_SCOREDATA_UpdateRenshouMax(
 void BSUBWAY_SCOREDATA_SetRenshou(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 count )
 {
+  mode = scoreData_ChgMultiMode( mode );
   bsw_score->renshou[mode] = count;
 }
 
@@ -534,6 +559,7 @@ void BSUBWAY_SCOREDATA_SetRenshou(
 void BSUBWAY_SCOREDATA_ErrorStageNo(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
   bsw_score->stage[mode] = 0;
 }
 
@@ -547,6 +573,7 @@ void BSUBWAY_SCOREDATA_ErrorStageNo(
 void BSUBWAY_SCOREDATA_InitStageNo(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
   bsw_score->stage[mode] = 1;
 }
 
@@ -560,6 +587,8 @@ void BSUBWAY_SCOREDATA_InitStageNo(
 BOOL BSUBWAY_SCOREDATA_CheckExistStageNo(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
+  
   if( bsw_score->stage[mode] == 0 ){
     return( FALSE );
   }
@@ -577,6 +606,8 @@ BOOL BSUBWAY_SCOREDATA_CheckExistStageNo(
 void BSUBWAY_SCOREDATA_IncStageNo(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
+  mode = scoreData_ChgMultiMode( mode );
+  
   if( bsw_score->stage[mode] < (0xffff-1) ){ //-1=エラー判定用
     bsw_score->stage[mode]++;
   }
@@ -592,6 +623,8 @@ void BSUBWAY_SCOREDATA_IncStageNo(
 void BSUBWAY_SCOREDATA_SetStageNo_Org1(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode, u16 stage )
 {
+  mode = scoreData_ChgMultiMode( mode );
+  
   if( stage == 0 ){
     GF_ASSERT( 0 );
     stage = 1;
@@ -608,15 +641,19 @@ void BSUBWAY_SCOREDATA_SetStageNo_Org1(
 u16 BSUBWAY_SCOREDATA_GetStageNo_Org0(
     const BSUBWAY_SCOREDATA *bsw_score, BSWAY_PLAYMODE mode )
 {
-  u16 stage = bsw_score->stage[mode];
-  stage--;
+  mode = scoreData_ChgMultiMode( mode );
   
-  if( (s16)stage < 0 ){
-    GF_ASSERT( 0 );
-    stage = 0;
+  {
+    u16 stage = bsw_score->stage[mode];
+    stage--;
+  
+    if( (s16)stage < 0 ){
+      GF_ASSERT( 0 );
+      stage = 0;
+    }
+  
+    return( stage );
   }
-  
-  return( stage );
 }
 
 
