@@ -926,10 +926,12 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
   switch( p_wk->seq_matchmake )
   { 
   case WIFIBATTLEMATCH_NET_SEQ_MATCH_START:
-    if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2, p_wk->matchmake_eval_callback, p_wk ) != 0 )
     {
-      GFL_NET_DWC_SetVChat( FALSE );
-      p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
+      if( GFL_NET_DWC_StartMatchFilter( p_wk->filter, 2, p_wk->matchmake_eval_callback, p_wk ) != 0 )
+      {
+        GFL_NET_DWC_SetVChat( FALSE );
+        p_wk->seq_matchmake = WIFIBATTLEMATCH_NET_SEQ_MATCH_START2;
+      }
     }
     break;
 
@@ -1080,15 +1082,15 @@ BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk )
 {
   static const int sc_temp  = 0;
 
-  if( GFL_NET_DWC_IsMatched() )
   {
-    return GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), 
-        WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH, sizeof(int), &sc_temp );
+    if( GFL_NET_DWC_IsMatched() )
+    {
+      return GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), 
+          WIFIBATTLEMATCH_NETCMD_SEND_CANCELMATCH, sizeof(int), &sc_temp );
+    }
   }
-  else
-  {
-    return TRUE;
-  }
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**

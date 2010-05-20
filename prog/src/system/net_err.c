@@ -111,7 +111,6 @@ static BOOL Local_SystemOccCheck(void);
 static void Local_ErrDispDraw(void);
 static void Local_ErrMessagePrint(BOOL fatal_error);
 
-
 //==============================================================================
 //
 //	
@@ -201,10 +200,19 @@ void NetErr_Main(void)
             || net_init->bNetType == GFL_NET_TYPE_WIFI_LOBBY 
             || net_init->bNetType == GFL_NET_TYPE_WIFI_GTS )
         { 
-          GFL_NETSTATE_DWCERROR *p_dwc_error   = GFL_NET_StateGetWifiError();
+          const GFL_NETSTATE_DWCERROR *cp_dwc_error  = GFL_NET_StateGetWifiError();
 
-          NetErrSystem.wifi_msg = GFL_NET_DWC_ErrorType( p_dwc_error->errorCode,
-              p_dwc_error->errorType);
+          if( cp_dwc_error->errorUser == ERRORCODE_TIMEOUT )
+          {
+            //タイムアウトならば
+            NetErrSystem.wifi_msg = dwc_message_0022;
+          }
+          else
+          {
+            //DWCのエラーならば
+            NetErrSystem.wifi_msg = GFL_NET_DWC_ErrorType( cp_dwc_error->errorCode,
+                cp_dwc_error->errorType);
+          }
         }
       }
 #endif 
@@ -378,7 +386,7 @@ void NetErr_DEBUG_ErrorSet(void)
 
   //WiFi
 #if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi )
-  GFL_NET_StateSetWifiError( 1, 1, 1, 0 );
+//  GFL_NET_StateSetWifiError( -30000, DWC_ETYPE_DISCONNECT, 1, 0 );
   NetErr_ErrorSet();
 #endif
   OS_TPrintf( "ユーザーからエラー設定リクエストが発生しました\n" );

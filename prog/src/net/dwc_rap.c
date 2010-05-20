@@ -1504,6 +1504,7 @@ static void ConnectionClosedCallback(DWCError error,
   _dWork->setupErrorCount = 0;
   _dWork->bConnectCallback = FALSE;
 
+  MYDWC_DEBUGPRINT("ConnectionClosedCallback\n");
   if (error == DWC_ERROR_NONE){
 
     //        if((!CommLocalIsWiFiQuartetGroup(CommStateGetServiceNo()) && (DWC_GetNumConnectionHost() == 1))){
@@ -1520,7 +1521,6 @@ static void ConnectionClosedCallback(DWCError error,
       else {
         if(_dWork->bAutoDisconnect){
           GFL_NET_StateSetError(0);
-          GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_TIMEOUT );
         }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
         MYDWC_DEBUGPRINT("MDSTATE_DISCONNECTTING\n");
@@ -1688,6 +1688,8 @@ int mydwc_HandleError(void)
       //FriendsMatch処理中ならDWC_ShutdownFriendsMatch()を呼び出し、
       //更にDWC_CleanupInet()で通信の切断も行う必要がある。
       //エラーコードの表示が必要。
+
+      MYDWC_DEBUGPRINT("Disconnect Error!!\n");
       if(_dWork){
         switch( _dWork->state )
         {
@@ -1740,11 +1742,12 @@ int mydwc_HandleError(void)
     returnNo = ERRORCODE_HEAP;
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, returnNo );
   }
-  if(_dWork->state==MDSTATE_TIMEOUT){
+  else if(_dWork->state==MDSTATE_TIMEOUT){
+    MYDWC_DEBUGPRINT("TimeOut Error!!\n");
     returnNo = ERRORCODE_TIMEOUT;
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, returnNo );
   }
-  if( ret != 0 ){
+  else if( ret != 0 ){
     GFL_NET_StateSetWifiError( errorCode, myErrorType, ret, 0 );
   }
   return returnNo;

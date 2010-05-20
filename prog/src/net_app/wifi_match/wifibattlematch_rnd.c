@@ -1200,8 +1200,22 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_WAIT_MATCHING:
+    //マッチングエラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      PMSND_StopSE();
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      return;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      PMSND_StopSE();
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      return ;
+    }
+
     //マッチングキャンセル処理
-   {
+    {
       WIFIBATTLEMATCH_NET_MATCHMAKE_STATE state = WIFIBATTLEMATCH_NET_WaitMatchMake( p_wk->p_net );
       //マッチング終了待ち
       if( WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_SUCCESS == state )
@@ -1213,20 +1227,6 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       {
         *p_seq = SEQ_START_MATCHING;
       }
-    }
-
-    //マッチングエラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
-    { 
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-      PMSND_StopSE();
-      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
-      break;
-
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-      PMSND_StopSE();
-      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-      break;
     }
 
     break;
@@ -2253,6 +2253,20 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_WAIT_MATCHING:
+    //マッチングエラー
+    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+    { 
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+      PMSND_StopSE();
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
+      return;
+
+    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+      PMSND_StopSE();
+      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
+      return;
+    }
+
     {
       WIFIBATTLEMATCH_NET_MATCHMAKE_STATE state = WIFIBATTLEMATCH_NET_WaitMatchMake( p_wk->p_net );
       //マッチング終了待ち
@@ -2266,21 +2280,6 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         *p_seq = SEQ_START_MATCHING;
       }
     }
-
-    //マッチングエラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
-    { 
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-      PMSND_StopSE();
-      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Start );
-      break;
-
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-      PMSND_StopSE();
-      WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Err_ReturnLogin );
-      break;
-    }
-
     break;
 
     //-------------------------------------

@@ -337,8 +337,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
   }
 
   //エラー処理
-  //バトル中はバトル内部のエラーチェックに任せる
-  if( GFL_NET_IsInit() && (status == GFL_PROC_MAIN_NULL ) )
+  //バトル中はバトルの自動終了を待つ
+  if( GFL_NET_IsInit() && !(SEQ_BATTLE_INIT<= *p_seq && *p_seq <= SEQ_CALL_END_DEMO ) )
   {
     if( GFL_NET_GetNETInitStruct()->bNetType == GFL_NET_TYPE_IRC )
     { 
@@ -351,14 +351,10 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
     }
     else 
     { 
-      GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE,TRUE );
+      GFL_NET_DWC_ERROR_RESULT result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE, TRUE );
+
       switch( result )
       { 
-      case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
-        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_DISCONNECT_WIFI;
-        OS_TPrintf( "相手が切断\n" );
-        return GFL_PROC_RES_FINISH;
-
       case GFL_NET_DWC_ERROR_RESULT_NONE:
         /*  エラーが発生していない  */
         break;
@@ -368,6 +364,11 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_BATTLELINK_PROC_Main( GFL_PROC *p_proc, i
       default:
         OS_TPrintf( "ネット切断\n" );
         p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_RETURN_LOGIN_WIFI;
+        return GFL_PROC_RES_FINISH;
+
+      case GFL_NET_DWC_ERROR_RESULT_TIMEOUT:
+        p_param->result = WIFIBATTLEMATCH_BATTLELINK_RESULT_ERROR_DISCONNECT_WIFI;
+        OS_TPrintf( "相手が切断\n" );
         return GFL_PROC_RES_FINISH;
       }
     }
