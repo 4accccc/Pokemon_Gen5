@@ -19,6 +19,8 @@
 //============================================================================================
 #define	SRMAIN_DRAW_3D		// 定義を有効にすると３Ｄが有効になります
 
+#define	SRMAIN_CAMERA_REQ_MAX		( 16 )
+
 // フォントタイプ
 enum {
 	SRMAIN_FONT_NORMAL = 0,			// 通常
@@ -48,10 +50,34 @@ typedef struct {
 	VecFx32	target;
 }SR3DCAMERA_PARAM;
 
+// カメラリクエストデータ
 typedef struct {
-	const SR3DCAMERA_PARAM * tbl;
-	SR3DCAMERA_PARAM	param;
-	SR3DCAMERA_PARAM	val;
+	u16	no;
+	u16	cnt;
+}SR3DCAMERA_REQ_PARAM;
+
+/*
+typedef struct {
+	const SR3DCAMERA_PARAM * tbl;		// 座標テーブル
+	SR3DCAMERA_PARAM	param;				// 移動先
+	SR3DCAMERA_PARAM	val;					// 移動値
+
+	u16	tblMax;		// テーブル数
+	u16	pos;
+
+	u16	cnt;
+	u16	cntMax;
+
+	BOOL	flg;
+}SR3DCAMERA_MOVE;
+*/
+
+typedef struct {
+	const SR3DCAMERA_PARAM * tbl;		// 座標テーブル
+	SR3DCAMERA_PARAM	param;				// 移動先
+	SR3DCAMERA_PARAM	val;					// 移動値
+
+	SR3DCAMERA_REQ_PARAM	req[SRMAIN_CAMERA_REQ_MAX];	// リクエスト
 
 	u16	tblMax;
 	u16	pos;
@@ -85,6 +111,7 @@ typedef struct {
 	u16	g3d_unit;
 
 	SR3DCAMERA_MOVE	cameraMove;
+
 #endif	// SRMAIN_DRAW_3D
 
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント

@@ -1828,27 +1828,6 @@
 		<language name="JPN_KANJI" width="256">POCKET MONSTERS  WHITE  VERSION</language>
 	</row>
 
-	<row id="STAFF_ROLL_STR_287">
-		<language name="JPN" width="256">
-</language>
-		<language name="JPN_KANJI" width="256">
-</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_288">
-		<language name="JPN" width="256">
-</language>
-		<language name="JPN_KANJI" width="256">
-</language>
-	</row>
-
-	<row id="STAFF_ROLL_STR_289">
-		<language name="JPN" width="256">
-</language>
-		<language name="JPN_KANJI" width="256">
-</language>
-	</row>
-
 	<flowchart-group-list>
 		<flowchart-group japanese="root" english="root" group-id="0" parent-id="-1"/>
 	</flowchart-group-list>

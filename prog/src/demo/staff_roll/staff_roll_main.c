@@ -65,10 +65,8 @@ enum {
 #if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
 #define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(15,2,0) )	// フォントカラー：デフォルト
-//#define	BG_COLOR		( 0x7fff )											// バックグラウンドカラー
-//#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
 #else
-#define	BG_COLOR		( 0x7fff )											// バックグラウンドカラー
+#define	BG_COLOR		( 0xffff )											// バックグラウンドカラー
 #define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
 #endif
 #define	FCOL_WP00R	( PRINTSYS_MACRO_LSB(3,4,0) )		// フォントカラー：赤
@@ -100,6 +98,8 @@ enum {
 	ITEMLIST_LABEL_LOGO_PUT,
 	ITEMLIST_LABEL_3D_PUT,
 	ITEMLIST_LABEL_3D_CLEAR,
+	ITEMLIST_LABEL_3D_CAMERA_REQUEST,
+
 	ITEMLIST_LABEL_VERSION,
 
 	ITEMLIST_LABEL_MAX,
@@ -175,6 +175,7 @@ static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
+static BOOL Comm_Label3DCameraRequest( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
@@ -238,9 +239,11 @@ static const pCOMM_FUNC CommFunc[] = {
 	Comm_LabelScrollStop,		// ラベル：スクロール停止
 	Comm_LabelEnd,					// ラベル：終了
 
-	Comm_LabelLogoPut,			// ラベル：ロゴ表示
-	Comm_Label3DPut,				// ラベル：３Ｄ表示
-	Comm_Label3DClear,			// ラベル：３Ｄクリア
+	Comm_LabelLogoPut,					// ラベル：ロゴ表示
+	Comm_Label3DPut,						// ラベル：３Ｄ表示
+	Comm_Label3DClear,					// ラベル：３Ｄクリア
+	Comm_Label3DCameraRequest,	// ラベル：３Ｄカメラ移動リクエスト
+
 	Comm_LabelVersion,			// ラベル：バージョン別処理
 };
 
@@ -603,7 +606,7 @@ static void InitMsg( SRMAIN_WORK * wk )
 																	ARCID_FONT, NARC_font_small_batt_gftr,
 //																	GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_STAFF_ROLL );
 																	GFL_FONT_LOADTYPE_MEMORY, FALSE, HEAPID_STAFF_ROLL );
-	OS_Printf( "heap size [2] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
+//	OS_Printf( "heap size [2] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 }
 
 static void ExitMsg( SRMAIN_WORK * wk )
@@ -622,32 +625,10 @@ static void CreateListData( SRMAIN_WORK * wk )
 	if( wk->dat->mojiMode == MOJIMODE_HIRAGANA ){
 		wk->list = GFL_ARC_LoadDataAlloc(
 								ARCID_STAFF_ROLL, NARC_staff_roll_staff_list_jp_dat, HEAPID_STAFF_ROLL );
-/*
-		wk->listPos = 283;
-		{
-			u32	i = 288;
-			OS_Printf(
-				"[%d] : label = %d, ltype = %d, msg = %d, wait = %d, fnt = %d, col = %d, mode = %d, px = %d, ox = %d\n",
-				i, wk->list[i].label, wk->list[i].labelType, wk->list[i].msgIdx, wk->list[i].wait,
-				wk->list[i].font, wk->list[i].color, wk->list[i].putMode, wk->list[i].px, wk->list[i].offs_x );
-		}
-*/
 	}else{
 		wk->list = GFL_ARC_LoadDataAlloc(
 								ARCID_STAFF_ROLL, NARC_staff_roll_staff_list_eng_dat, HEAPID_STAFF_ROLL );
 	}
-/*
-	{
-		u32	i;
-
-		for( i=0; i<16; i++ ){
-			OS_Printf(
-				"[%d] : label = %d, ltype = %d, msg = %d, wait = %d, fnt = %d, col = %d, mode = %d, px = %d, ox = %d\n",
-				i, wk->list[i].label, wk->list[i].labelType, wk->list[i].msgIdx, wk->list[i].wait,
-				wk->list[i].font, wk->list[i].color, wk->list[i].putMode, wk->list[i].px, wk->list[i].offs_x );
-		}
-	}
-*/
 }
 
 static void DeleteListData( SRMAIN_WORK * wk )
@@ -720,8 +701,8 @@ static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
 	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
 	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
 #else
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
-	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
 #endif
 };
 
@@ -811,7 +792,7 @@ static int     moveflag;
 
 static void Init3D( SRMAIN_WORK * wk )
 {
-	OS_Printf( "heap size [3] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
+//	OS_Printf( "heap size [3] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 
 	// ３Ｄシステム起動
 	GFL_G3D_Init(
@@ -898,10 +879,10 @@ static void Init3D( SRMAIN_WORK * wk )
 	G3X_AntiAlias( TRUE );	// セットアップ関数で作ったほうがいいけど。。。
 
 	GFL_BG_SetBGControl3D( 2 );				// BG面設定（引数は優先度）
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+//	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 
 	CameraMoveInit( &wk->cameraMove );
-	CameraMoveFlagSet( &wk->cameraMove, TRUE );
+//	CameraMoveFlagSet( &wk->cameraMove, TRUE );
 }
 
 static void Exit3D( SRMAIN_WORK * wk )
@@ -1009,7 +990,7 @@ static void Main3D( SRMAIN_WORK * wk )
 	GFL_G3D_SCENE_Draw( wk->g3d_scene );
 */
 
-//	CameraMoveMain( wk );
+	CameraMoveMain( wk );
 
 	{
     GFL_G3D_OBJ * obj;
@@ -1051,21 +1032,53 @@ static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work )
 
 static const SR3DCAMERA_PARAM CameraMoveTable[] =
 {
-	{ { 69939, 179142, -266359 }, { -2833552, 1208595, -7952187 } },
-	{ { 69939, 110839, -283946 }, { -2833552, 1208595, -7952187 } },
-	{ { 15951, 127608, -283946 }, { -2833552, 1208595, -7952187 } },
-	{ { 111248, 17178, -283946 }, { -2833552, 1208595, -7952187 } },
-	{ { 154193, 66258, -61859 }, { -2833552, 1208595, -7952187 } },
+	{ { CAMERA_POS_X, CAMERA_POS_Y, CAMERA_POS_Z }, { CAMERA_TARGET_X, CAMERA_TARGET_Y, CAMERA_TARGET_Z } },
+	{ { 289572, 177097, -1445 }, { 0, 124745, 0 } },
+	{ { 93661, 231085, -302469 }, { 0, 124745, 0 } },
+	{ { -122291, 269122, -92652 }, { 0, 124745, 0 } },
+	{ { -42127, 95706, 92625 }, { 0, 124745, 0 } },
+	{ { -409, 168917, 142114 }, { 0, 124745, 0 } },
 };
 
 static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk )
 {
+	u32	i;
+
 	mvwk->tbl    = CameraMoveTable;
 	mvwk->tblMax = NELEMS(CameraMoveTable);
 	mvwk->cnt    = 0;
 //	mvwk->cntMax = 0;
 	mvwk->pos    = 0;
 	mvwk->flg = FALSE;
+
+	for( i=0; i<SRMAIN_CAMERA_REQ_MAX; i++ ){
+		mvwk->req[i].no  = 0xffff;
+		mvwk->req[i].cnt = 0;
+	}
+}
+
+static void CameraMoveRequestSet( SR3DCAMERA_MOVE * mvwk, u16 no, u16 cnt )
+{
+	u32	i;
+
+	for( i=0; i<SRMAIN_CAMERA_REQ_MAX; i++ ){
+		if( mvwk->req[i].no == 0xffff ){
+			mvwk->req[i].no  = no;
+			mvwk->req[i].cnt = cnt;
+			break;
+		}
+	}
+}
+
+static void CameraMoveRequestShift( SR3DCAMERA_MOVE * mvwk )
+{
+	u32	i;
+
+	for( i=0; i<SRMAIN_CAMERA_REQ_MAX-1; i++ ){
+		mvwk->req[i] = mvwk->req[i+1];
+	}
+	mvwk->req[SRMAIN_CAMERA_REQ_MAX-1].no  = 0xffff;
+	mvwk->req[SRMAIN_CAMERA_REQ_MAX-1].cnt = 0;
 }
 
 static VecFx32 CameraMoveValMake( const VecFx32 * now, const VecFx32 * mvp, u32 cnt )
@@ -1124,25 +1137,26 @@ static void CameraMoveMain( SRMAIN_WORK * wk )
 	}
 
 	if( mvwk->cnt == 0 ){
-		mvwk->cntMax = 256;
-		{
-			u32	next = mvwk->pos + 1;
-			if( next >= mvwk->tblMax ){
-				next = 0;
-			}
-			mvwk->val.pos = CameraMoveValMake( &mvwk->tbl[mvwk->pos].pos, &mvwk->tbl[next].pos, mvwk->cntMax );
-			mvwk->val.target = CameraMoveValMake( &mvwk->tbl[mvwk->pos].target, &mvwk->tbl[next].target, mvwk->cntMax );
-		}
+		VecFx32	vec;
+
+		mvwk->cntMax = mvwk->req[0].cnt;
+
+		GFL_G3D_CAMERA_GetPos( wk->g3d_camera, &vec );
+		mvwk->val.pos = CameraMoveValMake( &vec, &mvwk->tbl[mvwk->req[0].no].pos, mvwk->cntMax );
+
+		GFL_G3D_CAMERA_GetTarget( wk->g3d_camera, &vec );
+		mvwk->val.target = CameraMoveValMake( &vec, &mvwk->tbl[mvwk->req[0].no].target, mvwk->cntMax );
 	}
 
 	if( mvwk->cnt >= mvwk->cntMax ){
+		mvwk->param.pos    = mvwk->tbl[mvwk->req[0].no].pos;
+		mvwk->param.target = mvwk->tbl[mvwk->req[0].no].target;
+		mvwk->pos = mvwk->req[0].no;
 		mvwk->cnt = 0;
-		mvwk->pos++;
-		if( mvwk->pos >= mvwk->tblMax ){
-			mvwk->pos = 0;
+		CameraMoveRequestShift( mvwk );
+		if( mvwk->req[0].no == 0xffff ){
+			CameraMoveFlagSet( mvwk, FALSE );
 		}
-		mvwk->param.pos    = mvwk->tbl[mvwk->pos].pos;
-		mvwk->param.target = mvwk->tbl[mvwk->pos].target;
 	}else{
 		mvwk->param.pos    = CameraMoveCore( &mvwk->tbl[mvwk->pos].pos, &mvwk->val.pos, mvwk->cnt );
 		mvwk->param.target = CameraMoveCore( &mvwk->tbl[mvwk->pos].target, &mvwk->val.target, mvwk->cnt );
@@ -1596,12 +1610,25 @@ static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 // ３Ｄ表示
 static BOOL Comm_Label3DPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 {
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 	return TRUE;
 }
 
 // ３Ｄクリア
 static BOOL Comm_Label3DClear( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 {
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+	return TRUE;
+}
+
+// ３Ｄカメラ移動リクエスト
+static BOOL Comm_Label3DCameraRequest( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
+{
+	SR3DCAMERA_MOVE * mvwk = &wk->cameraMove;
+
+	CameraMoveRequestSet( mvwk, item->labelType, item->wait );
+	CameraMoveFlagSet( mvwk, TRUE );
+
 	return TRUE;
 }
 

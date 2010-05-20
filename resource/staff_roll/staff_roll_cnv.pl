@@ -26,9 +26,10 @@ $CNV_FILE = 0;				# 作成ファイル
 	"ロゴ",
 	"３Ｄ開始",
 	"３Ｄ停止",
+	"３Ｄカメラ移動",
 	"バージョン別",
 );
-$LABEL_NAME_MAX = 9;
+$LABEL_NAME_MAX = 10;
 
 # ラベル変換値
 @LabelConv = (
@@ -40,7 +41,8 @@ $LABEL_NAME_MAX = 9;
 	6,		# ITEMLIST_LABEL_LOGO_PUT
 	7,		# ITEMLIST_LABEL_3D_PUT
 	8,		# ITEMLIST_LABEL_3D_CLEAR
-	9,		# ITEMLIST_LABEL_VERSION
+	9,		# ITEMLIST_LABEL_3D_CAMERA_REQUEST
+	10,		# ITEMLIST_LABEL_VERSION
 );
 
 # 表示モードテーブル

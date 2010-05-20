@@ -8,3 +8,5 @@
 
 "staffroll_b.nsbmd"
 "staffroll_b.nsbca"
+"staffroll_w.nsbmd"
+"staffroll_w.nsbca"
