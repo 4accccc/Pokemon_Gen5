@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-05-14T11:41:51"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T12:19:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1248,11 +1248,11 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
 		<language name="JPN" width="256">この　かくど　からの
 しゃしんが　ほしかったの！▼
-きかんぶが　まるみえよ！▽
+きかんぶが　まるみえよ！
 もえるわー</language>
 		<language name="JPN_KANJI" width="256">この　角度からの
 写真が　欲しかったの！▼
-機関部が　まるみえよ！▽
+機関部が　まるみえよ！
 もえるわー</language>
 	</row>
 
