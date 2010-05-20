@@ -726,10 +726,14 @@
 	</row>
 
 	<row id="TRID_SCHOOLB_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">いろんな　ちしきを　もっているけど
-しょうぶのとき　かえって　まようんだ</language>
-		<language name="JPN_KANJI" width="216">いろんな　知識を　持っているけど
-勝負のとき　かえって　迷うんだ</language>
+		<language name="JPN" width="216">ゆれる　くさむらの　なかには
+ちょっと　めずらしい▽
+ポケモンが　いるかも？　とか▽
+いろんな　ちしきは　そなえているよ</language>
+		<language name="JPN_KANJI" width="216">揺れる　草むらの　中には
+ちょっと　珍しい▽
+ポケモンが　いるかも？　とか▽
+いろんな　知識は　備えているよ</language>
 	</row>
 
 	<row id="TRID_SCHOOLG_01_TRMSG_FIGHT_START">
