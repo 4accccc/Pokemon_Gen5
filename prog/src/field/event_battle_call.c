@@ -44,6 +44,7 @@
 
 #include "field/event_battle_call.h"
 
+#include "debug/debug_flg.h"  //デバッグ用
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -336,8 +337,18 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       }
       else
       {
+
+#ifdef PM_DEBUG
+        //次のバージョンのためのサーバーバージョンが異なった際のデバッグ用
+        if( DEBUG_FLG_GetFlg(DEBUG_FLG_UpperBtlServerVersion) )
+        {
+          bcw->btl_setup_prm->commServerVer = BTL_NET_SERVER_VERSION+1;
+        }
+#endif
+
         // 通信対戦時のサーババーション
-        if( bcw->btl_setup_prm->commServerVer <= BTL_NET_SERVER_VERSION )
+//        if( bcw->btl_setup_prm->commServerVer <= BTL_NET_SERVER_VERSION )
+        if( BattleRec_ServerVersionCheck( bcw->btl_setup_prm->commServerVer ) )
         {
           // 自分と同じサーバーバージョン OR 自分が一番高いならば録画可能
           b_rec = TRUE;

@@ -59,11 +59,13 @@
 #ifdef PM_DEBUG
 
 //#define DEBUG_REGULATIONCRC_PASS  //レギュレーションのCRCチェックを通過する
-#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 #define DEBUGWIN_USE                  //デバッグウィンドウを使用する
 
-#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 //#define DEBUG_REGULATION_RECVCHECK_PASS  //レギュレーションの受信チェックを通過する
+#elif defined(DEBUG_ONLY_FOR_shimoyamada)
+#define DEBUG_REGULATION_RECV_A_PASS  //レギュレーションの受信をAボタンで進む
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 
 

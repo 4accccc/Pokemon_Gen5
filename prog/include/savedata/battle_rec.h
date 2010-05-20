@@ -115,6 +115,7 @@ typedef enum{
 #define RECHEAD_IDX_DATA_NUMBER   (4)   ///<データナンバー
 #define RECHEAD_IDX_SECURE      (5)   ///<安全視聴済み
 #define RECHEAD_IDX_GENDER      (6)   ///<性別
+#define RECHEAD_IDX_SERVER_VER  (7)   ///<サーバーバージョン
 
 
 
@@ -176,6 +177,7 @@ extern BATTLE_REC_HEADER_PTR BattleRec_HeaderPtrGetWork(BATTLE_REC_SAVEDATA *wk_
 
 extern void BattleRec_DataSet(GDS_PROFILE_PTR gpp, BATTLE_REC_HEADER_PTR head, BATTLE_REC_WORK_PTR rec, SAVE_CONTROL_WORK *sv);
 extern u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param);
+extern BOOL BattleRec_ServerVersionCheck( u8 version );
 
 
 //==============================================================================

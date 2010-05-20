@@ -798,11 +798,30 @@ u64 RecHeader_ParamGet(BATTLE_REC_HEADER_PTR head, int index, int param)
   case RECHEAD_IDX_GENDER:
     GF_ASSERT(param < HEADER_MONSNO_MAX);
     return ( head->form_no_and_sex[param] & HEADER_GENDER_MASK ) >> HEADER_GENDER_SHIFT;
+  case RECHEAD_IDX_SERVER_VER:
+    return head->server_vesion;
   }
 
   GF_ASSERT(0); //不明なINDEX
   return 0;
 }
+
+//--------------------------------------------------------------
+/**
+ * @brief   自分のROMのサーバーバージョンよりも高いサーバーバージョンが記録されているか確認
+ *
+ * @param   試合後に録画できるかを確認したい場合はBATTLE_SETUP_PARAMのcommServerVer
+ *          バトルビデオのデータを確認したい場合はRecHeader_ParamGet( header, RECHEAD_IDX_SERVER_VER ,0 )で取得した値をいれてください
+ *
+ * @retval  TRUE:dd自分と同じか以下のサーバーバージョン（保存、再生可能）
+ * @retval  FALSE:自分のROMよりも高いサーバーバージョンが記録されている
+ */
+//--------------------------------------------------------------
+extern BOOL BattleRec_ServerVersionCheck( u8 version )
+{
+  return version <= BTL_NET_SERVER_VERSION;
+}
+
 
 FS_EXTERN_OVERLAY(battle_recorder_tools);
 

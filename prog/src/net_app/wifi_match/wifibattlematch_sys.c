@@ -1580,9 +1580,15 @@ static void *WBM_BTLREC_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapI
   p_param->battle_mode  = battle_mode;;
   p_param->fight_count  = 0;
 
+  //相手のサーバーが、自分のサーバーよりバージョンが上だったら録画できない
   //相手と自分のサーバーが違かったら録画できない
-  if( p_wk->p_enemy_data->btl_server_version != p_wk->p_player_data->btl_server_version )
-  { 
+//  if( p_wk->p_enemy_data->btl_server_version <= p_wk->p_player_data->btl_server_version )
+  if( BattleRec_ServerVersionCheck( p_wk->p_enemy_data->btl_server_version ) )
+  {
+    p_param->b_rec      = TRUE;
+  }
+  else
+  {
     p_param->b_rec      = FALSE;
   }
 
