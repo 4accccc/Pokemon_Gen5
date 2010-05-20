@@ -4430,8 +4430,8 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_WeatherBall( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_PARAM, handler_WeatherBall_Type },  // ワザパラメータチェックハンドラ
-    { BTL_EVENT_WAZA_POWER, handler_WeatherBall_Pow },   // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_PARAM,      handler_WeatherBall_Type },  // ワザパラメータチェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE, handler_WeatherBall_Pow },   // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4471,7 +4471,9 @@ static void handler_WeatherBall_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   &&  (BTL_SVFTOOL_GetWeather(flowWk) != BTL_WEATHER_NONE)
   ){
-    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+    u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
+    pow *= 2;
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
 //----------------------------------------------------------------------------------
