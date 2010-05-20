@@ -1543,17 +1543,17 @@ EVENT_START ev_fld_item_216
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d04r0201 X=19 Y=11 ITEM=クリティカット FLAG=15
+// MAP=d04r0201 X=19 Y=11 ITEM=げんきのかけら FLAG=15
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_15
-  _FLD_ITEM_EVENT ITEM_KURITHIKATTO,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d04r0301 X=22 Y=21 ITEM=いいキズぐすり FLAG=50
+// MAP=d04r0301 X=22 Y=21 ITEM=まんたんのくすり FLAG=50
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_50
-  _FLD_ITEM_EVENT ITEM_IIKIZUGUSURI,1
+  _FLD_ITEM_EVENT ITEM_MANTANNOKUSURI,1
 EVENT_END
 
 //--------------------------------------------------------------
@@ -1578,10 +1578,10 @@ EVENT_START ev_fld_item_60
 EVENT_END
 
 //--------------------------------------------------------------
-// MAP=d04r0401 X=13 Y=24 ITEM=げんきのかけら FLAG=86
+// MAP=d04r0401 X=13 Y=24 ITEM=げんきのかたまり FLAG=86
 //--------------------------------------------------------------
 EVENT_START ev_fld_item_86
-  _FLD_ITEM_EVENT ITEM_GENKINOKAKERA,1
+  _FLD_ITEM_EVENT ITEM_GENKINOKATAMARI,1
 EVENT_END
 
 //--------------------------------------------------------------
