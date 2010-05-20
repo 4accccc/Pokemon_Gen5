@@ -2905,15 +2905,23 @@ BOOL BPP_MIGAWARI_IsExist( const BTL_POKEPARAM* bpp )
   return bpp->migawariHP != 0;
 }
 
-BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16 damage )
+/**
+ *  ダメージ加算
+ *
+ *  @param  [io] damage  与えるダメージ値 -> 与えたダメージ値
+ *
+ *  @retval  破壊されたらTRUEが返る
+ */
+BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16* damage )
 {
   GF_ASSERT(bpp->migawariHP!=0);
 
-  if( bpp->migawariHP <= damage ){
+  if( bpp->migawariHP <= (*damage) ){
+    (*damage) = bpp->migawariHP;
     bpp->migawariHP = 0;
     return TRUE;
   }else{
-    bpp->migawariHP -= damage;
+    bpp->migawariHP -= (*damage);
     return FALSE;
   }
 }

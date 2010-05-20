@@ -3115,8 +3115,8 @@ static void handler_TatsujinNoObi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_InochiNoTama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,    handler_InochiNoTama_Reaction },   // ダメージ処理後ハンドラ
-    { BTL_EVENT_WAZA_DMG_PROC2,         handler_InochiNoTama_Damage   },
+    { BTL_EVENT_DAMAGEPROC_END_HIT,    handler_InochiNoTama_Reaction },   // ダメージ処理後ハンドラ
+    { BTL_EVENT_WAZA_DMG_PROC2,        handler_InochiNoTama_Damage   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3209,7 +3209,7 @@ static void handler_NebariNoKagidume( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KaigaraNoSuzu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END, handler_KaigaraNoSuzu },
+    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_KaigaraNoSuzu },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4698,7 +4698,7 @@ static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RedCard( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,     handler_RedCard },   /// ダメージ処理終了
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,     handler_RedCard },   /// ダメージ処理終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4877,7 +4877,7 @@ static void handler_Juudenti_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuButton( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,     handler_DassyutuButton_Reaction },  // ダメージ処理終了ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,     handler_DassyutuButton_Reaction },  // ダメージ処理終了ハンドラ
     { BTL_EVENT_USE_ITEM,                handler_DassyutuButton_Use      },  // どうぐ使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );

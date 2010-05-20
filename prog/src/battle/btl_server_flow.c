@@ -557,7 +557,8 @@ static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u32 damage );
 static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
+static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
+static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets, u32 dmgTotal );
 static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender );
 static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
@@ -566,7 +567,7 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
-static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, const SVFL_WAZAPARAM* wazaParam );
+static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
@@ -644,7 +645,8 @@ static void scEvent_FieldEffectCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage, BtlTypeAff aff, WazaID waza );
+static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
+  BtlTypeAff aff, u8 fCritical, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* rec );
@@ -6122,6 +6124,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   u32  dmg_sum;
 
   FlowFlg_Clear( wk, FLOWFLG_SET_WAZAEFFECT );
+  scproc_Fight_DamageProcStart( wk, attacker, wazaParam );
 
   // ダメージ受けポケモンワークをクリアしておく
   BTL_POKESET_Clear( wk->psetDamaged );
@@ -6143,7 +6146,7 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
     scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
   }
 
-  scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged );
+  scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum );
 }
 /**
 * １回ヒットワザ（対象は１体以上）
@@ -6373,18 +6376,19 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     {
       u8 j;
 
-      scproc_Migawari_Damage( wk, bpp[i], dmg[i], affAry[j], wazaParam->wazaID );
-      for(j=i; j<(poke_cnt-1); ++j){
+      scproc_Migawari_Damage( wk, attacker, bpp[i], dmg[i], affAry[i], critical_flg[i], wazaParam );
+      BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], 0 );  // ダメージ0として記録
+
+      for(j=i; j<(poke_cnt-1); ++j)
+      {
         bpp[j] = bpp[j+1];
         dmg[j] = dmg[j+1];
         affAry[j] = affAry[j+1];
+        critical_flg[j] = critical_flg[j+1];
       }
       --i;
       --poke_cnt;
     }
-  }
-  if( poke_cnt == 0 ){
-    return dmg_sum;
   }
 
   // 最初のヒットならダメージ確定イベントコール
@@ -6395,6 +6399,11 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     }
   }
   hitCheckParam->count++;
+
+  // 対象がみがわりだけだったらここでリターン
+  if( poke_cnt == 0 ){
+    return dmg_sum;
+  }
 
   // ダメージコマンド出力
   scPut_WazaDamagePlural( wk, wazaParam, poke_cnt, affAry, bpp, dmg, critical_flg, fTargetPlural );
@@ -6500,7 +6509,7 @@ static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage )
 }
 //----------------------------------------------------------------------------------
 /**
- * ワザによるダメージを与えることが確定した
+ * ワザによるダメージを与えることが確定した（みがわりも含む）
  *
  * @param   wk
  * @param   attacker
@@ -6784,11 +6793,11 @@ static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 //------------------------------------------------------------------
 // サーバーフロー：ダメージワザシーケンス開始
 //------------------------------------------------------------------
-static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
 
-  scEvent_DamageProcStart( wk, attacker, targets, wazaParam );
+  scEvent_DamageProcStart( wk, attacker, wazaParam );
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
 
   Hem_PopState( &wk->HEManager, hem_state );
@@ -6796,7 +6805,18 @@ static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
 //------------------------------------------------------------------
 // サーバーフロー：ダメージワザシーケンス終了
 //------------------------------------------------------------------
-static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+//----------------------------------------------------------------------------------
+/**
+ *
+ *
+ * @param   wk
+ * @param   wazaParam   ワザパラメータ
+ * @param   attacker    攻撃ポケ
+ * @param   targets     ダメージを受けたポケモン群（みがわり除く）
+ * @param   dmg_sum     みがわり分も含めたダメージトータル
+ */
+//----------------------------------------------------------------------------------
+static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets, u32 dmgTotal )
 {
 //  scproc_Fight_Damage_Drain( wk, wazaParam->wazaID, attacker, targets );
 //  scproc_Fight_Damage_Shrink( wk, wazaParam->wazaID, attacker, targets );
@@ -6986,7 +7006,7 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, const SVFL_WAZAPARAM* wazaParam )
+static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
 {
   BTL_EVENTVAR_Push();
 
@@ -7009,32 +7029,54 @@ static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 //----------------------------------------------------------------------------------
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza )
 {
-  u32 cnt;
+  u32 real_hit_cnt = 0;   // 実体にダメージを与えた数
+  u32 hit_cnt = 0;        // みがわり含めダメージを与えた数
+
+  const BTL_POKEPARAM* bpp;
+  u32 i, damage_sum;
+
+  hit_cnt = BTL_POKESET_GetCount( targets );
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    if( hit_cnt )
     {
-      u32 i, damage_sum;
-      const BTL_POKEPARAM* bpp;
-
-      cnt = BTL_POKESET_GetCount( targets );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, cnt );
-      if( cnt )
+      u32 damage;
+      for(i=0, damage_sum=0; i<hit_cnt; ++i)
       {
-        for(i=0, damage_sum=0; i<cnt; ++i){
-          bpp = BTL_POKESET_Get( targets, i );
-          BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
-          damage_sum += BTL_POKESET_GetDamage( targets, bpp );
+        bpp = BTL_POKESET_Get( targets, i );
+        damage = BTL_POKESET_GetDamage( targets, bpp );
+        if( damage )
+        {
+          damage_sum += damage;
+          BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+real_hit_cnt, BPP_GetID(bpp) );
+          ++real_hit_cnt;
         }
       }
-      else
-      {
-        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1, BTL_POKEID_NULL );
-      }
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
     }
-    if( cnt ){
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_INFO );
+    if( real_hit_cnt )
+    {
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, real_hit_cnt );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
+    }
+  BTL_EVENTVAR_Pop();
+
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+
+    if( hit_cnt )
+    {
+      for(i=0, damage_sum=0; i<hit_cnt; ++i)
+      {
+        bpp = BTL_POKESET_Get( targets, i );
+        damage_sum += BTL_POKESET_GetDamage( targets, bpp );
+        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
+      }
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, hit_cnt );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT );
     }
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
 
@@ -8891,15 +8933,21 @@ static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @retval  BOOL  みがわりが消えたらTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 damage, BtlTypeAff aff, WazaID waza )
+static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
+  BtlTypeAff aff, u8 fCritical, const SVFL_WAZAPARAM* wazaParam )
 {
-  SCQUE_PUT_ACT_MigawariDamage( wk->que, BPP_GetID(bpp), aff, waza );
-  scPut_Message_Set( wk, bpp, BTL_STRID_SET_MigawariDamage );
-  scPut_WazaAffinityMsg( wk, 1, &aff, &bpp, FALSE );
+  SCQUE_PUT_ACT_MigawariDamage( wk->que, BPP_GetID(target), aff, wazaParam->wazaID );
+  scPut_Message_Set( wk, target, BTL_STRID_SET_MigawariDamage );
+  scPut_WazaAffinityMsg( wk, 1, &aff, &target, FALSE );
+  scPut_CriticalMsg( wk, 1, &target, &fCritical, FALSE );
 
-  if( BPP_MIGAWARI_AddDamage(bpp, damage) )
+  if( BPP_MIGAWARI_AddDamage(target, &damage) )
   {
-    scproc_Migawari_Delete( wk, bpp );
+    scproc_Migawari_Delete( wk, target );
+
+    scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
+    scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
+
     return TRUE;
   }
   return FALSE;

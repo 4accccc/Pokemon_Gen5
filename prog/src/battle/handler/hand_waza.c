@@ -4082,7 +4082,7 @@ static const BtlEventHandlerTable*  ADD_MezamasiBinta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER,          handler_MezamasiBinta             }, // ワザ威力チェックハンドラ
-    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_MezamasiBinta_AfterDamage }, // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_MezamasiBinta_AfterDamage }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4123,7 +4123,7 @@ static const BtlEventHandlerTable*  ADD_Kituke( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER,          handler_Kituke             },  // ワザ威力チェックハンドラ
-    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_Kituke_AfterDamage },  // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_Kituke_AfterDamage },  // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4767,7 +4767,7 @@ static const BtlEventHandlerTable*  ADD_SizenNoMegumi( u32* numElems )
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_SizenNoMegumi_ExeCheck    }, // わざ出し成否チェック
     { BTL_EVENT_WAZA_PARAM,             handler_SizenNoMegumi_Type        }, // わざパラメータチェック
     { BTL_EVENT_WAZA_POWER_BASE,        handler_SizenNoMegumi_Pow         }, // わざ威力チェック
-    { BTL_EVENT_DAMAGEPROC_END,         handler_SizenNoMegumi_AfterDamage }, // ワザダメージシーケンス終了
+    { BTL_EVENT_DAMAGEPROC_END_HIT,     handler_SizenNoMegumi_AfterDamage }, // ワザダメージシーケンス終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4829,7 +4829,7 @@ static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
 static const BtlEventHandlerTable*  ADD_Hatakiotosu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,      handler_Hatakiotosu },  // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,      handler_Hatakiotosu },  // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5003,7 +5003,7 @@ static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_Dorobou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_INFO,      handler_Dorobou }, // ダメージプロセス終了ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,      handler_Dorobou }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -5832,7 +5832,7 @@ static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },  // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_Feint_AfterDamage },  // ダメージ処理後
+    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_Feint_AfterDamage },  // ダメージ処理後
 
     { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Feint_Decide },  // ワザ出し確定
 //    { BTL_EVENT_WAZASEQ_START,       handler_Feint_Start },  // ワザ処理開始
@@ -7857,7 +7857,7 @@ static const BtlEventHandlerTable*  ADD_ShadowDive( u32* numElems )
     { BTL_EVENT_TAME_START,          handler_ShadowDive_TameStart },     // 溜め開始
     { BTL_EVENT_TAME_RELEASE,        handler_ShadowDive_TameRelease },   // 溜め解放
     { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },        // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_ShadowDive_AfterDamage },   // ダメージ処理後
+    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_ShadowDive_AfterDamage },   // ダメージ処理後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -8191,7 +8191,6 @@ static const BtlEventHandlerTable* ADD_Waruagaki( u32* numElems )
     { BTL_EVENT_WAZASEQ_START,   handler_Waruagaki_SeqStart    }, // ワザ処理開始ハンドラ
     { BTL_EVENT_WAZA_PARAM,      handler_Waruagaki_WazaParam   }, // ワザパラメータ取得
     { BTL_EVENT_CALC_KICKBACK,   handler_Waruagaki_KickBack    }, // 反動チェックハンドラ
-//    { BTL_EVENT_DAMAGEPROC_END,  handler_Waruagaki             }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9778,7 +9777,6 @@ static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_HajikeruHonoo( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-//    { BTL_EVENT_DAMAGEPROC_END_INFO, handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION,   handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
