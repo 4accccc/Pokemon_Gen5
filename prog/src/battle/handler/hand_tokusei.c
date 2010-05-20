@@ -1711,8 +1711,8 @@ static void handler_Technician( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // ˆÐ—Í60ˆÈ‰º‚È‚ç1.5”{‚É‚·‚é
-    WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_GetPower(waza) <= 60 )
+    u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER );
+    if( pow <= 60 )
     {
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, BTL_CALC_TOK_TECKNICIAN_POWRATIO );
     }

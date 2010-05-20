@@ -1408,8 +1408,9 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     }
 
     {
-      BTL_HANDEX_PARAM_SIDEEFF_REMOVE* remove_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
+      BTL_HANDEX_PARAM_SIDEEFF_REMOVE* remove_param;
 
+      remove_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
       remove_param->side = BTL_MAINUTIL_PokeIDtoSide( targetPokeID );
       BTL_CALC_BITFLG_Construction( remove_param->flags, sizeof(remove_param->flags) );
       BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_REFRECTOR );
@@ -1419,8 +1420,6 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_MAKIBISI );
       BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_DOKUBISI );
       BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_STEALTHROCK );
-      remove_param->fExMsg = TRUE;
-      remove_param->exStrID = BTL_STRID_SET_Kiribarai;
     }
   }
 }
@@ -4419,6 +4418,8 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }else{
       pow = 20;
     }
+
+    TAYA_Printf("ëÃèd=%d, à–óÕ=%d\n", heavy, pow );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }

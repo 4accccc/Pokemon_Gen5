@@ -554,8 +554,6 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              flags[ BTL_SIDEEFF_BITFLG_BYTES ];
   u8              side;
-  u8              fExMsg;
-  u16             exStrID;
 }BTL_HANDEX_PARAM_SIDEEFF_REMOVE;
 
 /**
