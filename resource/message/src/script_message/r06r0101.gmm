@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-19T20:45:00"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-20T13:02:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="62" top="586" right="617" bottom="1200" maximized="no" rayout="Vertical2">
+	<dialog left="24" top="423" right="579" bottom="1037" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="547"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="231"/>
 		<band id="3" index="4" style="0000" width="147"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -758,7 +758,7 @@ GRID X=7 Y=３に配置</comment>
 ・春用
 ・0＝11～19でランダム</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">６ばんどうろの　きおん　[2:01:２桁:]ど</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　[2:01:２桁:0]ど</language>
 		<language name="JPN_KANJI" width="256">６番道路の気温　[2:01:２桁:0]度</language>
 	</row>
 
@@ -767,7 +767,7 @@ GRID X=7 Y=３に配置</comment>
 ・夏用
 ・0＝19～35でランダム</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">６ばんどうろの　きおん　[2:01:２桁:]ど</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　[2:01:２桁:0]ど</language>
 		<language name="JPN_KANJI" width="256">６番道路の気温　[2:01:２桁:0]度</language>
 	</row>
 
@@ -776,7 +776,7 @@ GRID X=7 Y=３に配置</comment>
 ・秋用
 ・0＝11～19でランダム</comment>
 		<attribute name="キャラ指定">温度計</attribute>
-		<language name="JPN" width="256">６ばんどうろの　きおん　[2:01:２桁:]ど</language>
+		<language name="JPN" width="256">６ばんどうろの　きおん　[2:01:２桁:0]ど</language>
 		<language name="JPN_KANJI" width="256">６番道路の気温　[2:01:２桁:0]度</language>
 	</row>
 
