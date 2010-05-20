@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T20:26:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T22:46:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -294,7 +294,7 @@
 
 	<row id="msg_h05_ninja1_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>♂
-・pos(未定）を踏むと3人出現
+・posを踏むと3人出現
 ・続けてninja2_01</comment>
 		<attribute name="キャラ指定">ダークトリニティ
 その１</attribute>
@@ -462,7 +462,7 @@
 	<row id="msg_h05_woman2_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 ・メッセージ後
-　ミネズミ４匹出現（お姉さんの後ろから？（</comment>
+　ミネズミ４匹出現（お姉さんの後ろから）</comment>
 		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">よーし　ミネズミちゃーん！
 ぜんいん　しゅうごーう！▼</language>
