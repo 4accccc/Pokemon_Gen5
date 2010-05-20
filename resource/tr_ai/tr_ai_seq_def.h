@@ -1512,11 +1512,13 @@ DEF_CMD_COUNT 	=	(DEF_CMD_COUNT + 1)
 //
 //	label:インデックスラベル
 //	adrs:テーブルアドレス
+//	size:テーブルサイズ
 //
 //------------------------------------------------------------
-	.macro  TABLE_JUMP  label, adrs
+	.macro  TABLE_JUMP  label, adrs, size
 	.short	AI_TABLE_JUMP
 	.long		\label
+	.long		\size
 	.long		(\adrs-.)-4
 	.endm
 
