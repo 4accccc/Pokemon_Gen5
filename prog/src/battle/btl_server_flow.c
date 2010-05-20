@@ -9212,31 +9212,40 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     wk->turnCheckStep++;
     if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_BEGIN) ){
       fExpGet = TRUE;
+      break;
     }
-    break;
+    if( scproc_CheckShowdown(wk) ){ return FALSE; }
+    /* fallthru */
   case 2:
     wk->turnCheckStep++;
     if( scproc_turncheck_weather(wk, pokeSet) ){
       fExpGet = TRUE;
+      break;
     }
-    break;
+    if( scproc_CheckShowdown(wk) ){ return FALSE; }
+    /* fallthru */
   case 3:
     wk->turnCheckStep++;
     if( scproc_turncheck_sick(wk, pokeSet) ){
       fExpGet = TRUE;
+      break;
     }
-    break;
+    if( scproc_CheckShowdown(wk) ){ return FALSE; }
+    /* fallthru */
+
   case 4:
     wk->turnCheckStep++;
     scproc_turncheck_side( wk );
     scproc_turncheck_field( wk );
-    break;
+    /* fallthru */
   case 5:
     wk->turnCheckStep++;
     if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_END) ){
       fExpGet = TRUE;
+      break;
     }
-    break;
+    if( scproc_CheckShowdown(wk) ){ return FALSE; }
+    /* fallthru */
   case 6:
     // 全ポケモンのターンフラグをクリア
     wk->turnCheckStep++;
