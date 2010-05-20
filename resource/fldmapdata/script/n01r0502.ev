@@ -782,9 +782,6 @@ IF $WK_SCENE_N01R0502 >= 4 THEN
 ELSE
   //それ以外
 
-    _OBJ_ANIME( N01R0502_WKOBJCODE00_01, anm_legend_hoeru )
-    _OBJ_ANIME_WAIT()
-
     _CALL sub_voice_play_n_legend
     _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_WHITE THEN
@@ -1283,7 +1280,7 @@ ev_last:
 
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラのバインドを解く
-	
+
 		//カメラ操作　Ｎの位置にカメラを合わせる
 		_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,1 )
 		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
@@ -1292,7 +1289,7 @@ ev_last:
 		_OBJ_POS_CHANGE( N01R0502_SAGE1_01, 16, 0, 39, DIR_DOWN )
 		_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 40, DIR_UP )
 
-		_END_EVENT_BGM()
+		_END_EVENT_BGM_EX(BGM_FADE_VSHORT)
 
 		//可変OBJの確定
 		IF $LWK_ROM == VERSION_WHITE THEN
@@ -1404,13 +1401,6 @@ ev_last:
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_tsureteku2 )
 	_OBJ_ANIME_WAIT()
 
-	_TIME_WAIT(20)
-
-	//カメラ操作　Ｎの位置にカメラを合わせる
-	_CAMERA_MOVE( 9688,0,970752,1081344,0,2392064,40 )
-	
-	_CAMERA_WAIT_MOVE()
-
 	_OBJ_ANIME( N01R0502_BOSS_01, anm_n_nayamu )
 	_OBJ_ANIME_WAIT()
 	
@@ -1428,12 +1418,12 @@ ev_last:
 	_CAMERA_WAIT_MOVE()
 
 	_TIME_WAIT(30)
-	
-	//イベント曲再生
-	_START_EVENT_BGM( SEQ_BGM_E_LAST )
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_r )
 	_OBJ_ANIME_WAIT()
+
+	//イベント曲再生
+	_START_EVENT_BGM( SEQ_BGM_E_LAST )
 
 	//ちょっといいかな　
 	_BALLOONWIN_OBJMSG_POS( msg_n01r0502_boss_20 , N01R0502_BOSS_01,POS_DEFAULT )
@@ -1609,9 +1599,9 @@ ev_last:
 		ENDIF
 }	
 	//無音にする
-	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 180 )
+	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 360 )
 	
-	//_TIME_WAIT( 30 )
+	_TIME_WAIT( 20 )
 	
 	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
@@ -1624,7 +1614,7 @@ ev_last:
 	
 	_SE_PLAY(SEQ_SE_END_01)
 	
-	_TIME_WAIT( 20 )
+	_TIME_WAIT( 8 )
 	
 	//Ｎのアップ絵終了
 	_CAMERA_END()
@@ -1860,9 +1850,7 @@ _ANIME_LABEL	anm_gcis_last1
 
 _ANIME_LABEL	anm_n_nayamu
 	_ANIME_DATA	AC_STAY_WALK_L_16F,1
-	_ANIME_DATA	AC_WAIT_16F,1
-	_ANIME_DATA	AC_WAIT_8F,1
-	_ANIME_DATA	AC_WAIT_4F,1
+	_ANIME_DATA	AC_WAIT_16F,2
 	_ANIME_DATA	AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -1989,7 +1977,7 @@ sub_legend_add_loop:
 /*		ボール投げる演出			  */
 /**************************************************************/
 ball_out:
-  _LEG_MOVE_BALL( N01R0502_BOSS_01, 16, 5, 6, 5, 10 )
+  _LEG_MOVE_BALL( N01R0502_BOSS_01, 16, 5, 6, 10, 20 )
   _LEG_START_BALL_ANM( 16, 5, 6  )
   //ボール出現フレーム待ち
   _LEG_WAIT_BALL_POKE_APP()
