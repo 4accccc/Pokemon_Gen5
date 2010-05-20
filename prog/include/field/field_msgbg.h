@@ -197,6 +197,7 @@ extern void FLDMSGBG_Delete( FLDMSGBG *fmb );
 extern void FLDMSGBG_ReleaseBGResouce( FLDMSGBG *fmb );
 extern BOOL FLDMSGBG_ReleaseBG2Resource( FLDMSGBG *fmb );
 extern void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb );
+extern BOOL FLDMSGBG_WaitResetBGResource( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintMain( FLDMSGBG *fmb );
 extern void FLDMSGBG_PrintG3D( FLDMSGBG *fmb );
 extern void FLDMSGBG_ClearPrintQue( FLDMSGBG *fmb );

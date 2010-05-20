@@ -198,6 +198,7 @@ struct _TAG_FLDMSGBG
   
   GFL_TCBLSYS *printTCBLSys;
   GFL_G3D_CAMERA *g3Dcamera;
+  GFL_TCB *pVBlankTCB;
   
   u8 req_reset_bg2_control;
   u8 padding[3];
@@ -351,6 +352,7 @@ static void syswin_ClearBmp( GFL_BMPWIN *bmpwin );
 static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin );
 
 static void setBGResource( FLDMSGBG *fmb, const BOOL trans );
+static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk );
 static void setBG1Resource( FLDMSGBG *fmb );
 static void resetBG2Control( BOOL cnt_set );
 static void resetBG2ControlProc( FLDMSGBG *fmb );
@@ -600,7 +602,27 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
     TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
   }
   
-  setBG1Resource( fmb );
+  if( fmb->pVBlankTCB == NULL ){
+    fmb->pVBlankTCB = GFUser_VIntr_CreateTCB( tcbSetBG1Resource, fmb, 0 );
+  }else{
+    GF_ASSERT( 0 );
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * FLDMSGBG FLDMSGBG_ResetBGResource()Š®—¹‘Ò‚¿
+ * @param *fmb FLDMSGBG
+ * @retval BOOL TRUE=I—¹
+ */
+//--------------------------------------------------------------
+BOOL FLDMSGBG_WaitResetBGResource( FLDMSGBG *fmb )
+{
+  if( fmb->pVBlankTCB == NULL ){
+    return( TRUE );
+  }
+  
+  return( FALSE );
 }
 
 //--------------------------------------------------------------
@@ -4949,6 +4971,7 @@ static void setBG1Resource( FLDMSGBG *fmb )
   { //TALKMSGWIN
     if( fmb->g3Dcamera != NULL ){
       TALKMSGWIN_SYS_SETUP setup;
+      
       setup.heapID = fmb->heapID;
       setup.g3Dcamera = fmb->g3Dcamera;
       setup.fontHandle = fmb->fontHandle;
@@ -4961,9 +4984,19 @@ static void setBG1Resource( FLDMSGBG *fmb )
   }
   
   GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
-  
   fmb->deriveFont_plttNo = PANO_FONT;
 }
+
+static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk )
+{
+  FLDMSGBG *fmb = wk;
+  
+  setBG1Resource( fmb );
+  
+  fmb->pVBlankTCB = NULL;
+  GFL_TCB_DeleteTask( tcb );
+}
+ 
 
 //--------------------------------------------------------------
 /**
