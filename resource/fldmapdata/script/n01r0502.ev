@@ -1599,9 +1599,9 @@ ev_last:
 		ENDIF
 }	
 	//無音にする
-	_START_EVENT_BGM_SILENT ( 360 )
+	_START_EVENT_BGM_SILENT ( 160 )
 	
-	_TIME_WAIT( 20 )
+	_TIME_WAIT( 30 )
 	
 	_START_FACEUP_ANM() //顔アップの口パク目パチ開始
 	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_last_05 )
@@ -1620,10 +1620,9 @@ ev_last:
 	_CAMERA_END()
 	_END_FACEUP()
 	_PLAINWIN_CLOSE()
-	_SE_WAIT()
+	
 	//ゲームクリア
 	_GOTO_GAMECLEAR_DEMO( 0 )
-
 	//========================================/
 	
 	//$WK_SCENE_N01R0502を６にして終了
