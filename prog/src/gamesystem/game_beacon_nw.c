@@ -1056,7 +1056,7 @@ void BEACONINFO_Set_Thankyou(GAMEBEACON_INFO *info, GAMEDATA *gamedata, u32 targ
   info->action.action_no = GAMEBEACON_ACTION_THANKYOU;
   info->action.thanks.target_trainer_id = target_trainer_id;
 
-//  Ú×‚Í’¼‘O‚Ì‚ğˆÛ
+  BEACONINFO_Set_Details_Walk(info);
 }
 
 //==================================================================
