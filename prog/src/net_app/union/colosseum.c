@@ -396,7 +396,7 @@ void Colosseum_Clear_ReceivePokeParty(COLOSSEUM_SYSTEM_PTR clsys, BOOL except_fo
 //==================================================================
 void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *gsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id)
 {
-  int net_id, member_max, set_id, stand_pos;
+  int net_id, member_max, set_id, stand_pos, my_pos, my_net_id;
   
   GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
   
@@ -410,9 +410,12 @@ void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *g
     }
   }
   
+  my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
+  my_pos = clsys->recvbuf.stand_position[my_net_id];
+  
   for(net_id = 0; net_id < member_max; net_id++){
     stand_pos = clsys->recvbuf.stand_position[net_id];
-    if((stand_pos & 1) == 0){  //ç∂ë§
+    if((stand_pos & 1) == (my_pos & 1)){  //ç∂ë§
       set_id = COMM_BTL_DEMO_TRDATA_A;
     }
     else{ //âEë§

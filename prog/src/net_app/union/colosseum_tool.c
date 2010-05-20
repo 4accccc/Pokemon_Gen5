@@ -45,9 +45,9 @@ static const POINT_S16 ColosseumStandingPos_1vs1[] = {
 ///マルチの時の立ち位置座標(グリッド座標)
 static const POINT_S16 ColosseumStandingPos_multi[] = {
   {3, 4},     //左上
-  {9, 4},     //右上
-  {3, 6},     //左下
   {9, 6},     //右下
+  {3, 6},     //左下
+  {9, 4},     //右上
 };
 
 //--------------------------------------------------------------
