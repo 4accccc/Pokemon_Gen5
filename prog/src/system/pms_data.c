@@ -153,7 +153,7 @@ void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms )
   //pms->sentence_id = NARC_message_pmss_union_dat;
   
   PMSDAT_Init( pms, PMS_TYPE_MAIL );  // ユニオンルームにはいりました！
-  pms->sentence_id = pmss_mail_01;    // が、なくなってしまったので、緊急仮対応
+  pms->sentence_id = pmss_mail_01;    // が、なくなってしまったので、これで代用。2010年5月20日現在、この関数は呼ばれていない。
   pms->word[0] = PMSW_GetWordNumberByGmmID( NARC_message_pms_word08_dat, pms_word08_48 );
 }
 
