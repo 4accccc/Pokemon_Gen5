@@ -1367,12 +1367,21 @@ static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
   FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
   C_GEAR_WORK * cgear = FIELD_SUBSCREEN_GetCGearWork( subscreen );
+
   //Cギアじゃないか、Cギアからワイヤレスに移行するイベントでない場合
-  if ( cgear == NULL || CGEAR_IsDoEventWireless( cgear ) == FALSE )
-  {
+  if( cgear == NULL ){
+    
+    // Cギアじゃない
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(gsys) );
+    FSND_StopTVTRingTone( fsnd );
+    
+  }else if ( CGEAR_IsDoEventWireless( cgear ) == FALSE ){
+    
+    // Cギアからwireless以外への遷移
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(gsys) );
     FSND_StopTVTRingTone( fsnd );
     CGEAR_SetStopTVTRingTone( cgear );
+    
   }
 }
 
