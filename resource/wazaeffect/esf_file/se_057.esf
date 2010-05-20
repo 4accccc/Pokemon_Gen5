@@ -9,6 +9,10 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_057_fire_burn.spa
 射影モード	透視射影	すべて
 BGのパレットフェード	すべて	0	10	1	31:0:0
 ポケモンアニメ	防御側	アニメストップ
+制御モード変更	継続
+SE再生	SEQ_SE_BE_SE_016	SE1	防御側	0:0:127	0:0:0
+SE再生	SEQ_SE_BE_SE_016	SE2	防御側	20:0:127	0:0:0
+制御モード変更	逐次
 ポケモンパレットフェード	防御側	0	10	1	31:0:0
 パーティクルデータロード	be_se_057_fire_burn
 パーティクル再生	be_se_057_fire_burn	BE_SE_057_FIRE_BURN_SE_057_FIRE_BURN	防御側	方向無し	1:0:0	3:1:1.5	1
