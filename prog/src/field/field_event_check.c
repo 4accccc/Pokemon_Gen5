@@ -342,8 +342,8 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
   if( !(req.debugRequest) && DEBUG_FLG_GetFlg(DEBUG_FLG_DisableTrainerEye) == FALSE )
 #endif
   {
-    u32 count = FIELD_EVENT_CountBattleMember( gsys );
-    event = EVENT_CheckTrainerEye( fieldWork, count );
+    event = EVENT_CheckTrainerEye( fieldWork );
+     
     if( event != NULL ){
       *eff_delete_flag = TRUE;  //エフェクトエンカウント消去リクエスト
       return event;

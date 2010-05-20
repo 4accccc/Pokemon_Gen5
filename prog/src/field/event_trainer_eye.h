@@ -34,7 +34,7 @@
  * 視線チェック＆トレーナーイベント生成
  */
 //--------------------------------------------------------------
-extern GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, u32 enable_member );
+extern GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap );
 
 //--------------------------------------------------------------
 /**

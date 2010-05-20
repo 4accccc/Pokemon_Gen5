@@ -23,6 +23,9 @@
 #include "trainer_eye_data.h"  //TRAINER_HITDATA
 
 #include "script_def.h"
+
+#include "field_event_check.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -93,12 +96,11 @@ typedef struct {
 //======================================================================
 static BOOL treye_CheckEyeMeet(
     FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, TRAINER_HITDATA *hit );
-static int treye_CheckEyeRange(
-    const FIELD_ENCOUNT* enc, const MMDL *mmdl, const MMDL *jiki, u16 *hitDir );
+static int treye_CheckEyeRange( const FIELD_ENCOUNT *enc,
+    const MMDL *mmdl, const MMDL *jiki, u16 *hitDir );
 
-static int treye_CheckEyeLine(
-    u16 dir, s16 range, s16 tx, s16 ty, s16 tz, s16 gx, s16 gy, s16 gz );
-
+static int treye_CheckEyeLine( u16 dir, s16 range,
+    const MMDL_GRIDPOS *pos0, const MMDL_GRIDPOS *pos1 );
 
 static u16 tr_GetTrainerEventType( const MMDL *mmdl );
 static BOOL tr_HitCheckEyeLine( const MMDL *mmdl, u16 dir, int range, const FIELD_ENCOUNT* enc );
@@ -108,10 +110,11 @@ static MMDL * tr_CheckPairTrainer( const MMDL *tr_mmdl, u16 tr_id );
 static GMEVENT * createTrainerScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl );
 
 static int (* const data_treye_CheckEyeLineTbl[DIR_MAX4])(
-    s16,s16,s16,s16,s16,s16,s16);
+    s16 range,const MMDL_GRIDPOS *t_pos,const MMDL_GRIDPOS *j_pos );
 
+static GMEVENT_RESULT controlTrainerEyeMoveEvent(
+    GMEVENT * ev, int *seq, void * wk );
 
-static GMEVENT_RESULT controlTrainerEyeMoveEvent( GMEVENT * ev, int *seq, void * wk );
 //======================================================================
 //  トレーナー視線イベント
 //======================================================================
@@ -119,11 +122,10 @@ static GMEVENT_RESULT controlTrainerEyeMoveEvent( GMEVENT * ev, int *seq, void *
 /**
  * トレーナー視線イベントチェック
  * @param fieldMap FIELDMAP_WORK*
- * @param enable_member   バトル可能な手持ちポケモンの数
  * @retval GMEVENT NULL=ヒット無し
  */
 //--------------------------------------------------------------
-GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, u32 enable_member )
+GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap )
 {
   TRAINER_HITDATA hit0;
   GMEVENT *event = NULL;
@@ -132,10 +134,10 @@ GMEVENT * EVENT_CheckTrainerEye( FIELDMAP_WORK *fieldMap, u32 enable_member )
   {
     TRAINER_HITDATA hit1;
     BtlRule btl_rule = SCRIPT_GetTrainerBtlRule( hit0.tr_id );
+    u32 enable_member = FIELD_EVENT_CountBattleMember( FIELDMAP_GetGameSysWork(fieldMap) );
     
     if( btl_rule == BTL_RULE_SINGLE ) //シングル
     {
-
       if( enable_member < 2 || //シングル戦チェック
           treye_CheckEyeMeet(fieldMap,hit0.mmdl,&hit1) == FALSE )
       { //スクリプト用イベントデータセット シングル
@@ -214,8 +216,7 @@ int TRAINER_MMDL_CheckEyeRange(
   MMDL_GetGridPos( jiki, &pj );
   MMDL_GetGridPos( mmdl, &pt );
   
-  ret = treye_CheckEyeLine( eye_dir, eye_range, 
-      pt.gx, pt.gy, pt.gz, pj.gx, pj.gy, pj.gz );
+  ret = treye_CheckEyeLine( eye_dir, eye_range, &pt, &pj );
   
   if( ret != EYE_CHECK_NOHIT ){
     if( tr_HitCheckEyeLine(mmdl,eye_dir,ret,enc) == TRUE ){
@@ -241,24 +242,29 @@ int TRAINER_MMDL_CheckEyeRange(
 static BOOL treye_CheckEyeMeet(
     FIELDMAP_WORK *fieldMap, MMDL *non_mmdl, TRAINER_HITDATA *hit )
 {
-  MMDL *               jiki = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer(fieldMap) );
-  MMDLSYS *         mmdlsys = FIELDMAP_GetMMdlSys( fieldMap );
-  const FIELD_ENCOUNT * enc = FIELDMAP_GetEncount( fieldMap );
-  MMDL *               mmdl = NULL;
-  u32                    no = 0;
-
+  u16 dir;
+  int range;
+  const FIELD_ENCOUNT *enc = FIELDMAP_GetEncount( fieldMap );
+  MMDL *jiki = FIELD_PLAYER_GetMMdl( FIELDMAP_GetFieldPlayer(fieldMap) );
+  MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldMap );
+  MMDL *mmdl = NULL;
+  u32 no = 0;
+  
   while( MMDLSYS_SearchUseMMdl( mmdlsys, &mmdl, &no ) == TRUE )
   {
-    if( non_mmdl == NULL || (non_mmdl != mmdl) )
+    if( mmdl != jiki )
     {
-      u16   dir;
-      int range = treye_CheckEyeRange( enc, mmdl, jiki, &dir );
-      if( range != EYE_CHECK_NOHIT )
+      if( non_mmdl == NULL || (non_mmdl != mmdl) )
       {
-        if( tr_CheckEventFlag(fieldMap,mmdl) == FALSE )
+        range = treye_CheckEyeRange( enc, mmdl, jiki, &dir );
+      
+        if( range != EYE_CHECK_NOHIT )
         {
-          makeHitData( hit, mmdl, range, dir );
-          return( TRUE );
+          if( tr_CheckEventFlag(fieldMap,mmdl) == FALSE )
+          {
+            makeHitData( hit, mmdl, range, dir );
+            return( TRUE );
+          }
         }
       }
     }
@@ -276,8 +282,8 @@ static BOOL treye_CheckEyeMeet(
  * @retval int 視線ヒット時の自機までのグリッド数。EYE_CHECK_NOHIT=外れ。
  */
 //--------------------------------------------------------------
-static int treye_CheckEyeRange(
-    const FIELD_ENCOUNT* enc, const MMDL *mmdl, const MMDL *jiki, u16 *hitDir )
+static int treye_CheckEyeRange( const FIELD_ENCOUNT *enc,
+    const MMDL *mmdl, const MMDL *jiki, u16 *hitDir )
 {
   u16 type;
   
@@ -289,14 +295,14 @@ static int treye_CheckEyeRange(
     u16 dir;
     MMDL_GRIDPOS pt,pj;
     s16 range = MMDL_GetParam( mmdl, MMDL_PARAM_0 );
-
+    
     MMDL_GetGridPos( mmdl, &pt);
     MMDL_GetGridPos( jiki, &pj);
     
     if( type == EV_TYPE_TRAINER )
     {
       dir = MMDL_GetDirDisp( mmdl );
-      ret = treye_CheckEyeLine( dir, range, pt.gx, pt.gy, pt.gz, pj.gx, pj.gy, pj.gz );
+      ret = treye_CheckEyeLine( dir, range, &pt, &pj );
       
       if( ret != EYE_CHECK_NOHIT )
       {
@@ -311,7 +317,7 @@ static int treye_CheckEyeRange(
       dir = DIR_UP;
       
       do{
-        ret = treye_CheckEyeLine( dir, range, pt.gx, pt.gy, pt.gz, pj.gx, pj.gy, pj.gz );
+        ret = treye_CheckEyeLine( dir, range, &pt, &pj );
         
         if( ret != EYE_CHECK_NOHIT )
         {
@@ -341,12 +347,12 @@ static int treye_CheckEyeRange(
  * @retval int 自機へのグリッド距離。EYE_CHECK_NOHIT=外れ
  */
 //--------------------------------------------------------------
-static int treye_CheckEyeLine(
-    u16 dir, s16 range, s16 tx, s16 ty, s16 tz, s16 gx, s16 gy, s16 gz )
+static int treye_CheckEyeLine( u16 dir, s16 range,
+    const MMDL_GRIDPOS *t_pos, const MMDL_GRIDPOS *j_pos )
 {
   int hit;
   GF_ASSERT( dir < DIR_MAX4 );
-  hit = data_treye_CheckEyeLineTbl[dir]( range, tx, ty, tz, gx, gy, gz );
+  hit = data_treye_CheckEyeLineTbl[dir]( range, t_pos, j_pos );
   return( hit );
 }
 
@@ -363,12 +369,14 @@ static int treye_CheckEyeLine(
  * @retval int 自機へのグリッド距離。EYE_CHECK_NOHIT=外れ
  */
 //--------------------------------------------------------------
-static int treye_CheckEyeLineUp(
-    s16 range, s16 tx, s16 ty, s16 tz, s16 jx, s16 jy, s16 jz )
+static int treye_CheckEyeLineUp( s16 range,
+    const MMDL_GRIDPOS *t_pos, const MMDL_GRIDPOS *j_pos )
 {
-  if( tx == jx && ty == jy ){
-    if( jz < tz && jz >= (tz-range) ){
-      return( tz-jz );
+  if( t_pos->gx == j_pos->gx ){
+    if( t_pos->gy == j_pos->gy ){
+      if( j_pos->gz < t_pos->gz && j_pos->gz >= (t_pos->gz-range) ){
+        return( t_pos->gz - j_pos->gz );
+      }
     }
   }
   return( EYE_CHECK_NOHIT );
@@ -387,12 +395,14 @@ static int treye_CheckEyeLineUp(
  * @retval int 自機へのグリッド距離。EYE_CHECK_NOHIT=外れ
  */
 //--------------------------------------------------------------
-static int treye_CheckEyeLineDown(
-    s16 range, s16 tx, s16 ty, s16 tz, s16 jx, s16 jy, s16 jz )
+static int treye_CheckEyeLineDown( s16 range, 
+    const MMDL_GRIDPOS *t_pos, const MMDL_GRIDPOS *j_pos )
 {
-  if( tx == jx && ty == jy ){
-    if( jz > tz && jz <= (tz+range) ){
-      return( jz - tz );
+  if( t_pos->gx == j_pos->gx ){
+    if( t_pos->gy == j_pos->gy ){
+      if( j_pos->gz > t_pos->gz && j_pos->gz <= (t_pos->gz+range) ){
+        return( j_pos->gz - t_pos->gz );
+      }
     }
   }
   return( EYE_CHECK_NOHIT );
@@ -411,12 +421,14 @@ static int treye_CheckEyeLineDown(
  * @retval int 自機へのグリッド距離。EYE_CHECK_NOHIT=外れ
  */
 //--------------------------------------------------------------
-static int treye_CheckEyeLineLeft(
-    s16 range, s16 tx, s16 ty, s16 tz, s16 jx, s16 jy, s16 jz )
+static int treye_CheckEyeLineLeft( s16 range, 
+    const MMDL_GRIDPOS *t_pos, const MMDL_GRIDPOS *j_pos )
 {
-  if( tz == jz && ty == jy ){
-    if( jx < tx && jx >= (tx-range) ){
-      return( tx - jx );
+  if( t_pos->gz == j_pos->gz ){
+    if( t_pos->gy == j_pos->gy ){
+      if( j_pos->gx < t_pos->gx && j_pos->gx >= (t_pos->gx-range) ){
+        return( t_pos->gx - j_pos->gx );
+      }
     }
   }
   return( EYE_CHECK_NOHIT );
@@ -435,12 +447,14 @@ static int treye_CheckEyeLineLeft(
  * @retval int 自機へのグリッド距離。EYE_CHECK_NOHIT=外れ
  */
 //--------------------------------------------------------------
-static int treye_CheckEyeLineRight(
-    s16 range, s16 tx, s16 ty, s16 tz, s16 jx, s16 jy, s16 jz )
+static int treye_CheckEyeLineRight( s16 range, 
+    const MMDL_GRIDPOS *t_pos, const MMDL_GRIDPOS *j_pos )
 {
-  if( tz == jz ){
-    if( jx > tx && jx <= (tx+range) ){
-      return( jx - tx );
+  if( t_pos->gz == j_pos->gz ){
+    if( t_pos->gy == j_pos->gy ){
+      if( j_pos->gx > t_pos->gx && j_pos->gx <= (t_pos->gx+range) ){
+        return( j_pos->gx - t_pos->gx );
+      }
     }
   }
   return( EYE_CHECK_NOHIT );
@@ -1101,7 +1115,7 @@ static GMEVENT * createTrainerScript( FIELDMAP_WORK *fieldMap, MMDL *mmdl )
 /// 視線チェックテーブル
 //--------------------------------------------------------------
 static int (* const data_treye_CheckEyeLineTbl[DIR_MAX4])(
-    s16,s16,s16,s16,s16,s16,s16) =
+    s16 range,const MMDL_GRIDPOS *t_pos, const MMDL_GRIDPOS *j_pos ) =
 {
   treye_CheckEyeLineUp,
   treye_CheckEyeLineDown,
