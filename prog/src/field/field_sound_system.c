@@ -2055,12 +2055,8 @@ static void Main_CHANGE_PUSH_load( FIELD_SOUND* fieldSound )
 //---------------------------------------------------------------------------------
 static void Main_STAND_BY_out( FIELD_SOUND* fieldSound )
 {
-  if( PMSND_CheckFadeOnBGM() == FALSE )
-  {
-    if( CheckSaveNow( fieldSound ) == FALSE ) {
-      DivLoadBGM_start( fieldSound );
-      ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
-    }
+  if( PMSND_CheckFadeOnBGM() == FALSE ) { 
+    ChangeState( fieldSound, FSND_STATE_STAND_BY_load );
   }
 }
 
@@ -2071,18 +2067,10 @@ static void Main_STAND_BY_out( FIELD_SOUND* fieldSound )
 //---------------------------------------------------------------------------------
 static void Main_STAND_BY_load( FIELD_SOUND* fieldSound )
 {
-  BOOL loadFinished;
-
-  // 分割ロード実行
-  loadFinished = DivLoadBGM_load( fieldSound );
-
-  // 分割ロード完了(再生開始)
-  if( loadFinished ) { 
-    // BGM一時停止
-    PMSND_PauseBGM( TRUE );
-    ChangeState( fieldSound, FSND_STATE_WAIT );
-    FinishRequest( fieldSound );
-  }
+  ForcePlayBGM( fieldSound );
+  PMSND_PauseBGM( TRUE ); // BGM 一時停止
+  ChangeState( fieldSound, FSND_STATE_WAIT );
+  FinishRequest( fieldSound );
 } 
 
 //---------------------------------------------------------------------------------

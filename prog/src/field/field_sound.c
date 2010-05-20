@@ -1088,11 +1088,11 @@ void FSND_StandByNextMapBGM(
   nextBGM = GetSpecialBGM( gameData, nextZoneID );
   if( nextBGM == SPECIAL_BGM_NONE ) { nextBGM = GetZoneBGM( gameData, nextZoneID ); }
 
-  // 前後のBGMが同じなら何もしない
+  // 前後の BGM が同じなら何もしない
   if( prevBGM == nextBGM ) { return; }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_FADE_OUT( fieldSound, FSND_FADE_NORMAL );
+  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextBGM, FSND_FADE_NORMAL );
 }
 
 //---------------------------------------------------------------------------------
@@ -1115,7 +1115,7 @@ void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID 
   }
 
   // リクエスト登録
-  FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, soundIdx );
+  FIELD_SOUND_RegisterRequest_FADE_IN( fieldSound, FSND_FADE_NONE );
 }
 
 //---------------------------------------------------------------------------------
