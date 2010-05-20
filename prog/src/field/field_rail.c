@@ -2564,8 +2564,9 @@ static const RAIL_POINT* getRailDatPoint( const RAIL_SETTING * raildat, u32 inde
 	{
 		return &raildat->point_table[ index ];	
 	}
-	GF_ASSERT( RAIL_TBL_NULL==index );
-	return NULL;
+	if( RAIL_TBL_NULL==index ){ return NULL; }
+  GF_ASSERT( RAIL_TBL_NULL==index );
+	return &raildat->point_table[ 0 ];  // フリーズ回避
 }
 // ライン情報取得
 static const RAIL_LINE* getRailDatLine( const RAIL_SETTING * raildat, u32 index )
@@ -2574,8 +2575,9 @@ static const RAIL_LINE* getRailDatLine( const RAIL_SETTING * raildat, u32 index 
 	{
 		return &raildat->line_table[ index ];
 	}
-	GF_ASSERT( RAIL_TBL_NULL==index );
-	return NULL;
+	if( RAIL_TBL_NULL==index ){ return NULL; }
+  GF_ASSERT( RAIL_TBL_NULL==index );
+	return &raildat->line_table[ 0 ]; // フリーズ回避
 }
 // カメラ情報取得
 static const RAIL_CAMERA_SET* getRailDatCamera( const RAIL_SETTING * raildat, u32 index )
@@ -2584,6 +2586,7 @@ static const RAIL_CAMERA_SET* getRailDatCamera( const RAIL_SETTING * raildat, u3
 	{
 		return &raildat->camera_table[ index ];
 	}
+	if( RAIL_TBL_NULL==index ){ return NULL; }
 	GF_ASSERT( index == RAIL_TBL_NULL );
 	return &RAIL_CAMERA_SET_Default;
 }
@@ -2594,6 +2597,7 @@ static const RAIL_LINEPOS_SET* getRailDatLinePos( const RAIL_SETTING * raildat, 
 	{
 		return &raildat->linepos_table[ index ];	
 	}
+	if( RAIL_TBL_NULL==index ){ return NULL; }
 	GF_ASSERT( index == RAIL_TBL_NULL );
 	return &RAIL_LINEPOS_SET_Default;
 }
@@ -2604,8 +2608,9 @@ static RAIL_CAMERA_FUNC*const getRailDatCameraFunc( const RAIL_SETTING * raildat
 	{
 		return raildat->camera_func[ index ];
 	}
+	if( RAIL_TBL_NULL==index ){ return NULL; }
 	GF_ASSERT( index == RAIL_TBL_NULL );
-	return NULL;
+	return raildat->camera_func[ 0 ]; // フリーズ回避
 }
 // 座標計算関数取得
 static RAIL_POS_FUNC*const getRailDatLinePosFunc( const RAIL_SETTING * raildat, u32 index )
@@ -2614,8 +2619,9 @@ static RAIL_POS_FUNC*const getRailDatLinePosFunc( const RAIL_SETTING * raildat, 
 	{	
 		return raildat->line_pos_func[ index ];
 	}
+	if( RAIL_TBL_NULL==index ){ return NULL; }
 	GF_ASSERT( index == RAIL_TBL_NULL );
-	return NULL;
+	return raildat->line_pos_func[ 0 ]; // フリーズ回避
 }
 
 // ラインと座標の当たり判定
@@ -2625,8 +2631,9 @@ static RAIL_LINE_HIT_LOCATION_FUNC*const getRailDatLineHitLocationFunc( const RA
 	{	
 		return raildat->line_hit_location_func[ index ];
 	}
+	if( RAIL_TBL_NULL==index ){ return NULL; }
 	GF_ASSERT( index == RAIL_TBL_NULL );
-	return NULL;
+	return raildat->line_hit_location_func[ 0 ];  // フリーズ回避
 }
 
 
