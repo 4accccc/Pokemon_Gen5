@@ -32,6 +32,9 @@
 #include "system\pms_data.h"
 
 
+#include "../../../resource/quiz/pms_answer.h"
+
+
 //--------------------------------------------------------------
 /**
  *  定数
@@ -166,6 +169,7 @@ void PMSDAT_SetupDefaultUnionMessage( PMS_DATA* pms )
 //------------------------------------------------------------------
 void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType )
 {
+#if 0
   static const struct {
     u8  sentenceType;
     u8  sentenceID;
@@ -217,6 +221,43 @@ void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType )
          sentenceDataTbl[msgType].word2_gmmID, sentenceDataTbl[msgType].word2_wordID );
     }
   }
+#else
+  switch(msgType)
+  {
+  case PMS_BATTLE_TYPE_PLAYER_READY:
+    {
+      PMSDAT_Init( pms, PMS_TYPE_BATTLE_READY );
+      // 「おねがいします！　『いくよ』」
+      pms->sentence_id = pmss_ready_01;
+      pms->word[0]     = mypms02;
+    }
+    break;
+  case PMS_BATTLE_TYPE_PLAYER_WIN:
+    {
+      PMSDAT_Init( pms, PMS_TYPE_BATTLE_WON );
+      // 「かちました！　『ありがとう』」
+      pms->sentence_id = pmss_won_01;
+      pms->word[0]     = mypms03;
+    }
+    break;
+  case PMS_BATTLE_TYPE_PLAYER_LOSE:
+    {
+      PMSDAT_Init( pms, PMS_TYPE_BATTLE_LOST );
+      // 「まけました……　『ざんねん』」
+      pms->sentence_id = pmss_lost_01;
+      pms->word[0]     = mypms04;
+    }
+    break;
+  case PMS_BATTLE_TYPE_LEADER:
+    {
+      PMSDAT_Init( pms, PMS_TYPE_BATTLE_WON );
+      // 「うれしい！　『いちばん』だなんて！」
+      pms->sentence_id = pmss_won_14;
+      pms->word[0]     = mypms05;
+    }
+    break;
+  }
+#endif
 }
 
 //----------------------------------------------------------------------------
@@ -227,12 +268,20 @@ void PMSDAT_SetupDefaultBattleMessage( PMS_DATA* pms, PMS_BATTLE_TYPE msgType )
  */
 //-----------------------------------------------------------------------------
 void PMSDAT_SetupDefaultIntroductionMessage( PMS_DATA* pms )
-{ 
+{
+#if 0
   PMSDAT_Init( pms, PMS_TYPE_MAIL );
 
   // 「『トレーナー』です！　よろしくおねがいします！」
   pms->sentence_id = pmss_mail_02;
   pms->word[0]     = PMSW_GetWordNumberByGmmID( NARC_message_pms_word06_dat, pms_word06_29 );
+#else
+  PMSDAT_Init( pms, PMS_TYPE_MAIL );
+  
+  // 「『トレーナー』です！　よろしくおねがいします！」
+  pms->sentence_id = pmss_mail_02;
+  pms->word[0]     = mypms01;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -586,7 +635,7 @@ u32 PMSDAT_GetSentenceIdMax( u32 sentence_type )
   //if( sentence_type < NELEMS(SentenceDatID) )
   if( sentence_type < PMS_TYPE_MAX )
   {
-//    // とりあえず現状は全タイプ20個になっているので...
+//    // 現状は全タイプ20個になっているのでこれでよしだが...
 //    return 20;
 
     return SentenceIdMax[sentence_type];

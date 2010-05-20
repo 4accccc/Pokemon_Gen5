@@ -60,3 +60,8 @@
 #define mail02 (1653) // ドキドキ
 #define mail03 (1741) // PIC_バイバイ
 #define mail04 (1423) // トレーナー
+#define mypms01 (1423) // トレーナー
+#define mypms02 (1490) // いくよ
+#define mypms03 (1485) // ありがとう
+#define mypms04 (1639) // ざんねん
+#define mypms05 (1395) // いちばん

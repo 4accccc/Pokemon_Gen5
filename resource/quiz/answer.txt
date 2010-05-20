@@ -47,3 +47,8 @@ mail01,しょうぶ
 mail02,ドキドキ
 mail03,PIC_バイバイ
 mail04,トレーナー
+mypms01,トレーナー
+mypms02,いくよ
+mypms03,ありがとう
+mypms04,ざんねん
+mypms05,いちばん
