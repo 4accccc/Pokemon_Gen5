@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-05-18T17:56:24"/>
+	<create user="murakami_naoto" host="W00228" date="2010-05-20T15:14:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -420,8 +420,8 @@
 	<row id="msg_gate_common_jim_08b" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,#80ffff,#80ffff,,,#80ffff,,">
 		<comment>各ゲート共通メッセージ
 ・臨時ニュース/主人公がジム8bをクリア</comment>
-		<language name="JPN" width="256">◇カノコタウンしゅっしんの　トレーナーが　ソウリュウジムリーダー　ジャガにしょうり！</language>
-		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　トレーナーが　ソウリュウジムリーダー　ジャガに勝利！</language>
+		<language name="JPN" width="256">◇カノコタウンしゅっしんの　トレーナーが　ソウリュウジムリーダー　シャガにしょうり！</language>
+		<language name="JPN_KANJI" width="256">◇カノコタウン出身の　トレーナーが　ソウリュウジムリーダー　シャガに勝利！</language>
 	</row>
 
 	<row id="msg_gate_common_cm_01" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
