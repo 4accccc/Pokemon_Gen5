@@ -3607,27 +3607,27 @@ static void tokwin_cleanupAll( BTLV_SCU* wk )
 // 表示開始
 static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash )
 {
-  if( tokwin->dispFlag ){
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( tokwin->parentWk->pokeCon, pos );
+  u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
+  u8  pokeID = BPP_GetID( bpp );
+
+  if( tokwin->dispFlag )
+  {
+    if( pokeID == tokwin->pokeID ){
+      return;
+    }
     tokwin_hide_first( tokwin );
   }
 
+//    TAYA_Printf("とくせいウィンドウ: pokeID=%d, tokID=%d\n", pokeID, tokusei);
+  if( (tokusei != tokwin->tokusei) || (pokeID != tokwin->pokeID) )
   {
-    const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( tokwin->parentWk->pokeCon, pos );
-    u16 tokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
-    u8  pokeID = BPP_GetID( bpp );
-
-    TAYA_Printf("とくせいウィンドウ: pokeID=%d, tokID=%d\n", pokeID, tokusei);
-
-    if( (tokusei != tokwin->tokusei) || (pokeID != tokwin->pokeID) )
-    {
-      TAYA_Printf("  ->書き換え\n");
-      tokwin->tokusei = tokusei;
-      tokwin->pokeID = pokeID;
-      tokwin_update_cgr( tokwin );
-    }
-    tokwin->fFlash = fFlash;
-    tokwin->seq = 0;
+    tokwin->tokusei = tokusei;
+    tokwin->pokeID = pokeID;
+    tokwin_update_cgr( tokwin );
   }
+  tokwin->fFlash = fFlash;
+  tokwin->seq = 0;
 }
 // 表示更新
 static BOOL tokwin_disp_progress( TOK_WIN* tokwin )
