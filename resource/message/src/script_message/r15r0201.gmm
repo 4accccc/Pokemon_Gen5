@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T19:39:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T12:19:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -349,6 +349,80 @@
 		<language name="JPN_KANJI" width="256">みんなは　自販機で　なにを買うのか
 それを　チェックしつづける……▼
 これが　ボクの　人生です</language>
+	</row>
+
+	<row id="msg_r15r0201_elitew_01b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀：BLACK
+・はい/いいえ選択肢表示
+・はい→戦闘（trmsg.gmm）
+　はい＆2匹以下（trmsg.gmm）
+　いいえ→elitew_02</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_21</attribute>
+		<language name="JPN" width="256">ねえ　あなた
+トリプルバトル　ためさない？</language>
+		<language name="JPN_KANJI" width="256">ねえ　あなた
+トリプルバトル　試さない？</language>
+	</row>
+
+	<row id="msg_r15r0201_elitew_02b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_21</attribute>
+		<language name="JPN" width="256">トレーナーなのに
+じゅんび　してなくて？</language>
+		<language name="JPN_KANJI" width="256">トレーナーなのに
+準備してなくて？</language>
+	</row>
+
+	<row id="msg_r15r0201_elitew_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・戦闘後</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_21</attribute>
+		<language name="JPN" width="256">ぐうぜんは　じゅんびの　できていない
+ひとを　たすけないんですって</language>
+		<language name="JPN_KANJI" width="256">偶然は　準備の　できていない
+人を　助けないんですって</language>
+	</row>
+
+	<row id="msg_r15r0201_elitew_01w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀：WHITE
+・はい/いいえ選択肢表示
+・はい→戦闘（trmsg.gmm）
+　はい＆2匹以下（trmsg.gmm）
+　いいえ→elitew_02</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_23</attribute>
+		<language name="JPN" width="256">ローテーションバトルの　こうかてきな
+たたかいかたを　しらべたいの▼
+よければ　あいて　してくれるかしら？</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルの　効果的な
+戦い方を　調べたいの▼
+よければ　相手してくれるかしら？</language>
+	</row>
+
+	<row id="msg_r15r0201_elitew_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・いいえ選択時</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_23</attribute>
+		<language name="JPN" width="256">トレーナーなら　もっと
+せっきょくてきに　きてよ</language>
+		<language name="JPN_KANJI" width="256">トレーナーなら　もっと
+積極的に　きてよ</language>
+	</row>
+
+	<row id="msg_r15r0201_elitew_03w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♀
+・戦闘後</comment>
+		<attribute name="キャラ指定">？？？
+・トレーナーID=elitew_23</attribute>
+		<language name="JPN" width="256">よければ　おともだちとも
+ローテーションバトルを　してみてね</language>
+		<language name="JPN_KANJI" width="256">よければ　お友達とも
+ローテーションバトルを　してみてね</language>
 	</row>
 
 	<flowchart-group-list>
