@@ -28,7 +28,7 @@ extern "C"{
 typedef void (STARTUP_ENDCALLBACK) (void* pWork);
 
 
-//BG面とパレット番号(仮設定
+//BG面とパレット番号
 #define FIELD_SUBSCREEN_BGPLANE (GFL_BG_FRAME0_S)
 #define FIELD_SUBSCREEN_PALLET  (0xE)
 
