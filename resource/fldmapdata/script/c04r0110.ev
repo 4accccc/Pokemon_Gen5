@@ -1250,9 +1250,14 @@ sub_common_btlrec:
     ENDIF
   ENDIF
   
-  IF $flag == TRUE THEN
+  IF $flag == TRUE THEN //録画する
     _SYSWIN_MSG( msg_c04r0110_13, POS_DOWN )
+    _TIME_WAIT( 1 ) //画面に反映
+    _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
+    
     _BSUBWAY_TOOL( BSWSUB_SAVE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
+    _SYSWIN_CLOSE()
+    
     _PLAYER_NAME( 0 )
     _SYSWIN_MSG( msg_c04r0110_14, POS_DOWN )
     _AB_KEYWAIT()
