@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T19:23:47"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T15:57:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,18 +296,22 @@
 		<comment>♀</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2
 太ったおばさん</attribute>
-		<language name="JPN" width="256">こちらの　ほいくえんの
-いいところ！　それはね！▼
-おとなりの　そだてやさんで
-ポケモンが　そだつ　すがたを　みて▽
-えんじの　みんなが　こころゆたかに▽
-そだつと　ひょうばん　なのよ！</language>
-		<language name="JPN_KANJI" width="256">こちらの　保育園の
-いいところ！　それはね！▼
-おとなりの　育て屋さんで
-ポケモンが　育つ　姿を　みて▼
-園児の　みんなが
-心豊かに　育つと　評判なのよ！</language>
+		<language name="JPN" width="256">あたくし……　じつは　となりで
+ポケモンそだてやを　いとなんでいる▽
+ふうふの　むすめで　ございまして▼
+そうなんです！▼
+おやこ　そろって　そだてる
+おしごとを　しておりますの▼
+ポケモンも　ひとも　そだてるのって
+すばらしいこと　ですものね！</language>
+		<language name="JPN_KANJI" width="256">あたくし……　実は　隣で
+ポケモン育て屋を　営んでいる▽
+夫婦の　娘で　ございまして▼
+そうなんです！▼
+親子　そろって　育てる
+お仕事を　しておりますの▼
+ポケモンも　人も　育てるのって
+すばらしいこと　ですものね！</language>
 	</row>
 
 	<row id="msg_r03r0101_woman3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
