@@ -1040,7 +1040,7 @@
 
 <tex_palette_array size='1'>
 	<tex_palette name='t8x8x15poke' color_size='16' index='0'>
-		42d4 163e 1d9b 24f8 1e57 39ce 2124 3da3 
+		2a91 2dde 161f 24f8 7fe0 7fe0 7fe0 3da3 
 		56a2 571d 0842 2d08 49ad 5e73 6f39 7fbd 
 	</tex_palette>
 </tex_palette_array>
