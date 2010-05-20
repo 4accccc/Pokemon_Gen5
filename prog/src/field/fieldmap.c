@@ -153,7 +153,6 @@
 
 extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態は、main.c
 
-
 #endif  //PM_DEBUG
 
 //======================================================================
@@ -2408,17 +2407,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
   //ZONEFOGLIGHT
   FIELD_ZONEFOGLIGHT_Update( fieldWork->zonefog, fieldWork->heapID ); 
 	
-/*#ifdef PM_DEBUG
-  INIT_CHECK();   //デバッグ：処理負荷計測用
-#endif*/
 	FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
-/*#ifdef PM_DEBUG
-  {
-    OSTick debug_fieldmap_end_tick;
-    TAIL_CHECK( &debug_fieldmap_end_tick );
-    OS_TPrintf( "weather_tick %d\n", OS_TicksToMicroSeconds(debug_fieldmap_end_tick) );
-  }
-#endif*/
 	FIELD_FOG_Main( fieldWork->fog );
 	FIELD_LIGHT_Main( fieldWork->light, GFL_RTC_GetTimeBySecond() );
 
