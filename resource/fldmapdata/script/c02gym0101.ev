@@ -523,6 +523,11 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	DEFINE_LOCAL LWK_POSZ
 	
 	_PLAYER_POS_GET(LWK_POSX,LWK_POSZ)
+
+	//アロエが喋る
+	//おふざけは　よしてくれ！
+	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_leader_02 , MMDL_ID_EVENTOBJ_00, POS_UL )
+	_MSGWIN_CLOSE()
 	
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_gyoe)
 	_OBJ_ANIME_WAIT()
