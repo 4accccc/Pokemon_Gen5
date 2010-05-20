@@ -141,9 +141,9 @@
 #define BTLEFF_POKEMON_SIN_MOVE_X             ( 0 )
 #define BTLEFF_POKEMON_SIN_MOVE_Y             ( 1 )
 
-#define	BTLEFF_MEPACHI_ON											( MCSS_MEPACHI_ON )
-#define	BTLEFF_MEPACHI_OFF										( MCSS_MEPACHI_OFF )
-#define	BTLEFF_MEPACHI_MABATAKI								( 2 )
+#define	BTLEFF_MEPACHI_ON											( BTLV_MCSS_MEPACHI_ALWAYS_ON )
+#define	BTLEFF_MEPACHI_OFF										( BTLV_MCSS_MEPACHI_ALWAYS_OFF )
+#define	BTLEFF_MEPACHI_MABATAKI								( BTLV_MCSS_MEPACHI_FLIP )
 #define	BTLEFF_ANM_STOP												( MCSS_ANM_STOP_ON )
 #define	BTLEFF_ANM_START											( MCSS_ANM_STOP_OFF )
 
