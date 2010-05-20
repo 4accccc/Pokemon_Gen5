@@ -43,6 +43,9 @@ _EVENT_DATA_END
 /*  C06 ジム前のNのイベント                   */
 /**************************************************************/
 EVENT_START    ev_scene_c06_boss_01
+
+	//重要イベントでの通信切断
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	DEFINE_LOCAL LWK_POKE_POS
 	DEFINE_LOCAL LWK_POKE_NUM
@@ -146,6 +149,9 @@ EVENT_START    ev_scene_c06_boss_01
 	//Ｎを非表示に
 	_FLAG_SET(FV_C06_BOSS)
 	//========================================//
+
+	//重要イベントでの通信切断から復帰
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 EVENT_END
 
@@ -354,8 +360,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//博士:おお！　おまえさん！　[1:00:トレーナー名:0]だろ！！
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_01, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
-
-
 	
 	//捕獲数を格納
 	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 ) 
@@ -375,9 +379,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 		//捕まえていない
 		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_04, C06_HAKASE1_01,POS_DEFAULT)
 	ENDIF
-	
-	//主人公のポケモン図鑑を見ている時間
-	_TIME_WAIT(24)
 	
 	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
 	_OBJ_ANIME_WAIT()
@@ -993,9 +994,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign1_01
 
-  _BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN)  
-  _LAST_KEYWAIT()
-  _BGWIN_CLOSE()
+  _EASY_BGWIN_MSG(msg_c06_sign1_01,TYPE_TOWN)
 
 EVENT_END
 
@@ -1004,9 +1003,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign2_01
 
-  _BGWIN_MSG(msg_c06_sign2_01,TYPE_POST)  
-  _LAST_KEYWAIT()
-  _BGWIN_CLOSE()
+   _EASY_BGWIN_MSG(msg_c06_sign2_01,TYPE_POST)
 
 EVENT_END
 
@@ -1015,9 +1012,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START   ev_bg_c06_sign3_01
 
-  _BGWIN_MSG(msg_c06_gymsign_01,TYPE_POST)  
-  _LAST_KEYWAIT()
-  _BGWIN_CLOSE()
+   _EASY_BGWIN_MSG(msg_c06_gymsign_01,TYPE_POST)
 
 EVENT_END
 
