@@ -175,7 +175,6 @@ ev_c02gym_tounan:
     DEFINE_LOCAL  POSZ    /* {}で囲う場合は連続して書かなければならない */
    
     _PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
-    _PLAYER_NAME(0)
     
 	//ジムリーダー夫を配置
 	_OBJ_ADD_EX( 5, 19, DIR_DOWN, MMDL_ID_EVENTOBJ_00, ASSISTANTM, MV_DMY )
@@ -219,6 +218,7 @@ ev_c02gym_tounan:
 	_OBJ_ANIME_WAIT()
 	
 	//アロエ：なんだって！
+    _PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG( msg_c02gym0202_leader_07 , C02GYM0202_LEADER2_01 )
 	_BALLOONWIN_CLOSE()
 	
