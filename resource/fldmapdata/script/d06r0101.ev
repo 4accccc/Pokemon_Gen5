@@ -887,16 +887,9 @@ EVENT_START    ev_pos_d06r0101_denki_04
 	_OBJ_ANIME( D06R0101_HAKASE2_01,anm_hakase2_kuru_04)
 	_OBJ_ANIME_WAIT()
 	
-	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_down)
-	_OBJ_ANIME_WAIT()
-	
 	//博士2が喋る
 	//博士2:･･････ホワイティは　みみが　いいのね
 	_BALLOONWIN_OBJMSG_POS( msg_d06r0101_hakase2_09, D06R0101_HAKASE2_01,POS_UL)
-	
-
-	_OBJ_ANIME(D06R0101_HAKASE2_01,anm_common_turn_right)
-	_OBJ_ANIME_WAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//100517斉藤マ修正
