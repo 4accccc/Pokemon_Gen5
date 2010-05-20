@@ -46,6 +46,10 @@
 //#define DEBUG_PRINT_LOADING_TICK
 //#define DEBUG_PRINT_WRITE_SCHEDULE
 
+#define DEBUG_SPEED_CHECK_ENABLE
+#include "debug_speed_check.h"
+//#define DEBUG_FLDMAPPER_SETUP_SPEED_CHECK
+
 #endif
 
 
@@ -677,31 +681,6 @@ EHL_PTR	FLDMAPPER_GetExHegihtPtr( FLDMAPPER* g3Dmapper )
 	return g3Dmapper->ExHeightList;
 }
 
-//------------------------------------------------------------------
-//------------------------------------------------------------------
-static NNSG3dResFileHeader * createDummyTexHeader( HEAPID heapID, void * file )
-{
-  NNSG3dResTex * resTex = NNS_G3dGetTex( (NNSG3dResFileHeader*)file );
-  NNSG3dResFileHeader * header;
-  u8* texImgStartAddr;
-  u32 newSize;
-
-  // テクスチャ／パレットは、4x4COMP以外のテクスチャ・4x4COMPのテクスチャ・パレット
-  // の順番で格納されています。よって4x4COMP以外のテクスチャの開始アドレス以降は
-  // 不要になります。なお、4x4COMPフォーマット以外のテクスチャイメージが存在しない
-  // 場合でもresTex->texInfo.ofsTexには適切な値が入っています。
-  SDK_ASSERT(resTex->texInfo.ofsTex != 0);
-  texImgStartAddr = (u8*)resTex + resTex->texInfo.ofsTex;
-
-  // ヒープの先頭からテクスチャイメージまでのサイズ
-  newSize = (u32)(texImgStartAddr - (u8*)file);
-
-  header = GFL_HEAP_AllocClearMemory( heapID, newSize );
-  GFL_STD_MemCopy32( file, header, newSize );
-
-  return header;
-}
-
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -711,6 +690,8 @@ static NNSG3dResFileHeader * createDummyTexHeader( HEAPID heapID, void * file )
 //------------------------------------------------------------------
 void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* resistData, u8 *gray_scale )
 {
+  INIT_CHECK();
+
 	GF_ASSERT( g3Dmapper );
 
 	g3Dmapper->blockWidth = resistData->blockWidth;
@@ -732,7 +713,7 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
     switch( g3Dmapper->mode ){
     case FLDMAPPER_MODE_SCROLL_NONE:
       if( g3Dmapper->totalSize > g3Dmapper->blockNum ){
-        OS_Printf("mapper mode set Error\n");
+        GF_ASSERT_MSG( 0, "mapper mode set Error\n" );
         g3Dmapper->mode = FLDMAPPER_MODE_SCROLL_XZ;
       }
       break;
@@ -745,6 +726,7 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
     }
   }
 
+  SET_CHECK("g3dmapper: texture");
   g3Dmapper->gtexType = resistData->gtexType;
 	//グローバルテクスチャ作成
 	CreateGlobalTexture( g3Dmapper, resistData, gray_scale );
@@ -752,10 +734,12 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
 	//CreateGlobalObject( g3Dmapper, resistData );
   
 
+  SET_CHECK("g3dmapper: ground anime");
 	// 地面アニメーション作成
   g3Dmapper->granime = createGroundAnime(g3Dmapper->blockNum, g3Dmapper->globalTexture, &resistData->ground_anime, g3Dmapper->heapID );
 	
 
+  SET_CHECK("g3dmapper: block control");
 	{
 		int i;
 		FLD_G3D_MAP_SETUP setup;
@@ -815,6 +799,15 @@ void	FLDMAPPER_ResistData( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDATA* res
     }
 
 	}
+  SET_CHECK("tail");
+#ifdef  DEBUG_FLDMAPPER_SETUP_SPEED_CHECK
+  {
+    OSTick end_tick;
+    TAIL_CHECK(&end_tick);
+    OS_Printf("g3dmapper:total %ld\n", OS_TicksToMicroSeconds( end_tick ) );
+    PUT_CHECK();
+  }
+#endif  //DEBUG_FLDMAPPER_SETUP_SPEED_CHECK
 
 	//グローバルオブジェクト作成
 	//CreateGlobalObject( g3Dmapper, resistData );
@@ -891,7 +884,6 @@ BOOL FLDMAPPER_Field_Grayscale(GFL_G3D_RES *g3Dres, u8* gray_scale)
 
 }
 
-#define TEXTURE_RELEASE
 //------------------------------------------------------------------
 /**
  * @brief	グローバルテクスチャ作成
@@ -902,48 +894,17 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
 	switch (resistData->gtexType) {
 	case FLDMAPPER_TEXTYPE_USE:
 		{
-#ifdef TEXTURE_RELEASE
       void * buffer;
 			const FLDMAPPER_RESIST_TEX* gtexData = &resistData->gtexData;
 
-      	TAMADA_Printf("TEX:%06x PLT:%04x\n",
-            DEBUG_GFL_G3D_GetBlankTextureSize(),
-            DEBUG_GFL_G3D_GetBlankPaletteSize());
-
-
-      g3Dmapper->globalTexture = GFL_HEAP_AllocClearMemory(
-          g3Dmapper->heapID, GFL_G3D_GetResourceHeaderSize() );
-      //バイナリファイルロード
-      buffer = GFL_ARC_LoadDataAlloc( gtexData->arcID, gtexData->datID,
-          GFL_HEAP_LOWID(g3Dmapper->heapID) );
-      GFL_G3D_CreateResourceAuto( g3Dmapper->globalTexture, buffer );
+      g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
       if( gray_scale != NULL )
       {
         FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture, gray_scale);
       }
-      GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
-      
-      	TAMADA_Printf("TEX:%06x PLT:%04x\n",
-            DEBUG_GFL_G3D_GetBlankTextureSize(),
-            DEBUG_GFL_G3D_GetBlankPaletteSize());
-
-      {
-        //NNSG3dResTexのヘッダ部分をコピーしたものでGFL_G3D_RESを作り直し
-        void * header;
-        header = createDummyTexHeader( g3Dmapper->heapID, buffer );
-        GFL_G3D_CreateResourceAuto( g3Dmapper->globalTexture, header );
-        //バイナリファイル解放
-        GFL_HEAP_FreeMemory( buffer );
-        buffer = NULL;
+      if ( !GFL_G3D_TransVramTextureAndFreeImageEntity( g3Dmapper->globalTexture ) ) {
+        GF_ASSERT(0);
       }
-#else
-			const FLDMAPPER_RESIST_TEX* gtexData = &resistData->gtexData;
-			g3Dmapper->globalTexture = GFL_G3D_CreateResourceArc( gtexData->arcID, gtexData->datID );
-      if( gray_scale != GRAYSCALE_TYPE_NULL ){
-        FLDMAPPER_Field_Grayscale(g3Dmapper->globalTexture, gray_scale);
-      }
-			GFL_G3D_TransVramTexture( g3Dmapper->globalTexture );
-#endif
 		}
 		break;
 	case FLDMAPPER_TEXTYPE_NONE:
@@ -954,16 +915,10 @@ static void CreateGlobalTexture( FLDMAPPER* g3Dmapper, const FLDMAPPER_RESISTDAT
 static void DeleteGlobalTexture( FLDMAPPER* g3Dmapper )
 {
 	if( g3Dmapper->globalTexture != NULL ){
-#ifdef TEXTURE_RELEASE
 		GFL_G3D_FreeVramTexture( g3Dmapper->globalTexture );
 		GFL_G3D_DeleteResource( g3Dmapper->globalTexture );
     //GFL_HEAP_FreeMemory( g3Dmapper->globalTexture );
 		g3Dmapper->globalTexture = NULL;
-#else
-		GFL_G3D_FreeVramTexture( g3Dmapper->globalTexture );
-		GFL_G3D_DeleteResource( g3Dmapper->globalTexture );
-		g3Dmapper->globalTexture = NULL;
-#endif
 	}
 }
 
