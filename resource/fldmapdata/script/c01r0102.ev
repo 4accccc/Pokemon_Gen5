@@ -624,7 +624,6 @@ _TALK_START_SE_PLAY()
 	IF FLAG_ON( FE_CGEAR_GET ) THEN
 
 		_SYSWIN_MSG( msg_c01r0102_pc_01 , POS_DOWN )
-		_SYSWIN_CLOSE()
 
 		WHILE $LWK_REPEAT != 1
 
@@ -642,19 +641,9 @@ _TALK_START_SE_PLAY()
 
 			SWITCH $LWK_SELECT
 			CASE 0 THEN
-				_SYSWIN_CLOSE()
 				_SYSWIN_MSG( msg_c01r0102_pc_03 , POS_DOWN )
-				_SYSWIN_CLOSE()
 			CASE 1 THEN
-				_SYSWIN_CLOSE()
 				_SYSWIN_MSG( msg_c01r0102_pc_04 , POS_DOWN )
-				_SYSWIN_CLOSE()
-			CASE 2 THEN
-				_SYSWIN_CLOSE()
-				//========================================/
-				//åJÇËï‘ÇµíEèo
-				$LWK_REPEAT = 1
-				//========================================/
 			DEFAULT
 				_SYSWIN_CLOSE()
 				//========================================/
