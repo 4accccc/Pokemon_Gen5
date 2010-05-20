@@ -22,7 +22,7 @@
 //--------------------------------------------------------------
 void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEPARTY *ppt, const u8 inSeason)
 {
-	int pos, count, monsno;
+	int pos, count, monsno, formno;
 	POKEMON_PARAM *pp;
 	int set_form_no_poke511;
   int set_form_no_poke527;
@@ -61,7 +61,8 @@ void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEPARTY *ppt, const u8 inSea
   {
 		pp = PokeParty_GetMemberPointer(ppt,pos);
 		monsno = PP_Get(pp, ID_PARA_monsno, NULL);
-		if ( monsno == MONSNO_511 )
+    formno = PP_Get(pp, ID_PARA_form_no, NULL);
+    if ( (monsno == MONSNO_511) && (formno!=set_form_no_poke511) )
     {
       PP_ChangeFormNo( pp, set_form_no_poke511 );
       //ê}ä”ìoò^Åuå©ÇΩÅv
@@ -71,7 +72,7 @@ void SEASONPOKE_FORM_ChangeForm(GAMEDATA * gdata, POKEPARTY *ppt, const u8 inSea
         see511 = TRUE;
       }
     }
-    else if ( monsno == MONSNO_527 ){
+    else if ( (monsno == MONSNO_527) && (formno!=set_form_no_poke527) ){
       PP_ChangeFormNo( pp, set_form_no_poke527 );
       //ê}ä”ìoò^Åuå©ÇΩÅv
       if (!see527)
