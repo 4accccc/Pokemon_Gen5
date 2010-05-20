@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T16:58:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:47:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1318" top="212" right="2023" bottom="840" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="668" top="313" right="1141" bottom="711" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -727,9 +727,8 @@
 アタシに　話しかけて</language>
 	</row>
 
-	<row id="msg_t01r0102_presentbox_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>プレゼントボックス
-・仮メッセージ</comment>
+	<row id="msg_t01r0102_presentbox_02" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>プレゼントボックス</comment>
 		<attribute name="キャラ指定">プレゼントボックス</attribute>
 		<language name="JPN" width="256">……はこは　からっぱ</language>
 		<language name="JPN_KANJI" width="256">……はこは　からっぱ</language>
@@ -804,7 +803,7 @@
 勝負しよーよ！！</language>
 	</row>
 
-	<row id="msg_t01r0102_white_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0102_white_11" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ
 　フィールドに復帰して煙が消えてから
@@ -823,7 +822,7 @@
 あたし　そんな　気がする▼</language>
 	</row>
 
-	<row id="msg_t01r0102_white_11b" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_white_11b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘後メッセージ＋主人公敗北
 　フィールドに復帰して煙が消えてから
@@ -1081,7 +1080,7 @@
 だから　お願いするよ</language>
 	</row>
 
-	<row id="msg_t01r0102_black_20" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_t01r0102_black_20" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ
 　フィールド復帰してメッセージ表示
@@ -1104,7 +1103,7 @@
 謝らないと　いけないね▼</language>
 	</row>
 
-	<row id="msg_t01r0102_black_21" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01r0102_black_21" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後メッセージ＋主人公敗北
 　フィールド復帰してメッセージ表示
@@ -1185,7 +1184,7 @@
 
 	<row id="msg_t01r0102_pc_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>ＢＧメッセージ
-・仮：プラチナと同じ
+・プラチナと同じメッセージ
 ・0＝主人公名</comment>
 		<attribute name="キャラ指定">パソコン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
