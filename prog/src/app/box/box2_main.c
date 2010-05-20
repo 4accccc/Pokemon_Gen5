@@ -4403,7 +4403,7 @@ int BOX2MAIN_NameInCall( BOX2_SYS_WORK * syswk )
   wk = GFL_HEAP_AllocClearMemory( HEAPID_BOX_SYS, sizeof(BOX_NAMEIN_WORK) );
 
   wk->name = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_SYS );
-  BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->box_mv_pos, wk->name );
+  BOXDAT_GetBoxName( syswk->dat->sv_box, syswk->tray, wk->name );
 
   wk->prm = NAMEIN_AllocParam(
               HEAPID_BOX_SYS, NAMEIN_BOX, 0, 0, BOX_TRAYNAME_MAXLEN, wk->name, misc );
@@ -4428,7 +4428,7 @@ int BOX2MAIN_NameInExit( BOX2_SYS_WORK * syswk )
   BOX_NAMEIN_WORK * wk = syswk->subProcWork;
 
   if( wk->prm->cancel == FALSE ){
-    BOXDAT_SetBoxName( syswk->dat->sv_box, syswk->box_mv_pos, wk->prm->strbuf );
+    BOXDAT_SetBoxName( syswk->dat->sv_box, syswk->tray, wk->prm->strbuf );
   }
   syswk->subRet = wk->prm->cancel;
 
