@@ -325,6 +325,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
               COMM_TVT_GetObjResIdx( work, CTOR_BAR_BUTTON_ANM ),
               &cellInitData ,CLSYS_DRAW_SUB , heapId );
     GFL_CLACT_WK_SetDrawEnable( talkWork->clwkReturn , TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( talkWork->clwkReturn , TRUE );
   }
 
   talkWork->state = CTS_FADEIN;
@@ -760,7 +761,18 @@ const COMM_TVT_MODE CTVT_TALK_Main( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWo
     }
   }
 
-  
+  if( GFL_CLACT_WK_CheckAnmActive( talkWork->clwkReturn ) == FALSE )
+  {
+    if( talkWork->state == CTS_END_CONFIRM )
+    {
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
+    }
+    else
+    {
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkReturn , APP_COMMON_BARICON_RETURN );
+    }
+  }
+
   return CTM_TALK;
 }
 
@@ -864,6 +876,7 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
       }
       talkWork->state = CTS_END_CONFIRM_INIT;
       PMSND_PlaySystemSE( CTVT_SND_CANCEL );
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkReturn , APP_COMMON_BARICON_RETURN_ON );
     }
     else
     if( ret == 1 ||
@@ -884,8 +897,12 @@ static void CTVT_TALK_UpdateWait( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork
   if( COMM_TVT_GetSelfIdx(work) == 0 &&
       GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
   {
-    COMM_TVT_FlipDoubleMode( work );
-    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    CTVT_CAMERA_WORK *camWork =  COMM_TVT_GetCameraWork( work );
+    if( CTVT_CAMERA_GetWaitAllRefreshFlg( work , camWork ) == FALSE )
+    {
+      COMM_TVT_FlipDoubleMode( work );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    }
   }
 
   CTVT_TALK_UpdateVoiceBar( work , talkWork );
@@ -1298,6 +1315,10 @@ static void CTVT_TALK_InitEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talk
   
   talkWork->state = CTS_END_CONFIRM;
   
+  if( GFL_CLACT_WK_CheckAnmActive( talkWork->clwkReturn ) == FALSE )
+  {
+    GFL_CLACT_WK_SetAnmSeq( talkWork->clwkReturn , APP_COMMON_BARICON_RETURN_OFF );
+  }
 }
 
 static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
@@ -1349,6 +1370,7 @@ static void CTVT_TALK_UpdateEndConfirm( COMM_TVT_WORK *work , CTVT_TALK_WORK *ta
       GFL_BMPWIN_ClearScreen( talkWork->msgWin );
       GFL_BMPWIN_MakeScreen( talkWork->waveWin );
       GFL_BG_LoadScreenReq(CTVT_FRAME_SUB_MSG);
+      GFL_CLACT_WK_SetAnmSeq( talkWork->clwkReturn , APP_COMMON_BARICON_RETURN );
 
     }
     APP_TASKMENU_CloseMenu( talkWork->yesNoWork );

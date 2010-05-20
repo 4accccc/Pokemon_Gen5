@@ -819,11 +819,15 @@ static void CTVT_DRAW_UpdateDraw( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork
   if( GFL_UI_KEY_GetTrg() & CTVT_BUTTON_DRAW_EDIT &&
       drawWork->isUpdateInfo == FALSE )
   {
-    drawWork->state = CDS_EDIT;
-    drawWork->barScroll = 0;
-    CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
-    GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_RETURN] , APP_COMMON_BARICON_RETURN );
-    PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    if( GFL_CLACT_WK_CheckAnmActive( drawWork->clwkEditButton[CDED_RETURN] ) == FALSE ||
+        GFL_CLACT_WK_GetAnmSeq( drawWork->clwkEditButton[CDED_RETURN] ) == APP_COMMON_BARICON_RETURN )
+    {
+      drawWork->state = CDS_EDIT;
+      drawWork->barScroll = 0;
+      CTVT_DRAW_DrawInfoMsg( work , drawWork , TRUE );
+      GFL_CLACT_WK_SetAnmSeq( drawWork->clwkEditButton[CDED_RETURN] , APP_COMMON_BARICON_RETURN );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    }
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
   {
@@ -1356,16 +1360,20 @@ static void CTVT_DRAW_UpdateDrawing( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawW
 static void CTVT_DRAW_UpdateBar( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 {
   BOOL isUpdate = FALSE;
-  if( drawWork->barScroll < drawWork->dispBarScroll )
+  if( GFL_CLACT_WK_CheckAnmActive( drawWork->clwkEditButton[CDED_RETURN] ) == FALSE ||
+      GFL_CLACT_WK_GetAnmSeq( drawWork->clwkEditButton[CDED_RETURN] ) == APP_COMMON_BARICON_RETURN )
   {
-    drawWork->dispBarScroll -= 24;
-    isUpdate = TRUE;
-  }
-  else
-  if( drawWork->barScroll > drawWork->dispBarScroll )
-  {
-    drawWork->dispBarScroll += 24;
-    isUpdate = TRUE;
+    if( drawWork->barScroll < drawWork->dispBarScroll )
+    {
+      drawWork->dispBarScroll -= 24;
+      isUpdate = TRUE;
+    }
+    else
+    if( drawWork->barScroll > drawWork->dispBarScroll )
+    {
+      drawWork->dispBarScroll += 24;
+      isUpdate = TRUE;
+    }
   }
   
   if( isUpdate == TRUE )

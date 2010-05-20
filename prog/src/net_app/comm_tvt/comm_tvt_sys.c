@@ -72,6 +72,7 @@ struct _COMM_TVT_WORK
   BOOL isSusspendDraw;  //お絵描きログ受信中の待機
   BOOL isReqFinish; //親からの終了通知
   BOOL isReqDispWarn; //ペアコン警告表示リクエスト
+  BOOL isUseSelfBUffer; //自身のバッファの使用ロック(カメラ・通信)
   u16 palAnmCnt;
   u16 palAnmIdx;
   u16 palAnmData[COMM_TVT_PAL_ANM_NUM][16];
@@ -202,6 +203,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   work->isSusspendDraw = FALSE;
   work->isReqFinish = FALSE;
   work->isReqDispWarn = FALSE;
+  work->isUseSelfBUffer = FALSE;
 
   if( DS_SYSTEM_IsRestrictPhotoExchange() == TRUE )
   {
@@ -514,6 +516,17 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
     work->cellUnit = GFL_CLACT_UNIT_Create( 64 , 0, work->heapId );
     GFL_CLACT_UNIT_SetDefaultRend( work->cellUnit );
   }
+  
+  //Window(倍角表示時更新用
+  {
+    GX_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
+    G2_SetWnd0InsidePlane( 0x1F , TRUE );
+    G2_SetWnd1InsidePlane( 0x1F , TRUE );
+    G2_SetWndOutsidePlane( GX_WND_PLANEMASK_BG0 | GX_WND_PLANEMASK_BG1 | GX_WND_PLANEMASK_OBJ , TRUE );
+    G2_SetWnd0Position( 0,0,255,192 );
+    G2_SetWnd1Position( 128,0,0,192 );
+
+  }
 }
 
 //--------------------------------------------------------------
@@ -521,6 +534,8 @@ static void COMM_TVT_InitGraphic( COMM_TVT_WORK *work )
 //--------------------------------------------------------------
 static void COMM_TVT_TermGraphic( COMM_TVT_WORK *work )
 {
+  GX_SetVisibleWnd( GX_WNDMASK_NONE );
+
   GFL_CLACT_UNIT_Delete( work->cellUnit );
   GFL_CLACT_SYS_Delete();
 
@@ -1089,6 +1104,15 @@ void COMM_TVT_ResetIsReqWarn( COMM_TVT_WORK *work )
   work->isReqDispWarn = FALSE;
 }
 
+//バッファ仕様ロック
+const BOOL COMM_TVT_IsUseSelfBuffer( COMM_TVT_WORK *work )
+{
+  return work->isUseSelfBUffer;
+}
+void COMM_TVT_SetUseSelfBuffer( COMM_TVT_WORK *work , const BOOL flg )
+{
+  work->isUseSelfBUffer = flg;
+}
 #pragma mark [>util func
 //--------------------------------------------------------------------------
 //  TWL起動かチェック

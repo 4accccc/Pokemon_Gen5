@@ -278,6 +278,8 @@ extern const BOOL COMM_TVT_IsWifi( COMM_TVT_WORK *work );
 //ペアコン表示リクエスト
 extern const BOOL COMM_TVT_IsReqWarn( COMM_TVT_WORK *work );
 extern void COMM_TVT_ResetIsReqWarn( COMM_TVT_WORK *work );
+extern const BOOL COMM_TVT_IsUseSelfBuffer( COMM_TVT_WORK *work );
+extern void COMM_TVT_SetUseSelfBuffer( COMM_TVT_WORK *work , const BOOL flg );
 
 //UTIL
 extern const BOOL COMM_TVT_IsTwlMode( void );

@@ -68,6 +68,7 @@ struct _CTVT_CAMERA_WORK
   BOOL isRefreshClear;
   BOOL isDispDouble;
   u8   waitAllConut;  //2‰ñ‘Ò‚½‚È‚¢‚Æ‚¢‚¯‚È‚¢
+  u8   allClearCnt;   //ƒEƒBƒ“ƒhƒE‚ðŽg‚Á‚ÄÄ•`‰æ‚·‚é
   
   CTVT_CAMERA_MEMBER_WORK memWork[CTVT_MEMBER_NUM];
   
@@ -125,6 +126,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   camWork->isUpdateBit = 0;
   camWork->waitAllConut = 0;
   camWork->isWaitAllRefresh = FALSE;
+  camWork->allClearCnt = 192;
   camWork->isRefreshClear = FALSE;
   camWork->isDispDouble = FALSE;
   camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
@@ -193,6 +195,14 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   {
     CAMERA_SYS_UpdateCameta( camWork->camSys );
   }
+  
+  if( camWork->allClearCnt < 192 )
+  {
+    camWork->allClearCnt += 8;
+    G2_SetWnd0Position( 0,0,255,camWork->allClearCnt );
+    G2_SetWnd1Position( 128,0,0,camWork->allClearCnt );
+  }
+
 #if (defined(SDK_TWL))
   
   if( COMM_TVT_CanUseCamera() == TRUE )
@@ -279,9 +289,13 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       {
         u8 i;
         //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
+        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         if( camWork->isRefreshClear == TRUE )
         {
-          GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
+          camWork->isRefreshClear = FALSE;
+          camWork->allClearCnt = 0;
+          G2_SetWnd0Position( 0,0,255,0 );
+          G2_SetWnd1Position( 128,0,0,0 );
         }
         camWork->isWaitAllRefresh = FALSE;
         if( camWork->isDispDouble != COMM_TVT_IsDoubleMode(work) )
@@ -482,6 +496,13 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
         GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
       }
     }
+    if(0)
+    {
+      const u32 temCol[3] = {0x801f801f,0x83e083e0,0xfc00fc00};
+      static u32 temCnt = 0;
+      GFL_STD_MemFill32( (void*)camWork->tempBuf , temCol[temCnt] , CTVT_BUFFER_SCR_SIZE/2 );
+      temCnt = (temCnt+1)%3;
+    }
   }
 
   if( mode == CTDM_SINGLE )
@@ -518,16 +539,21 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
       capSizeX= ( mode == CTDM_DOUBLE ? 64 : 64 );
       capSizeY= ( mode == CTDM_DOUBLE ? 96 : 48 );
     }
-    
-    for( iy=0;iy<capSizeY;iy++ )
+
+    if( COMM_TVT_IsUseSelfBuffer( work ) == FALSE )
     {
-      const u32 capTopAdr = (u32)camWork->tempBuf+ (capPosY+iy)*128*2 + capPosX*2;
-      const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*tempIdx + capSizeX*iy*2 ;
-      GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
-      
+      COMM_TVT_SetUseSelfBuffer( work , TRUE );
+      for( iy=0;iy<capSizeY;iy++ )
+      {
+        const u32 capTopAdr = (u32)camWork->tempBuf+ (capPosY+iy)*128*2 + capPosX*2;
+        const u32 bufTopAdr = (u32)camWork->scrBuf + capSizeX*capSizeY*2*tempIdx + capSizeX*iy*2 ;
+        GFL_STD_MemCopy32( (void*)capTopAdr , (void*)bufTopAdr , capSizeX*2 );
+        
+      }
+      COMM_TVT_SetUseSelfBuffer( work , FALSE );
+      camWork->isUpdateBit |= 1<<idx;
     }
   }
-  camWork->isUpdateBit |= 1<<idx;
 }
 
 //--------------------------------------------------------------
@@ -536,6 +562,13 @@ static void CTVT_CAMERA_CapCallBack( void *captureArea , void *userWork )
 void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
 {
   camWork->isUpdateBit |= 1<<idx;
+}
+void CTVT_CAMERA_ResetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
+{
+  if( camWork->isUpdateBit & 1<<idx )
+  {
+    camWork->isUpdateBit -= 1<<idx;
+  }
 }
 
 //--------------------------------------------------------------
@@ -562,6 +595,10 @@ void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *c
       CTVT_CAMERA_SetMemberState_TargetPos( work , camWork , i );
     }
   }
+}
+const BOOL CTVT_CAMERA_GetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
+{
+  return camWork->isWaitAllRefresh;
 }
 
 //--------------------------------------------------------------

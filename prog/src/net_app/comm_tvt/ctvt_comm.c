@@ -87,6 +87,7 @@ typedef enum
   CCSU_NONE,
 
   CCSU_REQ_PHOTO,
+  CCSU_START_POST_PHOTO_WAIT,
   CCSU_POST_PHOTO_WAIT,
   CCSU_POST_PHOTO,
 
@@ -766,7 +767,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       commWork->connectNum = 1;
       commWork->beacon.connectNum = 1;
       
-      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork , TRUE );
+      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork , FALSE );
     }
   }
   else
@@ -822,35 +823,40 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       if( (commWork->reqCheckBit & commWork->photoReqBit) == commWork->reqCheckBit&&
           commWork->reqCheckBit != 0 )
       {
-        if( COMM_TVT_GetSusspend( work ) == FALSE )
+        if( COMM_TVT_IsUseSelfBuffer( work ) == FALSE )
         {
-          CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
-          void *selfBuf = CTVT_CAMERA_GetSelfBuffer( work , camWork );
-          const u32 bufSize = CTVT_CAMERA_GetBufferSize( work , camWork );
-          u32 dataSize;
-          GFL_STD_MemCopy32( (void*)selfBuf , (void*)commWork->encBuffer , bufSize );
+          COMM_TVT_SetUseSelfBuffer( work , TRUE );
+          if( COMM_TVT_GetSusspend( work ) == FALSE )
           {
-            dataSize = SSP_StartJpegEncoder(  commWork->encBuffer , 
-                                              commWork->sendBuffer , 
-                                              bufSize ,
-                                              commWork->encWorkBuf , 
-                                              CTVT_CAMERA_GetPhotoSizeX(work,camWork) ,
-                                              CTVT_CAMERA_GetPhotoSizeY(work,camWork) ,
-                                              CTVT_COMM_JPG_QUALITY ,
-                                              CTVT_COMM_JPG_OUT_TYPE ,
-                                              CTVT_COMM_JPG_OUT_OPT );
+            CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+            void *selfBuf = CTVT_CAMERA_GetSelfBuffer( work , camWork );
+            const u32 bufSize = CTVT_CAMERA_GetBufferSize( work , camWork );
+            u32 dataSize;
+            GFL_STD_MemCopy32( (void*)selfBuf , (void*)commWork->encBuffer , bufSize );
+            {
+              dataSize = SSP_StartJpegEncoder(  commWork->encBuffer , 
+                                                commWork->sendBuffer , 
+                                                bufSize ,
+                                                commWork->encWorkBuf , 
+                                                CTVT_CAMERA_GetPhotoSizeX(work,camWork) ,
+                                                CTVT_CAMERA_GetPhotoSizeY(work,camWork) ,
+                                                CTVT_COMM_JPG_QUALITY ,
+                                                CTVT_COMM_JPG_OUT_TYPE ,
+                                                CTVT_COMM_JPG_OUT_OPT );
+            }
+            if( dataSize != 0 )
+            {
+              GFL_NET_LDATA_SetSendData( commWork->sendBuffer , dataSize , commWork->reqCheckBit , FALSE );
+              //CTVT_TPrintf("Send[%d]!!\n",commWork->reqCheckBit);
+              commWork->photoReqBit = 0;
+              commWork->isSendWait = TRUE;
+            }
+            else
+            {
+              CTVT_TPrintf("JpegEncode Error!!\n");
+            }
           }
-          if( dataSize != 0 )
-          {
-            GFL_NET_LDATA_SetSendData( commWork->sendBuffer , dataSize , commWork->reqCheckBit , FALSE );
-            //CTVT_TPrintf("Send[%d]!!\n",commWork->reqCheckBit);
-            commWork->photoReqBit = 0;
-            commWork->isSendWait = TRUE;
-          }
-          else
-          {
-            CTVT_TPrintf("JpegEncode Error!!\n");
-          }
+          COMM_TVT_SetUseSelfBuffer( work , FALSE );
         }
       }
       
@@ -1071,7 +1077,7 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
   }
   {
     CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
-    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork  , TRUE );
+    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork  , FALSE );
   }
 }
 
@@ -1150,8 +1156,15 @@ static void CTVT_COMM_UpdateMemberState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
       const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_REQ_PHOTO , 0 );
       if( ret == TRUE )
       {
-        state->state = CCSU_POST_PHOTO_WAIT;
+        state->state = CCSU_START_POST_PHOTO_WAIT;
       }
+    }
+    break;
+  case CCSU_START_POST_PHOTO_WAIT:
+    if( GFL_NET_LDATA_IsFinishPost( idx ) == FALSE )
+    {
+      CTVT_CAMERA_ResetRefreshFlg( work , camWork , idx );
+      state->state = CCSU_POST_PHOTO_WAIT;
     }
     break;
   case CCSU_POST_PHOTO_WAIT:
@@ -1268,7 +1281,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   case CCFT_CHANGE_DOUBLE:
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(commWork->parentWork);
-      CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , FALSE );
+      CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , TRUE );
       COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
     }
     break;
