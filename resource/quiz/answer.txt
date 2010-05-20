@@ -33,3 +33,17 @@ password01,みんな
 password02,ハッピー
 password03,かんたん
 password04,つうしん
+pic01,PIC_はじめまして
+pic02,PIC_こんにちは
+pic03,PIC_だいすき
+pic04,PIC_がんばれ！
+pic05,PIC_たのしい
+pic06,PIC_うれしい
+pic07,PIC_ありがとう
+pic08,PIC_さいこう
+pic09,PIC_ごめんね
+pic10,PIC_バイバイ
+mail01,しょうぶ
+mail02,ドキドキ
+mail03,PIC_バイバイ
+mail04,トレーナー

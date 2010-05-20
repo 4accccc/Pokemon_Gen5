@@ -454,6 +454,56 @@
 	</row>
 
 	<row id="search_abc_12">
+		<language name="JPN" width="216">PIC_ありかとう</language>
+		<language name="JPN_KANJI" width="216">PIC_ありかとう</language>
+	</row>
+
+	<row id="search_abc_13">
+		<language name="JPN" width="216">PIC_うれしい</language>
+		<language name="JPN_KANJI" width="216">PIC_うれしい</language>
+	</row>
+
+	<row id="search_abc_14">
+		<language name="JPN" width="216">PIC_かんはれ！</language>
+		<language name="JPN_KANJI" width="216">PIC_かんはれ！</language>
+	</row>
+
+	<row id="search_abc_15">
+		<language name="JPN" width="216">PIC_こめんね</language>
+		<language name="JPN_KANJI" width="216">PIC_こめんね</language>
+	</row>
+
+	<row id="search_abc_16">
+		<language name="JPN" width="216">PIC_こんにちは</language>
+		<language name="JPN_KANJI" width="216">PIC_こんにちは</language>
+	</row>
+
+	<row id="search_abc_17">
+		<language name="JPN" width="216">PIC_さいこう</language>
+		<language name="JPN_KANJI" width="216">PIC_さいこう</language>
+	</row>
+
+	<row id="search_abc_18">
+		<language name="JPN" width="216">PIC_たいすき</language>
+		<language name="JPN_KANJI" width="216">PIC_たいすき</language>
+	</row>
+
+	<row id="search_abc_19">
+		<language name="JPN" width="216">PIC_たのしい</language>
+		<language name="JPN_KANJI" width="216">PIC_たのしい</language>
+	</row>
+
+	<row id="search_abc_20">
+		<language name="JPN" width="216">PIC_はいはい</language>
+		<language name="JPN_KANJI" width="216">PIC_はいはい</language>
+	</row>
+
+	<row id="search_abc_21">
+		<language name="JPN" width="216">PIC_はしめまして</language>
+		<language name="JPN_KANJI" width="216">PIC_はしめまして</language>
+	</row>
+
+	<row id="search_abc_22">
 		<language name="JPN" width="216">Wi\x{ff0d}Fi</language>
 		<language name="JPN_KANJI" width="216">Wi\x{ff0d}Fi</language>
 	</row>

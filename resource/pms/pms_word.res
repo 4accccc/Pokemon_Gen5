@@ -78,43 +78,19 @@ static const u16 PMS_SrcFileID[] = {
 //----------------------------------------------------------------
 
 static const PMS_WORD DupWord_00[] = {
-	1485,1738,
-};
-
-static const PMS_WORD DupWord_01[] = {
 	1100,1536,
 };
 
-static const PMS_WORD DupWord_02[] = {
+static const PMS_WORD DupWord_01[] = {
 	1028,1402,
 };
 
-static const PMS_WORD DupWord_03[] = {
+static const PMS_WORD DupWord_02[] = {
 	 93,1219,
 };
 
-static const PMS_WORD DupWord_04[] = {
-	1498,1740,
-};
-
-static const PMS_WORD DupWord_05[] = {
+static const PMS_WORD DupWord_03[] = {
 	1291,1407,
-};
-
-static const PMS_WORD DupWord_06[] = {
-	1476,1733,
-};
-
-static const PMS_WORD DupWord_07[] = {
-	1648,1734,
-};
-
-static const PMS_WORD DupWord_08[] = {
-	1514,1741,
-};
-
-static const PMS_WORD DupWord_09[] = {
-	1515,1732,
 };
 
 static const struct {
@@ -125,12 +101,6 @@ static const struct {
 	{ DupWord_01, 2 },
 	{ DupWord_02, 2 },
 	{ DupWord_03, 2 },
-	{ DupWord_04, 2 },
-	{ DupWord_05, 2 },
-	{ DupWord_06, 2 },
-	{ DupWord_07, 2 },
-	{ DupWord_08, 2 },
-	{ DupWord_09, 2 },
 };
 
 //----------------------------------------------------------------

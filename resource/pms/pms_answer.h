@@ -46,3 +46,17 @@
 #define password02 (1659) // ハッピー
 #define password03 (1636) // かんたん
 #define password04 (1719) // つうしん
+#define pic01 (1732) // PIC_はじめまして
+#define pic02 (1733) // PIC_こんにちは
+#define pic03 (1734) // PIC_だいすき
+#define pic04 (1735) // PIC_がんばれ！
+#define pic05 (1736) // PIC_たのしい
+#define pic06 (1737) // PIC_うれしい
+#define pic07 (1738) // PIC_ありがとう
+#define pic08 (1739) // PIC_さいこう
+#define pic09 (1740) // PIC_ごめんね
+#define pic10 (1741) // PIC_バイバイ
+#define mail01 (1410) // しょうぶ
+#define mail02 (1653) // ドキドキ
+#define mail03 (1741) // PIC_バイバイ
+#define mail04 (1423) // トレーナー
