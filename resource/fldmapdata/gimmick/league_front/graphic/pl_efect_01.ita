@@ -3,7 +3,7 @@
 <ita version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-05-18T22:55:13" source="pl_ele_01_bunkatu00_off.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-20T17:09:57" source="pl_efect_01.mb"/>
 	<title>Texture SRT Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
@@ -11,9 +11,9 @@
 <body>
 
 <tex_srt_info
-	frame_size="181"
+	frame_size="211"
 	tool_start_frame="0"
-	tool_end_frame="180"
+	tool_end_frame="210"
 	interpolation="frame"
 	tex_matrix_mode="maya"
 	compress_material="on" material_size="1 1"
@@ -31,7 +31,7 @@
 	0.000000
 </tex_rotate_data>
 
-<tex_translate_data size="182">
+<tex_translate_data size="212">
 	0.500000 0.000000 0.020752 0.041748 0.062500 0.083252 0.104248 0.125000 0.145752 0.166748
 	0.187500 0.208252 0.229248 0.250000 0.270752 0.291748 0.312500 0.333252 0.354248 0.375000
 	0.395752 0.416748 0.437500 0.458252 0.479248 0.500000 0.520752 0.541748 0.562500 0.583252
@@ -50,7 +50,10 @@
 	3.104248 3.125000 3.145752 3.166748 3.187500 3.208252 3.229248 3.250000 3.270752 3.291748
 	3.312500 3.333252 3.354248 3.375000 3.395752 3.416748 3.437500 3.458252 3.479248 3.500000
 	3.520752 3.541748 3.562500 3.583252 3.604248 3.625000 3.645752 3.666748 3.687500 3.708252
-	3.729248 3.750000
+	3.729248 3.750000 3.770752 3.791748 3.812500 3.833252 3.854248 3.875000 3.895752 3.916748
+	3.937500 3.958252 3.979248 4.000000 4.020752 4.041748 4.062500 4.083252 4.104248 4.125000
+	4.145752 4.166748 4.187500 4.208252 4.229248 4.250000 4.270752 4.291748 4.312500 4.333252
+	4.354248 4.375000
 </tex_translate_data>
 
 <tex_srt_anm_array size="1">
@@ -59,7 +62,7 @@
 		<tex_scale_t frame_step="1" data_size="1" data_head="0"/>
 		<tex_rotate frame_step="1" data_size="1" data_head="0"/>
 		<tex_translate_s frame_step="1" data_size="1" data_head="0"/>
-		<tex_translate_t frame_step="1" data_size="181" data_head="1"/>
+		<tex_translate_t frame_step="1" data_size="211" data_head="1"/>
 	</tex_srt_anm>
 </tex_srt_anm_array>
 
