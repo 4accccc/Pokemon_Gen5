@@ -5402,15 +5402,9 @@ static void handler_Mamoru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     }
 
     // åªÉ^Å[Éìç≈å„ÇÃçsìÆÇ»ÇÁé∏îs
+    if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
     {
-      u8 myOrder, maxOrder;
-      if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &maxOrder) )
-      {
-        if( (myOrder+1) == maxOrder ){
-          BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-          return;
-        }
-      }
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
   }
 }

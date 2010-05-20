@@ -30,5 +30,17 @@ BOOL HandCommon_CheckTargetPokeID( u8 pokeID )
   }
   return FALSE;
 }
-
-
+/**
+ *  指定ポケモンの行動順が最後かどうか判定
+ */
+BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  u8 myOrder, maxOrder;
+  if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &maxOrder) )
+  {
+    if( (myOrder+1) == maxOrder ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}

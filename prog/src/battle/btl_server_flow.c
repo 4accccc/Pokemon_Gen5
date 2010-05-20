@@ -563,7 +563,6 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets, u32 dmgTotal );
-static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender );
 static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* targets );
@@ -2222,8 +2221,10 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
          break;
       }
 
-      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
-      scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
+      if( (action.gen.cmd == BTL_ACTION_FIGHT) || (action.gen.cmd == BTL_ACTION_ITEM) ){
+        BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_DONE );
+        scPut_SetContFlag( wk, bpp, BPP_CONTFLG_ACTION_DONE );
+      }
 
       {
         u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -6962,7 +6963,6 @@ static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
 static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets, u32 dmgTotal )
 {
 //  scproc_Fight_Damage_Drain( wk, wazaParam->wazaID, attacker, targets );
-//  scproc_Fight_Damage_Shrink( wk, wazaParam->wazaID, attacker, targets );
   scproc_Fight_Damage_KoriCure( wk, wazaParam, attacker, targets );
 
   {
@@ -6977,25 +6977,11 @@ static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARA
 //------------------------------------------------------------------
 // サーバーフロー：ダメージ受け後の処理 > ひるみチェック
 //------------------------------------------------------------------
-static void scproc_Fight_Damage_Shrink( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POKEPARAM* attacker, BTL_POKESET* targets )
-{
-  u32 waza_per = scEvent_GetWazaShrinkPer( wk, waza, attacker );
-  BTL_POKEPARAM* bpp;
-  u32 i=0;
-
-  while( (bpp = BTL_POKESET_Get(targets, i++)) != NULL )
-  {
-    if( !BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_DONE) )
-    {
-      scproc_AddShrinkCore( wk, bpp,  waza_per );
-    }
-  }
-}
 static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender )
 {
   u32 waza_per = scEvent_GetWazaShrinkPer( wk, wazaParam->wazaID, attacker );
 
-  if( !BPP_TURNFLAG_Get(defender, BPP_TURNFLG_ACTION_DONE) )
+//  if( !BPP_TURNFLAG_Get(defender, BPP_TURNFLG_ACTION_DONE) )
   {
     scproc_AddShrinkCore( wk, defender, waza_per );
   }
@@ -7036,7 +7022,7 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 {
   BOOL fShrink;
 
-  BTL_Printf("ひるみ効果を与えるよ\n");
+  TAYA_Printf("ひるみ効果を与えるよ\n");
 
   if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_MUST_SHRINK) ){
     fShrink = TRUE;
@@ -7046,6 +7032,7 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 
   if( fShrink )
   {
+    TAYA_Printf("ほんとに与えますよ pokeID=%d\n", BPP_GetID(target));
     BPP_TURNFLAG_Set( target, BPP_TURNFLG_SHRINK );
     return TRUE;
   }
