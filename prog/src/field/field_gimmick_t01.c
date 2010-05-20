@@ -30,7 +30,7 @@
 
 #define BIRD_ANM_NUM  (2)
 
-#define DAY_SE_PLAY_FRM (40 * FX32_ONE)   //１羽遅れて羽ばたくフレーム
+#define DAY_SE_PLAY_FRM (60 * FX32_ONE)   //１羽遅れて羽ばたくフレーム
 
 //==========================================================================================
 // ■3Dリソース
@@ -223,7 +223,11 @@ void T01_GIMMICK_Move( FIELDMAP_WORK* fieldmap )
       fx32 frm;
       //アニメフレーム取得
       frm = FLD_EXP_OBJ_GetObjAnmFrm( exobj_cnt, EXPOBJ_UNIT_IDX, OBJ_BIRD, 0 );
-      if ( frm == DAY_SE_PLAY_FRM ) PMSND_PlaySE( T01_GMK_DAY_SE02 );      //朝2
+      if ( frm == DAY_SE_PLAY_FRM )
+      {
+        NOZOMU_Printf("第２ＳＥ再生開始\n");
+        PMSND_PlaySE( T01_GMK_DAY_SE02 );      //朝2
+      }
     }
 
     //インデックス0のアニメで終了判定する
