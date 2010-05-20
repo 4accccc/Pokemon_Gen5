@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T21:15:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T18:14:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -729,20 +729,19 @@
 	</row>
 
 	<row id="msg_d06r0101_white_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♀
-・続けてhakase2_08</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 ポケモンって　ふしぎ　だよね！▼
 どうして　こんなに
 すごいコたちが　あたしたちと▽
-いっしょに　いてくれるのかな？▼</language>
+いっしょに　いてくれるのかな？</language>
 		<language name="JPN_KANJI" width="256">ベル『ねえねえ　[1:00:トレーナー名:0]！
 ポケモンって　不思議だよね！▼
 どうして　こんなに
 すごいコたちが　あたしたちと▽
-一緒に　いてくれるのかな？▼</language>
+一緒に　いてくれるのかな？</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_08">
@@ -757,13 +756,13 @@
 そして　どこへ　いくのか……▼
 それを　しることが　できれば
 わたしたちは　もっと　なかよくなれる▽
-そう　しんじて　いるんだよねー</language>
+そう　しんじているのよね！</language>
 		<language name="JPN_KANJI" width="256">アララギ『ポケモンたちが
 どこから　来たのか▽
 そして　どこへ　向かうのか……▼
 それを　知ることが　できれば
 わたしたちは　もっと　親しくなれる▽
-そう　信じているんだよねー</language>
+そう　信じているのよね！</language>
 	</row>
 
 	<row id="msg_d06r0101_white_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
