@@ -96,18 +96,113 @@ _ANIME_LABEL	anm_gyoe
 /*  C01R0102 マコモの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c01r0102_inventor_01
-_TALK_OBJ_START()
+
 	//重要アイテム「ゆめのけむり」を所持しているか、いないかの分岐
 	//重要アイテム「ゆめのけむり」を持っていない場合
-	IF $WK_SCENE_D01R0101_POKE <= 3 THEN
+	IF FLAG_OFF( FE_D01R0101_POKE_END ) THEN
 		//あなた　アララギから
-		_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_06 )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_06 )
 	//重要アイテム「？？？」を持っている場合
-	ELSIF $WK_SCENE_D01R0101_POKE == 4 THEN
+	ELSE
+	
+		IF FLAG_OFF( FE_CGEAR_GET ) THEN
 		
+			_TALK_OBJ_START()
+			_CALL ev_makomo
+		
+		ELSE
+		
+			DEFINE_LOCAL	LWK_RECORD
+	
+			_GET_RECORD( RECID_PDW_SLEEP_POKEMON, LWK_RECORD )
+		
+			IF $LWK_RECORD == 0 THEN
+		
+				//gamesyncでねかせた　ポケモンを　おこしたら
+				_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
+		
+			ELSE
+		
+				//gamesyncでねかせた　ポケモンを　おこしたら
+				_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_14 )
+			
+			ENDIF
+			
+		ENDIF
+		
+	ENDIF
+
+EVENT_END
+
+//Ｃギア入手処理[100422斉藤マ]
+ev_cgear_get:
+	//Ｃギアを手に入れた！
+	_ME_PLAY( SEQ_ME_KEYITEM )
+	_PLAYER_NAME( 0 )
+	_SYSWIN_MSG( msg_c01r0102_cgear_01, POS_DEFAULT )
+	_ME_WAIT()
+	_AB_KEYWAIT_MARK()
+
+	//Ｃギアの電源を入れる？
+	_PUT_CGEAR_COMMENT( TRUE )		//注意書きを表示
+	{
+	DEFINE_LOCAL lwk_loop
+	WHILE $lwk_loop != 555
+	
+		_SYSWIN_MSG( msg_c01r0102_cgear_02, POS_DOWN )
+		_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
+		_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_03, 0 )	//はい
+		_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_04, 1 )	//いいえ
+		_BMPMENU_START()
+
+		IF $SCWK_ANSWER == SCR_YES THEN
+			//はい選択
+			_MSGWIN_CLOSE()
+			
+			_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
+			
+			//Cギア起動ＳＥ
+			_SE_PLAY( SEQ_SE_DECIDE3 )
+			_CGEAR_ON_DEMO( TRUE )		//Ｃギア画面をアクティブで起動
+			_SE_WAIT()
+			
+			//ほら！Ｃギアが起動したでしょ！
+			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
+			
+			$lwk_loop = 555
+			
+		ELSE
+			//いいえ選択なら再確認メッセージ
+			//通信機能がオフになりますがよろしいですか？
+			_SYSWIN_MSG( msg_c01r0102_cgear_05, POS_DOWN )
+			_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
+			_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_03, 0 )	//はい
+			_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_04, 1 )	//いいえ
+			_BMPMENU_START()
+			
+			IF $SCWK_ANSWER == SCR_YES THEN
+				//はい選択なら通信オフで先へ進む
+				_MSGWIN_CLOSE()
+				
+				_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
+				
+				_CGEAR_ON_DEMO( FALSE )		//Ｃギア画面をパッシブで起動
+				//Ｃギアの画面があらわれたでしょ？
+				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08_01 )
+				
+				$lwk_loop = 555
+				
+			ENDIF
+			
+		
+		ENDIF
+	
+	ENDWHILE
+	}
+_RET
+
+ev_makomo:
+
 		//マコモ：その場ジャンプ
 		DEFINE_LOCAL	LWK_DIR
 		_PLAYER_DIR_GET( LWK_DIR )
@@ -221,9 +316,6 @@ _TALK_OBJ_START()
 
 		//========================================/
 		
-		//ゆめのあとちイベント終了
-		$WK_SCENE_D01R0101_POKE = 5
-		
 		//ショーロと会話済み
 		$WK_SCENE_C01R0102 = 2
 		
@@ -239,97 +331,7 @@ _TALK_OBJ_START()
 		_SET_STARTMENU_FLAG( SCR_STARTMENU_FLAG_GAMESYNC )
 		
 		//========================================/
-	ELSE
-		
-		DEFINE_LOCAL	LWK_RECORD
-	
-		_GET_RECORD( RECID_PDW_SLEEP_POKEMON, LWK_RECORD )
-		
-		IF $LWK_RECORD == 0 THEN
-		
-			//gamesyncでねかせた　ポケモンを　おこしたら
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_13 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-		
-		ELSE
-		
-			//gamesyncでねかせた　ポケモンを　おこしたら
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_14 )
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-		
-		ENDIF
-		
-	ENDIF
 
-EVENT_END
-
-//Ｃギア入手処理[100422斉藤マ]
-ev_cgear_get:
-	//Ｃギアを手に入れた！
-	_ME_PLAY( SEQ_ME_KEYITEM )
-	_PLAYER_NAME( 0 )
-	_SYSWIN_MSG( msg_c01r0102_cgear_01, POS_DEFAULT )
-	_ME_WAIT()
-	_AB_KEYWAIT_MARK()
-
-	//Ｃギアの電源を入れる？
-	_PUT_CGEAR_COMMENT( TRUE )		//注意書きを表示
-	{
-	DEFINE_LOCAL lwk_loop
-	WHILE $lwk_loop != 555
-	
-		_SYSWIN_MSG( msg_c01r0102_cgear_02, POS_DOWN )
-		_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
-		_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_03, 0 )	//はい
-		_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_04, 1 )	//いいえ
-		_BMPMENU_START()
-
-		IF $SCWK_ANSWER == SCR_YES THEN
-			//はい選択
-			_MSGWIN_CLOSE()
-			
-			_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
-			
-			//Cギア起動ＳＥ
-			_SE_PLAY( SEQ_SE_DECIDE3 )
-			_CGEAR_ON_DEMO( TRUE )		//Ｃギア画面をアクティブで起動
-			_SE_WAIT()
-			
-			//ほら！Ｃギアが起動したでしょ！
-			_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08 )
-			
-			$lwk_loop = 555
-			
-		ELSE
-			//いいえ選択なら再確認メッセージ
-			//通信機能がオフになりますがよろしいですか？
-			_SYSWIN_MSG( msg_c01r0102_cgear_05, POS_DOWN )
-			_BMPMENU_INIT_RIGHT( MENU_X1, 13, 0, 1, SCWK_ANSWER )
-			_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_03, 0 )	//はい
-			_BMPMENU_MAKE_LIST( msg_c01r0102_cgear_04, 1 )	//いいえ
-			_BMPMENU_START()
-			
-			IF $SCWK_ANSWER == SCR_YES THEN
-				//はい選択なら通信オフで先へ進む
-				_MSGWIN_CLOSE()
-				
-				_PUT_CGEAR_COMMENT( FALSE )		//注意書きを非表示
-				
-				_CGEAR_ON_DEMO( FALSE )		//Ｃギア画面をパッシブで起動
-				//Ｃギアの画面があらわれたでしょ？
-				_BALLOONWIN_TALKOBJ_MSG( msg_c01r0102_inventor_08_01 )
-				
-				$lwk_loop = 555
-				
-			ENDIF
-			
-		
-		ENDIF
-	
-	ENDWHILE
-	}
 _RET
 
 //--------------------------------------------------------------
