@@ -993,6 +993,7 @@ static GMEVENT * SkillUse_Osyaberi(
   GMEVENT *event;
   HIDEN_SCR_WORK *hsw;
   
+  GAMEBEACON_Set_FieldSkill( WAZANO_OSYABERI );
   event = EVENT_FieldSkillOsyaberi( scwk->gsys, scwk->fieldmap, head->poke_pos );
   return event;
 }
