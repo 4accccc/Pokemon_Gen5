@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-20T13:02:43"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:36:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,13 +263,13 @@
 		</language>
 	</columns>
 
-	<dialog left="24" top="423" right="579" bottom="1037" maximized="no" rayout="Vertical2">
+	<dialog left="1642" top="211" right="2197" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="547"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="231"/>
-		<band id="3" index="4" style="0000" width="147"/>
+		<band id="2" index="3" style="0000" width="226"/>
+		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
@@ -585,7 +585,7 @@ assistantm3_11</comment>
 ・四季イベント
 ・すべてのフォルムを見せてから話しかけ
 ・アイテム入手処理
-　No085「リーフの石」(暫定）
+　No085「リーフの石」
 
 イベント終了</comment>
 		<attribute name="キャラ指定">ASSISTANTM

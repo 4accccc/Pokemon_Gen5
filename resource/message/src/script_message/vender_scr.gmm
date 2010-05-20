@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-19T16:17:14"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:36:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		<comment>自動販売機
 ・購入可能
 ・当たりかどうかの判定をおこないます
-　当たり確率１／３２（暫定）
+　当たり確率１／３２
 ・運が良ければ連続して当たります
 　当たると　→　msg_vender_03
 　この場合、でてくる道具は最初に選んだもの
