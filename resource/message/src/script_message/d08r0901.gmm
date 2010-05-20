@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T17:04:17"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T23:07:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -480,7 +480,7 @@
 ボクたちを　とめられる！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクたちを　止めるなら
 キミも　英雄に　なればいい！▼
-そう！　ムと　対をなす
+そう！　ゼクロムと　対をなす
 ポケモン　レシラムに▽
 認められてこそ▽
 ようやく　対等に　なれる！▽
@@ -634,9 +634,9 @@
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</comment>
 		<attribute name="キャラ指定">ポケモン
-シン</attribute>
-		<language name="JPN" width="256">モエルーワ！▼</language>
-		<language name="JPN_KANJI" width="256">モエルーワ！▼</language>
+レシラム</attribute>
+		<language name="JPN" width="256">ンバーニンガガッ！！▼</language>
+		<language name="JPN_KANJI" width="256">ンバーニンガガッ！！▼</language>
 	</row>
 
 	<row id="msg_d08r0901_poke7_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -645,7 +645,7 @@
 ・倒した場合、フィールド復帰時に
 　このメッセージを表示</comment>
 		<attribute name="キャラ指定">ポケモン
-シン</attribute>
+レシラム</attribute>
 		<language name="JPN" width="256">レシラムは　どこかに
 とびさって　いった……</language>
 		<language name="JPN_KANJI" width="256">レシラムは　どこかに
@@ -660,19 +660,19 @@
 　つづけてポケモン戦闘に
 ・倒した場合は、殿堂入りで復活処理</comment>
 		<attribute name="キャラ指定">ポケモン
-ム</attribute>
-		<language name="JPN" width="256">バリバリダー！！▼</language>
-		<language name="JPN_KANJI" width="256">バリバリダー！！▼</language>
+ゼクロム</attribute>
+		<language name="JPN" width="256">ババリバリッシュ！！▼</language>
+		<language name="JPN_KANJI" width="256">ババリバリッシュ！！▼</language>
 	</row>
 
-	<row id="msg_d08r0901_poke8_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_d08r0901_poke8_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
 		<comment>ポケモン
 ・WHITEver
 ・倒した場合、フィールド復帰時に
 　このメッセージを表示</comment>
 		<attribute name="キャラ指定">ポケモン
-ム</attribute>
-		<language name="JPN" width="256">ゼクロゼクロムは　どこかに
+ゼクロム</attribute>
+		<language name="JPN" width="256">ゼクロムは　どこかに
 とびさって　いった……</language>
 		<language name="JPN_KANJI" width="256">ゼクロムは　どこかに
 飛び去って　いった……</language>
