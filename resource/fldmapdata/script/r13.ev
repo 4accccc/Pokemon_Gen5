@@ -321,12 +321,14 @@ _PLAYER_DIR_GET(LWK_DIR)
 				//アイテム入手処理 わざマシン「とんぼがえり」
 				_OBJ_DEL(MMDL_ID_EVENTOBJ_00)
  				_ITEM_EVENT_FIELD(ITEM_WAZAMASIN89,1)
-				
+ 				
+ 				//========================================/
+    			_FLAG_SET(FV_H04_POKE_01)
+  				//========================================/
 			ENDIF
 			
 			//========================================/
 			_FLAG_RESET(FE_H04_ITEMHAVING_01)
-    		_FLAG_SET(FV_H04_POKE_01)
 			//========================================/
 		ELSE			
 
