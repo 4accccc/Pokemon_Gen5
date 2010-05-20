@@ -1599,7 +1599,7 @@ ev_last:
 		ENDIF
 }	
 	//–³‰¹‚É‚·‚é
-	_START_EVENT_BGM_EX( SEQ_BGM_SILENCE_DUNGEON, 360 )
+	_START_EVENT_BGM_SILENT ( 360 )
 	
 	_TIME_WAIT( 20 )
 	
