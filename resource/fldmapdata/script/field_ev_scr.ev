@@ -26,8 +26,10 @@ _EVENT_DATA     ev_fld_ev_fishing_failed_encount
 _EVENT_DATA     ev_fld_ev_fishing_failed_too_early
 _EVENT_DATA     ev_fld_ev_fishing_failed_too_slow
 _EVENT_DATA     ev_fld_ev_warp_success
+_EVENT_DATA     ev_fld_ev_warp_success_partner
 _EVENT_DATA     ev_fld_ev_warp_failed
 _EVENT_DATA     ev_fld_ev_warp_failed_mission_target
+_EVENT_DATA     ev_fld_ev_warp_failed_connecting
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -141,6 +143,16 @@ EVENT_START ev_fld_ev_warp_success
 }
 EVENT_END
 
+//進入成功(協力者)
+EVENT_START ev_fld_ev_warp_success_partner
+{
+  //プレーヤー名をタグ０にセット
+  _PLAYER_NAME(0)
+  _SYSWIN_MSG( msg_fld_ev_warp_05 , POS_DOWN )
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
 //進入失敗
 EVENT_START ev_fld_ev_warp_failed
 {
@@ -154,6 +166,15 @@ EVENT_END
 EVENT_START ev_fld_ev_warp_failed_mission_target
 {
   _SYSWIN_MSG( msg_fld_ev_warp_03 , POS_DOWN )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
+//進入失敗(コネクト中)
+EVENT_START ev_fld_ev_warp_failed_connecting
+{
+  _SYSWIN_MSG( msg_fld_ev_warp_04 , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }
