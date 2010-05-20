@@ -36,7 +36,11 @@
 #if PM_DEBUG
 
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_yoshida
-#define CAMERA_FOCUS
+//#define CAMERA_FOCUS
+#endif
+
+#if defined DEBUG_ONLY_FOR_sogabe
+//#define SCALE_OFFSET_MODE   //スケール補正値を操作するモード（mcss.cにscale_offsetのグローバルがないと動作しません）
 #endif
 
 //============================================================================================
@@ -651,6 +655,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
 #endif
   }
 
+#if 0
   { 
     BOOL  mosaic = FALSE;
 
@@ -677,6 +682,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
       }
     }
   }
+#endif
 
 
   {
@@ -814,6 +820,9 @@ static  void  PokemonViewerSequence( POKEMON_VIEWER_WORK *pvw )
 //======================================================================
 //  ロムに入っているポケモンを閲覧するモード
 //======================================================================
+#ifdef SCALE_OFFSET_MODE
+extern  fx32  scale_offset;
+#endif
 static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
 {
   BOOL  ret = FALSE;
@@ -897,6 +906,10 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
     else
     {
       int index = pvw->edit_value;
+
+#ifdef SCALE_OFFSET_MODE
+      scale_offset = pvw->value[ MODE_NORMAL ][ VALUE_PERSONAL_RND ][ pvw->edit_pos ];
+#endif
 
       if( index == VALUE_SCALE_PERS )
       {
@@ -1030,6 +1043,34 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       BTLV_EFFECT_DelPokemon( pvw->edit_pos );
       PP_SetupEx( pvw->pp, pvw->mons_no[ pvw->edit_pos ], 1, 12345678, 0, rnd );
       set_pokemon( pvw, pvw->edit_pos );
+    }
+    if( ( trg & PAD_BUTTON_SELECT ) && ( pvw->edit_type == 0 ) )
+    {
+      VecFx32 scale;
+      pvw->proj ^= 1;
+      if( pvw->proj )
+      {
+        BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+      }
+      else
+      {
+        BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
+      }
+      { 
+        BtlvMcssPos pos;
+
+        for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+        { 
+          if( BTLV_EFFECT_CheckExist( pos ) == TRUE )
+          {
+            VEC_Set( &scale,
+                     pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                     pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
+                     FX32_ONE );
+            BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, &scale );
+          }
+        }
+      }
     }
     if( trg & PAD_BUTTON_B )
     {
@@ -1468,13 +1509,16 @@ static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
 {
   int mons_no = PP_Get( pvw->pp, ID_PARA_monsno, NULL );
 
-  if( mons_no != 0 )
+//  if( mons_no != 0 )
   {
     BTLV_EFFECT_SetPokemon( pvw->pp, pos );
     BTLV_MCSS_SetPosition( BTLV_EFFECT_GetMcssWork(), pos,
                            pvw->value[ pvw->mcss_mode ][ VALUE_X ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pos ] );
+#if defined DEBUG_ONLY_FOR_sogabe
+    BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_ANM_STOP_ON );
+#endif
   }
 }
 
