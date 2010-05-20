@@ -91,6 +91,10 @@ FS_EXTERN_OVERLAY(debug_data);
 
 #include "../../../resource/fldmapdata/mm_list/mmlist_def.h"  //for MMLID_NOENTRY
 
+#include "msg/msg_pmss_peculiar.h"
+#include "../../../resource/quiz/pms_answer.h"
+
+
 //============================================================================================
 
 #define MMLID_MAX  (MMLID_NOENTRY)
@@ -3336,21 +3340,19 @@ static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata )
 static const PMS_DATA mail_pmsdata[]={
   // 「しょうぶ」してくれて　ありがとう！
   {
-    PMS_TYPE_PECULIAR,  9,
-    { 1410, PMS_WORD_NULL},
+    PMS_TYPE_PECULIAR,  pmss_peculiar_10,
+    { mail01, PMS_WORD_NULL},
   },
   // 「ドキドキ」で　とってもよかったです！
   {
-    PMS_TYPE_PECULIAR,  10,
-    { 1653, PMS_WORD_NULL},
+    PMS_TYPE_PECULIAR,  pmss_peculiar_11,
+    { mail02, PMS_WORD_NULL},
   },
   // また「しょうぶ」しようね！　「バイバイ」
   {
-    PMS_TYPE_PECULIAR,  20,
-    { 1410, 2058},
-    
+    PMS_TYPE_PECULIAR,  pmss_peculiar_21,
+    { mail01, PMS_WORD_ONLY_DECO_BIT_WORD|PMS_DECOID_BYEBYE },
   },
-
 };
 
 //----------------------------------------------------------------------------------
@@ -3393,7 +3395,7 @@ static void MailBox_SetFirstMail( GAMEDATA* gamedata )
   MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[1], 1 );
   MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[2], 2 );
   // 簡易ワード「トレーナー」セット
-  MailData_SetFormBit( mail, 1423 );
+  MailData_SetFormBit( mail, mail04 );
 
   // メールボックスにメールをセット
   {

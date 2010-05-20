@@ -98,6 +98,7 @@ typedef u16   PMS_WORD;
 
 #define PMS_WORD_DECO_MASK ( 0x1 )    ///< デコメ判定用ビットマスク
 #define PMS_WORD_DECO_BITSHIFT ( 11 )  ///< デコメ判定用ビット オフセット
+#define PMS_WORD_ONLY_DECO_BIT_WORD ( 0x800 )  ///< デコメ判定用ビットだけを立てたPMS_WORD
 #define PMS_WORD_NUM_MASK		( 0x7FF )    ///< 単語・デコメナンバー ビットマスク
 
 #define PMS_WORD_LOCALIZE_MASK			( 0x4 )	///<	LOCALIZE用ビットマスク
