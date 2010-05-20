@@ -45,7 +45,6 @@ EVENT_START   ev_pos_r08_support_01
 	
 	//プレイヤーの名前を格納する
 	_PLAYER_NAME(0)
-	
 	//サポートが呼びかける
 	_PLAINWIN_MSG_DOWN(msg_r08_white_01)
 	_MSGWIN_CLOSE()
@@ -71,6 +70,7 @@ EVENT_START   ev_pos_r08_support_01
 	_CALL		ev_support_btl
 	
 	//ふわあ　やっぱり
+    _PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_03, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
 	
@@ -89,11 +89,13 @@ EVENT_START   ev_pos_r08_support_01
 	_TIME_WAIT(8)
 	_OBJ_ANIME(MMDL_ID_EVENTOBJ_00,anm_common_turn_r)
 	_OBJ_ANIME_WAIT()
-	
+
+    _PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_04, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
 	
 	_TIME_WAIT(20)
+    _PLAYER_NAME(0)
 	_BALLOONWIN_OBJMSG_POS( msg_r08_white_05, MMDL_ID_EVENTOBJ_00, POS_DL )
 	_MSGWIN_CLOSE()
 	
