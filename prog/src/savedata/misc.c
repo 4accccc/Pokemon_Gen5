@@ -82,7 +82,7 @@ void MISC_Init( MISC *p_msc )
 
 	MISC_InitNameIn( p_msc );
 	
-	p_msc->palpark_highscore = 100; //仮
+	p_msc->palpark_highscore = 0;
 	
   // すれ違いデフォルトメッセージ
   {
