@@ -261,13 +261,15 @@ ev_shikijika_event:
 					
 					$LOCALWORK1 = 1
 				ELSE
-					//そうですか……　われわれの　けんきゅうに　きょうりょくして
-					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_08)
+					_MONS_NAME( 0, MONSNO_511 )
+					//もうしあげにくいのですが……
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_11)
 		
 				ENDIF
 			ELSE
-				//そうですか……　われわれの　けんきゅうに　きょうりょくして
-				_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_08)	
+				_MONS_NAME( 0, MONSNO_511 )
+				//もうしあげにくいのですが……
+				_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_11)	
 			ENDIF
 		ELSE
 			//そうですか……　われわれの　けんきゅうに　きょうりょくして
