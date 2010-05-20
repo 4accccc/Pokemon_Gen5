@@ -88,8 +88,8 @@ EVENT_START    ev_d06_stopper_01
 		
 		//ヤーコンが喋る
 		//ヤーコン:またせたな
-		_BALLOONWIN_OBJMSG( msg_d06_leader_01, D06_LEADER5_01)
-		_BALLOONWIN_CLOSE()
+		_PLAINWIN_MSG_DOWN(msg_d06_leader_01)
+		_MSGWIN_CLOSE()
 		
 		//主人公がヤーコンに気づく
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
