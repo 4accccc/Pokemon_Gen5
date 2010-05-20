@@ -4248,6 +4248,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
   // スリープチェック
   _cgear_SleepCheck( pWork, bAction );
 
+  /*
   // スリープ時は強制停止
   if( SleepMode_IsSleep( pWork ) && 
       (pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS) ){
@@ -4256,6 +4257,7 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
     //FSND_StopTVTRingTone( fsnd );
     pWork->tvt_snd = FALSE;
   }
+  */
 
   if( !SleepMode_IsSleep( pWork ) )
   {
@@ -4458,10 +4460,28 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
 //-----------------------------------------------------------------------------
 BOOL CGEAR_IsDoEventWireless( const C_GEAR_WORK* cpWork )
 {
+  if( cpWork ){
+    return FALSE;
+  }
   if( cpWork->doEvent == FIELD_SUBSCREEN_ACTION_WIRELESS ){
     return TRUE;
   }
   return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  外部でTVTRingToneをとめたときに設定してもらう。
+ *
+ *	@param	pWork 
+ */
+//-----------------------------------------------------------------------------
+void CGEAR_SetStopTVTRingTone( C_GEAR_WORK* pWork )
+{
+  if( pWork ){
+    pWork->tvt_snd = FALSE;
+    _PanelPalette_EXSet( pWork, FALSE, FALSE );
+  }
 }
 
 

@@ -1366,12 +1366,13 @@ static void setupRequest(EV_REQUEST * req, GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 static void stopTVTSE( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap )
 {
   FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork( fieldmap );
-  const C_GEAR_WORK * cgear = FIELD_SUBSCREEN_GetCGearWork( subscreen );
+  C_GEAR_WORK * cgear = FIELD_SUBSCREEN_GetCGearWork( subscreen );
   //Cギアじゃないか、Cギアからワイヤレスに移行するイベントでない場合
   if ( cgear == NULL || CGEAR_IsDoEventWireless( cgear ) == FALSE )
   {
     FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(gsys) );
     FSND_StopTVTRingTone( fsnd );
+    CGEAR_SetStopTVTRingTone( cgear );
   }
 }
 
