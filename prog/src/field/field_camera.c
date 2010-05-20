@@ -88,6 +88,9 @@ static BOOL (*pIsAreaFunc[])( const FIELD_CAMERA_AREA* cp_area, const VecFx32* c
 // 線形カメラ移動関連処理
 //------------------------------------------------------------------
 static void SetNowCameraParam(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CORE *outParam);
+static void SetNowCameraParamAreaOv(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CORE *outParam);
+static void SetLinerParamCommon(
+    FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame);
 #if 0
 static void RecvModeCamera(FIELD_CAMERA * camera);
 static void RecvModeTarget(FIELD_CAMERA * camera);
@@ -2489,6 +2492,28 @@ static void SetNowCameraParam(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CO
   outParam->Shift = inCamera->target_offset;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  カメラパラメータセットカメラエリアオーバー版
+ *
+ *	@param	inCamera      カメラポインタ
+ *	@param	outParam      パラメータ格納バッファ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void SetNowCameraParamAreaOv(const FIELD_CAMERA * inCamera, FLD_CAM_MV_PARAM_CORE *outParam)
+{
+  outParam->CamPos = inCamera->camPos;
+  FIELD_CAMERA_GetCameraAreaAfterTargetPos(inCamera, &outParam->TrgtPos);
+  outParam->AnglePitch = inCamera->angle_pitch;
+  outParam->AngleYaw = inCamera->angle_yaw;
+  outParam->Distance = inCamera->angle_len;
+  outParam->Fovy = inCamera->fovy;
+  outParam->Shift = inCamera->target_offset;
+}
+
+
 #if 0
 static void RecvModeCamera(FIELD_CAMERA * camera)
 {
@@ -2571,6 +2596,44 @@ void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera )
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief　復帰情報の保存
+ *	@note   復帰場所がカメラエリアオーバーのときに使用
+ *
+ *	@param	camera      カメラポインタ
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetRecvCamParamOv(FIELD_CAMERA * camera )
+{
+  FLD_MOVE_CAM_DATA *data;
+  FLD_CAM_PUSH_PARAM *push_param;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+
+  data = &camera->MoveData;
+  push_param = &data->PushParam;
+
+  if (data->PushFlg){
+    GF_ASSERT_MSG(0,"Already Exist PushData");
+    return;
+  }
+
+  //情報をプッシュ
+  push_param->BeforeMode = camera->mode;
+  //補間移動はカメラ位置不定型のみのサポート
+  FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
+  
+  SetNowCameraParamAreaOv(camera, &push_param->RecvParam);
+
+  //プッシュしたフラグ
+  data->PushFlg = TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  復帰情報のクリア
  *
  *	@param	camera      カメラポインタ
@@ -2614,7 +2677,8 @@ void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera)
  *	@retval none
  */
 //-----------------------------------------------------------------------------
-void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame)
+static void SetLinerParamCommon(
+    FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame)
 {
   FLD_MOVE_CAM_DATA *data;
   if (camera == NULL){
@@ -2627,7 +2691,6 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
   //補間移動はカメラ位置不定型のみのサポート
   FIELD_CAMERA_ChangeMode( camera, FIELD_CAMERA_MODE_CALC_CAMERA_POS );
 
-  SetNowCameraParam(camera, &data->SrcParam);
   data->DstParam = param->Core;
   data->NowFrm = 0;
   data->CostFrm = inFrame;
@@ -2638,7 +2701,53 @@ void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *p
   data->CallBackWorkPtr = NULL;
   //線形補間移動を開始
   data->Valid = TRUE;
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  線形移動パラメータをセットして動作開始
+ *
+ *	@param	camera      カメラポインタ
+ *	@param	param       パラメータ格納バッファ
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame)
+{
+  FLD_MOVE_CAM_DATA *data;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+  data = &camera->MoveData;
+  SetLinerParamCommon( camera, param, inFrame);
+  SetNowCameraParam(camera, &data->SrcParam);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  線形移動パラメータをセットして動作開始
+ *	@note 開始地点がカメラエリアに引っかかっている場合に使用
+ *
+ *	@param	camera      カメラポインタ
+ *	@param	param       パラメータ格納バッファ
+ *	@param  inFrame     フレーム
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+void FIELD_CAMERA_SetLinerParamOv(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame)
+{
+  FLD_MOVE_CAM_DATA *data;
+  if (camera == NULL){
+    GF_ASSERT( 0 );
+    return;
+  }
+  data = &camera->MoveData;
+  SetLinerParamCommon( camera, param, inFrame);
+  SetNowCameraParamAreaOv(camera, &data->SrcParam);
 }
 
 //----------------------------------------------------------------------------

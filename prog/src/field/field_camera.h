@@ -421,8 +421,10 @@ extern BOOL FIELD_CAMERA_GetCameraAreaActive( const FIELD_CAMERA * camera );
  */
 //-----------------------------------------------------------------------------
 extern void FIELD_CAMERA_SetRecvCamParam(FIELD_CAMERA * camera);
+extern void FIELD_CAMERA_SetRecvCamParamOv(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_ClearRecvCamParam(FIELD_CAMERA * camera);
 extern void FIELD_CAMERA_SetLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame);
+extern void FIELD_CAMERA_SetLinerParamOv(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM *param, const u16 inFrame);
 extern void FIELD_CAMERA_RecvLinerParam(FIELD_CAMERA * camera, const FLD_CAM_MV_PARAM_CHK *chk, const u16 inFrame);
 extern void FIELD_CAMERA_RecvLinerParamDefault( FIELD_CAMERA * camera, const u16 inFrame);
 extern void FIELD_CAMERA_SetLinerParamDirect(FIELD_CAMERA * camera,
