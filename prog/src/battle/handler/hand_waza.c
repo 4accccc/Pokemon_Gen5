@@ -3348,32 +3348,6 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
   }
 }
-//----------------------------------------------------------------------------------
-/**
- * みやぶる・かぎわける
- */
-//----------------------------------------------------------------------------------
-static const BtlEventHandlerTable*  ADD_Miyaburu( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASICK_PARAM,    handler_Miyaburu                },  // 状態異常パラメータ調整ハンドラ
-    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive },  // みがわりチェック
-
-  };
-  *numElems = NELEMS( HandlerTable );
-  return HandlerTable;
-}
-// 状態異常パラメータ調整ハンドラ
-static void handler_Miyaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BPP_SICK_CONT cont;
-    cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
-    BPP_SICKCONT_AddParam( &cont, POKETYPE_GHOST );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
-  }
-}
 
 //----------------------------------------------------------------------------------
 /**
@@ -10271,7 +10245,32 @@ static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * みやぶる・かぎわける
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_Miyaburu( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZASICK_PARAM,    handler_Miyaburu                },  // 状態異常パラメータ調整ハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive },  // みがわりチェック
 
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+// 状態異常パラメータ調整ハンドラ
+static void handler_Miyaburu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BPP_SICK_CONT cont;
+    cont.raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
+    BPP_SICKCONT_AddParam( &cont, POKETYPE_GHOST );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
+  }
+}
 //----------------------------------------------------------------------------------
 /**
  * ミラクルアイ
@@ -10281,6 +10280,7 @@ static const BtlEventHandlerTable*  ADD_MiracleEye( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZASICK_PARAM, handler_MiracleEye },    // 状態異常パラメータ調整ハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive },  // みがわりチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
