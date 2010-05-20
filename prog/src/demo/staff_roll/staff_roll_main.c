@@ -294,6 +294,8 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	InitVBlank( wk );
 
+	PMSND_PlayBGM_WideChannel( SEQ_BGM_ENDING );
+
 //	return SetFadeIn( wk, MAINSEQ_START_SE_PLAY );
 	return SetFadeIn( wk, MAINSEQ_MAIN );
 }
