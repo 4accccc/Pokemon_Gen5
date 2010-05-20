@@ -3198,7 +3198,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		187,
 		0,
-		413,
+		414,
 	},
 	{//ZONE_ID_C05GYM0101 = 97
 		RSC_GRID_DEFAULT,
@@ -3561,7 +3561,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		108,
 		0,
-		305,
+		306,
 	},
 	{//ZONE_ID_C06GYM0101 = 108
 		RSC_GRID_DEFAULT,
@@ -3759,7 +3759,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		184,
 		3,
-		196,
+		197,
 	},
 	{//ZONE_ID_C07GYM0101 = 114
 		RSC_HYBRID,
@@ -13131,7 +13131,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		796,
 		0,
-		658,
+		659,
 	},
 	{//ZONE_ID_T02PC0101 = 398
 		RSC_GRID_NOSCROLL,
@@ -13428,7 +13428,7 @@ static const ZONEDATA ZoneData[] = {
 		0, // padding
 		660,
 		0,
-		185,
+		186,
 	},
 	{//ZONE_ID_T03PC0101 = 407
 		RSC_GRID_NOSCROLL,
