@@ -85,7 +85,7 @@ u32 UN_GetRoomInfo(UNSV_WORK* work, const u32 inType)
 /**
  * @brief　国選択アプリ呼び出し
  * @param   gsys      ゲームシステムポインタ
- * @param   inFloor     現在フロア　エントランスにいるときは1以下を指定
+ * @param   inFloor     現在フロア　エントランスにいるときは2(2階)を指定
  * @param   outFloor    フロア格納バッファ
  * @param   outCountry  国コード格納バッファ
  * @param   ret_wk      結果格納
