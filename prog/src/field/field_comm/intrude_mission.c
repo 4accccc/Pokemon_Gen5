@@ -115,14 +115,14 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
   if(GFL_NET_IsParentMachine() == TRUE 
       && MISSION_RecvCheck(mission) == TRUE 
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    if(mission->data.ready_timer > 0){
+    if(mission->data.variable.ready_timer > 0){
       if(mission->send_mission_start == _SEND_MISSION_START_NULL 
-          && _GetMissionTime(mission) > mission->data.ready_timer){
+          && _GetMissionTime(mission) > mission->data.variable.ready_timer){
         mission->send_mission_start = _SEND_MISSION_START_SEND_REQ;
       }
     }
     else if(mission->mission_start_ok == TRUE){
-      if(_GetMissionTime(mission) > mission->data.exe_timer){
+      if(_GetMissionTime(mission) > mission->data.variable.exe_timer){
         GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
         MISSION_SetMissionFail(intcomm, mission, GAMEDATA_GetIntrudeMyID(gamedata));
       }
@@ -168,7 +168,7 @@ static s32 MISSION_GetExeMissionTimer(MISSION_SYSTEM *mission)
 {
   s32 ret_timer;
   
- ret_timer = mission->data.exe_timer;  //mission->data.cdata.time;
+ ret_timer = mission->data.variable.exe_timer;  //mission->data.cdata.time;
  ret_timer -= _GetMissionTime(mission);
   if(ret_timer < 0){
     return 0;
@@ -191,8 +191,8 @@ s32 MISSION_GetMissionTimer(MISSION_SYSTEM *mission)
   
   if(MISSION_RecvCheck(mission) == TRUE 
       && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    if(mission->data.ready_timer > 0 || mission->mission_start_ok == FALSE){
-      ret_timer = mission->data.ready_timer;
+    if(mission->data.variable.ready_timer > 0 || mission->mission_start_ok == FALSE){
+      ret_timer = mission->data.variable.ready_timer;
       ret_timer -= _GetMissionTime(mission);
     }
     else{
@@ -304,7 +304,7 @@ void MISSION_RecvMissionStart(MISSION_SYSTEM *mission)
 {
   MISSION_DATA *md = MISSION_GetRecvData(mission);
   if(md != NULL){
-    md->ready_timer = 0;
+    md->variable.ready_timer = 0;
   }
 }
 
@@ -337,11 +337,11 @@ void MISSION_RecvMissionStartClient(MISSION_SYSTEM *mission, NetID net_id)
 void MISSION_RecvMissionStartClientAnswer(MISSION_SYSTEM *mission, s32 now_timer)
 {
   mission->mission_start_ok = TRUE;
-  mission->data.exe_timer = now_timer;
+  mission->data.variable.exe_timer = now_timer;
   if(GFL_NET_IsParentMachine() == FALSE){ //親はMISSION_RecvMissionStartClientでセットされる
     mission->start_timer = GFL_RTC_GetTimeBySecond();
   }
-  OS_TPrintf("start_timer = %d, exe_timer = %d\n", mission->start_timer, now_timer);
+  OS_TPrintf("start_timer = %d, variable.exe_timer = %d\n", mission->start_timer, now_timer);
 }
 
 //==================================================================
@@ -631,7 +631,7 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
   int ranking;
   
   OS_TPrintf("ミッション達成エントリー net_id=%d\n", achieve_netid);
-  if(GFL_STD_MemComp(data, mdata, sizeof(MISSION_DATA)) != 0){
+  if(GFL_STD_MemComp(data, mdata, sizeof(MISSION_DATA) - sizeof(MISSION_VARIABLE_PARAM)) != 0){
     OS_TPrintf("親が管理しているミッションデータと内容が違うので受け付けない\n");
     mission->result_mission_achieve[achieve_netid] = MISSION_ACHIEVE_NG;
     return FALSE;
@@ -1129,8 +1129,8 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   exe_mdata->accept_netid = net_id;
   exe_mdata->palace_area = entry_req->target_info.net_id;
   exe_mdata->monolith_type = entry_req->monolith_type;
-  exe_mdata->ready_timer = _MISSION_READY_TIMER;
-  exe_mdata->exe_timer = entry_req->cdata.time;
+  exe_mdata->variable.ready_timer = _MISSION_READY_TIMER;
+  exe_mdata->variable.exe_timer = entry_req->cdata.time;
   
   //返事セット
   mission->entry_answer[net_id].mdata = *exe_mdata;

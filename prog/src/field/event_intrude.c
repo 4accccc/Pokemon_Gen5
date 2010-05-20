@@ -46,6 +46,7 @@
 #include "script.h"     //for SCRIPT_CallScript
 #include "../../../resource/fldmapdata/script/palace01_def.h"  //for SCRID_～
 #include "../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
+#include "../../../resource/fldmapdata/script/field_ev_scr_def.h" // for SCRID_FLD_EV_
 
 
 //==============================================================================
@@ -98,6 +99,7 @@ typedef struct
 //==============================================================================
 static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk );
+static GMEVENT_RESULT EventIntrudeNotWarp( GMEVENT* event, int* seq, void* wk );
 
 
 //======================================================================
@@ -743,6 +745,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     SEQ_DISGUISE_INIT,
     SEQ_DISGUISE_MAIN,
    	SEQ_TUTORIAL,
+    SEQ_FINISH_BEFORE,
     SEQ_FINISH,
   };
   
@@ -862,7 +865,7 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
           (*seq)++;
         }
         else{
-          *seq = SEQ_FINISH;
+          *seq = SEQ_FINISH_BEFORE;
         }
       }
     }
@@ -893,16 +896,58 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
       }
       SCRIPT_CallScript( event, scr_id, NULL, NULL, GFL_HEAP_LOWID(HEAPID_FIELDMAP) );
     }
-    *seq = SEQ_FINISH;
+    *seq = SEQ_FINISH_BEFORE;
     break;
     
-  case SEQ_FINISH:
-  default:
+  case SEQ_FINISH_BEFORE: //終了前の最終処理
     GameCommSys_ClearLastStatus(game_comm);
     GameCommStatus_InitPlayerStatus(game_comm);
-    GAMESYSTEM_CommBootAlways(gsys);
+    if(GAMEDATA_GetIntrudeMyID(gamedata) != 0){ //協力者なので表フィールドへ戻す
+    	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );
+    }
+    (*seq)++;
+    break;
+  case SEQ_FINISH:
     return GMEVENT_RES_FINISH;
   }
 
+  return GMEVENT_RES_CONTINUE;
+}
+
+//==================================================================
+/**
+ * 「コネクト中のため、ワープできません」を表示するだけのイベント
+ *
+ * @param   gsys		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_IntrudeNotWarp(GAMESYS_WORK *gsys)
+{
+  return GMEVENT_Create( gsys, NULL, EventIntrudeNotWarp, 0 );
+}
+
+//--------------------------------------------------------------
+/**
+ * 「コネクト中のため、ワープできません」を表示するだけのイベント
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  GMEVENT_RESULT		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventIntrudeNotWarp( GMEVENT* event, int* seq, void* wk )
+{
+  switch(*seq){
+  case 0:
+    SCRIPT_CallScript(event, SCRID_FLD_EV_WARP_FAILED_CONNECTING, NULL, NULL, HEAPID_FIELDMAP);
+    (*seq)++;
+    break;
+  case 1:
+    return GMEVENT_RES_FINISH;
+  }
   return GMEVENT_RES_CONTINUE;
 }

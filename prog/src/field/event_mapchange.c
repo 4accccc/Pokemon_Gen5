@@ -3183,16 +3183,27 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
     {
       INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
       BOOL is_target = FALSE;
+      BOOL is_partner = FALSE;
       
       if(intcomm != NULL){
         is_target = IntrudeField_Check_Tutorial_OR_TargetMine(intcomm);
+        if(Intrude_GetIntrudeStatus(game_comm) == INTRUDE_CONNECT_MISSION_PARTNER){
+          is_partner = TRUE;
+        }
       }
       
       //進入可能座標チェック
       if ( is_target == FALSE && PLC_WP_CHK_Check(work->gameSystem) )
       {   //進入可能
         //進入可能メッセージコール
-        SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_SUCCESS, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+        u32 scr_id;
+        if(is_partner == FALSE){
+          scr_id = SCRID_FLD_EV_WARP_SUCCESS;
+        }
+        else{
+          scr_id = SCRID_FLD_EV_WARP_SUCCESS_PARTNER;
+        }
+        SCRIPT_CallScript( event, scr_id, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
 
         //チュートリアルが全て完了していない場合は常時通信をOFF
         //(子としてパレスに入るとチュートリアルで混乱する)

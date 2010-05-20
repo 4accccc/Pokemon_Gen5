@@ -30,6 +30,7 @@
 #include "field_comm/intrude_work.h"
 #include "field_comm/intrude_main.h"
 #include "arc/fieldmap/zone_id.h"
+#include "event_intrude.h"
 
 
 //============================================================================================
@@ -96,7 +97,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     switch(dbw->selectType){
     case CG_WIRELESS_RETURNMODE_PALACE:
       if(Intrude_Check_CommConnect(pComm)){ //侵入通信が正常に繋がっているか調べる
-        GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
+        //GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
       }
       (*seq) = _FIELD_FADEOUT;
       break;
@@ -141,18 +142,33 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     {
       GMEVENT* intrude_event;
       if(dbw->selectType==CG_WIRELESS_RETURNMODE_PALACE){
-        if(NULL==Intrude_Check_CommConnect(pComm)){ //つながってない
+        if(dbw->hilinkStateNo == INTRUDE_CONNECT_NULL){ //最初の一人としてパレスへワープ
+          //パレスへワープする前に誰とも繋がっていないことが保障されるように通信を終了する
+          if(GameCommSys_CheckSystemWaiting(pComm) == FALSE){
+            if(GameCommSys_BootCheck(pComm) != GAME_COMM_NO_NULL){
+              GameCommSys_ExitReq(pComm);
+            }
+            else{ //何も通信が起動していない
+              intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01);
+              GMEVENT_CallEvent(event,intrude_event);
+              *seq = _FIELD_END;
+            }
+          }
+        }
+        else if(dbw->hilinkStateNo == INTRUDE_CONNECT_MISSION_PARTNER){ //協力者としてパレスへ
           intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01);
           GMEVENT_CallEvent(event,intrude_event);
+          *seq = _FIELD_END;
         }
-
-
-
-
-        
+        else{ //パレスへいけない
+          GMEVENT_CallEvent(event, EVENT_IntrudeNotWarp(gsys));
+          *seq = _FIELD_END;
+        }
+      }
+      else{
+        *seq = _FIELD_END;
       }
     }
-    (*seq) ++;
     break;
   case _FIELD_END: 
     return GMEVENT_RES_FINISH;

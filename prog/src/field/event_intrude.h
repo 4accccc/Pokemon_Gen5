@@ -82,3 +82,8 @@ extern GMEVENT * EVENT_IntrudeWarpPalace_Mine(GAMESYS_WORK *gsys);
 extern GMEVENT * EVENT_IntrudeWarpPalace_NetID(GAMESYS_WORK *gsys, int net_id);
 extern GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys, MISSION_FORCEWARP_MSGID warp_talk);
 
+//--------------------------------------------------------------
+//  
+//--------------------------------------------------------------
+extern GMEVENT * EVENT_IntrudeNotWarp(GAMESYS_WORK *gsys);
+

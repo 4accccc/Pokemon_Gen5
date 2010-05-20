@@ -43,7 +43,7 @@ MISSION_STATUS MISSION_FIELD_CheckStatus(MISSION_SYSTEM *mission)
   if(md == NULL){
     return MISSION_STATUS_NULL;
   }
-  if(md->ready_timer == 0){
+  if(md->variable.ready_timer == 0){
     if(mission->mine_entry == TRUE){
       return MISSION_STATUS_EXE;
     }

@@ -217,6 +217,13 @@ typedef struct{
   };
 }MISSION_TYPE_WORK;
 
+///ミッションデータに含まれるが、整合性のチェックからは除くパラメータ
+///(ミッション開始後、可変していく値)
+typedef struct{
+  u16 ready_timer;            ///<開始前のエントリー待ちの残り時間(秒)
+  u16 exe_timer;              ///<ミッションの終了時間
+}MISSION_VARIABLE_PARAM;
+
 ///ミッションデータ
 typedef struct{
   MISSION_CONV_DATA cdata;       ///<ミッションデータ
@@ -226,8 +233,8 @@ typedef struct{
   u8 monolith_type;           ///<石版タイプ  MONOLITH_TYPE_???
   u8 padding;
   
-  u16 ready_timer;            ///<開始前のエントリー待ちの残り時間(秒)
-  u16 exe_timer;              ///<ミッションの終了時間
+  //整合性チェックから省く為、構造体の最後に配置する事！
+  MISSION_VARIABLE_PARAM variable;
 }MISSION_DATA;
 
 
