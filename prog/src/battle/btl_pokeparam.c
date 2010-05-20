@@ -2613,8 +2613,9 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       u32 expAdd = (expBorder - expNow);
       u16 prevHP   = bpp->coreParam.hpMax;
       u16 diffHP;
+      u16 atk, def, sp_atk, sp_def, agi;
       u8  fFastMode = PP_FastModeOn( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
-      u8  atk, def, sp_atk, sp_def, agi;
+
 
       // レベルアップ前パラメータ
       atk = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );

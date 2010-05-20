@@ -205,13 +205,13 @@ static inline void BPP_WAZADMG_REC_Setup( BPP_WAZADMG_REC* rec, u8 pokeID, BtlPo
  */
 //--------------------------------------------------------------
 typedef struct {
-  u8  level;
-  u8  hp;
-  u8  atk;
-  u8  def;
-  u8  sp_atk;
-  u8  sp_def;
-  u8  agi;
+  u8   level;
+  u16  hp;
+  u16  atk;
+  u16  def;
+  u16  sp_atk;
+  u16  sp_def;
+  u16  agi;
 }BTL_LEVELUP_INFO;
 
 extern BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* exp, BTL_LEVELUP_INFO* info );
