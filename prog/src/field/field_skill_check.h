@@ -23,10 +23,6 @@ typedef enum
 {
   FSCR_OK,
   FSCR_HIDEN,       //秘伝技
-  
-  //コンパイル通すためにとりあえず置いておく
-  FSCR_NO_MACHINE = FSCR_HIDEN,  //技マシン無い
-  FSCR_USE_SKILL,   //今使ってる
 }FIELD_SKILL_CHECK_RET;
 
 extern const u16 FIELD_SKILL_CHECK_GetUseSkillBit( GAMEDATA *gameData );

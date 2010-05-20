@@ -15,6 +15,7 @@
 
 #include "waza_tool/wazano_def.h"
 #include "item/itemsym.h"
+#include "item/item.h"
 
 //======================================================================
 //	define
@@ -36,16 +37,6 @@
 //	proto
 //======================================================================
 #pragma mark [> proto
-
-static const u16 HidenTable[] = {
-  WAZANO_IAIGIRI,
-  WAZANO_KAIRIKI,
-  WAZANO_NAMINORI,
-  WAZANO_SORAWOTOBU,
-  WAZANO_DAIBINGU,
-  WAZANO_TAKINOBORI,
-};
-
 
 //--------------------------------------------------------------
 //	今使っている技ビットの取得
@@ -88,26 +79,11 @@ const u16 FIELD_SKILL_CHECK_GetUseSkillBit( GAMEDATA *gameData )
 }
 
 //--------------------------------------------------------------
-//	秘伝技チェック
-//--------------------------------------------------------------
-static BOOL isHiden( u16 wazano )
-{
-  int i;
-
-  for(i = 0;i < NELEMS(HidenTable);i++){
-    if(HidenTable[i] == wazano){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-
-//--------------------------------------------------------------
 //	指定技が忘れられるか？
 //--------------------------------------------------------------
 const FIELD_SKILL_CHECK_RET FIELD_SKILL_CHECK_CheckForgetSkill( GAMEDATA *gameData , const u16 wazaNo , HEAPID heapId )
 {
-  return (FSCR_OK+isHiden( wazaNo ));
+  return (FSCR_OK+ITEM_CheckHidenWaza( wazaNo ));
 }
 
 //--------------------------------------------------------------
@@ -119,7 +95,7 @@ const BOOL FIELD_SKILL_CHECK_CanTradePoke( POKEMON_PASO_PARAM *ppp , HEAPID heap
   for( i=0;i<4;i++ )
   {
     const u32 wazaNo = PPP_Get( ppp , ID_PARA_waza1+i , NULL );
-    if( isHiden( wazaNo )){
+    if( ITEM_CheckHidenWaza( wazaNo )){
       return FALSE;
     }
   }
