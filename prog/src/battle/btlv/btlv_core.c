@@ -1229,10 +1229,16 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.shooter_item_bit = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
     wk->bagData.commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
 
-    if( BTL_POKECON_GetClientAlivePokeCount(wk->pokeCon, BTL_CLIENT_ENEMY1) > 1 ){
-      wk->bagData.ball_use = BBAG_BALLUSE_DOUBLE;
-    }else if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) ){
+    // 手持ち・ボックスが満杯なら投げられない
+    if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) ){
       wk->bagData.ball_use = BBAG_BALLUSE_POKEMAX;
+    // ２体以上居て野生戦なら投げられない
+    }else if(
+        (BTL_POKECON_GetClientAlivePokeCount(wk->pokeCon, BTL_CLIENT_ENEMY1) > 1)
+    &&  (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+    ){
+      wk->bagData.ball_use = BBAG_BALLUSE_DOUBLE;
+    // それ以外は投げる
     }else{
       wk->bagData.ball_use = BBAG_BALLUSE_TRUE;
     }

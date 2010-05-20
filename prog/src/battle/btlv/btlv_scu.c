@@ -3829,7 +3829,7 @@ static BOOL tokwin_renew_progress( TOK_WIN* tokwin )
     }
     tokwin->moveTimer = 0;
     tokwin->writeRaw = 0;
-    PMSND_PlaySE( BANK_SE_WB_DECIDE3 );  // @TODO ‰¼
+    PMSND_PlaySE( BANK_SE_WB_DECIDE3 );
     tokwin->seq++;
     break;
   case 1:
