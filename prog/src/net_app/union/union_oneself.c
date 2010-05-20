@@ -1404,9 +1404,8 @@ static BOOL OneselfSeq_TalkUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
       }
       else if(select_list == UNION_PLAY_CATEGORY_TRADE){
         GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
-        if(PokeParty_GetPokeCount(party) <= 1
-            && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(gamedata))){
-          //手持ちが1匹でボックスにも交換できるポケモンがいない為、交換できない
+        if(PokeParty_GetPokeCountNotEgg(party) < 2){
+          //手持ちが2匹以上いないと交換できない
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
             UnionMsg_GetMsgID_TradeMinePokeNG(situ->mycomm.talk_pc->beacon.sex));
           *seq = _LOCALSEQ_MAINMENU_FAIL;
