@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T11:44:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:44:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -361,7 +361,7 @@
 博士に　会おう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01_white_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01_white_01a" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：図鑑入手後
 ・主人公性別：♂
 ・主人公がt01に来ると自動で表示
@@ -374,7 +374,7 @@
 [1:00:トレーナー名:0]　待ってよお！▼</language>
 	</row>
 
-	<row id="msg_t01_white_01b" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t01_white_01b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：図鑑入手後
 ・主人公性別：♀
 ・主人公がt01に来ると自動で表示
@@ -619,10 +619,8 @@
 		<language name="JPN_KANJI" width="256">チェレン『さ　行こう！▼</language>
 	</row>
 
-	<row id="msg_t01_black_08" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・white_05表示後に下入力
-・メッセージ表示後、元の位置にもどされる</comment>
+	<row id="msg_t01_black_08" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">友達♂</attribute>
 		<language name="JPN" width="256">チェレン『どこ　いくのさ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『どこ　いくのさ▼</language>
@@ -658,8 +656,7 @@
 	<row id="msg_t01_woman2_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい/いいえの選択肢表示
-　はいだと文字モード切替
-・仮メッセージ</comment>
+　はいだと文字モード切替</comment>
 		<attribute name="キャラ指定">WOMAN2
 女性</attribute>
 		<language name="JPN" width="256">あなたは　ひらがな　よりも
