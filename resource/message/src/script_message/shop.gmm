@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-05-12T20:25:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:59:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -396,10 +396,9 @@
 
 	<row id="mes_shop_02_03_02">
 		<comment>買う画面で、技マシンを買うとき
-０：技ナンバー
-１：技の名前
-２：金額５桁
-</comment>
+0：技ナンバー
+1：技の名前
+2：金額５桁</comment>
 		<language name="JPN" width="256">ＮＯ．[2:01:２桁:0]「[1:07:わざ名:1]」ですね
 [2:04:５桁:2]円に　なりますが？</language>
 		<language name="JPN_KANJI" width="256">ＮＯ．[2:01:２桁:0]「[1:07:わざ名:1]」ですね
@@ -408,10 +407,9 @@
 
 	<row id="mes_shop_02_03_03">
 		<comment>バトルポイントショップで技マシンを買うとき
-０：技ナンバー
-１：技の名前
-２：ＢＰ２桁
-</comment>
+0：技ナンバー
+1：技の名前
+2：ＢＰ２桁</comment>
 		<language name="JPN" width="256">ＮＯ．[2:01:２桁:0]「[1:07:わざ名:1]」ですね
 [2:03:４桁:2]ＢＰに　なりますが？</language>
 		<language name="JPN_KANJI" width="256">ＮＯ．[2:01:２桁:0]「[1:07:わざ名:1]」ですね
