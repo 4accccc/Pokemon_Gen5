@@ -890,11 +890,13 @@ static void _modeCheckStart5(IRC_BATTLE_MATCH* pWork)
  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_POKEP, WB_NET_IRCBATTLE)){
    switch(pWork->selectType){
    case EVENTIRCBTL_ENTRYMODE_FRIEND:
+#if DEBUG_ONLY_FOR_ohno
      {
        GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
        MYSTATUS* pFriend = GAMEDATA_GetMyStatusPlayer(pGameData, 1-GFL_NET_SystemGetCurrentID());
        WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pGameData), pFriend);
      }
+#endif
      _CHANGE_STATE(pWork,_modeSuccessMessage);
      break;
    case EVENTIRCBTL_ENTRYMODE_SINGLE:
