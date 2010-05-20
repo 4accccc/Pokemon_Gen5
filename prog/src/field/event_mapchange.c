@@ -580,23 +580,23 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
   cmw->sp_exit_flag = EVENTWORK_CheckEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
   EVENTWORK_ResetEventFlag( ev, SYS_FLAG_SPEXIT_REQUEST );
 
-  //時間書き換えによるペナルティチェック
   {
     SAVE_CONTROL_WORK * svdt = GAMEDATA_GetSaveControlWork(cmw->gamedata );
     SYSTEMDATA * sysdt = SaveData_GetSystemData( svdt );
+    POKEPARTY *ppt = SaveData_GetTemotiPokemon(svdt);
+    //時間書き換えによるペナルティチェック
     if (!SYSTEMDATA_IdentifyMACAddress(sysdt) || !SYSTEMDATA_IdentifyRTCOffset(sysdt) )
     {
       //ペナルティ時間を設定する
       GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
       //シェイミのフォルムを戻す
-      {
-        POKEPARTY *ppt;
-        ppt = SaveData_GetTemotiPokemon(svdt);
-        SHEIMI_NFORM_ChangeNormal(ppt);
-      }
+      SHEIMI_NFORM_ChangeNormal(ppt);
     }
     //現在のDS本体情報を今後の設定とする
     SYSTEMDATA_Update( sysdt );
+
+    //季節ポケのフォルム変更
+    SEASONPOKE_FORM_ChangeForm(cmw->gamedata, ppt, GAMEDATA_GetSeasonID( cmw->gamedata ) );
   }
 
   // コンティニュー設定
