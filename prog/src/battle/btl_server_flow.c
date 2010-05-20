@@ -649,7 +649,7 @@ static void scEvent_FieldEffectCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
 static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
+static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
   BtlTypeAff aff, u8 fCritical, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* wazaParam,
@@ -6447,8 +6447,9 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   {
     if( BPP_MIGAWARI_IsExist(bpp[i]) )
     {
-      scproc_Migawari_Damage( wk, attacker, bpp[i], dmg[i], affAry[i], critical_flg[i], wazaParam );
+      u16 add_damage = scproc_Migawari_Damage( wk, attacker, bpp[i], dmg[i], affAry[i], critical_flg[i], wazaParam );
       BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], 0 );  // ダメージ0として記録
+      dmg_sum -= (dmg[i] - add_damage);
       migawari_flag[ i ] = TRUE;
     }
     else{
@@ -9062,12 +9063,13 @@ static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @param   wk
  * @param   bpp
  *
- * @retval  BOOL  みがわりが消えたらTRUE
+ * @retval  u16 実際に与えたダメージ値
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
+static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 damage,
   BtlTypeAff aff, u8 fCritical, const SVFL_WAZAPARAM* wazaParam )
 {
+
   SCQUE_PUT_ACT_MigawariDamage( wk->que, BPP_GetID(target), aff, wazaParam->wazaID );
   scPut_Message_Set( wk, target, BTL_STRID_SET_MigawariDamage );
   scPut_WazaAffinityMsg( wk, 1, &aff, &target, FALSE );
@@ -9080,9 +9082,10 @@ static BOOL scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker
     scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
     scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
 
-    return TRUE;
+    return damage;
   }
-  return FALSE;
+
+  return 0;
 }
 //----------------------------------------------------------------------------------
 /**

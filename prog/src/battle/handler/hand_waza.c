@@ -4099,8 +4099,9 @@ static void handler_MezamasiBinta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    if( BPP_CheckSick(bpp, WAZASICK_NEMURI) )
-    {
+    if( (!BPP_MIGAWARI_IsExist(bpp))
+    &&  (BPP_CheckSick(bpp, WAZASICK_NEMURI))
+    ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }
@@ -4141,7 +4142,9 @@ static void handler_Kituke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   {
     // É}ÉqèÛë‘ÇÃëäéËÇ…à–óÕÇQî{
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    if( BPP_CheckSick(bpp, WAZASICK_MAHI) ){
+    if( (!BPP_MIGAWARI_IsExist(bpp))
+    &&  (BPP_CheckSick(bpp, WAZASICK_MAHI))
+    ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
     }
   }
