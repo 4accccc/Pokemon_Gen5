@@ -33,7 +33,7 @@
 #ifdef PM_DEBUG
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
-//#define AI_SEQ_PRINT
+#define AI_SEQ_PRINT
 //#define TR_AI_WAZA_CACHE    //技AI内で技データのキャッシュを持つ
 #endif
 #endif
@@ -3544,9 +3544,11 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
   int label = ( int )VMGetU32( vmh );
+  int size  = ( int )VMGetU32( vmh );
   u16 *tbl_adrs = (u16*)(vmh->adrs + ( int )VMGetU32( vmh ));
   int ofs;
   int index;
+  BOOL  err = FALSE;
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_TABLE_JUMP\n");
@@ -3555,6 +3557,10 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
   switch( label ){
   case TABLE_JUMP_WAZASEQNO:
     ofs = get_waza_param( taw, taw->waza_no, WAZAPARAM_AI_SEQNO ) * 2;
+    if( ofs / 2 > size )
+    { 
+      err = TRUE;
+    }
 #ifdef AI_SEQ_PRINT
     OS_TPrintf("waza:%d seqno:%d\n",taw->waza_no,ofs/2);
 #endif
@@ -3562,7 +3568,15 @@ static  VMCMD_RESULT  AI_TABLE_JUMP( VMHANDLE* vmh, void* context_work )
   default:
     //未定義のラベルです
     GF_ASSERT( 0 );
+    err = TRUE;
     break;
+  }
+
+  //不正なアドレスを取得してしまったら、強制停止
+  if( err == TRUE )
+  { 
+    GF_ASSERT_MSG( err == FALSE, "TABLE_JUMP adrs error\n" );
+    return AI_AIEND( vmh, context_work );
   }
 
 #ifdef AI_SEQ_PRINT
