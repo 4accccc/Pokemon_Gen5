@@ -893,6 +893,9 @@
   DEF_CMD( EvCmdLegWaitBallAnm, EV_SEQ_LEG_WAIT_BALL_ANM )
   DEF_CMD( EvCmdLegWaitBallPokeApp, EV_SEQ_LEG_WAIT_BALL_POKE_APP )
 
+  //無音BGMの再生
+  DEF_CMD( EvCmdBgmPlaySilent, EV_SEQ_START_EVENT_BGM_SILENT )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   

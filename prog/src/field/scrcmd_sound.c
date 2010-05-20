@@ -65,7 +65,7 @@ static GMEVENT_RESULT PlayVoiceEvent( GMEVENT* event, int* seq, void* wk );
 
 //--------------------------------------------------------------
 /**
- * BGM変更
+ * BGM 変更
  * @param  core    仮想マシン制御構造体へのポインタ
  * @retval VMCMD_RESULT
  * @note 現在再生中のBGMを破棄し、指定BGMを再生している。
@@ -80,8 +80,7 @@ VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk )
 
   {
     GMEVENT* event;
-    //event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_FAST, FSND_FADE_NONE );
-    event = EVENT_FSND_PlayEventBGM( gsys, soundIdx ); // 100413 即時再生に変更
+    event = EVENT_FSND_PlayEventBGM( gsys, soundIdx );
     SCRIPT_CallEvent( sc, event );
   }
 
@@ -116,6 +115,38 @@ VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk )
   {
     GMEVENT* event;
     event = EVENT_FSND_PlayEventBGMEx( gsys, sound_idx, frame );
+    SCRIPT_CallEvent( script, event );
+  }
+
+  // フィールドサウンド。
+  // 環境SE停止。
+  {
+    GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+    FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
+    FSND_PauseEnvSE( fsound );
+  }
+  
+  return VMCMD_RESULT_SUSPEND;
+}
+
+//--------------------------------------------------------------
+/**
+ * BGM 変更 ( 無音曲再生 )
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ * @note 現在再生中のBGMを破棄し、無音BGMを再生している。
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK*  work   = wk;
+  GAMESYS_WORK* gsys   = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  script = SCRCMD_WORK_GetScriptWork( work );
+  u16           frame  = VMGetU16( core ); // コマンド第一引数: FOフレーム数
+
+  {
+    GMEVENT* event;
+    event = EVENT_FSND_PlayEventBGMSilent( gsys, frame );
     SCRIPT_CallEvent( script, event );
   }
 

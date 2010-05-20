@@ -3138,6 +3138,38 @@
 
 //--------------------------------------------------------------
 /**
+  * @def _START_EVENT_BGM_EX 
+	* @brief BGMを鳴らす ( FOフレーム数指定 ver. )
+  * @param no    BGM Number
+	* @param frame フェードアウトフレーム数
+  */
+//--------------------------------------------------------------
+#define _START_EVENT_BGM_EX( no, frame ) \
+		_ASM_START_EVENT_BGM_EX no, frame
+
+  .macro  _ASM_START_EVENT_BGM_EX no, frame
+  .short  EV_SEQ_START_EVENT_BGM_EX
+  .short  \no
+  .short  \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
+  * @def _START_EVENT_BGM_SILENT 
+	* @brief 無音曲を再生する
+	* @param frame フェードアウトフレーム数
+  */
+//--------------------------------------------------------------
+#define _START_EVENT_BGM_SILENT( frame ) \
+		_ASM_START_EVENT_BGM_SILENT frame
+
+  .macro  _ASM_START_EVENT_BGM_SILENT frame
+  .short  EV_SEQ_START_EVENT_BGM_SILENT
+  .short  \frame
+  .endm
+
+//--------------------------------------------------------------
+/**
  * @def _END_EVENT_BGM
  * @brief スクリプト簡易マクロ：イベントBGM終了
  *
@@ -3152,23 +3184,6 @@
   //_ASM_BGM_FADEOUT  0, 30
   //_ASM_BGM_STOP
   _ASM_BGM_NOW_MAP_RECOVER
-  .endm
-
-//--------------------------------------------------------------
-/**
-  * @def _START_EVENT_BGM_EX 
-	* @brief BGMを鳴らす ( FOフレーム数指定 ver. )
-  * @param no    BGM Number
-	* @param frame フェードアウトフレーム数
-  */
-//--------------------------------------------------------------
-#define _START_EVENT_BGM_EX( no, frame ) \
-		_ASM_START_EVENT_BGM_EX no, frame
-
-   .macro  _ASM_START_EVENT_BGM_EX no, frame
-  .short  EV_SEQ_START_EVENT_BGM_EX
-  .short  \no
-  .short  \frame
   .endm
 
 //--------------------------------------------------------------

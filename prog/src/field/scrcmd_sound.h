@@ -16,6 +16,7 @@
 //BGM
 extern VMCMD_RESULT EvCmdBgmPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPlayEx( VMHANDLE *core, void *wk );
+extern VMCMD_RESULT EvCmdBgmPlaySilent( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmPlayCheck( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk );

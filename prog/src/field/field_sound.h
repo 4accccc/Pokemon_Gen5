@@ -59,6 +59,7 @@ extern GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem );
 // イベント曲・視線曲用 即時再生イベント
 extern GMEVENT* EVENT_FSND_PlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
 extern GMEVENT* EVENT_FSND_PlayEventBGMEx( GAMESYS_WORK* gameSystem, u32 soundIdx, u32 fadeOutFrame );
+extern GMEVENT* EVENT_FSND_PlayEventBGMSilent( GAMESYS_WORK* gameSystem, u32 fadeOutFrame );
 extern GMEVENT* EVENT_FSND_PushPlayEventBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
 extern GMEVENT* EVENT_FSND_PlayTrainerEyeBGM( GAMESYS_WORK* gameSystem, u32 soundIdx );
 
