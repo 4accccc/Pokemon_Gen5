@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-20T15:32:47"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-20T20:35:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1300,7 +1300,7 @@
 	<row id="msg_wifilobby_1028" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>「制限無し」を選んだときの表題</comment>
 		<language name="JPN" width="216">たいせんルール[BD:05:X指定:115]：[FF:00:色:2]せいげんなし</language>
-		<language name="JPN_KANJI" width="216">対戦ルール[BD:05:X指定:115]：[FF:00:色:2]せいげんなし</language>
+		<language name="JPN_KANJI" width="216">対戦ルール[BD:05:X指定:115]：[FF:00:色:2]制限なし</language>
 	</row>
 
 	<row id="msg_wifilobby_1029" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
