@@ -556,7 +556,8 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		}
 		
 		while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
-			;	//エラー画面終了ボタンが押されるまで待つ
+      //LCDOFF対応
+      GFL_UI_Main();	//エラー画面終了ボタンが押されるまで待つ
 		}
 		
 		//エラー画面終了
