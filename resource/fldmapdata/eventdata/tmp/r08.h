@@ -22,6 +22,7 @@
 #define R08_HAKAIM_01                      9
 #define R08_HAKAIM_02                     10
 #define R08_FLD_ITEM_04                   11
+#define R08_AMBRELLA_02                   12
 
 #endif //ZONE_R08_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/r08.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_r08_ambrella_01
+_EVENT_DATA    ev_r08_ambrella_02
 _EVENT_DATA		ev_bg_r08_sign1_01
 _EVENT_DATA		ev_bg_r08_sign2_01
 _EVENT_DATA		ev_bg_r08_sign3_01
@@ -28,7 +29,7 @@ _EVENT_DATA    ev_r08_hakaim_02
 _EVENT_DATA		ev_pos_r08_support_01
 _EVENT_DATA_END
 
-
+	
 /**************************************************************/
 /*  R02 サポートのイベントスクリプト*/
 /**************************************************************/
@@ -247,12 +248,56 @@ EVENT_START   ev_r08_hakaim_02
 	ENDIF
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-EVENT_END
+EVENT_END 	//時間帯の取得
+
 /**************************************************************/
-/*  R08 パラソルの会話用イベントスクリプト                    */
+/*  R08 パラソル1の会話用イベントスクリプト                    */
 /**************************************************************/
 EVENT_START   ev_r08_ambrella_01
 	_EASY_TALK_ITEM_EVENT(ITEM_WAZAMASIN42,1,FE_R08_ITEMGET_01,msg_r08_ambrella_01,msg_r08_ambrella_02,msg_r08_ambrella_02)
+EVENT_END
+
+/**************************************************************/
+/*  R08 パラソル2の会話用イベントスクリプト                    */
+/**************************************************************/
+EVENT_START   ev_r08_ambrella_02
+
+	_GET_TIMEZONE( SCWK_ANSWER )
+	_TALK_OBJ_START()
+	
+	IF FLAG_OFF(TMFLG_R08_STONE_GET) THEN	
+		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_01)
+		
+		IF $SCWK_ANSWER == TIMEZONE_MORNING THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_02)
+			_MSGWIN_CLOSE()
+			
+			_ITEM_EVENT_KEYWAIT(ITEM_SIMETTAIWA,1)
+		ELSIF $SCWK_ANSWER == TIMEZONE_NOON THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_03)
+			_MSGWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT(ITEM_ATUIIWA,1)
+			
+		ELSIF $SCWK_ANSWER == TIMEZONE_EVENING THEN
+			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_04)
+			_MSGWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT(ITEM_SARASARAIWA,1)
+			
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_05)
+			_MSGWIN_CLOSE()
+			_ITEM_EVENT_KEYWAIT(ITEM_TUMETAIIWA,1)	
+			
+		ENDIF
+		
+		_FLAG_SET(TMFLG_R08_STONE_GET)
+		
+	ELSE
+		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+	ENDIF
+	
 EVENT_END
 
 /**************************************************************/
