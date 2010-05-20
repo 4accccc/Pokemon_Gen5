@@ -4419,8 +4419,6 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       pow = 20;
     }
 
-    TAYA_Printf("ëÃèd=%d, à–óÕ=%d\n", heavy, pow );
-
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
@@ -5580,6 +5578,8 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
             targetPokeID = BTL_POKEID_NULL;
           }
         }
+
+        TAYA_Printf("Ç™Ç‹ÇÒÇÃëŒè€=%d\n", targetPokeID);
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
         break;

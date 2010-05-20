@@ -4700,8 +4700,13 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 3;
 
   case WAZA_TARGET_USER:      ///< Ž©•ª‚P‘Ì‚Ì‚Ý
-    BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, atPos) );
+    if( intrPokeID == BTL_POKEID_NULL ){
+      BTL_POKESET_Add( rec, attacker );
+    }else{
+      BTL_POKESET_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
+    }
     return 1;
+
   case WAZA_TARGET_FRIEND_USER_SELECT:  ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, targetPos) );
     return 1;
@@ -4799,8 +4804,13 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return cnt;
 
   case WAZA_TARGET_USER:      ///< Ž©•ª‚P‘Ì‚Ì‚Ý
-    BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, atPos) );
+    if( intrPokeID == BTL_POKEID_NULL ){
+      BTL_POKESET_Add( rec, attacker );
+    }else{
+      BTL_POKESET_Add( rec, BTL_POKECON_GetPokeParam(wk->pokeCon, intrPokeID) );
+    }
     return 1;
+
   case WAZA_TARGET_FRIEND_USER_SELECT:  ///< Ž©•ª‚ðŠÜ‚Þ–¡•û‚P‘Ìi‘I‘ðj
     BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, targetPos) );
     return 1;
