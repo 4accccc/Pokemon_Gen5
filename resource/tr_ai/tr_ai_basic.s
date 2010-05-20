@@ -104,7 +104,7 @@ BasicAI_DmgEnd:
 	IF_WAZANO	WAZANO_BAAKUAUTO,AI_DEC10		//2010.2.9
 
 BasicAI_01:
-  TABLE_JUMP TABLE_JUMP_WAZASEQNO,WAZASEQ_TABLE
+  TABLE_JUMP TABLE_JUMP_WAZASEQNO,WAZASEQ_TABLE,337
   AIEND
 
   TABLE_ADRS  WAZASEQ_TABLE
@@ -480,6 +480,7 @@ BasicAI_01:
 	ADRS  BasicAI_Dummy	//	  Ｖジェネレート
 	ADRS  BasicAI_Dummy	//	  フレイムソウル
 	ADRS  BasicAI_Dummy	//	  サンダーソウル
+	ADRS  BasicAI_Dummy	// 	ぼうふう            2010.5.20　修正
 
 BasicAI_Dummy:	//	  ダミー
 BasicAISeq_end:

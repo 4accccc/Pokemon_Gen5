@@ -17,7 +17,7 @@
 ExpertAISeq:
 	IF_MIKATA_ATTACK	ExpertAISeq_end   //対象が味方なら終了
 
-  TABLE_JUMP TABLE_JUMP_WAZASEQNO,WAZASEQ_TABLE
+  TABLE_JUMP TABLE_JUMP_WAZASEQNO,WAZASEQ_TABLE,337
   AIEND
 
   TABLE_ADRS  WAZASEQ_TABLE
@@ -393,6 +393,7 @@ ExpertAISeq:
 	ADRS  ExpertAI_Dummy	// 	Ｖジェネレート
 	ADRS  ExpertAI_Dummy	// 	フレイムソウル
 	ADRS  ExpertAI_Dummy	// 	サンダーソウル
+	ADRS  ExpertAI_337	// 	ぼうふう  2010.5.20
 
 ExpertAI_Dummy:		// ダミー	
 ExpertAISeq_end:
@@ -2293,6 +2294,7 @@ ExpertAI_151_end:
 
 //---------------------------------------------------------------------------
 
+ExpertAI_337:	//ぼうふう  2010.5.20
 ExpertAI_152:	//かみなり
 	CHECK_WAZA_AISYOU	AISYOU_0BAI,ExpertAI_152_1
 	CHECK_WAZA_AISYOU	AISYOU_1_2BAI,ExpertAI_152_1
