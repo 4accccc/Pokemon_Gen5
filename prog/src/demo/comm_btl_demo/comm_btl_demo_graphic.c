@@ -273,23 +273,8 @@ static const VecFx32 sc_CAMERA_PER_TARGET	= { 0,0,0 };	//ターゲット
 static inline GFL_G3D_CAMERA* GRAPHIC_G3D_CAMERA_Create
 		( const VecFx32* cp_pos, const VecFx32* cp_up, const VecFx32* cp_target, HEAPID heapID )
 {
-#if 1	//射影
-  // @TODO
+  // デフォルト設定
   return  GFL_G3D_CAMERA_CreateDefault( cp_pos, cp_target, heapID );
-  
-	return GFL_G3D_CAMERA_Create(	GFL_G3D_PRJPERS, 
-									FX_SinIdx( 10/2 *PERSPWAY_COEFFICIENT ),
-									FX_CosIdx( 10/2 *PERSPWAY_COEFFICIENT ),
-									defaultCameraAspect, 0,
-									FX32_CONST(0.1), FX32_CONST(2048), 0,
-									cp_pos, cp_up, cp_target, heapID );
-#else	//正射影	クリップ面は適当です
-	return GFL_G3D_CAMERA_CreateOrtho( 
-		// const fx32 top, const fx32 bottom, const fx32 left, const fx32 right, 
-			FX32_CONST(24), -FX32_CONST(24), -FX32_CONST(32), FX32_CONST(32),
-									defaultCameraNear, defaultCameraFar, 0,
-									cp_pos, cp_up, cp_target, heapID );
-#endif
 }
 
 //-------------------------------------

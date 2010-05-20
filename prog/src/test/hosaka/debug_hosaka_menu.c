@@ -100,7 +100,7 @@ static BOOL TESTMODE_ITEM_SelectIntro( TESTMODE_WORK *work , const int idx )
 #include "demo/comm_btl_demo.h"
 
 // デバッグ用のパラメータ設定
-//@TODO ALLOCしっぱなし
+// ALLOCしっぱなし
 // ワーク生成
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
@@ -117,7 +117,7 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
 
     {
-      //@TODO ALLOCしっぱなし
+      // ALLOCしっぱなし
       MYSTATUS* st = GFL_HEAP_AllocMemoryLo( GFL_HEAPID_APP, MyStatus_GetWorkSize() );
 
       MyStatus_Copy( SaveData_GetMyStatus( SaveControl_GetPointer() ), st );
