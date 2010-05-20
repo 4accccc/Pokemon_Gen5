@@ -1181,6 +1181,7 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/handler/hand_tokusei.c \
 			battle/handler/hand_item.c \
 			battle/handler/hand_waza.c \
+			battle/handler/hand_common.c \
 			battle/btl_util.c \
 			battle/btlv/btlv_core.c \
 			battle/btlv/btlv_scu.c \

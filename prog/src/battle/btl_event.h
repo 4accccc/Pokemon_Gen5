@@ -90,6 +90,7 @@ typedef enum {
   BTL_EVENT_TYPEMATCH_RATIO,        ///< 攻撃側タイプ一致時倍率
   BTL_EVENT_WAZA_ATK_TYPE,          ///< 攻撃側ポケタイプチェックハンドラ
   BTL_EVENT_WAZA_DEF_TYPE,          ///< 防御側ポケタイプチェックハンドラ
+  BTL_EVENT_PREV_WAZA_DMG,          ///< ダメージ演出直後
   BTL_EVENT_WAZA_DMG_DETERMINE,     ///< ダメージワザが当たること確定した（計算前）
   BTL_EVENT_WAZA_DMG_PROC1,         ///< タイプ計算前ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_PROC2,         ///< タイプ計算後ダメージ補正ハンドラ

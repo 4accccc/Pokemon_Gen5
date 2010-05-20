@@ -703,6 +703,8 @@ static void scput_WazaNoEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defend
 static void scput_WazaNoEffectIchigeki( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* defender );
 static void scPut_WazaDamagePlural( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   u32 poke_cnt, const BtlTypeAff* aff, BTL_POKEPARAM** bpp, const u16* damage, const u8* critical_flag, BOOL fTargetPlural );
+static void scproc_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, u32 poke_cnt, BTL_POKEPARAM** bppAry );
+static void scEvent_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, u32 poke_cnt, BTL_POKEPARAM** bppAry );
 static void scPut_WazaAffinityMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, const BtlTypeAff* aff, BTL_POKEPARAM** bpp,  BOOL fTargetPlural );
 static void scPut_CriticalMsg( BTL_SVFLOW_WORK* wk, u32 poke_cnt, BTL_POKEPARAM** bpp, const u8* critical_flg, BOOL fTargetPlural );
 static void scPut_Koraeru( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BppKoraeruCause cause );
@@ -6374,20 +6376,9 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   {
     if( BPP_MIGAWARI_IsExist(bpp[i]) )
     {
-      u8 j;
-
       scproc_Migawari_Damage( wk, attacker, bpp[i], dmg[i], affAry[i], critical_flg[i], wazaParam );
       BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], 0 );  // ダメージ0として記録
-
-      for(j=i; j<(poke_cnt-1); ++j)
-      {
-        bpp[j] = bpp[j+1];
-        dmg[j] = dmg[j+1];
-        affAry[j] = affAry[j+1];
-        critical_flg[j] = critical_flg[j+1];
-      }
-      --i;
-      --poke_cnt;
+      bpp[i] = NULL;  // 削除予定としてNULLを入れておく
     }
   }
 
@@ -6400,14 +6391,35 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   }
   hitCheckParam->count++;
 
+  // 身代わりヒットした分は配列から削除
+  for(i=0; i<poke_cnt; ++i)
+  {
+    if( bpp[i] == NULL )
+    {
+      int j;
+      for(j=(i+1); j<(poke_cnt-1); ++j)
+      {
+        bpp[j] = bpp[j+1];
+        dmg[j] = dmg[j+1];
+        affAry[j] = affAry[j+1];
+        critical_flg[j] = critical_flg[j+1];
+      }
+      --i;
+      --poke_cnt;
+    }
+  }
+
   // 対象がみがわりだけだったらここでリターン
   if( poke_cnt == 0 ){
     return dmg_sum;
   }
 
   // ダメージコマンド出力
+  scproc_PrevWazaDamage( wk, wazaParam, attacker, poke_cnt, bpp );
   scPut_WazaDamagePlural( wk, wazaParam, poke_cnt, affAry, bpp, dmg, critical_flg, fTargetPlural );
+
   if( !HITCHECK_IsPluralHitWaza(hitCheckParam) ){
+    // １回ヒットなら相性メッセージ即表示
     scPut_WazaAffinityMsg( wk, poke_cnt, affAry, bpp, fTargetPlural );
   }else{
     // 複数回ヒットワザの場合は相性値を記録するだけ
@@ -6507,6 +6519,7 @@ static u32 MarumeDamage( const BTL_POKEPARAM* bpp, u32 damage )
   }
   return damage;
 }
+
 //----------------------------------------------------------------------------------
 /**
  * ワザによるダメージを与えることが確定した（みがわりも含む）
@@ -6549,7 +6562,6 @@ static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk,
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_DETERMINE );
   BTL_EVENTVAR_Pop();
 }
-
 //----------------------------------------------------------------------------------
 /**
  * [Event] ワザによるダメージを「こらえる」かどうかチェック
@@ -6633,6 +6645,52 @@ static void scEvent_KoraeruExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKora
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_KORAERU_EXE );
   BTL_EVENTVAR_Pop();
 }
+//----------------------------------------------------------------------------------
+/**
+ * ワザダメージ演出直後（みがわりは除外されている）
+ *
+ * @param   wk
+ * @param   wazaParam
+ * @param   attacker
+ * @param   poke_cnt
+ * @param   bppAry
+ */
+//----------------------------------------------------------------------------------
+static void scproc_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, u32 poke_cnt, BTL_POKEPARAM** bppAry )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+
+  scEvent_PrevWazaDamage( wk, wazaParam, attacker, poke_cnt, bppAry );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザダメージ演出直後（みがわりは除外されている）
+ *
+ * @param   wk
+ * @param   wazaParam
+ * @param   attacker
+ * @param   poke_cnt
+ * @param   bppAry
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, u32 poke_cnt, BTL_POKEPARAM** bppAry )
+{
+  u32 i;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, poke_cnt );
+    for(i=0; i<poke_cnt; ++i)
+    {
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bppAry[i]) );
+    }
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_PREV_WAZA_DMG );
+  BTL_EVENTVAR_Pop();
+}
+
 
 //----------------------------------------------------------------------------------
 /**

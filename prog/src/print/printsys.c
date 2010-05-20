@@ -452,7 +452,7 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     u8 defL, defS, defB;
     PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
     if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
-      GFL_FONTSYS_SetColor( defL, defS, defB );
+      GFL_FONT  SYS_SetColor( defL, defS, defB );
     }
   }
 

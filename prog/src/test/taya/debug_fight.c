@@ -2334,7 +2334,7 @@ FS_EXTERN_OVERLAY(battle);
       BtlRule rule = btltype_GetRule( wk->saveData.btlType );
 
       TrainerID  trID = 1 + GFL_STD_MtRand( 100 ); // ‚Ä‚«‚Æ[‚Éƒ‰ƒ“ƒ_ƒ€‚Å
-//      TrainerID  trID = TRID_LEADER2_01;
+//      TrainerID  trID = TRID_SAGE1_01;
 
       switch( rule ){
       case BTL_RULE_SINGLE:

@@ -17,3 +17,8 @@ typedef struct {
 }HANDWORK_POKEID;
 
 
+/**
+ *  ‹¤—Lƒc[ƒ‹ŠÖ”ŒQ
+ */
+extern BOOL HandCommon_CheckTargetPokeID( u8 pokeID );
+

@@ -19,6 +19,7 @@
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
 
+#include "hand_common.h"
 #include "hand_item.h"
 
 
@@ -368,7 +369,6 @@ static void handler_Huusen_DamageReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static void handler_Huusen_ItemSetFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RedCard( u32* numElems );
 static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BOOL common_CheckTargetPokeID( u8 pokeID );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_NerainoMato( u32* numElems );
 static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SimetukeBand( u32* numElems );
@@ -1580,8 +1580,8 @@ static void handler_NazoNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OkkaNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,         handler_OkkaNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_WAZA_DMG_PROC2,       handler_OkkaNomi                },
+    { BTL_EVENT_PREV_WAZA_DMG,        handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1600,8 +1600,8 @@ static void handler_OkkaNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable* HAND_ADD_ITEM_ItokeNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,         handler_ItokeNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_WAZA_DMG_PROC2,     handler_ItokeNomi               },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1620,8 +1620,8 @@ static void handler_ItokeNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SokunoNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,         handler_SokunoNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_WAZA_DMG_PROC2,       handler_SokunoNomi },
+    { BTL_EVENT_PREV_WAZA_DMG,        handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1640,8 +1640,8 @@ static void handler_SokunoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RindoNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC2,         handler_RindoNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_WAZA_DMG_PROC2,       handler_RindoNomi },
+    { BTL_EVENT_PREV_WAZA_DMG,        handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1661,7 +1661,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_YacheNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,          handler_YacheNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,       handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,       handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1681,7 +1681,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_YopuNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,         handler_YopuNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1701,7 +1701,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_BiarNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,        handler_BiarNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,     handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1721,7 +1721,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SyukaNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,         handler_SyukaNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1741,7 +1741,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_BakouNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,         handler_BakouNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1761,7 +1761,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_UtanNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,        handler_UtanNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,     handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1781,7 +1781,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_TangaNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,        handler_TangaNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,     handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1801,7 +1801,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_YorogiNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,        handler_YorogiNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,     handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1821,7 +1821,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KasibuNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,        handler_KasibuNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,     handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1841,7 +1841,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HabanNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,         handler_HabanNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1861,7 +1861,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NamoNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,         handler_NamoNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1881,7 +1881,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_RiribaNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,        handler_RiribaNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,     handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1901,7 +1901,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HozuNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_PROC2,         handler_HozuNomi },
-    { BTL_EVENT_WAZA_DMG_REACTION,      handler_common_WeakAff_DmgAfter },
+    { BTL_EVENT_PREV_WAZA_DMG,      handler_common_WeakAff_DmgAfter },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -1924,8 +1924,11 @@ static BOOL common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == type)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF) > BTL_TYPEAFF_100)
   ){
-    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
-    return TRUE;
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_MIGAWARI_IsExist(bpp) ){
+      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -1933,7 +1936,7 @@ static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 {
   if( work[0] )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+    if( HandCommon_CheckTargetPokeID(pokeID) )
     {
       BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
 
@@ -4706,7 +4709,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_RedCard( u32* numElems )
 /// ダメージ処理終了ハンドラ
 static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( common_CheckTargetPokeID(pokeID) )
+  if( HandCommon_CheckTargetPokeID(pokeID) )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
     if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) != BTL_POS_NULL )
@@ -4722,20 +4725,6 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       push_param->fIgnoreLevel = TRUE;
     }
   }
-}
-/**
- *  複数体ターゲットポケモンIDが設定されているハンドラで、指定IDのポケモンがターゲットに含まれるか判定
- */
-static BOOL common_CheckTargetPokeID( u8 pokeID )
-{
-  u32 i, target_cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
-  for(i=0; i<target_cnt; ++i)
-  {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID ){
-      return TRUE;
-    }
-  }
-  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -4888,7 +4877,7 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 {
   // 自分がダメージを受けた側
 //  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  if( common_CheckTargetPokeID(pokeID) )
+  if( HandCommon_CheckTargetPokeID(pokeID) )
   {
     // 控えに交替可能メンバーがいるなら、どうぐ使用ハンドラ呼び出し
     //（割り込みアクション時を除く）
