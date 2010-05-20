@@ -324,6 +324,10 @@ EVENT_START		ev_pos_c03p07_plazma_01
 
 	//À•W•ªŠò‚±‚±‚Ü‚Å
 
+	//ŠÔˆá‚¢‚È‚­ƒRƒR‚¾‚Ë
+	_BALLOONWIN_OBJMSG( msg_c03p07_leader3_04 , C03P07_LEADER3_01 )
+	_MSGWIN_CLOSE()
+		
 	_CALL		ev_c03p07_hakai
 
 EVENT_END
