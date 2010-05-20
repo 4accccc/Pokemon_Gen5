@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-14T23:13:02"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T17:32:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -417,7 +417,7 @@
 ・選択したデオキシスがディフェンスフォルムのとき
 ・スピードフォルムにする</comment>
 		<language name="JPN" width="256">デオキシスは　すばやさが　ました
-じょうたいを　へんか　させた！</language>
+じょうたいに　へんか　した！</language>
 		<language name="JPN_KANJI" width="256">デオキシスは　すばやさが　ました
 状態に　変化した！</language>
 	</row>
