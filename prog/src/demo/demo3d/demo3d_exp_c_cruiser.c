@@ -233,7 +233,7 @@ static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk )
     {
       // À•WXV
       GFL_CLACT_WK_SetPos( uwk->clwk_marker, &g_c_cruiser_postbl[ uwk->pos_id ], CLSYS_DRAW_SUB );
-      GFL_CLACT_WK_SetAnmFrame( uwk->clwk_marker, 0 );
+//      GFL_CLACT_WK_SetAnmFrame( uwk->clwk_marker, 0 );
 
       OS_TPrintf("frame=%d marker pos_id=%d x=%d, y=%d\n", 
           frame, uwk->pos_id, 
