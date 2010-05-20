@@ -1030,7 +1030,7 @@ static GMEVENT_RESULT ShotEvt( GMEVENT* event, int* seq, void* work )
 
     {
       MMDL * mmdl;
-      IELD_PLAYER *fld_player;
+      FIELD_PLAYER *fld_player;
       u8 shot_idx = tmp->ShotIdx;
       u8 shot_dir_idx = GetDirIdxFromDir(tmp->ShotDir);
       u16 cam_eff_idx = ShotData[shot_idx][shot_dir_idx].CamEffIdx;
