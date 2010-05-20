@@ -2553,15 +2553,19 @@ void ITEMDISP_YesNoStart(FIELD_ITEMMENU_WORK* pWork)
   appinit.posType = ATPT_RIGHT_DOWN;
   appinit.charPosX = 32;
   appinit.charPosY = 12;
-  appinit.w        = APP_TASKMENU_PLATE_WIDTH;
-  appinit.h        = APP_TASKMENU_PLATE_HEIGHT;
+  appinit.w        = APP_TASKMENU_PLATE_WIDTH_YN_WIN;
+  appinit.h        = APP_TASKMENU_PLATE_HEIGHT_YN_WIN;
 
   pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR003, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
   pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
   GFL_MSG_GetString(pWork->MsgManager, MSG_ITEM_STR004, pWork->appitem[1].str);
   pWork->appitem[1].msgColor = PRINTSYS_LSB_Make( 0xe,0xf,0);
+  pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+
   pWork->pAppTask = APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);

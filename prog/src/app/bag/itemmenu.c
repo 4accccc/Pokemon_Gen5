@@ -236,7 +236,7 @@ static void _changeStateDebug(FIELD_ITEMMENU_WORK* pWork,StateFunc state, int li
 
 
 
-
+/*
 ///選択メニューのリスト
 static BMPMENULIST_HEADER _itemMenuListHeader = {
   NULL,     // 表示文字データポインタ
@@ -265,6 +265,7 @@ static BMPMENULIST_HEADER _itemMenuListHeader = {
   NULL,   //表示に使用するプリントキュー
   NULL,   //表示に使用するフォントハンドル
 };
+*/
 
 //-----------------------------------------------------------------------------
 /**
