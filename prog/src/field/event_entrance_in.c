@@ -384,7 +384,7 @@ static void StandByNextBGM( EVENT_WORK* work )
 	GAMEDATA*        gameData   = evdata->gameData;
   FIELD_SOUND*     fieldSound = GAMEDATA_GetFieldSound( gameData );
 
-  FSND_StandByNextMapBGM( fieldSound, gameData, evdata->nextLocation.zone_id );
+  FSND_StandByNextMapBGM( fieldSound, gameData, evdata->nextLocation.zone_id, evdata->end_season );
 
   evdata->BGM_standby_flag = TRUE;
 }

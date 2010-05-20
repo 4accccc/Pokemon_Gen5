@@ -336,7 +336,8 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
   case 1:
     // BGM フェードイン
     {
-      u32 soundIdx = FSND_GetFieldBGM( gamedata, fmw->loc_req.zone_id );
+      u8 season_id = GAMEDATA_GetSeasonID( gamedata );
+      u32 soundIdx = FSND_GetFieldBGM( gamedata, fmw->loc_req.zone_id, season_id );
       GMEVENT_CallEvent( event, EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
     }
     (*seq)++;
@@ -516,7 +517,8 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
   case 1:
     // BGM フェードイン
     {
-      u32 soundIdx = FSND_GetFieldBGM( gamedata, cmw->continue_zone_id );
+      u8 season_id = GAMEDATA_GetSeasonID( gamedata );
+      u32 soundIdx = FSND_GetFieldBGM( gamedata, cmw->continue_zone_id, season_id );
       GMEVENT_CallEvent( event, EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
     }
     (*seq)++;
@@ -761,7 +763,7 @@ static void JudgeSeasonUpdateOccur( MAPCHANGE_WORK* work )
     AREADATA_Delete( areaData );
   }
 
-  // 季節が変化 && 遷移先が屋外
+  // 実際に季節の更新が起こるかどうか
   if( (nextSeason != prevSeason) && (nextZoneIsOutdoor) ) { 
     work->seasonUpdateOccur = TRUE; 
     work->prevSeason = prevSeason;
@@ -1112,8 +1114,7 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
   GAMEDATA*       gameData   = work->gameData;
   FIELD_SOUND*    fieldSound = GAMEDATA_GetFieldSound( gameData );
 
-  switch(*seq)
-  {
+  switch(*seq) {
   case 0:
     // フェードアウト
     GMEVENT_CallEvent( event, DEBUG_EVENT_QuickFadeOut( gameSystem, fieldmap ) );
@@ -1126,8 +1127,8 @@ static GMEVENT_RESULT DEBUG_EVENT_QuickMapChange( GMEVENT* event, int* seq, void
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
   case 3:
@@ -1164,8 +1165,8 @@ static GMEVENT_RESULT EVENT_MapChangeNoFade( GMEVENT* event, int* seq, void* wk 
     break;
   case 1:
     // BGM更新リクエスト
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
   case 2:
@@ -1288,8 +1289,8 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
     break;
   case _SEQ_BGM_CHANGE:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
   case _SEQ_MAPCHG_CORE:
@@ -1340,8 +1341,8 @@ static GMEVENT_RESULT EVENT_MapChangeBySandStream( GMEVENT* event, int* seq, voi
     break;
   case 2:
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
   case 3: 
@@ -1393,8 +1394,8 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
 
@@ -1451,8 +1452,8 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     //自機のフォームを二足歩行に戻す
     MapChange_SetPlayerMoveFormNormal( gameData );
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
 
@@ -1507,8 +1508,8 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
       PLAYERWORK_SetMoveForm( player, PLAYER_MOVE_FORM_NORMAL );
     }
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     (*seq)++;
     break;
   case 3: 
@@ -1663,8 +1664,8 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp( GMEVENT* event, int* seq, void* wk 
     break;
   case 2: 
     // BGM変更
-    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id );
-    FSND_PlayStartBGM( fieldSound, gameData, work->loc_req.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, work->loc_req.zone_id, work->nextSeason );
+    FSND_PlayStartBGM( fieldSound, gameData );
     // マップチェンジ コアイベント
     GMEVENT_CallEvent( event, EVENT_MapChangeCore( work, EV_MAPCHG_NORMAL ) );
     (*seq)++;
@@ -1768,16 +1769,18 @@ static GMEVENT_RESULT EVENT_MapChangeToUnion( GMEVENT* event, int* seq, void* wk
 //------------------------------------------------------------------
 static void MAPCHANGE_WORK_init( MAPCHANGE_WORK* work, GAMESYS_WORK* gameSystem )
 {
-  FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gameSystem ); 
+  GAMEDATA*      gameData      = GAMESYSTEM_GetGameData( gameSystem );
+  FIELDMAP_WORK* fieldmap      = GAMESYSTEM_GetFieldMapWork( gameSystem ); 
+  u8             now_season_id = GAMEDATA_GetSeasonID( gameData );
 
   work->gameSystem         = gameSystem;
-  work->gameData           = GAMESYSTEM_GetGameData( gameSystem );
+  work->gameData           = gameData;
   work->fieldmap           = fieldmap;
   work->before_zone_id     = FIELDMAP_GetZoneID( fieldmap );
   work->seasonUpdateEnable = FALSE;
   work->seasonUpdateOccur  = FALSE;
-  work->prevSeason         = 0;
-  work->nextSeason         = 0;
+  work->prevSeason         = now_season_id;
+  work->nextSeason         = now_season_id;
 
   //コモン処理としてここに書く
   EFFECT_ENC_EffectAnmPauseSet( FIELDMAP_GetEncount( work->fieldmap), TRUE );
@@ -2575,7 +2578,8 @@ static GMEVENT_RESULT GMEVENT_GameOver(GMEVENT * event, int * seq, void *work)
     }
     // BGM 再生開始
     {
-      u32 soundIdx = FSND_GetFieldBGM( p_wk->gamedata, p_wk->loc_req.zone_id );
+      u8 season_id = GAMEDATA_GetSeasonID( p_wk->gamedata );
+      u32 soundIdx = FSND_GetFieldBGM( p_wk->gamedata, p_wk->loc_req.zone_id, season_id );
       GMEVENT_CallEvent( event, 
           EVENT_FSND_ChangeBGM( p_wk->gsys, soundIdx, FSND_FADE_NONE, FSND_FADE_NORMAL ) );
     }

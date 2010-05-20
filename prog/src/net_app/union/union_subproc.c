@@ -674,7 +674,8 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   	  GURUGURU_PARENT_WORK *gurupwk = subproc->parent_work;
   	  
   	  if(gurupwk->bgm_change == TRUE){
-        u16 snd_index = FSND_GetFieldBGM(unisys->uniparent->game_data, ZONE_ID_UNION);
+        u8 season_id = GAMEDATA_GetSeasonID(unisys->uniparent->game_data);
+        u16 snd_index = FSND_GetFieldBGM(unisys->uniparent->game_data, ZONE_ID_UNION, season_id);
         PMSND_PlayNextBGM( snd_index, FSND_FADE_FAST, FSND_FADE_NORMAL );
         *seq = _SEQ_BGM_FADE;
       }

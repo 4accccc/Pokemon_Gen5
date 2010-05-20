@@ -71,8 +71,8 @@ extern GMEVENT* EVENT_FSND_PlayTrainerEyeBGM( GAMESYS_WORK* gameSystem, u32 soun
 extern void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID ); 
 
 // マップ チェンジ
-extern void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID );
-extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID );
+extern void FSND_StandByNextMapBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID, u8 nextSeasonID );
+extern void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData );
 
 // 自機移動フォーム変更
 extern void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID ); 
@@ -102,7 +102,7 @@ inline void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
 // ■BGM No.の取得
 //=================================================================================
 // 指定したフィールド上で再生すべき BGM No.
-extern u32 FSND_GetFieldBGM( GAMEDATA* gdata, u32 zoneID ); 
+extern u32 FSND_GetFieldBGM( GAMEDATA* gdata, u32 zoneID, u8 seasonID ); 
 
 // トレーナー視線 BGM No.
 extern u32 FSND_GetTrainerEyeBGM( u32 trType ); 

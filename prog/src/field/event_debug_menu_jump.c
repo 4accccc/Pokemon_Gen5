@@ -270,7 +270,9 @@ static GMEVENT_RESULT debugMenuZoneJump(GMEVENT *event, int *seq, void *wk )
   
   case 100: //ユニオンルームへワープする前にユニオンのBGMに変更する
     {
-      u16 snd_index = FSND_GetFieldBGM(GAMESYSTEM_GetGameData(work->gmSys), ZONE_ID_UNION);
+      GAMEDATA* gdata = GAMESYSTEM_GetGameData(work->gmSys);
+      u8 season_id = GAMEDATA_GetSeasonID(gdata);
+      u16 snd_index = FSND_GetFieldBGM(gdata, ZONE_ID_UNION, season_id);
       GMEVENT_CallEvent(event, 
         EVENT_FSND_ChangeBGM(work->gmSys, snd_index, FSND_FADE_FAST, FSND_FADE_FAST));
     }

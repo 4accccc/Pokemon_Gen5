@@ -29,9 +29,9 @@
 // 自機フォームの取得
 static PLAYER_MOVE_FORM GetPlayerMoveForm( GAMEDATA* gameData );
 // BGM 番号取得
-static u32 GetZoneBGM   ( GAMEDATA* gameData, u32 zoneID );
+static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID, u8 seasonID );
 static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID );
-static u32 GetFieldBGM  ( GAMEDATA* gameData, u32 zoneID );
+static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID, u8 seasonID );
 
 
 //=================================================================================
@@ -1088,27 +1088,27 @@ GMEVENT* EVENT_FSND_WaitBGMPop( GAMESYS_WORK* gameSystem )
  * @param nextZoneID チェンジ後のゾーンID
  */
 //---------------------------------------------------------------------------------
-void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, 
-                                  u16 nextZoneID )
+void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID )
 {
-  u32 soundIdx;
+  u8 seasonID;
   u16 fadeOutFrame, fadeInFrame;
+  u32 soundIdx;
 
+  // ゾーンチェンジでは, 季節は変化しない
+  seasonID = GAMEDATA_GetSeasonID( gameData );
 
   // チェンジ先のゾーンのBGMを取得
   soundIdx = GetSpecialBGM( gameData, nextZoneID );
   if( soundIdx == SPECIAL_BGM_NONE ) {
-    soundIdx = GetZoneBGM( gameData, nextZoneID ); 
+    soundIdx = GetZoneBGM( gameData, nextZoneID, seasonID ); 
   }
 
   // フェード フレーム数を決定
-  if( GetPlayerMoveForm(gameData) == PLAYER_MOVE_FORM_CYCLE )
-  { // 自転車
+  if( GetPlayerMoveForm(gameData) == PLAYER_MOVE_FORM_CYCLE ) { // 自転車
     fadeOutFrame = FSND_FADE_NORMAL;
     fadeInFrame  = FSND_FADE_NORMAL;
   }
-  else
-  { // 歩き
+  else { // 歩き
     fadeOutFrame = FSND_FADE_NORMAL;
     fadeInFrame  = FSND_FADE_NONE;
   }
@@ -1123,24 +1123,23 @@ void FSND_ChangeBGM_byZoneChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData,
  *
  * @param fieldSound
  * @param gameData
- * @param nextZoneID 遷移後のゾーンID
+ * @param nextZoneID   遷移後のゾーンID
+ * @param nextSeasonID 遷移後の季節ID
  */
 //---------------------------------------------------------------------------------
 void FSND_StandByNextMapBGM( 
-    FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID )
-{ 
-  u32 prevBGM, nextBGM;
+    FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 nextZoneID, u8 nextSeasonID )
+{
+  u32 nextBGM;
 
-  // 前後のゾーンのBGMを取得
-  prevBGM = PMSND_GetBGMsoundNo();
   nextBGM = GetSpecialBGM( gameData, nextZoneID );
-  if( nextBGM == SPECIAL_BGM_NONE ) { nextBGM = GetZoneBGM( gameData, nextZoneID ); }
+  if( nextBGM == SPECIAL_BGM_NONE ) { 
+    nextBGM = GetZoneBGM( gameData, nextZoneID, nextSeasonID ); 
+  }
 
-  // 前後の BGM が同じなら何もしない
-  if( prevBGM == nextBGM ) { return; }
-
-  // リクエスト登録
-  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextBGM, FSND_FADE_NORMAL );
+  if( nextBGM != PMSND_GetBGMsoundNo() ) {
+    FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextBGM, FSND_FADE_NORMAL );
+  }
 }
 
 //---------------------------------------------------------------------------------
@@ -1149,19 +1148,10 @@ void FSND_StandByNextMapBGM(
  *
  * @param fieldSound
  * @param gameData
- * @param zoneID チェンジ後のゾーンID
  */
 //---------------------------------------------------------------------------------
-void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID )
+void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData )
 {
-  u32 soundIdx;
-
-  // チェンジ後のゾーンのBGMを取得
-  soundIdx = GetSpecialBGM( gameData, zoneID );
-  if( soundIdx == SPECIAL_BGM_NONE ) {
-    soundIdx = GetZoneBGM( gameData, zoneID ); 
-  }
-
   // リクエスト登録
   FIELD_SOUND_RegisterRequest_FADE_IN( fieldSound, FSND_FADE_NONE );
 }
@@ -1177,9 +1167,10 @@ void FSND_PlayStartBGM( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID 
 //---------------------------------------------------------------------------------
 void FSND_ChangeBGM_byPlayerFormChange( FIELD_SOUND* fieldSound, GAMEDATA* gameData, u16 zoneID )
 {
+  u8 seasonID;
   u32 soundIdx;
 
-  soundIdx = GetFieldBGM( gameData, zoneID );
+  soundIdx = GetFieldBGM( gameData, zoneID, GAMEDATA_GetSeasonID(gameData) );
 
   // リクエスト登録
   FIELD_SOUND_RegisterRequest_CHANGE( fieldSound, soundIdx, FSND_FADE_SHORT, FSND_FADE_NONE );
@@ -1243,13 +1234,14 @@ void FSND_ReleaseBGMVolume_fromApp( FIELD_SOUND* fieldSound, ISS_SYS* iss )
  *
  * @param gameData
  * @param zoneID   ゾーンID
+ * @param seasonID 季節ID
  *
  * @return 指定したゾーンで再生すべきBGM No.
  */
 //---------------------------------------------------------------------------------
-u32 FSND_GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
+u32 FSND_GetFieldBGM( GAMEDATA* gameData, u32 zoneID, u8 seasonID )
 {
-  return GetFieldBGM( gameData, zoneID );
+  return GetFieldBGM( gameData, zoneID, seasonID );
 }
 
 //---------------------------------------------------------------------------------
@@ -1307,17 +1299,16 @@ static PLAYER_MOVE_FORM GetPlayerMoveForm( GAMEDATA* gameData )
  * @brief 指定ゾーンのBGMを取得
  *
  * @param gameData
- * @param zoneID ゾーンID
+ * @param zoneID   ゾーンID
+ * @param seasonID 季節ID
  *
- * @return 指定ゾーンのBGM
+ * @return ゾーン×季節 で決定する フィールドの BGM
  */
 //---------------------------------------------------------------------------------
-static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID )
+static u32 GetZoneBGM( GAMEDATA* gameData, u32 zoneID, u8 seasonID )
 {
   u32 soundIdx;
-  u8 seasonID;
 
-  seasonID = GAMEDATA_GetSeasonID( gameData );
   soundIdx = ZONEDATA_GetBGMID( zoneID, seasonID );
 
   return soundIdx;
@@ -1362,11 +1353,12 @@ static u32 GetSpecialBGM( GAMEDATA* gameData, u32 zoneID )
  *
  * @param gameData
  * @param zoneID
+ * @param seasonID
  *
  * @return 指定したゾーンで再生すべきBGM
  */
 //---------------------------------------------------------------------------------
-static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
+static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID, u8 seasonID )
 {
   u32 soundIdx;
   PLAYER_MOVE_FORM playerForm;
@@ -1379,137 +1371,20 @@ static u32 GetFieldBGM( GAMEDATA* gameData, u32 zoneID )
   soundIdx = GetSpecialBGM( gameData, zoneID );
 
   // 特殊BGMが無い
-  if( soundIdx == SPECIAL_BGM_NONE )
-  {
-    if( (playerForm == PLAYER_MOVE_FORM_SWIM) && ZONEDATA_BicycleBGMEnable( zoneID ) )
-    { // なみのり
+  if( soundIdx == SPECIAL_BGM_NONE ) {
+    // なみのり
+    if( (playerForm == PLAYER_MOVE_FORM_SWIM) && ZONEDATA_BicycleBGMEnable( zoneID ) ) { 
       soundIdx = SEQ_BGM_NAMINORI;
     }      
-    else if( (playerForm == PLAYER_MOVE_FORM_CYCLE) && ZONEDATA_BicycleBGMEnable( zoneID ) )
-    { // 自転車
+    // 自転車
+    else if( (playerForm == PLAYER_MOVE_FORM_CYCLE) && ZONEDATA_BicycleBGMEnable( zoneID ) ) { 
       soundIdx = SEQ_BGM_BICYCLE; 
     } 
-    else
-    { // 歩き
-      soundIdx = GetZoneBGM( gameData, zoneID ); 
+    // 歩き
+    else { 
+      soundIdx = GetZoneBGM( gameData, zoneID, seasonID ); 
     }                             
   } 
 
   return soundIdx;
 }
-
-
-
-
-//=================================================================================
-// ■環境音
-//=================================================================================
-#if 0
-//----------------------------------------------------------------------------
-/**
- *	@brief  環境音の再生
- *
- *	@param	fieldSound    フィールドサウンド
- *	@param	soundIdx      サウンドインデックス
- */
-//-----------------------------------------------------------------------------
-void FSND_PlayEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
-{
-  FIELD_SOUND_PlayEnvSE( fieldSound, soundIdx );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  環境音の再生  （単発のみ対応）
- *
- *	@param	fieldSound    フィールドサウンド
- *	@param	soundIdx      サウンドインデックス
- *	@param	vol           指定ボリューム(有効値 0-127 デフォルトは127)
- */
-//-----------------------------------------------------------------------------
-void FSND_PlayEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
-{
-  FIELD_SOUND_PlayEnvSEVol( fieldSound, soundIdx, vol );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  環境音ボリュームの設定
- *
- *	@param	fieldSound  フィールドサウンド
- *	@param	soundIdx    サウンドインデックス
- *	@param	vol           指定ボリューム(有効値 0-127 デフォルトは127)
- */
-//-----------------------------------------------------------------------------
-void FSND_SetEnvSEVol( FIELD_SOUND* fieldSound, u32 soundIdx, u32 vol )
-{
-  FIELD_SOUND_SetEnvSEVol( fieldSound, soundIdx, vol );
-}
-
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  環境音の停止
- *
- *	@param	fieldSound  フィールドサウンド
- *	@param	soundIdx    サウンドインデックス
- */
-//-----------------------------------------------------------------------------
-void FSND_StopEnvSE( FIELD_SOUND* fieldSound, u32 soundIdx )
-{
-  FIELD_SOUND_StopEnvSE( fieldSound, soundIdx );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  環境音の一時停止
- *
- *	@param	fieldSound  フィールドサウンド
- */
-//-----------------------------------------------------------------------------
-void FSND_PauseEnvSE( FIELD_SOUND* fieldSound )
-{
-  FIELD_SOUND_PauseEnvSE( fieldSound );
-}
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  環境音の再始動
- *
- *	@param	fieldSound  フィールドサウンド
- */
-//-----------------------------------------------------------------------------
-void FSND_RePlayEnvSE( FIELD_SOUND* fieldSound )
-{
-  FIELD_SOUND_RePlayEnvSE( fieldSound );
-}
-#endif
-
-//=================================================================================
-// ■TVトランシーバー着信音
-//=================================================================================
-#if 0
-//-----------------------------------------------------------------------------
-/**
- * @brief TVトランシーバー着信音リクエスト
- *
- *	@param	fieldSound  フィールドサウンド
- */
-//-----------------------------------------------------------------------------
-void FSND_RequestTVTRingTone( FIELD_SOUND* fieldSound )
-{
-  FIELD_SOUND_PlayTVTRingTone( fieldSound );
-}
-
-//-----------------------------------------------------------------------------
-/**
- * @brief TVトランシーバー着信音の停止
- *
- *	@param	fieldSound  フィールドサウンド
- */
-//-----------------------------------------------------------------------------
-void FSND_StopTVTRingTone( FIELD_SOUND* fieldSound )
-{
-  FIELD_SOUND_StopTVTRingTone( fieldSound );
-}
-#endif

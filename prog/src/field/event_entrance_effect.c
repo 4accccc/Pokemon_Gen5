@@ -297,7 +297,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   // 演出開始
   case SEQ_DOOROUT_EFFECT_START:
     ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam ); // カメラ演出をセットアップ
-    FSND_PlayStartBGM( fieldSound, gameData, zone_id ); // BGM 再生開始
+    FSND_PlayStartBGM( fieldSound, gameData ); // BGM 再生開始
     StartFadeInEvent( event, work ); // 画面フェードイン開始
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
@@ -533,7 +533,7 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
 
     // BGM再生準備
   case SEQ_DOORIN_BGM_STAND_BY:
-    FSND_StandByNextMapBGM( fieldSound, gameData, evdata->nextLocation.zone_id );
+    FSND_StandByNextMapBGM( fieldSound, gameData, evdata->nextLocation.zone_id, evdata->end_season );
     evdata->BGM_standby_flag = TRUE;
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );

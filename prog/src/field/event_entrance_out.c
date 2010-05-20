@@ -330,7 +330,7 @@ static void StartStandByBGM( EVENT_WORK* work )
 
   GF_ASSERT( evdata->BGM_standby_flag );
 
-  FSND_PlayStartBGM( fieldSound, gameData, evdata->nextLocation.zone_id );
+  FSND_PlayStartBGM( fieldSound, gameData );
 }
 
 //---------------------------------------------------------------------------------------

@@ -296,20 +296,25 @@ BOOL SCREND_CheckEndBGMVolumeDown( SCREND_CHECK *end_check, int *seq )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdBgmNowMapPlay( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*       work = wk;
-  GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
-  GAMEDATA*         gdata = GAMESYSTEM_GetGameData( gsys );
+  SCRCMD_WORK*   work = wk;
+  GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA*      gdata    = GAMESYSTEM_GetGameData( gsys );
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-  FIELD_SOUND* fsound = GAMEDATA_GetFieldSound( gdata );
-  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
+  FIELD_SOUND*   fsound   = GAMEDATA_GetFieldSound( gdata );
+  SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
 
   {
     GMEVENT* event;
+    u8 seasonID;
     u16 zoneID;
     u32 soundIdx;
-    zoneID = FIELDMAP_GetZoneID( fieldmap );
-    soundIdx = FSND_GetFieldBGM( gdata, zoneID );
+
+    seasonID = GAMEDATA_GetSeasonID( gdata );
+    zoneID   = FIELDMAP_GetZoneID( fieldmap );
+    soundIdx = FSND_GetFieldBGM( gdata, zoneID, seasonID );
+
     event = EVENT_FSND_ChangeBGM( gsys, soundIdx, FSND_FADE_LONG, FSND_FADE_NORMAL );
+
     SCRIPT_CallEvent( sc, event );
     FSND_RePlayEnvSE( fsound ); // ŠÂ‹«‰¹•œ‹A
   }
@@ -336,11 +341,13 @@ VMCMD_RESULT EvCmdBgmNowMapPlayEx( VMHANDLE *core, void *wk )
 
   {
     GMEVENT* event;
+    u8 seasonID;
     u16 zoneID;
     u32 soundIdx;
 
+    seasonID = GAMEDATA_GetSeasonID( gdata );
     zoneID   = FIELDMAP_GetZoneID( fieldmap );
-    soundIdx = FSND_GetFieldBGM( gdata, zoneID );
+    soundIdx = FSND_GetFieldBGM( gdata, zoneID, seasonID );
     event    = EVENT_FSND_ChangeBGM( gsys, soundIdx, frame, FSND_FADE_NORMAL );
     SCRIPT_CallEvent( script, event );
     FSND_RePlayEnvSE( fsnd ); // ŠÂ‹«‰¹•œ‹A
