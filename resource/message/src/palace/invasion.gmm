@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-19T19:22:28"/>
+	<create user="ohmori" host="W00223" date="2010-05-20T20:19:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,7 +293,7 @@
 ・親プレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
 せつぞく　しました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と　
 接続　しました！</language>
 	</row>
 
@@ -302,7 +302,7 @@
 ・子プレイヤー１</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
 せつぞく　しました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と　
 接続　しました！</language>
 	</row>
 
@@ -311,7 +311,7 @@
 ・子プレイヤー２</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
 せつぞく　しました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と　
 接続　しました！</language>
 	</row>
 
@@ -320,7 +320,7 @@
 ・子プレイヤー３</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
 せつぞく　しました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と　
 接続　しました！</language>
 	</row>
 
@@ -543,7 +543,7 @@
 タグ1：タグ0のターゲットになるプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と　
 せつぞく　しました！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]のせかい　と　
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と　
 接続　しました！</language>
 	</row>
 
@@ -999,7 +999,7 @@
 じぶんのハイリンクに　もどってきた</language>
 		<language name="JPN_KANJI" width="256">ミッション　失敗！
 先を　こされてしまった……▼
-相手の世界は　なくなり
+相手の世界が　消え去り
 自分のハイリンクに　戻ってきた</language>
 	</row>
 
@@ -1011,28 +1011,32 @@
 じぶんのハイリンクに　もどってきた</language>
 		<language name="JPN_KANJI" width="256">ミッション　失敗！
 時間が　なくなった……▼
-相手の世界は　なくなり
+相手の世界が　消え去り
 自分のハイリンクに　戻ってきた</language>
 	</row>
 
 	<row id="plc_connect_12" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>通信切断時のメッセージ：通信エラー</comment>
-		<language name="JPN" width="256">とつぜん　あいてのせかいが　きえさり
-じぶんのハイリンクに　もどってきた</language>
-		<language name="JPN_KANJI" width="256">突然　相手の世界が　消えさり
-自分のハイリンクに　戻ってきた</language>
+		<language name="JPN" width="256">とつぜん　じぶんのハイリンクに
+もどされた！▼
+……どうやら　つながっていた
+ハイリンクが　きえてしまったようだ</language>
+		<language name="JPN_KANJI" width="256">突然　自分のハイリンクに
+戻された！▼
+……どうやら　つながっていた
+ハイリンクが　消えてしまったようだ</language>
 	</row>
 
 	<row id="plc_connect_13" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
 		<comment>通信切断時のメッセージ：相手が帰った</comment>
-		<language name="JPN" width="256">だれかが　ハイリンクから
-もとのせかいに　かえった▼
-あいてのせかいが　きえさり
-じぶんのハイリンクに　もどってきた</language>
-		<language name="JPN_KANJI" width="256">だれかが　ハイリンクから
-元の世界に　帰った▼
-相手の世界が　消えさり
-自分のハイリンクに　戻ってきた</language>
+		<language name="JPN" width="256">とつぜん　じぶんのハイリンクに
+もどされた！▼
+……どうやら　つながっていた
+ハイリンクが　きえてしまったようだ</language>
+		<language name="JPN_KANJI" width="256">突然　自分のハイリンクに
+戻された！▼
+……どうやら　つながっていた
+ハイリンクが　消えてしまったようだ</language>
 	</row>
 
 	<row id="plc_connect_14" back-color="#ffff00,,,#ff0000,,,,,,,,,,,,,,">
@@ -1043,7 +1047,7 @@
 じぶんのハイリンクに　もどってきた</language>
 		<language name="JPN_KANJI" width="256">ミッション　失敗！
 相手が　いなくなった……▼
-相手の世界は　なくなり
+相手の世界が　消え去り
 自分のハイリンクに　戻ってきた</language>
 	</row>
 
@@ -1055,7 +1059,7 @@
 じぶんのハイリンクに　もどってきた</language>
 		<language name="JPN_KANJI" width="256">ミッション　失敗！
 相手に　断られた……▼
-相手の世界は　なくなり
+相手の世界が　消え去り
 自分のハイリンクに　戻ってきた</language>
 	</row>
 

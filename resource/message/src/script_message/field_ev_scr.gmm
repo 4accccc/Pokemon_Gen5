@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-18T22:16:34"/>
+	<create user="ohmori" host="W00223" date="2010-05-20T20:39:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1926" top="97" right="2631" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -380,14 +380,16 @@
 
 	<row id="msg_fld_ev_warp_05" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
 		<comment>ハイリンクのミッションに参加するときに表示されるメッセージ。</comment>
-		<language name="JPN" width="256">……ミッションに　さんかします
+		<language name="JPN" width="256">……ハイリンクで　おこなわれている
+ミッションに　さんかします！▽
 しゅうりょうごは　ここに　もどります▼
 ミッションに　さんかするため
-あいてのハイリンクに　ワープした！</language>
-		<language name="JPN_KANJI" width="256">……ミッションに　参加します
+あいてのハイリンクに　ワープした！▼</language>
+		<language name="JPN_KANJI" width="256">……ハイリンクで　行なわれている
+ミッションに　参加します！▽
 終了後は　ここに　もどります▼
 ミッションに　参加するため
-相手のハイリンクに　ワープした！</language>
+相手のハイリンクに　ワープした！▼</language>
 	</row>
 
 	<flowchart-group-list>
