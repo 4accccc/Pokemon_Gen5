@@ -917,6 +917,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
     //c02ジムリーダーが博物館から出てくる
 	_SE_PLAY(SEQ_SE_KAIDAN)
+	_OBJ_POS_CHANGE(C02_LEADER02_02,644,0,581,DIR_DOWN)
 	_OBJ_ANIME( C02_LEADER02_02, anm_leader2_kuru_01 )
 	_SE_WAIT()
 	_OBJ_ANIME_WAIT()
@@ -1374,7 +1375,7 @@ _ANIME_LABEL	anm_c02_guide_x648
 //アロエ（ジムリーダー2）：博物館から出てくる                     
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader2_kuru_01
-	_ANIME_DATA AC_WALK_D_8F,4
+	_ANIME_DATA AC_WALK_D_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
