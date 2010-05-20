@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:20:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T22:07:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -355,7 +355,7 @@ C03ジムリーダー</attribute>
 
 	<row id="msg_d02_rock_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・手持ちリストの先頭が格闘ポケモンのとき
+・手持ちリストに格闘ポケモンがいるとき
 ・はい/いいえの選択肢</comment>
 		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">ためしのいわが　ある……[BE:01:ページ切り替え（クリア）]
@@ -379,7 +379,7 @@ C03ジムリーダー</attribute>
 
 	<row id="msg_d02_rock_03" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
-・手持ちリストの先頭が格闘ポケモンでないとき
+・手持ちリストに格闘ポケモンがいないとき
 ・アイテムを入手したあと（日が変わるまで）</comment>
 		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">ためしのいわが　ある……</language>
