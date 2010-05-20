@@ -378,9 +378,9 @@
 #define FE_N01R0304_TALK                   362 /* 0x016a Nの城：ボールをくれるプラズマ団員・初回会話フラグ */
 #define FE_T05_RAILWAY_TALK                363 /* 0x016b カナワタウン：鉄道トークを聞いたことがある */
 #define FE_D01R0101_POKE_END               364 /* 0x016c 夢の跡地：ゆめのけむりイベント終了フラグ */
-		/* not used   365(0x016d) */
-		/* not used   366(0x016e) */
-		/* not used   367(0x016f) */
+#define FE_C05R0601_ITEMGET_01             365 /* 0x016d ホドモエマーケット：アイテム入手フラグ */
+#define FE_C04R0502_ITEMGET_01             366 /* 0x016e ライモンシティビル：アイテム入手フラグ */
+#define FE_C04R0801_ITEMGET_01             367 /* 0x016f ライモン16番道路側ゲート：アイテム入手フラグ */
 		/* not used   368(0x0170) */
 		/* not used   369(0x0171) */
 		/* not used   370(0x0172) */
@@ -864,7 +864,7 @@
 #define FV_D07_STONE_01                    840 /* 0x0348 ネジ山：季節対応・冬季岩ストッパー */
 #define FV_D02R0101_STOP_01                841 /* 0x0349 ヤグルマの森：伝説ポケモン用のストッパー */
 #define FV_C04R0901_TRAINERW_01            842 /* 0x034a トライアルハウス：謎の女 */
-		/* not used   843(0x034b) */
+#define FV_C03R1101_ITEM_01                843 /* 0x034b ヒウンビル：ゲーチスイベント後のアイテムボール */
 		/* not used   844(0x034c) */
 		/* not used   845(0x034d) */
 		/* not used   846(0x034e) */
@@ -2535,7 +2535,7 @@
 #define TMFLG_H05_MINEZUMI                2761 /* 0x0ac9 ワンダーブリッジ：ミネズミ当てゲーム */
 #define TMFLG_D07R0401_FOSSIL             2762 /* 0x0aca ネジ山：クリア後１日１回カセキ入手イベント */
 #define TMFLG_T04R0401_SHIRONA_TALK       2763 /* 0x0acb サザナミタウン：シロナの春の１日の初回会話フラグ */
-		/* not used  2764(0x0acc) */
+#define TMFLG_R08_STONE_GET               2764 /* 0x0acc ８番道路：天候石入手イベント（１日１回入手） */
 		/* not used  2765(0x0acd) */
 		/* not used  2766(0x0ace) */
 		/* not used  2767(0x0acf) */
