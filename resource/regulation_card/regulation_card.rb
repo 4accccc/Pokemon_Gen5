@@ -58,8 +58,6 @@ POKENUM_MAX_BYTE = (656/8)  ##このくらいに増えるかも ８２バイト
 ITEMNUM_MAX_BYTE = (608/8)  ##このくらいにふえるかも
 SHOOTER_ITEMNUM_MAX_BYTE = 7  
 
-
-
 class RegulationBin
   
   def initialize
@@ -241,11 +239,19 @@ class RegulationBin
       i = 0
       mojibyte1 = 0
       msg.each_byte{ | mojibyte |
-        if i % 2 == 0
-          mojibyte1 = mojibyte
-        else
-          outFH.putc( mojibyte )
-          outFH.putc( mojibyte1 )
+        if i <= 144 #文字数オーバーしたら書き込まない
+          if i % 2 == 0
+            mojibyte1 = mojibyte
+          else
+            #改行コードなら書き換える
+            if mojibyte == 0x5e && mojibyte1 == 0x00
+              outFH.putc( 0xfe )
+              outFH.putc( 0xff )
+            else
+              outFH.putc( mojibyte )
+              outFH.putc( mojibyte1 )
+            end
+          end
         end
         i=i+1
       }
@@ -337,7 +343,10 @@ class RegulationBin
     
     headerplus(outHeader)
     
+    #一旦改行コードを加工するために
+    #バッファに受け取る
     fpr = File.new(tabfile,"r")
+
     lineindex=0
     fpr.each{ |line|
       index = 0
@@ -357,12 +366,11 @@ class RegulationBin
       outFH.close
       lineindex = lineindex + 1
     }
-    outHeader.close
     fpr.close
+    outHeader.close
     
   end
-  
-  
+
   def gmmread( gmmfile , hashgmm)
     fpr = File.new(gmmfile,"r")
     pokeno = 0
