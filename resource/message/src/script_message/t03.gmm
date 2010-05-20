@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-17T22:01:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T21:51:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -386,7 +386,7 @@
 町の　おきてに　したそうじゃ▼</language>
 	</row>
 
-	<row id="msg_t03_oldwoman1_02_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_t03_oldwoman1_02_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♀
 イベント終了</comment>
 		<attribute name="キャラ指定">oldwoman1</attribute>
