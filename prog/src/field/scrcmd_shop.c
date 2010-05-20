@@ -330,7 +330,7 @@ static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, 
   // カメラ移動制限処理を解除（ただし解除前の設定を保存しておく）
   sbw->camera_flag_push = FIELD_CAMERA_GetCameraAreaActive( fieldcamera );
   FIELD_CAMERA_SetCameraAreaActive( fieldcamera, FALSE );
-  FIELD_CAMERA_SetRecvCamParam( fieldcamera );
+  FIELD_CAMERA_SetRecvCamParamOv( fieldcamera );
 
   // 主人公の向きを取得
   fld_player = FIELDMAP_GetFieldPlayer( fieldmap );
@@ -354,7 +354,7 @@ static void Start_CameraMove( SHOP_BUY_CALL_WORK *sbw, FIELDMAP_WORK* fieldmap, 
   param.Chk.Pos   = TRUE;
 
   // カメラ移動開始
-  FIELD_CAMERA_SetLinerParam( fieldcamera, &param, 10 );
+  FIELD_CAMERA_SetLinerParamOv( fieldcamera, &param, 10 );
 
 }
 //----------------------------------------------------------------------------------
