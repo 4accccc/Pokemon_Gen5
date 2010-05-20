@@ -233,11 +233,15 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
 
   //MISCをスクロールするのでキャラ表示に使うのでMSGに展開  
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
-                    CTVT_FRAME_SUB_MSG , 0 , CTVT_BMPWIN_CGX*0x20, FALSE , heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_yobidashi_bg_NSCR , 
-                    CTVT_FRAME_SUB_MSG ,  0 , 0, FALSE , heapId );
-  GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MSG );
+
+  if( COMM_TVT_IsReqWarn( work ) == FALSE )
+  {
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+                      CTVT_FRAME_SUB_MSG , 0 , CTVT_BMPWIN_CGX*0x20, FALSE , heapId );
+    GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_yobidashi_bg_NSCR , 
+                      CTVT_FRAME_SUB_MSG ,  0 , 0, FALSE , heapId );
+    GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MSG );
+  }
   {
     u8 i;
     GFL_CLWK_DATA cellInitData;
@@ -281,7 +285,14 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
     //戻るボタン
     cellInitData.pos_x = CTVT_CALL_RETURN_X;
     cellInitData.pos_y = 192-24;
-    cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+    if( COMM_TVT_IsReqWarn( work ) == FALSE )
+    {
+      cellInitData.anmseq = APP_COMMON_BARICON_RETURN;
+    }
+    else
+    {
+      cellInitData.anmseq = APP_COMMON_BARICON_RETURN_OFF;
+    }
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
     
@@ -724,6 +735,16 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         //メッセージのアップデートで出す
         callWork->state = CCS_MAIN;
         callWork->barState = CCBS_DISP_MSG;
+        GFL_CLACT_WK_SetAnmSeq( callWork->clwkReturn , APP_COMMON_BARICON_RETURN );
+        {
+          const HEAPID heapId = COMM_TVT_GetHeapId( work );
+          ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
+          GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
+                            CTVT_FRAME_SUB_MSG , 0 , CTVT_BMPWIN_CGX*0x20, FALSE , heapId );
+          GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_comm_tvt_tv_t_yobidashi_bg_NSCR , 
+                            CTVT_FRAME_SUB_MSG ,  0 , 0, FALSE , heapId );
+          GFL_BG_LoadScreenReq( CTVT_FRAME_SUB_MSG );
+        }
         //CTVT_CALL_DispMessage( work , callWork , COMM_TVT_CALL_04 );
       }
     }
