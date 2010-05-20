@@ -136,7 +136,8 @@ static GMEVENT_RESULT DemoCallEvt( GMEVENT* event, int* seq, void* work )
     //経過時間セット
     PL_BOAT_SetTime(evt_work->Ptr, evt_work->Param.end_frame);
     NOZOMU_Printf("end_frame = %d\n",evt_work->Param.end_frame);
-    GF_ASSERT(evt_work->Param.start_frame<=evt_work->Param.end_frame);
+    GF_ASSERT_MSG(evt_work->Param.start_frame<=evt_work->Param.end_frame,"%d_%d",
+        evt_work->Param.start_frame<=evt_work->Param.end_frame);
     //イベント終了
     return GMEVENT_RES_FINISH;
   }
