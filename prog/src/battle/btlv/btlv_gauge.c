@@ -1618,8 +1618,14 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
     //ゲージの表示ドット数から色とパーツアドレスを取得
     {
       int dotto_color;
+      int now_hp = bgcl->hp_work;
 
-      dotto_color = GAUGETOOL_GetGaugeDottoColor( bgcl->hp, bgcl->hpmax );
+      if( bgcl->hpmax < BTLV_GAUGE_HP_DOTTOMAX )
+      { 
+        now_hp >>= 8; 
+      }
+
+      dotto_color = GAUGETOOL_GetGaugeDottoColor( now_hp, bgcl->hpmax );
       switch(dotto_color){
       case GAUGETOOL_HP_DOTTO_GREEN:
         parts_num = GP_HPBAR_GREEN;
