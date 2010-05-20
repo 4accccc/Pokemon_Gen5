@@ -112,12 +112,16 @@ EVENT_START   ev_c02r0301_woman2_01
 				//選んだポケモンは交換できるぞ！
 				IF	$LWK_TRADE_CHK == FLD_TRADE_ENABLE  THEN
 					
+					//よし 交換しよう[100520斉藤マ追加]
+					_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_01a )
+					_MSGWIN_CLOSE()
+					
 					//交換するポケモンのデータを保存
 					_TRADEPOKE_AFTER_SAVE( LWK_TEMOCHI_POS, SCR_TRPOKE_AFTER_SAVE_C02 )
-			
+					
 					//ポケモンの交換開始！
 					_FIELD_POKE_TRADE( LWK_POKE_NAME1, LWK_TEMOCHI_POS )
-
+					
 					//うふふ！　あたしの 1:01:ポケモン種族名:1]　だいじにしてね！▼
 					_BALLOONWIN_TALKOBJ_MSG( msg_c02r0301_woman2_02 )
 					_LAST_KEYWAIT()

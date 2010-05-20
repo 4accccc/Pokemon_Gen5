@@ -67,6 +67,10 @@ EVENT_START		ev_r15r0401_assistantw_01
 				//åä∑â¬î\Ç≈Ç†ÇÈ
 				IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
 				
+					//ÇÊÇµ åä∑ÇµÇÊÇ§[100520êƒì°É}í«â¡]
+					_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_01a, R15R0401_ASSISTANTW_01 )
+					_MSGWIN_CLOSE()
+					
 					//åä∑èàóù
 					_FIELD_POKE_TRADE ( FLD_TRADE_POKE_7_ROTOMU , LWK_CHOICE )
 					_BALLOONWIN_OBJMSG( msg_r15r0401_woman2_02 ,R15R0401_ASSISTANTW_01)

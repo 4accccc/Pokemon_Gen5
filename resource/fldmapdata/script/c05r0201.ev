@@ -196,10 +196,14 @@ EVENT_START   ev_c05r0201_boy2_01
 				
 					//交換可能である
 					IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
-					
+						
+						//よし 交換しよう[100520斉藤マ追加]
+						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_01a ,C05R0201_BOY2_01)
+						_MSGWIN_CLOSE()
+						
 						//交換したポケモンを記録
 						_TRADEPOKE_AFTER_SAVE( LWK_CHOICE , SCR_TRPOKE_AFTER_SAVE_C05 )
-					
+						
 						//交換処理
 						_FIELD_POKE_TRADE ( FLD_TRADE_POKE_3_BASURAO , LWK_CHOICE )
 						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_02 ,C05R0201_BOY2_01)
@@ -216,6 +220,7 @@ EVENT_START   ev_c05r0201_boy2_01
 					//条件と一致しなかった
 					ELSE
 						//オイラがほしいのは違う
+						_MONS_NAME ( 0 , MONSNO_533  ) //要望（チラーミィ）
 						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_03 ,C05R0201_BOY2_01)
 						_LAST_KEYWAIT()
 						_BALLOONWIN_CLOSE()
@@ -229,10 +234,14 @@ EVENT_START   ev_c05r0201_boy2_01
 				
 					//交換可能である
 					IF $LWK_TRADE_CHECK == FLD_TRADE_ENABLE THEN
-					
+						
+						//よし 交換しよう[100520斉藤マ追加]
+						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_01a ,C05R0201_BOY2_01)
+						_MSGWIN_CLOSE()
+						
 						//交換したポケモンを記録
 						_TRADEPOKE_AFTER_SAVE( LWK_CHOICE , SCR_TRPOKE_AFTER_SAVE_C05 )
-					
+						
 						//交換処理
 						_FIELD_POKE_TRADE ( FLD_TRADE_POKE_4_BASURAO , LWK_CHOICE )
 						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_02 ,C05R0201_BOY2_01)
@@ -249,6 +258,7 @@ EVENT_START   ev_c05r0201_boy2_01
 					//条件と一致しなかった
 					ELSE
 						//オイラがほしいのは違う
+						_MONS_NAME ( 0 , MONSNO_533  ) //要望（チラーミィ）
 						_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_03 ,C05R0201_BOY2_01)
 						_LAST_KEYWAIT()
 						_BALLOONWIN_CLOSE()
