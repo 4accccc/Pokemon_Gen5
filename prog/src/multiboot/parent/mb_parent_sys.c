@@ -385,6 +385,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
   work->playNum = 0;
   work->totalGet = 0;
 
+  GFL_UI_SleepDisable( GFL_UI_SLEEP_MB );
 }
 
 //--------------------------------------------------------------
@@ -393,6 +394,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
   
+  GFL_UI_SleepDisable( GFL_UI_SLEEP_MB );
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
   GFL_NET_WirelessIconEasyEnd();
