@@ -616,6 +616,7 @@ static void PokeExit( MCSS_SYS_WORK* mcss_sys_wk, MCSS_WORK* poke_wk );
     }
 // NULLを代入し忘れないようにマクロを使うようにしておく
 static void PokeAdjustOfsPos( MCSS_WORK* poke_wk );
+static void PokeAdjustOfsPosX( MCSS_WORK* poke_wk );
 static void PokeGetCompareRelativePosition( MCSS_WORK* poke_wk, VecFx32* pos );
 
 static void PokeMcssWorkInit( POKE_MCSS_WORK* poke_mcss_wk, HEAPID heap_id,
@@ -2141,6 +2142,7 @@ static MCSS_WORK* PokeInit( MCSS_SYS_WORK* mcss_sys_wk,
   MCSS_SetAnmStopFlag( poke_wk );
   MCSS_SetScale( poke_wk, &scale );
   //PokeAdjustOfsPos( poke_wk );  // 地面原点で問題ないので、オフセットしない。
+  PokeAdjustOfsPosX( poke_wk );
 
   return poke_wk;
 }
@@ -2158,6 +2160,17 @@ static void PokeAdjustOfsPos( MCSS_WORK* poke_wk )
   ofs_y = ( POKE_SIZE_MAX - size_y ) / 2.0f;
   ofs.x = 0;  ofs.y = FX_F32_TO_FX32(ofs_y);  ofs.z = 0;
   MCSS_SetOfsPosition( poke_wk, &ofs );
+}
+static void PokeAdjustOfsPosX( MCSS_WORK* poke_wk )
+{
+  f32      offset_x = (f32)MCSS_GetOffsetX( poke_wk );  // 右にずれているとき+, 左にずれているとき-
+  f32      ofs_position_x;
+  VecFx32  ofs_position;
+
+  ofs_position_x = - offset_x;
+    
+  ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = 0;  ofs_position.z = 0;
+  MCSS_SetOfsPosition( poke_wk, &ofs_position );
 }
 
 static void PokeGetCompareRelativePosition( MCSS_WORK* poke_wk, VecFx32* pos )

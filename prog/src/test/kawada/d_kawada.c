@@ -98,6 +98,9 @@ FS_EXTERN_OVERLAY(manual);
 //============================================================================================
 #define	TOP_MENU_SIZ	( 15 )
 
+#define POKE_LIST_NUM  (11)
+
+
 typedef struct {
 	u32	main_seq;
 	u32	next_seq;
@@ -157,7 +160,7 @@ typedef struct {
 
   // }ŠÓÚ×
   ZUKAN_DETAIL_PARAM* zukan_detail_param;
-  u16                 poke_list[9];
+  u16                 poke_list[POKE_LIST_NUM];
 
   // ƒeƒXƒg
   D_KAWADA_TEST_PARAM*  d_test_param;
@@ -1128,6 +1131,9 @@ static void EggDemoInit( KAWADA_MAIN_WORK* wk )
   ZONEDATA_Open( wk->heapID );
 
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )  monsno = MONSNO_MANAFI;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )  monsno = MONSNO_PIZYOTTO;
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )  monsno = MONSNO_PIZYON;
+
   wk->pp = PP_Create( monsno, 1, 0, wk->heapID );
   PP_Put( wk->pp, ID_PARA_tamago_flag, 1 );
      
@@ -1204,7 +1210,7 @@ static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk )
 // }ŠÓÚ×
 static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
 {
-  u16 poke_list_num = 9;
+  u16 poke_list_num = POKE_LIST_NUM;
   const u8 lang_code[6] =
   {
     LANG_ENGLISH,
@@ -1224,15 +1230,17 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   
   ZUKANSAVE_SetGraphicVersionUpFlag( zukan_savedata );
  
-  wk->poke_list[0] = 201;
-  wk->poke_list[1] = 202;
-  wk->poke_list[2] = 151;
-  wk->poke_list[3] = 487;
-  wk->poke_list[4] = 582;  // MONSNO_TURURI
-  wk->poke_list[5] = 583;  // MONSNO_TURUTTO
-  wk->poke_list[6] = 584;  // MONSNO_TURUTURUDA
-  wk->poke_list[7] = 585;  // MONSNO_SIKIZIKA
-  wk->poke_list[8] = 586;  // MONSNO_ANTORESU
+  wk->poke_list[ 0] = 201;
+  wk->poke_list[ 1] = 202;
+  wk->poke_list[ 2] = 151;
+  wk->poke_list[ 3] = 487;
+  wk->poke_list[ 4] =  17;
+  wk->poke_list[ 5] =  18;
+  wk->poke_list[ 6] = 582;  // MONSNO_TURURI
+  wk->poke_list[ 7] = 583;  // MONSNO_TURUTTO
+  wk->poke_list[ 8] = 584;  // MONSNO_TURUTURUDA
+  wk->poke_list[ 9] = 585;  // MONSNO_SIKIZIKA
+  wk->poke_list[10] = 586;  // MONSNO_ANTORESU
 
   for( i=0; i<poke_list_num; i++ )
   {

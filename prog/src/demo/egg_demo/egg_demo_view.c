@@ -1002,6 +1002,7 @@ static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
   }
 
   {
+#if 0
     f32 size_y = (f32)MCSS_GetSizeY( work->mcss_wk );
     f32 ofs_y;
     VecFx32 ofs;
@@ -1009,6 +1010,24 @@ static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
     ofs_y = ( POKE_SIZE_MAX - size_y ) / 2.0f;
     ofs.x = 0;  ofs.y = FX_F32_TO_FX32(ofs_y);  ofs.z = 0;
     MCSS_SetOfsPosition( work->mcss_wk, &ofs );
+#else
+
+    f32      size_y   = (f32)MCSS_GetSizeY( work->mcss_wk );
+    f32      offset_y = (f32)MCSS_GetOffsetY( work->mcss_wk );  // •‚‚¢‚Ä‚¢‚é‚Æ‚«-, ’¾‚ñ‚Å‚¢‚é‚Æ‚«+
+    f32      offset_x = (f32)MCSS_GetOffsetX( work->mcss_wk );  // ‰E‚É‚¸‚ê‚Ä‚¢‚é‚Æ‚«+, ¶‚É‚¸‚ê‚Ä‚¢‚é‚Æ‚«-
+    f32      ofs_position_y;
+    f32      ofs_position_x;
+    VecFx32  ofs_position;
+
+    if( size_y > POKE_SIZE_MAX ) size_y = POKE_SIZE_MAX;
+
+    ofs_position_y = ( POKE_SIZE_MAX - size_y ) / 2.0f + offset_y;
+    ofs_position_x = - offset_x;
+      
+    ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = FX_F32_TO_FX32(ofs_position_y);  ofs_position.z = 0;
+    MCSS_SetOfsPosition( work->mcss_wk, &ofs_position );
+
+#endif
   }
 }
 //-------------------------------------

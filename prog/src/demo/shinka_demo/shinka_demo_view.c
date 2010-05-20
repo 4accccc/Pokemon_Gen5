@@ -1190,6 +1190,7 @@ static u8 NotDispPoke( u8 disp_poke )
 //=====================================
 static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
 {
+#if 0
   u8 i;
   for(i=0; i<POKE_MAX; i++)
   {
@@ -1205,6 +1206,35 @@ static void ShinkaDemo_View_AdjustPokePos( SHINKADEMO_VIEW_WORK* work )
       MCSS_SetOfsPosition( work->poke_set[i].wk, &ofs );
     }
   }
+#else
+
+  u8 i;
+  for(i=0; i<POKE_MAX; i++)
+  {
+    if( work->poke_set[i].wk != NULL )
+    {
+      f32      size_y   = (f32)MCSS_GetSizeY( work->poke_set[i].wk );
+      f32      offset_y = (f32)MCSS_GetOffsetY( work->poke_set[i].wk );  // •‚‚¢‚Ä‚¢‚é‚Æ‚«-, ’¾‚ñ‚Å‚¢‚é‚Æ‚«+
+      f32      offset_x = (f32)MCSS_GetOffsetX( work->poke_set[i].wk );  // ‰E‚É‚¸‚ê‚Ä‚¢‚é‚Æ‚«+, ¶‚É‚¸‚ê‚Ä‚¢‚é‚Æ‚«-
+      f32      ofs_position_y;
+      f32      ofs_position_x;
+      VecFx32  ofs_position;
+
+      size_y   *= work->scale / SCALE_MAX;
+      if( size_y > POKE_SIZE_MAX ) size_y = POKE_SIZE_MAX;
+      
+      offset_y *= work->scale / SCALE_MAX;
+      offset_x *= work->scale / SCALE_MAX;
+
+      ofs_position_y = ( ( POKE_SIZE_MAX - size_y ) / 2.0f + offset_y ) * POKE_Y_ADJUST;
+      ofs_position_x = - offset_x * POKE_Y_ADJUST;
+      
+      ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = FX_F32_TO_FX32(ofs_position_y);  ofs_position.z = 0;
+      MCSS_SetOfsPosition( work->poke_set[i].wk, &ofs_position );
+    }
+  }
+
+#endif
 }
 
 //-------------------------------------
