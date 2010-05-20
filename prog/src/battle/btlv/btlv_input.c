@@ -1126,7 +1126,6 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
   GFL_ARC_CloseDataHandle( biw->handle );
 
   biw->scr_type = BTLV_INPUT_SCRTYPE_STANDBY;
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NORMAL );
 }
 
 //============================================================================================
