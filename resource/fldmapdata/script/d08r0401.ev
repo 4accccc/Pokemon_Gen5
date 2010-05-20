@@ -32,9 +32,9 @@ EVENT_START    ev_pos_d08r0401_rivel_01
 	_PLAYER_NAME(0)
 	//ライバルが喋る
 	//ライバル：(プレイヤーの名前)！
-	_BALLOONWIN_OBJMSG( msg_d08r0401_black_01, MMDL_ID_EVENTOBJ_00)
-	_BALLOONWIN_CLOSE()
-
+	_PLAINWIN_MSG_UP(msg_d08r0401_black_01)
+	_MSGWIN_CLOSE()
+	
 	_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 
