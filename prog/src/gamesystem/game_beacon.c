@@ -438,7 +438,7 @@ static GAMEBEACON_INFO * BeaconInfo_GetDirect(GAMEBEACON_SYSTEM *bsys, int log_n
 //==================================================================
 const GAMEBEACON_INFO * GAMEBEACON_Get_BeaconLogDirect(int log_no)
 {
-  return BeaconInfo_Get(GameBeaconSys, log_no);
+  return BeaconInfo_GetDirect(GameBeaconSys, log_no);
 }
 
 //--------------------------------------------------------------
