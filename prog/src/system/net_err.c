@@ -79,10 +79,6 @@ typedef struct{
 	GXVRamBG bg_bank;			    ///<BG VRAMバンク情報
 	GXVRamSubBG bg_bank_sub;	///<SUB BG VRAMバンク情報
 	
-	u8 font_letter;
-	u8 font_shadow;
-	u8 font_back;
-	
 	NET_ERR_STATUS status;		///<エラー画面システムの状況
 	s32 key_timer;				///<キー入力受付までのタイマー
 
@@ -623,10 +619,6 @@ static void Local_ErrDispInit(BOOL fatal_error)
 	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
 	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
 
-	//フォントカラー退避
-	GFL_FONTSYS_GetColor(&nes->font_letter, &nes->font_shadow, &nes->font_back);
-	GFL_FONTSYS_SetColor(4, 0xb, 7);
-	
 	//退避できないもの
 	G2_BlendNone(); //WriteOnlyの為、レジスタ退避が出来ていない
 	
@@ -657,9 +649,6 @@ static void Local_ErrDispExit(void)
 	GX_SetMasterBrightness(-16);
 	GXS_SetMasterBrightness(-16);
 	
-	//フォントカラー復帰
-	GFL_FONTSYS_SetColor(nes->font_letter, nes->font_shadow, nes->font_back);
-
 	//VRAM復帰
 	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
 	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
@@ -780,6 +769,10 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
 			data++;
 		}
 	}
+
+	//BMPキャラクタ領域を文字背景色で埋める
+	GFL_STD_MemFill16((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
+	  0x7777, MESSAGE_X_LEN * MESSAGE_Y_LEN * 32);
 	
 	//BMP作成
 	bmpdata = GFL_BMP_CreateInVRAM((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
@@ -889,7 +882,7 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
     src     = GFL_MSG_CreateString(mm, msgno);
 		strbuf  = GFL_MSG_CreateString(mm, msgno);
     WORDSET_ExpandStr( wordset, strbuf, src );
-		PRINTSYS_Print(bmpdata, 0, 0, strbuf, fontHandle);
+		PRINTSYS_PrintColor(bmpdata, 0, 0, strbuf, fontHandle, PRINTSYS_LSB_Make(4, 0xb, 7));
 
 		GFL_STR_DeleteBuffer(strbuf);
 		GFL_STR_DeleteBuffer(src);

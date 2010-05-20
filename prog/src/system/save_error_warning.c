@@ -130,9 +130,6 @@ static void Local_WarningDispInit(u32 msg_id)
 	G2_BG1Mosaic(FALSE);
 	G2_SetBG1Offset(0, 0);
 
-	//フォントカラー退避
-	GFL_FONTSYS_SetColor(4, 0xb, 7);
-	
 	G2_BlendNone();
 	
 	//エラー画面描画
@@ -211,6 +208,10 @@ static void Local_WarningMessagePrint(u32 msg_id)
 			data++;
 		}
 	}
+
+	//BMPキャラクタ領域を文字背景色で埋める
+	GFL_STD_MemFill16((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
+	  0x7777, MESSAGE_X_LEN * MESSAGE_Y_LEN * 32);
 	
 	//BMP作成
 	bmpdata = GFL_BMP_CreateInVRAM((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
@@ -229,7 +230,7 @@ static void Local_WarningMessagePrint(u32 msg_id)
         ARCID_MESSAGE, NARC_message_backup_err_dat, HEAPID_SAVE);
 
     src     = GFL_MSG_CreateString(mm, msg_id);
-		PRINTSYS_Print(bmpdata, 0, 0, src, fontHandle);
+		PRINTSYS_PrintColor(bmpdata, 0, 0, src, fontHandle, PRINTSYS_LSB_Make(4, 0xb, 7));
 
 		GFL_STR_DeleteBuffer(src);
 		GFL_MSG_Delete(mm);
