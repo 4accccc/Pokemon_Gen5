@@ -163,19 +163,6 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
   GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( wk->local_procsys );
   if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
-#ifdef PM_DEBUG
-  // デバッグ都合上、特定キー押しながら逃げた時に結果コード書き換え
-  if( param->btlResult->result == BTL_RESULT_RUN )
-  {
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){      // R押し = 勝ち
-      param->btlResult->result = BTL_RESULT_WIN;
-    }
-    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){ // X押し = 負け
-      param->btlResult->result = BTL_RESULT_LOSE;
-    }
-  }
-#endif
-
   switch( *seq ){
   case 0:
     {
@@ -186,6 +173,17 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
       wk->shinka_poke_pos = 0;
       wk->shinka_poke_bit = 0;
+
+#ifdef PM_DEBUG
+      // デバッグ都合上、特定キー押しながら逃げた時に結果コード書き換え
+      if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R) )
+      {
+        param->btlResult->result = BTL_RESULT_WIN;
+        if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){   // X押し = 負け
+          param->btlResult->result = BTL_RESULT_LOSE;
+        }
+      }
+#endif
 
       // 野生orゲーム内通常トレーナー（サブウェイ除く）の後のみ行う処理
       if( (param->btlResult->competitor == BTL_COMPETITOR_WILD)
