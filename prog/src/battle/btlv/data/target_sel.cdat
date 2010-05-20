@@ -701,7 +701,7 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Pair_R[] = {
 ///< 場に出ているポケモン全て & 場全体（天候など）
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6All[] = { 
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 5,  1,  0,  4,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  { { 5,  1,  0,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
