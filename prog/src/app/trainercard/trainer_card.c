@@ -216,26 +216,26 @@ enum{
 
 
 //ユニオンルームトレーナー表示テーブル
-static const int UniTrTable[UNION_TR_MAX] =
+static const int UniTrTable[UNION_TR_MAX][2] =
 {
   //男
-  NARC_trc_union_trdp_elitem256_NCGR,
-  NARC_trc_union_trdp_karate256_NCGR,
-  NARC_trc_union_trdp_espm256_NCGR,
-  NARC_trc_union_trdp_prince256_NCGR,
-  NARC_trc_union_trdp_mushi256_NCGR,
-  NARC_trc_union_trdp_iseki256_NCGR,
-  NARC_trc_union_trdp_heads256_NCGR,
-  NARC_trc_union_trdp_schoolb256_NCGR,
-  //女
-  NARC_trc_union_trdp_mini256_NCGR,
-  NARC_trc_union_trdp_elitew256_NCGR,
-  NARC_trc_union_trdp_princess256_NCGR,
-  NARC_trc_union_trdp_battleg256_NCGR,
-  NARC_trc_union_trdp_idol256_NCGR,
-  NARC_trc_union_trdp_madam256_NCGR,
-  NARC_trc_union_trdp_cowgirl256_NCGR,
-  NARC_trc_union_trdp_sister256_NCGR,
+  { NARC_trc_union_01_NCGR, NARC_trc_union_01_NCLR },
+  { NARC_trc_union_02_NCGR, NARC_trc_union_02_NCLR },
+  { NARC_trc_union_03_NCGR, NARC_trc_union_03_NCLR },
+  { NARC_trc_union_04_NCGR, NARC_trc_union_04_NCLR },
+  { NARC_trc_union_05_NCGR, NARC_trc_union_05_NCLR },
+  { NARC_trc_union_06_NCGR, NARC_trc_union_06_NCLR },
+  { NARC_trc_union_07_NCGR, NARC_trc_union_07_NCLR },
+  { NARC_trc_union_08_NCGR, NARC_trc_union_08_NCLR },
+  //女              
+  { NARC_trc_union_09_NCGR, NARC_trc_union_09_NCLR },
+  { NARC_trc_union_10_NCGR, NARC_trc_union_10_NCLR },
+  { NARC_trc_union_11_NCGR, NARC_trc_union_11_NCLR },
+  { NARC_trc_union_12_NCGR, NARC_trc_union_12_NCLR },
+  { NARC_trc_union_13_NCGR, NARC_trc_union_13_NCLR },
+  { NARC_trc_union_14_NCGR, NARC_trc_union_14_NCLR },
+  { NARC_trc_union_15_NCGR, NARC_trc_union_15_NCLR },
+  { NARC_trc_union_16_NCGR, NARC_trc_union_16_NCLR },
 };
 
 static const GFL_DISP_VRAM vramBank = {
@@ -879,17 +879,10 @@ static void SetCardPalette(TR_CARD_WORK *wk ,u8 inCardRank, const u8 inPokeBookH
 //--------------------------------------------------------------------------------------------
 static void SetUniTrainerPalette(TR_CARD_WORK *wk ,const u8 inTrainerNo)
 {
-  void *buf;
-  u8 *addr;
-  NNSG2dPaletteData *dat;
-  buf = GFL_ARC_UTIL_LoadPalette(
-      ARCID_TRC_UNION, NARC_trc_union_trdp_union_card_NCLR, &dat, wk->heapId );
-
-  addr = (u8*)(dat->pRawData);
-
-  DC_FlushRange(&addr[2*16*inTrainerNo] , 2*16 );
-  GXS_LoadBGPltt( &addr[2*16*inTrainerNo], 2*16*UNI_TRAINER_PLTT_NO, 2*16 );
-  GFL_HEAP_FreeMemory(buf);
+  // ユニオンルーム用のグラフィックは０行目のパレットを転送する
+  // が、グラフィックそのもののパレット行は４行目が参照されているのでそこに転送する
+  GFL_ARC_UTIL_TransVramPalette( ARCID_TRC_UNION, UniTrTable[inTrainerNo][1], 
+                                 PALTYPE_SUB_BG, 32*UNI_TRAINER_PLTT_NO, 32, wk->heapId );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1050,7 +1043,7 @@ static void SetTrCardBgGraphic( TR_CARD_WORK * wk )
   }else{
     //ユニオンルームで他の人のデータを見る時
     {
-      wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRC_UNION, UniTrTable[wk->TrCardData->UnionTrNo],
+      wk->TrArcData = GFL_ARC_UTIL_LoadBGCharacter( ARCID_TRC_UNION, UniTrTable[wk->TrCardData->UnionTrNo][0],
                     FALSE, &wk->TrCharData, wk->heapId);
 
       wk->TrScrnArcData = GFL_ARC_UTIL_LoadScreen( ARCID_TRC_UNION, NARC_trc_union_card_test256_NSCR,
