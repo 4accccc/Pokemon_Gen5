@@ -889,6 +889,7 @@ static void stw_addFarPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainMod
     if( BTL_MAINUTIL_GetTripleFarPos(myPos, &farPos) )
     {
       stw->pos[ stw->selectablePokeCount++ ] = farPos;
+      stw->pos[ stw->selectablePokeCount++ ] = BTL_MAINUTIL_GetFacedPokePos( BTL_RULE_TRIPLE, farPos );
     }
   }
 }
@@ -962,19 +963,14 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
                                              );
 
 
-  bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
-  // @todo ↑トリプル＆遠隔ワザ有効であれば、選択可能範囲を示す枠の絵を用意する必要がありそう
-
-
-#if 0
-  if( bisp.waza_target == WAZA_TARGET_OTHER_SELECT )
-  {
-    if( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) )
-    {
-      bisp.waza_target = WAZA_TARGET_LONG_SELECT;
-    }
+  if( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) )
+  { 
+    bisp.waza_target = WAZA_TARGET_MAX;
   }
-#endif
+  else
+  { 
+    bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  }
 
   BTL_Printf(" **** triple select **** \n");
   while( count-- )
@@ -1121,6 +1117,11 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         touch_max = 4;
       }else{
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 3 ) ), "pos:%d\n", pos );
+        //遠隔技のRANGEはWAZA_TARGET_MAXと同値にしている
+        if( WAZADATA_GetFlag( wk->destActionParam->fight.waza, WAZAFLAG_TripleFar ) )
+        { 
+          target = WAZA_TARGET_MAX;
+        }
         touch_data = PokeSeleMenuTouch6Data[ pos ][ target ];
         key_data = PokeSeleMenuKey6Data[ pos ][ target ];
         touch_max = 6;
@@ -1207,7 +1208,8 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 
   case WAZA_TARGET_FIELD:               ///< 場に効く（天候系など）
   case WAZA_TARGET_ALL:
-    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ALL, basePos) );
+    //stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_ALL, basePos) );
+    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_FULL_ALL, basePos) );
     break;
 
   case WAZA_TARGET_UNKNOWN:             ///< 特殊系（ゆびをふる等）
