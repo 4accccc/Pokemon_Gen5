@@ -66,11 +66,11 @@ enum
 /// トレーナー毎のデータ
 //==============================================================
 typedef struct {
-  const POKEPARTY* party; ///< 戦所時の所有ポケモンデータ(結果も受け取りたいので、BATTLE_SETUP_PARAM内のpartyと同じものである必要がある)
+  const POKEPARTY* party;   ///< 戦所時の所有ポケモンデータ(結果も受け取りたいので、BATTLE_SETUP_PARAM内のpartyと同じものである必要がある)
   const MYSTATUS* mystatus; ///< トレーナー名、性別を取得する
-  STRBUF* str_trname;     ///< トレーナー名(MYSTATUSに置き換わるので廃止予定)
-  u8 trsex;               ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSに置き換わるので廃止予定)
-  u8 server_version;      ///< ROMのサーババージョン
+  STRBUF* str_trname;       ///< トレーナー名(MYSTATUSに置き換わるので廃止予定)
+  u8 trsex;                 ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSに置き換わるので廃止予定)
+  u8 server_version;        ///< ROMのサーババージョン
   u8 padding[2];
 } COMM_BTL_DEMO_TRAINER_DATA;
 
@@ -80,10 +80,11 @@ typedef struct {
 typedef struct {
   COMM_BTL_DEMO_TRAINER_DATA trainer_data[ COMM_BTL_DEMO_TRDATA_MAX ];  ///< [IN] トレーナー毎のデータ
   COMM_BTL_DEMO_RESULT result;  ///< [IN] バトルの勝敗 (※このパラメータはevent_battle_call.c内で設定します。)
-  COMM_BTL_DEMO_TYPE type;    ///< [IN] 通信バトルデモ 起動タイプ(※このパラメータはevent_battle_call.c内で設定します。)
-  int battle_mode;            ///< [IN] BATTLE_MODE_xxx
-  int fight_count;            ///< [IN] 連勝数
-  RECORD *record;             ///< [IN] レコードデータ
+  COMM_BTL_DEMO_TYPE type;      ///< [IN] 通信バトルデモ 起動タイプ(※このパラメータはevent_battle_call.c内で設定します。)
+  int battle_mode;              ///< [IN] BATTLE_MODE_xxx
+  int fight_count;              ///< [IN] 連勝数
+  int wcs_flag;                 ///< [IN] 世界大会用にオープニングを派手にするフラグ(TRUE:大会モード FALSE:普通）
+  RECORD *record;               ///< [IN] レコードデータ
 } COMM_BTL_DEMO_PARAM;
 
 //=============================================================================

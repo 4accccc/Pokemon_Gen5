@@ -393,7 +393,8 @@ typedef struct
 
   u8 type;
   COMM_BTL_DEMO_RESULT result;
-  int timer;  ///< デモ起動時間カウンタ
+  int timer;        ///< デモ起動時間カウンタ
+  int scrol_work;   ///< 背景スクロール用カウンタ
 
 } COMM_BTL_DEMO_MAIN_WORK;
 
@@ -522,7 +523,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
 //-------------------------------------
 /// 汎用処理ユーティリティ
 //=====================================
-static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID );
+static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID, int wcs );
 
 //=============================================================================
 /**
@@ -542,11 +543,11 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
   int i;
 
-  HOSAKA_Printf("in param type = %d \n", prm->type);
+  OS_Printf("in param type = %d \n", prm->type);
   
   prm->result = GFUser_GetPublicRand( COMM_BTL_DEMO_RESULT_MAX );
 
-  HOSAKA_Printf( "result = %d \n", prm->result );
+  OS_Printf( "result = %d \n", prm->result );
 
   for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
   {
@@ -608,11 +609,11 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
           case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // 毒
           case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // 瀕死
           }
-          HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
+          OS_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
         }
       }
 
-      HOSAKA_Printf("[%d] server_version=%d poke_cnt=%d \n",i, 
+      OS_Printf("[%d] server_version=%d poke_cnt=%d \n",i, 
           prm->trainer_data[i].server_version,
           poke_cnt );
     }
@@ -674,6 +675,8 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   GF_ASSERT( prm );
   GF_ASSERT( (*seq) == 0 );
 
+  OS_Printf("↓↓↓通信戦闘デモプログラム開始↓↓↓\n");
+
   //オーバーレイ読み込み
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
 
@@ -715,7 +718,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
       calc_first_scene(pwk), wk );
 
   //BGリソース読み込み
-  CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID );
+  CommBtlDemo_BG_LoadResource( &wk->wk_bg, wk->heapID, wk->pwk->wcs_flag );
 
   // G3D関連初期化
   G3D_Init( &wk->wk_g3d, wk->graphic, wk->heapID );
@@ -755,6 +758,8 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
   debug_param_del( pwk );
 #endif
   
+  GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
+
   // レコード埋込
   _Set_RecordData(wk);
   
@@ -808,7 +813,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 #if 0
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
-    HOSAKA_Printf("aaa\n");
+    OS_Printf("aaa\n");
     PMSND_PlaySE( SE_WIN_IN );
   }
 #endif
@@ -837,6 +842,9 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
   //2D描画
   COMM_BTL_DEMO_GRAPHIC_2D_Draw( wk->graphic );
 
+  wk->scrol_work++;
+  GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, wk->scrol_work/2 );
+
   return GFL_PROC_RES_CONTINUE;
 }
 
@@ -846,41 +854,51 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
  */
 //=============================================================================
 
+static const u32 bg_res_tbl[][3]={
+  {
+    NARC_comm_btl_demo_bg_base_d_NCLR,
+    NARC_comm_btl_demo_bg_base_d_NCGR,
+    NARC_comm_btl_demo_bg_base_d_NSCR,
+  },
+  {
+    NARC_comm_btl_demo_wcs_bg1_NCLR,
+    NARC_comm_btl_demo_wcs_bg1_NCGR,
+    NARC_comm_btl_demo_wcs_bg1_NSCR,
+  }
+};
+
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  BG管理モジュール リソース読み込み
  *
  *  @param  COMM_BTL_DEMO_BG_WORK* wk BG管理ワーク
  *  @param  heapID  ヒープID 
+ *  @param  wcs     世界大戦モードかどうか(TRUE:世界大戦  FALSE:通常）
  *
  *  @retval none
  */
 //-----------------------------------------------------------------------------
-static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID )
+static void CommBtlDemo_BG_LoadResource( COMM_BTL_DEMO_BG_WORK* wk, HEAPID heapID, int wcs )
 {
   ARCHANDLE *handle;
+  GF_ASSERT( wcs<2 );
 
   handle  = GFL_ARC_OpenDataHandle( ARCID_COMM_BTL_DEMO_GRA, heapID );
 
   // 上下画面ＢＧパレット転送
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
-  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_d_NCLR, PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
   
-#if 0 
-  // 会話フォントパレット転送
-  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT,
-      NARC_font_default_nclr,
-      PALTYPE_MAIN_BG,
-      0x20*PLTID_BG_TEXT_M, 0x20, heapID );
-#endif
-  
-  //  ----- 下画面 -----
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_comm_btl_demo_bg_base_d_NCGR,
-            BG_FRAME_BACK_M, 0, 0, 0, heapID );
-  GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_comm_btl_demo_bg_base_d_NSCR,
-            BG_FRAME_BACK_M, 0, 0, 0, heapID ); 
-
   //  ----- 上画面 -----
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, bg_res_tbl[wcs][0], 
+                                    PALTYPE_MAIN_BG, PLTID_BG_BACK_M, 0x0, heapID );
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, bg_res_tbl[wcs][1],
+                                        BG_FRAME_BACK_M, 0, 0, 0, heapID );
+  GFL_ARCHDL_UTIL_TransVramScreen(  handle, bg_res_tbl[wcs][2],
+                                    BG_FRAME_BACK_M, 0, 0, 0, heapID ); 
+
+  //  ----- 下画面 -----
+  GFL_ARCHDL_UTIL_TransVramPalette( handle, NARC_comm_btl_demo_bg_base_u_NCLR, 
+                                    PALTYPE_SUB_BG, PLTID_BG_BACK_S, 0x0, heapID );
   GFL_ARCHDL_UTIL_TransVramBgCharacter( handle, NARC_comm_btl_demo_bg_base_u_NCGR,
             BG_FRAME_BACK_S, 0, 0, 0, heapID );
   GFL_ARCHDL_UTIL_TransVramScreen(  handle, NARC_comm_btl_demo_bg_base_u_NSCR,
@@ -1053,7 +1071,11 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       G3D_AnimeSet( &wk->wk_g3d, DEMO_ID_START );
       
       //「VS」用PTCロード
-      G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
+      if(wk->pwk->wcs_flag){
+        G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01wcs_spa );
+      }else{
+        G3D_PTC_Setup( &wk->wk_g3d, NARC_comm_btl_demo_vs_demo01_spa );
+      }
       
       wk->timer = 0;
 
@@ -1149,6 +1171,8 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
   
   // トレーナーユニット初期化
   TRAINER_UNIT_CNT_Init( wk );
+
+  OS_Printf("type=%d, result=%d\n", wk->pwk->type, wk->pwk->result);
 
   // 勝敗ユニット生成
   {
@@ -1572,7 +1596,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
   unit->timer = 0;
   unit->g3d = g3d;
 
-  HOSAKA_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
+  OS_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
 
   for( i=0; i<unit->max; i++ )
   {
@@ -1702,8 +1726,8 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
   GF_ASSERT( id <= unit->max && id >= 0 );
 
-  HOSAKA_Printf("unit->timer=%d ",unit->timer);
-  HOSAKA_Printf("ball open id=%d\n", id);
+  OS_Printf("unit->timer=%d ",unit->timer);
+  OS_Printf("ball open id=%d\n", id);
 
   if( id < unit->max )
   {
@@ -2149,7 +2173,7 @@ static void TRAINER_UNIT_Main( TRAINER_UNIT* unit )
 //  _trainer_unit_main_end( unit );
   }
 
-//  HOSAKA_Printf("unit timer=%d \n", unit->timer);
+//  OS_Printf("unit timer=%d \n", unit->timer);
 
   unit->timer++;
 }
@@ -2266,13 +2290,13 @@ static void TRAINER_UNIT_CNT_Main( COMM_BTL_DEMO_MAIN_WORK* wk )
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){  fy -= num; }else
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT ){  fx -= num; }else
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT ){ fx += num; }else
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ num += 0x100; HOSAKA_Printf("num=0x%x\n",num); }else
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){ num -= 0x100; HOSAKA_Printf("num=0x%x\n",num); }else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){ num += 0x100; OS_Printf("num=0x%x\n",num); }else
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){ num -= 0x100; OS_Printf("num=0x%x\n",num); }else
     if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
     {
       if( wk->wk_g3d.ptc != NULL )
       {
-        HOSAKA_Printf("{0x%x,0x%x}\n", fx, fy);
+        OS_Printf("{0x%x,0x%x}\n", fx, fy);
         G3D_PTC_CreateEmitterAll( &wk->wk_g3d, &(VecFx32){fx,fy,-100} );
       }
     }
@@ -2678,7 +2702,7 @@ static GFL_CLWK* OBJ_CreatePokeNum( COMM_BTL_DEMO_OBJ_WORK* obj, u8 posid, u8 po
   
   anm = pokenum;
 
-  HOSAKA_Printf("after pokenum = %d\n", anm);
+  OS_Printf("after pokenum = %d\n", anm);
 
   clwk = OBJ_CreateCLWK( obj, px, py, anm );
   GFL_CLACT_WK_SetDrawEnable( clwk , FALSE );
@@ -2897,7 +2921,7 @@ static void G3D_PTC_CreateEmitter( COMM_BTL_DEMO_G3D_WORK * g3d, u16 idx, const 
 
   emit = GFL_PTC_CreateEmitter( g3d->ptc, idx, pos );
 
-  HOSAKA_Printf("emit=%d \n", emit);
+  OS_Printf("emit=%d \n", emit);
 }
 
 //-----------------------------------------------------------------------------
@@ -2974,7 +2998,7 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
   // ユニット生成
   g3d->anm_unit_idx = GFL_G3D_UTIL_AddUnit( g3d->g3d_util, &sc_setup[ demo_id ] );
   g3d->is_add = TRUE;
-  HOSAKA_Printf("demo_id=%d add unit idx=%d ",demo_id, g3d->anm_unit_idx );
+  OS_Printf("demo_id=%d add unit idx=%d ",demo_id, g3d->anm_unit_idx );
   
   {
     GFL_G3D_OBJ* obj;
@@ -2983,7 +3007,7 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
     obj         = GFL_G3D_UTIL_GetObjHandle( g3d->g3d_util, g3d->anm_unit_idx );
     anime_count = GFL_G3D_OBJECT_GetAnimeCount( obj );
 
-    HOSAKA_Printf("anime_count=%d \n", anime_count);
+    OS_Printf("anime_count=%d \n", anime_count);
 
     // アニメーション有効化
     for( i=0; i<anime_count; i++ )
@@ -2991,7 +3015,7 @@ static void G3D_AnimeSet( COMM_BTL_DEMO_G3D_WORK* g3d, u16 demo_id )
       GFL_G3D_OBJECT_EnableAnime( obj, i );
     }
 
-    HOSAKA_Printf("obj_count=%d resCount=%d resIdx=%d \n",
+    OS_Printf("obj_count=%d resCount=%d resIdx=%d \n",
       GFL_G3D_UTIL_GetObjCount(g3d->g3d_util),
       GFL_G3D_UTIL_GetUnitResCount(g3d->g3d_util,0),
       GFL_G3D_UTIL_GetUnitResIdx(g3d->g3d_util, 0)
@@ -3023,22 +3047,22 @@ static void G3D_AnimeSetTrSex( COMM_BTL_DEMO_G3D_WORK* g3d, u8 trsex, u8 is_norm
     if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
     {
       mat++;
-      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+      OS_Printf("mat=%d pal=%d \n", mat, pal);
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
     {
       mat--;
-      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+      OS_Printf("mat=%d pal=%d \n", mat, pal);
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
     {
       pal++;
-      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+      OS_Printf("mat=%d pal=%d \n", mat, pal);
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
     {
       pal--;
-      HOSAKA_Printf("mat=%d pal=%d \n", mat, pal);
+      OS_Printf("mat=%d pal=%d \n", mat, pal);
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
     {
@@ -3047,10 +3071,10 @@ static void G3D_AnimeSetTrSex( COMM_BTL_DEMO_G3D_WORK* g3d, u8 trsex, u8 is_norm
       NNS_G3dReleaseMdlPltt(mdl);
       // リバインド
       result &= NNS_G3dForceBindMdlPltt( mdl, tex, mat, pal );
-      HOSAKA_Printf("bind mat=%d pal=%d \n", mat, pal);
+      OS_Printf("bind mat=%d pal=%d \n", mat, pal);
       if( result == FALSE )
       {
-        HOSAKA_Printf("failed.\n");
+        OS_Printf("failed.\n");
       }
     }
   }
@@ -3070,7 +3094,7 @@ static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d )
 {
   GF_ASSERT( g3d );
 
-  HOSAKA_Printf("del unit_idx=%d\n", g3d->anm_unit_idx );
+  OS_Printf("del unit_idx=%d\n", g3d->anm_unit_idx );
 
   // ユニット削除
   GFL_G3D_UTIL_DelUnit( g3d->g3d_util, g3d->anm_unit_idx );
@@ -3129,16 +3153,16 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
       if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
       {
         frame+= FX32_ONE;
-        HOSAKA_Printf("frame=%d\n",frame);
+        OS_Printf("frame=%d\n",frame);
       }
       else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y )
       {
         frame-= FX32_ONE;
-        HOSAKA_Printf("frame=%d\n",frame);
+        OS_Printf("frame=%d\n",frame);
       }
       
       GFL_G3D_OBJECT_GetAnimeFrame( obj, 0, &frame );
-      HOSAKA_Printf("frame=%d \n", frame>>FX32_SHIFT );
+      OS_Printf("frame=%d \n", frame>>FX32_SHIFT );
     }
 #endif
   
@@ -3152,7 +3176,7 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
     if( PAD_BUTTON_SELECT & GFL_UI_KEY_GetTrg() )
     {
       speed ^= 1;
-      HOSAKA_Printf("set anime speed=%d \n", speed );
+      OS_Printf("set anime speed=%d \n", speed );
     }
 #endif
     
@@ -3186,15 +3210,17 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
       fovy += 1;
       GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
       GFL_G3D_CAMERA_SetfovySin( p_camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      HOSAKA_Printf("fovy = %d \n", fovy);
+      OS_Printf("fovy = %d \n", fovy);
     }
     else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B )
     {
       fovy -= 1;
       GFL_G3D_CAMERA_SetfovyCos( p_camera, FX_SinIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
       GFL_G3D_CAMERA_SetfovySin( p_camera, FX_CosIdx( fovy/2 * PERSPWAY_COEFFICIENT ) );
-      HOSAKA_Printf("fovy = %d \n", fovy);
+      OS_Printf("fovy = %d \n", fovy);
     }
   }
 #endif
+
+
 
