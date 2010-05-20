@@ -9788,7 +9788,7 @@ static void handler_MagicRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_HajikeruHonoo( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,   handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT,   handler_HajikeruHonoo },    // ダメージ処理最終ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9797,7 +9797,7 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     BtlPokePos pos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, damagedPokeID );
     BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_NEXT_FRIENDS, pos );
     u8  targetPokeID[ BTL_POSIDX_MAX ];
