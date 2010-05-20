@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-05-19T19:10:10"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-20T14:45:45" source="m_siten02_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-04-02T18:11:44" source="m_siten02_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-20T14:45:45" source="m_siten02_00_00.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,14 +22,14 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="20 19"
 	compress_material="on" material_size="6 6"
-	output_texture="all"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-2.652832 0.107422 -2.575195" whd="4.966553 2.571045 4.708008"/>
+<box_test pos_scale="6" xyz="-2.652832 0.107178 -2.575195" whd="4.966553 2.571289 5.200195"/>
 
-<tex_image_array size="10">
+<tex_image_array size="12">
 	<tex_image index="0" name="c09_fire.0"
 		width="16" height="64" original_width="16" original_height="64"
 		format="a5i3"
@@ -521,7 +521,91 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="8" name="jhero.4"
+	<tex_image index="8" name="jhero.2"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="jhero.2_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/jhero.2.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 4450 0544 0000 0000 0000
+			0000 0000 f000 ee84 48ee 000f 0000 0000
+			0000 0000 8f00 1eee eee1 00f8 0000 0000
+			0000 0000 a8f0 1fff ffe1 0f5f 0000 0000
+			0000 0000 a8f0 f5fe f5fe 0f8f 0000 0000
+			0000 0000 888f 5f5f 5f5f f8f5 0000 0000
+			0000 0000 888f 555f 5555 f8f5 0000 0000
+			0000 0000 f88f 5555 5555 f855 0000 0000
+			0000 d000 f8fb 5555 5555 bf56 000d 0000
+			0000 d000 fffb 5556 6655 bf55 000d 0000
+			0000 d000 f4fb 6655 5566 bf55 000d 0000
+			0000 0000 4f4f 555f 5555 ff55 0000 0000
+			0000 0000 4f4f 55ff 5555 5455 000f 0000
+			0000 0000 f4f0 44ff 5555 f445 0000 0000
+			0000 0000 ff00 445f 4444 ff4f 0000 0000
+			0000 0000 bff0 4ffb 4f44 00ff 0000 0000
+			0000 0000 b2bf f5ff ffff 00fb 0000 0000
+			0000 0000 fbbf 545f f551 0f2c 0000 0000
+			0000 0000 0ff0 556f f615 fcc3 0000 0000
+			0000 0000 4000 5889 2165 fccf 0000 0000
+			0000 0000 4000 e999 29ee 0ff2 0000 0000
+			0000 0000 4000 7997 3797 0332 0000 0000
+			0000 0000 0000 7785 f56f 0033 0000 0000
+			0000 0000 0000 3be4 0ff0 0000 0000 0000
+			0000 0000 0000 55f0 000f 0000 0000 0000
+			0000 0000 0000 66f0 000f 0000 0000 0000
+			0000 0000 0000 ff00 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="9" name="jhero.3"
+		width="32" height="32" original_width="32" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="jhero.3_pl"
+		path="C:/home/wb_data3d/field/in52/chip/tex/hero/jhero.3.tga"
+	>
+		<bitmap size="256">
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+			0000 0000 0000 4450 0544 0000 0000 0000
+			0000 0000 f000 ee84 48ee 000f 0000 0000
+			0000 0000 8f00 1eee eee1 00f8 0000 0000
+			0000 0000 f5f0 1eff fff1 0f8a 0000 0000
+			0000 0000 f8f0 ef5f ef5f 0f8a 0000 0000
+			0000 0000 5f8f f5f5 f5f5 f888 0000 0000
+			0000 0000 5f8f 5555 f555 f888 0000 0000
+			0000 0000 558f 5555 5555 f88f 0000 0000
+			0000 d000 65fb 5555 5555 bf8f 000d 0000
+			0000 d000 55fb 5566 6555 bfff 000d 0000
+			0000 d000 55fb 6655 5566 bf4f 000d 0000
+			0000 0000 55ff 5555 f555 f4f4 0000 0000
+			0000 f000 5545 5555 ff55 f4f4 0000 0000
+			0000 0000 544f 5555 ff44 0f4f 0000 0000
+			0000 0000 f4ff 4444 f544 00ff 0000 0000
+			0000 0000 ff00 44f4 bff4 0ffb 0000 0000
+			0000 0000 bf00 ffff ff5f fb2b 0000 0000
+			0000 0000 c2f0 54f4 3551 fbbf 0000 0000
+			0000 0000 3ccf 556f 3615 0ff2 0000 0000
+			0000 0000 fccf 568f 2185 0f11 0000 0000
+			0000 0000 4ff0 ee77 299e 0312 0000 0000
+			0000 0000 4000 7778 3797 0332 0000 0000
+			0000 0000 0000 f64f 7899 0033 0000 0000
+			0000 0000 0000 0ff0 feb3 0000 0000 0000
+			0000 0000 0000 f000 0f55 0000 0000 0000
+			0000 0000 0000 f000 0f66 0000 0000 0000
+			0000 0000 0000 0000 00ff 0000 0000 0000
+			0000 0000 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="10" name="jhero.4"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -563,7 +647,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="9" name="jhero.7"
+	<tex_image index="11" name="jhero.7"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -607,7 +691,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="10">
+<tex_palette_array size="12">
 	<tex_palette index="0" name="c09_fire.0_pl" color_size="8">
 		0000 019f 0abf 17ff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -634,11 +718,19 @@
 		2e47 4d7d 4158 3110 1ca7 28e9 416d 4d47
 		6af5 61e8 7779 3a7a 5f5f 192f 7fff 0000
 	</tex_palette>
-	<tex_palette index="8" name="jhero.4_pl" color_size="16">
+	<tex_palette index="8" name="jhero.2_pl" color_size="16">
 		2e47 4d7d 4158 3110 1ca7 28e9 416d 4d47
 		6af5 61e8 7779 3a7a 5f5f 192f 7fff 0000
 	</tex_palette>
-	<tex_palette index="9" name="jhero.7_pl" color_size="16">
+	<tex_palette index="9" name="jhero.3_pl" color_size="16">
+		2e47 4d7d 4158 3110 1ca7 28e9 416d 4d47
+		6af5 61e8 7779 3a7a 5f5f 192f 7fff 0000
+	</tex_palette>
+	<tex_palette index="10" name="jhero.4_pl" color_size="16">
+		2e47 4d7d 4158 3110 1ca7 28e9 416d 4d47
+		6af5 61e8 7779 3a7a 5f5f 192f 7fff 0000
+	</tex_palette>
+	<tex_palette index="11" name="jhero.7_pl" color_size="16">
 		2e47 4d7d 4158 3110 1ca7 28e9 416d 4d47
 		6af5 61e8 7779 3a7a 5f5f 192f 7fff 0000
 	</tex_palette>
@@ -1615,7 +1707,7 @@
 		billboard="on"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.598877 22.881348 136.508301"
+		translate="-6.937744 22.865234 168.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1633,9 +1725,9 @@
 		brother_prev="15"
 		draw_mtx="on"
 		billboard="on"
-		scale="1.000000 1.000000 1.000000"
+		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.598877 22.881348 136.508301"
+		translate="-6.937744 22.865234 168.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1655,7 +1747,7 @@
 		billboard="on"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.598877 22.881348 136.508301"
+		translate="-6.937744 22.865234 168.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1673,9 +1765,9 @@
 		brother_prev="17"
 		draw_mtx="on"
 		billboard="on"
-		scale="0.000000 0.000000 0.000000"
+		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.598877 22.881348 136.508301"
+		translate="-6.937744 22.865234 168.000000"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1690,83 +1782,6 @@
 
 <output_info vertex_size="72" polygon_size="18"
 	triangle_size="0" quad_size="18"/>
-
-<ex_nns_3dme>
-	<ex_model_info scene_name="def2" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="10">
-		<ex_tex_image index="0" disp_pos="-360.000000 480.000000"/>
-		<ex_tex_image index="1" disp_pos="-1020.000000 360.000000"/>
-		<ex_tex_image index="2" disp_pos="-240.000000 480.000000"/>
-		<ex_tex_image index="3" disp_pos="-120.000000 480.000000"/>
-		<ex_tex_image index="4" disp_pos="0.000000 480.000000"/>
-		<ex_tex_image index="5" disp_pos="120.000000 480.000000"/>
-		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="9" disp_pos="0.000000 0.000000"/>
-	</ex_tex_image_array>
-	<ex_tex_palette_array size="10">
-		<ex_tex_palette index="0" disp_pos="-360.000000 540.000000"/>
-		<ex_tex_palette index="1" disp_pos="-1020.000000 420.000000"/>
-		<ex_tex_palette index="2" disp_pos="-240.000000 540.000000"/>
-		<ex_tex_palette index="3" disp_pos="-120.000000 540.000000"/>
-		<ex_tex_palette index="4" disp_pos="0.000000 540.000000"/>
-		<ex_tex_palette index="5" disp_pos="120.000000 540.000000"/>
-		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="9" disp_pos="0.000000 0.000000"/>
-	</ex_tex_palette_array>
-	<ex_material_array size="6">
-		<ex_material index="0" disp_pos="-1020.000000 300.000000"/>
-		<ex_material index="1" disp_pos="-900.000000 300.000000"/>
-		<ex_material index="2" disp_pos="660.000000 300.000000"/>
-		<ex_material index="3" disp_pos="780.000000 300.000000"/>
-		<ex_material index="4" disp_pos="900.000000 300.000000"/>
-		<ex_material index="5" disp_pos="1020.000000 300.000000"/>
-	</ex_material_array>
-	<ex_polygon_array size="18">
-		<ex_polygon index="0" disp_pos="-1020.000000 240.000000"/>
-		<ex_polygon index="1" disp_pos="-900.000000 240.000000"/>
-		<ex_polygon index="2" disp_pos="-780.000000 240.000000"/>
-		<ex_polygon index="3" disp_pos="-660.000000 240.000000"/>
-		<ex_polygon index="4" disp_pos="-540.000000 240.000000"/>
-		<ex_polygon index="5" disp_pos="-420.000000 240.000000"/>
-		<ex_polygon index="6" disp_pos="-300.000000 240.000000"/>
-		<ex_polygon index="7" disp_pos="-180.000000 240.000000"/>
-		<ex_polygon index="8" disp_pos="-60.000000 240.000000"/>
-		<ex_polygon index="9" disp_pos="60.000000 240.000000"/>
-		<ex_polygon index="10" disp_pos="180.000000 240.000000"/>
-		<ex_polygon index="11" disp_pos="300.000000 240.000000"/>
-		<ex_polygon index="12" disp_pos="420.000000 240.000000"/>
-		<ex_polygon index="13" disp_pos="540.000000 240.000000"/>
-		<ex_polygon index="14" disp_pos="660.000000 240.000000"/>
-		<ex_polygon index="15" disp_pos="780.000000 240.000000"/>
-		<ex_polygon index="16" disp_pos="900.000000 240.000000"/>
-		<ex_polygon index="17" disp_pos="1020.000000 240.000000"/>
-	</ex_polygon_array>
-	<ex_node_array size="19">
-		<ex_node index="0" disp_pos="0.000000 120.000000"/>
-		<ex_node index="1" disp_pos="-1020.000000 180.000000"/>
-		<ex_node index="2" disp_pos="-900.000000 180.000000"/>
-		<ex_node index="3" disp_pos="-780.000000 180.000000"/>
-		<ex_node index="4" disp_pos="-660.000000 180.000000"/>
-		<ex_node index="5" disp_pos="-540.000000 180.000000"/>
-		<ex_node index="6" disp_pos="-420.000000 180.000000"/>
-		<ex_node index="7" disp_pos="-300.000000 180.000000"/>
-		<ex_node index="8" disp_pos="-180.000000 180.000000"/>
-		<ex_node index="9" disp_pos="-60.000000 180.000000"/>
-		<ex_node index="10" disp_pos="60.000000 180.000000"/>
-		<ex_node index="11" disp_pos="180.000000 180.000000"/>
-		<ex_node index="12" disp_pos="300.000000 180.000000"/>
-		<ex_node index="13" disp_pos="420.000000 180.000000"/>
-		<ex_node index="14" disp_pos="540.000000 180.000000"/>
-		<ex_node index="15" disp_pos="660.000000 180.000000"/>
-		<ex_node index="16" disp_pos="780.000000 180.000000"/>
-		<ex_node index="17" disp_pos="900.000000 180.000000"/>
-		<ex_node index="18" disp_pos="1020.000000 180.000000"/>
-	</ex_node_array>
-</ex_nns_3dme>
 
 </body>
 

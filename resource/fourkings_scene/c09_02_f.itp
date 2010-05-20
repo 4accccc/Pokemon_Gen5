@@ -3,7 +3,7 @@
 <itp version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-02T18:11:44" source="m_siten02_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-20T14:45:36" source="m_siten02_00_00.mb"/>
 	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
@@ -17,7 +17,7 @@
 	compress_material="on" material_size="6 6"
 />
 
-<tex_pattern_list_data image_size="10" palette_size="10">
+<tex_pattern_list_data image_size="12" palette_size="12">
 	<image_name index="0" name="c09_fire.0"/>
 	<image_name index="1" name="c09_fire.1"/>
 	<image_name index="2" name="c09_fire.2"/>
@@ -26,8 +26,10 @@
 	<image_name index="5" name="c09_fire.5"/>
 	<image_name index="6" name="jhero.1"/>
 	<image_name index="7" name="jhero.10"/>
-	<image_name index="8" name="jhero.4"/>
-	<image_name index="9" name="jhero.7"/>
+	<image_name index="8" name="jhero.2"/>
+	<image_name index="9" name="jhero.3"/>
+	<image_name index="10" name="jhero.4"/>
+	<image_name index="11" name="jhero.7"/>
 	<palette_name index="0" name="c09_fire.0_pl"/>
 	<palette_name index="1" name="c09_fire.1_pl"/>
 	<palette_name index="2" name="c09_fire.2_pl"/>
@@ -36,12 +38,14 @@
 	<palette_name index="5" name="c09_fire.5_pl"/>
 	<palette_name index="6" name="jhero.10_pl"/>
 	<palette_name index="7" name="jhero.1_pl"/>
-	<palette_name index="8" name="jhero.4_pl"/>
-	<palette_name index="9" name="jhero.7_pl"/>
+	<palette_name index="8" name="jhero.2_pl"/>
+	<palette_name index="9" name="jhero.3_pl"/>
+	<palette_name index="10" name="jhero.4_pl"/>
+	<palette_name index="11" name="jhero.7_pl"/>
 </tex_pattern_list_data>
 
 <tex_pattern_data>
-	<frame_idx size="444">
+	<frame_idx size="500">
 		0 3 6 9 13 15 18 21 25 27
 		30 33 37 39 42 45 49 51 54 57
 		61 63 66 69 73 75 78 81 85 87
@@ -86,9 +90,14 @@
 		468 470 472 474 476 478 480 482 484 486
 		488 490 492 494 496 498 500 502 504 506
 		508 510 512 514 516 518 520 522 524 526
-		0 0 0 0
+		0 0 0 0 2 4 6 8 40 42
+		44 46 78 80 82 84 116 118 120 122
+		154 156 158 160 192 194 196 198 230 232
+		234 236 268 270 272 274 306 308 310 312
+		344 346 348 350 382 384 386 388 420 422
+		424 426 458 460 462 464 496 498 500 502
 	</frame_idx>
-	<image_idx size="444">
+	<image_idx size="500">
 		1 2 3 0 1 2 3 0 1 2
 		3 0 1 2 3 0 1 2 3 0
 		1 2 3 0 1 2 3 0 1 2
@@ -133,9 +142,14 @@
 		4 5 4 5 4 5 4 5 4 5
 		4 5 4 5 4 5 4 5 4 5
 		4 5 4 5 4 5 4 5 4 5
-		9 7 8 6
+		11 7 10 6 8 9 8 6 8 9
+		8 6 8 9 8 6 8 9 8 6
+		8 9 8 6 8 9 8 6 8 9
+		8 6 8 9 8 6 8 9 8 6
+		8 9 8 6 8 9 8 6 8 9
+		8 6 8 9 8 6 8 9 8 6
 	</image_idx>
-	<palette_idx size="444">
+	<palette_idx size="500">
 		1 2 3 0 1 2 3 0 1 2
 		3 0 1 2 3 0 1 2 3 0
 		1 2 3 0 1 2 3 0 1 2
@@ -180,7 +194,12 @@
 		4 5 4 5 4 5 4 5 4 5
 		4 5 4 5 4 5 4 5 4 5
 		4 5 4 5 4 5 4 5 4 5
-		9 6 8 7
+		11 6 10 7 8 9 8 7 8 9
+		8 7 8 9 8 7 8 9 8 7
+		8 9 8 7 8 9 8 7 8 9
+		8 7 8 9 8 7 8 9 8 7
+		8 9 8 7 8 9 8 7 8 9
+		8 7 8 9 8 7 8 9 8 7
 	</palette_idx>
 </tex_pattern_data>
 
@@ -190,7 +209,7 @@
 	<tex_pattern_anm index="2" material_name="hero_1" data_size="1" data_head="440"/>
 	<tex_pattern_anm index="3" material_name="hero_2" data_size="1" data_head="441"/>
 	<tex_pattern_anm index="4" material_name="hero_3" data_size="1" data_head="442"/>
-	<tex_pattern_anm index="5" material_name="hero_4" data_size="1" data_head="443"/>
+	<tex_pattern_anm index="5" material_name="hero_4" data_size="57" data_head="443"/>
 </tex_pattern_anm_array>
 
 </body>

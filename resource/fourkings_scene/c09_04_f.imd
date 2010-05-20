@@ -3,15 +3,15 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-05-19T19:19:13"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-20T21:10:25" source="m_siten04_00_00.ma"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
+	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-04-02T19:18:16" source="m_siten04_00_00.ma"/>
-<original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-05-20T21:10:25" source="m_siten04_00_00.ma"/>
+<original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
 	pos_scale="4"
@@ -21,13 +21,13 @@
 	tool_start_frame="0"
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="17 11"
-	compress_material="on" material_size="4 4"
-	output_texture="all"
+	compress_material="on" material_size="5 5"
+	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="6" xyz="-0.384766 -0.509033 1.001465" whd="4.994385 7.384277 2.454102"/>
+<box_test pos_scale="6" xyz="-0.377930 -0.509033 1.001465" whd="4.987549 7.384277 2.454102"/>
 
 <tex_image_array size="9">
 	<tex_image index="0" name="c09_04_star"
@@ -461,7 +461,7 @@
 	</tex_palette>
 </tex_palette_array>
 
-<material_array size="4">
+<material_array size="5">
 	<material index="0" name="c09_04_star_3"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
@@ -534,7 +534,31 @@
 		tex_translate="0.000000 0.000000"
 		tex_gen_mode="none"
 	/>
-	<material index="3" name="hika_1"
+	<material index="3" name="hika2"
+		light0="off" light1="off" light2="off" light3="off"
+		face="front"
+		alpha="31"
+		wire_mode="off"
+		polygon_mode="modulate"
+		polygon_id="4"
+		fog_flag="off"
+		depth_test_decal="off"
+		translucent_update_depth="off"
+		render_1_pixel="off"
+		far_clipping="off"
+		diffuse="25 25 25"
+		ambient="31 31 31"
+		specular="0 0 0"
+		emission="0 0 0"
+		shininess_table_flag="off"
+		tex_image_idx="1" tex_palette_idx="1"
+		tex_tiling="repeat repeat"
+		tex_scale="1.000000 1.000000"
+		tex_rotate="0.000000"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
+	/>
+	<material index="4" name="hika_1"
 		light0="off" light1="off" light2="off" light3="off"
 		face="front"
 		alpha="31"
@@ -986,7 +1010,7 @@
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.533447 15.219482 132.813232"
+		translate="-8.093262 14.651367 149.324951"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
@@ -995,7 +1019,7 @@
 		volume_max="1.535400 1.535400 0.000000"
 		volume_r="1.535400"
 	>
-		<display index="0" material="3" polygon="6" priority="0"/>
+		<display index="0" material="4" polygon="6" priority="0"/>
 	</node>
 	<node index="2" name="hikari3" kind="mesh"
 		parent="0"
@@ -1006,7 +1030,7 @@
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.612305 -16.570313 130.998047"
+		translate="-8.171875 -16.570313 147.510010"
 		visibility="on"
 		display_size="1"
 		vertex_size="24" polygon_size="12"
@@ -1026,7 +1050,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.612305 16.570313 135.459473"
+		translate="-8.171875 16.002197 151.971191"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1046,7 +1070,7 @@
 		billboard="on"
 		scale="1.000000 1.000000 1.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.614502 -16.568359 135.458252"
+		translate="-8.174072 -16.568359 151.970215"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1146,7 +1170,7 @@
 		billboard="on"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.612305 16.570313 135.459473"
+		translate="-8.171875 16.002197 151.971191"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1166,7 +1190,7 @@
 		billboard="on"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 0.000000 0.000000"
-		translate="-8.614502 -16.568359 135.458252"
+		translate="-8.174072 -16.568359 151.970215"
 		visibility="on"
 		display_size="1"
 		vertex_size="4" polygon_size="1"
@@ -1181,63 +1205,6 @@
 
 <output_info vertex_size="80" polygon_size="32"
 	triangle_size="24" quad_size="8"/>
-
-<ex_nns_3dme>
-	<ex_model_info scene_name="def2" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="9">
-		<ex_tex_image index="0" disp_pos="-60.000000 360.000000"/>
-		<ex_tex_image index="1" disp_pos="-540.000000 360.000000"/>
-		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="7" disp_pos="0.000000 0.000000"/>
-		<ex_tex_image index="8" disp_pos="0.000000 0.000000"/>
-	</ex_tex_image_array>
-	<ex_tex_palette_array size="9">
-		<ex_tex_palette index="0" disp_pos="-60.000000 420.000000"/>
-		<ex_tex_palette index="1" disp_pos="-540.000000 420.000000"/>
-		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="7" disp_pos="0.000000 0.000000"/>
-		<ex_tex_palette index="8" disp_pos="0.000000 0.000000"/>
-	</ex_tex_palette_array>
-	<ex_material_array size="4">
-		<ex_material index="0" disp_pos="-60.000000 300.000000"/>
-		<ex_material index="1" disp_pos="-300.000000 300.000000"/>
-		<ex_material index="2" disp_pos="420.000000 300.000000"/>
-		<ex_material index="3" disp_pos="-540.000000 300.000000"/>
-	</ex_material_array>
-	<ex_polygon_array size="10">
-		<ex_polygon index="0" disp_pos="60.000000 240.000000"/>
-		<ex_polygon index="1" disp_pos="180.000000 240.000000"/>
-		<ex_polygon index="2" disp_pos="300.000000 240.000000"/>
-		<ex_polygon index="3" disp_pos="-420.000000 240.000000"/>
-		<ex_polygon index="4" disp_pos="-180.000000 240.000000"/>
-		<ex_polygon index="5" disp_pos="540.000000 240.000000"/>
-		<ex_polygon index="6" disp_pos="-540.000000 240.000000"/>
-		<ex_polygon index="7" disp_pos="-300.000000 240.000000"/>
-		<ex_polygon index="8" disp_pos="420.000000 240.000000"/>
-		<ex_polygon index="9" disp_pos="-60.000000 240.000000"/>
-	</ex_polygon_array>
-	<ex_node_array size="11">
-		<ex_node index="0" disp_pos="0.000000 120.000000"/>
-		<ex_node index="1" disp_pos="-540.000000 180.000000"/>
-		<ex_node index="2" disp_pos="-420.000000 180.000000"/>
-		<ex_node index="3" disp_pos="-300.000000 180.000000"/>
-		<ex_node index="4" disp_pos="-180.000000 180.000000"/>
-		<ex_node index="5" disp_pos="-60.000000 180.000000"/>
-		<ex_node index="6" disp_pos="60.000000 180.000000"/>
-		<ex_node index="7" disp_pos="180.000000 180.000000"/>
-		<ex_node index="8" disp_pos="300.000000 180.000000"/>
-		<ex_node index="9" disp_pos="420.000000 180.000000"/>
-		<ex_node index="10" disp_pos="540.000000 180.000000"/>
-	</ex_node_array>
-</ex_nns_3dme>
 
 </body>
 
