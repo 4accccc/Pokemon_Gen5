@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/28 15:25:25
+#save date:2010/05/20 14:51:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d08r0601.wms
 #SECTION START:OBJ_EVENT
@@ -450,7 +450,7 @@ EVENTDATA_POSTYPE_GRID
 #ID name
 TR_HAKAIW1_14
 #OBJ CODE Number
-HAKAIM
+HAKAIW
 #MOVE CODE Number
 MV_RIGHT
 #EVENT TYPE Number
