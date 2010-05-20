@@ -56,7 +56,6 @@ EVENT_START    ev_pos_d08r0601_leader07_01
 	//ハチクが喋る
 	//……わたしたちが　こいつらを
 	_BALLOONWIN_OBJMSG( msg_d08r0601_leader7_01, D08R0601_LEADER7_01)
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 	//自機にカメラを戻す
@@ -91,10 +90,9 @@ EVENT_START    ev_pos_d08r0601_rivel_01
 	_OBJ_ANIME(D08R0601_RIVEL_01,anm_common_turn_left)
 	_OBJ_ANIME_WAIT()
 	
-	//ハチクが喋る
+	//ライバルが喋る
 	//……ぼくも　だいじょうぶ
 	_BALLOONWIN_OBJMSG( msg_d08r0601_black_01, D08R0601_RIVEL_01)
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 	//自機にカメラを戻す
