@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-19T16:12:06"/>
+	<create user="taya" host="W00146" date="2010-05-20T18:00:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2212,14 +2212,6 @@
 [1:07:わざ名:1]を　スケッチした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:07:わざ名:1]を　スケッチした！</language>
-	</row>
-
-	<row id="BTL_STRID_SET_Kiribarai">
-		<comment>きりばらい</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　ふりはらった！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-[1:07:わざ名:1]を　振り払った！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_MikadukiNoMai">
