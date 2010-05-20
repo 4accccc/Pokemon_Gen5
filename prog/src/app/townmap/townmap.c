@@ -922,6 +922,13 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     if( cp_data != NULL )
     {
       PLACEWND_Start( &p_wk->placewnd, cp_data );
+      INFO_Update( &p_wk->info, cp_data );
+      p_wk->cp_select	= cp_data;
+      {
+        GFL_POINT wld;
+        PLACE_GetWldPos(&p_wk->place, &wld );
+				CURSOR_SetTarget( &p_wk->cursor, cp_data, &wld );
+      }
     }
   }
 
