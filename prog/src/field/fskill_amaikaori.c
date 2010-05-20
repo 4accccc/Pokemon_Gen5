@@ -58,12 +58,13 @@ typedef struct _AMAIKAORI_EFFECT{
   u8      evy;
   u8      wait;
   u8      wait_ct;
+  FLD_VREQ* fld_vreq;
 }AMAIKAORI_EFFECT;
 
 static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *work);
 static BOOL amaikaori_WeatherCheck( AMAIKAORI_WORK* wk );
 
-static void EVENT_FieldAmaikaoriEffectCall( GMEVENT* parent_event, GAMESYS_WORK* gsys );
+static void EVENT_FieldAmaikaoriEffectCall( GMEVENT* parent_event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork );
 static GMEVENT_RESULT AmaikaoriEffectEvent(GMEVENT * event, int * seq, void *work);
 static void amaikaori_BGResInit( AMAIKAORI_EFFECT* wk );
 static void amaikaori_BGResRelease( AMAIKAORI_EFFECT* wk);
@@ -128,7 +129,7 @@ static GMEVENT_RESULT FSkillAmaikaoriEvent(GMEVENT * event, int * seq, void *wor
       break;
     }
     //エフェクト起動
-    EVENT_FieldAmaikaoriEffectCall( event, wk->gsys );
+    EVENT_FieldAmaikaoriEffectCall( event, wk->gsys, wk->fieldWork );
     *seq = SEQ_ENCOUNT_CHECK;
     break;
   case SEQ_ENCOUNT_CHECK:
@@ -177,7 +178,7 @@ static BOOL amaikaori_WeatherCheck( AMAIKAORI_WORK* wk )
  *  @brief  あまいかおりエフェクトイベント起動
  */
 //------------------------------------------------------------------
-static void EVENT_FieldAmaikaoriEffectCall( GMEVENT* parent_event, GAMESYS_WORK* gsys )
+static void EVENT_FieldAmaikaoriEffectCall( GMEVENT* parent_event, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldWork )
 {
 	GMEVENT * event = GMEVENT_Create( gsys, NULL, AmaikaoriEffectEvent, sizeof(AMAIKAORI_EFFECT));
 	AMAIKAORI_EFFECT * wk = GMEVENT_GetEventWork(event);
@@ -186,6 +187,9 @@ static void EVENT_FieldAmaikaoriEffectCall( GMEVENT* parent_event, GAMESYS_WORK*
   wk->evy = 0;
   wk->wait = 2;
   wk->wait_ct = 0;
+
+	wk->fld_vreq = FIELDMAP_GetFldVReq(fieldWork);
+  
   GMEVENT_CallEvent( parent_event, event );
 }
 
@@ -202,7 +206,7 @@ static GMEVENT_RESULT AmaikaoriEffectEvent(GMEVENT * event, int * seq, void *wor
   case 1:
     if(wk->wait_ct++ >= wk->wait ) {
       wk->evy++;
-    	G2_ChangeBlendAlpha( wk->evy, (16-wk->evy) );
+    	FLD_VREQ_G2_ChangeBlendAlpha( wk->fld_vreq, wk->evy, (16-wk->evy) );
       wk->wait_ct = 0;
     }
     if(wk->evy >= 8){
@@ -217,12 +221,17 @@ static GMEVENT_RESULT AmaikaoriEffectEvent(GMEVENT * event, int * seq, void *wor
   case 3:
     if(wk->wait_ct++ >= wk->wait ) {
       wk->evy--;
-    	G2_ChangeBlendAlpha( wk->evy, (16-wk->evy) );
+    	FLD_VREQ_G2_ChangeBlendAlpha( wk->fld_vreq,wk->evy, (16-wk->evy) );
       wk->wait_ct = 0;
     }
     if(wk->evy <= 0){
       (*seq)++;
     }
+    break;
+  case 4:
+    FLD_VREQ_G2_SetBlendAlpha( wk->fld_vreq, GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_NONE, 0, 31 );
+    FLD_VREQ_GFL_BG_SetVisible( wk->fld_vreq, wk->bg_frm, VISIBLE_OFF );
+    (*seq)++;
     break;
   default:
     amaikaori_BGResRelease( wk );
@@ -251,22 +260,20 @@ static void amaikaori_BGResInit( AMAIKAORI_EFFECT* wk )
 	GFL_BG_LoadScreenReq( wk->bg_frm );
 	
   //ＢＧコントロール設定
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, ALPHA_2ND, wk->evy, (16-wk->evy) );
-  GFL_BG_SetVisible( wk->bg_frm, VISIBLE_ON );
+  FLD_VREQ_G2_SetBlendAlpha( wk->fld_vreq, GX_BLEND_PLANEMASK_BG3, ALPHA_2ND, wk->evy, (16-wk->evy) );
+  FLD_VREQ_GFL_BG_SetVisible( wk->fld_vreq, wk->bg_frm, VISIBLE_ON );
 }
 
 static void amaikaori_BGResRelease( AMAIKAORI_EFFECT* wk)
 {
   u16 pal[2] = {0x0000,0x0000};
 
-  GFL_BG_SetVisible( wk->bg_frm, VISIBLE_OFF );
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_NONE, 0, 31 );
+//  GFL_BG_SetVisible( wk->bg_frm, VISIBLE_OFF );
+//  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_NONE, GX_BLEND_PLANEMASK_NONE, 0, 31 );
 
   GFL_BG_LoadPalette( wk->bg_frm, pal, sizeof(16)*2, AMAIKAORI_PAL_IDX*0x20);
 	GFL_BG_FillScreen( wk->bg_frm,0x0000, 0, 0, 32, 32, AMAIKAORI_PAL_IDX );
 	GFL_BG_LoadScreenReq( wk->bg_frm );
   GFL_BG_FillCharacterRelease( wk->bg_frm, 1, 0x100 );
-
-//  GFL_BG_FreeBGControl( wk->bg_frm );
 }
 

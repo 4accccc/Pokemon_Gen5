@@ -142,6 +142,7 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->gsys = gsys;
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  wk->fld_vreq = FIELDMAP_GetFldVReq(wk->fieldWork);
   wk->subscreen = subscreen;
  
   wk->heap_sID = HEAPID_FIELD_SUBSCREEN;

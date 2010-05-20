@@ -14,6 +14,7 @@
 #include "gamesystem/g_power.h"
 #include "net/wih_dwc.h"
 #include "field/field_comm/intrude_work.h"
+#include "field/fld_vreq.h"
 #include "system/palanm.h"
 #include "system/gfl_use.h"
 #include "system/bmp_oam.h"
@@ -138,6 +139,7 @@ typedef struct _BEACON_VIEW{
   GAMEDATA* gdata;
   FIELDMAP_WORK* fieldWork; 
   FIELD_SUBSCREEN_WORK *subscreen;
+  FLD_VREQ* fld_vreq;
   MISC* misc_sv;
   MYITEM_PTR item_sv;
   GAME_COMM_SYS_PTR game_comm;
