@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T12:21:58"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T18:40:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -445,7 +445,7 @@
 		<comment>♂
 ・はい/いいえ選択肢表示
 ・はい→戦闘（trmsg.gmm）
-　はい＆2匹以下（trmsg.gmm）
+　はい＆2匹以下→boy3a_01a
 　いいえ→boy3a_02</comment>
 		<attribute name="キャラ指定">BOY3
 ・トレーナーID=schoolb_10</attribute>
@@ -455,6 +455,21 @@
 		<language name="JPN_KANJI" width="256">ぼくが　いっしょうけんめい
 育てた　ポケモンで▽
 トリプルバトル　しようよ！</language>
+	</row>
+
+	<row id="msg_wc10r0101_boy3a_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい＆2匹以下</comment>
+		<attribute name="キャラ指定">BOY3
+・トレーナーID=schoolb_10</attribute>
+		<language name="JPN" width="256">トリプルバトルは　ポケモン
+３びきでの　あたらしい　しょうぶ！▼
+たたかえる　ポケモンを
+３びきは　ようい　してください！</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルは　ポケモン
+３匹での　新しい　勝負！▼
+戦える　ポケモンを
+３匹は　用意してください！</language>
 	</row>
 
 	<row id="msg_wc10r0101_boy3a_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -468,7 +483,7 @@
 ポケモン　みてみたかったな</language>
 	</row>
 
-	<row id="msg_wc10r0101_boy3a_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_wc10r0101_boy3a_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">BOY3
@@ -483,7 +498,7 @@
 		<comment>♀
 ・はい/いいえ選択肢表示
 ・はい→戦闘（trmsg.gmm）
-　はい＆2匹以下（trmsg.gmm）
+　はい＆2匹以下→_woman3_01a
 　いいえ→woman3_02</comment>
 		<attribute name="キャラ指定">WOMAN3
 ・トレーナーID=childcare_04</attribute>
@@ -497,6 +512,19 @@
 トリプルバトル　しましょ？</language>
 	</row>
 
+	<row id="msg_wc10r0101_woman3_01a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♀
+・はい＆2匹以下</comment>
+		<attribute name="キャラ指定">WOMAN3
+・トレーナーID=childcare_04</attribute>
+		<language name="JPN" width="256">トリプルバトルを　するには
+たたかえる　ポケモンを▽
+３びきは　ようい　してくださいね</language>
+		<language name="JPN_KANJI" width="256">トリプルバトルを　するには
+戦える　ポケモンを▽
+３匹は　用意してくださいね</language>
+	</row>
+
 	<row id="msg_wc10r0101_woman3_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・いいえ選択時</comment>
@@ -508,7 +536,7 @@
 また　いつか　みせてね！</language>
 	</row>
 
-	<row id="msg_wc10r0101_woman3_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_wc10r0101_woman3_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♀
 ・戦闘後</comment>
 		<attribute name="キャラ指定">WOMAN3

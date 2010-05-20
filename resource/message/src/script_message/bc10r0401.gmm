@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T12:17:46"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T18:39:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -472,32 +472,47 @@
 		<comment>♂
 ・はい/いいえ選択肢表示
 ・はい→戦闘（trmsg.gmm）
-　はい＆2匹以下（trmsg.gmm）
+　はい＆2匹以下→badman1_01a
 　いいえ→badman1_02</comment>
 		<attribute name="キャラ指定">BADMAN
-・トレーナーID=badraider_04</attribute>
+・トレーナーID=badrider_04</attribute>
 		<language name="JPN" width="256">ひひ！　オレと
 ローテーションバトル　しようぜ！</language>
 		<language name="JPN_KANJI" width="256">ひひ！　オレと
 ローテーションバトル　しようぜ！</language>
 	</row>
 
+	<row id="msg_bc10r0401_badman1_01a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・はい＆2匹以下</comment>
+		<attribute name="キャラ指定">BADMAN
+・トレーナーID=badrider_04</attribute>
+		<language name="JPN" width="256">たたかえる　ポケモンを
+３びきは　ようい　しろよな！▼
+ローテーションバトルは　ポケモン
+３びきでの　あたらしい　しょうぶだ！</language>
+		<language name="JPN_KANJI" width="256">戦える　ポケモンを
+３匹は　用意しろよな！▼
+ローテーションバトルは　ポケモン
+３匹での　新しい　勝負だ！</language>
+	</row>
+
 	<row id="msg_bc10r0401_badman1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">BADMAN
-・トレーナーID=badraider_04</attribute>
+・トレーナーID=badrider_04</attribute>
 		<language name="JPN" width="256">へっ！　オレを
 こわがってんな！？</language>
 		<language name="JPN_KANJI" width="256">へっ！　オレを
 怖がってんな！？</language>
 	</row>
 
-	<row id="msg_bc10r0401_badman1_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_bc10r0401_badman1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">BADMAN
-・トレーナーID=badraider_04</attribute>
+・トレーナーID=badrider_04</attribute>
 		<language name="JPN" width="256">ローテーションバトルは
 ピリピリするぜー！！</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルは
@@ -508,7 +523,7 @@
 		<comment>♂
 ・はい/いいえ選択肢表示
 ・はい→戦闘（trmsg.gmm）
-　はい＆2匹以下（trmsg.gmm）
+　はい＆2匹以下→backpackerm_01a
 　いいえ→backpackerm_02</comment>
 		<attribute name="キャラ指定">BACKPACKERM
 ・トレーナーID=backpackerm_15</attribute>
@@ -522,6 +537,19 @@
 ローテーションバトル　しようぜ</language>
 	</row>
 
+	<row id="msg_bc10r0401_backpackerm_01a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+		<comment>♂
+・はい＆2匹以下</comment>
+		<attribute name="キャラ指定">BACKPACKERM
+・トレーナーID=backpackerm_15</attribute>
+		<language name="JPN" width="256">ローテーションバトルは　ポケモン
+３びきでの　ポケモンしょうぶ！▽
+３びきは　ポケモンを　よういしてね</language>
+		<language name="JPN_KANJI" width="256">ローテーションバトルは　ポケモン
+３匹での　ポケモン勝負！▽
+３匹は　ポケモンを　用意してね</language>
+	</row>
+
 	<row id="msg_bc10r0401_backpackerm_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
@@ -531,7 +559,7 @@
 		<language name="JPN_KANJI" width="256">おれの　運の強さ　怖がったな</language>
 	</row>
 
-	<row id="msg_bc10r0401_backpackerm_03" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_bc10r0401_backpackerm_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・戦闘後</comment>
 		<attribute name="キャラ指定">BACKPACKERM
