@@ -485,7 +485,6 @@ EVENT_START    ev_pos_d08_hakase1_01
 	_OBJ_ANIME_WAIT()
 		
 	_BALLOONWIN_OBJMSG_POS(msg_d08_hakase1_00_10, D08_HAKASE1_01,POS_UR)
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 		
 	//もりのヨウカン入手フラグをON
