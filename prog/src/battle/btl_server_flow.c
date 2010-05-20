@@ -15076,9 +15076,15 @@ static u8 scproc_HandEx_EquipItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
  */
 static u8 scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
+  const BTL_HANDEX_PARAM_USE_ITEM* param = (const BTL_HANDEX_PARAM_USE_ITEM*)(param_header);
   BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
-  if( !BPP_IsDead(pp_user) )
+
+  if( !BPP_IsDead(pp_user) || param->fUseDead )
   {
+    if( param->fSkipHPFull && BPP_IsHPFull(pp_user) ){
+      return 0;
+    }
+
     if( scproc_UseItemEquip(wk, pp_user) ){
       return 1;
     }

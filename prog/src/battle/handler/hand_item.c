@@ -3323,8 +3323,8 @@ static void handler_PowefulHarb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static const BtlEventHandlerTable* HAND_ADD_ITEM_Tabenokosi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END, handler_Tabenokosi_Reaction },
-    { BTL_EVENT_USE_ITEM,      handler_Tabenokosi_Use },
+    { BTL_EVENT_TURNCHECK_BEGIN, handler_Tabenokosi_Reaction },
+    { BTL_EVENT_USE_ITEM,        handler_Tabenokosi_Use },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3333,7 +3333,12 @@ static void handler_Tabenokosi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_IsHPFull(bpp) )
+    {
+      BTL_HANDEX_PARAM_USE_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+      param->fSkipHPFull = TRUE;
+    }
   }
 }
 static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -3986,7 +3991,7 @@ static void handler_DenkiDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_DokudokuDama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN,  handler_DokudokuDama },
+    { BTL_EVENT_TURNCHECK_END,    handler_DokudokuDama        },
     { BTL_EVENT_USE_ITEM_TMP,     handler_DokudokuDama_UseTmp },
   };
   *numElems = NELEMS( HandlerTable );
@@ -4029,7 +4034,7 @@ static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KaenDama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN,  handler_KaenDama },
+    { BTL_EVENT_TURNCHECK_END,  handler_KaenDama        },
     { BTL_EVENT_USE_ITEM_TMP,   handler_KaenDama_UseTmp },
   };
   *numElems = NELEMS( HandlerTable );

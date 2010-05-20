@@ -340,6 +340,9 @@ static inline void HANDEX_STR_AddArg( BTL_HANDEX_STR_PARAMS* param, int arg )
 
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
+ u32     fSkipHPFull : 1;   // HP満タンなら実行しない
+ u32     fUseDead    : 1;   // 死んでいても実行する
+ u32     _pad        : 30;
 }BTL_HANDEX_PARAM_USE_ITEM;
 
 
