@@ -132,12 +132,12 @@ ev_item_event_keywait:
   _END
 
 //====================================================================
-//	アイテム取得イベント(LAST_KEYWAIT)
+//	アイテム取得イベント(LAST_KEYWAIT) コア
 //
 //	SCWK_PARAM0	アイテムナンバー
 //	SCWK_PARAM1	個数
 //====================================================================
-ev_item_event_nowait:
+ev_item_event_nowait_core:
 {
   _ADD_ITEM_CHK( SCWK_PARAM0, SCWK_PARAM1, SCWK_ANSWER)
   IF $SCWK_ANSWER == FALSE THEN
@@ -153,6 +153,18 @@ ev_item_event_nowait:
 
     _CALL   sub_item_event_nowait
   ENDIF
+}
+_RET
+
+//====================================================================
+//	アイテム取得イベント(LAST_KEYWAIT)
+//
+//	SCWK_PARAM0	アイテムナンバー
+//	SCWK_PARAM1	個数
+//====================================================================
+ev_item_event_nowait:
+{
+  _CALL ev_item_event_nowait_core
 }
 _CHG_LOCAL_SCR
 _END
@@ -186,14 +198,14 @@ _END
 
 //====================================================================
 //	アイテム取得イベント プログラムからコールする場合専用
-//  (フィールドアイテム&LAST_KEYWAIT)
+//  (アイテム取得&LAST_KEYWAIT)
 //
 //	SCWK_PARAM0	アイテムナンバー
 //	SCWK_PARAM1	個数
 //====================================================================
 EVENT_START ev_item_event_prog_call
 {
-  _CALL ev_item_event_field_core
+  _CALL ev_item_event_nowait_core
 }
 EVENT_END
 
