@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-20T20:39:34"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T22:50:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -351,8 +351,8 @@
 	</row>
 
 	<row id="msg_fld_ev_warp_02" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
-		<comment>&quot;表フィールドからハイリンクにワープするとき、
-ワープ不可であることを、伝えるメッセージ。&quot;</comment>
+		<comment>表フィールドからハイリンクにワープするとき、
+ワープ不可であることを、伝えるメッセージ。</comment>
 		<language name="JPN" width="256">ここでは　ハイリンクに
 ワープできない！</language>
 		<language name="JPN_KANJI" width="256">ここでは　ハイリンクに
