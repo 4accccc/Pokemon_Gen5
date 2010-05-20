@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T19:24:43"/>
+	<create user="matsumiya" host="W00224" date="2010-05-20T16:52:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -300,9 +300,11 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]！▼
-こいつら　はなしが　つうじないね▼</language>
+こいつら　はなしが　つうじない
+メンドーな　れんちゅう　だね▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]！▼
-こいつら　話が　通じないね▼</language>
+こいつら　話が　通じない
+メンドーな　連中だね▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaim1_01">
@@ -414,12 +416,11 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]▼
-ぼくとの　コンビネーションで
-かれらの　まちがいを▽
-しょうめい　するよ▼</language>
+おさななじみの　コンビネーションで
+かれらに　おもいしらせよう▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]▼
-ぼくとの　コンビネーションで
-かれらの　間違いを　証明するよ▼</language>
+幼なじみの　コンビネーションで
+彼らに　思い知らせよう▼</language>
 	</row>
 
 	<row id="msg_r03r0301_hakaim2_03">
@@ -444,12 +445,12 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『……やれやれ
-メンドーくさいな▼
+ほんとうに　メンドーくさいな▼
 どんな　りゆうが　あろうと
 ひとの　ポケモンを▽
 とって　いいわけ　ないよね？▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『……やれやれ
-メンドーくさいな▼
+本当に　メンドーくさいな▼
 どんな理由が　あろうと
 人の　ポケモンを▽
 盗って　いいわけ　ないよね？▼</language>
@@ -496,8 +497,7 @@
 		<comment>♂
 ・メッセージ後、画面暗転し
 　その間にプラチナ団の動作も出る削除
-・画面復帰し続けてblack_07
-</comment>
+・画面復帰し続けてblack_07</comment>
 		<attribute name="キャラ指定">プラズマ団♂その１</attribute>
 		<language name="JPN" width="256">プラズマだん『……いつか
 じぶんたちの　おろかさに　きづけ▼</language>
