@@ -403,6 +403,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
       return SEQ_BBAG_ENDSET;
 
     case CURSORMOVE_CURSOR_MOVE:    // 移動
+    case CURSORMOVE_CURSOR_ON:      // カーソル表示
       PlaySE( wk, SEQ_SE_SELECT1 );
       break;
 
@@ -410,7 +411,6 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
     case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
     case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
     case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-    case CURSORMOVE_CURSOR_ON:      // カーソル表示
     case CURSORMOVE_NONE:           // 動作なし
       break;
     }
@@ -503,12 +503,12 @@ static int BBAG_SeqItemSelect( BBAG_WORK * wk )
     break;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
+  case CURSORMOVE_CURSOR_ON:      // カーソル表示
     PlaySE( wk, SEQ_SE_SELECT1 );
     break;
 
   case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
   case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
   case CURSORMOVE_NONE:           // 動作なし
     break;
 
@@ -637,6 +637,7 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
     return SEQ_BBAG_BUTTON_WAIT;
 
   case CURSORMOVE_CURSOR_MOVE:    // 移動
+  case CURSORMOVE_CURSOR_ON:      // カーソル表示
     PlaySE( wk, SEQ_SE_SELECT1 );
     break;
 
@@ -644,7 +645,6 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
   case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
   case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
   case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
   case CURSORMOVE_NONE:           // 動作なし
       break;
   }
