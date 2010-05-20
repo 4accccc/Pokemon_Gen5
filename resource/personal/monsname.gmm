@@ -3459,8 +3459,8 @@
 	</row>
 
 	<row id="MONSNAME_613">
-		<language name="JPN" width="216">シルクマ</language>
-		<language name="JPN_KANJI" width="216">シルクマ</language>
+		<language name="JPN" width="216">クマシュン</language>
+		<language name="JPN_KANJI" width="216">クマシュン</language>
 	</row>
 
 	<row id="MONSNAME_614">
@@ -3609,13 +3609,13 @@
 	</row>
 
 	<row id="MONSNAME_643">
-		<language name="JPN" width="216">シン</language>
-		<language name="JPN_KANJI" width="216">シン</language>
+		<language name="JPN" width="216">レシラム</language>
+		<language name="JPN_KANJI" width="216">レシラム</language>
 	</row>
 
 	<row id="MONSNAME_644">
-		<language name="JPN" width="216">ム</language>
-		<language name="JPN_KANJI" width="216">ム</language>
+		<language name="JPN" width="216">ゼクロム</language>
+		<language name="JPN_KANJI" width="216">ゼクロム</language>
 	</row>
 
 	<row id="MONSNAME_645">

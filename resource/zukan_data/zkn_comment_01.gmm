@@ -5863,12 +5863,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_613_000">
-		<language name="JPN">ぐあいが　わるくなると　はなみずが
-みずっぽくなり　こおり　わざの
-いりょくが　おちてしまうのだ。</language>
-		<language name="JPN_KANJI">具合が　悪くなると
-鼻水が　水っぽくなり　こおり技の
-威力が　落ちてしまうのだ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_614_000">
@@ -6133,21 +6129,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_643_000">
-		<language name="JPN">しんわに　とうじょうする　ポケモン。
-しっぽから　ほのおを　ふきあげて
-すべての　ものを　やきつくす。</language>
-		<language name="JPN_KANJI">神話に　登場する　ポケモン。
-しっぽから　炎を　吹き上げて
-すべての　ものを　焼きつくす。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_644_000">
-		<language name="JPN">しっぽで　でんきを　つくりだす。
-ぜんしんを　カミナリぐもに　かくして
-イッシュちほうの　そらを　とぶ。</language>
-		<language name="JPN_KANJI">しっぽで　電気を　作り出す。
-全身を　カミナリ雲に　隠して
-イッシュ地方の　空を　飛ぶ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_645_000">

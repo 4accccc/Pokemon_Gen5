@@ -621,7 +621,7 @@
 #define		MONSNO_541		( 610 )		//キバゴ
 #define		MONSNO_542		( 611 )		//オノンド
 #define		MONSNO_509		( 612 )		//オノノクス
-#define		MONSNO_531		( 613 )		//シルクマ
+#define		MONSNO_531		( 613 )		//クマシュン
 #define		MONSNO_532		( 614 )		//ツンベアー
 #define		MONSNO_621		( 615 )		//アイスゴン
 #define		MONSNO_561		( 616 )		//チョボマキ
@@ -651,8 +651,8 @@
 #define		MONSNO_647		( 640 )		//アラミス
 #define		MONSNO_648		( 641 )		//トルネロス
 #define		MONSNO_649		( 642 )		//ボルトロス
-#define		MONSNO_650		( 643 )		//シン
-#define		MONSNO_651		( 644 )		//ム
+#define		MONSNO_650		( 643 )		//レシラム
+#define		MONSNO_651		( 644 )		//ゼクロム
 #define		MONSNO_652		( 645 )		//ランドロス
 #define		MONSNO_653		( 646 )		//ライ
 #define		MONSNO_654		( 647 )		//ダルタニス

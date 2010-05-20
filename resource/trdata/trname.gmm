@@ -629,8 +629,8 @@
 	</row>
 
 	<row id="dancer_01">
-		<language name="JPN" width="216">リョウ</language>
-		<language name="JPN_KANJI" width="216">リョウ</language>
+		<language name="JPN" width="216">タクヤ</language>
+		<language name="JPN_KANJI" width="216">タクヤ</language>
 	</row>
 
 	<row id="juggling_01">
@@ -1229,8 +1229,8 @@
 	</row>
 
 	<row id="business1_03">
-		<language name="JPN" width="216">トモヤ</language>
-		<language name="JPN_KANJI" width="216">トモヤ</language>
+		<language name="JPN" width="216">カズヤ</language>
+		<language name="JPN_KANJI" width="216">カズヤ</language>
 	</row>
 
 	<row id="business1_04">

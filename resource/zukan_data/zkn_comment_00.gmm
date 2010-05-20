@@ -5863,12 +5863,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_613_000">
-		<language name="JPN">いつも　はなみずを　たらしている。
-はなみずを　すすって　わざを　だす。
-はなみずが　わざの　もと　なのだ。</language>
-		<language name="JPN_KANJI">いつも　鼻水を　垂らしている。
-鼻水を　すすって　技を　出す。
-鼻水が　技の　素　なのだ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_614_000">
@@ -6133,21 +6129,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_643_000">
-		<language name="JPN">シン●●●の　しっぽが　もえると
-ねつエネルギーで　たいきが　うごいて
-せかいの　てんきが　へんかする。</language>
-		<language name="JPN_KANJI">シン●●●の　しっぽが　燃えると
-熱エネルギーで　大気が　動いて
-世界の　天気が　変化する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_644_000">
-		<language name="JPN">しんわに　とうじょうする　ポケモン。
-しっぽの　なかに　でんきを　つくる
-きょだいな　はつでんきを　もつ。</language>
-		<language name="JPN_KANJI">神話に　登場する　ポケモン。
-しっぽの　中に　電気を　作る
-巨大な　発電器を　持つ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_645_000">
