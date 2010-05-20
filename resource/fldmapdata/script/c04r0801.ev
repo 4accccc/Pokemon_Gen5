@@ -22,6 +22,7 @@
 _EVENT_DATA		ev_c04r0801_trainerw_01
 _EVENT_DATA		ev_bg_c04r0801_board_01
 _EVENT_DATA		ev_c04r0801_informationw_01
+_EVENT_DATA		ev_c04r0801_baseballm_01
 _EVENT_DATA_END
 
 
@@ -62,3 +63,14 @@ EVENT_START   ev_bg_c04r0801_board_01
 	_LOOK_ELBOARD(ELBOARD_CAMERA_FRAME)
 
 EVENT_END
+
+
+/************************************************************/
+/*							ñÏãÖëIéË						*/
+/************************************************************/
+EVENT_START	ev_c04r0801_baseballm_01
+	//Ç´ÇÂÇ§ÇπÇ¢ÉMÉvÉXì¸éËèàóù
+	_EASY_TALK_ITEM_EVENT( ITEM_KYOUSEIGIPUSU, 1, FE_C04R0801_ITEMGET_01, msg_c04r0801_baseballm_01, msg_c04r0801_baseballm_02, msg_c04r0801_baseballm_02)
+EVENT_END
+
+
