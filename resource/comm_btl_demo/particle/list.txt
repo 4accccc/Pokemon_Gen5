@@ -14,3 +14,8 @@ vs_demo03.spa
 vs_demo04.spa
   vs_demo04a.spr
 
+vs_demo01wcs.spa
+  vs_demo01a.spr
+  vs_wcs01b.spr
+  vs_demo01c.spr
+  vs_demo02a.spr
