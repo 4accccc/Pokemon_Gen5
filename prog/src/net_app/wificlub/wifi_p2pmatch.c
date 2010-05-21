@@ -2138,11 +2138,11 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(wk->pParentWork->seq != WIFI_GAME_NONE){
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
     if(wk->pParentWork->btalk && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
-      _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
       //ここでVCT切断
       DWCRAP_StopVChat();
       WifiP2PMatch_FriendListInit2( wk, seq );
       wk->friendNo = wk->pParentWork->friendNo;
+      _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
     }
     else{  //相手と切断
@@ -7192,8 +7192,9 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   // グラフィック初期化
   _graphicInit(wk);
 
-  _makeMyMatchStatus(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-
+  if(pParentWork->seq == WIFI_GAME_NONE){
+    _makeMyMatchStatus(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+  }
 
   if(GFL_NET_IsInit()){
     GFL_NET_WirelessIconEasy_HoldLCD(TRUE,HEAPID_WIFIP2PMATCH);

@@ -1579,7 +1579,7 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   GFL_NET_SetNoChildErrorCheck(FALSE);
 
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_NEXT);
-
+  return seq;
 }
 
 //------------------------------------------------------------------
