@@ -24,6 +24,7 @@
 #include "btlv_effvm.h"
 
 #include "battle/battle.h"
+#include "battle/app/b_bag.h"
 
 #include "waza_tool/wazadata.h"
 #include "system/palanm.h"
@@ -32,7 +33,7 @@
 
 //戦闘エフェクト定義
 enum{
-  BTLEFF_SINGLE_ENCOUNT_1 = WAZANO_MAX + 1,   //558
+  BTLEFF_SINGLE_ENCOUNT_1 = WAZANO_MAX + 1,   //561
   BTLEFF_SINGLE_ENCOUNT_2_SOLO,
   BTLEFF_SINGLE_ENCOUNT_2_TAG,
   BTLEFF_SINGLE_ENCOUNT_3,
@@ -290,6 +291,7 @@ extern  BTLV_MCSS_VANISH_FLAG BTLV_EFFECT_GetMcssVanishFlag( BtlvMcssPos positio
 extern  void              BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FLAG flag );
 extern  void              BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int frame, int wait, int brake );
 extern  void              BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32* target );
+extern  BTLV_EFFECT_WORK* BTLV_EFFECT_GetEffectWork( void );
 extern  BTLV_CAMERA_WORK* BTLV_EFFECT_GetCameraWork( void );
 extern  BTLV_MCSS_WORK*   BTLV_EFFECT_GetMcssWork( void );
 extern  BTLV_STAGE_WORK*  BTLV_EFFECT_GetStageWork( void );
@@ -308,6 +310,8 @@ extern  const BTLV_SCU*   BTLV_EFFECT_GetScu( void );
 extern  int               BTLV_EFFECT_GetPinchBGMFlag( void );
 extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no );
 extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
+extern  void              BTLV_EFFECT_SetBagMode( BtlBagMode bagMode );
+extern  BtlBagMode        BTLV_EFFECT_GetBagMode( void );
 extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func,
                                               BTLV_EFFECT_TCB_GROUP group );
 extern  int               BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb );

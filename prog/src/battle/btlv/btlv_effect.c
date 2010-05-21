@@ -110,7 +110,8 @@ struct _BTLV_EFFECT_WORK
   u32                     tcb_damage_flag :BTLV_MCSS_POS_MAX;
   u32                     tcb_henge_flag  :BTLV_MCSS_POS_MAX;
   u32                     tcb_rotate_flag :2;
-  u32                                     :15;
+  u32                     bagMode         :8;
+  u32                                     :6;
   HEAPID                  heapID;
 
   BOOL                    trainer_bgm_change_flag;
@@ -1387,6 +1388,18 @@ void    BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32*
 
 //============================================================================================
 /**
+ * @brief  エフェクト管理構造体のポインタを取得
+ *
+ * @retval bew カメラ管理構造体
+ */
+//============================================================================================
+BTLV_EFFECT_WORK* BTLV_EFFECT_GetEffectWork( void )
+{
+  return bew;
+}
+
+//============================================================================================
+/**
  * @brief  エフェクトで使用されているカメラ管理構造体のポインタを取得
  *
  * @retval bcw カメラ管理構造体
@@ -1609,6 +1622,26 @@ BOOL  BTLV_EFFECT_GetTrainerBGMChangeFlag( void )
   return bew->trainer_bgm_change_flag;
 }
 
+//============================================================================================
+/**
+ * @brief  バッグモードをセット
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetBagMode( BtlBagMode bagMode )
+{ 
+  bew->bagMode = bagMode;
+}
+
+//============================================================================================
+/**
+ * @brief  バッグモードをゲット
+ */
+//============================================================================================
+BtlBagMode  BTLV_EFFECT_GetBagMode( void )
+{ 
+  return bew->bagMode;
+}
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  空いているTCBIndexを取得してGFL_TCBをセット
@@ -1713,8 +1746,11 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
     return;
   }
   bew->camera_work_execute = cwe;
-  bew->camera_work_seq  = 0;
-  bew->camera_work_wait = 0;
+  if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
+  { 
+    bew->camera_work_seq  = 0; 
+    bew->camera_work_wait = 0;
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -1946,28 +1982,35 @@ static  void  camera_work_check( void )
 
   if( bew->camera_work_execute == BTLV_EFFECT_CWE_NONE ) return;
 
-  if( ( trg ) || ( tp ) ||
-      ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL ) ||
+  if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL ) ||
       ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE ) )
   {
-    if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
-    {
-      BTLV_EFFECT_Stop();
-      BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, BTLEFF_CAMERA_INIT, NULL );
-    }
+    BTLV_EFFECT_Stop();
+    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+    bew->camera_work_seq  = 0;
+    bew->camera_work_wait = 0;
     if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL )
     {
-      bew->camera_work_execute = BTLV_EFFECT_CWE_NORMAL;
+    bew->camera_work_execute = BTLV_EFFECT_CWE_NORMAL;
     }
     if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
     {
       bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
     }
-    bew->camera_work_seq  = 0;
-    bew->camera_work_wait = 0;
   }
 
-  switch( bew->camera_work_seq ){
+  if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
+  { 
+    if( ( trg ) || ( tp ) )
+    { 
+      BTLV_EFFECT_Stop();
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      bew->camera_work_seq = 0;
+      bew->camera_work_wait = 0;
+    }
+  }
+
+  switch( bew->camera_work_seq ){ 
   case 0:
     if( bew->camera_work_wait < bew->camera_work_wait_tmp )
     {
@@ -2007,8 +2050,7 @@ static  void  camera_work_check( void )
           }
         }
       }
-      BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
-      bew->execute_flag = TRUE;
+      BTLV_EFFECT_Add( eff_no );
       bew->camera_work_seq = 2;
     }
     break;

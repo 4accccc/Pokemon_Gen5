@@ -2191,6 +2191,8 @@ BOOL BTLV_WaitRankEffect( BTLV_CORE* wk, u8 vpos )
 //=============================================================================================
 void BTLV_StartCommWait( BTLV_CORE* wk )
 {
+  //カメラワークチェック開始
+  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_NORMAL );
   BTLV_SCU_StartCommWaitInfo( wk->scrnU );
 }
 BOOL BTLV_WaitCommWait( BTLV_CORE* wk )
@@ -2199,6 +2201,8 @@ BOOL BTLV_WaitCommWait( BTLV_CORE* wk )
 }
 void BTLV_ResetCommWaitInfo( BTLV_CORE* wk )
 {
+  //カメラワークチェックを止めてカメラをデフォルト位置にする
+  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
   BTLV_SCU_ClearCommWaitInfo( wk->scrnU );
 }
 
