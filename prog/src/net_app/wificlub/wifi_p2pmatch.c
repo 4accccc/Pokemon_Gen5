@@ -834,6 +834,7 @@ static int WifiP2PMatch_CancelEnableWaitDP( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq );
 static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq );
+static int WifiP2PMatch_VCTDisconnectSendEnd(WIFIP2PMATCH_WORK *wk, int seq);
 
 
 
@@ -1013,7 +1014,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerMachineTalkEnd, //  WIFIP2PMATCH_PLAYERMACHINE_TALKEND,
   _playerDirectBattleStart42, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42
   _playerDirectEndNext,  ///WIFIP2PMATCH_PLAYERDIRECT_END_NEXT
-
+  WifiP2PMatch_VCTDisconnectSendEnd,//WIFIP2PMATCH_VCTEND_COMMSEND2_ENDCHK
 };
 
 
@@ -3741,6 +3742,18 @@ static int WifiP2PMatch_VCTDisconnectSend1(WIFIP2PMATCH_WORK *wk, int seq)
   return seq;
 }
 
+
+//WIFIP2PMATCH_VCTEND_COMMSEND2_ENDCHK
+//VCTÉâÉCÉuÉâÉäÇÃèIóπë“Çø
+static int WifiP2PMatch_VCTDisconnectSendEnd(WIFIP2PMATCH_WORK *wk, int seq)
+{
+  if(DWCRAP_IsVChat()==FALSE){
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+  }
+  return seq;
+}
+
+
 //WIFIP2PMATCH_VCTEND_COMMSEND2
 static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
 {
@@ -3751,7 +3764,7 @@ static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
       DWCRAP_StopVChat();
       _changeBGMVol( wk, _VOL_DEFAULT );
       EndMessageWindowOff(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+      _CHANGESTATE(wk,WIFIP2PMATCH_VCTEND_COMMSEND2_ENDCHK);
     }
     else{
       _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);

@@ -473,6 +473,7 @@ extern void GFL_NET_DWC_SetCconnectionUserData(u32 data);
 
 extern void DWCRAP_StartVChat(void);
 extern void DWCRAP_StopVChat(void);
+extern BOOL DWCRAP_IsVChat(void);
 
 
 extern BOOL GFL_NET_DWC_IsDisconnect(void);
