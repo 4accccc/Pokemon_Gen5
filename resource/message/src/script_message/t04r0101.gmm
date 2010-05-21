@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-21T16:28:07"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-21T16:32:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -894,11 +894,11 @@
 		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">ブルジョワールけ
-じきとうしゅ　ジリオン！▼
+じきとうしゅ　マイル！▼
 いっかの　めいよは
 この　ボクが　まもろう！▼</language>
 		<language name="JPN_KANJI" width="256">ブルジョワール家
-次期当主　ジリオン！▼
+次期当主　マイル！▼
 一家の　名誉は
 この　ボクが　護ろう！▼</language>
 	</row>
