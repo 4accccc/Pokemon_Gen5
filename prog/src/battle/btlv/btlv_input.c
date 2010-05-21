@@ -687,13 +687,19 @@ typedef struct
   int                 anm_no[ BUTTON_ANIME_TYPE_MAX ];  //アニメーションナンバー
 }BUTTON_ANIME_PARAM;
 
+typedef struct
+{
+  BTLV_INPUT_WORK*  biw;
+  BtlBagMode        bagMode;
+}TCB_BAGMODE_SET;
+
 //============================================================================================
 /**
  *  プロトタイプ宣言
  */
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
-                                               PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag,
+                                               PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
                                                BOOL main_loop_tcb_flag, HEAPID heapID );
 static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw );
 static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work );
@@ -735,6 +741,7 @@ static  void  TCB_WeatherIconMove( GFL_TCB* tcb, void* work );
 static  void  TCB_WeatherIconMove_CB( GFL_TCB* tcb );
 static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir );
 static  void  TCB_RotateAction( GFL_TCB* tcb, void* work );
+static  void  TCB_BagModeSet( GFL_TCB* tcb, void* work );
 
 static  void  BTLV_INPUT_MainTCB( GFL_TCB* tcb, void* work );
 static  void  FontLenGet( const STRBUF *str, GFL_FONT *font, int *ret_dot_len, int *ret_char_len );
@@ -799,7 +806,7 @@ static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
 //============================================================================================
 BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, FALSE, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, BTL_COMPETITOR_WILD, pfd, font, cursor_flag, BBAG_MODE_NORMAL, FALSE, heapID );
 }
 
 //============================================================================================
@@ -812,14 +819,15 @@ BTLV_INPUT_WORK*  BTLV_INPUT_InitEx( GAMEDATA* gameData, BTLV_INPUT_TYPE type, P
  *  @param[in]  pfd           パレットフェード管理構造体ポインタ
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
+ *  @param[in]  bagMdoe       バッグモード
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
-BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, HEAPID heapID )
+BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp, PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode, HEAPID heapID )
 {
-  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, TRUE, heapID );
+  return BTLV_INPUT_InitCore( gameData, type, comp, pfd, font, cursor_flag, bagMode, TRUE, heapID );
 }
 
 //============================================================================================
@@ -832,13 +840,14 @@ BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, Btl
  *  @param[in]  pfd           パレットフェード管理構造体ポインタ
  *  @param[in]  font          使用するフォント
  *  @param[in]  cursor_flag   カーソル表示するかどうかフラグのポインタ（他のアプリとも共用するため）
+ *  @param[in]  bagMdoe       バッグモード
  *  @param[in]  heapID        ヒープID
  *
  *  @retval システム管理構造体のポインタ
  */
 //============================================================================================
 static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,
-                                               PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag,
+                                               PALETTE_FADE_PTR pfd, GFL_FONT* font, u8* cursor_flag, BtlBagMode bagMode,
                                                BOOL main_loop_tcb_flag, HEAPID heapID )
 {
   BTLV_INPUT_WORK *biw = GFL_HEAP_AllocClearMemory( heapID, sizeof( BTLV_INPUT_WORK ) );
@@ -889,6 +898,13 @@ static  BTLV_INPUT_WORK*  BTLV_INPUT_InitCore( GAMEDATA* gameData, BTLV_INPUT_TY
   biw->hit = GFL_UI_TP_HIT_NONE;
 
   BTLV_INPUT_InitBG( biw );
+
+  { 
+    TCB_BAGMODE_SET* tbs = GFL_HEAP_AllocMemory( biw->heapID, sizeof( TCB_BAGMODE_SET ) );
+    tbs->biw      = biw;
+    tbs->bagMode  = bagMode;
+    BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_BagModeSet, tbs, 0 ), NULL );
+  }
 
   return biw;
 }
@@ -1238,6 +1254,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
+    BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
+
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
       MtxFx22 mtx;
@@ -1259,18 +1277,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
-
-      switch( biw->scr_type ){ 
-      case BTLV_INPUT_SCRTYPE_COMMAND:
-      case BTLV_INPUT_SCRTYPE_WAZA:
-      case BTLV_INPUT_SCRTYPE_DIR:
-      case BTLV_INPUT_SCRTYPE_ROTATE:
-        BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NORMAL );
-        break;
-      case BTLV_INPUT_SCRTYPE_YES_NO:
-      default:
-        break;
-      }
 
       if( ( biw->scr_type == BTLV_INPUT_SCRTYPE_COMMAND ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_YES_NO ) )
       {
@@ -3173,6 +3179,21 @@ static  void  TCB_RotateAction( GFL_TCB* tcb, void* work )
     break;
   }
 #endif
+}
+
+//============================================================================================
+/**
+ *  @brief  バッグモードをBTLV_EFFECTにセット
+ */
+//============================================================================================
+static  void  TCB_BagModeSet( GFL_TCB* tcb, void* work )
+{ 
+  TCB_BAGMODE_SET*  tbs = ( TCB_BAGMODE_SET* )work;
+  if( BTLV_EFFECT_GetEffectWork() != NULL )
+  { 
+    BTLV_EFFECT_SetBagMode( tbs->bagMode );
+    BTLV_INPUT_FreeTCB( tbs->biw, tcb );
+  }
 }
 
 //--------------------------------------------------------------

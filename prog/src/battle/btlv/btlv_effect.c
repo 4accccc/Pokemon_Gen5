@@ -824,6 +824,10 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
     switch( trtype ){
     case TRTYPE_HERO:
     case TRTYPE_HEROINE:
+      if( bew->bagMode == BBAG_MODE_SHOOTER )
+      { 
+        trtype += 4;
+      }
       break;
     case TRTYPE_DOCTOR:
       trtype = 2;

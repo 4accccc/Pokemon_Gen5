@@ -198,7 +198,7 @@ void BTLV_SCD_Init( BTLV_SCD* wk )
   wk->biw = BTLV_INPUT_Init( BTL_MAIN_GetGameData( wk->mainModule ),
                              BTL_MAIN_GetRule( wk->mainModule ),
                              BTL_MAIN_GetCompetitor( wk->mainModule ),
-                             BTLV_EFFECT_GetPfd(), wk->font, &wk->cursor_flag, wk->heapID );
+                             BTLV_EFFECT_GetPfd(), wk->font, &wk->cursor_flag, wk->bagMode, wk->heapID );
 
   ///<obj
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
