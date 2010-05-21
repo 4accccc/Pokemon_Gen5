@@ -1814,13 +1814,13 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_284">
-		<language name="JPN" width="256">POCKET MONSTERS  BLACK  VERSION</language>
-		<language name="JPN_KANJI" width="256">POCKET MONSTERS  BLACK  VERSION</language>
+		<language name="JPN" width="256">POCKET  MONSTERS  BLACK  VERSION</language>
+		<language name="JPN_KANJI" width="256">POCKET  MONSTERS  BLACK  VERSION</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_285">
-		<language name="JPN" width="256">POCKET MONSTERS  WHITE  VERSION</language>
-		<language name="JPN_KANJI" width="256">POCKET MONSTERS  WHITE  VERSION</language>
+		<language name="JPN" width="256">POCKET  MONSTERS  WHITE  VERSION</language>
+		<language name="JPN_KANJI" width="256">POCKET  MONSTERS  WHITE  VERSION</language>
 	</row>
 
 	<flowchart-group-list>
