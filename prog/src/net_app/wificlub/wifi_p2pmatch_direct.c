@@ -208,6 +208,14 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
   PRINT_UTIL_Trans( &wk->SysMsgPrintUtil, wk->SysMsgQue );
   ret = BmpMenuList_Main(wk->sublw);
 
+  switch(ret){
+  case WIFI_GAME_TVT:
+  case WIFI_GAME_VCT:
+    if(!wk->pParentWork->vchatMain){
+      return seq;
+    }
+    break;
+  }
   if(BMPMENULIST_NULL!=ret){
     EndMessageWindowOff(wk);
   }
@@ -1569,6 +1577,22 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
+
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_NEXT);
+
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END_NEXT
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectEndNext( WIFIP2PMATCH_WORK *wk, int seq )
+{
+
   GFL_NET_StateWifiMatchEnd(TRUE);
 
   if(GFL_NET_IsParentMachine()){
@@ -1751,7 +1775,7 @@ static int _playerDirectVCTChange4( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u16 gamemode[2];
   gamemode[0] = _WifiMyGameModeGet( wk, wk->pMatch );
-  gamemode[1] = 1 - WIFI_STATUS_GetVChatStatus(wk->pMatch);  //自分の状態を反転して送信
+  gamemode[1] = 1 - wk->pParentWork->vchatMain;  //自分の状態を反転して送信
 
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5);

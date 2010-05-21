@@ -1012,6 +1012,8 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectSub23, //  WIFIP2PMATCH_PLAYERDIRECT_SUB23
   _playerMachineTalkEnd, //  WIFIP2PMATCH_PLAYERMACHINE_TALKEND,
   _playerDirectBattleStart42, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START42
+  _playerDirectEndNext,  ///WIFIP2PMATCH_PLAYERDIRECT_END_NEXT
+
 };
 
 
@@ -2212,7 +2214,7 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   _myStatusChange_not_send(wk, status, gamemode); // BGMó‘Ô‚È‚Ç‚ğ’²®
   WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
   WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
-  WIFI_STATUS_SetVChatStatus(wk->pMatch, TRUE);
+  WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
 
   _sendMatchStatus(wk);
 
@@ -4162,24 +4164,24 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case BMPMENULIST_CANCEL:
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+//    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     _windelandSEcall(wk);
     FriendRequestWaitOff(wk);
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+//    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _windelandSEcall(wk);
     _battleCustomSelectMenu(wk);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;
   case WIFI_GAME_VCT:
-    if( 0==WIFI_STATUS_GetVChatStatus(wk->pMatch) ){
-      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    if( !wk->pParentWork->vchatMain ){
+ //     PMSND_PlaySystemSE(SEQ_SE_BEEP);
       return seq;
     }
     else{
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+   //   PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
@@ -4191,22 +4193,22 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       BmpMenuWork_ListDelete( wk->submenulist );
       EndMessageWindowOff(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
-      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+   //  PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
       _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
     }
     else{
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+//     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
     break;
   case WIFI_GAME_TVT:
-    if( 0==WIFI_STATUS_GetVChatStatus(wk->pMatch) ){
-      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
+    if( !wk->pParentWork->vchatMain ){
+ //     PMSND_PlaySystemSE(SEQ_SE_BEEP);
       return seq;
     }
     else{
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+ //     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
@@ -5332,7 +5334,7 @@ static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq )
   u16 gamemode[2];
   u16 status = _WifiMyStatusGet( wk, wk->pMatch );
   gamemode[0] = _WifiMyGameModeGet( wk, wk->pMatch );
-  gamemode[1] = WIFI_STATUS_GetVChatStatus(wk->pMatch);
+  gamemode[1] = wk->pParentWork->vchatMain;
 
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK);
@@ -5847,14 +5849,14 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamem
  * @retval  none
  */
 //------------------------------------------------------------------
-
+#if 0
 static BOOL _myVChatStatusToggle(WIFIP2PMATCH_WORK *wk)
 {
   WIFI_STATUS_SetVChatStatus(wk->pMatch, 1 - WIFI_STATUS_GetVChatStatus( wk->pMatch ));
   _sendMatchStatus(wk);
   return WIFI_STATUS_GetVChatStatus( wk->pMatch );
 }
-
+#endif
 //------------------------------------------------------------------
 /**
  * $brief   VCHATƒtƒ‰ƒO‚ÌØ‚è‘Ö‚¦
