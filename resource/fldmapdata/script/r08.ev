@@ -229,6 +229,7 @@ _ANIME_LABEL	anm_common_turn_u
 /*  R08 プラズマ団１会話用イベントスクリプト                  */
 /**************************************************************/
 EVENT_START   ev_r08_hakaim_01
+	_TALK_START_TURN_NOT()
 	IF FLAG_ON(FE_D08_PACKAGEPOKE_END) THEN
 		_BALLOONWIN_OBJMSG_POS( msg_r08_stop1_02, R08_HAKAIM_01, POS_DEFAULT )
 	ELSE
@@ -241,6 +242,7 @@ EVENT_END
 /*  R08 プラズマ団２会話用イベントスクリプト                  */
 /**************************************************************/
 EVENT_START   ev_r08_hakaim_02
+	_TALK_START_TURN_NOT()
 	IF FLAG_ON(FE_D08_PACKAGEPOKE_END) THEN
 		_BALLOONWIN_OBJMSG_POS( msg_r08_stop2_02, R08_HAKAIM_02, POS_DEFAULT )
 	ELSE
