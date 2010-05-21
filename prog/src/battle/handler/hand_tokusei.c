@@ -89,7 +89,7 @@ static void handler_PlusMinus( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Plus( u32* numElems );
 static BOOL checkExistTokuseiFriend( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeTokusei tokuseiID );
 static BOOL checkFlowerGiftEnablePokemon( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
-static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm );
+static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm, u8 fTokWin );
 static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1544,7 +1544,7 @@ static BOOL checkFlowerGiftEnablePokemon( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
   }
   return FALSE;
 }
-static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm )
+static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 nextForm, u8 fTokWin )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
@@ -1553,7 +1553,7 @@ static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
     param->pokeID = pokeID;
     param->formNo = nextForm;
-    param->header.tokwin_flag = TRUE;
+    param->header.tokwin_flag = fTokWin;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
@@ -1564,7 +1564,7 @@ static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
   {
     u8 nextForm = (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)?  FORMNO_THERIMU_POSI : FORMNO_THERIMU_NEGA;
-    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, nextForm );
+    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, nextForm, TRUE );
   }
 }
 // 天候変化ハンドラ
@@ -1573,7 +1573,7 @@ static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
   if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
   {
     u8 nextForm = (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)?  FORMNO_THERIMU_POSI : FORMNO_THERIMU_NEGA;
-    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, nextForm );
+    common_FlowerGift_FormChange( myHandle, flowWk, pokeID, nextForm, TRUE );
   }
 }
 // いえきハンドラ
@@ -1583,7 +1583,7 @@ static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
     {
-      common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA );
+      common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA, FALSE );
     }
   }
 }
@@ -1595,7 +1595,7 @@ static void handler_FlowerGift_TokChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_TOKUSEI_NEXT) != BTL_EVENT_FACTOR_GetSubID(myHandle))
     ){
-      common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA );
+      common_FlowerGift_FormChange( myHandle, flowWk, pokeID, FORMNO_THERIMU_NEGA, FALSE );
     }
   }
 }
