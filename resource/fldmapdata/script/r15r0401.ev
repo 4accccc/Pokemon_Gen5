@@ -61,7 +61,7 @@ EVENT_START		ev_r15r0401_assistantw_01
 				//要望と一致してるかチェック結果格納変数定義
 				DEFINE_LOCAL LWK_TRADE_CHECK
 			
-				//選択したポケモンが交換可能かチェック（トレードするデータが仮）
+				//選択したポケモンが交換可能かチェック
 				_FIELD_POKE_TRADE_CHECK ( LWK_TRADE_CHECK , FLD_TRADE_POKE_7_ROTOMU , LWK_CHOICE )
 				
 				//交換可能である
