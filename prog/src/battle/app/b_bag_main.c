@@ -430,118 +430,120 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 {
-  u32 ret;
+  if( PaletteFadeCheck( wk->pfd ) == 0 ){
+	  u32 ret;
 	
-	if( CheckTimeOut( wk ) == TRUE ){
-		return SEQ_BBAG_ENDSET;
+		if( CheckTimeOut( wk ) == TRUE ){
+			return SEQ_BBAG_ENDSET;
+		}
+
+		ret = CURSORMOVE_MainCont( wk->cmwk );
+
+	  switch( ret ){
+	  case BBAG_UI_P2_ITEM1:    // アイテム１
+	  case BBAG_UI_P2_ITEM2:    // アイテム２
+	  case BBAG_UI_P2_ITEM3:    // アイテム３
+	  case BBAG_UI_P2_ITEM4:    // アイテム４
+	  case BBAG_UI_P2_ITEM5:    // アイテム５
+	  case BBAG_UI_P2_ITEM6:    // アイテム６
+	    if( BattleBag_PosItemCheck( wk, ret ) != 0 ){
+	      PlaySE( wk, SEQ_SE_DECIDE2 );
+	      wk->dat->item_pos[wk->poke_id] = (u8)ret;
+	      wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
+	      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_ITEM01+ret );
+	      return SEQ_BBAG_BUTTON_WAIT;
+	    }
+	    break;
+
+	  case BBAG_UI_P2_RETURN:   // 戻る
+			PlaySE( wk, SEQ_SE_CANCEL2 );
+	    BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
+	    if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
+	      wk->dat->ret_item = ITEM_DUMMY_DATA;
+	      wk->dat->ret_page = BBAG_POKE_MAX;
+	      return SEQ_BBAG_ENDSET;
+	    }else{
+	      wk->ret_seq = SEQ_BBAG_PAGE1_CHG;
+	      return SEQ_BBAG_BUTTON_WAIT;
+	    }
+	    break;
+
+	  case CURSORMOVE_CANCEL:   // キャンセル
+			PlaySE( wk, SEQ_SE_CANCEL2 );
+	    BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
+	    if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
+	      wk->dat->ret_item = ITEM_DUMMY_DATA;
+	      wk->dat->ret_page = BBAG_POKE_MAX;
+	      return SEQ_BBAG_ENDSET;
+	    }else{
+	      wk->ret_seq = SEQ_BBAG_PAGE1_CHG;
+	      return SEQ_BBAG_BUTTON_WAIT;
+	    }
+	    break;
+
+	  case BBAG_UI_P2_LEFT:     // 前へ
+	    if( wk->scr_max[wk->poke_id] != 0 ){
+	      PlaySE( wk, SEQ_SE_DECIDE2 );
+	      wk->dat->item_pos[wk->poke_id] = 0;
+	      wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
+	      wk->page_mv = -1;
+	      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
+	      return SEQ_BBAG_BUTTON_WAIT;
+	    }
+	    break;
+
+	  case BBAG_UI_P2_RIGHT:    // 次へ
+	    if( wk->scr_max[wk->poke_id] != 0 ){
+	      PlaySE( wk, SEQ_SE_DECIDE2 );
+	      wk->dat->item_pos[wk->poke_id] = 0;
+	      wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
+	      wk->page_mv = 1;
+	      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
+	      return SEQ_BBAG_BUTTON_WAIT;
+	    }
+	    break;
+
+	  case CURSORMOVE_CURSOR_MOVE:    // 移動
+	  case CURSORMOVE_CURSOR_ON:      // カーソル表示
+	    PlaySE( wk, SEQ_SE_SELECT1 );
+	    break;
+
+	  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
+	  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
+	  case CURSORMOVE_NONE:           // 動作なし
+	    break;
+
+	  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
+	    {
+	      u8  pos = CURSORMOVE_PosGet( wk->cmwk );
+	      if( pos == BBAG_UI_P2_ITEM1 || pos == BBAG_UI_P2_ITEM3 || BBAG_UI_P2_ITEM5 ){
+	        if( wk->scr_max[wk->poke_id] != 0 ){
+	        PlaySE( wk, SEQ_SE_DECIDE2 );
+	          wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
+	          wk->page_mv = -1;
+	          BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
+	          return SEQ_BBAG_BUTTON_WAIT;
+	        }
+	      }
+	    }
+	    break;
+
+	  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
+	    {
+	      u8  pos = CURSORMOVE_PosGet( wk->cmwk );
+	      if( pos == BBAG_UI_P2_ITEM2 || pos == BBAG_UI_P2_ITEM4 || BBAG_UI_P2_ITEM6 ){
+	        if( wk->scr_max[wk->poke_id] != 0 ){
+	        PlaySE( wk, SEQ_SE_DECIDE2 );
+	          wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
+	          wk->page_mv = 1;
+	          BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
+	          return SEQ_BBAG_BUTTON_WAIT;
+	        }
+	      }
+	    }
+	    break;
+	  }
 	}
-
-	ret = CURSORMOVE_MainCont( wk->cmwk );
-
-  switch( ret ){
-  case BBAG_UI_P2_ITEM1:    // アイテム１
-  case BBAG_UI_P2_ITEM2:    // アイテム２
-  case BBAG_UI_P2_ITEM3:    // アイテム３
-  case BBAG_UI_P2_ITEM4:    // アイテム４
-  case BBAG_UI_P2_ITEM5:    // アイテム５
-  case BBAG_UI_P2_ITEM6:    // アイテム６
-    if( BattleBag_PosItemCheck( wk, ret ) != 0 ){
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-      wk->dat->item_pos[wk->poke_id] = (u8)ret;
-      wk->ret_seq = SEQ_BBAG_PAGE3_CHG;
-      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_ITEM01+ret );
-      return SEQ_BBAG_BUTTON_WAIT;
-    }
-    break;
-
-  case BBAG_UI_P2_RETURN:   // 戻る
-		PlaySE( wk, SEQ_SE_CANCEL2 );
-    BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
-    if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
-      wk->dat->ret_item = ITEM_DUMMY_DATA;
-      wk->dat->ret_page = BBAG_POKE_MAX;
-      return SEQ_BBAG_ENDSET;
-    }else{
-      wk->ret_seq = SEQ_BBAG_PAGE1_CHG;
-      return SEQ_BBAG_BUTTON_WAIT;
-    }
-    break;
-
-  case CURSORMOVE_CANCEL:   // キャンセル
-		PlaySE( wk, SEQ_SE_CANCEL2 );
-    BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RETURN );
-    if( wk->dat->mode == BBAG_MODE_SHOOTER || wk->dat->mode == BBAG_MODE_PDC ){
-      wk->dat->ret_item = ITEM_DUMMY_DATA;
-      wk->dat->ret_page = BBAG_POKE_MAX;
-      return SEQ_BBAG_ENDSET;
-    }else{
-      wk->ret_seq = SEQ_BBAG_PAGE1_CHG;
-      return SEQ_BBAG_BUTTON_WAIT;
-    }
-    break;
-
-  case BBAG_UI_P2_LEFT:     // 前へ
-    if( wk->scr_max[wk->poke_id] != 0 ){
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-      wk->dat->item_pos[wk->poke_id] = 0;
-      wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
-      wk->page_mv = -1;
-      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
-      return SEQ_BBAG_BUTTON_WAIT;
-    }
-    break;
-
-  case BBAG_UI_P2_RIGHT:    // 次へ
-    if( wk->scr_max[wk->poke_id] != 0 ){
-      PlaySE( wk, SEQ_SE_DECIDE2 );
-      wk->dat->item_pos[wk->poke_id] = 0;
-      wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
-      wk->page_mv = 1;
-      BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
-      return SEQ_BBAG_BUTTON_WAIT;
-    }
-    break;
-
-  case CURSORMOVE_CURSOR_MOVE:    // 移動
-  case CURSORMOVE_CURSOR_ON:      // カーソル表示
-    PlaySE( wk, SEQ_SE_SELECT1 );
-    break;
-
-  case CURSORMOVE_NO_MOVE_UP:     // 十字キー上が押されたが、移動なし
-  case CURSORMOVE_NO_MOVE_DOWN:   // 十字キー下が押されたが、移動なし
-  case CURSORMOVE_NONE:           // 動作なし
-    break;
-
-  case CURSORMOVE_NO_MOVE_LEFT:   // 十字キー左が押されたが、移動なし
-    {
-      u8  pos = CURSORMOVE_PosGet( wk->cmwk );
-      if( pos == BBAG_UI_P2_ITEM1 || pos == BBAG_UI_P2_ITEM3 || BBAG_UI_P2_ITEM5 ){
-        if( wk->scr_max[wk->poke_id] != 0 ){
-        PlaySE( wk, SEQ_SE_DECIDE2 );
-          wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
-          wk->page_mv = -1;
-          BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_LEFT );
-          return SEQ_BBAG_BUTTON_WAIT;
-        }
-      }
-    }
-    break;
-
-  case CURSORMOVE_NO_MOVE_RIGHT:  // 十字キー右が押されたが、移動なし
-    {
-      u8  pos = CURSORMOVE_PosGet( wk->cmwk );
-      if( pos == BBAG_UI_P2_ITEM2 || pos == BBAG_UI_P2_ITEM4 || BBAG_UI_P2_ITEM6 ){
-        if( wk->scr_max[wk->poke_id] != 0 ){
-        PlaySE( wk, SEQ_SE_DECIDE2 );
-          wk->ret_seq = SEQ_BBAG_ITEMSEL_NEXT;
-          wk->page_mv = 1;
-          BBAGANM_ButtonAnmInit( wk, BBAG_BGWF_RIGHT );
-          return SEQ_BBAG_BUTTON_WAIT;
-        }
-      }
-    }
-    break;
-  }
 
   return SEQ_BBAG_ITEM;
 }
