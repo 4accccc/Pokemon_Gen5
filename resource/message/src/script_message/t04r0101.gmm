@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-21T16:04:25"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-21T16:28:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,7 +296,7 @@
 		<comment>♂
 ・豪邸の中央部分まで歩いてから会話開始。
 ・メッセージの後に、コレクション棚の方を向く。</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">すごいだろ！　ひろいだろ！▼
 ここは　パパの　べっそうで
@@ -310,7 +310,7 @@
 		<comment>♂
 ・続き。
 ・メッセージの後に再び主人公の方に向きなおす</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">……でも　きてみたら　いがいと
 することなくて　ひまでさ▼
@@ -327,7 +327,7 @@
 ・続き。
 ・以降、本日中はmsg_t04r0101_boy3_03を
 　表示する</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">なぁ　オマエ　ひまなんだろう？▼
 あしたも　こいよ！
@@ -341,7 +341,7 @@
 		<comment>♂
 ・続き。
 ・以降、本日中はこのメッセージを表示する。</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">なぁ　オマエ　ひまなんだろう？▼
 あしたも　こいよ！
@@ -357,7 +357,7 @@
 ・この後にはい／いいえの選択肢。
 　「はい」で連戦スタート。
 　「いいえ」でmsg_t04r0101_boy3_02a</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">きたな！▼
 ひまで　ひまで
@@ -374,7 +374,7 @@
 	<row id="msg_t04r0101_boy3_02a" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・トレーナー戦闘へ</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">いざ　じんじょうに　しょうぶっ！▼</language>
 		<language name="JPN_KANJI" width="256">いざ　じんじょうに　勝負っ！▼</language>
@@ -383,7 +383,7 @@
 	<row id="msg_t04r0101_boy3_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・msg_t04r0101_boy3_02で「いいえ」の場合</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">なんだよう　ひまじゃないのか……</language>
 		<language name="JPN_KANJI" width="256">なんだよう　暇じゃないのか……</language>
@@ -393,7 +393,7 @@
 		<comment>♂
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">ううー！
 くやしいー！　なんでだー！▼</language>
@@ -404,7 +404,7 @@
 	<row id="msg_t04r0101_boy3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・家族全員に勝利したあとのメッセージ</comment>
-		<attribute name="キャラ指定">息子
+		<attribute name="キャラ指定">息子　ドレイク
 じゅくがえり</attribute>
 		<language name="JPN" width="256">オマエ　すごいじゃないか！
 すこしだけ　みとめてやっても　いいぞ！</language>
@@ -416,7 +416,7 @@
 		<comment>♀
 ・ふきだしのみ。この後にマップ外から登場し、
 　主人公の目の前まで移動する。</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">あら　たのしそうね▼</language>
 		<language name="JPN_KANJI" width="256">あら　楽しそうね▼</language>
@@ -426,7 +426,7 @@
 		<comment>♀
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">ごきげんよう　トレーナーさん▼
 おとうさまの　べっそうで
@@ -442,7 +442,7 @@
 		<comment>♀
 ・初回以降
 ・この後戦闘に入る。</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">ごきげんよう　トレーナーさん
 きょうは　まけませんわよ▼</language>
@@ -453,7 +453,7 @@
 	<row id="msg_t04r0101_girl4_03a">
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">おとうさまの　べっそうでは
 じかんを　もてあましますわ▼
@@ -469,7 +469,7 @@
 		<comment>♀
 ・本日の連戦終了後、
 　自らはなしかけた時のメッセージ</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">おとうさまの　べっそうでは
 じかんを　もてあましますわ▼
@@ -485,7 +485,7 @@
 		<comment>♀
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">あいかわらず　おつよいわね
 でも　つぎは　どうかしら？▼</language>
@@ -496,7 +496,7 @@
 	<row id="msg_t04r0101_girl4_04">
 		<comment>♀
 ・連戦前、能動的に話しかけた場合</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">ごきげんよう
 きょうも　きてくださったのね▼
@@ -515,7 +515,7 @@
 	<row id="msg_t04r0101_girl4_05">
 		<comment>♀
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
-		<attribute name="キャラ指定">姉
+		<attribute name="キャラ指定">姉　スーザン
 お嬢様</attribute>
 		<language name="JPN" width="256">ブルジョワールけ　あげてでも
 かなうことのない　その　おつよさ……▽
@@ -530,6 +530,7 @@
 ・ふきだしのみ。この後にマップ外から登場し、
 　主人公の目の前まで移動する。</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">おやおや
 なにやら　にぎやかですわねぇ▼</language>
@@ -542,6 +543,7 @@
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">まごの　おあいて　してくださって
 かんしゃ　しますよ▼
@@ -560,6 +562,7 @@
 ・初回以降
 ・この後戦闘に入る。</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">ホホホ　わたくしに　かつ
 じしんは　おあり？▼</language>
@@ -571,14 +574,15 @@
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
-		<language name="JPN" width="256">サザナミタウンは　とても　のんびりできて
+		<language name="JPN" width="256">サザナミタウンは　ゆっくりできて
 きもちのよい　ところですわ▼
 ……でも　まごには　いささか
 たいくつなよう▼
 また　あしたも　いらっしゃいな
 まごも　よろこぶでしょう▼</language>
-		<language name="JPN_KANJI" width="256">サザナミタウンは　とても　のんびりできて
+		<language name="JPN_KANJI" width="256">サザナミタウンは　ゆっくりできて
 気持ちのよい　所ですわ▼
 ……でも　孫には
 いささか　退屈なよう▼
@@ -591,6 +595,7 @@
 ・本日の連戦終了後、
 　自らはなしかけた時のメッセージ</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">サザナミタウンは　とても　のんびりできて
 きもちのよい　ところですわ▼
@@ -611,6 +616,7 @@
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">ホホホ　ほんとに　おつよいこと！
 たのもしい　くらいですわね！▼</language>
@@ -622,6 +628,7 @@
 		<comment>♀
 ・連戦前、能動的に話しかけた場合</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">あら　いらっしゃい
 まごが　あなたと　しょうぶ　したくて▽
@@ -635,6 +642,7 @@
 		<comment>♀
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
 		<attribute name="キャラ指定">おばあちゃん
+クアドナ
 マダム</attribute>
 		<language name="JPN" width="256">さいきんの　おこさんは
 ポケモンしょうぶが　おつよいのね▼
@@ -651,6 +659,7 @@
 ・ふきだしのみ。この後にマップ外から登場し、
 　主人公の目の前まで移動する。</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ホッホッホ
 ポケモン　しょうぶとは　なつかしい！▼</language>
@@ -663,6 +672,7 @@
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ちが　たぎりますな！
 ……おあいて　おねがいできますかな？▼</language>
@@ -675,6 +685,7 @@
 ・初回以降
 ・この後戦闘に入る。</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ちが　たぎりますな！
 きょうも　おあいて　ねがいますぞ！▼</language>
@@ -686,15 +697,16 @@
 		<comment>♂
 ・戦闘終了後、主人公が勝利した場合</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ホッホ　いくつに　なっても
-ポケモンしょうぶは　たのしいものですな！▼
+ポケモンしょうぶは　たのしいですな！▼
 たまには　こういった
 しげきも　わるくない！▼
 いつでも　また　きなさい
 こんどは　まけませんぞ！▼</language>
 		<language name="JPN_KANJI" width="256">ホッホ　いくつに　なっても
-ポケモン勝負は　楽しいものですな！▼
+ポケモン勝負は　楽しいですな！▼
 たまには　こういった
 刺激も　悪くない！▼
 いつでも　また　きなさい
@@ -706,13 +718,14 @@
 ・本日の連戦終了後、
 　自らはなしかけた時のメッセージ</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ホッホ　いくつに　なっても
-ポケモンしょうぶは　たのしいものですな！▼
+ポケモンしょうぶは　たのしいですな！▼
 たまには　こういった
 しげきも　わるくない！</language>
 		<language name="JPN_KANJI" width="256">ホッホ　いくつに　なっても
-ポケモン勝負は　楽しいものですな！▼
+ポケモン勝負は　楽しいですな！▼
 たまには　こういった
 刺激も　悪くない！</language>
 	</row>
@@ -721,6 +734,7 @@
 		<comment>♂
 ・連戦前、能動的に話しかけた場合</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ホッホ　いらっしゃい！
 きみが　くると▽
@@ -735,6 +749,7 @@
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ホッホ　わかさよ！
 しかし　つぎは　こうはいきませんぞ▼</language>
@@ -746,6 +761,7 @@
 		<comment>♂
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
 		<attribute name="キャラ指定">おじいちゃん
+ジリオン
 ジェントルマン</attribute>
 		<language name="JPN" width="256">ホッホ！
 いっか　そろっての　ポケモンしょうぶ！▽
@@ -759,7 +775,7 @@
 		<comment>♀
 ・ふきだしのみ。この後にマップ外から登場し、
 　主人公の目の前まで移動する。</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">なにごとかしら？
 ずいぶんと　にぎやかね▼</language>
@@ -771,7 +787,7 @@
 		<comment>♀
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">ぼうや　おつよいのかしら？▼
 ならば　わたくしを
@@ -785,9 +801,9 @@
 		<comment>♀
 ・初回以降
 ・この後戦闘に入る。</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
-		<language name="JPN" width="256">きょうこそは　まけなくてよ！
+		<language name="JPN" width="256">きょうこそは　まけなくてよ！▼
 さあ　わたくしを　たおしてごらんなさい！▼</language>
 		<language name="JPN_KANJI" width="256">今日こそは　負けなくてよ！
 さあ　わたくしを　倒してごらんなさい！▼</language>
@@ -796,7 +812,7 @@
 	<row id="msg_t04r0101_veteranw_03a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">これでも　わたくし
 ポケモンには　くわしくてよ▼
@@ -811,7 +827,7 @@
 	<row id="msg_t04r0101_veteranw_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・戦闘終了後、主人公が勝利した場合</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">これでも　わたくし
 ポケモンには　くわしくてよ▼
@@ -824,7 +840,7 @@
 	<row id="msg_t04r0101_veteranw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・連戦前、能動的に話しかけた場合</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">ようこそ▼
 ブルジョワールけの　しんの　つよさ
@@ -838,7 +854,7 @@
 		<comment>♂
 ・連戦途中であり、戦闘終了後。
 　このあと、席に帰るアニメーション。</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">まさか　ここまで　おつよいとは……▼</language>
 		<language name="JPN_KANJI" width="256">まさか　ここまで　お強いとは……▼</language>
@@ -847,7 +863,7 @@
 	<row id="msg_t04r0101_veteranw_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
-		<attribute name="キャラ指定">母
+		<attribute name="キャラ指定">母　トリッシュ
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">かんぱい　ですわ……▼
 この　ブルジョワールけ
@@ -863,7 +879,7 @@
 		<comment>♂
 ・ふきだしのみ。この後にマップ外から登場し、
 　主人公の目の前まで移動する。</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">きみたち　それでも
 ブルジョワールけの　にんげん　かい？▼</language>
@@ -875,7 +891,7 @@
 		<comment>♂
 ・続けて。初回限定。
 ・この後戦闘に入る。</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">ブルジョワールけ
 じきとうしゅ　ジリオン！▼
@@ -891,7 +907,7 @@
 		<comment>♂
 ・初回以降
 ・この後戦闘に入る。</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">なんど　きても　おなじこと！　この
 ジリオンを　たおすことなど　できない！▼
@@ -906,7 +922,7 @@
 	<row id="msg_t04r0101_boy4_03">
 		<comment>♂
 ・戦闘終了後、主人公が勝利した場合</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">また　あしたも　くるがいい▼
 だが　ブルジョワールけの
@@ -921,7 +937,7 @@
 	<row id="msg_t04r0101_boy4_04">
 		<comment>♂
 ・連戦前、能動的に話しかけた場合</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">きたな！▼
 かぞくを　たおすことが　できたら
@@ -934,7 +950,7 @@
 	<row id="msg_t04r0101_boy4_05">
 		<comment>♂
 ・家族全員勝ち抜いた後、話しかけた場合。</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">……　……　……
 ……　……　……▼
@@ -955,7 +971,7 @@
 	<row id="msg_t04r0101_boy4_03a">
 		<comment>♂
 ・戦闘終了後、主人公が勝利した場合</comment>
-		<attribute name="キャラ指定">兄
+		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">……　……　……
 ……　……　……▼
