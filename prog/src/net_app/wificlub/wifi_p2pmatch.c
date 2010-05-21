@@ -318,20 +318,20 @@ typedef struct{  // スクリーン用RECT構造体
 #define PLAYER_DISP_VCTICON_POS_Y ( 1 )
 enum{
   PLAYER_DISP_ICON_IDX_NONE_NUKI = 0,  //抜き色
-  PLAYER_DISP_ICON_IDX_NORMAL,
   PLAYER_DISP_ICON_IDX_NORMAL_ACT,
-  PLAYER_DISP_ICON_IDX_VCTBIG,
+  PLAYER_DISP_ICON_IDX_NORMAL,
   PLAYER_DISP_ICON_IDX_VCT_ACT,
-  PLAYER_DISP_ICON_IDX_TVT,
+  PLAYER_DISP_ICON_IDX_VCTBIG,
   PLAYER_DISP_ICON_IDX_TVT_ACT,
-  PLAYER_DISP_ICON_IDX_FIGHT,
+  PLAYER_DISP_ICON_IDX_TVT,
   PLAYER_DISP_ICON_IDX_FIGHT_ACT,
-  PLAYER_DISP_ICON_IDX_CHANGE,
+  PLAYER_DISP_ICON_IDX_FIGHT,
   PLAYER_DISP_ICON_IDX_CHANGE_ACT,
+  PLAYER_DISP_ICON_IDX_CHANGE,
   PLAYER_DISP_ICON_IDX_VCTNOT,
   PLAYER_DISP_ICON_IDX_VCT,
-  PLAYER_DISP_ICON_IDX_UNK,      //その他不明
   PLAYER_DISP_ICON_IDX_UNK_ACT,      //その他不明
+  PLAYER_DISP_ICON_IDX_UNK,      //その他不明
   PLAYER_DISP_ICON_IDX_NONE,  //空
   PLAYER_DISP_ICON_IDX_NUM,    //数
 };
@@ -4153,7 +4153,6 @@ static void _windelandSEcall(WIFIP2PMATCH_WORK *wk)
   BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
   BmpMenuWork_ListDelete( wk->submenulist );
   EndMessageWindowOff(wk);
-  PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
 }
 
 
@@ -4181,11 +4180,13 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case BMPMENULIST_CANCEL:
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     _windelandSEcall(wk);
     FriendRequestWaitOff(wk);
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _windelandSEcall(wk);
     _battleCustomSelectMenu(wk);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
@@ -4196,6 +4197,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       return seq;
     }
     else{
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
@@ -4207,9 +4209,11 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       BmpMenuWork_ListDelete( wk->submenulist );
       EndMessageWindowOff(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
+      PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
       _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
     }
     else{
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
@@ -4220,6 +4224,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       return seq;
     }
     else{
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     }
@@ -4680,7 +4685,7 @@ static int _playerDirectInit( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
 
   case BMPMENULIST_CANCEL:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     break;
@@ -4796,7 +4801,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
 
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     break;
@@ -6123,8 +6128,6 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
   // ユーザーデータ表示処理
   if( wk->view.user_disp == MCV_USERDISP_INIT ){
     wk->view.user_disp = MCV_USERDISP_ON;
-    //    wk->view.user_dispno = WF_USERDISPTYPE_NRML;
-  //  PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     MCVSys_UserDispDraw( wk, heapID );
   }
 
@@ -6167,8 +6170,6 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       wk->view.button_on = TRUE;
       wk->view.bttn_allchg = TRUE;
       wk->view.user_disp = MCV_USERDISP_OFF;
-      // MCVSys_OamBttnOff( wk );  // ボタンOFF
-    //  PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     }
   }
 
