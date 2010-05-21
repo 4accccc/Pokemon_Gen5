@@ -203,6 +203,7 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     G2_SetWnd1Position( 128,0,0,camWork->allClearCnt );
   }
 
+/*
 #if (defined(SDK_TWL))
   
   if( COMM_TVT_CanUseCamera() == TRUE )
@@ -225,6 +226,7 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     }
   }
 #endif
+*/
 }
 
 //--------------------------------------------------------------
@@ -867,4 +869,14 @@ void CTVT_CAMERA_SetUpdateCameraAnime( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *c
 {
   camWork->memWork[idx].isUpdate = flg;
   CTVT_CAMERA_SetMemberState_TargetPos( work , camWork , idx );
+}
+
+void CTVT_CAMERA_SetCameraEffect( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 effect )
+{
+#if (defined(SDK_TWL))
+  if( COMM_TVT_CanUseCamera() == TRUE )
+  {
+    CAMERA_I2CEffect( CAMERA_SELECT_BOTH , effect );
+  }
+#endif
 }

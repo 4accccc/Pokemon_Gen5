@@ -775,6 +775,42 @@ const COMM_TVT_MODE CTVT_DRAW_Main( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWo
     }
   }
   
+  //カメラエフェクト
+#if (defined(SDK_TWL))
+  if( drawWork->state <= CDS_EDIT &&
+      COMM_TVT_GetPause(work) == FALSE )
+  {
+    CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork( work );
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NONE );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_SEPIA01 );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_MONO );
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+    {
+      CTVT_CAMERA_SetCameraEffect( work , camWork , CAMERA_EFFECT_NEGATIVE );
+    }
+  }
+#endif
+  //拡縮操作
+  if( COMM_TVT_GetSelfIdx(work) == 0 &&
+      GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+  {
+    CTVT_CAMERA_WORK *camWork =  COMM_TVT_GetCameraWork( work );
+    if( CTVT_CAMERA_GetWaitAllRefreshFlg( work , camWork ) == FALSE )
+    {
+      COMM_TVT_FlipDoubleMode( work );
+      PMSND_PlaySystemSE( CTVT_SND_TOUCH );
+    }
+  }
+
   //パレットアニメ
   
   if( drawWork->palCalAnm + CTVT_DRAW_PALANM_SPD >= 0x10000 )
