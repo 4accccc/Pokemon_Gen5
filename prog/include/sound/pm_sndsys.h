@@ -142,6 +142,30 @@ extern BOOL						PMSND_CheckOnReverb( void );
 extern u8							PMSND_GetBGMTrackVolume( int trackNo );
 extern BOOL           PMSND_IsLoading( void );  // ロード中かどうか
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サウンド分割読み込みスレッド　CARDカードアクセス中チェック
+ *
+ *	サウンド分割読み込みスレッド内でのCARDアクセス中にメインスレッドに戻ってきた状態をチェックする関数
+ *	注意点は２点
+ *	１．処理タイミングによっては、VBlank期間中にカードアクセス完了の割り込みが発生し、
+ *	　　本来VBlank期間中に行わなければならない処理がVBlank期間中に行われない可能性がある。
+ *	
+ *	２・サウンドデータがカードにアクセスしているため、その状態でメインスレッドに戻ってきた際には
+ *	　　メインスレッドからカードにアクセスすることが出来ない。
+ *
+ *	１，２に当てはまる処理では、この関数を使用し、１フレーム処理をスキップする必要があります。
+ *
+ *	＊さらに、スレッドに関しての知識不足なため、上記内容に誤まったものがある可能性もあります。
+ *	　2010.05.21の状態では本関数を使用することで、不具合の対処は出来ています。　tomoya takahashi
+ *  
+ *	@retval TRUE    CARDアクセス中
+ *	@retval FALSE   通常動作
+ */
+//-----------------------------------------------------------------------------
+extern BOOL           PMSND_IsAccessCARD( void );
+
 #ifdef REVERB_USE
 //	リバーブ設定
 extern void PMSND_EnableCaptureReverb( u32 depth, u32 samplingRate, int volume, int stopFrames );

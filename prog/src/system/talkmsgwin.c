@@ -183,6 +183,7 @@ static void backupCamera( TALKMSGWIN_SYS* tmsgwinSys );
 static void recoverCamera( TALKMSGWIN_SYS* tmsgwinSys );
 
 static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup );
+static void transWindowBG3D( TALKMSGWIN_SYS* tmsgwinSys );
 static void setBGAlpha( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setup );
 
 static void initWindow( TMSGWIN* tmsgwin );
@@ -252,6 +253,12 @@ TALKMSGWIN_SYS* TALKMSGWIN_SystemCreate( TALKMSGWIN_SYS_SETUP* setup )
   }
 
   return tmsgwinSys;
+}
+
+//----------------------------------------------------------------------------
+void TALKMSGWIN_SystemTrans3DResource( TALKMSGWIN_SYS* tmsgwinSys )
+{
+  transWindowBG3D( tmsgwinSys );
 }
 
 //------------------------------------------------------------------
@@ -1394,6 +1401,13 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
                                               FALSE,
                                               setup->heapID);
 
+  
+  return chrSiz;
+}
+
+// テクスチャ転送関数
+static void transWindowBG3D( TALKMSGWIN_SYS* tmsgwinSys )
+{
   //テクスチャ転送
   GX_BeginLoadTex(); 
   DC_FlushRange(texData, TEX_DATA_SIZ);
@@ -1404,8 +1418,6 @@ static u32 setupWindowBG( TALKMSGWIN_SYS* tmsgwinSys, TALKMSGWIN_SYS_SETUP* setu
   DC_FlushRange(texPltt, TEX_PLTT_SIZ);
   GX_LoadTexPltt(texPltt, NNS_GfdGetPlttKeyAddr(tmsgwinSys->texPlttVramKey), TEX_PLTT_SIZ); 
   GX_EndLoadTexPltt(); 
-  
-  return chrSiz;
 }
 
 #if 0 //ARCID_TALKWIN_TEST

@@ -63,6 +63,7 @@ extern void TALKMSGWIN_SystemDraw2D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void TALKMSGWIN_SystemDraw3D( TALKMSGWIN_SYS* tmsgwinSys );
 extern void TALKMSGWIN_SystemDelete( TALKMSGWIN_SYS* tmsgwinSys );
 extern u32 TALKMSGWIN_SystemGetUsingChrNumber( TALKMSGWIN_SYS* tmsgwinSys );
+extern void TALKMSGWIN_SystemTrans3DResource( TALKMSGWIN_SYS* tmsgwinSys );
 
 //============================================================================================
 /**

@@ -602,6 +602,8 @@ void FLDMSGBG_ResetBGResource( FLDMSGBG *fmb )
     TALKMSGWIN_SystemDelete( fmb->talkMsgWinSys );
   }
   
+  setBG1Resource( fmb );
+
   if( fmb->pVBlankTCB == NULL ){
     fmb->pVBlankTCB = GFUser_VIntr_CreateTCB( tcbSetBG1Resource, fmb, 0 );
   }else{
@@ -4911,6 +4913,7 @@ static void setBGResource( FLDMSGBG *fmb, const BOOL trans )
       setup.ini.winPltID = PANO_TALKMSGWIN;
       setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
       fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
+      TALKMSGWIN_SystemTrans3DResource( fmb->talkMsgWinSys );
     }
   }
   
@@ -4991,7 +4994,8 @@ static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk )
 {
   FLDMSGBG *fmb = wk;
   
-  setBG1Resource( fmb );
+
+  TALKMSGWIN_SystemTrans3DResource( fmb->talkMsgWinSys );
   
   fmb->pVBlankTCB = NULL;
   GFL_TCB_DeleteTask( tcb );

@@ -2548,7 +2548,7 @@ static void	fldmap_G3D_VBlank( GFL_TCB *tcb, void *work )
   // SND分割読み込み　と並列にVBlank処理が動作している場合には、
   // 処理があふれる可能性があるため３Dテクスチャの転送を行わない。
   // 
-  if( ((OS_GetIrqMask() & OS_IE_CARD_A_DATA) == 0)  ){
+  if( PMSND_IsAccessCARD() == FALSE ){
     if( fieldWork->fldMMdlSys != NULL ){
       MMDLSYS_VBlankProc( fieldWork->fldMMdlSys );
     }
