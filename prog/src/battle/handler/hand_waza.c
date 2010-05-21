@@ -3831,7 +3831,9 @@ static void handler_Revenge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     // 狙う相手から現ターンにダメージ受けてたら威力２倍
     while( BPP_WAZADMGREC_Get(bpp, 0, idx++, &rec) )
     {
-      if( rec.pokeID == target_pokeID ){
+      if( (rec.pokeID == target_pokeID)
+      &&  (rec.damage != 0)
+      ){
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
         break;
       }

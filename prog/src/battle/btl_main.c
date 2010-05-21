@@ -2277,12 +2277,12 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
 {
   switch( wk->setupParam->competitor ){
   case BTL_COMPETITOR_WILD:
-    return BTL_ESCAPE_MODE_OK;
+    return BTL_ESCAPE_MODE_WILD;
 
   case BTL_COMPETITOR_TRAINER:
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R) ){
-      return BTL_ESCAPE_MODE_OK;
+      return BTL_ESCAPE_MODE_WILD;
     }
     #endif
     return BTL_ESCAPE_MODE_NG;
@@ -2290,7 +2290,7 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
   case BTL_COMPETITOR_SUBWAY:
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R)){
-      return BTL_ESCAPE_MODE_OK;
+      return BTL_ESCAPE_MODE_WILD;
     }
     #endif
     return BTL_ESCAPE_MODE_CONFIRM;

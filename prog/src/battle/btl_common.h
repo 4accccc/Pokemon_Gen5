@@ -123,7 +123,7 @@ typedef  u8  BtlClientType;
 //--------------------------------------------------------------
 typedef enum {
 
-  BTL_ESCAPE_MODE_OK,       ///< すぐに「にげる」確定（野生戦など）
+  BTL_ESCAPE_MODE_WILD,       ///< すぐに「にげる」確定（野生戦など）
   BTL_ESCAPE_MODE_NG,       ///< しょうぶのさいちゅうに背中を見せられない
   BTL_ESCAPE_MODE_CONFIRM,  ///< にげると負けになるけどホントにいいの？と確認する
 

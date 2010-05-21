@@ -2191,7 +2191,7 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
     // 戦闘モード等による禁止チェック
     BtlEscapeMode esc = BTL_MAIN_GetEscapeMode( wk->mainModule );
     switch( esc ){
-    case BTL_ESCAPE_MODE_OK:  // 素早さなど条件クリアすれば逃げられる（野生）
+    case BTL_ESCAPE_MODE_WILD:  // 素早さなど条件クリアすれば逃げられる（野生）
     default:
       {
         BtlCantEscapeCode  code;

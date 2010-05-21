@@ -300,6 +300,7 @@ struct _BTL_SVFLOW_WORK {
   HITCHECK_PARAM*         hitCheckParam;
   BTL_ESCAPEINFO          escInfo;
   BTL_LEVELUP_INFO        lvupInfo;
+  u32                     simulationCounter;
   u8                      cmdBuildStep;
   u8                      actOrderStep;
   u8                      turnCheckStep;
@@ -307,7 +308,6 @@ struct _BTL_SVFLOW_WORK {
 
   HEAPID  heapID;
 
-  u8      numClient;
   u8      numActOrder;
   u8      numEndActOrder;
   u8      getPokePos;
@@ -576,7 +576,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fEnableRand, u16* dstDamage );
 static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 wazaDamage );
-static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
+static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str, BOOL fMustEnable );
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
@@ -763,7 +763,7 @@ static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   const SVFL_WAZAPARAM* wazaParam );
 static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
 static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u32 damage );
+static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u32 damage, BOOL* fMustEnable );
 static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BtlTypeAff aff,
   u32 damage, BOOL criticalFlag );
@@ -898,6 +898,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->server = server;
   wk->pokeCon = pokeCon;
   wk->mainModule = mainModule;
+  wk->simulationCounter = 0;
   wk->numActOrder = 0;
   wk->turnCount = 0;
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
@@ -2679,8 +2680,8 @@ static BOOL scproc_Nigeru_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   {
     if( clientID == playerClientID ){
       BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERU_SIPPAI );
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
     }
-    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_EscapeFail );
   }
 
   if( clientID == playerClientID )
@@ -2701,7 +2702,7 @@ static BOOL scproc_NigeruSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   BOOL fSkipNigeruCalc;
 
-  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_OK ){
+  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD ){
     fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
   }else{
     fSkipNigeruCalc = TRUE;
@@ -2761,8 +2762,10 @@ static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
 }
 static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_OK )
+  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD )
   {
+    u8 escapeClientID;
+
     // 逃げ禁止チェック
     if( !BPP_IsDead(bpp) )
     {
@@ -2779,24 +2782,30 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     }
 
     // ここまで来たら逃げ確定
-    {
-      u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-      BTL_ESCAPEINFO_Add( &wk->escInfo, clientID );
-    }
+    escapeClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+    BTL_ESCAPEINFO_Add( &wk->escInfo, escapeClientID );
 
     {
+      // 特殊な逃げメッセージチェック
       u32 hem_state = Hem_PushState( &wk->HEManager );
       if( scEvent_NigeruExMessage(wk, bpp) ){
         scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      }else{
-        SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
+      }
+      // 何もなければ標準メッセージ
+      else
+      {
+        u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+        if( BTL_MAINUTIL_IsFriendClientID( escapeClientID, playerClientID) ){
+          SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
+        }
       }
       Hem_PopState( &wk->HEManager, hem_state );
     }
     return TRUE;
   }
 
-  return FALSE;
+  // サブウェイ戦・通信対戦などは無条件に逃げる
+  return TRUE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -7363,21 +7372,32 @@ static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
 {
   if( !BPP_IsDead(attacker) )
   {
-    u32 damage = scEvent_CalcKickBack( wk, attacker, waza, wazaDamage );
+    u32  damage;
+    BOOL fMustEnable;
+
+    damage = scEvent_CalcKickBack( wk, attacker, waza, wazaDamage, &fMustEnable );
+
     if( damage )
     {
       HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
       HANDEX_STR_AddArg( &wk->strParam, BPP_GetID(attacker) );
-      scproc_SimpleDamage( wk, attacker, damage, &wk->strParam );
+      scproc_SimpleDamage( wk, attacker, damage, &wk->strParam, fMustEnable );
     }
   }
 }
 //---------------------------------------------------------------------------------------------
 // ワザ以外のダメージ共通処理
 //---------------------------------------------------------------------------------------------
-static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str )
+static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str, BOOL fMustEnable )
 {
-  if( scEvent_CheckEnableSimpleDamage(wk, bpp, damage) )
+  if( !fMustEnable )
+  {
+    if( !scEvent_CheckEnableSimpleDamage(wk, bpp, damage) )
+    {
+      return FALSE;
+    }
+  }
+
   {
     int value = -damage;
 
@@ -7401,8 +7421,9 @@ static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 da
       scproc_CheckItemReaction( wk, bpp );
       return TRUE;
     }
+
+    return FALSE;
   }
-  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -9259,6 +9280,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
       wk->turnCount++;
     }
     wk->turnCheckStep = 0;
+    wk->simulationCounter = 0;
     return FALSE;
   }
 
@@ -9430,7 +9452,7 @@ void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick
       break;
     }
     BTL_SICK_MakeSickDamageMsg( &wk->strParam, bpp, sickID );
-    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam );
+    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam, FALSE );
   }
   else{
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
@@ -9627,7 +9649,7 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
 
   BTL_Printf("ダメージ値=%d\n", damage);
   if( damage > 0 ){
-    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam );
+    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam, FALSE );
   }
 }
 
@@ -11922,7 +11944,7 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
  * @retval  u32
  */
 //----------------------------------------------------------------------------------
-static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u32 damage )
+static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u32 damage, BOOL* fMustEnable )
 {
   u8 pokeID = BPP_GetID( attacker );
   u8 ratio = WAZADATA_GetParam( waza, WAZAPARAM_DAMAGE_REACTION_RATIO );
@@ -11930,6 +11952,8 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
   u8 fail_flag = FALSE;
   u8 anti_fail_flag = FALSE;
   SV_ReactionType  reactionType = SV_REACTION_NONE;
+
+  *fMustEnable = FALSE;
 
   if( ratio )
   {
@@ -11982,7 +12006,9 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
     else{
       damage = roundMin( BTL_CALC_MulRatioInt(damage, ratio), 1 );
     }
-    TAYA_Printf("反動発生, ratio=%d, damage=%d\n", ratio, damage);
+
+    (*fMustEnable) = anti_fail_flag;
+
     return damage;
   }
   return 0;
@@ -13156,9 +13182,12 @@ BtlTypeAff BTL_SVFTOOL_SimulationAffinity( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8
   BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
   BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
   SVFL_WAZAPARAM  wazaParam;
+  BtlTypeAff result;
 
   scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
-  return scProc_checkWazaDamageAffinity( wk, attacker, defender, &wazaParam, FALSE );
+  result = scProc_checkWazaDamageAffinity( wk, attacker, defender, &wazaParam, FALSE );
+
+  return result;
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -13187,6 +13216,8 @@ u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeI
     SVFL_WAZAPARAM  wazaParam;
     u16  damage;
 
+    wk->simulationCounter++;
+
     //
     if( fAffinity ){
       aff = BTL_SVFTOOL_SimulationAffinity( wk, atkPokeID, defPokeID, waza );
@@ -13199,11 +13230,27 @@ u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeI
     scEvent_CalcDamage( wk, attacker, defender, &wazaParam, aff,
       BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE, fEnableRand, &damage );
 
+    wk->simulationCounter--;
+
+
     return damage;
   }
   else{
     return 0;
   }
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] シミュレーション用呼び出しかどうかを判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsSimulationMode( BTL_SVFLOW_WORK* wk )
+{
+  return wk->simulationCounter != 0;
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -14194,7 +14241,7 @@ static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
  */
 static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
-  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param_header->userPokeID) )
+//  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param_header->userPokeID) )
   {
     BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
     scPut_TokWin_Out( wk, pp_user );
@@ -14298,7 +14345,7 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
       if( (param->fHitHidePoke)
       ||  (CheckPokeHideState(pp_target) == BPP_CONTFLG_NULL)
       ){
-        if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr) ){
+        if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr, FALSE) ){
           return 1;
         }
       }
@@ -15330,6 +15377,9 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BPP_HpPlus( target, param->recoverHP );
   SCQUE_PUT_OP_HpPlus( wk->que, param->pokeID, param->recoverHP );
   wk->pokeDeadFlag[param->pokeID] = FALSE;
+
+  BTL_HANDLER_TOKUSEI_Add( target );
+  BTL_HANDLER_ITEM_Add( target );
 
   {
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
