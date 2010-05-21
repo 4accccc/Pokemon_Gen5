@@ -100,7 +100,7 @@ enum{
 #define BREQ_LINE_MAX (3+FAKE_DATA_MAX)
 #define BREQ_WIN_MAIN_SX  (31)
 
-#define BREQ_FWAZA_MAX  (9)
+#define BREQ_FWAZA_MAX  (10)
 
 typedef enum{
  TR_PAT_MINE,
@@ -426,8 +426,8 @@ static const  D_BEACON_PRM_SET DATA_DebugBeaconParamSet[BEACON_PSET_MAX] = {
  { 0, 999, BPRM_WSET_NONE }, //BEACON_PSET_PTIME,       プレイタイム
  { 0, CROSS_COMM_SURETIGAI_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_SURETIGAI_CT, すれ違い回数
  { 0, CROSS_COMM_THANKS_RECV_COUNT_MAX, BPRM_WSET_NONE }, //BEACON_PSET_THANKS, 御礼回数
- { 0, BREQ_FWAZA_MAX, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
- { 0, 6, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
+ { 1, BREQ_FWAZA_MAX, BPRM_WSET_FWAZA }, //BEACON_PSET_WAZA,        技名
+ { 1, 7, BPRM_WSET_NONE }, //BEACON_PSET_VICTORY,     サブウェイ挑戦中の連勝数1-7
  { 0, 5, BPRM_WSET_NONE }, //BEACON_PSET_TH_RANK,     トライアルハウスランク
  { 0, GPOWER_ID_CAPTURE_MAX, BPRM_WSET_GPOWER }, //BEACON_PSET_GPOWER,      Gパワー名
  { 0, 65535, BPRM_WSET_NONE }, //BEACON_PSET_ID,     プレイヤーID
@@ -456,6 +456,7 @@ static const u16 DATA_FieldWazaTbl[BREQ_FWAZA_MAX] = {
   WAZANO_TAKINOBORI,
   WAZANO_HURASSYU,
   WAZANO_DAIBINGU,
+  WAZANO_OSYABERI,
 };
 
 //======================================================================
@@ -950,8 +951,8 @@ static void sub_BeaconInfoSet( DMENU_LIVE_COMM* wk, TR_PATTERN pat )
       fake[i] = (GFUser_GetPublicRand0( range ))+f_prm->min;
     }
     info->trainer_view = GFUser_GetPublicRand0( 8 );
-    if( fake[FAKE_LANG] == 6 ){ //無効値にしていると言語バージョン固定
-      fake[FAKE_LANG] = wk->fake_prm[TR_PAT_FAKE][FAKE_LANG];
+    if( wk->fake_prm[TR_PAT_FAKE][FAKE_LANG] == 6 ){ //無効値にしていると言語バージョン固定
+      fake[FAKE_LANG] = wk->fake_prm[TR_PAT_MINE][FAKE_LANG];
     }
     break;
   }
