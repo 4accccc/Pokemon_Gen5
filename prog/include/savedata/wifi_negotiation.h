@@ -48,6 +48,8 @@ extern void WIFI_NEGOTIATION_SV_AddChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
 #if PM_DEBUG
 extern void WIFINEGOSV_DEBUG_DeleteFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,int index);
 extern void WIFINEGOSV_DEBUG_AddFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 addnum);
+extern MYSTATUS* WIFI_NEGOTIATION_SV_GetMyStatus_DEBUG(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index);
+
 #endif
 
 //----------------------------------------------------------

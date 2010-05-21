@@ -120,6 +120,24 @@ MYSTATUS* WIFI_NEGOTIATION_SV_GetMyStatus(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 ind
   return &pSV->aMyStatus[ i ];
 }
 
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   Wi-Fiネゴシエーション用MYSTATUSを引き出す
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   index インデックス WIFI_NEGOTIATION_DATAMAXまで
+ * @return	profileID
+ */
+//--------------------------------------------------------------------------------------------
+#if PM_DEBUG
+MYSTATUS* WIFI_NEGOTIATION_SV_GetMyStatus_DEBUG(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index)
+{
+  int i = index;
+  return &pSV->aMyStatus[ index ];
+}
+#endif
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   渡したPlayerIDに一致する物があるかどうかさがす

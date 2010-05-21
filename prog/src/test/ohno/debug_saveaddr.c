@@ -237,6 +237,9 @@ static BOOL zukandummydata( SAVEADDR_WORK *pWork )
 #include "savedata/zukan_savedata_local.h"
 #include "savedata/symbol_save.h"
 
+#include "savedata/wifi_negotiation.h"
+
+
 
 extern MYITEM_PTR* SaveData_GetMyItem(SAVE_CONTROL_WORK * sv);
 
@@ -372,20 +375,40 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       pAddr = (u8*)&playtime->second;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","PLAYTIME_SECOND", (u32)pAddr-(u32)topAddr, sizeof(playtime->second));
     }
-    
+
+
+
+    { //GTSネゴ履歴
+      WIFI_NEGOTIATION_SAVEDATA* pGTSNEGO = WIFI_NEGOTIATION_SV_GetSaveData(pWork->pSaveData);
+
+      for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
+        MYSTATUS* pMys = WIFI_NEGOTIATION_SV_GetMyStatus_DEBUG(pGTSNEGO, i);
+        pAddr = (u8*)&pMys->profileID;
+        OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "GTSNEGO_GSID",(u32)pAddr-(u32)topAddr,sizeof(pMys->profileID));
+      }
+    }
+
+#if 1
     { //ジオネット
       WIFI_HISTORY* pHis = SaveData_GetWifiHistory(pWork->pSaveData);
+#if 0
       for(i=0;i<UNITEDNATIONS_PEOPLE_MAX;i++){
         MYSTATUS* pMys = &pHis->aUnitedPeople[i].aMyStatus;
         pAddr = (u8*)&pMys->profileID;
         OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "GTS_GSID",(u32)pAddr-(u32)topAddr,sizeof(pMys->profileID));
     //    OS_TPrintf(" id %d \n",pMys->profileID);
       }
-      
+#endif 
       pAddr = (u8*)&pHis->myCountryCount;
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","GTS_COUNTRYCOUNT", (u32)pAddr-(u32)topAddr, sizeof(pHis->myCountryCount));
     }
+#endif
 
+    {  //FRIENDCODE
+
+    }
+
+    
     {//レコード
       short* rec = (short*)SaveData_GetRecord(pWork->pSaveData);
       int num = RECORD_GetWorkSize();
