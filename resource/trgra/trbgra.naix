@@ -42,7 +42,23 @@ enum {
 	NARC_trbgra_tbwb_rival_NMCR = 28,
 	NARC_trbgra_tbwb_rival_NMAR = 29,
 	NARC_trbgra_tbwb_rival_NCEC = 30,
-	NARC_trbgra_tbwb_rival_NCLR = 31
+	NARC_trbgra_tbwb_rival_NCLR = 31,
+	NARC_trbgra_tbwb_hero_s_NCGR = 32,
+	NARC_trbgra_tbwb_hero_s_NCBR = 33,
+	NARC_trbgra_tbwb_hero_s_NCER = 34,
+	NARC_trbgra_tbwb_hero_s_NANR = 35,
+	NARC_trbgra_tbwb_hero_s_NMCR = 36,
+	NARC_trbgra_tbwb_hero_s_NMAR = 37,
+	NARC_trbgra_tbwb_hero_s_NCEC = 38,
+	NARC_trbgra_tbwb_hero_s_NCLR = 39,
+	NARC_trbgra_tbwb_heroine_s_NCGR = 40,
+	NARC_trbgra_tbwb_heroine_s_NCBR = 41,
+	NARC_trbgra_tbwb_heroine_s_NCER = 42,
+	NARC_trbgra_tbwb_heroine_s_NANR = 43,
+	NARC_trbgra_tbwb_heroine_s_NMCR = 44,
+	NARC_trbgra_tbwb_heroine_s_NMAR = 45,
+	NARC_trbgra_tbwb_heroine_s_NCEC = 46,
+	NARC_trbgra_tbwb_heroine_s_NCLR = 47
 };
 
 /* NARC_TRBGRA_NAIX_ */
