@@ -164,7 +164,9 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
           *seq = _FIELD_END;
         }
         else{ //ƒpƒŒƒX‚Ö‚¢‚¯‚È‚¢
-          GMEVENT_CallEvent(event, EVENT_IntrudeNotWarp(gsys));
+          if(dbw->hilinkStateNo != INTRUDE_CONNECT_MISSION_TARGET){
+            GMEVENT_CallEvent(event, EVENT_IntrudeNotWarp(gsys));
+          }
           *seq = _FIELD_END;
         }
       }

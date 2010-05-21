@@ -1394,11 +1394,12 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
   }
   else if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)
       || GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
-    BOOL palace_enable;
+    BOOL palace_enable = FALSE;
     //自分のエリアの為、パレス島しかタッチ出来ない
     for(i = 0; i <= INTSUB_ACTOR_TOUCH_TOWN_MAX - INTSUB_ACTOR_TOUCH_TOWN_0; i++){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_TOUCH_TOWN_0 + i], FALSE);
     }
+  #if 0
     //自分のエリアの場合はパレスは表フィールドにいないとタッチできない
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
       palace_enable = TRUE;
@@ -1406,6 +1407,7 @@ static void _IntSub_ActorUpdate_TouchTown(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INF
     else{
       palace_enable = FALSE;
     }
+  #endif
     
   #if 0
     GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_TOUCH_PALACE], 
