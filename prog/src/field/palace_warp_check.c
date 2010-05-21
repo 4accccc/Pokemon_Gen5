@@ -42,6 +42,14 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
   //マップ管理表の登録情報チェック
   if (ZONEDATA_EnablePalaceUse( FIELDMAP_GetZoneID( fieldWork ) ) == FALSE) return FALSE;
 
+  { //自機の形態をチェック：なみのり状態ではパレスにいけない
+    PLAYER_MOVE_FORM form = FIELD_PLAYER_GetMoveForm( fld_player );
+    if ( form == PLAYER_MOVE_FORM_SWIM || form == PLAYER_MOVE_FORM_DIVING )
+    {
+      return FALSE;
+    }
+  }
+
   if (tbl == NULL || max == 0) return TRUE;
 
   for(i=0;i<max;i++)
