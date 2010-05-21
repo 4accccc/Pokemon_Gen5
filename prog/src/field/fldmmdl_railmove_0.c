@@ -399,8 +399,7 @@ void MMDL_GetRailLocation( const MMDL * fmmdl, RAIL_LOCATION* location )
   if( FIELD_RAIL_WORK_IsAction( cp_work->rail_wk ) )
   {
     // 移動先を返す
-    FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, location );
-    FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_WORK_GetActionKey( cp_work->rail_wk ), location );
+    FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_WORK_GetActionKey( cp_work->rail_wk ), location, NULL );
   }
   else
   {
@@ -663,7 +662,7 @@ u32 MMDL_HitCheckRailMoveDirEx( const MMDL *mmdl, u16 dir, MAPATTR* p_attr )
   FIELD_RAIL_WORK_GetLocation( cp_work->rail_wk, &now_location );
   my_dir = MMDL_GetDirDisp( mmdl );
   if( my_dir == dir ){
-    check_next_location = FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, MMdl_ConvertDir_RailKey( dir ), &next_location );
+    check_next_location = FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, MMdl_ConvertDir_RailKey( dir ), &next_location, NULL );
   }else{
     check_next_location = FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, &now_location, MMdl_ConvertDir_RailKey( dir ), &next_location );
   }
@@ -695,7 +694,7 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
   const MMDLSYS* cp_sys = MMDL_GetMMdlSys( mmdl );
   const FLDNOGRID_MAPPER* cp_mapper = MMDLSYS_GetNOGRIDMapper( cp_sys );
   const FIELD_RAIL_MAN* cp_railman = FLDNOGRID_MAPPER_GetRailMan( cp_mapper );
-  RAIL_LOCATION mdl_location;
+  FIELD_RAIL_WORK* p_railwk;
   VecFx32 my_pos;
   VecFx32 mdl_pos;
   fx32 dist;
@@ -716,23 +715,23 @@ BOOL MMDL_HitCheckRailMoveFellow( const MMDL * mmdl, const RAIL_LOCATION* next_l
       {
         if( !MMDL_CheckStatusBit( cmdl,MMDL_STABIT_RAIL_MOVE) == 0 )
         {
-          // NOW
-          MMDL_GetRailLocation( cmdl, &mdl_location );
-          FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
+          p_railwk = MMDL_GetRailWork( cmdl );
 
-          //TOMOYA_Printf( "now grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
-          //TOMOYA_Printf( "mdl_location line%d width%d\n", mdl_location.line_grid, mdl_location.width_grid );
-          if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
+          // 動作中であれば１つ前の位置をチェック
+          if( FIELD_RAIL_WORK_IsAction( p_railwk ) )
           {
-            return TRUE;
+            // 移動先を返す
+            FIELD_RAIL_WORK_GetFrontLocation( p_railwk, FIELD_RAIL_WORK_GetActionKey( p_railwk ), NULL, &mdl_pos );
+
+            if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
+            {
+              return TRUE;
+            }
           }
-
+          
           // OLD
-          MMDL_GetOldRailLocation( cmdl, &mdl_location );
-          FIELD_RAIL_MAN_GetLocationPosition( cp_railman, &mdl_location, &mdl_pos );
+          FIELD_RAIL_WORK_GetLocationPos( p_railwk, &mdl_pos );
 
-          //TOMOYA_Printf( "last grid_r 0x%x my_pos x[0x%x]y[0x%x]z[0x%x] mdl_pos x[0x%x]y[0x%x]z[0x%x] \n", grid_r, my_pos.x, my_pos.y, my_pos.z, mdl_pos.x, mdl_pos.y, mdl_pos.z );
-          //TOMOYA_Printf( "mdl_location line%d width%d\n", mdl_location.line_grid, mdl_location.width_grid );
           if( FIELD_RAIL_TOOL_HitCheckSphere( &my_pos, &mdl_pos, grid_r ) )
           {
             return TRUE;
@@ -821,7 +820,7 @@ BOOL MMDL_GetRailFrontLocation( const MMDL *mmdl, RAIL_LOCATION* location )
 
   dir = MMDL_GetDirDisp( mmdl );
 
-  return FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
+  return FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location, NULL ); 
 }
 
 //----------------------------------------------------------------------------
@@ -854,7 +853,7 @@ BOOL MMDL_GetRailDirLocation( const MMDL *mmdl, u16 dir, RAIL_LOCATION* location
     MMDL_GetRailLocation( mmdl, location );
     return FIELD_RAIL_MAN_CalcRailKeyLocation( cp_railman, location, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
   }
-  return FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location ); 
+  return FIELD_RAIL_WORK_GetFrontLocation( cp_work->rail_wk, FIELD_RAIL_TOOL_ConvertDirToRailKey(dir), location, NULL ); 
 }
 
 //----------------------------------------------------------------------------

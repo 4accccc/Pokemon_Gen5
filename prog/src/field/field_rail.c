@@ -146,6 +146,8 @@ struct _FIELD_RAIL_WORK{
   u8 last_pad;          // 予備
   
   VecFx32 pos;  // 現在座標
+  VecFx32 now_loc_pos;  // now_locationの座標
+  VecFx32 front_loc_pos;  // front_locationの座標
   RAIL_LOCATION now_location;
   // 過去の情報
   RAIL_LOCATION last_location;
@@ -1212,18 +1214,40 @@ BOOL FIELD_RAIL_WORK_CheckLocation( const FIELD_RAIL_WORK * work, const RAIL_LOC
  *	@retval FALSE   いけないばしょのロケーション
  */
 //-----------------------------------------------------------------------------
-BOOL FIELD_RAIL_WORK_GetFrontLocation(FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION * location)
+BOOL FIELD_RAIL_WORK_GetFrontLocation(FIELD_RAIL_WORK * work, RAIL_KEY key, RAIL_LOCATION * location, VecFx32* pos)
 {
   if( (work->calc_front_loc == FALSE) || (key != work->front_rail_key) ){
     // 再計算 
     work->normal_front_loc = FIELD_RAIL_MAN_CalcRailKeyLocation( work->cp_man, &work->now_location, key, &work->front_location );
 
+    FIELD_RAIL_MAN_GetLocationPosition( work->cp_man, &work->front_location, &work->front_loc_pos );
+
     work->calc_front_loc = TRUE;
     work->front_rail_key = key;
   }
 
-  GFL_STD_MemCopy( &work->front_location, location, sizeof(RAIL_LOCATION) );
+  if( location ){
+    GFL_STD_MemCopy( &work->front_location, location, sizeof(RAIL_LOCATION) );
+  }
+
+  if( pos ){
+    *pos = work->front_loc_pos;
+  }
+
   return work->normal_front_loc;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  now_locationに対応した座標の取得
+ *
+ *	@param	work        ワーク
+ *	@param	p_loc_pos   ロケーションポジション
+ */
+//-----------------------------------------------------------------------------
+void FIELD_RAIL_WORK_GetLocationPos(const FIELD_RAIL_WORK * work, VecFx32* p_loc_pos )
+{
+  *p_loc_pos = work->now_loc_pos;
 }
 
 //----------------------------------------------------------------------------
@@ -1383,6 +1407,7 @@ void FIELD_RAIL_WORK_SetLocation(FIELD_RAIL_WORK * work, const RAIL_LOCATION * l
   // ロケーションの初期化
   work->now_location = *location;
   work->last_location = *location;
+  work->now_loc_pos   = work->pos;
 }
 
 //------------------------------------------------------------------
@@ -1682,6 +1707,8 @@ void FIELD_RAIL_WORK_Update(FIELD_RAIL_WORK * work)
       // ロケーションの更新
       work->last_location = work->now_location;
       getRailLocation( work, &work->now_location );
+
+      work->now_loc_pos = work->pos;
 
 
 #ifdef DEBUG_ONLY_FOR_tomoya_takahashi
@@ -2193,6 +2220,8 @@ void FIELD_RAIL_WORK_SetNotMinusRailParam( FIELD_RAIL_WORK* p_work, u16 index, u
   // ロケーションの初期化
   p_work->now_location = location;
   p_work->last_location = location;
+
+  p_work->now_loc_pos = p_work->pos;
 }
 
 
