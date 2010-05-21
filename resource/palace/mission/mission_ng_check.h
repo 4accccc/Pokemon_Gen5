@@ -7,5 +7,5 @@
 
 
 //最大値定義(不正チェック用)
-#define MISSION_REWARD_MAX   15		//報酬最大値(不正チェック用)
+#define MISSION_REWARD_MAX   20		//報酬最大値(不正チェック用)
 #define MISSION_TIME_MAX   180		//制限時間最大値(不正チェック用)
