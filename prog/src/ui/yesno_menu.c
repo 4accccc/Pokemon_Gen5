@@ -601,6 +601,18 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
     {
       BOOL decide = FALSE;
 
+      // ショートカットキー操作
+      if( !decide )
+      {
+        if( key_trg & PAD_BUTTON_B )
+        {
+          PMSND_PlaySE( SEQ_SE_CANCEL2 );
+          work->sel = YESNO_MENU_SEL_NO;
+          decide = TRUE;
+          GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+        }
+      }
+
       // キー操作
       if( !decide )
       {
@@ -613,21 +625,16 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
 
             if( key_trg & PAD_BUTTON_A )
             {
-              PMSND_PlaySE( SEQ_SE_DECIDE2 );
               if( work->cursor_set.origin == CURSOR_ORIGIN_UP )
               {
+                PMSND_PlaySE( SEQ_SE_DECIDE2 );
                 work->sel = YESNO_MENU_SEL_YES;
               }
               else
               {
+                PMSND_PlaySE( SEQ_SE_CANCEL2 );
                 work->sel = YESNO_MENU_SEL_NO;
               }
-              decide = TRUE;
-            }
-            else if( key_trg & PAD_BUTTON_B )
-            {
-              PMSND_PlaySE( SEQ_SE_CANCEL2 );
-              work->sel = YESNO_MENU_SEL_NO;
               decide = TRUE;
             }
             else if( key_trg & PAD_KEY_UP )
@@ -684,13 +691,14 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
           int hit = GFL_UI_TP_HitSelf( tp_data, tp_x, tp_y );
           if( hit != GFL_UI_TP_HIT_NONE )
           {
-            PMSND_PlaySE( SEQ_SE_DECIDE2 );
             if( hit == 0 )
             {
+              PMSND_PlaySE( SEQ_SE_DECIDE2 );
               work->sel = YESNO_MENU_SEL_YES;
             }
             else if( hit == 1 )
             {
+              PMSND_PlaySE( SEQ_SE_CANCEL2 );
               work->sel = YESNO_MENU_SEL_NO;
             }
 
@@ -721,6 +729,7 @@ void YESNO_MENU_Main( YESNO_MENU_WORK* work )
             }
 #endif
 
+            PMSND_PlaySE( SEQ_SE_SELECT1 );
             //work->key = TRUE;
             GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
           }

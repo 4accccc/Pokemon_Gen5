@@ -3836,6 +3836,7 @@ static int Psel_S02Main    ( PSEL_WORK* work, int* seq )
           select_change = TRUE;  // どれも選ばれていない状態から最初のを選んでいる状態になったのでTRUEにしたが、前がどれも選ばれていない状態なので何も書かれていないはずだから、TRUEにしなくても問題はない
         }
         Psel_FingerDrawEnable( work, TRUE );
+        PMSND_PlaySE( PSELSND_MOVE );  // カーソルを表示したときにSEを鳴らす
         Psel_FingerUpdatePos( work );
         Psel_ThreeS02OnlyMbSelectAnimeStart( work, work->select_target_poke );
         Psel_PokeSetSelectStart( work, work->select_target_poke );

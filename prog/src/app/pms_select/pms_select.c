@@ -1903,6 +1903,8 @@ static BOOL PLATE_CNT_Main( PMS_SELECT_MAIN_WORK* wk )
       wk->select_id_prev = SELECT_ID_NULL;
 
       wk->b_touch = FALSE;
+      
+      PMSND_PlaySE( SE_MOVE_CURSOR );
 
       PLATE_CNT_UpdateAll( wk );
 
