@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-21T14:47:27"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-05-21T16:19:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="124" right="711" bottom="744" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -394,7 +394,7 @@
 	<row id="msg_rotom_05">
 		<comment>ロトム：フォルムチェンジ処理
 ・ポケモン選択でロトム以外のポケモン選択
-・続けてmsg_rotom_04</comment>
+</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">そのポケモンでは　モーターの　なかに
 はいることが　できません</language>
@@ -405,7 +405,7 @@
 	<row id="msg_rotom_06">
 		<comment>ロトム：フォルムチェンジ処理
 ・ポケモン選択でタマゴ選択
-・続けてmsg_rotom_04</comment>
+</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">タマゴでは　モーターの　なかに
 はいることが　できません</language>
@@ -605,7 +605,6 @@
 	<row id="msg_rotom_08">
 		<comment>・電化製品選択で
 　すでにその電化製品に応じたフォルムのとき
-・続けてmsg_rotom_07
 ・0＝ロトムのニックネーム</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">えらんだ　[1:02:ポケモンニックネーム:0]は　すでに
@@ -634,8 +633,7 @@
 	<row id="msg_rotom_10">
 		<comment>・電化製品選択で
 　もとにもどる選択時
-・ただし選んだロトムがノーマルフォルムのとき
-・続けてmsg_rotom_07</comment>
+・ただし選んだロトムがノーマルフォルムのとき</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 モーターに　はいっていません！[BE:01:ページ切り替え（クリア）]</language>
