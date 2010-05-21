@@ -6477,8 +6477,10 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
       critical_flg[i] = FALSE;
     }
     dmg_tmp = dmg[i];
-    dmg[i] = MarumeDamage( bpp[i], dmg[i] );
-    koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
+    if( !BPP_MIGAWARI_IsExist(bpp[i]) ){
+      dmg[i] = MarumeDamage( bpp[i], dmg[i] );
+      koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
+    }
     dmg_sum += dmg[i];
     if( dmg_tmp ){
       AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp[i], affAry[i] );
