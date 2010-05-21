@@ -101,6 +101,7 @@ typedef struct{
   STRBUF*         strbufENG;
   int             push_timer;       //[PUSH START BUTTON]の点滅間隔をカウント
   int             push_visible;
+  int             scrol_work;
 }G2D_CONTROL;
 
 typedef struct{
@@ -640,6 +641,8 @@ static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 {
 
   GFL_BG_SetVisible(FRAME_MSG, FALSE);
+  GFL_BG_SetScrollReq( FRAME_BACK, GFL_BG_SCROLL_X_SET, CG2d->scrol_work/2 );
+  CG2d->scrol_work++;
 
 #if 0
   // "PUSH START" 点滅処理
