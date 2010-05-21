@@ -2738,7 +2738,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   }
   #endif
 
-  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU )
+  if( BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU )
   {
     // 入れ替え可否判定のみ「きれいなぬけがら」チェック
     if( fCheckChange ){
