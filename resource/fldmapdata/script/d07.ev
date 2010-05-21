@@ -51,6 +51,8 @@ EVENT_END
 /*POS：ライバルとチャンピオン                                  */
 /**************************************************************/
 EVENT_START  ev_pos_d07_rival_01
+	//重要イベント中の通信遮断処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 	
 	//ライバルのOBJを出現させる
 	_FLAG_RESET(FV_D07_RIVAL_01)
@@ -278,6 +280,8 @@ EVENT_START  ev_pos_d07_rival_01
 
 	//==================================//
 	
+	//重要イベント中の通信遮断からの復帰処理
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------

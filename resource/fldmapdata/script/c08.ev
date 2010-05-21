@@ -96,8 +96,7 @@ INIT_EVENT_END
 /**************************************************************/
 //ジム挑戦可能になるまで表示
 EVENT_START   ev_pos_c08_champions_01
-
-	//ハイリンク通信ブロック処理
+	//重要イベントでの通信切断
 	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 
 	//プレイヤーネームを格納
@@ -461,8 +460,6 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG_POS( msg_c08_champion_04 , C08_CHAMPION_01 , POS_DL )
 	_BALLOONWIN_CLOSE()
 	
-	
-	
 	//white･シン
 	IF $LCWK_VERSION == VERSION_WHITE THEN
 	
@@ -604,9 +601,8 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//======================================//
 	
-	//ハイリンク通信ブロック処理終了
+	//重要イベントでの通信切断から復帰
 	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
-	
 EVENT_END
 
 //--------------------------------------------------------------

@@ -117,6 +117,9 @@ EVENT_END
 /*  カザカミ・ライカミイベント開始（おばあちゃん登場）*/
 /**************************************************************/
 EVENT_START   ev_pos_r07_movepoke_01
+	//重要イベント中の通信遮断処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
+	
 	{
 	
 	//主人公位置取得
@@ -299,6 +302,9 @@ EVENT_START   ev_pos_r07_movepoke_01
 	_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 	
 	}
+	
+	//重要イベント中の通信遮断からの復帰処理
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------
@@ -462,6 +468,8 @@ _ANIME_LABEL	anm_r07_player_to_house_z244_right
 /*  カザカミ・ライカミイベント開始（家から出たら）*/
 /**************************************************************/
 EVENT_START   ev_scene_r07_movepoke_02
+	//重要イベント中の通信遮断処理
+	_DISABLE_NETWORK_IN_IMPORTANT_EVENT()
 {
 	//バージョンチェック
 	DEFINE_LOCAL LCW_VERSION
@@ -577,7 +585,10 @@ EVENT_START   ev_scene_r07_movepoke_02
 		_ADD_MOVE_POKEMON( MOVE_POKE_RAIKAMI )
 	ENDIF
 	//========================================//
+	
 }
+	//重要イベント中の通信遮断からの復帰処理
+	_ENABLE_NETWORK_IN_IMPORTANT_EVENT()
 EVENT_END
 
 //--------------------------------------------------------------
