@@ -62,6 +62,7 @@ enum {
 };
 
 #define	LIST_START_WAIT		( 39 )
+#define	LOGO_PUT_WAIT			( 128 )
 
 #if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
@@ -349,14 +350,26 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 // 開始時のＳＥ再生
 static int MainSeq_StartWait( SRMAIN_WORK * wk )
 {
-	if( wk->wait == LIST_START_WAIT ){
-		wk->wait = 0;
-		return MAINSEQ_MAIN;
-	}else{
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			OS_Printf( "push a button : wait = %d\n", wk->wait );
+	switch( wk->subSeq ){
+	case 0:
+		if( wk->wait == LIST_START_WAIT ){
+			wk->wait = 0;
+			wk->listWait = LOGO_PUT_WAIT;
+			wk->subSeq++;
+		}else{
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+				OS_Printf( "push a button : wait = %d\n", wk->wait );
+			}
+			wk->wait++;
 		}
-		wk->wait++;
+		break;
+
+	case 1:
+		if( PutLogo( wk ) == FALSE ){
+			wk->subSeq = 0;
+			return MAINSEQ_MAIN;
+		}
+		break;
 	}
 	return MAINSEQ_START_WAIT;
 }
@@ -429,11 +442,13 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 		}
 		break;
 
+/*
 	case SUBSEQ_LOGO_PUT:
 		if( PutLogo( wk ) == FALSE ){
 			wk->subSeq = SUBSEQ_INIT;
 		}
 		break;
+*/
 
 	case SUBSEQ_END:
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
@@ -1618,8 +1633,8 @@ static BOOL Comm_LabelEnd( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 // ロゴ表示
 static BOOL Comm_LabelLogoPut( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 {
-	wk->listWait = item->wait;
-	wk->subSeq = SUBSEQ_LOGO_PUT;
+//	wk->listWait = item->wait;
+//	wk->subSeq = SUBSEQ_LOGO_PUT;
 	return TRUE;
 }
 
