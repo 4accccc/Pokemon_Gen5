@@ -827,7 +827,7 @@ static int _playerDirectBattleShooter2( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_CANCEL:
     break;
   default:
-    wk->battleShooter = 1-ret;
+    wk->pParentWork->shooter =  1-ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
@@ -934,13 +934,13 @@ static u32 _createRegulation(WIFIP2PMATCH_WORK *wk)
 {
   u32 regulation;
 
-  NET_PRINT("regcr %d %d %d\n",wk->battleMode,wk->battleRule,wk->battleShooter);
+//  NET_PRINT("regcr %d %d %d\n",wk->battleMode,wk->battleRule,wk->battleShooter);
   regulation = _regtable[wk->battleMode + (wk->battleRule*4)];
   if(wk->pRegulation){
     GFL_HEAP_FreeMemory((void*)wk->pRegulation);
   }
   wk->pRegulation = (REGULATION*)PokeRegulation_LoadDataAlloc(regulation, HEAPID_WIFIP2PMATCH);
-  if(wk->battleShooter){
+  if(wk->pParentWork->shooter){
     regulation = regulation | 0x80000000;
   }
   return regulation;
@@ -950,10 +950,10 @@ static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
 {
   int i;
   if(regulation & 0x80000000){
-    wk->battleShooter = 1;
+    wk->pParentWork->shooter = 1;
   }
   else{
-    wk->battleShooter = 0;
+    wk->pParentWork->shooter = 0;
   }
   regulation = (regulation & 0xfffffff);
   for(i=0;i<elementof(_regtable);i++){
@@ -962,7 +962,7 @@ static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
       wk->battleRule = i / 4;
     }
   }
-  NET_PRINT("regch %d %d %d\n",wk->battleMode,wk->battleRule,wk->battleShooter);
+//  NET_PRINT("regch %d %d %d\n",wk->battleMode,wk->battleRule,wk->pParentWork->shooter);
 }
 
 //------------------------------------------------------------------
@@ -1027,7 +1027,7 @@ static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
 
     _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
-    _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_TEMOTI);
+    _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
 
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
   }
@@ -1042,7 +1042,7 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
     _Menu_RegulationDelete(wk);
     if( wk->bb_party){
       _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
-      _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_BBOX);
+      _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
     }
     else{
@@ -1068,7 +1068,7 @@ static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectBattleWatch( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 regulation = _createRegulation(wk);
-  _Menu_RegulationSetup(wk,0,wk->battleShooter ,REGWIN_TYPE_RULE);
+  _Menu_RegulationSetup(wk,0,wk->pParentWork->shooter ,REGWIN_TYPE_RULE);
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH2);
   return seq;
 }
@@ -1100,7 +1100,7 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_NET_IsParentMachine()){
     u32 regulation = _createRegulation(wk);
 
-    _Menu_RegulationSetup(wk,0,wk->battleShooter ,REGWIN_TYPE_RULE_SHORT);
+    _Menu_RegulationSetup(wk,0,wk->pParentWork->shooter ,REGWIN_TYPE_RULE_SHORT);
 
     _friendNameExpand(wk,  wk->friendNo - 1);
 //    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1032, FALSE);
@@ -1121,12 +1121,7 @@ static int _playerDirectBattleGO_12( WIFIP2PMATCH_WORK *wk, int seq )
   if( !WifiP2PMatchMessageEndCheck(wk) ){
     return seq;
   }
-//  EndMessageWindowOff(wk);
   {
-//    u32 regulation = _createRegulation(wk);
-//    _Menu_RegulationSetup(wk,0,1-wk->battleShooter ,REGWIN_TYPE_RULE_SHORT);
-//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1001+wk->battleMode+wk->battleRule*4, FALSE);
-    
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_13);
   }
   return seq;
@@ -1432,7 +1427,6 @@ static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
   wk->DirectMacSet = 0;
   status = WIFI_STATUS_PLAYING;
 
-  NET_PRINT("regch %d %d %d\n",wk->battleMode,wk->battleRule,wk->battleShooter);
 
   {
     u32 modetbl[]={

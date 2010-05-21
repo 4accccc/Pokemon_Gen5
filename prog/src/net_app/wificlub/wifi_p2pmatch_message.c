@@ -1434,7 +1434,7 @@ static void _battleCustomSelectMenu( WIFIP2PMATCH_WORK *wk )
 
   _parentCustomInfoMenuList[0].str_id = msg_wifilobby_1023 + wk->battleMode;
   _parentCustomInfoMenuList[1].str_id = msg_wifilobby_1028 + wk->battleRule;
-  _parentCustomInfoMenuList[2].str_id = msg_wifilobby_1030 + (1-wk->battleShooter);
+  _parentCustomInfoMenuList[2].str_id = msg_wifilobby_1030 + (1-wk->pParentWork->shooter);
 
   _modeSelectMenuBase(wk, &_parentCustomMenuListHeader, _parentCustomInfoMenuList,
                       elementof(_parentCustomInfoMenuList), _MENUTYPE_BATTLE_CUSTOM, 30);

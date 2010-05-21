@@ -519,13 +519,15 @@ struct _WIFIP2PMATCH_WORK{
   REGULATION* pRegulation;
   u16 battleMode;  //バトルのモード
   u16 battleRule;  //バトルのルール
-  u16 battleShooter;  //バトルのシューター
+//  u16 battleShooter;  //バトルのシューター
   u8 DirectModeNo;    // ダイレクトにはなしかけられている場合、話してきたやつのNO
   u8 DirectMacSet;  //話しかける為のMACをセットした人
   u8 keepGameMode;
   u8 command;   ///< direct進行の為のコマンド
   u8 backupCursor;
   u8 VChatModeOff;  //VCTOFFが呼ばれた
+  u8 dummy1;
+  u8 dummy2;
 
 };
 

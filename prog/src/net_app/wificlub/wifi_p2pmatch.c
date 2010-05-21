@@ -4908,8 +4908,8 @@ static int _childModeConnect( WIFIP2PMATCH_WORK *wk, int seq )
     if( WifiP2PMatch_CommWifiBattleStart( wk, friendNo - 1 ) ){
 
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-      _commStateChange(wk,WIFI_STATUS_RECRUIT, gamemode);
-      _myStatusChange(wk, WIFI_STATUS_RECRUIT, gamemode);  // ê⁄ë±ë“ã@íÜÇ…Ç»ÇÈ
+      _commStateChange(wk,WIFI_STATUS_CALL, gamemode);
+      _myStatusChange(wk, WIFI_STATUS_CALL, gamemode);  // ê⁄ë±ë“ã@íÜÇ…Ç»ÇÈ
       _friendNameExpand(wk, friendNo - 1);
       WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
       WifiP2PMatchMessage_TimeIconStart(wk);
