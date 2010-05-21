@@ -74,7 +74,7 @@ void MAPDATA_ATR_GetAttrFunc( FLD_G3D_MAP_ATTRINFO* attrInfo, const u8 idx, cons
         vfmt = (NormalVtxFormat*)(attrAdrs);
         ofs = vfmt->width * vfmt->height * sizeof(WB_NORMALVTXST_TR1);
       }
-      NOZOMU_Printf("idx %d tryangle two ex_idx=%d\n", grid_idx, ex_idx);
+//      NOZOMU_Printf("idx %d tryangle two ex_idx=%d\n", grid_idx, ex_idx);
 
       //データの先頭アドレスを計算
       ex_nvs = (WB_NORMALVTXST_TR2*)(attrAdrs + sizeof(NormalVtxFormat) + ofs + ex_idx* sizeof(WB_NORMALVTXST_TR2));
