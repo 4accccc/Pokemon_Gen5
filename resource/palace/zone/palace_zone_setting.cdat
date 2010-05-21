@@ -1827,7 +1827,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		ZONE_ID_PLC04,		//zone_id
 		ZONE_ID_PLC04,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
-		405,		//warp_grid_x
+		406,		//warp_grid_x
 		1,		//warp_grid_y
 		468,		//warp_grid_z
 		128,		//sub_x
@@ -1927,7 +1927,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		ZONE_ID_PLR05,		//zone_id
 		ZONE_ID_PLR05,		//reverse_zone_id
 		ZONE_ID_PLC04,		//warp_zone_id
-		405,		//warp_grid_x
+		406,		//warp_grid_x
 		1,		//warp_grid_y
 		468,		//warp_grid_z
 		114,		//sub_x
@@ -1987,7 +1987,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		ZONE_ID_PLR12,		//zone_id
 		ZONE_ID_PLR12,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
-		657,		//warp_grid_x
+		660,		//warp_grid_x
 		0,		//warp_grid_y
 		185,		//warp_grid_z
 		166,		//sub_x
@@ -1997,7 +1997,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		ZONE_ID_PLR13,		//zone_id
 		ZONE_ID_PLR13,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
-		657,		//warp_grid_x
+		660,		//warp_grid_x
 		0,		//warp_grid_y
 		185,		//warp_grid_z
 		202,		//sub_x
@@ -2037,7 +2037,7 @@ const PALACE_ZONE_SETTING PalaceZoneSetting[] = {
 		ZONE_ID_PLT03,		//zone_id
 		ZONE_ID_PLT03,		//reverse_zone_id
 		ZONE_ID_PLT03,		//warp_zone_id
-		657,		//warp_grid_x
+		660,		//warp_grid_x
 		0,		//warp_grid_y
 		185,		//warp_grid_z
 		186,		//sub_x
