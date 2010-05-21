@@ -38,7 +38,7 @@
 #include "event_mapchange.h"
 #include "event_fldmmdl_control.h"
 #include "event_fieldmap_control_local.h" // event_mapchange“àŒÀ’è‚ÌFieldOpen Close
-#include "field_place_name.h"   // FIELD_PLACE_NAME_DisplayForce 
+#include "field_place_name.h"   // FIELD_PLACE_NAME_DisplayOnPlaceNameFlag
 #include "fieldmap/zone_id.h"
 #include "script.h"
 #include "warpdata.h"
@@ -361,7 +361,7 @@ static GMEVENT_RESULT FirstMapInEvent(GMEVENT * event, int *seq, void *work)
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
     if( FIELDMAP_GetPlaceNameSys(fieldmap) )
     {
-      FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id );
+      FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELDMAP_GetPlaceNameSys(fieldmap), fmw->loc_req.zone_id );
     }
     return GMEVENT_RES_FINISH;
   }
@@ -550,9 +550,8 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
   case 4:
     // ’n–¼‚ð•\Ž¦‚·‚é
     fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
-    if( FIELDMAP_GetPlaceNameSys(fieldmap) )
-    {
-      FIELD_PLACE_NAME_DisplayForce( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->continue_zone_id );
+    if( FIELDMAP_GetPlaceNameSys(fieldmap) ) {
+      FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELDMAP_GetPlaceNameSys(fieldmap), cmw->continue_zone_id );
     }
     return GMEVENT_RES_FINISH;
   }
@@ -1304,7 +1303,7 @@ static GMEVENT_RESULT EVENT_MapChangePalace_to_Palace( GMEVENT* event, int* seq,
     (*seq)++;
     break;
   case _SEQ_FINISH:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
+    FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   default:
     (*seq)++;
@@ -1413,7 +1412,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnanukenohimo( GMEVENT* event, int* seq, 
     break;
 
   case 5:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
+    FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1470,7 +1469,7 @@ static GMEVENT_RESULT EVENT_MapChangeByAnawohoru( GMEVENT* event, int* seq, void
     break;
 
   case 5:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
+    FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1523,7 +1522,7 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
     (*seq)++;
     break;
   case 5:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
+    FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;
@@ -1577,7 +1576,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleUp( GMEVENT* event, int* seq, vo
 
   // Š®—¹
   case 4:
-    FIELD_PLACE_NAME_Display( 
+    FIELD_PLACE_NAME_DisplayOnStanderdRule( 
         FIELDMAP_GetPlaceNameSys( fieldmap ), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
@@ -1630,7 +1629,7 @@ static GMEVENT_RESULT EVENT_MapChangeBySeaTempleDown( GMEVENT* event, int* seq, 
 
   // Š®—¹
   case 4:
-    FIELD_PLACE_NAME_Display(
+    FIELD_PLACE_NAME_DisplayOnStanderdRule(
         FIELDMAP_GetPlaceNameSys( fieldmap ), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
@@ -1676,7 +1675,7 @@ static GMEVENT_RESULT EVENT_MapChangeByWarp( GMEVENT* event, int* seq, void* wk 
     (*seq)++;
     break;
   case 4:
-    FIELD_PLACE_NAME_Display( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
+    FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELDMAP_GetPlaceNameSys(fieldmap), work->loc_req.zone_id );
     return GMEVENT_RES_FINISH; 
   }
   return GMEVENT_RES_CONTINUE;

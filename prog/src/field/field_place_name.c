@@ -500,13 +500,13 @@ void FIELD_PLACE_NAME_Draw( const FIELD_PLACE_NAME* system )
 
 //------------------------------------------------------------------------------------
 /**
- * @brief ゾーンの切り替えを通知し, 新しい地名を表示する
+ * @brief 基本のルールに従って, 地名を表示する
  *
  * @param system
  * @param zoneID 地名を表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
+void FIELD_PLACE_NAME_DisplayOnStanderdRule( FIELD_PLACE_NAME* system, u32 zoneID )
 { 
   // リクエストのあったゾーンIDを更新
   SetNowZoneID( system, zoneID ); 
@@ -523,19 +523,39 @@ void FIELD_PLACE_NAME_Display( FIELD_PLACE_NAME* system, u32 zoneID )
 
 //------------------------------------------------------------------------------------
 /**
- * @brief 地名ウィンドウを強制的に表示する
+ * @brief 地名表示フラグに従い, 地名を表示する
  *
  * @param system
  * @param zoneID 地名を表示する場所のゾーンID
  */
 //------------------------------------------------------------------------------------
-extern void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
+void FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( FIELD_PLACE_NAME* system, u32 zoneID )
 {
   // リクエストのあったゾーンIDを更新
   SetNowZoneID( system, zoneID ); 
 
   // 地名表示フラグが立っていない場所では表示しない
   if( CheckPlaceNameFlag( zoneID ) == FALSE ) { return; }
+
+  // 表示中のウィンドウを退出させる
+	Cancel( system ); 
+
+  // 強制的に表示
+  SetForceDispFlag( system ); 
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 強制的に地名を表示する
+ *
+ * @param system
+ * @param zoneID 地名を表示する場所のゾーンID
+ */
+//------------------------------------------------------------------------------------
+void FIELD_PLACE_NAME_DisplayForce( FIELD_PLACE_NAME* system, u32 zoneID )
+{
+  // リクエストのあったゾーンIDを更新
+  SetNowZoneID( system, zoneID ); 
 
   // 表示中のウィンドウを退出させる
 	Cancel( system ); 

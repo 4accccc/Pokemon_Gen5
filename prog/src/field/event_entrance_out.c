@@ -25,7 +25,7 @@
 #include "event_fieldmap_control.h"    // for EVENT_FieldFadeIn
 #include "event_entrance_effect.h"     // for EVENT_FieldDoorOutAnime
 #include "event_fldmmdl_control.h"     // for EVENT_PlayerOneStepAnime
-#include "field_place_name.h"          // for FIELD_PLACE_NAME_Display
+#include "field_place_name.h"          // for FIELD_PLACE_NAME_DisplayOnStanderdRule
 #include "fieldmap.h"                  // for FIELDMAP_GetPlaceNameSys
 
 #include "event_entrance_out.h"
@@ -391,6 +391,6 @@ static void PutPlaceNameRequest( EVENT_WORK* work )
 {
   ENTRANCE_EVDATA* evdata   = work->evdata;
 
-  FIELD_PLACE_NAME_Display( 
+  FIELD_PLACE_NAME_DisplayOnStanderdRule( 
       FIELDMAP_GetPlaceNameSys(evdata->fieldmap), evdata->nextLocation.zone_id );
 }

@@ -290,7 +290,7 @@ static GMEVENT_RESULT FSkillSorawotobuEvent(GMEVENT * event, int * seq, void *wo
     //地名表示開始
     {
        FIELD_PLACE_NAME * p_sys = FIELDMAP_GetPlaceNameSys( fieldWork );
-       FIELD_PLACE_NAME_DisplayForce( p_sys, wk->ZoneID );
+       FIELD_PLACE_NAME_DisplayOnPlaceNameFlag( p_sys, wk->ZoneID );
     }
 
     {
