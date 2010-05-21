@@ -95,8 +95,6 @@ VMCMD_RESULT EvCmdTrainerFlagCheck( VMHANDLE * core, void *wk )
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND
  *
- * @todo  強制終了されるスクリプトに解放忘れがないか、検討
- *
  * @note
  * スクリプトを強制終了し、敗北処理イベントへと遷移する。
  */
@@ -144,8 +142,6 @@ VMCMD_RESULT EvCmdTrainerLoseCheck( VMHANDLE *core, void *wk )
  * @brief 野生戦敗北処理
  * @param	core		仮想マシン制御構造体へのポインタ
  * @return	VMCMD_RESULT_SUSPEND
- *
- * @todo  強制終了されるスクリプトに解放忘れがないか、検討
  *
  * @note
  * スクリプトを強制終了し、敗北処理イベントへと遷移する。

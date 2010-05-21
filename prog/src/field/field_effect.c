@@ -91,6 +91,8 @@ struct _TAG_FLDEFF_TASKSYS
 //======================================================================
 //  proto
 //======================================================================
+static const FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1];
+
 static void fectrl_InitProcEffect( FLDEFF_CTRL *fectrl );
 static void fectrl_DeleteProcEffect( FLDEFF_CTRL *fectrl );
 static FLDEFF_PROCEFF * fectrl_SearchProcEffect(
@@ -930,7 +932,7 @@ void FLDEFF_CTRL_SetGrayScaleG3DResource(
 #include "fldeff_hide.h"
 #include "fldeff_bubble.h"
 
-FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
+static const FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1] =
 {
   {FLDEFF_PROCID_SHADOW,FLDEFF_SHADOW_Init,FLDEFF_SHADOW_Delete},
   {FLDEFF_PROCID_KEMURI,FLDEFF_KEMURI_Init,FLDEFF_KEMURI_Delete},

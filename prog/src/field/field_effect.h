@@ -169,8 +169,5 @@ extern u8 * FLDEFF_CTRL_GetGrayScaleParam( FLDEFF_CTRL *fectrl );
 extern void FLDEFF_CTRL_SetGrayScaleG3DResource(
     FLDEFF_CTRL *fectrl, GFL_G3D_RES *g3dRes );
 
-//kari
-extern FLDEFF_PROCEFF_DATA DATA_FLDEFF_ProcEffectDataTbl[FLDEFF_PROCID_MAX+1];
-
 extern const FLDEFF_PROCID DATA_FLDEFF_RegistEffectGroundTbl[];
 extern const u32 DATA_FLDEFF_RegistEffectGroundTblNum;
