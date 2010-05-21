@@ -8,30 +8,21 @@
 ///////////////////////////////////////////////////////////////////////////////// 
 #pragma once
 #include <gflib.h>
-#include "gamesystem/gamesystem.h" // for GAMESYS_WORK
-#include "research_common.h"       // for RRC_WORK
+#include "gamesystem/gamesystem.h"  // for GAMESYS_WORK
+#include "research_common.h"        // for RRC_WORK
+#include "research_list_recovery.h" // for RRL_RECOVERY_DATA
 
-
-//===============================================================================
-// ■定数
-//=============================================================================== 
 // リスト画面の終了結果
 typedef enum {
   RRL_RESULT_TO_TOP, // トップ画面へ
 } RRL_RESULT;
 
 
-//=============================================================================== 
-// ■リスト画面ワークの不完全型
-//=============================================================================== 
-typedef struct _RESEARCH_RADAR_LIST_WORK RRL_WORK;
+typedef struct _RESEARCH_RADAR_LIST_WORK RRL_WORK; 
 
 
-//=============================================================================== 
-// ■
-//=============================================================================== 
 // ワークを生成する
-extern RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork );
+extern RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork, RRL_RECOVERY_DATA* recoveryData );
 // ワークを破棄する
 extern void RRL_DeleteWork( RRL_WORK* work ); 
 // メイン動作

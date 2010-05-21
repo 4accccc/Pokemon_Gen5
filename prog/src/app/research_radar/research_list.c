@@ -15,6 +15,7 @@
 #include "research_list_index.h"
 #include "research_list_def.h"
 #include "research_list_data.cdat"
+#include "research_list_recovery.h" // for RRL_RECOVERY_DATA
 #include "research_common.h"
 #include "research_common_data.cdat"
 #include "research_data.h"
@@ -48,13 +49,17 @@
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" // for FE_xxxx
 
 
+
 //=========================================================================================
 // ¡ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN
 //=========================================================================================
-struct _RESEARCH_RADAR_LIST_WORK
-{ 
+struct _RESEARCH_RADAR_LIST_WORK { 
+
   // ‘S‰æ–Ê‹¤’Êƒ[ƒN
   RRC_WORK* commonWork; 
+
+  // ƒŠƒXƒg‰æ–Ê‚Ì•œ‹Aƒf[ƒ^
+  RRL_RECOVERY_DATA* recoveryData;
 
   HEAPID       heapID; 
   GFL_FONT*    font;
@@ -231,6 +236,7 @@ static void AdjustScrollCursor( RRL_WORK* work ); // ƒXƒNƒ[ƒ‹ÀŒø’l‚É‡‚í‚¹, ƒ
 static void UpdateScrollValue( const RRL_WORK* work ); // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV‚·‚é
 static void AdjustScrollValue( const RRL_WORK* work ); // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹ˆÊ’u‚É‡‚í‚¹‚ÄXV‚·‚é
 static int GetScrollValue(); // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğæ“¾‚·‚é
+static void SetScrollValue( int value ); // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğİ’è‚·‚é
 static int GetMinScrollCursorMarginPos(); // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹—]”’”ÍˆÍ‚ÌÅ¬’l‚ğæ“¾‚·‚é
 static int GetMaxScrollCursorMarginPos(); // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹—]”’”ÍˆÍ‚ÌÅ‘å’l‚ğæ“¾‚·‚é
 static int CalcTopicID_byScrollCursorPos( int pos ); // w’è‚µ‚½ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹ˆÊ’u‚É‚ ‚éƒ{ƒ^ƒ“‚Ì’²¸€–ÚID‚ğŒvZ‚·‚é
@@ -270,6 +276,9 @@ static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work );
 static GAMEDATA* GetGameData( const RRL_WORK* work );
 static void SetHeapID( RRL_WORK* work, HEAPID heapID );
 static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork );
+static void SetRecoveryData( RRL_WORK* work, RRL_RECOVERY_DATA* recoveryData );
+static void LoadRecoveryData( RRL_WORK* work );
+static void SaveRecoveryData( RRL_WORK* work );
 // ’²¸€–Ú
 static int GetNextTopicID( const RRL_WORK* work, int topicID ); // Ÿ‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
 static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // ‘O‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
@@ -363,12 +372,13 @@ static void ReleaseVBlankTask ( RRL_WORK* work ); // VBlank ƒ^ƒXƒN ‰ğœ
 /**
  * @brief ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN‚ğ¶¬‚·‚é
  *
- * @param commonWork ‘S‰æ–Ê‹¤’Êƒ[ƒN
+ * @param commonWork   ‘S‰æ–Ê‹¤’Êƒ[ƒN
+ * @param recoveryData ƒŠƒXƒg‰æ–Ê‚Ì•œ‹Aƒf[ƒ^
  *
  * @return ƒŠƒXƒg‰æ–ÊŠÇ—ƒ[ƒN
  */
 //-----------------------------------------------------------------------------------------
-RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork )
+RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork, RRL_RECOVERY_DATA* recoveryData )
 {
   RRL_WORK* work;
   HEAPID heapID;
@@ -382,6 +392,7 @@ RRL_WORK* RRL_CreateWork( RRC_WORK* commonWork )
   InitListWork( work );
   SetHeapID( work, heapID );
   SetCommonWork( work, commonWork );
+  SetRecoveryData( work, recoveryData );
 
   return work;
 }
@@ -477,7 +488,7 @@ RRL_RESULT RRL_GetResult( const RRL_WORK* work )
  */
 //-----------------------------------------------------------------------------------------
 static void MainState_SETUP( RRL_WORK* work )
-{
+{ 
   CreateStateQueue( work );
   CreateFont( work );
   CreateMessages( work );
@@ -523,6 +534,17 @@ static void MainState_SETUP( RRL_WORK* work )
   SetupWirelessIcon( work );  // ’ÊMƒAƒCƒRƒ“
   SetupScrollBar( work );     // ƒXƒNƒ[ƒ‹ƒo[
 
+  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON ); 
+
+  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
+  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
+
+  // ‰æ–Ê•œ‹Aƒf[ƒ^‚ğ”½‰f
+  LoadRecoveryData( work );
+
   // ’²¸’†‚Ì€–Ú‚ª‚ ‚éê‡
   {
     u8 topic_id = GetInvestigatingTopicID( work );
@@ -533,23 +555,18 @@ static void MainState_SETUP( RRL_WORK* work )
       SetSelectedTopicID( work, topic_id );          // ’²¸’†‚Ì€–Ú‚ğ‘I‘ğ
       UpdateInvestigatingIcon( work );               // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
     }
-  }
+  } 
 
-  // ƒpƒŒƒbƒgƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
-  StartPaletteAnime( work, PALETTE_ANIME_TOPIC_CURSOR_ON ); 
-
-  // Šm”FƒƒbƒZ[ƒW‚Æ‘I‘ğ€–Ú‚ğÁ‹
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CONFIRM, FALSE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_OK, FALSE );
-  BmpOamSetDrawEnable( work, BMPOAM_ACTOR_CANCEL, FALSE );
-
+#if 0
   // ƒI[ƒgƒXƒNƒ[ƒ‹ŠJn
   StartAutoScroll_to_Topic( work ); 
   while( CheckScrollEnd(work) == FALSE ) {
     UpdateScroll( work ); // ƒXƒNƒ[ƒ‹‚ğXV
   }
+#endif
+
   // ƒXƒNƒ[ƒ‹I—¹
-  UpdateScrollValue( work );       // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
+  //UpdateScrollValue( work );       // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
   UpdateTopicTouchArea( work );    // ƒ^ƒbƒ`”ÍˆÍ‚ğXV
   UpdateSliderDisp( work );        // ƒXƒ‰ƒCƒ_[
   UpdateInvestigatingIcon( work ); // ’²¸€–Ú‘I‘ğƒAƒCƒRƒ“‚ğXV
@@ -1281,6 +1298,8 @@ static void MainState_CONFIRM_CANCEL( RRL_WORK* work )
 //-----------------------------------------------------------------------------------------
 static void MainState_CLEAN_UP( RRL_WORK* work )
 { 
+  SaveRecoveryData( work );
+
   // VBlankƒ^ƒXƒN‚ğ‰ğœ
   ReleaseVBlankTask( work );
 
@@ -2818,8 +2837,7 @@ static void AdjustScrollValue( const RRL_WORK* work )
   if( GetMaxScrollValue(work) < value ) { value = GetMaxScrollValue(work); } // Å‘å’l•â³
 
   // ƒXƒNƒ[ƒ‹ÀŒø’l‚ğXV
-  GFL_BG_SetScroll( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
-  GFL_BG_SetScroll( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
+  SetScrollValue( value );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -2832,6 +2850,17 @@ static void AdjustScrollValue( const RRL_WORK* work )
 static int GetScrollValue()
 {
   return GFL_BG_GetScrollY( MAIN_BG_WINDOW );
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒXƒNƒ[ƒ‹ÀŒø’l‚ğİ’è‚·‚é
+ */
+//-----------------------------------------------------------------------------------------
+static void SetScrollValue( int value )
+{
+  GFL_BG_SetScroll( MAIN_BG_WINDOW, GFL_BG_SCROLL_Y_SET, value );
+  GFL_BG_SetScroll( MAIN_BG_FONT,   GFL_BG_SCROLL_Y_SET, value );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3327,6 +3356,77 @@ static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief ƒŠƒXƒg‰æ–Ê‚Ì•œ‹Aƒf[ƒ^‚ğİ’è‚·‚é
+ *
+ * @param work
+ * @param recoveryData
+ */
+//-----------------------------------------------------------------------------------------
+static void SetRecoveryData( RRL_WORK* work, RRL_RECOVERY_DATA* recoveryData )
+{
+  work->recoveryData = recoveryData;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–Ê‚Ì•œ‹Aƒf[ƒ^‚ğ”½‰f‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void LoadRecoveryData( RRL_WORK* work )
+{
+  if( work->recoveryData ) {
+    // ƒXƒNƒ[ƒ‹ÀŒø’l
+    {
+      int scroll_value = RRL_RECOVERY_GetScrollValue( work->recoveryData );
+      if( scroll_value < MIN_SCROLL_VALUE ) { scroll_value = MIN_SCROLL_VALUE; }
+      if( MAX_SCROLL_VALUE < scroll_value ) { scroll_value = MAX_SCROLL_VALUE; }
+      SetScrollValue( scroll_value );
+    }
+    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹ˆÊ’u
+    {
+      int scroll_cursor_pos = RRL_RECOVERY_GetScrollCursorPos( work->recoveryData );
+      if( scroll_cursor_pos < MIN_SCROLL_CURSOR_POS ) { scroll_cursor_pos = MIN_SCROLL_CURSOR_POS; }
+      if( MAX_SCROLL_CURSOR_POS < scroll_cursor_pos ) { scroll_cursor_pos = MAX_SCROLL_CURSOR_POS; }
+      work->scrollCursorPos = scroll_cursor_pos;
+    }
+    // ’²¸€–ÚƒJ[ƒ\ƒ‹ˆÊ’u
+    work->topicCursorPos = RRL_RECOVERY_GetTopicCursorPos( work->recoveryData );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒŠƒXƒg‰æ–Ê‚Ì•œ‹Aƒf[ƒ^‚ğ‹L˜^‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SaveRecoveryData( RRL_WORK* work )
+{
+  if( work->recoveryData ) {
+    // ƒXƒNƒ[ƒ‹ÀŒø’l
+    {
+      int scroll_value = GetScrollValue();
+      if( scroll_value < MIN_SCROLL_VALUE ) { scroll_value = MIN_SCROLL_VALUE; }
+      if( MAX_SCROLL_VALUE < scroll_value ) { scroll_value = MAX_SCROLL_VALUE; }
+      RRL_RECOVERY_SetScrollValue( work->recoveryData, scroll_value );
+    }
+    // ƒXƒNƒ[ƒ‹ƒJ[ƒ\ƒ‹ˆÊ’u
+    {
+      int scroll_cursor_pos = work->scrollCursorPos;
+      if( scroll_cursor_pos < MIN_SCROLL_CURSOR_POS ) { scroll_cursor_pos = MIN_SCROLL_CURSOR_POS; }
+      if( MAX_SCROLL_CURSOR_POS < scroll_cursor_pos ) { scroll_cursor_pos = MAX_SCROLL_CURSOR_POS; }
+      RRL_RECOVERY_SetScrollCursorPos( work->recoveryData, scroll_cursor_pos );
+    }
+    // ’²¸€–ÚƒJ[ƒ\ƒ‹ˆÊ’u
+    RRL_RECOVERY_SetTopicCursorPos( work->recoveryData, work->topicCursorPos );
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief Ÿ‚Ì’²¸€–ÚID‚ğæ“¾‚·‚é
  *
  * @param work
@@ -3555,6 +3655,7 @@ static RRL_WORK* CreateListWork( HEAPID heapID )
 //-----------------------------------------------------------------------------------------
 static void InitListWork( RRL_WORK* work )
 {
+  work->recoveryData         = NULL;
   work->state                = RRL_STATE_SETUP;
   work->stateCount           = 0;
   work->stateEndFlag         = FALSE;

@@ -12,6 +12,7 @@
 #include "research_common_data.cdat"
 #include "research_top.h"
 #include "research_list.h"
+#include "research_list_recovery.h"
 #include "research_graph.h"
 
 #include "system/main.h"                    // for HEAPID_xxxx
@@ -107,9 +108,12 @@ typedef struct {
   RRC_WORK* commonWork;
 
   // 各画面専用ワーク
-  RRT_WORK*   topWork;   // トップ画面
-  RRL_WORK* listWork; // リスト画面
-  RRG_WORK*  graphWork;  // 調査報告確認画面
+  RRT_WORK* topWork;   // トップ画面
+  RRL_WORK* listWork;  // リスト画面
+  RRG_WORK* graphWork; // 調査報告確認画面
+
+  // 画面の復帰データ
+  RRL_RECOVERY_DATA* listRecoveryData; // リスト画面
 
 } RESEARCH_WORK;
 
@@ -137,6 +141,8 @@ static void CountUpFrame( RESEARCH_WORK* work );
 static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem );
 static void CreateCommonWork( RESEARCH_WORK* work );
 static void DeleteCommonWork( RESEARCH_WORK* work );
+static void CreateRecoveryData( RESEARCH_WORK* work );
+static void DeleteRecoveryData( RESEARCH_WORK* work );
 // BG のセットアップ・クリーンアップ
 static void SetupBG( HEAPID heapID );
 static void CleanUpBG( void );
@@ -195,8 +201,8 @@ static GFL_PROC_RESULT ResearchRadarProcInit( GFL_PROC* proc, int* seq, void* pr
       LoadMainBGResources( work->heapID ); 
       LoadSubBGResources ( work->heapID ); 
 
-      // 全画面共通ワークを生成
-      CreateCommonWork( work );
+      CreateCommonWork( work ); // 全画面共通ワークを生成
+      CreateRecoveryData( work ); // 画面の復帰データを生成
 
       return GFL_PROC_RES_FINISH;
   }
@@ -219,6 +225,7 @@ static GFL_PROC_RESULT ResearchRadarProcEnd( GFL_PROC* proc, int* seq, void* prm
 {
   RESEARCH_WORK* work = wk;
 
+  DeleteRecoveryData( work ); // 画面復帰データを破棄
   DeleteCommonWork( work ); // 全画面共通ワークを破棄
   CleanUpBG(); // BG をクリーンアップ
   GFL_PROC_FreeWork( proc ); // プロセスワークを破棄
@@ -349,8 +356,8 @@ static void SetMainProcSeq( RESEARCH_WORK* work, int* seq, PROC_MAIN_SEQ nextSeq
   switch( nextSeq )
   {
   case PROC_MAIN_SEQ_SETUP:   break;
-  case PROC_MAIN_SEQ_MENU:    work->topWork   = RRT_CreateWork( work->commonWork );  break;
-  case PROC_MAIN_SEQ_SELECT:  work->listWork  = RRL_CreateWork( work->commonWork );  break;
+  case PROC_MAIN_SEQ_MENU:    work->topWork = RRT_CreateWork( work->commonWork );  break;
+  case PROC_MAIN_SEQ_SELECT:  work->listWork = RRL_CreateWork( work->commonWork, work->listRecoveryData );  break;
   case PROC_MAIN_SEQ_CHECK:   work->graphWork = RRG_CreateWork ( work->commonWork ); break;
   case PROC_MAIN_SEQ_FINISH:  break;
   default:  GF_ASSERT(0);
@@ -518,6 +525,7 @@ static void InitProcWork( RESEARCH_WORK* work, GAMESYS_WORK* gameSystem )
   work->topWork   = NULL;
   work->listWork = NULL;
   work->graphWork  = NULL;
+  work->listRecoveryData = NULL;
 }
 
 //-------------------------------------------------------------------------------
@@ -547,6 +555,34 @@ static void DeleteCommonWork( RESEARCH_WORK* work )
 
   RRC_DeleteWork( work->commonWork );
   work->commonWork = NULL;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 画面の復帰データを生成する
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+static void CreateRecoveryData( RESEARCH_WORK* work )
+{
+  GF_ASSERT( work->listRecoveryData == NULL );
+
+  work->listRecoveryData = RRL_RECOVERY_CreateData( work->heapID );
+  RRL_RECOVERY_InitData( work->listRecoveryData );
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 画面の復帰データを破棄する
+ *
+ * @param work
+ */
+//-------------------------------------------------------------------------------
+static void DeleteRecoveryData( RESEARCH_WORK* work )
+{
+  RRL_RECOVERY_DeleteData( work->listRecoveryData );
+  work->listRecoveryData = NULL;
 }
 
 //===============================================================================

@@ -46,6 +46,8 @@ struct _RESEARCH_RADAR_COMMON_WORK {
   RADAR_SEQ prevSeq; // 直前の画面
   RADAR_SEQ nowSeq;  // 現在の画面
   SEQ_CHANGE_TRIG seqTrig; // 画面遷移の引き金となったトリガ
+
+  // 画面の復帰データ
 };
 
 //-------------------------------------------------------------------------------
