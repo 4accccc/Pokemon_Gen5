@@ -10,6 +10,7 @@
 
   .include  "scr_seq_def.h"
   .include  "msg_seatemple_scr.h"
+  .include	"d20r0501.h"
   .include	"d20r0601.h"
   .include	"d20r0701.h"
 
@@ -60,6 +61,20 @@ EVENT_START ev_seatemple_step_000
 	_PLAINWIN_MSG_DOWN( msg_seatemple_step00 )
 	_LAST_KEYWAIT()
 	_PLAINWIN_CLOSE()
+	
+	//========================================/
+	
+	_FLAG_RESET(FE_SEA_TEMPLE_FLASH)
+	_FLAG_RESET(FE_SEA_TEMPLE_KAIRIKI)
+
+	$WK_SCENE_D20R0501 = 0
+	$WK_SCENE_D20R0601 = 0
+	$WK_SCENE_D20R0701 = 0
+
+	_OBJ_POS_CHANGE( D20R0501_STOPPER_01, 80, 3, 79, DIR_DOWN ) 
+	_OBJ_POS_CHANGE( D20R0501_CUBE_01, 80, 3, 77, DIR_DOWN ) 
+
+	//========================================/
 	
 EVENT_END
 
