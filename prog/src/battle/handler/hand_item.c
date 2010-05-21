@@ -4729,7 +4729,7 @@ static void handler_NerainoMato( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SimetukeBand( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK,     handler_SimetukeBand },   // 状態異常パラメータチェックハンドラ
+    { BTL_EVENT_WAZASICK_PARAM,     handler_SimetukeBand },   // 状態異常パラメータチェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
