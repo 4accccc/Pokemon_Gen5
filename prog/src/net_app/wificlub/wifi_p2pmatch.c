@@ -5844,7 +5844,7 @@ static void _myStatusChange_not_send(WIFIP2PMATCH_WORK *wk, int status,int gamem
     else if(status == WIFI_STATUS_PLAYING ){
       // ƒ{ƒŠƒ…[ƒ€‚ğ—‚·
       if(gamemode != WIFI_GAME_UNIONMATCH){
-        _changeBGMVol( wk, _VOL_DEFAULT/3 );
+     //   _changeBGMVol( wk, _VOL_DEFAULT/3 );
       }
     }
     else{

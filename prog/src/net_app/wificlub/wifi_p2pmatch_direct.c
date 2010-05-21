@@ -1450,10 +1450,7 @@ static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
     wk->endSeq = gamemode;
   }
   {
-
-    GFL_NET_DWC_SetVChat(TRUE);
-    GFL_NET_DWC_StartVChat();
-    DWCRAP_StartVChat();
+    _vctcheckCommon(wk);
 
     EndMessageWindowOff(wk);
   }
