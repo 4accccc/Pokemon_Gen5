@@ -38,7 +38,7 @@ void WIFINEGOSV_DEBUG_DeleteFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,int index)
 
   size--;
   if(size > 0){
-    STD_MoveMemory(&pSV->aMyStatus[index+1],&pSV->aMyStatus[index], MyStatus_GetWorkSize()*size);
+    STD_MoveMemory(&pSV->aMyStatus[index], &pSV->aMyStatus[index+1],MyStatus_GetWorkSize()*size);
   }
   GFL_STD_MemClear(&pSV->aMyStatus[WIFI_NEGOTIATION_DATAMAX-1],  MyStatus_GetWorkSize());
 }
