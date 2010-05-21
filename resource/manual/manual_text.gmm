@@ -351,38 +351,293 @@
 	</row>
 
 	<row id="man_txt_cate_no_002">
-		<language name="JPN">メニューかんれん</language>
-		<language name="JPN_KANJI">メニュー関連</language>
+		<language name="JPN">ポケモンセンターの　せつめい</language>
+		<language name="JPN_KANJI">タイトルメニュー</language>
 	</row>
 
 	<row id="man_txt_cate_no_003">
-		<language name="JPN">そのたきのう</language>
-		<language name="JPN_KANJI">その他機能</language>
+		<language name="JPN">Cギアの　せつめい</language>
+		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+	</row>
+
+	<row id="man_txt_cate_no_005">
+		<language name="JPN">メニューの　アプリ</language>
+		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+	</row>
+
+	<row id="man_txt_cate_no_006">
+		<language name="JPN">せんとうに　ついて</language>
+		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+	</row>
+
+	<row id="man_txt_cate_no_007">
+		<language name="JPN">ポケモンの　じょうほう</language>
+		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+	</row>
+
+	<row id="man_txt_cate_no_008">
+		<language name="JPN">そのた</language>
+		<language name="JPN_KANJI">その他</language>
 	</row>
 
 	<row id="man_txt_title_no_001_001">
 		<language name="JPN">つづきから　はじめる</language>
-		<language name="JPN_KANJI">続きから　始める</language>
+		<language name="JPN_KANJI">続きから　はじめる</language>
 	</row>
 
 	<row id="man_txt_title_no_001_002">
 		<language name="JPN">さいしょから　はじめる</language>
-		<language name="JPN_KANJI">最初から　始める</language>
+		<language name="JPN_KANJI">最初から　はじめる</language>
+	</row>
+
+	<row id="man_txt_title_no_001_003">
+		<language name="JPN">ふしぎな　おくりもの</language>
+		<language name="JPN_KANJI">ふしぎな　おくりもの</language>
+	</row>
+
+	<row id="man_txt_title_no_001_004">
+		<language name="JPN">バトルたいかい</language>
+		<language name="JPN_KANJI">バトル大会</language>
+	</row>
+
+	<row id="man_txt_title_no_001_005">
+		<language name="JPN">ゲームシンクせってい</language>
+		<language name="JPN_KANJI">ゲームシンク設定</language>
+	</row>
+
+	<row id="man_txt_title_no_001_006">
+		<language name="JPN">Ｗｉ?Ｆｉ せってい</language>
+		<language name="JPN_KANJI">Ｗｉ?Ｆｉ設定</language>
+	</row>
+
+	<row id="man_txt_title_no_001_007">
+		<language name="JPN">マイクテスト</language>
+		<language name="JPN_KANJI">マイクテスト</language>
 	</row>
 
 	<row id="man_txt_title_no_002_001">
-		<language name="JPN">バッグ</language>
-		<language name="JPN_KANJI">バッグ</language>
+		<language name="JPN">ポケモンセンター</language>
+		<language name="JPN_KANJI">マイクテスト</language>
 	</row>
 
 	<row id="man_txt_title_no_002_002">
-		<language name="JPN">トレーナーカード</language>
-		<language name="JPN_KANJI">トレーナーカード</language>
+		<language name="JPN">パソコンで　ポケモンをいれかえる</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_002_003">
+		<language name="JPN">つうしんこうかんの　はじめかた</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_002_004">
+		<language name="JPN">つうしんたいせんの　はじめかた</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_002_005">
+		<language name="JPN">ユニオンルーム</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_002_006">
+		<language name="JPN">Ｗｉ?Ｆｉ クラブ</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_002_007">
+		<language name="JPN">グローバルターミナル</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_002_008">
+		<language name="JPN">ともだちコード</language>
+		<language name="JPN_KANJI">マイクテスト</language>
 	</row>
 
 	<row id="man_txt_title_no_003_001">
+		<language name="JPN">Ｃギア (シー ギア)</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_002">
+		<language name="JPN">すれちがいちょうさ とは</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_003">
+		<language name="JPN">すれちがいちょうさいを　うける</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_004">
+		<language name="JPN">すれちがいちょうさを　はじめる</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_005">
+		<language name="JPN">すれちがいちょうさの　ほうこく</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_006">
+		<language name="JPN">ＩＲ(アイアール)つうしん</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_007">
+		<language name="JPN">ゲームシンク</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_008">
+		<language name="JPN">ハイリンク</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_009">
+		<language name="JPN">ライブキャスター</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_010">
+		<language name="JPN">ポケシフターでポケモンをつれてくる</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_011">
+		<language name="JPN">ポケシフターでポケモンをつかまえる</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_012">
+		<language name="JPN">バトルボックス</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_003_013">
+		<language name="JPN">デジタル選手証</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_005_001">
+		<language name="JPN">バッグ</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_005_002">
+		<language name="JPN">トレーナーズカード</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_005_003">
+		<language name="JPN">ポケモンずかん</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_001">
+		<language name="JPN">ポケモンをつかまえるコツ</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_002">
+		<language name="JPN">タイプとあいしょう</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_003">
+		<language name="JPN">「ぶつり」「とくしゅ」「へんか」</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_004">
+		<language name="JPN">どく</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_005">
+		<language name="JPN">ひんし</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_006">
+		<language name="JPN">まひ</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_007">
+		<language name="JPN">ねむり</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_008">
+		<language name="JPN">こおり</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_009">
+		<language name="JPN">やけど</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_010">
+		<language name="JPN">こんらん</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_006_011">
+		<language name="JPN">メロメロ</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_007_001">
+		<language name="JPN">けいけんち</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_007_002">
+		<language name="JPN">しんか</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_007_003">
+		<language name="JPN">「せいかく」と　「こせい」</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_007_004">
+		<language name="JPN">ポケルス</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_008_001">
+		<language name="JPN">はしる</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_008_002">
 		<language name="JPN">ダウジングマシン</language>
-		<language name="JPN_KANJI">ダウジングマシン</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_008_003">
+		<language name="JPN">ライブキャスター</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_008_004">
+		<language name="JPN">ジムバッジ</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_008_005">
+		<language name="JPN">べんりボタン</language>
+		<language name="JPN_KANJI">マイクテスト</language>
+	</row>
+
+	<row id="man_txt_title_no_008_006">
+		<language name="JPN">デルパワー</language>
+		<language name="JPN_KANJI">マイクテスト</language>
 	</row>
 
 	<row id="man_txt_page_no_001_001_001">
@@ -394,14 +649,7 @@
 きっても　タイトルメニューの
 「つづきから　はじめる」から
 ぼうけんの　つづきを　あそべます</language>
-		<language name="JPN_KANJI">ぼうけんを　はじめたら　Ｘボタンを
-おして　「レポート」を　こまめに
-とりましょう
-
-レポートをとると　ＤＳの　でんげんを
-きっても　タイトルメニューの
-「つづきから　はじめる」から
-ぼうけんの　つづきを　あそべます</language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="man_txt_page_no_001_002_001">
@@ -409,133 +657,1111 @@
 さいしょから　ぼうけんを　はじめなおす
 ときは　タイトルメニューがめんで
 
-じゅうじボタン　うえ
-セレクトボタン
-Ｂボタン
+うえボタン　セレクトボタン　Ｂボタン
 
 の３つのボタンを　どうじに　ぜんぶ
 おしてください</language>
-		<language name="JPN_KANJI">レポートを　すべてけして　もういちど
-さいしょから　ぼうけんを　はじめなおす
-ときは　タイトルメニューがめんで
+		<language name="JPN_KANJI"></language>
+	</row>
 
-じゅうじボタン　うえ
-セレクトボタン
-Ｂボタン
+	<row id="man_txt_page_no_001_003_001">
+		<language name="JPN">イベントかいじょうなどで　とくべつな
+データを　つぎの　３つの　ほうほうで
+うけとることが　できます
+・ワイヤレスで　うけとる
+・Ｗｉ?Ｆｉで　うけとる
+・せきがいせんで　うけとる
 
-の３つのボタンを　どうじに　ぜんぶ
-おしてください</language>
+イベントごとに　ほうほうが　きめられて
+いるので　ごちゅういください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_003_002">
+		<language name="JPN">ふしぎなおくりもので　とくべつな
+ポケモンや　どうぐを　もらえる
+ふしぎなカードを　じゅしんすると
+ポケモンセンターに　みどりの
+ふくをきた　はいたついんが
+やってきます
+
+はいたついんに　はなしかけて
+ポケモンや　どうぐを　うけとろう！</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_003_003">
+		<language name="JPN">ふしぎなカードは　１２まいまで
+もっておくことが　できます
+
+ふしぎなカードが　いっぱいのときに
+さらにカードを　うけとりたいときは
+「カードアルバムを　みる」から
+プレゼントを　すでにうけとったカードを
+けしてください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_004_001">
+		<language name="JPN">Ｗｉ−Ｆｉや　イベントかいじょうで
+おこなわれる　たいかいに　さんかします
+
+バトルたいかいに　さんかするためには
+おてもとの　パソコンから　ポケモンの
+インターネットこうしきサイト
+「ポケモンだいすきクラブ」に
+ログインして　さんかとうろくを
+しておく　ひつようが　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_004_002">
+		<language name="JPN">みてい</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_005_001">
+		<language name="JPN">おてもとの　パソコンから　ポケモンの
+インターネットこうしきホームページ
+「ポケモンだいすきクラブ」で
+ユーザーとうろくと　ログインをしたあと
+ゲームシンクせっていを　しておくと
+「バトルたいかい」や　「●●●●●●」
+などに　さんかすることが　できます
+
+くわしくはホームページをごらんください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_005_002">
+		<language name="JPN">みてい</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_006_001">
+		<language name="JPN">おつかいのＤＳほんたいで
+Ｗｉ?Ｆｉつうしんをするための
+せっていができます
+
+Ｗｉ?Ｆｉせっていをすると
+インターネットをつうじて
+せかいじゅうの　ひとたちと
+ポケモンのこうかんや　たいせんが
+できるように　なります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_006_002">
+		<language name="JPN">みてい</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_001_007_001">
+		<language name="JPN">ＤＳほんたいの　マイクが　ただしく
+うごいているか　かくにんすることが
+できます
+
+マイクにむかって　こえをだしたり
+いきをふきかけたときに　うえがめんの
+プリンが　はんのうすれば　マイクは
+せいじょうに　うごいています</language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="man_txt_page_no_002_001_001">
-		<language name="JPN">バッグは　どうぐの　しゅるいごとに
-じどうてきに　ふりわけられます　
+		<language name="JPN">ポケモンを　かいふくしたり　やくにたつ
+どうぐを　かうことが　できます
+つかまえた　ポケモンを　いれかえたり
+アララギはかせの　ひょうかをきくための
+パソコンは　ここに　おいてあります
 
-たいせつなものポケットに　いれている
-どうぐは　なまえの　よこの　□に
-チェックして　とうろくしておくと　
-バッグを　ひらかなくても　Yボタンで
-かんたんに　つかうことができます</language>
-		<language name="JPN_KANJI">バッグは　どうぐの　しゅるいごとに
-じどうてきに　ふりわけられます　
-
-たいせつなものポケットに　いれている
-どうぐは　なまえの　よこの　□に
-チェックして　とうろくしておくと　
-バッグを　ひらかなくても　Yボタンで
-かんたんに　つかうことができます</language>
-	</row>
-
-	<row id="man_txt_page_no_002_001_002">
-		<language name="JPN">スタートボタンを　おすと　ポケットの
-どうぐを　じどうで　せいりできます
-
-セレクトボタンを　おすと　ポケットの
-どうぐを　じゆうに　いれかえることが
-できます
-
-L/Rボタンを　おすと　カーソルの　
-いちを　さいしょと　さいごの　いちに
-それぞれ　うごかすことが　できます</language>
-		<language name="JPN_KANJI">スタートボタンを　おすと　ポケットの
-どうぐを　じどうで　せいりできます
-
-セレクトボタンを　おすと　ポケットの
-どうぐを　じゆうに　いれかえることが
-できます
-
-L/Rボタンを　おすと　カーソルの　
-いちを　さいしょと　さいごの　いちに
-それぞれ　うごかすことが　できます</language>
+ともだちと　つうしんで　ポケモンの
+こうかんや　たいせんをするときは
+ポケモンセンターの２かいで　します</language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="man_txt_page_no_002_002_001">
-		<language name="JPN">トレーナーの　じょうほうが　きろく
-された　カードです
-しょくぎょうや　せいかくは　がめんを
-タッチすると　きりかわりますので
-すきな　ものを　えらんでください
-したの　しろいわくを　タッチすると
-メッセージが　へんしゅう　できます
-よういされている　メッセージの
-あいている　ところに　すきな　たんごを
-えらんで　かんせいさせよう！</language>
-		<language name="JPN_KANJI">トレーナーの　じょうほうが　きろく
-された　カードです
-しょくぎょうや　せいかくは　がめんを
-タッチすると　きりかわりますので
-すきな　ものを　えらんでください
-したの　しろいわくを　タッチすると
-メッセージが　へんしゅう　できます
-よういされている　メッセージの
-あいている　ところに　すきな　たんごを
-えらんで　かんせいさせよう！</language>
+		<language name="JPN">パソコンを　つかうと　つれている
+ポケモンを　あずけたり
+あずけている　ポケモンを
+ひきだすことが　できます
+
+ポケモンを　６ひき　つれているときに
+あたらしく　つかまえた　ポケモンは
+じどうてきに　このパソコンに
+てんそうされます</language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
-	<row id="man_txt_page_no_002_002_002">
-		<language name="JPN">トレーナーズカードの　うらには
-タッチペンを　つかって　てがきの
-サインを　かくことが　できます
-　や　で　ペンと　けしゴムを
-きりかえることができます
+	<row id="man_txt_page_no_002_003_001">
+		<language name="JPN">ともだちに　つうしんこうかんを
+もうしこむ　ほうほうは
+つぎの　４つ　あります
 
-　を　おすと　がめんを　かくだい
-できます
-　を　おすと　エリアを　はんぶんに
-わけて　アニメが　さいせい　できます</language>
-		<language name="JPN_KANJI">トレーナーズカードの　うらには
-タッチペンを　つかって　てがきの
-サインを　かくことが　できます
-　や　で　ペンと　けしゴムを
-きりかえることができます
+・ＩＲつうしんで　はじめる
+・ユニオンルームで　はじめる
+・Ｗｉ?Ｆｉクラブで　はじめる
+・グローバルターミナルで　はじめる</language>
+		<language name="JPN_KANJI"></language>
+	</row>
 
-　を　おすと　がめんを　かくだい
-できます
-　を　おすと　エリアを　はんぶんに
-わけて　アニメが　さいせい　できます</language>
+	<row id="man_txt_page_no_002_003_002">
+		<language name="JPN">・ＩＲつうしんで　はじめる
+
+ちかくのともだちに　つうしんこうかんを
+もうしこむときは　ＩＲつうしんをつかうと
+すぐに　はじめるられて　べんりです
+
+Ｃギアの　「ＩＲ」つうしんを　えらんだあと
+「こうかん」を　えらんでください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_003_003">
+		<language name="JPN">・ユニオンルームで　はじめる
+
+たくさんのともだちと　みんなで
+あそんでいるときは　ユニオンルームに
+あつまって　こうかんを　もうしこむと
+にぎやかです
+
+ユニオンルームは　ポケモンセンターの
+２かいに　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_003_004">
+		<language name="JPN">・Ｗｉ?Ｆｉクラブで　はじめる
+
+ともだちが　とおくに　いるときは
+Ｗｉ?Ｆｉクラブで　こうかんが　できます
+
+Ｗｉ?Ｆｉクラブを　りようするには
+おたがいに　Ｗｉ?Ｆｉせっていと
+ともだちコードの　こうかんを
+すませておく　ひつようがあります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_003_005">
+		<language name="JPN">・グローバルターミナルで　はじめる
+
+グローバルターミナルを　つかうと
+せかいじゅうのひとと　ポケモンの
+こうかんが　できます
+おたがいの　こうかんじょうけんが
+あったひとどうしで　こうかんが
+おこなわれます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_004_001">
+		<language name="JPN">ともだちに　つうしんたいせんを
+もうしこむ　ほうほうは
+つぎの　４つが　あります
+
+・ＩＲつうしんで　はじめる
+・ユニオンルームから　はじめる
+・Ｗｉ?Ｆｉクラブから　はじめる
+・グローバルターミナルから　はじめる</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_004_002">
+		<language name="JPN">・ＩＲつうしんで　はじめる
+
+ちかくのともだちに　つうしんたいせんを
+もうしこむときは　ＩＲつうしんをつかうと
+すぐに　はじめるられて　べんりです
+
+Ｃギアの　「ＩＲ」つうしんを　えらんだあと
+「たいせん」を　えらんでください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_004_003">
+		<language name="JPN">・ユニオンルームから　はじめる
+
+たくさんのともだちと　みんなで
+あそんでいるときは　ユニオンルームに
+あつまって　たいせんを　もうしこむと
+にぎやかです
+
+ユニオンルームは　ポケモンセンターの
+２かいに　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_004_004">
+		<language name="JPN">・Ｗｉ?Ｆｉクラブから　はじめる
+
+ともだちが　とおくに　いるときは
+Ｗｉ?Ｆｉクラブで　たいせんが　できます
+
+Ｗｉ?Ｆｉクラブを　りようするには
+おたがいに　Ｗｉ?Ｆｉせっていと
+ともだちコードの　こうかんを　
+すませておく　ひつようがあります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_004_005">
+		<language name="JPN">・グローバルターミナルから　はじめる
+
+せかいじゅうのひとと　いろいろなルールで
+たいせんをして　じぶんの　うでを
+みがきたいときは　グローバルターミナルを
+つかってください
+
+グローバルターミナルは
+ポケモンセンターの　２かいに　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_005_001">
+		<language name="JPN">ユニオンルームでは　ちかくにいる　ひとと
+こうかんや　たいせんなどを　たのしめます
+ポケモンセンター２かいの　ひだりで
+うけつけを　してください
+ルームに　はいったら　はなしたい　ひとの
+まえにたって　Ａボタンを　おしてください
+
+ユニオンルームの　ひだりおくにいる　おね
+えさんから　よりくわしいことが　きけます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_006_001">
+		<language name="JPN">ポケモンセンターの　２かいにある
+ポケモン Ｗｉ?Ｆｉ クラブでは
+ともだちてちょうに　とうろくしたひと
+どうしで　つうしんこうかんや　たいせん
+ボイスチャット　ライブキャスターを
+たのしむことが　できます
+ともだちを　とうろくするほうほうは
+「ともだちてちょう」の　せつめいを
+ごらんください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_006_002">
+		<language name="JPN">ルームに　はいったら　つうしんしたい
+ともだちの　まえにたって　Ａボタンを
+おしてください
+つうしんしたいことをきめて　まっている
+ともだちは　ぴょんぴょん　とんでいます
+
+つうしんで　したいことを　きめている
+ときは　おくにある　モニターにむかって
+Ａボタンを　おしてください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_006_003">
+		<language name="JPN">ボイスチャットをつかうと　でんわのように
+とおくのともだちと　こえで　やりとりする
+ことができます
+
+ルームのなかで　Ｘボタンをおすと
+ボイスチャットを　するかしないか
+あらかじめ　きめておくことが　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_007_001">
+		<language name="JPN">グローバルターミナル（ＧＴＳ）では
+とおくにいる　みしらぬひとと
+つうしんこうかんや　つうしんたいせんを
+たのしめます
+ポケモンセンター２かいの　みぎで
+うけつけを　してください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_008_001">
+		<language name="JPN">いちど　Ｗｉ?Ｆｉコネクションに　せつぞくを
+すると　はっこうされる　あなたこじんの
+ばんごうです
+ともだちコードを　おしえあうと　とおくの
+ともだちと　たいせんや　こうかんが
+たのしめます
+じぶんの　ともだちコードは　バッグの
+たいせつなものの　なかにある
+「ともだちてちょう」で　かくにんできます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_002_008_002">
+		<language name="JPN">ともだちコードを　とうろくするほうほうは
+つぎの３しゅるい　あります
+
+・ポケモンセンターの　ユニオンルームで
+　いっしょに　つうしんを　する
+・バッグにある　ともだちてちょうに
+　すうじを　ちょくせつ　にゅうりょくする
+・Ｃギアの　ＩＲつうしんを　つかう</language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="man_txt_page_no_003_001_001">
+		<language name="JPN">Ｃギアは　ちかくのひとと
+つうしんこうかんや　たいせんをしたり
+ハイリンクや　ライブキャスター
+ゲームシンクなどを　するときにつかう
+いろいろな　きのうをもった　きかいです
+
+Ｃギアの　みぎしたに　ひょうじされた
+でんげんのマークを　タッチすると
+Ｃギアのでんげんを　ON/OFFできます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_001_002">
+		<language name="JPN">Ｃギアのでんげんが　はいっているとき
+ＤＳのむせんは　つねにオンになっています
+
+ひこうきや　びょういんのなかなど
+むせんつうしんを　つかってはいけない
+ばしょでは　Ｃギアは　つかわないように
+してください
+まもらないと　ほうりついはんになる
+ばあいが　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_001_003">
+		<language name="JPN">Ｃギアの　みぎしたに　ある
+スパナのマークを　タッチすると
+Ｃギアを　カスタマイズできます
+スパナのマークを　タッチしたあと
+いろのついた　わくを　なんかいか
+タッチして　じぶんなりに　つかいやすく
+カスタマイズしましょう
+？マークを　タッチすると　このヘルプを
+みることができます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_001_004">
+		<language name="JPN">Ｃギアの　したのほうに　ひょうじされた
+よこながのマークを　タッチすると
+ちかくで　おなじように　Ｃギアを
+つかっているひとが　ひょうじされます
+そのひとの　ようすや　プロフィールが
+わかったり　あいさつをしたりすることが
+できます
+また　あいてにも　じぶんのようすが
+しらされます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_002_001">
+		<language name="JPN">すれちがいちょうさとは　すれちがった
+ひとが　どんな　このみや　しゅみを
+もっていて　そのにんずうが　どれくらい
+いるのかを　しらべることです
+
+すれちがいちょうさは　ヒウンシティの
+すれちがいちょうさたいほんぶで
+ちょうさいらいを　うけるところから
+はじまります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_003_001">
+		<language name="JPN">たいちょうから　ちょうさいらいを
+うけたら　Ｃギアの　ひだりしたに
+ひょうじされている　えんグラフを
+タッチして　ちょうさないようを
+きめてください
+
+ちょうさちゅうの　ちょうさには
+しるしが　ついています</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_004_001">
+		<language name="JPN">Ｃギアを　オンにするだけで
+じゅんびは　かんりょうです
+おなじように　Ｃギアを　オンに
+しているひとと　すれちがったときに
+じどうで　ちょうさが　おこなわれます
+
+ＤＳは　とじていても　かまいませんし
+ぼうけんをいつもどおり　すすめていても
+ちょうさは　じどうで　おこなわれます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_005_001">
+		<language name="JPN">ヒウンシティのたいちょうに　ほうこく
+するまえに　まず　Ｃギアの「チョーサを
+みる」で　ちょうさの　かくにんを
+しましょう
+ちょうさしおわったことを　かくにんしたら
+ヒウンシティの
+すれちがいちょうさたいほんぶ　にいって
+たいちょうに　ちょうさけっかを
+ほうこくしてください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_006_001">
+		<language name="JPN">Ｃギアの　「ＩＲ (アイアール）」と
+かかれた　あかい　わくを　タッチすると
+ちかくのひとに　つうしんこうかんや
+たいせんを　もうしこむことが　できます
+ともだちコードを　こうかんしたり
+つうしんあいてとの　あいしょうを
+チェックすることも　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_006_002">
+		<language name="JPN">おたがいに　おなじこうもくを　えらんで
+ＤＳカードどうしを　むけあい
+つうしんを　はじめます
+つうしんが　ただしくはじまったあとは
+ＤＳをむけあう　ひつようは　ありません</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_007_001">
+		<language name="JPN">Ｃギアの　「Ｗｉ?Ｆｉ (ワイファイ)」と
+かかれた
+あおい　わくを　タッチすると
+ゲームシンクが　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_008_001">
+		<language name="JPN">Ｃギアの　「ＷＩＲＥＬＥＳＳ(ワイヤレス)」と
+かかれた　きいろいわくを　タッチすると
+ちかくのひとと　ハイリンクが　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_009_001">
+		<language name="JPN">みてい</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_010_001">
+		<language name="JPN">『ダイヤモンド・パール・プラチナ
+　ハートゴールド・ソウルシルバー』の
+いずれかを　もう１だいの　ＤＳほんたいに
+セットして　ＤＳメニューがめん　の
+「ＤＳダウンロードプレイ』を　えらんだあと
+「ポケシフター」を　えらんでください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_010_002">
+		<language name="JPN">ダウンロードが　おわったら
+『ブラック・ホワイト』に　つれていく
+ポケモンを　６ぴき　きめて
+タッチペンで　みぎがわの　わくに
+スライドしてください
+
+ポケシフターで　つれてきたポケモンを
+もとのソフトに　もどすことは
+できません</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_011_001">
+		<language name="JPN">タッチパネルを　タッチして
+モンスターボールを　てまえに　ひき
+くさむらに　かくれている　ポケモンに
+ねらいをさだめたら　モンスターボールを
+はなしてください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_011_002">
+		<language name="JPN">モンスターボールが　うまく　あたると
+ポケモンが　くさむらから　とびでるので
+とびでたポケモンに　むかって
+もういちど　モンスターボールを
+とばして　あててください
+
+きめられた　じかんないに　６ひきすべて
+つかまえることが　できれば　せいこうです</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_011_003">
+		<language name="JPN">たまに　ピンクいろの　けむりのような
+ものが　よこぎることが　あります
+これに　モンスターボールを　あてると
+ポケモンたちは　ねむります
+
+ねむっているあいだ　ポケモンは
+うごかないので　つかまえやすくなります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_012_001">
+		<language name="JPN">たいせんで　よくつかう　ポケモンを
+１〜６ひきまで　とうろくして　おけます
+ともだちと　たいせんするときは
+バトルボックスに　とうろくしたポケモンで
+しょうぶするか　てもちの　ポケモンで
+しょうぶするかを　えらぶことができます
+バトルボックスに　なにも　とうろく
+していない　ばあいは　てもちの　
+ポケモンで　しょうぶを　します</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_003_013_001">
+		<language name="JPN">デジタル選手証のことにも触れること。</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_001">
+		<language name="JPN">■バッグの　きのう
+バッグは　もちものの　しゅるいごとに
+じどうてきに　ふりわけられます　
+
+たいせつなものポケットに　いれている
+もちものは　なまえの　よこの　しかくい
+はこに　チェックして　とうろくしておくと　
+バッグを　ひらかなくても　Yボタンで
+かんたんに　つかうことができます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_002">
+		<language name="JPN">したがめんの　みどりいろの　マークか
+スタートボタンを　おすと　ポケットの
+どうぐを　じどうで　せいりできます
+
+セレクトボタンを　おすと　ポケットの
+どうぐを　じゆうに　いれかえることが
+できます
+L/Rボタンを　おすと　ページを
+きりかえることが　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_003">
+		<language name="JPN">■もちものの　しゅるい
+・どうぐ
+ポケモンに　もたせると　のうりょくや
+わざの　いりょくが　アップする　どうぐが
+あります
+もたせて　こうかのある　どうぐには
+しるしが　ついているので　
+ポケモンに　もたせて　こうかを
+たしかめて　みましょう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_004">
+		<language name="JPN">せんとうちゅうに　つかうと　そのときだけ
+のうりょくや　わざの　いりょくが
+アップする　どうぐも　あります
+
+いっていのあいだ　こうかが　つづくものや
+ポケモンを　ひっこめると　こうかが
+きれるものも　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_005">
+		<language name="JPN">ポケモンを　つかまえるための　ボールも
+このポケットに　はいっています
+ポケモンの　しんかに　かんけいする
+どうぐも　どこかに　あるようです
+
+メールは　すきなことばを　くみあわせて
+つくる　てがみの　ことで　ポケモンに　
+もたせておいて　こうかんすると　
+ともだちに　とどけることが　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_006">
+		<language name="JPN">・かいふく
+ポケモンの　HPや　PP　
+じょうたいいじょうなどを　かいふくさせる　
+どうぐを　しまっておく　ばしょです
+
+・わざマシン
+わざマシンを　しまっておく　ばしょです
+わざマシンは　なんどでも　つかうことが
+できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_001_007">
+		<language name="JPN">・きのみ
+ポケモンに　つかったり　もたせておくと
+こうかのある　きのみを　しまっておく
+ばしょです
+・たいせつなもの
+たいせつな　どうぐを　しまっておく
+ばしょです　
+べんりボタンに　とうろくできる　ものも
+あります　</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_002_001">
+		<language name="JPN">トレーナーの　じょうほうが　きろくされた
+カードです
+しょくぎょうや　せいかくは　がめんを
+タッチすると　きりかわりますので　すきな
+ものを　えらんでください
+したの　しろいわくを　タッチすると
+メッセージが　へんしゅう　できます
+あいている　ところに　すきな　たんごを
+えらんで　かんせいさせて　ください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_002_002">
+		<language name="JPN">カードの　うらには　タッチペンを　
+つかって　サインを　かくことが　できます
+ペンの　マークや　けしゴムの　マークを
+タッチで　きりかえます　
+プラスの　マークを　タッチすると　
+がめんを　かくだい　できます
+さんかくの　マークを　タッチすると
+サインエリアを　はんぶんに　わけた
+アニメが　さいせい　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_002_003">
+		<language name="JPN">トレーナーズカードでは
+いま　いくつ　ジムバッジを
+もっているのか　かくにんすることも
+できます
+
+ジムバッジを　かくにんするには　
+トレーナーズカードの　ひだりしたの
+マークを　タッチして　ください</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_005_003_001">
+		<language name="JPN">であった　ポケモンを　じどうてきに
+きろくしていく　ハイテクな　ずかんです
+
+しらべたい　ポケモンを　タッチすると
+せつめいや　せいそくしている　ばしょ
+なきごえや　おおきさが　みられます
+「START」を　タッチすると　ばんごうや
+ごじゅうおん　いろや　かたち　などから
+ポケモンを　けんさくすることが　できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_001_001">
+		<language name="JPN">たいりょくを　へらしてから
+モンスターボールを　なげると
+つかまえやすく　なります
+
+ポケモンの　わざで　まひさせたり
+ねむらせたりすると　さらに
+つかまえやすく　なります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_002_001">
+		<language name="JPN">ポケモンや　わざには　タイプがあり
+そのかずは　ぜんぶで　17しゅるいです
+タイプごとに　ゆうりなタイプと　
+ふりなタイプが　あり　くみあわせで
+あいしょうが　きまります
+たとえば　ほのおタイプのわざは
+むしや　くさタイプのポケモンには
+ゆうりですが　みずや　いわタイプの
+ポケモンには　あまり　ききません</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_002_002">
+		<language name="JPN">だすわざの　タイプが　そのわざを　だす
+ポケモンのタイプと　おなじばあいは
+わざのいりょくが　いつもより　あがります
+ポケモンが　ふたつの　タイプを　
+もっていると　それぞれの　あいしょうが
+えいきょう　しあいます
+
+また　あいしょうに　よっては　わざの
+こうかがない　くみあわせも　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_003_001">
+		<language name="JPN">わざは　「ぶつり」と　「とくしゅ」と
+「へんか」の　3つに　ぶんるいされていて　
+マークに　よって　みわける　ことが
+できます
+
+・ぶつりわざ
+ポケモンの　こうげきと　ぼうぎょの　
+すうちに　よって　いりょくが　きまる
+わざの　しゅるいです</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_003_002">
+		<language name="JPN">・とくしゅわざ
+ポケモンの　とくこうと　とくぼうの　
+すうちに　よって　いりょくが　きまる
+わざの　しゅるいです
+・へんかわざ
+あいてを　こうげきする　わざではなく
+ポケモンの　のうりょくを　あげたり
+じょうたいいじょうに　するなど　ほじょの
+こうかがある　わざの　しゅるいです</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_004_001">
+		<language name="JPN">ポケモンが　どくを　あびたじょうたい
+バトルちゅう　じょじょに　HPが　へって
+いきます　
+ボールに　もどったり　バトルが　おわると
+ダメージは　うけませんが　しぜんには　
+なおりません
+■なおす　ほうほう
+・ポケモンセンターで　やすませる
+・どくけしや　モモンのみを　つかう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_005_001">
+		<language name="JPN">ポケモンの　HPが0に　なったじょうたい
+かいふくさせる　までは　バトルに　だす
+ことが　できませんが　バトルちゅう　
+いがいで　つかえる　いちぶの　わざは
+ひんしでも　つかうことが　できます
+■なおす　ほうほう
+・ポケモンセンターで　やすませる
+・げんきのかけらを　つかう
+・げんきのかたまりを　つかう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_006_001">
+		<language name="JPN">ポケモンが　まひに　なったじょうたい
+バトルちゅう　ときどき　えらんだ　わざが
+うまく　だせないときが　あります
+また　すばやさも　さがってしまいます　
+
+■なおす　ほうほう
+・ポケモンセンターで　やすませる
+・まひなおしや　クラボのみを　つかう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_007_001">
+		<language name="JPN">ポケモンが　ねむっている　じょうたい
+とくていの　わざ　いがいは　つかう
+ことが　できなくなります
+バトルちゅうに　かいふく　することが
+ありますが　ねむったまま　バトルが
+おわっても　かいふく　しません
+■なおすほうほう
+・ポケモンセンターで　やすませる
+・ねむけざましや　カゴのみを　つかう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_008_001">
+		<language name="JPN">ポケモンが　こおりついた　じょうたい
+ほとんどの　わざが　だせなくなります
+バトルちゅうに　かいふく　することが
+ありますが　こおったまま　バトルが
+おわっても　かいふく　しません
+
+■なおす　ほうほう
+・ポケモンセンターで　やすませる
+・こおりなおしや　ナナシのみを　つかう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_009_001">
+		<language name="JPN">ポケモンが　やけどした　じょうたい
+バトルちゅう　じょじょに　HPが　
+へっていき　こうげきも　さがります　
+ボールに　もどったり　バトルが　おわると　
+ダメージは　うけませんが　しぜんには　
+なおりません
+■なおす　ほうほう
+・ポケモンセンターで　やすませる
+・やけどなおしや　チーゴのみを　つかう</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_010_001">
+		<language name="JPN">ポケモンが　こんらんした　じょうたい
+ときどき　えらんだ　わざを　ださずに
+じぶんを　こうげきする　ことがあります
+バトルちゅう　しばらくたつか　バトルが
+おわると　しぜんに　なおります
+ほかの　じょうたいいじょうと　いっしょに
+こんらんする　ことも　あります
+■なおす　ほうほう
+　キーのみを　もたせておく</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_006_011_001">
+		<language name="JPN">せいべつの　ちがう　ポケモンに　
+メロメロに　なった　じょうたい
+あいての　ポケモンに　みとれて
+ときどき　えらんだ　わざが　だせない
+ことがあります
+ポケモンを　いれかえるか　あいてを
+たおすと　もとにもどります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_007_001_001">
+		<language name="JPN">ポケモンは　たたかいに　さんかすると
+けいけんちが　もらえます
+たくさん　けいけんを　つむと　レベルが
+あがって　どんどん　せいちょうします
+
+あいての　ポケモンのほうが　つよいと
+もらえる　けいけんちは　おおくなります
+あいての　ポケモンのほうが　よわいと
+もらえる　けいけんちは　すくなくなります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_007_001_002">
+		<language name="JPN">けいけんちは　バトルにでた　ポケモン
+ぜんいんで　わけあいます
+よわいポケモンを　さきにだしたあと
+つよいポケモンに　こうたいしてあげると
+じょうずに　レベルを　あげられます
+
+ほかのひとと　こうかんした　ポケモンは
+じぶんで　つかまえた　ポケモンよりも
+もらえる　けいけんちが　おおくなります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_007_002_001">
+		<language name="JPN">ポケモンは　せいちょうすると　しんか
+することが　あります
+しんかすると　すがたかたちが　かわり
+のうりょくも　アップします
+ポケモンが　しんかするには　レベルを
+あげて　せいちょうさせたり　しんかに
+ひつような　どうぐを　つかったり
+ともだちと　つうしんで　こうかんしたりと
+いろいろな　ほうほうが　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_007_002_002">
+		<language name="JPN">ポケモンが　しんかしている　さいちゅうに
+Bボタンを　おすと　ポケモンが　
+おどろいて　しんかを　やめます
+
+ポケモンに　もたせておくと　
+しんかしなくなる　どうぐも　どこかに
+あるようです</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_007_003_001">
+		<language name="JPN">おなじ　ポケモンでも　せいかくや
+こせいは　さまざまです
+せいちょうにも　ちがいが　でてきます
+
+ポケモンの　つよさをみると　こうげきや
+ぼうぎょなどの　のうりょくに　いろが
+ついていることが　あります
+あかは　そののうりょくが　あがりやすく
+あおは　あがりにくいことを　あらわします</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_007_004_001">
+		<language name="JPN">ポケルスは　ポケモンに　くっつく
+ちいさな　せいめいたいの　ことです
+ポケルスが　くっついている　あいだは　
+ポケモンが　よくそだつ　らしいです
+なんにちかで　もとの　じょうたいに　
+もどりますが　いちど　ポケルスが　つくと
+もう　その　ポケモンには　くっつきません
+ほかの　ポケモンにも　うつることが　
+あるようです</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_001_001">
+		<language name="JPN">ランニングシューズをもらったあとは
+Ｂボタンを　おしながら　いどうすると
+はしることが　できます
+
+おもいっきり　はしりまくろう！</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_002_001">
 		<language name="JPN">ダウジングマシンを　つかいながら
 あるいていると　したの　がめんが
 はんのうすることが　あります
 やじるしにむかって　あるいてみましょう　
-かくれた　どうぐの　まうえに　たつと
+かくれた　どうぐの　まうえに　たつと　
 がめんの　マークが　てんめつします
-
 まうえからは　どうぐが　ひろえません
 いっぽ　さがってから　Aボタンを　
 おして　どうぐを　ひろいましょう</language>
-		<language name="JPN_KANJI">ダウジングマシンを　つかいながら
-あるいていると　したの　がめんが
-はんのうすることが　あります
-やじるしにむかって　あるいてみましょう　
-かくれた　どうぐの　まうえに　たつと
-がめんの　マークが　てんめつします
+		<language name="JPN_KANJI"></language>
+	</row>
 
-まうえからは　どうぐが　ひろえません
-いっぽ　さがってから　Aボタンを　
-おして　どうぐを　ひろいましょう</language>
+	<row id="man_txt_page_no_008_003_001">
+		<language name="JPN">ＤＳワイヤレスつうしんや　Ｗｉ?Ｆｉつうしんを
+つかって　ともだちと　おはなしが　できる
+どうぐです
+ＤＳiや　ＤＳiLLなら　カメラきのうを　
+つかって　ともだちの　かおを　みながら
+おはなしが　できます
+ライブキャスターで　おはなしするには
+あらかじめ　ともだちコードを　とうろく
+しあっておく　ひつようが　あります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_003_002">
+		<language name="JPN">■ＤＳワイヤレスつうしんのばあい
+Cギアの　ワイヤレスボタンを　タッチして
+ライブキャスターを　えらびます
+ちかくに　ともだちコードを　こうかん
+している　あいてが　みつかると　したの
+がめんに　なまえと　IDばんごうが
+ひょうじされますので　おはなしをしたい
+あいてを　えらんで　よびだします
+4にんまで　どうじに　よびだせます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_003_003">
+		<language name="JPN">ともだちからの　よびだしが　あると
+Cギアの　ワイヤレスボタンが　ひかり
+よびだしおんが　なります
+ライブキャスターに　ともだちの
+なまえが　ひょうじ　されますので
+タッチして　よびだしを　うけてください
+よびだしを　うけるまえに
+ライブキャスターを　えらぶと
+よびだしを　うけることが　できません</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_003_004">
+		<language name="JPN">■Ｗｉ?Ｆｉクラブのばあい
+Ｗｉ?Ｆｉクラブの　なかにいる　メンバーで
+４にんまで　いっしょに　おはなしできます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_003_005">
+		<language name="JPN">■ライブキャスターの　つかいかた
+したがめんで　そうさを　おこないます
+ちゅうおうの　スピークボタンを　
+タッチしながら　ことばを　はなすと
+つうしんで　あいてに　とどきます
+
+ひだりの　ゲージを　そうさすると
+こえの　たかさが　かえられます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_003_006">
+		<language name="JPN">ＤＳiや　ＤＳiLLなら　おたがいの　かおが　
+うえのがめんに　ひょうじされます
+みぎうえの　カメラボタンを　おすと　
+おたがいの　かおに　らくがきを　して　
+あそべます
+みぎしたの　ボタンで　がめんを　こてい
+することも　できます
+カメラが　ない　ほんたいの　ばあいは
+「SOUND ONLY」と　ひょうじされます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_004_001">
+		<language name="JPN">イッシュちほうには　８つの　ジムが　あり
+それぞれに　ジムリーダーが　います
+ジムバッジは　ジムリーダーに　かった
+あかしとして　もらえる　バッジです
+
+トレーナーズカードをみると　ジムバッジを
+いくつとったか　かくにんできます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_004_002">
+		<language name="JPN">てにいれた　バッジの　かずが　おおいと
+ひとから　もらった　ポケモンの　レベルが
+たかくても　あなたの　めいれいを　
+すなおに　きいてくれるように　なります</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_005_001">
+		<language name="JPN">べんりボタンは　よくつかう　きのうや
+どうぐを　つかいたいときに　すぐに
+つかうことができる　べんりなボタンです
+
+べんりボタンに　とうろくすると
+Ｙボタンを　おして　すぐにつかえます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_005_002">
+		<language name="JPN">Ｘボタンを　おして　メニューを　ひらくと
+したのがめんに　しかくい　マークが
+ひょうじされている　ことが　あります
+このマークを　タッチすると　あかい
+チェックマークが　つきます
+
+チェックマークを　つけた　きのうや
+どうぐが　べんりボタンに
+とうろくされます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_005_003">
+		<language name="JPN">たいせつなもの　ポケットに　はいっている
+どうぐの　よこにも　しかくい　マークが
+あります
+
+マークが　しろくなっている　どうぐは
+タッチして　チェックしておくと　
+べんりボタンに　とうろくして　おけます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_005_004">
+		<language name="JPN">べんりボタンには　25こ　まで　きのうや
+どうぐを　とうろくして　おけます
+とうろくを　かいじょしたい　ばあいは
+しかくい　マークを　タッチして
+チェックを　はずして　ください
+２つ　いじょう　とうろくしていると
+セレクトボタンで　べんりボタンの
+こうもくを　ならびかえる　ことが
+できます</language>
+		<language name="JPN_KANJI"></language>
+	</row>
+
+	<row id="man_txt_page_no_008_006_001">
+		<language name="JPN">みてい</language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<flowchart-group-list>

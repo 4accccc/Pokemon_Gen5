@@ -1406,7 +1406,7 @@ sub WriteDataTitleFile
 
       if( $manual_title_tbl[$i][$manual_title_col_page_max] != $page_count )
       {
-        # テーブルに存在しないリードフラグ名
+        # ページ数が合っていない
         die "page_count \"$page_count\", page_max \"$manual_title_tbl[$i][$manual_title_col_page_max]\" error, stopped";
       }
 
