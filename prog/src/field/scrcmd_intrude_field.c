@@ -40,6 +40,8 @@
 #include "msg/msg_mission_msg.h"
 
 #include "event_intrude.h"
+#include "event_intrude_subscreen.h"
+#include "fieldmap/zone_id.h"
 
 
 //==============================================================================
@@ -498,6 +500,7 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   INTRUDE_COMM_SYS_PTR intcomm;
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   enum{
     SEQ_WARP,
     SEQ_MISSION_START_WAIT,
@@ -509,14 +512,21 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
   switch( *seq ){
   case SEQ_WARP:
     {
+      GMEVENT *child_event;
       NetID warp_netid;
       if(intcomm == NULL){
         warp_netid = GAMEDATA_GetIntrudeMyID(gamedata);
       }
       else{
+        MISSION_SetMissionEntry(intcomm, &intcomm->mission);
         warp_netid = MISSION_GetMissionTargetNetID(intcomm, &intcomm->mission);
       }
-      GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_NetID(gsys, warp_netid));
+      //GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_NetID(gsys, warp_netid));
+      child_event = EVENT_IntrudeTownWarp(gsys, fieldWork, ZONE_ID_PALACE01);
+      if(child_event == NULL){
+        return GMEVENT_RES_FINISH;
+      }
+      GMEVENT_CallEvent(event, child_event);
     }
     (*seq)++;
     break;

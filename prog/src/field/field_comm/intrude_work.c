@@ -630,6 +630,9 @@ INTRUDE_CONNECT Intrude_GetIntrudeStatus(GAME_COMM_SYS_PTR game_comm)
     if(MISSION_CheckTargetIsMine(intcomm) == TRUE){
       return INTRUDE_CONNECT_MISSION_TARGET;
     }
+    if(Intrude_CheckTutorialComplete( GameCommSys_GetGameData(game_comm) ) == FALSE){
+      return INTRUDE_CONNECT_INTRUDE; //チュートリアルが済んでいないと協力者にはなれない
+    }
     return INTRUDE_CONNECT_MISSION_PARTNER;
   }
   return INTRUDE_CONNECT_INTRUDE;

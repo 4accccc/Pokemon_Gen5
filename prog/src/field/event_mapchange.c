@@ -2194,8 +2194,8 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
       map_offset = 0;
     }
     else{
-      //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
-      palace_area = intcomm->intrude_status_mine.palace_area;
+      //子機の場合、ミッション乱入でのワープしかありえないため、ターゲットのパレスへ飛ばす
+      palace_area = MISSION_GetMissionTargetNetID(intcomm, &intcomm->mission);
       map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
       if(map_offset < 0){
         map_offset = intcomm->member_num + map_offset;

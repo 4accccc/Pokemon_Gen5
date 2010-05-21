@@ -1120,6 +1120,8 @@ BOOL MISSION_SetEntryNew(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, 
   //全員に実行されるミッションデータを送信する
   MISSION_Set_DataSendReq(mission);
 
+  mission->start_timer = GFL_RTC_GetTimeBySecond();
+
   mission->send_mission_start = _SEND_MISSION_START_NULL;
   
   return TRUE;

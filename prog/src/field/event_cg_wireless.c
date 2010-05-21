@@ -31,6 +31,7 @@
 #include "field_comm/intrude_main.h"
 #include "arc/fieldmap/zone_id.h"
 #include "event_intrude.h"
+#include "scrcmd_intrude.h"
 
 
 //============================================================================================
@@ -97,7 +98,9 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
     switch(dbw->selectType){
     case CG_WIRELESS_RETURNMODE_PALACE:
       if(Intrude_Check_CommConnect(pComm)){ //N“ü’ÊM‚ª³í‚ÉŒq‚ª‚Á‚Ä‚¢‚é‚©’²‚×‚é
-        //GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
+        if(dbw->hilinkStateNo == INTRUDE_CONNECT_MISSION_TARGET){
+          GAMEDATA_SetSubScreenMode(gdata, FIELD_SUBSCREEN_INTRUDE);
+        }
       }
       (*seq) = _FIELD_FADEOUT;
       break;
@@ -156,7 +159,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
           }
         }
         else if(dbw->hilinkStateNo == INTRUDE_CONNECT_MISSION_PARTNER){ //‹¦—ÍŽÒ‚Æ‚µ‚ÄƒpƒŒƒX‚Ö
-          intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01);
+          intrude_event = EVENT_Intrude_MissionStartWait_Warp(gsys);
           GMEVENT_CallEvent(event,intrude_event);
           *seq = _FIELD_END;
         }
