@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-21T14:23:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-21T14:36:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,7 +360,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1144,7 +1144,7 @@ assistantm_01_15へ続く
 調べてくる　調査だ▼
 調査の　結果を
 子供の　プレイ時間と▽
-くらべたいそうだ▼</language>
+比べたいそうだ▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_13d" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -2193,7 +2193,7 @@ assistantm_01_23○へ続く
 みんな　なにが　１番　大事なのか……
 それを知りたくてな……▼
 え？
-理由は　言えんな▼</language>
+理由は　いえんな▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_14l" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -2666,7 +2666,7 @@ assistantm_01_17へ続く
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『ブラックと　ホワイト▽
 多いのは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2685,7 +2685,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『選んだ　最初の　ポケモンは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16c" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2704,7 +2704,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　多い　プレイ時間は？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16d" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2722,7 +2722,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『男と　女　多いのは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16e" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2740,7 +2740,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　多い　仕事は？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16f" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2758,7 +2758,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　多い　趣味は？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16g" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2777,7 +2777,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『対戦と　交換　人気なのは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16h" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2795,7 +2795,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『好きな　ポケモンは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16i" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2815,7 +2815,7 @@ assistantm_01_17へ続く
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『好きな　ポケモンの▽
 タイプは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16j" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2834,7 +2834,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『都会と　田舎　住みたいのは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16k" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2854,7 +2854,7 @@ assistantm_01_17へ続く
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『大事に　しているものに▽
 ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16l" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2872,7 +2872,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『人の　魅力に　ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16m" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2890,7 +2890,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『季節に　ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16n" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2908,7 +2908,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『芸術に　ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16o" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2926,7 +2926,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　好きな　音楽は？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16p" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2944,7 +2944,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『映像に　ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16q" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2963,7 +2963,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　好きな　学校の　時間は？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16r" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -2981,7 +2981,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『勉強に　ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16s" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3000,7 +3000,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　人気の　スポーツは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16t" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3018,7 +3018,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『休日に　ついて』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16u" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3036,7 +3036,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　なりたいものは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16v" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3056,7 +3056,7 @@ assistantm_01_17へ続く
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『１番　人気の▽
 ジムリーダーは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_16w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -3075,7 +3075,7 @@ assistantm_01_17へ続く
 ちょうさ　いらいを　うけた！▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:1]は
 『ポケモンの　面白い　ところは？』の▽
-調査　依頼を　受けた！▼</language>
+調査依頼を　受けた！▼</language>
 	</row>
 
 	<row id="msg_c03r0101_assistantm_01_17" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
