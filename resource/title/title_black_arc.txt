@@ -1,3 +1,8 @@
 "blk_logo.NCGR"
 "blk_logo.NSCR"
 "blk_logo.NCLR"
+"blk_base.NSCR"
+"blk_obj.NCLR"
+"blk_obj.NCGR"
+"blk_obj.NCER"
+"blk_obj.NANR"

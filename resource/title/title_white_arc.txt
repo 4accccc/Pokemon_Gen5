@@ -1,3 +1,8 @@
 "wht_logo.NCGR"
 "wht_logo.NSCR"
 "wht_logo.NCLR"
+"wht_base.NSCR"
+"wht_obj.NCLR"
+"wht_obj.NCGR"
+"wht_obj.NCER"
+"wht_obj.NANR"

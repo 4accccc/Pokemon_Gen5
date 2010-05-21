@@ -13,7 +13,12 @@
 enum {
 	NARC_title_black_blk_logo_NCGR = 0,
 	NARC_title_black_blk_logo_NSCR = 1,
-	NARC_title_black_blk_logo_NCLR = 2
+	NARC_title_black_blk_logo_NCLR = 2,
+	NARC_title_black_blk_base_NSCR = 3,
+	NARC_title_black_blk_obj_NCLR = 4,
+	NARC_title_black_blk_obj_NCGR = 5,
+	NARC_title_black_blk_obj_NCER = 6,
+	NARC_title_black_blk_obj_NANR = 7
 };
 
 /* NARC_TITLE_BLACK_NAIX_ */

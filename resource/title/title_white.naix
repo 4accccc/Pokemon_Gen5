@@ -13,7 +13,12 @@
 enum {
 	NARC_title_white_wht_logo_NCGR = 0,
 	NARC_title_white_wht_logo_NSCR = 1,
-	NARC_title_white_wht_logo_NCLR = 2
+	NARC_title_white_wht_logo_NCLR = 2,
+	NARC_title_white_wht_base_NSCR = 3,
+	NARC_title_white_wht_obj_NCLR = 4,
+	NARC_title_white_wht_obj_NCGR = 5,
+	NARC_title_white_wht_obj_NCER = 6,
+	NARC_title_white_wht_obj_NANR = 7
 };
 
 /* NARC_TITLE_WHITE_NAIX_ */
