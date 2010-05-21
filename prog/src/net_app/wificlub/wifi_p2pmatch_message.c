@@ -35,7 +35,7 @@ enum{
   LV_POS_SPACE_X = POKEICON_POS_SPACE_X,
   LV_POS_Y = 4*8,
   
-  SEX_POS_X = 4*8,
+  SEX_POS_X = 4*8-2,
   SEX_POS_SPACE_X = POKEICON_POS_SPACE_X,
   SEX_POS_Y = 2*8,
   
@@ -1535,7 +1535,6 @@ static void _Print_DrawPokeStatusBmpWin(WIFIP2PMATCH_WORK *wk, const POKEPARTY *
 
   party_max = PokeParty_GetPokeCount(party);
   for(i = 0; i < party_max; i++){
-    OS_Printf("-x-x-x  %d\n",i);
     pp = PokeParty_GetMemberPointer(party, i);
     monsno = PP_Get( pp, ID_PARA_monsno, NULL);
     nidoran_nickname = PP_Get(pp, ID_PARA_nidoran_nickname, NULL);
@@ -1702,8 +1701,6 @@ static void _battlePokePartySelectMenu( WIFIP2PMATCH_WORK *wk )
 {
   _parentInfoBattleMenuListHeader.count = elementof(_parentPokePartyMenuList);
   _parentInfoBattleMenuListHeader.line = elementof(_parentPokePartyMenuList);
-
-  NET_PRINT("elementof(_parentPokePartyMenuList) %d\n",elementof(_parentPokePartyMenuList));
 
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentPokePartyMenuList,
                       elementof(_parentPokePartyMenuList), _MENUTYPE_POKEPARTY,18);
