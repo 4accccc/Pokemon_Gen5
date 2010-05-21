@@ -441,8 +441,9 @@ int GFL_NET_DWC_connect()
     {// IPLのユーザ名を使ってログイン
       // 自分のユーザ名を圧縮。
       OSOwnerInfo info;
+      u16 dummy[2]={0x0000,0x0000};
       OS_GetOwnerInfo( &info );
-      DWC_LoginAsync( &(info.nickName[0]), NULL, LoginCallback, NULL);
+      DWC_LoginAsync( dummy, NULL, LoginCallback, NULL);
     }
     _CHANGE_STATE(MDSTATE_TRYLOGIN);
     //_dWork->state = MDSTATE_TRYLOGIN;
