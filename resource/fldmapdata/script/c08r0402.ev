@@ -194,8 +194,17 @@ ev_event_check:
 		
 		//必要なポケモンがいない
 		ELSE
-			//あありがとう……ってぼくのおねがいした
-			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_05w,msg_c08_man1_05b,C08R0402_MAN1_01,POS_DOWN)
+			IF $SCWK_ANSWER == 0 THEN
+				//そそうかざんねんだな
+				_BALLOONWIN_OBJMSG_WB(msg_c08_man1_03w,msg_c08_man1_03b,C08R0402_MAN1_01,POS_DOWN)
+			ELSIF $LWK_WAZA_CHECK == 0 THEN
+				//あありがとう……ってぼくのおねがいした
+				_BALLOONWIN_OBJMSG_WB(msg_c08_man1_05w,msg_c08_man1_05b,C08R0402_MAN1_01,POS_DOWN)
+			ELSE
+				//あありがとう……ってそのポケモン「じゅうでん」は　おぼえているけど
+				_BALLOONWIN_OBJMSG_WB(msg_c08_man1_05w_a,msg_c08_man1_05b_a,C08R0402_MAN1_01,POS_DOWN)
+			ENDIF
+			
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			$LWK_POKE_CHECK = 2
