@@ -130,6 +130,7 @@
 #include "test/performance.h"
 
 #include "field_camera_debug.h"
+#include "field/field_comm/intrude_mission.h" //MISSION_LIST_Create
 
 #include "../../../resource/fld3d_ci/fldci_id_def.h"  // for FLDCIID_MAX
 
@@ -287,6 +288,7 @@ static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
 
 
 //======================================================================
@@ -369,6 +371,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
   { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
+  { DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset },  //ミッションリスト再作成
 
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
@@ -3353,6 +3356,21 @@ static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk )
               FS_OVERLAY_ID( d_livecomm ), DEBUG_EVENT_LiveCommFromField, NULL );
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　ミッションリスト再作成
+ * @param wk  DEBUG_MENU_EVENT_WORK*  ワーク
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMEDATA *gmData = GAMESYSTEM_GetGameData(wk->gmSys);
+  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gmData);
+  MISSION_LIST_Create( occupy );
+  return FALSE;
 }
 
 //======================================================================
