@@ -263,7 +263,7 @@ void BEACON_VIEW_Update(BEACON_VIEW_PTR wk, BOOL bActive )
     IWASAWA_Printf("BeaconView seq = %d tick = %d\n", before_seq, tick );
   }
 #endif
-  if(!wk->deb_stack_check_throw ){
+  if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) == FALSE ){
     GAMEBEACON_Stack_Update( wk->infoStack );
   }
 #else

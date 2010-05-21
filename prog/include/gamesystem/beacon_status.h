@@ -57,3 +57,21 @@ extern STRBUF* BEACON_STATUS_GetFreeWordBuffer( BEACON_STATUS* wk );
  */
 extern u16* BEACON_STATUS_GetFreeWordInputResultPointer( BEACON_STATUS* wk );
 
+
+#ifdef PM_DEBUG
+
+//------------------------------------------------------------
+/*
+ *  @brief  デバッグ用スタックチェックスルーフラグセット
+ */
+//------------------------------------------------------------
+extern void DEBUG_BEACON_STATUS_SetStackCheckThrowFlag( BEACON_STATUS* wk, BOOL flag );
+
+//------------------------------------------------------------
+/*
+ *  @brief  デバッグ用スタックチェックスルーフラグゲット
+ */
+//------------------------------------------------------------
+extern BOOL DEBUG_BEACON_STATUS_GetStackCheckThrowFlag( BEACON_STATUS* wk );
+
+#endif  //PM_DEBUG

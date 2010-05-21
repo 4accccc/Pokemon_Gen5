@@ -483,6 +483,8 @@ static GMEVENT* event_CreateEventBeaconReq( GAMESYS_WORK* gsys, DMENU_LIVE_COMM*
 
 static int ninput_GetMiscCount( DMENU_LIVE_COMM* wk, int param );
 static void ninput_SetMiscCount( DMENU_LIVE_COMM* wk, int param, int value );
+static int ninput_GetDebugFlag( DMENU_LIVE_COMM* wk, int param );
+static void ninput_SetDebugFlag( DMENU_LIVE_COMM* wk, int param, int value );
 
 //======================================================================
 //
@@ -505,6 +507,7 @@ GMEVENT* DEBUG_EVENT_LiveComm( GAMESYS_WORK* gsys, void* parent_work )
   wk = GMEVENT_GetEventWork( event );
   wk->gsys = gsys; 
   wk->gdata = GAMESYSTEM_GetGameData( gsys ); 
+  wk->b_status = GAMEDATA_GetBeaconStatus( wk->gdata );
   wk->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   wk->save = GAMEDATA_GetSaveControlWork( wk->gdata ); 
   wk->int_sv = SaveData_GetIntrude( wk->save );
@@ -685,8 +688,10 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
       }
       switch( ret ){
       case MENU_UPDATE_STOP:
-        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, 1,
-            &wk->view_wk->deb_stack_check_throw, BPRM_WSET_NONE));
+//        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, 1,
+//            &wk->view_wk->deb_stack_check_throw, BPRM_WSET_NONE));
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 0, 0, 1,
+            ninput_SetDebugFlag, ninput_GetDebugFlag) );
         break;
       case MENU_BEACON_REQ:
         GMEVENT_CallEvent( event, event_CreateEventBeaconReq( wk->gsys, wk ) );
@@ -1704,10 +1709,41 @@ static void ninput_SetMiscCount( DMENU_LIVE_COMM* wk, int param, int value )
   case 0:
     MISC_CrossComm_SetSuretigaiCount( wk->misc_sv, value );
     DEBUG_BEACON_VIEW_SuretigaiCountSet( wk->view_wk, value );
+    break;
   case 1:
     MISC_CrossComm_SetThanksRecvCount( wk->misc_sv, value );
+    break;
   }
 }
+
+//--------------------------------------------------------------
+/*
+ *  @brief  デバッグフラグ関係　ゲット 
+ */
+//--------------------------------------------------------------
+static int ninput_GetDebugFlag( DMENU_LIVE_COMM* wk, int param )
+{
+  switch(param){
+  case 0:
+    return DEBUG_BEACON_STATUS_GetStackCheckThrowFlag( wk->b_status );
+  }
+  return 0;
+}
+
+//--------------------------------------------------------------
+/*
+ *  @brief  デバッグフラグ関係　セット 
+ */
+//--------------------------------------------------------------
+static void ninput_SetDebugFlag( DMENU_LIVE_COMM* wk, int param, int value )
+{
+  switch(param){
+  case 0:
+    DEBUG_BEACON_STATUS_SetStackCheckThrowFlag( wk->b_status, value );
+    break;
+  }
+}
+
 
 
 

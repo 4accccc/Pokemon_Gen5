@@ -235,9 +235,6 @@ typedef struct _BEACON_VIEW{
   RES2D_PLTT  resPlttUnion;
   RES2D_PLTT  resPlttPanel;
 
-#ifdef PM_DEBUG
-  int deb_stack_check_throw;
-#endif
 }BEACON_VIEW;
 
 /*

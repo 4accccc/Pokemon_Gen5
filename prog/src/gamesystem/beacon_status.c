@@ -17,18 +17,24 @@
 #include "msg/msg_beacon_status.h"
 
 struct _TAG_BEACON_STATUS{
-  u8  view_top_ofs;     ///<ビューリストのトップのデータオフセット
-  u16 ret_fword_input;  ///<フリーワード入力があったかの結果を受けるワーク(u16の必要がある)
   GAMEBEACON_INFO_TBL view_log; 
-
   STRBUF* str_fword;  //フリーワード
+  
+  u16 ret_fword_input;  ///<フリーワード入力があったかの結果を受けるワーク(u16の必要がある)
+  u8  view_top_ofs;     ///<ビューリストのトップのデータオフセット
+
+#ifdef PM_DEBUG
+  u8  debug_stack_check_throw:1;
+#endif
 };
 
 #define BUFLEN_INTRODUCTION_MSG (GAMEBEACON_SELFINTRODUCTION_MESSAGE_LEN+EOM_SIZE)
 
+//------------------------------------------------------------
 /*
  *  @brief  ビーコンステータスワーク生成
  */
+//------------------------------------------------------------
 BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID, HEAPID tmpHeapID )
 {
   BEACON_STATUS* wk;
@@ -55,9 +61,11 @@ BEACON_STATUS* BEACON_STATUS_Create( HEAPID heapID, HEAPID tmpHeapID )
   return wk;
 }
 
+//------------------------------------------------------------
 /*
  *  @brief  ビーコンステータスワーク破棄
  */
+//------------------------------------------------------------
 void BEACON_STATUS_Delete( BEACON_STATUS* wk )
 {
   GFL_STR_DeleteBuffer(wk->str_fword);
@@ -65,43 +73,79 @@ void BEACON_STATUS_Delete( BEACON_STATUS* wk )
   GFL_HEAP_FreeMemory( wk );
 }
 
+//------------------------------------------------------------
 /*
  *  @brief  InfoTblを取得
  */
+//------------------------------------------------------------
 GAMEBEACON_INFO_TBL* BEACON_STATUS_GetInfoTbl( BEACON_STATUS* wk )
 {
   return &wk->view_log;
 }
 
+//------------------------------------------------------------
 /*
  *  @brief  ビューリストのトップオフセットを取得
  */
+//------------------------------------------------------------
 u8  BEACON_STATUS_GetViewTopOffset( BEACON_STATUS* wk )
 {
   return wk->view_top_ofs;
 }
 
+//------------------------------------------------------------
 /*
  *  @brief  ビューリストのトップオフセットをセット
  */
+//------------------------------------------------------------
 void BEACON_STATUS_SetViewTopOffset( BEACON_STATUS* wk, u8 ofs )
 {
   wk->view_top_ofs = ofs;
 }
 
+//------------------------------------------------------------
 /*
  *  @brief  フリーワードバッファのアドレスを取得
  */
+//------------------------------------------------------------
 STRBUF* BEACON_STATUS_GetFreeWordBuffer( BEACON_STATUS* wk )
 {
   return wk->str_fword; 
 }
 
+//------------------------------------------------------------
 /*
  *  @brief  フリーワードバッファの入力フラグアドレスを取得
  */
+//------------------------------------------------------------
 u16* BEACON_STATUS_GetFreeWordInputResultPointer( BEACON_STATUS* wk )
 {
   return &wk->ret_fword_input; 
 }
+
+#ifdef PM_DEBUG
+
+//------------------------------------------------------------
+/*
+ *  @brief  デバッグ用スタックチェックスルーフラグセット
+ */
+//------------------------------------------------------------
+void DEBUG_BEACON_STATUS_SetStackCheckThrowFlag( BEACON_STATUS* wk, BOOL flag )
+{
+  wk->debug_stack_check_throw = flag;
+}
+
+//------------------------------------------------------------
+/*
+ *  @brief  デバッグ用スタックチェックスルーフラグゲット
+ */
+//------------------------------------------------------------
+BOOL DEBUG_BEACON_STATUS_GetStackCheckThrowFlag( BEACON_STATUS* wk )
+{
+  return wk->debug_stack_check_throw;
+}
+
+
+
+#endif  //PM_DEBUG
 

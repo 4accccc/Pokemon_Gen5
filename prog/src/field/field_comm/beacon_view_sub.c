@@ -291,7 +291,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
 
   //スタックに積まれた情報をチェック
 #ifdef PM_DEBUG
-  if( wk->deb_stack_check_throw ){
+  if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) ){
     list_TimeOutCheck( wk );
     return FALSE;
   }
