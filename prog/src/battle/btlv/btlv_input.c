@@ -1254,7 +1254,10 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
-    BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
+    if( biw->main_loop_tcb_flag == TRUE )
+    { 
+      BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
+    }
 
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
     {
