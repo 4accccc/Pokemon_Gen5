@@ -61,6 +61,9 @@ EVENT_START		ev_pos_d20r0101_exit_01
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_exit )
 	_OBJ_ANIME_WAIT()
 	
+	//特定の場所へジャンプ
+	_SET_SP_LOCATION_DIRECT( ZONE_ID_D20, DIR_DOWN, 801, 5, 276 )
+	
 	//マップチェンジ
 	_DIVING( SCR_EV_DIVING_MAPCHANGE_UP )
 	
