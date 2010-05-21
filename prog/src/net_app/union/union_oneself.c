@@ -1694,9 +1694,8 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         }
         else if(situ->mycomm.mainmenu_select == UNION_PLAY_CATEGORY_TRADE && result == TRUE){
           GAMEDATA *gamedata = GAMESYSTEM_GetGameData(unisys->uniparent->gsys);
-          if(PokeParty_GetPokeCount(party) <= 1
-              && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(gamedata))){
-            //手持ちが1匹でボックスにも交換できるポケモンがいない為、交換できない
+          if(PokeParty_GetPokeCountNotEgg(party) < 2){
+            //手持ちが2匹以上いないと交換できない
             result = FALSE; //強制で「いいえ」を返す
             situ->work = _RESULT_NO_TEMOTI_SHORT;
           }
