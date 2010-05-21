@@ -134,12 +134,23 @@
 
 #include "../../../resource/fld3d_ci/fldci_id_def.h"  // for FLDCIID_MAX
 
+#include "system/main.h" //for HEAPID_FIELDMAP
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
 //  global
 //======================================================================
 int DbgCutinNo = 0;
+
+//======================================================================
+//  extern
+//======================================================================
+//デバッグ用変数実体はgamesystem.cにあります
+extern u32 DbgFldHeapRest;
+extern u32 DbgVramRest;
+extern u32 DbgFldHeapUseMaxZone;
+extern u32 DbgVramUseMaxZone;
 
 //======================================================================
 //  define
@@ -290,6 +301,8 @@ static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
 
+static void DbgRestDataUpdate(const u32 inZone);
+static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
 
 //======================================================================
 //  デバッグメニューリスト
@@ -5728,6 +5741,8 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
     zone_id = getNextZoneID( amcw );
     if ( zone_id >= ZONE_ID_MAX || zone_id < 0 )
     { 
+      OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
+      OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
       OS_Printf( "HUDSON: ALL MAP CHECK SUCCESS!!\n" ); // hudson 検出用
       return GMEVENT_RES_FINISH;
     }
@@ -5746,6 +5761,9 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
     amcw->wait ++;
     if ( amcw->wait > 120 )
     {
+      fieldmap = GAMESYSTEM_GetFieldMapWork( amcw->gsys );
+      //フィールドヒープの残りとＶＲＡＭの残りを計測
+      DbgRestDataUpdate( FIELDMAP_GetZoneID( fieldmap ) );
       amcw->wait = 0;
       *seq = SEQ_FLY_CHECK/*SEQ_SEEK_ID*/;
     }
@@ -6639,6 +6657,40 @@ static GMEVENT_RESULT debugCutin(
   }
 
   return( GMEVENT_RES_CONTINUE );
+}
+
+static void DbgRestDataUpdate(const u32 inZone)
+{
+  u32 heap_rest = GFL_HEAP_GetHeapFreeSize( HEAPID_FIELDMAP );
+  u32 vram_rest = 0;
+
+  NOZOMU_Printf("Zone %d seach..\n", inZone );
+
+  if ( DbgFldHeapRest >= heap_rest )
+  {
+    DbgFldHeapRest = heap_rest;
+    DbgFldHeapUseMaxZone = inZone;
+  }
+  
+  NNS_GfdDumpLnkTexVramManagerEx( VramDumpCallBack, VramDumpCallBack, &vram_rest );
+
+  if ( DbgVramRest >= vram_rest )
+  {
+    DbgVramRest = vram_rest;
+    DbgVramUseMaxZone = inZone;
+  }
+  OS_Printf( "FieldHeap restmin = 0x%x: zone = %d\n",DbgFldHeapRest, DbgFldHeapUseMaxZone );
+  OS_Printf( "3DVram restmin = 0x%x: zone = %d\n",DbgVramRest, DbgVramUseMaxZone );
+}
+
+static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
+{
+    // 合計サイズを計算。
+    (*((u32*)pUserData)) += szByte;
+    // 情報をデバックコンソールに出力
+    NOZOMU_Printf("adr=0x%08x:  size=0x%08x    \n", addr, szByte );
+    NOZOMU_Printf("Free_total 0x%x \n", (*((u32*)pUserData)) );
+    
 }
 
 
