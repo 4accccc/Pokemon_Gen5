@@ -20,10 +20,6 @@
 
 #include "system/brightness.h"
 
-//#include "system/snd_tool.h"
-//#include "fld_bgm.h"
-
-//#include "system/window.h"
 #include "system/wipe.h"
 
 #include "warpdata.h"			//WARPDATA_～
@@ -33,42 +29,14 @@
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h" //SCRID_～
 
-//#include "situation_local.h"		//Situation_Get～
-//#include "scr_tool.h"
-//#include "mapdefine.h"
-//#include "..\fielddata\script\common_scr_def.h"		//SCRID_GAME_OVER_RECOVER_PC
-//#include "sysflag.h"
-//#include "fld_flg_init.h"			//FldFlgInit_GameOver
-//#include "system/savedata.h"
-//#include "poketool/pokeparty.h"
-//#include "poketool\status_rcv.h"
-
 #include "field/field_msgbg.h"
 #include "system/bmp_winframe.h"
-//==============================================================================================
-//
-//	全滅関連
-//
-//==============================================================================================
-//#include "system/fontproc.h"						
-//#include "system/msgdata.h"							//MSGMAN_TYPE_DIRECT
-//#include "system/wordset.h"							//WORDSET_Create
 #include "print/wordset.h"
 
-//#include "fld_bmp.h"						
-
-//#include "msgdata/msg.naix"							//NARC_msg_??_dat
-//#include "msgdata/msg_gameover.h"					//msg_all_dead_??
-//#include "arc/
-//#include "system/arc_util.h"
-//#include "system/font_arc.h"
 #include "font/font.naix" //NARC_font_large_gftr
 #include "message.naix"
 #include "msg/msg_gameover.h"
 
-#include "arc/fieldmap/zone_id.h"
-
-#include "pleasure_boat.h"
 
 //==============================================================================================
 //==============================================================================================
@@ -88,7 +56,6 @@ typedef struct{
 	WORDSET* wordset;								//単語セット
 	GFL_BMPWIN *bmpwin;							//BMPウィンドウデータ
 
-  //PRINT_QUE *printQue;
   GFL_FONT * fontHandle;
 }GAMEOVER_MSG_WORK;
 
@@ -113,16 +80,15 @@ enum {
 //----------------------------------------------------------------------------------------------
 enum{
 	GAME_OVER_BMPWIN_FRAME	= GFL_BG_FRAME0_M,
-	//GAME_OVER_BMPWIN_PX1	= 1,//2,
-	//GAME_OVER_BMPWIN_PY1	= 1,//2,
-	//GAME_OVER_BMPWIN_SX		= 29,//25,
-	//GAME_OVER_BMPWIN_SY		= 19,//18,
 	GAME_OVER_BMPWIN_PX1	= 2,
-	GAME_OVER_BMPWIN_PY1	= 5,
+	GAME_OVER_BMPWIN_PY1	= 5+2,
 	GAME_OVER_BMPWIN_SX		= 27,
 	GAME_OVER_BMPWIN_SY		= 15,
 	GAME_OVER_BMPWIN_PL		= FLD_SYSFONT_PAL,
 	GAME_OVER_BMPWIN_CH		= 1,
+
+  GAME_OVER_BMPWIN_OFSX = 6,
+  GAME_OVER_BMPWIN_OFSY = 0,
 };
 
 //==============================================================================================
@@ -187,7 +153,6 @@ static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * 
       NARC_font_large_gftr, //新フォントID
 			GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
-    //wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
     //メッセージデータマネージャー作成
     wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
         ARCID_MESSAGE, NARC_message_gameover_dat, wk->heapID);
@@ -204,11 +169,11 @@ static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * 
 
     if ( wk->rev_type == REVIVAL_TYPE_HOME )
     { //自宅に戻るとき
-      scr_msg_print( wk, msg_all_dead_05, 0, 0 );
+      scr_msg_print( wk, msg_all_dead_05, GAME_OVER_BMPWIN_OFSX, GAME_OVER_BMPWIN_OFSY );
     }
     else
     { //ポケセンに戻るとき
-      scr_msg_print( wk, msg_all_dead_04, 0, 0 );
+      scr_msg_print( wk, msg_all_dead_04, GAME_OVER_BMPWIN_OFSX, GAME_OVER_BMPWIN_OFSY );
     }
 
     GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
@@ -218,8 +183,6 @@ static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * 
 
 	//メッセージ転送待ち
 	case 1:
-    //PRINTSYS_QUE_Main( wk->printQue );
-    //if( PRINTSYS_QUE_IsFinished( wk->printQue ) == TRUE )
     {
       GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_BLACKOUT_MAIN | GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
@@ -263,7 +226,6 @@ static GFL_PROC_RESULT GameOverMsgProc_Main( GFL_PROC * proc, int * seq, void * 
 		GFL_MSG_Delete( wk->msgman );
 		GFL_BG_FreeBGControl( GAME_OVER_BMPWIN_FRAME );
 
-    //PRINTSYS_QUE_Delete( wk->printQue ); 
     GFL_FONT_Delete( wk->fontHandle );
 
     release_bg_sys();
