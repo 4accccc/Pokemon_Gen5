@@ -85,17 +85,18 @@ endif
 #------------------------------------------------------------------------------
 #do-build:	$(ZONETABLE_DIR)$(ZONEID_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_H) $(MESSAGE_INC_DIR)$(MSG_MISSION_MONO_H) $(FLDMMDL_DIR)$(FLDMMDL_CODE_H) $(ITEM_DIR)$(ITEM_H) $(MONSNO_DIR)$(MONSNO_H) $(MONSNO_DIR)$(MONSNUM_H) $(FIELDCOMM_DIR)$(MISSION_TYPES_H) subdir $(TARGETDIR)/$(targetname).narc
 #do-build:	subdir $(TARGETDIR)/$(targetname).narc $(ZONEID_H) $(MSG_MISSION_H) $(MSG_MISSION_MONO_H) $(FLDMMDL_CODE_H) $(ITEM_H) $(MONSNO_H) $(MONSNUM_H) $(MISSION_TYPES_H)
-do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETLISTDIR)/mission_list_param.cdat $(TARGETLISTDIR)/mission_ng_check.cdat
+do-build:	subdir $(TARGETDIR)/$(targetname).narc $(TARGETLISTDIR)/mission_list_param.cdat $(TARGETLISTDIR)/mission_ng_check.cdat  $(TARGETLISTDIR)/mission_ng_check.h
 
 subdir:
 	@$(MAKE_SUBDIR)
 
 # narc のコピーだけ実行する
-$(TARGETDIR)/$(targetname).narc: $(targetname).narc mission_list_param.cdat mission_ng_check.cdat
+$(TARGETDIR)/$(targetname).narc: $(targetname).narc mission_list_param.cdat mission_ng_check.cdat mission_ng_check.h
 	$(COPY) $(targetname).narc $(TARGETDIR)
 	$(COPY) $(targetname).naix $(TARGETDIR)
 	$(COPY) mission_list_param.cdat $(TARGETLISTDIR)
 	$(COPY) mission_ng_check.cdat $(TARGETLISTDIR)
+	$(COPY) mission_ng_check.h $(TARGETLISTDIR)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする

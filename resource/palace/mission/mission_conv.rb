@@ -371,6 +371,14 @@ def DataFileOutput()
       file.printf("\t%s,\t\t//%d\n", ItemList[i], i);
     end
     file.printf("};\n");
+  }
+
+  #不正データチェック用ファイルのヘッダ
+  File.open("mission_ng_check.h", "w"){|file|
+    file.printf("//============================================================\n");
+    file.printf("//       mission_conv.rb で出力されたファイルです\n");
+    file.printf("//============================================================\n\n");
+    file.printf("#pragma once\n\n");
 
     #最大値定義
     file.printf("\n\n//最大値定義(不正チェック用)\n");
