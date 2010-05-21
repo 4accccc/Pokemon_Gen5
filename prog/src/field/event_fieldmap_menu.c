@@ -93,9 +93,9 @@ static GMEVENT_RESULT FldMapMenuEvent( GMEVENT *event, int *seq, void *wk );
 static EVENT_PROCLINK_CALL_TYPE FldMapGetProclinkToMenuItem( FIELD_MENU_ITEM_TYPE type );
 
 //コールバック
-static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
-static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
-static void FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+static BOOL FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+static BOOL FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+static BOOL FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 //======================================================================
 //  イベント：フィールドマップメニュー
 //======================================================================
@@ -400,7 +400,7 @@ static EVENT_PROCLINK_CALL_TYPE FldMapGetProclinkToMenuItem( FIELD_MENU_ITEM_TYP
  *  @param  *wk_adrs                          自分のワーク
  */
 //-----------------------------------------------------------------------------
-static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
+static BOOL FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 { 
   FMENU_EVENT_WORK *mwk = wk_adrs;
 
@@ -419,6 +419,8 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
     //メニューに戻る場合
     FIELD_SUBSCREEN_SetTopMenuItemNo( subscreen, mwk->item_type );
   }
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -428,9 +430,10 @@ static void FldMapMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *w
  *  @param  *wk_adrs                          自分のワーク
  */
 //-----------------------------------------------------------------------------
-static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
+static BOOL FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 { 
   FMENU_EVENT_WORK *mwk = wk_adrs;
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -440,7 +443,7 @@ static void FldMapMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *
  *  @param  *wk_adrs                          自分のワーク
  */
 //-----------------------------------------------------------------------------
-static void FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
+static BOOL FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 { 
   FMENU_EVENT_WORK *mwk = wk_adrs;
   GAMEDATA  *gamedata = GAMESYSTEM_GetGameData( mwk->gmSys );
@@ -462,4 +465,6 @@ static void FldMapMenu_InitBefore_Callback( const EVENT_PROCLINK_PARAM *param, v
   case EVENT_PROCLINK_RESULT_SKILL:
     GAMEDATA_SetSubScreenMode( gamedata, mwk->return_subscreen_mode );
   }
+
+  return TRUE;
 }

@@ -70,11 +70,13 @@ typedef enum
 //-------------------------------------
 /// メニューやYボタンリストなどを
 //    開いたり閉じたりするコールバック
+//      戻り値がTRUEならばコールバック終了
+//              FALSEならばコールバック継続
 //=====================================
 typedef struct _EVENT_PROCLINK_PARAM EVENT_PROCLINK_PARAM;
-typedef void (*EVENT_PROCLINK_MENUOPEN_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
-typedef void (*EVENT_PROCLINK_MENUCLOSE_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
-typedef void (*EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+typedef BOOL (*EVENT_PROCLINK_MENUOPEN_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+typedef BOOL (*EVENT_PROCLINK_MENUCLOSE_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+typedef BOOL (*EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC)( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 
 //-------------------------------------
 /// イベントの引数

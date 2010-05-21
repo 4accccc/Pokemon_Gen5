@@ -101,12 +101,11 @@ static BOOL GetItemCheckEnable( SHORTCUT_ID shortcutID, ITEMCHECK_ENABLE * enabl
 
 //メニュー作成
 static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *p_wk );
-static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk );
 static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk );
 
 //コールバック
-static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
-static void ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+static BOOL ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
+static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs );
 
 //アイテム使用NGメッセージ表示イベント生成
 static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type );
@@ -614,12 +613,11 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		//=====================================
 	case SEQ_EVENT_CALL:
 		{	
-
-      GFL_BG_SetVisible( FLDBG_MFRM_MSG, VISIBLE_OFF );
-			ShortCutMenu_Exit( p_wk );
-
-			GMEVENT_CallEvent( p_event, EVENT_ProcLink( p_wk->p_link, p_wk->heapID ) );
-			*p_seq	= SEQ_EVENT_RETURN;
+			if( ShortCutMenu_ExitSeq( p_wk ) )
+      {
+        GMEVENT_CallEvent( p_event, EVENT_ProcLink( p_wk->p_link, p_wk->heapID ) );
+        *p_seq	= SEQ_EVENT_RETURN;
+      }
 		}
 		break;
 
@@ -905,27 +903,6 @@ static void ShortCutMenu_Init( SHORTCUTMENU_MODE mode, EVENT_SHORTCUTMENU_WORK *
 //----------------------------------------------------------------------------
 /**
  *	@brief	MENUを破棄し、FLDMSGBGを割り当て
- *
- *	@param	EVENT_SHORTCUTMENU_WORK *p_wk ワーク
- */
-//-----------------------------------------------------------------------------
-static void ShortCutMenu_Exit( EVENT_SHORTCUTMENU_WORK *p_wk )
-{	
-	if( p_wk->p_menu != NULL && p_wk->is_empty == FALSE )
-	{
-		//SHORTCUTを破棄し、MSGBGを作成
-		FLDMSGBG *p_msgbg;
-
-		SHORTCUTMENU_Exit( p_wk->p_menu );
-		p_wk->p_menu	= NULL;
-
-		p_msgbg	= FIELDMAP_GetFldMsgBG( p_wk->p_fieldmap );
-		FLDMSGBG_ResetBGResource( p_msgbg );
-	}
-}
-//----------------------------------------------------------------------------
-/**
- *	@brief	MENUを破棄し、FLDMSGBGを割り当て
  *	        ShortCutMenu_Exitが重いため、フィールド上で破棄するときはこちらをつかう
  *
  *	@param	EVENT_SHORTCUTMENU_WORK *p_wk ワーク
@@ -993,7 +970,7 @@ static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
  *	@param	*wk_adrs													自分のワーク
  */
 //-----------------------------------------------------------------------------
-static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
+static BOOL ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 {	
 	EVENT_SHORTCUTMENU_WORK *p_wk	= wk_adrs;
 
@@ -1024,6 +1001,8 @@ static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void 
 			ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
 		}
 	}
+
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1033,11 +1012,11 @@ static void ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void 
  *	@param	*wk_adrs													自分のワーク
  */
 //-----------------------------------------------------------------------------
-static void ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
+static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 {	
 
 	EVENT_SHORTCUTMENU_WORK *p_wk	= wk_adrs;
-	ShortCutMenu_Exit( p_wk );
+	return ShortCutMenu_ExitSeq( p_wk );
 }
 
 /*

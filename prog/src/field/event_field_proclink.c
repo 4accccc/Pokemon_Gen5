@@ -161,9 +161,9 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs );
 /// FUNCITON
 //=====================================
 static void PROCLINK_CALLBACK_Set( PROCLINK_CALLBACK_WORK *wk, const EVENT_PROCLINK_PARAM *param, EVENT_PROCLINK_MENUOPEN_FUNC  open_func, EVENT_PROCLINK_MENUCLOSE_FUNC close_func, EVENT_PROCLINK_FIELDINIT_BEFORE_FUNC init_before_func, void *wk_adrs );
-static void PROCLINK_CALLBACK_Open( PROCLINK_CALLBACK_WORK *wk );
-static void PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk );
-static void PROCLINK_CALLBACK_InitBefore( PROCLINK_CALLBACK_WORK *wk );
+static BOOL PROCLINK_CALLBACK_Open( PROCLINK_CALLBACK_WORK *wk );
+static BOOL PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk );
+static BOOL PROCLINK_CALLBACK_InitBefore( PROCLINK_CALLBACK_WORK *wk );
 
 //-------------------------------------
 /// 各PROCごとのCALL関数とRETURN関数
@@ -441,6 +441,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     SEQ_FLD_FADEOUT,
     SEQ_FLD_CLOSE,
     SEQ_FLD_OPEN,
+    SEQ_FLD_INITBG,
     SEQ_FLD_FADEIN,
 
     //プロック繋がり
@@ -525,10 +526,11 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
   case SEQ_EVENT_CALL:
     GF_ASSERT( wk->now_type < EVENT_PROCLINK_CALL_MAX );
 
-    PROCLINK_CALLBACK_Close( &wk->callback );
-
-    ProcLinkData[ wk->now_type ].event_func( wk, wk->param->data );
-    *seq  = SEQ_EVENT_WAIT;
+    if( PROCLINK_CALLBACK_Close( &wk->callback ) )
+    {
+      ProcLinkData[ wk->now_type ].event_func( wk, wk->param->data );
+      *seq  = SEQ_EVENT_WAIT;
+    }
     break;
 
   case SEQ_EVENT_WAIT:
@@ -537,9 +539,15 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 
   case SEQ_EVENT_RETURN:
     if( wk->result == RETURNFUNC_RESULT_RETURN ){
-      PROCLINK_CALLBACK_Open( &wk->callback );
+      if( PROCLINK_CALLBACK_Open( &wk->callback ) )
+      {
+        *seq  = SEQ_JUNCTION;
+      }
     }
-    *seq  = SEQ_JUNCTION;
+    else
+    {
+      *seq  = SEQ_JUNCTION;
+    }
     break;
 
   //-------------------------------------
@@ -555,29 +563,35 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     break;
     
   case SEQ_FLD_CLOSE:
-    PROCLINK_CALLBACK_Close( &wk->callback );
-    GMEVENT_CallEvent(event, EVENT_FieldClose(wk->param->gsys, wk->param->field_wk));
-    *seq = SEQ_PROC_CALL; //PROCへ行く
+    if( PROCLINK_CALLBACK_Close( &wk->callback ) )
+    {
+      GMEVENT_CallEvent(event, EVENT_FieldClose(wk->param->gsys, wk->param->field_wk));
+      *seq = SEQ_PROC_CALL; //PROCへ行く
+    }
     break;
     
   case SEQ_FLD_OPEN:      //PROCから戻る
     PROCLINK_CALLBACK_InitBefore( &wk->callback );
     GMEVENT_CallEvent(event, EVENT_FieldOpen(wk->param->gsys));
-    *seq = SEQ_FLD_FADEIN;
+    *seq = SEQ_FLD_INITBG;
     break;
     
-  case SEQ_FLD_FADEIN:
+  case SEQ_FLD_INITBG:
     //フィールドを作り直したため、再度取得
     wk->param->field_wk = GAMESYSTEM_GetFieldMapWork(wk->param->gsys);
     FIELDMAP_InitBGMode();
     FIELDMAP_InitBG( wk->param->field_wk );
-    PROCLINK_CALLBACK_Open( &wk->callback );  
+    *seq = SEQ_FLD_FADEIN;
+    break;
+
+  case SEQ_FLD_FADEIN:
+    if( PROCLINK_CALLBACK_Open( &wk->callback ) )
     {
       GMEVENT* fade_event;
       fade_event = EVENT_FieldFadeIn_Menu(wk->param->gsys, wk->param->field_wk, FIELD_FADE_WAIT);
       GMEVENT_CallEvent(event, fade_event);
+      *seq = SEQ_JUNCTION;
     }
-    *seq = SEQ_JUNCTION;
     break;
 
   //-------------------------------------
@@ -724,12 +738,13 @@ static void PROCLINK_CALLBACK_Set( PROCLINK_CALLBACK_WORK *wk, const EVENT_PROCL
  *  @param  PROCLINK_CALLBACK_WORK *wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void PROCLINK_CALLBACK_Open( PROCLINK_CALLBACK_WORK *wk )
+static BOOL PROCLINK_CALLBACK_Open( PROCLINK_CALLBACK_WORK *wk )
 { 
   if( wk->open_func )
   { 
-    wk->open_func( wk->param, wk->wk_adrs );
+    return wk->open_func( wk->param, wk->wk_adrs );
   }
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -738,12 +753,13 @@ static void PROCLINK_CALLBACK_Open( PROCLINK_CALLBACK_WORK *wk )
  *  @param  PROCLINK_CALLBACK_WORK *wk  ワーク
  */
 //-----------------------------------------------------------------------------
-static void PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk )
+static BOOL PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk )
 { 
   if( wk->close_func )
   { 
-    wk->close_func( wk->param, wk->wk_adrs );
+    return wk->close_func( wk->param, wk->wk_adrs );
   }
+  return TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -752,12 +768,13 @@ static void PROCLINK_CALLBACK_Close( PROCLINK_CALLBACK_WORK *wk )
  *	@param	PROCLINK_CALLBACK_WORK *wk ワーク
  */
 //-----------------------------------------------------------------------------
-static void PROCLINK_CALLBACK_InitBefore( PROCLINK_CALLBACK_WORK *wk )
+static BOOL PROCLINK_CALLBACK_InitBefore( PROCLINK_CALLBACK_WORK *wk )
 {
   if( wk->init_before_func )
   {
-    wk->init_before_func( wk->param, wk->wk_adrs );
+    return wk->init_before_func( wk->param, wk->wk_adrs );
   }
+  return TRUE;
 }
 
 //=============================================================================
