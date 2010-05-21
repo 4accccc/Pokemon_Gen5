@@ -91,6 +91,22 @@ extern GMEVENT* EVENT_ChangeMapSorawotobu( GAMESYS_WORK* gameSystem, FIELDMAP_WO
 extern GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
                                                    u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir, BOOL seasonUpdateEnable );
 
+//------------------------------------------------------------------
+/**
+ * @brief マップ遷移イベント生成 ( レール座標指定 )ノーフェード版
+ *
+ * @param gameSystem
+ * @param fieldmap
+ * @param zoneID    遷移先マップのZONE指定
+ * @param rail_loc  遷移先マップでのレール座標指定
+ * @param dir       遷移先マップでの方向指定
+ *
+ * @return 生成したマップ遷移イベント
+ */
+//------------------------------------------------------------------
+extern GMEVENT* EVENT_ChangeMapRailLocNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                                   u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir, BOOL seasonUpdateEnable );
+
 #ifdef  PM_DEBUG
 //------------------------------------------------------------------
 /**

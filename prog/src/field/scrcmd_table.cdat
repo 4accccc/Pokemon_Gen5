@@ -896,6 +896,9 @@
   //無音BGMの再生
   DEF_CMD( EvCmdBgmPlaySilent, EV_SEQ_START_EVENT_BGM_SILENT )
 
+  //レールへマップチェンジノーフェード版
+  DEF_CMD( EvCmdRailMapChangeNoFade, EV_SEQ_RAIL_MAP_CHANGE_NO_FADE )
+
   END_CMD
   //スクリプトコマンドテーブル終了
   

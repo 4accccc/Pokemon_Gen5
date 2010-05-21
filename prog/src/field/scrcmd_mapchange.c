@@ -348,6 +348,46 @@ VMCMD_RESULT EvCmdRailMapChange( VMHANDLE *core, void *wk )
   return VMCMD_RESULT_SUSPEND;
 }
 
+//--------------------------------------------------------------
+/**
+ * レールマップに遷移ノーフェード
+ * @param	core		仮想マシン制御構造体へのポインタ
+ * @retval VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdRailMapChangeNoFade( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  GAMESYS_WORK * gsys = SCRIPT_GetGameSysWork( sc );
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+
+  u16 zone_id = VMGetU16(core); //2byte read  ZONE指定
+  u16 rail_idx = VMGetU16(core);  //2byte read  レールインデックス
+  u16 front_idx = VMGetU16(core);  //2byte read  フロントインデックス
+  u16 side_idx = VMGetU16(core);  //2byte read  サイドインデックス
+  u16 dir = VMGetU16(core);     //2byte read  方向
+  
+  {
+    GMEVENT * mapchange_event;
+    GMEVENT * parent_event;
+    RAIL_LOCATION loc;
+
+    parent_event = GAMESYSTEM_GetEvent( gsys ); //現在のイベント
+    {
+      FLDNOGRID_MAPPER* nogrid = FIELDMAP_GetFldNoGridMapper( fieldmap );
+      FLDNOGRID_MAPPER_ChangeNotMinusRailPosToRailLocation(
+          nogrid, zone_id, rail_idx, front_idx, side_idx, &loc, HEAPID_FIELDMAP );
+      mapchange_event = EVENT_ChangeMapRailLocNoFade( gsys, fieldmap,
+           zone_id, &loc, dir, FALSE );
+    }         
+    GMEVENT_CallEvent( parent_event, mapchange_event );
+  }
+
+  return VMCMD_RESULT_SUSPEND;
+}
+
+
 
 //======================================================================
 //

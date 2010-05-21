@@ -1827,7 +1827,29 @@ GMEVENT* EVENT_ChangeMapRailLocation( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* f
   work->seasonUpdateEnable = seasonUpdateEnable;
   
   return event;
-} 
+}
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+GMEVENT* EVENT_ChangeMapRailLocNoFade( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap,
+                                            u16 zoneID, const RAIL_LOCATION* rail_loc, u16 dir, BOOL seasonUpdateEnable )
+{
+  MAPCHANGE_WORK* work;
+  GMEVENT* event;
+
+  event = GMEVENT_Create(gameSystem, NULL, EVENT_MapChangeNoFade, sizeof(MAPCHANGE_WORK));
+  work  = GMEVENT_GetEventWork( event );
+
+  // イベントワーク初期化
+  MAPCHANGE_WORK_init( work, gameSystem ); 
+  dir = EXITDIR_fromDIR( dir );
+  LOCATION_SetDirectRail( &(work->loc_req), zoneID, dir, 
+                          rail_loc->rail_index, rail_loc->line_grid, rail_loc->width_grid);
+  work->exit_type = EXIT_TYPE_NONE;
+  work->seasonUpdateEnable = seasonUpdateEnable;
+  
+  return event;
+}
 
 #ifdef  PM_DEBUG
 //------------------------------------------------------------------
