@@ -354,7 +354,7 @@
 		<language name="JPN">うまれてから　しばらくの　あいだは
 せなかの　タネから　えいようを
 もらって　おおきく　そだつ。</language>
-		<language name="JPN_KANJI">産まれてから　しばらくの　間は
+		<language name="JPN_KANJI">うまれてから　しばらくの　あいだは
 背中の　タネから　栄養をもらって
 大きく　育つ。</language>
 	</row>
@@ -5047,8 +5047,8 @@
 		<language name="JPN">カミナリぐもで　そらが　おおわれると
 あらわれる。たてがみで　カミナリを
 キャッチして　でんきを　ためる。</language>
-		<language name="JPN_KANJI">カミナリ雲で　空が　おおわれると
-現れる。たてがみで　カミナリを
+		<language name="JPN_KANJI">雷雲で　空が　おおわれると
+現れる。たてがみで　雷を
 キャッチして　電気を　ためる。</language>
 	</row>
 
@@ -5128,7 +5128,7 @@
 		<language name="JPN">けたはずれの　ちょうりょくを　もつ。
 かすかな　おとで　まわりの　ようすを
 レーダーのように　キャッチする。</language>
-		<language name="JPN_KANJI">けたちがいの　聴力を　もつ。
+		<language name="JPN_KANJI">けたはずれの　聴力を　もつ。
 かすかな　音で　まわりの　様子を
 レーダーのように　キャッチする。</language>
 	</row>
@@ -5216,10 +5216,10 @@
 
 	<row id="ZKN_COMMENT_00_541_000">
 		<language name="JPN">はっぱで　からだを　つつみこんで
-さむさを　ふせぐ。みじかな　おちばを
+さむさを　ふせぐ。てぢかな　おちばを
 たべながら　もりを　いどうする。</language>
 		<language name="JPN_KANJI">葉っぱで　体を　包み込んで
-寒さを　防ぐ。身近な　落ち葉を
+寒さを　防ぐ。手近な　落ち葉を
 食べながら　森を　移動する。</language>
 	</row>
 
@@ -5696,7 +5696,7 @@
 キズついた　ポケモンを　みつけると
 だきかかえて　きしまで　はこぶ。</language>
 		<language name="JPN_KANJI">大海原を　漂って　暮らす。
-キズついた　ポケモンを　見つけると
+傷ついた　ポケモンを　見つけると
 抱きかかえて　岸まで　運ぶ。</language>
 	</row>
 
@@ -5737,12 +5737,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_599_000">
-		<language name="JPN">２つの　からだが　かいてんして
-エネルギーを　つくり　いきている。
-かいてんが　とまると　しんでしまう。</language>
-		<language name="JPN_KANJI">２つの　体が　回転して
-エネルギーを　作り　生きている。
-回転が　止まると　死んでしまう。</language>
+		<language name="JPN">２つの　からだが　かみあい
+かいてんすることで　いきるための
+エネルギーを　つくりだしている。</language>
+		<language name="JPN_KANJI">２つの　体が　かみ合い
+回転することで　生きるための
+エネルギーを　作り出している。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_600_000">
@@ -5839,7 +5839,7 @@
 		<language name="JPN">キバで　じゅもくに　キズを　つけて
 なわばりの　めじるしにする。
 キバは　おれても　すぐに　はえる。</language>
-		<language name="JPN_KANJI">キバで　樹木に　キズを　つけて
+		<language name="JPN_KANJI">キバで　樹木に　傷を　つけて
 縄張りの　目印にする。
 キバは　折れても　すぐに　生える。</language>
 	</row>
@@ -5849,7 +5849,7 @@
 なわばりを　めぐる　オノンドたちの
 あらそいは　ひじょうに　はげしい。</language>
 		<language name="JPN_KANJI">大岩を　砕く　キバを　もつ。
-縄張りを　巡る　オノドンたちの
+縄張りを　巡る　オノンドたちの
 争いは　非常に　激しい。</language>
 	</row>
 
@@ -5863,8 +5863,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_613_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">いつも　はなみずを　たらしている。
+はなみずを　すすって　わざを　だす。
+はなみずが　わざの　もと　なのだ。</language>
+		<language name="JPN_KANJI">いつも　鼻水を　垂らしている。
+鼻水を　すすって　技を　出す。
+鼻水が　技の　素　なのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_614_000">
@@ -5994,12 +5998,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_628_000">
-		<language name="JPN">ゆうもう　かかんで　しられている。
-そらの　たたかいでは　さいきょうと
-いわれている　おおぞらのせんし。</language>
-		<language name="JPN_KANJI">勇猛　果敢で　知られている。
-空の　戦いでは
-最強と　言われている　大空の戦士。</language>
+		<language name="JPN">ゆうもうかかんな　おおぞらのせんし。
+からだの　キズが　おおい　ほど
+なかまから　そんけいされると　いう。</language>
+		<language name="JPN_KANJI">勇猛果敢な　大空の戦士。
+体の　傷が　多いほど
+仲間から　尊敬されるという。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_629_000">
@@ -6129,13 +6133,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_643_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">レシラムの　しっぽが　もえると
+ねつエネルギーで　たいきが　うごいて
+せかいの　てんきが　へんかする。</language>
+		<language name="JPN_KANJI">レシラムの　しっぽが　燃えると
+熱エネルギーで　大気が　動いて
+世界の　天気が　変化する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_644_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しんわに　とうじょうする　ポケモン。
+しっぽの　なかに　でんきを　つくる
+きょだいな　はつでんきを　もつ。</language>
+		<language name="JPN_KANJI">神話に　登場する　ポケモン。
+しっぽの　中に　電気を　作る
+巨大な　発電器を　持つ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_645_000">
@@ -6157,12 +6169,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_647_000">
-		<language name="JPN">みずのせいれいと　よばれている。
-よごれた　みずを　じょうかして
-きれいする　ちからを　もつと　いう。</language>
-		<language name="JPN_KANJI">水の精霊と　呼ばれている。
-汚れた　水を　浄化して
-きれいにする　力を　もつと　いう。</language>
+		<language name="JPN">うみや　かわなど　すいめんを　はしり
+せかいじゅうを　かけめぐっている。
+うつくしい　みずべに　あらわれる。</language>
+		<language name="JPN_KANJI">海や　川など　水面を　走り
+世界中を　駆け巡る。
+美しい　水辺に　現れる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_648_000">

@@ -354,7 +354,7 @@
 		<language name="JPN">うまれてから　しばらくの　あいだは
 せなかの　タネから　えいようを
 もらって　おおきく　そだつ。</language>
-		<language name="JPN_KANJI">産まれてから　しばらくの　間は
+		<language name="JPN_KANJI">うまれてから　しばらくの　あいだは
 背中の　タネから　栄養をもらって
 大きく　育つ。</language>
 	</row>
@@ -4857,10 +4857,10 @@
 	<row id="ZKN_COMMENT_01_501_000">
 		<language name="JPN">おなかの　ホタチで　たたかう。
 こうげきを　うけとめてから　すかさず
-きりつけて　はんげきすりのだ。</language>
+きりつけて　はんげきするのだ。</language>
 		<language name="JPN_KANJI">お腹の　ホタチを　小刀の　ように
 使って　戦う。攻撃を　受け止めてから
-すかさず　きりつけて　反撃するのだ。</language>
+すかさず　切りつけて　反撃するのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_502_000">
@@ -5695,9 +5695,9 @@
 		<language name="JPN">ママンボウの　からだを　おおう
 とくしゅな　ねんまくには
 キズを　なおす　こうかが　ある。</language>
-		<language name="JPN_KANJI">ママンボウの　体を　覆う
+		<language name="JPN_KANJI">ママンボウの　体を　おおう
 特殊な　粘膜には
-キズを　治す　効果が　ある。</language>
+傷を　治す　効果が　ある。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_595_000">
@@ -5759,7 +5759,7 @@
 やくわり。チャージした　エネルギーを
 トゲから　しゅういに　うちだす。</language>
 		<language name="JPN_KANJI">赤い　コアは　エネルギータンクの
-役割り、チャージした　エネルギーを
+役割。チャージした　エネルギーを
 トゲから　周囲に　撃ち出す。</language>
 	</row>
 
@@ -5809,10 +5809,10 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_607_000">
-		<language name="JPN">ローソクンの　ともす　あかりは
+		<language name="JPN">ヒトモシの　ともす　あかりは
 ひとや　ポケモンの　せいめいりょくを
 すいとって　もえているのだ。</language>
-		<language name="JPN_KANJI">ローソクンの　灯す　明かりは
+		<language name="JPN_KANJI">ヒトモシの　灯す　明かりは
 人や　ポケモンの　生命力を
 吸い取って　燃えているのだ。</language>
 	</row>
@@ -5863,8 +5863,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_613_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ぐあいが　わるくなると　はなみずが
+みずっぽくなり　こおりわざの
+いりょくが　おちてしまうのだ。</language>
+		<language name="JPN_KANJI">具合が　悪くなると
+鼻水が　水っぽくなり　こおり技の
+威力が　落ちてしまうのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_614_000">
@@ -5997,7 +6001,7 @@
 		<language name="JPN">なかまのため　きけんを　かえりみず
 たたかう。じどうしゃを　つかんだまま
 おおぞらを　まう　ことが　できる。</language>
-		<language name="JPN_KANJI">仲間のため　危険を　かえりみ
+		<language name="JPN_KANJI">仲間のため　危険を　かえりみず
 戦う。自動車を　つかんだまま
 大空を　舞う　ことが　できる。</language>
 	</row>
@@ -6129,13 +6133,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_643_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しんわに　とうじょうする　ポケモン。
+しっぽから　ほのおを　ふきあげて
+すべての　ものを　やきつくす。</language>
+		<language name="JPN_KANJI">神話に　登場する　ポケモン。
+しっぽから　炎を　吹き上げて
+すべての　ものを　焼きつくす。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_644_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しっぽで　でんきを　つくりだす。
+ぜんしんを　カミナリぐもに　かくして
+イッシュちほうの　そらを　とぶ。</language>
+		<language name="JPN_KANJI">しっぽで　電気を　作り出す。
+全身を　カミナリ雲に　隠して
+イッシュ地方の　空を　飛ぶ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_645_000">
