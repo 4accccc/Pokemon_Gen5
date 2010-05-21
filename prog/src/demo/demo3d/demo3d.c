@@ -338,15 +338,19 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
         GF_ASSERT_MSG((!wk->delayVCountTotal),"AnmDelay %d please push(L+R+X+Y)\n",wk->delayVCountTotal);
         #endif
       #endif
-    
+      (*seq)++;
+    }
+  case 1:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
       // フェードアウト リクエスト
-      if( sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID )){
+      if( sub_FadeInOutReq( wk->param->demo_id, WIPE_TYPE_FADEOUT, wk->heapID ) ){
         return GFL_PROC_RES_FINISH;
       }
       (*seq)++;
     }
     break;
-  case 1:
+  case 2:
     OS_TPrintf("# Demo3D EndOutFrame = [%d] \n",DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT );
     if( WIPE_SYS_EndCheck() == TRUE ){
       return GFL_PROC_RES_FINISH;
@@ -380,8 +384,23 @@ static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
     color = WIPE_FADE_WHITE;
   }
   WIPE_SetBrightnessFadeOut( color );
-  if( sync > 0 ){
+  
+#if 0
+  if( wipe == WIPE_TYPE_FADEOUT ){
+    if( color == WIPE_FADE_BLACK ){
+      SetBrightness( -16, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY );
+    }
+    else{
+      SetBrightness( 16, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY );
+    }
+  }
+#endif
+  
+  if( sync > 0 )
+  {
     u8 spd = GFL_FADE_GetFadeSpeed();
+
+    HOSAKA_Printf("sync=%d\n",sync);
     WIPE_SYS_Start( WIPE_PATTERN_WMS, wipe, wipe, color, sync*spd, 1, heapID );
     return FALSE;
   }
