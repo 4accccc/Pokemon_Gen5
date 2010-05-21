@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T20:14:44"/>
+	<create user="matsumiya" host="W00224" date="2010-05-21T15:46:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -831,12 +831,9 @@
 ・戦闘後</comment>
 		<attribute name="キャラ指定">本棚ストッパー１</attribute>
 		<language name="JPN" width="256">もうすぐ　ジムリーダーに　あえるわ
-ここが　さいごの　ほんなの▼
-さあ！
-さいごの　ほんを　よんでみて！</language>
+ここが　さいごの　ほんなの！</language>
 		<language name="JPN_KANJI" width="256">もうすぐ　ジムリーダーに　会えるわ
-ここが　最後の　本なの▽
-さあ！　最後の　本を　読んでみて！</language>
+ここが　最後の　本なの！</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_07" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
