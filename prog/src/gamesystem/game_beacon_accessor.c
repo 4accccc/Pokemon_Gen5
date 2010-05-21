@@ -488,7 +488,7 @@ BOOL GAMEBEACON_Check_Error(const GAMEBEACON_INFO *info)
     return TRUE;
   }
   //プレイ時間
-  if( info->play_hour >= 999 || info->play_min >= 59 ){
+  if( info->play_hour > 999 || info->play_min > 59 ){
     return TRUE;
   }
   //GパワーIDチェック
