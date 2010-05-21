@@ -7932,6 +7932,7 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr )
 {
   scPut_AddSick( wk, target, sick, sickCont );
+  TAYA_Printf("SickCont Flag=%d, line=%d\n", BPP_SICKCONT_GetFlag(sickCont), __LINE__);
 
   // エフェクトの用意されている異常はそれを表示
   switch( sick ){
@@ -9131,14 +9132,12 @@ static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   if( BPP_MIGAWARI_AddDamage(target, &damage) )
   {
     scproc_Migawari_Delete( wk, target );
-
-    scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
-    scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
-
-    return damage;
   }
 
-  return 0;
+  scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
+  scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
+
+  return damage;
 }
 //----------------------------------------------------------------------------------
 /**

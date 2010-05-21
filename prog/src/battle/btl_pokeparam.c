@@ -2132,6 +2132,9 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
   }
   bpp->formNo = bpp->coreParam.defaultFormNo;
   bpp->tokusei = bpp->coreParam.defaultTokusei;
+
+  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, bpp->formNo );
+//  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_speabino, bpp->tokusei );
 }
 //=============================================================================================
 /**
@@ -2233,6 +2236,10 @@ void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
   PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
   setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
+
+  if( (bpp->coreParam.monsno == MONSNO_SHEIMI) && (formNo == FORMNO_SHEIMI_LAND) ){
+    bpp->coreParam.defaultFormNo = FORMNO_SHEIMI_LAND;
+  }
 }
 
 
@@ -2742,8 +2749,9 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
   }
 
   PP_Put( pp, ID_PARA_item, bpp->coreParam.item );
-
+//  PP_Put( pp, ID_PARA_speabino, bpp->coreParam.defaultTokusei );
 }
+
 //=============================================================================================
 /**
  * Srcポケモンデータからパラメータを再構築
