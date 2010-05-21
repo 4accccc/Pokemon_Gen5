@@ -12986,17 +12986,17 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_GENTLE_1_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">おやおや　まけてしまいましたね
-おつよいこと！</language>
-		<language name="JPN_KANJI" width="216">おやおや　負けてしまいましたね
-お強いこと！</language>
-	</row>
-
-	<row id="TRID_MADAM_1_05_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">おお！
 すばらしい　つよさですな！</language>
 		<language name="JPN_KANJI" width="216">おお！
 素晴らしい　強さですな！</language>
+	</row>
+
+	<row id="TRID_MADAM_1_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">おやおや　まけてしまいましたね
+おつよいこと！</language>
+		<language name="JPN_KANJI" width="216">おやおや　負けてしまいましたね
+お強いこと！</language>
 	</row>
 
 	<row id="TRID_VETERANW_1_07_TRMSG_FIGHT_LOSE">
