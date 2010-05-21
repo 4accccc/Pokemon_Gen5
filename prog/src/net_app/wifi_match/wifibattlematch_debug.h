@@ -977,7 +977,7 @@ static inline void DebugWin_LiveScore_U_MyMacAddr( void* userWork , DEBUGWIN_ITE
 static inline void DebugWin_LiveScore_D_MyMacAddr( void* userWork , DEBUGWIN_ITEM* item )
 { 
   LIVEMATCH_DATA *p_sv  = userWork;
-  u8 mac_address[7];
+  u8 mac_address[6];
   u32 hight, low;
 
   LIVEMATCH_DATA_GetMyMacAddr( p_sv, mac_address );
@@ -1046,10 +1046,20 @@ static inline void DebugWin_LiveScore_U_FoeMacAddr( void* userWork , DEBUGWIN_IT
 static inline void DebugWin_LiveScore_D_FoeMacAddr( void* userWork , DEBUGWIN_ITEM* item )
 { 
   LIVEMATCH_DATA *p_sv  = userWork;
-  u8 mac_address[7];
+  u8 mac_address[6];
+  u32 hight, low;
+
   LIVEMATCH_DATA_GetFoeMacAddr( p_sv, s_livescore_page, mac_address );
-  mac_address[6]  = '\n';
-  DEBUGWIN_ITEM_SetNameV( item , "mac[%s]", mac_address );  
+
+  hight = (mac_address[0] << 0xFFFF)
+    | (mac_address[1] << 0xFF)
+    | mac_address[2];
+
+  low   = (mac_address[3] << 0xFFFF)
+    | (mac_address[4] << 0xFF)
+    | mac_address[5];
+
+  DEBUGWIN_ITEM_SetNameV( item , "mac[%d][%d]", hight, low );  
 }
 static inline void DebugWin_LiveScore_U_FoePoke( void* userWork , DEBUGWIN_ITEM* item )
 { 

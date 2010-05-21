@@ -1419,7 +1419,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       u32 your_ver  = p_wk->param.p_enemy_data->btl_server_version;
 
       //自分のバージョンが相手より高ければ振り返ることができる。
-      if( my_ver >= your_ver )
+      if( BattleRec_ServerVersionCheck( your_ver ) )
       { 
         *p_seq  = SEQ_START_MSG_LOOKBACK;
       }

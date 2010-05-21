@@ -61,6 +61,10 @@
 #define WBM_SYS_PRINT_ON
 #endif
 
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+//#define WBM_SYS_BATTLE_VSTIME_60
+#endif //DEBUG_ONLY_FOR_toru_nagihashi
+
 #endif //PM_DEBUG
 
 #ifdef WBM_SYS_PRINT_ON
@@ -353,7 +357,8 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, 
       //ランダムマッチはポケセンWIFIカウンターから入り、
       //ゲームシステム等でメモリを食っているので、HEAPID_PROCにシステムをおく
       //parentID  = HEAPID_PROC;
-      //PROCはさまざまなイベントが乗る可能性があるのでAPPから貰う
+
+      //PROCはさまざまなイベントが乗る可能性があるのでAPPから貰うことにしました
       parentID  = GFL_HEAPID_APP;
       break;
 
@@ -991,6 +996,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   p_param->p_demo_param = GFL_HEAP_AllocMemory( heapID, sizeof(COMM_BTL_DEMO_PARAM) );
 	GFL_STD_MemClear( p_param->p_demo_param, sizeof(COMM_BTL_DEMO_PARAM) );
   p_param->p_demo_param->record = GAMEDATA_GetRecordPtr( p_wk->param.p_game_data );
+  p_param->p_demo_param->wcs_flag = FALSE;
 
   //デモパラメータへの設定
   //自分
@@ -1183,6 +1189,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
       p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_NORMAL;
       p_param->p_btl_setup_param->musicWin    = WBM_SND_BGM_NORMAL_WIN;
     }
+
+    p_param->p_demo_param->wcs_flag = TRUE;
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_LIVECUP )
   { 
@@ -1199,6 +1207,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
       p_param->p_btl_setup_param->musicDefault  = WBM_SND_BGM_NORMAL;
       p_param->p_btl_setup_param->musicWin    = WBM_SND_BGM_NORMAL_WIN;
     }
+
+    p_param->p_demo_param->wcs_flag = TRUE;
   }
 
   //ポケモン設定
@@ -1206,6 +1216,10 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
   //レギュレーションの内容を適用
   BATTLE_PARAM_SetRegulation( p_param->p_btl_setup_param, p_reg, GFL_HEAP_LOWID( heapID ) );
+
+#ifdef WBM_SYS_BATTLE_VSTIME_60
+  p_param->p_btl_setup_param->LimitTimeGame = 60;
+#endif
 
   WBM_SYS_Printf( "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );
   WBM_SYS_Printf( "cmd %d\n",  p_param->p_btl_setup_param->LimitTimeCommand );
