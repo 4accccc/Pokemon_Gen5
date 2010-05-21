@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T21:59:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-21T14:47:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -610,10 +610,10 @@
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">えらんだ　[1:02:ポケモンニックネーム:0]は　すでに
 その　でんかせいひんの[BE:00:ページ切り替え（行送り）]
-モーターに　はいっています！</language>
+モーターに　はいっています！▼</language>
 		<language name="JPN_KANJI" width="256">選んだ　[1:02:ポケモンニックネーム:0]は　すでに
 その　電化製品の[BE:00:ページ切り替え（行送り）]
-モーターに　入っています！</language>
+モーターに　入っています！▼</language>
 	</row>
 
 	<row id="msg_rotom_09">
