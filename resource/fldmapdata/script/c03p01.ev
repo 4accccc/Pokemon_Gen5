@@ -340,7 +340,6 @@ _PLAYER_DIR_GET( LWK_DIR )
 			_MSGWIN_CLOSE()
 		
 			//おまもりこばん入手
-			//【仮】アイテム内容
 			_ITEM_EVENT_KEYWAIT( ITEM_OMAMORIKOBAN, 1 )
 			
 			//オレたち　ダンスで　メッセージを　つたえる！
