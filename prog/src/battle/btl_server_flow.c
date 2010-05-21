@@ -7955,6 +7955,15 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
     handexSub_putString( wk, exStr );
   }
 
+  // シェイミがランドフォルムに戻る
+  if( (BPP_GetMonsNo(target) == MONSNO_SHEIMI)
+  &&  (BPP_GetValue(target,BPP_FORM) == FORMNO_SHEIMI_SKY)
+  ){
+    BPP_ChangeForm( target, FORMNO_SHEIMI_LAND );
+    SCQUE_PUT_ACT_ChangeForm( wk->que, BPP_GetID(target), FORMNO_SHEIMI_LAND );
+    scPut_Message_Set( wk, target, BTL_STRID_SET_ChangeForm );
+  }
+
   // 状態異常確定イベントコール
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
@@ -15769,7 +15778,6 @@ static u8 scproc_HandEx_changeForm( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
         scPut_TokWin_In( wk, bpp );
       }
 
-      TAYA_Printf("今のフォルム=%d, 変更後のフォルム=%d\n", currentForm, param->formNo);
       BPP_ChangeForm( bpp, param->formNo );
       SCQUE_PUT_ACT_ChangeForm( wk->que, param->pokeID, param->formNo );
       handexSub_putString( wk, &param->exStr );
