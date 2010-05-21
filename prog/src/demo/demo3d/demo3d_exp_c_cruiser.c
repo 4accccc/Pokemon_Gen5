@@ -174,12 +174,21 @@ static void _C_CRUISER_LoadBG( HEAPID heapID )
 static void EXP_C_CRUISER_Init( APP_EXCEPTION_WORK* wk )
 {
   EXP_C_CRUISER_WORK* uwk;
+  int frame;
 
   wk->userwork = GFL_HEAP_AllocClearMemory( wk->heapID, sizeof(EXP_C_CRUISER_WORK) );
   
   uwk = wk->userwork;
-
+  
   _C_CRUISER_LoadBG( wk->heapID );
+
+  frame = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT;
+  uwk->pos_id = frame / C_CRUISER_POS_FLASH_SYNC;
+
+  if( uwk->pos_id >= NELEMS(g_c_cruiser_postbl) )
+  {
+    uwk->pos_id = NELEMS(g_c_cruiser_postbl)-1;
+  }
 
   {
     GFL_CLUNIT* clunit;
@@ -200,7 +209,10 @@ static void EXP_C_CRUISER_Init( APP_EXCEPTION_WORK* wk )
 
     UI_EASY_CLWK_LoadResource( &uwk->clwk_res, &prm, clunit, wk->heapID );
 
-    uwk->clwk_marker = UI_EASY_CLWK_CreateCLWK( &uwk->clwk_res, clunit, 40, 40, 0, wk->heapID );
+    uwk->clwk_marker = UI_EASY_CLWK_CreateCLWK( &uwk->clwk_res, clunit,
+        g_c_cruiser_postbl[uwk->pos_id].x,
+        g_c_cruiser_postbl[uwk->pos_id].y,
+        0, wk->heapID );
       
     GFL_CLACT_WK_SetDrawEnable( uwk->clwk_marker, TRUE );
     GFL_CLACT_WK_SetAutoAnmFlag( uwk->clwk_marker, TRUE );
@@ -226,8 +238,8 @@ static void EXP_C_CRUISER_Main( APP_EXCEPTION_WORK* wk )
   EXP_C_CRUISER_WORK* uwk = wk->userwork;
   
   frame = DEMO3D_ENGINE_GetNowFrame( wk->engine ) >> FX32_SHIFT;
-  if( uwk->pos_id < NELEMS(g_c_cruiser_postbl) )
 
+  if( uwk->pos_id < NELEMS(g_c_cruiser_postbl) )
   {
     if( uwk->pos_id * C_CRUISER_POS_FLASH_SYNC <= frame )
     {
