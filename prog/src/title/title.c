@@ -74,6 +74,13 @@ enum {
 };
 
 
+enum{
+  OBJ_RES_PAL,
+  OBJ_RES_CHR,
+  OBJ_RES_CEL,
+  OBJ_RES_MAX,
+};
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
@@ -104,12 +111,13 @@ typedef struct{
 
 typedef struct{
   GFL_CLUNIT*               clunit;
-  GFL_CLWK*                 clwk_icon;    //アイテムアイコンアクター
+  GFL_CLWK*                 clwk;    //アイテムアイコンアクター
   NNSG2dImagePaletteProxy   icon_pal_proxy;
   NNSG2dCellDataBank*       icon_cell_data;
   NNSG2dAnimBankData*       icon_anm_data;
   void*                     icon_cell_res;
   void*                     icon_anm_res;
+  u32                       clres[OBJ_RES_MAX];
 }OAM_CONTROL;
 
 typedef struct {
@@ -510,14 +518,16 @@ static void releaseSystem(SYS_CONTROL* CSys)
 enum{
   BGPRI_MSG = 0,
   BGPRI_TITLE_LOGO = 2,
+  BGPRI_TITLE_BACK = 3,
   BGPRI_3D = 1,
   BGPRI_BKGR = 2,
 };
 
 enum{
   FRAME_BKGR = GFL_BG_FRAME3_M,     // メイン画面背景
-  FRAME_MSG = GFL_BG_FRAME1_S,    // メッセージフレーム
+  FRAME_MSG  = GFL_BG_FRAME1_S,    // メッセージフレーム
   FRAME_LOGO = GFL_BG_FRAME3_S,   // タイトルロゴのBGフレーム
+  FRAME_BACK = GFL_BG_FRAME2_S,   // タイトルロゴのBGフレーム
 };
 
 //--------------------------------------------------------------
@@ -543,9 +553,16 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
       GX_BG_SCRBASE_0x0000, GX_BG_CHARBASE_0x04000, 0x8000,
       GX_BG_EXTPLTT_01, BGPRI_TITLE_LOGO, 0, 0, FALSE
     };
+    static const GFL_BG_BGCNT_HEADER sub_back_frame = { //サブ画面BGフレーム
+      0, 0, 0x800, 0,
+      GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
+      GX_BG_SCRBASE_0x1000, GX_BG_CHARBASE_0x04000, 0x8000,
+      GX_BG_EXTPLTT_01, BGPRI_TITLE_BACK, 0, 0, FALSE
+    };
     GFL_BG_SetBGControl( FRAME_BKGR, &main_bkgr_frame, GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_MSG, &sub_msg_frame, GFL_BG_MODE_TEXT );
-    GFL_BG_SetBGControl( FRAME_LOGO, &sub_logo_frame, GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_MSG,  &sub_msg_frame,   GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_LOGO, &sub_logo_frame,  GFL_BG_MODE_TEXT );
+    GFL_BG_SetBGControl( FRAME_BACK, &sub_back_frame,  GFL_BG_MODE_TEXT );
   }
   //メイン画面背景設定
   {
@@ -572,6 +589,14 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
     GFL_BG_LoadScreenReq( FRAME_LOGO );
     GFL_BG_SetVisible(FRAME_LOGO, VISIBLE_ON);
   }
+
+  // グラフィックデータロード（BACK)
+  {
+    GFL_ARC_UTIL_TransVramScreen(
+      TITLE_RES_ARCID, TITLE_RES_BACK_NSCR, FRAME_BACK, 0, 0, 0, heapID);
+    GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
+  }
+
   //メッセージ関連作成(MSG)
   {
     GFL_BG_FillCharacter( FRAME_MSG, 0x00, 1, 0 );
@@ -613,6 +638,10 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 
 static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 {
+
+  GFL_BG_SetVisible(FRAME_MSG, FALSE);
+
+#if 0
   // "PUSH START" 点滅処理
   CG2d->push_timer++;
   if(CG2d->push_timer > PUSH_TIMER_WAIT){
@@ -631,6 +660,7 @@ static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
       }
     }
   }
+#endif
 }
 
 static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
@@ -840,18 +870,46 @@ static void releaseG3Dcontrol(G3D_CONTROL* CG3d)
 //--------------------------------------------------------------
 static void setupOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
 {
-  GFL_CLSYS_INIT clsys_init = GFL_CLSYSINIT_DEF_DIVSCREEN;
+  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, heapID );
   
-  clsys_init.oamst_main = GFL_CLSYS_OAMMAN_INTERVAL;  //通信アイコンの分
-  clsys_init.oamnum_main = 128-GFL_CLSYS_OAMMAN_INTERVAL;
-  clsys_init.tr_cell = ACT_MAX;
-  GFL_CLACT_SYS_Create(&clsys_init, &vramBank, heapID);
+  GFL_CLACT_SYS_Create(&GFL_CLSYSINIT_DEF_DIVSCREEN, &vramBank, heapID);
   
   COam->clunit = GFL_CLACT_UNIT_Create(ACT_MAX, 0, heapID);
   GFL_CLACT_UNIT_SetDefaultRend(COam->clunit);
 
+  // ---PUSH START BUTTON---
+  COam->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
+                                                      TITLE_RES_PUSH_NCGR, 0, 
+                                                      CLSYS_DRAW_SUB, heapID );
+  COam->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
+                                                      TITLE_RES_PUSH_NCLR, 
+                                                      CLSYS_DRAW_SUB, 0, heapID );
+  COam->clres[OBJ_RES_CEL] = GFL_CLGRP_CELLANIM_Register( handle, 
+                                                         TITLE_RES_PUSH_NCER, 
+                                                         TITLE_RES_PUSH_NANR, 
+                                                         heapID );
+  {
+    GFL_CLWK_DATA add;
+    add.pos_x   = 128;
+    add.pos_y   = 96;
+    add.anmseq  = 0;
+    add.bgpri   = 0;
+    add.softpri = 0;
+
+    COam->clwk    = GFL_CLACT_WK_Create( COam->clunit,
+                                       COam->clres[OBJ_RES_CHR],
+                                       COam->clres[OBJ_RES_PAL],
+                                       COam->clres[OBJ_RES_CEL],
+                                       &add, CLSYS_DEFREND_SUB, heapID );
+    GFL_CLACT_WK_SetAutoAnmFlag( COam->clwk, TRUE );
+  
+  }
+  
+
   //OBJ表示ON
-  GFL_DISP_GX_SetVisibleControl(GX_PLANEMASK_OBJ, VISIBLE_ON);
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+
+  GFL_ARC_CloseDataHandle( handle );
 }
 
 static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
@@ -861,7 +919,11 @@ static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
 
 static void releaseOAMcontrol(OAM_CONTROL* COam)
 {
-  GFL_CLACT_UNIT_Delete(COam->clunit);
+  GFL_CLGRP_CGR_Release(      COam->clres[OBJ_RES_CHR] );
+  GFL_CLGRP_PLTT_Release(     COam->clres[OBJ_RES_PAL] );
+  GFL_CLGRP_CELLANIM_Release( COam->clres[OBJ_RES_CEL] );
+
+ GFL_CLACT_UNIT_Delete(COam->clunit);
   GFL_CLACT_SYS_Delete();
 }
 
