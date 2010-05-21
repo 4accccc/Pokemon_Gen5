@@ -3498,7 +3498,7 @@ static VMCMD_RESULT VMEC_NAKIGOE( VMHANDLE *vmh, void *context_work )
       { 
         TCB_NONE_WORK*  tnw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bevw->heapID ), sizeof( TCB_NONE_WORK ) );
         tnw->bevw = bevw;
-        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, tnw, 0 ), NULL, GROUP_EFFVM );
+        BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, tnw, 0 ), NULL, GROUP_DEFAULT );
       }
     }
     else
@@ -5929,7 +5929,7 @@ static  void  TCB_EFFVM_NAKIGOE( GFL_TCB* tcb, void* work )
     { 
       TCB_NONE_WORK*  tnw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( ben->bevw->heapID ), sizeof( TCB_NONE_WORK ) );
       tnw->bevw = ben->bevw;
-      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( ben->bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, tnw, 0 ), NULL, GROUP_EFFVM );
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( ben->bevw->tcbsys, TCB_EFFVM_NakigoeEndCheck, tnw, 0 ), NULL, GROUP_DEFAULT );
     }
     BTLV_EFFECT_FreeTCB( tcb );
   }
