@@ -206,23 +206,39 @@ EVENT_START   ev_bc10r0401_badman_02
 		//はい
 		IF $SCWK_ANSWER == 0 THEN
 		
-			_BALLOONWIN_CLOSE()
-		
-			//ローテーションバトルセット
-			_TRAINER_BTL_SET( TRID_BADRIDER_04, 0 )
-			//結果チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()
-			ELSE
-				_TRAINER_LOSE()
-			ENDIF
+			//手持ちポケモンチェック
+			DEFINE_LOCAL LCW_POKECOUNTB
+			_GET_PARTY_POKE_COUNT( LCW_POKECOUNTB , POKECOUNT_MODE_BATTLE_ENABLE )
 			
-				//======================================//
-					
-					_FLAG_SET( FE_BC10R0401_BTL_01 )
-					
-				//======================================//
+			//戦えるポケモンが３匹以下
+			IF $LCW_POKECOUNTB < 3 THEN
+			
+				_BALLOONWIN_OBJMSG(msg_bc10r0401_badman1_01a,BC10R0401_BADMAN_02)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			
+			//3匹以上
+			ELSE
+			
+				_BALLOONWIN_CLOSE()
+			
+				//ローテーションバトルセット
+				_TRAINER_BTL_SET( TRID_BADRIDER_04, 0 )
+				//結果チェック
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()
+				ELSE
+					_TRAINER_LOSE()
+				ENDIF
+				
+					//======================================//
+						
+						_FLAG_SET( FE_BC10R0401_BTL_01 )
+						
+					//======================================//
+			
+			ENDIF
 		
 		//いいえ
 		ELSE
@@ -254,24 +270,39 @@ EVENT_START   ev_bc10r0401_backpackerm_01
 		
 		//はい
 		IF $SCWK_ANSWER == 0 THEN
-			
-			_BALLOONWIN_CLOSE()
 		
-			//ローテーションバトルセット
-			_TRAINER_BTL_SET( TRID_BACKPACKERM_15, 0 )
-			//結果チェック
-			_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-				_TRAINER_WIN()
-			ELSE
-				_TRAINER_LOSE()
-			ENDIF
+			//手持ちポケモンチェック
+			DEFINE_LOCAL LCW_POKECOUNTB
+			_GET_PARTY_POKE_COUNT( LCW_POKECOUNTB , POKECOUNT_MODE_BATTLE_ENABLE )
 			
-				//======================================//
-					
-					_FLAG_SET( FE_BC10R0401_BTL_02 )
-					
-				//======================================//
+			//戦えるポケモンが３匹以下
+			IF $LCW_POKECOUNTB < 3 THEN
+			
+				_BALLOONWIN_OBJMSG(msg_bc10r0401_backpackerm_01a,BC10R0401_BACKPACKERM_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			
+			//3匹以上
+			ELSE
+			
+				_BALLOONWIN_CLOSE()
+			
+				//ローテーションバトルセット
+				_TRAINER_BTL_SET( TRID_BACKPACKERM_15, 0 )
+				//結果チェック
+				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+					_TRAINER_WIN()
+				ELSE
+					_TRAINER_LOSE()
+				ENDIF
+				
+					//======================================//
+						
+						_FLAG_SET( FE_BC10R0401_BTL_02 )
+						
+					//======================================//
+			ENDIF
 		
 		//いいえ
 		ELSE
