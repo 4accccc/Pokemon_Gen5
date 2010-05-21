@@ -884,47 +884,6 @@ BOOL MISSION_CheckResultTimeout(MISSION_SYSTEM *mission)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * ミッションデータを該当条件に合うものを選択してバッファに格納する
- *
- * @param   md		        ミッションデータへのポインタ
- * @param   dest_md		    該当条件にあったデータの代入先
- * @param   md_max		    ミッションデータ要素数
- * @param   choice_type		選択タイプ
- * @param   level		      パレスレベル
- *
- * @retval  BOOL		TRUE:条件に当てはまるものがあった。　FALSE:無かった
- */
-//--------------------------------------------------------------
-static BOOL MISSIONDATA_Choice(const MISSION_CONV_DATA *cdata, MISSION_CONV_DATA *dest_md, int md_max, MISSION_TYPE choice_type, int level)
-{
-  int i;
-  int my_version_bit;
-  
-#if (PM_VERSION == VERSION_WHITE)
-  my_version_bit = MISSION_DATA_VERSION_WHITE;
-#elif (PM_VERSION == VERSION_BLACK)
-  my_version_bit = MISSION_DATA_VERSION_BLACK;
-#else
-  my_version_bit = MISSION_DATA_VERSION_NEXT;
-#endif
-
-  for(i = 0; i < md_max; i++){
-    if((cdata[i].version_bit & my_version_bit)
-        && cdata[i].type == choice_type && cdata[i].level <= level){
-      if(cdata[i].odds == 100 || cdata[i].odds <= GFUser_GetPublicRand(100+1)){
-        GFL_STD_MemCopy(&cdata[i], dest_md, sizeof(MISSION_CONV_DATA));
-        return TRUE;
-      }
-    }
-  }
-  
-  GF_ASSERT_MSG(0, "type=%d, level=%d\n", choice_type, level);
-  GFL_STD_MemCopy(&cdata[0], dest_md, sizeof(MISSION_CONV_DATA));
-  return FALSE;
-}
-
-//--------------------------------------------------------------
-/**
  * ターゲット情報をクリア
  *
  * @param   target		
@@ -1416,16 +1375,27 @@ void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type)
 {
   int no;
   int palace_level;
+  int my_version_bit;
+  
+#if (PM_VERSION == VERSION_WHITE)
+  my_version_bit = MISSION_DATA_VERSION_WHITE;
+#elif (PM_VERSION == VERSION_BLACK)
+  my_version_bit = MISSION_DATA_VERSION_BLACK;
+#else
+  my_version_bit = MISSION_DATA_VERSION_NEXT;
+#endif
 
   palace_level = occupy->white_level + occupy->black_level;
   
   for(no = 0; no < NELEMS(MissionConvDataListParam); no++){
     if(MissionConvDataListParam[no].type == mission_type
         && MissionConvDataListParam[no].level <= palace_level){
-      if(MissionConvDataListParam[no].odds == 100 
-          || MissionConvDataListParam[no].odds >= GFUser_GetPublicRand(100+1)){
-        occupy->mlst.mission_no[mission_type] = no;
-        return;
+      if(MissionConvDataListParam[no].version_bit & my_version_bit){
+        if(MissionConvDataListParam[no].odds == 100 
+            || MissionConvDataListParam[no].odds >= GFUser_GetPublicRand(100+1)){
+          occupy->mlst.mission_no[mission_type] = no;
+          return;
+        }
       }
     }
   }
