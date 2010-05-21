@@ -557,7 +557,7 @@ void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
 	// ƒŒƒxƒ‹
 	str = GFL_MSG_CreateString( wk->mman, DDEMO_STR_04 );
 	WORDSET_RegisterNumber(
-		wk->wset, 0, PPP_Get(ppp,ID_PARA_get_level,NULL), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+		wk->wset, 0, PPP_Get(ppp,ID_PARA_level,NULL), 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wk->wset, wk->exp, str );
 	PrintFontOam( wk, DDEMOOBJ_FOAM_INFO, wk->font, wk->exp, 14*8+x, 0 );
 	GFL_STR_DeleteBuffer( str );
