@@ -139,7 +139,7 @@ typedef struct{
 
 ///ミッション系統毎に異なるdataの構造体：ATTRIBUTE
 typedef struct{
-  u16 item;
+  u16 item_no;
   u16 price;
   u16 padding;
 }MISSION_TYPEDATA_ATTRIBUTE;

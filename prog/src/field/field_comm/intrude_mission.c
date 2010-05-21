@@ -19,7 +19,9 @@
 #include "field/zonedata.h"
 
 #include "mission.naix"
-#include "item/itemsym.h"
+#include "msg/msg_mission.h"
+#include "msg/msg_mission_monolith.h"
+#include "mission_ng_check.h"
 
 
 SDK_COMPILER_ASSERT(MISSION_LIST_MAX == MISSION_TYPE_MAX);
@@ -896,9 +898,19 @@ BOOL MISSION_CheckResultTimeout(MISSION_SYSTEM *mission)
 static BOOL MISSIONDATA_Choice(const MISSION_CONV_DATA *cdata, MISSION_CONV_DATA *dest_md, int md_max, MISSION_TYPE choice_type, int level)
 {
   int i;
+  int my_version_bit;
   
+#if PM_VERSION == VERSION_WHITE
+  my_version_bit = MISSION_DATA_VERSION_WHITE;
+#elif PM_VERSION == VERSION_BLACK
+  my_version_bit = MISSION_DATA_VERSION_BLACK;
+#else
+  my_version_bit = MISSION_DATA_VERSION_NEXT;
+#endif
+
   for(i = 0; i < md_max; i++){
-    if(cdata[i].type == choice_type && cdata[i].level <= level){
+    if((cdata[i].version_bit & my_version_bit)
+        && cdata[i].type == choice_type && cdata[i].level <= level){
       if(cdata[i].odds == 100 || cdata[i].odds <= GFUser_GetPublicRand(100+1)){
         GFL_STD_MemCopy(&cdata[i], dest_md, sizeof(MISSION_CONV_DATA));
         return TRUE;
@@ -1011,10 +1023,38 @@ BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list)
 //==================================================================
 static BOOL MISSION_MissionList_CheckNG(const MISSION_SYSTEM *mission, const MISSION_CONV_DATA *cdat)
 {
-  //¦check@Œã‚Åì¬B
-  if(cdat->type >= MISSION_TYPE_MAX){
+  int i;
+  
+  if(cdat->type >= MISSION_TYPE_MAX || cdat->reward > MISSION_REWARD_MAX 
+      || cdat->time > MISSION_TIME_MAX || cdat->msg_id_contents >= plc_mis_end
+      || cdat->msg_id_contents_monolith >= plc_mism_end){
     return FALSE;
   }
+  
+  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
+    if(cdat->talk_type[i] >= TALK_TYPE_MAX){
+      return FALSE;
+    }
+    if(Intrude_CheckNG_OBJID(cdat->obj_id[i]) == FALSE){
+      return FALSE;
+    }
+  }
+  
+  for(i = 0; i < 2; i++){
+    if(cdat->type == MISSION_TYPE_ATTRIBUTE){
+      const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)cdat->data;
+      if(Intrude_CheckNG_Item(d_attr->item_no) == FALSE){
+        return FALSE;
+      }
+    }
+    else if(cdat->type == MISSION_TYPE_ITEM){
+      const MISSION_TYPEDATA_ITEM *d_item = (void*)cdat->data;
+      if(Intrude_CheckNG_Item(d_item->item_no) == FALSE){
+        return FALSE;
+      }
+    }
+  }
+  
   return TRUE;
 }
 
@@ -1315,7 +1355,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)cdata->data;
 
       MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
-      WORDSET_RegisterItemName( wordset, 1, d_attr->item );
+      WORDSET_RegisterItemName( wordset, 1, d_attr->item_no );
       WORDSET_RegisterNumber( 
         wordset, 2, d_attr->price, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
