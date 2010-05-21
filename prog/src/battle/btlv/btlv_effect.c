@@ -153,7 +153,7 @@ typedef struct
   int               seq_no;
   BtlvMcssPos       from;
   BtlvMcssPos       to;
-  WazaID            waza;
+  int               eff_no;
   BTLV_EFFVM_PARAM* param;
 }TCB_EFFECT_START;
 
@@ -172,6 +172,8 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_EFFECT_Henge_CB( GFL_TCB *tcb );
 static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work );
 static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb );
+static  void  TCB_BTLV_EFFECT_Start( GFL_TCB *tcb, void *work );
+static  void  TCB_BTLV_EFFECT_Start_CB( GFL_TCB *tcb );
 static  int   BTLV_EFFECT_GetTCBIndex( void );
 static  void  BTLV_EFFECT_FreeTCBAll( void );
 static  void  camera_work_check( void );
@@ -324,13 +326,16 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   }
   
   //カメラワークウエイトセット
-  if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
+  if( bew->besp.mainModule )
   { 
-    bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
-  }
-  else
-  { 
-    bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
+    if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
+    { 
+      bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
+    }
+    else
+    { 
+      bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
+    }
   }
 
 #ifdef  CAMERA_FOCUS
@@ -440,8 +445,22 @@ void  BTLV_EFFECT_Main( void )
 //============================================================================================
 void  BTLV_EFFECT_Add( int eff_no )
 {
-  BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
-  bew->execute_flag = TRUE;
+  if( !BTLV_EFFECT_CheckExecute() )
+  { 
+    BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
+    bew->execute_flag = TRUE;
+  }
+  else
+  { 
+    TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bew->heapID ), sizeof( TCB_EFFECT_START ) );
+
+    tes->from   = BTLV_MCSS_POS_ERROR;
+    tes->to     = BTLV_MCSS_POS_ERROR;
+    tes->eff_no = eff_no;
+
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Start, tes, 0 ),
+                                         TCB_BTLV_EFFECT_Start_CB, GROUP_DEFAULT );
+  }
 }
 //=============================================================================================
 /**
@@ -454,8 +473,22 @@ void  BTLV_EFFECT_Add( int eff_no )
 //=============================================================================================
 void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 {
-  BTLV_EFFVM_Start( bew->vm_core, pos, BTLV_MCSS_POS_ERROR, eff_no, NULL );
-  bew->execute_flag = TRUE;
+  if( !BTLV_EFFECT_CheckExecute() )
+  { 
+    BTLV_EFFVM_Start( bew->vm_core, pos, BTLV_MCSS_POS_ERROR, eff_no, NULL );
+    bew->execute_flag = TRUE;
+  }
+  else
+  { 
+    TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( TCB_EFFECT_START ) );
+
+    tes->from   = pos;
+    tes->to     = BTLV_MCSS_POS_ERROR;
+    tes->eff_no = eff_no;
+
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Start, tes, 0 ),
+                                         TCB_BTLV_EFFECT_Start_CB, GROUP_DEFAULT );
+  }
 }
 //=============================================================================================
 /**
@@ -469,8 +502,22 @@ void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 //=============================================================================================
 void BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no )
 {
-  BTLV_EFFVM_Start( bew->vm_core, from, to, eff_no, NULL );
-  bew->execute_flag = TRUE;
+  if( !BTLV_EFFECT_CheckExecute() )
+  { 
+    BTLV_EFFVM_Start( bew->vm_core, from, to, eff_no, NULL );
+    bew->execute_flag = TRUE;
+  }
+  else
+  { 
+    TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( TCB_EFFECT_START ) );
+
+    tes->from   = from;
+    tes->to     = to;
+    tes->eff_no = eff_no;
+
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Start, tes, 0 ),
+                                         TCB_BTLV_EFFECT_Start_CB, GROUP_DEFAULT );
+  }
 }
 //=============================================================================================
 /**
@@ -481,16 +528,35 @@ void BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no )
 //=============================================================================================
 void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 {
-  BTLV_EFFVM_PARAM effvm_param;
+  if( !BTLV_EFFECT_CheckExecute() )
+  { 
+    BTLV_EFFVM_PARAM effvm_param;
 
-  BTLV_EFFVM_ClearParam( &effvm_param );
+    BTLV_EFFVM_ClearParam( &effvm_param );
 
-  effvm_param.waza_range = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
-  effvm_param.turn_count = param->turn_count;
-  effvm_param.continue_count = param->continue_count;
+    effvm_param.waza_range = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
+    effvm_param.turn_count = param->turn_count;
+    effvm_param.continue_count = param->continue_count;
 
-  BTLV_EFFVM_Start( bew->vm_core, param->from, param->to, param->waza, &effvm_param );
-  bew->execute_flag = TRUE;
+    BTLV_EFFVM_Start( bew->vm_core, param->from, param->to, param->waza, &effvm_param );
+    bew->execute_flag = TRUE;
+  }
+  else
+  { 
+    TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( TCB_EFFECT_START ) );
+    tes->param = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( BTLV_EFFVM_PARAM ) );
+
+    tes->from   = param->from;
+    tes->to     = param->to;
+    tes->eff_no = param->waza;
+
+    tes->param->waza_range      = WAZADATA_GetParam( param->waza, WAZAPARAM_TARGET );
+    tes->param->turn_count      = param->turn_count;
+    tes->param->continue_count  = param->continue_count;
+
+    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bew->tcb_sys, TCB_BTLV_EFFECT_Start, tes, 0 ),
+                                         TCB_BTLV_EFFECT_Start_CB, GROUP_DEFAULT );
+  }
 }
 
 //=============================================================================================
@@ -1839,6 +1905,33 @@ static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb )
   TCB_ROTATION *tr = ( TCB_ROTATION* )GFL_TCB_GetWork( tcb );
 
   bew->tcb_rotate_flag &= ( BTLV_EFFTOOL_Pos2Bit( tr->side ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
+}
+
+//============================================================================================
+/**
+ *  @brief  技エフェクト起動
+ */
+//============================================================================================
+static  void  TCB_BTLV_EFFECT_Start( GFL_TCB *tcb, void *work )
+{ 
+  TCB_EFFECT_START *tes = ( TCB_EFFECT_START* )work;
+
+  if( !BTLV_EFFECT_CheckExecute() )
+  { 
+    BTLV_EFFVM_Start( bew->vm_core, tes->from, tes->to, tes->eff_no, tes->param );
+    bew->execute_flag = TRUE;
+    BTLV_EFFECT_FreeTCB( tcb );
+  }
+}
+
+static  void  TCB_BTLV_EFFECT_Start_CB( GFL_TCB *tcb )
+{ 
+  TCB_EFFECT_START *tes = ( TCB_EFFECT_START* )GFL_TCB_GetWork( tcb );
+
+  if( tes->param )
+  { 
+    GFL_HEAP_FreeMemory( tes->param );
+  }
 }
 
 //============================================================================================
