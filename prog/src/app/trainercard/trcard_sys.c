@@ -657,7 +657,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     }else{
       cardData->PokeBookFlg = 0;
     }
-    cardData->PokeBook    = ZUKANSAVE_GetZukanPokeGetCount( zukan, heapId );
+    cardData->PokeBook    = ZUKANSAVE_GetZukanPokeSeeCount( zukan, heapId );
   }
 
   
