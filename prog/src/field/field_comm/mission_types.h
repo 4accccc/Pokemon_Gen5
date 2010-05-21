@@ -16,12 +16,6 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-///ミッション確認タイプ
-typedef enum{
-  CONFIRM_NUM,
-  CONFIRM_PEOPLE,
-}CONFIRM_TYPE;
-
 ///ミッション系統
 typedef enum{
   MISSION_TYPE_VICTORY,     ///<勝利(LV)
@@ -68,6 +62,13 @@ enum{
   POWER_LEVEL_PALACE = 0xff,          ///<パレス用パワーを示す
 };
 
+///ミッションデータで選出可能なバージョン
+typedef enum{
+  MISSION_DATA_VERSION_WHITE = 1 << 0,
+  MISSION_DATA_VERSION_BLACK = 1 << 1,
+  MISSION_DATA_VERSION_NEXT = 1 << 2,
+}MISSION_DATA_VERSION;
+
 ///ミッション達成で上がるレベル数
 #define MISSION_ACHIEVE_ADD_LEVEL   (1)
 
@@ -76,27 +77,21 @@ enum{
 //==============================================================================
 ///ミッションデータ
 typedef struct{
-  u8 mission_no;                  ///<ミッション番号
-  u8 type;                        ///<ミッション系統(MISSION_TYPE_???)
-  u8 level;                       ///<発生レベル
-  u8 odds;                        ///<発生率
+  u32 level:8;                       ///<発生レベル
+  u32 odds:7;                        ///<発生率
+  u32 reward:7;                      ///<報酬
+  u32 time:10;                       ///<時間(秒)
+  
+  u32 type:4;                        ///<ミッション系統(MISSION_TYPE_???)
+  u32 version_bit:3;                 ///<選出可能なバージョン(MISSION_DATA_VERSION)
+  u32 msg_id_contents:11;            ///<ミッション内容gmmのmsg_id
+  u32 msg_id_contents_monolith:11;   ///<ミッション内容モノリスgmmのmsg_id
+  u8 obj_sex_bit:3;                  ///<変化OBJの性別(bit単位) 0bit:NetID0 1bit:NetID1...
+  
+  u16 obj_id[3];                     ///<変化OBJ ID
+  u8 talk_type[3];                   ///<変化OBJの会話タイプ(TALK_TYPE_xxx)
 
-  u16 msg_id_contents;            ///<ミッション内容gmmのmsg_id
-  u16 msg_id_contents_monolith;   ///<ミッション内容モノリスgmmのmsg_id
-
-  u16 obj_id[4];      ///<変化OBJ ID
-  u8 obj_sex[4];         ///<変化OBJの性別
-  u8 talk_type[4];       ///<変化OBJの会話タイプ(TALK_TYPE_xxx)
-
-  u16 data[3];        ///<データ(ミッション系統毎に扱いが変化)
-  u16 time;           ///<時間(秒)
-
-  u16 reward[4];      ///<報酬 0(1位) ～ 3(4位)
-
-  u8 confirm_type;    ///<ミッション確認タイプ (CONFIRM_???)
-  u8 limit_run;       ///<制限走り　TRUE:走り禁止
-  u8 limit_talk;      ///<制限話　TRUE:話禁止
-  u8 padding;
+  u16 data[2];                       ///<データ(ミッション系統毎に扱いが変化)
 }MISSION_CONV_DATA;
 
 ///ミッションデータからリスト作成用に最低限のデータだけを抽出した塊
@@ -104,7 +99,7 @@ typedef struct{
   u8 type;                        ///<ミッション系統(MISSION_TYPE_???)
   u8 level;                       ///<発生レベル
   u8 odds;                        ///<発生率
-  u8 padding;
+  u8 version_bit;                 ///<選出可能なバージョン(MISSION_DATA_VERSION)
 }MISSION_CONV_DATA_LISTPARAM;
 
 ///パワーデータ

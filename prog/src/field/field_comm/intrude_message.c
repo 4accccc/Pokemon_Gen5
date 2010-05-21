@@ -162,34 +162,6 @@ void IntrudeEventPrint_StartStream(INTRUDE_EVENT_MSGWORK *iem, u16 msg_id)
   _StartStream(iem, iem->msgbuf);
 }
 
-//--------------------------------------------------------------
-/**
- * プリントストリーム出力：mission.gmm用
- *      現在実施中のミッションを表示
- *
- * @param   iem		
- * @param   
- */
-//--------------------------------------------------------------
-BOOL IntrudeEventPrint_StartStreamMission(INTRUDE_EVENT_MSGWORK *iem, INTRUDE_COMM_SYS_PTR intcomm)
-{
-  const MISSION_DATA *mdata;
-
-  if(MISSION_RecvCheck(&intcomm->mission) == FALSE){
-    return FALSE; //実施しているミッションは無い
-  }
-  
-  mdata = MISSION_GetRecvData(&intcomm->mission);
-
-  GFL_MSG_GetString(iem->msgdata_mission, mdata->cdata.msg_id_contents, iem->tmpbuf);
-  MISSIONDATA_Wordset(&mdata->cdata, &mdata->target_info, 
-    iem->wordset, INTRUDE_EVENT_HEAPID);
-  WORDSET_ExpandStr( iem->wordset, iem->msgbuf, iem->tmpbuf );
-  
-  _StartStream(iem, iem->msgbuf);
-  return TRUE;
-}
-
 //==================================================================
 /**
  * メッセージ領域をクリア

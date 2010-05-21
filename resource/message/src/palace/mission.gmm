@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-13T23:47:38"/>
+	<create user="matsuda" host="W00142" date="2010-05-20T22:34:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -67,6 +67,11 @@
 			<tag entry="11" japanese="ボックス名" english="ボックス名" view="EP" width="96" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="12" japanese="ポケモンニックネーム（正体）" english="ポケモンニックネーム（正体）" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+				<comment language="english">バトル用。イリュージョンの影響を受けないニックネーム取得。</comment>
+			</tag>
 			<tag entry="13" japanese="ステータス名" english="ステータス名" view="EP" width="74" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">たいりょく、こうげきりょく、ぼうぎょりょく、とくこう、とくぼう、すばやさ、かいひりつ、めいちゅう</comment>
@@ -77,6 +82,14 @@
 				<comment language="japanese">「たんぱんこぞう」「エリートトレーナー」など</comment>
 				<comment language="english">「たんぱんこぞう」「エリートトレーナー」など</comment>
 			</tag>
+			<tag entry="15" japanese="趣味（調査レーダー）" english="趣味（調査レーダー）" view="EP" length="0" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="16" japanese="Gパワー名称" english="Gパワー名称" view="EP" width="156" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">Gパワーの名称です</comment>
+				<comment language="english">Gパワーの名称です</comment>
+			</tag>
 			<tag entry="17" japanese="特殊状態名" english="特殊状態名" view="EP" width="48" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">ポケモンの特殊状態です。</comment>
@@ -86,6 +99,9 @@
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 				<comment language="japanese">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
 				<comment language="english">バッグのポケットの名前。「ポケット」の部分も含む。</comment>
+			</tag>
+			<tag entry="19" japanese="アンケート回答" english="アンケート回答" view="EP" width="108" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
 			<tag entry="26" japanese="カップ名" english="カップ名" view="EP" width="72" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -108,19 +124,17 @@
 				<comment language="japanese">ぼうけんノートなどで使う</comment>
 				<comment language="english">ぼうけんノートなどで使う</comment>
 			</tag>
-			<tag entry="34" japanese="コンテスト名称" english="コンテスト名称" view="EP" width="120" line="1">
+			<tag entry="34" japanese="ミュージカル演目名" english="ミュージカル演目名" view="EP" width="234" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">コンテストのジャンル
-「○○○○○コンテスト」</comment>
-				<comment language="english">コンテストのジャンル
-「○○○○○コンテスト」</comment>
+				<comment language="japanese">ミュージカルの演目名</comment>
+				<comment language="english">ミュージカルの演目名</comment>
 			</tag>
-			<tag entry="35" japanese="コンテストランク" english="コンテストランク" view="EP" width="84" line="1">
+			<tag entry="35" japanese="ミュージカルコンディション" english="ミュージカルコンディション" view="EP" width="65" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
-				<comment language="japanese">○○○○ランク
-「ランク」も含む</comment>
-				<comment language="english">○○○○ランク
-「ランク」も含む</comment>
+				<comment language="japanese">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
+				<comment language="english">ミュージカルのコンディション
+クール・キュート・エレガント・ユニーク</comment>
 			</tag>
 			<tag entry="36" japanese="国名" english="国名" view="EP" width="216" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
@@ -137,9 +151,70 @@
 				<comment language="japanese">リボンの名前</comment>
 				<comment language="english">リボンの名前</comment>
 			</tag>
+			<tag entry="40" japanese="広場ミニゲーム" english="広場ミニゲーム" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のミニゲーム名</comment>
+				<comment language="english">WiFi広場のミニゲーム名</comment>
+			</tag>
+			<tag entry="41" japanese="広場イベント名" english="広場イベント名" view="EP" width="60" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場イベント名</comment>
+				<comment language="english">WiFi広場イベント名</comment>
+			</tag>
+			<tag entry="42" japanese="広場アイテム名" english="広場アイテム名" view="EP" width="120" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">WiFi広場のアイテム名</comment>
+				<comment language="english">WiFi広場のアイテム名</comment>
+			</tag>
+			<tag entry="43" japanese="日本の挨拶" english="日本の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">日本の挨拶</comment>
+				<comment language="english">日本の挨拶</comment>
+			</tag>
+			<tag entry="44" japanese="英語の挨拶" english="英語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">英語の挨拶</comment>
+				<comment language="english">英語の挨拶</comment>
+			</tag>
+			<tag entry="45" japanese="フランス語の挨拶" english="フランス語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">フランス語の挨拶</comment>
+				<comment language="english">フランス語の挨拶</comment>
+			</tag>
+			<tag entry="46" japanese="ドイツ語の挨拶" english="ドイツ語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">ドイツ語の挨拶</comment>
+				<comment language="english">ドイツ語の挨拶</comment>
+			</tag>
+			<tag entry="47" japanese="イタリア語の挨拶" english="イタリア語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">イタリア語の挨拶</comment>
+				<comment language="english">イタリア語の挨拶</comment>
+			</tag>
+			<tag entry="48" japanese="スペイン語の挨拶" english="スペイン語の挨拶" view="EP" width="143" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">スペイン語の挨拶</comment>
+				<comment language="english">スペイン語の挨拶</comment>
+			</tag>
+			<tag entry="49" japanese="ミュージカルグッズ部位" english="ミュージカルグッズ部位" view="EP" width="39" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="50" japanese="PDW家具名" english="PDW家具名" view="EP" width="169" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="51" japanese="ミュージカル客層" english="ミュージカル客層" view="EP" width="78" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">おとこのひと、女の子等</comment>
+				<comment language="english">おとこのひと、女の子等</comment>
+			</tag>
+			<tag entry="52" japanese="DS本体名" english="DS本体名" view="EP" width="130" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+				<comment language="japanese">DS本体のユーザー名</comment>
+				<comment language="english">DS本体のユーザー名</comment>
+			</tag>
 		</group>
 
-		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）">
+		<group entry="2" japanese="ポケモンＷＢ（数値）" english="ポケモンＷＢ（数値）" color="#c0c0c0">
 			<tag entry="00" japanese="１桁" english="１桁" view="EP" width="8" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
@@ -168,9 +243,15 @@
 			<tag entry="07" japanese="８桁" english="８桁" view="EP" width="64" line="1">
 				<parameter number="0" japanese="番号" english="番号" type="int8"/>
 			</tag>
+			<tag entry="08" japanese="９桁" english="９桁" view="EP" width="72" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
+			<tag entry="09" japanese="10桁" english="10桁" view="EP" width="80" line="1">
+				<parameter number="0" japanese="番号" english="番号" type="int8"/>
+			</tag>
 		</group>
 
-		<group entry="189" japanese="汎用コントロール" english="汎用コントロール">
+		<group entry="189" japanese="汎用コントロール" english="汎用コントロール" color="#c0c0c0">
 			<tag entry="00" japanese="カラー変更" english="カラー変更" view="EP" length="0" line="1">
 				<parameter number="0" japanese="文字色番号" english="文字色番号" type="int8"/>
 				<parameter number="1" japanese="影色番号" english="影色番号" type="int8"/>
@@ -189,9 +270,23 @@
 				<comment language="english">当該行の文字列を
 ウィンドウ内で右寄せします。</comment>
 			</tag>
+			<tag entry="04" japanese="X加算" english="X加算" view="EP" length="0" line="1">
+				<parameter number="0" japanese="加算値" english="加算値" type="int8"/>
+				<comment language="japanese">描画X座標を加算します。
+使用は許可制です。</comment>
+				<comment language="english">描画X座標を加算します。
+使用は許可制です。</comment>
+			</tag>
+			<tag entry="05" japanese="X指定" english="X指定" view="EP" length="0" line="1">
+				<parameter number="0" japanese="Ｘ座標" english="Ｘ座標" type="int16"/>
+				<comment language="japanese">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+				<comment language="english">描画Ｘ座標を指定値に変更。
+使用は許可制です。</comment>
+			</tag>
 		</group>
 
-		<group entry="190" japanese="動的コントロール" english="Word">
+		<group entry="190" japanese="動的コントロール" english="Word" color="#c0c0c0">
 			<tag entry="00" japanese="ページ切り替え（行送り）" english="ページ切り替え（行送り）" view="EP" length="0" line="1"/>
 			<tag entry="01" japanese="ページ切り替え（クリア）" english="ページ切り替え（クリア）" view="EP" length="0" line="1"/>
 			<tag entry="02" japanese="ウェイト変更（単発）" english="ウェイト変更（単発）" view="EP" length="0" line="1">
@@ -209,11 +304,21 @@
 			</tag>
 			<tag entry="07" japanese="コールバック引数リセット" english="コールバック引数リセット" view="EP" length="0" line="1"/>
 			<tag entry="08" japanese="描画領域クリア" english="描画領域クリア" view="EP" length="0" line="1"/>
+			<tag entry="09" japanese="速度コントロール" english="速度コントロール" view="EP" length="0" line="1">
+				<parameter number="0" japanese="モード" english="モード" type="int8"/>
+				<comment language="japanese">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+				<comment language="english">ユーザConfig設定に応じて
+相対的に速い（遅い）速度になるように、ウェイトフレーム値などを操作します。</comment>
+			</tag>
 		</group>
 
 		<group entry="254" japanese="文字列展開" english="Word">
 		</group>
 
+		<set japanese="RESET" english="RESET" value="BE:09:速度コントロール:0"/>
+		<set japanese="FAST" english="FAST" value="BE:09:速度コントロール:1"/>
+		<set japanese="SLOW" english="SLOW" value="BE:09:速度コントロール:2"/>
 		<set japanese="500%" english="500%" value="FF:01:サイズ:500"/>
 		<set japanese="400%" english="400%" value="FF:01:サイズ:400"/>
 		<set japanese="300%" english="300%" value="FF:01:サイズ:300"/>
@@ -308,298 +413,26 @@
 		<comment>ミッション１：
 「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「ぜんかいパワー」を　あたえよ！</language>
+「[1:10:Gパワー名称:1]」を　あたえよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「ぜんかいパワー」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_02" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「たまごふかパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「たまごふかパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_03" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「やすうりパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「やすうりパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「なつきパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「なつきパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「けいけんちパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「けいけんちパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「おこづかいパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「おこづかいパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「ほかくパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「ほかくパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「たまごふかパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「たまごふかパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「やすうりパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「やすうりパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「なつきパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「なつきパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_11" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「けいけんちパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「けいけんちパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_12" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「おこづかいパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「おこづかいパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_01_13" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション１：
-「●●●●●に　話しかけられ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　はなしかけて　もらい
-「ほかくパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　話しかけて　もらい
-「ほかくパワー　Ｓ」を　与えよ！</language>
+「[1:10:Gパワー名称:1]」を　与えよ！</language>
 	</row>
 
 	<row id="plc_mis_02_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「ほかくパワー　ＭＡＸ」を　あたえよ！</language>
+「[1:10:Gパワー名称:1]」を　あたえよ！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「ほかくパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「おこづかいパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「おこづかいパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「けいけんちパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「けいけんちパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「なつきパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「なつきパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「やすうりパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「やすうりパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「たまごふかパワー　ＭＡＸ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「たまごふかパワー　ＭＡＸ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「ぜんかいパワー」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「ぜんかいパワー」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「ほかくパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「ほかくパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_09" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「おこづかいパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「おこづかいパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_10" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「けいけんちパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「けいけんちパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_11" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「なつきパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「なつきパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_12" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「やすうりパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「やすうりパワー　Ｓ」を　与えよ！</language>
-	</row>
-
-	<row id="plc_mis_02_13" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション２：
-「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「たまごふかパワー　Ｓ」を　あたえよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「たまごふかパワー　Ｓ」を　与えよ！</language>
+「[1:10:Gパワー名称:1]」を　与えよ！</language>
 	</row>
 
 	<row id="plc_mis_03_01" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　１００フラット</language>
+てもち　２ひき　レベルは　[2:02:３桁:1]フラット</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　１００フラット</language>
-	</row>
-
-	<row id="plc_mis_03_02" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　５０フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　５０フラット</language>
-	</row>
-
-	<row id="plc_mis_03_03" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　１００フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　１００フラット</language>
-	</row>
-
-	<row id="plc_mis_03_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　５０フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　５０フラット</language>
-	</row>
-
-	<row id="plc_mis_03_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　３０フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　３０フラット</language>
-	</row>
-
-	<row id="plc_mis_03_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　１０フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　１０フラット</language>
-	</row>
-
-	<row id="plc_mis_03_07" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　３０フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　３０フラット</language>
-	</row>
-
-	<row id="plc_mis_03_08" back-color="#ffff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション３：「●●●●●に　しょうぶを　いどめ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　たたかいを　いどめ！
-てもち　２ひき　レベルは　１０フラット</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　戦いを　挑め！
-手持ち　２匹　レベルは　１０フラット</language>
+手持ち　２匹　レベルは　[2:02:３桁:1]フラット</language>
 	</row>
 
 	<row id="plc_mis_04_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
@@ -610,7 +443,7 @@
 「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
 	</row>
 
-	<row id="plc_mis_04_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
+	<row id="plc_mis_04_02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
 「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
@@ -618,7 +451,7 @@
 「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
 	</row>
 
-	<row id="plc_mis_04_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
+	<row id="plc_mis_04_03" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
 「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
@@ -626,7 +459,7 @@
 「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
 	</row>
 
-	<row id="plc_mis_04_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
+	<row id="plc_mis_04_04" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかっている　[1:00:トレーナー名:0]に　はなしかけ
 「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
@@ -924,306 +757,17 @@
 
 	<row id="plc_mis_06_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　タウリンを　すばやく
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　[1:09:どうぐ名:1]を
 おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　タウリンを　素早く
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　[1:09:どうぐ名:1]を
 お買い得な　値段で　買ってもらえ！</language>
 	</row>
 
-	<row id="plc_mis_06_02" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_03" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　インドメタシンを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　インドメタシンを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_04" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　リゾチウムを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　リゾチウムを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_05" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　キトサンを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　キトサンを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_06" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　マックスアップを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　マックスアップを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_07" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_08" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_09" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのこなを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのこなを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_10" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのねっこを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのねっこを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_11" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ばんのうごなを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ばんのうごなを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_12" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ふっかつそうを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ふっかつそうを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_13" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ハイパーボールを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ハイパーボールを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_14" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_15" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_16" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　なんでもなおしを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　なんでもなおしを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_17" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかけらを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかけらを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_18" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　スーパーボールを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　スーパーボールを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_19" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　モンスターボールを　すばやく
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　モンスターボールを　素早く
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_20" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　タウリンを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　タウリンを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_21" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ブロムヘキシンを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_22" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　インドメタシンを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　インドメタシンを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_23" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　リゾチウムを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　リゾチウムを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_24" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　キトサンを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　キトサンを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_25" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　マックスアップを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　マックスアップを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_26" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　かいふくのくすりを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_27" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかたまりを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_28" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのこなを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのこなを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_29" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ちからのねっこを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ちからのねっこを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_30" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ばんのうごなを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ばんのうごなを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_31" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ふっかつそうを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ふっかつそうを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_32" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　ハイパーボールを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　ハイパーボールを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_33" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　まんたんのくすりを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_34" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　すごいキズぐすりを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_35" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　なんでもなおしを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　なんでもなおしを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_36" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　げんきのかけらを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　げんきのかけらを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_37" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　スーパーボールを
-おかいどくな　ねだんで　かってもらえ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　スーパーボールを
-お買い得な　値段で　買ってもらえ！</language>
-	</row>
-
-	<row id="plc_mis_06_38" back-color="#80ff80,,,,,,,,,,,,,,,,,">
-		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　モンスターボールを
-おかいどくな　ねだんで　かってもらえ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　モンスターボールを
-お買い得な　値段で　買ってもらえ</language>
+	<row id="plc_mis_end" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>このメッセージはプログラム上でメッセージIDの上限チェックをする為に設定しています。
+このファイル内で必ず一番最後に存在するようにしてください。</comment>
+		<language name="JPN" width="256">ー</language>
+		<language name="JPN_KANJI" width="256">ー</language>
 	</row>
 
 	<flowchart-group-list>

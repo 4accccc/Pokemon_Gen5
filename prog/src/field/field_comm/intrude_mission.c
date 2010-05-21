@@ -19,6 +19,7 @@
 #include "field/zonedata.h"
 
 #include "mission.naix"
+#include "item/itemsym.h"
 
 
 SDK_COMPILER_ASSERT(MISSION_LIST_MAX == MISSION_TYPE_MAX);
@@ -578,12 +579,9 @@ BOOL MISSION_GetMissionPlay(MISSION_SYSTEM *mission)
 static int _SetAchieveNetID(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, int achieve_netid)
 {
   MISSION_RESULT *result = &mission->result;
-  int i;
   
-  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(result->achieve_netid[i] == INTRUDE_NETID_NULL && mdata->cdata.reward[i] > 0){
-      return i;
-    }
+  if(result->achieve_netid[0] == INTRUDE_NETID_NULL){
+    return 0;
   }
   return FIELD_COMM_MEMBER_MAX;
 }
@@ -800,7 +798,7 @@ s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *m
   
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(result->achieve_netid[i] == GAMEDATA_GetIntrudeMyID(gamedata)){
-      return result->mission_data.cdata.reward[i];
+      return result->mission_data.cdata.reward;
     }
   }
   return 0;
@@ -882,42 +880,6 @@ BOOL MISSION_CheckResultTimeout(MISSION_SYSTEM *mission)
 //  ミッションデータ
 //
 //==============================================================================
-//--------------------------------------------------------------
-/**
- * ミッションデータをロード
- *
- * @retval  MISSION_CONV_DATA *		ミッションデータへのポインタ
- */
-//--------------------------------------------------------------
-static MISSION_CONV_DATA * MISSIONDATA_Load(HEAPID heap_id)
-{
-  return GFL_ARC_LoadDataAlloc(ARCID_MISSION, NARC_mission_mission_data_bin, HEAPID_WORLD);
-}
-
-//--------------------------------------------------------------
-/**
- * ミッションデータをアンロード
- *
- * @param   md		ミッションデータへのポインタ
- */
-//--------------------------------------------------------------
-static void MISSIONDATA_Unload(MISSION_CONV_DATA *md)
-{
-  GFL_HEAP_FreeMemory(md);
-}
-
-//--------------------------------------------------------------
-/**
- * ミッションデータの要素数を取得
- *
- * @retval  u32		要素数
- */
-//--------------------------------------------------------------
-static u32 MISSIONDATA_GetArrayMax(void)
-{
-  return GFL_ARC_GetDataSize(ARCID_MISSION, NARC_mission_mission_data_bin);
-}
-
 //--------------------------------------------------------------
 /**
  * ミッションデータを該当条件に合うものを選択してバッファに格納する
@@ -1047,9 +1009,12 @@ BOOL MISSION_MissionList_CheckOcc(const MISSION_CHOICE_LIST *list)
  * @retval  BOOL		TRUE:問題なし。　FALSE:不正である
  */
 //==================================================================
-static BOOL MISSION_MissionList_CheckNG(const MISSION_SYSTEM *mission, const MISSION_CONV_DATA *cdata)
+static BOOL MISSION_MissionList_CheckNG(const MISSION_SYSTEM *mission, const MISSION_CONV_DATA *cdat)
 {
   //※check　後で作成。
+  if(cdat->type >= MISSION_TYPE_MAX){
+    return FALSE;
+  }
   return TRUE;
 }
 
@@ -1334,7 +1299,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)cdata->data;
 
       MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
-      WORDSET_RegisterGPowerName( wordset, 2, d_skill->gpower_id );
+      WORDSET_RegisterGPowerName( wordset, 1, d_skill->gpower_id );
     }
     break;
   case MISSION_TYPE_BASIC:       //基礎
@@ -1342,7 +1307,7 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
       const MISSION_TYPEDATA_BASIC *d_bas = (void*)cdata->data;
       
       MISSIONDATA_WordsetTargetName(wordset, 0, target, temp_heap_id);
-      WORDSET_RegisterGPowerName( wordset, 2, d_bas->gpower_id );
+      WORDSET_RegisterGPowerName( wordset, 1, d_bas->gpower_id );
     }
     break;
   case MISSION_TYPE_ATTRIBUTE:   //属性
@@ -1375,15 +1340,9 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
   
   //制限時間
   WORDSET_RegisterNumber(wordset, 2, cdata->time, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  //報酬1位～4位
+  //報酬
   WORDSET_RegisterNumber(
-    wordset, 3, cdata->reward[0], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber(
-    wordset, 4, cdata->reward[1], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber(
-    wordset, 5, cdata->reward[2], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
-  WORDSET_RegisterNumber(
-    wordset, 6, cdata->reward[3], 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+    wordset, 3, cdata->reward, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
 }
 
 //==================================================================

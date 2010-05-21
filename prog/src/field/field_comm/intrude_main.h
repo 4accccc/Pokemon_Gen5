@@ -94,6 +94,12 @@ extern BOOL Intrude_OtherPlayerExistence(void);
 extern void Intrude_MyMonolithStatusSet(GAMEDATA *gamedata, MONOLITH_STATUS *monost);
 extern BOOL Intrude_CheckRecvOccupyResult(INTRUDE_COMM_SYS_PTR intcomm);
 
+//--------------------------------------------------------------
+//  不正チェック
+//--------------------------------------------------------------
+extern BOOL Intrude_CheckNG_OBJID(u16 obj_id);
+extern BOOL Intrude_CheckNG_Item(u16 item_no);
+
 //==============================================================================
 //  データ
 //==============================================================================

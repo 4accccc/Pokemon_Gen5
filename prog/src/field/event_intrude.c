@@ -229,7 +229,7 @@ static GMEVENT_RESULT DisguiseEvent( GMEVENT *event, int *seq, void *wk )
       NetID my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
       IntrudeEvent_Sub_DisguiseEffectSetup(&dis_wk->iedw, gsys, dis_wk->fieldWork, 
         dis_wk->mdata.cdata.obj_id[my_net_id], dis_wk->mdata.cdata.talk_type[my_net_id],
-        dis_wk->mdata.cdata.obj_sex[my_net_id]);
+        (dis_wk->mdata.cdata.obj_sex_bit & (1 << my_net_id)));
       (*seq)++;
     }
     break;

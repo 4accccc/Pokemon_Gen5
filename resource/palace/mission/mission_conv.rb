@@ -10,14 +10,22 @@ mission_data.cdat
 #--------------------------------------------------------------
 #  定数定義
 #--------------------------------------------------------------
-OBJID_MAX = 4;
-DATA_MAX = 3;
-REWARD_MAX = 4;
+OBJID_MAX = 3;
+DATA_MAX = 2;
+
+ITEM_LIST_ARRAY_MAX = 999;
+OBJID_LIST_ARRAY_MAX = 999;
 
 #--------------------------------------------------------------
 #  グローバル変数
 #--------------------------------------------------------------
 InputExcelFile = ARGV[0];
+
+$RewardMax = 0;   #報酬最大値
+$TimeMax = 0;     #時間最大値
+ItemList = [];
+ObjIDList = [];
+
 
 
 #--------------------------------------------------------------
@@ -29,6 +37,7 @@ class MISSION_DATA
     @type = "0"                        #ミッション系統
     @level = "0"                       #発生レベル
     @odds = "0"                        #発生率
+    @version = "0"                     #選出バージョン
     @msg_id_contents = "0"            #ミッション内容gmmのmsg_id
     @msg_id_contents_monolith = "0"   #ミッション内容モノリスgmmのmsg_id
     
@@ -41,6 +50,7 @@ class MISSION_DATA
     for i in 0..OBJID_MAX
       @obj_sex[i] = "男";       #変化OBJの性別
     end
+    @obj_sex_bit = 0;
 
     @talk_type = [];
     for i in 0..OBJID_MAX
@@ -54,19 +64,11 @@ class MISSION_DATA
     
     @time = "0"           #時間(秒)
     
-    @reward = [];
-    for i in 0..REWARD_MAX
-      @reward[i] = "0";      #報酬 0(1位) ～ 3(4位)
-    end
-    
-    @confirm_type = "0"   #ミッション確認タイプ
-    @limit_run = "0"       #制限走り　TRUE:走り禁止
-    @limit_talk = "0"      #制限話　TRUE:話禁止
+    @reward = "0";      #報酬
   end
 
-  attr_accessor :mission_no, :type, :level, :odds, :msg_id_contents, :msg_id_contents_monolith;
-  attr_accessor :obj_id, :obj_sex, :talk_type, :data, :time, :reward, :confirm_type;
-  attr_accessor :limit_run, :limit_talk;
+  attr_accessor :mission_no, :type, :level, :odds, :version, :msg_id_contents, :msg_id_contents_monolith;
+  attr_accessor :obj_id, :obj_sex, :obj_sex_bit, :talk_type, :data, :time, :reward;
 end
 
 
@@ -114,9 +116,9 @@ def CsvConvFileCheck()
     cell += 1;
     MissionData[s].odds = line[cell];
     cell += 1;
-    MissionData[s].msg_id_contents = line[cell];
+    MissionData[s].version = line[cell];
     cell += 1;
-    MissionData[s].confirm_type = line[cell];
+    MissionData[s].msg_id_contents = line[cell];
     cell += 1;
     MissionData[s].msg_id_contents_monolith = line[cell];
     cell += 1;
@@ -131,23 +133,16 @@ def CsvConvFileCheck()
     end
     
     for g in 0..DATA_MAX-1
-      MissionData[s].data[g] = line[cell];
+      MissionData[s].data[g] = line[cell].sub(/\.0/, "");#csvの時点で小数点がついているので取り除く
       cell += 1;
     end
     
     MissionData[s].time = line[cell];
     cell += 1;
 
-    for g in 0..REWARD_MAX-1
-      MissionData[s].reward[g] = line[cell];
-      cell += 1;
-    end
+    MissionData[s].reward = line[cell];
+    cell += 1;
     
-    MissionData[s].limit_run = line[cell];
-    cell += 1;
-    MissionData[s].limit_talk = line[cell];
-    cell += 1;
-
     s += 1;
   }
   
@@ -165,7 +160,18 @@ def DataConv()
   for i in 0..MissionData.size-1
     
     MissionData[i].type = "MISSION_TYPE_" + MissionData[i].type;
-    MissionData[i].confirm_type = "CONFIRM_" + MissionData[i].confirm_type;
+    
+    version_bit = 0;
+    if(MissionData[i].version =~ /.*W.*/)
+      version_bit |= 1 << 0;
+    end
+    if(MissionData[i].version =~ /.*B.*/)
+      version_bit |= 1 << 1;
+    end
+    if(MissionData[i].version =~ /.*N.*/)
+      version_bit |= 1 << 2;
+    end
+    MissionData[i].version = version_bit;
     
     for s in 0..OBJID_MAX-1
       if(MissionData[i].obj_id[s] =~ /.*-.*/)
@@ -173,11 +179,13 @@ def DataConv()
       end
     end
 
+    MissionData[i].obj_sex_bit = 0;
     for s in 0..OBJID_MAX-1
       if(MissionData[i].obj_sex[s] =~ /男/)
         MissionData[i].obj_sex[s] = "0";
       elsif(MissionData[i].obj_sex[s] =~ /女/)
         MissionData[i].obj_sex[s] = "1";
+        MissionData[i].obj_sex_bit |= 1 << s;
       else
         MissionData[i].obj_sex[s] = "0";
       end
@@ -203,24 +211,61 @@ def DataConv()
       end
     end
     
-    for s in 0..REWARD_MAX-1
-      if(MissionData[i].reward[s] =~ /.*-.*/)
-        MissionData[i].reward[s] = "0";
-      end
+    if(MissionData[i].reward =~ /.*-.*/)
+      MissionData[i].reward = "0";
+    end
+    if(MissionData[i].reward.to_i > $RewardMax)
+      $RewardMax = MissionData[i].reward.to_i;
     end
     
-    if(MissionData[i].limit_run =~ /.*-.*/)
-      MissionData[i].limit_run = "FALSE";
-    elsif(MissionData[i].limit_run =~ /.*○.*/)
-      MissionData[i].limit_run = "TRUE";
+    if(MissionData[i].time.to_i > $TimeMax)
+      $TimeMax = MissionData[i].time.to_i;
     end
 
-    if(MissionData[i].limit_talk =~ /.*-.*/)
-      MissionData[i].limit_talk = "FALSE";
-    elsif(MissionData[i].limit_talk =~ /.*○.*/)
-      MissionData[i].limit_talk = "TRUE";
-    end
+  end
 
+  #アイテムリストを抽出
+  item_list_count = 0;
+  for i in 0..ITEM_LIST_ARRAY_MAX 
+    ItemList[i] = "NULL";
+  end
+  for i in 0..MissionData.size-1
+    for no in 0..DATA_MAX
+      type = MissionData[i].data[no];
+      for s in 0..ITEM_LIST_ARRAY_MAX 
+        if(type =~ /ITEM_.*/)
+          if(type == ItemList[s])
+            break;
+          end
+          if(ItemList[s] == "NULL")
+            ItemList[s] = type;
+            item_list_count += 1;
+            break;
+          end
+        end
+      end
+    end
+  end
+
+  #OBJIDリストを抽出
+  objid_list_count = 0;
+  for i in 0..ITEM_LIST_ARRAY_MAX 
+    ObjIDList[i] = "NULL";
+  end
+  for i in 0..MissionData.size-1
+    for no in 0..OBJID_MAX
+      type = MissionData[i].obj_id[no];
+      for s in 0..OBJID_LIST_ARRAY_MAX 
+        if(type == ObjIDList[s])
+          break;
+        end
+        if(ObjIDList[s] == "NULL")
+          ObjIDList[s] = type;
+          objid_list_count += 1;
+          break;
+        end
+      end
+    end
   end
 
 end
@@ -243,24 +288,23 @@ def DataFileOutput()
 
     for i in 0..MissionData.size-1
       file.printf("\t{\t//%d\n", i);
-      file.printf("\t\t%s,\t\t//mission_no\n", MissionData[i].mission_no);
-      file.printf("\t\t%s,\t\t//type\n", MissionData[i].type);
+
       file.printf("\t\t%s,\t\t//level\n", MissionData[i].level);
       file.printf("\t\t%s,\t\t//odds\n", MissionData[i].odds);
+      file.printf("\t\t%s,\t\t//reward\n", MissionData[i].reward);
+      file.printf("\t\t%s,\t\t//time\n", MissionData[i].time);
+
+      file.printf("\t\t%s,\t\t//type\n", MissionData[i].type);
+      file.printf("\t\t%s,\t\t//version_bit\n", MissionData[i].version);
       file.printf("\t\t%s,\t\t//msg_id_contents\n", MissionData[i].msg_id_contents);
       file.printf("\t\t%s,\t\t//msg_id_contents_monolith\n", MissionData[i].msg_id_contents_monolith);
+      file.printf("\t\t%d,\t\t//obj_sex_bit\n", MissionData[i].obj_sex_bit);
 
       file.printf("\t\t{");
       for s in 0..OBJID_MAX-1
         file.printf("%s,", MissionData[i].obj_id[s]);
       end
       file.printf("},\t\t//obj_id\n");
-
-      file.printf("\t\t{");
-      for s in 0..OBJID_MAX-1
-        file.printf("%s,", MissionData[i].obj_sex[s]);
-      end
-      file.printf("},\t\t//obj_sex\n");
 
       file.printf("\t\t{");
       for s in 0..OBJID_MAX-1
@@ -274,19 +318,6 @@ def DataFileOutput()
       end
       file.printf("},\t\t//data\n");
       
-      file.printf("\t\t%s,\t\t//time\n", MissionData[i].time);
-
-      file.printf("\t\t{");
-      for s in 0..REWARD_MAX-1
-        file.printf("%s,", MissionData[i].reward[s]);
-      end
-      file.printf("},\t\t//reward\n");
-
-      file.printf("\t\t%s,\t\t//confirm_type\n", MissionData[i].confirm_type);
-      file.printf("\t\t%s,\t\t//limit_run\n", MissionData[i].limit_run);
-      file.printf("\t\t%s,\t\t//limit_talk\n", MissionData[i].limit_talk);
-      file.printf("\t\t0,\t\t//padding\n");
-
       file.printf("\t},\n");
     end
     
@@ -306,10 +337,45 @@ def DataFileOutput()
       file.printf("\t\t%s,\t\t//type\n", MissionData[i].type);
       file.printf("\t\t%s,\t\t//level\n", MissionData[i].level);
       file.printf("\t\t%s,\t\t//odds\n", MissionData[i].odds);
+      file.printf("\t\t%s,\t\t//version_bit\n", MissionData[i].version);
       file.printf("\t},\n");
     end
     
     file.printf("};\n");
+  }
+  
+  #不正データチェック用ファイル
+  File.open("mission_ng_check.cdat", "w"){|file|
+    file.printf("//============================================================\n");
+    file.printf("//       mission_conv.rb で出力されたファイルです\n");
+    file.printf("//============================================================\n\n");
+
+    #OBJIDリスト
+    file.printf("\n\n//登場できるOBJIDテーブル(不正チェック用)\n");
+    file.printf("ALIGN4 static const u16 IntrudeOBJID_List[] = {\n");
+    for i in 0..OBJID_LIST_ARRAY_MAX
+      if(ObjIDList[i] == "NULL")
+        break;
+      end
+      file.printf("\t%s,\t\t//%d\n", ObjIDList[i], i);
+    end
+    file.printf("};\n");
+
+    #アイテムリスト
+    file.printf("\n\n//登場できるアイテムテーブル(不正チェック用)\n");
+    file.printf("ALIGN4 static const u16 IntrudeItem_List[] = {\n");
+    for i in 0..ITEM_LIST_ARRAY_MAX
+      if(ItemList[i] == "NULL")
+        break;
+      end
+      file.printf("\t%s,\t\t//%d\n", ItemList[i], i);
+    end
+    file.printf("};\n");
+
+    #最大値定義
+    file.printf("\n\n//最大値定義(不正チェック用)\n");
+    file.printf("#define MISSION_REWARD_MAX   %d\t\t//報酬最大値(不正チェック用)\n", $RewardMax);
+    file.printf("#define MISSION_TIME_MAX   %d\t\t//制限時間最大値(不正チェック用)\n", $TimeMax);
   }
 
 end

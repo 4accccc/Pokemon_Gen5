@@ -8,560 +8,672 @@ static const MISSION_CONV_DATA_LISTPARAM MissionConvDataListParam[] = {
 		MISSION_TYPE_SKILL,		//type
 		48,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//1
 		MISSION_TYPE_SKILL,		//type
 		38,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//2
 		MISSION_TYPE_SKILL,		//type
 		32,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//3
 		MISSION_TYPE_SKILL,		//type
 		24,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//4
 		MISSION_TYPE_SKILL,		//type
 		17,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//5
 		MISSION_TYPE_SKILL,		//type
 		14,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//6
 		MISSION_TYPE_SKILL,		//type
 		11,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//7
 		MISSION_TYPE_SKILL,		//type
 		8,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//8
 		MISSION_TYPE_SKILL,		//type
 		5,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//9
 		MISSION_TYPE_SKILL,		//type
 		2,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//10
 		MISSION_TYPE_SKILL,		//type
 		0,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//11
 		MISSION_TYPE_SKILL,		//type
 		0,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//12
 		MISSION_TYPE_SKILL,		//type
 		0,		//level
 		100,		//odds
+		7,		//version_bit
 	},
 	{	//13
 		MISSION_TYPE_BASIC,		//type
 		50,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//14
 		MISSION_TYPE_BASIC,		//type
 		40,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//15
 		MISSION_TYPE_BASIC,		//type
 		34,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//16
 		MISSION_TYPE_BASIC,		//type
 		25,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//17
 		MISSION_TYPE_BASIC,		//type
 		19,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//18
 		MISSION_TYPE_BASIC,		//type
 		16,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//19
 		MISSION_TYPE_BASIC,		//type
 		13,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//20
 		MISSION_TYPE_BASIC,		//type
 		10,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//21
 		MISSION_TYPE_BASIC,		//type
 		7,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//22
 		MISSION_TYPE_BASIC,		//type
 		4,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//23
 		MISSION_TYPE_BASIC,		//type
 		0,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//24
 		MISSION_TYPE_BASIC,		//type
 		0,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//25
 		MISSION_TYPE_BASIC,		//type
 		0,		//level
 		100,		//odds
+		7,		//version_bit
 	},
 	{	//26
 		MISSION_TYPE_VICTORY,		//type
 		42,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//27
 		MISSION_TYPE_VICTORY,		//type
 		34,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//28
 		MISSION_TYPE_VICTORY,		//type
 		26,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//29
 		MISSION_TYPE_VICTORY,		//type
 		18,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//30
 		MISSION_TYPE_VICTORY,		//type
 		10,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//31
 		MISSION_TYPE_VICTORY,		//type
 		5,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//32
 		MISSION_TYPE_VICTORY,		//type
 		0,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//33
 		MISSION_TYPE_VICTORY,		//type
 		0,		//level
 		100,		//odds
+		7,		//version_bit
 	},
 	{	//34
 		MISSION_TYPE_PERSONALITY,		//type
 		25,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//35
 		MISSION_TYPE_PERSONALITY,		//type
 		15,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//36
 		MISSION_TYPE_PERSONALITY,		//type
 		5,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//37
 		MISSION_TYPE_PERSONALITY,		//type
 		0,		//level
 		100,		//odds
+		7,		//version_bit
 	},
 	{	//38
 		MISSION_TYPE_ITEM,		//type
 		48,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//39
 		MISSION_TYPE_ITEM,		//type
 		48,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//40
 		MISSION_TYPE_ITEM,		//type
 		48,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//41
 		MISSION_TYPE_ITEM,		//type
 		43,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//42
 		MISSION_TYPE_ITEM,		//type
 		43,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//43
 		MISSION_TYPE_ITEM,		//type
 		43,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//44
 		MISSION_TYPE_ITEM,		//type
 		38,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//45
 		MISSION_TYPE_ITEM,		//type
 		38,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//46
 		MISSION_TYPE_ITEM,		//type
 		38,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//47
 		MISSION_TYPE_ITEM,		//type
 		33,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//48
 		MISSION_TYPE_ITEM,		//type
 		33,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//49
 		MISSION_TYPE_ITEM,		//type
 		33,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//50
 		MISSION_TYPE_ITEM,		//type
 		28,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//51
 		MISSION_TYPE_ITEM,		//type
 		28,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//52
 		MISSION_TYPE_ITEM,		//type
 		28,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//53
 		MISSION_TYPE_ITEM,		//type
 		23,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//54
 		MISSION_TYPE_ITEM,		//type
 		23,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//55
 		MISSION_TYPE_ITEM,		//type
 		23,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//56
 		MISSION_TYPE_ITEM,		//type
 		18,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//57
 		MISSION_TYPE_ITEM,		//type
 		18,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//58
 		MISSION_TYPE_ITEM,		//type
 		18,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//59
 		MISSION_TYPE_ITEM,		//type
 		13,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//60
 		MISSION_TYPE_ITEM,		//type
 		13,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//61
 		MISSION_TYPE_ITEM,		//type
 		13,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//62
 		MISSION_TYPE_ITEM,		//type
 		8,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//63
 		MISSION_TYPE_ITEM,		//type
 		8,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//64
 		MISSION_TYPE_ITEM,		//type
 		8,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//65
 		MISSION_TYPE_ITEM,		//type
 		4,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//66
 		MISSION_TYPE_ITEM,		//type
 		4,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//67
 		MISSION_TYPE_ITEM,		//type
 		4,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//68
 		MISSION_TYPE_ITEM,		//type
 		4,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//69
 		MISSION_TYPE_ITEM,		//type
 		0,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//70
 		MISSION_TYPE_ITEM,		//type
 		0,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//71
 		MISSION_TYPE_ITEM,		//type
 		0,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//72
 		MISSION_TYPE_ITEM,		//type
 		0,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//73
 		MISSION_TYPE_ITEM,		//type
 		0,		//level
 		100,		//odds
+		7,		//version_bit
 	},
 	{	//74
 		MISSION_TYPE_ATTRIBUTE,		//type
 		54,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//75
 		MISSION_TYPE_ATTRIBUTE,		//type
 		54,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//76
 		MISSION_TYPE_ATTRIBUTE,		//type
 		54,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//77
 		MISSION_TYPE_ATTRIBUTE,		//type
 		54,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//78
 		MISSION_TYPE_ATTRIBUTE,		//type
 		49,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//79
 		MISSION_TYPE_ATTRIBUTE,		//type
 		49,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//80
 		MISSION_TYPE_ATTRIBUTE,		//type
 		49,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//81
 		MISSION_TYPE_ATTRIBUTE,		//type
 		44,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//82
 		MISSION_TYPE_ATTRIBUTE,		//type
 		44,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//83
 		MISSION_TYPE_ATTRIBUTE,		//type
 		44,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//84
 		MISSION_TYPE_ATTRIBUTE,		//type
 		39,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//85
 		MISSION_TYPE_ATTRIBUTE,		//type
 		39,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//86
 		MISSION_TYPE_ATTRIBUTE,		//type
 		39,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//87
 		MISSION_TYPE_ATTRIBUTE,		//type
 		34,		//level
 		15,		//odds
+		7,		//version_bit
 	},
 	{	//88
 		MISSION_TYPE_ATTRIBUTE,		//type
 		34,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//89
 		MISSION_TYPE_ATTRIBUTE,		//type
 		34,		//level
 		33,		//odds
+		7,		//version_bit
 	},
 	{	//90
 		MISSION_TYPE_ATTRIBUTE,		//type
 		29,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//91
 		MISSION_TYPE_ATTRIBUTE,		//type
 		29,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//92
 		MISSION_TYPE_ATTRIBUTE,		//type
 		29,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//93
 		MISSION_TYPE_ATTRIBUTE,		//type
 		24,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//94
 		MISSION_TYPE_ATTRIBUTE,		//type
 		24,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//95
 		MISSION_TYPE_ATTRIBUTE,		//type
 		24,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//96
 		MISSION_TYPE_ATTRIBUTE,		//type
 		19,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//97
 		MISSION_TYPE_ATTRIBUTE,		//type
 		19,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//98
 		MISSION_TYPE_ATTRIBUTE,		//type
 		19,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//99
 		MISSION_TYPE_ATTRIBUTE,		//type
 		14,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//100
 		MISSION_TYPE_ATTRIBUTE,		//type
 		14,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//101
 		MISSION_TYPE_ATTRIBUTE,		//type
 		14,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//102
 		MISSION_TYPE_ATTRIBUTE,		//type
 		8,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//103
 		MISSION_TYPE_ATTRIBUTE,		//type
 		8,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//104
 		MISSION_TYPE_ATTRIBUTE,		//type
 		8,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//105
 		MISSION_TYPE_ATTRIBUTE,		//type
 		3,		//level
 		20,		//odds
+		7,		//version_bit
 	},
 	{	//106
 		MISSION_TYPE_ATTRIBUTE,		//type
 		3,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//107
 		MISSION_TYPE_ATTRIBUTE,		//type
 		3,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//108
 		MISSION_TYPE_ATTRIBUTE,		//type
 		0,		//level
 		25,		//odds
+		7,		//version_bit
 	},
 	{	//109
 		MISSION_TYPE_ATTRIBUTE,		//type
 		0,		//level
 		30,		//odds
+		7,		//version_bit
 	},
 	{	//110
 		MISSION_TYPE_ATTRIBUTE,		//type
 		0,		//level
 		50,		//odds
+		7,		//version_bit
 	},
 	{	//111
 		MISSION_TYPE_ATTRIBUTE,		//type
 		0,		//level
 		100,		//odds
+		7,		//version_bit
 	},
 };

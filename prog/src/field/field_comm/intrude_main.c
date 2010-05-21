@@ -31,6 +31,7 @@
 #include "intrude_work.h"
 #include "savedata/symbol_save_notwifi.h"
 #include "savedata/intrude_save.h"
+#include "item/itemsym.h"
 
 
 //==============================================================================
@@ -100,6 +101,11 @@ const PALACE_TOWN_DATA PalaceTownData[] = {
   },
 };
 SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
+
+//==============================================================================
+//  外部データ
+//==============================================================================
+#include "mission_ng_check.cdat"
 
 
 //==============================================================================
@@ -1015,3 +1021,44 @@ BOOL Intrude_CheckRecvOccupyResult(INTRUDE_COMM_SYS_PTR intcomm)
   return intcomm->recv_occupy_result.occ;
 }
 
+//==================================================================
+/**
+ * OBJIDが侵入で変装できるOBJIDかをチェックする(不正チェックに使用)
+ *
+ * @param   obj_id		
+ *
+ * @retval  BOOL		TRUE:表示OK　FALSE:不正なOBJID
+ */
+//==================================================================
+BOOL Intrude_CheckNG_OBJID(u16 obj_id)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(IntrudeOBJID_List); i++){
+    if(IntrudeOBJID_List[i] == obj_id){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * アイテムが侵入のミッションで売買、入手出来るアイテムかをチェックする(不正チェックに使用)
+ *
+ * @param   item_no		
+ *
+ * @retval  BOOL		TRUE:表示OK　FALSE:不正なOBJID
+ */
+//==================================================================
+BOOL Intrude_CheckNG_Item(u16 item_no)
+{
+  int i;
+  
+  for(i = 0; i < NELEMS(IntrudeItem_List); i++){
+    if(IntrudeItem_List[i] == item_no){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}

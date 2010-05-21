@@ -38,8 +38,6 @@ typedef struct{
 extern void IntrudeEventPrint_SetupFieldMsg(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *gsys);
 extern void IntrudeEventPrint_ExitFieldMsg(INTRUDE_EVENT_MSGWORK *iem);
 extern void IntrudeEventPrint_StartStream(INTRUDE_EVENT_MSGWORK *iem, u16 msg_id);
-extern BOOL IntrudeEventPrint_StartStreamMission(
-  INTRUDE_EVENT_MSGWORK *iem, INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeEventPrint_WaitStream(INTRUDE_EVENT_MSGWORK *iem);
 extern BOOL IntrudeEventPrint_LastKeyWait(void);
 extern void IntrudeEventPrint_Print(INTRUDE_EVENT_MSGWORK *iem, u16 msg_id, int x, int y);
