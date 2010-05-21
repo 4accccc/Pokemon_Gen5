@@ -5458,8 +5458,16 @@ static BOOL IsTikarazukuEffecive( WazaID waza )
   WazaCategory category = WAZADATA_GetCategory( waza );
 
   switch( category ){
-  // 殴った相手に効果が発動するタイプは無条件に有効
+  // 殴った相手に効果が発動するタイプは基本的に有効
   case WAZADATA_CATEGORY_DAMAGE_SICK:
+    {
+      // バインド系のみ無効
+      WazaSick sickID = WAZADATA_GetParam( waza, WAZAPARAM_SICK );
+      if( sickID == WAZASICK_BIND ){
+        return FALSE;
+      }
+    }
+    /* fallthru */
   case WAZADATA_CATEGORY_DAMAGE_EFFECT:
     return TRUE;
 
@@ -5480,8 +5488,6 @@ static BOOL IsTikarazukuEffecive( WazaID waza )
     }
     break;
   }
-
-  // @TODO ひるみ？
 
   return FALSE;
 }
