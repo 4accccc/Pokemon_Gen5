@@ -79,7 +79,7 @@ static const DEBUG_NUMINPUT_LIST DNI_DebugFadeList[] = {
 //////////////////////////////////////////////////////
 ///í êMä÷òA
 static const DEBUG_NUMINPUT_PARAM net_whpipe_alonetest_param = {
- 0, 32, DebugGetNetWhpipeAloneTestCode, DebugSetNetWhpipeAloneTestCode,
+ 0, 255, DebugGetNetWhpipeAloneTestCode, DebugSetNetWhpipeAloneTestCode,
 };
 
 static const DEBUG_NUMINPUT_LIST DNI_DebugNetConfigList[] = {

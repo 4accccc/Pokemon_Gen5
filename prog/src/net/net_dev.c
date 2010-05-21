@@ -53,9 +53,10 @@ FS_EXTERN_OVERLAY(dpw_common);
 
 
 #ifdef PM_DEBUG
+#include "net_alone_test.h"
 //net_whpipe.cでしか使用しないが、オーバーレイされるsrcの為、値が消えてしまう
 //消されないように常駐であるこのファイルに定義だけ行う
-u8 DebugAloneTest = 0;
+u8 DebugAloneTest = _DEBUG_ALONETEST;
 #endif
 
 

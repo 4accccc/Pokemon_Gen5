@@ -337,9 +337,6 @@ SRCS_OVERLAY_EVENT_WIFIBSUBWAY  = field/event_wifi_bsubway.c
 #GROUP_OVERLAY_MAINEVENT
 SRCS_OVERLAY_EVENT_BATTLECALL = field/event_battle_call.c
 
-
-
-
 # wifiプログラムのライブラリ libwcm$(TWL_LIBSUFFIX).a
 #===> GROUP_OVERLAY_MAINEVENT
 #LIB=>          libcps.$HYB.a
@@ -1697,7 +1694,8 @@ SRCS_OVERLAY_SOUNDVIEW = sound/snd_viewer.c
 
 #D_NUMINPUTライブラリ
 #===> GROUP_OVERLAY_GIMMICK
-SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c
+SRCS_OVERLAY_D_NUMINPUT = field/event_debug_numinput.c \
+                          net/net_whpipe_deb.c
 
 #D_NUMINPUT_RESEARCH
 #===> GROUP_OVERLAY_GIMMICK

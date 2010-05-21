@@ -1031,11 +1031,7 @@ static void DebugSetBlackLevel(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 par
 //--------------------------------------------------------------
 static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param )
 {
-  if( GFL_NET_IsInit() ){
-    return DEBUG_NET_WHPIPE_AloneTestCodeGet();
-  }else{
-    return 255; //ñ≥å¯ÉRÅ[Éh
-  }
+  return DEBUG_NET_WHPIPE_AloneTestCodeGet();
 }
 
 //--------------------------------------------------------------
@@ -1045,9 +1041,7 @@ static u32 DebugGetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gameda
 //--------------------------------------------------------------
 static void DebugSetNetWhpipeAloneTestCode(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
 {
-  if( GFL_NET_IsInit() && value <= 32 ){
-    DEBUG_NET_WHPIPE_AloneTestCodeSet( value );
-  }
+  DEBUG_NET_WHPIPE_AloneTestCodeSet( value );
 }
 
 //--------------------------------------------------------------
