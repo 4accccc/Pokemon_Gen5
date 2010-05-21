@@ -325,9 +325,9 @@ void PSTATUS_INFO_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_INFO_WORK *infoWo
 
   for( i=0;i<SIB_MAX;i++ )
   {
-    GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWin[i] );
+    GFL_BMPWIN_MakeTransWindow( infoWork->bmpWin[i] );
   }
-  GFL_BMPWIN_MakeTransWindow_VBlank( infoWork->bmpWinUp );
+  GFL_BMPWIN_MakeTransWindow( infoWork->bmpWinUp );
 
   //タイプアイコン
   if( work->isEgg == FALSE )

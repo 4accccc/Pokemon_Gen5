@@ -680,7 +680,7 @@ static void PSTATUS_SKILL_DispStatusPage_Trans( PSTATUS_WORK *work , PSTATUS_SKI
   GFL_BG_ClearScreenCodeVReq( PSTATUS_BG_SUB_STR , 0 );
   for( i=PSBT_STATUS_START;i<=PSBT_STATUS_END;i++ )
   {
-    GFL_BMPWIN_MakeTransWindow_VBlank( skillWork->upBmpWin[i] );
+    GFL_BMPWIN_MakeTransWindow( skillWork->upBmpWin[i] );
   }
 
   GFL_BG_LoadScreenBuffer( PSTATUS_BG_SUB_PLATE,
@@ -719,7 +719,7 @@ static void PSTATUS_SKILL_DispSkillInfoPage_Trans( PSTATUS_WORK *work , PSTATUS_
   GFL_BG_ClearScreenCodeVReq( PSTATUS_BG_SUB_STR , 0 );
   for( i=PSBT_SKILL_START;i<=PSBT_SKILL_END;i++ )
   {
-    GFL_BMPWIN_MakeTransWindow_VBlank( skillWork->upBmpWin[i] );
+    GFL_BMPWIN_MakeTransWindow( skillWork->upBmpWin[i] );
   }
   GFL_BG_LoadScreen( PSTATUS_BG_SUB_PLATE,
                      skillWork->scrDataUpSkill->rawData,
@@ -1033,7 +1033,7 @@ static void PSTATUS_SKILL_DrawStrSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK 
                             PSTATUS_SKILL_STR_WAZA_POWER_X , PSTATUS_SKILL_STR_WAZA_POWER_Y , PSTATUS_STR_COL_TITLE );
   {
     u32 pow = WAZADATA_GetPower( wazaNo );
-    if( pow == 0 )
+    if( pow <= 1 )
     {
       PSTATUS_UTIL_DrawStrFunc( work , skillWork->upBmpWin[PSBT_POW] , mes_status_06_28 ,
                                      PSTATUS_SKILL_STR_WAZA_POWER_NUM_X+6 , PSTATUS_SKILL_STR_WAZA_POWER_NUM_Y , PSTATUS_STR_COL_VALUE );
