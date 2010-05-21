@@ -232,15 +232,15 @@ EVENT_START ev_sodateya_grandma
   ELSE 
     _GOLD_WIN_OPEN( MENU_X1, MENU_Y1 ) // 所持金表示
 
-    // 初回会話かどうかでメッセージ切り替え
-    IF $first_talk == TRUE THEN
+    // 初回会話
+    IF $first_talk == FALSE THEN
       //「あたし育て屋ばあさん」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_01, SCWK_TARGET_OBJID, POS_DOWN )
-      //_AB_KEYWAIT()
+      _FLAG_SET( FE_SODATEYA_FIRSTTALK ) // 初回会話が完了
+    // 2回目以降
     ELSE
       //「何をしにきたの？」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_02, SCWK_TARGET_OBJID, POS_DOWN )
-      //_AB_KEYWAIT()
     ENDIF
 
     // メニュー作成
