@@ -365,6 +365,7 @@ void CTVT_TALK_InitMode( COMM_TVT_WORK *work , CTVT_TALK_WORK *talkWork )
     if( talkMem != CTVT_COMM_INVALID_MEMBER )
     {
       COMM_TVT_DispTalkIcon( work , talkMem );
+      talkWork->recButtonState = CRBT_DISALE;
     }
   }
 }

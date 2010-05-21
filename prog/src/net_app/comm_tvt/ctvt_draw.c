@@ -206,6 +206,7 @@ CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
 
   drawWork->penSize = DSPS_CIRCLE_1;
   drawWork->stampType = DSPS_STAMP_HEART;
+  drawWork->editMode = CDED_PEN;
 
   //ƒo[ƒWƒ‡ƒ“‚Å”’•‚ð•Ï‚¦‚é
   if( GET_VERSION() == VERSION_BLACK )
@@ -442,7 +443,6 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->dispBarScroll = 24;
   drawWork->isHold = FALSE;
   drawWork->isTouch = FALSE;
-  drawWork->editMode = CDED_PEN;
   drawWork->isBefStamp = FALSE;
   drawWork->isDispPenSize = FALSE;
   drawWork->isDispStampType = FALSE;
