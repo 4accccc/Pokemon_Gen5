@@ -28,7 +28,7 @@ _EVENT_DATA    ev_c04r0101_fighterm_01
 _EVENT_DATA    ev_pos_c04r0101_connect_c04
 _EVENT_DATA    ev_scene_c04r0101_entry
 _EVENT_DATA    ev_c04r0101_boy1_btltalk
-_EVENT_DATA    ev_bg_bsleader_board		//歴代リーダー閲覧
+_EVENT_DATA    ev_bg_bsleader_board   //歴代リーダー閲覧
 _EVENT_DATA    ev_bg_c04r0101_sign_01
 _EVENT_DATA    ev_bg_c04r0101_sign_02
 _EVENT_DATA    ev_bg_c04r0101_sign_03
@@ -44,104 +44,104 @@ DEFINE_LOCAL easy_talk_word1
 DEFINE_LOCAL easy_talk_word2
 
 /************************************************************/
-/*					入った時の主人公アニメ					*/
+/*          入った時の主人公アニメ          */
 /************************************************************/
-EVENT_START	ev_scene_c04r0101_entry
-	//主人公：階段を降りる
-//	_TIME_WAIT( 8 )
-	
-	_PLACE_NAME_DISPLAY()	//地名表示演出
-	
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_in )
-	_OBJ_ANIME_WAIT()
-	
-	//プレイヤー位置を別のレール座標に変更
-	_PLAYER_RAIL_LOC_SET( 2, 0, 1 )
-	
-	//========================================//
-	//シーンチェンジを無効にする
-	$WK_OTHER_STATION_CONNECT = 0
-	//========================================//
-	
+EVENT_START ev_scene_c04r0101_entry
+  //主人公：階段を降りる
+//  _TIME_WAIT( 8 )
+  
+  _PLACE_NAME_DISPLAY() //地名表示演出
+  
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_in )
+  _OBJ_ANIME_WAIT()
+  
+  //プレイヤー位置を別のレール座標に変更
+  _PLAYER_RAIL_LOC_SET( 2, 0, 1 )
+  
+  //========================================//
+  //シーンチェンジを無効にする
+  $WK_OTHER_STATION_CONNECT = 0
+  //========================================//
+  
 EVENT_END
 
 //--------------------------------------------------------------------
 //主人公：階段を降りる
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_walk_in
-	_ANIME_DATA	AC_WALK_L_8F,10
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_walk_in
+  _ANIME_DATA AC_WALK_L_8F,10
+  _ANIME_DATA ACMD_END,0
 
 
 /************************************************************/
-/*					POSイベント：C04に出る					*/
+/*          POSイベント：C04に出る          */
 /************************************************************/
 //スクリプトによる特殊な接続イベント
-EVENT_START	ev_pos_c04r0101_connect_c04
-	//プレイヤー位置を別のレール座標に変更
-	_PLAYER_RAIL_LOC_SET( 6, 0, 0 )
-	
-	//主人公：階段を登る
-	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_out )
-	_OBJ_ANIME_WAIT()
-	
-	//予約スクリプト：C04マップチェンジ後に主人公出てくるアニメを起動
-	_RESERVE_SCRIPT( SCRID_RESERVE_C04_EXIT )
-	
-	//C04にマップチェンジ
-	_MAP_CHANGE( ZONE_ID_C04, 422, 459, DIR_DOWN )
-	
+EVENT_START ev_pos_c04r0101_connect_c04
+  //プレイヤー位置を別のレール座標に変更
+  _PLAYER_RAIL_LOC_SET( 6, 0, 0 )
+  
+  //主人公：階段を登る
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_walk_out )
+  _OBJ_ANIME_WAIT()
+  
+  //予約スクリプト：C04マップチェンジ後に主人公出てくるアニメを起動
+  _RESERVE_SCRIPT( SCRID_RESERVE_C04_EXIT )
+  
+  //C04にマップチェンジ
+  _MAP_CHANGE( ZONE_ID_C04, 422, 459, DIR_DOWN )
+  
 EVENT_END
 
 //--------------------------------------------------------------------
 //主人公：階段を登る
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_player_walk_out
-	_ANIME_DATA	AC_WALK_R_8F,8
-	_ANIME_DATA	ACMD_END,0
+_ANIME_LABEL  anm_player_walk_out
+  _ANIME_DATA AC_WALK_R_8F,8
+  _ANIME_DATA ACMD_END,0
 
 
 /************************************************************/
-/*						鉄道員１							*/
+/*            鉄道員１              */
 /************************************************************/
-EVENT_START	ev_c04r0101_railman_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_railman1_01 )
+EVENT_START ev_c04r0101_railman_01
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_railman1_01 )
 EVENT_END
 
 
 /************************************************************/
-/*						鉄道員２							*/
+/*            鉄道員２              */
 /************************************************************/
-EVENT_START	ev_c04r0101_railman_02
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_railman2_01 )
+EVENT_START ev_c04r0101_railman_02
+  _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_railman2_01 )
 EVENT_END
 
 
 /************************************************************/
-/*						格闘家							*/
+/*            格闘家              */
 /************************************************************/
-EVENT_START	ev_c04r0101_fighterm_01
-	_TALK_OBJ_START()
+EVENT_START ev_c04r0101_fighterm_01
+  _TALK_OBJ_START()
 
-	//ゲームクリア前後で分岐
-	IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
-		//殿堂入り後
-		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_02 )
-	ELSE
-		//殿堂入り前
-		_BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_01 )
-	ENDIF
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
+  //ゲームクリア前後で分岐
+  IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+    //殿堂入り後
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_02 )
+  ELSE
+    //殿堂入り前
+    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0101_fighterm_01 )
+  ENDIF
+  _LAST_KEYWAIT()
+  _BALLOONWIN_CLOSE()
 
 EVENT_END
 
 
 /************************************************************/
-/*				少年１ ※戦闘会話の登録NPC					*/
+/*        少年１ ※戦闘会話の登録NPC          */
 /************************************************************/
 //バトルサブウェイで通信時に話すメッセージの登録イベント
-EVENT_START	ev_c04r0101_boy1_btltalk
+EVENT_START ev_c04r0101_boy1_btltalk
   DEFINE_LOCAL last_msg
 
   _TALK_OBJ_START()
@@ -246,116 +246,116 @@ _RET
 
 
 /************************************************************/
-/*					歴代リーダー閲覧						*/
+/*          歴代トレーナー閲覧            */
 /************************************************************/
-EVENT_START	ev_bg_bsleader_board
-	_TALK_START_SE_PLAY()
-	
-	//歴代リーダーの人数チェック
-	_BSUBWAY_TOOL( BSWTOOL_GET_LEADERDATA_DATANUM, BSW_NULL, BSW_NULL, SCWK_ANSWER )
-	
-	_DEBUG_PRINT_WK( SCWK_ANSWER )
-	
-	IF $SCWK_ANSWER == 0 THEN
-		//人数0 データを取得していないなら
-		_SYSWIN_MSG( msg_c04r0101_bsboard_01, POS_DOWN )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-		
-	ELSE
-		//【仮】サーバに接続できないため仮データを表示する。第２～４引数はダミー
-		_BSUBWAY_TOOL( BSWTOOL_WIFI_EV_READ_SCDATA, 0, 0, SCWK_ANSWER )
-		
-	ENDIF
-	
+EVENT_START ev_bg_bsleader_board
+  _TALK_START_SE_PLAY()
+  
+  //歴代リーダーの人数チェック
+  _BSUBWAY_TOOL( BSWTOOL_GET_LEADERDATA_DATANUM, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == 0 THEN
+    //人数0 データを取得していないならメッセージを出して終了
+    _SYSWIN_MSG( msg_c04r0101_bsboard_01, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    
+  ELSE
+    // 歴代トレーナー画面の表示
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_EV_READ_SCDATA, 0, 0, SCWK_ANSWER )
+    
+  ENDIF
+  
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_01
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign1_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_01
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign1_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_02
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign2_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_02
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign2_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_03
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign3_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_03
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign3_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_04
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign4_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_04
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign4_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_05
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign5_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_05
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign5_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_06
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign6_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_06
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign6_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_07
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign7_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_07
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign7_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
 /************************************************************/
-/*						行き先案内							*/
+/*            行き先案内              */
 /************************************************************/
-EVENT_START	ev_bg_c04r0101_sign_08
-	_TALK_START_SE_PLAY()
-	_SYSWIN_MSG( msg_c04r0101_sign8_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
+EVENT_START ev_bg_c04r0101_sign_08
+  _TALK_START_SE_PLAY()
+  _SYSWIN_MSG( msg_c04r0101_sign8_01, POS_DOWN )
+  _LAST_KEYWAIT()
+  _MSGWIN_CLOSE()
 EVENT_END
 
 
