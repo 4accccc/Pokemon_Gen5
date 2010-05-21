@@ -2260,4 +2260,7 @@ SRCS_OVERLAY_PDC_RETURN =	field/event_pdc_return.c
 #===> SRCS_OVERLAY_MYSTERY
 SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 
+# 任天堂デバッグ
+#===> GROUP_OVERLAY_UNION_INTRUDE
+SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
 

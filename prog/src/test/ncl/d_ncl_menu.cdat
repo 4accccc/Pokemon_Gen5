@@ -1,0 +1,26 @@
+//=============================================================================
+/**
+ *  @file   d_ncl_menu.cdat
+ *  @brief  任天堂デバッグメニュー項目
+ *  @author ichibayashi
+ *  @data   2010.05.20
+ */
+//=============================================================================
+
+FS_EXTERN_OVERLAY(debug_ncl);
+
+static BOOL TESTMODE_ITEM_SelectFontViewer( TESTMODE_WORK *work , const int idx );
+
+static TESTMODE_MENU_LIST menuNCL[] = 
+{
+  {L"Font Viewer"             ,TESTMODE_ITEM_SelectFontViewer },
+
+  {L"もどる"                  ,TESTMODE_ITEM_BackTopMenu },
+};
+
+extern const GFL_PROC_DATA FontViewerProcData;
+static BOOL TESTMODE_ITEM_SelectFontViewer( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeProc(work, FS_OVERLAY_ID(debug_ncl), &FontViewerProcData, NULL );
+  return TRUE;
+}

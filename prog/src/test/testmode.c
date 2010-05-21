@@ -173,6 +173,7 @@ static BOOL TESTMODE_ITEM_SelectFuncMori( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncKawada( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectFuncNCL( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx );
@@ -265,6 +266,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"Ç»Ç©ÇﬁÇÁÅ@Ç–ÇÎÇ‰Ç´"  ,TESTMODE_ITEM_SelectFuncNakamura},
   {L"ÇŸÇ≥Ç©Å@Ç∞ÇÒÇ‚"      ,TESTMODE_ITEM_SelectFuncHosaka},
   {L"Ç©ÇÌÇæÅ@Ç±Ç§Ç∂"      ,TESTMODE_ITEM_SelectFuncKawada},
+  {L"Ç…ÇÒÇƒÇÒÇ«Ç§"        ,TESTMODE_ITEM_SelectFuncNCL},
 };
 
 static TESTMODE_MENU_LIST menuRTCEdit[] =
@@ -1119,6 +1121,12 @@ static BOOL TESTMODE_ITEM_SelectFuncRTCEdit( TESTMODE_WORK *work , const int idx
   return TRUE;
 }
 
+#include "ncl/d_ncl_menu.cdat"
+static BOOL TESTMODE_ITEM_SelectFuncNCL( TESTMODE_WORK *work , const int idx )
+{
+  TESTMODE_COMMAND_ChangeMenu( work , menuNCL, NELEMS(menuNCL) );
+  return TRUE;
+}
 
 //-----------------------------------------------------------------------
 
