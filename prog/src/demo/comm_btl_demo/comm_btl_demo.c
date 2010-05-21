@@ -83,12 +83,26 @@ enum
   TRAINER_CNT_MULTI = 4,
 };
 
+
+
 enum
 { 
-  SE_BALL_IN = SEQ_SE_SYS_65,   ///< ボールが出現
-  SE_VS_IN   = SEQ_SE_SYS_66,   ///< VS表示
-  SE_WIN_IN  = SEQ_SE_SYS_67,   ///< WIN表示
+  SE_BALL_IN  = 0, ///< ボールが出現
+  SE_VS_IN,        ///< VS表示
+  SE_WIN_IN,       ///< WIN表示
+  SE_FLASH_IN,     ///< ホワイトアウト時の効果音
+  SE_DRAW_IN,      ///< DRAW表示
 };
+
+// ＷＣＳと通常時でＳＥを切り替えるテーブル
+static const u32 se_table[][2]={
+  { SEQ_SE_SYS_65,    SEQ_SE_SYS_65,   },    ///< ボールが出現
+  { SEQ_SE_SYS_66,    SEQ_SE_WCS_02,   },    ///< VS表示
+  { SEQ_SE_SYS_67,    SEQ_SE_WCS_03,   },    ///< WIN表示
+  { SEQ_SE_TDEMO_009, SEQ_SE_WCS_04,   },    ///< ホワイトアウト時の効果音
+  { SEQ_SE_W235_03,   SEQ_SE_W235_03,  },    ///< DRAW表示
+};
+
 
 //--------------------------------------------------------------
 /// リザルト表示位置
@@ -810,13 +824,6 @@ static GFL_PROC_RESULT CommBtlDemoProc_Main( GFL_PROC *proc, int *seq, void *pwk
 { 
   COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
         
-#if 0
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    OS_Printf("aaa\n");
-    PMSND_PlaySE( SE_WIN_IN );
-  }
-#endif
 
 #ifdef PM_DEBUG
 #if 0
@@ -1024,6 +1031,22 @@ static void _start_demo_init_rebind_multi( COMM_BTL_DEMO_MAIN_WORK* wk )
   }
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief SEラベルを取得する（WCSに対応）
+ *
+ * @param   se_label    
+ * @param   wcs   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int _get_se_no( int se_label, int wcs )
+{
+  return se_table[se_label][wcs];
+}
+
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  バトル前デモ 主処理
@@ -1088,7 +1111,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
 
     if( wk->timer == START_DEMO_VS_OPEN_SYNC )
     {
-      PMSND_PlaySE( SE_VS_IN );
+      PMSND_PlaySE( _get_se_no(SE_VS_IN,wk->pwk->wcs_flag) );
       // 「VS」出現パーティクル
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 0, &(VecFx32){0,0,-100} );
       G3D_PTC_CreateEmitter( &wk->wk_g3d, 1, &(VecFx32){0,0,-100} );
@@ -1105,7 +1128,7 @@ static BOOL SceneStartDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 0, 16, -3 );
     }
     else if( wk->timer == START_DEMO_WHITEOUT_SE_SYNC){
-      PMSND_PlaySE( SEQ_SE_TDEMO_009 );
+      PMSND_PlaySE( _get_se_no(SE_FLASH_IN,wk->pwk->wcs_flag) );
     }
     else if( wk->timer == START_DEMO_FINISH_SYNC )
     {
@@ -1275,7 +1298,7 @@ static BOOL SceneEndDemo_Main( UI_SCENE_CNT_PTR cnt, void* work )
           pos = RESULT_POS_YOU;
         }
 
-        PMSND_PlaySE( SE_WIN_IN );
+        PMSND_PlaySE( _get_se_no(SE_WIN_IN,wk->pwk->wcs_flag) );
         RESULT_UNIT_SetOpen( &wk->result_unit, pos, COMM_BTL_DEMO_RESULT_WIN );
       }
       // LOSE表示
@@ -1356,6 +1379,7 @@ static BOOL SceneEndDemo_End( UI_SCENE_CNT_PTR cnt, void* work )
   // 引き分けは開放せずに別シーケンスへ
   if( wk->result == COMM_BTL_DEMO_RESULT_DRAW )
   {
+    PMSND_PlaySE( _get_se_no(SE_DRAW_IN,wk->pwk->wcs_flag) );
     UI_SCENE_CNT_SetNextScene( cnt, CBD_SCENE_ID_END_DEMO_DRAW );
     return TRUE;
   }
@@ -1731,7 +1755,7 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
   if( id < unit->max )
   {
-    if( id == 0 ){ PMSND_PlaySE( SE_BALL_IN ); } // ボール
+    if( id == 0 ){ PMSND_PlaySE( _get_se_no(SE_BALL_IN, 0 ) ); } // ボール
 
     // パーティクル表示
     if( type_is_normal(unit->type) )
