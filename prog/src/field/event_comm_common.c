@@ -57,6 +57,13 @@ typedef struct{
 	u8 padding[3];
 }EVENT_COMM_COMMON;
 
+typedef struct{
+  FIELDMAP_WORK *fieldWork;
+  MMDL *fmmdl_player;
+  u32 talk_net_id;
+  HEAPID heap_id;
+}EVENT_COMM_MANAGER;
+
 
 
 //==============================================================================
@@ -68,6 +75,11 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 static void _EventChangeTalk(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_COMM_SYS_PTR intcomm);
 static void _EventChangeTalked(GMEVENT *event, EVENT_COMM_COMMON *talk, INTRUDE_COMM_SYS_PTR intcomm);
 static INTRUDE_TALK_TYPE _IntrudeTalkTypeJudge(EVENT_COMM_COMMON *talk, INTRUDE_COMM_SYS_PTR intcomm);
+static GMEVENT_RESULT EventCommCommonTalk_Manager( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT EventCommCommonTalked_Manager( GMEVENT *event, int *seq, void *wk );
+static GMEVENT * EVENT_CommCommon_TalkEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id);
+static GMEVENT * EVENT_CommCommon_TalkedEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+  INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id);
 
 
 //==============================================================================
@@ -171,6 +183,74 @@ static const EVENT_COMM_FUNC EventCommFuncTalkedTbl[] = {
 //==================================================================
 GMEVENT * EVENT_CommCommon_Talk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id)
 {
+	EVENT_COMM_MANAGER *manage;
+	GMEVENT *event = NULL;
+	
+ 	event = GMEVENT_Create(
+    		gsys, NULL,	EventCommCommonTalk_Manager, sizeof(EVENT_COMM_MANAGER) );
+  
+	manage = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( manage, sizeof(EVENT_COMM_MANAGER) );
+	
+	manage->fieldWork = fieldWork;
+	manage->fmmdl_player = fmmdl_player;
+	manage->talk_net_id = talk_net_id;
+	manage->heap_id = heap_id;
+
+	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信プレイヤー話しかけられたイベント（イベント管理）
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventCommCommonTalk_Manager( GMEVENT *event, int *seq, void *wk )
+{
+	EVENT_COMM_MANAGER *manage = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+	
+	switch( *seq ){
+	case 0:
+	  if(intcomm == NULL){
+      return GMEVENT_RES_FINISH;
+    }
+    
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( manage->fieldWork ) );
+    
+    GMEVENT_CallEvent(event, 
+      EVENT_CommCommon_TalkEvent(gsys, manage->fieldWork, intcomm, 
+      manage->fmmdl_player, manage->talk_net_id, manage->heap_id) );
+    (*seq)++;
+    break;
+  case 1:
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(manage->fieldWork));
+ 	  return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤー話しかけイベント（ここから状況毎にイベントが枝分かれしていく)
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   intcomm		
+ * @param   fmmdl_player		
+ * @param   talk_net_id		
+ * @param   heap_id		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+static GMEVENT * EVENT_CommCommon_TalkEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id)
+{
 	EVENT_COMM_COMMON *talk;
 	GMEVENT *event = NULL;
 	
@@ -205,6 +285,75 @@ GMEVENT * EVENT_CommCommon_Talk(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, IN
  */
 //==================================================================
 GMEVENT * EVENT_CommCommon_Talked(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
+  INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id)
+{
+	EVENT_COMM_MANAGER *manage;
+	GMEVENT *event = NULL;
+	
+ 	event = GMEVENT_Create(
+    		gsys, NULL,	EventCommCommonTalked_Manager, sizeof(EVENT_COMM_MANAGER) );
+  
+	manage = GMEVENT_GetEventWork( event );
+	GFL_STD_MemClear( manage, sizeof(EVENT_COMM_MANAGER) );
+	
+	manage->fieldWork = fieldWork;
+	manage->fmmdl_player = fmmdl_player;
+	manage->talk_net_id = talk_net_id;
+	manage->heap_id = heap_id;
+  
+	return( event );
+}
+
+//--------------------------------------------------------------
+/**
+ * 通信プレイヤー話しかけられたイベント（イベント管理）
+ * @param	event	GMEVENT
+ * @param	seq		シーケンス
+ * @param	wk		event talk
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventCommCommonTalked_Manager( GMEVENT *event, int *seq, void *wk )
+{
+	EVENT_COMM_MANAGER *manage = wk;
+	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+	
+	switch( *seq ){
+	case 0:
+	  if(intcomm == NULL){
+      return GMEVENT_RES_FINISH;
+    }
+    
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( manage->fieldWork ) );
+    
+    GMEVENT_CallEvent(event, 
+      EVENT_CommCommon_TalkedEvent(gsys, manage->fieldWork, intcomm, 
+      manage->fmmdl_player, manage->talk_net_id, manage->heap_id) );
+    (*seq)++;
+    break;
+  case 1:
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(manage->fieldWork));
+ 	  return GMEVENT_RES_FINISH;
+  }
+	return GMEVENT_RES_CONTINUE;
+}
+
+//==================================================================
+/**
+ * 通信プレイヤー話しかけられたイベント（ここから状況毎にイベントが枝分かれしていく)
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   intcomm		
+ * @param   fmmdl_player		
+ * @param   talk_net_id		
+ * @param   heap_id		
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+static GMEVENT * EVENT_CommCommon_TalkedEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
   INTRUDE_COMM_SYS_PTR intcomm, MMDL *fmmdl_player, u32 talk_net_id, HEAPID heap_id)
 {
 	EVENT_COMM_COMMON *talk;
@@ -414,6 +563,7 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
+    SEQ_SEND_ANSWER,
     SEQ_PLAYER_DIR_CHANGE,
     SEQ_PLAYER_DIR_CHANGE_WAIT,
     SEQ_ANSWER_SEND_WAIT,
@@ -433,7 +583,11 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
   }
 
 	switch( *seq ){
-	case SEQ_INIT:    //返事を返す
+	case SEQ_INIT:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( talk->ccew.fieldWork ) );
+	  *seq = SEQ_SEND_ANSWER;
+	  break;
+	case SEQ_SEND_ANSWER:   //返事を返す
 	  if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_status) == TRUE){
       (*seq)++;
@@ -470,6 +624,7 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
   	return GMEVENT_RES_CONTINUE;
     
 	case SEQ_FINISH:   //終了処理
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(talk->ccew.fieldWork));
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
     return GMEVENT_RES_FINISH;

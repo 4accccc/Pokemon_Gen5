@@ -20,6 +20,7 @@
 #include "event_comm_error.h"
 #include "system/net_err.h"
 #include "field/game_beacon_search.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 
 //==============================================================================
@@ -34,6 +35,7 @@ static GFL_PROC_RESULT FieldCommErrorProc_Init(GFL_PROC * proc, int * seq , void
 static GFL_PROC_RESULT FieldCommErrorProc_Main(GFL_PROC * proc, int * seq , void *pwk, void *mywk);
 static GFL_PROC_RESULT FieldCommErrorProc_Exit(GFL_PROC * proc, int * seq , void *pwk, void *mywk);
 static GMEVENT_RESULT _EventCommErrorExit( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT _EventCommError_Manage( GMEVENT *event, int *seq, void *wk );
 
 //==============================================================================
 //  データ
@@ -58,21 +60,64 @@ static const GFL_PROC_DATA FieldCommErrorProc = {
 //==================================================================
 GMEVENT * EVENT_FieldCommErrorProc(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap)
 {
-  GAME_COMM_NO comm_no = GameCommSys_GetLastCommNo(GAMESYSTEM_GetGameCommSysPtr(gsys));
+  return GMEVENT_Create(gsys, NULL, _EventCommError_Manage, 0);
+}
 
-  if(comm_no == GAME_COMM_NO_INVASION){
-    if(GAMEDATA_GetIntrudeReverseArea(GAMESYSTEM_GetGameData(gsys)) == TRUE){
-      //裏フィールド侵入中はエラーを出す
-      NetErr_App_ReqErrorDisp();
-      return EVENT_FieldSubProc(gsys, fieldmap, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, gsys);
+//--------------------------------------------------------------
+/**
+ * 
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  GMEVENT_RESULT		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT _EventCommError_Manage( GMEVENT *event, int *seq, void *wk )
+{
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+
+  switch(*seq){
+  case 0:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldWork ) );
+    
+    {
+      GAME_COMM_NO comm_no = GameCommSys_GetLastCommNo(GAMESYSTEM_GetGameCommSysPtr(gsys));
+      GMEVENT *child_event;
+      
+      if(comm_no == GAME_COMM_NO_INVASION){
+        if(GAMEDATA_GetIntrudeReverseArea(GAMESYSTEM_GetGameData(gsys)) == TRUE){
+          //裏フィールド侵入中はエラーを出す
+          NetErr_App_ReqErrorDisp();
+          child_event = EVENT_FieldSubProc(
+            gsys, fieldWork, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, gsys);
+        }
+        else{
+        	child_event = GMEVENT_Create( gsys, NULL, _EventCommErrorExit, 0 );
+        }
+      }
+      else{ //侵入以外では通常通りエラー画面を表示
+        NetErr_App_ReqErrorDisp();
+        child_event = EVENT_FieldSubProc(
+          gsys, fieldWork, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, gsys);
+      }
+      
+      GMEVENT_CallEvent(event, child_event);
     }
-    else{
-    	return GMEVENT_Create( gsys, NULL, _EventCommErrorExit, 0 );
+    
+    (*seq)++;
+    break;
+  case 1:
+    if(fieldWork != NULL && FIELDMAP_IsReady(fieldWork) == TRUE){
+   	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldWork));
+      return GMEVENT_RES_FINISH;
     }
+    break;
   }
-  else{ //侵入以外では通常通りエラー画面を表示
-    NetErr_App_ReqErrorDisp();
-    return EVENT_FieldSubProc(gsys, fieldmap, FS_OVERLAY_ID(fieldmap), &FieldCommErrorProc, gsys);  }
+  
+  return GMEVENT_RES_CONTINUE;
 }
 
 //--------------------------------------------------------------

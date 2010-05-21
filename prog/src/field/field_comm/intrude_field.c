@@ -63,7 +63,6 @@ typedef enum{
 //==============================================================================
 ///通信終了
 typedef struct{
-  FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   FLDMSGWIN_STREAM *msgStream;
@@ -107,7 +106,6 @@ typedef struct{
 
 ///ミッションターゲットにされたので表フィールドへ強制ワープ
 typedef struct{
-  FIELDMAP_WORK *fieldmap;
   GFL_MSGDATA *msgData;
   FLDMSGWIN_STREAM *msgStream;
 	INTRUDE_EVENT_DISGUISE_WORK iedw;
@@ -338,6 +336,7 @@ static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk
   
   switch(*seq){
   case 0:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( ngwin->fieldWork ) );
     {
       u32 msg_id;
       
@@ -381,6 +380,7 @@ static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk
   case 5:
     if(MMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
       MMDL_EndAcmd(ngwin->player_mmdl);
+   	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(ngwin->fieldWork));
       return( GMEVENT_RES_FINISH );
     }
     break;
@@ -442,6 +442,7 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   enum{
+    _SEQ_PAUSE,
     _SEQ_INIT,
     _SEQ_INIT_WAIT,
     _SEQ_MSG_INIT,
@@ -451,6 +452,10 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
   };
   
   switch(*seq){
+  case _SEQ_PAUSE:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( barrier->fieldWork ) );
+    (*seq)++;
+    break;
   case _SEQ_INIT:
     if(MMDL_CheckPossibleAcmd(barrier->player_mmdl) == FALSE){
       break;  
@@ -557,6 +562,7 @@ static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *w
       GFL_MSG_Delete( barrier->msgData );
       WORDSET_Delete(barrier->wordset);
     }
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(barrier->fieldWork));
     return( GMEVENT_RES_FINISH );
   }
 
@@ -708,7 +714,6 @@ static GMEVENT * EVENT_ChangeMapPosCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * 
 	event = GMEVENT_Create(gsys, NULL, EVENT_MapChangeCommEnd, sizeof(EVENT_SIOEND_WARP));
 	dsw = GMEVENT_GetEventWork(event);
 	GFL_STD_MemClear(dsw, sizeof(EVENT_SIOEND_WARP));
-	dsw->fieldmap = fieldmap;
 	
 	OS_TPrintf("親機：通信切断イベント起動\n");
 	return event;
@@ -718,7 +723,7 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
 {
 	EVENT_SIOEND_WARP * dsw = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
-	FIELDMAP_WORK * fieldmap = dsw->fieldmap;
+  FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   enum{
   	SEQ_INIT,
@@ -735,12 +740,15 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
   	SEQ_EXIT_CANCEL,
     SEQ_PLAYER_MOVE_UP,
     SEQ_PLAYER_MOVE_UP_WAIT,
+    SEQ_FINISH,
   };
 	
 	switch (*seq) {
 	case SEQ_INIT:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldmap ) );
+    
 	  {
-      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsw->fieldmap);
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldmap);
       dsw->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       dsw->msgStream = FLDMSGWIN_STREAM_AddTalkWin(msgBG, dsw->msgData );
 
@@ -750,7 +758,7 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
 	  break;
   case SEQ_INIT_PRINT_WAIT:
     if( FLDMSGWIN_STREAM_Print(dsw->msgStream) == TRUE){
-      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(dsw->fieldmap);
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldmap);
       dsw->menufunc = FLDMENUFUNC_AddYesNoMenu(msgBG, FLDMENUFUNC_YESNO_YES);
       (*seq)++;
     }
@@ -779,7 +787,7 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
     if(NetErr_App_CheckError() == FALSE 
         && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
       GameCommSys_ExitReq(game_comm); //通信終了リクエスト
-      dsw->msgWin = FLDMSGWIN_AddTalkWin( FIELDMAP_GetFldMsgBG(dsw->fieldmap), dsw->msgData );
+      dsw->msgWin = FLDMSGWIN_AddTalkWin( FIELDMAP_GetFldMsgBG(fieldmap), dsw->msgData );
       FLDMSGWIN_Print( dsw->msgWin, 0, 0, msg_invasion_test06_01 );
     }
     (*seq)++;
@@ -844,7 +852,8 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
     (*seq)++;
     break;
 	case SEQ_MAP_WARP_FINISH:
-		return GMEVENT_RES_FINISH;
+    *seq = SEQ_FINISH;
+    break;
 	
 	//ここから下はキャンセルした場合の処理
 	case SEQ_EXIT_CANCEL:
@@ -866,10 +875,15 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
       FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldmap);
       MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
       if(MMDL_EndAcmd(player_mmdl) == TRUE){ //アニメコマンド終了待ち
-  	    return GMEVENT_RES_FINISH;
+  	    *seq = SEQ_FINISH;
+  	    break;
   	  }
   	}
 	  break;
+	
+	case SEQ_FINISH:
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldmap));
+ 	  return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;
 }
@@ -970,7 +984,6 @@ GMEVENT * EVENT_MissionTargetWarp(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap 
 
 	event = GMEVENT_Create(gsys, NULL, EventMissionTargetWarp, sizeof(EVENT_MISSIONTARGET_WARP));
 	emtw = GMEVENT_GetEventWork(event);
-	emtw->fieldmap = fieldmap;
 	return event;
 }
 
@@ -989,7 +1002,7 @@ static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*wor
 {
 	EVENT_MISSIONTARGET_WARP * emtw = work;
 	GAMESYS_WORK  * gsys = GMEVENT_GetGameSysWork(event);
-	FIELDMAP_WORK * fieldmap = emtw->fieldmap;
+	FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork(gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   enum{
     SEQ_INIT,
@@ -1002,8 +1015,9 @@ static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*wor
 	
 	switch (*seq) {
 	case SEQ_INIT:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldmap ) );
 	  {
-      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(emtw->fieldmap);
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldmap);
       emtw->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_invasion_dat );
       emtw->msgStream = FLDMSGWIN_STREAM_AddTalkWin(msgBG, emtw->msgData );
 
@@ -1047,7 +1061,11 @@ static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*wor
     (*seq)++;
     break;
 	case SEQ_MAP_WARP_FINISH:
-		return GMEVENT_RES_FINISH;
+	  if(fieldmap != NULL && FIELDMAP_IsReady(fieldmap) == TRUE){
+  	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldmap));
+	  	return GMEVENT_RES_FINISH;
+	  }
+	  break;
   }
 	return GMEVENT_RES_CONTINUE;
 }

@@ -230,7 +230,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
       shop->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, shop->ccew.talk_netid) );
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)shop->ccew.mdata.cdata.data;
-      WORDSET_RegisterItemName( shop->ccew.iem.wordset, 1, d_attr->item );
+      WORDSET_RegisterItemName( shop->ccew.iem.wordset, 1, d_attr->item_no );
       WORDSET_RegisterNumber( shop->ccew.iem.wordset, 2, d_attr->price, 5, 
         STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     }
@@ -405,7 +405,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
       shop->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, shop->ccew.talk_netid) );
-    WORDSET_RegisterItemName( shop->ccew.iem.wordset, 1, d_attr->item );
+    WORDSET_RegisterItemName( shop->ccew.iem.wordset, 1, d_attr->item_no );
     WORDSET_RegisterNumber( shop->ccew.iem.wordset, 2, d_attr->price, 5, 
       STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterPlayerName( 
@@ -441,7 +441,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
         }
         //“¹‹ï‚É‹ó‚«‚Í‚ ‚é‚©
         if(MYITEM_AddCheck( 
-            GAMEDATA_GetMyItem(gamedata), d_attr->item, 1, HEAPID_FIELDMAP ) == FALSE){
+            GAMEDATA_GetMyItem(gamedata), d_attr->item_no, 1, HEAPID_FIELDMAP ) == FALSE){
           *seq = SEQ_NG_ITEM_FULL;
           break;
         }
@@ -463,7 +463,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     break;
   case SEQ_CONCLUDED_MSG:
     MISC_SubGold( GAMEDATA_GetMiscWork(gamedata), d_attr->price );
-    MYITEM_AddItem(GAMEDATA_GetMyItem(gamedata), d_attr->item, 1, HEAPID_FIELDMAP);
+    MYITEM_AddItem(GAMEDATA_GetMyItem(gamedata), d_attr->item_no, 1, HEAPID_FIELDMAP);
     
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
       MissionShopMsgID.target_concluded[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);

@@ -37,6 +37,7 @@
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 
 #include "poke_tool/status_rcv.h"
+#include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 
 
@@ -61,6 +62,8 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talk( GMEVENT *event, int *seq, void 
 static GMEVENT_RESULT CommMissionItem_MtoT_Talked( GMEVENT *event, int *seq, void *wk );
 static GMEVENT_RESULT CommMissionItem_TtoM_Talked( GMEVENT *event, int *seq, void *wk );
 
+static GMEVENT_RESULT Intrude_SecretItemArrivalManager( GMEVENT *event, int *seq, void *wk );
+static GMEVENT* EVENT_Intrude_SecretItemArrival(GAMESYS_WORK *gsys, const MISSION_DATA *mdata );
 static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, void *wk );
 
 
@@ -459,6 +462,12 @@ typedef struct{
   BOOL error;
 }EVENT_ARRIVAL_WORK;
 
+///目的場所に到達した時のイベント管理
+typedef struct{
+  MISSION_DATA mdata;
+}EVENT_ARRIVAL_MANAGER;
+
+
 //---------------------------------------------------------------------------------
 /**
  * @brief ミッション：道具を隠せ：目的地に到着し、隠すイベント
@@ -469,6 +478,61 @@ typedef struct{
  */
 //---------------------------------------------------------------------------------
 GMEVENT* EVENT_Intrude_SecretItemArrivalEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, const MISSION_DATA *mdata )
+{
+  GMEVENT* event;
+  EVENT_ARRIVAL_MANAGER* manage;
+  
+  event = GMEVENT_Create(gsys, NULL, 
+    Intrude_SecretItemArrivalManager, sizeof(EVENT_ARRIVAL_MANAGER));
+  manage = GMEVENT_GetEventWork( event );
+  
+  manage->mdata = *mdata;
+
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ミッション：道具を隠せ：目的地に到着し、隠すイベント
+ *
+ * @param gsys
+ * 
+ * @return イベント
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT Intrude_SecretItemArrivalManager( GMEVENT *event, int *seq, void *wk )
+{
+  EVENT_ARRIVAL_MANAGER* manage = wk;
+  GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  
+  switch(*seq){
+  case 0:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldWork ) );
+
+    GMEVENT_CallEvent(event, EVENT_Intrude_SecretItemArrival(gsys, &manage->mdata));
+    (*seq)++;
+    break;
+  case 1:
+    if(fieldWork != NULL && FIELDMAP_IsReady(fieldWork) == TRUE){
+   	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldWork));
+      return GMEVENT_RES_FINISH;
+    }
+    break;
+  }
+  return GMEVENT_RES_CONTINUE;
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief ミッション：道具を隠せ：目的地に到着し、隠すイベント
+ *
+ * @param gsys
+ * 
+ * @return イベント
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT* EVENT_Intrude_SecretItemArrival(GAMESYS_WORK *gsys, const MISSION_DATA *mdata )
 {
   GMEVENT* event;
   EVENT_ARRIVAL_WORK* work;
@@ -506,6 +570,7 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
+	FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 	enum{
     SEQ_INIT,
     SEQ_SEND_ACHIEVE,

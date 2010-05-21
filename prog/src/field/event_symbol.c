@@ -78,7 +78,6 @@ typedef struct{
 //--------------------------------------------------------------
 typedef struct{
   u16 *result_ptr;        ///<‘JˆÚ‚Å‚«‚½‚©‚Ç‚¤‚©‚ÌŒ‹‰Ê‚ð•Ô‚·‚½‚ß‚Ìƒ|ƒCƒ“ƒ^
-  FIELDMAP_WORK *fieldWork;
   u16 warp_zone_id;       ///<‘JˆÚæƒ][ƒ“ID
   VecFx32 warp_pos;       ///<‘JˆÚæ‚Å‚Ìƒ}ƒbƒvˆÊ’u
   u16 warp_dir;           ///<‘JˆÚæ‚Å‚ÌŒü‚«
@@ -466,7 +465,6 @@ GMEVENT * EVENT_SymbolMapWarp(
 	esmw = GMEVENT_GetEventWork( event );
 	GFL_STD_MemClear( esmw, sizeof(EVENT_SYMBOL_MAP_WARP) );
 
-  esmw->fieldWork = fieldWork;
   esmw->warp_pos = *warp_pos;
   esmw->warp_dir = warp_dir;
   esmw->result_ptr = result_ptr;
@@ -514,17 +512,21 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+	FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 	enum{
     _SEQ_INIT,
     _SEQ_REQ_WAIT,
     _SEQ_FADEOUT,
     _SEQ_CHANGE_MAP,
     _SEQ_FADEIN,
+    _SEQ_FADEIN_WAIT,
     _SEQ_FINISH,
   };
   
 	switch( *seq ){
 	case _SEQ_INIT:
+    MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( fieldWork ) );
+    
   	if(esmw->my_palace == TRUE){
       *seq = _SEQ_FADEOUT;
     }
@@ -539,12 +541,13 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
       if(esmw->result_ptr != NULL){
         *(esmw->result_ptr) = FALSE;
       }
-      return GMEVENT_RES_FINISH;
+      (*seq) = _SEQ_FINISH;
+      break;
     }
     (*seq)++;
     break;
   case _SEQ_FADEOUT:
-    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( gsys, esmw->fieldWork ) );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( gsys, fieldWork ) );
     (*seq)++;
     break;
   case _SEQ_CHANGE_MAP:
@@ -552,7 +555,7 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
     GAMEDATA_SetSymbolMapID(gamedata, esmw->symbol_map_id);
     GMEVENT_CallEvent(event, 
       EVENT_ChangeMapPosNoFade(
-        gsys, esmw->fieldWork, esmw->warp_zone_id, &esmw->warp_pos, esmw->warp_dir));
+        gsys, fieldWork, esmw->warp_zone_id, &esmw->warp_pos, esmw->warp_dir));
     (*seq)++;
     break;
   case _SEQ_FADEIN:
@@ -564,13 +567,17 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
         break;
       }
     }
-    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( gsys, esmw->fieldWork ) );
+    GMEVENT_CallEvent( event, EVENT_FieldFadeIn_PlayerDir( gsys, fieldWork ) );
     (*seq)++;
     break;
-  case _SEQ_FINISH:
+  case _SEQ_FADEIN_WAIT:
     if(esmw->result_ptr != NULL){
       *(esmw->result_ptr) = TRUE;
     }
+    *seq = _SEQ_FINISH;
+    break;
+  case _SEQ_FINISH:
+ 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(fieldWork));
     return GMEVENT_RES_FINISH;
   }
   
