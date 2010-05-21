@@ -13,6 +13,7 @@
 #include "item/item.h"
 #include "system/main.h"
 #include "system/bmp_winframe.h"
+#include "system/wipe.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
 #include "waza_tool/wazadata.h"
@@ -42,7 +43,10 @@
 //============================================================================================
 // メインシーケンス
 enum {
-  SEQ_BPL_INIT = 0,			// 初期化
+  SEQ_BPL_INIT = 0,					// 初期化
+  SEQ_BPL_INIT_PRINT_WAIT,	// 初期化時の描画待ち
+  SEQ_BPL_INIT_WIPE_WAIT,		// 初期化時のワイプ待ち
+
   SEQ_BPL_SELECT,				// ポケモン選択画面コントロール
   SEQ_BPL_IREKAE,				// 入れ替えページコントロール
   SEQ_BPL_ST_MAIN,			// ステータスメイン画面コントロール
@@ -125,6 +129,8 @@ enum {
 static void BattlePokeList_Main( GFL_TCB* tcb, void * work );
 
 static int BPL_SeqInit( BPLIST_WORK * wk );
+static int BPL_SeqInitPrintWait( BPLIST_WORK * wk );
+static int BPL_SeqInitWipeWait( BPLIST_WORK * wk );
 static int BPL_SeqPokeSelect( BPLIST_WORK * wk );
 static int BPL_SeqPokeIrekae( BPLIST_WORK * wk );
 static int BPL_SeqStatusMain( BPLIST_WORK * wk );
@@ -200,6 +206,9 @@ static void PlaySE( BPLIST_WORK * wk, int no );
 // メインシーケンス
 static const pBPlistFunc MainSeqFunc[] = {
   BPL_SeqInit,
+	BPL_SeqInitPrintWait,
+	BPL_SeqInitWipeWait,
+
   BPL_SeqPokeSelect,
   BPL_SeqPokeIrekae,
   BPL_SeqStatusMain,
@@ -381,9 +390,10 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqInit( BPLIST_WORK * wk )
 {
-  u8  ret;
+//  u8  ret;
 
   G2S_BlendNone();
+	GXS_SetMasterBrightness( -16 );
 
   wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
@@ -393,15 +403,15 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 	// 技忘れ
   if( wk->dat->mode == BPL_MODE_WAZASET ){
     wk->page = BPLIST_PAGE_WAZASET_BS;
-    ret = SEQ_BPL_WAZADEL_SEL;
+//    ret = SEQ_BPL_WAZADEL_SEL;
 	// 技説明
 	}else if( wk->dat->mode == BPL_MODE_WAZAINFO ){
     wk->page = BPLIST_PAGE_SKILL;
-    ret = SEQ_BPL_WAZAINFOMODE_MAIN;
+//    ret = SEQ_BPL_WAZAINFOMODE_MAIN;
 	// その他
   }else{
     wk->page = BPLIST_PAGE_SELECT;
-    ret = SEQ_BPL_SELECT;
+//    ret = SEQ_BPL_SELECT;
   }
 
   wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
@@ -456,7 +466,54 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, wk->dat->tcb_sys );
 
-  return ret;
+//  return ret;
+	return SEQ_BPL_INIT_PRINT_WAIT;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		画面初期化時の描画待ち
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int BPL_SeqInitPrintWait( BPLIST_WORK * wk )
+{
+  if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+		WIPE_SYS_Start(
+			WIPE_PATTERN_S, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+			WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->dat->heap );
+		return SEQ_BPL_INIT_WIPE_WAIT;
+	}
+	return SEQ_BPL_INIT_PRINT_WAIT;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		画面初期化時のワイプ待ち
+ *
+ * @param		wk    ワーク
+ *
+ * @return  移行するシーケンス
+ */
+//--------------------------------------------------------------------------------------------
+static int BPL_SeqInitWipeWait( BPLIST_WORK * wk )
+{
+	if( WIPE_SYS_EndCheck() == TRUE ){
+		// 技忘れ
+	  if( wk->dat->mode == BPL_MODE_WAZASET ){
+	    return SEQ_BPL_WAZADEL_SEL;
+		// 技説明
+		}else if( wk->dat->mode == BPL_MODE_WAZAINFO ){
+	    return SEQ_BPL_WAZAINFOMODE_MAIN;
+		// その他
+	  }else{
+	    return SEQ_BPL_SELECT;
+	  }
+	}
+	return SEQ_BPL_INIT_WIPE_WAIT;
 }
 
 //--------------------------------------------------------------------------------------------
