@@ -220,7 +220,7 @@ EVENT_START		ev_bg_d20r0501_bg19_01
 		_CALL ev_stone
 	
 	ELSE
-	
+		_TALK_START_SE_PLAY()
 		_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_01, TYPE_INFO )
 		_BGWIN_CLOSE()
 	
@@ -232,6 +232,7 @@ ev_stone:
 
 	//ï‡êîÇ™190ï‡à»ì‡ÇÃèÍçá
 	IF $LWK_STEP <= 190 THEN
+		_TALK_START_SE_PLAY()
 		_BGWIN_SEATEMPLE_MSG( msg_d20r0501_bg19_01, TYPE_INFO )
 		_BGWIN_CLOSE()
 
