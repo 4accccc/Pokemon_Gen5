@@ -2835,6 +2835,7 @@ static void fldmap_ZoneChange( FIELDMAP_WORK *fieldWork )
 	u32 new_zone_id;
 	u32 old_zone_id = lc->zone_id;
 
+  GFL_NET_ChangeoverChangeSpeed(GFL_NET_CROSS_SPEED_PAUSE);  //すれ違い一時停止
 
   INIT_CHECK();   //デバッグ：処理負荷計測用
 
