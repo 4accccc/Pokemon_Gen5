@@ -135,7 +135,7 @@ sub_wifi_counter_main:
     CASE SEQ_THROW_EXIT THEN
       $i_loop = FALSE
 
-    //無限ループを避けるために、とりあえず
+    //万一の時無限ループを避けるためにFALSEを入れておく
     DEFAULT
       $i_loop = FALSE
     ENDSWITCH

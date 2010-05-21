@@ -266,31 +266,3 @@ _RET
 
 } //WIFI_CLUB_COUNTER_END
 
-//==============================================================
-//サブルーチン：〆のメッセージ
-//==============================================================
-sub_club_counter_goodbye:
-  _OBJ_ANIME( SCWK_TARGET_OBJID, anm_wifi_club_p01 ) //お辞儀アニメ
-  _OBJ_ANIME_WAIT()
-  _BALLOONWIN_OBJMSG_POS( msg_wifi_club_01_02, SCWK_TARGET_OBJID, POS_DL ) //それではまたお越しください
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-_RET
-
-//--------------------------------------------------------------------
-//通信部屋へ誘導
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_wifi_club_p01
-//【仮】  ジョーイさんお辞儀アニメが未対応
-	//_ANIME_DATA	AC_PC_BOW,1
-	//_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_U,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_R,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	AC_DIR_D,1
-	_ANIME_DATA	AC_WAIT_4F,1
-	_ANIME_DATA	ACMD_END,0
-
