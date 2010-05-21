@@ -1015,12 +1015,14 @@ static int _playerDirectNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
   if(!WifiP2PMatchMessageEndCheck(wk)){
     return seq;
   }
-  EndMessageWindowOff(wk);
+  if(GFL_UI_KEY_GetTrg()){
+    EndMessageWindowOff(wk);
 
-  _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
-  _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_TEMOTI);
+    _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
+    _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_TEMOTI);
 
-  _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT1);
+  }
   return seq;
 }
 
@@ -1030,9 +1032,14 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
   u32 fail_bit;
   if(GFL_UI_KEY_GetTrg()){
     _Menu_RegulationDelete(wk);
-    _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
-    _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_BBOX);
-    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
+    if( wk->bb_party){
+      _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
+      _Menu_RegulationSetup(wk, fail_bit, wk->battleShooter , REGWIN_TYPE_NG_BBOX);
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
+    }
+    else{
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
+    }
   }
   return seq;
 }
