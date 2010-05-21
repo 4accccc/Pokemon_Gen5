@@ -115,8 +115,6 @@ FMMDL_RESLIST_NCGIMD = \
 	poke4.imd \
 	poke5.imd \
 	poke6.imd \
-	poke7.imd \
-	poke8.imd \
 	poke9.imd \
 	poke10.imd \
 	poke11.imd \
@@ -180,8 +178,6 @@ FMMDL_RESLIST_NCGIMD = \
 	trophy3.imd \
 	prize1.imd \
 	prize2.imd \
-	hidegrass.imd \
-	hideground.imd \
 	flag.imd \
 	keyboard.imd \
 	sprock.imd \
