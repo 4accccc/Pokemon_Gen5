@@ -141,6 +141,7 @@ typedef struct {
 	fx32	listScrollCnt;
 	BOOL	listScrollFlg;
 
+	u32	wait;
 
 	int	mainSeq;
 	int	subSeq;

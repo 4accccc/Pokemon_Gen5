@@ -44,7 +44,7 @@ enum {
 	MAINSEQ_WIPE,
 	MAINSEQ_RELEASE,
 
-	MAINSEQ_START_SE_PLAY,
+	MAINSEQ_START_WAIT,
 	MAINSEQ_MAIN,
 
 	MAINSEQ_END,
@@ -61,6 +61,7 @@ enum {
 	SUBSEQ_END,
 };
 
+#define	LIST_START_WAIT		( 39 )
 
 #if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
@@ -125,7 +126,7 @@ typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 static int MainSeq_Init( SRMAIN_WORK * wk );
 static int MainSeq_Wipe( SRMAIN_WORK * wk );
 static int MainSeq_Release( SRMAIN_WORK * wk );
-static int MainSeq_StartSePlay( SRMAIN_WORK * wk );
+static int MainSeq_StartWait( SRMAIN_WORK * wk );
 static int MainSeq_Main( SRMAIN_WORK * wk );
 
 static void InitVram(void);
@@ -194,7 +195,7 @@ static const pSRMAIN_FUNC	MainSeq[] = {
 	MainSeq_Wipe,
 	MainSeq_Release,
 
-	MainSeq_StartSePlay,
+	MainSeq_StartWait,
 	MainSeq_Main,
 };
 
@@ -299,8 +300,8 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	PMSND_PlayBGM_WideChannel( SEQ_BGM_ENDING );
 
-//	return SetFadeIn( wk, MAINSEQ_START_SE_PLAY );
-	return SetFadeIn( wk, MAINSEQ_MAIN );
+	return SetFadeIn( wk, MAINSEQ_START_WAIT );
+//	return SetFadeIn( wk, MAINSEQ_MAIN );
 }
 
 static int MainSeq_Wipe( SRMAIN_WORK * wk )
@@ -346,10 +347,18 @@ static int MainSeq_Release( SRMAIN_WORK * wk )
 }
 
 // 開始時のＳＥ再生
-static int MainSeq_StartSePlay( SRMAIN_WORK * wk )
+static int MainSeq_StartWait( SRMAIN_WORK * wk )
 {
-//	PMSND_PlaySE( SEQ_SE_END_01 );
-	return MAINSEQ_MAIN;
+	if( wk->wait == LIST_START_WAIT ){
+		wk->wait = 0;
+		return MAINSEQ_MAIN;
+	}else{
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			OS_Printf( "push a button : wait = %d\n", wk->wait );
+		}
+		wk->wait++;
+	}
+	return MAINSEQ_START_WAIT;
 }
 
 static int MainSeq_Main( SRMAIN_WORK * wk )
@@ -883,6 +892,8 @@ static void Init3D( SRMAIN_WORK * wk )
 
 	CameraMoveInit( &wk->cameraMove );
 //	CameraMoveFlagSet( &wk->cameraMove, TRUE );
+
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
 }
 
 static void Exit3D( SRMAIN_WORK * wk )
@@ -903,6 +914,11 @@ static void Exit3D( SRMAIN_WORK * wk )
 
 static void Main3D( SRMAIN_WORK * wk )
 {
+	if( ( GFL_DISP_GetMainVisible() & GX_PLANEMASK_BG0 ) == 0 ){
+		return;
+	}
+	
+
 #ifdef PM_DEBUG
 	if( wk->debugStopFlg == TRUE ){
 		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
