@@ -666,7 +666,8 @@ static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_PsycoShock( u32* numElems );
 static void handler_PsycoShock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_NasiKuzusi( u32* numElems );
-static void handler_NasiKuzusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_NasiKuzusi_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_NasiKuzusi_HitCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_WonderRoom( u32* numElems );
 static void handler_WonderRoom( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MagicRoom( u32* numElems );
@@ -9692,18 +9693,29 @@ static void handler_PsycoShock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_NasiKuzusi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DEFENDER_GUARD_PREV,  handler_NasiKuzusi },   // 防御側能力値計算
+    { BTL_EVENT_DEFENDER_GUARD_PREV,  handler_NasiKuzusi_CalcDmg  },  // 防御側能力値計算
+    { BTL_EVENT_WAZA_HIT_RANK,        handler_NasiKuzusi_HitCheck }   // 回避チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-static void handler_NasiKuzusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// 防御側能力値計算
+static void handler_NasiKuzusi_CalcDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
   }
 }
+// 回避チェック
+static void handler_NasiKuzusi_HitCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * ワンダールーム

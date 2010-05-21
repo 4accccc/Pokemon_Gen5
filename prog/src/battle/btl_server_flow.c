@@ -5652,7 +5652,7 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   }
 
   {
-    u8 wazaHitPer;
+    u8 wazaHitPer, fAvoidFlat;
     s8 hitRank, avoidRank, totalRank;
     u32 totalPer;
     fx32 ratio;
@@ -5662,6 +5662,7 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
     BTL_EVENTVAR_Push();
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLAT_FLAG, FALSE );
       BTL_EVENTVAR_SetValue( BTL_EVAR_HIT_RANK, BPP_GetValue(attacker, BPP_HIT_RATIO) );
       BTL_EVENTVAR_SetValue( BTL_EVAR_AVOID_RANK, BPP_GetValue(defender, BPP_AVOID_RATIO) );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.01f), FX32_CONST(32) );
@@ -5670,12 +5671,14 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
 
       hitRank = BTL_EVENTVAR_GetValue( BTL_EVAR_HIT_RANK );
       avoidRank = BTL_EVENTVAR_GetValue( BTL_EVAR_AVOID_RANK );
-      if( BPP_CheckSick(defender, WAZASICK_MIYABURU) )
-      {
-        if( avoidRank > BTL_CALC_HITRATIO_MID ){
-          avoidRank = BTL_CALC_HITRATIO_MID;
-        }
+      fAvoidFlat = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
+      // 「みやぶる」をされたポケモンは回避率上昇を無視
+      if( ((BPP_CheckSick(defender, WAZASICK_MIYABURU)) && (avoidRank > BTL_CALC_HITRATIO_MID))
+      ||  (fAvoidFlat)
+      ){
+        avoidRank = BTL_CALC_HITRATIO_MID;
       }
+
       ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
 
     BTL_EVENTVAR_Pop();
