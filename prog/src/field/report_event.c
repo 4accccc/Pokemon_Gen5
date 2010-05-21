@@ -308,7 +308,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 			ResetReportPlayerAnime( wk );
 			SetReportMsg( wk, msg_common_report_06 );
 			TIMEICON_Exit( wk->local->timeIcon );
-			PMSND_StopSE();
+//			PMSND_StopSE();
 			*seq = REPORT_SEQ_RESULT_NG_WAIT;
 			break;
 		}
@@ -316,7 +316,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
 
 	case REPORT_SEQ_RESULT_OK_BAR_WAIT:			// セーブ成功バー待ち
 		if( FIELD_SUBSCREEN_SetReportEnd( FIELDMAP_GetFieldSubscreenWork(wk->fieldWork) ) == TRUE ){
-			PMSND_StopSE();
+//			PMSND_StopSE();
 			PMSND_PlaySE( SEQ_SE_SAVE );
       ResetReportBgAnime( wk );
       ResetReportPlayerAnime( wk );
