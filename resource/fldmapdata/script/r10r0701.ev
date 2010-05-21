@@ -69,7 +69,7 @@ EVENT_START     ev_r10r0701_veteranm_01
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ELSE
-    //Ç∆ÇËÇ†Ç¶Ç∏
+    //ã§í èàóùÇ÷
     _CALL ev_sub_gate_event
   ENDIF
 
