@@ -1421,7 +1421,7 @@ void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type)
     if(MissionConvDataListParam[no].type == mission_type
         && MissionConvDataListParam[no].level <= palace_level){
       if(MissionConvDataListParam[no].odds == 100 
-          || MissionConvDataListParam[no].odds <= GFUser_GetPublicRand(100+1)){
+          || MissionConvDataListParam[no].odds >= GFUser_GetPublicRand(100+1)){
         occupy->mlst.mission_no[mission_type] = no;
         return;
       }
