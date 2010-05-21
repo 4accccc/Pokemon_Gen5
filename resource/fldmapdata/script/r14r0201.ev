@@ -588,6 +588,7 @@ _ANIME_LABEL	anm_r14r0210_player_back_01
 /**************************************************************/
 EVENT_START   ev_r14r0201_poke9_01
 {
+	_TALK_START_SE_PLAY()
 	_VOICE_PLAY( MONSNO_652, 0 )
 	_GIZAWIN_OBJMSG_POS( msg_r14r0201_tsutinokami_01 , R14R0201_POKE9_01, POS_DEFAULT )
 	_AB_KEYWAIT_MARK()
