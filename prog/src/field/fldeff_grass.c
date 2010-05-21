@@ -349,7 +349,11 @@ static void grassTask_Update( FLDEFF_TASK *task, void *wk )
     work->seq_no++;
     break;
   case 2: //アニメポーズ
+    //ビルボードアクター更新によってはseq1の処理が反映されていない場合がある
+    //アニメを終端まで流す事で対処
+#if 0
     GFL_BBDACT_SetAnimeEnable( bbdact_sys, work->act_id, FALSE );
+#endif
     work->seq_no++;
   case 3:
     if( MMDL_CheckSameData(work->head.fmmdl,&work->samedata) == FALSE ){

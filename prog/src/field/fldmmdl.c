@@ -481,7 +481,7 @@ void MMDLSYS_SetMMdl( MMDLSYS *mmdlsys,
         mmdlsys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
       mmdlsys_AddMMdlCore( mmdlsys, header, zone_id, eventWork );
     }else{
-      D_MMDL_Printf( "ADD STOP MMDL OBJID=%d,EVENT FLAG=%xH\n",
+      D_MMDL_DPrintf( "ADD STOP MMDL OBJID=%d,EVENT FLAG=%xH\n",
           header->id, header->event_flag );
     }
     

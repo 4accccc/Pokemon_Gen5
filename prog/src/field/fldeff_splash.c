@@ -18,10 +18,10 @@
 //======================================================================
 //	define
 //======================================================================
-#define SPLASH_DRAW_Y_OFFSET (FX32_ONE*(-1))
-#define SPLASH_DRAW_Z_OFFSET (FX32_ONE*(-2))
+#define SPLASH_DRAW_Y_OFFSET (FX32_ONE*-14)
+#define SPLASH_DRAW_Z_OFFSET (FX32_ONE*-10)
 
-#define SHOAL_DRAW_Z_OFFSET (FX32_ONE*(8))
+#define SHOAL_DRAW_Z_OFFSET (FX32_ONE*8)
 
 //======================================================================
 //	struct
