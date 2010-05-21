@@ -73,8 +73,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  NNSG2dImagePaletteProxy *shadow_palette,
 							  int node,
 							  u32 mcss_ortho_mode,
-							  fx32 *pos_z_default,const u8 isFlip, fx32* scale_offset_work
-                            );
+							  fx32 *pos_z_default,const u8 isFlip, fx32* scale_offset_work ,
+							  const u8 projection_revise_off );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
@@ -495,7 +495,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
-									  &pos_z_default, flipFlg, &scale_offset_work);
+									  &pos_z_default, flipFlg, &scale_offset_work ,
+									  mcss_sys->projection_revise_off);
 					}
 					else{
 						MCSS_DrawAct( mcss,
@@ -507,7 +508,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 									  ncec->mepachi_tex_t,
 									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	                  ortho_mode,
-									  &pos_z_default, flipFlg, &scale_offset_work);
+									  &pos_z_default, flipFlg, &scale_offset_work ,
+									  mcss_sys->projection_revise_off);
 					}
 				}
 				MCSS_DrawAct( mcss,
@@ -519,7 +521,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							  ncec->tex_t,
 							  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
 	              ortho_mode,
-							  &pos_z_default, flipFlg, &scale_offset_work);
+							  &pos_z_default, flipFlg, &scale_offset_work , 
+							  mcss_sys->projection_revise_off );
 			}
 		}
 	}
@@ -599,7 +602,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  u32 mcss_ortho_mode,
 							  fx32 *pos_z_default,
                 const u8 isFlip,
-							  fx32* scale_offset_work )
+							  fx32* scale_offset_work ,
+							  const u8 projection_revise_off )
 {
 	VecFx32	pos;
   int polyID;
@@ -727,7 +731,8 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
   	G3_End();
   }
 
-	if( mcss_ortho_mode == 0 ){
+	if( mcss_ortho_mode == 0 &&
+	    projection_revise_off == 0 ){
 		*pos_z_default -= MCSS_DEFAULT_Z;
     *scale_offset_work += MCSS_SCALE_OFFSET;
 	}
@@ -1746,6 +1751,17 @@ void   MCSS_RestartAnime( MCSS_WORK *mcss )
   NNS_G2dRestartMCAnimation( &mcss->mcss_mcanim );
 }
 
+//--------------------------------------------------------------------------
+/**
+ * @brief 透視射影時の補正を無効化する
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void   MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg )
+{ 
+  mcss_sys->projection_revise_off = flg;
+}
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 

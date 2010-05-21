@@ -161,6 +161,7 @@ extern  void	          MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MC
 extern  void	          MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss );
 extern  int	            MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss );
 extern  void            MCSS_RestartAnime( MCSS_WORK *mcss );
+extern  void            MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg );
 
 #ifdef PM_DEBUG
 extern	MCSS_WORK*			MCSS_AddDebug( MCSS_SYS_WORK *mcss_sys, fx32	pos_x, fx32	pos_y, fx32	pos_z, const MCSS_ADD_DEBUG_WORK *madw );
