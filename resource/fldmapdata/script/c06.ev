@@ -312,10 +312,20 @@ EVENT_START    ev_pos_c06_hakase1_01
 	DEFINE_LOCAL	LWK_YES
 	DEFINE_LOCAL	LWK_PLY_X
 	DEFINE_LOCAL	LWK_PLY_Z
-
+	
+	DEFINE_LOCAL	LWK_PLY_X_SUB_HAKASE
+	DEFINE_LOCAL	LWK_PLY_Z_SUB_HAKASE
+	DEFINE_LOCAL	LWK_PLY_X_SUB_LEADER7
+	DEFINE_LOCAL	LWK_PLY_Z_SUB_LEADER7
+	
 	//主人公位置の座標取得
 	_PLAYER_POS_GET( LWK_PLY_X, LWK_PLY_Z )
-
+	$LWK_PLY_X_SUB_HAKASE = $LWK_PLY_X
+	$LWK_PLY_X_SUB_HAKASE -= 10
+	
+	_OBJ_POS_CHANGE(C06_HAKASE1_01,LWK_PLY_X_SUB_HAKASE,0,298,DIR_RIGHT)
+	_OBJ_POS_CHANGE(C06_LEADER6_01,LWK_PLY_X_SUB_HAKASE,0,297,DIR_RIGHT)	
+	
 	//プレイヤーの名前の格納
 	_PLAYER_NAME(0)
 	
@@ -329,9 +339,24 @@ EVENT_START    ev_pos_c06_hakase1_01
 	_START_EVENT_BGM(SEQ_BGM_E_DOCTOR2)
 	
 	//博士とジムリーダーがやってくる
-	_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01)
-	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01)
+	IF $LWK_PLY_X == 100 THEN
+		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01_x100)
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01_x100)
+	ELSIF $LWK_PLY_X == 101 THEN
+		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01_x101)
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01_x101)
+	ELSIF $LWK_PLY_X == 102 THEN
+		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01_x102)
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01_x102)
+	ELSIF $LWK_PLY_X == 103 THEN
+		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01_x103)
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01_x103)
+	ELSIF $LWK_PLY_X == 104 THEN
+		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_01_x104)
+		_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_kuru_01_x104)
+	ENDIF
 	_OBJ_ANIME_WAIT()
+	
 
 	//博士とジムリーダーが主人公に気づく
 	_OBJ_ANIME( C06_HAKASE1_01,anm_hakase1_gyoe)
@@ -359,17 +384,14 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//博士が主人公に話しかける
 	//博士:おお！　おまえさん！　[1:00:トレーナー名:0]だろ！！
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_01, C06_HAKASE1_01,POS_DEFAULT)
-	_BALLOONWIN_CLOSE()
 	
 	//捕獲数を格納
 	_NUMBER( 0, LWK_HOKAKU_COUNT, 3 ) 
 
 	//博士が主人公に話しかける
 	//博士:ちょいと　ずかんを　みせてもらうよ
-	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_02, C06_HAKASE1_01,POS_DEFAULT)
-	_OBJ_ANIME_WAIT()
-	
+
 	//ギアンがいるかどうかで、分岐	
 	//ギアンを捕まえている？
 	IF $LWK_GIAN_CHECK ==  1	THEN
@@ -393,16 +415,6 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//博士が主人公に話しかける
 	//博士:では　であいを　きねんして　おまえさんの　ポケモンずかんを
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_06, C06_HAKASE1_01,POS_DEFAULT)
-	_BALLOONWIN_CLOSE()
-	
-	//図鑑をパワーアップする動きを作るためのウェイト
-	//主人公の図鑑をパワーアップするような動き
-	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
-	_OBJ_ANIME_WAIT()
-	_TIME_WAIT(8)
-	_OBJ_ANIME( C06_HAKASE1_01,anm_common_turn_d)
-	_OBJ_ANIME_WAIT()
-	_TIME_WAIT(16)
 	
 	//博士が主人公に話しかける
 	//博士:アララギ『よし！　これで　ポケモンの　みた　すがたなら
@@ -414,27 +426,22 @@ EVENT_START    ev_pos_c06_hakase1_01
 	IF $LWK_PLY_X == 100 THEN
 		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02_x100)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
 		_OBJ_ANIME(C06_LEADER6_01,anm_common_turn_l)
 	ELSIF $LWK_PLY_X == 101 THEN
 		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02_x101)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
 		_OBJ_ANIME(C06_LEADER6_01,anm_common_turn_l)
 	ELSIF $LWK_PLY_X == 102 THEN
 		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02_x102)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
 		_OBJ_ANIME(C06_LEADER6_01,anm_common_turn_l)
 	ELSIF $LWK_PLY_X == 103 THEN
 		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02_x103)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
 		_OBJ_ANIME(C06_LEADER6_01,anm_common_turn_r)
 	ELSIF $LWK_PLY_X == 104 THEN
 		_OBJ_ANIME( C06_LEADER6_01,anm_leader06_kuru_02_x104)
 		_OBJ_ANIME_WAIT()
-		_TIME_WAIT(8)
 		_OBJ_ANIME(C06_LEADER6_01,anm_common_turn_r)
 	ENDIF
 	_OBJ_ANIME_WAIT()
@@ -452,7 +459,13 @@ EVENT_START    ev_pos_c06_hakase1_01
 	
 	//博士がフウロに喋る
 	//博士:『おお！　おう！　すまんすまん
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_08, C06_HAKASE1_01,POS_DEFAULT)
+
+
+	IF $LWK_PLY_X == 100 || $LWK_PLY_X == 101 || $LWK_PLY_X == 102 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_08, C06_HAKASE1_01,POS_UL)	
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_08, C06_HAKASE1_01,POS_UR)
+	ENDIF
 	_BALLOONWIN_CLOSE()
 	
 	//ジムリーダーが主人公を向く
@@ -469,15 +482,23 @@ EVENT_START    ev_pos_c06_hakase1_01
 
 	//博士がフウロに喋る
 	//博士:『そうだな　[1:00:トレーナー名:0]くん
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_09, C06_HAKASE1_01,POS_DEFAULT)
+	IF $LWK_PLY_X == 100 || $LWK_PLY_X == 101 || $LWK_PLY_X == 102 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_09, C06_HAKASE1_01,POS_UL)	
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_09, C06_HAKASE1_01,POS_UR)
+	ENDIF
 	_BALLOONWIN_CLOSE()
-
+	
 	//博士がフウロを向く
 	_CALL		ev_hakase01_turn_btl
 	
 	//博士がフウロに喋る
 	//博士:『ではな　フウロくん　また　なにかあったら　たのむぞ
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_10, C06_HAKASE1_01,POS_DEFAULT)
+	IF $LWK_PLY_X == 100 || $LWK_PLY_X == 101 || $LWK_PLY_X == 102 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_10, C06_HAKASE1_01,POS_UL)	
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_10, C06_HAKASE1_01,POS_UR)
+	ENDIF
 	_BALLOONWIN_CLOSE()
 
 	//フウロが博士を向く
@@ -487,10 +508,14 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//フウロ:『……はかせ　アタシの　ひこうきは　かもつき！
 	_BALLOONWIN_OBJMSG_POS( msg_c06_leader6_03, C06_LEADER6_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()	
-	
+
 	//博士がフウロに喋る
 	//博士:『おいおい　かわいい　かおして
-	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_11, C06_HAKASE1_01,POS_DEFAULT)
+	IF $LWK_PLY_X == 100 || $LWK_PLY_X == 101 || $LWK_PLY_X == 102 THEN
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_11, C06_HAKASE1_01,POS_UL)	
+	ELSE
+		_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_11, C06_HAKASE1_01,POS_UR)
+	ENDIF
 	_BALLOONWIN_CLOSE()
 	
 	//フウロと博士が去る動きを作るためのウェイト
@@ -682,67 +707,103 @@ _ANIME_LABEL	anm_player_muku_02
 //--------------------------------------------------------------------
 //フウロ:主人公に近づく１                     
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_leader06_kuru_01
-	_ANIME_DATA AC_WALK_R_8F,14
+_ANIME_LABEL	anm_leader06_kuru_01_x100
+	_ANIME_DATA AC_WALK_R_8F,13
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader06_kuru_01_x101
+	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader06_kuru_01_x102
+	_ANIME_DATA AC_WALK_R_8F,11
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader06_kuru_01_x103
+	_ANIME_DATA AC_WALK_R_8F,10
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_leader06_kuru_01_x104
+	_ANIME_DATA AC_WALK_R_8F,9
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader06_kuru_02_x100
 	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
-
+	
 _ANIME_LABEL	anm_leader06_kuru_02_x101
 	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader06_kuru_02_x102
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader06_kuru_02_x103
 	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_leader06_kuru_02_x104
-	_ANIME_DATA AC_WALK_D_8F,2
+	_ANIME_DATA AC_WALK_D_8F,4
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //博士:主人公に近づく１                        
-//--------------------------------------------------------------------
-_ANIME_LABEL	anm_hakase1_kuru_01
-	_ANIME_DATA AC_WALK_R_8F,13
+//--------------------------------------------------------------------anm_hakase1_kuru_01_x100
+_ANIME_LABEL	anm_hakase1_kuru_01_x100
+	_ANIME_DATA AC_WALK_R_8F,12
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase1_kuru_01_x101
+	_ANIME_DATA AC_WALK_R_8F,11
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase1_kuru_01_x102
+	_ANIME_DATA AC_WALK_R_8F,10
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase1_kuru_01_x103
+	_ANIME_DATA AC_WALK_R_8F,9
+	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_hakase1_kuru_01_x104
+	_ANIME_DATA AC_WALK_R_8F,8
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_hakase1_kuru_02_x100
 	_ANIME_DATA AC_WALK_L_8F,2
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_hakase1_kuru_02_x101
 	_ANIME_DATA AC_WALK_L_8F,1
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakase1_kuru_02_x102
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakase1_kuru_02_x103
 	_ANIME_DATA AC_WALK_R_8F,1
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakase1_kuru_02_x104
 	_ANIME_DATA AC_WALK_R_8F,2
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_hakase1_kuru_03
-	_ANIME_DATA AC_WALK_D_8F,1
+	_ANIME_DATA AC_WALK_D_8F,3
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
@@ -834,7 +895,7 @@ _ANIME_LABEL	anm_hakase1_muku_02
 // フウロ:立ち去る                      
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader06_saru_01
-	_ANIME_DATA AC_WALK_U_8F,3
+	_ANIME_DATA AC_WALK_U_8F,5
 	_ANIME_DATA AC_WALK_R_8F,7
 	_ANIME_DATA	ACMD_END,0
 
