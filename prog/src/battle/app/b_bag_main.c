@@ -12,6 +12,7 @@
 #include "message.naix"
 #include "system/main.h"
 #include "system/bmp_winframe.h"
+#include "system/wipe.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
 
@@ -38,6 +39,7 @@
 enum {
   SEQ_BBAG_INIT = 0,      // 初期化
   SEQ_BBAG_SHOOTER_INIT,  // 初期化（シューター用）
+	SEQ_BBAG_INIT_PRINT_WAIT,	// 初期化描画待ち
   SEQ_BBAG_POCKET,        // ポケット選択
   SEQ_BBAG_ITEM,          // アイテム選択
   SEQ_BBAG_USE,           // アイテム使用
@@ -76,6 +78,7 @@ static void BattleBag_Main( GFL_TCB* tcb, void * work );
 
 static int BBAG_SeqInit( BBAG_WORK * wk );
 static int BBAG_SeqShooterInit( BBAG_WORK * wk );
+static int BBAG_SeqInitPrintWait( BBAG_WORK * wk );
 static int BBAG_SeqPokeSelect( BBAG_WORK * wk );
 static int BBAG_SeqItemSelect( BBAG_WORK * wk );
 static int BBAG_SeqUseSelect( BBAG_WORK * wk );
@@ -117,6 +120,7 @@ static void PlaySE( BBAG_WORK * wk, int no );
 static const pBBagFunc MainSeqFunc[] = {
   BBAG_SeqInit,
   BBAG_SeqShooterInit,
+  BBAG_SeqInitPrintWait,
   BBAG_SeqPokeSelect,
   BBAG_SeqItemSelect,
   BBAG_SeqUseSelect,
@@ -247,6 +251,7 @@ static void BattleBag_Main( GFL_TCB * tcb, void * work )
 static int BBAG_SeqInit( BBAG_WORK * wk )
 {
   G2S_BlendNone();
+	GXS_SetMasterBrightness( -16 );
 
   wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
@@ -290,7 +295,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
-
+/*
   if( wk->dat->mode == BBAG_MODE_GETDEMO ){
     return SEQ_BBAG_GETDEMO;
   }else if( wk->dat->mode == BBAG_MODE_PDC ){
@@ -298,6 +303,11 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	  return SEQ_BBAG_ITEM;
 	}
   return SEQ_BBAG_POCKET;
+*/
+	if( wk->dat->mode == BBAG_MODE_PDC ){
+		BBAG_PageChgBgScroll( wk, wk->page );
+	}
+	return SEQ_BBAG_INIT_PRINT_WAIT;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -312,6 +322,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 {
   G2S_BlendNone();
+	GXS_SetMasterBrightness( -16 );
 
   wk->tcbl = GFL_TCBL_Init( wk->dat->heap, wk->dat->heap, 1, 4 );
 
@@ -342,9 +353,43 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
-
+/*
   return SEQ_BBAG_ITEM;
+*/
+
+	return SEQ_BBAG_INIT_PRINT_WAIT;
 }
+
+static int BBAG_SeqInitPrintWait( BBAG_WORK * wk )
+{
+  if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
+/*
+		PaletteTrans_AutoSet( wk->pfd, TRUE );
+	  PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
+	  PaletteFadeReq(
+	    wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
+*/
+		WIPE_SYS_Start(
+			WIPE_PATTERN_S, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+			WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->dat->heap );
+
+		// 捕獲デモ
+	  if( wk->dat->mode == BBAG_MODE_GETDEMO ){
+	    return SEQ_BBAG_GETDEMO;
+		// シューター
+		}else if( wk->dat->mode == BBAG_MODE_SHOOTER ){
+			return SEQ_BBAG_ITEM;
+		// ポケモンドリームキャッチ
+		}else if( wk->dat->mode == BBAG_MODE_PDC ){
+		  return SEQ_BBAG_ITEM;
+		// その他
+	  }else{
+		  return SEQ_BBAG_POCKET;
+	  }
+	}
+	return SEQ_BBAG_INIT_PRINT_WAIT;
+}
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -357,7 +402,8 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 {
-  if( PaletteFadeCheck( wk->pfd ) == 0 ){
+  if( PaletteFadeCheck( wk->pfd ) == 0 && WIPE_SYS_EndCheck() == TRUE ){
+
     u32 ret;
 		
 		if( CheckTimeOut( wk ) == TRUE ){
@@ -430,7 +476,7 @@ static int BBAG_SeqPokeSelect( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqItemSelect( BBAG_WORK * wk )
 {
-  if( PaletteFadeCheck( wk->pfd ) == 0 ){
+  if( PaletteFadeCheck( wk->pfd ) == 0 && WIPE_SYS_EndCheck() == TRUE ){
 	  u32 ret;
 	
 		if( CheckTimeOut( wk ) == TRUE ){
@@ -868,7 +914,7 @@ static int BBAG_SeqEndSet( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqEndWait( BBAG_WORK * wk )
 {
-  if( PaletteFadeCheck( wk->pfd ) == 0 ){
+  if( PaletteFadeCheck( wk->pfd ) == 0 && WIPE_SYS_EndCheck() == TRUE ){
     return SEQ_BBAG_END;
   }
   return SEQ_BBAG_ENDWAIT;
