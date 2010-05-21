@@ -344,6 +344,7 @@ static void WifiP2PMatchMessagePrintDirect( WIFIP2PMATCH_WORK *wk, int msgno, BO
 {
   wk->SysMsgWin = _BmpWinDel(wk->SysMsgWin);
 
+  GFL_FONTSYS_SetDefaultColor();
   WifiP2PMatchMessagePrintS(wk,msgno, bSystem, FALSE);
 }
 
