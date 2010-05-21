@@ -448,7 +448,8 @@ sub EncodeFileFromShiftjisToUtf8
 
   while( <IN> )
   {
-    $line = Encode::decode( 'shiftjis', $_ );
+    #$line = Encode::decode( 'shiftjis', $_ );
+    $line = Encode::decode( 'cp932', $_ );  # WindowsのShiftJISはcp932。これにしておかないとハイフンとかチルダがうまくいかないらしい。
     print OUT Encode::encode( 'utf8', $line );
   }
 
@@ -1082,7 +1083,7 @@ sub WriteManualTextGmmFile
 sub WriteManualTextGmmRow
 {
   local( $row_id, $hira, $kanji ) = @_;
-
+ 
   printf FH "\t<row id=\"%s\">\r\n", $row_id;
   printf FH "\t\t<language name=\"JPN\">";
   printf FH "%s", $hira;
