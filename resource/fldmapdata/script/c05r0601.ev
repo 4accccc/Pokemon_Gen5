@@ -57,7 +57,87 @@ EVENT_END
 /*  C05R0601 SUNGLASSESの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_c05r0601_sunglasses_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_c05r0601_sunglasses_01 )
+{
+	_TALK_OBJ_START()
+
+	IF FLAG_OFF(FE_C05R0601_ITEMGET_01) THEN
+
+		_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_01,C05R0601_SUNGLASSES_01)
+		DEFINE_LOCAL SCWK_ANSWER01
+		_YES_NO_WIN( SCWK_ANSWER01 )
+		
+		//回答により分岐・はい
+		IF $SCWK_ANSWER01 == 0 THEN
+		
+			_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_02,C05R0601_SUNGLASSES_01)
+		
+			//LV取得のための変数定義
+			DEFINE_LOCAL LWK_PARTY_NUM
+			DEFINE_LOCAL LWK_COUNT_NUM
+			DEFINE_LOCAL LWK_RET_LEVEL
+			DEFINE_LOCAL LWK_OVER_30
+			
+			_GET_PARTY_POKE_COUNT ( LWK_PARTY_NUM , POKECOUNT_MODE_NOT_EGG)
+			
+			$LWK_PARTY_NUM = 1
+			
+			WHILE $LWK_PARTY_NUM > $LWK_COUNT_NUM
+				
+				//指定POSのポケモンのLVを取得
+				_GET_PARTY_POKE_PARAM ( LWK_RET_LEVEL , LWK_COUNT_NUM , SCR_POKEPARA_LEVEL )
+				
+				//レベルが30以上ならば
+				IF $LWK_RET_LEVEL >= 30 THEN
+					$LWK_OVER_30 += 1
+				ENDIF
+				
+				//カウントアップ
+				$LWK_COUNT_NUM +=1
+
+			ENDWHILE
+			
+			
+			//LV30以上のポケモンが１匹以上いる
+			IF $LWK_OVER_30 >= 1 THEN
+				
+				_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_03,C05R0601_SUNGLASSES_01)
+				_BALLOONWIN_CLOSE()
+				
+				_ITEM_EVENT_KEYWAIT ( ITEM_TATUZINNOOBI,1 ) 
+				
+				//======================================//
+				
+				//アイテム入手フラグセット
+				_FLAG_SET( FE_C05R0601_ITEMGET_01 )
+				
+				//======================================//
+			
+			//LV30以上のポケモンが０匹
+			ELSE
+				_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_04,C05R0601_SUNGLASSES_01)
+				_LAST_KEYWAIT()
+				_BALLOONWIN_CLOSE()
+			
+			ENDIF
+		
+		//いいえ
+		ELSE
+		
+		_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_05,C05R0601_SUNGLASSES_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+		ENDIF
+	
+	//アイテム入手後
+	ELSE
+		
+		_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_06,C05R0601_SUNGLASSES_01)
+		_LAST_KEYWAIT()
+		_BALLOONWIN_CLOSE()
+		
+	ENDIF
+}
 EVENT_END
 
 /**************************************************************/
