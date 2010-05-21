@@ -5019,7 +5019,22 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
       }
     }
 
-    BTL_Printf("%p の結果を %p に書き戻し\nsrc_member..\n", srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ]);
+    // トレーナー戦は装備アイテムを元に戻す
+    if( (wk->setupParam->competitor == BTL_COMPETITOR_TRAINER) )
+    {
+      POKEMON_PARAM *ppOrg, *ppResult;
+      u32 i, pokeCnt = PokeParty_GetPokeCount( srcParty );
+      u16 itemNo;
+      for(i=0; i<pokeCnt; ++i)
+      {
+        ppOrg = PokeParty_GetMemberPointer( wk->setupParam->party[ BTL_CLIENT_PLAYER ], i );
+        ppResult = PokeParty_GetMemberPointer( srcParty, i );
+        itemNo = PP_Get( ppOrg, ID_PARA_item, NULL );
+        PP_Put( ppResult, ID_PARA_item, itemNo );
+      }
+    }
+
+
     PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ] );
     {
       u32 i;
