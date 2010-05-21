@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-17T17:47:01"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-20T14:30:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="287"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2145,7 +2145,7 @@ OL</attribute>
 		<attribute name="キャラ指定">BOY4
 おぼっちゃま</attribute>
 		<language name="JPN" width="256">やあ……　まいにち　さむいよね▼
-あの　ちょっと……▼
+あの　ちょっと……
 いま　きみ　じかん　あるかな？▼
 じつは　ぼく　ひさしぶりに
 そとに　でてるんだ……▼
@@ -2158,7 +2158,7 @@ OL</attribute>
 きみさえ　よければ　すこし
 つきあって　もらえないかな？</language>
 		<language name="JPN_KANJI" width="256">やあ……　毎日　寒いよね▼
-あの　ちょっと……▼
+あの　ちょっと……
 今　君　時間　あるかな？▼
 実は　僕　久しぶりに
 外に　出てるんだ……▼
