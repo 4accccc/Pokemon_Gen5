@@ -644,12 +644,20 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
   PRINT_UTIL_Trans( &wk->SysMsgPrintUtil, wk->SysMsgQue );
   ret = BmpMenuList_Main(wk->sublw);
 
-  switch(ret){
-  case BMPMENULIST_NULL:
+  if(ret ==  BMPMENULIST_NULL){
     return seq;
+  }
+  
+  EndMessageWindowOff(wk);
+  wk->SubListWin = _BmpWinDel(wk->SubListWin);
+  BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_BATTLE_CUSTOM]);
+  BmpMenuWork_ListDelete( wk->submenulist );
+  
+  switch(ret){
   case BMPMENULIST_CANCEL:
     if(wk->pParentWork->btalk){  //‰ï˜b‚Ì—¬‚ê
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_084, FALSE);
+      _friendNameExpand(wk,  wk->friendNo - 1);
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_084, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT6);
     }
     else{  //Œf¦”Â‚Ì—¬‚ê
@@ -670,10 +678,6 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   }
-  EndMessageWindowOff(wk);
-  wk->SubListWin = _BmpWinDel(wk->SubListWin);
-  BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_BATTLE_CUSTOM]);
-  BmpMenuWork_ListDelete( wk->submenulist );
   return seq;
 }
 

@@ -294,7 +294,7 @@ static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bS
 
   // システムウインドウ枠描画
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(wk->MsgWin), WINCLR_COL(FBMP_COL_WHITE) );
-  GFL_BMPWIN_MakeScreen(wk->MsgWin);
+ // GFL_BMPWIN_MakeScreen(wk->MsgWin);
 
   BmpWinFrame_Write( wk->MsgWin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(wk->menuwin_m2), COMM_MESFRAME_PAL );
 
@@ -308,6 +308,7 @@ static void WifiP2PMatchMessagePrintS( WIFIP2PMATCH_WORK *wk, int msgno, BOOL bS
   }
   GFL_BMPWIN_TransVramCharacter(wk->MsgWin);
   GFL_BMPWIN_MakeScreen(wk->MsgWin);
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME2_M);
 }
 
 
