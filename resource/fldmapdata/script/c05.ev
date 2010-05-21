@@ -951,7 +951,7 @@ ev_c08r0201_black_battle:
 			_BALLOONWIN_OBJMSG(msg_c05_badrider_05b,C05_BADRIDER_01)
 			_BALLOONWIN_CLOSE()
 			
-			//戦闘処理（トレーナーIDが仮）
+			//戦闘処理
 			_TRAINER_BTL_SET( TRID_BADRIDER_01_07, 0 )
 		
 			//結果チェック

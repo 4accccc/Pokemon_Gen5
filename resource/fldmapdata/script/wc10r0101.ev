@@ -103,7 +103,7 @@ EVENT_START   ev_wc10r0101_oldman1
 					_BALLOONWIN_OBJMSG( msg_wc10r0101_oldman1_04 , WC10R0101_OLDMAN1 )
 					_BALLOONWIN_CLOSE() 
 					
-					//【仮】乱数で0～4のうちのひとつを選んで格納する
+					//乱数で0～4のうちのひとつを選んで格納する
 					_GET_RND( LOCALWORK15,5 )
 					
 					//乱数の結果によって入手するアイテムを変更
