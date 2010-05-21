@@ -1114,7 +1114,7 @@ static void _UniSub_Chat_DispScroll(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
     dest_pos = UNION_CHAT_VIEW_LOG_NUM - 1;
     src_pos = dest_pos + offset;
     while(src_pos > -1){
-      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no+offset);
+      _UniSub_Chat_DispCopy(unisub, src_pos, dest_pos, log, log->chat_view_no-offset);
       dest_pos--;
       src_pos--;
     }
@@ -1238,10 +1238,7 @@ static void _UniSub_ScrollBar_PosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG
     }
   }
   
-//  OS_TPrintf("ccc page_y = %d, bar.y = %d, page_y8 = %d, log_count = %d, view_no = %d, view_page = %d, page_max = %d, check_y = %d\n", page_y, bar.y, page_y >> 8, log->chat_log_count, log->chat_view_no, view_page, page_max, check_y);
   if(log->chat_view_no < 0 || log->chat_view_no > log->chat_log_count){
-    OS_TPrintf("OVER!!! chat_view_no = %d, log_count = %d, view_page = %d\n", 
-      log->chat_view_no, log->chat_log_count, view_page);
     log->chat_view_no = log->chat_log_count;
     GF_ASSERT(0);
   }
@@ -1274,8 +1271,6 @@ static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT
   
   bar.x = ACT_SCROLL_BAR_X;
   GFL_CLACT_WK_SetPos(unisub->act[UNISUB_ACTOR_APPEAL_SCROLL], &bar, CLSYS_DEFREND_SUB);
-  
-//  OS_TPrintf("aaa page_y = %d, bar.y = %d, log_offset = %d, page_y8 = %d, log_count = %d, view_no = %d\n", page_y, bar.y, log_offset, page_y >> 8, log->chat_log_count, log->chat_view_no);
 }
 
 //--------------------------------------------------------------
