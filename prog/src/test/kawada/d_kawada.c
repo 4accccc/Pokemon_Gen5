@@ -958,6 +958,7 @@ static void ZenkokuZukanAwardExit( KAWADA_MAIN_WORK* wk )
 // ’ÊM‘ÎíŒã‚Ì˜^‰æ‘I‘ð‰æ–Ê
 static void BtlRecSelInit( KAWADA_MAIN_WORK* wk )
 {
+#if 0
   BOOL        b_rec       = TRUE;
   BOOL        b_sync      = TRUE;
   MYSTATUS*   mystatus    = GAMEDATA_GetMyStatus( wk->gamedata );
@@ -987,6 +988,11 @@ static void BtlRecSelInit( KAWADA_MAIN_WORK* wk )
   wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, b_rec, b_sync,0,0 );
   
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &BTL_REC_SEL_ProcData, wk->btl_rec_sel_param );
+#else
+  GFL_OVERLAY_Load(FS_OVERLAY_ID(btl_rec_sel));
+  wk->btl_rec_sel_param = BTL_REC_SEL_AllocParam( wk->heapID, wk->gamedata, FALSE, FALSE, 0, 0 );
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &BTL_REC_SEL_ProcData, wk->btl_rec_sel_param );
+#endif
 }
 static void BtlRecSelExit( KAWADA_MAIN_WORK* wk )
 {

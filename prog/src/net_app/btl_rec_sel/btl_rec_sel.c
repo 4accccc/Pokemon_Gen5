@@ -338,6 +338,7 @@ typedef struct
 
   // ストリームテキストウィンドウ
   PRINT_STREAM*               text_stream;
+  BOOL                        text_stream_need_input;  // ストリームテキスト表示が完了したときに入力を待って終了する場合TRUE
   GFL_TCBLSYS*                text_tcblsys;
   GFL_BMPWIN*                 text_winin_bmpwin;
   GFL_BMPWIN*                 text_dummy_bmpwin;      ///< 0番のキャラクターを1x1でつくっておく
@@ -425,7 +426,7 @@ static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
 static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                                     u32 str_id );
+                                     u32 str_id, BOOL text_stream_need_input );
 static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
 static void Btl_Rec_Sel_TextStartPrint( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,  // ストリームじゃないテキストウィンドウ
@@ -844,7 +845,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     break;
   case SEQ_QA_INIT:
     {
-      Btl_Rec_Sel_TextStartStream( param, work, work->qa_str_id );
+      Btl_Rec_Sel_TextStartStream( param, work, work->qa_str_id, FALSE );
       (*seq) = SEQ_QA_QUES;
     }
     break;
@@ -859,7 +860,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
     break;
   case SEQ_STM_INIT:
     {
-      Btl_Rec_Sel_TextStartStream( param, work, work->stm_str_id );
+      Btl_Rec_Sel_TextStartStream( param, work, work->stm_str_id, FALSE );
       (*seq) = work->stm_next_seq;
     }
     break;
@@ -1198,7 +1199,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
       }
       else
       {
-        Btl_Rec_Sel_TextStartStream( param, work, str_id );
+        Btl_Rec_Sel_TextStartStream( param, work, str_id, TRUE );
       }
       (*seq) = SEQ_WAIT_INIT2;
     }
@@ -1416,8 +1417,9 @@ static void Btl_Rec_Sel_TextInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
   GFL_BG_LoadScreenV_Req( BG_FRAME_M_TEXT );
 
   // NULL初期化
-  work->text_stream       = NULL;
-  work->text_strbuf       = NULL;
+  work->text_stream            = NULL;
+  work->text_stream_need_input = FALSE;
+  work->text_strbuf            = NULL;
 }
 static void Btl_Rec_Sel_TextExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
@@ -1448,7 +1450,7 @@ static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
   GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
 }
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
-                                     u32 str_id )
+                                     u32 str_id, BOOL text_stream_need_input )
 {
   // 一旦消去
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_winin_bmpwin), TEXT_WININ_BACK_COLOR );
@@ -1471,6 +1473,8 @@ static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_W
                           work->text_tcblsys, 2,
                           work->heap_id,
                           TEXT_WININ_BACK_COLOR );
+
+  work->text_stream_need_input = text_stream_need_input;
 }
 static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
@@ -1517,7 +1521,31 @@ static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
     break;
   case PRINTSTREAM_STATE_DONE:
     {
-      ret = TRUE;
+      if( work->text_stream_need_input )
+      {
+        if( ( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) ) || GFL_UI_TP_GetTrg() )
+        {
+          // メッセージ送りキーカーソルアイコンAPP_KEYCURSOR_WORKが出ているわけではないので、SEも鳴らさなくていいかな
+          
+          if( GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B ) )
+          {
+            // タッチorキー
+            GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+          }
+          else
+          {
+            // タッチorキー
+            GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+          }
+
+          work->text_stream_need_input = FALSE;
+          ret = TRUE;
+        }
+      }
+      else
+      {
+        ret = TRUE;
+      }
     }
     break;
   }
