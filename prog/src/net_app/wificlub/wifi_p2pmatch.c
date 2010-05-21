@@ -321,7 +321,7 @@ enum{
   PLAYER_DISP_ICON_IDX_NORMAL_ACT,
   PLAYER_DISP_ICON_IDX_NORMAL,
   PLAYER_DISP_ICON_IDX_VCT_ACT,
-  PLAYER_DISP_ICON_IDX_VCTBIG,
+  PLAYER_DISP_ICON_IDX_VCT,
   PLAYER_DISP_ICON_IDX_TVT_ACT,
   PLAYER_DISP_ICON_IDX_TVT,
   PLAYER_DISP_ICON_IDX_FIGHT_ACT,
@@ -329,7 +329,7 @@ enum{
   PLAYER_DISP_ICON_IDX_CHANGE_ACT,
   PLAYER_DISP_ICON_IDX_CHANGE,
   PLAYER_DISP_ICON_IDX_VCTNOT,
-  PLAYER_DISP_ICON_IDX_VCT,
+  PLAYER_DISP_ICON_IDX_VCTBIG,
   PLAYER_DISP_ICON_IDX_UNK_ACT,      //その他不明
   PLAYER_DISP_ICON_IDX_UNK,      //その他不明
   PLAYER_DISP_ICON_IDX_NONE,  //空
@@ -3486,24 +3486,6 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
   if(wk->cancelEnableTimer < 0  ){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT);
   }
-  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL){
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-  }
-  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT ){
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-  }
-  else if((GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_DISCONNECTING) || (GFL_NET_StateIsWifiDisconnect())){
-    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_016, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-  }
-  else if(GFL_NET_StateIsWifiError()){
-    _errorDisp(wk);
-  }
 #if PLFIX_T869
   // VCHATフラグがOFFになっていたら通信切断
   else if(vchat == FALSE){
@@ -3669,7 +3651,7 @@ static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq )
     }
     else{
       WifiP2PMatchFriendListIconWrite(   &wk->icon, GFL_BG_FRAME1_M,
-                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT + PLAYER_DISP_ICON_MYMODE, 0 );
+                                         PLAYER_DISP_ICON_POS_X, PLAYER_DISP_ICON_POS_Y, PLAYER_DISP_ICON_IDX_VCT_ACT + PLAYER_DISP_ICON_MYMODE, 0 );
     }
   }
 
