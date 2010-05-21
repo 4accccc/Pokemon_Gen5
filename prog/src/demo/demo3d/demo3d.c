@@ -340,6 +340,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
       #endif
       (*seq)++;
     }
+    break;
   case 1:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
