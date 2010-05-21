@@ -549,9 +549,11 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->PlayTime    = GAMEDATA_GetPlayTimeWork( gameData );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
     cardData->SignAnimeOn = TRCSave_GetSignAnime(  trc_ptr );
-    MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &cardData->Pms );
-
   }
+
+  // 簡易会話取得
+  MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &cardData->Pms );
+
   //クリア日時とプレイ開始日時
   {
     RTCDate workDate;
