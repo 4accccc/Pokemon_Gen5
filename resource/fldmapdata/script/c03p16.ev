@@ -275,9 +275,6 @@ IF $LWK_GOLD_CHK == TRUE THEN
 	_FLAG_SET( TMFLG_C03P16_CABIN_01 )
 	
 	//========================================/
-			
-	//船員のOBJを消す
-	_OBJ_DEL( C03P16_CABINGUIDE_01 )
 
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_C03R0801_CABINGUIDE_01 )
