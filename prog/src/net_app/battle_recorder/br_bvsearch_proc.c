@@ -729,7 +729,7 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
         BR_PROC_SYS_Pop( p_param->p_procsys );
         return TRUE;
       }
-      if( BR_BTN_GetTrg( p_wk->p_btn[BR_BVSEARCH_BTNID_MENU_OK], x, y ))
+      if( BR_BTN_GetHit( p_wk->p_btn[BR_BVSEARCH_BTNID_MENU_OK], x, y ))
       { 
         if( p_param->search_data.monsno != BATTLE_REC_SEARCH_MONSNO_NONE
             || p_param->search_data.local_code != BATTLE_REC_SEARCH_LOCAL_CODE_NONE
@@ -739,6 +739,9 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
           GFL_POINT pos;
           pos.x = x;
           pos.y = y;
+
+          PMSND_PlaySE( BR_SND_SE_OK );
+
           BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
 
           p_wk->next_sub_seq  = BR_BVSEARCH_SUBSEQ_END;
@@ -747,6 +750,7 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
         }
         else
         { 
+          PMSND_PlaySE( BR_SND_SE_NG );
           BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_713 );
         }
       }

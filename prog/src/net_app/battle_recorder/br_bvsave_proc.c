@@ -948,9 +948,9 @@ static void Br_BvSave_OverWrite_CreateDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_P
     WORDSET *p_word     = BR_RES_GetWordSet( p_param->p_res );
     GFL_MSGDATA *p_msg  = BR_RES_GetMsgData( p_param->p_res );
     STRBUF  *p_src  = GFL_MSG_CreateString( p_msg, msg_info_013 );
-    STRBUF  *p_dst  = GFL_STR_CreateCopyBuffer( p_src, p_wk->heapID );
+    STRBUF  *p_dst  = GFL_STR_CreateBuffer( 128, p_wk->heapID );
 
-    WORDSET_RegisterWord( p_word, 0, 
+    WORDSET_RegisterWord( p_word, 0,
         p_param->cp_rec_saveinfo->p_name[ BR_SAVEDATA_OTHER_00 + p_wk->save_btn_idx],
         p_param->cp_rec_saveinfo->sex[ BR_SAVEDATA_OTHER_00 + p_wk->save_btn_idx], 
         TRUE, PM_LANG );
