@@ -494,6 +494,7 @@ typedef struct
   // FRONT or BACK
   BOOL                        is_poke_front;  // TRUEのときFRONTを表示中、FALSEのときBACKを表示中
 
+  ARCHANDLE*                  pokeicon_handle;
   u32                         pokeicon_ncg[OBJ_SWAP_MAX];    // pokeicon_clwk[i]がNULLでないときpokeicon_ncg[i]は有効
   u32                         pokeicon_ncl;
   u32                         pokeicon_nce;
@@ -588,7 +589,7 @@ static void Zukan_Detail_Form_ObjBaseCreate( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 static void Zukan_Detail_Form_ObjBaseDelete( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static void Zukan_Detail_Form_ObjButtonAroowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+static void Zukan_Detail_Form_ObjButtonArrowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void Zukan_Detail_Form_ObjButtonMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 
 static void Zukan_Detail_Form_ObjFieldSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -640,7 +641,7 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 // ポケアイコン
 static void PokeiconBaseInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
 static void PokeiconBaseExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
-static GFL_CLWK* PokeiconInit( u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg );
+static GFL_CLWK* PokeiconInit( ARCHANDLE* pokeicon_handle, u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg );
 static void PokeiconExit( u32 ncg, GFL_CLWK* clwk );
 // マクロ
 #define BLOCK_POKEICON_EXIT(ncg,clwk)                     \
@@ -2098,18 +2099,21 @@ static void Zukan_Detail_Form_ScrollPokeText( ZUKAN_DETAIL_FORM_PARAM* param, ZU
   {
   case STATE_TOP:
     {
-      GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, -64 );
+      //GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, -64 );
+      GFL_BG_SetScrollReq( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, -64 );
     }
     break;
   case STATE_EXCHANGE:
     {
       if( work->diff_num >= 2 )
       {
-        GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, 0 );
+        //GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, 0 );
+        GFL_BG_SetScrollReq( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, 0 );
       }
       else
       {
-        GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, -64 );
+        //GFL_BG_SetScroll( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, -64 );
+        GFL_BG_SetScrollReq( BG_FRAME_M_TEXT, GFL_BG_SCROLL_X_SET, -64 );
       }
     }
     break;
@@ -2301,11 +2305,11 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 static void PokeiconBaseInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 不変物の生成
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, param->heap_id );
+  work->pokeicon_handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, param->heap_id );
 
 /*
   work->pokeicon_ncl = GFL_CLGRP_PLTT_RegisterEx(
-                           handle,
+                           work->pokeicon_handle,
                            POKEICON_GetPalArcIndex(),
                            CLSYS_DRAW_SUB,
                            OBJ_PAL_POS_S_POKEICON * 0x20,
@@ -2314,33 +2318,31 @@ static void PokeiconBaseInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_
                            param->heap_id );
 */
   work->pokeicon_ncl = GFL_CLGRP_PLTT_RegisterComp(  // ポケアイコンのパレットは圧縮されている
-                           handle,
+                           work->pokeicon_handle,
                            POKEICON_GetPalArcIndex(),
                            CLSYS_DRAW_SUB,
                            OBJ_PAL_POS_S_POKEICON * 0x20,
                            param->heap_id );
 
   work->pokeicon_nce = GFL_CLGRP_CELLANIM_Register(
-                           handle,
+                           work->pokeicon_handle,
                            POKEICON_GetCellSubArcIndex(),
                            POKEICON_GetAnmSubArcIndex(),
                            param->heap_id );
-
-  GFL_ARC_CloseDataHandle( handle );
 }
 static void PokeiconBaseExit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 不変物の生成
   GFL_CLGRP_CELLANIM_Release( work->pokeicon_nce );
   GFL_CLGRP_PLTT_Release( work->pokeicon_ncl );
+  
+  GFL_ARC_CloseDataHandle( work->pokeicon_handle );
 }
 
-static GFL_CLWK* PokeiconInit( u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg )
+static GFL_CLWK* PokeiconInit( ARCHANDLE* pokeicon_handle, u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, HEAPID heap_id, u32 mons, u32 form_no, u32 sex, BOOL egg )
 {
   GFL_CLWK* clwk;
   GFL_CLWK_DATA data;
-
-  ARCHANDLE* handle = GFL_ARC_OpenDataHandle( ARCID_POKEICON, heap_id );
 
   data.pos_x   = pokeicon_pos[0];
   data.pos_y   = pokeicon_pos[1];
@@ -2349,7 +2351,7 @@ static GFL_CLWK* PokeiconInit( u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, H
   data.bgpri   = 0;
 
   *ncg = GFL_CLGRP_CGR_Register(
-             handle,
+             pokeicon_handle,
              POKEICON_GetCgxArcIndexByMonsNumber( mons, form_no, sex, egg ),
              FALSE,
              CLSYS_DRAW_SUB,
@@ -2376,8 +2378,6 @@ static GFL_CLWK* PokeiconInit( u32* ncg, u32 ncl, u32 nce, GFL_CLUNIT* clunit, H
   GFL_CLACT_WK_SetObjMode( clwk, GX_OAM_MODE_NORMAL );  // BGとともにこのOBJも暗くしたいのは、フェードインとフェードアウトのときだけであり、
                                                         // ポケモンを変更しただけのときは、暗くしたり半透明にしたりしたくない。
                                                         // BGとともにこのOBJも暗くしたいときは、この関数の後に設定すること。
-
-  GFL_ARC_CloseDataHandle( handle );
 
   return clwk;
 }
@@ -2759,6 +2759,7 @@ static void Zukan_Detail_Form_PokeiconInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM*
   sex = work->diff_info_list[diff_no].sex;
 
   work->pokeicon_clwk[work->pokeicon_swap_curr] = PokeiconInit(
+                                                      work->pokeicon_handle,
                                                       &(work->pokeicon_ncg[work->pokeicon_swap_curr]),
                                                       work->pokeicon_ncl,
                                                       work->pokeicon_nce,
@@ -2827,7 +2828,7 @@ static void Zukan_Detail_Form_ChangePoke( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
   Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
 
   // 変更されたポケモン用に、トップ画面でフォルムを切り替えるための矢印を用意する
-  Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
+  Zukan_Detail_Form_ObjButtonArrowSetup( param, work, cmn );
 
   // 押し出し用関数を利用してcompをcurrの次のフォルムにしておく
   // 押し出し用関数を利用して位置設定
@@ -3347,7 +3348,7 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
     Zukan_Detail_Form_ObjBarSetup( param, work, cmn );
 
     // 変更された状態用に、トップ画面でフォルムを切り替えるための矢印を用意する
-    Zukan_Detail_Form_ObjButtonAroowSetup( param, work, cmn );
+    Zukan_Detail_Form_ObjButtonArrowSetup( param, work, cmn );
 
     // 入力可不可やボタン押し情報を元に戻す
     work->push_button = BUTTON_OBJ_NONE;
@@ -3691,7 +3692,7 @@ static BUTTON_OBJ Zukan_Detail_Form_ObjButtonCheckPush( ZUKAN_DETAIL_FORM_PARAM*
   return curr_push_button; 
 }
 
-static void Zukan_Detail_Form_ObjButtonAroowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+static void Zukan_Detail_Form_ObjButtonArrowSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
   // 現在の状態で、トップ画面でフォルムを切り替えるための矢印を準備する
 

@@ -1240,8 +1240,8 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   wk->poke_list[ 1] = 202;
   wk->poke_list[ 2] = 151;
   wk->poke_list[ 3] = 487;
-  wk->poke_list[ 4] =  17;
-  wk->poke_list[ 5] =  18;
+  wk->poke_list[ 4] =  17;  // MONSNO_PIZYON
+  wk->poke_list[ 5] =  18;  // MONSNO_PIZYOTTO
   wk->poke_list[ 6] = 582;  // MONSNO_TURURI
   wk->poke_list[ 7] = 583;  // MONSNO_TURUTTO
   wk->poke_list[ 8] = 584;  // MONSNO_TURUTURUDA
@@ -1275,6 +1275,29 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
         ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
         ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
       }
+    }
+    if( wk->poke_list[i] == 17 )
+    {
+/*
+      PP_Put( pp, ID_PARA_sex, 0 );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+      
+      PP_Put( pp, ID_PARA_sex, 1 );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+*/
+      GFL_HEAP_FreeMemory( pp );
+      pp = PP_CreateEx( wk->poke_list[i] , 1, 0, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_RARE, wk->heapID );
+//      PP_Put( pp, ID_PARA_sex, 0 );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+
+      GFL_HEAP_FreeMemory( pp );
+      pp = PP_CreateEx( wk->poke_list[i] , 1, 0, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_RARE, wk->heapID );
+ //     PP_Put( pp, ID_PARA_sex, 1 );
+      ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
     }
     if( wk->poke_list[i] == 382 )
     {
