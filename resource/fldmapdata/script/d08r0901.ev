@@ -49,6 +49,9 @@ INIT_EVENT_END
 /* パッケージポケモン 話しかけ                                                          
 /**************************************************************/
 EVENT_START    ev_d08r0901_poke_01
+
+	_TALK_START_SE_PLAY()
+	
 	_OBJ_ANIME(D08R0901_POKE_01, anm_legend_hoeru )
 	_OBJ_ANIME_WAIT()
 
