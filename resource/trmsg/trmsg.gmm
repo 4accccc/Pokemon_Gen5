@@ -2856,26 +2856,26 @@
 	</row>
 
 	<row id="TRID_BUSINESS2_01_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">ちょっと　きゅうけいを　しようと
+		<language name="JPN" width="216">ちょいと　きゅうけいを　しようと
 おもったところで　キミに　であう！▼</language>
-		<language name="JPN_KANJI" width="216">ちょっと　休憩を　しようと
+		<language name="JPN_KANJI" width="216">ちょいと　休憩を　しようと
 思ったところで　キミに　出会う！▼</language>
 	</row>
 
 	<row id="TRID_BUSINESS2_01_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">この　であいは
-キミにとって　いいものだったな！</language>
+キミにとって　いいものだったね！</language>
 		<language name="JPN_KANJI" width="216">この　予期せぬ　出会いは
-キミにとって　いいものだったな！</language>
+キミにとって　いいものだったね！</language>
 	</row>
 
 	<row id="TRID_BUSINESS2_01_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ボクの　ポケモンは
+		<language name="JPN" width="216">わたしの　ポケモンは
 であって　１０ねんいじょう！▽
-こころを　ゆるせる　あいぼうさ</language>
-		<language name="JPN_KANJI" width="216">ボクの　ポケモンは
+こころを　ゆるせる　あいぼうだよ</language>
+		<language name="JPN_KANJI" width="216">わたしの　ポケモンは
 出会って　１０年以上！▽
-心を　許せる　相棒さ</language>
+心を　許せる　相棒だよ</language>
 	</row>
 
 	<row id="TRID_BUSINESS1_05_TRMSG_FIGHT_LOSE">
