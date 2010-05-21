@@ -5810,7 +5810,7 @@ static void _myStatusChange(WIFIP2PMATCH_WORK *wk, int status,int gamemode)
   if((status == WIFI_STATUS_WAIT) && (gamemode==WIFI_GAME_LOGIN_WAIT)){
     WIFI_STATUS_ResetVChatMac(wk->pMatch);
   }
-  if(status == WIFI_STATUS_PLAYING){
+  if((status == WIFI_STATUS_PLAYING) && (gamemode!=WIFI_GAME_UNIONMATCH)){
     //バトルや対戦以外でも更新する為にここにした
     WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
   }
