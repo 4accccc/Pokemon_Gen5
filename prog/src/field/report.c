@@ -678,7 +678,7 @@ static void InitBmp( REPORT_WORK * wk )
 		if( EVENTWORK_CheckEventFlag( ev, SYS_FLAG_ZUKAN_GET ) == TRUE ){
 			str = GFL_MSG_CreateString( mman, REPORT_STR_07 );
 			{
-				u16	num = ZUKANSAVE_GetZukanPokeGetCount( GAMEDATA_GetZukanSave(gd), wk->heapID );
+				u16	num = ZUKANSAVE_GetZukanPokeSeeCount( GAMEDATA_GetZukanSave(gd), wk->heapID );
 				WORDSET_RegisterNumber( wset, 0, num, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 			}
 			WORDSET_ExpandStr( wset, exp, str );
