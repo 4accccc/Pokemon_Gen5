@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:18:27"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-21T16:04:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,8 +271,8 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -773,10 +773,12 @@
 ・この後戦闘に入る。</comment>
 		<attribute name="キャラ指定">母
 ベテラントレーナー</attribute>
-		<language name="JPN" width="256">ぼうや　おつよいのかしら？
-ならば　わたくしを　たおしてごらんなさい！▼</language>
-		<language name="JPN_KANJI" width="256">坊や　お強いのかしら？
-ならば　私を　倒してごらんなさい！▼</language>
+		<language name="JPN" width="256">ぼうや　おつよいのかしら？▼
+ならば　わたくしを
+たおしてごらんなさい！▼</language>
+		<language name="JPN_KANJI" width="256">坊や　お強いのかしら？▼
+ならば　わたくしを
+倒してごらんなさい！▼</language>
 	</row>
 
 	<row id="msg_t04r0101_veteranw_02a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -813,10 +815,10 @@
 ベテラントレーナー</attribute>
 		<language name="JPN" width="256">これでも　わたくし
 ポケモンには　くわしくてよ▼
-また　おあいて　ねがいますわ▼</language>
+また　おあいて　ねがいますわ</language>
 		<language name="JPN_KANJI" width="256">これでも　わたくし
 ポケモンには　詳しくてよ▼
-また　お相手　願いますわ▼</language>
+また　お相手　願いますわ</language>
 	</row>
 
 	<row id="msg_t04r0101_veteranw_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -824,12 +826,12 @@
 ・連戦前、能動的に話しかけた場合</comment>
 		<attribute name="キャラ指定">母
 ベテラントレーナー</attribute>
-		<language name="JPN" width="256">ようこそ
+		<language name="JPN" width="256">ようこそ▼
 ブルジョワールけの　しんの　つよさ
-きょうこそ　おみせ　いたしますわ！</language>
-		<language name="JPN_KANJI" width="256">ようこそ
+きょうこそ　ごらんに　いれますわ！</language>
+		<language name="JPN_KANJI" width="256">ようこそ▼
 ブルジョワール家の　真の　強さ
-今日こそ　お見せ　いたしますわ！</language>
+今日こそ　ご覧に　いれますわ！</language>
 	</row>
 
 	<row id="msg_t04r0101_veteranw_04a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
