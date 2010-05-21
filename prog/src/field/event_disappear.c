@@ -288,7 +288,10 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   // 流砂アニメーション開始
   case SEQ_SAND_ANIME_START:
     // SE
-    PMSND_PlaySE( SEQ_SE_FLD_15 );
+    {
+      SEPLAYER_ID player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_15 );
+      PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_15, player_id );
+    }
     // 配置モデルのアニメ再生
     {
       FLDMAPPER* mapper = FIELDMAP_GetFieldG3Dmapper( work->fieldmap );
@@ -426,7 +429,10 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_FallInSand( GMEVENT* event, int* seq,
   // 終了
   case SEQ_EXIT:
     // SE 停止
-    PMSND_StopSE();
+    {
+      SEPLAYER_ID player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_15 );
+      PMSND_StopSE_byPlayerID( player_id );
+    }
     // カメラモードの復帰
     FIELD_CAMERA_ChangeMode( camera, work->camera_mode );
     // 登録した配置モデルを消去

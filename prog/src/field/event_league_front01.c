@@ -102,7 +102,11 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       heapID = FIELDMAP_GetHeapID( fieldmap );
       work->liftAnime = ICA_ANIME_CreateAlloc( heapID, ARCID_LEAGUE_FRONT_GIMMICK, NARC_league_front_pl_ele_00_ica_bin );
     }
-    PMSND_PlaySE( SEQ_SE_FLD_148 ); // エレベータ稼動音開始
+    // エレベータ稼動音開始
+    {
+      SEPLAYER_ID player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_148 );
+      PMSND_PlaySE_byPlayerID( SEQ_SE_FLD_148, player_id ); 
+    }
     ++(*seq);
     break;
 

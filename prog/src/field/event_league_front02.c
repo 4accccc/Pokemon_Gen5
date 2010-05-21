@@ -169,8 +169,13 @@ static GMEVENT_RESULT LiftDownEvent( GMEVENT* event, int* seq, void* wk )
       // アニメ終了
       if( anime_end ) { 
         ICA_ANIME_Delete( work->liftAnime );
-        PMSND_StopSE(); // エレベータ稼動音を停止
-        PMSND_PlaySE( SEQ_SE_FLD_94 ); // エレベータ到着音
+        // エレベータ稼動音を停止
+        {
+          SEPLAYER_ID player_id = PMSND_GetSE_DefaultPlayerID( SEQ_SE_FLD_148 );
+          PMSND_StopSE_byPlayerID( player_id ); 
+        }
+        // エレベータ到着音
+        PMSND_PlaySE( SEQ_SE_FLD_94 ); 
         // カメラ振動イベントをコール
         {
           CAM_SHAKE_PARAM shakeParam;
