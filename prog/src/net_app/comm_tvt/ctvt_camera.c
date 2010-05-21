@@ -567,9 +567,13 @@ void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork 
 }
 void CTVT_CAMERA_ResetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx )
 {
-  if( camWork->isUpdateBit & 1<<idx )
+  //“¯Šú‘Ò‚¿‚ÌŠÔ‚ÍƒuƒƒbƒN
+  if( camWork->isWaitAllRefresh == FALSE )
   {
-    camWork->isUpdateBit -= 1<<idx;
+    if( camWork->isUpdateBit & 1<<idx )
+    {
+      camWork->isUpdateBit -= 1<<idx;
+    }
   }
 }
 
