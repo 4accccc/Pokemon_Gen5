@@ -12,6 +12,9 @@
 
 #include <nitro.h>
 #include "gflib.h"
+
+#if PM_DEBUG
+
 #include "arc_def.h"
 
 #include "system/main.h"  //HEAPID
@@ -679,3 +682,4 @@ const GFL_PROC_DATA DebugSaveAddrProcData = {
   DebugSaveAddrProc_End,
 };
 
+#endif
