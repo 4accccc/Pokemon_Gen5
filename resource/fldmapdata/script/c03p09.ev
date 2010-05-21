@@ -604,7 +604,7 @@ ev_r03_ice_shop_buy:
 		//ヒウンアイスを買う場合の処理
 		IF $LWK_ICE_NUM_SELECT == 0 THEN	
 			
-			//バッグ空きチェック（チェックする対象が仮）
+			//バッグ空きチェック
 			_ADD_ITEM_CHK(ITEM_HIUNAISU,1,LWK_BAG_CHK)
 			//金額チェック
 			_CHECK_GOLD( LWK_GOLD_CHK, LWK_ICE_GOLD  )
