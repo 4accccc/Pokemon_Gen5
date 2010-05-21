@@ -6124,7 +6124,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
   if( wk->view.user_disp == MCV_USERDISP_INIT ){
     wk->view.user_disp = MCV_USERDISP_ON;
     //    wk->view.user_dispno = WF_USERDISPTYPE_NRML;
-    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+  //  PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     MCVSys_UserDispDraw( wk, heapID );
   }
 
@@ -6168,7 +6168,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
       wk->view.bttn_allchg = TRUE;
       wk->view.user_disp = MCV_USERDISP_OFF;
       // MCVSys_OamBttnOff( wk );  // ƒ{ƒ^ƒ“OFF
-      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    //  PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     }
   }
 
