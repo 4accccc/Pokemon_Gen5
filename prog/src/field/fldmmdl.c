@@ -374,10 +374,8 @@ static MMDL * mmdlsys_AddMMdlCore( MMDLSYS *mmdlsys,
   MMDL *mmdl;
   MMDL_HEADER header_data = *header;
   const MMDL_HEADER *head = &header_data;
-  
   mmdl = mmdlsys_SearchSpaceMMdl( mmdlsys );
   GF_ASSERT( mmdl != NULL );
-  
   mmdl_InitWork( mmdl, mmdlsys, zone_id );
   mmdl_SetHeaderBefore( mmdl, head, ev, mmdlsys );
   mmdl_InitDir( mmdl );
@@ -475,7 +473,6 @@ void MMDLSYS_SetMMdl( MMDLSYS *mmdlsys,
   GF_ASSERT( header != NULL );
   
   D_MMDL_DPrintf( "MMDLSYS_SetMMdl Count %d\n", count );
-  
   do{
     if( MMdlHeader_CheckAlies(header) == TRUE ||
         mmdlsys_CheckEventFlag(eventWork,header->event_flag) == FALSE ){
@@ -4531,6 +4528,7 @@ void MMDLSYS_SetSysOBJCodeParam( MMDLSYS *mmdlsys, int list_id)
 {
   NOZOMU_Printf("list_id %d\n",list_id);
 	GFL_ARC_LoadData( mmdlsys->pMdlPrmWork, ARCID_MMDL_LIST, list_id );
+  
   {
     u16 *data = (u16*)mmdlsys->pMdlPrmWork;
     u16 num = data[0];
@@ -4601,20 +4599,6 @@ u16 MMDLSYS_GetSysOBJCodeParamNum( const MMDLSYS *mmdlsys)
 void MMDLSYS_LoadOBJCodeParam(
     const MMDLSYS *mmdlsys, u16 code, OBJCODE_PARAM *outParam )
 {
-  { //既にロード済みの同一コードを持つ動作モデルを探す
-    u32 no = 0;
-    MMDL *mmdl;
-    
-    while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
-      if( MMDL_GetOBJCode(mmdl) == code ){
-        *outParam = mmdl->objcode_param;
-        D_MMDL_DPrintf(
-            "MMDLSYS_LoadOBJCodeParam() CODE %xH 既存データアリ\n", code );
-        return;
-      }
-    }
-  }
-
   {
     int i;
     u16 *data = (u16*)mmdlsys->pMdlPrmWork;
@@ -4627,14 +4611,28 @@ void MMDLSYS_LoadOBJCodeParam(
       {
         if ( code == data[1+i] )
         {
-          NOZOMU_Printf("Find code:%d\n",code);
+//          NOZOMU_Printf("Find code:%d\n",code);
           *outParam = prm[i];
           return;
         }
       }
     }
   }
-  
+
+  { //既にロード済みの同一コードを持つ動作モデルを探す
+    u32 no = 0;
+    MMDL *mmdl;
+    
+    while( MMDLSYS_SearchUseMMdl(mmdlsys,&mmdl,&no) ){
+      if( MMDL_GetOBJCode(mmdl) == code ){
+        *outParam = mmdl->objcode_param;        
+        D_MMDL_DPrintf(
+            "MMDLSYS_LoadOBJCodeParam() CODE %xH 既存データアリ\n", code );
+        return;
+      }
+    }
+  }
+
   {
     u16 size = sizeof( OBJCODE_PARAM );
     u16 offs = OBJCODE_PARAM_TOTAL_NUMBER_SIZE +
