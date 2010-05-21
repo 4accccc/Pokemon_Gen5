@@ -1745,7 +1745,7 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
 {
   //WCSでカメラワークオフなら何もしない
   if( ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) &&
-      ( !BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) ) )
+      ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) ) )
   {
     return;
   }
