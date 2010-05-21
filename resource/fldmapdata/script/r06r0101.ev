@@ -140,7 +140,7 @@ EVENT_START  ev_r06r0101_assistantm_03
 			_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_09)
 			_MSGWIN_CLOSE()
 			
-			//アイテム入手【仮】アイテム内容
+			//アイテム入手
 			_ITEM_EVENT_KEYWAIT(ITEM_RIIHUNOISI,1)
 			//アイテム入手フラグをON
 			_FLAG_SET(FE_R06R0101_ITEMGET_01)
