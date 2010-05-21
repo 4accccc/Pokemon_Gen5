@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T18:01:47"/>
+	<create user="matsumiya" host="W00224" date="2010-05-21T12:54:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
+	<dialog left="1439" top="228" right="2144" bottom="848" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,10 +296,10 @@
 		<comment>♂
 ・HP/PP満タン時</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">そんなに　げんきなら
-さばくだって　どこにだって　いけるね！</language>
-		<language name="JPN_KANJI" width="256">そんなに　元気なら
-砂漠だって　どこにだって　行けるね！</language>
+		<language name="JPN" width="256">そんなに　げんきなら　すなあらしでも
+どこにだって　いけるね！</language>
+		<language name="JPN_KANJI" width="256">そんなに　元気なら　砂あらしでも
+どこにだって　行けるね！</language>
 	</row>
 
 	<row id="msg_r04r0101_middlewoman2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
