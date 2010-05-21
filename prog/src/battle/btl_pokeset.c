@@ -11,6 +11,11 @@
 #include "btl_pokeset.h"
 #include "btl_calc.h"
 
+enum {
+  PRINT_FLG = TRUE,
+};
+
+
 /**
  *  ‰Šú‰»
  */
@@ -25,6 +30,7 @@ void BTL_POKESET_Clear( BTL_POKESET* set )
 void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
 {
   GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
+  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_PSET_Copy, dst, dst->count );
 }
 
 /**
@@ -48,6 +54,7 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
     if( rec->count > rec->countMax ){
       rec->countMax = rec->count;
     }
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_PSET_Add, rec, BPP_GetID(bpp), rec->count, rec->countMax );
   }
   else
   {
@@ -78,6 +85,7 @@ void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
       }
       rec->count--;
       rec->getIdx--;
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_PSET_Remove, rec, BPP_GetID(bpp), rec->count, rec->countMax );
       break;
     }
   }

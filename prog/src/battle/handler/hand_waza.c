@@ -4044,6 +4044,7 @@ static void handler_Ongaesi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( pow == 0 ){
       pow = 1;
     }
+//    TAYA_Printf("おんがえし：なつき度=%d, 基本威力=%d\n", natsuki, pow );
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
@@ -9807,7 +9808,7 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   {
     u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     BtlPokePos pos = BTL_SVFTOOL_GetPokeLastPos( flowWk, damagedPokeID );
-    TAYA_Printf(" ダメうけポケモン=%d, 最終位置=%d\n", damagedPokeID, pos );
+
     if( pos != BTL_POS_NULL )
     {
       BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_NEXT_FRIENDS, pos );
@@ -10167,29 +10168,41 @@ static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param;
+    const BTL_POKEPARAM* target = NULL;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
-
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
-    param->pokeID = targetPokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
-
-    {
-      BTL_HANDEX_PARAM_ADD_SICK* sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-      sick_param->pokeID = targetPokeID;
-      sick_param->sickID = WAZASICK_FREEFALL;
-      sick_param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
+    if( targetPokeID != BTL_POKEID_NULL ){
+      target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     }
 
+    if( (target!=NULL) && (!BPP_MIGAWARI_IsExist(target)) )
     {
-      BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_FreeFall );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-      HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
+      BTL_HANDEX_PARAM_SET_CONTFLAG* param;
+
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+      param->pokeID = pokeID;
+      param->flag = BPP_CONTFLG_SORAWOTOBU;
+
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+      param->pokeID = targetPokeID;
+      param->flag = BPP_CONTFLG_SORAWOTOBU;
+
+      {
+        BTL_HANDEX_PARAM_ADD_SICK* sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+        sick_param->pokeID = targetPokeID;
+        sick_param->sickID = WAZASICK_FREEFALL;
+        sick_param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
+      }
+
+      {
+        BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_FreeFall );
+        HANDEX_STR_AddArg( &msg_param->str, pokeID );
+        HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
+      }
+    }
+    else{
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
   }
 }
@@ -10383,7 +10396,7 @@ static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems )
     { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
     { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
     { BTL_EVENT_WAZA_POWER_BASE,     handler_CombiWaza_Pow       }, // 威力計算
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
+    { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10475,31 +10488,34 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
       u32 viewEffectNo = 0;
       u16 strID = 0;
+      u8  viewEffectTargetPokeID = BTL_POKEID_NULL;
 
       switch( work[1] ){
       case COMBI_EFFECT_RAINBOW:
-          eff = BTL_SIDEEFF_RAINBOW;
-          strID = BTL_STRID_STD_Rainbow;
-          viewEffectNo = BTLEFF_RAINBOW;
-          break;
+        eff = BTL_SIDEEFF_RAINBOW;
+        strID = BTL_STRID_STD_Rainbow;
+        viewEffectNo = BTLEFF_RAINBOW;
+        viewEffectTargetPokeID = pokeID;
+        break;
       case COMBI_EFFECT_BURNING:
-          eff = BTL_SIDEEFF_BURNING;
-          strID = BTL_STRID_STD_Burning;
-          side = BTL_MAINUTIL_GetOpponentSide( side );
-          viewEffectNo = BTLEFF_BURNING;
-          break;
+        eff = BTL_SIDEEFF_BURNING;
+        strID = BTL_STRID_STD_Burning;
+        side = BTL_MAINUTIL_GetOpponentSide( side );
+        viewEffectNo = BTLEFF_BURNING;
+        viewEffectTargetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+        break;
       case COMBI_EFFECT_MOOR:
-          eff = BTL_SIDEEFF_MOOR;
-          strID = BTL_STRID_STD_Moor;
-          side = BTL_MAINUTIL_GetOpponentSide( side );
-          viewEffectNo = BTLEFF_MOOR;
-          break;
+        eff = BTL_SIDEEFF_MOOR;
+        strID = BTL_STRID_STD_Moor;
+        side = BTL_MAINUTIL_GetOpponentSide( side );
+        viewEffectNo = BTLEFF_MOOR;
+        viewEffectTargetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+        break;
       }
 
       if( eff != BTL_SIDEEFF_NULL )
       {
         BTL_HANDEX_PARAM_SIDEEFF_ADD* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_ADD, pokeID );
-        BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
 
         param->effect = eff;
         param->side = side;
@@ -10507,9 +10523,17 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, strID );
         HANDEX_STR_AddArg( &param->exStr, side );
 
-        viewEff_param->pos_from = BTL_POS_NULL;
-        viewEff_param->pos_to = BTL_POS_NULL;
-        viewEff_param->effectNo = viewEffectNo;
+        if( viewEffectTargetPokeID != BTL_POKEID_NULL )
+        {
+          BtlPokePos viewEffectPos = BTL_SVFTOOL_GetPokeLastPos( flowWk, viewEffectTargetPokeID );
+          if( viewEffectPos != BTL_POS_NULL )
+          {
+            BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
+            viewEff_param->pos_from = viewEffectPos;
+            viewEff_param->pos_to   = BTL_POS_NULL;
+            viewEff_param->effectNo = viewEffectNo;
+          }
+        }
       }
     }
   }

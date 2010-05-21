@@ -152,6 +152,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_OP_HPPlus:            return "ポケモンHP回復 : bpp=%p, pokeID=%d, AddHP=%d, ResultHP=%d\n";
   case DBGSTR_CLIENT_OP_MemberIn:          return "メンバー入場 : pos %d<->%d  inPokeID=%d, inPokeHP=%d\n";
 
+  case DBGSTR_PSET_Copy:          return "ポケセットコピー  adrs=%p, count=%d\n";
+  case DBGSTR_PSET_Add:           return "ポケセット追加    adrs=%p, pokeID=%d, count=%d/%d\n";
+  case DBGSTR_PSET_Remove:        return "ポケセット削除    adrs=%p, pokeID=%d, count=%d/%d\n";
+
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
   case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面 モード=%d すでに%d体選択, 今回選択=%d\n";

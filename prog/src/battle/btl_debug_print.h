@@ -278,6 +278,9 @@ typedef enum {
 
   DBGSTR_SIDE_AddFirst,
   DBGSTR_SIDE_NoMoreAdd,
+  DBGSTR_PSET_Copy,
+  DBGSTR_PSET_Add,
+  DBGSTR_PSET_Remove,
 
   DBGSTR_SICK_ContProc,
 
