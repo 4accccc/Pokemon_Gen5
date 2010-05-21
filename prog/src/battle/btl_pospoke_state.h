@@ -22,7 +22,8 @@ typedef struct {
  * 状態保持構造体
  */
 typedef struct {
-  BTL_POSPOKE_STATE  state[ BTL_POS_MAX ];
+  BTL_POSPOKE_STATE  state[ BTL_POS_MAX ];        ///< 位置ごとの状態
+  BtlPokePos         lastPos[ BTL_POKEID_MAX ];   ///< ポケモンごとの最終位置（死んだり交替したりした時にも消えない）
 }BTL_POSPOKE_WORK;
 
 /**
@@ -42,6 +43,7 @@ extern void BTL_POSPOKE_Swap( BTL_POSPOKE_WORK* wk, BtlPokePos pos1, BtlPokePos 
 extern u8 BTL_POSPOKE_GetClientEmptyPos( const BTL_POSPOKE_WORK* wk, u8 clientID, u8* pos );
 extern BOOL BTL_POSPOKE_IsExist( const BTL_POSPOKE_WORK* wk, u8 pokeID );
 extern BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID );
+extern BtlPokePos BTL_POSPOKE_GetPokeLastPos( const BTL_POSPOKE_WORK* wk, u8 pokeID );
 extern u8 BTL_POSPOKE_GetExistPokeID( const BTL_POSPOKE_WORK* wk, BtlPokePos pos );
 extern void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, const BTL_POKEPARAM* inPoke, BTL_POKE_CONTAINER* pokeCon );
 

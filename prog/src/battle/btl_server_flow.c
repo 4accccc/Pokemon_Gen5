@@ -13106,6 +13106,20 @@ BtlPokePos BTL_SVFTOOL_GetExistFrontPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] 指定ポケIDを持つポケモンが最後に出ているた位置IDを返す
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BtlPokePos
+ */
+//--------------------------------------------------------------------------------------
+BtlPokePos BTL_SVFTOOL_GetPokeLastPos( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  return BTL_POSPOKE_GetPokeLastPos( &wk->pospokeWork, pokeID );
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 指定位置に存在しているポケIDを返す（存在していない場合は BTL_POKEID_NULL）
  *
  * @param   wk
@@ -13960,7 +13974,7 @@ static BTL_HANDEX_PARAM_HEADER* Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, Bt
     { BTL_HANDEX_FAKE_BREAK,           sizeof(BTL_HANDEX_PARAM_FAKE_BREAK)          },
     { BTL_HANDEX_JURYOKU_CHECK,        sizeof(BTL_HANDEX_PARAM_HEADER)              },
     { BTL_HANDEX_TAMEHIDE_CANCEL,      sizeof(BTL_HANDEX_PARAM_TAMEHIDE_CANCEL)     },
-    { BTL_HANDEX_EFFECT_BY_POS,        sizeof(BTL_HANDEX_PARAM_EFFECT_BY_POS)       },
+    { BTL_HANDEX_ADD_EFFECT,        sizeof(BTL_HANDEX_PARAM_ADD_EFFECT)       },
     { BTL_HANDEX_CHANGE_FORM,          sizeof(BTL_HANDEX_PARAM_CHANGE_FORM)         },
     { BTL_HANDEX_SET_EFFECT_IDX,       sizeof(BTL_HANDEX_PARAM_SET_EFFECT_IDX)      },
     { BTL_HANDEX_WAZAEFFECT_ENABLE,    sizeof(BTL_HANDEX_PARAM_WAZAEFFECT_ENABLE)   },
@@ -14221,7 +14235,7 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     case BTL_HANDEX_FAKE_BREAK:         fPrevSucceed = scproc_HandEx_fakeBreak( wk, handEx_header ); break;
     case BTL_HANDEX_JURYOKU_CHECK:      fPrevSucceed = scproc_HandEx_juryokuCheck( wk, handEx_header ); break;
     case BTL_HANDEX_TAMEHIDE_CANCEL:    fPrevSucceed = scproc_HandEx_TameHideCancel( wk, handEx_header ); break;
-    case BTL_HANDEX_EFFECT_BY_POS:      fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
+    case BTL_HANDEX_ADD_EFFECT:         fPrevSucceed = scproc_HandEx_effectByPos( wk, handEx_header ); break;
     case BTL_HANDEX_CHANGE_FORM:        fPrevSucceed = scproc_HandEx_changeForm( wk, handEx_header ); break;
     case BTL_HANDEX_SET_EFFECT_IDX:     fPrevSucceed = scproc_HandEx_setWazaEffectIndex( wk, handEx_header ); break;
     case BTL_HANDEX_WAZAEFFECT_ENABLE:  fPrevSucceed = scproc_HandEx_setWazaEffectEnable( wk, handEx_header ); break;
@@ -14995,6 +15009,10 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 
   if( ((param->fSameTokEffective) || ( param->tokuseiID != prevTokusei ))
   ){
+    if( param_header->tokwin_flag ){
+      SCQUE_PUT_TOKWIN_IN( wk->que, param_header->userPokeID );
+    }
+
     SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
 
     // とくせい書き換え直前イベント
@@ -15021,6 +15039,10 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
       scEvent_ChangeTokuseiAfter( wk, param->pokeID );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
+    }
+
+    if( param_header->tokwin_flag ){
+      SCQUE_PUT_TOKWIN_OUT( wk->que, param_header->userPokeID );
     }
 
     return 1;
@@ -15637,30 +15659,57 @@ static u8 scproc_HandEx_TameHideCancel( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PA
  */
 static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
-  const BTL_HANDEX_PARAM_EFFECT_BY_POS* param = (const BTL_HANDEX_PARAM_EFFECT_BY_POS*)(param_header);
+  enum {
+    EFF_SIMPLE = 0, // 位置指定なし
+    EFF_POS,        // 開始位置のみ指定
+    EFF_VECTOR,     // 開始・終端位置ともに指定
+  };
 
+  const BTL_HANDEX_PARAM_ADD_EFFECT* param = (const BTL_HANDEX_PARAM_ADD_EFFECT*)(param_header);
+  int effType;
+
+  if( param->pos_to != BTL_POS_NULL ){
+    effType = EFF_VECTOR;
+  }else if( param->pos_from != BTL_POS_NULL ) {
+    effType = EFF_POS;
+  }else{
+    effType = EFF_SIMPLE;
+  }
+
+  // 予約領域へ書き込み
   if( param->fQueReserve )
   {
-    if( param->pos_to != BTL_POS_NULL )
-    {
-      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYVECTOR,
-          param->pos_from, param->pos_to, param->effectNo );
-    }
-    else
-    {
+    switch( effType ){
+    case EFF_SIMPLE:
+      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_SIMPLE, param->effectNo );
+      break;
+
+    case EFF_POS:
       SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYPOS,
           param->pos_from, param->effectNo );
+      break;
+
+    case EFF_VECTOR:
+      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYVECTOR,
+          param->pos_from, param->pos_to, param->effectNo );
+      break;
     }
   }
+  // 最後尾に追記
   else
   {
-    if( param->pos_to != BTL_POS_NULL )
-    {
-      SCQUE_PUT_ACT_EffectByVector( wk->que, param->pos_from, param->pos_to, param->effectNo );
-    }
-    else
-    {
+    switch( effType ){
+    case EFF_SIMPLE:
+      SCQUE_PUT_ACT_EffectSimple( wk->que, param->effectNo );
+      break;
+
+    case EFF_POS:
       SCQUE_PUT_ACT_EffectByPos( wk->que, param->pos_from, param->effectNo );
+      break;
+
+    case EFF_VECTOR:
+      SCQUE_PUT_ACT_EffectByVector( wk->que, param->pos_from, param->pos_to, param->effectNo );
+      break;
     }
   }
   return 1;

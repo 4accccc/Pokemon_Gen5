@@ -706,9 +706,7 @@ static void handler_MiracleEye( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_Seityou( u32* numElems );
 static void handler_Seityou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static CombiEffectType GetCombiWazaType( WazaID waza1, WazaID waza2 );
-static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems );
-static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems );
-static const BtlEventHandlerTable*  ADD_KusaNoTikai( u32* numElems );
+static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems );
 static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -995,10 +993,10 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_INISIENOUTA,      ADD_InisieNoUta     },
     { WAZANO_KARI_TEKUNOBASUTAA,    ADD_TechnoBaster    },  // テクノバスター=さばきのつぶて
 
-    { WAZANO_KARI_MIZUNOTIKAI,      ADD_MizuNoTikai     },
-    { WAZANO_KARI_HONOONOTIKAI,     ADD_HonooNoTikai    },
-    { WAZANO_KARI_KUSANOTIKAI,      ADD_KusaNoTikai     },
-    { WAZANO_KARI_FUREIMUSOURU,     ADD_FlameSoul       },
+    { WAZANO_KARI_MIZUNOTIKAI,      ADD_CombiWazaCommon },  // 合体ワザは共通ハンドラ
+    { WAZANO_KARI_HONOONOTIKAI,     ADD_CombiWazaCommon },
+    { WAZANO_KARI_KUSANOTIKAI,      ADD_CombiWazaCommon },
+    { WAZANO_KARI_FUREIMUSOURU,     ADD_FlameSoul       },  // リンクワザも共通ハンドラ
     { WAZANO_KARI_SANDAASOURU,      ADD_FlameSoul       },
   };
 
@@ -7357,7 +7355,7 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
       BTL_HANDEX_PARAM_MESSAGE* msg_param;
-      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param;
+      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param;
 
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Tonbogaeri );
@@ -7367,7 +7365,7 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       param->pokeID = pokeID;
 
-      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
       eff_param->effectNo = (BTL_EVENT_FACTOR_GetSubID(myHandle) == WAZANO_TONBOGAERI)?
                     BTLEFF_TONBOGAERI_RETURN : BTLEFF_VOLTCHANGE_RETURN;
       eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
@@ -8472,14 +8470,14 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_HANDEX_PARAM_TURNFLAG* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
-    BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param;
+    BTL_HANDEX_PARAM_ADD_EFFECT* eff_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
 
     param->pokeID = pokeID;
     param->flag = BPP_TURNFLG_MUST_SHRINK;
 
-    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+    eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
     eff_param->effectNo = BTLEFF_KIAIPUNCH_TAME;
     eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
     eff_param->pos_to = BTL_POS_NULL;
@@ -9808,26 +9806,30 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 damagedPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    BtlPokePos pos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, damagedPokeID );
-    BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_NEXT_FRIENDS, pos );
-    u8  targetPokeID[ BTL_POSIDX_MAX ];
-    u8  targetCnt;
-    u8  i;
-
-    targetCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, targetPokeID );
-    for(i=0; i<targetCnt; ++i)
+    BtlPokePos pos = BTL_SVFTOOL_GetPokeLastPos( flowWk, damagedPokeID );
+    TAYA_Printf(" ダメうけポケモン=%d, 最終位置=%d\n", damagedPokeID, pos );
+    if( pos != BTL_POS_NULL )
     {
-      if( targetPokeID[i] != damagedPokeID )
-      {
-        const BTL_POKEPARAM* bpp;
-        BTL_HANDEX_PARAM_DAMAGE* param;
+      BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_NEXT_FRIENDS, pos );
+      u8  targetPokeID[ BTL_POSIDX_MAX ];
+      u8  targetCnt;
+      u8  i;
 
-        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-        param->pokeID = targetPokeID[ i ];
-        param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HajikeruHonoo_Side );
-        HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+      targetCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, targetPokeID );
+      for(i=0; i<targetCnt; ++i)
+      {
+        if( targetPokeID[i] != damagedPokeID )
+        {
+          const BTL_POKEPARAM* bpp;
+          BTL_HANDEX_PARAM_DAMAGE* param;
+
+          bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
+          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+          param->pokeID = targetPokeID[ i ];
+          param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HajikeruHonoo_Side );
+          HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+        }
       }
     }
   }
@@ -10370,10 +10372,10 @@ static CombiEffectType GetCombiWazaType( WazaID waza1, WazaID waza2 )
 }
 //----------------------------------------------------------------------------------
 /**
- * みずのちかい
+ * みずのちかい・ほのおのちかい・くさのちかい
  */
 //----------------------------------------------------------------------------------
-static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
+static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
@@ -10386,44 +10388,6 @@ static const BtlEventHandlerTable*  ADD_MizuNoTikai( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-//----------------------------------------------------------------------------------
-/**
- * ほのおのちかい
- */
-//----------------------------------------------------------------------------------
-static const BtlEventHandlerTable*  ADD_HonooNoTikai( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
-    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
-    { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
-    { BTL_EVENT_WAZA_POWER_BASE,     handler_CombiWaza_Pow       }, // 威力計算
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
-  };
-  *numElems = NELEMS( HandlerTable );
-  return HandlerTable;
-}
-
-//----------------------------------------------------------------------------------
-/**
- * くさのちかい
- */
-//----------------------------------------------------------------------------------
-static const BtlEventHandlerTable*  ADD_KusaNoTikai( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
-    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
-    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
-    { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
-    { BTL_EVENT_WAZA_POWER_BASE,     handler_CombiWaza_Pow       }, // 威力計算
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
-  };
-  *numElems = NELEMS( HandlerTable );
-  return HandlerTable;
-}
-
 
 // 発動チェックハンドラ
 static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -10509,33 +10473,43 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     {
       BtlSideEffect eff = BTL_SIDEEFF_NULL;
       BtlSide side = BTL_MAINUTIL_PokeIDtoSide( pokeID );
+      u32 viewEffectNo = 0;
       u16 strID = 0;
 
       switch( work[1] ){
       case COMBI_EFFECT_RAINBOW:
           eff = BTL_SIDEEFF_RAINBOW;
           strID = BTL_STRID_STD_Rainbow;
+          viewEffectNo = BTLEFF_RAINBOW;
           break;
       case COMBI_EFFECT_BURNING:
           eff = BTL_SIDEEFF_BURNING;
           strID = BTL_STRID_STD_Burning;
           side = BTL_MAINUTIL_GetOpponentSide( side );
+          viewEffectNo = BTLEFF_BURNING;
           break;
       case COMBI_EFFECT_MOOR:
           eff = BTL_SIDEEFF_MOOR;
           strID = BTL_STRID_STD_Moor;
           side = BTL_MAINUTIL_GetOpponentSide( side );
+          viewEffectNo = BTLEFF_MOOR;
           break;
       }
 
       if( eff != BTL_SIDEEFF_NULL )
       {
         BTL_HANDEX_PARAM_SIDEEFF_ADD* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_ADD, pokeID );
+        BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
+
         param->effect = eff;
         param->side = side;
         param->cont = BPP_SICKCONT_MakeTurn( 4 );
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, strID );
         HANDEX_STR_AddArg( &param->exStr, side );
+
+        viewEff_param->pos_from = BTL_POS_NULL;
+        viewEff_param->pos_to = BTL_POS_NULL;
+        viewEff_param->effectNo = viewEffectNo;
       }
     }
   }

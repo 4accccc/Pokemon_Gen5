@@ -19,6 +19,7 @@
 /*--------------------------------------------------------------------------*/
 static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModule, const BTL_POKE_CONTAINER* pokeCon, BtlPokePos pos );
 static void checkConfrontRec( BTL_POSPOKE_WORK* wk, BtlPokePos pos, BTL_POKE_CONTAINER* pokeCon );
+static void updateLastPos( BTL_POSPOKE_WORK* wk, BtlPokePos pos );
 
 
 
@@ -29,6 +30,9 @@ void BTL_POSPOKE_InitWork( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModu
   for(i=0; i<NELEMS(wk->state); ++i){
     wk->state[i].fEnable = FALSE;
     wk->state[i].existPokeID = BTL_POKEID_NULL;
+  }
+  for(i=0; i<NELEMS(wk->state); ++i){
+    wk->lastPos[i] = BTL_POS_NULL;
   }
 
   endPos = BTL_MAIN_GetEnablePosEnd( mainModule );
@@ -46,7 +50,9 @@ static void set_pos_state( BTL_POSPOKE_WORK* wk, const BTL_MAIN_MODULE* mainModu
 
   if( bpp != NULL && !BPP_IsDead(bpp) )
   {
-    wk->state[ pos ].existPokeID = BPP_GetID( bpp );
+    u8 pokeID = BPP_GetID( bpp );
+    wk->state[ pos ].existPokeID = pokeID;
+    wk->lastPos[ pokeID ] = pos;
   }
   else
   {
@@ -92,6 +98,7 @@ void BTL_POSPOKE_PokeIn( BTL_POSPOKE_WORK* wk, BtlPokePos pos,  u8 pokeID, BTL_P
 {
   GF_ASSERT_MSG(wk->state[pos].fEnable, "pos=%d\n", pos);
   wk->state[pos].existPokeID = pokeID;
+  wk->lastPos[ pokeID ] = pos;
   BTL_N_Printf( DBGSTR_POSPOKE_In, pokeID, pos );
 
   checkConfrontRec( wk, pos, pokeCon );
@@ -140,7 +147,10 @@ void BTL_POSPOKE_Rotate( BTL_POSPOKE_WORK* wk, BtlRotateDir dir, u8 clientID, co
       }else{
         wk->state[ i ].existPokeID = BTL_POKEID_NULL;
       }
+    }
 
+    for(i=0; i<cnt; ++i){
+      updateLastPos( wk, idx[i] );
     }
 
     #else
@@ -234,7 +244,27 @@ void BTL_POSPOKE_Swap( BTL_POSPOKE_WORK* wk, BtlPokePos pos1, BtlPokePos pos2 )
   BTL_POSPOKE_STATE tmp = wk->state[ pos1 ];
   wk->state[ pos1 ] = wk->state[ pos2 ];
   wk->state[ pos2 ] = tmp;
+
+  updateLastPos( wk, pos1 );
+  updateLastPos( wk, pos2 );
 }
+//----------------------------------------------------------------------------------
+/**
+ * ポケモン最終位置ワークを更新
+ *
+ * @param   wk
+ * @param   pos
+ */
+//----------------------------------------------------------------------------------
+static void updateLastPos( BTL_POSPOKE_WORK* wk, BtlPokePos pos )
+{
+  u8 pokeID = wk->state[ pos ].existPokeID;
+  if( pokeID != BTL_POKEID_NULL )
+  {
+    wk->lastPos[ pokeID ] = pos;
+  }
+}
+
 
 //=============================================================================================
 /**
@@ -295,6 +325,20 @@ BtlPokePos BTL_POSPOKE_GetPokeExistPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )
     }
   }
   return BTL_POS_NULL;
+}
+//=============================================================================================
+/**
+ * 指定ポケモンが最後に居た位置を返す（死んでいる場合にも有効な値が返る）
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BtlPokePos    最後に居た位置／一度も場に出ていないポケモンの場合 BTL_POS_NULL
+ */
+//=============================================================================================
+BtlPokePos BTL_POSPOKE_GetPokeLastPos( const BTL_POSPOKE_WORK* wk, u8 pokeID )
+{
+  return wk->lastPos[ pokeID ];
 }
 
 //=============================================================================================

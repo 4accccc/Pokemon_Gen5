@@ -6366,6 +6366,10 @@ static void handler_Miira( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         param->pokeID = targetPokeID;
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Miira );
         HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+
+        if( !BTL_MAINUTIL_IsFriendPokeID(pokeID, targetPokeID) ){
+          param->header.tokwin_flag = TRUE;
+        }
       }
     }
   }

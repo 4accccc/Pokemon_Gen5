@@ -141,7 +141,7 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 
     // ダメージが成功したらエフェクト
     {
-      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
       eff_param->header.failSkipFlag = TRUE;
       eff_param->effectNo = BTLEFF_YADORIGI;
       // エフェクト側の from, to の解釈が逆っぽいのでこうする。

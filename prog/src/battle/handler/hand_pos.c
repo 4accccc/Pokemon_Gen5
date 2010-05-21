@@ -262,7 +262,7 @@ static void handler_pos_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 
     if( fEnable )
     {
-      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
       eff_param->effectNo = BTLEFF_MIKADUKINOMAI_KAIHUKU;
       eff_param->pos_from = pokePos;
       eff_param->pos_to = BTL_POS_NULL;
@@ -320,7 +320,7 @@ static void handler_pos_IyasiNoNegai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 
     if( fEnable )
     {
-      BTL_HANDEX_PARAM_EFFECT_BY_POS* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EFFECT_BY_POS, pokeID );
+      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
       eff_param->effectNo = BTLEFF_IYASINONEGAI_KAIHUKU;
       eff_param->pos_from = pokePos;
       eff_param->pos_to = BTL_POS_NULL;

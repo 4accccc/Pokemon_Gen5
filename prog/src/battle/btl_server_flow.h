@@ -134,7 +134,8 @@ extern u16 BTL_SVF_GetTypeAffCnt_RecvDisadvantage( const BTL_SVFLOW_WORK* wk );
 //------------------------------------------------
 extern BtlRule BTL_SVFTOOL_GetRule( BTL_SVFLOW_WORK* wk );
 extern BtlCompetitor BTL_SVFTOOL_GetCompetitor( BTL_SVFLOW_WORK* wk );
-extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokePos( BTL_SVFLOW_WORK* server, u8 pokeID );
+extern BtlPokePos BTL_SVFTOOL_GetExistFrontPokePos( BTL_SVFLOW_WORK* sv, u8 pokeID );
+extern BtlPokePos BTL_SVFTOOL_GetPokeLastPos( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u8 BTL_SVFTOOL_GetExistPokeID( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
 extern BOOL BTL_SVFTOOL_CheckExistTokuseiPokemon( BTL_SVFLOW_WORK* wk, PokeTokusei tokusei );
 extern const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID );
@@ -281,7 +282,7 @@ typedef enum {
   BTL_HANDEX_FAKE_BREAK,          ///< イリュージョン解除
   BTL_HANDEX_JURYOKU_CHECK,       ///< じゅうりょく発動時のチェック処理
   BTL_HANDEX_TAMEHIDE_CANCEL,     ///< 特定の消え状態（そらをとぶなど）をキャンセル
-  BTL_HANDEX_EFFECT_BY_POS,       ///< 位置指定してエフェクト発動
+  BTL_HANDEX_ADD_EFFECT,       ///< 位置指定してエフェクト発動
   BTL_HANDEX_CHANGE_FORM,         ///< フォルムナンバーチェンジ
   BTL_HANDEX_SET_EFFECT_IDX,      ///< ワザエフェクトインデックス変更
   BTL_HANDEX_WAZAEFFECT_ENABLE,   ///< 強制ワザエフェクト有効
@@ -826,16 +827,16 @@ typedef struct {
 }BTL_HANDEX_PARAM_TAMEHIDE_CANCEL;
 
 /**
- * 位置指定エフェクト
+ * エフェクト呼び出し
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u16  effectNo;                      ///< エフェクトナンバー
-  u8   pos_from;                      ///< エフェクト発動位置
-  u8   pos_to;                        ///< エフェクト終点位置（不要ならBTL_POS_NULL）
+  u8   pos_from;                      ///< エフェクト発動位置（不要ならBTL_POS_NULL：初期値(0)はBTL_POS_NULLではないので注意）
+  u8   pos_to;                        ///< エフェクト終点位置（不要ならBTL_POS_NULL：初期値(0)はBTL_POS_NULLではないので注意）
   u16  reservedQuePos;                ///< Que予約領域
   u8   fQueReserve;                   ///< Que予約フラグ
-}BTL_HANDEX_PARAM_EFFECT_BY_POS;
+}BTL_HANDEX_PARAM_ADD_EFFECT;
 
 /**
  * フォルムナンバーチェンジ
