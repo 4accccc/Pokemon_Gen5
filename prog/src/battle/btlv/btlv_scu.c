@@ -4092,12 +4092,12 @@ static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs )
   switch( *seq ){
   case 0:
     {
-      u8 hp     = BPP_GetValue_Base( wk->lvupBpp, BPP_MAX_HP );
-      u8 atk    = BPP_GetValue_Base( wk->lvupBpp, BPP_ATTACK );
-      u8 def    = BPP_GetValue_Base( wk->lvupBpp, BPP_DEFENCE );
-      u8 sp_atk = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_ATTACK );
-      u8 sp_def = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_DEFENCE );
-      u8 agi    = BPP_GetValue_Base( wk->lvupBpp, BPP_AGILITY );
+      u16 hp     = BPP_GetValue_Base( wk->lvupBpp, BPP_MAX_HP );
+      u16 atk    = BPP_GetValue_Base( wk->lvupBpp, BPP_ATTACK );
+      u16 def    = BPP_GetValue_Base( wk->lvupBpp, BPP_DEFENCE );
+      u16 sp_atk = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_ATTACK );
+      u16 sp_def = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_DEFENCE );
+      u16 agi    = BPP_GetValue_Base( wk->lvupBpp, BPP_AGILITY );
 
       BTL_STR_MakeString_LvupInfo_Param( wk->strBufMain, hp, atk, def, sp_atk, sp_def, agi );
       GFL_BMP_Clear( wk->lvupBmp, COLIDX_LVUPWIN_CLEAR );

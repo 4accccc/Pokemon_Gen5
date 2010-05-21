@@ -11080,7 +11080,7 @@ static void scPut_SetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnF
 }
 //----------------------------------------------------------------------------------
 /**
- * [Put] ターンフラグセット
+ * [Put] ターンフラグリセット
  *
  * @param   wk
  * @param   bpp

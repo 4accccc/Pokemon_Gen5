@@ -10263,14 +10263,16 @@ static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK)==pokeID )
     {
-      if( BPP_GetValue(bpp, BPP_FORM) == FORMNO_MERODHIA_VOICE )
-      {
-        BTL_HANDEX_PARAM_CHANGE_FORM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
-        param->pokeID = pokeID;
-        param->formNo = FORMNO_MERODHIA_STEP;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-      }
+      BTL_HANDEX_PARAM_CHANGE_FORM* param;
+
+      u8 nextForm = (BPP_GetValue(bpp, BPP_FORM) == FORMNO_MERODHIA_VOICE)?
+              FORMNO_MERODHIA_STEP : FORMNO_MERODHIA_VOICE;
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_FORM, pokeID );
+
+      param->pokeID = pokeID;
+      param->formNo = nextForm;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ChangeForm );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
     }
   }
 }
