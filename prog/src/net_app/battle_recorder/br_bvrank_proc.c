@@ -85,6 +85,9 @@ typedef struct
   
   u32               cnt;
 
+  BOOL              is_rank_init;
+  BOOL              is_load_graphic;
+
   //引数
   BR_BVRANK_PROC_PARAM	*p_param;
   
@@ -233,6 +236,35 @@ static GFL_PROC_RESULT BR_BVRANK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 	BR_BVRANK_WORK				*p_wk	= p_wk_adrs;
 	BR_BVRANK_PROC_PARAM	*p_param	= p_param_adrs;
 
+  //エラー終了のため、途中で作成されるモジュールの解放
+  if( p_wk->is_rank_init )
+  {
+    BR_RANK_Exit( &p_wk->rank );  
+    p_wk->is_rank_init  = FALSE;
+  }
+  
+  if( p_wk->p_title )
+  {
+    BR_MSGWIN_Exit( p_wk->p_title );
+    p_wk->p_title = NULL;
+  }
+  if( p_wk->p_msgwin )
+  {
+    BR_MSGWIN_Exit( p_wk->p_msgwin );
+    p_wk->p_msgwin  = NULL;
+  }
+  if( p_wk->p_btn )
+  {
+    BR_BTN_Exit( p_wk->p_btn );
+    p_wk->p_btn = NULL;
+  }
+  if( p_wk->is_load_graphic )
+  {
+    BR_RES_UnLoadOBJ( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
+    BR_RES_UnLoadBG( p_wk->p_param->p_res, BR_RES_BG_BVRANK );
+    p_wk->is_load_graphic = FALSE;
+  }
+
   BR_SEQ_Exit( p_wk->p_seq );
 
   if( p_wk->p_text )
@@ -344,6 +376,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 	//グラフィック初期化
   BR_RES_LoadBG( p_wk->p_param->p_res, BR_RES_BG_BVRANK, p_wk->heapID );
   BR_RES_LoadOBJ( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
+  p_wk->is_load_graphic = TRUE;
 
   //ボタン
   { 
@@ -378,6 +411,7 @@ static void Br_Seq_FadeInBefore( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 
   //ダウンロードしてアウトラインがきまってからランクを作成
   BR_RANK_Init( &p_wk->rank, p_wk->p_param->p_outline, p_wk->p_param->p_res, p_wk->p_param->p_unit, p_wk->p_balleff[ CLSYS_DRAW_MAIN ], p_wk->p_balleff[ CLSYS_DRAW_SUB ], p_wk->p_param->p_list_pos, p_wk->heapID );
+  p_wk->is_rank_init  = TRUE;
 
   BR_SEQ_SetNext( p_seqwk,Br_Seq_FadeIn );
 }
@@ -396,16 +430,21 @@ static void Br_Seq_FadeOutAfter( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
 
   //ランク破棄
   BR_RANK_Exit( &p_wk->rank );  
+  p_wk->is_rank_init  = FALSE;
   
   BR_MSGWIN_Exit( p_wk->p_title );
+  p_wk->p_title = NULL;
   BR_MSGWIN_Exit( p_wk->p_msgwin );
+  p_wk->p_msgwin  = NULL;
   GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 
   BR_BTN_Exit( p_wk->p_btn );
+  p_wk->p_btn = NULL;
   
   BR_RES_UnLoadOBJ( p_wk->p_param->p_res, BR_RES_OBJ_SHORT_BTN_S );
   BR_RES_UnLoadBG( p_wk->p_param->p_res, BR_RES_BG_BVRANK );
+  p_wk->is_load_graphic = FALSE;
 
 
   BR_SEQ_End( p_seqwk );
