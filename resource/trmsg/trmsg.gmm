@@ -4663,11 +4663,11 @@
 	<row id="TRID_TANPAN_06_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">さぎょういんの　おっさんは
 ポケモンと　にもつを　はこぶ！▼
-たんパンの　おいらは　なかよく
+たんぱんの　おいらは　なかよく
 ポケモンと　ちからを　あわせる！▼</language>
 		<language name="JPN_KANJI" width="216">さぎょういんの　おっさんは
 ポケモンと　荷物を　運ぶ！▼
-たんパンの　おいらは　仲良く
+たんぱんの　おいらは　仲良く
 ポケモンと　力を　あわせる！▼</language>
 	</row>
 
@@ -8380,17 +8380,17 @@
 
 	<row id="TRID_TANPAN_12_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">オレが　はいているのは
-たんパン　じゃない！▽
+たんぱん　じゃない！▽
 ハーフパンツ　なんだよ！▼</language>
 		<language name="JPN_KANJI" width="216">オレが　履いているのは
-たんパン　じゃない！▽
+たんぱん　じゃない！▽
 ハーフパンツ　なんだよ！▼</language>
 	</row>
 
 	<row id="TRID_TANPAN_12_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">オマエ　つよすぎるから　たんパン
+		<language name="JPN" width="216">オマエ　つよすぎるから　たんぱん
 ずりおちそうに　なっただろ！</language>
-		<language name="JPN_KANJI" width="216">オマエ　強すぎるから　たんパン
+		<language name="JPN_KANJI" width="216">オマエ　強すぎるから　たんぱん
 ずりおちそうに　なっただろ！</language>
 	</row>
 
@@ -8404,13 +8404,13 @@
 	<row id="TRID_TANPAN_12_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
 		<language name="JPN" width="216">サッカーせんしゅ　や
 バスケットの　せんしゅて　いいよなー▼
-だって　たんパン……　じゃなくて
+だって　たんぱん……　じゃなくて
 ハーフパンツ　なんだぜ▼
 だけど　やきゅうや　アメフトの
 ユニフォームも　かっこいいよなー！　</language>
 		<language name="JPN_KANJI" width="216">サッカー選手や
 バスケットの　選手て　いいよなー▼
-だって　たんパン……　じゃなくて
+だって　たんぱん……　じゃなくて
 ハーフパンツ　なんだぜ▼
 だけど　野球や　アメフトの
 ユニフォームも　かっこいいよなー！　</language>
@@ -13555,11 +13555,11 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_TANPAN_16_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">たんパンだと　よく　すりむくけど
+		<language name="JPN" width="216">たんぱんだと　よく　すりむくけど
 ぜんぜん　へいき　だよ！▼
 すりむいた　ところは
 ポケモンが　なめてくれるもん！</language>
-		<language name="JPN_KANJI" width="216">たんパンだと　よく　すりむくけど
+		<language name="JPN_KANJI" width="216">たんぱんだと　よく　すりむくけど
 ぜんぜん　平気だよ！▼
 すりむいた　ところは
 ポケモンが　なめてくれるもん！</language>
