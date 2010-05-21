@@ -30,6 +30,7 @@
 #define	BMPWIN_TITLE_SY		( 2 )
 #define	BMPWIN_TITLE_PAL	( 3 )
 
+/*
 // ページ
 #define	BMPWIN_PAGE_FRM		( GFL_BG_FRAME3_M )
 #define	BMPWIN_PAGE_PX		( 5 )
@@ -37,6 +38,7 @@
 #define	BMPWIN_PAGE_SX		( 5 )
 #define	BMPWIN_PAGE_SY		( 3 )
 #define	BMPWIN_PAGE_PAL		( 3 )
+*/
 
 // 情報
 #define	BMPWIN_INFO_FRM		( GFL_BG_FRAME1_S )
@@ -69,6 +71,8 @@
 #define FCOL_SP01RN		( PRINTSYS_LSB_Make(5,6,0) )		// フォントカラー：上用０１赤抜
 #define FCOL_SP01BLN	( PRINTSYS_LSB_Make(3,4,0) )		// フォントカラー：上用０１青抜
 
+#define FCOL_FNTOAM		( PRINTSYS_LSB_Make(6,8,0) )		// フォントカラー：フォントOAM
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -91,11 +95,13 @@ void DPCBMP_Init( DPCMAIN_WORK * wk )
 																			BMPWIN_TITLE_PX, BMPWIN_TITLE_PY,
 																			BMPWIN_TITLE_SX, BMPWIN_TITLE_SY,
 																			BMPWIN_TITLE_PAL, GFL_BMP_CHRAREA_GET_B );
+/*
 	wk->win[DPCBMP_WINID_PAGE].win = GFL_BMPWIN_Create(
 																			BMPWIN_PAGE_FRM,
 																			BMPWIN_PAGE_PX, BMPWIN_PAGE_PY,
 																			BMPWIN_PAGE_SX, BMPWIN_PAGE_SY,
 																			BMPWIN_PAGE_PAL, GFL_BMP_CHRAREA_GET_B );
+*/
 	wk->win[DPCBMP_WINID_INFO].win = GFL_BMPWIN_Create(
 																			BMPWIN_INFO_FRM,
 																			BMPWIN_INFO_PX, BMPWIN_INFO_PY,
@@ -106,7 +112,7 @@ void DPCBMP_Init( DPCMAIN_WORK * wk )
 void DPCBMP_Exit( DPCMAIN_WORK * wk )
 {
 	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_TITLE].win );
-	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_PAGE].win );
+//	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_PAGE].win );
 	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_INFO].win );
 	GFL_BMPWIN_Exit();
 }
@@ -170,8 +176,11 @@ void DPCBMP_PutTitle( DPCMAIN_WORK * wk )
 
 void DPCBMP_PutPage( DPCMAIN_WORK * wk )
 {
-	if( wk->pageMax == 1 ){ return; }
+	STRBUF * str;
+	u8	px, sx;
 
+	if( wk->pageMax == 1 ){ return; }
+/*
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[DPCBMP_WINID_PAGE].win), 0 );
 
 	PRINTTOOL_PrintFractionColor(
@@ -181,6 +190,57 @@ void DPCBMP_PutPage( DPCMAIN_WORK * wk )
 		FCOL_MP03WN, wk->page+1, wk->pageMax, HEAPID_DENDOU_PC );
 
 	PrintScreenTrans( &wk->win[DPCBMP_WINID_PAGE] );
+*/
+
+	GFL_BMP_Clear( wk->fobmp, 0 );
+
+	//「/」
+	str = GFL_MSG_CreateString( wk->mman, mes_pc_dendou_01_04 );
+	sx  = PRINTSYS_GetStrWidth( str, wk->font, 0 );
+	px  = ( DPCBMP_PAGE_SX * 8 - sx ) / 2;
+	PRINTSYS_PrintColor(
+		wk->fobmp,
+		px, 4,
+		str, wk->font, FCOL_FNTOAM );
+	GFL_STR_DeleteBuffer( str );
+
+	str = GFL_MSG_CreateString( wk->mman, mes_pc_dendou_01_05 );
+
+	// 現在のページ
+	WORDSET_RegisterNumber( wk->wset, 0, wk->page+1, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PRINTSYS_PrintColor(
+		wk->fobmp,
+		px - PRINTSYS_GetStrWidth( wk->exp, wk->font, 0 ), 4,
+		wk->exp, wk->font, FCOL_FNTOAM );
+
+	// ページ最大
+	WORDSET_RegisterNumber( wk->wset, 0, wk->pageMax, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PRINTSYS_PrintColor(
+		wk->fobmp,
+		px+sx , 4,
+		wk->exp, wk->font, FCOL_FNTOAM );
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( wk->foact );
+
+/*
+	STRBUF * str;
+	u32	x;
+
+	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP_L );
+
+	BOXDAT_GetBoxName( syswk->dat->sv_box, tray, str );
+	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
+	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
+	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
+
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
+*/
 }
 
 void DPCBMP_PutInfo( DPCMAIN_WORK * wk )

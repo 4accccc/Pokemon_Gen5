@@ -29,6 +29,15 @@
 #define	PALNUM_TB				( PALNUM_POKEGRA + PALSIZ_POKEGRA )
 #define	PALSIZ_TB				( APP_COMMON_BARICON_PLT_NUM )
 
+#define	FOAM_PAGE_PX		( 5*8 )
+#define	FOAM_PAGE_PY		( 21*8 )
+#define	FOAM_PAGE_SX		( DPCBMP_PAGE_SX )
+#define	FOAM_PAGE_SY		( 3 )
+
+// フォントOAMで使用するOBJ管理数
+// 使用するBMPWINのキャラサイズ分が最大なので、それだけあれば足りる。
+#define	FNTOAM_CHR_MAX		( FOAM_PAGE_SX*FOAM_PAGE_SY )
+
 // セルアクターデータ
 typedef struct {
 	GFL_CLWK_DATA	dat;
@@ -52,6 +61,8 @@ static void ExitResource( DPCMAIN_WORK * wk );
 static void AddClact( DPCMAIN_WORK * wk );
 static void DelClact( DPCMAIN_WORK * wk, u32 idx );
 static void DelClactAll( DPCMAIN_WORK * wk );
+static void FontOamInit( DPCMAIN_WORK * wk );
+static void FontOamExit( DPCMAIN_WORK * wk );
 
 
 //============================================================================================
@@ -125,6 +136,7 @@ void DPCOBJ_Init( DPCMAIN_WORK * wk )
 	InitClact();
 	InitResource( wk );
 	AddClact( wk );
+	FontOamInit( wk );
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// MAIN DISP OBJ ON
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
@@ -132,8 +144,9 @@ void DPCOBJ_Init( DPCMAIN_WORK * wk )
 
 void DPCOBJ_Exit( DPCMAIN_WORK * wk )
 {
-	ExitResource( wk );
+	FontOamExit( wk );
 	DelClactAll( wk );
+	ExitResource( wk );
 	GFL_CLACT_SYS_Delete();
 }
 
@@ -201,10 +214,10 @@ static void InitClact(void)
 		124,									// サブ画面OAM管理数					4の倍数
 		0,										// セルVram転送管理数
 
-		DPCOBJ_CHRRES_MAX,		// 登録できるキャラデータ数
-		DPCOBJ_PALRES_MAX,		// 登録できるパレットデータ数
-		DPCOBJ_CELRES_MAX,		// 登録できるセルアニメパターン数
-		0,										// 登録できるマルチセルアニメパターン数（※現状未対応）
+		DPCOBJ_CHRRES_MAX+FNTOAM_CHR_MAX,		// 登録できるキャラデータ数
+		DPCOBJ_PALRES_MAX,									// 登録できるパレットデータ数
+		DPCOBJ_CELRES_MAX+FNTOAM_CHR_MAX,		// 登録できるセルアニメパターン数
+		0,																	// 登録できるマルチセルアニメパターン数（※現状未対応）
 
 	  16,										// メイン CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
 	  16										// サブ CGR　VRAM管理領域　開始オフセット（キャラクタ単位）
@@ -232,7 +245,7 @@ static void InitResource( DPCMAIN_WORK * wk )
 	}
 
 	// タッチバー
-	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_DENDOU_PC );
+	ah = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_DENDOU_PC_L );
 	chr = &wk->chrRes[ DPCOBJ_CHRRES_TB ];
 	pal = &wk->palRes[ DPCOBJ_PALRES_TB ];
 	cel = &wk->celRes[ DPCOBJ_CELRES_TB ];
@@ -301,7 +314,7 @@ static void AddClact( DPCMAIN_WORK * wk )
 {
 	u32	i;
 
-	wk->clunit = GFL_CLACT_UNIT_Create( DPCOBJ_ID_MAX, 0, HEAPID_DENDOU_PC );
+	wk->clunit = GFL_CLACT_UNIT_Create( DPCOBJ_ID_MAX+FNTOAM_CHR_MAX, 0, HEAPID_DENDOU_PC );
 
 	// 初期化
 	for( i=0; i<DPCOBJ_ID_MAX; i++ ){
@@ -528,4 +541,65 @@ void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg )
 			wk->nowEvy[i] = 0;
 		}
 	}
+}
+
+
+//============================================================================================
+//	OAM font
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ＯＡＭフォント初期化
+ *
+ * @param
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void FontOamInit( DPCMAIN_WORK * wk )
+{
+	BMPOAM_ACT_DATA	finit;
+	u32	i;
+
+	wk->fntoam = BmpOam_Init( HEAPID_DENDOU_PC, wk->clunit );
+
+	wk->fobmp = GFL_BMP_Create( FOAM_PAGE_SX, FOAM_PAGE_SY, GFL_BMP_16_COLOR, HEAPID_DENDOU_PC );
+
+	finit.bmp = wk->fobmp;
+	finit.x = FOAM_PAGE_PX;
+	finit.y = FOAM_PAGE_PY;
+	finit.pltt_index = wk->palRes[DPCOBJ_PALRES_TB];
+	finit.pal_offset = 1;		// pltt_indexのパレット内でのオフセット
+	finit.soft_pri = 0;			// ソフトプライオリティ
+	finit.bg_pri = 0;				// BGプライオリティ
+	finit.setSerface = CLWK_SETSF_NONE;
+	finit.draw_type  = CLSYS_DRAW_MAIN;
+
+	wk->foact = BmpOam_ActorAdd( wk->fntoam, &finit );
+
+	if( wk->pageMax == 1 ){
+		BmpOam_ActorSetDrawEnable( wk->foact, FALSE );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ＯＡＭフォント削除
+ *
+ * @param
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void FontOamExit( DPCMAIN_WORK * wk )
+{
+	BmpOam_ActorDel( wk->foact );
+	GFL_BMP_Delete( wk->fobmp );
+	BmpOam_Exit( wk->fntoam );
+}
+
+void DPCOBJ_FontOamVanish( DPCMAIN_WORK * wk, BOOL flg )
+{
+	BmpOam_ActorSetDrawEnable( wk->foact, flg );
 }

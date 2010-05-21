@@ -484,7 +484,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 	case  MAIN_SEQ_DENDOU_PC:
     wk->dpc_data.gamedata = wk->gamedata;
-    wk->dpc_data.callMode = 1;
+    wk->dpc_data.callMode = 0;
 		{
 			SAVE_CONTROL_WORK * sv;
 			DENDOU_SAVEDATA * ex_rec;

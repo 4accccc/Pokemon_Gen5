@@ -12,6 +12,7 @@
 
 #include "system/main.h"
 #include "system/palanm.h"
+#include "system/bmp_oam.h"
 #include "savedata/dendou_save.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -74,6 +75,11 @@ typedef struct {
 	u32	chrRes[DPCOBJ_CHRRES_MAX];
 	u32	palRes[DPCOBJ_PALRES_MAX];
 	u32	celRes[DPCOBJ_CELRES_MAX];
+
+	// ‚n‚`‚lƒtƒHƒ“ƒg
+	BMPOAM_SYS_PTR	fntoam;
+	BMPOAM_ACT_PTR	foact;
+	GFL_BMP_DATA * fobmp;
 
 	s8	pokePos;
 	s8	pokeChg;

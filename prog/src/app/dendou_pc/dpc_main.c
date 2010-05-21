@@ -120,14 +120,15 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 
 void DPCMAIN_InitHBlank( DPCMAIN_WORK * wk )
 {
-	wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
+//	wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
 }
 
 void DPCMAIN_ExitHBlank( DPCMAIN_WORK * wk )
 {
-	GFL_TCB_DeleteTask( wk->htask );
+//	GFL_TCB_DeleteTask( wk->htask );
 }
 
+/*
 static void HBlankTask( GFL_TCB * tcb, void * work )
 {
 	s32	vcount = GX_GetVCount();
@@ -142,7 +143,7 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );		// タイトル背景
 	}
 }
-
+*/
 
 
 void DPCMAIN_InitVram(void)
@@ -194,7 +195,7 @@ void DPCMAIN_InitBg(void)
 	{	// メイン画面：文字
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_SCRBASE_0xd800, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
@@ -211,7 +212,7 @@ void DPCMAIN_InitBg(void)
 	{	// サブ画面：文字
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x8000,
+			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,
 			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_S, &cnth, GFL_BG_MODE_TEXT );
@@ -266,6 +267,12 @@ void DPCMAIN_LoadBgGraphic(void)
 		ah, NARC_dendou_pc_gra_bgu_base_lz_NSCR, GFL_BG_FRAME0_S, 0, 0, TRUE, HEAPID_DENDOU_PC );
 
 	GFL_ARC_CloseDataHandle( ah );
+
+	{	// タッチバーコピー
+		u16 * scrn = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
+		GFL_BG_WriteScreen( GFL_BG_FRAME3_M, &scrn[21*32], 0, 21, 32, 3 );
+//		GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
+	}
 
 	// フォントパレット
 	GFL_ARC_UTIL_TransVramPalette(

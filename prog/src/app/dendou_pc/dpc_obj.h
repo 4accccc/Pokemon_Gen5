@@ -43,3 +43,5 @@ extern void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad );
 extern void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk );
 
 extern void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg );
+
+extern void DPCOBJ_FontOamVanish( DPCMAIN_WORK * wk, BOOL flg );
