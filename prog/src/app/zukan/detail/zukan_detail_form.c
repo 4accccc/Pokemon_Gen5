@@ -389,6 +389,7 @@ typedef enum
 {
   OSHIDASHI_STATE_NONE,    // 押し出ししていない
   OSHIDASHI_STATE_MOVE,    // 押し出し中
+  OSHIDASHI_STATE_CHANGE_COMPARE_FORM,    // 押し出しが完了したので、比較フォルムを変更する
 }
 OSHIDASHI_STATE;
 typedef enum
@@ -4387,26 +4388,40 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 
     if( move_end )
     {
-      Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+      pos_x = center_x;
+      work->oshidashi_state = OSHIDASHI_STATE_CHANGE_COMPARE_FORM;
+    }
 
+    {
+      pos_fx32.x = FX_F32_TO_FX32(pos_x);
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
+ 
+      MCSS_GetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      pos_x = FX_FX32_TO_F32( pos_fx32.x );
+      if( work->oshidashi_direct == OSHIDASHI_DIRECT_L_TO_R )  // 左から右へ
+      {
+        pos_x += OSHIDASHI_SPEED;
+      }
+      else  // 右から左へ
+      {
+        pos_x -= OSHIDASHI_SPEED;
+      }
+      pos_fx32.x = FX_F32_TO_FX32(pos_x);
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
+      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );
+    }
 
-        if( work->diff_num >= 2 )
+  }
+  else if( work->oshidashi_state == OSHIDASHI_STATE_CHANGE_COMPARE_FORM )  // 押し出しが完了したので、比較フォルムを変更する
+  {
+    Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
+
         {
           u16 no;
           MCSS_WORK* mw;
           POKE_MCSS_CALL_BACK_DATA* pmcbd;
 
-          // 位置入れ替え
-          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-          MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &poke_pos[POKE_CURR_POS_LEFT] );
-          {
-            VecFx32 p;
-            PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
-            
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
-            MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );
-          }
-          
           // 番号、ポインタ入れ替え
           no = work->diff_curr_no;
           work->diff_curr_no = work->diff_comp_no;
@@ -4468,13 +4483,7 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
             }
 #endif
           }
-
-          //if( work->diff_num >= 3 )
-          //{
-          //  work->bar_cursor_move_by_key = TRUE;
-          //}
         }
-
 
       // 押し出し用関数を利用してcompをcurrの次のフォルムにしておく
       // 押し出し用関数を利用して位置設定
@@ -4486,27 +4495,6 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
       // STATE_TOPの状態のときにフォルム変更を行わなかったら、compはSTATE_EXCHANGEの状態のときに設定したもののままになる。
       
       work->oshidashi_state = OSHIDASHI_STATE_NONE;
-    }
-    else
-    {
-      pos_fx32.x = FX_F32_TO_FX32(pos_x);
-      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &pos_fx32 );
-      MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &pos_fx32 );
- 
-      MCSS_GetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
-      pos_x = FX_FX32_TO_F32( pos_fx32.x );
-      if( work->oshidashi_direct == OSHIDASHI_DIRECT_L_TO_R )  // 左から右へ
-      {
-        pos_x += OSHIDASHI_SPEED;
-      }
-      else  // 右から左へ
-      {
-        pos_x -= OSHIDASHI_SPEED;
-      }
-      pos_fx32.x = FX_F32_TO_FX32(pos_x);
-      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &pos_fx32 );
-      MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &pos_fx32 );
-    }
   }
 }
 
