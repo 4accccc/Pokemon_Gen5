@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/28 17:45:05
+#save date:2010/05/21 19:08:36
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r16r0201.wms
 #SECTION START:OBJ_EVENT
@@ -24,7 +24,7 @@ EV_TYPE_NORMAL
 #Flag Name
 FV_R16R0201_WOMAN3
 #Event Script Name
-SCRID_R16R0201_WOMAN3_01
+SCRID_DUMMY
 #Direction Type Number
 DIR_DOWN
 #Parameter 0 Number
