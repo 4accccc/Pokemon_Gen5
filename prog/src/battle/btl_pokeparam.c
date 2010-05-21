@@ -2428,9 +2428,13 @@ u16 BPP_GetWeight( const BTL_POKEPARAM* bpp )
 {
   u16 weight = bpp->weight;
 
+  TAYA_Printf("体重チェック：pokeID=%d, weight=%d\n", bpp->coreParam.myID, bpp->weight);
+
   if( IsMatchTokusei(bpp, POKETOKUSEI_HEVIMETARU) ){
+    TAYA_Printf("ヘビーメタルで２倍\n");
     weight *= 2;
   }else if( IsMatchTokusei(bpp, POKETOKUSEI_RAITOMETARU) ){
+    TAYA_Printf("ライトメタルで1/2\n");
     weight /= 2;
   }
 

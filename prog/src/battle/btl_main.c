@@ -2956,7 +2956,7 @@ BOOL BTL_MAIN_IsOpponentClientID( const BTL_MAIN_MODULE* wk, u8 clientID1, u8 cl
 }
 
 /**
- *  マルチモード時の味方クライアントIDに変換
+ *  マルチモード時の味方クライアントIDに変換（存在しなくても計算上の値を返す）
  */
 static inline u8 GetFriendCrientID( u8 clientID )
 {
@@ -3334,9 +3334,19 @@ u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk )
 {
   return wk->myClientID;
 }
-u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk )
+/**
+ *  存在するならプレイヤーの味方クライアントIDを返す（存在しない場合 BTL_CLIENTID_NULL ）
+ */
+u8 BTL_MAIN_GetPlayerFriendCleintID( const BTL_MAIN_MODULE* wk )
 {
-  u8 friendClientID = GetFriendCrientID( wk->myClientID );
+  return BTL_MAIN_GetFriendCleintID( wk, wk->myClientID );
+}
+/**
+ *  存在するなら指定クライアントのの味方クライアントIDを返す（存在しない場合 BTL_CLIENTID_NULL ）
+ */
+u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  u8 friendClientID = GetFriendCrientID( clientID );
   if( BTL_MAIN_IsExistClient(wk, friendClientID) ){
     return friendClientID;
   }

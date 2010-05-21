@@ -2038,7 +2038,7 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
 static BOOL btlinEff_MyPokeInDouble( BTLV_SCU* wk, int* seq )
 {
   u8 clientID_1 = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-  u8 clientID_2 = BTL_MAIN_GetFriendCleintID( wk->mainModule );
+  u8 clientID_2 = BTL_MAIN_GetPlayerFriendCleintID( wk->mainModule );
   if( clientID_2 == BTL_CLIENTID_NULL )
   {
     return btlinEffSub_MyPokeIn_Solo( wk, seq, clientID_1 );

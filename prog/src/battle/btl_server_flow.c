@@ -8270,8 +8270,9 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
   WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, BOOL fAlmost, BOOL fStdMsg )
 {
   volume = scEvent_RankValueChange( wk, target, effect, wazaUsePokeID, itemID, volume );
-
   BTL_N_Printf( DBGSTR_SVFL_RankEffCore, BPP_GetID(target), effect, volume, atkPokeID );
+
+  // すでに限界ならそれを表示
   if( !BPP_IsRankEffectValid(target, effect, volume) ){
     if( fAlmost ){
       scPut_RankEffectLimit( wk, target, effect, volume );
@@ -13768,6 +13769,20 @@ u32 BTL_SVFTOOL_GetSideEffectCount( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSide
 BOOL BTL_SVFTOOL_IsExistPosEffect( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlPosEffect effect )
 {
   return BTL_HANDLER_POS_IsRegistered( effect, pos );
+}
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 指定クライアントの味方クライアントIDを返す（味方が居ない時は BTL_CLIENTID_NULL）
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  u8
+ */
+//--------------------------------------------------------------------------------------
+u8 BTL_SVFTOOL_GetFriendClientID( BTL_SVFLOW_WORK* wk, u8 clientID )
+{
+  return BTL_MAIN_GetFriendCleintID( wk->mainModule, clientID );
 }
 //--------------------------------------------------------------------------------------
 /**

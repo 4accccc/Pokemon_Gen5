@@ -48,7 +48,7 @@
 #define TRTYPE_NONE ( 0xffff )
 
 enum
-{ 
+{
   BTLV_EFFECT_FOCUS_OFFSET_X = 0x00004b33,
   BTLV_EFFECT_FOCUS_OFFSET_Y = 0x00002299,
   BTLV_EFFECT_FOCUS_OFFSET_Z = 0x000099cd,
@@ -62,10 +62,10 @@ enum
 #endif
 
 #ifdef  CAMERA_FOCUS
-volatile  fx32  camera_focus_offset_x = 0x00004b33; //BTLV_EFFECT_FOCUS_OFFSET_X 
-volatile  fx32  camera_focus_offset_y = 0x00002299; //BTLV_EFFECT_FOCUS_OFFSET_Y 
-volatile  fx32  camera_focus_offset_z = 0x000099cd; //BTLV_EFFECT_FOCUS_OFFSET_Z 
-volatile  fx32  camera_focus_target_y = 0x00002000; //BTLV_EFFECT_FOCUS_OFFSET_Z 
+volatile  fx32  camera_focus_offset_x = 0x00004b33; //BTLV_EFFECT_FOCUS_OFFSET_X
+volatile  fx32  camera_focus_offset_y = 0x00002299; //BTLV_EFFECT_FOCUS_OFFSET_Y
+volatile  fx32  camera_focus_offset_z = 0x000099cd; //BTLV_EFFECT_FOCUS_OFFSET_Z
+volatile  fx32  camera_focus_target_y = 0x00002000; //BTLV_EFFECT_FOCUS_OFFSET_Z
 #endif
 
 //============================================================================================
@@ -149,7 +149,7 @@ typedef struct
 }TCB_ROTATION;
 
 typedef struct
-{ 
+{
   int               seq_no;
   BtlvMcssPos       from;
   BtlvMcssPos       to;
@@ -225,7 +225,7 @@ BTLV_EFFECT_SETUP_PARAM*  BTLV_EFFECT_MakeSetUpParamBtl( const BTL_MAIN_MODULE* 
   {
     tr_type[ 0 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerClientID( mainModule ) );
     tr_type[ 1 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 0 ) );
-    tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetFriendCleintID( mainModule ) );
+    tr_type[ 2 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetPlayerFriendCleintID( mainModule ) );
     tr_type[ 3 ] = BTL_MAIN_GetClientTrainerType( mainModule, BTL_MAIN_GetEnemyClientID( mainModule, 1 ) );
   }
   else
@@ -324,16 +324,16 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
       bew->trainer_index[ index ] = BTLV_EFFECT_TRAINER_INDEX_NONE;
     }
   }
-  
+
   //カメラワークウエイトセット
   if( bew->besp.mainModule )
-  { 
+  {
     if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
-    { 
+    {
       bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
     }
     else
-    { 
+    {
       bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
     }
   }
@@ -446,12 +446,12 @@ void  BTLV_EFFECT_Main( void )
 void  BTLV_EFFECT_Add( int eff_no )
 {
   if( !BTLV_EFFECT_CheckExecute() )
-  { 
+  {
     BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, eff_no, NULL );
     bew->execute_flag = TRUE;
   }
   else
-  { 
+  {
     TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bew->heapID ), sizeof( TCB_EFFECT_START ) );
 
     tes->from   = BTLV_MCSS_POS_ERROR;
@@ -474,12 +474,12 @@ void  BTLV_EFFECT_Add( int eff_no )
 void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 {
   if( !BTLV_EFFECT_CheckExecute() )
-  { 
+  {
     BTLV_EFFVM_Start( bew->vm_core, pos, BTLV_MCSS_POS_ERROR, eff_no, NULL );
     bew->execute_flag = TRUE;
   }
   else
-  { 
+  {
     TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( TCB_EFFECT_START ) );
 
     tes->from   = pos;
@@ -503,12 +503,12 @@ void BTLV_EFFECT_AddByPos( BtlvMcssPos pos, int eff_no )
 void BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no )
 {
   if( !BTLV_EFFECT_CheckExecute() )
-  { 
+  {
     BTLV_EFFVM_Start( bew->vm_core, from, to, eff_no, NULL );
     bew->execute_flag = TRUE;
   }
   else
-  { 
+  {
     TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( TCB_EFFECT_START ) );
 
     tes->from   = from;
@@ -529,7 +529,7 @@ void BTLV_EFFECT_AddByDir( BtlvMcssPos from, BtlvMcssPos to, int eff_no )
 void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
 {
   if( !BTLV_EFFECT_CheckExecute() )
-  { 
+  {
     BTLV_EFFVM_PARAM effvm_param;
 
     BTLV_EFFVM_ClearParam( &effvm_param );
@@ -542,7 +542,7 @@ void BTLV_EFFECT_AddWazaEffect( const BTLV_WAZAEFFECT_PARAM* param )
     bew->execute_flag = TRUE;
   }
   else
-  { 
+  {
     TCB_EFFECT_START* tes = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( TCB_EFFECT_START ) );
     tes->param = GFL_HEAP_AllocClearMemory( bew->heapID, sizeof( BTLV_EFFVM_PARAM ) );
 
@@ -704,7 +704,7 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
  */
 //=============================================================================================
 void  BTLV_EFFECT_PokemonVanishOn( BtlvMcssPos vpos )
-{ 
+{
   BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_VANISH_ON );
 }
 
@@ -716,7 +716,7 @@ void  BTLV_EFFECT_PokemonVanishOn( BtlvMcssPos vpos )
  */
 //=============================================================================================
 void  BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos )
-{ 
+{
   BTLV_EFFECT_AddByPos( vpos, BTLEFF_POKEMON_VANISH_OFF );
 }
 
@@ -728,7 +728,7 @@ void  BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos )
  */
 //=============================================================================================
 void  BTLV_EFFECT_CreateMigawari( BtlvMcssPos vpos )
-{ 
+{
   BTLV_EFFECT_AddByPos( vpos, BTLEFF_MIGAWARI_FALL );
 }
 
@@ -740,7 +740,7 @@ void  BTLV_EFFECT_CreateMigawari( BtlvMcssPos vpos )
  */
 //=============================================================================================
 void  BTLV_EFFECT_DeleteMigawari( BtlvMcssPos vpos )
-{ 
+{
   BTLV_EFFECT_AddByPos( vpos, BTLEFF_MIGAWARI_DEAD );
 }
 
@@ -1303,14 +1303,14 @@ void    BTLV_EFFECT_SetMcssVanishFlag( BtlvMcssPos position, BTLV_MCSS_VANISH_FL
  */
 //============================================================================================
 void    BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int frame, int wait, int brake )
-{ 
+{
   VecFx32 pos;
   VecFx32 target;
 
   GF_ASSERT( ( move_type == BTLEFF_CAMERA_MOVE_DIRECT ) || ( move_type == BTLEFF_CAMERA_MOVE_INTERPOLATION ) );
 
   if( position & 1 )
-  { 
+  {
     BTLV_EFFECT_GetCameraFocus( position, &pos, &target );
 
     switch( move_type ){
@@ -1323,32 +1323,32 @@ void    BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int fra
     }
   }
   else
-  { 
-    switch( bew->besp.rule ){ 
+  {
+    switch( bew->besp.rule ){
     case BTL_RULE_SINGLE:
       BTLV_EFFECT_Add( BTLEFF_1vs1_POS_AA_FOCUS );
       break;
     case BTL_RULE_DOUBLE:
       if( position == BTLV_MCSS_POS_A )
-      { 
+      {
         BTLV_EFFECT_Add( BTLEFF_2vs2_POS_A_FOCUS );
       }
       else
-      { 
+      {
         BTLV_EFFECT_Add( BTLEFF_2vs2_POS_C_FOCUS );
       }
       break;
     case BTL_RULE_TRIPLE:
       if( position == BTLV_MCSS_POS_A )
-      { 
+      {
         BTLV_EFFECT_Add( BTLEFF_3vs3_POS_A_FOCUS );
       }
       else if( position == BTLV_MCSS_POS_C )
-      { 
+      {
         BTLV_EFFECT_Add( BTLEFF_1vs1_POS_AA_FOCUS );
       }
       else
-      { 
+      {
         BTLV_EFFECT_Add( BTLEFF_3vs3_POS_E_FOCUS );
       }
       break;
@@ -1369,7 +1369,7 @@ void    BTLV_EFFECT_SetCameraFocus( BtlvMcssPos position, int move_type, int fra
  */
 //============================================================================================
 void    BTLV_EFFECT_GetCameraFocus( BtlvMcssPos position, VecFx32* pos, VecFx32* target )
-{ 
+{
   BTLV_MCSS_GetPokeDefaultPos( bew->bmw, target, position );
 
 #ifndef  CAMERA_FOCUS
@@ -1594,7 +1594,7 @@ void  BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no )
   BTLV_GAUGE_SetNowBGMNo( bew->bgw, bgm_no );
 
   if( BTLV_GAUGE_GetPinchBGMFlag( bew->bgw ) == 0 )
-  { 
+  {
     BTLV_GAUGE_SetTrainerBGMChangeFlag( bew->bgw, 1 );
   }
 }
@@ -1619,7 +1619,7 @@ BOOL  BTLV_EFFECT_GetTrainerBGMChangeFlag( void )
  */
 //-----------------------------------------------------------------------------
 void   BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func, BTLV_EFFECT_TCB_GROUP group )
-{ 
+{
   int index = BTLV_EFFECT_GetTCBIndex();
 
   bew->tcb[ index ] = tcb;
@@ -1665,11 +1665,11 @@ void  BTLV_EFFECT_FreeTCB( GFL_TCB* tcb )
   {
     void* work = GFL_TCB_GetWork( tcb );
     if( bew->tcb_callback[ index ] )
-    { 
+    {
       bew->tcb_callback[ index ]( tcb );
     }
     if( work )
-    { 
+    {
       GFL_HEAP_FreeMemory( work );
     }
     GFL_TCB_DeleteTask( tcb );
@@ -1687,7 +1687,7 @@ void  BTLV_EFFECT_FreeTCB( GFL_TCB* tcb )
  */
 //-----------------------------------------------------------------------------
 void  BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group )
-{ 
+{
   int i;
 
   for( i = 0 ; i < BTLV_EFFECT_TCB_MAX ; i++ )
@@ -1705,15 +1705,15 @@ void  BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group )
  */
 //-----------------------------------------------------------------------------
 void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
-{ 
+{
   //WCSでカメラワークオフなら何もしない
   if( ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) &&
       ( !BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) ) )
-  { 
+  {
     return;
   }
   bew->camera_work_execute = cwe;
-  bew->camera_work_seq  = 0; 
+  bew->camera_work_seq  = 0;
   bew->camera_work_wait = 0;
 }
 
@@ -1738,7 +1738,7 @@ static  int   BTLV_EFFECT_GetTCBIndex( void )
 
   GF_ASSERT( i != BTLV_EFFECT_TCB_MAX );
   if( i == BTLV_EFFECT_TCB_MAX )
-  { 
+  {
     BTLV_EFFECT_FreeTCB( bew->tcb[ 0 ] );
     i = 0;
   }
@@ -1793,7 +1793,7 @@ static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work )
   switch( bedt->seq_no ){
   case 0:
     if( bedt->vanish == FALSE )
-    { 
+    {
       BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 16, 16, 0, bedt->color );
     }
     bedt->wait = BTLV_EFFECT_BLINK_WAIT;
@@ -1801,7 +1801,7 @@ static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work )
     break;
   case 1:
     if( bedt->vanish == FALSE )
-    { 
+    {
       BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_ON );
     }
     bedt->wait = BTLV_EFFECT_BLINK_WAIT;
@@ -1810,7 +1810,7 @@ static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work )
   case 2:
     bedt->seq_no = 0;
     if( bedt->vanish == FALSE )
-    { 
+    {
       BTLV_MCSS_SetVanishFlag( bew->bmw, bedt->target, BTLV_MCSS_VANISH_OFF );
       BTLV_MCSS_SetPaletteFade( bew->bmw, bedt->target, 0, 0, 0, 0x7fff );
     }
@@ -1823,7 +1823,7 @@ static  void  TCB_BTLV_EFFECT_Damage( GFL_TCB *tcb, void *work )
 }
 
 static  void  TCB_BTLV_EFFECT_Damage_CB( GFL_TCB *tcb )
-{ 
+{
   BTLV_EFFECT_DAMAGE_TCB *bedt = (BTLV_EFFECT_DAMAGE_TCB*)GFL_TCB_GetWork( tcb );
 
   bew->tcb_damage_flag &= ( BTLV_EFFTOOL_Pos2Bit( bedt->target ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
@@ -1870,7 +1870,7 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
 }
 
 static  void  TCB_BTLV_EFFECT_Henge_CB( GFL_TCB *tcb )
-{ 
+{
   BTLV_EFFECT_HENGE_TCB *beht = (BTLV_EFFECT_HENGE_TCB*)GFL_TCB_GetWork( tcb );
 
   bew->tcb_henge_flag &= ( BTLV_EFFTOOL_Pos2Bit( beht->vpos ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
@@ -1901,7 +1901,7 @@ static  void  TCB_BTLV_EFFECT_Rotation( GFL_TCB *tcb, void *work )
 }
 
 static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb )
-{ 
+{
   TCB_ROTATION *tr = ( TCB_ROTATION* )GFL_TCB_GetWork( tcb );
 
   bew->tcb_rotate_flag &= ( BTLV_EFFTOOL_Pos2Bit( tr->side ) ^ BTLV_EFFTOOL_POS2BIT_XOR );
@@ -1913,11 +1913,11 @@ static  void  TCB_BTLV_EFFECT_Rotation_CB( GFL_TCB *tcb )
  */
 //============================================================================================
 static  void  TCB_BTLV_EFFECT_Start( GFL_TCB *tcb, void *work )
-{ 
+{
   TCB_EFFECT_START *tes = ( TCB_EFFECT_START* )work;
 
   if( !BTLV_EFFECT_CheckExecute() )
-  { 
+  {
     BTLV_EFFVM_Start( bew->vm_core, tes->from, tes->to, tes->eff_no, tes->param );
     bew->execute_flag = TRUE;
     BTLV_EFFECT_FreeTCB( tcb );
@@ -1925,11 +1925,11 @@ static  void  TCB_BTLV_EFFECT_Start( GFL_TCB *tcb, void *work )
 }
 
 static  void  TCB_BTLV_EFFECT_Start_CB( GFL_TCB *tcb )
-{ 
+{
   TCB_EFFECT_START *tes = ( TCB_EFFECT_START* )GFL_TCB_GetWork( tcb );
 
   if( tes->param )
-  { 
+  {
     GFL_HEAP_FreeMemory( tes->param );
   }
 }
@@ -1940,7 +1940,7 @@ static  void  TCB_BTLV_EFFECT_Start_CB( GFL_TCB *tcb )
  */
 //============================================================================================
 static  void  camera_work_check( void )
-{ 
+{
   int trg = GFL_UI_KEY_GetTrg();
   int tp = GFL_UI_TP_GetTrg();
 
@@ -1949,59 +1949,59 @@ static  void  camera_work_check( void )
   if( ( trg ) || ( tp ) ||
       ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL ) ||
       ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE ) )
-  { 
+  {
     if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
-    { 
+    {
       BTLV_EFFECT_Stop();
       BTLV_EFFVM_Start( bew->vm_core, BTLV_MCSS_POS_ERROR, BTLV_MCSS_POS_ERROR, BTLEFF_CAMERA_INIT, NULL );
     }
     if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL )
-    { 
+    {
       bew->camera_work_execute = BTLV_EFFECT_CWE_NORMAL;
     }
     if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
-    { 
+    {
       bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
     }
     bew->camera_work_seq  = 0;
     bew->camera_work_wait = 0;
   }
 
-  switch( bew->camera_work_seq ){ 
+  switch( bew->camera_work_seq ){
   case 0:
     if( bew->camera_work_wait < bew->camera_work_wait_tmp )
-    { 
+    {
       bew->camera_work_wait++;
       break;
     }
     bew->camera_work_seq = 1;
     /*fallthru*/
   case 1:
-    { 
-      static  int camera_work_num[ 3 ] = {  
+    {
+      static  int camera_work_num[ 3 ] = {
         BTLEFF_CAMERA_WORK,
         BTLEFF_CAMERA_WORK_MIDDLE,
         BTLEFF_CAMERA_WORK_SHORT,
       };
-      static  int wcs_camera_work_num[ 2 ] = {  
+      static  int wcs_camera_work_num[ 2 ] = {
         BTLEFF_WCS_CAMERA_WORK_E_M,
         BTLEFF_WCS_CAMERA_WORK_M_E,
       };
       int eff_no;
 
       if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
-      { 
+      {
         eff_no = wcs_camera_work_num[ bew->camera_work_num ];
         bew->camera_work_num ^= 1;
       }
       else
-      { 
+      {
         eff_no = camera_work_num[ bew->camera_work_num ];
         while( 1 )
-        { 
+        {
           int no = GFL_STD_MtRand( 3 );
           if( bew->camera_work_num != no )
-          { 
+          {
             bew->camera_work_num = no;
             break;
           }
@@ -2014,7 +2014,7 @@ static  void  camera_work_check( void )
     break;
   case 2:
     if( !BTLV_EFFECT_CheckExecute() )
-    { 
+    {
       bew->camera_work_seq  = 1;
     }
     break;

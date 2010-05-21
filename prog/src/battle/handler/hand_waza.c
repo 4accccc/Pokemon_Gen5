@@ -9131,7 +9131,10 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
 
-    int weight_ratio = BPP_GetWeight(bpp) / BPP_GetWeight(target);
+    int atk_weight = BPP_GetWeight( bpp );
+    int tgt_weight = BPP_GetWeight( target );
+
+    int weight_ratio = atk_weight / tgt_weight;
     u32 pow;
 
     // ëäéËÇÊÇËèdÇ¢ÇŸÇ«à–óÕÇ™çÇÇ¢
@@ -9147,6 +9150,7 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       pow = 40;
     }
 
+    TAYA_Printf("AtkWeight=%d, DefWeight=%d, ratio=%d .. pow=%d\n", atk_weight, tgt_weight, weight_ratio, pow);
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
@@ -10067,14 +10071,16 @@ static void handler_SideChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
   switch( BTL_SVFTOOL_GetRule(flowWk) ){
   case BTL_RULE_DOUBLE:
-  case BTL_RULE_ROTATION:
-    if( !BTL_SVFTOOL_IsMultiMode(flowWk) )
     {
-      targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 0 );
-      if( targetPos == myPos ){
-        targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 1 );
+      u8 myClientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+      if( BTL_SVFTOOL_GetFriendClientID(flowWk, myClientID) == BTL_CLIENTID_NULL )
+      {
+        targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 0 );
+        if( targetPos == myPos ){
+          targetPos = BTL_MAINUTIL_GetFriendPokePos( myPos, 1 );
+        }
+        target_pokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, targetPos );
       }
-      target_pokeID = BTL_SVFTOOL_PokePosToPokeID( flowWk, targetPos );
     }
     break;
   case BTL_RULE_TRIPLE:
