@@ -900,9 +900,9 @@ static BOOL MISSIONDATA_Choice(const MISSION_CONV_DATA *cdata, MISSION_CONV_DATA
   int i;
   int my_version_bit;
   
-#if PM_VERSION == VERSION_WHITE
+#if (PM_VERSION == VERSION_WHITE)
   my_version_bit = MISSION_DATA_VERSION_WHITE;
-#elif PM_VERSION == VERSION_BLACK
+#elif (PM_VERSION == VERSION_BLACK)
   my_version_bit = MISSION_DATA_VERSION_BLACK;
 #else
   my_version_bit = MISSION_DATA_VERSION_NEXT;
