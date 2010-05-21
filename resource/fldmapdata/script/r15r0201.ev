@@ -48,24 +48,40 @@ EVENT_START	ev_r15r0201_trainerw_01
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
 				
-				_BALLOONWIN_CLOSE()
-			
-				//トリプルバトルセット
-				_TRAINER_BTL_SET( TRID_ELITEW_21, 0 )
-				//結果チェック
-				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-					_TRAINER_WIN()
+				//手持ちポケモンチェック
+				DEFINE_LOCAL LCW_POKECOUNTB
+				_GET_PARTY_POKE_COUNT( LCW_POKECOUNTB , POKECOUNT_MODE_BATTLE_ENABLE )
+				
+				//戦えるポケモンが３匹以下
+				IF $LCW_POKECOUNTB < 3 THEN
+				
+					_BALLOONWIN_OBJMSG(msg_r15r0201_elitew_01b_01,R15R0201_TRAINERW_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+				
+				//戦えるポケモンが３匹以上
 				ELSE
-					_TRAINER_LOSE()
+				
+					_BALLOONWIN_CLOSE()
+				
+					//トリプルバトルセット
+					_TRAINER_BTL_SET( TRID_ELITEW_21, 0 )
+					//結果チェック
+					_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+					IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+						_TRAINER_WIN()
+					ELSE
+						_TRAINER_LOSE()
+					ENDIF
+					
+					//======================================//
+						
+						_TRAINER_FLAG_SET( TRID_ELITEW_21 )
+						
+					//======================================//
+				
 				ENDIF
 				
-				//======================================//
-					
-					_TRAINER_FLAG_SET( TRID_ELITEW_21 )
-					
-				//======================================//
-			
 			//いいえ
 			ELSE
 				_BALLOONWIN_OBJMSG_POS( msg_r15r0201_elitew_02b , R15R0201_TRAINERW_01 , POS_DEFAULT )
@@ -93,24 +109,39 @@ EVENT_START	ev_r15r0201_trainerw_01
 			
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
+			
+				//手持ちポケモンチェック
+				DEFINE_LOCAL LCW_POKECOUNTW
+				_GET_PARTY_POKE_COUNT( LCW_POKECOUNTW , POKECOUNT_MODE_BATTLE_ENABLE )
+				
+				//戦えるポケモンが３匹以下
+				IF $LCW_POKECOUNTW < 3 THEN
+				
+					_BALLOONWIN_OBJMSG(msg_r15r0201_elitew_01w_01,R15R0201_TRAINERW_01)
+					_LAST_KEYWAIT()
+					_BALLOONWIN_CLOSE()
+				
+				//戦えるポケモンが３匹以上
+				ELSE
 				
 				_BALLOONWIN_CLOSE()
 			
-				//ローテーションバトルセット
-				_TRAINER_BTL_SET( TRID_ELITEW_23, 0 )
-				//結果チェック
-				_TRAINER_LOSE_CHECK( SCWK_ANSWER )
-				IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
-					_TRAINER_WIN()
-				ELSE
-					_TRAINER_LOSE()
+					//ローテーションバトルセット
+					_TRAINER_BTL_SET( TRID_ELITEW_23, 0 )
+					//結果チェック
+					_TRAINER_LOSE_CHECK( SCWK_ANSWER )
+					IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+						_TRAINER_WIN()
+					ELSE
+						_TRAINER_LOSE()
+					ENDIF
+					
+						//======================================//
+							
+							_TRAINER_FLAG_SET( TRID_ELITEW_23 )
+							
+						//======================================//
 				ENDIF
-				
-					//======================================//
-						
-						_TRAINER_FLAG_SET( TRID_ELITEW_23 )
-						
-					//======================================//
 			
 			//いいえ
 			ELSE
