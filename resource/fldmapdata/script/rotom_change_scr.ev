@@ -103,14 +103,17 @@ _RET
 //ポケモンのチェック⇒フォルム変更
 check_poke:
   DEFINE_LOCAL SEL_MONS_NO            //選択したポケモンのモンスターナンバー
+  DEFINE_LOCAL IS_TAMAGO              //タマゴか？
   //リターン値を初期化(SCWK_ANSWERにFALSEをセット)
   $SCWK_ANSWER = FALSE
   //タマゴチェックする
-  _CHECK_TEMOTI_EGG( SCWK_ANSWER, SEL_POS )
-  IF $SCWK_ANSWER == TRUE THEN
+  _CHECK_TEMOTI_EGG( IS_TAMAGO, SEL_POS )
+  IF $IS_TAMAGO == TRUE THEN
     //タマゴなので終了
     $END_MSG = msg_rotom_06
     _CALL end_msg
+    //リターン値セット
+    $SCWK_ANSWER = FALSE
   ELSE
     _GET_PARTY_POKE_MONSNO( SEL_MONS_NO, SEL_POS )
     //選んだのはロトム？
@@ -121,6 +124,8 @@ check_poke:
       //「ロトムではない」
       $END_MSG = msg_rotom_05
       _CALL end_msg
+      //リターン値セット
+      $SCWK_ANSWER = FALSE
     ENDIF
   ENDIF
 _RET
