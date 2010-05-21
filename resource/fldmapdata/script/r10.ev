@@ -154,10 +154,13 @@ EVENT_START   ev_pos_r10_rival_01
 	_BALLOONWIN_CLOSE()
 	
 	//システムメッセージ：回復させた
-	_SE_PLAY( SEQ_SE_RECOVERY )
 	_SYSWIN_MSG( msg_r10_black_04a, POS_DEFAULT )
-	_MSGWIN_CLOSE()
+	_SE_PLAY( SEQ_SE_RECOVERY )
+	//回復処理
+	_TEMOTI_POKEMON_KAIFUKU()
 	_SE_WAIT()
+	_MSGWIN_CLOSE()
+	
 	
 	//ライバル戻る
 	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_restore_03 )
