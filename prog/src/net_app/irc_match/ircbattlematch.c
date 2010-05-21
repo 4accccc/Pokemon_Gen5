@@ -163,6 +163,8 @@ static void _msgWindowCreate(int* pMsgBuff,IRC_BATTLE_MATCH* pWork);
 static void _friendNumWindowCreate(int msgno,IRC_BATTLE_MATCH* pWork);
 static void _returnMessage(IRC_BATTLE_MATCH* pWork);
 static void _modeCheckStartTok(IRC_BATTLE_MATCH* pWork);
+static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork,BOOL bDecide );
+static void ircExitStart2(IRC_BATTLE_MATCH* pWork);
 
 
 ///通信コマンド
@@ -350,6 +352,7 @@ struct _IRC_BATTLE_MATCH {
   int messageBackup;
   void* pVramBG;
   PRINT_QUE*            SysMsgQue;
+  BOOL bReturnButton;
   APP_TASKMENU_WORK* pAppTask;
 	APP_TASKMENU_RES* pAppTaskRes;
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
@@ -1288,7 +1291,18 @@ static void _YesNoStart(IRC_BATTLE_MATCH* pWork)
 
 
   pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
-  APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //キー抑制
+
+
+  switch(pWork->selectType){
+  case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+  case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+  case EVENTIRCBTL_ENTRYMODE_SUBWAY:
+    break;
+  default:
+    APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //キー抑制
+    break;
+  }
+
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
   GFL_STR_DeleteBuffer(pWork->appitem[1].str);
   _PaletteFade(pWork,TRUE);
@@ -1296,34 +1310,55 @@ static void _YesNoStart(IRC_BATTLE_MATCH* pWork)
 }
 
 
-static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork , BOOL bDecide)
+static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork ,BOOL bDecide)
 {
   int i;
+  APP_TASKMENU_INITWORK appinit;
 
-  pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-  GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
-  pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-  pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
 
-  if(!bDecide){
-    pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                             pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+  appinit.heapId = pWork->heapID;
+  appinit.posType = ATPT_RIGHT_DOWN;
+  appinit.charPosX = 32;
+  appinit.charPosY = 24;
+  appinit.w				 = APP_TASKMENU_PLATE_WIDTH;
+  appinit.h				 = APP_TASKMENU_PLATE_HEIGHT;
+
+  if(bDecide){
+    appinit.itemNum =  2;
+    appinit.itemWork =  &pWork->appitem[0];
+    pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_36, pWork->appitem[0].str);
+    pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
+    pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[1].str);
+    pWork->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_RETURN;
+    pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
     GFL_STR_DeleteBuffer(pWork->appitem[0].str);
+    GFL_STR_DeleteBuffer(pWork->appitem[1].str);
+    pWork->bReturnButton=FALSE;
   }
   else{
-    pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                             pWork->appitem, 32-10, 24-4, 10, pWork->heapID);
+    appinit.itemNum = 1;
+    appinit.itemWork =  &pWork->appitem[0];
+    pWork->appitem[0].str = GFL_STR_CreateBuffer(100, pWork->heapID);
+    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_03, pWork->appitem[0].str);
+    pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
+    pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_RETURN;
+
+    pWork->pAppTask			= APP_TASKMENU_OpenMenu(&appinit,pWork->pAppTaskRes);
     GFL_STR_DeleteBuffer(pWork->appitem[0].str);
-
-    pWork->appitem[1].str = GFL_STR_CreateBuffer(100, pWork->heapID);
-    GFL_MSG_GetString(pWork->pMsgData, IRCBTL_STR_36, pWork->appitem[1].str);
-    pWork->appitem[1].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
-    pWork->appitem[1].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-
-    pWork->pAppWinLeader =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                             &pWork->appitem[1], 32-10, 24-4-3, 10, pWork->heapID);
-    GFL_STR_DeleteBuffer(pWork->appitem[1].str);
-
+    pWork->bReturnButton=TRUE;
+  }
+  switch(pWork->selectType){
+  case EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER:
+  case EVENTIRCBTL_ENTRYMODE_MUSICAL:
+  case EVENTIRCBTL_ENTRYMODE_SUBWAY:
+    break;
+  default:
+    APP_TASKMENU_SetDisableKey(pWork->pAppTask, TRUE);  //キー抑制
+    break;
   }
 }
 
@@ -1740,7 +1775,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
       net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ
       net_ini_data.maxMPParentSize = pWork->pBattleWork->netInitWork->maxMPParentSize;           ///< 送信サイズ
-      pWork->musicalNum = net_ini_data.maxConnectNum;
+      pWork->musicalNum = -1;
       break;
     case EVENTIRCBTL_ENTRYMODE_MUSICAL:
       net_ini_data.GsidOverwrite = WB_NET_MUSICAL;
@@ -1749,7 +1784,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       net_ini_data.maxConnectNum = pWork->pBattleWork->netInitWork->maxConnectNum;         ///< 最大接続人数
       net_ini_data.maxSendSize = pWork->pBattleWork->netInitWork->maxSendSize;           ///< 送信サイズ
       net_ini_data.maxMPParentSize = pWork->pBattleWork->netInitWork->maxMPParentSize;           ///< 送信サイズ
-      pWork->musicalNum = net_ini_data.maxConnectNum;
+      pWork->musicalNum = -1;
       break;
     default:
       GF_ASSERT(0);
@@ -1773,7 +1808,7 @@ static void _ircMatchStart(IRC_BATTLE_MATCH* pWork)
       break;
     }
   }
-  _ReturnButtonStart(pWork, EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER == pWork->selectType);
+  _ReturnButtonStart(pWork,FALSE);
   
   _CHANGE_STATE(pWork,_ircInitWait);
 }
@@ -1814,8 +1849,8 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
       break;
     }
     GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback,_ircConnectEndCallback); // 専用の自動接続
-    pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-    pWork->touch = &_cancelButtonCallback;
+//    pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
+//    pWork->touch = &_cancelButtonCallback;
     _CHANGE_STATE(pWork,_ircMatchWait);
   }
 }
@@ -1832,9 +1867,7 @@ static void _ircExitWaitNO(IRC_BATTLE_MATCH* pWork)
     _msgWindowCreate(aMsgBuff, pWork);
   }
   
-  _ReturnButtonStart(pWork,EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER == pWork->selectType);
-  pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_cancelButtonCallback;
+  _ReturnButtonStart(pWork,FALSE);
 
   _CHANGE_STATE(pWork,_ircMatchWait);
 
@@ -1876,29 +1909,35 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
 
 static void _nop(IRC_BATTLE_MATCH* pWork)
 {
-  GFL_BMN_Main( pWork->pButton );
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask = NULL;
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+    _CHANGE_STATE(pWork,ircExitStart2);
+  }
 }
 
 
 static void _ircstarLoop(IRC_BATTLE_MATCH* pWork)
 {
-  GFL_BMN_Main( pWork->pButton );
  if(GFL_NET_ForceParentStart_IRCWIRELESS()){  //決定
     _CHANGE_STATE(pWork,_nop);
   }
-
+  else if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+    _CHANGE_STATE(pWork,ircExitStart2);
+  }
 
 }
 
 
 static void _ircstarStart(IRC_BATTLE_MATCH* pWork)
 {
-  pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_cancelButtonCallback;
-
-
   _ReturnButtonStart(pWork,FALSE);
-  
   _CHANGE_STATE(pWork,_ircstarLoop);
 }
 
@@ -1932,9 +1971,9 @@ static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
         _msgWindowCreate(aMsgBuff, pWork);
       }
       
-      _ReturnButtonStart(pWork,EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER == pWork->selectType);
-      pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-      pWork->touch = &_cancelButtonCallback;
+      _ReturnButtonStart(pWork,FALSE);
+      //pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
+      //pWork->touch = &_cancelButtonCallback;
       _CHANGE_STATE(pWork,_ircMatchWait);
     }
   }
@@ -2143,7 +2182,6 @@ static void _ircExitWaitNO2(IRC_BATTLE_MATCH* pWork)
 {
   _buttonWindowDelete(pWork);
 
-//  _firstConnectMessage(pWork);
   {
     int aMsgBuff[1];
     aMsgBuff[0] = IRCBTL_STR_13;  //pWork->messageBackup;
@@ -2151,8 +2189,6 @@ static void _ircExitWaitNO2(IRC_BATTLE_MATCH* pWork)
   }
   
   _ReturnButtonStart(pWork,FALSE);
-  pWork->pButton = GFL_BMN_Create( btn_irmain_leader, _BttnCallBack, pWork,  pWork->heapID );
-  pWork->touch = &_cancelButtonCallback2;
 
   _CHANGE_STATE(pWork,_nop);
 
@@ -2477,27 +2513,13 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
   }
 
   
- // if(pWork->ircCenterAnim &&   //4台の時2台を真ん中に
-//    (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER) &&
-//     (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL)
-//     ){
   if(pWork->ircCenterAnim && (EVENTIRCBTL_ENTRYMODE_MULTH==pWork->selectType)){ //2vs2//4台の時2台を真ん中に
     _ircFourMatch2TwoMatch(pWork);
   }
   else if((pWork->ircmatchanim==TRUE) && (pWork->selectType!=EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER)){  //2台の時お互いを引く
     if(pWork->ircmatchflg==TRUE){
       _buttonWindowDelete(pWork);
-   //   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND || pWork->selectType==EVENTIRCBTL_ENTRYMODE_TRADE)
-     // {
-//        int aMsgBuff[]={IRCBTL_STR_30};
       _msgWindowCreate(&_ansmessagebuff[pWork->selectType], pWork);
-//      }
-  //    else
-      
-    //  else{
-      //  int aMsgBuff[]={IRCBTL_STR_31};
-        //_msgWindowCreate(aMsgBuff, pWork);
-//      }
       clactSafeRemove(pWork,CELL_IRWAVE1);
       clactSafeRemove(pWork,CELL_IRWAVE2);
       pWork->ircmatchflg=FALSE;
@@ -2506,27 +2528,6 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
         GFL_CLACT_WK_SetAutoAnmFlag(pWork->curIcon[CELL_IRDS3],FALSE);
       }
       //アニメ終了コールバック登録
-    /*  
-      if(pWork->curIcon[CELL_IRDS1]){
-        GFL_CLWK_ANM_CALLBACK cbwk;
-
-        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS1], NANR_ir_ani_CellAnime13);
-        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS3], NANR_ir_ani_CellAnime12);
-
-        cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
-        cbwk.param = (u32)pWork;          // コールバックワーク
-        cbwk.p_func = _modeFlashCallback1; // コールバック関数
-        GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS1], &cbwk );
-        cbwk.p_func = _modeFlashCallback2; // コールバック関数
-        GFL_CLACT_WK_StartAnmCallBack( pWork->curIcon[CELL_IRDS3], &cbwk );
-      }
-*/
-
-/*      if(pWork->curIcon[CELL_IRDS1]){
-        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS1], NANR_ir_ani_CellAnime13);
-        GFL_CLACT_WK_SetAnmSeq(pWork->curIcon[CELL_IRDS3], NANR_ir_ani_CellAnime12);
-      }
-*/
     }
     _CLACT_AddPos(pWork,0,-2,CELL_IRDS1);
     _CLACT_AddPos(pWork,0, 2,CELL_IRDS3);
@@ -2546,21 +2547,49 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
       _CHANGE_STATE(pWork, _returnMessage);
       return;
     }
-//    if(GFL_NET_GetTypeErrorIRCWIRELESS()){
-  //    _CHANGE_STATE(pWork, _returnMessage);
-    //  return;
-//    }
-    
   }
+
+
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+
+    if(pWork->bReturnButton){ //ボタン一個の場
+      _CHANGE_STATE(pWork,ircExitStart);
+        return;
+    }
+    else{
+      if(selectno == 0){   // すすむを選択した場合
+        _CHANGE_STATE(pWork,_ircActionCheck);
+        return;
+      }
+      else
+      {  // もどるを選択した場合
+        _CHANGE_STATE(pWork,ircExitStart);
+        return;
+      }
+    }
+    return;
+  }
+
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_MUSICAL_LEADER){
     if(pWork->musicalNum != GFL_NET_GetNowConnectNum_IRCWIRELESS()){
       _musicalNumWindowCreate(IRCBTL_STR_40, pWork);
       pWork->musicalNum = GFL_NET_GetNowConnectNum_IRCWIRELESS();
     }
+    if((pWork->musicalNum > 0) && (pWork->bReturnButton==TRUE)){
+      APP_TASKMENU_CloseMenu(pWork->pAppTask);
+      pWork->pAppTask=NULL;
+      _ReturnButtonStart(pWork,TRUE);
+    }
   }
 
-  GFL_BMN_Main( pWork->pButton );
-
+#if 1
+#else
+ // GFL_BMN_Main( pWork->pButton );
+#endif
 }
 
 //------------------------------------------------------------------------------
@@ -2651,7 +2680,6 @@ static GFL_PROC_RESULT IrcBattleMatchProcInit( GFL_PROC * proc, int * seq, void 
     _modeInit(pWork);
 //    _CHANGE_STATE( pWork, _modeInit);
   }
-  GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
   GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
 
   G2_SetBlendAlpha( GX_BLEND_PLANEMASK_OBJ,  GX_BLEND_PLANEMASK_BG1|GX_BLEND_PLANEMASK_BG0, 9, 14);

@@ -2932,6 +2932,7 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     }
   }
 
+  GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);  //ƒ^ƒbƒ`‚µ‚½Ž–‚É‚È‚é
 
   switch(bttnid){
   case TOUCH_LABEL_ALL:
@@ -3017,6 +3018,9 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
     pWork->createEvent = FIELD_SUBSCREEN_ACTION_CGEAR_POWER;
     break;
   }
+
+
+
 }
 
 
