@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T16:21:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-21T15:31:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="114" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -545,12 +545,16 @@
 ・戦闘後自動で表示
 ・表示後、プラズマ団たち、ビル内に入る</comment>
 		<attribute name="キャラ指定">プラズマ団♂</attribute>
-		<language name="JPN" width="256">プラズマだん『まずい……▼
-まずいまずいまずいまずいまずいまずい▼
+		<language name="JPN" width="256">プラズマだん『マズイ……▼
+マズイマズイマズイマズイマズイマズイ▼
+プラズマだんと　して　マズイ
+ちぢめて　プラズマズイ！▼
 とりあえず　しちけんじんさまに
 ほうこく　しないと……！▼</language>
-		<language name="JPN_KANJI" width="256">プラズマ団『まずい……▼
-まずいまずいまずいまずいまずいまずい▼
+		<language name="JPN_KANJI" width="256">プラズマ団『マズイ……▼
+マズイマズイマズイマズイマズイマズイ▼
+プラズマ団と　して　マズイ
+ちぢめて　プラズマズイ！▼
 とりあえず　七賢人さまに
 報告しないと……！▼</language>
 	</row>
@@ -635,9 +639,8 @@ TVトランシーバー</attribute>
 ライブキャスターを　つなげた[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_c03p07_veteranm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03p07_veteranm_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">ジムリーダーが　たしかめるのは
 ちょうせんしゃと　ポケモンとの▽
@@ -647,21 +650,19 @@ TVトランシーバー</attribute>
 きずな……　結びつき　だな！</language>
 	</row>
 
-	<row id="msg_c03p07_trainerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c03p07_trainerw_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">ジムに　チャレンジする　まえに
 キズぐすりの　かずは　たりているか▽
 たしかめて　おかないとね</language>
 		<language name="JPN_KANJI" width="256">ジムに　チャレンジする前に
 キズぐすりの　数は　足りているか▽
-確認しておかないとね</language>
+確認して　おかないとね</language>
 	</row>
 
-	<row id="msg_c03p07_businessman1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03p07_businessman1_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">だれもが　ポケモントレーナーとして
@@ -676,20 +677,26 @@ TVトランシーバー</attribute>
 みんなに　できることだよね</language>
 	</row>
 
-	<row id="msg_c03p07_businessman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c03p07_businessman2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ビジネスマン</attribute>
 		<language name="JPN" width="256">わたしの　バッグには　６コ
-モンスターボールが　はいってます！</language>
+モンスターボールが　はいってます！▼
+ほんとうは　スーパーボールや
+ハイパーボールが　ほしいのですが……▼
+ジムバッジを　あつめないと
+フレンドリィショップで　かえないんだ</language>
 		<language name="JPN_KANJI" width="256">わたしの　バッグには　６個
-モンスターボールが　入ってます！</language>
+モンスターボールが　入ってます！▼
+本当は　スーパーボールや
+ハイパーボールが　欲しいのですが……▼
+ジムバッジを　集めないと
+フレンドリィショップで　買えないんだ</language>
 	</row>
 
-	<row id="msg_c03p07_ol_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c03p07_ol_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">OL
 </attribute>
 		<language name="JPN" width="256">あたしの　ポケモン　かわいーの！▼
