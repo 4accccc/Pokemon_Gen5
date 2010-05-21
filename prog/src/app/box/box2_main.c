@@ -3115,12 +3115,18 @@ static void PokeIconBufPosChange( BOX2_SYS_WORK * syswk, BOX2MAIN_POKEMOVE_DATA 
         BOX2OBJ_PokeIconPriChg( syswk->app, dat[i].df_pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
       }
 */
-      syswk->app->pokeicon_id[ dat[i].mv_pos ] = id[i];
+			if( dat[i].mv_pos <= BOX2OBJ_POKEICON_GET_POS ){
+				syswk->app->pokeicon_id[ dat[i].mv_pos ] = id[i];
+	      if( dat[i].df_pos == BOX2OBJ_POKEICON_GET_POS ){
+	        gmp = dat[i].mv_pos;
+	      }
+			}else{
+				syswk->app->pokeicon_id[ BOX2OBJ_POKEICON_GET_POS ] = id[i];
+	      if( dat[i].df_pos == BOX2OBJ_POKEICON_GET_POS ){
+	        gmp = BOX2OBJ_POKEICON_GET_POS;
+	      }
+			}
 //      BOX2OBJ_PokeIconPriChg( syswk->app, dat[i].mv_pos, BOX2OBJ_POKEICON_PRI_CHG_PUT );
-      if( dat[i].df_pos == BOX2OBJ_POKEICON_GET_POS ){
-        gmp = dat[i].mv_pos;
-//        OS_Printf( "gmp = %d\n", gmp );
-      }
     }
   }
 
@@ -4731,7 +4737,7 @@ int BOX2MAIN_VFuncGetPokeMoveParty( BOX2_SYS_WORK * syswk )
     if( BOX2MAIN_VFuncBoxMoveFrmOut( syswk ) == 0 ){
       BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
       BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-      BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+      BOX2OBJ_PartyPokeIconFrmInSet( syswk, 1 );
       BOX2BGWFRM_TemochiButtonOff( syswk->app );
       BOX2BGWFRM_BoxListButtonOn( syswk->app );
       PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
@@ -5112,7 +5118,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
     if( BOX2MAIN_VFuncBoxMoveFrmOut( syswk ) == 0 ){
       BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
       BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-      BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+      BOX2OBJ_PartyPokeIconFrmInSet( syswk, 1 );
       BOX2BGWFRM_TemochiButtonOff( syswk->app );
       BOX2BGWFRM_BoxListButtonOn( syswk->app );
       PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
@@ -6402,7 +6408,7 @@ int BOX2MAIN_VFuncItemGetTouch( BOX2_SYS_WORK * syswk )
         if( BOX2UI_HitCheckPosTrayPoke( tpx, tpy ) != syswk->get_pos ){
           BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
           BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-          BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+          BOX2OBJ_PartyPokeIconFrmInSet( syswk, 1 );
           BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           // 戻り先のシーケンスを「いどうする」の処理にする
@@ -7656,7 +7662,7 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
           syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
           BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
           BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-          BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+          BOX2OBJ_PartyPokeIconFrmInSet( syswk, 1 );
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           // 戻り先のシーケンスを「つかむ」の処理にする
           BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->get_pos );

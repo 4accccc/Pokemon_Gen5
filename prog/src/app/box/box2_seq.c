@@ -91,6 +91,7 @@ enum {
 	SEQ_PTOUT_PUT_ICON_PUT,				// アイコン配置
 	SEQ_PTOUT_PUT_DATA_CHG,				// データ入れ替え
 
+	SEQ_PTOUT_PUT_CANCEL_END,			// 終了（キャンセル時）
 	SEQ_PTOUT_PUT_END,						// 終了
 };
 
@@ -2240,7 +2241,7 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
 	}
 
-	syswk->get_pos = BOX2MAIN_GETPOS_NONE;	// 未取得にする
+//	syswk->get_pos = BOX2MAIN_GETPOS_NONE;	// 未取得にする
 
 	switch( syswk->app->mv_err_code ){
 	case BOX2MAIN_ERR_CODE_MAIL:			// メールを持っている
@@ -2345,7 +2346,11 @@ static int MainSeq_ArrangePokeGetPartyChange( BOX2_SYS_WORK * syswk )
 	case 1:
 		BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
 		BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-		BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		if( syswk->poke_get_key == 1 ){
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk, 1 );
+		}else{
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk, 0 );
+		}
 		PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
 		syswk->app->sub_seq++;
 		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_PARTY_CHANGE );
@@ -2388,7 +2393,7 @@ static int MainSeq_ArrangePartyInit( BOX2_SYS_WORK * syswk )
 
 		BOX2BGWFRM_PartyPokeFrameInitPutLeft( syswk->app->wfrm );
 		BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-		BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		BOX2OBJ_PartyPokeIconFrmInSet( syswk, 0 );
 		if( syswk->dat->callMode == BOX_MODE_ITEM ){
 			BOX2OBJ_PokeIconBlendSetAll( syswk, BOX2OBJ_BLENDTYPE_PARTYITEM, TRUE );
 		}
@@ -2741,7 +2746,7 @@ static int MainSeq_ArrangePartyPokeGetInit( BOX2_SYS_WORK * syswk )
 		}else{
 			BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
 			BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-			BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk, 0 );
 		}
 		PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
 		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_INIT );
@@ -3415,7 +3420,7 @@ static int MainSeq_BattleBoxPartyInit( BOX2_SYS_WORK * syswk )
 
 		BOX2BGWFRM_PartyPokeFrameInitPutLeft( syswk->app->wfrm );
 		BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-		BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+		BOX2OBJ_PartyPokeIconFrmInSet( syswk, 0 );
 		PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
 		syswk->app->sub_seq++;
 		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_INIT );
@@ -4479,8 +4484,10 @@ static int MainSeq_PartyOutPutEnd( BOX2_SYS_WORK * syswk )
 
 	case SEQ_PTOUT_PUT_ICON_RET:
 		PokeMoveWorkAlloc( syswk );
-		syswk->app->sub_seq = SEQ_PTOUT_PUT_END;
-		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMovePutKey, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE );
+//		syswk->app->sub_seq = SEQ_PTOUT_PUT_END;
+//		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMovePutKey, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE );
+		syswk->app->sub_seq = SEQ_PTOUT_PUT_CANCEL_END;
+		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMovePutKey, BOX2SEQ_MAINSEQ_PARTYOUT_PUT_END );
 
 	case SEQ_PTOUT_PUT_PTFRM_IN:
 		PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
@@ -4510,6 +4517,8 @@ static int MainSeq_PartyOutPutEnd( BOX2_SYS_WORK * syswk )
 		syswk->app->sub_seq = SEQ_PTOUT_PUT_PTFRM_IN;
 		break;
 
+	case SEQ_PTOUT_PUT_CANCEL_END:
+		PokeMoveWorkFree( syswk );
 	case SEQ_PTOUT_PUT_END:
 		syswk->poke_get_key = 0;
 		BOX2OBJ_PokeCursorVanish( syswk, FALSE );
@@ -4986,7 +4995,7 @@ static int MainSeq_ItemGetInit( BOX2_SYS_WORK * syswk )
 		}else{
 			BOX2BGWFRM_PartyPokeFrameInitPutRight( syswk->app->wfrm );
 			BOX2BGWFRM_PartyPokeFrameInSet( syswk->app->wfrm );
-			BOX2OBJ_PartyPokeIconFrmInSet( syswk );
+			BOX2OBJ_PartyPokeIconFrmInSet( syswk, 0 );
 		}
 		PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
 		return VFuncSet( syswk, BOX2MAIN_VFuncPartyFrameMove, BOX2SEQ_MAINSEQ_ITEMGET_INIT );

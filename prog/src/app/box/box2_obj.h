@@ -398,7 +398,7 @@ extern void BOX2OBJ_PokeIconDefaultPosSet( BOX2_SYS_WORK * syswk, u32 pos, u32 o
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2OBJ_PartyPokeIconFrmInSet( BOX2_SYS_WORK * syswk );
+extern void BOX2OBJ_PartyPokeIconFrmInSet( BOX2_SYS_WORK * syswk, u32 get );
 
 //--------------------------------------------------------------------------------------------
 /**
