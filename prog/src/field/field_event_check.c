@@ -852,32 +852,6 @@ GMEVENT * FIELD_EVENT_CheckUnion( GAMESYS_WORK *gsys, void *work )
         }
       }
     }
-    
-    { //BG話し掛け
-      u16 id;
-      VecFx32 pos;
-      EVENTWORK *evwork = GAMEDATA_GetEventWork( req.gamedata );
-      MMDL *fmmdl = FIELD_PLAYER_GetMMdl( req.field_player );
-      u16 dir = MMDL_GetDirDisp( fmmdl );
-      
-      FIELD_PLAYER_GetPos( req.field_player, &pos );
-      MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
-      id = EVENTDATA_CheckTalkBGEvent( req.evdata, evwork, &pos, dir );
-      
-      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-        return event;
-      }
-    }
-
-    { //BG Attribute 話しかけ
-      u16 id = checkTalkAttrEvent( &req, fieldWork );
-      if( id != EVENTDATA_ID_NONE ){ //座標イベント起動
-        event = SCRIPT_SetEventScript( gsys, id, NULL, req.heapID );
-        return event;
-      }
-
-    }
   }
 
   //通信エラー画面呼び出しチェック(※メニュー起動チェックの真上に配置する事！)
