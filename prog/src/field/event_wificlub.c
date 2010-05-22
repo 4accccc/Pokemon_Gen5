@@ -159,6 +159,13 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
   int shooter = pClub->pMatchParam->shooter; //Regulation_GetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER);
 
   OS_TPrintf("シューター%d\n",shooter);
+
+  if(shooter){
+    Regulation_SetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER, REGULATION_SHOOTER_VALID);
+  }
+  else{
+    Regulation_SetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER, REGULATION_SHOOTER_INVALID);
+  }
   
   switch(gamemode){
   case WIFI_GAME_BATTLE_SINGLE_FLAT:
