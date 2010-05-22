@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T14:46:49"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:26:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -368,11 +368,11 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……おわった！▼
 もう　ポケモンを　きずつけることも
 しばりつけることも　なくなる▼
-トモダチ　シンの　おかげだ！[BE:09:速度コントロール:0]▼</language>
+トモダチ　レシラムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……終わった！▼
 もう　ポケモンを　傷つけることも
 しばりつけることも　なくなる▼
-トモダチ　シンの　おかげだ！[BE:09:速度コントロール:0]▼</language>
+トモダチ　レシラムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -383,11 +383,11 @@
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……おわった！▼
 もう　ポケモンを　きずつけることも
 しばりつけることも　なくなる▼
-トモダチ　ムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
+トモダチ　ゼクロムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……終わった！▼
 もう　ポケモンを　傷つけることも
 しばりつけることも　なくなる▼
-トモダチ　ムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
+トモダチ　ゼクロムの　おかげだ！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -486,11 +486,11 @@
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
 キミも　ストーンを　てにいれたんだ▼
 その　ダークストーン……
-シンに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
+レシラムに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
 キミも　ストーンを　手に入れたんだ▼
 その　ダークストーン……
-シンに　反応しているね[BE:09:速度コントロール:0]▼</language>
+レシラムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_06b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -500,11 +500,11 @@
 		<language name="JPN" width="256">[BE:09:速度コントロール:1]ボクの　みた　みらいどおり
 キミも　ストーンを　てにいれたんだ▼
 その　ライトストーン……
-ムに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
+ゼクロムに　はんのう　しているね[BE:09:速度コントロール:0]▼</language>
 		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]ボクの　みた　未来どおり
 キミも　ストーンを　手に入れたんだ▼
 その　ライトストーン……
-ムに　反応しているね[BE:09:速度コントロール:0]▼</language>
+ゼクロムに　反応しているね[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_c09r0501_boss_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
