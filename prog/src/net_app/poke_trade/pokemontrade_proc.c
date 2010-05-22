@@ -3981,11 +3981,11 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   
   GFL_HEAP_FreeMemory(pWork->pVramOBJ);
   GFL_HEAP_FreeMemory(pWork->pVramBG);
+  IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   POKMEONTRADE_RemoveCoreResource(pWork);
 
   DEBUGWIN_ExitProc();
-  IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
-  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_DelCommandTable(GFL_NET_CMD_IRCTRADE);
