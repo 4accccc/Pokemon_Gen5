@@ -639,10 +639,15 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 
 static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 {
-
   GFL_BG_SetVisible(FRAME_MSG, FALSE);
   GFL_BG_SetScrollReq( FRAME_BACK, GFL_BG_SCROLL_X_SET, CG2d->scrol_work/2 );
-  CG2d->scrol_work++;
+
+  // BLACKは右にスクロール・WHITEは左にスクロール
+  if(GetVersion()==VERSION_BLACK){
+    CG2d->scrol_work--;
+  }else{
+    CG2d->scrol_work++;
+  }
 
 #if 0
   // "PUSH START" 点滅処理
