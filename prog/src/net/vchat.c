@@ -32,7 +32,7 @@
 
 // デバッグ出力を大量に吐き出す場合定義
 #if defined(DEBUG_ONLY_FOR_ohno)
-#define DEBUGPRINT_ON (0)
+#define DEBUGPRINT_ON (1)
 #else
 #define DEBUGPRINT_ON (0)
 #endif
@@ -381,13 +381,13 @@ static void VoiceChatEventCallbackPhone(u8 aid, VCTEvent event, VCTSession *sess
 			VCT_PRINT("Can't send response Ok [%d]\n", ret);
 		}
 		ClearSession(session);
-		GFL_NET_DWC_StopVChat();
+//		GFL_NET_DWC_StopVChat();
 		break;
 
 	case VCT_EVENT_DISCONNECTED:
 		VCT_PRINT("Disconnected\n");
 		ClearSession(session);
-		GFL_NET_DWC_StopVChat();
+//		GFL_NET_DWC_StopVChat();
 		break;
 
 	case VCT_EVENT_CANCEL:
@@ -443,6 +443,7 @@ static void ClearSession(VCTSession *session)
 	VCT_StopStreaming(session);
 	VCT_DeleteSession(session);
 	_vWork->session = NULL;
+  GFL_NET_DWC_StopVChat();
 }
 
 
@@ -670,7 +671,8 @@ void myvct_setCodec( int codec )
  * @retval  none
  */
 //==============================================================================
-void myvct_endConnection(){
+void myvct_endConnection()
+{
 	int ret;
 
 	// まだ会話要求を出す前で、受け取る前
@@ -697,7 +699,7 @@ void myvct_endConnection(){
 		GFL_NET_DWC_StopVChat();
 		return;
 	}
-	return;
+  VCT_PRINT("リクエストを出した\n");
 }
 
 //==============================================================================

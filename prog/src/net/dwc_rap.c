@@ -2039,6 +2039,7 @@ void GFL_NET_DWC_StopVChat(void)
 {
   myvct_free();
   if(_dWork != NULL){
+    MYDWC_DEBUGPRINT("GFL_NET_DWC_StopVChat\n");
     _dWork->isvchat = 0;
     _dWork->backupBitmap = 0;
     _dWork->myvchaton = 0;
