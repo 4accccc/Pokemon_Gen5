@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-22T12:54:20"/>
+	<create user="taya" host="W00146" date="2010-05-23T01:57:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,7 +427,7 @@
 		<band id="2" index="3" style="0000" width="520"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -5987,6 +5987,46 @@
 ほろびのカウントが　[2:00:１桁:1]になった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
 滅びのカウントが　[2:00:１桁:1]になった！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_FreezeBolt">
+		<comment>フリーズボルト</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+つめたい　ひかりに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+冷たい光に　包まれた！</language>
+	</row>
+	<row id="BTL_STRID_SET_FreezeBolt_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+つめたい　ひかりに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+冷たい光に　包まれた！</language>
+	</row>
+	<row id="BTL_STRID_SET_FreezeBolt_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+つめたい　ひかりに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+冷たい光に　包まれた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_ColdFlare">
+		<comment>コールドフレア</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+こごえる　くうきに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+凍える空気に　包まれた！</language>
+	</row>
+	<row id="BTL_STRID_SET_ColdFlare_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+こごえる　くうきに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+凍える空気に　包まれた！</language>
+	</row>
+	<row id="BTL_STRID_SET_ColdFlare_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+こごえる　くうきに　つつまれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+凍える空気に　包まれた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CantEscTok">

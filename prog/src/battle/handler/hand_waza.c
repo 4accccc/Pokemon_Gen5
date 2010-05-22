@@ -705,6 +705,8 @@ static const BtlEventHandlerTable*  ADD_MiracleEye( u32* numElems );
 static void handler_MiracleEye( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Seityou( u32* numElems );
 static void handler_Seityou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  ADD_FreezeBolt( u32* numElems );
+static void handler_FreezeBolt_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static CombiEffectType GetCombiWazaType( WazaID waza1, WazaID waza2 );
 static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems );
 static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -992,6 +994,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
     { WAZANO_KARI_KISEKINOTURUGI,   ADD_PsycoShock      },  // きせきのつるぎ=サイコショック
     { WAZANO_KARI_INISIENOUTA,      ADD_InisieNoUta     },
     { WAZANO_KARI_TEKUNOBASUTAA,    ADD_TechnoBaster    },  // テクノバスター=さばきのつぶて
+    { WAZANO_KARI_HURIIZUBORUTO,    ADD_FreezeBolt      },
+    { WAZANO_KARI_KOORUDOHUREA,     ADD_FreezeBolt      },
 
     { WAZANO_KARI_MIZUNOTIKAI,      ADD_CombiWazaCommon },  // 合体ワザは共通ハンドラ
     { WAZANO_KARI_HONOONOTIKAI,     ADD_CombiWazaCommon },
@@ -6327,7 +6331,7 @@ static void handler_Fuuin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
+//    if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
     {
       BTL_HANDEX_PARAM_ADD_FLDEFF* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_FLDEFF, pokeID );
 
@@ -10356,6 +10360,74 @@ static void handler_Seityou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     }
   }
 }
+//----------------------------------------------------------------------------------
+/**
+ * フリーズボルト・コールドフレア
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_FreezeBolt( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_TAME_START,       handler_FreezeBolt_TameStart },     // 溜め開始
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_FreezeBolt_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+    u16 strID = (BTL_EVENT_FACTOR_GetSubID(myHandle) == WAZANO_KARI_HURIIZUBORUTO)?
+      BTL_STRID_SET_FreezeBolt : BTL_STRID_SET_ColdFlare;
+
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * フレイムソウル・サンダーソウル
+ */
+//----------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  ADD_FlameSoul( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,          handler_FlameSoul_Pow       }, // 威力計算
+  };
+
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  // このターン、直前に対になるワザを誰かが使っていたら威力が倍
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
+    WazaID  myWazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
+    WazaID  combiWazaID;
+
+    switch( myWazaID ){
+    case WAZANO_KARI_FUREIMUSOURU: combiWazaID = WAZANO_KARI_SANDAASOURU; break;
+    case WAZANO_KARI_SANDAASOURU:  combiWazaID = WAZANO_KARI_FUREIMUSOURU; break;
+    default:
+      combiWazaID = WAZANO_NULL; break;
+    }
+
+    if( combiWazaID != WAZANO_NULL )
+    {
+      u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
+
+      if( BTL_WAZAREC_GetPrevEffectiveWaza(rec, thisTurn) == combiWazaID )
+      {
+        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+        BTL_SVFRET_SetWazaEffectIndex( flowWk, BTLV_WAZAEFF_LINKWAZA_LINK );
+      }
+    }
+  }
+}
 
 //-----------------------------------------------------------------------------------------------
 // 合体ワザ関連ハンドラ＆サブルーチン
@@ -10536,49 +10608,6 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
             viewEff_param->effectNo = viewEffectNo;
           }
         }
-      }
-    }
-  }
-}
-
-//----------------------------------------------------------------------------------
-/**
- * フレイムソウル・サンダーソウル
- */
-//----------------------------------------------------------------------------------
-static const BtlEventHandlerTable*  ADD_FlameSoul( u32* numElems )
-{
-  static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,          handler_FlameSoul_Pow       }, // 威力計算
-  };
-
-  *numElems = NELEMS( HandlerTable );
-  return HandlerTable;
-}
-static void handler_FlameSoul_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  // このターン、直前に対になるワザを誰かが使っていたら威力が倍
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    const BTL_WAZAREC* rec = BTL_SVFTOOL_GetWazaRecord( flowWk );
-    WazaID  myWazaID = BTL_EVENT_FACTOR_GetSubID( myHandle );
-    WazaID  combiWazaID;
-
-    switch( myWazaID ){
-    case WAZANO_KARI_FUREIMUSOURU: combiWazaID = WAZANO_KARI_SANDAASOURU; break;
-    case WAZANO_KARI_SANDAASOURU:  combiWazaID = WAZANO_KARI_FUREIMUSOURU; break;
-    default:
-      combiWazaID = WAZANO_NULL; break;
-    }
-
-    if( combiWazaID != WAZANO_NULL )
-    {
-      u32 thisTurn = BTL_SVFTOOL_GetTurnCount( flowWk );
-
-      if( BTL_WAZAREC_GetPrevEffectiveWaza(rec, thisTurn) == combiWazaID )
-      {
-        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
-        BTL_SVFRET_SetWazaEffectIndex( flowWk, BTLV_WAZAEFF_LINKWAZA_LINK );
       }
     }
   }
