@@ -109,8 +109,6 @@ struct _PRINT_QUE {
   u8    fColorChanged  : 4;
   u8    fForceCommMode : 4;   ///< 非通信時にも通信中と同じ挙動をする（デバッグ用）
 
-  PRINTSYS_LSB  defColor;
-
   OSTick        limitPerFrame;
 
   PRINT_JOB*    runningJob;
@@ -352,12 +350,19 @@ void PRINTSYS_QUE_SetLimitTick( PRINT_QUE* que, OSTick tick )
 BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 {
   OSTick start, diff;
+  PRINTSYS_LSB  bkupColor;
   u8 endFlag = FALSE;
 
   que->debugCounter++;
 
   if( que->runningJob == NULL ){
     return TRUE;
+  }
+  // 色のバックアップ
+  {
+    u8 defL, defS, defB;
+    GFL_FONTSYS_GetColor( &defL, &defS, &defB );
+    bkupColor = PRINTSYS_LSB_Make( defL, defS, defB );
   }
 
   // 初回書き込み前にグローバルカラー情報をリセット
@@ -388,15 +393,6 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
 
   while( que->runningJob )
   {
-    // 最初の色変更時、デフォルトの色情報を覚えておく
-    //最初の描画色とフォントカラーが一致した場合不定値をセットしていたので対応
-    if( que->fColorChanged == FALSE )
-    {
-      u8 defL, defS, defB;
-      GFL_FONTSYS_GetColor( &defL, &defS, &defB );
-      que->defColor = PRINTSYS_LSB_Make( defL, defS, defB );
-      que->fColorChanged = TRUE;
-    }
     if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_REQ )
     {
       u8 colL, colS, colB;
@@ -424,15 +420,6 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     {
       u16 pos;
 
-      // job 終了ごとにデフォルト色に戻す
-      if( que->runningJob->colorState == JOB_COLORSTATE_CHANGE_DONE )
-      {
-        u8 defL, defS, defB;
-        PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
-        if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
-          GFL_FONTSYS_SetColor( defL, defS, defB );
-        }
-      }
       pos = Que_AdrsToBufPos( que, que->runningJob );
 
       que->runningJob = Que_ReadNextJobAdrs( que, que->runningJob );
@@ -447,13 +434,11 @@ BOOL PRINTSYS_QUE_Main( PRINT_QUE* que )
     if( endFlag ){ break; }
   } //while_end
 
-  if( que->fColorChanged )
+  //色の復帰
   {
     u8 defL, defS, defB;
-    PRINTSYS_LSB_GetLSB( que->defColor, &defL, &defS, &defB );
-    if( GFL_FONTSYS_IsDifferentColor( defL, defS, defB ) ){
-      GFL_FONTSYS_SetColor( defL, defS, defB );
-    }
+    PRINTSYS_LSB_GetLSB( bkupColor, &defL, &defS, &defB );
+    GFL_FONTSYS_SetColor( defL, defS, defB );
   }
 
   if( que->runningJob != NULL )
@@ -687,7 +672,7 @@ static void printJob_setup( PRINT_JOB* wk, GFL_FONT* font, GFL_BMP_DATA* dst, s1
   wk->fontHandle = font;
   wk->org_x = wk->write_x = org_x;
   wk->org_y = wk->write_y = org_y;
-  wk->colorState = JOB_COLORSTATE_IGNORE;
+  wk->colorState = JOB_COLORSTATE_CHANGE_REQ;
 
   {
     u8 letter, shadow, back;
