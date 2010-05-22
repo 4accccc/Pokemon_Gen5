@@ -1550,6 +1550,13 @@ static int _playerDirectFailed3( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  //BTS2302の対処 naigihshi
+  //メッセージを早送りするために読んでいます
+  if( wk->pStream )
+  {
+    WifiP2PMatchMessageEndCheck(wk);
+  }
+
   return seq;
 }
 

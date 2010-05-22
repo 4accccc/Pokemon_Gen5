@@ -4941,6 +4941,12 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int status;
 
+  //BTS2302の対処 naigihshi
+  //メッセージを早送りするために読んでいます
+  if( wk->pStream )
+  {
+    WifiP2PMatchMessageEndCheck(wk);
+  }
 
   wk->cancelEnableTimer--;
   if(wk->cancelEnableTimer < 0  ){
