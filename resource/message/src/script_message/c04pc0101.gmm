@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-11T23:14:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T17:46:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -313,11 +313,13 @@
 		<attribute name="キャラ指定">GIRL4
 少女4お嬢様</attribute>
 		<language name="JPN" width="256">１６ばんどうろで　であった
-あたくしの　うるわしい　チラーミィを▽
-ミュージカルに　だしてあげたいの！</language>
+あたくしの　うるわしい　チラーミィ！▼
+ぜったい　ミュージカルで
+にんきものに　なれるはずよ！</language>
 		<language name="JPN_KANJI" width="256">１６番道路で　運命の　出会いをした
-あたくしの　麗しい　チラーミィを▽
-ミュージカルに　出演させたいの！</language>
+あたくしの　麗しい　チラーミィ！▼
+絶対　ミュージカルで
+人気者に　なれるはずよ！</language>
 	</row>
 
 	<row id="msg_c04pc0101_girl4_02">
