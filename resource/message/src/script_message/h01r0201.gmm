@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-29T22:05:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:43:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -292,108 +292,46 @@
 	</lock>
 
 
-	<row id="msg_h01r0201_black_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・pos起動（GRIDZ=8^11、GRIDX=8）に出現
-・主人公と向き合ってメッセージ表示
-・続けてblack_02</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『やあ　[1:00:トレーナー名:0]▼</language>
+	<row id="msg_h01r0201_black_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h01r0201_black_02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・画面下を見ながらメッセージ表示
-　（主人公の位置を調整の可能性あり）
-・続けてblack_03</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">きいたよ
-ヤグルマのもり　でのこと▼
-メンドーな　プラズマだんを
-きみが　こらしめて　くれて▽
-うれしい　かぎりさ▼</language>
-		<language name="JPN_KANJI" width="256">きいたよ
-ヤグルマの森　でのこと▼
-メンドーな　プラズマ団を
-きみが　こらしめて　くれて▽
-うれしい　かぎりさ▼</language>
+	<row id="msg_h01r0201_black_02" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h01r0201_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・再度主人公と向き合ってメッセージ表示
-・以下の選択肢表示
-　ポケモンセンター→black_04
-　ポケモンジム→black_05</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">それは　さておき……▼
-シッポウシティでも
-アドバイス　したけれど▼
-はじめての　まちに　ついたら
-さいしょに　むかうべき　なのは……？</language>
-		<language name="JPN_KANJI" width="256">それは　さておき……▼
-シッポウシティでも
-アドバイス　したけれど▼
-はじめての　街に　着いたら
-最初に　向かうべき　なのは……？</language>
+	<row id="msg_h01r0201_black_03" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h01r0201_black_win01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>選択肢</comment>
-		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ポケモンセンター</language>
-		<language name="JPN_KANJI" width="256">ポケモンセンター</language>
+	<row id="msg_h01r0201_black_win01" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h01r0201_black_win02" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>選択肢</comment>
-		<attribute name="キャラ指定">選択肢</attribute>
-		<language name="JPN" width="256">ポケモンジム</language>
-		<language name="JPN_KANJI" width="256">ポケモンジム</language>
+	<row id="msg_h01r0201_black_win02" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h01r0201_black_04" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ライバルだけゲートからヒウンに向かう
-・画面外に消えると主人公、操作可能に</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">そう！　そのとおり
-ポケモンセンター▼
-ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま▽
-まっすぐ　すすめば　すぐらしいよ▼</language>
-		<language name="JPN_KANJI" width="256">そう！　そのとおり
-ポケモンセンター▼
-ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま▽
-まっすぐ　進めば　すぐらしいよ▼</language>
+	<row id="msg_h01r0201_black_04" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_h01r0201_black_05" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♂
-・ライバルだけゲートからヒウンに向かう
-・画面外に消えると主人公、操作可能に</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
-		<language name="JPN" width="256">ポケモンジム……？
-ずいぶんと　もえているね▼
-でも　さいしょに　いくべきなのは
-ポケモンセンターだよ▼
-ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま▽
-まっすぐ　すすめば　すぐらしいよ▼</language>
-		<language name="JPN_KANJI" width="256">ポケモンジム……？
-ずいぶんと　燃えているね▼
-でも　最初に　行くべきなのは
-ポケモンセンターだよ▼
-ヒウンシティの　ポケモンセンターは
-ゲートをでて　そのまま▽
-まっすぐ　進めば　すぐらしいよ▼</language>
+	<row id="msg_h01r0201_black_05" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_h01r0201_infomationw_01">
