@@ -462,7 +462,6 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     { 
       Gauge_Yure( bgw, i );
     }
-    //@todo@‚¿‚á‚ñ‚Æ‚µ‚½ˆ—‚ð‚Â‚­‚é‚Ü‚Å‚ÌŽb’èˆ—
     if( ( bgw->bgcl[ i ].hp_damage_clwk ) && ( bgw->bgcl[ i ].damage_wait_flag ) )
     { 
       if( bgw->bgcl[ i ].damage_wait == 0 )
@@ -472,6 +471,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
       }
       else
       { 
+        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ i ].hp_damage_clwk, bgw->bgcl[ i ].damage_wait & 1 );
         bgw->bgcl[ i ].damage_wait--;
       }
     }
