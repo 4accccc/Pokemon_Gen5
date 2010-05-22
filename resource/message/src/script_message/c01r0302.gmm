@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T15:11:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T14:29:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,8 +293,7 @@
 
 
 	<row id="msg_c01r0302_man1_01">
-		<comment>♂
-・仮メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">ボクは　すきで　ほのおタイプの
@@ -312,8 +311,7 @@
 	</row>
 
 	<row id="msg_c01r0302_breederw_01">
-		<comment>♀
-・仮メッセージ</comment>
+		<comment>♀</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
 		<language name="JPN" width="256">６ひきも　ポケモンを　そだてるのは
