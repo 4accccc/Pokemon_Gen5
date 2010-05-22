@@ -223,7 +223,7 @@ extern u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp );
  *  関数プロトタイプ
  */
 //--------------------------------------------------------------
-extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 id, HEAPID heapID );
+extern BTL_POKEPARAM*  BTL_POKEPARAM_Create( POKEMON_PARAM* pp, u8 id, HEAPID heapID );
 extern void BTL_POKEPARAM_Delete( BTL_POKEPARAM* bpp );
 extern void BTL_POKEPARAM_Copy( BTL_POKEPARAM* dst, const BTL_POKEPARAM* src );
 

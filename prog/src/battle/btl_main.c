@@ -4952,7 +4952,10 @@ void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk )
 
 //=============================================================================================
 /**
- * ポケモンレベルアップ通知をクライアントから受け取り、ゲームシステム（ビーコン）に通知
+ * ポケモンレベルアップ通知をクライアントから受け取り、必要な処理を行う
+ *
+ * ->ゲームシステム（ビーコン）に通知
+ * ->なつき度計算
  *
  * @param   wk
  */
@@ -4964,6 +4967,8 @@ void BTL_MAIN_NotifyPokemonLevelup( BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp )
   {
     // レベルアップでなつき度上昇
     NatsukiPut( wk, bpp, CALC_NATSUKI_LEVELUP );
+
+    // ビーコン送信
     BTL_SERVER_NotifyPokemonLevelUp( wk->server, bpp );
   }
 }

@@ -64,7 +64,7 @@ typedef struct {
  */
 //--------------------------------------------------------------
 typedef struct {
-  const POKEMON_PARAM*  ppSrc;
+  POKEMON_PARAM*  ppSrc;
   const POKEMON_PARAM*  ppFake;
 //  BPP_WAZA            backup_waza[ PTL_WAZA_MAX ];
   u32   exp;
@@ -173,9 +173,12 @@ struct _BTL_POKEPARAM {
 /*--------------------------------------------------------------------------*/
 static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL fReflectHP );
 static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp_src, BOOL fLinkSurface );
+static void WazaWorkSys_ReflectToPP( BTL_POKEPARAM* bpp );
+static void WazaWorkSys_ReflectFromPP( BTL_POKEPARAM* bpp );
+static void WazaWork_ClearUsedFlag( BPP_WAZA* waza );
 static void WazaWork_UpdateNumber( BPP_WAZA* waza, WazaID nextNumber, u8 ppMax, BOOL fPermenent );
-static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index );
 static void WazaCore_UpdateNumber( BPP_WAZA_CORE* core, WazaID nextID, u8 ppMax );
+static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index );
 static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP );
 static void clearHensin( BTL_POKEPARAM* bpp );
 static void reflectWazaPP( BTL_POKEPARAM* bpp );
@@ -213,7 +216,7 @@ static inline BOOL IsMatchItem( const BTL_POKEPARAM* bpp, u16 itemID );
  * @retval  BTL_POKEPARAM*
  */
 //=============================================================================================
-BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID heapID )
+BTL_POKEPARAM*  BTL_POKEPARAM_Create( POKEMON_PARAM* pp, u8 pokeID, HEAPID heapID )
 {
   BTL_POKEPARAM* bpp = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_POKEPARAM) );
 
@@ -233,6 +236,10 @@ BTL_POKEPARAM*  BTL_POKEPARAM_Create( const POKEMON_PARAM* pp, u8 pokeID, HEAPID
   bpp->coreParam.level = PP_Get( pp, ID_PARA_level, 0 );
 
   setupBySrcData( bpp, pp, TRUE );
+
+  // 所有ワザデータ初期化
+  bpp->wazaCnt = WazaWorkSys_SetupBySrcPP( bpp, pp, TRUE );
+  bpp->usedWazaCount = 0;
 
   BTL_Printf("setup pokeID=%d, monsno=%d, ppSrc=%p\n", pokeID, bpp->coreParam.monsno, pp );
 
@@ -295,11 +302,6 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
   // 基本パラメタ初期化
   setupBySrcDataBase( bpp, srcPP );
 
-  // 所有ワザデータ初期化
-  bpp->wazaCnt = WazaWorkSys_SetupBySrcPP( bpp, srcPP, TRUE );
-  bpp->usedWazaCount = 0;
-
-
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
 
@@ -309,7 +311,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
   }
 }
 /**
- *
+ *  srcPPを元にワザデータを設定
  */
 static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp_src, BOOL fLinkSurface )
 {
@@ -335,14 +337,53 @@ static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp
   PP_FastModeOff( (POKEMON_PARAM*)pp, fastFlag );
   return cnt;
 }
+/**
+ *  srcPPにワザデータを反映させる
+ */
+static void WazaWorkSys_ReflectToPP( BTL_POKEPARAM* bpp )
+{
+  POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+
+  u32 i;
+  for(i=0; i<PTL_WAZA_MAX; ++i)
+  {
+    PP_SetWazaPos( pp, bpp->waza[i].truth.number, i );
+    PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].truth.pp );
+    PP_Put( pp, ID_PARA_pp_count1+i, bpp->waza[i].truth.ppCnt );
+  }
+}
+/**
+ *  srcPP のワザデータを使って再設定（レベルアップ用）
+ */
+static void WazaWorkSys_ReflectFromPP( BTL_POKEPARAM* bpp )
+{
+  POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+  u32 i;
+
+  bpp->wazaCnt = 0;
+
+  for(i=0; i<PTL_WAZA_MAX; ++i)
+  {
+    if( WazaCore_SetupByPP( &(bpp->waza[i].truth), pp, i) ){
+      bpp->wazaCnt++;
+    }
+    if( bpp->waza[i].fLinked ){
+      TAYA_Printf("Index=%d, Link されてます\n", i);
+      bpp->waza[i].surface = bpp->waza[i].truth;
+    }
+    TAYA_Printf("  Surface waza[%d] = %d\n", i, bpp->waza[i].surface.number );
+  }
+}
 static void WazaWork_ClearUsedFlag( BPP_WAZA* waza )
 {
   waza->surface.usedFlag = FALSE;
   waza->truth.usedFlag = FALSE;
 }
+
+
 static void WazaWork_UpdateNumber( BPP_WAZA* waza, WazaID nextNumber, u8 ppMax, BOOL fPermenent )
 {
-  // レベルアップ・スケッチ用
+  // スケッチ用
   if( fPermenent )
   {
     // 真ワザワークを更新、リンク中なら仮ワザワークも連動させる
@@ -355,9 +396,33 @@ static void WazaWork_UpdateNumber( BPP_WAZA* waza, WazaID nextNumber, u8 ppMax, 
   else
   {
     // 仮ワザワークのみを更新、リンクを切る
+    TAYA_Printf("ものまね書き換え、リンク切れます\n");
     WazaCore_UpdateNumber( &waza->surface, nextNumber, ppMax );
     waza->fLinked = FALSE;
   }
+}
+/**
+ *  ppMax  0ならデフォルト値
+ */
+static void WazaCore_UpdateNumber( BPP_WAZA_CORE* core, WazaID nextID, u8 ppMax )
+{
+  core->number = nextID;
+  core->usedFlag = FALSE;
+  core->usedFlagFix = FALSE;
+
+  if( nextID != WAZANO_NULL ){
+    core->ppMax = WAZADATA_GetMaxPP( nextID, 0 );
+  }
+  else{
+    core->ppMax = 0;
+  }
+
+  if( (ppMax !=0)
+  &&  (core->ppMax > ppMax)
+  ){
+    core->ppMax = ppMax;
+  }
+  core->pp = core->ppMax;
 }
 static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index )
 {
@@ -381,26 +446,6 @@ static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index
   core->usedFlagFix = FALSE;
 
   return fExist;
-}
-static void WazaCore_UpdateNumber( BPP_WAZA_CORE* core, WazaID nextID, u8 ppMax )
-{
-  core->number = nextID;
-  core->usedFlag = FALSE;
-  core->usedFlagFix = FALSE;
-
-  if( nextID != WAZANO_NULL ){
-    core->ppMax = WAZADATA_GetMaxPP( nextID, 0 );
-  }
-  else{
-    core->ppMax = 0;
-  }
-
-  if( (ppMax !=0)
-  &&  (core->ppMax > ppMax)
-  ){
-    core->ppMax = ppMax;
-  }
-  core->pp = core->ppMax;
 }
 
 
@@ -436,7 +481,9 @@ static void clearHensin( BTL_POKEPARAM* bpp )
 {
   if( bpp->coreParam.fHensin )
   {
-    setupBySrcData( bpp, bpp->coreParam.ppSrc, FALSE );
+    POKEMON_PARAM* ppSrc = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+    setupBySrcData( bpp, ppSrc, FALSE );
+    bpp->wazaCnt = WazaWorkSys_SetupBySrcPP( bpp, ppSrc, TRUE );
     bpp->coreParam.fHensin = FALSE;
   }
 }
@@ -753,6 +800,7 @@ void BPP_WAZA_DecrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
   if( bpp->waza[wazaIdx].fLinked ){
     bpp->waza[wazaIdx].truth.pp = bpp->waza[wazaIdx].surface.pp;
     PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_pp1+wazaIdx, bpp->waza[wazaIdx].truth.pp );
+    TAYA_Printf("  * %d * idx=%d, pp=%d\n", __LINE__, wazaIdx, bpp->waza[wazaIdx].truth.pp );
   }
 }
 //=============================================================================================
@@ -809,6 +857,7 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* bpp, u8 wazaIdx, WazaID waza, u8 ppMax, B
 {
   BPP_WAZA* pWaza = &bpp->waza[ wazaIdx ];
 
+  TAYA_Printf("UpdateWazaID ... index=%d\n", wazaIdx );
   WazaWork_UpdateNumber( &bpp->waza[wazaIdx], waza, ppMax, fPermenent );
 }
 //=============================================================================================
@@ -2734,6 +2783,8 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
       bpp->coreParam.hp += diffHP;
       PP_Put((POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_hp, bpp->coreParam.hp );
 
+      WazaWorkSys_ReflectToPP( bpp );
+
       PP_FastModeOff( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), fFastMode );
 
       *expRest -= expAdd;
@@ -2791,12 +2842,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
     PP_SetSick( pp, POKESICK_NULL );
   }
 
-  for(i=0; i<PTL_WAZA_MAX; ++i)
-  {
-    PP_SetWazaPos( pp, bpp->waza[i].truth.number, i );
-    PP_Put( pp, ID_PARA_pp1+i, bpp->waza[i].truth.pp );
-    PP_Put( pp, ID_PARA_pp_count1+i, bpp->waza[i].truth.ppCnt );
-  }
+  WazaWorkSys_ReflectToPP( bpp );
 
   {
     u8 formNo = ( bpp->coreParam.fHensin )? bpp->coreParam.defaultFormNo : bpp->formNo;
@@ -2820,6 +2866,7 @@ void BPP_ReflectByPP( BTL_POKEPARAM* bpp )
   {
     // へんしん中でなければパラメータを全て反映
     setupBySrcData( bpp, bpp->coreParam.ppSrc, TRUE );
+    WazaWorkSys_ReflectFromPP( bpp );
   }
   else{
     // へんしん中なら真ワザワークのみ反映
