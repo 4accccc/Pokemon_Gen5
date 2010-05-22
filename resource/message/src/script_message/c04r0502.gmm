@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T20:00:22"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T17:52:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,9 +292,8 @@
 	</lock>
 
 
-	<row id="msg_c04r0502_boy4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c04r0502_boy4_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">BOY4
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">まいにち　きまった　じかんに
@@ -305,9 +304,8 @@
 それが　ビッグスタジアム　なのさ！</language>
 	</row>
 
-	<row id="msg_c04r0502_girl4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c04r0502_girl4_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">GIRL4
 お嬢様</attribute>
 		<language name="JPN" width="256">リトルコートでは
@@ -318,7 +316,7 @@
 試合が　ありますのよ　</language>
 	</row>
 
-	<row id="msg_c04r0502_lady_01" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0502_lady_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・先頭のポケモンのなつき度が
 　７０以上ならこのメッセージ
@@ -341,7 +339,7 @@
 うれしいから　これを　差しあげます▼</language>
 	</row>
 
-	<row id="msg_c04r0502_lady_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0502_lady_02" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・アイテム入手後は繰り返し</comment>
 		<attribute name="キャラ指定">LADY
@@ -352,7 +350,7 @@
 なんだか　なついてくれますよ</language>
 	</row>
 
-	<row id="msg_c04r0502_lady_03" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04r0502_lady_03" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・先頭のポケモンのなつき度が
 　６９以下</comment>
