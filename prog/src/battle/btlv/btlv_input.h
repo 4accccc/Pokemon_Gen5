@@ -50,6 +50,7 @@ typedef struct{
   u8          pp[ PTL_WAZA_MAX ];
   u8          ppmax[ PTL_WAZA_MAX ];
   BtlvMcssPos pos;
+  BOOL        henshin_flag;
 }BTLV_INPUT_WAZA_PARAM;
 
 ///攻撃対象選択画面構成用のデータ

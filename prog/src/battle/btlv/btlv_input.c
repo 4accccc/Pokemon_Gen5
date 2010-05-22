@@ -596,6 +596,7 @@ struct _BTLV_INPUT_WORK
 
   BtlvMcssPos           focus_pos;          //フォーカスをあわせるポケモンの位置
   int                   active_index;       //コマンド選択しているポケモンのインデックス
+  BOOL                  henshin_flag;
 
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
@@ -1413,6 +1414,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
       ttw->pos = biwp->pos;
+      biw->henshin_flag = biwp->henshin_flag;
 
       if( ( biw->main_loop_tcb_flag == TRUE ) &&
         ( ( biw->type == BTLV_INPUT_TYPE_DOUBLE ) || ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ) )
@@ -1685,8 +1687,22 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
-    if( biw->button_exist[ hit ] == FALSE )
+    int cont = GFL_UI_KEY_GetCont();
+    if( ( biw->button_exist[ hit ] == FALSE ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_WAZA ) )
     {
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else if( ( biw->button_exist[ hit ] == FALSE ) &&
+             ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
+             ( ( cont & PAD_BUTTON_L ) == 0 ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else if( ( hit < 4 ) &&
+             ( cont & PAD_BUTTON_L ) &&
+             ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) &&
+             ( biw->henshin_flag == TRUE ) )
+    { 
       hit = GFL_UI_TP_HIT_NONE;
     }
     else
@@ -1837,8 +1853,13 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   }
   if( hit != GFL_UI_TP_HIT_NONE )
   {
-    if( biw->button_exist[ hit ] == FALSE )
-    {
+    int cont = GFL_UI_KEY_GetCont();
+    if( ( biw->button_exist[ hit ] == FALSE ) && ( ( cont & PAD_BUTTON_L ) == 0 ) )
+    { 
+      hit = GFL_UI_TP_HIT_NONE;
+    }
+    else if( ( hit < 4 ) && ( cont & PAD_BUTTON_L ) && ( BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) == TRUE ) )
+    { 
       hit = GFL_UI_TP_HIT_NONE;
     }
     else
@@ -4664,7 +4685,14 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
     return hit;
   }
 
-  biw->hit = hit;
+  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )&& ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) )
+  { 
+    biw->hit = BTLV_INPUT_SetWazaInfoModeMask( hit );
+  }
+  else
+  { 
+    biw->hit = hit;
+  }
 
   {
     TCB_BUTTON_REACTION*  tbr = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BUTTON_REACTION ) );

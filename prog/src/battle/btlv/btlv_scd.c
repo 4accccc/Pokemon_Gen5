@@ -682,6 +682,7 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
   u8 PP, PPMax;
 
   wazaCnt = BPP_WAZA_GetCount( wk->bpp );
+  biwp.henshin_flag = BPP_HENSIN_Check( wk->bpp );
   BTL_Printf("ƒƒU”:%d, pokeID=%d\n", wazaCnt, BPP_GetID(wk->bpp));
   for(i=0; i<wazaCnt; i++)
   {
@@ -720,14 +721,12 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
                                                 SkillMenuKeyData3vs3 :
                                                 SkillMenuKeyDataNormal;
 
-  BOOL fWazaInfoMode;
-
 //  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
   hit = BTLV_INPUT_CheckInput( wk->biw, SkillMenuTouchData, SkillMenuKeyData );
-  fWazaInfoMode = BTLV_INPUT_CheckWazaInfoModeMask( &hit );
 
   if( hit != GFL_UI_TP_HIT_NONE )
   {
+    BOOL fWazaInfoMode = BTLV_INPUT_CheckWazaInfoModeMask( &hit );
     //ƒLƒƒƒ“ƒZƒ‹‚ª‰Ÿ‚³‚ê‚½
     if( hit == 4 )
     {
