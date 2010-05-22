@@ -8601,13 +8601,13 @@
 		<language name="JPN" width="256">WCS-04</language>
 		<language name="JPN_KANJI" width="256">WCS-04</language>
 	</row>
-	<row id="msg_seq_se_dmy_380">
-		<language name="JPN" width="256">DMY-380</language>
-		<language name="JPN_KANJI" width="256">DMY-380</language>
+	<row id="msg_seq_se_lcdemo_01">
+		<language name="JPN" width="256">LCDEMO-01</language>
+		<language name="JPN_KANJI" width="256">LCDEMO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_381">
-		<language name="JPN" width="256">DMY-381</language>
-		<language name="JPN_KANJI" width="256">DMY-381</language>
+	<row id="msg_seq_se_lcdemo_02">
+		<language name="JPN" width="256">LCDEMO-02</language>
+		<language name="JPN_KANJI" width="256">LCDEMO-02</language>
 	</row>
 	<row id="msg_seq_se_dmy_382">
 		<language name="JPN" width="256">DMY-382</language>
