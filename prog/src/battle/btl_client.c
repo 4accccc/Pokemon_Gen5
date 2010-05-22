@@ -1897,7 +1897,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         #endif
 
         // ワザ説明ショートカットへ
-        if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+        if( BTL_ACTION_IsWazaInfoMode(procAction) )
         {
           wk->wazaInfoPokeIdx = pokeIdx;
           wk->wazaInfoWazaIdx = BPP_WAZA_SearchIdx( procPoke, procAction->fight.waza );

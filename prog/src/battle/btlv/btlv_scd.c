@@ -720,8 +720,12 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
                                                 SkillMenuKeyData3vs3 :
                                                 SkillMenuKeyDataNormal;
 
+  BOOL fWazaInfoMode;
+
 //  hit = GFL_UI_TP_HitTrg( SkillMenuTouchData );
   hit = BTLV_INPUT_CheckInput( wk->biw, SkillMenuTouchData, SkillMenuKeyData );
+  fWazaInfoMode = BTLV_INPUT_CheckWazaInfoModeMask( &hit );
+
   if( hit != GFL_UI_TP_HIT_NONE )
   {
     //ƒLƒƒƒ“ƒZƒ‹‚ª‰Ÿ‚³‚ê‚½
@@ -736,6 +740,9 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 
       waza = BPP_WAZA_GetID( wk->bpp, hit );
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
+      if( fWazaInfoMode ){
+        BTL_ACTION_FightParamToWazaInfoMode( wk->destActionParam );
+      }
 
       return TRUE;
     }
@@ -964,11 +971,11 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
 
 
   if( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) )
-  { 
+  {
     bisp.waza_target = WAZA_TARGET_MAX;
   }
   else
-  { 
+  {
     bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
   }
 
@@ -1119,7 +1126,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 3 ) ), "pos:%d\n", pos );
         //‰“Šu‹Z‚ÌRANGE‚ÍWAZA_TARGET_MAX‚Æ“¯’l‚É‚µ‚Ä‚¢‚é
         if( WAZADATA_GetFlag( wk->destActionParam->fight.waza, WAZAFLAG_TripleFar ) )
-        { 
+        {
           target = WAZA_TARGET_MAX;
         }
         touch_data = PokeSeleMenuTouch6Data[ pos ][ target ];

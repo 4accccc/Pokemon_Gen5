@@ -46,11 +46,12 @@ typedef union {
   }gen;
 
   struct {
-    u32 cmd       : 4;
-    u32 targetPos : 3;
-    u32 waza      : 16;
-    u32 rot_dir   : 3;
-    u32 _0        : 6;
+    u32 cmd          : 4;
+    u32 targetPos    : 3;
+    u32 waza         : 16;
+    u32 rot_dir      : 3;
+    u32 wazaInfoFlag : 1; ///< ワザ説明画面
+    u32 _0           : 5;
   }fight;
 
   struct {
@@ -89,6 +90,10 @@ typedef union {
 
 // たたかうアクション
 extern void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos );
+
+extern void BTL_ACTION_FightParamToWazaInfoMode( BTL_ACTION_PARAM* p );
+
+extern BOOL BTL_ACTION_IsWazaInfoMode( const BTL_ACTION_PARAM* p );
 
 // アイテムつかうアクション
 extern void BTL_ACTION_SetItemParam( BTL_ACTION_PARAM* p, u16 itemNumber, u8 targetIdx, u8 wazaIdx );

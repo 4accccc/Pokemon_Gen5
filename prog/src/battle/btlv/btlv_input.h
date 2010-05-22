@@ -18,8 +18,8 @@
 #define BTLV_INPUT_POKEMON_MAX ( 3 )            //入力するポケモンMAX
 #define BTLV_INPUT_DIR_MAX  ( TEMOTI_POKEMAX )  //対象選択MAX
 #define BTLV_INPUT_POKEICON_MAX ( 3 )           //ポケモンアイコンMAX
-#define CANCEL_FLAG_MASK    ( 2 ) 
-#define CANCEL_FLAG_SHIFT   ( 1 )  
+#define CANCEL_FLAG_MASK    ( 2 )
+#define CANCEL_FLAG_SHIFT   ( 1 )
 
 //戦闘下画面OBJパレット内訳
 /*
@@ -80,14 +80,14 @@ typedef struct{
 }BTLV_INPUT_YESNO_PARAM;
 
 enum
-{ 
+{
   BTLV_INPUT_BR_SEL_REW = 0,  //巻き戻し
   BTLV_INPUT_BR_SEL_FF,       //早送り
   BTLV_INPUT_BR_SEL_STOP,     //停止
 };
 
 typedef enum
-{ 
+{
   BTLV_INPUT_BR_STOP_NONE = 0,
   BTLV_INPUT_BR_STOP_KEY,         //キーによる中断
   BTLV_INPUT_BR_STOP_BREAK,       //データ破壊による中断
@@ -167,7 +167,7 @@ enum
 };
 
 typedef struct
-{ 
+{
   const GFL_UI_TP_HITTBL* hit_tbl;
   const BOOL*             cancel_flag;
   const int*              button_pltt;
@@ -199,6 +199,19 @@ static inline u16 BTLV_INPUT_GetBtlRotateDir( BTLV_INPUT_ROTATE_RESULT result )
 static inline u16 BTLV_INPUT_GetSelectWaza( BTLV_INPUT_ROTATE_RESULT result )
 {
   return ( result & 0xffff );
+}
+
+#define BTLV_INPUT_WAZAINFO_MASK  (0x8000)  // ワザ説明モードへの遷移を示すマスク用Bit
+
+static inline int BTLV_INPUT_SetWazaInfoModeMask( int hit_pos )
+{
+  return hit_pos | BTLV_INPUT_WAZAINFO_MASK;
+}
+static inline BOOL BTLV_INPUT_CheckWazaInfoModeMask( int* hit_pos )
+{
+  BOOL fWazaInfoMode = ((*hit_pos) & BTLV_INPUT_WAZAINFO_MASK) != 0;
+  (*hit_pos) &= (~(BTLV_INPUT_WAZAINFO_MASK));
+  return fWazaInfoMode;
 }
 
 extern  BTLV_INPUT_WORK*  BTLV_INPUT_Init( GAMEDATA* gameData, BTLV_INPUT_TYPE type, BtlCompetitor comp,

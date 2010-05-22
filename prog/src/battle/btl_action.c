@@ -18,6 +18,23 @@ void BTL_ACTION_SetFightParam( BTL_ACTION_PARAM* p, WazaID waza, u8 targetPos )
   p->fight.targetPos = targetPos;
   p->fight.waza = waza;
 }
+// たたかうアクション -> ワザ説明モードへ
+void BTL_ACTION_FightParamToWazaInfoMode( BTL_ACTION_PARAM* p )
+{
+  if( p->gen.cmd == BTL_ACTION_FIGHT ){
+    p->fight.wazaInfoFlag = TRUE;
+  }
+}
+// ワザ説明モード設定かどうか判定
+BOOL BTL_ACTION_IsWazaInfoMode( const BTL_ACTION_PARAM* p )
+{
+  if( p->gen.cmd == BTL_ACTION_FIGHT )
+  {
+    return p->fight.wazaInfoFlag;
+  }
+  return FALSE;
+}
+
 /**
  *  ワザID取得（たたかうアクション設定時のみ）
  */
