@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T20:13:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T17:56:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,7 +292,7 @@
 	</lock>
 
 
-	<row id="msg_c05r0601_man3_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c05r0601_man3_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・続けて、道具屋の処理へ</comment>
 		<attribute name="キャラ指定">MAN3</attribute>
@@ -302,7 +302,7 @@
 不思議な　漢方薬　あるよ▼</language>
 	</row>
 
-	<row id="msg_c05r0601_woman3_01" text-color=",,,#000000,,,,,,,,,,,,,,,">
+	<row id="msg_c05r0601_woman3_01">
 		<comment>♀
 ・上記OBJに隣接</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
@@ -437,7 +437,7 @@
 ぜーんぶ　買ってっちゃったの</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_01" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_sunglasses_01" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・アイテム入手前
 ・はい/いいえの選択肢表示
@@ -450,7 +450,7 @@
 いいもの　欲しいかー？</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_02" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_sunglasses_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい選択
 ・レベル３０以上のポケモンが
@@ -463,7 +463,7 @@
 ポケモン　みせてくれー！▼</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_03" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_sunglasses_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・アイテム入手処理
 　No268「たつじんのおび」</comment>
@@ -476,7 +476,7 @@
 これ　持ってけー！▼</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_04" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_sunglasses_04" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・はい選択
 ・レベル３０以上のポケモンがいない</comment>
@@ -489,7 +489,7 @@
 また　ここに　来ると　いいー！</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_05" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_sunglasses_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・いいえ選択時</comment>
 		<attribute name="キャラ指定">SUNGLASSES</attribute>
@@ -499,7 +499,7 @@
 いいもの　欲しがれば　いいのにー！</language>
 	</row>
 
-	<row id="msg_c05r0601_sunglasses_06" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
+	<row id="msg_c05r0601_sunglasses_06" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・アイテム入手後
 </comment>
