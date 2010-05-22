@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:20:37"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T20:27:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 わかった！
 あたしも　てつだうね▼
 ねーねー　さいしょに　えらんだ
-ポケモンは　なーにー？▼</language>
+ポケモンは　なーにー？</language>
 		<language name="JPN_KANJI" width="256">きみの　持ってる　ソレって
 ポケモン図鑑　でしょ！▼
 へえ！　すっごいじゃん！
@@ -338,7 +338,7 @@
 わかった！
 あたしも　手伝うね▼
 ねーねー　最初に　選んだ
-ポケモンは　なーにー？▼</language>
+ポケモンは　なーにー？</language>
 	</row>
 
 	<row id="msg_c02r0501_trainerw_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -470,9 +470,9 @@
 ・選択肢表示</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
 		<language name="JPN" width="256">じゃあ　さいしょに　えらんだ
-ポケモンは　なーにー？▼</language>
+ポケモンは　なーにー？</language>
 		<language name="JPN_KANJI" width="256">じゃあ　最初に　選んだ
-ポケモンは　なーにー？▼</language>
+ポケモンは　なーにー？</language>
 	</row>
 
 	<row id="msg_c02r0501_trainerw_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
