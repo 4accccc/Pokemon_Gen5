@@ -1459,8 +1459,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_213">
-		<language name="JPN" width="256">グラフィック　＆　サウンド　スペシャルサンクス</language>
-		<language name="JPN_KANJI" width="256">グラフィック　＆　サウンド　スペシャルサンクス</language>
+		<language name="JPN" width="256">グラフィック　スペシャルサンクス</language>
+		<language name="JPN_KANJI" width="256">グラフィック　スペシャルサンクス</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_214">

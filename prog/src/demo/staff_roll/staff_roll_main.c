@@ -61,7 +61,8 @@ enum {
 	SUBSEQ_END,
 };
 
-#define	LIST_START_WAIT		( 39 )
+#define	LIST_START_INIT_WAIT	( 31 )
+#define	LIST_START_END_WAIT		( 39 )
 #define	LOGO_PUT_WAIT			( 128 )
 
 #if	PM_VERSION == LOCAL_VERSION
@@ -352,7 +353,7 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:
-		if( wk->wait == LIST_START_WAIT ){
+		if( wk->wait == LIST_START_INIT_WAIT ){
 			wk->wait = 0;
 			wk->listWait = LOGO_PUT_WAIT;
 			wk->subSeq++;
@@ -366,8 +367,20 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 
 	case 1:
 		if( PutLogo( wk ) == FALSE ){
+			wk->subSeq++;
+		}
+		break;
+
+	case 2:
+		if( wk->wait == LIST_START_END_WAIT ){
+			wk->wait = 0;
 			wk->subSeq = 0;
 			return MAINSEQ_MAIN;
+		}else{
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+				OS_Printf( "push a button : wait = %d\n", wk->wait );
+			}
+			wk->wait++;
 		}
 		break;
 	}
@@ -478,7 +491,7 @@ static void InitBg(void)
 
 	{	// BG SYSTEM
 		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+			GX_DISPMODE_GRAPHICS, GX_BGMODE_3, GX_BGMODE_0, GX_BG0_AS_3D,
 		};
 		GFL_BG_SetBGMode( &sysh );
 	}
@@ -495,10 +508,35 @@ static void InitBg(void)
 		GFL_BG_BGCNT_HEADER cnth= {
 			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_256,
 			GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x10000,
-			GX_BG_EXTPLTT_01, 1, 0, 0, FALSE
+			GX_BG_EXTPLTT_23, 1, 0, 0, FALSE
 		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_256X16 );
 	}
+
+	{	// âÒì]ägèkè¨èâä˙âª
+		MtxFx22 mtx;
+	  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*9, FX32_ONE*9, GFL_CALC2D_AFFINE_MAX_NORMAL );
+		GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
+	}
+/*
+	{
+		GFL_BG_BGCNT_HEADER cnth= {
+			0, 0, 0x2000, 0, GFL_BG_SCRSIZ_512x512, GX_BG_COLORMODE_256,
+			GX_BG_SCRBASE_0x2000, GX_BG_CHARBASE_0x08000, 0x10000,
+			GX_BG_EXTPLTT_23, 1, 0, 0, FALSE
+		};
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_256X16 );
+		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &cnth, GFL_BG_MODE_256X16 );
+	}
+
+	{	// âÒì]ägèkè¨èâä˙âª
+		MtxFx22 mtx;
+	  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
+		G2_SetBG3Affine( &mtx, 0, 0, 0, 0 );
+		G2S_SetBG3Affine( &mtx, 0, 0, 0, 0 );
+	}
+*/
+
 
 	{	// ÉTÉuâÊñ ÅFï∂éöñ 
 		GFL_BG_BGCNT_HEADER cnth= {
@@ -516,7 +554,7 @@ static void InitBg(void)
 			GX_BG_SCRBASE_0xe800, GX_BG_CHARBASE_0x08000, 0x1000,
 			GX_BG_EXTPLTT_01, 3, 0, 0, FALSE
 		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME3_M, &cnth, GFL_BG_MODE_TEXT );
+		GFL_BG_SetBGControl( GFL_BG_FRAME2_M, &cnth, GFL_BG_MODE_TEXT );
 		GFL_BG_SetBGControl( GFL_BG_FRAME3_S, &cnth, GFL_BG_MODE_TEXT );
 	}
 #endif	// PM_DEBUG
@@ -532,10 +570,10 @@ static void ExitBg(void)
 
 #ifdef PM_DEBUG
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 #endif	// PM_DEBUG
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
+	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
 
 	GFL_BG_Exit();
@@ -546,9 +584,9 @@ static void LoadBgGraphic(void)
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, TITLE_RES_LOGO_NCGR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+		ah, TITLE_RES_LOGO_NCGR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
 
 	GFL_ARC_CloseDataHandle( ah );
 
@@ -786,24 +824,21 @@ static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_d
 #define cameraFar       ( 1024 << FX32_SHIFT )
 
 // ÇRÇcÉJÉÅÉâê›íË
+/*
 #define	CAMERA_POS_X			( 98978 )
 #define	CAMERA_POS_Y			( 177097 )
 #define	CAMERA_POS_Z			( 214916 )
 #define	CAMERA_TARGET_X		( 0 )
 #define	CAMERA_TARGET_Y		( 124745 )
 #define	CAMERA_TARGET_Z		( 0 )
-/*
-#define	CAMERA_POS_X			( 69939 )
-#define	CAMERA_POS_Y			( 179142 )
-#define	CAMERA_POS_Z			( -266359 )
-#define	CAMERA_TARGET_X		( -2833552 )
-#define	CAMERA_TARGET_Y		( 1208595 )
-#define	CAMERA_TARGET_Z		( -7952187 )
 */
-/*
-POS : x = 69939, y = 179142, z = -266359
-TARGET : x = -2833552, y = 1208595, z = -7952187
-*/
+#define	CAMERA_POS_X			( 3681 )
+#define	CAMERA_POS_Y			( 94888 )
+#define	CAMERA_POS_Z			( 42318 )
+#define	CAMERA_TARGET_X		( 0 )
+#define	CAMERA_TARGET_Y		( 124745 )
+#define	CAMERA_TARGET_Z		( 0 )
+
 
 #ifdef PM_DEBUG
 //static VecFx32 test_pos    = { 0, BADGE3D_CAMERA_POS_Y, BADGE3D_CAMERA_POS_Z };
@@ -1064,11 +1099,19 @@ static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work )
 static const SR3DCAMERA_PARAM CameraMoveTable[] =
 {
 	{ { CAMERA_POS_X, CAMERA_POS_Y, CAMERA_POS_Z }, { CAMERA_TARGET_X, CAMERA_TARGET_Y, CAMERA_TARGET_Z } },
+	{ { 1636, 95706, 63177 }, { 0, 124745, 0 } },
+	{ { -5317, 111657, 78310 }, { 0, 124745, 0 } },
+	{ { -7362, 159919, 115938 }, { 32311, 124745, 0 } },
+	{ { -64622, 150921, 81582 }, { 245809, 108794, 129244 } },
+	{ { -17178, 158283, 90580 }, { 199183, 98978, -41718 } },
+	{ { -18405, 189776, 93443 }, { 959514, 154602, 0 } },
+/*
 	{ { 289572, 177097, -1445 }, { 0, 124745, 0 } },
 	{ { 93661, 231085, -302469 }, { 0, 124745, 0 } },
 	{ { -122291, 269122, -92652 }, { 0, 124745, 0 } },
 	{ { -42127, 95706, 92625 }, { 0, 124745, 0 } },
 	{ { -409, 168917, 142114 }, { 0, 124745, 0 } },
+*/
 };
 
 static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk )
@@ -1492,26 +1535,34 @@ static BOOL ClearStr( SRMAIN_WORK * wk )
 
 static BOOL PutLogo( SRMAIN_WORK * wk )
 {
+	MtxFx22 mtx;
+
+	// ägèkÇP
 	switch( wk->labelSeq ){
 	case 0:
 		LoadLogoPalette( wk, TRUE );
-		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BD|GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1, 0, 16 );
-		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
+		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BD, 0, 16 );
+		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+		wk->britness = 0;
 		wk->labelSeq++;
 		break;
 
 	case 1:
 		if( wk->skipFlag == 1 ){
-			wk->britness += ( LOGO_FADEIN_SPEED * SKIP_SPEED );
+			wk->britness += 2;
 		}else{
-			wk->britness += LOGO_FADEIN_SPEED;
+			wk->britness += 2;
 		}
 		if( wk->britness >= 16 ){
 			G2_ChangeBlendAlpha( 16, 0 );
+		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
+			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 			wk->britness = 0;
 			wk->labelSeq++;
 		}else{
 			G2_ChangeBlendAlpha( wk->britness, 16-wk->britness );
+		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*(8-wk->britness/2), FX32_ONE*(8-wk->britness/2), GFL_CALC2D_AFFINE_MAX_NORMAL );
+			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 		}
 		break;
 
@@ -1525,23 +1576,30 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 			wk->listWait = 0;
 			wk->labelSeq++;
 		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			OS_Printf( "push a button : start %d, wait = %d\n", LOGO_PUT_WAIT, wk->listWait );
+		}
 		break;
 
 	case 3:
 		if( wk->skipFlag == 1 ){
-			wk->britness += ( LOGO_FADEOUT_SPEED * SKIP_SPEED );
+			wk->britness += 2;
 		}else{
-			wk->britness += LOGO_FADEOUT_SPEED;
+			wk->britness += 2;
 		}
 		if( wk->britness >= 16 ){
 			G2_BlendNone();
-			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+			GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
+			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 			LoadLogoPalette( wk, FALSE );
 			wk->britness = 0;
 			wk->labelSeq = 0;
 			return FALSE;
 		}else{
 			G2_ChangeBlendAlpha( 16-wk->britness, wk->britness );
+		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE*(1+wk->britness/2), FX32_ONE*(1+wk->britness/2), GFL_CALC2D_AFFINE_MAX_NORMAL );
+			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 		}
 		break;
 	}
@@ -1717,20 +1775,20 @@ static const u8 GridChar[] = {
 
 static void DebugGridSet(void)
 {
-	GFL_BG_LoadCharacter( GFL_BG_FRAME3_M, GridChar, 0x60, 1 );
+	GFL_BG_LoadCharacter( GFL_BG_FRAME2_M, GridChar, 0x60, 1 );
 	GFL_BG_LoadCharacter( GFL_BG_FRAME3_S, GridChar, 0x60, 1 );
 
-	GFL_BG_ClearScreenCode( GFL_BG_FRAME3_M, 0xf001 );
+	GFL_BG_ClearScreenCode( GFL_BG_FRAME2_M, 0xf001 );
 	GFL_BG_ClearScreenCode( GFL_BG_FRAME3_S, 0xf001 );
 
-	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0xf002, 15, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0xf002, 15, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME3_S, 0xf002, 15, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
-	GFL_BG_FillScreen( GFL_BG_FRAME3_M, 0xf003, 16, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
+	GFL_BG_FillScreen( GFL_BG_FRAME2_M, 0xf003, 16, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
 	GFL_BG_FillScreen( GFL_BG_FRAME3_S, 0xf003, 16, 0, 1, 24, GFL_BG_SCRWRT_PALIN );
-  GFL_BG_LoadScreenReq( GFL_BG_FRAME3_M );
+  GFL_BG_LoadScreenReq( GFL_BG_FRAME2_M );
   GFL_BG_LoadScreenReq( GFL_BG_FRAME3_S );
 
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 

@@ -1454,8 +1454,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_212">
-		<language name="JPN" width="256">GRAPHICS  &amp;  SOUND  DESIGN  SPECIAL  THANKS</language>
-		<language name="JPN_KANJI" width="256">GRAPHICS  &amp;  SOUND  DESIGN  SPECIAL  THANKS</language>
+		<language name="JPN" width="256">GRAPHICS  SPECIAL  THANKS</language>
+		<language name="JPN_KANJI" width="256">GRAPHICS  SPECIAL  THANKS</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_213">
