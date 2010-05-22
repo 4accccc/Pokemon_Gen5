@@ -1986,21 +1986,17 @@ static  void  camera_work_check( void )
 
   if( bew->camera_work_execute == BTLV_EFFECT_CWE_NONE ) return;
 
-  if( ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL ) ||
-      ( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE ) )
+  if( bew->camera_work_execute >= BTLV_EFFECT_CWE_SHIFT_NONE )
   {
     BTLV_EFFECT_Stop();
-    BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+
+    if( bew->camera_work_execute != BTLV_EFFECT_CWE_SHIFT_NO_STOP )
+    { 
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+    }
     bew->camera_work_seq  = 0;
     bew->camera_work_wait = 0;
-    if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NORMAL )
-    {
-    bew->camera_work_execute = BTLV_EFFECT_CWE_NORMAL;
-    }
-    if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
-    {
-      bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
-    }
+    bew->camera_work_execute -= BTLV_EFFECT_CWE_SHIFT_NONE;
   }
 
   if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
@@ -2024,6 +2020,7 @@ static  void  camera_work_check( void )
     bew->camera_work_seq = 1;
     /*fallthru*/
   case 1:
+    if( !BTLV_EFFECT_CheckExecute() )
     {
       static  int camera_work_num[ 3 ] = {
         BTLEFF_CAMERA_WORK,
@@ -2055,13 +2052,7 @@ static  void  camera_work_check( void )
         }
       }
       BTLV_EFFECT_Add( eff_no );
-      bew->camera_work_seq = 2;
-    }
-    break;
-  case 2:
-    if( !BTLV_EFFECT_CheckExecute() )
-    {
-      bew->camera_work_seq  = 1;
+      bew->execute_flag = TRUE;
     }
     break;
   }

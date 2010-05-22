@@ -151,10 +151,11 @@ typedef enum{
 
 typedef enum{ 
   BTLV_EFFECT_CWE_NONE = 0,
-  BTLV_EFFECT_CWE_NORMAL,       //通常動作
-  BTLV_EFFECT_CWE_NO_STOP,      //入力があってもCAMERA_INITを呼ばない
-  BTLV_EFFECT_CWE_SHIFT_NORMAL, //強制的にCAMERA_INITを呼んでNORMALに移行
-  BTLV_EFFECT_CWE_SHIFT_NONE,   //強制的にCAMERA_INITを呼んでNONEに移行
+  BTLV_EFFECT_CWE_NORMAL,         //通常動作
+  BTLV_EFFECT_CWE_NO_STOP,        //入力があってもCAMERA_INITを呼ばない
+  BTLV_EFFECT_CWE_SHIFT_NONE,     //強制的にCAMERA_INITを呼んでNONEに移行
+  BTLV_EFFECT_CWE_SHIFT_NORMAL,   //強制的にCAMERA_INITを呼んでNORMALに移行
+  BTLV_EFFECT_CWE_SHIFT_NO_STOP,  //強制的にCAMERA_INITを呼んでNO_STOPに移行
 }BTLV_EFFECT_CWE;
 
 //--------------------------------------------

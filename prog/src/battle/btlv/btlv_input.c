@@ -3069,7 +3069,7 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
 
   BTLV_EFFECT_Stop();
   BTLV_EFFECT_Add( eff );
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_NO_STOP );
+  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NO_STOP );
 #else
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
@@ -4764,9 +4764,8 @@ static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
 { 
   BTLV_EFFECT_Stop();
   BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_NO_STOP );
+  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NO_STOP );
 }
-
 
 //=============================================================================================
 //  ボタン決定位置記憶初期化チェック
