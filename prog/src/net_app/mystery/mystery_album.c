@@ -2467,11 +2467,6 @@ static void SEQFUNC_SelectList( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     break;
 
   case SEQ_NEXT_DELETE:
-    if( p_wk->p_text )
-    { 
-      MYSTERY_TEXT_Exit( p_wk->p_text );
-      p_wk->p_text  = NULL;
-    }
     MYSTERY_LIST_Exit( p_wk->p_list );
     p_wk->p_list  = NULL;
     MYSTERY_SEQ_SetNext( p_seqwk, SEQFUNC_DeleteCard );
@@ -2515,11 +2510,6 @@ static void SEQFUNC_DeleteCard( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   { 
   case SEQ_YESNO_MSG:
-    if( p_wk->p_text == NULL )
-    { 
-      p_wk->p_text  = MYSTERY_TEXT_Init( MYSTERY_ALBUM_LIST_FRM, MYSTERY_ALBUM_FONT_PLT, p_wk->setup.p_que, p_wk->setup.p_font, HEAPID_MYSTERYGIFT );
-      MYSTERY_TEXT_WriteWindowFrame( p_wk->p_text, 1, MYSTERY_ALBUM_BG_FRM_S_PLT );
-    }
     MYSTERY_TEXT_Print( p_wk->p_text, p_wk->setup.p_msg, syachi_mystery_01_021, MYSTERY_TEXT_TYPE_STREAM ); 
 
     *p_seq  = SEQ_YESNO_INIT;

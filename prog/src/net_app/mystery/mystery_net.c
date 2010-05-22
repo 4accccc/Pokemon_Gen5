@@ -1110,6 +1110,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     //キャンセル
     if( p_nd_data->wifi_cancel )
     { 
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
       WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_CANCEL, SEQ_CANCEL );
     }
     else
@@ -1118,7 +1119,8 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( DWC_NdSetAttr(WIFI_FILE_ATTR1, WIFI_FILE_ATTR2, WIFI_FILE_ATTR3) == FALSE )
       {
         OS_TPrintf( "DWC_NdSetAttr: Failed\n." );
-        //エラーが起こったら内部で取得するためループ
+        p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
+        WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
       }
       else
       { 
@@ -1135,6 +1137,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     if( DWC_NdGetFileListNumAsync( &p_nd_data->server_filenum ) == FALSE )
     {
       OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
       WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END ); 
     }
     else
@@ -1149,6 +1152,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       //ファイルがなかった場合
       if( p_nd_data->server_filenum == 0 )
       { 
+        p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
         WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
         break;
       }
@@ -1159,6 +1163,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
         {
           OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+          p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
           WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
         }
         else
@@ -1255,6 +1260,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     else
     { 
       //ありえないが念のため。ファイルがないときは終了
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
       WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_NOT_FOUND_FILES, p_seq, SEQ_DOWNLOAD_COMPLETE, SEQ_DOWNLOAD_COMPLETE ); 
     }
 
@@ -1268,6 +1274,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     OS_TPrintf( "取得するもの target%d max%d ser%d\n", p_nd_data->target, p_nd_data->recv_filenum, p_nd_data->server_filenum );
     if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->p_buffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
       WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END ); 
     }
     else
@@ -1288,6 +1295,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       if( p_nd_data->cancel_req )
       {
         // ダウンロードキャンセル
+        p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
         WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_CANCEL, SEQ_CANCEL ); 
       }
       else
@@ -1333,13 +1341,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else 
     {
-      //wk->wifi_check_func = NULL;
-      // エラー管理用処理の終了
-       // _commEnd();
-
-      OS_Printf("download cancel\n");
-      GF_ASSERT(0);
-      //return wifi_result;
+      *p_seq = SEQ_DOWNLOAD_COMPLETE;
     }
     break;
 
@@ -1392,7 +1394,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     else if( p_nd_data->cancel_req )
     { 
-      OS_Printf( "キャンセルしました! 2\n" );
+      OS_Printf( "クリーンアップしました! 2\n" );
       p_nd_data->wifi_cancel  = TRUE;
     }
     break;
