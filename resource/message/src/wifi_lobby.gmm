@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-20T20:35:16"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-22T18:10:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -870,23 +870,19 @@
 	<row id="msg_wifilobby_069">
 		<language name="JPN" width="216">この　ともだちと　あそぶ　あいだは
 ボイスチャットが　オンに　なります[BE:01:ページ切り替え（クリア）]
-この　ともだちの　ぼしゅうに
-おうぼ　しますか？</language>
+この　ともだちと　あそびますか？</language>
 		<language name="JPN_KANJI" width="216">この友達と　遊ぶあいだは
 ボイスチャットが　ＯＮに　なります[BE:01:ページ切り替え（クリア）]
-この友達の　募集に
-応募しますか？</language>
+この友達と　遊びますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_070">
 		<language name="JPN" width="216">この　ともだちと　あそぶ　あいだは
 ボイスチャットが　オフに　なります[BE:01:ページ切り替え（クリア）]
-この　ともだちの　ぼしゅうに
-おうぼ　しますか？</language>
+この　ともだちと　あそびますか？</language>
 		<language name="JPN_KANJI" width="216">この友達と　遊ぶあいだは
 ボイスチャットが　ＯＦＦに　なります[BE:01:ページ切り替え（クリア）]
-この友達の　募集に
-応募しますか？</language>
+この友達と　遊びますか？</language>
 	</row>
 
 	<row id="msg_wifilobby_071">
