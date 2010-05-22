@@ -3054,7 +3054,6 @@ static void handler_KiaiNoHachimaki_UseItem( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   }
 }
 
-
 //------------------------------------------------------------------------------
 /**
  *  たつじんのおび
@@ -4848,9 +4847,10 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_DassyutuButton( u32* numElems )
 static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // 自分がダメージを受けた側
-//  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  if( HandCommon_CheckTargetPokeID(pokeID) )
-  {
+
+  if( (HandCommon_CheckTargetPokeID(pokeID))
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DELAY_ATTACK_FLAG) == FALSE )
+  ){
     // 控えに交替可能メンバーがいるなら、どうぐ使用ハンドラ呼び出し
     //（割り込みアクション時を除く）
     if( (!BTL_SVFTOOL_IsMemberOutIntr(flowWk))
