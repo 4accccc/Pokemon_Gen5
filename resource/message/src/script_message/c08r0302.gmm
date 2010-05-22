@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-21T13:45:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:19:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1280" top="152" right="1985" bottom="780" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,9 +292,8 @@
 	</lock>
 
 
-	<row id="msg_c08r0302_man2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c08r0302_man2_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年２</attribute>
 		<language name="JPN" width="256">……ここだけの　はなし▼
@@ -317,9 +316,8 @@
 アイツには　内緒だぜ</language>
 	</row>
 
-	<row id="msg_c08r0302_man2a_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c08r0302_man2a_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">MAN2
 青年２</attribute>
 		<language name="JPN" width="256">……ここだけの　はなし▼
