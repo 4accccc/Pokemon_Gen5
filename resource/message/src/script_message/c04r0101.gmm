@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:41:23"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T17:47:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -314,9 +314,8 @@
 勝負を　繰り広げる　地下鉄です</language>
 	</row>
 
-	<row id="msg_c04r0101_fighterm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0101_fighterm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ
 ・エンディング前</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
@@ -329,9 +328,8 @@
 乗れるのは　１路線のみ　だそうだ</language>
 	</row>
 
-	<row id="msg_c04r0101_fighterm_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c04r0101_fighterm_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
-・仮メッセージ
 ・エンディング後</comment>
 		<attribute name="キャラ指定">FIGHTERM
 格闘家</attribute>
@@ -486,65 +484,57 @@
 		<language name="JPN_KANJI" width="256">教えない</language>
 	</row>
 
-	<row id="msg_c04r0101_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">シングルトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">シングルトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">ダブルトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">ダブルトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign3_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">マルチトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">マルチトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign4_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign5_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign5_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">スーパーシングルトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">スーパーシングルトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign6_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign6_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">スーパーダブルトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">スーパーダブルトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign7_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign7_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">スーパーマルチトレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">スーパーマルチトレイン　乗り場</language>
 	</row>
 
-	<row id="msg_c04r0101_sign8_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>BGメッセージ
-・仮</comment>
+	<row id="msg_c04r0101_sign8_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">行き先案内</attribute>
 		<language name="JPN" width="256">カナワタウンいき　トレイン　のりば</language>
 		<language name="JPN_KANJI" width="256">カナワタウン行き　トレイン　乗り場</language>
