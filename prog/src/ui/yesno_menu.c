@@ -546,6 +546,12 @@ void YESNO_MENU_CloseMenu( YESNO_MENU_WORK* work )
   {
     // ”ñ•\Ž¦
     GFL_BG_SetVisible( work->mes_bg_frame, VISIBLE_OFF );
+
+    // ŽŸ‚ÉŠJ‚¢‚½‚Æ‚«‚É‘O‚Ì•¶Žš‚ªˆêuŒ©‚¦‚é‚Ì‚ð–h‚®‚½‚ß‚ÉAÁ‚µ‚Ä“]‘—‚µ‚Ä‚¨‚­
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->mes_yes_bmpwin), 0 );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->mes_no_bmpwin), 0 );
+    GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_yes_bmpwin);
+    GFL_BMPWIN_MakeTransWindow_VBlank(work->mes_no_bmpwin);
   }
 
 #ifndef NO_USE_OBJ
