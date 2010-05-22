@@ -5187,7 +5187,7 @@ static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Monohiroi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_BEGIN,    handler_Monohiroi },  // ターンチェック開始ハンドラ
+    { BTL_EVENT_TURNCHECK_END,    handler_Monohiroi },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
