@@ -38,8 +38,8 @@ typedef struct {
   u8 vchatMain;  // VCHATをONOFFするメインフラグ 内部は相手によって変化する為
   u8 btalk;    // 話しかけたのか、掲示板なのかで戻った際の分岐がある
   u8 friendNo;  //対戦している人の番号
-  u8 shooter; 
-  u8 dummy2; 
+  u8 shooter;         //戦うようのシューター
+  u8 shooterSelect;   //自分で選択したシューター
   u8 dummy3; 
 }WIFIP2PMATCH_PROC_PARAM;
 
