@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T12:16:43"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:51:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,28 +292,18 @@
 	</lock>
 
 
-	<row id="msg_r01_white_00">
-		<comment>♀
-・移動デモ中(1番道路の表示が出たあと、３人止まって）
-　主人公、ライバルは右向き
-　サポートは左向き
-・続けてblack_00</comment>
-		<attribute name="キャラ指定">友達♀
-ベル</attribute>
+	<row id="msg_r01_white_00" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用
+・t01.gmmに記述</comment>
 		<language name="JPN" width="256">ベル『ああ！　なんだろう
 どきどき　ワクワク　しちゃうね▼</language>
 		<language name="JPN_KANJI" width="256">ベル『ああ！　なんだろう
 どきどき　ワクワク　しちゃうね▼</language>
 	</row>
 
-	<row id="msg_r01_black_00" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂
-・ライバル、上向き
-　主人公、サポート、左向き
-・メッセージ表示後、移動再開
-　black_01へ</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
+	<row id="msg_r01_black_00" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用
+・t01.gmmに記述</comment>
 		<language name="JPN" width="256">チェレン『そうだね
 さ　はかせが　まってる▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『そうだね
@@ -392,10 +382,8 @@
 モンスターボールも　プレゼント！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r01_test_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>アイテム入手
-・0＝プレイヤー名
-・1＝道具名</comment>
+	<row id="msg_r01_test_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]は
 [FF:00:色:2]モンスターボール[FF:00:色:0]を　てにいれた！</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]は
@@ -651,8 +639,6 @@
 
 	<row id="msg_r01_black_11a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>未使用</comment>
-		<attribute name="キャラ指定">友達♂
-チェレン</attribute>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
