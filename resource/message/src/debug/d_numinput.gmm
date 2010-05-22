@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-15T16:11:41"/>
+	<create user="iwasawa" host="W00157" date="2010-05-22T15:56:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -464,6 +464,13 @@
 　エフェクト発生確認</comment>
 		<language name="JPN" width="240">pos check</language>
 		<language name="JPN_KANJI" width="240">pos check</language>
+	</row>
+
+	<row id="dni_effenc_add_delete" back-color="#80ff80,,,,,,,,,,,,,,,,,">
+		<comment>エフェクトエンカウント関連メニュー
+　エフェクトを強制追加＆削除</comment>
+		<language name="JPN" width="240">Add/Del Force</language>
+		<language name="JPN_KANJI" width="240">Add/Del Force</language>
 	</row>
 
 	<row id="dni_number_string" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">

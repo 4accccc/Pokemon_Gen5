@@ -834,6 +834,9 @@ u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 p
       if(y < 0 ){ y += 999; }
       return (x*1000000+y*1000+z);
     }
+    break;
+  case EFFENC_DNI_ADD_DELETE:
+    return wk->param.valid_f;
   }
   return 0;
 }
@@ -864,6 +867,13 @@ void EFFENC_DEB_NumInputParamSet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
     break;
   case EFFENC_DNI_OFSZ: 
     wk->deb_ofsz = value;
+    break;
+  case EFFENC_DNI_ADD_DELETE:
+    if( wk->param.valid_f && value == 0 ){
+      effect_EffectDelete( encount, eff_wk );
+    }else if( !wk->param.valid_f && value == 1 ){
+      EFFECT_ENC_CheckEffectEncountStart( encount );
+    }
     break;
   }
 }

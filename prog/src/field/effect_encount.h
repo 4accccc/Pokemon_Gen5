@@ -101,6 +101,7 @@ enum{
   EFFENC_DNI_OFSX,
   EFFENC_DNI_OFSZ,
   EFFENC_DNI_POSITION,
+  EFFENC_DNI_ADD_DELETE,
 };
 
 extern u32 EFFENC_DEB_NumInputParamGet( GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param );

@@ -32,6 +32,7 @@ static const DEBUG_NUMINPUT_LIST DNI_EffectEncountList[] = {
  { dni_effenc_pos_ofsx, EFFENC_DNI_OFSX, &enceff_ofs_param }, 
  { dni_effenc_pos_ofsz, EFFENC_DNI_OFSZ, &enceff_ofs_param },
  { dni_effenc_pos_check, EFFENC_DNI_POSITION, &enceff_pos_param },
+ { dni_effenc_add_delete, EFFENC_DNI_ADD_DELETE, &enceff_prob_fix_param },
 };
 
 //////////////////////////////////////////////////////
