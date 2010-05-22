@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T15:03:18"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T14:26:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1523" top="180" right="2228" bottom="808" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1988" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="543"/>
+		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="152"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="4" index="0" style="0000" width="694"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -522,9 +522,8 @@
 ジムリーダーが　教えてくれたぜ！</language>
 	</row>
 
-	<row id="msg_c01_cleaningm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c01_cleaningm_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">OLDMAN</attribute>
 		<language name="JPN" width="256">ゆめのあとち　という　はいきょには
 ゆめを　みせるらしい　めずらしい▽
@@ -534,15 +533,14 @@
 野生の　ポケモンが　おるぞ！</language>
 	</row>
 
-	<row id="msg_c01_breederw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c01_breederw_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">BREEDERW
 ブリーダー♀</attribute>
-		<language name="JPN" width="256">もしかして　トレーナーズスクール？
-そういう　トレーナーさん　おおいよね</language>
-		<language name="JPN_KANJI" width="256">もしかして　トレーナーズスクール？
-そういう　トレーナーさん　多いよね</language>
+		<language name="JPN" width="256">あたしも　ビギナーの　ころに
+トレーナーズスクールで　まなんだの</language>
+		<language name="JPN_KANJI" width="256">あたしも　ビギナーの　ころに
+トレーナーズスクールで　学んだの</language>
 	</row>
 
 	<row id="msg_c01_woman2_01">
