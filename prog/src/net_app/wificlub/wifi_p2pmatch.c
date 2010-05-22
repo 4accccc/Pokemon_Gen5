@@ -2160,7 +2160,14 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk, WIFIP2PMATCH_FRIENDLIST_INIT);
     _initBGMVol( wk, WIFI_STATUS_WAIT);
   }
-  PMSND_PlayBGM(SEQ_BGM_POKECEN);
+
+  //BTS2447 対処 nagihashi
+  //ライブキャスター等でここに戻ってくると再度PlayBGMをしてしまうので、
+  //同じ曲の時は鳴らさないようにする。
+  if( PMSND_GetNextBGMsoundNo() != SEQ_BGM_POKECEN )
+  {
+    PMSND_PlayBGM(SEQ_BGM_POKECEN);
+  }
   return seq;
 }
 
