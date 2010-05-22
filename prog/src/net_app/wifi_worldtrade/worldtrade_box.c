@@ -33,7 +33,6 @@
 #include "msg/msg_wifi_gts.h"
 #include "print/printsys.h"
 
-#include "net_app/net_bugfix.h"
 #include "poke_tool/monsno_def.h"
 
 #include "worldtrade.naix"			// グラフィックアーカイブ定義

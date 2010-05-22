@@ -38,6 +38,8 @@
 
 #include "net_app/net_bugfix.h"
 
+#include "arc_def.h"
+#include "font/font.naix"
 
 //=============================================================================
 /**
@@ -57,6 +59,19 @@
 #define PARA_MALE							(0)
 #define PARA_FEMALE						(1)
 
+// 通常のフォントカラー
+#define	FBMP_COL_NULL		(0)
+#define	FBMP_COL_BLACK		(1)
+#define	FBMP_COL_BLK_SDW	(2)
+#define	FBMP_COL_RED		(3)
+#define	FBMP_COL_RED_SDW	(4)
+#define	FBMP_COL_GREEN		(5)
+#define	FBMP_COL_GRN_SDW	(6)
+#define	FBMP_COL_BLUE		(7)
+#define	FBMP_COL_BLU_SDW	(8)
+#define	FBMP_COL_PINK		(9)
+#define	FBMP_COL_PNK_SDW	(10)
+#define	FBMP_COL_WHITE		(15)
 
 //=============================================================================
 /**
@@ -138,6 +153,11 @@ static inline void WirelessIconEasyEnd( void )
 	GFL_NET_WirelessIconEasyEnd();
 }
 
+static inline void TalkFontPaletteLoad(PALTYPE type, u32 offs, u32 heap)
+{
+	GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, type, 
+		offs, 0x20, heap);
+}
 
 static inline void Comm_WifiHistoryDataSet( WIFI_HISTORY *wifiHistory, int Nation, int Area, int langCode )
 {
