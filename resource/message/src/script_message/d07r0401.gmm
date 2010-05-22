@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:04:01"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:33:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -424,7 +424,7 @@
 だれの　ために　強くなる……？▼</language>
 	</row>
 
-	<row id="d07r0401_black_03a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="d07r0401_black_03a" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・black_03表示後から
 　c07ジムクリア後イベントまで繰り返し表示
