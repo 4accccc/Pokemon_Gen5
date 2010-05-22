@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T14:01:23"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:40:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -546,147 +546,122 @@
 春　夏　秋の　火曜日発売</language>
 	</row>
 
-	<row id="msg_c03p09_businessman1_01" text-color="#ffffff,,,#ffffff,,#ffffff,,,,,,,,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman1_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman2_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman3_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman3_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman4_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman4_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman5_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman5_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman6_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman6_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman7_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman7_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman8_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman8_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman9_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman9_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman10_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman10_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman11_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman11_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman12_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman12_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman13_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman13_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman14_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman14_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_businessman15_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">BUSINESSMAN</attribute>
+	<row id="msg_c03p09_businessman15_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_ol1_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">OL
-</attribute>
+	<row id="msg_c03p09_ol1_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_ol2_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">OL
-</attribute>
+	<row id="msg_c03p09_ol2_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_ol3_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">OL
-</attribute>
+	<row id="msg_c03p09_ol3_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_ol4_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">OL
-</attribute>
+	<row id="msg_c03p09_ol4_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_c03p09_ol5_01" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#000000,,,#404040,,#000000,#404040,,,,,,#404040,,,,,,">
-		<comment>実験用</comment>
-		<attribute name="キャラ指定">OL
-</attribute>
+	<row id="msg_c03p09_ol5_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
