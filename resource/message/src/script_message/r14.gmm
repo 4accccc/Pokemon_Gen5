@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T17:28:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:21:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -310,10 +310,10 @@
 ・続けてsage2_end_01e</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">そなたは　あの　シンと
+		<language name="JPN" width="256">そなたは　あの　レシラムと
 こころを　かよいあわせているか？▼</language>
-		<language name="JPN_KANJI" width="256">そなたは　あの
-シンと　心を　通い合わせているか？▼</language>
+		<language name="JPN_KANJI" width="256">そなたは　あの　レシラムと
+心を　通い合わせているか？▼</language>
 	</row>
 
 	<row id="msg_r14_sage2_end_01b" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
@@ -323,9 +323,9 @@
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
 		<language name="JPN" width="256">そなたは　あの
-シンを　トモダチと　せぬのか？▼</language>
+レシラムを　トモダチと　せぬのか？▼</language>
 		<language name="JPN_KANJI" width="256">そなたは　あの
-シンを　トモダチと　せぬのか？▼</language>
+レシラムを　トモダチと　せぬのか？▼</language>
 	</row>
 
 	<row id="msg_r14_sage2_end_01c" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
@@ -334,10 +334,10 @@
 ・続けてsage2_end_01e</comment>
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
-		<language name="JPN" width="256">そなたは　あの　ムと
+		<language name="JPN" width="256">そなたは　あの　ゼクロムと
 こころを　かよいあわせているか？▼</language>
-		<language name="JPN_KANJI" width="256">そなたは　あの
-ムと　心を　通い合わせているか？▼</language>
+		<language name="JPN_KANJI" width="256">そなたは　あの　ゼクロムと
+心を　通い合わせているか？▼</language>
 	</row>
 
 	<row id="msg_r14_sage2_end_01d" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
@@ -347,9 +347,9 @@
 		<attribute name="キャラ指定">SAGE２
 七賢人その２</attribute>
 		<language name="JPN" width="256">そなたは　あの
-ムを　トモダチと　せぬのか？▼</language>
+ゼクロムを　トモダチと　せぬのか？▼</language>
 		<language name="JPN_KANJI" width="256">そなたは　あの
-ムを　トモダチと　せぬのか？▼</language>
+ゼクロムを　トモダチと　せぬのか？▼</language>
 	</row>
 
 	<row id="msg_r14_sage2_end_01e" text-color="#0000ff,,,,,,,,,,,,,,,,,,">
