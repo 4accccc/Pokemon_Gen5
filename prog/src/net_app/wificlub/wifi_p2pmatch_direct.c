@@ -223,7 +223,7 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_NULL:
     return seq;
   case BMPMENULIST_CANCEL:
-    wk->command = WIFIP2PMATCH_PLAYERDIRECT_END;
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_CANCELEND;
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
     break;
   case WIFI_GAME_VCT:
@@ -1555,6 +1555,50 @@ static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 
 
 
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了自分でキャンセルした場合   WIFIP2PMATCH_PLAYERDIRECT_CANCELEND
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectCancelEnd( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
+
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_CANCELEND_NEXT);
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了自分でキャンセルした場合   WIFIP2PMATCH_PLAYERDIRECT_CANCELEND_NEXT
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectCancelEndNext( WIFIP2PMATCH_WORK *wk, int seq )
+{
+
+  if(GFL_NET_IsParentMachine()){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
+  }
+  GFL_NET_StateWifiMatchEnd(TRUE);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
+  return seq;
+}
+
+
+
 //------------------------------------------------------------------
 /**
  * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END
@@ -1584,14 +1628,13 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 {
 
-  GFL_NET_StateWifiMatchEnd(TRUE);
-
   if(GFL_NET_IsParentMachine()){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
   }
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
   }
+  GFL_NET_StateWifiMatchEnd(TRUE);
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
