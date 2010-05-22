@@ -14,6 +14,9 @@
 #include <tcbl.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/ica_anime.h"
+#include "system/ica_camera.h"
+#include "sound/pm_voice.h"
 #include "print/printsys.h"
 #include "print/gf_font.h"
 #include "arc_def.h"
@@ -26,10 +29,12 @@
 #include "backup_erase.h"
 #include "app/mictest.h"
 #include "sound/pm_sndsys.h"
+#include "poke_tool/monsno_def.h"
 
 #include "title_res.h"
 
 #include "title1.naix"
+#include "demo3d.naix"
 #include "title/title.h"
 
 #ifdef PM_DEBUG
@@ -44,10 +49,39 @@
 // タイトル画面の長さ
 #define TOTAL_WAIT      (60*78)
 
+// 上下画面を入れ替えるフレーム
+#define TITLE_FLIP_WAIT   ( 678 )
+
+// 伝説ポケモンが鳴くフレーム
+#define POKE_VOICE_FRAME    ( 4580 )
+
 /// 入力トリガマスク
 #define NEXT_PROC_MASK    ( PAD_BUTTON_START | PAD_BUTTON_A )
 #define BACKUP_ERASE_MASK ( PAD_KEY_UP | PAD_BUTTON_SELECT | PAD_BUTTON_B )
 #define MIC_TEST_MASK     ( PAD_KEY_DOWN | PAD_BUTTON_X | PAD_BUTTON_Y )
+
+///フォントが使用するパレット番号
+#define D_FONT_PALNO  (0xa)
+///アイテムアイコンのパレット展開位置
+#define D_MATSU_ICON_PALNO    (0)
+///[PUSH START BUTTON]の点滅間隔
+#define PUSH_TIMER_WAIT     (45)
+
+///タイトルロゴBGのBGプライオリティ
+enum{
+  BGPRI_MSG = 0,
+  BGPRI_TITLE_LOGO = 2,
+  BGPRI_TITLE_BACK = 3,
+  BGPRI_3D = 1,
+  BGPRI_BKGR = 2,
+};
+
+enum{
+  FRAME_BKGR = GFL_BG_FRAME3_M,   // メイン画面背景
+  FRAME_MSG  = GFL_BG_FRAME1_S,   // メッセージフレーム
+  FRAME_LOGO = GFL_BG_FRAME3_S,   // タイトルロゴのBGフレーム
+  FRAME_BACK = GFL_BG_FRAME2_S,   // タイトルロゴのBGフレーム
+};
 
 
 /// シーケンスID定義
@@ -56,6 +90,7 @@ enum{
   SEQ_SETUP,
   SEQ_FADEIN,
   SEQ_MAIN,
+  SEQ_VOICE_PLAY,
   SEQ_NEXT,
   SEQ_FADEOUT,
   SEQ_END,
@@ -99,8 +134,6 @@ typedef struct{
   PRINT_STREAM*   printStream;
   GFL_MSGDATA*    mm;
   STRBUF*         strbufENG;
-  int             push_timer;       //[PUSH START BUTTON]の点滅間隔をカウント
-  int             push_visible;
   int             scrol_work;
 }G2D_CONTROL;
 
@@ -108,6 +141,9 @@ typedef struct{
   GFL_G3D_UTIL*     g3Dutil;
   u16               g3DutilUnitIdx;
   GFL_G3D_LIGHTSET* g3Dlightset;
+  ICA_ANIME* icaAnime;
+  GFL_G3D_CAMERA* camera;
+
 }G3D_CONTROL;
 
 typedef struct{
@@ -132,6 +168,7 @@ typedef struct {
   OAM_CONTROL   COam;
   
   u32           totalWait;
+  int           voiceIndex;
 }TITLE_WORK;
 
 //==============================================================================
@@ -181,6 +218,7 @@ static void releaseG2Dcontrol(G2D_CONTROL* CG2d);
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID);
 static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID);
 static void releaseG3Dcontrol(G3D_CONTROL* CG3d);
+static void setLegendPokeVoiceScene( G3D_CONTROL *CG3d );
 
 static void setupOAMcontrol(OAM_CONTROL* COam, HEAPID heapID);
 static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID);
@@ -190,12 +228,12 @@ static void MainFunc(TITLE_WORK* tw);
 static void VintrFunc(GFL_TCB *tcb, void *work);
 //--------------------------------------------------------------
 /**
- * @brief   
+ * @brief   タイトル画面初期化
  *
- * @param   proc    
+ * @param   proc  
  * @param   seq   
  * @param   pwk   
- * @param   mywk    
+ * @param   mywk  タイトル画面ワーク（ここで確保）
  *
  * @retval  
  */
@@ -205,7 +243,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
   TITLE_WORK *tw;
   
   //ヒープ作成
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TITLE_DEMO, 0x70000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_TITLE_DEMO, 0x120000 );
   tw = GFL_PROC_AllocWork( proc, sizeof(TITLE_WORK), HEAPID_TITLE_DEMO );
   GFL_STD_MemClear(tw, sizeof(TITLE_WORK));
   tw->heapID = HEAPID_TITLE_DEMO;
@@ -224,11 +262,49 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
   return GFL_PROC_RES_FINISH;
 }
 
-//--------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------------
 /**
- * PROC Main
+ * @brief 経過時間で画面切り替えや終了遷移を管理する
+ *
+ * @param   tw    
  */
-//--------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+static void _timewait_func( TITLE_WORK *tw )
+{
+  // 指定フレームに来ると上下画面が切り替わる
+  if(tw->totalWait==TITLE_FLIP_WAIT){
+    GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
+
+    GFL_BG_SetVisible(FRAME_BACK, VISIBLE_OFF);
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+  }
+  
+
+  // 表示時間判別処理
+  tw->totalWait++;
+  if(tw->totalWait > TOTAL_WAIT){
+    tw->mode = END_TIMEOUT;
+    tw->seq = SEQ_NEXT;
+  }
+
+}
+
+
+
+//=============================================================================================
+/**
+ * @brief タイトル画面メイン
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk  タイトル画面ワーク
+ *
+ * @retval  GFL_PROC_RESULT   
+ */
+//=============================================================================================
 GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   TITLE_WORK* tw = mywk;
@@ -268,7 +344,19 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     // ゲーム開始
     if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
       tw->mode = END_SELECT;
-      tw->seq = SEQ_NEXT;
+      tw->seq  = SEQ_VOICE_PLAY;
+//      tw->seq  = SEQ_NEXT;
+      tw->voiceIndex = PMVOICE_Play(  MONSNO_ZEKUROMU,  0,  64, FALSE,  
+                    0,  // コーラスボリューム差
+                    0,  // 再生速度差
+                    FALSE,    // 逆再生フラグ
+                    0   // ユーザーパラメーター 
+                    );
+      setLegendPokeVoiceScene( &tw->CG3d );
+      GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+      GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
+      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+      PMSND_FadeOutBGM( 4 );
       break;
     }
     // セーブデータ初期化
@@ -291,14 +379,16 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
       break;
     }
 #endif  // PM_DEBUG
-    // 表示時間判別処理
-    tw->totalWait++;
-    if(tw->totalWait > TOTAL_WAIT){
-      tw->mode = END_TIMEOUT;
-      tw->seq = SEQ_NEXT;
-    }
-    break;
 
+    // 経過時間処理
+    _timewait_func( tw );
+    break;
+  case SEQ_VOICE_PLAY:
+    if(PMVOICE_CheckPlay(tw->voiceIndex)==FALSE){
+      tw->seq  = SEQ_NEXT;
+    }
+    MainFunc(tw);
+    break;
   case SEQ_NEXT:
     // FADEOUT設定
     GFL_FADE_SetMasterBrightReq
@@ -342,11 +432,18 @@ static void HudsonInit( void )
 }
 #endif // DEBUG_ONLY_FOR_hudson
 
-//--------------------------------------------------------------------------
+//=============================================================================================
 /**
- * PROC Quit
+ * @brief タイトル画面終了
+ *
+ * @param   proc    
+ * @param   seq   
+ * @param   pwk   
+ * @param   mywk  タイトル画面ワーク
+ *
+ * @retval  GFL_PROC_RESULT   
  */
-//--------------------------------------------------------------------------
+//=============================================================================================
 GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
   TITLE_WORK * tw = mywk;
@@ -388,9 +485,13 @@ GFL_PROC_RESULT TitleProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * myw
 //  Init
 //
 //==============================================================================
-//==============================================================================
-//  I/O
-//==============================================================================
+//----------------------------------------------------------------------------------
+/**
+ * @brief 画面初期化
+ *
+ * @param   none    
+ */
+//----------------------------------------------------------------------------------
 static void initIO(void)
 {
   // 各種効果レジスタ初期化
@@ -412,16 +513,23 @@ static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,           // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,     // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_64_E,               // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_16_G,               // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,        // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_16_I,           // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
   GX_VRAM_TEX_01_AB,              // テクスチャイメージスロット
-  GX_VRAM_TEXPLTT_01_FG,          // テクスチャパレットスロット
+  GX_VRAM_TEXPLTT_0123_E,          // テクスチャパレットスロット
   GX_OBJVRAMMODE_CHAR_1D_64K,     // メインOBJマッピングモード
   GX_OBJVRAMMODE_CHAR_1D_32K,     // サブOBJマッピングモード
 };
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief VRAM 設定
+ *
+ * @param   none    
+ */
+//----------------------------------------------------------------------------------
 static void initVRAM(void)
 {
   static const GFL_BG_SYS_HEADER sysHeader = {
@@ -437,9 +545,13 @@ static void initVRAM(void)
 //  Function
 //
 //==============================================================================
-//==============================================================================
-//  Main
-//==============================================================================
+//----------------------------------------------------------------------------------
+/**
+ * @brief 常駐処理
+ *
+ * @param   tw    
+ */
+//----------------------------------------------------------------------------------
 static void MainFunc(TITLE_WORK* tw)
 {
   mainSystem(&tw->CSys, tw->heapID);
@@ -448,9 +560,14 @@ static void MainFunc(TITLE_WORK* tw)
   mainOAMcontrol(&tw->COam, tw->heapID);
 }
 
-//==============================================================================
-//  VSync
-//==============================================================================
+//----------------------------------------------------------------------------------
+/**
+ * @brief VBLANK処理
+ *
+ * @param   tcb   
+ * @param   work    
+ */
+//----------------------------------------------------------------------------------
 static void VintrFunc(GFL_TCB *tcb, void *work)
 {
   GFL_CLACT_SYS_VBlankFunc();
@@ -467,12 +584,20 @@ static void VintrFunc(GFL_TCB *tcb, void *work)
 #define DTCM_SIZE   (0x1000)
 
 //------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
+/**
+ * @brief   基本システム初期化
+ *
+ * @param   CSys    SYS_CONTROL
+ * @param   heapID  
+ */
+//----------------------------------------------------------------------------------
 static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID)
 {
   GFL_BG_Init( heapID );
   GFL_BMPWIN_Init( heapID );
-  GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
-                GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
+  GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K,
+                GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
                 DTCM_SIZE, heapID, NULL );
   GFL_FONTSYS_Init();   // 初期化のみリリースなし
 
@@ -508,28 +633,6 @@ static void releaseSystem(SYS_CONTROL* CSys)
 //==============================================================================
 //  G2DControl
 //==============================================================================
-///フォントが使用するパレット番号
-#define D_FONT_PALNO  (0xa)
-///アイテムアイコンのパレット展開位置
-#define D_MATSU_ICON_PALNO    (0)
-///[PUSH START BUTTON]の点滅間隔
-#define PUSH_TIMER_WAIT     (45)
-
-///タイトルロゴBGのBGプライオリティ
-enum{
-  BGPRI_MSG = 0,
-  BGPRI_TITLE_LOGO = 2,
-  BGPRI_TITLE_BACK = 3,
-  BGPRI_3D = 1,
-  BGPRI_BKGR = 2,
-};
-
-enum{
-  FRAME_BKGR = GFL_BG_FRAME3_M,     // メイン画面背景
-  FRAME_MSG  = GFL_BG_FRAME1_S,    // メッセージフレーム
-  FRAME_LOGO = GFL_BG_FRAME3_S,   // タイトルロゴのBGフレーム
-  FRAME_BACK = GFL_BG_FRAME2_S,   // タイトルロゴのBGフレーム
-};
 
 //--------------------------------------------------------------
 static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
@@ -683,20 +786,6 @@ static void releaseG2Dcontrol(G2D_CONTROL* CG2d)
 //==============================================================================
 //  G3DControl
 //==============================================================================
-static const GFL_G3D_LOOKAT cameraLookAt = {
-  //{ -252.446045*FX32_ONE, 268.627930*FX32_ONE, 721.645996*FX32_ONE }, //カメラの位置(＝視点)
-  //{ -477.457031*FX32_ONE, 205.554199*FX32_ONE, 784.570801*FX32_ONE }, //カメラの位置(＝視点)
-  { -578.636963*FX32_ONE, 548.796875*FX32_ONE, 874.053223*FX32_ONE }, //カメラの位置(＝視点)
-  { 0, FX32_ONE, 0 },                       //カメラの上方向
-  //{ 110.435803*FX32_ONE, 1395.428467*FX32_ONE, 279.511475*FX32_ONE }, //カメラの焦点(＝注視点)
-  //{ 195.185791*FX32_ONE, 1299.894775*FX32_ONE, 189.700439*FX32_ONE }, //カメラの焦点(＝注視点)
-  { 195.185791*FX32_ONE, 1185.452637*FX32_ONE, 189.700439*FX32_ONE }, //カメラの焦点(＝注視点)
-};
-#define cameraPerspway  ( 30/2 * PERSPWAY_COEFFICIENT )
-#define cameraAspect  ( FX32_ONE * 4/3 )
-#define cameraNear    ( 32 << FX32_SHIFT )
-#define cameraFar   ( 2048 << FX32_SHIFT )
-
 //ライト初期設定データ
 static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
   { 0, {{ (FX16_ONE-1), -(FX16_ONE-1)/2, -(FX16_ONE-1) }, GX_RGB(31,31,31) } },
@@ -706,58 +795,78 @@ static const GFL_G3D_LIGHT_DATA light0Tbl[] = {
 };
 static const GFL_G3D_LIGHTSET_SETUP light0Setup = { light0Tbl, NELEMS(light0Tbl) };
 
-#define g3DanmRotateSpeed ( 0x100 )
-#define g3DanmFrameSpeed  ( FX32_ONE )
-
-static const GFL_G3D_OBJSTATUS drawStatus[] = {
-  {
-    { 0, 0, 0 },                                        //座標
-    { FX32_ONE, FX32_ONE, FX32_ONE },                   //スケール
-    { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, //回転
-  },
-  {
-    //{ 0xfffebef9, 0x00378800, 0x0019a82f }, //座標
-    //{ 0xffffecf9, 0x00392c00, 0x001a122f }, //座標
-    { 0xffff98f9, 0x00392c00, 0x0019902f }, //座標
-    //{ 0x3000, 0x3000, 0x3000 },                     //スケール
-    { 0x4600, 0x4600, 0x4600 },                     //スケール
-    { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },         //回転
-  },
+static const GFL_G3D_OBJSTATUS drawStatus = {
+  { 0, 0, 0 },                                        //座標
+  { FX32_ONE, FX32_ONE, FX32_ONE },                   //スケール
+  { FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE }, //回転
 };
 
+
 enum{
-  G3DRES_BRIDGE_BMD = 0,
-  G3DRES_PM_BMD,
-  G3DRES_PM_BCA,
+  G3DRES_01_BMD = 0,
+  G3DRES_01_BCA,
+  G3DRES_02_BMD,
+  G3DRES_02_BCA,
+  G3DRES_03_BMD,
+  G3DRES_03_BCA,
 };
 
 //読み込む3Dリソース
+#if PM_VERSION == VERSION_BLACK
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-  { ARCID_TITLETEST, NARC_title1_h01_all_00002_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_TITLETEST, NARC_title1_wbpm_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_TITLETEST, NARC_title1_wbpm_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
 };
+
+#else
+static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
+};
+
+#endif
 
 //3Dアニメ
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
-  { G3DRES_PM_BCA, 0  },
+  { G3DRES_01_BCA, 0  },
+};
+static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
+  { G3DRES_02_BCA, 0  },
+};
+static const GFL_G3D_UTIL_ANM g3Dutil_anm3Tbl[] = {
+  { G3DRES_03_BCA, 0  },
 };
 
 //3Dオブジェクト設定テーブル
 static const GFL_G3D_UTIL_OBJ g3Dutil_objTbl[] = {
   {
-    G3DRES_BRIDGE_BMD,    //モデルリソースID
-    0,                    //モデルデータID(リソース内部INDEX)
-    G3DRES_BRIDGE_BMD,    //テクスチャリソースID
-    NULL,                 //アニメテーブル(複数指定のため)
-    0,                    //アニメリソース数
+    G3DRES_01_BMD,          //モデルリソースID
+    0,                      //モデルデータID(リソース内部INDEX)
+    G3DRES_01_BMD,          //テクスチャリソースID
+    g3Dutil_anm1Tbl,        //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anm1Tbl),//アニメリソース数
   },
   {
-    G3DRES_PM_BMD,        //モデルリソースID
+    G3DRES_02_BMD,        //モデルリソースID
     0,                    //モデルデータID(リソース内部INDEX)
-    G3DRES_PM_BMD,        //テクスチャリソースID
-    g3Dutil_anm1Tbl,      //アニメテーブル(複数指定のため)
-    NELEMS(g3Dutil_anm1Tbl),  //アニメリソース数
+    G3DRES_02_BMD,        //テクスチャリソースID
+    g3Dutil_anm2Tbl,      //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anm2Tbl),  //アニメリソース数
+  },
+  {
+    G3DRES_03_BMD,        //モデルリソースID
+    0,                    //モデルデータID(リソース内部INDEX)
+    G3DRES_03_BMD,        //テクスチャリソースID
+    g3Dutil_anm3Tbl,      //アニメテーブル(複数指定のため)
+    NELEMS(g3Dutil_anm3Tbl),  //アニメリソース数
   },
 };
 
@@ -768,55 +877,79 @@ static const GFL_G3D_UTIL_SETUP g3Dutil_setup = {
   NELEMS(g3Dutil_objTbl),   //オブジェクト数
 };
 
+// リソーステーブル数
 #define G3DUTIL_RESCOUNT  (NELEMS(g3Dutil_resTbl))
+// アニメOBJ数
 #define G3DUTIL_OBJCOUNT  (NELEMS(g3Dutil_objTbl))
 
-#if 0
-VecFx32 debugVec;
-fx32 debugScale;
-#endif
+
+static const VecFx32 sc_CAMERA_PER_POS    = { 0,0,FX32_CONST( 0 ) };  //位置
+static const VecFx32 sc_CAMERA_PER_UP     = { 0,FX32_ONE,0 };         //上方向
+static const VecFx32 sc_CAMERA_PER_TARGET = { 0,0,FX32_CONST( 0 ) };  //ターゲット
+
 //--------------------------------------------------------------
+//----------------------------------------------------------------------------------
+/**
+ * @brief 3D初期化
+ *
+ * @param   CG3d    
+ * @param   heapID    
+ */
+//----------------------------------------------------------------------------------
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 {
   u16 objIdx;
   
-  CG3d->g3Dutil = GFL_G3D_UTIL_Create(G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, heapID);
+  CG3d->g3Dutil = GFL_G3D_UTIL_Create( G3DUTIL_RESCOUNT, G3DUTIL_OBJCOUNT, heapID );
   CG3d->g3DutilUnitIdx = GFL_G3D_UTIL_AddUnit( CG3d->g3Dutil, &g3Dutil_setup );
 
   //アニメーションを有効にする
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
+  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 0), 0); 
   GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 1), 0); 
+  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 2), 0); 
 
-  //モデル１のマテリアル再設定
+
+  // カメラ作成
   {
-    NNSG3dResFileHeader* fs = GFL_G3D_GetResourceFileHeader
-                          (GFL_G3D_UTIL_GetResHandle(CG3d->g3Dutil, G3DRES_PM_BMD));
-    NNSG3dResMdlSet* ms = NNS_G3dGetMdlSet(fs);
-    NNSG3dResMdl* pm = NNS_G3dGetMdlByIdx(ms, 0);
+    fx32 near = FX32_CONST(0.100);
+    fx32 far  = FX32_ONE * 2048;
+    fx32 fovySin, fovyCos;
+    fx32 scale_w = FX32_CONST(0.1 );
+    
+    fovySin = FX_SinIdx( (FX32_CONST(60.0)>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
+    fovyCos = FX_CosIdx( (FX32_CONST(60.0)>>FX32_SHIFT) / 2 * PERSPWAY_COEFFICIENT );
 
-    NNS_G3dMdlSetMdlAmbAll(pm, GX_RGB(16,16,16));
+    CG3d->camera = GFL_G3D_CAMERA_CreateFrustumByPersPrmW( 
+                  &sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET,
+                  fovySin, fovyCos, defaultCameraAspect, near, far, scale_w, heapID );
   }
+  // カメラicaデータをロード
+  CG3d->icaAnime = ICA_ANIME_CreateStreamingAlloc(
+      heapID, ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_camera_bin, 10 );
 
-  //カメラセット
-  {
-    GFL_G3D_PROJECTION initProjection = 
-      { GFL_G3D_PRJPERS, 0, 0, cameraAspect, 0, cameraNear, cameraFar, 0 };
-    initProjection.param1 = FX_SinIdx( cameraPerspway ); 
-    initProjection.param2 = FX_CosIdx( cameraPerspway ); 
-    GFL_G3D_SetSystemProjection( &initProjection ); 
-    GFL_G3D_SetSystemLookAt( &cameraLookAt ); 
-  }
+
   //ライトセット
   CG3d->g3Dlightset = GFL_G3D_LIGHT_Create( &light0Setup, heapID );
   GFL_G3D_LIGHT_Switching(CG3d->g3Dlightset);
 
   GFL_BG_SetBGControl3D(BGPRI_3D);
-#if 0
-  debugVec = drawStatus[1].trans;
-  debugScale = drawStatus[1].scale.x;
-#endif
+
+  G3X_AntiAlias( FALSE );     //  アンチエイリアス
+  G3X_AlphaTest( FALSE, 16 ); //  アルファテスト　　オフ
+  G3X_AlphaBlend( TRUE );     //  アルファブレンド　オン
+
+
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 3D描画メイン
+ *
+ * @param   CG3d    
+ * @param   heapID    
+ */
+//----------------------------------------------------------------------------------
 static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 {
   GFL_G3D_OBJ*  g3Dobj;
@@ -824,50 +957,84 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
 
+  // ICAカメラ更新
+  ICA_ANIME_IncAnimeFrameNoLoop( CG3d->icaAnime, FX32_ONE );
+
+  // ICAカメラ座標を設定
+  ICA_CAMERA_SetCameraStatus( CG3d->camera, CG3d->icaAnime );
+
+  // カメラ切り替え
+  GFL_G3D_CAMERA_Switching( CG3d->camera );
+
+
+  // 描画
   GFL_G3D_DRAW_Start();
   GFL_G3D_DRAW_SetLookAt();
   {
     int i;
 
     for(i=0; i<NELEMS(g3Dutil_objTbl); i++){
-#if 1
       g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
-      GFL_G3D_DRAW_DrawObject( g3Dobj, &drawStatus[i]);
-#else
-      GFL_G3D_OBJSTATUS status;
-      status = drawStatus[i];
-      if(i==1){ VEC_Set(&status.trans, debugVec.x, debugVec.y, debugVec.z); }
-
-      g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
-      GFL_G3D_DRAW_DrawObject( g3Dobj, &status);
-#endif
+      GFL_G3D_DRAW_DrawObject( g3Dobj, &drawStatus);  // 全部デフォ位置でOK
     }
   }
   GFL_G3D_DRAW_End();
 
+  // アニメフレーム進める
   {
-    g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + 1 );
-    GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE/2 );
+    int i;
+    for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
+      g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
+      GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
+    }
   }
-#if 0
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_LEFT){ debugVec.x -= FX32_ONE/8; }
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT){ debugVec.x += FX32_ONE/8; }
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_UP){ debugVec.z -= FX32_ONE/8; }
-  if(GFL_UI_KEY_GetCont() & PAD_KEY_DOWN){ debugVec.z += FX32_ONE/8; }
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_Y){ debugVec.y -= FX32_ONE/8; }
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_X){ debugVec.y += FX32_ONE/8; }
-
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_L){ debugScale -= FX32_ONE/8; }
-  if(GFL_UI_KEY_GetCont() & PAD_BUTTON_R){ debugScale += FX32_ONE/8; }
-#endif
 }
 
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 3D関連解放
+ *
+ * @param   CG3d    
+ */
+//----------------------------------------------------------------------------------
 static void releaseG3Dcontrol(G3D_CONTROL* CG3d)
 {
+  // カメラICA解放
+  ICA_ANIME_Delete( CG3d->icaAnime );
+
+  // カメラ破棄
+  GFL_G3D_CAMERA_Delete( CG3d->camera );
   GFL_G3D_LIGHT_Delete( CG3d->g3Dlightset );
   GFL_G3D_UTIL_DelUnit( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
   GFL_G3D_UTIL_Delete( CG3d->g3Dutil );
 }
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 伝説ポケが鳴くシーンへ飛ばす
+ *
+ * @param   CG3d    
+ */
+//----------------------------------------------------------------------------------
+static void setLegendPokeVoiceScene( G3D_CONTROL *CG3d )
+{
+  GFL_G3D_OBJ*  g3Dobj;
+  u16           objIdx;
+  int i;
+  int anmFrm = POKE_VOICE_FRAME*FX32_ONE;
+
+  ICA_ANIME_SetAnimeFrame( CG3d->icaAnime, anmFrm );
+  objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
+  for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
+    g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
+    GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, 0, &anmFrm );
+  }
+  
+}
+
 
 //==============================================================================
 //  OAMControl
