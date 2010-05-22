@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T19:26:50"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:19:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1490" top="328" right="2195" bottom="956" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -384,7 +384,7 @@
 ポケモンが　いないよ！！</language>
 	</row>
 
-	<row id="msg_c08_man1_05w_a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,,">
+	<row id="msg_c08_man1_05w_a">
 		<comment>♂：WHITEver
 ・はい選択
 　「じゅうでん」は覚えているが
@@ -599,7 +599,7 @@
 ポケモンが　いないよ！！</language>
 	</row>
 
-	<row id="msg_c08_man1_05b_a" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#80ff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c08_man1_05b_a" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
 		<comment>♂：BLACKver
 ・はい選択
 　「じゅうでん」は覚えているが
