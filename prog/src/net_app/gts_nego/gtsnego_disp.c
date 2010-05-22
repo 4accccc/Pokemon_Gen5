@@ -556,7 +556,7 @@ void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
       if(palette== _TOUCHBAR_PAL1){
         int stb[]={  0,11};
         int paln[]={ 9, 4};
-        _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 1);
+        _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
       }
       else{
         int stb[]={  0,11};
