@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-20T20:39:17"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:13:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -292,10 +292,9 @@
 	</lock>
 
 
-	<row id="msg_d04r0401_hakaim7_01">
+	<row id="msg_d04r0401_hakaim7_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♂
 ・GRIDX=16、GRIDZ=18、下向き
-・戦闘後メッセージ表示後に再度会話
 ・トレーナーIDはhakaim1_07</comment>
 		<attribute name="キャラ指定">プラズマ団♂
 hakaim1_07</attribute>
@@ -305,10 +304,9 @@ hakaim1_07</attribute>
 おまえなんかに　負けるなんて……</language>
 	</row>
 
-	<row id="msg_d04r0401_hakaiw2_01">
+	<row id="msg_d04r0401_hakaiw2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>♀
 ・GRIDX=5、GRIDZ=21、右向き
-・戦闘後メッセージ表示後に再度会話
 ・トレーナーIDはhakaiw1_02</comment>
 		<attribute name="キャラ指定">プラズマ団♀
 hakaiw1_02</attribute>

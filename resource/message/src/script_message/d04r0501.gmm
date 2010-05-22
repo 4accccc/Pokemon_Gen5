@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-02T20:47:27"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:07:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1309" top="166" right="2014" bottom="794" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -295,7 +295,6 @@
 	<row id="msg_d04r0501_hakaim8_01">
 		<comment>♂
 ・GRIDX=13、GRIDZ=19、下向き
-・戦闘後メッセージ表示後に再度会話
 ・トレーナーIDはhakaim1_08</comment>
 		<attribute name="キャラ指定">プラズマ団♂
 hakaim1_08</attribute>
@@ -312,7 +311,6 @@ hakaim1_08</attribute>
 	<row id="msg_d04r0501_hakaiw3_01">
 		<comment>♀
 ・GRIDX=12、GRIDZ=19、下向き
-・戦闘後メッセージ表示後に再度会話
 ・トレーナーIDはhakaiw1_03</comment>
 		<attribute name="キャラ指定">プラズマ団♀
 hakaiw1_03</attribute>
