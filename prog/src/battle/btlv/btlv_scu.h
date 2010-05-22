@@ -122,6 +122,10 @@ extern void BTLV_SCU_StartCommWaitInfo( BTLV_SCU* wk );
 extern BOOL BTLV_SCU_WaitCommWaitInfo( BTLV_SCU* wk );
 extern void BTLV_SCU_ClearCommWaitInfo( BTLV_SCU* wk );
 
+
+extern void BTLV_SCU_MsgWinHide_Start( BTLV_SCU* wk );
+extern BOOL BTLV_SCU_MsgWinHide_Wait( BTLV_SCU* wk );
+
 //=============================================================================================
 //  録画再生時フェードアウト処理
 //=============================================================================================

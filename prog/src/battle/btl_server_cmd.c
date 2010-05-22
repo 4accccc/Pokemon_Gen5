@@ -169,6 +169,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_11byte,           // SC_ACT_HENSIN,
   SC_ARGFMT_53bit_2byte,      // SC_ACT_MIGAWARI_DAMAGE
   SC_ARGFMT_2byte,            // SC_ACT_WIN_BGM
+  SC_ARGFMT_1byte,            // SC_ACT_MSGWIN_HIDE
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
   SC_ARGFMT_12byte, // SC_MSG_WAZA

@@ -106,6 +106,7 @@ typedef enum {
   SC_ACT_HENSIN,            ///< へんしん
   SC_ACT_MIGAWARI_DAMAGE,   ///< みがわりダメージ
   SC_ACT_WIN_BGM,           ///< 勝利BGM再生
+  SC_ACT_MSGWIN_HIDE,       ///< メッセージウィンドウフェードアウト
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
@@ -540,6 +541,10 @@ static inline void SCQUE_PUT_ACT_MigawariDamage( BTL_SERVER_CMD_QUE* que, u8 def
 static inline void SCQUE_PUT_ACT_PlayWinBGM( BTL_SERVER_CMD_QUE* que, u16 bgmNo )
 {
   SCQUE_PUT_Common( que, SC_ACT_WIN_BGM, bgmNo );
+}
+static inline void SCQUE_PUT_ACT_MsgWinHide( BTL_SERVER_CMD_QUE* que, u8 dmy )
+{
+  SCQUE_PUT_Common( que, SC_ACT_MSGWIN_HIDE, dmy );
 }
 
 

@@ -759,7 +759,7 @@ u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 }
 //=============================================================================================
 /**
- * ワザPP値が満タンかどうかチェック
+ * ワザPP値に回復の余地があるか判定
  *
  * @param   pp
  * @param   wazaIdx
@@ -770,8 +770,19 @@ u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 BOOL BPP_WAZA_IsPPFull( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 {
   GF_ASSERT(wazaIdx < bpp->wazaCnt);
-  return  bpp->waza[wazaIdx].surface.pp == bpp->waza[wazaIdx].surface.ppMax;
+
+  {
+    const BPP_WAZA* waza = &bpp->waza[wazaIdx];
+
+    if( (waza->truth.number != WAZANO_NULL)
+    &&  (waza->truth.pp == waza->truth.ppMax)
+    ){
+      return TRUE;
+    }
+    return FALSE;
+  }
 }
+
 //=============================================================================================
 /**
  * ワザPP値を減少
@@ -854,16 +865,27 @@ void BPP_WAZA_SetUsedFlag_Org( BTL_POKEPARAM* bpp, u8 wazaIdx )
  * @param   wazaIdx
  * @param   value
  *
+ * @retval  WazaID    回復したワザナンバー
  */
 //=============================================================================================
-void BPP_WAZA_IncrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
+WazaID BPP_WAZA_IncrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
 {
   GF_ASSERT(wazaIdx < bpp->wazaCnt);
 
-  bpp->waza[wazaIdx].surface.pp += value;
-  if( bpp->waza[wazaIdx].surface.pp > bpp->waza[wazaIdx].surface.ppMax )
   {
-    bpp->waza[wazaIdx].surface.pp = bpp->waza[wazaIdx].surface.ppMax;
+    BPP_WAZA* wp = &bpp->waza[wazaIdx];
+
+    wp->truth.pp += value;
+    if( wp->truth.pp > wp->truth.ppMax )
+    {
+      wp->truth.pp = wp->truth.ppMax;
+    }
+
+    if( wp->fLinked ){
+      wp->surface.pp = wp->truth.pp;
+    }
+
+    return wp->truth.number;
   }
 }
 //=============================================================================================

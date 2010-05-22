@@ -362,7 +362,7 @@ extern void BPP_HpZero( BTL_POKEPARAM* pp );
 extern void BPP_WAZA_DecrementPP( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BPP_WAZA_DecrementPP_Org( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern void BPP_WAZA_SetUsedFlag_Org( BTL_POKEPARAM* bpp, u8 wazaIdx );
-extern void BPP_WAZA_IncrementPP( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
+extern WazaID BPP_WAZA_IncrementPP( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value );
 extern BOOL BPP_WAZA_IsLinkOut( const BTL_POKEPARAM* bpp, u8 wazaIdx, WazaID orgWaza );
 extern void BPP_TURNFLAG_Set( BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern void BPP_TURNFLAG_ForceOff( BTL_POKEPARAM* pp, BppTurnFlag flagID );

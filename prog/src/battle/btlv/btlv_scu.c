@@ -283,6 +283,7 @@ static void msgWinVisible_Init( MSGWIN_VISIBLE* wk, GFL_BMPWIN* win );
 static void msgWinVisible_Hide( MSGWIN_VISIBLE* wk );
 static void msgWinVisible_Disp( MSGWIN_VISIBLE* wk, BOOL printAtOnceFlag );
 static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk );
+static void taskMsgWinHide( GFL_TCBL* tcbl, void* wk_adrs );
 static void statwin_setupAll( BTLV_SCU* wk );
 static void statwin_cleanupAll( BTLV_SCU* wk );
 static void statwin_setup( STATUS_WIN* stwin, BTLV_SCU* wk, BtlPokePos pokePos );
@@ -3400,6 +3401,49 @@ static BOOL msgWinVisible_Update( MSGWIN_VISIBLE* wk )
 }
 //----------------------------
 
+typedef struct {
+
+  BTLV_SCU*        parentWork;
+  u32          seq;
+  u8*          pTaskCounter;
+
+}MSGWINHIDE_TASK_WORK;
+
+void BTLV_SCU_MsgWinHide_Start( BTLV_SCU* wk )
+{
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskMsgWinHide, sizeof(MSGWINHIDE_TASK_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  MSGWINHIDE_TASK_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+  twk->parentWork = wk;
+  twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->seq = 0;
+
+  (*(twk->pTaskCounter))++;
+}
+BOOL BTLV_SCU_MsgWinHide_Wait( BTLV_SCU* wk )
+{
+  return ( wk->taskCounter[ TASKTYPE_DEFAULT ] == 0 );
+}
+/**
+ *
+ */
+static void taskMsgWinHide( GFL_TCBL* tcbl, void* wk_adrs )
+{
+  MSGWINHIDE_TASK_WORK* wk = wk_adrs;
+
+  switch( wk->seq ){
+  case 0:
+    msgWinVisible_Hide( &wk->parentWork->msgwinVisibleWork );
+    wk->seq++;
+    break;
+  case 1:
+    if( msgWinVisible_Update( &wk->parentWork->msgwinVisibleWork ) ){
+      (*(wk->pTaskCounter))--;
+      GFL_TCBL_Delete( tcbl );
+    }
+  }
+}
+
 //==============================================================================================
 // HPÅESTATUSÉQÅ[ÉW
 //==============================================================================================
@@ -3927,6 +3971,7 @@ static void bbgp_make( BTLV_SCU* wk, BTLV_BALL_GAUGE_PARAM* bbgp, u8 clientID, B
     }
   }
 }
+
 
 
 //=============================================================================================

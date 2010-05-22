@@ -347,6 +347,7 @@ static BOOL scProc_ACT_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args
 static BOOL scProc_ACT_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_MigawariDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_MsgWinHide( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Exp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL msgPokanCallback( u32 arg );
 static BOOL wazaOboeSeq( BTL_CLIENT* wk, int* seq, BTL_POKEPARAM* bpp );
@@ -4916,6 +4917,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_HENSIN,            scProc_ACT_Hensin         },
     { SC_ACT_MIGAWARI_DAMAGE,   scProc_ACT_MigawariDamage },
     { SC_ACT_WIN_BGM,           scProc_ACT_PlayBGM        },
+    { SC_ACT_MSGWIN_HIDE,       scProc_ACT_MsgWinHide     },
   };
 
 restart:
@@ -6085,6 +6087,26 @@ static BOOL scProc_ACT_PlayBGM( BTL_CLIENT* wk, int* seq, const int* args )
 {
   PMSND_PlayBGM( args[0] );
   return TRUE;
+}
+//---------------------------------------------------------------------------------------
+/**
+ *  MsgWindow フェードアウト
+ *  args .. [0]:dummy
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_MsgWinHide( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  switch( *seq ){
+  case 0:
+    BTLV_MsgWinHide_Start( wk->viewCore );
+    (*seq)++;
+    break;
+  case 1:
+    if( BTLV_MsgWinHide_Wait(wk->viewCore) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //---------------------------------------------------------------------------------------

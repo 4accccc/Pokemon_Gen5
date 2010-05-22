@@ -9296,6 +9296,8 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
       BTL_POKESET_SortByAgility( pokeSet, wk );
     }
 
+    SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
+
     wk->turnCheckStep = 1;
     wk->turnCheckPokeStep = 0;
 
@@ -11051,11 +11053,10 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
 {
   u8 pokeID = BPP_GetID( bpp );
 
-  BPP_WAZA_IncrementPP( bpp, wazaIdx, volume );
+  WazaID waza = BPP_WAZA_IncrementPP( bpp, wazaIdx, volume );
   SCQUE_PUT_OP_PPPlus( wk->que, pokeID, wazaIdx, volume );
   if( itemID != ITEM_DUMMY_DATA )
   {
-    WazaID waza = BPP_WAZA_GetID( bpp, wazaIdx );
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverPP, pokeID, itemID, waza );
   }
 }
@@ -14500,9 +14501,10 @@ static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
-    if( !BPP_IsDead(pp_target) )
+    if( BPP_IsFightEnable(pp_target) )
     {
-      if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx) ){
+      if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx) )
+      {
         scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID );
         handexSub_putString( wk, &param->exStr );
         return 1;
