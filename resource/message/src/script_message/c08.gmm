@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-21T16:58:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:40:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1530,9 +1530,9 @@ WOMAN2</attribute>
 ・WHITEver</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">バトルの　やかた
-ザ・ローテーションバトル！</language>
+ザ・トリプルバトル！</language>
 		<language name="JPN_KANJI" width="256">バトルの館
-ザ・ローテーションバトル！</language>
+ザ・トリプルバトル！</language>
 	</row>
 
 	<row id="msg_c08_sign3_01b" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
@@ -1540,9 +1540,9 @@ WOMAN2</attribute>
 ・BLACKver</comment>
 		<attribute name="キャラクター">看板</attribute>
 		<language name="JPN" width="256">バトルの　やかた
-ザ・トリプルバトル！</language>
+ザ・ローテーションバトル！</language>
 		<language name="JPN_KANJI" width="256">バトルの館
-ザ・トリプルバトル！</language>
+ザ・ローテーションバトル！</language>
 	</row>
 
 	<row id="msg_c08_sign4_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
