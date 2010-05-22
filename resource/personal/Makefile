@@ -25,7 +25,7 @@ TARGETDIR	=
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-.PHONY:	do-build clean
+.PHONY:	do-build clean fake
 
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
@@ -40,3 +40,7 @@ do-build:
 clean:
 	$(MAKE) -f convcsv.mk clean
 	$(MAKE) -f mknarc.mk clean
+
+fake:
+	$(MAKE) -f convcsv.mk fake
+	$(MAKE) -f mknarc.mk fake

@@ -58,13 +58,13 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 LDIRT_CLEAN += $(PERSONAL) $(PERSONAL_NAIX) $(WOTBL) $(EVOTBL) $(PMSTBL) $(PERSONAL_CSV) *.bin
 endif
 
-.PHONY:	do-build
+.PHONY:	do-build fake
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 .SUFFIXES: .s .bin
 
 #パーソナルデータ生成
-do-build: narc $(PERSONAL_CSV)
+do-build: narc #$(PERSONAL_CSV)
 
 narc:
 personal.narc: $(PERFILES)
@@ -76,8 +76,8 @@ evo.narc: $(EVOFILES)
 pms.narc: $(PMSFILES)
 	nnsarc -c -l -n pms.narc pms_*.bin
 
-$(PERSONAL_CSV): personal_wb.csv
-	ruby ../../tools/personal_conv/wazamachine_split.rb personal_wb.csv $(PERSONAL_CSV)
+#$(PERSONAL_CSV): personal_wb.csv
+#	ruby ../../tools/personal_conv/wazamachine_split.rb personal_wb.csv $(PERSONAL_CSV)
 endif
 
 #------------------------------------------------------------------------------
@@ -108,4 +108,15 @@ $(POKEICONDIR)$(ICONSCR):	$(ICONSCR)
 
 $(POKEICONDIR)$(ICONATTR):	$(ICONATTR)
 	$(COPY)	$(ICONATTR) $(POKEICONDIR)
+
+fake:
+	nnsarc -c -l -n -i personal.narc per_*.bin zenkoku_to_chihou.bin
+	nnsarc -c -l -n wotbl.narc wot_*.bin
+	nnsarc -c -l -n evo.narc evo_*.bin
+	nnsarc -c -l -n pms.narc pms_*.bin
+	$(COPY)	$(PERSONAL) $(TARGETDIR)
+	$(COPY)	$(PERSONAL_NAIX) $(TARGETDIR)
+	$(COPY)	$(WOTBL) $(TARGETDIR)
+	$(COPY)	$(EVOTBL) $(TARGETDIR)
+	$(COPY)	$(PMSTBL) $(TARGETDIR)
 

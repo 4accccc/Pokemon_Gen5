@@ -25,7 +25,7 @@ TARGETDIR	=
 #------------------------------------------------------------------------------
 SUBDIRS	=
 
-.PHONY:	do-build clean
+.PHONY:	do-build clean fake
 
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
@@ -40,3 +40,7 @@ do-build:
 clean:
 	$(MAKE) -f cpfile.mk clean
 	$(MAKE) -f mknarc.mk clean
+
+fake:
+	$(MAKE) -f cpfile.mk fake
+	$(MAKE) -f mknarc.mk

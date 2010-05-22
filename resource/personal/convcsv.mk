@@ -49,7 +49,7 @@ include	$(COMMONDEFS_CCTYPE_CW)
 #Moduleルール
 include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 
-.PHONY:	do-build
+.PHONY:	do-build fake
 
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
@@ -70,6 +70,9 @@ do-build: out_end
 
 out_end: personal_wb.csv
 	ruby ../../tools/personal_conv/personal_conv.rb $< ../message/template.gmm
+
+fake:
+	ruby ../../tools/personal_conv/personal_conv.rb personal_wb_fake.csv ../message/template.gmm
 endif
 
 do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE) $(POKELISTDIR)$(POKELIST)

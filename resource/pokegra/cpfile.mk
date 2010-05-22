@@ -34,7 +34,7 @@ COPY_DIR = ./conv/
 #スクリプトが存在するディレクトリを指定
 SCRIPT_DIR = ../../tools/pokegra/
 
-.PHONY:	do-build clean
+.PHONY:	do-build clean fake
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
@@ -45,6 +45,10 @@ normal:
 
 other:
 	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
+
+fake:
+	ruby fake_list_make.rb $(COPY_DIR)otherform_wb.lst $(COPY_DIR)otherform_wb_fake.lst
+	ruby $(SCRIPT_DIR)tschk.rb $(COPY_DIR)otherform_wb_fake.lst ../../../pokemon_wb_doc/pokegra/ $(COPY_DIR)
 
 endif
 
@@ -58,5 +62,4 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	-rm $(COPY_DIR)*.nmc
 	-rm $(COPY_DIR)*.ncl
 endif
-
 
