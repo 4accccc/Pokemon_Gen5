@@ -1824,11 +1824,13 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
 
   if( biw->hit != GFL_UI_TP_HIT_NONE )
   {
-    if( biw->hit < 5 )
+    int hit = biw->hit;
+    BTLV_INPUT_CheckWazaInfoModeMask( &hit );
+    if( hit < 5 )
     { 
       *select = biw->hit;
       *dir    = rotate_result[ biw->rotate_scr ];
-      biw->decide_pos[ biw->active_index ][biw->scr_type ]= biw->hit;
+      biw->decide_pos[ biw->active_index ][biw->scr_type ]= hit;
       biw->hit = GFL_UI_TP_HIT_NONE;
       return TRUE;
     }
@@ -1837,7 +1839,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       biw->cursor_pos = 0;
       biw->decide_pos[ biw->active_index ][biw->scr_type ] = 0;
       SePlayRotateSelect( biw );
-      SetupRotateAction( biw, biw->hit );
+      SetupRotateAction( biw, hit );
       biw->hit = GFL_UI_TP_HIT_NONE;
     }
   }
@@ -4685,7 +4687,8 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
     return hit;
   }
 
-  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )&& ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) )
+  if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) &&
+      ( ( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA ) || ( biw->scr_type == BTLV_INPUT_SCRTYPE_ROTATE ) ) )
   { 
     biw->hit = BTLV_INPUT_SetWazaInfoModeMask( hit );
   }
