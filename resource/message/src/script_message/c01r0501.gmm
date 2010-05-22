@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T20:00:18"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T14:30:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -371,11 +371,11 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">ところでさ　[1:00:トレーナー名:0]
-ぼくと　しょうぶ　しないか？▼
+ぼくと　しょうぶ　してくれないか▼
 しょうぶのとき　どれだけ
 どうぐが　だいじか　ためしたいんだ</language>
 		<language name="JPN_KANJI" width="256">ところでさ　[1:00:トレーナー名:0]
-ぼくと　勝負　しないか？▼
+ぼくと　勝負してくれないか▼
 勝負のとき　どれだけ
 道具が　重要か　試したいんだ</language>
 	</row>
