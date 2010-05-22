@@ -36,8 +36,6 @@
 #include "poke_tool/poke_tool.h"
 #include "pokeicon/pokeicon.h"
 
-#include "net_app/net_bugfix.h"
-
 #include "arc_def.h"
 #include "font/font.naix"
 
