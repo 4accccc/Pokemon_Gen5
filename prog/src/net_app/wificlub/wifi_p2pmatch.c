@@ -4193,7 +4193,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   case WIFI_GAME_BATTLE_SINGLE_ALL:
 //    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _windelandSEcall(wk);
-    _battleCustomSelectMenu(wk);
+    _battleCustomSelectMenu(wk,TRUE);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;
   case WIFI_GAME_VCT:

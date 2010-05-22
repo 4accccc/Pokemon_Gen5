@@ -626,8 +626,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattle1( WIFIP2PMATCH_WORK *wk, int seq )
 {
-
-  _battleCustomSelectMenu(wk);
+  _battleCustomSelectMenu(wk,TRUE);
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
   return seq;
 }
@@ -730,6 +729,7 @@ static int _playerDirectBattleMode2( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     wk->battleMode = ret;
+    wk->battleModeSelect  = ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
@@ -778,7 +778,8 @@ static int _playerDirectBattleRule2( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_CANCEL:
     break;
   default:
-    wk->battleRule = ret;
+    wk->battleRule  = ret;
+    wk->battleRuleSelect  = ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
@@ -828,6 +829,7 @@ static int _playerDirectBattleShooter2( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     wk->pParentWork->shooter =  1-ret;
+    wk->pParentWork->shooterSelect =  1-ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
