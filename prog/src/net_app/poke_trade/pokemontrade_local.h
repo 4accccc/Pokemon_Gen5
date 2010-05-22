@@ -748,7 +748,7 @@ extern BOOL POKEMONTRADEPROC_IsNetworkMode(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_PROC_FadeoutStart(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork);
-extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork );
+extern void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork , const BOOL isTransVBlank );
 extern void IRC_POKETRADE_AllDeletePokeIconResource(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_G3dDraw(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetSubdispGraphicDemo(POKEMON_TRADE_WORK* pWork,int type);

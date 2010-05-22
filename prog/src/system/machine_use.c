@@ -23,7 +23,7 @@ static void myExitCallback(void *arg);
 
 
 //VRAM転送マネージャ定義(NNS関数)
-#define VRAMTRANS_MAN_TASKNUM    (32)
+#define VRAMTRANS_MAN_TASKNUM    (48)
 NNSGfdVramTransferTask    VRAMtransManTaskArray[ VRAMTRANS_MAN_TASKNUM ];
 //=============================================================================================
 //
@@ -87,6 +87,7 @@ void MachineSystem_Init(void)
 		OS_TPrintf("remains of MainRAM = 0x%08x bytes.\n", 
 						(u32)(OS_GetMainArenaHi())-(u32)(OS_GetMainArenaLo()));
 	}
+	OS_TPrintf("[%d]\n",sizeof(NNSGfdVramTransferTask));
 #else
   MachineSystem_MbInitFile();
 #endif

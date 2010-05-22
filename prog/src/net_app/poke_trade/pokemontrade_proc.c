@@ -2760,7 +2760,7 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
 
   IRC_POKETRADE_TrayDisp(pWork);
   IRC_POKETRADE_SendScreenBoxNameChar(pWork);
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , TRUE );
 
   if(!PMSND_CheckPlaySE() && bSE){
     PMSND_PlaySystemSE(POKETRADESE_RIBBON);
@@ -3107,7 +3107,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
          pWork->workBoxno = -1;
          pWork->workPokeIndex = -1;
         _CatchPokemonRelease(pWork);
-        IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);//再描画
+        IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//再描画
 
         _CHANGE_STATE(pWork,_notWazaChangePoke);
       }
@@ -3337,7 +3337,7 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
   GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
   GFL_NET_ReloadIcon();
 
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);  //ポケモンの表示
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );  //ポケモンの表示
 
 }
 

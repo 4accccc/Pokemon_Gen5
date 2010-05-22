@@ -263,7 +263,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_TrayInit(pWork,pWork->subchar2);
 
   _PokeIconCgxLoad( pWork );
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork);
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );
 
 //	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
 	//		pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
@@ -929,7 +929,7 @@ static void _pokeIconPaletteGray(POKEMON_TRADE_WORK* pWork,int line, int i,POKEM
  */
 //------------------------------------------------------------------------------
 //
-static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxData ,int line, int k)
+static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxData ,int line, int k , const BOOL isTransVBlank )
 {
   int i,j;
   
@@ -980,11 +980,28 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
         GFL_CLACT_WK_GetImgProxy( pWork->pokeIcon[k][i], &aproxy );
 
         {
+          GFL_CLACTPOS apos;
           int tray = IRC_TRADE_LINE2TRAY(line, pWork);
           int index = IRC_TRADE_LINE2POKEINDEX(line, i);
 
           int cgxnum = tray*BOX_MAX_POS+index;
-          GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*cgxnum] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
+          GFL_CLACT_WK_GetPos(pWork->pokeIcon[k][i], &apos, CLSYS_DRAW_SUB);
+          if( isTransVBlank == TRUE &&
+              apos.x >= -16 && apos.x <= 256+16)
+          {
+            //表示中はパレットとの更新タイミングの関係でVBLank転送
+            const BOOL ret = NNS_GfdRegisterNewVramTransferTask( NNS_GFD_DST_2D_OBJ_CHAR_SUB , aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], &pWork->pCharMem[4*8*4*4*cgxnum] , 4*8*4*4 );
+            if( ret == FALSE )
+            {
+              //間に合わなかったので通常転送(基本画面外なので問題ないはず
+              GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*cgxnum] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
+            }
+          }
+          else
+          {
+            //初期化中は間に合わないから通常転送
+            GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*cgxnum] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
+          }
           
         }
 //        GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*monsno] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
@@ -1027,10 +1044,26 @@ int POKETRADE_boxScrollNum2Line(POKEMON_TRADE_WORK* pWork)
   else if(pWork->BoxScrollNum < _TEMOTITRAY_MAX){
     line = 1;
   }
-  else{
-    i = (pWork->BoxScrollNum - _TEMOTITRAY_MAX) / _BOXTRAY_MAX; //BOX数
-    line = i * 6 + 2;
-    line += ((pWork->BoxScrollNum - _TEMOTITRAY_MAX) - (i*_BOXTRAY_MAX)) / 27 ;
+  else
+  {
+    const int boxNo = (pWork->BoxScrollNum - _TEMOTITRAY_MAX) / _BOXTRAY_MAX; //BOX数
+    const int boxOfs = (pWork->BoxScrollNum - _TEMOTITRAY_MAX) - (boxNo*_BOXTRAY_MAX);
+    const int baseLine = boxNo * 6 + 2;
+    
+    //Boxの前後には8Dotの余白があるのでそのチェック
+    if( boxOfs < 8 )
+    {
+      line = baseLine;
+    }
+    else
+    if( boxOfs >= _BOXTRAY_MAX - 8 )
+    {
+      line = baseLine + 5;
+    }
+    else
+    {
+      line = baseLine + (boxOfs-8)/24;
+    }
     //OS_TPrintf("LINE %d %d\n", pWork->BoxScrollNum, line);
   }
   return line;
@@ -1080,7 +1113,7 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
  */
 //------------------------------------------------------------------------------
 
-void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork )
+void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork , const BOOL isTransVBlank )
 {
   int j,k,i,line = POKETRADE_boxScrollNum2Line(pWork);
 
@@ -1103,7 +1136,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     for(i=0;i < _LING_LINENO_MAX;i++){
       k =  POKETRADE_Line2RingLineIconGet(pWork->oldLine+i);
       
-      _createPokeIconResource(pWork, boxData,line, k );  //アイコン表示
+      _createPokeIconResource(pWork, boxData,line, k , isTransVBlank );  //アイコン表示
       line++;
       if(line >= pWork->TRADEBOX_LINEMAX){
         line=0;
@@ -1111,7 +1144,6 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     }
   }
   IRC_POKETRADE_PokeIcomPosSet(pWork);
-  
 }
 
 //------------------------------------------------------------------------------
