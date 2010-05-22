@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T17:29:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T20:28:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -532,8 +532,8 @@
 ・続けてwhite_04</comment>
 		<attribute name="キャラ指定">ポケモン
 ムンナ</attribute>
-		<language name="JPN" width="256">……むううん▼</language>
-		<language name="JPN_KANJI" width="256">……むううん▼</language>
+		<language name="JPN" width="256">……むううん</language>
+		<language name="JPN_KANJI" width="256">……むううん</language>
 	</row>
 
 	<row id="msg_d01r0101_white_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -573,8 +573,8 @@
 ・続けて_white_04</comment>
 		<attribute name="キャラ指定">ポケモン
 ムンナ</attribute>
-		<language name="JPN" width="256">ムンナ『……むう！▼</language>
-		<language name="JPN_KANJI" width="256">ムンナ『……むう！▼</language>
+		<language name="JPN" width="256">ムンナ『……むう！</language>
+		<language name="JPN_KANJI" width="256">ムンナ『……むう！</language>
 	</row>
 
 	<row id="msg_d01r0101_white_05" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -640,8 +640,8 @@
 ・続けてhakaim_03</comment>
 		<attribute name="キャラ指定">ポケモン
 ムンナ</attribute>
-		<language name="JPN" width="256">ムンナ『む……にゅ……▼</language>
-		<language name="JPN_KANJI" width="256">ムンナ『む……にゅ……▼</language>
+		<language name="JPN" width="256">ムンナ『む……にゅ……</language>
+		<language name="JPN_KANJI" width="256">ムンナ『む……にゅ……</language>
 	</row>
 
 	<row id="msg_d01r0101_hakaim_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -867,8 +867,8 @@
 ・続けてwhite_07b</comment>
 		<attribute name="キャラ指定">ポケモン
 ムシャーナ</attribute>
-		<language name="JPN" width="256">？？？『むにゃあ！▼</language>
-		<language name="JPN_KANJI" width="256">？？？『むにゃあ！▼</language>
+		<language name="JPN" width="256">？？？『むにゃあ！</language>
+		<language name="JPN_KANJI" width="256">？？？『むにゃあ！</language>
 	</row>
 
 	<row id="msg_d01r0101_white_08" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -927,8 +927,8 @@
 ・続けてpoke_04</comment>
 		<attribute name="キャラ指定">ポケモン
 ムシャーナ</attribute>
-		<language name="JPN" width="256">ムシャーナ『むしゃ？▼</language>
-		<language name="JPN_KANJI" width="256">ムシャーナ『むしゃ？▼</language>
+		<language name="JPN" width="256">ムシャーナ『むしゃ？</language>
+		<language name="JPN_KANJI" width="256">ムシャーナ『むしゃ？</language>
 	</row>
 
 	<row id="msg_d01r0101_poke_04" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -939,8 +939,8 @@
 ・続けてinventor_03</comment>
 		<attribute name="キャラ指定">ポケモン
 ムンナ</attribute>
-		<language name="JPN" width="256">ムンナ『むにぃ▼</language>
-		<language name="JPN_KANJI" width="256">ムンナ『むにぃ▼</language>
+		<language name="JPN" width="256">ムンナ『むにぃ</language>
+		<language name="JPN_KANJI" width="256">ムンナ『むにぃ</language>
 	</row>
 
 	<row id="msg_d01r0101_inventor_03" text-color=",,,,,,,#000000,,,#000000,,,#000000,,,#000000,,">
