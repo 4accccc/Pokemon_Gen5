@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T12:01:32"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T17:54:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -697,7 +697,7 @@
 [1:00:トレーナー名:0]！！▼</language>
 	</row>
 
-	<row id="msg_c05_white_01a" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c05_white_01a" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ・主人公性別：♀
 ・c05ジムバッジ入手後に発動
@@ -831,9 +831,8 @@
 たたかえないんだよ？</language>
 	</row>
 
-	<row id="msg_c05_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c05_backpackerw_01">
+		<comment>♀</comment>
 		<attribute name="キャラクター">BACKPACKERW</attribute>
 		<language name="JPN" width="256">うみ……[BE:01:ページ切り替え（クリア）]
 わたしが　ここで　こぼした　なみだは
@@ -897,10 +896,9 @@
 鍛えている　子供も　おるよ</language>
 	</row>
 
-	<row id="msg_c05_boy2" text-color="#000000,,,#ff0000,,#000000,,,,,,,,,,,,,">
+	<row id="msg_c05_boy2" text-color="#000000,,,,,#000000,,,,,,,,,,,,,">
 		<comment>♀
-・GRIDX=179、GRIDZ=413辺り
-・仮メッセージ</comment>
+・GRIDX=179、GRIDZ=413辺り</comment>
 		<attribute name="キャラクター">BOY2</attribute>
 		<language name="JPN" width="256">かみなりの　ポケモン
 あめの　ポケモン▼
@@ -912,10 +910,9 @@
 あちこち　行ったり　来たりさ</language>
 	</row>
 
-	<row id="msg_c05_rangerw_01" text-color="#000000,,,#ff0000,,#000000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_c05_rangerw_01" text-color="#000000,,,,,#000000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
-・GRIDX=171、GRIDZ=430辺り
-・仮メッセージ</comment>
+・GRIDX=171、GRIDZ=430辺り</comment>
 		<attribute name="キャラクター">RANGERW</attribute>
 		<language name="JPN" width="256">うみの　むこうにも
 いろんな　ひとや▽
