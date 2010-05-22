@@ -6633,18 +6633,20 @@
 
 	<row id="TRID_HAKAIM1_05_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">そして　つよいヤツ　とも
-きいていたが　そのとおり　だな</language>
+きいていたが　そのとおり　だぜ</language>
 		<language name="JPN_KANJI" width="216">そして　強いヤツ　とも
-聞いていたが　そのとおり　だな</language>
+聞いていたが　そのとおり　だぜ</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">オマエは　つよい……▼
-だが　それで　ポケモンは
-シアワセだと　いいきれるのか！？</language>
-		<language name="JPN_KANJI" width="216">オマエは　強い……▼
-だが　それで　ポケモンは
-シアワセだと　いいきれるのか！？</language>
+		<language name="JPN" width="216">……おりるなら
+りゅうさの　まんなかで　じっとしてな▼
+おっと！　これは　やさしさ　じゃない
+なかまに　たおしてもらう　ためだぜ</language>
+		<language name="JPN_KANJI" width="216">……降りるなら
+流砂の　真ん中で　じっとしてな▼
+おっと！　これは　優しさ　じゃない
+仲間に　倒してもらう　ためだぜ</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_06_TRMSG_FIGHT_START">
@@ -6662,10 +6664,14 @@
 	<row id="TRID_HAKAIM1_06_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">オマエの　せいで
 オレの　ポケモン　まけたんだぞ！▽
-かわいそうだと　おもうだろ！！</language>
+かわいそうだと　おもうだろ！！▼
+……しかも　その　つよさ
+ポケモンに　たよっているだけだろ！</language>
 		<language name="JPN_KANJI" width="216">オマエの　せいで
 オレの　ポケモン　負けたんだぞ！▽
-かわいそうだと　思うだろ！！</language>
+かわいそうだと　思うだろ！！▼
+……しかも　その　強さ
+ポケモンに　頼っているだけだろ！</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_07_TRMSG_FIGHT_START">
@@ -6728,16 +6734,22 @@
 
 	<row id="TRID_HAKAIW1_01_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">だれも　せかいを　かえないから
-あたしたちが　ふんとう　してるのに！</language>
+あたしたちが　がんばってるのに！▼
+そう！　あなたに
+Ｎさまの　きもち　わかるの！？</language>
 		<language name="JPN_KANJI" width="216">だれも　世界を　変えないから
-あたしたちが　奮闘してるのに！</language>
+あたしたちが　奮闘してるのに！▼
+そう！　あなたに
+Ｎさまの　気持ち　理解できるの！？</language>
 	</row>
 
 	<row id="TRID_HAKAIW1_02_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">わたし　この　たたかいが　おわれば
-ポケモンたちを　ときはなつのよ▼</language>
-		<language name="JPN_KANJI" width="216">わたし　この戦いが　終われば
-ポケモンたちを　解き放つのよ▼</language>
+		<language name="JPN" width="216">おろかな　トレーナーどもが
+すばらしい　ポケモンを▽
+つかいこなすなんて　ムリなのよ！▼</language>
+		<language name="JPN_KANJI" width="216">愚かな　トレーナーどもが
+すばらしい　ポケモンを▽
+使いこなすなんて　ムリなのよ！▼</language>
 	</row>
 
 	<row id="TRID_HAKAIW1_02_TRMSG_FIGHT_LOSE">
@@ -6748,10 +6760,14 @@
 	</row>
 
 	<row id="TRID_HAKAIW1_02_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あなたのせいで　たたかいが
-まだまだ　つづくじゃないの！</language>
-		<language name="JPN_KANJI" width="216">あなたのせいで　戦いが
-まだまだ　続くじゃないの！</language>
+		<language name="JPN" width="216">まけた　あたしが
+おろかな　トレーナーって　こと！？▼
+なによ！　この　すなまみれ　で
+がんばってる　あたしに　まけなさい！</language>
+		<language name="JPN_KANJI" width="216">負けた　あたしが
+愚かな　トレーナーって　こと！？▼
+なによ！　この　砂まみれ　で
+がんばってる　あたしに　負けなさい！</language>
 	</row>
 
 	<row id="TRID_HAKAIW1_03_TRMSG_FIGHT_START">
@@ -6770,9 +6786,13 @@
 
 	<row id="TRID_HAKAIW1_03_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">くりかえす！　あたしたちと　ちがう
-かんがえの　もちぬしは　ゆるさない！</language>
+かんがえの　もちぬしは　ゆるさない！▼
+……この　したで
+アンタの　おなかまが　おまちかねよ！</language>
 		<language name="JPN_KANJI" width="216">繰り返す！　あたしたちと　違う
-考えの　持ち主は　許さない！</language>
+考えの　持ち主は　許さない！▼
+……この　下で
+アンタの　お仲間が　お待ちかねよ！</language>
 	</row>
 
 	<row id="TRID_MOUNT_04_TRMSG_FIGHT_START">
