@@ -540,30 +540,47 @@ void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
       GFL_STD_MemCopy((void*)HW_DB_OBJ_PLTT, pWork->pVramOBJ, 16*2*16);
       GFL_STD_MemCopy((void*)HW_DB_BG_PLTT, pWork->pVramBG, 16*2*16);
 
-      if(palette== _TOUCHBAR_PAL1)
-      {
-        int stb[]={ 1};
-        int paln[]={15};
-        _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 1);
-      }
-      else
-      {
-        int stb[]={ 0,11};
-        int paln[]={10,5};
-        _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 2);
+      switch(palette){
+      case _PALETTEFADE_PATTERN3:
+        {
+          int stb[]={ 0};
+          int paln[]={16};
+          _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, elementof(stb));
+        }
+        break;
+      case _PALETTEFADE_PATTERN1:
+        {
+          int stb[]={ 1};
+          int paln[]={15};
+          _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 1);
+        }
+        break;
+      case _PALETTEFADE_PATTERN2:
+        {
+          int stb[]={ 0,11};
+          int paln[]={10,5};
+          _PaletteFadeSingle2( pWork,  FADE_SUB_OBJ, stb, paln, 2);
+        }
+        break;
       }
 
-      if(palette== _TOUCHBAR_PAL1){
-        int stb[]={  0,11};
-        int paln[]={ 9, 4};
-        _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
+      switch(palette){
+      case _PALETTEFADE_PATTERN3:
+      case _PALETTEFADE_PATTERN1:
+        {
+          int stb[]={  0,11};
+          int paln[]={ 9, 4};
+          _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
+        }
+        break;
+      case _PALETTEFADE_PATTERN2:
+        {
+          int stb[]={  0,11};
+          int paln[]={ 9, 5};
+          _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
+        }
+        break;
       }
-      else{
-        int stb[]={  0,11};
-        int paln[]={ 9, 5};
-        _PaletteFadeSingle2( pWork,  FADE_SUB_BG, stb, paln, 2);
-      }
-//      _PaletteFadeSingle( pWork,  FADE_SUB_BG, 9);
     }
   }
   else{

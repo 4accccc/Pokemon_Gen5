@@ -1069,7 +1069,7 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
 
  // GTSNEGO_MESSAGE_CancelButtonCreate(pWork->pMessageWork, &_cancelButtonCallback, pWork );
 
-  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _TOUCHBAR_PAL1);
+  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN3);
 
   pWork->dbw->result = EVENT_GTSNEGO_LV;
 
@@ -1372,7 +1372,7 @@ static void _cancelFlash(GTSNEGO_WORK* pWork)
   GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
   GTSNEGO_MESSAGE_DeleteDispLevel(pWork->pMessageWork);
   GTSNEGO_DISP_LevelInputFree(pWork->pDispWork);
-  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
+  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
   
   GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
   GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
@@ -1439,7 +1439,7 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
       _CHANGE_STATE(pWork,_matchKeyMake);
       break;
     case 1:
-      GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
+      GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
       GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_024);
       if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
         GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key3);
@@ -1462,7 +1462,7 @@ static void _friendSelectDecide2( GTSNEGO_WORK *pWork )
   }
   TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, FALSE);
   pWork->pAppTask = GTSNEGO_MESSAGE_MatchOrReturnStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
-  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _TOUCHBAR_PAL2);
+  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN2);
   _CHANGE_STATE(pWork,_friendSelectDecide3);
 }
 
@@ -2066,7 +2066,7 @@ static void _messageEndCheck2(GTSNEGO_WORK* pWork)
         GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_048);
       }
       TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
-      GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
+      GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
       _CHANGE_STATE(pWork,_modeSelectMenuWait);
       break;
     }
@@ -2081,7 +2081,7 @@ static void _messageEndCheck(GTSNEGO_WORK* pWork)
   TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, FALSE);
   pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
 
-  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _TOUCHBAR_PAL1);
+  GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN1);
 
   _CHANGE_STATE(pWork,_messageEndCheck2);
 }
@@ -2164,7 +2164,7 @@ static void _checkReturnState(GTSNEGO_WORK* pWork)
     GFL_NET_SetNoChildErrorCheck(FALSE);
     GFL_NET_StateWifiMatchEnd(TRUE);
 
-    GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _TOUCHBAR_PAL1);
+    GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_NET_StateWifiMatchEnd(TRUE);
     GTSNEGO_DISP_ResetDispSet(pWork->pDispWork);
