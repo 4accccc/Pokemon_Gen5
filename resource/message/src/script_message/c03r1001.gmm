@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T12:58:31"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T14:42:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -321,7 +321,11 @@
 	<row id="msg_c03r1001_woman3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・はい選択時
-・woman3_04表示後、画面暗転</comment>
+・woman3_04表示後、画面暗転＋SE
+・暗転終了
+　→　５％でなつき度＋３０
+　→２５％でなつき度＋１０
+　→７０％でなつき度＋　５</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
 		<language name="JPN" width="256">はーい！
 それでは　はじめますね▼</language>
@@ -329,18 +333,11 @@
 それでは　はじめますね▼</language>
 	</row>
 
-	<row id="msg_c03r1001_woman3_04" text-color="#404040,,,#ffffff,,#404040,#404040,,,,,,#404040,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>♀
-・画面暗転中にこのメッセージ表示→未使用
-・暗転終了
-　→　５％でなつき度＋３０　
-　→２５％でなつき度＋１０　
-　→７０％でなつき度＋　５　</comment>
+	<row id="msg_c03r1001_woman3_04" text-color="#404040,,,#ffffff,,#404040,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<attribute name="キャラ指定">WOMAN3</attribute>
-		<language name="JPN" width="256">もみもみもみもみもみもみもみ
-もみもみもみもみもみもみ……▼</language>
-		<language name="JPN_KANJI" width="256">もみもみもみもみもみもみもみ
-もみもみもみもみもみもみ……▼</language>
+		<language name="JPN" width="256">no data</language>
+		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_c03r1001_woman3_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
