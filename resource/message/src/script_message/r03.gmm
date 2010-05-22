@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T22:09:06"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:53:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -873,7 +873,7 @@
 		<language name="JPN_KANJI" width="256">３番道路</language>
 	</row>
 
-	<row id="msg_r03_sign2_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+	<row id="msg_r03_sign2_01" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>看板分類：タウンマップ</comment>
 		<attribute name="キャラ指定">看板：道路</attribute>
 		<language name="JPN" width="256">３ばんどうろ</language>
