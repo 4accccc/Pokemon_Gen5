@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-10T16:15:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:38:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,9 +294,7 @@
 
 	<row id="msg_d10r0401_poke10_01">
 		<comment>ライ
-・話しかけ戦闘開始前
-
-（仮メッセージ）</comment>
+・話しかけ戦闘開始前</comment>
 		<attribute name="キャラ指定">POKE10</attribute>
 		<language name="JPN" width="256">ヒュラララ！</language>
 		<language name="JPN_KANJI" width="256">ヒュラララ！</language>
@@ -306,9 +304,7 @@
 		<comment>システムメッセージ
 ・戦闘後
 ・ポケモンを倒した/逃げた場合のメッセージ
-殿堂入り後に復活
-
-（仮メッセージ）</comment>
+殿堂入り後に復活</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
 		<language name="JPN" width="256">ポケモンは　ほらあなの　くらがりに
 まぎれて　きえてしまった…</language>
