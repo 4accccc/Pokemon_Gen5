@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T18:12:20"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:22:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,10 +327,10 @@
 ・ストッパー処理
 ・会話</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">さきの　どうろで　もんだいがあって
-いまは　つうこうきんし　ですよ！</language>
-		<language name="JPN_KANJI" width="256">先の道路で　問題があって
-今は　通行禁止　ですよ！</language>
+		<language name="JPN" width="256">このさき　ちょいと　ありまして
+いまは　つうこうきんし　なんですよ</language>
+		<language name="JPN_KANJI" width="256">この先　ちょいと　ありまして
+今は　通行禁止なんですよ</language>
 	</row>
 
 	<row id="msg_r08r0701_policeman_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -338,10 +338,10 @@
 ・ストッパー処理
 ・pos</comment>
 		<attribute name="キャラ指定">POLICEMAN</attribute>
-		<language name="JPN" width="256">さきの　どうろで　もんだいがあって
-いまは　つうこうきんし　ですよ！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">先の道路で　問題があって
-今は　通行禁止　ですよ！[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">このさき　ちょいと　ありまして
+いまは　つうこうきんし　なんですよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">この先　ちょいと　ありまして
+今は　通行禁止なんですよ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
