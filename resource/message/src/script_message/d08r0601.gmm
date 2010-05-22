@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:13:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:38:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -352,9 +352,8 @@
 なにが　強さの源　なんだ？</language>
 	</row>
 
-	<row id="msg_d08r0601_black_03" text-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
-		<attribute name="キャラ指定">友達♂</attribute>
+	<row id="msg_d08r0601_black_03" text-color=",,,#ffffff,,,#ffffff,,,,,,#ffffff,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:20:04"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T15:34:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -434,43 +434,43 @@
 	</row>
 
 	<row id="msg_d05r0101_sage2_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d05r0101_sage2_02" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d05r0101_hakaim_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d05r0101_black_07" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d05r0101_hakaim_02" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d05r0101_workman_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_d05r0101_black_08" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>削除ラベル</comment>
+		<comment>未使用</comment>
 		<language name="JPN" width="256">no data</language>
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
