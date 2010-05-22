@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T20:18:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:24:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -409,7 +409,7 @@
 
 	<row id="msg_c09_veteranm2_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・GRIDX=23、GRIDZ=53（仮）
+・GRIDX=23、GRIDZ=53付近
 ・msg_c09_veteranm1_02表示後
 　続けてこのメッセージ
 ・このとき動作モデルを中心にカメラ移動
