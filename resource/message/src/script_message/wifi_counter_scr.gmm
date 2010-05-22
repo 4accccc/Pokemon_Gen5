@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-18T00:54:17"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-22T15:21:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1235" top="371" right="1940" bottom="999" maximized="no" rayout="Vertical2">
+	<dialog left="1024" top="387" right="1729" bottom="1015" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="453"/>
@@ -899,7 +899,7 @@ C-Gear入手前</comment>
 ホームページに　アクセスして[BE:01:ページ切り替え（クリア）]
 ゲームシンクＩＤコードを
 とうろくすることで　さんか　できます[BE:01:ページ切り替え（クリア）]
-http://www.pokemon-gl.com
+http://www.pokemon-gl.com/
 （ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ランダムマッチでは
 遠くにいる　見知らぬ人と[BE:00:ページ切り替え（行送り）]
@@ -919,7 +919,7 @@ http://www.pokemon-gl.com
 ホームページに　アクセスして[BE:01:ページ切り替え（クリア）]
 ゲームシンクＩＤコードを
 登録することで　参加できます[BE:01:ページ切り替え（クリア）]
-http://www.pokemon-gl.com
+http://www.pokemon-gl.com/
 （ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1204,7 +1204,7 @@ http://www.pokemon-gl.com
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">シングルバトルは　ポケモンが
 ３～６匹　必要です[BE:01:ページ切り替え（クリア）]
-戦うまえに　相手と　自分の[BE:00:ページ切り替え（行送り）]
+戦うまえに　相手と　自分の
 手持ちポケモンを　見比べて[BE:00:ページ切り替え（行送り）]
 ３匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
 連れていく　ポケモンは　すべて　違う
