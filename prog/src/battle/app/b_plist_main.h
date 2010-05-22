@@ -380,6 +380,7 @@ typedef struct {
 	STRBUF * msg_buf;				// メッセージ用バッファ
 	PRINT_QUE * que;				// プリントキュー
 	PRINT_STREAM * stream;	// プリントストリーム
+	BOOL	stream_clear_flg;
 
 	GFL_CLUNIT * clunit;
 	GFL_CLWK * clwk[BPL_CA_MAX];

@@ -225,6 +225,7 @@ typedef struct {
 	STRBUF * msg_buf;				// メッセージ用バッファ
 	PRINT_QUE * que;				// プリントキュー
 	PRINT_STREAM * stream;	// プリントストリーム
+	BOOL	stream_clear_flg;
 
 	GFL_BMPWIN * talk_win;
 	PRINT_UTIL	add_win[WIN_MAX];

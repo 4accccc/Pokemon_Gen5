@@ -197,6 +197,7 @@ static BOOL CheckNextDeadSel( BPLIST_WORK * wk );
 static void SetSelPosCancel( BPLIST_WORK * wk );
 static BOOL CheckTimeOut( BPLIST_WORK * wk );
 static void PlaySE( BPLIST_WORK * wk, int no );
+static void PlaySystemSE( BPLIST_WORK * wk, int no );
 
 
 //============================================================================================
@@ -1387,11 +1388,31 @@ static int BPL_SeqIrekaeErr( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqMsgWait( BPLIST_WORK * wk )
 {
-  if( PRINTSYS_PrintStreamGetState(wk->stream) == PRINTSTREAM_STATE_DONE ){
+  switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
+  case PRINTSTREAM_STATE_RUNNING:	// 実行中
+    if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      PRINTSYS_PrintStreamShortWait( wk->stream, 0 );
+    }
+    wk->stream_clear_flg = FALSE;
+    break;
+
+	case PRINTSTREAM_STATE_PAUSE:		// 一時停止中
+    if( wk->stream_clear_flg == FALSE ){
+      if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+        PlaySystemSE( wk, SEQ_SE_MESSAGE );
+        PRINTSYS_PrintStreamReleasePause( wk->stream );
+        wk->stream_clear_flg = TRUE;
+      }
+    }
+    break;
+
+  case PRINTSTREAM_STATE_DONE:		// 終了
     PRINTSYS_PrintStreamDelete( wk->stream );
 		wk->stream = NULL;
+    wk->stream_clear_flg = FALSE;
     return SEQ_BPL_TRG_WAIT;
   }
+
   return SEQ_BPL_MSG_WAIT;
 }
 
@@ -3009,5 +3030,22 @@ static void PlaySE( BPLIST_WORK * wk, int no )
 {
 	if( wk->dat->commFlag == FALSE ){
 		PMSND_PlaySE( no );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＳＥ再生（システム）
+ *
+ * @param		wk    戦闘リストワーク
+ * @param		no		ＳＥ番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void PlaySystemSE( BPLIST_WORK * wk, int no )
+{
+	if( wk->dat->commFlag == FALSE ){
+		PMSND_PlaySystemSE( no );
 	}
 }

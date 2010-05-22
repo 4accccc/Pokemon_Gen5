@@ -113,6 +113,7 @@ static void BBAG_PageChange( BBAG_WORK * wk, u8 next_page );
 static BOOL CheckTimeOut( BBAG_WORK * wk );
 
 static void PlaySE( BBAG_WORK * wk, int no );
+static void PlaySystemSE( BBAG_WORK * wk, int no );
 
 
 //============================================================================================
@@ -863,11 +864,31 @@ static int BBAG_SeqError( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_SeqMsgWait( BBAG_WORK * wk )
 {
-  if( PRINTSYS_PrintStreamGetState(wk->stream) == PRINTSTREAM_STATE_DONE ){
+  switch( PRINTSYS_PrintStreamGetState(wk->stream) ){
+  case PRINTSTREAM_STATE_RUNNING:	// ŽÀs’†
+    if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      PRINTSYS_PrintStreamShortWait( wk->stream, 0 );
+    }
+    wk->stream_clear_flg = FALSE;
+    break;
+
+	case PRINTSTREAM_STATE_PAUSE:		// ˆêŽž’âŽ~’†
+    if( wk->stream_clear_flg == FALSE ){
+      if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+        PlaySystemSE( wk, SEQ_SE_MESSAGE );
+        PRINTSYS_PrintStreamReleasePause( wk->stream );
+        wk->stream_clear_flg = TRUE;
+      }
+    }
+    break;
+
+  case PRINTSTREAM_STATE_DONE:		// I—¹
     PRINTSYS_PrintStreamDelete( wk->stream );
 		wk->stream = NULL;
+    wk->stream_clear_flg = FALSE;
     return SEQ_BBAG_TRG_WAIT;
   }
+
   return SEQ_BBAG_MSG_WAIT;
 }
 
@@ -1321,5 +1342,22 @@ static void PlaySE( BBAG_WORK * wk, int no )
 {
 	if( wk->dat->commFlag == FALSE ){
 		PMSND_PlaySE( no );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		‚r‚dÄ¶iƒVƒXƒeƒ€j
+ *
+ * @param		wk    ƒ[ƒN
+ * @param		no		‚r‚d”Ô†
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void PlaySystemSE( BBAG_WORK * wk, int no )
+{
+	if( wk->dat->commFlag == FALSE ){
+		PMSND_PlaySystemSE( no );
 	}
 }
