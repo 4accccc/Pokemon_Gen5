@@ -357,22 +357,22 @@
 
 	<row id="man_txt_cate_no_003">
 		<language name="JPN">Cギアの　せつめい</language>
-		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+		<language name="JPN_KANJI">Ｃ－ＧＥＡＲの　説明</language>
 	</row>
 
 	<row id="man_txt_cate_no_005">
 		<language name="JPN">メニューの　アプリ</language>
-		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+		<language name="JPN_KANJI">Ｃ－ＧＥＡＲの　説明</language>
 	</row>
 
 	<row id="man_txt_cate_no_006">
 		<language name="JPN">せんとうに　ついて</language>
-		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+		<language name="JPN_KANJI">Ｃ－ＧＥＡＲの　説明</language>
 	</row>
 
 	<row id="man_txt_cate_no_007">
 		<language name="JPN">ポケモンの　じょうほう</language>
-		<language name="JPN_KANJI">Ｃ?ＧＥＡＲの　説明</language>
+		<language name="JPN_KANJI">Ｃ－ＧＥＡＲの　説明</language>
 	</row>
 
 	<row id="man_txt_cate_no_008">
@@ -1013,7 +1013,7 @@
 
 Ｃギアの　みぎしたに　ひょうじされた
 でんげんのマークを　タッチすると
-Ｃギアのでんげんを　ON/OFFできます</language>
+Ｃギアのでんげんを　ＯＮ／ＯＦＦできます</language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
@@ -1228,7 +1228,7 @@
 たいせつなものポケットに　いれている
 もちものは　なまえの　よこの　しかくい
 はこに　チェックして　とうろくしておくと　
-バッグを　ひらかなくても　Yボタンで
+バッグを　ひらかなくても　Ｙボタンで
 かんたんに　つかうことができます</language>
 		<language name="JPN_KANJI"></language>
 	</row>
@@ -1241,7 +1241,7 @@
 セレクトボタンを　おすと　ポケットの
 どうぐを　じゆうに　いれかえることが
 できます
-L/Rボタンを　おすと　ページを
+Ｌ／Ｒボタンを　おすと　ページを
 きりかえることが　できます</language>
 		<language name="JPN_KANJI"></language>
 	</row>
@@ -1285,7 +1285,7 @@ L/Rボタンを　おすと　ページを
 
 	<row id="man_txt_page_no_005_001_006">
 		<language name="JPN">・かいふく
-ポケモンの　HPや　PP　
+ポケモンの　ＨＰや　ＰＰ　
 じょうたいいじょうなどを　かいふくさせる　
 どうぐを　しまっておく　ばしょです
 
@@ -1354,7 +1354,7 @@ L/Rボタンを　おすと　ページを
 しらべたい　ポケモンを　タッチすると
 せつめいや　せいそくしている　ばしょ
 なきごえや　おおきさが　みられます
-「START」を　タッチすると　ばんごうや
+「ＳＴＡＲＴ」を　タッチすると　ばんごうや
 ごじゅうおん　いろや　かたち　などから
 ポケモンを　けんさくすることが　できます</language>
 		<language name="JPN_KANJI"></language>
@@ -1373,7 +1373,7 @@ L/Rボタンを　おすと　ページを
 
 	<row id="man_txt_page_no_006_002_001">
 		<language name="JPN">ポケモンや　わざには　タイプがあり
-そのかずは　ぜんぶで　17しゅるいです
+そのかずは　ぜんぶで　１７しゅるいです
 タイプごとに　ゆうりなタイプと　
 ふりなタイプが　あり　くみあわせで
 あいしょうが　きまります
@@ -1399,7 +1399,7 @@ L/Rボタンを　おすと　ページを
 
 	<row id="man_txt_page_no_006_003_001">
 		<language name="JPN">わざは　「ぶつり」と　「とくしゅ」と
-「へんか」の　3つに　ぶんるいされていて　
+「へんか」の　３つに　ぶんるいされていて　
 マークに　よって　みわける　ことが
 できます
 
@@ -1425,7 +1425,7 @@ L/Rボタンを　おすと　ページを
 
 	<row id="man_txt_page_no_006_004_001">
 		<language name="JPN">ポケモンが　どくを　あびたじょうたい
-バトルちゅう　じょじょに　HPが　へって
+バトルちゅう　じょじょに　ＨＰが　へって
 いきます　
 ボールに　もどったり　バトルが　おわると
 ダメージは　うけませんが　しぜんには　
@@ -1437,7 +1437,7 @@ L/Rボタンを　おすと　ページを
 	</row>
 
 	<row id="man_txt_page_no_006_005_001">
-		<language name="JPN">ポケモンの　HPが0に　なったじょうたい
+		<language name="JPN">ポケモンの　ＨＰが０に　なったじょうたい
 かいふくさせる　までは　バトルに　だす
 ことが　できませんが　バトルちゅう　
 いがいで　つかえる　いちぶの　わざは
@@ -1489,7 +1489,7 @@ L/Rボタンを　おすと　ページを
 
 	<row id="man_txt_page_no_006_009_001">
 		<language name="JPN">ポケモンが　やけどした　じょうたい
-バトルちゅう　じょじょに　HPが　
+バトルちゅう　じょじょに　ＨＰが　
 へっていき　こうげきも　さがります　
 ボールに　もどったり　バトルが　おわると　
 ダメージは　うけませんが　しぜんには　
@@ -1565,7 +1565,7 @@ L/Rボタンを　おすと　ページを
 
 	<row id="man_txt_page_no_007_002_002">
 		<language name="JPN">ポケモンが　しんかしている　さいちゅうに
-Bボタンを　おすと　ポケモンが　
+Ｂボタンを　おすと　ポケモンが　
 おどろいて　しんかを　やめます
 
 ポケモンに　もたせておくと　
@@ -1617,7 +1617,7 @@ Bボタンを　おすと　ポケモンが　
 かくれた　どうぐの　まうえに　たつと　
 がめんの　マークが　てんめつします
 まうえからは　どうぐが　ひろえません
-いっぽ　さがってから　Aボタンを　
+いっぽ　さがってから　Ａボタンを　
 おして　どうぐを　ひろいましょう</language>
 		<language name="JPN_KANJI"></language>
 	</row>
@@ -1637,14 +1637,14 @@ Bボタンを　おすと　ポケモンが　
 
 	<row id="man_txt_page_no_008_003_002">
 		<language name="JPN">■ＤＳワイヤレスつうしんのばあい
-Cギアの　ワイヤレスボタンを　タッチして
+Ｃギアの　ワイヤレスボタンを　タッチして
 ライブキャスターを　えらびます
 ちかくに　ともだちコードを　こうかん
 している　あいてが　みつかると　したの
-がめんに　なまえと　IDばんごうが
+がめんに　なまえと　ＩＤばんごうが
 ひょうじされますので　おはなしをしたい
 あいてを　えらんで　よびだします
-4にんまで　どうじに　よびだせます</language>
+４にんまで　どうじに　よびだせます</language>
 		<language name="JPN_KANJI"></language>
 	</row>
 
@@ -1681,7 +1681,7 @@ Cギアの　ワイヤレスボタンが　ひかり
 	</row>
 
 	<row id="man_txt_page_no_008_003_006">
-		<language name="JPN">ＤＳiや　ＤＳiLLなら　おたがいの　かおが　
+		<language name="JPN">ＤＳｉや　ＤＳｉＬＬなら　おたがいの　かおが　
 うえのがめんに　ひょうじされます
 みぎうえの　カメラボタンを　おすと　
 おたがいの　かおに　らくがきを　して　
@@ -1747,7 +1747,7 @@ Cギアの　ワイヤレスボタンが　ひかり
 	</row>
 
 	<row id="man_txt_page_no_008_005_004">
-		<language name="JPN">べんりボタンには　25こ　まで　きのうや
+		<language name="JPN">べんりボタンには　２５こ　まで　きのうや
 どうぐを　とうろくして　おけます
 とうろくを　かいじょしたい　ばあいは
 しかくい　マークを　タッチして
