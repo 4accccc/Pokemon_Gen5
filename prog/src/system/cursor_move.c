@@ -21,7 +21,8 @@
 // 選択カーソル移動ワーク
 struct _CURSOR_MOVE_WORK {
 	const CURSORMOVE_DATA * dat;				// カーソル移動データ
-	BOOL cur_flg;												// カーソルON/OFF
+	BOOL	cur_flg;											// カーソルON/OFF
+	BOOL	cancel_on;										// キャンセル時にカーソルを表示する
 	u8	cur_mode;												// カーソル表示モード
 	u8	cur_pos;												// カーソル位置
 	u8	old_pos;												// 前回のカーソル位置
@@ -60,6 +61,7 @@ static BOOL Main_TouchCheck( CURSORMOVE_WORK * wk, int * hit );
 static u8 MoveVec( const CURSORMOVE_DATA * dat, u8 now, u8 mv );
 static u32 Main_CursorOn( CURSORMOVE_WORK * wk );
 static u32 Main_KeyMove( CURSORMOVE_WORK * wk, u8 mv, u8 ret );
+static u32 Main_CursorOnKey( CURSORMOVE_WORK * wk );
 
 static BOOL OldCursorSetCheck( const CURSORMOVE_DATA * dat, u8 mv );
 static BOOL MoveTableBitCheck( u32 * tbl, u32 pos );
@@ -108,11 +110,12 @@ CURSORMOVE_WORK * CURSORMOVE_Create(
 	wk->func = func;
 	wk->work = work;
 
-	wk->cur_mode = CURSOR_MODE_NORMAL;
-	wk->cur_flg  = cur_flg;
-	wk->cur_pos  = cur_pos;
-	wk->old_pos  = DEF_OLDPOS;
-	wk->save_pos = DEF_OLDPOS;
+	wk->cur_mode  = CURSOR_MODE_NORMAL;
+	wk->cur_flg   = cur_flg;
+	wk->cancel_on = FALSE;
+	wk->cur_pos   = cur_pos;
+	wk->old_pos   = DEF_OLDPOS;
+	wk->save_pos  = DEF_OLDPOS;
 
 	wk->mv_tbl[0] = DEF_MVTBL;
 	wk->mv_tbl[1] = DEF_MVTBL;
@@ -150,6 +153,20 @@ void CURSORMOVE_VanishModeSet( CURSORMOVE_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * キャンセルボタンを表示モードに変更
+ *
+ * @param		wk		カーソル移動ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void CURSORMOVE_CancelOnSet( CURSORMOVE_WORK * wk )
+{
+	wk->cancel_on = TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * 選択カーソル移動（トリガ入力）
  *
  * @param	wk		カーソル移動ワーク
@@ -169,15 +186,7 @@ u32 CURSORMOVE_Main( CURSORMOVE_WORK * wk )
 
 	// カーソル表示チェック
 	if( wk->cur_flg == FALSE && wk->cur_mode == CURSOR_MODE_VANISH ){
-//		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
-		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_DECIDE ) ){		// キャンセルボタンは即実行にする
-			return Main_CursorOn( wk );
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			Main_CursorOn( wk );
-			return CURSORMOVE_CANCEL;
-		}
-		return CURSORMOVE_NONE;
+		return Main_CursorOnKey( wk );
 	}
 
 	// 移動先取得
@@ -240,15 +249,7 @@ u32 CURSORMOVE_MainCont( CURSORMOVE_WORK * wk )
 
 	// カーソル表示チェック
 	if( wk->cur_flg == FALSE && wk->cur_mode == CURSOR_MODE_VANISH ){
-//		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
-		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_DECIDE ) ){		// キャンセルボタンは即実行にする
-			return Main_CursorOn( wk );
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
-			Main_CursorOn( wk );
-			return CURSORMOVE_CANCEL;
-		}
-		return CURSORMOVE_NONE;
+		return Main_CursorOnKey( wk );
 	}
 
 	// 移動先取得
@@ -403,6 +404,35 @@ static u32 Main_CursorOn( CURSORMOVE_WORK * wk )
 	wk->save_pos = DEF_OLDPOS;
 	wk->func->on( wk->work, wk->cur_pos, wk->old_pos );
 	return CURSORMOVE_CURSOR_ON;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * カーソル表示のキーチェック
+ *
+ * @param	wk		カーソル移動ワーク
+ *
+ * @return	動作結果
+ */
+//--------------------------------------------------------------------------------------------
+static u32 Main_CursorOnKey( CURSORMOVE_WORK * wk )
+{
+	// キャンセルボタンが表示モード
+	if( wk->cancel_on == TRUE ){
+		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_CANCEL | PAD_BUTTON_DECIDE ) ){
+			return Main_CursorOn( wk );
+		}
+	// キャンセルボタンは即実行にする
+	}else{
+		if( GFL_UI_KEY_GetTrg() & ( PAD_KEY_ALL | PAD_BUTTON_DECIDE ) ){
+			return Main_CursorOn( wk );
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+			Main_CursorOn( wk );
+			return CURSORMOVE_CANCEL;
+		}
+	}
+	return CURSORMOVE_NONE;
 }
 
 //--------------------------------------------------------------------------------------------

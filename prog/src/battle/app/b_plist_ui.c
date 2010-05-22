@@ -170,6 +170,7 @@ void BPLISTUI_Init( BPLIST_WORK * wk, u32 page, u32 pos )
 								pos,
 								wk->dat->heap );
 	CURSORMOVE_VanishModeSet( wk->cmwk );
+	CURSORMOVE_CancelOnSet( wk->cmwk );
 	MoveCursor( wk, pos );
 }
 
