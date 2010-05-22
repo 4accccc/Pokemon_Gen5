@@ -728,7 +728,7 @@ static BOOL selectWaza_loop( int* seq, void* wk_adrs )
   {
     BOOL fWazaInfoMode = BTLV_INPUT_CheckWazaInfoModeMask( &hit );
     //ƒLƒƒƒ“ƒZƒ‹‚ª‰Ÿ‚³‚ê‚½
-    if( hit == 4 )
+    if( hit == PTL_WAZA_MAX )
     {
       BTL_ACTION_SetNULL( wk->destActionParam );
       return TRUE;
@@ -790,6 +790,7 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
 
   if( BTLV_INPUT_CheckInputRotate(wk->biw, &dir, &wazaIdx) )
   {
+    BOOL fWazaInfoMode = BTLV_INPUT_CheckWazaInfoModeMask( &wazaIdx );
     if( wazaIdx != PTL_WAZA_MAX )
     {
       int pokeIdx;
@@ -804,6 +805,9 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
 
       BTL_ACTION_SetRotation( &wk->rotationSelParam->actRotation, dir );
       BTL_ACTION_SetFightParam( &wk->rotationSelParam->actWaza, waza, BTL_POS_NULL );
+      if( fWazaInfoMode ){
+        BTL_ACTION_FightParamToWazaInfoMode( &wk->rotationSelParam->actWaza );
+      }
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
     }
     return TRUE;
