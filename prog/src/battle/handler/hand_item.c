@@ -3102,7 +3102,7 @@ static void handler_InochiNoTama_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     param->pokeID = pokeID;
     param->damage = BTL_CALC_QuotMaxHP( bpp, 10 );
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_InochiNoTama );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }

@@ -2003,8 +2003,8 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     {
       u16 pos = wk->selectItem - SELITEM_POKE_SELF_1;
       wk->makePokeParam.dst = savework_GetPokeParaArea( &wk->saveData, pos );
-  //  wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
-      wk->makePokeParam.oyaStatus = NULL;
+      wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
+//      wk->makePokeParam.oyaStatus = NULL;
       wk->makePokeParam.defaultMonsNo = PosToDeafultMonsNo( pos );
 
       GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
