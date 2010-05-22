@@ -69,7 +69,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level);
 static const GFLNetInitializeStruct aGFLNetInit = {
   Intrude_CommPacketTbl, //NetSamplePacketTbl,  // 受信関数テーブル
   INTRUDE_CMD_NUM, // 受信テーブル要素数
-  IntrudeComm_HardConnect,    ///< ハードで接続した時に呼ばれる
+  NULL,    ///< ハードで接続した時に呼ばれる
   NULL,    ///< ネゴシエーション完了時にコール
   NULL, // ユーザー同士が交換するデータのポインタ取得関数
   NULL, // ユーザー同士が交換するデータのサイズ取得関数
@@ -251,8 +251,6 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   
   switch(*seq){
   case 0:
-    //※check ハード接続コールバックが呼ばれないときがあるので、
-    //        接続人数が増えていたら同様のことをする暫定処理
     if(GFL_NET_SystemGetConnectNum() > 1){
       if(intcomm->comm_status < INTRUDE_COMM_STATUS_HARD_CONNECT){
         intcomm->comm_status = INTRUDE_COMM_STATUS_HARD_CONNECT;
@@ -770,23 +768,5 @@ static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWor
 static void  IntrudeComm_DisconnectCallBack(void* pWork)
 {
   OS_TPrintf("切断コールバック呼ばれた\n");
-}
-
-//--------------------------------------------------------------
-/**
- * ハード接続時に呼ばれるコールバック
- *
- * @param   pWork		
- * @param   hardID		
- */
-//--------------------------------------------------------------
-static void IntrudeComm_HardConnect(void* pWork,int hardID)
-{
-  INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  
-  OS_TPrintf("HardConnect Callback hardID=%d\n", hardID);
-  if(intcomm->comm_status < INTRUDE_COMM_STATUS_HARD_CONNECT){
-    intcomm->comm_status = INTRUDE_COMM_STATUS_HARD_CONNECT;
-  }
 }
 

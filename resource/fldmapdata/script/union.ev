@@ -53,8 +53,6 @@ EVENT_START ev_union_guide_00
 		//========================================//
 	ENDIF
 
-	//_MSGWIN_CLOSE()		//※checkウインドウ連続表示が可能になったら不要
-	
 	{
   	DEFINE_LOCAL  lwk_loop
   	DEFINE_LOCAL  lwk_bmpans
@@ -75,7 +73,6 @@ EVENT_START ev_union_guide_00
   		_BMPMENU_MAKE_LIST( msg_union_info_03_10, 0xff )	//もどる
   		//メニュー表示
   		_BMPMENU_START()
-  		//_MSGWIN_CLOSE()		//※checkウインドウ連続表示が可能になったら不要
   		
   		SWITCH $lwk_bmpans
   		CASE 0 THEN

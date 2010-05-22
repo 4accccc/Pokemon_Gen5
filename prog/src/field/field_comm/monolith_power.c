@@ -412,10 +412,8 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_Main( GFL_PROC * proc, int * seq,
     break;
 
   case SEQ_FIRST_STREAM:
-    if(PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == TRUE){  //※check　Queのパレットカラーが被るので暫定対処　フォントのカラー指定が個別に出来るようになれば取っ払う
-      _Set_MsgStream(mpw, appwk->setup, msg_mono_pow_014);
-      (*seq)++;
-    }
+    _Set_MsgStream(mpw, appwk->setup, msg_mono_pow_014);
+    (*seq)++;
     break;
   case SEQ_FIRST_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mpw) == TRUE){

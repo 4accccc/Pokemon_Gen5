@@ -397,6 +397,8 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
 //==================================================================
 void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
 {
+  _MemberInfo_Exit(em);
+  
   GFL_STR_DeleteBuffer(em->strbuf_num_expand);
   GFL_STR_DeleteBuffer(em->strbuf_num_template);
   GFL_STR_DeleteBuffer(em->strbuf_list_expand);

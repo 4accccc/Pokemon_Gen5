@@ -21,9 +21,7 @@ extern void SaveData_PlayerDataLoad(SAVE_CONTROL_WORK * sv, PLAYER_WORK *pw);
 
 //--------------------------------------------------------------
 //  初回セーブセットアップ管理　
-//      @todo
-//      ※check 下記の関数はsave_control.c, save_control_intr.cでしか使用しないはず。
-//              マスターアップ前にも他の箇所で意図せず使用されていないか確認する
+//      下記の関数はsave_control.c, save_control_intr.cでしか使用しないはず。
 //--------------------------------------------------------------
 extern BOOL SaveData_GetNowSaveModeSetup(SAVE_CONTROL_WORK *sv);
 extern void SaveData_SetNowSaveModeSetupON(SAVE_CONTROL_WORK *sv);

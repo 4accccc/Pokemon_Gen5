@@ -327,15 +327,13 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     *seq = SEQ_FIRST_STREAM;
     break;
   case SEQ_FIRST_STREAM:
-    if(PRINTSYS_QUE_IsFinished( appwk->setup->printQue ) == TRUE){  //※check　Queのパレットカラーが被るので暫定対処　フォントのカラー指定が個別に出来るようになれば取っ払う
-      if(Intrude_CheckTutorialComplete( GAMESYSTEM_GetGameData(appwk->parent->gsys) ) == FALSE){
-        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_008);
-      }
-      else{
-        _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_004);
-      }
-      (*seq)++;
+    if(Intrude_CheckTutorialComplete( GAMESYSTEM_GetGameData(appwk->parent->gsys) ) == FALSE){
+      _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_008);
     }
+    else{
+      _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_004);
+    }
+    (*seq)++;
     break;
   case SEQ_FIRST_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){

@@ -333,10 +333,9 @@ u16 GPOWER_ID_to_Point(const POWER_CONV_DATA *powerdata, GPOWER_ID gpower_id)
 }
 
 //Gパワーがバグっていないか簡易的なチェック
-//※check 将来的には各タイプ毎にセットされるIDは決まっているので、
-//        それ以外のIDが入っていた場合はNULL化するなどのケアまで入れた方が良い
 static void _ErrorCheck(void)
 {
+#ifdef PM_DEBUG
   GPOWER_TYPE type;
   int zero_count = 0;
   
@@ -348,6 +347,7 @@ static void _ErrorCheck(void)
   if(zero_count == GPOWER_TYPE_MAX){
     GF_ASSERT(0);
   }
+#endif
 }
 
 

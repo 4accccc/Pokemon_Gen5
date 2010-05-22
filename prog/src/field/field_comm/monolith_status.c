@@ -471,7 +471,7 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     s64 src_seq;
     u32 hour, minute;
     src_seq = appwk->parent->monolith_status.palace_sojourn_time;
-    hour = src_seq / 60 / 60; //※check　滞在時間の計算があっているかしっかりデバッグ
+    hour = src_seq / 60 / 60;
     if(hour > 999){
       minute = 59;
     }

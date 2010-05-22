@@ -414,7 +414,7 @@ int SymbolSave_CheckFlashLoad(SAVE_CONTROL_WORK *ctrl, const SYMBOL_POKEMON *spo
       }
     }
     if(result == TRUE){
-      break;  //※check　B面のみに存在していた場合、ちゃんとチェックが正常に動いているか確認
+      break;
     }
   }
   GFL_HEAP_FreeMemory(load_symbol);

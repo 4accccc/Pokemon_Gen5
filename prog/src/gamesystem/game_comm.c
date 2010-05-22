@@ -739,7 +739,6 @@ static void GameCommInfo_SetQue(GAME_COMM_SYS_PTR gcsp, int comm_net_id, int tar
     target_myst = GAMEDATA_GetMyStatusPlayer(gcsp->gamedata, target_net_id);
   }
   
-  //※check　暫定処理　通信確立＝必ず名前を交換しあっている状況ではないため
   if(MyStatus_CheckNameClear(myst) == TRUE || MyStatus_CheckNameClear(target_myst) == TRUE){
     return;
   }

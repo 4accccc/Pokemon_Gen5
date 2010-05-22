@@ -3219,7 +3219,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         (*seq) = 200;
         break;
       case COMM_ENTRY_RESULT_ERROR:        //エラーで終了
-        (*seq) = 200; //※check　後で作成 とりあえずキャンセルと同じにしておく
+        (*seq) = 200;
         break;
       default:
         GF_ASSERT(0);

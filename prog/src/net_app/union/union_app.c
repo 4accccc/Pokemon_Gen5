@@ -412,7 +412,7 @@ void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id)
     }
   }
   else{
-    uniapp->entry_reserve_bit |= 1 << net_id; //※check　ここら辺は後でフラグの意味が多重なので整理
+    uniapp->entry_reserve_bit |= 1 << net_id;
     uniapp->recv_intrude_ready_bit |= 1 << net_id;
   }
 }

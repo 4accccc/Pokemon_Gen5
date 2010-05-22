@@ -133,11 +133,10 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
   intcomm = Intrude_Check_CommConnect(game_comm);
   // ※BGMのPush,Popがある為、途中でイベントは停止しない
   //   その為、intcommがNULLかどうかは、その使用ポイントでそれぞれNULL判定をして使用すること！！
-  //   ※check　マスターアップ前にintcomm使用箇所でNULLチェックしているか調査する
   
 	switch( *seq ){
 	case SEQ_RESULT_RECV_WAIT:  //結果受信待ち
-    if(intcomm == NULL && (*seq) == SEQ_RESULT_RECV_WAIT){
+    if(intcomm == NULL){
       return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
     }
     else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE
