@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:38:10"/>
+	<create user="matsumiya" host="W00224" date="2010-05-22T18:36:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -600,7 +600,7 @@
 プラズマ団め　なにを　目論む……？▼</language>
 	</row>
 
-	<row id="msg_d08_hakase1_00_11" text-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
+	<row id="msg_d08_hakase1_00_11">
 		<comment>♂
 ・hakase1_00_10以降、
 　d08r0910イベント後まで繰り返し</comment>
