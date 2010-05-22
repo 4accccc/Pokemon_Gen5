@@ -537,7 +537,7 @@ static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
 static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, SV_WazaFailCause fail_cause );
 static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 wazaIdx, BTL_POKESET* rec );
-static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume );
+static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, BOOL fOrgWazaLinkOut );
 static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
    BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack );
 static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
@@ -738,7 +738,7 @@ static void scPut_Message_Set( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u1
 static void scPut_Message_StdEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, const int* args );
 static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, const int* args );
 static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value );
-static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol );
+static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol, BOOL fOrgWazaLinkOut );
 static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID );
 static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
@@ -3940,7 +3940,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   REQWAZA_WORK  reqWaza;
   WazaID  orgWaza, actWaza;
   BtlPokePos  orgTargetPos, actTargetPos;
-  u8 fWazaEnable, fWazaExecute, fWazaLock, fReqWaza, fPPDecrement;
+  u8 fWazaEnable, fWazaExecute, fWazaLock, fReqWaza, fPPDecrement, orgWazaIdx;
 
   wazaEffCtrl_Init( wk->wazaEffCtrl );
 
@@ -3948,6 +3948,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   reqWaza.targetPos = BTL_POS_NULL;
 
   orgWaza = action->fight.waza;
+  orgWazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
   actWaza = orgWaza;
   orgTargetPos = action->fight.targetPos;
   actTargetPos = orgTargetPos;
@@ -4045,10 +4046,11 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
                           wk->wazaParam->wazaType, actWaza, orgWaza );
 
   // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
-  if( (!fWazaLock) && fPPDecrement ){
-    u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
-    if( wazaIdx != PTL_WAZA_MAX ){
-      scproc_decrementPPUsedWaza( wk, attacker, orgWaza, wazaIdx, wk->psetTargetOrg );
+  if( (!fWazaLock) && fPPDecrement )
+  {
+    if( orgWazaIdx != PTL_WAZA_MAX )
+    {
+      scproc_decrementPPUsedWaza( wk, attacker, orgWaza, orgWazaIdx, wk->psetTargetOrg );
     }
   }
 
@@ -6210,7 +6212,9 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
 static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 wazaIdx, BTL_POKESET* rec )
 {
   u8 vol = scEvent_DecrementPPVolume( wk, attacker, waza, rec );
-  scproc_decrementPP( wk, attacker, wazaIdx, vol );
+  u8 fOrgWazaLinkOut = BPP_WAZA_IsLinkOut( attacker, wazaIdx, waza );
+
+  scproc_decrementPP( wk, attacker, wazaIdx, vol, fOrgWazaLinkOut );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6224,7 +6228,7 @@ static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
  * @retval  BOOL      減少させたらTRUE／死亡時など減少させられなかったらFALSE
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume )
+static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, BOOL fOrgWazaLinkOut )
 {
   u8 restPP = BPP_WAZA_GetPP( bpp, wazaIdx );
   if( volume > restPP ){
@@ -6233,7 +6237,7 @@ static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 waza
 
   if( volume )
   {
-    scPut_DecrementPP( wk, bpp, wazaIdx, volume );
+    scPut_DecrementPP( wk, bpp, wazaIdx, volume, fOrgWazaLinkOut );
     if( scEvent_DecrementPP_Reaction(wk, bpp, wazaIdx) ){
       scproc_UseItemEquip( wk, bpp );
     }
@@ -6242,6 +6246,37 @@ static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 waza
 
   return FALSE;
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Put] 使ったワザのPPデクリメント
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   wazaIdx
+ * @param   vol
+ */
+//----------------------------------------------------------------------------------
+static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol, BOOL fOrgWazaLinkOut )
+{
+  if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_PP_CONST) )
+  {
+    u8 pokeID = BPP_GetID( attacker );
+
+    if( fOrgWazaLinkOut == FALSE )
+    {
+      BPP_WAZA_DecrementPP( attacker, wazaIdx, vol );
+      BPP_WAZA_SetUsedFlag( attacker, wazaIdx );
+      SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, vol );
+    }
+    else
+    {
+      BPP_WAZA_DecrementPP_Org( attacker, wazaIdx, vol );
+      BPP_WAZA_SetUsedFlag_Org( attacker, wazaIdx );
+      SCQUE_PUT_OP_PPMinus_Org( wk->que, pokeID, wazaIdx, vol );
+    }
+  }
+}
+
 //----------------------------------------------------------------------
 // サーバーフロー：「たたかう」> ダメージワザ
 //----------------------------------------------------------------------
@@ -11003,26 +11038,6 @@ static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value
 }
 //----------------------------------------------------------------------------------
 /**
- * [Put] 使ったワザのPPデクリメント
- *
- * @param   wk
- * @param   attacker
- * @param   wazaIdx
- * @param   vol
- */
-//----------------------------------------------------------------------------------
-static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol )
-{
-  if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_PP_CONST) )
-  {
-    u8 pokeID = BPP_GetID( attacker );
-    BPP_WAZA_DecrementPP( attacker, wazaIdx, vol );
-    BPP_WAZA_SetUsedFlag( attacker, wazaIdx );
-    SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, vol );
-  }
-}
-//----------------------------------------------------------------------------------
-/**
  * [Put] PP回復
  *
  * @param   wk
@@ -14509,7 +14524,7 @@ static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   {
     BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
     if( !BPP_IsDead(target) ){
-      scproc_decrementPP( wk, target, param->wazaIdx, param->volume );
+      scproc_decrementPP( wk, target, param->wazaIdx, param->volume, FALSE );
       return 1;
     }
   }

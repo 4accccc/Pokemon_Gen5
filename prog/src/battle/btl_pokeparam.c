@@ -795,10 +795,55 @@ void BPP_WAZA_DecrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
     bpp->waza[wazaIdx].surface.pp = 0;
   }
 
-  if( bpp->waza[wazaIdx].fLinked ){
+  if( bpp->waza[wazaIdx].fLinked )
+  {
     bpp->waza[wazaIdx].truth.pp = bpp->waza[wazaIdx].surface.pp;
-    PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_pp1+wazaIdx, bpp->waza[wazaIdx].truth.pp );
+    PP_Put( bpp->coreParam.ppSrc, ID_PARA_pp1+wazaIdx, bpp->waza[wazaIdx].truth.pp );
     TAYA_Printf("  * %d * idx=%d, pp=%d\n", __LINE__, wazaIdx, bpp->waza[wazaIdx].truth.pp );
+  }
+}
+//=============================================================================================
+/**
+ * ワザPP値を減少（ものまね等、一時的に上書きされている場合の上書き前の部分）
+ *
+ * @param   bpp
+ * @param   wazaIdx
+ * @param   value
+ */
+//=============================================================================================
+void BPP_WAZA_DecrementPP_Org( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
+{
+  if( bpp->waza[wazaIdx].fLinked == FALSE )
+  {
+    int pp =  bpp->waza[wazaIdx].truth.pp;
+    pp -= value;
+    if( pp < 0 ){
+      pp = 0;
+    }
+    bpp->waza[wazaIdx].truth.pp = pp;
+    PP_Put( bpp->coreParam.ppSrc, ID_PARA_pp1+wazaIdx, bpp->waza[wazaIdx].truth.pp );
+
+  }
+}
+//=============================================================================================
+/**
+ *
+ *
+ * @param   bpp
+ * @param   wazaIdx
+ */
+//=============================================================================================
+void BPP_WAZA_SetUsedFlag_Org( BTL_POKEPARAM* bpp, u8 wazaIdx )
+{
+  if( bpp->waza[wazaIdx].fLinked == FALSE )
+  {
+    BPP_WAZA* pWaza = &bpp->waza[ wazaIdx ];
+
+    if( pWaza->truth.usedFlagFix == FALSE )
+    {
+      pWaza->truth.usedFlagFix = TRUE;
+      bpp->usedWazaCount++;
+    }
   }
 }
 //=============================================================================================
@@ -811,16 +856,37 @@ void BPP_WAZA_DecrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
  *
  */
 //=============================================================================================
-void BPP_WAZA_IncrementPP( BTL_POKEPARAM* pp, u8 wazaIdx, u8 value )
+void BPP_WAZA_IncrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
 {
-  GF_ASSERT(wazaIdx < pp->wazaCnt);
+  GF_ASSERT(wazaIdx < bpp->wazaCnt);
 
-  pp->waza[wazaIdx].surface.pp += value;
-  if( pp->waza[wazaIdx].surface.pp > pp->waza[wazaIdx].surface.ppMax )
+  bpp->waza[wazaIdx].surface.pp += value;
+  if( bpp->waza[wazaIdx].surface.pp > bpp->waza[wazaIdx].surface.ppMax )
   {
-    pp->waza[wazaIdx].surface.pp = pp->waza[wazaIdx].surface.ppMax;
+    bpp->waza[wazaIdx].surface.pp = bpp->waza[wazaIdx].surface.ppMax;
   }
 }
+//=============================================================================================
+/**
+ * ワザが一時上書き状態にあるか判定
+ *
+ * @param   bpp
+ * @param   wazaIdx   インデックス
+ * @param   orgWaza   上書き前のワザID
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BPP_WAZA_IsLinkOut( const BTL_POKEPARAM* bpp, u8 wazaIdx, WazaID orgWaza )
+{
+  if( (bpp->waza[wazaIdx].fLinked == FALSE)
+  &&  (bpp->waza[wazaIdx].truth.number == orgWaza)
+  ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //=============================================================================================
 /**
  * 使用したワザフラグを立てる
