@@ -368,10 +368,8 @@ static void WazaWorkSys_ReflectFromPP( BTL_POKEPARAM* bpp )
       bpp->wazaCnt++;
     }
     if( bpp->waza[i].fLinked ){
-      TAYA_Printf("Index=%d, Link ‚³‚ê‚Ä‚Ü‚·\n", i);
       bpp->waza[i].surface = bpp->waza[i].truth;
     }
-    TAYA_Printf("  Surface waza[%d] = %d\n", i, bpp->waza[i].surface.number );
   }
 }
 static void WazaWork_ClearUsedFlag( BPP_WAZA* waza )

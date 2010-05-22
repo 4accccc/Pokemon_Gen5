@@ -380,6 +380,7 @@ static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
 static const BtlEventHandlerTable*  ADD_Hatakiotosu( u32* numElems );
 static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems );
+static void handler_MagicCoat_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MagicCoat( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MagicCoat_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MagicCoat_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4876,6 +4877,7 @@ static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,       handler_MagicCoat_ExeCheck  }, // ワザ出し成否チェックハンドラ
     { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,  handler_MagicCoat           }, // 未分類ワザ処理
     { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob  }, // ワザ乗っ取り判定
     { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect   }, // ワザ乗っ取り確定
@@ -4883,6 +4885,17 @@ static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+static void handler_MagicCoat_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    // 現ターン最後の行動なら失敗
+    if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+    }
+  }
 }
 static void handler_MagicCoat( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
