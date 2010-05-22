@@ -124,6 +124,10 @@ static int PageChange( ZKNSEARCHMAIN_WORK * wk, int next );
 
 static void SetShortCut( ZKNSEARCHMAIN_WORK * wk );
 
+static void ConvFormDataToList( ZKNSEARCHMAIN_WORK * wk );
+static void ConvFormListToData( ZKNSEARCHMAIN_WORK * wk );
+
+
 FS_EXTERN_OVERLAY(ui_common);
 
 
@@ -168,7 +172,26 @@ static const pZKNSEARCH_FUNC MainSeq[] = {
 	MainSeq_EndSet,
 };
 
+// フォルムリストの検索番号テーブル
+static const u8 FormListTable[] = {
+	0,		// "丸型"=>0,
+	13,		// "腕型"=>13,
+	1,		// "脚型"=>1,
+	7,		// "多足型"=>7,
 
+	5,		// "四枚羽型"=>5,
+	12,		// "腹這脚無型"=>12,
+	8,		// "直立胴型"=>8,
+	4,		// "四足型"=>4,
+
+	6,		// "集合型"=>6,
+	3,		// "昆虫型"=>3,
+	2,		// "魚型"=>2,
+	9,		// "二足尻尾型"=>9,
+
+	11,		// "二枚羽型"=>11,
+	10,		// "二足人型"=>10,
+};
 
 
 
@@ -246,6 +269,7 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
   else{
     wk->dat->sort->mode = ZKNCOMM_LIST_SORT_MODE_LOCAL;
   }
+	ConvFormDataToList( wk );		// データからリストへ
 
 	return MAINSEQ_INIT_MENU;
 }
@@ -378,6 +402,7 @@ static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 
 	case ZKNSEARCHUI_RET:
 		PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
+		ConvFormListToData( wk );		// リストからデータへ
 		wk->dat->retMode = ZKNSEARCH_RET_CANCEL;
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_END_SET );
@@ -392,6 +417,7 @@ static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 
 	case CURSORMOVE_CANCEL:					// キャンセル
 		PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
+		ConvFormListToData( wk );		// リストからデータへ
 		wk->dat->retMode = ZKNSEARCH_RET_CANCEL;
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_END_SET );
@@ -435,6 +461,7 @@ static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
   // 分割検索エンジン
 	if( wk->loadingCnt == 1 ){
     // 生成
+		ConvFormListToData( wk );		// リストからデータへ
     wk->egn_wk = ZUKAN_SEARCH_ENGINE_DivInit(
         wk->dat->savedata,
 				wk->dat->sort,
@@ -506,6 +533,7 @@ static int MainSeq_ResultSort( ZKNSEARCHMAIN_WORK * wk )
 		}else{
 			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
 		}
+		ConvFormDataToList( wk );		// データからリストへ戻す
 		return MAINSEQ_MAIN_MENU;
 	}
 	return MAINSEQ_RESULT_SORT;
@@ -1151,4 +1179,33 @@ static void SetShortCut( ZKNSEARCHMAIN_WORK * wk )
 		GAMEDATA_SetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_SEARCH, TRUE );
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON );
 	}
+}
+
+// フォルムデータからリストインデックスへ変換
+static void ConvFormDataToList( ZKNSEARCHMAIN_WORK * wk )
+{
+	u32	i;
+
+	if( wk->dat->sort->form == ZKNCOMM_LIST_SORT_NONE ){
+		return;
+	}
+
+	for( i=0; i<NELEMS(FormListTable); i++ ){
+		if( wk->dat->sort->form == FormListTable[i] ){
+			wk->dat->sort->form = i;
+			break;
+		}
+	}
+}
+
+// フォルムリストインデックスからデータへ変換
+static void ConvFormListToData( ZKNSEARCHMAIN_WORK * wk )
+{
+	u32	i;
+
+	if( wk->dat->sort->form == ZKNCOMM_LIST_SORT_NONE ){
+		return;
+	}
+
+	wk->dat->sort->form = FormListTable[wk->dat->sort->form];
 }
