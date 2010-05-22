@@ -8569,21 +8569,21 @@
 		<language name="JPN" width="256">END-05</language>
 		<language name="JPN_KANJI" width="256">END-05</language>
 	</row>
-	<row id="msg_seq_se_meat_01">
-		<language name="JPN" width="256">MEAT-01</language>
-		<language name="JPN_KANJI" width="256">MEAT-01</language>
+	<row id="msg_seq_se_meet_01">
+		<language name="JPN" width="256">MEET-01</language>
+		<language name="JPN_KANJI" width="256">MEET-01</language>
 	</row>
-	<row id="msg_seq_se_meat_02">
-		<language name="JPN" width="256">MEAT-02</language>
-		<language name="JPN_KANJI" width="256">MEAT-02</language>
+	<row id="msg_seq_se_meet_02">
+		<language name="JPN" width="256">MEET-02</language>
+		<language name="JPN_KANJI" width="256">MEET-02</language>
 	</row>
-	<row id="msg_seq_se_meat_03">
-		<language name="JPN" width="256">MEAT-03</language>
-		<language name="JPN_KANJI" width="256">MEAT-03</language>
+	<row id="msg_seq_se_meet_03">
+		<language name="JPN" width="256">MEET-03</language>
+		<language name="JPN_KANJI" width="256">MEET-03</language>
 	</row>
-	<row id="msg_seq_se_meat_04">
-		<language name="JPN" width="256">MEAT-04</language>
-		<language name="JPN_KANJI" width="256">MEAT-04</language>
+	<row id="msg_seq_se_meet_04">
+		<language name="JPN" width="256">MEET-04</language>
+		<language name="JPN_KANJI" width="256">MEET-04</language>
 	</row>
 	<row id="msg_seq_se_wcs_01">
 		<language name="JPN" width="256">WCS-01</language>
@@ -8609,9 +8609,9 @@
 		<language name="JPN" width="256">LCDEMO-02</language>
 		<language name="JPN_KANJI" width="256">LCDEMO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_382">
-		<language name="JPN" width="256">DMY-382</language>
-		<language name="JPN_KANJI" width="256">DMY-382</language>
+	<row id="msg_seq_se_sys_101">
+		<language name="JPN" width="256">SYS-101</language>
+		<language name="JPN_KANJI" width="256">SYS-101</language>
 	</row>
 	<row id="msg_seq_se_dmy_383">
 		<language name="JPN" width="256">DMY-383</language>
