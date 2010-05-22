@@ -972,6 +972,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectBattleStart4, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4
   _playerDirectBattleStart5, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START5
   _playerDirectBattleStart6, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6
+  _playerDirectBattleStart7, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START7
   _playerDirectFailed, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED
   _playerDirectFailed2, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED2
   _playerDirectFailed3, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED3
@@ -5130,6 +5131,13 @@ static BOOL _connectingErrFunc(WIFIP2PMATCH_WORK *wk)
 //------------------------------------------------------------------
 static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  //BTS2302の対処 naigihashi
+  //メッセージを早送りするために読んでいます
+  if( wk->pStream )
+  {
+    WifiP2PMatchMessageEndCheck(wk);
+  }
+
   if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() ){
 
     if(wk->bRetryBattle){

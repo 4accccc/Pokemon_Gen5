@@ -1408,6 +1408,29 @@ static int _playerDirectBattleStart42( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectBattleStart5( WIFIP2PMATCH_WORK *wk, int seq )
 {
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), _TIMING_POKEPARTY_END,WB_NET_WIFICLUB )){
+    const int min = Regulation_GetParam( wk->pRegulation,REGULATION_NUM_LO);
+    const int max = Regulation_GetParam( wk->pRegulation,REGULATION_NUM_HI);
+    int msgno;
+    if( min == 3 && max == 3 )
+    {
+      msgno = msg_wifilobby_1043;
+    }
+    else if( min == 4 && max == 4 )
+    {
+      msgno = msg_wifilobby_1044;
+    }
+    else if( min == 6 && max == 6 )
+    {
+      msgno = msg_wifilobby_1045;
+    }
+    else
+    {
+      msgno = msg_wifilobby_1042;
+    }
+    WifiP2PMatchMessagePrint(wk, msgno, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
+    wk->timer  = 120;
+
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START6);
   }
   return seq;
@@ -1422,6 +1445,25 @@ static int _playerDirectBattleStart5( WIFIP2PMATCH_WORK *wk, int seq )
 //------------------------------------------------------------------
 
 static int _playerDirectBattleStart6( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    if( wk->timer-- < 0)
+    {
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START7);
+    }
+  }
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ポケパーティー転送  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START7
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectBattleStart7( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 status,gamemode;
   
@@ -1552,7 +1594,7 @@ static int _playerDirectFailed3( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  //BTS2302の対処 naigihshi
+  //BTS2302の対処 naigihashi
   //メッセージを早送りするために読んでいます
   if( wk->pStream )
   {
