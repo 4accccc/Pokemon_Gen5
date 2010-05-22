@@ -76,6 +76,7 @@ enum{
  MENU_MEMBER_CLEAR,
  MENU_RECV_BUF_CHECK,
  MENU_RECV_BUF_CLEAR,
+ MENU_MY_GPOWER,
  MENU_EXIT,
 };
 
@@ -278,14 +279,15 @@ static const FLDMENUFUNC_LIST DATA_DebugLiveCommMenuList[] =
   { dlc_menu_07, (void*)MENU_MEMBER_CLEAR },
   { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK },
   { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR },
-  { dlc_menu_10, (void*)MENU_EXIT },
+  { dlc_menu_exit, (void*)MENU_EXIT },
 };
 
 static const FLDMENUFUNC_LIST DATA_DebugLiveCommFromFieldMenuList[] =
 {
   { dlc_menu_08, (void*)MENU_RECV_BUF_CHECK },
   { dlc_menu_09, (void*)MENU_RECV_BUF_CLEAR },
-  { dlc_menu_10, (void*)MENU_EXIT },
+  { dlc_menu_10, (void*)MENU_MY_GPOWER },
+  { dlc_menu_exit, (void*)MENU_EXIT },
 };
 
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
@@ -483,8 +485,8 @@ static GMEVENT* event_CreateEventBeaconReq( GAMESYS_WORK* gsys, DMENU_LIVE_COMM*
 
 static int ninput_GetMiscCount( DMENU_LIVE_COMM* wk, int param );
 static void ninput_SetMiscCount( DMENU_LIVE_COMM* wk, int param, int value );
-static int ninput_GetDebugFlag( DMENU_LIVE_COMM* wk, int param );
-static void ninput_SetDebugFlag( DMENU_LIVE_COMM* wk, int param, int value );
+static int ninput_GetDebugParam( DMENU_LIVE_COMM* wk, int param );
+static void ninput_SetDebugParam( DMENU_LIVE_COMM* wk, int param, int value );
 
 //======================================================================
 //
@@ -688,10 +690,8 @@ static GMEVENT_RESULT event_LiveCommMain( GMEVENT * event, int *seq, void * work
       }
       switch( ret ){
       case MENU_UPDATE_STOP:
-//        GMEVENT_CallEvent( event, event_CreateEventNumInputRetWork( wk, 0, 0, 1,
-//            &wk->view_wk->deb_stack_check_throw, BPRM_WSET_NONE));
         GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 0, 0, 1,
-            ninput_SetDebugFlag, ninput_GetDebugFlag) );
+            ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       case MENU_BEACON_REQ:
         GMEVENT_CallEvent( event, event_CreateEventBeaconReq( wk->gsys, wk ) );
@@ -768,6 +768,10 @@ static GMEVENT_RESULT event_LiveCommFromFieldMain( GMEVENT * event, int *seq, vo
         break;
       case MENU_RECV_BUF_CLEAR:
         DEBUG_RecvBeaconBufferClear();
+        break;
+      case MENU_MY_GPOWER:
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 1, 0, GPOWER_ID_EGG_INC_S+1,
+            ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       }
       *seq = SEQ_MENU_INIT; 
@@ -1721,11 +1725,23 @@ static void ninput_SetMiscCount( DMENU_LIVE_COMM* wk, int param, int value )
  *  @brief  デバッグフラグ関係　ゲット 
  */
 //--------------------------------------------------------------
-static int ninput_GetDebugFlag( DMENU_LIVE_COMM* wk, int param )
+static int ninput_GetDebugParam( DMENU_LIVE_COMM* wk, int param )
 {
   switch(param){
   case 0:
     return DEBUG_BEACON_STATUS_GetStackCheckThrowFlag( wk->b_status );
+  case 1:
+    {
+      INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
+      GPOWER_ID gpower_id = ISC_SAVE_GetGPowerID(int_sv);
+      if( gpower_id == GPOWER_ID_NULL ){
+        return 0;
+      }else{
+        return gpower_id+1;
+      }
+    }
+    break;
+
   }
   return 0;
 }
@@ -1735,12 +1751,24 @@ static int ninput_GetDebugFlag( DMENU_LIVE_COMM* wk, int param )
  *  @brief  デバッグフラグ関係　セット 
  */
 //--------------------------------------------------------------
-static void ninput_SetDebugFlag( DMENU_LIVE_COMM* wk, int param, int value )
+static void ninput_SetDebugParam( DMENU_LIVE_COMM* wk, int param, int value )
 {
   switch(param){
   case 0:
     DEBUG_BEACON_STATUS_SetStackCheckThrowFlag( wk->b_status, value );
     break;
+  case 1:
+    {
+      INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude(wk->save);
+      if( value == 0 ){
+        value = GPOWER_ID_NULL;
+      }else{
+        value -= 1;
+      }
+      ISC_SAVE_SetGPowerID( int_sv, value );
+    }
+    break;
+
   }
 }
 
