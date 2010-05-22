@@ -3764,6 +3764,7 @@ static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
       DWCRAP_StopVChat();
       _changeBGMVol( wk, _VOL_DEFAULT );
       EndMessageWindowOff(wk);
+      _myStatusChange(wk, WIFI_STATUS_CALL,WIFI_GAME_UNIONMATCH);
       _CHANGESTATE(wk,WIFIP2PMATCH_VCTEND_COMMSEND2_ENDCHK);
     }
     else{
