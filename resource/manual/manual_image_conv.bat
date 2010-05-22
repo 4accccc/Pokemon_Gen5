@@ -31,7 +31,6 @@ ntexconv 017_03_kemuri.bmp -no -bg -bgb -bgf direct
 ntexconv 018_01_battlebox.bmp -no -bg -bgb -bgf direct
 ntexconv 019_01_taisetu.bmp -no -bg -bgb -bgf direct
 ntexconv 019_02_motaseru.bmp -no -bg -bgb -bgf direct
-ntexconv 020_01_trainercard.bmp -no -bg -bgb -bgf direct
 ntexconv 020_02_ura.bmp -no -bg -bgb -bgf direct
 ntexconv 020_03_badge.bmp -no -bg -bgb -bgf direct
 ntexconv 021_01_zukan.bmp -no -bg -bgb -bgf direct

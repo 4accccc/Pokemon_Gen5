@@ -31,7 +31,6 @@ ntrcomp -l -o 017_03_kemuri_lz77.nbfs 017_03_kemuri.nbfs
 ntrcomp -l -o 018_01_battlebox_lz77.nbfs 018_01_battlebox.nbfs
 ntrcomp -l -o 019_01_taisetu_lz77.nbfs 019_01_taisetu.nbfs
 ntrcomp -l -o 019_02_motaseru_lz77.nbfs 019_02_motaseru.nbfs
-ntrcomp -l -o 020_01_trainercard_lz77.nbfs 020_01_trainercard.nbfs
 ntrcomp -l -o 020_02_ura_lz77.nbfs 020_02_ura.nbfs
 ntrcomp -l -o 020_03_badge_lz77.nbfs 020_03_badge.nbfs
 ntrcomp -l -o 021_01_zukan_lz77.nbfs 021_01_zukan.nbfs
