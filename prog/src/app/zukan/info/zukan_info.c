@@ -281,6 +281,25 @@ static const u16 typeicon_ncg_data_id_tbl[ZUKAN_INFO_LANG_MAX] =
   NARC_zukan_gra_info_st_type_kor_NCGR,
 };
 
+// 高さ、重さの右揃えのx座標
+static const u16 height_pos_x_tbl[ZUKAN_INFO_LANG_MAX] =
+{
+  101,
+   98,
+   94,
+   98,
+   98,
+   94,
+};
+static const u16 weight_pos_x_tbl[ZUKAN_INFO_LANG_MAX] =
+{
+  102,
+  100,
+  100,
+  100,
+  100,
+  100,
+};
 
 // ARCHANDLE
 enum
@@ -1963,7 +1982,7 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
         disp_id = 0 + monsno_formno_pos;  // たかさ判明
       }
       Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_height, work->print_que, work->font,
-                            disp_id, 93, 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+                            disp_id, height_pos_x_tbl[lang], 4, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
     }
 
     // ？？？.？kg  // 左上指定なら(40,20)
@@ -1974,7 +1993,7 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
         disp_id = 0 + monsno_formno_pos;  // おもさ判明
       }
       Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_PHYSICAL], msgdata_weight, work->print_que, work->font,
-                            disp_id, 100, 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
+                            disp_id, weight_pos_x_tbl[lang], 20, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_RIGHT, NULL );
     }
 
     // 例：かたい　きのみも　でんげきで

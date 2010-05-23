@@ -8,6 +8,9 @@
  *  モジュール名：ZUKAN_DETAIL_FORM
  */
 //============================================================================
+
+#define DEF_SCMD_CHANGE  // これが定義されているとき、CMDが発行されるまで待たずにSCMDが発行されたときに変更を開始する
+
 //#define DEBUG_KAWADA
 
 
@@ -558,6 +561,17 @@ typedef struct
   // 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
   BOOL                        kaisou_curr_end;  // TRUEのとき、currは所定の位置に到着している
   BOOL                        kaisou_comp_end;  // TRUEのとき、compは所定の位置に到着している
+
+#ifdef DEF_SCMD_CHANGE
+  // タッチバーの左右アイコンでフォルムを変更するときだけ使用する変数
+  BOOL                        change_form_by_cur_l_r_flag;  // TRUEのとき、タッチバーの左右アイコンでフォルムを変更する
+                                                            // (bar_cursor_move_by_keyと同じタイミングで初期化される。1フレームだけTRUEになる。)
+
+  // タッチバーの入れ替えアイコンでcurrとcompのフォルムを入れ替えるときだけ使用する変数
+  BOOL                        irekae_by_exchange_flag;         // TRUEのとき、タッチバーの入れ替えアイコンでフォルムを入れ替えている
+  BOOL                        irekae_by_exchange_poke_finish;  // ポケモンのフォルムの入れ替えが完了していたらTRUE
+  BOOL                        irekae_by_exchange_icon_finish;  // タッチバーの入れ替えアイコンのアニメが完了していたらTRUE
+#endif
 }
 ZUKAN_DETAIL_FORM_WORK;
 
@@ -827,6 +841,16 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcInit( ZKNDTL_PROC* proc, int* se
   // 状態
   work->state = STATE_TOP;
 
+#ifdef DEF_SCMD_CHANGE
+  // タッチバーの左右アイコンでフォルムを変更するときだけ使用する変数
+  work->change_form_by_cur_l_r_flag = FALSE;
+
+  // タッチバーの入れ替えアイコンでcurrとcompのフォルムを入れ替えるときだけ使用する変数
+  work->irekae_by_exchange_flag        = FALSE;
+  work->irekae_by_exchange_poke_finish = TRUE;
+  work->irekae_by_exchange_icon_finish = TRUE;
+#endif
+
   return ZKNDTL_PROC_RES_FINISH;
 }
 
@@ -1069,7 +1093,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
           ZUKAN_DETAIL_TOUCHBAR_SetType(
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM,
+              (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE );
           ZUKAN_DETAIL_TOUCHBAR_Appear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
         }
         else
@@ -1371,6 +1396,10 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
 
     work->bar_cursor_move_by_key = FALSE;
 
+#ifdef DEF_SCMD_CHANGE    
+    work->change_form_by_cur_l_r_flag = FALSE;
+#endif
+
     // 入力不可
     switch( cmd )
     {
@@ -1415,28 +1444,12 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     }
 
-    // コマンド
+
+#ifdef DEF_SCMD_CHANGE
     switch( cmd )
     {
-    case ZKNDTL_CMD_NONE:
-      {
-      }
-      break;
-    case ZKNDTL_CMD_CLOSE:
-    case ZKNDTL_CMD_RETURN:
-      {
-        work->end_cmd = END_CMD_OUTSIDE;
-      }
-      break;
-    case ZKNDTL_CMD_INFO:
-    case ZKNDTL_CMD_MAP:
-    case ZKNDTL_CMD_VOICE:
-      {
-        work->end_cmd = END_CMD_INSIDE;
-      }
-      break;
-    case ZKNDTL_CMD_CUR_D:
-    case ZKNDTL_CMD_FORM_CUR_D:
+    case ZKNDTL_SCMD_CUR_D:
+    case ZKNDTL_SCMD_FORM_CUR_D:
       {
         if( work->state == STATE_TOP )
         {
@@ -1495,12 +1508,10 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
             }
           }
         }
-        
-        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
-    case ZKNDTL_CMD_CUR_U:
-    case ZKNDTL_CMD_FORM_CUR_U:
+    case ZKNDTL_SCMD_CUR_U:
+    case ZKNDTL_SCMD_FORM_CUR_U:
       {
         if( work->state == STATE_TOP )
         {
@@ -1559,6 +1570,220 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
             }
           }
         }
+      }
+      break;
+    case ZKNDTL_SCMD_FORM_CUR_R:
+      {
+        if( work->diff_num >= 3 )
+        {
+          work->diff_comp_no++;
+          work->diff_comp_no %= work->diff_num;
+          if( work->diff_curr_no == work->diff_comp_no )
+          {
+            work->diff_comp_no++;
+            work->diff_comp_no %= work->diff_num;
+          }
+
+          Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
+          work->bar_cursor_move_by_key = TRUE;
+          work->change_form_by_cur_l_r_flag = TRUE;
+        }
+      }
+      break;
+    case ZKNDTL_SCMD_FORM_CUR_L:
+      {
+        if( work->diff_num >= 3 )
+        {
+          work->diff_comp_no += work->diff_num -1;
+          work->diff_comp_no %= work->diff_num;
+          if( work->diff_curr_no == work->diff_comp_no )
+          {
+            work->diff_comp_no += work->diff_num -1;
+            work->diff_comp_no %= work->diff_num;
+          }
+
+          Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
+          work->bar_cursor_move_by_key = TRUE;
+          work->change_form_by_cur_l_r_flag = TRUE;
+        }
+      }
+      break;
+
+
+    case ZKNDTL_SCMD_FORM_EXCHANGE:
+      {
+        if( work->diff_num >= 2 )
+        {
+          Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_IREKAE );
+
+          // タッチバーの入れ替えアイコンでcurrとcompのフォルムを入れ替えるときだけ使用する変数
+          work->irekae_by_exchange_flag        = TRUE;
+          work->irekae_by_exchange_poke_finish = FALSE;
+          work->irekae_by_exchange_icon_finish = FALSE;
+        }
+        else
+        {
+          // タッチバーの入れ替えアイコンでcurrとcompのフォルムを入れ替えるときだけ使用する変数
+          work->irekae_by_exchange_flag        = TRUE;
+          work->irekae_by_exchange_poke_finish = TRUE;
+          work->irekae_by_exchange_icon_finish = FALSE;
+        }
+      }
+      break;
+
+
+    }
+#endif
+
+
+    // コマンド
+    switch( cmd )
+    {
+    case ZKNDTL_CMD_NONE:
+      {
+      }
+      break;
+    case ZKNDTL_CMD_CLOSE:
+    case ZKNDTL_CMD_RETURN:
+      {
+        work->end_cmd = END_CMD_OUTSIDE;
+      }
+      break;
+    case ZKNDTL_CMD_INFO:
+    case ZKNDTL_CMD_MAP:
+    case ZKNDTL_CMD_VOICE:
+      {
+        work->end_cmd = END_CMD_INSIDE;
+      }
+      break;
+    case ZKNDTL_CMD_CUR_D:
+    case ZKNDTL_CMD_FORM_CUR_D:
+      {
+#ifndef DEF_SCMD_CHANGE
+        if( work->state == STATE_TOP )
+        {
+          u16 monsno_curr;
+          u16 monsno_go;
+          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          ZKNDTL_COMMON_GoToNextPoke(cmn);
+          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          if( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_ChangePoke(param, work, cmn);
+          }
+        }
+        else if( work->state == STATE_EXCHANGE )
+        {
+          DIFF_INFO   diff_info_list[DIFF_MAX];
+          u16         diff_num;
+          u16         diff_sugata_num;
+          u16         diff_irochigai_num;
+          u16         diff_curr_no;
+          u16         diff_comp_no;
+          u16 monsno_curr;
+          u16 monsno_go;
+          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          ZKNDTL_COMMON_GoToNextPoke(cmn);
+          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          while( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_GetDiffInfoWithoutWork( param, cmn,
+                                                      diff_info_list,
+                                                      &diff_num,
+                                                      &diff_sugata_num,
+                                                      &diff_irochigai_num,
+                                                      &diff_curr_no,
+                                                      &diff_comp_no );
+            if( diff_num >= 2 )
+            {
+              break;
+            }
+            else
+            {
+              ZKNDTL_COMMON_GoToNextPoke(cmn);
+              monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+            }
+          }
+          if( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_ChangePoke(param, work, cmn);
+            if( diff_num >= 3 )
+            {
+              ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, TRUE );
+            }
+            else
+            {
+              ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, FALSE );
+            }
+          }
+        }
+#endif
+
+        ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+      }
+      break;
+    case ZKNDTL_CMD_CUR_U:
+    case ZKNDTL_CMD_FORM_CUR_U:
+      {
+#ifndef DEF_SCMD_CHANGE
+        if( work->state == STATE_TOP )
+        {
+          u16 monsno_curr;
+          u16 monsno_go;
+          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          ZKNDTL_COMMON_GoToPrevPoke(cmn);
+          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          if( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_ChangePoke(param, work, cmn);
+          }
+        }
+        else if( work->state == STATE_EXCHANGE )
+        {
+          DIFF_INFO   diff_info_list[DIFF_MAX];
+          u16         diff_num;
+          u16         diff_sugata_num;
+          u16         diff_irochigai_num;
+          u16         diff_curr_no;
+          u16         diff_comp_no;
+          u16 monsno_curr;
+          u16 monsno_go;
+          monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          ZKNDTL_COMMON_GoToPrevPoke(cmn);
+          monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+          while( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_GetDiffInfoWithoutWork( param, cmn,
+                                                      diff_info_list,
+                                                      &diff_num,
+                                                      &diff_sugata_num,
+                                                      &diff_irochigai_num,
+                                                      &diff_curr_no,
+                                                      &diff_comp_no );
+            if( diff_num >= 2 )
+            {
+              break;
+            }
+            else
+            {
+              ZKNDTL_COMMON_GoToPrevPoke(cmn);
+              monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+            }
+          }
+          if( monsno_curr != monsno_go )
+          {
+            Zukan_Detail_Form_ChangePoke(param, work, cmn);
+            if( diff_num >= 3 )
+            {
+              ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, TRUE );
+            }
+            else
+            {
+              ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, FALSE );
+            }
+          }
+        }
+#endif
         
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
@@ -1575,6 +1800,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     case ZKNDTL_CMD_FORM_CUR_R:
       {
+#ifndef DEF_SCMD_CHANGE
         if( work->diff_num >= 3 )
         {
           work->diff_comp_no++;
@@ -1588,11 +1814,13 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
           Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
           work->bar_cursor_move_by_key = TRUE;
         }
+#endif
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     case ZKNDTL_CMD_FORM_CUR_L:
       {
+#ifndef DEF_SCMD_CHANGE
         if( work->diff_num >= 3 )
         {
           work->diff_comp_no += work->diff_num -1;
@@ -1606,6 +1834,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
           Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
           work->bar_cursor_move_by_key = TRUE;
         }
+#endif
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -1620,6 +1849,7 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     case ZKNDTL_CMD_FORM_EXCHANGE:
       {
+#ifndef DEF_SCMD_CHANGE
         if( work->diff_num >= 2 )
         {
           Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_EXCHANGE_IREKAE );
@@ -1628,6 +1858,19 @@ static void Zukan_Detail_Form_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
         {
           ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
         }
+#endif
+
+#ifdef DEF_SCMD_CHANGE
+        if( work->irekae_by_exchange_flag )
+        {
+          work->irekae_by_exchange_icon_finish = TRUE;
+          if( work->irekae_by_exchange_poke_finish )
+          {
+            work->irekae_by_exchange_flag = FALSE;
+            ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+          }
+        }
+#endif
       }
       break;
     default:
@@ -2586,7 +2829,8 @@ static void Zukan_Detail_Form_GetDiffInfoWithoutWork( ZUKAN_DETAIL_FORM_PARAM* p
 
     *a_diff_num = diff_num;
     *a_diff_curr_no = diff_curr_no;
-    *a_diff_comp_no = (diff_curr_no!=0)?(0):(1%diff_num);
+    //*a_diff_comp_no = (diff_curr_no!=0)?(0):(1%diff_num);  // 0番目か1番目の姿にしておく
+    *a_diff_comp_no = (diff_curr_no+1)%diff_num;  // currの次の姿にしておく
   }
 
   // 姿の数、色違いの数
@@ -2830,12 +3074,21 @@ static void Zukan_Detail_Form_ChangePoke( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
   // 変更されたポケモン用に、トップ画面でフォルムを切り替えるための矢印を用意する
   Zukan_Detail_Form_ObjButtonArrowSetup( param, work, cmn );
 
+/*
   // 押し出し用関数を利用してcompをcurrの次のフォルムにしておく
   // 押し出し用関数を利用して位置設定
   if( work->state == STATE_TOP && work->diff_num >= 2 ) 
   {
     work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
     Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+  }
+*/
+  // Zukan_Detail_Form_GetDiffInfoでcompをcurrの次のフォルムにするようにしたので、
+  // 押し出し用関数を利用して位置設定だけ行うことにする
+  if( work->state == STATE_TOP && work->diff_num >= 2 ) 
+  {
+    // 押し出し用関数を利用して位置設定
+    Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
   }
 }
 
@@ -3164,7 +3417,8 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
           ZUKAN_DETAIL_TOUCHBAR_SetType(
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_FORM,
-              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM,
+              (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE );
           if( work->diff_num >= 3 )
           {
             ZUKAN_DETAIL_TOUCHBAR_SetVisibleOfFormCurLR( touchbar, TRUE );
@@ -3217,7 +3471,21 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
       {
       case STATE_EXCHANGE:
         {
+#ifndef DEF_SCMD_CHANGE
           ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+#endif
+
+#ifdef DEF_SCMD_CHANGE
+          if( work->irekae_by_exchange_flag )
+          {
+            work->irekae_by_exchange_poke_finish = TRUE;
+            if( work->irekae_by_exchange_icon_finish )
+            {
+              work->irekae_by_exchange_flag = FALSE;
+              ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+            }
+          }
+#endif
         }
         break;
       }
@@ -3306,7 +3574,8 @@ static void Zukan_Detail_Form_ChangeState( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
           ZUKAN_DETAIL_TOUCHBAR_SetType(
               touchbar,
               ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM );
+              ZUKAN_DETAIL_TOUCHBAR_DISP_FORM,
+              (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE ); 
           {
             GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
             ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(
@@ -3898,6 +4167,9 @@ static void Zukan_Detail_Form_ObjBarSetup( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN
     GFL_CLACT_WK_SetDrawEnable( work->obj_clwk[OBJ_BAR_CURSOR], TRUE );
     // 初期化 
     work->bar_cursor_move_by_key    = FALSE;
+#ifdef DEF_SCMD_CHANGE
+    work->change_form_by_cur_l_r_flag = FALSE;
+#endif
     work->bar_cursor_move_by_touch  = FALSE;
   }
   else
@@ -3910,9 +4182,16 @@ static void Zukan_Detail_Form_ObjBarMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 {
   BOOL ret = FALSE;
 
+#ifndef DEF_SCMD_CHANGE
   if(    work->state == STATE_EXCHANGE
       && work->input_enable
       && work->push_button == BUTTON_OBJ_NONE )
+#else
+   if(    (    work->state == STATE_EXCHANGE
+            && work->input_enable
+            && work->push_button == BUTTON_OBJ_NONE )
+       || ( work->change_form_by_cur_l_r_flag       ) )
+#endif
   {
     // タッチ継続中の場合は、それが最優先となる
     // だから、タッチ継続中の場合は、bar_cursor_move_by_keyはTRUEにならない。

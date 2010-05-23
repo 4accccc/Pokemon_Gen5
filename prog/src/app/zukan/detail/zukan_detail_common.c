@@ -167,6 +167,10 @@ ZUKAN_DETAIL_HEADBAR_WORK*   ZKNDTL_COMMON_GetHeadbar( ZKNDTL_COMMON_WORK* cmn )
  *  @retval          
  */
 //------------------------------------------------------------------
+u16   ZKNDTL_COMMON_GetPokeNum( ZKNDTL_COMMON_WORK* cmn )
+{
+  return cmn->num;
+}
 u16   ZKNDTL_COMMON_GetCurrPoke( ZKNDTL_COMMON_WORK* cmn )  // monsno‚ð•Ô‚·
 {
   return cmn->list[*(cmn->no)];

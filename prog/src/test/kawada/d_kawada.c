@@ -96,8 +96,9 @@ FS_EXTERN_OVERLAY(manual);
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 15 )
+#define	TOP_MENU_SIZ	( 16 )
 
+#define POKE_LIST_NUM_G (24)
 #define POKE_LIST_NUM  (13)
 
 
@@ -177,7 +178,8 @@ enum {
   MAIN_SEQ_YOIN,
 
   // ここから
-	MAIN_SEQ_ZUKAN_TOROKU_CALL,  // top_menu00
+	MAIN_SEQ_ZUKAN_DETAIL_G_CALL,  // top_menu00
+	MAIN_SEQ_ZUKAN_TOROKU_CALL,
 	MAIN_SEQ_TH_AWARD_CALL,
 	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL,
 	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL,
@@ -193,7 +195,8 @@ enum {
 	MAIN_SEQ_D_TEST_CALL,
 	MAIN_SEQ_MANUAL_CALL,
   // ここまで
-
+	
+  MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN,
 	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
 	MAIN_SEQ_TH_AWARD_CALL_RETURN,
 	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN,
@@ -232,6 +235,10 @@ static void BgExit(void);
 static void TopMenuInit( KAWADA_MAIN_WORK * wk );
 static void TopMenuExit( KAWADA_MAIN_WORK * wk );
 
+
+// 図鑑詳細G
+static void ZukanDetailGInit( KAWADA_MAIN_WORK* wk );
+static void ZukanDetailGExit( KAWADA_MAIN_WORK* wk );
 
 // 図鑑登録
 static void ZukanTorokuInit( KAWADA_MAIN_WORK* wk );
@@ -420,6 +427,16 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 	  return GFL_PROC_RES_FINISH;
 
 
+  // 図鑑詳細G
+  case MAIN_SEQ_ZUKAN_DETAIL_G_CALL:
+    ZukanDetailGInit(wk);
+		wk->main_seq = MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN;
+    break;
+  case MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN:
+    ZukanDetailGExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
 
 
   // 図鑑登録
@@ -696,7 +713,7 @@ static void TopMenuInit( KAWADA_MAIN_WORK * wk )
 	wk->ld = BmpMenuWork_ListCreate( TOP_MENU_SIZ, wk->heapID );
 	for( i=0; i<TOP_MENU_SIZ; i++ ){
 		STRBUF * str = GFL_MSG_CreateString( wk->mman, top_menu00+i );
-		BmpMenuWork_ListAddString( &wk->ld[i], str, MAIN_SEQ_ZUKAN_TOROKU_CALL+i, wk->heapID );
+		BmpMenuWork_ListAddString( &wk->ld[i], str, MAIN_SEQ_ZUKAN_DETAIL_G_CALL+i, wk->heapID );
 		GFL_STR_DeleteBuffer( str );
 	}
 
@@ -1334,6 +1351,81 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
   GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, wk->zukan_detail_param );
 }
 static void ZukanDetailExit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_HEAP_FreeMemory( wk->zukan_detail_param );
+  
+  ZONEDATA_Close();
+}
+
+// 図鑑詳細G
+static void ZukanDetailGInit( KAWADA_MAIN_WORK* wk )
+{
+  u16 poke_list_num = POKE_LIST_NUM_G;
+  ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( wk->gamedata );
+  u16 i;
+  u16 lc;
+  EVENTWORK* eventwork = GAMEDATA_GetEventWork( wk->gamedata );
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) EVENTWORK_SetEventFlag( eventwork, SYS_FLAG_ARRIVE_T01 );
+
+  ZONEDATA_Open( wk->heapID );
+  
+  ZUKANSAVE_SetGraphicVersionUpFlag( zukan_savedata );
+
+
+  wk->poke_list[ 0] = MONSNO_529;//ゾロア
+  wk->poke_list[ 1] = MONSNO_530;//ゾロアーク
+
+  wk->poke_list[ 2] = MONSNO_551;//ツタージャ
+  wk->poke_list[ 3] = MONSNO_554;//ポカブ
+  wk->poke_list[ 4] = MONSNO_557;//ミジュマル
+  wk->poke_list[ 5] = MONSNO_650;//レシラム
+  wk->poke_list[ 6] = MONSNO_651;//ゼクロム
+
+  wk->poke_list[ 7] = MONSNO_504;//メグロコ
+  wk->poke_list[ 8] = MONSNO_540;//ムンナ
+  wk->poke_list[ 9] = MONSNO_544;//ギアル
+  wk->poke_list[10] = MONSNO_514;//マメパト
+  wk->poke_list[11] = MONSNO_570;//シママ
+  wk->poke_list[12] = MONSNO_503;//ヒヒダルマ
+  wk->poke_list[13] = MONSNO_533;//チラーミィ
+
+  wk->poke_list[14] = MONSNO_541;//キバゴ
+  wk->poke_list[15] = MONSNO_537;//ミネズミ
+  wk->poke_list[16] = MONSNO_520;//コロモリ
+  wk->poke_list[17] = MONSNO_585;//ランクルス
+  wk->poke_list[18] = MONSNO_608;//ゴチルゼル
+  wk->poke_list[19] = MONSNO_516;//ムシャーナ
+  wk->poke_list[20] = MONSNO_567;//ウォーグル
+
+  wk->poke_list[21] = MONSNO_611;//ツルリ
+  wk->poke_list[22] = MONSNO_612;//ツルット
+  wk->poke_list[23] = MONSNO_613;//ツルツルダ
+
+
+  for( i=0; i<poke_list_num; i++ )
+  {
+    POKEMON_PARAM* pp = PP_Create( wk->poke_list[i] , 1, 0, wk->heapID );
+    ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+    ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+
+    GFL_HEAP_FreeMemory( pp );
+    pp = PP_CreateEx( wk->poke_list[i] , 1, 0, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_RARE, wk->heapID );
+    ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+    ZUKANSAVE_SetPokeGet( zukan_savedata, pp );  // 捕まえた  // 図鑑フラグをセットする
+
+    GFL_HEAP_FreeMemory( pp );
+  }
+
+	wk->zukan_detail_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(ZUKAN_DETAIL_PARAM) );
+  wk->zukan_detail_param->gamedata = wk->gamedata;
+  wk->zukan_detail_param->type     = ZUKAN_DETAIL_TYPE_INFO;
+  wk->zukan_detail_param->list     = wk->poke_list;
+  wk->zukan_detail_param->num      = poke_list_num;
+  wk->zukan_detail_param->no       = 0;
+
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, FS_OVERLAY_ID(zukan_detail), &ZUKAN_DETAIL_ProcData, wk->zukan_detail_param );
+}
+static void ZukanDetailGExit( KAWADA_MAIN_WORK* wk )
 {
   GFL_HEAP_FreeMemory( wk->zukan_detail_param );
   

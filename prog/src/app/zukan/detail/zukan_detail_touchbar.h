@@ -87,7 +87,8 @@ extern void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 extern void ZUKAN_DETAIL_TOUCHBAR_SetType(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work,
                    ZUKAN_DETAIL_TOUCHBAR_TYPE  type, 
-                   ZUKAN_DETAIL_TOUCHBAR_DISP  disp );
+                   ZUKAN_DETAIL_TOUCHBAR_DISP  disp,
+                   BOOL                        is_cur_u_d );
 extern ZUKAN_DETAIL_TOUCHBAR_STATE ZUKAN_DETAIL_TOUCHBAR_GetState( ZUKAN_DETAIL_TOUCHBAR_WORK* work );
 extern void ZUKAN_DETAIL_TOUCHBAR_Appear( ZUKAN_DETAIL_TOUCHBAR_WORK* work, ZUKAN_DETAIL_TOUCHBAR_SPEED speed );
 extern void ZUKAN_DETAIL_TOUCHBAR_Disappear( ZUKAN_DETAIL_TOUCHBAR_WORK* work, ZUKAN_DETAIL_TOUCHBAR_SPEED speed );

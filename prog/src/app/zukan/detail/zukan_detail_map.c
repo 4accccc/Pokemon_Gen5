@@ -9,6 +9,7 @@
  */
 //============================================================================
 
+#define DEF_SCMD_CHANGE  // これが定義されているとき、CMDが発行されるまで待たずにSCMDが発行されたときに変更を開始する
 
 //#define DEBUG_SET_ANIME_AND_POS  // これが定義されているとき、生息する場所に置くOBJのアニメ指定、位置指定用のデータ調整モードになる
 //#define DEBUG_KAWADA
@@ -611,6 +612,13 @@ typedef struct
 
   // 入力可不可
   BOOL                        input_enable;  // 入力可のときTRUE
+
+#ifdef DEF_SCMD_CHANGE
+  // タッチバーの上下アイコンでポケモンを変更するときだけ使用する変数
+  BOOL                        change_poke_by_cur_u_d_flag;                // TRUEのとき、タッチバーの上下アイコンでポケモンを変更している
+  BOOL                        change_poke_by_cur_u_d_change_poke_finish;  // ポケモンの変更が完了していたらTRUE
+  BOOL                        change_poke_by_cur_u_d_cur_u_d_finish;      // タッチバーの上下アイコンのアニメが完了していたらTRUE
+#endif
 }
 ZUKAN_DETAIL_MAP_WORK;
 
@@ -889,6 +897,13 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
   // 入力可不可
   work->input_enable = TRUE;
 
+#ifdef DEF_SCMD_CHANGE
+  // タッチバーの上下アイコンでポケモンを変更するときだけ使用する変数
+  work->change_poke_by_cur_u_d_flag                = FALSE;
+  work->change_poke_by_cur_u_d_change_poke_finish  = TRUE;
+  work->change_poke_by_cur_u_d_cur_u_d_finish      = TRUE;
+#endif
+
   return ZKNDTL_PROC_RES_FINISH;
 }
 
@@ -1099,7 +1114,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcMain( ZKNDTL_PROC* proc, int* seq
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP,
+            (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE ); 
         ZUKAN_DETAIL_TOUCHBAR_Appear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
       }
       else
@@ -1472,6 +1488,66 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
       break;
     }
 
+
+#ifdef DEF_SCMD_CHANGE
+    switch( cmd )
+    {
+    case ZKNDTL_SCMD_CUR_D:
+      {
+        u16 monsno_curr;
+        u16 monsno_go;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZKNDTL_COMMON_GoToNextPoke(cmn);
+        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        if( monsno_curr != monsno_go )
+        {
+          Zukan_Detail_Map_ChangePoke( param, work, cmn );
+          Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
+
+          // タッチバーの上下アイコンでポケモンを変更するときだけ使用する変数
+          work->change_poke_by_cur_u_d_flag                = TRUE;
+          work->change_poke_by_cur_u_d_change_poke_finish  = FALSE;
+          work->change_poke_by_cur_u_d_cur_u_d_finish      = FALSE;
+        }
+        else
+        {
+          // タッチバーの上下アイコンでポケモンを変更するときだけ使用する変数
+          work->change_poke_by_cur_u_d_flag                = TRUE;
+          work->change_poke_by_cur_u_d_change_poke_finish  = TRUE;    // ポケモンを変更しないので
+          work->change_poke_by_cur_u_d_cur_u_d_finish      = FALSE;
+        }
+      }
+      break;
+    case ZKNDTL_SCMD_CUR_U:
+      {
+        u16 monsno_curr;
+        u16 monsno_go;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZKNDTL_COMMON_GoToPrevPoke(cmn);
+        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        if( monsno_curr != monsno_go )
+        {
+          Zukan_Detail_Map_ChangePoke( param, work, cmn );
+          Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
+
+          // タッチバーの上下アイコンでポケモンを変更するときだけ使用する変数
+          work->change_poke_by_cur_u_d_flag                = TRUE;
+          work->change_poke_by_cur_u_d_change_poke_finish  = FALSE;
+          work->change_poke_by_cur_u_d_cur_u_d_finish      = FALSE;
+        }
+        else
+        {
+          // タッチバーの上下アイコンでポケモンを変更するときだけ使用する変数
+          work->change_poke_by_cur_u_d_flag                = TRUE;
+          work->change_poke_by_cur_u_d_change_poke_finish  = TRUE;    // ポケモンを変更しないので
+          work->change_poke_by_cur_u_d_cur_u_d_finish      = FALSE;
+        }
+      }
+      break;
+    }
+#endif
+
+
     // コマンド
     switch( cmd )
     {
@@ -1494,6 +1570,7 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
       break;
     case ZKNDTL_CMD_CUR_D:
       {
+#ifndef DEF_SCMD_CHANGE
         u16 monsno_curr;
         u16 monsno_go;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
@@ -1505,10 +1582,24 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
           Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
         }
         //ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+#endif
+
+#ifdef DEF_SCMD_CHANGE
+        if( work->change_poke_by_cur_u_d_flag )
+        {
+          work->change_poke_by_cur_u_d_cur_u_d_finish = TRUE;
+          if( work->change_poke_by_cur_u_d_change_poke_finish )
+          {
+            work->change_poke_by_cur_u_d_flag = FALSE;
+            ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+          }
+        }
+#endif 
       }
       break;
     case ZKNDTL_CMD_CUR_U:
       {
+#ifndef DEF_SCMD_CHANGE
         u16 monsno_curr;
         u16 monsno_go;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
@@ -1520,6 +1611,19 @@ static void Zukan_Detail_Map_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pwk
           Zukan_Detail_Map_DrawSeasonAreaAfterChangePoke( param, work, cmn );
         }
         //ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+#endif
+
+#ifdef DEF_SCMD_CHANGE
+        if( work->change_poke_by_cur_u_d_flag )
+        {
+          work->change_poke_by_cur_u_d_cur_u_d_finish = TRUE;
+          if( work->change_poke_by_cur_u_d_change_poke_finish )
+          {
+            work->change_poke_by_cur_u_d_flag = FALSE;
+            ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+          }
+        }
+#endif 
       }
       break;
     case ZKNDTL_CMD_CHECK:
@@ -3298,7 +3402,8 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_TYPE_MAP,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP,
+            (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE ); 
       }
     }
     break;
@@ -3306,7 +3411,20 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
     {
       if( state == STATE_TOP )  // 遷移後の状態
       {
+#ifndef DEF_SCMD_CHANGE
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+#else
+        if( work->change_poke_by_cur_u_d_flag )
+        {
+          work->change_poke_by_cur_u_d_change_poke_finish = TRUE;
+          if( work->change_poke_by_cur_u_d_cur_u_d_finish )
+          {
+            work->change_poke_by_cur_u_d_flag = FALSE;
+            ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
+          }
+        }
+#endif
+
         if( work->push_button == OBJ_PUSH_BUTTON_NONE )  // 矢印アニメの点滅の終了とOBJの表示OFFから表示ONまでの一連の流れの終了とどちらが先か分からないので。
         {
           if( work->draw_season_area_set_user_active_whole )
@@ -3364,7 +3482,8 @@ static void Zukan_Detail_Map_ChangeState( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_D
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP );
+            ZUKAN_DETAIL_TOUCHBAR_DISP_MAP,
+            (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE ); 
         {
           GAMEDATA* gamedata = ZKNDTL_COMMON_GetGamedata(cmn);
           ZUKAN_DETAIL_TOUCHBAR_SetCheckFlipOfGeneral(

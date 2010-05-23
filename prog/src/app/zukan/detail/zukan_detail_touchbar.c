@@ -238,6 +238,9 @@ struct _ZUKAN_DETAIL_TOUCHBAR_WORK
   u8                            bg_pri;
   BOOL                          req;     // TRUEのときVBlank中にbg_priを設定する
 
+  // 上下アイコンを表示するか否か
+  BOOL                          is_cur_u_d;  // TRUEのとき表示する
+
   // カスタムボタン
   // GENERAL
   u32    general_ncl;
@@ -493,12 +496,14 @@ void ZUKAN_DETAIL_TOUCHBAR_Main( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 void ZUKAN_DETAIL_TOUCHBAR_SetType(
                    ZUKAN_DETAIL_TOUCHBAR_WORK* work,
                    ZUKAN_DETAIL_TOUCHBAR_TYPE  type, 
-                   ZUKAN_DETAIL_TOUCHBAR_DISP  disp )
+                   ZUKAN_DETAIL_TOUCHBAR_DISP  disp,
+                   BOOL                        is_cur_u_d )
 {
   work->prev_type = work->type;
   work->type = type;
   work->prev_disp = work->disp;
   work->disp = disp;
+  work->is_cur_u_d = is_cur_u_d;
 
   Zukan_Detail_Touchbar_Delete( work );
 
@@ -1107,6 +1112,13 @@ static void Zukan_Detail_Touchbar_CreateGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* wor
   // GENERALのパレットアニメ
   Zukan_Detail_Touchbar_AnimeBaseInitGeneral( work );
   Zukan_Detail_Touchbar_AnimeInitGeneral( work );
+
+  // 上下アイコンを表示するか否か
+  if( !(work->is_cur_u_d) )
+  {
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUR_U].cset->id, FALSE );
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[GENERAL_ICON_CUR_D].cset->id, FALSE );
+  }
 }
 static void Zukan_Detail_Touchbar_DeleteGeneral( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
 {
@@ -1697,6 +1709,13 @@ static void Zukan_Detail_Touchbar_CreateForm( ZUKAN_DETAIL_TOUCHBAR_WORK* work )
   {
     ZKND_TBAR_SetUseKey( work->tbwk, work->icon_set[FORM_ICON_CUR_R].cset->id, ( PAD_KEY_RIGHT | PAD_BUTTON_R ) );
     ZKND_TBAR_SetUseKey( work->tbwk, work->icon_set[FORM_ICON_CUR_L].cset->id, ( PAD_KEY_LEFT  | PAD_BUTTON_L ) );
+  }
+
+  // 上下アイコンを表示するか否か
+  if( !(work->is_cur_u_d) )
+  {
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[FORM_ICON_CUR_U].cset->id, FALSE );
+    ZKND_TBAR_SetVisible( work->tbwk, work->icon_set[FORM_ICON_CUR_D].cset->id, FALSE );
   }
 
   /*

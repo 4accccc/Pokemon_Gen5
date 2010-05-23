@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-04-26T22:02:49"/>
+	<create user="kawada_koji" host="W00215" date="2010-05-23T14:53:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1424" top="140" right="2129" bottom="768" maximized="no" rayout="Vertical2">
+	<dialog left="233" top="332" right="938" bottom="960" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -341,76 +341,81 @@
 
 
 	<row id="top_menu00">
+		<language name="JPN" width="256">ずかんＧ</language>
+		<language name="JPN_KANJI" width="256">図鑑Ｇ</language>
+	</row>
+
+	<row id="top_menu01">
 		<language name="JPN" width="256">ずかんとうろく</language>
 		<language name="JPN_KANJI" width="256">図鑑登録</language>
 	</row>
 
-	<row id="top_menu01">
+	<row id="top_menu02">
 		<language name="JPN" width="256">トライアルハウスけっか</language>
 		<language name="JPN_KANJI" width="256">トライアルハウス結果</language>
 	</row>
 
-	<row id="top_menu02">
+	<row id="top_menu03">
 		<language name="JPN" width="256">イッシュしょうじょう</language>
 		<language name="JPN_KANJI" width="256">イッシュ賞状</language>
 	</row>
 
-	<row id="top_menu03">
+	<row id="top_menu04">
 		<language name="JPN" width="256">ぜんこくしょうじょう</language>
 		<language name="JPN_KANJI" width="256">全国賞状</language>
 	</row>
 
-	<row id="top_menu04">
+	<row id="top_menu05">
 		<language name="JPN" width="256">ろくがせんたく</language>
 		<language name="JPN_KANJI" width="256">録画選択</language>
 	</row>
 
-	<row id="top_menu05">
+	<row id="top_menu06">
 		<language name="JPN" width="256">にたくかんいかいわ</language>
 		<language name="JPN_KANJI" width="256">二択簡易会話</language>
 	</row>
 
-	<row id="top_menu06">
+	<row id="top_menu07">
 		<language name="JPN" width="256">いったくかんいかいわ</language>
 		<language name="JPN_KANJI" width="256">一択簡易会話</language>
 	</row>
 
-	<row id="top_menu07">
+	<row id="top_menu08">
 		<language name="JPN" width="256">さんびきせんたく</language>
 		<language name="JPN_KANJI" width="256">三匹選択</language>
 	</row>
 
-	<row id="top_menu08">
+	<row id="top_menu09">
 		<language name="JPN" width="256">ちかてつろせんず</language>
 		<language name="JPN_KANJI" width="256">地下鉄路線図</language>
 	</row>
 
-	<row id="top_menu09">
+	<row id="top_menu10">
 		<language name="JPN" width="256">ていけいぶんかんいかいわ</language>
 		<language name="JPN_KANJI" width="256">定型文簡易会話</language>
 	</row>
 
-	<row id="top_menu10">
+	<row id="top_menu11">
 		<language name="JPN" width="256">タマゴふかデモ</language>
 		<language name="JPN_KANJI" width="256">タマゴふかデモ</language>
 	</row>
 
-	<row id="top_menu11">
+	<row id="top_menu12">
 		<language name="JPN" width="256">しんかデモ</language>
 		<language name="JPN_KANJI" width="256">進化デモ</language>
 	</row>
 
-	<row id="top_menu12">
+	<row id="top_menu13">
 		<language name="JPN" width="256">ずかんしょうさい</language>
 		<language name="JPN_KANJI" width="256">図鑑詳細</language>
 	</row>
 
-	<row id="top_menu13">
+	<row id="top_menu14">
 		<language name="JPN" width="256">テスト</language>
 		<language name="JPN_KANJI" width="256">テスト</language>
 	</row>
 
-	<row id="top_menu14">
+	<row id="top_menu15">
 		<language name="JPN" width="256">マニュアル</language>
 		<language name="JPN_KANJI" width="256">マニュアル</language>
 	</row>

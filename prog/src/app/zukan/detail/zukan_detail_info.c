@@ -8,6 +8,9 @@
  *  モジュール名：ZUKAN_DETAIL_INFO
  */
 //============================================================================
+
+#define DEF_SCMD_CHANGE  // これが定義されているとき、CMDが発行されるまで待たずにSCMDが発行されたときに変更を開始する
+
 //#define DEBUG_KAWADA
 
 
@@ -450,7 +453,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Info_ProcMain( ZKNDTL_PROC* proc, int* se
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_INFO );
+            ZUKAN_DETAIL_TOUCHBAR_DISP_INFO,
+            (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE ); 
         ZUKAN_DETAIL_TOUCHBAR_Appear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
       }
       else
@@ -761,6 +765,40 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     }
 
+
+#ifdef DEF_SCMD_CHANGE
+    switch( cmd )
+    {
+    case ZKNDTL_SCMD_CUR_D:
+      {
+        u16 monsno_curr;
+        u16 monsno_go;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZKNDTL_COMMON_GoToNextPoke(cmn);
+        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        if( monsno_curr != monsno_go )
+        {
+          Zukan_Detail_Info_ChangePoke(param, work, cmn);
+        }
+      }
+      break;
+    case ZKNDTL_SCMD_CUR_U:
+      {
+        u16 monsno_curr;
+        u16 monsno_go;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZKNDTL_COMMON_GoToPrevPoke(cmn);
+        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        if( monsno_curr != monsno_go )
+        {
+          Zukan_Detail_Info_ChangePoke(param, work, cmn);
+        }
+      }
+      break;
+    }
+#endif
+
+
     switch( cmd )
     {
     case ZKNDTL_CMD_NONE:
@@ -782,6 +820,7 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
       break;
     case ZKNDTL_CMD_CUR_D:
       {
+#ifndef DEF_SCMD_CHANGE
         u16 monsno_curr;
         u16 monsno_go;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
@@ -791,11 +830,13 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
         {
           Zukan_Detail_Info_ChangePoke(param, work, cmn);
         }
+#endif
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     case ZKNDTL_CMD_CUR_U:
       {
+#ifndef DEF_SCMD_CHANGE
         u16 monsno_curr;
         u16 monsno_go;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
@@ -805,6 +846,7 @@ static void Zukan_Detail_Info_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* pw
         {
           Zukan_Detail_Info_ChangePoke(param, work, cmn);
         }
+#endif
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -1004,6 +1046,11 @@ static void Zukan_Detail_Info_ChangePoke( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
   // 図鑑情報
   {
     BOOL b_sub_off = TRUE;
+
+#ifdef DEBUG_KAWADA
+    if( monsno == 202 ) b_get_flag = FALSE;
+#endif
+
     ZUKAN_INFO_ChangePoke( work->info_wk_m, monsno, formno, sex, rare, personal_rnd, b_get_flag );
 
     if( work->lang != ZUKAN_INFO_LANG_NONE )
@@ -1071,6 +1118,10 @@ static void Zukan_Detail_Info_ChangeLang( ZUKAN_DETAIL_INFO_PARAM* param, ZUKAN_
                   &personal_rnd,
                   &b_get_flag,
                   lang_exist );
+
+#ifdef DEBUG_KAWADA
+    if( monsno == 202 ) b_get_flag = FALSE;
+#endif
 
     ZUKAN_INFO_ChangePokeAndLang( work->info_wk_s, monsno, formno, sex, rare, personal_rnd, b_get_flag, lang );  //何も表示していないときはポケモンを更新していないので、ポケモンを変更する必要がある。
     

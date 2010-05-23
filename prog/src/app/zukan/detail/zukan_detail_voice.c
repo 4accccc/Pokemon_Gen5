@@ -8,6 +8,9 @@
  *  モジュール名：ZUKAN_DETAIL_VOICE
  */
 //============================================================================
+
+#define DEF_SCMD_CHANGE  // これが定義されているとき、CMDが発行されるまで待たずにSCMDが発行されたときに変更を開始する
+
 //#define DEBUG_KAWADA
 
 
@@ -688,6 +691,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcExit( ZKNDTL_PROC* proc, int* s
   ZUKAN_DETAIL_VOICE_PARAM*    param    = (ZUKAN_DETAIL_VOICE_PARAM*)pwk;
   ZUKAN_DETAIL_VOICE_WORK*     work     = (ZUKAN_DETAIL_VOICE_WORK*)mywk;
 
+  // まだ鳴いているかもしれないので、ここで止めておく
+  if( PMV_CheckPlay() )
+  {
+    PMV_StopVoice();
+  }
+
   // グラフ
   Zukan_Detail_Voice_GraphExit( param, work, cmn );
   // OBJ
@@ -853,7 +862,8 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Voice_ProcMain( ZKNDTL_PROC* proc, int* s
         ZUKAN_DETAIL_TOUCHBAR_SetType(
             touchbar,
             ZUKAN_DETAIL_TOUCHBAR_TYPE_GENERAL,
-            ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE );
+            ZUKAN_DETAIL_TOUCHBAR_DISP_VOICE,
+            (ZKNDTL_COMMON_GetPokeNum(cmn)>1)?TRUE:FALSE ); 
         ZUKAN_DETAIL_TOUCHBAR_Appear( touchbar, ZUKAN_DETAIL_TOUCHBAR_SPEED_OUTSIDE );
       }
       else
@@ -1074,6 +1084,40 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
       break;
     }
 
+
+#ifdef DEF_SCMD_CHANGE
+    switch( cmd )
+    {
+    case ZKNDTL_SCMD_CUR_D:
+      {
+        u16 monsno_curr;
+        u16 monsno_go;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZKNDTL_COMMON_GoToNextPoke(cmn);
+        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        if( monsno_curr != monsno_go )
+        {
+          Zukan_Detail_Voice_ChangePoke(param, work, cmn);
+        }
+      }
+      break;
+    case ZKNDTL_SCMD_CUR_U:
+      {
+        u16 monsno_curr;
+        u16 monsno_go;
+        monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        ZKNDTL_COMMON_GoToPrevPoke(cmn);
+        monsno_go = ZKNDTL_COMMON_GetCurrPoke(cmn);
+        if( monsno_curr != monsno_go )
+        {
+          Zukan_Detail_Voice_ChangePoke(param, work, cmn);
+        }
+      }
+      break;
+    }
+#endif
+
+
     // コマンド
     switch( cmd )
     {
@@ -1096,6 +1140,7 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
       break;
     case ZKNDTL_CMD_CUR_D:
       {
+#ifndef DEF_SCMD_CHANGE
         u16 monsno_curr;
         u16 monsno_go;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
@@ -1105,11 +1150,13 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
         {
           Zukan_Detail_Voice_ChangePoke(param, work, cmn);
         }
+#endif
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
     case ZKNDTL_CMD_CUR_U:
       {
+#ifndef DEF_SCMD_CHANGE
         u16 monsno_curr;
         u16 monsno_go;
         monsno_curr = ZKNDTL_COMMON_GetCurrPoke(cmn);
@@ -1119,6 +1166,7 @@ static void Zukan_Detail_Voice_CommandFunc( ZKNDTL_PROC* proc, int* seq, void* p
         {
           Zukan_Detail_Voice_ChangePoke(param, work, cmn);
         }
+#endif
         ZUKAN_DETAIL_TOUCHBAR_Unlock( touchbar );
       }
       break;
@@ -1159,7 +1207,7 @@ static void Zukan_Detail_Voice_VBlankFunc( GFL_TCB* tcb, void* wk )
 
   if( work->graph_req )
   {
-    GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );
+//    GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );  // ポケモン切り替えのSEが割れる現象対策：VBlank中にこれを行うとSEが割れるのでコメントアウト
  
     GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_X_SET, SGRAPH_BITMAP_SCREEN_SCROLL_BASE_X + work->graph_x_scroll );
     GFL_BG_SetScroll( BG_FRAME_M_TIME, GFL_BG_SCROLL_Y_SET, SGRAPH_BITMAP_SCREEN_SCROLL_BASE_Y );
@@ -2647,6 +2695,8 @@ static void Zukan_Detail_Voice_GraphMakeTransScreen_VBlank( ZUKAN_DETAIL_VOICE_P
   //GFL_BG_LoadScreenV_Req( BG_FRAME_M_TIME );
 
   work->graph_req = TRUE;
+
+  GFL_BMPWIN_TransVramCharacter( work->graph_bmpwin );  // ポケモン切り替えのSEが割れる現象対策：VBlank中にはこれを行いたくないのでここで行う
 }
 #endif  // #ifdef USE_SGRAPH
 
