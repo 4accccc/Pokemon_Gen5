@@ -114,6 +114,7 @@ static void _recvEvilCheck(const int netID, const int size, const void* pData, v
 static void _recvUNData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvGTSSelectPokemonIndex(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork);
+static void _touchPreMode_TouchStateCommon(POKEMON_TRADE_WORK* pWork);
 
 
 ///通信コマンドテーブル
@@ -3181,6 +3182,19 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
   
   TOUCHBAR_Main(pWork->pTouchWork);   //タッチバー
+  switch( TOUCHBAR_GetTouch(pWork->pTouchWork )){
+  case TOUCHBAR_ICON_RETURN:
+  case TOUCHBAR_ICON_CUTSOM1:
+  case TOUCHBAR_ICON_CUTSOM2:
+    _CHANGE_STATE(pWork, _touchPreMode_TouchStateCommon);
+    break;
+  }
+}
+
+//タッチボタンアニメ完了待ち
+static void _touchPreMode_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
+{
+  TOUCHBAR_Main(pWork->pTouchWork);   //タッチバー
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
     _CHANGE_STATE(pWork,_endRequestState);
@@ -3195,6 +3209,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
         _CatchPokemonRelease(pWork);
         _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
+        return;
       }
       else{
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE);
@@ -3208,11 +3223,10 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       }
       else{
         _CHANGE_STATE(pWork, _changeMenuOpen);
+        return;
       }
     }
-    return;
-    break;
-  default:
+    _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
     break;
   }
 }
