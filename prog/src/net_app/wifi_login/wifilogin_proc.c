@@ -78,7 +78,7 @@ static void _connectCallBack(void* pWk, int netID);
 static void _RecvFirstData(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void* _BeaconGetFunc(void* pWork);
 static int _BeaconGetSizeFunc(void* pWork);
-static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
+static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork);
 static void* _getMyUserData(void* pWork);  //DWCUserData
 static void* _getFriendData(void* pWork);  //DWCFriendData
 static void _deleteFriendList(int deletedIndex,int srcIndex, void* pWork);
@@ -311,7 +311,7 @@ static int _BeaconGetSizeFunc(void* pWork)
 }
 
 ///< ビーコンデータ取得関数
-static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
+static BOOL _BeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork)
 {
   if(myNo != beaconNo){
     return FALSE;

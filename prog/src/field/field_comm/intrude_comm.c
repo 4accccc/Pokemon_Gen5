@@ -56,7 +56,7 @@ static void  IntrudeComm_FinishTermCallback( void* pWork );
 static void * IntrudeComm_GetBeaconData(void* pWork);
 static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon);
 static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon);
-static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
+static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork );
 static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void  IntrudeComm_DisconnectCallBack(void* pWork);
 static void IntrudeComm_HardConnect(void* pWork,int hardID);
@@ -733,7 +733,7 @@ static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon)
  * @retval  BOOL		TRUE:ê⁄ë±OK  FALSE:ê⁄ë±NG
  */
 //--------------------------------------------------------------
-static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
+static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork )
 {
 //  OS_TPrintf("GameServiceID1 = %d, GameServiceID2 = %d\n", GameServiceID1, GameServiceID2);
   return (GameServiceID1==GameServiceID2);

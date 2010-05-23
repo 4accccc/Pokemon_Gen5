@@ -758,7 +758,7 @@ static void printPartyInfo( POKEPARTY* party );
 static void cutoff_wildParty( POKEPARTY* party, BtlRule rule );
 static void* testBeaconGetFunc( void* pWork );
 static int testBeaconGetSizeFunc( void* pWork );
-static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
+static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo, void* pWork );
 static void comm_dummy_callback(void* pWork);
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void btlAutoConnectCallback( void* pWork );
@@ -2728,7 +2728,7 @@ static int testBeaconGetSizeFunc( void* pWork )
 }
 
 ///< ビーコンデータ比較関数
-static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
+static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo, void* pWork )
 {
     if(myNo != beaconNo ){
         return FALSE;

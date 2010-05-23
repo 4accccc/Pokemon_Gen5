@@ -118,7 +118,7 @@ struct _COMPATIBLE_IRC_SYS
 static void NET_INIT_NegotiationCallBack( void *p_work, int netID );
 static void* NET_INIT_GetBeaconCallBack( void *p_work );
 static int NET_INIT_GetBeaconSizeCallBack( void *p_work );
-static BOOL NET_INIT_CompBeaconCallBack( GameServiceID myNO, GameServiceID beaconNO );
+static BOOL NET_INIT_CompBeaconCallBack( GameServiceID myNO, GameServiceID beaconNO, void* pWork );
 static void NET_INIT_DisConnectCallBack( void *p_work );
 static void NET_INIT_InitCallBack( void *p_work );
 static void NET_EXIT_ExitCallBack( void *p_work );
@@ -1221,7 +1221,7 @@ static int NET_INIT_GetBeaconSizeCallBack( void *p_work )
  *	@return	ê⁄ë±ÇµÇƒÇÊÇ¢Ç»ÇÁÇŒTRUEÅAÇ≥Ç‡Ç»Ç≠ÇŒFALSE
  */
 //-----------------------------------------------------------------------------
-static BOOL NET_INIT_CompBeaconCallBack( GameServiceID myNO, GameServiceID beaconNO )
+static BOOL NET_INIT_CompBeaconCallBack( GameServiceID myNO, GameServiceID beaconNO, void* pWork )
 {	
 	return myNO	== beaconNO;
 }

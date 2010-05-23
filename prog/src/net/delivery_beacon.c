@@ -54,7 +54,7 @@ static void _netConnectFunc(void* pWork,int hardID);
 static void _netNegotiationFunc(void* pWork,int NetID);
 static void* _netBeaconGetFunc(void* pWork);
 static int _netBeaconGetSizeFunc(void* pWork);
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork);
 static void _endCallBack(void* pWork);
 static void _RecvDummyData(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 
@@ -155,7 +155,7 @@ static int _netBeaconGetSizeFunc(void* pWork)
 }
 
 ///< ビーコンデータ取得関数
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork)
 {
   if(myNo != beaconNo){
     return FALSE;

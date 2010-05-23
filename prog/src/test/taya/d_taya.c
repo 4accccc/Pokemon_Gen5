@@ -145,14 +145,14 @@ static BOOL SUBPROC_PrintTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 static void testPacketFunc( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle );
 static void* testBeaconGetFunc( void* pWork );
 static int testBeaconGetSizeFunc( void* pWork );
-static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
+static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo, void* pWork );
 static void testCallBack(void* pWork);
 static void autoConnectCallBack( void* pWork );
 static BOOL SUBPROC_MakePokeTest( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_GoBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void* btlBeaconGetFunc( void* pWork );
 static int btlBeaconGetSizeFunc( void* pWork );
-static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo );
+static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo, void* pWork );
 static void btlAutoConnectCallback( void* pWork );
 static BOOL SUBPROC_CommBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static BOOL SUBPROC_MultiBattle( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
@@ -824,7 +824,7 @@ static int testBeaconGetSizeFunc( void* pWork )
 }
 
 ///< ビーコンデータ比較関数
-static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
+static BOOL testBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo, void* pWork )
 {
     if(myNo != beaconNo ){
         return FALSE;
@@ -1052,7 +1052,7 @@ static int btlBeaconGetSizeFunc( void* pWork )
 }
 
 ///< ビーコンデータ比較関数
-static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo )
+static BOOL btlBeaconCompFunc( GameServiceID myNo, GameServiceID beaconNo, void* pWork )
 {
     if( myNo != beaconNo ){
         return FALSE;

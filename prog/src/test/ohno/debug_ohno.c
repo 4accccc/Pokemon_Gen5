@@ -73,7 +73,7 @@ static BOOL NetTestEnd(void* pCtl);
 static void _connectCallBack(void* pWork);
 static void* _netBeaconGetFunc(void* pWork);
 static int _netBeaconGetSizeFunc(void* pWork);
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork);
 //static void FatalError_Disp(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void _netConnectFunc(void* pWork,int hardID);    ///< ハードで接続した時に呼ばれる
 static void _netNegotiationFunc(void* pWork,int hardID);    ///< ネゴシエーション完了時にコール
@@ -174,7 +174,7 @@ static int _netBeaconGetSizeFunc(void* pWork)
 }
 
 ///< ビーコンデータ取得関数
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork)
 {
   if(myNo != beaconNo){
     return FALSE;

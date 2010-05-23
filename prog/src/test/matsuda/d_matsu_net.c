@@ -47,7 +47,7 @@ typedef struct {
 static BOOL DebugMatsuda_WiressTest(D_MATSU_WORK *wk);
 static void* _netBeaconGetFunc(void* pWork);
 static int _netBeaconGetSizeFunc(void* pWork);
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo);
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork);
 static void _initCallBack(void* pWork);
 static void _connectCallBack(void* pWork, int netID);
 static void _endCallBack(void* pWork);
@@ -425,7 +425,7 @@ static int _netBeaconGetSizeFunc(void* pWork)
 }
 
 ///< ビーコンデータ取得関数
-static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
+static BOOL _netBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork)
 {
     if(myNo != beaconNo){
         return FALSE;

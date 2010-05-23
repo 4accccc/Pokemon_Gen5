@@ -199,7 +199,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
 static void CTVT_COMM_UpdateScan( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
 static void*  CTVT_COMM_GetBeaconData(void* pWork);
 static int CTVT_COMM_GetBeaconSize(void *pWork);
-static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
+static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pWork);
 static BOOL CTVT_COMM_ConnectCheckCallBack(WMStartParentCallback *cbWork, void* pWork);
 
 static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork );
@@ -715,7 +715,7 @@ static int CTVT_COMM_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 // ビーコンデータ比較関数 
 //--------------------------------------------------------------
-static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2)
+static BOOL CTVT_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pWork)
 {
   if( GameServiceID2 == WB_NET_COMM_TVT ||
       GameServiceID2 == WB_NET_FIELDMOVE_SERVICEID)

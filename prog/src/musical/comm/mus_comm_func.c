@@ -247,7 +247,7 @@ static void MUS_COMM_CheckUserData( MUS_COMM_WORK *work );
 
 static void*  MUS_COMM_GetBeaconData(void* pWork);
 static int MUS_COMM_GetBeaconSize(void *pWork);
-static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2);
+static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pWork);
 
 inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_STATE commState );
 static void MUS_COMM_DebugCheckCRC( void *data , const u32 size , const u8 code );
@@ -1047,7 +1047,7 @@ static int MUS_COMM_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 // 接続チェック用比較
 //--------------------------------------------------------------
-static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2)
+static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pWork)
 {
   if( GameServiceID1 == GameServiceID2 )
   {

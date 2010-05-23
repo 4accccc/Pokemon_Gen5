@@ -52,7 +52,7 @@ enum
 static void * get_BeaconData( void *pWork );
 static int get_BeaconSize( void *pWork );
 static BOOL check_ConnectService(
-    GameServiceID GameServiceID1, GameServiceID GameServiceID2 );
+    GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pUserwork );
 
 static void commCmd_RecvBufPlayerData(
     int netID, const int size, const void *pData,
@@ -210,7 +210,7 @@ static int get_BeaconSize( void *pWork )
  */
 //--------------------------------------------------------------
 static BOOL check_ConnectService(
-    GameServiceID GameServiceID1, GameServiceID GameServiceID2 )
+    GameServiceID GameServiceID1, GameServiceID GameServiceID2, void* pUserwork )
 {
   return( GameServiceID1 == GameServiceID2 );
 }

@@ -81,7 +81,7 @@ static void	GameBeacon_ExitCallback(void* pWork);
 static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs);
 static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_index);
 static void* GameBeacon_GetBeaconData(void* pWork);
-static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
+static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork );
 static void GameBeacon_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void GameBeacon_DisconnectCallBack(void* pWork);
 static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a , const GBS_BEACON *beacon_b );
@@ -521,7 +521,7 @@ int GameBeacon_GetBeaconSize(void *pWork)
  * @retval  BOOL		TRUE:接続OK　　FALSE:接続NG
  */
 //--------------------------------------------------------------
-static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
+static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork )
 {
   // CGEARで色々なビーコンを取得したいのでTRUEのみにした k.ohno 2010.01.08
   return TRUE;

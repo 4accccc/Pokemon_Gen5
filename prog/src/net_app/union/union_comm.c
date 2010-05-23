@@ -62,7 +62,7 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
 static void* UnionComm_GetBeaconData(void* pWork);
 static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beacon);
 static int UnionComm_GetBeaconSize(void *pWork);
-static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
+static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork );
 static void UnionComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
 static void UnionComm_DisconnectCallBack(void* pWork);
 static void UnionChat_InitLog(UNION_CHAT_LOG *log);
@@ -807,7 +807,7 @@ static int UnionComm_GetBeaconSize(void *pWork)
  * @retval  BOOL		TRUE:ê⁄ë±OKÅ@Å@FALSE:ê⁄ë±NG
  */
 //--------------------------------------------------------------
-static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
+static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork )
 {
   return (GameServiceID1==GameServiceID2);
 }

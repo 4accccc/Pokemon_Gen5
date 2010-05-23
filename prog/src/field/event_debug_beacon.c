@@ -139,7 +139,7 @@ static void BEACON_DATA_SetWord( const BEACON_DATA *cp_wk, WORDSET *p_word, STRB
 //=====================================
 static void * NETCALLBACK_GetBeaconData( void *p_wk_adrs );
 static int NETCALLBACK_GetBeaconSize( void *p_wk_adrs );
-static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
+static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pUserwork );
 
 //-------------------------------------
 ///	その他
@@ -755,7 +755,7 @@ static int NETCALLBACK_GetBeaconSize( void *p_wk_adrs )
  *	@return	TRUEならば接続OK	FALSEならば接続NG
  */
 //-----------------------------------------------------------------------------
-static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
+static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pUserwork )
 {	
 	//ビーコンの受け取りだけで、繋がらない
 	return GameServiceID1 == GameServiceID2;

@@ -191,7 +191,7 @@ static void WIFI_DOWNLOAD_WaitNdCleanCallback( WIFI_DOWNLOAD_DATA *p_wk, int res
 //=====================================
 static void * NETCALLBACK_GetBeaconData( void *p_wk_adrs );
 static int NETCALLBACK_GetBeaconSize( void *p_wk_adrs );
-static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 );
+static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 , void* pWork);
 static void	NETCALLBACK_ExitCallback(void* p_wk_adrs);
 // wifi downloadで使用するコールバック
 static void NdCallback(DWCNdCallbackReason reason, DWCNdError error, int servererror);
@@ -1658,7 +1658,7 @@ static int NETCALLBACK_GetBeaconSize( void *p_wk_adrs )
  *	@return	TRUEならば接続OK	FALSEならば接続NG
  */
 //-----------------------------------------------------------------------------
-static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2 )
+static BOOL NETCALLBACK_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork )
 {	
 	//受け取るビーコンを判断
 	return GameServiceID1 == GameServiceID2;

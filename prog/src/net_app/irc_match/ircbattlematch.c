@@ -223,7 +223,7 @@ static int IrcBattleBeaconGetSizeFunc(void* pWork)
 }
 
 ///< ビーコンデータ取得関数
-static BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo)
+static BOOL IrcBattleBeaconCompFunc(GameServiceID myNo,GameServiceID beaconNo, void* pWork)
 {
   if(myNo != beaconNo){
     return FALSE;
