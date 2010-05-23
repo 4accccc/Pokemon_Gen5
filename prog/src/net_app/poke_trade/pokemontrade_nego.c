@@ -65,6 +65,8 @@
 #define _GTSINFO16_WAIT (60*2)
 #define _GTSINFO14_WAIT (60*2)
 
+#define _MESSAGE_TIMER  (60*2)
+
 
 static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork);
 static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork);
@@ -847,6 +849,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID);
   }
+  pWork->anmCount = 0;
   _CHANGE_STATE(pWork, _NEGO_Select6CancelWait3);
 
 }
@@ -1180,6 +1183,9 @@ static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork)
     return;
   }
   if(!CheckNegoWaitTimer(pWork)){
+    return;
+  }
+  if(pWork->anmCount < _MESSAGE_TIMER){
     return;
   }
 
@@ -1525,12 +1531,14 @@ static void _PokeEvilChkEnd2(POKEMON_TRADE_WORK* pWork)
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_11, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     pWork->NegoWaitTime = _GTSINFO11_WAIT;
+    pWork->anmCount = 0;
     _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
   }
   else{
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_10, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     pWork->NegoWaitTime = _GTSINFO10_WAIT;
+    pWork->anmCount = 0;
     _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
   }
 }

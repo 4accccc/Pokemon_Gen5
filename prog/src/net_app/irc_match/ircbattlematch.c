@@ -165,6 +165,10 @@ static void _returnMessage(IRC_BATTLE_MATCH* pWork);
 static void _modeCheckStartTok(IRC_BATTLE_MATCH* pWork);
 static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork,BOOL bDecide );
 static void ircExitStart2(IRC_BATTLE_MATCH* pWork);
+static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork);
+static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork ,BOOL bDecide);
+static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork);
+static void _YesNoStart(IRC_BATTLE_MATCH* pWork);
 
 
 ///’ÊMƒRƒ}ƒ“ƒh
@@ -1052,8 +1056,88 @@ static void _modeCheckStart31(IRC_BATTLE_MATCH* pWork)
   }
 }
 
+
+
+
+static void _ircExitWaitNO_TS2(IRC_BATTLE_MATCH* pWork)
+{
+  _buttonWindowDelete(pWork);
+  {
+    int aMsgBuff[1];
+    aMsgBuff[0] = pWork->messageBackup;
+    _msgWindowCreate(aMsgBuff, pWork);
+  }
+  _ReturnButtonStart(pWork,FALSE);
+  _CHANGE_STATE(pWork,_modeCheckStart2);
+
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ‚h‚q‚bÚ‘±‘Ò‹@
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _ircExitWait_TS2(IRC_BATTLE_MATCH* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+    if(selectno == 0)
+    { // ‚Í‚¢‚ð‘I‘ð‚µ‚½ê‡
+      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      _buttonWindowDelete(pWork);
+      GFL_NET_Exit(NULL);
+      _CHANGE_STATE(pWork,_modeFadeoutStart);
+    }
+    else
+    {  // ‚¢‚¢‚¦‚ð‘I‘ð‚µ‚½ê‡
+      _CHANGE_STATE(pWork,_ircExitWaitNO_TS2);
+    }
+    _PaletteFade(pWork,FALSE);
+    
+  }
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ’†’fˆ—
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void ircExitStart_TS2(IRC_BATTLE_MATCH* pWork)
+{
+  int aMsgBuff[]={IRCBTL_STR_16};
+  int backup = pWork->messageBackup;
+
+  GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
+                                0x20*12, 0x20, pWork->heapID);
+  _msgWindowCreate(aMsgBuff, pWork);
+  pWork->messageBackup = backup;
+  _YesNoStart(pWork);
+  GFL_FONTSYS_SetDefaultColor();
+  _CHANGE_STATE(pWork,_ircExitWait_TS2);
+}
+
+
+
+
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork)
 {
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
+    _CHANGE_STATE(pWork,ircExitStart_TS2);
+    return;
+  }
+
+  
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_CS,WB_NET_IRCBATTLE)){
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_TYPESEND, sizeof(pWork->selectType), &pWork->selectType)){
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), _TIMINGNO_TYPECHECK, WB_NET_IRCBATTLE);
