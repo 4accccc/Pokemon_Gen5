@@ -351,7 +351,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
     return FALSE;
 	}
 	if(pInit->beaconCompFunc){
-		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo)){
+		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo,pNetWL->pUserWork)){
 			return FALSE;   // サービスが異なる場合は拾わない
 		}
 	}
