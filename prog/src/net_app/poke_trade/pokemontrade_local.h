@@ -45,6 +45,7 @@
 #include "net/nhttp_rap.h"
 #include "pm_define.h"
 #include "savedata/wifihistory.h"
+#include "app/app_keycursor.h"
 
 
 ///3Dモデルのタイプ
@@ -546,6 +547,7 @@ struct _POKEMON_TRADE_WORK{
   STRBUF* pMessageStrBufEx;
   PRINT_QUE*            SysMsgQue;
   GFL_TCBLSYS *pMsgTcblSys;
+  APP_KEYCURSOR_WORK* pKeyCursor;
 
   GFL_BMPWIN* SerchMojiWin[JAPANESE_SEARCH_INDEX_MAX];  //頭文字検索のウインドウ用
   int selectMoji;                  //頭文字検索で選んだ文字

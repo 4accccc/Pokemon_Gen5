@@ -11,6 +11,7 @@
 #include "system/tr2dgra.h"
 #include "pokeicon/pokeicon.h"
 #include "system/time_icon.h"
+#include "app/app_keycursor.h"
 
 
 #define _TOUCHBAR_BG_PALPOS (12)     //タッチバーの色   （１）本
@@ -209,13 +210,18 @@ static void EndMessageWindowOff( WIFIP2PMATCH_WORK *wk )
 
 static BOOL WifiP2PMatchMessageEndCheck(WIFIP2PMATCH_WORK* wk)
 {
+  BOOL ret =TRUE;
 
-  BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc(&wk->trgWork, wk->pStream);
-
-  if(ret){
-    if(wk->pStream){
-      PRINTSYS_PrintStreamDelete( wk->pStream );
-      wk->pStream = NULL;
+  if(wk->pStream){
+    if(wk->MsgWin){
+      APP_KEYCURSOR_Main( wk->pKeyCursor, wk->pStream, wk->MsgWin );
+    }
+    ret = APP_PRINTSYS_COMMON_PrintStreamFunc(&wk->trgWork, wk->pStream);
+    if(ret){
+      if(wk->pStream){
+        PRINTSYS_PrintStreamDelete( wk->pStream );
+        wk->pStream = NULL;
+      }
     }
   }
   return ret;

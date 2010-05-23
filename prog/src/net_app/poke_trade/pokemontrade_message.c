@@ -342,6 +342,7 @@ void POKETRADE_MESSAGE_HeapInit(POKEMON_TRADE_WORK* pWork)
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   GFL_FONTSYS_SetColor(1, 2, 15);
   pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
+  pWork->pKeyCursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, pWork->heapID );
 
 	pWork->pAppTaskRes	= APP_TASKMENU_RES_Create( GFL_BG_FRAME2_S, _SUBLIST_NORMAL_PAL,
 			pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID );
@@ -361,6 +362,7 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
   if(pWork->pMsgTcblSys==NULL){
     return;
   }
+  APP_KEYCURSOR_Delete( pWork->pKeyCursor );
   POKETRADE_MESSAGE_WindowClose(pWork);
   POKETRADE_MESSAGE_AppMenuClose(pWork);
   if(pWork->pStream){
@@ -413,39 +415,22 @@ void POKETRADE_MESSAGE_HeapEnd(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKETRADE_MESSAGE_EndCheck(POKEMON_TRADE_WORK* pWork)
 {
-  BOOL ret = APP_PRINTSYS_COMMON_PrintStreamFunc(&pWork->trgWork,pWork->pStream);
+  BOOL ret =TRUE;
 
-  if(ret){
-    if(pWork->pStream){
-      PRINTSYS_PrintStreamDelete( pWork->pStream );
-      pWork->pStream = NULL;
+  if(pWork->pStream){
+    if(pWork->mesWin){
+      APP_KEYCURSOR_Main( pWork->pKeyCursor, pWork->pStream, pWork->mesWin );
+    }
+    ret = APP_PRINTSYS_COMMON_PrintStreamFunc(&pWork->trgWork,pWork->pStream);
+    if(ret){
+      if(pWork->pStream){
+        PRINTSYS_PrintStreamDelete( pWork->pStream );
+        pWork->pStream = NULL;
+      }
     }
   }
   return ret;
   
-#if 0
-
-
-
-  if(pWork->pStream){
-    int state = PRINTSYS_PrintStreamGetState( pWork->pStream );
-    switch(state){
-    case PRINTSTREAM_STATE_DONE:
-      PRINTSYS_PrintStreamDelete( pWork->pStream );
-      pWork->pStream = NULL;
-      break;
-    case PRINTSTREAM_STATE_PAUSE:
- //     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE){
-        PRINTSYS_PrintStreamReleasePause( pWork->pStream );
-   //   }
-      break;
-    default:
-      break;
-    }
-    return FALSE;  //‚Ü‚¾I‚í‚Á‚Ä‚È‚¢
-  }
-  return TRUE;// I‚í‚Á‚Ä‚¢‚é
-#endif
 }
 
 
