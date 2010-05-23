@@ -27,7 +27,6 @@
 //------------------------------------------------------------------
 #include "net_app/irc_match/ircbattlematch.h"
 #include "net_app/irc_match/ircbattlemenu.h"
-#include "net_app/friend_trade/ircbattlefriend.h"
 #include "net_app/pokemontrade.h"
 #include "net_app/irc_compatible.h"
 #include "sound/pm_sndsys.h"

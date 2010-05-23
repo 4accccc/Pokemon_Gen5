@@ -1039,7 +1039,7 @@ static void _itemDispInit(G_SYNC_WORK* pWork,DREAM_WORLD_SERVER_DOWNLOAD_DATA* p
   int i;
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
     if((pDream->itemID[i]!=0) && (pDream->itemNum[i]!=0)){
-      GSYNC_DISP_MoveIconAdd(pWork->pDispWork,i,pDream->itemID[i], 0, 0 );
+      GSYNC_DISP_MoveIconItemAdd(pWork->pDispWork,i,pDream->itemID[i] );
     }
   }
 }
@@ -1071,7 +1071,6 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
     if(pWork->zukanNo != DREAM_WORLD_NOPICTURE){
       pWork->msgBit = pWork->msgBit | 0x04;
     }
-#if DOWNLOADPOKE_MORE_VER
     //シンボルポケ格納
     for(i=0;i<DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
       if(pDream->poke[i].findPokemon==0){
@@ -1083,19 +1082,10 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
                          pDream->poke[i].findPokemonForm,
                          pDream->poke[i].findPokemonTecnique,
                          pDream->poke[i].findPokemonAct);
-      GSYNC_DISP_MoveIconAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX,
+      GSYNC_DISP_MoveIconPokeAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX+i,
                              pDream->poke[i].findPokemon, pDream->poke[i].findPokemonForm,
                              pDream->poke[i].findPokemonSex);
     }
-#else
-    //シンボルポケ格納
-    _symbolPokemonSave(pWork, pDreamSave, pDream->findPokemon,
-                       pDream->findPokemonSex,
-                       pDream->findPokemonForm,
-                       pDream->findPokemonTecnique, pDream->findPokemonAct);
-    GSYNC_DISP_MoveIconAdd(pWork->pDispWork, DREAM_WORLD_DATA_MAX_ITEMBOX,
-                           pDream->findPokemon, pDream->findPokemonForm,pDream->findPokemonSex);
-#endif
       
     //サインイン
     DREAMWORLD_SV_SetSignin(pDreamSave,pDream->signin);
@@ -1110,7 +1100,9 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
                      GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
                      GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
                      8,8);
-    
+    //リソース読み込み
+    GSYNC_DISP_DownloadFileRead(pWork->pDispWork);
+
     //          _CHANGE_STATE();  //セーブに行く?
   }
   else{
@@ -2258,7 +2250,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pSaveData = GAMEDATA_GetSaveControlWork(pParent->gameData);
     profileID = MyStatus_GetProfileID( GAMEDATA_GetMyStatus(pParent->gameData) );
     pWork->pNHTTPRap = NHTTP_RAP_Init(HEAPID_GAMESYNC, profileID, &pParent->aSVL);
-    pWork->pBox = GAMEDATA_GetBoxManager(GAMESYSTEM_GetGameData(pParent->gsys));
+    pWork->pBox = GAMEDATA_GetBoxManager(pParent->gameData);
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
     switch(pParent->selectType){

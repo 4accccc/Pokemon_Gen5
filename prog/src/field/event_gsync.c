@@ -26,7 +26,6 @@
 //------------------------------------------------------------------
 #include "net_app/irc_match/ircbattlematch.h"
 #include "net_app/irc_match/ircbattlemenu.h"
-#include "net_app/friend_trade/ircbattlefriend.h"
 #include "net_app/pokemontrade.h"
 #include "net_app/gsync.h"
 
@@ -155,9 +154,8 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
 		OS_EnableIrq();
    	PMSND_Init();
     { 
-      GMEVENT* sound_event;
-      sound_event = EVENT_FSND_ForcePlayBGM( gsys, dbw->PlayBGM );
-      GMEVENT_CallEvent( event, sound_event ); 
+      PMSND_PlayBGM( dbw->PlayBGM );
+      PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     }
     (*seq) = _FADEIN_WIFIUTIL;
     break;

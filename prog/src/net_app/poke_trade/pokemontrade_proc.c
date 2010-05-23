@@ -42,7 +42,7 @@
 #include "trade.naix"
 #include "box_m_obj_NANR_LBLDEFS.h"
 #include "p_st_obj_d_NANR_LBLDEFS.h"
-
+#include "wb_trade_obj01_NANR_LBLDEFS.h"
 
 #include "net_app/pokemontrade.h"
 #include "net_app/connect_anm.h"

@@ -40,6 +40,7 @@
 #include "gsync_local.h"
 #include "gtsnego.naix"
 #include "msg/msg_gsync.h"
+#include "app/app_keycursor.h"
 
 #if PM_DEBUG
 #include "debug/debugwin_sys.h"
@@ -115,6 +116,7 @@ struct _GSYNC_MESSAGE_WORK {
   STRBUF* pStrBuf;
   STRBUF* pMessageStrBufEx;
   int msgidx[_MESSAGE_INDEX_MAX];
+  APP_KEYCURSOR_WORK* pKeyCursor;
 
   GFL_BMPWIN* infoDispWin;
   GFL_BMPWIN* systemDispWin;
@@ -157,6 +159,7 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
   pWork->pMessageStrBufEx = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pFontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , pWork->heapID );
   pWork->pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, msg_dat, pWork->heapID );
+  pWork->pKeyCursor = APP_KEYCURSOR_Create( 15, FALSE, TRUE, pWork->heapID );
 
   pWork->pAppTaskRes =
     APP_TASKMENU_RES_Create( GFL_BG_FRAME1_S, _SUBLIST_NORMAL_PAL,
@@ -215,6 +218,7 @@ void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
   GFL_BG_FreeCharacterArea(GFL_BG_FRAME2_S,GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar2S),
                            GFL_ARCUTIL_TRANSINFO_GetSize(pWork->bgchar2S));
   _ButtonSafeDelete(pWork);
+  APP_KEYCURSOR_Delete( pWork->pKeyCursor );
 
   WORDSET_Delete(pWork->pWordSet);
 //  GSYNC_MESSAGE_ButtonWindowDelete(pWork);
@@ -318,6 +322,8 @@ void GSYNC_MESSAGE_NickNameMessageDisp(GSYNC_MESSAGE_WORK* pWork,int msgid, int 
 BOOL GSYNC_MESSAGE_InfoMessageEndCheck(GSYNC_MESSAGE_WORK* pWork)
 {
   if(pWork->pStream){
+    APP_KEYCURSOR_Main( pWork->pKeyCursor, pWork->pStream, pWork->infoDispWin );
+
     if(!APP_PRINTSYS_COMMON_PrintStreamFunc(&pWork->aPrintWork,pWork->pStream)){
       return FALSE;  //‚Ü‚¾I‚í‚Á‚Ä‚È‚¢
     }

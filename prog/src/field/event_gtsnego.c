@@ -104,14 +104,8 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
 
   switch (*seq) {
   case _FIELD_FADE_START:
-    {
-//      GMEVENT* fade_event;
-  //    fade_event = EVENT_FieldFadeOut_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
-    //  GMEVENT_CallEvent(event, fade_event);
-    }
-    
     dbw->soundNo = PMSND_GetBGMsoundNo();
-    PMSND_FadeOutBGM(6);
+    PMSND_FadeOutBGM(PMSND_FADE_FAST);
     (*seq) ++;
     break;
   case _FIELD_CLOSE:
