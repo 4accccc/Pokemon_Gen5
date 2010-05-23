@@ -220,16 +220,18 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->anmCount == 61){
-    POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
-    APP_KEYCURSOR_Clear( pWork->pKeyCursor, GFL_BMPWIN_GetBmp(pWork->mesWin), 15 );
-  }
-  if(pWork->anmCount == 60){
-    if(PRINTSTREAM_STATE_PAUSE == PRINTSYS_PrintStreamGetState( pWork->pStream )){
-      POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_THROUGH);
+  if(pWork->pStream){
+    if(pWork->anmCount == 61){
+      POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
+      APP_KEYCURSOR_Clear( pWork->pKeyCursor, GFL_BMPWIN_GetBmp(pWork->mesWin), 15 );
     }
-    else{
-      pWork->anmCount++;
+    if(pWork->anmCount == 60){
+      if(PRINTSTREAM_STATE_PAUSE == PRINTSYS_PrintStreamGetState( pWork->pStream )){
+        POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_THROUGH);
+      }
+      else{
+        pWork->anmCount++;
+      }
     }
   }
 

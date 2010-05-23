@@ -1616,11 +1616,23 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
 
 
 //ポケモンプレ不正検査
+static void _PokeEvilChkPre1(POKEMON_TRADE_WORK* pWork)
+{
+  if(WIPE_SYS_EndCheck()){
+    IRC_POKETRADE_AllDeletePokeIconResource(pWork);
+    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
+    WIPE_ResetBrightness(WIPE_PATTERN_S);
+    _CHANGE_STATE(pWork, _PokeEvilChk);
+  }
+
+}
+
+//ポケモンプレ不正検査
 static void _PokeEvilChkPre(POKEMON_TRADE_WORK* pWork)
 {
-  IRC_POKETRADE_AllDeletePokeIconResource(pWork);
-  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
-  _CHANGE_STATE(pWork, _PokeEvilChk);
+  WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
+                  WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+  _CHANGE_STATE(pWork, _PokeEvilChkPre1);
 }
 
 #endif

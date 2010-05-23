@@ -42,6 +42,7 @@ struct _POKEMONTRADE_DEMO_WORK{
   void* ptcheap[PTC_KIND_NUM_MAX];
   VecFx32 PushPos;
   VecFx32 ReturnPos;
+  VecFx32 BackupScale[4];
 
   ICA_ANIME* icaCamera;
   ICA_ANIME* icaTarget;

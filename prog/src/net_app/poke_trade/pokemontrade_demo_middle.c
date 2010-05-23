@@ -161,16 +161,22 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   G2_BlendNone();
 
 
-  IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手裏
-  IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );  //みかた裏
-  IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手表
-
   if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-    MCSS_GetScale( pWork->pokeMcss[0], &pWork->pPokemonTradeDemo->ReturnPos );
+    IRCPOKETRADE_PokeCreateMcssNormal(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手裏
+    IRCPOKETRADE_PokeCreateMcssNormal(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );  //みかた裏
+    IRCPOKETRADE_PokeCreateMcssNormal(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手表
   }
   else{
-    MCSS_GetScale( pWork->pokeMcss[3], &pWork->pPokemonTradeDemo->ReturnPos );
+    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手裏
+    IRCPOKETRADE_PokeCreateMcss(pWork, 2, 0, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );  //みかた裏
+    IRCPOKETRADE_PokeCreateMcss(pWork, 3, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1),FALSE );  //相手表
   }
+
+
+  MCSS_GetScale( pWork->pokeMcss[0], &pWork->pPokemonTradeDemo->BackupScale[0] );
+  MCSS_GetScale( pWork->pokeMcss[1], &pWork->pPokemonTradeDemo->BackupScale[1] );
+  MCSS_GetScale( pWork->pokeMcss[2], &pWork->pPokemonTradeDemo->BackupScale[2] );
+  MCSS_GetScale( pWork->pokeMcss[3], &pWork->pPokemonTradeDemo->BackupScale[3] );
 
   MCSS_SetVanishFlag( pWork->pokeMcss[1] );
   MCSS_SetVanishFlag( pWork->pokeMcss[2] );
@@ -286,37 +292,52 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 //--------------------------------------------------------------------
 
-
+  if(pWork->anmCount == ANMCNTC(_POKE_APPEAR_START-1)){    //作り直している
+    IRCPOKETRADE_PokeDeleteMcss(pWork,0);
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      IRCPOKETRADE_PokeCreateMcssNormal(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );
+    }
+    else{
+      IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );
+    }
+    MCSS_GetScale( pWork->pokeMcss[0], &pWork->pPokemonTradeDemo->BackupScale[0] );
+    MCSS_SetVanishFlag( pWork->pokeMcss[0] );
+  }
   
   if(pWork->anmCount == ANMCNTC(_POKE_APPEAR_START)){
+    int mcssno = 2;
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+       mcssno = 1;
+    }
 
-
-    MCSS_ResetVanishFlag( pWork->pokeMcss[2] );
-    IRCPOKETRADE_PokeDeleteMcss(pWork,0);
-    IRCPOKETRADE_PokeCreateMcss(pWork, 0, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,0),FALSE );
-    MCSS_SetVanishFlag( pWork->pokeMcss[0] );
+    MCSS_ResetVanishFlag( pWork->pokeMcss[mcssno] );
 
     {  //初期位置設定
       VecFx32 apos;
       apos.x = _POKEMON_PLAYER_APPEAR_POSX;
       apos.y = _POKEMON_PLAYER_APPEAR_POSY;
       apos.z = _POKEMON_PLAYER_APPEAR_POSZ;
-      MCSS_SetPosition( pWork->pokeMcss[2] ,&apos );
+      MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
       apos.x = _POKEMON_PLAYER_UP_POSX;
       apos.y = _POKEMON_PLAYER_UP_POSY;
       apos.z = _POKEMON_PLAYER_UP_POSZ;
-      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_POKE_APPEAR_TIME), &apos, pWork->heapID);
-      MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
+      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno], ANMCNTC(_POKE_APPEAR_TIME), &apos, pWork->heapID);
+      MCSS_SetAnmStopFlag(pWork->pokeMcss[mcssno]);
 
-      MCSS_GetScale( pWork->pokeMcss[2], &apos );
-      apos.x *= _FRONT_POKMEON_SCALE_SIZE;
-      apos.y *= _FRONT_POKMEON_SCALE_SIZE;
-      MCSS_SetScale( pWork->pokeMcss[2], &apos );
+      apos.x = _FRONT_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].x;
+      apos.y = _FRONT_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].y;
+      apos.z = pWork->pPokemonTradeDemo->BackupScale[mcssno].z;
+      MCSS_SetScale( pWork->pokeMcss[mcssno], &apos );
     }
   }
 
   if(pWork->anmCount == ANMCNTC(_POKE_APPEAR_START+1)){
-    MCSS_ResetVanishFlag( pWork->pokeMcss[3] );
+    int mcssno = 3;
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+       mcssno = 0;
+    }
+
+    MCSS_ResetVanishFlag( pWork->pokeMcss[mcssno] );
     
  //   IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
     {
@@ -324,25 +345,17 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_FRIEND_APPEAR_POSX;
       apos.y = _POKEMON_FRIEND_APPEAR_POSY;
       apos.z = _POKEMON_FRIEND_APPEAR_POSZ;
-      MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
+      MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
 
       apos.x = _POKEMON_FRIEND_DOWN_POSX;
       apos.y = _POKEMON_FRIEND_DOWN_POSY;
       apos.z = _POKEMON_FRIEND_DOWN_POSZ;
-      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_POKE_APPEAR_TIME), &apos , pWork->heapID);
-      MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
-      MCSS_GetScale( pWork->pokeMcss[3], &apos );
-      apos.x *= _BACK_POKMEON_SCALE_SIZE;
-      apos.y *= _BACK_POKMEON_SCALE_SIZE;
-      MCSS_SetScale( pWork->pokeMcss[3], &apos );
-
-
-
-
-      MCSS_SetScale( pWork->pokeMcss[3], &pWork->pPokemonTradeDemo->ReturnPos );
-
-
-
+      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno], ANMCNTC(_POKE_APPEAR_TIME), &apos , pWork->heapID);
+      MCSS_SetAnmStopFlag(pWork->pokeMcss[mcssno]);
+      apos.x = _BACK_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].x;
+      apos.y = _BACK_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].y;
+      apos.z = pWork->pPokemonTradeDemo->BackupScale[mcssno].z;
+      MCSS_SetScale( pWork->pokeMcss[mcssno], &apos );
     }
     //移動設定
   }
@@ -367,58 +380,74 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
     {  //初期位置設定
       VecFx32 apos;
+      int mcssno2 = 2;
+      int mcssno1 = 3;
+      if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+        mcssno1 = 0;
+      }
+      if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+        mcssno2 = 1;
+      }
       apos.x = _POKEMON_PLAYER_SIDEOUT_POSX;
       apos.y = _POKEMON_PLAYER_SIDEOUT_POSY;
       apos.z = _POKEMON_PLAYER_SIDEOUT_POSZ;
-      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_POKE_SIDEOUT_TIME), &apos, pWork->heapID);
+      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno2], ANMCNTC(_POKE_SIDEOUT_TIME), &apos, pWork->heapID);
       apos.x = _POKEMON_FRIEND_SIDEOUT_POSX;
       apos.y = _POKEMON_FRIEND_SIDEOUT_POSY;
       apos.z = _POKEMON_FRIEND_SIDEOUT_POSZ;
-      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_POKE_SIDEOUT_TIME), &apos , pWork->heapID);
+      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno1], ANMCNTC(_POKE_SIDEOUT_TIME), &apos , pWork->heapID);
       pWork->pMoveMcss[0]->wave=1;
       pWork->pMoveMcss[1]->wave=1;
     }
   }
 
   if(ANMCNTC(_POKE_SIDEIN_START) == pWork->anmCount){
-
+    int mcssno = 0;
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      mcssno = 3;
+    }
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0]=NULL;
-    MCSS_ResetVanishFlag( pWork->pokeMcss[0] );
-    MCSS_SetPaletteFade( pWork->pokeMcss[0], 0, 0, 0, 0x7fff  );
+    MCSS_ResetVanishFlag( pWork->pokeMcss[mcssno] );
+    MCSS_SetPaletteFade( pWork->pokeMcss[mcssno], 0, 0, 0, 0x7fff  );
     {  //初期位置設定
       VecFx32 apos;
       apos.x = _POKEMON_PLAYER_SIDEST_POSX;
       apos.y = _POKEMON_PLAYER_SIDEST_POSY;
       apos.z = _POKEMON_PLAYER_SIDEST_POSZ;
-      MCSS_SetPosition( pWork->pokeMcss[0] ,&apos );
+      MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
       apos.x = _POKEMON_PLAYER_SIDEIN_POSX;
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
-      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
-      MCSS_GetScale( pWork->pokeMcss[0], &apos );
-      apos.x *= _BACK_POKMEON_SCALE_SIZE;
-      apos.y *= _BACK_POKMEON_SCALE_SIZE;
-      MCSS_SetScale( pWork->pokeMcss[0], &apos );
+      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
+      apos.x = _BACK_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].x;
+      apos.y = _BACK_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].y;
+      apos.z = pWork->pPokemonTradeDemo->BackupScale[mcssno].z;
+      MCSS_SetScale( pWork->pokeMcss[mcssno], &apos );
     }
-
+  }
+  if(ANMCNTC(_POKE_SIDEIN_START) == pWork->anmCount){
+    int mcssno = 1;
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      mcssno = 2;
+    }
     GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1]=NULL;
-    MCSS_ResetVanishFlag( pWork->pokeMcss[1] );
+    MCSS_ResetVanishFlag( pWork->pokeMcss[mcssno] );
     {  //初期位置設定
       VecFx32 apos;
       apos.x = _POKEMON_FRIEND_SIDEST_POSX;
       apos.y = _POKEMON_FRIEND_SIDEST_POSY;
       apos.z = _POKEMON_FRIEND_SIDEST_POSZ;
-      MCSS_SetPosition( pWork->pokeMcss[1] ,&apos );
+      MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
       apos.x = _POKEMON_FRIEND_SIDEIN_POSX;
       apos.y = _POKEMON_FRIEND_SIDEIN_POSY;
       apos.z = _POKEMON_FRIEND_SIDEIN_POSZ;
-      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKE_SIDEIN_TIME), &apos , pWork->heapID);
-      MCSS_GetScale( pWork->pokeMcss[1], &apos );
-      apos.x *= _FRONT_POKMEON_SCALE_SIZE;
-      apos.y *= _FRONT_POKMEON_SCALE_SIZE;
-      MCSS_SetScale( pWork->pokeMcss[1], &apos );
+      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno], ANMCNTC(_POKE_SIDEIN_TIME), &apos , pWork->heapID);
+      apos.x = _FRONT_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].x;
+      apos.y = _FRONT_POKMEON_SCALE_SIZE * pWork->pPokemonTradeDemo->BackupScale[mcssno].y;
+      apos.z = pWork->pPokemonTradeDemo->BackupScale[mcssno].z;
+      MCSS_SetScale( pWork->pokeMcss[mcssno], &apos );
     }
     pWork->pMoveMcss[0]->wave=1;
     pWork->pMoveMcss[1]->wave=1;
@@ -431,72 +460,56 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
   
   if(ANMCNTC(_POKE_LEAVE_START) == pWork->anmCount){
+    int mcssno2 = 1;
+    int mcssno1 = 0;
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      mcssno1 = 3;
+    }
+    if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+      mcssno2 = 2;
+    }
     _moveMcssDelete(pWork, 0);
     _moveMcssDelete(pWork, 1);
-
-
     {  //初期位置設定
       VecFx32 apos;
       apos.x = _POKEMON_PLAYER_LEAVE_POSX;
       apos.y = _POKEMON_PLAYER_LEAVE_POSY;
       apos.z = _POKEMON_PLAYER_LEAVE_POSZ;
-      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_LEAVE_TIME), &apos, pWork->heapID);
+      pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno1], ANMCNTC(_POKE_LEAVE_TIME), &apos, pWork->heapID);
       apos.x = _POKEMON_FRIEND_LEAVE_POSX;
       apos.y = _POKEMON_FRIEND_LEAVE_POSY;
       apos.z = _POKEMON_FRIEND_LEAVE_POSZ;
-      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKE_LEAVE_TIME), &apos , pWork->heapID);
+      pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[mcssno2], ANMCNTC(_POKE_LEAVE_TIME), &apos , pWork->heapID);
     }
   }
-  if(ANMCNTC(_POKEMON_CREATE_TIME-3) == pWork->anmCount){
-//    IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
-//    IRCPOKETRADE_PokeCreateMcss(pWork, 1, 1, IRC_POKEMONTRADE_GetRecvPP(pWork,1) );
-//    MCSS_ResetVanishFlag( pWork->pokeMcss[3] );
-
-
-  }
-
-#if 1
   {
-    int num = 3;
+    int mcssno = 3;
     if(POKEMONTRADEPROC_IsTriSelect(pWork)){
-      num=0;
+      mcssno=0;
     }
     if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
       VecFx32 apos;
 
-      _pokemonApperLastCreate(pWork,num);
+      _pokemonApperLastCreate(pWork,mcssno);
 
-      MCSS_ResetVanishFlag(pWork->pokeMcss[num]);
+      MCSS_ResetVanishFlag(pWork->pokeMcss[mcssno]);
       apos.x = _POKEMON_PLAYER_CENTER_POSX;
       apos.y = _POKEMON_PLAYER_CENTER_POSY;
       apos.z = _POKEMON_PLAYER_CENTER_POSZ;
-      MCSS_SetPosition( pWork->pokeMcss[num] ,&apos );
+      MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
 
-      MCSS_SetScale( pWork->pokeMcss[num], &pWork->pPokemonTradeDemo->ReturnPos );
-/*
-      MCSS_GetScale( pWork->pokeMcss[num], &apos );
-      if(apos.x < 0){
-        apos.x = -FX32_ONE*16;
-      }
-      else{
-        apos.x = FX32_ONE*16;
-      }
-      apos.y = FX32_ONE*16;
-      apos.z = FX32_ONE;
-      MCSS_SetScale( pWork->pokeMcss[num], &apos );
-  */    
-      MCSS_SetAnmStopFlag(pWork->pokeMcss[num]);
+      MCSS_SetScale( pWork->pokeMcss[mcssno], &pWork->pPokemonTradeDemo->BackupScale[mcssno] );
+      MCSS_SetAnmStopFlag(pWork->pokeMcss[mcssno]);
       
-      MCSS_SetPaletteFade( pWork->pokeMcss[num], 16, 16, 0, 0x7fff );
+      MCSS_SetPaletteFade( pWork->pokeMcss[mcssno], 16, 16, 0, 0x7fff );
     }
     if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){
-      MCSS_SetPaletteFade( pWork->pokeMcss[num], 8, 8, 0, 0x7fff );
+      MCSS_SetPaletteFade( pWork->pokeMcss[mcssno], 8, 8, 0, 0x7fff );
     }
     if(ANMCNTC(_POKEMON_CREATE_TIME+2) == pWork->anmCount){
-      MCSS_SetPaletteFade( pWork->pokeMcss[num], 0, 0, 0, 0x7fff  );
+      MCSS_SetPaletteFade( pWork->pokeMcss[mcssno], 0, 0, 0, 0x7fff  );
     }
   }
-#endif
 
 
   if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEOUT_START)){
