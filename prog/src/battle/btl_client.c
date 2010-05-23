@@ -368,6 +368,7 @@ static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus_Org( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_PPPlus_Org( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankDown( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RankSet7( BTL_CLIENT* wk, int* seq, const int* args );
@@ -389,7 +390,6 @@ static BOOL scProc_OP_ResetTurnFlag( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_OP_Hensin( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args );
@@ -4864,6 +4864,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_PP_MINUS,           scProc_OP_PPMinus         },
     { SC_OP_PP_MINUS_ORG,       scProc_OP_PPMinus_Org     },
     { SC_OP_PP_PLUS,            scProc_OP_PPPlus          },
+    { SC_OP_PP_PLUS_ORG,        scProc_OP_PPPlus_Org      },
     { SC_OP_RANK_UP,            scProc_OP_RankUp          },
     { SC_OP_RANK_DOWN,          scProc_OP_RankDown        },
     { SC_OP_RANK_SET7,          scProc_OP_RankSet7        },
@@ -7011,6 +7012,14 @@ static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args )
   BPP_WAZA_IncrementPP( bpp, args[1], args[2] );
   return TRUE;
 }
+static BOOL scProc_OP_PPPlus_Org( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_WAZA_IncrementPP_Org( bpp, args[1], args[2] );
+  return TRUE;
+}
+
+
 static BOOL scProc_OP_RankUp( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );

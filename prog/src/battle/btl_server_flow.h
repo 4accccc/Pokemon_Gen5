@@ -408,6 +408,7 @@ typedef struct {
  u8   volume;                        ///< PP量
  u8   pokeID;                        ///< 対象ポケモンID
  u8   wazaIdx;                       ///< 対象ワザインデックス
+ u8   fSurfacePP;                    ///< 仮ワザワークのPPを対象にする
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PP;
 

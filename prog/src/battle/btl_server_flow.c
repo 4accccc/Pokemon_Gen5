@@ -739,7 +739,7 @@ static void scPut_Message_StdEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, con
 static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, const int* args );
 static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value );
 static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 wazaIdx, u8 vol, BOOL fOrgWazaLinkOut );
-static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID );
+static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID, BOOL fOrgWaza );
 static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
@@ -3605,10 +3605,10 @@ static u8 ItemEff_CriticalUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemI
 }
 static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  if( BPP_WAZA_GetCount(bpp) > actParam )
+  if( BPP_WAZA_GetCount_Org(bpp) > actParam )
   {
     u8 pokeID = BPP_GetID( bpp );
-    u8 volume = BPP_WAZA_GetPPShort( bpp, actParam );
+    u8 volume = BPP_WAZA_GetPPShort_Org( bpp, actParam );
     u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
     if( ppValue != ITEM_RECOVER_PP_FULL ){
       if( volume > ppValue ){
@@ -3623,7 +3623,7 @@ static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
       param->wazaIdx = actParam;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PP_Recover );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
-      HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID(bpp, actParam) );
+      HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID_Org(bpp, actParam) );
       return 1;
     }
   }
@@ -3636,12 +3636,11 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
   u8 pokeID = BPP_GetID( bpp );
   u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
 
-  cnt = BPP_WAZA_GetCount( bpp );
-
+  cnt = BPP_WAZA_GetCount_Org( bpp );
 
   for(i=0; i<cnt; ++i)
   {
-    volume = BPP_WAZA_GetPPShort( bpp, i );
+    volume = BPP_WAZA_GetPPShort_Org( bpp, i );
     if( volume > ppValue ){
       volume = ppValue;
     }
@@ -6230,7 +6229,14 @@ static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
 //----------------------------------------------------------------------------------
 static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, BOOL fOrgWazaLinkOut )
 {
-  u8 restPP = BPP_WAZA_GetPP( bpp, wazaIdx );
+  u8 restPP ;
+
+  if( fOrgWazaLinkOut ){
+    restPP = BPP_WAZA_GetPP_Org( bpp, wazaIdx );
+  }else{
+    restPP = BPP_WAZA_GetPP( bpp, wazaIdx );
+  }
+
   if( volume > restPP ){
     volume = restPP;
   }
@@ -8363,6 +8369,19 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
       scPut_RankEffectLimit( wk, target, effect, volume );
     }
     return FALSE;
+  }
+
+  // ターゲットがみがわり状態の時、自分以外からの作用は受けない
+  if( BPP_MIGAWARI_IsExist(target) )
+  {
+    u8 targetPokeID = BPP_GetID( target );
+    if( atkPokeID != targetPokeID )
+    {
+      if( fAlmost ){
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, targetPokeID );
+      }
+      return FALSE;
+    }
   }
 
   {
@@ -11049,12 +11068,22 @@ static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value
  * @param   itemID    アイテムを使った効果の場合はアイテムID
  */
 //----------------------------------------------------------------------------------
-static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID )
+static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID, BOOL fOrgWaza )
 {
   u8 pokeID = BPP_GetID( bpp );
+  WazaID waza;
 
-  WazaID waza = BPP_WAZA_IncrementPP( bpp, wazaIdx, volume );
-  SCQUE_PUT_OP_PPPlus( wk->que, pokeID, wazaIdx, volume );
+  if( fOrgWaza )
+  {
+    waza = BPP_WAZA_IncrementPP_Org( bpp, wazaIdx, volume );
+    SCQUE_PUT_OP_PPPlus_Org( wk->que, pokeID, wazaIdx, volume );
+  }
+  else
+  {
+    waza = BPP_WAZA_IncrementPP( bpp, wazaIdx, volume );
+    SCQUE_PUT_OP_PPPlus( wk->que, pokeID, wazaIdx, volume );
+  }
+
   if( itemID != ITEM_DUMMY_DATA )
   {
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverPP, pokeID, itemID, waza );
@@ -14503,9 +14532,10 @@ static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 
     if( BPP_IsFightEnable(pp_target) )
     {
-      if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx) )
+      BOOL fOrgWaza = (!(param->fSurfacePP));
+      if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx, fOrgWaza) )
       {
-        scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID );
+        scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID, fOrgWaza );
         handexSub_putString( wk, &param->exStr );
         return 1;
       }

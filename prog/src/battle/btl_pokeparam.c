@@ -640,11 +640,27 @@ u16 BPP_GetMonsNo( const BTL_POKEPARAM* bpp )
 
 
 /**
- *  ワザ所持数を返す
+ *  ワザ所持数を返す（仮ワザワーク）
  */
 u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* bpp )
 {
   return bpp->wazaCnt;
+}
+/**
+ *  ワザ所持数を返す（真ワザワーク）
+ */
+u8 BPP_WAZA_GetCount_Org( const BTL_POKEPARAM* bpp )
+{
+  u32 cnt, i;
+  for(i=0, cnt=0; i<PTL_WAZA_MAX; ++i)
+  {
+    if( bpp->waza[i].truth.number != WAZANO_NULL ){
+      ++cnt;
+    }else{
+      break;
+    }
+  }
+  return cnt;
 }
 
 /**
@@ -687,6 +703,10 @@ WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* bpp, u8 idx )
   GF_ASSERT(idx < bpp->wazaCnt);
   return bpp->waza[idx].surface.number;
 }
+WazaID BPP_WAZA_GetID_Org( const BTL_POKEPARAM* bpp, u8 idx )
+{
+  return bpp->waza[idx].truth.number;
+}
 BOOL BPP_WAZA_CheckUsedInAlive( const BTL_POKEPARAM* bpp, u8 idx )
 {
   GF_ASSERT(idx < bpp->wazaCnt);
@@ -726,7 +746,7 @@ WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* bpp, u8 idx, u8* PP, u8* PPM
 
 //=============================================================================================
 /**
- * [ワザパラメータ] PP不足分を取得
+ * [ワザパラメータ] PP不足分を取得（仮ワザワーク）
  *
  * @param   bpp
  * @param   idx       対象ワザインデックス
@@ -741,7 +761,22 @@ u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx )
 }
 //=============================================================================================
 /**
- * ワザPP値を取得
+ * [ワザパラメータ] PP不足分を取得（真ワザワーク）
+ *
+ * @param   bpp
+ * @param   idx       対象ワザインデックス
+ *
+ * @retval  u8        PP不足分
+ */
+//=============================================================================================
+u8 BPP_WAZA_GetPPShort_Org( const BTL_POKEPARAM* bpp, u8 idx )
+{
+  GF_ASSERT(bpp->waza[idx].truth.number != WAZANO_NULL);
+  return (bpp->waza[idx].truth.ppMax - bpp->waza[idx].truth.pp);
+}
+//=============================================================================================
+/**
+ * ワザPP値を取得（仮ワザワーク）
  *
  * @param   pp
  * @param   wazaIdx
@@ -759,29 +794,45 @@ u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 }
 //=============================================================================================
 /**
- * ワザPP値に回復の余地があるか判定
+ * ワザPP値を取得（真ワザワーク）
  *
  * @param   pp
  * @param   wazaIdx
  *
+ */
+//=============================================================================================
+u16 BPP_WAZA_GetPP_Org( const BTL_POKEPARAM* bpp, u8 wazaIdx )
+{
+  GF_ASSERT(bpp->waza[wazaIdx].truth.number != WAZANO_NULL);
+  return  bpp->waza[wazaIdx].truth.pp;
+}
+
+//=============================================================================================
+/**
+ * ワザPP値に回復の余地があるか判定
+ *
+ * @param   pp
+ * @param   wazaIdx
+ * @param   fOrg    TRUEなら真ワザワークの方を調べる
+ *
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BPP_WAZA_IsPPFull( const BTL_POKEPARAM* bpp, u8 wazaIdx )
+BOOL BPP_WAZA_IsPPFull( const BTL_POKEPARAM* bpp, u8 wazaIdx, BOOL fOrg )
 {
-  GF_ASSERT(wazaIdx < bpp->wazaCnt);
-
   {
-    const BPP_WAZA* waza = &bpp->waza[wazaIdx];
+    const BPP_WAZA_CORE* core = (fOrg)? &(bpp->waza[wazaIdx].truth) : &(bpp->waza[wazaIdx].surface);
 
-    if( (waza->truth.number != WAZANO_NULL)
-    &&  (waza->truth.pp == waza->truth.ppMax)
+    if( (core->number != WAZANO_NULL)
+    &&  (core->pp == core->ppMax)
     ){
       return TRUE;
     }
     return FALSE;
   }
 }
+
+
 
 //=============================================================================================
 /**
@@ -870,7 +921,38 @@ void BPP_WAZA_SetUsedFlag_Org( BTL_POKEPARAM* bpp, u8 wazaIdx )
 //=============================================================================================
 WazaID BPP_WAZA_IncrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
 {
-  GF_ASSERT(wazaIdx < bpp->wazaCnt);
+  GF_ASSERT(wazaIdx < PTL_WAZA_MAX);
+
+  {
+    BPP_WAZA* wp = &bpp->waza[wazaIdx];
+
+    wp->surface.pp += value;
+    if( wp->surface.pp > wp->surface.ppMax )
+    {
+      wp->surface.pp = wp->surface.ppMax;
+    }
+
+    if( wp->fLinked ){
+      wp->truth.pp = wp->surface.pp;
+    }
+
+    return wp->surface.number;
+  }
+}
+//=============================================================================================
+/**
+ * ワザPP値を増加（真ワザワーク用）
+ *
+ * @param   pp
+ * @param   wazaIdx
+ * @param   value
+ *
+ * @retval  WazaID    回復したワザナンバー
+ */
+//=============================================================================================
+WazaID BPP_WAZA_IncrementPP_Org( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
+{
+  GF_ASSERT(wazaIdx < PTL_WAZA_MAX);
 
   {
     BPP_WAZA* wp = &bpp->waza[wazaIdx];
@@ -888,6 +970,7 @@ WazaID BPP_WAZA_IncrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
     return wp->truth.number;
   }
 }
+
 //=============================================================================================
 /**
  * ワザが一時上書き状態にあるか判定

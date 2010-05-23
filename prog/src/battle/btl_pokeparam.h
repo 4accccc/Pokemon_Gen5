@@ -238,15 +238,19 @@ extern const POKEMON_PARAM* BPP_GetViewSrcData( const BTL_POKEPARAM* bpp );
 
 extern u8 BPP_WAZA_GetUsedCountInAlive( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetCount( const BTL_POKEPARAM* pp );
+extern u8 BPP_WAZA_GetCount_Org( const BTL_POKEPARAM* bpp );
 extern u8 BPP_WAZA_GetUsedCount( const BTL_POKEPARAM* pp );
 extern u8 BPP_WAZA_GetUsableCount( const BTL_POKEPARAM* bpp );
 extern WazaID BPP_WAZA_GetID( const BTL_POKEPARAM* pp, u8 idx );
+extern WazaID BPP_WAZA_GetID_Org( const BTL_POKEPARAM* bpp, u8 idx );
 extern BOOL BPP_WAZA_CheckUsedInAlive( const BTL_POKEPARAM* bpp, u8 idx );
 extern void BPP_WAZA_Copy( const BTL_POKEPARAM* bppSrc, BTL_POKEPARAM* bppDst );
 extern WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
 extern u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza );
 extern u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );
+extern u16 BPP_WAZA_GetPP_Org( const BTL_POKEPARAM* bpp, u8 wazaIdx );
 extern u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx );
+extern u8 BPP_WAZA_GetPPShort_Org( const BTL_POKEPARAM* bpp, u8 idx );
 
 extern int BPP_GetValue( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid );
@@ -255,7 +259,9 @@ extern int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid );
 extern BOOL BPP_IsDead( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp );
 extern BOOL BPP_IsHPFull( const BTL_POKEPARAM* pp );
-extern BOOL BPP_WAZA_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx );
+extern BOOL BPP_WAZA_IsPPFull( const BTL_POKEPARAM* pp, u8 wazaIdx, BOOL fOrg );
+extern WazaID BPP_WAZA_IncrementPP_Org( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value );
+
 
 extern BOOL BPP_TURNFLAG_Get( const BTL_POKEPARAM* pp, BppTurnFlag flagID );
 extern BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID );

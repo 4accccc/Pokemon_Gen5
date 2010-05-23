@@ -364,6 +364,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_PP_MINUS:  return "SC_OP_PP_MINUS";           ///< PPマイナス  [ClientID, マイナス量]
   case SC_OP_PP_MINUS_ORG:  return "SC_OP_PP_MINUS_ORG";           ///< PPマイナス  [ClientID, マイナス量]
   case SC_OP_PP_PLUS:  return "SC_OP_PP_PLUS";            ///< PPプラス    [ClientID, プラス量]
+  case SC_OP_PP_PLUS_ORG:  return "SC_OP_PP_PLUS_ORG";            ///< PPプラス    [ClientID, プラス量]
   case SC_OP_RANK_UP:  return "SC_OP_RANK_UP";            ///< ステータスランクアップ  [ClientID, StatusType, プラス量]
   case SC_OP_RANK_DOWN:  return "SC_OP_RANK_DOWN";          ///< ステータスランクダウン  [ClientID, StatusType, マイナス量]
   case SC_OP_RANK_SET7:  return "SC_OP_RANK_SET7";          ///< ステータスランク７種セット[ pokeID, atk, def, sp_atk, sp_def, agi ]
