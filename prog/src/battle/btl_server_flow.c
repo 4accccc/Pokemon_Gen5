@@ -6908,19 +6908,20 @@ static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
 {
   WazaCategory category = WAZADATA_GetCategory( wazaParam->wazaID );
 
-  if( !BPP_IsDead(defender) )
-  {
-    switch( category ){
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
-      scproc_Fight_Damage_AddEffect( wk, wazaParam, attacker, attacker );
-      break;
-    case WAZADATA_CATEGORY_DAMAGE_EFFECT:
+  switch( category ){
+  case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
+    scproc_Fight_Damage_AddEffect( wk, wazaParam, attacker, attacker );
+    break;
+  case WAZADATA_CATEGORY_DAMAGE_EFFECT:
+    if( !BPP_MIGAWARI_IsExist(defender) ){
       scproc_Fight_Damage_AddEffect( wk, wazaParam, attacker, defender );
-      break;
-    case WAZADATA_CATEGORY_DAMAGE_SICK:
-      scproc_Fight_Damage_AddSick( wk, wazaParam, attacker, defender );
-      break;
     }
+    break;
+  case WAZADATA_CATEGORY_DAMAGE_SICK:
+    if( !BPP_MIGAWARI_IsExist(defender) ){
+      scproc_Fight_Damage_AddSick( wk, wazaParam, attacker, defender );
+    }
+    break;
   }
 }
 //----------------------------------------------------------------------------------
@@ -9112,8 +9113,10 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
   atk_tok = BPP_GetValue( attacker, BPP_TOKUSEI );
   tgt_tok = BPP_GetValue( target, BPP_TOKUSEI );
 
-  if( (!BTL_CALC_TOK_CheckCantChange(atk_tok)) && (!BTL_CALC_TOK_CheckCantChange(tgt_tok)) )
-  {
+  if( (atk_tok != tgt_tok)
+  &&  (!BTL_CALC_TOK_CheckCantChange(atk_tok))
+  &&  (!BTL_CALC_TOK_CheckCantChange(tgt_tok))
+  ){
     u8 atkPokeID = BPP_GetID( attacker );
     u8 tgtPokeID = BPP_GetID( target );
 
@@ -9207,6 +9210,7 @@ static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   }
 
   scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
+  scproc_WazaAdditionalEffect( wk, wazaParam, attacker, target, damage );
   scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
 
   return damage;
