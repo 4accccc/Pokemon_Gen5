@@ -2214,6 +2214,7 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
           param->poke_cnt = 1;
           param->pokeID[0] = targetPokeID;
           param->rankType = method_arg;
+          param->rankVolume = -1;
         }
         break;
 
