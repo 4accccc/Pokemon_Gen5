@@ -1885,6 +1885,7 @@ static void _Select6MessageInit2(POKEMON_TRADE_WORK* pWork)
       break;
     default: //‚¢‚¢‚¦
       POKETRADE_MESSAGE_WindowClear(pWork);
+
       _CHANGE_STATE(pWork,POKETRADE_TouchStateGTS);
       break;
     }

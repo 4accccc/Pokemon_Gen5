@@ -1806,6 +1806,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+        TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE);
         bIconReset=FALSE;
         _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
       }
@@ -1813,7 +1814,6 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
         POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
-        POKE_GTS_VisibleFaceIcon(pWork,TRUE);
         _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);//タッチに戻る
       }
     }
@@ -2950,6 +2950,7 @@ void POKETRADE_TouchStateGTS(POKEMON_TRADE_WORK* pWork)
 {
   int i;
 
+  POKE_GTS_VisibleFaceIcon(pWork,TRUE);
   GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
 
   _CatchPokemonPositionRewind(pWork);
