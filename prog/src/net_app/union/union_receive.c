@@ -71,7 +71,8 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
   //チャット
   UnionChat_AddChat(unisys, bpc, NULL, UNION_CHAT_TYPE_NORMAL);
 
-  if(situ->union_status == UNION_STATUS_NORMAL){
+  //話しかけられていないか確認
+  if(situ->union_status == UNION_STATUS_NORMAL && situ->next_union_status == UNION_STATUS_NORMAL){
     //接続要求チェック
     if(bpc->beacon.union_status == UNION_STATUS_CONNECT_REQ && bpc->life > 0)
     {
@@ -80,9 +81,10 @@ static void UnionReceive_BeaconCheck(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *b
       if(GFL_STD_MemComp(bpc->beacon.connect_mac_address, my_mac, 6) == 0)
       {
         OS_TPrintf("接続要求：Mac一致\n");
-        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, bpc);
-        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_TALK_PC, bpc);
-        UnionOneself_Outside_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER);
+        if(UnionOneself_Outside_ReqStatus(unisys, UNION_STATUS_CONNECT_ANSWER) == TRUE){
+          UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, bpc);
+          UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_TALK_PC, bpc);
+        }
       }
       else
       {
