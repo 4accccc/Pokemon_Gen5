@@ -1564,6 +1564,7 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,FALSE );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
 
+  _CatchPokemonRelease(pWork);
 
   if( _PokemonsetAndSendData(pWork) )
   {
@@ -3192,6 +3193,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       if(POKE_GTS_IsMyIn(pWork)){
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+        _CatchPokemonRelease(pWork);
         _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
       }
       else{
