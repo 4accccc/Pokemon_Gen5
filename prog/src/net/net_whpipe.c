@@ -497,7 +497,7 @@ BOOL GFL_NET_WL_scanCheck(WMBssDesc *bssdesc, u32 check_bit)
   
   if(check_bit & WL_SCAN_CHK_BIT_BEACON_COMP){
   	if(pInit->beaconCompFunc){
-  		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo)){
+  		if(FALSE == pInit->beaconCompFunc(serviceNo, pGF->serviceNo, pNetWL->pUserWork)){
   			return FALSE;   // サービスが異なる場合は拾わない
   		}
   	}
