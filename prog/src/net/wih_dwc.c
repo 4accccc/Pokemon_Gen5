@@ -192,11 +192,12 @@ static BOOL _scanAPReserveed( WMBssDesc* pChk )
 
 
   for(i = 0;i < 3;i++){
-    if(GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid,pChk->ssid,WM_SIZE_SSID)){
-      
- //     NET_PRINT("SSIDFIND %s\n",pChk->ssid);
-      
-      return TRUE;
+    if(GFL_STD_StrLen(_localWork->cfg->slot[i].ap.ssid[0]) > 0){
+//      NET_PRINT("SSIDchk %d %s\n",i,_localWork->cfg->slot[i].ap.ssid[0]);
+      if(0==GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid[0], pChk->ssid, WM_SIZE_SSID)){
+      //  NET_PRINT("SSIDFIND %s\n",pChk->ssid);
+        return TRUE;
+      }
     }
   }
   return FALSE;
