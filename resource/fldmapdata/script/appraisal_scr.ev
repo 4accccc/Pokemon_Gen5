@@ -109,15 +109,15 @@ _TALK_OBJ_START()
 				//ワーオ！　ナイス　スメル！
 				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_03 )
 				_YES_NO_WIN( SCWK_ANSWER )
-				_MSGWIN_CLOSE()
 			
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
-
+					_MSGWIN_CLOSE()
 					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_g_04, POS_DOWN )
+					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
@@ -242,15 +242,15 @@ _TALK_OBJ_START()
 				//グラグラくるの
 				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_03 )
 				_YES_NO_WIN( SCWK_ANSWER )
-				_MSGWIN_CLOSE()
 			
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
-
+					_MSGWIN_CLOSE()
 					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_m_04, POS_DOWN )
+					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
@@ -341,7 +341,6 @@ _TALK_OBJ_START()
 			//それは　こだいのおうかん！
 			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_08 )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
 		
 			//========================================/
 			
@@ -351,11 +350,12 @@ _TALK_OBJ_START()
 		
 			//はい選択時
 			IF $SCWK_ANSWER == SCR_YES THEN
-				
+				_MSGWIN_CLOSE()
 				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 				
 				//～を渡して　～円をもらった
 				_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
+				_AB_KEYWAIT_MARK()
 				_SYSWIN_CLOSE()
 				
 				//アイテム減算処理
@@ -460,15 +460,15 @@ ev_fugou:
 				//ゆずってくれないかね？　かね？
 				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_03 )
 				_YES_NO_WIN( SCWK_ANSWER )
-				_MSGWIN_CLOSE()
 		
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
-
+					_MSGWIN_CLOSE()
 					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 					
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
+					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
@@ -530,7 +530,6 @@ _TALK_OBJ_START()
 
 		//やあ とつぜんだが
 		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_01 )
-		_MSGWIN_CLOSE()
 		
 		//========================================/
 		
@@ -593,15 +592,15 @@ _TALK_OBJ_START()
 				//イイね ったら イイねえ…
 				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_03 )
 				_YES_NO_WIN( SCWK_ANSWER )
-				_MSGWIN_CLOSE()
 			
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
-
+					_MSGWIN_CLOSE()
 					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_m2_04, POS_DOWN )
+					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
