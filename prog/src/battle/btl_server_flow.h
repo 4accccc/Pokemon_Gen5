@@ -570,7 +570,7 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlFieldEffect           effect;
   BPP_SICK_CONT            cont;
-  u8                       sub_param;
+  u8                       fAddDependPoke;  ///< ’Ç‰Á‚ÉŽ¸”s‚µ‚½Žž‚ÉˆË‘¶‘ÎÛƒ|ƒPƒ‚ƒ“‚Æ‚µ‚Ä“o˜^‚·‚é
 
   BTL_HANDEX_STR_PARAMS    exStr;
 

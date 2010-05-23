@@ -60,6 +60,8 @@ typedef enum {
   SC_OP_UPDATE_WAZANUMBER,  ///< ワザ書き換え
   SC_OP_OUTCLEAR,           ///< 退場時クリア
   SC_OP_ADD_FLDEFF,         ///< フィールドエフェクト追加
+  SC_OP_ADD_FLDEFF_DEPEND,  ///< フィールドエフェクトの依存ポケを追加
+  SC_OP_DEL_FLDEFF_DEPEND,  ///< フィールドエフェクトの依存ポケを削除
   SC_OP_REMOVE_FLDEFF,      ///< フィールドエフェクト削除
   SC_OP_SET_POKE_COUNTER,   ///< ポケモンカウンタ値セット
   SC_OP_BATONTOUCH,         ///< バトンタッチ
@@ -317,9 +319,17 @@ static inline void SCQUE_PUT_OP_OutClear( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_OP_OUTCLEAR, pokeID );
 }
-static inline void SCQUE_PUT_OP_AddFieldEffect( BTL_SERVER_CMD_QUE* que, u8 eff, u16 cont )
+static inline void SCQUE_PUT_OP_AddFieldEffect( BTL_SERVER_CMD_QUE* que, u8 eff, u32 cont )
 {
   SCQUE_PUT_Common( que, SC_OP_ADD_FLDEFF, eff, cont );
+}
+static inline void SCQUE_PUT_OP_AddFieldEffectDepend( BTL_SERVER_CMD_QUE* que, u8 eff, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_ADD_FLDEFF_DEPEND, eff, pokeID );
+}
+static inline void SCQUE_PUT_OP_DeleteDependPokeFieldEffect( BTL_SERVER_CMD_QUE* que, u8 pokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_DEL_FLDEFF_DEPEND, pokeID );
 }
 static inline void SCQUE_PUT_OP_RemoveFieldEffect( BTL_SERVER_CMD_QUE* que, u8 eff )
 {

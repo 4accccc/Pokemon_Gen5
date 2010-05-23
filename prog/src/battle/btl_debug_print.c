@@ -155,6 +155,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_PSET_Copy:          return "ポケセットコピー  adrs=%p, count=%d\n";
   case DBGSTR_PSET_Add:           return "ポケセット追加    adrs=%p, pokeID=%d, count=%d/%d\n";
   case DBGSTR_PSET_Remove:        return "ポケセット削除    adrs=%p, pokeID=%d, count=%d/%d\n";
+  case DBGSTR_FIDLD_FuinCheck:    return "ふういんポケチェック %d 体目 : ふういんポケ=%d, チェックワザ=%d\n";
+  case DBGSTR_FIELD_FuinHit:      return "ふういんポケ(ID=%d)が、ワザ:%dを持っていた！\n";
 
   case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
 
@@ -390,6 +392,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_UPDATE_WAZANUMBER:  return "SC_OP_UPDATE_WAZANUMBER";  ///< ワザ書き換え
   case SC_OP_OUTCLEAR:  return "SC_OP_OUTCLEAR";           ///< 退場時クリア
   case SC_OP_ADD_FLDEFF:  return "SC_OP_ADD_FLDEFF";         ///< フィールドエフェクト追加
+  case SC_OP_ADD_FLDEFF_DEPEND: return "SC_OP_ADD_FLDEFF_DEPEND";
   case SC_OP_REMOVE_FLDEFF:  return "SC_OP_REMOVE_FLDEFF";      ///< フィールドエフェクト削除
   case SC_OP_SET_POKE_COUNTER:  return "SC_OP_SET_POKE_COUNTER";   ///< ポケモンカウンタ値セット
   case SC_OP_BATONTOUCH:  return "SC_OP_BATONTOUCH";         ///< バトンタッチ

@@ -392,6 +392,8 @@ static BOOL scProc_OP_SetItem( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_UpdateWazaNumber( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_AddFldEffDepend( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_DelFldEffDepend( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetPokeCounter( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_BatonTouch( BTL_CLIENT* wk, int* seq, const int* args );
@@ -2633,24 +2635,16 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 // ふういんチェック（ふういんをかけたポケが持ってるワザを出せない）
   if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
   {
-    u8 fuinPokeID = BTL_FIELD_GetDependPokeID( BTL_FLDEFF_FUIN );
-    u8 myPokeID = BPP_GetID( bpp );
-    BTL_Printf("ふういん実施中\n");
-    if( !BTL_MAINUTIL_IsFriendPokeID(myPokeID, fuinPokeID) )
+    TAYA_Printf("ふういんが効いてるからチェックします\n");
+    if( BTL_FIELD_CheckFuin(wk->pokeCon, bpp, waza) )
     {
-      const BTL_POKEPARAM* fuinPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, fuinPokeID );
-      BTL_Printf("自分はふういんポケじゃありません\n");
-      if( BPP_WAZA_SearchIdx(fuinPoke, waza) != PTL_WAZA_MAX )
+      if( strParam != NULL )
       {
-        BTL_Printf("そのワザ(%d)はふういんされている\n", waza);
-        if( strParam != NULL )
-        {
-          BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_FuuinWarn );
-          BTLV_STRPARAM_AddArg( strParam, myPokeID );
-          BTLV_STRPARAM_AddArg( strParam, waza );
-        }
-        return TRUE;
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_FuuinWarn );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
       }
+      return TRUE;
     }
   }
 
@@ -4890,6 +4884,8 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_UPDATE_WAZANUMBER,  scProc_OP_UpdateWazaNumber},
     { SC_OP_OUTCLEAR,           scProc_OP_OutClear        },
     { SC_OP_ADD_FLDEFF,         scProc_OP_AddFldEff       },
+    { SC_OP_ADD_FLDEFF_DEPEND,  scProc_OP_AddFldEffDepend },
+    { SC_OP_DEL_FLDEFF_DEPEND,  scProc_OP_DelFldEffDepend },
     { SC_OP_REMOVE_FLDEFF,      scProc_OP_RemoveFldEff    },
     { SC_OP_SET_POKE_COUNTER,   scProc_OP_SetPokeCounter  },
     { SC_OP_BATONTOUCH,         scProc_OP_BatonTouch      },
@@ -7187,6 +7183,30 @@ static BOOL scProc_OP_OutClear( BTL_CLIENT* wk, int* seq, const int* args )
 static BOOL scProc_OP_AddFldEff( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
+  if( !BTL_MAIN_CheckImServerMachine(wk->mainModule) )
+  {
+    BPP_SICK_CONT cont;
+    cont.raw = (u32)(args[1]);
+    BTL_FIELD_AddEffect( args[0], cont );
+  }
+  return TRUE;
+}
+static BOOL scProc_OP_AddFldEffDepend( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
+  if( !BTL_MAIN_CheckImServerMachine(wk->mainModule) )
+  {
+    BTL_FIELD_AddDependPoke( args[0], args[1] );
+  }
+  return TRUE;
+}
+static BOOL scProc_OP_DelFldEffDepend( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_CALC_BITFLG_Set( wk->fieldEffectFlag, args[0] );
+  if( !BTL_MAIN_CheckImServerMachine(wk->mainModule) )
+  {
+    BTL_FIELD_RemoveDependPokeEffect( args[0] );
+  }
   return TRUE;
 }
 static BOOL scProc_OP_RemoveFldEff( BTL_CLIENT* wk, int* seq, const int* args )

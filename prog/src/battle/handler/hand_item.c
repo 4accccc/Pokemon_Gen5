@@ -3290,7 +3290,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_Tabenokosi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_TURNCHECK_BEGIN, handler_Tabenokosi_Reaction },
-    { BTL_EVENT_USE_ITEM,        handler_Tabenokosi_Use },
+    { BTL_EVENT_USE_ITEM,        handler_Tabenokosi_Use      },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

@@ -6350,6 +6350,7 @@ static void handler_Fuuin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
       param->effect = BTL_FLDEFF_FUIN;
       param->cont = BPP_SICKCONT_MakePoke( pokeID );
+      param->fAddDependPoke = TRUE;
       param->exStr.type = BTL_STRTYPE_SET;
       param->exStr.ID = BTL_STRID_SET_Fuuin;
       param->exStr.argCnt = 1;

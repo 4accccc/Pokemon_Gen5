@@ -11,6 +11,8 @@
 #define __BTL_FIELD_H__
 
 #include "battle\battle.h"
+
+#include "btl_main_def.h"
 #include "btl_util.h"
 
 
@@ -45,13 +47,15 @@ extern void BTL_FIELD_SetWeather( BtlWeather weather, u16 turn );
 extern void BTL_FIELD_ClearWeather( void );
 
 extern BOOL BTL_FIELD_AddEffect( BtlFieldEffect effect, BPP_SICK_CONT cont );
+extern BOOL BTL_FIELD_AddDependPoke( BtlFieldEffect effect, u8 pokeID );
+extern BOOL BTL_FIELD_IsDependPoke( BtlFieldEffect effect, u8 pokeID );
 extern BOOL BTL_FIELD_RemoveEffect( BtlFieldEffect state );
 extern void BTL_FIELD_RemoveDependPokeEffect( u8 pokeID );
-extern void BTL_FIELD_BatonTouchPokeEffect( u8 oldPokeID, u8 nextPokeID );
 extern BOOL BTL_FIELD_CheckEffect( BtlFieldEffect state );
 extern u8 BTL_FIELD_GetDependPokeID( BtlFieldEffect effect );
 
 
+extern BOOL BTL_FIELD_CheckFuin( const BTL_POKE_CONTAINER* pokeCon, const BTL_POKEPARAM* attacker, WazaID waza );
 
 extern BtlWeather BTL_FIELD_TurnCheckWeather( void );
 

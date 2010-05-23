@@ -4085,6 +4085,19 @@ BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* p
 
 //=============================================================================================
 /**
+ * 自分がサーバマシンか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_CheckImServerMachine( BTL_MAIN_MODULE* wk )
+{
+  return wk->ImServer;
+}
+//=============================================================================================
+/**
  * クライアントの管理位置数を返す
  *
  * @param   wk
@@ -4870,7 +4883,6 @@ static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID, BOOL fForServe
     return wk->srcParty[ clientID ];
   }
 }
-
 
 //=============================================================================================
 /**

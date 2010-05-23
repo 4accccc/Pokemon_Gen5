@@ -282,6 +282,9 @@ typedef enum {
   DBGSTR_PSET_Add,
   DBGSTR_PSET_Remove,
 
+  DBGSTR_FIDLD_FuinCheck,
+  DBGSTR_FIELD_FuinHit,
+
   DBGSTR_SICK_ContProc,
 
   DBGSTR_POKESET_RemoveDeadPoke,

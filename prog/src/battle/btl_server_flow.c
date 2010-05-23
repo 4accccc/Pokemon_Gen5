@@ -318,7 +318,6 @@ struct _BTL_SVFLOW_WORK {
   u8                      cmdBuildStep;
   u8                      actOrderStep;
   u8                      turnCheckStep;
-  u8                      turnCheckPokeStep;
   u8                      defaultTargetPos;
 
   HEAPID  heapID;
@@ -658,7 +657,7 @@ static void scproc_ChangeWeatherCore( BTL_SVFLOW_WORK* wk, BtlWeather weather, u
 static void scproc_ChangeWeatherAfter( BTL_SVFLOW_WORK* wk, BtlWeather weather );
 static u8 scEvent_WazaWeatherTurnUp( BTL_SVFLOW_WORK* wk, BtlWeather weather, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather, u8* turn );
-static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam );
+static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam, BOOL fDependTry );
 static void scEvent_FieldEffectCall( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scput_Fight_Uncategory( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
@@ -6163,6 +6162,9 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
   case SV_WAZAFAIL_ICHAMON:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_IchamonWarn, pokeID, waza );
     break;
+  case SV_WAZAFAIL_FUUIN:
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_FuuinWarn, pokeID, waza );
+    break;
   case SV_WAZAFAIL_KAIHUKUHUUJI:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFuji, pokeID, waza );
     break;
@@ -9030,12 +9032,22 @@ static BOOL scEvent_CheckChangeWeather( BTL_SVFLOW_WORK* wk, BtlWeather weather,
     return !fFail;
   }
 }
-static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam )
+static BOOL scproc_FieldEffectCore( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect, BPP_SICK_CONT contParam, BOOL fAddDependTry )
 {
   if( BTL_FIELD_AddEffect(effect, contParam) )
   {
     SCQUE_PUT_OP_AddFieldEffect( wk->que, effect, contParam.raw );
     return TRUE;
+  }
+  else if( fAddDependTry )
+  {
+    u8 dependPokeID = BPP_SICKCONT_GetPokeID( contParam );
+    if( dependPokeID != BTL_POKEID_NULL )
+    {
+      BTL_FIELD_AddDependPoke( effect, dependPokeID );
+      SCQUE_PUT_OP_AddFieldEffectDepend( wk->que, effect, dependPokeID );
+      return TRUE;
+    }
   }
   return FALSE;
 }
@@ -9319,11 +9331,9 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
       BTL_POKESET_SortByAgility( pokeSet, wk );
     }
 
-    SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
-
     wk->turnCheckStep = 1;
-    wk->turnCheckPokeStep = 0;
 
+    SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
     scproc_turncheck_CommSupport( wk );
   }
 
@@ -9891,6 +9901,7 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
     BPP_CureWazaSickDependPoke( bpp, dead_pokeID, CurePokeDependSick_CallBack, wk );
   }
   BTL_FIELD_RemoveDependPokeEffect( dead_pokeID );
+  SCQUE_PUT_OP_DeleteDependPokeFieldEffect( wk->que, dead_pokeID );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -11459,15 +11470,11 @@ static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_PO
     // ふういんによる失敗チェック
     if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
     {
-      u8 dependPokeID = BTL_FIELD_GetDependPokeID( BTL_FLDEFF_FUIN );
-      u8 atkPokeID = BPP_GetID( attacker );
-      if( !BTL_MAINUTIL_IsFriendPokeID(atkPokeID, dependPokeID) )
+      TAYA_Printf("ふういんが効いてるのでチェックする\n");
+      if( BTL_FIELD_CheckFuin(wk->pokeCon, attacker, waza) )
       {
-        const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, dependPokeID );
-        if( BPP_WAZA_SearchIdx(bpp, waza) != PTL_WAZA_MAX ){
-          cause = SV_WAZAFAIL_FUUIN;
-          break;
-        }
+        cause = SV_WAZAFAIL_FUUIN;
+        break;
       }
     }
 
@@ -15002,7 +15009,8 @@ static u8 scproc_HandEx_addFieldEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PA
 {
   const BTL_HANDEX_PARAM_ADD_FLDEFF* param = (const BTL_HANDEX_PARAM_ADD_FLDEFF*)(param_header);
 
-  if( scproc_FieldEffectCore(wk, param->effect, param->cont) ){
+  if( scproc_FieldEffectCore(wk, param->effect, param->cont, param->fAddDependPoke) )
+  {
     handexSub_putString( wk, &param->exStr );
     return 1;
   }
