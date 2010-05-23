@@ -2841,7 +2841,7 @@ static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKE
     return FALSE;
   }
   if( BPP_GetItem(procPoke) == ITEM_HUUSEN ){
-    return TRUE;
+    return FALSE;
   }
 
   return TRUE;
