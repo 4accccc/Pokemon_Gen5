@@ -1291,6 +1291,8 @@ ev_last:
 
 		_END_EVENT_BGM_EX(BGM_FADE_VSHORT)
 
+		_GET_ROM_VERSION( LWK_ROM )
+
 		//可変OBJの確定
 		IF $LWK_ROM == VERSION_WHITE THEN
 			$OBJCHRWORK0 = SHIN_C	//シン
@@ -1553,12 +1555,6 @@ ev_last:
 
 	//Ｎのアップ絵表示  ※プレーンウィンドウを出すたびにアニメのリクエストをしましょう
 	_START_FACEUP( FLD_FACEUP_BG_CATSLE2, FLD_FACEUP_CHAR_BOSS, TRUE )
-
-	//プレイヤー名！
-	_PLAYER_NAME( 0 )
-  _START_FACEUP_ANM() //顔アップの口パク目パチ開始
-	_PLAINWIN_MSG_DOWN( msg_n01r0502_boss_17 )
-	_PLAINWIN_CLOSE()
 
 	//はいと　答えた回数でメッセージ分岐
 {
@@ -1902,7 +1898,7 @@ sub_legend_add_loop:
   DEFINE_LOCAL  LWK_LOOP
   DEFINE_LOCAL  LWK_LOOP_END
   DEFINE_LOCAL  LWK_GET_POKE
-
+	_GET_ROM_VERSION( LWK_ROM )
   IF $LWK_ROM == VERSION_WHITE THEN
       $LWK_GET_POKE = MONSNO_651
   ELSE
