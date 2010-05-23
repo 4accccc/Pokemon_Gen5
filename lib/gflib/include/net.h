@@ -202,7 +202,7 @@ typedef int (*NetInfomationGetSizeFunc)(void* pWork);  ///< ユーザー同士が交換す
 // こちらは親機から子機に一方的に送られるデータ
 typedef void* (*NetBeaconGetFunc)(void* pWork);        ///< ビーコンデータ取得関数        上と同じでかまわない
 typedef int (*NetBeaconGetSizeFunc)(void* pWork);      ///< ビーコンデータサイズ取得関数  上と同じでかまわない
-typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID GameServiceID2);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
+typedef BOOL (*NetBeaconCompFunc)(GameServiceID GameServiceID1, GameServiceID GameServiceID2,void* pUserWork);  ///< ビーコンのサービスを比較して繋いで良いかどうか判断する
 
 typedef void (*NetAutoParentConnect)(void* work);  ///< 自動接続したときに親になったマシンで呼び出される関数
 
