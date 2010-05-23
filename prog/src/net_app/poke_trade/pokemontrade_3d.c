@@ -949,25 +949,6 @@ void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  )
 
 #if 1
 
-static const u16 pal_16plett[] = {
-  GX_RGB(31,0,0),
-  GX_RGB(0,0,31),
-  GX_RGB(31,31,0),
-  GX_RGB(0,31,0),
-  GX_RGB(31,31,0),
-  GX_RGB(19,9,0),
-  GX_RGB(19,9,19),
-  GX_RGB(16,16,16),
-  GX_RGB(31,31,31),
-  GX_RGB(31,19,18),
-  
-  
-  GX_RGB(31,31,31), GX_RGB(16,16,16), //
-  GX_RGB(19,9,0), GX_RGB(0,0,0),    //
-  GX_RGB(31,0,0), GX_RGB(0,0,0), 
-};
-
-
 
 
 static s16     gCubeGeometry[3 * 8] = {
@@ -1439,7 +1420,6 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
 
 static void _paletteLoad(POKEMON_TRADE_WORK *pWork)
 {
-#if 1
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_BOX2_GRA, pWork->heapID );
   NNSG2dPaletteData* pPal;
   void* pData = GFL_ARCHDL_UTIL_LoadPalette(p_handle, NARC_box_gra_box_tray_NCLR,
@@ -1458,18 +1438,6 @@ static void _paletteLoad(POKEMON_TRADE_WORK *pWork)
   GFL_HEAP_FreeMemory(pData);
   GFL_ARC_CloseDataHandle( p_handle );
 
-#else
-
-  GX_BeginLoadTexPltt();             // map the texture palette slots onto LCDC address space
-  {
-    GX_LoadTexPltt((void *)&pal_16plett[0], // a pointer to the texture data on the main memory(4 bytes aligned)
-                   myTexPlttAddr,  // an offset address in the texture palette slots
-                   32);            // the size of the texture palette(s)(in bytes)
-  }
-  GFL_STD_MemCopy(pal_16plett, pWork->palette3d, 32);
-  GX_EndLoadTexPltt();               // restore the texture palette slots
-
-#endif
 }
 
 

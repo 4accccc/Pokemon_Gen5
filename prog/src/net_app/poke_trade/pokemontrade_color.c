@@ -47,6 +47,7 @@ static u8 _getColorIndex(POKEMON_PASO_PARAM * ppp,HEAPID heapID)
           color = POKEPER_COLOR_WHITE;
         }
       }
+      color = TrayPokeDotColorPos[color];
     }
     PPP_FastModeOff( ppp, fast );
   }
