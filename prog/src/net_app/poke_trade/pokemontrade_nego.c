@@ -1289,12 +1289,14 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
     POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
     PMSND_PlaySystemSE(SEQ_SE_SELECT1);
   }
+/*
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
     return;
   }
+   */
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
