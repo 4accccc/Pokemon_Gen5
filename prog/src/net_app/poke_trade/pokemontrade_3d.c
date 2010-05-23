@@ -919,7 +919,7 @@ void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFro
 
   if(bGTS && !bFront){
     bFront=TRUE;
-    bRev = TRUE;
+    bRev = FALSE;
   }
   IRCPOKETRADE_PokeCreateMcssNormal(pWork, no, bFront, pp, bRev);
 }
@@ -927,7 +927,8 @@ void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFro
 //è„ÇÃÉâÉbÉpÅ[ä÷êî
 void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev )
 {
-  IRCPOKETRADE_PokeCreateMcssGTS( pWork ,no, bFront, pp, bRev, FALSE );
+  //IRCPOKETRADE_PokeCreateMcssGTS( pWork ,no, bFront, pp, bRev, FALSE );
+  IRCPOKETRADE_PokeCreateMcssNormal(pWork, no, bFront, pp, bRev);
 }
 
 

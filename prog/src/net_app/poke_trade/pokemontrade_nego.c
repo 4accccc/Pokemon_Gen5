@@ -2226,6 +2226,8 @@ void POKE_GTS_InitEruptedIconResource(POKEMON_TRADE_WORK* pWork)
 
 void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARAM* pp)
 {
+  POKETRADE_2D_GTSPokemonIconVisible(pWork, side, FALSE);
+
   if(pWork->SlideWindowTimer[side]!=0){
     POKEMONTRADE_NEGOBG_SlideMessageDel(pWork, side);
     IRCPOKETRADE_PokeDeleteMcss(pWork, side);
@@ -2234,9 +2236,9 @@ void POKEMONTRADE_NEGO_SlideInit(POKEMON_TRADE_WORK* pWork,int side,POKEMON_PARA
   POKEMONTRADE_NEGOBG_SlideInit(pWork, side, pp);
   POKEMONTRADE_NEGOBG_SlideMessage(pWork, side, pp);
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
-  IRCPOKETRADE_PokeCreateMcssGTS(pWork, side, 1-side, pp, TRUE, TRUE);
-
-  POKETRADE_2D_GTSPokemonIconVisible(pWork, side, FALSE);
+  IRCPOKETRADE_PokeCreateMcssGTS(pWork, side, 1-side, pp, 1-side, TRUE);
+//  IRCPOKETRADE_PokeCreateMcssNormal(pWork, side, TRUE, pp, 1-side);
+  
 }
 
 //------------------------------------------------------------------------------
