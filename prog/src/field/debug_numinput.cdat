@@ -58,7 +58,7 @@ static const DEBUG_NUMINPUT_PARAM bp_param = {
  0, 9999, DebugGetBP, DebugSetBP,
 };
 static const DEBUG_NUMINPUT_PARAM tv_param = {
- 0, 159, DebugGetTV, DebugSetTV,
+ 0, 170, DebugGetTV, DebugSetTV,
 };
 static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
   //gmm_id, param, dni_param
