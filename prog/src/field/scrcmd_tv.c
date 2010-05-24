@@ -36,12 +36,14 @@
 #define LECTURE_TV_MAX  (50)
 #define VARIETY_TV_MAX (80)
 #define NOTBADGE_RETRY_TV_MAX   (12)    //バッジ持っていなかったときの再抽選番組数
+#define NOTCLEAR_RETRY_TV_MAX   (20)    //クリアしてなかったときの再抽選番組数
 
 #define REC_TAG_MAX (2)
 
 #define NO_REC_ID (0xffffffff)
 
 #define BADGE_MAX (8)
+#define AFTER_CL_MAX (15)
 
 #ifdef PM_DEBUG
 //デバッグテレビ用番組番号 実体はmisc.c
@@ -95,7 +97,27 @@ static const int BadgeMsg[BADGE_MAX] = {
   msg_tv_03_20
 };
 
+//クリア後抽選メッセージ
+static const int AfterClearMsg[AFTER_CL_MAX] = {
+  msg_tv_03_46,
+  msg_tv_03_47,
+  msg_tv_03_48,
+  msg_tv_03_49,
+  msg_tv_03_50,
+  msg_tv_03_51,
+  msg_tv_03_52,
+  msg_tv_03_53,
+  msg_tv_03_54,
+  msg_tv_03_55,
+  msg_tv_03_56,
+  msg_tv_03_57,
+  msg_tv_03_58,
+  msg_tv_03_59,
+  msg_tv_03_60,
+};
+
 static int CheckBadge(GAMEDATA *gdata, const int inMsg);
+static int CheckClear(GAMEDATA *gdata, const int inMsg, const BOOL inClear);
 
 //--------------------------------------------------------------
 /**
@@ -118,6 +140,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
   MYSTATUS *my = GAMEDATA_GetMyStatus(gdata);
   WORDSET *wordset    = SCRIPT_GetWordSet( sc );
 
+  u16 clear = SCRCMD_GetVMWorkValue( core, work );
   u16 *ret = SCRCMD_GetVMWork( core, work );
 
   //固定タグ展開
@@ -246,6 +269,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
 #endif  //PM_DEBUG
 
   msg = CheckBadge(gdata, msg);
+  msg = CheckClear(gdata, msg, clear);
 
   *ret = msg;
 
@@ -294,5 +318,38 @@ static int CheckBadge(GAMEDATA *gdata, const int inMsg)
     }
   }
   //バッジ関係ないメッセージ
+  return msg;
+}
+
+//--------------------------------------------------------------
+/**
+ * クリア状態によるメッセージ抽選
+ * @param   gdata    ゲームデータポインタ
+ * @param   inMag     抽選されたメッセージ
+ * @param   inClear   クリアしてるか？
+ * @retval int      再抽選されたメッセージ
+ */
+//--------------------------------------------------------------
+static int CheckClear(GAMEDATA *gdata, const int inMsg, const BOOL inClear)
+{
+  int i;
+  int msg;
+  msg = inMsg;
+
+  //クリアしていないなら再抽選を検討する
+  if (!inClear)
+  {
+    for (i=0;i<AFTER_CL_MAX;i++)
+    {
+      if ( AfterClearMsg[i] == msg )
+      {
+        //クリアしていない場合は別のメッセージ
+        msg = msg_tv_03_21 + GFUser_GetPublicRand(NOTCLEAR_RETRY_TV_MAX);
+        OS_Printf("%dクリアしてないから別のに変更 >> %d\n",i, msg);
+        return msg;
+      }
+    }
+  }
+  //クリア関係ないメッセージ
   return msg;
 }

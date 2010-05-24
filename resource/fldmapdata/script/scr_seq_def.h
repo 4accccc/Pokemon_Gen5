@@ -11233,13 +11233,15 @@
 //--------------------------------------------------------------
 /**
  * @brief テレビ番組メッセージ抽選
+ * @param   clear ゲームクリアしてるか？
  * @param   msg   抽選結果メッセージ
  */
 //--------------------------------------------------------------
-#define _TV_GET_MSG( msg ) _ASM_TV_GET_MSG msg
+#define _TV_GET_MSG( clear, msg ) _ASM_TV_GET_MSG clear, msg
 
-  .macro _ASM_TV_GET_MSG msg
+  .macro _ASM_TV_GET_MSG clear, msg
   .short EV_SEQ_TV_GET_MSG
+  .short \clear
   .short \msg
   .endm
 

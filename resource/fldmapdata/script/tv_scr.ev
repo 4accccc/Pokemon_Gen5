@@ -23,8 +23,16 @@ EVENT_START ev_tv
   _TALK_START_SE_PLAY()
   //テレビ見たレコード加算
   _ADD_RECORD( RECID_WATCH_TV, 1 )
+  {
+    DEFINE_LOCAL clear
+    IF FLAG_OFF( SYS_FLAG_GAME_CLEAR )  THEN    //ゲームクリア前
+      $clear = FALSE
+    ELSE                                        //ゲームクリア後
+      $clear = TRUE
+    ENDIF
 
-  _TV_GET_MSG(msg)
+    _TV_GET_MSG(clear, msg)
+  }
   _SYSWIN_MSG( msg, POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
