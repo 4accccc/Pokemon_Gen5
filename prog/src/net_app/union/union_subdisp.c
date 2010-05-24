@@ -304,6 +304,7 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   }
 
   //通信アイコンリロード
+  GFL_NET_WirelessIconEasy_DefaultLCD();
   GFL_NET_ReloadIcon();
 
   //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
