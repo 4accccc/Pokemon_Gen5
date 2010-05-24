@@ -90,7 +90,7 @@ static const struct{
     BATTLEMODE_MASK_CONTEST,
   },
   { //BATTLEMODE_SEARCH_NO_ALL,                           ///<‘S‚Ä(Ž{ÝŽw’è–³‚µ)
-    BATTLEMODE_BIT_CONTEST,
-    BATTLEMODE_MASK_CONTEST,
+    0,
+    0,
   },
 };
