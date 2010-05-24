@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/13 18:18:53
+#save date:2010/05/24 16:36:28
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d04r0401.wms
 #SECTION START:OBJ_EVENT
@@ -121,7 +121,7 @@ SCRID_TRID_HAKAIW1_02
 #Direction Type Number
 DIR_RIGHT
 #Parameter 0 Number
-2
+5
 #Parameter 1 Number
 0
 #Parameter 2 Number
