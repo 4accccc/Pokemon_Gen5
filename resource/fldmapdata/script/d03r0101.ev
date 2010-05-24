@@ -44,11 +44,12 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_d03r0101_sunglasses_01
 
-	//じてんしゃを貰っていない場合
+	//初回話しかけの場合、やわらかいすな入手
 	IF FLAG_OFF( FE_D03R0101_ITEMGET_01 ) THEN
+	
 		_EASY_TALK_ITEM_EVENT(ITEM_YAWARAKAISUNA, 1, FE_D03R0101_ITEMGET_01 , msg_d03r0101_sunglasses_01, msg_d03r0101_sunglasses_02, msg_d03r0101_sunglasses_02 )
 	
-	//じてんしゃ取得済み
+	//やわらかいすな入手後
 	ELSE
 	
 		//古代の城に行く前
@@ -58,11 +59,9 @@ EVENT_START		ev_d03r0101_sunglasses_01
 		
 		//古代の城に行った後
 		ELSE
-		
-			
-		
+
 			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_d03r0101_sunglasses_03 )
-		
+
 		ENDIF
 		
 	ENDIF
@@ -85,8 +84,12 @@ EVENT_START		ev_pos_d03r0101_rival_01
 	_PLAYER_NAME( 0 )
 	_PLAINWIN_MSG_DOWN( msg_d03r0101_rival_00 )
 	_MSGWIN_CLOSE()
-
+	
+	//========================================/
+	//ライバル表示
 	_FLAG_RESET(FV_D03R0101_RIVAL_01)
+	//========================================/
+	
 	_OBJ_ADD( D03R0101_RIVAL_01 )
 	_OBJ_POS_CHANGE( D03R0101_RIVAL_01, 61, 0, 38, DIR_DOWN )
 
@@ -198,12 +201,6 @@ EVENT_START		ev_reserve_d03r0101_event_01
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
 
-/*
-	//ライバル：自機のほうに向く
-	_OBJ_ANIME( D03R0101_RIVAL_02, anm_stay_l )
-	_OBJ_ANIME_WAIT()
-*/
-
 	//……シッポウはくぶつかん　そこに　いけば
 	_BALLOONWIN_OBJMSG( msg_d03r0101_champion_02 , D03R0101_CHAMPION_01 )
 	_MSGWIN_CLOSE()
@@ -297,7 +294,7 @@ _TALK_START_TURN_NOT()
 		
 		_SYSWIN_MSG( msg_d03r0101_daruma_02 , POS_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_SYSWIN_CLOSE()
+		
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
 
@@ -321,6 +318,10 @@ _TALK_START_TURN_NOT()
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
 				ENDIF
 			ENDIF
+		//いいえの場合
+		ELSE
+			
+			_SYSWIN_CLOSE()
 			
 		ENDIF
 		
@@ -347,7 +348,7 @@ _TALK_START_TURN_NOT()
 		
 		_SYSWIN_MSG( msg_d03r0101_daruma_02 , POS_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_SYSWIN_CLOSE()
+		
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
 
@@ -371,7 +372,11 @@ _TALK_START_TURN_NOT()
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
 				ENDIF
 			ENDIF
+		//いいえの場合
+		ELSE
 			
+			_SYSWIN_CLOSE()
+		
 		ENDIF
 		
 	ELSE
@@ -397,7 +402,6 @@ _TALK_START_TURN_NOT()
 		
 		_SYSWIN_MSG( msg_d03r0101_daruma_02 , POS_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_SYSWIN_CLOSE()
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
 
@@ -421,6 +425,10 @@ _TALK_START_TURN_NOT()
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
 				ENDIF
 			ENDIF
+		//いいえの場合
+		ELSE
+			
+			_SYSWIN_CLOSE()
 			
 		ENDIF
 		
@@ -447,7 +455,6 @@ _TALK_START_TURN_NOT()
 		
 		_SYSWIN_MSG( msg_d03r0101_daruma_02 , POS_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_SYSWIN_CLOSE()
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
 
@@ -471,6 +478,10 @@ _TALK_START_TURN_NOT()
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
 				ENDIF
 			ENDIF
+		//いいえの場合
+		ELSE
+			
+			_SYSWIN_CLOSE()
 			
 		ENDIF
 		
@@ -497,7 +508,6 @@ _TALK_START_TURN_NOT()
 		
 		_SYSWIN_MSG( msg_d03r0101_daruma_02 , POS_DOWN )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_SYSWIN_CLOSE()
 		//はいの場合
 		IF $SCWK_ANSWER == SCR_YES THEN
 
@@ -521,6 +531,10 @@ _TALK_START_TURN_NOT()
 					_WILD_LOSE()    //負けなら敗北処理へ（ここでスクリプト終了）
 				ENDIF
 			ENDIF
+		//いいえの場合
+		ELSE
+			
+			_SYSWIN_CLOSE()
 			
 		ENDIF
 		
