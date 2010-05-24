@@ -5089,14 +5089,6 @@
 		<language name="JPN" width="256">BGM-06</language>
 		<language name="JPN_KANJI" width="256">BGM-06</language>
 	</row>
-	<row id="msg_seq_bgm_07">
-		<language name="JPN" width="256">BGM-07</language>
-		<language name="JPN_KANJI" width="256">BGM-07</language>
-	</row>
-	<row id="msg_seq_bgm_08">
-		<language name="JPN" width="256">BGM-08</language>
-		<language name="JPN_KANJI" width="256">BGM-08</language>
-	</row>
 	<row id="msg_seq_bgm_msl_dl_01">
 		<language name="JPN" width="256">BGM-MSL-DL-01</language>
 		<language name="JPN_KANJI" width="256">BGM-MSL-DL-01</language>
@@ -5104,6 +5096,14 @@
 	<row id="msg_seq_bgm_msl_dl_02">
 		<language name="JPN" width="256">BGM-MSL-DL-02</language>
 		<language name="JPN_KANJI" width="256">BGM-MSL-DL-02</language>
+	</row>
+	<row id="msg_seq_bgm_msl_dl_03">
+		<language name="JPN" width="256">BGM-MSL-DL-03</language>
+		<language name="JPN_KANJI" width="256">BGM-MSL-DL-03</language>
+	</row>
+	<row id="msg_seq_bgm_msl_dl_04">
+		<language name="JPN" width="256">BGM-MSL-DL-04</language>
+		<language name="JPN_KANJI" width="256">BGM-MSL-DL-04</language>
 	</row>
 	<row id="msg_seq_bgm_end">
 		<language name="JPN" width="256">BGM-END</language>
