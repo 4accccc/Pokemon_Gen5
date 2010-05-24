@@ -638,6 +638,8 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
       }
     }
     else{ //乱入でない場合は同期取り
+      //乱入可のゲームは乱入を受け入れる準備が出来たら専用のGSIDに変える
+      Union_ChangePlayCategoryGSID(situ->play_category);
       GFL_NET_HANDLE_TimeSyncStart(
         GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE, WB_NET_UNION);
       *seq = _SEQ_START_BEFORE_TIMING_WAIT;
@@ -646,6 +648,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
 	case _SEQ_START_BEFORE_TIMING_WAIT:
 		if(GFL_NET_HANDLE_IsTimeSync(
 		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_START_BEFORE, WB_NET_UNION) == TRUE){
+      GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);  //乱入許可
       (*seq) = _SEQ_MINIGAME_PROC;
     }
     break;
@@ -664,10 +667,6 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   	  GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(guru2), &Guru2ProcData, gurupwk);
     }
     
-    if(GFL_NET_IsParentMachine() == TRUE){
-      //乱入可のゲームは乱入を受け入れる準備が出来たら専用のGSIDに変える
-      Union_ChangePlayCategoryGSID(situ->play_category);
-    }
 		(*seq) ++;
 		break;
 	case _SEQ_MINIGAME_PROC_WAIT:

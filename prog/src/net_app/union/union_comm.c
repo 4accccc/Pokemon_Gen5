@@ -812,7 +812,6 @@ static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameSer
   UNION_SYSTEM_PTR unisys = pWork;
   
   if(unisys->my_situation.mycomm.intrude_exe == TRUE){ //Ž©•ª‚ª—“ü‚µ‚æ‚¤‚Æ‚µ‚Ä‚¢‚éó‘Ô
-    OS_TPrintf("aaa intrude my_service=%d, target=%d\n", GameServiceID1, GameServiceID2);
     if(GameServiceID1 == WB_NET_UNION || GameServiceID2 == WB_NET_UNION){
       return FALSE; //—“ü‚ÅŽ©•ª‚©‘ŠŽè‚ªUNION‚Ìê‡‚Í‚Ü‚¾ID‚ªØ‚è‘Ö‚í‚Á‚Ä‚¢‚È‚¢
     }
@@ -820,10 +819,8 @@ static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameSer
   }
   
   if(GameServiceID2 >= WB_NET_UNION && GameServiceID2 <= WB_NET_UNION_GURUGURU){
-    OS_TPrintf("aaa union my_service=%d, target=%d\n", GameServiceID1, GameServiceID2);
     return TRUE;
   }
-  OS_TPrintf("aaa union faild my_service=%d, target=%d\n", GameServiceID1, GameServiceID2);
   return FALSE;
 }
 

@@ -1101,6 +1101,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     LOCALSEQ_INIT,
     LOCALSEQ_WAIT,
     LOCALSEQ_END,
+    LOCALSEQ_LASTKEY_END,
   };
 
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
@@ -1120,8 +1121,23 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     }
     
     if(GFL_NET_GetConnectNum() > 1){
+      int s;
       OS_TPrintf("接続しました！：親\n");
+      for(s = 2; s < UNION_CONNECT_PLAYER_NUM; s++){
+        if(GFL_NET_IsConnectMember(s) == TRUE){ //通信ID0,1を超えた相手と繋がってしまっている
+          break;
+        }
+      }
+      if(s < UNION_CONNECT_PLAYER_NUM || GFL_NET_SystemGetConnectNum() > 2){
+        UnionMsg_TalkStream_PrintPack(unisys, fieldWork, UnionMsg_GetMsgID_TalkTimeout(unisys));
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        UnionComm_Req_ShutdownRestarts(unisys);
+        OS_TPrintf("意図しない接続のため切断 %d %d\n", s, GFL_NET_SystemGetConnectNum());
+        (*seq) = LOCALSEQ_LASTKEY_END;
+        break;
+      }
       GFL_NET_SetNoChildErrorCheck(TRUE);
+      GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE); //乱入禁止
       UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC,situ->mycomm.calling_pc);
       UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
@@ -1147,6 +1163,13 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
   case LOCALSEQ_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
+    }
+    break;
+  case LOCALSEQ_LASTKEY_END:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
+        return TRUE;
+      }
     }
     break;
   }
@@ -2775,8 +2798,10 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_TALK_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
-        UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
-        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
+        if(situ->mycomm.connect_pc != NULL){
+          UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
+          UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
+        }
         return TRUE;
       }
     }
@@ -3170,6 +3195,8 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
 
     if(situ->mycomm.intrude == FALSE){
+      //乱入可のゲームは乱入を受け入れる準備が出来たら専用のGSIDに変える(親子共に)
+      Union_ChangePlayCategoryGSID(situ->play_category);
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), 
         UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP, WB_NET_UNION);
     }
@@ -3180,6 +3207,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     if(situ->mycomm.intrude == FALSE){
       if(GFL_NET_HANDLE_IsTimeSync(
           GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_COLOSSEUM_MEMBER_ENTRY_SETUP, WB_NET_UNION) == TRUE){
+        GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);  //乱入許可
         (*seq)++;
       }
     }
@@ -3188,8 +3216,6 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
     break;
   case 2:
-    //乱入可のゲームは乱入を受け入れる準備が出来たら専用のGSIDに変える(親子共に)
-    Union_ChangePlayCategoryGSID(situ->play_category);
     (*seq)++;
     break;
   case 3:
