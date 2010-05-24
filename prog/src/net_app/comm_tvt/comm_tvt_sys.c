@@ -264,7 +264,8 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
   }
   work->nameDrawBit = 0;
   work->nameWinUpdateBit = 0;
-
+  
+  //PMSND_FadeOutBGM( PMSND_FADE_FAST );
   PMSND_ChangeBGMVolume( 0xFFFF , 0 );
 
 }
@@ -275,7 +276,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
 static void COMM_TVT_Term( COMM_TVT_WORK *work )
 {
   u8 i;
-  PMSND_ChangeBGMVolume( 0xFFFF , 127 );
+  //PMSND_ChangeBGMVolume( 0xFFFF , 127 );
 
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
   {

@@ -106,7 +106,6 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
       break;
     case  CG_WIRELESS_RETURNMODE_TV:
       dbw->soundNo = PMSND_GetBGMsoundNo();
-      PMSND_StopBGM();
       {
         GMEVENT_CallProc( event, FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &dbw->aTVT);
         (*seq) = _WAIT_TV;
