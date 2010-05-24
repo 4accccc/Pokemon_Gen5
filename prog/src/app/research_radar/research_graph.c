@@ -188,7 +188,8 @@ static void ChangeQuestionToPrev( RRG_WORK* work ); // ‘O‚ÌŽ¿–â‚É•ÏX‚·‚é
 // •\Ž¦‚·‚é‰ñ“š
 static void ChangeAnswerToNext( RRG_WORK* work ); // ŽŸ‚Ì‰ñ“š‚É•ÏX‚·‚é
 static void ChangeAnswerToPrev( RRG_WORK* work ); // ‘O‚Ì‰ñ“š‚É•ÏX‚·‚é
-static void ChangeAnswerToTop( RRG_WORK* work ); // æ“ª‚Ì‰ñ“š‚É•ÏX‚·‚é
+static void ChangeAnswerToFirst( RRG_WORK* work ); // æ“ª‚Ì‰ñ“š‚É•ÏX‚·‚é
+static void ChangeAnswerToTop( RRG_WORK* work ); // ƒ‰ƒ“ƒN1ˆÊ‚Ì‰ñ“š‚É•ÏX‚·‚é
 // ’²¸ƒf[ƒ^‚Ì•\Ž¦ƒ^ƒCƒv
 static void SwitchDataDisplayType( RRG_WORK* work ); // ’²¸ƒf[ƒ^‚Ì•\Ž¦ƒ^ƒCƒv‚ðØ‚è‘Ö‚¦‚é
 // ‰æ–Ê‚ÌƒtƒF[ƒhƒCƒ“EƒtƒF[ƒhƒAƒEƒg
@@ -206,8 +207,9 @@ static void SetMenuCursorOff( RRG_WORK* work ); // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚È‚¢ó‘Ô‚É‚
 // •\Ž¦‚·‚éŽ¿–âƒCƒ“ƒfƒbƒNƒX
 static void ShiftQuestionIdx( RRG_WORK* work, int stride ); // •\Ž¦‚·‚éŽ¿–â‚ÌƒCƒ“ƒfƒbƒNƒX‚ð•ÏX‚·‚é
 // ‘I‘ð’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX
+static void SetAnswerIdxToTop( RRG_WORK* work ); // ‘I‘ð’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ðƒ‰ƒ“ƒN1ˆÊ‚Ì€–Ú‚ÉƒZƒbƒg‚·‚é
 static void ShiftAnswerIdx( RRG_WORK* work, int stride ); // ‘I‘ð’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ð•ÏX‚·‚é
-static void ResetAnswerIdx( RRG_WORK* work );             // ‘I‘ð’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ðƒŠƒZƒbƒg‚·‚é
+static void ResetAnswerIdx( RRG_WORK* work ); // ‘I‘ð’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ðƒŠƒZƒbƒg‚·‚é
 //w•ñ‚ðŒ©‚éxƒ{ƒ^ƒ“
 static void UpdateAnalyzeButton( RRG_WORK* work ); //w•ñ‚ðŒ©‚éxƒ{ƒ^ƒ“‚ðXV‚·‚é
 static void BlinkAnalyzeButton( RRG_WORK* work ); //w•ñ‚ðŒ©‚éxƒ{ƒ^ƒ“‚ð“_–Å‚³‚¹‚é
@@ -222,7 +224,7 @@ static void BlinkReturnButton( RRG_WORK* work ); //u–ß‚évƒ{ƒ^ƒ“‚ð“_–Å‚³‚¹‚é
 static void UpdateCircleGraphs( RRG_WORK* work ); // ‚·‚×‚Ä‚Ì‰~ƒOƒ‰ƒt‚ðXV‚·‚é
 static void DrawCircleGraphs( const RRG_WORK* work ); // ‚·‚×‚Ä‚Ì‰~ƒOƒ‰ƒt‚ð•`‰æ‚·‚é
 static void SetupMainCircleGraph( RRG_WORK* work, GRAPH_DISP_MODE graphMode ); // ƒƒCƒ“‰~ƒOƒ‰ƒt‚ðŒ»Ý‚Ì’²¸ƒf[ƒ^‚Å\¬‚·‚é
-static void SetupSubCircleGraph ( RRG_WORK* work, GRAPH_DISP_MODE graphMode ); // ƒTƒu‰~ƒOƒ‰ƒt‚ðŒ»Ý‚Ì’²¸ƒf[ƒ^‚Å\¬‚·‚é
+static void SetupSubCircleGraph( RRG_WORK* work, GRAPH_DISP_MODE graphMode ); // ƒTƒu‰~ƒOƒ‰ƒt‚ðŒ»Ý‚Ì’²¸ƒf[ƒ^‚Å\¬‚·‚é
 static void InterchangeCircleGraph( RRG_WORK* work ); // ƒTƒu‰~ƒOƒ‰ƒt‚ÆƒƒCƒ“‰~ƒOƒ‰ƒt‚ð“ü‚ê‘Ö‚¦‚é
 static void SetupCenterColorOfGraphComponent( GRAPH_COMPONENT_ADD_DATA* component ); // ƒOƒ‰ƒt\¬—v‘f‚Ì’†S“_ƒJƒ‰[‚ðƒZƒbƒgƒAƒbƒv‚·‚é
 static void AdjustCircleGraphLayer( RRG_WORK* work ); // ƒƒCƒ“‰~ƒOƒ‰ƒt, ƒTƒu‰~ƒOƒ‰ƒt‚Ìd‚È‚è•û‚ð’²®‚·‚é
@@ -467,6 +469,10 @@ void RRG_Main( RRG_WORK* work )
 
   WatchOutNewEntry( work );
   WatchOutUpdateEnable( work );
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG ) {
+    OBATA_Printf( "answerIdx = %d\n", work->answerIdx );
+  }
 
   // •`‰æ
   if( work->setupFlag ) { 
@@ -1050,7 +1056,7 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
     SetMenuCursorPos( work, MENU_ITEM_ANSWER ); // ƒJ[ƒ\ƒ‹ˆÊ’u‚ðw‰ñ“šx‚É‡‚í‚¹‚é
     UpdateControlCursor( work );                // ¶‰EƒJ[ƒ\ƒ‹‚ðXV
     UpdateTouchArea( work );                    // ƒ^ƒbƒ`”ÍˆÍ‚ðXV
-    ChangeAnswerToTop( work );                  // æ“ª‚Ì‰ñ“š‚ð•\Ž¦
+    ChangeAnswerToTop( work );                  // ƒ‰ƒ“ƒN1ˆÊ‚Ì‰ñ“š‚ð•\Ž¦
     HideAnalyzeMessage( work );                 //uc‚©‚¢‚¹‚«‚¿‚ã‚¤cv‚ðÁ‚·
     UpdateMainBG_WINDOW( work );                // MAIN-BG ( ƒEƒBƒ“ƒhƒE–Ê ) ‚ðXV‚·‚é
     UpdateBGFont_Answer( work );                // ‰ñ“š‚ðXV‚·‚é
@@ -1820,7 +1826,7 @@ static void ChangeQuestionToNext( RRG_WORK* work )
   SetMenuCursorOn( work );              // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
   UpdateBGFont_QuestionCaption( work ); // Ž¿–â‚Ì•â‘«•¶‚ðXV‚·‚é
   UpdateBGFont_Question( work );        // Ž¿–â‚ðXV‚·‚é 
-  ChangeAnswerToTop( work );            // ‰ñ“š‚ðXV‚·‚é
+  ChangeAnswerToFirst( work );          // ‰ñ“š‚ðXV‚·‚é
   UpdateBGFont_MyAnswer( work );        // Ž©•ª‚Ì‰ñ“š‚ðXV‚·‚é
   UpdateBGFont_Count( work );           // ‰ñ“šl”‚ðXV‚·‚é
   UpdateBGFont_NoData( work );          //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\Ž¦‚ðXV‚·‚é
@@ -1856,7 +1862,7 @@ static void ChangeQuestionToPrev( RRG_WORK* work )
   SetMenuCursorOn( work );              // ƒJ[ƒ\ƒ‹‚ªæ‚Á‚Ä‚¢‚éó‘Ô‚É‚·‚é
   UpdateBGFont_QuestionCaption( work ); // Ž¿–â‚Ì•â‘«•¶‚ðXV‚·‚é
   UpdateBGFont_Question( work );        // Ž¿–â‚ðXV‚·‚é 
-  ChangeAnswerToTop( work );            // ‰ñ“š‚ðXV‚·‚é
+  ChangeAnswerToFirst( work );          // ‰ñ“š‚ðXV‚·‚é
   UpdateBGFont_MyAnswer( work );        // Ž©•ª‚Ì‰ñ“š‚ðXV‚·‚é
   UpdateBGFont_Count( work );           // ‰ñ“šl”‚ðXV‚·‚é
   UpdateBGFont_NoData( work );          //u‚½‚¾‚¢‚Ü ‚¿‚å‚¤‚³‚¿‚ã‚¤v‚Ì•\Ž¦‚ðXV‚·‚é
@@ -1913,9 +1919,25 @@ static void ChangeAnswerToPrev( RRG_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void ChangeAnswerToTop( RRG_WORK* work )
+static void ChangeAnswerToFirst( RRG_WORK* work )
 {
   ResetAnswerIdx( work ); // •\Ž¦‚·‚é‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ðƒŠƒZƒbƒg
+
+  // •\Ž¦‚ðXV
+  UpdateBGFont_Answer( work ); // ‰ñ“š‚ðXV‚·‚é
+  UpdateArrow( work );         // –îˆó‚ðXV
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief •\Ž¦‚·‚é‰ñ“š‚ð, ƒ‰ƒ“ƒN1ˆÊ‚Ì‰ñ“š‚É•ÏX‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ChangeAnswerToTop( RRG_WORK* work )
+{
+  SetAnswerIdxToTop( work ); 
 
   // •\Ž¦‚ðXV
   UpdateBGFont_Answer( work ); // ‰ñ“š‚ðXV‚·‚é
@@ -2156,6 +2178,27 @@ static void ShiftQuestionIdx( RRG_WORK* work, int stride )
   nowIdx  = work->questionIdx;
   nextIdx = ( nowIdx + stride + QUESTION_NUM_PER_TOPIC ) % QUESTION_NUM_PER_TOPIC;
   work->questionIdx = nextIdx;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‘I‘ð’†‚Ì‰ñ“šƒCƒ“ƒfƒbƒNƒX‚ðƒ‰ƒ“ƒN1ˆÊ‚Ì€–Ú‚ÉƒZƒbƒg‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void SetAnswerIdxToTop( RRG_WORK* work )
+{
+  CIRCLE_GRAPH* graph;
+  int questionID;
+  int answerID;
+
+  graph      = GetMainGraph( work );
+  questionID = GetQuestionID( work );
+  answerID   = CIRCLE_GRAPH_GetComponentID_byRank( graph, 0 );
+
+  work->answerIdx = 
+    RESEARCH_DATA_GetAnswerIndex_byID( &(work->researchData), questionID, answerID );
 }
 
 //-----------------------------------------------------------------------------------------
