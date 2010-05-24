@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-05-18T12:05:38"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-05-24T17:51:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -626,9 +626,10 @@
 	</row>
 
 	<row id="GSYNC_028">
-		<language name="JPN" width="256">ゲームシンクＩＤを　はっこうしました
+		<language name="JPN" width="256">ゲームシンクＩＤコードを
+はっこうしました
 
-うえのゲームシンクＩＤコードは
+うえのゲームシンクＩＤコード　は
 ゲームをはじめるときの
 メインメニュー
 ゲームシンクせっていから
@@ -643,21 +644,21 @@
 
 	<row id="GSYNC_029">
 		<language name="JPN" width="256">ポケモングローバルリンクの
-ホームページで　ゲームシンクＩＤを
+ホームページで
+ゲームシンクＩＤコード　を
 にゅうりょくすると　よりゲームシンクを
 おたのしみいただくことが　できます
 http://www.pokemon-gl.com/
-ゲームシンクせっていについて
-くわしくは　せつめいしょを
-ごらんください</language>
+せっていについて　くわしくは
+せつめいしょを　ごらんください</language>
 		<language name="JPN_KANJI" width="256">ポケモングローバルリンクの
-ホームページで　ゲームシンクＩＤを
+ホームページで
+ゲームシンクＩＤコード　を
 入力することで　よりゲームシンクを
 お楽しみ頂くことが　できます
 http://www.pokemon-gl.com/
-ゲームシンク設定について
-詳しくは　説明書を
-ごらんください</language>
+設定について　詳しくは
+説明書を　ごらんください</language>
 	</row>
 
 	<flowchart-group-list>
