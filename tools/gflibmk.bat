@@ -2,17 +2,30 @@
 echo off
 
 REM ============================================
-REM     通常版を作成
-REM ============================================
-call %PROJECT_ROOT%prompt.bat cmd mkgl.bat %1
-
-
-REM ============================================
 REM     ROM版を作るために現状の定義を保存
 REM ============================================
 SET TMP_PM_DEBUG=%PM_DEBUG%
 SET TMP_NITRO_FINALROM=%NITRO_FINALROM%
 SET TMP_TWL_FINALROM=%TWL_FINALROM%
+
+
+REM ============================================
+REM     Release用定義指定
+REM ============================================
+SET PM_DEBUG=yes
+SET NITRO_FINALROM=
+SET TWL_FINALROM=
+
+
+REM ============================================
+REM     通常版を作成
+REM ============================================
+call %PROJECT_ROOT%prompt.bat cmd mkgl.bat %1
+call %PROJECT_ROOT%nitro_prompt.bat cmd mkgl.bat %1
+
+
+
+
 
 
 REM ============================================
@@ -27,6 +40,7 @@ REM ============================================
 REM     ROM版作成
 REM ============================================
 call %PROJECT_ROOT%prompt.bat cmd mkgl.bat %1
+call %PROJECT_ROOT%nitro_prompt.bat cmd mkgl.bat %1
 
 
 REM ============================================
