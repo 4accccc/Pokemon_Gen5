@@ -3069,6 +3069,18 @@ static GMEVENT_RESULT debugMenuControlLinerCamera(
   DEBUG_CTL_LINERCAMERA_WORK *work = wk;
   FIELD_CAMERA * cam = FIELDMAP_GetFieldCamera(work->fieldWork);
 
+  if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START )
+  {
+    //ãÛÇîÚÇ‘Ç∆Ç´ÇÃÉJÉÅÉâÉAÉìÉOÉãÇ…Ç∑ÇÈ
+    VecFx32 add = {0,16384,0}; 
+    FIELD_CAMERA_SetTargetOffset(cam, &add );
+    FIELD_CAMERA_SetFovy(cam, 3640 );
+    FIELD_CAMERA_SetAngleLen(cam, 970752 );
+    FIELD_CAMERA_SetAnglePitch(cam, 9688 );
+    FIELD_CAMERA_SetAngleYaw(cam,0);
+    return GMEVENT_RES_CONTINUE;
+  }
+
 
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
     FIELD_CAMERA_DEBUG_ReleaseSubScreen( cam );
