@@ -708,7 +708,13 @@ static void can_player_buy_item( SHOP_BUY_APP_WORK *wk )
 //----------------------------------------------------------------------------------
 static void shop_main( SHOP_BUY_APP_WORK *wk )
 {
-  u32 ret = BmpMenuList_Main( wk->menuList );
+  u32 ret;
+  // printQue‚Éˆ—‚ªŽc‚Á‚Ä‚¢‚éê‡‚ÍƒƒCƒ“‚ð’Ê‚³‚È‚¢
+  if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+    return;
+  }
+
+  ret = BmpMenuList_Main( wk->menuList );
   if(ret!=BMPMENULIST_NULL)
   {
     if(ret==BMPMENULIST_CANCEL)
@@ -1589,6 +1595,7 @@ static void bmpwin_exit( SHOP_BUY_APP_WORK *wk )
 {
   int i;
 
+  PRINTSYS_QUE_Clear( wk->printQue );
   PRINTSYS_QUE_Delete( wk->printQue );
 
   for(i=0;i<SHOP_BUY_BMPWIN_MAX;i++){
