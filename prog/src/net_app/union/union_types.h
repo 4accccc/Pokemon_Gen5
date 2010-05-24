@@ -389,7 +389,9 @@ typedef struct{
   u8 submenu_select;          ///<メインメニュー後のサブメニューの選択結果
   UNION_PARTY party;          ///<一緒に遊んでいる相手のパラメータ
   u16 talk_obj_id;             ///<話しかけた相手のCharacterIndex
-  u8 intrude;                 ///<TRUE:乱入参加
+  u8 intrude_exe:1;           ///<TRUE:乱入参加の通信接続を実行しています
+  u8 intrude:1;                 ///<TRUE:乱入参加
+  u8        :6;
   u8 mystatus_recv_bit;       ///<MYSTATUS受信結果(bit管理)
   u8 first_talk;              ///<0:初回会話 1以上：継続会話
   u8 target_card_receive;     ///<TRUE:相手のカードを受信した

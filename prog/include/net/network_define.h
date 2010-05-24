@@ -175,15 +175,10 @@ typedef enum  {
   WB_NET_SERVICEID_DEBUG_BATTLE,
   WB_NET_DEBUG_MATSUDA_SERVICEID,
   WB_NET_TRADE_SERVICEID,     ///<ポケモン交換
-  WB_NET_MINIGAME_TOOL,       ///<WIFI広場ミニゲームツール
   WB_NET_MYSTERY,         ///<不思議な贈り物
-  WB_NET_BALLOON,         ///<風船割り(ソーナンス)
-  WB_NET_BUCKET,          ///<球入れ(マルノーム)
-  WB_NET_BALANCEBALL,       ///<バランスボール(マネネ)
   WB_NET_WIFICLUB,                 ///<WIFICLUB
   WB_NET_COMPATI_CHECK,       ///<相性チェック（テスト版）
   WB_NET_IRCBATTLE,               ///< IRC>WIRELESS>接続
-  WB_NET_WIFILOBBY,                 ///<WIFI広場
   WB_NET_IRCCOMPATIBLE,     ///相性チェック
   WB_NET_IRCAURA,         ///相性チェック オーラチェック
   WB_NET_IRCRHYTHM,       ///相性チェック　RHYTHMチェック
@@ -191,8 +186,14 @@ typedef enum  {
   WB_NET_MUSICAL,       ///ミュージカル      （IRC親機＋無線共通）        順番変更禁止
   WB_NET_MUSICAL_CHILD,       ///ミュージカル  (IRC子機)         順番変更禁止
   WB_NET_MUSICAL_LEADER,       ///ミュージカル  (IRC認証)         順番変更禁止
-  WB_NET_UNION,           ///<ユニオンルーム
+  WB_NET_UNION,                             ///<ユニオンルーム
   WB_NET_COLOSSEUM,       ///<コロシアム
+  WB_NET_UNION_PICTURE,                     ///<お絵かき
+  WB_NET_UNION_BATTLE_MULTI_FREE_SHOOTER,   ///<マルチ(シューター有)
+  WB_NET_UNION_BATTLE_MULTI_FREE,           ///<マルチ
+  WB_NET_UNION_BATTLE_MULTI_FLAT_SHOOTER,   ///<マルチフラット(シューター有)
+  WB_NET_UNION_BATTLE_MULTI_FLAT,           ///<マルチフラット
+  WB_NET_UNION_GURUGURU,                    ///<ぐるぐる交換
   WB_NET_IRCTRADE,       ///<赤外線ぽけ交換
   WB_NET_IRCFRIEND,       ///<赤外線ともだち交換
   WB_NET_WIFIGTS,         ///<GTS
@@ -229,15 +230,10 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_DEBUG_BATTLE = (WB_NET_SERVICEID_DEBUG_BATTLE<<8),
   GFL_NET_CMD_DEBUG_MATSUDA = (WB_NET_DEBUG_MATSUDA_SERVICEID<<8),
   GFL_NET_CMD_TRADE = (WB_NET_TRADE_SERVICEID<<8),      ///<ポケモン交換の開始番号
-  GFL_NET_CMD_MINIGAME_TOOL = (WB_NET_MINIGAME_TOOL<<8),  ///<WIFI広場ミニゲームツール
   GFL_NET_CMD_MYSTERY = (WB_NET_MYSTERY<<8),        ///<不思議な贈り物
-  GFL_NET_CMD_BALLOON = (WB_NET_BALLOON<<8),        ///<風船割り
-  GFL_NET_CMD_BUCKET = (WB_NET_BUCKET<<8),          ///<球入れ
-  GFL_NET_CMD_BALANCEBALL = (WB_NET_BALANCEBALL<<8),    ///<バランスボール
   GFL_NET_CMD_WIFICLUB = (WB_NET_WIFICLUB<<8),        ///<WIFICLUB
   GFL_NET_CMD_COMPATI_CHECK = (WB_NET_COMPATI_CHECK<<8),  ///<相性チェック（テスト版）
   GFL_NET_CMD_IRCBATTLE = (WB_NET_IRCBATTLE<<8),  ///< IRC>WIRELESS>接続
-  GFL_NET_CMD_WIFILOBBY = (WB_NET_WIFILOBBY<<8),      ///<WIFI広場
   GFL_NET_CMD_IRCCOMPATIBLE = (WB_NET_IRCCOMPATIBLE<<8),  ///<相性チェック
   GFL_NET_CMD_IRCAURA = (WB_NET_IRCAURA<<8),  ///<相性チェック　オーラチェック
   GFL_NET_CMD_IRCRHYTHM = (WB_NET_IRCRHYTHM<<8),  ///<相性チェック　リズムチェック
@@ -245,6 +241,12 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_MUSICAL = (WB_NET_MUSICAL<<8),  ///ミュージカル
   GFL_NET_CMD_UNION = (WB_NET_UNION<<8),      ///<ユニオンルーム
   GFL_NET_CMD_COLOSSEUM = (WB_NET_COLOSSEUM<<8),      ///<コロシアム
+  GFL_NET_CMD_UNION_PICTURE = (WB_NET_UNION_PICTURE),                     ///<お絵かき
+  GFL_NET_CMD_UNION_BATTLE_MULTI_FREE_SHOOTER = (WB_NET_UNION_BATTLE_MULTI_FREE_SHOOTER), ///<マルチ(シューター有)
+  GFL_NET_CMD_UNION_BATTLE_MULTI_FREE = (WB_NET_UNION_BATTLE_MULTI_FREE),  ///<マルチ
+  GFL_NET_CMD_UNION_BATTLE_MULTI_FLAT_SHOOTER = (WB_NET_UNION_BATTLE_MULTI_FLAT_SHOOTER), ///<マルチフラット(シューター有)
+  GFL_NET_CMD_UNION_BATTLE_MULTI_FLAT = (WB_NET_UNION_BATTLE_MULTI_FLAT),  ///<マルチフラット
+  GFL_NET_CMD_UNION_GURUGURU = (WB_NET_UNION_GURUGURU),                    ///<ぐるぐる交換
   GFL_NET_CMD_IRCTRADE = (WB_NET_IRCBATTLE<<8),  ///< IRCぽけこうかん
   GFL_NET_CMD_IRCFRIEND = (WB_NET_IRCFRIEND<<8),  ///< IRCともだちこうかん
   GFL_NET_CMD_WIFIGTS   = (WB_NET_WIFIGTS<<8),    ///< GTS

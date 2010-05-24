@@ -663,6 +663,11 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   	  gurupwk->uniapp = unisys->alloc.uniapp;
   	  GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(guru2), &Guru2ProcData, gurupwk);
     }
+    
+    if(GFL_NET_IsParentMachine() == TRUE){
+      //—“ü‰Â‚ÌƒQ[ƒ€‚Í—“ü‚ðŽó‚¯“ü‚ê‚é€”õ‚ªo—ˆ‚½‚çê—p‚ÌGSID‚É•Ï‚¦‚é
+      Union_ChangePlayCategoryGSID(situ->play_category);
+    }
 		(*seq) ++;
 		break;
 	case _SEQ_MINIGAME_PROC_WAIT:

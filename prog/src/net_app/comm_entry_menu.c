@@ -393,10 +393,16 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
  * 参加募集メニュー削除
  *
  * @param   em		
+ * 
+ * @retval  最終的な参加メンバーのNetIDのbit
  */
 //==================================================================
-void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
+u32 CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
 {
+  u32 completion_bit = 0;
+  
+  completion_bit = CommEntryMenu_GetCompletionBit(em);
+  
   _MemberInfo_Exit(em);
   
   GFL_STR_DeleteBuffer(em->strbuf_num_expand);
@@ -413,6 +419,8 @@ void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
     CommEntryMenu_DelCommandTable();
   }
   GFL_HEAP_FreeMemory(em);
+  
+  return completion_bit;
 }
 
 //==================================================================
@@ -1214,7 +1222,7 @@ static void CommEntryMenu_LeaveUserUpdate(COMM_ENTRY_MENU_PTR em)
 
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
     if(em->user[net_id].status != USER_STATUS_NULL && GFL_NET_IsConnectMember(net_id) == FALSE){
-      OS_TPrintf("%d番のプレイヤーがいなくなった\n", net_id);
+      OS_TPrintf("%d番のプレイヤーがいなくなった Connect=%d SystemNum=%d status=%d\n", net_id, GFL_NET_GetConnectNum(), GFL_NET_SystemGetConnectNum(), em->user[net_id].status);
       CommEntryMenu_EraseUser(em, net_id);
       _SendBitClear(em, net_id);
       _Req_SendMemberInfo(em);
@@ -1646,6 +1654,29 @@ int CommEntryMenu_GetCompletionNum(COMM_ENTRY_MENU_PTR em)
     }
   }
   return count;
+}
+
+//==================================================================
+/**
+ * エントリー完了している人のNetIDをbitで取得する
+ *
+ * @param   em		
+ *
+ * @retval  u32		エントリー完了している人のNetIDのビット
+ *                (NetID0番と2番の人がエントリー完了しているならば2進数で[0101]
+ */
+//==================================================================
+u32 CommEntryMenu_GetCompletionBit(COMM_ENTRY_MENU_PTR em)
+{
+  u32 comp_bit = 0;
+  int i;
+  
+  for(i = 0; i < COMM_ENTRY_USER_MAX; i++){
+    if(em->user[i].status == USER_STATUS_COMPLETION){
+      comp_bit |= 1 << i;
+    }
+  }
+  return comp_bit;
 }
 
 //--------------------------------------------------------------

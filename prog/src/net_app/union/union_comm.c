@@ -106,7 +106,7 @@ static const GFLNetInitializeStruct aGFLNetInit = {
 	TRUE,		// CRC計算
 	FALSE,		// MP通信＝親子型通信モードかどうか
 	GFL_NET_TYPE_WIRELESS,		//通信タイプの指定
-	FALSE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
+	TRUE,		// 親が再度初期化した場合、つながらないようにする場合TRUE
 	WB_NET_UNION,	//GameServiceID
 #if GFL_NET_IRC
 	IRC_TIMEOUT_STANDARD,	// 赤外線タイムアウト時間
@@ -809,7 +809,22 @@ static int UnionComm_GetBeaconSize(void *pWork)
 //--------------------------------------------------------------
 static BOOL UnionComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork )
 {
-  return (GameServiceID1==GameServiceID2);
+  UNION_SYSTEM_PTR unisys = pWork;
+  
+  if(unisys->my_situation.mycomm.intrude_exe == TRUE){ //自分が乱入しようとしている状態
+    OS_TPrintf("aaa intrude my_service=%d, target=%d\n", GameServiceID1, GameServiceID2);
+    if(GameServiceID1 == WB_NET_UNION || GameServiceID2 == WB_NET_UNION){
+      return FALSE; //乱入で自分か相手がUNIONの場合はまだIDが切り替わっていない
+    }
+    return (GameServiceID1==GameServiceID2);
+  }
+  
+  if(GameServiceID2 >= WB_NET_UNION && GameServiceID2 <= WB_NET_UNION_GURUGURU){
+    OS_TPrintf("aaa union my_service=%d, target=%d\n", GameServiceID1, GameServiceID2);
+    return TRUE;
+  }
+  OS_TPrintf("aaa union faild my_service=%d, target=%d\n", GameServiceID1, GameServiceID2);
+  return FALSE;
 }
 
 //--------------------------------------------------------------
@@ -1159,4 +1174,36 @@ void UnionChat_SetRecruit(UNION_SYSTEM_PTR unisys, UNION_CHAT_TYPE chat_type)
   situ->chat_type = chat_type;
   situ->chat_pms_rand++;
   situ->chat_upload = TRUE;
+}
+
+//==================================================================
+/**
+ * 乱入可のゲームは別のゲームが繋がらないように専用のGSIDに変更する
+ *
+ * @param   play_category		
+ */
+//==================================================================
+void Union_ChangePlayCategoryGSID(u32 play_category)
+{
+  switch(play_category){
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
+    GFL_NET_ChangeGameService(WB_NET_UNION_BATTLE_MULTI_FREE_SHOOTER, UNION_CONNECT_PLAYER_NUM);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
+    GFL_NET_ChangeGameService(WB_NET_UNION_BATTLE_MULTI_FREE, UNION_CONNECT_PLAYER_NUM);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
+    GFL_NET_ChangeGameService(WB_NET_UNION_BATTLE_MULTI_FLAT_SHOOTER, UNION_CONNECT_PLAYER_NUM);
+    break;
+  case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
+    GFL_NET_ChangeGameService(WB_NET_UNION_BATTLE_MULTI_FLAT, UNION_CONNECT_PLAYER_NUM);
+    break;
+
+  case UNION_PLAY_CATEGORY_PICTURE:
+    GFL_NET_ChangeGameService(WB_NET_UNION_PICTURE, UNION_CONNECT_PLAYER_NUM);
+    break;
+  case UNION_PLAY_CATEGORY_GURUGURU:
+    GFL_NET_ChangeGameService(WB_NET_UNION_GURUGURU, UNION_CONNECT_PLAYER_NUM);
+    break;
+  }
 }

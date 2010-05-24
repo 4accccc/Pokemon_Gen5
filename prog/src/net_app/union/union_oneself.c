@@ -2620,6 +2620,8 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     {
       OS_TPrintf("乱入開始します\n");
       OS_TPrintf("ChangeOver モード切替：子固定\n");
+      situ->mycomm.intrude_exe = TRUE;
+      Union_ChangePlayCategoryGSID(situ->mycomm.mainmenu_select); //乱入先のGSIDに変更
       GFL_NET_ChangeoverModeSet(
         GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, unisys->receive_beacon[buf_no].mac_address);
     }
@@ -2674,6 +2676,8 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     else{
       situ->wait++;
       if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
+        situ->mycomm.intrude_exe = FALSE;
+        GFL_NET_ChangeGameService(WB_NET_UNION, UNION_CONNECT_PLAYER_NUM);  //GSIDを元に戻す
         GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
@@ -3025,7 +3029,7 @@ static BOOL OneselfSeq_MultiColosseumUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     _SEQ_WARP_SUBPROC_WAIT,
   };
 
-  if(*seq < _SEQ_WARP_SUBPROC && _UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+  if(*seq < _SEQ_WARP_SUBPROC && _UnionCheckError_ForceExit(unisys) == TRUE){ //コロシアムに遷移前なので_UnionCheckError_ForceExitでチェックする。※コロシアム用のは使用しないこと！
     return TRUE;
   }
 
@@ -3184,18 +3188,9 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     }
     break;
   case 2:
-  #if 0
-    if(UnionSend_ColosseumEntryStatus(&clsys->basic_status[my_net_id]) == TRUE){
-      if(GFL_NET_IsParentMachine() == TRUE){
-        (*seq)++;
-      }
-      else{
-        (*seq) = 100;
-      }
-    }
-  #else
+    //乱入可のゲームは乱入を受け入れる準備が出来たら専用のGSIDに変える(親子共に)
+    Union_ChangePlayCategoryGSID(situ->play_category);
     (*seq)++;
-  #endif
     break;
   case 3:
     {
@@ -3206,7 +3201,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         break;
       }
       
-      CommEntryMenu_Exit(clsys->entry_menu);
+      clsys->entry_bit = CommEntryMenu_Exit(clsys->entry_menu);
       switch(entry_result){
       case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
         (*seq) = 100;
@@ -4266,10 +4261,28 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
     break;
   case LEAVE_SEQ_SHUTDOWN_INIT:
     //親機は最後まで待つ
-    if(GFL_NET_IsParentMachine() && (GFL_NET_SystemGetConnectNum()>1) ){
-      break;
+    if(GFL_NET_IsParentMachine() == TRUE){
+      int s;
+      u32 entry_bit = clsys->entry_bit;
+      if(GFL_NET_SystemGetConnectNum() <= 1){
+        (*seq)++;
+        break;
+      }
+      for(s = 0; s < UNION_CONNECT_PLAYER_NUM; s++){
+        if(GFL_NET_SystemGetCurrentID() != s){  //自分は飛ばす
+          if((entry_bit & (1 << s)) && GFL_NET_IsConnectMember(s) == TRUE){
+            break;
+          }
+        }
+      }
+      if(s == UNION_CONNECT_PLAYER_NUM){//コロシアム内で接続扱いになっていた全員が離脱完了している
+        (*seq)++;
+        break;
+      }
     }
-    (*seq)++;
+    else{
+      (*seq)++;
+    }
     break;
   case LEAVE_SEQ_SHUTDOWN:
     if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){

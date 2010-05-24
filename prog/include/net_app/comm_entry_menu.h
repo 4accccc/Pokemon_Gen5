@@ -86,7 +86,7 @@ typedef struct{
 //  äOïîä÷êîêÈåæ
 //==============================================================================
 extern COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fieldWork, int min_num, int max_num, HEAPID heap_id, COMM_ENTRY_MODE entry_mode, COMM_ENTRY_GAMETYPE game_type, const u8 *parent_mac_address);
-extern void CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em);
+extern u32 CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_Entry(COMM_ENTRY_MENU_PTR em, int netID, const MYSTATUS *myst, BOOL force_entry, const u8 *mac_address);
 extern COMM_ENTRY_RESULT CommEntryMenu_Update(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_SetGameStart(COMM_ENTRY_MENU_PTR em);
@@ -94,6 +94,7 @@ extern void CommEntryMenu_SetGameCancel(COMM_ENTRY_MENU_PTR em);
 extern COMM_ENTRY_ANSWER CommEntryMenu_GetAnswer(COMM_ENTRY_MENU_PTR em, int netID, BOOL exit_mode);
 extern void CommEntryMenu_SetSendFlag(COMM_ENTRY_MENU_PTR em, int netID);
 extern int CommEntryMenu_GetCompletionNum(COMM_ENTRY_MENU_PTR em);
+extern u32 CommEntryMenu_GetCompletionBit(COMM_ENTRY_MENU_PTR em);
 extern void CommEntyrMenu_MemberInfoReserveUpdate(COMM_ENTRY_MENU_PTR em);
 extern ENTRYMENU_MEMBER_INFO * CommEntryMenu_GetMemberInfo(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_RecvMemberInfo(COMM_ENTRY_MENU_PTR em, const ENTRYMENU_MEMBER_INFO *member_info);

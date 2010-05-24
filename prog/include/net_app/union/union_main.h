@@ -77,6 +77,8 @@ extern BOOL UnionComm_Check_ShutdownRestarts(UNION_SYSTEM_PTR unisys);
 extern void UnionChat_SetMyPmsData(UNION_SYSTEM_PTR unisys, const PMS_DATA *pmsdata);
 extern void UnionChat_SetRecruit(UNION_SYSTEM_PTR unisys, UNION_CHAT_TYPE chat_type);
 
+extern void Union_ChangePlayCategoryGSID(u32 play_category);
+
 //--------------------------------------------------------------
 //  union_main.c
 //--------------------------------------------------------------

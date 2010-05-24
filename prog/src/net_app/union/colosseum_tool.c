@@ -208,15 +208,16 @@ BOOL ColosseumTool_CheckStandingPosition(FIELDMAP_WORK *fieldWork, int entry_num
 //==================================================================
 BOOL ColosseumTool_AllReceiveCheck_Leave(COLOSSEUM_SYSTEM_PTR clsys)
 {
-  int i, count;
+  int i, count, entry_bit;
   
+  entry_bit = clsys->entry_bit;
   count = 0;
   for(i = 0; i < COLOSSEUM_MEMBER_MAX; i++){
     if(clsys->recvbuf.leave[i] == TRUE){
       count++;
     }
   }
-  if(count >= GFL_NET_GetConnectNum()){
+  if(count >= GFL_NET_GetConnectNum() || count >= MATH_CountPopulation(entry_bit)){
     return TRUE;
   }
   return FALSE;
