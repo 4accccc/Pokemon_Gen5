@@ -888,6 +888,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     }
   }
 #endif //DEB_ARI
+
   return ret;
 }
 
@@ -1236,14 +1237,23 @@ static void DUP_FIT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane 
 //--------------------------------------------------------------
 static void DUP_FIT_SetupPokemon( FITTING_WORK *work )
 {
-  VecFx32 pos = {FIT_POKE_POS_X_FX,FIT_POKE_POS_Y_FX,FIT_POKE_POS_Z_FX};
+  VecFx32 pos;
 //  VecFx32 pos = {FX32_ONE*10,FX32_ONE*10,FX32_ONE*-7};  //ˆÊ’u‚Í“K“–
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
   MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x50000 );
   MUS_POKE_DRAW_SetPltAddres( work->drawSys , 0x4000-0x20 );
   work->drawWork = MUS_POKE_DRAW_Add( work->drawSys , work->initWork->musPoke , FALSE );
-  MUS_POKE_DRAW_SetPosition( work->drawWork , &pos);
   
+  MUS_POKE_DRAW_UpdateSystem( work->drawSys ); 
+  MUS_POKE_DRAW_DrawSystem( work->drawSys ); 
+
+  {
+    VecFx32 *ofs = MUS_POKE_DRAW_GetShadowOfs( work->drawWork );
+    pos.x = FIT_POS_X_FX(  FX32_CONST(FIT_POKE_POS_X) - ofs->x );
+    pos.y = FIT_POS_Y_FX(  FX32_CONST(FIT_POKE_POS_Y) - ofs->y );
+    pos.z = FIT_POKE_POS_Z_FX;
+    MUS_POKE_DRAW_SetPosition( work->drawWork , &pos );
+  }
 }
 
 //--------------------------------------------------------------

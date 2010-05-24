@@ -125,7 +125,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
   if( subVCount > 1 )
   {
     //ARI_TPrintf("Script Delay[%d]!!\n",subVCount-1);
-#if DEB_ARI
+#if PM_DEBUG
     //コマ送りチェック用
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
     {
@@ -133,7 +133,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
     }
 #endif
   }
-#if DEB_ARI
+#if PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
   {
     subVCount = 3;
