@@ -564,7 +564,7 @@ BOOL BTL_SICK_CheckBatonTouch( WazaSick sick )
 {
   static const u16 sickTbl[] = {
     WAZASICK_KONRAN,
-    WAZASICK_KAIHUKUHUUJI,
+//    WAZASICK_KAIHUKUHUUJI,
     WAZASICK_IEKI,
     WAZASICK_YADORIGI,
     WAZASICK_SASIOSAE,

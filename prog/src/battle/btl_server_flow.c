@@ -5225,7 +5225,8 @@ static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     if( (attacker != bpp)
     &&  (BPP_MIGAWARI_IsExist(bpp))
     ){
-      if( scEvent_CheckMigawariExclude(wk, attacker, bpp, wazaParam->wazaID, fDamage) ){
+      if( (!fDamage) && (WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru)==FALSE) ){
+//      if( scEvent_CheckMigawariExclude(wk, attacker, bpp, wazaParam->wazaID, fDamage) ){
         BTL_POKESET_Remove( target, bpp );
       }
     }
@@ -6170,7 +6171,7 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_FuuinWarn, pokeID, waza );
     break;
   case SV_WAZAFAIL_KAIHUKUHUUJI:
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFuji, pokeID, waza );
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFujiExe, pokeID, waza );
     break;
   case SV_WAZAFAIL_HPFULL:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_HPFull, pokeID );
@@ -8522,12 +8523,12 @@ static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recov
 static BOOL scproc_RecoverHP_CheckFailBase( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   if( !BPP_IsFightEnable(bpp) ){
-    return FALSE;
+    return TRUE;
   }
   if( BPP_IsHPFull(bpp) ){
-    return FALSE;
+    return TRUE;
   }
-  return TRUE;
+  return FALSE;
 }
 /**
  *  HP回復可否チェック（特殊条件）
@@ -8536,7 +8537,9 @@ static BOOL scproc_RecoverHP_CheckFailSP( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
 {
   if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
   {
+    TAYA_Printf("かいふくふうじ . flg=%d\n", fDispFailMsg);
     if( fDispFailMsg ){
+      TAYA_Printf("メッセージ表示されるよ\n");
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFujiExe, BPP_GetID(bpp) );
     }
     return FALSE;
