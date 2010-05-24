@@ -368,10 +368,10 @@
         <language name="JPN_KANJI" width="256">自分の周りには　どんな人が
 多いのか調査をします</language>
       </row><row id="str_topic_2_caption">
-        <language name="JPN" width="256">どんな　ポケモンが　すきで　そのポケモンで
-どんな　あそびをしているのか　ちょうさします</language>
-        <language name="JPN_KANJI" width="256">どんなポケモンが好きで　そのポケモンで
-どんな遊びをしているのか調査します</language>
+        <language name="JPN" width="256">じぶんの　すきな　ポケモンで
+どんな　あそびをしてるのか　ちょうさします</language>
+        <language name="JPN_KANJI" width="256">自分の　好きな　ポケモンで
+どんな　遊びをしてるのか　調査します</language>
       </row><row id="str_topic_3_caption">
         <language name="JPN" width="256">じぶんの　りそうや　みんなの　たいせつに
 しているものを　ちょうさをします</language>
@@ -518,20 +518,20 @@
         <language name="JPN_KANJI" width="256">都会の暮らしと　田舎の暮らし
 どちらが好き？　を集めたアンケート</language>
       </row><row id="str_question_04_caption">
-        <language name="JPN" width="256">あたまがいい　ひとと　うんどうのできる　ひと
-もしえらぶなら　どちらをえらぶ？　のアンケート</language>
+        <language name="JPN" width="256">あたまがいいひとと　うんどうのできるひと
+えらぶなら　どちらをえらぶ？　のアンケート</language>
         <language name="JPN_KANJI" width="256">頭が良い人と　運動のできる人
-もし選ぶならどちらを選ぶ？　のアンケート</language>
+選ぶならどちらを選ぶ？　のアンケート</language>
       </row><row id="str_question_05_caption">
-        <language name="JPN" width="256">もし　じかんと　おかね　すきなだけ
-もらえるなら　どちらをえらぶ？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">もし時間とお金　好きなだけもらえるなら
+        <language name="JPN" width="256">じかんと　おかね　すきなだけ　もらえるなら
+どちらをえらぶ？　のアンケート</language>
+        <language name="JPN_KANJI" width="256">時間とお金　好きなだけもらえるなら
 どちらを選ぶ？　のアンケート</language>
       </row><row id="str_question_06_caption">
-        <language name="JPN" width="256">がいけんのいい　ひとと　こころが　きれいなひと
-もしえらぶなら　どちらをえらぶ？　のアンケート</language>
+        <language name="JPN" width="256">がいけんのよいひとと　こころがきれいなひと
+えらぶなら　どちらをえらぶ？　のアンケート</language>
         <language name="JPN_KANJI" width="256">外見の良い人と　心がキレイな人
-もし選ぶなら　どちらを選ぶ？　のアンケート</language>
+選ぶなら　どちらを選ぶ？　のアンケート</language>
       </row><row id="str_question_07_caption">
         <language name="JPN" width="256">みんなは　どんなポケモンが　すき？
 をあつめた　アンケート</language>
@@ -548,9 +548,9 @@
         <language name="JPN_KANJI" width="256">休みの日に　もし外に遊びに良くなら
 どこにする？　を集めたアンケート</language>
       </row><row id="str_question_10_caption">
-        <language name="JPN" width="256">がっこうせいかつで　いちばんすきな　じかんは
+        <language name="JPN" width="256">がっこうせいかつで　いちばんすきなのは
 どのじかん？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">学校生活で一番好きな時間は
+        <language name="JPN_KANJI" width="256">学校生活で　一番好きなのは
 どの時間？　を集めたアンケート</language>
       </row><row id="str_question_11_caption">
         <language name="JPN" width="256">じぶんにとって　たいせつなのは　かぞく？
@@ -618,14 +618,14 @@
         <language name="JPN_KANJI" width="256">みんなの好きなスポーツはどんなスポーツ？
 を集めたアンケート</language>
       </row><row id="str_question_24_caption">
-        <language name="JPN" width="256">このなかで　えらぶなら　どのいろが　すきか？
+        <language name="JPN" width="256">このなかで　えらぶなら　どのいろが　すき？
 をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">この中で選ぶなら　どの色が好きか？
+        <language name="JPN_KANJI" width="256">この中で選ぶなら　どの色が好き？
 を集めたアンケート</language>
       </row><row id="str_question_25_caption">
-        <language name="JPN" width="256">みんなが　どんなことを　しゅみにしている？
+        <language name="JPN" width="256">みんなは　どんなことを　しゅみにしている？
 をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">みんながどんな事を趣味にしている？
+        <language name="JPN_KANJI" width="256">みんなはどんな事を趣味にしている？
 を集めたアンケート</language>
       </row><row id="str_question_26_caption">
         <language name="JPN" width="256">みんなは　どんなことを　しごとにしている？

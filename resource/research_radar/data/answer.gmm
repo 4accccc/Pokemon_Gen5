@@ -490,8 +490,8 @@
         <language name="JPN" width="256">しゃかい</language>
         <language name="JPN_KANJI" width="256">社会</language>
       </row><row id="answer_54">
-        <language name="JPN" width="256">ポケモントレーナー</language>
-        <language name="JPN_KANJI" width="256">ポケモントレーナー</language>
+        <language name="JPN" width="256">トレーナー</language>
+        <language name="JPN_KANJI" width="256">トレーナー</language>
       </row><row id="answer_55">
         <language name="JPN" width="256">ポケモンはかせ</language>
         <language name="JPN_KANJI" width="256">ポケモン博士</language>
