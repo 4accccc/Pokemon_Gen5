@@ -193,6 +193,12 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   BOOL parent_set;
   int hit_percent_total_num = FIELD_WFBC_HIT_PERCENT_MAX;
   GF_ASSERT( p_wk );
+
+#ifdef PM_DEBUG
+  OS_SetPrintOutput_Arm9( 2 );
+#endif
+  
+  TOMOYA_Printf( "WFBC_SETUP\n" );
   
   p_wk->data_in = TRUE;
 #if PM_VERSION == VERSION_BLACK
@@ -222,6 +228,7 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
       mood = cp_data->mood_wf;
       parent_set = FALSE;
     }
+    TOMOYA_Printf( "setUp idx:%d\n", set_npc_idx );
     WFBC_CORE_SetUpPeople( p_people, set_npc_idx, cp_mystatus, mood, parent_set );
 
     // ‘Š‘Î’l‚ðŒvŽZ‚µ‚È‚¨‚·
@@ -247,6 +254,10 @@ void FIELD_WFBC_CORE_SetUp( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, 
   }
 
   FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
+
+#ifdef PM_DEBUG
+  OS_SetPrintOutput_Arm9( 0 );
+#endif
 }
 
 

@@ -1776,6 +1776,10 @@ SRCS_OVERLAY_DEBUG_MENU_ZONE_JUMP = field/event_debug_menu_zone_jump.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MENU_MMDL_LIST = field/event_debug_menu_mmdl_list.c
 
+#DEBUG_MENU_WFBC_CHECK
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MENU_WFBC_CHECK = field/debug_wfbc.c
+
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c

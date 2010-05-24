@@ -136,6 +136,8 @@
 
 #include "system/main.h" //for HEAPID_FIELDMAP
 
+#include "debug_wfbc.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -300,6 +302,7 @@ static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DbgRestDataUpdate(const u32 inZone);
 static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData );
@@ -404,6 +407,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
   { DEBUG_FIELD_STR47, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
+  { DEBUG_FIELD_STR73, debugMenu_WfbcDebug },                   //WFBCオートチェック
+
 };
 
 
@@ -6695,4 +6700,75 @@ static void VramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
 
 
 
+
+//-----------------------------------------------------------------------------
+/**
+ *    WFBC自動チェック
+ */
+//-----------------------------------------------------------------------------
+//-------------------------------------
+///	イベントワーク
+//=====================================
+typedef struct {
+  GAMESYS_WORK* p_gsys;
+  FIELDMAP_WORK* p_fieldmap;
+} EV_DEBUGMENU_WFBC;
+
+
+static GMEVENT_RESULT EV_debugMenu_WfbcDebug( GMEVENT *event, int *seq, void *wk );
+//----------------------------------------------------------------------------
+/**
+ *	@brief  WFBCオートデバック
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  GMEVENT *event = wk->gmEvent;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  EV_DEBUGMENU_WFBC *work;
+
+  GMEVENT_Change( event, EV_debugMenu_WfbcDebug, sizeof(EV_DEBUGMENU_WFBC) );
+
+  work = GMEVENT_GetEventWork( event );
+
+  work->p_gsys = gsys;
+  work->p_fieldmap = fieldWork;
+
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  自動動作
+ */
+//-----------------------------------------------------------------------------
+static GMEVENT_RESULT EV_debugMenu_WfbcDebug( GMEVENT *event, int *seq, void *wk )
+{
+  EV_DEBUGMENU_WFBC *work = wk;
+
+  
+  switch( *seq ){
+  case 0:
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_menu_wfbc_check) );
+    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+      GMEVENT_CallEvent( event, DEBUG_WFBC_100SetUp( work->p_gsys ) );
+    }else{
+      GMEVENT_CallEvent( event, DEBUG_WFBC_PeopleCheck( work->p_gsys ) );
+    }
+    (*seq)++;
+    break;
+
+  case 2:
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_menu_wfbc_check) );
+    return ( GMEVENT_RES_FINISH );
+  }
+
+  return ( GMEVENT_RES_CONTINUE );
+}
+
+
+
 #endif  //  PM_DEBUG
+
