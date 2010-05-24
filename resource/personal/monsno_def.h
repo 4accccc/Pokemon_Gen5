@@ -635,8 +635,8 @@
 #define		MONSNO_KURIMUGAN		( 621 )
 #define		MONSNO_GOBITTO			( 622 )
 #define		MONSNO_GORUUGU			( 623 )
-#define		MONSNO_ZURURU				( 624 )
-#define		MONSNO_ZURUGASII		( 625 )
+#define		MONSNO_KOMATANA			( 624 )
+#define		MONSNO_KIRIKIZAN		( 625 )
 #define		MONSNO_BAHHURON			( 626 )
 #define		MONSNO_IIGURA				( 627 )
 #define		MONSNO_WHOOGURU			( 628 )
@@ -647,8 +647,8 @@
 #define		MONSNO_MONOZU				( 633 )
 #define		MONSNO_ZIHEDDO			( 634 )
 #define		MONSNO_SAZANDORA		( 635 )
-#define		MONSNO_RAA					( 636 )
-#define		MONSNO_DORAA				( 637 )
+#define		MONSNO_MERARUBA			( 636 )
+#define		MONSNO_URUGAMOSU		( 637 )
 #define		MONSNO_ATOSU				( 638 )
 #define		MONSNO_PORUTOSU			( 639 )
 #define		MONSNO_ARAMISU			( 640 )
@@ -804,9 +804,7 @@
 
 //ライ
 #define		FORMNO_RAI_A				( 0 )
-#define		FORMNO_RAI_B				( 1 )
-#define		FORMNO_RAI_C				( 2 )
-#define		FORMNO_RAI_MAX				( 3 )
+#define		FORMNO_RAI_MAX				( 1 )
 
 //メロディア
 #define		FORMNO_MERODHIA_VOICE				( 0 )
@@ -827,7 +825,7 @@
 #define		FORMNO_TAMAGO_MAX				( 2 )
 
 //フォルム違いトータル
-#define OTHER_FORM_MAX  ( 62 )
+#define OTHER_FORM_MAX  ( 60 )
 
 //イッシュ図鑑トータル
 #define ZUKANNO_ISSHU_END  ( 155 )

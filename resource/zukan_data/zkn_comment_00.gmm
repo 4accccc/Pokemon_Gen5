@@ -5962,21 +5962,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_624_000">
-		<language name="JPN">ズルガシーの　めいれいで　たたかう。
-えものに　しがみつき　やいばを
-くいこませて　いためつけるのだ。</language>
-		<language name="JPN_KANJI">ズルガシーの　命令で　戦う。
-獲物に　しがみつき
-刃を　食いこませて　痛めつけるのだ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_625_000">
-		<language name="JPN">おおぜいの　ズルル●●を　したがえて
-えものを　むれで　おいつめる。
-とどめは　ズルガシーが　さす。</language>
-		<language name="JPN_KANJI">大勢の　ズルル●●を　従えて
-獲物を　群れで　追いつめる。
-とどめは　ズルガシーが　刺す。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_626_000">
@@ -6070,21 +6062,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_636_000">
-		<language name="JPN">かざんの　ふもとに　せいそくする。
-５ほんの　ツノから　ほのおを　だして
-おそってきた　てきを　げきたいする。</language>
-		<language name="JPN_KANJI">火山の　ふもとに　生息する。
-５本の　ツノから　炎を　出して
-襲ってきた　敵を　撃退する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_637_000">
-		<language name="JPN">たたかいになると　６まいの　ハネから
-ひのこの　りんぷんを　まきちらして
-あたり　いちめんを　ひのうみにする。</language>
-		<language name="JPN_KANJI">戦いになると　６枚の　ハネから
-火の粉の　りんぷんを　まき散らして
-あたり　一面を　火の海にする。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_638_000">
@@ -6817,20 +6801,6 @@
 	<row id="ZKN_COMMENT_00_586_003">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_646_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_00_646_002">
-		<language name="JPN">きょくていおんの　れいきを　つくる
-ちからを　もっているが　じぶんの
-からだを　こおらせてしまっている。</language>
-		<language name="JPN_KANJI">極低温の　冷気を　作る　力を
-持っているが　自分の　体を
-凍らせてしまっている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_648_001">

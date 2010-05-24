@@ -5962,21 +5962,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_624_000">
-		<language name="JPN">ぜんしんが　はものの　ポケモン。
-たたかいで　はこぼれすると　かわらの
-てごろな　いしで　はを　とぐ。</language>
-		<language name="JPN_KANJI">全身が　刃物の　ポケモン。
-戦いで　刃こぼれすると　
-河原の　石で　刃を　とぐ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_625_000">
-		<language name="JPN">ズルル●●の　むれを　ひきいている。
-ボスの　ざを　うばいあい　たたかう。
-やぶれると　むれを　おいだされる。</language>
-		<language name="JPN_KANJI">ズルル●●の　群れを　率いている。
-ボスの　座を　奪い合い　戦う。
-敗れると　群れを　追い出される。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_626_000">
@@ -6070,21 +6062,13 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_636_000">
-		<language name="JPN">たいようから　うまれた　ポケモンと
-しんじられてきた。しんかするとき
-ぜんしんが　ほのおに　つつまれる。</language>
-		<language name="JPN_KANJI">太陽から　生まれた　ポケモンと
-信じられてきた。進化するとき
-全身が　炎に　包まれる。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_637_000">
-		<language name="JPN">かざんばいで　ちじょうが　まっくらに
-なったとき　ドラー●●の　ほのおが
-たいようの　かわりに　なったという。</language>
-		<language name="JPN_KANJI">火山灰で　地上が　真っ暗に
-なったとき　ドラー●●の　炎が
-太陽の　代わりに　なったという。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_638_000">
@@ -6817,20 +6801,6 @@
 	<row id="ZKN_COMMENT_01_586_003">
 		<language name="JPN"></language>
 		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_646_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
-	</row>
-
-	<row id="ZKN_COMMENT_01_646_002">
-		<language name="JPN">きょうりょくな　れいとうエネルギーを
-たいないで　つくりだすが　もれだした
-れいきで　からだが　こおっている。</language>
-		<language name="JPN_KANJI">強力な　冷凍エネルギーを
-体内で　作り出すが　漏れ出した
-冷気で　体が　凍っている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_648_001">

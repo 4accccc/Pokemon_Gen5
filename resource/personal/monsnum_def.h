@@ -632,8 +632,8 @@
 #define		MONSNO_629		( 621 )		//クリムガン
 #define		MONSNO_604		( 622 )		//ゴビット
 #define		MONSNO_605		( 623 )		//ゴルーグ
-#define		MONSNO_634		( 624 )		//ズルル
-#define		MONSNO_635		( 625 )		//ズルガシー
+#define		MONSNO_634		( 624 )		//コマタナ
+#define		MONSNO_635		( 625 )		//キリキザン
 #define		MONSNO_582		( 626 )		//バッフロン
 #define		MONSNO_566		( 627 )		//イーグラ
 #define		MONSNO_567		( 628 )		//ウォーグル
@@ -644,8 +644,8 @@
 #define		MONSNO_640		( 633 )		//モノズ
 #define		MONSNO_641		( 634 )		//ジヘッド
 #define		MONSNO_642		( 635 )		//サザンドラ
-#define		MONSNO_643		( 636 )		//ラー
-#define		MONSNO_644		( 637 )		//ドラー
+#define		MONSNO_643		( 636 )		//メラルバ
+#define		MONSNO_644		( 637 )		//ウルガモス
 #define		MONSNO_645		( 638 )		//アトス
 #define		MONSNO_646		( 639 )		//ポルトス
 #define		MONSNO_647		( 640 )		//アラミス
@@ -796,9 +796,7 @@
 
 //ライ
 #define		FORMNO_653_A				( 0 )
-#define		FORMNO_653_B				( 1 )
-#define		FORMNO_653_C				( 2 )
-#define		FORMNO_653_MAX				( 3 )
+#define		FORMNO_653_MAX				( 1 )
 
 //メロディア
 #define		FORMNO_655_VOICE				( 0 )

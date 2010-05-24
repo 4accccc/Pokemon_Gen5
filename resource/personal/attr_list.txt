@@ -706,8 +706,6 @@
 "poke_icon_527_summer_m.NCGR"
 "poke_icon_527_autumn_m.NCGR"
 "poke_icon_527_winter_m.NCGR"
-"poke_icon_653_b_m.NCGR"
-"poke_icon_653_c_m.NCGR"
 "poke_icon_655_step_m.NCGR"
 "poke_icon_656_aqua_m.NCGR"
 "poke_icon_656_inazuma_m.NCGR"
