@@ -36,17 +36,6 @@
 #include "message.naix"// GMM
 #include "msg/msg_mictest.h"//  GMM
 
-
-// BGM関連
-static void Snd_BgmFadeOut( int a, int b ){}
-static void Snd_BgmFadeIn( int a, int b, int c){}
-#define BGM_VOL_MIN (0)
-#define BGM_VOL_MAX (127)
-#define BGM_FADEIN_START_VOL_NOW (0)
-
-// ===== ↑未実装処理の仮定義↑ =====
-
-
 /*
  *  マイクテスト任天堂規約
  *
@@ -568,7 +557,7 @@ static GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, voi
   MicTest_SEQ_Init( &p_wk->seq, p_wk, SEQFUNC_FadeIn );
 
   //  曲はフェードアウト
-  Snd_BgmFadeOut( BGM_VOL_MIN, BGM_FADE_CNT_MAX );
+  PMSND_FadeOutBGM( BGM_FADE_CNT_MAX );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -619,7 +608,7 @@ static GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, voi
   GFL_HEAP_DeleteHeap( p_wk->heap_id );
 
   //  曲はフェードイン
-  Snd_BgmFadeIn( BGM_VOL_MAX, BGM_FADE_CNT_MAX, BGM_FADEIN_START_VOL_NOW );
+  PMSND_FadeInBGM( BGM_FADE_CNT_MAX );
 
   GFL_PROC_SysSetNextProc( FS_OVERLAY_ID(title), &TitleProcData, NULL );
 //  Main_SetNextProc( FS_OVERLAY_ID(title), &TitleProcData );
