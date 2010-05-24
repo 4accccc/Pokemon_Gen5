@@ -1313,8 +1313,8 @@ static BOOL IsValidEasyTalk(BSUBWAY_TRAINER *bsw_trainer)
 static const u16 btower_trtype2objcode[][2] =
 {
  {TRTYPE_TANPAN,  BOY2},  ///<たんパンこぞう
- {TRTYPE_MINI,  GIRL1},  ///<ミニスカート
- {TRTYPE_SCHOOLB,  BOY1},  ///<じゅくがえり
+ {TRTYPE_MINI,  GIRL2},  ///<ミニスカート
+ {TRTYPE_SCHOOLB,  BOY3},  ///<じゅくがえり
  {TRTYPE_SCHOOLG, GIRL3 },  ///<じゅくがえり
  {TRTYPE_PRINCE,  BOY4},  ///<おぼっちゃま
  {TRTYPE_PRINCESS,  GIRL4},  ///<おじょうさま
@@ -1332,24 +1332,24 @@ static const u16 btower_trtype2objcode[][2] =
  {TRTYPE_CYCLINGW,  CYCLEW},  ///<サイクリング♀
  {TRTYPE_GENTLE,  GENTLEMAN},  ///<ジェントルマン
  {TRTYPE_MADAM,  LADY},  ///<マダム
- {TRTYPE_BREEDERM,  MAN1},  ///<ポケモンブリーダー
- {TRTYPE_BREEDERW,  WOMAN1},  ///<ポケモンブリーダー
+ {TRTYPE_BREEDERM,  BREEDERM},  ///<ポケモンブリーダー
+ {TRTYPE_BREEDERW,  BREEDERW},  ///<ポケモンブリーダー
  {TRTYPE_SCIENTISTM,  ASSISTANTM},  //けんきゅういん♂
  {TRTYPE_SCIENTISTW,  ASSISTANTW},  //けんきゅういん♀
  {TRTYPE_ESPM,  ESPM},  ///<サイキッカー
  {TRTYPE_ESPW,  ESPW},  ///<サイキッカー
  {TRTYPE_KARATE,  FIGHTERM},  //からておう
- {TRTYPE_BATTLEG,  GIRL2},  ///<バトルガール
- {TRTYPE_RANGERM,  MAN3},  ///<ポケモンレンジャー
- {TRTYPE_RANGERW,  WOMAN3},  ///<ポケモンレンジャー
- {TRTYPE_ELITEM,  MAN3},  ///<エリートトレーナー
- {TRTYPE_ELITEW,  WOMAN3},  ///<エリートトレーナー
- {TRTYPE_VETERANM,  OLDMAN1},  ///<ベテラントレーナー
- {TRTYPE_VETERANW,  OLDWOMAN1},  ///<ベテラントレーナー
+ {TRTYPE_BATTLEG,  FIGHTERW},  ///<バトルガール
+ {TRTYPE_RANGERM,  RANGERM},  ///<ポケモンレンジャー
+ {TRTYPE_RANGERW,  RANGERW},  ///<ポケモンレンジャー
+ {TRTYPE_ELITEM,  TRAINERM},  ///<エリートトレーナー
+ {TRTYPE_ELITEW,  TRAINERW},  ///<エリートトレーナー
+ {TRTYPE_VETERANM,  VETERANM},  ///<ベテラントレーナー
+ {TRTYPE_VETERANW,  VETERANW},  ///<ベテラントレーナー
  {TRTYPE_FISHING,  FISHING},  ///<つりびと
- {TRTYPE_MOUNT,  MAN1},  ///<やまおとこ
+ {TRTYPE_MOUNT,  MOUNTMAN},  ///<やまおとこ
  {TRTYPE_WORKER1,  WORKMAN},  ///<さぎょういん
- {TRTYPE_WORKER2,  WORKMAN},  ///<さぎょういん
+ {TRTYPE_WORKER2,  WORKMAN2},  ///<さぎょういん
  {TRTYPE_JUGGLING, CLOWN },   //クラウン
  {TRTYPE_ARTIST,  OLDMAN1},  ///<げいじゅつか
  {TRTYPE_POLICE,  POLICEMAN},  ///<おまわりさん
