@@ -137,15 +137,17 @@ DEFINE_LOCAL	LWK_DIR
 	
 	//‰æ–ÊˆÃ“]
 	_TIME_WAIT(16)
-	_BLACK_OUT()
+	//‰æ–ÊˆÃ“]----------------------------
+	_BLACK_OUT_SLOW()
 	_OBJ_ANIME_WAIT()
 	_DISP_FADE_END_CHECK()
 
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL( R14_SAGE2_01 )
 	
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
+	//ˆÃ“]•œ‹A---------------------------
 
 	//========================================/
 	
