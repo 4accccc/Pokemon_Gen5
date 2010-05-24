@@ -2510,6 +2510,9 @@ void BPP_ChangeTokusei( BTL_POKEPARAM* bpp, PokeTokusei tok )
 void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 {
   bpp->formNo = formNo;
+  if( fOverWriteDefault ){
+    bpp->coreParam.defaultFormNo = formNo;
+  }
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
   PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
   setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );
@@ -2995,7 +2998,7 @@ u32 BPP_GetExpMargin( const BTL_POKEPARAM* bpp )
  * @param   bpp
  */
 //=============================================================================================
-void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
+void BPP_ReflectToPP( BTL_POKEPARAM* bpp, BOOL fDefaultForm )
 {
   POKEMON_PARAM* pp = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
   u32 i;
@@ -3014,7 +3017,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp )
   WazaWorkSys_ReflectToPP( bpp );
 
   {
-    u8 formNo = ( bpp->coreParam.fHensin )? bpp->coreParam.defaultFormNo : bpp->formNo;
+    u8 formNo = ( bpp->coreParam.fHensin || fDefaultForm )? bpp->coreParam.defaultFormNo : bpp->formNo;
     PP_Put( pp, ID_PARA_form_no, formNo );
   }
 

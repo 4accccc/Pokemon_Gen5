@@ -3893,11 +3893,12 @@ static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_
 
   for(i=0; i<memberCount; ++i)
   {
-    for(j=0; j<memberCount; ++j){
+    for(j=0; j<memberCount; ++j)
+    {
       bpp = BTL_PARTY_GetMemberData( btlParty, j );
       if( BPP_GetID(bpp) == (orgPokeID+i) )
       {
-        BPP_ReflectToPP( bpp );
+        BPP_ReflectToPP( bpp, TRUE );
         pp = BPP_GetSrcData( bpp );
         PokeParty_Add( wk->tmpParty, pp );
 
