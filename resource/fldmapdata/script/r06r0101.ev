@@ -142,12 +142,15 @@ EVENT_START  ev_r06r0101_assistantm_03
 			
 			//アイテム入手
 			_ITEM_EVENT_KEYWAIT(ITEM_RIIHUNOISI,1)
+			
+			//-----------------------------------------//
 			//アイテム入手フラグをON
 			_FLAG_SET(FE_R06R0101_ITEMGET_01)
+			//-----------------------------------------//
 		
 		ELSE
 			//依頼に「はい」と答え、イベントを引き受けている？
-			IF FLAG_OFF(FE_R06R0101_EVENT_ON)THEN
+			IF FLAG_OFF(FE_R06R0101_EVENT_ON) THEN
 				IF $LOCALWORK2 == 0 THEN
 					//2回目以降の話しかけはこの処理を飛ばす
 					IF $LOCALWORK0  == 0 THEN
@@ -162,15 +165,17 @@ EVENT_START  ev_r06r0101_assistantm_03
 					
 					//シキジカを選択したかの判定へ
 					_CALL ev_shikijika_event
-
+					
+					//-----------------------------------------//
 					//イベントスタートフラグON
 					_FLAG_SET(FE_R06R0101_EVENT_ON)
-			
+					
 					//一度話しかけたことを保存
 					$LOCALWORK0 = 1
+					//-----------------------------------------//
 					
 				ELSIF $LOCALWORK2 == 1 THEN
-					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_03)				
+					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_03)
 				ELSIF $LOCALWORK2 == 2 THEN
 					_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_04)
 				ELSIF $LOCALWORK2 == 3 THEN
@@ -236,30 +241,49 @@ ev_shikijika_event:
 					//春のフォルムのシキジカを見せた
 					IF $LWK_POKE_FORMNO == FORMNO_511_SPRING && FLAG_ON(FV_R06R0101_POKE_SPRING) THEN
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_03)
+						
+						//-----------------------------------------//
 						_FLAG_RESET(FV_R06R0101_POKE_SPRING)
 						$LOCALWORK2 = 1
+						//-----------------------------------------//
+						
 					//夏のフォルムのシキジカを見せた
 					ELSIF $LWK_POKE_FORMNO == FORMNO_511_SUMMER && FLAG_ON(FV_R06R0102_POKE_SUMMER) THEN
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_04)
+						
+						//-----------------------------------------//
 						_FLAG_RESET(FV_R06R0102_POKE_SUMMER)
 						$LOCALWORK2 = 2
+						//-----------------------------------------//
+						
 					//秋のフォルムのシキジカを見せた
 					ELSIF $LWK_POKE_FORMNO == FORMNO_511_AUTUMN && FLAG_ON(FV_R06R0103_POKE_AUTUMN) THEN
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_05)
+						
+						//-----------------------------------------//
 						_FLAG_RESET(FV_R06R0103_POKE_AUTUMN)
 						$LOCALWORK2 = 3
+						//-----------------------------------------//
+						
 					//冬のフォルムのシキジカを見せた
 					ELSIF $LWK_POKE_FORMNO == FORMNO_511_WINTER && FLAG_ON(FV_R06R0104_POKE_WINTER) THEN
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_06)
+						
+						//-----------------------------------------//
 						_FLAG_RESET(FV_R06R0104_POKE_WINTER)
 						$LOCALWORK2 = 4
+						//-----------------------------------------//
+						
 					//すでに見せた季節のシキジカを見せた
 					ELSE
 						//ありがとうございます！　ですが　そのきせつの
 						_BALLOONWIN_TALKOBJ_MSG(msg_r06r0101_assistantm3_07)
 					ENDIF
 					
+					//-----------------------------------------//
 					$LOCALWORK1 = 1
+					//-----------------------------------------//
+					
 				ELSE
 					_MONS_NAME( 0, MONSNO_511 )
 					//もうしあげにくいのですが……
