@@ -2510,9 +2510,7 @@ void BPP_ChangeTokusei( BTL_POKEPARAM* bpp, PokeTokusei tok )
 void BPP_ChangeForm( BTL_POKEPARAM* bpp, u8 formNo )
 {
   bpp->formNo = formNo;
-  if( fOverWriteDefault ){
-    bpp->coreParam.defaultFormNo = formNo;
-  }
+
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, formNo );
   PP_Renew( (POKEMON_PARAM*)(bpp->coreParam.ppSrc) );
   setupBySrcDataBase( bpp, bpp->coreParam.ppSrc );

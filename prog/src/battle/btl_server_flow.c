@@ -768,6 +768,7 @@ static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static BOOL scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza );
 static void scEvent_TameSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* rec, WazaID waza );
+static BppContFlag CheckPokeHideState( const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
@@ -3940,12 +3941,16 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   REQWAZA_WORK  reqWaza;
   WazaID  orgWaza, actWaza;
   BtlPokePos  orgTargetPos, actTargetPos;
+  BppContFlag  tameFlag;
   u8 fWazaEnable, fWazaExecute, fWazaLock, fReqWaza, fPPDecrement, orgWazaIdx;
+
+  tameFlag = CheckPokeHideState( attacker );
 
   wazaEffCtrl_Init( wk->wazaEffCtrl );
 
   reqWaza.wazaID = WAZANO_NULL;
   reqWaza.targetPos = BTL_POS_NULL;
+  tameFlag =
 
   orgWaza = action->fight.waza;
   orgWazaIdx = BPP_WAZA_SearchIdx( attacker, orgWaza );
@@ -4023,7 +4028,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // ここまで来たらワザが出ることは確定
     BTL_WAZAREC_Add( &wk->wazaRec, actWaza, wk->turnCount, BPP_GetID(attacker) );
-    BTL_Printf( "ポケ[%d]がワザ_%dを出す\n", BPP_GetID(attacker), actWaza );
     scproc_WazaExe_Decide( wk, attacker, wk->wazaParam );
 
     // ワザ乗っ取り判定
@@ -4058,7 +4062,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   }
 
   // 溜めワザによる非表示状態を解除
-  if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_TAMEHIDE_OFF) ){
+  if( (BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_TAMEHIDE_OFF))
+  ||  ((tameFlag != BPP_CONTFLG_NULL) && (CheckPokeHideState(attacker) != BPP_CONTFLG_NULL))
+  ){
     SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), FALSE );
   }
 
@@ -5794,7 +5800,6 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
     }
     // @TODO 溜めリリースはもっと前のタイミングじゃないとマズいかも？
     // @TODO フリーフォールの解放が行われないと。
-
     scPut_CureSick( wk, attacker, WAZASICK_TAMELOCK, NULL );
     BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_TAMEHIDE_OFF );
     wazaEffCtrl_SetEffectIndex( wk->wazaEffCtrl, BTLV_WAZAEFF_TAME_RELEASE );
@@ -5842,11 +5847,7 @@ static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   if( fSuccess )
   {
-    if( BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_SORAWOTOBU)
-    ||  BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_DIVING)
-    ||  BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_ANAWOHORU)
-    ||  BPP_CONTFLAG_Get(attacker, BPP_CONTFLG_SHADOWDIVE)
-    ){
+    if( CheckPokeHideState(attacker) != BPP_CONTFLG_NULL ){
       SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), TRUE );
     }
   }

@@ -3864,7 +3864,7 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
   for(i=0; i<memberCount; ++i)
   {
     bpp = BTL_PARTY_GetMemberData( btlParty, i );
-    BPP_ReflectToPP( bpp );
+    BPP_ReflectToPP( bpp, FALSE );
     pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
     PokeParty_Add( wk->tmpParty, pp );
   }
