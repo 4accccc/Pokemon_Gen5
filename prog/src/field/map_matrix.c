@@ -323,7 +323,7 @@ void MAP_MATRIX_CheckReplace(
     MAP_MATRIX *pMat, GAMESYS_WORK * gamesys, HEAPID temp_heapID )
 {
   int count ,data_max;
-  MAPREPLACE_CTRL * ctrl = MAPREPLACE_Create( pMat->heapID, gamesys );
+  MAPREPLACE_CTRL * ctrl = MAPREPLACE_Create( temp_heapID, gamesys );
   data_max = MAPREPLACE_GetDataMax( ctrl );
   for ( count = 0; count < data_max; count ++ )
   {

@@ -53,7 +53,7 @@ enum {
   /**
    * @brief 永続情報用HEAP領域
    */
-  HEAPSIZE_WORLD = 0x10000 - 0x5000,
+  HEAPSIZE_WORLD = 0x10000 - 0x6000,
 
   /**
    * @brief イベント用HEAP領域
