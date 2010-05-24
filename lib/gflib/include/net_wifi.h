@@ -362,8 +362,12 @@ typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 #define ERRORCODE_0 (STEPMATCH_SUCCESS+5)
 #define ERRORCODE_HEAP (STEPMATCH_SUCCESS+6)
 #define STEPMATCH_CONNECT (STEPMATCH_SUCCESS+7)
-#define ERRORCODE_TIMEOUT (STEPMATCH_SUCCESS+8)
-#define ERRORCODE_DISCONNECT (STEPMATCH_SUCCESS+9)
+
+#define ERRORCODE_TIMEOUT (STEPMATCH_SUCCESS+8)     //マッチング相手とのタイムアウトエラー
+#define ERRORCODE_DISCONNECT (STEPMATCH_SUCCESS+9)  //マッチング相手と切断エラー
+#define ERRORCODE_CRC (STEPMATCH_SUCCESS+10)        //送られてきたCRCが違うエラー lightなエラー
+#define ERRORCODE_SYSTEM (STEPMATCH_SUCCESS+11)     //システムが意図していないエラー lightなエラー
+#define ERRORCODE_SENDQUEUE (STEPMATCH_SUCCESS+12)     //送信キューに入らなかったエラーlightなエラー
 
 
 #if GFL_NET_WIFI //wifi
