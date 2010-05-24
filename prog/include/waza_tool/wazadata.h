@@ -264,6 +264,8 @@ typedef enum {
   WAZAFLAG_Flying,        ///< 重力時に失敗する（飛んだり浮いたりイメージ）
   WAZAFLAG_KooriMelt,     ///< 自分が凍りでも解除してワザを出す（高温イメージ）
   WAZAFLAG_TripleFar,     ///< トリプルバトルで、離れた相手も選択出来る
+  WAZAFLAG_KaifukuHuuji,  ///< かいふく封じで封じられる
+  WAZAFLAG_MigawariThru,  ///< 相手がみがわりでも当たる（ダメージワザ以外の判定に）
 
   WAZAFLAG_MAX,
 

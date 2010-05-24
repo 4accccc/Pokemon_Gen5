@@ -2635,7 +2635,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // かいふくふうじ状態（回復ワザを選べない）
   if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
   {
-    if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIMPLE_RECOVER )
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_KaifukuHuuji) )
     {
       if( strParam )
       {

@@ -334,7 +334,7 @@ static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   case WAZASICK_NEWOHARU:     strID = BTL_STRID_SET_NeWoHaru; break;
   case WAZASICK_SASIOSAE:     strID = BTL_STRID_SET_Sasiosae; break;
   case WAZASICK_KANASIBARI:   strID = BTL_STRID_SET_Kanasibari; break;
-  case WAZASICK_KAIHUKUHUUJI: strID = BTL_STRID_SET_KaifukuFujiExe; break;
+  case WAZASICK_KAIHUKUHUUJI: strID = BTL_STRID_SET_KaifukuFuji; break;
 
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
