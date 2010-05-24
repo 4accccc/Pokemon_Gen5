@@ -70,8 +70,10 @@ use constant IDX_FLG_Bouon			=> 45;	# 【ぼうおん対象】
 use constant IDX_FLG_Juryoku		=> 46;	# 【重力で失敗する】
 use constant IDX_FLG_KoriMelt		=> 47;	# 【凍り解除】
 use constant IDX_FLG_TripleFar		=> 48;	# 【トリプル遠隔ワザ】
+use constant IDX_FLG_KaifukuFuji	=> 49;	# 【トリプル遠隔ワザ】
+use constant IDX_FLG_MigawariThru	=> 50;	# 【みがわり貫通】
 
-use constant IDX_FLG_End			=> 49;	# フラグ最後（waza.tabにはありません）
+use constant IDX_FLG_End			=> 51;	# フラグ最後（waza.tabにはありません）
 use constant IDX_FLG_Start			=> 37;	# フラグ最初
 
 
@@ -128,6 +130,8 @@ use constant IDX_FLG_Start			=> 37;	# フラグ最初
 	"【重力で失敗する】",			IDX_FLG_Juryoku,
 	"【凍り解除】",					IDX_FLG_KoriMelt,
 	"【トリプル遠隔ワザ】",			IDX_FLG_TripleFar,
+	"【かいふく封じ対象】",			IDX_FLG_KaifukuFuji,
+	"【みがわり貫通】"	,			IDX_FLG_MigawariThru,
 );
 
 #----------------------------------------------------------------------------------
