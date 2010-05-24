@@ -71,11 +71,12 @@ struct _RESEARCH_RADAR_GRAPH_WORK
   WORDSET*     wordset;                // ƒ[ƒhƒZƒbƒg
 
   // ó‘Ô
-  QUEUE*    stateQueue; // ó‘ÔƒLƒ…[
-  RRG_STATE state;      // Œ»Ý‚Ìó‘Ô
-  u32       stateSeq;   // ó‘Ô“àƒV[ƒPƒ“ƒX”Ô†
-  u32       stateCount; // ó‘ÔƒJƒEƒ“ƒ^
-  u32       waitFrame;  // WAIT ó‘Ô‚Ì‘Ò‚¿ŽžŠÔ
+  QUEUE*    stateQueue;  // ó‘ÔƒLƒ…[
+  RRG_STATE state;       // Œ»Ý‚Ìó‘Ô
+  u32       stateSeq;    // ó‘Ô“àƒV[ƒPƒ“ƒX”Ô†
+  u32       stateCount;  // ó‘ÔƒJƒEƒ“ƒ^
+  u32       waitFrame;   // WAIT ó‘Ô‚Ì‘Ò‚¿ŽžŠÔ
+  u32       updateCount; // ÅŒã‚ÌXV‚©‚ç‚ÌŒo‰ßƒtƒŒ[ƒ€”
 
   // ƒJ[ƒ\ƒ‹
   MENU_ITEM cursorPos; // ƒJ[ƒ\ƒ‹ˆÊ’u
@@ -129,6 +130,8 @@ struct _RESEARCH_RADAR_GRAPH_WORK
   BOOL analyzeFlag;        // ‰ðÍ‚ªÏ‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
   BOOL analyzeByTouchFlag; // ƒ^ƒbƒ`‚É‚æ‚é‰ðÍ‚©‚Ç‚¤‚©
   BOOL updateFlag;         // XV’†‚©‚Ç‚¤‚©
+  BOOL updateEnableFlag;   // XV‚ª‰Â”\‚©‚Ç‚¤‚©
+  BOOL newEntryFlag;       // V‚µ‚¢l•¨‚Æ‚·‚êˆá‚Á‚½‚©‚Ç‚¤‚©
   BOOL stateEndFlag;       // Œ»Ý‚Ìó‘Ô‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
   BOOL finishFlag;         // ƒOƒ‰ƒt‰æ–Ê‚ÌI—¹ƒtƒ‰ƒO
   RRG_RESULT finishResult; // ƒOƒ‰ƒt‰æ–Ê‚ÌI—¹Œ‹‰Ê
@@ -266,6 +269,11 @@ static void StartPaletteFadeFlashIn ( RRG_WORK* work ); // ƒpƒŒƒbƒgƒAƒjƒ‚É‚æ‚éƒ
 static BOOL IsPaletteFadeEnd( RRG_WORK* work ); // ƒpƒŒƒbƒg‚ÌƒtƒF[ƒh‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©‚ð”»’è‚·‚é
 // VBlankƒ^ƒXƒN
 static void VBlankFunc( GFL_TCB* tcb, void* wk );  // VBlank’†‚Ìˆ—
+// ‚·‚êˆá‚¢‚ÌŠÄŽ‹
+static void WatchOutNewEntry( RRG_WORK* work ); // V‚µ‚¢l•¨‚Æ‚Ì‚·‚êˆá‚¢‚ðŠÄŽ‹‚·‚é
+static void ClearNewEntryFlag( RRG_WORK* work ); // ‚·‚êˆá‚¢ƒtƒ‰ƒO‚ðƒNƒŠƒA‚·‚é
+static void WatchOutUpdateEnable( RRG_WORK* work ); // XV‚ª‰Â”\‚Èó‘Ô‚©‚Ç‚¤‚©‚ðŠÄŽ‹‚·‚é
+static void DisableUpdate( RRG_WORK* work ); // ˆê’èŽžŠÔ‚ÌŠÔ, XV‚ª‹N‚±‚ç‚È‚¢ó‘Ô‚É‚·‚é
 //-----------------------------------------------------------------------------------------
 // žLAYER 3 Žæ“¾EÝ’èE”»’è
 //-----------------------------------------------------------------------------------------
@@ -456,6 +464,9 @@ void RRG_Main( RRG_WORK* work )
   case RRG_STATE_FINISH:           return;                            
   default: GF_ASSERT(0);
   }
+
+  WatchOutNewEntry( work );
+  WatchOutUpdateEnable( work );
 
   // •`‰æ
   if( work->setupFlag ) { 
@@ -653,22 +664,9 @@ static void MainSeq_STANDBY( RRG_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
-  // TEST: XVˆ—
-#ifdef PM_DEBUG
-  if( trg & PAD_BUTTON_DEBUG ) {
-    FinishCurrentState( work );                             // RRG_STATE_STANDBY ó‘Ô‚ðI—¹
-    RegisterNextState( work, RRG_STATE_UPDATE_AT_STANDBY ); // => RRG_STATE_UPDATE_AT_STANDBY
-    RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
-    RegisterNextState( work, RRG_STATE_FLASHIN );           // ===> RRG_STATE_FLASHIN
-    RegisterNextState( work, RRG_STATE_PERCENTAGE );        // ====> RRG_STATE_PERCENTAGE
-    RegisterNextState( work, RRG_STATE_STANDBY );           // =====> RRG_STATE_STANDBY
-    return;
-  }
-#endif
-
   //------------------------
   // ’²¸ƒf[ƒ^‚ÌXV‚ðŒŸo
-  if( (work->analyzeFlag == TRUE) && (GAMEBEACON_Get_NewEntry() == TRUE) ) {
+  if( work->analyzeFlag && work->newEntryFlag && work->updateEnableFlag ) {
     FinishCurrentState( work );                              // RRG_STATE_STANDBY ó‘Ô‚ðI—¹
     RegisterNextState( work, RRG_STATE_UPDATE_AT_STANDBY );  // => RRG_STATE_UPDATE_AT_STANDBY
     RegisterNextState( work, RRG_STATE_FLASHOUT );           // ==> RRG_STATE_FLASHOUT
@@ -862,7 +860,7 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
 
   //------------------------
   // ’²¸ƒf[ƒ^‚ÌXV‚ðŒŸo
-  if( (work->analyzeFlag == TRUE) && (GAMEBEACON_Get_NewEntry() == TRUE) ) {
+  if( work->analyzeFlag && work->newEntryFlag && work->updateEnableFlag ) {
     FinishCurrentState( work );                             // RRG_STATE_KEYWAIT ó‘Ô‚ðI—¹
     RegisterNextState( work, RRG_STATE_UPDATE_AT_KEYWAIT ); // => RRG_STATE_UPDATE_AT_KEYWAIT
     RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
@@ -871,19 +869,6 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
     RegisterNextState( work, RRG_STATE_KEYWAIT );           // =====> RRG_STATE_KEYWAIT
     return;
   } 
-
-  // TEST: XVˆ—
-#ifdef PM_DEBUG
-  if( trg & PAD_BUTTON_DEBUG ) {
-    FinishCurrentState( work );                             // RRG_STATE_KEYWAIT ó‘Ô‚ðI—¹
-    RegisterNextState( work, RRG_STATE_UPDATE_AT_KEYWAIT ); // => RRG_STATE_UPDATE_AT_KEYWAIT
-    RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
-    RegisterNextState( work, RRG_STATE_FLASHIN );           // ===> RRG_STATE_FLASHIN
-    RegisterNextState( work, RRG_STATE_PERCENTAGE );        // ====> RRG_STATE_PERCENTAGE
-    RegisterNextState( work, RRG_STATE_KEYWAIT );           // =====> RRG_STATE_KEYWAIT
-    return;
-  }
-#endif
 
   //-----------------------
   //w–ß‚éxƒ{ƒ^ƒ“‚ðƒ^ƒbƒ`
@@ -1184,6 +1169,8 @@ static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work )
   case 0:
     // XVŠJŽn
     work->updateFlag = TRUE;
+    ClearNewEntryFlag( work );
+    DisableUpdate( work );
 
     // ’²¸ƒf[ƒ^‚ðÄƒZƒbƒgƒAƒbƒv
     SetupResearchData( work );
@@ -1236,7 +1223,7 @@ static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work )
     UpdateBGFont_Count( work );         // ‰ñ“šl”‚ðXV‚·‚é
     UpdateArrow( work );                // –îˆó‚ðXV‚·‚é
     UpdateControlCursor( work );        // ¶‰E‚ÌƒJ[ƒ\ƒ‹•\Ž¦‚ðXV‚·‚é
-    DispAllPercentage( work );          // “•\‹L‚ð•\Ž¦‚·‚é
+    //DispAllPercentage( work );          // “•\‹L‚ð•\Ž¦‚·‚é
     UpdateMyAnswerIconOnGraph( work );  // Ž©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒOƒ‰ƒtã ) ‚ðXV‚·‚é
 
     // XVŠ®—¹SE
@@ -1260,6 +1247,8 @@ static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work )
   case 0:
     // XVŠJŽn
     work->updateFlag = TRUE;
+    ClearNewEntryFlag( work );
+    DisableUpdate( work );
 
     // ’²¸ƒf[ƒ^‚ðÄƒZƒbƒgƒAƒbƒv
     SetupResearchData( work );
@@ -1314,7 +1303,7 @@ static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work )
     UpdateBGFont_Count( work );         // ‰ñ“šl”‚ðXV‚·‚é
     UpdateArrow( work );                // –îˆó‚ðXV‚·‚é
     UpdateControlCursor( work );        // ¶‰E‚ÌƒJ[ƒ\ƒ‹•\Ž¦‚ðXV‚·‚é
-    DispAllPercentage( work );          // “•\‹L‚ð•\Ž¦‚·‚é
+    //DispAllPercentage( work );          // “•\‹L‚ð•\Ž¦‚·‚é
     UpdateMyAnswerIconOnGraph( work );  // Ž©•ª‚Ì‰ñ“šƒAƒCƒRƒ“ ( ƒOƒ‰ƒtã ) ‚ðXV‚·‚é
 
     // XVŠ®—¹SE
@@ -3389,6 +3378,63 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
   PaletteFadeTrans( work->paletteFadeSystem ); // ƒpƒŒƒbƒgƒtƒF[ƒh
 }
 
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief V‚µ‚¢l•¨‚Æ‚Ì‚·‚êˆá‚¢‚ðŠÄŽ‹‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void WatchOutNewEntry( RRG_WORK* work )
+{
+  if( GAMEBEACON_Get_NewEntry() == TRUE ) {
+    work->newEntryFlag = TRUE;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ‚·‚êˆá‚¢ƒtƒ‰ƒO‚ðƒNƒŠƒA‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void ClearNewEntryFlag( RRG_WORK* work )
+{
+  work->newEntryFlag = FALSE;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief XV‚ª‰Â”\‚Èó‘Ô‚©‚Ç‚¤‚©‚ðŠÄŽ‹‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void WatchOutUpdateEnable( RRG_WORK* work )
+{
+  if( work->updateCount < UPDATE_INTERVAL ) {
+    work->updateCount++;
+  }
+  else {
+    work->updateEnableFlag = TRUE;
+  }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ˆê’èŽžŠÔ‚ÌŠÔ, XV‚ª‹N‚±‚ç‚È‚¢ó‘Ô‚É‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------------------
+static void DisableUpdate( RRG_WORK* work )
+{
+  work->updateCount = 0;
+  work->updateEnableFlag = FALSE;
+}
+
+
 
 //=========================================================================================
 // žLAYER 3 Žæ“¾EÝ’èE”»’è
@@ -3935,11 +3981,14 @@ static void InitGraphWork( RRG_WORK* work )
   work->stateEndFlag       = FALSE;
   work->stateCount         = 0;
   work->waitFrame          = WAIT_FRAME_BUTTON;
+  work->updateCount        = 0;
   work->cursorPos          = MENU_ITEM_QUESTION;
   work->setupFlag          = FALSE;
   work->analyzeFlag        = FALSE;
   work->analyzeByTouchFlag = FALSE;
   work->updateFlag         = FALSE;
+  work->updateEnableFlag   = FALSE;
+  work->newEntryFlag       = FALSE;
   work->questionIdx        = 0;
   work->answerIdx          = 0;
   work->graphMode          = GRAPH_DISP_MODE_TODAY;
