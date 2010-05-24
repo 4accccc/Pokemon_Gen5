@@ -3555,8 +3555,6 @@ static void handler_Omitoosi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
-
-    BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Omitoosi( u32* numElems )
