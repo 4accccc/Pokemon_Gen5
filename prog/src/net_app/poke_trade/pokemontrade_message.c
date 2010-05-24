@@ -1126,7 +1126,7 @@ void POKETRADE_MESSAGE_SixStateDisp(POKEMON_TRADE_WORK* pWork,int frame)
       if(pWork->GTSSelectIndex[1-side][poke]!=-1){
         BOOL bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
-        POKETRADE_2D_GTSPokemonIconSet(pWork, side, poke, pp,FALSE);
+        POKETRADE_2D_GTSPokemonIconSet(pWork, side, poke, pp,FALSE, TRUE);
         
         _pokeNickNameMsgDisp(pp, pWork->listBmp[side*4+poke+1], 0,  0 , bEgg,POKEMONTRADEPROC_IsTimeWaitSelect(pWork), pWork);
         if(!bEgg){

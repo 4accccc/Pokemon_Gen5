@@ -370,11 +370,11 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
     GFL_HEAP_FreeMemory(pp);
     return TRUE;
   }
-  POKETRADE_2D_GTSPokemonIconSet(pWork,0,no,pp,TRUE);
+  POKETRADE_2D_GTSPokemonIconSet(pWork,0,no,pp,TRUE, FALSE);
 #if PM_DEBUG
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     no = _addPokemon(pWork, 1, index,boxno, pp);
-    POKETRADE_2D_GTSPokemonIconSet(pWork,1,no,pp,TRUE);
+    POKETRADE_2D_GTSPokemonIconSet(pWork,1,no,pp,TRUE,TRUE);
   }
 #endif
   GFL_HEAP_FreeMemory(pp);

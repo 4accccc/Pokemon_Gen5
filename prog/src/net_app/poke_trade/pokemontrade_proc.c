@@ -730,7 +730,7 @@ static void _recvThreePokemon(const int netID, const int size, const void* pData
   
   if(PP_Get( pWork->TempBuffer[netID], ID_PARA_poke_exist, NULL  )){
     POKE_GTS_DirectAddPokemon(pWork, num, pWork->TempBuffer[netID]);
-    POKETRADE_2D_GTSPokemonIconSet(pWork, 1, num, pWork->TempBuffer[netID],TRUE);
+    POKETRADE_2D_GTSPokemonIconSet(pWork, 1, num, pWork->TempBuffer[netID],TRUE, FALSE);
     POKEMONTRADE_NEGO_SlideInit(pWork, 1, pWork->TempBuffer[netID]);
   }
   else{

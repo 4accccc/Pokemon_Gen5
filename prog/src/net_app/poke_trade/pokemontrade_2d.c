@@ -2478,7 +2478,7 @@ void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int side, BOOL
  */
 //------------------------------------------------------------------------------
 
-void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow)
+void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow, BOOL bDisp)
 {
   POKEMON_PASO_PARAM* ppp = PP_GetPPPPointer(pp);
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
@@ -2514,8 +2514,7 @@ void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, 
 
   GFL_CLACT_WK_SetPlttOffs( pWork->pokeIconGTS[side][no] , POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
   GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIconGTS[side][no] , FALSE );
-  GFL_CLACT_WK_SetDrawEnable( pWork->pokeIconGTS[side][no], TRUE );
-
+  GFL_CLACT_WK_SetDrawEnable( pWork->pokeIconGTS[side][no], bDisp );
   GFL_ARC_CloseDataHandle(arcHandlePoke);
 
 }
