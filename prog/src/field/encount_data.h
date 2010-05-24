@@ -18,9 +18,8 @@
 #define ENC_MONS_NUM_WATER_SP      (5) ///<特殊水上エンカウント
 #define ENC_MONS_NUM_FISHING       (5) ///<釣りエンカウント
 #define ENC_MONS_NUM_FISHING_SP    (5) ///<特殊釣りエンカウント
-#define ENC_MONS_NUM_BINGO        (15)  ///<ビンゴエンカウントモンスター数
 
-#define ENC_MONS_NUM_MAX          (ENC_MONS_NUM_BINGO)  ///<現状ビンゴが最大
+#define ENC_MONS_NUM_MAX          (ENC_MONS_NUM_GROUND_L)  ///<通常エンカウトが最大数
 
 #define ENC_MONS_FORM_RND_CODE    (0x1F)  //フォルムをランダムで決める特殊コード
 

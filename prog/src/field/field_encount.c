@@ -210,8 +210,13 @@ void* FIELD_ENCOUNT_CheckEncount( FIELD_ENCOUNT *enc, ENCOUNT_TYPE enc_type )
     enc_num = ENCPOKE_GetNormalEncountPokeData( enc->encdata,
               &fld_spa, FIELDMAP_GetZoneID( enc->fwork ),poke_tbl );
 
-    if( enc_num < fld_spa.enc_poke_num ){ //エンカウント失敗
+    if( enc_num == 0 ){ //エンカウント失敗
       return NULL;
+    }
+    if( fld_spa.enc_double_f && enc_num == 1 ){
+      //ダブル抽選に漏れたら、シングルエンカウントにする
+      fld_spa.enc_double_f = FALSE;
+      fld_spa.enc_poke_num = enc_num;
     }
 
     //バトルパラメータセット
