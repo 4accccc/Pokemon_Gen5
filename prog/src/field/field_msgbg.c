@@ -3889,6 +3889,7 @@ BOOL FLDBGWIN_PrintStrBuf( FLDBGWIN *bgWin, const STRBUF *strBuf )
         BGWIN_NCOL );
     bgWin->scroll_y = 0;
     
+    PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
     bgWin->seq_no++;
   case 4: //ƒXƒNƒ[ƒ‹
     if( bgwin_ScrollBmp(GFL_BMPWIN_GetBmp(bgWin->bmpwin),
