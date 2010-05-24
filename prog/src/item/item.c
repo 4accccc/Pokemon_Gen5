@@ -354,7 +354,7 @@ s32 ITEM_GetBufParam( ITEMDATA * item, u16 param )
 {
   switch( param ){
   case ITEM_PRM_PRICE:              // ”ƒ’l
-    return (s32)item->price;
+    return (s32)( item->price * 10 );
   case ITEM_PRM_EQUIP:              // ‘•”õŒø‰Ê
     return (s32)item->eqp;
   case ITEM_PRM_ATTACK:             // ˆÐ—Í

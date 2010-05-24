@@ -13,7 +13,7 @@
 
 typedef struct {
   u16 id;       // どうぐID
-  u16 price;    // 値段 or BPポイント
+  u32 price;    // 値段 or BPポイント
 }SHOP_ITEM;
 
 // 一度に並べることができる商品数

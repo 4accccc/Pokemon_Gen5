@@ -154,7 +154,7 @@ typedef struct{
   ARCHANDLE         *itemiconHandle;    // アイテムアイコンハンドル
 
   u16               selectitem;       // 選択したどうぐ
-  u16               price;            // 選択したどうぐの価格
+  u32               price;            // 選択したどうぐの価格
   u32               buy_max;          // 購入できる最大数
   s16               item_multi;       // 購入する数
   u16               etc;
@@ -207,8 +207,8 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y );
 static void line_callback_waza(BMPMENULIST_WORK * wk, u32 param, u8 y );
 static void move_callback( BMPMENULIST_WORK * wk, u32 param, u8 mode);
 static void ShopPrintMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno );
-static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 price, u16 num );
-static void ShopDecideWazaMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 price );
+static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price, u16 num );
+static void ShopDecideWazaMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price );
 static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_price );
 static  int price_key_control( SHOP_BUY_APP_WORK *wk );
 static void submenu_screen_clear( int type );
@@ -2071,7 +2071,7 @@ static void _expand_and_print_msg( SHOP_BUY_APP_WORK *wk, int strId )
  * @param   num     個数
  */
 //----------------------------------------------------------------------------------
-static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 price, u16 num )
+static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price, u16 num )
 {
   // BMPWINクリア
   _clear_msg_bmpwin( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
@@ -2098,7 +2098,7 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 pri
  * @param   price   値段（円orBP）
  */
 //----------------------------------------------------------------------------------
-static void ShopDecideWazaMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u16 price )
+static void ShopDecideWazaMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 price )
 {
   // BMPWINクリア
   _clear_msg_bmpwin( wk->win[SHOP_BUY_BMPWIN_TALKMSG] );
