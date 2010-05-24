@@ -14465,7 +14465,7 @@ static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
         scPut_TokWin_In( wk, pp_user );
       }
 
-      if( scproc_RecoverHP_CheckFailSP(wk, pp_target, TRUE) )
+      if( !scproc_RecoverHP_CheckFailSP(wk, pp_target, TRUE) )
       {
         scproc_RecoverHP_Core( wk, pp_target, param->recoverHP );
 
