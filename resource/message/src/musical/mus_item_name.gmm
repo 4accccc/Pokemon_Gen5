@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-04-29T14:03:00"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-05-24T21:34:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -471,8 +471,8 @@
 	</row>
 
 	<row id="ITEM_NAME_022">
-		<language name="JPN" width="256">あわだて</language>
-		<language name="JPN_KANJI" width="256">あわだて</language>
+		<language name="JPN" width="256">あわだてき</language>
+		<language name="JPN_KANJI" width="256">あわだてき</language>
 	</row>
 
 	<row id="ITEM_NAME_023">
