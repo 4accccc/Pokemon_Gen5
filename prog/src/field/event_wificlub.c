@@ -460,10 +460,19 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       int i;
 
       ep2p->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
-
-      for( i=0;i<2;i++){
-        ep2p->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
-        ep2p->demo_prm.trainer_data[i].party = ep2p->pMatchParam->pPokeParty[i];
+      
+      if( GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() )== 0 ){
+        for( i=0;i<2;i++){
+          ep2p->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+          ep2p->demo_prm.trainer_data[i].party = ep2p->pMatchParam->pPokeParty[i];
+        }
+      }
+      else{
+        for( i=0;i<2;i++){
+          u8 buff[]={1,0};
+          ep2p->demo_prm.trainer_data[buff[i]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+          ep2p->demo_prm.trainer_data[buff[i]].party = ep2p->pMatchParam->pPokeParty[i];
+        }
       }
       {
         ep2p->prm.gdata = GAMESYSTEM_GetGameData(pClub->gsys);

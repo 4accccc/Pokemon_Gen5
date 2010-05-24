@@ -1219,8 +1219,9 @@ static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
 
     if(!_regulationCheck(wk)){        // ëIÇ‘éñÇ™Ç≈Ç´Ç»Ç¢
       if(wk->pParentWork->btalk){
-        wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
+        _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB45);
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+        return seq;
       }
       else{
         _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
@@ -1238,7 +1239,30 @@ static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
 
 
 
+//------------------------------------------------------------------
+/**
+ * @brief   ëŒêÌéûÇ…êîÇ™ë´ÇËÇ»Ç¢èÍçá  WIFIP2PMATCH_PLAYERDIRECT_SUB45
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
 
+static int _playerDirectSub45( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(!WifiP2PMatchMessageEndCheck(wk)){
+    return seq;
+  }
+  if(!GFL_UI_KEY_GetTrg()){
+    return seq;
+  }
+  wk->command = WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED;
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  return seq;
+}
+
+
+
+  
 //------------------------------------------------------------------
 /**
  * @brief   ééçáäJén WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START

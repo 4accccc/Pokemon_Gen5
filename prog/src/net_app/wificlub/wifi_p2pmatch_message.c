@@ -1097,18 +1097,8 @@ static void MCVSys_UserDispDraw( WIFIP2PMATCH_WORK *wk, u32 heapID )
   sex = WifiList_GetFriendInfo( wk->pList,
                                 wk->view.touch_friendNo - 1, WIFILIST_FRIEND_SEX );
 
-  //  if(sex == PM_FEMALE){
-  //    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_GIRL;
-  //  }else{
-  //    pal = MCV_PAL_BTTN+MCV_PAL_BTTNST_MAN;
-  //  }
   GFL_BG_LoadScreenBufferOfs( GFL_BG_FRAME2_S, wk->view.p_userscrn[0]->rawData,
                               wk->view.p_userscrn[0]->szByte,0 );
-  //  GFL_BG_ScreenBufSet( GFL_BG_FRAME2_S, wk->view.p_userscrn[wk->view.user_dispno]->rawData,
-  //      wk->view.p_userscrn[wk->view.user_dispno]->szByte );
-
-  //  GFL_BG_ChangeScreenPalette( GFL_BG_FRAME2_S, 0, 0,
-  //                            32, 24, pal );
 
   // BG３面のスクリーンをクリア
   GFL_BG_ClearFrame( GFL_BG_FRAME3_S);
