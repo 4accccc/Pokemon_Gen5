@@ -264,7 +264,6 @@ VMCMD_RESULT EvCmdGetBirthDay( VMHANDLE * core, void*wk )
   *month_wk = ownerInfo.birthday.month;
   *day_wk   = ownerInfo.birthday.day;
 
-  /* –¢ŽÀ‘• */
   return VMCMD_RESULT_CONTINUE;
 }
 
