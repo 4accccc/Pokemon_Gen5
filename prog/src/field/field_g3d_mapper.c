@@ -41,13 +41,14 @@
 #include "system/palanm.h"
 #include "field/field_comm/intrude_work.h"
 
+#define DEBUG_SPEED_CHECK_ENABLE
+#include "debug_speed_check.h"
+
 #ifdef PM_DEBUG
 
 //#define DEBUG_PRINT_LOADING_TICK
 //#define DEBUG_PRINT_WRITE_SCHEDULE
 
-#define DEBUG_SPEED_CHECK_ENABLE
-#include "debug_speed_check.h"
 //#define DEBUG_FLDMAPPER_SETUP_SPEED_CHECK
 
 #endif
