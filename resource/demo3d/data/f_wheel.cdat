@@ -206,15 +206,51 @@ static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_boy4[] = {
 };
 
 ///==================================
-/// field Unit File Resource
+/// field_sp Unit File Resource
 
-static const u16 res_f_wheel_file_field[] = {
- NARC_data_demo3d_f_wheel_01_nsbmd,
- NARC_data_demo3d_f_wheel_01_nsbta,
+static const u16 res_f_wheel_file_field_sp[] = {
+ NARC_data_demo3d_f_wheel_01sp_nsbmd,
+ NARC_data_demo3d_f_wheel_01sp_nsbta,
 };
 
-static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field[] = {
- { res_f_wheel_file_field, 2 },
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_sp[] = {
+ { res_f_wheel_file_field_sp, 2 },
+};
+
+///==================================
+/// field_su Unit File Resource
+
+static const u16 res_f_wheel_file_field_su[] = {
+ NARC_data_demo3d_f_wheel_01su_nsbmd,
+ NARC_data_demo3d_f_wheel_01su_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_su[] = {
+ { res_f_wheel_file_field_su, 2 },
+};
+
+///==================================
+/// field_au Unit File Resource
+
+static const u16 res_f_wheel_file_field_au[] = {
+ NARC_data_demo3d_f_wheel_01au_nsbmd,
+ NARC_data_demo3d_f_wheel_01au_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_au[] = {
+ { res_f_wheel_file_field_au, 2 },
+};
+
+///==================================
+/// field_wi Unit File Resource
+
+static const u16 res_f_wheel_file_field_wi[] = {
+ NARC_data_demo3d_f_wheel_01wi_nsbmd,
+ NARC_data_demo3d_f_wheel_01wi_nsbta,
+};
+
+static const DEMO3D_FILE_UNIT res_f_wheel_file_unit_field_wi[] = {
+ { res_f_wheel_file_field_wi, 2 },
 };
 
 ///==================================
@@ -294,8 +330,11 @@ static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_boss_tbl[] = {
  { res_f_wheel_file_unit_boy4, 1 },
 };
 
-static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_field_tbl[] = {
- { res_f_wheel_file_unit_field, 1 },
+static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_field_sp_tbl[] = {
+ { res_f_wheel_file_unit_field_sp, 1 },
+ { res_f_wheel_file_unit_field_su, 1 },
+ { res_f_wheel_file_unit_field_au, 1 },
+ { res_f_wheel_file_unit_field_wi, 1 },
 };
 
 static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_f_wheel_tbl[] = {
@@ -313,7 +352,7 @@ static const DEMO3D_FILE_UNIT_TBL res_f_wheel_file_unit_sky_tbl[] = {
 static const DEMO3D_SCENE_UNIT res_f_wheel_scene_unit[] = {
  { res_f_wheel_file_unit_hero_tbl, 2, DEMO3D_UNITCHG_PLAYER_SEX },
  { res_f_wheel_file_unit_boss_tbl, 9, DEMO3D_UNITCHG_SCENE_ID },
- { res_f_wheel_file_unit_field_tbl, 1, DEMO3D_UNITCHG_NONE },
+ { res_f_wheel_file_unit_field_sp_tbl, 4, DEMO3D_UNITCHG_SEASON },
  { res_f_wheel_file_unit_f_wheel_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_f_wheel_file_unit_f_wheel2_tbl, 1, DEMO3D_UNITCHG_NONE },
  { res_f_wheel_file_unit_sky_tbl, 1, DEMO3D_UNITCHG_NONE },
