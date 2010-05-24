@@ -24,6 +24,8 @@ enum UNION_CMD{
   UNION_CMD_TALK_SHUTDOWN = UNION_CMD_START,///<会話中の切断
   UNION_CMD_MAINMENU_LIST_RESULT,           ///<メインメニュー選択結果
   UNION_CMD_MAINMENU_LIST_RESULT_ANSWER,    ///<メインメニュー選択結果の返事
+  UNION_CMD_FIRST_CHILD_PARAM,     ///<子が話しかけで繋がってきた時に認証用に親に送る最初のデータ
+  UNION_CMD_FIRST_PARENT_ANSWER,            ///<親から子に対しての認証の返事
   UNION_CMD_MYSTATUS,                       ///<MYSTATUS
   UNION_CMD_TRAINERCARD_PARAM,              ///<トレーナーカード情報
   UNION_CMD_COLOSSEUM_ENTRY,                ///<コロシアムエントリー
@@ -56,6 +58,8 @@ extern const NetRecvFuncTable Union_CommPacketTbl[];
 extern BOOL UnionSend_TalkShutdown(void);
 extern BOOL UnionSend_MainMenuListResult(u32 select_list);
 extern BOOL UnionSend_MainMenuListResultAnswer(BOOL yes_no);
+extern BOOL UnionSend_FirstChildParam(void);
+extern BOOL UnionSend_FirstParentAnswer(UNION_FIRST_PARENT_ANSWER answer);
 extern BOOL UnionSend_Mystatus(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionSend_TrainerCardParam(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionSend_ColosseumEntryStatus(COLOSSEUM_BASIC_STATUS *basic_status);

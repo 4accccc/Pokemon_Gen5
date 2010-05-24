@@ -1100,8 +1100,11 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
   enum{
     LOCALSEQ_INIT,
     LOCALSEQ_WAIT,
+    LOCALSEQ_FIRST_CHECK,
     LOCALSEQ_END,
     LOCALSEQ_LASTKEY_END,
+    LOCALSEQ_RETRY,
+    LOCALSEQ_RETRY_WAIT,
   };
 
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
@@ -1136,12 +1139,10 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
         (*seq) = LOCALSEQ_LASTKEY_END;
         break;
       }
+      
       GFL_NET_SetNoChildErrorCheck(TRUE);
       GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE); //乱入禁止
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC,situ->mycomm.calling_pc);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
-      (*seq)++;
+      (*seq) = LOCALSEQ_FIRST_CHECK;
     }
     else{
       situ->wait++;
@@ -1156,10 +1157,33 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_05);
         }
         OS_TPrintf("子が来なかった為キャンセルしました\n");
-        (*seq)++;
+        (*seq) = LOCALSEQ_END;
       }
     }
     break;
+  case LOCALSEQ_FIRST_CHECK:
+    //最初の認証データ受信待ち
+    if(situ->mycomm.talk_first_param.occ == TRUE){
+      if(GFL_STD_MemComp(situ->mycomm.talk_first_param.mac_address, 
+          situ->mycomm.calling_pc->mac_address, 6) != 0){
+        //認証NG：接続してきた人は最後に話しかけた相手ではない
+        if(UnionSend_FirstParentAnswer(UNION_FIRST_PARENT_ANSWER_NG) == TRUE){
+          GFL_NET_SetNoChildErrorCheck(FALSE);  //子機切断をOKにして一人になるのを待って切断
+          (*seq) = LOCALSEQ_RETRY;
+        }
+      }
+      else{ //認証OK
+        if(UnionSend_FirstParentAnswer(UNION_FIRST_PARENT_ANSWER_OK) == TRUE){
+          UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
+          UnionMySituation_SetParam(
+            unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC,situ->mycomm.calling_pc);
+          UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
+          *seq = LOCALSEQ_END;
+        }
+      }
+    }
+    break;
+
   case LOCALSEQ_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
@@ -1170,6 +1194,19 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
         return TRUE;
       }
+    }
+    break;
+  
+  case LOCALSEQ_RETRY:
+    if(GFL_NET_SystemGetConnectNum() <= 1){ //自分ひとりになったらリトライ開始
+      UnionComm_Req_ShutdownRestarts(unisys);
+      (*seq)++;
+    }
+    break;
+  case LOCALSEQ_RETRY_WAIT:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      situ->mycomm.talk_first_param.occ = FALSE;
+      *seq = LOCALSEQ_INIT;
     }
     break;
   }
@@ -1229,28 +1266,34 @@ static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUA
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
+  enum{
+    _LOCALSEQ_INIT,
+    _LOCALSEQ_CONNECT_WAIT,
+    _LOCALSEQ_CANCEL_END,
+    _LOCALSEQ_SEND_FIRST_PARAM,
+    _LOCALSEQ_ANSWER_WAIT,
+    _LOCALSEQ_NG_END,
+  };
+
   if(_UnionCheckError_ForceExit(unisys) == TRUE){
     return TRUE;
   }
 
   switch(*seq){
-  case 0:
+  case _LOCALSEQ_INIT:
     OS_TPrintf("親へ接続しにいきます\n");
     GF_ASSERT(situ->mycomm.answer_pc != NULL);
     OS_TPrintf("ChangeOver モード切替：子固定\n");
     GFL_NET_ChangeoverModeSet(
       GFL_NET_CHANGEOVER_MODE_FIX_CHILD, TRUE, situ->mycomm.answer_pc->mac_address);
     situ->wait = 0;
-    (*seq)++;
+    (*seq) = _LOCALSEQ_CONNECT_WAIT;
     break;
-  case 1:
+  case _LOCALSEQ_CONNECT_WAIT:
     if(GFL_NET_GetConnectNum() > 1){
       OS_TPrintf("接続しました！：子\n");
       GFL_NET_SetNoChildErrorCheck(TRUE);
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->mycomm.answer_pc);
-      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
-      return TRUE;  //UnionMsg_TalkStream_Checkは次のUNION_STATUS_TALK_CHILDで行う
+      *seq = _LOCALSEQ_SEND_FIRST_PARAM;
     }
     else{
       situ->wait++;
@@ -1265,13 +1308,45 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_05);
         }
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
-        (*seq)++;
+        (*seq) = _LOCALSEQ_CANCEL_END;
       }
     }
     break;
-  case 2:
+  case _LOCALSEQ_CANCEL_END:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      return TRUE;
+      if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
+        return TRUE;
+      }
+    }
+    break;
+  
+  case _LOCALSEQ_SEND_FIRST_PARAM:
+    if(UnionSend_FirstChildParam() == TRUE){
+      *seq = _LOCALSEQ_ANSWER_WAIT;
+    }
+    break;
+  case _LOCALSEQ_ANSWER_WAIT:
+    switch(situ->mycomm.first_parent_answer){
+    case UNION_FIRST_PARENT_ANSWER_OK:
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, situ->mycomm.answer_pc);
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_CHILD);
+      return TRUE;  //UnionMsg_TalkStream_Checkは次のUNION_STATUS_TALK_CHILDで行う
+    case UNION_FIRST_PARENT_ANSWER_NG:
+      UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
+      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_03);
+      UnionComm_Req_ShutdownRestarts(unisys);
+      *seq = _LOCALSEQ_NG_END;
+      break;
+    }
+    break;
+  case _LOCALSEQ_NG_END:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE
+        && UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
+        return TRUE;
+      }
     }
     break;
   }

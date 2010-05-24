@@ -267,6 +267,13 @@ typedef enum{
 ///誰にも話しかけていない時のtalk_obj_id
 #define UNION_MYCOMM_NOT_TALK_OBJ_ID      (0xffff)
 
+///話しかけ成立時、親から子に対しての認証の返事
+typedef enum{
+  UNION_FIRST_PARENT_ANSWER_NULL,   ///<返事待ち
+  UNION_FIRST_PARENT_ANSWER_OK,     ///<認証OK
+  UNION_FIRST_PARENT_ANSWER_NG,     ///<認証NG
+}UNION_FIRST_PARENT_ANSWER;
+
 
 //==============================================================================
 //  構造体定義
@@ -286,6 +293,13 @@ typedef struct{
   u8 padding[2];
 }UNION_APP_MY_PARAM;
 
+
+///子が話しかけで繋がってきた時に認証用に親に送る最初のデータ
+typedef struct{
+  u8 mac_address[6];         ///<子自身のMacAddress
+  u8 occ;                    ///<TRUE:データ有効
+  u8 padding;
+}UNION_FIRST_CHILD_PARAM;
 
 ///接続メンバーの情報
 typedef struct{
@@ -383,6 +397,7 @@ typedef struct{
   UNION_BEACON_PC *calling_pc; ///<接続して欲しい人のreceive_beaconへのポインタ
   UNION_BEACON_PC *answer_pc;  ///<接続したい人のreceive_beaconへのポインタ
   UNION_BEACON_PC *connect_pc; ///<接続中の人のreceive_beaconへのポインタ
+  UNION_FIRST_CHILD_PARAM talk_first_param; ///<子から親に対しての最初の認証データ受信バッファ
   u8 force_exit;              ///<TRUE:通信相手から強制切断を受信
   u8 mainmenu_select;         ///<メインメニューでの選択結果
   u8 mainmenu_yesno_result;   ///<「はい(TRUE)」「いいえ(FALSE)」選択結果
@@ -390,8 +405,9 @@ typedef struct{
   UNION_PARTY party;          ///<一緒に遊んでいる相手のパラメータ
   u16 talk_obj_id;             ///<話しかけた相手のCharacterIndex
   u8 intrude_exe:1;           ///<TRUE:乱入参加の通信接続を実行しています
-  u8 intrude:1;                 ///<TRUE:乱入参加
-  u8        :6;
+  u8 intrude:1;               ///<TRUE:乱入参加
+  u8 first_parent_answer:2;   ///<UNION_FIRST_PARENT_ANSWER
+  u8        :4;
   u8 mystatus_recv_bit;       ///<MYSTATUS受信結果(bit管理)
   u8 first_talk;              ///<0:初回会話 1以上：継続会話
   u8 target_card_receive;     ///<TRUE:相手のカードを受信した

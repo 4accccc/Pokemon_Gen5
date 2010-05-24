@@ -29,6 +29,8 @@ static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
 static void _UnionRecv_TalkShutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_FirstChildParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _UnionRecv_FirstParentAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_Mystatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_TrainerCardParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _UnionRecv_ColosseumEntryStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -50,9 +52,11 @@ static void _UnionRecv_MinigameLeaveChild(const int netID, const int size, const
 //==============================================================================
 ///ユニオン受信コマンドテーブル   ※UNION_CMD_???と並びを同じにしておくこと！！
 const NetRecvFuncTable Union_CommPacketTbl[] = {
-  {_UnionRecv_TalkShutdown, NULL},                //UNION_CMD_SHUTDOWN
-  {_UnionRecv_MainMenuListResult, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT
-  {_UnionRecv_MainMenuListResultAnswer, NULL},      //UNION_CMD_MAINMENU_LIST_RESULT_ANSWER
+  {_UnionRecv_TalkShutdown, NULL},                      //UNION_CMD_SHUTDOWN
+  {_UnionRecv_MainMenuListResult, NULL},                //UNION_CMD_MAINMENU_LIST_RESULT
+  {_UnionRecv_MainMenuListResultAnswer, NULL},          //UNION_CMD_MAINMENU_LIST_RESULT_ANSWER
+  {_UnionRecv_FirstChildParam, NULL},                   //UNION_CMD_FIRST_CHILD_PARAM
+  {_UnionRecv_FirstParentAnswer, NULL},                 //UNION_CMD_FIRST_PARENT_ANSWER
   {_UnionRecv_Mystatus, NULL},                          //UNION_CMD_MYSTATUS
   {_UnionRecv_TrainerCardParam, _RecvHugeBuffer},       //UNION_CMD_TRAINERCARD_PARAM
   {_UnionRecv_ColosseumEntryStatus, _RecvHugeBuffer},   //UNION_CMD_COLOSSEUM_ENTRY
@@ -207,6 +211,95 @@ static void _UnionRecv_MainMenuListResultAnswer(const int netID, const int size,
 BOOL UnionSend_MainMenuListResultAnswer(BOOL yes_no)
 {
   return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), UNION_CMD_MAINMENU_LIST_RESULT_ANSWER, sizeof(BOOL), &yes_no);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：子が話しかけで繋がってきた時に認証用に親に送る最初のデータ
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_FirstChildParam(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  const UNION_FIRST_CHILD_PARAM *pFirstParam = pData;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
+  
+  OS_TPrintf("Recv FirstParam\n");
+  GFL_STD_MemCopy(pFirstParam, &situ->mycomm.talk_first_param, sizeof(UNION_FIRST_CHILD_PARAM));
+}
+
+//==================================================================
+/**
+ * データ送信：子が話しかけで繋がってきた時に認証用に親に送る最初のデータ
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_FirstChildParam(void)
+{
+  UNION_FIRST_CHILD_PARAM send_data;
+  
+  OS_TPrintf("SEND FirstParam\n");
+  GFL_STD_MemClear(&send_data, sizeof(UNION_FIRST_CHILD_PARAM));
+  OS_GetMacAddress(send_data.mac_address);
+  send_data.occ = TRUE;
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    UNION_CMD_FIRST_CHILD_PARAM, sizeof(UNION_FIRST_CHILD_PARAM), &send_data);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：親から子に対しての認証の返事
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _UnionRecv_FirstParentAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  UNION_SYSTEM_PTR unisys = pWork;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+  const UNION_FIRST_PARENT_ANSWER *pAnswer = pData;
+
+	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return; //自分のデータなので無視
+  }
+  
+  OS_TPrintf("Recv ParentAnswer %d\n", *pAnswer);
+  situ->mycomm.first_parent_answer = *pAnswer;
+}
+
+//==================================================================
+/**
+ * データ送信：親から子に対しての認証の返事
+ * @param   yes_no    TRUE:はい　FALSE:いいえ
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL UnionSend_FirstParentAnswer(UNION_FIRST_PARENT_ANSWER answer)
+{
+  OS_TPrintf("SEND ParentAnswer = %d\n", answer);
+  return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+    UNION_CMD_FIRST_PARENT_ANSWER, sizeof(answer), &answer);
 }
 
 //==============================================================================
