@@ -613,6 +613,7 @@ EVENT_START    ev_pos_d06r0101_denki_02
 		//ホワイトが喋る
 		//ホワイト:ねえねえ　ポケモンって
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_UL)
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	ELSE
 		//博士2:ハーイ！　なにか　みつかった？
@@ -636,6 +637,7 @@ EVENT_START    ev_pos_d06r0101_denki_02
 		//ホワイトが喋る
 		//ホワイト:ねえねえ　ポケモンって
 		_BALLOONWIN_OBJMSG_POS( msg_d06r0101_white_04, D06R0101_HEROINE_01,POS_DL)
+		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 		
 	ENDIF
