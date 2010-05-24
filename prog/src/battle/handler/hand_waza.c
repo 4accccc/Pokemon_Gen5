@@ -2615,8 +2615,8 @@ static const BtlEventHandlerTable*  ADD_Hakidasu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Hakidasu_CheckExe   },    // ワザ出し成功判定
-    { BTL_EVENT_WAZA_POWER_BASE,     handler_Hakidasu_Pow        },    // ワザ威力決定
-    { BTL_EVENT_WAZA_EXECUTE_DONE,   handler_Hakidasu_Done       },    // ワザ出し終了
+    { BTL_EVENT_WAZA_POWER_BASE,         handler_Hakidasu_Pow        },    // ワザ威力決定
+    { BTL_EVENT_WAZA_EXECUTE_DONE,       handler_Hakidasu_Done       },    // ワザ出し終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2702,11 +2702,10 @@ static void handler_Hakidasu_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Nomikomu( u32* numElems )
 {
-  // @todo よこどりされた時、たくわえワークが空なのにハンドラが呼び出されることがある
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_Hakidasu_CheckExe   },    // ワザ出し成功判定
-    { BTL_EVENT_RECOVER_HP_RATIO,    handler_Nomikomu_Ratio      },    // HP回復率決定
-    { BTL_EVENT_WAZA_EXECUTE_DONE,   handler_Hakidasu_Done       },    // ワザ出し終了
+    { BTL_EVENT_RECOVER_HP_RATIO,        handler_Nomikomu_Ratio      },    // HP回復率決定
+    { BTL_EVENT_WAZA_EXECUTE_DONE,       handler_Hakidasu_Done       },    // ワザ出し終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2718,6 +2717,7 @@ static void handler_Nomikomu_Ratio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 cnt = BPP_COUNTER_Get( bpp, BPP_COUNTER_TAKUWAERU );
     fx32 ratio;
+
     switch( cnt ){
     case 1:
     default:
@@ -2727,6 +2727,7 @@ static void handler_Nomikomu_Ratio( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     case 3:   ratio = FX32_CONST( 1 ); break;
     }
 
+    TAYA_Printf("takuwae cnt=%d, ratio=%08x\n", cnt, ratio);
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_RATIO, ratio );
   }
 }
@@ -6192,6 +6193,8 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 
     if( !BPP_CheckSick(target, WAZASICK_ENCORE)
     &&  (prevWaza != WAZANO_NULL)
+    &&  (prevWaza != WAZANO_ANKOORU)
+    &&  (prevWaza != WAZANO_OUMUGAESI)
     &&  (BPP_WAZA_IsUsable(target, prevWaza))
     ){
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );

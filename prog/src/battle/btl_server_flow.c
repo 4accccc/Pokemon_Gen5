@@ -12996,6 +12996,8 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
     u32 volume;
 
+    TAYA_Printf("maxHP=%d, ex_ratio=%08x, baes_ratio=%08x\n", maxHP, ex_ratio, base_ratio );
+
     if( ex_ratio ){
       volume = BTL_CALC_MulRatio( maxHP, ex_ratio );
     }else{
@@ -13006,6 +13008,7 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     }else if( volume > maxHP ){
       volume = maxHP;
     }
+
     return volume;
   }
 }
