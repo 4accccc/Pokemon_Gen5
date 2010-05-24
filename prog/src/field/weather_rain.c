@@ -943,53 +943,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIN = {
 };
 
 
-// 雷雨
-WEATHER_TASK_DATA c_WEATHER_TASK_DATA_SPARKRAIN = {
-	//	グラフィック情報
-	ARCID_FIELD_WEATHER,			// アークID
-	TRUE,		// OAMを使用するか？
-	WEATHER_TASK_3DBG_USE_NONE,		// BGを使用するか？
-	NARC_field_weather_rain_st_NCGR,			// OAM CG
-	NARC_field_weather_rain_NCLR,			// OAM PLTT
-	NARC_field_weather_rain_st_NCER,			// OAM CELL
-	NARC_field_weather_rain_st_NANR,			// OAM CELLANM
-  {
-    {
-      0,		// BGTEX
-      0,		// GXTexSizeS
-      0,		// GXTexSizeT
-      0,		// GXTexRepeat
-      0,		// GXTexFlip
-      0,		// GXTexFmt
-      0,		// GXTexPlttColor0
-    },
-    {
-      0,		// BGTEX
-      0,		// GXTexSizeS
-      0,		// GXTexSizeT
-      0,		// GXTexRepeat
-      0,		// GXTexFlip
-      0,		// GXTexFmt
-      0,		// GXTexPlttColor0
-    },
-  },
-
-	// ワークサイズ
-	sizeof(WEATHER_SPARKRAIN_WORK),
-
-	// 管理関数
-	WEATHER_SPARKRAIN_Init,		// 初期化
-	WEATHER_SPARKRAIN_FadeIn,		// フェードイン
-	WEATHER_SPARKRAIN_NoFade,		// フェードなし
-	WEATHER_SPARKRAIN_Main,		// メイン処理
-	WEATHER_SPARKRAIN_InitFadeOut,	// フェードアウト
-	WEATHER_SPARKRAIN_FadeOut,		// フェードアウト
-	WEATHER_SPARKRAIN_Exit,		// 破棄
-
-	// オブジェ動作関数
-	WEATHER_SPARKRAIN_OBJ_Move,
-};
-
 // ライカミ
 WEATHER_TASK_DATA c_WEATHER_TASK_DATA_RAIKAMI = {
 	//	グラフィック情報
@@ -1084,53 +1037,6 @@ WEATHER_TASK_DATA c_WEATHER_TASK_DATA_KAZAKAMI = {
 	WEATHER_KAZAKAMI_OBJ_Move,
 };
 
-
-// 夕立
-WEATHER_TASK_DATA c_WEATHER_TASK_DATA_EVENING_RAIN = {
-	//	グラフィック情報
-	ARCID_FIELD_WEATHER,			// アークID
-	TRUE,		// OAMを使用するか？
-	WEATHER_TASK_3DBG_USE_FRONT,		// BGを使用するか？
-	NARC_field_weather_rain_st_NCGR,			// OAM CG
-	NARC_field_weather_rain_NCLR,			// OAM PLTT
-	NARC_field_weather_rain_st_NCER,			// OAM CELL
-	NARC_field_weather_rain_st_NANR,			// OAM CELLANM
-  {
-    {
-      NARC_field_weather_rain_bg_nsbtx,		// BGTEX
-      GX_TEXSIZE_S32,		// GXTexSizeS
-      GX_TEXSIZE_T32,		// GXTexSizeT
-      GX_TEXREPEAT_ST,		// GXTexRepeat
-      GX_TEXFLIP_NONE,		// GXTexFlip
-      GX_TEXFMT_PLTT4,		// GXTexFmt
-      GX_TEXPLTTCOLOR0_TRNS,		// GXTexPlttColor0
-    },
-    {
-      0,		// BGTEX
-      0,		// GXTexSizeS
-      0,		// GXTexSizeT
-      0,		// GXTexRepeat
-      0,		// GXTexFlip
-      0,		// GXTexFmt
-      0,		// GXTexPlttColor0
-    },
-  },
-
-	// ワークサイズ
-	sizeof(WEATHER_EVENING_RAIN_WORK),
-
-	// 管理関数
-	WEATHER_EVENING_RAIN_Init,		// 初期化
-	WEATHER_EVENING_RAIN_FadeIn,		// フェードイン
-	WEATHER_EVENING_RAIN_NoFade,		// フェードなし
-	WEATHER_EVENING_RAIN_Main,		// メイン処理
-	WEATHER_EVENING_RAIN_InitFadeOut,	// フェードアウト
-	WEATHER_EVENING_RAIN_FadeOut,		// フェードアウト
-	WEATHER_EVENING_RAIN_Exit,		// 破棄
-
-	// オブジェ動作関数
-	WEATHER_EVENING_RAIN_OBJ_Move,
-};
 
 
 
