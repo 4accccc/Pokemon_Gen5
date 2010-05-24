@@ -1151,6 +1151,26 @@ static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork,int boxno,int i
 }
 
 
+BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+
+  if (PP_Get(pp, ID_PARA_fusei_tamago_flag, NULL) == 1) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
+
+  if (PP_Get(pp, ID_PARA_fusei_tamago_flag, NULL) == 1) {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
@@ -1180,6 +1200,14 @@ static void POKETRE_MAIN_ChangePokemonSendDataNetwork2(POKEMON_TRADE_WORK* pWork
   if( bMode ){
     if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
       u8 cmd = POKETRADE_FACTOR_EGG;
+      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
+    }
+    else if(POKEMONTRADE_IsIllegalPokemon(pWork)){
+      u8 cmd = POKETRADE_FACTOR_ILLEGAL;
+      bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
+    }
+    else if(POKEMONTRADE_IsIllegalPokemonFriend(pWork)){
+      u8 cmd = POKETRADE_FACTOR_ILLEGAL_FRIEND;
       bSend=GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd);
     }
     else if(POKEMONTRADE_IsMailPokemon(pWork)){
@@ -1970,6 +1998,18 @@ static void _changeWaitState(POKEMON_TRADE_WORK* pWork)
   }
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_EGG){
     msgno = POKETRADE_STR_98;
+  }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_ILLEGAL){
+    msgno = POKETRADE_STR2_01;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_ILLEGAL){
+    msgno = POKETRADE_STR2_02;
+  }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_ILLEGAL_FRIEND){
+    msgno = POKETRADE_STR2_02;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_ILLEGAL_FRIEND){
+    msgno = POKETRADE_STR2_01;
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_WAZA){
     msgno = POKETRADE_STR_97;

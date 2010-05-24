@@ -114,6 +114,8 @@ typedef enum
   POKETRADE_FACTOR_END,            //終わり選択
   POKETRADE_FACTOR_EGG,        // たまごと最後の手持ち交換
   POKETRADE_FACTOR_MAIL,      //メールボックスがいっぱい
+  POKETRADE_FACTOR_ILLEGAL,  // 不正ポケモン
+  POKETRADE_FACTOR_ILLEGAL_FRIEND,  // 相手が不正ポケモン
   POKETRADE_FACTOR_WAZA,      //技がまずい
   POKETRADE_FACTOR_TRI_SELECT,   //  ３体選択にすすむ
 
@@ -855,6 +857,8 @@ extern void POKEMONTRAE_EndCancelState(POKEMON_TRADE_WORK* pWork);
 
 extern void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev );
 extern POKEMON_PARAM* POKEMONTRADE_CreatePokeData(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork);
+extern BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork);
 
 
 

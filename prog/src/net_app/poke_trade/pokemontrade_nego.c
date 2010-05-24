@@ -676,6 +676,18 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_EGG){
     msgno = POKETRADE_STR2_03;
   }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_ILLEGAL){
+    msgno = POKETRADE_STR2_01;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_ILLEGAL){
+    msgno = POKETRADE_STR2_02;
+  }
+  else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_ILLEGAL_FRIEND){
+    msgno = POKETRADE_STR2_02;
+  }
+  else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_ILLEGAL_FRIEND){
+    msgno = POKETRADE_STR2_01;
+  }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_MAIL){
     msgno = POKETRADE_STR_97;
   }
@@ -704,12 +716,18 @@ static void _changePokemonSendDataOk(POKEMON_TRADE_WORK* pWork)
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     pWork->changeFactor[0]=cmd;
     pWork->changeFactor[1]=cmd;
-      _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
+    _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
   }
   else{
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
       if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
         cmd = POKETRADE_FACTOR_EGG;
+      }
+      else if(POKEMONTRADE_IsIllegalPokemon(pWork)){
+        cmd = POKETRADE_FACTOR_ILLEGAL;
+      }
+      else if(POKEMONTRADE_IsIllegalPokemonFriend(pWork)){
+        cmd = POKETRADE_FACTOR_ILLEGAL_FRIEND;
       }
       else if(POKEMONTRADE_IsMailPokemon(pWork)){
         cmd = POKETRADE_FACTOR_MAIL;
