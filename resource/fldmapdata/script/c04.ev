@@ -528,7 +528,12 @@ EVENT_START	ev_pos_c04_musicalguide_01
 	
 	//おーい！
 	_PLAYER_NAME( 0 )
-	_PLAINWIN_MSG_DOWN( msg_c04_white_04 )
+	_GET_MY_SEX( SCWK_ANSWER )	//性別取得
+	IF $SCWK_ANSWER == PM_MALE THEN
+		_PLAINWIN_MSG_DOWN( msg_c04_white_04 )
+	ELSE
+		_PLAINWIN_MSG_DOWN( msg_c04_white_04a )
+	ENDIF
 	_MSGWIN_CLOSE()
 	
 	//サポート曲再生
