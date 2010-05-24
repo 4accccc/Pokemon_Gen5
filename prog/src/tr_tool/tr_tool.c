@@ -22,6 +22,11 @@
 
 #include  "message.naix"
 
+#ifdef PM_DEBUG
+#if defined DEBUG_ONLY_FOR_nishino
+#define SEIKAKU_PUT      //éËéùÇøÉ|ÉPÉÇÉìÇÃê´äiï\é¶
+#endif
+#endif
 
 //============================================================================================
 /**
@@ -609,6 +614,9 @@ static  void  pp_set_param( POKEMON_PARAM* pp, int form_no, int para )
     rnd >>= 8;
 
     PP_Put( pp, ID_PARA_seikaku, rnd % PTL_SEIKAKU_MAX );
+#ifdef SEIKAKU_PUT
+    OS_TPrintf("mons_no:%d ê´äi:%d\n",PP_Get( pp, ID_PARA_monsno, NULL ), rnd % PTL_SEIKAKU_MAX );
+#endif
   }
 }
 
