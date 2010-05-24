@@ -1312,6 +1312,14 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       BSUBWAY_PLAYDATA_AddWifiRecord( playData, down, turn, damage );
     }
     break;
+  //通信録画済みフラグをセット TRUE=済み
+  case BSWSUB_SET_BTLREC_FINISH_FLAG:
+    bsw_scr->btlrec_finish_f = param0;
+    break;
+  //戦闘録画済フラグをゲット
+  case BSWSUB_GET_BTLREC_FINISH_FLAG:
+    *ret_wk = bsw_scr->btlrec_finish_f;
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:

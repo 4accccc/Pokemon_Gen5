@@ -67,15 +67,16 @@ struct _TAG_BSUBWAY_SCRWORK
   u8 my_sex;      ///<自分の性別
   u8 pare_sex;    ///<自分とパートナーの性別
   
-  u16        clear_f:1;  ///<クリアフラグ
-  u16         boss_f:2;  ///<ボスを倒したフラグ
-  u16       retire_f:1;  ///<リタイアフラグ
-  u16        prize_f:1;  ///<ご褒美フラグ
-  u16        partner:3;  ///<パートナーNo
-  u16     comm_sio_f:1; ///<通信中フラグ
-  u16     comm_irc_f:1; ///<赤外線通信フラグ
-  u16 btlrec_exist_f:2; ///<戦闘録画存在フラグ
-  u16    padding_bit:4; ///<余り
+  u16         clear_f:1;  ///<クリアフラグ
+  u16          boss_f:2;  ///<ボスを倒したフラグ
+  u16        retire_f:1;  ///<リタイアフラグ
+  u16         prize_f:1;  ///<ご褒美フラグ
+  u16         partner:3;  ///<パートナーNo
+  u16      comm_sio_f:1; ///<通信中フラグ
+  u16      comm_irc_f:1; ///<赤外線通信フラグ
+  u16  btlrec_exist_f:2; ///<戦闘録画存在フラグ
+  u16 btlrec_finish_f:1; ///<戦闘録画済みフラグ
+  u16     padding_bit:3; ///<余り
   u8 padding[2]; //余り
   
   BtlResult comm_btl_result; ///< 勝敗結果

@@ -423,6 +423,9 @@ sub_train_battle:
   //戦闘録画データ存在チェック呼び出し
   _BSUBWAY_TOOL( BSWSUB_CALL_BTLREC_EXIST, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //戦闘録画済フラグを無しに
+  _BSUBWAY_TOOL( BSWSUB_SET_BTLREC_FINISH_FLAG, FALSE, BSW_NULL, BSW_NULL )
+  
   //対戦へ
   SWITCH $play_mode
   CASE BSWAY_MODE_SINGLE THEN
@@ -754,7 +757,6 @@ sub_train_battle_win_next_menu:
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_CHK_MODE_MULTI, play_mode, BSW_NULL, multi_flag )
   
-  $rc_flag = FALSE
   $loop = 1
   
   WHILE $loop == 1
@@ -771,6 +773,9 @@ sub_train_battle_win_next_menu:
     _SYSWIN_MSG( msg_c04r0110_01 , POS_DOWN )
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER ) //Bキャン無効
+    
+    //戦闘録画済みフラグ取得
+    _BSUBWAY_TOOL( BSWSUB_GET_BTLREC_FINISH_FLAG, BSW_NULL, BSW_NULL, rc_flag )
     
     IF $rc_flag == FALSE THEN
       _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
@@ -813,7 +818,6 @@ sub_train_battle_win_next_menu:
       $loop = 0
     CASE 1 THEN //記録する
       _CALL sub_common_btlrec
-      $rc_flag = $SCWK_ANSWER
     CASE 2 THEN //休む
       //休むか
       _SYSWIN_MSG( msg_c04r0110_07 , POS_DOWN )
@@ -879,7 +883,6 @@ sub_train_battle_win_next_menu_comm_multi:
     _RET
   ENDIF
   
-  $rc_flag = FALSE
   $loop = 1
   
   WHILE $loop == 1
@@ -891,6 +894,9 @@ sub_train_battle_win_next_menu_comm_multi:
     _SYSWIN_MSG( msg_c04r0110_01 , POS_DOWN )
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER ) //Bキャン無効
+    
+    //戦闘録画済みフラグ取得
+    _BSUBWAY_TOOL( BSWSUB_GET_BTLREC_FINISH_FLAG, BSW_NULL, BSW_NULL, rc_flag )
     
     IF $rc_flag == FALSE THEN
       _BMPMENU_MAKE_LIST( msg_c04r0110_02, 0 )  //つづける
@@ -960,7 +966,6 @@ sub_train_battle_win_next_menu_comm_multi:
       $loop = 0
     CASE 1 THEN //記録する
       _CALL sub_common_btlrec
-      $rc_flag = $SCWK_ANSWER
     DEFAULT //リタイア
       //リタイアするか
       _SYSWIN_MSG( msg_c04r0110_06 , POS_DOWN )
@@ -1157,13 +1162,18 @@ sub_common_retmap_lose_retire:
   DEFINE_LOCAL ret
   DEFINE_LOCAL play_mode
   
-  //バトルビデオに記録するか？
-  _SYSWIN_MSG( msg_c04r0110_15, POS_DOWN )
-  _YES_NO_WIN( ret )
-  _SYSWIN_CLOSE()
+  //戦闘録画済みフラグ取得
+  _BSUBWAY_TOOL( BSWSUB_GET_BTLREC_FINISH_FLAG, BSW_NULL, BSW_NULL, ret )
   
-  IF $ret == SCR_YES THEN
-    _CALL sub_common_btlrec
+  //バトルビデオに記録するか？
+  IF $ret == FALSE THEN
+    _SYSWIN_MSG( msg_c04r0110_15, POS_DOWN )
+    _YES_NO_WIN( ret )
+    _SYSWIN_CLOSE()
+  
+    IF $ret == SCR_YES THEN
+      _CALL sub_common_btlrec
+    ENDIF
   ENDIF
   
   //受付制御　キャンセルゲームに
@@ -1264,6 +1274,8 @@ sub_common_btlrec:
     _SYSWIN_MSG( msg_c04r0110_14, POS_DOWN )
     _AB_KEYWAIT()
     _SYSWIN_CLOSE()
+    
+    _BSUBWAY_TOOL( BSWSUB_SET_BTLREC_FINISH_FLAG, TRUE, BSW_NULL, BSW_NULL )
   ENDIF
   
   $SCWK_ANSWER = $flag
