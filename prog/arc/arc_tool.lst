@@ -63,7 +63,6 @@
   ARCID_FLDMAP_REPLACE  "fieldmap/map_replace.narc" #マップ置き換えデータ
   ARCID_BATTGRA   "battle/battgra_wb.narc"  #
   ARCID_ZONEDATA    "fieldmap/zonedata.narc"    #ゾーン毎データ
-  ARCID_BMODEL_ANIME  "fieldmap/buildmodel_anime.narc"    #配置モデルアニメデータ
   ARCID_AREADATA    "fieldmap/area_data.bin"    #エリア毎設定データ
   ARCID_AREA_MAPTEX "fieldmap/area_map_tex.narc"  #エリア毎地形テクスチャデータ
   ARCID_FIELD_EDGEMARK  "fieldmap/edgemarking.narc"   #エッジマーキング指定データ
