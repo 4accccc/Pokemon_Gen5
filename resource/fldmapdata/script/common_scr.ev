@@ -37,13 +37,18 @@ EVENT_START   ev_gameover_recover_pokecen
   DEFINE_LOCAL  i_pz
   DEFINE_LOCAL  i_target_get
 
-//マップフェードイン
+  //マップフェードイン
 	_MAP_FADE_BLACK_IN_FORCE( )
 	_MAP_FADE_END_CHECK()
 
-//預けるアニメ
+  //預けるアニメ
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
+  _OBJ_ANIME_WAIT()
+
+  //預け後に通常絵に戻す
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+  _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke_wait )
   _OBJ_ANIME_WAIT()
 
   _PLAYER_POS_GET( i_px, i_pz )
@@ -51,6 +56,7 @@ EVENT_START   ev_gameover_recover_pokecen
   _GET_OBJID( SCWK_TARGET_OBJID, i_target_get, i_px, 0, i_pz )
 
   _TEMOTI_POKEMON_KAIFUKU()       //手持ちポケモン回復処理
+
   IF $i_target_get == TRUE THEN
     _BALLOONWIN_OBJMSG( msg_common_gameover_pc_01, SCWK_TARGET_OBJID ) //まずはポケモンを回復
     _CALL sub_pc_kaifuku_anime      //回復アニメ呼び出し(SCWK_TARGET_OBJIDへの代入込み)
@@ -58,6 +64,7 @@ EVENT_START   ev_gameover_recover_pokecen
   ENDIF
 
   //受け取るアニメ
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_uketori )
   _OBJ_ANIME_WAIT()
   _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
@@ -77,7 +84,6 @@ EVENT_START   ev_gameover_recover_pokecen
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
-//
 }
 EVENT_END
 
@@ -86,6 +92,12 @@ _ANIME_LABEL  anm_hero_azuke
   _ANIME_DATA AC_HERO_BANZAI,1
   _ANIME_DATA ACMD_END,0
 
+//主人公預け後の立ち
+_ANIME_LABEL anm_hero_azuke_wait
+  _ANIME_DATA AC_DIR_U,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_
 //主人公受け取り
 _ANIME_LABEL  anm_hero_uketori
   _ANIME_DATA AC_HERO_BANZAI_UKE,1

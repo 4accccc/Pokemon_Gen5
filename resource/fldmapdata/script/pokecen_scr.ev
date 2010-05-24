@@ -111,6 +111,11 @@ EVENT_START   ev_heal_p01
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke )
     _OBJ_ANIME_WAIT()
 
+    //預け後に通常絵に戻す
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_azuke_wait )
+    _OBJ_ANIME_WAIT()
+
     _BALLOONWIN_TALKOBJ_MSG( msg_pc_heal_04 ) //それでは　おあずかりします
     
     _CALL sub_heal_kaifuku_anime     //回復アニメ呼び出し
@@ -119,6 +124,7 @@ EVENT_START   ev_heal_p01
 
     _BALLOONWIN_CLOSE()
     
+    _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_PC_AZUKE )
     _OBJ_ANIME( MMDL_ID_PLAYER, anm_hero_uketori )
     _OBJ_ANIME_WAIT()
     _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_MOVE_FORM_TO_DRAW_FORM )
@@ -195,6 +201,10 @@ _ANIME_LABEL  anm_heal_p01_bow
 
 _ANIME_LABEL  anm_hero_azuke
   _ANIME_DATA AC_HERO_BANZAI,1
+  _ANIME_DATA ACMD_END,0
+
+_ANIME_LABEL anm_hero_azuke_wait
+  _ANIME_DATA AC_DIR_U,1
   _ANIME_DATA ACMD_END,0
 
 _ANIME_LABEL  anm_hero_uketori
