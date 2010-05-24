@@ -4464,7 +4464,7 @@ GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WOR
 //-----------------------------------------------------------------------------
 BOOL CGEAR_IsDoEventWireless( const C_GEAR_WORK* cpWork )
 {
-  if( cpWork ){
+  if( cpWork == NULL ){
     return FALSE;
   }
   if( cpWork->doEvent == FIELD_SUBSCREEN_ACTION_WIRELESS ){
