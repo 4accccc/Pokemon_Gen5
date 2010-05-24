@@ -50,6 +50,7 @@ static BOOL debugMenuCallProc_ATotal( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_QToday( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_AToday( DEBUG_MENU_EVENT_WORK * p_wk );
 static BOOL debugMenuCallProc_Random( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_Clear( DEBUG_MENU_EVENT_WORK * p_wk );
 
 
 //======================================================================
@@ -67,6 +68,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_RESEARCH_Qtoday, debugMenuCallProc_QToday }, // 今日の調査人数 ( 質問 )
   { DEBUG_FIELD_RESEARCH_Atoday, debugMenuCallProc_AToday }, // 今日の調査人数 ( 回答 )
   { DEBUG_FIELD_RESEARCH_Random, debugMenuCallProc_Random }, // ランダムセットアップ
+  { DEBUG_FIELD_RESEARCH_clear,  debugMenuCallProc_Clear },  // 調査データクリア
 }; 
 
 //--------------------------------------------------------------
@@ -348,6 +350,19 @@ static BOOL debugMenuCallProc_Random( DEBUG_MENU_EVENT_WORK * p_wk )
   GMEVENT* event;
 
   event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 5 );
+
+  GMEVENT_CallEvent( p_wk->gmEvent, event );
+
+  return TRUE;
+}
+//--------------------------------------------------------------
+/// デバッグメニュー：調査データクリア
+//--------------------------------------------------------------
+static BOOL debugMenuCallProc_Clear( DEBUG_MENU_EVENT_WORK * p_wk )
+{
+  GMEVENT* event;
+
+  event = DEBUG_EVENT_FLDMENU_ResearchNumInput( p_wk->gmSys, p_wk, 6 );
 
   GMEVENT_CallEvent( p_wk->gmEvent, event );
 

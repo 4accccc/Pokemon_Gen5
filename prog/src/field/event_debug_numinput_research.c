@@ -75,6 +75,7 @@ static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work)
 static void SetResearchDataAtRandom( GAMESYS_WORK* gameSystem );
 static void SetResearchDataAtRandom_today( GAMESYS_WORK* gameSystem, u32 rand_max );
 static void SetResearchDataAtRandom_total( GAMESYS_WORK* gameSystem, u32 rand_max );
+static void ClearResearchData( GAMESYS_WORK* gameSystem );
 
 //--------------------------------------------------------------
 ///サブメニューイベント：デバッグフラグ操作
@@ -375,6 +376,7 @@ static GMEVENT_RESULT dninput_MainEvent( GMEVENT * event, int *seq, void * work)
 			case 3: menu = &DATA_DNumInput_MenuInitializer_Qtoday; break;
 			case 4: menu = &DATA_DNumInput_MenuInitializer_Atoday; break;
       case 5: SetResearchDataAtRandom( gsys ); break; // ランダムセットアップ
+      case 6: ClearResearchData( gsys ); break; // 調査データクリア
 			default: GF_ASSERT(0);
 			}
       if( menu ) {
@@ -875,6 +877,24 @@ static void SetResearchDataAtRandom_total( GAMESYS_WORK* gameSystem, u32 rand_ma
     }
     QuestionnaireWork_AddTotalCount( QSave, q_id, total_add_count );
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief 調査データをクリアする
+ */
+//--------------------------------------------------------------
+static void ClearResearchData( GAMESYS_WORK* gameSystem )
+{
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+
+  gameData = GAMESYSTEM_GetGameData( gameSystem );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save );
+
+  QuestionnaireWork_ClearResearch( QSave );
 }
 
 

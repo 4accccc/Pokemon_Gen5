@@ -57,3 +57,9 @@ extern void QuestionnaireWork_AddTodayAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, in
 extern u16 QuestionnaireWork_GetTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type);
 extern void QuestionnaireWork_AddTotalAnswerNum(QUESTIONNAIRE_SAVE_WORK *qsw, int question_id, int answer_type, int add_count);
 extern void QuestionnaireWork_DateChangeUpdate(QUESTIONNAIRE_SAVE_WORK *qsw);
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+extern void QuestionnaireWork_ClearResearch(QUESTIONNAIRE_SAVE_WORK *qsw); 
+#endif

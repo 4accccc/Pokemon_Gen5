@@ -434,3 +434,25 @@ void QuestionnaireWork_DateChangeUpdate(QUESTIONNAIRE_SAVE_WORK *qsw)
 }
 
 
+#ifdef PM_DEBUG
+//==================================================================
+/**
+ * 調査人数をクリアする
+ *
+ * @param   qsw		アンケートセーブワークへのポインタ
+ */
+//==================================================================
+void QuestionnaireWork_ClearResearch(QUESTIONNAIRE_SAVE_WORK* qsw)
+{
+  int i;
+
+  for(i = 0; i < QUESTIONNAIRE_ITEM_NUM; i++){
+    qsw->today_count[i] = 0;
+    qsw->total_count[i] = 0;
+  }
+  for(i = 0; i < QUESTIONNAIRE_ANSWER_NUM; i++ ){
+    qsw->today_answer[i] = 0;
+    qsw->total_answer[i] = 0;
+  }
+}
+#endif 
