@@ -31,6 +31,7 @@ _EVENT_DATA		ev_bg_r04_sign1_01
 _EVENT_DATA		ev_r04_mountain_01
 _EVENT_DATA		ev_init_r04
 _EVENT_DATA		ev_recover_r04
+_EVENT_DATA		ev_zone_r04
 _EVENT_DATA_END
 
 
@@ -43,15 +44,22 @@ _EVENT_DATA_END
 /************************************************************/
 /*					FIELD_INIT_LABEL						*/
 /************************************************************/
-INIT_EVENT_START	ev_init_r04
+INIT_EVENT_START	ev_zone_r04
 	_CALL ev_stopper
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_INIT_LABEL						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_r04
+
 INIT_EVENT_END
 
 /************************************************************/
 /*					FIELD_RECOVER_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_r04
-	_CALL ev_stopper
+
 INIT_EVENT_END
 
 ev_stopper:
@@ -60,10 +68,9 @@ ev_stopper:
 _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_03 )
 //ジムバッジを取得していない場合
 IF $SCWK_TEMP0 == 0 THEN
-	_OBJ_POS_CHANGE( R04_STOP_01, 431, 0, 564, DIR_DOWN )
 //取得している場合
 ELSE
-
+	_SXY_MOVE_NPC_POS( R04_STOP_01 , DIR_DOWN , 429, 0, 565 )
 ENDIF
 	
 _RET
