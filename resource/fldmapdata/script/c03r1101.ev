@@ -242,7 +242,7 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	_MSGWIN_CLOSE()
 	
 	//âÊñ à√ì]
-	_BLACK_OUT()
+	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
 
 	_TIME_WAIT( 30 )
@@ -267,7 +267,7 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	//------------------------------------//
 	
 	//âÊñ à√ì]âèú
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
 
 	//BGMèIóπ
