@@ -197,19 +197,18 @@ EVENT_START		ev_d04r2201_sage4_01
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_r)
 	ENDSWITCH
 	
-	//画面暗転
+	//画面暗転----------------------------
 	_TIME_WAIT(32)
-	_BLACK_OUT()
+	_BLACK_OUT_SLOW()
 	_OBJ_ANIME_WAIT()
 	_DISP_FADE_END_CHECK()
 
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL( D04R2201_SAGE4_01 )
 	
-	_BLACK_IN()
+	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
-	
-	//========================================/
+	//暗転復帰---------------------------
 	
 	//バニシュフラグセット
 	_FLAG_SET(FV_D04R2201_SAGE4)
