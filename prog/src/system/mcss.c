@@ -1881,7 +1881,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
-    u32 size = 8 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    u32 size = 12 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
     mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
     mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
   }
@@ -2229,6 +2229,7 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 	{	
 		TCB_LOADRESOURCE_WORK*	tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
 
+    tlw->mcss_sys = mcss_sys;
     tlw->mcss = mcss;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * mcss->index;
@@ -2670,6 +2671,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
   //
   {
 		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
+		tlw->mcss_sys	= mcss_sys;
 		tlw->image_p = &mcss->mcss_image_proxy;
 		tlw->palette_p = &mcss->mcss_palette_proxy;
 		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
