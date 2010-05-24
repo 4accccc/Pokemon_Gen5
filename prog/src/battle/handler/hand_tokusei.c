@@ -4898,6 +4898,11 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems )
 //------------------------------------------------------------------------------
 static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
 {
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  if( BPP_CheckSick(bpp, WAZASICK_IEKI) ){
+    return FALSE;
+  }
+
   if( factorType == BTL_EVENT_FACTOR_ITEM )
   {
     if( BTL_EVENT_FACTOR_GetPokeID(myHandle) == pokeID )
