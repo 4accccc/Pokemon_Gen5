@@ -628,6 +628,23 @@ fx32 DEMO3D_ENGINE_GetNowFrame( const DEMO3D_ENGINE_WORK* wk )
 
 //-----------------------------------------------------------------------------
 /**
+ *	@brief  最大フレーム値を取得
+ *
+ *	@param	const DEMO3D_ENGINE_WORK* wk  ワーク
+ *
+ *	@retval 最大フレーム値
+ */
+//-----------------------------------------------------------------------------
+fx32 DEMO3D_ENGINE_GetMaxFrame( const DEMO3D_ENGINE_WORK* wk )
+{
+  GF_ASSERT(wk);
+  GF_ASSERT(wk->ica_anime);
+
+  return ICA_ANIME_GetMaxFrame( wk->ica_anime );
+}
+
+//-----------------------------------------------------------------------------
+/**
  *	@brief  エンジンに終了コードを通知
  *
  *	@param	DEMO3D_ENGINE_WORK* wk 　ワーク

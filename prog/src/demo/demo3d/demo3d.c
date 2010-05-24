@@ -218,8 +218,23 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   // デモ毎の例外処理エンジン初期化
   wk->expection = APP_EXCEPTION_Create( param->demo_id, wk->graphic, wk->engine, wk->heapID );
 
-  // フェードイン リクエスト
-  sub_FadeInOutReq( param->demo_id, WIPE_TYPE_FADEIN, wk->heapID );
+  {
+    u8  type, sync;
+    int diff;
+
+    diff = DEMO3D_ENGINE_GetMaxFrame( wk->engine ) - param->start_frame;
+
+    Demo3D_DATA_GetFadeParam( param->demo_id, FALSE, &type, &sync );
+    
+    HOSAKA_Printf("diff=%d sync=%d \n", diff, sync );
+
+    // フェードアウト間際でなければ
+    if( diff > sync )
+    {
+      // フェードイン リクエスト
+      sub_FadeInOutReq( param->demo_id, WIPE_TYPE_FADEIN, wk->heapID );
+    }
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -389,17 +404,6 @@ static BOOL sub_FadeInOutReq( u8 demo_id, u8 wipe, HEAPID heapID )
     color = WIPE_FADE_WHITE;
   }
   WIPE_SetBrightnessFadeOut( color );
-  
-#if 0
-  if( wipe == WIPE_TYPE_FADEOUT ){
-    if( color == WIPE_FADE_BLACK ){
-      SetBrightness( -16, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY );
-    }
-    else{
-      SetBrightness( 16, PLANEMASK_ALL, MASK_DOUBLE_DISPLAY );
-    }
-  }
-#endif
   
   if( sync > 0 )
   {
