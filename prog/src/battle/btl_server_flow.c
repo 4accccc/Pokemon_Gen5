@@ -9696,6 +9696,20 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
     SCQUE_PUT_MSG_STD( wk->que, strID );
   }
   SCQUE_PUT_OP_RemoveFieldEffect( wk->que, effect );
+
+  // マジックルームが切れたらアイテム反応チェック
+  if( effect == BTL_FLDEFF_MAGICROOM )
+  {
+    BTL_POKEPARAM* bpp;
+
+    BTL_POKESET_SeekStart( wk->psetTarget );
+    while( (bpp = BTL_POKESET_SeekNext(wk->psetTarget)) != NULL )
+    {
+      if( BPP_IsFightEnable(bpp) ){
+        scproc_CheckItemReaction( wk, bpp );
+      }
+    }
+  }
 }
 
 //------------------------------------------------------------------
