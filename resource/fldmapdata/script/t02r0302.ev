@@ -175,8 +175,10 @@ _TALK_OBJ_START()
 				_LAST_KEYWAIT()
 				_BALLOONWIN_CLOSE()
 			ENDIF
-		
+			
 		DEFAULT
+		
+			//‚±‚±‚É‚Í—¬‚ê‚Ä‚«‚Ü‚¹‚ñ
 		
 		ENDSWITCH
 

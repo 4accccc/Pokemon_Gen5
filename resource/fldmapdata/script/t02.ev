@@ -384,14 +384,15 @@ EVENT_START		ev_scene_t02_speech_01
 	_OBJ_ANIME( T02_BOODLE_02, anm_boodle_go )
 	_OBJ_ANIME_WAIT()
 
-	//群集ワープ
+	//演説誘導イベントのOBJを削除
 	_OBJ_DEL( T02_BOODLE_01 )
 	_OBJ_DEL( T02_BOODLE_02 )
-	
-	_FLAG_SET( FV_T02_SPEECH_BEFORE )
 
 	//========================================/
-
+	
+	//演説誘導イベントのOBJを非表示
+	_FLAG_SET( FV_T02_SPEECH_BEFORE )
+	
 	//シーンチェンジイベント終了
 	$WK_SCENE_T02 = 2
 	
@@ -662,7 +663,9 @@ t02_speech:
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
 	_MSGWIN_CLOSE()
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 1 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 2 )
 
 	//ゲーチスの方を向く
@@ -719,8 +722,11 @@ t02_speech:
 	//サブウィン・MSGウィンクローズ
 	_AB_KEYWAIT_MARK()
 	_MSGWIN_CLOSE()
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 3 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 4 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 5 )
 
 	//ゲーチスの方を向く
@@ -763,7 +769,9 @@ t02_speech:
 	//10フレーム待機した後ウィンドウを消す
 	_AB_KEYWAIT_MARK()
 	_BALLOONWIN_CLOSE()
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 6 )
+	_TIME_WAIT( 5 )
 	_SUBWIN_CLOSE( 7 )
 
 	//ゲーチスの方を向く
