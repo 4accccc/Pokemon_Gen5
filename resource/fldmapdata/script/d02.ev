@@ -150,7 +150,7 @@ IF $LWK_EGG == FALSE THEN
 			_PLAINWIN_MSG_DOWN( msg_d02_rock_02 )
 			_PLAINWIN_CLOSE()
 			
-			_ITEM_EVENT_KEYWAIT( ITEM_HOSINOKAKERA, 1 )
+			_ITEM_EVENT_NOWAIT( ITEM_HOSINOKAKERA, 1 )
 				
 			//========================================/
 				
