@@ -77,6 +77,7 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 							  const u8 projection_revise_off );
 
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
+static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw );
 static	void	MCSS_GetNewMultiCellAnimation(MCSS_WORK *mcss, NNSG2dMCType	mcType );
 static	void	MCSS_MaterialSetup( void );
 static	NNSG2dMultiCellAnimation*     GetNewMultiCellAnim_( u16 num );
@@ -118,7 +119,7 @@ MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID )
 
 	mcss_sys = GFL_HEAP_AllocClearMemory( heapID, sizeof(MCSS_SYS_WORK) );
 
-	mcss_sys->mcss_max		= max;
+	mcss_sys->mcss_max	= max;
 	mcss_sys->heapID		= heapID;
 
 	mcss_sys->mcAnimRate = FX32_ONE;
@@ -164,6 +165,8 @@ void	MCSS_Exit( MCSS_SYS_WORK *mcss_sys )
 {
 	int	i;
 
+  MCSS_CloseHandle( mcss_sys );
+
   if( mcss_sys->tcb_load_shadow )
   { 
 	  TCB_LOADRESOURCE_WORK *tlw = ( TCB_LOADRESOURCE_WORK *)GFL_TCB_GetWork( mcss_sys->tcb_load_shadow );
@@ -208,6 +211,54 @@ void	MCSS_Main( MCSS_SYS_WORK *mcss_sys )
 			}
     }
 	}
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief リソースハンドルオープン
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  arcID    ハンドルオープンするリソースのARCID
+ */
+//--------------------------------------------------------------------------
+void	MCSS_OpenHandle( MCSS_SYS_WORK *mcss_sys, ARCID arcID )
+{ 
+  GF_ASSERT( mcss_sys->handle == NULL );
+  if( mcss_sys->handle == NULL )
+  { 
+    mcss_sys->arcID   = arcID;
+    mcss_sys->handle  = GFL_ARC_OpenDataHandle( arcID, mcss_sys->heapID );
+  }
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief リソースハンドルクローズ
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_CloseHandle( MCSS_SYS_WORK *mcss_sys )
+{ 
+  if( mcss_sys->handle )
+  { 
+    GFL_ARC_CloseDataHandle( mcss_sys->handle );
+    mcss_sys->arcID   = 0;
+    mcss_sys->handle  = NULL;
+  }
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief TCBSYSセット
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  tcb_sys  TCBSYS
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetTCBSys( MCSS_SYS_WORK *mcss_sys, GFL_TCBSYS* tcb_sys )
+{ 
+  mcss_sys->tcb_sys = tcb_sys;
 }
 
 //--------------------------------------------------------------------------
@@ -1686,7 +1737,14 @@ void	MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK* mcss, u8 
 
     if( mcss->pal_fade_flag == 0 )
     { 
-	    mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+      if( mcss_sys->tcb_sys ) 
+      { 
+	      mcss->tcb_load_base_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 1 );
+      }
+      else
+      { 
+	      mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+      }
     }
     else
     { 
@@ -1723,7 +1781,14 @@ void	MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 
   MI_CpuCopy16( mcss->base_pltt_data, tlw->pPlttData->pRawData, mcss->pltt_data_size );
 
-  mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+  if( mcss_sys->tcb_sys ) 
+  { 
+    mcss->tcb_load_base_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 1 );
+  }
+  else
+  { 
+    mcss->tcb_load_base_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+  }
   mcss->fade_pltt_data_flag = 0;
 }
 
@@ -1777,6 +1842,12 @@ void   MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg
 static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw )
 {
 	MCSS_WORK	*mcss = mcss_sys->mcss[ count ];
+
+  if( ( mcss_sys->handle ) && ( mcss_sys->arcID == maw->arcID ) )
+  { 
+    MCSS_LoadResourceByHandle( mcss_sys, count, maw );
+    return;
+  }
 
 	mcss->is_load_resource = 0;
 
@@ -1858,7 +1929,119 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
     { 
       MCSS_CalcMosaic( mcss, tlw );
     }
-		mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    if( mcss_sys->tcb_sys ) 
+    { 
+		  mcss->tcb_load_resource = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadResource, tlw, 0 );
+    }
+    else
+    { 
+		  mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    }
+	}
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief リソースロード（ハンドル版）
+ *
+ * @param[in]  mcss_sys MCSSシステム管理構造体のポインタ
+ * @param[in]  count    登録場所指定
+ * @param[in]  maw      マルチセル登録用パラメータ構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_ADD_WORK *maw )
+{
+	MCSS_WORK*  mcss    = mcss_sys->mcss[ count ];
+  ARCHANDLE*  handle  = mcss_sys->handle;
+
+	mcss->is_load_resource = 0;
+
+	//プロキシ初期化
+	NNS_G2dInitImageProxy( &mcss->mcss_image_proxy );
+	NNS_G2dInitImagePaletteProxy( &mcss->mcss_palette_proxy );
+
+	// セルデータ、セルアニメーション、マルチセルデータ、
+	// マルチセルアニメーションをロード。
+	mcss->mcss_ncer_buf = GFL_ARCHDL_UTIL_LoadCellBank( handle, maw->ncer, FALSE, &mcss->mcss_ncer, mcss->heapID );
+	GF_ASSERT( mcss->mcss_ncer_buf != NULL );
+#ifdef	POKEGRA_LZ
+	mcss->mcss_nanr_buf = GFL_ARCHDL_UTIL_LoadAnimeBank( handle, maw->nanr, TRUE, &mcss->mcss_nanr, mcss->heapID );
+#else	// POKEGRA_LZ
+	mcss->mcss_nanr_buf = GFL_ARCHDL_UTIL_LoadAnimeBank( handle, maw->nanr, FALSE, &mcss->mcss_nanr, mcss->heapID );
+#endif	// POKEGRA_LZ
+	GF_ASSERT( mcss->mcss_nanr_buf != NULL );
+	mcss->mcss_nmcr_buf = GFL_ARCHDL_UTIL_LoadMultiCellBank( handle, maw->nmcr, FALSE, &mcss->mcss_nmcr, mcss->heapID );
+	GF_ASSERT( mcss->mcss_nmcr_buf != NULL );
+	mcss->mcss_nmar_buf = GFL_ARCHDL_UTIL_LoadMultiAnimeBank( handle, maw->nmar, FALSE, &mcss->mcss_nmar, mcss->heapID );
+	GF_ASSERT( mcss->mcss_nmar_buf != NULL );
+
+	//
+	// マルチセルアニメーションの実体を初期化します
+	//
+  MCSS_SetAnimeIndex( mcss, 0 );
+
+	//1枚の板ポリで表示するための情報の読み込み（独自フォーマット）
+	mcss->mcss_ncec = GFL_ARC_LoadDataAllocByHandle( handle, maw->ncec, mcss->heapID );
+  { 
+	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
+    u32 size = 8 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
+    mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
+  }
+
+	//
+	// VRAM 関連の初期化
+	//
+	{
+		TCB_LOADRESOURCE_WORK *tlw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( mcss->heapID ), sizeof( TCB_LOADRESOURCE_WORK ) );
+		tlw->image_p = &mcss->mcss_image_proxy;
+		tlw->palette_p = &mcss->mcss_palette_proxy;
+		tlw->chr_ofs = mcss_sys->texAdrs + MCSS_TEX_SIZE * count;
+		tlw->pal_ofs = mcss_sys->palAdrs + MCSS_PAL_SIZE * count;
+		tlw->mcss	 = mcss;
+		// load character data for 3D (software sprite)
+		{
+#ifdef	POKEGRA_LZ
+			tlw->pBufChar = GFL_ARCHDL_UTIL_LoadBGCharacter( handle, maw->ncbr, TRUE, &tlw->pCharData,
+                                                       GFL_HEAP_LOWID( mcss->heapID ) );
+#else	// POKEGRA_LZ
+			tlw->pBufChar = GFL_ARCHDL_UTIL_LoadBGCharacter( handle, maw->ncbr, FALSE, &tlw->pCharData,
+                                                       GFL_HEAP_LOWID( mcss->heapID ) );
+#endif	// POKEGRA_LZ
+			GF_ASSERT( tlw->pBufChar != NULL);
+		}
+
+		// load palette data
+		{
+			tlw->pBufPltt = GFL_ARCHDL_UTIL_LoadPalette( handle, maw->nclr, &tlw->pPlttData, GFL_HEAP_LOWID( mcss->heapID ) );
+			GF_ASSERT( tlw->pBufPltt != NULL);
+			mcss->base_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->fade_pltt_data = GFL_HEAP_AllocMemory( mcss->heapID, tlw->pPlttData->szByte );
+			mcss->pltt_data_size = tlw->pPlttData->szByte;
+			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->base_pltt_data, tlw->pPlttData->szByte );
+		}
+
+    if( mcss_sys->load_resource_callback )
+    { 
+      if( mcss_sys->load_resource_callback( maw, tlw, mcss_sys->callback_work ) == TRUE )
+      { 
+        mcss_sys->load_resource_callback = NULL;
+        mcss_sys->callback_work = NULL;
+
+      }
+    }
+    if( mcss->mosaic )
+    { 
+      MCSS_CalcMosaic( mcss, tlw );
+    }
+    if( mcss_sys->tcb_sys ) 
+    { 
+		  mcss->tcb_load_resource = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadResource, tlw, 0 );
+    }
+    else
+    { 
+		  mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
+    }
 	}
 }
 
@@ -2064,7 +2247,14 @@ static	void	MCSS_CalcPaletteFade( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss )
 							  mcss->pal_fade_rgb );
     }
 
-		mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+    if( mcss_sys->tcb_sys ) 
+    { 
+		  mcss->tcb_load_palette = GFL_TCB_AddTask( mcss_sys->tcb_sys, TCB_LoadPalette, tlw, 1 );
+    }
+    else
+    { 
+		  mcss->tcb_load_palette = GFUser_VIntr_CreateTCB( TCB_LoadPalette, tlw, 1 );
+    }
 
 	  if( mcss->pal_fade_start_evy == mcss->pal_fade_end_evy )
     { 
@@ -2492,7 +2682,6 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 			mcss->pltt_data_size = tlw->pPlttData->szByte;
 			MI_CpuCopy16( tlw->pPlttData->pRawData, mcss->base_pltt_data, tlw->pPlttData->szByte );
     }
-
     mcss->tcb_load_resource = GFUser_VIntr_CreateTCB( TCB_LoadResource, tlw, 0 );
   }
 }

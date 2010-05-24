@@ -122,6 +122,9 @@ struct _MCSS_WORK
 
 struct _MCSS_SYS_WORK
 {
+  ARCHANDLE*              handle;               //リソースのARCHANDLE
+  ARCID                   arcID;                //リソースのARCHANDLEをオープンしたARCID
+  GFL_TCBSYS*             tcb_sys;              //リソース読み込みtcbsys（VBlank外での転送）
   GFL_TCB*                tcb_load_shadow;      //影リソース読み込みtcb
 	int											mcss_max;							//登録数MAX
 	MCSS_WORK**							mcss;									//登録マルチセル構造体
