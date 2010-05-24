@@ -600,6 +600,7 @@ PMS_WORD PMSI_DATA_GetWordToOriginalPos( const PMS_INPUT_DATA* data, u32 file_id
 		if( *src_tbl == PMS_WORDID_DUP )
     {
       src_tbl = skip_dup( src_tbl );
+			src_tbl++;
     }
     else
     {
