@@ -4238,7 +4238,6 @@ static void handler_Dokubari_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->pokeID = pokeID;
     param->sickID = WAZASICK_DOKU;
     param->sickCont = BTL_CALC_MakeDefaultPokeSickCont( WAZASICK_DOKU );
-    param->fAlmost = TRUE;
   }
 }
 //------------------------------------------------------------------------------
