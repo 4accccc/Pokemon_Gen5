@@ -8023,7 +8023,8 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
   }
 
   // シェイミがランドフォルムに戻る
-  if( (BPP_GetMonsNo(target) == MONSNO_SHEIMI)
+  if( (sick == WAZASICK_KOORI)
+  &&  (BPP_GetMonsNo(target) == MONSNO_SHEIMI)
   &&  (BPP_GetValue(target,BPP_FORM) == FORMNO_SHEIMI_SKY)
   ){
     BPP_ChangeForm( target, FORMNO_SHEIMI_LAND );

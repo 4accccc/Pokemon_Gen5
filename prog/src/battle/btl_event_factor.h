@@ -61,7 +61,7 @@ typedef void (*BtlEventHandler)( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 * return  スキップする場合TRUE
 */
 //--------------------------------------------------------------
-typedef BOOL (*BtlEventSkipCheckHandler)( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
+typedef BOOL (*BtlEventSkipCheckHandler)( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* wk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 
 //--------------------------------------------------------------
 /**

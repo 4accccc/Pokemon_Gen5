@@ -169,7 +169,7 @@ static const BtlEventHandlerTable*  ADD_Kawarawari( u32* numElems );
 static void handler_Kawarawari_DmgProc1( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kawarawari_DmgProcEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kawarawari_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 dependID );
+static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 dependID );
 static const BtlEventHandlerTable*  ADD_Tobigeri( u32* numElems );
 static void handler_Tobigeri_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tobigeri_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -438,7 +438,7 @@ static void handler_Feint_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_Feint_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_Start( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Feint_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
+static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static const BtlEventHandlerTable*  ADD_TuboWoTuku( u32* numElems );
 static void handler_TuboWoTuku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Nemuru( u32* numElems );
@@ -1482,7 +1482,7 @@ static void handler_Kawarawari_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   }
 }
 // スキップチェックハンドラ
-static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 dependID )
+static BOOL handler_Kawarawari_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 dependID )
 {
   if( factorType == BTL_EVENT_FACTOR_SIDE )
   {
@@ -5936,7 +5936,7 @@ static void handler_Feint_End( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   }
 }
 // 「フェイント」スキップチェックハンドラ
-static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
+static BOOL handler_Feint_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
 {
   if( factorType == BTL_EVENT_FACTOR_SIDE )
   {

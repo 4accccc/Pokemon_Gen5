@@ -570,10 +570,16 @@ static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* fac
     {
       if( fp->skipCheckHandler != NULL )
       {
-        BOOL result;
-        BTL_Printf("factor[%p]にスキップチェックハンドラ( 0x%p )が見つかったので判断してもらう...\n", fp, fp->skipCheckHandler);
-        result = (fp->skipCheckHandler)( fp, factor->factorType, eventID, factor->subID, factor->dependID );
-        if( result ){
+        if( fp->factorType == BTL_EVENT_FACTOR_TOKUSEI )
+        {
+          const BTL_POKEPARAM* skipBpp = BTL_SVFTOOL_GetPokeParam( flowWork, fp->pokeID );
+          if( skipBpp && BPP_CheckSick(skipBpp, WAZASICK_IEKI) ){
+            // いえき状態はスキップチェックも行えないようにする
+            continue;
+          }
+        }
+
+        if( (fp->skipCheckHandler)( fp, flowWork, factor->factorType, eventID, factor->subID, factor->dependID ) ){
           BTL_Printf("スキップするそうです\n");
           return TRUE;
         }
