@@ -5164,6 +5164,8 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
         GFL_STD_MemClear(&wk->matchGameMode,sizeof(wk->matchGameMode));
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_GAME_CHECK2,WB_NET_WIFICLUB);
         wk->bRetryBattle = FALSE;
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_066, FALSE);
+        WifiP2PMatchMessage_TimeIconStart(wk);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_SEND);
       }
     }
@@ -5351,6 +5353,7 @@ static int _parentModeCallMenuSend( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_GAME_CHECK2, WB_NET_WIFICLUB)){
     if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_MYSTATUS, MyStatus_GetWorkSize(), GAMEDATA_GetMyStatus(wk->pGameData))){
+      EndMessageWindowOff(wk);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK_D);
     }
   }
