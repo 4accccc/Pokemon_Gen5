@@ -655,10 +655,13 @@ void STA_POKE_InitItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
   STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
   VecFx32 pos;
   STA_EFF_SYS  *effSys = STA_ACT_GetEffectSys( work->actWork );
+  MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , pokeWork->itemUseWork.equipPos );
 
   itemUseWork->effWork = STA_EFF_CreateEffect( effSys , NARC_stage_gra_mus_eff_itemuse_spa );
 
-  if( pokeWork->isFront == TRUE )
+  //背面対応・アッパー装備箇所無いとき対応
+  if( pokeWork->isFront == TRUE &&
+      equipData->isEnable == TRUE )
   {
     MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
                   pokeWork->itemWork[itemUseWork->equipPos] ,
@@ -684,9 +687,12 @@ void STA_POKE_InitItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 void STA_POKE_UpdateItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
   STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , pokeWork->itemUseWork.equipPos );
   VecFx32 pos;
   
-  if( pokeWork->isFront == TRUE )
+  //背面対応・アッパー装備箇所無いとき対応
+  if( pokeWork->isFront == TRUE &&
+      equipData->isEnable == TRUE )
   {
     MUS_ITEM_DRAW_GetPosition( work->itemDrawSys , 
                   pokeWork->itemWork[itemUseWork->equipPos] ,
@@ -721,11 +727,13 @@ void STA_POKE_UpdateItemUse_Flash( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork 
 void STA_POKE_InitItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
   STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , pokeWork->itemUseWork.equipPos );
 
   pokeWork->isEnableItem[pokeWork->itemUseWork.equipPos] = FALSE;
 
-  //背面対応
-  if( pokeWork->isFront == FALSE )
+  //背面対応・アッパー装備箇所無いとき対応
+  if( pokeWork->isFront == FALSE ||
+      equipData->isEnable == FALSE )
   {
     VecFx32 pos;
     VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
@@ -779,11 +787,13 @@ void STA_POKE_UpdateItemUse_Flying( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork
 void STA_POKE_InitItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
   STA_POKE_ITEMUSE_WORK *itemUseWork = &pokeWork->itemUseWork;
+  MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( pokeWork->drawWork , pokeWork->itemUseWork.equipPos );
 
   pokeWork->isEnableItem[pokeWork->itemUseWork.equipPos] = FALSE;
   
-  //背面対応
-  if( pokeWork->isFront == FALSE )
+  //背面対応・アッパー装備箇所無いとき対応
+  if( pokeWork->isFront == FALSE ||
+      equipData->isEnable == FALSE )
   {
     VecFx32 pos;
     VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );

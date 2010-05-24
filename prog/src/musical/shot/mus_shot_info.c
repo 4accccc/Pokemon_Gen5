@@ -11,6 +11,7 @@
 #include <gflib.h>
 #include "system/main.h"
 #include "system/gfl_use.h"
+#include "system/net_err.h"
 
 #include "arc_def.h"
 //#include "musical_shot.naix"
@@ -252,10 +253,21 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
         infoWork->state = MSIS_FINISH;
       }
     }
+    else
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      APP_TASKMENU_CloseMenu( infoWork->yesNoWork );
+      infoWork->state = MSIS_FINISH;
+    }
     break;
   
   case MSIS_COMM_WAIT:
     if( MUS_COMM_CheckTimingCommand( infoWork->commWork , MUS_COMM_TIMMING_SHOT_CONFIRM ) == TRUE )
+    {
+      infoWork->state = MSIS_FINISH;
+    }
+    else
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
     {
       infoWork->state = MSIS_FINISH;
     }
