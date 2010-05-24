@@ -92,7 +92,7 @@ _ANIME_LABEL	anm_leader3_saru
 /*	D02			ÇΩÇﬂÇµÇÃÇ¢ÇÌÇP								  */
 /**************************************************************/
 EVENT_START		ev_bg_d02_rock_01
-
+_TALK_START_SE_PLAY()
 	//ÇªÇÃì˙ÅAèâÇﬂÇƒÇÃèÍçá
 	IF FLAG_OFF( TMFLG_D02_ROCK_01 ) THEN
 
