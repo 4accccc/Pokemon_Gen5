@@ -1249,24 +1249,32 @@ static BOOL POKEMONTRADE_IsWazaPokemon(POKEMON_TRADE_WORK* pWork,int boxno,int i
 }
 
 
-BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork)
+static BOOL _pokemonIllegalCheck(POKEMON_PARAM* pp)
 {
-  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+  int mons_no;
+  int form_no;
 
   if (PP_Get(pp, ID_PARA_fusei_tamago_flag, NULL) == 1) {
     return TRUE;
   }
+  mons_no = PP_Get( pp, ID_PARA_monsno, NULL  );
+  form_no = PP_Get( pp, ID_PARA_form_no, NULL  );
+  if( form_no != POKETOOL_CheckPokeFormNo( mons_no, form_no ) ){
+    return TRUE;
+  }
   return FALSE;
+
+}
+
+
+BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork)
+{
+  return _pokemonIllegalCheck(IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
 }
 
 BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
-
-  if (PP_Get(pp, ID_PARA_fusei_tamago_flag, NULL) == 1) {
-    return TRUE;
-  }
-  return FALSE;
+  return _pokemonIllegalCheck(IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
 }
 
 BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
