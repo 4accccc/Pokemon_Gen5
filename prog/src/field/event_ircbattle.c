@@ -217,6 +217,51 @@ static void _wifilistPlayData(EVENT_IRCBATTLE_WORK *dbw, GAMEDATA* pGameData)
   }
 }
 
+static void _demoparamSet(EVENT_IRCBATTLE_WORK *dbw, GAMESYS_WORK * gsys)
+{
+  int i;
+
+  if(dbw->para->multiMode){
+    if(GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ) < 2 ){
+      NET_PRINT("1マルチ番号 %d %d %d %d\n",
+                dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
+                dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
+      for( i=0;i<4;i++){
+        dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].party = dbw->pNetParty[i];
+        dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+      }
+    }
+    else{
+      NET_PRINT("2マルチ番号 %d %d %d %d\n",
+                dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
+                dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
+      for( i=0;i<4;i++){
+        u8 buff[]={2,3,0,1};
+        dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].party = dbw->pNetParty[i];
+        dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+      }
+    }
+  }
+  else{
+    NET_PRINT("バトル %d %d\n",
+              dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1]);
+    if( GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() )== 0 ){
+      for( i=0;i<2;i++){
+        dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].party = dbw->pNetParty[i];
+        dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+      }
+    }
+    else{
+      for( i=0;i<2;i++){
+        u8 buff[]={1,0};
+        dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].party = dbw->pNetParty[i];
+        dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
+      }
+    }
+  }
+}
+
+
 
 static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw);
 
@@ -408,37 +453,9 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     {
       GMEVENT* next_event;
       EV_BATTLE_CALL_PARAM battlecall_param;
-      int i;
 
-      if(dbw->para->multiMode){
-        if(GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ) < 2 ){
-          NET_PRINT("1マルチ番号 %d %d %d %d\n",
-                    dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
-                    dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
-          for( i=0;i<4;i++){
-            dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].party = dbw->pNetParty[i];
-            dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
-          }
-        }
-        else{
-          NET_PRINT("2マルチ番号 %d %d %d %d\n",
-                    dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
-                    dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
-          for( i=0;i<4;i++){
-            u8 buff[]={2,3,0,1};
-            dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].party = dbw->pNetParty[i];
-            dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
-          }
-        }
-      }
-      else{
-        NET_PRINT("バトル %d %d\n",
-                  dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1]);
-        for( i=0;i<2;i++){
-          dbw->demo_prm.trainer_data[i].party = dbw->pNetParty[dbw->irc_match.MultiNo[i]];
-          dbw->demo_prm.trainer_data[i].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),dbw->irc_match.MultiNo[i] );
-        }
-      }
+      _demoparamSet(dbw, gsys);  //でも画面の順番を決めている
+
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
       battlecall_param.btl_setup_prm = dbw->para;
@@ -446,8 +463,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       battlecall_param.error_auto_disp = TRUE;
 
       next_event = GMEVENT_CreateOverlayEventCall( gsys, 
-                    FS_OVERLAY_ID(event_battlecall), 
-                    EVENT_CallCommBattle, &battlecall_param );
+                    FS_OVERLAY_ID(event_battlecall),   EVENT_CallCommBattle, &battlecall_param );
 
       GMEVENT_CallEvent( event, next_event );
     }
