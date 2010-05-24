@@ -2351,14 +2351,15 @@ static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
 {
-
+  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
+  GFL_NET_ReloadIcon();
   
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
   //メッセージ時計アイコン
   POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
 
-  GFL_DISP_GX_SetVisibleControlDirect( 0 );
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_OBJ );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2 );
   WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
