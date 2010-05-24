@@ -1521,6 +1521,17 @@ static void ConnectionClosedCallback(DWCError error,
       }
       else {
         if(_dWork->bAutoDisconnect){
+
+          const GFL_NETSTATE_DWCERROR* cp_error =GFL_NET_StateGetWifiError();
+          if( cp_error->errorUser == 0 )
+          {
+            GFL_NET_StateSetWifiError( 
+                cp_error->errorCode, 
+                cp_error->errorType, 
+                cp_error->errorRet, 
+                ERRORCODE_DISCONNECT );
+          }
+
           GFL_NET_StateSetError(0);
         }
         _CHANGE_STATE(MDSTATE_DISCONNECTTING);
