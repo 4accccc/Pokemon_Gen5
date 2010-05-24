@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-17T18:55:19"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-24T18:47:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -681,8 +681,7 @@
 ポケモングローバルリンクの[BE:00:ページ切り替え（行送り）]
 ホームページで[BE:00:ページ切り替え（行送り）]
 とうろくを　おこなってください[BE:01:ページ切り替え（クリア）]
-http://www.pokemon-gl.com
-（ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
+http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ポケモングローバルリンクに
 ゲームシンクＩＤコードが[BE:00:ページ切り替え（行送り）]
 登録　されていません[BE:01:ページ切り替え（クリア）]
@@ -690,8 +689,7 @@ http://www.pokemon-gl.com
 お手元の　パソコンで[BE:01:ページ切り替え（クリア）]
 ポケモングローバルリンクの
 ホームページで　登録を行ってください[BE:01:ページ切り替え（クリア）]
-http://www.pokemon-gl.com
-（ポケモングローバルリンク）[BE:01:ページ切り替え（クリア）]</language>
+http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_06">
