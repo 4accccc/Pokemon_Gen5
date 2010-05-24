@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T19:41:57"/>
+	<create user="matsumiya" host="W00224" date="2010-05-24T12:41:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -632,20 +632,24 @@ msg_waza_omoi_01へ</comment>
 忘れさせて　よろしいですね？</language>
 	</row>
 
-	<row id="msg_waza_omoi_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_waza_omoi_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>初めての会話時のみに使用</comment>
 		<language name="JPN" width="256">みんな　あたしの　ことを　
 メモリアルガール　と　よぶの▼
 ポケモンが　せいちょうして　おぼえる
 わざを　すべて　しっていてね▼
 その　わざを　ポケモンに
-おもいださせることが　できるのよ！▼</language>
+おもいださせることが　できるのよ！▼
+ハートのウロコを　くれたら
+ポケモンに　わざを　おもいださせるわ▼</language>
 		<language name="JPN_KANJI" width="256">みんな　あたしの　ことを　
 メモリアルガール　と　呼ぶの▼
 ポケモンが　成長して　覚える
 技を　すべて　知っていてね▼
 その技を　ポケモンに
-思い出させることが　できるのよ！▼</language>
+思い出させることが　できるのよ！▼
+ハートのウロコを　くれたら
+ポケモンに　技を　思い出させるわ▼</language>
 	</row>
 
 	<row id="msg_waza_omoi_13" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
@@ -666,7 +670,7 @@ msg_waza_omoi_01へ</comment>
 		<language name="JPN_KANJI" width="256">どの　ポケモンにしますか？▼</language>
 	</row>
 
-	<row id="msg_waza_omoi_15" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_waza_omoi_15" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ポケモンリストからキャンセル
 ハートのウロコ不所持</comment>
 		<language name="JPN" width="256">ポケモンに　おもいださせたい
