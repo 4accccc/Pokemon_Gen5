@@ -1046,27 +1046,24 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
     // 解析済みフラグを立てる
     work->analyzeFlag = TRUE;
 
-    // タッチで解析
-    if( work->analyzeByTouchFlag == FALSE ) {
-      MoveMenuCursorSilent( work, MENU_ITEM_ANSWER ); // カーソル位置を『回答』に合わせる
-    }
-    // ボタンで解析
-    else {
-      SetMenuCursorPos( work, MENU_ITEM_ANSWER ); // カーソル位置を『回答』に合わせる
-      UpdateControlCursor( work );                // 左右カーソルを更新
-      UpdateTouchArea( work );                    // タッチ範囲を更新
-    }
-
     // 表示を更新
-    ChangeAnswerToTop( work );          // 先頭の回答を表示
-    HideAnalyzeMessage( work );         //「…かいせきちゅう…」を消す
-    UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
-    UpdateBGFont_Answer( work );        // 回答を更新する
-    UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
-    UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
-    UpdateBGFont_Count( work );         // 回答人数を更新する
-    UpdateArrow( work );                // 矢印を更新する
-    UpdateMyAnswerIconOnButton( work ); // 自分の回答アイコン ( ボタン上 ) を更新する
+    SetMenuCursorPos( work, MENU_ITEM_ANSWER ); // カーソル位置を『回答』に合わせる
+    UpdateControlCursor( work );                // 左右カーソルを更新
+    UpdateTouchArea( work );                    // タッチ範囲を更新
+    ChangeAnswerToTop( work );                  // 先頭の回答を表示
+    HideAnalyzeMessage( work );                 //「…かいせきちゅう…」を消す
+    UpdateMainBG_WINDOW( work );                // MAIN-BG ( ウィンドウ面 ) を更新する
+    UpdateBGFont_Answer( work );                // 回答を更新する
+    UpdateBGFont_MyAnswer( work );              // 自分の回答を更新する
+    UpdateBGFont_DataReceiving( work );         //「データしゅとくちゅう」の表示を更新する
+    UpdateBGFont_Count( work );                 // 回答人数を更新する
+    UpdateArrow( work );                        // 矢印を更新する
+    UpdateMyAnswerIconOnButton( work );         // 自分の回答アイコン ( ボタン上 ) を更新する
+
+    // ボタンで解析
+    if( work->analyzeByTouchFlag == FALSE ) {
+      SetMenuCursorOn( work ); // カーソルが乗っている状態にする
+    }
 
     // 調査結果表示SE
     PMSND_PlaySE( SEQ_SE_SYS_82 );
