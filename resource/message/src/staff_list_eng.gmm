@@ -454,8 +454,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_012">
-		<language name="JPN" width="256">Wi-Fi ,  WIRELESS  and  IR  SYSTEM  PROGRAMMING</language>
-		<language name="JPN_KANJI" width="256">Wi-Fi ,  WIRELESS  and  IR  SYSTEM  PROGRAMMING</language>
+		<language name="JPN" width="256">Wi-Fi ,  WIRELESS  and  IR  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">Wi-Fi ,  WIRELESS  and  IR  PROGRAMMING</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_013">
@@ -484,8 +484,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_018">
-		<language name="JPN" width="256">BATTLE  SYSTEM  PROGRAMMING</language>
-		<language name="JPN_KANJI" width="256">BATTLE  SYSTEM  PROGRAMMING</language>
+		<language name="JPN" width="256">BATTLE  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">BATTLE  PROGRAMMING</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_019">
@@ -504,8 +504,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_022">
-		<language name="JPN" width="256">FIELD  SYSTEM  PROGRAMMING</language>
-		<language name="JPN_KANJI" width="256">FIELD  SYSTEM  PROGRAMMING</language>
+		<language name="JPN" width="256">FIELD  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">FIELD  PROGRAMMING</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_023">
@@ -544,8 +544,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_030">
-		<language name="JPN" width="256">UI  SYSTEM  PROGRAMMING</language>
-		<language name="JPN_KANJI" width="256">UI  SYSTEM  PROGRAMMING</language>
+		<language name="JPN" width="256">USER  INTERFACE  PROGRAMMING</language>
+		<language name="JPN_KANJI" width="256">USER  INTERFACE  PROGRAMMING</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_031">
@@ -574,8 +574,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_036">
-		<language name="JPN" width="256">Battle  Server  Main  Programming</language>
-		<language name="JPN_KANJI" width="256">Battle  Server  Main  Programming</language>
+		<language name="JPN" width="256">Battle  System  Programming</language>
+		<language name="JPN_KANJI" width="256">Battle  System  Programming</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_037">

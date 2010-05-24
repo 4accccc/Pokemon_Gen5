@@ -454,8 +454,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_012">
-		<language name="JPN" width="256">つうしん　システム　プログラム</language>
-		<language name="JPN_KANJI" width="256">つうしん　システム　プログラム</language>
+		<language name="JPN" width="256">つうしん　プログラム</language>
+		<language name="JPN_KANJI" width="256">つうしん　プログラム</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_013">
@@ -484,8 +484,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_018">
-		<language name="JPN" width="256">バトル　システム　プログラム</language>
-		<language name="JPN_KANJI" width="256">バトル　システム　プログラム</language>
+		<language name="JPN" width="256">バトル　プログラム</language>
+		<language name="JPN_KANJI" width="256">バトル　プログラム</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_019">
@@ -504,8 +504,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_022">
-		<language name="JPN" width="256">フィールド　システム　プログラム</language>
-		<language name="JPN_KANJI" width="256">フィールド　システム　プログラム</language>
+		<language name="JPN" width="256">フィールド　プログラム</language>
+		<language name="JPN_KANJI" width="256">フィールド　プログラム</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_023">
@@ -544,8 +544,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_030">
-		<language name="JPN" width="256">ユーザーインターフェイス　システム　プログラム</language>
-		<language name="JPN_KANJI" width="256">ユーザーインターフェイス　システム　プログラム</language>
+		<language name="JPN" width="256">ユーザーインターフェイス　プログラム</language>
+		<language name="JPN_KANJI" width="256">ユーザーインターフェイス　プログラム</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_031">
@@ -574,8 +574,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_036">
-		<language name="JPN" width="256">バトル　サーバー　プログラム</language>
-		<language name="JPN_KANJI" width="256">バトル　サーバー　プログラム</language>
+		<language name="JPN" width="256">バトル　システム　プログラム</language>
+		<language name="JPN_KANJI" width="256">バトル　システム　プログラム</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_037">

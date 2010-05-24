@@ -149,6 +149,11 @@ typedef struct {
 
 #ifdef	PM_DEBUG
 	BOOL	debugStopFlg;
+
+	int	testStartInitWait;
+	int	testStartEndWait;
+	int	testLogoWait;
+
 #endif
 
 }SRMAIN_WORK;

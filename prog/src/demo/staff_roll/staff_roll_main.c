@@ -61,9 +61,15 @@ enum {
 	SUBSEQ_END,
 };
 
+#ifdef	PM_DEBUG
+#define	LIST_START_INIT_WAIT	( wk->testStartInitWait )
+#define	LIST_START_END_WAIT		( wk->testStartEndWait )
+#define	LOGO_PUT_WAIT					( wk->testLogoWait )
+#else
 #define	LIST_START_INIT_WAIT	( 31 )
 #define	LIST_START_END_WAIT		( 39 )
-#define	LOGO_PUT_WAIT			( 128 )
+#define	LOGO_PUT_WAIT					( 128 )
+#endif	// PM_DEBUG
 
 #if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
@@ -287,6 +293,12 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	GX_SetMasterBrightness( -16 );
 	GXS_SetMasterBrightness( -16 );
 
+#ifdef	PM_DEBUG
+	wk->testStartInitWait = 31;
+	wk->testLogoWait = 128;
+	wk->testStartEndWait = 39;
+#endif	// PM_DEBUG
+
 	InitVram();
 	InitBg();
 	LoadBgGraphic();
@@ -359,7 +371,7 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 			wk->subSeq++;
 		}else{
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-				OS_Printf( "push a button : wait = %d\n", wk->wait );
+				OS_Printf( "[0] push a button : wait = %d\n", wk->wait );
 			}
 			wk->wait++;
 		}
@@ -378,7 +390,7 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 			return MAINSEQ_MAIN;
 		}else{
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-				OS_Printf( "push a button : wait = %d\n", wk->wait );
+				OS_Printf( "[2] push a button : wait = %d\n", wk->wait );
 			}
 			wk->wait++;
 		}
@@ -762,9 +774,11 @@ static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
 #if	PM_VERSION == LOCAL_VERSION
 	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
 	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_b_nsbtp, GFL_G3D_UTIL_RESARC },		// 02: アニメ
 #else
 	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbmd, GFL_G3D_UTIL_RESARC },		// 00: モデル
 	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbca, GFL_G3D_UTIL_RESARC },		// 01: アニメ
+	{ ARCID_STAFF_ROLL, NARC_staff_roll_staffroll_w_nsbtp, GFL_G3D_UTIL_RESARC },		// 02: アニメ
 #endif
 };
 
@@ -772,6 +786,7 @@ static const GFL_G3D_UTIL_RES G3DUtilResTbl[] =
 static const GFL_G3D_UTIL_ANM G3DUtil_AnmTbl[] =
 {
 	{ 1, 0 },		// 00: アニメ
+	{ 2, 0 },		// 01: アニメ
 };
 
 // 3D OBJテーブル
@@ -864,7 +879,7 @@ static void Init3D( SRMAIN_WORK * wk )
 		NULL );							// セットアップ関数(NULLの時はDefaultSetUp)
 
 	// ハンドル作成
-	wk->g3d_util = GFL_G3D_UTIL_Create( 2, 1, HEAPID_STAFF_ROLL );
+	wk->g3d_util = GFL_G3D_UTIL_Create( 3, 1, HEAPID_STAFF_ROLL );
 	wk->g3d_unit = GFL_G3D_UTIL_AddUnit( wk->g3d_util, &G3DUtilSetup );
 
 /*	常駐が大きくなるので使えない...
@@ -1577,7 +1592,7 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 			wk->labelSeq++;
 		}
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			OS_Printf( "push a button : start %d, wait = %d\n", LOGO_PUT_WAIT, wk->listWait );
+			OS_Printf( "[1] push a button : start %d, wait = %d\n", LOGO_PUT_WAIT, wk->listWait );
 		}
 		break;
 
