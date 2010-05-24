@@ -8515,7 +8515,7 @@ static void scproc_Fight_SimpleRecover( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_PO
  */
 static BOOL scproc_RecoverHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 recoverHP, BOOL fDispFailMsg )
 {
-  if( scproc_RecoverHP_CheckFailSP(wk, bpp, fDispFailMsg) )
+  if( !scproc_RecoverHP_CheckFailSP(wk, bpp, fDispFailMsg) )
   {
     scproc_RecoverHP_Core( wk, bpp, recoverHP );
     return TRUE;
@@ -9541,6 +9541,8 @@ static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
       scEvent_TurnCheck( wk, bpp, event_type );
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
+
+      scproc_CheckDeadCmd( wk, bpp );
     }
   }
 
