@@ -20,6 +20,8 @@
 #include "print\gf_font.h"
 #include "font/font.naix"
 #include "msg\msg_net_err.h"
+#include "sound\pm_sndsys.h"
+#include "sound\pm_voice.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include <dwc.h>
@@ -106,6 +108,7 @@ static void Local_ErrDispExit(void);
 static BOOL Local_SystemOccCheck(void);
 static void Local_ErrDispDraw(void);
 static void Local_ErrMessagePrint(BOOL fatal_error);
+static void Local_ErrUpdate(void);
 
 //==============================================================================
 //
@@ -270,11 +273,11 @@ void NetErr_DispCallPushPop(void)
 //		OS_SpinWait(10000);
 	
 	while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
-		;	//ボタンを一度離すまで待つ
+		Local_ErrUpdate();	//ボタンを一度離すまで待つ
 	}
 	
 	while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
-		;	//エラー画面終了ボタンが押されるまで待つ
+		Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
 	}
 	
 	//エラー画面終了
@@ -542,22 +545,21 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		
 		while( fatal_error == TRUE )
 		{
-      ; //fatalは抜けれない
+      Local_ErrUpdate(); //fatalは抜けれない
     }
 #ifdef MULTI_BOOT_MAKE  //マルチブート処理
 		while( TRUE )
 		{
-      ; //常に抜けれない
+      Local_ErrUpdate(); //常に抜けれない
     }
 
 #endif
 		while((PAD_Read() & ERR_DISP_END_BUTTON) != 0){
-			;	//ボタンを一度離すまで待つ
+			Local_ErrUpdate();	//ボタンを一度離すまで待つ
 		}
 		
 		while((PAD_Read() & ERR_DISP_END_BUTTON) == 0){
-      //LCDOFF対応
-      GFL_UI_Main();	//エラー画面終了ボタンが押されるまで待つ
+      Local_ErrUpdate();	//エラー画面終了ボタンが押されるまで待つ
 		}
 		
 		//エラー画面終了
@@ -895,4 +897,19 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
 	}
 	
 	GFL_BMP_Delete(bmpdata);
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief   エラー中も更新する必要があるもの
+ */
+//--------------------------------------------------------------
+static void Local_ErrUpdate(void)
+{
+  //LCDOFF対応
+  GFL_UI_Main();
+  //BGMが間延びする問題対応
+  PMSND_Main();
+  PMVOICE_Main();
 }
