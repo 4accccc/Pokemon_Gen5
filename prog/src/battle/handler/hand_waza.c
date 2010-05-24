@@ -5095,13 +5095,16 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trick );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
 
-        HANDEX_STR_Setup( &param->exSubStr1, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
-        HANDEX_STR_AddArg( &param->exSubStr1, target_pokeID );
-        HANDEX_STR_AddArg( &param->exSubStr1, selfItemID );
-
-        HANDEX_STR_Setup( &param->exSubStr1, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
-        HANDEX_STR_AddArg( &param->exSubStr1, pokeID );
-        HANDEX_STR_AddArg( &param->exSubStr1, targetItemID );
+        if( targetItemID != ITEM_DUMMY_DATA ){
+          HANDEX_STR_Setup( &param->exSubStr2, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
+          HANDEX_STR_AddArg( &param->exSubStr2, pokeID );
+          HANDEX_STR_AddArg( &param->exSubStr2, targetItemID );
+        }
+        if( selfItemID != ITEM_DUMMY_DATA ){
+          HANDEX_STR_Setup( &param->exSubStr1, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
+          HANDEX_STR_AddArg( &param->exSubStr1, target_pokeID );
+          HANDEX_STR_AddArg( &param->exSubStr1, selfItemID );
+        }
       }
     }
   }
