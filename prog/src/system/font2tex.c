@@ -51,8 +51,7 @@ static const GX_TEXSIZ_TBL GX_texSizTbl[] = {
 
 static void clearBitmap(GFL_BMP_DATA* bmp);
 static void printStr
-      (const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, GFL_BMP_DATA* bmp,
-       PRINT_QUE* printQue, GFL_FONT* fontHandle);
+      (const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, GFL_BMP_DATA* bmp, GFL_FONT* fontHandle);
 static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst);
 static void LoadTex
       (F2T_SETDATA * setData, const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, HEAPID heapID);
@@ -299,11 +298,10 @@ static void clearBitmap(GFL_BMP_DATA* bmp)
 }
 // 文字列描画
 static void printStr
-      (const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, GFL_BMP_DATA* bmp,
-       PRINT_QUE* printQue, GFL_FONT* fontHandle)
+      (const STRBUF* str, u16 xpos, u16 ypos, PRINTSYS_LSB lsb, GFL_BMP_DATA* bmp, GFL_FONT* fontHandle)
 {
   clearBitmap(bmp);
-  PRINTSYS_PrintQueColor(printQue, bmp, xpos, ypos, str, fontHandle, lsb);
+  PRINTSYS_PrintColor( bmp, xpos, ypos, str, fontHandle, lsb );
 }
 // ビットマップ変換
 static void convBitmap(GFL_BMP_DATA* src, GFL_BMP_DATA* dst)
@@ -329,12 +327,8 @@ static void LoadTex
 {
   //テクスチャ作成
   u16           texSizS, texSizT;
-  PRINT_QUE*    printQue;
   GFL_BMP_DATA* bmp;
   GFL_BMP_DATA* bmpTmp;
-
-  //プリントキューハンドル作成
-  printQue = PRINTSYS_QUE_Create(heapID);
 
   texSizS = GX_texSizTbl[setData->texSizIdxS].siz;
   texSizT = GX_texSizTbl[setData->texSizIdxT].siz;
@@ -343,7 +337,7 @@ static void LoadTex
   bmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
   bmpTmp = GFL_BMP_Create(texSizS/8, texSizT/8, GFL_BMP_16_COLOR, heapID);
 
-  printStr(str, xpos, ypos, lsb, bmpTmp, printQue, setData->fontHandle);
+  printStr(str, xpos, ypos, lsb, bmpTmp, setData->fontHandle);
   convBitmap(bmpTmp, bmp);
   {
     //テクスチャ転送
@@ -359,9 +353,6 @@ static void LoadTex
 
   GFL_BMP_Delete(bmpTmp);
   GFL_BMP_Delete(bmp);
-
-  PRINTSYS_QUE_Clear(printQue);
-  PRINTSYS_QUE_Delete(printQue);
 }
 
 static void LoadPlt( F2T_SETDATA * setData, void *data )
