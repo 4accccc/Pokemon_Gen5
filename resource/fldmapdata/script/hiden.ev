@@ -207,7 +207,7 @@ ev_hiden_naminori_02:
   
   _CALL sub_cutin_player_form_set
   _CALL_POKE_CUTIN(SCWK_TEMP0)
-  _CALL sub_cutin_player_player_form_return
+  _PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL ) //ÇQë¨ï‡çsÇ…
   _NAMINORI()
   _BEACON_SET_REQ_FSKILL_USE( WAZANO_NAMINORI )
 }
