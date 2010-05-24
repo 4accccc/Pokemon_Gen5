@@ -2548,8 +2548,9 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
   if( !BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
   {
-    if( BPP_CheckSick(bpp, WAZASICK_KODAWARI) )
-    {
+    if( (BPP_CheckSick(bpp, WAZASICK_KODAWARI))
+    &&  (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU)
+    ){
       BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_KODAWARI );
       WazaID  kodawariWaza = BPP_SICKCONT_GetParam( cont );
 
