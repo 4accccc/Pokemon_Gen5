@@ -3311,7 +3311,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // Ú‘±‚µ‚Ä‚«‚½
     OS_TPrintf("Ú‘± %d\n",wk->DirectModeNo);
-    PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+    PMSND_PlaySystemSE( SEQ_SE_SYS_101 );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
