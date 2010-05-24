@@ -4206,7 +4206,6 @@ static void handler_Present_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   &&  (work[0])
   ){
-    BTL_HANDEX_PARAM_MESSAGE* msg_param;
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
@@ -4215,13 +4214,13 @@ static void handler_Present_Fix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       BTL_HANDEX_PARAM_RECOVER_HP*  param = BTL_SVF_HANDEX_Push( flowWk ,BTL_HANDEX_RECOVER_HP, pokeID );
       param->pokeID = target_pokeID;
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 4 );
-
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
-      HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
+      HANDEX_STR_AddArg( &param->exStr, target_pokeID );
     }
     else
     {
+      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NoEffect );
       HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
