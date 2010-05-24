@@ -5,7 +5,6 @@ REM ============================================
 REM     í èÌî≈ÇçÏê¨
 REM ============================================
 call %PROJECT_ROOT%prompt.bat cmd mkgl.bat %1
-call %PROJECT_ROOT%twl_prompt.bat cmd mkgl.bat %1
 
 
 REM ============================================
@@ -28,7 +27,6 @@ REM ============================================
 REM     ROMî≈çÏê¨
 REM ============================================
 call %PROJECT_ROOT%prompt.bat cmd mkgl.bat %1
-call %PROJECT_ROOT%twl_prompt.bat cmd mkgl.bat %1
 
 
 REM ============================================
