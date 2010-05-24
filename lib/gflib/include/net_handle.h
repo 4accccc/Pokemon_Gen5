@@ -45,7 +45,7 @@ struct _GFL_NETHANDLE{
   u8 timingSendFlg;      ///< 送ったかどうか                        --ここまで並びを変えてはいけない
   u8 negotiationType;        ///< 接続しているハンドルの状態
   u8 negotiationSendFlg;      ///< 送ったかどうか
-  u8 serviceNo;              ///< 通信サービス番号
+  u8 dummys; //  u8 serviceNo;              ///< 通信サービス番号
   u8 version;                ///< 通信相手の通信バージョン番号
   u8 bSendInfomation;   ///< インフォメーションデータを送るフラグ
   u8 dummy;
@@ -299,6 +299,15 @@ extern void GFL_NET_HANDLE_RequestResetNegotiation(int netID);
  */
 //==============================================================================
 extern void GFL_NET_HANDLE_RecvNegotiationReset(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+
+//----------------------------------------------------------------------
+/**
+ * @brief   中に蓄えているGSIDの変更
+ * @param   pNetHandle  ネットワークハンドル
+ * @param   gsid
+ */
+//----------------------------------------------------------------------
+extern void GFL_NET_HANDLE_ChangeGSID(GFL_NETHANDLE* pNetHandle,int gsid);
 
 
 #ifdef __cplusplus
