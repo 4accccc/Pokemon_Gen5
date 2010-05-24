@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T17:52:27"/>
+	<create user="matsumiya" host="W00224" date="2010-05-24T18:53:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -333,18 +333,18 @@
 	</row>
 
 	<row id="msg_c04r0501_middleman2_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,,">
-		<comment>♂</comment>
-		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
+		<comment>♀</comment>
+		<attribute name="キャラ指定">MIDDLEWOMAN</attribute>
 		<language name="JPN" width="256">ヒウンシティが　ビジネスの　ちゅうしん
 ライモンシティは　ごらくの　ちゅうしん▼
 イッシュには　さまざまな
 ひとや　ポケモンが　あつまり▽
-さらに　かっきづいて　いくんだな</language>
+さらに　かっきづいて　いくんだね</language>
 		<language name="JPN_KANJI" width="256">ヒウンシティが　ビジネスの中心
 ライモンシティは　娯楽の中心▼
 イッシュには　多彩な
 人や　ポケモンが　集まり▽
-さらに　活気づいて　いくんだな</language>
+さらに　活気づいて　いくんだね</language>
 	</row>
 
 	<flowchart-group-list>
