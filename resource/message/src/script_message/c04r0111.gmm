@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-08T14:17:38"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-22T19:09:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -657,9 +657,11 @@
 		<attribute name="キャラ指定">boy3
 じゅくがえり♂</attribute>
 		<language name="JPN" width="256">はあ……　つかれたなあ……▼
-こっちの　トレーナーは　つよいよお</language>
+こっちの　トレーナーは　つよいよお
+ぼくの　うでで　どこまで　いけるやら</language>
 		<language name="JPN_KANJI" width="256">はあ……　疲れたなあ……▼
-こっちの　トレーナーは　強いよお</language>
+こっちの　トレーナーは　強いよお
+僕の　腕で　どこまで　いけるやら</language>
 	</row>
 
 	<row id="msg_c04r0111_girl3_1">
@@ -684,11 +686,11 @@
 ♀</comment>
 		<attribute name="キャラ指定">girl3
 じゅくがえり♀</attribute>
-		<language name="JPN" width="256">さっきの　しょうぶ　つらかったな
-もっといい　どうぐを　ＢＰと▽
+		<language name="JPN" width="256">さっきの　しょうぶ　つらかった……▼
+もっと　いい　どうぐを　ＢＰと
 こうかん　してくれば　よかったな</language>
-		<language name="JPN_KANJI" width="256">さっきの　勝負　辛かったな
-もっといい　道具を　ＢＰと▽
+		<language name="JPN_KANJI" width="256">さっきの　勝負　辛かった……▼
+もっと　いい　道具を　ＢＰと
 交換　してくれば　よかったな</language>
 	</row>
 
@@ -1056,9 +1058,8 @@ no.051
 		<language name="JPN" width="256">オレたちの　ボスに　かったんでしょ？
 やるじゃないのさ！　キミ！▼
 で　そんな　イカした　キミは
-スーパートレインに▽
-ちょうせんする　しかくを▽
-てに　いれました！▼
+スーパートレインに　ちょうせんする▽
+しかくを　てに　しましたよ！▼
 スーパートレインの　トレーナーは
 ほんとうに　つよいよ！▼
 バトルサブウェイの　しんずいを
@@ -1067,9 +1068,8 @@ no.051
 		<language name="JPN_KANJI" width="256">オレたちの　ボスに　勝ったんでしょ？
 やるじゃないのさ！　キミ！▼
 で　そんな　イカした　キミは
-スーパートレインに▽
-挑戦する　資格を▽
-手に　いれました！▼
+スーパートレインに　挑戦する▽
+資格を　手に　いれました！▼
 スーパートレインの　トレーナーは
 本当に　強いよ！▼
 バトルサブウェイの　真髄を
