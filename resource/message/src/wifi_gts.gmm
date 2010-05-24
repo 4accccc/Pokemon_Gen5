@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-11T21:43:44"/>
+	<create user="ohmori" host="W00223" date="2010-05-24T20:03:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -405,7 +405,7 @@
 	<row id="msg_gtc_01_010">
 		<comment>ほしいポケモンを選択するときのメッセージ</comment>
 		<language name="JPN" width="216">ほしい　ポケモンを　えらんでください</language>
-		<language name="JPN_KANJI" width="216">ほしい　ポケモンを　選んでください</language>
+		<language name="JPN_KANJI" width="216">欲しい　ポケモンを　選んでください</language>
 	</row>
 
 	<row id="msg_gtc_01_011">
