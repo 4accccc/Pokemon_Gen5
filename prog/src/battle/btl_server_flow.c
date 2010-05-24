@@ -3667,6 +3667,7 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_HP, pokeID );
     param->pokeID = pokeID;
+    param->fFailCheckThru = TRUE;
     itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
     switch( itemParam ){
     case ITEM_RECOVER_HP_FULL:
@@ -7010,13 +7011,16 @@ static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
 //----------------------------------------------------------------------------------
 static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-  u32 hem_state = Hem_PushState( &wk->HEManager );
+  if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
+  {
+    u32 hem_state = Hem_PushState( &wk->HEManager );
 
-  BTL_Printf("ポケ[%d]の装備アイテム発動チェックします\n", BPP_GetID(bpp));
+    BTL_Printf("ポケ[%d]の装備アイテム発動チェックします\n", BPP_GetID(bpp));
 
-  scEvent_CheckItemReaction( wk, bpp );
-  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-  Hem_PopState( &wk->HEManager, hem_state );
+    scEvent_CheckItemReaction( wk, bpp );
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    Hem_PopState( &wk->HEManager, hem_state );
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -8538,14 +8542,12 @@ static BOOL scproc_RecoverHP_CheckFailSP( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
 {
   if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
   {
-    TAYA_Printf("かいふくふうじ . flg=%d\n", fDispFailMsg);
     if( fDispFailMsg ){
-      TAYA_Printf("メッセージ表示されるよ\n");
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KaifukuFujiExe, BPP_GetID(bpp) );
     }
-    return FALSE;
+    return TRUE;
   }
-  return TRUE;
+  return FALSE;
 }
 /**
  *  HP回復処理コア
@@ -14480,7 +14482,15 @@ static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
         scPut_TokWin_In( wk, pp_user );
       }
 
-      if( !scproc_RecoverHP_CheckFailSP(wk, pp_target, TRUE) )
+      if( param->fFailCheckThru == FALSE )
+      {
+        result = !scproc_RecoverHP_CheckFailSP( wk, pp_target, TRUE );
+      }
+      else{
+        result = TRUE;
+      }
+
+      if( result )
       {
         scproc_RecoverHP_Core( wk, pp_target, param->recoverHP );
 
@@ -14489,7 +14499,6 @@ static u8 scproc_HandEx_recoverHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
         }else if( itemID != ITEM_DUMMY_DATA ){
           SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverHP, param->pokeID, itemID );
         }
-        result = 1;
       }
 
       if( param_header->tokwin_flag ){

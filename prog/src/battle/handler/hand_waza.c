@@ -4188,7 +4188,11 @@ static void handler_Present_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     // 20ÅìÇÃämó¶Ç≈âÒïúâª
+    #ifdef PM_DEBUG
+    if( BTL_CALC_IsOccurPer(99) )
+    #else
     if( BTL_CALC_IsOccurPer(20) )
+    #endif
     {
       work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }

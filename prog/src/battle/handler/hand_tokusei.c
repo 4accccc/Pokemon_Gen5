@@ -322,6 +322,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_HedoroEki( u32* numElems );
 static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Bukiyou_PreChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Bukiyou_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Bukiyou_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems );
@@ -4938,7 +4939,24 @@ static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static void handler_Bukiyou_PreChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
+  {
+    handler_Bukiyou_IekiFixed( myHandle, flowWk, pokeID, work );
+  }
 }
+// いえき確定ハンドラ
+static void handler_Bukiyou_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+//  BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  TAYA_Printf("ぶきようですが、いえき食らったよ\n");
+  if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
+  {
+    BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+    param->pokeID = pokeID;
+    TAYA_Printf("アイテムもってたよ\n");
+  }
+}
+
 // ワザ出し成否チェックハンドラ
 static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -4975,6 +4993,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bukiyou( u32* numElems )
     { BTL_EVENT_MEMBER_IN,                handler_Bukiyou_MemberIn  }, // メンバー入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Bukiyou_MemberIn  }, // とくせい書き換えハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,    handler_Bukiyou_PreChange }, // とくせい書き換え直前ハンドラ
+    { BTL_EVENT_IEKI_FIXED,               handler_Bukiyou_IekiFixed }, // いえき確定ハンドラ
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,   handler_Bukiyou_ExeCheck  }, // ワザ出し成否チェックハンドラ
     { BTL_EVENT_WAZA_EXECUTE_FAIL,        handler_Bukiyou_ExeFail   }, // ワザ出し失敗確定ハンドラ
   };
