@@ -176,7 +176,7 @@ static void MoveMenuCursorUp( RRL_WORK* work ); // 上へ移動する
 static void MoveMenuCursorDown( RRL_WORK* work ); // 下へ移動する
 static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem ); // 直接移動する
 // 調査項目カーソル
-static void AdjustTopicCursor( RRL_WORK* work ); // カーソルが画面内に存在するように調整する
+static void AdjustTopicCursor_to_ScrollCursor( RRL_WORK* work ); // カーソルが画面内に存在するように調整する
 static void MoveTopicCursorDirect( RRL_WORK* work, u8 topicID ); // 直接移動する
 //『戻る』ボタン
 static void BlinkReturnButton( RRL_WORK* work ); //『戻る』ボタンを明滅させる
@@ -506,8 +506,6 @@ static void MainState_SETUP( RRL_WORK* work )
 
   // 文字列描画オブジェクト 準備
   CreateBGFonts( work );
-  UpdateTopicDetailStrings_at_Now( work );
-  HideTopicDetailStrints( work );
 
   // OBJ 準備
   RegisterSubObjResources( work );
@@ -557,23 +555,11 @@ static void MainState_SETUP( RRL_WORK* work )
     }
   } 
 
-#if 0
-  // オートスクロール開始
-  StartAutoScroll_to_Topic( work ); 
-  while( CheckScrollEnd(work) == FALSE ) {
-    UpdateScroll( work ); // スクロールを更新
-  }
-#endif
-
-  // スクロール終了
-  //UpdateScrollValue( work );       // スクロール実効値を更新
-  UpdateTopicTouchArea( work );    // タッチ範囲を更新
-  UpdateSliderDisp( work );        // スライダー
-  UpdateInvestigatingIcon( work ); // 調査項目選択アイコンを更新
-  UpdateTopicButtonMask( work );   // 調査項目のマスクウィンドを更新
-
-  // フェードイン開始
-  StartFadeIn(); 
+  UpdateTopicTouchArea( work );            // タッチ範囲を更新
+  UpdateSliderDisp( work );                // スライダー
+  UpdateInvestigatingIcon( work );         // 調査項目選択アイコンを更新
+  UpdateTopicButtonMask( work );           // 調査項目のマスクウィンドを更新
+  UpdateTopicDetailStrings_at_Now( work ); // 上画面の詳細表示をカーソル位置に合わせる
 
   // 次の状態遷移をセット
   if( GetFinishReason( work ) == SEQ_CHANGE_BY_BUTTON ) {
@@ -584,9 +570,13 @@ static void MainState_SETUP( RRL_WORK* work )
   }
   else {
     SetTopicButtonCursorOff( work );               // カーソルが乗っていない状態にする
+    HideTopicDetailStrints( work );                // 上画面の詳細文字列は非表示
     FinishCurrentState( work );                    // RRL_STATE_SETUP 状態終了
     RegisterNextState( work, RRL_STATE_STANDBY );  // => RRL_STATE_STANDBY 
   }
+
+  // フェードイン開始
+  StartFadeIn(); 
 }
 
 //-----------------------------------------------------------------------------------------
@@ -667,6 +657,9 @@ static void MainState_STANDBY( RRL_WORK* work )
       ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
     // スクロール操作可能
     if( CheckScrollControlCan( work ) == TRUE ) {
+      MoveTopicCursorDirect( work, work->topicCursorPos ); // カーソルセット
+      UpdateTopicDetailStrings_at_Now( work );             // 上画面の詳細文字列をカーソル位置に合わせる
+      ShowTopicDetailStrings( work );                      // 上画面の詳細表示開始
       FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT 状態終了
       RegisterNextState( work, RRL_STATE_SLIDE_CONTROL );  // => RRL_STATE_SLIDE_CONTROL 
       RegisterNextState( work, RRL_STATE_KEY_WAIT );       // ==> RRL_STATE_KEY_WAIT 
@@ -890,7 +883,7 @@ static void MainState_SLIDE_CONTROL( RRL_WORK* work )
   }
 
   // カーソル位置調整
-  AdjustTopicCursor( work );
+  AdjustTopicCursor_to_ScrollCursor( work );
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1605,7 +1598,7 @@ static void MoveMenuCursorDirect( RRL_WORK* work, MENU_ITEM menuItem )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void AdjustTopicCursor( RRL_WORK* work )
+static void AdjustTopicCursor_to_ScrollCursor( RRL_WORK* work )
 {
   int min = GetMinScrollCursorMarginPos();
   int max = GetMaxScrollCursorMarginPos();
