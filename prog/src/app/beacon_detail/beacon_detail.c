@@ -962,7 +962,7 @@ static void _sub_BeaconWinInit( BEACON_DETAIL_WORK* wk )
     
       bp->cTrainer = act_Add( wk, clunit, &wk->objResTrainer[i],
                         ACT_TRAINER_PX, ACT_TRAINER_PY, 0, 1, ACT_TRAINER_BGPRI+i, ACT_SF_SUB );
-      GFL_CLACT_WK_SetObjMode( bp->cTrainer, GX_OAM_MODE_XLU );
+      GFL_CLACT_WK_SetObjMode( bp->cTrainer, GX_OAM_MODE_NORMAL );
       GFL_CLACT_WK_SetDrawEnable( bp->cTrainer, FALSE );
       bp->cRank = act_Add( wk, clunit, &wk->objResNormal,
                         ACT_RANK_PX, ACT_RANK_PY, ACTANM_RANK05, 0, ACT_TRAINER_BGPRI+i, ACT_SF_SUB );
