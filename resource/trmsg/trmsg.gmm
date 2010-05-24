@@ -6499,11 +6499,13 @@
 	</row>
 
 	<row id="TRID_ELITEW_10_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">あおい　ゆかから　とびおりなさい！▼
+		<language name="JPN" width="216">さんかくけいの　マークの
+うえから　とびおりなさい！▼
 うでの　スイッチに　のれば
 ドラゴンの　くびが　うごき▽
 さきに　すすめるように　なるから！</language>
-		<language name="JPN_KANJI" width="216">青い　床から　飛び降りなさい！▼
+		<language name="JPN_KANJI" width="216">三角形の　マークの
+上から　飛び降りなさい！▼
 うでの　スイッチに　乗れば
 ドラゴンの　首が　動き▽
 先に　進めるように　なるから！</language>
@@ -11557,9 +11559,9 @@
 
 	<row id="TRID_BATTLEG_11_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">あなたの　ポケモン！
-とても　リズムカルな　うごきね！</language>
+とても　リズミカルな　うごきね！</language>
 		<language name="JPN_KANJI" width="216">あなたの　ポケモン！
-とても　リズムカルな　動きね！</language>
+とても　リズミカルな　動きね！</language>
 	</row>
 
 	<row id="TRID_BATTLEG_11_TRMSG_FIGHT_AFTER">
