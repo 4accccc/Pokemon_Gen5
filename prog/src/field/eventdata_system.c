@@ -363,7 +363,7 @@ static void loadEventDataTable( EVENTDATA_SYSTEM * evdata, u16 zone_id )
   u32 size;
 
 #ifdef  PM_DEBUG
-  if ( SCRDEBUGGER_ReadEventFile( zone_id, evdata->load_buffer, READ_DATA_SIZE ) == FALSE)
+  if ( SCRDEBUGGER_ReadEventFile( zone_id, &evdata->load_count, READ_DATA_SIZE ) == FALSE)
 #endif
   {
     arcID = ZONEDATA_GetEventDataArcID(zone_id);
@@ -371,8 +371,8 @@ static void loadEventDataTable( EVENTDATA_SYSTEM * evdata, u16 zone_id )
     // サイズオーバーチェック
     GF_ASSERT( READ_DATA_SIZE > size );
     GFL_ARC_LoadDataOfsByHandle(evdata->eventHandle, arcID, 0, size, &evdata->load_count );
-    evdata->spscr_pos = ((u8 *)evdata->load_buffer) + evdata->load_count;
   }
+  evdata->spscr_pos = ((u8 *)evdata->load_buffer) + evdata->load_count;
   
   table = (const EVENTDATA_TABLE*)evdata->load_buffer; 
   buf = (const u8*)table->buf;
