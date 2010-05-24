@@ -337,7 +337,9 @@ static BOOL GameSystem_Main(GAMESYS_WORK * gsys)
 {
 	//Game Server Proccess
 
-  GameSystem_UpdateDoEvent( gsys ); // 今フレームのイベント動作フラグ更新
+  // 今フレームのイベント動作フラグ更新
+  // １フレームの途中で、イベント状態が変わらないようにするための仕組み
+  GameSystem_UpdateDoEvent( gsys ); 
 
 	if(GAMEDATA_IsFrameSpritMode(gsys->gamedata)) //フレーム分割状態にいる場合
 	{
@@ -728,17 +730,6 @@ BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
 }
 
 #ifdef PM_DEBUG
-//==================================================================
-/**
- * デバッグ：ゲーム制御システム用ワーク取得
- *
- * @retval  GAMESYS_WORK *		
- */
-//==================================================================
-GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void)
-{
-  return GameSysWork;
-}
 
 //============================================================================================
 //============================================================================================
