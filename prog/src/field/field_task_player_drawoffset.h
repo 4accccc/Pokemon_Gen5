@@ -20,4 +20,31 @@
  */
 //------------------------------------------------------------------------------------------
 extern FIELD_TASK* FIELD_TASK_TransDrawOffset( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec ); 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 指定した動作モデルのオフセット移動タスクを作成する
+ *
+ * @param fieldmap タスク動作対象のフィールドマップ
+ * @param frame    タスク動作フレーム数
+ * @param move     移動ベクトル
+ * @param mmdl     操作対象の動作モデル
+ *
+ * @return 作成したフィールドタスク
+ */
+//------------------------------------------------------------------------------------------
 extern FIELD_TASK* FIELD_TASK_TransDrawOffsetEX( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec, MMDL* mmdl ); 
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 指定した動作モデルの移動タスクを作成する
+ *
+ * @param fieldmap タスク動作対象のフィールドマップ
+ * @param frame    タスク動作フレーム数
+ * @param move     移動ベクトル
+ * @param mmdl     操作対象の動作モデル
+ *
+ * @return 作成したフィールドタスク
+ */
+//------------------------------------------------------------------------------------------
+extern FIELD_TASK* FIELD_TASK_TransPos( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec, MMDL* mmdl );

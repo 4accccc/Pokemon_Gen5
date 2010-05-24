@@ -1779,10 +1779,34 @@
  */
 //--------------------------------------------------------------
 #define _PLAYER_UPDOWN_EFFECT( type, frame, length, way ) \
-    _ASM_PLAYER_UPDOWN type, frame, length, way
+    _ASM_PLAYER_UPDOWN_EFFECT type, frame, length, way
 
-  .macro  _ASM_PLAYER_UPDOWN type, frame, length, way
-  .short  EV_SEQ_PLAYER_UPDOWN
+  .macro  _ASM_PLAYER_UPDOWN_EFFECT type, frame, length, way
+  .short  EV_SEQ_PLAYER_UPDOWN_EFFECT
+  .short  \type
+  .short  \frame
+  .short  \length
+  .short  \way
+  .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _PLAYER_UPDOWN_EFFECT_POS
+ * @brief 自機の高さ変化
+ * @param type  　動かす種類0の時原点から、1の時逆算した位置から
+ * @param frame   動かす時間
+ * @param length  移動距離（3D座標単位）
+ * @param way     移動方向 0=↓  1=↑
+ *
+ * @note
+ * 自機の内部情報を操作して戻す処理がないため使用箇所は要注意！
+ */
+//--------------------------------------------------------------
+#define _PLAYER_UPDOWN_POS( type, frame, length, way ) \
+    _ASM_PLAYER_UPDOWN_POS type, frame, length, way
+
+  .macro  _ASM_PLAYER_UPDOWN_POS type, frame, length, way
+  .short  EV_SEQ_PLAYER_UPDOWN_POS
   .short  \type
   .short  \frame
   .short  \length

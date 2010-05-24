@@ -913,7 +913,7 @@ VMCMD_RESULT EvCmdPlayerRequest( VMHANDLE *core, void *wk )
  * @retval  VMCMD_RESULT
  */
 //--------------------------------------------------------------
-VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
+VMCMD_RESULT EvCmdPlayerUpDownEffect( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -938,11 +938,59 @@ VMCMD_RESULT EvCmdPlayerUpDown( VMHANDLE *core, void *wk )
   }else{
     VEC_Set( &vec, 0, (length) <<FX32_SHIFT, 0 );
   }
-  move     = FIELD_TASK_TransDrawOffset( fieldmap, frame, &vec );
+  //move     = FIELD_TASK_TransDrawOffset( fieldmap, frame, &vec );
+  {
+    FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
+    move     = FIELD_TASK_TransPos( fieldmap, frame, &vec, FIELD_PLAYER_GetMMdl( player ) );
+  }
   FIELD_TASK_MAN_AddTask( man, move, NULL );
 
   return VMCMD_RESULT_CONTINUE;
 }
+
+//--------------------------------------------------------------
+/**
+ * 自機の上下動リクエスト
+ * @param  core    仮想マシン制御構造体へのポインタ
+ * @param wk
+ * @retval  VMCMD_RESULT
+ */
+//--------------------------------------------------------------
+VMCMD_RESULT EvCmdPlayerUpDownPos( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRIPT_FLDPARAM *fldparam = SCRIPT_GetFieldParam( sc );
+  FIELDMAP_WORK *fieldmap = fldparam->fieldMap;
+  FIELD_TASK* move;
+  FIELD_TASK_MAN* man = FIELDMAP_GetTaskManager( fieldmap );
+  VecFx32 vec;
+  u16 type = SCRCMD_GetVMWorkValue( core, work );
+  u16 frame_param = SCRCMD_GetVMWorkValue( core, work );
+  u16 length = SCRCMD_GetVMWorkValue( core, work );
+  u16 way = SCRCMD_GetVMWorkValue( core, work );
+  int frame;
+  if (type == 0) {
+    frame = frame_param;
+  } else {
+    frame = - frame_param;
+  }
+
+  if(way == 0){
+    VEC_Set( &vec, 0, (- length) <<FX32_SHIFT, 0 );
+  }else{
+    VEC_Set( &vec, 0, (length) <<FX32_SHIFT, 0 );
+  }
+  //move     = FIELD_TASK_TransDrawOffset( fieldmap, frame, &vec );
+  {
+    FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
+    move     = FIELD_TASK_TransPos( fieldmap, frame, &vec, FIELD_PLAYER_GetMMdl( player ) );
+  }
+  FIELD_TASK_MAN_AddTask( man, move, NULL );
+
+  return VMCMD_RESULT_CONTINUE;
+}
+
 
 
 //======================================================================

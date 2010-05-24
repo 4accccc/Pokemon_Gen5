@@ -30,6 +30,7 @@ typedef struct
   u16            nowFrame;  // 動作フレーム数
   u16            endFrame;  // 最大フレーム数
   VecFx32        vecMove;   // 移動ベクトル 
+  VecFx32        basePos;
   MMDL*          mmdl;      // 操作対象の動作モデル
 
 } TASK_WORK;
@@ -39,6 +40,7 @@ typedef struct
 //========================================================================================== 
 static void CalcDrawOffset( VecFx32* now, u16 nowFrame, VecFx32* max, u16 maxFrame );
 static FIELD_TASK_RETVAL UpdateDrawOffset( void* wk );
+static FIELD_TASK_RETVAL UpdatePosOffset( void* wk );
 
 
 //------------------------------------------------------------------------------------------
@@ -54,31 +56,8 @@ static FIELD_TASK_RETVAL UpdateDrawOffset( void* wk );
 //------------------------------------------------------------------------------------------
 FIELD_TASK* FIELD_TASK_TransDrawOffset( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec )
 {
-  FIELD_TASK* task;
-  TASK_WORK* work;
-  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
   FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
-
-  // 生成
-  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), UpdateDrawOffset );
-  // 初期化
-  work = FIELD_TASK_GetWork( task );
-  work->seq      = 0;
-  work->fieldmap = fieldmap;
-  work->mmdl     = FIELD_PLAYER_GetMMdl( player ); 
-  if (frame >= 0 )
-  {
-    work->transType = TRANS_TYPE_PLUS;
-    work->nowFrame = 0;
-    work->endFrame = frame;
-  } else {
-    work->transType = TRANS_TYPE_MINUS;
-    work->nowFrame = 0;
-    work->endFrame = -frame;
-  }
-  VEC_Set( &work->vecMove, vec->x, vec->y, vec->z );
-
-  return task;
+  return FIELD_TASK_TransDrawOffsetEX( fieldmap, frame, vec, FIELD_PLAYER_GetMMdl( player ) );
 }
 
 //------------------------------------------------------------------------------------------
@@ -107,6 +86,7 @@ FIELD_TASK* FIELD_TASK_TransDrawOffsetEX( FIELDMAP_WORK* fieldmap, int frame, co
   work->seq      = 0;
   work->fieldmap = fieldmap;
   work->mmdl     = mmdl;
+  MMDL_GetVectorPos( mmdl, &work->basePos );
 
   if (frame >= 0 ) {
     work->transType = TRANS_TYPE_PLUS;
@@ -121,6 +101,49 @@ FIELD_TASK* FIELD_TASK_TransDrawOffsetEX( FIELDMAP_WORK* fieldmap, int frame, co
 
   return task;
 }
+
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 指定した動作モデルの移動タスクを作成する
+ *
+ * @param fieldmap タスク動作対象のフィールドマップ
+ * @param frame    タスク動作フレーム数
+ * @param move     移動ベクトル
+ * @param mmdl     操作対象の動作モデル
+ *
+ * @return 作成したフィールドタスク
+ */
+//------------------------------------------------------------------------------------------
+FIELD_TASK* FIELD_TASK_TransPos( FIELDMAP_WORK* fieldmap, int frame, const VecFx32* vec, MMDL* mmdl )
+{
+  FIELD_TASK* task;
+  TASK_WORK* work;
+  HEAPID heap_id = FIELDMAP_GetHeapID( fieldmap );
+
+  // タスクを生成
+  task = FIELD_TASK_Create( heap_id, sizeof(TASK_WORK), UpdatePosOffset );
+
+  // タスクワークを初期化
+  work = FIELD_TASK_GetWork( task );
+  work->seq      = 0;
+  work->fieldmap = fieldmap;
+  work->mmdl     = mmdl;
+  MMDL_GetVectorPos( mmdl, &work->basePos );
+
+  if (frame >= 0 ) {
+    work->transType = TRANS_TYPE_PLUS;
+    work->nowFrame = 0;
+    work->endFrame = frame;
+  } else {
+    work->transType = TRANS_TYPE_MINUS;
+    work->nowFrame = 0;
+    work->endFrame = -frame;
+  }
+  VEC_Set( &work->vecMove, vec->x, vec->y, vec->z );
+
+  return task;
+}
+
 
 
 //========================================================================================== 
@@ -178,6 +201,40 @@ static FIELD_TASK_RETVAL UpdateDrawOffset( void* wk )
       CalcDrawOffset( &offset, now, &work->vecMove, work->endFrame );
     }
     MMDL_SetVectorDrawOffsetPos( mmdl, &offset );
+    // 終了チェック
+    if( work->endFrame <= work->nowFrame )
+    { 
+      return FIELD_TASK_RETVAL_FINISH;
+    }
+    break;
+  }
+  return FIELD_TASK_RETVAL_CONTINUE; 
+} 
+//------------------------------------------------------------------------------------------
+/**
+ * @brief 描画オフセット更新処理
+ */
+//------------------------------------------------------------------------------------------
+static FIELD_TASK_RETVAL UpdatePosOffset( void* wk )
+{
+  TASK_WORK* work = (TASK_WORK*)wk;
+  MMDL*      mmdl = work->mmdl;
+  VecFx32    offset;
+
+  switch( work->seq )
+  {
+  case 0:
+    // 自機の描画オフセットを更新
+    work->nowFrame++;
+    if (work->transType == TRANS_TYPE_PLUS)
+    {
+      CalcDrawOffset( &offset, work->nowFrame, &work->vecMove, work->endFrame );
+    } else if (work->transType == TRANS_TYPE_MINUS ) {
+      u16 now = work->endFrame - work->nowFrame;
+      CalcDrawOffset( &offset, now, &work->vecMove, work->endFrame );
+    }
+    VEC_Add( &offset, &work->basePos, &offset );
+    MMDL_SetVectorPos( mmdl, &offset );
     // 終了チェック
     if( work->endFrame <= work->nowFrame )
     { 

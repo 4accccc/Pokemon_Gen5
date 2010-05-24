@@ -474,11 +474,15 @@ sub_pokecen_elevator_in:
 
   _BMODEL_ANIME_DELETE( LWK_BM_DOOR_ID )
 
+
+  _CAMERA_START()
+  _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+
   _BMODEL_ANIME_CREATE( LWK_BM_FLOOR_ID, SCR_BMID_PCEV_FLOOR, BASEX, BASEZ )
 //エレベーター下降アニメ
   _SE_PLAY( SEQ_SE_FLD_23 )
   _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_DOWN )
-  _PLAYER_UPDOWN_EFFECT( 0, 40, 64, 0 )
+  _PLAYER_UPDOWN_POS( 0, 40, 64, 0 )
 
   _BMODEL_ANIME_WAIT( LWK_BM_FLOOR_ID )
 
@@ -488,6 +492,8 @@ sub_pokecen_elevator_in:
 
   _BMODEL_ANIME_DELETE( LWK_BM_FLOOR_ID )
 
+  _CAMERA_BIND()
+  _CAMERA_END()
   _RET
 }
 
@@ -552,6 +558,9 @@ sub_pokecen_elevator_out:
     $SCWK_TARGET_OBJID = $LWK_WOMANID
   ENDIF
 
+  _CAMERA_START()
+  _CAMERA_PURGE() //対象物とカメラのバインドを解く（この場面で対象物＝自機）
+
 //エレベーター上昇アニメ準備：自機を見えなくしておく
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_vanish )
   _OBJ_ANIME_WAIT()
@@ -574,8 +583,9 @@ sub_pokecen_elevator_out:
   _SE_PLAY( SEQ_SE_FLD_23 )
   _BMODEL_ANIME_SET( LWK_BM_FLOOR_ID, SCR_BMANM_PCEV_UP )
   //自機上昇演出開始
-  _PLAYER_UPDOWN_EFFECT( 1, 40, 64, 0 )
+  _PLAYER_UPDOWN_POS( 1, 40, 64, 0 )
 
+  _TIME_WAIT( 2 )     //_PLAYER_UPDOWN_EFFECTで自機DrawOffsetが反映されるのを待ってから
   //自機を下向きにし、表示する
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_turn_down )
   _OBJ_ANIME_WAIT()
@@ -591,6 +601,9 @@ sub_pokecen_elevator_out:
   _BMODEL_ANIME_SET( LWK_BM_DOOR_ID, SCR_BMANM_PCEV_OPEN )
   _BMODEL_ANIME_WAIT( LWK_BM_DOOR_ID )
   _SE_WAIT()
+
+  _CAMERA_BIND()
+  _CAMERA_END()
 
 //プレイヤー、3歩進む
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_return_strait )
