@@ -93,6 +93,9 @@ typedef BOOL (MCSS_CALLBACK_FUNC)( const MCSS_ADD_WORK*, TCB_LOADRESOURCE_WORK*,
 extern	MCSS_SYS_WORK*	MCSS_Init( int max, HEAPID heapID );
 extern	void						MCSS_Exit( MCSS_SYS_WORK *mcss_sys );
 extern	void						MCSS_Main( MCSS_SYS_WORK *mcss_sys );
+extern  void	          MCSS_OpenHandle( MCSS_SYS_WORK *mcss_sys, ARCID arcID );
+extern  void	          MCSS_CloseHandle( MCSS_SYS_WORK *mcss_sys );
+extern  void	          MCSS_SetTCBSys( MCSS_SYS_WORK *mcss_sys, GFL_TCBSYS* tcb_sys );
 extern  void	          MCSS_SetCallBackFunc( MCSS_SYS_WORK *mcss_sys, MCSS_CALLBACK_FUNC* func, u32 work );
 extern  void	          MCSS_SetCallBackWork( MCSS_SYS_WORK *mcss_sys, u32 work );
 extern  void	          MCSS_ReloadResource( MCSS_SYS_WORK *mcss_sys, MCSS_WORK* mcss, MCSS_ADD_WORK* maw );
