@@ -480,7 +480,9 @@ sub_train_battle_win:
   
   //送信ビーコンセット：バトルサブウェイ連勝中
   //挑戦中に一勝するごとに呼んでください
-  _BEACON_SET_REQ_SUBWAY_WIN( SCWK_ANSWER )
+  IF $SCWK_ANSWER > 1 THEN
+    _BEACON_SET_REQ_SUBWAY_WIN( SCWK_ANSWER )
+  ENDIF
   
   //ラウンド更新
   _BSUBWAY_TOOL( BSWTOOL_INC_ROUND, BSW_NULL, BSW_NULL, SCWK_ANSWER )
