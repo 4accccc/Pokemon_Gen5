@@ -15288,6 +15288,8 @@ static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
     scPut_TokWin_In( wk, self );
   }
   handexSub_putString( wk, &param->exStr );
+  handexSub_putString( wk, &param->exSubStr1 );
+  handexSub_putString( wk, &param->exSubStr2 );
   if( param_header->tokwin_flag ){
     scPut_TokWin_Out( wk, self );
   }
@@ -15416,7 +15418,6 @@ static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     scEvent_ItemSetFixed( wk, bpp );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     Hem_PopState( &wk->HEManager, hem_state );
-
   }
 }
 

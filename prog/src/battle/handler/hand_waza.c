@@ -5090,28 +5090,18 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       if( !ITEM_CheckMail(selfItemID) && !ITEM_CheckMail(targetItemID) )
       {
         BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
-        BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
         param->pokeID = target_pokeID;
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trick );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
 
-        if( selfItemID != ITEM_DUMMY_DATA )
-        {
-          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-          msg_param->header.failSkipFlag = TRUE;
-          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
-          HANDEX_STR_AddArg( &msg_param->str, target_pokeID );
-          HANDEX_STR_AddArg( &msg_param->str, selfItemID );
-        }
-        if( targetItemID != ITEM_DUMMY_DATA )
-        {
-          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-          msg_param->header.failSkipFlag = TRUE;
-          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
-          HANDEX_STR_AddArg( &msg_param->str, pokeID );
-          HANDEX_STR_AddArg( &msg_param->str, targetItemID );
-        }
+        HANDEX_STR_Setup( &param->exSubStr1, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
+        HANDEX_STR_AddArg( &param->exSubStr1, target_pokeID );
+        HANDEX_STR_AddArg( &param->exSubStr1, selfItemID );
+
+        HANDEX_STR_Setup( &param->exSubStr1, BTL_STRTYPE_SET, BTL_STRID_SET_TrickGetItem );
+        HANDEX_STR_AddArg( &param->exSubStr1, pokeID );
+        HANDEX_STR_AddArg( &param->exSubStr1, targetItemID );
       }
     }
   }
