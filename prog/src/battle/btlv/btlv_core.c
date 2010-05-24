@@ -1067,7 +1067,9 @@ static void SetupPlistDataCommon( BTLV_CORE* wk, BPLIST_DATA* plist, u8 bplMode,
   plist->gamedata = BTL_MAIN_GetGameData( wk->mainModule );
   plist->time_out_flg = FALSE;
   plist->commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
+  plist->comm_err_flg = FALSE;
   plist->end_flg = FALSE;
+
 }
 //=============================================================================================
 /**
@@ -1224,12 +1226,14 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.heap = wk->heapID;
     wk->bagData.energy = energy;
     wk->bagData.reserved_energy = reserved_energy;
-    wk->bagData.end_flg = FALSE;
     wk->bagData.ret_item = ITEM_DUMMY_DATA;
     wk->bagData.cursor_flg = BTLV_SCD_GetCursorFlagPtr( wk->scrnD );
     wk->bagData.time_out_flg = FALSE;
     wk->bagData.shooter_item_bit = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
     wk->bagData.commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
+    wk->bagData.comm_err_flg = FALSE;
+    wk->bagData.end_flg = FALSE;
+
 
     // 手持ち・ボックスが満杯なら投げられない
     if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) ){
