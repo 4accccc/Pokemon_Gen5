@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T22:10:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-24T12:43:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,7 +372,7 @@
 		<language name="JPN_KANJI" width="256">チェレン『じめんタイプの
 ポケモンを　捕まえておくか▼
 それとも　ポケモンを　鍛えるか
-どちらが　強くなれる……</language>
+どちらが　強くなれる……？</language>
 	</row>
 
 	<row id="msg_r04_black_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
