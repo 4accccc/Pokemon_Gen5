@@ -27,23 +27,25 @@
 //============================================================================================
 #define	RES_NONE	( 0xffffffff )		// リソースなし
 
-#define	PALNUM_ETC				( 0 )
-#define	PALSIZ_ETC				( 3 )
-#define	PALNUM_POKEGRA		( PALNUM_ETC+PALSIZ_ETC )
-#define	PALSIZ_POKEGRA		( 1 )
-#define	PALNUM_POKEGRA_B	( PALNUM_POKEGRA+PALSIZ_POKEGRA )
-#define	PALSIZ_POKEGRA_B	( 1 )
-#define	PALNUM_FOAM				( PALNUM_POKEGRA_B+PALSIZ_POKEGRA_B )
-#define	PALSIZ_FOAM				( 1 )
-#define	PALNUM_PLAYER_M		( PALNUM_FOAM+PALSIZ_FOAM )
-#define	PALSIZ_PLAYER_M		( 1 )
-#define	PALNUM_TYPE_WIN		( PALNUM_PLAYER_M+PALSIZ_PLAYER_M )
-#define	PALSIZ_TYPE_WIN		( 1 )
+// パレット定義（メイン画面）
+#define	PALNUM_ETC				( 0 )																		// パレット番号：その他
+#define	PALSIZ_ETC				( 3 )																		// パレットサイズ：その他
+#define	PALNUM_POKEGRA		( PALNUM_ETC+PALSIZ_ETC )								// パレット番号：ポケモン（正面）
+#define	PALSIZ_POKEGRA		( 1 )																		// パレットサイズ：ポケモン（正面）
+#define	PALNUM_POKEGRA_B	( PALNUM_POKEGRA+PALSIZ_POKEGRA )				// パレット番号：ポケモン（背面）
+#define	PALSIZ_POKEGRA_B	( 1 )																		// パレットサイズ：ポケモン（背面）
+#define	PALNUM_FOAM				( PALNUM_POKEGRA_B+PALSIZ_POKEGRA_B )		// パレット番号：ＯＡＭフォント
+#define	PALSIZ_FOAM				( 1 )																		// パレットサイズ：ＯＡＭフォント
+#define	PALNUM_PLAYER_M		( PALNUM_FOAM+PALSIZ_FOAM )							// パレット番号：主人公
+#define	PALSIZ_PLAYER_M		( 1 )																		// パレットサイズ：主人公
+#define	PALNUM_TYPE_WIN		( PALNUM_PLAYER_M+PALSIZ_PLAYER_M )			// パレット番号：タイプ別ウィンドウ
+#define	PALSIZ_TYPE_WIN		( 1 )																		// パレットサイズ：タイプ別ウィンドウ
 
-#define	PALNUM_ETC_S			( 0 )
-#define	PALSIZ_ETC_S			( 3 )
-#define	PALNUM_PLAYER_S		( PALNUM_ETC_S+PALSIZ_ETC_S )
-#define	PALSIZ_PLAYER_S		( 1 )
+// パレット定義（サブ画面）
+#define	PALNUM_ETC_S			( 0 )														// パレット番号：その他
+#define	PALSIZ_ETC_S			( 3 )														// パレットサイズ：その他
+#define	PALNUM_PLAYER_S		( PALNUM_ETC_S+PALSIZ_ETC_S )		// パレット番号：主人公
+#define	PALSIZ_PLAYER_S		( 1 )														// パレットサイズ：主人公
 
 #define	FCOL_FNTOAM				( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：ＯＡＭフォント白抜
 
@@ -58,14 +60,12 @@ typedef struct {
 
 	u16	pal;
 	u16	disp;
-
 }DDEMO_CLWK_DATA;
 
-
-#define	MES_PX		( -8 )
-#define	MES_PY		( 24 )
-#define	INFO_PX		( 256+8 )
-#define	INFO_PY		( 192-24 )
+#define	MES_PX		( -8 )				//「でんどういり　おめでとう」表示Ｘ座標
+#define	MES_PY		( 24 )				//「でんどういり　おめでとう」表示Ｙ座標
+#define	INFO_PX		( 256+8 )			// ポケモン情報表示Ｘ座標
+#define	INFO_PY		( 192-24 )		// ポケモン情報表示Ｙ座標
 
 // フォントOAMで使用するBMPのサイズ
 #define	FOAM_MES_SX			( 22 )
@@ -98,48 +98,56 @@ static void PrintFontOam( DDEMOMAIN_WORK * wk, u32 idx, GFL_FONT * font, STRBUF 
 //	グローバル
 //============================================================================================
 
+//「でんどういり　おめでとう」OBJデータ
 static const DDEMO_CLWK_DATA MesClactParamTbl = {
 	{ MES_PX, MES_PY, 0, 10, 0 },
 	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
 	0, CLSYS_DRAW_MAIN
 };
 
+// ポケモン情報OBJデータ
 static const DDEMO_CLWK_DATA InfoClactParamTbl = {
 	{ INFO_PX, INFO_PY, 1, 10, 0 },
 	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
 	0, CLSYS_DRAW_MAIN
 };
 
+// シーン１光エフェクトOBJデータ
 static const DDEMO_CLWK_DATA PokeFlashClactParamTbl = {
 	{ 48, 144, 6, 8, 0 },
 	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
 	0, CLSYS_DRAW_MAIN
 };
 
+// ポケモン正面OBJデータ
 static const DDEMO_CLWK_DATA PokeClactParamTbl = {
 	{ -48, 144, 0, 10, 0 },
 	DDEMOOBJ_CHRRES_POKE, DDEMOOBJ_PALRES_POKE, DDEMOOBJ_CELRES_POKE,
 	0, CLSYS_DRAW_MAIN
 };
 
+// ポケモン背面OBJデータ
 static const DDEMO_CLWK_DATA PokeBackClactParamTbl = {
 	{ 304, 144, 0, 10, 0 },
 	DDEMOOBJ_CHRRES_POKE_B, DDEMOOBJ_PALRES_POKE_B, DDEMOOBJ_CELRES_POKE_B,
 	0, CLSYS_DRAW_MAIN
 };
 
+//「ポケモンリーグ　チャンピオン　おめでとう」OBJデータ
 static const DDEMO_CLWK_DATA Mes2ClactParamTbl = {
 	{ 128, 24, 2, 10, 0 },
 	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
 	0, CLSYS_DRAW_MAIN
 };
 
+// プレイデータOBJデータ
 static const DDEMO_CLWK_DATA Info2ClactParamTbl = {
 	{ 128, 168, 2, 10, 0 },
 	DDEMOOBJ_CHRRES_ETC, DDEMOOBJ_PALRES_ETC, DDEMOOBJ_CELRES_ETC,
 	0, CLSYS_DRAW_MAIN
 };
 
+// シーン２光エフェクトOBJデータ
 static const DDEMO_CLWK_DATA FlashClactParamTbl[] =
 {
 	{	// メイン
@@ -154,6 +162,7 @@ static const DDEMO_CLWK_DATA FlashClactParamTbl[] =
 	},
 };
 
+// 主人公OBJデータ
 static const DDEMO_CLWK_DATA PlayerClactParamTbl[] =
 {
 	{	// メイン
@@ -191,6 +200,16 @@ static const u32 TypePalTbl[] = {
 
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		OBJ初期化
+ *
+ * @param		wk			ワーク
+ * @param		scene		シーン番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk, u32 scene )
 {
 	if( scene == 0 ){
@@ -242,6 +261,15 @@ void DDEMOOBJ_Init( DDEMOMAIN_WORK * wk, u32 scene )
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		OBJ解放
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_Exit( DDEMOMAIN_WORK * wk )
 {
 	BmpOam_Exit( wk->fntoam );
@@ -249,6 +277,15 @@ void DDEMOOBJ_Exit( DDEMOMAIN_WORK * wk )
 	GFL_CLACT_SYS_Delete();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪアニメメイン
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void AnmMain( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -261,6 +298,18 @@ static void AnmMain( DDEMOMAIN_WORK * wk )
 	GFL_CLACT_SYS_Main();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ座標設定
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ * @param		x				Ｘ座標
+ * @param		y				Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_SetPos( DDEMOMAIN_WORK * wk, u32 id, s16 x, s16 y )
 {
 	GFL_CLACTPOS	pos;
@@ -270,6 +319,18 @@ void DDEMOOBJ_SetPos( DDEMOMAIN_WORK * wk, u32 id, s16 x, s16 y )
 	GFL_CLACT_WK_SetPos( wk->clwk[id], &pos, CLSYS_DRAW_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ座標取得
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ * @param		x				Ｘ座標格納場所
+ * @param		y				Ｙ座標格納場所
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_GetPos( DDEMOMAIN_WORK * wk, u32 id, s16 * x, s16 * y )
 {
 	GFL_CLACTPOS	pos;
@@ -279,6 +340,18 @@ void DDEMOOBJ_GetPos( DDEMOMAIN_WORK * wk, u32 id, s16 * x, s16 * y )
 	*y = pos.y;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ移動
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ * @param		x				Ｘ移動量
+ * @param		y				Ｙ移動量
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_Move( DDEMOMAIN_WORK * wk, u32 id, s16 mx, s16 my )
 {
 	s16	x, y;
@@ -289,6 +362,17 @@ void DDEMOOBJ_Move( DDEMOMAIN_WORK * wk, u32 id, s16 mx, s16 my )
 	DDEMOOBJ_SetPos( wk, id, x, y );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ表示切り替え
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ * @param		flg			TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_SetVanish( DDEMOMAIN_WORK * wk, u32 id, BOOL flg )
 {
 	if( wk->clwk[id] != NULL ){
@@ -296,6 +380,17 @@ void DDEMOOBJ_SetVanish( DDEMOMAIN_WORK * wk, u32 id, BOOL flg )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪオートアニメ設定
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ * @param		anm			アニメ番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_SetAutoAnm( DDEMOMAIN_WORK * wk, u32 id, u32 anm )
 {
 	GFL_CLACT_WK_SetAnmFrame( wk->clwk[id], 0 );
@@ -303,15 +398,32 @@ void DDEMOOBJ_SetAutoAnm( DDEMOMAIN_WORK * wk, u32 id, u32 anm )
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[id], TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪアニメ稼動チェック
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ *
+ * @retval	"TRUE = アニメ中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL DDEMOOBJ_CheckAnm( DDEMOMAIN_WORK * wk, u32 id )
 {
 	return GFL_CLACT_WK_CheckAnmActive( wk->clwk[id] );
 }
 
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース初期化
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitResource( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -328,6 +440,16 @@ static void InitResource( DDEMOMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		キャラリソース削除
+ *
+ * @param		wk			ワーク
+ * @param		idx			リソースインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResChr( DDEMOMAIN_WORK * wk, u32 idx )
 {
 	if( wk->chrRes[idx] != RES_NONE ){
@@ -335,6 +457,17 @@ static void ExitResChr( DDEMOMAIN_WORK * wk, u32 idx )
 		wk->chrRes[idx] = RES_NONE;
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットリソース削除
+ *
+ * @param		wk			ワーク
+ * @param		idx			リソースインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResPal( DDEMOMAIN_WORK * wk, u32 idx )
 {
 	if( wk->palRes[idx] != RES_NONE ){
@@ -342,6 +475,17 @@ static void ExitResPal( DDEMOMAIN_WORK * wk, u32 idx )
 		wk->palRes[idx] = RES_NONE;
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルリソース削除
+ *
+ * @param		wk			ワーク
+ * @param		idx			リソースインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResCel( DDEMOMAIN_WORK * wk, u32 idx )
 {
 	if( wk->celRes[idx] != RES_NONE ){
@@ -350,6 +494,15 @@ static void ExitResCel( DDEMOMAIN_WORK * wk, u32 idx )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース削除
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResource( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -365,6 +518,15 @@ static void ExitResource( DDEMOMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ追加
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static GFL_CLWK * CleateClact( DDEMOMAIN_WORK * wk, const DDEMO_CLWK_DATA * prm )
 {
 	return GFL_CLACT_WK_Create(
@@ -375,15 +537,33 @@ static GFL_CLWK * CleateClact( DDEMOMAIN_WORK * wk, const DDEMO_CLWK_DATA * prm 
 					&prm->dat, prm->disp, HEAPID_DENDOU_DEMO );
 }
 
-
-static void DelClact( DDEMOMAIN_WORK * wk, u32 idx )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ削除（個別）
+ *
+ * @param		wk			ワーク
+ * @param		id			OBJ ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DelClact( DDEMOMAIN_WORK * wk, u32 id )
 {
-	if( wk->clwk[idx] != NULL ){
-		GFL_CLACT_WK_Remove( wk->clwk[idx] );
-		wk->clwk[idx] = NULL;
+	if( wk->clwk[id] != NULL ){
+		GFL_CLACT_WK_Remove( wk->clwk[id] );
+		wk->clwk[id] = NULL;
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ削除（全体）
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DelClactAll( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -393,6 +573,15 @@ static void DelClactAll( DDEMOMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンＯＢＪ追加
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -444,6 +633,15 @@ void DDEMOOBJ_AddPoke( DDEMOMAIN_WORK * wk )
 	wk->clwk[DDEMOOBJ_ID_POKE_B] = CleateClact( wk, &PokeBackClactParamTbl );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ別ウィンドウパレット設定
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_SetTypeWindow( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -460,9 +658,16 @@ void DDEMOOBJ_SetTypeWindow( DDEMOMAIN_WORK * wk )
 }
 
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＡＭフォント削除（個別）
+ *
+ * @param		wk			ワーク
+ * @param		idx			ＯＡＭフォントインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DeleteFontOam( DDEMOMAIN_WORK * wk, u32 idx )
 {
 	if( wk->fobj[idx].oam != NULL ){
@@ -472,6 +677,15 @@ static void DeleteFontOam( DDEMOMAIN_WORK * wk, u32 idx )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＡＭフォント削除（全体）
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DeleteFontOamAll( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -481,12 +695,35 @@ static void DeleteFontOamAll( DDEMOMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＡＭフォント書き込み
+ *
+ * @param		wk			ワーク
+ * @param		idx			ＯＡＭフォントインデックス
+ * @param		font		フォント
+ * @param		str			文字列
+ * @param		x				Ｘ座標
+ * @param		y				Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PrintFontOam( DDEMOMAIN_WORK * wk, u32 idx, GFL_FONT * font, STRBUF * str, u32 x, u32 y )
 {
 	PRINTSYS_PrintColor( wk->fobj[idx].bmp, x, y, str, font, FCOL_FNTOAM );
 	BmpOam_ActorBmpTrans( wk->fobj[idx].oam );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン１のＯＡＭフォント初期化
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitScene1FontOam( DDEMOMAIN_WORK * wk )
 {
 	BMPOAM_ACT_DATA	finit;
@@ -528,6 +765,15 @@ static void InitScene1FontOam( DDEMOMAIN_WORK * wk )
 	fobj->oam = BmpOam_ActorAdd( wk->fntoam, &finit );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン情報書き込み
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
 {
 	POKEMON_PASO_PARAM * ppp;
@@ -565,6 +811,15 @@ void DDEMOOBJ_PrintPokeInfo( DDEMOMAIN_WORK * wk )
 	PPP_FastModeOff( ppp, fast );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン２のＯＡＭフォント初期化
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitScene2FontOam( DDEMOMAIN_WORK * wk )
 {
 	BMPOAM_ACT_DATA	finit;
@@ -634,7 +889,15 @@ static void InitScene2FontOam( DDEMOMAIN_WORK * wk )
 	GFL_STR_DeleteBuffer( str );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＡＭフォント移動
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_MoveFontOamPos( DDEMOMAIN_WORK * wk )
 {
 	s16	x, y;
@@ -646,13 +909,31 @@ void DDEMOOBJ_MoveFontOamPos( DDEMOMAIN_WORK * wk )
 	BmpOam_ActorSetPos( wk->fobj[DDEMOOBJ_FOAM_INFO].oam, x, y-8 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＡＭフォント表示切り替え
+ *
+ * @param		wk			ワーク
+ * @param		idx			ＯＡＭフォントインデックス
+ * @param		flg			TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void BOX2OBJ_FontOamVanish( DDEMOMAIN_WORK * wk, u32 idx, BOOL flg )
 {
 	BmpOam_ActorSetDrawEnable( wk->fobj[idx].oam, flg );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		共通リソース読み込み
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void LoadDefaultResource( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO_L );
@@ -679,8 +960,15 @@ static void LoadDefaultResource( DDEMOMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン１初期化
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_InitScene1( DDEMOMAIN_WORK * wk )
 {
 	LoadDefaultResource( wk );
@@ -694,6 +982,15 @@ void DDEMOOBJ_InitScene1( DDEMOMAIN_WORK * wk )
 	InitScene1FontOam( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン１解放
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_ExitScene1( DDEMOMAIN_WORK * wk )
 {
 	DeleteFontOamAll( wk );
@@ -701,6 +998,15 @@ void DDEMOOBJ_ExitScene1( DDEMOMAIN_WORK * wk )
 	ExitResource( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン１メイン
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -713,9 +1019,15 @@ void DDEMOOBJ_MainScene1( DDEMOMAIN_WORK * wk )
 	AnmMain( wk );
 }
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン２初期化
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -778,6 +1090,15 @@ void DDEMOOBJ_InitScene2( DDEMOMAIN_WORK * wk )
 	InitScene2FontOam( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン２解放
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_ExitScene2( DDEMOMAIN_WORK * wk )
 {
 	DeleteFontOamAll( wk );
@@ -788,11 +1109,29 @@ void DDEMOOBJ_ExitScene2( DDEMOMAIN_WORK * wk )
 	ExitResource( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン２メイン
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_MainScene2( DDEMOMAIN_WORK * wk )
 {
 	AnmMain( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン２光ＯＢＪ表示設定
+ *
+ * @param		wk			ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOOBJ_SetRandomFlash( DDEMOMAIN_WORK * wk )
 {
 	s16	x, y;

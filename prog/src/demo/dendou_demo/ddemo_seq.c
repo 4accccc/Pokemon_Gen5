@@ -20,6 +20,46 @@
 #include "ddemo_obj.h"
 
 
+//============================================================================================
+//	定数定義
+//============================================================================================
+// シーン１データ
+#define	DEF_1ST_START_WAIT			( 32 )																						// 開始ウェイト
+#define	DEF_1ST_PM_LEFT_SPEED		( -16 )																						// ポケモン左移動速度
+#define	DEF_1ST_PM_LEFT_COUNT		( (256+96) / GFL_STD_Abs(DEF_1ST_PM_LEFT_SPEED) )	// ポケモン左移動カウント	
+#define	DEF_1ST_PM_LEFT_WAIT		( 8 )																							// ポケモン左移動後のウェイト
+#define	DEF_1ST_TYPE_EFF_WAIT		( 8 )																							// タイプ別エフェクト後のウェイト
+#define	DEF_1ST_PM_RIGHT_SPEED	( 16 )																						// ポケモン右移動速度
+#define	DEF_1ST_PM_RIGHT_EPX		( 48 )																						// ポケモン右移動終了座標
+#define	DEF_1ST_MM_RIGHT_EPX		( 21*8 )																					//「おめでとう」右移動終了座標
+#define	DEF_1ST_IM_RIGHT_EPX		( 11*8 )																					// ポケモン情報左移動終了座標
+#define	DEF_1ST_PM_RIGHT_WAIT		( 128 )																						// ポケモン右移動後のウェイト
+#define	DEF_1ST_PM_OUT_SPEED		( 16 )																						// ポケモン画面アウト移動速度
+#define	DEF_1ST_PM_OUT_EPX			( -48 )																						// ポケモン画面アウト終了座標
+#define	DEF_1ST_MM_OUT_EPX			( -8 )																						//「おめでとう」アウト終了座標
+#define	DEF_1ST_IM_OUT_EPX			( 256+8 )																					// ポケモン情報アウト終了座標
+#define	DEF_1ST_LOOP_WAIT				( 32 )																						// シーン１ループ開始ウェイト
+
+// シーン２データ
+#define	DEF_2ND_START_WAIT				( 32 )																					// 開始ウェイト
+#define	DEF_2ND_PLAYER_FALL_SPEED	( 8 )																						// プレイヤー落下速度
+#define	DEF_2ND_PLAYER_FALL_COUNT	( (192+128+24+64)/DEF_2ND_PLAYER_FALL_SPEED )		// プレイヤー落下カウント
+#define	DEF_2ND_WIN_OPEN_WAIT			( 32 )																					// ウィンドウオープン開始ウェイト
+#define	DEF_2ND_WIN_PUT_WAIT			( 16 )																					// ウィンドウオープン後のウェイト
+#define	DEF_2ND_INFO_PUT_WAIT			( 32 )																					// プレイ情報表示後のウェイト
+#define	DEF_2ND_MES_PUT_WAIT			( 60*5 )																				//「おめでとう」表示後のウェイト
+#define	DEF_2ND_POKEIN_WAIT_MAX		( 256 )																					// ポケモン表示開始ウェイト
+#define	DEF_2ND_POKEIN_WAIT				( 128 )																					// 次のポケモン表示開始ウェイト
+#define	DEF_2ND_POKEIN_SPEED			( -8 )																					// ポケモン画面イン速度
+#define	DEF_2ND_POKEIN_COUNT			( 19 )																					// ポケモン画面イン移動カウント
+#define	DEF_2ND_POKEOUT_WAIT			( 128 )																					// ポケモン画面アウト開始ウェイト
+#define	DEF_2ND_POKEOUT_SPEED			( -8 )																					// ポケモン画面アウト速度
+#define	DEF_2ND_POKEOUT_COUNT			( 32+12-DEF_2ND_POKEIN_COUNT )									// ポケモン画面アウト移動カウント
+
+
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
 static int MainSeq_Init( DDEMOMAIN_WORK * wk );
 static int MainSeq_Release( DDEMOMAIN_WORK * wk );
 static int MainSeq_Wipe( DDEMOMAIN_WORK * wk );
@@ -43,6 +83,11 @@ static BOOL MoveObjRand( DDEMOMAIN_WORK * wk, u32 id );
 static void RotationBgScene2( DDEMOMAIN_WORK * wk );
 
 
+//============================================================================================
+//	グローバル
+//============================================================================================
+
+// メインシーケンス
 static const pDDEMOMAIN_FUNC MainSeq[] = {
 	MainSeq_Init,
 	MainSeq_Release,
@@ -59,8 +104,16 @@ static const pDDEMOMAIN_FUNC MainSeq[] = {
 };
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メイン処理
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL DDEMOSEQ_MainSeq( DDEMOMAIN_WORK * wk )
 {
 	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
@@ -71,7 +124,6 @@ BOOL DDEMOSEQ_MainSeq( DDEMOMAIN_WORK * wk )
 	if( wk->scene == 1 ){
 		DDEMOOBJ_MainScene1( wk );
 		DDEMOMAIN_MainDouble3D( wk );
-//		GFL_G3D_DOUBLE3D_SetSwapFlag();
 	}else if( wk->scene == 2 ){
 		DDEMOOBJ_MainScene2( wk );
 		DDEMOMAIN_Main3D( wk );
@@ -81,7 +133,15 @@ BOOL DDEMOSEQ_MainSeq( DDEMOMAIN_WORK * wk )
 	return TRUE;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：初期化
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 {
 	// 表示初期化
@@ -100,15 +160,18 @@ static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 
 	DDEMOMAIN_GetPokeMax( wk );
 
-/*
-	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-		return MAINSEQ_2ND_INIT;
-	}
-*/
-
 	return MAINSEQ_1ST_INIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：解放
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Release( DDEMOMAIN_WORK * wk )
 {
 	DDEMOMAIN_ExitSound( wk );
@@ -128,6 +191,15 @@ static int MainSeq_Release( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_END;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ワイプ処理
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Wipe( DDEMOMAIN_WORK * wk )
 {
 	if( WIPE_SYS_EndCheck() == TRUE ){
@@ -136,6 +208,15 @@ static int MainSeq_Wipe( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ウェイト処理
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Wait( DDEMOMAIN_WORK * wk )
 {
 	if( wk->wait == 0 ){
@@ -145,7 +226,15 @@ static int MainSeq_Wait( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_WAIT;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：シーン１初期化
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_1stInit( DDEMOMAIN_WORK * wk )
 {
 	DDEMOMAIN_InitVram( 0 );
@@ -154,7 +243,6 @@ static int MainSeq_1stInit( DDEMOMAIN_WORK * wk )
 	DDEMOMAIN_Init3D( wk );
 	DDEMOMAIN_InitParticle();
 	DDEMOMAIN_InitDouble3D();
-//	DDEMOMAIN_CreateNameParticle( wk );
 
 	DDEMOOBJ_Init( wk, 0 );
 	DDEMOOBJ_InitScene1( wk );
@@ -168,6 +256,15 @@ static int MainSeq_1stInit( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_1ST_MAIN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：シーン１解放
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_1stExit( DDEMOMAIN_WORK * wk )
 {
 	DDEMOMAIN_ExitVBlank( wk );
@@ -178,7 +275,6 @@ static int MainSeq_1stExit( DDEMOMAIN_WORK * wk )
 	DDEMOOBJ_ExitScene1( wk );
 	DDEMOOBJ_Exit( wk );
 
-//	DDEMOMAIN_DeleteNameParticle( wk );
 	DDEMOMAIN_ExitDouble3D();
 	DDEMOMAIN_ExitParticle();
 	DDEMOMAIN_Exit3D( wk );
@@ -188,35 +284,17 @@ static int MainSeq_1stExit( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_2ND_INIT;
 }
 
-
-#define	DEF_1ST_START_WAIT		( 32 )
-#define	DEF_1ST_PM_LEFT_SPEED	( -16 )
-#define	DEF_1ST_PM_LEFT_COUNT	( (256+96) / GFL_STD_Abs(DEF_1ST_PM_LEFT_SPEED) )
-#define	DEF_1ST_PM_LEFT_WAIT	( 8 )
-#define	DEF_1ST_TYPE_EFF_WAIT	( 8 )
-
-#define	DEF_1ST_PM_RIGHT_SPEED	( 16 )
-#define	DEF_1ST_PM_RIGHT_EPX		( 48 )
-#define	DEF_1ST_MM_RIGHT_EPX		( 21*8 )
-#define	DEF_1ST_IM_RIGHT_EPX		( 11*8 )
-#define	DEF_1ST_PM_RIGHT_WAIT		( 128 )
-
-#define	DEF_1ST_PM_OUT_SPEED	( 16 )
-#define	DEF_1ST_PM_OUT_EPX		( -48 )
-#define	DEF_1ST_MM_OUT_EPX		( -8 )
-#define	DEF_1ST_IM_OUT_EPX		( 256+8 )
-
-#define	DEF_1ST_LOOP_WAIT		( 32 )
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：シーン１メイン
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 {
-/*
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-		PMSND_StopBGM();
-		return SetFadeOut( wk, MAINSEQ_1ST_EXIT );
-	}
-*/
-
 	switch( wk->subSeq ){
 	case 0:		// 初期ウェイト
 		wk->subSeq++;
@@ -230,9 +308,6 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 	case 2:
 		wk->wait++;
 		if( wk->wait == 48 ){
-//    if( PMSND_CheckPlayingSEIdx(SEQ_SE_DDEMO_02A) == FALSE ){
-//			OS_Printf( "se wait = %d\n", wk->wait );
-//			PMSND_StopSE();
 			PMSND_PlaySE( SEQ_SE_DDEMO_02B );
 			wk->wait = 0;
 			wk->subSeq++;
@@ -393,14 +468,6 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 	case 16:		// 終了チェック
 		DDEMOMAIN_DeleteNameParticle( wk );
 		DDEMOMAIN_DeleteTypeParticle( wk );
-/*
-		// デバッグ用スキップ処理
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
-			wk->pokePos = 0;
-			wk->subSeq = 0;
-			return MAINSEQ_1ST_EXIT;
-		}
-*/
 		wk->pokePos++;
 		if( wk->pokePos == wk->pokeMax ){
 			wk->pokePos = 0;
@@ -415,9 +482,15 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_1ST_MAIN;
 }
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：シーン２初期化
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_2ndInit( DDEMOMAIN_WORK * wk )
 {
 	GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );		// サブ画面をメインに
@@ -431,12 +504,8 @@ static int MainSeq_2ndInit( DDEMOMAIN_WORK * wk )
 	DDEMOMAIN_Init3D( wk );
 	DDEMOMAIN_InitMcss( wk );
 
-//	DDEMOMAIN_AddMcss( wk );
-
 	DDEMOOBJ_Init( wk, 1 );
 	DDEMOOBJ_InitScene2( wk );
-
-//	DDEMOMAIN_SetBlendAlpha();
 
 	DDEMOMAIN_InitScene2VBlank( wk );
 
@@ -445,19 +514,23 @@ static int MainSeq_2ndInit( DDEMOMAIN_WORK * wk )
 	return SetFadeIn( wk, MAINSEQ_2ND_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：シーン２解放
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk )
 {
 	DDEMOMAIN_ExitVBlank( wk );
-
-//	G2_BlendNone();
-//	G2S_BlendNone();
 
 	DDEMOOBJ_ExitScene2( wk );
 	DDEMOOBJ_Exit( wk );
 
 	DDEMOMAIN_ExitScene2BgFrame();
-
-//	DDEMOMAIN_DelMcss( wk );
 
 	DDEMOMAIN_ExitMcss( wk );
 	DDEMOMAIN_Exit3D( wk );
@@ -467,24 +540,15 @@ static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_RELEASE;
 }
 
-
-
-#define	DEF_2ND_START_WAIT				( 32 )
-#define	DEF_2ND_PLAYER_FALL_SPEED	( 8 )
-#define	DEF_2ND_PLAYER_FALL_COUNT	( (192+128+24+64)/DEF_2ND_PLAYER_FALL_SPEED )
-#define	DEF_2ND_WIN_OPEN_WAIT			( 32 )
-#define	DEF_2ND_WIN_PUT_WAIT			( 16 )
-#define	DEF_2ND_INFO_PUT_WAIT			( 32 )
-#define	DEF_2ND_MES_PUT_WAIT			( 60*5 )
-
-#define	DEF_2ND_POKEIN_WAIT				( 128 )
-#define	DEF_2ND_POKEIN_WAIT_MAX		( 256 )
-#define	DEF_2ND_POKEIN_SPEED			( -8 )
-#define	DEF_2ND_POKEIN_COUNT			( 19 )
-#define	DEF_2ND_POKEOUT_WAIT			( 128 )
-#define	DEF_2ND_POKEOUT_SPEED			( -8 )
-#define	DEF_2ND_POKEOUT_COUNT			( 32+12-DEF_2ND_POKEIN_COUNT )
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：シーン２メイン
+ *
+ * @param		wk		ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 {
 	switch( wk->subSeq ){
@@ -620,12 +684,16 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 	return MAINSEQ_2ND_MAIN;
 }
 
-
-
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードイン設定
+ *
+ * @param		wk		ワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetFadeIn( DDEMOMAIN_WORK * wk, int next )
 {
 	WIPE_SYS_Start(
@@ -635,6 +703,16 @@ static int SetFadeIn( DDEMOMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードアウト設定
+ *
+ * @param		wk		ワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetFadeOut( DDEMOMAIN_WORK * wk, int next )
 {
 	WIPE_SYS_Start(
@@ -644,6 +722,16 @@ static int SetFadeOut( DDEMOMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ウェイト設定
+ *
+ * @param		wk		ワーク
+ * @param		wait	ウェイト
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetWait( DDEMOMAIN_WORK * wk, int wait )
 {
 	wk->wait = wait;
@@ -651,8 +739,15 @@ static int SetWait( DDEMOMAIN_WORK * wk, int wait )
 	return MAINSEQ_WAIT;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ別ウィンドウのランダム動作設定
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MakeRandMoveParam( DDEMOMAIN_WORK * wk )
 {
 	u32	i;
@@ -665,6 +760,17 @@ static void MakeRandMoveParam( DDEMOMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ別ウィンドウのランダム動作
+ *
+ * @param		wk		ワーク
+ * @param		id		OBJ ID
+ *
+ * @retval	"TRUE = 動作中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MoveObjRand( DDEMOMAIN_WORK * wk, u32 id )
 {
 	if( wk->rndCnt == 8 ){
@@ -677,6 +783,15 @@ static BOOL MoveObjRand( DDEMOMAIN_WORK * wk, u32 id )
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		シーン２のボール面回転動作
+ *
+ * @param		wk		ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void RotationBgScene2( DDEMOMAIN_WORK * wk )
 {
 	GFL_BG_SetRadianReq( GFL_BG_FRAME3_M, GFL_BG_RADION_INC, 1 );

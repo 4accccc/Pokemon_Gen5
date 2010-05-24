@@ -37,6 +37,8 @@
 static void Scene1_VBlankTask( GFL_TCB * tcb, void * work );
 static void Scene2_VBlankTask( GFL_TCB * tcb, void * work );
 
+static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp );
+
 
 //============================================================================================
 //	グローバル
@@ -114,7 +116,7 @@ static const u32 SndTbl[] = {
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		VBLANK関数設定
+ * @brief		VBLANK関数設定（シーン１）
  *
  * @param		wk		殿堂入りデモ画面ワーク
  *
@@ -125,6 +127,16 @@ void DDEMOMAIN_InitScene1VBlank( DDEMOMAIN_WORK * wk )
 {
 	wk->vtask = GFUser_VIntr_CreateTCB( Scene1_VBlankTask, wk, 0 );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK関数設定（シーン２）
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitScene2VBlank( DDEMOMAIN_WORK * wk )
 {
 	wk->vtask = GFUser_VIntr_CreateTCB( Scene2_VBlankTask, wk, 0 );
@@ -146,10 +158,10 @@ void DDEMOMAIN_ExitVBlank( DDEMOMAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		VBLANK処理
+ * @brief		VBLANK処理（シーン１）
  *
  * @param		tcb		GFL_TCB
- * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		wk		殿堂入りデモ画面ワーク
  *
  * @return	none
  */
@@ -161,6 +173,17 @@ static void Scene1_VBlankTask( GFL_TCB * tcb, void * work )
 	GFL_G3D_DOUBLE3D_VblankIntr();
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK処理（シーン２）
+ *
+ * @param		tcb		GFL_TCB
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void Scene2_VBlankTask( GFL_TCB * tcb, void * work )
 {
 	GFL_BG_VBlankFunc();
@@ -169,8 +192,15 @@ static void Scene2_VBlankTask( GFL_TCB * tcb, void * work )
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM初期化
+ *
+ * @param		scene		シーン
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitVram( u32 scene )
 {
 	GFL_DISP_ClearVRAM( 0 );
@@ -181,6 +211,15 @@ void DDEMOMAIN_InitVram( u32 scene )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM設定取得
+ *
+ * @param		scene		シーン
+ *
+ * @return	VRAM設定
+ */
+//--------------------------------------------------------------------------------------------
 const GFL_DISP_VRAM * DDEMOMAIN_GetVramBankData( u32 scene )
 {
 	if( scene == 0 ){
@@ -189,16 +228,43 @@ const GFL_DISP_VRAM * DDEMOMAIN_GetVramBankData( u32 scene )
 	return &VramTblScene2;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitBg(void)
 {
 	GFL_BG_Init( HEAPID_DENDOU_DEMO );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG削除
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_ExitBg(void)
 {
 	GFL_BG_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGモード初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitBgMode(void)
 {
 	GFL_BG_SYS_HEADER sysh = {
@@ -206,12 +272,19 @@ void DDEMOMAIN_InitBgMode(void)
 	};
 	GFL_BG_SetBGMode( &sysh );
 
-//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x7ffff );
-//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x7ffff );
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGフレーム設定（シーン２）
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitScene2BgFrame(void)
 {
 	{
@@ -245,12 +318,19 @@ void DDEMOMAIN_InitScene2BgFrame(void)
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 
-//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0x7ffff );
-//	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0x7ffff );
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_M, 0 );
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME0_S, 0 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGフレーム削除（シーン２）
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_ExitScene2BgFrame(void)
 {
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
@@ -260,6 +340,15 @@ void DDEMOMAIN_ExitScene2BgFrame(void)
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG読み込み（シーン２）
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_LoadScene2BgGraphic(void)
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_DENDOU_DEMO_GRA, HEAPID_DENDOU_DEMO );
@@ -282,6 +371,15 @@ void DDEMOMAIN_LoadScene2BgGraphic(void)
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アルファブレンド設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_SetBlendAlpha(void)
 {
 	G2_SetBlendAlpha(
@@ -298,7 +396,7 @@ void DDEMOMAIN_SetBlendAlpha(void)
 /**
  * @brief	  メッセージ関連初期化
  *
- * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		wk		殿堂入りデモ画面ワーク
  *
  * @return	none
  */
@@ -322,7 +420,7 @@ void DDEMOMAIN_InitMsg( DDEMOMAIN_WORK * wk )
 /**
  * @brief	  メッセージ関連解放
  *
- * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		wk		殿堂入りデモ画面ワーク
  *
  * @return	none
  */
@@ -336,26 +434,44 @@ void DDEMOMAIN_ExitMsg( DDEMOMAIN_WORK * wk )
 	GFL_MSG_Delete( wk->mman );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  サウンド初期設定
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitSound( DDEMOMAIN_WORK * wk )
 {
-//	PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
-//	PMSND_PauseBGM( TRUE );
-
 	wk->sndHandle = SOUNDMAN_PresetSoundTbl( SndTbl, NELEMS(SndTbl) );
-
-//	PMSND_PauseBGM( FALSE );
 	PMSND_PlayBGM( SEQ_BGM_E_DENDOUIRI );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  サウンド削除
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_ExitSound( DDEMOMAIN_WORK * wk )
 {
-//	PMSND_StopBGM();
 	SOUNDMAN_ReleasePresetData( wk->sndHandle );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  ポケモン最大数設定
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_GetPokeMax( DDEMOMAIN_WORK * wk )
 {
 	POKEMON_PARAM * pp;
@@ -372,16 +488,22 @@ void DDEMOMAIN_GetPokeMax( DDEMOMAIN_WORK * wk )
 		}
 		PP_FastModeOff( pp, fast );
 	}
-
-//	wk->pokeMax = PokeParty_GetPokeCount( wk->dat->party );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  ポケモンデータ取得
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk )
 {
 	POKEMON_PARAM * pp;
 	BOOL	fast;
 	
-//	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
 	pp = wk->pp[wk->pokePos];
 
 	fast = PP_FastModeOn( pp );
@@ -393,6 +515,15 @@ void DDEMOMAIN_GetPokeData( DDEMOMAIN_WORK * wk )
 	PP_FastModeOff( pp, fast );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  鳴き声読み込み
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_LoadPokeVoice( DDEMOMAIN_WORK * wk )
 {
 	if( wk->monsno == MONSNO_PERAPPU ){
@@ -409,118 +540,19 @@ void DDEMOMAIN_LoadPokeVoice( DDEMOMAIN_WORK * wk )
 }
 
 
+//============================================================================================
+//	3D
+//============================================================================================
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// 上画面カメラ設定（数値適当）
-// 焦点
-#define	U_CAMERA_TX_F32	( 0.0 )
-#define	U_CAMERA_TY_F32	( 192.0 )
-#define	U_CAMERA_TZ_F32	( 0.0 )
-//#define	U_CAMERA_TX_F32	( 0.0 )
-//#define	U_CAMERA_TY_F32	( 4.5 )
-//#define	U_CAMERA_TZ_F32	( -6.0 )
-#define	U_CAMERA_TX		( FX_F32_TO_FX32(U_CAMERA_TX_F32) )
-#define	U_CAMERA_TY		( FX_F32_TO_FX32(U_CAMERA_TY_F32) )
-#define	U_CAMERA_TZ		( FX_F32_TO_FX32(U_CAMERA_TZ_F32) )
-// 位置
-#define	U_CAMERA_PX_F32	( 0.0 )
-#define	U_CAMERA_PY_F32	( 18.0 )
-#define	U_CAMERA_PZ_F32	( 5.6 )
-#define	U_CAMERA_PX		( FX_F32_TO_FX32(U_CAMERA_PX_F32) )
-#define	U_CAMERA_PY		( FX_F32_TO_FX32(U_CAMERA_PY_F32) )
-#define	U_CAMERA_PZ		( FX_F32_TO_FX32(U_CAMERA_PZ_F32) )
-
-// 下画面カメラ設定（数値適当）
-// 焦点
-//#define	D_CAMERA_TX_F32	( 0.0 )
-//#define	D_CAMERA_TY_F32	( 4.5 )
-//#define	D_CAMERA_TZ_F32	( 2.3 )
-#define	D_CAMERA_TX_F32	( 0.0 )
-#define	D_CAMERA_TY_F32	( 0.0 )
-#define	D_CAMERA_TZ_F32	( 0.0 )
-#define	D_CAMERA_TX		( FX_F32_TO_FX32(D_CAMERA_TX_F32) )
-#define	D_CAMERA_TY		( FX_F32_TO_FX32(D_CAMERA_TY_F32) )
-#define	D_CAMERA_TZ		( FX_F32_TO_FX32(D_CAMERA_TZ_F32) )
-// 位置
-//#define	D_CAMERA_PX_F32	( 0.0 )
-//#define	D_CAMERA_PY_F32	( 18.0 )
-//#define	D_CAMERA_PZ_F32	( 14.0 )
-#define	D_CAMERA_PX_F32	( 0.0 )
-#define	D_CAMERA_PY_F32	( 0.0 )
-#define	D_CAMERA_PZ_F32	( 0.0 )
-#define	D_CAMERA_PX		( FX_F32_TO_FX32(D_CAMERA_PX_F32) )
-#define	D_CAMERA_PY		( FX_F32_TO_FX32(D_CAMERA_PY_F32) )
-#define	D_CAMERA_PZ		( FX_F32_TO_FX32(D_CAMERA_PZ_F32) )
-
-#define	CAMERA_FOVY		( 18.5 )			// 縦(y)方向の視界角度
-#define	CAMERA_ASPECT	( FX32_ONE * 1.5 )	// 縦に対する横の視界の割合
-
-// ライト設定（数値適当）
-//#define	LIGHT_PX			( FX_F32_TO_FX16(0.0) )
-//#define	LIGHT_PY			( FX_F32_TO_FX16(-0.8) )
-//#define	LIGHT_PZ			( FX_F32_TO_FX16(-0.5) )
-#define	LIGHT_PX			( FX_F32_TO_FX16(0.0) )
-#define	LIGHT_PY			( FX_F32_TO_FX16(0.0) )
-#define	LIGHT_PZ			( FX_F32_TO_FX16(0.0) )
-#define	LIGHT_COLOR		( 0x7fff )
-
-// 絶対値計算
-/*
-#define	GAME_START_CAMERA_MX_U		( U_CAMERA_PX/16 )
-#define	GAME_START_CAMERA_MY_U		( U_CAMERA_PY/16 )
-#define	GAME_START_CAMERA_MZ_U		( U_CAMERA_PZ/16 )
-#define	GAME_START_CAMERA_MX_D		( (f32)(D_CAMERA_PX_F32-D_CAMERA_TX_F32)/(f32)16 )
-#define	GAME_START_CAMERA_MY_D		( (f32)(D_CAMERA_PY_F32-D_CAMERA_TY_F32)/(f32)16 )
-#define	GAME_START_CAMERA_MZ_D		( (f32)(D_CAMERA_PZ_F32-D_CAMERA_TZ_F32)/(f32)16 )
-
-#define	GAME_START_CAMERA_MOVE_UX(cnt)	( GAME_START_CAMERA_MX_U * (16-cnt) )
-#define	GAME_START_CAMERA_MOVE_UY(cnt)	( GAME_START_CAMERA_MY_U * (16-cnt) )
-#define	GAME_START_CAMERA_MOVE_UZ(cnt)	( GAME_START_CAMERA_MZ_U * (16-cnt) )
-#define	GAME_START_CAMERA_MOVE_DX(cnt)	( FX_F32_TO_FX32( (f32)GAME_START_CAMERA_MX_D * (f32)(16-cnt) ) )
-#define	GAME_START_CAMERA_MOVE_DY(cnt)	( FX_F32_TO_FX32( (f32)GAME_START_CAMERA_MY_D * (f32)(16-cnt) ) )
-#define	GAME_START_CAMERA_MOVE_DZ(cnt)	( FX_F32_TO_FX32( (f32)GAME_START_CAMERA_MZ_D * (f32)(16-cnt) ) )
-*/
-
-// カメラ注視点
-static const VecFx32 U_ComeraTarget = { U_CAMERA_TX, U_CAMERA_TY, U_CAMERA_TZ };
-static const VecFx32 D_ComeraTarget = { D_CAMERA_TX, D_CAMERA_TY, D_CAMERA_TZ };
-
-// カメラ位置
-static const VecFx32 U_ComeraPos = { U_CAMERA_PX, U_CAMERA_PY, U_CAMERA_PZ };
-static const VecFx32 D_ComeraPos = { D_CAMERA_PX, D_CAMERA_PY, D_CAMERA_PZ };
-
-// ライトデータ
-static const GFL_G3D_LIGHT_DATA LightData = { 0, { { LIGHT_PX, LIGHT_PY, LIGHT_PZ }, LIGHT_COLOR } };
-static const GFL_G3D_LIGHTSET_SETUP LightSetup = { &LightData, 1 };
-
-static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp );
-//static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp );
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セットアップ
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetUp3D(void)
 {
 	// ３Ｄ使用面の設定(表示＆プライオリティー)
@@ -546,22 +578,10 @@ static void SetUp3D(void)
 	{
 		static const GFL_G3D_LIGHT sc_GFL_G3D_LIGHT[] = 
 		{
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
-			{
-				{ 0, -FX16_ONE, 0 },
-				GX_RGB( 16,16,16),
-			},
+			{ { 0, -FX16_ONE, 0 }, GX_RGB( 16,16,16), },
+			{ { 0, FX16_ONE, 0 }, GX_RGB( 16,16,16), },
+			{ { 0, -FX16_ONE, 0 }, GX_RGB( 16,16,16), },
+			{ { 0, -FX16_ONE, 0 }, GX_RGB( 16,16,16), },
 		};
 		int i;
 		
@@ -574,6 +594,15 @@ static void SetUp3D(void)
 	GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		３Ｄ初期化
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk )
 {
 	// ３Ｄシステム起動
@@ -585,79 +614,35 @@ void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk )
 		DTCM_SIZE,					// ジオメトリバッファの使用サイズ
 		HEAPID_DENDOU_DEMO,	// ヒープID
 		SetUp3D );					// セットアップ関数(NULLの時はDefaultSetUp)
-//		NULL );					// セットアップ関数(NULLの時はDefaultSetUp)
 
 	// ハンドル作成
 	wk->g3d_util  = GFL_G3D_UTIL_Create( 32, 32, HEAPID_DENDOU_DEMO );
-
-/*
-	// 管理システム作成
-	wk->g3d_scene = GFL_G3D_SCENE_Create(
-										wk->g3d_util,						// 依存するg3Dutil
-										1000,										// 配置可能なオブジェクト数
-										4,											// １オブジェクトに割り当てるワークのサイズ
-										32,											// アクセサリ数
-										TRUE,										// パーティクルシステムの起動フラグ
-										HEAPID_DENDOU_DEMO );		// ヒープID
-*/
-
-
-
-
-/*
-	{	// カメラ作成
-		VecFx32 defaultCameraUp = { 0, FX32_ONE, 0 };
-
-		wk->g3d_camera[0] = GFL_G3D_CAMERA_Create(
-													GFL_G3D_PRJPERS, 
-													FX_SinIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
-													FX_CosIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
-													CAMERA_ASPECT,
-													0,
-													defaultCameraNear,
-													FX32_ONE,
-													0,
-													&D_ComeraPos,
-													&defaultCameraUp,
-													&D_ComeraTarget,
-													HEAPID_DENDOU_DEMO );
-
-		wk->g3d_camera[1] = GFL_G3D_CAMERA_Create(
-													GFL_G3D_PRJPERS, 
-													FX_SinIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
-													FX_CosIdx( CAMERA_FOVY/2 *PERSPWAY_COEFFICIENT ),
-													CAMERA_ASPECT,
-													0,
-													defaultCameraNear,
-													FX32_ONE,
-													0,
-													&U_ComeraPos,
-													&defaultCameraUp,
-													&U_ComeraTarget,
-													HEAPID_DENDOU_DEMO );
-	}
-
-	// ライト作成
-	wk->g3d_light = GFL_G3D_LIGHT_Create( &LightSetup, HEAPID_DENDOU_DEMO );
-
-	// カメラ・ライト反映
-	GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
-	GFL_G3D_LIGHT_Switching( wk->g3d_light );
-*/
-
-//	G3X_AntiAlias( TRUE );	// セットアップ関数で作ったほうがいいけど。。。
-
-//	GFL_BG_SetBGControl3D( 0 );				// BG面設定（引数は優先度）
-
-//	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		３Ｄ削除
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_Exit3D( DDEMOMAIN_WORK * wk )
 {
 	GFL_G3D_UTIL_Delete( wk->g3d_util );
 	GFL_G3D_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		３Ｄメイン処理（通常）
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_Main3D( DDEMOMAIN_WORK * wk )
 {
 	GFL_G3D_DRAW_Start();
@@ -669,28 +654,23 @@ void DDEMOMAIN_Main3D( DDEMOMAIN_WORK * wk )
 	GFL_G3D_DRAW_End();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		３Ｄメイン処理（２画面３Ｄ用）
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_MainDouble3D( DDEMOMAIN_WORK * wk )
 {
-/*
-	GFL_G3D_SCENE_Main( wk->g3d_scene );
-	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
-//		GFL_G3D_CAMERA_Switching( wk->g3d_camera[0] );
-//		GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, TRUE );
-//		CreateParticleCamera( wk, TRUE );
-	}else{
-//		GFL_G3D_CAMERA_Switching( wk->g3d_camera[1] );
-//		GFL_G3D_SCENE_SetDrawParticleSW( wk->g3d_scene, FALSE );
-//		CreateParticleCamera( wk, FALSE );
-	}
-	GFL_G3D_SCENE_Draw( wk->g3d_scene );
-*/
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
 
 	if( GFL_G3D_DOUBLE3D_GetFlip() == TRUE ){
 		CreateParticleCamera( wk, wk->ptc, TRUE );
 		CreateParticleCamera( wk, wk->ptcName, TRUE );
-//		CreateNameParticleCamera( wk, wk->ptcName, TRUE );
 	}else{
 		CreateParticleCamera( wk, wk->ptc, FALSE );
 		CreateParticleCamera( wk, wk->ptcName, FALSE );
@@ -701,28 +681,71 @@ void DDEMOMAIN_MainDouble3D( DDEMOMAIN_WORK * wk )
 	GFL_G3D_DOUBLE3D_SetSwapFlag();
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		２画面３Ｄ初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitDouble3D(void)
 {
 	GFL_G3D_DOUBLE3D_Init( HEAPID_DENDOU_DEMO );	// 2画面3D初期化
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		２画面３Ｄ削除
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_ExitDouble3D(void)
 {
 	GFL_G3D_DOUBLE3D_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パーティクル初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitParticle(void)
 {
 	GFL_PTC_Init( HEAPID_DENDOU_DEMO );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パーティクル削除
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_ExitParticle(void)
 {
 	GFL_PTC_Exit();
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ別パーティクル作成
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_CreateTypeParticle( DDEMOMAIN_WORK * wk )
 {
 	void * res;
@@ -730,31 +753,48 @@ void DDEMOMAIN_CreateTypeParticle( DDEMOMAIN_WORK * wk )
 	wk->ptc = GFL_PTC_Create( wk->ptcWork, PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_DENDOU_DEMO );
 	res = GFL_PTC_LoadArcResource( ARCID_DENDOU_DEMO_GRA, TypeArcTbl[wk->type], HEAPID_DENDOU_DEMO );
 	GFL_PTC_SetResource( wk->ptc, res, TRUE, NULL );
-
-/*
-	{	// 初期カメラを保存
-		GFL_G3D_CAMERA * cmr = GFL_PTC_GetCameraPtr( wk->ptc );
-		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcTypeCamera[0] );
-		GFL_G3D_CAMERA_GetfovyCos( cmr, &wk->ptcTypeCamera[1] );
-		GFL_G3D_CAMERA_GetAspect( cmr, &wk->ptcTypeCamera[2] );
-		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcTypeCamera[3] );
-		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcTypeCamera[4] );
-	}
-*/
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ別パーティクル削除
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_DeleteTypeParticle( DDEMOMAIN_WORK * wk )
 {
 	GFL_PTC_Delete( wk->ptc );
 	wk->ptc = NULL;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ別パーティクル追加
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ * @param		id		パーティクルＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_SetTypeParticle( DDEMOMAIN_WORK * wk, u32 id )
 {
 	VecFx32	p = { 0, 0, FX32_CONST(0.1f) };
 	GFL_PTC_CreateEmitter( wk->ptc, id, &p );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前エフェクトパーティクル作成
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_CreateNameParticle( DDEMOMAIN_WORK * wk )
 {
 	void * res;
@@ -762,71 +802,66 @@ void DDEMOMAIN_CreateNameParticle( DDEMOMAIN_WORK * wk )
 	wk->ptcName = GFL_PTC_Create( wk->ptcNameWork, PARTICLE_LIB_HEAP_SIZE, TRUE, HEAPID_DENDOU_DEMO );
 	res = GFL_PTC_LoadArcResource( ARCID_DENDOU_DEMO_GRA, NARC_dendou_demo_gra_name_spa, HEAPID_DENDOU_DEMO );
 	GFL_PTC_SetResource( wk->ptcName, res, TRUE, NULL );
-/*
-	{	// 初期カメラを保存
-		GFL_G3D_CAMERA * cmr = GFL_PTC_GetCameraPtr( wk->ptcName );
-		GFL_G3D_CAMERA_GetfovySin( cmr, &wk->ptcNameCamera[0] );
-		GFL_G3D_CAMERA_GetfovyCos( cmr, &wk->ptcNameCamera[1] );
-		GFL_G3D_CAMERA_GetAspect( cmr, &wk->ptcNameCamera[2] );
-		GFL_G3D_CAMERA_GetNear( cmr, &wk->ptcNameCamera[3] );
-		GFL_G3D_CAMERA_GetFar( cmr, &wk->ptcNameCamera[4] );
-	}
-*/
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前エフェクトパーティクル削除
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_DeleteNameParticle( DDEMOMAIN_WORK * wk )
 {
 	GFL_PTC_Delete( wk->ptcName );
 	wk->ptcName = NULL;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前エフェクトパーティクル追加
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ * @param		id		パーティクルＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_SetNameParticle( DDEMOMAIN_WORK * wk, u32 id )
 {
 	VecFx32	p = { 0, 0, 0 };
 	GFL_PTC_CreateEmitter( wk->ptcName, id, &p );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パーティクルカメラ作成
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ * @param		ptc		パーティクル
+ * @param		disp	TRUE = メイン画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp )
 {
 	GFL_G3D_PROJECTION	projection;
 
 	if( ptc == NULL ){ return; }
 
-/*
-	projection.type = GFL_G3D_PRJPERS;
-	projection.param1 = wk->ptcNameCamera[0];
-	projection.param2 = wk->ptcNameCamera[1];
-	projection.param3 = wk->ptcNameCamera[2];
-	projection.param4 = 0;
-	projection.near   = wk->ptcNameCamera[3];
-	projection.far    = wk->ptcNameCamera[4];
-	projection.scaleW = 0;
-
-	// サブ画面（上）
-	if( disp == FALSE ){
-		projection.param1 = wk->ptcNameCamera[0]+FX32_CONST(8);
-		projection.param2 = wk->ptcNameCamera[1]+FX32_CONST(8);
-//		projection.param3 = wk->ptcNameCamera[1]+8;
-	}
-*/
-
 	// メイン画面（下）
 	if( disp == TRUE ){
-//		projection.param1 = FX32_CONST(3);
-//		projection.param2 = -FX32_CONST(3);
 		projection.param1 = FX32_CONST(3.975);
 		projection.param2 = -FX32_CONST(3.975);
 	// サブ画面（上）
 	}else{
 		projection.param1 = FX32_CONST(11.925+2);
 		projection.param2 = FX32_CONST(3.975+2);
-//		projection.param1 = FX32_CONST((9+2));
-//		projection.param2 = FX32_CONST((3+2));
 	}
 	projection.type = GFL_G3D_PRJORTH;
-//	projection.param3 = -FX32_CONST(4);
-//	projection.param4 = FX32_CONST(4);
 	projection.param3 = -FX32_CONST(5.3);
 	projection.param4 = FX32_CONST(5.3);
 	projection.near = 0;
@@ -837,102 +872,54 @@ static void CreateParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL dis
 	GFL_PTC_PersonalCameraCreate( ptc, &projection, DEFAULT_PERSP_WAY, NULL, NULL, NULL, HEAPID_DENDOU_DEMO );
 }
 
-/*
-static void CreateNameParticleCamera( DDEMOMAIN_WORK * wk, GFL_PTC_PTR ptc, BOOL disp )
-{
-	GFL_G3D_PROJECTION	projection;
-
-	if( ptc == NULL ){ return; }
-
-	projection.type = GFL_G3D_PRJPERS;
-	projection.param1 = wk->ptcNameCamera[0];
-	projection.param2 = wk->ptcNameCamera[1];
-	projection.param3 = wk->ptcNameCamera[2];
-	projection.param4 = 0;
-	projection.near   = wk->ptcNameCamera[3];
-	projection.far    = wk->ptcNameCamera[4];
-	projection.scaleW = 0;
-
-	GFL_PTC_PersonalCameraDelete( ptc );
-	GFL_PTC_PersonalCameraCreate( ptc, &projection, DEFAULT_PERSP_WAY, NULL, NULL, NULL, HEAPID_DENDOU_DEMO );
-}
-*/
-
-/*
-static const VecFx32 sc_camera_pos = { 0x0, 0x70c2, 0x21ccf }; 
-static const VecFx32 sc_camera_up =  { 0x0, 0x4272, 0x9f0 }; 
-static const VecFx32 sc_camera_target = { 0x0, 0x519a, 0x800 }; 
-*/
-/*
-static const VecFx32 sc_CAMERA_PER_POS    	= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32( 3000.0f ) };
-static const VecFx32 sc_CAMERA_PER_UP       = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(  1.0f ), FX_F32_TO_FX32(    0.0f ) };
-static const VecFx32 sc_CAMERA_PER_TARGET		= { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32( 30.0f ), FX_F32_TO_FX32(    0.0f ) };
-*/
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSS初期化
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_InitMcss( DDEMOMAIN_WORK * wk )
 {
 	wk->mcss = MCSS_Init( 1, HEAPID_DENDOU_DEMO );
 
-/*
-	// g3dと並行させるためにずらし込む
-	MCSS_SetTextureTransAdrs( wk->mcss, 0x30000 );
-	MCSS_SetOrthoMode( wk->mcss );
-*/
 	MCSS_SetTextureTransAdrs( wk->mcss, 0 );
 	MCSS_ResetOrthoMode( wk->mcss );
-/*
-	wk->mcssCamera = GFL_G3D_CAMERA_Create(
-										GFL_G3D_PRJPERS, 
-										FX_SinIdx( 26/2 *PERSPWAY_COEFFICIENT ),
-										FX_CosIdx( 26/2 *PERSPWAY_COEFFICIENT ),
-										defaultCameraAspect, 0,
-										defaultCameraNear, defaultCameraFar, 0,
-										&sc_camera_pos, &sc_camera_up, &sc_camera_target, HEAPID_DENDOU_DEMO );
 
-	GFL_G3D_CAMERA_Switching( wk->mcssCamera );
-*/
-/*
-	wk->mcssCamera = GFL_G3D_CAMERA_CreateOrtho(
-										FX32_CONST(96), -FX32_CONST(96), -FX32_CONST(128), FX32_CONST(128),
-										defaultCameraNear, defaultCameraFar, 0,
-										&sc_CAMERA_PER_POS, &sc_CAMERA_PER_UP, &sc_CAMERA_PER_TARGET, HEAPID_DENDOU_DEMO );
-*/
 	{
-    static const VecFx32 cam_pos = {FX32_CONST(-41.0f),
-                                    FX32_CONST(  0.0f),
-                                    FX32_CONST(101.0f)};
-    static const VecFx32 cam_target = {FX32_CONST(0.0f),
-                                       FX32_CONST(0.0f),
-                                       FX32_CONST(-1.0f)};
-    static const VecFx32 cam_up = {0,FX32_ONE,0};
-/*
-    //エッジマーキングカラー
-    static  const GXRgb edge_color_table[8]=
-      { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 
-        GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 
-        GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 
-        GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ) };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
-            0, work->heapId, NULL );
-*/ 
-    //正射影カメラ
-    wk->mcssCamera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH, 
-                       FX32_ONE*192.0f,
-                       0,
-                       0,
-                       FX32_ONE*256.0f,
-                       (FX32_ONE),
-                       (FX32_ONE*400),
-                       NULL,
-                       &cam_pos,
-                       &cam_up,
-                       &cam_target,
-                       HEAPID_DENDOU_DEMO );
+    static const VecFx32 cam_pos = { FX32_CONST(-41.0f), FX32_CONST(0.0f), FX32_CONST(101.0f) };
+    static const VecFx32 cam_target = { FX32_CONST(0.0f), FX32_CONST(0.0f), FX32_CONST(-1.0f) };
+    static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
+
+    // 正射影カメラ
+    wk->mcssCamera = GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH, 
+                      FX32_ONE*192.0f,
+                      0,
+                      0,
+                      FX32_ONE*256.0f,
+                      (FX32_ONE),
+                      (FX32_ONE*400),
+                      NULL,
+                      &cam_pos,
+                      &cam_up,
+                      &cam_target,
+                      HEAPID_DENDOU_DEMO );
     
     GFL_G3D_CAMERA_Switching( wk->mcssCamera );
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSS解放
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_ExitMcss( DDEMOMAIN_WORK * wk )
 {
 	DDEMOMAIN_DelMcss( wk );
@@ -940,26 +927,39 @@ void DDEMOMAIN_ExitMcss( DDEMOMAIN_WORK * wk )
 	MCSS_Exit( wk->mcss );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSS追加
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_AddMcss( DDEMOMAIN_WORK * wk )
 {
 	MCSS_ADD_WORK   add;
 	POKEMON_PARAM * pp;
-//	VecFx32 scale = {FX32_ONE*16,FX32_ONE*16,FX32_ONE};
 	VecFx32 scale = { FX_F32_TO_FX32(16), FX_F32_TO_FX32(16), FX32_ONE };
-//	VecFx32 scale = { FX32_ONE, FX32_ONE, FX32_ONE };
 
-//	pp = PokeParty_GetMemberPointer( wk->dat->party, wk->pokePos );
 	pp = wk->pp[wk->pokePos];
 
 	MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
 
-//	wk->mcssWork = MCSS_Add( wk->mcss, -FX32_CONST(14), -FX32_CONST(11.5), FX32_ONE, &add );
 	wk->mcssWork = MCSS_Add( wk->mcss, FX32_CONST(256+48), FX32_CONST(48), 0, &add );
-//	wk->mcssWork = MCSS_Add( wk->mcss, 0, 0, 0, &add );
 	MCSS_SetScale( wk->mcssWork, &scale );
 	MCSS_SetAnmStopFlag( wk->mcssWork );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSS削除
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_DelMcss( DDEMOMAIN_WORK * wk )
 {
 	if( wk->mcssWork != NULL ){
@@ -968,6 +968,16 @@ void DDEMOMAIN_DelMcss( DDEMOMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSS移動
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ * @param		mv		移動値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_MoveMcss( DDEMOMAIN_WORK * wk, s16 mv )
 {
 	VecFx32	pos;
@@ -977,6 +987,16 @@ void DDEMOMAIN_MoveMcss( DDEMOMAIN_WORK * wk, s16 mv )
 	MCSS_SetPosition( wk->mcssWork, &pos );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSSコールバック関数
+ *
+ * @param		data
+ * @param		currentFrame
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void McssCallBackFrame( u32 data, fx32 currentFrame )
 {
 	DDEMOMAIN_WORK * wk = (DDEMOMAIN_WORK *)data;
@@ -985,6 +1005,15 @@ static void McssCallBackFrame( u32 data, fx32 currentFrame )
 	wk->mcssAnmEndFlg = TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		MCSSコールバック関数セット
+ *
+ * @param		wk		殿堂入りデモ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DDEMOMAIN_SetMcssCallBack( DDEMOMAIN_WORK * wk )
 {
 	wk->mcssAnmEndFlg = FALSE;
