@@ -3962,14 +3962,14 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
     if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza) ){ break; }
 
-    fPPDecrement = TRUE;
-
     // 派生ワザ呼び出しパラメータチェック＆失敗判定
     if( !scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, &reqWaza) ){
       scPut_WazaMsg( wk, attacker, orgWaza );
       scproc_WazaExecuteFailed( wk, attacker, orgWaza, SV_WAZAFAIL_OTHER );
       break;
     }
+
+    fPPDecrement = TRUE;
 
     // 派生ワザ呼び出しする場合、メッセージ出力＆ワザ出し確定イベント
     fReqWaza = ( reqWaza.wazaID != WAZANO_NULL );
@@ -4003,7 +4003,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     }
 
     // ワザ出し失敗判定２
-    if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock, fReqWaza) ){ break; }
+    if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock, fReqWaza) ){
+      fPPDecrement = FALSE;
+       break;
+     }
 
     // 遅延発動ワザの準備処理
     if( scproc_Fight_CheckDelayWazaSet(wk, attacker, actWaza, actTargetPos) ){ break; }
@@ -7116,7 +7119,6 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 {
   BOOL fShrink;
 
-  TAYA_Printf("ひるみ効果を与えるよ\n");
 
   if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_MUST_SHRINK) ){
     fShrink = TRUE;
@@ -7126,7 +7128,6 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
 
   if( fShrink )
   {
-    TAYA_Printf("ほんとに与えますよ pokeID=%d\n", BPP_GetID(target));
     BPP_TURNFLAG_Set( target, BPP_TURNFLG_SHRINK );
     return TRUE;
   }
@@ -12715,13 +12716,19 @@ static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker )
 {
+  BOOL fFail = FALSE;
   u32 per = WAZADATA_GetParam( waza, WAZAPARAM_SHRINK_PER );
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
     BTL_EVENTVAR_SetValue( BTL_EVAR_ADD_PER, per );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_SHRINK_PER );
+    fFail = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
     per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
   BTL_EVENTVAR_Pop();
+  if( fFail ){
+    return 0;
+  }
   return per;
 }
 //----------------------------------------------------------------------------------

@@ -2632,6 +2632,21 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
     }
   }
 
+  // かいふくふうじ状態（回復ワザを選べない）
+  if( BPP_CheckSick(bpp, WAZASICK_KAIHUKUHUUJI) )
+  {
+    if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIMPLE_RECOVER )
+    {
+      if( strParam )
+      {
+        BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_SET, BTL_STRID_SET_KaifukuFujiWarn );
+        BTLV_STRPARAM_AddArg( strParam, BPP_GetID(bpp) );
+        BTLV_STRPARAM_AddArg( strParam, waza );
+      }
+      return TRUE;
+    }
+  }
+
 // ふういんチェック（ふういんをかけたポケが持ってるワザを出せない）
   if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
   {

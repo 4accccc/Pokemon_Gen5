@@ -5457,6 +5457,13 @@ static BOOL IsTikarazukuEffecive( WazaID waza )
 {
   WazaCategory category = WAZADATA_GetCategory( waza );
 
+  // ひるみ確率のあるワザは
+/*
+  if( WAZADATA_GetParam(waza, WAZAPARAM_SHRINK_PER) != 0 ){
+    return TRUE;
+  }
+*/
+
   switch( category ){
   // 殴った相手に効果が発動するタイプは基本的に有効
   case WAZADATA_CATEGORY_DAMAGE_SICK:

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-23T01:57:00"/>
+	<create user="taya" host="W00146" date="2010-05-24T12:14:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3387,26 +3387,6 @@
 味方からの攻撃を　受けない！</language>
 	</row>
 
-	<row id="BTL_STRID_SET_Boujin">
-		<comment>ぼうじん</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
-てんこうによる　ダメージを　うけない！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-天候によるダメージを　受けない！</language>
-	</row>
-	<row id="BTL_STRID_SET_Boujin_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
-てんこうによる　ダメージを　うけない！</language>
-		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
-天候によるダメージを　受けない！</language>
-	</row>
-	<row id="BTL_STRID_SET_Boujin_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
-てんこうによる　ダメージを　うけない！</language>
-		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
-天候によるダメージを　受けない！</language>
-	</row>
-
 	<row id="BTL_STRID_SET_Dokusyu">
 		<comment>どくしゅ</comment>
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]に
@@ -6097,18 +6077,75 @@
 
 	<row id="BTL_STRID_SET_KaifukuFuji">
 		<comment>かいふくふうじメッセージ</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+かいふくどうさを　ふうじられた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+回復動作を　封じられた！</language>
+	</row>
+	<row id="BTL_STRID_SET_KaifukuFuji_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+かいふくどうさを　ふうじられた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+回復動作を　封じられた！</language>
+	</row>
+	<row id="BTL_STRID_SET_KaifukuFuji_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+かいふくどうさを　ふうじられた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+回復動作を　封じられた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KaifukuFujiCure">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+かいふくふうじの　こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+かいふくふうじの　効果が切れた！</language>
+	</row>
+	<row id="BTL_STRID_SET_KaifukuFujiCure_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
+かいふくふうじの　こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
+かいふくふうじの　効果が切れた！</language>
+	</row>
+	<row id="BTL_STRID_SET_KaifukuFujiCure_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
+かいふくふうじの　こうかが　きれた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
+かいふくふうじの　効果が切れた！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KaifukuFujiExe">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+かいふくふうじで　かいふく　できない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+かいふくふうじで　回復できない！</language>
+	</row>
+	<row id="BTL_STRID_SET_KaifukuFujiExe_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+かいふくふうじで　かいふく　できない！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
+かいふくふうじで　回復できない！</language>
+	</row>
+	<row id="BTL_STRID_SET_KaifukuFujiExe_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
+かいふくふうじで　かいふく　できない！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
+かいふくふうじで　回復できない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KaifukuFujiWarn">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
-	<row id="BTL_STRID_SET_KaifukuFuji_Y">
+	<row id="BTL_STRID_SET_KaifukuFujiWarn_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　出せない！</language>
 	</row>
-	<row id="BTL_STRID_SET_KaifukuFuji_E">
+	<row id="BTL_STRID_SET_KaifukuFujiWarn_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　かいふくふうじで
 [1:07:わざ名:1]が　だせない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　かいふくふうじで

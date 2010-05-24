@@ -319,21 +319,22 @@ static int getDefaultSickStrID( WazaSick sickID, BPP_SICK_CONT cont )
   int strID = -1;
 
   switch( sickID ){
-  case WAZASICK_YAKEDO:     strID = BTL_STRID_SET_YakedoGet; break;
-  case WAZASICK_MAHI:       strID = BTL_STRID_SET_MahiGet; break;
-  case WAZASICK_KOORI:      strID = BTL_STRID_SET_KoriGet; break;
-  case WAZASICK_NEMURI:     strID = BTL_STRID_SET_NemuriGet; break;
-  case WAZASICK_KONRAN:     strID = BTL_STRID_SET_KonranGet; break;
-  case WAZASICK_MEROMERO:   strID = BTL_STRID_SET_MeromeroGet; break;
-  case WAZASICK_AKUMU:      strID = BTL_STRID_SET_AkumuGet;  break;
-  case WAZASICK_TYOUHATSU:  strID = BTL_STRID_SET_Chouhatu; break;
-  case WAZASICK_ICHAMON:    strID = BTL_STRID_SET_Ichamon; break;
-  case WAZASICK_AKUBI:      strID = BTL_STRID_SET_Akubi; break;
-  case WAZASICK_YADORIGI:   strID = BTL_STRID_SET_Yadorigi; break;
-  case WAZASICK_MIYABURU:   strID = BTL_STRID_SET_Miyaburu; break;
-  case WAZASICK_NEWOHARU:   strID = BTL_STRID_SET_NeWoHaru; break;
-  case WAZASICK_SASIOSAE:   strID = BTL_STRID_SET_Sasiosae; break;
-  case WAZASICK_KANASIBARI: strID = BTL_STRID_SET_Kanasibari; break;
+  case WAZASICK_YAKEDO:       strID = BTL_STRID_SET_YakedoGet; break;
+  case WAZASICK_MAHI:         strID = BTL_STRID_SET_MahiGet; break;
+  case WAZASICK_KOORI:        strID = BTL_STRID_SET_KoriGet; break;
+  case WAZASICK_NEMURI:       strID = BTL_STRID_SET_NemuriGet; break;
+  case WAZASICK_KONRAN:       strID = BTL_STRID_SET_KonranGet; break;
+  case WAZASICK_MEROMERO:     strID = BTL_STRID_SET_MeromeroGet; break;
+  case WAZASICK_AKUMU:        strID = BTL_STRID_SET_AkumuGet;  break;
+  case WAZASICK_TYOUHATSU:    strID = BTL_STRID_SET_Chouhatu; break;
+  case WAZASICK_ICHAMON:      strID = BTL_STRID_SET_Ichamon; break;
+  case WAZASICK_AKUBI:        strID = BTL_STRID_SET_Akubi; break;
+  case WAZASICK_YADORIGI:     strID = BTL_STRID_SET_Yadorigi; break;
+  case WAZASICK_MIYABURU:     strID = BTL_STRID_SET_Miyaburu; break;
+  case WAZASICK_NEWOHARU:     strID = BTL_STRID_SET_NeWoHaru; break;
+  case WAZASICK_SASIOSAE:     strID = BTL_STRID_SET_Sasiosae; break;
+  case WAZASICK_KANASIBARI:   strID = BTL_STRID_SET_Kanasibari; break;
+  case WAZASICK_KAIHUKUHUUJI: strID = BTL_STRID_SET_KaifukuFujiExe; break;
 
   case WAZASICK_DOKU:
     strID = BPP_SICKCONT_IsMoudokuCont(cont)? BTL_STRID_SET_MoudokuGet : BTL_STRID_SET_DokuGet;
@@ -399,6 +400,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_TELEKINESIS,   BTL_STRID_SET_Telekinesis_End,  -1                                },
     { WAZASICK_TYOUHATSU,     BTL_STRID_SET_ChouhatuCure,     -1                                },
     { WAZASICK_FLYING,        BTL_STRID_SET_DenjiFuyuCure,    -1                                },
+    { WAZASICK_KAIHUKUHUUJI,  BTL_STRID_SET_KaifukuFujiCure,  -1                                },
 
     { WAZASICK_KONRAN,        BTL_STRID_SET_KonranCure,       BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,      BTL_STRID_SET_MeromeroCure,     BTL_STRID_SET_UseItem_CureMero    },
