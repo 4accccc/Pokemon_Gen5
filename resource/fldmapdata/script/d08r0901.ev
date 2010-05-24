@@ -33,10 +33,9 @@ INIT_EVENT_START	ev_init_d08R0901
 	//バージョンを取得してOBJを変化させる
 	_GET_ROM_VERSION( SCWK_ANSWER )
 	IF FLAG_ON(FV_D08R0901_PACKAGE_POKE) THEN
-		//BlackVERならム
+	
 		IF $SCWK_ANSWER == VERSION_BLACK THEN
 			$OBJCHRWORK0 = SHIN_B
-		//Whiteならシン
 		ELSE
 			$OBJCHRWORK0 = MU_B
 		ENDIF
@@ -50,83 +49,78 @@ INIT_EVENT_END
 /**************************************************************/
 EVENT_START    ev_d08r0901_poke_01
 
-	_TALK_START_SE_PLAY()
-	
+_TALK_START_SE_PLAY()
+{	
+  DEFINE_LOCAL	LWK_DIR
+	//自機：一歩前に戻る
+	_PLAYER_DIR_GET( LWK_DIR )
+	SWITCH $LWK_DIR
+	CASE DIR_UP THEN
+	CASE DIR_DOWN THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_d )
+	CASE DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_r )
+	CASE DIR_LEFT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER, anm_last6_l )
+	ENDSWITCH
+	_OBJ_ANIME_WAIT()
+}	
+{
 	_OBJ_ANIME(D08R0901_POKE_01, anm_legend_hoeru )
 	_OBJ_ANIME_WAIT()
 
-	//WHITE版の場合
-{
-	DEFINE_LOCAL	LWK_ROM
-	_GET_ROM_VERSION( LWK_ROM )
+    DEFINE_LOCAL  LWK_BATTLE_FLAG
+	DEFINE_LOCAL  LWK_ROM
+	
+    //シン・ム専用、伝説系MSG、レア無し
+    $LWK_BATTLE_FLAG = SCR_WILD_BTL_FLAG_IMMORTAL
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_LEGEND
+    $LWK_BATTLE_FLAG |= SCR_WILD_BTL_FLAG_NO_RARE
+  
+	 _GET_ROM_VERSION( LWK_ROM )
+	IF $LWK_ROM == VERSION_WHITE THEN
+		_VOICE_PLAY( MONSNO_651, 0 )
+	ELSE
+		_VOICE_PLAY( MONSNO_650, 0 )
+	ENDIF
+
+    _GET_ROM_VERSION( LWK_ROM )
 		IF $LWK_ROM == VERSION_BLACK THEN
-			_VOICE_PLAY( MONSNO_650, 0 )
-			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke8_01 ,D08R0901_POKE_01, POS_DEFAULT )
+			_GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke7_01,POS_DEFAULT )
+			_GIZAPLAINWIN_CLOSE()
 			_VOICE_WAIT()
-			_MSGWIN_CLOSE()
-			
-			_WILD_BTL_SET_LEGEND( MONSNO_650, 50 )
-			_WILD_LOSE_CHECK( SCWK_ANSWER )
-			//倒した場合
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN  THEN
-				
-				
-				//========================================/
-				
-				//シンのOBJ削除
-				_OBJ_DEL(D08R0901_POKE_01)
-				
-				//フラグセット
-				_FLAG_SET(FV_D08R0901_PACKAGE_POKE)
-				
-				//自機の位置調整
-				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 12, DIR_UP )
-				
-				//========================================/
-				
-				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-			
-			//負けた場合
-			ELSE
-			
-				_WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-			
-			ENDIF
-			
+
+			_WILD_BTL_SET_EX( MONSNO_650, 50, LWK_BATTLE_FLAG )
 		ELSE
-			_VOICE_PLAY( MONSNO_651, 0 )
-			_GIZAWIN_OBJMSG_POS( msg_d08r0901_poke7_01 , D08R0901_POKE_01, POS_DEFAULT )
-			_VOICE_WAIT()		
-			_MSGWIN_CLOSE()
-			
-			_WILD_BTL_SET_LEGEND( MONSNO_651, 50 )
-			_WILD_LOSE_CHECK( SCWK_ANSWER )
-			//倒した場合
-			IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN  THEN
-				
-				//========================================/
-				
-				//ムのOBJ削除
-				_OBJ_DEL(D08R0901_POKE_01)
+			_GIZAPLAINWIN_MSG_POS( msg_d08r0901_poke8_01,POS_DEFAULT )
+			_GIZAPLAINWIN_CLOSE()
+			_VOICE_WAIT()
 
-				//フラグセット
-				_FLAG_SET(FV_D08R0901_PACKAGE_POKE)
-
-				//自機の位置調整
-				_OBJ_POS_CHANGE( MMDL_ID_PLAYER, 16, 0, 12, DIR_UP )
-
-				//========================================/
-				
-				_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
-			
-			//負けた場合
-			ELSE
-			
-				_WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
-			
-			ENDIF
-			
+			_WILD_BTL_SET_EX( MONSNO_651, 50, LWK_BATTLE_FLAG )
 		ENDIF
+
+    _WILD_LOSE_CHECK( SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+    
+          //========================================/
+          
+          //シンのOBJ削除
+          _OBJ_DEL( D08R0901_POKE_01 )
+          
+          //フラグセット
+          _FLAG_SET( FV_D08R0901_PACKAGE_POKE )
+          
+          //========================================/
+          
+    	//勝った場合
+      	_WILD_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+    
+    ELSE
+        //負けた場合
+        _WILD_LOSE()		//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
+      
+    ENDIF
 }
 {
 	_WILD_RETRY_CHECK( SCWK_ANSWER )
@@ -153,7 +147,6 @@ EVENT_START    ev_d08r0901_poke_01
 
 	ENDSWITCH
 }
-
 EVENT_END
 
 //--------------------------------------------------------------------
@@ -162,6 +155,29 @@ EVENT_END
 _ANIME_LABEL	anm_legend_hoeru
 	_ANIME_DATA	AC_SHIN_MU_HOERU,1
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------------
+//		話しかけた場合の回り込み処理
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_last6_r
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_last6_l
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_last6_d
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 	
 /**************************************************************/
 /* パッケージポケモンの復活POSイベント                                                          
@@ -292,7 +308,7 @@ EVENT_START    ev_pos_d08R0901_boss_01
 	_SE_PLAY(SEQ_SE_FLD_170)
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00,anm_poke_idou_02)
 	//Nの動作モデルを消す
-	_TIME_WAIT(23)
+	_TIME_WAIT(21)
 	_OBJ_DEL( D08R0901_BOSS_01 )
 	//主人公がNが飛び去った方向を見る
 	_TIME_WAIT( 4 )
