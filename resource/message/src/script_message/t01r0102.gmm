@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T16:05:50"/>
+	<create user="matsumiya" host="W00224" date="2010-05-24T14:17:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1157,9 +1157,9 @@
 	<row id="msg_t01r0102_tv_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">TV</attribute>
-		<language name="JPN" width="256">おとうさんが　かった
+		<language name="JPN" width="256">パパが　かった
 うすがたテレビ　だ！</language>
-		<language name="JPN_KANJI" width="256">おとうさんが　買った
+		<language name="JPN_KANJI" width="256">パパが　買った
 薄型テレビ　だ！</language>
 	</row>
 
@@ -1167,10 +1167,10 @@
 		<comment>BGメッセージ</comment>
 		<attribute name="キャラ指定">ベッド</attribute>
 		<language name="JPN" width="256">ベッドが　ある……！▼
-おかあさんが　せんたくしてくれた
+ママが　せんたくしてくれた
 シーツが　いい　かおり！</language>
 		<language name="JPN_KANJI" width="256">ベッドが　ある……！▼
-おかあさんが　洗濯してくれた
+ママが　洗濯してくれた
 シーツが　いい　香り！</language>
 	</row>
 
