@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:38:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-24T12:14:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -623,15 +623,15 @@
 		<language name="JPN" width="256">アララギ『その　しあわせタマゴを
 ポケモンに　もたせておくと▼
 たたかいで　もらえる
-けいけんちが　ちょっぴり　ふえるわ！▼
+けいけんちが　ちょっぴり　ふえるの！▼
 ポケモンが　たくましくなった　ほうが
-ずかんの　ページも　うめやすいでしょ</language>
+ずかんの　ページも　うめやすいよね！</language>
 		<language name="JPN_KANJI" width="256">アララギ『その　しあわせタマゴを
 ポケモンに　持たせておくと▼
 戦いで　もらえる
-経験値が　ちょっぴり　増えるわ！▼
+経験値が　ちょっぴり　増えるの！▼
 ポケモンが　たくましくなった　ほうが
-図鑑の　ページも　埋めやすいでしょ</language>
+図鑑の　ページも　埋めやすいよね！</language>
 	</row>
 
 	<row id="msg_d06r0101_hakase2_04">
@@ -668,7 +668,7 @@
 
 	<row id="msg_d06r0101_hakase2_05">
 		<comment>♀：シーン2
-・pos（GRIDX=31、GRIDZ=24~26）を踏むと
+・pos（GRIDX=33、GRIDZ=24~26）を踏むと
 　博士　　GRIDX=30、GRIDZ=25
 　サポートGRIDX=29、GRIDZ=26に配置
 ・続けてhakase2_06</comment>
