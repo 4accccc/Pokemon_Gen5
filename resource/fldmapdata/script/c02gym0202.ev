@@ -166,7 +166,6 @@ ev_leader2_btl:
 	_BALLOONWIN_CLOSE()
 	
 _RET
-EVENT_END
 
 //盗難イベント開始
 ev_c02gym_tounan:
@@ -247,7 +246,6 @@ ev_c02gym_tounan:
 	_END_EVENT_BGM()
 
 _RET
-EVENT_END
 
 //--------------------------------------------------------------
 //	ジムリーダー夫:ジム2室目に入ってくる
