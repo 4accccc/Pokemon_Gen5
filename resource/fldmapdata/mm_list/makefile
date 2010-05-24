@@ -7,7 +7,7 @@
 #
 #----------------------------------------------------------------------------
 #¦USERS ‚É–¼‘O‚ğ’Ç‰Á‚·‚éê‡‚Ífldmmdl‚ÌƒƒCƒN‚à’Ê‚é‚æ‚¤‚É‚µ‚Ä‚­‚¾‚³‚¢
-USERS = kagaya lee_hyunjung takahashi saitou
+USERS = kagaya lee_hyunjung takahashi saitou saya_tsuruta fuchino iwasawa
 include $(PROJECT_RSCDIR)/macro_define
 
 #----------------------------------------------------------------------------
