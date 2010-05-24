@@ -2585,6 +2585,7 @@ static void handler_Takuwaeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param->pokeID[0] = pokeID;
       rank_param->rankType = BPP_DEFENCE_RANK;
       rank_param->rankVolume = 1;
+      rank_param->fAlmost = TRUE;
       counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
       counter_param->header.failSkipFlag = TRUE;
       counter_param->pokeID = pokeID;
@@ -2596,6 +2597,7 @@ static void handler_Takuwaeru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param->pokeID[0] = pokeID;
       rank_param->rankType = BPP_SP_DEFENCE_RANK;
       rank_param->rankVolume = 1;
+      rank_param->fAlmost = TRUE;
       counter_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_COUNTER, pokeID );
       counter_param->header.failSkipFlag = TRUE;
       counter_param->pokeID = pokeID;
