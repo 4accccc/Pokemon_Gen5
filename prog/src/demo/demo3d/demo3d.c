@@ -339,7 +339,7 @@ static GFL_PROC_RESULT Demo3DProc_Main( GFL_PROC *proc, int *seq, void *pwk, voi
         OS_TPrintf("# Demo3D EndFrame = [%d] ˆ——Ž‚¿ƒtƒŒ[ƒ€” [%d]!!\n",wk->param->end_frame, wk->delayVCountTotal);
       #else
         #ifdef DEBUG_ONLY_FOR_iwasawa
-        GF_ASSERT_MSG((!wk->delayVCountTotal),"AnmDelay %d please push(L+R+X+Y)\n",wk->delayVCountTotal);
+//        GF_ASSERT_MSG((!wk->delayVCountTotal),"AnmDelay %d please push(L+R+X+Y)\n",wk->delayVCountTotal);
         #endif
       #endif
       (*seq)++;
