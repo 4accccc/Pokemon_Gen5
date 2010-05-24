@@ -594,6 +594,31 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     if(ITEM_CheckMail(item)){
       MAIL_BLOCK* pMailBlock = GAMEDATA_GetMailBlock(pWork->pGameData);
 
+
+#if 0 //デバッグ用途
+
+      {
+        int id,j;
+        int itemno = ITEM_DUMMY_DATA;
+        MAIL_DATA* src = NULL;
+        //ワーク作成
+        src = MailData_CreateWork(pWork->heapID);
+        PP_Get(pp,ID_PARA_mail_data,src);
+
+        for(j = 0;j < 100;j++){
+          id = MAIL_SearchNullID(pMailBlock,MAILBLOCK_PASOCOM);
+          if(id != MAILDATA_NULLID){
+            //パソコン領域にデータコピー
+            MAIL_AddMailFormWork(pMailBlock,MAILBLOCK_PASOCOM,id,src);
+          }
+        }
+        MailData_Clear(src);
+        PP_Put(pp,ID_PARA_mail_data,(u32)src);
+        PP_Put(pp,ID_PARA_item,ITEM_DUMMY_DATA);
+        //領域解放
+        GFL_HEAP_FreeMemory(src);
+      }
+#else
       {
         int id;
         int itemno = ITEM_DUMMY_DATA;
@@ -615,6 +640,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
           GFL_HEAP_FreeMemory(src);
         }
       }
+#endif
     }
   }
 

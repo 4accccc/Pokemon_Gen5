@@ -115,6 +115,10 @@ static void _recvUNData(const int netID, const int size, const void* pData, void
 static void _recvGTSSelectPokemonIndex(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork);
 static void _touchPreMode_TouchStateCommon(POKEMON_TRADE_WORK* pWork);
+static void _recvThreePokemon1Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvThreePokemon2Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvThreePokemon3Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvSelectPokemonBox(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 
 ///通信コマンドテーブル
@@ -138,7 +142,11 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvFriendBoxNum,   NULL},   ///_NETCMD_FRIENDBOXNUM
   {_recvEvilCheck,   NULL},    ///_NETCMD_EVILCHECK
   {_recvUNData,   NULL},    ///_NETCMD_UN
-
+  {_recvThreePokemon1Box,   NULL},    ///_NETCMD_THREE_SELECT1_BOX ポケモン３匹みせあい BOXか手持ちか
+  {_recvThreePokemon2Box,   NULL},    ///_NETCMD_THREE_SELECT2_BOX ポケモン３匹みせあい BOXか手持ちか
+  {_recvThreePokemon3Box,   NULL},    ///_NETCMD_THREE_SELECT3_BOX ポケモン３匹みせあい BOXか手持ちか
+  {_recvSelectPokemonBox,   NULL},    ///_NETCMD_SELECT_POKEMON_BOX 2 ポケモン見せ合う BOXか手持ちか
+  
 };
 
 
@@ -673,6 +681,47 @@ static void _recvSeqNegoNo(const int netID, const int size, const void* pData, v
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   自分と相手でindex指定でボックスから選んだかどうかを返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+BOOL IRC_POKEMONTRADE_GetRecvBoxFlg(POKEMON_TRADE_WORK *pWork, int index)
+{
+  BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
+  GF_ASSERT(index < 2);
+
+  if(bMode==FALSE){
+    return pWork->bRecvPokeBox[index];
+  }
+  if(0 == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return pWork->bRecvPokeBox[index];
+  }
+  return pWork->bRecvPokeBox[1-index];
+}
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   自分と相手でindex指定でボックスから選んだかどうかを返す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+void IRC_POKEMONTRADE_SetRecvBoxFlg(POKEMON_TRADE_WORK *pWork, int index, BOOL bFlg)
+{
+  BOOL bMode = POKEMONTRADEPROC_IsNetworkMode(pWork);
+  GF_ASSERT(index < 2);
+
+  if(bMode==FALSE){
+    pWork->bRecvPokeBox[index]=bFlg;
+  }
+  else if(0 == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    pWork->bRecvPokeBox[index]=bFlg;
+  }
+  else{
+    pWork->bRecvPokeBox[1-index]=bFlg;
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -756,6 +805,55 @@ static void _recvThreePokemon3(const int netID, const int size, const void* pDat
 {
   _recvThreePokemon(netID, size, pData, pWk, pNetHandle, 2);
 }
+
+//_NETCMD_THREE_SELECT1_BOX ポケモン３匹みせあい BOXか手持ちか
+static void _recvThreePokemon1Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  OS_TPrintf("メールセット%d \n",pRecvData[0]);
+  pWork->bGTSSelectPokeBox[netID][0] = pRecvData[0];
+}
+
+//_NETCMD_THREE_SELECT2_BOX ポケモン３匹みせあい BOXか手持ちか
+static void _recvThreePokemon2Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  pWork->bGTSSelectPokeBox[netID][1] = pRecvData[0];
+}
+//_NETCMD_THREE_SELECT3_BOX ポケモン３匹みせあい BOXか手持ちか
+static void _recvThreePokemon3Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  pWork->bGTSSelectPokeBox[netID][2] = pRecvData[0];
+}
+
+//_NETCMD_SELECT_POKEMON_BOX 2 ポケモン見せ合う BOXか手持ちか
+static void _recvSelectPokemonBox(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  pWork->bRecvPokeBox[netID] = pRecvData[0];
+}
+
 
 //_NETCMD_POKEMONCOLOR
 static void _recvPokemonColor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
@@ -1173,11 +1271,22 @@ BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+  int item;
+  BOOL bBox;
+  POKEMON_PARAM* pp;
 
-  int item = PP_Get( pp , ID_PARA_item ,NULL);
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+    bBox = IRC_POKEMONTRADE_GetRecvBoxFlg(pWork, 1); //相手のコピー位置
+  }
+  else{
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);//相手のポケモン
+    bBox = IRC_POKEMONTRADE_GetRecvBoxFlg(pWork, 0); //自分のコピー位置
+  }
+  
+  item = PP_Get( pp , ID_PARA_item ,NULL);
   if(ITEM_CheckMail(item)){
-    if(pWork->friendMailBoxFULL){
+    if(pWork->friendMailBoxFULL && !bBox){
       return TRUE;
     }
   }
@@ -1584,6 +1693,31 @@ static void _changeMenuWait(POKEMON_TRADE_WORK* pWork)
 }
 
 
+
+static void _changeMenuOpen2(POKEMON_TRADE_WORK* pWork)
+{
+  if( _PokemonsetAndSendData(pWork) )
+  {
+    int msg[]={POKETRADE_STR_01,POKETRADE_STR_06};
+    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
+
+    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
+
+    _CHANGE_STATE(pWork, _changeMenuWait);
+  }
+}
+
+static void _changeMenuOpen1(POKEMON_TRADE_WORK* pWork)
+{
+  BOOL bSet = FALSE;
+  if(pWork->selectBoxno == pWork->BOX_TRAY_MAX){
+    bSet = TRUE;
+  }
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON_BOX, 1, &bSet)){
+    _CHANGE_STATE(pWork, _changeMenuOpen2);
+  }
+}
+
 //こうかんにだす、メニュー表示
 static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
 {
@@ -1595,15 +1729,7 @@ static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork)
 
   _CatchPokemonRelease(pWork);
 
-  if( _PokemonsetAndSendData(pWork) )
-  {
-    int msg[]={POKETRADE_STR_01,POKETRADE_STR_06};
-    POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-
-    G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG3 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_OBJ , -8 );
-
-    _CHANGE_STATE(pWork, _changeMenuWait);
-  }
+  _CHANGE_STATE(pWork, _changeMenuOpen1);
 }
 
 
@@ -1729,6 +1855,60 @@ static void _dispSubStateWait2(POKEMON_TRADE_WORK* pWork)
 
 
 
+static void _dispSubStateWait_SendPoke(POKEMON_TRADE_WORK* pWork)
+{
+  if(POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno)){  //記録
+    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);//タッチに戻る
+  }
+}
+
+static void _dispSubStateWait_SendFlg(POKEMON_TRADE_WORK* pWork)
+{
+  int no;
+  BOOL bSet = FALSE;
+  if(pWork->selectBoxno == pWork->BOX_TRAY_MAX){
+    bSet = TRUE;
+  }
+  no = POKEMONTRADE_NEGO_CheckGTSSetPokemon(pWork,0,pWork->selectIndex,pWork->selectBoxno);
+  if(no != -1){
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_THREE_SELECT1_BOX + no, 1, &bSet)){
+      _CHANGE_STATE(pWork,_dispSubStateWait_SendPoke);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork,_dispSubStateWait_SendPoke);
+  }
+}
+
+
+
+static void _dispSubStateWait_SendPoke6(POKEMON_TRADE_WORK* pWork)
+{
+  if(POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno)){  //記録
+    _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit); //６交換に行く
+  }
+}
+
+
+static void _dispSubStateWait_SendFlg6(POKEMON_TRADE_WORK* pWork)
+{
+  int no;
+  BOOL bSet = FALSE;
+  if(pWork->selectBoxno == pWork->BOX_TRAY_MAX){
+    bSet = TRUE;
+  }
+  no = POKEMONTRADE_NEGO_CheckGTSSetPokemon(pWork,0,pWork->selectIndex,pWork->selectBoxno);
+  if(no != -1){
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_THREE_SELECT1_BOX + no, 1, &bSet)){
+      _CHANGE_STATE(pWork,_dispSubStateWait_SendPoke6);
+    }
+  }
+  else{
+    _CHANGE_STATE(pWork,_dispSubStateWait_SendPoke6);
+  }
+}
+
+
 //自分画面にステータス表示 相手に見せるかどうか待ち
 static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
 {
@@ -1831,18 +2011,16 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       else if( (POKE_GTS_IsFullMode(pWork) &&  (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) )){
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
-        POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
+        _CHANGE_STATE(pWork, _dispSubStateWait_SendFlg6);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, FALSE);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
         TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM3, FALSE);
         bIconReset=FALSE;
-        _CHANGE_STATE(pWork, POKE_GTS_Select6MessageInit);
       }
       else{
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
-        POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno);  //記録
-        _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);//タッチに戻る
+        _CHANGE_STATE(pWork, _dispSubStateWait_SendFlg);
       }
     }
     else{
@@ -3007,8 +3185,14 @@ void POKETRADE_TouchStateGTS(POKEMON_TRADE_WORK* pWork)
   _scrollResetAndIconReset(pWork);
 
   _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
-
 }
+
+
+
+
+
+
+
 
 
 static void _POKE_SetAndSendData2(POKEMON_TRADE_WORK* pWork)
@@ -3029,11 +3213,36 @@ static void _POKE_SetAndSendData2(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+static void _POKE_SetAndSendData1(POKEMON_TRADE_WORK* pWork)
+{
+  BOOL bSet = FALSE;
+  int no;
+  if(pWork->selectBoxno == pWork->BOX_TRAY_MAX){
+    bSet = TRUE;
+  }
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    no = POKEMONTRADE_NEGO_CheckGTSSetPokemon(pWork,0,pWork->selectIndex,pWork->selectBoxno);
+    if(no != -1){
+      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_THREE_SELECT1_BOX + no, 1, &bSet)){
+        _CHANGE_STATE(pWork,_POKE_SetAndSendData2);
+      }
+    }
+    else{
+      _CHANGE_STATE(pWork,_POKE_SetAndSendData2);
+    }
+  }
+  else{
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON_BOX, 1, &bSet)){
+      _CHANGE_STATE(pWork,_POKE_SetAndSendData2);
+    }
+  }
+}
+
 
 static void _POKE_SetAndSendData(POKEMON_TRADE_WORK* pWork)
 {
   if(POKEMONTRADE_SuckedMain(pWork)){
-    _CHANGE_STATE(pWork,_POKE_SetAndSendData2);
+    _CHANGE_STATE(pWork,_POKE_SetAndSendData1);
   }
 }
 

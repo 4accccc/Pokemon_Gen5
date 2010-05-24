@@ -234,6 +234,24 @@ void POKE_GTS_DirectAddPokemon(POKEMON_TRADE_WORK* pWork,int index,const POKEMON
 
 }
 
+//何処に設定して良いかを探す 同じポケモンは-1
+int POKEMONTRADE_NEGO_CheckGTSSetPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno)
+{
+  int i;
+  for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
+    if((pWork->GTSSelectIndex[side][i] == index) && (pWork->GTSSelectBoxno[side][i] == boxno)){
+      return -1;
+    }
+  }
+  for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
+    if(pWork->GTSSelectIndex[side][i] == -1){
+      return i;
+    }
+  }
+  return (GTS_NEGO_POKESLT_MAX-1);
+}
+
+
 //ポケモン追加
 static int _addPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno,const POKEMON_PARAM* pp)
 {
@@ -1115,7 +1133,7 @@ static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static void _menuMyPokemonSend(POKEMON_TRADE_WORK* pWork)
+static void _menuMyPokemonSendG(POKEMON_TRADE_WORK* pWork)
 {
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON,
@@ -1124,6 +1142,19 @@ static void _menuMyPokemonSend(POKEMON_TRADE_WORK* pWork)
     }
   }
   _CHANGE_STATE(pWork,_menuMyPokemonMenu);
+}
+
+
+static void _menuMyPokemonSend(POKEMON_TRADE_WORK* pWork)
+{
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+    u8 flg = IRC_POKEMONTRADE_GetRecvBoxFlg(pWork,0);
+    if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON_BOX,
+                         POKETOOL_GetWorkSize(), &flg) ){
+      return;
+    }
+  }
+  _CHANGE_STATE(pWork,_menuMyPokemonSendG);
 }
 
 
@@ -1143,6 +1174,8 @@ static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
   if(trgno != -1){
     if(pWork->GTSSelectIndex[1-side][poke]!=-1){
       POKEMON_PARAM* pp = pWork->GTSSelectPP[ 1-side ][ poke ]; //さかさまにする
+      BOOL bBoxFlg = pWork->bGTSSelectPokeBox[ 1-side ][ poke ];
+      
       if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL)){
         pWork->pokemonselectno = trgno;
         OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
@@ -1154,6 +1187,8 @@ static BOOL _NEGO_Select6PokemonSelect(POKEMON_TRADE_WORK* pWork, int trgno)
         else{
           POKE_MAIN_Pokemonset(pWork, trgno/GTS_NEGO_POKESLT_MAX, pp);
           GFL_STD_MemCopy(pp, IRC_POKEMONTRADE_GetRecvPP(pWork,0) ,POKETOOL_GetWorkSize());
+          OS_TPrintf("メールセット2%d \n",bBoxFlg);
+          IRC_POKEMONTRADE_SetRecvBoxFlg(pWork,0,bBoxFlg);
           _CHANGE_STATE(pWork, _menuMyPokemonSend);
         }
         return TRUE;

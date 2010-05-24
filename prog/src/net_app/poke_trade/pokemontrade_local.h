@@ -513,6 +513,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_BMPWIN* GTSInfoWindow;     ///< GTSネゴシエーション説明
   GFL_BMPWIN* GTSInfoWindow2;     ///< GTSネゴシエーション説明
   POKEMON_PARAM* recvPoke[2];  ///< 受け取ったポケモンを格納する場所
+  BOOL bRecvPokeBox[2];    /// 手持ちかボックスか
   StateFunc* state;      ///< ハンドルのプログラム状態
   TIMEICON_WORK* pTimeIcon;
   HEAPID heapID;
@@ -659,6 +660,7 @@ struct _POKEMON_TRADE_WORK{
 
   GFL_CLWK* pokeSelectSixCur;
   POKEMON_PARAM* GTSSelectPP[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
+  BOOL bGTSSelectPokeBox[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];  //ボックスか手持ちか
   GFL_CLWK* pokeIconGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
   u32 pokeIconNcgResGTS[GTS_PLAYER_WORK_NUM][GTS_NEGO_POKESLT_MAX];
   GFL_BMPWIN* TriStatusWin[ GTS_PLAYER_WORK_NUM*2 ];            // ボックス名表示
@@ -942,6 +944,10 @@ typedef enum {
   _NETCMD_FRIENDBOXNUM,
   _NETCMD_EVILCHECK,
   _NETCMD_UN,
+  _NETCMD_THREE_SELECT1_BOX,
+  _NETCMD_THREE_SELECT2_BOX,
+  _NETCMD_THREE_SELECT3_BOX,
+  _NETCMD_SELECT_POKEMON_BOX,
 } _POKEMON_TRADE_SENDCMD;
 
 
@@ -957,6 +963,7 @@ extern void POKE_GTS_Select6MessageInit(POKEMON_TRADE_WORK* pWork);
 extern int POKE_GTS_IsSelect(POKEMON_TRADE_WORK* pWork,int boxno,int index);
 extern BOOL POKE_GTS_IsFullMode(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADEPROC_IsTimeWaitSelect(POKEMON_TRADE_WORK* pWork);
+extern int POKEMONTRADE_NEGO_CheckGTSSetPokemon(POKEMON_TRADE_WORK* pWork,int side,int index,int boxno);
 
 
 
@@ -1041,6 +1048,8 @@ extern BOOL POKEMONTRADE_IsInPokemonRecvPoke(POKEMON_PARAM* pp);
 extern void POKEMONTRADE_CreatePokeSelectMessage(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_RemovePokeSelectMessage(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE_MessageOAMWriteVram(POKEMON_TRADE_WORK* pWork);
+extern BOOL IRC_POKEMONTRADE_GetRecvBoxFlg(POKEMON_TRADE_WORK *pWork, int index);
+extern void IRC_POKEMONTRADE_SetRecvBoxFlg(POKEMON_TRADE_WORK *pWork, int index, BOOL bFlg);
 
 
 extern void POKMEONTRADE_DEMO_GTSUP_ChangeDemo(POKEMON_TRADE_WORK* pWork);
