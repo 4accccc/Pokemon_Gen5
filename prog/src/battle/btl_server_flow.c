@@ -3172,9 +3172,9 @@ static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
 
   // 投げる位置（生きているポケモンをシークして最初のヒット位置）を決める
   {
-    BtlExPos exPos;
-    u8 posAry[ BTL_POSIDX_MAX ];
+    u8 posAry[ BTL_POS_MAX ];
     u8 basePos, posCnt, i;
+    BtlExPos exPos;
 
     basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
     exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, basePos );
@@ -4928,7 +4928,7 @@ static BOOL correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKE
       if( BPP_IsDead(defaulTarget)
       &&  !BTL_MAINUTIL_IsFriendPokeID( BPP_GetID(attacker), BPP_GetID(defaulTarget) )
       ){
-        u8  nextTargetPos[ BTL_POSIDX_MAX ];
+        u8  nextTargetPos[ BTL_POS_MAX ];
         BTL_POKEPARAM* nextTarget[ BTL_POSIDX_MAX ];
         BtlPokePos  atPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(attacker) );
         BtlExPos    exPos;
@@ -13502,11 +13502,12 @@ BOOL BTL_SVFTOOL_IsExistBenchPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 //--------------------------------------------------------------------------------------
 u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID )
 {
-  u8 pos[ BTL_POSIDX_MAX ];
+  u8 pos[ BTL_POS_MAX ];
   BTL_POKEPARAM* bpp;
   u8 max, num, i;
 
   max = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, pos );
+
   for(i=0, num=0; i<max; ++i)
   {
     bpp = BTL_POKECON_GetFrontPokeData( wk->pokeCon, pos[i] );

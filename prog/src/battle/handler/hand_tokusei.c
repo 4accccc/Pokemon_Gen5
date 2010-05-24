@@ -5239,6 +5239,7 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
       mwk->pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, mwk->pokeID );
       mwk->consumedPokeCnt = 0;
+
       for(i=0; i<mwk->pokeCnt; ++i)
       {
         bpp = BTL_SVFTOOL_GetPokeParam( flowWk, mwk->pokeID[i] );

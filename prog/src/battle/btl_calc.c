@@ -1274,7 +1274,7 @@ BtlPokePos BTL_CALC_DecideWazaTargetAuto( const BTL_MAIN_MODULE* mainModule, BTL
   else
   {
     BtlExPos exPos;
-    u8 pokeID[ BTL_POSIDX_MAX ];
+    u8 pokeID[ BTL_POS_MAX ];
     u8 pokeCnt = 0;
 
     switch( targetType ){
