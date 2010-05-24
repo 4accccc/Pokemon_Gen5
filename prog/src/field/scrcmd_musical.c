@@ -1050,7 +1050,7 @@ static GMEVENT_RESULT event_Musical(
 
       
       //FIELD_SOUND_PopBGM( fsnd );
-      PMSND_FadeInBGM( 30 );
+      //PMSND_FadeInBGM( 30 );
     }
     (*seq)++;
     break;

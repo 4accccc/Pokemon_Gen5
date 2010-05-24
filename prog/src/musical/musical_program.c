@@ -69,6 +69,8 @@ typedef struct
   u8 rewardType;
   u8 pad;
   u16 rewardValue;
+  u8  version;    //WBèâä˙ÇP(musical_shotÇ∆ÇÕï 
+  u8  langCode;   //pm_version
   MUSICAL_PROGRAM_POKE_DATA pokeData[MUS_PROG_DATA_POKE_NUM];
   
 }MUSICAL_PROGRAM_DATA;

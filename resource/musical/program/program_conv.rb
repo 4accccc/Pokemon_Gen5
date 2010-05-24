@@ -28,6 +28,9 @@ DATA_IDX_AWARD_TYPE = 8
 DATA_IDX_AWARD_NO = 9
 DATA_IDX_POKE_DATA_START = 10
 
+DATA_IDX_VERSION = 148
+DATA_IDX_LANG_CODE = 149
+
 POKEDATA_IDX_MONSNO = 0
 POKEDATA_IDX_TRAINER = 1
 POKEDATA_IDX_TR_NAME = 2
@@ -105,6 +108,10 @@ begin
   outFile.write( padAry.pack("C") ) #パディング
   ary = Array( sheet[dataCol,DATA_IDX_AWARD_NO].to_i )
   outFile.write( ary.pack("S") )
+  ary = Array( sheet[dataCol,DATA_IDX_VERSION].to_i )
+  outFile.write( ary.pack("C") )
+  ary = Array( sheet[dataCol,DATA_IDX_LANG_CODE].to_i )
+  outFile.write( ary.pack("C") )
 
   #ぽけデータ
   pokeIdx = 0
