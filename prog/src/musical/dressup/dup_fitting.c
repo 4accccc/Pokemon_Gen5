@@ -92,7 +92,7 @@ static const fx32 FIT_POKE_POS_Z_FX = FX32_CONST(40.0f);
 //アイテム表示個数
 static const u16 ITEM_LIST_NUM = 14;
 //static const u16 ITEM_LIST_NUM = 48;
-static const u16 ITEM_FIELD_NUM = 64;
+static const u16 ITEM_FIELD_NUM = 128;
 static const u16 ITEM_EQUIP_NUM = MUS_POKE_EQUIP_MAX;//9
 static const u16 ITEM_DISP_NUM = ITEM_LIST_NUM+ITEM_FIELD_NUM+ITEM_EQUIP_NUM+1; //ペンで持つ分
 
@@ -1111,7 +1111,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
 
   {
     GFL_BBD_SETUP bbdSetup = {
-      512,128,
+      512,160,
       {FX32_ONE,FX32_ONE,0},
       GX_RGB(0,0,0),
       GX_RGB(0,0,0),
