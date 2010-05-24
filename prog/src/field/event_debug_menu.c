@@ -5845,6 +5845,7 @@ typedef enum {
   DEBUG_ZKNCMD_LOCAL_SEE_25,
   DEBUG_ZKNCMD_LOCAL_SEE_60,
   DEBUG_ZKNCMD_LOCAL_SEE_120,
+  DEBUG_ZKNCMD_MANUAL_SET,
 }DEBUG_ZKNCMD;
 
 typedef struct {
@@ -5856,6 +5857,21 @@ typedef struct {
   FLDMENUFUNC *menuFunc;
   ZUKAN_SAVEDATA * sv;
 }DEBUG_ZUKAN_WORK;
+
+typedef struct {
+  FIELDMAP_WORK * fieldWork;
+  ZUKAN_SAVEDATA * sv;
+	HEAPID	heapID;
+
+	GFL_MSGDATA * msgData;
+	FLDSYSWIN * win;
+
+	u16	mode;
+	u16	pos;
+	s16	start;
+	s16	end;
+
+}DEBUG_ZUKAN_MANUAL_WORK;
 
 ///リスト メニューヘッダー
 static const FLDMENUFUNC_HEADER ZukanMenuHeader =
@@ -5883,18 +5899,19 @@ static const FLDMENUFUNC_HEADER ZukanMenuHeader =
 ///メニューリスト
 static const FLDMENUFUNC_LIST ZukanMenuList[] =
 {
-  { DEBUG_FIELD_ZUKAN_01, (void*)DEBUG_ZKNCMD_GLOBAL_GET_FULL }, // 全国捕獲コンプ
-  { DEBUG_FIELD_ZUKAN_07, (void*)DEBUG_ZKNCMD_GLOBAL_SEE_FULL }, // 全国見たコンプ
-  { DEBUG_FIELD_ZUKAN_10, (void*)DEBUG_ZKNCMD_LOCAL_GET_FULL },  // 地方捕獲コンプ
-  { DEBUG_FIELD_ZUKAN_11, (void*)DEBUG_ZKNCMD_LOCAL_SEE_FULL },  // 地方見たコンプ
-  { DEBUG_FIELD_ZUKAN_09, (void*)DEBUG_ZKNCMD_RANDOM },          // ランダムセット
-  { DEBUG_FIELD_ZUKAN_03, (void*)DEBUG_ZKNCMD_FORM_FULL },       // フォルムコンプ
-  { DEBUG_FIELD_ZUKAN_12, (void*)DEBUG_ZKNCMD_LANGUAGE_FULL },   // 言語コンプ
-  { DEBUG_FIELD_ZUKAN_05, (void*)DEBUG_ZKNCMD_ZENKOKU_FLAG },    // 全国フラグ
-  { DEBUG_FIELD_ZUKAN_06, (void*)DEBUG_ZKNCMD_VERSION_UP },      // バージョンアップ
-  { DEBUG_FIELD_ZUKAN_13, (void*)DEBUG_ZKNCMD_LOCAL_SEE_25 },    // 地方見た２５
-  { DEBUG_FIELD_ZUKAN_14, (void*)DEBUG_ZKNCMD_LOCAL_SEE_60 },    // 地方見た６０
-  { DEBUG_FIELD_ZUKAN_15, (void*)DEBUG_ZKNCMD_LOCAL_SEE_120 },   // 地方見た１２０
+  { DEBUG_FIELD_ZUKAN_01, (void*)DEBUG_ZKNCMD_GLOBAL_GET_FULL },	// 全国捕獲コンプ
+  { DEBUG_FIELD_ZUKAN_07, (void*)DEBUG_ZKNCMD_GLOBAL_SEE_FULL },	// 全国見たコンプ
+  { DEBUG_FIELD_ZUKAN_10, (void*)DEBUG_ZKNCMD_LOCAL_GET_FULL },		// 地方捕獲コンプ
+  { DEBUG_FIELD_ZUKAN_11, (void*)DEBUG_ZKNCMD_LOCAL_SEE_FULL },		// 地方見たコンプ
+  { DEBUG_FIELD_ZUKAN_09, (void*)DEBUG_ZKNCMD_RANDOM },						// ランダムセット
+  { DEBUG_FIELD_ZUKAN_03, (void*)DEBUG_ZKNCMD_FORM_FULL },				// フォルムコンプ
+  { DEBUG_FIELD_ZUKAN_12, (void*)DEBUG_ZKNCMD_LANGUAGE_FULL },		// 言語コンプ
+  { DEBUG_FIELD_ZUKAN_05, (void*)DEBUG_ZKNCMD_ZENKOKU_FLAG },			// 全国フラグ
+  { DEBUG_FIELD_ZUKAN_06, (void*)DEBUG_ZKNCMD_VERSION_UP },				// バージョンアップ
+  { DEBUG_FIELD_ZUKAN_13, (void*)DEBUG_ZKNCMD_LOCAL_SEE_25 },			// 地方見た２５
+  { DEBUG_FIELD_ZUKAN_14, (void*)DEBUG_ZKNCMD_LOCAL_SEE_60 },			// 地方見た６０
+  { DEBUG_FIELD_ZUKAN_15, (void*)DEBUG_ZKNCMD_LOCAL_SEE_120 },		// 地方見た１２０
+  { DEBUG_FIELD_ZUKAN_16, (void*)DEBUG_ZKNCMD_MANUAL_SET },				// 登録切り替え
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
@@ -5914,6 +5931,7 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk );
 static void SetZukanDataOne( DEBUG_ZUKAN_WORK * wk, u16 mons, u16 form, u16 lang, u32 mode );
 static void SetZukanLocal( DEBUG_ZUKAN_WORK * wk, u16 count, u32 mode );
 static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk );
+static GMEVENT_RESULT ZukanManualSet( GMEVENT *event, int *seq, void *wk );
 
 
 //--------------------------------------------------------------
@@ -6010,20 +6028,6 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       return GMEVENT_RES_FINISH;
 
     case DEBUG_ZKNCMD_FORM_FULL:     // フォルム
-/*
-      {
-        u32 max;
-        u16 i, j;
-        for( i=1; i<=MONSNO_END; i++ ){
-          max = ZUKANSAVE_GetFormMax( i );
-          if( max != 1 ){
-            for( j=0; j<max; j++ ){
-              SetZukanDataOne( wk, i, j, PM_LANG, 0 );
-            }
-          }
-        }
-      }
-*/
       SetZukanDataAll( wk );
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
@@ -6040,37 +6044,11 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
 
     case DEBUG_ZKNCMD_LOCAL_GET_FULL:     // 地方捕獲
       SetZukanLocal( wk, MONSNO_END, 0 );
-#if 0
-      {
-        u16 * buf;
-        u32 i;
-        buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
-        for( i=1; i<=MONSNO_END; i++ ){
-          if( buf[i] != 0 ){
-            SetZukanDataOne( wk, i, 0, PM_LANG, 0 );
-          }
-        }
-        GFL_HEAP_FreeMemory( buf );
-      }
-#endif
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
     case DEBUG_ZKNCMD_LOCAL_SEE_FULL:     // 地方見た
       SetZukanLocal( wk, MONSNO_END, 1 );
-#if 0
-      {
-        u16 * buf;
-        u32 i;
-        buf = POKE_PERSONAL_GetZenkokuToChihouArray( work->heapID, NULL );
-        for( i=1; i<=MONSNO_END; i++ ){
-          if( buf[i] != 0 ){
-            SetZukanDataOne( wk, i, 0, PM_LANG, 1 );
-          }
-        }
-        GFL_HEAP_FreeMemory( buf );
-      }
-#endif
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
 
@@ -6104,6 +6082,23 @@ static GMEVENT_RESULT debugMenuZukanEvent( GMEVENT *event, int *seq, void *wk )
       }
       FLDMENUFUNC_DeleteMenu( work->menuFunc );
       return GMEVENT_RES_FINISH;
+
+		case DEBUG_ZKNCMD_MANUAL_SET:				// 登録切り替え
+			FLDMENUFUNC_DeleteMenu( work->menuFunc );
+			{
+				FIELDMAP_WORK * fieldWork = work->fieldWork;
+				ZUKAN_SAVEDATA * sv = work->sv;
+				HEAPID	heapID = work->heapID;
+				DEBUG_ZUKAN_MANUAL_WORK * mwk;
+
+			  GMEVENT_Change( event, ZukanManualSet, sizeof(DEBUG_ZUKAN_MANUAL_WORK) );
+
+				mwk = GMEVENT_GetEventWork( event );
+				mwk->sv = sv;
+				mwk->fieldWork = fieldWork;
+				mwk->heapID = heapID;
+			}
+			return GMEVENT_RES_CONTINUE;
     }
     break;
   }
@@ -6232,6 +6227,177 @@ static void SetZukanDataAll( DEBUG_ZUKAN_WORK * wk )
   }
 }
 
+static void DZM_ModePut( DEBUG_ZUKAN_MANUAL_WORK * wk )
+{
+	FLDSYSWIN_FillClearWindow( wk->win, 0, 40, 22*8, 16 );
+
+	if( wk->mode == 0 ){
+		FLDSYSWIN_Print( wk->win, 0, 40, DEBUG_FIELD_ZUKAN_17 );
+	}else if( wk->mode == 1 ){
+		FLDSYSWIN_Print( wk->win, 0, 40, DEBUG_FIELD_ZUKAN_18 );
+	}else{
+		FLDSYSWIN_Print( wk->win, 0, 40, DEBUG_FIELD_ZUKAN_19 );
+	}
+}
+
+static void DZM_MonsPut( DEBUG_ZUKAN_MANUAL_WORK * wk, u32 pos )
+{
+	STRBUF * str;
+	STRBUF * exp;
+	WORDSET * wset;
+
+	FLDSYSWIN_FillClearWindow( wk->win, 0, 56+pos*16, 22*8, 16 );
+
+  wset = WORDSET_Create( wk->heapID );
+	exp  = GFL_STR_CreateBuffer( 128, wk->heapID );
+
+	if( pos == 0 ){
+		str = GFL_MSG_CreateString( wk->msgData, DEBUG_FIELD_ZUKAN_20 );
+		WORDSET_RegisterNumber( wset, 0, wk->start, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterPokeMonsNameNo( wset, 1, wk->start );
+	}else{
+		str = GFL_MSG_CreateString( wk->msgData, DEBUG_FIELD_ZUKAN_21 );
+		WORDSET_RegisterNumber( wset, 0, wk->end, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+		WORDSET_RegisterPokeMonsNameNo( wset, 1, wk->end );
+	}
+
+	WORDSET_ExpandStr( wset, exp, str );
+
+	if( wk->pos == pos ){
+		FLDSYSWIN_PrintStrBufColor( wk->win, 0, 56+pos*16, exp, PRINTSYS_LSB_Make(3,4,15) );
+	}else{
+		FLDSYSWIN_PrintStrBufColor( wk->win, 0, 56+pos*16, exp, PRINTSYS_LSB_Make(1,2,15) );
+	}
+
+	GFL_STR_DeleteBuffer( str );
+	GFL_STR_DeleteBuffer( exp );
+	WORDSET_Delete( wset );
+}
+
+static void ZukanManualCountUp( DEBUG_ZUKAN_MANUAL_WORK * wk, s16 val )
+{
+	s16 * dat;
+
+	if( wk->pos == 0 ){
+		dat = &wk->start;
+	}else{
+		dat = &wk->end;
+	}
+
+	*dat += val;
+
+	if( *dat > MONSNO_END ){
+		*dat = *dat - MONSNO_END;
+	}else if( *dat < 1 ){
+		*dat = *dat + MONSNO_END;
+	}
+
+	DZM_MonsPut( wk, wk->pos );
+}
+
+static void DZM_DataMake( DEBUG_ZUKAN_MANUAL_WORK * wk )
+{
+	u16	start, end;
+
+	if( wk->start > wk->end ){
+		start = wk->end;
+		end   = wk->start;
+	}else{
+		start = wk->start;
+		end   = wk->end;
+	}
+
+	// みた
+	if( wk->mode == 0 ){
+		ZUKANSAVE_DebugDataSetSee( wk->sv, start, end, wk->heapID );
+	// ほかく
+	}else if( wk->mode == 1 ){
+		ZUKANSAVE_DebugDataSetGet( wk->sv, start, end, wk->heapID );
+	// 範囲クリア
+	}else{
+		ZUKANSAVE_DebugDataClear( wk->sv, start, end );
+	}
+}
+
+static GMEVENT_RESULT ZukanManualSet( GMEVENT *event, int *seq, void *wk )
+{
+	DEBUG_ZUKAN_MANUAL_WORK * work = wk;
+
+	switch( (*seq) ){
+	case 0:
+		work->mode  = 0;
+		work->pos   = 0;
+		work->start = 1;
+		work->end   = 1;
+		{
+			FLDMSGBG * msgBG;
+			msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
+			work->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
+			work->win = FLDSYSWIN_AddEx( msgBG, work->msgData, 1, 1, 22, 11 );
+
+			FLDSYSWIN_Print( work->win, 0, 0, DEBUG_FIELD_ZUKAN_22 );
+			DZM_ModePut( work );
+			DZM_MonsPut( work, 0 );
+			DZM_MonsPut( work, 1 );
+		}
+		(*seq)++;
+		break;
+
+	case 1:
+		// モード切り替え
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			work->mode += 1;
+			if( work->mode >= 3 ){
+				work->mode = 0;
+			}
+			DZM_ModePut( work );
+			break;
+		}
+		// 反映
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+			DZM_DataMake( work );
+			PMSND_PlaySE( SEQ_SE_SAVE );
+			break;
+		}
+		// 決定
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			work->pos ^= 1;
+			DZM_MonsPut( work, 0 );
+			DZM_MonsPut( work, 1 );
+			break;
+		}
+		// 終了
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			FLDSYSWIN_ClearWindow( work->win );
+			FLDSYSWIN_Delete( work->win );
+		  GFL_MSG_Delete( work->msgData );
+			return GMEVENT_RES_FINISH;
+		}
+		// +1
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+			ZukanManualCountUp( work, 1 );
+			break;
+		}
+		// -1
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+			ZukanManualCountUp( work, -1 );
+			break;
+		}
+		// +10
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+			ZukanManualCountUp( work, 10 );
+			break;
+		}
+		// -10
+		if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+			ZukanManualCountUp( work, -10 );
+			break;
+		}
+		break;
+	}
+
+	return GMEVENT_RES_CONTINUE;
+}
 
 
 //======================================================================================

@@ -1381,3 +1381,96 @@ BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 
 
 	return check_bit( zw->TextVersionUp, (monsno-1)*TEXTVER_VER_MAX+(country_code-1) );
 }
+
+
+
+//============================================================================================
+//	デバッグ処理
+//============================================================================================
+#ifdef	PM_DEBUG
+
+static void DebugDataClearCore( ZUKAN_SAVEDATA * zw, u16 mons )
+{
+	u32	i;
+
+	reset_bit_mons( (u8 *)zw->get_flag, mons );				// 捕獲フラグクリア
+
+	for( i=SEE_FLAG_MALE; i<=SEE_FLAG_F_RARE; i++ ){
+		reset_bit_mons( (u8 *)zw->sex_flag[i], mons );	// ♂♀フラグクリア
+		reset_bit_mons( (u8 *)zw->draw_sex[i], mons );	// 閲覧中♂♀フラグクリア
+	}
+
+	{	// フォルムデータクリア
+		s32	cnt = 0;
+		i = 0;
+		while( FormTable[i][0] != 0 ){
+			if( FormTable[i][0] == mons ){
+				u16	j, k;
+				for( j=0; j<FormTable[i][1]; j++ ){
+					for( k=COLOR_NORMAL; k<=COLOR_RARE; k++ ){
+						reset_bit( (u8 *)zw->form_flag[k], cnt+j );			// フォルムフラグクリア
+						reset_bit( (u8 *)zw->draw_form[k], cnt+j );			// 閲覧中フォルムフラグクリア
+					}
+				}
+			}
+			cnt += FormTable[i][1];
+			i++;
+		}
+	}
+
+	// 言語フラグクリア
+	if( mons <= POKEZUKAN_TEXT_POSSIBLE ){
+		for( i=0; i<TEXTVER_VER_MAX; i++ ){
+			reset_bit( zw->TextVersionUp, (mons-1)*TEXTVER_VER_MAX+i );
+		}
+	}
+
+	// パッチール用個性乱数クリア
+  if( mons == MONSNO_PATTIIRU ){
+		zw->PachiRandom = 0;
+	}
+}
+
+// データクリア
+void ZUKANSAVE_DebugDataClear( ZUKAN_SAVEDATA * zw, u16 start, u16 end )
+{
+	u32	i;
+
+	if( zw->defaultMonsNo >= start && zw->defaultMonsNo <= end ){
+		zw->defaultMonsNo = 0;		// 閲覧中のポケモン番号クリア
+	}
+
+	for( i=start; i<=end; i++ ){
+		DebugDataClearCore( zw, i );
+	}
+}
+
+// 見た設定
+void ZUKANSAVE_DebugDataSetSee( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID )
+{
+	POKEMON_PARAM * pp;
+	u32	i;
+
+	for( i=start; i<=end; i++ ){
+		DebugDataClearCore( zw, i );
+    pp = PP_Create( i, 50, 0, heapID );
+		ZUKANSAVE_SetPokeSee( zw, pp );
+    GFL_HEAP_FreeMemory( pp );
+	}
+}
+
+// 捕獲設定
+void ZUKANSAVE_DebugDataSetGet( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID )
+{
+	POKEMON_PARAM * pp;
+	u32	i;
+
+	for( i=start; i<=end; i++ ){
+		DebugDataClearCore( zw, i );
+    pp = PP_Create( i, 50, 0, heapID );
+		ZUKANSAVE_SetPokeGet( zw, pp );
+    GFL_HEAP_FreeMemory( pp );
+	}
+}
+
+#endif	// PM_DEBUG

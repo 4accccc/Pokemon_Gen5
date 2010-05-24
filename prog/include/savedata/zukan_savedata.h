@@ -159,20 +159,10 @@ extern void ZUKANSAVE_GetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 * sex, BOO
 //----------------------------------------------------------
 //  デバッグ用
 //----------------------------------------------------------
-extern void Debug_ZUKANSAVE_Make(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
-extern void Debug_ZUKANSAVE_Make_PM_LANG(ZUKAN_SAVEDATA * zs, int start, int end, BOOL see_flg, HEAPID heapId);
-extern void Debug_ZUKANSAVE_LangSetRand( ZUKAN_SAVEDATA * zs, int start, int end );
-extern void Debug_ZUKANSAVE_LangSetAll( ZUKAN_SAVEDATA * zs, int start, int end );
-extern void Debug_ZUKANSAVE_LangSet( ZUKAN_SAVEDATA * zs, int start, int end, u8 lang );
-extern void Debug_ZUKANSAVE_AnnoonGetSet( ZUKAN_SAVEDATA * zs, int start, int end, HEAPID heapId );
-extern void Debug_ZUKANSAVE_DeokisisuBuckUp( ZUKAN_SAVEDATA * zs );
-
-#ifdef CREATE_INDEX
-extern void *Index_Get_Zukan_Offset(ZUKAN_SAVEDATA *zs);
-extern void *Index_Get_Zenkoku_Zukan_Offset(ZUKAN_SAVEDATA *zs);
-extern void *Index_Get_Get_Flag_Offset(ZUKAN_SAVEDATA *zs);
-extern void *Index_Get_See_Flag_Offset(ZUKAN_SAVEDATA *zs);
-extern void *Index_Get_Sex_Flag_Offset(ZUKAN_SAVEDATA *zs);
-#endif
+#ifdef	PM_DEBUG
+extern void ZUKANSAVE_DebugDataClear( ZUKAN_SAVEDATA * zw, u16 start, u16 end );
+extern void ZUKANSAVE_DebugDataSetSee( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID );
+extern void ZUKANSAVE_DebugDataSetGet( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID );
+#endif	// PM_DEBUG
 
 #endif  // __ZUKAN_SAVEADATA_H__

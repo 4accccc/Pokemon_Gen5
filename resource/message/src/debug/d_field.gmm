@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00168" date="2010-05-24T13:19:51"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-05-24T20:28:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="186" top="190" right="891" bottom="818" maximized="no" rayout="Vertical2">
+	<dialog left="515" top="233" right="1220" bottom="861" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="752" top="297" right="1280" bottom="819" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1697,6 +1697,43 @@ allocable (0x[2:07:８桁:5])</language>
 	<row id="DEBUG_FIELD_ZUKAN_15">
 		<language name="JPN" width="160">ちほうみた１２０</language>
 		<language name="JPN_KANJI" width="160">地方見た１２０</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_16">
+		<language name="JPN" width="160">とうろくきりかえ</language>
+		<language name="JPN_KANJI" width="160">とうろくきりかえ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_17">
+		<language name="JPN" width="160">みた</language>
+		<language name="JPN_KANJI" width="160">みた</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_18">
+		<language name="JPN" width="160">ほかく</language>
+		<language name="JPN_KANJI" width="160">ほかく</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_19">
+		<language name="JPN" width="160">さくじょ</language>
+		<language name="JPN_KANJI" width="160">さくじょ</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_20">
+		<language name="JPN" width="160">ここから：[2:02:３桁:0]　[1:01:ポケモン種族名:1]</language>
+		<language name="JPN_KANJI" width="160">ここから：[2:02:３桁:0]　[1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_21">
+		<language name="JPN" width="160">ここまで：[2:02:３桁:0]　[1:01:ポケモン種族名:1]</language>
+		<language name="JPN_KANJI" width="160">ここまで：[2:02:３桁:0]　[1:01:ポケモン種族名:1]</language>
+	</row>
+
+	<row id="DEBUG_FIELD_ZUKAN_22">
+		<language name="JPN" width="160">ＳＥＬＥＣＴ：きりかえ
+ＳＴＡＲＴ：けってい</language>
+		<language name="JPN_KANJI" width="160">ＳＥＬＥＣＴ：きりかえ
+ＳＴＡＲＴ：けってい</language>
 	</row>
 
 	<row id="DEBUG_FIELD_GEONET">

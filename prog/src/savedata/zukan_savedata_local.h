@@ -76,44 +76,14 @@ struct ZUKAN_SAVEDATA {
 
   u32 get_flag[POKEZUKAN_ARRAY_LEN];    ///< 捕まえたフラグ用ワーク
 
-// 21 x 4 x 3 = 252
-// 649 x 3 / 8 = 1947 / 8 = 244
-
   u32 sex_flag[SEE_FLAG_MAX][POKEZUKAN_ARRAY_LEN];		///< オスメスフラグ用ワーク
 	u32	draw_sex[SEE_FLAG_MAX][POKEZUKAN_ARRAY_LEN];		///< 閲覧中オスメスフラグ
-//	u32	draw_rare[COLOR_MAX][POKEZUKAN_ARRAY_LEN];			///< 閲覧中レアフラグ
 
   u8	form_flag[COLOR_MAX][FORM_ARRAY_LEN];						///< フォルムフラグ用ワーク
 	u8	draw_form[COLOR_MAX][FORM_ARRAY_LEN];						///< 閲覧中フォルムフラグ
-//	u8	draw_form_rare[COLOR_MAX][FORM_ARRAY_LEN];			///< 閲覧中フォルムレアフラグ
 
   u8 TextVersionUp[TEXTVER_ARRAY_LEN];	///< 言語バージョンアップマスク
 
   u32 PachiRandom;            ///< パッチール用個性乱数保持ワーク
-
-/*
-  u32 see_flag[POKEZUKAN_ARRAY_LEN];    ///<見つけたフラグ用ワーク
-
-  u8 SiiusiTurn;              ///<シーウシ用見つけた順保持ワーク    2bit必要  1bit*2種類
-  u8 SiidorugoTurn;           ///<シードルゴ用見つけた順保持ワーク  2bit必要  1bit*2種類
-  u8 MinomuttiTurn;           ///<ミノムッチ用見つけた順保持ワーク  6bit必要  2bit*3種類
-  u8 MinomesuTurn;            ///<ミノメス用見つけた順保持ワーク    6bit必要  2bit*3種類
-  u8 UnknownTurn[ POKEZUKAN_UNKNOWN_NUM ];///<アンノーンを見つけた番号
-  u8 UnknownGetTurn[ POKEZUKAN_UNKNOWN_NUM ];///<アンノーンを捕獲した番号
-  u8 TextVersionUp[ POKEZUKAN_TEXTVER_UP_NUM ];///<言語バージョンアップマスク
-
-  u8 GraphicVersionUp;          ///<グラフィックバージョン用機能拡張フラグ
-  u8 TextVersionUpMasterFlag;       ///<言語バージョンアップMasterフラグ
-
-  ///<ロトム用見つけた順番保持ワーク    18bit必要 3bit*6種類
-  ///<シェイミ用見つけた順番保持ワーク  2bit必要  1bit*2種類
-  ///<ギラティナ用見つけた順番保持ワーク  2bit必要  1bit*2種類
-  u32 rotomu_turn;
-  u8  syeimi_turn;
-  u8  giratyina_turn;
-  u8  pityuu_turn;  ///< ピチュー用見つけた順保持ワーク 2bit*3種類( ♂/♀/ギザミミ )
-  u8  turn_pad;   ///< 余り
-*/
-
 };
 
