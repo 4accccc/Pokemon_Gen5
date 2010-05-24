@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-20T11:58:17"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-05-24T18:46:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -721,6 +721,14 @@
 いまは　ねむくないみたいです</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">このポケモンは
 今は眠くないみたいです</language>
+	</row>
+
+	<row id="msg_boxmes_06_10" back-color="#00ffff,,,,,,,#ff0000,,,#ff0000,,,,,,,">
+		<comment>寝かす操作をキャンセルする際の確認</comment>
+		<language name="JPN" font=" 1:small" width="216">ねかせるポケモンの　せんたくを
+つづけますか？</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">寝かせるポケモンの　選択を
+続けますか？</language>
 	</row>
 
 	<row id="msg_boxmes_07_01" back-color="#ffff80,,,#ffff80,,#ffff80,,#ff0000,,,#ff0000,#ffff80,,,,,,">
