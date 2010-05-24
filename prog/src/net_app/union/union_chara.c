@@ -203,6 +203,9 @@ static MMDL * UNION_CHAR_AddOBJ(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, u8 tra
   head = UnionChar_MMdlHeader;
   head.id = chara_index;
   head.obj_code = UnionView_GetObjCode(trainer_view);
+  if(child_chara_index != 0){
+    head.move_code = MV_DOWN;  //Žq‚Í‰ºŒü‚«ŒÅ’è
+  }
   MMDLHEADER_SetGridPos( &head,
       UnionCharPosTbl[oya_chara_index].x + LinkParentOffsetPosTbl[child_chara_index].x,
       UnionCharPosTbl[oya_chara_index].z + LinkParentOffsetPosTbl[child_chara_index].z,
@@ -719,6 +722,18 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
     mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
     if(MMDL_CheckPossibleAcmd(mmdl) == TRUE){
       MMDL_SetAcmd(mmdl, AC_STAY_JUMP_D_8F);
+    }
+  }
+  else if(unichara->child_no == 0 && beacon->connect_num > 1){//e‚Å’N‚©‚ÆŒq‚ª‚Á‚Ä‚¢‚éŽž‚ÍŒü‚«ŒÅ’è
+    mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+    if(MMDL_GetMoveCode( mmdl ) == MV_DIR_RND){
+      MMDL_ChangeMoveCode( mmdl, MV_DOWN );
+    }
+  }
+  else if(unichara->child_no == 0 && beacon->connect_num <= 1){
+    mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+    if(MMDL_GetMoveCode( mmdl ) == MV_DOWN){
+      MMDL_ChangeMoveCode( mmdl, MV_DIR_RND );
     }
   }
   
