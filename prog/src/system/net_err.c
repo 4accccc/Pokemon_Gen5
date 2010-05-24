@@ -201,9 +201,10 @@ void NetErr_Main(void)
         { 
           const GFL_NETSTATE_DWCERROR *cp_dwc_error  = GFL_NET_StateGetWifiError();
 
-          if( cp_dwc_error->errorUser == ERRORCODE_TIMEOUT )
+          if( cp_dwc_error->errorUser == ERRORCODE_TIMEOUT
+              || cp_dwc_error->errorUser == ERRORCODE_DISCONNECT )
           {
-            //タイムアウトならば
+            //タイムアウトか相手と切断していたならばならば
             NetErrSystem.wifi_msg = dwc_message_0022;
           }
           else

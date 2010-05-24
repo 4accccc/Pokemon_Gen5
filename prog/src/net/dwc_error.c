@@ -91,7 +91,9 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
     }
-    if( cp_error->errorUser == ERRORCODE_TIMEOUT && is_timeout )
+    if( (cp_error->errorUser == ERRORCODE_TIMEOUT 
+        || cp_error->errorUser == ERRORCODE_DISCONNECT )
+        && is_timeout )
     { 
       NetErr_DispCallPushPop();       //エラーメッセージ表示
       GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
