@@ -430,22 +430,6 @@ static void TheEnd_BgExit( THE_END_WORK* work )
 }
 
 
-// ƒ^ƒCƒgƒ‹ƒƒS‘fÞ
-//title/title_res.h‚Å‹zŽû
-/*
-static const int logo_tbl[][3]={
-  {
-    NARC_title_wht_logo_NCLR,
-    NARC_title_wht_logo_NCGR,
-    NARC_title_wht_logo_NSCR,
-  },
-  {
-    NARC_title_blk_logo_NCLR,
-    NARC_title_blk_logo_NCGR,
-    NARC_title_blk_logo_NSCR,
-  }
-};
-*/
 //----------------------------------------------------------------------------------
 /**
  * @brief ƒ^ƒCƒgƒ‹ƒƒSƒOƒ‰ƒtƒBƒbƒN‚ð“Ç‚Ýž‚Ý
@@ -473,7 +457,7 @@ static void TheEnd_LogoInit( THE_END_WORK* work )
       BG_FRAME_M_LOGO,  
       0,
       0,  // ‘S“]‘—
-      FALSE,
+      TRUE,
       work->heap_id );
 
   GFL_ARCHDL_UTIL_TransVramScreen(
@@ -482,7 +466,7 @@ static void TheEnd_LogoInit( THE_END_WORK* work )
       BG_FRAME_M_LOGO,
       0,
       0,  // ‘S“]‘—
-      FALSE,
+      TRUE,
       work->heap_id );
    
   GFL_ARC_CloseDataHandle( handle );

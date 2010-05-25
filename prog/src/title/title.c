@@ -73,7 +73,7 @@ enum{
   BGPRI_TITLE_LOGO = 2,
   BGPRI_TITLE_BACK = 3,
   BGPRI_3D = 1,
-  BGPRI_BKGR = 2,
+  BGPRI_BKGR = 0,
 };
 
 enum{
@@ -279,6 +279,7 @@ static void _timewait_func( TITLE_WORK *tw )
 
     GFL_BG_SetVisible(FRAME_BACK, VISIBLE_OFF);
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+    GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_OFF );
   }
   
 
@@ -672,11 +673,11 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
   {
     //GFL_BG_SetBackGroundColor(GFL_BG_FRAME0_M, GX_RGB(25, 31, 31));
     GFL_ARC_UTIL_TransVramBgCharacter(
-      ARCID_TITLETEST, NARC_title1_sky_NCGR, FRAME_BKGR, 0, 0x4000, 0, heapID);
+      TITLE_RES_ARCID, TITLE_RES_DEV_NCGR, FRAME_BKGR, 0, 0, TRUE, heapID);
     GFL_ARC_UTIL_TransVramScreen(
-      ARCID_TITLETEST, NARC_title1_sky_NSCR, FRAME_BKGR, 0, 0, 0, heapID);
+      TITLE_RES_ARCID, TITLE_RES_DEV_NSCR, FRAME_BKGR, 0, 0, TRUE, heapID);
     GFL_ARC_UTIL_TransVramPalette(
-      ARCID_TITLETEST, NARC_title1_sky_NCLR, PALTYPE_MAIN_BG, 0, 0, heapID);
+      TITLE_RES_ARCID, TITLE_RES_DEV_NCLR, PALTYPE_MAIN_BG, 0, 0, heapID);
 
     GFL_BG_LoadScreenReq( FRAME_BKGR );
     GFL_BG_SetVisible(FRAME_BKGR, VISIBLE_ON);
@@ -684,9 +685,9 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
   //グラフィックデータロード(LOGO)
   {
   GFL_ARC_UTIL_TransVramBgCharacter(
-    TITLE_RES_ARCID, TITLE_RES_LOGO_NCGR, FRAME_LOGO, 0, 0x8000, 0, heapID);
+    TITLE_RES_ARCID, TITLE_RES_LOGO_NCGR, FRAME_LOGO, 0, 0x8000, 1, heapID);
   GFL_ARC_UTIL_TransVramScreen(
-    TITLE_RES_ARCID, TITLE_RES_LOGO_NSCR, FRAME_LOGO, 0, 0, 0, heapID);
+    TITLE_RES_ARCID, TITLE_RES_LOGO_NSCR, FRAME_LOGO, 0, 0, 1, heapID);
   GFL_ARC_UTIL_TransVramPalette(
     TITLE_RES_ARCID, TITLE_RES_LOGO_NCLR, PALTYPE_SUB_BG, 0, 0, heapID);
   
@@ -697,7 +698,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
   // グラフィックデータロード（BACK)
   {
     GFL_ARC_UTIL_TransVramScreen(
-      TITLE_RES_ARCID, TITLE_RES_BACK_NSCR, FRAME_BACK, 0, 0, 0, heapID);
+      TITLE_RES_ARCID, TITLE_RES_BACK_NSCR, FRAME_BACK, 0, 0, 1, heapID);
     GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
   }
 
@@ -1054,7 +1055,7 @@ static void setupOAMcontrol(OAM_CONTROL* COam, HEAPID heapID)
 
   // ---PUSH START BUTTON---
   COam->clres[OBJ_RES_CHR]  = GFL_CLGRP_CGR_Register( handle, 
-                                                      TITLE_RES_PUSH_NCGR, 0, 
+                                                      TITLE_RES_PUSH_NCGR, 1, 
                                                       CLSYS_DRAW_SUB, heapID );
   COam->clres[OBJ_RES_PAL] = GFL_CLGRP_PLTT_Register( handle, 
                                                       TITLE_RES_PUSH_NCLR, 
