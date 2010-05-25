@@ -528,7 +528,7 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		メッセージ表示メイン
+ * @brief		メッセージ表示状態取得
  *
  * @param   wk      ワーク
  *
@@ -536,14 +536,8 @@ static void SetReportMsgBuff( FMENU_REPORT_EVENT_WORK * wk )
  * @retval  "FALSE = 終了"
  */
 //--------------------------------------------------------------------------------------------
-static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
+static BOOL GetPrintStreamState( FMENU_REPORT_EVENT_WORK * wk )
 {
-  GFL_TCBL_Main( wk->local->tcbl );
-  GFL_TCBL_Main( wk->local->tcbl );
-
-  APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->util.win );
-  APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->util.win );
-
   switch( PRINTSYS_PrintStreamGetState(wk->local->stream) ){
   case PRINTSTREAM_STATE_RUNNING: //実行中
     if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
@@ -569,6 +563,28 @@ static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
   }
 
   return TRUE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メッセージ表示メイン
+ *
+ * @param   wk      ワーク
+ *
+ * @retval  "TRUE = 表示中"
+ * @retval  "FALSE = 終了"
+ */
+//--------------------------------------------------------------------------------------------
+static BOOL MainReportMsg( FMENU_REPORT_EVENT_WORK * wk )
+{
+	GFL_TCBL_Main( wk->local->tcbl );
+	APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->util.win );
+	if( GetPrintStreamState( wk ) == FALSE ){
+		return FALSE;
+	}
+  GFL_TCBL_Main( wk->local->tcbl );
+  APP_KEYCURSOR_Main( wk->local->kcwk, wk->local->stream, wk->local->util.win );
+	return GetPrintStreamState( wk );
 }
 
 //--------------------------------------------------------------------------------------------
