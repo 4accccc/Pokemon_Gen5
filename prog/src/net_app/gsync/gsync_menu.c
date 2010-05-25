@@ -1174,6 +1174,21 @@ static void _FadeWait(GAMESYNC_MENU* pWork)
 }
 
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブ中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeReporting2(GAMESYNC_MENU* pWork)
+{
+  SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->gamedata);
+
+  if(svr == SAVE_RESULT_OK){
+    _infoMessageEnd(pWork);
+    _CHANGE_STATE(pWork,_modeFadeoutStart);
+  }
+}
 
 //------------------------------------------------------------------------------
 /**
@@ -1183,18 +1198,11 @@ static void _FadeWait(GAMESYNC_MENU* pWork)
 //------------------------------------------------------------------------------
 static void _modeReporting(GAMESYNC_MENU* pWork)
 {
-
   if(!_infoMessageEndCheck(pWork)){
     return;
   }
-  {
-    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->gamedata);
-
-    if(svr == SAVE_RESULT_OK){
-      _infoMessageEnd(pWork);
-      _CHANGE_STATE(pWork,_modeFadeoutStart);
-    }
-  }
+  GAMEDATA_SaveAsyncStart(pWork->gamedata);
+  _CHANGE_STATE(pWork,_modeReporting2);
 }
 
 //------------------------------------------------------------------------------
@@ -1220,7 +1228,6 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
         _infoMessageDisp(pWork);
         _MESSAGE_WindowTimeIconStart(pWork);
         //セーブ開始
-        GAMEDATA_SaveAsyncStart(pWork->gamedata);
         _CHANGE_STATE(pWork,_modeReporting);
       }
     }

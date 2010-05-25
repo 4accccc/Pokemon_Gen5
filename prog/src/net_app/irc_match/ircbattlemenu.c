@@ -1866,6 +1866,34 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
   _CHANGE_STATE(pWork,_modeReportWait);
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   セーブ中
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+static void _modeReporting2(IRC_BATTLE_MENU* pWork)
+{
+  SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->pGameData);
+    
+  if(svr == SAVE_RESULT_OK){
+    
+    BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+    if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_SINGLE){
+      _CHANGE_STATE(pWork, _modeSelectEntryNumInit);
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeFadeoutStart);
+    }
+    pWork->IsIrc = TRUE;  //赤外線接続開始
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   セーブ中
@@ -1878,23 +1906,8 @@ static void _modeReporting(IRC_BATTLE_MENU* pWork)
   if(!_infoMessageEndCheck(pWork)){
     return;
   }
-  {
-    SAVE_RESULT svr = GAMEDATA_SaveAsyncMain(pWork->pGameData);
-    
-    if(svr == SAVE_RESULT_OK){
-
-			BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
-      GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-      GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
-      if( pWork->selectType == EVENTIRCBTL_ENTRYMODE_SINGLE){
-        _CHANGE_STATE(pWork,_modeSelectEntryNumInit);
-      }
-      else{// if(( pWork->selectType == EVENTIRCBTL_ENTRYMODE_TRADE) || (pWork->selectType == EVENTIRCBTL_ENTRYMODE_FRIEND)){
-        _CHANGE_STATE(pWork, _modeFadeoutStart);
-      }
-      pWork->IsIrc = TRUE;  //赤外線接続開始
-    }
-  }
+  GAMEDATA_SaveAsyncStart(pWork->pGameData);
+  _CHANGE_STATE(pWork,_modeReporting2);
 }
 
 //------------------------------------------------------------------------------
@@ -1941,7 +1954,6 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
         _infoMessageDisp(pWork);
         _MESSAGE_WindowTimeIconStart(pWork);
-        GAMEDATA_SaveAsyncStart(pWork->pGameData);
         _CHANGE_STATE(pWork,_modeReporting);
       }
     }
