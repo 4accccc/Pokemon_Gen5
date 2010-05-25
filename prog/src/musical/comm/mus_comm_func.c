@@ -393,19 +393,17 @@ BOOL MUS_COMM_ExitGameComm(int *seq, void *pwk, void *pWork)
     }
     break;
   case 2:
+    if( work->isInitMusical == FALSE )
+    {
+      //ミュージカル前なら勝手に切る
+      GFL_NET_Exit( NULL );
+      return TRUE;
+    }
+    else
     if( GFL_NET_IsParentMachine() == FALSE )
     {
-      if( work->isInitMusical == TRUE )
+      if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
       {
-        if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_CMD_EXIT_REQ,0,NULL) == TRUE )
-        {
-          return TRUE;
-        }
-      }
-      else
-      {
-        //ミュージカル前なら勝手に切る
-        GFL_NET_Exit( NULL );
         return TRUE;
       }
     }
@@ -989,6 +987,10 @@ const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no )
   if( GFL_NET_HANDLE_IsTimeSync( selfHandle , no , WB_NET_MUSICAL ) == TRUE )
   {
     ARI_TPrintf("MusComm Sync timming command[%d]\n",no);
+    return TRUE;
+  }
+  if( work->isErr == TRUE )
+  {
     return TRUE;
   }
   return FALSE;

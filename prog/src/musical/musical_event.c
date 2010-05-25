@@ -322,6 +322,11 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
         }
       }
     }
+    else
+    if( evWork->isNetErr == TRUE )
+    {
+      evWork->state = MES_ERROR_INIT;
+    }
     break;
   case MES_ENTER_WAITROOM_FIRST_BEF_COMM2:
     if( MUS_COMM_IsPostProgramData(evWork->scriptWork->commWork) == TRUE )
@@ -335,6 +340,11 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       }
       evWork->selfIdx = MUS_COMM_GetSelfMusicalIndex( evWork->scriptWork->commWork );
       MUSICAL_EVENT_CalcProgramData( evWork );
+    }
+    else
+    if( evWork->isNetErr == TRUE )
+    {
+      evWork->state = MES_ERROR_INIT;
     }
     break;
     
@@ -611,10 +621,19 @@ static void MUSICAL_EVENT_TermMusical( MUSICAL_EVENT_WORK *evWork )
     GFL_HEAP_FreeMemory( evWork->shotInitWork->musShotData );
     GFL_HEAP_FreeMemory( evWork->shotInitWork );
   }
-  MUSICAL_SYSTEM_TermDistributeData( evWork->distData );
-  GFL_HEAP_FreeMemory( evWork->musPoke );
+  if( evWork->distData != NULL )
+  {
+    MUSICAL_SYSTEM_TermDistributeData( evWork->distData );
+  }
+  if( evWork->musPoke != NULL )
+  {
+    GFL_HEAP_FreeMemory( evWork->musPoke );
+  }
   
-  MUSICAL_PROGRAM_TermProgramData( evWork->progWork );
+  if( evWork->progWork != NULL )
+  {
+    MUSICAL_PROGRAM_TermProgramData( evWork->progWork );
+  }
   evWork->scriptWork->eventWork = NULL;
 
 }
