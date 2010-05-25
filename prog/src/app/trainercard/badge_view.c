@@ -1573,6 +1573,33 @@ static void _print_gym_leader_info( BADGEVIEW_WORK *wk, int line, int no, STRBUF
                          0, 32*line, strbuf, wk->font, BV_COL_BLACK );
 
 }
+
+// ジムリーダーのテキストをWBで対応させるためのテーブル
+#if PM_VERSION==VERSION_BLACK
+static const u32 gymleader_text_tbl[]={
+  MSG_BADGE_LEADER1_01,
+  MSG_BADGE_LEADER2_01,
+  MSG_BADGE_LEADER3_01,
+  MSG_BADGE_LEADER4_01,
+  MSG_BADGE_LEADER5_01,
+  MSG_BADGE_LEADER6_01,
+  MSG_BADGE_LEADER7_01,
+  MSG_BADGE_LEADER8B_01,
+};
+
+#else
+static const u32 gymleader_text_tbl[]={
+  MSG_BADGE_LEADER1_01,
+  MSG_BADGE_LEADER2_01,
+  MSG_BADGE_LEADER3_01,
+  MSG_BADGE_LEADER4_01,
+  MSG_BADGE_LEADER5_01,
+  MSG_BADGE_LEADER6_01,
+  MSG_BADGE_LEADER7_01,
+  MSG_BADGE_LEADER8W_01,
+};
+#endif
+
 //----------------------------------------------------------------------------------
 /**
  * @brief 情報ウインドウにテキスト書き込み
@@ -1604,14 +1631,14 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no )
       WORDSET_RegisterNumber( wk->wset, 2, date.day,   2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
     }
     // 描画（１行目）
-    GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+no*3, strbuf );
+    GFL_MSG_GetString( wk->mman, gymleader_text_tbl[no], strbuf );
     WORDSET_ExpandStr( wk->wset, wk->expbuf, strbuf );
     PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
                            0, 0, wk->expbuf, wk->font, BV_COL_BLACK );
     
     // 描画（２行目・３行目）
     for(i=1;i<3;i++){
-      GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+no*3+i, strbuf );
+      GFL_MSG_GetString( wk->mman, gymleader_text_tbl[no]+i, strbuf );
       PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
                              0, 32*i, strbuf, wk->font, BV_COL_BLACK );
     }
