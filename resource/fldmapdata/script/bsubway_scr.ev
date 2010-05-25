@@ -85,37 +85,49 @@ INIT_EVENT_START ev_init_bsw_receipt
         
         //自機話し掛け位置取得
         _CALL sub_bsw_common_check_jiki_talkpos
-
+        
         //自機の隣に
         SWITCH $SCWK_TEMP2
         CASE DIR_UP THEN
           $SCWK_TEMP0 = 11
           $SCWK_TEMP1 = 14
           $SCWK_TEMP2 = DIR_RIGHT
+          $SCWK_TEMP3 = DIR_UP
         CASE DIR_DOWN THEN
           $SCWK_TEMP0 = 11
           $SCWK_TEMP1 = 16
           $SCWK_TEMP2 = DIR_RIGHT
+          $SCWK_TEMP3 = DIR_DOWN
         CASE DIR_LEFT THEN
           $SCWK_TEMP0 = 10
           $SCWK_TEMP1 = 15
           $SCWK_TEMP2 = DIR_RIGHT
+          $SCWK_TEMP3 = DIR_LEFT
         DEFAULT
           $SCWK_TEMP0 = 13
           $SCWK_TEMP1 = 16
           $SCWK_TEMP2 = DIR_UP
+          $SCWK_TEMP3 = DIR_LEFT
         ENDSWITCH
         
         _OBJ_POS_CHANGE( objid, SCWK_TEMP0, 0, SCWK_TEMP1, SCWK_TEMP2 )
+        
+        
       ELSE //エラー
         $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
         _CALL sub_bsw_common_del_partner //パートナーOBJ削除
         _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 3, BSW_NULL, BSW_NULL )
       ENDIF
+      
+      //受付を自機の方向へ向かせる
+      _CALL sub_common_set_dir_receipt_to_hero
     ENDIF
   CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
     _CALL sub_bsw_common_del_partner  //パートナーOBJ削除
+    
+    //受付を自機の方向へ向かせる
+    _CALL sub_common_set_dir_receipt_to_hero
   /*
   CASE BSWAY_SCENE_RECEIPT_CANCEL THEN    //キャンセル
   CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
@@ -185,10 +197,16 @@ INIT_EVENT_START ev_recover_bsw_receipt
         _CALL sub_bsw_common_del_partner //パートナーOBJ削除
         _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_NO, 3, BSW_NULL, BSW_NULL )
       ENDIF
+
+      //受付を自機の方向へ向かせる
+      _CALL sub_common_set_dir_receipt_to_hero
     ENDIF
   CASE BSWAY_SCENE_RECEIPT_ERROR THEN     //エラー
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
     _CALL sub_bsw_common_del_partner  //パートナーOBJ削除
+    
+    //受付を自機の方向へ向かせる
+    _CALL sub_common_set_dir_receipt_to_hero
   /*
   CASE BSWAY_SCENE_RECEIPT_AFTER THEN     //ゲーム後
   CASE BSWAY_SCENE_RECEIPT_AFTER_LOSE THEN    //ゲーム後　負け
@@ -602,7 +620,6 @@ sub_receipt_challenge_multi:
     _CALL sub_bsw_common_report //レポート
 
     IF $SCWK_ANSWER == 1 THEN //キャンセル
-      _CALL sub_bsw_common_exit
       _RET
     ENDIF
     
@@ -1628,7 +1645,6 @@ _ANIME_LABEL anm_receipt_demo_partner_in_anm0
   _ANIME_DATA AC_WALK_R_8F,6
   _ANIME_DATA AC_WALK_D_8F,2
   _ANIME_DATA AC_WALK_R_8F,3
-  _ANIME_DATA AC_WALK_R_8F,3
   _ANIME_DATA ACMD_END,0
 
 //アニメデータ　パートナー登場デモ　自機話し掛け下
@@ -1660,6 +1676,33 @@ sub_receipt_demo_jiki_turn_receipt:
 {
   //自機話し掛け位置取得
   _CALL sub_bsw_common_check_jiki_talkpos
+  
+  //自機位置
+  SWITCH $SCWK_TEMP2
+  CASE DIR_UP THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_down )
+  CASE DIR_DOWN THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_up )
+  CASE DIR_LEFT THEN
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_right )
+  DEFAULT
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_turn_left )
+  ENDSWITCH
+  
+  _OBJ_ANIME_WAIT()
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　デモ　受付、自機に振り向く
+//--------------------------------------------------------------
+sub_receipt_demo_receipt_turn_jiki:
+{
+  //自機話し掛け位置取得
+  _CALL sub_bsw_common_check_jiki_talkpos
+  
+  _CALL sub_bsw_common_get_objid_receipt
+  $objid = $SCWK_ANSWER
   
   //自機位置
   SWITCH $SCWK_TEMP2
@@ -1912,9 +1955,9 @@ _ANIME_LABEL anm_receipt_demo_start_train_jiki4
 _ANIME_LABEL anm_receipt_demo_start_train_partner0
   _ANIME_DATA AC_WALK_R_8F, 1
   _ANIME_DATA AC_WALK_D_8F, 1
-  _ANIME_DATA AC_WALK_R_8F, 5
+  _ANIME_DATA AC_WALK_R_8F, 4
   _ANIME_DATA AC_WALK_U_8F, 1
-  _ANIME_DATA AC_WAIT_1F, 4
+  _ANIME_DATA AC_WAIT_8F, 1
   _ANIME_DATA AC_WALK_U_8F, 1
   _ANIME_DATA AC_WAIT_1F, 4
   _ANIME_DATA AC_VANISH_ON,1
@@ -2147,8 +2190,6 @@ sub_bsw_common_report_error_exit:
 {
   //ゾーン別プレイモード取得
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
-  //受付と主人公の向きを合わせる
   
   //お客様！
   $SCWK_TEMP0 = msg_bsw_scr_37
@@ -2606,6 +2647,22 @@ sub_common_wifi_upload_score:
   ELSE
     $SCWK_ANSWER = FALSE
   ENDIF
+}
+_RET
+
+//--------------------------------------------------------------
+//  バトルサブウェイ　受付を自機の方向へ向かせる
+//--------------------------------------------------------------
+sub_common_set_dir_receipt_to_hero:
+{
+  _CALL sub_bsw_common_get_objid_receipt
+  $objid = $SCWK_ANSWER
+  
+  //自機話し掛け位置取得
+  _CALL sub_bsw_common_check_jiki_talkpos
+  
+  //話し掛け方向に向かせる
+  _BSUBWAY_TOOL( BSWTOOL_SET_OBJ_DIR, objid, SCWK_TEMP2, BSW_NULL )
 }
 _RET
 
