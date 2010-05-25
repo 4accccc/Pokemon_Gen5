@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-24T15:20:58"/>
+	<create user="taya" host="W00146" date="2010-05-25T16:18:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -432,7 +432,7 @@
 		<band id="2" index="3" style="0000" width="520"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2773,10 +2773,10 @@
 	<row id="BTL_STRID_SET_UseItem_RecoverPP">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
-[1:07:わざ名:2]のPPを　かいふくした！</language>
+[1:07:わざ名:2]のＰＰを　かいふくした！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
-[1:07:わざ名:2]のPPを　回復した！</language>
+[1:07:わざ名:2]のＰＰを　回復した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RecoverLittle">
@@ -2852,64 +2852,64 @@
 	<row id="BTL_STRID_SET_UseItem_Rankup_ATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-こうげき　が　あがった！</language>
+こうげきが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-攻撃　が　上がった！</language>
+攻撃が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_DEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-ぼうぎょ　が　あがった！</language>
+ぼうぎょが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-防御　が　上がった！</language>
+防御が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　あがった！</language>
+とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこう　が　上がった！</language>
+とくこうが　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　あがった！</language>
+とくぼうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼう　が　上がった！</language>
+とくぼうが　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-すばやさ　が　あがった！</language>
+すばやさが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-素早さ　が　上がった！</language>
+素早さが　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_HIT">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-めいちゅうりつ　が　あがった！</language>
+めいちゅうりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-命中率　が　上がった！</language>
+命中率が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AVOID">
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
-かいひりつ　が　あがった！</language>
+かいひりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
-かいひ率　が　上がった！</language>
+かいひ率が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK">
