@@ -617,7 +617,7 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
     fake[FAKE_NAME] = 0;
     fake[FAKE_ZONE] = PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork( wk->gdata ));
     fake[FAKE_SEX] = MyStatus_GetMySex( wk->my_status );
-    fake[FAKE_VERSION] = PM_VERSION;
+    fake[FAKE_VERSION] = GET_VERSION();  //PM_VERSION;
     fake[FAKE_LANG] = PM_LANG;
     fake[FAKE_COLOR] = owner_info.favoriteColor;
 

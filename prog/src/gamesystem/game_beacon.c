@@ -621,7 +621,7 @@ static void SendBeacon_Init(GAMEBEACON_SEND_MANAGER *send, GAMEDATA * gamedata)
   else{ //3bit‚ÉŽû‚ß‚é
     info->trainer_view = MyStatus_GetTrainerView(myst) - UNION_VIEW_INDEX_WOMAN_START;
   }
-  info->pm_version = PM_VERSION;
+  info->pm_version = GET_VERSION(); //PM_VERSION;
   info->language = PM_LANG;
   info->nation = MyStatus_GetMyNation(myst);
   info->area = MyStatus_GetMyArea(myst);
