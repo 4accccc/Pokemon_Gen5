@@ -2670,13 +2670,14 @@ static BOOL _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
       if(ppp){
         monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
         if(POKEMONTRADE_IsPokeLanguageMark(monsno, moji)){
-
-          OS_TPrintf("‚Ý‚Â‚©‚Á‚½ BOX %d\n",line/6);
-          pWork->oldLine++;
-          pWork->BoxScrollNum = _boxScrollLine2Num(line) - 32;
-          pWork->bgscrollRenew = TRUE;
-          _scrollMainFunc(pWork,FALSE,TRUE);
-          return TRUE;
+          if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL)){
+            OS_TPrintf("‚Ý‚Â‚©‚Á‚½ BOX %d\n",line/6);
+            pWork->oldLine++;
+            pWork->BoxScrollNum = _boxScrollLine2Num(line) - 32;
+            pWork->bgscrollRenew = TRUE;
+            _scrollMainFunc(pWork,FALSE,TRUE);
+            return TRUE;
+          }
         }
       }
     }
