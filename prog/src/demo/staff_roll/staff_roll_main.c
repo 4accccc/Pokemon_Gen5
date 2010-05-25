@@ -596,9 +596,9 @@ static void LoadBgGraphic(void)
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
 
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, TITLE_RES_LOGO_NCGR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+		ah, TITLE_RES_LOGO_NCGR, GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STAFF_ROLL );
 	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME3_M, 0, 0, FALSE, HEAPID_STAFF_ROLL );
+		ah, TITLE_RES_LOGO_NSCR, GFL_BG_FRAME3_M, 0, 0, TRUE, HEAPID_STAFF_ROLL );
 
 	GFL_ARC_CloseDataHandle( ah );
 
@@ -1120,13 +1120,6 @@ static const SR3DCAMERA_PARAM CameraMoveTable[] =
 	{ { -64622, 150921, 81582 }, { 245809, 108794, 129244 } },
 	{ { -17178, 158283, 90580 }, { 199183, 98978, -41718 } },
 	{ { -18405, 189776, 93443 }, { 959514, 154602, 0 } },
-/*
-	{ { 289572, 177097, -1445 }, { 0, 124745, 0 } },
-	{ { 93661, 231085, -302469 }, { 0, 124745, 0 } },
-	{ { -122291, 269122, -92652 }, { 0, 124745, 0 } },
-	{ { -42127, 95706, 92625 }, { 0, 124745, 0 } },
-	{ { -409, 168917, 142114 }, { 0, 124745, 0 } },
-*/
 };
 
 static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk )
