@@ -180,28 +180,27 @@ void POKE_MEMO_SetTrainerMemoPokeDistribution( POKEMON_PASO_PARAM *ppp , const u
 
 static void POKE_MEMO_ClearPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE setType )
 {
-
-  if( setType == PMDT_1 )
-  {
-    PPP_Put( ppp , ID_PARA_get_place , 0 );
-    PPP_Put( ppp , ID_PARA_get_year  , 0 );
-    PPP_Put( ppp , ID_PARA_get_month , 0 );
-    PPP_Put( ppp , ID_PARA_get_day   , 0 );
-  }
-  else
-  {
-    PPP_Put( ppp , ID_PARA_birth_place , 0 );
-    PPP_Put( ppp , ID_PARA_birth_year  , 0 );
-    PPP_Put( ppp , ID_PARA_birth_month , 0 );
-    PPP_Put( ppp , ID_PARA_birth_day   , 0 );
-  }
+  POKE_MEMO_SetPlaceTimeEx( ppp , 0, 0, 0, 0, setType );
 }
 
 static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , const POKE_MEMO_DATA_TYPE setType )
 {
   RTCDate date;
   GFL_RTC_GetDate( &date );
-  
+
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+    if( ZONEDATA_CheckPlaceNameID_IsPalace( place ) == TRUE )
+    {
+      POKE_MEMO_SetPlaceTimeEx( ppp , POKE_MEMO_PLACE_PALACE ,
+          date.year , date.month , date.day , setType );
+    }else
+#endif //MULTI_BOOT_MAKE    
+    {
+      POKE_MEMO_SetPlaceTimeEx( ppp , place,
+          date.year , date.month , date.day , setType );
+    }
+#if 0
   if( setType == PMDT_1 )
   {
 //マルチブート用きり分け
@@ -236,10 +235,20 @@ static void POKE_MEMO_SetPlaceTime( POKEMON_PASO_PARAM *ppp , const u32 place , 
     PPP_Put( ppp , ID_PARA_birth_month , date.month );
     PPP_Put( ppp , ID_PARA_birth_day   , date.day );
   }
+#endif
 }
 
 static void POKE_MEMO_SetPlaceTimeEx( POKEMON_PASO_PARAM *ppp , const u32 place , const u32 year , const u32 month , const u32 day , const POKE_MEMO_DATA_TYPE setType )
 {
+  u8 place_ofs = (setType == PMDT_2);
+  u8 time_ofs = place_ofs*3;
+  
+  PPP_Put( ppp , ID_PARA_get_place+place_ofs , place );
+  PPP_Put( ppp , ID_PARA_get_year+time_ofs  , year );
+  PPP_Put( ppp , ID_PARA_get_month+time_ofs , month );
+  PPP_Put( ppp , ID_PARA_get_day+time_ofs   , day );
+
+#if 0
   if( setType == PMDT_1 )
   {
     PPP_Put( ppp , ID_PARA_get_place , place );
@@ -254,11 +263,25 @@ static void POKE_MEMO_SetPlaceTimeEx( POKEMON_PASO_PARAM *ppp , const u32 place 
     PPP_Put( ppp , ID_PARA_birth_month , month );
     PPP_Put( ppp , ID_PARA_birth_day   , day );
   }
+#endif
 }
 
 static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_DATA_TYPE srcSetType )
 {
-  if( srcSetType == PMDT_1 )
+  u32 place,year,month,day;
+  
+  u8 place_ofs = (srcSetType == PMDT_2);
+  u8 time_ofs = place_ofs*3;
+  
+  place = PPP_Get( ppp , ID_PARA_get_place+place_ofs , NULL );
+  year  = PPP_Get( ppp , ID_PARA_get_year+time_ofs  , NULL );
+  month = PPP_Get( ppp , ID_PARA_get_month+time_ofs , NULL );
+  day   = PPP_Get( ppp , ID_PARA_get_day+time_ofs   , NULL );
+
+  POKE_MEMO_SetPlaceTimeEx( ppp , place, year, month, day, srcSetType );
+
+#if 0
+if( srcSetType == PMDT_1 )
   {
     const u32 place = PPP_Get( ppp , ID_PARA_get_place , NULL );
     const u32 year  = PPP_Get( ppp , ID_PARA_get_year  , NULL );
@@ -282,6 +305,7 @@ static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_D
     PPP_Put( ppp , ID_PARA_get_month , month );
     PPP_Put( ppp , ID_PARA_get_day   , day );
   }
+#endif
 }
 
 static void POKE_MEMO_SetMyStatus( POKEMON_PASO_PARAM *ppp , const MYSTATUS* my , const HEAPID heapId )

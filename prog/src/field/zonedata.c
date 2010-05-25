@@ -301,6 +301,19 @@ static ZONEDATA * getZoneData(ZONEDATA * zdbuf, u16 zone_id)
   return zdbuf;
 }
 
+static BOOL isTargetZone( u16 zone_id, const u16* tbl, int num )
+{
+  int i;
+  zone_id = ControlZoneID(zone_id);
+
+  for(i = 0;i < num;i++){
+    if( tbl[i] == zone_id ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
 //============================================================================================
 //============================================================================================
 //------------------------------------------------------------------
@@ -559,6 +572,21 @@ BOOL ZONEDATA_EnablePalaceUse( u16 zone_id )
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsRailOnlyMap( u16 zone_id )
 {
+  static const u16 zone_tbl[] = {
+   ZONE_ID_C03,
+   ZONE_ID_H01,
+   ZONE_ID_D09,
+   ZONE_ID_D08R0501,
+   ZONE_ID_D08R0701,
+   ZONE_ID_C04R0101,
+   ZONE_ID_D20R0101,
+   ZONE_ID_D20R0201,
+   ZONE_ID_D20R0301,
+   ZONE_ID_D20R0401,
+   ZONE_ID_C03P13,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+#if 0
   switch(zone_id)
   {
   case ZONE_ID_C03:
@@ -575,6 +603,7 @@ BOOL ZONEDATA_IsRailOnlyMap( u16 zone_id )
     return TRUE;
   }
   return FALSE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -599,10 +628,49 @@ BOOL ZONEDATA_IsRailMap(u16 zone_id)
  *  @retval other レールデータアーカイブ指定ID
  */
 //------------------------------------------------------------------
+/*
+ * @todo ゾーンIDが2047を超える場合、
+ *       また、レールデータアーカイブのデータ数が32を越える時はbitを拡張する必要アリ
+ */
+typedef struct RAIL_DATA{
+  u16 zone_id:11;
+  u16 rail_id:5;
+}RAIL_DATA;
+
 int ZONEDATA_GetRailDataID(u16 zone_id)
 {
+  int i;
+  static const RAIL_DATA DATA_RailTbl[] = {
+    { ZONE_ID_C03,        NARC_field_rail_setup_C03_bin },
+    { ZONE_ID_H01,        NARC_field_rail_setup_H01_bin },
+    { ZONE_ID_C03P01,     NARC_field_rail_setup_C03P02_bin },
+    { ZONE_ID_D09,        NARC_field_rail_setup_D09_bin },
+    { ZONE_ID_R07R0101,   NARC_field_rail_setup_R07R0101_bin },
+    { ZONE_ID_R07R0102,   NARC_field_rail_setup_R07R0102_bin },
+    { ZONE_ID_R07R0103,   NARC_field_rail_setup_R07R0103_bin },
+    { ZONE_ID_R07R0104,   NARC_field_rail_setup_R07R0104_bin },
+    { ZONE_ID_C07GYM0101, NARC_field_rail_setup_C07GYM0101_bin },
+    { ZONE_ID_D08R0501,   NARC_field_rail_setup_D08R0501_bin },
+    { ZONE_ID_D08R0701,   NARC_field_rail_setup_D08R0701_bin },
+    { ZONE_ID_C04R0101,   NARC_field_rail_setup_C04R0101_bin },
+    { ZONE_ID_C08GYM0101, NARC_field_rail_setup_C08GYM0101_bin },
+    { ZONE_ID_D20R0101,   NARC_field_rail_setup_D20_bin },
+    { ZONE_ID_D20R0201,   NARC_field_rail_setup_D20_bin },
+    { ZONE_ID_D20R0301,   NARC_field_rail_setup_D20_bin },
+    { ZONE_ID_D20R0401,   NARC_field_rail_setup_D20_bin },
+    { ZONE_ID_C03P13,     NARC_field_rail_setup_C03P13_bin },
+    { ZONE_ID_H04,        NARC_field_rail_setup_H04_bin },
+    { ZONE_ID_C09P01,     NARC_field_rail_setup_C09P01_bin },
+  };
   zone_id = ControlZoneID(zone_id);
 
+  for( i = 0;i < NELEMS(DATA_RailTbl);i++){
+    if( DATA_RailTbl[i].zone_id == zone_id ){
+      return DATA_RailTbl[i].rail_id;
+    }
+  }
+#if 0
+  zone_id = ControlZoneID(zone_id);
   switch (zone_id)
   {
   case ZONE_ID_C03:
@@ -644,6 +712,7 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
   case ZONE_ID_C09P01:
     return NARC_field_rail_setup_C09P01_bin;
   }
+#endif
   return ZONEDATA_NO_RAILDATA_ID;
 }
 
@@ -785,8 +854,17 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 //==================================================================
 BOOL ZONEDATA_IsWfbc(u16 zone_id)
 {
+  static const u16 zone_tbl[] = {
+    ZONE_ID_WC10,
+    ZONE_ID_BC10,
+    ZONE_ID_PLC10,
+    ZONE_ID_PLCW10,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+#if 0
   zone_id = ControlZoneID(zone_id);
   return ((zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10) || (zone_id == ZONE_ID_PLC10) || (zone_id == ZONE_ID_PLCW10));
+#endif
 }
 
 //------------------------------------------------------------------
@@ -1068,8 +1146,35 @@ u32 ZONEDATA_GetFieldSkillMapEffMsk(u16 zone_id)
  *  @return シーンエリアデータID
  */
 //-----------------------------------------------------------------------------
+/*
+ * @todo ゾーンIDが2047を超える場合、
+ *       また、カメラシーンデータアーカイブのデータ数が32を越える時はbitを拡張する必要アリ
+ */
+typedef struct CAMERA_SCENE_DATA{
+  u16 zone_id:11;
+  u16 scene_id:5;
+}CAMERA_SCENE_DATA;
+
 u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
 {
+  int i;
+
+  static const CAMERA_SCENE_DATA DATA_CameraScene[] = {
+    { ZONE_ID_C04,     NARC_grid_camera_scene_camera_scene_C04_dat },
+    { ZONE_ID_T05,     NARC_grid_camera_scene_camera_scene_T05_dat },
+    { ZONE_ID_R04,     NARC_grid_camera_scene_camera_scene_R04_dat },
+    { ZONE_ID_H04,     NARC_grid_camera_scene_camera_scene_H04_dat },
+    { ZONE_ID_C09P02,  NARC_grid_camera_scene_camera_scene_C09P02_dat },
+  };
+  zone_id = ControlZoneID(zone_id);
+  
+  for( i = 0;i < NELEMS(DATA_CameraScene);i++){
+    if( DATA_CameraScene[i].zone_id == zone_id ){
+      return DATA_CameraScene[i].scene_id;
+    }
+  }
+
+#if 0
   zone_id = ControlZoneID(zone_id);
 
   switch( zone_id )
@@ -1085,6 +1190,7 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
   case ZONE_ID_C09P02:
     return NARC_grid_camera_scene_camera_scene_C09P02_dat;
   }
+#endif
   return ZONEDATA_NO_SCENEAREA_ID;
 }
 
@@ -1112,6 +1218,18 @@ u8 ZONEDATA_GetMapChangeType(u16 zone_id)
 //-----------------------------------------------------------------------------
 BOOL ZONEDATA_IsSeaTemple( u16 zone_id )
 {
+  static const u16 zone_tbl[] = {
+   ZONE_ID_D20R0101,
+   ZONE_ID_D20R0201,
+   ZONE_ID_D20R0301,
+   ZONE_ID_D20R0401,
+   ZONE_ID_D20R0501,
+   ZONE_ID_D20R0601,
+   ZONE_ID_D20R0701,
+   ZONE_ID_D20R0801,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+#if 0
   switch( zone_id ){
   case ZONE_ID_D20R0101:
   case ZONE_ID_D20R0201:
@@ -1125,6 +1243,7 @@ BOOL ZONEDATA_IsSeaTemple( u16 zone_id )
   }
 
   return FALSE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -1132,6 +1251,14 @@ BOOL ZONEDATA_IsSeaTemple( u16 zone_id )
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id )
 {
+  static const u16 zone_tbl[] = {
+    ZONE_ID_D20R0501,
+    ZONE_ID_D20R0601,
+    ZONE_ID_D20R0701,
+    ZONE_ID_D20R0801,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+#if 0
   switch( zone_id ){
   case ZONE_ID_D20R0501:
   case ZONE_ID_D20R0601:
@@ -1141,6 +1268,7 @@ BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id )
   }
 
   return FALSE;
+#endif
 }
 
 // 2Fか？
@@ -1176,6 +1304,15 @@ BOOL ZONEDATA_IsSeaTempleDungeon3F( u16 zone_id )
 //-----------------------------------------------------------------------------
 BOOL ZONEDATA_IsC04RebattleZone( u16 zone_id )
 {
+  static const u16 zone_tbl[] = {
+    ZONE_ID_C04R0303,
+    ZONE_ID_C04R0304,
+    ZONE_ID_C04R0305,
+    ZONE_ID_C04R0403,
+    ZONE_ID_C04R0404,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+#if 0
   if( (zone_id == ZONE_ID_C04R0303) ||
       (zone_id == ZONE_ID_C04R0304) ||
       (zone_id == ZONE_ID_C04R0305) ||
@@ -1184,6 +1321,7 @@ BOOL ZONEDATA_IsC04RebattleZone( u16 zone_id )
     return TRUE;
   }
   return FALSE;
+#endif
 }
 
 
@@ -1254,7 +1392,10 @@ u8 ZONEDATA_GetMvMdlID(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsChampionLord(u16 zone_id)
 {
-  // @todo ZONEIDが変わったらここも確認する必要があります。 2010.04.14
+  // @todo ZONE_GROUPが変わったらここも確認する必要があります。 2010.05.25
+  return ( ZONEDATA_GetGroupID( zone_id ) ==  ZONE_ID_D09 );
+#if 0
+  // @todo ZONEIDが変わったらここも確認する必要があります。 2010.04.21
   switch( zone_id ){
   case ZONE_ID_D09:
   case ZONE_ID_D09R0101:
@@ -1275,6 +1416,7 @@ BOOL ZONEDATA_IsChampionLord(u16 zone_id)
     return TRUE;
   }
   return FALSE;
+#endif
 }
 
 //------------------------------------------------------------------
@@ -1282,8 +1424,21 @@ BOOL ZONEDATA_IsChampionLord(u16 zone_id)
 //------------------------------------------------------------------
 BOOL ZONEDATA_IsBattleSubway( u16 zone_id )
 {
+  int i;
+  static const u16 zone_tbl[] = {
+   ZONE_ID_C04R0102,
+   ZONE_ID_C04R0103,
+   ZONE_ID_C04R0104,
+   ZONE_ID_C04R0105,
+   ZONE_ID_C04R0106,
+   ZONE_ID_C04R0107,
+   ZONE_ID_C04R0108,
+   ZONE_ID_C04R0110,
+   ZONE_ID_C04R0111,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+#if 0  
   zone_id = ControlZoneID(zone_id);
-  
   switch( zone_id ){
   case ZONE_ID_C04R0102:
   case ZONE_ID_C04R0103:
@@ -1297,6 +1452,7 @@ BOOL ZONEDATA_IsBattleSubway( u16 zone_id )
     return TRUE;
   }
   return FALSE;
+#endif
 }
 
 //============================================================================================

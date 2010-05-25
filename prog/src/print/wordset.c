@@ -71,6 +71,7 @@ struct _WORDSET{
 /*--------------------------------------------------------------------------*/
 static void InitParam(WORDSET_PARAM* param);
 static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const WORDSET_PARAM* param );
+static void RegisterWordFormMsgArc( WORDSET* wordset, u32 bufID, u32 arc_id, u32 msg_id );
 static void ClearBuffer( WORDSET* wordset, u32 bufID );
 
 
@@ -254,6 +255,27 @@ static void RegisterWord( WORDSET* wordset, u32 bufID, const STRBUF* str, const 
   }
 }
 
+//------------------------------------------------------------------
+/**
+ * 指定アーカイブ内の、指定ID文字列をバッファ展開
+ *
+ * @param   wordset   単語セットモジュール
+ * @param   bufID   バッファＩＤ
+ * @param   str     文字列
+ * @param   param   文字列に付随するパラメータ
+ *
+ */
+//------------------------------------------------------------------
+static void RegisterWordFormMsgArc( WORDSET* wordset, u32 bufID, u32 arc_id, u32 msg_id )
+{
+  GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, arc_id, wordset->heapID);
+  if( man )
+  {
+    GFL_MSG_GetString( man, msg_id, wordset->tmpBuf );
+    RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
+    GFL_MSG_Delete(man);
+  }
+}
 
 //------------------------------------------------------------------
 /**
@@ -387,6 +409,7 @@ void WORDSET_RegisterPokeOyaName( WORDSET* wordset,  u32 bufID, const POKEMON_PA
 //------------------------------------------------------------------
 void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID )
 {
+#if 0
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
           NARC_message_wazaname_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
@@ -395,6 +418,9 @@ void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
     GFL_MSG_Delete( man );
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_wazaname_dat, wazaID );
+#endif
 }
 //------------------------------------------------------------------
 /**
@@ -407,6 +433,7 @@ void WORDSET_RegisterWazaName( WORDSET* wordset, u32 bufID, u32 wazaID )
 //------------------------------------------------------------------
 void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID )
 {
+#if 0
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
           NARC_message_itemname_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
@@ -415,6 +442,9 @@ void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
     GFL_MSG_Delete( man );
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_itemname_dat, itemID );
+#endif
 }
 //------------------------------------------------------------------
 /**
@@ -427,6 +457,7 @@ void WORDSET_RegisterItemName( WORDSET* wordset, u32 bufID, u32 itemID )
 //------------------------------------------------------------------
 void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID )
 {
+#if 0
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
           NARC_message_tokusei_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
@@ -435,6 +466,9 @@ void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
     GFL_MSG_Delete( man );
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_tokusei_dat, tokuseiID );
+#endif
 }
 //------------------------------------------------------------------
 /**
@@ -447,6 +481,7 @@ void WORDSET_RegisterTokuseiName( WORDSET* wordset, u32 bufID, u32 tokuseiID )
 //------------------------------------------------------------------
 void WORDSET_RegisterSeikaku( WORDSET* wordset, u32 bufID, u32 seikakuID )
 {
+#if 0
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
           NARC_message_chr_dat, GFL_HEAP_LOWID(wordset->heapID) );
   if( man )
@@ -455,6 +490,9 @@ void WORDSET_RegisterSeikaku( WORDSET* wordset, u32 bufID, u32 seikakuID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL);
     GFL_MSG_Delete( man );
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_chr_dat, seikakuID );
+#endif
 }
 //------------------------------------------------------------------
 /**
@@ -554,6 +592,7 @@ void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID )
 //------------------------------------------------------------------
 void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeID )
 {
+#if 0
   GFL_MSGDATA *man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_typename_dat, wordset->heapID);
   if( man )
   {
@@ -561,6 +600,9 @@ void WORDSET_RegisterPokeTypeName( WORDSET* wordset, u32 bufID, u32 typeID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(man);
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_typename_dat, typeID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -656,6 +698,7 @@ void WORDSET_RegisterLocalPlaceName( WORDSET* wordset, u32 bufID, u32 countryID,
 //------------------------------------------------------------------
 void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, u8 trType )
 {
+#if 0
   GFL_MSGDATA* man = 
     GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, wordset->heapID );
 
@@ -666,6 +709,10 @@ void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, u8 trType )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( man );
   }
+#else
+  GF_ASSERT( trType < TRTYPE_MAX );
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_trtype_dat, trType );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -680,6 +727,7 @@ void WORDSET_RegisterTrTypeName( WORDSET* wordset, u32 bufID, u8 trType )
 //------------------------------------------------------------------
 void WORDSET_RegisterTrTypeName_byTrID( WORDSET* wordset, u32 bufID, TrainerID trID )
 {
+#if 0
   //tr_tool/tr_tool.hをインクルードして
   //TT_TrainerTypeSexGet(trID)とすることでトレーナーの性別が取得できます
   GFL_MSGDATA*  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trtype_dat, wordset->heapID );
@@ -690,6 +738,12 @@ void WORDSET_RegisterTrTypeName_byTrID( WORDSET* wordset, u32 bufID, TrainerID t
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( man );
   }
+#else
+  //tr_tool/tr_tool.hをインクルードして
+  //TT_TrainerTypeSexGet(trID)とすることでトレーナーの性別が取得できます
+  int tr_type = TT_TrainerDataParaGet( trID, ID_TD_tr_type );
+  WORDSET_RegisterTrTypeName( wordset, bufID, tr_type );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -704,6 +758,7 @@ void WORDSET_RegisterTrTypeName_byTrID( WORDSET* wordset, u32 bufID, TrainerID t
 //------------------------------------------------------------------
 void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID )
 {
+#if 0
   GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_trname_dat, wordset->heapID );
   if( man )
   {
@@ -711,6 +766,9 @@ void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(man);
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_trname_dat, trID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -725,6 +783,7 @@ void WORDSET_RegisterTrainerName( WORDSET* wordset, u32 bufID, TrainerID trID )
 //------------------------------------------------------------------
 void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID )
 {
+#if 0 
   GFL_MSGDATA* man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_status_dat, wordset->heapID );
   if( man )
   {
@@ -732,6 +791,9 @@ void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(man);
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_status_dat, statusID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -745,6 +807,7 @@ void WORDSET_RegisterPokeStatusName( WORDSET* wordset, u32 bufID, u8 statusID )
 //------------------------------------------------------------------
 void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID )
 {
+#if 0
   GFL_MSGDATA *man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_itempocket_dat, wordset->heapID);
   if( man )
   {
@@ -752,6 +815,9 @@ void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(man);
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_itempocket_dat, pocketID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -766,6 +832,7 @@ void WORDSET_RegisterItemPocketName( WORDSET* wordset, u32 bufID, u32 pocketID )
 //------------------------------------------------------------------
 void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 placeNameID )
 {
+#if 0
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_place_name_dat, wordset->heapID );
 
@@ -775,6 +842,9 @@ void WORDSET_RegisterPlaceName( WORDSET* wordset, u32 bufID, u32 placeNameID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(msg);
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_place_name_dat, placeNameID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -802,12 +872,13 @@ void WORDSET_RegisterBoxName( WORDSET* wordset, u32 bufID, const BOX_MANAGER* bo
 //------------------------------------------------------------------
 void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power )
 {
-  GFL_MSGDATA *msg;
+//  GFL_MSGDATA *msg;
   
   if( g_power >= GPOWER_ID_MAX ){
     GF_ASSERT( g_power < GPOWER_ID_MAX );
     g_power = 0;
   }
+#if 0
   msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_power_dat, wordset->heapID );
 
@@ -817,6 +888,9 @@ void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power 
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete(msg);
   }
+#else
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_power_dat, g_power );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -829,6 +903,7 @@ void WORDSET_RegisterGPowerName( WORDSET* wordset, u32 bufID, GPOWER_ID g_power 
 //------------------------------------------------------------------
 void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
 {
+#if 0
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_hobby_dat, wordset->heapID );
 
@@ -846,6 +921,16 @@ void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( msg );
   }
+#else
+  // 趣味IDエラー
+  if( HOBBY_ID_MAX < hobbyID )
+  {
+    GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_hobby_dat, hobbyID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -858,6 +943,7 @@ void WORDSET_RegisterHobbyName( WORDSET* wordset, u32 bufID, u8 hobbyID )
 //------------------------------------------------------------------
 void WORDSET_RegisterAnswerName( WORDSET* wordset, u32 bufID, u8 answerID )
 {
+#if 0
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_answer_dat, wordset->heapID );
 
@@ -875,6 +961,16 @@ void WORDSET_RegisterAnswerName( WORDSET* wordset, u32 bufID, u8 answerID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( msg );
   }
+#else
+  // 回答IDエラー
+  if( ANSWER_ID_MAX < answerID )
+  {
+    GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_answer_dat, answerID );
+#endif
 }
 
 //------------------------------------------------------------------
@@ -887,6 +983,7 @@ void WORDSET_RegisterAnswerName( WORDSET* wordset, u32 bufID, u8 answerID )
 //------------------------------------------------------------------
 void WORDSET_RegisterJobName( WORDSET* wordset, u32 bufID, u8 jobID )
 {
+#if 0
   GFL_MSGDATA *msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
       ARCID_MESSAGE, NARC_message_job_dat, wordset->heapID );
 
@@ -904,6 +1001,16 @@ void WORDSET_RegisterJobName( WORDSET* wordset, u32 bufID, u8 jobID )
     RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
     GFL_MSG_Delete( msg );
   }
+#else
+  // 仕事IDエラー
+  if( JOB_ID_MAX < jobID )
+  {
+    GF_ASSERT(0);
+    ClearBuffer( wordset, bufID );
+    return;
+  }
+  RegisterWordFormMsgArc( wordset, bufID, NARC_message_job_dat, jobID );
+#endif
 }
 
 //------------------------------------------------------------------
