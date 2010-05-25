@@ -81,11 +81,6 @@ INIT_EVENT_END
 /*            FIELD_INIT_LABEL                              　*/
 /**************************************************************/
 INIT_EVENT_START	ev_init_c02gym0201
-
-	DEFINE_LOCAL  LWK_POSX_INIT   /* ローカル変数定義 */
-    DEFINE_LOCAL  LWK_POSZ_INIT    /* {}で囲う場合は連続して書かなければならない */
-
-    _PLAYER_POS_GET( LWK_POSX_INIT,LWK_POSZ_INIT ) //自機座標取得
 	
 	//戦ったトレーナーを、本棚の前から移動させる
 	IF FLAG_ON( FE_C02GYM_TRBTL1 ) THEN	
@@ -157,14 +152,6 @@ EVENT_START		ev_pos_c02gym0201_danpei_01
     DEFAULT
     ENDSWITCH
     }
-  
-   //ジムバッジを持っているのかを判定
-   _GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
-    
-	//分岐処理・ジムバッジがあるか？
-	IF $SCWK_TEMP0 == 0 THEN
-	
-	//ジムバッジがない
 	
 	//はくぶつかんの　そのおくで　ちょうせんしゃを　まつ　ポケモンジム……
 	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_01,C02GYM0201_DANPEI_01)
@@ -175,9 +162,7 @@ EVENT_START		ev_pos_c02gym0201_danpei_01
 	// ジムリーダーの　アロエさんは　ノーマルタイプの　ポケモンを　つかう
 	_BALLOONWIN_OBJMSG( msg_c02gym0101_glasses_02,C02GYM0201_DANPEI_01)
 	_BALLOONWIN_CLOSE()
-	
-	ENDIF
-	
+
 	//サングラス、元の位置に戻る
 	
     { //ここからローカル変数の参照制限範囲開始
@@ -882,6 +867,7 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_14)
 			
 			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
+			//この処理には流れてきません。ジムギミックを初期化していた際に必要な処理でした。
 				$WK_SCENE_C02GYM0201 = 4
 				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
 				_OBJ_ANIME_WAIT()
@@ -931,6 +917,7 @@ EVENT_START		 ev_bg_c02gym0201_category_06
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_14)
 			
 			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
+			//この処理には流れてきません。ジムギミックを初期化していた際に必要な処理でした。
 				$WK_SCENE_C02GYM0201 = 4
 				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
 				_OBJ_ANIME_WAIT()
