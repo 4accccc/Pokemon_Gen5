@@ -1663,10 +1663,10 @@ static void _PokeEvilChk(POKEMON_TRADE_WORK* pWork)
     }
   }
   NHTTP_RAP_PokemonEvilCheckCreate(pWork->pNHTTP, pWork->heapID,
-                                   POKETOOL_GetPPPWorkSize() * num, NHTTP_POKECHK_GTSNEGO);
+                                   POKETOOL_GetWorkSize() * num, NHTTP_POKECHK_GTSNEGO);
   for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
     if(pWork->GTSSelectPP[1][i]){
-      NHTTP_RAP_PokemonEvilCheckAdd(pWork->pNHTTP, PP_GetPPPPointerConst(pWork->GTSSelectPP[1][i]), POKETOOL_GetPPPWorkSize());
+      NHTTP_RAP_PokemonEvilCheckAdd(pWork->pNHTTP, pWork->GTSSelectPP[1][i], POKETOOL_GetWorkSize());
     }
   }
   NHTTP_RAP_PokemonEvilCheckConectionCreate(pWork->pNHTTP);
