@@ -942,6 +942,7 @@ static void _PFadeSetSleepBlack( C_GEAR_WORK* pWork, BOOL on_flag );
 static void _PFadeSetExBttnBlack( C_GEAR_WORK* pWork, BOOL on_flag );
 static void _PFadeToBlack( C_GEAR_WORK* pWork );
 static void _PFadeFromBlack( C_GEAR_WORK* pWork );
+static void _PFadeStop( C_GEAR_WORK* pWork );
 static BOOL _PFadeIsFade( const C_GEAR_WORK* cpWork );
 
 // パレットフェード　ボタンアニメ
@@ -2398,6 +2399,16 @@ static void _PFadeFromBlack( C_GEAR_WORK* pWork )
   PaletteFadeReq(
     pWork->pfade_ptr, PF_BIT_SUB_OBJ, 0xffff,  1, 16, 0, _BLACK_COLOR[pWork->sex], pWork->pfade_tcbsys
     );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パレットフェード停止
+ */
+//-----------------------------------------------------------------------------
+static void _PFadeStop( C_GEAR_WORK* pWork )
+{
+  PaletteFadeForceStop( pWork->pfade_ptr );
 }
 
 static BOOL _PFadeIsFade( const C_GEAR_WORK* cpWork )
@@ -3902,6 +3913,7 @@ static void _modeSelectMenuWait0(C_GEAR_WORK* pWork)
 
     // スキップ
     if( _IsEffectSkip(pWork) ){
+      _PFadeStop( pWork );  // フェード停止
       pWork->state_seq = STARTUP_SEQ_SKIP;
       break;
     }
@@ -4173,16 +4185,20 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   //初期設定を行う。
   {
+    
+    // 時計を合わせる。
+    _timeAnimation(pWork);
+    
     if( power_effect == FALSE ){
 
       // スリープチェック
       _cgear_SleepCheck( pWork, !(GAMESYSTEM_IsEventExists( pGameSys )) );
       // スリープカラー反映
       SleepMode_ColorUpdateEx( pWork );
+    }else{
+      _modeSelectMenuWait0( pWork );
     }
-    
-    // 時計を合わせる。
-    _timeAnimation(pWork);
+
   }
 
 
