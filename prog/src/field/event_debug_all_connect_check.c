@@ -103,6 +103,7 @@ static u16 GetCheckOffset( const CHECK_WORK* work ); // チェック対象のオフセット
 // ユーティリティ
 static u16 ConnectData_GetExitDirToDir( const CONNECT_DATA * cp_data ); // EXIT_DIR_xxxx を DIR_xxxx に変換する
 static BOOL CheckValidZone( u16 zone_id ); // チェックが有効なゾーンかどうかを判定する
+static BOOL CheckValidConnect( const CONNECT_DATA* connect ); // チェックが有効な接続かどうかを判定する
 // デバッグ出力
 static void DebugPrint_Start( const CHECK_WORK* work );
 static void DebugPrint_AllConnect( const CHECK_WORK* work );
@@ -289,6 +290,10 @@ static GMEVENT_RESULT AllConnectCheckEvent( GMEVENT* event, int* seq, void* wk )
     }
     // 無効出入口の場合
     else if( CheckClosedConnect(work) ) {
+      *seq = CHECK_SEQ_TO_NEXT_CHECK;
+    }
+    // 接続先がチェック対象外ゾーンの場合
+    else if( CheckValidZone( GetConnectZoneID(work) ) == FALSE ) {
       *seq = CHECK_SEQ_TO_NEXT_CHECK;
     }
     // 通常の出入り口の場合
