@@ -281,21 +281,11 @@ EVENT_START ev_t01r0101_mother_01
 
 	//図鑑入手前後で分岐
 	IF FLAG_ON( SYS_FLAG_ZUKAN_GET ) THEN
-		//回復済みかで分岐
-		IF $LOCALWORK15 == 999 THEN
-			//回復済みなら一言メッセージ
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
-			
-		ELSIF $LOCALWORK15 == 333 THEN
-			//クリア後のハンサムイベント後なら一言メッセージ
-			_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_end_08 )
-			
-		ELSE
-			//ママの回復イベントへ
-			_CALL		ev_everyday
-			
-		ENDIF
-	
+		//図鑑入手後
+		
+		//ママの回復イベントへ
+		_CALL		ev_everyday
+		
 	ELSE
 		//図鑑入手するまで
 		
@@ -304,14 +294,31 @@ EVENT_START ev_t01r0101_mother_01
 		
 	ENDIF
 
-
 EVENT_END
 
 
 //ママの回復イベント
 ev_everyday:
+	//回復済みなら一言メッセージ
+	IF $LOCALWORK15 == 999 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
+		_RET
+	//シナリオクリア後のハンサムイベント後なら一言メッセージ
+	ELSIF $LOCALWORK15 == 333 THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_end_08 )
+		_RET
+	ENDIF
+	
+	//殿堂入り後、外に出ずに話しかけたなら一言メッセージ。BTS2574バグ対処：いきなり回復されると変なので
+	IF FLAG_ON( FE_T01R0101_MAMA_RETALK ) THEN
+		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t01r0101_mama_07 )
+		_RET
+	ENDIF
+	
+	
+	//上記の条件に当てはまらなければ回復イベント開始
 	_TALK_OBJ_START()
-
+	
 	//シナリオ進行でメッセージ分岐
 	IF $WK_SCENE_R02 == 0 THEN
 		//ランニングシューズ入手前なら
@@ -347,8 +354,8 @@ ev_everyday:
 		_MSGWIN_CLOSE()
 
 	ENDIF
-
 _RET
+
 
 //回復処理
 ev_kaifuku:

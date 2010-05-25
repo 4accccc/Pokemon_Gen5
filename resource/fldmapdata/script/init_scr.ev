@@ -415,6 +415,8 @@ INIT_EVENT_START  ev_init_gameclear_script
   //↑で設定した特殊接続先からゲームを開始するリクエスト
   _FLAG_SET( SYS_FLAG_SPEXIT_REQUEST )
 
+  //自宅１Fお母さんのメッセージを回復処理ではなく日常会話にする。BTS2574の対処
+  _FLAG_SET( FE_T01R0101_MAMA_RETALK )
 
   //伝説３体の復活処理
   IF FLAG_ON( FV_R06R0203_LEGEND1 ) && FLAG_OFF( FE_LEGEND1_GET ) THEN

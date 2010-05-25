@@ -45,6 +45,12 @@ INIT_EVENT_START   ev_zone_t01
 		//ギミック表示開始
 		_T01_GMK_DISP()
 	ENDIF
+	
+	//殿堂入り後、外に出たならママ会話分岐フラグをリセット。BTS2754の対処。
+	IF FLAG_ON( FE_T01R0101_MAMA_RETALK ) THEN
+		_FLAG_RESET( FE_T01R0101_MAMA_RETALK )
+	ENDIF
+	
 INIT_EVENT_END
 
 /************************************************************/
