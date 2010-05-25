@@ -384,6 +384,12 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
   if(game_type == COMM_ENTRY_GAMETYPE_MUSICAL){
     em->mp_mode = TRUE;
   }
+  //ビーコンのマジックナンバーを設定
+  {
+    GFLNetInitializeStruct *netInit = GFL_NET_GetNETInitStruct();
+    COMM_ENTRY_BEACON *bcn = (COMM_ENTRY_BEACON*)netInit->beaconGetFunc(GFL_NET_GetWork());
+    bcn->magic_number = COMM_ENTRY_MAGIC_NUMBER;
+  }
   
   return em;
 }
@@ -638,6 +644,13 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       GFL_NET_SetNoChildErrorCheck(TRUE);
       em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
       em->seq = _SEQ_FINISH;
+      
+      //ビーコンのマジックナンバーを消す
+      {
+        GFLNetInitializeStruct *netInit = GFL_NET_GetNETInitStruct();
+        COMM_ENTRY_BEACON *bcn = (COMM_ENTRY_BEACON*)netInit->beaconGetFunc(GFL_NET_GetWork());
+        bcn->magic_number = 0;
+      }
     }
     break;
   case _SEQ_SEND_GAMECANCEL:
@@ -2306,7 +2319,10 @@ static void _ParentSearchList_BeaconUpdate(COMM_ENTRY_MENU_PTR em)
   	bcon_buff = GFL_NET_GetBeaconData(i);
   	if(bcon_buff != NULL )
   	{
-      _ParentSearchList_SetNewParent(em, bcon_buff->mac_address, &bcon_buff->mystatus);
+      if( bcon_buff->magic_number == COMM_ENTRY_MAGIC_NUMBER )
+      {
+        _ParentSearchList_SetNewParent(em, bcon_buff->mac_address, &bcon_buff->mystatus);
+      }
   	}
   }
 }

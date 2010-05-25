@@ -186,6 +186,8 @@ static void * get_BeaconData( void *pWork )
    
   MyStatus_Copy( GAMEDATA_GetMyStatus(gdata), &bcon->mystatus );
   OS_GetMacAddress( bcon->mac_address );
+  bcon->magic_number = COMM_ENTRY_MAGIC_NUMBER;
+
   return( bcon );
 }
 

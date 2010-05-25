@@ -75,10 +75,11 @@ typedef enum{
 //  構造体定義
 //==============================================================================
 ///エントリーメニューを使用して参加する為のビーコン情報
+#define COMM_ENTRY_MAGIC_NUMBER (0x0622)
 typedef struct{
   MYSTATUS mystatus;    ///<自身のMyStatus
   u8 mac_address[6];    ///<自身のMacAddress
-  u8 padding[2];
+  u16 magic_number;     ///<チェック用マジックナンバー
 }COMM_ENTRY_BEACON;
 
 

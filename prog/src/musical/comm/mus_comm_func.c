@@ -346,6 +346,7 @@ void* MUS_COMM_InitGameComm(int *seq, void *pwk)
 
   MyStatus_Copy( work->myStatus, &work->beacon.mystatus );
   OS_GetMacAddress( work->beacon.mac_address );
+  work->beacon.magic_number = COMM_ENTRY_MAGIC_NUMBER;
 
   
   return work;
