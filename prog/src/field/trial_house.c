@@ -26,6 +26,8 @@
 
 #define DOWNLOAD_BIT_MAX  (128)
 
+#define BEACON_SEARCH_TIME  (4)
+
 //ビーコンサーチワーク
 typedef struct
 {
@@ -444,13 +446,13 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     }
     break;
   case BEACON_SEQ_SEARCH:
-    //配信サービス検出のため、２秒間位配送メインをまわす
+    //配信サービス検出のため、4秒間位配送メインをまわす
     {
       //配送メイン
       DELIVERY_BEACON_Main( evt_wk->BeaconWork );
     }
     evt_wk->Time++;
-    if ( evt_wk->Time > 30*2 ) (*seq) = BEACON_SEQ_CHECK;
+    if ( evt_wk->Time > 30*BEACON_SEARCH_TIME ) (*seq) = BEACON_SEQ_CHECK;
     break;
   case BEACON_SEQ_CHECK:
     //配送メイン
