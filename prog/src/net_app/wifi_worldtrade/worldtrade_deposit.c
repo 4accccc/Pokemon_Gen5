@@ -1602,6 +1602,8 @@ void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameMa
   STRBUF *strbuf;
   int i;
 
+  BOOL is_sex_visible = TRUE;
+
   //「ほしいポケモン」描画
   strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_05_008 );
   WorldTrade_SysPrint( win[0], strbuf,    0, 0, 0, PRINTSYS_LSB_Make(1,2,0), print );
@@ -1614,8 +1616,18 @@ void WodrldTrade_PokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsNameMa
   // 名前
   WorldTrade_PokeNamePrint(win[1], MonsNameManager, monsno, 0, 0,PRINTSYS_LSB_Make(1,2,0), print );
 
+  //ニドランチェック
+  if( monsno == MONSNO_NIDORAN_F && sex == DPW_TR_GENDER_FEMALE )
+  {
+    is_sex_visible  = FALSE;
+  }
+  else if( monsno == MONSNO_NIDORAN_M && sex == DPW_TR_GENDER_MALE  )
+  {
+    is_sex_visible  = FALSE;
+  }
+
   // 性別
-  if( sex==DPW_TR_GENDER_MALE || sex==DPW_TR_GENDER_FEMALE ){
+  if( is_sex_visible && (sex==DPW_TR_GENDER_MALE || sex==DPW_TR_GENDER_FEMALE) ){
     OS_Printf("性別描画した %d\n", sex);
     WorldTrade_SexPrint( win[1], MsgManager, sex, 0, 0, 70, PRINTSYS_LSB_Make(1,2,0), print );
   }else{
@@ -1652,6 +1664,8 @@ void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsName
 {
   STRBUF *strbuf;
   int i;
+  BOOL is_sex_visible = TRUE;
+
 
   //「ほしいポケモン」描画
   strbuf = GFL_MSG_CreateString( MsgManager, msg_gtc_05_008 );
@@ -1665,8 +1679,18 @@ void WodrldTrade_MyPokeWantPrint( GFL_MSGDATA *MsgManager, GFL_MSGDATA *MonsName
   // 名前
   WorldTrade_PokeNamePrint(win[1], MonsNameManager, monsno, 0, 0,PRINTSYS_LSB_Make(1,2,0), print );
 
+  //ニドランチェック
+  if( monsno == MONSNO_NIDORAN_F && sex == DPW_TR_GENDER_FEMALE )
+  {
+    is_sex_visible  = FALSE;
+  }
+  else if( monsno == MONSNO_NIDORAN_M && sex == DPW_TR_GENDER_MALE  )
+  {
+    is_sex_visible  = FALSE;
+  }
+
   // 性別
-  if( sex==DPW_TR_GENDER_MALE || sex==DPW_TR_GENDER_FEMALE ){
+  if( is_sex_visible && (sex==DPW_TR_GENDER_MALE || sex==DPW_TR_GENDER_FEMALE ) ){
     OS_Printf("性別描画した %d\n", sex);
     WorldTrade_SexPrint( win[1], MsgManager, sex, 0, 0, 70, PRINTSYS_LSB_Make(1,2,0),print );
   }else{
