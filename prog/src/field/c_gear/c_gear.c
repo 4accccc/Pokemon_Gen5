@@ -4068,7 +4068,7 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
         }
 #if PM_DEBUG
         else{
-          OS_TPrintf("CRCDIFF chk%x pict%x\n",crc,crc2);
+          OHNO_Printf("CRCDIFF chk%x pict%x\n",crc,crc2);
         }
 #endif
       }

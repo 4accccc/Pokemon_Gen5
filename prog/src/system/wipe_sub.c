@@ -5597,7 +5597,7 @@ static BOOL scchg_WndRoundMain(WIPE_TYPE_WND_ROUND* data)
 			if( ROTA_NUM(180 ) <= data->angle &&  data->angle < data->start_angle && data->turn_flg == TRUE ) {
 				scchg_WndSwapInOutPlane(data->wnd_sys, data->wnd_no, data->disp, data->fade_flg);
 				data->turn_flg	= FALSE;
-				OS_Printf("”½“]:%d\n", data->turn_flg);
+				//OS_Printf("”½“]:%d\n", data->turn_flg);
 			}
 			scchg_WndRoundSum(data);
 			GFUser_VIntr_CreateTCB( scchg_WndSwap, &data->hb_round, WIPE_VBLANK_WND_SWAP_TCB);
