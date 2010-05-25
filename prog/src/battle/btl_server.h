@@ -59,6 +59,7 @@ extern BTL_SVFLOW_WORK* BTL_SERVER_GetFlowWork( BTL_SERVER* server );
 extern void BTL_SERVER_NotifyPokemonLevelUp( BTL_SERVER* server, const BTL_POKEPARAM* bpp );
 extern void BTL_SERVER_NotifyPokemonCapture( BTL_SERVER* server, const BTL_POKEPARAM* bpp );
 extern void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume );
+extern void BTL_SERVER_SetMoneyDblUp( BTL_SERVER* server );
 extern void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server );
 extern void BTL_SERVER_RequestChangePokemon( BTL_SERVER* server, BtlPokePos pos );
 extern BOOL BTL_SERVER_IsFrontPokemon( BTL_SERVER* server, const BTL_POKEPARAM* bpp );

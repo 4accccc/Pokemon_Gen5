@@ -14123,7 +14123,7 @@ void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex )
 }
 //=============================================================================================
 /**
- * [ハンドラからの操作呼び出し]
+ * [ハンドラからのシステム呼び出し]
  *  スタンドアローンバトルで、プレイヤーポケモンの使用したハンドラから呼び出された場合のみ
  *  おこづかいを上乗せする（ネコにこばん専用）
  *
@@ -14136,14 +14136,37 @@ void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex )
 //=============================================================================================
 BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID )
 {
-  if( (BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE)
-  &&  (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER)
+  BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
+
+  if( (competitor == BTL_COMPETITOR_WILD)
+  ||  (competitor == BTL_COMPETITOR_TRAINER)
   ){
     BTL_SERVER_AddBonusMoney( wk->server, volume );
     return TRUE;
   }
   return FALSE;
 }
+//=============================================================================================
+/**
+ * [ハンドラからのシステム呼び出し]
+ * スタンドアロンバトルで、終了時にもらえるお金を倍にする（効果は１度だけ）
+ *
+ * @param   wk
+ * @param   pokeID
+ */
+//=============================================================================================
+void BTL_SVFRET_SetMoneyDblUp( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+
+  if( ((competitor == BTL_COMPETITOR_WILD)||(competitor == BTL_COMPETITOR_TRAINER))
+  &&  (clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule))
+  ){
+    BTL_SERVER_SetMoneyDblUp( wk->server );
+  }
+}
+
 //=============================================================================================
 /**
  * [ハンドラからの操作呼び出し]  フリーフォール溜めターン処理

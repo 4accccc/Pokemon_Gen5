@@ -310,6 +310,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq );
 static void setupSubwayTrainerMsg( BTL_CLIENT* wk, BtlResult result, u8 client_idx );
+static BOOL SubProc_UI_WinWild( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_LoseWild( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_NotifyTimeUp( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ServerCmd( BTL_CLIENT* wk, int* seq );
@@ -993,6 +994,9 @@ static ClientSubProc getSubProc( BTL_CLIENT* wk, BtlAdapterCmd cmd, BOOL* fRecCt
 
     { BTL_ACMD_EXIT_SUBWAY_TRAINER,         TRUE,
         { SubProc_UI_ExitForSubwayTrainer,  NULL,   SubProc_REC_ExitForSubwayTrainer }, },
+
+    { BTL_ACMD_EXIT_WIN_WILD,     TRUE,
+      { SubProc_UI_WinWild,   NULL,  NULL }, },
 
     { BTL_ACMD_EXIT_LOSE_WILD,    TRUE,
       { SubProc_UI_LoseWild,   NULL,  NULL }, },
@@ -4495,6 +4499,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     SEQ_WIN_WAIT_TR2_IN,
     SEQ_WIN_WAIT_TR2_MSG,
     SEQ_WIN_GET_MONEY,
+    SEQ_WIN_BONUS_MONEY,
 
     SEQ_LOSE_START,
     SEQ_LOSE_WAIT_MSG1,
@@ -4583,7 +4588,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
     break;
   case SEQ_WIN_GET_MONEY:
     {
-      u32 getMoney = BTL_MAIN_FixBonusMoney( wk->mainModule );
+      u32 getMoney = BTL_MAIN_FixRegularMoney( wk->mainModule );
       if( getMoney )
       {
         u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
@@ -4591,6 +4596,27 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_GetMoney );
         BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
         BTLV_STRPARAM_AddArg( &wk->strParam, getMoney );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      }
+
+      if( BTL_MAIN_GetBonusMoney(wk->mainModule) == 0 ){
+        (*seq) = SEQ_END;
+      }else{
+        (*seq) = SEQ_WIN_BONUS_MONEY;
+      }
+    }
+    break;
+  case SEQ_WIN_BONUS_MONEY:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      u32 bonus = BTL_MAIN_GetBonusMoney( wk->mainModule );
+      if( bonus )
+      {
+        u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PickMoney );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, bonus );
         BTLV_StartMsg( wk->viewCore, &wk->strParam );
       }
       (*seq) = SEQ_END;
@@ -4763,7 +4789,37 @@ static void setupSubwayTrainerMsg( BTL_CLIENT* wk, BtlResult result, u8 client_i
     }
   }
 }
+//---------------------------------------------------
+// 野生戦で勝った
+//---------------------------------------------------
+static BOOL SubProc_UI_WinWild( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    // シナリオのシン・ム戦では落ちてるお金を拾わない
+    if( !BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND_EX) )
+    {
+      u32 bonus = BTL_MAIN_GetBonusMoney( wk->mainModule );
+      if( bonus )
+      {
+        u8 clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+        BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_PickMoney );
+        BTLV_STRPARAM_AddArg( &wk->strParam, clientID );
+        BTLV_STRPARAM_AddArg( &wk->strParam, bonus );
+        BTLV_StartMsg( wk->viewCore, &wk->strParam );
+      }
+    }
+    (*seq)++;
+  case 1:
+    if( BTLV_WaitMsg(wk->viewCore) )
+    {
+      return TRUE;
+    }
+    break;
 
+  }
+  return FALSE;
+}
 //---------------------------------------------------
 // 野生戦で負けた
 //---------------------------------------------------

@@ -132,6 +132,7 @@ struct _BTL_MAIN_MODULE {
   BTLNET_SERVER_NOTIFY_PARAM  serverNotifyParam;
 
   u8        posCoverClientID[ BTL_POS_MAX ];
+  u32       regularMoney;
   u32       bonusMoney;
   u32       loseMoney;
   int       msgSpeed;
@@ -158,9 +159,10 @@ struct _BTL_MAIN_MODULE {
   u8        MultiAIClientID;
   u8        fCommError           : 1;
   u8        fWazaEffectEnable    : 1;
-  u8        fBonusMoneyFixed     : 1;
+  u8        fGetMoneyFixed     : 1;
   u8        fLoseMoneyFixed      : 1;
   u8        fBGMFadeOutDisable   : 1;
+  u8        fMoneyDblUp          : 1;
 
 
 };
@@ -283,10 +285,11 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
       wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
-      wk->fBonusMoneyFixed = FALSE;
+      wk->fGetMoneyFixed = FALSE;
       wk->fLoseMoneyFixed = FALSE;
       wk->fCommError = FALSE;
       wk->fBGMFadeOutDisable = FALSE;
+      wk->fMoneyDblUp = FALSE;
       wk->MultiAIClientNum = 0;
 
       TAYA_Printf("musicDef=%d, musicWin=%d\n", setup_param->musicDefault, setup_param->musicWin );
@@ -305,7 +308,8 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       BTL_CALC_InitSys( &wk->randomContext, wk->heapID );
       BTL_CLIENTSYSTEM_Init();
 
-      wk->bonusMoney =  BTL_CALC_WinMoney( setup_param );
+      wk->regularMoney =  BTL_CALC_WinMoney( setup_param );
+      wk->bonusMoney = 0;
       wk->loseMoney = 0;
 
 
@@ -364,11 +368,10 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
     switch( result ){
     case BTL_RESULT_WIN:
-      wk->setupParam->getMoney = wk->bonusMoney;
+      wk->setupParam->getMoney = (wk->regularMoney + wk->bonusMoney);
       break;
     case BTL_RESULT_LOSE:
       wk->setupParam->getMoney = (int)(wk->loseMoney) * -1;
-      TAYA_Printf("負けペナ金額=%d\n", wk->setupParam->getMoney );
       break;
     }
     return GFL_PROC_RES_FINISH;
@@ -3519,7 +3522,27 @@ void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk )
 
 //=============================================================================================
 /**
- * おこずかいボーナス額の増量受け付け
+ * おこずかい額を現在の値で決定する
+ *
+ * @param   wk
+ */
+//=============================================================================================
+u32 BTL_MAIN_FixRegularMoney( BTL_MAIN_MODULE* wk )
+{
+  if( wk->fGetMoneyFixed == FALSE )
+  {
+    if( wk->fMoneyDblUp ){
+      wk->regularMoney *= 2;
+    }
+    wk->regularMoney = GPOWER_Calc_Money( wk->regularMoney );
+    wk->fGetMoneyFixed = TRUE;
+  }
+
+  return wk->regularMoney;
+}
+//=============================================================================================
+/**
+ * ボーナス額の増量受け付け
  *
  * @param   wk
  * @param   volume
@@ -3527,7 +3550,7 @@ void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk )
 //=============================================================================================
 void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
 {
-  if( wk->fBonusMoneyFixed == FALSE )
+  if( wk->fGetMoneyFixed == FALSE )
   {
     wk->bonusMoney += volume;
     if( wk->bonusMoney > BTL_BONUS_MONEY_MAX ){
@@ -3537,31 +3560,30 @@ void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume )
 }
 //=============================================================================================
 /**
- * おこずかいボーナス額の取得
+ * ボーナス額を取得
  *
  * @param   wk
- *
- * @retval  u32
+ * @param   volume
  */
 //=============================================================================================
 u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
 {
-  return wk->bonusMoney;
+  u32 bonus = wk->bonusMoney;
+  if( wk->fMoneyDblUp ){
+    bonus *= 2;
+  }
+  return bonus;
 }
 //=============================================================================================
 /**
- * おこずかいボーナス額を現在の値で決定する
+ * おこづかい・ボーナスの２倍化フラグ設定
  *
  * @param   wk
  */
 //=============================================================================================
-u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk )
+void BTL_MAIN_SetMoneyDblUp( BTL_MAIN_MODULE* wk )
 {
-  if( wk->fBonusMoneyFixed == FALSE ){
-    wk->bonusMoney = GPOWER_Calc_Money( wk->bonusMoney );
-    wk->fBonusMoneyFixed = TRUE;
-  }
-  return wk->bonusMoney;
+  wk->fMoneyDblUp = TRUE;
 }
 
 //=============================================================================================

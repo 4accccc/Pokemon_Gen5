@@ -130,6 +130,7 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq );
+static BOOL ServerMain_ExitBattle_WinWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
@@ -1106,7 +1107,8 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
           PMSND_PlayBGM( winBGM );
         }
         */
-        setMainProc( server, ServerMain_ExitBattle_KeyWait );
+//        setMainProc( server, ServerMain_ExitBattle_KeyWait );
+        setMainProc( server, ServerMain_ExitBattle_WinWild );
       }
       else if( (result == BTL_RESULT_LOSE) || (result == BTL_RESULT_DRAW) ){
         setMainProc( server, ServerMain_ExitBattle_LoseWild );
@@ -1169,7 +1171,35 @@ static BOOL ServerMain_ExitBattle_KeyWait( BTL_SERVER* server, int* seq )
   }
   return FALSE;
 }
-
+//----------------------------------------------------------------------------------
+/**
+ * サーバメインループ：バトル終了（野生に勝ち）
+ *
+ * @param   server
+ * @param   seq
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL ServerMain_ExitBattle_WinWild( BTL_SERVER* server, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    SetAdapterCmdEx( server, BTL_ACMD_EXIT_WIN_WILD, &server->btlResultContext, sizeof(server->btlResultContext) );
+    (*seq)++;
+    break;
+  case 1:
+    if( WaitAllAdapterReply(server) ){
+      ResetAdapterCmd( server );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    setMainProc( server, ServerMain_ExitBattle_KeyWait );
+    break;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------------------------------
 /**
  * サーバメインループ：バトル終了（野生に負け）
@@ -1847,6 +1877,10 @@ void BTL_SERVER_NotifyPokemonCapture( BTL_SERVER* server, const BTL_POKEPARAM* b
 void BTL_SERVER_AddBonusMoney( BTL_SERVER* server, u32 volume )
 {
   BTL_MAIN_AddBonusMoney( server->mainModule, volume );
+}
+void BTL_SERVER_SetMoneyDblUp( BTL_SERVER* server )
+{
+  BTL_MAIN_SetMoneyDblUp( server->mainModule );
 }
 
 void BTL_SERVER_InitChangePokemonReq( BTL_SERVER* server )

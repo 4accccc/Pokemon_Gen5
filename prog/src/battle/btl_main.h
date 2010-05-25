@@ -108,8 +108,7 @@ extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
 extern void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_NotifyPokemonLevelup( BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp );
 extern void BTL_MAIN_NotifyPokemonGetToGameSystem( BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp );
-extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
-extern u32 BTL_MAIN_FixBonusMoney( BTL_MAIN_MODULE* wk );
+extern u32 BTL_MAIN_FixRegularMoney( BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk );
 extern BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk );
@@ -118,6 +117,9 @@ extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID );
 extern void BTL_MAIN_RECORDDATA_Add( const BTL_MAIN_MODULE* wk, int recID, u32 value );
 extern void BTL_MAIN_ReflectNatsukiDead( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, BOOL fLargeDiffLevel );
+extern u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk );
+extern void BTL_MAIN_SetMoneyDblUp( BTL_MAIN_MODULE* wk );
+
 
 /*------------------------------------------------------------------------------*/
 /* 通信・CONFIG等のシステム情報                                                 */

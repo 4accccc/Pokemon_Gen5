@@ -286,6 +286,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_OokinaNekko( u32* numElems );
 static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kemuridama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kemuridama_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_ADD_ITEM_OmamoriKoban( u32* numElems );
+static void handler_OmamoriKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_ADD_ITEM_Kemuridama( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -586,6 +588,7 @@ static const struct {
   { ITEM_KOUTETUPUREETO,    HAND_ADD_ITEM_KoutetsuPlate   },
   { ITEM_OOKINANEKKO,       HAND_ADD_ITEM_OokinaNekko     },
   { ITEM_KEMURIDAMA,        HAND_ADD_ITEM_Kemuridama      },
+  { ITEM_OMAMORIKOBAN,      HAND_ADD_ITEM_OmamoriKoban    },
 
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
@@ -3781,7 +3784,6 @@ static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, ratio );
   }
 }
-
 //------------------------------------------------------------------------------
 /**
  *  けむりだま
@@ -3816,6 +3818,27 @@ static void handler_Kemuridama_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       HANDEX_STR_AddArg( &param->str, pokeID );
       HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     }
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ *  おまもりこばん
+ */
+//------------------------------------------------------------------------------
+static  const BtlEventHandlerTable*  HAND_ADD_ITEM_OmamoriKoban( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_MEMBER_IN,       handler_OmamoriKoban },  // メンバー入場ハンドラ
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// メンバー入場ハンドラ
+static void handler_OmamoriKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_SVFRET_SetMoneyDblUp( flowWk, pokeID );
   }
 }
 
