@@ -844,12 +844,11 @@ static u16 GetPassedTime( SAVE_CONTROL_WORK* save )
 
   { 
     s64 nowSec, passedSec;
-    RTCDate passedDate, nowDate;
-    RTCTime passedTime, nowTime;
+    RTCDate passedDate;
+    RTCTime passedTime;
 
     // Œ»İ‚ğæ“¾
-    GFL_RTC_GetDateTime( &nowDate, &nowTime );
-    nowSec = RTC_ConvertDateTimeToSecond( &nowDate, &nowTime );
+    nowSec = GFL_RTC_GetDateTimeBySecond();
 
     // Œo‰ßŠÔ[h]‚ğZo
     passedSec = nowSec - startSec;
