@@ -369,6 +369,7 @@ static GMEVENT_RESULT ExitEvent_DoorOut( GMEVENT * event, int *seq, void * wk )
   if( GetCurrentSeq( work ) == SEQ_DOOROUT_END ) {
     if( FIELD_TASK_MAN_IsAllTaskEnd( task_man ) ) {
       ENTRANCE_CAMERA_Recover( work->ECamWork );
+      FIELD_CAMERA_SetDefaultParameter( camera );
       ENTRANCE_CAMERA_DeleteWork( work->ECamWork );
       DeleteDoorBM( work );
       return GMEVENT_RES_FINISH;
