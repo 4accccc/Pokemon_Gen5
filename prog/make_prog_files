@@ -740,7 +740,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/event_autoway.c \
         field/event_current.c \
         field/fldeff_d06denki.c \
-        field/event_debug_demo3d.c \
         field/land_data_patch.c \
         field/fldeff_iaigiri.c \
         field/event_pokecen_pc.c \
@@ -1713,6 +1712,10 @@ SRCS_OVERLAY_D_IWASAWA = field/event_debug_mvpoke.c
 #D_LIVECOMMライブラリ
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_D_LIVECOMM = field/event_debug_livecomm.c
+
+#DEBUG_DEMO3Dライブラリ
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_DEMO3D = field/event_debug_demo3d.c
 
 #DEBUG_ITEMライブラリ
 #===> GROUP_OVERLAY_GIMMICK

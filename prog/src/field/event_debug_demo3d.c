@@ -162,7 +162,7 @@ static const DEBUG_MENU_INITIALIZER DebugDemo3DJumpMenuData = {
  *	@retval
  */
 //-----------------------------------------------------------------------------
-GMEVENT* DEBUG_EVENT_FLDMENU_Demo3DSelect( GAMESYS_WORK * gsys, HEAPID heapID )
+GMEVENT* DEBUG_EVENT_FLDMENU_Demo3DSelect( GAMESYS_WORK * gsys, void* parent_wk )
 {
   GMEVENT* event;
   EVENT_WORK* work;
@@ -171,11 +171,11 @@ GMEVENT* DEBUG_EVENT_FLDMENU_Demo3DSelect( GAMESYS_WORK * gsys, HEAPID heapID )
   event = GMEVENT_Create( gsys, NULL, debugMenuDemo3DSelectEvent, sizeof(EVENT_WORK) );
    // ‰Šú‰»
   work = GMEVENT_GetEventWork( event );
-  work->heapID   = heapID;
   work->gsys     = gsys;
   work->gdata    = GAMESYSTEM_GetGameData( gsys );
   work->gcsp     = GAMESYSTEM_GetGameCommSysPtr( gsys );
   work->fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  work->heapID   = FIELDMAP_GetHeapID( work->fieldmap );
   work->menuFunc = NULL;
 
   return event;

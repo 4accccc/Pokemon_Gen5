@@ -30,5 +30,5 @@
 
 //--------------------------------------------------------------------------------------
 
-extern GMEVENT* DEBUG_EVENT_FLDMENU_Demo3DSelect( GAMESYS_WORK * gsys, HEAPID heapID );
+extern GMEVENT* DEBUG_EVENT_FLDMENU_Demo3DSelect( GAMESYS_WORK * gsys, void* parent_wk );
 

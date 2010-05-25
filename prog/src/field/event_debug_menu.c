@@ -4064,14 +4064,13 @@ static BOOL debugMenuCallProc_FadeSpeedChange( DEBUG_MENU_EVENT_WORK * wk )
  * @brief 3Dƒfƒ‚Ä¶
  */
 //-----------------------------------------------------------------------------
+FS_EXTERN_OVERLAY( debug_demo3d );
 static BOOL debugMenuCallProc_Demo3d( DEBUG_MENU_EVENT_WORK* wk )
 {
-  GMEVENT*         parent = wk->gmEvent;
-  GAMESYS_WORK*      gsys = wk->gmSys;
-  FIELDMAP_WORK* fieldmap = wk->fieldWork;
-  HEAPID          heap_id = FIELDMAP_GetHeapID( fieldmap );
+  GMEVENT * event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+      FS_OVERLAY_ID( debug_demo3d ), DEBUG_EVENT_FLDMENU_Demo3DSelect, NULL );
 
-  GMEVENT_ChangeEvent( parent, DEBUG_EVENT_FLDMENU_Demo3DSelect( gsys, heap_id ) );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
 
   return TRUE;
 }
