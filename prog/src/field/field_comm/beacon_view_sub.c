@@ -538,7 +538,6 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
       BeaconView_PrintQueLimmitUpSet( wk, TRUE );
       effReq_PopupMsgSys( wk, msg_sys_thanks_send );
  
-      OS_TPrintf("ありがとう ビーコンセット %d\n", pp->tr_id );
       GAMEBEACON_Set_Thankyou( wk->gdata, pp->tr_id );
     }
     wk->sub_seq = SSEQ_THANKS_DECIDE_WAIT;
