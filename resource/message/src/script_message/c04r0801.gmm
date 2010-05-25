@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T20:59:46"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T12:46:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -304,8 +304,7 @@
 
 	<row id="msg_c04r0801_elitew_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・ゾロアークイベント前
-・仮メッセージ</comment>
+・ゾロアークイベント前</comment>
 		<attribute name="キャラ指定">ELITEW</attribute>
 		<language name="JPN" width="256">１６ばんどうろの　まよいのもりに
 キャンピングカーが　とまってるのよ[BE:01:ページ切り替え（クリア）]
@@ -317,8 +316,7 @@
 
 	<row id="msg_c04r0801_elitew_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
-・ゾロアークイベント後
-・仮メッセージ</comment>
+・ゾロアークイベント後</comment>
 		<attribute name="キャラ指定">ELITEW</attribute>
 		<language name="JPN" width="256">ゾロアークという　ポケモンが
 みんなを　ばかして[BE:00:ページ切り替え（行送り）]
