@@ -1857,7 +1857,7 @@ static BOOL OneselfSeq_TalkUpdate_Child(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     
   case _ANSWER_MSG: //u‚Í‚¢E‚¢‚¢‚¦v‘I‘ðŒ‹‰Ê‘—M
     if(situ->mycomm.mainmenu_yesno_result == FALSE){
-      if(situ->work == _RESULT_NO_DAMETAMAGO){  //ŽèŽ‚¿‚ª1•C‚¾‚Á‚½ˆ×AŒðŠ·‚ð’f‚Á‚½
+      if(situ->work == _RESULT_NO_TEMOTI_SHORT){  //ŽèŽ‚¿‚ª1•C‚¾‚Á‚½ˆ×AŒðŠ·‚ð’f‚Á‚½
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_04_04);
       }
       else if(situ->work == _RESULT_NO_EGG_SHORT){

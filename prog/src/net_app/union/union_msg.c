@@ -553,6 +553,10 @@ ALIGN4 static const u16 talk_multi_start[2] = {
   msg_union_talkboy_03_02, msg_union_talkgirl_03_02,
 };
 
+// ぐるぐる交換：誘った自分の手持ちにダメタマゴがある場合のNGメッセージ
+ALIGN4 static const u16 guruguru_ng_mine_dametamago[2] = {
+  msg_union_talkboy_07_15, msg_union_talkgirl_07_15,
+};
 // ぐるぐる交換：手持ちにダメタマゴがある場合のNGメッセージ
 ALIGN4 static const u16 guruguru_ng_dametamago[2] = {
   msg_union_talkboy_07_14, msg_union_talkgirl_07_14,
@@ -795,7 +799,7 @@ u16 UnionMsg_GetMsgID_GuruguruMineEggNG(int target_sex)
 //==================================================================
 u16 UnionMsg_GetMsgID_GuruguruMineDametamago(UNION_SYSTEM_PTR unisys)
 {
-  return talk_guruguru_intrude_dametamago[MyStatus_GetMySex(unisys->uniparent->mystatus)];
+  return guruguru_ng_mine_dametamago[MyStatus_GetMySex(unisys->uniparent->mystatus)];
 }
 
 //==================================================================

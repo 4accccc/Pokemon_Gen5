@@ -73,9 +73,11 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
       
       if(UnionTool_CheckDwcFriend(wifilist, &bpc->beacon) == TRUE){
         dest->friend_type = UNION_CHAT_FRIEND_TYPE_FRIEND;
+        OS_TPrintf("ccc friend\n");
       }
       else if(EtcSave_CheckAcquaintance(etc_save, bpc->beacon.trainer_id) == TRUE){
         dest->friend_type = UNION_CHAT_FRIEND_TYPE_ACQUAINTANCE;
+        OS_TPrintf("ccc acqua\n");
       }
     }
   }

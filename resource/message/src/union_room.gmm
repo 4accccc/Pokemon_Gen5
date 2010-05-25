@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-25T16:48:15"/>
+	<create user="matsuda" host="W00142" date="2010-05-25T18:41:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -344,7 +344,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2376,6 +2376,24 @@ msg_connect_union_08からの分岐メッセージ
 タマゴが　あります</language>
 		<language name="JPN_KANJI" width="216" line="2">手持ちに　交換できない
 タマゴが　あります</language>
+	</row>
+
+	<row id="msg_union_talkboy_07_15" text-color="#0000ff,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>自分の手持ちがダメタマゴのため、参加が不成立だった
+</comment>
+		<language name="JPN" width="216" line="2">てもちに　こうかん　できない
+タマゴが　あります[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">手持ちに　交換　できない
+タマゴが　あります[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_union_talkgirl_07_15" text-color="#ff0000,,,,,,#000000,#000000,,#000000,#000000,,,,,,,">
+		<comment>自分の手持ちがダメタマゴのため、参加が不成立だった
+</comment>
+		<language name="JPN" width="216" line="2">てもちに　こうかん　できない
+タマゴが　あります[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="216" line="2">手持ちに　交換できない
+タマゴが　あります[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_union_talkboy_07_10" text-color="#0000ff,,,#000000,,#000000,#000000,#000000,,#000000,#000000,,,,,,,">
