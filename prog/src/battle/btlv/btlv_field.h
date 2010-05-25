@@ -20,7 +20,7 @@ typedef enum
 
 typedef struct _BTLV_FIELD_WORK BTLV_FIELD_WORK;
 
-extern  BTLV_FIELD_WORK*  BTLV_FIELD_Init( BtlRule rule, int index, u8 season, HEAPID heapID );
+extern  BTLV_FIELD_WORK*  BTLV_FIELD_Init( BOOL wcs, int index, u8 season, HEAPID heapID );
 extern	void              BTLV_FIELD_Exit( BTLV_FIELD_WORK *bsw );
 extern	void              BTLV_FIELD_Main( BTLV_FIELD_WORK *bsw );
 extern	void              BTLV_FIELD_Draw( BTLV_FIELD_WORK *bsw );
