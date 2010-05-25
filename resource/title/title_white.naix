@@ -11,14 +11,21 @@
 #define NARC_TITLE_WHITE_NAIX_
 
 enum {
-	NARC_title_white_wht_logo_NCGR = 0,
-	NARC_title_white_wht_logo_NSCR = 1,
+	NARC_title_white_wht_logo_lz_NCGR = 0,
+	NARC_title_white_wht_logo_lz_NSCR = 1,
 	NARC_title_white_wht_logo_NCLR = 2,
-	NARC_title_white_wht_base_NSCR = 3,
+	NARC_title_white_wht_base_lz_NSCR = 3,
 	NARC_title_white_wht_obj_NCLR = 4,
-	NARC_title_white_wht_obj_NCGR = 5,
+	NARC_title_white_wht_obj_lz_NCGR = 5,
 	NARC_title_white_wht_obj_NCER = 6,
-	NARC_title_white_wht_obj_NANR = 7
+	NARC_title_white_wht_obj_NANR = 7,
+	NARC_title_white_wht_develop_NCLR = 8,
+	NARC_title_white_wht_develop_lz_NCGR = 9,
+	NARC_title_white_wht_develop_lz_NSCR = 10,
+	NARC_title_white_logo_tpc_ntd_NCLR = 11,
+	NARC_title_white_logo_tpc_ntd_lz_NCGR = 12,
+	NARC_title_white_logo_tpc_ntd_lz_NSCR = 13,
+	NARC_title_white_logo_tpc_ntd_s_lz_NSCR = 14
 };
 
 /* NARC_TITLE_WHITE_NAIX_ */
