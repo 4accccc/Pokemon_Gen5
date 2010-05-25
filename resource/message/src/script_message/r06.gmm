@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T22:11:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T15:31:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -398,15 +398,23 @@
 		<language name="JPN" width="256">おとくな　けいじばん！[BE:01:ページ切り替え（クリア）]
 
 バッグの　たいせつなものポケットに
-しまっている　どうぐは[BE:01:ページ切り替え（クリア）]
-とうろくすれば　セレクトボタンで
-かんたんに　えらべるように　なります！</language>
+しまっている　どうぐで[BE:01:ページ切り替え（クリア）]
+しかくの　チェックボックスが
+ついている　どうぐは[BE:01:ページ切り替え（クリア）]
+Ｙボタンで
+とうろく　できます[BE:01:ページ切り替え（クリア）]
+とうろくした　どうぐは
+Ｙボタンで　かんたんに　えらべます！</language>
 		<language name="JPN_KANJI" width="256">お得な　掲示板！[BE:01:ページ切り替え（クリア）]
 
 バッグの　たいせつなものポケットに
-しまっている　道具は[BE:01:ページ切り替え（クリア）]
-登録すれば　セレクトボタンで
-簡単に　選べるように　なります！</language>
+しまっている　道具で[BE:01:ページ切り替え（クリア）]
+四角の　チェックボックスが
+ついている　道具は[BE:01:ページ切り替え（クリア）]
+Ｙボタンで
+登録できます[BE:01:ページ切り替え（クリア）]
+登録した　道具は
+Ｙボタンで　簡単に　選べます！</language>
 	</row>
 
 	<row id="msg_r06_sign3_02" back-color="#8080ff,,,,,#8080ff,,,,,,,,,,,,,">
