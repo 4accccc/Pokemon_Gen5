@@ -1216,6 +1216,8 @@ static void _TOUCHBAR_Init(WIFIP2PMATCH_WORK *wk,HEAPID heapID)
 
   wk->pTouchWork = TOUCHBAR_Init(&touchbar_setup, heapID);
 
+  TOUCHBAR_SetUseKey(wk->pTouchWork, TOUCHBAR_ICON_RETURN, 0);
+  
 }
 
 
