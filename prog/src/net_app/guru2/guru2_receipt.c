@@ -275,7 +275,8 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
     //  Union_BeaconChange( UNION_PARENT_MODE_GURU2_FREE );
     //}
     
-    GFL_NET_WirelessIconEasyFunc();
+    // 通信アイコン表示
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE , HEAPID_GURU2 );
   
   //  MakeSendData( wk->g2p->param.sv, &wk->g2c->send_data );
   

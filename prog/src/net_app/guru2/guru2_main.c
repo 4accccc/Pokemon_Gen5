@@ -3625,10 +3625,8 @@ static void guru2_ClActResLoad( GURU2MAIN_WORK *g2m )
     GFL_ARC_CloseDataHandle( n_hdl );
   }
   
-  { //アイコンセット
-//    WirelessIconEasy();
-    GFL_NET_WirelessIconEasy_DefaultLCD();
-  }
+  //アイコンセット
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_GURU2 );
 
 #ifdef WMICON_PALETTE  
   { //パレットフェードに通信アイコンパレット転送
