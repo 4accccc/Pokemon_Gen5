@@ -396,7 +396,7 @@ static GMEVENT_RESULT _event_MissionStartWait( GMEVENT * event, int * seq, void 
   };
   
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL && (*seq) > SEQ_INIT && (*seq) < SEQ_FINISH){
+  if(intcomm == NULL && (*seq) < SEQ_FINISH){
     *seq = SEQ_FINISH;
   }
   

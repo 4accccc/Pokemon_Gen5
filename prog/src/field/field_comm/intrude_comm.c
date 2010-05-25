@@ -132,7 +132,6 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   NetID net_id;
   int i;
-  GFLNetInitializeStruct *pNetInitData;
   
   OS_TPrintf("intcomm alloc size = 0x%x\n", sizeof(INTRUDE_COMM_SYS));
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
@@ -158,17 +157,6 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
     MyStatus_Copy(myst, dest_myst);
   }
   
-  pNetInitData = GFL_HEAP_AllocMemory(
-    GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(GFLNetInitializeStruct));
-  *pNetInitData = aGFLNetInit;
-  
-  if(invalid_parent->my_invasion == TRUE && Intrude_CheckTutorialComplete(gamedata) == FALSE){
-    pNetInitData->maxConnectNum = 2; //チュートリアルをこなすまでは最大二人接続
-  }
-  GFL_NET_Init( pNetInitData, IntrudeComm_FinishInitCallback, intcomm );
-  
-  GFL_HEAP_FreeMemory(pNetInitData);
-  
   return intcomm;
 }
 
@@ -183,9 +171,31 @@ BOOL  IntrudeComm_InitCommSystemWait( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
+  
+  if(GAMEDATA_GetIsSave(gamedata) == TRUE){
+    return FALSE;
+  }
   
   switch(*seq){
   case 0:
+    {
+      GFLNetInitializeStruct *pNetInitData;
+      
+      pNetInitData = GFL_HEAP_AllocMemory(
+        GFL_HEAP_LOWID(HEAPID_APP_CONTROL), sizeof(GFLNetInitializeStruct));
+      *pNetInitData = aGFLNetInit;
+      
+      if(invalid_parent->my_invasion == TRUE && Intrude_CheckTutorialComplete(gamedata) == FALSE){
+        pNetInitData->maxConnectNum = 2; //チュートリアルをこなすまでは最大二人接続
+      }
+      GFL_NET_Init( pNetInitData, IntrudeComm_FinishInitCallback, intcomm );
+      
+      GFL_HEAP_FreeMemory(pNetInitData);
+    }
+    (*seq)++;
+    break;
+  case 1:
     if(intcomm->comm_status >= INTRUDE_COMM_STATUS_INIT){
       if(invalid_parent->my_invasion == TRUE){
         OS_TPrintf("親として起動\n");
@@ -375,6 +385,7 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   enum{
     SEQ_INIT,
     SEQ_TIMING_START,
@@ -458,6 +469,10 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   int i;
   BOOL exit_ok = FALSE;
+  
+  if(GAMEDATA_GetIsSave(gamedata) == TRUE){
+    return FALSE;
+  }
   
   if(intcomm->comm_status == INTRUDE_COMM_STATUS_EXIT || GFL_NET_IsExit() == TRUE){
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){  //表フィールドにいる場合は即解放

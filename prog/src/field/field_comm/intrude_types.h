@@ -247,8 +247,11 @@ typedef struct _INTRUDE_COMM_SYS{
   INTRUDE_SYMBOL_WORK intrude_send_symbol;   ///<送信バッファ：シンボルワーク
   SYMBOL_DATA_REQ req_symbol_data[FIELD_COMM_MEMBER_MAX]; ///<シンボルデータリクエスト
   SYMBOL_DATA_CHANGE send_symbol_change;     ///<送信バッファ：シンボルデータ変更
-  u8 recv_symbol_flag;            ///<TRUE:シンボルデータを受信した
-  u8 recv_symbol_change_flag;     ///<TRUE:シンボルデータの変更通知を受け取った
+  INTRUDE_SECRET_ITEM_SAVE recv_secret_item;  ///<受信バッファ隠しアイテム
+  u8 recv_secret_item_flag:1;                 ///<TRUE:隠しアイテムを受信した
+  u8 recv_symbol_flag:1;            ///<TRUE:シンボルデータを受信した
+  u8 recv_symbol_change_flag:1;     ///<TRUE:シンボルデータの変更通知を受け取った
+  u8        :5;
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id

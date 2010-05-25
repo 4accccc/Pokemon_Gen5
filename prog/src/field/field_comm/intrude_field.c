@@ -168,6 +168,10 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   int i, my_net_id;
   BOOL update_ret;
 
+  if(GAMEDATA_GetIsSave(gamedata) == TRUE){
+    return;
+  }
+
 #if 0
   //デバッグ
   if(ZONEDATA_IsBingo(FIELDMAP_GetZoneID(fieldWork)) && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT)){

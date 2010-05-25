@@ -122,6 +122,8 @@ SDK_COMPILER_ASSERT(NELEMS(PalaceTownData) == PALACE_TOWN_DATA_MAX);
 //==================================================================
 void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
 {
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+
   //参加人数が変わっているなら人数を送信(親機専用)
   if(GFL_NET_IsParentMachine() == TRUE){
     int now_member = GFL_NET_GetConnectNum();
@@ -180,6 +182,15 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){
     IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
+  }
+  
+  //セーブ関連のデータ更新処理
+  if(GAMEDATA_GetIsSave(gamedata) == FALSE){
+    if(intcomm->recv_secret_item_flag == TRUE){
+      INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
+      ISC_SAVE_SetItem(intsave, &intcomm->recv_secret_item);
+      intcomm->recv_secret_item_flag = FALSE;
+    }
   }
 }
 

@@ -1746,9 +1746,8 @@ static void _IntrudeRecv_SecretItem(const int netID, const int size, const void*
   }
   
   OS_TPrintf("受信：隠しアイテム netID=%d\n", netID);
-  {
-    INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
-    ISC_SAVE_SetItem(intsave, itemdata);
+  if(intcomm->recv_secret_item_flag == FALSE){
+    GFL_STD_MemCopy(itemdata, &intcomm->recv_secret_item, sizeof(INTRUDE_SECRET_ITEM_SAVE));
   }
 }
 
