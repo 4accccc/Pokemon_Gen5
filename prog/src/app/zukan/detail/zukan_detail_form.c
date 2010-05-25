@@ -3591,8 +3591,19 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
               if(    ( ( (work->is_poke_front)) && (!(work->poke_mcss_wk[POKE_COMP_F].poke_wk)) )
                   || ( (!(work->is_poke_front)) && (!(work->poke_mcss_wk[POKE_COMP_B].poke_wk)) ) )
               {
+                // EXCHANGE画面からTOP画面に戻ってくる
+                // TOP画面で前後を入れ替える
+                // TOP画面からEXCHANGE画面に行く
+                // という操作を行ったときに、フォルムは入れ替えていないので、
+                // 最初のEXCHANGE画面と同じフォルムを、これから行くEXCHANGE画面でも表示したい。
+                // だから、Zukan_Detail_Form_OshidashiChangeCompareFormではなく、
+                // Zukan_Detail_Form_ChangeCompareFormとZukan_Detail_Form_OshidashiSetPosCompareFormを用いることにした。
+                
+                Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
+
+                // 押し出し用関数を利用して位置設定
                 work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
-                Zukan_Detail_Form_OshidashiChangeCompareForm( param, work, cmn );
+                Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
               }
 #endif
 
