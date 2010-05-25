@@ -982,15 +982,7 @@ static inline void DebugWin_LiveScore_D_MyMacAddr( void* userWork , DEBUGWIN_ITE
 
   LIVEMATCH_DATA_GetMyMacAddr( p_sv, mac_address );
 
-  hight = (mac_address[0] << 0xFFFF)
-    | (mac_address[1] << 0xFF)
-    | mac_address[2];
-
-  low   = (mac_address[3] << 0xFFFF)
-    | (mac_address[4] << 0xFF)
-    | mac_address[5];
-
-  DEBUGWIN_ITEM_SetNameV( item , "mac[%d][%d]", hight, low );  
+  DEBUGWIN_ITEM_SetNameV( item , "mac%2x-%2x-%2x-%2x-%2x-%2x", mac_address[0], mac_address[1],mac_address[2],mac_address[3],mac_address[4],mac_address[5]);  
 }
 static inline void DebugWin_LiveScore_U_MyWin( void* userWork , DEBUGWIN_ITEM* item )
 { 
@@ -1050,16 +1042,8 @@ static inline void DebugWin_LiveScore_D_FoeMacAddr( void* userWork , DEBUGWIN_IT
   u32 hight, low;
 
   LIVEMATCH_DATA_GetFoeMacAddr( p_sv, s_livescore_page, mac_address );
+  DEBUGWIN_ITEM_SetNameV( item , "mac%2x-%2x-%2x-%2x-%2x-%2x", mac_address[0], mac_address[1],mac_address[2],mac_address[3],mac_address[4],mac_address[5]);  
 
-  hight = (mac_address[0] << 0xFFFF)
-    | (mac_address[1] << 0xFF)
-    | mac_address[2];
-
-  low   = (mac_address[3] << 0xFFFF)
-    | (mac_address[4] << 0xFF)
-    | mac_address[5];
-
-  DEBUGWIN_ITEM_SetNameV( item , "mac[%d][%d]", hight, low );  
 }
 static inline void DebugWin_LiveScore_U_FoePoke( void* userWork , DEBUGWIN_ITEM* item )
 { 
@@ -1088,6 +1072,25 @@ static inline void DebugWin_LiveScore_D_FoeHp( void* userWork , DEBUGWIN_ITEM* i
   DEBUGWIN_ITEM_SetNameV( item , "HP[%d]", param );  
 }
 
+static inline void DebugWin_LiveScore_U_FoeDelete( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  LIVEMATCH_DATA *p_sv  = userWork;
+
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    u8  mac_address[6];
+    GFL_STD_MemClear( mac_address, sizeof(mac_address) );
+    LIVEMATCH_DATA_SetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_HP, 0 );
+    LIVEMATCH_DATA_SetFoeParam( p_sv, s_livescore_page, LIVEMATCH_FOEDATA_PARAM_REST_POKE, 0 );
+    LIVEMATCH_DATA_SetFoeMacAddr( p_sv, s_livescore_page, mac_address );
+    DEBUGWIN_RefreshScreen();
+  }
+
+}
+static inline void DebugWin_LiveScore_D_FoeDelete( void* userWork , DEBUGWIN_ITEM* item )
+{ 
+  DEBUGWIN_ITEM_SetName( item , "‚¯‚·" );  
+}
 
 static inline void DEBUGWIN_LIVESCORE_Init( HEAPID heapID )
 { 
@@ -1113,6 +1116,8 @@ static inline void DEBUGWIN_LIVESCORE_Init( HEAPID heapID )
   DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoePoke, DebugWin_LiveScore_D_FoePoke,
        p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
   DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoeHp, DebugWin_LiveScore_D_FoeHp,
+       p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
+  DEBUGWIN_AddItemToGroupEx( DebugWin_LiveScore_U_FoeDelete, DebugWin_LiveScore_D_FoeDelete,
        p_sv, DEBUGWIN_GROUP_LIVESCORE_FOE, heapID );
 }
 

@@ -271,7 +271,7 @@ BOOL LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
     GFL_NET_TYPE_IRC,  //wifi通信を行うかどうか
     TRUE,     // 親が再度初期化した場合、つながらないようにする場合TRUE
     WB_NET_IRC_BATTLE,  //GameServiceID
-    0xfffe, // 赤外線タイムアウト時間
+    0xffffffff, // 赤外線タイムアウト時間
     0,//MP通信親機送信バイト数
     0,//dummy
   };

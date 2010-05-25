@@ -1666,7 +1666,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_RETURN_MENU );
 		break;
 
-  case SEQ_START_DISCONNECT_NOMATCH:  //‘å‰ï‚ªˆá‚¤‚½‚ßØ’f
+  case SEQ_START_DISCONNECT_NOMATCH:  //“¯‚¶‘Îí‘ŠŽè
     if( LIVEBATTLEMATCH_IRC_StartDisConnect(p_wk->p_irc))
     { 
       *p_seq  = SEQ_WAIT_DISCONNECT_NOMATCH;
