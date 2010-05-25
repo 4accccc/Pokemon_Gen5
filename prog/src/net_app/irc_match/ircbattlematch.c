@@ -427,6 +427,20 @@ static void _endCallBack(void* pWork)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   通信中断
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _netBreakOff(IRC_BATTLE_MATCH* pWork)
+{
+  pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+  GFL_NET_IRCWIRELESS_ResetSystemError();
+  GFL_NET_Exit(NULL);
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   フェードアウト処理
  * @retval  none
  */
@@ -844,8 +858,7 @@ static void _recvMultiPartyNo(const int netID, const int size, const void* pData
 static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_UI_TP_GetTrg()){
-    pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    GFL_NET_Exit(NULL);
+    _netBreakOff(pWork);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
   }
 
@@ -1087,9 +1100,9 @@ static void _ircExitWait_TS2(IRC_BATTLE_MATCH* pWork)
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
     if(selectno == 0)
     { // はいを選択した場合
-      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
       _buttonWindowDelete(pWork);
-      GFL_NET_Exit(NULL);
+      _netBreakOff(pWork);
+      
       _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
     else
@@ -1973,10 +1986,8 @@ static void _ircExitWait(IRC_BATTLE_MATCH* pWork)
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
     if(selectno == 0)
     { // はいを選択した場合
-      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-//      EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_EXIT);
       _buttonWindowDelete(pWork);
-      GFL_NET_Exit(NULL);
+      _netBreakOff(pWork);
       _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
     else
@@ -2079,12 +2090,8 @@ static void _ircActionWait(IRC_BATTLE_MATCH* pWork)
 static void _ircEndKeyWait(IRC_BATTLE_MATCH* pWork)
 {
   if(GFL_UI_TP_GetTrg()){
-
-
+    _netBreakOff(pWork);
     pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_RETRY;
-//    pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-//    EVENT_IrcBattleSetType(pWork->pBattleWork,EVENTIRCBTL_ENTRYMODE_RETRY);
-    GFL_NET_Exit(NULL);
     _CHANGE_STATE(pWork,_modeFadeoutStart);
   }
 }
@@ -2251,7 +2258,7 @@ static void _waitFinish(IRC_BATTLE_MATCH* pWork)
     return;
   }
   _buttonWindowDelete(pWork);
-  GFL_NET_Exit(NULL);
+  _netBreakOff(pWork);
   _CHANGE_STATE(pWork,_modeFadeoutStart);
 
 }
@@ -2296,9 +2303,8 @@ static void _ircExitWait2(IRC_BATTLE_MATCH* pWork)
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
     if(selectno == 0)
     { // はいを選択した場合
-      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
       _buttonWindowDelete(pWork);
-      GFL_NET_Exit(NULL);
+      _netBreakOff(pWork);
       _CHANGE_STATE(pWork,_modeFadeoutStart);
     }
     else
@@ -2589,7 +2595,7 @@ static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
   if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
     int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
     if(num1==WIFILIST_FRIEND_MAX){
-      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+//      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
       _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
       pWork->timer = _FULL_TIMER;
       return;
