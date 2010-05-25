@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-24T20:21:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T15:15:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,13 +296,15 @@
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
 		<language name="JPN" width="256">はしのうえに　まれに
-はねが　おちているだろ？▼
-あれを　ひろうとき　まれに
-ポケモンと　ぶつかるんだ！</language>
+とりポケモンの　かげが　みえるだろ？▽
+あの　したに　ハネが　おちてくるんだ！▼
+でさ　ハネを　ひろおうとしたとき
+まれに　ポケモンと　ぶつかるんだよね</language>
 		<language name="JPN_KANJI" width="256">橋の上に　まれに
-ハネが　落ちているだろ？▼
-あれを　拾うとき　まれに
-ポケモンと　ぶつかるんだ！</language>
+とりポケモンの　影が　みえるだろ？▽
+あの下に　ハネが　落ちてくるんだ！▼
+でさ　ハネを　拾おうとしたとき
+まれに　ポケモンと　ぶつかるんだよね</language>
 	</row>
 
 	<row id="msg_h02_woman2_01">
