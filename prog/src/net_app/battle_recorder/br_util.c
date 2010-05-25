@@ -1353,7 +1353,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
       case BR_PROFILE_MSGWINID_M_NAME:   //●●●のプロフィール
         { 
           STRBUF  *p_name;
-          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
           p_name    = GDS_Profile_CreateNameString( cp_profile, heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterWord( p_word, 0, p_name, GDS_Profile_GetSex(cp_profile), TRUE, PM_LANG );
@@ -1365,7 +1365,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
       case BR_PROFILE_MSGWINID_M_BIRTH:      //●がつうまれ
         { 
           const u32 month = GDS_Profile_GetMonthBirthday( cp_profile );
-          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, month, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
@@ -1375,7 +1375,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
       case BR_PROFILE_MSGWINID_M_COUNTRY:    //住んでいる場所国名
         { 
           const u32 nation = GDS_Profile_GetNation( cp_profile );
-          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterCountryName( p_word, 0, nation );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
@@ -1386,7 +1386,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
         { 
           const u32 nation  = GDS_Profile_GetNation( cp_profile );
           const u32 area    = GDS_Profile_GetArea( cp_profile );
-          p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+          p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterLocalPlaceName( p_word, 0, nation, area );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
@@ -1402,7 +1402,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
           p_self    = GDS_Profile_GetSelfIntroduction( cp_profile, &pms, heapID );
           if( p_self )
           { 
-            p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
+            p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
             p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
             WORDSET_RegisterWord( p_word, 0, p_self, GDS_Profile_GetSex(cp_profile), TRUE, PM_LANG );
             WORDSET_ExpandStr( p_word, p_strbuf, p_src );
