@@ -49,7 +49,7 @@ extern  const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ];
 //============================================================================================
 
 #define BTLV_INPUT_TCB_MAX ( 8 )    //使用するTCBのMAX
-#define BTLV_INPUT_BUTTON_MAX ( 6 + 1 )  //押せるボタンのMAX値（3vs3時の対象選択6個＋キャンセル1個）
+#define BTLV_INPUT_BUTTON_MAX ( 6 + 2 )  //押せるボタンのMAX値（3vs3時の対象選択6個＋キャンセル1個）
 #define BG_CLEAR_CODE     (0x8000 / 0x20 - 1)   ///BGスクリーンのクリアコード（キャラクタの一番後ろを指定）
 
 //カーソル表示にするボタン
@@ -1834,6 +1834,10 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     BTLV_INPUT_CheckWazaInfoModeMask( &hit );
     if( hit < 5 )
     { 
+      if( biw->waruagaki_flag == TRUE )
+      { 
+        biw->hit = BTLV_INPUT_WARUAGAKI_BUTTON;
+      }
       *select = biw->hit;
       *dir    = rotate_result[ biw->rotate_scr ];
       biw->decide_pos[ biw->active_index ][biw->scr_type ]= hit;
@@ -1867,7 +1871,9 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
-    else if( ( hit < 4 ) && ( cont & PAD_BUTTON_L ) && ( BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) == TRUE ) )
+    else if( ( hit < 4 ) &&
+             ( cont & PAD_BUTTON_L ) &&
+           ( ( BPP_HENSIN_Check( biw->rotate_bpp[ biw->rotate_scr ] ) == TRUE ) || ( biw->waruagaki_flag == TRUE ) ) )
     { 
       hit = GFL_UI_TP_HIT_NONE;
     }
