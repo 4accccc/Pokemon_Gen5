@@ -4948,12 +4948,10 @@ static void handler_Bukiyou_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 {
 //  BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-  TAYA_Printf("ぶきようですが、いえき食らったよ\n");
   if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
   {
     BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
     param->pokeID = pokeID;
-    TAYA_Printf("アイテムもってたよ\n");
   }
 }
 
@@ -4981,7 +4979,7 @@ static void handler_Bukiyou_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->header.tokwin_flag = TRUE;
     HANDEX_STR_Setup( &(param->str), BTL_STRTYPE_SET, BTL_STRID_SET_WazaCantUse );
     HANDEX_STR_AddArg( &(param->str), pokeID );
-    HANDEX_STR_AddArg( &(param->str), work[1] );
+    HANDEX_STR_AddArg( &(param->str), BTL_EVENT_FACTOR_GetSubID(myHandle) );
 
     work[2] = 0;
   }
