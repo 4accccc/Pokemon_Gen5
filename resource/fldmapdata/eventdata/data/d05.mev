@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/13 11:44:47
+#save date:2010/05/25 22:27:30
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\d05.wms
 #SECTION START:OBJ_EVENT
@@ -409,7 +409,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_D05_RIVAL_01
@@ -427,6 +427,23 @@ EVENTDATA_POSTYPE_GRID
 -136 0 -168
 #size
 1 3
+#event number: 1
+#Pos Event Label
+POS_D05_PALACEBLOCK_01
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-104 0 -184
+#size
+1 1
 #Map Event List Data End
 #SECTION End:POS_EVENT
 #SECTION START:DOOR_EVENT

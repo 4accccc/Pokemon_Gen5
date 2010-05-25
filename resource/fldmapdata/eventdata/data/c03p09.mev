@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/26 14:11:52
+#save date:2010/05/25 22:26:37
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c03p09.wms
 #SECTION START:OBJ_EVENT
@@ -102,7 +102,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--56 0 -328
+-40 0 -328
 #event number: 3
 #type
 1
@@ -365,7 +365,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-1
+2
 #event number: 0
 #Pos Event Label
 POS_C03P09_ICESHOP_01
@@ -381,6 +381,23 @@ WK_SCENE_C03P09_SWEETS
 EVENTDATA_POSTYPE_GRID
 #position
 -56 0 -392
+#size
+1 1
+#event number: 1
+#Pos Event Label
+POS_C03P09_PALACEBLOCK_01
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+0
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+-56 0 -328
 #size
 1 1
 #Map Event List Data End
