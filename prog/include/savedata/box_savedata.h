@@ -222,10 +222,8 @@ extern BOOL BOXDAT_GetExWallPaperFlag( BOX_MANAGER * box, u32 flag );
 //extern void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box);
 //extern u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box);
 extern u32 BOXDAT_GetOneBoxDataSize(void);
-extern void BOXDAT_CheckBoxDummyData(BOX_MANAGER* box);
 
 
-extern void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_MANAGER *boxData );
 
 //==============================================================================================
 // ボックスデータ分割処理

@@ -24,21 +24,16 @@ static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData );
 
 
 
-//#define TRAY_ALL_USE_BIT  ((1<<BOX_MAX_TRAY)-1)
-//#define TRAY_ALL_USE_BIT  (0b111111111111111111)
 
 //フラッシュのページをまたがないように1トレー分のデータを256バイトアライメントする
 struct _BOX_TRAY_DATA
 {
   POKEMON_PASO_PARAM  ppp[BOX_MAX_POS];
-//  u8 dummy[TRAY_DUMMY_NUM];
 };
 
 struct _BOX_SAVEDATA{
-//  BOX_TRAY_DATA   btd[BOX_MAX_TRAY];  //WBよりトレーが個別のセーブになります。
-  //ここより下のデータが２５６バイトアライメントされたところにマッピングされる
   u32     currentTrayNumber;                //4
-//  u32     UseBoxBits;                   //4
+
   STRCODE trayName[BOX_MAX_TRAY][BOX_TRAYNAME_BUFSIZE]; //2*20*24 = 960
   u8      wallPaper[BOX_MAX_TRAY];            //24
   u8      daisukiBitFlag;                 //1
@@ -588,26 +583,6 @@ u32 BOXDAT_GetWallPaperNumber( const BOX_MANAGER* box, u32 trayNum )
   }
 }
 
-//------------------------------------------------------------------
-/**
- * 金銀で有効な壁紙番号をチェック
- *
- * @param num   壁紙番号
- *
- * @retval  "TRUE = 有効"
- * @retval  "FALSE = 無効"
- */
-//------------------------------------------------------------------
-/*
-static BOOL WallPaperNumberCheck( u32 num )
-{
-  if( num < BOX_NORMAL_WALLPAPER_MAX ||
-    ( num >= BOX_TOTAL_WALLPAPER_MAX_PL && num < BOX_TOTAL_WALLPAPER_MAX_GS ) ){
-    return TRUE;
-  }
-  return FALSE;
-}
-*/
 
 //------------------------------------------------------------------
 /**
@@ -630,7 +605,6 @@ void BOXDAT_SetWallPaperNumber( BOX_MANAGER* box, u32 trayNum, u32 wallPaperNumb
 //  if( trayNum < BOX_MAX_TRAY && WallPaperNumberCheck(wallPaperNumber) == TRUE ){
   if( trayNum < BOX_MAX_TRAY ){
     boxData->wallPaper[trayNum] = wallPaperNumber;
-    //SaveData_RequestTotalSave();  金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ  
   }else{
     GF_ASSERT(0);
   }
@@ -685,7 +659,6 @@ void BOXDAT_SetBoxName( BOX_MANAGER* box, u32 trayNumber, const STRBUF* src )
   if( trayNumber < BOX_MAX_TRAY )
   {
     GFL_STR_GetStringCode( src, boxData->trayName[trayNumber], BOX_TRAYNAME_BUFSIZE );
-    //SaveData_RequestTotalSave();  //金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ
   }
 }
 //------------------------------------------------------------------
@@ -959,157 +932,6 @@ BOOL BOXDAT_GetExWallPaperFlag( BOX_MANAGER * box, u32 flag )
 }
 
 
-//==============================================================================================
-// だいすきクラブ壁紙
-//==============================================================================================
-
-//------------------------------------------------------------------
-/**
- * だいすきクラブ壁紙を１枚、有効にする
- *
- * @param   box     ボックスデータポインタ
- * @param   number    有効にする壁紙ナンバー
- *
- */
-//------------------------------------------------------------------
-/*
-void BOXDAT_SetDaisukiKabegamiFlag( BOX_MANAGER* box, u32 number )
-{
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  GF_ASSERT( number < BOX_EX_WALLPAPER_MAX );
-
-  boxData->daisukiBitFlag |= (1 << number);
-/// SaveData_RequestTotalSave();金銀で削除　ポケモン以外のデータはいかなる場合も書くのでこの関数でリクエストしなくてＯＫ
-}
-*/
-
-//------------------------------------------------------------------
-/**
- * だいすきクラブ壁紙を取得しているかチェック
- *
- * @param   box     ボックスデータポインタ
- * @param   number    チェックする壁紙ナンバー
- *
- * @retval  BOOL    TRUEで取得している
- */
-//------------------------------------------------------------------
-/*
-BOOL BOXDAT_GetDaisukiKabegamiFlag( const BOX_MANAGER* box, u32 number )
-{
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  GF_ASSERT( number < BOX_EX_WALLPAPER_MAX );
-
-  return (boxData->daisukiBitFlag & (1<<number)) != 0;
-}
-*/
-
-//------------------------------------------------------------------
-/**
- * 取得しただいすきクラブ壁紙の総数を取得
- *
- * @param   box   ボックスデータポインタ
- *
- * @retval  u32   
- */
-//------------------------------------------------------------------
-/*
-u32 BOXDAT_GetDaiukiKabegamiCount( const BOX_MANAGER* box )
-{
-  u32 i, cnt;
-
-  for(i=0, cnt=0; i<BOX_EX_WALLPAPER_MAX; i++)
-  {
-    if( BOXDAT_GetDaisukiKabegamiFlag(box, i) )
-    {
-      cnt++;
-    }
-  }
-  return cnt;
-}
-*/
-
-//------------------------------------------------------------------
-/**
- * 編集を行ったトレーのビットを立てる
- *
- * @param   box   ボックスデータポインタ
- * @param inTrayIdx トレーインデックス
- *
- * @retval  none
- */
-//------------------------------------------------------------------
-/*
-void BOXDAT_SetTrayUseBit(BOX_MANAGER* box, const u8 inTrayIdx)
-{
-  u8 bit;
-  u32 data = 0;
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  if (inTrayIdx >= BOX_MAX_TRAY){
-    GF_ASSERT_MSG(0,"ボックストレーインデックス不正\n");
-    return;
-  }
-
-  bit = (0b1);
-  data = bit << inTrayIdx;
-
-  boxData->UseBoxBits |= data;
-}
-*/
-
-//------------------------------------------------------------------
-/**
- * トレーの全ビットを立てる
- *
- * @param   box   ボックスデータポインタ
- * @param inTrayIdx トレーインデックス
- *
- * @retval  none
- */
-//------------------------------------------------------------------
-/*
-void BOXDAT_SetTrayUseBitAll(BOX_MANAGER* box)
-{
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  boxData->UseBoxBits = TRAY_ALL_USE_BIT;
-  OS_Printf("全ビットオン%x\n",boxData->UseBoxBits);
-}
-*/
-
-//------------------------------------------------------------------
-/**
- * トレーの全ビットを立てる
- *
- * @param   box   ボックスデータポインタ
- * @param inTrayIdx トレーインデックス
- *
- * @retval  none
- */
-//------------------------------------------------------------------
-/*
-void BOXDAT_ClearTrayUseBits(BOX_MANAGER* box)
-{
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  boxData->UseBoxBits = 0;
-  OS_Printf("トレー編集ビット全クリア\n");
-}
-*/
-
-//------------------------------------------------------------------
-/**
- * トレーの編集ビット群を取得
- *
- * @param   box   ボックスデータポインタ
- *
- * @retval  u32   編集ビット群
- */
-//------------------------------------------------------------------
-/*
-u32 BOXDAT_GetTrayUseBits(const BOX_MANAGER* box)
-{
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  return boxData->UseBoxBits;
-}
-*/
 
 //------------------------------------------------------------------
 /**
@@ -1124,28 +946,6 @@ u32 BOXDAT_GetOneBoxDataSize(void)
   return  sizeof(BOX_TRAY_DATA);
 }
 
-//------------------------------------------------------------------
-/**
- * 18ボックスのポケモンデータ以外のダミー１６バイトの中身をチェックする
- *
- *
- */
-//------------------------------------------------------------------
-void BOXDAT_CheckBoxDummyData(BOX_MANAGER* box)
-{
-  //ダミーは無くしました。
-  /*
-  u8 i,d;
-  for(i = 0; i < BOX_MAX_TRAY; i++){
-    BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,i);
-    for(d = 0; d < TRAY_DUMMY_NUM; d++){
-      GF_ASSERT( trayData->dummy[d] == 0 );
-      trayData->dummy[d] = 0;
-    }
-  }
-  */
-
-}
 
 BOX_MANAGER * BOX_DAT_InitManager( const HEAPID heapId , SAVE_CONTROL_WORK * sv)
 {
@@ -1160,23 +960,6 @@ void BOX_DAT_ExitManager( BOX_MANAGER *box )
   GFL_HEAP_FreeMemory( box );
 }
 
-
-//---------------------------------------------------------------------------
-/**
- * @brief ボックスデータのセット(1ボックス単位(30匹))
- * @param trayIdx   ボックス番号
- * @param dataPtr   保存するデータのポインタ
- * @param boxData   ボックスセーブデータへのポインタ
- */
-//---------------------------------------------------------------------------
-void BOXDAT_SetPPPData_Tray( u8 trayIdx , void *dataPtr , BOX_MANAGER *box )
-{
-  BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  //通信用に切り分け、解読シーケンスをはさむか？
-  // 将来作り直す必要がある
-//  GFL_STD_MemCopy( dataPtr , (void*)boxData->ppp[trayIdx] , 0x88*30 );
-
-}
 
 //==============================================================================================
 // ボックスデータ分割処理

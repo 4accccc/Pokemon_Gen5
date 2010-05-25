@@ -203,13 +203,11 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
 
 	case SEQ_LIST_TIMING_INIT:
 		GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_LIST_DEMO_TIMING );
-		OS_Printf( "ok1\n" );
 		(*seq) = SEQ_LIST_TIMING_WAIT;
 		break;
 
 	case SEQ_LIST_TIMING_WAIT:
     if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),EVENT_BATTLE_LIST_DEMO_TIMING) ){
-			OS_Printf( "ok2\n" );
       (*seq) = SEQ_CALL_LIST_DEMO;
     }
 		break;
@@ -240,14 +238,12 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
 //    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD );
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING);
-      OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
       (*seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
 //  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD) ){
     if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING)){
-      OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*seq) = SEQ_BATTLE_INIT;
     }
     break;
@@ -263,7 +259,6 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     }
     break;
   case SEQ_BATTLE_END:
-    OS_TPrintf("バトル完了\n");
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 
     BattleRec_LoadToolModule();                       // 録画
