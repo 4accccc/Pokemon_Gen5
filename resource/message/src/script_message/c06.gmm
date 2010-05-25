@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T18:13:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T20:34:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -364,7 +364,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -494,10 +494,10 @@
 アララギ博士父</attribute>
 		<language name="JPN" width="256">では　であいを　きねんして
 おまえさんの　ポケモンずかんを[BE:00:ページ切り替え（行送り）]
-パワーアップ！　だね[BE:01:ページ切り替え（クリア）]</language>
+パワーアップ！　だね</language>
 		<language name="JPN_KANJI" width="256">では　出会いを　記念して
 おまえさんの　ポケモン図鑑を[BE:00:ページ切り替え（行送り）]
-パワーアップ！　だね[BE:01:ページ切り替え（クリア）]</language>
+パワーアップ！　だね</language>
 	</row>
 
 	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
