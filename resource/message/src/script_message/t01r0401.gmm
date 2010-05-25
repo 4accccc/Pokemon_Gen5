@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T21:49:19"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T14:12:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -745,7 +745,7 @@
 		<language name="JPN_KANJI" width="256">ぎりぎりぎりぃ！</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_01" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・msg_t01r0201_white_end_01表示後
 　＋
@@ -767,10 +767,10 @@
 ながめていて　思ったんだ▼
 旅をして　出会った
 ポケモンたち……　もっともっと▽
-このコたちのこと　しりたいなって▼</language>
+このコたちのこと　知りたいなって▼</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・！マーク表示後
 ・はい/いいえの選択肢表示
@@ -783,11 +783,11 @@
 [1:00:トレーナー名:0]　しってる？
 ポケモンの　たいりょうはっせいのこと</language>
 		<language name="JPN_KANJI" width="256">そうだ！▼
-[1:00:トレーナー名:0]　しってる？
+[1:00:トレーナー名:0]　知ってる？
 ポケモンの　大量発生のこと</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_03" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・はい選択時
 ・続けてwhite_end_05</comment>
@@ -808,10 +808,10 @@
 電光掲示板を　みれば▼
 イッシュ地方の　どこで
 大量発生が　起きているか▽
-わかるってことも　しってるんだ！▼</language>
+わかるってことも　知ってるんだ！▼</language>
 	</row>
 
-	<row id="msg_t01r0401_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_t01r0401_white_end_04" text-color="#0000ff,,,#0000ff,,#0000ff,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀：クリア後の初回
 ・いいえ選択時
 ・続けてwhite_end_05</comment>
@@ -827,7 +827,7 @@
 でんこうけいじばんを　みれば▽
 わかるんだよ！　どう　すごいでしょ▼</language>
 		<language name="JPN_KANJI" width="256">ベル『うふふ
-じゃあ　あたしが　おしえてあげるね▼
+じゃあ　あたしが　教えてあげるね▼
 まず　大量発生は
 ある　ポケモンが　各地の　草むらで▽
 いっぱい　出現すること▼
