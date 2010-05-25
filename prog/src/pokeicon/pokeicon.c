@@ -130,13 +130,8 @@ u32 POKEICON_GetCgxArcIndexByMonsNumber( u32 mons_no, u32 form_no, BOOL egg )
     }
     if( pltt_only )
     { 
-#if 0
-      //@todo アイコンの方のアルセウスをどうするか決まってないので現状は変化なしにする
-      if( pltt_only_offset )
-      { 
-        *pltt_only_offset = POKEICON_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
-      }
-#endif
+      //アイコンの方のpltt_onlyは存在しないので変化なしにする
+      ;
     }
     else
     { 
@@ -212,13 +207,8 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     }
     if( pltt_only )
     { 
-#if 0
-      //@todo アイコンの方のアルセウスをどうするか決まってないので現状は変化なしにする
-      if( pltt_only_offset )
-      { 
-        *pltt_only_offset = POKEICON_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
-      }
-#endif
+      //アイコンの方のpltt_onlyは存在しないので変化なしにする
+      ;
     }
     else
     { 
