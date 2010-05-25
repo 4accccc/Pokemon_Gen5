@@ -1458,27 +1458,23 @@ static GXRgb GetComponentCenterColor( const GRAPH_COMPONENT* component )
 //------------------------------------------------------------------------------
 static void GetComponentPointPos( const CIRCLE_GRAPH* graph, const GRAPH_COMPONENT* component, VecFx16* dest )
 {
-  u8 headIdx, tailIdx, centerIdx;
-  VecFx16 outerPos, vecToOuterPos;
+  u8 headIdx, tailIdx;
   float vx, vy, vz;
   float cx, cy, cz;
+  float radian;
 
-  // 対象となる外周点の座標を取得
   GetComponentCirclePointIndex( component, &headIdx, &tailIdx ); // 構成要素の両端の外周頂点のインデックスを取得
-  centerIdx = (headIdx + tailIdx) / 2; // 外周両頂点の中間地点にある頂点インデックスを算出
-  outerPos = graph->circlePoints[ centerIdx ];
-
-  // 指し示す座標を決定
-  VEC_Fx16Normalize( &outerPos, &vecToOuterPos ); // 中心点→外周点 方向ベクトル ( 単位ベクトル )
-  vx = FX_FX16_TO_F32(vecToOuterPos.x) * COMPONENT_POINT_RADIUS; // 中心点から外周点方向ベクトル
-  vy = FX_FX16_TO_F32(vecToOuterPos.y) * COMPONENT_POINT_RADIUS; // 
-  vz = FX_FX16_TO_F32(vecToOuterPos.z) * COMPONENT_POINT_RADIUS; // 
+  radian = PI * (headIdx + tailIdx + 1) * 0.01f;
+  radian = 0.5f * PI - radian; // 位相を調整
+  vx = COMPONENT_POINT_RADIUS * cosf( radian );
+  vy = COMPONENT_POINT_RADIUS * sinf( radian );
+  vz = FX_FX16_TO_F32(graph->circlePoints[ tailIdx ].z);
   cx = FX_FX16_TO_F32(graph->centerPos.x); // 中心点の位置ベクトル
   cy = FX_FX16_TO_F32(graph->centerPos.y); //
   cz = FX_FX16_TO_F32(graph->centerPos.z); //
   dest->x = FX16_CONST(cx + vx);
   dest->y = FX16_CONST(cy + vy);
-  dest->z = FX16_CONST(cz + vz);
+  dest->z = FX16_CONST(cz + vz); 
 }
 
 //------------------------------------------------------------------------------
