@@ -1068,6 +1068,7 @@ static void handler_HimeriNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     param->volume = 10;
     param->pokeID = pokeID;
     param->wazaIdx = work[0];
+    param->fSurfacePP = TRUE;
   }
 }
 static void handler_HimeriNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
