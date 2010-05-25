@@ -70,6 +70,7 @@ typedef enum {
   SC_OP_SHOOTER_CHARGE,     ///< シューターエネルギーチャージ
   SC_OP_SET_FAKESRC,        ///< イリュージョン用参照ポケモン変更
   SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
+  SC_OP_CURESICK_DEPEND_POKE,///< ポケモン依存状態異常のクリア
   SC_OP_WAZADMG_REC,        ///< ワザダメージ記録
   SC_OP_TURN_CHECK,         ///< ターンチェック
   SC_ACT_WAZA_EFFECT,
@@ -363,6 +364,11 @@ static inline void SCQUE_PUT_OP_ClearConsumedItem( BTL_SERVER_CMD_QUE* que, u8 p
 {
   SCQUE_PUT_Common( que, SC_OP_CLEAR_CONSUMED_ITEM, pokeID );
 }
+static inline void SCQUE_PUT_OP_CureSickDependPoke( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 dependPokeID )
+{
+  SCQUE_PUT_Common( que, SC_OP_CURESICK_DEPEND_POKE, pokeID, dependPokeID );
+}
+
 static inline void SCQUE_OP_AddWazaDmgRec( BTL_SERVER_CMD_QUE* que, u8 defPokeID, u8 atkPokeID, BtlPokePos pokePos, PokeType wazaType, u16 wazaID, u16 damage )
 {
   SCQUE_PUT_Common( que, SC_OP_WAZADMG_REC, defPokeID, atkPokeID, pokePos, wazaType, wazaID, damage );

@@ -10057,7 +10057,8 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* po
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
   {
-    BPP_CureWazaSickDependPoke( bpp, dead_pokeID, wk );
+    BPP_CureWazaSickDependPoke( bpp, dead_pokeID );
+    SCQUE_PUT_OP_CureSickDependPoke( wk->que, BPP_GetID(bpp), dead_pokeID );
   }
   BTL_FIELD_RemoveDependPokeEffect( dead_pokeID );
   SCQUE_PUT_OP_DeleteDependPokeFieldEffect( wk->que, dead_pokeID );
@@ -11842,7 +11843,6 @@ static BOOL scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
   BOOL fFail = FALSE;
 
   targetCnt = BTL_POKESET_GetCount( targetRec );
-   TAYA_Printf("溜めターン対象ターゲット数=%d\n", targetCnt);
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );

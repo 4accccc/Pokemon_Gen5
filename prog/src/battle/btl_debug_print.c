@@ -401,6 +401,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_SHOOTER_CHARGE:  return "SC_OP_SHOOTER_CHARGE";     ///< シューターエネルギーチャージ
   case SC_OP_SET_FAKESRC:  return "SC_OP_SET_FAKESRC";        ///< イリュージョン用参照ポケモン変更
   case SC_OP_CLEAR_CONSUMED_ITEM:  return "SC_OP_CLEAR_CONSUMED_ITEM";///< アイテム消費情報のクリア
+  case SC_OP_CURESICK_DEPEND_POKE: return "SC_OP_CURESICK_DEPEND_POKE";
   case SC_ACT_WAZA_EFFECT:  return "SC_ACT_WAZA_EFFECT";
   case SC_ACT_TAMEWAZA_HIDE:  return "SC_ACT_TAMEWAZA_HIDE";     ///< 【アクション】そらをとぶなどで画面から消える・現れる設定
   case SC_ACT_WAZA_DMG:  return "SC_ACT_WAZA_DMG";          ///< 【アクション】[ AtClient, DefClient, wazaIdx, Affinity ]

@@ -2081,7 +2081,7 @@ void BPP_CureWazaSick( BTL_POKEPARAM* bpp, WazaSick sick )
  * @param   depend_pokeID
  */
 //=============================================================================================
-void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID, void* callbackArg )
+void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID )
 {
   u32 i;
   u8 fCure;

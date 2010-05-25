@@ -133,6 +133,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_44bit,            // SC_OP_SHOOTER_CHARGE
   SC_ARGFMT_44bit,            // SC_OP_SET_FAKESRC
   SC_ARGFMT_1byte,            // SC_OP_CLEAR_CONSUMED_ITEM
+  SC_ARGFMT_11byte,           // SC_OP_CURESICK_DEPEND_POKE
   SC_ARGFMT_5555bit_22byte,   // SC_OP_WAZADMG_REC
   SC_ARGFMT_1byte,            // SC_OP_TURN_CHECK
   SC_ARGFMT_5_5_14bit_1byte,  // SC_ACT_WAZA_EFFECT

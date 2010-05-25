@@ -402,6 +402,7 @@ static BOOL scProc_OP_MigawariDelete( BTL_CLIENT* wk, int* seq, const int* args 
 static BOOL scProc_OP_ShooterCharge( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_CureSickDependPoke( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_AddWazaDamage( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_TurnCheck( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_SetStatus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -4921,6 +4922,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
     { SC_OP_SET_FAKESRC,        scProc_OP_SetFakeSrc      },
     { SC_OP_CLEAR_CONSUMED_ITEM,scProc_OP_ClearConsumedItem },
+    { SC_OP_CURESICK_DEPEND_POKE,scProc_OP_CureSickDependPoke},
     { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage   },
     { SC_OP_TURN_CHECK,         scProc_OP_TurnCheck       },
     { SC_ACT_KILL,              scProc_ACT_Kill           },
@@ -7295,6 +7297,16 @@ static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* ar
   BPP_ClearConsumedItem( bpp );
   return TRUE;
 }
+/**
+ *  特定ポケ依存の状態異常を回復  args[0]:回復するポケID, [1]:依存対象ポケID
+ */
+static BOOL scProc_OP_CureSickDependPoke( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
+  BPP_CureWazaSickDependPoke( bpp, args[1] );
+  return TRUE;
+}
+
 /**
  *  ワザダメージ記録追加
  *  args [0]:defPokeID [1]:atkPokeID [2]:pokePos [3]:wazaType [4]:wazaID [5]:damage

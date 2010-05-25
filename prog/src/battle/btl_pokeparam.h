@@ -341,7 +341,7 @@ typedef void (*BtlSickTurnCheckFunc)( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SIC
 extern void BPP_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam );
 extern void BPP_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
-extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID, void* callbackArg );
+extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID );
 extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
 extern BOOL BPP_CheckNemuriWakeUp( BTL_POKEPARAM* bpp );
 extern BOOL BPP_CheckKonranWakeUp( BTL_POKEPARAM* bpp );
