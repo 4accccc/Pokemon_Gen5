@@ -395,7 +395,7 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 {
 	const POKEMON_PASO_PARAM *ppp = PP_GetPPPPointerConst( musPoke->pokePara );
 	int	mons_no = musPoke->mcssParam.monsno;
-	int	form_no = musPoke->mcssParam.form;
+	int	form_no = POKETOOL_CheckPokeFormNo( musPoke->mcssParam.monsno , musPoke->mcssParam.form );
 	int	sex		= musPoke->mcssParam.sex;
 	int	rare	= musPoke->mcssParam.rare;
 	BOOL egg = FALSE;
