@@ -311,7 +311,8 @@ ev_cgear_get:
 				//通信不可（TWL本体設定により無線通信がOFFになっている状態）
 				
 				//DS本体設定により通信できません
-				_SYSWIN_MSG( msg_c01r0102_cgear_02, POS_DOWN )
+				_SYSWIN_MSG( msg_c01r0102_cgear_06, POS_DOWN )
+				_MSGWIN_CLOSE()
 				
 				_CGEAR_ON_DEMO( FALSE )		//Ｃギア画面をパッシブで起動
 				
