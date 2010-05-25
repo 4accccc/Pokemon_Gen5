@@ -344,6 +344,7 @@ BTLV_MCSS_WORK  *BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapI
 
   bmw->mcss_sys = MCSS_Init( BTLV_MCSS_MAX, heapID );
   bmw->tcb_sys  = tcb_sys;
+  bmw->heapID   = heapID;
 
   bmw->mcss_pos_3vs3 = ( rule == BTL_RULE_TRIPLE ) ? 1 : 0;
   bmw->mcss_pos_rotate = ( rule == BTL_RULE_ROTATION ) ? 1 : 0;
@@ -1407,7 +1408,7 @@ int  BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
- * @brief 指定された立ち位置のMCSSのポケモンNoデータを取得
+ * @brief 指定された立ち位置のMCSSのフォルムNoデータを取得
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
  * @param[in] position  MCSSの立ち位置
