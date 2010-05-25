@@ -86,3 +86,54 @@ warning:
 echo_buildtype:
 	$(MAKE) -f $(MAKE_MAIN) echo_buildtype
 
+
+#----------------------------------------------------------------------------
+#	削除するとプログラムメモリに余裕が出来るOS_Printをリストアップ
+#----------------------------------------------------------------------------
+include make_prog_files
+check_printf:
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl SEARCH
+
+	@echo ■常駐SOUNDSRC > check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SOUNDSRC) >> check_printf_result.txt
+	@echo ■常駐SAVEDATASRC >> check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SAVEDATASRC) >> check_printf_result.txt
+	@echo ■常駐NETWORKSRC >> check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(NETWORKSRC) >> check_printf_result.txt
+	@echo ■常駐SRCS >> check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_EVENT_WIFICLUB>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_EVENT_WIFICLUB) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_EVENT_BATTLECALL>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_EVENT_BATTLECALL) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_NOTWIFI>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_NOTWIFI) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_SHINKA_DEMO>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_SHINKA_DEMO) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_INTRUDE_SYSTEM>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_INTRUDE_SYSTEM) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_DEV_WIRELESS>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_DEV_WIRELESS) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_DEV_IRC>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_DEV_IRC) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_FIELD_INTRUDE>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_FIELD_INTRUDE) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_FIELD_INIT>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_FIELD_INIT) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_FIELDMAP>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_FIELDMAP) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_FIELD_WEATHER_RAIN>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_FIELD_WEATHER_RAIN) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_BEACON_VIEW>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BEACON_VIEW) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_CGEAR>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_CGEAR) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_MUSICAL_SHOT>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_MUSICAL_SHOT) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_BATTLE_RECORDER_MUSICAL_LOOK>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_RECORDER_MUSICAL_LOOK) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_BATTLE_RECORDER_CORE>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_RECORDER_CORE) >> check_printf_result.txt
+	@echo ■SRCS_OVERLAY_BATTLE_RECORDER>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_RECORDER) >> check_printf_result.txt
+
