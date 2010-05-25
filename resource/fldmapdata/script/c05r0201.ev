@@ -30,6 +30,13 @@ _EVENT_DATA_END
 //ev_c05r0201_flag_change:
 //  _END
 
+//------------------------------注意--------------------------------//
+//																	//
+//	LOCALWORK1,LOCALWORK15を使用しました。同マップ内の使用を禁止します。	//
+//	LOCALWORK15⇒交換後マップ遷移前は対戦の処理に入らないように分岐// 
+//																	//
+//------------------------------------------------------------------//
+
 /**************************************************************/
 /*  C05R0201 OLDMAN1の会話用イベントスクリプト*/
 /**************************************************************/
@@ -89,8 +96,16 @@ EVENT_START   ev_c05r0201_boy2_01
 	//交換後話しかけ
 	IF FLAG_ON( FE_C05R0201_POKETRADE_01 ) THEN
 		
+		
+		//交換後・マップ遷移前
+		IF $LOCALWORK15 == 99 && FLAG_ON( SYS_FLAG_GAME_CLEAR ) THEN
+			
+			_BALLOONWIN_OBJMSG( msg_c05r0201_boy2_05 ,C05R0201_BOY2_01)
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+		
 		//交換後・クリア後・戦闘していない
-		IF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( FE_C05R0201_BTL_01 ) THEN
+		ELSIF FLAG_ON( SYS_FLAG_GAME_CLEAR ) && FLAG_OFF( FE_C05R0201_BTL_01 ) THEN
 			
 			//ポケモンのニックネームを格納
 			_SET_WORD_TRADEAFTER_POKENAME( SCR_TRPOKE_AFTER_SAVE_C05 , 0 )
@@ -214,6 +229,9 @@ EVENT_START   ev_c05r0201_boy2_01
 				
 						//交換完了
 						_FLAG_SET ( FE_C05R0201_POKETRADE_01 )
+						
+						//マップ遷移まで交換後セリフを表示
+						$LOCALWORK15 = 99
 								
 						//==================================//
 			
@@ -252,6 +270,9 @@ EVENT_START   ev_c05r0201_boy2_01
 				
 						//交換完了
 						_FLAG_SET ( FE_C05R0201_POKETRADE_01 )
+						
+						//マップ遷移まで交換後セリフを表示
+						$LOCALWORK15 = 99
 								
 						//==================================//
 			
