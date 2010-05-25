@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-17T20:42:50"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-25T16:11:03"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,14 +342,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1377" top="257" right="2082" bottom="885" maximized="no" rayout="Vertical2">
+	<dialog left="486" top="184" right="1191" bottom="812" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
+		<tag-palette left="793" top="142" right="1266" bottom="540" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -548,30 +548,24 @@ Ariizumi100506</comment>
 		<comment>参加している子
 マルチバトルの中止
 親が開催を中止したり、通信が途絶えたとき</comment>
-		<language name="JPN">つごうが　わるくなってしまった
-メンバーが　います[BE:01:ページ切り替え（クリア）]
-マルチバトルを　ちゅうし　します</language>
-		<language name="JPN_KANJI">都合が　悪くなってしまった
-メンバーが　います[BE:01:ページ切り替え（クリア）]
-マルチバトルを　中止します</language>
+		<language name="JPN">つごうが　わるくなりました
+マルチバトルを　ちゅうし　します[BE:02:ウェイト変更（単発）:60]</language>
+		<language name="JPN_KANJI">都合が　悪くなりました
+マルチバトルを　中止します[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_connect_09_01_2">
-		<language name="JPN">つごうが　わるくなってしまった
-メンバーが　います[BE:01:ページ切り替え（クリア）]
-ミュージカルを　ちゅうし　します</language>
-		<language name="JPN_KANJI">都合が　悪くなってしまった
-メンバーが　います[BE:01:ページ切り替え（クリア）]
-ミュージカルを　中止します</language>
+		<language name="JPN">つごうが　わるくなりました
+ミュージカルを　ちゅうし　します[BE:02:ウェイト変更（単発）:60]</language>
+		<language name="JPN_KANJI">都合が　悪くなりました
+ミュージカルを　中止します[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_connect_09_01_3">
-		<language name="JPN">つごうが　わるくなってしまった
-メンバーが　います[BE:01:ページ切り替え（クリア）]
-バトルサブウェイを　ちゅうし　します</language>
-		<language name="JPN_KANJI">都合が　悪くなってしまった
-メンバーが　います[BE:01:ページ切り替え（クリア）]
-バトルサブウェイを　中止します</language>
+		<language name="JPN">つごうが　わるくなりました
+バトルサブウェイを　ちゅうし　します[BE:02:ウェイト変更（単発）:60]</language>
+		<language name="JPN_KANJI">都合が　悪くなりました
+バトルサブウェイを　中止します[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_connect_search_000">
@@ -651,8 +645,8 @@ Ariizumi100506</comment>
 	<row id="msg_game_connect_timeout" back-color=",,,#ffff80,,,,,,,,,,,,,,">
 		<comment>子機：接続タイムアウト
 Ariizumi100517</comment>
-		<language name="JPN" width="240">つごうが　わるいみたい…▼</language>
-		<language name="JPN_KANJI">都合が　悪いみたい…▼</language>
+		<language name="JPN" width="240">つごうが　わるいみたい…[BE:02:ウェイト変更（単発）:60]</language>
+		<language name="JPN_KANJI">都合が　悪いみたい…[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<flowchart-group-list>
