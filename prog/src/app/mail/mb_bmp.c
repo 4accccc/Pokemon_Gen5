@@ -490,7 +490,6 @@ void MBBMP_MailButtonSet( MAILBOX_SYS_WORK * syswk, u32 frmID, u32 winID, u32 ma
 
 //  GF_BGL_BmpWinCgxOn( win );
   GFL_BMPWIN_TransVramCharacter( win ); // キャラクターのみ転送
-  GFL_BMPWIN_MakeScreen( win );  
 
   // フレームにBMPを貼り付け
   BGWINFRM_BmpWinOn( syswk->app->wfrm, frmID, win );
