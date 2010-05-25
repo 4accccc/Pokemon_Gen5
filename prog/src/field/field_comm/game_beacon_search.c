@@ -334,6 +334,9 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
             GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
           }
         }
+        else{
+          GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
+        }
       }
       else{
         GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
