@@ -1789,9 +1789,8 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		SEQ_NEXTPROC,
 	};
 
-  if( *p_seq == SEQ_CONNECT && COMPATIBLE_IRC_IsCancelConnext( p_wk->p_param->p_irc ) )
   { 
-    if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+    if( *p_seq < SEQ_MSG_CONNECT && APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
 		{
 			COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
 			SEQ_Change( p_wk, SEQFUNC_DisConnect );
@@ -1828,7 +1827,6 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_MSG_PRINT:
-    APPBAR_SetVisible( p_wk->p_appbar, FALSE );
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_004, 0, 0  );
 		*p_seq	= SEQ_SEND_STATUS;
 		break;
@@ -1841,11 +1839,12 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
         if( p_wk->p_param->p_gamesys )
         {
           //Žd—l‚ª‚È‚­‚È‚è‚Ü‚µ‚½
-//          GAMEDATA  *p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
-//          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
-//          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);;
-//          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_wk->p_param->p_you_status->my_status );
-            
+#if 0
+          GAMEDATA  *p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
+          SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );
+          WIFI_NEGOTIATION_SAVEDATA* pSV  = WIFI_NEGOTIATION_SV_GetSaveData(p_sv_ctrl);;
+          WIFI_NEGOTIATION_SV_SetFriend(pSV, (MYSTATUS*)p_wk->p_param->p_you_status->my_status );
+#endif       
           //’m‚è‡‚¢‚É“o˜^
           GAMEDATA  *p_data  = GAMESYSTEM_GetGameData( p_wk->p_param->p_gamesys );
           SAVE_CONTROL_WORK *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_data );

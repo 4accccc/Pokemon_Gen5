@@ -2799,12 +2799,21 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     SEQ_SENDRESULT,
     SEQ_SCENE,
     SEQ_TIMING,
-    SEQ_CALC,
     SEQ_MSG_PRINT_END,
+    SEQ_CALC,
     SEQ_END,
 
   };
   AURANET_RESULT_DATA result;
+
+
+  //戻るボタン
+  if( *p_seq < SEQ_MSG_PRINT_END && APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+  {
+    p_wk->p_param->result = IRCAURA_RESULT_RETURN;
+    SEQ_End( p_wk );
+    return;
+  }
 
   switch( *p_seq )
   {
@@ -2813,16 +2822,9 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     {
       *p_seq  = SEQ_MSG_PRINT;
     }
-    //戻るボタン
-    if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
-    {
-      p_wk->p_param->result = IRCAURA_RESULT_RETURN;
-      SEQ_End( p_wk );
-    }
     break;
 
   case SEQ_MSG_PRINT:
-    APPBAR_SetVisible( p_wk->p_appbar, FALSE );
     MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_004, 0, 0 );
     *p_seq  = SEQ_SENDRESULT;
     break;
