@@ -228,7 +228,8 @@ struct _BTLV_GAUGE_CLWK
   u32           damage_wait_flag  :1;
   u32           appear_flag       :1;     //GAUGE_Addされたかどうかフラグ（下画面のボタン記憶クリアに使用）
   u32           se_wait_flag      :1;
-  u32                             :3;
+  u32           gauge_draw_enable :1;
+  u32                             :2;
 
   u32           add_dec;
   u32           damage_dot;   //ダメージゲージエフェクト用の初期ドット値
@@ -257,9 +258,10 @@ struct _BTLV_GAUGE_WORK
   u32             vanish_flag             :1;
   u32             bgm_fade_flag           :1;
   u32             pinch_bgm_flag          :1;
-  u32             yure_angle              :16;
   u32             trainer_bgm_change_flag :1;
-  u32                                     :13;
+  u32             gauge_num_mode          :1;     //3vs3orローテーション時にHPゲージを数字表示にするかフラグ
+  u32             yure_angle              :16;
+  u32                                     :11;
 
   u32             now_bgm_no;
 
@@ -307,6 +309,7 @@ static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvM
 static  void  init_damage_dot( BTLV_GAUGE_CLWK* bgcl );
 static  void  bgm_pause( BOOL flag );
 static  u32   get_num_dotto( u32 prm_now, u32 prm_max, u8 dot_max );
+static  void  set_hp_gauge_draw( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, BOOL on_off );
 
 //============================================================================================
 /**
@@ -429,6 +432,20 @@ void  BTLV_GAUGE_Exit( BTLV_GAUGE_WORK *bgw )
 void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
 {
   int i;
+  int trg = GFL_UI_KEY_GetTrg();
+
+  if( trg & PAD_BUTTON_START )
+  { 
+    int pos;
+    bgw->gauge_num_mode ^= 1;
+    for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
+    { 
+      if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_draw_enable == TRUE ) && ( bgw->bgcl[ pos ].gauge_enable ) )
+      { 
+        set_hp_gauge_draw( bgw, &bgw->bgcl[ pos ], TRUE );
+      }
+    }
+  }
 
   for( i = 0 ; i < BTLV_GAUGE_CLWK_MAX ; i++ )
   {
@@ -917,6 +934,12 @@ void  BTLV_GAUGE_SetPos( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, GFL_CLACTPOS* of
     cl_pos.y = pos_y + BTLV_GAUGE_HPNUM_Y;
     GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
   }
+  else if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_type != BTLV_GAUGE_TYPE_2vs2 ) )
+  { 
+    cl_pos.x = pos_x + BTLV_GAUGE_HPNUM_X;
+    cl_pos.y = pos_y + BTLV_GAUGE_MINE_HP_Y;
+    GFL_CLACT_WK_SetPos( bgw->bgcl[ pos ].hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
+  }
 
   cl_pos.x = pos_x + hp_pos_ofs[ pos & 1 ].x;
   cl_pos.y = pos_y + hp_pos_ofs[ pos & 1 ].y;
@@ -1054,25 +1077,22 @@ void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off, int side )
 {
   BtlvMcssPos pos;
 
-  if( side == BTLEFF_GAUGE_ALL )
+  for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
   { 
-    GFL_CLACT_UNIT_SetDrawEnable( bgw->clunit, on_off );
-  }
-  else
-  { 
-    for( pos = 0 ;  pos < BTLV_GAUGE_CLWK_MAX ; pos++ )
-    { 
-      if( ( bgw->bgcl[ pos ].gauge_dir == side ) &&
+    bgw->bgcl[ pos ].gauge_draw_enable = on_off;
+    if( ( ( side == BTLEFF_GAUGE_ALL ) || ( bgw->bgcl[ pos ].gauge_dir == side ) ) &&
           ( bgw->bgcl[ pos ].gauge_enable ) )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].base_clwk, on_off );
+      set_hp_gauge_draw( bgw, &bgw->bgcl[ pos ], on_off );
+      if( bgw->bgcl[ pos ].exp_clwk )
       { 
-        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].base_clwk, on_off );
-        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hpnum_clwk, on_off );
-        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hp_clwk, on_off );
-        if( bgw->bgcl[ pos ].exp_clwk )
-        { 
-          GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].exp_clwk, on_off );
-        }
-        if( bgw->bgcl[ pos ].status_clwk )
+        GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].exp_clwk, on_off );
+      }
+      if( bgw->bgcl[ pos ].status_clwk )
+      { 
+        u16 sick_anm = GFL_CLACT_WK_GetAnmSeq( bgw->bgcl[ pos ].status_clwk );
+        if( sick_anm != APP_COMMON_ST_ICON_POKERUS )
         { 
           GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, on_off );
         }
@@ -2013,6 +2033,7 @@ void  BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos
   if( sick == POKESICK_NULL )
   {
     GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].status_clwk, FALSE );
+    GFL_CLACT_WK_SetAnmSeq( bgw->bgcl[ pos ].status_clwk, 0 );
   }
   else
   {
@@ -2237,7 +2258,7 @@ static  void  TCB_BTLV_GAUGE_Move( GFL_TCB* tcb, void* work )
   cl_pos.x += move_value;
   GFL_CLACT_WK_SetPos( bgcl->status_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
 
-  if( ( bgcl->gauge_dir == 0 ) && ( bgcl->gauge_type == BTLV_GAUGE_TYPE_1vs1 ) )
+  if( bgcl->gauge_dir == 0 )
   {
     GFL_CLACT_WK_GetPos( bgcl->hpnum_clwk, &cl_pos, CLSYS_DEFREND_MAIN );
     cl_pos.x += move_value;
@@ -2360,4 +2381,24 @@ static  u32 get_num_dotto( u32 prm_now, u32 prm_max, u8 dot_max )
 		put_dot = 1;
 	}
 	return put_dot;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		HPゲージの表示ON/OFF制御
+ */
+//--------------------------------------------------------------------------------------------
+static  void  set_hp_gauge_draw( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, BOOL on_off )
+{ 
+  if( ( ( bgcl->gauge_type == BTLV_GAUGE_TYPE_3vs3 ) || ( bgcl->gauge_type == BTLV_GAUGE_TYPE_ROTATE ) ) &&
+        ( on_off == TRUE ) )
+  { 
+    GFL_CLACT_WK_SetDrawEnable( bgcl->hpnum_clwk, bgw->gauge_num_mode );
+    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_clwk, !bgw->gauge_num_mode );
+  }
+  else
+  { 
+    GFL_CLACT_WK_SetDrawEnable( bgcl->hpnum_clwk, on_off );
+    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_clwk, on_off );
+  }
 }
