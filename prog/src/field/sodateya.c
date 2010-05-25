@@ -62,6 +62,7 @@ struct _SODATEYA {
 static u32 CalcExpAdd( u32 exp1, u32 exp2 );
 static void GrowUpPokemon( POKEMON_PARAM* poke, u32 exp );
 static void LearnNewWaza( POKEMON_PARAM* poke, u32 wazano );
+static BOOL CheckWazaHave( const POKEMON_PARAM* poke, u32 wazano );
 static void SortSodateyaPokemon( SODATEYA_WORK* work );
 static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
 static u32 CalcLoveLv_normal( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
@@ -526,6 +527,9 @@ static void LearnNewWaza( POKEMON_PARAM* poke, u32 wazano )
     ID_PARA_waza4,
   };
 
+  if( wazano == WAZANO_NULL ) { return; } // 技番号が不正
+  if( CheckWazaHave(poke, wazano) ) { return; } // すでに覚えている
+
   // 空き要素に追加
   for( pos=0; pos < PTL_WAZA_MAX; pos++ )
   {
@@ -539,6 +543,38 @@ static void LearnNewWaza( POKEMON_PARAM* poke, u32 wazano )
 
   // 空きがなければプッシュする
   PP_SetWazaPush( poke, wazano );
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 指定した技を持っているかどうかをチェックする
+ *
+ * @param poke   チェックするポケモン
+ * @param wazano チェックする技
+ *
+ * @return 指定した技を持っている場合 TRUE
+ *         そうでなければ FALSE
+ */
+//---------------------------------------------------------------------------------------- 
+static BOOL CheckWazaHave( const POKEMON_PARAM* poke, u32 wazano )
+{
+  int i;
+  u32 id_para[ PTL_WAZA_MAX ] = 
+  { 
+    ID_PARA_waza1, 
+    ID_PARA_waza2, 
+    ID_PARA_waza3, 
+    ID_PARA_waza4 
+  };
+
+  for( i=0; i<PTL_WAZA_MAX; i++ )
+  {
+    if( PP_Get( poke, id_para[i], NULL ) == wazano ) {
+      return TRUE;
+    }
+  }
+
+  return FALSE;
 }
 
 //---------------------------------------------------------------------------------------- 
