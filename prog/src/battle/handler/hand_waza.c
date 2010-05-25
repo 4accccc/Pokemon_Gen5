@@ -3357,7 +3357,7 @@ static void handler_YadorigiNoTane_Param( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static const BtlEventHandlerTable*  ADD_NekoNiKoban( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZADMG_SIDE_AFTER, handler_NekoNiKoban },    // ダメージ反応ハンドラ
+    { BTL_EVENT_WAZA_DMG_DETERMINE, handler_NekoNiKoban },    // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
