@@ -355,8 +355,10 @@ void MMDL_MoveCommActor_Move( MMDL *fmmdl )
   if( work->watch_vanish != NULL ){
     if( (*work->watch_vanish) == TRUE ){
       MMDL_SetStatusBitVanish( fmmdl, TRUE );
+      MMDL_SetStatusBitFellowHit( fmmdl, FALSE ); //100525 “–‚è”»’è‚à‘€ì
     }else{
       MMDL_SetStatusBitVanish( fmmdl, FALSE );
+      MMDL_SetStatusBitFellowHit( fmmdl, TRUE ); //100525 “–‚è”»’è‚à‘€ì
     }
   }
 }
