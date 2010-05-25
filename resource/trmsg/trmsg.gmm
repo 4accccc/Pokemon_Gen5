@@ -2084,10 +2084,10 @@
 	<row id="TRID_RANGERM_01_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">まいにち　ヤグルマのもりを
 パトロールしている　この　オレ！▽
-ここので　しょうぶは　おてのもの！▼</language>
+ここでの　しょうぶは　おてのもの！▼</language>
 		<language name="JPN_KANJI" width="216">毎日　ヤグルマの森を
 パトロールしている　この　オレ！▽
-ここので　勝負は　おてのもの！▼</language>
+ここでの　勝負は　おてのもの！▼</language>
 	</row>
 
 	<row id="TRID_RANGERM_01_TRMSG_FIGHT_LOSE">
