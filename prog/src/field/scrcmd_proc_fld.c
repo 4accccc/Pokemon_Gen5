@@ -113,6 +113,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   GAMESYS_WORK*        gsys          = SCRCMD_WORK_GetGameSysWork( work );
   GAMEDATA*            gdata         = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK*   save          = GAMEDATA_GetSaveControlWork( gdata );
+  ZUKAN_SAVEDATA*      zukan_save    = GAMEDATA_GetZukanSave( gdata );
   FIELDMAP_WORK*       fieldmap      = GAMESYSTEM_GetFieldMapWork( gsys );
   u16*                 ret_wk        = SCRCMD_GetVMWork( core, work );       // コマンド第一引数
   u16                  box_mode      = SCRCMD_GetVMWorkValue( core, work );  // コマンド第二引数
@@ -128,7 +129,7 @@ VMCMD_RESULT EvCmdCallBoxProc( VMHANDLE *core, void *wk )
   box_param->myitem    = GAMEDATA_GetMyItem( gdata );
   box_param->mystatus  = GAMEDATA_GetMyStatus( gdata );
   box_param->cfg       = SaveData_GetConfig( save );
-  box_param->zknMode   = 0;
+  box_param->zknMode   = ZUKANSAVE_GetZenkokuZukanFlag( zukan_save );
   box_param->callMode  = box_mode;
 	box_param->bbRockFlg = FALSE;
   
