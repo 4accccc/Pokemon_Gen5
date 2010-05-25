@@ -604,7 +604,6 @@ end
         if str == trainer[ k ][ TR::STR_HASH ]
           #_（アンダーバー）が2個ある場合は、LABELを（）付きで連結
           if trainer[ k ][ TR::TRTYPE ].scan("_").size == 2
-            p trainer[ k ][ TR::TRTYPE ]
             trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "（%s）" % [ trainer[ k ][ TR::NAME ].upcase ]
           elsif trainer[ k ][ TR::TRTYPE ].index(/M[0-9]/) != nil
             trainer[ k ][ TR::STR_HASH ] = trainer[ k ][ TR::STR_HASH ] + "♂"
@@ -631,6 +630,7 @@ end
   }
 
   no = 2
+  idx = 0
   trfgra = []
   trainer.size.times { |i|
     fp_trgra.printf( "trwb_%s,%s\n", trainer[ i ][ TR::LABEL ], trainer[ i ][ TR::GENDER ] )
@@ -662,12 +662,40 @@ end
     fp_hash.printf("\t\t\"%s\"=>%d,\n", trainer[ i ][ TR::STR_HASH ], no )
     no += 1
 	}
-	fp_trtype.printf( "#define	TRTYPE_MAX	( %d )\n", no )
+	fp_trtype.printf( "#define	TRTYPE_HERO_S	    ( %d )\n", no )
+	fp_trtype.printf( "#define	TRTYPE_HEROINE_S	( %d )\n", no + 1)
+	fp_trtype.printf( "#define	TRTYPE_MAX	( %d )\n", no + 2 )
+
+	fp_trtypegra.printf( "\t%d, //男主人公（シューター）\n", idx + 1 )
+	fp_trtypegra.printf( "\t%d,	//女主人公（シューター）\n", idx + 2 )
+
+  gmm_type.make_row_kanji( "MSG_TRTYPE_HERO_S", "ポケモントレーナー", "ポケモントレーナー" )
+  gmm_type.make_row_kanji( "MSG_TRTYPE_HEROINE_S", "ポケモントレーナー", "ポケモントレーナー" )
+
+	fp_trtypesex.print( "\tPTL_SEX_MALE,		//男主人公（シューター）\n" )
+	fp_trtypesex.print( "\tPTL_SEX_FEMALE,	//女主人公（シューター）\n" )
 
   #gmm後始末
   gmm_name.close_gmm
   gmm_type.close_gmm
 
+  #シューター用自機グラフィック
+  fp_trfgra.print "\"trwb_hero_s.NCGR\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NCBR\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NCER\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NANR\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NMCR\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NMAR\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NCEC\"\n"
+  fp_trfgra.print "\"trwb_hero_s.NCLR\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NCGR\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NCBR\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NCER\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NANR\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NMCR\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NMAR\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NCEC\"\n"
+  fp_trfgra.print "\"trwb_heroine_s.NCLR\"\n"
 	fp_trgra.close
 	fp_trfgra.close
 	fp_trtype.close
