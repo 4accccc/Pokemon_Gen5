@@ -901,6 +901,7 @@ EVENT_START   ev_pos_c02_stone_01
         _OBJ_ANIME( MMDL_ID_PLAYER,anm_c02_guide_x648 )
         _OBJ_ANIME_WAIT()
     DEFAULT
+    //この処理に入ることはありません
     ENDSWITCH
 	
 	_CAMERA_START()		//カメラ操作開始
@@ -917,6 +918,7 @@ EVENT_START   ev_pos_c02_stone_01
 	
     //c02ジムリーダーが博物館から出てくる
 	_SE_PLAY(SEQ_SE_KAIDAN)
+	//ジムリーダーの初期位置は博物館の配置モデルの中
 	_OBJ_POS_CHANGE(C02_LEADER02_02,644,0,581,DIR_DOWN)
 	_OBJ_ANIME( C02_LEADER02_02, anm_leader2_kuru_01 )
 	_SE_WAIT()
