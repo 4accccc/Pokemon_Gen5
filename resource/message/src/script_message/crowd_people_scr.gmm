@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T16:35:42"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T22:33:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -357,10 +357,10 @@
 
 	<row id="CROWD_MSG01">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">みんな　あるくのが
-うまいでしょ！　はやいでしょ！</language>
-		<language name="JPN_KANJI" width="256">みんな　人を避けて　歩くのが
-うまいでしょ！　スピーディーでしょ！</language>
+		<language name="JPN" width="256">ゆっくり　ゆっくり　いきるけど
+あるく　スピードは　はやいんだ</language>
+		<language name="JPN_KANJI" width="256">ゆっくり　ゆっくり　生きるけど
+あるく　スピードは　速いんだ</language>
 	</row>
 
 	<row id="CROWD_MSG02">
@@ -395,12 +395,10 @@
 
 	<row id="CROWD_MSG06">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">……どこで　さぼろうかな▼
-いやいや　さぼるじゃないな
-ちょっと　きゅうけい　だね</language>
-		<language name="JPN_KANJI" width="256">……どこで　さぼろうかな▼
-いやいや　さぼるじゃないな
-ちょっと　休憩だね</language>
+		<language name="JPN" width="256">さぼるときも　ぜんりょく！
+いつだって　ほんき　なのよ</language>
+		<language name="JPN_KANJI" width="256">さぼるときも　全力！
+いつだって　本気なのよ</language>
 	</row>
 
 	<row id="CROWD_MSG07">
@@ -437,16 +435,18 @@
 
 	<row id="CROWD_MSG11">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">がんばれ！　おれ！！</language>
-		<language name="JPN_KANJI" width="256">がんばれ！　おれ！！</language>
+		<language name="JPN" width="256">がんばれ！　おれ！！
+がんばれ！　きみ！！</language>
+		<language name="JPN_KANJI" width="256">がんばれ！　おれ！！
+がんばれ！　きみ！！</language>
 	</row>
 
 	<row id="CROWD_MSG12">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">こんど　やすんで
-ベースボールかんせん　したいな</language>
-		<language name="JPN_KANJI" width="256">今度　休んで
-ベースボール観戦　したいな</language>
+		<language name="JPN" width="256">こんどの　やすみは
+ベースボールかんせん　だな</language>
+		<language name="JPN_KANJI" width="256">今度の　休日は
+ベースボール観戦だな</language>
 	</row>
 
 	<row id="CROWD_MSG13">
@@ -463,10 +463,10 @@
 
 	<row id="CROWD_MSG14">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">うーむ……　きみの　ポケモン
-ドレスアップを　すると　いいかも</language>
-		<language name="JPN_KANJI" width="256">うーむ……　きみの　ポケモン
-ドレスアップを　すると　いいかも</language>
+		<language name="JPN" width="256">うーむ……　ユーの　ポケモン
+ドレスアップを　すると　いいかもね</language>
+		<language name="JPN_KANJI" width="256">うーむ……　ユーの　ポケモン
+ドレスアップを　すると　いいかもね</language>
 	</row>
 
 	<row id="CROWD_MSG15">
@@ -501,7 +501,7 @@
 		<comment>群集用</comment>
 		<language name="JPN" width="256">いろんな　くにの　ひとびとが
 この　ヒウンに　あつまってるんだ</language>
-		<language name="JPN_KANJI" width="256">いろんな　国の　人々が
+		<language name="JPN_KANJI" width="256">各国の　人々が
 この　ヒウンに　集ってるんだ</language>
 	</row>
 
