@@ -2652,7 +2652,8 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
   if( work->is_poke_front )
   {
     MCSS_SetVanishFlag( work->poke_mcss_wk[POKE_CURR_F].poke_wk );
-    if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    //if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    if( work->poke_mcss_wk[POKE_COMP_F].poke_wk )
     {
       MCSS_SetVanishFlag( work->poke_mcss_wk[POKE_COMP_F].poke_wk );
     }
@@ -2662,7 +2663,8 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
   else
   {
     MCSS_SetVanishFlag( work->poke_mcss_wk[POKE_CURR_B].poke_wk );
-    if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    //if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    if( work->poke_mcss_wk[POKE_COMP_B].poke_wk )
     {
       MCSS_SetVanishFlag( work->poke_mcss_wk[POKE_COMP_B].poke_wk );
     }
@@ -2676,7 +2678,8 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
   if( work->is_poke_front )
   {
     MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_CURR_F].poke_wk );
-    if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    //if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    if( work->poke_mcss_wk[POKE_COMP_F].poke_wk )
     {
       MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_COMP_F].poke_wk );
     }
@@ -2684,7 +2687,8 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
   else
   {
     MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_CURR_B].poke_wk );
-    if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    //if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
+    if( work->poke_mcss_wk[POKE_COMP_B].poke_wk )
     {
       MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_COMP_B].poke_wk );
     }
@@ -3143,6 +3147,7 @@ static void Zukan_Detail_Form_PokeInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM* par
     POKE_INDEX  poke_opposite;   // 今の向きではないほうの向き
     int         dir;             // 今の向き
     POKE_INDEX  poke_relative;   // 今の向きの位置の元
+    VecFx32 p;
     if( work->is_poke_front )
     {
       poke_present  = poke_f;
@@ -3163,7 +3168,6 @@ static void Zukan_Detail_Form_PokeInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM* par
                       personal_rnd );
     work->poke_mcss_wk[poke_present].diff_no = diff_no;
     {
-      VecFx32 p;
       if( pos == POKE_COMP_RPOS )
       {
         PokeGetCompareRelativePosition( work->poke_mcss_wk[poke_relative].poke_wk, &p );
@@ -3174,7 +3178,13 @@ static void Zukan_Detail_Form_PokeInitFromDiffInfo( ZUKAN_DETAIL_FORM_PARAM* par
       }
       MCSS_SetPosition( work->poke_mcss_wk[poke_present].poke_wk, &p );
     }
-    if( work->poke_mcss_wk[poke_opposite].poke_wk ) MCSS_SetVanishFlag( work->poke_mcss_wk[poke_opposite].poke_wk );
+    if( work->poke_mcss_wk[poke_opposite].poke_wk )
+    {
+      {
+        MCSS_SetPosition( work->poke_mcss_wk[poke_opposite].poke_wk, &p );
+      }
+      MCSS_SetVanishFlag( work->poke_mcss_wk[poke_opposite].poke_wk );
+    }
   }
 #endif
 }
@@ -3418,6 +3428,16 @@ static void Zukan_Detail_Form_MakePokeWhenFlipFrontBack( ZUKAN_DETAIL_FORM_PARAM
         PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );  // POKE_COMP_RPOSなので 
         MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
       }
+    }
+  }
+  else if( work->state == STATE_TOP )
+  {
+    if(    ( ( (work->is_poke_front)) && ( (work->poke_mcss_wk[POKE_COMP_F].poke_wk)) )
+        || ( (!(work->is_poke_front)) && ( (work->poke_mcss_wk[POKE_COMP_B].poke_wk)) ) )
+    { 
+      // 押し出し用関数を利用して位置設定
+      work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
+      Zukan_Detail_Form_OshidashiSetPosCompareForm( param, work, cmn );
     }
   }
 }
