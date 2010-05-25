@@ -389,8 +389,19 @@ FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( const FIELD_SOU
   // 現在積まれているBGMの数を取得
   pushCount = fieldSound->pushCount;
 
-  // キューに登録されているPOPリクエストの数だけ減らす
+  // キューに登録されている PUSH, POP リクエストの分を考慮
+  pushCount += GetRequestCountInQueue( fieldSound, FSND_BGM_REQUEST_PUSH );
   pushCount -= GetRequestCountInQueue( fieldSound, FSND_BGM_REQUEST_POP );
+
+  // PUSH リクエスト処理中
+  if( fieldSound->request == FSND_BGM_REQUEST_PUSH ) {
+    // PUSH 処理が未実行
+    if( (fieldSound->state == FSND_STATE_PUSH) ||
+        (fieldSound->state == FSND_STATE_CHANGE_PUSH_out) ||
+        (fieldSound->state == FSND_STATE_CHANGE_PUSH_load) ) {
+      pushCount++;
+    }
+  }
 
   // POP リクエスト処理中
   if( fieldSound->request == FSND_BGM_REQUEST_POP ) {
