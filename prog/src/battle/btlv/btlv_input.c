@@ -684,6 +684,7 @@ typedef struct
   BTLV_INPUT_WORK*  biw;
   int               seq_no;
   int               pltt;
+  BOOL              waruagaki;
 }TCB_BUTTON_REACTION;
 
 typedef struct
@@ -786,6 +787,7 @@ static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw );
 static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos );
 static  void  set_cursor_pos( BTLV_INPUT_WORK* biw );
 
+static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayDecide( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayCancel( BTLV_INPUT_WORK* biw );
@@ -1848,13 +1850,14 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     }
   }
 
-  hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
   if( biw->waruagaki_flag == TRUE )
   {
+    hit = GFL_UI_TP_HitTrg( RotateTouchDataWaruagaki.hit_tbl );
     hit = BTLV_INPUT_CheckKey( biw, &RotateTouchDataWaruagaki, RotateKeyDataWaruagaki[ biw->rotate_scr ], NULL, hit );
   }
   else
   {
+    hit = GFL_UI_TP_HitTrg( RotateTouchData.hit_tbl );
     hit = BTLV_INPUT_CheckKey( biw, &RotateTouchData, RotateKeyData[ biw->rotate_scr ], RotateMoveTbl, hit );
   }
   if( hit != GFL_UI_TP_HIT_NONE )
@@ -1974,7 +1977,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -2016,7 +2019,7 @@ static  void  TCB_TransformStandby2Waza( GFL_TCB* tcb, void* work )
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -2319,7 +2322,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -2369,7 +2372,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1g_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -2416,7 +2419,7 @@ static  void  TCB_TransformStandby2Rotate( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -2478,7 +2481,7 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1f_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -2522,7 +2525,7 @@ static  void  TCB_TransformStandby2PDC( GFL_TCB* tcb, void* work )
                                      GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1d_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    PMSND_PlaySE( SEQ_SE_OPEN2 );
+    SePlayOpen( ttw->biw );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
@@ -4705,13 +4708,13 @@ static  int  BTLV_INPUT_SetButtonReaction( BTLV_INPUT_WORK* biw, int hit, int pl
   }
 
   {
-    TCB_BUTTON_REACTION*  tbr = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BUTTON_REACTION ) );
-
+    TCB_BUTTON_REACTION*  tbr = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_BUTTON_REACTION ) ); 
     biw->button_reaction = ( ( pltt & 0x10000 ) == 0 );
 
-    tbr->biw    = biw;
-    tbr->seq_no = 0;
-    tbr->pltt   = pltt & 0xffff;
+    tbr->biw        = biw;
+    tbr->seq_no     = 0;
+    tbr->pltt       = pltt & 0xffff;
+    tbr->waruagaki  = ( ( biw->waruagaki_flag == TRUE ) && ( tbr->pltt == 0 ) );
 
     BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_ButtonReaction, tbr, 0 ), TCB_ButtonReaction_CB );
   }
@@ -4729,13 +4732,27 @@ static  void  TCB_ButtonReaction( GFL_TCB* tcb, void* work )
 
   switch( tbr->seq_no ){
   case 0:
-    PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 0, 8, 0x7fff, tbr->biw->tcbsys );
+    if( tbr->waruagaki == TRUE )
+    { 
+      PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_OBJ, 0x0002, 0, 0, 8, 0x7fff, tbr->biw->tcbsys );
+    }
+    else
+    { 
+      PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 0, 8, 0x7fff, tbr->biw->tcbsys );
+    }
     tbr->seq_no++;
     break;
   case 1:
     if( !PaletteFadeCheck( tbr->biw->pfd ) )
     {
-      PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 8, 0, 0x7fff, tbr->biw->tcbsys );
+      if( tbr->waruagaki == TRUE )
+      { 
+        PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_OBJ, 0x0002, 0, 8, 0, 0x7fff, tbr->biw->tcbsys );
+      }
+      else
+      { 
+        PaletteFadeReq( tbr->biw->pfd, PF_BIT_SUB_BG, tbr->pltt, 0, 8, 0, 0x7fff, tbr->biw->tcbsys );
+      }
       tbr->seq_no++;
     }
     break;
@@ -4997,6 +5014,17 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
   default:
     biw->cursor_pos = 0;
     break;
+  }
+}
+
+//=============================================================================================
+//  ƒI[ƒvƒ“‰¹Ä¶
+//=============================================================================================
+static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw )
+{
+  if( ( biw->comp == BTL_COMPETITOR_COMM ) && ( biw->scr_type != BTLV_INPUT_SCRTYPE_BATTLE_RECORDER ) ) return;
+  {
+    PMSND_PlaySE( SEQ_SE_OPEN2 );
   }
 }
 
