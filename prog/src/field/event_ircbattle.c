@@ -616,7 +616,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     {
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
       NET_PRINT("相性チェック画面おわり\n");
-      (*seq)=_CALL_IRCBATTLE_MENU;
+      //(*seq)=_CALL_IRCBATTLE_MENU;
+      (*seq)=_WAIT_NET_END;
     }
     break;
   default:
