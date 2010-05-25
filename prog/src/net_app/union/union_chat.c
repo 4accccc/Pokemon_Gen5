@@ -104,17 +104,18 @@ UNION_CHAT_DATA * UnionChat_GetSpaceBuffer(UNION_CHAT_LOG *log)
 {
   UNION_CHAT_DATA *buffer;
   
+  if(log->chat_log_count > 0 && log->end_no == log->start_no){
+    log->start_no++;
+    if(log->start_no >= UNION_CHAT_LOG_MAX){
+      log->start_no = 0;
+    }
+  }
+
   buffer = &log->chat[log->end_no];
   
   log->end_no++;
   if(log->end_no >= UNION_CHAT_LOG_MAX){
     log->end_no = 0;
-  }
-  if(log->end_no == log->start_no){
-    log->start_no++;
-    if(log->start_no >= UNION_CHAT_LOG_MAX){
-      log->start_no = 0;
-    }
   }
   
   return buffer;
@@ -135,10 +136,11 @@ UNION_CHAT_DATA * UnionChat_GetReadBuffer(UNION_CHAT_LOG *log, u32 log_no)
   u32 buffer_pos;
   static const u8 invalid_mac[] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
   
-  buffer_pos = (log->start_no + log_no) % UNION_CHAT_LOG_MAX;
+  buffer_pos = log_no % UNION_CHAT_LOG_MAX;  //(log->start_no + log_no) % UNION_CHAT_LOG_MAX;
   if(GFL_STD_MemComp(log->chat[buffer_pos].mac_address, invalid_mac, 6) == 0){
     return NULL;
   }
+  OS_TPrintf("aaa buffer_pos = %d, start=%d, log_no=%d\n", buffer_pos, log->start_no, log_no);
   return &log->chat[buffer_pos];
 }
 

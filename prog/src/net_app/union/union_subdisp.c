@@ -1270,6 +1270,9 @@ static void _UniSub_ScrollBar_ViewPosUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT
   
   page_y = _UniSub_ScrollBar_GetPageY(log, _UniSub_ScrollBar_GetPageMax(log));
 
+  if((s32)log->chat_log_count - log->chat_view_no > UNION_CHAT_LOG_MAX - UNION_CHAT_VIEW_LOG_NUM){
+    log->chat_view_no = log->chat_log_count - (UNION_CHAT_LOG_MAX - UNION_CHAT_VIEW_LOG_NUM);
+  }
   log_offset = log->chat_log_count - log->chat_view_no;
   bar.y = ACT_SCROLL_BAR_Y_BOTTOM - ((page_y * log_offset) >> 8);
   
