@@ -312,6 +312,7 @@ void BattlePokeList_TaskAdd( BPLIST_DATA * dat )
   wk->pfd = dat->pfd;
   wk->seq = SEQ_BPL_INIT;
   wk->init_poke = dat->sel_poke;
+	wk->initFlag  = FALSE;
 
 //  wk->multi_pos = BattleWorkClientTypeGet( dat->bw, dat->client_no );
 //  wk->multi_pos = 0;
@@ -360,6 +361,7 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
   BPLIST_WORK * wk = (BPLIST_WORK *)work;
 
 	if( wk->dat->comm_err_flg == TRUE ){
+    SetSelPosCancel( wk );
 		wk->seq = SEQ_BPL_END;
 	}
 
@@ -391,8 +393,6 @@ static void BattlePokeList_Main( GFL_TCB* tcb, void * work )
 //--------------------------------------------------------------------------------------------
 static int BPL_SeqInit( BPLIST_WORK * wk )
 {
-//  u8  ret;
-
   G2S_BlendNone();
 	GXS_SetMasterBrightness( -16 );
 
@@ -404,15 +404,12 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
 	// 技忘れ
   if( wk->dat->mode == BPL_MODE_WAZASET ){
     wk->page = BPLIST_PAGE_WAZASET_BS;
-//    ret = SEQ_BPL_WAZADEL_SEL;
 	// 技説明
 	}else if( wk->dat->mode == BPL_MODE_WAZAINFO ){
     wk->page = BPLIST_PAGE_SKILL;
-//    ret = SEQ_BPL_WAZAINFOMODE_MAIN;
 	// その他
   }else{
     wk->page = BPLIST_PAGE_SELECT;
-//    ret = SEQ_BPL_SELECT;
   }
 
   wk->cpwk = BAPPTOOL_CreateCursor( wk->dat->heap );
@@ -467,7 +464,8 @@ static int BPL_SeqInit( BPLIST_WORK * wk )
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, wk->dat->tcb_sys );
 
-//  return ret;
+	wk->initFlag = TRUE;
+
 	return SEQ_BPL_INIT_PRINT_WAIT;
 }
 
@@ -1508,34 +1506,50 @@ static int BPL_SeqEndWait( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static BOOL BPL_SeqEnd( GFL_TCB * tcb, BPLIST_WORK * wk )
 {
-  if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-    return FALSE;
-  }
+	if( wk->initFlag == TRUE ){
+		if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+			// 通信エラー時は強制クリア
+			if( wk->dat->comm_err_flg == 1 ){
+				PRINTSYS_QUE_Clear( wk->que );
+			}else{
+				return FALSE;
+			}
+	  }
+		if( WIPE_SYS_EndCheck() == FALSE ){
+			// 通信エラー時は強制終了
+			if( wk->dat->comm_err_flg == 1 ){
+				WIPE_SYS_ExeEnd();
+			}else{
+				return FALSE;
+			}
+		}
 
-	if( wk->stream != NULL ){
-		PRINTSYS_PrintStreamDelete( wk->stream );
-	}
-	if( wk->chg_wfrm != NULL ){
-		BGWINFRM_Exit( wk->chg_wfrm );
+		if( wk->stream != NULL ){
+			PRINTSYS_PrintStreamDelete( wk->stream );
+		}
+		if( wk->chg_wfrm != NULL ){
+			BGWINFRM_Exit( wk->chg_wfrm );
+		}
+
+	  BPL_MsgManExit( wk );
+	  BattlePokeList_ObjFree( wk );
+	  BattlePokeList_BmpFreeAll( wk );
+	  BPL_BgExit();
+
+	  GFL_TCBL_Exit( wk->tcbl );
+
+	  BPLISTUI_Exit( wk );
+
+	  BAPPTOOL_FreeCursor( wk->cpwk );
+
+	  if( wk->cursor_flg == TRUE ){
+	    *wk->dat->cursor_flg = 1;
+	  }else{
+	    *wk->dat->cursor_flg = 0;
+	  }
 	}
 
   wk->dat->end_flg = 1;
-  if( wk->cursor_flg == TRUE ){
-    *wk->dat->cursor_flg = 1;
-  }else{
-    *wk->dat->cursor_flg = 0;
-  }
-
-  BPL_MsgManExit( wk );
-  BattlePokeList_ObjFree( wk );
-  BattlePokeList_BmpFreeAll( wk );
-  BPL_BgExit();
-
-  GFL_TCBL_Exit( wk->tcbl );
-
-  BPLISTUI_Exit( wk );
-
-  BAPPTOOL_FreeCursor( wk->cpwk );
 
   GFL_TCB_DeleteTask( tcb );
   GFL_HEAP_FreeMemory( wk );

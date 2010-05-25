@@ -429,6 +429,8 @@ typedef struct {
 
 	const u8 * putWin;
 
+	BOOL	initFlag;		// 初期化したか（初期化前に外部から終了要求されると止まるので）
+
 }BPLIST_WORK;
 
 typedef int (*pBPlistFunc)(BPLIST_WORK*);

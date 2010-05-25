@@ -178,6 +178,7 @@ void BattleBag_TaskAdd( BBAG_DATA * dat )
 
   wk->dat = dat;
   wk->pfd = BTLV_EFFECT_GetPfd();
+	wk->initFlag = FALSE;
 
 	// シューター
   if( wk->dat->mode == BBAG_MODE_SHOOTER ){
@@ -224,6 +225,8 @@ static void BattleBag_Main( GFL_TCB * tcb, void * work )
   BBAG_WORK * wk = (BBAG_WORK *)work;
 
 	if( wk->dat->comm_err_flg == TRUE ){
+		wk->dat->ret_item = ITEM_DUMMY_DATA;
+		wk->dat->ret_cost = 0;
 		wk->seq = SEQ_BBAG_END;
 	}
 
@@ -313,6 +316,9 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 	if( wk->dat->mode == BBAG_MODE_PDC ){
 		BBAG_PageChgBgScroll( wk, wk->page );
 	}
+
+	wk->initFlag = TRUE;
+
 	return SEQ_BBAG_INIT_PRINT_WAIT;
 }
 
@@ -359,9 +365,8 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
   PaletteFadeReq(
     wk->pfd, PF_BIT_SUB_ALL, 0xffff, BATTLE_BAGLIST_FADE_SPEED, 16, 0, 0, BTLV_EFFECT_GetTCBSYS() );
-/*
-  return SEQ_BBAG_ITEM;
-*/
+
+	wk->initFlag = TRUE;
 
 	return SEQ_BBAG_INIT_PRINT_WAIT;
 }
@@ -976,31 +981,47 @@ static int BBAG_SeqEndWait( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static BOOL BBAG_SeqEnd( GFL_TCB * tcb, BBAG_WORK * wk )
 {
-  if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
-    return FALSE;
-  }
+	if( wk->initFlag == TRUE ){
+		if( PRINTSYS_QUE_IsFinished( wk->que ) == FALSE ){
+			// 通信エラー時は強制クリア
+			if( wk->dat->comm_err_flg == 1 ){
+				PRINTSYS_QUE_Clear( wk->que );
+			}else{
+				return FALSE;
+			}
+	  }
+		if( WIPE_SYS_EndCheck() == FALSE ){
+			// 通信エラー時は強制終了
+			if( wk->dat->comm_err_flg == 1 ){
+				WIPE_SYS_ExeEnd();
+			}else{
+				return FALSE;
+			}
+		}
 
-	if( wk->stream != NULL ){
-		PRINTSYS_PrintStreamDelete( wk->stream );
+		if( wk->stream != NULL ){
+			PRINTSYS_PrintStreamDelete( wk->stream );
+		}
+
+	  BBAGANM_ButtonExit( wk );
+
+	  BattleBag_ObjFree( wk );
+	  BattleBag_BmpFreeAll( wk );
+	  BBAG_MsgManExit( wk );
+	  BBAG_BgExit();
+
+	  GFL_TCBL_Exit( wk->tcbl );
+	  BBAGUI_Exit( wk );
+	  BAPPTOOL_FreeCursor( wk->cpwk );
+
+	  if( wk->cursor_flg == TRUE ){
+	    *wk->dat->cursor_flg = 1;
+	  }else{
+	    *wk->dat->cursor_flg = 0;
+	  }
 	}
 
   wk->dat->end_flg = 1;
-  if( wk->cursor_flg == TRUE ){
-    *wk->dat->cursor_flg = 1;
-  }else{
-    *wk->dat->cursor_flg = 0;
-  }
-
-  BBAGANM_ButtonExit( wk );
-
-  BattleBag_ObjFree( wk );
-  BattleBag_BmpFreeAll( wk );
-  BBAG_MsgManExit( wk );
-  BBAG_BgExit();
-
-  GFL_TCBL_Exit( wk->tcbl );
-  BBAGUI_Exit( wk );
-  BAPPTOOL_FreeCursor( wk->cpwk );
 
   GFL_TCB_DeleteTask( tcb );
   GFL_HEAP_FreeMemory( wk );

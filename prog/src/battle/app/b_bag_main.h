@@ -276,6 +276,8 @@ typedef struct {
 
 	const u8 * putWin;
 
+	BOOL	initFlag;		// 初期化したか（初期化前に外部から終了要求されると止まるので）
+
 }BBAG_WORK;
 
 typedef int (*pBBagFunc)(BBAG_WORK*);
