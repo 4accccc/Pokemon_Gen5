@@ -78,7 +78,7 @@ typedef struct{
 //==============================================================================
 static void GameBeacon_InitCallback(void *pWork);
 static void	GameBeacon_ExitCallback(void* pWork);
-static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs);
+static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs, int *hit_index);
 static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_index);
 static void* GameBeacon_GetBeaconData(void* pWork);
 static BOOL GameBeacon_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork );
@@ -279,6 +279,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   GBS_TARGET_INFO *target;
+  int hit_index = 0;
   
   if(GAMEDATA_GetIsSave(gamedata) == TRUE){
     return;
@@ -302,7 +303,7 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
   
   GAMEBEACON_SendBeaconUpdate();
   
-  target = GameBeacon_UpdateBeacon(gbs);
+  target = GameBeacon_UpdateBeacon(gbs, &hit_index);
 #ifdef PM_DEBUG
   if(target != NULL && GameCommSys_GetCommGameNo(gcsp) != GAME_COMM_NO_DEBUG_SCANONLY){
 #else
@@ -330,8 +331,12 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
           }
           else{
             OS_TPrintf("palace no connect zone\n");
+            GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
           }
         }
+      }
+      else{
+        GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
       }
       break;
     default:
@@ -349,12 +354,13 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
  * 
  *
  * @param   gbs		
+ * @param   hit_index       見つかった場合、ビーコンバッファindexが代入される
  *
  * @retval  対象が見つかっていればターゲット情報のポインタが返る
  * @retval  見つかっていない場合、NULL
  */
 //--------------------------------------------------------------
-static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
+static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs, int *hit_index)
 {
   GBS_BEACON *beacon;
   GBS_TARGET_INFO * target = &gbs->target_info;
@@ -371,12 +377,10 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
   
   //ビーコンサーチ
   if(target->gsid == 0){ //誰も見つけていない場合にサーチをする
-    int hit_index;
-    
-    beacon = GameBeacon_BeaconSearch(gbs, &hit_index);
+    beacon = GameBeacon_BeaconSearch(gbs, hit_index);
     if(beacon != NULL){
       if(beacon->error != 0){
-        GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
+        GFL_NET_WLResetGFBss(*hit_index);  //ビーコンバッファクリア
       }
       else if( beacon->beacon_type == GBS_BEACONN_TYPE_PALACE ){
         int i;
@@ -386,14 +390,14 @@ static GBS_TARGET_INFO * GameBeacon_UpdateBeacon(GAME_BEACON_SYS_PTR gbs)
         target->gsid = beacon->gsid;
         target->member_num = beacon->member_num;
         target->member_max = beacon->member_max;
-        mac_address = GFL_NET_GetBeaconMacAddress(hit_index);
+        mac_address = GFL_NET_GetBeaconMacAddress(*hit_index);
         for(i = 0; i < 6; i++){
           target->macAddress[i] = mac_address[i];
         }
       }
       else if(beacon->beacon_type == GBS_BEACONN_TYPE_INFO){
         GAMEBEACON_SetRecvBeacon(&beacon->info);
-        GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
+        GFL_NET_WLResetGFBss(*hit_index);  //ビーコンバッファクリア
       }
     }
   }
