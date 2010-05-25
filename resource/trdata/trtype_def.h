@@ -113,4 +113,6 @@
 #define	TRTYPE_DPCHAMPION    ( 100 )    //ポケモントレーナー（DPCHAMPION）
 #define	TRTYPE_BOSS_2    ( 101 )    //プラズマだん（BOSS_2）
 #define	TRTYPE_BCHAMP2    ( 102 )    //サブウェイマスター2
-#define	TRTYPE_MAX	( 103 )
+#define	TRTYPE_HERO_S	    ( 103 )
+#define	TRTYPE_HEROINE_S	( 104 )
+#define	TRTYPE_MAX	( 105 )
