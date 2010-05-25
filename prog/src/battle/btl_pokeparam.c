@@ -2982,6 +2982,7 @@ void BPP_ReflectToPP( BTL_POKEPARAM* bpp, BOOL fDefaultForm )
   {
     u8 formNo = ( bpp->coreParam.fHensin || fDefaultForm )? bpp->coreParam.defaultFormNo : bpp->formNo;
     PP_Put( pp, ID_PARA_form_no, formNo );
+    PP_Renew( pp );
   }
 
   PP_Put( pp, ID_PARA_item, bpp->coreParam.item );
@@ -3093,18 +3094,22 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
   ){
     static BPP_CORE_PARAM  core = {0};
     static BPP_WAZA  wazaWork[ PTL_WAZA_MAX ] = {0};
+    u16    migawariHP;
     int i;
 
     // 不変部分をバックアップ
     GFL_STD_MemCopy( bpp->waza, wazaWork, sizeof(wazaWork) );
     core = bpp->coreParam;
+    migawariHP = bpp->migawariHP;
 
     // 丸ごとコピー
     *bpp = *target;
 
     // 不変部分書き戻し
     bpp->coreParam = core;
+    bpp->migawariHP = migawariHP;
     GFL_STD_MemCopy( wazaWork, bpp->waza, sizeof(wazaWork) );
+
 
     // 仮ワザワークを全書き換え（MAXPPは最大5）
     for(i=0; i<PTL_WAZA_MAX; ++i)
