@@ -271,35 +271,36 @@ static void MakeTrainer(TRIAL_HOUSE_WORK_PTR ptr, const int inBtlCount)
   int tr_no;
   int base, band;
 
+  //※ここで抽選するトレーナーナンバーは０オリジン。この後アーカイブで+1される
   switch(inBtlCount){
   case 0:
-    base = 51;
+    base = 50;
     band = 20;
     break;
   case 1:
-    base = 111;
+    base = 110;
     band = 50;
     break;
   case 2:
-    base = 161;
+    base = 160;
     band = 20;
     break;
   case 3:
-    base = 241;
+    base = 240;
     band = 30;
     break;
   case 4:
-    base = 271;
+    base = 270;
     band = 30;
     break;
   default:
     GF_ASSERT_MSG(0,"count error %d",inBtlCount);
-    base = 51;
+    base = 50;
     band = 20;
   }
   //トレーナー抽選
   tr_no = base + GFUser_GetPublicRand(band);
-  NOZOMU_Printf("entry_tr_no = %d\n",tr_no);
+  NOZOMU_Printf("ZERO_ORG entry_tr_no = %d\n",tr_no);
 
   //データをトライアルハウスワークにセット
   FBI_TOOL_MakeRomTrainerData(
