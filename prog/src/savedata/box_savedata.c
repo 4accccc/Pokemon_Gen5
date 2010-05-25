@@ -20,7 +20,6 @@
 #include "savedata/save_tbl.h"
 
 
-static void PPP_RecoverPP(const POKEMON_PASO_PARAM* pp){}  //ダミー関数
 static BOX_SAVEDATA* BOXDAT_GetBoxSaveData( const BOX_MANAGER *boxData );
 
 
@@ -172,7 +171,7 @@ BOOL BOXDAT_PutPokemon( BOX_MANAGER* box, const POKEMON_PASO_PARAM* poke )
   b = boxData->currentTrayNumber;
   do
   {
-    PPP_RecoverPP(poke);
+//    PPP_RecoverPP(poke);
 
     if( BOXDAT_PutPokemonBox( box, b, poke ) )
     {
@@ -213,8 +212,6 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PAR
   u32 i;
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
 
-  PPP_RecoverPP(poke);
-
   if( trayNum == BOXDAT_TRAYNUM_CURRENT ){
     trayNum = boxData->currentTrayNumber;
   }else{
@@ -230,8 +227,7 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PAR
     if( PPP_Get( &(trayData->ppp[i]), ID_PARA_monsno, NULL  ) == 0 )
     {
       trayData->ppp[i] = *poke;
-      //SaveData_RequestTotalSave();  //金銀で変更
-//      BOXDAT_SetTrayUseBit( box, trayNum);
+			PPP_RecoverWazaPPAll( &trayData->ppp[i] );
       return TRUE;
     }
   }
@@ -253,7 +249,6 @@ BOOL BOXDAT_PutPokemonBox( BOX_MANAGER* box, u32 trayNum, const POKEMON_PASO_PAR
 BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON_PASO_PARAM* poke )
 {
   BOX_SAVEDATA *boxData = BOXDAT_GetBoxSaveData(box);
-  PPP_RecoverPP(poke);
 
   if( trayNum == BOXDAT_TRAYNUM_CURRENT )
   {
@@ -263,8 +258,7 @@ BOOL BOXDAT_PutPokemonPos( BOX_MANAGER* box, u32 trayNum, u32 pos, const POKEMON
   if( ( trayNum < boxData->trayMax ) && ( pos < BOX_MAX_POS ) ){
     BOX_TRAY_DATA *trayData = BOXTRAYDAT_GetTrayData(box,trayNum);
     trayData->ppp[pos] = *poke;
-    //SaveData_RequestTotalSave();  金銀で変更
-//    BOXDAT_SetTrayUseBit( box, trayNum);  
+		PPP_RecoverWazaPPAll( &trayData->ppp[pos] );
     return TRUE;
   }else{
     GF_ASSERT(0);
