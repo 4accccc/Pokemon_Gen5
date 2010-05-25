@@ -10183,12 +10183,15 @@ static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-
+    BOOL fFailMsgDisped = FALSE;
 
     if( (targetPokeID == BTL_POKEID_NULL)
-    ||  (!BTL_SVFRET_FreeFallStart(flowWk, pokeID, targetPokeID))
+    ||  (!BTL_SVFRET_FreeFallStart(flowWk, pokeID, targetPokeID, &fFailMsgDisped))
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      if( fFailMsgDisped ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_MSG_FLAG, TRUE );
+      }
     }else{
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
