@@ -188,7 +188,7 @@ enum
 #define INFO_STR_PLACE_X	(16)
 
 #define INFO_STR_PLACE_Y	(48)
-#define INFO_STR_GUIDE_X	(32)
+#define INFO_STR_GUIDE_X	(28)//(32)
 #define INFO_STR_GUIDE_Y	(80)
 #define INFO_STR_PLACE1_X	(16)
 #define INFO_STR_PLACE1_Y	(128)
