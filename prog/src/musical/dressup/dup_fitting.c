@@ -2663,7 +2663,7 @@ static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
   MUS_POKE_EQUIP_POS touchPos;
   u16 startIdx;
   //1週半と1個先のところを先頭にしてソート(スタートは下
-  const u32 startAngle = work->listTotalMove + 0x18000;
+  const u32 startAngle = work->listTotalMove + 0x18000+LIST_ONE_ANGLE-10;
   //1と1/4週と1個先のところを先頭にしてソート(スタートは左
   //const u32 startAngle = work->listTotalMove + 0x14000+LIST_ONE_ANGLE;
   
