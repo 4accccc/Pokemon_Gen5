@@ -305,7 +305,6 @@ EVENT_START   ev_scene_t02pc0101_hakaseguide_02
 	
 	//あたし　ちょっと　のんびり　していくね
 	_BALLOONWIN_OBJMSG( msg_t02pc0101_white_02,T02PC0101_SUPPORT_01 )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//サポート：ショップに向く
