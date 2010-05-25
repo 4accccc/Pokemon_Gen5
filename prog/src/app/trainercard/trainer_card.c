@@ -190,7 +190,7 @@ enum{
 // スコアスクロール領域
 #define TP_SCORE_SCROL_X  (   24 )
 #define TP_SCORE_SCROL_Y  (   16 )
-#define TP_SCORE_SCROL_W  (  208 )
+#define TP_SCORE_SCROL_W  (  216 )
 #define TP_SCORE_SCROL_H  (   64 )
 
 // 落書き領域（簡易版）
@@ -1265,10 +1265,10 @@ static void EditOK_MineCardAppear( TR_CARD_WORK *wk, int is_back )
     if(wk->ScaleMode==0){
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK,  APP_COMMON_BARICON_RETURN,TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END,   APP_COMMON_BARICON_EXIT,  TRUE);
-      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,             TRUE);
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_TURN,  ANMS_TURN_L,              TRUE);
 
-      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2, TRUE);
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_LOUPE, ANMS_LOUPE_L,           wk->TrCardData->SignAnimeOn^1);
+      SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2, wk->TrCardData->SignAnimeOn^1);
 
       // サインアニメ中か
       Change_SignAnimeButton( wk, wk->TrCardData->SignAnimeOn, TRUE);
@@ -1362,8 +1362,8 @@ static void OtherCardAppear( TR_CARD_WORK *wk, int is_back )
 /**
  * @brief 表裏の切り替わり時にタッチバーのOBJ表示状態を変更する
  *
- * @param   wk    
- * @param   is_back   
+ * @param   wk       TR_CARD_WORK
+ * @param   is_back  表・裏
  */
 //----------------------------------------------------------------------------------
 static void DispTouchBarObj( TR_CARD_WORK *wk, int is_back )
@@ -1719,16 +1719,20 @@ static int CheckKey(TR_CARD_WORK* wk)
   const int keyTrg = GFL_UI_KEY_GetTrg();
   if( keyTrg & PAD_BUTTON_CANCEL )
   {
-    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
-    PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
-    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-    return TRC_KEY_REQ_RETURN_BUTTON;
+    if(wk->ScaleMode==0){
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_BACK, 9, TRUE);
+      PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
+      GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+      return TRC_KEY_REQ_RETURN_BUTTON;
+    }
   }
   else if(keyTrg & PAD_BUTTON_X )
   {
-    SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END, 8, TRUE);
-    PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
-    return TRC_KEY_REQ_END_BUTTON;
+    if(wk->ScaleMode==0 && wk->TrCardData->OtherTrCard==FALSE){
+      SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END, 8, TRUE);
+      PMSND_PlaySE( SND_TRCARD_CANCEL );   //終了音
+      return TRC_KEY_REQ_END_BUTTON;
+    }
     
   }
   else if(keyTrg & (PAD_KEY_LEFT|PAD_KEY_RIGHT))
@@ -1742,11 +1746,13 @@ static int CheckKey(TR_CARD_WORK* wk)
   else if(keyTrg & PAD_BUTTON_Y)
   {
     // ブックマーク（Yボタンメニュー）登録
-    SetBookMark( wk );
+    if(wk->TrCardData->OtherTrCard==FALSE){ // 自分のカードであればバッジ画面へ
+      SetBookMark( wk );
+    }
   }
   else if(keyTrg & PAD_BUTTON_DECIDE)
   {
-    if(wk->TrCardData->OtherTrCard==FALSE){ // 自分のカードであればバッジ画面へ
+    if(wk->TrCardData->OtherTrCard==FALSE && wk->ScaleMode==0){ // 自分のカードであればバッジ画面へ
       PMSND_PlaySE( SND_TRCARD_DECIDE );
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
       return TRC_KEY_REQ_BADGE_CALL;
@@ -1938,7 +1944,8 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     break;
   case 5:     // ペン先ボタン
     if(wk->is_back){
-      if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
+      // 編集可能 & アニメ中じゃなかったら
+      if(wk->tcp->TrCardData->EditPossible && wk->TrCardData->SignAnimeOn==0){    
         PMSND_PlaySE( SND_TRCARD_PEN );
         SetSActDrawSt(&wk->ObjWork,ACTS_BTN_PEN, ANMS_WHITE_PEN_L-wk->pen*2+1, TRUE);
         wk->pen ^=1;
