@@ -394,6 +394,10 @@ BOOL  IntrudeComm_TermCommSystem( int *seq, void *pwk, void *pWork )
     SEQ_FINISH,
   };
 
+  if(GAMEDATA_GetIsSave(gamedata) == TRUE){
+    return FALSE;
+  }
+
   if(intcomm->error == TRUE || NetErr_App_CheckError()){
     GFL_NET_Exit( IntrudeComm_FinishTermCallback );
     return TRUE;
