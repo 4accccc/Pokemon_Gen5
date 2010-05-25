@@ -4982,7 +4982,7 @@ static void handler_Bukiyou_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     param->header.tokwin_flag = TRUE;
     HANDEX_STR_Setup( &(param->str), BTL_STRTYPE_SET, BTL_STRID_SET_WazaCantUse );
     HANDEX_STR_AddArg( &(param->str), pokeID );
-    HANDEX_STR_AddArg( &(param->str), BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    HANDEX_STR_AddArg( &(param->str), BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
 
     work[2] = 0;
   }
