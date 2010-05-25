@@ -1391,11 +1391,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
       PokeMcssAnimeMain( &work->poke_mcss_wk[i] );  // この関数内でNULLチェックはしてくれている
     }
 
-    MCSS_Main( work->mcss_sys_wk );
-
 #ifdef DEF_MCSS_TCBSYS
-    GFL_TCB_Main( work->mcss_tcbsys );
+    GFL_TCB_Main( work->mcss_tcbsys );  // DEF_MCSS_TCBSYSが定義されておりDEF_MINIMUM_LOADが定義されていないとき、
+                                        // GFL_TCB_Main, MCSS_Mainの順にしておかないと、メモリ解放忘れが出てしまう。
 #endif
+    
+    MCSS_Main( work->mcss_sys_wk );
   } 
 
   if( *seq >= SEQ_PREPARE )
@@ -2569,7 +2570,9 @@ static void PokeMcssWorkExit( POKE_MCSS_WORK* poke_mcss_wk, MCSS_SYS_WORK* mcss_
   BLOCK_POKE_EXIT( mcss_sys_wk, poke_mcss_wk->poke_wk )
   if( poke_mcss_wk->poke_call_back_data ) GFL_HEAP_FreeMemory( poke_mcss_wk->poke_call_back_data );
   poke_mcss_wk->poke_call_back_data = NULL;
+#ifdef DEF_MINIMUM_LOAD 
   poke_mcss_wk->diff_no = DIFF_MAX;
+#endif
 }
 static void PokeMcssCallBackDataInit( POKE_MCSS_CALL_BACK_DATA* poke_mcss_call_back_data,
                                       POKE_INDEX poke_idx, ZUKAN_DETAIL_FORM_WORK* work )
@@ -2669,11 +2672,11 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 
   Zukan_Detail_Form_MakePokeWhenFlipFrontBack( param, work, cmn );
 
-  // 今の状態を見て、前後を変更する
+  // 変更後の状態を見て、前後を変更する
   if( work->is_poke_front )
   {
     MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_CURR_F].poke_wk );
-    if( work->diff_num >= 2 )
+    if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
     {
       MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_COMP_F].poke_wk );
     }
@@ -2681,7 +2684,7 @@ static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
   else
   {
     MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_CURR_B].poke_wk );
-    if( work->diff_num >= 2 )
+    if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
     {
       MCSS_ResetVanishFlag( work->poke_mcss_wk[POKE_COMP_B].poke_wk );
     }
@@ -3367,6 +3370,19 @@ static void Zukan_Detail_Form_MakePokeWhenFlipFrontBack( ZUKAN_DETAIL_FORM_PARAM
                                   POKE_CURR_B, work );
       }
     }
+    // 位置を設定する(ここで新たに作成していない場合は、前の位置のままのことがあるので)(新たに作成した場合は、位置は大丈夫)
+    else
+    {
+      VecFx32 p = poke_pos[pos];
+      if( work->is_poke_front )
+      {
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );
+      }
+      else
+      {
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );
+      }
+    }
   }
 
   if( work->state == STATE_EXCHANGE && work->diff_num >= 2 )
@@ -3386,6 +3402,21 @@ static void Zukan_Detail_Form_MakePokeWhenFlipFrontBack( ZUKAN_DETAIL_FORM_PARAM
       {
         PokeMcssCallBackDataInit( work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data,
                                   POKE_COMP_B, work );
+      }
+    }
+    // 位置を設定する(ここで新たに作成していない場合は、前の位置のままのことがあるので)(新たに作成した場合は、位置は大丈夫)
+    else
+    {
+      VecFx32 p;
+      if( work->is_poke_front )
+      {
+        PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_F].poke_wk, &p );  // POKE_COMP_RPOSなので 
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_F].poke_wk, &p );
+      }
+      else
+      {
+        PokeGetCompareRelativePosition( work->poke_mcss_wk[POKE_CURR_B].poke_wk, &p );  // POKE_COMP_RPOSなので 
+        MCSS_SetPosition( work->poke_mcss_wk[POKE_COMP_B].poke_wk, &p );
       }
     }
   }
