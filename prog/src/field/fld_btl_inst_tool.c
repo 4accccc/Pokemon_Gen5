@@ -115,6 +115,7 @@ GMEVENT *FBI_TOOL_CreatePokeListEvt(
     st->max = PokeParty_GetPokeCount( inTargetParty );
     st->mode = PST_MODE_NORMAL;
     st->page = PPT_INFO;
+    st->game_data = gdata;
     st->zukan_mode = ZUKANSAVE_GetZenkokuZukanFlag( zukanSave );
   }
 
