@@ -149,6 +149,9 @@ EVENT_START   ev_pos_c02_rival_01
 	//クロックが歩いていく
 	_OBJ_ANIME( C02_RIVAL_02, anm_rival_01_walk )
 	
+	//主人公とライバルの動きに差をつける
+	_TIME_WAIT(4)
+	
 	//主人公もついていく
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_01_walk )
 	_OBJ_ANIME_WAIT()
