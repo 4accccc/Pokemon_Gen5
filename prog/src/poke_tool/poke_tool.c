@@ -224,14 +224,14 @@ POKEMON_PARAM* PP_CreateByPPP( const POKEMON_PASO_PARAM* ppp, HEAPID heapID )
 //HP初期化
   PP_Put(pp,ID_PARA_hp,i);
   PP_Put(pp,ID_PARA_hpmax,i);
+
   //メールデータ
-#if 0
   {
-    MAIL_DATA* mail_data = MailData_CreateWork(heapID);
-    PP_Put(pp,ID_PARA_mail_data, mail_data);
-    sys_FreeMemoryEz(mail_data);
+    MAIL_DATA* mail_data = MailData_CreateWork( GFL_HEAP_LOWID( heapID ) );
+    PP_Put( pp, ID_PARA_mail_data, (u32)mail_data );
+    GFL_HEAP_FreeMemory( mail_data );
   }
-#endif
+
   PP_Renew(pp);
 
   return pp;
@@ -298,12 +298,6 @@ void PP_Setup( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID )
 void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow pow, u64 rnd )
 {
   u32     i;
-//メールとカスタムボール対応がまだです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning MAIL_DATA and CB_CORE nothing
-#endif
-//  MAIL_DATA *mail_data;
-//  CB_CORE   cb_core;
 
   PP_Clear( pp );
 
@@ -316,12 +310,15 @@ void  PP_SetupEx( POKEMON_PARAM *pp, u16 mons_no, u16 level, u64 ID, PtlSetupPow
 //レベルセット
   PP_Put( pp, ID_PARA_level, level );
 
-#if 0
 //メールデータ
-  mail_data = MailData_CreateWork( HEAPID_BASE_SYSTEM );
-  PP_Put( pp, ID_PARA_mail_data, mail_data );
-  GFL_HEAP_FreeMemory( mail_data );
+  {
+    MAIL_DATA* mail_data = MailData_CreateWork( GFL_HEAP_LOWID( GFL_HEAPID_SYSTEM ) );
+    PP_Put( pp, ID_PARA_mail_data, (u32)mail_data );
+    GFL_HEAP_FreeMemory( mail_data );
+  }
 
+  //シャチにおいてカスタムボールは存在しません
+#if 0
 //カスタムボールID
   i = 0;
   PP_Put( pp, ID_PARA_cb_id, (u8 *)&i );
@@ -2508,10 +2505,6 @@ static  u32 pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
 {
   u32 ret = 0;
 
-//メールとカスタムボール対応がまだです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning CB_CORE nothing
-#endif
   switch( id ){
   case ID_PARA_condition:
     ret = pp->pcp.condition;
@@ -2548,6 +2541,7 @@ static  u32 pp_getAct( POKEMON_PARAM *pp, int id, void *buf )
     ret = TRUE;
     break;
   case ID_PARA_cb_core:
+  //シャチにおいてカスタムボールは存在しません
 //    CB_Tool_CoreData_Copy( &pp->pcp.cb_core, ( CB_CORE * )buf );
     ret = TRUE;
     break;
@@ -3030,10 +3024,7 @@ static  void  pp_putAct( POKEMON_PARAM *pp, int paramID, u32 arg )
     MailData_Copy( ( MAIL_DATA * )arg, ( MAIL_DATA * )pp->pcp.mail_data );
     break;
   case ID_PARA_cb_core:
-//カスタムボール処理ないです
-#ifdef DEBUG_ONLY_FOR_sogabe
-#warning CB_CORE Nothing
-#endif
+  //シャチにおいてカスタムボールは存在しません
 //    CB_Tool_CoreData_Copy( ( CB_CORE * )buf, &pp->pcp.cb_core );
     break;
 

@@ -9,6 +9,7 @@
 //============================================================================================
 
 #include  "item/itemsym.h"
+#include  "savedata/mail.h"
 #define	EOM_				( 0xff )
 
 #ifndef __POKE_TOOL_DEF_H_
@@ -18,6 +19,7 @@
 
 #define	POKE_PARA_BLOCK_MAX		( 4 )		//POKEMON_PARAM構造体の分割ブロック数
 #define	GROW_TBL_SIZE			( 101 )		//成長テーブルのサイズ
+#define MAIL_DATA_SIZE    ( 56 )
 
 struct pokemon_paso_param1
 {
@@ -407,20 +409,18 @@ struct pokemon_paso_param
 ///<ボックスポケモン分以外の構造体宣言
 struct pokemon_calc_param
 {
-	u32			condition;							//04h	コンディション
-	u8			level;								//05h	レベル
-	u8			cb_id;								//06h	カスタムボールID
-	u16			hp;									//08h	HP
-	u16			hpmax;								//0ah	HPMAX
-	u16			pow;								//0ch	攻撃力
-	u16			def;								//0eh	防御力
-	u16			agi;								//10h	素早さ
-	u16			spepow;								//12h	特攻
-	u16			spedef;								//14h	特防
-//	_MAIL_DATA	mail_data;							//3ch	ポケモンにもたせるメールデータ
-//	CB_CORE		cb_core;							//54h	カスタムボール
-	u8			mail_data[0x3c-0x14];
-	u8			cb_core[0x54-0x3c];
+	u32 condition;					          //04h	コンディション
+	u8  level;							          //05h	レベル
+	u8	cb_id;							          //06h	カスタムボールID
+	u16	hp;								 	          //08h	HP
+	u16	hpmax;							          //0ah	HPMAX
+	u16	pow;								          //0ch	攻撃力
+	u16	def;								          //0eh	防御力
+	u16	agi;								          //10h	素早さ
+	u16	spepow;							          //12h	特攻
+	u16	spedef;							          //14h	特防
+	u8	mail_data[ MAIL_DATA_SIZE ];  //4ch	ポケモンにもたせるメールデータ（56byte）
+	u8	padding[ 8 ];                 //POKEMON_PARAM合計で1体220バイト
 };
 
 ///<手持ちポケモンの構造体宣言
