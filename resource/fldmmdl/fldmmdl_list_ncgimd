@@ -107,7 +107,6 @@ FMMDL_RESLIST_NCGIMD = \
 	icpo.imd \
 	tboss.imd \
 	tree.imd \
-	rock.imd \
 	monsterball.imd \
 	pikachu.imd \
 	poke2.imd \
@@ -130,18 +129,14 @@ FMMDL_RESLIST_NCGIMD = \
 	accordion.imd \
 	basketm.imd \
 	support.imd \
-	none_debug.imd \
 	gethero.imd \
 	getheroine.imd \
 	reporthero.imd \
 	reportheroine.imd \
 	pchero.imd \
 	pcheroine.imd \
-	bone.imd \
 	blackstone.imd \
 	whitestone.imd \
-	blackmonolith.imd \
-	whitemonolith.imd \
 	mama.imd \
 	spider.imd \
 	pipe.imd \
@@ -172,7 +167,6 @@ FMMDL_RESLIST_NCGIMD = \
 	sage7.imd \
 	goddess2.imd \
 	poke22.imd \
-	poke23.imd \
 	trophy1.imd \
 	trophy2.imd \
 	trophy3.imd \
