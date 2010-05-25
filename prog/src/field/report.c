@@ -400,7 +400,7 @@ void REPORT_SetSaveSize( REPORT_WORK * wk )
 {
 	wk->sv = GAMEDATA_GetSaveControlWork( GAMESYSTEM_GetGameData(wk->gameSys) );
 	SaveControl_GetActualSize( wk->sv, &wk->actualSize, &wk->totalSize );
-	wk->timeSize  = wk->actualSize * 2 / 10;
+	wk->timeSize  = ((wk->actualSize * 2)<<8) / 10;
 	wk->overSize  = wk->timeSize;
 	wk->objCount  = 0;
 	wk->objWait   = 0;
@@ -879,7 +879,7 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 
 	if( wk->save_active == FALSE ){ return; }
 
-	now_size = SaveControl_GetSaveAsyncMain_WritingSize( wk->sv );
+	now_size = SaveControl_GetSaveAsyncMain_WritingSize( wk->sv ) << 8;
 
 	if( wk->objWait != TIMEMARK_WAIT ){
 		wk->objWait++;
@@ -894,6 +894,7 @@ static void VBlankTask_SaveTimeMarkObj( GFL_TCB * tcb, void * work )
 				GFL_CLACT_WK_SetAnmSeq( wk->clwk[OBJID_TIME01+wk->objCount], 1 );
 				GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[OBJID_TIME01+wk->objCount], TRUE );
 				wk->objCount++;
+				OS_Printf( "objCount = %d\n", wk->objCount );
 			}
 		}
 	}
