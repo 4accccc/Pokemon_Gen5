@@ -117,11 +117,12 @@ UNION_APPEAL UnionTool_PlayCategory_to_AppealNo(UNION_PLAY_CATEGORY play_categor
 BOOL UnionTool_CheckDwcFriend(WIFI_LIST *wifilist, UNION_BEACON *beacon)
 {
   int i;
+  u32 trainer_id;
   
   for(i = 0; i < WIFILIST_FRIEND_MAX; i++){
     if(WifiList_IsFriendData(wifilist, i) == TRUE){
-      if(DWC_IsEqualFriendData(
-          WifiList_GetDwcDataPtr( wifilist, i ), &beacon->dwcfriend) == TRUE){
+      trainer_id = WifiList_GetFriendInfo(wifilist, i, WIFILIST_FRIEND_ID);
+      if(trainer_id == beacon->trainer_id){
         return TRUE;
       }
     }
