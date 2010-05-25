@@ -341,7 +341,10 @@ static const BOOL COMM_TVT_Main( COMM_TVT_WORK *work )
   
   if( work->isCommError == TRUE )
   {
-    work->nextMode = CTM_ERROR;
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      work->nextMode = CTM_ERROR;
+    }
   }
   if( work->mode != work->nextMode )
   {
