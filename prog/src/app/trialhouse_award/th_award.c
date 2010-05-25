@@ -22,6 +22,9 @@
 #include "pokeicon/pokeicon.h"
 #include "app/app_nogear_subscreen.h"
 
+#include "sound/wb_sound_data.sadl"
+#include "sound/pm_sndsys.h"
+
 #include "savedata/trialhouse_save.h"
 #include "savedata/th_rank_def.h"
 #include "field/th_rank_calc.h"
@@ -92,6 +95,7 @@ enum
 {
   SEQ_START          = 0,
   SEQ_FADE_IN,
+  SEQ_SOUND_WAIT,
   SEQ_MAIN,
   SEQ_FADE_OUT,
   SEQ_END,
@@ -195,6 +199,8 @@ typedef enum
   RANK_NOVICE,
   RANK_BEGINNER,
   RANK_MAX,
+
+  RANK_INVALID    = RANK_MAX,  // 無効なデータのときのランク
 }
 RANK;
 typedef struct
@@ -202,19 +208,20 @@ typedef struct
   u32 str_id;
   u8  star_num;
   u16 rank_def;  // TH_RANK_????
+  u32 me_idx;
   //u16 min;  // min<= <=max
   //u16 max;
 }
 RANK_INFO;
 static const RANK_INFO rank_info_tbl[RANK_MAX] =
 {
-  { msg_trialhouse_rank6, 7, TH_RANK_MASTER   },  //             6000, POINT_NUMBER_MAX },
-  { msg_trialhouse_rank5, 6, TH_RANK_ELITE    },  //             5000,             5999 },
-  { msg_trialhouse_rank4, 5, TH_RANK_HYPER    },  //             4000,             4999 },
-  { msg_trialhouse_rank3, 4, TH_RANK_SUPER    },  //             3000,             3999 },
-  { msg_trialhouse_rank2, 3, TH_RANK_NORMAL   },  //             2000,             2999 },
-  { msg_trialhouse_rank1, 2, TH_RANK_NOVICE   },  //             1000,             1999 },
-  { msg_trialhouse_rank0, 1, TH_RANK_BEGINNER },  // POINT_NUMBER_MIN,              999 },
+  { msg_trialhouse_rank6, 7, TH_RANK_MASTER,   SEQ_ME_HYOUKA6 },  //             6000, POINT_NUMBER_MAX },
+  { msg_trialhouse_rank5, 6, TH_RANK_ELITE,    SEQ_ME_HYOUKA5 },  //             5000,             5999 },
+  { msg_trialhouse_rank4, 5, TH_RANK_HYPER,    SEQ_ME_HYOUKA4 },  //             4000,             4999 },
+  { msg_trialhouse_rank3, 4, TH_RANK_SUPER,    SEQ_ME_HYOUKA3 },  //             3000,             3999 },
+  { msg_trialhouse_rank2, 3, TH_RANK_NORMAL,   SEQ_ME_HYOUKA2 },  //             2000,             2999 },
+  { msg_trialhouse_rank1, 2, TH_RANK_NOVICE,   SEQ_ME_HYOUKA1 },  //             1000,             1999 },
+  { msg_trialhouse_rank0, 1, TH_RANK_BEGINNER, SEQ_ME_HYOUKA1 },  // POINT_NUMBER_MIN,              999 },
 };
 
 
@@ -255,6 +262,9 @@ typedef struct
   u8                          star_num;
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   star_clwk[STAR_NUM_MAX];
+
+  // ランク
+  RANK                        rank;
 }
 TH_AWARD_WORK;
 
@@ -318,6 +328,7 @@ const GFL_PROC_DATA    TH_AWARD_ProcData =
  *  @param[in]       sex           プレイヤーの性別  // PM_MALE or PM_FEMALE  // include/pm_version.h
  *  @param[in]       thsv          THSV_WORK
  *  @param[in]       b_download    ダウンロードデータを表示するときTRUE
+ *  @param[in]       b_me          MEを鳴らすときTRUE
  *
  *  @retval          TH_AWARD_PARAM
  */
@@ -326,14 +337,16 @@ TH_AWARD_PARAM*  TH_AWARD_AllocParam(
                                 HEAPID               heap_id,
                                 u8                   sex,           // PM_MALE or PM_FEMALE  // include/pm_version.h
                                 const THSV_WORK*     thsv,
-                                BOOL                 b_download )
+                                BOOL                 b_download,
+                                BOOL                 b_me )
 {
   TH_AWARD_PARAM* param = GFL_HEAP_AllocMemory( heap_id, sizeof( TH_AWARD_PARAM ) );
   TH_AWARD_InitParam(
       param,
       sex,
       thsv,
-      b_download );
+      b_download,
+      b_me );
   return param;
 }
 
@@ -360,6 +373,7 @@ void            TH_AWARD_FreeParam(
  *  @param[in]       sex           プレイヤーの性別  // PM_MALE or PM_FEMALE  // include/pm_version.h
  *  @param[in]       thsv          THSV_WORK
  *  @param[in]       b_download    ダウンロードデータを表示するときTRUE
+ *  @param[in]       b_me          MEを鳴らすときTRUE
  *
  *  @retval          
  */
@@ -368,11 +382,13 @@ void  TH_AWARD_InitParam(
                   TH_AWARD_PARAM*      param,
                   u8                   sex,           // PM_MALE or PM_FEMALE  // include/pm_version.h
                   const THSV_WORK*     thsv,
-                  BOOL                 b_download )
+                  BOOL                 b_download,
+                  BOOL                 b_me )
 {
   param->sex          = sex;
   param->thsv         = thsv;
   param->b_download   = b_download;
+  param->b_me         = b_me;
 }
 
 
@@ -413,6 +429,32 @@ static GFL_PROC_RESULT Th_Award_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   // VBlank中TCB
   work->vblank_tcb = GFUser_VIntr_CreateTCB( Th_Award_VBlankFunc, work, 1 );
 
+  // ランク
+  {
+    const TH_SV_COMMON_WK*  common_data;
+  
+    // セーブデータ
+    // ダウンロードデータ
+    if( work->param->b_download )
+    {
+      common_data   = &(work->param->thsv->CommonData[1]);
+    }
+    // ＲＯＭデータ
+    else
+    {
+      common_data   = &(work->param->thsv->CommonData[0]);
+    }
+
+    if( common_data->Valid == 0 )  // 無効データ
+    {
+      work->rank = RANK_INVALID;
+    }
+    else
+    {
+      work->rank = Th_Award_GetRank( common_data->Point );
+    }
+  }
+
   // 生成
   Th_Award_BgInit( work );
   Th_Award_PokeiconInit( work );
@@ -423,12 +465,18 @@ static GFL_PROC_RESULT Th_Award_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   APP_NOGEAR_SUBSCREEN_Init();
   APP_NOGEAR_SUBSCREEN_Trans( work->heap_id, work->param->sex );
 
-  // フェードイン(黒→見える)
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+  // フェードイン(ただちに真っ黒)
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 16, 0 );
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
   GFL_NET_ReloadIcon();
+
+  // サウンド
+  if( work->param->b_me && work->rank != RANK_INVALID )
+  {
+    PMSND_FadeOutBGM( PMSND_FADE_FAST );
+  }
 
   return GFL_PROC_RES_FINISH;
 }
@@ -483,13 +531,53 @@ static GFL_PROC_RESULT Th_Award_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
   {
   case SEQ_START:
     {
-      *seq = SEQ_FADE_IN;
+      BOOL  b_next  = TRUE;
+      // サウンド
+      if( work->param->b_me && work->rank != RANK_INVALID )
+      {
+        if( PMSND_CheckFadeOnBGM() )
+        {
+          b_next = FALSE;
+        }
+        else
+        {
+          PMSND_PauseBGM( TRUE );
+          PMSND_PushBGM();
+          PMSND_PlayBGM( rank_info_tbl[work->rank].me_idx );
+        }
+      }
+      if( b_next )
+      {
+        // フェードイン(黒→見える)
+        GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, FADE_IN_WAIT );
+        *seq = SEQ_FADE_IN;
+      }
     }
     break;
   case SEQ_FADE_IN:
     {
       if( !GFL_FADE_CheckFade() )
       {
+        if( work->param->b_me && work->rank != RANK_INVALID )
+        {
+          *seq = SEQ_SOUND_WAIT;
+        }
+        else
+        {
+          *seq = SEQ_MAIN;
+        }
+      }
+    }
+    break;
+  case SEQ_SOUND_WAIT:
+    {
+      // サウンド
+      if( !PMSND_CheckPlayBGM() )
+      {
+        PMSND_PopBGM();
+        PMSND_PauseBGM( FALSE );
+        PMSND_FadeInBGM( PMSND_FADE_FAST );
+        
         *seq = SEQ_MAIN;
       }
     }
@@ -787,29 +875,14 @@ static void Th_Award_PokeiconExit( TH_AWARD_WORK* work )
 //=====================================
 static void Th_Award_StarInit( TH_AWARD_WORK* work )
 {
-  const TH_SV_COMMON_WK*  common_data;
-  
   // NULL、ゼロ初期化
   work->star_num = 0;
 
-  // セーブデータ
-  // ダウンロードデータ
-  if( work->param->b_download )
-  {
-    common_data   = &(work->param->thsv->CommonData[1]);
-  }
-  // ＲＯＭデータ
-  else
-  {
-    common_data   = &(work->param->thsv->CommonData[0]);
-  }
-
-  if( common_data->Valid == 0 ) return;  // 無効データ
+  if( work->rank == RANK_INVALID ) return;  // 無効データ
 
   // スターの個数
   {
-    RANK     rank         = Th_Award_GetRank( common_data->Point );
-    work->star_num = rank_info_tbl[rank].star_num;
+    work->star_num = rank_info_tbl[work->rank].star_num;
 
     if( work->star_num == 0 ) return;  // スターなし
   }

@@ -797,10 +797,12 @@ static void ThAwardInit( KAWADA_MAIN_WORK* wk )
 
       u8 sex = PM_MALE;
       u8 type = 0;  // 0=ローカルシングル; 1=ローカルダブル; 2=ダウンロードシングル; 3=ダウンロードダブル;
+      BOOL b_me = FALSE;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) sex = PM_FEMALE;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) type = 1;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ) type = 2;
       if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ) type = 3;
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ) b_me = TRUE;
 
   CONFIG_SetMojiMode( cf, MOJIMODE_HIRAGANA );
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ) CONFIG_SetMojiMode( cf, MOJIMODE_KANJI );
@@ -874,7 +876,7 @@ static void ThAwardInit( KAWADA_MAIN_WORK* wk )
           break;
         }
       }
-      wk->th_award_param = TH_AWARD_AllocParam( wk->heapID, sex, wk->thsv, (type==2||type==3)?TRUE:FALSE );
+      wk->th_award_param = TH_AWARD_AllocParam( wk->heapID, sex, wk->thsv, (type==2||type==3)?TRUE:FALSE, b_me );
       GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &TH_AWARD_ProcData, wk->th_award_param );
 }
 static void ThAwardExit( KAWADA_MAIN_WORK* wk )

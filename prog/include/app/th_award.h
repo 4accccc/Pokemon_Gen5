@@ -50,6 +50,7 @@ typedef struct
   u8                   sex;           ///< [in] プレイヤーの性別  // PM_MALE or PM_FEMALE  // include/pm_version.h
   const THSV_WORK*     thsv;          ///< [in] トライアルハウスセーブデータ
   BOOL                 b_download;    ///< [in] ダウンロードデータを表示するときTRUE
+  BOOL                 b_me;          ///< [in] MEを鳴らすときTRUE
 }
 TH_AWARD_PARAM;
 
@@ -66,7 +67,8 @@ extern TH_AWARD_PARAM*  TH_AWARD_AllocParam(
                                 HEAPID               heap_id,
                                 u8                   sex,           // PM_MALE or PM_FEMALE  // include/pm_version.h
                                 const THSV_WORK*     thsv,
-                                BOOL                 b_download );
+                                BOOL                 b_download,
+                                BOOL                 b_me );
 
 //-------------------------------------
 /// パラメータ解放
@@ -81,5 +83,6 @@ extern void  TH_AWARD_InitParam(
                   TH_AWARD_PARAM*      param,
                   u8                   sex,           // PM_MALE or PM_FEMALE  // include/pm_version.h
                   const THSV_WORK*     thsv,
-                  BOOL                 b_download );
+                  BOOL                 b_download,
+                  BOOL                 b_me );
 
