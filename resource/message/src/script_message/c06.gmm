@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T20:34:34"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T20:37:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -494,10 +494,20 @@
 アララギ博士父</attribute>
 		<language name="JPN" width="256">では　であいを　きねんして
 おまえさんの　ポケモンずかんを[BE:00:ページ切り替え（行送り）]
-パワーアップ！　だね</language>
+パワーアップ！　だね▼</language>
 		<language name="JPN_KANJI" width="256">では　出会いを　記念して
 おまえさんの　ポケモン図鑑を[BE:00:ページ切り替え（行送り）]
-パワーアップ！　だね</language>
+パワーアップ！　だね▼</language>
+	</row>
+
+	<row id="msg_c06_hakase1_06a" back-color="#80ffff,,,,,,,,,,,,,,,,,,">
+		<comment>システムメッセージ
+・ME再生
+・続けてhakase1_07</comment>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンずかんが
+パワーアップ　した！</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモン図鑑が
+パワーアップ　した！</language>
 	</row>
 
 	<row id="msg_c06_hakase1_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
