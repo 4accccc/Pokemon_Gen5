@@ -39,7 +39,7 @@ DAT_ADD_ST UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
     if ( my_country_code == 0 )
     {
       //登録指定無い場合は処理を行わない
-      OS_Printf("自分の国コードが設定されていないので、処理しない\n");
+      NOZOMU_Printf("自分の国コードが設定されていないので、処理しない\n");
       return DAT_ADD_ST_FAIL;
     }
   }
