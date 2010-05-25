@@ -70,17 +70,21 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
         return FALSE;
       }
     }
-    else if ( tbl[i].pos_type == MMDL_HEADER_POSTYPE_RAIL )
+    else if ( tbl[i].pos_type == MMDL_HEADER_POSTYPE_RAIL )   //レールに乗っている人物は自分がレールにいるときのみチェックする
     {
       RAIL_LOCATION rail_loc;
       MMDL_HEADER_RAILPOS * pos = (MMDL_HEADER_RAILPOS *)(tbl[i].pos_buf);
-      FIELD_PLAYER_GetNoGridLocation( fld_player, &rail_loc );
-      if ( (pos->rail_index == rail_loc.rail_index) &&
-           (pos->front_grid == rail_loc.line_grid) &&
-           (pos->side_grid == rail_loc.width_grid) )
+      //自分が立っている位置がレールのとき
+      if( FIELDMAP_GetBaseSystemType( fieldWork ) == FLDMAP_BASESYS_RAIL )
       {
-        NOZOMU_Printf( "Dont warp\n");
-        return FALSE;
+        FIELD_PLAYER_GetNoGridLocation( fld_player, &rail_loc );
+        if ( (pos->rail_index == rail_loc.rail_index) &&
+             (pos->front_grid == rail_loc.line_grid) &&
+             (pos->side_grid == rail_loc.width_grid) )
+        {
+          NOZOMU_Printf( "Dont warp\n");
+          return FALSE;
+        }
       }
     }
   }
