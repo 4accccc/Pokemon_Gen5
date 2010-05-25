@@ -1093,15 +1093,6 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
 //============================================================================================
 void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait, int count )
 {
-  BTLV_MCSS_TCB_WORK  *bmtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_TCB_WORK ) );
-
-  bmtw->bmw           = bmw;
-  bmtw->position      = position;
-  bmtw->emw.move_type = type;
-  bmtw->emw.wait      = 0;
-  bmtw->emw.wait_tmp  = wait;
-  bmtw->emw.count     = count * 2;  //閉じて開くを1回とカウントするために倍しておく
-
   switch( type ){
   case BTLEFF_MEPACHI_ON:
     BTLV_MCSS_SetMepachiFlag( bmw, position, BTLV_MCSS_MEPACHI_ON );
@@ -1110,8 +1101,19 @@ void  BTLV_MCSS_MoveBlink( BTLV_MCSS_WORK *bmw, int position, int type, int wait
     BTLV_MCSS_SetMepachiFlag( bmw, position, BTLV_MCSS_MEPACHI_OFF );
     break;
   case BTLEFF_MEPACHI_MABATAKI:
-    BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Blink, bmtw, 0 ), TCB_BTLV_MCSS_Blink_CB, GROUP_MCSS );
-    bmw->mcss_tcb_blink_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+    { 
+      BTLV_MCSS_TCB_WORK  *bmtw = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_TCB_WORK ) );
+
+      bmtw->bmw           = bmw;
+      bmtw->position      = position;
+      bmtw->emw.move_type = type;
+      bmtw->emw.wait      = 0;
+      bmtw->emw.wait_tmp  = wait;
+      bmtw->emw.count     = count * 2;  //閉じて開くを1回とカウントするために倍しておく
+
+      BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bmw->tcb_sys, TCB_BTLV_MCSS_Blink, bmtw, 0 ), TCB_BTLV_MCSS_Blink_CB, GROUP_MCSS );
+      bmw->mcss_tcb_blink_execute |= BTLV_EFFTOOL_Pos2Bit( position );
+    }
     break;
   }
 }
