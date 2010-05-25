@@ -1838,21 +1838,27 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
 
   switch( *seq ){
   case SEQ_START:
-    if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
-      ClientSubProc_Set( wk, selact_CheckFinish );
+    if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION )
+    {
+      if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
+        ClientSubProc_Set( wk, selact_CheckFinish );
+      }else{
+        (*seq) = SEQ_SELECT_WAZA_START;
+      }
     }
     else
     {
       #ifdef ROTATION_NEW_SYSTEM
-      if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION ){
-        (*seq) = SEQ_SELECT_WAZA_START;
+      setupRotationParams( wk, &wk->rotWazaSelParam );
+      (*seq) = SEQ_SELECT_ROTATION_WAZA_START;
+      #else
+      if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
+        ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
-        setupRotationParams( wk, &wk->rotWazaSelParam );
-        (*seq) = SEQ_SELECT_ROTATION_WAZA_START;
+        (*seq) = SEQ_SELECT_WAZA_START;
       }
       #endif
     }
-
     break;
 
   case SEQ_SELECT_WAZA_START:
@@ -1997,21 +2003,26 @@ static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* pa
   {
     bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
     param->poke[ i ].bpp = bpp;
+
+    for(j=0; j<PTL_WAZA_MAX; ++j){
+      param->poke[ i ].fWazaUsable[ j ] = FALSE;
+    }
+
     if( !BPP_IsDead(bpp) )
     {
       u32 wazaCnt = BPP_WAZA_GetCount( bpp );
+      TAYA_Printf("wazaCount=%d\n", wazaCnt);
 
-      for(j=0; j<wazaCnt; ++j){
-        param->poke[ i ].fWazaUsable[ j ] = !is_unselectable_waza( wk, bpp, BPP_WAZA_GetID(bpp,j), NULL );
-      }
-      while( j < wazaCnt ){
-        param->poke[ i ].fWazaUsable[ j++ ] = FALSE;
-      }
-    }
-    else
-    {
-      for(j=0; j<PTL_WAZA_MAX; ++j){
-        param->poke[ i ].fWazaUsable[ j ] = FALSE;
+      for(j=0; j<wazaCnt; ++j)
+      {
+        if( (BPP_WAZA_GetPP(bpp, j) == 0)
+        ||  (is_unselectable_waza(wk, bpp, BPP_WAZA_GetID(bpp,j), NULL))
+        ){
+          param->poke[ i ].fWazaUsable[ j ] = FALSE;
+        }
+        else{
+          param->poke[ i ].fWazaUsable[ j ] = TRUE;
+        }
       }
     }
   }
