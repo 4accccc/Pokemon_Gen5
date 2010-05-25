@@ -21,13 +21,13 @@
 #include "font/font.naix"
 #include "msg\msg_net_err.h"
 #include "sound\pm_sndsys.h"
-#include "sound\pm_voice.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include <dwc.h>
 #include "net/dwc_rap.h"
 #include "msg\msg_wifi_system.h"
 #include "message.naix"
+#include "sound\pm_voice.h"
 #endif //MULTI_BOOT_MAKE
 
 //==============================================================================
@@ -902,5 +902,8 @@ static void Local_ErrUpdate(void)
   GFL_UI_Main();
   //BGMが間延びする問題対応
   PMSND_Main();
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
   PMVOICE_Main();
+#endif //MULTI_BOOT_MAKE
 }
