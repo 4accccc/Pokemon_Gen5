@@ -553,7 +553,6 @@ EVENT_START   ev_pos_r03_rival_01
 	
 	//夢の跡地のイベントを終了
 	_FLAG_SET(FV_D01R0101_SUPPORT_01)
-	$WK_SCENE_D01R0101_POKE = 5
 	
 	//***フラグ操作：ストッパーを有効にする***
 	$WK_SCENE_R03_PLASMA = 1
