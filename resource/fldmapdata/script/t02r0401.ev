@@ -39,7 +39,6 @@ EVENT_START   ev_t02r0401_girl4_01
 		//私の好きな曲 弾いてあげましょうか？
 		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_girl4_01 )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		IF $SCWK_ANSWER == SCR_YES THEN
 			//では聞いてください
@@ -110,8 +109,7 @@ EVENT_START   ev_t02r0401_man2_01
 		//ドラム聞く？
 		_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_01 )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
-		
+
 		IF $SCWK_ANSWER == SCR_YES THEN
 			//では聞いてください
 			_BALLOONWIN_TALKOBJ_MSG( msg_t02r0401_man2_02 )
