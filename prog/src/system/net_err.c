@@ -207,6 +207,13 @@ void NetErr_Main(void)
             //タイムアウトか相手と切断していたならばならば
             NetErrSystem.wifi_msg = dwc_message_0022;
           }
+          else if( cp_dwc_error->errorUser == ERRORCODE_CRC
+              || cp_dwc_error->errorUser == ERRORCODE_SYSTEM 
+              || cp_dwc_error->errorUser == ERRORCODE_SENDQUEUE)
+          {
+            //タイムアウトか相手と切断していたならばならば
+            NetErrSystem.wifi_msg = dwc_message_0015;
+          }
           else
           {
             //DWCのエラーならば
@@ -842,24 +849,7 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
 
       mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
           ARCID_MESSAGE, NARC_message_net_err_dat, HEAPID_NET_TEMP);
-/*
-      switch( nes->error )
-      { 
-        //致命的ではないエラー
-      case WM_ERRCODE_NO_KEYSET:
-      //case WM_ERRCODE_NO_DATASET: //WM_ERRCODE_NO_KEYSETと同じ値
-      case WM_ERRCODE_NO_CHILD:
-      case WM_ERRCODE_TIMEOUT:
-      case WM_ERRCODE_SEND_QUEUE_FULL:
-      case WM_ERRCODE_INVALID_POLLBITMAP:
-      case WM_ERRCODE_SEND_FAILED:
-        msgno = 0;
-        break;
 
-      default:
-        msgno = 1;
-      }
-*/
       if( fatal_error == TRUE )
       {
         msgno = net_error_0002;
