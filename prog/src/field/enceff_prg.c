@@ -200,7 +200,7 @@ static GMEVENT_RESULT MainEvt( GMEVENT* event, int* seq, void* work )
     if( GFL_FADE_CheckFade() == FALSE ){
       evt_work->BrightCount++;
       
-      if( evt_work->BrightCount < 3 ){
+      if( evt_work->BrightCount < FLASH_COUNT ){
         GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
         (*seq) = 1;

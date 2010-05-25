@@ -15,6 +15,7 @@
 #include "enceffno_def.h"
 
 #define FLASH_SPEED (0)   //フェードフラッシュのスピード
+#define FLASH_COUNT (2)   //フラッシュ回数
 
 typedef struct ENCEFF_CNT_tag * ENCEFF_CNT_PTR;
 

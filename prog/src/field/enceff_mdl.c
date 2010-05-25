@@ -264,7 +264,7 @@ static GMEVENT_RESULT ev_encEffectFunc( GMEVENT *event, int *seq, void *wk )
     if( GFL_FADE_CheckFade() == FALSE ){
       work->count++;
       
-      if( work->count < 3 ){
+      if( work->count < FLASH_COUNT ){
         GFL_FADE_SetMasterBrightReq(
           GFL_FADE_MASTER_BRIGHT_WHITEOUT_MAIN, 0, 16, FLASH_SPEED );
         (*seq) = 1;
