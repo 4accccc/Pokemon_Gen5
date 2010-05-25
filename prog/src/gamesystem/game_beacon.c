@@ -265,10 +265,12 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
         }
         
         if(answer != 0){  //0‚Í–³‰ñ“š
-          QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
-          QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
-          bsys->new_entry = TRUE;
-          MATSUDA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
+          if(QuestionnaireWork_IsTodayAnswerNumFull(questsave, search_question_id, answer) == FALSE){
+            QuestionnaireWork_AddTodayCount(questsave, search_question_id, 1);
+            QuestionnaireWork_AddTodayAnswerNum(questsave, search_question_id, answer, 1);
+            bsys->new_entry = TRUE;
+            MATSUDA_Printf("QuestionAnswerSet id=%d, answer=%d\n", search_question_id, answer);
+          }
         }
       }
     } 

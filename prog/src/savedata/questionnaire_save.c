@@ -310,6 +310,27 @@ static u32 _Get_AnswerNo(int question_id, int answer_type)
 
 //==================================================================
 /**
+ * 指定項目の答えた人数が最大値に達しているかどうか
+ *
+ * @param   qsw		        アンケートセーブワークへのポインタ
+ * @param   question_id		質問ID
+ * @param   answer_type		質問ID毎の項目No ※0:回答0  1:回答1  2:回答2...
+ *
+ * @retval  BOOL		最大値に達している場合 TRUE
+ */
+//==================================================================
+BOOL QuestionnaireWork_IsTodayAnswerNumFull(QUESTIONNAIRE_SAVE_WORK* qsw, int question_id, int answer_type)
+{ 
+  u8 today_count = QuestionnaireWork_GetTodayAnswerNum(qsw, question_id, answer_type);
+  
+  if(QUESTIONNAIRE_TODAY_ANSWER_COUNT_MAX <= today_count){
+    return TRUE;
+  } 
+  return FALSE;
+}
+
+//==================================================================
+/**
  * 指定項目の答えた人数を取得：今日の答え
  *
  * @param   qsw		        アンケートセーブワークへのポインタ
