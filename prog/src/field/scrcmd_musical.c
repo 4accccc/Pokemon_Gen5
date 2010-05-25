@@ -1167,7 +1167,8 @@ static void EvCmdIrcEntry_CallBack( void* wk )
   GAMEDATA *gdata = SCRCMD_WORK_GetGameData( cbWork->scWork );
   GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( gsys );
 
-  if( cbWork->musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_EXIT )
+  if(( cbWork->musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_EXIT )
+     &&( cbWork->musScriptWork->irEntryWork.selectType != EVENTIRCBTL_ENTRYMODE_RETRY ))
   {
     *cbWork->musScriptWork->scriptRet = TRUE;
     MUS_COMM_InitAfterIrcConnect( cbWork->musScriptWork->commWork );
