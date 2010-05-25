@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:32:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T12:50:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -412,13 +412,13 @@
 		<language name="JPN" width="256">じいさん『わしは　３ばんどうろで
 そだてやを　やっておるんじゃ！[BE:01:ページ切り替え（クリア）]
 そだててほしい　ポケモンが　いれば
-えんりょせずに　もってくるんじゃ！[BE:01:ページ切り替え（クリア）]
+えんりょせずに　あずけておくれ！[BE:01:ページ切り替え（クリア）]
 ……ふう　かんこうに　きて
 エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">じいさん『わしは　３番道路で
 育て屋を　やっておるんじゃ！[BE:01:ページ切り替え（クリア）]
 育ててほしい　ポケモンが　いれば
-遠慮せずに　もってくるんじゃ！[BE:01:ページ切り替え（クリア）]
+遠慮せずに　預けておくれ！[BE:01:ページ切り替え（クリア）]
 ……ふう　観光に　来て
 エライめに　あったもんじゃ！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -541,7 +541,7 @@
 じゃあ　入ろうっ！▼</language>
 	</row>
 
-	<row id="msg_c04_white_07" back-color="#ffff00,,,#ffff00,,#ffff00,#ffff00,,,,,,#ffff00,,,,,,">
+	<row id="msg_c04_white_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♀
 ・msg_c04_white_04イベント発生させずに
 　ミュージカルホールの前に到達したときは
@@ -775,7 +775,7 @@
 ……　……　そうだよねえ▼
 旅を　続けたいのが
 ベルの　ワガママと　いうなら▼
-旅を　止めさせたいのは
+旅を　やめさせたいのは
 わたしの　ワガママ　だ▼
 しかも　どう　考えても
 わたしの　ほうが　子供っぽい▼</language>
@@ -811,9 +811,9 @@
 		<attribute name="キャラ指定">男性
 サポートの父親</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]
-ベルを　よろしく　たのむよ▼</language>
+ベルを　よろしく　たのむね▼</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]
-ベルを　よろしく　頼むよ▼</language>
+ベルを　よろしく　頼むね▼</language>
 	</row>
 
 	<row id="msg_c04_white_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -918,35 +918,32 @@
 じゃあね　[1:00:トレーナー名:0]！▼</language>
 	</row>
 
-	<row id="msg_c04_footballm_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_footballm_01">
 		<comment>♂
-・仮メッセージ</comment>
+・ビッグスタジアム、リトルコートへの誘導</comment>
 		<attribute name="キャラ指定">FOOTBALLM
 アメフト選手</attribute>
-		<language name="JPN" width="256">スポーツの　まち！
-ライモンシティに　ようこそ！[BE:01:ページ切り替え（クリア）]
-すきな　スポーツしせつに
-あしを　はこんで　みてくれ！</language>
-		<language name="JPN_KANJI" width="256">スポーツの街！
-ライモンシティに　ようこそ！[BE:01:ページ切り替え（クリア）]
-好きな　スポーツ施設に
-足を　運んでみてくれ！</language>
+		<language name="JPN" width="256">オレたち　スポーツマンの
+ポケモンとの　チームプレイ！▼
+ビッグスタジアムや　リトルコートで
+おみせするから　ぜひ　きてくれよ！</language>
+		<language name="JPN_KANJI" width="256">オレたち　スポーツマンの
+ポケモンとの　チームプレイ！▼
+ビッグスタジアムや　リトルコートで
+披露するから　ぜひ　来てくれよ！</language>
 	</row>
 
-	<row id="msg_c04_clown_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+	<row id="msg_c04_clown_01">
+		<comment>♂</comment>
 		<attribute name="キャラ指定">CLOWN
 ピエロ</attribute>
-		<language name="JPN" width="256">……おきゃくさん
-じつは　ライモンシティって▽
-ポケモンしょうぶの　メッカですよ[BE:01:ページ切り替え（クリア）]
-あちこちの　しせつに
+		<language name="JPN" width="256">……じつは　ライモンシティって
+ポケモンしょうぶの　メッカですよ▼
+そこいらの　しせつに
 ポケモントレーナーが　いますから</language>
-		<language name="JPN_KANJI" width="256">……お客さん
-実は　ライモンシティって▽
-ポケモン勝負の　メッカですよ[BE:01:ページ切り替え（クリア）]
-そこかしこの　施設に
+		<language name="JPN_KANJI" width="256">……実は　ライモンシティって
+ポケモン勝負の　メッカですよ▼
+そこいらの　施設に
 ポケモントレーナーが　いますから</language>
 	</row>
 
@@ -960,11 +957,11 @@
 ちょいとした　ゆめ　きぶんだぜ</language>
 		<language name="JPN_KANJI" width="256">ぶらり　電車の　旅……▼
 ギアステーションから
-カナワタウン行きに　のれば▽
+カナワタウン行きに　乗れば▽
 ちょいとした　夢気分だぜ</language>
 	</row>
 
-	<row id="msg_c04_middleman2_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_middleman2_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">MIDDLEMAN2
 太ったおじさん</attribute>
@@ -976,20 +973,25 @@
 体が　フワフワした　感じ！</language>
 	</row>
 
-	<row id="msg_c04_backpackerw_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_backpackerw_01">
 		<comment>♀
-・仮メッセージ</comment>
+・５番道路への誘導</comment>
 		<attribute name="キャラ指定">BACKPACKERW
 バックパッカー♀</attribute>
-		<language name="JPN" width="256">なんて　きらびやかな……
-いるだけで　きもちも　ゴージャス！！</language>
-		<language name="JPN_KANJI" width="256">なんて　きらびやかな……
-いるだけで　気持ちも　ゴージャス！！</language>
+		<language name="JPN" width="256">５ばんどうろで　ひしめく
+パフォーマーたち……▼
+ポケモンと　トレーナーの
+たのしそうな　ようすを　みると▽
+こころに　エネルギーが　たまります！</language>
+		<language name="JPN_KANJI" width="256">５番道路で　ひしめく
+パフォーマーたち……▼
+ポケモンと　トレーナーの
+楽しそうな　様子を　みると▽
+心に　エネルギーが　たまります！</language>
 	</row>
 
-	<row id="msg_c04_girl3_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_girl3_01">
 		<comment>♀
-・仮メッセージ
 ・babygirl1、middlewoman1とセット</comment>
 		<attribute name="キャラ指定">GIRL3
 少女：聡明</attribute>
@@ -999,9 +1001,8 @@
 遊園地に　連れてきてもらったの！</language>
 	</row>
 
-	<row id="msg_c04_babygirl1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
-		<comment>♀
-・仮メッセージ</comment>
+	<row id="msg_c04_babygirl1_01">
+		<comment>♀</comment>
 		<attribute name="キャラ指定">BABYGIRL1
 女の子</attribute>
 		<language name="JPN" width="256">かんらんしゃ！　かんらんしゃ！
@@ -1010,15 +1011,19 @@
 あたし　かんらんしゃ　だいすきッ！！</language>
 	</row>
 
-	<row id="msg_c04_middlewoman1_02" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
+	<row id="msg_c04_middlewoman1_02">
 		<comment>♀
-・仮メッセージ</comment>
+・ポケモンジムへの誘導</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN1
 おばさん</attribute>
-		<language name="JPN" width="256">きいたけれど　ここの　ジムって
-ジェットコースターなんですって！？</language>
-		<language name="JPN_KANJI" width="256">聞いたけれど　ここの　ジムって
-ジェットコースターなんですって！？</language>
+		<language name="JPN" width="256">ライモンの　ポケモンジムは
+ゆうえんちの　なか　ですって！▼
+さぞかし　おどろきの
+ギミックが　あるんでしょうね！</language>
+		<language name="JPN_KANJI" width="256">ライモンの　ポケモンジムは
+遊園地の　中ですって！▼
+さぞかし　驚きの
+ギミックが　あるんでしょうね！</language>
 	</row>
 
 	<row id="msg_c04_trainerw_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1122,7 +1127,7 @@
 		<language name="JPN_KANJI" width="256">ミュージカル　ホール</language>
 	</row>
 
-	<row id="msg_c04_sign6_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04_sign6_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・リトルコート側</comment>
 		<attribute name="キャラ指定">お得な掲示板</attribute>
@@ -1142,7 +1147,7 @@
 ポケモン勝負が　できるかも！</language>
 	</row>
 
-	<row id="msg_c04_sign7_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+	<row id="msg_c04_sign7_01" text-color="#000000,,,,,#000000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
 		<comment>BGメッセージ
 ・ミュージカルホール側</comment>
 		<attribute name="キャラ指定">お得な掲示板</attribute>
