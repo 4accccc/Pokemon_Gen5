@@ -207,6 +207,7 @@ CTVT_DRAW_WORK* CTVT_DRAW_InitSystem( COMM_TVT_WORK *work , const HEAPID heapId 
   drawWork->penSize = DSPS_CIRCLE_1;
   drawWork->stampType = DSPS_STAMP_HEART;
   drawWork->editMode = CDED_PEN;
+  drawWork->isBefStamp = FALSE;
 
   //バージョンで白黒を変える
   if( GET_VERSION() == VERSION_BLACK )
@@ -443,7 +444,6 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   drawWork->dispBarScroll = 24;
   drawWork->isHold = FALSE;
   drawWork->isTouch = FALSE;
-  drawWork->isBefStamp = FALSE;
   drawWork->isDispPenSize = FALSE;
   drawWork->isDispStampType = FALSE;
   drawWork->isUpdateInfo = FALSE;
@@ -484,6 +484,20 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   //サンプリング終了
   GFL_UI_TP_AutoStop();
 #endif //CTVT_DRAW_USE_SAMPLING
+
+  //スポイトだったら戻す
+  if( drawWork->editMode == CDED_SPOITO )
+  {
+    if( drawWork->isBefStamp == FALSE )
+    {
+      drawWork->editMode = CDED_PEN;
+    }
+    else
+    {
+      drawWork->editMode = CDED_STAMP;
+    }
+  }
+
 
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , heapId );
   GFL_NET_ReloadIcon();
