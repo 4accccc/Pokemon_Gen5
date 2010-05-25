@@ -4013,7 +4013,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // ÉèÉUèoÇµé∏îsîªíËÇQ
     if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock, fReqWaza) ){
-      fPPDecrement = FALSE;
+       fPPDecrement = FALSE;
        break;
      }
 

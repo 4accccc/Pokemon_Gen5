@@ -3299,13 +3299,13 @@ static void handler_Juden_WazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 static const BtlEventHandlerTable*  ADD_HorobiNoUta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_START,    handler_HorobiNoUta_Exe          },   // ワザ出し確定ハンドラ
-    { BTL_EVENT_MIGAWARI_EXCLUDE,  handler_Common_MigawariEffctive  },   // みがわりチェック
+    { BTL_EVENT_WAZA_EXECUTE_EFFECTIVE, handler_HorobiNoUta_Exe          },  // ワザ処理終了（有効）ハンドラ
+    { BTL_EVENT_MIGAWARI_EXCLUDE,       handler_Common_MigawariEffctive  },  // みがわりチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// ワザ処理終了（有効）ハンドラ
 static void handler_HorobiNoUta_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
