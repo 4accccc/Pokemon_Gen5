@@ -941,6 +941,13 @@ static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
       {
         FLDMSGBG *p_msgbg	= FIELDMAP_GetFldMsgBG( p_wk->p_fieldmap );
         FLDMSGBG_ResetBGResource( p_msgbg );
+#ifdef PM_DEBUG
+        {
+          FIELD_DEBUG_WORK *p_fld_debug;
+          p_fld_debug = FIELDMAP_GetDebugWork( p_wk->p_fieldmap );
+          FIELD_DEBUG_RecoverBgCont( p_fld_debug );
+        }
+#endif
       }
       p_wk->exit_seq  = SEQ_EXIT;
       break;

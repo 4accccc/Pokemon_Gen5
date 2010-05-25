@@ -115,6 +115,7 @@ static void g3d_unit_Draw( FIELD_DEBUG_WORK *work );
 
 
 static void DebugFont_Init( FIELD_DEBUG_WORK *work );
+static void DebugFont_InitResource( FIELD_DEBUG_WORK *work );
 static void DebugFont_Put( u16 *screen, char c, u16 x, u16 y );
 static void DebugFont_Print(
 	FIELD_DEBUG_WORK *work, u16 x, u16 y, const char *msgBuf );
@@ -433,8 +434,6 @@ static void g3d_unit_Draw( FIELD_DEBUG_WORK *work )
 //--------------------------------------------------------------
 static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 {
-	void *buf;
-  
   { //BGリソースをクリア
     FLDMSGBG *fmb = FIELDMAP_GetFldMsgBG( work->pFieldMainWork );
     FLDMSGBG_ReleaseBG2Resource( fmb );
@@ -448,15 +447,35 @@ static void DebugFont_Init( FIELD_DEBUG_WORK *work )
 			FLDBG_MFRM_EFF1_SCRBASE, FLDBG_MFRM_EFF1_CHARBASE, FLDBG_MFRM_EFF1_CHARSIZE,
 			GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
 		};
-		
+    
 		GFL_BG_SetBGControl( work->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
 		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
-		GFL_BG_FillCharacter( work->bgFrame, 0x00, 1, 0 );
+	}
+	
+  { //クリアキャラ
+  	GFL_BG_FillCharacter( work->bgFrame, 0x00, 1, 0 );
+  }
+
+  DebugFont_InitResource( work );
+}
+
+//--------------------------------------------------------------
+/**
+ * システムフォント初期化　リソース初期化
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DebugFont_InitResource( FIELD_DEBUG_WORK *work )
+{
+	void *buf;
+  
+  { //クリアキャラ
 		GFL_BG_FillScreen( work->bgFrame,
 			0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
 		GFL_BG_LoadScreenReq( work->bgFrame );
-	}
-	
+  }
+  
 	{	//パレット
 		NNSG2dPaletteData *pal;
 		buf = GFL_ARC_LoadDataAlloc(
@@ -565,13 +584,15 @@ static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
 void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
 {
 	if( work->flag_pos_print == FALSE ){
+		GFL_BG_SetVisible( work->bgFrame, VISIBLE_OFF );
 		work->flag_pos_print = TRUE;
 		work->flag_pos_update = TRUE;
     resetBgCont( work );
+    DebugFont_InitResource( work );
 		GFL_BG_SetVisible( work->bgFrame, VISIBLE_ON );
 	}else{
 		work->flag_pos_print = FALSE;
-
+    
     // スクリーンのクリア
     GFL_BG_ClearScreen( work->bgFrame );
 		GFL_BG_LoadScreenReq( work->bgFrame );
