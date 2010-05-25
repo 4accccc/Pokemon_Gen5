@@ -754,7 +754,23 @@ enum {
 	NARC_trfgra_trwb_bchamp2_NMCR = 740,
 	NARC_trfgra_trwb_bchamp2_NMAR = 741,
 	NARC_trfgra_trwb_bchamp2_NCEC = 742,
-	NARC_trfgra_trwb_bchamp2_NCLR = 743
+	NARC_trfgra_trwb_bchamp2_NCLR = 743,
+	NARC_trfgra_trwb_hero_s_NCGR = 744,
+	NARC_trfgra_trwb_hero_s_NCBR = 745,
+	NARC_trfgra_trwb_hero_s_NCER = 746,
+	NARC_trfgra_trwb_hero_s_NANR = 747,
+	NARC_trfgra_trwb_hero_s_NMCR = 748,
+	NARC_trfgra_trwb_hero_s_NMAR = 749,
+	NARC_trfgra_trwb_hero_s_NCEC = 750,
+	NARC_trfgra_trwb_hero_s_NCLR = 751,
+	NARC_trfgra_trwb_heroine_s_NCGR = 752,
+	NARC_trfgra_trwb_heroine_s_NCBR = 753,
+	NARC_trfgra_trwb_heroine_s_NCER = 754,
+	NARC_trfgra_trwb_heroine_s_NANR = 755,
+	NARC_trfgra_trwb_heroine_s_NMCR = 756,
+	NARC_trfgra_trwb_heroine_s_NMAR = 757,
+	NARC_trfgra_trwb_heroine_s_NCEC = 758,
+	NARC_trfgra_trwb_heroine_s_NCLR = 759
 };
 
 /* NARC_TRFGRA_NAIX_ */
