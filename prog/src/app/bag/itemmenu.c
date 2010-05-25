@@ -1778,7 +1778,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   // ソート
   }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS &&
+				ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, TRUE );
       pWork->oamlistpos_old = 0xffff;
@@ -1793,10 +1794,12 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   {
     if( GFL_UI_KEY_GetTrg() )
     {
-      PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
-      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
-      KTST_SetDraw( pWork, TRUE );
-      return;
+			if( ITEMMENU_GetItemPocketNumber( pWork ) != 0 ){
+	      PMSND_PlaySE( SE_BAG_CURSOR_MOVE );
+	      ITEMDISP_upMessageRewrite(pWork); // 上画面表示
+	      KTST_SetDraw( pWork, TRUE );
+	      return;
+			}
     }
   }
 
@@ -1815,7 +1818,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
   // 並び替え
   else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
   {
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS &&
+				ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       GFL_STD_MemClear( pWork->ScrollItem, sizeof( pWork->ScrollItem ) );
       MYITEM_ITEM_STCopy( pWork->pMyItem, pWork->ScrollItem, pWork->pocketno, TRUE );  //取得
       GFL_CLACT_WK_SetAnmSeq( pWork->clwkCur , 2 );
@@ -1852,6 +1856,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
         pWork->pocketno = 0;
       }
 //      GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+	    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
       return;
     }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
@@ -1861,6 +1866,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
         pWork->pocketno = BAG_POKE_MAX-1;
       }
 //      GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
+	    GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
       SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
       return;
     }
@@ -3555,7 +3561,8 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   // ソートボタン
   }else if(BUTTONID_SORT == bttnid){
     // 技マシン・木の実は処理なし
-    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS ){
+    if( pWork->pocketno != BAG_POKE_WAZA && pWork->pocketno != BAG_POKE_NUTS &&
+				ITEMMENU_GetItemPocketNumber( pWork ) > 1 ){
       SORT_Button( pWork );
       KTST_SetDraw( pWork, FALSE );
       pWork->oamlistpos_old = 0xffff;
