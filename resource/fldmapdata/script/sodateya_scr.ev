@@ -300,6 +300,8 @@ sodateya_adopt_pokemon_core:
     // 選択ポケモンがタマゴかどうかを調べる
     _CHECK_TEMOTI_EGG( select_poke_is_egg, select_party_pos )
     // 選択ポケモンがタマゴの場合
+    // ※育て屋専用のポケモンリスト画面では、
+    //   タマゴを選択できないため本来は必要ない処理だが、念のためチェックする。
     IF $select_poke_is_egg == TRUE THEN
       $retval_adopt_core = 1
     // 選択ポケモンがタマゴでない場合
@@ -376,19 +378,19 @@ sodateya_adopt_pokemon:
 
     // ポケモンを預けた場合
 		SWITCH $retval_adopt_core
-		CASE 0 THEN	//-------------------------------- キャンセル ==> 終了
+		CASE 0 THEN	// キャンセル ==> 終了
 			//「そうかい またおいで」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_03, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE() 
       _RET
-		CASE 1 THEN //-------------------------------- タマゴを選択 ==> 終了
+		CASE 1 THEN // タマゴを選択 ==> 終了
       //「それは育てられんぞ」
       _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_07, SCWK_TARGET_OBJID, POS_DOWN )
       _LAST_KEYWAIT()
       _BALLOONWIN_CLOSE() 
       _RET
-    CASE 2 THEN //-------------------------------- 預け完了
+    CASE 2 THEN // 預け完了
       // 最大数まで預けていなければ, ループする
       IF $sodateya_poke_num < $sodateya_poke_max THEN
         //「もう1匹 預けるかい？」
