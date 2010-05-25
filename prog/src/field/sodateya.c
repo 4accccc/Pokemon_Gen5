@@ -19,11 +19,12 @@
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_personal.h"
 #include "poke_tool/poke_memo.h"
+#include "waza_tool/wazano_def.h" // for WAZANO_xxxx 
 
 #include "fieldmap.h"
-#include "pokemon_egg.h"
+#include "pokemon_egg.h" 
 
-#include "arc/arc_def.h"  // for ARCID_PMSTBL
+#include "arc/arc_def.h" // for ARCID_PMSTBL
 
 #include "sodateya.h" 
 
@@ -60,6 +61,7 @@ struct _SODATEYA {
 //========================================================================================
 static u32 CalcExpAdd( u32 exp1, u32 exp2 );
 static void GrowUpPokemon( POKEMON_PARAM* poke, u32 exp );
+static void LearnNewWaza( POKEMON_PARAM* poke, u32 wazano );
 static void SortSodateyaPokemon( SODATEYA_WORK* work );
 static u32 LoveCheck( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
 static u32 CalcLoveLv_normal( const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2 );
@@ -492,17 +494,51 @@ static void GrowUpPokemon( POKEMON_PARAM* poke, u32 addExp )
   // 成長後のレベルを取得
   after_lv = PP_Get( poke, ID_PARA_level, NULL );
 
-  // 技を更新 (成長過程で覚える技をプッシュ)
+  // 技を更新 ( 成長過程で覚える技を習得 )
   POKE_PERSONAL_LoadWazaOboeTable( monsno, formno, waza_table );
   i = 0;
-  while( POKEPER_WAZAOBOE_IsEndCode( waza_table[i] ) )
+  while( !POKEPER_WAZAOBOE_IsEndCode( waza_table[i] ) )
   {
     int waza_lv = POKEPER_WAZAOBOE_GetLevel( waza_table[i] );
     int waza_id = POKEPER_WAZAOBOE_GetWazaID( waza_table[i] );
-    if( after_lv < waza_lv ) break;
-    if( before_lv < waza_lv ) PP_SetWazaPush( poke, waza_id );
+    if( after_lv < waza_lv ) { break; }
+    if( before_lv < waza_lv ) { LearnNewWaza( poke, waza_id ); }
     i++;
   } 
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 技を覚えさせる
+ *
+ * @param poke
+ * @param wazano
+ */
+//---------------------------------------------------------------------------------------- 
+static void LearnNewWaza( POKEMON_PARAM* poke, u32 wazano )
+{
+  int pos;
+  u32 param_id[ PTL_WAZA_MAX ] = 
+  {
+    ID_PARA_waza1,
+    ID_PARA_waza2,
+    ID_PARA_waza3,
+    ID_PARA_waza4,
+  };
+
+  // 空き要素に追加
+  for( pos=0; pos < PTL_WAZA_MAX; pos++ )
+  {
+    u32 waza = PP_Get( poke, param_id[ pos ], NULL );
+
+    if( waza == WAZANO_NULL ) {
+      PP_SetWazaPos( poke, wazano, pos );
+      return;
+    }
+  }
+
+  // 空きがなければプッシュする
+  PP_SetWazaPush( poke, wazano );
 }
 
 //---------------------------------------------------------------------------------------- 
