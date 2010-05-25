@@ -1106,7 +1106,7 @@ BOOL FBI_TOOL_MakeRomTrainerData(
  *  BSUBWAY_TRAINER_ROM_DATA型をメモリ確保して返すので、
  *  呼び出し側が明示的に解放すること
  *  @param tr_data BSUBWAY_PARTER_DATA
- *  @param tr_no トレーナーナンバー
+ *  @param zero_org_tr_no トレーナーナンバー　ゼロオリジン
  *  @param heapID HEAPID
  *  @retval BSUBWAY_TRAINER_ROM_DATA*
  *  TOWER_AI_MULTI_ONLY フィールド上で呼ばれる処理
@@ -1114,7 +1114,7 @@ BOOL FBI_TOOL_MakeRomTrainerData(
  */
 //--------------------------------------------------------------
 BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
-    BSUBWAY_PARTNER_DATA *tr_data, u16 tr_no, HEAPID inHeapID )
+    BSUBWAY_PARTNER_DATA *tr_data, u16 zero_org_tr_no, HEAPID inHeapID )
 {
   BSUBWAY_TRAINER_ROM_DATA  *trd;
   GFL_MSGDATA *msgdata;
@@ -1125,14 +1125,14 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
       NARC_message_btdtrname_dat, inHeapID );
   
   MI_CpuClear8(tr_data, sizeof(BSUBWAY_PARTNER_DATA));
-  trd = GetTrainerRomData(tr_no, inHeapID);
+  trd = GetTrainerRomData(zero_org_tr_no, inHeapID);
 
   //トレーナーIDをセット
-  tr_data->bt_trd.player_id = tr_no + 1; //1 origin
+  tr_data->bt_trd.player_id = zero_org_tr_no + BSW_TR_ARCDATANO_ORG; //1 origin
 
   //トレーナー出現メッセージ
   tr_data->bt_trd.appear_word[0] = 0xFFFF;
-  tr_data->bt_trd.appear_word[1] = tr_no*3;
+  tr_data->bt_trd.appear_word[1] = zero_org_tr_no*3;
   
   //トレーナーデータをセット
   tr_data->bt_trd.tr_type=trd->tr_type;
@@ -1153,7 +1153,7 @@ BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
 #endif
 #endif  //PM_DEBUG
 #endif  
-  name = GFL_MSG_CreateString( msgdata, tr_no );
+  name = GFL_MSG_CreateString( msgdata, zero_org_tr_no );
   GFL_STR_GetStringCode( name,
       &tr_data->bt_trd.name[0], BUFLEN_PERSON_NAME );
   GFL_STR_DeleteBuffer(name);

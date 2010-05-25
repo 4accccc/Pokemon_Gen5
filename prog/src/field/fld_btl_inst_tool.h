@@ -43,7 +43,7 @@ extern u32 FBI_TOOL_MakePokemonParam(
     u8 mem_idx, BOOL itemfix, HEAPID heapID );
 
 extern BSUBWAY_TRAINER_ROM_DATA * FBI_TOOL_AllocTrainerRomData(
-    BSUBWAY_PARTNER_DATA *tr_data, u16 tr_no, HEAPID inHeapID );
+    BSUBWAY_PARTNER_DATA *tr_data, u16 zero_org_tr_no, HEAPID inHeapID );
 
 extern BOOL FBI_TOOL_SetBSWayPokemonParam(
     BSUBWAY_TRAINER_ROM_DATA *trd,
