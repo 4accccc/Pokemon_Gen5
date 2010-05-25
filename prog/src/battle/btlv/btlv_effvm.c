@@ -263,7 +263,7 @@ typedef struct
 {
   u8  head[ 8 ];    //ヘッダーデータ
   u16 size;         //spaに含まれるsprの数らしい
-  u8  data[ 1 ];    //実データ？（取りたいのはサイズだけなので、とりあえず１個だけ）
+  u8  data[ 1 ];    //実データ
 }SPA_DATA;
 
 //ウインドウ操作
@@ -4437,7 +4437,6 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
     }
     break;
   case BTLEFF_POKEMON_SIDE_DEFENCE_PAIR:  //防御側ペア
-    //@todo 技のRANGEにあわせて対象となる立ち位置を返すようにしなければならない
     if( bevw->defence_pos > BTLV_MCSS_POS_BB ){
       pos[ 0 ] = bevw->defence_pos ^ BTLV_MCSS_POS_PAIR_BIT;
     }

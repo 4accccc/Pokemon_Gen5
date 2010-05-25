@@ -1945,11 +1945,9 @@ static  void  Gauge_LevelUp( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
   switch( bgcl->seq_no ){
   case 0:
     PMSND_PlaySE( SEQ_SE_EXPMAX );
-    /** @TODO レベルアップエフェクトを入れたい */
     bgcl->seq_no++;
     break;
   case 1:
-    /** @TODO レベルアップエフェクト終了チェックを入れたい */
     bgcl->seq_no++;
     break;
   case 2:
