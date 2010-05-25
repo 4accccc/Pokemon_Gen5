@@ -46,8 +46,8 @@ enum
 	//PLT
 	PLT_OBJ_M_COMMON	  = 0,  //3本
   PLT_OBJ_M_POKEICON  = 4,  //3本
-
-  PLT_OBJ_M_PMS       = 7,
+  PLT_OBJ_M_PMS       = 7,  //5本
+  PLT_OBJ_M_TRAINER   = 13,
 	PLT_OBJ_S_COMMON	  = 0,  //3本
   PLT_OBJ_S_SPECIAL   = 4,
 

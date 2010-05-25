@@ -1447,12 +1447,12 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
         p_handle  = GFL_ARC_OpenDataHandle( ARCID_POKEICON, GFL_HEAP_LOWID(heapID) );
         p_wk->res_icon_plt  = GFL_CLGRP_PLTT_RegisterComp( p_handle, 
             POKEICON_GetPalArcIndex(),
-            CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, heapID );
+            CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, GFL_HEAP_LOWID(heapID) );
         p_wk->res_icon_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
-            POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), heapID );
+            POKEICON_GetCellArcIndex(), POKEICON_GetAnmArcIndex(), GFL_HEAP_LOWID(heapID) );
         p_wk->res_icon_chr  = GFL_CLGRP_CGR_Register( p_handle,
             POKEICON_GetCgxArcIndexByMonsNumber( mons, form, sex, egg ),
-            FALSE, CLSYS_DRAW_MAIN, heapID );
+            FALSE, CLSYS_DRAW_MAIN, GFL_HEAP_LOWID(heapID) );
         GFL_ARC_CloseDataHandle( p_handle );
       }
       { 
@@ -1478,7 +1478,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
       p_handle  = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, GFL_HEAP_LOWID(heapID) );
       p_wk->res_self_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
                           NARC_wifi_unionobj_wifi_union_obj_NCLR,
-                          CLSYS_DRAW_MAIN, PLT_OBJ_M_POKEICON*0x20, 
+                          CLSYS_DRAW_MAIN, PLT_OBJ_M_TRAINER*0x20, 
                           sc_wifi_unionobj_plt[self], 1, heapID );
       p_wk->res_self_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
           NARC_wifi_unionobj_front00_NCER, 
