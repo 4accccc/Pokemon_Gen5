@@ -955,6 +955,7 @@ static void _changeTimingSaveStart2(POKEMON_TRADE_WORK* pWork)
   if(NET_SAVE_Main(pWork->pNetSave)){
     _removeCallback(pWork);
     NET_SAVE_Exit(pWork->pNetSave);
+    pWork->pNetSave=NULL;
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30);
   }
 }

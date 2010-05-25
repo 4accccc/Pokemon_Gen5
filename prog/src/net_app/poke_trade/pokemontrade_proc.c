@@ -4212,7 +4212,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   GFL_G3D_DRAW_End();
 
-  if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+  if(POKEMONTRADEPROC_IsNetworkMode(pWork) && (pWork->pNetSave==NULL)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
       if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
         NetErr_DispCall( TRUE );
