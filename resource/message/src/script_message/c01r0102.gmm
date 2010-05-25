@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T15:40:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T11:28:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -509,13 +509,12 @@
 
 	<row id="msg_c01r0102_cgear_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>システムメッセージ
-・いいえを選択したときの再確認
-・100422斉藤マ追加</comment>
+・いいえを選択したときの再確認</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">すべての　つうしんきのうが
-オフになりますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">全ての　通信機能が　オフに
-なりますが　よろしいですか？</language>
+		<language name="JPN" width="256">Ｃギアの　きのうが
+せいげんされますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲの　機能が
+制限されますが　よろしいですか？</language>
 	</row>
 
 	<row id="msg_c01r0102_inventor_08">
