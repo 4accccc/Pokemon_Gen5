@@ -3115,7 +3115,7 @@ static void SCROLL_Main( SCROLL_WORK *p_wk, const UI_WORK *cp_ui, MSGWND_WORK *p
       GRAPHIC_StartPalleteFade( p_graphic );
       is_bmpprint_decide  = TRUE;
     }
-    else
+    else if( p_wk->select == CONFIG_LIST_DECIDE )
     {
       p_wk->select++;
       PMSND_PlaySE( CONFIG_SE_MOVE );
