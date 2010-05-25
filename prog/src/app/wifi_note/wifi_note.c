@@ -1204,8 +1204,8 @@ typedef struct {
   u32 title_stridx;     // タイトル描画インデックス
 
   GFL_TCBLSYS   *msgTcblSys;
-  PRINT_STREAM  *printHandle;   //タイトル用
   PRINT_STREAM  *printHandleMsg;  //メッセージ用
+	BOOL	stream_clear_flg;
 
   PRINT_QUE   *printQue;
   PRINT_UTIL * printUtil[NOTE_PRINTUTIL_MAX];
@@ -2786,7 +2786,6 @@ static void Draw_MsgInit( WFNOTE_DRAW* p_draw, HEAPID heapID )
   p_draw->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , heapID );
 
   p_draw->msgTcblSys = GFL_TCBL_Init( heapID , heapID , 3 , 0x100 );
-  p_draw->printHandle = NULL;
   p_draw->printHandleMsg = NULL;
 
   p_draw->printQue = PRINTSYS_QUE_Create( heapID );
@@ -2804,10 +2803,6 @@ static void Draw_MsgExit( WFNOTE_DRAW* p_draw )
   PRINTSYS_QUE_Clear( p_draw->printQue );
   PRINTSYS_QUE_Delete( p_draw->printQue );
 
-  if( p_draw->printHandle != NULL ){
-    PRINTSYS_PrintStreamDelete( p_draw->printHandle );
-    p_draw->printHandle = NULL;
-  }
   if( p_draw->printHandleMsg != NULL ){
     PRINTSYS_PrintStreamDelete( p_draw->printHandleMsg );
     p_draw->printHandleMsg = NULL;
@@ -2925,14 +2920,6 @@ static void Draw_SCRNDATA_Exit( WFNOTE_DRAW* p_draw )
 //-----------------------------------------------------------------------------
 static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, PRINT_UTIL * util, u32 msg_idx )
 {
-/*
-  // タスク動作停止
-  if( p_draw->printHandle != NULL ){
-    PRINTSYS_PrintStreamDelete( p_draw->printHandle );
-    p_draw->printHandle = NULL;
-  }
-*/
-
   // クリア
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win), 0 );
 
@@ -2967,12 +2954,6 @@ static void Draw_BmpTitleWrite( WFNOTE_DRAW* p_draw, PRINT_UTIL * util, u32 msg_
 //-----------------------------------------------------------------------------
 static void Draw_BmpTitleOff( WFNOTE_DRAW* p_draw )
 {
-  // タスク動作停止
-  if( p_draw->printHandle != NULL ){
-    PRINTSYS_PrintStreamDelete( p_draw->printHandle );
-    p_draw->printHandle = NULL;
-  }
-
 //  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(p_draw->title), 0 );
 //  GFL_BMPWIN_TransVramCharacter( p_draw->title );
   GFL_BMPWIN_ClearTransWindow_VBlank( p_draw->title.win );
@@ -4151,9 +4132,39 @@ static void ModeSelect_TalkMsgPrint( WFNOTE_MODESELECT* p_wk, WFNOTE_DRAW* p_dra
  *  @retval FALSE まだ
  */
 //-----------------------------------------------------------------------------
+static BOOL CheckPrintStreamEnd( PRINT_STREAM * stream, BOOL * clear_flg )
+{
+  switch( PRINTSYS_PrintStreamGetState(stream) ){
+  case PRINTSTREAM_STATE_RUNNING:	// 実行中
+    if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+      PRINTSYS_PrintStreamShortWait( stream, 0 );
+    }
+    *clear_flg = FALSE;
+    break;
+
+	case PRINTSTREAM_STATE_PAUSE:		// 一時停止中
+    if( *clear_flg == FALSE ){
+      if( GFL_UI_TP_GetTrg() == TRUE || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B)) ){
+        PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
+        PRINTSYS_PrintStreamReleasePause( stream );
+        *clear_flg = TRUE;
+      }
+    }
+    break;
+
+  case PRINTSTREAM_STATE_DONE:		// 終了
+    PRINTSYS_PrintStreamDelete( stream );
+    *clear_flg = FALSE;
+    return FALSE;
+  }
+
+	return TRUE;
+}
+
+
 static BOOL ModeSelect_TalkMsgEndCheck( const WFNOTE_MODESELECT* cp_wk, WFNOTE_DATA* p_data , WFNOTE_DRAW *p_draw )
 {
-  if( PRINTSYS_PrintStreamGetState( p_draw->printHandleMsg ) == PRINTSTREAM_STATE_DONE ){
+	if( CheckPrintStreamEnd( p_draw->printHandleMsg, &p_draw->stream_clear_flg ) == FALSE ){
 //    p_data->key_mode = MsgPrintGetKeyTouchStatus();
     p_data->key_mode = GFL_APP_END_KEY;
     return TRUE;
@@ -5676,7 +5687,7 @@ static void FList_TalkMsgWrite( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DRAW* p_draw, u3
 //-----------------------------------------------------------------------------
 static BOOL FList_TalkMsgEndCheck( const WFNOTE_FRIENDLIST* cp_wk, WFNOTE_DATA* p_data ,WFNOTE_DRAW* p_draw)
 {
-  if( PRINTSYS_PrintStreamGetState( p_draw->printHandleMsg ) == PRINTSTREAM_STATE_DONE ){
+	if( CheckPrintStreamEnd( p_draw->printHandleMsg, &p_draw->stream_clear_flg ) == FALSE ){
 //    p_data->key_mode = MsgPrintGetKeyTouchStatus();
     p_data->key_mode = GFL_APP_END_KEY;
     return TRUE;
