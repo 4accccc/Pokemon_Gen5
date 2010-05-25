@@ -1978,16 +1978,19 @@ static void SwitchDataDisplayType( RRG_WORK* work )
   UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新
   SetMenuCursorOn( work );            // カーソルが乗っている状態にする
   UpdateBGFont_Answer( work );        // 回答を更新する
+  UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
   UpdateBGFont_Count( work );         // 回答人数を更新する
   UpdateBGFont_NoData( work );        //「ただいま ちょうさちゅう」の表示を更新する
   UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+  UpdateMyAnswerIconOnButton( work ); // 自分の回答アイコン ( ボタン上 ) の表示を更新する
+  UpdateAnalyzeButton( work );        //「報告を見る」ボタンを更新する
   UpdateArrow( work );                // 矢印を更新する
+  VanishAllPercentage( work );        // ％オブジェクトを全消去
 
   // 解析済みの場合のみの更新
-  if( work->analyzeFlag ) {
-    VanishAllPercentage( work ); // ％オブジェクトを全消去
-    SetupPercentages( work );    // ％オブジェクトを再セットアップ
-    DispAllPercentage( work );   // ％オブジェクトを全表示
+  if( work->analyzeFlag && GetCountOfQuestion(work) != 0 ) {
+    SetupPercentages( work );  // ％オブジェクトを再セットアップ
+    DispAllPercentage( work ); // ％オブジェクトを全表示
   }
 
   // 円グラフを出現させる
@@ -2639,6 +2642,9 @@ static void UpdateArrow( RRG_WORK* work )
   // 未解析なら表示しない
   if( !work->analyzeFlag ) { return; }
 
+  // 調査人数がゼロなら表示しない
+  if( GetCountOfQuestion(work) == 0 ) { return; }
+
   // 対象が0%なら表示しない
   if( CIRCLE_GRAPH_GetComponentPercentage_byID( GetMainGraph(work), GetAnswerID(work) ) == 0 ) { return; }
 
@@ -2962,7 +2968,7 @@ static void UpdateBGFont_MyAnswer( RRG_WORK* work )
   STRBUF* strbuf_myAnswer;  // 自分の回答文字列
 
   // 解析前なら表示しない
-  if( work->analyzeFlag == FALSE ) {
+  if( (work->analyzeFlag == FALSE) || (GetCountOfQuestion(work) == 0) ) {
     BG_FONT_SetDrawEnable( work->BGFont[ MAIN_BG_FONT_MY_ANSWER ], FALSE );
     return;
   }
@@ -3132,7 +3138,7 @@ static void UpdateControlCursor( RRG_WORK* work )
 static void UpdateMyAnswerIconOnButton( RRG_WORK* work )
 {
   // 未解析なら表示しない
-  if( work->analyzeFlag == FALSE ) {
+  if( (work->analyzeFlag == FALSE) || (GetCountOfQuestion(work) == 0) ) {
     GFL_CLACT_WK_SetDrawEnable( work->clactWork[ CLWK_MY_ANSWER_ICON_ON_BUTTON ], FALSE );
     return;
   }
