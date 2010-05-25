@@ -585,7 +585,6 @@ GMEVENT *FLD3D_CI_CreateEncCutInEvt(  GAMESYS_WORK *gsys, FLD3D_CI_PTR ptr,
     FLD3D_CI_EVENT_WORK *work;
     work = GMEVENT_GetEventWork(event);
     InitCutinEvtWork(ptr, work);
-    work->MainHook = FALSE;
     work->IsWhiteOut = inWhiteFade;
   }
 
