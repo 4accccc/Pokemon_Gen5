@@ -98,7 +98,7 @@ static MMDL_HEADER s_MMDL_HEADER =
 //=====================================
 #define FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID (1) // 何歩前までチェックするのか？
 
-#define FIELD_CROWD_PEOPLE_PUT_PAR (1) // FIELD_CROWD_PEOPLE_PUT_PAR回に一回意地悪がでる
+#define FIELD_CROWD_PEOPLE_PUT_PAR (8) // FIELD_CROWD_PEOPLE_PUT_PAR回に一回意地悪がでる
 
 
 
@@ -111,7 +111,7 @@ static MMDL_HEADER s_MMDL_HEADER =
 #define FIELD_CROWD_PEOPLE_OBJ_WALK_FRAME (6) // 歩きのフレーム数
 
 
-#define FIELD_CROWD_PEOPLE_SCRIPT_MAX   (4) // OBJCODEのスクリプトの数
+#define FIELD_CROWD_PEOPLE_SCRIPT_MAX   (6) // OBJCODEのスクリプトの数
 
 #define FIELD_CROWD_PEOPLE_TIMEZONE_TBL_MAX   (6) // タイムゾーンテーブルの数
 
@@ -613,7 +613,7 @@ static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD
         }
 
         // 移動方向が一致したら、OK
-        if( (dif_x == move_x) || (dif_z == move_z) )
+        if( (dif_x == move_x) && (dif_z == move_z) )
         {
           return &cp_sys->people_wk[i];
         }
