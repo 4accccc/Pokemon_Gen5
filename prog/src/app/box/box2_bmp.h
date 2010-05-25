@@ -74,7 +74,6 @@ enum {
 	BOX2BMP_MSGID_PARTYOUT_INIT,				// どこへ　あずける？
 	BOX2BMP_MSGID_PARTYOUT_BOXMAX,			// このボックスは　いっぱいだ！
 	BOX2BMP_MSGID_PARTYOUT_MAIL,				// メールを　はずしてください！
-//	BOX2BMP_MSGID_PARTYOUT_CAPSULE,		// ボールカプセルを　はずしてください！
 };
 
 // 道具整理メッセージ表示ＩＤ
@@ -337,12 +336,11 @@ extern void BOX2BMP_SysWinVanishTrans( BOX2_APP_WORK * appwk, u32 winID );
  *
  * @param		syswk		ボックス画面システムワーク
  * @param		winID		BMPWIN ID
- * @param		flg			タッチ or キー
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-extern void BOX2BMP_BoxEndMsgPut( BOX2_SYS_WORK * syswk, u32 winID, BOOL flg );
+extern void BOX2BMP_BoxEndMsgPut( BOX2_SYS_WORK * syswk, u32 winID );
 
 //--------------------------------------------------------------------------------------------
 /**

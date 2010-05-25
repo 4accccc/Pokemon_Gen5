@@ -1568,15 +1568,14 @@ static void SysMesPut( BOX2_SYS_WORK * syswk, u32 strID, u32 winID )
  *
  * @param		syswk		ボックス画面システムワーク
  * @param		winID		BMPWIN ID
- * @param		flg			タッチ or キー
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-void BOX2BMP_BoxEndMsgPut( BOX2_SYS_WORK * syswk, u32 winID, BOOL flg )
+void BOX2BMP_BoxEndMsgPut( BOX2_SYS_WORK * syswk, u32 winID )
 {
-	if( flg == TRUE ){
-		SysMesPut( syswk, msg_boxmes_01_12, winID );
+	if( syswk->dat->callMode == BOX_MODE_SLEEP ){
+		SysMesPut( syswk, msg_boxmes_06_10, winID );
 	}else{
 		SysMesPut( syswk, msg_boxmes_01_13, winID );
 	}
@@ -1830,12 +1829,6 @@ void BOX2BMP_PokeSelectMsgPut( BOX2_SYS_WORK * syswk, u32 pos, u32 msgID, u32 wi
 	case BOX2BMP_MSGID_PARTYOUT_BOXMAX:	// このボックスは　いっぱいだ！
 		str = msg_boxmes_01_14;
 		break;
-
-/*		
-	case BOX2BMP_MSGID_PARTYOUT_CAPSULE:	// ボールカプセルを　はずしてください！
-		str = msg_boxmes_01_31;
-		break;
-*/
 
 	case BOX2BMP_MSGID_PARTYOUT_MAIL:	// メールを　はずしてください！
 		str = msg_boxmes_01_32;

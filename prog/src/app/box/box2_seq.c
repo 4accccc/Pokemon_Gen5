@@ -203,7 +203,6 @@ static int MainSeq_BoxThemaWallPaperMain( BOX2_SYS_WORK * syswk );
 static int MainSeq_BoxThemaWallPaperChange( BOX2_SYS_WORK * syswk );
 static int MainSeq_BoxThemaNameInCall( BOX2_SYS_WORK * syswk );
 static int MainSeq_BoxEndInit( BOX2_SYS_WORK * syswk );
-static int MainSeq_BoxEndCancelInit( BOX2_SYS_WORK * syswk );
 
 static int ChangeSequence( BOX2_SYS_WORK * syswk, int next );
 static int FadeInSet( BOX2_SYS_WORK * syswk, int next );
@@ -426,7 +425,6 @@ static const pBOX2_FUNC MainSeq[] = {
 
 	// 終了処理
 	MainSeq_BoxEndInit,
-	MainSeq_BoxEndCancelInit,
 
 //	MainSeq_PartyInMainRcv,
 //	MainSeq_PartyInPartyFrmIn,
@@ -1545,7 +1543,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case BOX2UI_ARRANGE_MAIN_GET:			// 36: つかむ
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -1638,7 +1636,7 @@ static int MainSeq_ArrangeMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_MENU_CLOSE );
 		}
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case CURSORMOVE_CURSOR_ON:		// カーソル表示
 /*
@@ -2493,7 +2491,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	case BOX2UI_ARRANGE_PARTY_GET:				// 09: つかむ
@@ -2567,7 +2565,7 @@ static int MainSeq_ArrangePartyMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MENU_CLOSE );
 		}
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	default:
@@ -3232,7 +3230,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_BATTLEBOX_MAIN_RETURN2:	// 35: 戻る２
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case BOX2UI_BATTLEBOX_MAIN_GET:			// 36: いどうする
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -3316,7 +3314,7 @@ static int MainSeq_BattleBoxMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_MENU_CLOSE );
 		}
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case CURSORMOVE_CURSOR_ON:		// カーソル表示
 /*
@@ -3511,7 +3509,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_BATTLEBOX_PARTY_RETURN2:		// 08: 戻る２
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
 
 	case BOX2UI_BATTLEBOX_PARTY_GET:				// 09: いどうする
@@ -3556,7 +3554,7 @@ static int MainSeq_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_MENU_CLOSE );
 		}
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_BATTLEBOX_PARTY_END) );
 
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
@@ -3806,7 +3804,7 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_PTIN_MAIN_RETURN2:		// 34: 戻る２
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case BOX2UI_PTIN_MAIN_TSURETEIKU:	// 35: つれていく
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -3884,7 +3882,7 @@ static int MainSeq_PartyInMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_PARTYIN_MENU_CLOSE );
 		}
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case CURSORMOVE_CURSOR_ON:		// カーソル表示
 /*
@@ -4147,7 +4145,7 @@ static int MainSeq_PartyOutMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case BOX2UI_PTOUT_MAIN_AZUKERU:		// 08: あずける
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -4231,7 +4229,7 @@ static int MainSeq_PartyOutMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_PARTYOUT_MENU_CLOSE );
 		}
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	default:
 		ret += BOX2OBJ_POKEICON_TRAY_MAX;
@@ -4693,7 +4691,7 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case BOX2UI_ITEM_MAIN_MENU1:				// 36: いどうする
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -4803,7 +4801,7 @@ static int MainSeq_ItemMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_MENU_CLOSE );
 		}
 		syswk->dat->retMode = BOX_END_MODE_MENU;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	default:
 		if( BOX2MAIN_PokeParaGet( syswk, ret, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
@@ -5673,7 +5671,7 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CANCEL );
 //		BOX2MAIN_PokeInfoOff( syswk );
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	case BOX2UI_ITEM_PARTY_MENU1:			// 09: いどうする
@@ -5751,7 +5749,7 @@ static int MainSeq_ItemPartyMain( BOX2_SYS_WORK * syswk )
 			return BgButtonAnmSet( syswk, BOX2MAIN_WINFRM_MENU6, BOX2SEQ_MAINSEQ_ITEM_PARTY_MENU_CLOSE );
 		}
 //		syswk->dat->retMode = BOX_END_MODE_MENU;
-//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+//		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, ChangeSequence(syswk,BOX2SEQ_MAINSEQ_ARRANGE_PARTY_END) );
 
 	default:
@@ -6022,7 +6020,7 @@ static int MainSeq_SleepMain( BOX2_SYS_WORK * syswk )
 		syswk->dat->retMode = BOX_END_MODE_MENU;
 		syswk->dat->retTray = BOX_RET_SEL_NONE;
 		syswk->dat->retPoke = BOX_RET_SEL_NONE;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case BOX2UI_SLEEP_MAIN_SET:			// 34: ねかせる
 		PMSND_PlaySE( SE_BOX2_DECIDE );
@@ -6097,7 +6095,7 @@ static int MainSeq_SleepMain( BOX2_SYS_WORK * syswk )
 		syswk->dat->retMode = BOX_END_MODE_MENU;
 		syswk->dat->retTray = BOX_RET_SEL_NONE;
 		syswk->dat->retPoke = BOX_RET_SEL_NONE;
-		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT );
+		return ObjButtonAnmSet( syswk, BOX2OBJ_ID_TB_CANCEL, 9, BOX2SEQ_MAINSEQ_BOXEND_INIT );
 
 	case CURSORMOVE_NO_MOVE_UP:			// 十字キー上が押されたが、移動なし
 	case CURSORMOVE_NO_MOVE_DOWN:		// 十字キー下が押されたが、移動なし
@@ -7505,9 +7503,9 @@ static int MainSeq_BoxThemaNameInCall( BOX2_SYS_WORK * syswk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		メインシーケンス：ボックス終了「はい・いいえ」セット（ボタン）
+ * @brief		メインシーケンス：ボックス終了「はい・いいえ」セット
  *
- * @param		syswk	ボックス画面システムワーク
+ * @param		syswk		ボックス画面システムワーク
  *
  * @return	次のシーケンス
  *
@@ -7517,27 +7515,8 @@ static int MainSeq_BoxThemaNameInCall( BOX2_SYS_WORK * syswk )
 static int MainSeq_BoxEndInit( BOX2_SYS_WORK * syswk )
 {
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
-	BOX2BMP_BoxEndMsgPut( syswk, BOX2BMPWIN_ID_MSG1, TRUE );
-	BoxEndPassiveSet( syswk );
-	return YesNoSet( syswk, YESNO_ID_BOX_END );
-}
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		メインシーケンス：ボックス終了「はい・いいえ」セット（キャンセル）
- *
- * @param		syswk		ボックス画面システムワーク
- *
- * @return	次のシーケンス
- *
- *	定義：BOX2SEQ_MAINSEQ_BOXEND_CANCEL_INIT
- */
-//--------------------------------------------------------------------------------------------
-static int MainSeq_BoxEndCancelInit( BOX2_SYS_WORK * syswk )
-{
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, FALSE );
 	BOX2OBJ_PutConvButton( syswk, BOX2OBJ_ANM_CONV_RED, FALSE );
-	BOX2BMP_BoxEndMsgPut( syswk, BOX2BMPWIN_ID_MSG1, FALSE );
+	BOX2BMP_BoxEndMsgPut( syswk, BOX2BMPWIN_ID_MSG1 );
 	BoxEndPassiveSet( syswk );
 	return YesNoSet( syswk, YESNO_ID_BOX_END_CANCEL );
 }
