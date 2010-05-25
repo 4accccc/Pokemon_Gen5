@@ -98,7 +98,7 @@ static MMDL_HEADER s_MMDL_HEADER =
 //=====================================
 #define FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID (1) // 何歩前までチェックするのか？
 
-#define FIELD_CROWD_PEOPLE_PUT_PAR (8) // FIELD_CROWD_PEOPLE_PUT_PAR回に一回意地悪がでる
+#define FIELD_CROWD_PEOPLE_PUT_PAR (10) // FIELD_CROWD_PEOPLE_PUT_PAR回に一回意地悪がでる
 
 
 
