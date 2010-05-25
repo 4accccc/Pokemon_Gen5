@@ -83,7 +83,8 @@ typedef struct
   u16 frm_chr;
 
   BOOL  is_cancel;
-  u32   cancel_idx;
+  u16   cancel_idx;
+  u16   default_idx;
 } WBM_LIST_SETUP;
 
 //-------------------------------------

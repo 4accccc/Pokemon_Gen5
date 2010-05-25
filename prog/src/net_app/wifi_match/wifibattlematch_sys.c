@@ -62,7 +62,7 @@
 #endif
 
 #ifdef DEBUG_ONLY_FOR_toru_nagihashi
-//#define WBM_SYS_BATTLE_VSTIME_60
+#define WBM_SYS_BATTLE_VSTIME_60
 #endif //DEBUG_ONLY_FOR_toru_nagihashi
 
 #endif //PM_DEBUG

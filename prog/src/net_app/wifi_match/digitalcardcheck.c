@@ -301,6 +301,10 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     SEQ_START_LIST_CONFIRM1,
     SEQ_WAIT_LIST_CONFIRM1,
 
+    SEQ_START_MSG_CONFIRM2,
+    SEQ_START_LIST_CONFIRM2,
+    SEQ_WAIT_LIST_CONFIRM2,
+
     SEQ_START_MSG_UNREGISTER,
     SEQ_RETIRE,
     SEQ_START_SAVE,
@@ -337,7 +341,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 
   case SEQ_START_MSG_ENTRY:
     Util_Text_SetVisible( p_wk, TRUE );
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_10, WBM_TEXT_TYPE_STREAM  );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_00, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_UNREGISTER );
     break;
@@ -366,7 +370,7 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     break;
 
   case SEQ_START_MSG_CONFIRM1:
-    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_11, WBM_TEXT_TYPE_STREAM  );
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_10, WBM_TEXT_TYPE_STREAM  );
     *p_seq  = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM1 );
     break;
@@ -375,6 +379,33 @@ static void DC_SEQFUNC_SignUp( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
     *p_seq  = SEQ_WAIT_LIST_CONFIRM1;
     break;
   case SEQ_WAIT_LIST_CONFIRM1:
+    { 
+      const u32 select = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        if( select == 0 )   //‚Í‚¢
+        { 
+          *p_seq  = SEQ_START_MSG_CONFIRM2;
+        }
+        else if( select == 1 )  //‚¢‚¢‚¦
+        { 
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
+        }
+      }
+    }
+    break;
+
+  case SEQ_START_MSG_CONFIRM2:
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_11, WBM_TEXT_TYPE_STREAM  );
+    *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM2 );
+    break;
+  case SEQ_START_LIST_CONFIRM2:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_WAIT_LIST_CONFIRM2;
+    break;
+  case SEQ_WAIT_LIST_CONFIRM2:
     { 
       const u32 select = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
@@ -482,6 +513,10 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_START_LIST_CONFIRM1,
     SEQ_WAIT_LIST_CONFIRM1,
 
+    SEQ_START_MSG_CONFIRM2,
+    SEQ_START_LIST_CONFIRM2,
+    SEQ_WAIT_LIST_CONFIRM2,
+
     SEQ_START_MSG_UNREGISTER,
     SEQ_RETIRE,
     SEQ_START_SAVE,
@@ -556,6 +591,33 @@ static void DC_SEQFUNC_Entry( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     *p_seq  = SEQ_WAIT_LIST_CONFIRM1;
     break;
   case SEQ_WAIT_LIST_CONFIRM1:
+    { 
+      const u32 select = Util_List_Main( p_wk );
+      if( select != WBM_LIST_SELECT_NULL )
+      { 
+        Util_List_Delete( p_wk );
+        if( select == 0 )   //‚Í‚¢
+        { 
+          *p_seq  = SEQ_START_MSG_CONFIRM2;
+        }
+        else if( select == 1 )  //‚¢‚¢‚¦
+        { 
+          *p_seq  = SEQ_WAIT_MOVEOUT_PLAYERINFO;
+        }
+      }
+    }
+    break;
+
+  case SEQ_START_MSG_CONFIRM2:
+    Util_Text_Print( p_wk,  WIFIMATCH_DPC_STR_11, WBM_TEXT_TYPE_STREAM  );
+    *p_seq  = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CONFIRM2 );
+    break;
+  case SEQ_START_LIST_CONFIRM2:
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    *p_seq  = SEQ_WAIT_LIST_CONFIRM2;
+    break;
+  case SEQ_WAIT_LIST_CONFIRM2:
     { 
       const u32 select = Util_List_Main( p_wk );
       if( select != WBM_LIST_SELECT_NULL )
@@ -1164,6 +1226,7 @@ static void Util_List_Create( DIGITALCARD_CHECK_WORK *p_wk, UTIL_LIST_TYPE type 
       setup.is_cancel = TRUE;
       setup.cancel_idx  = 1;
       pos = POS_RIGHT_DOWN;
+      setup.default_idx   = 1;
       break;
     case UTIL_LIST_TYPE_RETURN:
       setup.strID[0]= WIFIMATCH_DPC_SELECT_00;
@@ -1179,6 +1242,7 @@ static void Util_List_Create( DIGITALCARD_CHECK_WORK *p_wk, UTIL_LIST_TYPE type 
       setup.is_cancel = TRUE;
       setup.cancel_idx  = 1;
       pos = POS_RIGHT_DOWN_LONG;
+      setup.default_idx   = 1;
       break;
     }
 

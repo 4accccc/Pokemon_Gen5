@@ -453,7 +453,7 @@ WBM_LIST_WORK * WBM_LIST_InitEx( const WBM_LIST_SETUP *cp_setup, u8 x, u8 y, u8 
     header.print_util   = &p_wk->print_util;
     header.print_que    = cp_setup->p_que;
     header.font_handle  = cp_setup->p_font;
-    p_wk->p_list  = BmpMenuList_Set( &header, 0, 0, heapID );
+    p_wk->p_list  = BmpMenuList_Set( &header, 0, cp_setup->default_idx, heapID );
 
     BmpMenuList_SetCursorBmp( p_wk->p_list, heapID );
 
