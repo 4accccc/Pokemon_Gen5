@@ -5,7 +5,7 @@
  * @author  matsuda
  * @date  2008.12.03(水)
  *
- * @TODO 一之瀬さんからタイトル画面の曲の長さの変更が来たら対応する。(TOTAL_WAIT)
+ * @NOTE タイトル画面の曲の長さの変更が来たら対応する。(TOTAL_WAIT)
  *       4/2時点では７９秒。タイトル画面の表示している長さは曲の長さと同じでよい。
  */
 //==============================================================================
@@ -53,7 +53,13 @@
 #define TITLE_FLIP_WAIT   ( 678 )
 
 // 伝説ポケモンが鳴くフレーム
-#define POKE_VOICE_FRAME    ( 4580 )
+#define POKE_VOICE_FRAME    ( 5001 )
+
+#if PM_VERSION==VERSION_BLACK
+#define PLAY_MONSNO ( MONSNO_RESIRAMU )
+#else
+#define PLAY_MONSNO ( MONSNO_ZEKUROMU )
+#endif
 
 /// 入力トリガマスク
 #define NEXT_PROC_MASK    ( PAD_BUTTON_START | PAD_BUTTON_A )
@@ -275,6 +281,7 @@ static void _timewait_func( TITLE_WORK *tw )
 {
   // 指定フレームに来ると上下画面が切り替わる
   if(tw->totalWait==TITLE_FLIP_WAIT){
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
     GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
 
     GFL_BG_SetVisible(FRAME_BACK, VISIBLE_OFF);
@@ -347,7 +354,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
       tw->mode = END_SELECT;
       tw->seq  = SEQ_VOICE_PLAY;
 //      tw->seq  = SEQ_NEXT;
-      tw->voiceIndex = PMVOICE_Play(  MONSNO_ZEKUROMU,  0,  64, FALSE,  
+      tw->voiceIndex = PMVOICE_Play(  PLAY_MONSNO,  0,  64, FALSE,  
                     0,  // コーラスボリューム差
                     0,  // 再生速度差
                     FALSE,    // 逆再生フラグ
@@ -357,6 +364,7 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
       GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
       GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
       GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
       PMSND_FadeOutBGM( 4 );
       break;
     }
@@ -936,7 +944,7 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 
   GFL_BG_SetBGControl3D(BGPRI_3D);
 
-  G3X_AntiAlias( FALSE );     //  アンチエイリアス
+  G3X_AntiAlias( TRUE );      //  アンチエイリアス
   G3X_AlphaTest( FALSE, 16 ); //  アルファテスト　　オフ
   G3X_AlphaBlend( TRUE );     //  アルファブレンド　オン
 
