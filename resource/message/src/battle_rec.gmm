@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-05-21T18:05:10"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-25T23:27:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="549" top="28" right="1049" bottom="638" maximized="no" rayout="Vertical2">
+	<dialog left="510" top="42" right="1010" bottom="652" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="70" top="18" right="543" bottom="416" visible="yes"/>
 		<band id="0" index="0" style="0000" width="492"/>
@@ -2044,10 +2044,10 @@
 	<row id="msg_err_042_01" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>バトルビデオ取得：
 バージョンエラー</comment>
-		<language name="JPN" font=" 1:small" width="216">バトルビデオの　バージョンが
-ことなるため　うけとれませんでした</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">バトルビデオの　バージョンが
-異なるため　受け取れませんでした</language>
+		<language name="JPN" font=" 1:small" width="216">この　バトルビデオは
+みることが　できません</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">この　バトルビデオは
+みることが　できません</language>
 	</row>
 
 	<row id="msg_err_043" back-color=",,,#ff8080,,,,,,,,,,,,,,">
