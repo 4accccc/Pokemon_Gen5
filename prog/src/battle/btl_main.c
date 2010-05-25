@@ -177,6 +177,9 @@ static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
 static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID );
 static u8 CheckNumFrontPos( const BTL_MAIN_MODULE* wk, u8 clientID );
+static void setupCommon_TrainerParam( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
+static void setupCommon_SetRecplayerClientMode( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
+static void setupCommon_CreateViewModule( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp, u8 bagMode );
 static BOOL setup_alone_single( int* seq, void* work );
 static BOOL cleanup_common( int* seq, void* work );
 static BOOL setup_alone_double( int* seq, void* work );
@@ -215,6 +218,7 @@ static BOOL PokeCon_IsInitialized( const BTL_POKE_CONTAINER* pokeCon );
 static void PokeCon_Init( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* mainModule, BOOL fForServer );
 static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
+static int GetIllusionTargetIndex( const POKEPARTY* party );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
 static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
@@ -3752,17 +3756,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
 
   // 最後以外のポケモンがイリュージョン使いなら、最後のSrcPPを見せかけデータにする
   {
-    int lastPokeIndex=0;
-    for(i=(poke_count-1); i>=0; --i){
-      pp = PokeParty_GetMemberPointer( party_src, i );
-      if( (!PP_Get(pp, ID_PARA_tamago_flag, NULL))  // タマゴ＆ひん死は対象外
-      &&  (PP_Get(pp, ID_PARA_hp, NULL) != 0)
-      ){
-        lastPokeIndex = i;
-        break;
-      }
-    }
-
+    int lastPokeIndex = GetIllusionTargetIndex( party_src );
     if( lastPokeIndex > 0 )
     {
       pokeID = pokeID_Start;
@@ -3834,6 +3828,23 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   }
 
   BTL_PARTY_MoveAlivePokeToFirst( party );
+}
+static int GetIllusionTargetIndex( const POKEPARTY* party )
+{
+  int poke_count = PokeParty_GetPokeCount( party );
+  const POKEMON_PARAM* pp;
+  int i;
+
+  for(i=(poke_count-1); i>=0; --i)
+  {
+    pp = PokeParty_GetMemberPointer( party, i );
+    if( (!PP_Get(pp, ID_PARA_tamago_flag, NULL))  // タマゴ＆ひん死は対象外
+    &&  (PP_Get(pp, ID_PARA_hp, NULL) != 0)
+    ){
+      return i;
+    }
+  }
+  return -1;
 }
 
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
@@ -4653,9 +4664,15 @@ void BTL_MAIN_SetFakeSrcMember( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, u8 
 
   if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
   {
-    if( (memberIdx < (party->memberCount -1 ))
-    &&  (party->memberCount > 1)
-    ){
+    int idx;
+    for(idx=(party->memberCount-1); idx>0; --idx)
+    {
+      if(BPP_IsFightEnable(party->member[idx])){
+        break;
+      }
+    }
+    if( (idx>memberIdx) )
+    {
       BTL_POKEPARAM* refPoke;
       u8 idx = party->memberCount - 1;
 
