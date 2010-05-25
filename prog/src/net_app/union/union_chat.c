@@ -140,7 +140,6 @@ UNION_CHAT_DATA * UnionChat_GetReadBuffer(UNION_CHAT_LOG *log, u32 log_no)
   if(GFL_STD_MemComp(log->chat[buffer_pos].mac_address, invalid_mac, 6) == 0){
     return NULL;
   }
-  OS_TPrintf("aaa buffer_pos = %d, start=%d, log_no=%d\n", buffer_pos, log->start_no, log_no);
   return &log->chat[buffer_pos];
 }
 
