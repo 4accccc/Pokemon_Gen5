@@ -52,6 +52,10 @@ extern  const u8 PokeSeleMenuKey6DataCount[ 3 ][ WAZA_TARGET_MAX + 1 ];
 #define BTLV_INPUT_BUTTON_MAX ( 6 + 1 )  //押せるボタンのMAX値（3vs3時の対象選択6個＋キャンセル1個）
 #define BG_CLEAR_CODE     (0x8000 / 0x20 - 1)   ///BGスクリーンのクリアコード（キャラクタの一番後ろを指定）
 
+//カーソル表示にするボタン
+#define BTLV_INPUT_CURSOR_ON_BUTTON ( PAD_KEY_UP | PAD_KEY_DOWN | PAD_KEY_LEFT | PAD_KEY_RIGHT | \
+                                      PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_X | PAD_BUTTON_Y )
+
 #define INFOWIN_PAL_NO  ( 0x0f )  //情報ステータスバーパレット
 #define BMPWIN_PAL_NO  ( 0x0d )   //BMPWINパレット
 
@@ -4112,8 +4116,8 @@ static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw )
 {
   BtlWeather  btl_weather = BTL_FIELD_GetWeather();
   int pal[] = { 0, 1, 3, 2, 1 };
-  int ofs_x[] = {   5, 0,  1,  1,   1 };
-  int ofs_y[] = { -12, 0, -8, -8, -12 };
+  int ofs_x[] = {   5,   5,  1,  1,   1 };
+  int ofs_y[] = { -12, -12, -8, -8, -12 };
   GFL_CLACTPOS  weather;
 
   if( btl_weather == BTL_WEATHER_NONE )
@@ -4548,9 +4552,12 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
     }
     else
     {
-      *(biw->cursor_mode) = 1;
-      set_cursor_pos( biw );
-      SePlaySelect( biw );
+      if( trg & BTLV_INPUT_CURSOR_ON_BUTTON )
+      { 
+        *(biw->cursor_mode) = 1;
+        set_cursor_pos( biw );
+        SePlaySelect( biw );
+      }
     }
     BTLV_INPUT_PutCursorOBJ( biw, tp_tbl->hit_tbl, key_tbl );
   }
