@@ -569,8 +569,8 @@ EVENT_START    ev_pos_d06r0101_denki_02
 	
 	//博士2の場所を移動
 	//ホワイトの場所を移動
-	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 25, 1, 22, DIR_DOWN )
-	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 25, 1, 21, DIR_DOWN )
+	_OBJ_POS_CHANGE( D06R0101_HAKASE2_01, 24, 1, 22, DIR_DOWN )
+	_OBJ_POS_CHANGE( D06R0101_HEROINE_01, 24, 1, 22, DIR_DOWN )
 	
 	//主人公がびっくり
 	_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe)
@@ -652,14 +652,14 @@ EVENT_END
 //ホワイト: やってくる２                    
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_heroine_kuru_02_a
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,2
 	_ANIME_DATA AC_WALK_R_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_heroine_kuru_02_b
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA AC_WALK_R_8F,2
