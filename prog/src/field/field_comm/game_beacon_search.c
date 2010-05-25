@@ -328,19 +328,15 @@ void GameBeacon_Update(int *seq, void *pwk, void *pWork)
             GFL_STD_MemCopy(target->macAddress, exw->target_macAddress, 6);
             GameCommSys_ExitReqCallback(gcsp, GameBeacon_ExitCallback_toInvasion, exw);
             OS_TPrintf("パレス親が見つかった為、通信を侵入に切り替えます\n");
+            break;
           }
           else{
             OS_TPrintf("palace no connect zone\n");
-            GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
           }
         }
-        else{
-          GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
-        }
       }
-      else{
-        GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
-      }
+      GFL_STD_MemClear(&gbs->target_info, sizeof(GBS_TARGET_INFO)); //ターゲット情報クリア
+      GFL_NET_WLResetGFBss(hit_index);  //ビーコンバッファクリア
       break;
     default:
       //フィールドから繋ぐgsidでは無い為、無視
