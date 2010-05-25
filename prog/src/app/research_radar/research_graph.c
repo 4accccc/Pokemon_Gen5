@@ -463,16 +463,12 @@ void RRG_Main( RRG_WORK* work )
   case RRG_STATE_FADEOUT:           MainSeq_FADEOUT( work );           break;
   case RRG_STATE_WAIT:              MainSeq_WAIT( work );              break;
   case RRG_STATE_CLEANUP:           MainSeq_CLEANUP( work );           break;
-  case RRG_STATE_FINISH:           return;                            
+  case RRG_STATE_FINISH:            return;                            
   default: GF_ASSERT(0);
   }
 
   WatchOutNewEntry( work );
   WatchOutUpdateEnable( work );
-
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DEBUG ) {
-    OBATA_Printf( "answerIdx = %d\n", work->answerIdx );
-  }
 
   // 描画
   if( work->setupFlag ) { 
@@ -1182,6 +1178,7 @@ static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work )
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
     UpdateBGFont_Answer( work );        //「回答」文字列の表示を更新する
     UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+    UpdateBGFont_NoData( work );        //「まだ調査できていません」の表示を更新する
     UpdateArrow( work );                // 矢印の表示を更新する
     UpdateControlCursor( work );        // 左右のカーソル表示を更新する
     VanishAllPercentage( work );        // ％表示を消去する
@@ -1223,11 +1220,12 @@ static void MainSeq_UPDATE_AT_STANDBY( RRG_WORK* work )
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
     UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
     UpdateBGFont_Answer( work );        // 回答を更新する
+    UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
     UpdateBGFont_Count( work );         // 回答人数を更新する
     UpdateArrow( work );                // 矢印を更新する
     UpdateControlCursor( work );        // 左右のカーソル表示を更新する
-    //DispAllPercentage( work );          // ％表記を表示する
     UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
+    UpdateMyAnswerIconOnButton( work ); // 自分の回答アイコン ( ボタン上 ) を更新する
 
     // 更新完了SE
     PMSND_PlaySE( SEQ_SE_SYS_82 );
@@ -1261,6 +1259,7 @@ static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work )
     UpdateMainBG_WINDOW( work );        // MAIN-BG ( ウィンドウ面 ) を更新する
     UpdateBGFont_Answer( work );        //「回答」文字列の表示を更新する
     UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
+    UpdateBGFont_NoData( work );        //「まだ調査できていません」の表示を更新する
     UpdateArrow( work );                // 矢印の表示を更新する
     UpdateControlCursor( work );        // 左右のカーソル表示を更新する
     VanishAllPercentage( work );        // ％表示を消去する
@@ -1303,11 +1302,12 @@ static void MainSeq_UPDATE_AT_KEYWAIT( RRG_WORK* work )
     SetMenuCursorOn( work );            // カーソルが乗っている状態にする
     UpdateBGFont_DataReceiving( work ); //「データしゅとくちゅう」の表示を更新する
     UpdateBGFont_Answer( work );        // 回答を更新する
+    UpdateBGFont_MyAnswer( work );      // 自分の回答を更新する
     UpdateBGFont_Count( work );         // 回答人数を更新する
     UpdateArrow( work );                // 矢印を更新する
     UpdateControlCursor( work );        // 左右のカーソル表示を更新する
-    //DispAllPercentage( work );          // ％表記を表示する
     UpdateMyAnswerIconOnGraph( work );  // 自分の回答アイコン ( グラフ上 ) を更新する
+    UpdateMyAnswerIconOnButton( work ); // 自分の回答アイコン ( ボタン上 ) を更新する
 
     // 更新完了SE
     PMSND_PlaySE( SEQ_SE_SYS_82 );
