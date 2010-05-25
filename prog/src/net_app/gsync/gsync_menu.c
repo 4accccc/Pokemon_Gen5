@@ -424,6 +424,10 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 
     if(pWork->selectType == GAMESYNC_RETURNMODE_UTIL){
       if( OS_IsRunOnTwl() ){//DSI‚ÍŒÄ‚Ô‚±‚Æ‚ªo—ˆ‚È‚¢
+        if(pWork->infoDispWin){
+          GFL_BMPWIN_Delete(pWork->infoDispWin);
+          pWork->infoDispWin=NULL;
+        }
         GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
         _infoMessageDispHeight(pWork,10, FALSE);
         _CHANGE_STATE(pWork,_hitAnyKey);
