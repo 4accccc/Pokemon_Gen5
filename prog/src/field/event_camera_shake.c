@@ -166,7 +166,6 @@ static GMEVENT_RESULT CameraShakeEvt( GMEVENT* event, int* seq, void* wk )
         cam_ofs.x = w;
         cam_ofs.y = h;
         cam_ofs.z = 0;
-        OS_Printf("info rad %x w=%x h=%x \n",rad,w,h);
 
         //座標セット
         FIELD_CAMERA_SetTargetPos( camera, &target );
