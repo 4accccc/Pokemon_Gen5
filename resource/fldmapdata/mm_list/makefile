@@ -37,6 +37,11 @@ CSV_MDL = fldmmdl_mdl_list.csv
 MMDL_XLS = fldmmdl_list.xls
 PRM_BIN	= ../../fldmmdl/fldmmdl_mdlparam.bin
 
+MMLIST = movemodel_list.txt
+ZONEXLS = ../zonetable/zonetable.xls
+ZONECSV = zonetable.csv
+
+
 #Makeで生成される*.bin/*.narcはmake cleanの削除対象にする
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 LDIRT_CLEAN = *.s *.bin $(RSCTXT) $(ARCNAME) $(TARGET_DIR)/$(ARCNAME)
@@ -51,6 +56,8 @@ IPATH	=	-I$(PROJECT_ROOT)/resource/fldmmdl/
 ELF2BIN	=	$(PROJECT_ROOT)/tools/elf2bin.exe
 XLS2TXT	=	$(PROJECT_ROOT)/tools/exceltool/ExcelSeetConv.exe
 TXT2ASM	=	ruby mmodel_file.rb
+
+AREA_MMDL_CHECK	=	ruby area_mdl_check.rb
 
 do-build:  $(TARGET_DIR)/$(ARCNAME)
 
@@ -114,4 +121,11 @@ $(ARCLIST): $(RSCTXT) $(FMMDLHEAD) $(MMDL_XLS) $(PRM_BIN)
 test:
 	echo $(wildcard mmlid_*.s)
 	echo $(ASMFILES:.s=.bin)
+
+check:
+	#ゾーンテーブルをＣＳＶファイルにする
+	@$(XLS2TXT) -o $(ZONECSV) -p 1 -s csv $(ZONEXLS)
+	#チェックする
+	@$(AREA_MMDL_CHECK) $(MMLIST) $(ZONECSV)
+
 endif
