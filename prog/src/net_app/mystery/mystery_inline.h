@@ -277,7 +277,12 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
     GFL_HEAP_FreeMemory(pp);
     return NULL;
   }
-  if(pGift->oyaname[0]!= GFL_STR_GetEOMCode()){
+  else if( pGift->oyaname[0] == GFL_STR_GetEOMCode())
+  {
+    PP_Put(pp, ID_PARA_oyaname_raw, (u32)MyStatus_GetMyName(GAMEDATA_GetMyStatus(pGameData)));
+  }
+  else
+  {
     PP_Put(pp, ID_PARA_oyaname_raw, (u32)pGift->oyaname);
   }
   if(pGift->oyasex <= PM_NEUTRAL){

@@ -563,6 +563,7 @@ static void MYSTERY_BTN_PrintMain( MYSTERY_BTN_WORK *p_wk );
 ///	その他
 //=====================================
 static u32 Mystery_GetLegPos( const POKEMON_PASO_PARAM* cp_ppp, HEAPID heapID );
+static BOOL Mystery_IsValid( const DOWNLOAD_GIFT_DATA *cp_data, u32 dirty );
 
 //=============================================================================
 /**
@@ -1929,9 +1930,7 @@ static void SEQFUNC_RecvGift( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
 
           //CRCがあっていて、不正が０かつ、取得できるバージョンならばOK
           //バージョンが０ならば制限なし、それ以外は自分のバージョンマスクで見る
-          if( MYSTERYDATA_CheckCrc( &p_wk->data ) &&
-              dirty == 0 && 
-              ( p_wk->data.version == 0 || (p_wk->data.version & (1<<GET_VERSION())) ) )
+          if( Mystery_IsValid( &p_wk->data, dirty ) )
           { 
             *p_seq  = SEQ_SELECT_GIFT_MSG;
           }
@@ -4304,4 +4303,29 @@ static u32 Mystery_GetLegPos( const POKEMON_PASO_PARAM* cp_ppp, HEAPID heapID )
   GFL_HEAP_FreeMemory( p_chr_buff );
 
   return pos;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  データの正当性をチェック
+ *
+ *	@param	const DOWNLOAD_GIFT_DATA *cp_data   データ
+ *
+ *	@return TRUE正統  FALSE不正
+ */
+//-----------------------------------------------------------------------------
+static BOOL Mystery_IsValid( const DOWNLOAD_GIFT_DATA *cp_data, u32 dirty )
+{
+  //１、CRCチェックがただしい
+  //２、不正カウントが０
+  //３、取得バージョンがただしい
+  //４、中身のデータが正しい
+  if( MYSTERYDATA_CheckCrc( cp_data )
+      && dirty == 0 
+      && ( cp_data->version == 0 || (cp_data->version & (1<<GET_VERSION())) ) )
+  {
+    return TRUE;
+  }
+
+
+  return FALSE;
 }
