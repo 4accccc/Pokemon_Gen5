@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-14T21:22:02"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T16:24:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="259" top="406" right="759" bottom="1034" maximized="no" rayout="Vertical2">
+	<dialog left="1670" top="203" right="2170" bottom="821" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="884" top="389" right="1357" bottom="787" visible="yes"/>
+		<tag-palette left="807" top="389" right="1280" bottom="787" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -388,7 +388,7 @@
 ゲーチス</attribute>
 		<language name="JPN" width="256">そんなことを　なさらずとも
 えいゆうに　なるための　きょういくを▽
-おなさいころより　ほどこし　けっか▼
+おさないころより　ほどこし　けっか▼
 でんせつの　ポケモンに
 みとめられたと　いうのに……▽
 ほんとうに　じゅんすいな　おかたです▼</language>
