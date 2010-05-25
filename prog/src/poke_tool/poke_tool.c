@@ -1402,21 +1402,33 @@ void  PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano )
 //=============================================================================================
 void PP_RecoverWazaPPAll( POKEMON_PARAM* pp )
 {
-  BOOL flag = PP_FastModeOn( pp );
+  PPP_RecoverWazaPPAll( &pp->ppp );
+}
+
+//=============================================================================================
+/**
+ * 覚えている全てのワザのPPを最大値まで回復させる
+ *
+ * @param   ppp
+ */
+//=============================================================================================
+void PPP_RecoverWazaPPAll( POKEMON_PASO_PARAM* ppp )
+{
+  BOOL flag = PPP_FastModeOn( ppp );
   {
     u32 waza, i;
     for(i=0; i<PTL_WAZA_MAX; ++i)
     {
-      waza = PP_Get( pp, ID_PARA_waza1+i, NULL );
+      waza = PPP_Get( ppp, ID_PARA_waza1+i, NULL );
       if( waza != WAZANO_NULL )
       {
-        u32 upsPP = PP_Get( pp, ID_PARA_pp_count1+i, NULL );
+        u32 upsPP = PPP_Get( ppp, ID_PARA_pp_count1+i, NULL );
         u32 maxPP = WAZADATA_GetMaxPP( waza, upsPP );
-        PP_Put( pp, ID_PARA_pp1+i, maxPP );
+        PPP_Put( ppp, ID_PARA_pp1+i, maxPP );
       }
     }
   }
-  PP_FastModeOff( pp, flag );
+  PPP_FastModeOff( ppp, flag );
 }
 
 //============================================================================================
