@@ -5196,7 +5196,7 @@
 	</row>
 
 	<row id="WAZAINFO_534">
-		<language name="JPN" width="216">あうるどい　かいがらで　きりつけて
+		<language name="JPN" width="216">するどい　かいがらで　きりつけて
 こうげきする。あいての　ぼうぎょを
 さげることが　ある。</language>
 		<language name="JPN_KANJI" width="216">鋭い　貝殻で　切りつけて
@@ -5333,10 +5333,10 @@
 	<row id="WAZAINFO_549">
 		<language name="JPN" width="216">こごえる　ような　つめたい　れいきを
 あいてに　ふきつけて　こうげきする。
-あいての　すばやさを　がくっと　さげる。</language>
+あいての　すばやさを　さげる。</language>
 		<language name="JPN_KANJI" width="216">凍えるような　冷気を
 相手に　吹きつけて　攻撃する。
-相手の　素早さを　がくっと　さげる。</language>
+相手の　素早さを　さげる。</language>
 	</row>
 
 	<row id="WAZAINFO_550">
