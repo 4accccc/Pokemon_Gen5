@@ -1739,8 +1739,8 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 
   BLINKPALANM_Main( pWork->blwk );
 
-  if(pWork->state == _endButtonAnime){
-    // 終了時はキー無効
+	// 処理が切り替わった場合はキー無効
+  if( pWork->state != _itemKindSelectMenu ){
     return;
   }
 
