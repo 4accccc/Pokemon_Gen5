@@ -541,6 +541,8 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     cardData->PlayTime = NULL;
     cardData->PlayTime_h = PLAYTIME_GetHour( playTime );
     cardData->PlayTime_m = PLAYTIME_GetMinute( playTime );
+    cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
+    cardData->SignAnimeOn = TRCSave_GetSignAnime(  trc_ptr );
   }
   else
   {
