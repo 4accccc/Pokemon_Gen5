@@ -141,9 +141,6 @@ static void BEW_ReflectBattleResult(BATTLE_EVENT_WORK * bew, GAMEDATA * gamedata
 static void BEW_Initialize(BATTLE_EVENT_WORK * bew, GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM* bp);
 static void BEW_Destructor(BATTLE_EVENT_WORK * bew);
 
-static void FriendCalc_TrainerBattleStart( GAMEDATA* gdata, FIELDMAP_WORK* fieldWork, u16 tr_id );
-
-
 //======================================================================
 //
 //
@@ -309,9 +306,6 @@ GMEVENT * EVENT_TrainerBattle(
     FIELD_ENCOUNT* enc = FIELDMAP_GetEncount(fieldmap);
     GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
     RECORD* record = GAMEDATA_GetRecordPtr( gdata );
-
-    //戦闘パラメータ生成前に懐き計算をしてしまう
-    FriendCalc_TrainerBattleStart( gdata, fieldmap, tr_id0 );
 
     bp = BATTLE_PARAM_Create(HEAPID_PROC);
     FIELD_ENCOUNT_SetTrainerBattleParam( enc, bp, rule, partner_id, tr_id0, tr_id1, HEAPID_PROC );
@@ -1008,28 +1002,6 @@ static void BEW_Destructor(BATTLE_EVENT_WORK * bew)
 {
   if( bew->not_free_bsp == FALSE ){
     BATTLE_PARAM_Delete( bew->battle_param );
-  }
-}
-
-//--------------------------------------------------------------
-/**
- * @brief   トレーナー戦闘開始時　懐き計算
- */
-//--------------------------------------------------------------
-static void FriendCalc_TrainerBattleStart( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, u16 tr_id )
-{
-  u8  tr_type;
-  
-  tr_type = TT_TrainerDataParaGet( tr_id, ID_TD_tr_type );
-  {
-    //ボス戦だったら懐きアップ
-    TRTYPE_GRP_ID grp_id = TT_TrainerTypeGrpGet( tr_type );
-
-    if( grp_id == TRTYPE_GRP_LEADER ||
-        grp_id == TRTYPE_GRP_BIGFOUR ||
-        grp_id == TRTYPE_GRP_CHAMPION ){
-      NATSUKI_CalcBossBattle( GAMEDATA_GetMyPokemon( gdata ), FIELDMAP_GetZoneID( fieldmap ), HEAPID_PROC );
-    }
   }
 }
 
