@@ -526,11 +526,12 @@ EVENT_START   ev_pos_r01_pokecount_01
 //カウント勝負質問
 _BALLOONWIN_OBJMSG_POS( msg_r01_white_10,R01_SUPPORT_02 , POS_UL )
 _YES_NO_WIN( SCWK_ANSWER )
-_BALLOONWIN_CLOSE()
 
 //「はい」
 IF $SCWK_ANSWER == SCR_YES THEN
 
+	_BALLOONWIN_CLOSE()
+	
 	//ライバル来る
 	_OBJ_ANIME( R01_RIVEL_02,anm_r01_count_rival_01 )
 	_OBJ_ANIME_WAIT()
