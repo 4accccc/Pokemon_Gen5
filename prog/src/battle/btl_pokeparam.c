@@ -1434,40 +1434,6 @@ BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   return flgbuf_get( pp->contFlag, flagID );
 }
-//=============================================================================================
-/**
- * HP残量のめやす（普通・半減・ピンチとか）を返す
- *
- * @param   pp
- *
- * @retval  BppHpBorder
- */
-//=============================================================================================
-BppHpBorder BPP_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp )
-{
-  if( hp <= (pp->coreParam.hpMax / 8) )
-  {
-    return BPP_HPBORDER_RED;
-  }
-  if( hp <= (pp->coreParam.hpMax / 3) )
-  {
-    return BPP_HPBORDER_YELLOW;
-  }
-  return BPP_HPBORDER_GREEN;
-}
-//=============================================================================================
-/**
- * HP残量のめやす（普通・半減・ピンチとか）を返す
- *
- * @param   pp
- *
- * @retval  BppHpBorder
- */
-//=============================================================================================
-BppHpBorder BPP_GetHPBorder( const BTL_POKEPARAM* pp )
-{
-  return BPP_CheckHPBorder( pp, pp->coreParam.hp );
-}
 
 //=============================================================================================
 /**
@@ -2115,7 +2081,7 @@ void BPP_CureWazaSick( BTL_POKEPARAM* bpp, WazaSick sick )
  * @param   depend_pokeID
  */
 //=============================================================================================
-void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID, BppCureWazaSickDependPokeCallback callbackFunc, void* callbackArg )
+void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID, void* callbackArg )
 {
   u32 i;
   u8 fCure;
@@ -2134,7 +2100,6 @@ void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID, BppCureWa
     if( fCure ){
       bpp->sickCont[i] = BPP_SICKCONT_MakeNull();
       cureDependSick( bpp, i );
-      callbackFunc( callbackArg, bpp, i, depend_pokeID );
     }
   }
 }

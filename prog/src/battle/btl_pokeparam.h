@@ -136,9 +136,27 @@ typedef enum {
   BPP_COUNTER_TAKUWAERU_DEF,      ///< たくわえるによって上がった防御ランク
   BPP_COUNTER_TAKUWAERU_SPDEF,    ///< たくわえるによって上がった特防ランク
   BPP_COUNTER_MAMORU,             ///< まもる・みきりカウンタ
+  BPP_COUNTER_FREEFALL,           ///< フリーフォールで捕まえてるポケIDをセットする
 
   BPP_COUNTER_MAX,
 }BppCounter;
+
+// ポケモンID->フリーフォールターゲット用ポケIDに変換
+static inline u8 BPP_PokeIDtoFreeFallCounter( u8 pokeID )
+{
+  return pokeID + 1;  // カウンタ値はデフォルトが0で怖いので、フリーフォール用には0ではない値を使う
+}
+// フリーフォールターゲット用ポケID->通常ポケモンIDに戻す
+static inline u8 BPP_FreeFallCounterToPokeID( u8 counter )
+{
+  if( counter ){
+    counter--;
+    if( counter < BTL_POKEID_MAX ){
+      return counter;
+    }
+  }
+  return BTL_POKEID_NULL;
+}
 
 //--------------------------------------------------------------
 /**
@@ -274,28 +292,6 @@ extern void BPP_COUNTER_Set( BTL_POKEPARAM* bpp, BppCounter cnt, u8 value );
 extern u8 BPP_COUNTER_Get( const BTL_POKEPARAM* bpp, BppCounter cnt );
 
 
-//=============================================================================================
-/**
- * 指定HPの値から、HP残量のめやす（普通・半減・ピンチとか）を返す
- *
- * @param   pp
- * @param   hp
- *
- * @retval  BppHpBorder
- */
-//=============================================================================================
-extern BppHpBorder BPP_CheckHPBorder( const BTL_POKEPARAM* pp, u32 hp );
-
-//=============================================================================================
-/**
- * 現在のHP残量のめやす（普通・半減・ピンチとか）を返す
- *
- * @param   pp
- *
- * @retval  BppHpBorder
- */
-//=============================================================================================
-extern BppHpBorder BPP_GetHPBorder( const BTL_POKEPARAM* pp );
 
 
 //=============================================================================================
@@ -340,13 +336,12 @@ extern BOOL BPP_IsRankEffectDowned( const BTL_POKEPARAM* bpp );
 
 //-------------------------
 typedef void (*BtlSickTurnCheckFunc)( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT oldCont, BOOL fCure, void* work );
-typedef void( *BppCureWazaSickDependPokeCallback)( void* arg, BTL_POKEPARAM* bpp, WazaSick sickID, u8 dependPokeID );
 
 
 extern void BPP_SetWazaSick( BTL_POKEPARAM* pp, WazaSick sick, BPP_SICK_CONT contParam );
 extern void BPP_CurePokeSick( BTL_POKEPARAM* pp );
 extern void BPP_CureWazaSick( BTL_POKEPARAM* pp, WazaSick sick );
-extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID, BppCureWazaSickDependPokeCallback callBackFunc, void* callbackArg );
+extern void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* pp, u8 depend_pokeID, void* callbackArg );
 extern void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork );
 extern BOOL BPP_CheckNemuriWakeUp( BTL_POKEPARAM* bpp );
 extern BOOL BPP_CheckKonranWakeUp( BTL_POKEPARAM* bpp );

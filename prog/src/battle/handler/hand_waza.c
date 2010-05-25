@@ -10182,41 +10182,15 @@ static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_POKEPARAM* target = NULL;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    if( targetPokeID != BTL_POKEID_NULL ){
-      target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-    }
 
-    if( (target!=NULL) && (!BPP_MIGAWARI_IsExist(target)) )
-    {
-      BTL_HANDEX_PARAM_SET_CONTFLAG* param;
-
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
-      param->pokeID = pokeID;
-      param->flag = BPP_CONTFLG_SORAWOTOBU;
-
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
-      param->pokeID = targetPokeID;
-      param->flag = BPP_CONTFLG_SORAWOTOBU;
-
-      {
-        BTL_HANDEX_PARAM_ADD_SICK* sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-        sick_param->pokeID = targetPokeID;
-        sick_param->sickID = WAZASICK_FREEFALL;
-        sick_param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
-      }
-
-      {
-        BTL_HANDEX_PARAM_MESSAGE* msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_FreeFall );
-        HANDEX_STR_AddArg( &msg_param->str, pokeID );
-        HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
-      }
-    }
-    else{
+    if( (targetPokeID == BTL_POKEID_NULL)
+    ||  (!BTL_SVFRET_FreeFallStart(flowWk, pokeID, targetPokeID))
+    ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    }else{
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
   }
 }
@@ -10224,6 +10198,8 @@ static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
+    BTL_SVFRET_FreeFallRelease( flowWk, pokeID );
+    /*
     BTL_HANDEX_PARAM_SET_CONTFLAG* param;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
@@ -10241,6 +10217,7 @@ static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
       cure_param->pokeID[0] = targetPokeID;
       cure_param->sickCode = WAZASICK_FREEFALL;
     }
+    */
   }
 }
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

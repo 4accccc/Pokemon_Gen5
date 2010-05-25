@@ -176,6 +176,9 @@ extern BOOL BTL_SVFTOOL_IsMemberOutIntr( BTL_SVFLOW_WORK* wk );
 extern void BTL_SVFTOOL_AddMemberOutIntr( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex );
 extern BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID );
+extern BOOL BTL_SVFRET_FreeFallStart( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 targetPokeID );
+extern void BTL_SVFRET_FreeFallRelease( BTL_SVFLOW_WORK* wk, u8 atkPokeID );
+
 
 
 //----------------------------
@@ -282,10 +285,11 @@ typedef enum {
   BTL_HANDEX_FAKE_BREAK,          ///< イリュージョン解除
   BTL_HANDEX_JURYOKU_CHECK,       ///< じゅうりょく発動時のチェック処理
   BTL_HANDEX_TAMEHIDE_CANCEL,     ///< 特定の消え状態（そらをとぶなど）をキャンセル
-  BTL_HANDEX_ADD_EFFECT,       ///< 位置指定してエフェクト発動
+  BTL_HANDEX_ADD_EFFECT,          ///< 位置指定してエフェクト発動
   BTL_HANDEX_CHANGE_FORM,         ///< フォルムナンバーチェンジ
   BTL_HANDEX_SET_EFFECT_IDX,      ///< ワザエフェクトインデックス変更
   BTL_HANDEX_WAZAEFFECT_ENABLE,   ///< 強制ワザエフェクト有効
+  BTL_HANDEX_FREEFALL,            ///< フリーフォール
 
   BTL_HANDEX_MAX,
 
@@ -866,6 +870,14 @@ typedef struct {
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
 }BTL_HANDEX_PARAM_WAZAEFFECT_ENABLE;
+
+/**
+ *  ワザエフェクトを強制的に有効にする
+ */
+typedef struct {
+  BTL_HANDEX_PARAM_HEADER  header;
+  u8                       targetPokeID;
+}BTL_HANDEX_PARAM_FREEFALL;
 
 
 
