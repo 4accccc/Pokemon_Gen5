@@ -978,6 +978,10 @@ static BOOL PowerOnOff_UpdateCannot( CGEAR_POWER_ONOFF* p_sys )
   switch( p_sys->seq ){
   case SEQ_CANNOT_INIT:
 
+    // ‚Ü‚¸‚ÍOFF
+    GFL_BMPWIN_ClearScreen( p_sys->p_talkmsg );
+    GFL_BMPWIN_ClearScreen( p_sys->p_sysmsg );
+
     // windowˆÊ’u‚ð•ÏX
     GFL_BMPWIN_SetPosY( p_sys->p_sysmsg, SYS_CANNOT_MSG_POS_Y );
     GFL_BMPWIN_TransVramCharacter( p_sys->p_sysmsg );
