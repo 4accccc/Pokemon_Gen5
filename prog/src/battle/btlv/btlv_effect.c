@@ -86,8 +86,6 @@ struct _BTLV_EFFECT_SETUP_PARAM
 
 struct _BTLV_EFFECT_WORK
 {
-  //本来はスクリプトエンジンを載せて、動作させるが、暫定でTCBを利用する
-  //最終的にはエフェクトで使用するTCBをBTLV_MCSS、BTLV_CAMERA、BTLV_EFFECTでシェアする形にする
   GFL_TCBSYS*             tcb_sys;
   void*                   tcb_work;
   GFL_TCB*                tcb[ BTLV_EFFECT_TCB_MAX ];
@@ -847,12 +845,26 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
       break;
     }
   }
+  else
+  { 
+    switch( trtype ){
+    case TRTYPE_HERO:
+    case TRTYPE_HEROINE:
+      //シューターモードでは専用の絵に差し替え
+      if( bew->bagMode == BBAG_MODE_SHOOTER )
+      { 
+        trtype += TRTYPE_HERO_S;
+      }
+      break;
+    default:
+      break;
+    }
+  }
   BTLV_MCSS_AddTrainer( bew->bmw, trtype, position );
   if( ( pos_x != 0 ) || ( pos_y != 0 ) || ( pos_z != 0 ) )
   {
     BTLV_MCSS_SetPosition( bew->bmw, position, pos_x, pos_y, pos_z );
   }
-  //BTLV_MCSS_SetShadowVanishFlag( bew->bmw, position, 1 );
   bew->trainer_index[ position - BTLV_MCSS_POS_MAX ] = position;
 }
 
