@@ -2676,6 +2676,8 @@ static void handler_UruoiBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         param->sickCode = WAZASICK_EX_POKEFULL;
         param->pokeID[0] = pokeID;
         param->poke_cnt = 1;
+        param->header.autoRemoveFlag = TRUE;
+
 
         BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 
@@ -2710,6 +2712,7 @@ static void handler_Dappi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
         param->header.tokwin_flag = TRUE;
+        param->header.autoRemoveFlag = TRUE;
         param->sickCode = WAZASICK_EX_POKEFULL;
         param->pokeID[0] = pokeID;
         param->poke_cnt = 1;
@@ -5673,6 +5676,7 @@ static void handler_Moraterapi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
           BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
 
           param->header.tokwin_flag = TRUE;
+          param->header.autoRemoveFlag = TRUE;
           param->poke_cnt = 1;
           param->pokeID[0] = targetID[i];
           param->sickCode = WAZASICK_EX_POKEFULL;

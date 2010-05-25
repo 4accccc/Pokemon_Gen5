@@ -304,7 +304,8 @@ typedef struct {
   u8    size;              ///< 構造体サイズ
   u8    tokwin_flag  : 1;  ///< 主体ポケモンのとくせい効果であることを表示する
   u8    failSkipFlag : 1;  ///< 直前の命令が失敗したらスキップされる
-  u8    padding : 6;       ///< パディング
+  u8    autoRemoveFlag : 1;///< 主体ポケモンが死んでいたら自動削除
+  u8    padding : 5;       ///< パディング
 }BTL_HANDEX_PARAM_HEADER;
 
 /**

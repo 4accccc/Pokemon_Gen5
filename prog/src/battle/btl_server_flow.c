@@ -14498,6 +14498,12 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     if( handEx_header->failSkipFlag && (fPrevSucceed == FALSE) ){
       continue;
     }
+    if( handEx_header->autoRemoveFlag ){
+      const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParamConst( wk->pokeCon, handEx_header->userPokeID );
+      if( BPP_IsDead(bpp) ){
+        continue;
+      }
+    }
     fExecute = TRUE;
     switch( handEx_header->equip ){
     case BTL_HANDEX_TOKWIN_IN:          fPrevSucceed = scproc_HandEx_TokWinIn( wk, handEx_header ); break;
