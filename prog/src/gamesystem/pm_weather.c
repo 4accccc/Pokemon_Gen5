@@ -31,6 +31,12 @@
 
 #include "field/field_comm/intrude_work.h"
 
+#ifdef PM_DEBUG
+
+#include "debug/debug_flg.h"
+
+#endif // PM_DEBUG
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -187,6 +193,30 @@ static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const
       }
     }
   }
+
+#ifdef PM_DEBUG
+  //パレス侵入テクスチャON
+  if( DEBUG_FLG_GetFlg(DEBUG_FLG_PalaceTexture) == TRUE )
+  {
+    //パレス到着ON
+    if( DEBUG_FLG_GetFlg(DEBUG_FLG_PalaceArrive) == TRUE )
+    {
+      if( GET_VERSION() == VERSION_WHITE ){
+        return WEATHER_NO_PALACE_WHITE_MIST;
+      }else{
+        return WEATHER_NO_PALACE_BLACK_MIST;
+      }
+    }
+    else
+    {
+      if( GET_VERSION() == VERSION_WHITE ){
+        return WEATHER_NO_PALACE_WHITE_MIST_HIGH;
+      }else{
+        return WEATHER_NO_PALACE_BLACK_MIST_HIGH;
+      }
+    }
+  }
+#endif // PM_DEBUG
 
   return WEATHER_NO_NONE;
 }
