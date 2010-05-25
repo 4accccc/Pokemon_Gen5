@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T17:29:49"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T12:15:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,7 +307,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -729,8 +729,9 @@
 はなればなれに　なること……▼
 それって　この　せかいから
 ポケモンが　いなくなることと▽
-おなじ　じゃないか……▼
-[1:00:トレーナー名:0]
+おなじ　じゃないか……▽
+まったく　メンドーな　れんちゅうだな▼
+[1:00:トレーナー名:0]……
 さむいから　そとに　でるよ▼</language>
 		<language name="JPN_KANJI" width="256">チェレン『やれやれ……
 プラズマ団の　理想……▼
@@ -738,8 +739,9 @@
 離れ離れに　なること……▼
 それって　この世界から
 ポケモンが　いなくなることと▽
-同じじゃ　ないか……▼
-[1:00:トレーナー名:0]
+同じじゃ　ないか……▽
+まったく　メンドーな　連中だな▼
+[1:00:トレーナー名:0]……
 寒いから　外に　でるよ▼</language>
 	</row>
 
