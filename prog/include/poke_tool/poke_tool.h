@@ -683,6 +683,7 @@ extern  void  PPP_SetWazaPush( POKEMON_PASO_PARAM *ppp, u16 wazano );
 extern  void  PP_SetWazaPos( POKEMON_PARAM *pp, u16 wazano, u8 pos );
 extern  void  PPP_SetWazaPos( POKEMON_PASO_PARAM *ppp, u16 wazano, u8 pos );
 extern  void  PP_RecoverWazaPPAll( POKEMON_PARAM* pp );
+extern  void  PPP_RecoverWazaPPAll( POKEMON_PASO_PARAM* ppp );
 extern  WazaID  PP_CheckWazaOboe( POKEMON_PARAM *pp, int* index, HEAPID  heapID );
 
 // パラメータ設定系（ワザ 技ポイント引継版）
