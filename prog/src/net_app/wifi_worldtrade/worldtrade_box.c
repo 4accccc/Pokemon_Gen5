@@ -1360,13 +1360,9 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 			SubSeq_MessagePrint( wk, msg_gtc_01_038, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
-#if 0//origin
-		else if((error=PokeNewFormCheck(ppp))){
-#else 
 			//warningになっていたので修正
 		else if((PokeNewFormCheck(ppp))){
 			error=PokeNewFormCheck(ppp);
-#endif
 			if(error==1){
 				SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
 			}else{
@@ -1395,7 +1391,14 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 
 			// 問題なければポケモン預けへ
 			if(flag==0){
-				wk->deposit_ppp     = WorldTrade_GetPokePtr( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos );
+        wk->deposit_ppp     = WorldTrade_GetPokePtr( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos );
+
+        //もしシェイミならばランドフォルムへ戻す
+        if( MONSNO_SHEIMI == PPP_Get(wk->deposit_ppp, ID_PARA_monsno, NULL) )
+        {
+          PPP_Put( wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
+        }
+
 				wk->subprocess_seq  = SUBSEQ_END;
 				WorldTrade_SubProcessChange( wk, WORLDTRADE_DEPOSIT, 0 );
 				OS_Printf("deposit_ppp1 = %08x\n",WorldTrade_GetPokePtr(wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos));
@@ -1502,13 +1505,9 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 			SubSeq_MessagePrint( wk, msg_gtc_01_038, 1, 0, 0x0f0f, 1 );
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_CLEAR_WAIT,  SUBSEQ_MAIN);
 		}
-#if 0//origin
-		else if((error=PokeNewFormCheck(ppp))){
-#else
 			//warningになっていたので修正
 		else if((PokeNewFormCheck(ppp))){
 			error=PokeNewFormCheck(ppp);
-#endif
 			if(error==1){
 				SubSeq_MessagePrint( wk, msg_gtc_new_form, 1, 0, 0x0f0f, 1 );
 			}else{
@@ -1537,6 +1536,13 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 			
 			// 問題なければ交換へ
 			if(flag==0){
+
+        //もしシェイミならばランドフォルムへ戻す
+        if( MONSNO_SHEIMI == PPP_Get(wk->deposit_ppp, ID_PARA_monsno, NULL) )
+        {
+          PPP_Put( wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
+        }
+
 				ExchangeCheck(wk);
 			}
 		}
@@ -2381,16 +2387,21 @@ static int PokeNewFormCheck( POKEMON_PASO_PARAM *ppp )
 	}
 	PPP_FastModeOff(ppp, flag);
 
+  /*  交換できないもの覚書  2010/05/25 nagihashi
+   *
+   * ・特定のリボンを持っているポケモンは交換できない
+   * ・ライは次回verでフォルムチェンジするのでper対策にチェックしておく
+   * ・ギザ耳ピチューは存在しないのでチェックしない
+   * ・シェイミはここでチェックしないが、スカイフォルムだった場合ランドフォルムに戻しておく
+   * ・ロトムは今回、普通にフォルム違いを取得できるので許可
+   * ・ギラティナも白金玉付きでの交換を許可
+   *
+   */
+
 	if(form_no > 0){
 		switch(monsno){
-		case MONSNO_GIRATHINA:
-		case MONSNO_SHEIMI:
-		case MONSNO_ROTOMU:
-			return 1;
-			break;
-		case MONSNO_PITYUU:		// ギザ耳ピチュー対応 
-			return 2;
-			break;
+    case MONSNO_653:
+      return 1;
 		}
 	}
 	return 0;
