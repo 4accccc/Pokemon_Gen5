@@ -1209,7 +1209,7 @@ static void _SetPmsAisatsu(GAMEDATA * gamedata, u8 region)
 			PMSW_AISATSU_GE,	// ドイツ語
 			-1,					// 無効言語ナンバー
 			PMSW_AISATSU_SP,	// スペイン語
-			-1,               // 韓国語
+			PMSW_AISATSU_KO,  // 韓国語
 		};
 
 		u16 lang = region - LANG_JAPAN;
