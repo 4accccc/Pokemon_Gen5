@@ -388,6 +388,7 @@ VMCMD_RESULT EvCmdTH_ClearDLData( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdTH_CallRankApp( VMHANDLE *core, void *wk )
 {
   u16 dl;
+  u16 me;
   GMEVENT* event;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
@@ -396,8 +397,9 @@ VMCMD_RESULT EvCmdTH_CallRankApp( VMHANDLE *core, void *wk )
   TRIAL_HOUSE_WORK_PTR *ptr = GAMEDATA_GetTrialHouseWorkPtr(gamedata);
 
   dl = SCRCMD_GetVMWorkValue( core, work );
+  me = SCRCMD_GetVMWorkValue( core, work );
 
-  event = TRIAL_HOUSE_CreateRankAppEvt( gsys, dl );
+  event = TRIAL_HOUSE_CreateRankAppEvt( gsys, dl, me );
   SCRIPT_CallEvent( sc, event );
 
   return VMCMD_RESULT_SUSPEND;

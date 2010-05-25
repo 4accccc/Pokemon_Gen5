@@ -10561,14 +10561,16 @@
 /**
  * @brief トライアルハウス　ランキング確認アプリコール
  * @param dl
+ * @param me
  * @param none
  */
 //--------------------------------------------------------------
-#define _TH_CALL_RANK_APP( dl ) _ASM_TH_CALL_RANK_APP dl
+#define _TH_CALL_RANK_APP( dl, me ) _ASM_TH_CALL_RANK_APP dl, me
   
-  .macro _ASM_TH_CALL_RANK_APP dl
+  .macro _ASM_TH_CALL_RANK_APP dl, me
   .short EV_SEQ_TH_CALL_RANK_APP
   .short \dl
+  .short \me
   .endm
 
 //--------------------------------------------------------------

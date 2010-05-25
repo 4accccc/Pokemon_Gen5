@@ -243,10 +243,11 @@ void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm 
  * ランキング確認アプリイベント
  * @param gsys          ゲームシステムポインタ
  * @param inIsDL    確認するのはダウンロードデータか？
+ * @param inME      ＭＥ鳴らすか？
  * @retval GMEVENT      イベントポインタ
  */
 //--------------------------------------------------------------
-GMEVENT *TRIAL_HOUSE_CreateRankAppEvt( GAMESYS_WORK * gsys, const BOOL inIsDL )
+GMEVENT *TRIAL_HOUSE_CreateRankAppEvt( GAMESYS_WORK * gsys, const BOOL inIsDL, const BOOL inME )
 {
   GMEVENT* event;
 	TH_RANK_WORK* work;
@@ -271,13 +272,16 @@ GMEVENT *TRIAL_HOUSE_CreateRankAppEvt( GAMESYS_WORK * gsys, const BOOL inIsDL )
     }
     //ダウンロードフラグ
     work->Param.b_download = inIsDL;
+
+    //ＭＥ鳴らすか？
+    work->Param.b_me = inME;
   }
   return event;
 }
 
 //--------------------------------------------------------------
 /**
- * @brief   国選択アプリコールイベント
+ * @brief   アプリコールイベント
  * @param	  event   イベントポインタ
  * @param   seq     シーケンサ
  * @param   work    ワークポインタ
