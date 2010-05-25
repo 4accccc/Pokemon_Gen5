@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-18T21:33:20"/>
+	<create user="matsumiya" host="W00224" date="2010-05-25T10:58:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1407" top="79" right="2112" bottom="707" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -346,12 +346,30 @@
 		<comment>♂
 ・アイテム入手後</comment>
 		<attribute name="キャラ指定">ASSISTANTM</attribute>
-		<language name="JPN" width="256">ポケモンを　しんか　させる
-どうぐは　いし　いがいにも▽
-いろいろ　あるらしいね</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　進化させる
-道具は　石　以外にも▽
-いろいろ　あるらしいね</language>
+		<language name="JPN" width="256">きみが　しっているか　しらないか
+ぼくには　わからないが　アドバイス！▼
+ポケモンは　しんか　すると
+ちからづよく　なるけれど　かわりに▽
+わざを　おぼえにくくなる▼
+とくに　いしで　しんか　する
+ポケモンは　その　けいこうが　つよい▼
+なので　いい　わざを　おぼえてから
+いしを　つかって　しんか　させるか▼
+さっさと　いしで　しんか　させてから
+わざマシンで　わざを　おぼえさせるか▽
+それは　きみに　おまかせさ！</language>
+		<language name="JPN_KANJI" width="256">きみが　知っているか　知らないか
+ぼくには　わからないが　アドバイス！▼
+ポケモンは　進化すると
+力強く　なるけれど　代わりに▽
+技を　覚えにくくなる▼
+特に　石で　進化する
+ポケモンは　その傾向が　強い▼
+なので　いい　技を　覚えてから
+石を　使って　進化させるか▼
+さっさと　石で　進化させてから
+わざマシンで　技を　覚えさせるか▽
+それは　きみに　おまかせさ！</language>
 	</row>
 
 	<row id="msg_c03p17_select_01" back-color="#ffff80,,,,,#ffff80,,,,,,,,,,,,,">
