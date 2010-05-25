@@ -692,7 +692,7 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
     msgno = POKETRADE_STR_97;
   }
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_EGG){
-    msgno = POKETRADE_STR2_03;
+    msgno = POKETRADE_STR_98;
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_ILLEGAL){
     msgno = POKETRADE_STR2_01;
@@ -713,10 +713,10 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
     msgno = POKETRADE_STR2_32;
   }
   else if(pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_BACK){
-    msgno = gtsnego_info_17;
+    msgno = gtsnego_info_18;
   }
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_BACK){
-    msgno = gtsnego_info_18;
+    msgno = gtsnego_info_17;
   }
   GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);

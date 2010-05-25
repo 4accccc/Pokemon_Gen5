@@ -971,7 +971,7 @@ static void WH_SetError(int code)
 	{
 		return;
 	}
-
+  WH_TRACE("WH_SetError %d\n",code);
 	_pWmInfo->sErrCode = code;
 }
 
@@ -1592,7 +1592,7 @@ void WIH_FixScanMode(int channel, void* pMac )
 {
   _pWmInfo->sChannelIndex = channel;
   GFL_STD_MemCopy( pMac, _pWmInfo->sScanExParam.ssid, sizeof(_pWmInfo->sScanExParam.ssid));
-  OS_TPrintf("channel fix %d mac %x%x%x%x%x%x\n",channel,
+  WH_TRACE("channel fix %d mac %x%x%x%x%x%x\n",channel,
              _pWmInfo->sScanExParam.ssid[0],_pWmInfo->sScanExParam.ssid[1],
              _pWmInfo->sScanExParam.ssid[2],_pWmInfo->sScanExParam.ssid[3],
              _pWmInfo->sScanExParam.ssid[4],_pWmInfo->sScanExParam.ssid[5]
@@ -2948,9 +2948,11 @@ static void WH_StateOutMeasureChannel(void *arg)
 
 	if (result == WH_ERRCODE_NOMORE_CHANNEL)
 	{
-		// チャンネル検索終了
-		WH_ChangeSysState(WH_SYSSTATE_MEASURECHANNEL);
-		return;
+    if(_pWmInfo->sSysState != WH_SYSSTATE_ERROR){
+      // チャンネル検索終了
+      WH_ChangeSysState(WH_SYSSTATE_MEASURECHANNEL);
+      return;
+    }
 	}
 
 	if (result != WM_ERRCODE_OPERATING)

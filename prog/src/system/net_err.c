@@ -508,12 +508,14 @@ void NetErr_ErrWorkInit(void)
 void NetErr_ExitNetSystem( void )
 { 
   if(GFL_NET_IsInit() )
-  { 
+  {
+    GFL_NET_ResetDisconnect();  ///切断処理中でも一旦リセット
     GFL_NET_Exit(NULL);
     GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
     do{
       GFL_NET_Main();
-      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
+      OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+//      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
     }while(GFL_NET_IsExit() == FALSE);
   }
 }

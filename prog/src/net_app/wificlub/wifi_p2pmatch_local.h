@@ -495,7 +495,7 @@ struct _WIFIP2PMATCH_WORK{
 
   u16 friendNo;			// 今つながっている友達ナンバー
   BOOL bRetryBattle;
-   int vctEnc;
+  int vctEnc;
 	WIFI_MATCHROOM matchroom;	// マッチングルームワーク
 	MCR_MOVEOBJ*	p_matchMoveObj[ MATCHROOM_IN_OBJNUM ];
 	WIFIP2PMATCH_ICON icon;	// アイコングラフィック
@@ -532,7 +532,7 @@ struct _WIFIP2PMATCH_WORK{
   u8 command;   ///< direct進行の為のコマンド
   u8 backupCursor;
   u8 VChatModeOff;  //VCTOFFが呼ばれた
-  u8 dummy1;
+  u8 vchatrev;
   u8 dummy2;
 
 };

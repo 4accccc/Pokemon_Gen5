@@ -1209,19 +1209,29 @@ static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side )
 
 BOOL POKEMONTRADE_IsEggAndLastBattlePokemonChange(POKEMON_TRADE_WORK* pWork)
 {
-  POKEMON_PARAM* pp1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
-  POKEMON_PARAM* pp2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
+  BOOL bBox;
+  POKEMON_PARAM* pp;//1 = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+  //POKEMON_PARAM* pp;//2 = IRC_POKEMONTRADE_GetRecvPP(pWork, 1); //相手のポケモン
 //  BOOL bEgg1 = PP_Get(pp1,ID_PARA_tamago_flag,NULL);
 //  BOOL bEgg2 = PP_Get(pp2,ID_PARA_tamago_flag,NULL);
 
-  if (PP_Get(pp1, ID_PARA_hp, NULL) == 0) {
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0); //自分のポケモン
+    bBox = IRC_POKEMONTRADE_GetRecvBoxFlg(pWork, 0); //自分の交換に出す位置
+  }
+  else{
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);//相手のポケモン
+    bBox = IRC_POKEMONTRADE_GetRecvBoxFlg(pWork, 1); //自分の交換に出す位置
+  }
+  
+  if (PP_Get(pp, ID_PARA_hp, NULL) == 0) {
     return FALSE;
   }
-  if (PP_Get(pp1, ID_PARA_tamago_flag, NULL)) {
+  if (PP_Get(pp, ID_PARA_tamago_flag, NULL)) {
     return FALSE;
   }
   //てもち
-  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && (pWork->selectBoxno == pWork->BOX_TRAY_MAX)  ){
+  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && (bBox)  ){
 //  if(1==PokeParty_GetBattlePokeNum(pWork->pMyParty) && !bEgg1 && bEgg2 && (pWork->selectBoxno == pWork->BOX_TRAY_MAX)){
     return TRUE;
   }

@@ -3211,6 +3211,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_obj;
   u32 status,gamemode;
 
+  wk->vchatrev = 0;  //マシンでの暫定VCTフラグリセット
 
   // ワイプ終了待ち
   if( !WIPE_SYS_EndCheck() ){
@@ -5373,8 +5374,14 @@ static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq )
   u16 gamemode[2];
   u16 status = _WifiMyStatusGet( wk, wk->pMatch );
   gamemode[0] = _WifiMyGameModeGet( wk, wk->pMatch );
-  gamemode[1] = wk->pParentWork->vchatMain;
 
+  if(wk->vchatrev){  //マシンでの暫定VCTフラグ
+    gamemode[1] = wk->vchatrev-1;
+    wk->vchatrev=0;
+  }
+  else{
+    gamemode[1] = wk->pParentWork->vchatMain;
+  }
   if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), CNM_WFP2PMF_STATUS, sizeof(u16)*2, gamemode)){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_CHECK);
   }
@@ -5777,7 +5784,7 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
     // 接続開始
     //VCT反転
     WIFI_STATUS_SetVChatStatus(wk->pMatch, 1-WIFI_STATUS_GetVChatStatus(wk->pMatch));
-    
+    wk->vchatrev = (1 - wk->pParentWork->vchatMain) + 1;  //反転フラグを格納
     _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
   }
   else{
