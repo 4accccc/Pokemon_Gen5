@@ -104,6 +104,24 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
                                         //‰ðÁ‚·‚é
       return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
+    else if( cp_error->errorUser == ERRORCODE_CRC
+        || cp_error->errorUser == ERRORCODE_SYSTEM 
+        || cp_error->errorUser == ERRORCODE_SENDQUEUE)
+    {
+      if( !is_heavy )
+      { 
+        NetErr_DispCallPushPop();
+        GFL_NET_StateClearWifiError();
+        NetErr_ErrWorkInit();
+        GFL_NET_StateResetError();
+        return GFL_NET_DWC_ERROR_RESULT_PRINT_MSG;
+      }
+      else
+      {
+        NetErr_App_ReqErrorDisp();
+        return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
+      }
+    }
   }
 
   return GFL_NET_DWC_ERROR_RESULT_NONE;
