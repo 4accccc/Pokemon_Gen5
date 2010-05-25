@@ -5042,13 +5042,19 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     {
       POKEMON_PARAM *ppOrg, *ppResult;
       u32 i, pokeCnt = PokeParty_GetPokeCount( srcParty );
-      u16 itemNo;
+      u16 OrgItemNo;
       for(i=0; i<pokeCnt; ++i)
       {
         ppOrg = PokeParty_GetMemberPointer( wk->setupParam->party[ BTL_CLIENT_PLAYER ], i );
         ppResult = PokeParty_GetMemberPointer( srcParty, i );
-        itemNo = PP_Get( ppOrg, ID_PARA_item, NULL );
-        PP_Put( ppResult, ID_PARA_item, itemNo );
+        OrgItemNo = PP_Get( ppOrg, ID_PARA_item, NULL );
+        // 消費アイテムでなければ、ただ元に戻すだけ
+        if( !BTL_CALC_ITEM_GetParam(OrgItemNo, ITEM_PRM_ITEM_SPEND) ){
+          PP_Put( ppResult, ID_PARA_item, OrgItemNo );
+        // 消費アイテムであれば、他のアイテムに変わっていた場合に消す
+        }else if( PP_Get(ppResult, ID_PARA_item, NULL) != OrgItemNo ){
+          PP_Put( ppResult, ID_PARA_item, ITEM_DUMMY_DATA );
+        }
       }
     }
 
