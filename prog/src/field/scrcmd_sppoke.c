@@ -309,6 +309,12 @@ VMCMD_RESULT EvCmdSetEvtPokeAfterFlg( VMHANDLE *core, void *wk )
   case MONSNO_SEREBHI:
     evt_flg = POKE_MEMO_EVENT_2010MOVIE_SEREBIXI_BEF;
     break;
+  case MONSNO_ENTEI:
+  case MONSNO_RAIKOU:
+  case MONSNO_SUIKUN:
+    evt_flg = POKE_MEMO_EVENT_2010MOVIE_ENRAISUI_BEF;
+    break;
+  
   default:
     //ëŒè€É|ÉPÉÇÉìÇ≈ÇÕÇ»Ç¢
     return VMCMD_RESULT_CONTINUE;
