@@ -2012,7 +2012,6 @@ static void setupRotationParams( BTL_CLIENT* wk, BTLV_ROTATION_WAZASEL_PARAM* pa
     if( !BPP_IsDead(bpp) )
     {
       u32 wazaCnt = BPP_WAZA_GetCount( bpp );
-      TAYA_Printf("wazaCount=%d\n", wazaCnt);
 
       for(j=0; j<wazaCnt; ++j)
       {

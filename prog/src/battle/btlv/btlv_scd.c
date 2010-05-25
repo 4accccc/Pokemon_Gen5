@@ -793,15 +793,20 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
     BOOL fWazaInfoMode = BTLV_INPUT_CheckWazaInfoModeMask( &wazaIdx );
     if( wazaIdx != PTL_WAZA_MAX )
     {
-      int pokeIdx;
       WazaID waza;
 
       if( dir == BTL_ROTATEDIR_NONE ){
         dir = BTL_ROTATEDIR_STAY;
       }
 
-      pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
-      waza = BPP_WAZA_GetID( wk->rotationSelParam->poke[ pokeIdx ].bpp, wazaIdx );
+      if( wazaIdx != BTLV_INPUT_WARUAGAKI_BUTTON )
+      {
+        int pokeIdx = BTL_MAINUTIL_GetRotateInPosIdx( dir );
+        waza = BPP_WAZA_GetID( wk->rotationSelParam->poke[ pokeIdx ].bpp, wazaIdx );
+      }
+      else{
+        waza = WAZANO_WARUAGAKI;
+      }
 
       BTL_ACTION_SetRotation( &wk->rotationSelParam->actRotation, dir );
       BTL_ACTION_SetFightParam( &wk->rotationSelParam->actWaza, waza, BTL_POS_NULL );
