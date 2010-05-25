@@ -715,7 +715,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
     if (ptr->CapEndFlg){
       //キャプチャ終わったら、プライオリティ変更と表示変更
       GFL_BG_SetPriority( 0, 0 );
-      GFL_BG_SetPriority( 2, 3 );
+      GFL_BG_SetPriority( 2, 1 );
       //描画モード変更
       {
         const GFL_BG_SYS_HEADER bg_sys_header = 
