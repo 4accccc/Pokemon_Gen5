@@ -85,10 +85,12 @@ $(TARGETDIR)/$(targetname_w).narc: $(targetname_w).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname_b).narc: $(lobjects) $(gobjects) $(sobjects) $(nobjects)
+	ntrcomp -l 2 -o blk_obj_lz.NCGR blk_obj.NCGR
 	nnsarc -r -l -n -i $(targetname_b) -S title_black_arc.txt
 	$(NAIXCUT) $(targetname_b).naix
 
 $(targetname_w).narc: $(lobjects) $(gobjects) $(sobjects) $(nobjects)
+	ntrcomp -l 2 -o wht_obj_lz.NCGR wht_obj.NCGR
 	nnsarc -r -l -n -i $(targetname_w) -S title_white_arc.txt
 	$(NAIXCUT) $(targetname_w).naix
 endif
