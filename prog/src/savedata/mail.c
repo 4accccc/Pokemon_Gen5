@@ -55,6 +55,12 @@ typedef struct _MAIL_DATA{
   PMS_DATA  msg[MAILDAT_MSGMAX];            //<文章データ 56
 }_MAIL_DATA;
 
+//_MAIL_DATA構造体のサイズに変更があったら、
+//直値指定しているPOKEMON_PARAM構造体メンバにも変更がかかるので、
+//チェックをする
+#ifdef DEBUG_ONLY_FOR_sogabe
+SDK_COMPILER_ASSERT( sizeof(_MAIL_DATA) == 56 );
+#endif
 
 //=============================================================
 ///メールデータセーブデータブロック定義構造体
