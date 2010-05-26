@@ -50,7 +50,7 @@ typedef enum
   BR_BTLSUBWAY_MSGWINID_S_SINGLE,  //シングルバトル
   BR_BTLSUBWAY_MSGWINID_S_DOUBLE,  //ダブルバトル
   BR_BTLSUBWAY_MSGWINID_S_MULTI,  //マルチバトル
-  BR_BTLSUBWAY_MSGWINID_S_WIF,  //WIFIバトルルーム
+  BR_BTLSUBWAY_MSGWINID_S_WIFI,  //WIFIバトルルーム
   BR_BTLSUBWAY_MSGWINID_S_MAX,
 } BR_BTLSUBWAY_MSGWINID_S;
 typedef enum
@@ -193,6 +193,10 @@ static void Br_BtlSubway_DeleteSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
 ///	private
 //=====================================
 static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 x, u32 y );
+
+static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv );
+static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv );
+static BOOL Br_BtlSubway_IsAppearMulti( BSUBWAY_SCOREDATA *p_sv );
 
 //-------------------------------------
 ///	OBJNUMBER
@@ -592,6 +596,8 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   STRBUF  *p_strbuf;
   STRBUF  *p_src;
 
+  BSWAY_PLAYMODE  mode;
+
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
   p_word  = BR_RES_GetWordSet( p_param->p_res );
@@ -599,6 +605,16 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
   //リソース読み込み
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_SINGLE, p_wk->heapID );
+
+  //スーパーかどうか
+  if( Br_BtlSubway_IsAppearSingle( p_param->p_subway ) )
+  {
+    mode  = BSWAY_PLAYMODE_S_SINGLE;
+  }
+  else
+  {
+    mode  = BSWAY_PLAYMODE_SINGLE;
+  }
 
   //メッセージWIN作成
   {
@@ -609,10 +625,25 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       switch( i )
       { 
+      case BR_BTLSUBWAY_MSGWINID_M_SINGLE_RULE:
+        {
+          u16 msgID;
+          if( Br_BtlSubway_IsAppearSingle( p_param->p_subway ) )
+          {
+            msgID = msg_800_01;
+          }
+          else
+          {
+            msgID = msg_800;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break;
+
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_CAPTION: //ぜんかい
         { 
           u16 msgID;
-          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ) )
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, mode ) )
           { 
             msgID = msg_817;
           }
@@ -626,7 +657,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_NUM:  //ぜんかいの数値
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, mode ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -637,7 +668,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_NUM: //さいこうの数値
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_SINGLE ); 
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, mode); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -747,6 +778,8 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   STRBUF  *p_strbuf;
   STRBUF  *p_src;
 
+  BSWAY_PLAYMODE  mode;
+
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
   p_word  = BR_RES_GetWordSet( p_param->p_res );
@@ -754,6 +787,16 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
   //リソース読み込み
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_DOUBLE, p_wk->heapID );
+
+  //スーパーかどうか
+  if( Br_BtlSubway_IsAppearDouble( p_param->p_subway ) )
+  {
+    mode  = BSWAY_PLAYMODE_S_DOUBLE;
+  }
+  else
+  {
+    mode  = BSWAY_PLAYMODE_DOUBLE;
+  }
 
   //メッセージWIN作成
   {
@@ -764,10 +807,25 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       switch( i )
       { 
+      case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_RULE:
+        {
+          u16 msgID;
+          if( Br_BtlSubway_IsAppearDouble( p_param->p_subway ) )
+          {
+            msgID = msg_801_01;
+          }
+          else
+          {
+            msgID = msg_801;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break;
+
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_CAPTION: //ぜんかい
         { 
           u16 msgID;
-          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE ) )
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, mode ) )
           { 
             msgID = msg_817;
           }
@@ -781,7 +839,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_NUM:  //ぜんかいの数値
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, mode ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -792,7 +850,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_NUM: //さいこうの数値
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_DOUBLE );
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, mode );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -956,6 +1014,9 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
   STRBUF  *p_strbuf;
   STRBUF  *p_src;
 
+  BSWAY_PLAYMODE  multi_mode;
+
+
   p_font  = BR_RES_GetFont( p_param->p_res );
   p_msg   = BR_RES_GetMsgData( p_param->p_res );
   p_word  = BR_RES_GetWordSet( p_param->p_res );
@@ -963,6 +1024,18 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
   //リソース読み込み
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_MULTI, p_wk->heapID );
+
+
+  //マルチモード
+  if( Br_BtlSubway_IsAppearMulti( p_param->p_subway ) )
+  {
+    multi_mode  = BSWAY_PLAYMODE_S_MULTI;
+  }
+  else
+  {
+    multi_mode  = BSWAY_PLAYMODE_MULTI;
+  }
+
 
   //メッセージWIN作成
   {
@@ -973,10 +1046,25 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       switch( i )
       { 
+      case BR_BTLSUBWAY_MSGWINID_M_MULTI_RULE:
+        {
+          u16 msgID;
+          if( Br_BtlSubway_IsAppearMulti( p_param->p_subway ) )
+          {
+            msgID = msg_802_01;
+          }
+          else
+          {
+            msgID = msg_802;
+          }
+          p_strbuf  = GFL_MSG_CreateString( p_msg, msgID );
+        }
+        break;
+
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_CAPTION:
         { 
           u16 msgID;
-          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, BSWAY_PLAYMODE_MULTI ) )
+          if( BSUBWAY_SCOREDATA_CheckExistStageNo( p_param->p_subway, multi_mode ) )
           { 
             msgID = msg_817;
           }
@@ -990,7 +1078,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_NUM:   //ぜんかい
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_MULTI ); 
+         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, multi_mode ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1000,7 +1088,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
         break;
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_NUM:       //９９９９
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_MULTI ); 
+         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, multi_mode ); 
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1279,10 +1367,56 @@ static void Br_BtlSubway_CreateSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
   //メッセージWIN作成
   {
     int i;
+    u16 msgID;
+
     for( i = 0; i < BR_BTLSUBWAY_MSGWINID_S_MAX; i++ )
     { 
       p_wk->p_msgwin_s[i]  = BR_MSGWIN_Init( BG_FRAME_S_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_S_FONT, p_wk->p_que, p_wk->heapID );
-      BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[i], p_msg, sc_msgwin_data[i].msgID, p_font, BR_PRINT_COL_NORMAL );
+
+      switch( i )
+      { 
+      case BR_BTLSUBWAY_MSGWINID_S_SINGLE:  //シングルバトル
+        if( Br_BtlSubway_IsAppearSingle( p_param->p_subway ) )
+        {
+          //スーパーシングル
+          msgID = msg_800_01;
+        }
+        else
+        {
+          //シングル
+          msgID = msg_800;
+        }
+        break;
+      case BR_BTLSUBWAY_MSGWINID_S_DOUBLE:  //ダブルバトル
+        if( Br_BtlSubway_IsAppearDouble( p_param->p_subway ) )
+        {
+          //スーパーダブル
+          msgID = msg_801_01;
+        }
+        else
+        {
+          //ダブル
+          msgID = msg_801;
+        }
+        break;
+      case BR_BTLSUBWAY_MSGWINID_S_MULTI:  //マルチバトル
+        if( Br_BtlSubway_IsAppearMulti( p_param->p_subway ) )
+        {
+          //スーパーマルチ
+          msgID = msg_802_01;
+        }
+        else
+        {
+          //マルチ
+          msgID = msg_802;
+        }
+        break;
+      case BR_BTLSUBWAY_MSGWINID_S_WIFI:  //WIFIバトルルーム
+        msgID = msg_803;
+        break;
+      }
+
+      BR_MSGWIN_PrintColor( p_wk->p_msgwin_s[i], p_msg, msgID, p_font, BR_PRINT_COL_NORMAL );
     }
   }
 
@@ -1380,6 +1514,60 @@ static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 
   }
 
   return BR_BTLSUBWAY_SELECT_NONE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スーパーシングルが出現しているか
+ *
+ *	@param	BSUBWAY_SCOREDATA *p_wk ワーク
+ *
+ *	@return TRUEで登場  FALSEでまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv )
+{
+  BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
+                          BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE, BSWAY_SETMODE_get );
+
+  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_SINGLE ); 
+
+  return is_clear && win > 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スーパーダブルが出現しているか
+ *
+ *	@param	BSUBWAY_SCOREDATA *p_sv ワーク
+ *
+ *	@return TRUEで登場  FALSEでまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv )
+{
+  BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
+                          BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_DOUBLE, BSWAY_SETMODE_get );
+
+  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_DOUBLE ); 
+
+  return is_clear && win > 0;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  スーパーマルチが出現しているか
+ *
+ *	@param	BSUBWAY_SCOREDATA *p_sv ワーク
+ *
+ *	@return TRUEで登場  FALSEでまだ
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_BtlSubway_IsAppearMulti(  BSUBWAY_SCOREDATA *p_sv )
+{
+  BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
+                          BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_MULTI, BSWAY_SETMODE_get );
+
+  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_MULTI ); 
+
+  return is_clear && win > 0;
 }
 //=============================================================================
 /**

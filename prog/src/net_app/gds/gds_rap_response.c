@@ -228,7 +228,6 @@ u64 GDS_RAP_RESPONSE_BattleVideo_Upload_DataGet(GDS_RAP_WORK *gdsrap)
 	param = (POKE_NET_GDS_RESPONSE_BATTLEDATA_REGIST *)(res->Param);
 	return param->Code;
 }
-
 //--------------------------------------------------------------
 /**
  * @brief   レスポンスデータ解釈：バトルビデオ検索

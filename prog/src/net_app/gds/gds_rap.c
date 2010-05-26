@@ -30,6 +30,16 @@
 #include "gamesystem/game_data.h"
 
 
+//-------------------------------------
+///	
+//=====================================
+#ifdef PM_DEBUG
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi) || defined(DEBUG_ONLY_FOR_shimoyamada)
+#define GDSRAP_DEBUG_ERRORREQ_ON
+#endif//definded
+#endif //PM_DEBUG
+
+
 //==============================================================================
 //	定数定義
 //==============================================================================
@@ -688,6 +698,13 @@ static int GDSRAP_MAIN_Recv(GDS_RAP_WORK *gdsrap)
 	// ステータス取得
 	gdsrap->stat = POKE_NET_GDS_GetStatus();
 
+#ifdef GDSRAP_DEBUG_ERRORREQ_ON
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    gdsrap->stat  = POKE_NET_GDS_STATUS_ERROR;
+  }
+#endif //GDSRAP_DEBUG_ERRORREQ_ON
+
 	if(	gdsrap->stat != gdsrap->laststat ){
 		// ステータスに変化があった
 		switch(gdsrap->stat){
@@ -733,6 +750,13 @@ static int GDSRAP_MAIN_Recv(GDS_RAP_WORK *gdsrap)
 			gdsrap->error_info.req_code = 0;
 			gdsrap->error_info.result = POKE_NET_GDS_GetLastErrorCode();
 			gdsrap->error_info.occ = TRUE;
+
+#ifdef GDSRAP_DEBUG_ERRORREQ_ON
+      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      {
+        gdsrap->error_info.result  = POKE_NET_GDS_LASTERROR_CONNECT;
+      }
+#endif //GDSRAP_DEBUG_ERRORREQ_ON
 		//	gdsrap->recv_wait_req = POKE_NET_GDS_REQCODE_LAST;
 			gdsrap->recv_sub_work.recv_sub_proccess = RecvSubProccess_SystemError;
 			break;

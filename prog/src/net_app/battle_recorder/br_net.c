@@ -68,7 +68,6 @@ struct _BR_NET_WORK
 
   BR_NET_REQUEST_PARAM  reqest_param;    ///<リクエストされた引数
   u32                   response_flag[BR_NET_REQUEST_MAX];  ///<レスポンスを受けたかどうかのフラグ
-  GDS_RAP_ERROR_INFO    error_info;
 };
 
 //=============================================================================
@@ -223,7 +222,8 @@ void BR_NET_StartRequest( BR_NET_WORK *p_wk, BR_NET_REQUEST type, const BR_NET_R
   { 
     p_wk->reqest_param  = *cp_param;
   }
-  p_wk->response_flag[ type ] = FALSE;
+
+  GFL_STD_MemClear( p_wk->response_flag, sizeof(u32)*BR_NET_REQUEST_MAX );
 
   switch( type )
   { 
@@ -290,10 +290,15 @@ BOOL BR_NET_WaitRequest( BR_NET_WORK *p_wk )
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetDownloadMusicalShot( BR_NET_WORK *p_wk, MUSICAL_SHOT_RECV **pp_data_tbl, int tbl_max, int *p_recv_num )
 { 
-  *p_recv_num = GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set( &p_wk->gdsrap,
-      pp_data_tbl, tbl_max );
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ];
 
-  return p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ];
+  if( response_flag )
+  {
+    *p_recv_num = GDS_RAP_RESPONSE_MusicalShot_Download_RecvPtr_Set( &p_wk->gdsrap,
+        pp_data_tbl, tbl_max );
+  }
+
+  return response_flag;
 }
 
 //----------------------------------------------------------------------------
@@ -308,8 +313,13 @@ BOOL BR_NET_GetDownloadMusicalShot( BR_NET_WORK *p_wk, MUSICAL_SHOT_RECV **pp_da
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetUploadBattleVideoNumber( BR_NET_WORK *p_wk, u64 *p_video_number )
 { 
-  *p_video_number = GDS_RAP_RESPONSE_BattleVideo_Upload_DataGet( &p_wk->gdsrap );
-  return p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ];
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ];
+  if( response_flag )
+  {
+    *p_video_number = GDS_RAP_RESPONSE_BattleVideo_Upload_DataGet( &p_wk->gdsrap );
+  }
+
+  return response_flag;
 }
 //----------------------------------------------------------------------------
 /**
@@ -324,10 +334,15 @@ BOOL BR_NET_GetUploadBattleVideoNumber( BR_NET_WORK *p_wk, u64 *p_video_number )
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetDownloadBattleVideo( BR_NET_WORK *p_wk, BATTLE_REC_RECV **pp_data, int *p_video_number )
 { 
-  *p_video_number = GDS_RAP_RESPONSE_BattleVideoData_Download_RecvPtr_Set( &p_wk->gdsrap, 
-	pp_data );
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ];
 
-  return p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ];
+  if( response_flag )
+  {
+    *p_video_number = GDS_RAP_RESPONSE_BattleVideoData_Download_RecvPtr_Set( &p_wk->gdsrap, 
+        pp_data );
+  }
+
+  return response_flag;
 }
 
 //----------------------------------------------------------------------------
@@ -344,10 +359,15 @@ BOOL BR_NET_GetDownloadBattleVideo( BR_NET_WORK *p_wk, BATTLE_REC_RECV **pp_data
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetDownloadBattleSearch( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
 { 
-  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
-      &p_wk->gdsrap, p_data_tbl, tbl_max );
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ];
 
-  return *p_recv_num != 0;
+  if( response_flag )
+  {
+    *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+        &p_wk->gdsrap, p_data_tbl, tbl_max );
+  }
+
+  return *p_recv_num != 0 && response_flag;
 }
 //----------------------------------------------------------------------------
 /**
@@ -363,10 +383,16 @@ BOOL BR_NET_GetDownloadBattleSearch( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV 
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetDownloadNewRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
 { 
-  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
-      &p_wk->gdsrap, p_data_tbl, tbl_max );
 
-  return *p_recv_num != 0;
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ];
+
+  if( response_flag )
+  {
+    *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+        &p_wk->gdsrap, p_data_tbl, tbl_max );
+  }
+
+  return *p_recv_num != 0 && response_flag;
 }
 //----------------------------------------------------------------------------
 /**
@@ -382,10 +408,15 @@ BOOL BR_NET_GetDownloadNewRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetDownloadFavoriteRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
 { 
-  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
-      &p_wk->gdsrap, p_data_tbl, tbl_max );
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ];
 
-  return *p_recv_num != 0;
+  if( response_flag )
+  {
+    *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+        &p_wk->gdsrap, p_data_tbl, tbl_max );
+  }
+
+  return *p_recv_num != 0 && response_flag;
 }
 //----------------------------------------------------------------------------
 /**
@@ -401,9 +432,14 @@ BOOL BR_NET_GetDownloadFavoriteRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RE
 //-----------------------------------------------------------------------------
 BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV *p_data_tbl, int tbl_max, int *p_recv_num )
 { 
-  *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
-      &p_wk->gdsrap, p_data_tbl, tbl_max );
-  return *p_recv_num != 0;
+  BOOL response_flag  = p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ];
+
+  if( response_flag )
+  {
+    *p_recv_num = GDS_RAP_RESPONSE_BattleVideoSearch_Download_DataCopy( 
+        &p_wk->gdsrap, p_data_tbl, tbl_max );
+  }
+  return *p_recv_num != 0 && response_flag;
 }
 
 //----------------------------------------------------------------------------
@@ -419,14 +455,16 @@ BOOL BR_NET_GetDownloadSubwayRanking( BR_NET_WORK *p_wk, BATTLE_REC_OUTLINE_RECV
 BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 { 
   //poke_netからのエラー
-  if( p_wk->error_info.occ )
+  GDS_RAP_ERROR_INFO *p_errorinfo;
+
+  if( GDSRAP_ErrorInfoGet(&p_wk->gdsrap, &p_errorinfo) )
   { 
     int ret = BR_NET_ERR_RETURN_ONCE;//BR_NET_ERR_RETURN_NONE;poke_netがエラーがあると言っている以上、
                                     //かならずエラーを返すようにする
-	  if( p_wk->error_info.type == GDS_ERROR_TYPE_LIB )
+	  if( p_errorinfo->type == GDS_ERROR_TYPE_LIB )
     { 
       //ライブラリのエラー
-      if( p_wk->error_info.result == POKE_NET_GDS_LASTERROR_NONE )
+      if( p_errorinfo->result == POKE_NET_GDS_LASTERROR_NONE )
       { 
         ret = BR_NET_ERR_RETURN_ONCE;
       }
@@ -434,20 +472,20 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
       { 
         if( p_msg_no )
         { 
-          *p_msg_no = msg_lib_err_000 + p_wk->error_info.result;
+          *p_msg_no = msg_lib_err_000 + p_errorinfo->result;
         }
 
         ret = BR_NET_ERR_RETURN_ONCE;
       }
     }
-    else if( p_wk->error_info.type == GDS_ERROR_TYPE_STATUS )
+    else if( p_errorinfo->type == GDS_ERROR_TYPE_STATUS )
     { 
       //ライブラリの状態エラー
-      if( p_wk->error_info.result == POKE_NET_GDS_STATUS_ABORTED )
+      if( p_errorinfo->result == POKE_NET_GDS_STATUS_ABORTED )
       { 
         if( p_msg_no )
         { 
-          *p_msg_no = msg_st_err_000 + p_wk->error_info.result;
+          *p_msg_no = msg_st_err_000 + p_errorinfo->result;
         }
         ret = BR_NET_ERR_RETURN_ONCE;
       }
@@ -456,19 +494,19 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
         ret = BR_NET_ERR_RETURN_ONCE;
       }
     }
-    else if( p_wk->error_info.type == GDS_ERROR_TYPE_APP )
+    else if( p_errorinfo->type == GDS_ERROR_TYPE_APP )
     { 
       //アプリごとのエラー
       //
-      switch( p_wk->error_info.req_code )
+      switch( p_errorinfo->req_code )
       { 
       case POKE_NET_GDS_REQCODE_MUSICALSHOT_REGIST:
         //ミュージカル送信時
-        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_SUCCESS )
+        if( p_errorinfo->result != POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_REGIST_SUCCESS )
         { 
           if( p_msg_no )
           { 
-            *p_msg_no = msg_err_000 + p_wk->error_info.result;
+            *p_msg_no = msg_err_000 + p_errorinfo->result;
           }
           ret = BR_NET_ERR_RETURN_TOPMENU;
         }
@@ -476,11 +514,11 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 
       case POKE_NET_GDS_REQCODE_MUSICALSHOT_GET:
         //ミュージカル取得時
-        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_SUCCESS )
+        if( p_errorinfo->result != POKE_NET_GDS_RESPONSE_RESULT_MUSICALSHOT_GET_SUCCESS )
         { 
           if( p_msg_no )
           { 
-            *p_msg_no = msg_err_006 + p_wk->error_info.result;
+            *p_msg_no = msg_err_006 + p_errorinfo->result;
           }
           ret = BR_NET_ERR_RETURN_TOPMENU;
         }
@@ -488,11 +526,11 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 
       case POKE_NET_GDS_REQCODE_BATTLEDATA_REGIST:
         //バトルビデオ送信時
-        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS )
+        if( p_errorinfo->result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS )
         { 
           if( p_msg_no )
           { 
-            *p_msg_no = msg_err_030 + p_wk->error_info.result;
+            *p_msg_no = msg_err_030 + p_errorinfo->result;
           }
           ret = BR_NET_ERR_RETURN_TOPMENU;
         }
@@ -500,11 +538,11 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 
       case POKE_NET_GDS_REQCODE_BATTLEDATA_SEARCH:
         //バトルビデオ検索時
-        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_SUCCESS )
+        if( p_errorinfo->result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_SEARCH_SUCCESS )
         { 
           if( p_msg_no )
           { 
-            *p_msg_no = msg_err_036 + p_wk->error_info.result;
+            *p_msg_no = msg_err_036 + p_errorinfo->result;
           }
           ret = BR_NET_ERR_RETURN_TOPMENU;
         }
@@ -512,11 +550,11 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
 
       case POKE_NET_GDS_REQCODE_BATTLEDATA_GET:
         //バトルビデオ取得時
-        if( p_wk->error_info.result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_SUCCESS )
+        if( p_errorinfo->result != POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_GET_SUCCESS )
         { 
           if( p_msg_no )
           { 
-            *p_msg_no = msg_err_040 + p_wk->error_info.result;
+            *p_msg_no = msg_err_040 + p_errorinfo->result;
           }
           ret = BR_NET_ERR_RETURN_ONCE;
         }
@@ -530,12 +568,10 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
       }
     }
 
-    BR_NET_Printf( "BR_NET エラー発生！occ%d type%d result%d ret%d\n", p_wk->error_info.occ, p_wk->error_info.type, p_wk->error_info.result, ret );
+    BR_NET_Printf( "BR_NET エラー発生！occ%d type%d result%d ret%d\n", p_errorinfo->occ, p_errorinfo->type, p_errorinfo->result, ret );
 
     //エラー消去
     GDSRAP_ErrorInfoClear( &p_wk->gdsrap );
-    GFL_STD_MemClear( &p_wk->error_info, sizeof(GDS_RAP_ERROR_INFO) );
-
     return ret;
   }
 
@@ -815,7 +851,6 @@ static void Br_Net_Response_MusicalRegist(void *p_wk_adrs, const GDS_RAP_ERROR_I
   BR_NET_Printf("ミュージカルショットのアップロードレスポンス取得\n");
 
   p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD ] = TRUE;
-  p_wk->error_info  = *p_error_info;
 
 }
 //----------------------------------------------------------------------------
@@ -832,7 +867,6 @@ static void Br_Net_Response_MusicalGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO
 
   BR_NET_Printf("ミュージカルショットのダウンロードレスポンス取得\n");
   p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ] = TRUE;
-  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -880,7 +914,6 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
   }
 
   p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_UPLOAD ] = TRUE;
-  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -896,7 +929,6 @@ static void Br_Net_Response_BattleVideoSearch(void *p_wk_adrs, const GDS_RAP_ERR
 
   BR_NET_Printf("バトルビデオ検索のダウンロードレスポンス取得\n");
   p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ] = TRUE;
-  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -913,7 +945,6 @@ static void Br_Net_Response_BattleVideoDataGet(void *p_wk_adrs, const GDS_RAP_ER
   BR_NET_Printf("バトルビデオデータ取得のダウンロードレスポンス取得\n");
 
   p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ] = TRUE;
-  p_wk->error_info  = *p_error_info;
 }
 //----------------------------------------------------------------------------
 /**
@@ -929,7 +960,6 @@ static void Br_Net_Response_BattleVideoFavorite(void *p_wk_adrs, const GDS_RAP_E
 
   BR_NET_Printf("バトルビデオお気に入り登録のダウンロードレスポンス取得\n");
   p_wk->response_flag[ BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD ] =  TRUE;
-  p_wk->error_info  = *p_error_info;
 }
 
 //=============================================================================
