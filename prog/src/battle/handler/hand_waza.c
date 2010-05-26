@@ -176,6 +176,7 @@ static void handler_Tobigeri_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Monomane( u32* numElems );
 static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Monomane_PP( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Sketch( u32* numElems );
 static void handler_Sketch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_KonoyubiTomare( u32* numElems );
@@ -507,6 +508,7 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID );
 static const BtlEventHandlerTable*  ADD_Hensin( u32* numElems );
 static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Hensin_PP( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MikadukiNoMai( u32* numElems );
 static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_IyasiNoNegai( u32* numElems );
@@ -1551,12 +1553,13 @@ static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable*  ADD_Monomane( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA, handler_Monomane },    // 未分類ワザハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Monomane    }, // 未分類ワザハンドラ
+//    { BTL_EVENT_DECREMENT_PP_VOLUME, handler_Monomane_PP }, // PP消費チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
+// 未分類ワザハンドラ
 static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -1565,6 +1568,12 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
     WazaID waza = BPP_GetPrevWazaID( target );
     if( (waza != WAZANO_NULL)
+    &&  (waza != WAZANO_SUKETTI)
+    &&  (waza != WAZANO_MONOMANE)
+    &&  (waza != WAZANO_HENSIN)
+    &&  (waza != WAZANO_WARUAGAKI)
+    &&  (waza != WAZANO_YUBIWOHURU)
+    &&  (waza != WAZANO_OSYABERI)
     &&  (BPP_WAZA_SearchIdx(self, waza) == PTL_WAZA_MAX)
     ){
       u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
@@ -1588,6 +1597,7 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * スケッチ
@@ -7081,7 +7091,8 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Hensin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,  handler_Hensin   },  // 未分類ワザ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Hensin    }, // 未分類ワザ
+//    { BTL_EVENT_DECREMENT_PP_VOLUME, handler_Hensin_PP }, // PP消費チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7096,6 +7107,25 @@ static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hensin );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      work[0] = BPP_HENSIN_Check( bpp );  // 変身中に、さらにへんしんを使ったフラグ
+    }
+  }
+}
+// PP消費チェック
+static void handler_Hensin_PP( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( work[0] == 0 )
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      if( BPP_HENSIN_Check(bpp) ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+      }
+    }
   }
 }
 

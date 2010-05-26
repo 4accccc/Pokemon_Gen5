@@ -99,8 +99,8 @@ typedef enum {
   BTL_EVENT_WAZA_DMG_LAST,          ///< 最終ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_REACTION,      ///< ダメージ処理１体ごとの反応
   BTL_EVENT_WAZA_DMG_REACTION_L2,   ///< ダメージ処理１体ごとの反応（２段階目）
-  BTL_EVENT_WAZADMG_SIDE_AFTER,         ///< ダメージを対象全部に与えた後の追加処理（１回のみ）
-  BTL_EVENT_DECREMENT_PP_VOLUME,    ///< 使用ワザの減少PP値を取得
+  BTL_EVENT_WAZADMG_SIDE_AFTER,     ///< ダメージを対象全部に与えた後の追加処理（１回のみ）
+  BTL_EVENT_DECREMENT_PP,           ///< 使用ワザの減少PP値を取得
   BTL_EVENT_DECREMENT_PP_DONE,      ///< 使用ワザのPP値を減少後
   BTL_EVENT_CALC_KICKBACK,          ///< 反動計算ハンドラ
   BTL_EVENT_ADD_RANK_TARGET,        ///< ワザを受けた側への追加効果

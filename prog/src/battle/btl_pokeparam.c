@@ -394,7 +394,7 @@ static void WazaWork_UpdateNumber( BPP_WAZA* waza, WazaID nextNumber, u8 ppMax, 
   else
   {
     // 仮ワザワークのみを更新、リンクを切る
-    TAYA_Printf("ものまね書き換え、リンク切れます\n");
+    BTL_N_Printf( DBGSTR_BPP_WazaLinkOff, nextNumber );
     WazaCore_UpdateNumber( &waza->surface, nextNumber, ppMax );
     waza->fLinked = FALSE;
   }
@@ -883,7 +883,6 @@ void BPP_WAZA_DecrementPP_Org( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
     }
     bpp->waza[wazaIdx].truth.pp = pp;
     PP_Put( bpp->coreParam.ppSrc, ID_PARA_pp1+wazaIdx, bpp->waza[wazaIdx].truth.pp );
-
   }
 }
 //=============================================================================================
@@ -981,11 +980,10 @@ WazaID BPP_WAZA_IncrementPP_Org( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
  * @retval  BOOL
  */
 //=============================================================================================
-BOOL BPP_WAZA_IsLinkOut( const BTL_POKEPARAM* bpp, u8 wazaIdx, WazaID orgWaza )
+BOOL BPP_WAZA_IsLinkOut( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 {
-  if( (bpp->waza[wazaIdx].fLinked == FALSE)
-  &&  (bpp->waza[wazaIdx].truth.number == orgWaza)
-  ){
+  if( bpp->waza[wazaIdx].fLinked == FALSE )
+  {
     return TRUE;
   }
   return FALSE;
@@ -1025,7 +1023,6 @@ void BPP_WAZA_UpdateID( BTL_POKEPARAM* bpp, u8 wazaIdx, WazaID waza, u8 ppMax, B
 {
   BPP_WAZA* pWaza = &bpp->waza[ wazaIdx ];
 
-  TAYA_Printf("UpdateWazaID ... index=%d\n", wazaIdx );
   WazaWork_UpdateNumber( &bpp->waza[wazaIdx], waza, ppMax, fPermenent );
 }
 //=============================================================================================

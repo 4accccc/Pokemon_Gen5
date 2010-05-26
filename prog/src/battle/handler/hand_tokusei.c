@@ -5057,7 +5057,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Pressure( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,            handler_Pressure_MemberIN },  // メンバー入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_Pressure_MemberIN },  // とくせい書き換えハンドラ
-    { BTL_EVENT_DECREMENT_PP_VOLUME,  handler_Pressure          },  // PP消費チェックハンドラ
+    { BTL_EVENT_DECREMENT_PP,         handler_Pressure          },  // PP消費チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

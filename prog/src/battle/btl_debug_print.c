@@ -158,7 +158,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_FIDLD_FuinCheck:    return "ふういんポケチェック %d 体目 : ふういんポケ=%d, チェックワザ=%d\n";
   case DBGSTR_FIELD_FuinHit:      return "ふういんポケ(ID=%d)が、ワザ:%dを持っていた！\n";
 
-  case DBGSTR_BPP_NemuriWakeCheck:        return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
+  case DBGSTR_BPP_NemuriWakeCheck:   return "ポケ[%d]のねむりターン最大値=%d, 経過ターン=%d\n";
+  case DBGSTR_BPP_WazaLinkOff:       return "ワザ書き換え、リンク切れます（新ワザナンバー=%d）\n";
 
   case DBGSTR_VCORE_PokeListStart:      return "交換リスト画面 モード=%d すでに%d体選択, 今回選択=%d\n";
   case DBGSTR_VCORE_SelPokeEnd:         return "ポケ選択おわった\n";

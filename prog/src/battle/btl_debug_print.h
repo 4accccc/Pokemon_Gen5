@@ -103,6 +103,7 @@ typedef enum {
   DBGSTR_CLIENT_OP_MemberIn,
 
   DBGSTR_BPP_NemuriWakeCheck,
+  DBGSTR_BPP_WazaLinkOff,
 
   DBGSTR_MAIN_SwapPartyMember,
   DBGSTR_MAIN_PartyDataNotifyComplete,

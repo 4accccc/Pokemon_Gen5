@@ -624,10 +624,10 @@ typedef struct {
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
-  u16                      tokuseiID;  ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
-  u8                       pokeID;     ///< 対象ポケモンID
+  u16                      tokuseiID;         ///< 書き換え後のとくせい（POKETOKUSEI_NULLならとくせいを消す）
+  u8                       pokeID;            ///< 対象ポケモンID
   u8                       fSameTokEffective; /// < おなじ「とくせい」を持つ対象にも効く
-  BTL_HANDEX_STR_PARAMS    exStr;      ///< 成功時メッセージ
+  BTL_HANDEX_STR_PARAMS    exStr;             ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_CHANGE_TOKUSEI;
 
 /**
@@ -638,7 +638,7 @@ typedef struct {
   u16             itemID;           ///< 書き換え後のアイテム（ITEM_DUMMY_DATA ならアイテムを消す）
   u8              pokeID;           ///< 対象ポケモンID
   u8              fClearConsume;    ///< 消費情報をクリア
-  BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
+  BTL_HANDEX_STR_PARAMS  exStr;     ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SET_ITEM;
 
 /**
