@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-25T17:13:53"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-05-26T18:55:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1364" top="125" right="2069" bottom="745" maximized="no" rayout="Vertical2">
+	<dialog left="1324" top="170" right="2029" bottom="790" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -302,7 +302,7 @@
 		<language name="JPN" width="256">けしきウキウキ　しょうぶワクワク
 ロイヤルイッシュごうへ　ようこそ！[BE:01:ページ切り替え（クリア）]
 じょうせんりょうは
-１０００えん　になります[BE:00:ページ切り替え（行送り）]
+１０００円　になります[BE:00:ページ切り替え（行送り）]
 ごじょうせんに　なりますか？</language>
 		<language name="JPN_KANJI" width="256">景色ウキウキ　勝負ワクワク
 ロイヤルイッシュ号へ　ようこそ！[BE:01:ページ切り替え（クリア）]
@@ -350,7 +350,7 @@
 		<comment>説明を受けた場合のみに表示</comment>
 		<attribute name="キャラ指定">WAITRESS
 仮OBJです</attribute>
-		<language name="JPN" width="256">じょうせんりょうは　１０００えん　です
+		<language name="JPN" width="256">じょうせんりょうは　１０００円　です
 ごじょうせんに　なりますか？</language>
 		<language name="JPN_KANJI" width="256">乗船料は　１０００円　になります
 ご乗船に　なりますか？</language>
