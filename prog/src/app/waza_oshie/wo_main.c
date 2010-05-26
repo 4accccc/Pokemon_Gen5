@@ -1542,8 +1542,9 @@ static int WO_SeqMsgWait( WO_WORK * wk )
     PRINTSYS_PrintStreamDelete( wk->printStream );
     return wk->next_seq;
   }else if(status==PRINTSTREAM_STATE_PAUSE){
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
+    if(GFL_UI_KEY_GetTrg()&(PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) || GFL_UI_TP_GetTrg()){
        PRINTSYS_PrintStreamReleasePause( wk->printStream );
+       PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
     }
   }
   return SEQ_MSG_WAIT;
@@ -2302,18 +2303,26 @@ static BOOL WO_TalkMsgCallBack( u32 value )
   case 1:   // SE終了待ち
     return PMSND_CheckPlaySE();
 
-  case 2:   // ME終了待ち
+  case 2:   // SE終了待ち
     return PMSND_CheckPlaySE();       //Snd_MePlayCheckBgmPlay(); MEはどうやって再生する？
   case 3:   // "ポカン"
     PMSND_PlaySE( SEQ_SE_KON );
     break;
 
   case 4:   // "おぼえた"
-    PMSND_PlaySE( SEQ_ME_LVUP );
+    PMSND_PauseBGM( TRUE );
+    PMSND_PushBGM();
+    PMSND_PlayBGM( SEQ_ME_LVUP );
     break;
 
   case 5:   // "ポカン"のSE終了待ち
-    return PMSND_CheckPlaySE();  //PMSND_CheckPlaySE( SEQ_SE_KON );
+    if(PMSND_CheckPlayBGM()==FALSE){
+      PMSND_PopBGM();
+      PMSND_PauseBGM( FALSE );
+    }else{
+      return TRUE;
+    }
+    
   }
 
   return FALSE;
