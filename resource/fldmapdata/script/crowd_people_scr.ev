@@ -30,23 +30,11 @@ _EVENT_DATA    ev_crowd_people_ol_02
 _EVENT_DATA    ev_crowd_people_ol_03
 _EVENT_DATA    ev_crowd_people_ol_04
 
-//メイド
-_EVENT_DATA    ev_crowd_people_maid_01
-_EVENT_DATA    ev_crowd_people_maid_02
-_EVENT_DATA    ev_crowd_people_maid_03
-_EVENT_DATA    ev_crowd_people_maid_04
-
 //ジェントルマン
 _EVENT_DATA    ev_crowd_people_gentleman_01
 _EVENT_DATA    ev_crowd_people_gentleman_02
 _EVENT_DATA    ev_crowd_people_gentleman_03
 _EVENT_DATA    ev_crowd_people_gentleman_04
-
-//バックパッカー
-_EVENT_DATA    ev_crowd_people_backpackerm_01
-_EVENT_DATA    ev_crowd_people_backpackerm_02
-_EVENT_DATA    ev_crowd_people_backpackerm_03
-_EVENT_DATA    ev_crowd_people_backpackerm_04
 
 //作業員
 _EVENT_DATA    ev_crowd_people_workman_01
@@ -146,38 +134,6 @@ ev_crowd_people_ol_06:
   _END
 
 /**************************************************************/
-/* 群集話しかけメッセージ            メイド                   */
-/**************************************************************/
-
-ev_crowd_people_maid_01:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG14)
-*/
-  _END
-
-ev_crowd_people_maid_02:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG01)
-*/
-  _END
-
-ev_crowd_people_maid_03:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG20)
-*/
-  _END
-
-ev_crowd_people_maid_04:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG19)
-*/
-  _END
-
-/**************************************************************/
 /* 群集話しかけメッセージ              ジェントルマン         */
 /**************************************************************/
 
@@ -245,38 +201,6 @@ ev_crowd_people_workman_06:
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG20)
   _END
   
-/**************************************************************/
-/* 群集話しかけメッセージ              バックパッカー         */
-/**************************************************************/ 
-
-ev_crowd_people_backpackerm_01:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG16 )
-*/
-  _END
-
-ev_crowd_people_backpackerm_02:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG24 )
-*/
-  _END
-  
-ev_crowd_people_backpackerm_03:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG05)
-*/
-  _END
-
-ev_crowd_people_backpackerm_04:
-	//
-/*
-	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG07)
-*/
-  _END
- 
  /**************************************************************/
 /* 群集話しかけメッセージ              バッドライダー         */
 /**************************************************************/ 
