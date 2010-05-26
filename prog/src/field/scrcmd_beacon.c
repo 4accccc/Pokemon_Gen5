@@ -116,6 +116,8 @@ VMCMD_RESULT EvCmdCheckGPowerFinish( VMHANDLE* core, void* wk )
  * @param wk   SCRCMD_WORKへのポインタ
  *
  * @retval VMCMD_RESULT:
+ *
+ * @note  EVENT_GPOWERオーバーレイがロードされていないと使えません
  */
 //--------------------------------------------------------------------
 VMCMD_RESULT EvCmdGPowerUseEffect( VMHANDLE* core, void* wk )
@@ -124,7 +126,7 @@ VMCMD_RESULT EvCmdGPowerUseEffect( VMHANDLE* core, void* wk )
   SCRIPT_WORK*   sc       = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK*  gsys     = SCRCMD_WORK_GetGameSysWork( work );
 
-  SCRIPT_CallEvent( sc, EVENT_GPowerUseEffect( gsys ));
+  SCRIPT_CallEvent( sc, EVENT_GPowerUseEffect( gsys ) );
 
   return VMCMD_RESULT_SUSPEND;
 }

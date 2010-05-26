@@ -279,8 +279,15 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
     IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
     
     {
+      GPOWER_EFFECT_PARAM param;
+      GMEVENT* call_event;
       const MISSION_TYPEDATA_SKILL *d_skill = (void*)talk->ccew.mdata.cdata.data;
-      GMEVENT_CallEvent(event, EVENT_GPowerEffectStart(gsys, d_skill->gpower_id, FALSE));
+      
+      param.g_power = d_skill->gpower_id;
+      param.mine_f = FALSE;
+      call_event = GMEVENT_CreateOverlayEventCall( gsys,
+          FS_OVERLAY_ID( event_gpower), EVENT_GPowerEffectStart, &param );
+      GMEVENT_CallEvent(event, call_event );
     }
     (*seq)++;
     break;

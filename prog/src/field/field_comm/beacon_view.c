@@ -334,16 +334,24 @@ GMEVENT* BEACON_VIEW_EventCheck(BEACON_VIEW_PTR wk, BOOL bEvReqOK )
     event = event_EventStart( wk, call_event, EVWAIT_TCB_ANM, 0 );
     break;
   case EV_GPOWER_USE:
-    call_event = EVENT_GPowerEffectStart( wk->gsys, wk->ctrl.g_power, wk->ctrl.mine_power_f );
+    {
+      GPOWER_EFFECT_PARAM param;
+      param.g_power = wk->ctrl.g_power;
+      param.mine_f = wk->ctrl.mine_power_f;
+      call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+          FS_OVERLAY_ID( event_gpower ), EVENT_GPowerEffectStart, &param );
+    }
     event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_YES].work) );
     wk->ctrl.g_power = GPOWER_ID_NULL;
     break;
   case EV_GPOWER_CHECK_TMENU_YN:
-    call_event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
+    call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+        FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
     event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu[TMENU_YN_CHECK].work) );
     break;
   case EV_GPOWER_CHECK_TMENU_CHK:
-    call_event = EVENT_GPowerEnableListCheck( wk->gsys, wk->fieldWork );
+    call_event = GMEVENT_CreateOverlayEventCall( wk->gsys,
+        FS_OVERLAY_ID( event_gpower), EVENT_GPowerEnableListCheck, wk->fieldWork );
     event = event_EventStart( wk, call_event, EVWAIT_TMENU_ANM, (int)(wk->tmenu_check[TMENU_CHECK_CALL].work) );
     wk->gpower_check_req = FALSE;
     break;

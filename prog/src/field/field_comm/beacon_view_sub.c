@@ -2224,7 +2224,6 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     //I—¹
     break;
   }
-//  bvp->gpower_check_req = ( twk->ret == TMENU_CHECK_CALL );
   BeaconView_MenuBarViewSet( twk->bvp, MENU_ALL, MENU_ST_ON );
   
   --(*twk->task_ct);

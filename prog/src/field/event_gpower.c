@@ -84,10 +84,11 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk );
  *  @param  g_power 発動するGパワーID
  *  @param  mine    自分のGパワーかどうか？
  */
-GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, BOOL mine )
+GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   SCRIPT_WORK* sc;
+  GPOWER_EFFECT_PARAM* prm = (GPOWER_EFFECT_PARAM*)work;
   HEAPID tmpHeapID = GFL_HEAP_LOWID( HEAPID_FIELDMAP );
   GAMEDATA* gdata = GAMESYSTEM_GetGameData(gsys);
   POWER_CONV_DATA * p_data = GPOWER_PowerData_LoadAlloc( tmpHeapID );
@@ -95,18 +96,18 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, BOOL mi
   event = SCRIPT_SetEventScript( gsys, SCRID_GPOWER_EFFECT_START, NULL, HEAPID_FIELDMAP );
   sc = SCRIPT_GetScriptWorkFromEvent( event );
   {
-    GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, g_power );
-    GPOWER_Set_OccurID( g_power, p_data, mine );
+    GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, prm->g_power );
+    GPOWER_Set_OccurID( prm->g_power, p_data, prm->mine_f );
 
-    SCRIPT_SetScriptWorkParam( sc, g_power, type, mine, 0 );
+    SCRIPT_SetScriptWorkParam( sc, prm->g_power, type, prm->mine_f, 0 );
     sub_InstantPowerUse( gsys, SCRIPT_GetWordSet( sc ), type );
   }
-  if( mine ){ //自分のを使った時
-    u16 point = GPOWER_ID_to_Point( p_data, g_power );
+  if( prm->mine_f ){ //自分のを使った時
+    u16 point = GPOWER_ID_to_Point( p_data, prm->g_power );
     MYITEM_SubItem( GAMEDATA_GetMyItem( gdata ), ITEM_DERUDAMA, point, tmpHeapID );
-    GAMEBEACON_Set_GPower( g_power );
+    GAMEBEACON_Set_GPower( prm->g_power );
   }else{  //他人のを使った時
-    GAMEBEACON_Set_OtherGPowerUse( g_power );
+    GAMEBEACON_Set_OtherGPowerUse( prm->g_power );
   }
   GPOWER_PowerData_Unload( p_data );
 
@@ -116,7 +117,7 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, GPOWER_ID g_power, BOOL mi
 /*
  *  @brief  Gパワー効果終了イベント
  */
-GMEVENT* EVENT_GPowerEffectEnd( GAMESYS_WORK * gsys )
+GMEVENT* EVENT_GPowerEffectEnd( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
 
@@ -147,10 +148,11 @@ GMEVENT* EVENT_GPowerUseEffect( GAMESYS_WORK * gsys )
 /*
  *  @brief  発動中のGパワー確認イベント
  */
-GMEVENT* EVENT_GPowerEnableListCheck( GAMESYS_WORK * gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_GPowerEnableListCheck( GAMESYS_WORK * gsys, void* work )
 {
   GMEVENT* event;
   POWER_CHECK_WORK* wk;
+  FIELDMAP_WORK* fieldmap = (FIELDMAP_WORK*)work;
 
   event = GMEVENT_Create(gsys, NULL, event_GPowerEnableListCheckMain, sizeof(POWER_CHECK_WORK));
   wk = GMEVENT_GetEventWork(event);

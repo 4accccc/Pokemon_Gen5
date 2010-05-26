@@ -752,7 +752,6 @@ SRCS_OVERLAY_FIELDMAP		=	field/field_proc.c \
         field/scrcmd_beacon.c \
         field/party_select_list.c \
         field/field_bbd_color.c \
-				field/event_gpower.c \
 				field/event_freeword_input.c \
         field/field_diving_data.c \
 				net_app/comm_entry_menu.c \
@@ -1086,6 +1085,9 @@ SRCS_OVERLAY_ENCEFF_PNL3 = field/enceff_pnl3.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_FLD_FACEUP = field/fld_faceup.c
 
+# Gパワー関連イベント 
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_EVENT_GPOWER = field/event_gpower.c
 
 # サウンドデバッグ画面
 #===> GROUP_OVERLAY_UNION_INTRUDE
