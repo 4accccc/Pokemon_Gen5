@@ -1328,6 +1328,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
 
   { 
     p_wk->p_pms = PMS_DRAW_Init( p_unit, CLSYS_DRAW_MAIN, p_que, p_font, PLT_OBJ_M_PMS, 1, heapID );
+    PMS_DRAW_SetPmsObjMode( p_wk->p_pms, 0, GX_OAM_MODE_XLU );
   }
 
 	BR_RES_LoadBG( p_wk->p_res, BR_RES_BG_RECORD_M_PROFILE, heapID );

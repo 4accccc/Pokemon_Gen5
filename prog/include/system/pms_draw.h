@@ -205,3 +205,16 @@ extern void PMS_DRAW_SetCLWKAutoScrollFlag( PMS_DRAW_WORK* wk, BOOL is_clwk_auto
  */
 //=============================================================================================
 extern void  PMS_DRAW_SetPmsObjVisible( PMS_DRAW_WORK* wk, u8 id, BOOL flag );
+
+//=============================================================================================
+/**
+ * @brief   簡易会話のデコメのOBJモード設定を行なう
+ *
+ * @param   wk    PMS_DRAW_WORK*
+ * @param   id    ユニットID
+ * @param   mode  OBJモード
+ *
+ * @retval  none
+ */
+//=============================================================================================
+extern void  PMS_DRAW_SetPmsObjMode( PMS_DRAW_WORK* wk, u8 id, GXOamMode mode );

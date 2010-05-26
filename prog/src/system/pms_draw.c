@@ -362,6 +362,28 @@ void PMS_DRAW_SetPmsObjVisible( PMS_DRAW_WORK* wk, u8 id, BOOL flag )
   }
 }
 
+//=============================================================================================
+/**
+ * @brief   簡易会話のデコメのOBJモード設定を行なう
+ *
+ * @param   wk    PMS_DRAW_WORK*
+ * @param   id    ユニットID
+ * @param   mode  OBJモード
+ *
+ * @retval  none
+ */
+//=============================================================================================
+void  PMS_DRAW_SetPmsObjMode( PMS_DRAW_WORK* wk, u8 id, GXOamMode mode )
+{
+  int i;
+  for( i = 0 ; i < PMS_WORD_MAX; i++ )
+  {
+    GFL_CLACT_WK_SetObjMode( wk->unit[id].clwk[i], mode );
+  }
+}
+
+
+
 //-----------------------------------------------------------------------------
 /**
  *  @brief  表示ユニットを上書き(双方プリント済みのものに限る)
