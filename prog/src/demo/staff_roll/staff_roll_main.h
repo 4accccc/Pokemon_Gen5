@@ -109,6 +109,7 @@ typedef struct {
 	GFL_G3D_LIGHTSET * g3d_light;
 	u32	g3d_obj_id;
 	u16	g3d_unit;
+	fx32	g3d_briCount;
 
 	SR3DCAMERA_MOVE	cameraMove;
 

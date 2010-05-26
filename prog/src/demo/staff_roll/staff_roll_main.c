@@ -165,6 +165,8 @@ static void CameraMoveFlagSet( SR3DCAMERA_MOVE * mvwk, BOOL flg );
 
 static int SetFadeIn( SRMAIN_WORK * wk, int next );
 static int SetFadeOut( SRMAIN_WORK * wk, int next );
+static void CheckSkip( SRMAIN_WORK * wk );
+static void ChangeBrightness3D( SRMAIN_WORK * wk );
 
 static void ListScroll( SRMAIN_WORK * wk );
 
@@ -189,7 +191,7 @@ static BOOL Comm_LabelVersion( SRMAIN_WORK * wk, ITEMLIST_DATA * item );
 
 #ifdef	PM_DEBUG
 static void DebugGridSet(void);
-//static void DebugCameraPrint( SRMAIN_WORK * wk );
+static void DebugCameraPrint( SRMAIN_WORK * wk );
 #endif	// PM_DEBUG
 
 
@@ -265,6 +267,8 @@ static const pCOMM_FUNC CommFunc[] = {
 
 BOOL SRMAIN_Main( SRMAIN_WORK * wk )
 {
+	CheckSkip( wk );
+
 	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
 	if( wk->mainSeq == MAINSEQ_END ){
 		return FALSE;
@@ -371,15 +375,18 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 {
 	switch( wk->subSeq ){
 	case 0:
-		if( wk->wait == LIST_START_INIT_WAIT ){
+		if( wk->wait >= LIST_START_INIT_WAIT ){
 			wk->wait = 0;
-			wk->listWait = LOGO_PUT_WAIT;
 			wk->subSeq++;
 		}else{
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 				OS_Printf( "[0] push a button : wait = %d\n", wk->wait );
 			}
-			wk->wait++;
+			if( wk->skipFlag == 1 ){
+				wk->wait += SKIP_SPEED;
+			}else{
+				wk->wait++;
+			}
 		}
 		break;
 
@@ -390,15 +397,19 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 		break;
 
 	case 2:
-		if( wk->wait == LIST_START_END_WAIT ){
+		if( wk->wait >= LIST_START_END_WAIT ){
 			wk->wait = 0;
 			wk->subSeq = 0;
 			return MAINSEQ_MAIN;
 		}else{
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 				OS_Printf( "[2] push a button : wait = %d\n", wk->wait );
 			}
-			wk->wait++;
+			if( wk->skipFlag == 1 ){
+				wk->wait += SKIP_SPEED;
+			}else{
+				wk->wait++;
+			}
 		}
 		break;
 	}
@@ -424,16 +435,6 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 #endif
-
-	if( wk->dat->fastMode == TRUE ){
-		if( wk->skipCount == 0 ){
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
-				wk->skipFlag = 1;
-			}else{
-				wk->skipFlag = 0;
-			}
-		}
-	}
 
 	if( wk->subSeq == SUBSEQ_INIT ){
 		while( 1 ){
@@ -486,8 +487,6 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 	}
 
 	ListScroll( wk );
-
-	wk->skipCount = ( wk->skipCount + 1 ) & 3;
 
 	return MAINSEQ_MAIN;
 }
@@ -584,12 +583,16 @@ static void InitBg(void)
 static void ExitBg(void)
 {
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
-	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF);
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1, VISIBLE_OFF );
 
 #ifdef PM_DEBUG
+	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG2, VISIBLE_OFF );
+	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_OFF );
+
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME2_M );
 #endif	// PM_DEBUG
+
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME3_M );
 	GFL_BG_FreeBGControl( GFL_BG_FRAME1_M );
@@ -965,6 +968,13 @@ static void Init3D( SRMAIN_WORK * wk )
 //	CameraMoveFlagSet( &wk->cameraMove, TRUE );
 
 	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+
+#if	PM_VERSION == LOCAL_VERSION
+	G2_SetBlendBrightness( GX_PLANEMASK_BG0, -16 );
+#else
+	G2_SetBlendBrightness( GX_PLANEMASK_BG0, 16 );
+#endif
+
 }
 
 static void Exit3D( SRMAIN_WORK * wk )
@@ -988,83 +998,9 @@ static void Main3D( SRMAIN_WORK * wk )
 	if( ( GFL_DISP_GetMainVisible() & GX_PLANEMASK_BG0 ) == 0 ){
 		return;
 	}
-	
 
 #ifdef PM_DEBUG
-	if( wk->debugStopFlg == TRUE ){
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
-				test_pos.z -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-				test_pos.z += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-				test_pos.y -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-				test_pos.y += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-				test_pos.x -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-				test_pos.x += FX32_ONE/10;
-			}
-			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
-			OS_Printf( "POS : x = %d, y = %d, z = %d\n", test_pos.x, test_pos.y, test_pos.z );
-		}
-		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
-				test_target.z -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-				test_target.z += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
-				test_target.y -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
-				test_target.y += FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
-				test_target.x -= FX32_ONE/10;
-			}
-			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
-				test_target.x += FX32_ONE/10;
-			}
-			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
-			OS_Printf( "TARGET : x = %d, y = %d, z = %d\n", test_target.x, test_target.y, test_target.z );
-		}
-
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-			test_pos.x = CAMERA_POS_X;
-			test_pos.y = CAMERA_POS_Y;
-			test_pos.z = CAMERA_POS_Z;
-			test_target.x = CAMERA_TARGET_X;
-			test_target.y = CAMERA_TARGET_Y;
-			test_target.z = CAMERA_TARGET_Z;
-			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
-			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
-		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
-			test_pos.x = 0;
-			test_pos.y = 0;
-			test_pos.z = 0;
-			test_target.x = 0;
-			test_target.y = 0;
-			test_target.z = 0;
-			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
-			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
-		}
-
-	  GFL_G3D_CAMERA_Switching( wk->g3d_camera );
-//	  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
-//	    anime_speed = FX32_ONE;
-//	  }else{
-//			anime_speed = 0;
-//	  }
-	}
+	DebugCameraPrint( wk );
 #endif
 
 /*	í’“‚ª‘å‚«‚­‚È‚é‚Ì‚ÅŽg‚¦‚È‚¢...
@@ -1076,6 +1012,8 @@ static void Main3D( SRMAIN_WORK * wk )
 	GFL_G3D_SCENE_Main( wk->g3d_scene );
 	GFL_G3D_SCENE_Draw( wk->g3d_scene );
 */
+
+	ChangeBrightness3D( wk );
 
 	CameraMoveMain( wk );
 
@@ -1248,7 +1186,11 @@ static void CameraMoveMain( SRMAIN_WORK * wk )
 	}else{
 		mvwk->param.pos    = CameraMoveCore( &mvwk->tbl[mvwk->pos].pos, &mvwk->val.pos, mvwk->cnt );
 		mvwk->param.target = CameraMoveCore( &mvwk->tbl[mvwk->pos].target, &mvwk->val.target, mvwk->cnt );
-		mvwk->cnt++;
+		if( wk->skipFlag == 1 ){
+			mvwk->cnt += SKIP_SPEED;
+		}else{
+			mvwk->cnt++;
+		}
 	}
 
 	GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &mvwk->param.pos );
@@ -1295,6 +1237,42 @@ static int SetFadeOut( SRMAIN_WORK * wk, int next )
 	wk->nextSeq = next;
 	return MAINSEQ_WIPE;
 }
+
+#define	G3D_FADEIN_SPEED	( FX32_ONE / 16 )
+
+static void ChangeBrightness3D( SRMAIN_WORK * wk )
+{
+	if( wk->g3d_briCount > FX32_CONST(16) ){ return; }
+
+	if( wk->skipFlag == 1 ){
+		wk->g3d_briCount += ( G3D_FADEIN_SPEED * SKIP_SPEED );
+	}else{
+		wk->g3d_briCount += G3D_FADEIN_SPEED;
+	}
+
+#if	PM_VERSION == LOCAL_VERSION
+	G2_SetBlendBrightness( GX_PLANEMASK_BG0, -16+wk->g3d_briCount/FX32_ONE );
+#else
+	G2_SetBlendBrightness( GX_PLANEMASK_BG0, 16-wk->g3d_briCount/FX32_ONE );
+#endif
+}
+
+
+static void CheckSkip( SRMAIN_WORK * wk )
+{
+	if( wk->dat->fastMode == TRUE ){
+		if( wk->skipCount == 0 ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+				wk->skipFlag = 1;
+			}else{
+				wk->skipFlag = 0;
+			}
+		}
+	}
+
+	wk->skipCount = ( wk->skipCount + 1 ) & 3;
+}
+
 
 #define	ITEMLIST_SCROLL_SPEED		( FX32_CONST(1) )
 
@@ -1565,7 +1543,7 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 
 	case 1:
 		if( wk->skipFlag == 1 ){
-			wk->britness += 2;
+			wk->britness += ( SKIP_SPEED * 2 );
 		}else{
 			wk->britness += 2;
 		}
@@ -1574,6 +1552,7 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		  GFL_CALC2D_GetAffineMtx22( &mtx, 0, FX32_ONE, FX32_ONE, GFL_CALC2D_AFFINE_MAX_NORMAL );
 			GFL_BG_SetAffine( GFL_BG_FRAME3_M, &mtx, 128, 96 );
 			wk->britness = 0;
+			wk->listWait = LOGO_PUT_WAIT;
 			wk->labelSeq++;
 		}else{
 			G2_ChangeBlendAlpha( wk->britness, 16-wk->britness );
@@ -1592,14 +1571,14 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 			wk->listWait = 0;
 			wk->labelSeq++;
 		}
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 			OS_Printf( "[1] push a button : start %d, wait = %d\n", LOGO_PUT_WAIT, wk->listWait );
 		}
 		break;
 
 	case 3:
 		if( wk->skipFlag == 1 ){
-			wk->britness += 2;
+			wk->britness += ( SKIP_SPEED * 2 );
 		}else{
 			wk->britness += 2;
 		}
@@ -1808,11 +1787,83 @@ static void DebugGridSet(void)
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 
-/*
 static void DebugCameraPrint( SRMAIN_WORK * wk )
 {
+	if( wk->debugStopFlg == TRUE ){
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
+				test_pos.z -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+				test_pos.z += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
+				test_pos.y -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+				test_pos.y += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+				test_pos.x -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+				test_pos.x += FX32_ONE/10;
+			}
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
+			OS_Printf( "POS : x = %d, y = %d, z = %d\n", test_pos.x, test_pos.y, test_pos.z );
+		}
+		if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X ){
+				test_target.z -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
+				test_target.z += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_UP ){
+				test_target.y -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_DOWN ){
+				test_target.y += FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT ){
+				test_target.x -= FX32_ONE/10;
+			}
+			if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT ){
+				test_target.x += FX32_ONE/10;
+			}
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+			OS_Printf( "TARGET : x = %d, y = %d, z = %d\n", test_target.x, test_target.y, test_target.z );
+		}
+
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+			test_pos.x = CAMERA_POS_X;
+			test_pos.y = CAMERA_POS_Y;
+			test_pos.z = CAMERA_POS_Z;
+			test_target.x = CAMERA_TARGET_X;
+			test_target.y = CAMERA_TARGET_Y;
+			test_target.z = CAMERA_TARGET_Z;
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+		}
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+			test_pos.x = 0;
+			test_pos.y = 0;
+			test_pos.z = 0;
+			test_target.x = 0;
+			test_target.y = 0;
+			test_target.z = 0;
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+		}
+
+	  GFL_G3D_CAMERA_Switching( wk->g3d_camera );
+//	  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
+//	    anime_speed = FX32_ONE;
+//	  }else{
+//			anime_speed = 0;
+//	  }
+	}
 }
-*/
 
 #endif // PM_DEBUG
 
