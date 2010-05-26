@@ -537,12 +537,10 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       INTRUDE_SAVE_WORK * intsave;
       s16 gx,gy,gz;
       int result;
-      FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
-      MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+      gx = FX32_TO_GRID( pos.x );
+      gy = FX32_TO_GRID( pos.y );
+      gz = FX32_TO_GRID( pos.z );
       intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( req.gamedata ) );
-      gx = MMDL_GetGridPosX( mmdl );
-      gy = MMDL_GetGridPosY( mmdl );
-      gz = MMDL_GetGridPosZ( mmdl );
       result = ISC_SAVE_CheckItem( intsave, FIELDMAP_GetZoneID( fieldWork ), gx, gy, gz );
       if ( result != ISC_SAVE_SEARCH_NONE )
       {
