@@ -159,7 +159,7 @@ EVENT_START		ev_d04r2201_sage4_01
 	
 	//まだ捕まえていない場合
 	ELSE
-		$SCWK_TEMP0 = 6
+		$SCWK_TEMP0 = 5
 		$SCWK_TEMP0 -= $WK_SCENE_AFTER_SAGE
 		_NUMBER( 0, SCWK_TEMP0, 1 )
 		//ハンサムセリフ
