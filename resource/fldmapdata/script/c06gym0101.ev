@@ -115,7 +115,7 @@ EVENT_END
 /*     ƒ|ƒPƒ‚ƒ“‘œ		      					              */
 /**************************************************************/
 EVENT_START		ev_bg_c06gym0101_pokezou
-	_TALK_OBJ_START()
+_TALK_START_SE_PLAY()
 
 	DEFINE_LOCAL	LWK_BADGE
 
