@@ -5269,18 +5269,15 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         if( itemID != ITEM_DUMMY_DATA )
         {
           BTL_HANDEX_PARAM_SET_ITEM* setParam;
-          BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM* clearParam;
 
           setParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
           setParam->header.tokwin_flag = TRUE;
           setParam->pokeID = pokeID;
           setParam->itemID = itemID;
+          setParam->fClearConsume = TRUE;
           HANDEX_STR_Setup( &setParam->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Monohiroi );
           HANDEX_STR_AddArg( &setParam->exStr, pokeID );
           HANDEX_STR_AddArg( &setParam->exStr, itemID );
-
-          clearParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CLEAR_CONSUMED_ITEM, pokeID );
-          clearParam->pokeID = mwk->pokeID[i];
         }
       }
     }
@@ -6565,19 +6562,16 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       ||  (Tokusei_IsExePer(flowWk, 50))
       ){
         BTL_HANDEX_PARAM_SET_ITEM* param;
-        BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM* clear_param;
 
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
         param->header.tokwin_flag = TRUE;
         param->itemID = usedItem;
         param->pokeID = pokeID;
+        param->fClearConsume = TRUE;
 
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Syuukaku );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
         HANDEX_STR_AddArg( &param->exStr, usedItem );
-
-        clear_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CLEAR_CONSUMED_ITEM, pokeID );
-        clear_param->pokeID = pokeID;
       }
     }
   }

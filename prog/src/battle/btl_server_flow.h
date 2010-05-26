@@ -267,7 +267,6 @@ typedef enum {
   BTL_HANDEX_ITEM_SP,             ///< アイテム効果発動
   BTL_HANDEX_CONSUME_ITEM,        ///< 自分でアイテムを消費
   BTL_HANDEX_SWAP_ITEM,           ///< アイテム入れ替え
-  BTL_HANDEX_CLEAR_CONSUMED_ITEM, ///< アイテム消費情報のクリア
   BTL_HANDEX_UPDATE_WAZA,         ///< ワザ書き換え
   BTL_HANDEX_COUNTER,             ///< ポケモンカウンタ値書き換え
   BTL_HANDEX_DELAY_WAZADMG,       ///< 時間差ワザダメージ
@@ -636,8 +635,9 @@ typedef struct {
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
-  u16             itemID;       ///< 書き換え後のアイテム（ITEM_DUMMY_DATA ならアイテムを消す）
-  u8              pokeID;       ///< 対象ポケモンID
+  u16             itemID;           ///< 書き換え後のアイテム（ITEM_DUMMY_DATA ならアイテムを消す）
+  u8              pokeID;           ///< 対象ポケモンID
+  u8              fClearConsume;    ///< 消費情報をクリア
   BTL_HANDEX_STR_PARAMS  exStr; ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SET_ITEM;
 
@@ -676,14 +676,6 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_CONSUME_ITEM;
-
-/**
- *  アイテム消費情報のクリア
- */
-typedef struct {
-  BTL_HANDEX_PARAM_HEADER  header;
-  u8              pokeID;       ///< 対象ポケモンID
-}BTL_HANDEX_PARAM_CLEAR_CONSUMED_ITEM;
 
 
 /**
