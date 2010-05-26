@@ -594,7 +594,8 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fEnableRand, u16* dstDamage );
 static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 wazaDamage );
-static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str, BOOL fMustEnable );
+static BOOL scproc_SimpleDamage_CheckEnable( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage );
+static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
@@ -791,6 +792,7 @@ static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BOOL fNoEffectMsg );
 static void scproc_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scproc_ViewEffect( BTL_SVFLOW_WORK* wk, u16 effectNo, BtlPokePos pos_from, BtlPokePos pos_to, BOOL fQueResereved, u32 reservedPos );
 static void scEvent_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType waza_type, PokeType poke_type );
@@ -7590,49 +7592,57 @@ static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* at
     {
       HANDEX_STR_Setup( &wk->strParam, BTL_STRTYPE_SET, BTL_STRID_SET_ReactionDmg );
       HANDEX_STR_AddArg( &wk->strParam, BPP_GetID(attacker) );
-      scproc_SimpleDamage( wk, attacker, damage, &wk->strParam, fMustEnable );
+      if( (fMustEnable)
+      ||  (scproc_SimpleDamage_CheckEnable(wk, attacker, damage))
+      ){
+        scproc_SimpleDamage_Core( wk, attacker, damage, &wk->strParam );
+      }
     }
   }
 }
 //---------------------------------------------------------------------------------------------
 // ワザ以外のダメージ共通処理
 //---------------------------------------------------------------------------------------------
-static BOOL scproc_SimpleDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str, BOOL fMustEnable )
+/**
+ *  ワザ以外ダメージ：有効チェック（有効ならTRUE）
+ */
+static BOOL scproc_SimpleDamage_CheckEnable( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage )
 {
-  if( !fMustEnable )
+  if( !scEvent_CheckEnableSimpleDamage(wk, bpp, damage) )
   {
-    if( !scEvent_CheckEnableSimpleDamage(wk, bpp, damage) )
-    {
-      return FALSE;
-    }
-  }
-
-  {
-    int value = -damage;
-
-    if( value )
-    {
-      scPut_SimpleHp( wk, bpp, value, TRUE );
-      scproc_CheckItemReaction( wk, bpp );
-      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
-
-      if( str != NULL ){
-        handexSub_putString( wk, str );
-        HANDEX_STR_Clear( str );
-      }
-
-      if( scproc_CheckDeadCmd(wk, bpp) ){
-        if( scproc_CheckShowdown(wk) ){
-          return TRUE;
-        }
-      }
-
-      scproc_CheckItemReaction( wk, bpp );
-      return TRUE;
-    }
-
     return FALSE;
   }
+  return TRUE;
+}
+/**
+ *  ワザ以外ダメージ：実行
+ */
+static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str )
+{
+  int value = -damage;
+
+  if( value )
+  {
+    scPut_SimpleHp( wk, bpp, value, TRUE );
+    scproc_CheckItemReaction( wk, bpp );
+    BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
+
+    if( str != NULL ){
+      handexSub_putString( wk, str );
+      HANDEX_STR_Clear( str );
+    }
+
+    if( scproc_CheckDeadCmd(wk, bpp) ){
+      if( scproc_CheckShowdown(wk) ){
+        return TRUE;
+      }
+    }
+
+    scproc_CheckItemReaction( wk, bpp );
+    return TRUE;
+  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -9705,30 +9715,37 @@ static BOOL scproc_turncheck_sick( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
 void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sickID, u32 damage )
 {
   u32 hem_state = Hem_PushState( &wk->HEManager );
+  BOOL fEnable = FALSE;
   damage = scEvent_SickDamage( wk, bpp, sickID, damage );
   if( damage )
   {
-    HANDEX_STR_Clear( &wk->strParam );
-    switch( sickID ){
-    case WAZASICK_DOKU:
-      scPut_EffectByPokePos( wk, bpp, BTLEFF_DOKU );
-      break;
-    case WAZASICK_YAKEDO:
-      scPut_EffectByPokePos( wk, bpp, BTLEFF_YAKEDO );
-      break;
-    case WAZASICK_NOROI:
-      scPut_EffectByPokePos( wk, bpp, BTLEFF_NOROI );
-      break;
-    case WAZASICK_AKUMU:
-      scPut_EffectByPokePos( wk, bpp, BTLEFF_AKUMU );
-      break;
+    if( scproc_SimpleDamage_CheckEnable(wk, bpp, damage) )
+    {
+      fEnable = TRUE;
+      switch( sickID ){
+      case WAZASICK_DOKU:
+        scPut_EffectByPokePos( wk, bpp, BTLEFF_DOKU );
+        break;
+      case WAZASICK_YAKEDO:
+        scPut_EffectByPokePos( wk, bpp, BTLEFF_YAKEDO );
+        break;
+      case WAZASICK_NOROI:
+        scPut_EffectByPokePos( wk, bpp, BTLEFF_NOROI );
+        break;
+      case WAZASICK_AKUMU:
+        scPut_EffectByPokePos( wk, bpp, BTLEFF_AKUMU );
+        break;
+      }
+      HANDEX_STR_Clear( &wk->strParam );
+      BTL_SICK_MakeSickDamageMsg( &wk->strParam, bpp, sickID );
+      scproc_SimpleDamage_Core( wk, bpp, damage, &wk->strParam );
     }
-    BTL_SICK_MakeSickDamageMsg( &wk->strParam, bpp, sickID );
-    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam, FALSE );
   }
-  else{
+
+  if(!fEnable){
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   }
+
   Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
@@ -9934,8 +9951,11 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
   }
 
   BTL_Printf("ダメージ値=%d\n", damage);
-  if( damage > 0 ){
-    scproc_SimpleDamage( wk, bpp, damage, &wk->strParam, FALSE );
+  if( damage > 0 )
+  {
+    if( scproc_SimpleDamage_CheckEnable(wk, bpp, damage) ){
+      scproc_SimpleDamage_Core( wk, bpp, damage, &wk->strParam );
+    }
   }
 }
 
@@ -10063,6 +10083,7 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* po
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
   {
+    TAYA_Printf("ポケID=%d, %dに依存した状態異常を回復します\n", BPP_GetID(bpp), dead_pokeID );
     BPP_CureWazaSickDependPoke( bpp, dead_pokeID );
     SCQUE_PUT_OP_CureSickDependPoke( wk->que, BPP_GetID(bpp), dead_pokeID );
   }
@@ -12435,6 +12456,76 @@ static void scproc_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
 }
 //----------------------------------------------------------------------------------
 /**
+ * エフェクト生成
+ *
+ * @param   wk
+ * @param   effectNo    エフェクトナンバー
+ * @param   pos_from    エフェクト開始位置（不要ならBTL_POS_NULL)
+ * @param   pos_to      エフェクト終了位置（不要ならBTL_POS_NULL)
+ * @param   fQueResereved   予約済みQue領域を利用するフラグ
+ * @param   reservedPos     予約済みQue位置
+ */
+//----------------------------------------------------------------------------------
+static void scproc_ViewEffect( BTL_SVFLOW_WORK* wk, u16 effectNo, BtlPokePos pos_from, BtlPokePos pos_to, BOOL fQueResereved, u32 reservedPos )
+{
+  enum {
+    EFF_SIMPLE = 0, // 位置指定なし
+    EFF_POS,        // 開始位置のみ指定
+    EFF_VECTOR,     // 開始・終端位置ともに指定
+  };
+
+  int effType;
+
+  if( pos_to != BTL_POS_NULL ){
+    effType = EFF_VECTOR;
+  }else if( pos_from != BTL_POS_NULL ) {
+    effType = EFF_POS;
+  }else{
+    effType = EFF_SIMPLE;
+  }
+
+  // 予約領域へ書き込み
+  if( fQueResereved )
+  {
+    switch( effType ){
+    case EFF_SIMPLE:
+      SCQUE_PUT_ReservedPos( wk->que, reservedPos, SC_ACT_EFFECT_SIMPLE, effectNo );
+      break;
+
+    case EFF_POS:
+      SCQUE_PUT_ReservedPos( wk->que, reservedPos, SC_ACT_EFFECT_BYPOS,
+          pos_from, effectNo );
+      break;
+
+    case EFF_VECTOR:
+      SCQUE_PUT_ReservedPos( wk->que, reservedPos, SC_ACT_EFFECT_BYVECTOR,
+          pos_from, pos_to, effectNo );
+      break;
+    }
+  }
+  // 最後尾に追記
+  else
+  {
+    switch( effType ){
+    case EFF_SIMPLE:
+      SCQUE_PUT_ACT_EffectSimple( wk->que, effectNo );
+      break;
+
+    case EFF_POS:
+      SCQUE_PUT_ACT_EffectByPos( wk->que, pos_from, effectNo );
+      break;
+
+    case EFF_VECTOR:
+      SCQUE_PUT_ACT_EffectByVector( wk->que, pos_from, pos_to, effectNo );
+      break;
+    }
+  }
+}
+
+
+
+//----------------------------------------------------------------------------------
+/**
  * [Event] ふゆう状態による地面ワザ無効化
  *
  * @param   wk
@@ -14742,7 +14833,12 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
       if( (!(param->fAvoidHidePoke))
       ||  (CheckPokeHideState(pp_target) == BPP_CONTFLG_NULL)
       ){
-        if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr, FALSE) ){
+        if( scproc_SimpleDamage_CheckEnable(wk, pp_target, param->damage) )
+        {
+          if( param->fExEffect ){
+            scproc_ViewEffect( wk, param->effectNo, param->pos_from, param->pos_to, FALSE, 0 );
+          }
+          scproc_SimpleDamage_Core(wk, pp_target, param->damage, &param->exStr );
           return 1;
         }
       }
@@ -16026,59 +16122,9 @@ static u8 scproc_HandEx_TameHideCancel( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PA
  */
 static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
-  enum {
-    EFF_SIMPLE = 0, // 位置指定なし
-    EFF_POS,        // 開始位置のみ指定
-    EFF_VECTOR,     // 開始・終端位置ともに指定
-  };
-
   const BTL_HANDEX_PARAM_ADD_EFFECT* param = (const BTL_HANDEX_PARAM_ADD_EFFECT*)(param_header);
-  int effType;
 
-  if( param->pos_to != BTL_POS_NULL ){
-    effType = EFF_VECTOR;
-  }else if( param->pos_from != BTL_POS_NULL ) {
-    effType = EFF_POS;
-  }else{
-    effType = EFF_SIMPLE;
-  }
-
-  // 予約領域へ書き込み
-  if( param->fQueReserve )
-  {
-    switch( effType ){
-    case EFF_SIMPLE:
-      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_SIMPLE, param->effectNo );
-      break;
-
-    case EFF_POS:
-      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYPOS,
-          param->pos_from, param->effectNo );
-      break;
-
-    case EFF_VECTOR:
-      SCQUE_PUT_ReservedPos( wk->que, param->reservedQuePos, SC_ACT_EFFECT_BYVECTOR,
-          param->pos_from, param->pos_to, param->effectNo );
-      break;
-    }
-  }
-  // 最後尾に追記
-  else
-  {
-    switch( effType ){
-    case EFF_SIMPLE:
-      SCQUE_PUT_ACT_EffectSimple( wk->que, param->effectNo );
-      break;
-
-    case EFF_POS:
-      SCQUE_PUT_ACT_EffectByPos( wk->que, param->pos_from, param->effectNo );
-      break;
-
-    case EFF_VECTOR:
-      SCQUE_PUT_ACT_EffectByVector( wk->que, param->pos_from, param->pos_to, param->effectNo );
-      break;
-    }
-  }
+  scproc_ViewEffect( wk, param->effectNo, param->pos_from, param->pos_to, param->fQueReserve, param->reservedQuePos );
   return 1;
 }
 

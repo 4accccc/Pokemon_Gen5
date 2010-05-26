@@ -127,7 +127,7 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     BTL_HANDEX_PARAM_DAMAGE* dmg_param;
     u16 damage = BTL_CALC_QuotMaxHP( bpp, 8 );
     u16 hp = BPP_GetValue( bpp, BPP_HP );
-    u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
+//    u16 que_reserve_pos = BTL_SVFTOOL_ReserveQuePos( flowWk, SC_ACT_EFFECT_BYVECTOR );
 
     if( damage > hp ){
       damage = hp;
@@ -141,14 +141,11 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 
     // ダメージが成功したらエフェクト
     {
-      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
-      eff_param->header.failSkipFlag = TRUE;
-      eff_param->effectNo = BTLEFF_YADORIGI;
       // エフェクト側の from, to の解釈が逆っぽいのでこうする。
-      eff_param->pos_from = pos_to;
-      eff_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-      eff_param->reservedQuePos = que_reserve_pos;
-      eff_param->fQueReserve = TRUE;
+      dmg_param->fExEffect = TRUE;
+      dmg_param->effectNo = BTLEFF_YADORIGI;
+      dmg_param->pos_from = pos_to;
+      dmg_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
     }
 
     // 続けて回復
@@ -208,13 +205,6 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
     case WAZANO_UZUSIO:        effNo = BTLEFF_UZUSIO; break;
     case WAZANO_SUNAZIGOKU:    effNo = BTLEFF_SUNAZIGOKU; break;
     }
-    if( effNo != -1 )
-    {
-      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
-      eff_param->effectNo = effNo;
-      eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-      eff_param->pos_to = BTL_POS_NULL;
-    }
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
 
@@ -223,6 +213,14 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
       param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
     }else{
       param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+    }
+
+    if( effNo != -1 )
+    {
+      param->fExEffect = TRUE;
+      param->effectNo = effNo;
+      param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      param->pos_to = BTL_POS_NULL;
     }
 
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Bind );

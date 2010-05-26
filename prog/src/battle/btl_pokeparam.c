@@ -2083,23 +2083,24 @@ void BPP_CureWazaSick( BTL_POKEPARAM* bpp, WazaSick sick )
 //=============================================================================================
 void BPP_CureWazaSickDependPoke( BTL_POKEPARAM* bpp, u8 depend_pokeID )
 {
-  u32 i;
-  u8 fCure;
-  for(i=0; i<WAZASICK_MAX; ++i)
+  if( depend_pokeID != BTL_POKEID_NULL )
   {
-    switch( bpp->sickCont[i].type ){
-    case WAZASICK_CONT_POKE:
-      fCure = ( bpp->sickCont[i].poke.ID == depend_pokeID );
-      break;
-    case WAZASICK_CONT_POKETURN:
-      fCure = ( bpp->sickCont[i].poketurn.pokeID == depend_pokeID );
-      break;
-    default:
-      fCure = FALSE;
-    }
-    if( fCure ){
-      bpp->sickCont[i] = BPP_SICKCONT_MakeNull();
-      cureDependSick( bpp, i );
+    BOOL fCure;
+    u32 i;
+
+    for(i=0; i<WAZASICK_MAX; ++i)
+    {
+      if( !BPP_SICKCONT_IsNull(bpp->sickCont[i]) )
+      {
+        TAYA_Printf("状態異常[%d]をチェック。依存ポケ=%d\n", i, BPP_SICKCONT_GetPokeID(bpp->sickCont[i]));
+
+        if( BPP_SICKCONT_GetPokeID(bpp->sickCont[i]) == depend_pokeID )
+        {
+         TAYA_Printf("治します\n");
+          bpp->sickCont[i] = BPP_SICKCONT_MakeNull();
+          cureDependSick( bpp, i );
+        }
+      }
     }
   }
 }

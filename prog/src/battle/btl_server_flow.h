@@ -390,11 +390,18 @@ typedef struct {
  */
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
- u8   pokeID;                        ///< 対象ポケモンID
- u8   fAvoidHidePoke;                ///< そらをとぶ状態など画面から消えているポケに効果なし
  u16  damage;                        ///< ダメージ量
+ u8   pokeID;                        ///< 対象ポケモンID
+ u8   fAvoidHidePoke  : 1;           ///< そらをとぶ状態など画面から消えているポケに効果なし
+ u8   fExEffect       : 1;           ///< 成功時呼び出しエフェクト有効
+ u8   _padd           : 6;
+ u16  effectNo;                ///< 成功時呼び出しエフェクトナンバー
+ u8   pos_from;                ///< 成功時呼び出しエフェクト開始位置（不要ならBTL_POS_NULL：初期値(0)はBTL_POS_NULLではないので注意）
+ u8   pos_to;                  ///< 成功時呼び出しエフェクト終了位置（不要ならBTL_POS_NULL：初期値(0)はBTL_POS_NULLではないので注意）
+
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
-}BTL_HANDEX_PARAM_DAMAGE;
+}
+BTL_HANDEX_PARAM_DAMAGE;
 
 /**
  * HPを増減（ダメージ・回復とは見なされない）
