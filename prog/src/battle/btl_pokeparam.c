@@ -480,8 +480,19 @@ static void clearHensin( BTL_POKEPARAM* bpp )
   if( bpp->coreParam.fHensin )
   {
     POKEMON_PARAM* ppSrc = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
+    u32 i;
+
     setupBySrcData( bpp, ppSrc, FALSE );
-    bpp->wazaCnt = WazaWorkSys_SetupBySrcPP( bpp, ppSrc, TRUE );
+
+    bpp->wazaCnt = 0;
+    for(i=0, bpp; i<PTL_WAZA_MAX; ++i)
+    {
+      bpp->waza[i].surface = bpp->waza[i].truth;
+      if( bpp->waza[i].surface.number != WAZANO_NULL ){
+        bpp->wazaCnt++;
+      }
+    }
+
     bpp->coreParam.fHensin = FALSE;
   }
 }
