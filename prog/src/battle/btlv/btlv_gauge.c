@@ -309,7 +309,7 @@ static  void  gauge_init_view( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, BtlvM
 static  void  init_damage_dot( BTLV_GAUGE_CLWK* bgcl );
 static  void  bgm_pause( BOOL flag );
 static  u32   get_num_dotto( u32 prm_now, u32 prm_max, u8 dot_max );
-static  void  set_hp_gauge_draw( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, BOOL on_off );
+static  void  set_hp_gauge_draw( BTLV_GAUGE_WORK* bgw, int pos, BOOL on_off );
 
 //============================================================================================
 /**
@@ -442,7 +442,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     { 
       if( ( ( pos & 1 ) == 0 ) && ( bgw->bgcl[ pos ].gauge_draw_enable == TRUE ) && ( bgw->bgcl[ pos ].gauge_enable ) )
       { 
-        set_hp_gauge_draw( bgw, &bgw->bgcl[ pos ], TRUE );
+        set_hp_gauge_draw( bgw, pos, TRUE );
       }
     }
   }
@@ -721,6 +721,11 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
                                                        bgw->bgcl[ pos ].hpnum_charID, bgw->plttID[ pltt_id ],
                                                        bgw->bgcl[ pos ].hpnum_cellID,
                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+    if( ( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 ) ||
+        ( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_ROTATE ) )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hpnum_clwk, FALSE );
+    }
     bgw->bgcl[ pos ].hp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                     bgw->bgcl[ pos ].hp_charID, bgw->plttID[ pltt_id ],
                                                     bgw->bgcl[ pos ].hp_cellID,
@@ -1084,7 +1089,7 @@ void  BTLV_GAUGE_SetDrawEnable( BTLV_GAUGE_WORK* bgw, BOOL on_off, int side )
           ( bgw->bgcl[ pos ].gauge_enable ) )
     { 
       GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].base_clwk, on_off );
-      set_hp_gauge_draw( bgw, &bgw->bgcl[ pos ], on_off );
+      set_hp_gauge_draw( bgw, pos, on_off );
       if( bgw->bgcl[ pos ].exp_clwk )
       { 
         GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].exp_clwk, on_off );
@@ -2388,17 +2393,18 @@ static  u32 get_num_dotto( u32 prm_now, u32 prm_max, u8 dot_max )
  * @brief		HPƒQ[ƒW‚Ì•\Ž¦ON/OFF§Œä
  */
 //--------------------------------------------------------------------------------------------
-static  void  set_hp_gauge_draw( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl, BOOL on_off )
+static  void  set_hp_gauge_draw( BTLV_GAUGE_WORK* bgw, int pos, BOOL on_off )
 { 
-  if( ( ( bgcl->gauge_type == BTLV_GAUGE_TYPE_3vs3 ) || ( bgcl->gauge_type == BTLV_GAUGE_TYPE_ROTATE ) ) &&
-        ( on_off == TRUE ) )
+  if( ( ( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 ) ||
+        ( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_ROTATE ) ) &&
+        ( on_off == TRUE ) && ( ( pos & 1 ) == 0 ) )
   { 
-    GFL_CLACT_WK_SetDrawEnable( bgcl->hpnum_clwk, bgw->gauge_num_mode );
-    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_clwk, !bgw->gauge_num_mode );
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hpnum_clwk, bgw->gauge_num_mode );
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hp_clwk, !bgw->gauge_num_mode );
   }
   else
   { 
-    GFL_CLACT_WK_SetDrawEnable( bgcl->hpnum_clwk, on_off );
-    GFL_CLACT_WK_SetDrawEnable( bgcl->hp_clwk, on_off );
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hpnum_clwk, on_off );
+    GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hp_clwk, on_off );
   }
 }
