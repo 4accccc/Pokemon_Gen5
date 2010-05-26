@@ -353,4 +353,4 @@
 #define SCROLL_BAR_TOUCH_AREA_LEFT   (232) // タッチ範囲の左上x座標
 #define SCROLL_BAR_TOUCH_AREA_TOP    (24)  // タッチ範囲の左上y座標
 #define SCROLL_BAR_TOUCH_AREA_RIGHT  (255) // タッチ範囲の右下x座標
-#define SCROLL_BAR_TOUCH_AREA_BOTTOM (232) // タッチ範囲の右下y座標
+#define SCROLL_BAR_TOUCH_AREA_BOTTOM (168) // タッチ範囲の右下y座標
