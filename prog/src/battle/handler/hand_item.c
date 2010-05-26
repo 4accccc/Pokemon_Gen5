@@ -1058,8 +1058,9 @@ static void handler_HimeriNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 waza_idx = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_IDX );
-    if( BPP_WAZA_GetPP(bpp, waza_idx) == 0 )
-    {
+    if( (waza_idx < BPP_WAZA_GetCount(bpp))    // へんしん直後だと、選択ワザIdx>=所持ワザ数が有り得るのではじく
+    &&  (BPP_WAZA_GetPP(bpp, waza_idx) == 0)
+    ){
       // work[0] = 対象ワザインデックスの受け渡し用に使う
       work[0] = waza_idx;
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
