@@ -282,8 +282,11 @@ VMCMD_RESULT EvCmdCallShopProcBuy( VMHANDLE* core, void* wk )
   } 
   // ショップ呼び出し
   VMCMD_SetWait( core, EvShopBuyWait );
-  GAMEBEACON_Set_Shoping();
 
+  // BPショップ以外の場合は買い物ビーコン送信
+  if(shop_id!=SCR_SHOPID_BP_ITEM && shop_id!=SCR_SHOPID_BP_WAZA){
+    GAMEBEACON_Set_Shoping();
+  }
   /*
     イベント終了時に ret_work に終了モードを返してください
     SCR_PROC_RETMODE_EXIT 一発終了
