@@ -369,7 +369,7 @@ void MMDL_MoveCommActor_Move( MMDL *mmdl )
           }
           diff += val;
           
-          if( diff >= GRID_SIZE_FX32(4) ){
+          if( diff >= NUM_FX32(4) ){
             status = DRAW_STA_HERO_DASH_4F;
           }
         }
