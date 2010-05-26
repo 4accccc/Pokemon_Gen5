@@ -5081,9 +5081,9 @@
 		<language name="JPN" width="256">BGM-E-EPIROGUE</language>
 		<language name="JPN_KANJI" width="256">BGM-E-EPIROGUE</language>
 	</row>
-	<row id="msg_seq_bgm_05">
-		<language name="JPN" width="256">BGM-05</language>
-		<language name="JPN_KANJI" width="256">BGM-05</language>
+	<row id="msg_seq_bgm_e_epirogue_w">
+		<language name="JPN" width="256">BGM-E-EPIROGUE-W</language>
+		<language name="JPN_KANJI" width="256">BGM-E-EPIROGUE-W</language>
 	</row>
 	<row id="msg_seq_bgm_06">
 		<language name="JPN" width="256">BGM-06</language>
@@ -8612,6 +8612,10 @@
 	<row id="msg_seq_se_sys_101">
 		<language name="JPN" width="256">SYS-101</language>
 		<language name="JPN_KANJI" width="256">SYS-101</language>
+	</row>
+	<row id="msg_seq_se_end_06">
+		<language name="JPN" width="256">END-06</language>
+		<language name="JPN_KANJI" width="256">END-06</language>
 	</row>
 	<row id="msg_seq_se_dmy_383">
 		<language name="JPN" width="256">DMY-383</language>
