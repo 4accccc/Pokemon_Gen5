@@ -647,6 +647,10 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
 
 static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
 {
+#ifdef DEBUG_GTS_AUTO_PLAY
+  DEBUG_UI_SetUp( DEBUG_UI_AUTO_GTS_LOGIN, DEBUG_UI_PLAY_ONE );
+#endif 
+
   if(WIFILOGIN_MESSAGE_YesNoIsFinish(pWork->pSelectWork)){
     int selectno = WIFILOGIN_MESSAGE_YesNoGetCursorPos(pWork->pSelectWork);
 
@@ -656,7 +660,7 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
+//      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
