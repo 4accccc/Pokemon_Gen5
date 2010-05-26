@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T20:29:11"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T11:50:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1271,7 +1271,9 @@
 		<comment>♂
 ・左右に数歩往復してから
 　画面下向きでメッセージ表示
-・続けてsage1_08w</comment>
+・続けて
+　WHITE→boss_11
+　BLACK→boss_12</comment>
 		<attribute name="キャラ指定">ゲーチス</attribute>
 		<language name="JPN" width="256">ゲーチス『なんとでも▼
 さて　かみと　よばれようと
@@ -1291,6 +1293,43 @@
 さあ　かかってきなさい！▼
 ワタクシは　アナタの　絶望する
 瞬間の　顔が　みたいのだ！▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_11" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>♂
+・WHITEver
+・ギザウイン＋尻尾なし
+・主人公回復処理（システムメッセージ、SEなど不要）
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]レシラム！
+キミの　ちからを　[1:00:トレーナー名:0]に！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]レシラム！
+キミの　力を　[1:00:トレーナー名:0]に！[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_n01r0502_boss_12" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#8080ff,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+・BLACKver
+・ギザウイン＋尻尾なし
+・主人公回復処理（システムメッセージ、SEなど不要）
+・続けてsage1_02</comment>
+		<attribute name="キャラ指定">Ｎ</attribute>
+		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]ゼクロム！
+キミの　ちからを　[1:00:トレーナー名:0]に！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]ゼクロム！
+キミの　力を　[1:00:トレーナー名:0]に！[BE:09:速度コントロール:0]▼</language>
+	</row>
+
+	<row id="msg_n01r0502_sage1_02" text-color="#ff0000,,,#ff0000,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+		<comment>♂
+・下向きのまま
+・続けてトレーナー戦闘</comment>
+		<attribute name="キャラ指定">ゲーチス</attribute>
+		<language name="JPN" width="256">ゲーチス『だれが　なにを　しようと！
+ワタクシを　とめることは　できない！▼</language>
+		<language name="JPN_KANJI" width="256">ゲーチス『だれが　なにを　しようと！
+ワタクシを　とめることは　できない！▼</language>
 	</row>
 
 	<row id="msg_n01r0502_rematch_black" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1825,27 +1864,6 @@
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]心して　かかりたまえ▼
 レシラムは　善の　心を　持たない
 人間を　焼き尽くすと　いうよ[BE:09:速度コントロール:0]</language>
-	</row>
-
-	<row id="msg_n01r0502_boss_11" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_n01r0502_boss_12" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">Ｎ</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
-	</row>
-
-	<row id="msg_n01r0502_sage1_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
-		<comment>未使用</comment>
-		<attribute name="キャラ指定">ゲーチス</attribute>
-		<language name="JPN" width="256">no data</language>
-		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
 	<row id="msg_n01r0502_stone_01w" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
