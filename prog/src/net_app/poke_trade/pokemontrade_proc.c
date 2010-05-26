@@ -3245,6 +3245,7 @@ static void _POKE_SetAndSendData2(POKEMON_TRADE_WORK* pWork)
     if(POKE_GTS_PokemonsetAndSendData(pWork,pWork->selectIndex,pWork->selectBoxno)){  //‹L˜^
       pWork->workPokeIndex = -1;
       pWork->workBoxno = -1;
+      _PokemonIconRenew(pWork);
       _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
     }
   }
@@ -3252,6 +3253,7 @@ static void _POKE_SetAndSendData2(POKEMON_TRADE_WORK* pWork)
     if( _PokemonsetAndSendData(pWork)){
       pWork->workPokeIndex = -1;
       pWork->workBoxno = -1;
+      _PokemonIconRenew(pWork);
       _CHANGE_STATE(pWork,POKE_TRADE_PROC_TouchStateCommon);
     }
   }
