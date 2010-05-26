@@ -34,7 +34,10 @@ struct _UNION_APP_WORK{
   u8 recv_intrude_ready_bit;    ///<乱入準備完了者のNetID(bit管理)
   u8 recv_leave_bit;            ///<離脱者のNetID(bit管理)
   
-  BOOL entry_block;             ///<TRUE:乱入禁止
+  u8 entry_block;               ///<TRUE:乱入禁止
+  u8 intrude_capacity_count;    ///<乱入してきた人数
+  u8 intrude_capacity_max;      ///<乱入受け入れ人数
+  u8 padding;
   BOOL leave_block;             ///<TRUE:退出禁止
   BOOL send_leave_req;          ///<TRUE:退出許可リクエストが発生している
   UNION_APP_LEAVE recv_leave_req_result;   ///<退出許可リクエストの返事

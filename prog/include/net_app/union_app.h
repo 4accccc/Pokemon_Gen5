@@ -125,6 +125,16 @@ extern void Union_App_Parent_ResetEntryBlock(UNION_APP_PTR uniapp);
 
 //==================================================================
 /**
+ * 指定人数だけ乱入を受け入れる　※親機専用命令
+ *
+ * @param   uniapp		
+ * @param   num       受け入れる人数
+ */
+//==================================================================
+extern void Union_App_Parent_EntryBlockNum(UNION_APP_PTR uniapp, int num);
+
+//==================================================================
+/**
  * 退出を禁止する(Union_App_ReqLeaveの結果が常にNGになります)　※親機専用命令
  *
  * @param   uniapp		

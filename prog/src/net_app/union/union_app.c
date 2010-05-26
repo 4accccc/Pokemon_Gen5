@@ -24,6 +24,15 @@
 #include "union_app_local.h"
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+typedef enum{
+  _ENTRY_TYPE_OK,     ///<乱入を受け入れる
+  _ENTRY_TYPE_NG,     ///<乱入は一切受け入れない
+  _ENTRY_TYPE_NUM,    ///<乱入を人数指定で受け入れる
+}_ENTRY_TYPE;
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -104,14 +113,29 @@ void UnionAppSystem_FreeAppWork(UNION_APP_PTR uniapp)
 //==================================================================
 BOOL UnionAppSystem_SetEntryUser(UNION_APP_PTR uniapp, NetID net_id, const MYSTATUS *myst)
 {
-  if(uniapp->entry_block == FALSE){
-    u32 member_num = MATH_CountPopulation((u32)(uniapp->basic_status.member_bit));
-    u32 entry_num = MATH_CountPopulation((u32)(uniapp->entry_reserve_bit));
-    if(member_num + entry_num < uniapp->basic_status.member_max){
-      uniapp->entry_reserve_bit |= 1 << net_id;
-      //MyStatus_Copy(myst, uniapp->mystatus[net_id]);
-      return TRUE;
+  u32 member_num, entry_num;
+  
+  if(uniapp->entry_block == _ENTRY_TYPE_NG){
+    return FALSE;
+  }
+  
+  member_num = MATH_CountPopulation((u32)(uniapp->basic_status.member_bit));
+  entry_num = MATH_CountPopulation((u32)(uniapp->entry_reserve_bit));
+
+  if(uniapp->entry_block == _ENTRY_TYPE_NUM){
+    if(uniapp->intrude_capacity_count + entry_num > uniapp->intrude_capacity_max){
+      return FALSE;
     }
+  }
+
+  if(member_num + entry_num < uniapp->basic_status.member_max){
+    uniapp->entry_reserve_bit |= 1 << net_id;
+    //MyStatus_Copy(myst, uniapp->mystatus[net_id]);
+
+    if(uniapp->entry_block == _ENTRY_TYPE_NUM){
+      uniapp->intrude_capacity_count++;
+    }
+    return TRUE;
   }
   return FALSE;
 }
@@ -498,7 +522,7 @@ BOOL Union_App_Parent_EntryBlock(UNION_APP_PTR uniapp)
 {
   if(uniapp->entry_reserve_bit == 0){
     GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
-    uniapp->entry_block = TRUE;
+    uniapp->entry_block = _ENTRY_TYPE_NG;
     OS_TPrintf("uniapp 乱入禁止にしました\n");
     return TRUE;
   }
@@ -516,8 +540,25 @@ BOOL Union_App_Parent_EntryBlock(UNION_APP_PTR uniapp)
 void Union_App_Parent_ResetEntryBlock(UNION_APP_PTR uniapp)
 {
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);
-  uniapp->entry_block = FALSE;
+  uniapp->entry_block = _ENTRY_TYPE_OK;
   OS_TPrintf("uniapp 乱入OKにしました\n");
+}
+
+//==================================================================
+/**
+ * 指定人数だけ乱入を受け入れる　※親機専用命令
+ *
+ * @param   uniapp		
+ * @param   num       受け入れる人数
+ */
+//==================================================================
+void Union_App_Parent_EntryBlockNum(UNION_APP_PTR uniapp, int num)
+{
+  GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);
+  uniapp->entry_block = _ENTRY_TYPE_NUM;
+  uniapp->intrude_capacity_max = num;
+  uniapp->intrude_capacity_count = 0;
+  OS_TPrintf("uniapp 一定人数乱入OKにしました %d\n", num);
 }
 
 //==================================================================
