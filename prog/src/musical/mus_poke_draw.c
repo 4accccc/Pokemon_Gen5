@@ -135,6 +135,7 @@ MUS_POKE_DRAW_WORK* MUS_POKE_DRAW_Add( MUS_POKE_DRAW_SYSTEM* work , MUSICAL_POKE
 	{
   	MUS_POKE_MakeMAW( musPoke , &maw , TRUE );
   	work->musMcss[idx].mcssBack = MUS_MCSS_Add( work->mcssSys , 0,0,0,&maw , &work->musMcss[idx] , FALSE );
+		MUS_MCSS_SetVanishFlag( work->musMcss[idx].mcssBack );
   }
   else
   {

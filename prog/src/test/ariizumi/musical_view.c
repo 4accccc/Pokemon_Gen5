@@ -105,6 +105,7 @@ typedef struct
   BOOL  isAnime;
 
   MUSICAL_POKE_PARAM *musPoke;
+  u16 rot;
   
   //AutoTestŠÖŒW
   BOOL isTest;
@@ -300,6 +301,7 @@ static void MUSICAL_VIEW_LoadPoke( MUS_VIEW_LOCAL_WORK *work )
   MUSICAL_POKE_PARAM *musPoke = work->musPoke;
   VecFx32 pos1 = {MUSICAL_POS_X( 64.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
   VecFx32 pos2 = {MUSICAL_POS_X(192.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
+  work->rot = 0;
   if( work->pokeWork == NULL )
   {
     work->pokeWork = MUS_POKE_DRAW_Add( work->pokeSys , musPoke , TRUE );
@@ -380,10 +382,29 @@ static void MUSICAL_VIEW_UnLoadItem( MUS_VIEW_LOCAL_WORK *work )
 
 static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
 {
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+  {
+    work->monsno--;
+    work->isRefresh = TRUE;
+    work->isRefreshName = TRUE;
+  }
   if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
   {
     work->monsno++;
     work->isRefresh = TRUE;
+    work->isRefreshName = TRUE;
+  }
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
+  {
+    work->rot -= 0x200;
+    MUS_POKE_DRAW_SetRotation( work->pokeWork , work->rot );
+    MUS_POKE_DRAW_SetRotation( work->pokeWorkBack , work->rot );
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  {
+    work->rot += 0x200;
+    MUS_POKE_DRAW_SetRotation( work->pokeWork , work->rot );
+    MUS_POKE_DRAW_SetRotation( work->pokeWorkBack , work->rot );
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   {
@@ -830,7 +851,34 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
     //ƒfƒoƒbƒO—p‚Éˆê‰ñŒ©‚½‚çFALSE‚É
     equipData->isEnable = FALSE;
   }
-  GFL_BG_LoadScreenV_Req( MUS_VIEW_BG_SUB );  
+  GFL_BG_LoadScreenV_Req( MUS_VIEW_BG_SUB );
+
+  {
+    VecFx32 pos = {MUSICAL_POS_X( 64.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
+
+    if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) )
+    {
+      VecFx32 *shadowOfs; //‰e·•ª
+      shadowOfs = MUS_POKE_DRAW_GetShadowOfs( work->pokeWork );
+      //‰e‚ÌÀ•W‚ðŠî€‚É
+      pos.x = MUSICAL_POS_X_FX( FX32_CONST(64.0f)-shadowOfs->x);
+      pos.y = MUSICAL_POS_Y_FX( FX32_CONST(128.0f)-shadowOfs->y);
+    }
+    
+    MUS_POKE_DRAW_SetPosition( work->pokeWork , &pos);
+  }
+  {
+    VecFx32 pos = {MUSICAL_POS_X(192.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
+    if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) )
+    {
+      VecFx32 *shadowOfs; //‰e·•ª
+      shadowOfs = MUS_POKE_DRAW_GetShadowOfs( work->pokeWorkBack );
+      //‰e‚ÌÀ•W‚ðŠî€‚É
+      pos.x = MUSICAL_POS_X_FX( FX32_CONST(192.0f)-shadowOfs->x);
+      pos.y = MUSICAL_POS_Y_FX( FX32_CONST(128.0f)-shadowOfs->y);
+    }
+    MUS_POKE_DRAW_SetPosition( work->pokeWorkBack , &pos);
+  }
 
   if( work->isRefresh == TRUE )
   {
