@@ -593,7 +593,7 @@ struct _POKEMON_TRADE_WORK{
 
   //	GAMESYS_WORK* pGameSys;
   _BALL_ICON_WORK aBallIcon[UI_BALL_NUM];
-  _TYPE_ICON_WORK aTypeIcon[2];
+  _TYPE_ICON_WORK aTypeIcon[4];  //ダブルバッファ
   _ITEMMARK_ICON_WORK aItemMark;
   _ITEMMARK_ICON_WORK aPokerusMark;
   _ITEMMARK_ICON_WORK aPokeMark[_POKEMARK_MAX];
@@ -604,7 +604,7 @@ struct _POKEMON_TRADE_WORK{
   GFL_TCB *g3dVintr; //3D用vIntrTaskハンドル
 
 //  u32 pokeIconNcgResOrg[BOX_POKESET_MAX+ TEMOTI_POKEMAX];
-
+   
   u32 pokeIconNcgRes[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* markIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
@@ -688,7 +688,7 @@ struct _POKEMON_TRADE_WORK{
   int bgscroll;
   int ringLineNo;
   int demoBGM;
-
+  BOOL flipflg;
   int modelno;  ///< 表示しているモデルの番号
   int pokemonselectno;  ///< 自分と相手のポケモン選択中のどちらを指しているか
 

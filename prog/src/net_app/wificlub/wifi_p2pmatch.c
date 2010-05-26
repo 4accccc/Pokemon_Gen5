@@ -816,6 +816,7 @@ static int WifiP2PMatch_Disconnect2(WIFIP2PMATCH_WORK *wk, int seq);
 static int WifiP2PMatch_VCTDisconnectSend1(WIFIP2PMATCH_WORK *wk, int seq);
 static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq);
 static int WifiP2PMatch_VCTDisconnectSend3(WIFIP2PMATCH_WORK *wk, int seq);
+static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq );
 
 
 
@@ -1019,6 +1020,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectCancelEnd, //WIFIP2PMATCH_PLAYERDIRECT_CANCELEND
   _playerDirectCancelEndNext, //WIFIP2PMATCH_PLAYERDIRECT_CANCELEND_NEXT
   _playerDirectSub45, //WIFIP2PMATCH_PLAYERDIRECT_SUB45
+  WifiP2PMatch_FriendListMain_MW, //WIFIP2PMATCH_MODE_FRIENDLIST_MW
 };
 
 
@@ -3301,6 +3303,8 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
           gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
           wk->friendNo = n + 1;
           //OS_TPrintf("ダイレクト番号セット%d\n", wk->friendNo);
+          PMSND_PlaySE_byPlayerID( SEQ_SE_SYS_101,SEPLAYER_SYS );
+//          PMSND_PlaySE_byPlayerID( SEQ_SE_DECIDE1,SEPLAYER_SE1 );
           _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALLGAME_INIT);
           return seq;
         }
@@ -3313,7 +3317,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
     OS_TPrintf("接続 %d\n",wk->DirectModeNo);
-    PMSND_PlaySystemSE( SEQ_SE_SYS_101 );
+    PMSND_PlaySE_byPlayerID( SEQ_SE_SYS_101,SEPLAYER_SYS );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -3417,6 +3421,118 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
 
 //------------------------------------------------------------------
 /**
+ * $brief   フレンドリスト表示中処理 WIFIP2PMATCH_MODE_FRIENDLIST_MW
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u32 ret = MCR_RET_NONE;
+  int checkMatch;
+  u32 check_friend;
+  MCR_MOVEOBJ* p_obj;
+  u32 status,gamemode;
+
+  wk->vchatrev = 0;  //マシンでの暫定VCTフラグリセット
+
+  // 友達が現れたら出す
+  MCRSYS_SetFriendObj( wk, HEAPID_WIFIP2PMATCH );
+  MCVSys_UpdataBttn( wk );
+
+  // パソコンアニメが動いていたら終了
+  WIFI_MCR_PCAnmOff( &wk->matchroom );
+
+  // 友達からこちらに接続してきたときの処理
+  checkMatch = _checkParentConnect(wk);
+  if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
+    OS_TPrintf("接続 %d\n",wk->DirectModeNo);
+    PMSND_PlaySE_byPlayerID( SEQ_SE_SYS_101,SEPLAYER_SYS );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
+    return seq;
+  }
+  if((wk->preConnect == -1) && (GFL_NET_DWC_IsNewPlayer() != -1)){  // 通常のコネクト開始
+    wk->preConnect = GFL_NET_DWC_IsNewPlayer();
+    _friendNameExpand(wk, wk->preConnect);
+    if(wk->DirectMacSet==0){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_043, FALSE);
+    }
+    wk->localTime = 0;
+  }
+
+
+  // 状態を取得
+  status = _WifiMyStatusGet( wk, wk->pMatch );
+
+  // 誰も自分に接続してきていないときだけリストを動かせる
+  if(wk->preConnect == -1){
+
+    // CANCELボタンでも待機状態をクリア
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL ){
+      if(_modeWait(status)){  // 待ち状態のとき
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
+        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        return seq;
+      }
+    }
+    ret = WIFI_MCR_Main( &wk->matchroom );
+    WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+  }
+  switch(ret){
+  case MCR_RET_NONE:
+    return seq;
+  case MCR_RET_CANCEL:
+    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+    if(_modeWait(status)){  // 待ち状態のとき
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_REL_INIT);
+    }
+    else{ // それか終了チェックへ
+      wk->endSeq = WIFI_GAME_NONE;
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_EXIT_YESNO);
+      WifiP2PMatchMessagePrint(wk, dwc_message_0010, TRUE);
+      //        wk->localTime=0;
+      ret = BMPMENULIST_CANCEL;
+    }
+    WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+    return seq;
+
+  case MCR_RET_MYSELECT:   //パソコンに話しかける
+    {  // 募集の行で選択したとき
+      if(status == WIFI_STATUS_WAIT){
+        wk->pParentWork->btalk = FALSE;  //NOTダイレクト
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+        WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
+        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        return seq;
+      }
+    }
+    break;
+  case MCR_RET_SELECT:   //相手に話しかける
+    if(WIFI_STATUS_WAIT==status){  // 人の名前ー＞マッチングへ
+      //相手の状態を確保 以後この状態をみるように変更 相手の動作をリアルタイムに追わない
+      int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+      PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+      GFL_STD_MemCopy(WifiFriendMatchStatusGet( friendNo - 1 ), &wk->targetStatus, sizeof(WIFI_STATUS));
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_INIT);
+      WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+      return seq;
+    }
+    break;
+  default:
+    GF_ASSERT(0);
+    break;
+  }
+  return seq;
+}
+
+
+
+
+//------------------------------------------------------------------
+/**
  * $brief   話しかけられた場合の確認画面に   WIFIP2PMATCH_MODE_CALLGAME_INIT
  * @param   wk
  * @retval  none
@@ -3428,6 +3544,10 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
   // だれかが話しかけてきた
   int n = wk->friendNo -1;
 
+  if(PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SYS )){
+    return seq;
+  }
+  
   if(n>=0 && n < WIFIP2PMATCH_MEMBER_MAX){
     if( WifiP2PMatch_CommWifiBattleStart( wk, n ) ){
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
@@ -5084,6 +5204,11 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   WIFI_STATUS* p_status;
   int myvchat;
 
+
+  if(PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE1 )){
+    return seq;
+  }
+  
   p_status = WifiFriendMatchStatusGet( GFL_NET_DWC_GetFriendIndex() );
   mySt = _WifiMyStatusGet( wk, wk->pMatch );
   targetSt = _WifiMyStatusGet( wk,p_status );

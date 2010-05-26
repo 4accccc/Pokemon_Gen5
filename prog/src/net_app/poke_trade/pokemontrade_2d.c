@@ -2199,13 +2199,25 @@ void IRC_POKETRADE_ItemIconDisp(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARA
     int item = PP_Get( pp , ID_PARA_item ,NULL);
     int type = 0;
 
+    if(ITEM_CheckMail(item)){
+      type = 1;
+    }
+
+    if(pIM->clwk_poke_item){
+      if(item == ITEM_DUMMY_ID){
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+      }
+      else{
+        GFL_CLACT_WK_SetAnmSeq( pIM->clwk_poke_item, type );
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, TRUE );
+      }
+      return;
+    }
+    
     if(item == ITEM_DUMMY_ID){
       return;
     }
     
-    if(ITEM_CheckMail(item)){
-      type = 1;
-    }
     switch(side){
     case 0:
     case 1:
@@ -2265,7 +2277,7 @@ void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM)
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ポケモンステータスにアイコン表示
+ * @brief   ポケルスアイコン表示
  * @param   POKEMON_TRADE_WORK work
  * @param   side  画面表示  右なら１左なら０
  * @param   POKEMON_PARAM 
@@ -2276,7 +2288,7 @@ void IRC_POKETRADE_ItemIconReset(_ITEMMARK_ICON_WORK* pIM)
 void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain, POKEMON_PARAM* pp)
 {
   // ポケアイコン用アイテムアイコン
-  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+//  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
   
   {
     _ITEMMARK_ICON_WORK* pIM = &pWork->aPokerusMark;
@@ -2284,6 +2296,15 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
     int rus = PP_Get( pp , ID_PARA_pokerus ,NULL);
     int type = 0;
 
+    if(pIM->clwk_poke_item){  //確保済み
+      if(rus == 0){
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+      }
+      else{
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, TRUE );
+      }
+      return;
+    }
     if(rus == 0){
       return;
     }
@@ -2352,7 +2373,7 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
     APP_COMMON_POKE_MARK_POKERUSU,        //顔(ポケルス完治マーク)
     -1,
   };
-  IRC_POKETRADE_PokeStatusIconReset(pWork);
+//  IRC_POKETRADE_PokeStatusIconReset(pWork);
 
   prm.draw_type = CLSYS_DRAW_MAIN;
   prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
@@ -2374,19 +2395,32 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
     else{
       type = marktbl[i*2+1];
     }
-    if(type==-1){
-      continue;
-    }
-    if(bEgg && i==12){
-      continue;
-    }
 
-    UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
+    if(pIM->clwk_poke_item){
+      if(type==-1){
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+      }
+      else if(bEgg && i==12){
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+      }
+      else{
+        GFL_CLACT_WK_SetAnmSeq( pIM->clwk_poke_item, type );
+        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, TRUE );
+      }
+    }
+    else{
+      if(type==-1){
+        continue;
+      }
+      if(bEgg && i==12){
+        continue;
+      }
 
-    pIM->clwk_poke_item =
-      UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , (12 * 8)+5, type, pWork->heapID );
+      UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
+      pIM->clwk_poke_item =
+        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , (12 * 8)+5, type, pWork->heapID );
+    }
   }
-
 }
 
 
@@ -2587,30 +2621,6 @@ void POKEMONTRADE_StartCatched(POKEMON_TRADE_WORK* pWork,int Ringline, int pos,i
 
 void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 {
-/*   GFL_CLACTPOS pos;
- * 
- *   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
- * 
- *   pWork->AddPos.x = pos.x-pWork->aVecPos.x;
- *   pWork->AddPos.y = pos.y-pWork->aVecPos.y;
- *   if(pWork->AddPos.x==0){
- *     if(pos.x > DEF_SUCKED_X){  //今の場所が最終地点より大きい
- *       pWork->AddPos.x = -1;
- *     }
- *     if(pos.x < DEF_SUCKED_X){ //小さい
- *       pWork->AddPos.x = 1;
- *     }
- *   }
- *   if(pWork->AddPos.y==0){
- *     pWork->AddPos.y = -1;
- *   }
- * 
- *   pWork->SuckedCount = 1;
- * 
- */
-
-
-#if 1
   GFL_CLACTPOS pos;
 
   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
@@ -2629,15 +2639,6 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     normal.x = (DEF_SUCKED_X - pos.x)*FX32_ONE;  //最後の方へのベクトル
     normal.y = (DEF_SUCKED_Y - pos.y)*FX32_ONE;
     normal.z = 0;
-#if 0
-    dotproduct = VEC_DotProduct(&angle,&normal);
-//    FX_Sqrt(FX_Mul(angle.x,angle.x),FX_Mul(angle.y,angle.y))
-    dotproduct = FX_Div(FX_Mul(angle.x, normal.x) + FX_Mul(angle.y, normal.y),dotproduct);
-
-    rad = FX_AcosIdx(dotproduct);  //目標地点への角度がでる
-
-    OS_TPrintf("rad = %x\n",rad);
-#endif
     
     mullpos[0].x = pos.x*FX32_ONE;
     mullpos[0].y = pos.y*FX32_ONE;
@@ -2646,9 +2647,6 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     mullpos[1].y = (pos.y-(pWork->aVecPos.y-pos.y)*1)*FX32_ONE;
     mullpos[1].z = 0;
 
-  //  mullpos[2].x = (pos.x-(pWork->aVecPos.x-pos.x)*2)*FX32_ONE;
- //   mullpos[2].y = (pos.y-(pWork->aVecPos.y-pos.y)*2)*FX32_ONE;
- //   mullpos[2].z = 0;
     mullpos[3].x = 28*FX32_ONE;
     mullpos[3].y = 0*FX32_ONE;
     mullpos[3].z = 0;
@@ -2667,17 +2665,12 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
     mullpos[2].z = 0;
 
 
-    OS_Printf("%d %d\n",mullpos[0].x/FX32_ONE,mullpos[0].y/FX32_ONE);
-    OS_Printf("%d %d\n",mullpos[1].x/FX32_ONE,mullpos[1].y/FX32_ONE);
-    OS_Printf("%d %d\n",mullpos[2].x/FX32_ONE,mullpos[2].y/FX32_ONE);
-    OS_Printf("%d %d\n",mullpos[3].x/FX32_ONE,mullpos[3].y/FX32_ONE);
 
     PROGVAL_PEZIER_Init(&pWork->aCutMullRom,
                          &mullpos[0],&mullpos[1],&mullpos[2],&mullpos[3],_SUCKEDCOUNT_NUM-2);
 
   }
   pWork->SuckedCount = _SUCKEDCOUNT_NUM;
-#endif
 }
 
 
@@ -2693,63 +2686,6 @@ void POKEMONTRADE_StartSucked(POKEMON_TRADE_WORK* pWork)
 
 BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
 {
-/* #if 0
- *   GFL_CLACTPOS pos;
- *   s16 x,y;
- * //  fx32 lastx = 28*FX32_ONE;
- * //  fx32 lasty = 0;
- * //  fx32 tan32;
- *   fx16 tan = FX_SinIdx(pWork->SuckedCount)/FX_CosIdx(pWork->SuckedCount);
- * 
- *   
- * //  lastx = FX_Mul(pWork->AddPos.x, tan32);
- * 
- *   
- * 
- * 
- *   GFL_CLACT_WK_GetPos(pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
- *   if(pos.x==DEF_SUCKED_X){
- *     if(pos.y==0){
- *       POKEMONTRADE_RemovePokemonCursor(pWork);
- *       return TRUE;
- *     }
- *   }
- *   x=DEF_SUCKED_X;
- *   y=0;
- * 
- *   if(pos.x != DEF_SUCKED_X){
- *     if(pos.x > DEF_SUCKED_X){
- *       pWork->AddPos.x -= pWork->SuckedCount * 2;
- *       x = pos.x + pWork->AddPos.x;
- *       if(x < DEF_SUCKED_X){
- *         x = DEF_SUCKED_X;
- *       }
- *     }
- *     if(pos.x < DEF_SUCKED_X){
- *       pWork->AddPos.x += pWork->SuckedCount * 2;
- *       x = pos.x + pWork->AddPos.x;
- *       if(x > DEF_SUCKED_X){
- *         x = DEF_SUCKED_X;
- *       }
- *     }
- *   }
- *   if(pos.y > 0){
- *     pWork->AddPos.y -= pWork->SuckedCount * 2;
- *     y = pos.y + pWork->AddPos.y;
- *     if(y < 0){
- *       y=0;
- *     }
- *   }
- *   pos.x = x;
- *   pos.y = y;
- *   GFL_CLACT_WK_SetPos(  pWork->curIcon[CELL_CUR_POKE_KEY], &pos, CLSYS_DRAW_SUB);
- * 
- *   pWork->SuckedCount++;
- *   return FALSE;
- * 
- * #endif
- */
-#if 1
   double num;
   double ansx,ansy;
     GFL_CLACTPOS pos;
@@ -2774,7 +2710,6 @@ BOOL POKEMONTRADE_SuckedMain(POKEMON_TRADE_WORK* pWork)
     }
   }
   return FALSE;
-#endif
 }
 
 //------------------------------------------------------------------------------

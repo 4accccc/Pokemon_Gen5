@@ -19,7 +19,7 @@
 #include "net/net_save.h"
 
 #if DEBUG_ONLY_FOR_ohno
-#define _NETSAVE_DEBUG (1)
+#define _NETSAVE_DEBUG (0)
 #else
 #define _NETSAVE_DEBUG (0)
 #endif

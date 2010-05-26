@@ -104,8 +104,6 @@ static void UITemplate_TYPEICON_CreateCLWK( _TYPE_ICON_WORK *wk, POKEMON_PARAM* 
   PokeType type = PP_Get(pp, ID_PARA_type1+side, NULL);
 
 
-  UITemplate_TYPEICON_DeleteCLWK(wk);
-
   prm.draw_type = draw_type;
   prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
   prm.arc_id    = APP_COMMON_GetArcId();
@@ -792,6 +790,15 @@ void POKETRADE_MESSAGE_ResetPokemonBallIcon(POKEMON_TRADE_WORK *pWork)
   }
 }
 
+static void POKETRADE_MESSAGE_ResetTypeIcon(POKEMON_TRADE_WORK *pWork)
+{
+  int i;
+  for(i=0;i<4;i++){
+    UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[i]);
+  }
+}
+
+
 
 void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
 {
@@ -800,8 +807,7 @@ void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   
   POKETRADE_MESSAGE_ResetPokemonBallIcon(pWork);
-  UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[0]);
-  UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[1]);
+  POKETRADE_MESSAGE_ResetTypeIcon(pWork);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ResetMainStatusBG(pWork); //CLACT削除含む
   IRCPOKETRADE_PokeDeleteMcss(pWork,0);
@@ -945,8 +951,7 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
 static void POKETRADE_MESSAGE_DeletePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp, int mcssno,int change)
 {
 
-  UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[0]);
-  UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[1]);
+  POKETRADE_MESSAGE_ResetTypeIcon(pWork);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
 
   IRCPOKETRADE_PokeDeleteMcss(pWork, mcssno);
@@ -956,6 +961,40 @@ static void POKETRADE_MESSAGE_DeletePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,
   }
 }
 
+
+static void _pokeTypeIconDispBuff(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp, int* nobuff)
+{
+  UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[nobuff[0]]);
+  UITemplate_TYPEICON_DeleteCLWK(&pWork->aTypeIcon[nobuff[1]]);
+  UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[nobuff[0]], pp, 0, pWork->cellUnit,
+                                 22*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
+  if( PP_Get(pp, ID_PARA_type1, NULL) != PP_Get(pp, ID_PARA_type2, NULL)){
+    UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[nobuff[1]], pp, 1, pWork->cellUnit,
+                                   26*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
+  }
+  if(pWork->aTypeIcon[nobuff[2]].clwk_type_icon){
+    GFL_CLACT_WK_SetDrawEnable(pWork->aTypeIcon[nobuff[2]].clwk_type_icon, FALSE );
+  }
+  if(pWork->aTypeIcon[nobuff[3]].clwk_type_icon){
+    GFL_CLACT_WK_SetDrawEnable(pWork->aTypeIcon[nobuff[3]].clwk_type_icon, FALSE );
+  }
+}
+
+// ステータス表示の変更
+
+static void _pokeTypeIconDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp)
+{
+  if(pWork->flipflg){
+    int buff[]={0,1,2,3};
+    _pokeTypeIconDispBuff(pWork, pp, buff);
+    pWork->flipflg=FALSE;
+  }
+  else{
+    int buff[]={2,3,0,1};
+    _pokeTypeIconDispBuff(pWork, pp, buff);
+    pWork->flipflg=TRUE;
+  }
+}
 
 
 // ステータス表示の変更
@@ -1022,13 +1061,8 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
     _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 19*8, 14*8+1, pWork);  //わざ
     _pokeTechniqueListMsgDisp(pp, pWork->MyInfoWin, 19*8,16*8, pWork); //わざリスト
 
-    UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[0], pp, 0, pWork->cellUnit,
-                                   22*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
+    _pokeTypeIconDisp(pWork,pp);  //タイプアイコン
 
-    if( PP_Get(pp, ID_PARA_type1, NULL) != PP_Get(pp, ID_PARA_type2, NULL)){
-      UITemplate_TYPEICON_CreateCLWK(&pWork->aTypeIcon[1], pp, 1, pWork->cellUnit,
-                                     26*8, 12*8, CLSYS_DRAW_MAIN, pWork->heapID );
-    }
     IRC_POKETRADE_ItemIconDisp(pWork, 2, pp);
 
   }
