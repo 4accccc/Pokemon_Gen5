@@ -7127,7 +7127,7 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   {
     u32 hem_state = Hem_PushState( &wk->HEManager );
 
-    BTL_Printf("ポケ[%d]の装備アイテム発動チェックします\n", BPP_GetID(bpp));
+    BTL_N_Printf( DBGSTR_SVFL_CheckItemReaction, BPP_GetID(bpp));
 
     scEvent_CheckItemReaction( wk, bpp );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
@@ -7547,7 +7547,6 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     &&  (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_KONJOU)
     ){
       fxDamage = (fxDamage * BTL_YAKEDO_DAMAGE_RATIO) / 100;
-      TAYA_Printf("  やけど補正 -> %d\n", fxDamage );
     }
     rawDamage = fxDamage;
     if( rawDamage == 0 ){ rawDamage = 1; }
@@ -8122,7 +8121,6 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr )
 {
   scPut_AddSick( wk, target, sick, sickCont );
-  TAYA_Printf("SickCont Flag=%d, line=%d\n", BPP_SICKCONT_GetFlag(sickCont), __LINE__);
 
   // エフェクトの用意されている異常はそれを表示
   switch( sick ){
@@ -8345,13 +8343,11 @@ static BOOL scEvent_CheckAddRankEffectOccur( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
 
   if( !failFlag )
   {
-    TAYA_Printf("AddPer=%d\n", per );
     if( perOccur(wk, per) ){
       return TRUE;
     }
     // デバッグ機能により必ず発生
     if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_MUST_TUIKA) ){
-      TAYA_Printf("Debug ON\n" );
       return TRUE;
     }
   }
@@ -8995,8 +8991,6 @@ static int get_pushout_nextpoke_idx( BTL_SVFLOW_WORK* wk, const SVCL_WORK* clwk 
 
   members = BTL_PARTY_GetMemberCount( clwk->party );
   startIdx = BTL_MAIN_GetClientBenchPosIndex( wk->mainModule, clwk->myID );
-
-  TAYA_Printf("開始Index=%d\n", startIdx );
 
   for(i=startIdx, count=0; i<members; ++i)
   {
@@ -10079,7 +10073,6 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* po
   FRONT_POKE_SEEK_InitWork( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
   {
-    TAYA_Printf("ポケID=%d, %dに依存した状態異常を回復します\n", BPP_GetID(bpp), dead_pokeID );
     BPP_CureWazaSickDependPoke( bpp, dead_pokeID );
     SCQUE_PUT_OP_CureSickDependPoke( wk->que, BPP_GetID(bpp), dead_pokeID );
   }
@@ -11638,7 +11631,6 @@ static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_PO
     // ふういんによる失敗チェック
     if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
     {
-      TAYA_Printf("ふういんが効いてるのでチェックする\n");
       if( BTL_FIELD_CheckFuin(wk->pokeCon, attacker, waza) )
       {
         cause = SV_WAZAFAIL_FUUIN;
@@ -13203,7 +13195,7 @@ static u32 scEvent_CalcRecoverHP( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     u32 maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
     u32 volume;
 
-    TAYA_Printf("maxHP=%d, ex_ratio=%08x, baes_ratio=%08x\n", maxHP, ex_ratio, base_ratio );
+//    TAYA_Printf("maxHP=%d, ex_ratio=%08x, baes_ratio=%08x\n", maxHP, ex_ratio, base_ratio );
 
     if( ex_ratio ){
       volume = BTL_CALC_MulRatio( maxHP, ex_ratio );

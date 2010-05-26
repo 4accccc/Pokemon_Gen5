@@ -288,6 +288,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ReliveEndIgnore:     return "空きがないので無視する\n";
   case DBGSTR_SVFL_RankEffCore:         return "ポケ[%d]の能力ランク(%d)を %d 段階変化 (ワザ使用ポケ=%d）\n";
   case DBGSTR_SVFL_IntrTargetPoke:      return "割り込みターゲットポケ=%d\n";
+  case DBGSTR_SVFL_CheckItemReaction:   return "ポケ[%d]の装備アイテム発動チェックします\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

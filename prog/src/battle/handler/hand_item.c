@@ -1008,6 +1008,7 @@ static void common_useForSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   if( common_sickcode_match(flowWk, pokeID, sickCode) )
   {
     BTL_HANDEX_PARAM_CURE_SICK* param;
+
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
     param->sickCode = sickCode;
     param->poke_cnt = 1;
@@ -1947,30 +1948,33 @@ static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 //----------------------------------------------------------------------------------
 static void common_DamageReactCore( BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
 {
-  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-  u32 maxHP;
-
-  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU ){
-    n /= 2;
-  }
-  if( n == 0 ){
-    GF_ASSERT(0);
-    n = 1;
-  }
-
-  maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
-  if( maxHP > 1 )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    u32 hp = BPP_GetValue( bpp, BPP_HP );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u32 maxHP;
 
-    BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, maxHP, hp, n);
-
-    if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) ){
-      BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU ){
+      n /= 2;
+    }
+    if( n == 0 ){
+      GF_ASSERT(0);
+      n = 1;
     }
 
-    BTL_N_PrintfSimple( DBGSTR_LF );
+    maxHP = BPP_GetValue( bpp, BPP_MAX_HP );
+    if( maxHP > 1 )
+    {
+      u32 hp = BPP_GetValue( bpp, BPP_HP );
+
+      BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, maxHP, hp, n);
+
+      if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) ){
+        BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
+        BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+      }
+
+      BTL_N_PrintfSimple( DBGSTR_LF );
+    }
   }
 }
 //------------------------------------------------------------------------------
