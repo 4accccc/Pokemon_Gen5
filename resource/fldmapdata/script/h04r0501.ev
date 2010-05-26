@@ -29,14 +29,14 @@ _EVENT_DATA		ev_h04r0501_poke17_04
 _EVENT_DATA		ev_h04r0501_wkobjcode00_01
 _EVENT_DATA		ev_h04r0501_wkobjcode01_01
 
-_EVENT_DATA		ev_init_h04r0501
+_EVENT_DATA		ev_zone_h04r0501
 
 _EVENT_DATA_END
 
 /**************************************************************/
 /*            FIELD_INIT_LABEL                              Å@ */
 /**************************************************************/
-INIT_EVENT_START	ev_init_h04r0501
+INIT_EVENT_START	ev_zone_h04r0501
 	
 	DEFINE_LOCAL LWK_NUM
 	_GET_RND(LWK_NUM,3)
