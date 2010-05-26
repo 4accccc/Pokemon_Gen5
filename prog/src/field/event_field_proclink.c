@@ -60,6 +60,27 @@ FS_EXTERN_OVERLAY(pokelist);
 FS_EXTERN_OVERLAY(app_mail);
 FS_EXTERN_OVERLAY(battle_recorder);
 
+//-------------------------------------
+/// デバッグ
+//=====================================
+#ifdef PM_DEBUG 
+#define DEBUG_PROCLINK_PRINT_ON //担当者のみのプリントON
+#endif  //PM_DEBUG
+
+//担当者のみのPRINTオン
+#ifdef DEBUG_PROCLINK_PRINT_ON
+#if defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#define DEBUG_PROCLINK_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+//以下のような感じで追加可能です
+//#elif defined( DEBUG_ONLY_FOR_ )
+//#define DEBUG_PROCLINK_Printf(...)  OS_TPrintf(__VA_ARGS__)
+#endif//defined
+#endif //DEBUG_PROCLINK_PRINT_ON
+//定義されていないときは、なにもない
+#ifndef DEBUG_PROCLINK_Printf
+#define DEBUG_PROCLINK_Printf(...)  /*  */
+#endif//ndef  DEBUG_PROCLINK_Printf
+
 //=============================================================================
 /**
  *          定数宣言
@@ -1572,12 +1593,12 @@ static void * FMenuCallProc_TrainerCard(PROCLINK_WORK* wk, u32 param, EVENT_PROC
     edit = FALSE;
   }
   
-  OS_Printf("zoneid=%d, edit=%d\n", zoneId, edit);
+  DEBUG_PROCLINK_Printf("zoneid=%d, edit=%d\n", zoneId, edit);
   
   // トレーナーカードワーク作成
   tr_param = TRAINERCASR_CreateCallParam_SelfData( gdata, HEAPID_PROC, edit );
 
-  OS_Printf("トレーナーカードの呼び出しparam=%d\n",param);
+  DEBUG_PROCLINK_Printf("トレーナーカードの呼び出しparam=%d\n",param);
   // ショートカットからの指定があるなら起動時引数に代入
   if(param!=EVENT_PROCLINK_DATA_NONE){
     tr_param->mode = param;
@@ -1606,7 +1627,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_TrainerCard(PROCLINK_WORK* wk,void* par
   FSND_ReleaseBGMVolume_fromApp(
     GAMEDATA_GetFieldSound(gdata), GAMESYSTEM_GetIssSystem(wk->param->gsys) );
 
-  OS_Printf("next_proc=%d\n", tr_param->next_proc);
+  DEBUG_PROCLINK_Printf("next_proc=%d\n", tr_param->next_proc);
   // フィールドに直接戻る
   if(tr_param->next_proc==TRAINERCARD_NEXTPROC_EXIT){
     return RETURNFUNC_RESULT_EXIT;
@@ -1919,7 +1940,7 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
     else
     {
       wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
-      OS_TPrintf("MailPos[%d]\n",plistData->ret_sel);
+      DEBUG_PROCLINK_Printf("MailPos[%d]\n",plistData->ret_sel);
       mailParam = MailSys_GetWorkViewPoke( gmData, PokeParty_GetMemberPointer(party,plistData->ret_sel), HEAPID_PROC );
     }
   }else{
@@ -1929,7 +1950,7 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
     if( pBag->mode == BAG_MODE_POKELIST ){
       //Bag開放時移動
       //wk->mode = PROCLINK_MODE_BAG_TO_MAIL_CREATE;
-      OS_TPrintf("メール作成\n");
+      DEBUG_PROCLINK_Printf("メール作成\n");
       mailParam = MAILSYS_GetWorkCreate( gmData, 
                                          MAILBLOCK_TEMOTI, 
                                          pBag->ret_item,
@@ -1938,7 +1959,7 @@ static void * FMenuCallProc_Mail(PROCLINK_WORK* wk, u32 param,EVENT_PROCLINK_CAL
       wk->item_no = pBag->ret_item;
     }else{
       wk->mode = PROCLINK_MODE_LIST_TO_MAIL_VIEW;
-      OS_TPrintf("メールデザイン見るだけ\n");
+      DEBUG_PROCLINK_Printf("メールデザイン見るだけ\n");
       mailParam = MailSys_GetWorkViewPrev( gmData, ITEM_GetMailDesign(pBag->ret_item), HEAPID_PROC );
     }
   }
@@ -2000,7 +2021,7 @@ static RETURNFUNC_RESULT FMenuReturnProc_Mail(PROCLINK_WORK* wk,void* param_adrs
   }else if(wk->pre_type==EVENT_PROCLINK_CALL_BAG){
     if(wk->mode == PROCLINK_MODE_BAG_TO_MAIL_CREATE){
       const BOOL isCreate = MailSys_IsDataCreate( mailParam );
-      OS_Printf("mail Create=%d\n", isCreate);
+      DEBUG_PROCLINK_Printf("mail Create=%d\n", isCreate);
       if( isCreate == TRUE )
       {
         const POKEPARTY *party = GAMEDATA_GetMyPokemon( gmData );
