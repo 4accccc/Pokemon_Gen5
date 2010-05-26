@@ -122,7 +122,6 @@ _ANIME_LABEL	anm_common_turn_u
 //--------------------------------------------------------------------
 
 _ANIME_LABEL	anm_leader3_kyoro
-	_ANIME_DATA		AC_WAIT_16F,1
 	_ANIME_DATA		AC_STAY_WALK_D_8F,1
 	_ANIME_DATA		AC_WAIT_16F,1
 	_ANIME_DATA		AC_STAY_WALK_U_8F,1
