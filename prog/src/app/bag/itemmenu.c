@@ -1011,6 +1011,7 @@ static void _itemInnerUse( FIELD_ITEMMENU_WORK* pWork )
 
       // アイテムを減らす
       ITEM_Sub( pWork, 1 );
+//			pWork->bCursorChange = 1;
 
       // つかった
       GFL_MSG_GetString( pWork->MsgManager, msg_bag_066, pWork->pStrBuf );
@@ -1059,6 +1060,8 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
     pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
+		pWork->bCursorChange = 1;
+		ITEMDISP_ScrollCursorChangePos( pWork );
 
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->clwkScroll, TRUE );
     ITEMDISP_ChangeActive( pWork, TRUE );
@@ -2030,6 +2033,8 @@ static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
     pWork->oamlistpos_old = 0xffff;
     _windowRewrite(pWork);
+		pWork->bCursorChange = 1;
+		ITEMDISP_ScrollCursorChangePos( pWork );
 
 //    InputNum_ButtonState( pWork, TRUE );
 
@@ -2386,6 +2391,7 @@ static void _itemSellYesnoInput( FIELD_ITEMMENU_WORK* pWork )
 
           // アイテムを減らす
           ITEM_Sub( pWork, pWork->InputNum );
+					pWork->bCursorChange = 1;
 
           // 所持金増加
           MISC_AddGold( GAMEDATA_GetMiscWork(pWork->gamedata), val );
@@ -2491,7 +2497,7 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
   // アイテムがなくなった場合
   if( MYITEM_GetItemNum( pWork->pMyItem, pWork->ret_item, pWork->heapID ) == 0 )
   {
-    int length = ITEMMENU_GetItemPocketNumber( pWork);
+    int length = ITEMMENU_GetItemPocketNumber( pWork) + 1;	// 捨てる前の数と比べないとダメなので＋１
 
     // スクロールバーが無効なら
     if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM )
@@ -2505,7 +2511,7 @@ static void ITEM_Sub( FIELD_ITEMMENU_WORK* pWork, int sub_num )
       // リストを下げる
       pWork->oamlistpos = MATH_IMax( pWork->oamlistpos-1 , -1 );
 //      pWork->bChange = TRUE;
-      pWork->bCursorChange = 1;
+//      pWork->bCursorChange = 1;
 //      pWork->bCellChange = 1;
       
       HOSAKA_Printf("oamlistpos=%d\n", pWork->oamlistpos);
@@ -3762,53 +3768,42 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
   }
 #endif
 
-//  pWork->pBagCursor = GAMEDATA_GetBagCursor(GAMESYSTEM_GetGameData(pWork->gsys));
-//  pWork->pMyItem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(pWork->gsys));
-
   // その他
   pWork->pocketno = MYITEM_FieldBagPocketGet(pWork->pBagCursor);
 
-  {
-    s16 cur,scr;
-    MYITEM_FieldBagCursorGet(pWork->pBagCursor, pWork->pocketno, &cur, &scr );
-    pWork->curpos = cur;
-    pWork->oamlistpos = scr - 1;
-    // カーソル位置補正
-    while( 1 ){
-      if( pWork->curpos == 0 && pWork->oamlistpos == -1 ){
-        break;
-      }
-      {
-        ITEM_ST * item = ITEMMENU_GetItem( pWork, ITEMMENU_GetItemIndex(pWork) );
-        if( item->id != 0 && item->no != 0 ){
-          break;
-        }
-      }
-      if( pWork->oamlistpos != -1 ){
-        pWork->oamlistpos--;
-      }else if( pWork->curpos != 0 ){
-        pWork->curpos--;
-      }
-    }
-  }
+	{	// カーソル位置補正
+		s16	cur, scr;
+		u16	max;
+		u16	i;
+
+		for( i=0; i<BAG_POKE_MAX; i++ ){
+			MYITEM_FieldBagCursorGet( pWork->pBagCursor, i, &cur, &scr );
+			max = MYITEM_GetItemPocketNumber( pWork->pMyItem, i );
+			while( 1 ){
+				if( cur == 0 && scr == 0 ){
+					break;
+				}
+				if( (cur+scr) >= max ){
+					if( scr != 0 ){
+						scr--;
+					}else{
+						cur--;
+					}
+				}else{
+					break;
+				}
+			}
+			if( i == pWork->pocketno ){
+				pWork->curpos = cur;
+				pWork->oamlistpos = scr - 1;
+			}
+			MYITEM_FieldBagCursorSet( pWork->pBagCursor, i, cur, scr );
+		}
+	}
 
   // 文字列初期化
   pWork->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                       NARC_message_bag_dat, pWork->heapID );
-
-/*
-  pWork->MsgManagerItemInfo = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-                                              NARC_message_iteminfo_dat, pWork->heapID );
-*/
-/*
-  pWork->MsgManagerPocket = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-                                            NARC_message_itempocket_dat, pWork->heapID );
-*/
-/*  
-  pWork->MsgManagerItemName = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE,
-                                            NARC_message_itemname_dat, pWork->heapID );
-*/
-
 
   pWork->pStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);
   pWork->pExpStrBuf = GFL_STR_CreateBuffer(200,pWork->heapID);

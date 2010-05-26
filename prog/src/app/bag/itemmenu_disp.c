@@ -1786,6 +1786,7 @@ void ITEMDISP_ScrollCursorChangePos( FIELD_ITEMMENU_WORK * pWork )
 	int length;
 	
 	length = ITEMMENU_GetItemPocketNumber( pWork );
+	if( length < ITEMMENU_SCROLLBAR_ENABLE_NUM ){ return; }
 
 	GFL_CLACT_WK_GetPos( pWork->clwkScroll, &pos, CLWK_SETSF_NONE );
 	pos.y = SCROLLBAR_GetPosY( length-6, pWork->oamlistpos+1, _SCROLL_TOP_Y, _SCROLL_BOTTOM_Y, 0 );
