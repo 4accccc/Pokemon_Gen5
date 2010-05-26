@@ -1290,7 +1290,6 @@ int BSUBWAY_LEADERDATA_GetDataNum( const BSUBWAY_LEADER_DATA *bsw_leader )
     }
   }
 
-  OS_Printf("トレーナーデータは%d人\n", result);
   return result;
 }
 
