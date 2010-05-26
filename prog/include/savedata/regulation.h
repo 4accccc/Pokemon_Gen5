@@ -90,13 +90,20 @@ typedef enum {
   REGULATION_SHOOTER_MANUAL,    ///<マニュアル
 }REGULATION_SHOOTER_TYPE;
 
+//本来カメラモードとデモの背景はまったく関係がないが、
+//プランナーさんの要望で合わせている
 typedef enum
 {
+  //デモの背景が変わらない
   REGULATION_CAMERA_NORMAL,
-  REGULATION_CAMERA_MOVE,    //待機中もカメラ動作
+  REGULATION_CAMERA_MOVE,   //待機中もカメラ動作
   REGULATION_CAMERA_STOP,   //カメラ操作を行わない
-} REGULATION_CAMERA_TYPE;
 
+  //デモの背景がWCSになる
+  REGULATION_CAMERA_WCS_NORMAL,
+  REGULATION_CAMERA_WCS_MOVE,   //待機中もカメラ動作
+  REGULATION_CAMERA_WCS_STOP,   //カメラ操作を行わない
+} REGULATION_CAMERA_TYPE;
 
 typedef enum  {
   REGULATION_CARD_CUPNAME,     ///< カップ名
