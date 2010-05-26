@@ -69,7 +69,7 @@ EVENT_START   ev_scene_r09_baseballm_01
 		_OBJ_ANIME(MMDL_ID_PLAYER,anm_common_turn_u)
 		_OBJ_ANIME_WAIT()
 		
-		_OBJ_ANIME(R09_BASEBALLM_01,anm_common_turn_d)
+		_OBJ_ANIME(R09_BASEBALLM_01,anm_common_turn_d_q)
 		_OBJ_ANIME_WAIT()
 		
 		_TIME_WAIT(12)
@@ -167,6 +167,11 @@ _ANIME_LABEL	anm_common_turn_l
 _ANIME_LABEL	anm_common_turn_d
 
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_common_turn_d_q
+
+	_ANIME_DATA AC_DIR_D,1
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
