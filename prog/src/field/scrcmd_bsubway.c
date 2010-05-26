@@ -102,6 +102,9 @@ static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
 static BOOL evCommRecvData( VMHANDLE *core, void *wk );
 static BOOL evBtlRecSave( VMHANDLE *core, void *wk );
 
+static GMEVENT * createYesNoEvent( GAMESYS_WORK *gsys,
+    SCRCMD_WORK *work, u16 *ret_wk, FLDMENUFUNC_YESNO cursor_pos );
+
 static void bsway_SetHomeNPC(
     BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata,
     MMDLSYS *mmdlsys, FIELDMAP_WORK *fieldmap );
@@ -196,6 +199,7 @@ VMCMD_RESULT EvCmdBSubwayWorkRelease( VMHANDLE *core, void *wk )
 VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 {
   void **buf;
+  VMCMD_RESULT result = VMCMD_RESULT_CONTINUE;
   SCRCMD_WORK *work = wk;
   SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
   SCRIPT_FLDPARAM *fparam = SCRIPT_GetFieldParam( sc );
@@ -215,47 +219,47 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   EV_WIFIBSUBWAY_PARAM wifibsubway_param;
   GMEVENT* next_event;
-  u16 com_id = VMGetU16( core );
+  u16 cmd_id = VMGetU16( core );
   u16 param0 = SCRCMD_GetVMWorkValue( core, work );
   u16 param1 = SCRCMD_GetVMWorkValue( core, work );
   u16 retwk_id = VMGetU16( core );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
    
 #ifdef DEBUG_ONLY_FOR_kagaya  
-  if( com_id < BSWTOOL_END_NO )
+  if( cmd_id >= BSWTOOL_START_NO && cmd_id < BSWTOOL_END_NO )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWTOOL : cmd No %d\n",
-        com_id );
+        cmd_id - BSWTOOL_START_NO );
   }
   else if(
-      com_id >= BSWTOOL_WIFI_START_NO && com_id < BSWTOOL_WIFI_END_NO )
+      cmd_id >= BSWTOOL_WIFI_START_NO && cmd_id < BSWTOOL_WIFI_END_NO )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWTOOL_WIFI : cmd No %d\n",
-        com_id - BSWTOOL_WIFI_START_NO );
+        cmd_id - BSWTOOL_WIFI_START_NO );
   }
   else if(
-      com_id >= BSWTOOL_DEBUG_START_NO && com_id < BSWTOOL_DEBUG_END_NO  )
+      cmd_id >= BSWTOOL_DEBUG_START_NO && cmd_id < BSWTOOL_DEBUG_END_NO  )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWTOOL_DEBUG : cmd No %d\n",
-        com_id - BSWTOOL_DEBUG_START_NO );
+        cmd_id - BSWTOOL_DEBUG_START_NO );
   }
   else if(
-      com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO )
+      cmd_id >= BSWSUB_START_NO && cmd_id < BSWSUB_END_NO )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB : cmd No %d\n",
-        com_id - BSWSUB_START_NO );
+        cmd_id - BSWSUB_START_NO );
   }
   else if(
-      com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO )
+      cmd_id >= BSWSUB_COMM_START_NO && cmd_id < BSWSUB_COMM_END_NO )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB_COMM : cmd No %d\n",
-        com_id - BSWSUB_COMM_START_NO );
+        cmd_id - BSWSUB_COMM_START_NO );
   }
   else if(
-      com_id >= BSWSUB_DEBUG_START_NO && com_id < BSWSUB_DEBUG_END_NO )
+      cmd_id >= BSWSUB_DEBUG_START_NO && cmd_id < BSWSUB_DEBUG_END_NO )
   {
     KAGAYA_Printf( "BSUBWAY_TOOL() cmd type BSWSUB_DEBUG : cmd No %d\n",
-        com_id - BSWSUB_DEBUG_START_NO );
+        cmd_id - BSWSUB_DEBUG_START_NO );
   }
   else
   {
@@ -263,14 +267,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   }
 #endif
   
-  if( bsw_scr == NULL && //バグチェック　ワーク依存コマンド
-      ((com_id >= BSWSUB_START_NO && com_id < BSWSUB_END_NO) ||
-      (com_id >= BSWSUB_COMM_START_NO && com_id < BSWSUB_COMM_END_NO)) ){
+  //バグチェック　ワーク依存コマンド
+  if( bsw_scr == NULL && cmd_id >= BSWSUB_START_NO ){
     GF_ASSERT( 0 );
     return( VMCMD_RESULT_CONTINUE );
   }
   
-  switch( com_id ){
+  switch( cmd_id ){
   //ゾーンID別プレイモード取得
   case BSWTOOL_GET_ZONE_PLAY_MODE:
     {
@@ -386,8 +389,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       MMDLSYS *mmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
       MMDL *mmdl = MMDLSYS_SearchOBJID( mmdlsys, id );
       if( mmdl == NULL ){
-        OS_Printf( "BSUBWAY MMDL VANISH ERROR OBJID %d\n", id );
-        GF_ASSERT( 0 );
+        GF_ASSERT_MSG( 0, "BSW MMDL VANISH ERROR OBJID %d\n", id );
       }else{
         MMDL_SetStatusBitVanish( mmdl, vanish );
       }
@@ -652,8 +654,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       SCRIPT_CallEvent(
           sc, BSUBWAY_EVENT_MsgWifiHomeNPC(gsys,leader_no,obj_id) );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //ステージ数が存在するかチェック
   case BSWTOOL_CHK_EXIST_STAGE:
     {
@@ -728,6 +730,19 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       GFL_HEAP_FreeMemory( pLeader );
     }
     break;
+  //はい、いいえウィンドウ param0 = カーソル初期位置 SCR_YES,SCR_NO
+  case BSWTOOL_YESNO_WIN:
+    {
+      FLDMENUFUNC_YESNO cursor_pos = FLDMENUFUNC_YESNO_YES;
+      
+      if( param0 == SCR_NO ){
+        cursor_pos = FLDMENUFUNC_YESNO_NO;
+      }
+      
+      SCRIPT_CallEvent( sc, createYesNoEvent(gsys,work,ret_wk,cursor_pos) );
+    }
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //----TOOL Wifi関連
   //Wifiアップロードフラグをセット
   case BSWTOOL_WIFI_SET_UPLOAD_FLAG:
@@ -750,7 +765,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     EventCmd_BTowerWifiCall(core->event_work,param,retwk_id,*ret_wk);
     return 1;
     #else
-    GF_ASSERT( 0 && "BSWTOOL_WIFI_CONNECT WB未作成コマンドです" );
+    GF_ASSERT( 0 && "BSWTOOL_WIFI_CONNECT NOT SUPPORT WB" );
     #endif
     break;
   //WiFi 前回の記録をアップロード
@@ -763,8 +778,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
               FS_OVERLAY_ID(event_wifibsubway), 
               WIFI_BSUBWAY_EVENT_CallStart, &wifibsubway_param );
     SCRIPT_CallEvent( sc, next_event );
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //WiFi ゲーム情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_GAMEDATA:
     wifibsubway_param.mode = WIFI_BSUBWAY_MODE_GAMEDATA_DOWNLOAD;
@@ -774,8 +789,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
               FS_OVERLAY_ID(event_wifibsubway), 
               WIFI_BSUBWAY_EVENT_CallStart, &wifibsubway_param );
     SCRIPT_CallEvent( sc, next_event );
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //WiFi 歴代情報をダウンロード
   case BSWTOOL_WIFI_DOWNLOAD_SCDATA:
     wifibsubway_param.mode = WIFI_BSUBWAY_MODE_SUCCESSDATA_DOWNLOAD;
@@ -785,8 +800,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
               FS_OVERLAY_ID(event_wifibsubway), 
               WIFI_BSUBWAY_EVENT_CallStart, &wifibsubway_param );
     SCRIPT_CallEvent( sc, next_event );
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //WiFi ランク取得
   case BSWTOOL_WIFI_GET_RANK:
     *ret_wk = BSUBWAY_WIFIDATA_GetPlayerRank( wifiData );
@@ -821,8 +836,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     {
       SCRIPT_CallEvent( sc, BSUBWAY_EVENT_CallLeaderBoard(gsys) );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //WiFi DLした歴代情報のランク取得
   case BSWTOOL_WIFI_GET_DL_SCDATA_RANK:
     *ret_wk = BSUBWAY_WIFIDATA_GetLeaderRank( wifiData );
@@ -831,6 +846,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWTOOL_WIFI_GET_DL_SCDATA_ROOM:
     *ret_wk = BSUBWAY_WIFIDATA_GetLeaderRoomNo( wifiData );
     break;
+  //----TOOL DEBUG
   //DEBUG フラグチェック
   case BSWTOOL_DEBUG_CHK_FLAG:
     {
@@ -878,8 +894,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       SCRIPT_CallEvent(
           sc, BSUBWAY_EVENT_SetSelectPokeList(bsw_scr,gsys,buf) );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return VMCMD_RESULT_SUSPEND;
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //選択ポケモン取得
   case BSWSUB_GET_ENTRY_POKE:
     *ret_wk = BSUBWAY_SCRWORK_GetEntryPoke( bsw_scr, gsys );
@@ -889,7 +905,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     #if 0
     *ret_wk = TowerScr_CheckEntryPoke(bsw_scr,core->fsys->savedata);
     #else
-    OS_Printf( "BSWSUB_GET_ENTRY_POKE WB未作成" );
+    GF_ASSERT( 0 && "BSWSUB_GET_ENTRY_POKE NOT SUPPORT" );
     *ret_wk = 0; //0=OK 1=同じポケモン 2=同じアイテム
     #endif
     break;
@@ -926,7 +942,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
 #ifdef DEBUG_BSW_COMM_MULTI_BTL_SKIP
     if( play_mode == BSWAY_MODE_COMM_MULTI ||
         play_mode == BSWAY_MODE_S_COMM_MULTI ){
-      return VMCMD_RESULT_SUSPEND;
+      result = VMCMD_RESULT_SUSPEND;
+      break;
     }
 #endif
     
@@ -934,8 +951,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     SCRIPT_CallEvent(
         sc, BSUBWAY_EVENT_TrainerBattle(bsw_scr,gsys,fieldmap) );
 #endif
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return VMCMD_RESULT_SUSPEND;
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //現在のプレイモードを取得
   case BSWSUB_GET_PLAY_MODE:
     *ret_wk = bsw_scr->play_mode;
@@ -983,8 +1000,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           BSUBWAY_EVENT_TrainerBeforeMsg(
             bsw_scr,gsys,tr_idx,obj_id,SCRCMD_MSGWIN_UPRIGHT) );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //ゲームクリア時のプレイデータをセーブ
   case BSWSUB_SAVE_GAMECLEAR:
     BSUBWAY_SCRWORK_SaveGameClearPlayData( bsw_scr );
@@ -1198,7 +1215,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       VMCMD_SetWait( core, evBtlRecSave );
       bsw_scr->btlrec_exist_f = BSW_BTLREC_EXIST_EXIST;
     }
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //戦闘用ワーク開放
   case BSWSUB_FREE_BTLPRM:
     if( bsw_scr->btl_setup_param != NULL ){
@@ -1226,8 +1244,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           NULL, NULL );
       SCRIPT_CallEvent( sc, event );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //ステージ数、ラウンド数をリセット
   case BSWSUB_RESET_STAGE_ROUND:
     {
@@ -1268,8 +1286,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           BSUBWAY_EVENT_TrainerBeforeMsg(
             bsw_scr,gsys,tr_idx,obj_id,SCRCMD_MSGWIN_DOWNRIGHT) );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //wifi成績、戦闘結果更新
   case BSWSUB_UPDATE_WIFISCORE_BTLRESULT:
     GF_ASSERT( bsw_scr->btl_setup_param != NULL );
@@ -1345,8 +1363,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     bsw_scr->ret_work_id = retwk_id;
     BSUBWAY_COMM_TimingSyncStart( bsw_scr->comm_timing_no );
     VMCMD_SetWait( core, evCommTimingSync );
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //親機選択メニュー表示
   case BSWSUB_COMM_ENTRY_PARENT_MENU:
     {
@@ -1358,8 +1376,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           COMM_ENTRY_GAMETYPE_SUBWAY, NULL );
       VMCMD_SetWait( core, evCommEntryMenuPerent );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //子機選択メニュー表示
   case BSWSUB_COMM_ENTRY_CHILD_MENU:
     {
@@ -1371,8 +1389,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           COMM_ENTRY_GAMETYPE_SUBWAY, NULL );
       VMCMD_SetWait( core, evCommEntryMenuChild );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //通信データ送信
   case BSWSUB_COMM_SEND_BUF:
     BSUBWAY_SCRWORK_CommSendData( bsw_scr, param0, param1 );
@@ -1382,8 +1400,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_SCRWORK_CommRecieveDataStart( bsw_scr, param0 );
     bsw_scr->ret_work_id = retwk_id;
     VMCMD_SetWait( core, evCommRecvData );
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
     break;
   //自分の通信IDを取得
   case BSWSUB_COMM_GET_CURRENT_ID:
@@ -1404,8 +1421,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           NULL, NULL );
       SCRIPT_CallEvent( sc, irc_event );
     }
-    KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-    return( VMCMD_RESULT_SUSPEND );
+    result = VMCMD_RESULT_SUSPEND;
+    break;
   //赤外線通信結果
   case BSWSUB_COMM_IRC_ENTRY_RESULT:
     switch( bsw_scr->irc_match.selectType ){
@@ -1495,13 +1512,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //----ERROR
   //未対応コマンドエラー
   default:
-    OS_Printf( "渡されたcom_id = %d\n", com_id );
-    GF_ASSERT( 0 && "com_idが未対応です！" );
+    GF_ASSERT_MSG( 0, "BSW CMD ID ERROR ID=%d", cmd_id );
     break;
   }
   
   KAGAYA_Printf( "BSUBWAY コマンド完了\n" );
-  return( VMCMD_RESULT_CONTINUE );
+  return( result );
 }
 
 //======================================================================
@@ -1655,6 +1671,97 @@ static BOOL evCommRecvData( VMHANDLE *core, void *wk )
   }
   
   return( FALSE );
+}
+
+//======================================================================
+//  はい、いいえウィンドウ
+//======================================================================
+//--------------------------------------------------------------
+/// はい・いいえウィンドウ制御イベント用ワーク定義
+//--------------------------------------------------------------
+typedef struct {
+  SCRCMD_WORK * scrcmd_work;
+  u16 * ret_wk;
+  FLDMENUFUNC * mw;
+  FLDMENUFUNC_YESNO cursor_pos;
+}YESNO_EV_WORK;
+
+//--------------------------------------------------------------
+/// はい・いいえウィンドウ制御イベント
+//--------------------------------------------------------------
+static GMEVENT_RESULT YesNoSelectEvent(
+    GMEVENT * event, int * seq, void * work )
+{
+  YESNO_EV_WORK * yew = work;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( yew->scrcmd_work );
+  
+  switch (*seq)
+  {
+  case 0:
+    SCRCMD_WORK_SetWaitCount( yew->scrcmd_work, SELECT_WAIT_VALUE );
+    (*seq) ++;
+    /* FALL THROUGH */
+  case 1:
+    //一定時間ウェイト後、選択可能にする
+    if ( SCRCMD_WORK_WaitCountDown( yew->scrcmd_work ) == TRUE )
+    {
+      GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( yew->scrcmd_work );
+      FIELDMAP_WORK *fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+      FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
+      FLDMENUFUNC *mw = FLDMENUFUNC_AddYesNoMenu( msgBG, yew->cursor_pos );
+      yew->mw = mw;
+      (*seq) ++;
+    }
+    break;
+  case 2:
+    {
+      FLDMENUFUNC_YESNO ret;
+      ret = FLDMENUFUNC_ProcYesNoMenu( yew->mw );
+      
+      switch ( ret )
+      {
+      case FLDMENUFUNC_YESNO_NULL:
+        break;
+      case FLDMENUFUNC_YESNO_YES:
+        *yew->ret_wk = SCR_YES;
+        (*seq) ++;
+        break;
+      default:
+        *yew->ret_wk = SCR_NO;
+        (*seq) ++;
+        break;
+      }
+    }
+    break;
+
+  case 3:
+    FLDMENUFUNC_DeleteMenu( yew->mw );
+    return GMEVENT_RES_FINISH;
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
+//--------------------------------------------------------------
+/**
+ * はい、いいえウィンドウイベント作成
+ * @param gsys  GAMESYS_WORK*
+ * @param work SCRCMD_WORK*
+ * @param ret_wk 結果格納先
+ * @retval GMEVNET*
+ */
+//--------------------------------------------------------------
+static GMEVENT * createYesNoEvent( GAMESYS_WORK *gsys,
+    SCRCMD_WORK *work, u16 *ret_wk, FLDMENUFUNC_YESNO cursor_pos )
+{
+  GMEVENT * event;
+  YESNO_EV_WORK * yew;
+  event = GMEVENT_Create( gsys, NULL, YesNoSelectEvent, sizeof(YESNO_EV_WORK) );
+  yew = GMEVENT_GetEventWork( event );
+  yew->scrcmd_work = work;
+  yew->ret_wk = ret_wk;
+  yew->cursor_pos = cursor_pos;
+  return event;
 }
 
 //======================================================================
