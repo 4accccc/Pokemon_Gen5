@@ -2064,7 +2064,12 @@ BOOL POKETRADE_NEGO_IsStatusLookAt(POKEMON_TRADE_WORK* pWork,int line , int heig
 }
 
 
-
+static void POKE_GTS_DeletePokemonStateRelease(POKEMON_TRADE_WORK* pWork)
+{
+  if(GFL_UI_TP_GetCont()==FALSE){
+    _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
+  }
+}
 
 
 
@@ -2088,7 +2093,7 @@ void POKE_GTS_DeletePokemonState(POKEMON_TRADE_WORK* pWork)
     POKE_GTS_DeletePokemonDirect(pWork, 0, no);
     POKETRADE_2D_GTSPokemonIconReset(pWork,0, no);
   }
-  _CHANGE_STATE(pWork, POKETRADE_TouchStateGTS);
+  _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonStateRelease);
 }
 
 

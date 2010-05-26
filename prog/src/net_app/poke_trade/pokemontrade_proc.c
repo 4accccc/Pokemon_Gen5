@@ -83,6 +83,8 @@ static BOOL _PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork);
 static void _recvFriendScrollBar(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _changeFinish(POKEMON_TRADE_WORK* pWork);
 static void _networkFriendsStandbyWait2(POKEMON_TRADE_WORK* pWork);
+static BOOL _IsBothPokemonSelect(POKEMON_TRADE_WORK* pWork,int boxno , int selectIndex);
+static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork);
 
 //static void _endCancelState(POKEMON_TRADE_WORK* pWork);
 static void _recvLookAtPoke(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
@@ -92,7 +94,7 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend);
 static void _recvCancelPokemon(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _PokemonReset(POKEMON_TRADE_WORK *pWork, int side );
 static void _changeMenuOpen(POKEMON_TRADE_WORK* pWork);
-static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch);
+static BOOL checkTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch);
 static int _boxScrollLine2Num(int line);
 static void _notWazaChangePoke2(POKEMON_TRADE_WORK* pWork);
 
@@ -1788,7 +1790,7 @@ static BOOL _SerchTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, int* boxno,int* 
 
 
 
-static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
+static BOOL checkTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
 {
   BOOL bChange=FALSE;
   {
@@ -1801,6 +1803,20 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
       if(pCL){
         POKEMON_PASO_PARAM* ppp =
           IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->workBoxno, pWork->workPokeIndex,pWork);
+
+        //おなじポケモンを選択したらキャンセル
+        if( _IsBothPokemonSelect(pWork, pWork->workBoxno, pWork->workPokeIndex) ){
+          if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+            _CHANGE_STATE(pWork,_DeletePokemonState);
+            return 3;
+          }
+          else{
+            _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
+            return 3;
+          }
+        }
+        
+
         _CatchPokemonPositionRewind(pWork);          //今のつかんでる物を元の位置に戻す
         if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
 
@@ -1812,12 +1828,9 @@ static BOOL IsTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
             return 2;
           }
           else{
-            OS_TPrintf("IsTouchCLACTPosition %d \n",line);
-        //    line=POKETRADE_Line2RingLineIconGet(line);
             _CatchPokemonPositionActive(pWork,pCL, Ringline, index, ppp);
 
             IRC_POKETRADE_CursorEnable(pWork,line, index);  //OAMカーソル移動
-            OS_TPrintf("GET %d %d\n",pWork->workBoxno,pWork->workPokeIndex);
             if(bCatch){
               pWork->underSelectBoxno  = pWork->workBoxno;
               pWork->underSelectIndex = pWork->workPokeIndex;
@@ -3074,6 +3087,13 @@ static void _panelScroll(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _DeletePokemonStateRelease(POKEMON_TRADE_WORK* pWork)
+{
+  if(GFL_UI_TP_GetCont()==FALSE){
+    _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  }
+}
+
 
 static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork)
 {
@@ -3095,7 +3115,7 @@ static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork)
 
   _PokemonIconRenew(pWork);
   
-  _CHANGE_STATE(pWork, POKE_TRADE_PROC_TouchStateCommon);
+  _CHANGE_STATE(pWork, _DeletePokemonStateRelease);
 }
 
 
@@ -3266,6 +3286,59 @@ static void _POKE_SetAndSendData(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+//同じポケモンを選択しているかどうか
+static BOOL _IsBothPokemonSelect(POKEMON_TRADE_WORK* pWork,int boxno , int selectIndex)
+{
+  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+    if((pWork->selectIndex == selectIndex) &&
+       (pWork->selectBoxno == boxno) ){
+      return TRUE;
+    }
+  }
+  else{
+    if( -1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+
+
+static BOOL _TouchStateCommonDecide(POKEMON_TRADE_WORK* pWork)
+{
+
+  POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
+
+  //おなじポケモンを選択したらキャンセル
+  if( _IsBothPokemonSelect(pWork, pWork->underSelectBoxno, pWork->underSelectIndex) ){
+    if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+      _CHANGE_STATE(pWork,_DeletePokemonState);
+      return TRUE;
+    }
+    else{
+      _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
+      return TRUE;
+    }
+  }
+  
+  if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
+    PMSND_PlaySystemSE(POKETRADESE_MARKON);
+    TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
+    POKETRADE_MESSAGE_AppMenuClose(pWork);
+    _CHANGE_STATE(pWork,_dispSubState);   ///ステートウインドウ表示
+    return TRUE;
+  }
+  else{
+    _CatchPokemonPositionRewind(pWork);
+    pWork->underSelectBoxno = -1;
+    pWork->underSelectIndex = -1;
+  }
+  return FALSE;
+}
+
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3283,7 +3356,6 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 {
   u32 x,y,i;
   GFL_CLACTPOS pos;
-  BOOL bDecided=FALSE;
   int backBoxNo = pWork->nowBoxno;
   POKEMON_PASO_PARAM* ppp;
   int line;
@@ -3348,21 +3420,17 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
           _CatchPokemonPositionRewind(pWork);
 
           pWork->pSelectCLWK=pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex];
-
-          
-//          _CatchPokemonPositionActive(pWork,
-//                                      pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex],
- //                                     pWork->MainObjCursorLine,pWork->MainObjCursorIndex,ppp);
           IRC_POKETRADE_SetCursorXY(pWork);
-//          IRC_POKETRADE_CursorEnable(pWork,pWork->MainObjCursorLine,pWork->MainObjCursorIndex);
-          bDecided=TRUE;
+          _TouchStateCommonDecide(pWork);  //決定時の処理
+          return;
         }
       }
     }
   }
 
-  switch(IsTouchCLACTPosition(pWork,FALSE)){
+  switch(checkTouchCLACTPosition(pWork,FALSE)){
   case 2:
+  case 3:
     return;
   case 1:
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
@@ -3398,9 +3466,10 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       return;
     }
     else if(pWork->touchON && pWork->pCatchCLWK && pWork->bStatusDisp){
-      bDecided = TRUE;
       pWork->underSelectBoxno = pWork->workBoxno;
       pWork->underSelectIndex = pWork->workPokeIndex;
+      _TouchStateCommonDecide(pWork);  //決定時の処理
+      return;
     }
     else{
       _CatchPokemonPositionRewind(pWork);
@@ -3411,39 +3480,6 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
   }
 
   
-  if( bDecided ){
-    POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
-
-    if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
-      if((pWork->selectIndex == pWork->underSelectIndex) &&
-         (pWork->selectBoxno == pWork->underSelectBoxno) ){
-        //おなじポケモンを選択したらキャンセル
-        _CHANGE_STATE(pWork,_DeletePokemonState);
-        return;
-      }
-    }
-    else{
-      if( -1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex) ){
-        //おなじポケモンを選択したらキャンセル
-        _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
-        return;
-      }
-    }
-    if(ppp && PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) != 0 ){
-      PMSND_PlaySystemSE(POKETRADESE_MARKON);
-      TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
-
-      POKETRADE_MESSAGE_AppMenuClose(pWork);
-      _CHANGE_STATE(pWork,_dispSubState);   ///ステートウインドウ表示
-      return;
-    }
-    else{
-      _CatchPokemonPositionRewind(pWork);
-      pWork->underSelectBoxno = -1;
-      pWork->underSelectIndex = -1;
-    }
-  }
-
   //パネルのスクロール
   _panelScroll(pWork);
   if(GFL_UI_TP_GetCont()){

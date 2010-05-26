@@ -158,7 +158,7 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
   int no;
   int shooter = pClub->pMatchParam->shooter; //Regulation_GetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER);
 
-  OS_TPrintf("シューター%d\n",shooter);
+//  OS_TPrintf("シューター%d\n",shooter);
 
   if(shooter){
     Regulation_SetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER, REGULATION_SHOOTER_VALID);
@@ -409,7 +409,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     if(ep2p->pMatchParam->seq == WIFI_GAME_ERROR){
        ep2p->login.mode = WIFILOGIN_MODE_ERROR;
     }
-    NET_PRINT("P2P_SELECT %d %d\n",(*seq) ,ep2p->pMatchParam->seq);
+//    NET_PRINT("P2P_SELECT %d %d\n",(*seq) ,ep2p->pMatchParam->seq);
     if(P2P_BATTLE != (*seq) ){  // バトル以外はいらない
       _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
     }

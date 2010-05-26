@@ -371,7 +371,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
         retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
       }
       else if(DWC_ParseWMBssDesc(_localWork->ScanMemory,bss,&ap)){
-        OS_TPrintf("DWCApInfo %d\n",ap.aptype);
+//        OS_TPrintf("DWCApInfo %d\n",ap.aptype);
         switch(ap.aptype){
         case DWC_APINFO_TYPE_USER0:
         case DWC_APINFO_TYPE_USER1:
