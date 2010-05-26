@@ -166,6 +166,7 @@ typedef struct {
   BTL_POKESET     Enemy;
   BTL_POKESET     Damaged;
   BTL_POKESET     RobTarget;
+  BTL_POKESET     psetTmp;
   WAZAEFF_CTRL    effCtrl;
   SVFL_WAZAPARAM  wazaParam;
   HITCHECK_PARAM  hitCheck;
@@ -347,6 +348,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_POKESET*   psetEnemy;
   BTL_POKESET*   psetDamaged;
   BTL_POKESET*   psetRobTarget;
+  BTL_POKESET*   psetTmp;
   POKESET_STACK_UNIT  pokesetUnit[ BTL_POS_MAX+1 ];
   u32            pokesetStackPtr;
 
@@ -678,6 +680,7 @@ static void scproc_Migawari_CheckNoEffect( BTL_SVFLOW_WORK* wk, SVFL_WAZAPARAM* 
   BTL_POKEPARAM* attacker, BTL_POKESET* rec );
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targets, BOOL* fFailMsgEnable );
+static void StoreFrontPokeOrderAgility( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet );
 static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk );
 static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk );
 static void   scproc_turncheck_CommSupport( BTL_SVFLOW_WORK* wk );
@@ -9506,6 +9509,23 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 //==============================================================================
 
 /**
+ *  POKESET‚É‘Sí“¬ƒ|ƒP‚ðŠi”[ -> ‘f‘‚³‡ƒ\[ƒg
+ */
+static void StoreFrontPokeOrderAgility( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet )
+{
+  FRONT_POKE_SEEK_WORK  fps;
+  BTL_POKEPARAM* bpp;
+
+  BTL_POKESET_Clear( pokeSet );
+
+  FRONT_POKE_SEEK_InitWork( &fps, wk );
+  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) ){
+    BTL_POKESET_Add( pokeSet, bpp );
+  }
+  BTL_POKESET_SortByAgility( pokeSet, wk );
+}
+
+/**
  *  @retval BOOL  ƒŒƒxƒ‹ƒAƒbƒv‚µ‚Äˆ—“r’†‚Å”²‚¯‚½‚çTRUE
  */
 static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
@@ -9516,20 +9536,8 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
 
   if( wk->turnCheckStep == 0 )
   {
-    BTL_POKESET_Clear( pokeSet );
-
     // POKESETŠi”[->‘f‘‚³‡ƒ\[ƒg
-    {
-      FRONT_POKE_SEEK_WORK  fps;
-      BTL_POKEPARAM* bpp;
-
-      FRONT_POKE_SEEK_InitWork( &fps, wk );
-      while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) ){
-        BTL_POKESET_Add( pokeSet, bpp );
-      }
-      BTL_POKESET_SortByAgility( pokeSet, wk );
-    }
-
+    StoreFrontPokeOrderAgility( wk, pokeSet );
     wk->turnCheckStep = 1;
 
     SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
@@ -9897,10 +9905,12 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
   {
     BTL_POKEPARAM* bpp;
 
-    BTL_POKESET_SeekStart( wk->psetTarget );
-    while( (bpp = BTL_POKESET_SeekNext(wk->psetTarget)) != NULL )
+    StoreFrontPokeOrderAgility( wk, wk->psetTmp );
+    BTL_POKESET_SeekStart( wk->psetTmp );
+    while( (bpp = BTL_POKESET_SeekNext(wk->psetTmp)) != NULL )
     {
-      if( BPP_IsFightEnable(bpp) ){
+      if( BPP_IsFightEnable(bpp) )
+      {
         scproc_CheckItemReaction( wk, bpp );
       }
     }
@@ -14611,6 +14621,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->psetEnemy     = &unit->Enemy;
   wk->psetDamaged   = &unit->Damaged;
   wk->psetRobTarget = &unit->RobTarget;
+  wk->psetTmp       = &unit->psetTmp;
   wk->wazaEffCtrl   = &unit->effCtrl;
   wk->wazaParam     = &unit->wazaParam;
   wk->hitCheckParam = &unit->hitCheck;
@@ -14624,6 +14635,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
     BTL_POKESET_Clear( wk->psetEnemy );
     BTL_POKESET_Clear( wk->psetDamaged );
     BTL_POKESET_Clear( wk->psetRobTarget );
+    BTL_POKESET_Clear( wk->psetTmp );
     wazaEffCtrl_Init( wk->wazaEffCtrl );
     GFL_STD_MemClear( wk->wazaParam, sizeof(*(wk->wazaParam)) );
     GFL_STD_MemClear( wk->hitCheckParam, sizeof(*(wk->hitCheckParam)) );
