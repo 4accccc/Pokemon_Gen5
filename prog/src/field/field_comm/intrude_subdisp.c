@@ -2047,7 +2047,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       //“¯‚¶ƒ][ƒ“‚É‚¢‚ê‚Î‹êŠ‚Ì•ûŒü‚ð•\Ž¦
       tar_zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
       if(intsub->comm.now_palace_area == intsub->comm.target_palace_area
-          && (tar_zonesetting->zone_id == my_zone_id || tar_zonesetting->reverse_zone_id == my_zone_id)){
+          && tar_zonesetting != NULL && (tar_zonesetting->zone_id == my_zone_id || tar_zonesetting->reverse_zone_id == my_zone_id)){
         fx32 offset_x, offset_z;
         u32 msg_id;
         offset_x = ist->player_pack.pos.x - player_pos.x;
@@ -2296,6 +2296,9 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
         }
         else{
           const PALACE_ZONE_SETTING *zonesetting = IntrudeField_GetZoneSettingData(PalaceTownData[i].front_zone_id);
+          if(zonesetting == NULL){  //”O‚Ì‚½‚ß
+            continue;
+          }
           intsub->warp_zone_id = zonesetting->warp_zone_id;
           intsub->event_req = _EVENT_REQ_NO_TOWN_WARP;
         }

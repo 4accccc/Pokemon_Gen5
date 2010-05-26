@@ -53,6 +53,7 @@ static void Intrude_CheckMonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm);
 static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_zone_id, fx32 mine_x, INTRUDE_STATUS *target);
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMBOL_DATA_REQ *p_sdr);
+static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id);
 
 //==============================================================================
 //  データ
@@ -521,6 +522,44 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
       intcomm->intrude_status_mine.player_pack.pos.x, target_status);
   }
   
+  intcomm->player_status_update |= 1 << net_id;
+}
+
+//==================================================================
+/**
+ * プレイヤーステータスを通信アクターへ反映
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_UpdatePlayerStatusAll(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  NetID net_id;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+  
+  if(GAMEDATA_GetIsSave(gamedata) == TRUE){
+    return; //MatrixIDのチェックや通信プレイヤーのAddなどでカードアクセスする為
+  }
+  
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    Intrude_UpdatePlayerStatus(intcomm, net_id);
+  }
+}
+
+//==================================================================
+/**
+ * プレイヤーステータスを通信アクターへ反映
+ *
+ * @param   intcomm		
+ * @param   net_id		
+ */
+//==================================================================
+static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id)
+{
+  INTRUDE_STATUS *target_status;
+  
+  target_status = &intcomm->intrude_status[net_id];
+
   //侵入エリアの違いによるアクター表示・非表示設定
   if(net_id != GFL_NET_SystemGetCurrentID()){
     INTRUDE_STATUS *mine_st = &intcomm->intrude_status_mine;
@@ -554,24 +593,6 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
       target_status->player_pack.vanish = TRUE;
     }
   }
-#if 0 //違うゾーンでも表示するように変わった 2009.10.21(水)
-  {//ゾーン違いによるアクター表示・非表示設定
-    PLAYER_WORK *my_player = GAMEDATA_GetMyPlayerWork(GameCommSys_GetGameData(intcomm->game_comm));
-    ZONEID my_zone_id = PLAYERWORK_getZoneID( my_player );
-    
-    if(target_status->zone_id != my_zone_id){
-      target_status->player_pack.vanish = TRUE;   //違うゾーンにいるので非表示
-    }
-    else if(ZONEDATA_IsPalace(target_status->zone_id) == FALSE
-        && target_status->palace_area != intcomm->intrude_status_mine.palace_area){
-      //通常フィールドの同じゾーンに居ても、侵入先ROMが違うなら非表示
-      target_status->player_pack.vanish = TRUE;
-    }
-    else{
-      target_status->player_pack.vanish = FALSE;
-    }
-  }
-#endif
 
   //変装によるOBJCODEが変わっているチェック
   if(CommPlayer_CheckOcc(intcomm->cps, net_id) == TRUE){

@@ -72,6 +72,7 @@ extern void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL Intrude_SearchPalaceTown(ZONEID zone_id, PALACE_TOWN_RESULT *result);
 extern CHECKSAME Intrude_CheckSameZoneID(const PALACE_TOWN_RESULT *result_a, const PALACE_TOWN_RESULT *result_b);
 extern void Intrude_PlayerPosRecalc(INTRUDE_COMM_SYS_PTR intcomm, fx32 mine_x);
+extern void Intrude_UpdatePlayerStatusAll(INTRUDE_COMM_SYS_PTR intcomm);
 
 //--------------------------------------------------------------
 //  ワークアクセス関数

@@ -304,6 +304,9 @@ typedef struct _INTRUDE_COMM_SYS{
   
   u32 mission_start_timeout:31;  ///<ミッション開始前までのタイムアウト時刻をカウント
   u32 mission_start_timeout_warning:1;  ///<「ミッション開始前のタイムアウトしそう」警告発生中
+
+  u8 player_status_update;    ///<プレイヤーステータス更新情報(bit管理)
+  u8 padding[3];
 }INTRUDE_COMM_SYS;
 
 
