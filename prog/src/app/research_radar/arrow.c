@@ -40,12 +40,14 @@ typedef enum {
 // Å°ñÓàÛÇç\ê¨Ç∑ÇÈÉZÉã
 //=====================================================================================
 typedef struct {
-  BOOL            bootFlag;  // ãNìÆÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
-  u16             bootFrame; // ãNìÆÇ∑ÇÈÉtÉåÅ[ÉÄêî
-  u8              left;      // ç∂è„ÇÃxç¿ïW
-  u8              top;       // ç∂è„ÇÃyç¿ïW
-  ARROW_CELL_TYPE type;      // ÉZÉãÉ^ÉCÉv
-  GFL_CLWK*       clactWork; // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN
+  BOOL            bootFlag;   // ãNìÆÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
+  u16             bootFrame;  // ãNìÆÇ∑ÇÈÉtÉåÅ[ÉÄêî
+  BOOL            pauseFlag;  // í‚é~Ç∑ÇÈÇ©Ç«Ç§Ç©
+  u16             pauseFrame; // í‚é~Ç∑ÇÈÉtÉåÅ[ÉÄêî
+  u8              left;       // ç∂è„ÇÃxç¿ïW
+  u8              top;        // ç∂è„ÇÃyç¿ïW
+  ARROW_CELL_TYPE type;       // ÉZÉãÉ^ÉCÉv
+  GFL_CLWK*       clactWork;  // ÉZÉãÉAÉNÉ^Å[ÉèÅ[ÉN
 } ARROW_CELL;
 
 
@@ -85,6 +87,7 @@ static void ChangeState( ARROW* arrow, ARROW_STATE nextState ); // èÛë‘ÇïœçXÇ∑Ç
 
 static BOOL CheckAllCellBoot( const ARROW* arrow ); // ëSÇƒÇÃÉZÉãÇ™ãNìÆÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©ÇîªíËÇ∑ÇÈ
 static void BootCell( ARROW* arrow, u8 cellIdx ); // ÉZÉãÇãNìÆÇ∑ÇÈ
+static void PauseCell( ARROW* arrow, u8 cellIdx ); // ÉZÉãÇí‚é~Ç∑ÇÈ
 static void Vanish( ARROW* arrow ); // ëSÇƒÇÃÉZÉãÇîÒï\é¶Ç…Ç∑ÇÈ
 
 //-------------------------------------------------------------------------------------
@@ -219,9 +222,9 @@ static void ArrowMain( ARROW* arrow )
 {
   // èÛë‘Ç≤Ç∆ÇÃèàóù
   switch( arrow->state ) {
-  case ARROW_STATE_WAIT:    ArrowAct_WAIT   ( arrow ); break;
+  case ARROW_STATE_WAIT:    ArrowAct_WAIT( arrow ); break;
   case ARROW_STATE_STRETCH: ArrowAct_STRETCH( arrow ); break;
-  case ARROW_STATE_STAY:    ArrowAct_STAY   ( arrow ); break;
+  case ARROW_STATE_STAY:    ArrowAct_STAY( arrow ); break;
   default: GF_ASSERT(0);
   }
 
@@ -251,19 +254,20 @@ static void ArrowAct_STRETCH( ARROW* arrow )
 {
   int cellIdx;
 
-  // ÉZÉãÇÃãNìÆ
   for( cellIdx=0; cellIdx < arrow->cellNum; cellIdx++ )
   {
     if( (arrow->cell[ cellIdx ].bootFlag == FALSE) &&
-        (arrow->cell[ cellIdx ].bootFrame < arrow->stateCount) )
-    {
+        (arrow->cell[ cellIdx ].bootFrame <= arrow->stateCount) ) {
       BootCell( arrow, cellIdx );
+    }
+    if( (arrow->cell[ cellIdx ].bootFlag == TRUE) &&
+        (arrow->cell[ cellIdx ].pauseFlag == TRUE) &&
+        (arrow->cell[ cellIdx ].pauseFrame <= arrow->stateCount) ) {
+      PauseCell( arrow, cellIdx );
     }
   }
 
-  // Ç∑Ç◊ÇƒÇÃÉZÉãÇ™ãNìÆ
-  if( CheckAllCellBoot( arrow ) )
-  {
+  if( CheckAllCellBoot( arrow ) ) {
     ChangeState( arrow, ARROW_STATE_STAY );
   }
 }
@@ -313,8 +317,7 @@ static BOOL CheckAllCellBoot( const ARROW* arrow )
   for( cellIdx=0; cellIdx < cellNum; cellIdx++ )
   {
     // ãNìÆÇµÇƒÇ¢Ç»Ç¢ÉZÉãÇî≠å©
-    if( arrow->cell[ cellIdx ].bootFlag == FALSE )
-    {
+    if( arrow->cell[ cellIdx ].bootFlag == FALSE ) {
       return FALSE;
     }
   }
@@ -367,6 +370,24 @@ static void BootCell( ARROW* arrow, u8 cellIdx )
 
 //-------------------------------------------------------------------------------------
 /**
+ * @brief ÉZÉãÇÇÃìÆÇ´Çé~ÇﬂÇÈ
+ *
+ * @param arrow
+ * @param cellIdx
+ */
+//-------------------------------------------------------------------------------------
+static void PauseCell( ARROW* arrow, u8 cellIdx )
+{
+  ARROW_CELL* cell;
+
+  GF_ASSERT( cellIdx < MAX_CELL_NUM );
+
+  cell = &( arrow->cell[ cellIdx ] ); 
+  GFL_CLACT_WK_StopAnm( cell->clactWork );
+}
+
+//-------------------------------------------------------------------------------------
+/**
  * @breif Ç∑Ç◊ÇƒÇÃÉZÉãÇîÒï\é¶Ç…Ç∑ÇÈ
  *
  * @param arrow
@@ -379,7 +400,6 @@ static void Vanish( ARROW* arrow )
 
   cellNum = arrow->cellNum;
 
-  // Ç∑Ç◊ÇƒÇÃÉZÉãÇîÒï\é¶Ç…Ç∑ÇÈ
   for(idx=0; idx < cellNum; idx++ )
   {
     GFL_CLACT_WK_SetDrawEnable( arrow->cell[ idx ].clactWork, FALSE );
@@ -408,6 +428,7 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
 
   GF_ASSERT( endX <= startX ); // ç∂Ç…ÇµÇ©êLÇ—Ç»Ç¢
   GF_ASSERT( startY <= endY ); // â∫Ç…ÇµÇ©êLÇ—Ç»Ç¢
+  GF_ASSERT( CELL_WIDTH/2 <= (startX - endX) ); // énì_Ç∆èIì_ä‘ÇÕç≈í·Ç≈Ç‡1/2ÉLÉÉÉâÇ»Ç¢Ç∆É_ÉÅ
 
   frame   = 0;
   cellIdx = 0;
@@ -418,6 +439,7 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
   hCellNum = length / CELL_WIDTH;
   left     = startX - CELL_WIDTH;
   top      = startY - CELL_HEIGHT/2;
+
   for( count=0; count < hCellNum; count++ )
   {
     SetCellParams( &( arrow->cell[ cellIdx ] ), left, top, frame, ARROW_CELL_H );
@@ -429,7 +451,11 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
   // â°Ç…êLÇ—ÇÈÉZÉã ( í≤êÆ )
   if( hCellNum == 0 ) {
     if( 0 < length ) {
-      SetCellParams( &( arrow->cell[ cellIdx ] ), endX, top, frame, ARROW_CELL_H );
+      SetCellParams( &( arrow->cell[ cellIdx ] ), left, top, frame, ARROW_CELL_H );
+      if( length < CELL_WIDTH/2 ) {
+        arrow->cell[ cellIdx ].pauseFlag = TRUE; // ìríÜÇ≈é~ÇﬂÇÈ
+        arrow->cell[ cellIdx ].pauseFrame = 1;
+      }
       left  -= length;
       frame += (STRETCH_FRAMES * length / CELL_WIDTH) - 1;
       cellIdx++;
@@ -502,11 +528,13 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
 //-------------------------------------------------------------------------------------
 static void SetCellParams( ARROW_CELL* cell, u8 left, u8 top, u16 frame, ARROW_CELL_TYPE type )
 {
-  cell->left      = left;
-  cell->top       = top;
-  cell->bootFrame = frame;
-  cell->bootFlag  = FALSE;
-  cell->type      = type;
+  cell->left       = left;
+  cell->top        = top;
+  cell->bootFrame  = frame;
+  cell->bootFlag   = FALSE;
+  cell->pauseFlag  = FALSE;
+  cell->pauseFrame = 0;
+  cell->type       = type;
 }
 
 
@@ -553,11 +581,13 @@ static void InitArrow( ARROW* arrow, HEAPID heapID )
   // ÉZÉãÇÃèâä˙âª
   for( i=0; i < MAX_CELL_NUM; i++ )
   {
-    arrow->cell[i].bootFlag  = FALSE;
-    arrow->cell[i].bootFrame = 0;
-    arrow->cell[i].left      = 0;
-    arrow->cell[i].top       = 0;
-    arrow->cell[i].clactWork = NULL;
+    arrow->cell[i].bootFlag   = FALSE;
+    arrow->cell[i].bootFrame  = 0;
+    arrow->cell[i].pauseFlag  = FALSE;
+    arrow->cell[i].pauseFrame = 0;
+    arrow->cell[i].left       = 0;
+    arrow->cell[i].top        = 0;
+    arrow->cell[i].clactWork  = NULL;
   }
 }
 
