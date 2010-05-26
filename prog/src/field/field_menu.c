@@ -111,16 +111,16 @@ enum
 
 typedef enum
 {
-  FMS_WAIT_MOVEIN,
-  FMS_WAIT_INIT,
-  FMS_LOOP,
-  FMS_EXIT_ANIME_WAIT,  // 「×」OBJ点滅
-  FMS_EXIT_INIT,  
-  FMS_WAIT_ICON_ANIME ,
-  FMS_EXIT_ENDMENU,     //終了時の処理
-  FMS_EXIT_DECIDEITEM,  //項目決定時の処理
-  FMS_WAIT_MOVEOUT, 
-  FMS_FINISH,
+  FMS_WAIT_MOVEIN,      ///< 背景スクロールイン
+  FMS_WAIT_INIT,        ///< 起動待ち
+  FMS_LOOP,             ///< 操作待ちループ
+  FMS_EXIT_ANIME_WAIT,  ///< 「×」OBJ点滅
+  FMS_EXIT_INIT,        ///< メニュー終了処理
+  FMS_WAIT_ICON_ANIME , ///< アイコン決定時アニメ
+  FMS_EXIT_ENDMENU,     ///< 終了時の処理
+  FMS_EXIT_DECIDEITEM,  ///< 項目決定時の処理
+  FMS_WAIT_MOVEOUT,     ///< 背景スクロールアウト
+  FMS_FINISH,           ///< 終了
   
   FIELD_MENU_STATE_MAX,
 }FIELD_MENU_STATE;
@@ -953,7 +953,6 @@ static int _get_menu_num(int menutype)
 //----------------------------------------------------------------------------------
 static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, int menuType )
 {
-  //TODO 場所により個数などが変動することを想定
   u8 i;
   //BmpWinの位置(下に半キャラずらして使う
   static const u8 bmpState[7][2] =
@@ -1160,12 +1159,14 @@ void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYP
         work->isUpdateCursor = TRUE;
 //        FIELD_MENU_UpdateCursor( work );
         
+#if 0
         //FIXME 今はメニューで仮のものがあり、再起動がかからないので
         //ステータスを初期に戻す処理で対応
         if( work->state == FMS_FINISH )
         {
           work->state = FMS_WAIT_INIT;
         }
+#endif
       }
     }
   }

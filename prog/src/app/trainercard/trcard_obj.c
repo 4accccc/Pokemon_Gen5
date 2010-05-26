@@ -162,7 +162,7 @@ void SetTrCardActorSub( TR_CARD_OBJ_WORK *wk)
     // ‰º‰æ–Ê(ƒTƒu‰æ–Ê)
     for(i=0;i<TR_CARD_SUB_ACT_MAX;i++){
       addData.pos_x  = entry_dat[i].x;
-      addData.pos_y  = entry_dat[i].y;  //TODO
+      addData.pos_y  = entry_dat[i].y;
       addData.anmseq = entry_dat[i].anime;
       addData.bgpri  = entry_dat[i].pri;
       wk->ClActWorkS[i] = GFL_CLACT_WK_Create( wk->cellUnit , 
@@ -253,13 +253,13 @@ void SetEffActDrawSt( TR_CARD_OBJ_WORK *wk, u8 pat ,u8 draw_f)
   if(pat == 2)
   {
     cellPos.x = tpx;
-    cellPos.y = tpy; //TODO +TR_SUBSURFACE_Y
+    cellPos.y = tpy;
     GFL_CLACT_WK_SetPos(wk->ClActWorkS[ACTS_BTN_EFF],&cellPos,CLSYS_DEFREND_SUB);
   }
   else
   {
     cellPos.x = pos_x[pat];
-    cellPos.y = 22*8; //TODO +TR_SUBSURFACE_Y
+    cellPos.y = 22*8;
     GFL_CLACT_WK_SetPos(wk->ClActWorkS[ACTS_BTN_EFF],&cellPos,CLSYS_DEFREND_SUB);
   }
   GFL_CLACT_WK_ResetAnm(wk->ClActWorkS[ACTS_BTN_EFF]);

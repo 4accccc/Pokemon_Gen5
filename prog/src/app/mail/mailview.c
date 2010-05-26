@@ -104,9 +104,6 @@ enum{
 #define APP_END_TOUCH   ( 0 )
 #define APP_END_KEY     ( 1 )
 
-//@TODO wk->win_typeにまだコンフィグで指定するウインドウの種類が素材として
-//　　　存在していないので、後から対応する必要が有る
-
 typedef struct _MAIL_VIEW_DATA  MAIL_VIEW_DAT;
 
 ///サブプロセス定義用関数型
@@ -118,16 +115,15 @@ struct _MAIL_VIEW_DATA{
   int seq;    ///<メインシーケンスNo
   u16 sub_seq;  ///<サブシーケンスNo
   u8  key_mode; ///<操作モード
-  u8  win_type; ///<ウィンドウタイプ
   u8  mode; ///<動作タイプ
   u8  inMode; ///<動作タイプ
   u8  cntNo;
-  u8  msgIdx;
 
+  int canm_f;   ///< アニメフックフラグ
+  u8  msgIdx;
   u8  msg_spd;
   u8  line;     ///< 選択ライン
   u8  side;     ///< サイド選択
-  u8  canm_f;   ///< アニメフックフラグ
   u8  colEvy;   ///< フェード度合い
   u8  colDir;   ///< フェード向き（ 0 or 1 )
   u8  nowCol;   ///< フェード対象パレット番号

@@ -4,9 +4,6 @@
  *  @author Miyuki Iwasawa
  *  @date 08.01.16
  *
- *  @todo
- *    金銀ではトレーナーカードはサイン書きアプリを呼び出していたが、WBでは直接カード内で
- *    サインが書けるようになっている。mysignアプリが他で流用されないのであれば削除してよい
  */
 
 #include <gflib.h>
@@ -517,7 +514,7 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   }
   else
   {
-    //TODO 念のため名前が入ってないときに落ちないようにしておく
+    // 念のため名前が入ってないときに落ちないようにしておく
     cardData->TrainerName[0] = L'N';
     cardData->TrainerName[1] = L'o';
     cardData->TrainerName[2] = L'N';
