@@ -474,7 +474,7 @@ static void SEQFUNCTION_WaitDisConnect( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartEndMessage( WIFILOGOUT_WORK *p_wk )
 { 
-  WIFILOGIN_MESSAGE_InfoMessageDisp( p_wk->p_message, dwc_message_0012 );
+  WIFILOGIN_MESSAGE_InfoMessageDispWaitIcon( p_wk->p_message, dwc_message_0012 );
   SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitEndMessage );
 }
 
