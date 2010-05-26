@@ -73,6 +73,7 @@ typedef struct
 	u32												pal_ofs;
 	MCSS_SYS_WORK*						mcss_sys;
 	MCSS_WORK*								mcss;
+  BOOL                      tcb_flag;
 }TCB_LOADRESOURCE_WORK;
 
 #ifdef PM_DEBUG
