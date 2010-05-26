@@ -94,22 +94,16 @@ include make_prog_files
 check_printf:
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl SEARCH
 
-	@echo ¡í’“SOUNDSRC > check_printf_result.txt
-	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SOUNDSRC) >> check_printf_result.txt
-	@echo ¡í’“SAVEDATASRC >> check_printf_result.txt
-	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SAVEDATASRC) >> check_printf_result.txt
-	@echo ¡í’“NETWORKSRC >> check_printf_result.txt
-	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(NETWORKSRC) >> check_printf_result.txt
-	@echo ¡í’“SRCS >> check_printf_result.txt
+	@echo ¡í’“SRCS > check_printf_result.txt
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS) >> check_printf_result.txt
 	@echo ¡SRCS_OVERLAY_EVENT_WIFICLUB>>check_printf_result.txt
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_EVENT_WIFICLUB) >> check_printf_result.txt
 	@echo ¡SRCS_OVERLAY_EVENT_BATTLECALL>>check_printf_result.txt
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_EVENT_BATTLECALL) >> check_printf_result.txt
+
+	@echo šFIELD_ROOT>>check_printf_result.txt
 	@echo ¡SRCS_OVERLAY_NOTWIFI>>check_printf_result.txt
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_NOTWIFI) >> check_printf_result.txt
-	@echo ¡SRCS_OVERLAY_SHINKA_DEMO>>check_printf_result.txt
-	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_SHINKA_DEMO) >> check_printf_result.txt
 	@echo ¡SRCS_OVERLAY_INTRUDE_SYSTEM>>check_printf_result.txt
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_INTRUDE_SYSTEM) >> check_printf_result.txt
 	@echo ¡SRCS_OVERLAY_DEV_WIRELESS>>check_printf_result.txt
@@ -137,3 +131,18 @@ check_printf:
 	@echo ¡SRCS_OVERLAY_BATTLE_RECORDER>>check_printf_result.txt
 	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_RECORDER) >> check_printf_result.txt
 
+	@echo šBATTLE_ROOT>>check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_DEV_WIFILIB>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_DEV_WIFILIB) >> check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_DEV_WIFI>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_DEV_WIFI) >> check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_BATTLE>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE) >> check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_BATTLE_VIEW>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_VIEW) >> check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_BATTLE_B_APP>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_B_APP) >> check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_BATTLE_PLIST>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_BATTLE_PLIST) >> check_printf_result.txt
+	@echo ¡SRCS_OVERLAY_SHINKA_DEMO>>check_printf_result.txt
+	@perl $(PROJECT_ROOT)/tools/check_printf.pl CHECK $(SRCS_OVERLAY_SHINKA_DEMO) >> check_printf_result.txt
