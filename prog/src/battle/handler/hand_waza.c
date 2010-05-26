@@ -6454,9 +6454,6 @@ static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_RANK_EFFECT* rank_param;
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-    kill_param->pokeID = pokeID;
-
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
     rank_param->poke_cnt = 1;
     rank_param->pokeID[0] = targetPokeID;
@@ -6470,6 +6467,9 @@ static void handler_Okimiyage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     rank_param->rankType = BPP_SP_ATTACK_RANK;
     rank_param->rankVolume = -2;
     rank_param->fAlmost = TRUE;
+
+    kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
+    kill_param->pokeID = pokeID;
   }
 }
 //----------------------------------------------------------------------------------
