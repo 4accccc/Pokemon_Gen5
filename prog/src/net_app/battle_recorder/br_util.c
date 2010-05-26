@@ -404,6 +404,8 @@ BR_LIST_WORK * BR_LIST_Init( const BR_LIST_PARAM *cp_param, HEAPID heapID )
     p_wk->max       = cp_param->list_max;
     p_wk->line_max  = cp_param->h / cp_param->str_line;
 
+    p_wk->line_max  = MATH_IMin( p_wk->line_max, cp_param->list_max );
+
     if( cp_param->p_pos )
     { 
       p_wk->list      = cp_param->p_pos->list;
