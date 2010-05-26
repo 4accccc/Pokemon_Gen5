@@ -225,6 +225,7 @@ typedef struct
   int                   edit_value;
   int                   form_max;
   int                   gender;
+  int                   rare;
   BTLV_MCSS_PROJECTION  proj;
 
   int                   mosaic;
@@ -251,6 +252,7 @@ static  void  PokemonViewerPP_Put( POKEMON_VIEWER_WORK *pvw, int pos );
 static  void  MoveCamera( POKEMON_VIEWER_WORK *pvw );
 
 static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos );
+static  void  create_pokemon ( POKEMON_VIEWER_WORK* pvw );
 
 static  void  get_default_value( POKEMON_VIEWER_WORK *pvw );
 static  void  mcss_mode_change( POKEMON_VIEWER_WORK *pvw );
@@ -831,6 +833,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
     int rep = GFL_UI_KEY_GetRepeat();
     int cont = GFL_UI_KEY_GetCont();
     int trg = GFL_UI_KEY_GetTrg();
+    BOOL hit = GFL_UI_TP_GetTrg();
 
     if( trg & PAD_BUTTON_DEBUG )
     {
@@ -1035,14 +1038,13 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
     }
     if( ( trg & PAD_BUTTON_A ) && (pvw->edit_type == 0 ) )
     {
-      u32 rnd;
-
       pvw->gender ^= 1;
-      rnd = POKETOOL_CalcPersonalRandSpec( 12345678, pvw->mons_no[ pvw->edit_pos ], pvw->form_no[ pvw->edit_pos ],
-                                           pvw->gender, PTL_TOKUSEI_SPEC_BOTH, PTL_RARE_SPEC_FALSE );
-      BTLV_EFFECT_DelPokemon( pvw->edit_pos );
-      PP_SetupEx( pvw->pp, pvw->mons_no[ pvw->edit_pos ], 1, 12345678, 0, rnd );
-      set_pokemon( pvw, pvw->edit_pos );
+      create_pokemon ( pvw );
+    }
+    if( ( hit == TRUE ) && (pvw->edit_type == 0 ) )
+    {
+      pvw->rare ^= 1;
+      create_pokemon ( pvw );
     }
     if( ( trg & PAD_BUTTON_SELECT ) && ( pvw->edit_type == 0 ) )
     {
@@ -1520,6 +1522,15 @@ static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
     BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_ANM_STOP_ON );
 #endif
   }
+}
+
+static  void  create_pokemon( POKEMON_VIEWER_WORK* pvw )
+{ 
+  u32 rnd = POKETOOL_CalcPersonalRandSpec( 12345678, pvw->mons_no[ pvw->edit_pos ], pvw->form_no[ pvw->edit_pos ],
+                                           pvw->gender, PTL_TOKUSEI_SPEC_BOTH, pvw->rare );
+  BTLV_EFFECT_DelPokemon( pvw->edit_pos );
+  PP_SetupEx( pvw->pp, pvw->mons_no[ pvw->edit_pos ], 1, 12345678, 0, rnd );
+  set_pokemon( pvw, pvw->edit_pos );
 }
 
 static  void  get_default_value( POKEMON_VIEWER_WORK *pvw )
