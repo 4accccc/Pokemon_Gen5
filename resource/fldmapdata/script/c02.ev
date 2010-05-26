@@ -51,7 +51,7 @@ INIT_EVENT_START	ev_zone_c02
 		//博物館前のジムリーダーの会話イベントは終わった？	
 		IF $WK_SCENE_C02  == 4 THEN 
 			//アロエの位置をチェンジ
-			_SXY_MOVE_NPC_POS( C02_LEADER02_01, MV_DIR_RND, 665, 0, 600 )
+			_SXY_MOVE_NPC_POS( C02_LEADER02_01, DIR_RIGHT, 665, 0, 600 )
 		
 		ENDIF
 	ENDIF
@@ -75,7 +75,8 @@ INIT_EVENT_END
 /*            ZONE_INIT_LABEL                              　 */
 /**************************************************************/
 INIT_EVENT_START	ev_init_c02
-	
+//ゾーンにも同じ処理がある為。INITの処理はコメントアウト
+/*
 	//盗難事件イベント時、博物館でのイベントが終わった後は
 	//解決するまで、アロエを3番道路の近くに配置
 	//盗難イベント中？
@@ -102,7 +103,7 @@ INIT_EVENT_START	ev_init_c02
 		_OBJ_POS_CHANGE( C02_LEADER02_02, 644, 0, 584, DIR_RIGHT )
 		_OBJ_POS_CHANGE( C02_SUPPORT_02, 646, 0, 584, DIR_LEFT)
 	ENDIF
-	
+*/	
 INIT_EVENT_END
 
 /************************************************************/
