@@ -882,7 +882,7 @@ static void PMSND_CancelSystemFadeBGM( void )
     if( nowSoundIdx != fadeStatus.nextSoundIdx ){
       while(fadeStatus.seq != 0){
         PMSND_SystemFadeBGM();
-        OS_Printf("サウンド読み込みが完了していないのに一時停止や階層操作をしようとしている\n");
+        //OS_Printf("サウンド読み込みが完了していないのに一時停止や階層操作をしようとしている\n");
       }
       PMSND_PlayBGM_EX(fadeStatus.nextSoundIdx, fadeStatus.nextTrackBit);
     }
@@ -1286,7 +1286,7 @@ static void _loadSeqBankThread( void* arg )
   // サウンドデータ（seq, bank）読み込み
   result = NNS_SndArcLoadSeqEx
     (arg1->soundIdx, NNS_SND_ARC_LOAD_SEQ | NNS_SND_ARC_LOAD_BANK, PmSndHeapHandle);
-  if( result == FALSE){ OS_Printf("sound seqbank load error!\n"); }
+  //if( result == FALSE){ OS_Printf("sound seqbank load error!\n"); }
 }
 
 static void _loadWaveThread( void* arg )
@@ -1296,7 +1296,7 @@ static void _loadWaveThread( void* arg )
 
   // サウンドデータ（wave）読み込み
   result = NNS_SndArcLoadSeqEx(arg1->soundIdx, NNS_SND_ARC_LOAD_WAVE, PmSndHeapHandle);
-  if( result == FALSE){ OS_Printf("sound wave load error!\n"); }
+  //if( result == FALSE){ OS_Printf("sound wave load error!\n"); }
 }
 
 static void createSoundPlayThread( u32 soundIdx, THREADLOAD_MODE mode )
