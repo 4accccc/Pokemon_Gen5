@@ -319,6 +319,14 @@ static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp
   u8 fastFlag = PP_FastModeOn( pp );
   u32 i, cnt = 0;
 
+  if( fLinkSurface )
+  {
+    for(i=0; i<PTL_WAZA_MAX; i++){
+      bpp->waza[i].truth.usedFlag = FALSE;
+      bpp->waza[i].truth.usedFlagFix = FALSE;
+    }
+  }
+
   for(i=0; i<PTL_WAZA_MAX; i++)
   {
     if( WazaCore_SetupByPP( &bpp->waza[i].truth, pp, i ) ){
@@ -425,8 +433,17 @@ static void WazaCore_UpdateNumber( BPP_WAZA_CORE* core, WazaID nextID, u8 ppMax 
 static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index )
 {
   BOOL fExist = TRUE;
+  WazaID next_number;
 
-  core->number = PP_Get( pp, ID_PARA_waza1+index, NULL );
+  next_number = PP_Get( pp, ID_PARA_waza1+index, NULL );
+
+  if( core->number != next_number )
+  {
+    core->usedFlag = FALSE;
+    core->usedFlagFix = FALSE;
+  }
+
+  core->number = next_number;
   if( core->number != WAZANO_NULL )
   {
     core->pp = PP_Get( pp, ID_PARA_pp1+index, 0 );
@@ -440,8 +457,6 @@ static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index
     fExist = FALSE;
   }
 
-  core->usedFlag = FALSE;
-  core->usedFlagFix = FALSE;
 
   return fExist;
 }
@@ -485,7 +500,7 @@ static void clearHensin( BTL_POKEPARAM* bpp )
     setupBySrcData( bpp, ppSrc, FALSE );
 
     bpp->wazaCnt = 0;
-    for(i=0, bpp; i<PTL_WAZA_MAX; ++i)
+    for(i=0; i<PTL_WAZA_MAX; ++i)
     {
       bpp->waza[i].surface = bpp->waza[i].truth;
       if( bpp->waza[i].surface.number != WAZANO_NULL ){
