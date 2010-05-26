@@ -1425,6 +1425,9 @@ static void handler_Kiribarai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_DOKUBISI );
       BTL_CALC_BITFLG_Set( remove_param->flags, BTL_SIDEEFF_STEALTHROCK );
     }
+
+
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
   }
 }
 //----------------------------------------------------------------------------------
