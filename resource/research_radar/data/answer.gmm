@@ -358,8 +358,8 @@
         <language name="JPN" width="256">あたまがいい</language>
         <language name="JPN_KANJI" width="256">頭が良い</language>
       </row><row id="answer_10">
-        <language name="JPN" width="256">うんどうができる</language>
-        <language name="JPN_KANJI" width="256">運動ができる</language>
+        <language name="JPN" width="256">うんどうできる</language>
+        <language name="JPN_KANJI" width="256">運動できる</language>
       </row><row id="answer_11">
         <language name="JPN" width="256">じかん</language>
         <language name="JPN_KANJI" width="256">時間</language>

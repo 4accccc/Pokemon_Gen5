@@ -518,9 +518,9 @@
         <language name="JPN_KANJI" width="256">都会の暮らしと　田舎の暮らし
 どちらが好き？　を集めたアンケート</language>
       </row><row id="str_question_04_caption">
-        <language name="JPN" width="256">あたまがいいひとと　うんどうのできるひと
+        <language name="JPN" width="256">あたまがいいひとと　うんどうができるひと
 えらぶなら　どちらをえらぶ？　のアンケート</language>
-        <language name="JPN_KANJI" width="256">頭が良い人と　運動のできる人
+        <language name="JPN_KANJI" width="256">頭が良い人と　運動ができる人
 選ぶならどちらを選ぶ？　のアンケート</language>
       </row><row id="str_question_05_caption">
         <language name="JPN" width="256">じかんと　おかね　すきなだけ　もらえるなら
