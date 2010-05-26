@@ -767,7 +767,7 @@ static void MainSeq_STANDBY( RRG_WORK* work )
 
   //-----------------------
   //「回答」ボタンをタッチ
-  if( touch == TOUCH_AREA_ANSWER ) {
+  if( work->analyzeFlag && touch == TOUCH_AREA_ANSWER ) {
     MoveMenuCursorDirect( work, MENU_ITEM_ANSWER ); // カーソル位置を設定
     SetMenuCursorOn( work );                        // カーソルが乗っている状態にする
     UpdateAnalyzeButton( work );                    //『報告を見る』ボタンを更新する
@@ -777,7 +777,7 @@ static void MainSeq_STANDBY( RRG_WORK* work )
   } 
   //-----------------------------
   //「自分の回答」ボタンをタッチ
-  if( touch == TOUCH_AREA_MY_ANSWER ) {
+  if( work->analyzeFlag && touch == TOUCH_AREA_MY_ANSWER ) {
     MoveMenuCursorDirect( work, MENU_ITEM_MY_ANSWER ); // カーソル位置を設定
     SetMenuCursorOn( work );                           // カーソルが乗っている状態にする
     UpdateAnalyzeButton( work );                       //『報告を見る』ボタンを更新する
@@ -941,13 +941,13 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   }
   //-----------------------
   //「回答」ボタンをタッチ
-  if( touch == TOUCH_AREA_ANSWER ) {
+  if( work->analyzeFlag && touch == TOUCH_AREA_ANSWER ) {
     MoveMenuCursorDirect( work, MENU_ITEM_ANSWER ); // カーソル移動
     return;
   } 
   //-----------------------------
   //「自分の回答」ボタンをタッチ
-  if( touch == TOUCH_AREA_MY_ANSWER ) {
+  if( work->analyzeFlag && touch == TOUCH_AREA_MY_ANSWER ) {
     MoveMenuCursorDirect( work, MENU_ITEM_MY_ANSWER ); // カーソル移動
     return;
   } 
