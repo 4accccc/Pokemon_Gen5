@@ -770,6 +770,9 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 
 // 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
 static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+#ifdef DEF_MINIMUM_LOAD
+static void Zukan_Detail_Form_KaisouChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
+#endif
 
 // アルファ設定
 static void Zukan_Detail_Form_AlphaInit( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn );
@@ -3728,8 +3731,12 @@ static void Zukan_Detail_Form_Input( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAI
                 // 最初のEXCHANGE画面と同じフォルムを、これから行くEXCHANGE画面でも表示したい。
                 // だから、Zukan_Detail_Form_OshidashiChangeCompareFormではなく、
                 // Zukan_Detail_Form_ChangeCompareFormとZukan_Detail_Form_OshidashiSetPosCompareFormを用いることにした。
+                // 訂正↓
+                // Zukan_Detail_Form_ChangeCompareFormと同様の機能を持つ関数Zukan_Detail_Form_KaisouChangeCompareFormを用意したので、
+                // Zukan_Detail_Form_KaisouChangeCompareFormとZukan_Detail_Form_OshidashiSetPosCompareFormを用いることにした。
                 
-                Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
+                //Zukan_Detail_Form_ChangeCompareForm( param, work, cmn );
+                Zukan_Detail_Form_KaisouChangeCompareForm( param, work, cmn );
 
                 // 押し出し用関数を利用して位置設定
                 work->oshidashi_direct = OSHIDASHI_DIRECT_R_TO_L;
@@ -5697,6 +5704,46 @@ static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
     Zukan_Detail_Form_ChangeState( param, work, cmn, STATE_TOP );
   }
 }
+
+#ifdef DEF_MINIMUM_LOAD
+static void Zukan_Detail_Form_KaisouChangeCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
+{
+  if( work->state == STATE_TOP )
+  {
+    // 前のを破棄
+    PokeMcssWorkExit( &work->poke_mcss_wk[POKE_COMP_F], work->mcss_sys_wk );
+    PokeMcssWorkExit( &work->poke_mcss_wk[POKE_COMP_B], work->mcss_sys_wk );
+  
+    // 次のを生成
+    {
+      // 読み込み時に既に表示されているポケモンの絵が乱れるので、tcbを一時的にはずしておく
+      MCSS_SetTCBSys( work->mcss_sys_wk, NULL );
+
+      {
+        POKE_INDEX poke_f = (work->is_poke_front)?(POKE_COMP_F):(POKE_INDEX_NONE);
+        POKE_INDEX poke_b = (work->is_poke_front)?(POKE_INDEX_NONE):(POKE_COMP_B);
+
+        Zukan_Detail_Form_PokeInitFromDiffInfo( param, work, cmn,
+            poke_f, poke_b, POKE_COMP_RPOS, work->diff_comp_no );
+    
+        if( poke_f != POKE_INDEX_NONE )
+        {
+          PokeMcssCallBackDataInit( work->poke_mcss_wk[POKE_COMP_F].poke_call_back_data,
+                                    POKE_COMP_F, work );
+        }
+        if( poke_b != POKE_INDEX_NONE )
+        {
+          PokeMcssCallBackDataInit( work->poke_mcss_wk[POKE_COMP_B].poke_call_back_data,
+                                    POKE_COMP_B, work );
+        }
+      }
+
+      // 一時的にはずしていたtcbを、再び使用するように戻しておく
+      MCSS_SetTCBSys( work->mcss_sys_wk, work->mcss_tcbsys );
+    }
+  }
+}
+#endif
 
 //-------------------------------------
 /// アルファ設定
