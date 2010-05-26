@@ -312,7 +312,6 @@ EVENT_END
 //		PLAZMA EVENTópÉAÉjÉÅ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_leader3_kiduku
-	_ANIME_DATA		AC_STAY_WALK_R_8F,1
 	_ANIME_DATA		AC_MARK_GYOE,1
 	_ANIME_DATA		AC_STAY_WALK_U_8F,1
 	_ANIME_DATA		ACMD_END,0
