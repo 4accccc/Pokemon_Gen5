@@ -15,7 +15,6 @@
 #include "system\machine_use.h"
 #include "system\gfl_use.h"
 #include "system\main.h"
-#include "sound\snd_strm.h"
 #include "savedata/save_control.h"
 #include "net/wih_dwc.h"
 #include "print/printsys.h"
