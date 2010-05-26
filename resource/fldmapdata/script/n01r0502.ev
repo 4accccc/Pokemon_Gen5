@@ -802,10 +802,31 @@ EVENT_END
 EVENT_START		ev_n01r0502_wkobjcode01_01
 _TALK_START_TURN_NOT()
 
+  //伝説ポケモン戦（負けたらこのサブルーチンから帰ってこない）
 	_CALL sub_legend_battle
 
-	//捕獲の場合
-	IF FLAG_ON( FE_PACKAGE_POKE_GET ) THEN
+  _CALL sub_empty_check   //戻り値：SCWK_ANSWER == TRUEのとき、手持ちもボックスもいっぱい
+  IF FLAG_OFF( FE_PACKAGE_POKE_GET ) && $SCWK_ANSWER == FALSE THEN
+	//  捕獲していなくて、なおかつ手持ちもボックスもいっぱいじゃない場合
+  //  もう一度伝説ポケモン戦にトライする状況になる
+
+    _OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_dir_d )
+    _OBJ_ANIME_WAIT()
+
+    _PLAYER_NAME( 0 )
+    _GET_ROM_VERSION( LWK_ROM )
+    IF $LWK_ROM == VERSION_WHITE THEN
+      _SYSWIN_MSG( msg_n01r0502_pokemon_02w , POS_DOWN )
+    ELSE
+      _SYSWIN_MSG( msg_n01r0502_pokemon_02b , POS_DOWN )
+    ENDIF
+    _LAST_KEYWAIT()
+    _SYSWIN_CLOSE()
+
+  ELSE
+	// FLAG_ON( FE_PACKAGE_POKE_GET ) || $SCWK_ANSWER == TRUE の場合
+	//  つまり、捕獲の場合 or 結果に関わらず手持ちもボックスもいっぱいの場合は
+  //  ゲームを進行する
 
 		//Ｎが主人公の方を向く
 		_OBJ_ANIME( N01R0502_BOSS_01, anm_dir_d )
@@ -819,9 +840,9 @@ _TALK_START_TURN_NOT()
 		//========================================/
 
 		//伝説ポケモンを（なるべく）手に入れる処理
-		_CALL sub_add_legend
-
-		_CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_TEMOTI_CHECK, SCWK_ANSWER )
+    IF FLAG_ON( FE_PACKAGE_POKE_GET ) THEN
+        _CALL sub_add_legend
+    ENDIF
 
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラのバインドを解く
@@ -830,6 +851,7 @@ _TALK_START_TURN_NOT()
 		_CAMERA_MOVE( 9688,0,970752,1081344,0,2457600,20 )
 		_CAMERA_WAIT_MOVE()
 
+		_CRIMAX_DEMO_COMMAND( SCR_CRIMAX_CMD_TEMOTI_CHECK, SCWK_ANSWER )
 		//手持ちに伝説ポケモンがいたら
 		IF $SCWK_ANSWER == TRUE THEN
 
@@ -906,6 +928,11 @@ sub_legend_battle:
 	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_legend_hoeru )
 	_OBJ_ANIME_WAIT()
 
+    //対戦前に、ボックス＋手持ちがいっぱいか？のチェック結果を保存
+    DEFINE_LOCAL  LWK_EMPTY_CHECK
+    _CALL sub_empty_check
+    $LWK_EMPTY_CHECK = $SCWK_ANSWER 
+
     DEFINE_LOCAL  LWK_BATTLE_FLAG
 
     //シン・ム専用、伝説系MSG、レア無し
@@ -934,8 +961,14 @@ sub_legend_battle:
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
         //勝利
         _WILD_RETRY_CHECK( SCWK_ANSWER )
-
         IF $SCWK_ANSWER == SCR_WILD_BTL_RET_CAPTURE THEN
+          //========================================/
+            _FLAG_SET( FE_PACKAGE_POKE_GET )
+          //========================================/
+        ENDIF
+
+        //捕獲したか、手持ちにもボックスにも空きがなかった場合は伝説ポケを消して話を進める
+        IF ($SCWK_ANSWER == SCR_WILD_BTL_RET_CAPTURE) || ($LWK_EMPTY_CHECK == TRUE) THEN
           //========================================/
           
           //シンのOBJ削除
@@ -955,30 +988,6 @@ sub_legend_battle:
       
     ENDIF
 			
-	_WILD_RETRY_CHECK( SCWK_ANSWER )
-
-	SWITCH $SCWK_ANSWER
-	CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN
-		//勝利した場合、あるいは逃げた場合
-    	_OBJ_ANIME( N01R0502_WKOBJCODE01_01, anm_dir_d )
-		_OBJ_ANIME_WAIT()
-		_GET_ROM_VERSION( LWK_ROM )
-		_PLAYER_NAME( 0 )
-		IF $LWK_ROM == VERSION_WHITE THEN
-			_SYSWIN_MSG( msg_n01r0502_pokemon_02w , POS_DOWN )
-		ELSE
-			_SYSWIN_MSG( msg_n01r0502_pokemon_02b , POS_DOWN )
-		ENDIF
-    _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
-        
-	CASE SCR_WILD_BTL_RET_CAPTURE THEN
-	//捕まえた場合
-
-		_FLAG_SET( FE_PACKAGE_POKE_GET )
-
-	ENDSWITCH
-
 _RET
 
 //--------------------------------------------------------------------
@@ -1967,6 +1976,26 @@ sub_legend_add_loop:
 
   _RET
 }
+
+/**************************************************************/
+/*    手持ちとボックスが一杯か？チェック  */
+/**************************************************************/
+sub_empty_check:
+{
+  DEFINE_LOCAL  LWK_BOX_COUNT
+  DEFINE_LOCAL  LWK_TEMTOTI_COUNT
+  _GET_BOX_POKE_COUNT( LWK_BOX_COUNT, POKECOUNT_MODE_EMPTY )
+  _DEBUG_PRINT_WK( LWK_BOX_COUNT )
+  _GET_PARTY_POKE_COUNT( LWK_TEMTOTI_COUNT, POKECOUNT_MODE_EMPTY )
+  _DEBUG_PRINT_WK( LWK_TEMTOTI_COUNT )
+  IF $LWK_TEMTOTI_COUNT == 0 && $LWK_BOX_COUNT == 0 THEN
+    $SCWK_ANSWER = TRUE
+  ELSE
+    $SCWK_ANSWER = FALSE
+  ENDIF
+  _DEBUG_PRINT_WK( SCWK_ANSWER )
+}
+_RET
 
 /**************************************************************/
 /*		ボール投げる演出			  */
