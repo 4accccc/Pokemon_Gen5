@@ -2596,8 +2596,12 @@ static void DrawAnswerMarker( const RRG_WORK* work )
   GXRgb color;
   const RESEARCH_DATA* data;
 
-  // 未解析 or 更新中は表示しない
-  if( (work->analyzeFlag == FALSE) || (work->updateFlag == TRUE) ) { return; }
+  // 未解析 or 更新中 or 調査人数０なら表示しない
+  if( (work->analyzeFlag == FALSE) || 
+      (work->updateFlag == TRUE) || 
+      (GetCountOfQuestion(work) == 0) ) {
+    return; 
+  }
 
   // 表示中の回答のカラーを取得
   data = &(work->researchData);
