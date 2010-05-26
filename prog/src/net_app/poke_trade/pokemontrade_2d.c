@@ -2290,9 +2290,11 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
     
     if(bMain){
       prm.draw_type = CLSYS_DRAW_MAIN;
+      prm.pltt_line = PLTID_OBJ_POKERUS_M;
     }
     else{
       prm.draw_type = CLSYS_DRAW_SUB;
+      prm.pltt_line = PLTID_OBJ_POKERUS_S;
     }
     prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
     prm.arc_id    = APP_COMMON_GetArcId();
@@ -2300,7 +2302,6 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
     prm.ncg_id    = APP_COMMON_GetStatusIconCharArcIdx();
     prm.cell_id   = APP_COMMON_GetStatusIconCellArcIdx( APP_COMMON_MAPPING_128K );
     prm.anm_id    = APP_COMMON_GetStatusIconAnimeArcIdx( APP_COMMON_MAPPING_128K );
-    prm.pltt_line = PLTID_OBJ_POKEITEM_S;
     prm.pltt_src_ofs = 0;
     prm.pltt_src_num = 1;
     

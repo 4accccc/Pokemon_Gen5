@@ -156,7 +156,7 @@ typedef enum
 #define PLTID_OBJ_TYPEICON_M (8) // //3本
 #define PLTID_OBJ_BALLICON_M (12)  // 1本使用
 #define PLTID_OBJ_POKESTATE_M (13) //
-#define PLTID_OBJ_POKERUS_M (15) //
+#define PLTID_OBJ_POKERUS_M (0) //
 #define PLTID_OBJ_DEMO_M (7)
 #define PLTID_OBJ_POKEITEM_M (6)
 #define PLTID_OBJ_BALLICON_M_L (5)  // 1本使用
@@ -170,6 +170,7 @@ typedef enum
 #define _TOUCHBAR_OBJ_PALPOS  (0)  //タッチバーのパレット
 #define _OBJPLT_COMMON_OFFSET (0)   //アプリケーションメニュ
 #define _OBJPLT_COMMON  (TOUCHBAR_OBJ_PLT_NUM)  //サブ画面OBJパレット下画面バー 3本
+#define PLTID_OBJ_POKERUS_S (0xb) //
 #define PLTID_OBJ_POKEITEM_S (0xc) //
 #define PLTID_OBJ_BALLICON_S (0xd)  // 1本使用
 
