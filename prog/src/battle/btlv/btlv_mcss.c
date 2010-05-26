@@ -37,7 +37,9 @@
 #define BTLV_MCSS_ORTHO_SCALE_MINE  ( FX32_ONE * 16 * 2 )
 #define BTLV_MCSS_ORTHO_SCALE_ENEMY ( FX32_ONE * 16 * 1 )
 
-#define BTLV_MCSS_STOP_ANIME_TIME   ( 64 )
+#define BTLV_MCSS_STOP_ANIME_TIME1   ( 48 )
+#define BTLV_MCSS_STOP_ANIME_TIME2   ( 56 )
+#define BTLV_MCSS_STOP_ANIME_TIME3   ( 64 )
 #define BTLV_MCSS_STOP_ANIME_COUNT  ( 3 )
 
 #define BTLV_MCSS_NO_INDEX  ( -1 )
@@ -2293,10 +2295,13 @@ static  void  TCB_BTLV_MCSS_StopAnime( GFL_TCB *tcb, void *work )
 
   switch( bmsa->seq_no ){
   case 0:
-    NNS_G2dStopAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->btlv_mcss[ index ].mcss ) ) );
-    MCSS_SetTraverseMCNodesCallBack( bmw->btlv_mcss[ index ].mcss, ANIME_STOP_FLAG | index, BTLV_MCSS_CallBackNodes );
-    bmsa->seq_no++;
-    bmsa->wait = BTLV_MCSS_STOP_ANIME_TIME;
+    { 
+      static  u8  time[ 3 ] = { BTLV_MCSS_STOP_ANIME_TIME1, BTLV_MCSS_STOP_ANIME_TIME2, BTLV_MCSS_STOP_ANIME_TIME3 };
+      NNS_G2dStopAnimCtrl( NNS_G2dGetMCAnimAnimCtrl( MCSS_GetAnimCtrl( bmw->btlv_mcss[ index ].mcss ) ) );
+      MCSS_SetTraverseMCNodesCallBack( bmw->btlv_mcss[ index ].mcss, ANIME_STOP_FLAG | index, BTLV_MCSS_CallBackNodes );
+      bmsa->seq_no++;
+      bmsa->wait = time[ GFL_STD_MtRand( 3 ) ];
+    }
     break;
   case 1:
     if( ( --bmsa->wait == 0 ) ||
