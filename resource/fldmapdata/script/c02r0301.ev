@@ -280,7 +280,7 @@ EVENT_START   ev_c02r0301_poke_01
 	
 	//White‚È‚çƒ`ƒ…ƒŠƒl
 	ELSE
-		_EASY_TALK_POKEVOICE( MONSNO_533, msg_c02r0301_poke_01w )
+		_EASY_TALK_POKEVOICE( MONSNO_517, msg_c02r0301_poke_01w )
 	ENDIF
 
 EVENT_END
