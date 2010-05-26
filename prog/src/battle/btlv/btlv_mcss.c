@@ -2477,13 +2477,9 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
     return;
   }
 
+  if( GFL_STD_MtRand0( bmw->btlv_mcss[ index ].stop_anime_count-- ) != 0 )
   { 
-    u32 rand = GFL_STD_MtRand0( bmw->btlv_mcss[ index ].stop_anime_count-- );
-    SOGABE_Printf("rand:%d\n",rand);
-    if( rand )
-    { 
-      return;
-    }
+    return;
   }
   bmw->btlv_mcss[ index ].stop_anime_count = BTLV_MCSS_STOP_ANIME_COUNT;
 
