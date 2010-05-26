@@ -296,8 +296,9 @@ static void make_PokePara(
       u16 eomCode = GFL_STR_GetEOMCode();
       DEBUG_STRBUF *d_strbuf = (DEBUG_STRBUF*)nick_name;
       const STRCODE *sz = src->nickname;
-      
-      OS_TPrintf( " SetStringCode ... " );
+#ifdef DEBUG_BSW_PRINT      
+      KAGAYA_Printf( " SetStringCode ... " );
+#endif
       d_strbuf->strlen = 0;
       
       while( *sz != eomCode )
@@ -309,12 +310,15 @@ static void make_PokePara(
           break;
         }
         
-        OS_TPrintf("%04x,", *sz);
+#ifdef DEBUG_BSW_PRINT      
+        KAGAYA_Printf("%04x,", *sz);
+#endif
         d_strbuf->buffer[ d_strbuf->strlen++ ] = *sz++;
       }
       
-      OS_TPrintf( "\n" );
-      
+#ifdef DEBUG_BSW_PRINT      
+      KAGAYA_Printf( "\n" );
+#endif      
       d_strbuf->buffer[d_strbuf->strlen] = eomCode;
     }
     */
@@ -561,8 +565,9 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   if( dst->multiMode == BTL_MULTIMODE_PA_AA ) //AIマルチ
   { //AIパートナー設定
     client = BTL_CLIENT_PARTNER;
+#ifdef DEBUG_BSW_PRINT      
     KAGAYA_Printf( "パートナーNo.%d\n", wk->partner );
-    
+#endif    
     //トレーナーデータ
     tr_data = dst->tr_data[client];
     
@@ -887,8 +892,9 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
   { //AIパートナー設定
     client = BTL_CLIENT_PARTNER;
     
+#ifdef DEBUG_BSW_PRINT      
     KAGAYA_Printf( "パートナーNo.%d\n", wk->partner );
-
+#endif
     //トレーナーデータ
     dst->tr_data[client] = create_BSP_TRAINER_DATA( HEAPID_PROC );
     tr_data = dst->tr_data[client];
@@ -966,7 +972,10 @@ u16 BTowerComm_RecvPlayerData(FIELDSYS_WORK* fsys,const u16* recv_buf)
 
   wk->partner = 5+wk->pare_sex;
 
-  OS_Printf("sio multi mem = %d,%d:%d,%d\n",wk->mem_poke[0],wk->mem_poke[1],wk->pare_poke[0],wk->pare_poke[1]);
+#ifdef DEBUG_BSW_PRINT      
+  KAGAYA_Printf("sio multi mem = %d,%d:%d,%d\n",wk->mem_poke[0],wk->mem_poke[1],wk->pare_poke[0],wk->pare_poke[1]);
+#endif
+
   if(  wk->mem_poke[0] == wk->pare_poke[0] ||
     wk->mem_poke[0] == wk->pare_poke[1]){
     ret += 1;
@@ -991,14 +1000,16 @@ u16  BTowerComm_RecvTrainerData(FIELDSYS_WORK* fsys,const u16* recv_buf)
   }
 
   MI_CpuCopy8(recv_buf,wk->trainer,BSUBWAY_STOCK_TRAINER_MAX*2);
-  OS_Printf("sio multi trainer01 = %d,%d:%d,%d\n",
+#ifdef DEBUG_BSW_PRINT      
+  KAGAYA_Printf("sio multi trainer01 = %d,%d:%d,%d\n",
       wk->trainer[0],wk->trainer[1],wk->trainer[2],wk->trainer[3]);
-  OS_Printf("sio multi trainer02 = %d,%d:%d,%d\n",
+  KAGAYA_Printf("sio multi trainer02 = %d,%d:%d,%d\n",
       wk->trainer[4],wk->trainer[5],wk->trainer[6],wk->trainer[7]);
-  OS_Printf("sio multi trainer03 = %d,%d:%d,%d\n",
+  KAGAYA_Printf("sio multi trainer03 = %d,%d:%d,%d\n",
       wk->trainer[8],wk->trainer[9],wk->trainer[10],wk->trainer[11]);
-  OS_Printf("sio multi trainer04 = %d,%d\n",
+  KAGAYA_Printf("sio multi trainer04 = %d,%d\n",
       wk->trainer[12],wk->trainer[13]);
+#endif
   return 1;
 }
 
@@ -1012,8 +1023,9 @@ u16  BTowerComm_RecvRetireSelect(FIELDSYS_WORK* fsys,const u16* recv_buf)
 {
   int i;
   BSUBWAY_SCRWORK* wk = fsys->btower_wk;
-
-  OS_Printf("sio multi retire = %d,%d\n",wk->retire_f,recv_buf[0]);
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf("sio multi retire = %d,%d\n",wk->retire_f,recv_buf[0]);
+#endif
   if(wk->retire_f || recv_buf[0]){
     return 1;
   }
@@ -1039,7 +1051,9 @@ void BTowerComm_SendPlayerData(BSUBWAY_SCRWORK* wk,SAVEDATA *sv)
   }
 
   //ここはBSWAY_MODE_COMM_MULTI専用
-  OS_Printf( "wk->play_mode = %d\n", wk->play_mode );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "wk->play_mode = %d\n", wk->play_mode );
+#endif
   wk->send_buf[3] =
     TowerScoreData_SetStage(wk->scoreSave,BSWAY_MODE_COMM_MULTI,BSWAY_DATA_get);
 }
@@ -1136,8 +1150,10 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
   s16 boss_no = -1;
   const u16 *tbl;
   
-  OS_Printf( "BSW GET TRAINER NO stage = %d round = %d\n", stage, round );
-  
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSW GET TRAINER NO stage = %d round = %d\n", stage, round );
+#endif
+
   switch( play_mode ) //スーパーモードか？
   {
   case BSWAY_MODE_S_SINGLE:
@@ -1294,8 +1310,9 @@ u16 BSUBWAY_SCRWORK_GetTrainerNo(
       no = tbl[0] + (get_Rand(wk) % no);
     }
   }
-  
-  OS_Printf( "BSW GET TRAINER NO GET NUM = %d\n", no );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSW GET TRAINER NO GET NUM = %d\n", no );
+#endif
   return no;
 }
 
@@ -1341,12 +1358,14 @@ static BSUBWAY_TRAINER_ROM_DATA * alloc_TrainerRomData(
   //wbでは存在していないタイプを書き換え
   #if 0
   if( check_TrainerType(trd->tr_type) == FALSE ){
-    OS_Printf( "BSUBWAY ERROR TRAINER TYPE" );
+    KAGAYA_Printf( "BSUBWAY ERROR TRAINER TYPE" );
     tr_data->bt_trd.tr_type = TRTYPE_TANPAN;
   }
   #endif
   
-  OS_Printf( "BSUBWAY allocTrainerRomData NameNo = %d\n", tr_no );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSUBWAY allocTrainerRomData NameNo = %d\n", tr_no );
+#endif
 
   name = GFL_MSG_CreateString( msgdata, tr_no );
   GFL_STR_GetStringCode( name,
@@ -1456,9 +1475,6 @@ static u32 make_PokemonParam(
     }while((prd_s.chr!=get_PokeSeikaku(personal_rnd))||(
           POKETOOL_CheckRare(poke_id,personal_rnd)==TRUE));
 #endif
-    //OS_Printf( "決定したpersonal_rnd = %d\n", personal_rnd );
-    //OS_Printf( "get_PokeSeikaku = %d\n",get_PokeSeikaku(personal_rnd) );
-    //OS_Printf( "レアじゃないか = %d\n", PokeRareGetPara(poke_id,personal_rnd) );
     pwd->personal_rnd=personal_rnd;
   }else{
     pwd->personal_rnd = poke_rnd;  //0でなければ引数の値を使用
@@ -1788,15 +1804,17 @@ static BSUBWAY_TRAINER_ROM_DATA * get_TrainerRomData(
     u16 tr_no, HEAPID heapID )
 {
   tr_no += BSW_TR_ARCDATANO_ORG;
-  OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
+#endif
   return GFL_ARC_UTIL_Load( ARCID_BSW_TR, tr_no, 0, heapID );
 }
 #endif
 #if 0 //old gs
 static void * get_TrainerRomData( u16 tr_no, HEAPID heapID )
 {
-#ifdef DEBUG_ONLY_FOR_kagaya
-  OS_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSUBWAY load TrainerRomData Num = %d\n", tr_no );
 #endif
   //AIマルチ限定なのでプラチナ！
   return GFL_ARC_UTIL_Load( ARCID_PL_BTD_TR, tr_no, 0, heapID );
@@ -1815,7 +1833,9 @@ static void get_PokemonRomData(
     BSUBWAY_POKEMON_ROM_DATA *prd, int index)
 {
 //  index += BSW_PM_ARCDATANO_ORG;
-  OS_Printf( "BSUBWAY load PokemonRomData Num = %d\n", index );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "BSUBWAY load PokemonRomData Num = %d\n", index );
+#endif
   GFL_ARC_LoadData( (void*)prd, ARCID_BSW_PD, index );
 }
 

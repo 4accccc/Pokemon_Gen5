@@ -294,10 +294,12 @@ u16 BSUBWAY_SCRWORK_CommReceivePlayerData(
   bsw_scr->pare_stage_no = recv_buf[3];
   
   bsw_scr->partner = 5 + bsw_scr->pare_sex;
-  
-  OS_Printf( "sio multi mem = %d,%d:%d,%d\n",
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "sio multi mem = %d,%d:%d,%d\n",
       bsw_scr->mem_poke[0], bsw_scr->mem_poke[1],
       bsw_scr->pare_poke[0], bsw_scr->pare_poke[1] );
+#endif
 
   if( bsw_scr->mem_poke[0] == bsw_scr->pare_poke[0] ||
       bsw_scr->mem_poke[0] == bsw_scr->pare_poke[1]){
@@ -328,19 +330,21 @@ u16 BSUBWAY_SCRWORK_CommReceiveTrainerData(
   }
   
   MI_CpuCopy8( recv_buf, bsw_scr->trainer, BSUBWAY_STOCK_TRAINER_MAX*2 );
-  
-  OS_Printf("sio multi trainer01 = %d,%d:%d,%d\n",
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf("sio multi trainer01 = %d,%d:%d,%d\n",
       bsw_scr->trainer[0], bsw_scr->trainer[1],
       bsw_scr->trainer[2], bsw_scr->trainer[3] );
-  OS_Printf("sio multi trainer02 = %d,%d:%d,%d\n",
+  KAGAYA_Printf("sio multi trainer02 = %d,%d:%d,%d\n",
       bsw_scr->trainer[4], bsw_scr->trainer[5],
       bsw_scr->trainer[6], bsw_scr->trainer[7] );
-  OS_Printf("sio multi trainer03 = %d,%d:%d,%d\n",
+  KAGAYA_Printf("sio multi trainer03 = %d,%d:%d,%d\n",
       bsw_scr->trainer[8], bsw_scr->trainer[9],
       bsw_scr->trainer[10], bsw_scr->trainer[11] );
-  OS_Printf("sio multi trainer04 = %d,%d\n",
+  KAGAYA_Printf("sio multi trainer04 = %d,%d\n",
       bsw_scr->trainer[12], bsw_scr->trainer[13] );
-  
+#endif
+
   return( 1 );
 }
 
@@ -356,8 +360,10 @@ u16 BSUBWAY_SCRWORK_CommReceiveTrainerData(
 u16 BSUBWAY_SCRWORK_CommReceiveRetireSelect(
     BSUBWAY_SCRWORK *bsw_scr, const u16 *recv_buf )
 {
-  OS_Printf( "sio multi retire = %d,%d\n",
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "sio multi retire = %d,%d\n",
       bsw_scr->retire_f, recv_buf[0] );
+#endif
   
   if( bsw_scr->retire_f || recv_buf[0] ){
     return( 1 );
@@ -392,7 +398,9 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
   }
   
   //ここはBTWR_MODE_COMM_MULTI専用
-  OS_Printf( "bsw_scr->play_mode = %d\n", bsw_scr->play_mode );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "bsw_scr->play_mode = %d\n", bsw_scr->play_mode );
+#endif
   
   bsw_scr->send_buf[3] = BSUBWAY_SCOREDATA_GetStageNo_Org0(
       bsw_scr->scoreData, bsw_scr->play_mode );
@@ -464,10 +472,12 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
     GF_ASSERT( 0 );
     return( FALSE );
   }
-  
-  OS_Printf( "bsubway comn send : cmdNo(%d) buf 0:%d, 1:%d, 2:%d\n",
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "bsubway comn send : cmdNo(%d) buf 0:%d, 1:%d, 2:%d\n",
       command-GFL_NET_CMD_BSUBWAY,
       bsw_scr->send_buf[0], bsw_scr->send_buf[1], bsw_scr->send_buf[2] );
+#endif
   
 //  BSUBWAY_COMM_AddCommandTable( bsw_scr );
   
@@ -475,7 +485,9 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),
         command,size,bsw_scr->send_buf) == TRUE ){
-    OS_Printf( "通信マルチデータ送信完了\n" );
+#ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "通信マルチデータ送信完了\n" );
+#endif
     return( TRUE );
   }
   
@@ -551,17 +563,23 @@ BOOL EvCmdBattleTowerRecvBuf(VM_MACHINE* core)
   u16  mode;
   BTOWER_SCRWORK* wk = core->fsys->btower_wk;
 
-  OS_Printf( "通信マルチデータ受信\n" );
-
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "通信マルチデータ受信\n" );
+#endif
+  
   mode = VMGetWorkValue(core);
   retwk_id = VMGetU16(core);
   
   //自分、相手のどちらかがDPの時は、DPの通信処理
   if( Frontier_CheckDPRomCode(core->fsys->savedata) == 1 ){
-    OS_Printf( "DPの形式の通信処理\n" );
+#ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "DPの形式の通信処理\n" );
+#endif
     EventCmd_BTowerSioRecvBuf(core->fsys->event,mode,retwk_id);
   }else{
-    OS_Printf( "PLの形式の通信処理\n" );
+#ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "PLの形式の通信処理\n" );
+#endif
     wk->ret_wkno = retwk_id;
     wk->mode = mode;
     VM_SetWait( core, EvWaitBattleTowerRecvBuf );
@@ -609,9 +627,11 @@ BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
   int size;
   
   size = (BSUBWAY_STOCK_TRAINER_MAX * 2);
-  
-  OS_Printf( "WIFI受付 バトルサブウェイ　トレーナーNoを送信した\n" );
-  
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　トレーナーNoを送信した\n" );
+#endif
+
   MI_CpuCopy8( bsw_scr->trainer, bsw_scr->send_buf, size );
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),
@@ -619,18 +639,20 @@ BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
     ret = TRUE;
   }
   
-  OS_Printf( "send sio multi trainer01 = %d,%d:%d,%d\n",
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "send sio multi trainer01 = %d,%d:%d,%d\n",
         bsw_scr->trainer[0], bsw_scr->trainer[1],
         bsw_scr->trainer[2], bsw_scr->trainer[3] );
-  OS_Printf(  "send sio multi trainer02 = %d,%d:%d,%d\n",
+  KAGAYA_Printf(  "send sio multi trainer02 = %d,%d:%d,%d\n",
         bsw_scr->trainer[4], bsw_scr->trainer[5],
         bsw_scr->trainer[6], bsw_scr->trainer[7] );
-  OS_Printf(  "send sio multi trainer03 = %d,%d:%d,%d\n",
+  KAGAYA_Printf(  "send sio multi trainer03 = %d,%d:%d,%d\n",
         bsw_scr->trainer[8], bsw_scr->trainer[9],
         bsw_scr->trainer[10], bsw_scr->trainer[11] );
-  OS_Printf(  "send sio multi trainer04 = %d,%d\n",
+  KAGAYA_Printf(  "send sio multi trainer04 = %d,%d\n",
         bsw_scr->trainer[12], bsw_scr->trainer[13] );
-  
+#endif
+
   return ret;
 }
 
@@ -655,17 +677,21 @@ static void commCmd_RecvBufPlayerData(
   u16 ret;
   BSUBWAY_SCRWORK *bsw_scr = pWork;
   const u16 *recv_buf = pData;
-  
-  OS_Printf( "WIFI受付 バトルサブウェイ　プレイヤーデータを受信\n" );
-  OS_Printf( "netID = %d\n", netID );
-  
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　プレイヤーデータを受信\n" );
+  KAGAYA_Printf( "netID = %d\n", netID );
+#endif
+
   ret = 0;
   num = 0;
   bsw_scr->comm_receive_count++;
-  
-  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
-      bsw_scr->comm_receive_count );
 
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
+#endif
+  
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
     return;
@@ -677,11 +703,13 @@ static void commCmd_RecvBufPlayerData(
   bsw_scr->pare_stage_no = recv_buf[3];
   
   bsw_scr->partner = 5 + bsw_scr->pare_sex;
-  
-  OS_Printf( "sio multi mem = %d,%d:%d,%d\n",
+
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "sio multi mem = %d,%d:%d,%d\n",
       bsw_scr->mem_poke[0], bsw_scr->mem_poke[1],
       bsw_scr->pare_poke[0], bsw_scr->pare_poke[1] );
-  
+#endif
+
   if( bsw_scr->mem_poke[0] == bsw_scr->pare_poke[0] ||
       bsw_scr->mem_poke[0] == bsw_scr->pare_poke[1]){
     ret += 1;
@@ -716,16 +744,20 @@ static void commCmd_FrWiFiCounterTowerRecvBufTrainerData(
   int num;
   BSUBWAY_SCRWORK *bsw_scr = pWork;
   const u16 *recv_buf = pData;
-  
-  OS_Printf( "WIFI受付 バトルサブウェイ　トレーナーNoを受信した\n" );
-  OS_Printf( "id_no = %d\n", netID );
-  OS_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
-  
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　トレーナーNoを受信した\n" );
+  KAGAYA_Printf( "id_no = %d\n", netID );
+  KAGAYA_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
+#endif
+
   num = 0;
   bsw_scr->comm_receive_count++;
 
-  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
       bsw_scr->comm_receive_count );
+#endif
   
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
@@ -738,18 +770,20 @@ static void commCmd_FrWiFiCounterTowerRecvBufTrainerData(
   }
   
   MI_CpuCopy8( recv_buf, bsw_scr->trainer, BSUBWAY_STOCK_TRAINER_MAX*2 );
-  
-  OS_Printf( "recv sio multi trainer01 = %d,%d:%d,%d\n",
+
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "recv sio multi trainer01 = %d,%d:%d,%d\n",
         bsw_scr->trainer[0], bsw_scr->trainer[1],
         bsw_scr->trainer[2], bsw_scr->trainer[3] );
-  OS_Printf(  "recv sio multi trainer02 = %d,%d:%d,%d\n",
+  KAGAYA_Printf(  "recv sio multi trainer02 = %d,%d:%d,%d\n",
         bsw_scr->trainer[4], bsw_scr->trainer[5],
         bsw_scr->trainer[6], bsw_scr->trainer[7] );
-  OS_Printf(  "recv sio multi trainer03 = %d,%d:%d,%d\n",
+  KAGAYA_Printf(  "recv sio multi trainer03 = %d,%d:%d,%d\n",
         bsw_scr->trainer[8], bsw_scr->trainer[9],
         bsw_scr->trainer[10], bsw_scr->trainer[11] );
-  OS_Printf(  "recv sio multi trainer04 = %d,%d\n",
+  KAGAYA_Printf(  "recv sio multi trainer04 = %d,%d\n",
         bsw_scr->trainer[12], bsw_scr->trainer[13] );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -771,24 +805,30 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   int num;
   BSUBWAY_SCRWORK *bsw_scr = pWork;
   const u16 *recv_buf = pData;
-  
-  OS_Printf( "WIFI受付 バトルサブウェイ　リタイア結果を受信\n" );
-  OS_Printf( "id_no = %d, result = %d\n", netID, recv_buf[0] );
-  
+
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　リタイア結果を受信\n" );
+  KAGAYA_Printf( "id_no = %d, result = %d\n", netID, recv_buf[0] );
+#endif
+
   num = 0;
   bsw_scr->comm_check_work = 0;
   bsw_scr->comm_receive_count++;
 
-  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
       bsw_scr->comm_receive_count );
-
+#endif
+  
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
     return;
   }
-    
-  OS_Printf( "sio multi retire = %d,%d\n",
+
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "sio multi retire = %d,%d\n",
       bsw_scr->retire_f, recv_buf[0] );
+#endif
   
   if( bsw_scr->retire_f || recv_buf[0] ){
     bsw_scr->comm_check_work = 1;
@@ -812,17 +852,21 @@ static void commCmd_FrRecvMyStatusData(
   int num;
   BSUBWAY_SCRWORK *bsw_scr = pWork;
   const u16 *recv_buf = pData;
-  
-  OS_Printf( "WIFI受付 バトルサブウェイ　MYSTATUSを受信した\n" );
-  OS_Printf( "id_no = %d\n", netID );
-  OS_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
+
+#ifdef DEBUG_BSW_PRINT 
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　MYSTATUSを受信した\n" );
+  KAGAYA_Printf( "id_no = %d\n", netID );
+  KAGAYA_Printf( "自分id = %d\n", GFL_NET_SystemGetCurrentID() );
+#endif
   
   num = 0;
   bsw_scr->comm_receive_count++;
 
-  OS_Printf( "bsw_scr->comm_receive_count = %d\n",
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
       bsw_scr->comm_receive_count );
-  
+#endif
+
   //自分のデータは受け取らない
   if( GFL_NET_SystemGetCurrentID() == netID ){
     return;

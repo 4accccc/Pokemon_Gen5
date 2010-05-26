@@ -329,8 +329,10 @@ void BSUBWAY_SCRWORK_LoadPokemonMember(
   party = BSUBWAY_SCRWORK_GetPokePartyUse( bsw_scr );
   
   for( i = 0; i < bsw_scr->member_num; i++ ){ //選択ポケモン手持ちNo
+#ifdef DEBUG_BSW_PRINT
     KAGAYA_Printf( "BSW LOAD POKEMON MEMBER [%d] = %d\n",
         i, bsw_scr->member[i] );
+#endif
     pp = PokeParty_GetMemberPointer(
         (POKEPARTY *)party, bsw_scr->member[i] );
     bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
@@ -476,8 +478,9 @@ void BSUBWAY_SCRWORK_SetLoseScore(
   SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
   RECORD *record = SaveControl_DataPtrGet( save, GMDATA_ID_RECORD );
   
-  OS_Printf( "TowerLoseScoreSet -> mode = %d\n", bsw_scr->play_mode );
-  
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "TowerLoseScoreSet -> mode = %d\n", bsw_scr->play_mode );
+#endif  
   id = bsw_scr->play_mode * 2 + RECID_RENSHOU_SINGLE;
   
   BSUBWAY_SCOREDATA_ResetRenshou( bsw_scr->scoreData, bsw_scr->play_mode );
@@ -1179,8 +1182,10 @@ static BOOL is_ConflictTrainer( u16 * trainer, u16 id, u16 num )
 
   for( i = 0;i < num;i++){
     if( trainer[i] == id ){
-      OS_Printf( "BSW is_ConflictTrainer() CONFLICT!! : " );
-      OS_Printf( "TR NO = %d : DATA NO = %d : HIT NO = %d\n", id, num, i );
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf( "BSW is_ConflictTrainer() CONFLICT!! : " );
+      KAGAYA_Printf( "TR NO = %d : DATA NO = %d : HIT NO = %d\n", id, num, i );
+#endif
       return TRUE;
     }
   }
@@ -1298,7 +1303,9 @@ void BSUBWAY_SCRWORK_BtlTrainerNoSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 #ifdef BSUBWAY_AUTO_DEB
 #if 0
       wk->trainer[i] = DebugBTowerAutoTrainer;
-      OS_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#endif
       if( DebugBTowerAutoTrainer++ >= 299){
         DebugBTowerAutoTrainer = 0;
         DebugBTowerAutoStage++;
@@ -1308,7 +1315,9 @@ void BSUBWAY_SCRWORK_BtlTrainerNoSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
       if( DebugBTowerAutoTrainer++ >= 299){
         DebugBTowerAutoStage++;
       }
-      OS_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#endif
 #else    
       wk->trainer[i] = no;
 #endif
@@ -1321,7 +1330,9 @@ void BSUBWAY_SCRWORK_BtlTrainerNoSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
 #ifdef BSUBWAY_AUTO_DEB
 #if 0
       wk->trainer[i] = DebugBTowerAutoTrainer;
-      OS_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#endif
       if( DebugBTowerAutoTrainer++ >= 299){
         DebugBTowerAutoTrainer = 0;
         DebugBTowerAutoStage++;
@@ -1330,7 +1341,9 @@ void BSUBWAY_SCRWORK_BtlTrainerNoSet( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
       if( DebugBTowerAutoTrainer++ >= 299){
         DebugBTowerAutoStage++;
       }
-      OS_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf(" #TowerStage = %d,%d\n",DebugBTowerAutoStage,DebugBTowerAutoTrainer );
+#endif
       wk->trainer[i] = 25;//no;
 #else    
       wk->trainer[i] = no;
@@ -1433,8 +1446,6 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
     return;
   }
   
-//  OS_Printf("TowerClearScoreSet -> mode = %d\n",wk->play_mode );
-//
 #if 0  
   record = SaveData_GetRecord( savedata );
   frontier = SaveData_GetFrontier( savedata );
@@ -1490,8 +1501,10 @@ void BSUBWAY_SCRWORK_SetClearScore( BSUBWAY_SCRWORK *wk, GAMESYS_WORK *gsys )
   //7+7=14勝利(勝ち終わり)
   //7+3=10勝利(負け終わり)
   //0+3=3勝利(負け終わり)
-  OS_Printf( "wk->renshou = %d\n", wk->renshou );
-  OS_Printf( "wk->now_win = %d\n", wk->now_win );
+#ifdef DEBUG_BSW_PRINT
+  KAGAYA_Printf( "wk->renshou = %d\n", wk->renshou );
+  KAGAYA_Printf( "wk->now_win = %d\n", wk->now_win );
+#endif
   ret = FrontierRecord_Set( frontier,id+1,Frontier_GetFriendIndex( id+1),( wk->renshou+wk->now_win ));
 #endif
 
@@ -1706,9 +1719,10 @@ u16 BSUBWAY_SCRWORK_AddBtlPoint( BSUBWAY_SCRWORK *wk )
 #if 0
     //WIFI(32人データがあるので、周回数ワークが足りないため、連勝数から周回数を算出する
     }else if( wk->play_mode == BSWAY_MODE_WIFI_MULTI ){
-
-      OS_Printf( "wk->renshou = %d\n", wk->renshou );
-      OS_Printf( "wk->now_win = %d\n", wk->now_win );
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf( "wk->renshou = %d\n", wk->renshou );
+      KAGAYA_Printf( "wk->now_win = %d\n", wk->now_win );
+#endif
       stage = ( wk->renshou / 7 );
       if( stage >= 7){                //この比較文はDPと合わせる
         point = BTLPOINT_VAL_TOWER_COMM8;
@@ -2097,7 +2111,9 @@ u16  btower_rand( BSUBWAY_SCRWORK *wk )
 
   wk->play_rnd_seed = BtlTower_PlayFixRand( wk->play_rnd_seed );
 
-  OS_Printf("btower_rand = %d\n",wk->play_rnd_seed );
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf("btower_rand = %d\n",wk->play_rnd_seed );
+#endif
   return ( wk->play_rnd_seed/65535);
 }
 #endif

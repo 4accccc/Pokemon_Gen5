@@ -5285,7 +5285,7 @@ void DEBUG_MMDL_PrintState(
     OS_TPrintf( "%s\n", f_str );
   }
   
-  OS_TPrintf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d : EV TYPE %d EV FLAG %d : PARAM 0(%d) 1(%d) 2(%d)\n",
+  D_MMDL_Printf( "MMDL ID %d : CODE %xH : MOVE CODE =%xH : DIR %d : GX = %d GY = %d GZ = %d : EV TYPE %d EV FLAG %d : PARAM 0(%d) 1(%d) 2(%d)\n",
       MMDL_GetOBJID(mmdl),
       MMDL_GetOBJCode(mmdl),
       MMDL_GetMoveCode(mmdl),

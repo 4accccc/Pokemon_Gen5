@@ -34,9 +34,6 @@
 #include "event_fldmmdl_control.h"
 #include "fldmmdl_code.h"
 
-#define SCRCMD_PL_NULL
-
-
 //======================================================================
 ///	動作モデル監視に使用するインライン関数定義
 //======================================================================
@@ -88,16 +85,14 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
   case 0:
     {
       MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
-      MMDL *fmmdl = NULL;  //とりあえず
-      //MMDL *player = PlayerGetMMdl( work );
-      MMDL *player = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
+      MMDL *fmmdl = NULL;
+      MMDL *player = MMDLSYS_SearchMMdlPlayer( fmmdlsys );
       MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
-      
-#ifndef SCRCMD_PL_NULL
+      #if 0 
       MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
-#else
+      #else
       MMDL *other_pair = NULL;
-#endif
+      #endif
 
       InitStepWatchBit(opaw);
       MMDLSYS_PauseMoveProc( fmmdlsys );
@@ -115,7 +110,7 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       }
 
       if( player_pair ){
-        #ifndef SCRCMD_PL_NULL
+        #if 0 
         if( SysFlag_PairCheck(SaveData_GetEventWork(fsys->savedata)) == 1
             && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
           SetStepWatchBit(opaw, PLAYER_PAIR_BIT);
@@ -133,16 +128,13 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
         }
       }
       ++ *seq;
-
     }
     break;
-
   case 1:
     {
       	MMDLSYS *fmmdlsys = FIELDMAP_GetMMdlSys( fieldmap );
-        MMDL *fmmdl = NULL;  //とりあえず
-        //MMDL *player = PlayerGetMMdl( work );
-        MMDL *player = MMDLSYS_SearchOBJID( fmmdlsys, MMDL_ID_PLAYER );
+        MMDL *fmmdl = NULL;
+        MMDL *player = MMDLSYS_SearchMMdlPlayer( fmmdlsys );
         MMDL *player_pair = MMDLSYS_SearchMoveCode( fmmdlsys, MV_PAIR );
         
      	//自機動作停止チェック
@@ -171,7 +163,7 @@ static GMEVENT_RESULT EVENTFUNC_ObjPauseAll(GMEVENT * event, int *seq, void*work
       
       //話しかけ対象の連れ歩き動作停止チェック
       if( CheckStepWatchBit(opaw, OTHER_PAIR_BIT) ){
-        #ifndef SCRCMD_PL_NULL
+        #if 0
         MMDL *other_pair = FieldOBJ_MovePairSearch(*fldobj);
         if (FieldOBJ_StatusBitCheck_Move(other_pair) == 0) {
           FieldOBJ_MovePause(other_pair);
@@ -249,8 +241,8 @@ static GMEVENT_RESULT EVENTFUNC_ObjAnime( GMEVENT * event, int *seq, void*work)
     //エラーチェック
     if( fmmdl == NULL )
     {
-      OS_Printf( "obj_id = %d\n", oaew->obj_id );
-      GF_ASSERT( (0) && "対象のフィールドOBJのポインタ取得失敗！" );
+      GF_ASSERT_MSG( 0,
+          "対象のフィールドOBJのポインタ取得失敗 obj_id %d", oaew->obj_id );
       return GMEVENT_RES_FINISH;				//08.06.12 プラチナで追加
     }
     
@@ -623,8 +615,8 @@ static VMCMD_RESULT EvCmdObjAnime( VMHANDLE *core, void *wk )
 	
 	//エラーチェック
 	if( fmmdl == NULL ){
-		OS_Printf( "obj_id = %d\n", obj_id );
-		GF_ASSERT( (0) && "対象のフィールドOBJのポインタ取得失敗！" );
+		GF_ASSERT_MSG( 0,
+        "対象のフィールドOBJのポインタ取得失敗 obj_id %d\n", obj_id );
 		return 0;				//08.06.12 プラチナで追加
 	}
 	

@@ -1139,6 +1139,8 @@ static void IDCodeIndex_RegistCode(
     tbl++;
     i++;
   }while( i < idx->max );
+  D_MMDL_Printf(
+      "ERROR:MMDL BLACT RES MAX OBJCODE %d:RES ID %d\n", code, id );
   GF_ASSERT( 0 );
 }
 

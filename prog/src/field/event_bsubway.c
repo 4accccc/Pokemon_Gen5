@@ -204,7 +204,9 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
       break;
     }
     
+#ifdef DEBUG_BSW_PRINT    
     KAGAYA_Printf( "レギュレーション　%d\n", reg );
+#endif
     
     list->reg = (void*)PokeRegulation_LoadDataAlloc( reg, HEAPID_PROC );
     list->mode = PL_MODE_BATTLE_SUBWAY;
@@ -215,8 +217,10 @@ GMEVENT * BSUBWAY_EVENT_SetSelectPokeList(
     {
       REGULATION *pReg = list->reg;
       
+#ifdef DEBUG_BSW_PRINT    
       KAGAYA_Printf( "BSWAY REG NUM_LO = %d, HI =%d, LV = %d\n",
         pReg->NUM_LO, pReg->NUM_HI, pReg->LEVEL );
+#endif
     }
     #endif
   }
@@ -368,9 +372,11 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
     
     msg_no = bsw_scr->tr_data[tr_idx].bt_trd.appear_word[1];
 
-    OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, ROM MSG NUM %d\n",
+#ifdef DEBUG_BSW_PRINT    
+    KAGAYA_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, ROM MSG NUM %d\n",
         tr_idx, msg_no );
-    
+#endif
+
     if( msg_no >= msg_tower_trainer_max ){
       GF_ASSERT( 0 && "ERROR BSW TRAINER MSG : INDEX OVER" );
       msg_no = 0;
@@ -381,7 +387,9 @@ GMEVENT * BSUBWAY_EVENT_TrainerBeforeMsg(
   }else{ //簡易会話
     PMS_DATA *pms = (PMS_DATA*)bsw_scr->tr_data[tr_idx].bt_trd.appear_word;
     work->strBuf = PMSDAT_ToString( pms, HEAPID_PROC );
-    OS_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, KAIWA MSG\n", tr_idx );
+#ifdef DEBUG_BSW_PRINT    
+    KAGAYA_Printf( "BSW TRAINER BEFORE MSG : IDX = %d, KAIWA MSG\n", tr_idx );
+#endif
   }
   
   { //mmdl
@@ -623,13 +631,17 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
           GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL );
       GFL_NET_TimingSyncStart(
           GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING);
-      OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
+#endif
       (*seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
     if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING)){
-      OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
+#ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
+#endif
       (*seq) = SEQ_BATTLE_INIT;
     }
     break;
@@ -643,7 +655,9 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     }
     break;
   case SEQ_BATTLE_END:
-    OS_TPrintf("バトル完了\n");
+#ifdef DEBUG_BSW_PRINT    
+    KAGAYA_Printf("バトル完了\n");
+#endif
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
 #if 0    
     BattleRec_LoadToolModule();                       // 録画
@@ -771,7 +785,9 @@ static GMEVENT_RESULT bsw_CommBattleMain(
     #if 0
     BATTLE_PARAM_Delete( work->para ); //SETUP_PARAM解放はサブウェイ側で
     #endif
-    OS_TPrintf("_FIELD_OPEN\n");
+#ifdef DEBUG_BSW_PRINT    
+    KAGAYA_Printf("_FIELD_OPEN\n");
+#endif
     GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
     (*seq) ++;
     break;
@@ -1060,7 +1076,9 @@ static int BtlTower_WifiConnectWait(BTWR_WIFI_EVENT* wk,FIELDSYS_WORK* fsys)
 
 	//ステータスを取得
 	wk->ret_val = wk->app_wk->result;//param->result;
-	OS_Printf("wifi_ret_val = %d,%d\n",wk->app_wk->result,wk->ret_val);
+#ifdef DEBUG_BSW_PRINT    
+	KAGAYA_Printf("wifi_ret_val = %d,%d\n",wk->app_wk->result,wk->ret_val);
+#endif
 	//メモリ解放
 	sys_FreeMemoryEz(wk->app_wk);
 	return BTWR_WIFI_EV_EXIT;
@@ -1089,7 +1107,9 @@ static GMEVENT_RESULT BtlTowerEv_WifiConnect(
 	case BTWR_WIFI_EV_EXIT:
 		//戻り値指定
 		buf16 = GetEventWorkAdrs(fsys,wk->scr_ret_wkno);//*(wk->scr_ret_wk);
-		OS_Printf("wifi_ret_val = %d\n",wk->ret_val);
+#ifdef DEBUG_BSW_PRINT    
+		KAGAYA_Printf("wifi_ret_val = %d\n",wk->ret_val);
+#endif
 		*buf16 = wk->ret_val;
 	  return GMEVENT_RES_FINISH;
 	}
@@ -1279,7 +1299,9 @@ static GMEVENT_RESULT ev_WifiConnect( GMEVENT *ev, int *seq, void *wk )
 	case 6:
 		//戻り値指定
 		buf16 = GetEventWorkAdrs(fsys,wk->scr_ret_wkno);//*(wk->scr_ret_wk);
-		OS_Printf("wifi_ret_val = %d\n",wk->ret_val);
+#ifdef DEBUG_BSW_PRINT    
+		KAGAYA_Printf("wifi_ret_val = %d\n",wk->ret_val);
+#endif
 		*buf16 = wk->ret_val;
 		sys_FreeMemoryEz(wk);
 		return TRUE;

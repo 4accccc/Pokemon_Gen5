@@ -628,15 +628,7 @@ VMCMD_RESULT EvCmdTalkObjPauseAll( VMHANDLE *core, void *wk )
   }
 
   if( player_pair ){
-    #ifndef SCRCMD_PL_NULL
-    if( SysFlag_PairCheck(SaveData_GetEventWork(fsys->savedata)) == 1
-        && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
-      SetStepWatchBit(PLAYER_PAIR_BIT);
-      FieldOBJ_MovePauseClear( player_pair );
-    }
-    #else
     GF_ASSERT( 0 );
-    #endif
   }
   
   if( other_pair ){
@@ -672,7 +664,6 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     MMDLSYS_PauseMoveProc( fmmdlsys );
     
-    #ifndef SCRCMD_PL_NULL
     //08.06.18
     //話しかけの対象がいないBGやPOSの時
     //連れ歩きOBJの移動動作中かのチェックをしていない
@@ -700,7 +691,6 @@ static VMCMD_RESULT EvCmdObjPauseAll( VMHANDLE *core, void *wk )
         }
       }
     }
-    #endif
   }else{
     EvCmdTalkObjPauseAll( core, wk );
   }
@@ -721,36 +711,6 @@ VMCMD_RESULT SCRCMD_SUB_ObjPauseAll( VMHANDLE *core, SCRCMD_WORK *work )
     MMDLSYS *fmmdlsys;
     fmmdlsys = SCRCMD_WORK_GetMMdlSys( work );
     MMDLSYS_PauseMoveProc( fmmdlsys );
-    
-    #ifndef SCRCMD_PL_NULL
-    //08.06.18
-    //話しかけの対象がいないBGやPOSの時
-    //連れ歩きOBJの移動動作中かのチェックをしていない
-    //
-    //ふれあい広場などで、連れ歩きOBJに対して、
-    //スクリプトでアニメを発行すると、
-    //アニメが行われず終了待ちにいかないでループしてしまう
-    
-    {
-      FIELD_OBJ_PTR player_pair =
-        FieldOBJSys_MoveCodeSearch( fsys->fldobjsys, MV_PAIR );
-      //ペアが存在している
-      if (player_pair) {
-        //連れ歩きフラグが立っていて、移動動作中なら
-        if( SysFlag_PairCheck(
-          SaveData_GetEventWork(fsys->savedata)) == 1
-          && FieldOBJ_StatusBitCheck_Move(player_pair) != 0) {
-          
-          //ペアの動作ポーズ解除
-          FieldOBJ_MovePauseClear( player_pair );
-          
-          //移動動作の終了待ちをセット
-          VM_SetWait( core, EvWaitPairObj );
-          return VMCMD_RESULT_SUSPEND;
-        }
-      }
-    }
-    #endif
   }else{
     return( EvCmdTalkObjPauseAll(core,work) );
   }
