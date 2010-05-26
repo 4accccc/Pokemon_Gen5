@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-21T12:25:35"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-05-26T17:36:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1045,11 +1045,11 @@ msg_c03r0801_hint_02</comment>
 かずかずの　こんなんを　のりこえた
 わたしの　スペシャルな　ポケモンと▽
 いざ　じんじょうに　しょうぶです！▼</language>
-		<language name="JPN_KANJI" width="256">私より　強い人を　探し▼
+		<language name="JPN_KANJI" width="256">わたしより　強い人を　探し▼
 山を　こえて　谷を　こえて
 海を　こえて　ここに　来ました▼
 かずかずの　困難を　のりこえた
-私の　スペシャルな　ポケモンと▽
+わたしの　スペシャルな　ポケモンと▽
 いざ　じんじょうに　勝負です！▼</language>
 	</row>
 
@@ -1061,9 +1061,9 @@ msg_c03r0801_hint_02</comment>
 せかいは　とんでもなく　ひろいって
 わたし　きづきました！</language>
 		<language name="JPN_KANJI" width="256">世界を　渡り歩いた
-私より　強いなんて！？[BE:01:ページ切り替え（クリア）]
+わたしより　強いなんて！？[BE:01:ページ切り替え（クリア）]
 世界は　とんでもなく　広いって
-私　気づきました！</language>
+わたし　気づきました！</language>
 	</row>
 
 	<row id="msg_c03r0801_babygirl2_01" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
