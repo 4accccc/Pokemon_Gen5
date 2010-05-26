@@ -3855,7 +3855,7 @@ static AREA_DATA* Zukan_Detail_Map_AreaDataLoad( u16 monsno, HEAPID heap_id, ARC
 //#endif
 
 #if 0
-  // 仮データ
+  // テストデータ
   AREA_DATA* area_data = GFL_HEAP_AllocClearMemory( heap_id, sizeof(AREA_DATA) );
   s32 case_no = monsno %3;
   if( monsno == 517 ) case_no = 0;
