@@ -5296,6 +5296,7 @@ static int MainSeq_ItemBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 		ItemMoveWorkFree( syswk );
 		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, FALSE );
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->get_pos );
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 		if( ITEM_CheckMail( syswk->app->get_item ) == TRUE && set_pos != syswk->get_pos ){
 			PMSND_PlaySE( SE_BOX2_WARNING );
 			BOX2BMP_MailMoveErrorPut( syswk, BOX2BMPWIN_ID_MSG1 );
@@ -5307,7 +5308,7 @@ static int MainSeq_ItemBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 		}
 	}
 
-	if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray == syswk->tray ){
+	if( syswk->get_tray == syswk->tray || syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
 		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->get_pos, TRUE );
 	}
 	BOX2OBJ_PokeIconBlendSet( syswk->app, mvwk->put_pos, FALSE );
@@ -5343,6 +5344,7 @@ static int MainSeq_ItemBoxPartyIconMovePokeAdd( BOX2_SYS_WORK * syswk )
 		syswk->get_pos = mvwk->put_pos;
 		ItemMoveWorkFree( syswk );
 //		CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
@@ -5417,6 +5419,8 @@ static int MainSeq_ItemBoxPartyIconMoveEnd( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_PokeInfoPut( syswk, pos );
 		}
 	}
+
+	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, BOX2OBJ_TB_ICON_OFF );
 
 	return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 }
