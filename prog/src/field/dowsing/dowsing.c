@@ -830,8 +830,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     {
       zone_id = MAP_MATRIX_GetVectorPosZoneID( map_mat, player_pos->x, player_pos->z );
       zone_id_field = ZONEDATA_IsFieldMatrixID( (u16)zone_id );
-      if( ZONEDATA_IsPalaceField( (u16)zone_id ) )item_search_type = ITEM_TYPE_INTRUDE;  // 裏フィールド
-      else                                        item_search_type = ITEM_TYPE_HIDE;     // 表フィールド
+      //if( ZONEDATA_IsPalaceField( (u16)zone_id ) )item_search_type = ITEM_TYPE_INTRUDE;  // 裏フィールド
+      //else                                        item_search_type = ITEM_TYPE_HIDE;     // 表フィールド
+      // アイテムは表フィールドでしか探せない。ダウジングは表フィールドでしか使えない。
+      // つまり、裏フィールドにいるときにダウジングで何かするということはない。どのアイテムも表フィールドで探す。
+      // よって、上記の探すアイテム表裏タイプ分けは必要ないので、コメントアウト。
     }
   }
   
