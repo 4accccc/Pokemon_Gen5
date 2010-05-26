@@ -736,6 +736,8 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 
   //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
   if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+      //へんしんは技エフェクトではなくなったので除外
+      ( bevw->waza != WAZANO_HENSIN ) &&
       ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) )
   {
     bevw->migawari_sequence = bevw->sequence;
@@ -3880,6 +3882,8 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   }
   //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
   else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+           //へんしんは技エフェクトではなくなったので除外
+           ( bevw->waza != WAZANO_HENSIN ) &&
            ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) )
   {
     int* start_ofs;
