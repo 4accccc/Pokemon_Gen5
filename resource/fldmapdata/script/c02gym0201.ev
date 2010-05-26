@@ -720,6 +720,8 @@ EVENT_START		 ev_bg_c02gym0201_category_01
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_01)
 				
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -744,6 +746,8 @@ EVENT_START		 ev_bg_c02gym0201_category_02
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_01)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -955,6 +959,8 @@ EVENT_START		 ev_bg_c02gym0201_category_07
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_06)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -979,6 +985,8 @@ EVENT_START		 ev_bg_c02gym0201_category_08
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_06)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -1003,6 +1011,8 @@ EVENT_START		 ev_bg_c02gym0201_category_09
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_09)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 		ENDIF
 		_LAST_KEYWAIT()
@@ -1026,6 +1036,8 @@ EVENT_START		 ev_bg_c02gym0201_category_10
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_09)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -1124,6 +1136,8 @@ EVENT_START		 ev_bg_c02gym0201_category_13
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_03)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 		ENDIF
 		_LAST_KEYWAIT()
@@ -1147,6 +1161,8 @@ EVENT_START		 ev_bg_c02gym0201_category_14
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_03)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 		ENDIF
 		_LAST_KEYWAIT()
@@ -1170,6 +1186,8 @@ EVENT_START		 ev_bg_c02gym0201_category_15
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_04)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 		ENDIF
 		_LAST_KEYWAIT()
@@ -1193,6 +1211,8 @@ EVENT_START		 ev_bg_c02gym0201_category_16
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_04)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 		ENDIF
 		_LAST_KEYWAIT()
@@ -1216,6 +1236,8 @@ EVENT_START		 ev_bg_c02gym0201_category_17
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_07)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -1241,6 +1263,8 @@ EVENT_START		 ev_bg_c02gym0201_category_18
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_07)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -1270,6 +1294,8 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 	    	_OBJ_ANIME_WAIT() 
 	    		
 	        _PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
+	        _AB_KEYWAIT_MARK()
+	        
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_switch_03)
 			_MSGWIN_CLOSE()
 			
@@ -1329,6 +1355,8 @@ EVENT_START		 ev_bg_c02gym0201_category_20
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
 		
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 		ENDIF
 		_LAST_KEYWAIT()
@@ -1350,6 +1378,8 @@ EVENT_START		 ev_bg_c02gym0201_category_21
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_11)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
@@ -1374,6 +1404,8 @@ EVENT_START		 ev_bg_c02gym0201_category_22
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_11)
 
 		IF $WK_SCENE_C02GYM0201 != 7 THEN
+			//作業短縮の為、スクリプト側で送り記号を指定。他ではやらないこと。
+			_AB_KEYWAIT_MARK()
 			_PLAINWIN_MSG_DOWN   (msg_c02gym0101_book_18)
 
 		ENDIF
