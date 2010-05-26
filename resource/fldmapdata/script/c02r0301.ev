@@ -96,11 +96,12 @@ EVENT_START   ev_c02r0301_woman2_01
 					
 		//はい/いいえの選択
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE() 
+
 		
 		//はいを選んだ！交換するぞ！
 		IF $SCWK_ANSWER ==  SCR_YES THEN
-			
+		_BALLOONWIN_CLOSE() 			
+		
 			//手持ちポケモンのチェック
 			_SELECT_TEMOTI_POKE( LWK_TEMOCHI_RET , LWK_TEMOCHI_POS , 0 )
 			
