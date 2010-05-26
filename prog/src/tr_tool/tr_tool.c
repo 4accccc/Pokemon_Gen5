@@ -13,6 +13,7 @@
 
 #include  "waza_tool/wazano_def.h"
 #include  "tr_tool/tr_tool.h"
+#include  "tr_tool/trno_def.h"
 #include  "tr_tool/trtype_def.h"
 #include  "tr_tool/trtype_sex.h"
 #include  "poke_tool/poke_tool.h"
@@ -21,12 +22,6 @@
 #include  "pm_define.h"
 
 #include  "message.naix"
-
-#ifdef PM_DEBUG
-#if defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_sogabe
-#define SEIKAKU_PUT      //手持ちポケモンの性格表示
-#endif
-#endif
 
 //============================================================================================
 /**
@@ -93,7 +88,7 @@ SDK_COMPILER_ASSERT(sizeof(TRTYPE_GRP_PARAM) == 2);
  */
 //============================================================================================
 static  void  rnd_tmp_get( int mons_no, int form_no, int para, u32* rnd_tmp, HEAPID heapID );
-static  void  pp_set_param( POKEMON_PARAM *pp, int form_no, int para );
+static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM *pp, int form_no, int para );
 static inline u32 TTL_SETUP_POW_PACK( u8 pow );
 
 //============================================================================================
@@ -422,7 +417,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     PTL_SETUP_ID_NOT_RARE,
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
-        pp_set_param( pp, ptn[ i ].form_no, ptn[ i ].para );
+        pp_set_param( tr_id, pp, ptn[ i ].form_no, ptn[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -454,7 +449,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
         {
           PP_SetWazaPos( pp, ptw[ i ].waza[ j ], j );
         }
-        pp_set_param( pp, ptw[ i ].form_no, ptw[ i ].para );
+        pp_set_param( tr_id, pp, ptw[ i ].form_no, ptw[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -483,7 +478,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
                     TTL_SETUP_POW_PACK( pow ),
                     rnd );
         PP_Put( pp, ID_PARA_item, pti[ i ].itemno );
-        pp_set_param( pp, pti[ i ].form_no, pti[ i ].para );
+        pp_set_param( tr_id, pp, pti[ i ].form_no, pti[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -516,7 +511,7 @@ void TT_EncountTrainerPokeDataMake( TrainerID tr_id, POKEPARTY* pparty, HEAPID h
         {
           PP_SetWazaPos( pp, ptm[ i ].waza[ j ], j );
         }
-        pp_set_param( pp, ptm[ i ].form_no, ptm[ i ].para );
+        pp_set_param( tr_id, pp, ptm[ i ].form_no, ptm[ i ].para );
         PokeParty_Add( pparty, pp );
       }
     }
@@ -583,11 +578,12 @@ static  void  rnd_tmp_get( int mons_no, int form_no, int para, u32* rnd_tmp, HEA
  * @param[in] form_no フォルムナンバー
  */
 //============================================================================================
-static  void  pp_set_param( POKEMON_PARAM* pp, int form_no, int para )
+static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int para )
 {
   //なつき度の初期値は255
   u8  friend = 255;
   int no;
+  u16 mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
 
   for( no = 0 ; no < PTL_WAZA_MAX ; no++ ){
     //やつあたりを持っているときは、なつき度を0にする
@@ -600,23 +596,46 @@ static  void  pp_set_param( POKEMON_PARAM* pp, int form_no, int para )
   //フォルムナンバーセット
   PP_Put( pp, ID_PARA_form_no, form_no );
 
-  //第3特性セット
-  if( ( para & 0xf0 ) == 0x30 )
+  //特性セット
   { 
-    PP_SetTokusei3( pp, PP_Get( pp, ID_PARA_monsno, NULL ), form_no );
+    if( ( para & 0xf0 ) == 0x30 )
+    { 
+      PP_SetTokusei3( pp, mons_no, form_no );
+    }
+    else if( para & 0xf0 )
+    { 
+      u16 param = POKEPER_ID_speabi1;
+      if( POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_speabi2 ) )
+      { 
+        if( ( para & 0xf0 ) == 0x20 )
+        { 
+          param = POKEPER_ID_speabi2;
+        }
+      }
+      PP_Put( pp, ID_PARA_speabino, POKETOOL_GetPersonalParam( mons_no, form_no, param ) );
+    }
   }
 
   //性格セット
   { 
-    int rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
+    //特定のトレーナーの特定ポケモンの性格を固定にする
+    if( ( tr_id == TRID_BOSS_2_06 ) && ( mons_no == MONSNO_RESIRAMU ) )
+    { 
+      PP_Put( pp, ID_PARA_seikaku, PTL_SEIKAKU_YOUKI );
+    }
+    else if( ( tr_id == TRID_BOSS_2_07 ) && ( mons_no == MONSNO_ZEKUROMU ) )
+    { 
+      PP_Put( pp, ID_PARA_seikaku, PTL_SEIKAKU_OKUBYOU );
+    }
+    else
+    { 
+      int rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
 
-    //下位1バイトは性別のために偏りがあるので、上位24bitで計算する
-    rnd >>= 8;
+      //下位1バイトは性別のために偏りがあるので、上位24bitで計算する
+      rnd >>= 8;
 
-    PP_Put( pp, ID_PARA_seikaku, rnd % PTL_SEIKAKU_MAX );
-#ifdef SEIKAKU_PUT
-    OS_TPrintf("mons_no:%d 性格:%d\n",PP_Get( pp, ID_PARA_monsno, NULL ), rnd % PTL_SEIKAKU_MAX );
-#endif
+      PP_Put( pp, ID_PARA_seikaku, rnd % PTL_SEIKAKU_MAX );
+    }
   }
 }
 
