@@ -25,6 +25,7 @@ POKELIST = pokelist.txt
 OTHERFORMFILE = otherform_wb.scr
 OTHERPLTTFILE = otherpltt_wb.scr
 OTHERLSTFILE = otherform_wb.lst
+NONSTOPLSTFILE = pokegra_wb_nonstop.lst
 
 #------------------------------------------------------------------------------
 #※コピー先へのパスを書く（通常はPROJECT_ARCDIRでよい）
@@ -54,9 +55,9 @@ include	$(NITROSYSTEM_ROOT)/build/buildtools/modulerules
 #------------------------------------------------------------------------------
 #	ファイル削除ルール
 #------------------------------------------------------------------------------
-LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr $(POKELISTDIR)$(POKELIST)
+LDIRT_CLEAN = $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(LSTDIR)*.lst $(SCRDIR)*.scr $(POKELISTDIR)$(POKELIST) $(SCRDIR)$(NONSTOPLSTFILE)
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-LDIRT_CLEAN += *.s $(HEADER) $(NUMHEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(LSTFILE) $(POKELIST) *.scr out_end
+LDIRT_CLEAN += *.s $(HEADER) $(NUMHEADER) $(GMMFILE) $(MONSNOHASHFILE) $(WOTHASHFILE) $(LSTFILE) $(POKELIST) $(NONSTOPLSTFILE) *.scr out_end
 endif
 
 #------------------------------------------------------------------------------
@@ -75,7 +76,7 @@ fake:
 	ruby ../../tools/personal_conv/personal_conv.rb personal_wb_fake.csv ../message/template.gmm
 endif
 
-do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE) $(POKELISTDIR)$(POKELIST)
+do-build: $(TARGETDIR)$(HEADER) $(TARGETDIR)$(NUMHEADER) $(GMMDIR)$(GMMFILE) $(HASHDIR)$(MONSNOHASHFILE) $(HASHDIR)$(WOTHASHFILE) $(SCRDIR)$(SCRFILE) $(LSTDIR)$(LSTFILE) $(LSTDIR)$(OTHERLSTFILE) $(SCRDIR)$(OTHERFORMFILE) $(SCRDIR)$(OTHERPLTTFILE) $(POKELISTDIR)$(POKELIST) $(SCRDIR)$(NONSTOPLSTFILE)
 
 $(TARGETDIR)$(HEADER):	$(HEADER)
 	$(COPY)	$(HEADER) $(TARGETDIR)
@@ -109,4 +110,7 @@ $(LSTDIR)$(OTHERLSTFILE):	$(OTHERLSTFILE)
 
 $(POKELISTDIR)$(POKELIST):	$(POKELIST)
 	$(COPY)	$(POKELIST) $(POKELISTDIR)
+
+$(SCRDIR)$(NONSTOPLSTFILE):	$(NONSTOPLSTFILE)
+	$(COPY)	$(NONSTOPLSTFILE) $(SCRDIR)
 
