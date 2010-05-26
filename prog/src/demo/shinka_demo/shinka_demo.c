@@ -1204,6 +1204,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
 
         // 下画面の破棄
         YESNO_MENU_DeleteRes( work->yesno_menu_work );
+        work->yesno_menu_work = NULL;
         SHINKADEMO_GRAPHIC_ExitBGSub( work->graphic );
 
         // キーorタッチ
@@ -1489,7 +1490,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   if(    work->step != STEP_WAZA_STATUS_FIELD
       && work->step != STEP_WAZA_STATUS_FIELD_OUT )
   {
-    YESNO_MENU_Main( work->yesno_menu_work );
+    if( work->yesno_menu_work ) YESNO_MENU_Main( work->yesno_menu_work );
 
     ShinkaDemo_TextMain( param, work );
 
@@ -1556,6 +1557,7 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   // テキストの初期化処理
   ShinkaDemo_TextInit( param, work );
   // YESNO_MENUの初期化処理
+  work->yesno_menu_work = NULL;
   ShinkaDemo_YesNoMenuInit( param, work );
   // BG
   ShinkaDemo_BgInit( param, work );
@@ -2355,6 +2357,7 @@ static void ShinkaDemo_YesNoMenuExit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK
   // YESNO_MENU
   {
     YESNO_MENU_DeleteRes( work->yesno_menu_work );
+    work->yesno_menu_work = NULL;
     if( work->yesno_menu_strbuf_yes ) GFL_STR_DeleteBuffer( work->yesno_menu_strbuf_yes );
     if( work->yesno_menu_strbuf_no ) GFL_STR_DeleteBuffer( work->yesno_menu_strbuf_no );
     GFL_MSG_Delete( work->yesno_menu_msgdata );
