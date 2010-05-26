@@ -2308,7 +2308,7 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
 
     if(bMain){
       pIM->clwk_poke_item =
-        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,29 * 8,13 * 8,type,pWork->heapID );
+        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,(30 * 8)+4,13 * 8,type,pWork->heapID );
     }
     else{
       pIM->clwk_poke_item =
