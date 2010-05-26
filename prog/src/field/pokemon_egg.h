@@ -15,14 +15,14 @@
  * @param heap_id  使用するヒープID
  * @param mystatus タマゴの所有者
  * @param memo     トレーナーメモの記載
- * @param father   父ポケモン
- * @param mother   母ポケモン
+ * @param poke1    親ポケモン1
+ * @param poke2    親ポケモン2
  * @param egg      作成したタマゴの格納先
  */
 //---------------------------------------------------------------------------------------- 
 extern void POKEMON_EGG_Create( 
     HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg );
+    const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg );
 
 //---------------------------------------------------------------------------------------- 
 /**

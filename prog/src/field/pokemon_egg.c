@@ -24,32 +24,40 @@
 #include "pokemon_egg.h"
 
 
-//========================================================================================
-// ■ 定数
-//========================================================================================
-#define DEBUG_PRINT_ON // デバッグ出力スイッチ
-#define PRINT_TARGET (2) // デバッグ出力先
-
+#define DEBUG_PRINT_ON      // デバッグ出力スイッチ
+#define PRINT_TARGET    (2) // デバッグ出力先
 #define RARE_EGG_CHANCE (5) // レアタマゴ抽選回数
 
+// 両親ポケモン
+typedef struct {
+  const POKEMON_PARAM* father;
+  const POKEMON_PARAM* mother;
+} PARENT;
 
-//========================================================================================
-// ■prototype
-//========================================================================================
+
+// prototype /////////////////////////////////////////////////////////////////////////////
+
+// 父母の決定
+static void CorrectParent_bySex( PARENT* parent );
+static void CorrectParent_byMetamon( PARENT* parent );
+static void ReverseParent( PARENT* parent );
 // タマゴパラメータの決定
-static void EggCordinate_monsno( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // モンスターNo.
-static void EggCordinate_seikaku( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 性格
-static void EggCordinate_tokusei( HEAPID heap_id, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 特性
-static void EggCordinate_ability_rand( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 個体乱数
-static void EggCordinate_rare( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // レア抽選
+static void EggCordinate_monsno( const PARENT* parent, POKEMON_PARAM* egg ); // モンスターNo.
+static void EggCordinate_seikaku( const PARENT* parent, POKEMON_PARAM* egg ); // 性格
+static void EggCordinate_tokusei( const PARENT* parent, POKEMON_PARAM* egg, HEAPID heap_id ); // 特性
+static void EggCordinate_ability_rand( const PARENT* parent, POKEMON_PARAM* egg ); // 個体乱数
+static void EggCordinate_rare( const PARENT* parent, POKEMON_PARAM* egg ); // レア抽選
 static void EggCordinate_waza_default( POKEMON_PARAM* egg ); // デフォルト技セット
-static void EggCordinate_waza_egg( HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg ); // タマゴ技セット
-static void EggCordinate_waza_parent( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 継承技 ( 両親 ) セット
-static void EggCordinate_waza_machine( HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg ); // 継承技 ( 技マシン ) セット
-static void EggCordinate_pityuu( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 特殊タマゴ処理 ( ピチュー )
-static void EggCordinate_karanakusi( const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg ); // 特殊タマゴ処理 ( カラナクシ )
+static void EggCordinate_waza_egg( const PARENT* parent, POKEMON_PARAM* egg, HEAPID heap_id ); // タマゴ技セット
+static void EggCordinate_waza_parent( const PARENT* parent, POKEMON_PARAM* egg ); // 継承技 ( 両親 ) セット
+static void EggCordinate_waza_machine( const PARENT* parent, POKEMON_PARAM* egg, HEAPID heap_id ); // 継承技 ( 技マシン ) セット
+static void EggCordinate_pityuu( const PARENT* parent, POKEMON_PARAM* egg ); // 特殊タマゴ処理 ( ピチュー )
+static void EggCordinate_karanakusi( const PARENT* parent, POKEMON_PARAM* egg ); // 特殊タマゴ処理 ( カラナクシ )
 static void EggCordinate_waza_sort( POKEMON_PARAM* egg ); // 技をソートする
 static void EggCordinate_finish( POKEMON_PARAM* egg, const MYSTATUS* mystatus, int memo, HEAPID heap_id );
+static const POKEMON_PARAM* GetBasePokemon( const PARENT* parent );
+static u32 ChangeEggMonsNo_manafi( const POKEMON_PARAM* base_poke, u32 monsno_egg );
+static u32 ChangeEggMonsNo_item( const POKEMON_PARAM* base_poke, u32 monsno_egg );
 // タマゴ孵化
 static void EggBirth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id ); // タマゴを孵化させる
 // ユーティリティ
@@ -63,9 +71,9 @@ static POKEMON_PARAM* CreateDebugEgg( GAMEDATA* gameData, HEAPID heapID, u32 mon
 #endif
 
 
-//========================================================================================
-// ■public functions
-//========================================================================================
+
+// publid functions //////////////////////////////////////////////////////////////////////
+
 
 //---------------------------------------------------------------------------------------- 
 /**
@@ -74,27 +82,35 @@ static POKEMON_PARAM* CreateDebugEgg( GAMEDATA* gameData, HEAPID heapID, u32 mon
  * @param heap_id  使用するヒープID
  * @param mystatus タマゴの所有者
  * @param memo     トレーナーメモの記載
- * @param father   父ポケモン
- * @param mother   母ポケモン
+ * @param poke1    親ポケモン1
+ * @param poke2    親ポケモン2
  * @param egg      作成したタマゴの格納先
  */
 //---------------------------------------------------------------------------------------- 
 void POKEMON_EGG_Create( 
     HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+    const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg )
 {
+  PARENT parent;
+
+  // 父母を決定
+  parent.father = poke1;
+  parent.mother = poke2;
+  CorrectParent_bySex( &parent );
+  CorrectParent_byMetamon( &parent );
+
   // タマゴのパラメータを設定
-  EggCordinate_monsno( father, mother, egg );          // モンスターナンバー
-  EggCordinate_seikaku( father, mother, egg );         // 性格
-  EggCordinate_tokusei( heap_id, mother, egg );        // 特性
-  EggCordinate_ability_rand( father, mother, egg );    // 個体乱数
-  EggCordinate_rare( father, mother, egg );            // レアポケ抽選
+  EggCordinate_monsno( &parent, egg );                 // モンスターナンバー
+  EggCordinate_seikaku( &parent, egg );                // 性格
+  EggCordinate_tokusei( &parent, egg, heap_id );       // 特性
+  EggCordinate_ability_rand( &parent, egg );           // 個体乱数
+  EggCordinate_rare( &parent, egg );                   // レアポケ抽選
   EggCordinate_waza_default( egg );                    // 技 ( デフォルト )
-  EggCordinate_waza_egg( heap_id, father, egg );       // 技 ( タマゴ技 )
-  EggCordinate_waza_parent( father, mother, egg );     // 技 ( 両親共通の技 )
-  EggCordinate_waza_machine( heap_id, father, egg );   // 技 ( 父のマシン技 )
-  EggCordinate_pityuu( father, mother, egg );          // 特殊タマゴ ( ピチュー )
-  EggCordinate_karanakusi( father, mother, egg );      // 特殊タマゴ ( カラナクシ )
+  EggCordinate_waza_egg( &parent, egg, heap_id );      // 技 ( タマゴ技 )
+  EggCordinate_waza_parent( &parent, egg );            // 技 ( 両親共通の技 )
+  EggCordinate_waza_machine( &parent, egg, heap_id );  // 技 ( 父のマシン技 )
+  EggCordinate_pityuu( &parent, egg );                 // 特殊タマゴ ( ピチュー )
+  EggCordinate_karanakusi( &parent, egg );             // 特殊タマゴ ( カラナクシ )
   EggCordinate_waza_sort( egg );                       // 技ソート
   EggCordinate_finish( egg, mystatus, memo, heap_id ); // 仕上げ
 }
@@ -114,98 +130,195 @@ void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_i
 }
 
 
-//========================================================================================
-// ■private functions
-//========================================================================================
+
+// private functions /////////////////////////////////////////////////////////////////////
+
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 父母の組み合わせを訂正する ( 性別 )
+ */
+//---------------------------------------------------------------------------------------- 
+static void CorrectParent_bySex( PARENT* parent )
+{
+  u32 sex_father, sex_mother;
+
+  sex_father = PP_Get( parent->father, ID_PARA_sex, NULL );
+  sex_mother = PP_Get( parent->mother, ID_PARA_sex, NULL );
+
+  if( sex_father == PTL_SEX_FEMALE ) {
+    ReverseParent( parent );
+  }
+  if( sex_mother == PTL_SEX_MALE ) {
+    ReverseParent( parent );
+  }
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 父母の組み合わせを訂正する ( メタモン )
+ *
+ * メタモン × ♂ ==> ( 父, 母 ) = ( ♂, メタモン )
+ * メタモン × ♀ ==> ( 父, 母 ) = ( メタモン, ♀ )
+ * メタモン × ？ ==> ( 父, 母 ) = ( ？, メタモン )
+ */
+//---------------------------------------------------------------------------------------- 
+static void CorrectParent_byMetamon( PARENT* parent )
+{
+  u32 monsno_father;
+  u32 sex_mother;
+
+  monsno_father = PP_Get( parent->father, ID_PARA_monsno, NULL );
+  sex_mother = PP_Get( parent->mother, ID_PARA_sex, NULL );
+
+  if( (monsno_father == MONSNO_METAMON) && (sex_mother == PTL_SEX_UNKNOWN) ) {
+    ReverseParent( parent );
+  }
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 父母を入れ替える
+ */
+//---------------------------------------------------------------------------------------- 
+static void ReverseParent( PARENT* parent )
+{
+  const POKEMON_PARAM* temp = parent->father;
+  parent->father = parent->mother;
+  parent->mother = temp;
+}
 
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief タマゴのモンスターナンバーを決定する
- *
- * @param father 父親ポケモン
- * @param mother 母親ポケモン
- * @param egg    設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_monsno( 
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_monsno( const PARENT* parent, POKEMON_PARAM* egg )
 {
-  int i;
-  u32 monsno_egg;
-  u32 monsno_father = PP_Get( father, ID_PARA_monsno, NULL );
-  u32 monsno_mother = PP_Get( mother, ID_PARA_monsno, NULL );
-  u32 itemno_mother = PP_Get( mother, ID_PARA_item, NULL );
-  const int table_size = 9;
-  u32 exception_table[table_size][3] = // 例外テーブル
-  {
-    // 母ポケモン      // アイテム          // 子ポケモン
-    {MONSNO_MARIRU,    ITEM_USIONOOKOU,     MONSNO_MARIRU},
-    {MONSNO_SOONANSU,  ITEM_NONKINOOKOU,    MONSNO_SOONANO},
-    {MONSNO_BARIYAADO, ITEM_AYASIIOKOU,     MONSNO_MANENE},
-    {MONSNO_USOKKII,   ITEM_GANSEKIOKOU,    MONSNO_USOHATI},
-    {MONSNO_KABIGON,   ITEM_MANPUKUOKOU,    MONSNO_GONBE},
-    {MONSNO_MANTAIN,   ITEM_SAZANAMINOOKOU, MONSNO_TAMANTA},
-    {MONSNO_ROZERIA,   ITEM_OHANANOOKOU,    MONSNO_SUBOMII},
-    {MONSNO_RAKKII,    ITEM_KOUUNNOOKOU,    MONSNO_PINPUKU},
-    {MONSNO_TIRIIN,    ITEM_KIYOMENOOKOU,   MONSNO_RIISYAN},
-  };
+  const POKEMON_PARAM* base_poke;
+  u32 monsno_base, monsno_egg;
+
+  // 基本ルールで子を決定
+  base_poke   = GetBasePokemon( parent );
+  monsno_base = PP_Get( base_poke, ID_PARA_monsno, NULL );
+  monsno_egg  = GetSeedMonsNo( monsno_base );
+
+  // 例外ルールによる子ポケモンの変化
+  monsno_egg = ChangeEggMonsNo_manafi( base_poke, monsno_egg );
+  monsno_egg = ChangeEggMonsNo_item( base_poke, monsno_egg );
   
-  // 通常は母親の種ポケモン
-  monsno_egg = GetSeedMonsNo( monsno_mother );
-
-  // 母親がメタモンなら, 父親の種ポケモンが産まれる
-  if( monsno_mother == MONSNO_METAMON ) {
-    monsno_egg = GetSeedMonsNo( monsno_father );
-  }
-
-  // 母親がマナフィなら, フィオネが産まれる
-  if( monsno_mother == MONSNO_MANAFI ) {
-    monsno_egg = MONSNO_FIONE;
-  }
-
-  // 例外テーブル適用
-  for( i=0; i<table_size; i++ )
-  {
-    // 特定の母ポケが特定アイテムを持っていたら, 子ポケモンが変化
-    if( ( monsno_mother == exception_table[i][0] ) &&
-        ( itemno_mother == exception_table[i][1] ) ) {
-      monsno_egg = exception_table[i][2];
-      break;
-    }
-  }
-
   // ポケモンパラメータ構築
   PP_SetupEx( egg, monsno_egg, 1, 
       PTL_SETUP_ID_AUTO, PTL_SETUP_POW_AUTO, PTL_SETUP_RND_AUTO );
 
 #ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET,
-      "POKEMON-EGG: <MonsNo> father[%d], mother[%d], egg[%d]\n", 
-      monsno_father, monsno_mother, monsno_egg );
+  {
+    u32 monsno_father = PP_Get( parent->father, ID_PARA_monsno, NULL );
+    u32 monsno_mother = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+    OS_TFPrintf( PRINT_TARGET,
+        "POKEMON-EGG: <MonsNo> father[%d], mother[%d], egg[%d]\n", 
+        monsno_father, monsno_mother, monsno_egg );
+  }
 #endif
 }
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴの性格を決定する
- *
- * @param father 父親ポケモン
- * @param mother 母親ポケモン
- * @param egg    設定するタマゴ
+ * @brief 子ポケモンのベースとなる親ポケモンを取得する
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_seikaku(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static const POKEMON_PARAM* GetBasePokemon( const PARENT* parent )
+{
+  u32 monsno_father = PP_Get( parent->father, ID_PARA_monsno, NULL );
+  u32 monsno_mother = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+
+  // 母親がメタモン ==> 父親
+  if( monsno_mother == MONSNO_METAMON ) {
+    return parent->father;
+  }
+  // 通常 ==> 母親
+  else {
+    return parent->mother;
+  }
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 子ポケモンを変換する ( 例外ケース：マナフィ )
+ *
+ * マナフィの子はフィオネ
+ */
+//---------------------------------------------------------------------------------------- 
+static u32 ChangeEggMonsNo_manafi( const POKEMON_PARAM* base_poke, u32 monsno_egg )
+{
+  u32 monsno_base;
+
+  monsno_base = PP_Get( base_poke, ID_PARA_monsno, NULL );
+
+  if( monsno_base == MONSNO_MANAFI ) {
+    return MONSNO_FIONE;
+  }
+  else { 
+    return monsno_egg;
+  }
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief 子ポケモンを変換する ( 例外ケース：アイテム )
+ */
+//---------------------------------------------------------------------------------------- 
+static u32 ChangeEggMonsNo_item( const POKEMON_PARAM* base_poke, u32 monsno_egg )
+{
+  // 例外テーブル適用
+  int i;
+  u32 monsno_base = PP_Get( base_poke, ID_PARA_monsno, NULL );
+  u32 itemno_base = PP_Get( base_poke, ID_PARA_item, NULL );
+
+  const int table_size = 9;
+  u32 exception_table[table_size][3] = // 例外テーブル
+  {
+    // 元ポケモン      // アイテム          // 子ポケモン
+    {MONSNO_MARIRU,    ITEM_USIONOOKOU,     MONSNO_MARIRU},
+    {MONSNO_SOONANSU,  ITEM_NONKINOOKOU,    MONSNO_SOONANSU},
+    {MONSNO_BARIYAADO, ITEM_AYASIIOKOU,     MONSNO_BARIYAADO},
+    {MONSNO_USOKKII,   ITEM_GANSEKIOKOU,    MONSNO_USOKKII},
+    {MONSNO_KABIGON,   ITEM_MANPUKUOKOU,    MONSNO_KABIGON},
+    {MONSNO_MANTAIN,   ITEM_SAZANAMINOOKOU, MONSNO_MANTAIN},
+    {MONSNO_ROZERIA,   ITEM_OHANANOOKOU,    MONSNO_ROZERIA},
+    {MONSNO_RAKKII,    ITEM_KOUUNNOOKOU,    MONSNO_RAKKII},
+    {MONSNO_TIRIIN,    ITEM_KIYOMENOOKOU,   MONSNO_TIRIIN},
+  };
+
+  // 例外テーブルとの照合
+  for( i=0; i<table_size; i++ )
+  {
+    // 元ポケが特定アイテムを持っていなかったら, 子ポケモンが変化
+    if( ( monsno_base == exception_table[i][0] ) &&
+        ( itemno_base != exception_table[i][1] ) ) {
+      return exception_table[i][2];
+    }
+  }
+
+  return monsno_egg;
+}
+
+//---------------------------------------------------------------------------------------- 
+/**
+ * @brief タマゴの性格を決定する
+ */
+//---------------------------------------------------------------------------------------- 
+static void EggCordinate_seikaku( const PARENT* parent, POKEMON_PARAM* egg )
 {
   BOOL kawarazu_father; // 父親が『かわらずのいし』を持っているかどうか
   BOOL kawarazu_mother; // 母親が『かわらずのいし』を持っているかどうか
-  u32 seikaku_father = PP_Get( father, ID_PARA_seikaku, NULL ); // 父親の性格
-  u32 seikaku_mother = PP_Get( mother, ID_PARA_seikaku, NULL ); // 母親の性格
+  u32 seikaku_father = PP_Get( parent->father, ID_PARA_seikaku, NULL ); // 父親の性格
+  u32 seikaku_mother = PP_Get( parent->mother, ID_PARA_seikaku, NULL ); // 母親の性格
   u32 seikaku_egg; // 子の性格
 
   //『かわらずのいし』を持っているかどうかを取得
-  kawarazu_father = ( PP_Get( father, ID_PARA_item, NULL ) == ITEM_KAWARAZUNOISI );
-  kawarazu_mother = ( PP_Get( mother, ID_PARA_item, NULL ) == ITEM_KAWARAZUNOISI );
+  kawarazu_father = ( PP_Get( parent->father, ID_PARA_item, NULL ) == ITEM_KAWARAZUNOISI );
+  kawarazu_mother = ( PP_Get( parent->mother, ID_PARA_item, NULL ) == ITEM_KAWARAZUNOISI );
 
   // デフォルトは乱数で決定
   seikaku_egg = GFUser_GetPublicRand0( PTL_SEIKAKU_MAX );
@@ -252,14 +365,9 @@ static void EggCordinate_seikaku(
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief タマゴの特性を決定する ( 母親の特性を遺伝する )
- *
- * @param heap_id 使用するヒープID
- * @param mother  母親ポケモン
- * @param egg     設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_tokusei(
-    HEAPID heap_id, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_tokusei( const PARENT* parent, POKEMON_PARAM* egg, HEAPID heap_id )
 {
   u32 rnd;
   u32 speabi_egg_idx;    // 何番目の特性を継承するか
@@ -268,13 +376,13 @@ static void EggCordinate_tokusei(
   u32 speabi_list[3];    // 特性リスト
 
   // 母親の特性を取得
-  speabi_mother = PP_Get( mother, ID_PARA_speabino, NULL );
+  speabi_mother = PP_Get( parent->mother, ID_PARA_speabino, NULL );
 
   // 母の特性リスト ( 種の特性 ) を取得
   {
     POKEMON_PERSONAL_DATA* personalData;
-    u32 monsno     = PP_Get( mother, ID_PARA_monsno, NULL );
-    u32 formno     = PP_Get( mother, ID_PARA_form_no, NULL );
+    u32 monsno     = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+    u32 formno     = PP_Get( parent->mother, ID_PARA_form_no, NULL );
     personalData   = POKE_PERSONAL_OpenHandle( monsno, formno, heap_id );
     speabi_list[0] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi1 );
     speabi_list[1] = POKE_PERSONAL_GetParam( personalData, POKEPER_ID_speabi2 );
@@ -321,8 +429,8 @@ static void EggCordinate_tokusei(
 
   // 特性をセット
   if( speabi_egg_idx == 2 ) { // 第三特性
-    u32 monsno = PP_Get( mother, ID_PARA_monsno, NULL );
-    u32 formno = PP_Get( mother, ID_PARA_form_no, NULL );
+    u32 monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+    u32 formno = PP_Get( parent->mother, ID_PARA_form_no, NULL );
     PP_SetTokusei3( egg, monsno, formno );
   }
   else {
@@ -347,14 +455,9 @@ static void EggCordinate_tokusei(
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief タマゴの個体乱数を決定する
- *
- * @param father 父親ポケモン
- * @param mother 母親ポケモン
- * @param egg    設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_ability_rand(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_ability_rand( const PARENT* parent, POKEMON_PARAM* egg )
 {
   int i = 0;
   u32 ability_type[3];  // 継承する個体乱数のタイプ
@@ -362,7 +465,7 @@ static void EggCordinate_ability_rand(
 
   // 父親が『パワーXXXX』を持っている場合
   {
-    u32 itemno = PP_Get( father, ID_PARA_item, NULL );
+    u32 itemno = PP_Get( parent->father, ID_PARA_item, NULL );
     switch( itemno ) {
     case ITEM_PAWAAUEITO:  ability_type[num++] = PTL_ABILITY_HP;    break;
     case ITEM_PAWAARISUTO: ability_type[num++] = PTL_ABILITY_ATK;   break;
@@ -377,7 +480,7 @@ static void EggCordinate_ability_rand(
   if( ( num == 0 ) ||
       ( GFUser_GetPublicRand0(2) == 0 ) ) // 父親も持っていた場合, 1/2で上書きする
   {
-    u32 itemno = PP_Get( father, ID_PARA_item, NULL );
+    u32 itemno = PP_Get( parent->father, ID_PARA_item, NULL );
     num = 0;  // 父親の継承を上書き
     switch( itemno ) {
     case ITEM_PAWAAUEITO:  ability_type[num++] = PTL_ABILITY_HP;    break;
@@ -416,8 +519,8 @@ static void EggCordinate_ability_rand(
     u32 value;
 
     // 父・母のどちらから受け継ぐのかを決定
-    if( GFUser_GetPublicRand0(2) == 0 ) { param = father; }
-    else                                { param = mother; }
+    if( GFUser_GetPublicRand0(2) == 0 ) { param = parent->father; }
+    else                                { param = parent->mother; }
 
     // 継承
     switch( ability_type[i] ) {
@@ -436,14 +539,14 @@ static void EggCordinate_ability_rand(
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <AbilityRnd> father(%d, %d, %d, %d, %d, %d)\n", 
-      PP_Get( father, ID_PARA_hp_rnd, NULL ), PP_Get( father, ID_PARA_pow_rnd, NULL ),
-      PP_Get( father, ID_PARA_def_rnd, NULL ), PP_Get( father, ID_PARA_spepow_rnd, NULL ),
-      PP_Get( father, ID_PARA_spedef_rnd, NULL ), PP_Get( father, ID_PARA_agi_rnd, NULL ) );
+      PP_Get( parent->father, ID_PARA_hp_rnd, NULL ), PP_Get( parent->father, ID_PARA_pow_rnd, NULL ),
+      PP_Get( parent->father, ID_PARA_def_rnd, NULL ), PP_Get( parent->father, ID_PARA_spepow_rnd, NULL ),
+      PP_Get( parent->father, ID_PARA_spedef_rnd, NULL ), PP_Get( parent->father, ID_PARA_agi_rnd, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <AbilityRnd> mother(%d, %d, %d, %d, %d, %d)\n", 
-      PP_Get( mother, ID_PARA_hp_rnd, NULL ), PP_Get( mother, ID_PARA_pow_rnd, NULL ),
-      PP_Get( mother, ID_PARA_def_rnd, NULL ), PP_Get( mother, ID_PARA_spepow_rnd, NULL ),
-      PP_Get( mother, ID_PARA_spedef_rnd, NULL ), PP_Get( mother, ID_PARA_agi_rnd, NULL ) );
+      PP_Get( parent->mother, ID_PARA_hp_rnd, NULL ), PP_Get( parent->mother, ID_PARA_pow_rnd, NULL ),
+      PP_Get( parent->mother, ID_PARA_def_rnd, NULL ), PP_Get( parent->mother, ID_PARA_spepow_rnd, NULL ),
+      PP_Get( parent->mother, ID_PARA_spedef_rnd, NULL ), PP_Get( parent->mother, ID_PARA_agi_rnd, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <AbilityRnd> ==> egg(%d, %d, %d, %d, %d, %d)\n", 
       PP_Get( egg, ID_PARA_hp_rnd, NULL ), PP_Get( egg, ID_PARA_pow_rnd, NULL ),
@@ -455,19 +558,14 @@ static void EggCordinate_ability_rand(
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief レアポケモンの抽選を行う
- *
- * @param father 父親ポケモン
- * @param mother 母親ポケモン
- * @param egg    設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_rare(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_rare( const PARENT* parent, POKEMON_PARAM* egg )
 {
   int i;
   u32 id, rnd;
-  u32 country_father = PP_Get( father, ID_PARA_country_code, NULL ); // 父の国コード
-  u32 country_mother = PP_Get( mother, ID_PARA_country_code, NULL ); // 母の国コード
+  u32 country_father = PP_Get( parent->father, ID_PARA_country_code, NULL ); // 父の国コード
+  u32 country_mother = PP_Get( parent->mother, ID_PARA_country_code, NULL ); // 母の国コード
   BOOL egg_is_rare = FALSE; // 子がレアポケかどうか
   BOOL chance_flag = TRUE; // レアポケの抽選を行うかどうか
 
@@ -554,15 +652,11 @@ static void EggCordinate_waza_default( POKEMON_PARAM* egg )
 //----------------------------------------------------------------------------------------
 /**
  * @brief タマゴ技を覚えさせる
- *        タマゴから孵るポケモンのみが覚えられる技のうち, 父ポケモンが覚えている技を習得
  *
- * @param heap_id 使用するヒープID 
- * @param father  父親ポケモン
- * @param egg     設定するタマゴ
+ * タマゴから孵るポケモンのみが覚えられる技のうち, 父ポケモンが覚えている技を習得
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_waza_egg( 
-    HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg )
+static void EggCordinate_waza_egg( const PARENT* parent, POKEMON_PARAM* egg, HEAPID heap_id )
 {
   int i, j;
   u32 monsno_egg;
@@ -578,7 +672,7 @@ static void EggCordinate_waza_egg(
   // 父親の全技をチェックする
   for( i=0; i<PTL_WAZA_MAX; i++ )
   {
-    u32 wazano = PP_Get( father, id_para[i], NULL );
+    u32 wazano = PP_Get( parent->father, id_para[i], NULL );
 
     // 父親の技がタマゴ技なら, 習得する
     for( j=1; j<=kowaza_num; j++ )
@@ -597,8 +691,8 @@ static void EggCordinate_waza_egg(
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <TamagoWaza> father(%d, %d, %d, %d)\n",
-      PP_Get( father, ID_PARA_waza1, NULL ), PP_Get( father, ID_PARA_waza2, NULL ),
-      PP_Get( father, ID_PARA_waza3, NULL ), PP_Get( father, ID_PARA_waza4, NULL ) );
+      PP_Get( parent->father, ID_PARA_waza1, NULL ), PP_Get( parent->father, ID_PARA_waza2, NULL ),
+      PP_Get( parent->father, ID_PARA_waza3, NULL ), PP_Get( parent->father, ID_PARA_waza4, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <TamagoWaza> ==> egg(%d, %d, %d, %d)\n",
       PP_Get( egg, ID_PARA_waza1, NULL ), PP_Get( egg, ID_PARA_waza2, NULL ),
@@ -609,15 +703,11 @@ static void EggCordinate_waza_egg(
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief 両親の技を受け継ぐ
- *        自分もレベルを上げることで覚える技のうち, 両親ともに覚えている技を習得
  *
- * @param father 父親ポケモン
- * @param mother 母親ポケモン
- * @param egg    設定するタマゴ
+ * 自分もレベルを上げることで覚える技のうち, 両親ともに覚えている技を習得
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_waza_parent(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_waza_parent( const PARENT* parent, POKEMON_PARAM* egg )
 {
   int i, j;
   u32 id_para[ PTL_WAZA_MAX ] = { ID_PARA_waza1, ID_PARA_waza2, ID_PARA_waza3, ID_PARA_waza4 };
@@ -641,7 +731,7 @@ static void EggCordinate_waza_parent(
     // 父が覚えているかどうかチェック
     for( j=0; j<PTL_WAZA_MAX; j++ )
     {
-      u32 wazano_father = PP_Get( father, id_para[j], NULL );
+      u32 wazano_father = PP_Get( parent->father, id_para[j], NULL );
 
       // 覚えている
       if( wazano_father == wazano ) {
@@ -653,7 +743,7 @@ static void EggCordinate_waza_parent(
     // 母が覚えているかどうかチェック
     for( j=0; j<PTL_WAZA_MAX; j++ )
     {
-      u32 wazano_mother = PP_Get( mother, id_para[j], NULL );
+      u32 wazano_mother = PP_Get( parent->mother, id_para[j], NULL );
 
       // 覚えている
       if( wazano_mother == wazano ) {
@@ -675,12 +765,12 @@ static void EggCordinate_waza_parent(
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <ParentWaza> father(%d, %d, %d, %d)\n",
-      PP_Get( father, ID_PARA_waza1, NULL ), PP_Get( father, ID_PARA_waza2, NULL ),
-      PP_Get( father, ID_PARA_waza3, NULL ), PP_Get( father, ID_PARA_waza4, NULL ) );
+      PP_Get( parent->father, ID_PARA_waza1, NULL ), PP_Get( parent->father, ID_PARA_waza2, NULL ),
+      PP_Get( parent->father, ID_PARA_waza3, NULL ), PP_Get( parent->father, ID_PARA_waza4, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <ParentWaza> mother(%d, %d, %d, %d)\n",
-      PP_Get( mother, ID_PARA_waza1, NULL ), PP_Get( mother, ID_PARA_waza2, NULL ),
-      PP_Get( mother, ID_PARA_waza3, NULL ), PP_Get( mother, ID_PARA_waza4, NULL ) );
+      PP_Get( parent->mother, ID_PARA_waza1, NULL ), PP_Get( parent->mother, ID_PARA_waza2, NULL ),
+      PP_Get( parent->mother, ID_PARA_waza3, NULL ), PP_Get( parent->mother, ID_PARA_waza4, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <ParentWaza> ==> egg(%d, %d, %d, %d)\n",
       PP_Get( egg, ID_PARA_waza1, NULL ), PP_Get( egg, ID_PARA_waza2, NULL ),
@@ -691,15 +781,11 @@ static void EggCordinate_waza_parent(
 //---------------------------------------------------------------------------------------- 
 /**
  * @brief 父ポケモンのマシン技を受け継ぐ
- *        自分も覚えることの出来るマシン技のうち, 父ポケモンが覚えている技を習得
  *
- * @param heap_id 使用するヒープID 
- * @param father  父親ポケモン
- * @param egg     設定するタマゴ
+ * 自分も覚えることの出来るマシン技のうち, 父ポケモンが覚えている技を習得
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_waza_machine(
-    HEAPID heap_id, const POKEMON_PARAM* father, POKEMON_PARAM* egg )
+static void EggCordinate_waza_machine( const PARENT* parent, POKEMON_PARAM* egg, HEAPID heap_id )
 {
   int i, itemno;
   u32 wazano;
@@ -711,7 +797,7 @@ static void EggCordinate_waza_machine(
   for( i=0; i<PTL_WAZA_MAX; i++ )
   {
     // 技コード取得
-    wazano = PP_Get( father, id_para[i], NULL );
+    wazano = PP_Get( parent->father, id_para[i], NULL );
 
     // 同技の技マシンが存在するかどうかチェック
     for( itemno=ITEM_WAZAMASIN01; itemno<=ITEM_DATA_MAX; itemno++ )
@@ -729,8 +815,8 @@ static void EggCordinate_waza_machine(
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <MachineWaza> father(%d, %d, %d, %d)\n",
-      PP_Get( father, ID_PARA_waza1, NULL ), PP_Get( father, ID_PARA_waza2, NULL ),
-      PP_Get( father, ID_PARA_waza3, NULL ), PP_Get( father, ID_PARA_waza4, NULL ) );
+      PP_Get( parent->father, ID_PARA_waza1, NULL ), PP_Get( parent->father, ID_PARA_waza2, NULL ),
+      PP_Get( parent->father, ID_PARA_waza3, NULL ), PP_Get( parent->father, ID_PARA_waza4, NULL ) );
   OS_TFPrintf( PRINT_TARGET,
       "POKEMON-EGG: <MachineWaza> ==> egg(%d, %d, %d, %d)\n",
       PP_Get( egg, ID_PARA_waza1, NULL ), PP_Get( egg, ID_PARA_waza2, NULL ),
@@ -748,15 +834,14 @@ static void EggCordinate_waza_machine(
  * @param egg    設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_pityuu(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_pityuu( const PARENT* parent, POKEMON_PARAM* egg )
 {
   // ピチューのタマゴでなければ何もしない
   if( PP_Get( egg, ID_PARA_monsno, NULL ) != MONSNO_PITYUU ) { return; }
 
   // 両親のどちらかが『でんきだま』を持っていたら,『ボルテッカー』を習得
-  if( ( PP_Get( father, ID_PARA_item, NULL ) == ITEM_DENKIDAMA ) ||
-      ( PP_Get( mother, ID_PARA_item, NULL ) == ITEM_DENKIDAMA ) ) {
+  if( ( PP_Get( parent->father, ID_PARA_item, NULL ) == ITEM_DENKIDAMA ) ||
+      ( PP_Get( parent->mother, ID_PARA_item, NULL ) == ITEM_DENKIDAMA ) ) {
     PokeWazaLearnByPush( egg, WAZANO_BORUTEKKAA );
 
 #ifdef DEBUG_PRINT_ON
@@ -775,16 +860,15 @@ static void EggCordinate_pityuu(
  * @param egg    設定するタマゴ
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_karanakusi(
-    const POKEMON_PARAM* father, const POKEMON_PARAM* mother, POKEMON_PARAM* egg )
+static void EggCordinate_karanakusi( const PARENT* parent, POKEMON_PARAM* egg )
 {
-  u32 monsno_mother = PP_Get( mother, ID_PARA_monsno, NULL );
+  u32 monsno_mother = PP_Get( parent->mother, ID_PARA_monsno, NULL );
 
   // 母親が『カラナクシ』or『トリトドン』なら, フォルムを継承
   if( (monsno_mother == MONSNO_KARANAKUSI) ||
       (monsno_mother == MONSNO_TORITODON) ) {
 
-    u32 formno = PP_Get( mother, ID_PARA_form_no, NULL );
+    u32 formno = PP_Get( parent->mother, ID_PARA_form_no, NULL );
     PP_Put( egg, ID_PARA_form_no, formno );
 
 #ifdef DEBUG_PRINT_ON

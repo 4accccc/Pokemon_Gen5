@@ -810,24 +810,8 @@ static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg )
   GAMESYS_WORK* gsys = FIELDMAP_GetGameSysWork( sodateya->fieldmap );
   GAMEDATA*    gdata = GAMESYSTEM_GetGameData( gsys );
   MYSTATUS* mystatus = GAMEDATA_GetMyStatus( gdata ); 
-  const POKEMON_PARAM* father = NULL;
-  const POKEMON_PARAM* mother = NULL;
-
-  // 父・母ポケモンを取得
-  for( i=0; i<2; i++ )
-  {
-    const POKEMON_PARAM* pp = SODATEYA_WORK_GetPokemon( sodateya->work, i );
-    u32 sex = PP_GetSex( pp );
-    switch( sex )
-    {
-    case PTL_SEX_MALE:   father = pp; break; 
-    case PTL_SEX_FEMALE: mother = pp; break;
-    default:
-      if( !father ) father = pp;
-      if( !mother ) mother = pp;
-      break;
-    }
-  }
+  const POKEMON_PARAM* father = SODATEYA_WORK_GetPokemon( sodateya->work, 0 );
+  const POKEMON_PARAM* mother = SODATEYA_WORK_GetPokemon( sodateya->work, 1 );
 
   // タマゴを作成
   POKEMON_EGG_Create( 
