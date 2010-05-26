@@ -394,8 +394,8 @@
 
 
 	<row id="TOKUSEI_000">
-		<language name="JPN" width="216">－</language>
-		<language name="JPN_KANJI" width="216">－</language>
+		<language name="JPN" width="216">―</language>
+		<language name="JPN_KANJI" width="216">―</language>
 	</row>
 
 	<row id="TOKUSEI_001">
