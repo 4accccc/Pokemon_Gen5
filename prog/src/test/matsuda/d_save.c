@@ -7,7 +7,7 @@
  */
 //==============================================================================
 #include <gflib.h>
-#if PM_DEBUG
+#ifdef PM_DEBUG
 #include <procsys.h>
 #include <tcbl.h>
 #include "system\main.h"
