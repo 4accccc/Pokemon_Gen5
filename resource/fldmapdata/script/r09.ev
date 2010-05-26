@@ -33,11 +33,6 @@ _EVENT_DATA_END
 /*            FLAG_CHANGE_LABEL                               */
 /**************************************************************/
 INIT_EVENT_START	ev_init_r09
-	//わざマシン「なげつける」をくれる人を移動
-	IF $WK_SCENE_R09 == 1 THEN
-		_OBJ_POS_CHANGE(R09_BASEBALLM_01,342, 0,172, DIR_DOWN)
-	ENDIF
-	
 	//クリア後に洞窟前のストッパーを移動
 	IF FLAG_ON(SYS_FLAG_GAME_CLEAR) THEN
 		_OBJ_POS_CHANGE(R09_FIGHTERM_01,345, -2,187, DIR_UP)
