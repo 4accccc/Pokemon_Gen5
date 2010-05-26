@@ -66,9 +66,9 @@ enum {
 #define	LIST_START_END_WAIT		( wk->testStartEndWait )
 #define	LOGO_PUT_WAIT					( wk->testLogoWait )
 #else
-#define	LIST_START_INIT_WAIT	( 31 )
-#define	LIST_START_END_WAIT		( 39 )
-#define	LOGO_PUT_WAIT					( 128 )
+#define	LIST_START_INIT_WAIT	( 47 )
+#define	LIST_START_END_WAIT		( 41 )
+#define	LOGO_PUT_WAIT					( 160 )
 #endif	// PM_DEBUG
 
 #if	PM_VERSION == LOCAL_VERSION
@@ -294,9 +294,14 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	GXS_SetMasterBrightness( -16 );
 
 #ifdef	PM_DEBUG
+	wk->testStartInitWait = 47;
+	wk->testLogoWait = 160;
+	wk->testStartEndWait = 41;
+/*
 	wk->testStartInitWait = 31;
 	wk->testLogoWait = 128;
 	wk->testStartEndWait = 39;
+*/
 #endif	// PM_DEBUG
 
 	InitVram();
@@ -314,7 +319,8 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 
 	PMSND_PlayBGM_WideChannel( SEQ_BGM_ENDING );
 
-	return SetFadeIn( wk, MAINSEQ_START_WAIT );
+//	return SetFadeIn( wk, MAINSEQ_START_WAIT );
+		return MAINSEQ_START_WAIT;
 //	return SetFadeIn( wk, MAINSEQ_MAIN );
 }
 
@@ -1551,6 +1557,8 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 		LoadLogoPalette( wk, TRUE );
 		G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BD, 0, 16 );
 		GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG3, VISIBLE_ON );
+		GX_SetMasterBrightness( 0 );
+		GXS_SetMasterBrightness( 0 );
 		wk->britness = 0;
 		wk->labelSeq++;
 		break;
