@@ -1139,9 +1139,9 @@ static void IDCodeIndex_RegistCode(
     tbl++;
     i++;
   }while( i < idx->max );
-  D_MMDL_Printf(
-      "ERROR:MMDL BLACT RES MAX OBJCODE %d:RES ID %d\n", code, id );
-  GF_ASSERT( 0 );
+  
+  GF_ASSERT_MSG( 0,
+      "MMDL BLACT RESOURCE MAX OBJCODE %d RES %d", code, id );
 }
 
 //--------------------------------------------------------------
@@ -1166,7 +1166,9 @@ static void IDCodeIndex_DeleteCode( IDCODEIDX *idx, u16 code )
     tbl++;
     i++;
   }while( i < idx->max );
-  GF_ASSERT( 0 );
+  
+  GF_ASSERT_MSG( 0,
+      "MMDL BLACT NONE RESOURCE OBJCODE %d", code );
 }
 
 //--------------------------------------------------------------
@@ -1597,7 +1599,8 @@ static void BlActAddReserve_RegistResourceParam(MMDL_BLACTCONT *pBlActCont,
     }
   }
   
-  GF_ASSERT( 0 );
+  GF_ASSERT_MSG( 0,
+      "MMDL BLACT REG RESPRM MAX OBJCODE %d", code );
 }
 
 //--------------------------------------------------------------
@@ -1689,7 +1692,10 @@ static BOOL BlActAddReserve_RegistResource( MMDL_BLACTCONT *pBlActCont,
     }
   }
   
-  GF_ASSERT( 0 ); //—\–ñˆê”t
+#if 1  
+  GF_ASSERT_MSG( 0,
+      "MMDL BLACT REG RESOURCE MAX OBJCODE %d", code );
+#endif
   return( FALSE );
 }
 
