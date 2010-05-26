@@ -44,3 +44,20 @@ BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
   }
   return FALSE;
 }
+
+/**
+ *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック
+ * （野生戦で相手の場合をチェック）
+ */
+BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  if( BTL_SVFTOOL_GetCompetitor(flowWk) == BTL_COMPETITOR_WILD )
+  {
+    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+    if( (clientID == BTL_CLIENT_ENEMY1) || (clientID == BTL_CLIENT_ENEMY1) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+

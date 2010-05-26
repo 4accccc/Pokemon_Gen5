@@ -22,4 +22,5 @@ typedef struct {
  */
 extern BOOL HandCommon_CheckTargetPokeID( u8 pokeID );
 extern BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
+extern BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
 
