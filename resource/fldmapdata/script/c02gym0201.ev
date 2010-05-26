@@ -297,7 +297,7 @@ EVENT_END
 /*     ポケモン像1               　　　　　　　　　　　　　*/
 /**************************************************************/
 EVENT_START		 ev_bg_c02gym0201_statue_01
-	
+_TALK_START_SE_PLAY()
 	//ジムバッジを持っているのかを判定
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
 
@@ -359,7 +359,7 @@ EVENT_END
 /*     隠し扉前に配置されるトレーナー				   　　　 */
 /**************************************************************/
 EVENT_START		ev_c02gym0201_girl3_01
-_TALK_START_SE_PLAY()
+
 	//ジムバッジを持っているのかを判定
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_02 )
 	
