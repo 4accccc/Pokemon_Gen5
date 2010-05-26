@@ -54,11 +54,21 @@ _EVENT_DATA    ev_crowd_people_workman_02
 _EVENT_DATA    ev_crowd_people_workman_03
 _EVENT_DATA    ev_crowd_people_workman_04
 
-//バックパッカー
+//バッドリーダー
 _EVENT_DATA    ev_crowd_people_badrider_01
 _EVENT_DATA    ev_crowd_people_badrider_02
 _EVENT_DATA    ev_crowd_people_badrider_03
 _EVENT_DATA    ev_crowd_people_badrider_04
+
+//未使用になっていたメッセージを追加
+_EVENT_DATA    ev_crowd_people_businessman_05
+_EVENT_DATA    ev_crowd_people_businessman_06
+_EVENT_DATA    ev_crowd_people_ol_05
+_EVENT_DATA    ev_crowd_people_ol_06
+_EVENT_DATA    ev_crowd_people_gentleman_05
+_EVENT_DATA    ev_crowd_people_gentleman_06
+_EVENT_DATA    ev_crowd_people_workman_05
+_EVENT_DATA    ev_crowd_people_workman_06
 
 _EVENT_DATA_END
 
@@ -90,6 +100,16 @@ ev_crowd_people_businessman_04:
 	//
 	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG22 )
   _END
+  
+ev_crowd_people_businessman_05:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG16 )
+  _END
+
+ev_crowd_people_businessman_06:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG05 )
+  _END
 
 /**************************************************************/
 /* 群集話しかけメッセージ            OL                       */
@@ -114,6 +134,16 @@ ev_crowd_people_ol_04:
 	//
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG23)
   _END
+ 
+ev_crowd_people_ol_05:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG24 )
+  _END
+
+ev_crowd_people_ol_06:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG07)
+  _END
 
 /**************************************************************/
 /* 群集話しかけメッセージ            メイド                   */
@@ -121,22 +151,30 @@ ev_crowd_people_ol_04:
 
 ev_crowd_people_maid_01:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG14)
+*/
   _END
 
 ev_crowd_people_maid_02:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG01)
+*/
   _END
 
 ev_crowd_people_maid_03:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG20)
+*/
   _END
 
 ev_crowd_people_maid_04:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG19)
+*/
   _END
 
 /**************************************************************/
@@ -163,6 +201,16 @@ ev_crowd_people_gentleman_04:
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG17)
   _END
 
+ev_crowd_people_gentleman_05:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG01)
+  _END
+	
+ev_crowd_people_gentleman_06:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG14)
+  _END
+
 /**************************************************************/
 /* 群集話しかけメッセージ              作業員                 */
 /**************************************************************/
@@ -180,33 +228,53 @@ ev_crowd_people_workman_02:
 ev_crowd_people_workman_03:
 	//
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG06)
-
+  _END
+  
 ev_crowd_people_workman_04:
 	//
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG03)
   _END
- 
+
+ev_crowd_people_workman_05:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG19)
+  _END
+  
+ev_crowd_people_workman_06:
+	//
+	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG20)
+  _END
+  
 /**************************************************************/
 /* 群集話しかけメッセージ              バックパッカー         */
 /**************************************************************/ 
 
 ev_crowd_people_backpackerm_01:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG16 )
+*/
   _END
 
 ev_crowd_people_backpackerm_02:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG( CROWD_MSG24 )
-
+*/
+  _END
+  
 ev_crowd_people_backpackerm_03:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG05)
+*/
   _END
 
 ev_crowd_people_backpackerm_04:
 	//
+/*
 	_EASY_BALLOONWIN_TALKOBJ_MSG(CROWD_MSG07)
+*/
   _END
  
  /**************************************************************/
