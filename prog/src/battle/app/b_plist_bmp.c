@@ -1254,7 +1254,7 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_001 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->lv, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   PRINT_UTIL_PrintColor(
     &wk->add_win[WIN_P3_LVNUM], wk->que, 0, 0, exp, wk->dat->font, FCOL_P13WN );
@@ -1271,10 +1271,10 @@ static void BPL_P3_LvPut( BPLIST_WORK * wk, u32 pos )
   if( pd->lv < 100 ){
     WORDSET_RegisterNumber(
       wk->wset, 0, pd->next_lv_exp - pd->now_exp,
-      6, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+      6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   }else{
     WORDSET_RegisterNumber(
-      wk->wset, 0, 0, 6, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+      wk->wset, 0, 0, 6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   }
   WORDSET_ExpandStr( wk->wset, exp, str );
   px = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_NEXTNUM].win ) * 8
@@ -1313,7 +1313,7 @@ static void BPL_P3_PowPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_401 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_POWNUM].win ) * 8 - siz;
@@ -1352,7 +1352,7 @@ static void BPL_P3_DefPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_501 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->def, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->def, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_DEFNUM].win ) * 8 - siz;
@@ -1391,7 +1391,7 @@ static void BPL_P3_AgiPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_801 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->agi, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->agi, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_AGINUM].win ) * 8 - siz;
@@ -1430,7 +1430,7 @@ static void BPL_P3_SppPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_601 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->spp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->spp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPPNUM].win ) * 8 - siz;
@@ -1469,7 +1469,7 @@ static void BPL_P3_SpdPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_701 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->spd, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->spd, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   px  = GFL_BMPWIN_GetSizeX( wk->add_win[WIN_P3_SPDNUM].win ) * 8 - siz;
@@ -1515,7 +1515,7 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_301 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->hp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->hp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   tmp_siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   PRINT_UTIL_PrintColor(
@@ -1526,7 +1526,7 @@ static void BPL_P3_HPPut( BPLIST_WORK * wk, u32 pos )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_03_302 );
   exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, pd->mhp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, pd->mhp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   PRINT_UTIL_PrintColor(
     &wk->add_win[WIN_P3_HPNUM], wk->que, px+sra_siz, 0, exp, wk->dat->font, FCOL_P13BKN );
@@ -1618,7 +1618,7 @@ static void BPL_WazaHitNumPut( BPLIST_WORK * wk, u32 idx, u32 hit )
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_201 );
     exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
     WORDSET_RegisterNumber(
-      wk->wset, 0, hit, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+      wk->wset, 0, hit, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
     WORDSET_ExpandStr( wk->wset, exp, str );
     siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
     px  = GFL_BMPWIN_GetSizeX(win) * 8 - siz;
@@ -1685,7 +1685,7 @@ static void BPL_WazaPowNumPut( BPLIST_WORK * wk, u32 idx, u32 pow )
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_101 );
     exp = GFL_STR_CreateBuffer( (3+1)*2, wk->dat->heap ); // (3桁+EOM_)x2(ローカライズ用に一応)
     WORDSET_RegisterNumber(
-      wk->wset, 0, pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+      wk->wset, 0, pow, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
     WORDSET_ExpandStr( wk->wset, exp, str );
     siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
     px  = GFL_BMPWIN_GetSizeX(win) * 8 - siz;
@@ -1818,7 +1818,7 @@ static void BPL_WazaPPPut( BPLIST_WORK * wk, u32 idx, u32 npp, u32 mpp )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_002 );
   exp = GFL_STR_CreateBuffer( (2+1)*2, wk->dat->heap ); // (2桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, npp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, npp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   tmp_siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   PRINT_UTIL_PrintColor(
@@ -1829,7 +1829,7 @@ static void BPL_WazaPPPut( BPLIST_WORK * wk, u32 idx, u32 npp, u32 mpp )
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_003 );
   exp = GFL_STR_CreateBuffer( (2+1)*2, wk->dat->heap ); // (2桁+EOM_)x2(ローカライズ用に一応)
   WORDSET_RegisterNumber(
-    wk->wset, 0, mpp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, mpp, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   PRINT_UTIL_PrintColor(
     &wk->add_win[idx], wk->que, px+sra_siz, 0, exp, wk->dat->font, FCOL_P13WN );
@@ -1925,7 +1925,7 @@ static void BPL_WazaButtonPPPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
   // 最大PP値
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_003 );
   WORDSET_RegisterNumber(
-    wk->wset, 0, waza->mpp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, waza->mpp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   PRINT_UTIL_PrintColor(
     &wk->add_win[idx], wk->que, BTN_PPSRA_PX+siz, BTN_PPSRA_PY, exp, wk->dat->font, FCOL_P09WN );
@@ -1934,7 +1934,7 @@ static void BPL_WazaButtonPPPut( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
   // PP値
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_002 );
   WORDSET_RegisterNumber(
-    wk->wset, 0, waza->pp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, waza->pp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   PRINT_UTIL_PrintColor(
@@ -1974,7 +1974,7 @@ static void BPL_WazaButtonPPRcv( BPLIST_WORK * wk, BPL_POKEWAZA * waza, u32 idx 
   // PP値
   str = GFL_MSG_CreateString( wk->mman, mes_b_plist_04_002 );
   WORDSET_RegisterNumber(
-    wk->wset, 0, waza->pp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+    wk->wset, 0, waza->pp, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wset, exp, str );
   siz = PRINTSYS_GetStrWidth( exp, wk->dat->font, 0 );
   PRINT_UTIL_PrintColor(
