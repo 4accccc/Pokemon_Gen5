@@ -38,6 +38,10 @@ SCRFILE = pokegra_wb.scr
 OTHERFILE = otherform_wb.scr
 OTHERPLTTFILE = otherpltt_wb.scr
 
+#ポケモンノンストップアニメリストデータ作成
+NONSTOPANMFILE = pokeanime_nonstop.csv
+NONSTOPANMDIR	 = w:\\debug_document\\戦闘関連\\ポケモンアニメ\\
+
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./conv/
 
@@ -64,7 +68,7 @@ endif
 #	make do-build ルール
 #------------------------------------------------------------------------------
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-do-build:	del_err nmc ncg ncgc nce ncl $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
+do-build:	nmc ncg ncgc nce ncl $(NONSTOPANMFILE) $(NARCNAME) $(TARGETDIR)/$(NARCNAME)
 else
 do-build:	$(TARGETDIR)/$(NARCNAME)
 endif
@@ -77,9 +81,6 @@ sub_dir:
 	@$(MAKE_SUBDIR)
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
-
-del_err:
-	#rm	err.txt
 
 #nmcデータからの生成ルール
 ncg: $(notdir $(NCGFILE:.ncg=.NCGR))
@@ -106,6 +107,9 @@ $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(n
 	nnsarc -c -l -n -i $(NARCNAME) -S $(SCRFILE) -S $(OTHERFILE) -S $(OTHERPLTTFILE)
 	$(NAIXCUT) $(NAIXNAME)
 
+$(NONSTOPANMFILE): $(NARCNAME)
+	ruby ..\..\tools\pokegra\nonstop_list_mk.rb pokegra_wb_nonstop.lst
+	$(COPY)	$(NONSTOPANMFILE) $(NONSTOPANMDIR)
 endif
 
 #------------------------------------------------------------------------------
@@ -116,6 +120,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 	@$(MAKE_SUBDIR)
 	-rm -f *.N*R
 	-rm -f *.N*C
+	-rm -f err.txt
 	-rm -f $(NARCNAME)
 	-rm -f $(NAIXNAME)
 endif
