@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T14:31:28"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T20:29:26"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -607,7 +607,7 @@
 ・通常時</comment>
 		<attribute name="キャラ指定">見物客その１
 MAN1</attribute>
-		<language name="JPN" width="256">せかいかっこくの　めずしいモノ……
+		<language name="JPN" width="256">せかいかっこくの　めずらしいモノ……
 はくぶつかんは　ロマンが　つまってる</language>
 		<language name="JPN_KANJI" width="256">世界各国の　珍しいモノ……
 博物館は　ロマンの　集合体だね</language>
