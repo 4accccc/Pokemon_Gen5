@@ -37,7 +37,8 @@
 #define BTLV_MCSS_ORTHO_SCALE_MINE  ( FX32_ONE * 16 * 2 )
 #define BTLV_MCSS_ORTHO_SCALE_ENEMY ( FX32_ONE * 16 * 1 )
 
-#define BTLV_MCSS_STOP_ANIME_TIME ( 64 )
+#define BTLV_MCSS_STOP_ANIME_TIME   ( 64 )
+#define BTLV_MCSS_STOP_ANIME_COUNT  ( 3 )
 
 #define BTLV_MCSS_NO_INDEX  ( -1 )
 
@@ -88,7 +89,8 @@ struct  _BTLV_MCSS
   u32             mepachi_always_flag :1;
   u32             sick_set_flag       :1;
   u32             mcss_proj_mode      :1;
-  u32                                 :29;
+  u32             stop_anime_count    :2;
+  u32                                 :27;
 };
 
 struct _BTLV_MCSS_WORK
@@ -563,6 +565,8 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
     int hpmax = PP_Get( pp, ID_PARA_hpmax, NULL );
     bmw->btlv_mcss[ index ].param.appear_hp_color = GAUGETOOL_GetGaugeDottoColor( hp, hpmax );
   }
+
+  bmw->btlv_mcss[ index ].stop_anime_count = BTLV_MCSS_STOP_ANIME_COUNT;
 
   BTLV_MCSS_SetDefaultScale( bmw, position );
 
@@ -2472,6 +2476,16 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
   {
     return;
   }
+
+  { 
+    u32 rand = GFL_STD_MtRand0( bmw->btlv_mcss[ index ].stop_anime_count-- );
+    SOGABE_Printf("rand:%d\n",rand);
+    if( rand )
+    { 
+      return;
+    }
+  }
+  bmw->btlv_mcss[ index ].stop_anime_count = BTLV_MCSS_STOP_ANIME_COUNT;
 
   bmsa = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( bmw->heapID ), sizeof( BTLV_MCSS_STOP_ANIME ) );
   bmsa->index = data;
