@@ -188,9 +188,9 @@ enum{
 //============================================
 
 // スコアスクロール領域
-#define TP_SCORE_SCROL_X  (   24 )
+#define TP_SCORE_SCROL_X  (   16 )
 #define TP_SCORE_SCROL_Y  (   16 )
-#define TP_SCORE_SCROL_W  (  216 )
+#define TP_SCORE_SCROL_W  (  224 )
 #define TP_SCORE_SCROL_H  (   64 )
 
 // 落書き領域（簡易版）
