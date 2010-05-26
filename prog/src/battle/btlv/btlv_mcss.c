@@ -2060,7 +2060,8 @@ static  void  TCB_BTLV_MCSS_Blink( GFL_TCB *tcb, void *work )
     BTLV_MCSS_SetMepachiFlag( bmtw->bmw, bmtw->position, BTLV_MCSS_MEPACHI_FLIP );
     if( --bmtw->emw.count == 0 )
     {
-     BTLV_EFFECT_FreeTCB( tcb );
+      BTLV_MCSS_SetMepachiFlag( bmtw->bmw, bmtw->position, BTLV_MCSS_MEPACHI_OFF );
+      BTLV_EFFECT_FreeTCB( tcb );
     }
   }
   else
