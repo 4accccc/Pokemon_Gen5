@@ -696,7 +696,6 @@ EVENT_START		ev_c02gym0201_assitantw_01
 	ELSE
 	//対戦が終了した場合は、ヒントメッセージを喋る
 		
-		_TALK_OBJ_START()
 		_BALLOONWIN_TALKOBJ_MSG(msg_c02gym0101_assitantw_03a)
 		_LAST_KEYWAIT()
 	    _BALLOONWIN_CLOSE()
