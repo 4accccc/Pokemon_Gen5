@@ -243,11 +243,6 @@ typedef struct _BEACON_VIEW{
 extern void BEACON_VIEW_SUB_EventReserve( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
 
 /*
- *  @brief  イベントリクエスト
- */
-extern void BEACON_VIEW_SUB_EventRequest( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id);
-
-/*
  *  @brief  イベントリクエストリセット
  */
 extern void BEACON_VIEW_SUB_EventReserveReset( BEACON_VIEW_PTR wk );

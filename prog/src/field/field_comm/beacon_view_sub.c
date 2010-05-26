@@ -62,7 +62,7 @@ static int touchin_CheckUpDown( BEACON_VIEW_PTR wk, POINT* tp );
 static int touchin_CheckMenu( BEACON_VIEW_PTR wk, POINT* tp );
 
 static void draw_LogNumWindow( BEACON_VIEW_PTR wk );
-static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id );
+static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id, int* task_ct );
 
 static u32 sub_GetBeaconMsgID(const GAMEBEACON_INFO *info);
 static void sub_PlaySE( u16 se_no );
@@ -121,7 +121,7 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   //現在のログ数
   draw_LogNumWindow( wk );
   //現在のトータルすれ違い人数
-  draw_MenuWindow( wk, msg_sys_now_record );
+  draw_MenuWindow( wk, msg_sys_now_record, NULL );
 
   //最新リストを描画
   for(i = 0;i < wk->ctrl.view_max;i++){
@@ -438,8 +438,7 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
     wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
 
     draw_LogNumWindow( wk );
-    draw_MenuWindow( wk, msg_sys_now_record );
-//    obj_ThanksViewSet( wk );
+    draw_MenuWindow( wk, msg_sys_now_record, &wk->eff_task_ct );
   
     //特殊Gパワーチェック
     sp_gpower_ConditionCheck( wk, wk->newLogInfo, wk->old_list_max );
@@ -455,7 +454,6 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
     list_ScrollReq( wk, wk->newLogInfo, wk->newLogIdx, SCROLL_DOWN, PANEL_DRAW_NEW+(wk->ctrl.view_top > 0));
     wk->ctrl.view_top = wk->newLogOfs;
   
-//    BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_OFF );
     sub_PlaySE( BVIEW_SE_NEW_PLAYER );
     return TRUE;
   }
@@ -503,10 +501,14 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk );
  */
 int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
 {
+  if( wk->eff_task_ct ){
+    return SEQ_THANK_YOU;
+  }
+
   switch( wk->sub_seq ){
   case SSEQ_THANKS_ICON_ANM:
     BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ANM );
-    draw_MenuWindow( wk, msg_sys_thanks );
+    draw_MenuWindow( wk, msg_sys_thanks, &wk->eff_task_ct );
     wk->sub_seq++;
     break;
   case SSEQ_THANKS_ICON_ANM_WAIT:
@@ -543,20 +545,16 @@ int BeaconView_SubSeqThanks( BEACON_VIEW_PTR wk )
     wk->sub_seq = SSEQ_THANKS_DECIDE_WAIT;
     break;
   case SSEQ_THANKS_DECIDE_WAIT:
-    if( wk->eff_task_ct == 0 ){
-      BeaconView_PrintQueLimmitUpSet( wk, FALSE );
-      wk->sub_seq = SSEQ_THANKS_END;
-    }
+    BeaconView_PrintQueLimmitUpSet( wk, FALSE );
+    wk->sub_seq = SSEQ_THANKS_END;
     break;
   case SSEQ_THANKS_VIEW_UPDATE:
-    if( wk->eff_task_ct == 0 ){
-      BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ON );
-      wk->sub_seq = SSEQ_THANKS_MAIN;
-    }
+    BeaconView_MenuBarViewSet( wk, MENU_THANKS, MENU_ST_ON );
+    wk->sub_seq = SSEQ_THANKS_MAIN;
     break;
   case SSEQ_THANKS_END:
     BeaconView_MenuBarViewSet( wk, MENU_ALL, MENU_ST_ON );
-    draw_MenuWindow( wk, msg_sys_now_record );
+    draw_MenuWindow( wk, msg_sys_now_record, &wk->eff_task_ct );
     wk->sub_seq = 0;
     return SEQ_MAIN;
   }
@@ -960,11 +958,11 @@ static void draw_LogNumWindow( BEACON_VIEW_PTR wk )
 /*
  *  @brief  メニューウィンドウ表示
  */
-static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id )
+static void draw_MenuWindow( BEACON_VIEW_PTR wk, u8 msg_id, int* task_ct )
 {
   WORDSET_RegisterNumber( wk->wordset, 0, wk->log_count, 5, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   print_GetMsgToBuf( wk, msg_id );
-  printReq_BmpwinPrint( wk, &wk->win[WIN_MENU], wk->str_expand, 0, 4, 0, FCOL_WHITE_N, NULL );
+  printReq_BmpwinPrint( wk, &wk->win[WIN_MENU], wk->str_expand, 0, 4, 0, FCOL_WHITE_N, task_ct );
 }
 
 /*
@@ -2138,7 +2136,7 @@ static void tcb_WinGPowerYesNo( GFL_TCBL *tcb , void* tcb_wk)
     }
     return;
   case 6:
-    draw_MenuWindow( bvp, msg_sys_now_record );
+    draw_MenuWindow( bvp, msg_sys_now_record, &twk->child_task );
     obj_MenuIconVisibleSet( bvp, TRUE );
     taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
     twk->seq++;
@@ -2215,7 +2213,7 @@ static void tcb_WinGPowerCheck( GFL_TCBL *tcb , void* tcb_wk)
     }
     return;
   case 7:
-    draw_MenuWindow( bvp, msg_sys_now_record );
+    draw_MenuWindow( bvp, msg_sys_now_record, &twk->child_task );
     obj_MenuIconVisibleSet( bvp, TRUE );
     taskAdd_MsgUpdown( bvp, SCROLL_DOWN, &twk->child_task );
     twk->seq++;
@@ -2536,8 +2534,8 @@ void DEBUG_BEACON_VIEW_SuretigaiCountSet( BEACON_VIEW_PTR wk, int value )
 
   //現在のトータルすれ違い人数セット
   wk->log_count = value;
-  draw_MenuWindow( wk, msg_sys_now_record );
-  
+  draw_MenuWindow( wk, msg_sys_now_record, NULL );
+
   wk->init_f = FALSE;
 }
 

@@ -385,14 +385,6 @@ void BEACON_VIEW_SUB_EventReserve( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id
 }
 
 /*
- *  @brief  イベントリクエスト
- */
-void BEACON_VIEW_SUB_EventRequest( BEACON_VIEW_PTR wk, BEACON_DETAIL_EVENT ev_id)
-{
-  wk->event_id = ev_id;
-}
-
-/*
  *  @brief  イベントリクエストリセット
  */
 void BEACON_VIEW_SUB_EventReserveReset( BEACON_VIEW_PTR wk )
