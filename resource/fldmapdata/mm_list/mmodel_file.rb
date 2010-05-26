@@ -60,7 +60,7 @@ def make_asm_text ofile, ar
 
 HEADER
 
-  if ar.length > 30 then
+  if ar.length > 26 then
     printf("ERROR:ŠÇ—‚Å‚«‚él”‚ğ’´‚¦‚Ä‚¢‚Ü‚· %d\n", ar.length);
     exit -1
   end

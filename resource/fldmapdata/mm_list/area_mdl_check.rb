@@ -48,7 +48,7 @@ end
 #---------------------------------------------------
 #---------------------------------------------------
 def make_asm_hash ar, hash, sym
-  if ar.length > 30 then
+  if ar.length > 26 then
     printf("ERROR:管理できる人数を超えています %d\n", ar.length);
     exit -1
   end
@@ -143,16 +143,15 @@ while line = zone_csv.gets
 
     target = AreaHash[area]
 
-    printf("zone %s  %s search..\n",zone, area)
+    printf("zone: %s  area: %s search..\n",zone, area)
 
     #作成した配列要素が全て、エリアに入っているかを調べる
     ary.each{|i|
       rc = target.include?(i)
       if rc == false then
         printf("ERROR:%s not!\n",i);
-        exit -1
       else
-        printf("%s exist!\n",i);
+#        printf("%s exist!\n",i);
       end
     }
   end  
