@@ -23,6 +23,12 @@
 
 #include  "message.naix"
 
+#ifdef PM_DEBUG
+#if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_nishino
+#define SEIKAKU_PRINT
+#endif
+#endif
+
 //============================================================================================
 /**
  * ç\ë¢ëÃêÈåæ
@@ -637,6 +643,9 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
       PP_Put( pp, ID_PARA_seikaku, rnd % PTL_SEIKAKU_MAX );
     }
   }
+#ifdef SEIKAKU_PRINT
+  OS_TPrintf("tr_id:%d mons_no:%d seikaku:%d\n",tr_id,PP_Get(pp,ID_PARA_monsno,NULL),PP_Get(pp,ID_PARA_seikaku,NULL));
+#endif
 }
 
 //============================================================================================
