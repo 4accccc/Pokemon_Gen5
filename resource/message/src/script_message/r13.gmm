@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T12:16:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T16:46:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -404,7 +404,7 @@
 		<language name="JPN_KANJI" width="256">キャル！　キャルルー！</language>
 	</row>
 
-	<row id="msg_r13_sys_01" text-color=",,,,,,#000000,,,,,,#000000,,,,,," back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="msg_r13_sys_01" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,#c0c0c0,,,,,,">
 		<comment>システム
 ・キャモメのお礼を取得
 　No416「わざマシン８９」（とんぼがえり）</comment>
@@ -412,11 +412,11 @@
 		<language name="JPN" width="256">キャモメは　うれしそうに
 そらへ　とびさった！▼
 ……おや？
-なにか　おちている</language>
+なにか　おちている▼</language>
 		<language name="JPN_KANJI" width="256">キャモメは　うれしそうに
 空へ　飛び去った！▼
 ……おや？
-なにか　落ちている</language>
+なにか　落ちている▼</language>
 	</row>
 
 	<row id="msg_r13_girl1_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
@@ -449,7 +449,7 @@
 どうにか　してあげたいのだけど……▼</language>
 	</row>
 
-	<row id="msg_r13_girl1_02" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_02" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・配達物を１つ以上持っている場合
 　キャモメに渡しているようなアニメ後
@@ -457,10 +457,10 @@
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あ　すごい！
 それ　はいたつぶつ　じゃない？▽
-ちょっと　みせて　あげようよ！</language>
+ちょっと　みせて　あげようよ！▼</language>
 		<language name="JPN_KANJI" width="256">あ　すごい！
 それ　配達物　じゃない？▽
-ちょっと　みせて　あげようよ！</language>
+ちょっと　みせて　あげようよ！▼</language>
 	</row>
 
 	<row id="msg_r13_girl1_03" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
@@ -483,15 +483,15 @@
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_r13_girl1_05" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_05" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・全部見つけている場合
 　msg_r13_poke_03へ</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ぜんぶ　そろったね！
-これで　キャモメも　おおだすかりね！</language>
+これで　キャモメも　おおだすかりね！▼</language>
 		<language name="JPN_KANJI" width="256">ぜんぶ　そろったね！
-これで　キャモメも　おおだすかりね！</language>
+これで　キャモメも　おおだすかりね！▼</language>
 	</row>
 
 	<row id="msg_r13_girl1_06" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
