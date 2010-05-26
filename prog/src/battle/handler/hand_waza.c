@@ -1750,7 +1750,7 @@ static void handler_KumoNoSu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
       param->pokeID = targetPokeID;
       param->sickID = WAZASICK_TOOSENBOU;
-      param->sickCont = BTL_CALC_MakeWazaSickCont_Poke( targetPokeID );
+      param->sickCont = BTL_CALC_MakeWazaSickCont_Poke( pokeID );
 
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_CantEscWaza );
       HANDEX_STR_AddArg( &param->exStr,targetPokeID );
