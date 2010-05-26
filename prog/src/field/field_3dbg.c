@@ -682,7 +682,8 @@ static void FIELD_3DBG_TEX_Init( FIELD_3DBG_TEX* p_wk, ARCHANDLE* p_handle, cons
 	p_wk->texpltt	= cp_data->texpltt;			// GXTexPlttColor0
 
 	// texture“Ç‚Ýž‚Ý
-	p_wk->p_textmp = GFL_G3D_CreateResourceHandle( p_handle, cp_data->nsbtex_id );
+  p_wk->p_textmp = GFL_HEAP_AllocClearMemory( heapID, GFL_G3D_GetResourceHeaderSize() );
+	GFL_G3D_CreateResourceAuto( p_wk->p_textmp, GFL_ARC_LoadDataAllocByHandle( p_handle, cp_data->nsbtex_id, heapID ) );
 
 	result = GFL_G3D_AllocVramTexture( p_wk->p_textmp );
 	GF_ASSERT( result );
