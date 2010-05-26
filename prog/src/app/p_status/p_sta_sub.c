@@ -702,9 +702,6 @@ void PSTATUS_SUB_DispPage_Trans( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork 
     GFL_G3D_CAMERA_Switching( work->camera );
   }
   */
-#if USE_STATUS_DEBUG
-  PSTATUS_SUB_SetShadowScale( work , subWork );
-#endif
 }
 
 //--------------------------------------------------------------
@@ -1478,15 +1475,3 @@ static void PSTATUS_SUB_SetShadowOffset( PSTATUS_WORK *work , PSTATUS_SUB_WORK *
   MCSS_SetShadowOffset( subWork->pokeMcss , &calcOfs );
   MCSS_SetShadowOffset( subWork->pokeMcssBack , &calcOfs );
 }
-
-//デバグ用
-#if USE_STATUS_DEBUG
-void PSTATUS_SUB_SetShadowScale( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork )
-{
-  MCSS_SetShadowScale( subWork->pokeMcss , &work->shadowScale );
-  MCSS_SetShadowRotate( subWork->pokeMcss , work->shadowRotate );
-  MCSS_SetShadowScale( subWork->pokeMcssBack , &work->shadowScale );
-  MCSS_SetShadowRotate( subWork->pokeMcssBack , work->shadowRotate );
-  PSTATUS_SUB_SetShadowOffset( work , subWork , &work->shadowOfs );
-}
-#endif
