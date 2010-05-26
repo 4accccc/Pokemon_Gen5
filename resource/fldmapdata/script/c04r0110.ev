@@ -848,7 +848,7 @@ sub_train_battle_win_next_menu:
     CASE 3 THEN //リタイア
       //リタイアするか
       _SYSWIN_MSG( msg_c04r0110_06 , POS_DOWN )
-      _YES_NO_WIN( SCWK_ANSWER )
+      _BSUBWAY_TOOL( BSWTOOL_YESNO_WIN, SCR_NO, BSW_NULL, SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == 0 THEN
@@ -969,7 +969,7 @@ sub_train_battle_win_next_menu_comm_multi:
     DEFAULT //リタイア
       //リタイアするか
       _SYSWIN_MSG( msg_c04r0110_06 , POS_DOWN )
-      _YES_NO_WIN( SCWK_ANSWER )
+      _BSUBWAY_TOOL( BSWTOOL_YESNO_WIN, SCR_NO, BSW_NULL, SCWK_ANSWER )
       _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == SCR_YES THEN
@@ -1254,7 +1254,7 @@ sub_common_btlrec:
   
   IF $ret == TRUE THEN //既存ビデオあり
     _SYSWIN_MSG( msg_c04r0110_09 , POS_DOWN )
-    _YES_NO_WIN( ret )
+    _BSUBWAY_TOOL( BSWTOOL_YESNO_WIN, SCR_NO, BSW_NULL, ret )
     _SYSWIN_CLOSE()
     
     IF $ret == SCR_NO THEN
