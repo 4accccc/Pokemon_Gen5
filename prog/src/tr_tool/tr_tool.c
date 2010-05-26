@@ -627,11 +627,11 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
     //特定のトレーナーの特定ポケモンの性格を固定にする
     if( ( tr_id == TRID_BOSS_2_06 ) && ( mons_no == MONSNO_RESIRAMU ) )
     { 
-      PP_Put( pp, ID_PARA_seikaku, PTL_SEIKAKU_YOUKI );
+      PP_SetSeikaku( pp, PTL_SEIKAKU_YOUKI );
     }
     else if( ( tr_id == TRID_BOSS_2_07 ) && ( mons_no == MONSNO_ZEKUROMU ) )
     { 
-      PP_Put( pp, ID_PARA_seikaku, PTL_SEIKAKU_OKUBYOU );
+      PP_SetSeikaku( pp, PTL_SEIKAKU_OKUBYOU );
     }
     else
     { 
@@ -640,7 +640,7 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
       //下位1バイトは性別のために偏りがあるので、上位24bitで計算する
       rnd >>= 8;
 
-      PP_Put( pp, ID_PARA_seikaku, rnd % PTL_SEIKAKU_MAX );
+      PP_SetSeikaku( pp, rnd % PTL_SEIKAKU_MAX );
     }
   }
 #ifdef SEIKAKU_PRINT
