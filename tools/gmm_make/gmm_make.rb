@@ -158,7 +158,7 @@ class GMM
     @fp_gmm_w.printf( "\t<row id=\"%s\">\r\n", label )
 
     @fp_gmm_w.printf( "\t\t<language name=\"JPN\" width=\"%d\">", @width_value )
-    data = [ 0xff0d ].pack( "s" )
+    data = [ 0xe2, 0x80, 0x95 ].pack( "c3" )
     for i in 1..value
 	    data.size.times{ |c|
           @fp_gmm_w.printf( "%c",data[ c ] )
@@ -192,7 +192,7 @@ class GMM
     @fp_gmm_w.printf( "\t<row id=\"%s\">\r\n", label )
 
     @fp_gmm_w.printf( "\t\t<language name=\"JPN\" width=\"%d\">", @width_value )
-    data = [ 0xef, 0xbc, 0x8d ].pack( "c3" )
+    data = [ 0xe2, 0x80, 0x95 ].pack( "c3" )
     for i in 1..value
 	    data.size.times{ |c|
           @fp_gmm_w.printf( "%c",data[ c ] )
