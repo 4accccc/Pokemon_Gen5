@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohnishi_shinichi" host="W00207" date="2010-04-21T14:20:51" source="m_dun1002_00_00c.mb"/>
+	<create user="ohnishi_shinichi" host="W00207" date="2010-05-26T13:32:40" source="_OH_Jaian_garden.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohnishi_shinichi" host="W00207" date="2010-04-21T14:20:51" source="m_dun1002_00_00c.mb"/>
+<original_create user="ohnishi_shinichi" host="W00207" date="2010-05-26T13:32:40" source="_OH_Jaian_garden.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -2844,9 +2844,9 @@
 		</mtx_prim>
 	</polygon>
 	<polygon index="11" name="polygon11"
-		vertex_size="28" polygon_size="7"
-		triangle_size="0" quad_size="7"
-		volume_min="-0.500000 0.250000 -4.000000"
+		vertex_size="32" polygon_size="8"
+		triangle_size="0" quad_size="8"
+		volume_min="-0.500000 0.000000 -4.000000"
 		volume_max="4.000000 1.750000 4.000000"
 		volume_r="5.921387"
 		mtx_prim_size="1"
@@ -2855,11 +2855,19 @@
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="1">
-				<primitive index="0" type="quads" vertex_size="28">
+				<primitive index="0" type="quads" vertex_size="32">
 					<mtx idx="0"/>
-					<tex st="-32.000000 272.000000"/>
+					<tex st="160.000000 -240.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="-0.500000 0.250000 4.000000"/>
+					<pos_s xyz="2.500000 0.000000 -4.000000"/>
+					<tex st="-32.000000 -240.000000"/>
+					<pos_xy xy="-0.500000 0.000000"/>
+					<tex st="-32.000000 272.000000"/>
+					<pos_xz xz="-0.500000 4.000000"/>
+					<tex st="160.000000 272.000000"/>
+					<pos_xy xy="2.500000 0.000000"/>
+					<tex st="-32.000000 272.000000"/>
+					<pos_xy xy="-0.500000 0.250000"/>
 					<tex st="-16.000000 272.000000"/>
 					<pos_xy xy="-0.250000 0.250000"/>
 					<tex st="-16.000000 -240.000000"/>
@@ -3137,8 +3145,8 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="15"
-		vertex_size="870" polygon_size="229"
-		triangle_size="20" quad_size="209"
+		vertex_size="874" polygon_size="230"
+		triangle_size="20" quad_size="210"
 		volume_min="-4.000000 0.000000 -4.000000"
 		volume_max="4.000000 1.750000 4.031250"
 		volume_r="5.921387"
@@ -3161,8 +3169,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="870" polygon_size="229"
-	triangle_size="20" quad_size="209"/>
+<output_info vertex_size="874" polygon_size="230"
+	triangle_size="20" quad_size="210"/>
 
 </body>
 
