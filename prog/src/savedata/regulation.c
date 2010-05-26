@@ -24,7 +24,11 @@
 
 #define HEAPID_SAVE_TEMP        (GFL_HEAPID_APP)
 
-
+#if PM_DEBUG
+#define REGPRINT (0)
+#else
+#define REGPRINT (0)
+#endif
 
 //============================================================================================
 //============================================================================================
@@ -720,7 +724,9 @@ void Regulation_SetCardParam(REGULATION_CARDDATA* pReg, REGULATION_CARD_PARAM_TY
 //-----------------------------------------------------------------------------
 BOOL Regulation_CheckCrc( const REGULATION_CARDDATA* pReg )
 { 
+#if REGPRINT
   OS_TPrintf( "CRCチェック buffer[0x%x]== calc[0x%x]\n", pReg->crc, GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 ));
+#endif
   return pReg->crc == GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
 }
 
@@ -974,6 +980,7 @@ void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg )
 { 
   const REGULATION  *cp_data = &cpReg->regulation_buff;
 
+#if REGPRINT
   OS_TPrintf( "reg size =%d\n", sizeof(REGULATION));
   OS_TPrintf( "card size=%d\n", sizeof(REGULATION_CARDDATA));
   OS_TPrintf( "cupno    =%d\n", cp_data->cupNo);
@@ -1014,6 +1021,6 @@ void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg )
   OS_TPrintf( "endy  d  =%d\n", cpReg->end_day);//終了日：01-31
   OS_TPrintf( "status   =%d\n", cpReg->status);  //大会状態： net/dreamworld_netdata.hのDREAM_WORLD_MATCHUP_TYPEの値
   OS_TPrintf( "crc      =%d\n", cpReg->crc);  //整合性検査
-  
+#endif
 }
 #endif //PM_DEBUG

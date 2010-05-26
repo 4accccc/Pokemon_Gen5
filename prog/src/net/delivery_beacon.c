@@ -20,6 +20,13 @@
 #include "net/wih.h"
 #include "net/net_whpipe.h"
 
+#if PM_DEBUG
+#define DELIVDEBUG_PRINT (0)
+#else
+#define DELIVDEBUG_PRINT (0)
+#endif
+
+
 
 #define _BEACON_CHANGE_COUNT (0)
 
@@ -206,7 +213,9 @@ static void _beaconDataDiv(DELIVERY_BEACON_WORK* pWork)
   for(j = 0; j < pWork->aInit.dataNum ; j++){
     max = (pWork->aInit.data[j].datasize/DELIVERY_BEACON_ONCE_NUM)+1;
     GF_ASSERT(pWork->aInit.data[j].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+#if DELIVDEBUG_PRINT
     OS_TPrintf("%d %d\n",pWork->aInit.data[j].datasize, (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+#endif
     for(i = 0; i < DELIVERY_BEACON_MAX_NUM ; i++){
       DELIVERY_BEACON* pBeacon;
       DELIVERY_BEACON_INIT* pInit;
@@ -240,7 +249,9 @@ static void _sendLoop(DELIVERY_BEACON_WORK* pWork)
   if( WHGetBeaconSendNum() > _BEACON_CHANGE_COUNT ){
     pWork->nowCount++;
     NET_WHPIPE_BeaconSetInfo();
+#if DELIVDEBUG_PRINT
     OS_TPrintf("いれかえ%d\n",pWork->nowCount);
+#endif
   }
 }
 //サーバ起動
@@ -306,7 +317,9 @@ static void _beaconAlloc(DELIVERY_BEACON_WORK* pWork)
 {
   if(pWork->aInit.data[0].datasize){
     int max = (pWork->aInit.data[0].datasize/DELIVERY_BEACON_ONCE_NUM)+1;
+#if DELIVDEBUG_PRINT
     OS_TPrintf("%d %d\n",pWork->aInit.data[0].datasize , (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
+#endif
     GF_ASSERT(pWork->aInit.data[0].datasize < (DELIVERY_BEACON_MAX_NUM*DELIVERY_BEACON_ONCE_NUM));
   }
 }
@@ -368,7 +381,9 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
 
     index = pBeacon->count - 1;
     if(index >= DELIVERY_BEACON_MAX_NUM){
+#if DELIVDEBUG_PRINT
       OS_TPrintf("DELIVERY_BEACON_MAX_NUM\n");
+#endif
       continue;
     }
     if(pWork->aSendRecv[0][index].count != 0){
@@ -377,12 +392,15 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
     pData = (u8*)pBeacon->data;
     crc = GFL_STD_CrcCalc( pData, DELIVERY_BEACON_ONCE_NUM);
     if(crc != pBeacon->crc16){
+#if DELIVDEBUG_PRINT
       OS_TPrintf("間違ったデータ\n");
+#endif
       continue; //間違ったデータ
     }
     //取得
+#if DELIVDEBUG_PRINT
     OS_TPrintf("取得%d \n",index);
-
+#endif
     GFL_NET_WLFIXScan( i ); //スキャンを限定する
 
     GFL_STD_MemCopy( pBeacon, &pWork->aSendRecv[0][index],  sizeof(DELIVERY_BEACON));

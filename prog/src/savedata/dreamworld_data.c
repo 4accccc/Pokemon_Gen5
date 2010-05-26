@@ -21,7 +21,6 @@
 //--------------------------------------------------------------------------------------------
 int DREAMWORLD_SV_GetWorkSize(void)
 {
-  OS_Printf("ドリームワールドサイズ\n",sizeof(DREAMWORLD_SAVEDATA));
 	return sizeof(DREAMWORLD_SAVEDATA);
 }
 

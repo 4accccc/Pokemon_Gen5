@@ -18,6 +18,13 @@
 #include "net/delivery_irc.h"
 #include "net/net_irc.h"
 
+#if PM_DEBUG
+#define DELIVDEBUG_PRINT (0)
+#else
+#define DELIVDEBUG_PRINT (0)
+#endif
+
+
 typedef enum
 {
   DELIVERY_IRC_FLAG_NONE,       //なにもない
@@ -308,7 +315,9 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
       u16 crc=0;
       DELIVERY_DATA *pData  = NULL;
 
+#if DELIVDEBUG_PRINT
       OS_TPrintf( "子機からリクエストうけとり　言語%d ver%d\n", pWork->request.LangCode, pWork->request.version );
+#endif
       //対応する言語コードをサーチ
       { 
         int i;
@@ -329,7 +338,9 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
       //言語コードがあったのでCRCを送る
       if( pWork->bRequestExist == TRUE )
       { 
+#if DELIVDEBUG_PRINT
         OS_TPrintf( "子機へ渡すデータは%d番です\n", pWork->dataIdx );
+#endif
         crc = GFL_STD_CrcCalc( pData->pData, pData->datasize);
         if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA + _NET_CMD( pWork->aInit.NetDevID ), sizeof(u16) ,  &crc )){
           GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
@@ -339,7 +350,9 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
       }
       else
       { 
+#if DELIVDEBUG_PRINT
         OS_TPrintf( "子機へ渡すデータがなかった\n" );
+#endif
         //なかったのでないよフラグを渡す
         pWork->recvFlag = DELIVERY_IRC_FLAG_NO_REQUEST_DATA;
         if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
