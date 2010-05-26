@@ -9728,6 +9728,9 @@ static BOOL scproc_turncheck_sub( BTL_SVFLOW_WORK* wk, BTL_POKESET* pokeSet, Btl
       Hem_PopState( &wk->HEManager, hem_state );
 
       scproc_CheckDeadCmd( wk, bpp );
+      if( scproc_CheckShowdown(wk) ){
+        break;
+      }
     }
   }
 
