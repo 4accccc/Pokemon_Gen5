@@ -194,9 +194,29 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
   if( !BPP_IsDead(bpp) )
   {
-    BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+    BTL_HANDEX_PARAM_DAMAGE* param ;
     BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_BIND );
     WazaID waza = BPP_SICKCONT_GetParam( cont );
+    int effNo = -1;
+
+    switch( waza ){
+    case WAZANO_MAKITUKU:      effNo = BTLEFF_MAKITUKU; break;
+    case WAZANO_SIMETUKERU:    effNo = BTLEFF_SIMETUKERU; break;
+    case WAZANO_HONOONOUZU:    effNo = BTLEFF_HONOONOUZU; break;
+    case WAZANO_MAGUMASUTOOMU: effNo = BTLEFF_MAGUMASUTOOMU; break;
+    case WAZANO_KARADEHASAMU:  effNo = BTLEFF_KARADEHASAMU; break;
+    case WAZANO_UZUSIO:        effNo = BTLEFF_UZUSIO; break;
+    case WAZANO_SUNAZIGOKU:    effNo = BTLEFF_SUNAZIGOKU; break;
+    }
+    if( effNo != -1 )
+    {
+      BTL_HANDEX_PARAM_ADD_EFFECT* eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
+      eff_param->effectNo = effNo;
+      eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      eff_param->pos_to = BTL_POS_NULL;
+    }
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
 
     param->pokeID = pokeID;
     if( BPP_SICKCONT_GetFlag(cont) ){ // フラグONなら２倍（しめつけバンド対応）
@@ -388,7 +408,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     s16       strID_useItem;
   }dispatchTbl[] = {
     { WAZASICK_DOKU,          BTL_STRID_SET_DokuCure,         BTL_STRID_SET_UseItem_CureDoku    },
-    { POKESICK_YAKEDO,        BTL_STRID_SET_YakedoCure,       BTL_STRID_SET_UseItem_CureYakedo  },
+    { WAZASICK_YAKEDO,        BTL_STRID_SET_YakedoCure,       BTL_STRID_SET_UseItem_CureYakedo  },
     { WAZASICK_NEMURI,        BTL_STRID_SET_NemuriWake,       BTL_STRID_SET_UseItem_CureNemuri  },
     { WAZASICK_KOORI,         BTL_STRID_SET_KoriMelt,         BTL_STRID_SET_UseItem_CureKoori   },
     { WAZASICK_MAHI,          BTL_STRID_SET_MahiCure,         BTL_STRID_SET_UseItem_CureMahi    },

@@ -391,7 +391,7 @@ typedef struct {
 typedef struct {
  BTL_HANDEX_PARAM_HEADER   header;   ///< 共有ヘッダ
  u8   pokeID;                        ///< 対象ポケモンID
- u8   fHitHidePoke;                  ///< そらをとぶ状態など画面から消えているポケにも与える
+ u8   fAvoidHidePoke;                ///< そらをとぶ状態など画面から消えているポケに効果なし
  u16  damage;                        ///< ダメージ量
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_DAMAGE;

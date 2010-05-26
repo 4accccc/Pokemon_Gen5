@@ -9716,6 +9716,12 @@ void BTL_SVF_SickDamageRecall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick
     case WAZASICK_YAKEDO:
       scPut_EffectByPokePos( wk, bpp, BTLEFF_YAKEDO );
       break;
+    case WAZASICK_NOROI:
+      scPut_EffectByPokePos( wk, bpp, BTLEFF_NOROI );
+      break;
+    case WAZASICK_AKUMU:
+      scPut_EffectByPokePos( wk, bpp, BTLEFF_AKUMU );
+      break;
     }
     BTL_SICK_MakeSickDamageMsg( &wk->strParam, bpp, sickID );
     scproc_SimpleDamage( wk, bpp, damage, &wk->strParam, FALSE );
@@ -14733,7 +14739,7 @@ static u8 scproc_HandEx_damage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 
     if( !BPP_IsDead(pp_target) )
     {
-      if( (param->fHitHidePoke)
+      if( (!(param->fAvoidHidePoke))
       ||  (CheckPokeHideState(pp_target) == BPP_CONTFLG_NULL)
       ){
         if( scproc_SimpleDamage(wk, pp_target, param->damage, &param->exStr, FALSE) ){

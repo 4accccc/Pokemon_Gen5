@@ -1537,7 +1537,6 @@ static void  common_TobigeriReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
   param->pokeID = pokeID;
   param->damage = damage;
-  param->fHitHidePoke = TRUE;
   HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HazureJibaku );
   HANDEX_STR_AddArg( &param->exStr, pokeID );
 }
@@ -9843,6 +9842,7 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
           param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
           param->pokeID = targetPokeID[ i ];
           param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+          param->fAvoidHidePoke = TRUE;
           HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HajikeruHonoo_Side );
           HANDEX_STR_AddArg( &param->exStr, param->pokeID );
         }

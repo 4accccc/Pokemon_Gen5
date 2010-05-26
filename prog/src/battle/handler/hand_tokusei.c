@@ -2550,7 +2550,6 @@ static void handler_SunPower_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
         param->pokeID = pokeID;
         param->damage = damage;
-        param->fHitHidePoke = TRUE;
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
@@ -3068,6 +3067,7 @@ static void handler_Yuubaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
           BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
           param->pokeID = attackerPokeID;
           param->damage = BTL_CALC_QuotMaxHP( bpp, 4 );
+          param->fAvoidHidePoke = TRUE;
           HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_SimpleDamage );
           HANDEX_STR_AddArg( &param->exStr, attackerPokeID );
         }
@@ -3866,7 +3866,6 @@ static void handler_Kansouhada_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       {
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
         param->pokeID = pokeID;
-        param->fHitHidePoke = TRUE;
         param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
       }
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
@@ -4869,7 +4868,6 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
       param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       param->damage = damage;
-      param->fHitHidePoke = TRUE;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HedoroEki );
       HANDEX_STR_AddArg( &param->exStr, param->pokeID );
 
