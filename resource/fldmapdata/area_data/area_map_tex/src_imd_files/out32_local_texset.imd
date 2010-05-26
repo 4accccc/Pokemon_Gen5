@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-05-17T14:40:01"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-05-25T19:02:49"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -3787,14 +3787,14 @@
 		path="C:/home/wb_data3d/gimmick/league_front/tex/pl_ele_dai.tga"
 	>
 		<bitmap size="64">
-			ffff ffff dddd dddd cccc cccc cccc cccc
-			eeee eeee eeee eeee eeee eeee eeee eeee
-			2222 2222 3333 3333 7777 7777 7777 7777
-			aaaa aaaa 6666 6666 8888 8888 9999 9999
-			7777 7777 8888 8888 7777 7777 aaaa aaaa
-			4444 4444 3333 3333 4444 4444 3333 3333
-			5555 5555 7777 7777 7777 7777 bbbb bbbb
-			1111 1111 0000 0000 0000 0000 0000 0000
+			0000 0000 1111 1111 2222 2222 4444 4444
+			0000 0000 0000 0000 0000 0000 0000 0000
+			6100 ccc9 7222 ddda 8333 eeeb 8333 eeeb
+			8555 fffb 8333 eeeb 8333 eeeb 8333 eeeb
+			8333 eeeb 8333 eeeb 8333 eeeb 8555 fffb
+			7222 ddda 7222 ddda 7222 ddda 7222 ddda
+			7222 ddda 8444 eeeb 8333 eeeb 8555 ffff
+			6111 ccc9 6000 ccc9 6000 ccc9 6000 ccc9
 		</bitmap>
 	</tex_image>
 	<tex_image index="82" name="slope"
@@ -4221,8 +4221,8 @@
 		3ef9 431a 433b 477c 4b9e 53df 57ff 6ebf
 	</tex_palette>
 	<tex_palette index="81" name="pl_ele_dai_pl" color_size="16">
-		7369 736b 6f6b 7390 7391 73b2 73b4 73b4
-		73b5 73b6 73d7 73d8 1a53 098d 04e9 050b
+		04e9 116b 1a11 1e74 22b6 26d7 3a2a 3eb0
+		4315 5aea 5f50 5f75 6f4a 6f90 6fb4 73b6
 	</tex_palette>
 	<tex_palette index="82" name="slope2_pl" color_size="16">
 		19b1 21f3 2214 2635 2a77 2e78 2eb9 32b9
