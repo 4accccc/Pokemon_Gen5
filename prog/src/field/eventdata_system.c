@@ -1005,6 +1005,10 @@ const POS_EVENT_DATA * EVENTDATA_GetDummyPosEvent(
       {
         continue;
       }
+      if ( data->workID == 0 )
+      { //ワーク指定が０のとき、無条件にPOS発動
+        return data;
+      }
       work_val = EVENTWORK_GetEventWorkAdrs( evwork, data->workID );
       if( (*work_val) == data->param )
       {

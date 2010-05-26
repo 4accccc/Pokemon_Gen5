@@ -12,7 +12,7 @@
 #include "fieldmap.h"
 #include "field/eventdata_system.h"
 #include "field/eventdata_sxy.h"
-#include "field/zonedata.h" //ZONEDATA_EnablePalaceUse
+#include "field/zonedata.h"       //for ZONEDATA_EnablePalaceUse
 
 #include "palace_warp_check.h"
 
@@ -86,6 +86,22 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
           return FALSE;
         }
       }
+    }
+  }
+
+  //ダミーＰＯＳチェック(グリッドのみ)
+  if( FIELDMAP_GetBaseSystemType( fieldWork ) == FLDMAP_BASESYS_GRID )
+  {
+    const POS_EVENT_DATA * pos_data;
+    VecFx32 pos;
+    MMDL *mmdl = FIELD_PLAYER_GetMMdl( fld_player );
+    EVENTWORK *evwork = GAMEDATA_GetEventWork( gdata );
+    MMDL_GetVectorPos( mmdl, &pos );
+    pos_data = EVENTDATA_GetDummyPosEvent( evdata, evwork, &pos );
+    if( pos_data != NULL ) //ダミーイベントを取得できたらその場では侵入不可
+    {
+      NOZOMU_Printf( "Dummy Pos Dont warp\n");
+      return FALSE;
     }
   }
 
