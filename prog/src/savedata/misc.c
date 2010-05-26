@@ -214,7 +214,7 @@ static void MISC_InitNameIn( MISC *p_misc )
 //--------------------------------------------------------------
 void MISC_SetFavoriteMonsno(MISC * misc, int monsno, int form_no, int egg_flag, int sex )
 {
-  OS_TPrintf( "お気に入りポケモンは%dでフォルムは%dで、性別は %d、タマゴフラグ%dです\n", monsno, form_no, egg_flag );
+  //OS_TPrintf( "お気に入りポケモンは%dでフォルムは%dで、性別は %d、タマゴフラグ%dです\n", monsno, form_no, egg_flag );
 	misc->favorite_monsno = monsno;
 	misc->favorite_form_no = form_no;
 	misc->favorite_egg_flag = egg_flag;

@@ -40,6 +40,33 @@
 
 /*----------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
+/* debug                                                                    */
+/*--------------------------------------------------------------------------*/
+#ifdef PM_DEBUG
+
+#define DEBUG_BATTLE_REC_PRINT_ON //担当者のみのプリントON
+
+#endif //PM_DEBUG
+
+
+//担当者のみのプリント
+#ifdef DEBUG_BATTLE_REC_PRINT_ON
+
+#if defined( DEBUG_ONLY_FOR_matsuda ) 
+#define BATTLE_REC_Printf(...) OS_TPrintf(__VA_ARGS__)
+#elif  defined( DEBUG_ONLY_FOR_shimoyamada )
+#define BATTLE_REC_Printf(...) OS_TPrintf(__VA_ARGS__)
+#elif defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#define BATTLE_REC_Printf(...) OS_TFPrintf(1,__VA_ARGS__)
+#else  //defined
+#define BATTLE_REC_Printf(...)  /*  */
+#endif //defined
+
+#else //DEBUG_BATTLE_REC_PRINT_ON
+#define BATTLE_REC_Printf(...)  /*  */
+#endif //DEBUG_BATTLE_REC_PRINT_ON
+
+/*--------------------------------------------------------------------------*/
 /* Globals                                                                  */
 /*--------------------------------------------------------------------------*/
 BATTLE_REC_SAVEDATA * brs=NULL;
@@ -89,8 +116,8 @@ static BATTLE_REC_SAVEDATA * _BattleRecSaveAlloc(HEAPID heapID)
 void BattleRec_Init(HEAPID heapID)
 {
 #ifdef DEBUG_ONLY_FOR_matsuda
-  OS_TPrintf("BATTLE_REC_WORK size = %d\n", sizeof(BATTLE_REC_WORK));
-  OS_TPrintf("BATTLE_REC_HEADER size = %d\n", sizeof(BATTLE_REC_HEADER));
+  BATTLE_REC_Printf("BATTLE_REC_WORK size = %d\n", sizeof(BATTLE_REC_WORK));
+  BATTLE_REC_Printf("BATTLE_REC_HEADER size = %d\n", sizeof(BATTLE_REC_HEADER));
 #endif  //DEBUG_ONLY_FOR_matsuda
 
   if(brs != NULL){
@@ -233,7 +260,7 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
   SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
 
   if(*result == LOAD_RESULT_NULL){
-    OS_TPrintf("録画データが存在しません\n");
+    BATTLE_REC_Printf("録画データが存在しません\n");
     *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
     return TRUE;
   }
@@ -251,7 +278,7 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
 
   //読み出したデータに録画データが入っているかチェック
   if(BattleRec_DataInitializeCheck(sv, wk_brs) == TRUE){
-    OS_TPrintf("録画データが初期状態のものです\n");
+    BATTLE_REC_Printf("録画データが初期状態のものです\n");
     *result = RECLOAD_RESULT_NULL;  //初期化データの為、データなし
     return TRUE;
   }
@@ -259,7 +286,7 @@ static BOOL _BattleRec_LoadCommon(SAVE_CONTROL_WORK *sv, BATTLE_REC_SAVEDATA *wk
   //データの整合性チェック
   if(BattleRecordCheckData(sv, wk_brs) == FALSE){
   #ifdef OSP_REC_ON
-    OS_TPrintf("不正な録画データ\n");
+    BATTLE_REC_Printf("不正な録画データ\n");
   #endif
     *result = RECLOAD_RESULT_NG;
     return TRUE;
@@ -375,7 +402,7 @@ BOOL BattleRec_DataOccCheck(SAVE_CONTROL_WORK *sv,HEAPID heapID,LOAD_RESULT *res
   //データの整合性チェック
   if(BattleRecordCheckData(sv, all) == FALSE){
   #ifdef OSP_REC_ON
-    OS_TPrintf("不正な録画データ\n");
+    BATTLE_REC_Printf("不正な録画データ\n");
   #endif
     *result = RECLOAD_RESULT_NG;
     SaveControl_Extra_Unload(sv, SAVE_EXTRA_ID_REC_MINE + num);
@@ -604,7 +631,7 @@ static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVED
     sizeof(BATTLE_REC_HEADER) -GDS_CRC_SIZE-DATANUMBER_SIZE);
   if(hash != head->crc.crc16ccitt_hash){
   #ifdef OSP_REC_ON
-    OS_TPrintf("ヘッダーのCRCハッシュ不正\n");
+    BATTLE_REC_Printf("ヘッダーのCRCハッシュ不正\n");
   #endif
     return FALSE;
   }
@@ -613,7 +640,7 @@ static  BOOL BattleRecordCheckData(SAVE_CONTROL_WORK *sv, const BATTLE_REC_SAVED
   hash = GFL_STD_CrcCalc(rec, sizeof(BATTLE_REC_WORK) - GDS_CRC_SIZE);
   if (hash != rec->crc.crc16ccitt_hash) {
   #ifdef OSP_REC_ON
-    OS_TPrintf("録画データ本体のCRCハッシュ不正\n");
+    BATTLE_REC_Printf("録画データ本体のCRCハッシュ不正\n");
   #endif
     return FALSE;
   }

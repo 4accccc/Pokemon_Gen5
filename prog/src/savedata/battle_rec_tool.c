@@ -152,6 +152,7 @@ static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *re
   for(i=0; i < rec_party->PokeCount; i++){
     pp = PokeParty_GetMemberPointer(party, i);
     POKETOOL_PokePara_to_RecPokePara(pp, &rec_party->member[i]);
+    NAGI_Printf( "poke[%d]=%d\n", i, PP_Get( pp, ID_PARA_monsno, NULL ) );
   }
 }
 

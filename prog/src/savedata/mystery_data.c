@@ -17,6 +17,23 @@ FS_EXTERN_OVERLAY(outside_save);
 
 //============================================================================================
 //============================================================================================
+#ifdef PM_DEBUG
+#define DEBUG_MYSTERY_DATA_PRINT_ON //担当者のみのプリントON
+#endif //PM_DEBUG
+
+
+//担当者のみのプリントON
+#ifdef DEBUG_MYSTERY_DATA_PRINT_ON
+
+#if defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#define MYSTERY_DATA_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+#else //def
+#define MYSTERY_DATA_Printf(...)  /*    */
+#endif  //def
+
+#else //DEBUG_MYSTERY_DATA_PRINT_ON
+#define MYSTERY_DATA_Printf(...)  /*    */
+#endif //DEBUG_MYSTERY_DATA_PRINT_ON
 
 
 #define MYSTERY_DATA_NO_USED		0x00000000
@@ -466,16 +483,16 @@ void MYSTERYDATA_SetEventRecvFlag(MYSTERY_DATA * fd, u32 num)
 //-----------------------------------------------------------------------------
 BOOL MYSTERYDATA_CheckCrc( const DOWNLOAD_GIFT_DATA * fd )
 { 
-  OS_TPrintf( "CRCチェック buffer[0x%x]== calc[0x%x]\n", fd->crc, GFL_STD_CrcCalc( fd, sizeof(DOWNLOAD_GIFT_DATA) - 2 ));
+  MYSTERY_DATA_Printf( "CRCチェック buffer[0x%x]== calc[0x%x]\n", fd->crc, GFL_STD_CrcCalc( fd, sizeof(DOWNLOAD_GIFT_DATA) - 2 ));
   {
     int k,j;
     u8  *p_temp = (u8*)fd;
     for(j=0;j<sizeof(DOWNLOAD_GIFT_DATA);){
       for(k=0;k<16;k++){
-          OS_TPrintf("%x ", p_temp[j]);
+          MYSTERY_DATA_Printf("%x ", p_temp[j]);
           j++;
       }
-      OS_TPrintf("\n");
+      MYSTERY_DATA_Printf("\n");
     }
   }
   return fd->crc == GFL_STD_CrcCalc( fd, sizeof(DOWNLOAD_GIFT_DATA) - 2 );
@@ -678,7 +695,7 @@ static void MysteryData_Init( MYSTERY_DATA *p_wk, SAVE_CONTROL_WORK *p_sv, MYSTE
   //通常セーブデータがあるかどうか
   if( is_normal_sv_use )
   {
-    OS_TPrintf( "!!! 不思議な贈り物通常セーブデータで起動 !!!\n" );
+    MYSTERY_DATA_Printf( "!!! 不思議な贈り物通常セーブデータで起動 !!!\n" );
 
     //通常セーブ
     p_wk->p_data_adrs = SaveControl_DataPtrGet(p_sv, GMDATA_ID_MYSTERYDATA);
@@ -686,7 +703,7 @@ static void MysteryData_Init( MYSTERY_DATA *p_wk, SAVE_CONTROL_WORK *p_sv, MYSTE
   }
   else
   {
-    OS_TPrintf( "!!! 不思議な贈り物管理外セーブデータで起動 !!!\n" );
+    MYSTERY_DATA_Printf( "!!! 不思議な贈り物管理外セーブデータで起動 !!!\n" );
 
     //管理外セーブ
     GFL_OVERLAY_Load( FS_OVERLAY_ID(outside_save) );
