@@ -40,7 +40,7 @@ OTHERPLTTFILE = otherpltt_wb.scr
 
 #ポケモンノンストップアニメリストデータ作成
 NONSTOPANMFILE = pokeanime_nonstop.csv
-NONSTOPANMDIR	 = w:\\debug_document\\戦闘関連\\ポケモンアニメ\\
+NONSTOPANMDIR	 = "w:\\debug_document\\戦闘関連\\ポケモンアニメ\\"
 
 #リソースファイルの存在するディレクトリを指定
 RES_DIR = ./conv/
