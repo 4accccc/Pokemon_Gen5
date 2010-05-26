@@ -861,7 +861,6 @@ void BPP_WAZA_DecrementPP( BTL_POKEPARAM* bpp, u8 wazaIdx, u8 value )
   {
     bpp->waza[wazaIdx].truth.pp = bpp->waza[wazaIdx].surface.pp;
     PP_Put( bpp->coreParam.ppSrc, ID_PARA_pp1+wazaIdx, bpp->waza[wazaIdx].truth.pp );
-    TAYA_Printf("  * %d * idx=%d, pp=%d\n", __LINE__, wazaIdx, bpp->waza[wazaIdx].truth.pp );
   }
 }
 //=============================================================================================

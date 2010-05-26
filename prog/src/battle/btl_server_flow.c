@@ -4067,8 +4067,15 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   // 溜めワザ解放ターンの失敗に対処
   if( (tameFlag != BPP_CONTFLG_NULL) && (CheckPokeHideState(attacker) != BPP_CONTFLG_NULL) ){
-    TAYA_Printf("開始時ContFlg=%d, 現在ContFlg=%d, 失敗とみなす\n", tameFlag, CheckPokeHideState(attacker));
+    TAYA_Printf("ポケ=%d 開始時ContFlg=%d, 現在ContFlg=%d, 失敗とみなす\n",
+      BPP_GetID(attacker), tameFlag, CheckPokeHideState(attacker));
+
     scproc_TameLockClear( wk, attacker );
+  }
+  else
+  {
+    TAYA_Printf("ポケID=%d, 開始時ContFlg=%d, 現在ContFlg=%d, なんもせん\n",
+        BPP_GetID(attacker), tameFlag, CheckPokeHideState(attacker));
   }
 
   if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_TAMEHIDE_OFF )
