@@ -881,9 +881,11 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
     break;
   case STEP_TEXT_CONGRATULATE:
     {
-      if( !ShinkaDemo_SoundCheckPlayCongratulate( param, work ) )
+      if(    ShinkaDemo_WaitTextStream( work )  // テキスト送りを行うためにサウンド待ちより前にチェックすることにした。
+          && ( !ShinkaDemo_SoundCheckPlayCongratulate( param, work ) ) )
+      //if( !ShinkaDemo_SoundCheckPlayCongratulate( param, work ) )
       { 
-        if( ShinkaDemo_WaitTextStream( work ) )
+        //if( ShinkaDemo_WaitTextStream( work ) )
         {
           if( ShinkaDemo_TextWaitInput( work ) )
           {
