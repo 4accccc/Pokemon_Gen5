@@ -4010,10 +4010,10 @@
 	<row id="WAZAINFO_402">
 		<language name="JPN" width="216">かたい　からを　もつ　おおきな　タネを
 うえから　たたきつけて
-あいての　こうげきする。</language>
+あいてを　こうげきする。</language>
 		<language name="JPN_KANJI" width="216">硬い　殻を　もつ　大きな　タネを
 上から　たたきつけて
-相手の　攻撃する。</language>
+相手を　攻撃する。</language>
 	</row>
 
 	<row id="WAZAINFO_403">
@@ -5162,7 +5162,7 @@
 	<row id="WAZAINFO_530">
 		<language name="JPN" width="216">からだの　かたいぶぶんで　あいてを
 たたいて　こうげきする。２かい
-れんぞくで　　ダメージを　あたえる。</language>
+れんぞくで　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">体の　硬い部分で　相手を
 たたいて　攻撃する。
 ２回　連続で　ダメージを　与える。</language>
@@ -5252,10 +5252,10 @@
 	<row id="WAZAINFO_540">
 		<language name="JPN" width="216">ふしぎな　ねんぱを　じったいかして
 あいてを　こうげきする。
-ねんぱは　ぶつりこうげきに　なる。</language>
+ぶつりてきな　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">不思議な　念波を　実体化して
 相手を　攻撃する。
-念波は　物理攻撃に　なる。</language>
+物理的な　ダメージを　与える。</language>
 	</row>
 
 	<row id="WAZAINFO_541">
@@ -5288,7 +5288,7 @@
 	<row id="WAZAINFO_544">
 		<language name="JPN" width="216">こうてつの　ギアを　あいてに
 なげつけて　こうげきする。２かい
-れんぞくで　　ダメージを　あたえる。</language>
+れんぞくで　ダメージを　あたえる。</language>
 		<language name="JPN_KANJI" width="216">鋼鉄の　ギアを　相手に
 投げつけて　攻撃する。
 ２回　連続で　ダメージを　与える。</language>
@@ -5324,10 +5324,10 @@
 	<row id="WAZAINFO_548">
 		<language name="JPN" width="216">ながい　つので　きりつけて　こうげきする。
 つのが　まとった　ふしぎな　ちからは
-じったいか　して　ぶつりこうげきに　なる。</language>
-		<language name="JPN_KANJI" width="216">
-
-</language>
+ぶつりてきな　ダメージを　あたえる。</language>
+		<language name="JPN_KANJI" width="216">長い角で　切りつけて　攻撃する。
+角が　まとった　不思議な　力は
+物理的な　ダメージを　与える。</language>
 	</row>
 
 	<row id="WAZAINFO_549">
@@ -5414,8 +5414,8 @@
 	<row id="WAZAINFO_558">
 		<language name="JPN" width="216">きょだいな　ほのおを　たたきつける。
 きょだいな　いかずちの　えいきょうをうけ
-わざの　いりょくが　　あがる。</language>
-		<language name="JPN_KANJI" width="216">巨大な　炎を　叩き付ける。
+わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">巨大な　炎を　たたきつける。
 巨大な　雷の　影響を受け
 技の　威力が　上がる。</language>
 	</row>
@@ -5423,8 +5423,8 @@
 	<row id="WAZAINFO_559">
 		<language name="JPN" width="216">きょだいな　いかずちを　たたきつける。
 きょだいな　ほのおの　えいきょうをうけ
-わざの　いりょくが　　あがる。</language>
-		<language name="JPN_KANJI" width="216">巨大な　雷を　叩き付ける。
+わざの　いりょくが　あがる。</language>
+		<language name="JPN_KANJI" width="216">巨大な　雷を　たたきつける。
 巨大な　炎の　影響を受け
 技の　威力が　上がる。</language>
 	</row>
