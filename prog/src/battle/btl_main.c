@@ -4696,7 +4696,6 @@ void BTL_MAIN_SetFakeSrcMember( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, u8 
     if( (idx>memberIdx) )
     {
       BTL_POKEPARAM* refPoke;
-      u8 idx = party->memberCount - 1;
 
       refPoke = party->member[idx];
       BPP_SetViewSrcData( bpp, BPP_GetSrcData(refPoke) );
