@@ -88,7 +88,6 @@ $(targetname).narc: $(lobjects) $(gobjects) $(eobjects) $(cobjects) $(aobjects) 
 	nnsarc -c -l -n -i $(targetname) -S list.txt
 	$(NAIXCUT) $(targetname).naix
 	$(DIFFCOPY) c_gear_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/
-	$(DIFFCOPY) c_gear2_obj_NANR_LBLDEFS.h  ../../prog/src/field/c_gear/
 	-rm	list.txt
 endif
 
