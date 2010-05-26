@@ -385,6 +385,9 @@ FIELD_PLACE_NAME* FIELD_PLACE_NAME_Create( GAMESYS_WORK* gameSystem, HEAPID heap
 
   GFL_BG_SetBGControl( BG_FRAME, &BGCntHeader, GFL_BG_MODE_TEXT ); 
   LoadBGPaletteData( system );
+  AllocBGNullCharArea( system );
+  CreateBandBlankBitmap( system );
+  CreateBandBitmapWindow( system );
 
 	ChangeState( system, SYSTEM_STATE_HIDE ); 
 
@@ -413,6 +416,7 @@ void FIELD_PLACE_NAME_Delete( FIELD_PLACE_NAME* system )
   DeleteMessageData( system ); 
   DeleteBandBitmapWindow( system );
   DeleteBandBlankBitmap( system );
+  FreeBGNullCharaArea( system ); 
   CloseDataHandle( system );
 
 	GFL_BG_FreeBGControl( BG_FRAME ); 
@@ -1520,21 +1524,11 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
   case 1:
     GFL_BG_ClearCharacter( BG_FRAME );
     GFL_BG_ClearScreen( BG_FRAME );
-    FreeBGNullCharaArea( system ); 
-    DeleteBandBitmapWindow( system );
-    DeleteBandBlankBitmap( system );
     TransBGPalette( system ); 
-    AllocBGNullCharArea( system );
     IncStateSeq( system );
     break; 
 
   case 2:
-    CreateBandBlankBitmap( system );
-    IncStateSeq( system );
-    break; 
-
-  case 3:
-    CreateBandBitmapWindow( system );
     RecoverBlankBand( system );
     GFL_BMPWIN_MakeTransWindow( system->bmpWin ); 
     GFL_BG_SetPriority( BG_FRAME, BG_FRAME_PRIORITY );
@@ -1544,7 +1538,7 @@ static void Process_SETUP( FIELD_PLACE_NAME* system )
     IncStateSeq( system );
     break; 
 
-  case 4:
+  case 3:
     SetupLetter_main( system ); // 文字オブジェクトをセットアップ
 
     // 全ての文字オブジェクトのセットアップが完了
