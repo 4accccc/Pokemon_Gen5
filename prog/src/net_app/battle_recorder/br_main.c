@@ -588,7 +588,7 @@ static void BR_BATTLE_FreeParam( void *p_param_adrs, void *p_wk_adrs )
 
 
   p_wk->data.is_recplay_finish = p_param->recPlayCompleteFlag;
-  OS_TPrintf( "バトルビデオ全部みたか？ %d\n", p_param->recPlayCompleteFlag );
+  NAGI_Printf( "バトルビデオ全部みたか？ %d\n", p_param->recPlayCompleteFlag );
 
 #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )

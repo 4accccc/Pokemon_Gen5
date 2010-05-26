@@ -27,7 +27,25 @@
  *					定数宣言
 */
 //=============================================================================
+//-------------------------------------
+///	デバッグ
+//=====================================
+#ifdef PM_DEBUG
+#define DEBUG_BR_PROCSYS_PRINT_ON //担当者のみのプリントON
+#endif //PM_DEBUG
 
+//担当者のみのPRINTオン
+#ifdef DEBUG_BR_PROCSYS_PRINT_ON
+#if defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#define BR_PROCSYS_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+#elif defined( DEBUG_ONLY_FOR_shimoyamada )
+#define BR_PROCSYS_Printf(...)  OS_TPrintf(__VA_ARGS__)
+#endif  //defined
+#endif //DEBUG_BR_PROCSYS_PRINT_ON
+//定義されていないときは、なにもない
+#ifndef BR_PROCSYS_Printf
+#define BR_PROCSYS_Printf(...)  /*  */ 
+#endif //BR_PROCSYS_Printf
 
 //=============================================================================
 /**
@@ -174,11 +192,9 @@ void BR_PROC_SYS_Main( BR_PROC_SYS *p_wk )
 	{	
 	case SEQ_INIT:
 
-#ifdef PM_DEBUG
-    OS_TPrintf( "prev %d\n", p_prev->procID );
-    OS_TPrintf( "now %d\n", p_now->procID );
-    OS_TPrintf( "next %d\n", p_next->procID );
-#endif 
+    BR_PROCSYS_Printf( "prev %d\n", p_prev->procID );
+    BR_PROCSYS_Printf( "now %d\n", p_now->procID );
+    BR_PROCSYS_Printf( "next %d\n", p_next->procID );
 
 		//データを保存する
 		*p_prev	= *p_now;
@@ -344,13 +360,13 @@ void BR_PROC_SYS_Pop( BR_PROC_SYS *p_wk )
 #ifdef PM_DEBUG
   { 
     int i;
-    OS_TPrintf( "Pop was called !!\n" );
-    OS_TPrintf( "積まれているSTACK\n" );
+    BR_PROCSYS_Printf( "Pop was called !!\n" );
+    BR_PROCSYS_Printf( "積まれているSTACK\n" );
     for( i = 0; i < p_wk->stack_num; i++ )
     { 
-      OS_TPrintf( "%d ", p_wk->stackID[ i ] );
+      BR_PROCSYS_Printf( "%d ", p_wk->stackID[ i ] );
     }
-    OS_TPrintf( "\n" );
+    BR_PROCSYS_Printf( "\n" );
   }
 #endif 
 
@@ -384,13 +400,13 @@ void BR_PROC_SYS_Push( BR_PROC_SYS *p_wk, u16 procID )
 #ifdef PM_DEBUG
   { 
     int i;
-    OS_TPrintf( "Push was called !! %d \n", procID );
-    OS_TPrintf( "積まれているSTACK\n" );
+    BR_PROCSYS_Printf( "Push was called !! %d \n", procID );
+    BR_PROCSYS_Printf( "積まれているSTACK\n" );
     for( i = 0; i < p_wk->stack_num; i++ )
     { 
-      OS_TPrintf( "%d ", p_wk->stackID[ i ] );
+      BR_PROCSYS_Printf( "%d ", p_wk->stackID[ i ] );
     }
-    OS_TPrintf( "\n" );
+    BR_PROCSYS_Printf( "\n" );
   }
 #endif 
 

@@ -29,6 +29,22 @@ FS_EXTERN_OVERLAY(gds_comm);
  *					定数宣言
 */
 //=============================================================================
+#ifdef PM_DEBUG
+#define DEBUG_BR_NET_PRINT_ON //担当者のみのプリントON
+#endif //PM_DEBUG
+
+//担当者のみのPRINTオン
+#ifdef DEBUG_BR_NET_PRINT_ON
+#if defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#define BR_NET_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+#elif defined( DEBUG_ONLY_FOR_shimoyamada )
+#define BR_NET_Printf(...)  OS_TPrintf(__VA_ARGS__)
+#endif  //defined
+#endif //DEBUG_BR_NET_PRINT_ON
+//定義されていないときは、なにもない
+#ifndef BR_NET_Printf
+#define BR_NET_Printf(...)  /*  */ 
+#endif //BR_NET_Printf
 
 //=============================================================================
 /**
@@ -514,7 +530,7 @@ BR_NET_ERR_RETURN BR_NET_GetError( BR_NET_WORK *p_wk, int *p_msg_no )
       }
     }
 
-    OS_TPrintf( "BR_NET エラー発生！occ%d type%d result%d ret%d\n", p_wk->error_info.occ, p_wk->error_info.type, p_wk->error_info.result, ret );
+    BR_NET_Printf( "BR_NET エラー発生！occ%d type%d result%d ret%d\n", p_wk->error_info.occ, p_wk->error_info.type, p_wk->error_info.result, ret );
 
     //エラー消去
     GDSRAP_ErrorInfoClear( &p_wk->gdsrap );
@@ -796,7 +812,7 @@ static void Br_Net_Seq_UploadFavoriteBattleReq( BR_NET_SEQ_WORK *p_seqwk, int *p
 static void Br_Net_Response_MusicalRegist(void *p_wk_adrs, const GDS_RAP_ERROR_INFO *p_error_info)
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
-  OS_TPrintf("ミュージカルショットのアップロードレスポンス取得\n");
+  BR_NET_Printf("ミュージカルショットのアップロードレスポンス取得\n");
 
   p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_UPLOAD ] = TRUE;
   p_wk->error_info  = *p_error_info;
@@ -814,7 +830,7 @@ static void Br_Net_Response_MusicalGet(void *p_wk_adrs, const GDS_RAP_ERROR_INFO
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
 
-  OS_TPrintf("ミュージカルショットのダウンロードレスポンス取得\n");
+  BR_NET_Printf("ミュージカルショットのダウンロードレスポンス取得\n");
   p_wk->response_flag[ BR_NET_REQUEST_MUSICAL_SHOT_DOWNLOAD ] = TRUE;
   p_wk->error_info  = *p_error_info;
 }
@@ -830,35 +846,35 @@ static void Br_Net_Response_BattleVideoRegist(void *p_wk_adrs, const GDS_RAP_ERR
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
 
-  OS_TPrintf("バトルビデオ登録時のダウンロードレスポンス取得\n");
+  BR_NET_Printf("バトルビデオ登録時のダウンロードレスポンス取得\n");
   if(p_error_info->occ == TRUE)
   {
     //TRUEならばエラー発生しているので、ここでメニューを戻すとかアプリ終了モードへ移行とかする
     switch(p_error_info->result){
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_SUCCESS:		//!< 登録成功
-  		OS_TPrintf("aバトルビデオ登録受信成功%d\n");
+  		BR_NET_Printf("aバトルビデオ登録受信成功%d\n");
   		break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_AUTH:		//!< ユーザー認証エラー
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:ユーザー認証エラー\n");
+  		BR_NET_Printf("aバトルビデオ登録受信エラー！:ユーザー認証エラー\n");
   		break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ALREADY:	//!< すでに登録されている
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:既に登録されている\n");
+  		BR_NET_Printf("aバトルビデオ登録受信エラー！:既に登録されている\n");
   		break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL:	//!< 不正なデータ
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:不正データ\n");
+  		BR_NET_Printf("aバトルビデオ登録受信エラー！:不正データ\n");
   		break;
     case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGAL_RANKINGTYPE:  //!< 不正なランキング種別
-      OS_TPrintf("aバトルビデオ登録受信エラー！:不正なランキング種別\n");
+      BR_NET_Printf("aバトルビデオ登録受信エラー！:不正なランキング種別\n");
       break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPROFILE:	//!< 不正なユーザープロフィール
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:不正なユーザー\n");
+  		BR_NET_Printf("aバトルビデオ登録受信エラー！:不正なユーザー\n");
   		break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_ILLEGALPOKEMON_VERIFY: //!< ポケモン署名でエラー
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:ポケモン署名でエラー\n");
+  		BR_NET_Printf("aバトルビデオ登録受信エラー！:ポケモン署名でエラー\n");
   	  break;
   	case POKE_NET_GDS_RESPONSE_RESULT_BATTLEDATA_REGIST_ERROR_UNKNOWN:	//!< その他エラー
   	default:
-  		OS_TPrintf("aバトルビデオ登録受信エラー！:その他のエラー \n");
+  		BR_NET_Printf("aバトルビデオ登録受信エラー！:その他のエラー \n");
   		break;
     }
   }
@@ -878,7 +894,7 @@ static void Br_Net_Response_BattleVideoSearch(void *p_wk_adrs, const GDS_RAP_ERR
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
 
-  OS_TPrintf("バトルビデオ検索のダウンロードレスポンス取得\n");
+  BR_NET_Printf("バトルビデオ検索のダウンロードレスポンス取得\n");
   p_wk->response_flag[ BR_NET_REQUEST_VIDEO_SEARCH_DOWNLOAD ] = TRUE;
   p_wk->error_info  = *p_error_info;
 }
@@ -894,7 +910,7 @@ static void Br_Net_Response_BattleVideoDataGet(void *p_wk_adrs, const GDS_RAP_ER
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
 
-  OS_TPrintf("バトルビデオデータ取得のダウンロードレスポンス取得\n");
+  BR_NET_Printf("バトルビデオデータ取得のダウンロードレスポンス取得\n");
 
   p_wk->response_flag[ BR_NET_REQUEST_BATTLE_VIDEO_DOWNLOAD ] = TRUE;
   p_wk->error_info  = *p_error_info;
@@ -911,7 +927,7 @@ static void Br_Net_Response_BattleVideoFavorite(void *p_wk_adrs, const GDS_RAP_E
 { 
   BR_NET_WORK *p_wk = p_wk_adrs;
 
-  OS_TPrintf("バトルビデオお気に入り登録のダウンロードレスポンス取得\n");
+  BR_NET_Printf("バトルビデオお気に入り登録のダウンロードレスポンス取得\n");
   p_wk->response_flag[ BR_NET_REQUEST_FAVORITE_VIDEO_UPLOAD ] =  TRUE;
   p_wk->error_info  = *p_error_info;
 }
