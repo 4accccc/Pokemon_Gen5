@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T19:12:31"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T22:01:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -396,9 +396,9 @@
 	<row id="CROWD_MSG06">
 		<comment>群集用</comment>
 		<language name="JPN" width="256">さぼるときも　ぜんりょく！
-いつだって　ほんき　なのよ</language>
+いつだって　ほんき　だよ！</language>
 		<language name="JPN_KANJI" width="256">さぼるときも　全力！
-いつだって　本気なのよ</language>
+いつだって　本気だよ！</language>
 	</row>
 
 	<row id="CROWD_MSG07">
@@ -411,10 +411,10 @@
 
 	<row id="CROWD_MSG08">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">あしたも　この　みちを　あるくだろう
-あさっても　しあさっても……</language>
-		<language name="JPN_KANJI" width="256">明日も　この道を　歩くだろう
-明後日も　明明後日も……</language>
+		<language name="JPN" width="256">あるくことで　エネルギーが　たまる
+シューズが　あれば　いいのにね！</language>
+		<language name="JPN_KANJI" width="256">歩くことで　エネルギーが　たまる
+シューズが　あれば　いいのにね！</language>
 	</row>
 
 	<row id="CROWD_MSG09">
@@ -513,10 +513,10 @@
 
 	<row id="CROWD_MSG20">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">こんなにも　たくさんの　ひとがいるが
-じぶんを　みうしなわないでよ</language>
-		<language name="JPN_KANJI" width="256">こんなにも　たくさんの　人がいるが
-自分を　見失わないでよ</language>
+		<language name="JPN" width="256">ひとなみの　なかでも
+じぶんを　みうしなうなよ！</language>
+		<language name="JPN_KANJI" width="256">人波の　中でも
+自分を　見失うなよ！</language>
 	</row>
 
 	<row id="CROWD_MSG21">
