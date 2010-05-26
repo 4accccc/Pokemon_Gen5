@@ -689,7 +689,10 @@ EVENT_START		ev_c02gym0201_assitantw_01
 		   		 
 		_FLAG_SET(FE_C02GYM_TRBTL1)
 	    $WK_SCENE_C02GYM0201 = 4
-		_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+		//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+		//（高さがグリッド単位でしか設定出来ない為）
+		//ここでは、DIR_Dで対応する。
+		_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 		_OBJ_ANIME_WAIT()
 	    }
 	    
@@ -784,8 +787,10 @@ EVENT_START		 ev_bg_c02gym0201_category_03
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_13)
 				
 			$WK_SCENE_C02GYM0201 = 5
-
-			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+			//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+			//（高さがグリッド単位でしか設定出来ない為）
+			//ここでは、DIR_Dで対応する。
+			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 			_OBJ_ANIME_WAIT()
 			
 		ELSIF $WK_SCENE_C02GYM0201 > 4 THEN 
@@ -827,8 +832,10 @@ EVENT_START		 ev_bg_c02gym0201_category_04
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_13)
 				
 			$WK_SCENE_C02GYM0201 = 5
-			
-			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+			//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+			//（高さがグリッド単位でしか設定出来ない為）
+			//ここでは、DIR_Dで対応する。
+			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 			_OBJ_ANIME_WAIT()
 			
 		ELSIF $WK_SCENE_C02GYM0201 > 4 THEN 
@@ -872,12 +879,18 @@ EVENT_START		 ev_bg_c02gym0201_category_05
 			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
 			//この処理には流れてきません。ジムギミックを初期化していた際に必要な処理でした。
 				$WK_SCENE_C02GYM0201 = 4
-				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+				//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+				//（高さがグリッド単位でしか設定出来ない為）
+				//ここでは、DIR_Dで対応する。
+				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 				_OBJ_ANIME_WAIT()
 			ELSE
 				$WK_SCENE_C02GYM0201 = 3
-				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
-				_OBJ_ANIME(C02GYM0201_ASSITANTW_01,anm_common_turn_d)
+				//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+				//（高さがグリッド単位でしか設定出来ない為）
+				//ここでは、DIR_Dで対応する。
+				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
+				_OBJ_ANIME(C02GYM0201_ASSITANTW_01,anm_common_turn_d_q)
 				_OBJ_ANIME_WAIT()
 			ENDIF
 			
@@ -922,12 +935,18 @@ EVENT_START		 ev_bg_c02gym0201_category_06
 			IF FLAG_ON( FE_C02GYM_TRBTL1) THEN
 			//この処理には流れてきません。ジムギミックを初期化していた際に必要な処理でした。
 				$WK_SCENE_C02GYM0201 = 4
-				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+				//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+				//（高さがグリッド単位でしか設定出来ない為）
+				//ここでは、DIR_Dで対応する。
+				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 				_OBJ_ANIME_WAIT()
 			ELSE
 				$WK_SCENE_C02GYM0201 = 3
-				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
-				_OBJ_ANIME(C02GYM0201_ASSITANTW_01,anm_common_turn_d)
+				//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+				//（高さがグリッド単位でしか設定出来ない為）
+				//ここでは、DIR_Dで対応する。
+				_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
+				_OBJ_ANIME(C02GYM0201_ASSITANTW_01,anm_common_turn_d_q)
 				_OBJ_ANIME_WAIT()
 				
 			ENDIF
@@ -1068,8 +1087,10 @@ EVENT_START		 ev_bg_c02gym0201_category_11
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
 			
 			$WK_SCENE_C02GYM0201 = 2
-			
-			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+			//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+			//（高さがグリッド単位でしか設定出来ない為）
+			//ここでは、DIR_Dで対応する。
+			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 			_OBJ_ANIME_WAIT()
     	
     	ELSIF $WK_SCENE_C02GYM0201 > 1 THEN 
@@ -1105,8 +1126,10 @@ EVENT_START		 ev_bg_c02gym0201_category_12
 			_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_16)
 
 			$WK_SCENE_C02GYM0201 = 2
-			
-			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d)
+			//このOBJは坂道にいる為、OBJ_POSチェンジが使えない。
+			//（高さがグリッド単位でしか設定出来ない為）
+			//ここでは、DIR_Dで対応する。
+			_OBJ_ANIME(C02GYM0201_GIRL3_01,anm_common_turn_d_q)
 			_OBJ_ANIME_WAIT()
     		
 		ELSIF $WK_SCENE_C02GYM0201 > 1 THEN 
@@ -1532,6 +1555,11 @@ _ANIME_LABEL	anm_common_turn_d
 	_ANIME_DATA AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+_ANIME_LABEL	anm_common_turn_d_q
+
+	_ANIME_DATA AC_DIR_D,1
+	_ANIME_DATA	ACMD_END,0
+	
 //--------------------------------------------------------------------
 // 共通アニメ：上振り向き                       
 //--------------------------------------------------------------------
