@@ -1131,7 +1131,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     pWork->ringLineNo = line;
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
 
-    OS_TPrintf("POKETRADE_Line2RingLineIconGet %d \n", POKETRADE_Line2RingLineIconGet(pWork->oldLine));
+//    OS_TPrintf("POKETRADE_Line2RingLineIconGet %d \n", POKETRADE_Line2RingLineIconGet(pWork->oldLine));
 
     for(i=0;i < _LING_LINENO_MAX;i++){
       k =  POKETRADE_Line2RingLineIconGet(pWork->oldLine+i);

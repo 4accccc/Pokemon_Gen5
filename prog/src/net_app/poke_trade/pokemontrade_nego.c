@@ -291,7 +291,9 @@ void POKE_GTS_DeletePokemonDirect(POKEMON_TRADE_WORK* pWork,int side,int index)
 {
   pWork->GTSSelectIndex[side][index] = -1;
   pWork->GTSSelectBoxno[side][index] = -1;
-  GFL_HEAP_FreeMemory(pWork->GTSSelectPP[side][index]);
+  if(pWork->GTSSelectPP[side][index]){
+    GFL_HEAP_FreeMemory(pWork->GTSSelectPP[side][index]);
+  }
   pWork->GTSSelectPP[side][index] = NULL;
 
 }
@@ -2057,7 +2059,7 @@ BOOL POKETRADE_NEGO_IsStatusLookAt(POKEMON_TRADE_WORK* pWork,int line , int heig
   int index = IRC_TRADE_LINE2POKEINDEX(line, height);
 
   if((pWork->underSelectIndex==index) && (pWork->underSelectBoxno==boxno)){
-    OS_TPrintf("selectIndex %d %d\n",boxno, index);
+//    OS_TPrintf("selectIndex %d %d\n",boxno, index);
     return TRUE;
   }
   return FALSE;

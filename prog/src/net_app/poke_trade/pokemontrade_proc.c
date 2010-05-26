@@ -1811,6 +1811,8 @@ static BOOL checkTouchCLACTPosition(POKEMON_TRADE_WORK* pWork, BOOL bCatch)
             return 3;
           }
           else{
+            pWork->underSelectBoxno  = pWork->workBoxno;
+            pWork->underSelectIndex = pWork->workPokeIndex;
             _CHANGE_STATE(pWork, POKE_GTS_DeletePokemonState);
             return 3;
           }
@@ -1867,6 +1869,8 @@ static void _notWazaChangePoke(POKEMON_TRADE_WORK* pWork)
 {
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_03, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
+  pWork->oldLine = -1;
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ
   _CHANGE_STATE(pWork,_notWazaChangePoke2);
 }
 
@@ -3296,7 +3300,7 @@ static BOOL _IsBothPokemonSelect(POKEMON_TRADE_WORK* pWork,int boxno , int selec
     }
   }
   else{
-    if( -1 != POKE_GTS_IsSelect(pWork,pWork->underSelectBoxno,pWork->underSelectIndex) ){
+    if( -1 != POKE_GTS_IsSelect(pWork,boxno,selectIndex) ){
       return TRUE;
     }
   }
@@ -3428,7 +3432,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  switch(checkTouchCLACTPosition(pWork,FALSE)){
+  switch(checkTouchCLACTPosition(pWork,FALSE)){  //ƒ^ƒbƒ`Žž‚Ìˆ—
   case 2:
   case 3:
     return;
@@ -3444,12 +3448,13 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       pWork->touchON = FALSE;
       pWork->bUpVec = FALSE;
       if(POKEMONTRADE_IsWazaPokemon(pWork, pWork->workBoxno, pWork->workPokeIndex)){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
-         pWork->workBoxno = -1;
-         pWork->workPokeIndex = -1;
+        pWork->workBoxno = -1;
+        pWork->workPokeIndex = -1;
+        pWork->selectIndex = -1;
+        pWork->selectBoxno = -1;
         _CatchPokemonRelease(pWork);
-        IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ
-
         _CHANGE_STATE(pWork,_notWazaChangePoke);
+        return;
       }
       else{
         pWork->underSelectBoxno  = pWork->workBoxno;
