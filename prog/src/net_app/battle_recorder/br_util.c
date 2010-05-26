@@ -2629,8 +2629,6 @@ static void Br_BallEff_Seq_EmitFollow( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
     break;
 
   case SEQ_EXIT_EMIT:
-    if( p_wk->init_pos.x != p_wk->cp_folow_pos->x
-      && p_wk->init_pos.y != p_wk->cp_folow_pos->y)
     { 
       *p_seq  = SEQ_INIT_FOLLOW;
     }

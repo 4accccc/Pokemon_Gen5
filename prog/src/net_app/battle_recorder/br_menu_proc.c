@@ -138,7 +138,14 @@ static GFL_PROC_RESULT BR_MENU_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     p_wk->p_btn	= BR_BTN_SYS_Init( p_param->menuID, p_param->p_unit, p_param->p_res, p_param->cp_saveinfo, p_param->p_btn_recovery, p_wk->p_balleff, p_wk->heapID );
   }
 
-  BR_FADE_ALPHA_SetAlpha( p_param->p_fade, BR_FADE_DISPLAY_BOTH, 0 );
+  if( p_param->fade_type == BR_FADE_TYPE_MASTERBRIGHT_AND_ALPHA )
+  {
+    BR_FADE_ALPHA_SetAlpha( p_param->p_fade, BR_FADE_DISPLAY_SUB, 0 );
+  }
+  else
+  {
+    BR_FADE_ALPHA_SetAlpha( p_param->p_fade, BR_FADE_DISPLAY_BOTH, 0 );
+  }
 
 	NAGI_Printf( "MENU: Init!\n" );
 
