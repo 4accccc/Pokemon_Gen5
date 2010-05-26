@@ -227,8 +227,8 @@ typedef enum {
   POKETOKUSEI_MAKENKI,            // まけんき
   POKETOKUSEI_YOWAKI,             // よわき
   POKETOKUSEI_NOROWAREBODY,       // のろわれボディ
-  POKETOKUSEI_MORATERAPII,        // モラテラピー
-  POKETOKUSEI_NAKAMAISIKI,        // なかまいしき
+  POKETOKUSEI_IYASINOKOKORO,      // いやしのこころ
+  POKETOKUSEI_FURENDOGAADO,       // フレンドガード
   POKETOKUSEI_KUDAKERUYOROI,      // くだけるよろい
   POKETOKUSEI_HEVIMETARU,         // ヘヴィメタル
   POKETOKUSEI_RAITOMETARU,        // ライトメタル
@@ -236,7 +236,7 @@ typedef enum {
   POKETOKUSEI_DOKUBOUSOU,         // どくぼうそう
   POKETOKUSEI_NETUBOUSOU,         // ねつぼうそう
   POKETOKUSEI_SYUUKAKU,           // しゅうかく
-  POKETOKUSEI_AUNNOIKI,           // あうんのいき
+  POKETOKUSEI_TEREPASII,          // あうんのいき
   POKETOKUSEI_MURAKKE,            // ムラっけ
   POKETOKUSEI_BOUJIN,             // ぼうじん
   POKETOKUSEI_DOKUSYU,            // どくしゅ
@@ -246,7 +246,7 @@ typedef enum {
   POKETOKUSEI_MIRAKURUSUKIN,      // ミラクルスキン
   POKETOKUSEI_ANARAIZU,           // アナライズ
   POKETOKUSEI_IRYUUJON,           // イリュージョン
-  POKETOKUSEI_KAWARIMONO,         // へんしん
+  POKETOKUSEI_KAWARIMONO,         // かわりもの
   POKETOKUSEI_SURINUKE,           // すりぬけ
   POKETOKUSEI_MIIRA,              // ミイラ
   POKETOKUSEI_JISINKAJOU,         // じしんかじょう
