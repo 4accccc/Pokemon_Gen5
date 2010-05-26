@@ -33,6 +33,14 @@
 #define DEBUGWIN_LETTER_COLOR (0x0000)
 #define DEBUGWIN_SELECT_COLOR (0x001f)
 
+#if 0
+#define DEBUGWIN_TPrintf(...) (void)((DEBUGWIN_TPrintf(__VA_ARGS__)))
+#define DEBUGWIN_Printf(...)  (void)((OS_Printf(__VA_ARGS__)))
+#else
+#define DEBUGWIN_TPrintf(...) ((void)0)
+#define DEBUGWIN_Printf(...)  ((void)0)
+#endif //DEB_ARI
+
 //======================================================================
 //  enum
 //======================================================================
@@ -147,7 +155,7 @@ void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
   
   if( debWork != NULL )
   {
-    OS_TPrintf("Debug system is initialized yet!!\n");
+    DEBUGWIN_TPrintf("Debug system is initialized yet!!\n");
     return;
   }
   
@@ -164,14 +172,14 @@ void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
 
   DEBUGWIN_AddSystemGroup(HEAPID_DEBUGWIN);
   
-  OS_TPrintf("Heap[%d]\n", GFL_HEAP_GetHeapFreeSize(HEAPID_DEBUGWIN) );
+  DEBUGWIN_TPrintf("Heap[%d]\n", GFL_HEAP_GetHeapFreeSize(HEAPID_DEBUGWIN) );
 }
 
 void DEBUGWIN_ExitSystem(void)
 {
   if( debWork == NULL )
   {
-    OS_TPrintf("Debug system isn't initialized!!\n");
+    DEBUGWIN_TPrintf("Debug system isn't initialized!!\n");
     return;
   }
   
@@ -452,7 +460,7 @@ void DEBUGWIN_AddGroupToGroup( const u8 id , const char *nameStr , const u8 pare
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
+    DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
   }
   else
   {
@@ -464,7 +472,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *n
 {
   if( DEBUGWIN_SearchGroupFromId( id ) != NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is registed yet!!\n",id);
+    DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is registed yet!!\n",id);
     return NULL;
   }
   else
@@ -476,7 +484,7 @@ static DEBUGWIN_GROUP* DEBUGWIN_AddGroupToGroupFunc( const u8 id , const char *n
     
     grp->parentGroup = parentGroup;
     
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is regist.\n",id);
+    DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is regist.\n",id);
     return grp;
   }
 }
@@ -487,7 +495,7 @@ void DEBUGWIN_AddItemToGroup( const char *nameStr , DEBUGWIN_UPDATE_FUNC updateF
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
+    DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
   }
   else
   {
@@ -501,7 +509,7 @@ void DEBUGWIN_AddItemToGroupEx( DEBUGWIN_UPDATE_FUNC updateFunc , DEBUGWIN_DRAW_
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( parentGroupId );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
+    DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",parentGroupId);
   }
   else
   {
@@ -589,7 +597,7 @@ void DEBUGWIN_RemoveGroup( const u8 id )
   DEBUGWIN_GROUP *grp = DEBUGWIN_SearchGroupFromId( id );
   if( grp == NULL )
   {
-    OS_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",id);
+    DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is not found!!\n",id);
   }
   else
   {
@@ -616,7 +624,7 @@ static void DEBUGWIN_RemoveGroupChild( DEBUGWIN_GROUP *group )
     
     item = nextItem;
   }
-  OS_TPrintf("DEBUG WINDOW:Group[%d] is removed.\n",group->id);
+  DEBUGWIN_TPrintf("DEBUG WINDOW:Group[%d] is removed.\n",group->id);
   DEBUGWIN_DeleteItem( group->selfData );
   GFL_HEAP_FreeMemory( group );
 }

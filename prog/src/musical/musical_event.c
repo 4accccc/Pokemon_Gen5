@@ -1478,7 +1478,7 @@ void MUSICAL_EVENT_CheckNetErr( MUSICAL_EVENT_WORK *evWork )
     if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
         evWork->isNetErr == FALSE )
     {
-      OS_TPrintf("Musical Error!!!\n");
+      ARI_TPrintf("Musical Error!!!\n");
       //NetErr_App_ReqErrorDisp();
       evWork->isNetErr = TRUE;
     }

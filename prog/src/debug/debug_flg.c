@@ -81,7 +81,6 @@ void DEBUG_FLG_FlgOn( const u16 flgIdx )
   const u8 bitIdx = flgIdx%8;
   const u8 arrIdx = flgIdx/8;
   GF_ASSERT_MSG( flgIdx < DEBUG_FLG_MAX , "invalid flg index[%d]\n",flgIdx );
-  OS_TPrintf("DEBUG_FLG [%s] -> ON\n",dispName[flgIdx]);
   
   debugFlgArr[arrIdx] |= 1<<bitIdx;
 }
@@ -90,7 +89,6 @@ void DEBUG_FLG_FlgOff( const u16 flgIdx )
   const u8 bitIdx = flgIdx%8;
   const u8 arrIdx = flgIdx/8;
   GF_ASSERT_MSG( flgIdx < DEBUG_FLG_MAX , "invalid flg index[%d]\n",flgIdx );
-  OS_TPrintf("DEBUG_FLG [%s] -> OFF\n",dispName[flgIdx]);
   
   debugFlgArr[arrIdx] &= (0xFF-(1<<bitIdx));
 }
@@ -101,14 +99,6 @@ void DEBUG_FLG_FlgFlip( const u16 flgIdx )
   if( flgIdx < DEBUG_FLG_MAX )
   {
     debugFlgArr[arrIdx] ^= (1<<bitIdx);
-    if( debugFlgArr[arrIdx] & (1<<bitIdx) )
-    {
-      OS_TPrintf("DEBUG_FLG [%s] -> ON\n",dispName[flgIdx]);
-    }
-    else
-    {
-      OS_TPrintf("DEBUG_FLG [%s] -> OFF\n",dispName[flgIdx]);
-    }
   }
   else
   {

@@ -28,6 +28,15 @@
 //OFFの場合、sd_printではアサートが出ない。
 #define DEB_SD_PRINT_ENABLE_ASSERT (0)
 
+#if 0
+#define DEB_SD_TPrintf(...) (void)((DEBUGWIN_TPrintf(__VA_ARGS__)))
+#define DEB_SD_Printf(...)  (void)((OS_Printf(__VA_ARGS__)))
+#else
+#define DEB_SD_TPrintf(...) ((void)0)
+#define DEB_SD_Printf(...)  ((void)0)
+#endif //DEB_ARI
+
+
 //======================================================================
 //	enum
 //======================================================================
@@ -207,7 +216,7 @@ static void DEB_SD_PRINT_PrintCore( const char *str )
 static void DEB_SD_PRINT_AssertDispMain( const char* str )
 {
   //内容の表示と書き出し
-  OS_TPrintf(str);
+  DEB_SD_TPrintf(str);
   //DEB_SD_PRINT_PrintCore( str );
   if( sdPrintWork->isCallAssert == FALSE )
   {
@@ -267,9 +276,9 @@ void OSi_TPanic(const char *file, int line, const char *fmt, ...)
 
     va_start(vlist, fmt);
     (void)OS_DisableInterrupts();
-    OS_TPrintf("%s:%d Panic:", file, line);
+    DEB_SD_TPrintf("%s:%d Panic:", file, line);
     OS_TVPrintf(fmt, vlist);
-    OS_TPrintf("\n");
+    DEB_SD_TPrintf("\n");
 
     //内容の書き出し
     if( sdPrintWork->isCallAssert == FALSE )

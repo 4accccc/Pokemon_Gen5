@@ -188,7 +188,6 @@ u8 STATUS_RCV_RecoverCheck( POKEMON_PARAM * pp, u16 item, u16 pos, u32 heap_id )
   if( PP_Get( pp, ID_PARA_monsno, NULL ) != MONSNO_NUKENIN ){
     if( ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP ) != 0 ){
       tmp[6] = ITEM_GetBufParam( dat, ITEM_PRM_HP_EXP_POINT );
-      OS_Printf( "HP EXP : now = %d, prm = %d\n", tmp[0], tmp[6] );
       if( tmp[6] > 0 ){
         if( !( tmp[0] >= ITEM_PRMEXP_MAX && tmp[7] == 0 ) &&
 						tmp[0] < PRMEXP_ONE_MAX &&

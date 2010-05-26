@@ -123,62 +123,6 @@ void	STA_BG_DrawSystem( STA_BG_SYS *work )
     
   	MTX_Identity33(&objState.rotate);
     GFL_G3D_DRAW_DrawObject( work->g3dobj , &objState );
-    /*
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
-    {
-      OS_Printf("[%.2f][%.2f][%.2f]:[%.2f]\n",FX_FX32_TO_F32(objState.trans.x),FX_FX32_TO_F32(objState.trans.y),FX_FX32_TO_F32(objState.trans.z),FX_FX32_TO_F32(objState.scale.x));
-    }
-
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_X )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-      {
-        objState.trans.z += FX32_CONST(0.25f);
-      }
-      else
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-      {
-        objState.trans.z -= FX32_CONST(0.25f);
-      }
-      else
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-      {
-        objState.scale.x += FX32_CONST(0.01);
-        objState.scale.y += FX32_CONST(0.01);
-        objState.scale.z += FX32_CONST(0.01);
-      }
-      else
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-      {
-        objState.scale.x -= FX32_CONST(0.01);
-        objState.scale.y -= FX32_CONST(0.01);
-        objState.scale.z -= FX32_CONST(0.01);
-      }
-    }
-    else
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y )
-    {
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
-      {
-        objState.trans.y -= FX32_CONST(0.25f);
-      }
-      else
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
-      {
-        objState.trans.y += FX32_CONST(0.25f);
-      }
-      else
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
-      {
-        objState.trans.x += FX32_CONST(0.25f);
-      }
-      else
-      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
-      {
-        objState.trans.x -= FX32_CONST(0.25f);
-      }
-    }
-    */
   }
 }
 
