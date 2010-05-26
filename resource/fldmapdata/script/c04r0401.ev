@@ -76,7 +76,7 @@ ev_sports_event_chk:
 
 		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_BASKETBALL
 		
-		$OBJCHRWORK0 = BASKETM		//見た目をテニス選手に
+		$OBJCHRWORK0 = BASKETM		//見た目をバスケ選手に
 		
 		//競技中かチェック
 		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
@@ -90,7 +90,7 @@ ev_sports_event_chk:
 
 		$WK_OTHER_SPORTS_EVENT = SPORTS_EVENT_TENNIS
 		
-		$OBJCHRWORK0 = TENNISW		//見た目をバスケ選手に
+		$OBJCHRWORK0 = TENNISW		//見た目をテニス選手に
 		
 		//競技中かチェック
 		_GET_TIME( SCWK_TEMP0, SCWK_TEMP1 )
