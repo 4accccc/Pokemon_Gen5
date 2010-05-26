@@ -6069,7 +6069,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
 
     // かいふくふうじチェック
     if( BPP_CheckSick(attacker, WAZASICK_KAIHUKUHUUJI)
-    &&  (WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIMPLE_RECOVER)
+    &&  (WAZADATA_GetFlag(waza, WAZAFLAG_KaifukuHuuji))
     ){
       cause = SV_WAZAFAIL_KAIHUKUHUUJI;
       break;
