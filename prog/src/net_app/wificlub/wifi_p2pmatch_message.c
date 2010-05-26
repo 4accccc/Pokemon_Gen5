@@ -197,6 +197,10 @@ static void EndMessageWindowOff( WIFIP2PMATCH_WORK *wk )
   if(!PRINTSYS_QUE_IsFinished(wk->SysMsgQue)){
     PRINTSYS_QUE_Clear(wk->SysMsgQue);
   }
+  if(wk->pStream){
+    PRINTSYS_PrintStreamDelete( wk->pStream );
+    wk->pStream = NULL;
+  }
   wk->MsgWin = _BmpWinDel(wk->MsgWin);
 }
 
