@@ -769,6 +769,7 @@ static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
   WazaID waza, SV_WazaFailCause cause );
 static BOOL scEvent_WazaExecuteStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* rec );
 static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
+static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 defaultTargetPokeID );
 static BOOL scEvent_CheckMamoruBreak( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static void scEvent_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8 targetCount, const u8* targetPokeID );
 static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
@@ -4765,12 +4766,12 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 1;
 
   case WAZA_TARGET_UNKNOWN:
+    if( intrPokeID != BTL_POKEID_NULL )
     {
-      // @@@ ココは割り込みのターゲットイベントとは処理を別ける必要があるか
-      u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
-      if( pokeID != BTL_POKEID_NULL ){
-        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-      }
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
+    }
+    else{
+      return 0;
     }
     break;
 
@@ -4778,13 +4779,13 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 0;
   }
 
-  // 対象が敵含む１体のワザ
+  // 対象が敵含む１体のワザならここまで来る
   if( bpp )
   {
-    u8 atkPokeID, targetPokeID;
-    if( intrPokeID != BTL_POKEID_NULL ){
-      BTL_N_Printf( DBGSTR_SVFL_DoubleTargetIntr, intrPokeID );
-      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
+    u8 targetPokeID = BPP_GetID( bpp );
+    u8 temptPokeID = scEvent_GetWazaTargetTempt( wk, attacker, wazaParam, targetPokeID );
+    if( temptPokeID != BTL_POKEID_NULL ){
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, temptPokeID );
     }
     BTL_N_Printf( DBGSTR_SVFL_DoubleTargetRegister, BPP_GetID(bpp) );
     BTL_POKESET_Add( rec, bpp );
@@ -4868,12 +4869,12 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 1;
 
   case WAZA_TARGET_UNKNOWN:
+    if( intrPokeID != BTL_POKEID_NULL )
     {
-      // @@@ ココは割り込みのターゲットイベントとは処理を別ける必要があると思う。いずれやる。
-      u8 pokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
-      if( pokeID != BTL_POKEID_NULL ){
-        bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-      }
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
+    }
+    else{
+      return 0;
     }
     break;
 
@@ -4881,11 +4882,15 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return 0;
   }
 
+  // 対象が敵含む１体のワザならここまで来る
   if( bpp )
   {
-    if( intrPokeID != BTL_POKEID_NULL ){
-      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, intrPokeID );
+    u8 targetPokeID = BPP_GetID( bpp );
+    u8 temptPokeID = scEvent_GetWazaTargetTempt( wk, attacker, wazaParam, targetPokeID );
+    if( temptPokeID != BTL_POKEID_NULL ){
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, temptPokeID );
     }
+    BTL_N_Printf( DBGSTR_SVFL_DoubleTargetRegister, BPP_GetID(bpp) );
     BTL_POKESET_Add( rec, bpp );
     return 1;
   }
@@ -9538,7 +9543,10 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
       fExpGet = TRUE;
       break;
     }
-    if( scproc_CheckShowdown(wk) ){ return FALSE; }
+    if( scproc_CheckShowdown(wk) ){
+      TAYA_Printf("経験値はいらないけど決着はついた\n");
+      return FALSE;
+     }
     /* fallthru */
   case 2:
     wk->turnCheckStep++;
@@ -11804,7 +11812,7 @@ static BOOL scEvent_WazaExecuteStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] ワザターゲット割り込み
+ * [Event] ワザターゲットを自動決定（攻撃側のハンドラによる）
  *
  * @param   wk
  * @param   attacker
@@ -11825,6 +11833,33 @@ static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
     pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   BTL_EVENTVAR_Pop();
   return pokeID;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザターゲットを強制書き換え（ゆびをふる等、防御側のハンドラによる）
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   wazaParam
+ *
+ * @retval  u8
+ */
+//----------------------------------------------------------------------------------
+static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 defaultTargetPokeID )
+{
+  u8 pokeID;
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, defaultTargetPokeID );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_TEMPT_TARGET );
+    pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+  BTL_EVENTVAR_Pop();
+  if( pokeID != defaultTargetPokeID ){
+    return pokeID;
+  }
+  return BTL_POKEID_NULL;
 }
 //----------------------------------------------------------------------------------
 /**

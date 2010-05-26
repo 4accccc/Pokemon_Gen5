@@ -67,6 +67,7 @@ typedef enum {
   BTL_EVENT_WAZA_EXECUTE_DONE,      ///< ワザ出し終了
   BTL_EVENT_WAZA_PARAM,             ///< ワザパラメータチェック
   BTL_EVENT_DECIDE_TARGET,          ///< ワザ対象決定
+  BTL_EVENT_TEMPT_TARGET,           ///< ワザ対象を自分に引き寄せ
   BTL_EVENT_NOEFFECT_CHECK_L1,      ///< ワザ無効化チェック（lv1 = 必中には負ける）ハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L2,      ///< ワザ無効化チェック（lv2 = 必中にも勝つ）ハンドラ
   BTL_EVENT_NOEFFECT_CHECK_L3,      ///< ワザ無効化チェック（lv3 = 必中にも勝つ＆まもるより後）ハンドラ

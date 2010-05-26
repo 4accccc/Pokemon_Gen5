@@ -1657,7 +1657,7 @@ static const BtlEventHandlerTable*  ADD_KonoyubiTomare( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_KonoyubiTomare_ExeCheck  },  // ワザ出し成否チェック
     { BTL_EVENT_UNCATEGORIZE_WAZA,      handler_KonoyubiTomare_Exe       },  // 未分類ワザ実行
-    { BTL_EVENT_DECIDE_TARGET,          handler_KonoyubiTomare_Target    },  // ターゲット決定
+    { BTL_EVENT_TEMPT_TARGET,           handler_KonoyubiTomare_Target    },  // ターゲット決定
     { BTL_EVENT_TURNCHECK_BEGIN,        handler_KonoyubiTomare_TurnCheck },  // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
@@ -1666,8 +1666,9 @@ static const BtlEventHandlerTable*  ADD_KonoyubiTomare( u32* numElems )
 // ワザ出し成否チェック：シングルなら失敗する
 static void handler_KonoyubiTomare_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_SINGLE )
-  {
+  if( (BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_SINGLE)
+  ||  (BTL_SVFTOOL_GetRule(flowWk) == BTL_RULE_ROTATION)
+  ){
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
     {
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_CAUSE) == SV_WAZAFAIL_NULL ){
@@ -1689,8 +1690,9 @@ static void handler_KonoyubiTomare_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 }
 static void handler_KonoyubiTomare_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_SINGLE )
-  {
+  if( (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_SINGLE)
+  &&  (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_ROTATION)
+  ){
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
     if (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
@@ -4979,10 +4981,10 @@ static void handler_MagicCoat_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_Yokodori( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,     handler_Yokodori }, // 未分類ワザ処理
-    { BTL_EVENT_CHECK_WAZA_ROB,        handler_Yokodori_CheckRob },  // 乗っ取り判定
-    { BTL_EVENT_WAZASEQ_ROB,           handler_Yokodori_Rob      },  // 乗っ取り確定
-    { BTL_EVENT_TURNCHECK_BEGIN,       handler_Yokodori_TurnCheck }, // ターンチェック
+    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,   handler_Yokodori           }, // 未分類ワザ処理
+    { BTL_EVENT_CHECK_WAZA_ROB,                handler_Yokodori_CheckRob  }, // 乗っ取り判定
+    { BTL_EVENT_WAZASEQ_ROB,                   handler_Yokodori_Rob       }, // 乗っ取り確定
+    { BTL_EVENT_TURNCHECK_BEGIN,               handler_Yokodori_TurnCheck }, // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

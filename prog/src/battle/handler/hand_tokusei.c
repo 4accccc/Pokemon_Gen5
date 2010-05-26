@@ -4747,13 +4747,13 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECIDE_TARGET,         handler_Yobimizu               }, // ワザターゲット決定ハンドラ
+    { BTL_EVENT_TEMPT_TARGET,          handler_Yobimizu               }, // ワザターゲット決定ハンドラ
     { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
-// ワザターゲット決定ハンドラ
+// ワザターゲット引き寄せハンドラ
 static void handler_Yobimizu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   common_WazaTargetChangeToMe( flowWk, pokeID, POKETYPE_MIZU );
@@ -4776,7 +4776,7 @@ static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECIDE_TARGET,        handler_Hiraisin               }, // ワザターゲット決定ハンドラ
+    { BTL_EVENT_TEMPT_TARGET,         handler_Hiraisin               }, // ワザターゲット決定ハンドラ
     { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
