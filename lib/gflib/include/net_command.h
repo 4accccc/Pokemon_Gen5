@@ -47,6 +47,7 @@ enum GFL_NET_CommCommand_e {
   GFL_NET_CMD_HUGEPREDATA,         ///< 大きなデータを送る予約コマンド
   GFL_NET_CMD_LOWER_DATA,          ///< 低優先度データ送信
   GFL_NET_CMD_LOWER_DATA_FLG,      ///< 低優先度データ送信のフラグ
+  GFL_NET_CMD_IRCNOP,             ///< 赤外線NOPコマンド
   //------------------------------------------------ここまで----------
   GFL_NET_CMD_COMMAND_MAX   // 終端--------------これは移動させないでください
 };
