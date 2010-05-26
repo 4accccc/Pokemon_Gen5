@@ -2850,15 +2850,33 @@ static void common_Counter_ExeCheck( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
     else
     {
       u8 targetPokeID = rec.pokeID;
-      // 対象が既に場にいない＆その場に他のポケもいないなら失敗
-      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_MAX )
+
+      // 対象が既に場にいない場合（とんぼがえりなど）、その位置に現在いるポケを対象にする
+      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_NULL )
       {
-        if( (rec.pokePos == BTL_POS_MAX)
-        ||  (BTL_SVFTOOL_GetExistPokeID(flowWk, rec.pokePos) == BTL_POKEID_NULL)
-        ){
-          BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+        targetPokeID = BTL_POKEID_NULL;
+
+        if( rec.pokePos != BTL_POS_MAX ){
+          targetPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, rec.pokePos );
+        }
+
+        if( targetPokeID == BTL_POKEID_NULL )
+        {
+          // その場にもいなければ「はたく」の範囲でランダム
+          BtlPokePos pos = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, WAZANO_HATAKU );
+          if( pos != BTL_POS_NULL ){
+            targetPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, pos );
+          }
         }
       }
+
+      // 対象が既に場にいない＆その場に他のポケもいないなら失敗
+      if( targetPokeID == BTL_POKEID_NULL )
+      {
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+      }
+
+      work[0] = targetPokeID;
     }
   }
 }
@@ -2871,24 +2889,7 @@ static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* w
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    BPP_WAZADMG_REC  rec;
-
-    if( common_Counter_GetRec(bpp, dmgType, &rec) )
-    {
-      u8 targetPokeID = rec.pokeID;
-
-      // 対象が既に場にいない場合（とんぼがえりなど）、その位置に現在いるポケを対象にする
-      if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, rec.pokeID) == BTL_POS_NULL )
-      {
-        if( rec.pokePos != BTL_POS_MAX ){
-          targetPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, rec.pokePos );
-        }else{
-          targetPokeID = BTL_POKEID_NULL;
-        }
-      }
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
-    }
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, work[0] );
   }
 }
 //----------------------------------------------------------------------------------
@@ -10300,7 +10301,7 @@ static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
