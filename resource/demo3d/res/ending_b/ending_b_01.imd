@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-18T10:57:24" source="ending_b_072.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-25T11:46:46" source="ending_b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-05-18T10:57:24" source="ending_b_072.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-05-25T11:46:46" source="ending_b.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="4" xyz="-2.351074 -1.063965 -6.283691" whd="4.701904 4.836670 6.810303"/>
+<box_test pos_scale="4" xyz="-2.351074 -1.063965 -6.283691" whd="4.701904 4.836670 7.086182"/>
 
 <tex_image_array size="11">
 	<tex_image index="0" name="N_s"
@@ -1919,7 +1919,7 @@
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
 		volume_min="-1.930420 -2.696777 -0.124512"
-		volume_max="1.315430 1.886719 0.391846"
+		volume_max="1.837402 1.886719 0.391846"
 		volume_r="3.318604"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
@@ -1929,16 +1929,16 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
-					<tex st="128.000000 0.000000"/>
+					<tex st="141.875000 0.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="1.315430 1.886719 0.391846"/>
+					<pos_xyz xyz="1.837402 1.886719 0.391846"/>
 					<tex st="74.750000 0.000000"/>
 					<pos_xyz xyz="-1.930420 1.633545 -0.124512"/>
 					<tex st="74.750000 64.000000"/>
 					<clr rgb="7 30 31"/>
 					<pos_xy xy="-1.930420 -2.696777"/>
-					<tex st="128.000000 64.000000"/>
-					<pos_xyz xyz="1.315430 -2.443359 0.391846"/>
+					<tex st="141.875000 64.000000"/>
+					<pos_xyz xyz="1.837402 -2.443359 0.391846"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -9616,7 +9616,7 @@
 		vertex_size="12" polygon_size="3"
 		triangle_size="0" quad_size="3"
 		volume_min="-5.176025 -2.949951 -0.640625"
-		volume_max="1.315430 1.886719 0.391846"
+		volume_max="1.837402 1.886719 0.391846"
 		volume_r="5.992188"
 	>
 		<display index="0" material="1" polygon="0" priority="0"/>

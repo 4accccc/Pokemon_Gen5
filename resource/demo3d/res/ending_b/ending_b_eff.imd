@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-18T10:57:40" source="ending_b_072.mb"/>
+	<create user="ohkubo_tomohiko" host="W00195" date="2010-05-25T11:47:04" source="ending_b.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohkubo_tomohiko" host="W00195" date="2010-05-18T10:57:40" source="ending_b_072.mb"/>
+<original_create user="ohkubo_tomohiko" host="W00195" date="2010-05-25T11:47:04" source="ending_b.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="9" xyz="-0.252441 1.259766 -6.078857" whd="0.135498 0.384521 0.375977"/>
+<box_test pos_scale="9" xyz="-0.252441 1.259766 -6.078857" whd="0.123535 0.384521 0.375977"/>
 
 <tex_image_array size="3">
 	<tex_image index="0" name="eff_kami01"
@@ -2130,7 +2130,7 @@
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 -12.055908 0.000000"
-		translate="-6.680664 0.000000 7.245605"
+		translate="-16.806396 0.000000 7.245605"
 		visibility="on"
 		display_size="1"
 		vertex_size="84" polygon_size="40"
@@ -2151,7 +2151,7 @@
 		billboard="off"
 		scale="0.000000 0.000000 0.000000"
 		rotate="0.000000 -12.055908 0.000000"
-		translate="30.920166 0.000000 6.209229"
+		translate="20.794678 0.000000 6.209229"
 		visibility="on"
 		display_size="1"
 		vertex_size="84" polygon_size="40"
@@ -2172,7 +2172,7 @@
 		billboard="off"
 		scale="11.000000 11.000000 11.000000"
 		rotate="0.000000 -12.055908 0.000000"
-		translate="23.781494 0.000000 7.245605"
+		translate="10.729004 0.000000 7.245605"
 		visibility="on"
 		display_size="1"
 		vertex_size="84" polygon_size="40"
@@ -2193,7 +2193,7 @@
 		billboard="off"
 		scale="10.000000 10.000000 10.000000"
 		rotate="0.000000 -12.055908 0.000000"
-		translate="23.781494 0.000000 7.245605"
+		translate="13.656006 0.000000 7.245605"
 		visibility="on"
 		display_size="1"
 		vertex_size="84" polygon_size="40"
