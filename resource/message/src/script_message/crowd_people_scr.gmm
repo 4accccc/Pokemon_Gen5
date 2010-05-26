@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T22:33:59"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T19:12:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -327,7 +327,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -366,9 +366,9 @@
 	<row id="CROWD_MSG02">
 		<comment>群集用</comment>
 		<language name="JPN" width="256">きょうこそ　はやく　かえって
-こどもたちと　ポケモンしょうぶ！</language>
+いもうとたちと　ポケモンしょうぶ！</language>
 		<language name="JPN_KANJI" width="256">今日こそ　早く　帰って
-子供たちと　ポケモン勝負！</language>
+妹たちと　ポケモン勝負！</language>
 	</row>
 
 	<row id="CROWD_MSG03">
@@ -536,9 +536,9 @@
 	<row id="CROWD_MSG23">
 		<comment>群集用</comment>
 		<language name="JPN" width="256">いつも　ここを　あるいているからね
-ひとを　よけるのは　うまいよ</language>
+ひとを　よけるのは　うまいのよ</language>
 		<language name="JPN_KANJI" width="256">いつも　ここを　歩いているからね
-人を　よけるのは　うまいよ</language>
+人を　よけるのは　うまいのよ</language>
 	</row>
 
 	<row id="CROWD_MSG24">
