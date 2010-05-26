@@ -133,7 +133,7 @@ INIT_EVENT_START	ev_init_h03
 				//群集の起動
 				_CROWD_PEOPLE_START()
 				
-				IF $LWK_POSZ_1 <= 34 THEN
+				IF $LWK_POSZ_1 < 34 THEN
 					_OBJ_POS_CHANGE(H03_BADRIDER1_01,15,0,37,DIR_UP)
 				ELSIF $LWK_POSZ_1 <= 156 && $LWK_POSZ_1 >= 35 THEN
 				
@@ -142,7 +142,7 @@ INIT_EVENT_START	ev_init_h03
 					$WK_SCENE_H03_BADRIDER = 2
 					//==============フラグワーク操作==============//
 					
-				ELSIF $LWK_POSZ_1 >= 157 THEN
+				ELSIF $LWK_POSZ_1 > 157 THEN
 					_OBJ_POS_CHANGE(H03_BADRIDER1_01,15,0,154,DIR_DOWN)
 				ENDIF
 				
