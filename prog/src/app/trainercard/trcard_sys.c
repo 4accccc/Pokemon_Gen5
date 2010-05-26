@@ -39,6 +39,19 @@
 #include "test/ariizumi/ari_debug.h"
 
 
+// デバッグ情報を表示する時は定義を有効に
+#define TRAINERCARD_DEBUG_PRINT_ENABLE  ///< 初期化処理や調査用パラメータを表示したい時は有効にする
+
+#ifdef  TRAINERCARD_DEBUG_PRINT_ENABLE
+#define DEBUG_TR_PRINT( ... )  OS_Printf(__VA_ARGS__)
+#else
+#define DEBUG_TR_PRINT( ... )  ((void)0)
+#endif
+
+
+//================================================================
+// 構造体定義
+//================================================================
 typedef struct _TR_CARD_SYS{
   int heapId;
 
@@ -51,6 +64,7 @@ typedef struct _TR_CARD_SYS{
 
 }TR_CARD_SYS;
 
+//================================================================
 //プロトタイプ宣言　ローカル
 //================================================================
 ///オーバーレイプロセス
@@ -148,7 +162,7 @@ GFL_PROC_RESULT TrCardSysProc_Init( GFL_PROC * proc, int * seq , void *pwk, void
   wk->tcp->TrCardData = GFL_HEAP_AllocClearMemory( wk->heapId , sizeof( TR_CARD_DATA ) );
   TRAINERCARD_GetSelfData( wk->tcp->TrCardData , pp->gameData , FALSE, wk->tcp->edit_possible, wk->heapId);
 
-  OS_Printf("pp->mode=%d\n", pp->mode);
+  DEBUG_TR_PRINT("pp->mode=%d\n", pp->mode);
 
   // ユニオン見た目を保存
   wk->TrainerView = wk->tcp->TrCardData->UnionTrNo;
@@ -248,7 +262,7 @@ GFL_PROC_RESULT TrCardSysProc_End( GFL_PROC * proc, int * seq , void *pwk, void 
     int trainer_view = MyStatus_GetTrainerView( my );
     if(wk->TrainerView!=trainer_view)
     {
-      OS_Printf("すれ違い情報[見た目]を更新した\n");
+      DEBUG_TR_PRINT("すれ違い情報[見た目]を更新した\n");
       GAMEBEACON_SendDataUpdate_TrainerView(trainer_view);
     }
   }
@@ -752,12 +766,12 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
 
   //ストーリークリア（殿堂入りとは違う）
   if (EVENTWORK_CheckEventFlag(GAMEDATA_GetEventWork( gameData ),SYS_FLAG_GAME_CLEAR)){
-    OS_Printf( "ストーリークリア\n");
+    DEBUG_TR_PRINT( "ストーリークリア\n");
     rank++;
   }
   //全国図鑑完成（イベント系ポケモンを除くポケモンをゲットしているか）
   if ( ZUKANSAVE_CheckZenkokuComp(GAMEDATA_GetZukanSave(gameData)) ){
-    OS_Printf( "全国図鑑完成\n");
+    DEBUG_TR_PRINT( "全国図鑑完成\n");
     rank++;
   }
 
@@ -766,21 +780,21 @@ int TRAINERCARD_GetCardRank( GAMEDATA *gameData )
   && BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_DOUBLE, BSWAY_SETMODE_get) 
 //  && BSUBWAY_SCOREDATA_SetFlag( bs_score,  BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_S_MULTI, BSWAY_SETMODE_get)    // 必要なら
   ){
-    OS_Printf( "バトルサブウェイボス撃破\n");
+    DEBUG_TR_PRINT( "バトルサブウェイボス撃破\n");
     rank++;
   }
 
   // ミュージカルグッズをコンプリートしているか
   if( MUSICAL_SAVE_IsCompleteItem( musical_sv ) ){
-    OS_Printf( "ミュージカルグッズコンプ\n");
+    DEBUG_TR_PRINT( "ミュージカルグッズコンプ\n");
     rank++;
   }
   
-  // ブラックシティ・ホワイトフォレストのバランス数値がうにゃうにゃ
+  // ブラックシティ・ホワイトフォレストのバランス数値が３０以上
   if(OccupyInfo_GetWhiteLevel(occupy_sv)>=OCCUPY_QUALIFY
   && OccupyInfo_GetBlackLevel(occupy_sv)>=OCCUPY_QUALIFY
   ){
-    OS_Printf( "BC/WFのバランス数値が両方共３０以上\n");
+    DEBUG_TR_PRINT( "BC/WFのバランス数値が両方共３０以上\n");
     rank++;
   }
 

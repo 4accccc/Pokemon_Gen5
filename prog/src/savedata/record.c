@@ -385,11 +385,10 @@ void RECORD_1day_Update( RECORD *rec )
 
   // レコードデータ1日更新処理
   for(i=0;i<NELEMS(oneday_update_tbl);i++){
+    // 最大値を超えている場合は登録
     ret=RECORD_SetIfLarge( rec, oneday_update_tbl[i][0], 
                            RECORD_Get(rec, oneday_update_tbl[i][1]));
-    if(RECORD_Get(rec, oneday_update_tbl[i][1])==ret){
-      OS_Printf("%d番目の値が更新されました\n", i);
-    }
+    // 一日の値はリセット
     RECORD_Set( rec, oneday_update_tbl[i][1], 0);
   }
 

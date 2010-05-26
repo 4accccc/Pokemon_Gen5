@@ -27,6 +27,15 @@
 #define PERAP_SAMPLING_SIZE   (PERAP_SAMPLING_RATE * PERAP_SAMPLING_TIME) //必要なデータ量
 
 
+// マイク関連のデバッグを表示する時は定義を有効に
+//#define MIC_DEBUG_PRINT_ENABLE  ///< 初期化処理や調査用パラメータを表示したい時は有効にする
+
+#ifdef  MIC_DEBUG_PRINT_ENABLE
+#define DEBUG_MIC_PRINT( ... )  OS_Printf(__VA_ARGS__)
+#else
+#define DEBUG_MIC_PRINT( ... )  ((void)0)
+#endif
+
 //=============================================================================
 /**
  *                構造体定義
@@ -112,11 +121,11 @@ void SND_MIC_Init( HEAPID heap_id )
     const u32 ret = SNDEX_SetIirFilter(SNDEX_IIR_FILTER_ADC_1, &FilterParam);
     if ( ret == SNDEX_RESULT_SUCCESS)
     {
-      OS_TPrintf("マイクのフィルターを設定しました。\n");
+      DEBUG_MIC_PRINT("マイクのフィルターを設定しました。\n");
     }
     else
     {
-      OS_TPrintf("マイクのフィルターの設定に失敗。\n");
+      DEBUG_MIC_PRINT("マイクのフィルターの設定に失敗。\n");
     }
     
   }
@@ -219,7 +228,7 @@ MICResult SND_MIC_StartAutoSampling( MICAutoParam* p )
 #endif  // SDK_TWL
 
   if( ret != MIC_RESULT_SUCCESS ){
-    OS_Printf( "StartMicAutoSamoling Failed ret=%d \n", ret );
+    DEBUG_MIC_PRINT( "StartMicAutoSamoling Failed ret=%d \n", ret );
   }
 
   // オートサンプリング開始
@@ -255,7 +264,7 @@ MICResult SND_MIC_StopAutoSampling(void)
 #endif  // SDK_TWL
 
   if( ret != MIC_RESULT_SUCCESS ){
-    OS_Printf( "MicStopAutoSampling Failed ret=%d \n", ret );
+    DEBUG_MIC_PRINT( "MicStopAutoSampling Failed ret=%d \n", ret );
   }
 
   return ret;
@@ -323,7 +332,7 @@ MICResult SND_MIC_ManualSampling(MICSamplingType type ,void* heap,MICCallback ca
   ret = MIC_DoSamplingAsync( type, heap, callback, arg);
 
   if( ret != MIC_RESULT_SUCCESS ){
-        OS_Printf( "マイク手動サンプリングが失敗\n" );
+        DEBUG_MIC_PRINT( "マイク手動サンプリングが失敗\n" );
   }
   return ret;
 }
@@ -420,7 +429,7 @@ void SND_PERAP_VoiceDataSave( PERAPVOICE* perap )
 //--------------------------------------------------------------
 static void MicCallback( MICResult /*result*/, void* /*arg*/ )
 {
-    OS_Printf( "Mic Callback Done\n" );
+    DEBUG_MIC_PRINT( "Mic Callback Done\n" );
 }
 
 //-----------------------------------------------------------------------------
