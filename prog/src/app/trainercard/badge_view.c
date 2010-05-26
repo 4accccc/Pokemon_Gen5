@@ -1556,24 +1556,6 @@ static void CellActorPosSet( BADGEVIEW_WORK *wk, int id, int x, int y )
 
 
 
-//----------------------------------------------------------------------------------
-/**
- * @brief ジムリーダー情報を描画する
- *
- * @param   wk    BAGDEVIEW_WORK
- * @param   line  行指定（0 or 1 or 2)
- * @param   no    ジムインデックス（0-7)
- * @param   strbuf  文字列展開のためのバッファ
- */
-//----------------------------------------------------------------------------------
-static void _print_gym_leader_info( BADGEVIEW_WORK *wk, int line, int no, STRBUF *strbuf )
-{
-  GFL_MSG_GetString( wk->mman, MSG_BADGE_LEADER1_01+no*3+line, strbuf );
-  PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
-                         0, 32*line, strbuf, wk->font, BV_COL_BLACK );
-
-}
-
 // ジムリーダーのテキストをWBで対応させるためのテーブル
 #if PM_VERSION==VERSION_BLACK
 static const u32 gymleader_text_tbl[]={
@@ -1599,6 +1581,25 @@ static const u32 gymleader_text_tbl[]={
   MSG_BADGE_LEADER8W_01,
 };
 #endif
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief ジムリーダー情報を描画する
+ *
+ * @param   wk    BAGDEVIEW_WORK
+ * @param   line  行指定（0 or 1 or 2)
+ * @param   no    ジムインデックス（0-7)
+ * @param   strbuf  文字列展開のためのバッファ
+ */
+//----------------------------------------------------------------------------------
+static void _print_gym_leader_info( BADGEVIEW_WORK *wk, int line, int no, STRBUF *strbuf )
+{
+  GFL_MSG_GetString( wk->mman, gymleader_text_tbl[no]+line, strbuf );
+  PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
+                         0, 32*line, strbuf, wk->font, BV_COL_BLACK );
+
+}
+
 
 //----------------------------------------------------------------------------------
 /**
@@ -1631,14 +1632,14 @@ static void InfoWinPrint( BADGEVIEW_WORK *wk, int type, int no )
       WORDSET_RegisterNumber( wk->wset, 2, date.day,   2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU);
     }
     // 描画（１行目）
-    GFL_MSG_GetString( wk->mman, gymleader_text_tbl[no], strbuf );
+    GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+3*no, strbuf );
     WORDSET_ExpandStr( wk->wset, wk->expbuf, strbuf );
     PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
                            0, 0, wk->expbuf, wk->font, BV_COL_BLACK );
     
     // 描画（２行目・３行目）
     for(i=1;i<3;i++){
-      GFL_MSG_GetString( wk->mman, gymleader_text_tbl[no]+i, strbuf );
+      GFL_MSG_GetString( wk->mman, MSG_LEAGUE_BADGE1_01+3*no+i, strbuf );
       PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 
                              0, 32*i, strbuf, wk->font, BV_COL_BLACK );
     }
