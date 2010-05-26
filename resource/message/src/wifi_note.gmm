@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-26T12:54:17"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-26T13:17:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -279,7 +279,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="246"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -700,9 +700,9 @@
 	<row id="msg_wifi_note_26">
 		<comment>入力したあいてのともだちコード登録確認</comment>
 		<language name="JPN" font=" 1:small" width="216">[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]
-[1:00:トレーナー名:0]さんを　とうろくします</language>
+[1:00:トレーナー名:0]を　とうろくします</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">[2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]
-[1:00:トレーナー名:0]さんを　登録します</language>
+[1:00:トレーナー名:0]を　登録します</language>
 	</row>
 
 	<row id="msg_wifi_note_27">
@@ -715,9 +715,9 @@
 
 	<row id="msg_wifi_note_29">
 		<comment>ともだちコード削除時の確認メッセージ</comment>
-		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]　を　けします
+		<language name="JPN" font=" 1:small" width="216">[1:00:トレーナー名:0]を　けします
 ほんとうに　よろしいですか？</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]　を　消します
+		<language name="JPN_KANJI" font=" 1:small" width="216">[1:00:トレーナー名:0]を　消します
 本当に　よろしいですか？</language>
 	</row>
 
@@ -738,11 +738,11 @@
 登録されていました</language>
 	</row>
 
-	<row id="msg_wifi_note_32" text-color="#000000,,,,,,,#000000,,,#000000,#808080,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,#ffffff,,,,,,">
+	<row id="msg_wifi_note_32" text-color="#000000,,,,,,,#000000,,,#000000,,,,,,," back-color="#ffffff,,,#ffffff,,#ffffff,#ffffff,#ffffff,,,#ffffff,#ffffff,,,,,,">
 		<comment>登録した人のともだちコードを見るときのメッセージ</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]さんの　ともだちコード
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　ともだちコード
 [2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんの　ともだちコード
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　ともだちコード
 [2:03:４桁:1]　[2:03:４桁:2]　[2:03:４桁:3]</language>
 	</row>
 
@@ -754,9 +754,9 @@
 	<row id="msg_wifi_note_add_01" text-color="#000000,,,,,,,,,,,,,,,,,">
 		<comment>通信終了後に、相手を友達手帳に
 登録するかどうかを確認するメッセージ</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]　を　ともだちてちょう　に
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんを　ともだちてちょう　に
 とうろく　しますか？</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　を　ともだちてちょう　に
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんを　ともだちてちょう　に
 登録しますか？</language>
 	</row>
 
@@ -774,9 +774,9 @@
 		<comment>通信終了後、相手を友達手帳へ
 登録することをあきらめるときの
 メッセージ</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]　の　とうろく　を
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんの　とうろく　を
 あきらめますか？</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　の　登録を
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんの　登録を
 あきらめますか？</language>
 	</row>
 
@@ -784,9 +784,9 @@
 		<comment>通信終了後、友達手帳がいっぱいだったときに
 登録してある友達コードを削除するときの
 確認メッセージ</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]　の　データを
+		<language name="JPN" width="216">[1:00:トレーナー名:0]の　データを
 さくじょ　しますか？</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]　の　データを
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]の　データを
 削除しますか？</language>
 	</row>
 
