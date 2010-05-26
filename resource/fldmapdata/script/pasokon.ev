@@ -55,14 +55,14 @@ EVENT_START ev_pc
   // PC起動イベント
   _POKECEN_PC_ON()
 
-  // 「パソコンの スイッチを いれた！」
+  //「パソコンの スイッチを いれた！」
   _PLAYER_NAME( 0 )
   _SYSWIN_MSG( msg_pc_on_01 , POS_DOWN )
-  //_SYSWIN_CLOSE()
 
   WHILE $log_out == FALSE 
-    // 「どこの パソコンに せつぞく …」
+    //「どこの パソコンに せつぞく …」
     _SYSWIN_MSG( msg_pc_on_02 , POS_DOWN )
+
     // 選択ウィンドウ表示
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, select_pos )
     IF $f_pcname == FALSE THEN
@@ -81,8 +81,9 @@ EVENT_START ev_pc
     _BMPMENU_MAKE_LIST( msg_pc_window_07, msg_pc_window_07 )  // ヘルプを見る
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START_BREAKABLE()
-    _SYSWIN_CLOSE()
+
     _TIME_WAIT(3) // メニュー決定音SEとアクセスSEが重ならないように待つ
+
     // 選択に応じた処理
     SWITCH $select_pos
     CASE msg_pc_window_01 THEN _CALL( pc_box )
@@ -122,7 +123,6 @@ pc_box:
 
   //「ポケモンの あずかりシステムを …」
   _SYSWIN_MSG( msg_pc_box_01 , POS_DOWN ) 
-  //_SYSWIN_CLOSE()
 
   // 初回クリア済み
   IF $game_clear == TRUE THEN
@@ -132,7 +132,6 @@ pc_box:
 	    _ME_PLAY(	SEQ_ME_ACCE )
       _ME_WAIT()
       _SYSWIN_MSG( msg_pc_on_05 , POS_DOWN ) 
-      //_SYSWIN_CLOSE()
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_01 )
     ENDIF
   ENDIF
@@ -145,12 +144,9 @@ pc_box:
 	    _ME_PLAY(	SEQ_ME_ACCE )
       _ME_WAIT()
       _SYSWIN_MSG( msg_pc_on_06 , POS_DOWN ) 
-      //_SYSWIN_CLOSE()
       _FLAG_SET( FE_WALLPAPER_OPEN_MSG_02 )
     ENDIF
   ENDIF
-
-  _SYSWIN_CLOSE()
 
   $exit = FALSE
   WHILE $exit == FALSE
@@ -165,6 +161,7 @@ pc_box:
     _BMPMENU_MAKE_LIST_EX( msg_pc_box_window_05, msg_pc_box_06, msg_pc_box_window_05 )  // さようなら
     _BMPMENU_START_BREAKABLE() 
     _SYSWIN_CLOSE()
+
     //「さようなら」選択
     SWITCH $select_pos
     CASE msg_pc_box_window_05 THEN _RET
@@ -173,6 +170,7 @@ pc_box:
                                    $pc_off_mode = SCR_PASOKON_OFF_QUICK
                                    _RET
     ENDSWITCH
+
     // ボックス呼び出し
     _MAP_FADE_BLACK_OUT() // フェードアウト
     _MAP_FADE_END_CHECK() //
@@ -252,7 +250,6 @@ pc_zukan_check:
 
   //「はかせの パソコンに せつぞくした！」
   _SYSWIN_MSG( msg_pc_zukan_check_01 , POS_DOWN ) 
-//  _SYSWIN_CLOSE() ずかん評価側で引き続きシステムMSG表示するので閉じない
   _CHG_COMMON_SCR SCRID_ZUKAN_MACHINE
 
 }
@@ -275,6 +272,7 @@ pc_record:
   $loop = TRUE
   WHILE $loop == TRUE
 
+    _SYSWIN_MSG( msg_exp_window , POS_DOWN ) // 説明文表示用のウィンドウを表示
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, TRUE, select_pos )
 
     // はじめてのクリア
