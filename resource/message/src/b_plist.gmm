@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-05-19T12:03:11"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-26T13:06:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -412,7 +412,7 @@ HP表示</comment>
 		<language name="JPN_KANJI" width="176">/</language>
 	</row>
 
-	<row id="mes_b_plist_01_703" back-color="#ff0000,,,,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
+	<row id="mes_b_plist_01_703" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>ポケモン選択画面
 HP表示</comment>
 		<language name="JPN" width="176">[2:02:３桁:0]</language>
@@ -471,8 +471,8 @@ HP表示</comment>
 		<comment>ステータスメイン
 「PP」
 プラチナで修正。　全角を半角に修正。</comment>
-		<language name="JPN" font=" 1:small" width="16">PP</language>
-		<language name="JPN_KANJI" font=" 1:small" width="16">PP</language>
+		<language name="JPN" font=" 1:small" width="16">ＰＰ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">ＰＰ</language>
 	</row>
 
 	<row id="mes_b_plist_02_501">
@@ -534,8 +534,8 @@ HP表示</comment>
 	<row id="mes_b_plist_03_000">
 		<comment>強さを見る画面
 レベル項目名</comment>
-		<language name="JPN" font=" 1:small" width="24">Lv.</language>
-		<language name="JPN_KANJI" font=" 1:small" width="24">Lv.</language>
+		<language name="JPN" font=" 1:small" width="24">Ｌｖ．</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">Ｌｖ．</language>
 	</row>
 
 	<row id="mes_b_plist_03_001">
@@ -571,8 +571,8 @@ HP表示</comment>
 	<row id="mes_b_plist_03_300">
 		<comment>強さを見る画面
 「ＨＰ」</comment>
-		<language name="JPN" font=" 1:small" width="24">HP</language>
-		<language name="JPN_KANJI" font=" 1:small" width="24">HP</language>
+		<language name="JPN" font=" 1:small" width="24">ＨＰ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">ＨＰ</language>
 	</row>
 
 	<row id="mes_b_plist_03_301">
@@ -594,8 +594,8 @@ HP表示</comment>
 		<comment>強さを見る画面
 ＨＰの「/」
 </comment>
-		<language name="JPN" font=" 1:small" width="56">/</language>
-		<language name="JPN_KANJI" font=" 1:small" width="56">/</language>
+		<language name="JPN" font=" 1:small" width="56">／</language>
+		<language name="JPN_KANJI" font=" 1:small" width="56">／</language>
 	</row>
 
 	<row id="mes_b_plist_03_400">
@@ -679,8 +679,8 @@ HP表示</comment>
 	<row id="mes_b_plist_04_001">
 		<comment>全画面共通
 ＰＰ項目名</comment>
-		<language name="JPN" font=" 1:small" width="16">PP</language>
-		<language name="JPN_KANJI" font=" 1:small" width="16">PP</language>
+		<language name="JPN" font=" 1:small" width="16">ＰＰ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">ＰＰ</language>
 	</row>
 
 	<row id="mes_b_plist_04_002">
@@ -702,14 +702,14 @@ HP表示</comment>
 	<row id="mes_b_plist_04_004">
 		<comment>全画面共通
 ＰＰの間に入る／</comment>
-		<language name="JPN" font=" 1:small" width="40">/</language>
-		<language name="JPN_KANJI" font=" 1:small" width="40">/</language>
+		<language name="JPN" font=" 1:small" width="40">／</language>
+		<language name="JPN_KANJI" font=" 1:small" width="40">／</language>
 	</row>
 
 	<row id="mes_b_plist_04_005" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,#c0c0c0,#c0c0c0,,#c0c0c0,#c0c0c0,,,,,,,">
 		<comment>技がないときのＰＰ値の表記</comment>
-		<language name="JPN" font=" 1:small" width="16">ーー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="16">ーー</language>
+		<language name="JPN" font=" 1:small" width="16">――</language>
+		<language name="JPN_KANJI" font=" 1:small" width="16">――</language>
 	</row>
 
 	<row id="mes_b_plist_04_100">
@@ -729,8 +729,8 @@ HP表示</comment>
 
 	<row id="mes_b_plist_04_102">
 		<comment>威力or命中率がないときの表記</comment>
-		<language name="JPN" font=" 1:small" width="24">ー</language>
-		<language name="JPN_KANJI" font=" 1:small" width="24">ー</language>
+		<language name="JPN" font=" 1:small" width="24">―</language>
+		<language name="JPN_KANJI" font=" 1:small" width="24">―</language>
 	</row>
 
 	<row id="mes_b_plist_04_200">
