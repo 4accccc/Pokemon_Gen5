@@ -1956,7 +1956,7 @@ static GMEVENT* CheckGPowerEffectEnd( GAMESYS_WORK* gsys )
   if( GPOWER_Get_FinishWaitID() == GPOWER_ID_NULL ){
     return NULL;
   }
-  return EVENT_GPowerEffectEnd( gsys );
+  return GMEVENT_CreateOverlayEventCall( gsys, FS_OVERLAY_ID( event_gpower), EVENT_GPowerEffectEnd, NULL );
 }
 
 //======================================================================
