@@ -4,6 +4,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_250.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_352_seabed.NSCR
 #001
 %00
+指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
 BGのパレットフェード	すべて	0	12	0	0:0:0
 BGのロード	bg_352_seabed
 エフェクト終了待ち	すべて
@@ -31,5 +32,6 @@ BGの表示/非表示	お盆	表示
 BGの表示/非表示	フィールド	表示
 BGのパレットフェード	お盆＋フィールド	12	0	2	0:0:0
 エフェクト終了待ち	すべて
+ラベル	NO_EFFECT
 エフェクト終了
 &

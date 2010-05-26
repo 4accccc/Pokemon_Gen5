@@ -3,6 +3,7 @@ $0001
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_171_nightmare.NSCR
 #001
 %00
+指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
 BGのパレットフェード	お盆＋フィールド	0	12	3	0:0:0
 エフェクト終了待ち	すべて
 BGのロード	bg_171_nightmare
@@ -24,5 +25,6 @@ BGの表示/非表示	フィールド	表示
 エフェクト終了待ち	すべて
 BGのパレットフェード	お盆＋フィールド	12	0	3	0:0:0
 エフェクト終了待ち	すべて
+ラベル	NO_EFFECT
 エフェクト終了
 &

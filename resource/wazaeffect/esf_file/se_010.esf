@@ -15,6 +15,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_009_ring.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_010_ring.spa
 #001
 %00
+指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
 ポケモンアニメ	攻撃側	アニメストップ
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_10	SE1	攻撃側	0:0:100	0:0:0
@@ -32,5 +33,6 @@ SE再生	SEQ_SE_BE_SE_09	SE1	攻撃側	0:0:127	0:0:0
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
 エフェクト終了待ち	すべて
+ラベル	NO_EFFECT
 エフェクト終了
 &

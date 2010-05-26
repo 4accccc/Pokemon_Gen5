@@ -22,6 +22,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_035.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_083.spa
 #001
 %00
+指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
 ポケモンアニメ	攻撃側	アニメストップ
 パーティクルデータロード	w_083
 制御モード変更	継続
@@ -36,5 +37,6 @@ SE動的変化	SE1	追従	ボリューム	100	0	30	30:0:0
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
 エフェクト終了待ち	すべて
+ラベル	NO_EFFECT
 エフェクト終了
 &

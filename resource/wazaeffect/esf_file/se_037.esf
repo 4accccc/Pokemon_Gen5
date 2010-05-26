@@ -3,6 +3,7 @@ $0001
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_128.spa
 #001
 %00
+指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
 パーティクルデータロード	w_128
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_034	SE1	攻撃側	20:0:127	0:0:0
@@ -14,5 +15,6 @@ SE再生	SEQ_SE_BE_SE_034	SE1	攻撃側	20:0:127	0:0:0
 タイマーによるウエイト	20
 ポケモン拡縮	攻撃側	往復	-0.2	0.2	8	0	1
 エフェクト終了待ち	すべて
+ラベル	NO_EFFECT
 エフェクト終了
 &
