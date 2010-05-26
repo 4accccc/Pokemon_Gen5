@@ -5532,7 +5532,8 @@ static int MainSeq_ItemKeyGetChangeCkack( BOX2_SYS_WORK * syswk )
 		return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 	}
 
-	if( syswk->get_tray != BOX2MAIN_GETPOS_NONE && syswk->get_tray == syswk->tray ){
+	// Žæ“¾ˆÊ’u‚ª•\Ž¦‚³‚ê‚Ä‚¢‚é‚Æ‚«
+	if( syswk->get_tray == syswk->tray || syswk->app->get_item_init_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
 		BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->app->get_item_init_pos, TRUE );
 	}
 	BOX2OBJ_PokeIconBlendSet( syswk->app, syswk->app->poke_put_key, FALSE );
