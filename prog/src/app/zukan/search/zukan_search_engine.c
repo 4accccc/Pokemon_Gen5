@@ -35,7 +35,8 @@
 //=============================================================================
 // monsno、formnoの取得
 #define MONSNO(no) (no&0x03FF)
-#define FORMNO(no) ((no&0xFC00)>>6)
+#define FORMNO(no) ((no&0xFC00)>>10)
+#define MONSNO_FORMNO(monsno,formno)  (((formno)<<10)&(monsno))
 /*
     |15 14 13 12 11 10|09 08 07 06 05 04 03 02 01 00|
     |     FORMNO      |           MONSNO            |
@@ -288,6 +289,12 @@ u16 ZUKAN_SEARCH_ENGINE_Search(
       u32 form;
       ZUKANSAVE_GetDrawData( (ZUKAN_SAVEDATA*)zkn_sv, monsno, &sex, &rare, &form, heap_id );
       target_formno = (u16)form;
+    }
+
+    // フォルム違いを考慮しない整列済みのデータの場合
+    if( full_num == MONSNO_END )
+    {
+      formno = target_formno;  // フォルムが一致するようにしておく
     }
 
     // 現在着目しているフォルムと一致していなければならない
@@ -599,7 +606,14 @@ ZKN_SCH_EGN_DIV_STATE  ZUKAN_SEARCH_ENGINE_DivSearch(  // 1フレームに1回呼び出す
         u16 target_formno;
     
         GF_ASSERT_MSG( 1<=monsno && monsno<=MONSNO_END,  "ZUKAN_SEARCH_ENGINE : full_listのmonsnoが異常です。\n" );
-    
+   
+#ifdef DEBUG_KAWADA
+        if( monsno == 487 )
+        {
+          OS_Printf( "monsno=%d, formno=%d\n", monsno, formno );
+        }
+#endif
+
         // 見つけていなければならない
         if( !ZUKANSAVE_GetPokeSeeFlag( work->zkn_sv, monsno ) )
           BLOCK_WORK_FULL_FLAG_ON_AND_CONTINUE(i)
@@ -612,7 +626,13 @@ ZKN_SCH_EGN_DIV_STATE  ZUKAN_SEARCH_ENGINE_DivSearch(  // 1フレームに1回呼び出す
           ZUKANSAVE_GetDrawData( (ZUKAN_SAVEDATA*)work->zkn_sv, monsno, &sex, &rare, &form, heap_id );
           target_formno = (u16)form;
         }
-    
+   
+        // フォルム違いを考慮しない整列済みのデータの場合
+        if( work->full_num == MONSNO_END )
+        {
+          formno = target_formno;  // フォルムが一致するようにしておく
+        }
+
         // 現在着目しているフォルムと一致していなければならない
         if( formno != target_formno )
           BLOCK_WORK_FULL_FLAG_ON_AND_CONTINUE(i)
