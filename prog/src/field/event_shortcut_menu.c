@@ -501,6 +501,9 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 			//MENU破棄
 			if( ShortCutMenu_ExitSeq( p_wk ) )
       {
+        GFL_HEAP_FreeMemory( p_wk->p_link );
+        p_wk->p_link	= NULL;
+
         //NGメッセージ表示
         GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
 
