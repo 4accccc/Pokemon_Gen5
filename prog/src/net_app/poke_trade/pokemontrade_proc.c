@@ -2282,6 +2282,23 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     pWork->pokemonGTSSeq[1]= POKEMONTORADE_SEQ_WAIT;
     
     POKE_GTS_InitFaceIcon(pWork);
+    {
+      POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+      GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
+
+      _CatchPokemonPositionRewind(pWork);
+
+      if(pWork->pAppTask!=NULL){
+        APP_TASKMENU_CloseMenu(pWork->pAppTask);
+        pWork->pAppTask=NULL;
+      }
+    //  G2S_BlendNone();
+
+      IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
+      POKEMONTRADE_2D_AlphaSet(pWork); //G2S_BlendNone();
+
+      _scrollResetAndIconReset(pWork);
+    }
     
     _CHANGE_STATE(pWork, _gtsFirstMsgState);
   }
