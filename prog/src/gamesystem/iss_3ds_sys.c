@@ -349,11 +349,6 @@ static void InitSystemData( ISS_3DS_SYS* system )
   system->systemData        = NULL;
   system->systemDataNum     = 0;
   system->currentSysDataIdx = CURRENT_DATA_NONE;
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: init system data\n" );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -386,12 +381,6 @@ static void LoadSystemData( ISS_3DS_SYS* system )
     GFL_ARC_LoadDataByHandle( handle, datID, &(system->systemData[ datID ]) );
   } 
   GFL_ARC_CloseDataHandle( handle );
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: load system data\n" );
-  DebugPrint_systemData( system );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -404,11 +393,6 @@ static void LoadSystemData( ISS_3DS_SYS* system )
 static void UnloadSystemData( ISS_3DS_SYS* system )
 {
   GF_ASSERT( system->systemData );
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: unload system data\n" );
-#endif
 
   // 破棄 / 初期化
   GFL_HEAP_FreeMemory( system->systemData );
@@ -430,11 +414,6 @@ static void ChangeCurrentSystemData( ISS_3DS_SYS* system, u8 nextDataIdx )
 
   // 変更
   system->currentSysDataIdx = nextDataIdx;
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: update current system data index ==> %d\n", nextDataIdx ); 
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -456,9 +435,7 @@ static u8 SearchSystemData( const ISS_3DS_SYS* system, u32 soundIdx )
   const ISS_BRIDGE_DATA* data;
 
   // データが読み込まれていない
-  if( system->systemData == NULL )
-  {
-    OS_Printf( "ISS-B: don't have system data\n" );
+  if( system->systemData == NULL ) {
     GF_ASSERT(0);
     return CURRENT_DATA_NONE;
   }
@@ -497,11 +474,6 @@ static void InitAllUnit( ISS_3DS_SYS* system )
 		system->unitVolume[ unitIdx ]     = 0;
 		system->unitPan[ unitIdx ]        = 0;
   }
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: init all unit\n" );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -522,9 +494,7 @@ void RegisterUnit( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx,
   unit = &( system->unit[ unitIdx ] );
 
   // すでに登録済み
-  if( unit->active == TRUE )
-  {
-    OS_Printf( "ISS-B: unit %d is already registered\n", unitIdx );
+  if( unit->active == TRUE ) {
     GF_ASSERT(0);
     return;
   }
@@ -533,12 +503,6 @@ void RegisterUnit( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx,
   unit->active         = TRUE;
   unit->effectiveRange = effectiveRange;
   unit->maxVolume      = maxVolume;
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: register unit no.%d\n", unitIdx );
-  DebugPrint_unit( unit );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -557,9 +521,7 @@ static void SetUnitPos( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx, const Ve
   unit = &( system->unit[ unitIdx ] );
 
   // ユニットが登録されていない
-  if( unit->active == FALSE )
-  {
-    OS_Printf( "ISS-B: unit no.%d is not registered\n", unitIdx );
+  if( unit->active == FALSE ) {
     GF_ASSERT(0);
     return;
   }
@@ -595,11 +557,6 @@ static void BootSystem( ISS_3DS_SYS* system )
   // 起動済み
   if( system->boot ){ return; }
 
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: boot system\n" );
-#endif
-
   // 起動
   system->boot = TRUE; 
 
@@ -631,11 +588,6 @@ static void StopSystem( ISS_3DS_SYS* system )
 
   // 停止
   system->boot = FALSE;
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "ISS-B: stop system\n" );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -693,9 +645,7 @@ static void InitTrackVolume( const ISS_3DS_SYS* system )
   const ISS_BRIDGE_DATA* systemData;
 
   // 参照するデータが無い
-  if( system->currentSysDataIdx == CURRENT_DATA_NONE )
-  {
-    OS_Printf( "ISS-B: not found system data\n" );;
+  if( system->currentSysDataIdx == CURRENT_DATA_NONE ) {
     GF_ASSERT(0);
     return;
   } 
@@ -733,12 +683,6 @@ static void UpdateUnitVolume( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx )
 	else if( volume < system->unitVolume[ unitIdx ] ) {
 		UnitVolumeDown( system, unitIdx, volume );
 	}
-
-
-#if 0
-  OS_TFPrintf( PRINT_TARGET, 
-               "ISS-B: update track volume (unit[%d] ==> %d)\n", unitIdx, volume );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -768,12 +712,6 @@ static void UpdateUnitPan( ISS_3DS_SYS* system, ISS3DS_UNIT_INDEX unitIdx )
 	else if( system->unitPan[ unitIdx ] < pan ) {
 		UnitPanMoveToRight( system, unitIdx, pan );
 	}
-
-
-#if 0
-  OS_TFPrintf( PRINT_TARGET, 
-               "ISS-B: update track pan (unit[%d] ==> %d)\n", unitIdx, pan );
-#endif
 }
 
 //-------------------------------------------------------------------------------
@@ -1086,12 +1024,6 @@ static void FadePracticalMasterVolume( ISS_3DS_SYS* system )
 
   // マスターボリューム ( 実行値 ) 更新
   system->practicalMasterVolume += add;
-
-  // DEBUG:
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, 
-               "ISS-B: update master volume ==> %d\n", system->practicalMasterVolume );
-#endif
 }
 
 //-------------------------------------------------------------------------------
