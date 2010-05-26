@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T16:07:12"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T12:07:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -411,7 +411,7 @@
 ※金曜日のみ出現しない
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照</comment>
-		<attribute name="キャラ指定">middleman2</attribute>
+		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
 あそびに　いっちゃうんだよ▼
 よるに　なったら　だいたい　うちに
@@ -437,7 +437,7 @@
 		<comment>♀
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照</comment>
-		<attribute name="キャラ指定">middlewoman1</attribute>
+		<attribute name="キャラ指定">MIDDLEWOMAN1</attribute>
 		<language name="JPN" width="256">ここは　カゴメタウン▼
 おはようから　おやすみまで
 きそく　ただしく　くらす　まちよ</language>

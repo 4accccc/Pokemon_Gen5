@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T15:20:41"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T12:09:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -454,12 +454,12 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="msg_t03r0401_waitress_01" back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+	<row id="msg_t03r0401_waitress_01" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
 		<comment>♀
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照
 </comment>
-		<attribute name="キャラ指定">waitress</attribute>
+		<attribute name="キャラ指定">WOMAN2</attribute>
 		<language name="JPN" width="256">よのなか　たくさんの　ひとがいて
 そのひとの　かずだけ　こせいや▽
 かんがえが　あるんだよね……▼
@@ -553,7 +553,7 @@
 ※金曜日のみ出現
 ※朝になるといなくなる
 ※消すタイミングはzoneチェンジ＋時間参照</comment>
-		<attribute name="キャラ指定">middleman2</attribute>
+		<attribute name="キャラ指定">MIDDLEMAN2</attribute>
 		<language name="JPN" width="256">オレの　ポケモン　いつも　かってに
 あそびに　いっちまうんだ▼
 まったく　だれに　にたんだかな</language>

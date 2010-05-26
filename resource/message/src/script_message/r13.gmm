@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T21:55:40"/>
+	<create user="matsumiya" host="W00224" date="2010-05-26T12:16:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -296,6 +296,7 @@
 		<comment>♂
 ・初回会話
 ・アイテム入手処理</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">なにを　しているか　だって？▼
 たからさがし　だよ
 た・か・ら・さ・が・し！▼
@@ -318,6 +319,7 @@
 		<comment>♂
 ・2回目以降
 ・アイテム入手処理</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">さっき　おたからを　みつけたんだ▼
 だけど　すでに　みつけた　モノだから
 きみに　ゆずってあげるよ▼</language>
@@ -329,6 +331,7 @@
 	<row id="msg_r13_salvage_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>♂
 ・アイテム入手後</comment>
+		<attribute name="キャラ指定">SUNGLASSES</attribute>
 		<language name="JPN" width="256">あしたも　ここで　たからさがし▼
 なにか　みつかるかも　しれないから
 ヒマなら　くると　いいんじゃないか</language>
@@ -373,7 +376,8 @@
 		<comment>ポケモン
 ・OBJをウロウロさせる
 　会話後、GIRL1が通訳をする</comment>
-		<attribute name="キャラ指定">POKE</attribute>
+		<attribute name="キャラ指定">TPOKE_0305
+キャモメ</attribute>
 		<language name="JPN" width="256">キュルル……ルー……</language>
 		<language name="JPN_KANJI" width="256">キュルル……ルー……</language>
 	</row>
@@ -385,7 +389,8 @@
 　msg_r13_girl1_03
 　msg_r13_girl1_04
 　msg_r13_girl1_05に分岐</comment>
-		<attribute name="キャラ指定">POKE</attribute>
+		<attribute name="キャラ指定">TPOKE_0305
+キャモメ</attribute>
 		<language name="JPN" width="256">キュルルー！</language>
 		<language name="JPN_KANJI" width="256">キュルルー！</language>
 	</row>
@@ -393,7 +398,8 @@
 	<row id="msg_r13_poke_03" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
 		<comment>♂
 ・ジャンプアニメをしてメッセージ表示</comment>
-		<attribute name="キャラ指定">POKE</attribute>
+		<attribute name="キャラ指定">TPOKE_0305
+キャモメ</attribute>
 		<language name="JPN" width="256">キャル！　キャルルー！</language>
 		<language name="JPN_KANJI" width="256">キャル！　キャルルー！</language>
 	</row>
@@ -413,11 +419,11 @@
 なにか　落ちている</language>
 	</row>
 
-	<row id="msg_r13_girl1_01">
+	<row id="msg_r13_girl1_01" text-color=",,,,,#ff0000,,,,,,,,,,,,,">
 		<comment>♀
 ・直接会話時
 　配達物イベント開始</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">この　キャモメね　はいたつぶつを
 ３つ　１３ばんどうろで▽
 なくしちゃった　みたいなの▽
@@ -443,12 +449,12 @@
 どうにか　してあげたいのだけど……▼</language>
 	</row>
 
-	<row id="msg_r13_girl1_02" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_02" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・配達物を１つ以上持っている場合
 　キャモメに渡しているようなアニメ後
 　msg_r13_poke_02へ</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あ　すごい！
 それ　はいたつぶつ　じゃない？▽
 ちょっと　みせて　あげようよ！</language>
@@ -457,41 +463,41 @@
 ちょっと　みせて　あげようよ！</language>
 	</row>
 
-	<row id="msg_r13_girl1_03" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_03" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・１つ見つけている場合</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あと　２つね！
 キャモメ　よろこんでる　みたい</language>
 		<language name="JPN_KANJI" width="256">あと　２つね！
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_r13_girl1_04" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_04" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・２つ見つけている場合</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">あと　１つね！
 キャモメ　よろこんでる　みたい</language>
 		<language name="JPN_KANJI" width="256">あと　１つね！
 キャモメ　喜んでる　みたい</language>
 	</row>
 
-	<row id="msg_r13_girl1_05" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_05" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・全部見つけている場合
 　msg_r13_poke_03へ</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ぜんぶ　そろったね！
 これで　キャモメも　おおだすかりね！</language>
 		<language name="JPN_KANJI" width="256">ぜんぶ　そろったね！
 これで　キャモメも　おおだすかりね！</language>
 	</row>
 
-	<row id="msg_r13_girl1_06" text-color=",,,,,,#000000,,,,,,#000000,,,,,,">
+	<row id="msg_r13_girl1_06" text-color=",,,,,#ff0000,#000000,,,,,,#000000,,,,,,">
 		<comment>♀
 ・イベントクリア後は、これを繰り返し</comment>
-		<attribute name="キャラ指定">GIRL1</attribute>
+		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">ありがとう　トレーナーさん！▼
 ポケモンの　うれしそうな
 かおをみると　シアワセに　なるね！</language>
@@ -534,20 +540,20 @@
 がんばって　くれてたんじゃのう！</language>
 	</row>
 
-	<row id="msg_r13_backpackerw_01" text-color=",,,,,,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_r13_backpackerw_01" text-color=",,,,,#ff0000,#ff0000,,,,,,#ff0000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 キャモメイベント開始前</comment>
-		<attribute name="キャラ指定">BACKPACKERW</attribute>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
 		<language name="JPN" width="256">なんで　わたしの　だした
 てがみが　そらから　ふってくるの……？</language>
 		<language name="JPN_KANJI" width="256">なんで　わたしの　だした
 手紙が　空から　降ってくるの……？</language>
 	</row>
 
-	<row id="msg_r13_backpackerw_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_r13_backpackerw_02" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 キャモメイベント中</comment>
-		<attribute name="キャラ指定">BACKPACKERW</attribute>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
 		<language name="JPN" width="256">なんで　わたしの　だした
 てがみが　そらから　ふってくるの……？▼
 ……なーんだ！
@@ -562,10 +568,10 @@
 今度は　落とさないように　ってね！▼</language>
 	</row>
 
-	<row id="msg_r13_backpackerw_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_r13_backpackerw_03" text-color=",,,,,#ff0000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 キャモメイベント後</comment>
-		<attribute name="キャラ指定">BACKPACKERW</attribute>
+		<attribute name="キャラ指定">AMBRELLA</attribute>
 		<language name="JPN" width="256">クチベタな　わたしは　メールに
 たびで　かんじた　きもちを　かくの</language>
 		<language name="JPN_KANJI" width="256">クチベタな　わたしは　メールに
