@@ -171,6 +171,9 @@ typedef struct
 	HEAPID						heapID;
 	GFL_MSGDATA				*p_msg;		//メッセージデータ
 	GFL_FONT					*p_font;	//フォント
+
+  BOOL              is_move_req;
+  BOOL              is_visible_req;
 } SCROLL_WORK;
 
 //-------------------------------------
@@ -209,7 +212,8 @@ static void SCROLL_Exit( SCROLL_WORK *p_wk, SHORTCUT_CURSOR	*p_cursor );
 static void SCROLL_Main( SCROLL_WORK *p_wk );
 static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk );
 static u32 SCROLL_GetInput( const SCROLL_WORK *cp_wk );
-static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_wk, u32 param, u8 mode );
+static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 mode );
+static void Scroll_MoveCursorReqCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 mode );
 static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, HEAPID heapID );
 static void Scroll_DeleteList( SCROLL_WORK *p_wk, u16 *p_list_bak, u16 *p_cursor_bak );
 
@@ -370,7 +374,6 @@ SHORTCUTMENU_WORK *SHORTCUTMENU_Init( GAMEDATA *p_gamedata, SHORTCUTMENU_MODE mo
 		SAVE_CONTROL_WORK *p_sv_ptr	= GAMEDATA_GetSaveControlWork( p_gamedata );
 		SHORTCUT *p_shortcut_sv = SaveData_GetShortCut( p_sv_ptr );
 		SCROLL_Init( &p_wk->scroll, p_wk->p_cursor, p_wk->p_msg, p_wk->p_font, p_wk->p_que, p_shortcut_sv, p_wk->p_clwk, sys_heapID );
-		SCROLL_PrintMain( &p_wk->scroll );
 	}
 
 	GFL_BG_LoadScreenV_Req( BG_FRAME_SCROLL_M );
@@ -465,6 +468,16 @@ void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 {	
+  BOOL  is_trans_end;
+
+  PRINTSYS_QUE_Main( p_wk->p_que );
+	is_trans_end  = SCROLL_PrintMain( &p_wk->scroll );
+
+  if( !is_trans_end )
+  {
+    return;
+  }
+
 	switch( p_wk->seq )
 	{	
 	case MAINSEQ_NONE:					//何もしていない
@@ -536,8 +549,7 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 		GF_ASSERT(0);
 	}
 
-  PRINTSYS_QUE_Main( p_wk->p_que );
-	SCROLL_PrintMain( &p_wk->scroll );
+
 }
 //----------------------------------------------------------------------------
 /**
@@ -826,12 +838,8 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 		{	
 			BmpMenuList_PosGet( p_wk->p_list, &p_wk->insert_list, &p_wk->insert_cursor );
 
-      for( i = 0; i < CLWKID_MAX; i++ )
-      { 
-        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
-      }
+      p_wk->is_visible_req  = TRUE;
 		}
-		Scroll_MoveCursorCallBack( p_wk->p_list, 0, 1 );
 	}
 }
 //----------------------------------------------------------------------------
@@ -845,7 +853,31 @@ static void SCROLL_Main( SCROLL_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk )
 {	
-	return PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+  BOOL is_trans_end = PRINT_UTIL_Trans( &p_wk->util, p_wk->p_que );
+
+  if( is_trans_end )
+  {
+    //カーソルの移動は転送が終わってから行なう
+    if( p_wk->is_move_req )
+    {
+      Scroll_MoveCursorCallBack( p_wk->p_list, 0, 0 );
+      p_wk->is_move_req = FALSE;
+    }
+
+    //動作してから描画ONにしないと、移動しているのがみえるので移動後に行なう
+    if( p_wk->is_visible_req )
+    {
+      int i;
+      for( i = 0; i < CLWKID_MAX; i++ )
+      { 
+        GFL_CLACT_WK_SetDrawEnable( p_wk->p_clwk[i], TRUE );
+      }
+      p_wk->is_visible_req  = FALSE;
+    }
+  }
+
+
+  return is_trans_end;
 }
 //----------------------------------------------------------------------------
 /**
@@ -862,6 +894,24 @@ static BOOL SCROLL_PrintMain( SCROLL_WORK *p_wk )
 static u32 SCROLL_GetInput( const SCROLL_WORK *cp_wk )
 {	
 	return cp_wk->select;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カーソルが移動したときに呼ばれるコールバック
+ *
+ *	@param	BMPMENULIST_WORK * p_list	ワーク
+ *	@param	param										選択しているリストのパラメータ
+ *	@param	mode	1ならば初期化時	0ならばカーソル移動時
+ */
+//-----------------------------------------------------------------------------
+static void Scroll_MoveCursorReqCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 mode )
+{
+  SCROLL_WORK *p_wk;
+
+	//ワーク取得
+	p_wk	= (SCROLL_WORK *)BmpListParamGet( p_list, BMPMENULIST_ID_WORK );
+  p_wk->is_move_req = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -917,14 +967,7 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
 	}
 	else if( p_wk->mode == SCROLL_MOVE_INSERT )
 	{	
-    int i;
-		GFL_CLACTPOS	clpos;
-    for( i = 0; i < CLWKID_MAX; i++ )
-    { 
-      GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
-      clpos.y = (SCROLL_BMPWIN_Y + cursor)*8;
-      GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
-    }
+
 
 		GFL_BG_ChangeScreenPalette( 
 				BG_FRAME_SCROLL_M, 
@@ -969,6 +1012,17 @@ static void Scroll_MoveCursorCallBack( BMPMENULIST_WORK * p_list, u32 param, u8 
 
 		GFL_BG_LoadScreenV_Req( BG_FRAME_SCROLL_M );
 	}
+
+  {
+    int i;
+		GFL_CLACTPOS	clpos;
+    for( i = 0; i < CLWKID_MAX; i++ )
+    { 
+      GFL_CLACT_WK_GetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
+      clpos.y = (SCROLL_BMPWIN_Y + cursor)*8;
+      GFL_CLACT_WK_SetPos( p_wk->p_clwk[i], &clpos, CLSYS_DRAW_MAIN );
+    }
+  }
 
 
 }
@@ -1054,7 +1108,7 @@ static void Scroll_CreateList( SCROLL_WORK *p_wk, u16 list_bak, u16 cursor_bak, 
 		BMPMENULIST_HEADER	header	= sc_menulist_default;
 		header.list				= p_wk->p_data;
 		header.count			= max;
-		header.call_back	= Scroll_MoveCursorCallBack;
+		header.call_back	= Scroll_MoveCursorReqCallBack;//Scroll_MoveCursorCallBack; コールバックで行なうと転送待ちできないためリクエストフラグだけたてる
 		header.icon				= NULL;
 		header.win				= p_wk->p_bmpwin;
 		header.work				= p_wk;

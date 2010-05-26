@@ -71,7 +71,7 @@ struct _BMPMENULIST_WORK {
 /*        ローカル関数宣言                  */
 /*                                                                  */
 /********************************************************************/
-static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y );
+static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y, BOOL is_que );
 static void ListScreenPut( BMPMENULIST_WORK * lw, u16 print_p, u16 line, u16 len, BOOL up_write );
 static void ListCursorPut( BMPMENULIST_WORK * lw );
 static void ListCursorCls( BMPMENULIST_WORK * lw, u16 p );
@@ -711,7 +711,7 @@ void BmpMenuList_SetMenuListData(BMPMENULIST_WORK * lw, BMP_MENULIST_DATA* pList
 //------------------------------------------------------------------
 //    メッセージ表示
 //------------------------------------------------------------------
-static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y )
+static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y, BOOL is_que )
 {
     if(msg==NULL){
         return;
@@ -719,15 +719,33 @@ static void LocalMsgPrint( BMPMENULIST_WORK * lw, void * msg, u8 x, u8 y )
     
   if( lw->tmp.sw )          // 一時変更スイッチ
   {
-    PRINT_UTIL_PrintColor( lw->hed.print_util, lw->hed.print_que, 
-      x, y, msg, lw->hed.font_handle, 
-      PRINTSYS_LSB_Make(lw->tmp.f_col, lw->tmp.s_col, lw->tmp.b_col) );
+    if( is_que )
+    {
+      PRINT_UTIL_PrintColor( lw->hed.print_util, lw->hed.print_que, 
+          x, y, msg, lw->hed.font_handle, 
+          PRINTSYS_LSB_Make(lw->tmp.f_col, lw->tmp.s_col, lw->tmp.b_col) );
+    }
+    else
+    {
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( lw->hed.print_util->win ),
+          x, y, msg, lw->hed.font_handle, 
+          PRINTSYS_LSB_Make(lw->tmp.f_col, lw->tmp.s_col, lw->tmp.b_col) );
+    }
   }
   else
   {
-    PRINT_UTIL_PrintColor( lw->hed.print_util, lw->hed.print_que,
-      x, y, msg, lw->hed.font_handle, 
-      PRINTSYS_LSB_Make(lw->hed.f_col, lw->hed.s_col, lw->hed.b_col) );
+    if( is_que )
+    {
+      PRINT_UTIL_PrintColor( lw->hed.print_util, lw->hed.print_que,
+          x, y, msg, lw->hed.font_handle, 
+          PRINTSYS_LSB_Make(lw->hed.f_col, lw->hed.s_col, lw->hed.b_col) );
+    }
+    else
+    {
+      PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( lw->hed.print_util->win ),
+          x, y, msg, lw->hed.font_handle, 
+          PRINTSYS_LSB_Make(lw->tmp.f_col, lw->tmp.s_col, lw->tmp.b_col) );
+    }
   }
 }
 
@@ -791,7 +809,8 @@ static void ListScreenPut(
       lw->hed.icon( lw, lw->hed.list[print_p-1].param,y );
     }
 
-    LocalMsgPrint( lw, (void*)lw->hed.list[print_p-1].str, x, y );
+    //この部分は余白に書き込むためにQUEを使っていません
+    LocalMsgPrint( lw, (void*)lw->hed.list[print_p-1].str, x, y, FALSE );
 
     BmpWinDataShift( lw->hed.win, BMPWIN_SHIFT_U, 
       yblk, (u8)((lw->hed.b_col<<4)|lw->hed.b_col), 
@@ -813,7 +832,7 @@ static void ListScreenPut(
     if( lw->hed.icon != NULL ){
       lw->hed.icon( lw, lw->hed.list[print_p].param,y );
     }
-    LocalMsgPrint( lw, (void*)lw->hed.list[print_p].str, x, y );
+    LocalMsgPrint( lw, (void*)lw->hed.list[print_p].str, x, y, TRUE );
     print_p++;
     if( print_p >= lw->hed.count )
     { 
