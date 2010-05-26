@@ -4874,7 +4874,6 @@ static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       param->damage = damage;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HedoroEki );
       HANDEX_STR_AddArg( &param->exStr, param->pokeID );
-
     }
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }

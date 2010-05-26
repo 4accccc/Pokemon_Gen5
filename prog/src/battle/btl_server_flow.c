@@ -7384,24 +7384,22 @@ static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* waza
 //----------------------------------------------------------------------------------
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP )
 {
-  if( (!scproc_RecoverHP_CheckFailBase(wk, attacker))
-  &&  (drainHP > 0)
-  ){
-    u32 hem_state = Hem_PushState( &wk->HEManager );
-    BOOL result = FALSE;
-    drainHP = scEvent_RecalcDrainVolume( wk, attacker, target, drainHP );
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+  BOOL result = FALSE;
 
-    if( drainHP != 0 )
+  drainHP = scEvent_RecalcDrainVolume( wk, attacker, target, drainHP );
+  if( drainHP > 0 )
+  {
+    if( !scproc_RecoverHP_CheckFailBase(wk, attacker) )
     {
       result = scproc_RecoverHP( wk, attacker, drainHP, TRUE );
     }
-
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    Hem_PopState( &wk->HEManager, hem_state );
-
-    return result;
   }
-  return FALSE;
+  else{
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  }
+  Hem_PopState( &wk->HEManager, hem_state );
+  return result;
 }
 //----------------------------------------------------------------------------------
 /**
