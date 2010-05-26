@@ -169,10 +169,12 @@ void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, 
     REGULATION_CAMERA_TYPE  type = Regulation_GetParam( reg, REGULATION_CAMERA );
     switch( type )
     {
+    case REGULATION_CAMERA_WCS_MOVE:
     case REGULATION_CAMERA_MOVE:
       bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_WCS;
       break;
 
+    case REGULATION_CAMERA_WCS_STOP:
     case REGULATION_CAMERA_STOP:
       bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_OFF;
       break;

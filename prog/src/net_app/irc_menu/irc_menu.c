@@ -344,6 +344,7 @@ typedef struct
 	u16			is_touch;
   u16     seq;
   u16     cnt;
+  BOOL    is_enable;
 } BUTTON_WORK;
 //-------------------------------------
 ///	加速度
@@ -496,6 +497,8 @@ static void SEQFUNC_SceneError( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq );
 static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_setup_tbl, u8 tbl_max, const MSG_WORK *cp_msg, HEAPID heapID );
 static void BUTTON_Exit( BUTTON_WORK *p_wk );
 static void BUTTON_Main( BUTTON_WORK *p_wk );
+static void BUTTON_SetTouchEnable( BUTTON_WORK *p_wk, BOOL is_enable );
+static BOOL BUTTON_IsBtnEffect( const BUTTON_WORK *cp_wk );
 static BOOL BUTTON_IsTouch( const BUTTON_WORK *cp_wk, u32 *p_btnID );
 static void BUTTON_Reset( BUTTON_WORK *p_wk );
 static void Button_TouchCallBack( u32 btnID, u32 event, void *p_param );
@@ -2018,7 +2021,14 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_SELECT:
-		BUTTON_Main( &p_wk->btn );
+
+    BUTTON_Main( &p_wk->btn );
+
+    if( BUTTON_IsBtnEffect( &p_wk->btn ) )
+    {
+      APPBAR_SetTouchEnable( p_wk->p_appbar, FALSE );
+    }
+
 		if( BUTTON_IsTouch( &p_wk->btn,  &p_wk->select ) )
 		{	
 			switch( p_wk->select )
@@ -2033,12 +2043,26 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 			};
 		}
 		p_wk->now_ms	= OS_TicksToMilliSeconds32( OS_GetTick() ) - p_wk->start_ms;
+
+
+    if( APPBAR_IsBtnEffect(p_wk->p_appbar ) )
+    {
+      BUTTON_SetTouchEnable( &p_wk->btn, FALSE );
+    }
+
+    if( APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
+    {
+      COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
+      SEQ_Change( p_wk, SEQFUNC_End );
+    }
+
 		break;
 
 	case SEQ_MSG:
 		MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_003, 0, 0  );
 
     APPBAR_ChangeButton( p_wk->p_appbar, APPBAR_BUTTON_TYPE_CANCEL );
+    APPBAR_SetTouchEnable( p_wk->p_appbar, TRUE );
 		SEQ_Change( p_wk, SEQFUNC_Connect );
 		break;
 #if 0
@@ -2062,12 +2086,6 @@ static void SEQFUNC_Select( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 #endif
 	};
-
-	if( (APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN) && *p_seq == SEQ_SELECT )
-	{
-		COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
-		SEQ_Change( p_wk, SEQFUNC_End );
-	}
 }
 
 //----------------------------------------------------------------------------
@@ -2246,7 +2264,7 @@ static void MainModules( IRC_MENU_MAIN_WORK *p_wk )
 	//BACKOBJ_Main( &p_wk->backobj );
 
 	//APPBAR
-	APPBAR_Main( p_wk->p_appbar );
+  APPBAR_Main( p_wk->p_appbar );
 
 	GRAPHIC_Draw( &p_wk->grp );
 }
@@ -2280,6 +2298,7 @@ static void BUTTON_Init( BUTTON_WORK *p_wk, u8 frm, const	 BUTTON_SETUP *cp_btn_
 	p_wk->cp_btn_setup_tbl	= cp_btn_setup_tbl;
 	p_wk->btn_num			= tbl_max;
 	p_wk->frm					= frm;
+  p_wk->is_enable   = TRUE;
 
 	//HITTBLを作成（キャラ単位をドット単位に）
 	{	
@@ -2380,7 +2399,7 @@ static void BUTTON_Main( BUTTON_WORK *p_wk )
   {
   case SEQ_MAIN:
     p_wk->is_touch  = FALSE;
-    if( GFL_BMN_Main( p_wk->p_btn ) )
+    if( GFL_BMN_Main( p_wk->p_btn ) && p_wk->is_enable )
     { 
       PMSND_PlaySE( IRCMENU_SE_DECIDE );
       p_wk->cnt = 0;
@@ -2433,6 +2452,34 @@ static void BUTTON_Main( BUTTON_WORK *p_wk )
     }
     break;
   }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタンがエフェクト中か設定
+ *
+ *	@param	const BUTTON_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEならばエフェクト中  FALSEならば待機中
+ */
+//-----------------------------------------------------------------------------
+static void BUTTON_SetTouchEnable( BUTTON_WORK *p_wk, BOOL is_enable )
+{
+  p_wk->is_enable  = is_enable;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ボタン演出を取得
+ *
+ *	@param	const BUTTON_WORK *cp_wk  ワーク
+ *
+ *	@return TRUEならばボタン演出中  FALSEならばそれ以外
+ */
+//-----------------------------------------------------------------------------
+static BOOL BUTTON_IsBtnEffect( const BUTTON_WORK *cp_wk )
+{
+  return cp_wk->seq > 0;
 }
 
 //----------------------------------------------------------------------------

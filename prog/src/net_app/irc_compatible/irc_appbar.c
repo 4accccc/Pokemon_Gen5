@@ -271,6 +271,19 @@ APPBAR_ICON APPBAR_GetTrg( const APPBAR_WORK *cp_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief	APPBAR	ボタンがアニメ中かチェック
+ *
+ *	@param	const APPBAR_WORK *cp_wk ワーク
+ *
+ *	@return	TRUEならばアニメ中  FALSEならば待機中
+ */
+//-----------------------------------------------------------------------------
+BOOL APPBAR_IsBtnEffect( const APPBAR_WORK *cp_wk )
+{	
+	return cp_wk->seq > 0;
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  選択されたものを直す
  *
  *	@param	APPBAR_WORK *p_wk ワーク
@@ -297,6 +310,20 @@ void APPBAR_SetVisible( APPBAR_WORK *p_wk, BOOL is_visible )
   p_wk->is_use  = is_visible;
   GFL_BG_SetVisible( p_wk->bg_frm, is_visible );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  タッチ許可
+ *
+ *	@param	APPBAR_WORK *p_wk ワーク
+ *	@param	is_use            TRUEで使用  FALSEでタッチできない
+ */
+//-----------------------------------------------------------------------------
+void APPBAR_SetTouchEnable( APPBAR_WORK *p_wk, BOOL is_use )
+{
+  p_wk->is_use  = is_use;
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  ボタン作成しなおし
