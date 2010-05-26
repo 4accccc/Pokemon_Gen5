@@ -256,7 +256,7 @@ GFL_PROC_RESULT TitleProcInit( GFL_PROC * proc, int * seq, void * pwk, void * my
 
 #ifdef PM_DEBUG // デバッグ用スキップ処理
   if( pwk != NULL ){
-    u32 * corp = pwk;
+    int * corp = pwk;
     if( *corp == CORPORATE_RET_DEBUG ){
       tw->mode = END_DEBUG_CALL;
       tw->seq = SEQ_SKIP;

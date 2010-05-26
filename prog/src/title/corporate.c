@@ -52,7 +52,7 @@ static GFL_PROC_RESULT CorpProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 #ifdef PM_DEBUG
-static void SetEndMode( u32 * buf, u32 mode );
+static void SetEndMode( CORP_PARAM * prm, u32 mode );
 #endif
 
 //==============================================================================
@@ -196,44 +196,39 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
 
     case SEQ_CORP1_FADEIN:
-    {
+	    {
 #if PM_VERSION==VERSION_BLACK
-      // メイン画面
-      GFL_ARC_UTIL_TransVramBgCharacter
-        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NCGR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramScreen
-        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NSCR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramPalette
-        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_TITLE_DEMO);
-
-      // サブ画面
-      GFL_ARC_UTIL_TransVramBgCharacter
-        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NCGR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramScreen
-        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_s_lz_NSCR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramPalette
-        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_TITLE_DEMO);
-
+	      // メイン画面
+	      GFL_ARC_UTIL_TransVramBgCharacter
+	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NCGR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramScreen
+	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NSCR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramPalette
+	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_TITLE_DEMO);
+	      // サブ画面
+	      GFL_ARC_UTIL_TransVramBgCharacter
+	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_lz_NCGR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramScreen
+	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_s_lz_NSCR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramPalette
+	        (ARCID_TITLE, NARC_title_black_logo_tpc_ntd_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_TITLE_DEMO);
 #else
-      // メイン画面
-      GFL_ARC_UTIL_TransVramBgCharacter
-        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_lz_NCGR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramScreen
-        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_lz_NSCR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramPalette
-        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_TITLE_DEMO);
-
-      // サブ画面
-      GFL_ARC_UTIL_TransVramBgCharacter
-        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_lz_NCGR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramScreen
-        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_s_lz_NSCR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
-      GFL_ARC_UTIL_TransVramPalette
-        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_TITLE_DEMO);
-
+	      // メイン画面
+	      GFL_ARC_UTIL_TransVramBgCharacter
+	        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_lz_NCGR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramScreen
+	        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_lz_NSCR, FRAME_CORP, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramPalette
+	        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_TITLE_DEMO);
+	      // サブ画面
+	      GFL_ARC_UTIL_TransVramBgCharacter
+	        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_lz_NCGR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramScreen
+	        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_s_lz_NSCR, FRAME_LOGO, 0, 0, 1, HEAPID_TITLE_DEMO);
+	      GFL_ARC_UTIL_TransVramPalette
+	        (ARCID_TITLE, NARC_title_white_logo_tpc_ntd_NCLR, PALTYPE_SUB_BG, 0, 0, HEAPID_TITLE_DEMO);
 #endif
-    }
-
+	    }
       GFL_BG_SetVisible(FRAME_CORP, VISIBLE_ON);
       GFL_BG_SetVisible(FRAME_LOGO, VISIBLE_ON);
       // 上下画面設定
@@ -245,12 +240,23 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
       }
       cw->seq = SEQ_CORP1_FADEIN_WAIT;
       break;
+
     case SEQ_CORP1_FADEIN_WAIT:
       if(GFL_FADE_CheckFade() == FALSE){
         cw->seq = SEQ_CORP1_MAIN;
         cw->timer = 0;
       }
+#ifdef PM_DEBUG
+    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_SELECT)){
+      int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
+      GFL_FADE_SetMasterBrightReq(mode, 0, 0, 0 );
+      SetEndMode( pwk, CORPORATE_RET_DEBUG );
+      cw->seq = SEQ_END;
       break;
+    }
+#endif
+      break;
+
     case SEQ_CORP1_MAIN:
       cw->timer++;
       if(cw->timer > TIMER_WAIT){
@@ -260,8 +266,15 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
         cw->seq = SEQ_CORP1_FADEOUT;
         break;
       }
-
+#ifdef PM_DEBUG
+	    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_SELECT)){
+	      SetEndMode( pwk, CORPORATE_RET_DEBUG );
+	      cw->seq = SEQ_END;
+	      break;
+	    }
+#endif
       break;
+
     case SEQ_CORP1_FADEOUT:
       {
         int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
@@ -269,18 +282,30 @@ static GFL_PROC_RESULT CorpProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
         cw->seq = SEQ_CORP1_FADEOUT_WAIT;
       }
       break;
+
     case SEQ_CORP1_FADEOUT_WAIT:
       if(GFL_FADE_CheckFade() == FALSE){
         cw->seq = SEQ_CORP1_WAIT;
         cw->timer = 0;
       }
+#ifdef PM_DEBUG
+	    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_SELECT)){
+	      int mode = GFL_FADE_MASTER_BRIGHT_BLACKOUT;
+	      GFL_FADE_SetMasterBrightReq(mode, 16, 16, 0);
+	      SetEndMode( pwk, CORPORATE_RET_DEBUG );
+	      cw->seq = SEQ_END;
+	      break;
+	    }
+#endif
       break;
+
     case SEQ_CORP1_WAIT:
       if(++cw->timer>END_TIMER_WAIT){
         cw->seq = SEQ_SETUP2;
         cw->timer = 0;
       }
       break;
+
     case SEQ_SETUP2:
     
     {
@@ -417,8 +442,8 @@ static GFL_PROC_RESULT CorpProcEnd( GFL_PROC * proc, int * seq, void * pwk, void
  * 終了モード設定
  */
 //--------------------------------------------------------------------------
-static void SetEndMode( u32 * buf, u32 mode )
+static void SetEndMode( CORP_PARAM * prm, u32 mode )
 {
-  *buf = mode;
+  prm->ret = mode;
 }
 #endif
