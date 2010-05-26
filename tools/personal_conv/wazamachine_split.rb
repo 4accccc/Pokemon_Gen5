@@ -124,6 +124,120 @@ class PARA
   ]
 end
 
+  waza_machine_waza = [
+    "つめとぎ",
+    "ドラゴンクロー",
+    "サイコショック",
+    "めいそう",
+    "ほえる",
+    "どくどく",
+    "あられ",
+    "ビルドアップ",
+    "ベノムショック",
+    "めざめるパワー",
+    "にほんばれ",
+    "ちょうはつ",
+    "れいとうビーム",
+    "ふぶき",
+    "はかいこうせん",
+    "ひかりのかべ",
+    "まもる",
+    "あまごい",
+    "テレキネシス",
+    "しんぴのまもり",
+    "やつあたり",
+    "ソーラービーム",
+    "うちおとす",
+    "１０まんボルト",
+    "かみなり",
+    "じしん",
+    "おんがえし",
+    "あなをほる",
+    "サイコキネシス",
+    "シャドーボール",
+    "かわらわり",
+    "かげぶんしん",
+    "リフレクター",
+    "ヘドロウェーブ",
+    "かえんほうしゃ",
+    "ヘドロばくだん",
+    "すなあらし",
+    "だいもんじ",
+    "がんせきふうじ",
+    "つばめがえし",
+    "いちゃもん",
+    "からげんき",
+    "ニトロチャージ",
+    "ねむる",
+    "メロメロ",
+    "どろぼう",
+    "ローキック",
+    "りんしょう",
+    "エコーボイス",
+    "オーバーヒート",
+    "サイドチェンジ",
+    "きあいだま",
+    "エナジーボール",
+    "みねうち",
+    "ねっとう",
+    "なげつける",
+    "チャージビーム",
+    "フリーフォール",
+    "やきつくす",
+    "さきおくり",
+    "おにび",
+    "アクロバット",
+    "さしおさえ",
+    "だいばくはつ",
+    "シャドークロー",
+    "しっぺがえし",
+    "かたきうち",
+    "ギガインパクト",
+    "ロックカット",
+    "フラッシュ",
+    "ストーンエッジ",
+    "ボルトチェンジ",
+    "でんじは",
+    "ジャイロボール",
+    "つるぎのまい",
+    "むしのていこう",
+    "じこあんじ",
+    "じならし",
+    "こおりのいぶき",
+    "いわなだれ",
+    "シザークロス",
+    "ドラゴンテール",
+    "ふるいたてる",
+    "どくづき",
+    "ゆめくい",
+    "くさむすび",
+    "いばる",
+    "ついばむ",
+    "とんぼがえり",
+    "みがわり",
+    "ラスターカノン",
+    "トリックルーム",
+    "ワイルドボルト",
+    "いあいぎり",
+    "かいりき",
+    "なみのり",
+    "そらをとぶ",
+    "ダイビング",
+    "たきのぼり",
+    "いわくだき",
+    "バークアウト",
+  ]
+
+  waza_oshie_waza = [
+    "くさのちかい",
+    "ほのおのちかい",
+    "みずのちかい",
+    "ハードプラント",
+    "ブラストバーン",
+    "ハイドロカノン",
+    "りゅうせいぐん",
+  ]
+
 	if ARGV.size < 2
 		print "error: ruby wazamachine_split.rb read_file write_file\n"
 		print "read_file:読み込むファイル\n"
@@ -151,49 +265,68 @@ end
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
     
-    for i in PARA::POKENAME..PARA::SHINKA_COND7
-      fp_w.printf( "%s,", split_data[ i ] )
-    end
-
-    waza_machine = split_data[ PARA::WAZA_MACHINE ].split(//)
-
-    waza_machine.size.times {|j|
-      if waza_machine[ j ] == "●"
-        fp_w.print("●,")
-      else
-        fp_w.print(",")
+    #iが0なら見出し
+    if i == 0
+      for j in PARA::POKENAME..PARA::SHINKA_COND7
+        fp_w.printf( "%s,", split_data[ j ] )
       end
-    }
-
-    padding = 101 - waza_machine.size
-
-    padding.times {|j|
-      fp_w.print(",")
-    }
-
-    for i in PARA::GRA_NO..PARA::WEIGHT
-      fp_w.printf( "%s,", split_data[ i ] )
-    end
-
-    waza_machine = split_data[ PARA::WAZA_OSHIE ].split(//)
-
-    waza_machine.size.times {|j|
-      if waza_machine[ j ] == "●"
-        fp_w.print("●,")
-      else
-        fp_w.print(",")
+      waza_machine_waza.size.times {|j|
+        fp_w.printf( "%s,", waza_machine_waza[ j ] )
+      }
+      for j in PARA::GRA_NO..PARA::WEIGHT
+        fp_w.printf( "%s,", split_data[ j ] )
       end
-    }
+      waza_oshie_waza.size.times {|j|
+        fp_w.printf( "%s,", waza_oshie_waza[ j ] )
+      }
+      fp_w.printf( "%s,", split_data[ PARA::NO_JUMP ] )
 
-    padding = 7 - waza_machine.size
+      fp_w.print("\n")
+    else
+      for j in PARA::POKENAME..PARA::SHINKA_COND7
+        fp_w.printf( "%s,", split_data[ j ] )
+      end
 
-    padding.times {|j|
-      fp_w.print(",")
-    }
+      waza_machine = split_data[ PARA::WAZA_MACHINE ].split(//)
 
-    fp_w.printf( "%s,", split_data[ PARA::NO_JUMP ] )
+      waza_machine.size.times {|k|
+        if waza_machine[ k ] == "●"
+          fp_w.print("●,")
+        else
+          fp_w.print(",")
+        end
+      }
 
-    fp_w.print("\n")
+      padding = 101 - waza_machine.size
+
+      padding.times {|k|
+        fp_w.print(",")
+      }
+
+      for j in PARA::GRA_NO..PARA::WEIGHT
+        fp_w.printf( "%s,", split_data[ j ] )
+      end
+
+      waza_machine = split_data[ PARA::WAZA_OSHIE ].split(//)
+
+      waza_machine.size.times {|k|
+        if waza_machine[ k ] == "●"
+          fp_w.print("●,")
+        else
+          fp_w.print(",")
+        end
+      }
+
+      padding = 7 - waza_machine.size
+
+      padding.times {|k|
+        fp_w.print(",")
+      }
+
+      fp_w.printf( "%s,", split_data[ PARA::NO_JUMP ] )
+
+      fp_w.print("\n")
+    end
   }
 
   fp_w.close
