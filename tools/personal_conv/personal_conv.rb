@@ -572,6 +572,7 @@ end
   fp_num = open( "zukan2grano.txt", "w" )
   fp_icon_scr = open( "pokeicon_all.scr", "w" )
   fp_icon_attr = open( "attr_list.txt", "w" )
+  fp_nonstop = open( "pokegra_wb_nonstop.lst", "w" )
   gmm = GMM::new
   gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "monsname.gmm" )
 
@@ -729,6 +730,9 @@ end
 	    fp_gra.printf( "\"pmwb_%03d%s_n.NCLR\"\n",   gra_no, form_name )
 	    fp_gra.printf( "\"pmwb_%03d%s_r.NCLR\"\n",   gra_no, form_name )
 
+	    fp_nonstop.printf( "pfwb_%03d%s.NCEC,%d,%s\n", gra_no, form_name, gra_hash[ split_data[ PARA::GRA_NO ] ], form_name.sub("_","") )
+	    fp_nonstop.printf( "pbwb_%03d%s.NCEC,%d,%s\n", gra_no, form_name, gra_hash[ split_data[ PARA::GRA_NO ] ], form_name.sub("_","") )
+
       fp_icon_scr.printf( "\"poke_icon_%03d%s_m.NCGR\"\n",  gra_no, form_name )
       fp_icon_scr.printf( "\"poke_icon_%03d%s_f.NCGR\"\n",  gra_no, form_name )
 
@@ -777,6 +781,15 @@ end
   }
   fp_hash.printf("\t}\n" )
 
+  #モンスターネームテーブル
+  fp_hash.printf("\t$monsname = [\n" )
+    fp_hash.printf("\t\t\"－－－－－\",\n" )
+  monsno.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t\t\"%s\",\n", split_data[ PARA::POKENAME ] )
+  }
+  fp_hash.printf("\t]\n" )
+
   #フォルムナンバー最大値ハッシュテーブル
   fp_hash.printf("\t$formmax_hash = {\n" )
   monsno.size.times {|no|
@@ -792,6 +805,15 @@ end
     fp_hash.printf("\t\t\"%s\"=>%d,\n", split_data[ PARA::GRA_NO ], gra_hash[ split_data[ PARA::GRA_NO ] ] )
   }
   fp_hash.printf("\t}\n" )
+
+  #GraNo2MonsNameハッシュテーブル
+  fp_hash.printf("\t$gra2monsname_hash = {\n" )
+  gra_hash.size.times {|no|
+    split_data = read_data[ no ].split(/,/)
+    fp_hash.printf("\t\t\"%s\"=>\"%s\",\n", split_data[ PARA::GRA_NO ], split_data[ PARA::POKENAME ] )
+  }
+  fp_hash.printf("\t}\n" )
+
   fp_hash.close
 
   #gmmファイルの後始末
@@ -946,6 +968,9 @@ end
   	        fp_form.printf( "\"pmwb_%s_%s_n.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
   	        fp_form.printf( "\"pmwb_%s_%s_r.NCLR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
 
+  	        fp_nonstop.printf( "pfwb_%s_%s.NCEC,%d,%s\n", split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ), gra_hash[ split_data[ PARA::GRA_NO ] ], form[ i ].get_form_name( j ) )
+  	        fp_nonstop.printf( "pbwb_%s_%s.NCEC,%d,%s\n", split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ), gra_hash[ split_data[ PARA::GRA_NO ] ], form[ i ].get_form_name( j ) )
+
   	        fp_icon_scr.printf( "\"poke_icon_%s_%s_m.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
   	        fp_icon_scr.printf( "\"poke_icon_%s_%s_f.NCGR\"\n",   split_data[ PARA::GRA_NO ], form[ i ].get_form_name( j ) )
 
@@ -984,6 +1009,7 @@ end
   fp_monsnum.close
   fp_form.close
   fp_pltt.close
+  fp_nonstop.close
 
   print "ポケモンラベル＆グラフィックデータ圧縮リスト＆gmmファイル　生成終了\n"
 
