@@ -183,10 +183,22 @@ EVENT_START   ev_pos_h04_baker
 						
 		//==============フラグワーク操作==============//
 		
-		IF $LWK_POSX == 86 THEN
-			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x86)
+		IF $LWK_POSX == 73 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_x72)
 			_OBJ_ANIME_WAIT()
-		ENDIF		
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x72)
+		ELSIF $LWK_POSX == 86 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_x86)
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x86)
+		ELSIF $LWK_POSX == 84 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_z45)
+			_OBJ_ANIME_WAIT()
+			_OBJ_ANIME(H04_BAKER_01,anm_baker_back_x86)
+		ELSIF $LWK_POSZ == 45 THEN
+			_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_back_z45)
+		ENDIF
+		_OBJ_ANIME_WAIT()	
 	ELSE
 		_MSGWIN_CLOSE()
 		
