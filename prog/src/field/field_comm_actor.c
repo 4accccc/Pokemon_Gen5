@@ -25,7 +25,7 @@ typedef struct
 {
   u32 id;
   u32 del_flag;
-  MMDL *fmmdl;
+  MMDL *mmdl;
 }FIELD_COMM_ACTOR;
 
 //--------------------------------------------------------------
@@ -35,7 +35,7 @@ struct _TAG_FIELD_COMM_ACTOR_CTRL
 {
   int max;
   HEAPID heapID;
-  MMDLSYS *fmmdlsys;
+  MMDLSYS *mmdlsys;
   FIELD_COMM_ACTOR *act_tbl;
 };
 
@@ -55,12 +55,12 @@ typedef struct
 //======================================================================
 static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act );
 
-static MMDL * fldcommAct_fmmdl_Add(
+static MMDL * fldcommAct_mmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
     const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish,
     FIELD_COMM_ACTOR *comm_actor );
-static void fldcommAct_fmmdl_SetWatchData(
-    MMDL *fmmdl, const u16 *dir, const VecFx32 *pos, const BOOL *vanish,
+static void fldcommAct_mmdl_SetWatchData(
+    MMDL *mmdl, const u16 *dir, const VecFx32 *pos, const BOOL *vanish,
     FIELD_COMM_ACTOR *comm_actor );
 
 static u16 grid_ChangeFourDir( u16 dir );
@@ -74,20 +74,20 @@ static const MMDL_HEADER fldcommActro_MMdlHeader;
 /**
  * フィールド通信用アクター制御　初期化
  * @param max アクター最大数
- * @param fmmdlsys MMDLSYS*
+ * @param mmdlsys MMDLSYS*
  * @param heapID HEAPID
  * @retval FIELD_COMM_ACTOR_CTRL
  */
 //--------------------------------------------------------------
 FIELD_COMM_ACTOR_CTRL * FIELD_COMM_ACTOR_CTRL_Create(
-    int max, MMDLSYS *fmmdlsys, HEAPID heapID )
+    int max, MMDLSYS *mmdlsys, HEAPID heapID )
 {
   FIELD_COMM_ACTOR_CTRL *act_ctrl;
   
   act_ctrl = GFL_HEAP_AllocClearMemory(
       heapID, sizeof(FIELD_COMM_ACTOR_CTRL) );
   act_ctrl->max = max;
-  act_ctrl->fmmdlsys = fmmdlsys;
+  act_ctrl->mmdlsys = mmdlsys;
   
   act_ctrl->act_tbl =
     GFL_HEAP_AllocClearMemory( heapID, sizeof(FIELD_COMM_ACTOR)*max );
@@ -108,7 +108,7 @@ void FIELD_COMM_ACTOR_CTRL_Delete( FIELD_COMM_ACTOR_CTRL *act_ctrl )
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
-    if( act->fmmdl != NULL ){
+    if( act->mmdl != NULL ){
       fldcommAct_DeleteActor( act );
     }
   }
@@ -143,8 +143,8 @@ void FIELD_COMM_ACTOR_CTRL_AddActor(
   dir = grid_ChangeFourDir( *watch_dir ); //角度->四方向
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
-    if( act->fmmdl == NULL ){
-      act->fmmdl = fldcommAct_fmmdl_Add(
+    if( act->mmdl == NULL ){
+      act->mmdl = fldcommAct_mmdl_Add(
           act_ctrl, code, watch_dir, watch_pos, watch_vanish, act );
       act->id = id;
       OS_Printf( "FIELD_COMM_ACTOR AddActor ID %d\n", id );
@@ -170,7 +170,7 @@ void FIELD_COMM_ACTOR_CTRL_DeleteActro(
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
-    if( act->fmmdl != NULL ){
+    if( act->mmdl != NULL ){
       if( act->id == id ){
         fldcommAct_DeleteActor( act );
         return;
@@ -196,14 +196,14 @@ BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
 {
   MMDL *mmdl;
   
-  mmdl = MMDLSYS_SearchGridPos( act_ctrl->fmmdlsys, gx, gz, FALSE );
+  mmdl = MMDLSYS_SearchGridPos( act_ctrl->mmdlsys, gx, gz, FALSE );
   
   if( mmdl != NULL ){
     int i;
     FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
     
     for( i = 0; i < act_ctrl->max; i++, act++ ){
-      if( act->fmmdl != NULL && act->fmmdl == mmdl ){
+      if( act->mmdl != NULL && act->mmdl == mmdl ){
         *outID = act->id;
         return( TRUE );
       }
@@ -228,9 +228,9 @@ MMDL * FIELD_COMM_ACTOR_CTRL_GetMMdl(
   FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
   
   for( i = 0; i < act_ctrl->max; i++, act++ ){
-    if( act->fmmdl != NULL ){
+    if( act->mmdl != NULL ){
       if( act->id == id ){
-        return( act->fmmdl );
+        return( act->mmdl );
       }
     }
   }
@@ -249,7 +249,7 @@ MMDL * FIELD_COMM_ACTOR_CTRL_GetMMdl(
 static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act )
 {
   if( act->del_flag == FALSE ){
-    MMDL_Delete( act->fmmdl );
+    MMDL_Delete( act->mmdl );
   }
   
   MI_CpuClear8( act, sizeof(FIELD_COMM_ACTOR) );
@@ -267,98 +267,125 @@ static void fldcommAct_DeleteActor( FIELD_COMM_ACTOR *act )
  * @retval MMDL* 追加されたMMDL
  */
 //--------------------------------------------------------------
-static MMDL * fldcommAct_fmmdl_Add(
+static MMDL * fldcommAct_mmdl_Add(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, u32 code,
     const u16 *watch_dir, const VecFx32 *watch_pos, const BOOL *watch_vanish,
     FIELD_COMM_ACTOR *comm_actor )
 {
-  MMDL *fmmdl;
-  MMDLSYS *fmmdlsys = act_ctrl->fmmdlsys;
+  MMDL *mmdl;
+  MMDLSYS *mmdlsys = act_ctrl->mmdlsys;
   MMDL_HEADER head = fldcommActro_MMdlHeader;
   
   head.obj_code = code;
-  fmmdl = MMDLSYS_AddMMdl( fmmdlsys, &head, 0 );
+  mmdl = MMDLSYS_AddMMdl( mmdlsys, &head, 0 );
   
-  fldcommAct_fmmdl_SetWatchData(
-      fmmdl, watch_dir, watch_pos, watch_vanish, comm_actor );
+  fldcommAct_mmdl_SetWatchData(
+      mmdl, watch_dir, watch_pos, watch_vanish, comm_actor );
   
-  MMDL_InitPosition( fmmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
-  MMDL_SetStatusBitHeightGetOFF( fmmdl, TRUE );
-  MMDL_SetStatusBitAttrGetOFF( fmmdl, TRUE );
-  MMDL_SetStatusBitNotZoneDelete( fmmdl, TRUE );
-  MMDL_SetMoveBitRejectPauseMove( fmmdl, TRUE );
-  return( fmmdl );
+  MMDL_InitPosition( mmdl, watch_pos, grid_ChangeFourDir(*watch_dir) );
+  MMDL_SetStatusBitHeightGetOFF( mmdl, TRUE );
+  MMDL_SetStatusBitAttrGetOFF( mmdl, TRUE );
+  MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
+  MMDL_SetMoveBitRejectPauseMove( mmdl, TRUE );
+  return( mmdl );
 }
 
 //--------------------------------------------------------------
 /**
  * 通信用アクター　動作モデル　動作初期化
- * @param   fmmdl MMDL
+ * @param   mmdl MMDL
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDL_MoveCommActor_Init( MMDL *fmmdl )
+void MMDL_MoveCommActor_Init( MMDL *mmdl )
 {
   MV_COMMACT_WORK *work;
-  work = MMDL_InitMoveProcWork( fmmdl, sizeof(MV_COMMACT_WORK) );
+  work = MMDL_InitMoveProcWork( mmdl, sizeof(MV_COMMACT_WORK) );
 }
 
 //--------------------------------------------------------------
 /**
  * 通信用アクター　動作モデル　動作削除
- * @param fmmdl MMDL
+ * @param mmdl MMDL
  * @retval  nothing
  */
 //--------------------------------------------------------------
-void MMDL_MoveCommActor_Delete( MMDL *fmmdl )
+void MMDL_MoveCommActor_Delete( MMDL *mmdl )
 {
   MV_COMMACT_WORK *work;
-  work = MMDL_GetMoveProcWork( fmmdl );
+  work = MMDL_GetMoveProcWork( mmdl );
   work->comm_actor->del_flag = TRUE; //通信側アクターに削除通知
 }
 
 //--------------------------------------------------------------
 /**
  * 通信用アクター　動作モデル　動作
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @retval nothing
  */
 //--------------------------------------------------------------
-void MMDL_MoveCommActor_Move( MMDL *fmmdl )
+void MMDL_MoveCommActor_Move( MMDL *mmdl )
 {
   MV_COMMACT_WORK *work;
-  work = MMDL_GetMoveProcWork( fmmdl );
+  work = MMDL_GetMoveProcWork( mmdl );
   
   {
     u16 dir;
     dir = grid_ChangeFourDir( *work->watch_dir );
-    MMDL_SetDirDisp( fmmdl, dir );
+    MMDL_SetDirDisp( mmdl, dir );
   }
   
   {
     VecFx32 pos;
     u16 status = DRAW_STA_STOP;
     
-    MMDL_GetVectorPos( fmmdl, &pos );
+    MMDL_GetVectorPos( mmdl, &pos );
     
     if( pos.x != work->watch_pos->x ||
         pos.y != work->watch_pos->y ||
-        pos.z != work->watch_pos->z ){
-        MMDL_InitPosition( fmmdl,
-            work->watch_pos, MMDL_GetDirDisp(fmmdl) );
-        status = DRAW_STA_WALK_8F;
+        pos.z != work->watch_pos->z )
+    {
+      MMDL_InitPosition( mmdl,
+          work->watch_pos, MMDL_GetDirDisp(mmdl) );
+       
+      status = DRAW_STA_WALK_8F;
+      
+      {
+        u16 code = MMDL_GetOBJCode( mmdl );
+          
+        if( code == HERO || code == HEROINE )
+        {
+          fx32 val,diff = 0;
+            
+          val = pos.x - work->watch_pos->x;
+          if( val < 0 ){
+            val = -val;
+          }
+          diff += val;
+            
+          val = pos.z - work->watch_pos->z;
+          if( val < 0 ){
+            val = -val; 
+          }
+          diff += val;
+          
+          if( diff >= GRID_SIZE_FX32(4) ){
+            status = DRAW_STA_HERO_DASH_4F;
+          }
+        }
+      }
     }
     
-    MMDL_SetDrawStatus( fmmdl, status );
+    MMDL_SetDrawStatus( mmdl, status );
   }
   
   if( work->watch_vanish != NULL ){
     if( (*work->watch_vanish) == TRUE ){
-      MMDL_SetStatusBitVanish( fmmdl, TRUE );
-      MMDL_SetStatusBitFellowHit( fmmdl, FALSE ); //100525 当り判定も操作
+      MMDL_SetStatusBitVanish( mmdl, TRUE );
+      MMDL_SetStatusBitFellowHit( mmdl, FALSE ); //100525 当り判定も操作
     }else{
-      MMDL_SetStatusBitVanish( fmmdl, FALSE );
-      MMDL_SetStatusBitFellowHit( fmmdl, TRUE ); //100525 当り判定も操作
+      MMDL_SetStatusBitVanish( mmdl, FALSE );
+      MMDL_SetStatusBitFellowHit( mmdl, TRUE ); //100525 当り判定も操作
     }
   }
 }
@@ -366,17 +393,17 @@ void MMDL_MoveCommActor_Move( MMDL *fmmdl )
 //--------------------------------------------------------------
 /**
  * 通信用アクター　動作モデル　参照座標をセット
- * @param fmmdl MMDL*
+ * @param mmdl MMDL*
  * @param pos 参照する座標
  * @retval nothing
  */
 //--------------------------------------------------------------
-static void fldcommAct_fmmdl_SetWatchData(
-    MMDL *fmmdl, const u16 *dir, const VecFx32 *pos, const BOOL *vanish,
+static void fldcommAct_mmdl_SetWatchData(
+    MMDL *mmdl, const u16 *dir, const VecFx32 *pos, const BOOL *vanish,
     FIELD_COMM_ACTOR *comm_actor )
 {
   MV_COMMACT_WORK *work;
-  work = MMDL_GetMoveProcWork( fmmdl );
+  work = MMDL_GetMoveProcWork( mmdl );
   work->watch_dir = dir;
   work->watch_pos = pos;
   work->watch_vanish = vanish;
