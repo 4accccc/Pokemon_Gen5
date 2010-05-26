@@ -313,7 +313,7 @@ static inline void DebugWin_Reg_D_ChangeSameMatch( void* userWork , DEBUGWIN_ITE
 static inline void DebugWin_Reg_U_ChangeCamera( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
-  DebugWin_Util_ChangeData( item, &p_wk->camera, REGULATION_CAMERA_NORMAL, REGULATION_CAMERA_STOP );
+  DebugWin_Util_ChangeData( item, &p_wk->camera, REGULATION_CAMERA_NORMAL, REGULATION_CAMERA_WCS_STOP );
 
 }
 static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* item )
@@ -323,6 +323,9 @@ static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* 
     "‚Â‚¤‚¶‚å‚¤",
     "‚Ç‚¤‚³",
     "‚Ä‚¢‚µ"
+    "WCS‚Â‚¤‚¶‚å‚¤",
+    "WCS‚Ç‚¤‚³",
+    "WCS‚Ä‚¢‚µ"
   };
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
   DEBUGWIN_ITEM_SetNameV( item , "ƒJƒƒ‰[%s]", scp_tbl[p_wk->camera] );
