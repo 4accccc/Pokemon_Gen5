@@ -23,7 +23,7 @@
 #include  "message.naix"
 
 #ifdef PM_DEBUG
-#if defined DEBUG_ONLY_FOR_nishino
+#if defined DEBUG_ONLY_FOR_nishino | defined DEBUG_ONLY_FOR_sogabe
 #define SEIKAKU_PUT      //手持ちポケモンの性格表示
 #endif
 #endif
@@ -237,8 +237,8 @@ void  TT_TrainerMessageGet( TrainerID tr_id, int kindID, STRBUF* str, HEAPID hea
 
 //  GF_ASSERT_MSG(ofs!=size,"TrainerMessage Not Found");
   //メッセージが見つからなかったら、STRBUFをクリアして返す
-  if( ofs == size ){
-    OS_TPrintf("TrainerMessage Not Found");
+  if( ofs == size )
+  {
     GFL_STR_ClearBuffer( str );
   }
 }

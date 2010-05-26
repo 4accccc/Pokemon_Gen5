@@ -3246,7 +3246,8 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
     case ID_PARA_pp_max2:
     case ID_PARA_pp_max3:
     case ID_PARA_pp_max4:
-      OS_Printf("不正な書き込み\n");
+      //不正な書き込み
+      GF_ASSERT( 0 );
       break;
     case ID_PARA_hp_rnd:
       ppp2->hp_rnd = arg;
@@ -3455,7 +3456,8 @@ static  void  ppp_putAct( POKEMON_PASO_PARAM *ppp, int paramID, u32 arg )
     case ID_PARA_nidoran_nickname:
     case ID_PARA_type1:
     case ID_PARA_type2:
-      OS_TPrintf("不正な書き込み\n");
+      //不正な書き込み
+      GF_ASSERT( 0 );
       break;
   }
 }
