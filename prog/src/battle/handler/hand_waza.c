@@ -10250,8 +10250,17 @@ static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
       if( fFailMsgDisped ){
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_MSG_FLAG, TRUE );
       }
-    }else{
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+    }
+    else
+    {
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) )
+      {
+        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_FreeFall );
+        HANDEX_STR_AddArg( &param->str, pokeID );
+        HANDEX_STR_AddArg( &param->str, targetPokeID );
+      }
     }
   }
 }
