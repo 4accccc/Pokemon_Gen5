@@ -1015,6 +1015,7 @@ _RET
 sub_receipt_challenge_wifi:
 {
   DEFINE_LOCAL dl_play
+  DEFINE_LOCAL loop
   
   //wifi接続フラグをワークがクリアされる前に取得
   _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, dl_play )
@@ -1062,8 +1063,49 @@ sub_receipt_challenge_wifi:
     _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, TRUE, BSW_NULL, BSW_NULL )
   ENDIF
   
-  //乗車メッセージ
-  _CALL sub_receipt_msg_geton_train
+  //乗車するが準備は良いか
+  //_CALL sub_receipt_msg_geton_train
+  $loop = TRUE
+  
+  WHILE $loop == TRUE
+    //乗車しますか？
+    $SCWK_TEMP0 = msg_bsw_scr_27
+    _CALL sub_bsw_common_bwin_receipt
+    _YES_NO_WIN( SCWK_ANSWER )
+    
+    IF $SCWK_ANSWER == SCR_YES THEN
+      $loop = FALSE
+    ELSE 
+      //レポートを書いて中断しますか？
+      $SCWK_TEMP0 = msg_bsw_scr_31
+      _CALL sub_bsw_common_bwin_receipt
+      
+      _YES_NO_WIN( SCWK_ANSWER )
+      
+      IF $SCWK_ANSWER == SCR_YES THEN
+        _MSGWIN_CLOSE()
+        //受付コンテニュー状態に
+        $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_CONTINUE
+        //復帰位置を受付に
+        _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+        //プレイデータ反映
+        _BSUBWAY_TOOL( BSWSUB_SAVE_REST_PLAY_DATA, BSW_NULL, BSW_NULL, BSW_NULL )
+        //ワーク開放
+        _BSUBWAY_WORK_RELEASE()
+        
+        //レポート
+        _CALL sub_bsw_common_auto_save
+        
+        //ブラックアウト
+        _BLACK_OUT()
+        _DISP_FADE_END_CHECK()
+        _BSUBWAY_TOOL( BSWTOOL_SYSTEM_RESET, BSW_NULL, BSW_NULL, BSW_NULL )
+        _END
+      ENDIF
+    ENDIF
+  ENDWHILE
+  
+  _MSGWIN_CLOSE()
   
   //バトルサブウェイ挑戦中のビーコンセット
   _BEACON_SET_REQ_SUBWAY_START()
@@ -1116,8 +1158,14 @@ ev_bsw_game_continue:
   //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
-  //フラグ初期化(受付エラー、車内乗車状態に)
-  _CALL sub_receipt_flag_set_geton_continue
+  //現在のラウンド数別にフラグ初期化(受付エラー、車内乗車状態に)
+  _BSUBWAY_TOOL( BSWTOOL_GET_NOW_ROUND, BSW_NULL, BSW_NULL, ret )
+  
+  IF $ret <= 1 THEN //wifi初回乗車前から
+    _CALL sub_receipt_flag_set_geton_first
+  ELSE //ラウンド2以降から
+    _CALL sub_receipt_flag_set_geton_continue
+  ENDIF
   
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
