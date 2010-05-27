@@ -93,8 +93,8 @@ _RET
 
 //最終メッセージ共通処理ＭＥ待ち
 end_msg_me_wait:
-  _ME_PLAY(SEQ_ME_LVUP)
   _SYSWIN_MSG( END_MSG , POS_DOWN )
+  _ME_PLAY(SEQ_ME_LVUP)
   _ME_WAIT()
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
@@ -332,7 +332,7 @@ del_skill_msg:
   _TEMOTI_NICK_NAME( 0, SEL_POS )
   _WAZA_NAME( 1, OLD_SKILL )
   _WAZA_NAME( 2, NEW_SKILL )
-  //「旧固有技を忘れて・・」
+  //「１，２、……ポカン！　旧固有技を忘れて・・」
   _SYSWIN_MSG( msg_rotom_waza_06 , POS_DOWN )   //クローズいらず
   //「新固有技を覚えた」
   $END_MSG = msg_rotom_waza_07
@@ -355,7 +355,7 @@ select_del_skill:
       //アプリに飛ぶのでクローズ
       _SYSWIN_CLOSE()
       //技忘れ
-      _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER ,DEL_SKILL_POS ,SEL_POS ,0 )
+      _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER ,DEL_SKILL_POS ,SEL_POS ,NEW_SKILL )
       IF $SCWK_ANSWER == FALSE THEN     //忘れる技を選択しなかった
         _CALL stop_del_skill
         IF $SCWK_ANSWER == 0 THEN

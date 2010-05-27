@@ -473,7 +473,7 @@ sub_skillteacher_wasure_core:
     ENDIF
     
     _SYSWIN_CLOSE()
-    _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER , waza_pos , select_pos , 0 )
+    _SELECT_WAZA_TEMOTI_POKE( SCWK_ANSWER , waza_pos , select_pos , teach_waza_id )
     IF $SCWK_ANSWER == FALSE THEN
       _RET
     ENDIF

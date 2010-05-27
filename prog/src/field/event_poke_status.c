@@ -273,7 +273,7 @@ typedef struct
  */
 //------------------------------------------------------------------
 GMEVENT * EVENT_CreateWazaSelect( 
-    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden )
+    GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden, u16 wazaNo )
 {
 	GMEVENT* event;
 	SELECT_WAZA_WORK* wsw;
@@ -288,7 +288,7 @@ GMEVENT * EVENT_CreateWazaSelect(
   ps_data->max = PokeParty_GetPokeCount( party );
   ps_data->pos = pokePos;
   ps_data->page = PPT_SKILL;
-  ps_data->waza = 0;
+  ps_data->waza = wazaNo;
   if( canSelHiden == TRUE )
   {
     ps_data->mode = PST_MODE_WAZAADD_HIDEN;

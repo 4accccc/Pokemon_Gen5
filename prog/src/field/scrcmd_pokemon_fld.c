@@ -897,7 +897,8 @@ VMCMD_RESULT EvCmdPartyPokeWazaSelect( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   
   {
-    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk , (value==0?FALSE:TRUE) );
+    BOOL canSelHiden = ( value == 0 );
+    GMEVENT *event = EVENT_CreateWazaSelect( gsys , fieldmap , pokePos , ret_decide , ret_wk , canSelHiden, value );
     SCRIPT_CallEvent( scw, event );
   }
   

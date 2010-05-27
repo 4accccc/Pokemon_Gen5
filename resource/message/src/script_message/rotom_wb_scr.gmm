@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-21T16:19:40"/>
+	<create user="tamada" host="W00139" date="2010-05-27T23:12:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -556,26 +556,22 @@
 忘れさせて　よろしいですね？</language>
 	</row>
 
-	<row id="msg_rotom_waza_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>ロトム：フォルムチェンジ処理
-・続けてmsg_rotom_waza_06</comment>
-		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">１[2:01:２桁:20]　２の[2:01:２桁:20]　…[2:01:２桁:20]…[2:01:２桁:20]　ポカン！</language>
-		<language name="JPN_KANJI" width="256">１[2:01:２桁:20]　２の[2:01:２桁:20]　…[2:01:２桁:20]…[2:01:２桁:20]　ポカン！</language>
-	</row>
-
 	<row id="msg_rotom_waza_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ロトム：フォルムチェンジ処理
 ・続けてmsg_rotom_waza_07
 ・0＝ロトムのニックネーム
 ・1＝技名</comment>
 		<attribute name="キャラ指定">システム</attribute>
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
-つかいかたを　きれいにわすれた！▼
-そして……！▼</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
-使い方を　きれいに忘れた！▼
-そして……！▼</language>
+		<language name="JPN" width="256">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]　…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:6]▼
+[1:02:ポケモンニックネーム:0]は　[1:07:わざ名:1]の
+つかいかたを　きれいに　わすれた！▼
+そして……！▼
+</language>
+		<language name="JPN_KANJI" width="256">１[BE:02:ウェイト変更（単発）:20]　２の[BE:02:ウェイト変更（単発）:20]　…[BE:02:ウェイト変更（単発）:20]…[BE:02:ウェイト変更（単発）:20]　ポカン！[BE:05:コールバック引数変更（単発）:3][BE:05:コールバック引数変更（単発）:6]▼
+[1:01:ポケモン種族名:0]は　[1:07:わざ名:1]の
+使い方を　きれいに　忘れた！▼
+そして……！▼
+</language>
 	</row>
 
 	<row id="msg_rotom_waza_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

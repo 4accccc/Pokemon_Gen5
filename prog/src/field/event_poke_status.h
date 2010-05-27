@@ -66,4 +66,4 @@ extern GMEVENT * EVENT_CreatePokeSelectMusical(
  * @param canSelHiden ”é“`‘I‘ð‰Â”\
  */
 //------------------------------------------------------------------
-extern GMEVENT * EVENT_CreateWazaSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden );
+extern GMEVENT * EVENT_CreateWazaSelect( GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap, u16 pokePos , u16* retDecide , u16* retPos , const BOOL canSelHiden, u16 wazaNo );
