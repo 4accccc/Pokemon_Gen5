@@ -380,6 +380,21 @@ static void WazaWorkSys_ReflectFromPP( BTL_POKEPARAM* bpp )
     }
   }
 }
+static void WazaWorkSys_ClearSurface( BTL_POKEPARAM* bpp )
+{
+  u32 i;
+
+  bpp->wazaCnt = 0;
+  for(i=0; i<PTL_WAZA_MAX; ++i)
+  {
+    bpp->waza[i].surface = bpp->waza[i].truth;
+    if( bpp->waza[i].surface.number != WAZANO_NULL ){
+      bpp->wazaCnt++;
+    }
+    bpp->waza[i].fLinked = TRUE;
+  }
+}
+
 static void WazaWork_ClearUsedFlag( BPP_WAZA* waza )
 {
   waza->surface.usedFlag = FALSE;
@@ -483,6 +498,7 @@ static void setupBySrcDataBase( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP )
   bpp->baseParam.agility = PP_Get( srcPP, ID_PARA_agi, 0 );
 }
 
+
 //----------------------------------------------------------------------------------
 /**
  * ‚Ö‚ñ‚µ‚ñó‘Ô‚ÌƒNƒŠƒA
@@ -495,18 +511,9 @@ static void clearHensin( BTL_POKEPARAM* bpp )
   if( bpp->coreParam.fHensin )
   {
     POKEMON_PARAM* ppSrc = (POKEMON_PARAM*)(bpp->coreParam.ppSrc);
-    u32 i;
 
     setupBySrcData( bpp, ppSrc, FALSE );
-
-    bpp->wazaCnt = 0;
-    for(i=0; i<PTL_WAZA_MAX; ++i)
-    {
-      bpp->waza[i].surface = bpp->waza[i].truth;
-      if( bpp->waza[i].surface.number != WAZANO_NULL ){
-        bpp->wazaCnt++;
-      }
-    }
+    WazaWorkSys_ClearSurface( bpp );
 
     bpp->coreParam.fHensin = FALSE;
   }
@@ -2371,6 +2378,7 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   BPP_MIGAWARI_Delete( bpp );
 
   clearHensin( bpp );
+  WazaWorkSys_ClearSurface( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
 
@@ -2404,6 +2412,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
 
 //  reflectWazaPP( bpp );
   clearHensin( bpp );
+  WazaWorkSys_ClearSurface( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
   BPP_CombiWaza_ClearParam( bpp );

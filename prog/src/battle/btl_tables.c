@@ -38,4 +38,23 @@ BOOL BTL_TABLES_IsMatchEncoreFail( WazaID waza )
   }
   return FALSE;
 }
+/**
+ *  Ç‡ÇÃÇ‹ÇÀé∏îsëŒè€ÇÃÉèÉUîªíË
+ */
+BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
+{
+  static const WazaID table[] = {
+    WAZANO_NULL,    WAZANO_SUKETTI,   WAZANO_MONOMANE,
+    WAZANO_HENSIN,  WAZANO_WARUAGAKI, WAZANO_YUBIWOHURU,
+    WAZANO_OSYABERI
+  };
+  u32 i;
 
+  for(i=0; i<NELEMS(table); ++i)
+  {
+    if( table[i] == waza ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}

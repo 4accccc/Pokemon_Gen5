@@ -1564,34 +1564,32 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
-    WazaID waza = BPP_GetPrevWazaID( target );
-    if( (waza != WAZANO_NULL)
-    &&  (waza != WAZANO_SUKETTI)
-    &&  (waza != WAZANO_MONOMANE)
-    &&  (waza != WAZANO_HENSIN)
-    &&  (waza != WAZANO_WARUAGAKI)
-    &&  (waza != WAZANO_YUBIWOHURU)
-    &&  (waza != WAZANO_OSYABERI)
-    &&  (BPP_WAZA_SearchIdx(self, waza) == PTL_WAZA_MAX)
-    ){
-      u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-      if( wazaIdx != PTL_WAZA_MAX )
-      {
-        BTL_HANDEX_PARAM_UPDATE_WAZA*  param;
-        BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_UPDATE_WAZA, pokeID );
-        param->pokeID = pokeID;
-        param->wazaIdx = wazaIdx;
-        param->waza = waza;
-        param->ppMax = 0;
-        param->fPermanent = FALSE;
+    if( !BPP_HENSIN_Check(self) )
+    {
+      const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
+      WazaID waza = BPP_GetPrevWazaID( target );
+      if( !BTL_TABLES_IsMatchMonomaneFail(waza) )
+      &&  (BPP_WAZA_SearchIdx(self, waza) == PTL_WAZA_MAX)
+      ){
+        u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+        if( wazaIdx != PTL_WAZA_MAX )
+        {
+          BTL_HANDEX_PARAM_UPDATE_WAZA*  param;
+          BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
-        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Monomane );
-        HANDEX_STR_AddArg( &msg_param->str, pokeID );
-        HANDEX_STR_AddArg( &msg_param->str, waza );
+          param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_UPDATE_WAZA, pokeID );
+          param->pokeID = pokeID;
+          param->wazaIdx = wazaIdx;
+          param->waza = waza;
+          param->ppMax = 0;
+          param->fPermanent = FALSE;
+
+          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Monomane );
+          HANDEX_STR_AddArg( &msg_param->str, pokeID );
+          HANDEX_STR_AddArg( &msg_param->str, waza );
+        }
       }
     }
   }

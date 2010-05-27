@@ -15,5 +15,9 @@
  */
 extern BOOL BTL_TABLES_IsMatchEncoreFail( WazaID waza );
 
+/**
+ *  ‚à‚Ì‚Ü‚Ë¸”s‘ÎÛ‚ÌƒƒU”»’è
+ */
+extern BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza );
 
 
