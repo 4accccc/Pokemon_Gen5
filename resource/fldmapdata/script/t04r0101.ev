@@ -101,6 +101,7 @@ EVENT_START	ev_reserve_t04r0101_first
 	
 	//ëßéqÅFÇ†ÇµÇΩÇ‡Ç±Ç¢ÇÊÅI
 	_BALLOONWIN_OBJMSG( msg_t04r0101_boy3_03a , T04R0101_BOY3_01 )
+	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 	
 	//======================================//
