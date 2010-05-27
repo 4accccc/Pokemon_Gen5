@@ -81,7 +81,6 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	
 	//シャガ：…すまない／さて、アテグとの約束だったね
 	_BALLOONWIN_OBJMSG( msg_c08r0101_leader8a_04_02 , C08R0101_LEADER8A_01)
-	_BALLOONWIN_CLOSE()
 	
 	//バージョンチェック
 	DEFINE_LOCAL LCW_VERSION
@@ -89,6 +88,8 @@ EVENT_START   ev_scene_c08r0101_leader8_01
 	
 	//whiteVER（アイリスがジムリーダー）
 	IF $LCW_VERSION == VERSION_WHITE THEN
+	
+		_BALLOONWIN_CLOSE()
 		
 		//シャガ、アイリスを見る
 		_OBJ_ANIME( C08R0101_LEADER8A_01 , anm_c08_leadera_look_b )
