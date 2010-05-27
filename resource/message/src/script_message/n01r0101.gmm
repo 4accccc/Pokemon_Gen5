@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T22:40:34"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T15:24:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -357,20 +357,22 @@
 		<comment>♂
 ・続けてleader5_01</comment>
 		<attribute name="キャラ指定">七賢人２</attribute>
-		<language name="JPN" width="256">さて……[BE:01:ページ切り替え（クリア）]
-ゲーチスさまは　おまえが
-ここを　とおれりぬけられるか▼
-ためしたいとの　ことだが▼
-いかに　おまえと　いえど
-われら　６にんを　あいてに[BE:00:ページ切り替え（行送り）]
-かちのこれるとは　おもえん[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">さて……[BE:01:ページ切り替え（クリア）]
-ゲーチスさまは　おまえが
-ここを　通り抜けられるか▼
-試したいとの　ことだが▼
-いかに　おまえと　いえど
-われら　６人を　相手に[BE:00:ページ切り替え（行送り）]
-勝ち残るのは　無理と　いうもの[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">さて……▼
+われらが　おうさまに
+なにか　あっては　いちだいじ▼
+ゲーチスさまの　かんぜんな
+けいかくも　くずれさる　というもの▼
+Ｎさまは　がっかり　なされるだろうが
+われら　６にん▽
+ここで　おまえを　たおしてみせる！▼</language>
+		<language name="JPN_KANJI" width="256">さて……▼
+われらが　王さまに
+なにか　あっては　一大事▼
+ゲーチスさまの　完全な
+計画も　崩れさる　というもの▼
+Ｎさまは　落胆なされるだろうが
+われら　６人▽
+ここで　おまえを　倒してみせる！▼</language>
 	</row>
 
 	<row id="msg_n01r0101_leader5_01">
@@ -380,8 +382,8 @@
 ・続けてleader5_02</comment>
 		<attribute name="キャラ指定">ジムリーダー
 ヤーコン</attribute>
-		<language name="JPN" width="256">？？？『だいじょうぶ　だろうよ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">？？？『大丈夫　だろうよ[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">？？？『そんなこと　できるのか？▼</language>
+		<language name="JPN_KANJI" width="256">？？？『そんなこと　できるのか？▼</language>
 	</row>
 
 	<row id="msg_n01r0101_leader5_02">
