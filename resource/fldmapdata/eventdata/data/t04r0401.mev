@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/27 20:54:05
+#save date:2010/05/27 17:19:58
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t04r0401.wms
 #SECTION START:OBJ_EVENT
@@ -57,7 +57,7 @@ FV_T04R0401_BIGFOUR4_01
 #Event Script Name
 SCRID_T04R0401_BIGFOUR4_01
 #Direction Type Number
-DIR_RIGHT
+DIR_DOWN
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -71,7 +71,7 @@ DIR_RIGHT
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--216 0 168
+-136 0 152
 #event number: 2
 #type
 1
