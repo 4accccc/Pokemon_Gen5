@@ -999,18 +999,75 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
   u16             pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
   GAMEDATA*     gdata = SCRCMD_WORK_GetGameData( work );
   MYSTATUS*   status = GAMEDATA_GetMyStatus( gdata );
-  u32     id = 0;
-  POKEMON_PARAM* param = NULL;
+  POKEMON_PARAM* pp = NULL;
 
-  id = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_id_no );
+  if ( SCRCMD_GetTemotiPP( work, pos, &pp ) == FALSE )
+  {
+    GF_ASSERT(0);
+    *ret_wk = FALSE;    //親は他人
+    return VMCMD_RESULT_CONTINUE;
+  }
+  
+  {
+    //ＩＤ同じか？
+    u32 id;
+    id = PP_Get( pp, ID_PARA_id_no, NULL );
+    NOZOMU_Printf("poke_id = %d\n",id);
+    NOZOMU_Printf("my_id = %d\n",MyStatus_GetID(status) );
+    if ( id != MyStatus_GetID(status) )
+    {
+      *ret_wk = FALSE;    //親は他人
+      return VMCMD_RESULT_CONTINUE;
+    }
+  }
 
-  NOZOMU_Printf("poke_id = %d\n",id);
-  NOZOMU_Printf("my_id = %d\n",MyStatus_GetID(status) );
+  {
+    //親名一致してるか？
+    STRBUF*         strbuf1;
+    STRBUF*         strbuf2;
+    HEAPID          heap_id = SCRCMD_WORK_GetHeapID( work );
+    strbuf1 = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heap_id );
+    strbuf2 = GFL_STR_CreateBuffer( BUFLEN_PERSON_NAME, heap_id );
+    if ( strbuf1 && strbuf2 )
+    {
+      PP_Get( pp, ID_PARA_oyaname, strbuf1 );
+      MyStatus_CopyNameString( status,  strbuf2 );
+      if (GFL_STR_CompareBuffer( strbuf1, strbuf2 ) == FALSE)
+      {
+        //バッファ解放
+        GFL_STR_DeleteBuffer(strbuf1);
+        GFL_STR_DeleteBuffer(strbuf2);
+        NOZOMU_Printf("親名不一致\n");
+        *ret_wk = FALSE;    //親は他人
+        return VMCMD_RESULT_CONTINUE;
+      }
+    }
+    else
+    {
+      GF_ASSERT(0);
+      //バッファ確保出来なかったら他人とみなす
+      *ret_wk = FALSE;    //親は他人
+      return VMCMD_RESULT_CONTINUE;
+    }
+    //バッファ解放
+    GFL_STR_DeleteBuffer(strbuf1);
+    GFL_STR_DeleteBuffer(strbuf2);
+  }
 
-  // 結果を格納
-  if ( id != MyStatus_GetID(status) ) *ret_wk = FALSE;    //親は他人
-  else  *ret_wk = TRUE;     //自分が親
+  {
+    //カセットバージョン同じか？
+    u32 ver;
+    ver = PP_Get( pp, ID_PARA_get_cassette, NULL );
+    NOZOMU_Printf("poke_ver = %d\n",ver);
+    NOZOMU_Printf("rom_ver = %d\n",CasetteVersion);
+    if (ver != CasetteVersion)
+    {
+      *ret_wk = FALSE;    //親は他人
+      return VMCMD_RESULT_CONTINUE;
+    }
+  }
 
+  *ret_wk = TRUE;     //自分が親
   return VMCMD_RESULT_CONTINUE;
 }
 
