@@ -143,12 +143,16 @@ static void CorrectParent_bySex( PARENT* parent )
 {
   u32 sex_father, sex_mother;
 
+  // 父親チェック
   sex_father = PP_Get( parent->father, ID_PARA_sex, NULL );
-  sex_mother = PP_Get( parent->mother, ID_PARA_sex, NULL );
-
+  sex_mother = PP_Get( parent->mother, ID_PARA_sex, NULL ); 
   if( sex_father == PTL_SEX_FEMALE ) {
     ReverseParent( parent );
   }
+
+  // 母親チェック
+  sex_father = PP_Get( parent->father, ID_PARA_sex, NULL );
+  sex_mother = PP_Get( parent->mother, ID_PARA_sex, NULL ); 
   if( sex_mother == PTL_SEX_MALE ) {
     ReverseParent( parent );
   }
