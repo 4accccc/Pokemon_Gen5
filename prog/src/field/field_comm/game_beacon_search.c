@@ -224,9 +224,13 @@ BOOL GameBeacon_Exit(int *seq, void *pwk, void *pWork)
   
   OS_TPrintf("GameBeaconExit\n");
   WIH_DWC_AllBeaconEnd(gbs->pWDWork);
+#if 0
   if(NetErr_App_CheckError() == FALSE){ //通信エラーの時はevent_comm_errorで処理される
     GFL_NET_Exit(GameBeacon_ExitCallback);
   }
+#else
+  GFL_NET_Exit(GameBeacon_ExitCallback);  //表フィールドはエラーを出さないのでエラーに関係なくExit
+#endif
   return TRUE;
 }
 
@@ -244,10 +248,14 @@ BOOL GameBeacon_ExitWait(int *seq, void *pwk, void *pWork)
   GAME_BEACON_SYS_PTR gbs = pWork;
   GAMESYS_WORK *gsys = pwk;
 
-  if(gbs->status == GBS_STATUS_NULL || NetErr_App_CheckError()){
+  if(gbs->status == GBS_STATUS_NULL){ //表はエラー関係なしにExit || NetErr_App_CheckError()){
     GFL_HEAP_FreeMemory(gbs);
     if(NetErr_App_CheckError()){
+    #if 0
       GAMESYSTEM_SetFieldCommErrorReq(gsys, TRUE);
+    #else
+      NetErr_ErrWorkInit();
+    #endif
     }
     OS_TPrintf("GameBeaconWait...Finish\n");
     return TRUE;
