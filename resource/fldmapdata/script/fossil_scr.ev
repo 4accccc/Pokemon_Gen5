@@ -227,12 +227,13 @@ get_poke:
     _PLAYER_NAME( 0 )
     //ポケモン名をタグ1にセット
     _MONS_NAME(1, RECOVER_POKE)
-    //システム：「プレーヤーはポケモンを手に入れた」
-    _SYSWIN_MSG( msg_kaseki_08 , POS_DOWN )
     
     //ポケモン入手ＭＥを再生 [091228斉藤マ]
     _ME_PLAY( SEQ_ME_POKEGET )
+    //システム：「プレーヤーはポケモンを手に入れた」
+    _SYSWIN_MSG( msg_kaseki_08 , POS_DOWN )
     _ME_WAIT()
+    _AB_KEYWAIT_MARK()
     
     _SYSWIN_CLOSE()
     //手持ちに追加(Lv25)
