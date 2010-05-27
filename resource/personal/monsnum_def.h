@@ -532,9 +532,9 @@
 #define		MONSNO_512		( 521 )		//ケンホロウ
 #define		MONSNO_570		( 522 )		//シママ
 #define		MONSNO_515		( 523 )		//ゼブライカ
-#define		MONSNO_600		( 524 )		//ガンセキ
-#define		MONSNO_601		( 525 )		//ガンクツ
-#define		MONSNO_602		( 526 )		//ガンドロス
+#define		MONSNO_600		( 524 )		//ダンゴロ
+#define		MONSNO_601		( 525 )		//ガントル
+#define		MONSNO_602		( 526 )		//ギガイアス
 #define		MONSNO_520		( 527 )		//コロモリ
 #define		MONSNO_535		( 528 )		//ココロモリ
 #define		MONSNO_502		( 529 )		//モグリュー
@@ -594,7 +594,7 @@
 #define		MONSNO_612		( 583 )		//ツルット
 #define		MONSNO_613		( 584 )		//ツルツルダ
 #define		MONSNO_511		( 585 )		//シキジカ
-#define		MONSNO_527		( 586 )		//アントレス
+#define		MONSNO_527		( 586 )		//メブキジカ
 #define		MONSNO_560		( 587 )		//エモンガ
 #define		MONSNO_571		( 588 )		//カブルモ
 #define		MONSNO_572		( 589 )		//シュバルゴ
@@ -635,7 +635,7 @@
 #define		MONSNO_634		( 624 )		//コマタナ
 #define		MONSNO_635		( 625 )		//キリキザン
 #define		MONSNO_582		( 626 )		//バッフロン
-#define		MONSNO_566		( 627 )		//イーグラ
+#define		MONSNO_566		( 627 )		//ワシボン
 #define		MONSNO_567		( 628 )		//ウォーグル
 #define		MONSNO_632		( 629 )		//バルチャイ
 #define		MONSNO_633		( 630 )		//バルジーナ
@@ -787,7 +787,7 @@
 #define		FORMNO_511_WINTER				( 3 )
 #define		FORMNO_511_MAX				( 4 )
 
-//アントレス
+//メブキジカ
 #define		FORMNO_527_SPRING				( 0 )
 #define		FORMNO_527_SUMMER				( 1 )
 #define		FORMNO_527_AUTUMN				( 2 )

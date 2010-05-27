@@ -3276,8 +3276,8 @@
 	</row>
 
 	<row id="ZKN_FORM_586_000">
-		<language name="JPN">はるのすがた</language>
-		<language name="JPN_KANJI">はるのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_587_000">
@@ -3941,18 +3941,18 @@
 	</row>
 
 	<row id="ZKN_FORM_586_001">
-		<language name="JPN">なつのすがた</language>
-		<language name="JPN_KANJI">なつのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_586_002">
-		<language name="JPN">あきのすがた</language>
-		<language name="JPN_KANJI">あきのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_586_003">
-		<language name="JPN">ふゆのすがた</language>
-		<language name="JPN_KANJI">ふゆのすがた</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_648_001">

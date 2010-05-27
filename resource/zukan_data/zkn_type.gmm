@@ -2966,18 +2966,18 @@
 	</row>
 
 	<row id="ZKN_TYPE_524">
-		<language name="JPN">マントルポケモン</language>
-		<language name="JPN_KANJI">マントルポケモン</language>
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_525">
-		<language name="JPN">こうせきポケモン</language>
-		<language name="JPN_KANJI">こうせきポケモン</language>
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_526">
-		<language name="JPN">こうあつポケモン</language>
-		<language name="JPN_KANJI">こうあつポケモン</language>
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_527">
@@ -3276,8 +3276,8 @@
 	</row>
 
 	<row id="ZKN_TYPE_586">
-		<language name="JPN">きせつポケモン</language>
-		<language name="JPN_KANJI">きせつポケモン</language>
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_587">
@@ -3481,8 +3481,8 @@
 	</row>
 
 	<row id="ZKN_TYPE_627">
-		<language name="JPN">ヒナわしポケモン</language>
-		<language name="JPN_KANJI">ヒナわしポケモン</language>
+		<language name="JPN">ポケモン</language>
+		<language name="JPN_KANJI">ポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_628">
