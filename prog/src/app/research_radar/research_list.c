@@ -658,8 +658,8 @@ static void MainState_STANDBY( RRL_WORK* work )
       ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
     // スクロール操作可能
     if( CheckScrollControlCan( work ) == TRUE ) {
-      FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT 状態終了
-      RegisterNextState( work, RRL_STATE_SLIDE_CONTROL );  // => RRL_STATE_SLIDE_CONTROL 
+      FinishCurrentState( work );                         // RRL_STATE_KEY_WAIT 状態終了
+      RegisterNextState( work, RRL_STATE_SLIDE_CONTROL ); // => RRL_STATE_SLIDE_CONTROL 
       RegisterNextState( work, RRL_STATE_STANDBY );       // ==> RRL_STATE_STANDBY 
     }
     return;
@@ -775,9 +775,11 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
       ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
     // スクロール操作可能
     if( CheckScrollControlCan( work ) == TRUE ) {
+      SetTopicButtonCursorOff( work );                    // カーソルを隠す
+      HideTopicDetailStrints( work );                     // 上画面の詳細表示を隠す
       FinishCurrentState( work );                         // RRL_STATE_KEY_WAIT 状態終了
       RegisterNextState( work, RRL_STATE_SLIDE_CONTROL ); // => RRL_STATE_SLIDE_CONTROL 
-      RegisterNextState( work, RRL_STATE_KEY_WAIT );      // ==> RRL_STATE_KEY_WAIT 
+      RegisterNextState( work, RRL_STATE_STANDBY );       // ==> RRL_STATE_STANDBY 
     }
     return;
   }
