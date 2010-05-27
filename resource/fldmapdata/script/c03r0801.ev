@@ -182,24 +182,20 @@ _TALK_OBJ_START()
 	_YES_NO_WIN( SCWK_ANSWER )
 	
 	IF $SCWK_ANSWER == SCR_YES THEN
-	
-		_BALLOONWIN_CLOSE()
 		
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_retire_01 )
 		_BALLOONWIN_CLOSE()
 	
 		//遊覧船内ゲーム終了
-    _PL_BOAT_GAME_END()
+		_PL_BOAT_GAME_END()
 
 		_MAP_FADE_BLACK_OUT_SLOW()
 		_MAP_FADE_END_CHECK()
 
-    //遊覧船終了
-    _CALL pl_boat_end
+		//遊覧船終了
+		_CALL pl_boat_end
 	
 	ELSE
-		
-		_BALLOONWIN_CLOSE()
 	
 		_BALLOONWIN_TALKOBJ_MSG( msg_c03r0801_retire_02 )
 		_LAST_KEYWAIT()
@@ -231,7 +227,6 @@ _TALK_OBJ_START()
 	ENDIF
 	
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 		
 	//はい
 	IF $SCWK_ANSWER == SCR_YES THEN
@@ -763,12 +758,11 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 
 	//ヒウンゆうらんせんの　ごじょうせん
 	_BALLOONWIN_OBJMSG( msg_c03r0801_ex_01 , C03R0801_CREW_01 )
-	_LAST_KEYWAIT()
 	_BALLOONWIN_CLOSE()
 }
 	//出港デモ再生・暗転⇒デモ再生⇒復帰
 
-	_MAP_FADE_BLACK_OUT()
+	_DEMO_FADEOUT_BLACK_CALL()
 	_DISP_FADE_END_CHECK()
 	
 	//デモ=============================
@@ -778,7 +772,7 @@ EVENT_START		ev_reserve_c03r0801_cabinguide_01
 	
 	//デモ=============================
 	
-	_MAP_FADE_BLACK_IN()
+	_DEMO_FADEIN_BLACK_CALL()
 	_DISP_FADE_END_CHECK()
 	
 	//乗船アニメ終了
