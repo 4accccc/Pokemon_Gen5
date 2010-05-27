@@ -39,7 +39,10 @@
 
 #ifdef PM_DEBUG
 #include "corporate.h"
+
+//#define DELAY_CHECK
 #endif
+
 
 
 //==============================================================================
@@ -348,7 +351,11 @@ static void _key_check( TITLE_WORK *tw )
   if( GFL_UI_KEY_GetTrg() & LOOP_PART_MASK && tw->scene_flag==1){
     
     GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+#ifdef DELAY_CHECK
+    GFL_BG_SetVisible( FRAME_BACK, VISIBLE_OFF );
+#else
     GFL_BG_SetVisible( FRAME_BACK, VISIBLE_ON );
+#endif
     GFL_BG_SetVisible( FRAME_BKGR, VISIBLE_ON );
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
     setLegendPokeScene( &tw->CG3d, POKE_LOOP_PART_FRAME );
@@ -398,6 +405,43 @@ static void _key_check( TITLE_WORK *tw )
 #endif  // PM_DEBUG
 
 }
+
+#ifdef PM_DEBUG
+
+static u32 oldVCount;
+static u32 delayVCount;
+static u32 delayVCountTotal;
+
+static const u16 pal_tbl[2]={
+#if PM_VERSION==VERSION_BLACK
+  0x0000, 0xffff
+#else
+  0x0000, 0xffff
+#endif
+};
+
+static void _vcount_func(void)
+{
+  { //処理落ちを検出
+    u32 nowVCount = OS_GetVBlankCount();
+    u32 subVCount = nowVCount - oldVCount;
+  
+    delayVCount = 0;
+    if( oldVCount > 0 && subVCount > 1 )
+    {
+      // 処理落ちした
+      delayVCount = (subVCount-1);
+      GXS_LoadBGPltt( &pal_tbl[0], 0, 2);
+    }else{
+      // してない
+      GXS_LoadBGPltt( &pal_tbl[1], 0, 2);
+    }
+    oldVCount = nowVCount;
+    delayVCountTotal += delayVCount;
+  }
+
+}
+#endif
 
 //=============================================================================================
 /**
@@ -451,6 +495,11 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
     _key_check(tw);
     // 経過時間処理
     _timewait_func( tw );
+#ifdef PM_DEBUG
+#ifdef DELAY_CHECK
+    _vcount_func();
+#endif
+#endif
     break;
   case SEQ_VOICE_PLAY:
     if(PMVOICE_CheckPlay(tw->voiceIndex)==FALSE){
@@ -645,9 +694,9 @@ static void VintrFunc(GFL_TCB *tcb, void *work)
   GFL_CLACT_SYS_VBlankFunc();
 
 
-	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
-                      GX_CAPTURE_MODE_AB,			   // Capture mode
-                      GX_CAPTURE_SRCA_2D3D,						 // Blend src A
+  GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
+                      GX_CAPTURE_MODE_AB,        // Capture mode
+                      GX_CAPTURE_SRCA_2D3D,            // Blend src A
                       GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
                       GX_CAPTURE_DEST_VRAM_D_0x00000,   // Output VRAM
                       CSys->mb_param_a,             // Blend parameter for src A
@@ -746,11 +795,11 @@ static void releaseSystem(SYS_CONTROL* CSys)
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  モーションブラー係数の設定
+ *  @brief  モーションブラー係数の設定
  *
- *	@param	CSys      ワーク
- *	@param	para_a    今フレームキャプチャ面の係数
- *	@param	para_b    バッファ面の係数
+ *  @param  CSys      ワーク
+ *  @param  para_a    今フレームキャプチャ面の係数
+ *  @param  para_b    バッファ面の係数
  */
 //-----------------------------------------------------------------------------
 static void setSystemMbParam(SYS_CONTROL* CSys, u16 para_a, u16 para_b)
@@ -839,7 +888,11 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
   {
     GFL_ARC_UTIL_TransVramScreen(
       TITLE_RES_ARCID, TITLE_RES_BACK_NSCR, FRAME_BACK, 0, 0, 1, heapID);
-    GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
+#ifdef DELAY_CHECK
+    GFL_BG_SetVisible( FRAME_BACK, VISIBLE_OFF );
+#else
+    GFL_BG_SetVisible( FRAME_BACK, VISIBLE_ON );
+#endif
   }
 
   //メッセージ関連作成(MSG)
