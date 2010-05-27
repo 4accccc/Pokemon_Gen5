@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-27T18:09:24"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T18:27:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -317,7 +317,7 @@
 しょうぶが　おわれば
 きちんと　かえしてもらえるわ▼
 ……だけど　つかうと　なくなる
-どうぐは　ムリみたいなのよね</language>
+どうぐは　どこかに　いっちゃうみたい</language>
 		<language name="JPN_KANJI" width="256">すてきな　トレーナーさん
 いいことを　教えてあげる▼
 トレーナーとの　勝負の　とき
@@ -326,7 +326,7 @@
 勝負が　終われば
 きちんと　返してもらえるわ▼
 ……だけど　使うと　なくなる
-道具は　ムリみたいなのよね</language>
+道具は　どこかに　いっちゃうみたい</language>
 	</row>
 
 	<flowchart-group-list>
