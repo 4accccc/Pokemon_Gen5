@@ -1214,16 +1214,16 @@ DoubleMineAI_IbaruEnd:
 DoubleMineAI_Gihutopasu:      	//　ギフトパス　2010/4/27 
 DoubleMineAI_Nagetukeru:
 DoubleMineAI_Torikku:
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_ramunomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_RAMUNOMI, DoubleMineAI_Torikku_ramunomi
 	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_kagonomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_kurabonomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_tiigonomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_nanashinomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_momonnomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_kiinomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_siroihaabu
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_obonnomi
-	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KAGONOMI, DoubleMineAI_Torikku_mentaruhaabu
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KURABONOMI, DoubleMineAI_Torikku_kurabonomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_TIIGONOMI, DoubleMineAI_Torikku_tiigonomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_NANASINOMI, DoubleMineAI_Torikku_nanashinomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_MOMONNOMI, DoubleMineAI_Torikku_momonnomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_KIINOMI, DoubleMineAI_Torikku_kiinomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_SIROIHAABU, DoubleMineAI_Torikku_siroihaabu
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_OBONNOMI, DoubleMineAI_Torikku_obonnomi
+	IF_HAVE_ITEM	CHECK_ATTACK, ITEM_MENTARUHAABU, DoubleMineAI_Torikku_mentaruhaabu
 
 	JUMP	DoubleMineAI_end
 
@@ -1267,7 +1267,7 @@ DoubleMineAI_Torikku_siroihaabu:
 	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_SPEPOW,5,DoubleMineAI_Torikku_statusdown
 	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,5,DoubleMineAI_Torikku_statusdown
 	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_AVOID,5,DoubleMineAI_Torikku_statusdown
-	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_DEF,5,DoubleMineAI_Torikku_statusdown
+	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_AGI,5,DoubleMineAI_Torikku_statusdown
 	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_SPEDEF,5,DoubleMineAI_Torikku_statusdown
 	IF_PARA_UNDER	CHECK_ATTACK_FRIEND,PARA_AVOID,5,DoubleMineAI_Torikku_statusdown
 	JUMP	DoubleMineAI_end
