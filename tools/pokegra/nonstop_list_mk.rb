@@ -32,6 +32,11 @@ end
     "pbwb"=>"背面",
   }
 
+  ox = [
+    "×",
+    "○",
+  ]
+
   read_data = []
   cnt = 0
   open( ARGV[ ARGV_READ_FILE ] ) {|fp_r|
@@ -44,7 +49,7 @@ end
   fp_w = open( "pokeanime_nonstop.csv", "w" )
 
   #見出し生成 
-  fp_w.print( "ポケモン名,向き,フォルム名,NONSTOP\n" )
+  fp_w.print( "ポケモン名,向き,フォルム名,NONSTOP,FLY\n" )
 
   read_data.size.times {|i|
     split_data = read_data[ i ].split(/,/)
@@ -55,19 +60,27 @@ end
 
     fp_r.read( NCEC_DATA_SIZE * cells )
 
-    data = fp_r.read( 1 )
-	  nonstop = data.unpack( "C" )
+    data = fp_r.read( 2 )
+	  nonstop, fly = data.unpack( "C2" )
+
+    if nonstop == 0xff
+      nonstop = 1
+    else
+      nonstop = 0
+    end
+
+    if fly > 1
+      p split_data[ PARA::GRA_FILE ]
+      p fly
+    end
 
     fp_r.close
 
-    if nonstop[ 0 ] == 0xff
-      fp_w.printf( "%s,%s,%s,○\n", $monsname[ split_data[ PARA::MONS_NO ].to_i ],
-                                    dir[ split_data[ PARA::GRA_FILE ][ 0..3 ] ],
-                                    split_data[ PARA::FORM ] )
-    else
-      fp_w.printf( "%s,%s,%s,×\n", $monsname[ split_data[ PARA::MONS_NO ].to_i ],
-                                    dir[ split_data[ PARA::GRA_FILE ][ 0..3 ] ],
-                                    split_data[ PARA::FORM ] )
-    end
+    fp_w.printf( "%s,%s,%s,%s,%s\n", $monsname[ split_data[ PARA::MONS_NO ].to_i ],
+                                     dir[ split_data[ PARA::GRA_FILE ][ 0..3 ] ],
+                                     split_data[ PARA::FORM ],
+                                     ox[ nonstop ],
+                                     ox[ fly ]
+               )
   }
   fp_w.close
