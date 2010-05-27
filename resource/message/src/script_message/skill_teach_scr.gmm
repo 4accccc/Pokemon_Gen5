@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T19:22:21"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T13:02:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -970,12 +970,14 @@
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">その　ポケモンは
 とくべつな　わざを　おぼえへんよ▼
-どの　ポケモンが　おぼえるかは
-ごめんやけど　おねえさんに　きいて！</language>
+とくべつな　わざを　おぼえるのは
+ポケモンはかせ　から▽
+もらえる　ポケモン　ぜんぶ　なんや！</language>
 		<language name="JPN_KANJI" width="256">その　ポケモンは
 特別な　技を　覚えへんよ▼
-どの　ポケモンが　覚えるかは
-ごめんやけど　お姉さんに　きいて！</language>
+特別な　技を　覚えるのは
+ポケモン博士から▽
+もらえる　ポケモン　全部なんや！</language>
 	</row>
 
 	<row id="msg_skillteach_coalescence_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1019,7 +1021,7 @@
 覚えさせるんか？</language>
 	</row>
 
-	<row id="msg_skillteach_coalescence_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="msg_skillteach_coalescence_11" back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
 		<comment>ＢＧメッセージ
 ・今後WBの最初3匹（の進化系)を追加</comment>
 		<attribute name="キャラ指定">TRAINERM</attribute>
