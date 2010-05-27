@@ -327,6 +327,7 @@ static void FldMenuFuncH_BmpMenuListH(
 
 static PRINTSTREAM_STATE fldMsgPrintStream_ProcPrint(
     FLDMSGPRINT_STREAM *stm );
+static BOOL fldMsgPrintStream_CallBack( u32 value );
 
 static BOOL fldSubMsgWin_Print( FLDSUBMSGWIN *subwin );
 
@@ -2099,17 +2100,39 @@ FLDMSGPRINT_STREAM * FLDMSGPRINT_STREAM_SetupPrintColor(
   
   DEBUG_AddCountPrintTCB( fmb );
   
-  stm->printStream = PRINTSYS_PrintStream(
+  stm->printStream = PRINTSYS_PrintStreamCallBack(
       bmpwin, x, y,
       strbuf, fmb->fontHandle,
       wait,
       fmb->printTCBLSys, 0,
-      fmb->heapID, n_color );
+      fmb->heapID, n_color,
+      fldMsgPrintStream_CallBack );
 
   // キー送り管理開始
   Control_StartPrint( &stm->fmb->print_cont );
 
   return( stm );
+}
+
+//--------------------------------------------------------------
+//	ストリーム用コールバック
+//--------------------------------------------------------------
+static BOOL fldMsgPrintStream_CallBack( u32 value )
+{
+  switch( value )
+  {
+  case 3:  // "ポカン"
+    {
+      PMSND_PlaySystemSE( SEQ_SE_KON );
+    }
+    break;
+  case 6:  // "ポカン"のSE終了待ち
+    {
+      return PMSND_CheckPlaySE();
+    }
+    break;
+  }
+  return FALSE;
 }
 
 //--------------------------------------------------------------

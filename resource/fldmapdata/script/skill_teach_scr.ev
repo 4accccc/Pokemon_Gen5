@@ -494,6 +494,7 @@ sub_skillteacher_wasure_core:
     _WAZA_NAME( 2 , teach_waza_id )
     //"1　２　のポカン！"
     _SYSWIN_MSG( msg_skillteach_system_06 , POS_DEFAULT )
+    _SYSWIN_MSG( msg_skillteach_system_07 , POS_DEFAULT )
     _ME_PLAY( SEQ_ME_LVUP )
     _ME_WAIT()
     _AB_KEYWAIT_MARK()
