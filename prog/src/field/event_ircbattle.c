@@ -222,19 +222,20 @@ static void _demoparamSet(EVENT_IRCBATTLE_WORK *dbw, GAMESYS_WORK * gsys)
   int i;
 
   if(dbw->para->multiMode){
-    if(GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() ) < 2 ){
-      NET_PRINT("1マルチ番号 %d %d %d %d\n",
+    int nid = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle());
+    if(dbw->irc_match.MultiNo[nid] < 2 ){
+      NET_PRINT("1マルチ番号 %d %d %d %d   %d\n",
                 dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
-                dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
+                dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3],nid);
       for( i=0;i<4;i++){
         dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].party = dbw->pNetParty[i];
         dbw->demo_prm.trainer_data[dbw->irc_match.MultiNo[i]].mystatus = GAMEDATA_GetMyStatusPlayer( GAMESYSTEM_GetGameData( gsys ),i );
       }
     }
     else{
-      NET_PRINT("2マルチ番号 %d %d %d %d\n",
+      NET_PRINT("2マルチ番号 %d %d %d %d  %d\n",
                 dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
-                dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
+                dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3], nid);
       for( i=0;i<4;i++){
         u8 buff[]={2,3,0,1};
         dbw->demo_prm.trainer_data[buff[dbw->irc_match.MultiNo[i]]].party = dbw->pNetParty[i];
