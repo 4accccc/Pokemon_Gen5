@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T18:34:20"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T12:58:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1327" top="118" right="2032" bottom="746" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="806" top="169" right="1280" bottom="567" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1183,10 +1183,12 @@ C02ジムリーダー</attribute>
 　いいえ→champion_stone_01_01n</comment>
 		<attribute name="キャラ指定">CHAMPION
 アデク</attribute>
-		<language name="JPN" width="256">アデク『ならば　たのむ！▼
+		<language name="JPN" width="256">アデク『それでも……
+それでもだ！　たのむ！▼
 いざ！　というときの　ため
 ストーンを　うけとってくれい！</language>
-		<language name="JPN_KANJI" width="256">アデク『ならば　頼む！▼
+		<language name="JPN_KANJI" width="256">アデク『それでも……
+それでもだ！　頼む！▼
 いざ！　というときの　ため
 ストーンを　受け取ってくれい！</language>
 	</row>
