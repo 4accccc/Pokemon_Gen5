@@ -925,10 +925,22 @@ static int _evalcallback(int index, void* param)
   else{  //‚¾‚ê‚Å‚à
     if(pWork->chageLevel==targetlv){
       if(pWork->myChageType==targetfriend){
+        value+=20;
+      }
+      else if((_CHANGEMODE_IMAGE_ALL==pWork->myChageType) || (_CHANGEMODE_IMAGE_ALL==targetfriend)){
         value+=10;
       }
+      else{
+        value-=40;
+      }
       if(pWork->friendChageType==targetmy){
+        value+=20;
+      }
+      else if((_CHANGEMODE_IMAGE_ALL==targetmy) || (_CHANGEMODE_IMAGE_ALL==pWork->friendChageType)){
         value+=10;
+      }
+      else{
+        value-=40;
       }
       for(i=0;i<EVENT_GTSNEGO_RECONNECT_NUM;i++){
         if((profile == pEv->profileID[i]) && (profile!=0)){
