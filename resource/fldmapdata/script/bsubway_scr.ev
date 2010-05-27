@@ -395,7 +395,7 @@ sub_receipt_rekidai_download:
         $SCWK_TEMP0 = msg_bsw_scr_52
         _CALL sub_bsw_common_bwin_receipt
         
-        _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+//      _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
       ENDIF
     ENDIF
   ENDIF
@@ -796,7 +796,7 @@ sub_receipt_challenge_multi_comm:
     ENDIF
     
     _MSGWIN_CLOSE()
-      
+     
     //通信開始
     _BSUBWAY_TOOL( BSWSUB_COMM_START, BSW_NULL, BSW_NULL, BSW_NULL )
     
@@ -809,7 +809,7 @@ sub_receipt_challenge_multi_comm:
     
     IF $SCWK_ANSWER == FALSE THEN //失敗
       _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+//    _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
@@ -825,7 +825,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_POKE_SELECT, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
     _CALL sub_bsw_common_comm_exit
     _RET
@@ -861,7 +861,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_MYST, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+//  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
     _CALL sub_bsw_common_comm_exit
     _RET
@@ -877,7 +877,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_BTL_TRAINER_SET, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
     _CALL sub_bsw_common_comm_exit
     _RET
@@ -897,7 +897,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
     _CALL sub_bsw_common_comm_exit
     _RET
@@ -929,7 +929,7 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_AUTO_SAVE, BSW_NULL, comm_ret )
    
   IF $comm_ret == FALSE THEN
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
     _CALL sub_bsw_common_comm_exit
     _RET
@@ -2174,9 +2174,9 @@ sub_bsw_common_comm_exit:
   //通信中であれば同期して切断
   IF $comm_flag == TRUE THEN
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SIO_END, BSW_NULL, comm_ret )
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+//  _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
+    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
   ENDIF
   
   _CALL sub_bsw_common_exit
@@ -2639,7 +2639,7 @@ sub_common_wifi_upload_score:
   //アップロード
   _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
   
-  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+//  _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
   
   IF $ret == TRUE THEN //送れた
     _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )

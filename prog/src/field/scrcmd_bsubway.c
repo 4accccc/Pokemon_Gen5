@@ -100,7 +100,11 @@ static BOOL evCommTimingSync( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuPerent( VMHANDLE *core, void *wk );
 static BOOL evCommEntryMenuChild( VMHANDLE *core, void *wk );
 static BOOL evCommRecvData( VMHANDLE *core, void *wk );
+
 static BOOL evBtlRecSave( VMHANDLE *core, void *wk );
+
+static GMEVENT * createEvCommExit(
+    GAMESYS_WORK *gsys, BSUBWAY_SCRWORK *bsw_scr );
 
 static GMEVENT * createYesNoEvent( GAMESYS_WORK *gsys,
     SCRCMD_WORK *work, u16 *ret_wk, FLDMENUFUNC_YESNO cursor_pos );
@@ -1350,11 +1354,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //通信終了
   case BSWSUB_COMM_END:
-    if( bsw_scr->comm_irc_f == TRUE ){ //赤外線
-      BSUBWAY_COMM_DeleteCommandTable( bsw_scr );
-    }
-    
-    BSUBWAY_COMM_Exit( bsw_scr );
+    SCRIPT_CallEvent( sc, createEvCommExit(gsys,bsw_scr) );
+    result = VMCMD_RESULT_SUSPEND;
     break;
   //通信同期
   case BSWSUB_COMM_TIMSYNC:
@@ -1671,6 +1672,78 @@ static BOOL evCommRecvData( VMHANDLE *core, void *wk )
   }
   
   return( FALSE );
+}
+
+//======================================================================
+//  バトルサブウェイ　通信終了
+//======================================================================
+//--------------------------------------------------------------
+/// バトルサブウェイ　通信終了イベント用ワーク
+//--------------------------------------------------------------
+typedef struct
+{
+  BSUBWAY_SCRWORK *bsw_scr;
+}EV_COMM_EXIT_WORK;
+
+//--------------------------------------------------------------
+/// バトルサブウェイ　通信終了イベント
+//--------------------------------------------------------------
+static GMEVENT_RESULT evCommExit( GMEVENT *event, int *seq, void *wk )
+{
+  EV_COMM_EXIT_WORK *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    if( GFL_NET_IsParentMachine() == TRUE ){
+      GFL_NET_SetNoChildErrorCheck( FALSE ); //子機が不在でもエラーとしない
+    }
+    
+    if( work->bsw_scr->comm_irc_f == TRUE ){ //赤外線通信 コマンド削除
+      BSUBWAY_COMM_DeleteCommandTable( work->bsw_scr );
+    }
+        
+    (*seq)++;
+    break;   
+  case 1:
+    if( GFL_NET_IsParentMachine() == TRUE ){
+      if( GFL_NET_GetConnectNum() <= 1 ){
+        GFL_NET_Exit( NULL );
+        (*seq)++;
+      }
+    }else{
+      GFL_NET_Exit( NULL );
+      (*seq)++;
+    }
+    break;
+  case 2:
+    if( GFL_NET_IsExit() == TRUE ){
+      KAGAYA_Printf( "BSW NET EXIT END\n" );
+      return( GMEVENT_RES_FINISH );
+    }
+  }
+  
+  return( GMEVENT_RES_CONTINUE );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　通信終了イベント作成
+ * @param gsys  GAMESYS_WORK*
+ * @param bsw_scr BSUBWAY_SCRWORK*
+ * @retval GMEVNET*
+ */
+//--------------------------------------------------------------
+static GMEVENT * createEvCommExit(
+    GAMESYS_WORK *gsys, BSUBWAY_SCRWORK *bsw_scr )
+{
+  GMEVENT *event;
+  EV_COMM_EXIT_WORK *work;
+  
+  event = GMEVENT_Create(
+      gsys, NULL, evCommExit, sizeof(EV_COMM_EXIT_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  work->bsw_scr = bsw_scr;
+  return( event );
 }
 
 //======================================================================
