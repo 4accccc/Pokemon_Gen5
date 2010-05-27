@@ -304,6 +304,7 @@ sub_field_comm_exit_main:
 
     IF $SCWK_ANSWER == SCR_NO THEN
       $SCWK_PARAM0 = SCR_FIELD_COMM_EXIT_CANCEL
+      _SYSWIN_CLOSE()
       _RET
     ENDIF
     _SYSWIN_MSG( msg_common_fldcomm_exit_02, POS_DOWN )
