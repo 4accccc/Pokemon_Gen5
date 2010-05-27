@@ -21,6 +21,7 @@ typedef enum{
   CALC_NATSUKI_HINSHI,            //瀕死
   CALC_NATSUKI_LEVEL30_HINSHI,    //レベル差30以上の瀕死
   CALC_NATSUKI_MUSICAL,           //ミュージカル
+  CALC_NATSUKI_WAZA_MACHINE,      //技マシン使用
 }CALC_NATSUKI;
 
 

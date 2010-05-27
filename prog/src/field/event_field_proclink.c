@@ -160,7 +160,7 @@ struct _PROCLINK_WORK
   ITEMCHECK_WORK            icwk;     // アイテム使用時に検査する情報が含まれている
   FLDSKILL_CHECK_WORK       scwk;     // フィールドスキルが使用可能がどうかの情報
   u8                        sel_poke; // メール画面で引き継げないので用意
-  u8                        item_no;  // メール画面・ステータスで引き継げないので用意
+  u16                       item_no;  // メール画面・ステータスで引き継げないので用意
   int                       lv_cnt;   // ステータスで引き継げないので用意 レベルアップカウンタ
   PROCLINK_TAKEOVER_MODE    mode;     // メール画面で引き継げないので用意
   BOOL                      is_shortcut;  //ポケリスト画面の初期化で設定し、破棄で使用

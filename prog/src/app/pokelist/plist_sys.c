@@ -23,6 +23,7 @@
 
 #include "pokeicon/pokeicon.h"
 #include "poke_tool/shinka_check.h"
+#include "poke_tool/natsuki.h"
 #include "savedata/myitem_savedata.h"
 #include "savedata/mail.h"
 #include "savedata/mail_util.h"
@@ -212,6 +213,7 @@ static void PLIST_MSGCB_FormChange( PLIST_WORK *work );
 //外部数値操作
 static void PLIST_LearnSkillEmpty( PLIST_WORK *work , POKEMON_PARAM *pp );
 static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos );
+static void PLIST_UseWazaMachine( PLIST_WORK *work  , POKEMON_PARAM *pp );
 static void PLIST_SetPokeItem( PLIST_WORK *work , POKEMON_PARAM *pp , u16 itemNo );
 static const u16 PLIST_CheckBagItemNum( PLIST_WORK *work , u16 itemNo );
 static void PLIST_SubBagItem( PLIST_WORK *work , u16 itemNo );
@@ -1818,6 +1820,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
       PLIST_MSG_DeleteWordSet( work , work->msgWork );
       
       PLIST_LearnSkillEmpty( work , work->selectPokePara );
+      PLIST_UseWazaMachine( work , work->selectPokePara );
       /*
       if( work->plData->item != 0 )
       {
@@ -3879,11 +3882,8 @@ static void PLIST_MSGCB_ForgetSkill_SkillForget( PLIST_WORK *work )
   {
     //技マシン
     PLIST_MessageWaitInit( work , mes_pokelist_04_11 , TRUE , PLIST_MSGCB_ExitCommon );
+    PLIST_UseWazaMachine( work , work->selectPokePara );
     work->plData->ret_mode = PL_RET_BAG;
-    if( work->plData->item != 0 )
-    {
-      PLIST_SubBagItem( work , work->plData->item );
-    }
   }
 
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
@@ -4242,6 +4242,12 @@ static void PLIST_LearnSkillFull( PLIST_WORK *work  , POKEMON_PARAM *pp , u8 pos
     //わざマシンならば技ポイント引継
     PP_SetWazaPosPPCont( pp , work->plData->waza , pos );
   }
+}
+
+//技マシンを使った処理(技覚える部分以外
+static void PLIST_UseWazaMachine( PLIST_WORK *work  , POKEMON_PARAM *pp )
+{
+  NATSUKI_Calc( pp , CALC_NATSUKI_WAZA_MACHINE , work->plData->zone_id , work->heapId );
 }
 
 //アイテムを持たせる処理

@@ -27,6 +27,7 @@ static	const	s8	CalcNatsukiTable[][3]={
 	{ -1, -1, -1 },		//瀕死
 	{ -5, -5,-10 },		//レベル３０差以上の瀕死
 	{  4,  3,  2 },		//ミュージカルに参加
+	{  1,  1,  0 },		//技マシン使用
 };
 
 static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID zoneID, HEAPID heapID );
