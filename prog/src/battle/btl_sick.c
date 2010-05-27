@@ -49,20 +49,21 @@ void BTL_SICK_TurnCheckCallback( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CON
 //----------------------------------------------------------------------------------------------
 static void turncheck_contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick )
 {
+  if( !BPP_IsDead(bpp) )
   {
     u32 damage =  BPP_CalcSickDamage( bpp, sick );
     if( damage ){
       BTL_SVF_SickDamageRecall( flowWk, bpp, sick, damage );
     }
-  }
-  BTL_N_Printf( DBGSTR_SICK_ContProc, pokeID, sick);
+    BTL_N_Printf( DBGSTR_SICK_ContProc, pokeID, sick);
 
-  switch( sick ){
-  case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
-  case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
-  case WAZASICK_NEWOHARU:       cont_NeWoHaru( flowWk, bpp, pokeID ); break;
-  case WAZASICK_BIND:           cont_Bind( flowWk, bpp, pokeID ); break;
-  case WAZASICK_AQUARING:       cont_AquaRing( flowWk, bpp, pokeID ); break;
+    switch( sick ){
+    case WAZASICK_HOROBINOUTA:    cont_HorobiNoUta( flowWk, bpp, pokeID ); break;
+    case WAZASICK_YADORIGI:       cont_Yadorigi( flowWk, bpp, pokeID ); break;
+    case WAZASICK_NEWOHARU:       cont_NeWoHaru( flowWk, bpp, pokeID ); break;
+    case WAZASICK_BIND:           cont_Bind( flowWk, bpp, pokeID ); break;
+    case WAZASICK_AQUARING:       cont_AquaRing( flowWk, bpp, pokeID ); break;
+    }
   }
 }
 //=============================================================================================
@@ -105,12 +106,15 @@ static int getWazaSickDamageStrID( WazaSick sick )
  */
 static void cont_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
-  BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_HOROBINOUTA );
-  u8 turnMax = BPP_SICCONT_GetTurnMax( cont );
-  u8 turnNow = BPP_GetSickTurnCount( bpp, WAZASICK_HOROBINOUTA );
-  int turnDiff = turnMax - turnNow;
-  if( turnDiff > 0 ){
-    putHorobiCounter( flowWk, bpp, turnDiff );
+  if( !BPP_IsDead(bpp) )
+  {
+    BPP_SICK_CONT cont = BPP_GetSickCont( bpp, WAZASICK_HOROBINOUTA );
+    u8 turnMax = BPP_SICCONT_GetTurnMax( cont );
+    u8 turnNow = BPP_GetSickTurnCount( bpp, WAZASICK_HOROBINOUTA );
+    int turnDiff = turnMax - turnNow;
+    if( turnDiff > 0 ){
+      putHorobiCounter( flowWk, bpp, turnDiff );
+    }
   }
 }
 /**
