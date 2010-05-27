@@ -335,13 +335,13 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   //カメラワークウエイトセット
   if( bew->besp.mainModule )
   {
-    if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
+    if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) )
     {
-      bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
+      bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
     }
     else
     {
-      bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
+      bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
     }
   }
 
@@ -1763,12 +1763,14 @@ void  BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group )
 //-----------------------------------------------------------------------------
 void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
 {
+#if 0
   //WCSでカメラワークオフなら何もしない
   if( ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) ) &&
       ( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) ) )
   {
     return;
   }
+#endif
   bew->camera_work_execute = cwe;
   if( bew->camera_work_execute != BTLV_EFFECT_CWE_NO_STOP )
   { 
