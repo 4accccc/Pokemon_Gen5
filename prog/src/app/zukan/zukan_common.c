@@ -17,12 +17,24 @@
 #include "zukan_common.h"
 
 
+//============================================================================================
+//	定数定義
+//============================================================================================
 #define	BASEBG_SCROLL_WAIT	( 4 )			// ＢＧスクロールウェイト
-#define	BASEBG_SCROLL_VAL		( 1 )
+#define	BASEBG_SCROLL_VAL		( 1 )			// ＢＧスクロール値
 
 
-
-// デフォルトリスト作成
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		デフォルトリスト作成
+ *
+ * @param		sv			図鑑セーブデータ
+ * @param		list		リスト作成場所
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	リストに登録した数
+ */
+//--------------------------------------------------------------------------------------------
 u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 {
 	u16 * buf;
@@ -48,7 +60,16 @@ u16 ZKNCOMM_MakeDefaultList( ZUKAN_SAVEDATA * sv, u16 ** list, HEAPID heapID )
 	return max;
 }
 
-// ビクティチェック
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ビクティチェック
+ *
+ * @param		sv		図鑑セーブデータ
+ *
+ * @retval	"TRUE = 表示する"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL ZKNCOMM_CheckLocalListNumberZero( ZUKAN_SAVEDATA * sv )
 {
 	// 表示モードが全国
@@ -65,7 +86,16 @@ BOOL ZKNCOMM_CheckLocalListNumberZero( ZUKAN_SAVEDATA * sv )
 	return FALSE;
 }
 
-// ソートデータリセット
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ソートデータリセット
+ *
+ * @param		sv		図鑑セーブデータ
+ * @param		sort	ソートデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNCOMM_ResetSortData( const ZUKAN_SAVEDATA * sv, ZKNCOMM_LIST_SORT * sort )
 {
 	if( ZUKANSAVE_GetZukanMode( sv ) == TRUE ){
@@ -81,7 +111,15 @@ void ZKNCOMM_ResetSortData( const ZUKAN_SAVEDATA * sv, ZKNCOMM_LIST_SORT * sort 
 	sort->form  = ZKNCOMM_LIST_SORT_NONE;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードインセット
+ *
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNCOMM_SetFadeIn( HEAPID heapID )
 {
 	WIPE_SYS_Start(
@@ -89,6 +127,15 @@ void ZKNCOMM_SetFadeIn( HEAPID heapID )
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードアウトセット
+ *
+ * @param		heapID		ヒープＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNCOMM_SetFadeOut( HEAPID heapID )
 {
 	WIPE_SYS_Start(
@@ -96,7 +143,17 @@ void ZKNCOMM_SetFadeOut( HEAPID heapID )
 		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, heapID );
 }
 
-// 背景スクロール
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		背景スクロール
+ *
+ * @param		mainBG		メイン画面のＢＧフレーム
+ * @param		subBG			サブ画面のＢＧフレーム
+ * @param		cnt				カウンタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNCOMM_ScrollBaseBG( u8 mainBG, u8 subBG, u32 * cnt )
 {
 	*cnt += 1;
@@ -107,7 +164,17 @@ void ZKNCOMM_ScrollBaseBG( u8 mainBG, u8 subBG, u32 * cnt )
 	}
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター追加
+ *
+ * @param		unit		GFL_CLUNIT
+ * @param		prm			セルアクターデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	GFL_CLWK
+ */
+//--------------------------------------------------------------------------------------------
 GFL_CLWK * ZKNCOMM_CreateClact( GFL_CLUNIT * unit, const ZKNCOMM_CLWK_DATA * prm, HEAPID heapID )
 {
 	return GFL_CLACT_WK_Create( unit, prm->chrRes, prm->palRes, prm->celRes, &prm->dat, prm->disp, heapID );

@@ -39,14 +39,18 @@ enum {
 
 typedef int (*pZKNTOP_FUNC)(ZKNTOPMAIN_WORK*);
 
-#define	HEAPID_ZUKAN_TOP_L	( GFL_HEAP_LOWID(HEAPID_ZUKAN_TOP) )
+#define	HEAPID_ZUKAN_TOP_L	( GFL_HEAP_LOWID(HEAPID_ZUKAN_TOP) )	// 後方確保用ヒープＩＤ
 
-//#define	BG_PALNUM_FRAME		( 1 )
-//#define	BG_PALNUM_GRAPHIC	( 2 )
+#define	AUTO_START_TIME		( 60*5 )		// 自動的にリストを開始するまでの時間
 
-#define	AUTO_START_TIME		( 60*5 )
+#define	DEMO_SCROLL_SPEED				( 8 )												// 開始デモ：ＢＧスクロール速度
+#define	DEMO_SCROLL_COUNT				( 208/DEMO_SCROLL_SPEED )		// 開始デモ：ＢＧスクロールカウント
+#define	DEMO_SCROLL_END_WAIT		( 32 )											// 開始デモ：ＢＧスクロール後のウェイト
 
 
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
 static int MainSeq_Init( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_Release( ZKNTOPMAIN_WORK * wk );
 static int MainSeq_WipeIn( ZKNTOPMAIN_WORK * wk );
@@ -57,6 +61,11 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk );
 static void ScaleAnimeFrameBG(void);
 
 
+//============================================================================================
+//	グローバル
+//============================================================================================
+
+// メインシーケンス
 static const pZKNTOP_FUNC	MainSeq[] = {
 	MainSeq_Init,
 	MainSeq_Release,
@@ -67,7 +76,16 @@ static const pZKNTOP_FUNC	MainSeq[] = {
 };
 
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL ZKNTOPMAIN_MainSeq( ZKNTOPMAIN_WORK * wk )
 {
 	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
@@ -75,17 +93,18 @@ BOOL ZKNTOPMAIN_MainSeq( ZKNTOPMAIN_WORK * wk )
 		return FALSE;
 	}
 
-/*
-	ZKNLISTOBJ_AnmMain( wk );
-	ZKNLISTBMP_PrintUtilTrans( wk );
-//	BGWINFRM_MoveMain( wk->wfrm );
-	ZKNCOMM_ScrollBaseBG( GFL_BG_FRAME3_M, GFL_BG_FRAME3_S, &wk->BaseScroll );
-*/
-
 	return TRUE;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitVram(void)
 {
 	const GFL_DISP_VRAM tbl = {
@@ -112,29 +131,60 @@ static void InitVram(void)
 	GFL_DISP_SetBank( &tbl );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK関数
+ *
+ * @param		tcb			GFL_TCB
+ * @param		work		図鑑トップ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void VBlankTask( GFL_TCB * tcb, void * work )
 {
-//	ZKNTOPMAIN_WORK * wk = work;
-
 	GFL_BG_VBlankFunc();
-//	GFL_CLACT_SYS_VBlankFunc();
-
-//	PaletteFadeTrans( wk->pfd );
 
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK設定
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitVBlank( ZKNTOPMAIN_WORK * wk )
 {
 	wk->vtask = GFUser_VIntr_CreateTCB( VBlankTask, wk, 0 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VBLANK削除
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitVBlank( ZKNTOPMAIN_WORK * wk )
 {
 	GFL_TCB_DeleteTask( wk->vtask );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitBg(void)
 {
 	GFL_BG_Init( HEAPID_ZUKAN_TOP );
@@ -162,7 +212,6 @@ static void InitBg(void)
 			GX_BG_EXTPLTT_01, 1, 1, 0, FALSE
 		};
 		GFL_BG_SetBGControl( GFL_BG_FRAME1_M, &cnth, GFL_BG_MODE_TEXT );
-//		GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
 		GFL_BG_SetClearCharacter( GFL_BG_FRAME1_M, 0x20, 0x20*1023, HEAPID_ZUKAN_TOP_L );
 		GFL_BG_ClearScreenCodeVReq( GFL_BG_FRAME1_M, 1023 );
 	}
@@ -201,6 +250,15 @@ static void InitBg(void)
 		GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ解放
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitBg(void)
 {
 	GFL_DISP_GX_SetVisibleControl(
@@ -217,6 +275,15 @@ static void ExitBg(void)
 	GFL_BG_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧグラフィック読み込み
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void LoadBgGraphic( ZKNTOPMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_TOP_L );
@@ -266,16 +333,17 @@ static void LoadBgGraphic( ZKNTOPMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カスタムグラフィック読み込み
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void LoadSaveGraphic( ZKNTOPMAIN_WORK * wk )
 {
-/*
-	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_TOP_L );
-
-	GFL_ARCHDL_UTIL_TransVramBgCharacter(
-		ah, NARC_zukan_gra_top_zkn_top_dummy_NCGR, GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_TOP );
-
-	GFL_ARC_CloseDataHandle( ah );
-*/
 	SAVE_CONTROL_WORK * sv = GAMEDATA_GetSaveControlWork( wk->dat->gamedata );
 
 	// 外部セーブデータ読み込み
@@ -313,14 +381,15 @@ static void LoadSaveGraphic( ZKNTOPMAIN_WORK * wk )
 }
 
 
-
-
-
-
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：初期化
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Init( ZKNTOPMAIN_WORK * wk )
 {
 	// 表示初期化
@@ -348,6 +417,15 @@ static int MainSeq_Init( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_WIPE_IN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：解放
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Release( ZKNTOPMAIN_WORK * wk )
 {
 	ExitVBlank( wk );
@@ -364,6 +442,15 @@ static int MainSeq_Release( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_END;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：開始フェードイン
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_WipeIn( ZKNTOPMAIN_WORK * wk )
 {
 	if( WIPE_SYS_EndCheck() == TRUE ){
@@ -372,6 +459,15 @@ static int MainSeq_WipeIn( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_WIPE_IN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：終了フェードアウト
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_WipeOut( ZKNTOPMAIN_WORK * wk )
 {
 	if( WIPE_SYS_EndCheck() == TRUE ){
@@ -380,6 +476,15 @@ static int MainSeq_WipeOut( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_WIPE_OUT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：メイン
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Main( ZKNTOPMAIN_WORK * wk )
 {
 	if( wk->time == AUTO_START_TIME ){
@@ -414,11 +519,15 @@ static int MainSeq_Main( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_MAIN;
 }
 
-#define	DEMO_SCROLL_SPEED				( 8 )
-#define	DEMO_SCROLL_COUNT				( 208/DEMO_SCROLL_SPEED )
-#define	DEMO_SCROLL_END_WAIT		( 32 )
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：図鑑開始デモ
+ *
+ * @param		wk		図鑑トップ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 {
 	switch( wk->demoSeq ){
@@ -475,6 +584,15 @@ static int MainSeq_Demo( ZKNTOPMAIN_WORK * wk )
 	return MAINSEQ_DEMO;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ拡大アニメ
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ScaleAnimeFrameBG(void)
 {
 	GFL_BG_SetScaleReq( GFL_BG_FRAME3_M, GFL_BG_SCALE_X_INC, FX32_ONE/32 );

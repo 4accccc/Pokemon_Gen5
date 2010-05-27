@@ -18,11 +18,12 @@
 //	定数定義
 //============================================================================================
 
+// 外部設定データ
 typedef struct {
+	// [in]
   GAMEDATA * gamedata;				// ゲームデータ
-//	ZUKAN_SAVEDATA * savedata;	// 図鑑セーブデータ
 	MYSTATUS * mystatus;				// プレイヤーデータ
-
+	// [out]
 	u32	retMode;								// 終了モード
 }ZUKANTOP_DATA;
 
