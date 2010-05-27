@@ -6567,16 +6567,27 @@ static void scPut_SetBppCounter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppCou
 static void scproc_decrementPPUsedWaza( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   WazaID waza, u8 wazaIdx, u8 fOrgWazaLinked, BTL_POKESET* rec )
 {
-  u8 vol = scEvent_DecrementPPVolume( wk, attacker, wazaIdx, waza, rec );
-
   BOOL fOrgWazaLinkOut = FALSE;
-  if( fOrgWazaLinked )
+
+  if( fOrgWazaLinked )  // ワザを出す時点でリンクされてた
   {
-    if( BPP_WAZA_IsLinkOut(attacker, wazaIdx) ){
+    if( BPP_WAZA_IsLinkOut(attacker, wazaIdx) ){  // 今はリンク切れてる
       fOrgWazaLinkOut = TRUE;
     }
+    else
+    {
+      // 出す前も出した後もリンクされてるのにスロットに違うワザ
+      //（レベルアップかスケッチ）ならPPは減らさない
+      if( BPP_WAZA_GetID(attacker, wazaIdx) != waza ){
+        return;
+      }
+    }
   }
-  scproc_decrementPP( wk, attacker, wazaIdx, vol, fOrgWazaLinkOut );
+
+  {
+    u8 vol = scEvent_DecrementPPVolume( wk, attacker, wazaIdx, waza, rec );
+    scproc_decrementPP( wk, attacker, wazaIdx, vol, fOrgWazaLinkOut );
+  }
 }
 //----------------------------------------------------------------------------------
 /**
