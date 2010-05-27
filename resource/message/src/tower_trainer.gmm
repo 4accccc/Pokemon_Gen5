@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-24T20:53:33"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T16:45:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="546" top="501" right="1046" bottom="1122" maximized="no" rayout="Vertical2">
+	<dialog left="1670" top="250" right="2170" bottom="773" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
@@ -8605,9 +8605,7 @@
 それは　あなたさまの　じゆう
 ですが　わたくしから　ひとこと▼
 じんせいに　おわり　というなの
-しゅうちゃくてんは　ないのです！▼
-では　クダリ
-なにかございましたら　どうぞ！</language>
+しゅうちゃくてんは　ないのです！</language>
 		<language name="JPN_KANJI">わたくし　ノボリと　クダリの
 二両編成▼
 今回は　勝利に　向かって
@@ -8617,9 +8615,7 @@
 それは　あなたさまの　自由
 ですが　わたくしから　一言▼
 人生に　終わり　というなの
-終着点は　ないのです！▼
-では　クダリ
-なにかございましたら　どうぞ！</language>
+終着点は　ないのです！</language>
 	</row>
 
 	<row id="mes_tower_tr_313_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
