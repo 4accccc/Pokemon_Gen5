@@ -231,6 +231,7 @@ _RET
 /*                         パソコン                           */
 /**************************************************************/
 EVENT_START	ev_bg_d13r0101_pc_01
+  _TALK_START_SE_PLAY()
   //読む？
   _SYSWIN_MSG( msg_d13r0101_pc_01, POS_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
