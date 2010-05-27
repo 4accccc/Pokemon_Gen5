@@ -438,13 +438,6 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   // ユニオンのように通信回路は動作しているが接続はしていない状態なら出さない
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE, wk->heapId );
 
-  //BGMをしぼる
-  //Snd_BgmFadeOut( BGM_VOL_TR_CASE, BGM_FADE_TR_CASE_TIME );
-  //Snd_PlayerSetPlayerVolume( PLAYER_FIELD, SND_PLAYER_VOL_TR_CASE );
-  //PMSND_ChangeBGMVolume( ISS_GetNowBgmBit(), SND_PLAYER_VOL_TR_CASE );    // @@TODO ISSでBGMトラック毎に
-                                                                            // ボリューム指定しているので、
-                                                                            // 許可bitをISSに教えてもらう必要がある
-
   WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTERIN_DOWN,
           WIPE_TYPE_SHUTTERIN_DOWN, WIPE_FADE_BLACK,
           WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapId );
@@ -727,12 +720,6 @@ GFL_PROC_RESULT TrCardProc_End( GFL_PROC * proc, int * seq , void *pwk, void *my
 
   GFL_HEAP_DeleteHeap( HEAPID_TR_CARD );
 
-  //BGMを元の音量に戻す
-  //Snd_BgmFadeIn( BGM_VOL_MAX, BGM_FADE_TR_CASE_TIME, BGM_FADEIN_START_VOL_NOW );
-  //Snd_PlayerSetPlayerVolume( PLAYER_FIELD, SND_PLAYER_DEFAULT_VOL );
-  //PMSND_ChangeBGMVolume( ISS_GetNowBgmBit(), SND_PLAYER_DEFAULT_VOL );    // @@TODO ISSでBGMトラック毎に
-                                                                            // ボリューム指定しているので、
-                                                                            // 許可bitをISSに教えてもらう必要がある
   return GFL_PROC_RES_FINISH;
 }
 
