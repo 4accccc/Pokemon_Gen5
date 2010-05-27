@@ -109,7 +109,10 @@ $(NARCNAME): $(notdir $(NCGFILE:.ncg=.NCGR)) $(notdir $(NMCFILE:.nmc=.NMCR)) $(n
 
 $(NONSTOPANMFILE): $(NARCNAME)
 	ruby ..\..\tools\pokegra\nonstop_list_mk.rb pokegra_wb_nonstop.lst
+ifeq ($(USERNAME),yoshida)
 	$(COPY)	$(NONSTOPANMFILE) $(NONSTOPANMDIR)
+endif
+
 endif
 
 #------------------------------------------------------------------------------
