@@ -5042,7 +5042,7 @@ static void handler_Nenchaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nenchaku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,    handler_Nenchaku_NoEff },  // 無効化チェックLv2ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Nenchaku_NoEff },  // 無効化チェックLv2ハンドラ
     { BTL_EVENT_ITEMSET_CHECK,        handler_Nenchaku   },
   };
   *numElems = NELEMS(HandlerTable);
@@ -5787,7 +5787,7 @@ static void handler_AunNoIki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Telepassy( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L2,        handler_AunNoIki }, // 無効化チェックLv2ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,        handler_AunNoIki }, // 無効化チェックLv2ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
