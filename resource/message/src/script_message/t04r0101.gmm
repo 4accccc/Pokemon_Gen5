@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-21T17:23:30"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-27T19:53:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -331,10 +331,10 @@
 じゅくがえり</attribute>
 		<language name="JPN" width="256">なぁ　オマエ　ひまなんだろう？▼
 あしたも　こいよ！
-ボクが　あいて　してやっても　いいぞ！▼</language>
+ボクが　あいて　してやっても　いいぞ！</language>
 		<language name="JPN_KANJI" width="256">なぁ　オマエ　暇なんだろう？▼
 明日も　こいよ！
-ボクが　相手してやっても　いいぞ！▼</language>
+ボクが　相手してやっても　いいぞ！</language>
 	</row>
 
 	<row id="msg_t04r0101_boy3_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -921,7 +921,7 @@
 
 	<row id="msg_t04r0101_boy4_03">
 		<comment>♂
-・戦闘終了後、主人公が負けた後、
+・戦闘終了後、主人公が負けて
 　その日のうちに話しかけた時</comment>
 		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
@@ -950,7 +950,8 @@
 
 	<row id="msg_t04r0101_boy4_05">
 		<comment>♂
-・家族全員勝ち抜いた後、話しかけた場合。</comment>
+・家族全員勝ち抜いた後、
+　自分から話しかけた場合。</comment>
 		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">……　……　……
@@ -971,7 +972,8 @@
 
 	<row id="msg_t04r0101_boy4_03a">
 		<comment>♂
-・戦闘終了後、主人公が勝利した場合</comment>
+・戦闘終了後、主人公が勝利した場合
+　自動で表示される</comment>
 		<attribute name="キャラ指定">兄　マイル
 お坊ちゃま</attribute>
 		<language name="JPN" width="256">……　……　……
