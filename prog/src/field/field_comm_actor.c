@@ -287,6 +287,7 @@ static MMDL * fldcommAct_mmdl_Add(
   MMDL_SetStatusBitAttrGetOFF( mmdl, TRUE );
   MMDL_SetStatusBitNotZoneDelete( mmdl, TRUE );
   MMDL_SetMoveBitRejectPauseMove( mmdl, TRUE );
+  MMDL_SetMoveBitNotSave( mmdl, FALSE );
   return( mmdl );
 }
 
