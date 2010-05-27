@@ -446,7 +446,7 @@ EVENT_START		ev_c04r0201_owner_01
     _GET_BIRTHDAY( birthMonth , birthDay )
     _GET_DATE( nowMonth , nowDay )
     
-    IF $birthMonth == $nowMonth && $birthDay && $nowDay THEN
+    IF $birthMonth == $nowMonth && $birthDay == $nowDay THEN
       $isEvent = TRUE
       //ハッピーバースデイ！
       _BALLOONWIN_TALKOBJ_MSG( msg_c04r0201_owner_05_01 )
