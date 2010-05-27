@@ -81,18 +81,20 @@ GMEVENT * DEBUG_EVENT_DebugMenu_MakePoke( GAMESYS_WORK *gsys, void* wk )
   p_mp_work->pp = PP_Create( 1,1,PTL_SETUP_ID_AUTO,p_mp_work->heapID );
   p_mp_work->p_mp_work.dst = p_mp_work->pp;
   p_mp_work->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) );
- 
+  p_mp_work->p_mp_work.mode = DMP_MODE_MAKE;
+
   //‰Šúƒpƒ‰ƒ[ƒ^Ý’è
-  {
-    u16 oyaName[7] = {L'‚Å',L'‚Î',L'‚Á',L'‚®',L'‚Û',L'‚¯',0xFFFF};
-    PP_Put( p_mp_work->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-    PP_Put( p_mp_work->pp , ID_PARA_oyasex , PTL_SEX_MALE );
-  }
   {
     u16 zone = FIELDMAP_GetZoneID( p_field );
 
     POKE_MEMO_SetTrainerMemoPP( p_mp_work->pp, POKE_MEMO_SET_CAPTURE,
       p_mp_work->p_mp_work.oyaStatus, ZONEDATA_GetPlaceNameID(zone), p_mp_work->heapID );
+  }
+  {
+    u16 oyaName[7] = {L'‚Å',L'‚Î',L'‚Á',L'‚®',L'‚Û',L'‚¯',0xFFFF};
+//    u16 oyaName[8] = {L'D',L'E',L'B',L'U',L'G',L'W',L'W',0xFFFF};
+    PP_Put( p_mp_work->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+//    PP_Put( p_mp_work->pp , ID_PARA_oyasex , PTL_SEX_MALE );
   }
   return p_event;
 }
