@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mori" host="W00155" date="2010-02-22T15:21:22"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-05-27T13:21:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -234,7 +234,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="163"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -260,14 +260,14 @@
 		</language>
 	</columns>
 
-	<dialog left="6" top="97" right="711" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="141" top="85" right="846" bottom="705" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="597" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -317,9 +317,9 @@
 リーダーが抜けた場合のメッセージ
 ０：リーダーの名前</comment>
 		<language name="JPN">リーダーの　[1:00:トレーナー名:0]さんが
-ぬけたので　かいさん　します</language>
+ぬけたので　かいさん　します[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI">リーダーの　[1:00:トレーナー名:0]さんが
-抜けたので　解散します</language>
+抜けたので　解散します[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_oekaki_05">
@@ -336,9 +336,9 @@
 		<comment>おえかきチャット：
 メンバーが誰もいなくなった場合のメッセージ</comment>
 		<language name="JPN">メンバーが　いなくなったので
-かいさん　します</language>
+かいさん　します[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI">メンバーが　いなくなったので
-解散します</language>
+解散します[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_oekaki_07">
