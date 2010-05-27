@@ -81,7 +81,6 @@ _TALK_OBJ_START()
 		
 		//YESNOï™äÚ
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		//ÇÕÇ¢ÇÃèÍçá
 		IF $SCWK_ANSWER == SCR_YES THEN
