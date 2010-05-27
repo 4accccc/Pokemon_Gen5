@@ -1234,16 +1234,7 @@ static int MailPutPokeListExit( MAILBOX_SYS_WORK * syswk )
   PLIST_DATA * pld;
   POKEMON_PARAM * pp;
 
-/*
-  pld = syswk->subProcWork;
-
-  if( pld->ret_sel <= PL_SEL_POS_POKE6 ){
-    pp = PokeParty_GetMemberPointer(
-        GAMEDATA_GetMyPokemon(syswk->dat->gamedata), pld->ret_sel );
-    MailSys_MoveMailPaso2Poke( syswk->sv_mail, syswk->lst_pos, pp, HEAPID_MAILBOX_SYS );
-  }
-*/
-
+  // ŒÄ‚Ño‚µƒ[ƒNíœ
   GFL_HEAP_FreeMemory( syswk->subProcWork );
 
   return MBSEQ_MAINSEQ_START;
