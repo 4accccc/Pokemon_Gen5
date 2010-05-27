@@ -320,10 +320,10 @@ static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* 
 { 
   static const char *scp_tbl[]  =
   { 
-    "‚Â‚¤‚¶‚å‚¤‚P‚T",
-    "‚Â‚¤‚¶‚å‚¤‚Q",
-    "WCS‚P‚T"
-    "WCS‚Q",
+    "NORMAL_15",
+    "NORMAL_02",
+    "WCS_15",
+    "WCS_02",
   };
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
   DEBUGWIN_ITEM_SetNameV( item , "‚¶‚å‚¤‚«‚å‚¤[%s]", scp_tbl[p_wk->camera] );
