@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-05-24T18:48:51"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-05-27T16:57:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -630,8 +630,7 @@
 はっこうしました
 
 うえのゲームシンクＩＤコード　は
-ゲームをはじめるときの
-メインメニュー
+ゲームかいしじの　メインメニュー
 ゲームシンクせっていから
 みなおすことが　できます▼</language>
 		<language name="JPN_KANJI" width="256">ゲームシンクＩＤコードを発行しました
@@ -644,17 +643,15 @@
 
 	<row id="GSYNC_029">
 		<language name="JPN" width="256">ポケモングローバルリンクの
-ホームページで
-ゲームシンクＩＤコード　を
-にゅうりょくすると　よりゲームシンクを
+ホームページで　せっていを
+おこなうと　よりゲームシンクを
 おたのしみいただくことが　できます
 http://www.pokemon-gl.com/
 せっていについて　くわしくは
 せつめいしょを　ごらんください</language>
 		<language name="JPN_KANJI" width="256">ポケモングローバルリンクの
-ホームページで
-ゲームシンクＩＤコード　を
-入力することで　よりゲームシンクを
+ホームページで　設定を
+行うと　よりゲームシンクを
 お楽しみ頂くことが　できます
 http://www.pokemon-gl.com/
 設定について　詳しくは
