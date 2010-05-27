@@ -337,11 +337,11 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
   {
     if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_OFF ) )
     {
-      bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
+      bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
     }
     else
     {
-      bew->camera_work_wait_tmp = BTLV_EFFECT_WCS_CAMERA_WORK_WAIT;
+      bew->camera_work_wait_tmp = BTLV_EFFECT_CAMERA_WORK_WAIT;
     }
   }
 
