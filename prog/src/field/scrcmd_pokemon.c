@@ -1055,6 +1055,21 @@ VMCMD_RESULT EvCmdCheckPokeOwner( VMHANDLE *core, void *wk )
   }
 
   {
+    //親の性別同じか？
+    u32 parent_sex;
+    u32 my_sex;
+    parent_sex = PP_Get( pp, ID_PARA_oyasex, NULL );
+    my_sex = MyStatus_GetMySex(status);
+    NOZOMU_Printf("parent_sex = %d\n",parent_sex);
+    NOZOMU_Printf("my_sex = %d\n",my_sex);
+    if ( parent_sex != my_sex )
+    {
+      *ret_wk = FALSE;    //親は他人
+      return VMCMD_RESULT_CONTINUE;
+    }
+  }
+
+  {
     //カセットバージョン同じか？
     u32 ver;
     ver = PP_Get( pp, ID_PARA_get_cassette, NULL );
