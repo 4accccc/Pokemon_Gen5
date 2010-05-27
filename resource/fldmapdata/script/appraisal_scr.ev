@@ -11,6 +11,10 @@
   .include  "scr_seq_def.h"
   .include  "../../message/dst/script/msg_appraisal_scr.h"
   .include  "appraisal_scr_def.h"
+  .include  "r05r0101.h"
+  .include  "c07pc0101.h"
+  .include  "t04r0101.h"
+  .include  "r18r0101.h"
 
 //--------------------------------------------------------------
 //               スクリプト本体
@@ -101,35 +105,33 @@ _TALK_OBJ_START()
 		
 			//興味ありの場合
 			ELSE
-			
+				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+				
 				//金額・アイテム名を格納
 				_ITEMJUDGE_SET_WORD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_GOURMET, 1, 8 ) 
 				_ITEM_NAME( 0,LWK_ITEM )
-		
+
 				//ワーオ！　ナイス　スメル！
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_03 )
+				_BALLOONWIN_OBJMSG_POS( msg_appraisal_g_03 , R05R0101_MAID_01, POS_DOWN )
 				_YES_NO_WIN( SCWK_ANSWER )
 			
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
 					_MSGWIN_CLOSE()
-					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
-
+					
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_GOURMET )
+					_GOLD_WIN_UPDATE()
+					
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_g_04, POS_DOWN )
+					_SE_WAIT()
 					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
 					DEFINE_LOCAL LWK_REDUCE
 					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
-
-					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_GOURMET )
-					_GOLD_WIN_UPDATE()
-					_SE_PLAY( SEQ_SE_SYS_22 )
-					_SE_WAIT()
-
-					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 
@@ -140,7 +142,8 @@ _TALK_OBJ_START()
 			
 				//譲らない場合
 				ELSE
-			
+					_GOLD_WIN_CLOSE()
+		
 					//チェ　まあ　しかたないかー
 					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_g_07 )
 					_LAST_KEYWAIT()
@@ -234,35 +237,33 @@ _TALK_OBJ_START()
 		
 			//興味ありの場合
 			ELSE
-
+				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+				
 				//金額・アイテム名を格納
 				_ITEMJUDGE_SET_WORD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA, 1, 8 ) 
 				_ITEM_NAME( 0,LWK_ITEM )
 		
 				//グラグラくるの
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_03 )
+				_BALLOONWIN_OBJMSG_POS( msg_appraisal_m_03 , C07PC0101_GENTLEMAN_01, POS_DOWN )
 				_YES_NO_WIN( SCWK_ANSWER )
 			
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
 					_MSGWIN_CLOSE()
-					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
-
+					
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA )
+					_GOLD_WIN_UPDATE()
+					
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_m_04, POS_DOWN )
+					_SE_WAIT()
 					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
 					DEFINE_LOCAL LWK_REDUCE
 					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
-
-					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_STONE_MANIA ) 
-					_GOLD_WIN_UPDATE()
-					_SE_PLAY( SEQ_SE_SYS_22 )
-					_SE_WAIT()
-
-					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 
@@ -273,7 +274,8 @@ _TALK_OBJ_START()
 				
 				//譲らない場合
 				ELSE
-			
+					_GOLD_WIN_CLOSE()
+					
 					//いつか　ゆずってほしいのー
 					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_07 )
 					_LAST_KEYWAIT()
@@ -287,7 +289,8 @@ _TALK_OBJ_START()
 		
 	//譲るアイテムが存在しない
 	ELSE
-	
+		_GOLD_WIN_CLOSE()
+		
 		//ざんねんだけど ないね
 		_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m_08 )
 		_LAST_KEYWAIT()
@@ -334,12 +337,14 @@ _TALK_OBJ_START()
 			$LWK_ITEM = ITEM_KODAINOOUKAN
 			_ITEMJUDGE( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH, LWK_MONEY )
 			
+			_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+			
 			//金額・アイテム名を格納
 			_ITEMJUDGE_SET_WORD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH, 1, 8 ) 
 			_ITEM_NAME( 0,LWK_ITEM )
 
 			//それは　こだいのおうかん！
-			_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_08 )
+			_BALLOONWIN_OBJMSG_POS( msg_appraisal_r_08 , T04R0101_FIGHTERM_01, POS_DOWN )
 			_YES_NO_WIN( SCWK_ANSWER )
 		
 			//========================================/
@@ -351,23 +356,20 @@ _TALK_OBJ_START()
 			//はい選択時
 			IF $SCWK_ANSWER == SCR_YES THEN
 				_MSGWIN_CLOSE()
-				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+				
+				_SE_PLAY( SEQ_SE_SYS_22 )
+				_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH ) 
+				_GOLD_WIN_UPDATE()
 				
 				//～を渡して　～円をもらった
 				_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
+				_SE_WAIT()
 				_AB_KEYWAIT_MARK()
 				_SYSWIN_CLOSE()
 				
 				//アイテム減算処理
 				DEFINE_LOCAL LWK_REDUCE
 				_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
-
-				_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH ) 
-				_GOLD_WIN_UPDATE()
-				_SE_PLAY( SEQ_SE_SYS_22 )
-				_SE_WAIT()
-
-				_TIME_WAIT( 30 )
 
 				_GOLD_WIN_CLOSE()
 
@@ -377,6 +379,7 @@ _TALK_OBJ_START()
 				_MSGWIN_CLOSE()
 				
 			ELSE	
+				_GOLD_WIN_CLOSE()
 				
 				//そのどうぐ　きがかわったら
 				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_07 )
@@ -452,35 +455,33 @@ ev_fugou:
 	
 			//興味ありの場合
 			ELSE
-		
+				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+				
 				//金額・アイテム名を格納
 				_ITEMJUDGE_SET_WORD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH, 1, 8 ) 
 				_ITEM_NAME( 0,LWK_ITEM )
 	
 				//ゆずってくれないかね？　かね？
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_03 )
+				_BALLOONWIN_OBJMSG_POS( msg_appraisal_r_03 , T04R0101_FIGHTERM_01, POS_DOWN )
 				_YES_NO_WIN( SCWK_ANSWER )
 		
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
 					_MSGWIN_CLOSE()
-					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+					
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH ) 
+					_GOLD_WIN_UPDATE()
 					
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_r_04, POS_DOWN )
+					_SE_WAIT()
 					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
 					DEFINE_LOCAL LWK_REDUCE
 					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
-
-					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_RICH ) 
-					_GOLD_WIN_UPDATE()
-					_SE_PLAY( SEQ_SE_SYS_22 )
-					_SE_WAIT()
-
-					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 
@@ -491,7 +492,8 @@ ev_fugou:
 		
 				//譲らない場合
 				ELSE
-		
+					_GOLD_WIN_CLOSE()
+					
 					//そのどうぐ　きがかわったら
 					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_r_07 )
 					_LAST_KEYWAIT()
@@ -584,35 +586,34 @@ _TALK_OBJ_START()
 		
 			//興味ありの場合
 			ELSE
+				
+				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 
 				//金額・アイテム名を格納
 				_ITEMJUDGE_SET_WORD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_KOUKO, 1, 8 ) 
 				_ITEM_NAME( 0,LWK_ITEM )
 		
 				//イイね ったら イイねえ…
-				_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_03 )
+				_BALLOONWIN_OBJMSG_POS( msg_appraisal_m2_03,R18R0101_SUNGLASSES_01,POS_DOWN )
 				_YES_NO_WIN( SCWK_ANSWER )
 			
 				//譲る場合
 				IF $SCWK_ANSWER == SCR_YES THEN
 					_MSGWIN_CLOSE()
-					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+					
+					_SE_PLAY( SEQ_SE_SYS_22 )
+					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_KOUKO ) 
+					_GOLD_WIN_UPDATE()
 
 					//～を渡して　～円をもらった
 					_SYSWIN_MSG( msg_appraisal_m2_04, POS_DOWN )
+					_SE_WAIT()
 					_AB_KEYWAIT_MARK()
 					_SYSWIN_CLOSE()
 					
 					//アイテム減算処理
 					DEFINE_LOCAL LWK_REDUCE
 					_SUB_ITEM( LWK_ITEM , 1 , LWK_REDUCE )
-
-					_ITEMJUDGE_ADD_MONEY( LWK_ITEM, SCR_ITEM_JUDGE_OBJTYPE_KOUKO ) 
-					_GOLD_WIN_UPDATE()
-					_SE_PLAY( SEQ_SE_SYS_22 )
-					_SE_WAIT()
-
-					_TIME_WAIT( 30 )
 
 					_GOLD_WIN_CLOSE()
 
@@ -623,7 +624,8 @@ _TALK_OBJ_START()
 				
 				//譲らない場合
 				ELSE
-			
+					_GOLD_WIN_CLOSE()
+					
 					//いかした ブツをみつけたら わたしのところに おいで
 					_BALLOONWIN_TALKOBJ_MSG( msg_appraisal_m2_07 )
 					_LAST_KEYWAIT()
