@@ -1206,10 +1206,14 @@ sub_sage_appear:
 	ENDIF
 	_PLAINWIN_CLOSE()
 	
-	_SE_PLAY(SEQ_SE_FLD_175)
+	_TIME_WAIT( 15 )
+	
+	_SE_PLAY(SEQ_SE_FLD_176)
 	//回復
 	_TEMOTI_POKEMON_KAIFUKU()
 	_SE_WAIT()
+	
+	_TIME_WAIT( 15 )
 
 	//ゲーチス：片手アニメ
 	_OBJ_ANIME( N01R0502_SAGE1_01, anm_sage1_hand )
