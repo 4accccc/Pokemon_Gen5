@@ -216,6 +216,11 @@ charange:
     _RET
   ENDIF
 
+  //選んだ（選ばれた）のが手持ちの場合、ポケモンリストをコールする前に回復
+  IF $party_sel == SCR_BTL_PARTY_SELECT_TEMOTI THEN
+    _TEMOTI_POKEMON_KAIFUKU()
+  ENDIF
+
   //ポケモンリストコール
   _TH_SEL_POKE(regulation, party_sel, SCWK_ANSWER)
 
