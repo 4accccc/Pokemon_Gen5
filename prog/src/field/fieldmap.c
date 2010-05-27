@@ -152,7 +152,7 @@
 
 
 extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態は、main.c
-
+static void DbgVramDumpCallBack(u32 addr, u32 szByte, void* pUserData);
 #endif  //PM_DEBUG
 
 //======================================================================
@@ -624,7 +624,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
   }
 
 	GFL_UI_StartFrameRateMode( GFL_UI_FRAMERATE_30 );
-	
+
   return MAINSEQ_RESULT_NEXTSEQ;
 }
 
@@ -2441,7 +2441,27 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
  */
 //--------------------------------------------------------------
 //プロジェクションマトリクスを操作する際のＺオフセット
+#ifdef PM_DEBUG
+//デバッグのとき
+
+//海野さん環境
+#ifdef DEBUG_ONLY_FOR_unno
+#define	PRO_MAT_Z_OFS	(310+0xb8)
+#else
+//淵野さん環境
+#ifdef DEBUG_ONLY_FOR_fuchino
+#define	PRO_MAT_Z_OFS	(310+0xb8)
+#else
+//それ以外の人の環境
 #define	PRO_MAT_Z_OFS	(310)
+#endif  //DEBUG_ONLY_FOR_fuchino
+#endif  //DEBUG_ONLY_FOR_unno
+
+#else   // NOT DEF PMDEBUG
+//製品版
+#define	PRO_MAT_Z_OFS	(310)
+#endif  //PM_DEBUG
+
 // topフレームでの描画
 // ３D描画環境の初期化
 // field_g3d_mapperのtopフレーム描画
@@ -2946,7 +2966,7 @@ static void zoneChange_SetMMdl( GAMEDATA *gdata,
 		MMDLSYS *fmmdlsys, EVENTDATA_SYSTEM *evdata, u32 zone_id )
 {
 	u16 count = EVENTDATA_GetNpcCount( evdata );
-	
+	NOZOMU_Printf("COUNT : %d\n",count);
 	if( count ){
     EVENTWORK *evwork =  GAMEDATA_GetEventWork( gdata );
 		const MMDL_HEADER *header = EVENTDATA_GetNpcData( evdata );
@@ -3485,7 +3505,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 */				
 		org_pm = *m;
 		pm = org_pm;
-    
+
 #if 0
     {
       FIELD_STATUS * fldstatus =
@@ -3562,6 +3582,11 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
   if (GFL_UI_KEY_GetCont() & PAD_BUTTON_DEBUG){
 #if 0    
     if (GFL_UI_KEY_GetTrg() & PAD_BUTTON_L){
+      u32 rest;
+      rest = 0;
+      NNS_GfdDumpLnkTexVramManagerEx( DbgVramDumpCallBack, DbgVramDumpCallBack, &rest );
+      NOZOMU_Printf( "3DVram rest = 0x%x\n",rest);
+
 //      DEBUG_CreateCamShakeEvt(fieldWork->gsys, 0, 10, 3, 10, 0,1,0,5);
 //      FLD3D_CI_CallCutIn(fieldWork->gsys, fieldWork->Fld3dCiPtr, 0);
     }
@@ -3900,4 +3925,13 @@ static fx32 calcBbdActYOffset( const FIELDMAP_WORK * fieldmap )
   }
   return offs;
 }
+
+#ifdef PM_DEBUG
+static void DbgVramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
+{
+    // 合計サイズを計算。
+    (*((u32*)pUserData)) += szByte;
+}
+
+#endif
 
