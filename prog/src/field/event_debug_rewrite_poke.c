@@ -119,26 +119,29 @@ static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *
     break;
 
   case SEQ_PROC_END:
+    if( p_wk->p_mp_work.ret_code == DMP_RET_COPY )
+    {
+      GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
+      POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
+      BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( gmData );
+
+      //手持ちに空きがあれば入れる
+      if( PokeParty_GetPokeCount( party ) < 6 )
+      {
+        PokeParty_Add( party , p_wk->pp );
+      }else{
+        BOXDAT_PutPokemon( boxman, PP_GetPPPPointer( p_wk->pp ));
+      }
+    }
+
+#if 0 //別にこれは要らないのでは？
     {
       //書き換えないデータ
       static const u16 sc_id_tbl[]  =
       {
        ID_PARA_pref_code,
-       ID_PARA_get_cassette,
-       ID_PARA_get_year,
-       ID_PARA_get_month,
-       ID_PARA_get_day,
-       ID_PARA_birth_year,
-       ID_PARA_birth_month,
-       ID_PARA_birth_day,
-       ID_PARA_get_place,
-       ID_PARA_birth_place,
-       ID_PARA_pokerus,
-       ID_PARA_get_ball,
-       ID_PARA_get_level,
        ID_PARA_oyasex,
        ID_PARA_get_ground_id,
-       ID_PARA_country_code,
        ID_PARA_style,                    //かっこよさ
        ID_PARA_beautiful,                //うつくしさ
        ID_PARA_cute,                     //かわいさ
@@ -204,18 +207,17 @@ static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *
        ID_PARA_country_ribbon,           //カントリーリボン
        ID_PARA_national_ribbon,          //ナショナルリボン
        ID_PARA_earth_ribbon,           //アースリボン
-       ID_PARA_condition,              //コンディション
       };
       int i;
       int id;
       //書き換えて欲しくないデータを入れる
-
       for( i = 0; i < NELEMS(sc_id_tbl); i++ )
       {
         id  = sc_id_tbl[i];
         PP_Put( p_wk->pp, id, PP_Get( p_wk->p_src_pp, id, NULL ) );
       }
     }
+#endif
     GFL_HEAP_FreeMemory( p_wk->p_src_pp );
     return GMEVENT_RES_FINISH;
   }

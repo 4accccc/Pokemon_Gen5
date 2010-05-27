@@ -13,8 +13,10 @@
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
 #include "system/main.h"
+#include "poke_tool/poke_memo.h"
 #include "field/fieldmap_proc.h"
 #include "field/field_msgbg.h"
+#include "field/zonedata.h"
 #include "debug/debug_str_conv.h"
 #include "event_debug_local.h"
 #include "fieldmap.h"
@@ -79,7 +81,19 @@ GMEVENT * DEBUG_EVENT_DebugMenu_MakePoke( GAMESYS_WORK *gsys, void* wk )
   p_mp_work->pp = PP_Create( 1,1,PTL_SETUP_ID_AUTO,p_mp_work->heapID );
   p_mp_work->p_mp_work.dst = p_mp_work->pp;
   p_mp_work->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) );
+ 
+  //‰Šúƒpƒ‰ƒ[ƒ^İ’è
+  {
+    u16 oyaName[7] = {L'‚Å',L'‚Î',L'‚Á',L'‚®',L'‚Û',L'‚¯',0xFFFF};
+    PP_Put( p_mp_work->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
+    PP_Put( p_mp_work->pp , ID_PARA_oyasex , PTL_SEX_MALE );
+  }
+  {
+    u16 zone = FIELDMAP_GetZoneID( p_field );
 
+    POKE_MEMO_SetTrainerMemoPP( p_mp_work->pp, POKE_MEMO_SET_CAPTURE,
+      p_mp_work->p_mp_work.oyaStatus, ZONEDATA_GetPlaceNameID(zone), p_mp_work->heapID );
+  }
   return p_event;
 }
 
@@ -113,20 +127,18 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
     break;
 
   case SEQ_PROC_END:
-    if( p_wk->pp != NULL )
+    if( p_wk->pp != NULL && p_wk->p_mp_work.ret_code != DMP_RET_CANCEL)
     {
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
       POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
+      BOX_MANAGER* boxman = GAMEDATA_GetBoxManager( gmData );
 
-      {
-        u16 oyaName[6] = {L'‚Å',L'‚Î',L'‚®',L'‚Û',L'‚¯',0xFFFF};
-        PP_Put( p_wk->pp , ID_PARA_oyaname_raw , (u32)&oyaName[0] );
-        PP_Put( p_wk->pp , ID_PARA_oyasex , PTL_SEX_MALE );
-      }
       //è‚¿‚É‹ó‚«‚ª‚ ‚ê‚Î“ü‚ê‚é
       if( PokeParty_GetPokeCount( party ) < 6 )
       {
         PokeParty_Add( party , p_wk->pp );
+      }else{
+        BOXDAT_PutPokemon( boxman, PP_GetPPPPointer( p_wk->pp ));
       }
 
       GFL_HEAP_FreeMemory( p_wk->pp );

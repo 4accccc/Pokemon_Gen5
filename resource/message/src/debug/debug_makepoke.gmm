@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-17T11:46:30"/>
+	<create user="iwasawa" host="W00157" date="2010-05-27T11:56:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -684,6 +684,18 @@
 
 	<row id="DMPSTR_EVENT_FLAG">
 		<language name="JPN" width="256">イベントはいふ</language>
+	</row>
+
+	<row id="DMPSTR_EGG_NAME" text-color=",,,#ff0000,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>ポケモンニックネーム
+ 5文字以下</comment>
+		<language name="JPN" width="256">タマゴ</language>
+	</row>
+
+	<row id="DMPSTR_DMY_OYA_NAME" text-color=",,,#ff0000,,,,,,,," back-color="#ffff80,,,,,,#ffff80,,,#ffff80,,">
+		<comment>親名
+　7文字以下</comment>
+		<language name="JPN" width="256">デバッグポケ</language>
 	</row>
 
 	<flowchart-group-list>

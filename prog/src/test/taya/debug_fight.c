@@ -2006,6 +2006,7 @@ FS_EXTERN_OVERLAY(debug_makepoke);
       wk->makePokeParam.oyaStatus = GAMEDATA_GetMyStatus( wk->gameData );
 //      wk->makePokeParam.oyaStatus = NULL;
       wk->makePokeParam.defaultMonsNo = PosToDeafultMonsNo( pos );
+      wk->makePokeParam.mode = DMP_MODE_D_FIGHT;
 
       GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, &wk->makePokeParam );
       (*seq)++;

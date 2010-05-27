@@ -874,6 +874,7 @@ FS_EXTERN_OVERLAY(debug_makepoke);
     {
       PROCPARAM_DEBUG_MAKEPOKE* para = getGenericWork( wk, sizeof(PROCPARAM_DEBUG_MAKEPOKE) );
       para->dst = wk->testPoke;
+      para->mode = DMP_MODE_D_FIGHT;
       GFL_PROC_LOCAL_CallProc( wk->localProc, FS_OVERLAY_ID(debug_makepoke), &ProcData_DebugMakePoke, para );
       (*seq)++;
     }
