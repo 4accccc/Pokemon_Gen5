@@ -9782,23 +9782,22 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
   switch( wk->turnCheckStep ){
   case 1:
     wk->turnCheckStep++;
-    if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_BEGIN) ){
-      fExpGet = TRUE;
-      break;
-    }
-    if( scproc_CheckShowdown(wk) ){
-      TAYA_Printf("ŒoŒ±’l‚Í‚¢‚ç‚È‚¢‚¯‚ÇŒˆ’…‚Í‚Â‚¢‚½\n");
-      return FALSE;
-     }
-    /* fallthru */
-  case 2:
-    wk->turnCheckStep++;
     SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
     if( scproc_turncheck_weather(wk, pokeSet) ){
       fExpGet = TRUE;
       break;
     }
     if( scproc_CheckShowdown(wk) ){ return FALSE; }
+    /* fallthru */
+  case 2:
+    wk->turnCheckStep++;
+    if( scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_BEGIN) ){
+      fExpGet = TRUE;
+      break;
+    }
+    if( scproc_CheckShowdown(wk) ){
+      return FALSE;
+     }
     /* fallthru */
   case 3:
     wk->turnCheckStep++;

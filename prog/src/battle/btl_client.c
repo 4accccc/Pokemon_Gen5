@@ -2765,8 +2765,9 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   }
   #endif
 
-  if( BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU )
-  {
+  if( (BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU)
+  &&  (BPP_CheckSick(procPoke, WAZASICK_SASIOSAE))
+  ){
     // 入れ替え可否判定のみ「きれいなぬけがら」チェック
     if( fCheckChange ){
       if( BPP_GetItem(procPoke) == ITEM_KIREINANUKEGARA ){
@@ -3826,18 +3827,26 @@ static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk )
   memberMax = BTL_PARTY_GetMemberCount( wk->myParty );
   prevMemberIdx = wk->numCoverPos;
 
+  TAYA_Printf("時間切れだから強制的に選ぶ。%d体選択しなきゃならなくて、生きてるのは%d体だよ\n",
+        wk->myChangePokeCnt, BTL_PARTY_GetAliveMemberCount(wk->myParty) );
+
   for(i=0; i<wk->myChangePokeCnt; ++i)
   {
     BTL_MAIN_BtlPosToClientID_and_PosIdx( wk->mainModule, wk->myChangePokePos[i], &clientID, &posIdx );
+    TAYA_Printf("%d件目 .. 位置Idx=%d\n", i+1, posIdx);
     for(j=prevMemberIdx; j<memberMax; ++j)
     {
       bpp = BTL_PARTY_GetMemberDataConst( wk->myParty, j );
+      TAYA_Printf("Idx=%d, ポケ=%d, HP=%d\n", j, BPP_GetID(bpp), BPP_GetValue(bpp, BPP_HP));
       if( !BPP_IsDead(bpp) )
       {
         BTL_N_Printf( DBGSTR_CLIENT_ForcePokeChange, selectCnt+1, wk->myChangePokeCnt, posIdx, j );
         BTL_ACTION_SetChangeParam( &wk->actionParam[selectCnt++], posIdx, j );
-        prevMemberIdx = j;
+        prevMemberIdx = j+1;
         break;
+      }
+      else{
+        TAYA_Printf("たたかえない\n");
       }
     }
   }
