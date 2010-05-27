@@ -234,7 +234,10 @@ static void ringTone_sleepSoundReleaseFunc( void * work )
 //------------------------------------------------------------------
 static void startSE( RINGTONE_SYS * rtone )
 {
-  PMSND_PlaySE_byPlayerID( RINGTONE_SE_NO, RINGTONE_SEPLAYER );
+  if (PMSND_CheckPlaySE_byPlayerID( RINGTONE_SEPLAYER ) == FALSE )
+  {
+    PMSND_PlaySE_byPlayerID( RINGTONE_SE_NO, RINGTONE_SEPLAYER );
+  }
   rtone->ringWait = RINGTONE_LENGTH;
 }
 //------------------------------------------------------------------
@@ -288,11 +291,7 @@ static void changeStatus( RINGTONE_SYS * rtone, RINGTONE_REQ req )
   RINGTONE_STAT new_state = seqTbl[rtone->state][req];
 
   //OS_TPrintf(" RINGTONE REQ(%d) STAT(%d --> %d)\n", req, rtone->state, new_state );
-  if ( rtone->state == new_state )
-  {
-    //状態が変わらないリクエスト＝＝＞何もしない
-    return;
-  }
+
   switch ( new_state )
   {
   case STAT_OPEN_OFF:
