@@ -18,7 +18,6 @@
 
 #include "zknlist_main.h"
 #include "zknlist_obj.h"
-#include "zknlist_bgwfrm.h"
 #include "zukan_gra.naix"
 
 

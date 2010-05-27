@@ -22,7 +22,6 @@
 #include "zukanlist.h"
 #include "zknlist_bmp_def.h"
 #include "zknlist_obj_def.h"
-#include "zknlist_bgwfrm_def.h"
 
 
 

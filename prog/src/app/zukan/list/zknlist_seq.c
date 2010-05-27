@@ -20,7 +20,6 @@
 #include "zknlist_obj.h"
 #include "zknlist_bmp.h"
 #include "zknlist_ui.h"
-#include "zknlist_bgwfrm.h"
 #include "zknlist_snd_def.h"
 
 
