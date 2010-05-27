@@ -1039,28 +1039,48 @@ sub_receipt_challenge_wifi:
     _RET
   ENDIF
   
-  //フラグ初期化
-  _CALL sub_receipt_flag_set_geton_first
-  
-  //レポート
-  _CALL sub_bsw_common_report
-  
-  IF $SCWK_ANSWER == 1 THEN //キャンセル
-    _RET
-  ENDIF
-  
-  //wifi接続
-  IF $dl_play == TRUE THEN
-    _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, ret )
-//  _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_DL_DATA, BSW_NULL, BSW_NULL, ret )
+  IF $dl_play == FALSE THEN //既存データプレイ
+    //フラグ初期化
+    _CALL sub_receipt_flag_set_geton_first
     
-    IF $ret == FALSE THEN
+    //レポート
+    _CALL sub_bsw_common_report
+    
+    IF $SCWK_ANSWER == 1 THEN //レポートキャンセル
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
+  ELSE //新規プレイ
+    //ステートクリア
+    _CALL sub_receipt_flag_clear
+    
+    //まずDLプレイで無い状況にする
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, FALSE, BSW_NULL, BSW_NULL )
+
+    //レポート
+    _CALL sub_bsw_common_report
+    
+    IF $SCWK_ANSWER == 1 THEN //レポートキャンセル
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
+   
+    //wifi接続　ダウンロード
+    _BSUBWAY_TOOL( BSWTOOL_WIFI_DOWNLOAD_GAMEDATA, BSW_NULL, BSW_NULL, ret )
+    
+    IF $ret == FALSE THEN //ダウンロードしなかった
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
     
+    //フラグ初期化
+    _CALL sub_receipt_flag_set_geton_first
+    
     //ダウンロードプレイである
     _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_SEL_DL_BTL, TRUE, BSW_NULL, BSW_NULL )
+    
+    //ダウンロードプレイ状態に更新されたのでレポート
+    _CALL sub_bsw_common_auto_save
   ENDIF
   
   //乗車するが準備は良いか
@@ -2264,7 +2284,7 @@ sub_bsw_common_report_error_exit:
   $SCWK_TEMP0 = msg_bsw_scr_37
   _CALL sub_bsw_common_bwin_receipt
   _MSGWIN_CLOSE()
-
+  
   //不正終了時のパラメータ処理
   _BSUBWAY_TOOL( BSWTOOL_SET_NG_SCORE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
   
@@ -2274,7 +2294,7 @@ sub_bsw_common_report_error_exit:
     IF $ret == TRUE THEN //新規プレイである
       //ランクダウン処理
       _BSUBWAY_TOOL( BSWTOOL_DOWN_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
-    
+      
       IF $ret == TRUE THEN //ランク下がった
         _BSUBWAY_TOOL( BSWTOOL_GET_WIFI_RANK, BSW_NULL, BSW_NULL, ret )
         //ランク文字列に
@@ -2286,6 +2306,9 @@ sub_bsw_common_report_error_exit:
         _MSGWIN_CLOSE()
       ENDIF
     ENDIF
+    
+    //フラグクリア
+    _CALL sub_receipt_flag_clear
     
     //レポート
     _CALL sub_bsw_common_auto_save
