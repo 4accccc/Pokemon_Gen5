@@ -34,7 +34,9 @@ typedef struct{
   //comm_player.cでのみ使用するもの
   u8 occ:1;         ///<この構造体全体のデータ有効・無効(TRUE:有効)
   u8 push_flag:1;
-  u8 :6;
+  u8 player_form:4; ///<PLAYER_MOVE_FORM
+  u8 map_attr_hitch:1;
+  u8 :1;
   u8 padding[3];
   
   FLDEFF_TASK *fldeff_gyoe_task;  ///<「！」エフェクト動作タスク
@@ -44,7 +46,10 @@ typedef struct{
 typedef struct{
   VecFx32 pos;
   u16 dir;
-  u8 padding[2];
+  u8 player_form:4; ///<PLAYER_MOVE_FORM
+  u8 map_attr_hitch:1;
+  u8  :5;
+  u8 padding;
 }MINE_PLAYER;
 
 ///通信プレイヤー制御システムワーク
@@ -292,6 +297,8 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
       pack.pos = cps->act[i].pos;
       pack.dir = cps->act[i].dir;
       pack.vanish = cps->act[i].vanish;
+      pack.player_form = cps->act[i].player_form;
+      pack.map_attr_hitch = cps->act[i].map_attr_hitch;
       CommPlayer_Add(cps, i, cps->act[i].obj_code, &pack);
       OS_TPrintf("CommPlayer Pop! %d\n", i);
     }
@@ -377,38 +384,58 @@ void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_P
 BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack)
 {
   MINE_PLAYER *mine = &cps->mine;
-#if 0
-  FIELDMAP_WORK *fieldWork;
-  FIELD_PLAYER * player;
-  VecFx32 pos;
-#else
   PLAYER_WORK * player;
-  const VecFx32 *p_pos;
-#endif
+  VecFx32 draw_pos;
   u16 dir;
+  PLAYER_MOVE_FORM form;
+  BOOL attr_hitch;
+  MMDL *player_mmdl;
   
-  if(cps->update_stop == TRUE || GAMESYSTEM_CheckFieldMapWork(cps->gsys) == FALSE){
+  if(cps->update_stop == TRUE || GAMESYSTEM_CheckFieldMapWork(cps->gsys) == FALSE 
+      || FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(cps->gsys)) == FALSE){
     return FALSE;
   }
 
-#if 0
-  fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
-  player = FIELDMAP_GetFieldPlayer(fieldWork);
-  FIELD_PLAYER_GetPos(player, &pos);
-  dir = FIELD_PLAYER_GetDir(player);
-#else
   player = GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(cps->gsys));
-  p_pos = PLAYERWORK_getPosition(player);
-  dir = PLAYERWORK_getDirection_Type(player);
-#endif
+  
+  form = PLAYERWORK_GetMoveForm( player );
 
+  if(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE 
+      && FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(cps->gsys)) == TRUE){
+    FIELDMAP_WORK *fieldWork;
+    FIELD_PLAYER * fld_player;
+    MMDL *player_mmdl;
+    u32 attr;
+    
+    fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
+    fld_player = FIELDMAP_GetFieldPlayer(fieldWork);
+    player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
+    
+    MMDL_GetDrawVectorPos(player_mmdl, &draw_pos);
+    dir = FIELD_PLAYER_GetDir(fld_player);
+    if(MMDL_GetMapPosAttr( player_mmdl, &draw_pos, &attr ) == TRUE){
+      attr_hitch = MAPATTR_GetHitchFlag( attr );
+    }
+  }
+  else{
+    const VecFx32 *p_pos = PLAYERWORK_getPosition(player);
+    draw_pos = *p_pos;
+    dir = PLAYERWORK_getDirection_Type(player);
+    attr_hitch = pack->map_attr_hitch;  //取得できない為、値を継続
+  }
+  
   pack->dir = dir;
-  pack->pos = *p_pos;
+  pack->pos = draw_pos;
   pack->vanish = FALSE;
+  pack->player_form = form;
+  pack->map_attr_hitch = attr_hitch;
 
-  if(dir != mine->dir || GFL_STD_MemComp(p_pos, &mine->pos, sizeof(VecFx32)) != 0){
+  if(dir != mine->dir || form != mine->player_form || attr_hitch != mine->map_attr_hitch
+      || GFL_STD_MemComp(&draw_pos, &mine->pos, sizeof(VecFx32)) != 0){
     mine->dir = dir;
-    mine->pos = *p_pos;
+    mine->pos = draw_pos;
+    mine->player_form = form;
+    mine->map_attr_hitch = attr_hitch;
     return TRUE;
   }
   return FALSE;

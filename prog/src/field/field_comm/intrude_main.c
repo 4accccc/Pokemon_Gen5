@@ -564,8 +564,17 @@ static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_i
   if(net_id != GFL_NET_SystemGetCurrentID()){
     INTRUDE_STATUS *mine_st = &intcomm->intrude_status_mine;
     
-    //お互いパレス島に居るなら表示
-    if(ZONEDATA_IsPalace(target_status->zone_id) == TRUE && ZONEDATA_IsPalace(mine_st->zone_id) == TRUE){
+    if(target_status->player_pack.player_form != PLAYER_MOVE_FORM_NORMAL
+        && target_status->player_pack.player_form != PLAYER_MOVE_FORM_CYCLE){
+      //表示できない形態ならば非表示
+      target_status->player_pack.vanish = TRUE;
+    }
+    else if(target_status->player_pack.map_attr_hitch == TRUE){
+      //通行できない地形にいるなら非表示
+      target_status->player_pack.vanish = TRUE;
+    }
+    else if(ZONEDATA_IsPalace(target_status->zone_id) == TRUE && ZONEDATA_IsPalace(mine_st->zone_id) == TRUE){
+      //お互いパレス島に居るなら表示
       target_status->player_pack.vanish = FALSE;
     }
     else if(target_status->palace_area == mine_st->palace_area){
@@ -980,7 +989,12 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
   u8 disguise_type, disguise_sex;
 
   if(sta->disguise_no == DISGUISE_NO_NULL){
-    obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
+    if(sta->player_pack.player_form == PLAYER_MOVE_FORM_CYCLE){
+      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? CYCLEHERO : CYCLEHEROINE;
+    }
+    else{
+      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? HERO : HEROINE;
+    }
   }
   else if(sta->disguise_no == DISGUISE_NO_NORMAL){
     Intrude_GetNormalDisguiseObjCode(myst, &obj_code, &disguise_type, &disguise_sex);
