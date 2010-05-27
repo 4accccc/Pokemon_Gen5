@@ -4309,7 +4309,7 @@ static int MainSeq_PartyOutPutInit( BOX2_SYS_WORK * syswk )
 		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 		BOX2MAIN_ResetTouchBar( syswk );
 		syswk->app->sub_seq++;
-		return VFuncSet( syswk, BOX2MAIN_VFuncMenuMove, BOX2SEQ_MAINSEQ_PARTYOUT_PUT_INIT );
+		return VFuncSet( syswk, BOX2MAIN_VFuncPokeMenuMove, BOX2SEQ_MAINSEQ_PARTYOUT_PUT_INIT );
 
 	case 1:
 		switch( PartyOutCheck(syswk) ){
