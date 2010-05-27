@@ -761,12 +761,12 @@ VMCMD_RESULT EvCmdObjTurn( VMHANDLE *core, void *wk )
   dir = MMDL_TOOL_FlipDir( dir );
   fmmdl = SCRIPT_GetTargetObj( sc );
   
-  if( (fmmdl) == NULL ){
-    return VMCMD_RESULT_CONTINUE;
+  if( fmmdl == NULL ){
+    GF_ASSERT( 0 );
+  } else {
+    MMDL_SetDirDisp( fmmdl, dir );
+    MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
   }
-  
-  MMDL_SetDirDisp( fmmdl, dir );
-  MMDL_SetDrawStatus( fmmdl, DRAW_STA_STOP );
   return VMCMD_RESULT_CONTINUE;
 }
 //--------------------------------------------------------------
