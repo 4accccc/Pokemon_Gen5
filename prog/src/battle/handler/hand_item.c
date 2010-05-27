@@ -3343,7 +3343,7 @@ static void handler_Tabenokosi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiHedoro( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END, handler_KuroiHedoro  },  // ターンチェックハンドラ
+    { BTL_EVENT_TURNCHECK_BEGIN, handler_KuroiHedoro  },  // ターンチェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3431,7 +3431,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KuttukiBari( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_REACTION, handler_KuttukiBari_DamageReaction  },  // ワザダメージ反応ハンドラ
-    { BTL_EVENT_TURNCHECK_BEGIN,   handler_KuttukiBari_TurnCheck       },  // ターンチェックハンドラ
+    { BTL_EVENT_TURNCHECK_END,   handler_KuttukiBari_TurnCheck       },  // ターンチェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
