@@ -257,10 +257,6 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     }
     break;
   case SEQ_FINISH:
-    if(GFUser_GetPublicRand(10) < 8){
-      OS_TPrintf("ccc FALSE!!\n");
-      *(emcl->ret_wk) = FALSE;
-    }
     return GMEVENT_RES_FINISH;
   }
 
