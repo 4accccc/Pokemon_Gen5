@@ -25,7 +25,6 @@ enum {
 struct _PMSI_PARAM {
 	// [IN]
 	u8   input_mode;
-	u8   guidance_type;			///< 説明文タイプ（enum PMS_INPUT_GUIDANCE）
 
 	// [OUT]
 	u8  cancel_flag;			///< 「やめる」でキャンセルされたフラグ
@@ -39,8 +38,6 @@ struct _PMSI_PARAM {
   u8  bit_padding : 4;
 
   u8  padding[1];
-
-	//WINTYPE		win_type; //syachiではありません
 
 	const ZUKAN_SAVEDATA*   zukan_savedata;
 	const PMSW_SAVEDATA*    pmsw_savedata;
@@ -74,11 +71,10 @@ struct _PMSI_PARAM {
  * 簡易会話入力画面パラメータ作成 
 	*
 	* @param   input_mode			入力モード（enum PMSI_MODE）
-	* @param   guidance_type	説明文タイプ（enum PMSI_GUIDANCE）
+	* @param   guidance_type	説明文タイプ（enum PMSI_GUIDANCE）(PMSI_GUIDANCE_DEFAULTに限る)
 	* @param   savedata			  セーブデータポインタ
   * @param   pms            文章を固定したい場合はPMS_DATAを指定。NULLにすれば固定化しない。
   * @param   picture_flag   TRUE:デコメ入力可能
-	* @param	 pKTStatus			キータッチスタータス保持構造体へのポインタ
 	* @param   heapID				  作成用ヒープID
 	*
 	* @retval  PMSI_PARAM*		作成されたパラメータオブジェクトへのポインタ
@@ -90,7 +86,6 @@ PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
 	PMSI_PARAM* p = GFL_HEAP_AllocClearMemory( heapID, sizeof(PMSI_PARAM));
 
 	p->input_mode = input_mode;
-	p->guidance_type = guidance_type;
 	
   p->zukan_savedata = SaveControl_DataPtrGet( savedata, GMDATA_ID_ZUKAN );
 
@@ -102,7 +97,6 @@ PMSI_PARAM*  PMSI_PARAM_Create( u32 input_mode, u32 guidance_type,
 
 	p->cancel_flag = TRUE;
 	p->modified_flag = FALSE;
-	//p->win_type = CONFIG_GetWindowType( SaveData_GetConfig(savedata) );
   p->picture_flag = picture_flag;
 	
 	if(input_mode == PMSI_MODE_SENTENCE)
@@ -305,12 +299,12 @@ u32 PMSI_PARAM_GetInputMode( const PMSI_PARAM* p )
 }
 u32 PMSI_PARAM_GetGuidanceType( const PMSI_PARAM* p )
 {
-	return p->guidance_type;
+	return PMSI_GUIDANCE_DEFAULT;
 }
 
 int PMSI_PARAM_GetWindowType( const PMSI_PARAM* p )
 {
-	return 0;//p->win_type;
+	return 0;  //syachiではありません
 }
 
 const ZUKAN_SAVEDATA*  PMSI_PARAM_GetZukanSaveData( const PMSI_PARAM* p )

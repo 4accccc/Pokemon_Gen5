@@ -760,7 +760,7 @@ static void print_word( PMSIV_WORDWIN* wk, u32 wordnum, u32 v_line )
     }
     else
     {
-      //スクロールをまたがるとき、仮Winに描画してから切れ目にコピー
+      //スクロールをまたがるとき、テンポラリWinに描画してから切れ目にコピー
       u32  write_v_range = WORDWIN_WRITE_LINE_MAX - v_line;
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( wk->tmp_win ), WORD_COL_GROUND);
 

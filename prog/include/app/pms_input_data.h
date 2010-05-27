@@ -102,7 +102,7 @@ enum {
 };
 
 
-extern PMS_INPUT_DATA* PMSI_DATA_Create( u32 heapID, const PMSI_PARAM* savedata );
+extern PMS_INPUT_DATA* PMSI_DATA_Create( u32 heapID, const PMSI_PARAM* input_param );
 extern void PMSI_DATA_Delete( PMS_INPUT_DATA* pmsi );
 
 extern u32  PMSI_DATA_GetGroupEnableWordCount( const PMS_INPUT_DATA* pmsi, u32 group );

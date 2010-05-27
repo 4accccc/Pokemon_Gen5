@@ -38,10 +38,6 @@ typedef enum {
 //------------------------------------------------------
 enum PMSI_GUIDANCE {
 	PMSI_GUIDANCE_DEFAULT,		///< 汎用的な文言
-	PMSI_GUIDANCE_BATTLE_READY,	///< 対戦前
-	PMSI_GUIDANCE_BATTLE_WON,	///< 勝った時のコメント
-	PMSI_GUIDANCE_BATTLE_LOST,	///< 負けたときコメント
-	PMSI_GUIDANCE_TREND,		///< 流行語
 };
 // PMSI_GUIDANCE は、ユーザに選んでもらう文は何かの説明メッセージを決めるだけのもの。
 // ユーザの入力できる文を制限するものではない。
@@ -62,8 +58,6 @@ enum PMSI_GUIDANCE {
 // prog/include/system/pms_data.h
 // PMS_TYPE
 // である。
-
-// @todo ↑
 
 
 //------------------------------------------------------
@@ -87,11 +81,10 @@ enum {
  * 簡易会話入力画面パラメータ作成 
 	*
 	* @param   input_mode			入力モード（enum PMSI_MODE）
-	* @param   guidance_type	説明文タイプ（enum PMSI_GUIDANCE）
+	* @param   guidance_type	説明文タイプ（enum PMSI_GUIDANCE）(PMSI_GUIDANCE_DEFAULTに限る)
 	* @param   savedata			  セーブデータポインタ
   * @param   pms            文章を固定したい場合はPMS_DATAを指定。NULLにすれば固定化しない。
   * @param   picture_flag   TRUE:デコメ入力可能
-	* @param	 pKTStatus			キータッチスタータス保持構造体へのポインタ
 	* @param   heapID				  作成用ヒープID
 	*
 	* @retval  PMSI_PARAM*		作成されたパラメータオブジェクトへのポインタ
