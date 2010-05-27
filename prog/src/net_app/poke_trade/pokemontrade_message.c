@@ -951,8 +951,8 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
 static void POKETRADE_MESSAGE_DeletePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp, int mcssno,int change)
 {
 
-  POKETRADE_MESSAGE_ResetTypeIcon(pWork);
-  IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
+//  POKETRADE_MESSAGE_ResetTypeIcon(pWork);
+//  IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
 
   IRCPOKETRADE_PokeDeleteMcss(pWork, mcssno);
 
@@ -1005,7 +1005,6 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
   bEgg = PP_Get(pp,ID_PARA_tamago_flag,NULL);
 
   POKETRADE_MESSAGE_DeletePokemonStatusDisp(pWork, pp, mcssno, change);
-
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
