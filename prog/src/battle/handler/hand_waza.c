@@ -6165,23 +6165,21 @@ static void handler_Encore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     WazaID  prevWaza;
 
     prevWaza = BPP_GetPrevOrgWazaID( target );
+    TAYA_Printf("アンコール対象ポケ=%d, 前に選んだワザ=%d\n", targetPokeID, prevWaza);
 
-    if( !BPP_CheckSick(target, WAZASICK_ENCORE)
-    &&  (prevWaza != WAZANO_NULL)
-    &&  (prevWaza != WAZANO_ANKOORU)
-    &&  (prevWaza != WAZANO_OUMUGAESI)
-    &&  (BPP_WAZA_IsUsable(target, prevWaza))
+    if( (!BPP_CheckSick(target, WAZASICK_ENCORE))
+    &&  (!BTL_TABLES_IsMatchEncoreFail(prevWaza))
+    &&  (BPP_WAZA_GetPP_ByNumber(target, prevWaza) != 0)
     ){
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
 //      u8 turns = BTL_CALC_RandRange( 3, 7 );
       param->sickID = WAZASICK_ENCORE;
-      param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
+      param->sickCont = BPP_SICKCONT_MakeTurnParam( 3, prevWaza );
       param->pokeID = targetPokeID;
       param->fAlmost = FALSE;
 
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Encore );
       HANDEX_STR_AddArg( &param->exStr, targetPokeID );
-
     }
   }
 }

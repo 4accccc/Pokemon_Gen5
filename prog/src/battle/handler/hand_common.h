@@ -10,6 +10,7 @@
 #pragma once
 
 #include "../btl_common.h"
+#include "../btl_tables.h"
 
 typedef struct {
   u8  pokeCnt;

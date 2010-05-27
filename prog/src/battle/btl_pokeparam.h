@@ -266,6 +266,7 @@ extern void BPP_WAZA_Copy( const BTL_POKEPARAM* bppSrc, BTL_POKEPARAM* bppDst );
 extern WazaID BPP_WAZA_GetParticular( const BTL_POKEPARAM* pp, u8 idx, u8* PP, u8* PPMax );
 extern u8 BPP_WAZA_SearchIdx( const BTL_POKEPARAM* pp, WazaID waza );
 extern u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* pp, u8 wazaIdx );
+extern u16 BPP_WAZA_GetPP_ByNumber( const BTL_POKEPARAM* bpp, WazaID waza );
 extern u16 BPP_WAZA_GetPP_Org( const BTL_POKEPARAM* bpp, u8 wazaIdx );
 extern u8 BPP_WAZA_GetPPShort( const BTL_POKEPARAM* bpp, u8 idx );
 extern u8 BPP_WAZA_GetPPShort_Org( const BTL_POKEPARAM* bpp, u8 idx );

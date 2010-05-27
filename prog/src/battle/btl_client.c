@@ -2589,7 +2589,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
   // アンコール効果（前回と同じワザしか出せない）
   if( BPP_CheckSick(bpp, WAZASICK_ENCORE) )
   {
-    WazaID prevWaza = BPP_GetPrevWazaID( bpp );
+    WazaID prevWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(bpp, WAZASICK_ENCORE) );
     if( waza != prevWaza ){
       if( strParam != NULL )
       {
@@ -3570,11 +3570,18 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         #endif
 
         // アンコール状態
-        if( BPP_CheckSick(wk->procPoke, WAZASICK_ENCORE)
-        ||  BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK)
-        ){
-          WazaID waza = BPP_GetPrevWazaID( wk->procPoke );
-          BtlPokePos pos = BPP_GetPrevTargetPos( wk->procPoke );
+        if( BPP_CheckSick(wk->procPoke, WAZASICK_ENCORE) )
+        {
+          WazaID waza = BPP_SICKCONT_GetParam(BPP_GetSickCont(wk->procPoke, WAZASICK_ENCORE));
+          BtlPokePos pos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, wk->procPoke, waza );
+          BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
+          (*seq) = SEQ_INC;
+          break;
+        }
+        // ワザロック状態
+        if( BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK) ){
+          WazaID waza = BPP_SICKCONT_GetParam(BPP_GetSickCont(wk->procPoke, WAZASICK_WAZALOCK));
+          BtlPokePos pos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, wk->procPoke, waza );
           BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
           (*seq) = SEQ_INC;
           break;

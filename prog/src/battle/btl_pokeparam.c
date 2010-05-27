@@ -820,6 +820,26 @@ u16 BPP_WAZA_GetPP( const BTL_POKEPARAM* bpp, u8 wazaIdx )
 }
 //=============================================================================================
 /**
+ * ワザPP値をワザIDから取得（仮ワザワーク）
+ *
+ * @param   pp
+ * @param   wazaIdx
+ *
+ */
+//=============================================================================================
+u16 BPP_WAZA_GetPP_ByNumber( const BTL_POKEPARAM* bpp, WazaID waza )
+{
+  u32 i;
+  for(i=0; i<bpp->wazaCnt; ++i)
+  {
+    if( bpp->waza[i].surface.number == waza ){
+      return bpp->waza[i].surface.pp;
+    }
+  }
+  return 0;
+}
+//=============================================================================================
+/**
  * ワザPP値を取得（真ワザワーク）
  *
  * @param   pp
@@ -2162,9 +2182,6 @@ BOOL BPP_CheckSick( const BTL_POKEPARAM* bpp, WazaSick sickType )
 
   if( bpp->sickCont[ sickType ].type != WAZASICK_CONT_NONE )
   {
-    if( (sickType == WAZASICK_WAZALOCK) || (sickType == WAZASICK_ENCORE) ){
-      BTL_Printf("該当異常になってます pokeID=%d, sick=%d\n", bpp->coreParam.myID, sickType);
-    }
     return TRUE;
   }
   return FALSE;
@@ -2578,6 +2595,9 @@ void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL
   bpp->prevActWazaID = actWaza;
   bpp->prevTargetPos = actTargetPos;
   bpp->prevWazaType  = actWazaType;
+
+  BTL_N_Printf( DBGSTR_BPP_WazaRecord, bpp->coreParam.myID,
+    bpp->prevSelectWazaID, bpp->prevActWazaID, bpp->prevTargetPos, bpp->prevWazaType );
 
   if( prevActWaza == actWaza )
   {

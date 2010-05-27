@@ -1185,7 +1185,8 @@ SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btlv/btlv_scu.c \
 			battle/btl_rec.c \
 			battle/btl_adapter.c \
-			battle/btl_string.c
+			battle/btl_string.c \
+			battle/btl_tables.c
 
 
 

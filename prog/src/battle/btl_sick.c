@@ -19,6 +19,7 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void cont_AquaRing( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID );
+static void cont_Encore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 pokeID );
 static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID, WazaSick sick, BPP_SICK_CONT oldCont );
 static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
 static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp );
@@ -63,6 +64,7 @@ static void turncheck_contProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 
     case WAZASICK_NEWOHARU:       cont_NeWoHaru( flowWk, bpp, pokeID ); break;
     case WAZASICK_BIND:           cont_Bind( flowWk, bpp, pokeID ); break;
     case WAZASICK_AQUARING:       cont_AquaRing( flowWk, bpp, pokeID ); break;
+    case WAZASICK_ENCORE:         cont_Encore( flowWk, bpp, pokeID ); break;
     }
   }
 }
@@ -258,6 +260,20 @@ static void cont_AquaRing( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     HANDEX_STR_Setup( &drain_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
     HANDEX_STR_AddArg( &drain_param->exStr, pokeID );
     #endif
+  }
+}
+/**
+ *  アンコール：継続
+ */
+static void cont_Encore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 pokeID )
+{
+  WazaID  encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(bpp, WAZASICK_ENCORE) );
+  if( BPP_WAZA_GetPP_ByNumber(bpp, encoreWaza) == 0 )
+  {
+    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
+    param->sickCode = WAZASICK_ENCORE;
+    param->pokeID[0] = pokeID;
+    param->poke_cnt = 1;
   }
 }
 
