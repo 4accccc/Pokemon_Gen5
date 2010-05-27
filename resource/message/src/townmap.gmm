@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-21T17:10:56"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T20:50:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -799,7 +799,7 @@
 
 	<row id="TM_GUIDE_D08_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>リュウラセンのとう</comment>
-		<language name="JPN" width="256">いつ　だれが　たてかも　わからない
+		<language name="JPN" width="256">いつ　だれが　たてたかも　わからない
 イッシュで　もっとも　ふるい　とう</language>
 		<language name="JPN_KANJI" width="256">いつ　だれが　建造したかも　不明な
 イッシュ地方　最古の　塔</language>
