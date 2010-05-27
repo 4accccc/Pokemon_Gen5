@@ -346,7 +346,7 @@ int Regulation_GetParam(const REGULATION* pReg, REGULATION_PARAM_TYPE type)
   case REGULATION_NICKNAME: //    #ニックネーム表示
     ret = pReg->NICKNAME;
     break;
-  case REGULATION_CAMERA:  //    #カメラモード
+  case REGULATION_STATE:
     ret = pReg->CAMERA;
     break;
   case REGULATION_SHOW_POKE:  //    #ポケモン見せ合い
@@ -481,9 +481,11 @@ void Regulation_SetParam(REGULATION* pReg, REGULATION_PARAM_TYPE type, int param
     }
     pReg->NICKNAME = param;
     break;
-  case REGULATION_CAMERA:  //    #カメラモード
+
+  case REGULATION_STATE:
     pReg->CAMERA  = param;
     break;
+
   case REGULATION_SHOW_POKE:  //    #ポケモン見せ合い
     if(param >= 2){
       GF_ASSERT(0);

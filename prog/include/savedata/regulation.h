@@ -57,7 +57,7 @@ typedef enum  {
   REGULATION_TIME_VS,     ///<    #対戦時間 分単位バトルに渡すときには秒に変換してください
   REGULATION_TIME_COMMAND, ///<    #入力時間  分単位バトルに渡すときには秒に変換してください
   REGULATION_NICKNAME, ///<    #ニックネーム表示
-  REGULATION_CAMERA,  ///<    #先頭のカメラーモード
+  REGULATION_STATE,  ///<    #戦闘の状況
   REGULATION_SHOW_POKE,  ///<    #ポケモン見せ合いONOFF
   REGULATION_SHOW_POKE_TIME,  ///<    #ポケモン見せ合い制限時間 0は無制限
   REGULATION_BATTLETYPE,  ///<  バトルタイプ
@@ -90,20 +90,14 @@ typedef enum {
   REGULATION_SHOOTER_MANUAL,    ///<マニュアル
 }REGULATION_SHOOTER_TYPE;
 
-//本来カメラモードとデモの背景はまったく関係がないが、
-//プランナーさんの要望で合わせている
 typedef enum
 {
-  //デモの背景が変わらない
-  REGULATION_CAMERA_NORMAL,
-  REGULATION_CAMERA_MOVE,   //待機中もカメラ動作
-  REGULATION_CAMERA_STOP,   //カメラ操作を行わない
+  REGULATION_STATE_NORMAL_15, //カメラ１５秒
+  REGULATION_STATE_NORMAL_02, //カメラ２秒
 
-  //デモの背景がWCSになる
-  REGULATION_CAMERA_WCS_NORMAL,
-  REGULATION_CAMERA_WCS_MOVE,   //待機中もカメラ動作
-  REGULATION_CAMERA_WCS_STOP,   //カメラ操作を行わない
-} REGULATION_CAMERA_TYPE;
+  REGULATION_STATE_WCS_15,  //カメラ１５秒　背景WCS　デモWCS
+  REGULATION_STATE_WCS_02,  //カメラ２秒  背景WCS デモWCS
+} REGULATION_STATE_TYPE;
 
 typedef enum  {
   REGULATION_CARD_CUPNAME,     ///< カップ名
@@ -171,7 +165,7 @@ typedef struct{
   u8 TIME_VS;     ///<    #対戦時間 分単位バトルに渡すときには秒に変換してください
   u8 TIME_COMMAND; ///<    #入力時間  分単位バトルに渡すときは秒に変換してください
   u8 NICKNAME; ///<    #ニックネーム表示
-  u8 CAMERA;  ///<    #カメラ動作モード REGULATION_CAMERA_TYPEの値
+  u8 CAMERA;  ///<    #カメラ動作モード REGULATION_STATE_TYPEの値
   u8 DUMMY;  ///<    #未使用
   u8 SHOW_POKE;  ///<    #ポケモン見せ合い
   u8 SHOW_POKE_TIME;  ///<ポケモン見せ合い時間

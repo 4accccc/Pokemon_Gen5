@@ -313,22 +313,20 @@ static inline void DebugWin_Reg_D_ChangeSameMatch( void* userWork , DEBUGWIN_ITE
 static inline void DebugWin_Reg_U_ChangeCamera( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
-  DebugWin_Util_ChangeData( item, &p_wk->camera, REGULATION_CAMERA_NORMAL, REGULATION_CAMERA_WCS_STOP );
+  DebugWin_Util_ChangeData( item, &p_wk->camera, 0, REGULATION_STATE_WCS_02 );
 
 }
 static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* item )
 { 
   static const char *scp_tbl[]  =
   { 
-    "‚Â‚¤‚¶‚å‚¤",
-    "‚Ç‚¤‚³",
-    "‚Ä‚¢‚µ"
-    "WCS‚Â‚¤‚¶‚å‚¤",
-    "WCS‚Ç‚¤‚³",
-    "WCS‚Ä‚¢‚µ"
+    "‚Â‚¤‚¶‚å‚¤‚P‚T",
+    "‚Â‚¤‚¶‚å‚¤‚Q",
+    "WCS‚P‚T"
+    "WCS‚Q",
   };
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "ƒJƒƒ‰[%s]", scp_tbl[p_wk->camera] );
+  DEBUGWIN_ITEM_SetNameV( item , "‚¶‚å‚¤‚«‚å‚¤[%s]", scp_tbl[p_wk->camera] );
 
 }
 
@@ -352,7 +350,7 @@ static inline void DebugWin_Reg_U_Get( void* userWork , DEBUGWIN_ITEM* item )
     p_wk->status = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS );
     p_wk->bgm = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
     p_wk->same_match = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH );
-    p_wk->camera = Regulation_GetParam( p_reg, REGULATION_CAMERA );
+    p_wk->camera = Regulation_GetParam( p_reg, REGULATION_STATE );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -373,7 +371,7 @@ static inline void DebugWin_Reg_U_Set( void* userWork , DEBUGWIN_ITEM* item )
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS, p_wk->status );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM, p_wk->bgm );
     Regulation_SetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH, p_wk->same_match );
-    Regulation_SetParam( p_reg, REGULATION_CAMERA, p_wk->camera );
+    Regulation_SetParam( p_reg, REGULATION_STATE, p_wk->camera );
   }
 }
 static inline void DebugWin_Reg_U_Clear( void* userWork , DEBUGWIN_ITEM* item )

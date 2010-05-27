@@ -1179,7 +1179,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   { 
     REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI );
     int bgm_type  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_BGM );
-    int camera_type  = Regulation_GetParam( RegulationData_GetRegulation(p_reg_card), REGULATION_CAMERA );
+    int state_type  = Regulation_GetParam( RegulationData_GetRegulation(p_reg_card), REGULATION_STATE );
 
     if( bgm_type == REGULATION_CARD_BGM_WCS )
     { 
@@ -1192,8 +1192,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
       p_param->p_btl_setup_param->musicWin    = WBM_SND_BGM_NORMAL_WIN;
     }
 
-    if( REGULATION_CAMERA_WCS_NORMAL <= camera_type 
-      && camera_type <= REGULATION_CAMERA_WCS_STOP)
+    if( REGULATION_STATE_WCS_15 == state_type 
+      || state_type == REGULATION_STATE_WCS_02)
     {
       p_param->p_demo_param->wcs_flag = TRUE;
     }
@@ -1202,7 +1202,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   { 
     REGULATION_CARDDATA *p_reg_card    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE );
     int bgm_type  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_BGM );
-    int camera_type  = Regulation_GetParam( RegulationData_GetRegulation(p_reg_card), REGULATION_CAMERA );
+    int state_type  = Regulation_GetParam( RegulationData_GetRegulation(p_reg_card), REGULATION_STATE );
 
     if( bgm_type == REGULATION_CARD_BGM_WCS )
     { 
@@ -1215,8 +1215,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
       p_param->p_btl_setup_param->musicWin    = WBM_SND_BGM_NORMAL_WIN;
     }
 
-    if( REGULATION_CAMERA_WCS_NORMAL <= camera_type 
-      && camera_type <= REGULATION_CAMERA_WCS_STOP)
+    if( REGULATION_STATE_WCS_15 == state_type 
+      || state_type == REGULATION_STATE_WCS_02)
     {
       p_param->p_demo_param->wcs_flag = TRUE;
     }

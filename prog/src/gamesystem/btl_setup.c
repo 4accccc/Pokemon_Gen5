@@ -166,16 +166,23 @@ void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, 
   //ƒJƒƒ‰ƒ‚[ƒhÝ’è
   {
 
-    REGULATION_CAMERA_TYPE  type = Regulation_GetParam( reg, REGULATION_CAMERA );
+    REGULATION_STATE_TYPE  type = Regulation_GetParam( reg, REGULATION_STATE );
     switch( type )
     {
-    case REGULATION_CAMERA_WCS_MOVE:
-    case REGULATION_CAMERA_MOVE:
+    case REGULATION_STATE_NORMAL_15:
+      /* none */
+      break;
+    
+    case REGULATION_STATE_NORMAL_02:
+      bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_OFF;
+      break;
+
+    case REGULATION_STATE_WCS_15:
       bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_WCS;
       break;
 
-    case REGULATION_CAMERA_WCS_STOP:
-    case REGULATION_CAMERA_STOP:
+    case REGULATION_STATE_WCS_02:
+      bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_WCS;
       bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_OFF;
       break;
     }
