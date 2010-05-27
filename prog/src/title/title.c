@@ -42,7 +42,6 @@
 #endif
 
 
-
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -79,6 +78,12 @@
 #define D_MATSU_ICON_PALNO    (0)
 ///[PUSH START BUTTON]の点滅間隔
 #define PUSH_TIMER_WAIT     (45)
+
+///モーションブラー係数
+#define NORMAL_MOTION_BL_A (12)
+#define NORMAL_MOTION_BL_B (4)
+#define VOICE_MOTION_BL_A (8)
+#define VOICE_MOTION_BL_B (8)
 
 ///タイトルロゴBGのBGプライオリティ
 enum{
@@ -129,12 +134,25 @@ enum{
   OBJ_RES_MAX,
 };
 
+
+
+#ifdef PM_DEBUG
+//#define  DEBUG_MOTION_BL_CONTROL
+#endif
+
+#ifdef DEBUG_MOTION_BL_CONTROL
+static BOOL DEBUG_is_motion = TRUE;
+#endif
+
+
 //==============================================================================
 //  構造体定義
 //==============================================================================
 typedef struct{
   GFL_TCBLSYS*  tcbl;
   GFL_TCB       *vintr_tcb;
+  s16 mb_param_a;
+  s16 mb_param_b;
 }SYS_CONTROL;
 
 typedef struct{
@@ -224,6 +242,8 @@ static void initVRAM(void);
 static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID);
 static void mainSystem(SYS_CONTROL* CSys, HEAPID heapID);
 static void releaseSystem(SYS_CONTROL* CSys);
+static void setSystemMbParam(SYS_CONTROL* CSys, u16 para_a, u16 para_b);
+static void addSystemMbParam(SYS_CONTROL* CSys, s16 add);
 
 static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID);
 static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID);
@@ -351,6 +371,9 @@ static void _key_check( TITLE_WORK *tw )
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
     PMSND_FadeOutBGM( 4 );
+
+    // モーションブラー係数を変更
+    setSystemMbParam( &tw->CSys, VOICE_MOTION_BL_A, VOICE_MOTION_BL_B );
     return;
   }
   // セーブデータ初期化
@@ -555,11 +578,11 @@ static void initIO(void)
 //  VRAM
 //==============================================================================
 static const GFL_DISP_VRAM vramBank = {
-  GX_VRAM_BG_128_D,               // メイン2DエンジンのBG
+  GX_VRAM_BG_32_FG,               // メイン2DエンジンのBG
   GX_VRAM_BGEXTPLTT_NONE,         // メイン2DエンジンのBG拡張パレット
   GX_VRAM_SUB_BG_128_C,           // サブ2DエンジンのBG
   GX_VRAM_SUB_BGEXTPLTT_NONE,     // サブ2DエンジンのBG拡張パレット
-  GX_VRAM_OBJ_16_G,               // メイン2DエンジンのOBJ
+  GX_VRAM_OBJ_NONE,               // メイン2DエンジンのOBJ
   GX_VRAM_OBJEXTPLTT_NONE,        // メイン2DエンジンのOBJ拡張パレット
   GX_VRAM_SUB_OBJ_16_I,           // サブ2DエンジンのOBJ
   GX_VRAM_SUB_OBJEXTPLTT_NONE,    // サブ2DエンジンのOBJ拡張パレット
@@ -579,7 +602,7 @@ static const GFL_DISP_VRAM vramBank = {
 static void initVRAM(void)
 {
   static const GFL_BG_SYS_HEADER sysHeader = {
-    GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+    GX_DISPMODE_VRAM_D, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
   };
   //VRAM設定
   GFL_DISP_SetBank( &vramBank );
@@ -606,6 +629,7 @@ static void MainFunc(TITLE_WORK* tw)
   mainOAMcontrol(&tw->COam, tw->heapID);
 }
 
+
 //----------------------------------------------------------------------------------
 /**
  * @brief VBLANK処理
@@ -616,7 +640,47 @@ static void MainFunc(TITLE_WORK* tw)
 //----------------------------------------------------------------------------------
 static void VintrFunc(GFL_TCB *tcb, void *work)
 {
+  SYS_CONTROL* CSys = work;
+  
   GFL_CLACT_SYS_VBlankFunc();
+
+
+	GX_SetCapture(GX_CAPTURE_SIZE_256x192,  // Capture size
+                      GX_CAPTURE_MODE_AB,			   // Capture mode
+                      GX_CAPTURE_SRCA_2D3D,						 // Blend src A
+                      GX_CAPTURE_SRCB_VRAM_0x00000,     // Blend src B
+                      GX_CAPTURE_DEST_VRAM_D_0x00000,   // Output VRAM
+                      CSys->mb_param_a,             // Blend parameter for src A
+                      CSys->mb_param_b);            // Blend parameter for src B
+
+
+#ifdef DEBUG_MOTION_BL_CONTROL
+  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP ){
+    addSystemMbParam( CSys, 1 );
+  }else if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN ){
+    addSystemMbParam( CSys, -1 );
+  }
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
+  {
+    if( DEBUG_is_motion ){
+      // OFF
+      static const GFL_BG_SYS_HEADER sysHeader = {
+        GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+      };
+      GFL_BG_SetBGMode( &sysHeader );
+      DEBUG_is_motion = FALSE;
+    }else{
+
+      // ON
+      static const GFL_BG_SYS_HEADER sysHeader = {
+        GX_DISPMODE_VRAM_D, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_3D,
+      };
+      GFL_BG_SetBGMode( &sysHeader );
+      DEBUG_is_motion = TRUE;
+    }
+  }
+#endif // DEBUG_MOTION_BL_CONTROL
 }
 
 //==============================================================================
@@ -648,11 +712,15 @@ static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID)
   GFL_FONTSYS_Init();   // 初期化のみリリースなし
 
   CSys->tcbl = GFL_TCBL_Init( heapID, heapID, 4, 32 );
-  CSys->vintr_tcb = GFUser_VIntr_CreateTCB(VintrFunc, NULL, 5);
+  CSys->vintr_tcb = GFUser_VIntr_CreateTCB(VintrFunc, CSys, 5);
 
   // 上下画面設定
   GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
   GFL_DISP_SetDispOn();
+
+  // モーションブラー係数
+  CSys->mb_param_a = NORMAL_MOTION_BL_A;
+  CSys->mb_param_b = NORMAL_MOTION_BL_B;
 }
 
 //------------------------------------------------------------------------------
@@ -676,6 +744,33 @@ static void releaseSystem(SYS_CONTROL* CSys)
   GFL_BG_Exit();
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  モーションブラー係数の設定
+ *
+ *	@param	CSys      ワーク
+ *	@param	para_a    今フレームキャプチャ面の係数
+ *	@param	para_b    バッファ面の係数
+ */
+//-----------------------------------------------------------------------------
+static void setSystemMbParam(SYS_CONTROL* CSys, u16 para_a, u16 para_b)
+{
+  CSys->mb_param_a = para_a;
+  CSys->mb_param_b = para_b;
+}
+
+static void addSystemMbParam(SYS_CONTROL* CSys, s16 add)
+{
+  if( ((CSys->mb_param_a + add) >= 0) && ((CSys->mb_param_a + add) <= 16) ){
+    CSys->mb_param_a += add;
+    CSys->mb_param_b -= add;
+
+#ifdef DEBUG_MOTION_BL_CONTROL
+    OS_TPrintf( "parama a %d  parama b %d\n", CSys->mb_param_a, CSys->mb_param_b );
+#endif
+  }
+}
+
 //==============================================================================
 //  G2DControl
 //==============================================================================
@@ -688,7 +783,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
     static const GFL_BG_BGCNT_HEADER main_bkgr_frame = {  //メイン画面BGフレーム
       0, 0, 0x800, 0,
       GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x0c000, 0x04000,
+      GX_BG_SCRBASE_0x0800, GX_BG_CHARBASE_0x04000, 0x04000,
       GX_BG_EXTPLTT_01, BGPRI_BKGR, 0, 0, FALSE
     };
     static const GFL_BG_BGCNT_HEADER sub_msg_frame = {  //サブ画面BGフレーム
