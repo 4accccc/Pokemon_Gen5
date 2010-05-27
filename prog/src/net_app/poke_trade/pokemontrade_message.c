@@ -209,14 +209,14 @@ void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,i
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
 
   GFL_FONTSYS_SetColor(FBMP_COL_BLACK, FBMP_COL_BLK_SDW, 15);
-  if(!bFast){
-    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
-                                          MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
-    APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork, APP_PRINTSYS_COMMON_TYPE_KEY );
-  }
-  else{
+//  if(!bFast){
+//    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pMessageStrBuf, pWork->pFontHandle,
+//                                          MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15 );
+//    APP_PRINTSYS_COMMON_PrintStreamInit(&pWork->trgWork, APP_PRINTSYS_COMMON_TYPE_KEY );
+//  }
+//  else{
     PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pMessageStrBuf, pWork->pFontHandle);
-  }
+//  }
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
   GFL_BMPWIN_TransVramCharacter(pwin);

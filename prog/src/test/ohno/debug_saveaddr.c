@@ -235,6 +235,8 @@ static BOOL zukandummydata( SAVEADDR_WORK *pWork )
 #include "savedata/playtime.h"
 #include "savedata/playtime_local.h"
 #include "savedata/regulation.h"
+#include "savedata/symbol_save.h"
+#include "savedata/symbol_save_local.h"
 #include "savedata/myitem_savedata_local.h"
 #include "net/dreamworld_netdata.h"
 #include "savedata/zukan_savedata_local.h"
@@ -429,7 +431,21 @@ static void _keyWait(SAVEADDR_WORK* pWork)
       OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n","RECID_FISHING_SUCCESS", (u32)&rec[RECID_FISHING_SUCCESS]-(u32)topAddr, 4);
 
     }
+    
+    {//シンボルエンカウント
+//      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
+      SYMBOL_SAVE_WORK* pSym = SymbolSave_GetSymbolData(pWork->pSaveData);
 
+      pAddr = (u8*)pSym;
+      OS_TPrintf("\"%s\",\"0x%x\",\"%d\"\n", "SYMBOL_SAVE_WORK",(u32)pAddr-(u32)topAddr,sizeof(SYMBOL_SAVE_WORK));
+
+    }
+
+
+    
+
+
+    
     {//システム
 //      SYSTEMDATA* pSys = SaveData_GetSystemData(pWork->pSaveData);
 

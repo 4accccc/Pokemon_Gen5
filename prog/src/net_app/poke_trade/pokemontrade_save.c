@@ -201,47 +201,55 @@ static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork)
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
-
+  pWork->anmCount=0;
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade21);
 
 }
 
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 {
-  if(PRINTSTREAM_STATE_PAUSE == PRINTSYS_PrintStreamGetState( pWork->pStream )){
-    pWork->anmCount = 0;
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
+  POKEMON_PARAM* pp;
+  if(pWork->anmCount < 200){
+    return;
   }
-  else if(POKETRADE_MESSAGE_EndCheck(pWork)){
-    pWork->anmCount = 0;
-    _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
+
+  if(POKEMONTRADEPROC_IsTriSelect(pWork))
+  {
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 0);
   }
+  else{
+    pp = IRC_POKEMONTRADE_GetRecvPP(pWork, 1);
+  }
+  WORDSET_RegisterPokeNickName( pWork->pWordSet, 1,  pp );
+  {
+    WORDSET_RegisterPlayerName( pWork->pWordSet, 0, pWork->pFriend  );
+  }
+
+  if(pWork->type == POKEMONTRADE_TYPE_GTSDOWN){
+  }
+  else if(pWork->type == POKEMONTRADE_TYPE_GTSMID){
+  }
+  else if(pWork->bEncountMessageEach){
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_34, pWork->pMessageStrBufEx );
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+  }
+  else{
+    GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBufEx );
+    WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
+    POKETRADE_MESSAGE_WindowOpen(pWork);
+  }
+
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
 }
 
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->pStream){
-    if(pWork->anmCount == 61){
-      POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
-      APP_KEYCURSOR_Clear( pWork->pKeyCursor, GFL_BMPWIN_GetBmp(pWork->mesWin), 15 );
-    }
-    if(pWork->anmCount == 60){
-      if(PRINTSTREAM_STATE_PAUSE == PRINTSYS_PrintStreamGetState( pWork->pStream )){
-        POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_THROUGH);
-      }
-      else{
-        pWork->anmCount++;
-      }
-    }
-  }
-
-  if(!POKETRADE_MESSAGE_EndCheck(pWork)){
-    return;
-  }
   if(pWork->anmCount < 400){
     return;
   }
-  POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
+
+//  POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
 
   _endME(pWork);
 
