@@ -916,9 +916,6 @@ sub_receipt_challenge_multi_comm:
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   
-  //回復
-  _TEMOTI_POKEMON_KAIFUKU()
-  
   //オートセーブ
   _CALL sub_bsw_common_auto_save
   
@@ -2245,8 +2242,11 @@ _RET
 //--------------------------------------------------------------
 sub_bsw_common_pokemon_select:
 {
-  //回復
-  _TEMOTI_POKEMON_KAIFUKU()
+  _BSUBWAY_TOOL( BSWSUB_GET_USE_BTL_BOX_FLAG, BSW_NULL, BSW_NULL, ret )
+  
+  IF $ret == FALSE THEN //手持ち
+    _TEMOTI_POKEMON_KAIFUKU() //回復
+  ENDIF
   
   //それでは参加するポケモンを
   $SCWK_TEMP0 = msg_bsw_scr_23

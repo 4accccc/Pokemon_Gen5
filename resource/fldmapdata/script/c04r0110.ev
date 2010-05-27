@@ -455,7 +455,7 @@ sub_train_battle:
 //_MAP_FADE_END_CHECK()
   
   //‰ñ•œ
-  _TEMOTI_POKEMON_KAIFUKU()
+//_TEMOTI_POKEMON_KAIFUKU()
   
   //‘ÎíŒ‹‰Ê
   IF $win_lose != SCR_BATTLE_RESULT_WIN THEN //•‰‚¯

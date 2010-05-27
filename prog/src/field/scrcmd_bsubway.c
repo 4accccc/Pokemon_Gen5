@@ -1342,6 +1342,11 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_GET_BTLREC_FINISH_FLAG:
     *ret_wk = bsw_scr->btlrec_finish_f;
     break;
+  //バトルボックス使用するかフラグを取得
+  case BSWSUB_GET_USE_BTL_BOX_FLAG:
+    *ret_wk = BSUBWAY_PLAYDATA_GetData(
+        playData, BSWAY_PLAYDATA_ID_use_battle_box, NULL );
+    break;
   //----ワーク依存　通信関連
   //通信開始
   case BSWSUB_COMM_START:
