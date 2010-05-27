@@ -9,6 +9,10 @@
  */
 //=============================================================================
 
+
+#define DEF_TOUCHBAR_ICON_OWN  // これが定義されているとき、タッチバーTOUCHBAR_WORKを使用せず、自前のtouchbar_icon_を使用する。
+
+
 /*
 パレットアニメーション
 素材メモ
@@ -40,6 +44,12 @@ pms_obj_main.ncl
 #include "msg\msg_pms_input_button.h"
 #include "msg\msg_pms_input.h"
 #include "message.naix"
+
+
+#ifdef DEF_TOUCHBAR_ICON_OWN
+  #include "app/app_menu_common.h"
+#endif
+
 
 //=============================================================================
 /**
@@ -195,6 +205,21 @@ MARK;
   };
 
 
+#ifdef DEF_TOUCHBAR_ICON_OWN
+//--------------------------------------------------------------
+///	自前のtouchbar_icon_の状態
+//==============================================================
+typedef enum  // TOUCHBAR_SEQ_を参考にした
+{
+  TI_STATE_MAIN,     // タッチ待ち
+  TI_STATE_ANM_TRG,  // ボタンアニメ  //アニメ前の１Fを得るため
+  TI_STATE_ANM,      // ボタンアニメ
+  TI_STATE_TRG,      // トリガ        //トリガを1フレームだけ伝える
+}
+TI_STATE;
+#endif
+
+
 //=============================================================================
 /**
  *								構造体定義
@@ -211,7 +236,16 @@ struct _PMSIV_MENU {
   int*                  p_key_mode;
   // [PRIVATE]
   PMSIV_CELL_RES          resCell;
+ 
+#ifndef DEF_TOUCHBAR_ICON_OWN
   TOUCHBAR_WORK*          touchbar;
+#else
+  u32                     touchbar_icon_ncl;
+  u32                     touchbar_icon_ncg;
+  u32                     touchbar_icon_nce;
+  GFL_CLWK*               touchbar_icon_clwk;
+  TI_STATE                touchbar_icon_state;
+#endif
 	GFL_MSGDATA*            msgman;
   //APP_TASKMENU_RES*       menu_res;
   APP_TASKMENU_RES*       menu_res_win[ TASKMENU_WIN_MAX ];  // APP_TASKMENU_WIN_WORKごとに異なるAPP_TASKMENU_RESを用意する。
@@ -237,7 +271,11 @@ static void _clwk_delete( PMSIV_MENU* wk );
 static void _clwk_setanm( PMSIV_MENU* wk, MENU_CLWKICON iconIdx, BOOL is_on );
 static void _mark_create( PMSIV_MENU* wk );  // 必ず_clwk_createの後に呼ぶこと
 static void _mark_delete( PMSIV_MENU* wk );  // 必ず_clwk_deleteの前に呼ぶこと
+#ifndef DEF_TOUCHBAR_ICON_OWN
 static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id );
+#else
+static void _touchbar_icon_init( PMSIV_MENU* wk );
+#endif
 static void _setup_category_group( PMSIV_MENU* wk );
 static void _setup_category_initial( PMSIV_MENU* wk );
 
@@ -311,8 +349,12 @@ PMSIV_MENU* PMSIV_MENU_Create( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, c
         HEAPID_PMS_INPUT_VIEW );	
   }
 
+#ifndef DEF_TOUCHBAR_ICON_OWN
   // タッチバー
   wk->touchbar = _touchbar_init( PMSIView_GetCellUnit(wk->vwk), HEAPID_PMS_INPUT_VIEW );
+#else
+  _touchbar_icon_init( wk );
+#endif
 
   // CLWK
   _clwk_create( wk );
@@ -338,8 +380,15 @@ void PMSIV_MENU_Delete( PMSIV_MENU* wk )
   // メニュークリア
   PMSIV_MENU_Clear( wk );
 
+#ifndef DEF_TOUCHBAR_ICON_OWN
   // タッチバー開放
   TOUCHBAR_Exit( wk->touchbar );
+#else
+  GFL_CLACT_WK_Remove( wk->touchbar_icon_clwk );
+  GFL_CLGRP_PLTT_Release( wk->touchbar_icon_ncl );
+  GFL_CLGRP_CGR_Release( wk->touchbar_icon_ncg );
+  GFL_CLGRP_CELLANIM_Release( wk->touchbar_icon_nce );
+#endif
 
   // タスクメニュー リソース開放
   //APP_TASKMENU_RES_Delete( wk->menu_res );
@@ -387,8 +436,39 @@ void PMSIV_MENU_Main( PMSIV_MENU* wk )
     }
   }
 
+#ifndef DEF_TOUCHBAR_ICON_OWN
   // タッチバー
   TOUCHBAR_Main( wk->touchbar );
+#else
+  switch( wk->touchbar_icon_state )
+  {
+  case TI_STATE_MAIN:
+    {
+      // 外部から
+      // wk->touchbar_icon_state = TI_STATE_ANM_TRG;
+      // に変更してもらう
+    }
+    break;
+  case TI_STATE_ANM_TRG:
+    {
+      wk->touchbar_icon_state = TI_STATE_ANM;
+    }
+    //break;  // breakなし
+  case TI_STATE_ANM:
+    {
+      if( !GFL_CLACT_WK_CheckAnmActive( wk->touchbar_icon_clwk ) )
+      {
+        wk->touchbar_icon_state = TI_STATE_TRG;
+      }
+    }
+    break;
+  case TI_STATE_TRG:
+    {
+      wk->touchbar_icon_state = TI_STATE_MAIN;
+    }
+    break;
+  }
+#endif
 
   // パレットアニメーション
   _pal_anime_main( wk );
@@ -436,8 +516,12 @@ void PMSIV_MENU_Clear( PMSIV_MENU* wk )
  
   GFL_BG_LoadScreenReq( FRM_MAIN_TASKMENU );
 
+#ifndef DEF_TOUCHBAR_ICON_OWN
   // 全部消す
   TOUCHBAR_SetVisibleAll( wk->touchbar, FALSE );
+#else
+  GFL_CLACT_WK_SetDrawEnable( wk->touchbar_icon_clwk, FALSE );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -541,9 +625,16 @@ void PMSIV_MENU_SetupCategory( PMSIV_MENU* wk )
 void PMSIV_MENU_SetupWordWin( PMSIV_MENU* wk )
 {
   PMSIV_MENU_Clear( wk );
+
+#ifndef DEF_TOUCHBAR_ICON_OWN
   // タッチバーのリターンボタン表示
   TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
   TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
+#else
+  GFL_CLACT_WK_SetDrawEnable( wk->touchbar_icon_clwk, TRUE );
+  GFL_CLACT_WK_SetAnmSeq( wk->touchbar_icon_clwk, APP_COMMON_BARICON_RETURN );
+  wk->touchbar_icon_state = TI_STATE_MAIN;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1003,6 +1094,49 @@ BOOL PMSIV_MENU_TaskMenuIsFinish( PMSIV_MENU* wk, u8 pos )
 }
 
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  
+ *
+ *	@param	PMSIV_MENU* wk 
+ *
+ *	@retval 
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSIV_MENU_TouchbarIconSetTouch( PMSIV_MENU* wk )
+{
+  // ボタンが反応したらTRUEを返す
+#ifndef DEF_TOUCHBAR_ICON_OWN
+  return TRUE;
+#else
+  if( GFL_CLACT_WK_GetDrawEnable( wk->touchbar_icon_clwk ) )
+  {
+    if( wk->touchbar_icon_state == TI_STATE_MAIN )
+    {
+      GFL_CLACT_WK_SetAnmSeq( wk->touchbar_icon_clwk, APP_COMMON_BARICON_RETURN_ON );
+      wk->touchbar_icon_state = TI_STATE_ANM_TRG;
+      return TRUE;
+    }
+  }
+  return FALSE;
+#endif
+}
+BOOL PMSIV_MENU_TouchbarIconGetTrg( PMSIV_MENU* wk )
+{
+  // ボタンのアニメが終わってから１Fのみ返します
+#ifndef DEF_TOUCHBAR_ICON_OWN
+  return TRUE;
+#else
+  if( GFL_CLACT_WK_GetDrawEnable( wk->touchbar_icon_clwk ) )
+  {
+    if( wk->touchbar_icon_state != TI_STATE_TRG )
+      return FALSE;
+  }
+  return TRUE;
+#endif
+}
+
+
 //=============================================================================
 /**
  *								static関数
@@ -1148,6 +1282,7 @@ static void _mark_delete( PMSIV_MENU* wk )  // 必ず_clwk_deleteの前に呼ぶこと
   }
 }
 
+#ifndef DEF_TOUCHBAR_ICON_OWN
 //-----------------------------------------------------------------------------
 /**
  *	@brief  タッチバーの設定
@@ -1192,6 +1327,46 @@ static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 
   return wk;
 }
+#else
+static void _touchbar_icon_init( PMSIV_MENU* wk )
+{
+  ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_PMS_INPUT_VIEW );
+
+  // 共通アイコンリソース	
+  wk->touchbar_icon_ncl = GFL_CLGRP_PLTT_RegisterEx( p_handle,
+      APP_COMMON_GetBarIconPltArcIdx(), CLSYS_DRAW_MAIN, PALNUM_OBJ_M_TOUCHBAR*0x20, 0, TOUCHBAR_OBJ_PLT_NUM, HEAPID_PMS_INPUT_VIEW );	
+  wk->touchbar_icon_ncg = GFL_CLGRP_CGR_Register( p_handle,
+      APP_COMMON_GetBarIconCharArcIdx(), FALSE, CLSYS_DRAW_MAIN, HEAPID_PMS_INPUT_VIEW );
+  wk->touchbar_icon_nce = GFL_CLGRP_CELLANIM_Register( p_handle,
+      APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_64K),
+      APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_64K), HEAPID_PMS_INPUT_VIEW );
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+  // CLWK作成
+  {
+    GFL_CLWK_DATA  cldata;
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+    cldata.pos_x   = TOUCHBAR_ICON_X_07;
+    cldata.pos_y   = TOUCHBAR_ICON_Y;
+    cldata.anmseq  = APP_COMMON_BARICON_RETURN;
+    cldata.softpri = 0;
+    cldata.bgpri   = FRM_MAIN_BAR;
+
+    wk->touchbar_icon_clwk = GFL_CLACT_WK_Create( PMSIView_GetCellUnit(wk->vwk),
+        wk->touchbar_icon_ncg,
+        wk->touchbar_icon_ncl, 
+        wk->touchbar_icon_nce, 
+        &cldata, CLSYS_DEFREND_MAIN, HEAPID_PMS_INPUT_VIEW );
+    GFL_CLACT_WK_SetAutoAnmFlag( wk->touchbar_icon_clwk, TRUE );
+  }
+
+  // 一端消しておく
+  GFL_CLACT_WK_SetDrawEnable( wk->touchbar_icon_clwk, FALSE );
+
+  wk->touchbar_icon_state = TI_STATE_MAIN;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 /**
@@ -1204,9 +1379,15 @@ static TOUCHBAR_WORK* _touchbar_init( GFL_CLUNIT* clunit, HEAPID heap_id )
 //-----------------------------------------------------------------------------
 static void _setup_category_group( PMSIV_MENU* wk )
 {
+#ifndef DEF_TOUCHBAR_ICON_OWN
   // タッチバー表示(リターンボタンのみ)
   TOUCHBAR_SetVisibleAll( wk->touchbar, TRUE );
   TOUCHBAR_SetActiveAll( wk->touchbar, TRUE );
+#else
+  GFL_CLACT_WK_SetDrawEnable( wk->touchbar_icon_clwk, TRUE );
+  GFL_CLACT_WK_SetAnmSeq( wk->touchbar_icon_clwk, APP_COMMON_BARICON_RETURN );
+  wk->touchbar_icon_state = TI_STATE_MAIN;
+#endif
 
   HOSAKA_Printf(" _setup_category_group \n");
 }

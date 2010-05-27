@@ -1219,16 +1219,32 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
 	switch( wk->seq ){
 	case 0:
     HOSAKA_Printf("Cmd_CategoryToEditArea\n");
-    PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
-    PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
+    if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+    {
+      PMSIV_MENU_SetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
+      PMSIV_CATEGORY_StartMoveSubWinList( vwk->category_wk, FALSE );
+    }
+    else
+    {
+      PMSIV_MENU_TouchbarIconSetTouch( vwk->menu_wk );
+    }
+
 		wk->seq++;
 		break;
 
 	case 1:
     {
-      flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
-      flag2 = PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
-		  
+      if( PMSI_GetCategoryMode(wk->mwk) == CATEGORY_MODE_INITIAL )
+      {
+        flag1 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, FALSE );
+        flag2 = PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CANCEL );
+      }
+      else
+      {
+        flag1 = PMSIV_MENU_TouchbarIconGetTrg( vwk->menu_wk );
+        flag2 = TRUE;
+      }
+
       if(flag1 && flag2)
       {
         wk->seq++;
@@ -1371,17 +1387,29 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 
 	switch( wk->seq ){
 	case 0:
+    PMSIV_MENU_TouchbarIconSetTouch( vwk->menu_wk );
+		wk->seq++;
+		break;
+	
+  case 1:
+    if( PMSIV_MENU_TouchbarIconGetTrg( vwk->menu_wk ) )
+    {
+		  wk->seq++;
+    }
+    break;
+
+	case 2:
     PMSIV_MENU_SetupCategory( vwk->menu_wk );
 		wk->seq++;
 		break;
 
-	case 1:
+	case 3:
 		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
 		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
 		wk->seq++;
 		break;
 
-	case 2:
+	case 4:
 		if( PMSIV_WORDWIN_WaitFadeOut( vwk->wordwin_wk ) )
 		{
 			PMSIV_CATEGORY_ChangeModeBG( vwk->category_wk );
@@ -1389,7 +1417,7 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 		}
 		break;
 
-	case 3:
+	case 5:
     // ‚±‚Ìƒ^ƒCƒ~ƒ“ƒO‚ÅBG”wŒi–Ê‚ð“Ç‚Ýž‚ñ‚Å‚µ‚Ü‚¤
     PMSIView_SetBackScreen( wk->vwk, FALSE );
 		PMSIV_CATEGORY_StartFadeIn( vwk->category_wk );
@@ -1416,7 +1444,7 @@ static void Cmd_WordWinToCategory( GFL_TCB *tcb, void* wk_adrs )
 		wk->seq++;
 		break;
 
-	case 4:
+	case 6:
 		flag1 = PMSIV_CATEGORY_WaitFadeIn( vwk->category_wk );
     flag2 = PMSIV_CATEGORY_WaitMoveSubWinList( vwk->category_wk, (count>0) );
 

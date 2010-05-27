@@ -427,5 +427,7 @@ extern void PMSIV_MENU_TouchEditButton( PMSIV_MENU* wk, EDIT_BUTTON_ID id );
 
 extern PMSIV_MENU* PMSIView_GetMenuWork( PMS_INPUT_VIEW* vwk );
 
+extern BOOL PMSIV_MENU_TouchbarIconSetTouch( PMSIV_MENU* wk );
+extern BOOL PMSIV_MENU_TouchbarIconGetTrg( PMSIV_MENU* wk );
 
 #endif
