@@ -289,7 +289,8 @@ BOOL PARTY_SELECT_LIST_Main(PARTY_SELECT_LIST_PTR psl)
       
       if(menu_ret != FLDMENUFUNC_NULL){
         _Print_DelMenuList(psl);
-        _Print_DelPokeStatusBmpWin(psl);
+//        _Print_DelPokeStatusBmpWin(psl); 20100527 del saito
+        _PokeStatusErase(psl);              //20100527 add satio
         _Print_DelTalkWin(psl);
         switch(menu_ret){
         case FLDMENUFUNC_NULL:
