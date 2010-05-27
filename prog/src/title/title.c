@@ -46,16 +46,22 @@
 //==============================================================================
 //  定数定義
 //==============================================================================
-// タイトル画面の長さ
+/// タイトル画面の長さ
 #define TOTAL_WAIT      (60*78)
 
-// 上下画面を入れ替えるフレーム
+/// 上下画面を入れ替えるフレーム
 #define TITLE_FLIP_WAIT   ( 678 )
 
-// 伝説ポケモンが鳴くフレーム
+/// 伝説ポケモンが鳴くフレーム
 #define POKE_VOICE_FRAME    ( 5001 )
 
+/// ループパートに入った時のフレーム
+#define POKE_LOOP_PART_FRAME  ( 5301 )
+#define POKE_LOOP_END_FRAME   ( 5779 )
+
+
 #if PM_VERSION==VERSION_BLACK
+/// タイトル画面の鳴き声を出すポケモンの指定
 #define PLAY_MONSNO ( MONSNO_RESIRAMU )
 #else
 #define PLAY_MONSNO ( MONSNO_ZEKUROMU )
@@ -65,6 +71,7 @@
 #define NEXT_PROC_MASK    ( PAD_BUTTON_START | PAD_BUTTON_A )
 #define BACKUP_ERASE_MASK ( PAD_KEY_UP | PAD_BUTTON_SELECT | PAD_BUTTON_B )
 #define MIC_TEST_MASK     ( PAD_KEY_DOWN | PAD_BUTTON_X | PAD_BUTTON_Y )
+#define LOOP_PART_MASK    ( PAD_BUTTON_START | PAD_BUTTON_A | PAD_BUTTON_B)
 
 ///フォントが使用するパレット番号
 #define D_FONT_PALNO  (0xa)
@@ -75,35 +82,35 @@
 
 ///タイトルロゴBGのBGプライオリティ
 enum{
-  BGPRI_MSG = 0,
-  BGPRI_TITLE_LOGO = 2,
-  BGPRI_TITLE_BACK = 3,
-  BGPRI_3D = 1,
-  BGPRI_BKGR = 0,
+  BGPRI_MSG = 0,        ///<
+  BGPRI_TITLE_LOGO = 2, ///<
+  BGPRI_TITLE_BACK = 3, ///<
+  BGPRI_3D = 1,         ///<
+  BGPRI_BKGR = 0,       ///<
 };
 
 enum{
-  FRAME_BKGR = GFL_BG_FRAME3_M,   // メイン画面背景
-  FRAME_MSG  = GFL_BG_FRAME1_S,   // メッセージフレーム
-  FRAME_LOGO = GFL_BG_FRAME3_S,   // タイトルロゴのBGフレーム
-  FRAME_BACK = GFL_BG_FRAME2_S,   // タイトルロゴのBGフレーム
+  FRAME_BKGR = GFL_BG_FRAME3_M,   ///< メイン画面背景「Develped by GameFreak」
+  FRAME_MSG  = GFL_BG_FRAME1_S,   ///< メッセージフレーム
+  FRAME_LOGO = GFL_BG_FRAME3_S,   ///< タイトルロゴのBGフレーム
+  FRAME_BACK = GFL_BG_FRAME2_S,   ///< チェックの背景BG
 };
 
 
 /// シーケンスID定義
 enum{
-  SEQ_INIT = 0,
-  SEQ_SETUP,
-  SEQ_FADEIN,
-  SEQ_MAIN,
-  SEQ_VOICE_PLAY,
-  SEQ_NEXT,
-  SEQ_FADEOUT,
-  SEQ_END,
-  SEQ_SKIP,
+  SEQ_INIT = 0,   ///<
+  SEQ_SETUP,      ///<
+  SEQ_FADEIN,     ///<
+  SEQ_MAIN,       ///<
+  SEQ_VOICE_PLAY, ///<
+  SEQ_NEXT,       ///<
+  SEQ_FADEOUT,    ///<
+  SEQ_END,        ///<
+  SEQ_SKIP,       ///<
 };
 
-// 終了モード
+/// 終了モード
 enum {
   END_SELECT = 0,
   END_TIMEOUT,
@@ -175,6 +182,7 @@ typedef struct {
   
   u32           totalWait;
   int           voiceIndex;
+  int           scene_flag;
 }TITLE_WORK;
 
 //==============================================================================
@@ -224,7 +232,7 @@ static void releaseG2Dcontrol(G2D_CONTROL* CG2d);
 static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID);
 static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID);
 static void releaseG3Dcontrol(G3D_CONTROL* CG3d);
-static void setLegendPokeVoiceScene( G3D_CONTROL *CG3d );
+static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame );
 
 static void setupOAMcontrol(OAM_CONTROL* COam, HEAPID heapID);
 static void mainOAMcontrol(OAM_CONTROL* COam, HEAPID heapID);
@@ -287,8 +295,15 @@ static void _timewait_func( TITLE_WORK *tw )
     GFL_BG_SetVisible(FRAME_BACK, VISIBLE_OFF);
     GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
     GFL_DISP_GX_SetVisibleControl(  GX_PLANEMASK_BG3, VISIBLE_OFF );
+    tw->scene_flag = 1;
   }
   
+  if(tw->scene_flag==2){
+    if(ICA_ANIME_GetNowFrame( tw->CG3d.icaAnime )==POKE_LOOP_END_FRAME*FX32_ONE){
+      setLegendPokeScene( &tw->CG3d, POKE_LOOP_PART_FRAME );
+      OS_Printf("ループ開始フレームへ戻った\n");
+    }
+  }
 
   // 表示時間判別処理
   tw->totalWait++;
@@ -300,6 +315,66 @@ static void _timewait_func( TITLE_WORK *tw )
 }
 
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 
+ *
+ * @param   tw    
+ */
+//----------------------------------------------------------------------------------
+static void _key_check( TITLE_WORK *tw )
+{
+  if( GFL_UI_KEY_GetTrg() & LOOP_PART_MASK && tw->scene_flag==1){
+    
+    GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+    GFL_BG_SetVisible( FRAME_BACK, VISIBLE_ON );
+    GFL_BG_SetVisible( FRAME_BKGR, VISIBLE_ON );
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
+    setLegendPokeScene( &tw->CG3d, POKE_LOOP_PART_FRAME );
+    tw->scene_flag=2;
+    return;
+  }
+  // ゲーム開始
+  if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
+    tw->mode = END_SELECT;
+    tw->seq  = SEQ_VOICE_PLAY;
+    tw->voiceIndex = PMVOICE_Play(  PLAY_MONSNO,  0,  64, FALSE,  
+                  0,  // コーラスボリューム差
+                  0,  // 再生速度差
+                  FALSE,    // 逆再生フラグ
+                  0   // ユーザーパラメーター 
+                  );
+    setLegendPokeScene( &tw->CG3d, POKE_VOICE_FRAME );
+    GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
+    GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
+    GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
+    GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
+    PMSND_FadeOutBGM( 4 );
+    return;
+  }
+  // セーブデータ初期化
+  if( GFL_UI_KEY_GetCont() == BACKUP_ERASE_MASK ){
+    tw->mode = END_BACKUP_ERASE;
+    tw->seq = SEQ_NEXT;
+    return;
+  }
+  // マイクテスト
+  if( GFL_UI_KEY_GetCont() == MIC_TEST_MASK ){
+    tw->mode = END_MIC_TEST;
+    tw->seq = SEQ_NEXT;
+    return;
+  }
+#ifdef  PM_DEBUG
+  // デバッグメニューへ
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+    tw->mode = END_DEBUG_CALL;
+    tw->seq = SEQ_NEXT;
+    return;
+  }
+#endif  // PM_DEBUG
+
+}
 
 //=============================================================================================
 /**
@@ -349,46 +424,8 @@ GFL_PROC_RESULT TitleProcMain( GFL_PROC * proc, int * seq, void * pwk, void * my
 
   case SEQ_MAIN:
     MainFunc(tw);
-    // ゲーム開始
-    if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
-      tw->mode = END_SELECT;
-      tw->seq  = SEQ_VOICE_PLAY;
-//      tw->seq  = SEQ_NEXT;
-      tw->voiceIndex = PMVOICE_Play(  PLAY_MONSNO,  0,  64, FALSE,  
-                    0,  // コーラスボリューム差
-                    0,  // 再生速度差
-                    FALSE,    // 逆再生フラグ
-                    0   // ユーザーパラメーター 
-                    );
-      setLegendPokeVoiceScene( &tw->CG3d );
-      GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_SUB );
-      GFL_BG_SetVisible(FRAME_BACK, VISIBLE_ON);
-      GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_OFF );
-      GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 3);
-      PMSND_FadeOutBGM( 4 );
-      break;
-    }
-    // セーブデータ初期化
-    if( GFL_UI_KEY_GetCont() == BACKUP_ERASE_MASK ){
-      tw->mode = END_BACKUP_ERASE;
-      tw->seq = SEQ_NEXT;
-      break;
-    }
-    // マイクテスト
-    if( GFL_UI_KEY_GetCont() == MIC_TEST_MASK ){
-      tw->mode = END_MIC_TEST;
-      tw->seq = SEQ_NEXT;
-      break;
-    }
-#ifdef  PM_DEBUG
-    // デバッグメニューへ
-    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-      tw->mode = END_DEBUG_CALL;
-      tw->seq = SEQ_NEXT;
-      break;
-    }
-#endif  // PM_DEBUG
-
+    // キーチェック
+    _key_check(tw);
     // 経過時間処理
     _timewait_func( tw );
     break;
@@ -688,7 +725,7 @@ static void setupG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
       TITLE_RES_ARCID, TITLE_RES_DEV_NCLR, PALTYPE_MAIN_BG, 0, 0, heapID);
 
     GFL_BG_LoadScreenReq( FRAME_BKGR );
-    GFL_BG_SetVisible(FRAME_BKGR, VISIBLE_ON);
+    GFL_BG_SetVisible( FRAME_BKGR, VISIBLE_ON );
   }
   //グラフィックデータロード(LOGO)
   {
@@ -1028,12 +1065,12 @@ static void releaseG3Dcontrol(G3D_CONTROL* CG3d)
  * @param   CG3d    
  */
 //----------------------------------------------------------------------------------
-static void setLegendPokeVoiceScene( G3D_CONTROL *CG3d )
+static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame )
 {
   GFL_G3D_OBJ*  g3Dobj;
   u16           objIdx;
   int i;
-  int anmFrm = POKE_VOICE_FRAME*FX32_ONE;
+  int anmFrm = anime_frame*FX32_ONE;
 
   ICA_ANIME_SetAnimeFrame( CG3d->icaAnime, anmFrm );
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
