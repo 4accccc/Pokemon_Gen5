@@ -116,6 +116,10 @@ struct _BTLV_MCSS_WORK
   int             evy_dir;
   int             evy_wait;
 
+#ifdef  PM_DEBUG
+  BOOL            anm_1_loop_flag;
+#endif
+
   HEAPID          heapID;
 };
 
@@ -2482,7 +2486,12 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
     return;
   }
 
+#ifdef PM_DEBUG
+  if( ( GFL_STD_MtRand0( bmw->btlv_mcss[ index ].stop_anime_count-- ) != 0 ) &&
+      ( bmw->anm_1_loop_flag == FALSE ) )
+#else
   if( GFL_STD_MtRand0( bmw->btlv_mcss[ index ].stop_anime_count-- ) != 0 )
+#endif
   { 
     return;
   }
@@ -2796,6 +2805,19 @@ void  BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag )
 void  BTLV_MCSS_SetMcssRotate( BTLV_MCSS_WORK *bmw, int flag )
 {
   bmw->mcss_pos_rotate = flag;
+}
+
+//============================================================================================
+/**
+ * @brief anm_1_loop_flagに値をセット（デバッグ用）
+ *
+ * @param[in] bmw   BTLV_MCSS管理ワークへのポインタ
+ * @param[in] flag  セットする値
+ */
+//============================================================================================
+void  BTLV_MCSS_SetAnm1LoopFlag( BTLV_MCSS_WORK *bmw, int flag )
+{
+  bmw->anm_1_loop_flag = flag;
 }
 
 //============================================================================================

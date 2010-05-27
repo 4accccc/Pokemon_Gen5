@@ -198,6 +198,7 @@ extern  BOOL            BTLV_MCSS_CheckAnimeExecute( BTLV_MCSS_WORK* bmw, int po
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
 extern  void            BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag );
 extern  void            BTLV_MCSS_SetMcssRotate( BTLV_MCSS_WORK *bmw, int flag );
+extern  void            BTLV_MCSS_SetAnm1LoopFlag( BTLV_MCSS_WORK *bmw, int flag );
 extern  void            BTLV_MCSS_ClearExecute( BTLV_MCSS_WORK *bmw );
 #endif
 
