@@ -59,6 +59,8 @@ typedef enum{
   SYMBOL_MAP_ID_FREE_LARGE_END = SYMBOL_MAP_ID_FREE_LARGE_START + 3,
   
   SYMBOL_MAP_ID_FREE_SMALL_START = SYMBOL_MAP_ID_FREE_LARGE_END,  ///<MAP ID フリー(32x32)開始No
+
+  SYMBOL_MAP_ID_ENTRANCE  = 5,  ///< MAP ID 入った最初のところ
 }SYMBOL_MAP_ID;
 
 //--------------------------------------------------------------

@@ -33,6 +33,17 @@ enum{
   PALACE_MAP_MONOLITH_Y = 32,
   PALACE_MAP_MONOLITH_Z = 472 << FX32_SHIFT,
   PALACE_MAP_MONOLITH_NUM = 3,                      ///<モノリスの連続設置数
+
+  PALACE_MAP_SYMMAP_ENTRANCE_X = FX32_CONST(504),   ///<シンボルマップ入り口の左端X座標
+  PALACE_MAP_SYMMAP_ENTRANCE_Z = FX32_CONST(344),   ///<シンボルマップ入り口のZ座標
+  PALACE_MAP_SYMMAP_ENTRANCE_SX = FX32_CONST(16 * 2),   ///<シンボルマップ入り口のX幅
+
+};
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+enum {
+  SYMBOL_MAP_DOWN_ENTRANCE_X  = FX32_CONST(248),    ///<シンボルマップに入った時の出現X位置
+  SYMBOL_MAP_DOWN_ENTRANCE_Z  = FX32_CONST(376),    ///<シンボルマップに入った時の出現Z位置
 };
 
 //==============================================================================

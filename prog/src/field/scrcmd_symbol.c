@@ -33,6 +33,7 @@
 
 #include "field/intrude_symbol.h"
 #include "field_comm/intrude_work.h"    //Intrude_Check_CommConnect
+#include "field_comm/intrude_field.h"   //SYMBOL_MAP_DOWN_ENTRANCE_X
 
 #include "arc/fieldmap/zone_id.h"
 #include "event_mapchange.h"
@@ -276,11 +277,15 @@ VMCMD_RESULT EvCmdSymbolMapWarp( VMHANDLE * core, void *wk )
 
   if ( warp_dir == DIR_DOWN && SYMBOLMAP_IsEntranceID(sid) )
   { //入ったところのマップで下向き→パレスに戻る
-    VecFx32 pos;
+    VecFx32 warp_pos, player_pos;
+    FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+    FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer( fieldmap );
     GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
-    IntrudeSymbol_GetPosPalaceForestDoorway( game_comm, gamedata, &pos );
-    new_event = EVENT_ChangeMapPos( gsys, GAMESYSTEM_GetFieldMapWork( gsys ),
-        ZONE_ID_PALACE01, &pos, DIR_DOWN, FALSE );
+    FIELD_PLAYER_GetPos( player, &player_pos );
+    IntrudeSymbol_GetPosPalaceForestDoorway( game_comm, gamedata, &warp_pos );
+    //入った位置によって出現先もずらす
+    warp_pos.x += player_pos.x - SYMBOL_MAP_DOWN_ENTRANCE_X;
+    new_event = EVENT_ChangeMapPos( gsys, fieldmap, ZONE_ID_PALACE01, &warp_pos, DIR_DOWN, FALSE );
   }
   else
   { //パレスの森の中を移動

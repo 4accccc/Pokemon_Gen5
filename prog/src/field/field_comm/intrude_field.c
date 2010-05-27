@@ -623,14 +623,19 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
     }
   }
   //ビンゴマップへワープ
-  for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
-    if(pos.x >= FX32_CONST(488) + PALACE_MAP_LEN*i
-        && pos.x <= FX32_CONST(536) + PALACE_MAP_LEN*i 
-        && pos.z >= FX32_CONST(328) && pos.z <= FX32_CONST(344)){
-      pos.x = 248 << FX32_SHIFT;
-      pos.y = 0;
-      pos.z = 360 << FX32_SHIFT;
-      return EVENT_SymbolMapWarp(gameSys, fieldWork, NULL, &pos, 0, 5);
+  {
+    fx32 entrance_x = PALACE_MAP_SYMMAP_ENTRANCE_X;
+    fx32 entrance_z = PALACE_MAP_SYMMAP_ENTRANCE_Z;
+    for (i = 0; i < FIELD_COMM_MEMBER_MAX; i++, entrance_x += PALACE_MAP_LEN )
+    {
+      if ( pos.x >= entrance_x && pos.x < entrance_x + PALACE_MAP_SYMMAP_ENTRANCE_SX
+          && pos.z == entrance_z )
+      {
+        //入った位置によって出現先もずらす
+        VecFx32 warp_pos = { SYMBOL_MAP_DOWN_ENTRANCE_X, 0, SYMBOL_MAP_DOWN_ENTRANCE_Z };
+        warp_pos.x += pos.x - entrance_x;
+        return EVENT_SymbolMapWarp(gameSys, TRUE, &warp_pos, DIR_UP, SYMBOL_MAP_ID_ENTRANCE);
+      }
     }
   }
   

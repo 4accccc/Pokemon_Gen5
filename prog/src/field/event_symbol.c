@@ -83,6 +83,7 @@ typedef struct{
   u16 warp_dir;           ///<遷移先での向き
   u8 symbol_map_id;       ///<リクエストするシンボルマップID
   u16 data_recv_result;   ///<下位イベントからの結果を受け取るためのワーク
+  BOOL se_request;        ///<マップ切り替えSEを鳴らすかどうか
   BOOL my_palace;         ///<TRUE:自分のパレスにいる
 }EVENT_SYMBOL_MAP_WARP;
 
@@ -453,7 +454,7 @@ static void getNewPos( const VecFx32 * now_pos, u16 dir, VecFx32 * next_pos )
  */
 //==================================================================
 GMEVENT * EVENT_SymbolMapWarp(
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 *result_ptr,
+    GAMESYS_WORK *gsys, BOOL se_request,
     const VecFx32 *warp_pos, u16 warp_dir, SYMBOL_MAP_ID symbol_map_id)
 {
 	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
@@ -467,8 +468,9 @@ GMEVENT * EVENT_SymbolMapWarp(
 
   esmw->warp_pos = *warp_pos;
   esmw->warp_dir = warp_dir;
-  esmw->result_ptr = result_ptr;
+  esmw->result_ptr = NULL;
   esmw->symbol_map_id = symbol_map_id;
+  esmw->se_request = se_request;
   if(IntrudeSymbol_CheckIntrudeNetID(GAMESYSTEM_GetGameCommSysPtr(gsys), gamedata) == INTRUDE_NETID_NULL){
     esmw->my_palace = TRUE;
   }
@@ -481,6 +483,7 @@ GMEVENT * EVENT_SymbolMapWarp(
 GMEVENT * EVENT_SymbolMapWarpEasy( GAMESYS_WORK * gsys, u16 warp_dir, SYMBOL_MAP_ID symbol_map_id )
 {
   VecFx32 next_pos;
+  BOOL se_request;
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   {
@@ -489,7 +492,8 @@ GMEVENT * EVENT_SymbolMapWarpEasy( GAMESYS_WORK * gsys, u16 warp_dir, SYMBOL_MAP
     const VecFx32 * now_pos = MMDL_GetVectorPosAddress( mmdl );
     getNewPos( now_pos, warp_dir, &next_pos );
   }
-  return EVENT_SymbolMapWarp( gsys, fieldmap, NULL, &next_pos, warp_dir, symbol_map_id );
+  se_request = ( warp_dir != DIR_NOT );
+  return EVENT_SymbolMapWarp( gsys, se_request, &next_pos, warp_dir, symbol_map_id );
 }
 
 
@@ -547,6 +551,10 @@ static GMEVENT_RESULT EventSymbolMapWarp( GMEVENT *event, int *seq, void *wk )
     (*seq)++;
     break;
   case _SEQ_FADEOUT:
+    if (esmw->se_request)
+    {
+      PMSND_PlaySE( SEQ_SE_KAIDAN );
+    }
     GMEVENT_CallEvent( event, EVENT_FieldFadeOut_PlayerDir( gsys, fieldWork ) );
     (*seq)++;
     break;
