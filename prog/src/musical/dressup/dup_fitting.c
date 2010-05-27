@@ -2663,7 +2663,7 @@ static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
   MUS_POKE_EQUIP_POS touchPos;
   u16 startIdx;
   //1週半と1個先のところを先頭にしてソート(スタートは下
-  const u32 startAngle = work->listTotalMove + 0x18000+LIST_ONE_ANGLE-10;
+  const u32 startAngle = work->listTotalMove + 0x18000+LIST_ONE_ANGLE;
   //1と1/4週と1個先のところを先頭にしてソート(スタートは左
   //const u32 startAngle = work->listTotalMove + 0x14000+LIST_ONE_ANGLE;
   
@@ -2705,12 +2705,11 @@ static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
     work->sortAnimeMoveAngle = 0;
     work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
     //listAngleのあまりが０だったら
-    /*  //1週半のときだけ有効にする
+    //1週半のときだけ有効にする
     if( work->sortAnimeEndAngle == 0x10000 )
     {
       work->sortAnimeEndAngle += LIST_ONE_ANGLE;
     }
-    */
     
     DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
     
