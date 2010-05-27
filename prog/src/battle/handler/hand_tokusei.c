@@ -6482,66 +6482,24 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_ItazuraGokoro( u32* numElems )
  * ワザ“マジックコート”で跳ね返せる技を跳ね返す。
  */
 //------------------------------------------------------------------------------
-// わざ乗っ取りハンドラ
-static void handler_MagicMirror_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// 無効化チェックハンドラ
+static void handler_MagicMirror_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-  u8 fEnable = FALSE;
-
-  work[0] = 0;
-
-  if( atkPokeID != pokeID )
-  {
-    u8 i, targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
-    for(i=0; i<targetCnt; ++i)
-    {
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID ){
-        fEnable = TRUE;
-        break;
-      }
-    }
-  }
-
-  if( fEnable )
-  {
-    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
-    {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
-      {
-        // 相手全体ワザ以外はターゲットを固定に
-        if( WAZADATA_GetParam(waza, WAZAPARAM_TARGET) != WAZA_TARGET_ENEMY_ALL ){
-          BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, atkPokeID );
-        }
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
-        work[0] = 1;
-      }
-    }
-  }
+  HandCommon_MagicCoat_Wait( myHandle, flowWk, pokeID, work );
 }
 // わざ跳ね返し確定ハンドラ
 static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  &&  (work[0] == 1)
-  ){
-    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-    {
-      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MajicMirror );
-      HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) );
-      HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
-    }
-    BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
-    work[0] = 0;
-  }
+  BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+  HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
+  BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 }
 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicMirror( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_WAZA_ROB,     handler_MagicMirror_CheckRob },  // わざ乗っ取り判定ハンドラ
-    { BTL_EVENT_WAZASEQ_REFRECT,    handler_MagicMirror_Reflect  },  // わざ跳ね返し確定
+    { BTL_EVENT_NOEFFECT_CHECK_L3,  handler_MagicMirror_Wait    },  // わざ乗っ取り判定ハンドラ
+    { BTL_EVENT_WAZASEQ_REFRECT,    handler_MagicMirror_Reflect },  // わざ跳ね返し確定
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

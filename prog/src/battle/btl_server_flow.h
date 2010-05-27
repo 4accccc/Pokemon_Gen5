@@ -71,6 +71,17 @@ typedef struct {
   WazaDamageType  damageType;
   WazaTarget      targetType;
 
+  union {
+    u32 flags;
+
+    struct {
+      u32             fMagicCoat : 1; ///< マジックコート処理中
+      u32             fYokodori  : 1; ///< よこどり処理中
+      u32             fReqWaza   : 1; ///< 派生ワザ処理中
+      u32             _padding   : 29;
+    };
+  };
+
 }SVFL_WAZAPARAM;
 
 /*--------------------------------------------------------------------------*/
@@ -177,6 +188,7 @@ extern void BTL_SVFTOOL_AddMemberOutIntr( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern void BTL_SVFRET_SetWazaEffectIndex( BTL_SVFLOW_WORK* wk, u8 effIndex );
 extern BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID );
 extern void BTL_SVFRET_SetMoneyDblUp( BTL_SVFLOW_WORK* wk, u8 pokeID );
+extern void BTL_SVFRET_AddMagicCoatAction( BTL_SVFLOW_WORK* wk, u8 pokeID, u8 targetPokeID );
 extern BOOL BTL_SVFRET_FreeFallStart( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 targetPokeID, BOOL* fFailMsgDisped );
 extern void BTL_SVFRET_FreeFallRelease( BTL_SVFLOW_WORK* wk, u8 atkPokeID );
 

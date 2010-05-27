@@ -239,6 +239,8 @@ typedef enum {
   DBGSTR_SVFL_RankEffCore,
   DBGSTR_SVFL_IntrTargetPoke,
   DBGSTR_SVFL_CheckItemReaction,
+  DBGSTR_SVFL_MagicCoatStart,
+  DBGSTR_SVFL_MagicCoatReflect,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
