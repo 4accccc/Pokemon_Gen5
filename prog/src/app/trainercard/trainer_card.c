@@ -1914,7 +1914,7 @@ static int normal_touch_func( TR_CARD_WORK *wk, int hitNo )
     }
     break;
   case 4:     // ¸–§•`‰æƒ{ƒ^ƒ“
-    if(wk->is_back && (!wk->isComm) && wk->TrCardData->SignAnimeOn==0){
+    if(wk->is_back && wk->TrCardData->SignAnimeOn==0){
       if(wk->tcp->TrCardData->EditPossible){    // •ÒW‰Â”\‚È‚ç
           if(wk->ScaleMode==0){
             SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_LOUPE_G, TRUE);
@@ -1983,7 +1983,7 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
   case 8:     // «Ši
     break;
   case 4:     // ¸–§•`‰æƒ{ƒ^ƒ“
-    if(wk->is_back && (!wk->isComm)){
+    if(wk->is_back){
       SetSActDrawSt(&wk->ObjWork,ACTS_BTN_LOUPE, ANMS_SIMPLE_G, TRUE);
       PMSND_PlaySE( SND_TRCARD_SCALEDOWN );
       wk->sub_seq = 3;
