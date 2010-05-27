@@ -595,7 +595,16 @@ sub_receipt_challenge_multi:
   
   //通信ならワーク切り替え
   IF $SCWK_ANSWER == SCR_YES THEN
-    $play_mode = BSWAY_MODE_COMM_MULTI
+    _GET_AVAILABLE_WIRELESS( SCWK_ANSWER ) //DS本体 通信機能チェック
+    
+    IF $SCWK_ANSWER == FALSE THEN //通信できません
+      _MSGWIN_CLOSE() //メッセージウィンドウ消去
+      _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
+    
+    $play_mode = BSWAY_MODE_COMM_MULTI //ワーク切り替え
     _BSUBWAY_TOOL( BSWSUB_CHG_WORK_COMM_MULTI_MODE, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
   
@@ -727,6 +736,7 @@ _RET
 sub_receipt_challenge_multi_comm:
 {
   DEFINE_LOCAL irc
+  DEFINE_LOCAL save_on
   DEFINE_LOCAL comm_id
   
   _BSUBWAY_TOOL( BSWSUB_GET_COMM_IRC_FLAG, BSW_NULL, BSW_NULL, irc )
@@ -758,7 +768,21 @@ sub_receipt_challenge_multi_comm:
   ENDIF
   
   //通信前レポート
-  _REPORT_EVENT_CALL_WIRELESS( ret )
+  $save_on = TRUE
+  
+  IF $irc == TRUE THEN
+    _GET_WIRELESS_SAVEMODE( ret ) //IRCレポート設定
+    
+    IF $ret == WIRELESS_SAVEMODE_OFF THEN
+      $save_on = FALSE  //IRC通信前レポート無し
+    ENDIF
+  ENDIF
+  
+  IF $save_on == TRUE THEN
+    _REPORT_EVENT_CALL( ret )
+  ELSE
+    $ret = SCR_REPORT_OK
+  ENDIF
   
   IF $ret != SCR_REPORT_OK THEN //レポートしない
     _CALL sub_bsw_common_exit
@@ -809,7 +833,7 @@ sub_receipt_challenge_multi_comm:
     
     IF $SCWK_ANSWER == FALSE THEN //失敗
       _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-//    _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
+      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
@@ -2172,7 +2196,7 @@ sub_bsw_common_comm_exit:
   IF $comm_flag == TRUE THEN
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SIO_END, BSW_NULL, comm_ret )
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-//  _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
+    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
   ENDIF
   

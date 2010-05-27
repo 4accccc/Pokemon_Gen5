@@ -242,6 +242,8 @@ sub_challenge_continue_comm_multi:
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
     
+    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+
     //受付対応　ゲーム後へ
     $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
     
@@ -331,6 +333,8 @@ sub_challenge_continue_comm_multi_error:
   _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
   _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
   
+  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+
   //受付対応　ゲーム後へ
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
   
@@ -398,6 +402,8 @@ sub_mapchg_receipt:
       _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SIO_END, BSW_NULL, comm_ret )
       _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
       _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+      
+      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
     ENDIF
     
     //ウィンドウクローズ

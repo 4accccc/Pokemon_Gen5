@@ -1190,6 +1190,7 @@ sub_common_retmap_lose_retire:
     //通信切断
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_SIO_END, BSW_NULL, comm_ret )
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
+    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
   ENDIF
   
   //ちょっと間を置く
@@ -1223,6 +1224,8 @@ sub_common_retmap_comm_error:
   
   //通信切断
   _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
   
   //電車揺れ停止
   _BSUBWAY_TOOL( BSWSUB_STOP_SHAKE_TRAIN, BSW_NULL, BSW_NULL, BSW_NULL )
