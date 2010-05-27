@@ -666,6 +666,20 @@ static void MainSeq_STANDBY( RRG_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
+#ifdef PM_DEBUG
+  //----------------
+  // デバッグボタン
+  if( work->analyzeFlag && (trg & PAD_BUTTON_DEBUG) ) {
+    FinishCurrentState( work );                              // RRG_STATE_STANDBY 状態を終了
+    RegisterNextState( work, RRG_STATE_UPDATE_AT_STANDBY );  // => RRG_STATE_UPDATE_AT_STANDBY
+    RegisterNextState( work, RRG_STATE_FLASHOUT );           // ==> RRG_STATE_FLASHOUT
+    RegisterNextState( work, RRG_STATE_FLASHIN );            // ===> RRG_STATE_FLASHIN
+    RegisterNextState( work, RRG_STATE_PERCENTAGE );         // ====> RRG_STATE_PERCENTAGE
+    RegisterNextState( work, RRG_STATE_STANDBY );            // =====> RRG_STATE_STANDBY
+    return;
+  }
+#endif
+
   //------------------------
   // 調査データの更新を検出
   if( work->analyzeFlag && work->newEntryFlag && work->updateEnableFlag ) {
@@ -852,6 +866,20 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   trg = GFL_UI_KEY_GetTrg(); 
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
+
+#ifdef PM_DEBUG
+  //----------------
+  // デバッグボタン
+  if( work->analyzeFlag && (trg & PAD_BUTTON_DEBUG) ) {
+    FinishCurrentState( work );                             // RRG_STATE_KEYWAIT 状態を終了
+    RegisterNextState( work, RRG_STATE_UPDATE_AT_KEYWAIT ); // => RRG_STATE_UPDATE_AT_KEYWAIT
+    RegisterNextState( work, RRG_STATE_FLASHOUT );          // ==> RRG_STATE_FLASHOUT
+    RegisterNextState( work, RRG_STATE_FLASHIN );           // ===> RRG_STATE_FLASHIN
+    RegisterNextState( work, RRG_STATE_PERCENTAGE );        // ====> RRG_STATE_PERCENTAGE
+    RegisterNextState( work, RRG_STATE_KEYWAIT );           // =====> RRG_STATE_KEYWAIT
+    return;
+  }
+#endif
 
   //------------------------
   // 調査データの更新を検出
