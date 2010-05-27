@@ -628,11 +628,13 @@ static  void  pp_set_param( TrainerID tr_id, POKEMON_PARAM* pp, int form_no, int
   //性格セット
   { 
     //特定のトレーナーの特定ポケモンの性格を固定にする
-    if( ( tr_id == TRID_BOSS_2_06 ) && ( mons_no == MONSNO_RESIRAMU ) )
+    //レシラム
+    if( ( tr_id == TRID_BOSS_2_06 ) && ( mons_no == MONSNO_650 ) )
     { 
       PP_SetSeikaku( pp, PTL_SEIKAKU_YOUKI );
     }
-    else if( ( tr_id == TRID_BOSS_2_07 ) && ( mons_no == MONSNO_ZEKUROMU ) )
+    //ゼクロム
+    else if( ( tr_id == TRID_BOSS_2_07 ) && ( mons_no == MONSNO_651 ) )
     { 
       PP_SetSeikaku( pp, PTL_SEIKAKU_OKUBYOU );
     }
