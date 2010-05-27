@@ -8617,25 +8617,25 @@
 		<language name="JPN" width="256">END-06</language>
 		<language name="JPN_KANJI" width="256">END-06</language>
 	</row>
-	<row id="msg_seq_se_dmy_383">
-		<language name="JPN" width="256">DMY-383</language>
-		<language name="JPN_KANJI" width="256">DMY-383</language>
+	<row id="msg_seq_se_end_07">
+		<language name="JPN" width="256">END-07</language>
+		<language name="JPN_KANJI" width="256">END-07</language>
 	</row>
-	<row id="msg_seq_se_dmy_384">
-		<language name="JPN" width="256">DMY-384</language>
-		<language name="JPN_KANJI" width="256">DMY-384</language>
+	<row id="msg_seq_se_logo_01">
+		<language name="JPN" width="256">LOGO-01</language>
+		<language name="JPN_KANJI" width="256">LOGO-01</language>
 	</row>
-	<row id="msg_seq_se_dmy_385">
-		<language name="JPN" width="256">DMY-385</language>
-		<language name="JPN_KANJI" width="256">DMY-385</language>
+	<row id="msg_seq_se_logo_02">
+		<language name="JPN" width="256">LOGO-02</language>
+		<language name="JPN_KANJI" width="256">LOGO-02</language>
 	</row>
-	<row id="msg_seq_se_dmy_386">
-		<language name="JPN" width="256">DMY-386</language>
-		<language name="JPN_KANJI" width="256">DMY-386</language>
+	<row id="msg_seq_se_logo_03">
+		<language name="JPN" width="256">LOGO-03</language>
+		<language name="JPN_KANJI" width="256">LOGO-03</language>
 	</row>
-	<row id="msg_seq_se_dmy_387">
-		<language name="JPN" width="256">DMY-387</language>
-		<language name="JPN_KANJI" width="256">DMY-387</language>
+	<row id="msg_seq_se_fld_176">
+		<language name="JPN" width="256">FLD-176</language>
+		<language name="JPN_KANJI" width="256">FLD-176</language>
 	</row>
 	<row id="msg_seq_se_dmy_388">
 		<language name="JPN" width="256">DMY-388</language>
