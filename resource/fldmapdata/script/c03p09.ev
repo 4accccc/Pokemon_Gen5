@@ -173,7 +173,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03p09_iceline_03
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG( msg_c03p09_iceline_03 , C03P09_ICELINE_01 )
+	_BALLOONWIN_OBJMSG( msg_c03p09_iceline_03 , C03P09_ICELINE_03 )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( C03P09_ICELINE_03 ,  anm_iceline_look_up )
 	_OBJ_ANIME_WAIT()
@@ -184,7 +184,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03p09_iceline_04
 	_TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG( msg_c03p09_iceline_04 , C03P09_ICELINE_01 )
+	_BALLOONWIN_OBJMSG( msg_c03p09_iceline_04 , C03P09_ICELINE_04 )
 	_BALLOONWIN_CLOSE()
 	_OBJ_ANIME( C03P09_ICELINE_04 ,  anm_iceline_look_up )
 	_OBJ_ANIME_WAIT()
@@ -246,7 +246,7 @@ EVENT_START		ev_c03p09_iceline_05
 	IF FLAG_ON( TMFLG_C03P09_SWEETS ) THEN
 		
 		_TALK_OBJ_START()
-		_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05d , C03P09_ICELINE_01 , POS_UL )
+		_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05d , C03P09_ICELINE_05 , POS_UP )
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
 		_OBJ_ANIME_WAIT()
@@ -261,12 +261,12 @@ EVENT_START		ev_c03p09_iceline_05
 		//火曜日である
 		IF $LWK_WEEKCK == RTC_WEEK_TUESDAY THEN
 			_TALK_OBJ_START()
-			_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05a , C03P09_ICELINE_01 , POS_UL )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05a , C03P09_ICELINE_05 , POS_UP )
 			_YES_NO_WIN( SCWK_ANSWER )
 			
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
-				_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05b , C03P09_ICELINE_01 , POS_UL )
+				_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05b , C03P09_ICELINE_05 , POS_UP )
 				_BALLOONWIN_CLOSE()
 				
 				//話しかけ時のため最後尾に移動（話しかけ方向で処理を分岐）
@@ -288,7 +288,7 @@ EVENT_START		ev_c03p09_iceline_05
 				//購入処理をコール
 				_CALL ev_r03_ice_shop_buy
 			ELSE
-				_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05c , C03P09_ICELINE_01 , POS_UL )
+				_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05c , C03P09_ICELINE_05 , POS_UP )
 				_BALLOONWIN_CLOSE()
 				_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
 				_OBJ_ANIME_WAIT()
@@ -297,7 +297,7 @@ EVENT_START		ev_c03p09_iceline_05
 		//火曜日ではない
 		ELSE
 			_TALK_OBJ_START()
-			_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05e , C03P09_ICELINE_01 , POS_UL )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05e , C03P09_ICELINE_05 , POS_UP )
 			_BALLOONWIN_CLOSE()
 			_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
 			_OBJ_ANIME_WAIT()
@@ -326,12 +326,12 @@ EVENT_START		ev_pos_c03p09_iceshop_01
 		_OBJ_ANIME_WAIT()
 	ENDIF
 	
-	_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05a , C03P09_ICELINE_01 , POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05a , C03P09_ICELINE_05 , POS_UP )
 	_YES_NO_WIN( SCWK_ANSWER )
 	
 	//はい
 	IF $SCWK_ANSWER == 0 THEN
-		_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05b , C03P09_ICELINE_01 , POS_UL )
+		_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05b , C03P09_ICELINE_05 , POS_UP )
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
 		_OBJ_ANIME_WAIT()
@@ -341,7 +341,7 @@ EVENT_START		ev_pos_c03p09_iceshop_01
 		//購入処理をコール
 		_CALL ev_r03_ice_shop_buy
 	ELSE
-		_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05c , C03P09_ICELINE_01 , POS_UL )
+		_BALLOONWIN_OBJMSG_POS( msg_c03p09_iceline_05c , C03P09_ICELINE_05 , POS_UP )
 		_BALLOONWIN_CLOSE()
 		_OBJ_ANIME( C03P09_ICELINE_05 ,  anm_iceline_look_up )
 		_OBJ_ANIME_WAIT()
@@ -528,7 +528,7 @@ ev_r03_ice_shop_buy:
 	$LWK_ICE_GOLD  = 100
 
 	//店員：ヒウンシティめいぶつ！
-	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_01 , C03P09_SHOPW_01, POS_DL )
+	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_01 , C03P09_SHOPW_01, POS_DOWN )
   	
    	//所持金の表示
    	_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
@@ -540,7 +540,6 @@ ev_r03_ice_shop_buy:
 	_BMPMENU_MAKE_LIST( msg_c03p09_ice_shop_08, 1 )	//やめる
 	
 	_BMPMENU_START()
-	_MSGWIN_CLOSE()
 	
 	//ヒウンアイスを買う場合の処理
 	IF $LWK_ICE_NUM_SELECT == 0 THEN	
@@ -552,23 +551,21 @@ ev_r03_ice_shop_buy:
 
 		//バッグがいっぱい
 		IF $LWK_BAG_CHK == 0 THEN 
-		 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_04 , C03P09_SHOPW_01, POS_DL )
-			_LAST_KEYWAIT()
+		 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_04 , C03P09_SHOPW_01, POS_DOWN )
 			_MSGWIN_CLOSE()
 			
 			_GOLD_WIN_CLOSE()
 		
 		//お金が足りない
 		ELSIF $LWK_GOLD_CHK == 0 THEN
-		 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_03 , C03P09_SHOPW_01, POS_DL )
-			_LAST_KEYWAIT()
+		 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_03 , C03P09_SHOPW_01, POS_DOWN )
 			_MSGWIN_CLOSE()		
 			
 			_GOLD_WIN_CLOSE()
 		
 		//購入条件は満たしている
 		ELSE
-			_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_02 , C03P09_SHOPW_01, POS_DL )
+			_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_02 , C03P09_SHOPW_01, POS_DOWN )
 			_MSGWIN_CLOSE()	
 			
 			//レジ音再生
@@ -582,7 +579,7 @@ ev_r03_ice_shop_buy:
 			_TIME_WAIT(30)
 			_GOLD_WIN_CLOSE()
 			
-			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_HIUNAISU, 1 )
+			_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_HIUNAISU, 1 )
 			
 		ENDIF
 	
@@ -590,7 +587,7 @@ ev_r03_ice_shop_buy:
 	ELSE
 	
 		//店員：ええっ本当に買わないんですか？
-		_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_01b , C03P09_SHOPW_01, POS_DL )
+		_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_01b , C03P09_SHOPW_01, POS_DOWN )
 	
 		//買う・買わない選択画面作成
 	  	_BMPMENU_INIT_RIGHT( MENU_X2, MENU_Y2, 0, 1, LWK_ICE_NUM_SELECT  )
@@ -599,7 +596,6 @@ ev_r03_ice_shop_buy:
 		_BMPMENU_MAKE_LIST( msg_c03p09_ice_shop_08, 1 )	//やめる
 		
 		_BMPMENU_START()
-		_MSGWIN_CLOSE()
 		
 		//ヒウンアイスを買う場合の処理
 		IF $LWK_ICE_NUM_SELECT == 0 THEN	
@@ -611,8 +607,7 @@ ev_r03_ice_shop_buy:
 
 			//バッグがいっぱい
 			IF $LWK_BAG_CHK == 0 THEN 
-			 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_04 , C03P09_SHOPW_01, POS_DL )
-				_LAST_KEYWAIT()
+			 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_04 , C03P09_SHOPW_01, POS_DOWN )
 				_MSGWIN_CLOSE()
 				
 				_GOLD_WIN_CLOSE()
@@ -620,34 +615,35 @@ ev_r03_ice_shop_buy:
 			
 			//お金が足りない
 			ELSIF $LWK_GOLD_CHK == 0 THEN
-			 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_03 , C03P09_SHOPW_01, POS_DL )
-				_LAST_KEYWAIT()
+			 	_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_03 , C03P09_SHOPW_01, POS_DOWN )
 				_MSGWIN_CLOSE()		
 				
 				_GOLD_WIN_CLOSE()
 			
 			//購入条件は満たしている
 			ELSE
-				_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_02 , C03P09_SHOPW_01, POS_DL )
+				_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_02 , C03P09_SHOPW_01, POS_DOWN )
 				_MSGWIN_CLOSE()	
 				
+				//レジ音再生
+				_SE_PLAY( SEQ_SE_SYS_22 )		
 				_SUBTRACT_GOLD( LWK_ICE_GOLD )
-        _GOLD_WIN_UPDATE()
-				_TIME_WAIT( 30 )
-				_GOLD_WIN_CLOSE()
-							
-				//コマンドが変更になる予定
-				_SE_PLAY( SEQ_SE_SYS_22 )
+				_GOLD_WIN_UPDATE()
+				
 				_SE_WAIT()
-				_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_HIUNAISU, 1 )
+				
+				//GOLDWINが即座に消えないための間
+				_TIME_WAIT(30)
+				_GOLD_WIN_CLOSE()
+			
+				_ITEM_EVENT_SUCCESS_KEYWAIT( ITEM_HIUNAISU, 1 )
 				
 			ENDIF
 		
 		//買わない
 		ELSE
 		
-			_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_05  , C03P09_SHOPW_01, POS_DL )
-			_LAST_KEYWAIT()
+			_BALLOONWIN_OBJMSG_POS( msg_c03p09_ice_shop_05  , C03P09_SHOPW_01, POS_DOWN )
 			_MSGWIN_CLOSE()
 			_GOLD_WIN_CLOSE()
 		
