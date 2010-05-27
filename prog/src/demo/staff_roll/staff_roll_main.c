@@ -856,13 +856,21 @@ static const GFL_G3D_LIGHTSET_SETUP light3d_setup = { light_data, NELEMS(light_d
 #define	CAMERA_TARGET_Y		( 124745 )
 #define	CAMERA_TARGET_Z		( 0 )
 */
+#if	PM_VERSION == LOCAL_VERSION
 #define	CAMERA_POS_X			( 3681 )
 #define	CAMERA_POS_Y			( 94888 )
 #define	CAMERA_POS_Z			( 42318 )
 #define	CAMERA_TARGET_X		( 0 )
 #define	CAMERA_TARGET_Y		( 124745 )
 #define	CAMERA_TARGET_Z		( 0 )
-
+#else
+#define	CAMERA_POS_X			( 7362 )
+#define	CAMERA_POS_Y			( 78119 )
+#define	CAMERA_POS_Z			( 2236 )
+#define	CAMERA_TARGET_X		( 0 )
+#define	CAMERA_TARGET_Y		( 124745 )
+#define	CAMERA_TARGET_Z		( 0 )
+#endif
 
 #ifdef PM_DEBUG
 //static VecFx32 test_pos    = { 0, BADGE3D_CAMERA_POS_Y, BADGE3D_CAMERA_POS_Z };
@@ -1020,7 +1028,13 @@ static void Main3D( SRMAIN_WORK * wk )
 
 	ChangeBrightness3D( wk );
 
+#ifdef	PMDEBUG
+	if( wk->debugStopFlg == FALSE ){
+		CameraMoveMain( wk );
+	}
+#else
 	CameraMoveMain( wk );
+#endif
 
 	{
     GFL_G3D_OBJ * obj;
@@ -1062,13 +1076,25 @@ static void Poke3DMove( GFL_G3D_SCENEOBJ * obj, void * work )
 
 static const SR3DCAMERA_PARAM CameraMoveTable[] =
 {
+#if	PM_VERSION == LOCAL_VERSION
 	{ { CAMERA_POS_X, CAMERA_POS_Y, CAMERA_POS_Z }, { CAMERA_TARGET_X, CAMERA_TARGET_Y, CAMERA_TARGET_Z } },
 	{ { 1636, 95706, 63177 }, { 0, 124745, 0 } },
 	{ { -5317, 111657, 78310 }, { 0, 124745, 0 } },
-	{ { -7362, 159919, 115938 }, { 32311, 124745, 0 } },
+//	{ { -7362, 159919, 115938 }, { 32311, 124745, 0 } },
+	{ { -7362, 159919, 128208 }, { 32311, 124745, 0 } },
 	{ { -64622, 150921, 81582 }, { 245809, 108794, 129244 } },
-	{ { -17178, 158283, 90580 }, { 199183, 98978, -41718 } },
+//	{ { -17178, 158283, 90580 }, { 199183, 98978, -41718 } },
+	{ { -17178, 156238, 90580 }, { 199183, 98978, -41718 } },
 	{ { -18405, 189776, 93443 }, { 959514, 154602, 0 } },
+#else
+	{ { CAMERA_POS_X, CAMERA_POS_Y, CAMERA_POS_Z }, { CAMERA_TARGET_X, CAMERA_TARGET_Y, CAMERA_TARGET_Z } },
+	{ { 1636, 120655, 48453 }, { 0, 124745, 0 } },
+	{ { -25358, 139878, 60723 }, { 23722, 124745, 0 } },
+	{ { -8998, 153784, 137615 }, { 47853, 124745, 0 } },
+	{ { -64622, 159919, 81582 }, { 245809, 108794, 129244 } },
+	{ { -19223, 155011, 93443 }, { 199183, 98978, -41718 } },
+	{ { -21677, 148467, 185468 }, { 1908803, 121064, -41718 } },
+#endif
 };
 
 static void CameraMoveInit( SR3DCAMERA_MOVE * mvwk )
@@ -1772,6 +1798,8 @@ static const u8 GridChar[] = {
 	0x86, 0x88, 0x88, 0x88,
 };
 
+static int	testCameraIndex = 0;
+
 static void DebugGridSet(void)
 {
 	GFL_BG_LoadCharacter( GFL_BG_FRAME2_M, GridChar, 0x60, 1 );
@@ -1840,6 +1868,7 @@ static void DebugCameraPrint( SRMAIN_WORK * wk )
 		}
 
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+/*
 			test_pos.x = CAMERA_POS_X;
 			test_pos.y = CAMERA_POS_Y;
 			test_pos.z = CAMERA_POS_Z;
@@ -1848,7 +1877,17 @@ static void DebugCameraPrint( SRMAIN_WORK * wk )
 			test_target.z = CAMERA_TARGET_Z;
 			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
 			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
+*/
+			testCameraIndex++;
+			if( testCameraIndex >= NELEMS(CameraMoveTable) ){
+				testCameraIndex = 0;
+			}
+			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &CameraMoveTable[testCameraIndex].pos );
+			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &CameraMoveTable[testCameraIndex].target );
+			GFL_G3D_CAMERA_GetPos( wk->g3d_camera, &test_pos );
+			GFL_G3D_CAMERA_GetTarget( wk->g3d_camera, &test_target );
 		}
+/*
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 			test_pos.x = 0;
 			test_pos.y = 0;
@@ -1859,6 +1898,7 @@ static void DebugCameraPrint( SRMAIN_WORK * wk )
 			GFL_G3D_CAMERA_SetPos( wk->g3d_camera, &test_pos );
 			GFL_G3D_CAMERA_SetTarget( wk->g3d_camera, &test_target );
 		}
+*/
 
 	  GFL_G3D_CAMERA_Switching( wk->g3d_camera );
 //	  if(GFL_UI_KEY_GetCont()&PAD_BUTTON_R){
