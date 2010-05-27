@@ -480,7 +480,7 @@ EVENT_END
 /*							石像							*/
 /************************************************************/
 EVENT_START	ev_bg_c08gym0101_statue_01
-	_TALK_OBJ_START()
+	_TALK_START_SE_PLAY()
 
 	//バージョンチェック
 	DEFINE_LOCAL LCW_VERSION_ST
