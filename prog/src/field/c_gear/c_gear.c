@@ -304,6 +304,7 @@ typedef enum{
 } _SELECTANIM_ENUM;
 #define _SELECT_ANIME_WAIT (16)
 
+#define _SELECT_ANIME_OBJ_MAX ( 24 )
 
 //-------------------------------------
 ///	パネルパレット情報
@@ -712,6 +713,17 @@ typedef struct {
 } BUTTON_PAL_FADE;
 
 
+//-------------------------------------
+///	SEL選択エフェクトワーク
+//=====================================
+typedef struct {
+  GFL_CLWK* cellSelect;
+  int x;
+  int y;
+} SEL_SELECT_EFFECT;
+
+
+
 struct _C_GEAR_WORK {
   StateFunc* state;      ///< ハンドルのプログラム状態
   TouchFunc* touch;
@@ -727,7 +739,7 @@ struct _C_GEAR_WORK {
 
   GFL_CLUNIT *cellUnit;
   GFL_CLSYS_REND* userRend;
-  GFL_CLWK  *cellSelect[C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT];
+  SEL_SELECT_EFFECT cellSelect[_SELECT_ANIME_OBJ_MAX];
   GFL_CLWK  *cellCursor[_CLACT_TIMEPARTS_MAX];
   GFL_CLWK  *cellType[_CLACT_TYPE_MAX];
   GFL_CLWK  *cellCross;
@@ -911,6 +923,8 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork);
 static BOOL _modeSelectAnimWait(C_GEAR_WORK* pWork);
 static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y);
 
+static SEL_SELECT_EFFECT* _selectAnimeGetCleanCLWK( C_GEAR_WORK* pWork );
+
 static void _modeSelectNgAnimInit(C_GEAR_WORK* pWork);
 static void _modeSelectNgAnimExit(C_GEAR_WORK* pWork);
 static BOOL _modeSelectNgAnimWait(const C_GEAR_WORK* cpWork);
@@ -1058,6 +1072,7 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
 {
   GFL_CLWK_DATA cellInitData;
   int scrx,scry,i;
+  SEL_SELECT_EFFECT* sel_select_wk;
 
   _gearXY2PanelScreen(x, y, &scrx, &scry);
   cellInitData.pos_x = scrx * 8+16;
@@ -1067,22 +1082,65 @@ static void _selectAnimInit(C_GEAR_WORK* pWork,int x,int y)
   cellInitData.bgpri = CGEAR_CLACT_BG_PRI;
   i = x + y * C_GEAR_PANEL_WIDTH;
 
-  // もしもうあるなら再始動
-  if(pWork->cellSelect[i]){
-    GFL_CLACT_WK_ResetAnm( pWork->cellSelect[i] );
+  sel_select_wk = _selectAnimeGetCleanCLWK( pWork );
 
+  // もしもうあるなら再始動
+  if(sel_select_wk->cellSelect){
+    GFL_CLACT_WK_ResetAnm( sel_select_wk->cellSelect );
+    GFL_CLACT_WK_SetTypePos( sel_select_wk->cellSelect, cellInitData.pos_x, CGEAR_REND_SUB, CLSYS_MAT_X );
+    GFL_CLACT_WK_SetTypePos( sel_select_wk->cellSelect, cellInitData.pos_y, CGEAR_REND_SUB, CLSYS_MAT_Y );
   }else{
   
-    pWork->cellSelect[i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+    sel_select_wk->cellSelect = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                 pWork->objRes[_CLACT_CHR],
                                                 pWork->objRes[_CLACT_PLT],
                                                 pWork->objRes[_CLACT_ANM],
                                                 &cellInitData ,
                                                 CGEAR_REND_SUB,
                                                 pWork->heapID );
-    GFL_CLACT_WK_SetAutoAnmFlag( pWork->cellSelect[i], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( pWork->cellSelect[i], TRUE );
+    GFL_CLACT_WK_SetAutoAnmFlag( sel_select_wk->cellSelect, TRUE );
+    GFL_CLACT_WK_SetDrawEnable( sel_select_wk->cellSelect, TRUE );
   }
+
+  sel_select_wk->x = x;
+  sel_select_wk->y = y;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空いているCLWKを取得  もし空いていなかったらもっともフレームが進んだものを返す。
+ *
+ *	@param	cpWork  ワーク
+ *
+ *	@return CLWK
+ */
+//-----------------------------------------------------------------------------
+static SEL_SELECT_EFFECT* _selectAnimeGetCleanCLWK( C_GEAR_WORK* pWork )
+{
+  int i;
+  int max_index = -1;
+  fx32 max_frame = -1;
+  int max_index_idx = 0;
+  int anm_index;
+  fx32 anm_frame;
+  
+  for( i=0; i<_SELECT_ANIME_OBJ_MAX; i++ ){
+
+    if( pWork->cellSelect[i].cellSelect == NULL ){
+      return &pWork->cellSelect[i];
+    }
+
+    anm_index = GFL_CLACT_WK_GetAnmIndex( pWork->cellSelect[i].cellSelect );
+    anm_frame = GFL_CLACT_WK_GetAnmFrame( pWork->cellSelect[i].cellSelect );
+    if( (anm_index > max_index) || 
+        ((anm_index == max_index) && (anm_frame > max_frame)) ){
+      max_index = anm_index;
+      max_frame = anm_frame;
+      max_index_idx = i;
+    }
+  }
+
+  return &pWork->cellSelect[max_index_idx];
 }
 
 //----------------------------------------------------------------------------
@@ -1101,12 +1159,18 @@ static BOOL _selectAnimeWait( const C_GEAR_WORK* cpWork,int x,int y )
 {
   int i;
 
-  i = x + y * C_GEAR_PANEL_WIDTH;
-  if( cpWork->cellSelect[i] ){
-    if( GFL_CLACT_WK_CheckAnmActive( cpWork->cellSelect[i] ) ){
-      return FALSE;
+  for( i=0; i<_SELECT_ANIME_OBJ_MAX; i++ ){
+    if( cpWork->cellSelect[i].cellSelect ){
+      if( (cpWork->cellSelect[i].x == x) && (cpWork->cellSelect[i].y == y) ){
+
+        if( GFL_CLACT_WK_CheckAnmActive( cpWork->cellSelect[i].cellSelect ) ){
+          return FALSE;
+        }
+        
+      }
     }
   }
+
   return TRUE;
 }
 
@@ -1135,6 +1199,7 @@ static BOOL _modeSelectAnimWait(C_GEAR_WORK* pWork)
         _selectAnimInit(pWork, x,y);
         pWork->typeAnim[x][y] = _SELECTANIM_ANIMING;
       }
+
     }
   }
 
@@ -3212,10 +3277,10 @@ static void _gearAllObjDrawEnabel(C_GEAR_WORK* pWork,BOOL bFlg)
   int i;
 
   // 選択時アニメ用
-  for(i=0;i < C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT;i++)
+  for(i=0;i < _SELECT_ANIME_OBJ_MAX;i++)
   {
-    if( pWork->cellSelect[i] ){
-      GFL_CLACT_WK_SetDrawEnable( pWork->cellSelect[i], bFlg );
+    if( pWork->cellSelect[i].cellSelect ){
+      GFL_CLACT_WK_SetDrawEnable( pWork->cellSelect[i].cellSelect, bFlg );
     }
   }
   
@@ -3585,10 +3650,10 @@ static void _arcGearRelease(C_GEAR_WORK* pWork)
         pWork->cellType[i] = NULL;
       }
     }
-    for(i = 0;i < C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT; i++){
-      if(pWork->cellSelect[i]){
-        GFL_CLACT_WK_Remove( pWork->cellSelect[i] );
-        pWork->cellSelect[i] = NULL;
+    for(i = 0;i < _SELECT_ANIME_OBJ_MAX; i++){
+      if(pWork->cellSelect[i].cellSelect){
+        GFL_CLACT_WK_Remove( pWork->cellSelect[i].cellSelect );
+        pWork->cellSelect[i].cellSelect = NULL;
       }
     }
   }
@@ -5114,10 +5179,10 @@ static void _modeSelectNgAnimExit(C_GEAR_WORK* pWork)
 {
   int i;
 
-  for( i=0; i<(C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT); i++ ){
-    if( pWork->cellSelect[i] ){
-      GFL_CLACT_WK_Remove( pWork->cellSelect[i] );
-      pWork->cellSelect[i] = NULL;
+  for( i=0; i<(_SELECT_ANIME_OBJ_MAX); i++ ){
+    if( pWork->cellSelect[i].cellSelect ){
+      GFL_CLACT_WK_Remove( pWork->cellSelect[i].cellSelect );
+      pWork->cellSelect[i].cellSelect = NULL;
     }
   }
 }
@@ -5132,9 +5197,9 @@ static BOOL _modeSelectNgAnimWait(const C_GEAR_WORK* cpWork)
   int i;
   BOOL ret = TRUE;
 
-  for( i=0; i<(C_GEAR_PANEL_WIDTH * C_GEAR_PANEL_HEIGHT); i++ ){
-    if( cpWork->cellSelect[i] ){
-      if( GFL_CLACT_WK_CheckAnmActive( cpWork->cellSelect[i] ) ){
+  for( i=0; i<(_SELECT_ANIME_OBJ_MAX); i++ ){
+    if( cpWork->cellSelect[i].cellSelect ){
+      if( GFL_CLACT_WK_CheckAnmActive( cpWork->cellSelect[i].cellSelect ) ){
         ret = FALSE;
         break;
       }
