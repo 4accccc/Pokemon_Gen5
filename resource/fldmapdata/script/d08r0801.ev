@@ -294,7 +294,6 @@ ev_hakaim1_24_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
-EVENT_END
 
 //プラズマ団男2との戦闘
 ev_hakaim1_25_btl:
@@ -309,7 +308,6 @@ ev_hakaim1_25_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
-EVENT_END
 
 //プラズマ団男3との戦闘
 ev_hakaim1_26_btl:
@@ -324,7 +322,6 @@ ev_hakaim1_26_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
-EVENT_END
 
 //プラズマ団女1との戦闘
 ev_hakaiw1_10_btl:
@@ -339,7 +336,6 @@ ev_hakaiw1_10_btl:
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF	
 _RET
-EVENT_END
 
 //--------------------------------------------------------------------
 // 主人公1：囲まれるA                    
