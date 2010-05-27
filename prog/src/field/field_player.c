@@ -401,6 +401,15 @@ void FIELD_PLAYER_UpdateMoveStatus( FIELD_PLAYER *fld_player )
       return;
     }
   }
+  // レール限定
+  else
+  {
+    //足元強制移動チェック
+    if( FIELD_PLAYER_NOGRID_IsAutoMove( fld_player->nogridwk ) == TRUE ){
+      FIELD_PLAYER_CORE_SetMoveState( fld_player->corewk, PLAYER_MOVE_STATE_ON );
+      return;
+    }
+  }
 
   FIELD_PLAYER_CORE_UpdateMoveStatus( fld_player->corewk );
 }
