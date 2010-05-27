@@ -2739,35 +2739,43 @@ static void PLIST_SelectPokeUpdateTP( PLIST_WORK *work )
 
     if( ret != GFL_UI_TP_HIT_NONE )
     {
-      const PL_SELECT_POS befPos = work->pokeCursor;
-      work->selectState = PSSEL_SELECT;
-      work->pokeCursor = plateIdx[ret];
-
-      //PLIST_SelectPokeSetCursor( work , work->pokeCursor );
-      if( befPos <= PL_SEL_POS_POKE6 )
+      if( work->canSelectEgg == FALSE && ret <= PL_SEL_POS_POKE6 &&
+          PLIST_PLATE_IsEgg( work , work->plateWork[ret] ) == TRUE )
       {
-        PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+        PMSND_PlaySystemSE( PLIST_SND_ERROR );
       }
       else
       {
-        //バトル時決定・戻る
-        const u8 idx = befPos - PL_SEL_POS_ENTER;
-        PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , FALSE );
-      }
+        const PL_SELECT_POS befPos = work->pokeCursor;
+        work->selectState = PSSEL_SELECT;
+        work->pokeCursor = plateIdx[ret];
 
-      if( work->pokeCursor <= PL_SEL_POS_POKE6 )
-      {
-        PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+        //PLIST_SelectPokeSetCursor( work , work->pokeCursor );
+        if( befPos <= PL_SEL_POS_POKE6 )
+        {
+          PLIST_PLATE_SetActivePlate( work , work->plateWork[befPos] , FALSE );
+        }
+        else
+        {
+          //バトル時決定・戻る
+          const u8 idx = befPos - PL_SEL_POS_ENTER;
+          PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , FALSE );
+        }
+
+        if( work->pokeCursor <= PL_SEL_POS_POKE6 )
+        {
+          PLIST_PLATE_SetActivePlate( work , work->plateWork[work->pokeCursor] , TRUE );
+        }
+        else
+        {
+          //バトル時決定・戻る
+          const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
+          PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
+          
+          GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
+        }
+        work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
       }
-      else
-      {
-        //バトル時決定・戻る
-        const u8 idx = work->pokeCursor - PL_SEL_POS_ENTER;
-        PLIST_MENU_SetActiveMenuWin_BattleMenu( work->btlMenuWin[idx] , TRUE );
-        
-        GFL_CLACT_WK_SetDrawEnable( work->clwkCursor[0] , FALSE );
-      }
-      work->platePalAnmCnt = PLIST_PLATE_ACTIVE_ANM_CNT;
 
       work->ktst = GFL_APP_KTST_TOUCH;
     }
