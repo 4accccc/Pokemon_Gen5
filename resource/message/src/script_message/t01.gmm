@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T21:44:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T15:38:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -801,12 +801,14 @@
 ・続けてwhite_end_02</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……それをいうなら
-ぼくだって　ゲーチスを▽
-ダークトリニティに　つれさられたし▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……それをいうなら
-ぼくだって　ゲーチスを▽
-ダークトリニティに　奪還されたし▼</language>
+		<language name="JPN" width="256">チェレン『……それなら
+ぼくだって　おなじさ▼
+ダークトリニティに　すきを　つかれ
+ゲーチスを　のがして　しまったし▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『……それなら
+ぼくだって　同じさ▼
+ダークトリニティに　すきを　つかれ
+ゲーチスを　逃して　しまったし▼</language>
 	</row>
 
 	<row id="msg_t01_white_end_02" text-color="#0000ff,,,#0000ff,,#0000ff,#0000ff,,,,,,#0000ff,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -829,10 +831,10 @@
 ・0＝主人公名前</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『……こんど　おしえるよ▼
+		<language name="JPN" width="256">チェレン『……こんど　おしえる▼
 それよりもさ　ベル
 きみたちは　これから　どうするの？▼</language>
-		<language name="JPN_KANJI" width="256">チェレン『……今度　教えるよ▼
+		<language name="JPN_KANJI" width="256">チェレン『……今度　教える▼
 それよりもさ　ベル
 きみたちは　これから　どうするの？▼</language>
 	</row>
