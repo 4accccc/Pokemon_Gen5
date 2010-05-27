@@ -1,27 +1,28 @@
 //============================================================================================
 /**
- * @file  zukan_savedata.h
- * @brief 図鑑セーブデータアクセス処理群ヘッダ
- * @author  mori / tamada GAME FREAK inc.
- * @date  2009.10.26
+ * @file		zukan_savedata.h
+ * @brief		図鑑セーブデータアクセス処理群ヘッダ
+ * @author	mori / tamada GAME FREAK inc.
+ * @date		2009.10.26
  *
  * ジョウト→イッシュ→？とその度に名前を書き換えるのもなんなので、
  * これからは全国は「ZENKOKU」、地方図鑑の事は「LOCAL」と記述する事にします。
  *
  */
 //============================================================================================
-#ifndef __ZUKAN_SAVEDATA_H__
-#define __ZUKAN_SAVEDATA_H__
+#pragma	once
 
 #include "gamesystem/gamedata_def.h"
-
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
-#define ISSHU_MAX ( ZUKANNO_ISSHU_END+1 )     // イッシュ図鑑数（ビクティ分＋１）
 
 //============================================================================================
+//	定数定義
 //============================================================================================
+
+#define ISSHU_MAX ( ZUKANNO_ISSHU_END+1 )     // イッシュ図鑑数（ビクティ分＋１）
+
 enum{
   ZUKANSAVE_RANDOM_PACHI = 0,   // パッチール個性乱数
 
@@ -52,117 +53,439 @@ enum{
 //----------------------------------------------------------
 typedef struct ZUKAN_SAVEDATA ZUKAN_SAVEDATA;
 
-//----------------------------------------------------------
+
+//============================================================================================
+//	プロトタイプ宣言
+//============================================================================================
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		図鑑セーブデータのサイズ取得
+ *
+ * @param		none
+ *
+ * @return	図鑑セーブデータのサイズ
+ */
+//--------------------------------------------------------------------------------------------
+extern int ZUKANSAVE_GetWorkSize(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		図鑑セーブデータの初期化
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANSAVE_Init( ZUKAN_SAVEDATA * zw );
+
+//--------------------------------------------------------------------------------------------
 /**
  * @brief		図鑑セーブデータ取得（セーブデータから）
  *
- * @param		sv      セーブデータ保持ワークへのポインタ
+ * @param		sv		セーブデータ保持ワークへのポインタ
  *
  * @return  図鑑セーブデータ
  *
  * @li	通常は使用しないでください！
  */
-//----------------------------------------------------------
+//--------------------------------------------------------------------------------------------
 extern ZUKAN_SAVEDATA * ZUKAN_SAVEDATA_GetZukanSave( SAVE_CONTROL_WORK * sv );
 
-//----------------------------------------------------------
-//  セーブデータ取得のための関数（GAMEDATA経由）
-//----------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		図鑑セーブデータ取得（GAMEDETAから）
+ *
+ * @param		gamedata		GAMEDATA
+ *
+ * @return  図鑑セーブデータ
+ *
+ * @li	ゲーム中はこちらを使用してください
+ */
+//--------------------------------------------------------------------------------------------
 extern ZUKAN_SAVEDATA * GAMEDATA_GetZukanSave( GAMEDATA * gamedata );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		全国図鑑モードをセット
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @return	none
+ *
+ *	全国図鑑を表示可能にする
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANSAVE_SetZenkokuZukanFlag( ZUKAN_SAVEDATA * zw );
 
-//----------------------------------------------------------
-//  セーブデータシステムが依存する関数
-//----------------------------------------------------------
-extern int ZUKANSAVE_GetWorkSize(void);
-extern ZUKAN_SAVEDATA * ZUKANSAVE_AllocWork( HEAPID heapID );
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		全国ずかんモードかどうか？の問い合わせ
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @retval	"TRUE = 全国図鑑可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_GetZenkokuZukanFlag( const ZUKAN_SAVEDATA * zw );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief  グラフィックバージョン用機能拡張フラグ設定
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANSAVE_SetGraphicVersionUpFlag( ZUKAN_SAVEDATA * zw );
 
-//----------------------------------------------------------
-//----------------------------------------------------------
-extern void ZUKANSAVE_Init(ZUKAN_SAVEDATA * zs);
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		グラフィックバージョン用機能拡張フラグ取得
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @retval	"TRUE = バージョンアップ済み"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_GetGraphicVersionUpFlag( const ZUKAN_SAVEDATA * zw );
 
-extern u16 ZUKANSAVE_GetPokeGetCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetPokeSeeCount(const ZUKAN_SAVEDATA * zs);
-
-extern u16 ZUKANSAVE_GetLocalPokeGetCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-extern u16 ZUKANSAVE_GetLocalPokeSeeCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-
-// ポケモン見た登録・ポケモン捕まえた登録
-extern void ZUKANSAVE_SetPokeSee(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
-extern void ZUKANSAVE_SetPokeGet(ZUKAN_SAVEDATA * zs, POKEMON_PARAM * pp);
-
-// ゼンコク図鑑持っているときー＞全国用の各数字を返す
-// イッシュ図鑑しかもっていないときー＞イッシュ図鑑用の各数字を返す
-extern u16 ZUKANSAVE_GetZukanPokeGetCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-extern u16 ZUKANSAVE_GetZukanPokeSeeCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-
-
-// ゼンコク図鑑　イッシュ図鑑
-// 完成に必要なポケモンだけでカウントした値を取得
-extern u16 ZUKANSAVE_GetZenkokuGetCompCount(const ZUKAN_SAVEDATA * zs);
-extern u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-extern u16 ZUKANSAVE_GetLocalSeeCompCount( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-
-extern BOOL ZUKANSAVE_CheckZenkokuComp(const ZUKAN_SAVEDATA * zs);
-extern BOOL ZUKANSAVE_CheckLocalGetComp( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-extern BOOL ZUKANSAVE_CheckLocalSeeComp( const ZUKAN_SAVEDATA * zs, HEAPID heapID );
-
-extern BOOL ZUKANSAVE_GetPokeGetFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
-extern BOOL ZUKANSAVE_GetPokeSeeFlag(const ZUKAN_SAVEDATA * zs, u16 monsno);
-extern u32 ZUKANSAVE_GetPokeSexFlag(const ZUKAN_SAVEDATA * zw, u16 monsno, int first_second, HEAPID heapId );
-extern u32 ZUKANSAVE_GetPokeAnnoonForm(const ZUKAN_SAVEDATA * zs, int count, BOOL get_f );
-extern u32 ZUKANSAVE_GetPokeAnnoonNum(const ZUKAN_SAVEDATA * zs, BOOL get_f);
-extern u32 ZUKANSAVE_GetPokeSiiusiForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZUKANSAVE_GetPokeSiiusiSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZUKANSAVE_GetPokeSiidorugoForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZUKANSAVE_GetPokeSiidorugoSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZUKANSAVE_GetPokeMinomuttiForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZUKANSAVE_GetPokeMinomuttiSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZUKANSAVE_GetPokeMinomesuForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZUKANSAVE_GetPokeMinomesuSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZUKANSAVE_GetPokePityuuForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZUKANSAVE_GetPokePityuuSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZUKANSAVE_GetPokeRandomFlag(const ZUKAN_SAVEDATA * zs, u8 random_poke);
-extern u32 ZUKANSAVE_GetPokeDeokisisuForm(const ZUKAN_SAVEDATA * zs, int count);
-extern u32 ZUKANSAVE_GetPokeDeokisisuFormSeeNum(const ZUKAN_SAVEDATA * zs);
-extern u32 ZUKANSAVE_GetPokeForm( const ZUKAN_SAVEDATA* zs, int monsno, int count );
-extern u32 ZUKANSAVE_GetPokeFormNum( const ZUKAN_SAVEDATA* zs, int monsno );
-
-
-extern BOOL ZUKANSAVE_GetZenkokuZukanFlag(const ZUKAN_SAVEDATA * zs);
-extern void ZUKANSAVE_SetZenkokuZukanFlag(ZUKAN_SAVEDATA * zs);
-
-extern BOOL ZUKANSAVE_GetGraphicVersionUpFlag(const ZUKAN_SAVEDATA * zs);
-extern void ZUKANSAVE_SetGraphicVersionUpFlag(ZUKAN_SAVEDATA * zs);
-
-extern BOOL ZUKANSAVE_GetTextVersionUpFlag(const ZUKAN_SAVEDATA * zs, u16 monsno, u32 country_code);
-
-extern void ZUKANSAVE_SetTextVersionUpMasterFlag( ZUKAN_SAVEDATA * zs );
-extern BOOL ZUKANSAVE_GetTextVersionUpMasterFlag(const ZUKAN_SAVEDATA * zs);
-
-extern void ZUKANSAVE_Copy(const ZUKAN_SAVEDATA * from, ZUKAN_SAVEDATA * to);
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		閲覧中の図鑑モードを設定
+ *
+ * @param		zw		図鑑セーブデータ
+ * @param		mode	図鑑モード TRUE = 全国, FALSE = 地方
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZUKANSAVE_SetZukanMode( ZUKAN_SAVEDATA * zw, BOOL mode );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		閲覧中の図鑑モードを取得
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @retval	"TRUE = 全国"
+ * @retval	"FALSE = 地方"
+ */
+//--------------------------------------------------------------------------------------------
 extern BOOL ZUKANSAVE_GetZukanMode( const ZUKAN_SAVEDATA * zw );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		閲覧中のポケモン番号を設定
+ *
+ * @param		zw		図鑑セーブデータ
+ * @param		mons	ポケモン番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZUKANSAVE_SetDefaultMons( ZUKAN_SAVEDATA * zw, u16 mons );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		閲覧中のポケモン番号を取得
+ *
+ * @param		zw		図鑑セーブデータ
+ *
+ * @return	ポケモン番号
+ */
+//--------------------------------------------------------------------------------------------
 extern u16 ZUKANSAVE_GetDefaultMons( const ZUKAN_SAVEDATA * zw );
-//extern void ZUKANSAVE_SetShortcutMons( ZUKAN_SAVEDATA * zw, u16 mons );
-//extern u16 ZUKANSAVE_GetShortcutMons( const ZUKAN_SAVEDATA * zw );
-extern u32	ZUKANSAVE_GetFormMax( u16 mons );
-extern BOOL ZUKANSAVE_CheckPokeSeeForm( const ZUKAN_SAVEDATA * zw, u16 monsno, int sex, int rare, int form );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		閲覧中データ設定
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		mons		ポケモン番号
+ * @param		sex			性別
+ * @param		rare		レアフラグ TRUE = RARE
+ * @param		form		フォルム
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZUKANSAVE_SetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 sex, BOOL rare, u32 form );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		最大フォルム数取得
+ *
+ * @param		mons		ポケモン番号
+ *
+ * @return	最大フォルム数
+ */
+//--------------------------------------------------------------------------------------------
+extern u32	ZUKANSAVE_GetFormMax( u16 mons );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		表示するフォルムデータを取得
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		mons		ポケモン番号
+ * @param		sex			性別
+ * @param		rare		レアフラグ TRUE = RARE
+ * @param		form		フォルム
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZUKANSAVE_GetDrawData( ZUKAN_SAVEDATA * zw, u16 mons, u32 * sex, BOOL * rare, u32 * form, HEAPID heapID );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		捕獲データセット
+ *
+ * @param		zw		図鑑セーブデータ
+ * @param		pp		捕獲ポケモンデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANSAVE_SetPokeGet( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp );
 
-//----------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		捕獲チェック
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		monsno	ポケモン番号
+ *
+ * @retval	"TRUE = 捕獲済み"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_GetPokeGetFlag( const ZUKAN_SAVEDATA * zw, u16 monsno );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		現在の図鑑モードのポケモン捕獲数取得
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	捕獲数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetZukanPokeGetCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン捕獲数取得（全国）
+ *
+ * @param		zw			図鑑セーブデータ
+ *
+ * @return	捕獲数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetPokeGetCount( const ZUKAN_SAVEDATA * zw );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン捕獲数取得（地方）
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	捕獲数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetLocalPokeGetCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		見たデータセット
+ *
+ * @param		zw		図鑑セーブデータ
+ * @param		pp		見たポケモンのデータ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZUKANSAVE_SetPokeSee( ZUKAN_SAVEDATA * zw, POKEMON_PARAM * pp );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		見たチェック
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		monsno	ポケモン番号
+ *
+ * @retval	"TRUE = 見た"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_GetPokeSeeFlag( const ZUKAN_SAVEDATA * zw, u16 monsno );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		現在の図鑑モードのポケモンを見た数取得
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	見た数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetZukanPokeSeeCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンを見た数取得（全国）
+ *
+ * @param		zw			図鑑セーブデータ
+ *
+ * @return	見た数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetPokeSeeCount( const ZUKAN_SAVEDATA * zw );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンを見た数取得（地方）
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	見た数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetLocalPokeSeeCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		指定タイプのポケモンを見たか
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		monsno	ポケモン番号
+ * @param		sex			性別
+ * @param		rare		レア
+ * @param		form		フォルム
+ *
+ * @retval	"TRUE = 見た"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_CheckPokeSeeForm( const ZUKAN_SAVEDATA * zw, u16 monsno, int sex, int rare, int form );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		特殊ポケモンの個性乱数取得
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		monsno	ポケモン番号
+ *
+ * @return	個性乱数
+ */
+//--------------------------------------------------------------------------------------------
+extern u32 ZUKANSAVE_GetPokeRandomFlag( const ZUKAN_SAVEDATA * zw, u8 monsno );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		全国図鑑完成チェック
+ *
+ * @param		zw			図鑑セーブデータ
+ *
+ * @retval	"TRUE = 完成"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_CheckZenkokuComp( const ZUKAN_SAVEDATA * zw );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑完成チェック（捕獲数）
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @retval	"TRUE = 完成"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_CheckLocalGetComp( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑完成チェック（見た数）
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @retval	"TRUE = 完成"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_CheckLocalSeeComp( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		全国図鑑完成に必要なポケモンの捕獲数
+ *
+ * @param		zw			図鑑セーブデータ
+ *
+ * @return	捕獲数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetZenkokuGetCompCount( const ZUKAN_SAVEDATA * zw );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑完成に必要なポケモンの捕獲数
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	捕獲数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetLocalGetCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		地方図鑑完成に必要なポケモンを見た数
+ *
+ * @param		zw			図鑑セーブデータ
+ * @param		heapID	ヒープＩＤ
+ *
+ * @return	見た数
+ */
+//--------------------------------------------------------------------------------------------
+extern u16 ZUKANSAVE_GetLocalSeeCompCount( const ZUKAN_SAVEDATA * zw, HEAPID heapID );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		図鑑テキストバージョンチェック
+ *
+ * @param		zw						図鑑セーブデータ
+ * @param		monsno				ポケモン番号
+ * @param		country_code	国コード
+ *
+ * @retval	"TRUE = 表示可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZUKANSAVE_GetTextVersionUpFlag( const ZUKAN_SAVEDATA * zw, u16 monsno, u32 country_code );
+
+
+
+//============================================================================================
 //  デバッグ用
-//----------------------------------------------------------
+//============================================================================================
 #ifdef	PM_DEBUG
 extern void ZUKANSAVE_DebugDataClear( ZUKAN_SAVEDATA * zw, u16 start, u16 end );
 extern void ZUKANSAVE_DebugDataSetSee( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID );
 extern void ZUKANSAVE_DebugDataSetGet( ZUKAN_SAVEDATA * zw, u16 start, u16 end, HEAPID heapID );
 #endif	// PM_DEBUG
 
-#endif  // __ZUKAN_SAVEADATA_H__
