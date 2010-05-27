@@ -29,7 +29,7 @@ _EVENT_DATA_END
 /**************************************************************/
 EVENT_START		ev_reserve_c03p16_cabinguide_01
 		
-	_MAP_FADE_BLACK_IN_SLOW()
+	_MAP_FADE_BLACK_IN()
 	_DISP_FADE_END_CHECK()
 
 	//下船アニメ
@@ -127,7 +127,10 @@ _TALK_OBJ_START()
 	
 			//乗船時間内の場合
 			IF $LWK_TIMEZONE == TIMEZONE_EVENING THEN
-	
+
+				//所持金の表示
+				_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
+
 				//けしき　ウキウキ
 				_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01 , C03P16_CABINGUIDE_01, POS_DOWN )
 			
@@ -135,8 +138,6 @@ _TALK_OBJ_START()
 				$LWK_MENU_WHILE = 0
 				WHILE $LWK_MENU_WHILE != 1
 				
-					//所持金の表示
-					_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
 					//BMPMENU表示
 					_BMPMENU_INIT_RIGHT( MENU_X2,MENU_Y2,0,1,LWK_MENU )
 
@@ -158,9 +159,7 @@ _TALK_OBJ_START()
 			
 					CASE 1 THEN		//せつめいを受ける場合
 
-						_GOLD_WIN_CLOSE()
 						_CALL ev_explanation
-						_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01d , C03P16_CABINGUIDE_01, POS_DOWN )
 
 					CASE 2 THEN		//やめる
 					
@@ -284,13 +283,12 @@ IF $LWK_GOLD_CHK == TRUE THEN
 
 //お金が足りない場合
 ELSE
+	_GOLD_WIN_CLOSE()
 	
 	//お金が　足りません
 	_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DOWN )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-
-	_GOLD_WIN_CLOSE()		
 
 ENDIF
 
@@ -310,6 +308,8 @@ _BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_02 , C03P16_CABINGUIDE_01, POS_DOW
 
 //甲板では　景色も　楽しめます
 _BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_03 , C03P16_CABINGUIDE_01, POS_DOWN )
-_MSGWIN_CLOSE()
+
+//乗船料は　１０００円
+_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01d , C03P16_CABINGUIDE_01, POS_DOWN )
 
 _RET
