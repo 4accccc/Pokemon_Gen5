@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-05-20T13:14:20"/>
+	<create user="ohmori" host="W00223" date="2010-05-27T12:35:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="470" top="134" right="1176" bottom="931" maximized="no" rayout="Vertical2">
+	<dialog left="935" top="239" right="1641" bottom="1036" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
 		<band id="0" index="0" style="0000" width="531"/>
@@ -696,17 +696,17 @@
 	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
 		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
-○ブラックＬｖが　[2:02:３桁:0]あがった！</language>
+◇ブラックＬｖが　[2:02:３桁:0]あがった！</language>
 		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
-○ブラックＬｖが　[2:02:３桁:0]上がった！</language>
+◇ブラックＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
 
 	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
 		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
-●ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
+◆ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
 		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
-●ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
+◆ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
 	</row>
 
 	<row id="mis_m01_01_t1" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
