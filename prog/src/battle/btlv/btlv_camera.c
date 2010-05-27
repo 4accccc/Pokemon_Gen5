@@ -369,12 +369,30 @@ static	void	BTLV_CAMERA_Move( BTLV_CAMERA_WORK *bcw )
 			bcw->brake_frame--;
 			if( bcw->brake_frame == 0 )
       {
-				bcw->vec_pos.x = bcw->vec_pos.x >> 1;
-				bcw->vec_pos.y = bcw->vec_pos.y >> 1;
-				bcw->vec_pos.z = bcw->vec_pos.z >> 1;
-				bcw->vec_target.x = bcw->vec_target.x >> 1;
-				bcw->vec_target.y = bcw->vec_target.y >> 1;
-				bcw->vec_target.z = bcw->vec_target.z >> 1;
+				if( bcw->vec_pos.x >> 1 )
+        { 
+				  bcw->vec_pos.x >>= 1;
+        }
+				if( bcw->vec_pos.y >> 1 )
+        { 
+				  bcw->vec_pos.y >>= 1;
+        }
+        if( bcw->vec_pos.z >> 1 )
+        { 
+				  bcw->vec_pos.z >>= 1;
+        }
+        if( bcw->vec_target.x >> 1 )
+        { 
+				  bcw->vec_target.x >>= 1;
+        }
+		  	if( bcw->vec_target.y >> 1 )
+        { 
+				  bcw->vec_target.y >>= 1;
+        }
+				if( bcw->vec_target.z >> 1 )
+        { 
+				  bcw->vec_target.z >>= 1;
+        }
 			}
 		}
 
