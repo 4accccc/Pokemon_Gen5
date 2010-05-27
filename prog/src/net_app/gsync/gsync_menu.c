@@ -1418,15 +1418,6 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   pWork->yoffset--;
   GFL_CLACT_SYS_Main();
 
-  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-    NetErr_App_ReqErrorDisp();
-    pWork->selectType = GAMESYNC_RETURNMODE_NONE;
-    retCode = GFL_PROC_RES_FINISH;
-    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
-  }
-
-  
   return retCode;
 }
 

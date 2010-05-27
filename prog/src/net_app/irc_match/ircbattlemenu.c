@@ -2139,14 +2139,6 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
 
   GFL_CLACT_SYS_Main();
 
-  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-    NetErr_App_ReqErrorDisp();
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    retCode = GFL_PROC_RES_FINISH;
-    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
-  }
-  
   return retCode;
 }
 
