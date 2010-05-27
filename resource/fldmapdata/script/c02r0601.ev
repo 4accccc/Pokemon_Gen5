@@ -61,7 +61,7 @@ EVENT_START   ev_c02r0601_waitress_01
 			_BALLOONWIN_OBJMSG( msg_c02r0601_waitress_02 , C02R0601_WAITRESS_01 )
 			_BALLOONWIN_CLOSE()
 			
-			_ITEM_EVENT_KEYWAIT(ITEM_SAIKOSOODA, 1)
+			_ITEM_EVENT_NOWAIT(ITEM_SAIKOSOODA, 1)
 			
 			//==================================//
 			
