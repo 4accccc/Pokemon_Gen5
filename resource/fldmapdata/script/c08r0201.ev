@@ -84,7 +84,6 @@ EVENT_START	ev_c08r0201_veteranm_01
 			//ようこそ！ かいせつしてもいいかね？
 			_BALLOONWIN_OBJMSG(msg_c08r0201_veteranm_01b,C08R0201_VETERANM_01)
 			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
 			
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
@@ -113,7 +112,6 @@ EVENT_START	ev_c08r0201_veteranm_01
 			//ようこそ！ かいせつしてもいいかね？
 			_BALLOONWIN_OBJMSG(msg_c08r0201_veteranm_02b,C08R0201_VETERANM_01)
 			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
 			
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
@@ -139,7 +137,6 @@ EVENT_START	ev_c08r0201_veteranm_01
 			//ようこそ！ かいせつしてもいいかね？
 			_BALLOONWIN_OBJMSG(msg_c08r0201_veteranm_01w,C08R0201_VETERANM_01)
 			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
 			
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
@@ -167,7 +164,6 @@ EVENT_START	ev_c08r0201_veteranm_01
 			//ようこそ！ かいせつしてもいいかね？
 			_BALLOONWIN_OBJMSG(msg_c08r0201_veteranm_02w,C08R0201_VETERANM_01)
 			_YES_NO_WIN( SCWK_ANSWER )
-			_BALLOONWIN_CLOSE()
 			
 			//はい
 			IF $SCWK_ANSWER == 0 THEN
