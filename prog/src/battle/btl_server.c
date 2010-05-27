@@ -911,6 +911,15 @@ static BOOL Irekae_IsNeedConfirm( BTL_SERVER* server )
           return FALSE;
         }
       }
+
+      // 交替できるポケモンがいない場合は確認の必要なし
+      {
+        BTL_PARTY* party = BTL_POKECON_GetPartyData( server->pokeCon, BTL_MAIN_GetPlayerClientID(server->mainModule) );
+        if( BTL_PARTY_GetAliveMemberCount(party) < 2 ){
+          return FALSE;
+        }
+      }
+
       return TRUE;
     }
   }
