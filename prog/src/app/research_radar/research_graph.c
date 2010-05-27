@@ -676,7 +676,7 @@ static void MainSeq_STANDBY( RRG_WORK* work )
     RegisterNextState( work, RRG_STATE_PERCENTAGE );         // ====> RRG_STATE_PERCENTAGE
     RegisterNextState( work, RRG_STATE_STANDBY );            // =====> RRG_STATE_STANDBY
     return;
-  } 
+  }
 
   //-----------------------
   //『戻る』ボタンをタッチ
@@ -708,8 +708,6 @@ static void MainSeq_STANDBY( RRG_WORK* work )
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
       work->analyzeByTouchFlag = TRUE;                 // タッチで解析
       BlinkAnalyzeButton( work );                      //『報告を見る』ボタンを明滅させる
-      UpdateBGFont_DataReceiving( work );              //「データしゅとくちゅう」の表示を更新する
-      UpdateBGFont_Answer( work );                     //「回答」文字列の表示を更新する
       FinishCurrentState( work );                      // RRG_STATE_STANDBY 状態を終了
       RegisterNextState( work, RRG_STATE_ANALYZE );    // => RRG_STATE_ANALYZE 
       RegisterNextState( work, RRG_STATE_FLASHOUT );   // ==> RRG_STATE_FLASHOUT 
@@ -726,8 +724,6 @@ static void MainSeq_STANDBY( RRG_WORK* work )
     if( (work->analyzeFlag == FALSE) && (GetCountOfQuestion(work) != 0) ) {
       work->analyzeByTouchFlag = TRUE;                 // タッチで解析
       BlinkAnalyzeButton( work );                      //『報告を見る』ボタンを明滅させる
-      UpdateBGFont_DataReceiving( work );              //「データしゅとくちゅう」の表示を更新する
-      UpdateBGFont_Answer( work );                     //「回答」文字列の表示を更新する
       FinishCurrentState( work );                      // RRG_STATE_STANDBY 状態を終了
       RegisterNextState( work, RRG_STATE_ANALYZE );    // => RRG_STATE_ANALYZE 
       RegisterNextState( work, RRG_STATE_FLASHOUT );   // ==> RRG_STATE_FLASHOUT 
@@ -748,9 +744,6 @@ static void MainSeq_STANDBY( RRG_WORK* work )
     if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
       work->analyzeByTouchFlag = TRUE;                 // タッチで解析
       BlinkAnalyzeButton( work );                      //『報告を見る』ボタンを明滅させる
-      MoveMenuCursorDirect( work, MENU_ITEM_ANSWER );  // カーソル位置を設定
-      UpdateBGFont_DataReceiving( work );              //「データしゅとくちゅう」の表示を更新する
-      UpdateBGFont_Answer( work );                     //「回答」文字列の表示を更新する
       FinishCurrentState( work );                      // RRG_STATE_STANDBY 状態を終了
       RegisterNextState( work, RRG_STATE_ANALYZE );    // => RRG_STATE_ANALYZE 
       RegisterNextState( work, RRG_STATE_FLASHOUT );   // ==> RRG_STATE_FLASHOUT 
@@ -936,7 +929,19 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
   //-----------------------
   //「質問」ボタンをタッチ
   if( touch == TOUCH_AREA_QUESTION ) {
-    MoveMenuCursorDirect( work, MENU_ITEM_QUESTION ); // カーソル移動
+    if( (work->analyzeFlag == FALSE ) && (GetCountOfQuestion(work) != 0) ) {
+      work->analyzeByTouchFlag = TRUE;                 // タッチで解析
+      BlinkAnalyzeButton( work );                      //『報告を見る』ボタンを明滅させる
+      FinishCurrentState( work );                      // RRG_STATE_STANDBY 状態を終了
+      RegisterNextState( work, RRG_STATE_ANALYZE );    // => RRG_STATE_ANALYZE 
+      RegisterNextState( work, RRG_STATE_FLASHOUT );   // ==> RRG_STATE_FLASHOUT 
+      RegisterNextState( work, RRG_STATE_FLASHIN );    // ===> RRG_STATE_FLASHIN 
+      RegisterNextState( work, RRG_STATE_PERCENTAGE ); // ====> RRG_STATE_PERCENTAGE 
+      RegisterNextState( work, RRG_STATE_STANDBY );    // =====> RRG_STATE_STANDBY 
+    }
+    else {
+      MoveMenuCursorDirect( work, MENU_ITEM_QUESTION ); // カーソル位置を設定
+    }
     return;
   }
   //-----------------------
