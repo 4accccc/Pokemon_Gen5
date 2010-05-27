@@ -409,18 +409,29 @@ EVENT_START    ev_pos_c06_hakase1_01
 	//博士:おぉ　すまない！　ちと　こうふん　してな
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_05, C06_HAKASE1_01,POS_DEFAULT)
 	
-	//ポケモン図鑑がパワーアップする処理 ※フォルム詳細画面追加
-	_SET_ZUKAN_GRAPHIC_FLAG()
-	
 	//博士が主人公に話しかける
 	//博士:では　であいを　きねんして　おまえさんの　ポケモンずかんを
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_06, C06_HAKASE1_01,POS_DEFAULT)
+	_BALLOONWIN_CLOSE()
+	
+	//ポケモン図鑑がパワーアップする処理 ※フォルム詳細画面追加
+	//------------------------------------//
+	_ME_PLAY( SEQ_ME_KEYITEM )
+	_PLAYER_NAME( 0 )
+	_SYSWIN_MSG( msg_c06_hakase1_06a, POS_DEFAULT )		//図鑑がパワーアップした
+	_ME_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
+	
+	//図鑑パワーアップフラグ
+	_SET_ZUKAN_GRAPHIC_FLAG()
+	//------------------------------------//
 	
 	//博士が主人公に話しかける
 	//博士:アララギ『よし！　これで　ポケモンの　みた　すがたなら
 	_BALLOONWIN_OBJMSG_POS( msg_c06_hakase1_07, C06_HAKASE1_01,POS_DEFAULT)
 	_BALLOONWIN_CLOSE()
-	
+
 	//フウロと博士の振り向きに差をつけるためのウェイト
 	//ジムリーダーが主人公に隣接
 	IF $LWK_PLY_X == 100 THEN
