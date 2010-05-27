@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-25T16:18:58"/>
+	<create user="taya" host="W00146" date="2010-05-27T12:47:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2416,10 +2416,10 @@
 	</row>
 
 	<row id="BTL_STRID_SET_MagicCoatExe">
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]は
-マジックコートに　はねかえされた！</language>
-		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の　[1:07:わざ名:1]は
-マジックコートに　跳ね返された！</language>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　はねかえした！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+[1:07:わざ名:1]を　跳ね返した！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Teleport">
