@@ -3316,6 +3316,10 @@ static void Escape_SetSPEscapeLocation( GAMEDATA* gamedata, const LOCATION* loc_
       GAMEDATA_SetEscapeLocation( gamedata, &location );
     }
   }
+  // 今リゾートデザートにいて、接続先があなぬけ可能な場所だったら設定する
+  if( loc_now->zone_id == ZONE_ID_D03R0101 && ZONEDATA_EscapeEnable( loc_req->zone_id ) ){
+      GAMEDATA_SetEscapeLocation( gamedata, ent );
+  }
 
 }
 
