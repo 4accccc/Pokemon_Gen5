@@ -564,9 +564,5 @@ _ANIME_LABEL	anm_common_turn_u
 /*  D06 看板のイベントスクリプト2                      */
 /**************************************************************/
 EVENT_START   ev_bg_d06_sign1_01
-
-  _BGWIN_MSG(msg_d06_sign1_01,TYPE_POST) 
-  _LAST_KEYWAIT()
-  _BGWIN_CLOSE()
-
+	_EASY_BGWIN_MSG(msg_d06_sign1_01,TYPE_POST)
 EVENT_END
