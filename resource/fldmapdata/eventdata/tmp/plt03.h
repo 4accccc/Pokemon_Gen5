@@ -10,6 +10,7 @@
 
 #define PLT03_MAN01_01                     0
 #define PLT03_MAN02_01                     1
+#define PLT03_STOPPER_PC                   2
 
 #endif //ZONE_PLT03_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plt03.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

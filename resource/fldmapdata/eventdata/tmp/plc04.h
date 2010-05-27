@@ -19,6 +19,7 @@
 #define STOPPER_05                         6
 #define STOPPER_06                         7
 #define STTOPER_07                         8
+#define STOPER_PC                          9
 
 #endif //ZONE_PLC04_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plc04.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

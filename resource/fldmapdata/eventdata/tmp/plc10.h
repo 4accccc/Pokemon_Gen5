@@ -12,6 +12,7 @@
 
 #define PLC10_STOPPER_01                   0
 #define PLC10_STOPPER_02                   1
+#define PLC10_STOPPER_PC                   2
 
 #endif //ZONE_PLC10_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/plc10.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

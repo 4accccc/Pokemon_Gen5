@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/31 17:45:27
+#save date:2010/05/27 14:49:44
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc05.wms
 #SECTION START:OBJ_EVENT
@@ -9,7 +9,7 @@ C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plc05.wms
 #hold event type:
 1
 #hold event number:
-4
+5
 #event number: 0
 #type
 1
@@ -134,6 +134,37 @@ DIR_DOWN
 EVENTDATA_POSTYPE_GRID
 #position
 -8 0 -712
+#event number: 4
+#type
+1
+#ID name
+PLC05_STOPPER_PC
+#OBJ CODE Number
+STOPPER
+#MOVE CODE Number
+MV_DMY
+#EVENT TYPE Number
+EV_TYPE_NORMAL
+#Flag Name
+0
+#Event Script Name
+SCRID_DUMMY
+#Direction Type Number
+DIR_DOWN
+#Parameter 0 Number
+1
+#Parameter 1 Number
+1
+#Parameter 2 Number
+0
+#Move Limit X Number
+0
+#Move Limit Z Number
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 0 -216
 #Map Event List Data End
 #SECTION End:OBJ_EVENT
 #SECTION START:BG_EVENT
@@ -179,7 +210,7 @@ EVENTDATA_POSTYPE_GRID
 #hold event type:
 1
 #hold event number:
-3
+4
 #event number: 0
 #Pos Event Label
 POSID_PLCDUMMY_01
@@ -229,6 +260,23 @@ POS_CHECK_TYPE_DUMMY
 EVENTDATA_POSTYPE_GRID
 #position
 -24 0 -408
+#size
+1 1
+#event number: 3
+#Pos Event Label
+POSID_PLCDUMMY_PC
+#Pos Script Name
+SCRID_DUMMY
+#Pos Check Type
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Name
+POS_CHECK_TYPE_DUMMY
+#Event Trigger Work Value
+0
+#Pos Type
+EVENTDATA_POSTYPE_GRID
+#position
+184 0 -216
 #size
 1 1
 #Map Event List Data End

@@ -15,6 +15,7 @@
 #define PLC08_STOPPER_01                   2
 #define PLC08_STOPPER_02                   3
 #define PLC08_STOPPER_03                   4
+#define PLC08_STOPPER_PC                   5
 
 #endif //ZONE_PLC08_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/plc08.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
