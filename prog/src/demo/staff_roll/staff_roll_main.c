@@ -995,6 +995,11 @@ static void Exit3D( SRMAIN_WORK * wk )
 
 static void Main3D( SRMAIN_WORK * wk )
 {
+	// ‚Q‰ñ–Ú‚Í•\¦‚µ‚È‚¢
+	if( wk->dat->fastMode == STAFFROLL_MODE_FAST ){
+		return;
+	}
+	// ‚R‚c–Ê‚ª”ñ•\¦‚Ì‚Æ‚«
 	if( ( GFL_DISP_GetMainVisible() & GX_PLANEMASK_BG0 ) == 0 ){
 		return;
 	}
@@ -1260,7 +1265,7 @@ static void ChangeBrightness3D( SRMAIN_WORK * wk )
 
 static void CheckSkip( SRMAIN_WORK * wk )
 {
-	if( wk->dat->fastMode == TRUE ){
+	if( wk->dat->fastMode != STAFFROLL_MODE_NORMAL ){
 		if( wk->skipCount == 0 ){
 			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
 				wk->skipFlag = 1;
@@ -1268,9 +1273,8 @@ static void CheckSkip( SRMAIN_WORK * wk )
 				wk->skipFlag = 0;
 			}
 		}
+		wk->skipCount = ( wk->skipCount + 1 ) & 3;
 	}
-
-	wk->skipCount = ( wk->skipCount + 1 ) & 3;
 }
 
 

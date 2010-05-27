@@ -515,7 +515,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 		break;
 
 	case MAIN_SEQ_STAFF_ROLL:
-		wk->sr_data.fastMode = TRUE;
+		wk->sr_data.fastMode = STAFFROLL_MODE_DEBUG;
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
 			wk->sr_data.mojiMode = MOJIMODE_KANJI;
 		}else{

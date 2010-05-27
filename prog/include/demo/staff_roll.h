@@ -20,9 +20,18 @@
 // 外部設定データ
 typedef struct {
 	// [ in ]
-	BOOL	fastMode;			// 早送り設定 TRUE = 有効
-	MOJIMODE	mojiMode;			// 文字表示モード（ひらがな・漢字）
+	u32	fastMode;					// 早送り設定
+	MOJIMODE	mojiMode;		// 文字表示モード（ひらがな・漢字）
 }STAFFROLL_DATA;
+
+// 呼び出しモード
+enum {
+	STAFFROLL_MODE_NORMAL = 0,
+	STAFFROLL_MODE_FAST,
+#ifdef	PM_DEBUG
+	STAFFROLL_MODE_DEBUG,
+#endif
+};
 
 
 //============================================================================================
