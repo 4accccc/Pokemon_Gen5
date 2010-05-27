@@ -322,6 +322,7 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 	u8 xRate,yRate;
 #endif //USE_LONG_SIZE
 	GFL_POINT ofsPos;
+	GFL_POINT rotOfs;
 	s16 subX,subY;
 	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemState->itemId );
 #if USE_LONG_SIZE
@@ -330,8 +331,12 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 	MUS_ITEM_DRAW_GetOffsetPos( item->itemWork , &ofsPos );
 	if( MUS_ITEM_DRAW_GetUseOffset( NULL , item->itemWork ) == TRUE )
 	{
-		subX = (item->pos.x-ofsPos.x) - posX;
-		subY = (item->pos.y-ofsPos.y) - posY;
+    u16 rot;
+    MUS_ITEM_DRAW_GetRotation( NULL , item->itemWork , &rot );
+    rotOfs.x = FX_FX32_TO_F32(FX_CosIdx( rot ) * ofsPos.x - FX_SinIdx( rot ) * ofsPos.y);
+    rotOfs.y = FX_FX32_TO_F32(FX_SinIdx( rot ) * ofsPos.x + FX_CosIdx( rot ) * ofsPos.y);
+		subX = (item->pos.x-rotOfs.x) - posX;
+		subY = (item->pos.y-rotOfs.y) - posY;
 	}
 	else
 	{
