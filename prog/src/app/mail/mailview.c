@@ -503,12 +503,12 @@ static int MailViewMain(MAIL_VIEW_DAT* wk)
   case MAILVIEW_MAIN:
     {
       static const MailKeyIn keyin[] = {
-        MailView_KeyInView,
-        MailView_KeyInCreate,
-        MailView_KeyInMsg,
-        MailView_KeyInCancel,
+        MailView_KeyInView,     // KEYIN_VIEW,
+        MailView_KeyInCreate,   // KEYIN_CREATE,
+        MailView_KeyInMsg,      // KEYIN_NOMSG,
+        MailView_KeyInCancel,   // KEYIN_CANCEL
       };
-  
+
       if(keyin[wk->mode](wk)==TRUE){
         wk->seq++;
         PaletteFadeReq( wk->palAnm, PF_BIT_MAIN_ALL, 0xFFFF,-1,0,16,0x0000, GFUser_VIntr_GetTCBSYS());
@@ -735,6 +735,7 @@ static int input_key_create(MAIL_VIEW_DAT* wk)
         PMSND_PlaySE(SND_MAIL_FINISH);
         wk->dat->cntNo = 0;
         wk->dat->flags = 0;
+        APP_TASKMENU_WIN_SetDecide( wk->menuwork[0], TRUE );
         return TRUE;
       }
     }else if(wk->line == 5){
@@ -854,6 +855,8 @@ static int input_touch_create(MAIL_VIEW_DAT* wk)
     PMSND_PlaySE(SND_MAIL_FINISH);
     wk->dat->cntNo = 0;
     wk->dat->flags = 0;
+    APP_TASKMENU_WIN_SetDecide( wk->menuwork[0], TRUE );
+    APP_TASKMENU_WIN_SetActive( wk->menuwork[1], FALSE );
     return TRUE;
   }
   return FALSE;
@@ -897,7 +900,7 @@ static void print_talk_msg( MAIL_VIEW_DAT *wk, int msgId )
 {
   STRBUF* str = NULL;
 
-  BmpWinFrame_Write( wk->win[WIN_TALK], WINDOW_TRANS_OFF, BMPL_TALK_WIN_CGX, BMPL_TALK_WIN_PAL );
+  BmpWinFrame_Write( wk->win[WIN_TALK], WINDOW_TRANS_OFF, BMPL_TALK_WIN_CGX, BMPL_MENU_WIN_PAL );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[WIN_TALK]), WINCLR_COL(15));
 
@@ -935,22 +938,31 @@ static int MailView_KeyInMsg(MAIL_VIEW_DAT* wk)
   
   switch(wk->sub_seq){
   case 0:
-    //空はダメメッセージ描画開始
-    print_talk_msg( wk, msg_mail_nozero );
+    APP_TASKMENU_WIN_SetDecide( wk->menuwork[0], TRUE );
+    APP_TASKMENU_WIN_SetActive( wk->menuwork[1], FALSE );
     wk->sub_seq = 1;
     break;
   case 1:
+    if(APP_TASKMENU_WIN_IsFinish( wk->menuwork[0] )){
+      APP_TASKMENU_WIN_ResetDecide( wk->menuwork[0] );
+      APP_TASKMENU_WIN_SetActive( wk->menuwork[0], TRUE );
+      //空はダメメッセージ描画開始
+      print_talk_msg( wk, msg_mail_nozero );
+      wk->sub_seq = 2;
+    }
+    break;
+  case 2:
     //描画終了待ち
     if(PRINTSYS_PrintStreamGetState( wk->printStream )==PRINTSTREAM_STATE_DONE)
     {
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE || GFL_UI_TP_GetTrg()){
         PRINTSYS_PrintStreamDelete( wk->printStream );
-        wk->sub_seq = 2;
+        wk->sub_seq = 3;
       }
     }
     break;
 
-  case 2:
+  case 3:
     BmpWinFrame_Clear( wk->win[WIN_TALK],WINDOW_TRANS_OFF);
     GFL_BMPWIN_ClearTransWindow( wk->win[WIN_TALK]);
     palanm_reset(wk);
@@ -994,6 +1006,12 @@ static void yesNoInit(MAIL_VIEW_DAT* wk)
   
   
   wk->yn_menuwork = APP_TASKMENU_OpenMenu( &init, wk->menures );
+
+  // 背景とメール文字のパレットを暗くする
+  SoftFadePfd(wk->palAnm,FADE_MAIN_BG, 0,16*MENU_FONT_PAL,10,0x0000);
+  APP_TASKMENU_WIN_Hide( wk->menuwork[0] ); // 「けってい」「やめる」を隠す
+  APP_TASKMENU_WIN_Hide( wk->menuwork[1] );
+
 }
 
 
@@ -1038,26 +1056,36 @@ static int MailView_KeyInCancel(MAIL_VIEW_DAT* wk)
   
   switch(wk->sub_seq){
   case 0:
-    wk->canm_f = 1;
-    //やめますかメッセージ描画開始
-    print_talk_msg( wk, msg_mail_cmsg );
-
-    //カラーアニメを一旦もとの色に戻す
-    palanm_reset(wk);
-    wk->oldCol = wk->nowCol;
+    APP_TASKMENU_WIN_SetActive( wk->menuwork[0], FALSE );
+    APP_TASKMENU_WIN_SetDecide( wk->menuwork[1], TRUE );
     break;
   case 1:
+    if(APP_TASKMENU_WIN_IsFinish( wk->menuwork[1] )){
+      APP_TASKMENU_WIN_ResetDecide( wk->menuwork[1] );
+      APP_TASKMENU_WIN_SetActive( wk->menuwork[1], TRUE );
+      wk->canm_f = 1;
+      //やめますかメッセージ描画開始
+      print_talk_msg( wk, msg_mail_cmsg );
+
+      //カラーアニメを一旦もとの色に戻す
+      palanm_reset(wk);
+      wk->oldCol = wk->nowCol;
+    }else{
+      return FALSE;
+    }
+    break;
+  case 2:
     //描画終了待ち
     if(PRINTSYS_PrintStreamGetState( wk->printStream )==PRINTSTREAM_STATE_DONE)
     {
       PRINTSYS_PrintStreamDelete( wk->printStream );
       //YNウィンドウ初期化
       yesNoInit(wk);
-      wk->sub_seq = 2;
+      wk->sub_seq = 3;
     }
     return FALSE;
     break;
-  case 2:
+  case 3:
     //選択待ち
     APP_TASKMENU_UpdateMenu( wk->yn_menuwork);
 
@@ -1077,6 +1105,10 @@ static int MailView_KeyInCancel(MAIL_VIEW_DAT* wk)
     }else{
       wk->mode = wk->inMode;  //モードを元に戻す 
       wk->canm_f = 0;
+      // 暗くした背景とメール文字のパレットを元に戻す
+      SoftFadePfd(wk->palAnm,FADE_MAIN_BG, 0,16*MENU_FONT_PAL,0,0x0000);
+      APP_TASKMENU_WIN_Show( wk->menuwork[0] ); //隠した「けってい」「やめる」を戻す
+      APP_TASKMENU_WIN_Show( wk->menuwork[1] );
       return FALSE;
     }
   }
@@ -1224,7 +1256,6 @@ static void MailView_PalAnmInit( MAIL_VIEW_DAT *wk )
 {
   //初期パレットを塗りつぶす
   SoftFadePfd(wk->palAnm,FADE_MAIN_BG, 0,16*MAILVIEW_PALMAX,16,0x0000);
-//  SoftFadePfd(wk->palAnm,FADE_MAIN_OBJ,0,16*3,16,0x0000);
   PaletteTrans_AutoSet(wk->palAnm,TRUE);
   PaletteFadeTrans( wk->palAnm );
 
@@ -1462,29 +1493,7 @@ static void MailView_2DGraInit(MAIL_VIEW_DAT* wk)
   GFL_ARCHDL_UTIL_TransVramScreen( handle,scrnID, GFL_BG_FRAME3_M, 0, 0x800,1,wk->heapID );
   GFL_ARCHDL_UTIL_TransVramScreen( handle,scrnID, GFL_BG_FRAME0_S, 0, 0x800,1,wk->heapID );
   GFL_ARCHDL_UTIL_TransVramPalette( handle, plttID, PALTYPE_SUB_BG, 0,0, wk->heapID);
-//  GFL_ARCHDL_UTIL_TransVramPalette( handle, plttID, PALTYPE_MAIN_BG, 0,0, wk->heapID);
   GFL_ARC_UTIL_TransVramPalette( ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 5*32,32, wk->heapID);
-
-/*  
-  size = ArchiveDataSizeGetByHandle(handle,charID);
-  pSrc = sys_AllocMemoryLo(wk->heapID,size);
-  ArchiveDataLoadByHandle(handle,charID,(void*)pSrc);
-  
-  NNS_G2dGetUnpackedCharacterData(pSrc,&pChar); 
-  GFL_BG_LoadCharacter(wk->bgl,GFL_BG_FRAME1_M,
-      pChar->pRawData,pChar->szByte,0);
-  GFL_BG_LoadCharacter(wk->bgl,GFL_BG_FRAME0_S,
-      pChar->pRawData,pChar->szByte,0);
-  GFL_HEAP_FreeMemory(pSrc);
-  //パレット転送
-  size = ArchiveDataSizeGetByHandle(handle,plttID);
-  pSrc = sys_AllocMemoryLo(wk->heapID,size);
-  ArchiveDataLoadByHandle(handle,plttID,(void*)pSrc);
-
-  NNS_G2dGetUnpackedPaletteData(pSrc,&pPal);
-//  GFL_BG_PaletteSet(GFL_BG_FRAME0_M,pPal->pRawData,pPal->szByte,0);
-  GFL_BG_PaletteSet(GFL_BG_FRAME0_S,pPal->pRawData,pPal->szByte,0);
-*/
 
   //パレットアニメコントローラー確保
   wk->palAnm = PaletteFadeInit(wk->heapID);
@@ -1492,14 +1501,8 @@ static void MailView_2DGraInit(MAIL_VIEW_DAT* wk)
   // MAIN BGパレット6列確保
   PaletteFadeWorkAllocSet( wk->palAnm, FADE_MAIN_BG,  FADE_PAL_ONE_SIZE*MAILVIEW_PALMAX, wk->heapID);
   // MAIN OBJパレット3列確保
-//  PaletteFadeWorkAllocSet( wk->palAnm, FADE_MAIN_OBJ, FADE_PAL_ONE_SIZE*3,wk->heapID);
-  // MAIN BGパレット読み込み
   PaletteWorkSet_ArcHandle( wk->palAnm, handle, plttID, wk->heapID, FADE_MAIN_BG,FADE_PAL_ONE_SIZE*3,0 );
 
-//  if(wk->mode == MAIL_MODE_CREATE){
-//    //ウィンドウフォントパレットを入れ替え(3列目のデータを1列目にコピー）
-//    PaletteWorkCopy( wk->palAnm, FADE_MAIN_BG, 16*3, FADE_MAIN_BG, 16, 32 );
-//  }
 
   //フォント＆ウィンドウ用パレットセット
   // 3列目にシステムウインドウパレット転送
@@ -1515,7 +1518,7 @@ static void MailView_2DGraInit(MAIL_VIEW_DAT* wk)
   PaletteWorkSet_Arc(wk->palAnm,ARCID_FLDMAP_WINFRAME,BmpWinFrame_WinPalArcGet(MENU_TYPE_TALK),wk->heapID, 
     FADE_MAIN_BG,FADE_PAL_ONE_SIZE,16*BMPL_TALK_WIN_PAL);
 
-
+  GFL_FONTSYS_SetDefaultColor();
 
   //ハンドル解放
   GFL_ARC_CloseDataHandle( handle );
@@ -1558,7 +1561,6 @@ static void MailView_2DGraRelease(MAIL_VIEW_DAT* wk)
 {
 
   // パレットフェード開放
-//  PaletteFadeWorkAllocFree( wk->palAnm, FADE_MAIN_OBJ );
   PaletteFadeWorkAllocFree( wk->palAnm, FADE_MAIN_BG );
 
   //パレットフェードシステム開放
