@@ -1809,10 +1809,7 @@ static GMEVENT* CheckSodateya(
   // 育て屋: 経験値加算, 子作り判定など1歩分の処理
   if ( SODATEYA_BreedPokemon( sodateya ) == TRUE )
   {
-    //R03のじいさんイベント用：タマゴが生まれたらワークを変更する
-    EVENTWORK *ev = GAMEDATA_GetEventWork( req->gamedata );
-    u16 * work = EVENTWORK_GetEventWorkAdrs( ev, WK_OTHER_DISCOVER_EGG );
-    *work = 1;
+    // タマゴが生まれた時の処理
   }
 
   // 手持ちタマゴ: 孵化カウンタ更新

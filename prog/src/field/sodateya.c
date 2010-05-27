@@ -25,6 +25,7 @@
 #include "pokemon_egg.h" 
 
 #include "arc/arc_def.h" // for ARCID_PMSTBL
+#include "../../../resource/fldmapdata/flagwork/work_define.h" // for WK_OTHER_DISCOVER_EGG
 
 #include "sodateya.h" 
 
@@ -69,6 +70,8 @@ static u32 CalcLoveLv_normal( const POKEMON_PARAM* poke1, const POKEMON_PARAM* p
 static BOOL LayEggCheck( SODATEYA* sodateya );
 static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg );
 static void DeletePerapVoice( FIELDMAP_WORK* fieldmap, POKEPARTY* party );
+static void SetR03OldmanEventWork( FIELDMAP_WORK* fieldmap );
+static void ResetR03OldmanEventWork( FIELDMAP_WORK* fieldmap );
 
 
 //========================================================================================
@@ -135,8 +138,7 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos )
   index = SODATEYA_WORK_GetPokemonNum( sodateya->work );
 
   // すでに最大数預かっている場合
-  if( SODATEYA_POKE_MAX <= index )
-  {
+  if( SODATEYA_POKE_MAX <= index ) {
     OBATA_Printf( "SODATEYA_TakePokemon: すでに最大数のポケモンを預かっています。\n" );
     return;
   }
@@ -165,8 +167,7 @@ void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party )
   u32 exp;
 
   // 指定インデックスにポケモンがいない場合
-  if( SODATEYA_WORK_IsValidPokemon( sodateya->work, index ) != TRUE )
-  {
+  if( SODATEYA_WORK_IsValidPokemon( sodateya->work, index ) != TRUE ) {
     OBATA_Printf( "SODATEYA_TakeBackPokemon: 指定インデックスには飼育ポケがいません。\n" );
     return;
   }
@@ -195,12 +196,12 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
   POKEMON_PARAM* egg = PP_Create( 1, 1, 1, sodateya->heapID );
 
   // タマゴが存在しない場合
-  if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE )
-  {
+  if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE ) {
     OBATA_Printf( "SODATEYA_TakeBackEgg: タマゴがありません。\n" );
     return;
   }
   GAMEBEACON_Set_SodateyaEgg();
+  ResetR03OldmanEventWork( sodateya->fieldmap );
 
   // タマゴを作成し, 手持ちに追加
   CreateEgg( sodateya, egg );
@@ -221,12 +222,13 @@ void SODATEYA_TakeBackEgg( SODATEYA* sodateya, POKEPARTY* party )
 void SODATEYA_DeleteEgg( SODATEYA* sodateya )
 {
   // タマゴが存在しない場合
-  if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE )
-  {
+  if( SODATEYA_WORK_IsValidEgg( sodateya->work ) != TRUE ) {
     OBATA_Printf( "SODATEYA_TakeBackEgg: タマゴがありません。\n" );
+    return;
   }
 
   SODATEYA_WORK_ClrEgg( sodateya->work );
+  ResetR03OldmanEventWork( sodateya->fieldmap );
 }
 
 
@@ -247,13 +249,40 @@ BOOL SODATEYA_BreedPokemon( SODATEYA* sodateya )
   SODATEYA_WORK_AddGrowUpExp( sodateya->work, EXP_PER_WALK );
 
   // 産卵チェック
-  if( LayEggCheck(sodateya) == TRUE )
-  {
-    // タマゴが産まれたことを記憶
-    SODATEYA_WORK_SetEgg( sodateya->work );
+  if( LayEggCheck(sodateya) == TRUE ) {
+    SODATEYA_WORK_SetEgg( sodateya->work ); // タマゴが産まれたことを記憶
+    SetR03OldmanEventWork( sodateya->fieldmap ); // じいさんイベントをセット
     return TRUE;
   }
   return FALSE;
+}
+
+/**
+ * @brief 育て屋じいさんの呼び掛けイベントをセットする
+ */
+static void SetR03OldmanEventWork( FIELDMAP_WORK* fieldmap )
+{
+  GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*     gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  EVENTWORK*    eventWork  = GAMEDATA_GetEventWork( gameData );
+  u16* work;
+
+  work = EVENTWORK_GetEventWorkAdrs( eventWork, WK_OTHER_DISCOVER_EGG );
+  *work = 1;
+}
+
+/**
+ * @brief 育て屋じいさんの呼び掛けイベントをリセットする
+ */
+static void ResetR03OldmanEventWork( FIELDMAP_WORK* fieldmap )
+{
+  GAMESYS_WORK* gameSystem = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA*     gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  EVENTWORK*    eventWork  = GAMEDATA_GetEventWork( gameData );
+  u16* work;
+
+  work = EVENTWORK_GetEventWorkAdrs( eventWork, WK_OTHER_DISCOVER_EGG );
+  *work = 0;
 }
 
 
@@ -819,7 +848,6 @@ static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg )
 }
 
 
-
 //========================================================================================
 // ■ポケモン個別処理
 //========================================================================================
@@ -842,4 +870,4 @@ static void DeletePerapVoice( FIELDMAP_WORK* fieldmap, POKEPARTY* party )
   perapVoice = GAMEDATA_GetPerapVoice( gameData );
 
   PERAPVOICE_CheckPerapInPokeParty( perapVoice, party );
-}
+} 
