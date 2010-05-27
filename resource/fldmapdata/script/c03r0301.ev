@@ -89,16 +89,12 @@ EVENT_START		ev_pos_c03r0301_cleaningm_01
 	SWITCH $POSX
 	CASE 6 THEN
 		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x6 )
-		_OBJ_ANIME_WAIT()
 	CASE 7 THEN
 		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x7 )
-		_OBJ_ANIME_WAIT()
 	CASE 8 THEN
 		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x8 )
-	_OBJ_ANIME_WAIT()
 	DEFAULT  //目の前に立ったケースと同じ処理を行う
 		_OBJ_ANIME( C03R0301_CLEANINGM_01,anm_cleaningm_bye01_x7 )
-		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
 	_CAMERA_WAIT_MOVE()	//カメラ移動待ち
