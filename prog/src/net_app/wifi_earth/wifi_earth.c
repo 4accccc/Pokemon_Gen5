@@ -356,12 +356,15 @@ typedef struct EARTH_DEMO_WORK_tag
   EARTH_DEMO_LIST placelist;
 
   //ＢＧシステムポインタ
-  //GFL_BG_INI*     bgl;
-  GFL_BMPWIN*   msgwin;
   GFL_BMPWIN*   listwin;
+  GFL_BMPWIN*   msgwin;
+  PRINT_UTIL    printUtilMsg;
   GFL_BMPWIN*   iconwin;  ///< やめるボタン
+  PRINT_UTIL    printUtilIcon;
   GFL_BMPWIN*   lookwin;  ///< みるボタン @ gs追加
+  PRINT_UTIL    printUtilLook;
   GFL_BMPWIN*   infowin;
+  PRINT_UTIL    printUtilInfo;
   BMPMENULIST_WORK*   bmplist;
   BMP_MENULIST_DATA*  bmplistdata;
   BMPMENU_WORK*       yesnowin;
@@ -496,7 +499,7 @@ static void Earth_TouchPanelParamGet( EARTH_DEMO_WORK * wk,
   int prevx,int prevy,int* dirx_p,int* lenx_p,int* diry_p,int* leny_p );
 
 static BOOL Earth_StrPrint
-( EARTH_DEMO_WORK * wk, GFL_BMPWIN* bmpwin, const STRBUF* strbuf, u8 x, u8 y );
+( EARTH_DEMO_WORK * wk, PRINT_UTIL *util, GFL_BMPWIN* bmpwin, const STRBUF* strbuf, u8 x, u8 y );
 static BOOL Earth_MsgPrint( EARTH_DEMO_WORK * wk,u32 msgID,int button_mode );
 static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
                               const BMPMENULIST_HEADER* listheader,const EARTH_BMPLIST* list);
@@ -946,7 +949,13 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
 
   case EARTHDEMO_SEQ_MAINMENU_SELECT: //メインメニュー選択モード
     {
-      u32 list_result = BmpMenuList_Main(wk->bmplist);
+      u32 list_result;
+      // printQueに残っている場合はBMPLISTのメインを回さない
+      if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+        break;
+      }
+
+      list_result = BmpMenuList_Main(wk->bmplist);
 
       if(list_result == BMPMENULIST_NULL){
         break;
@@ -1017,7 +1026,12 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
 
   case EARTHDEMO_SEQ_REGISTRATIONLIST_NATION_SELECT:  //国別登録リスト選択モード
     {
-      int list_result = BmpMenuList_Main(wk->bmplist);
+      int list_result;
+      // printQueに残っている場合はBMPLISTのメインを回さない
+      if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+        break;
+      }
+      list_result = BmpMenuList_Main(wk->bmplist);
 #ifdef WIFI_ERATH_DEBUG
       EarthDebugNationMarkSet(wk);
 #endif
@@ -1065,7 +1079,12 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
 
   case EARTHDEMO_SEQ_REGISTRATIONLIST_AREA_SELECT:  //地域別登録リスト選択モード
     {
-      int list_result = BmpMenuList_Main(wk->bmplist);
+      int list_result;
+      // printQueに残っている場合はBMPLISTのメインを回さない
+      if(PRINTSYS_QUE_IsFinished( wk->printQue )==FALSE){
+        break;
+      }
+      list_result = BmpMenuList_Main(wk->bmplist);
 #ifdef WIFI_ERATH_DEBUG
       EarthDebugAreaMarkSet(wk);
 #endif
@@ -1296,6 +1315,13 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
     }
     break;
   }
+
+  PRINT_UTIL_Trans( &wk->printUtil, wk->printQue );
+  PRINT_UTIL_Trans( &wk->printUtilInfo, wk->printQue );
+  PRINT_UTIL_Trans( &wk->printUtilLook, wk->printQue );
+  PRINT_UTIL_Trans( &wk->printUtilIcon, wk->printQue );
+  PRINT_UTIL_Trans( &wk->printUtilMsg, wk->printQue );
+  PRINT_UTIL_Trans( &wk->printUtil, wk->printQue );
 
   return sys_result;
 }
@@ -1860,7 +1886,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
     //文字列の取得（やめる）
     GFL_MSG_GetString(wk->msg_man, mes_earth_03_03, temp_str);
     //文字列の表示
-    Earth_StrPrint(wk, wk->iconwin, temp_str, 4, 0);  
+    Earth_StrPrint(wk, &wk->printUtilIcon, wk->iconwin, temp_str, 4, 0);  
     GFL_BMPWIN_TransVramCharacter(wk->iconwin);
     
     //メッセージウインドウビットマップ作成（ウインドウ内側）
@@ -1868,7 +1894,7 @@ static void Earth_BGdataLoad( EARTH_DEMO_WORK * wk, ARCHANDLE* p_handle )
     //文字列の取得（みる）
     GFL_MSG_GetString(wk->msg_man, mes_earth_02_08, temp_str);
     //文字列の表示
-    Earth_StrPrint(wk, wk->lookwin, temp_str, 0, 0);
+    Earth_StrPrint(wk, &wk->printUtilLook, wk->lookwin, temp_str, 0, 0);
     GFL_BMPWIN_TransVramCharacter(wk->lookwin);
 
     //メッセージバッファの開放
@@ -1988,14 +2014,13 @@ static void Earth_BGdataRelease( EARTH_DEMO_WORK * wk )
 //文字列表示
 //----------------------------------
 static BOOL Earth_StrPrint
-( EARTH_DEMO_WORK * wk, GFL_BMPWIN* bmpwin, const STRBUF* strbuf, u8 x, u8 y )
+( EARTH_DEMO_WORK * wk, PRINT_UTIL *util, GFL_BMPWIN* bmpwin, const STRBUF* strbuf, u8 x, u8 y )
 {
   //プリントキューハンドル作成
-  PRINT_UTIL      printUtil;
-  PRINT_UTIL_Setup(&printUtil, bmpwin);
+  PRINT_UTIL_Setup( util, bmpwin);
 
   //文字列の表示
-  PRINT_UTIL_Print( &printUtil, wk->printQue, x, y, strbuf, wk->fontHandle);
+  PRINT_UTIL_Print( util, wk->printQue, x, y, strbuf, wk->fontHandle);
 
   return TRUE;
 }
@@ -2204,7 +2229,7 @@ static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk )
   WORDSET_ExpandStr(wk->wordset, msgstr, msgtmp);
 
   //文字列の表示
-  Earth_StrPrint(wk, wk->infowin, msgstr, 0, 0);
+  Earth_StrPrint(wk, &wk->printUtilInfo, wk->infowin, msgstr, 0, 0);
 
   GFL_STR_DeleteBuffer( msgtmp );
   GFL_STR_DeleteBuffer( msgstr );
@@ -2222,14 +2247,15 @@ static void Earth_MyPlaceInfoWinSet2( EARTH_DEMO_WORK* wk, int nation, int area 
 
   WIFI_NationAreaNameGet(nation, area, str1, str2, wk->heapID);
   if( area != 0 ){
-    Earth_StrPrint(wk, wk->infowin, str2, 0, 16);
+    Earth_StrPrint(wk, &wk->printUtilInfo, wk->infowin, str2, 0, 16);
   }
-  Earth_StrPrint(wk, wk->infowin, str1, 0, 0);
+  Earth_StrPrint(wk, &wk->printUtilInfo, wk->infowin, str1, 0, 0);
   GFL_STR_DeleteBuffer(str2);
   GFL_STR_DeleteBuffer(str1);
 
   BmpWinFrame_Write(wk->infowin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
-  GFL_BMPWIN_TransVramCharacter(wk->infowin);
+//  GFL_BMPWIN_TransVramCharacter( wk->infowin );
+  GFL_BMPWIN_MakeTransWindow_VBlank( wk->infowin );
 }
 
 static void Earth_MyPlaceInfoWinRelease( EARTH_DEMO_WORK* wk )
@@ -2337,7 +2363,7 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
 
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->msgwin), FBMP_COL_WHITE );
       GFL_MSG_GetString(wk->msg_man, mes_earth_03_02, msgstr);
-      Earth_StrPrint(wk, wk->msgwin, msgstr, 0, 0);
+      Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, msgstr, 0, 0);
       GFL_STR_DeleteBuffer( msgstr );
     }
   } else {
@@ -2353,9 +2379,9 @@ static void Earth_PosInfoPut( EARTH_DEMO_WORK* wk )
                   wk->placelist.place[minindex].areaID,
                   str1,str2,wk->heapID);
       if( wk->placelist.place[minindex].areaID != 0 ){
-        Earth_StrPrint(wk, wk->msgwin, str2, 0, 16);
+        Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str2, 0, 16);
       }
-      Earth_StrPrint(wk, wk->msgwin, str1, 0, 0);
+      Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str1, 0, 0);
       GFL_STR_DeleteBuffer(str2);
       GFL_STR_DeleteBuffer(str1);
 
@@ -2923,8 +2949,8 @@ static void EarthDebugWinRotateInfoWrite( EARTH_DEMO_WORK * wk )
             NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
   STRBUF_SetHexNumber( str2, (u16)wk->rotate.y, 4, 
             NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
-  Earth_StrPrint(wk, wk->msgwin, str1, 0, 0);
-  Earth_StrPrint(wk, wk->msgwin, str2, 0, 16);
+  Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str1, 0, 0);
+  Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str2, 0, 16);
 
   GFL_STR_DeleteBuffer(str2);
   GFL_STR_DeleteBuffer(str1);
@@ -2947,8 +2973,8 @@ static void EarthDebugWinNameInfoWrite( EARTH_DEMO_WORK * wk )
         WIFI_NationAreaNameGet( wk->placelist.place[i].nationID,
                     wk->placelist.place[i].areaID,
                     str1,str2,wk->heapID);
-        Earth_StrPrint(wk, wk->msgwin, str1, 16*4, 0);
-        Earth_StrPrint(wk, wk->msgwin, str2, 16*4, 16);
+        Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str1, 16*4, 0);
+        Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str2, 16*4, 16);
 
         GFL_STR_DeleteBuffer(str2);
         GFL_STR_DeleteBuffer(str1);
@@ -2966,8 +2992,8 @@ static void EarthDebugWinNameInfoWrite( EARTH_DEMO_WORK * wk )
               NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
     STRBUF_SetHexNumber( str2, (u16)wk->rotate.y, 4, 
               NUMBER_DISPTYPE_SPACE, NUMBER_CODETYPE_DEFAULT );
-    Earth_StrPrint(wk, wk->msgwin, str1, 0, 0);
-    Earth_StrPrint(wk, wk->msgwin, str2, 0, 16);
+    Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str1, 0, 0);
+    Earth_StrPrint(wk, &wk->printUtilMsg, wk->msgwin, str2, 0, 16);
 
     GFL_STR_DeleteBuffer(str2);
     GFL_STR_DeleteBuffer(str1);
