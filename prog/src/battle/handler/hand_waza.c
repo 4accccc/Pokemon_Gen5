@@ -589,7 +589,7 @@ static void handler_Waruagaki_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static void handler_Waruagaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems );
 static void handler_Michidure_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Michidure_WazaSeqStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Michidure_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Michidure_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Onnen( u32* numElems );
@@ -8273,9 +8273,11 @@ static const BtlEventHandlerTable*  ADD_Michidure( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Michidure_Ready        },  // 未分類ワザハンドラ
-    { BTL_EVENT_WAZASEQ_START,       handler_Michidure_WazaSeqStart },  // ワザ処理開始ハンドラ
+    { BTL_EVENT_ACTPROC_START,       handler_Michidure_ActStart     },  // アクション処理開始ハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION,   handler_Michidure_WazaDamage   },  // ワザダメージ処理後
-//    { BTL_EVENT_TURNCHECK_BEGIN,     handler_Michidure_TurnCheck    },  // ターンチェック開始ハンドラ
+
+// ターンチェックで消えると後攻で無意味なワザになるのでマズい
+//    { BTL_EVENT_TURNCHECK_BEGIN,     handler_Michidure_TurnCheck  },  // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -8293,13 +8295,12 @@ static void handler_Michidure_Ready( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     work[ WORKIDX_STICK ] = 1;
   }
 }
-// ワザ処理開始ハンドラ
-static void handler_Michidure_WazaSeqStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// アクション開始ハンドラ
+static void handler_Michidure_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  // 「みちづれ」以外のワザを出すなら、貼り付き解除
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != BTL_EVENT_FACTOR_GetSubID(myHandle))
-  ){
+  // アクション開始時点でハンドラが存在するなら削除
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
       BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
