@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-05-26T18:59:00"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T16:42:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -301,12 +301,13 @@
 		<attribute name="キャラ指定">DANPEI
 ダンペイ</attribute>
 		<language name="JPN" width="256">はくぶつかんの　そのおくで
-ちょうせんしゃを　まつ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
+ちょうせんしゃを　まつ▽
+ポケモンジム……[BE:00:ページ切り替え（行送り）]
 なんだか　ふんいき　あるっすよね[BE:01:ページ切り替え（クリア）]
 というわけで
 これを　さしあげるっす！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">博物館の　その奥で
-挑戦者を待つ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
+挑戦者を　待つ　ポケモンジム……[BE:00:ページ切り替え（行送り）]
 なんだか　雰囲気あるっすよね[BE:01:ページ切り替え（クリア）]
 というわけで
 これを　さしあげるっす！[BE:01:ページ切り替え（クリア）]</language>
