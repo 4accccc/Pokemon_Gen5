@@ -73,7 +73,7 @@ _RET
 /*  Ç©Ç¢ÇËÇ´ */
 /**************************************************************/
 EVENT_START ev_hiden_kairiki
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
   _FLAG_CHECK( SYS_FLAG_KAIRIKI, SCWK_ANSWER )
   
   IF $SCWK_ANSWER == 1 THEN
@@ -168,7 +168,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_hiden_naminori
 {
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
   
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_NAMINORI )
   
@@ -233,7 +233,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_hiden_iaigiri
 {
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
   
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_IAIGIRI )
   
@@ -292,7 +292,7 @@ _RET
 //ãèçáÇ¢êÿÇËÅ@ÉÅÉjÉÖÅ[Ç©ÇÁ
 EVENT_START ev_hiden_iaigiri_menu
 {
-  _TALK_OBJ_START()
+  _TALK_START_SE_PLAY()
   
 	_TEMOTI_NICK_NAME( 0, SCWK_PARAM0 )
 	_SYSWIN_MSG( msg_iai_02 , POS_DOWN )
@@ -326,7 +326,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START ev_hiden_takinobori
 {
-	_TALK_OBJ_START()
+	_TALK_START_SE_PLAY()
   _CHECK_POKE_WAZA_GROUP( SCWK_ANSWER, WAZANO_TAKINOBORI )
   
   IF $SCWK_ANSWER == 6 THEN
