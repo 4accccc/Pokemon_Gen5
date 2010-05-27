@@ -253,6 +253,7 @@ static  void  MoveCamera( POKEMON_VIEWER_WORK *pvw );
 
 static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos );
 static  void  create_pokemon ( POKEMON_VIEWER_WORK* pvw );
+static  void  set_pokemon_scale( POKEMON_VIEWER_WORK* pvw );
 
 static  void  get_default_value( POKEMON_VIEWER_WORK *pvw );
 static  void  mcss_mode_change( POKEMON_VIEWER_WORK *pvw );
@@ -521,6 +522,8 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
 
   pvw->mcss_mode = 0;
   get_default_value( pvw );
+
+  BTLV_MCSS_SetAnm1LoopFlag( BTLV_EFFECT_GetMcssWork(), TRUE );
 
   return GFL_PROC_RES_FINISH;
 }
@@ -1048,7 +1051,6 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
     }
     if( ( trg & PAD_BUTTON_SELECT ) && ( pvw->edit_type == 0 ) )
     {
-      VecFx32 scale;
       pvw->proj ^= 1;
       if( pvw->proj )
       {
@@ -1058,21 +1060,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       {
         BTLV_MCSS_ResetOrthoMode( BTLV_EFFECT_GetMcssWork() );
       }
-      { 
-        BtlvMcssPos pos;
-
-        for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
-        { 
-          if( BTLV_EFFECT_CheckExist( pos ) == TRUE )
-          {
-            VEC_Set( &scale,
-                     pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
-                     pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pvw->edit_pos ],
-                     FX32_ONE );
-            BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), pvw->edit_pos, &scale );
-          }
-        }
-      }
+      set_pokemon_scale( pvw );
     }
     if( trg & PAD_BUTTON_B )
     {
@@ -1519,7 +1507,7 @@ static  void  set_pokemon( POKEMON_VIEWER_WORK *pvw, BtlvMcssPos pos )
                            pvw->value[ pvw->mcss_mode ][ VALUE_Y ][ pos ],
                            pvw->value[ pvw->mcss_mode ][ VALUE_Z ][ pos ] );
 #if defined DEBUG_ONLY_FOR_sogabe
-    BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_ANM_STOP_ON );
+    //BTLV_MCSS_SetAnmStopFlag( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_ANM_STOP_ON );
 #endif
   }
 }
@@ -1531,6 +1519,25 @@ static  void  create_pokemon( POKEMON_VIEWER_WORK* pvw )
   BTLV_EFFECT_DelPokemon( pvw->edit_pos );
   PP_SetupEx( pvw->pp, pvw->mons_no[ pvw->edit_pos ], 1, 12345678, 0, rnd );
   set_pokemon( pvw, pvw->edit_pos );
+  set_pokemon_scale( pvw );
+}
+
+static  void  set_pokemon_scale( POKEMON_VIEWER_WORK* pvw )
+{ 
+  VecFx32 scale;
+  BtlvMcssPos pos;
+
+  for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+  { 
+    if( BTLV_EFFECT_CheckExist( pos ) == TRUE )
+    {
+      VEC_Set( &scale,
+               pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pos ],
+               pvw->value[ pvw->mcss_mode ][ VALUE_SCALE_PERS + pvw->proj ][ pos ],
+               FX32_ONE );
+      BTLV_MCSS_SetScale( BTLV_EFFECT_GetMcssWork(), pos, &scale );
+    }
+  }
 }
 
 static  void  get_default_value( POKEMON_VIEWER_WORK *pvw )
