@@ -609,6 +609,7 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
   //OBJWINDOW(通信アイコン)をOFF
   GFL_NET_WirelessIconOBJWinOFF();
 	GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+  G2S_BlendNone();
 }
 
 //==================================================================

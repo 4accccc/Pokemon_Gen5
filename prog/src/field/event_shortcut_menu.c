@@ -84,7 +84,7 @@ typedef struct
 	EVENT_PROCLINK_PARAM	*p_link;		//リンクイベントパラメータ
 	HEAPID								heapID;			//常駐ヒープID
 	BOOL									is_empty;		//メニューを空にしたフラグ
-  u32                   exit_seq;
+  u32                   seq;
 } EVENT_SHORTCUTMENU_WORK;
 
 //=============================================================================
@@ -924,7 +924,7 @@ static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
 
 	if( p_wk->is_empty == FALSE )
 	{
-    switch( p_wk->exit_seq )
+    switch( p_wk->seq )
     {
     case SEQ_INIT:
       if( p_wk->p_menu )
@@ -932,11 +932,11 @@ static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
         GFL_BG_SetVisible( FLDBG_MFRM_MSG, VISIBLE_OFF );
         SHORTCUTMENU_Exit( p_wk->p_menu );
         p_wk->p_menu	= NULL;
-        p_wk->exit_seq  = SEQ_MAIN;
+        p_wk->seq  = SEQ_MAIN;
       }
       else
       {
-        p_wk->exit_seq  = SEQ_EXIT;
+        p_wk->seq  = SEQ_EXIT;
       }
       break;
 
@@ -952,11 +952,11 @@ static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
         }
 #endif
       }
-      p_wk->exit_seq  = SEQ_EXIT;
+      p_wk->seq  = SEQ_EXIT;
       break;
 
     case SEQ_EXIT:
-      p_wk->exit_seq  = 0;
+      p_wk->seq  = 0;
       return TRUE;
     }
 
@@ -982,6 +982,13 @@ static BOOL ShortCutMenu_ExitSeq( EVENT_SHORTCUTMENU_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static BOOL ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void *wk_adrs )
 {	
+  enum
+  {
+    SEQ_INIT,
+    SEQ_MAIN,
+    SEQ_EXIT,
+  };
+    
 	EVENT_SHORTCUTMENU_WORK *p_wk	= wk_adrs;
 
 	GAMEDATA					*p_gdata;
@@ -992,27 +999,47 @@ static BOOL ShortCutMenu_Open_Callback( const EVENT_PROCLINK_PARAM *param, void 
 	p_sv		= GAMEDATA_GetSaveControlWork( p_gdata );
 	cp_shortcut	= SaveData_GetShortCutConst( p_sv );
 
-	if( SHORTCUT_GetMax( cp_shortcut ) == 0 )
-	{	
-		p_wk->is_empty		=	TRUE;
-	}
-	else
-	{	
-		//フィールドに戻る場合
-		if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
-				param->result == EVENT_PROCLINK_RESULT_ITEM ||
-				param->result == EVENT_PROCLINK_RESULT_SKILL )
-		{	
-			/* なにもしない */
-		}
-		else
-		{	
-			//メニューに戻る場合
-			ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
-		}
-	}
+  switch( p_wk->seq )
+  {
+  case SEQ_INIT:
+    if( SHORTCUT_GetMax( cp_shortcut ) == 0 )
+    {	
+      p_wk->is_empty		=	TRUE;
+      p_wk->seq = SEQ_EXIT;
+    }
+    else
+    {	
+      //フィールドに戻る場合
+      if( param->result == EVENT_PROCLINK_RESULT_EXIT ||
+          param->result == EVENT_PROCLINK_RESULT_ITEM ||
+          param->result == EVENT_PROCLINK_RESULT_SKILL )
+      {	
+        /* なにもしない */
+        p_wk->seq = SEQ_EXIT;
+      }
+      else
+      {	
+        //メニューに戻る場合
+        ShortCutMenu_Init( SHORTCUTMENU_MODE_STAY, p_wk );
+        p_wk->seq = SEQ_MAIN;
+      }
+    }
+    break;
 
-  return TRUE;
+  case SEQ_MAIN:
+    //表示完了待ち
+    if( SHORTCUTMENU_PrintMain( p_wk->p_menu ) )
+    {
+      p_wk->seq = SEQ_EXIT;
+    }
+    break;
+
+  case SEQ_EXIT:
+    p_wk->seq = 0;
+    return TRUE;
+  }
+
+  return FALSE;
 }
 //----------------------------------------------------------------------------
 /**

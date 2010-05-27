@@ -59,6 +59,9 @@ extern SHORTCUTMENU_WORK *SHORTCUTMENU_Init( GAMEDATA *p_gamedata, SHORTCUTMENU_
 extern void SHORTCUTMENU_Exit( SHORTCUTMENU_WORK *p_wk );
 extern void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk );
 
+//表示完了待ち（通常Main内で行なうが表示完了待ちだけ行いたいときのみこちらを使用する）
+extern BOOL SHORTCUTMENU_PrintMain( SHORTCUTMENU_WORK *p_wk );
+
 //-------------------------------------
 ///	メニュー開始
 //=====================================

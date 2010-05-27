@@ -470,8 +470,7 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 {	
   BOOL  is_trans_end;
 
-  PRINTSYS_QUE_Main( p_wk->p_que );
-	is_trans_end  = SCROLL_PrintMain( &p_wk->scroll );
+	is_trans_end  = SHORTCUTMENU_PrintMain( p_wk );
 
   if( !is_trans_end )
   {
@@ -548,9 +547,23 @@ void SHORTCUTMENU_Main( SHORTCUTMENU_WORK *p_wk )
 	default:
 		GF_ASSERT(0);
 	}
-
-
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ショートカットメニュー  表示待ち
+ *
+ *	@param	SHORTCUTMENU_WORK *p_wk   ワーク
+ *
+ *	@return TRUEで表示完了  FALSEで表示中
+ */
+//-----------------------------------------------------------------------------
+BOOL SHORTCUTMENU_PrintMain( SHORTCUTMENU_WORK *p_wk )
+{
+  PRINTSYS_QUE_Main( p_wk->p_que );
+	return SCROLL_PrintMain( &p_wk->scroll );
+}
+
 //----------------------------------------------------------------------------
 /**
  *	@brief	ショートカットメニュー	開く
