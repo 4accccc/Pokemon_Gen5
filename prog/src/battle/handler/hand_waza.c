@@ -2976,7 +2976,7 @@ static void handler_Totteoki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Ibiki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_1ST, handler_Ibiki_CheckFail_1 },  // ワザ出し成否チェックハンドラ１
+    { BTL_EVENT_WAZA_FAIL_THREW,        handler_Ibiki_CheckFail_1 },  // ワザ出し成否チェックハンドラ１
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_Ibiki_CheckFail_2 },  // ワザ出し成否チェックハンドラ２
   };
   *numElems = NELEMS( HandlerTable );
@@ -2992,18 +2992,6 @@ static void handler_Ibiki_CheckFail_1( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     if( cause == SV_WAZAFAIL_NEMURI ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
     }
-
-    /*
-    「ねむり」状態でないのをココで失敗扱いにしちゃうとまずい。
-    （ワザメッセージが表示されるまえに「うまくきまらなかった」が表示されてしまう）
-    else if( cause == SV_WAZAFAIL_NULL )
-    {
-      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( !BPP_CheckSick(bpp, POKESICK_NEMURI) ){
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-      }
-    }
-    */
   }
 }
 // ワザ出し成否チェックハンドラ２
@@ -8782,7 +8770,7 @@ static void handler_Nekonote_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_Negoto( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_1ST, handler_Ibiki_CheckFail_1 },  // ワザ出し成否チェックハンドラ１
+    { BTL_EVENT_WAZA_FAIL_THREW,        handler_Ibiki_CheckFail_1 },  // ワザ出し成否チェックハンドラ１
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_Ibiki_CheckFail_2 },  // ワザ出し成否チェックハンドラ２
     { BTL_EVENT_REQWAZA_PARAM,          handler_Negoto            },  // 派生わざパラメータチェック
   };

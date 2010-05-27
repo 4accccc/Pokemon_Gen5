@@ -537,6 +537,8 @@ static BtlTypeAff DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scproc_checkNoEffect_sub( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, BtlEventType eventID );
+static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BtlEventType eventID,
+    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* customMsg, BOOL* fNoReaction );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scEvent_SkipAvoidCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
@@ -549,10 +551,12 @@ static void scproc_TameLockClear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker )
 static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL* fFailMsgDisped );
 static void scproc_FreeFall_CheckRelease( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fReleaseProc );
 static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
+static BOOL scEvent_ExeFailThrew( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, SV_WazaFailCause cause, WazaID waza );
+static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlEventType eventID );
 static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock, BOOL fReqWaza, u8* fPPDecrement );
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scproc_Fight_CheckMeroMero( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
-static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
+static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, SV_WazaFailCause fail_cause );
 static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static void scPut_SetBppCounter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppCounter counterID, u8 value );
@@ -777,8 +781,6 @@ static void scEvent_BeforeFight( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, 
 static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
   WazaID orgWazaID, WazaID actWazaID, BTL_HANDEX_STR_PARAMS* str );
-static SV_WazaFailCause scEvent_CheckWazaExecute1ST( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, SV_WazaFailCause cause );
-static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* param );
 static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
   WazaID waza, SV_WazaFailCause cause );
@@ -796,8 +798,6 @@ static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BtlEventType eventID,
-    const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* customMsg, BOOL* fNoReaction );
 static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
 static void scEvent_DmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender );
@@ -6063,20 +6063,37 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
 {
   SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
   PokeSick sick = POKESICK_NULL;
+  BOOL fWazaMelt = FALSE;
 
   do {
 
-    // こんらん自爆判定
-    if( scproc_Fight_CheckConf(wk, attacker) ){
-      cause = SV_WAZAFAIL_KONRAN;
+    // ねむり・こおり等の解除チェック
+    fWazaMelt = scproc_PokeSickCure_WazaCheck( wk, attacker, waza );
+
+    // ポケモン系 状態異常による失敗チェック
+    sick = BPP_GetPokeSick( attacker );
+    if( sick == POKESICK_NEMURI ){
+      if( !scEvent_ExeFailThrew(wk, attacker, waza, SV_WAZAFAIL_NEMURI) ){
+        cause = SV_WAZAFAIL_NEMURI;
+        break;
+      }
+    }
+    if( (sick == POKESICK_NEMURI) && (!fWazaMelt) ){
+      cause = SV_WAZAFAIL_KOORI;
       break;
     }
 
-    // メロメロ判定
-    if( scproc_Fight_CheckMeroMero(wk, attacker) ){
-      cause = SV_WAZAFAIL_MEROMERO;
+    // イベント失敗チェックレベル１
+    cause = scEvent_CheckWazaExecute( wk, attacker, waza, BTL_EVENT_WAZA_EXECUTE_CHECK_1ST );
+    if( cause != SV_WAZAFAIL_NULL ){  break; }
+
+
+    // ひるみによる失敗チェック
+    if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_SHRINK) ){
+      cause = SV_WAZAFAIL_SHRINK;
       break;
     }
+
     // かなしばり判定
     if( BPP_CheckSick(attacker, WAZASICK_KANASIBARI) )
     {
@@ -6087,81 +6104,6 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
           cause = SV_WAZAFAIL_KANASIBARI;
           break;
         }
-      }
-    }
-
-    // ねむり・こおり等の解除チェック
-    scproc_PokeSickCure_WazaCheck( wk, attacker, waza );
-
-    // ポケモン系 状態異常による失敗チェック
-    sick = BPP_GetPokeSick( attacker );
-    switch( sick ){
-    case POKESICK_NEMURI:
-      cause = SV_WAZAFAIL_NEMURI;
-      break;
-    case POKESICK_MAHI:
-      if( BTL_CALC_IsOccurPer(BTL_MAHI_EXE_PER) ){
-       cause = SV_WAZAFAIL_MAHI;
-      }
-      break;
-    case POKESICK_KOORI:
-      cause = SV_WAZAFAIL_KOORI;
-      break;
-    }
-
-    // その他の失敗チェック
-    cause = scEvent_CheckWazaExecute1ST( wk, attacker, waza, cause );
-    if( cause != SV_WAZAFAIL_NULL ){  break; }
-
-    // 命令無視判定
-    if( wk->currentSabotageType == SABOTAGE_DONT_ANY ){
-      cause = SV_WAZAFAIL_SABOTAGE;
-      break;
-    }
-    if( wk->currentSabotageType == SABOTAGE_GO_SLEEP ){
-      cause = SV_WAZAFAIL_SABOTAGE_GO_SLEEP;
-      break;
-    }
-
-    // ひるみによる失敗チェック
-    if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_SHRINK) ){
-      cause = SV_WAZAFAIL_SHRINK;
-      break;
-    }
-
-
-  }while( 0 );
-
-  if( cause != SV_WAZAFAIL_NULL ){
-    BTL_N_Printf( DBGSTR_SVFL_WazaExeFail_1, BPP_GetID(attacker), cause);
-    scproc_WazaExecuteFailed( wk, attacker, waza, cause );
-    return TRUE;
-  }else{
-    // 眠ってるのに失敗せず->眠りエフェクトだけ表示する
-    if( sick == POKESICK_NEMURI ){
-      scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI );
-      scPut_WazaExecuteFailMsg( wk, attacker, waza, SV_WAZAFAIL_NEMURI );
-//      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriAct, pokeID );
-    }
-  }
-  return FALSE;
-}
-
-static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock, BOOL fReqWaza, u8* fPPDecrement )
-{
-  SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
-  BOOL fPPFree = TRUE;
-
-  do {
-    // PPがゼロ
-    if( (!fWazaLock) && (!fReqWaza) )
-    {
-      u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, waza );
-      if( (wazaIdx != PTL_WAZA_MAX)
-      &&  (BPP_WAZA_GetPP(attacker, wazaIdx) == 0)
-      ){
-        cause = SV_WAZAFAIL_PP_ZERO;
-        break;
       }
     }
 
@@ -6181,10 +6123,129 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
       break;
     }
 
+    // わるあがき以外をチェック
+    if( waza != WAZANO_WARUAGAKI )
+    {
+      // アンコールによる失敗チェック
+      if( (BPP_CheckSick(attacker, WAZASICK_ENCORE))
+      &&  (BPP_GetPrevOrgWazaID(attacker) != waza)
+      ){
+        cause = SV_WAZAFAIL_WAZALOCK;
+        break;
+      }
+      // ワザロック（こだわり）による失敗チェック
+      if( (BPP_CheckSick(attacker, WAZASICK_WAZALOCK))
+      &&  (BPP_GetPrevWazaID(attacker) != waza)
+      ){
+        cause = SV_WAZAFAIL_WAZALOCK;
+        break;
+      }
+      // ちょうはつによる失敗チェック
+      if( BPP_CheckSick(attacker, WAZASICK_TYOUHATSU)
+      &&  !WAZADATA_IsDamage(waza)
+      ){
+        cause = SV_WAZAFAIL_TYOUHATSU;
+        break;
+      }
+      // いちゃもんによる失敗チェック
+      if( BPP_CheckSick(attacker, WAZASICK_ICHAMON)
+      &&  (BPP_GetPrevWazaID(attacker) == waza)
+      ){
+        cause = SV_WAZAFAIL_ICHAMON;
+        break;
+      }
+      // ふういんによる失敗チェック
+      if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
+      {
+        if( BTL_FIELD_CheckFuin(wk->pokeCon, attacker, waza) )
+        {
+          cause = SV_WAZAFAIL_FUUIN;
+          break;
+        }
+      }
+    }/* waza != WAZANO_WARUAGAKI */
+
+
+    // こんらん自爆判定
+    if( scproc_Fight_CheckConf(wk, attacker) ){
+      cause = SV_WAZAFAIL_KONRAN;
+      break;
+    }
+
+    // マヒ判定
+    if( sick == POKESICK_MAHI ){
+      if( BTL_CALC_IsOccurPer(BTL_MAHI_EXE_PER) ){
+       cause = SV_WAZAFAIL_MAHI;
+        break;
+      }
+    }
+    // メロメロ判定
+    if( scproc_Fight_CheckMeroMero(wk, attacker) ){
+      cause = SV_WAZAFAIL_MEROMERO;
+      break;
+    }
+
+    // 命令無視判定
+    if( wk->currentSabotageType == SABOTAGE_DONT_ANY ){
+      cause = SV_WAZAFAIL_SABOTAGE;
+      break;
+    }
+    if( wk->currentSabotageType == SABOTAGE_GO_SLEEP ){
+      cause = SV_WAZAFAIL_SABOTAGE_GO_SLEEP;
+      break;
+    }
+
+  }while( 0 );
+
+  if( cause != SV_WAZAFAIL_NULL ){
+    BTL_N_Printf( DBGSTR_SVFL_WazaExeFail_1, BPP_GetID(attacker), cause);
+    scproc_WazaExecuteFailed( wk, attacker, waza, cause );
+    return TRUE;
+  }
+  else
+  {
+    // 眠ってるのに失敗せず->眠りエフェクトだけ表示する
+    if( sick == POKESICK_NEMURI )
+    {
+      scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI );
+      scPut_WazaExecuteFailMsg( wk, attacker, waza, SV_WAZAFAIL_NEMURI );
+    }
+    // ワザでこおりが溶ける
+    else if( fWazaMelt && (sick == POKESICK_KOORI ) ){
+      scPut_CurePokeSick( wk, attacker, sick );
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriMeltWaza, BPP_GetID(attacker), waza );
+    }
+  }
+  return FALSE;
+}
+static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock, BOOL fReqWaza, u8* fPPDecrement )
+{
+  SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
+  BOOL fPPFree = TRUE;
+
+
+  if( waza == WAZANO_WARUAGAKI ){
+    return FALSE;
+  }
+
+  do {
+    // PPがゼロ
+    if( (!fWazaLock) && (!fReqWaza) )
+    {
+      u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, waza );
+      if( (wazaIdx != PTL_WAZA_MAX)
+      &&  (BPP_WAZA_GetPP(attacker, wazaIdx) == 0)
+      ){
+        cause = SV_WAZAFAIL_PP_ZERO;
+        break;
+      }
+    }
+
+
     fPPFree = FALSE;
 
     // その他の失敗チェック
-    cause = scEvent_CheckWazaExecute2ND( wk, attacker, waza );
+    cause = scEvent_CheckWazaExecute( wk, attacker, waza, BTL_EVENT_WAZA_EXECUTE_CHECK_2ND );
 
   }while( 0 );
 
@@ -6197,6 +6258,58 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKE
     return TRUE;
   }
   return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event]  特定ワザ出し失敗要因を無視するか判定
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   cause
+ * @param   waza
+ *
+ * @retval  BOOL    無視する場合TRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_ExeFailThrew( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, SV_WazaFailCause cause, WazaID waza )
+{
+  BOOL fThrew = FALSE;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_FAIL_CAUSE, cause );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_FAIL_THREW );
+    fThrew = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  return fThrew;
+}
+//--------------------------------------------------------------------------
+/**
+ * 【Event】ワザ出し失敗判定
+ *
+ * @param   wk
+ * @param   attacker    攻撃ポケモンパラメータ
+ * @param   waza        出そうとしているワザ
+ *
+ * @retval  SV_WazaFailCause
+ */
+//--------------------------------------------------------------------------
+static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlEventType eventID )
+{
+  SV_WazaFailCause cause ;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_NULL );
+    BTL_EVENT_CallHandlers( wk, eventID );
+    cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
+  BTL_EVENTVAR_Pop();
+
+  return cause;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6258,10 +6371,11 @@ static BOOL scproc_Fight_CheckMeroMero( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
+static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
 {
   PokeSick sick = BPP_GetPokeSick( attacker );
   BOOL f_cured = FALSE;
+  BOOL f_wazaMelt = FALSE;
 
   switch( sick ){
   case POKESICK_NEMURI:
@@ -6270,9 +6384,11 @@ static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
     }
     break;
   case POKESICK_KOORI:
-    if( WAZADATA_GetFlag(waza, WAZAFLAG_KooriMelt)
-    ||  BTL_CALC_IsOccurPer( BTL_KORI_MELT_PER )
-    ){
+    if( WAZADATA_GetFlag(waza, WAZAFLAG_KooriMelt) ){
+      f_wazaMelt = TRUE;
+    }
+    else if( BTL_CALC_IsOccurPer(BTL_KORI_MELT_PER) )
+    {
       f_cured = TRUE;
     }
     break;
@@ -6281,6 +6397,8 @@ static void scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
   if( f_cured ){
     scPut_CurePokeSick( wk, attacker, sick );
   }
+
+  return f_wazaMelt;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -11717,107 +11835,6 @@ static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
   BTL_EVENTVAR_Pop();
 
   return result;
-}
-//--------------------------------------------------------------------------
-/**
- * 【Event】ワザ出し失敗判定１回目（ワザメッセージ前）
- *
- * @param   wk
- * @param   attacker    攻撃ポケモンパラメータ
- * @param   waza        出そうとしているワザ
- *
- * @retval  SV_WazaFailCause
- */
-//--------------------------------------------------------------------------
-static SV_WazaFailCause scEvent_CheckWazaExecute1ST( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, SV_WazaFailCause cause )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_CAUSE, cause );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, FALSE );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_CHECK_1ST );
-    cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_FAIL_FLAG) ){
-      cause = SV_WAZAFAIL_NULL;
-    }
-  BTL_EVENTVAR_Pop();
-  return cause;
-}
-//--------------------------------------------------------------------------
-/**
- * 【Event】ワザ出し失敗判定２回目（ワザメッセージ後）
- *
- * @param   wk
- * @param   attacker    攻撃ポケモンパラメータ
- * @param   waza        出そうとしているワザ
- *
- * @retval  SV_WazaFailCause
- */
-//--------------------------------------------------------------------------
-static SV_WazaFailCause scEvent_CheckWazaExecute2ND( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza )
-{
-  WazaSick sick = BPP_GetPokeSick( attacker );
-  SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
-  u8 pokeID = BPP_GetID( attacker );
-
-  // わるあがきは失敗しない
-  if( waza == WAZANO_WARUAGAKI ){
-    return SV_WAZAFAIL_NULL;
-  }
-
-  do {
-
-    // アンコールによる失敗チェック
-    if( (BPP_CheckSick(attacker, WAZASICK_ENCORE))
-    &&  (BPP_GetPrevOrgWazaID(attacker) != waza)
-    ){
-      cause = SV_WAZAFAIL_WAZALOCK;
-      break;
-    }
-
-    // ワザロックによる失敗チェック
-    if( (BPP_CheckSick(attacker, WAZASICK_WAZALOCK))
-    &&  (BPP_GetPrevWazaID(attacker) != waza)
-    ){
-      cause = SV_WAZAFAIL_WAZALOCK;
-      break;
-    }
-
-    // ちょうはつによる失敗チェック
-    if( BPP_CheckSick(attacker, WAZASICK_TYOUHATSU)
-    &&  !WAZADATA_IsDamage(waza)
-    ){
-      cause = SV_WAZAFAIL_TYOUHATSU;
-      break;
-    }
-    // いちゃもんによる失敗チェック
-    if( BPP_CheckSick(attacker, WAZASICK_ICHAMON)
-    &&  (BPP_GetPrevWazaID(attacker) == waza)
-    ){
-      cause = SV_WAZAFAIL_ICHAMON;
-      break;
-    }
-    // ふういんによる失敗チェック
-    if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
-    {
-      if( BTL_FIELD_CheckFuin(wk->pokeCon, attacker, waza) )
-      {
-        cause = SV_WAZAFAIL_FUUIN;
-        break;
-      }
-    }
-
-  }while(0);
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_CAUSE, cause );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, pokeID );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_EXECUTE_CHECK_2ND );
-    cause = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_CAUSE );
-  BTL_EVENTVAR_Pop();
-  return cause;
 }
 //--------------------------------------------------------------------------
 /**

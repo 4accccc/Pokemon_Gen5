@@ -57,8 +57,10 @@ typedef enum {
   BTL_EVENT_CHECK_WAZA_ROB,         ///< ワザ乗っ取りチェック
   BTL_EVENT_WAZA_NOEFF_BY_FLYING,   ///< 浮遊状態による地面ワザ無効化
   BTL_EVENT_SKIP_AVOID_CHECK,       ///< ワザ命中判定スキップチェック
-  BTL_EVENT_WAZA_EXECUTE_CHECK_1ST, ///< ワザ実行チェック（ワザメッセージ前）
-  BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, ///< ワザ実行チェック（ワザメッセージ後）
+  BTL_EVENT_WAZA_FAIL_THREW,        ///< ワザ失敗要因の無視判定
+  BTL_EVENT_WAZA_EXECUTE_CHECK_1ST, ///< ワザ実行チェック（ワザメッセージ前・混乱より優先）
+  BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, ///< ワザ実行チェック（ワザメッセージ前・混乱より後）
+  BTL_EVENT_WAZA_EXECUTE_CHECK_3RD, ///< ワザ実行チェック（ワザメッセージ後）
   BTL_EVENT_WAZA_EXECUTE_FAIL,      ///< ワザ出し失敗
   BTL_EVENT_WAZA_EXE_DECIDE,        ///< ワザ出し確定
   BTL_EVENT_WAZA_EXE_START,         ///< ワザ出し処理開始

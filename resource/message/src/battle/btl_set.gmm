@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-27T12:47:22"/>
+	<create user="taya" host="W00146" date="2010-05-27T19:28:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2349,6 +2349,25 @@
 こおらない！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 凍らない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_KoriMeltWaza">
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
+[1:07:わざ名:1]で　こおりが　とけた！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
+[1:07:わざ名:1]で　こおりが　溶けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_KoriMeltWaza_Y">
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]の
+[1:07:わざ名:1]で　こおりが　とけた！</language>
+		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]の
+[1:07:わざ名:1]で　こおりが　溶けた！</language>
+	</row>
+	<row id="BTL_STRID_SET_KoriMeltWaza_E">
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]の
+[1:07:わざ名:1]で　こおりが　とけた！</language>
+		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]の
+[1:07:わざ名:1]で　こおりが　溶けた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_NemuriGet">
