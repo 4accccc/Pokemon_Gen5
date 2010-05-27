@@ -209,6 +209,7 @@ charange:
   IF $party_sel == SCR_BTL_PARTY_SELECT_CANCEL THEN //キャンセル
     //やめるフラグＯＮ
     $exit = TRUE
+    _RET
   ELSIF $party_sel == SCR_BTL_PARTY_SELECT_NG THEN
     //参加できるポケモンがいません
     _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )
