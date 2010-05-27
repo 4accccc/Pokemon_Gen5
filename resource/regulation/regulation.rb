@@ -59,7 +59,8 @@ class RegulationBin
     @HashOKNG = {"NG"=>0,"OK"=>1, "MANUAL"=>2}
     @HashONOFF = {"OFF"=>0,"ON"=>1, "MANUAL"=>2}
     @HashBATTLE = {"SINGLE"=>0,"DOUBLE"=>1, "TRIPLE"=>2, "ROTATION"=>3, "MULTI"=>4}
-    @HashCAMERA = { "NORMAL"=>0, "MOVE"=>1, "STOP"=>2 }
+    @HashCAMERA = { "NORMAL_15"=>0, "NORMAL_02"=>1, 
+                      "WCS_15"=>2, "WCS_02"=>3 }
     @TempNum = "0"
     @HashPokeGmm = Hash.new
     @HashItemGmm = Hash.new

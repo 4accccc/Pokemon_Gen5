@@ -75,8 +75,8 @@ class RegulationBin
       "GREEN"=>0x20, "GOLD"=>0x80, "SILVER"=>0x100,"DIAMOND"=>0x800, "PEARL"=>0x1000, "PLATINUM"=>0x2000,
       "COLOSSEUM"=>0x10000, "WHITE"=>0x100000, "BLACK"=>0x200000}
     @HashBGM = { "TRAINER"=>0,"WCS"=>1 }
-    @HashCAMERA = { "NORMAL"=>0, "MOVE"=>1, "STOP"=>2,
-      "WCS_NORMAL"=>3, "WCS_MOVE"=>4, "WCS_STOP"=>5 }
+    @HashCAMERA = { "NORMAL_15"=>0, "NORMAL_02"=>1, 
+                      "WCS_15"=>2, "WCS_02"=>3 }
     @TempNum = "0"
     @HashPokeGmm = Hash.new
     @HashItemGmm = Hash.new
