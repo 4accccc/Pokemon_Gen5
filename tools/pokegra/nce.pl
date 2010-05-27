@@ -464,6 +464,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
           $sc = $mcell_anms[$cell_index][$i];
           if( $stop_cell[$sc] == 1 ){
             push( @node, $i );
+            $stop_cell[$sc] = 0;
           }
         }
       }
@@ -552,8 +553,8 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   }
   else{
     $padding = 4 - ( 2 + $node_cnt ) % 4;
-    $write_data |= $node_cnt;
-		$write = pack "S", $write_data;
+    $write_work |= $node_cnt;
+		$write = pack "S", $write_work;
 	  print WRITE_NCE $write;
     for( $i = 0 ; $i < $node_cnt ; $i++ ){
 		  $write = pack "C", $node[$i];
