@@ -40,18 +40,6 @@ enum {
 	EDITAREA_WIN_HEIGHT = 4,
 	EDITAREA_WIN_CHARSIZE = EDITAREA_WIN_WIDTH*EDITAREA_WIN_HEIGHT,
 
-	MESSAGE_WIN_X = 2,
-	MESSAGE_WIN_Y = 21,
-	MESSAGE_WIN_WIDTH = 27,
-	MESSAGE_WIN_HEIGHT = 2,
-	MESSAGE_WIN_CHARSIZE = MESSAGE_WIN_WIDTH*MESSAGE_WIN_HEIGHT,
-
-	YESNO_WIN_X = 25,
-	YESNO_WIN_Y = 12,
-	YESNO_WIN_WIDTH = 8,
-	YESNO_WIN_HEIGHT = 4,
-	YESNO_WIN_CHARSIZE = YESNO_WIN_WIDTH*YESNO_WIN_HEIGHT,
-
 	DCSEL_WIN_X = 24,
 	DCSEL_WIN_Y = 14,
 	DCSEL_WIN_WIDTH = 7,
@@ -89,18 +77,6 @@ enum {
 	ALLCOVER_CURSOR_YPOS = 24,
 };
 
-
-enum {
-	YESNOWIN_CURSOR_OX = 0,
-	YESNOWIN_CURSOR_OY = 0,
-
-	YESNOWIN_STR_OX = 14,
-	YESNOWIN_STR_OY = 0,
-
-	YESONOWIN_LINE_HEIGHT = 16,
-};
-
-
 enum {
 	EDITAREA_WIN_BASE_COLOR_LETTER = 0x01,
 	EDITAREA_WIN_BASE_COLOR_SHADOW = 0x02,
@@ -109,14 +85,6 @@ enum {
 	EDITAREA_WIN_WORD_COLOR_LETTER = 0x03,
 	EDITAREA_WIN_WORD_COLOR_SHADOW = 0x04,
 	EDITAREA_WIN_WORD_COLOR_GROUND = 0x0e,
-
-	MESSAGE_WIN_COL_LETTER = 0x01,
-	MESSAGE_WIN_COL_SHADOW = 0x02,
-	MESSAGE_WIN_COL_GROUND = 0x09,
-
-	YESNOWIN_COL_LETTER = 0x01,
-	YESNOWIN_COL_SHADOW = 0x02,
-	YESNOWIN_COL_GROUND = 0x09,
 };
 
 //--------------------------------------------------------------
@@ -156,9 +124,6 @@ struct _PMSIV_EDIT {
 	const PMS_INPUT_DATA*  dwk;
 
 	GFL_BMPWIN	*win_edit[PMSIV_LCD_MAX];
-	GFL_BMPWIN	*win_msg[PMSIV_LCD_MAX];
-	GFL_BMPWIN	*win_yesno;
-	GFL_BMPWIN	**win_message;
 	GFL_CLWK	*cursor_actor[PMSIV_LCD_MAX];
 	GFL_CLWK	*deco_actor[PMS_WORD_MAX][PMSIV_LCD_MAX];
 
@@ -168,7 +133,6 @@ struct _PMSIV_EDIT {
 
 	POS                word_pos[PMS_INPUT_WORD_MAX];
 	u32                word_pos_max;
-	u32                yesnowin_frame_charpos;
 
 	PMS_ANALYZE_WORK   awk;
 
@@ -178,9 +142,6 @@ struct _PMSIV_EDIT {
 	s16					sub_scr;
 	u8					scr_ct;
 	u8					scr_dir;
-
-	u16					msgwin_cgx;
-	u16					yesno_win_cgx;
 
 	int*				p_key_mode;
 	
@@ -308,8 +269,6 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 
 	GFL_BMPWIN_Delete(wk->win_edit[0]);
 	GFL_BMPWIN_Delete(wk->win_edit[1]);
-	GFL_BMPWIN_Delete(wk->win_msg[0]);
-	GFL_BMPWIN_Delete(wk->win_msg[1]);
 	GFL_HEAP_FreeMemory( wk );
 }
 
@@ -325,8 +284,6 @@ void PMSIV_EDIT_Delete( PMSIV_EDIT* wk )
 //------------------------------------------------------------------
 void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 {
-	u32 charpos;
-	
 	setup_pal_datas( wk, p_handle );
 
 	GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_pmsi_pms_bg_main0_NSCR,
@@ -337,15 +294,10 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	wk->sub_scr = -24*8;
 	GFL_BG_SetScroll( FRM_SUB_EDITAREA, GFL_BG_SCROLL_Y_SET,wk->sub_scr);
 
-	charpos = GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main0_NCGR,
+	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main0_NCGR,
 		FRM_MAIN_EDITAREA, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(p_handle, NARC_pmsi_pms_bg_main0_NCGR,
 		FRM_SUB_EDITAREA, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
-	charpos /= 0x20;
-
-	//↑までのcharaposはBmpWinを保持して後方確保なので無視
-
-  charpos = 0;
 
 	wk->win_edit[0] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, EDITAREA_WIN_X, EDITAREA_WIN_Y, 
 						EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT, 
@@ -353,34 +305,9 @@ void PMSIV_EDIT_SetupGraphicDatas( PMSIV_EDIT* wk, ARCHANDLE* p_handle )
 	wk->win_edit[1] = GFL_BMPWIN_Create( FRM_SUB_EDITAREA, EDITAREA_WIN_X, EDITAREA_WIN_Y, 
 						EDITAREA_WIN_WIDTH, EDITAREA_WIN_HEIGHT, 
 						PALNUM_MAIN_EDITAREA,GFL_BMP_CHRAREA_GET_B );
-	charpos += EDITAREA_WIN_CHARSIZE;
-
-	wk->win_msg[0] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, MESSAGE_WIN_X, MESSAGE_WIN_Y, 
-						MESSAGE_WIN_WIDTH, MESSAGE_WIN_HEIGHT, 
-						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
-	wk->win_msg[1] = GFL_BMPWIN_Create( FRM_MAIN_EDITAREA, MESSAGE_WIN_X, MESSAGE_WIN_Y,
-						MESSAGE_WIN_WIDTH-8, MESSAGE_WIN_HEIGHT, 
-						PALNUM_MAIN_CATEGORY,GFL_BMP_CHRAREA_GET_B );
-	charpos += MESSAGE_WIN_CHARSIZE;
-
-	BmpWinFrame_CgxSet( FRM_MAIN_EDITAREA , charpos , MENU_TYPE_SYSTEM , HEAPID_PMS_INPUT_VIEW );
-
-	wk->yesnowin_frame_charpos = charpos;
-	charpos += MENU_WIN_CGX_SIZ;
-
-	wk->msgwin_cgx = charpos;
-	BmpWinFrame_GraphicSet( FRM_MAIN_EDITAREA,charpos,PALNUM_MAIN_TALKWIN,
-							MENU_TYPE_SYSTEM,HEAPID_PMS_INPUT_VIEW );
-
-#ifdef USE_SYSWIN
-	wk->win_message = &wk->win_msg[0];
-	BmpWinFrame_Write( *wk->win_message, WINDOW_TRANS_OFF ,charpos, PALNUM_MAIN_TALKWIN );
-#endif
 
 	GFL_BMPWIN_MakeScreen( wk->win_edit[0] );
 	GFL_BMPWIN_MakeScreen( wk->win_edit[1] );
-	GFL_BMPWIN_MakeScreen( wk->win_msg[0]);
-	GFL_BMPWIN_MakeScreen( wk->win_msg[1] );
 
 	setup_wordarea_pos(wk);
 
@@ -1042,24 +969,6 @@ u32 PMSIV_EDIT_GetWordPosMax( const PMSIV_EDIT* wk )
 
 //======================================================================================
 //======================================================================================
-
-/**
-	*	@brief	メッセージを書き込むウィンドウをチェンジ
-	*/
-void PMSIV_EDIT_ChangeSMsgWin(PMSIV_EDIT* wk,u8 mode)
-{
-#ifndef USE_SYSWIN
-  return; 
-#endif
-
-	//スクリーンをいったんクリア
-	GFL_BG_FillScreen(FRM_MAIN_EDITAREA,0x0000,0,20,24,4,GFL_BG_SCRWRT_PALIN);
-
-	GFL_BMPWIN_ClearScreen( *wk->win_message );
-	wk->win_message = &(wk->win_msg[mode]);	
-	
-	BmpWinFrame_Write( *wk->win_message, WINDOW_TRANS_OFF ,wk->msgwin_cgx, PALNUM_MAIN_TALKWIN );
-}
 
 void PMSIV_EDIT_StopCursor( PMSIV_EDIT* wk )
 {

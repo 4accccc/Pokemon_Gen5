@@ -1383,8 +1383,8 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 				wk->cmd_button_pos = BUTTON_POS_DECIDE;
 				PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
 				(*seq) = SEQ_EDS_BUTTON_KEYWAIT;
-				break;
 			}
+		  break;
 		}
 		if( (wk->key_trg & PAD_BUTTON_START)
 		||	( (wk->key_trg & PAD_BUTTON_A) && (wk->sentence_edit_pos_max==0) )
@@ -1683,6 +1683,7 @@ static GFL_PROC_RESULT mp_input_sentence( PMS_INPUT_WORK* wk, int* seq )
 		if(KeyStatusChange(wk,seq)){
 	    if(wk->key_mode == GFL_APP_KTST_KEY)  // タッチ→キーに変更したときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
       {
+			  PMSND_PlaySE(SOUND_MOVE_CURSOR);
 			  return GFL_PROC_RES_CONTINUE;
       }
 		}

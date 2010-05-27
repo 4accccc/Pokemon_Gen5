@@ -1054,13 +1054,13 @@ static void Cmd_EditAreaToCategory( GFL_TCB *tcb, void* wk_adrs )
 
 	case 1:
     HOSAKA_Printf("Cmd_EditAreaToCategory\n");
-    PMSIV_MENU_SetupCategory( vwk->menu_wk );
-
+    
     PMSI_ClearInputWord( (PMS_INPUT_WORK*)(wk->mwk) );  // constはずしはイヤだがやむなし
+    
+    PMSIV_MENU_SetupCategory( vwk->menu_wk );
 
 		PMSIV_EDIT_StopCursor( vwk->edit_wk );
 		PMSIV_EDIT_StopArrow( vwk->edit_wk );
-		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,1);
 		PMSIV_CATEGORY_StartEnableBG( vwk->category_wk );
 		PMSIV_EDIT_ScrollSet( vwk->edit_wk,0);
 
@@ -1159,9 +1159,9 @@ static void Cmd_ChangeCategoryModeEnable( GFL_TCB *tcb, void* wk_adrs )
       {
         PMSIV_MENU_ResetDecideCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_CHANGE );
 
-        PMSIV_MENU_SetupCategory( vwk->menu_wk );
-
         PMSI_ClearInputWord( (PMS_INPUT_WORK*)(wk->mwk) );  // constはずしはイヤだがやむなし
+        
+        PMSIV_MENU_SetupCategory( vwk->menu_wk );
         
         PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
         PMSIV_CATEGORY_StartModeChange( vwk->category_wk );
@@ -1240,7 +1240,6 @@ static void Cmd_CategoryToEditArea( GFL_TCB *tcb, void* wk_adrs )
     PMSIV_MENU_SetupEdit( vwk->menu_wk );
     PMSIV_CATEGORY_VisibleCursor( vwk->category_wk, FALSE );
     PMSIV_CATEGORY_StartDisableBG( vwk->category_wk );
-    PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
     PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
 
     // 上画面説明欄に表示するメッセージのウィンドウ
@@ -1458,7 +1457,6 @@ static void Cmd_WordWinToEditArea( GFL_TCB *tcb, void* wk_adrs )
       PMSIV_MENU_SetupEdit( vwk->menu_wk );
   		PMSIV_WORDWIN_VisibleCursor( vwk->wordwin_wk, FALSE );
   		PMSIV_WORDWIN_StartFadeOut( vwk->wordwin_wk );
-  		PMSIV_EDIT_ChangeSMsgWin(vwk->edit_wk,0);
   		PMSIV_EDIT_ScrollSet( vwk->edit_wk,1);
   		wk->seq++;
     }
@@ -2239,11 +2237,6 @@ static void trans_explain_message( PMS_INPUT_VIEW* vwk )
 //----------------------------------------------------------------------------------------------
 void PMSIView_ChangeKTEditArea( PMS_INPUT_VIEW* vwk, const PMS_INPUT_WORK* mwk, const PMS_INPUT_DATA* dwk )
 {
-  // 編集領域にいるか、ボタン領域にいるかを更新する
-  {
-    BOOL is_edit_area = PMSI_GetEditAreaOrButton( vwk->main_wk );
-  }
-
 	if(*vwk->p_key_mode == GFL_APP_KTST_TOUCH){	//キーからタッチへ
 		PMSIV_EDIT_VisibleCursor( vwk->edit_wk, FALSE );  // 編集エリアのカーソルはカテゴリ選択(ポケモンやステータスなど、あいうえおなど)やワードウィン選択(ピカチュウなど)に移行している間は表示しておくが、編集エリア内では選ばない限り消しておく。
     PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, PMSI_GetButtonCursorPos(vwk->main_wk), FALSE );

@@ -216,8 +216,6 @@ void PMSIV_WORDWIN_Delete( PMSIV_WORDWIN* wk )
 //------------------------------------------------------------------
 void PMSIV_WORDWIN_SetupGraphicDatas( PMSIV_WORDWIN* wk )
 {
-	u32 charpos;
-
 	GFL_BG_SetClearCharacter( FRM_MAIN_WORDWIN, 0x20, CLEAR_CHARPOS*0x20 , HEAPID_PMS_INPUT_VIEW );
 	GFL_BG_FillScreen( FRM_MAIN_WORDWIN, CLEAR_CHARPOS, 0, 0, 32, 32, PALNUM_MAIN_WORDWIN );
 

@@ -24,6 +24,10 @@
 
 #include "pms_abc_gmm_def.h"
 
+
+#include "../../../../resource/quiz/pms_answer.h"
+
+
 //=============================================================================
 /**
  *								定数定義
@@ -365,12 +369,67 @@ BOOL PMSI_SEARCH_Start( PMS_INPUT_SEARCH*wk )
     }
   }
 #endif
-  
-  // 検索
+
+  // 1文字目で英数字の検索か通常の検索か分岐する
+  // 英数字の検索
+  if( search_idx == INI_OTHER )
+  {
+    static const PMS_WORD pic_word[] =
+    {
+      pic01,
+      pic02,
+      pic03,
+      pic04,
+      pic05,
+      pic06,
+      pic07,
+      pic08,
+      pic09,
+      pic10,
+    };
+
+    u16          msg_idx    = search_idx;
+    GFL_MSGDATA* p_msg      = wk->msg_tbl[ msg_idx ];
+    u32          str_max    = GFL_MSG_GetStrCount( p_msg );
+    int          str_idx;
+    u32          hitnum                        = 0;
+    PMS_WORD     rslt_tbl[ WORD_SEARCH_MAX+1 ] = {0};
+
+    for( str_idx=0; str_idx<str_max; str_idx++ )
+    {
+      PMS_WORD word = PMSI_DATA_GetWordToOriginalPos( wk->dwk, search_idx, str_idx );
+      int j;
+      BOOL is_pic_word = FALSE;
+      for( j=0; j<sizeof(pic_word)/sizeof(pic_word[0]); j++ )
+      {
+        if( word == pic_word[j] )
+        {
+          is_pic_word = TRUE;
+          break;
+        }
+      }
+      if( !is_pic_word )
+      {
+        wk->search_result[hitnum].msg_idx = search_idx;
+        wk->search_result[hitnum].str_idx = str_idx;
+        rslt_tbl[hitnum] = word;
+        hitnum++;
+      }
+    }
+
+    // テーブル末尾に末尾データ
+    rslt_tbl[hitnum] = PMSI_DATA_GetWordTableEndData( wk->dwk );
+ 
+    // 無効データを排除
+    wk->search_hitnum = PMSI_DATA_GetInitialEnableWordTable( wk->dwk, rslt_tbl, wk->result_word );
+    
+    return ( wk->search_hitnum > 0 );
+  }
+  // 通常の検索
+  else
   {
     int i;
     u32 hitnum;
-    u32 desable_cnt = 0;
     PMS_WORD rslt_tbl[ WORD_SEARCH_MAX+1 ] = {0};
 
     hitnum = MSGSEARCH_Search( wk->search_wk, search_idx, 0, wk->str_search, wk->search_result ,WORD_SEARCH_MAX );
