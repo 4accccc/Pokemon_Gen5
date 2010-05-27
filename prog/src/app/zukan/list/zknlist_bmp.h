@@ -48,12 +48,39 @@ extern void ZKNLISTBMP_Exit( ZKNLISTMAIN_WORK * wk );
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTBMP_PrintUtilTrans( ZKNLISTMAIN_WORK * wk );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン登録数表示（捕獲数・見た数）
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索結果数表示
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTBMP_PutPokeSearchStr( ZKNLISTMAIN_WORK * wk );
 
-extern void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 winIdx, s32 listPos );
-
-
-extern void ZKNLISTBMP_PutPokeList2( ZKNLISTMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * name, u32 num );
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上の文字列表示（ポケモン名・図鑑番号）
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		util	PRINT_UTIL
+ * @param		name	ポケモン名
+ * @param		num		図鑑番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * name, u32 num );
 

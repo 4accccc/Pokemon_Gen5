@@ -297,42 +297,6 @@ BOOL ZKNLISTOBJ_CheckVanish( ZKNLISTMAIN_WORK * wk, u32 id )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターBGプライオリティ変更
- *
- * @param		wk		図鑑リストワーク
- * @param		id		OBJ ID
- * @param		pri		プライオリティ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void ZKNLISTOBJ_ChgBgPriority( ZKNLISTMAIN_WORK * wk, u32 id, int pri )
-{
-	GFL_CLACT_WK_SetBgPri( wk->clwk[id], pri );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		セルアクターのOBJ同士のプライオリティ変更
- *
- * @param		wk		図鑑リストワーク
- * @param		id		OBJ ID
- * @param		pri		プライオリティ
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void ZKNLISTOBJ_ChgObjPriority( ZKNLISTMAIN_WORK * wk, u32 id, int pri )
-{
-	GFL_CLACT_WK_SetSoftPri( wk->clwk[id], pri );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		セルアクター半透明設定
  *
  * @param		wk		図鑑リストワーク
@@ -414,12 +378,15 @@ void ZKNLISTOBJ_ChgPltt( ZKNLISTMAIN_WORK * wk, u32 id, u32 pal )
 }
 
 
-
-
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター初期化
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitClact(void)
 {
 	const GFL_CLSYS_INIT init = {
@@ -442,7 +409,15 @@ static void InitClact(void)
 	GFL_CLACT_SYS_Create( &init, ZKNLISTMAIN_GetVramBankData(), HEAPID_ZUKAN_LIST );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース初期化
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitResource( ZKNLISTMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -538,6 +513,15 @@ static void InitResource( ZKNLISTMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース解放
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResource( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
@@ -559,6 +543,15 @@ static void ExitResource( ZKNLISTMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター追加
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void AddClact( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
@@ -599,14 +592,33 @@ static void AddClact( ZKNLISTMAIN_WORK * wk )
 	}
 }
 
-static void DelClact( ZKNLISTMAIN_WORK * wk, u32 idx )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター削除（個別）
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		id			OBJ ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DelClact( ZKNLISTMAIN_WORK * wk, u32 id )
 {
-	if( wk->clwk[idx] != NULL ){
-		GFL_CLACT_WK_Remove( wk->clwk[idx] );
-		wk->clwk[idx] = NULL;
+	if( wk->clwk[id] != NULL ){
+		GFL_CLACT_WK_Remove( wk->clwk[id] );
+		wk->clwk[id] = NULL;
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター削除（全体）
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DelClactAll( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
@@ -618,16 +630,12 @@ static void DelClactAll( ZKNLISTMAIN_WORK * wk )
 }
 
 
-
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		ポケモン正面絵セルアクターセット
  *
  * @param		wk			図鑑リストワーク
  * @param		mons		ポケモン番号
- * @param		form		フォルム
- * @param		sex			性別
- * @param		rare		レアかどうか
  *
  * @return	none
  */
@@ -737,20 +745,6 @@ void ZKNLISTOBJ_SetPokeGra( ZKNLISTMAIN_WORK * wk, u16 mons )
 	wk->pokeGraFlag ^= 1;
 }
 
-/*
-void ZKNLISTOBJ_PutListPosPokeGra( ZKNLISTMAIN_WORK * wk, s16 pos )
-{
-	u16	mons;
-
-	if( ZKNLISTMAIN_GetListInfo( wk->list, pos ) == 0 ){
-		mons = 0;
-	}else{
-		mons = ZKNLISTMAIN_GetListMons( wk->list, pos );
-	}
-	ZKNLISTOBJ_SetPokeGra( wk, mons, 0, 0, 0 );
-}
-*/
-
 
 //============================================================================================
 //	ポケモンアイコン
@@ -799,11 +793,9 @@ static void AddPokeIcon( ZKNLISTMAIN_WORK * wk )
 	}
 
 	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
-//		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON+i, 1+i, 0, TRUE );
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON+i, FALSE );
 	}
 	for( i=0; i<ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
-//		ZKNLISTOBJ_ChgPokeIcon( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, 8+i, 0, FALSE );
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON_S+i, FALSE );
 		ZKNLISTOBJ_SetVanish( wk, ZKNLISTOBJ_IDX_POKEICON_SW+i, FALSE );
 	}
@@ -848,97 +840,16 @@ void ZKNLISTOBJ_ChgPokeIcon( ZKNLISTMAIN_WORK * wk, u32 idx, u16 mons, u16 form,
 		wk->clwk[idx], POKEICON_GetPalNum(mons,form,sex,FALSE), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 }
 
-/*
-void ZKNLISTOBJ_ScrollPokeIcon( ZKNLISTMAIN_WORK * wk, s16 mv )
-{
-	u32	i;
-	s16	x, y;
-
-	for( i=ZKNLISTOBJ_IDX_POKEICON; i<ZKNLISTOBJ_IDX_POKEICON+ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
-		ZKNLISTOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_MAIN );
-	}
-	for( i=ZKNLISTOBJ_IDX_POKEICON_S; i<ZKNLISTOBJ_IDX_POKEICON_S+ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_SUB );
-		ZKNLISTOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_SUB );
-	}
-}
-*/
-
-/*
-void ZKNLISTOBJ_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 objIdx, s32 listPos, BOOL disp )
-{
-	if( listPos < 0 ){
-		ZKNLISTOBJ_SetVanish( wk, objIdx, FALSE );
-		return;
-	}
-
-	if( ZKNLISTMAIN_GetListInfo( wk->list, listPos ) == 0 ){
-		ZKNLISTOBJ_SetVanish( wk, objIdx, FALSE );
-	}else{
-		ZKNLISTOBJ_ChgPokeIcon( wk, objIdx, ZKNLISTMAIN_GetListMons(wk->list,listPos), 0, disp );
-		ZKNLISTOBJ_SetVanish( wk, objIdx, TRUE );
-	}
-	ZKNLISTOBJ_SetAutoAnm( wk, objIdx, POKEICON_ANM_DEATH );
-}
-*/
-/*
-void ZKNLISTOBJ_PutScrollList( ZKNLISTMAIN_WORK * wk, u32 idx, u32 mv )
-{
-	if( mv == ZKNLISTBGWFRM_LISTPUT_UP ){
-		ZKNLISTOBJ_SetPos(
-			wk, ZKNLISTOBJ_IDX_POKEICON+idx, POKEICON_PX, POKEICON_PY-POKEICON_SY, CLSYS_DRAW_MAIN );
-		ZKNLISTOBJ_SetPos(
-			wk, ZKNLISTOBJ_IDX_POKEICON_S+idx, POKEICON_PX, POKEICON_PY, CLSYS_DRAW_SUB );
-	}else{
-		ZKNLISTOBJ_SetPos(
-			wk, ZKNLISTOBJ_IDX_POKEICON+idx, POKEICON_PX, POKEICON_PY+POKEICON_SY*7, CLSYS_DRAW_MAIN );
-		ZKNLISTOBJ_SetPos(
-			wk, ZKNLISTOBJ_IDX_POKEICON_S+idx, POKEICON_PX, POKEICON_PY+POKEICON_SY*8, CLSYS_DRAW_SUB );
-	}
-}
-*/
-/*
-void ZKNLISTOBJ_InitScrollList( ZKNLISTMAIN_WORK * wk )
-{
-	u32	i;
-
-	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_SetPos(
-			wk, ZKNLISTOBJ_IDX_POKEICON+i, POKEICON_PX, POKEICON_PY+POKEICON_SY*i, CLSYS_DRAW_MAIN );
-	}
-	for( i=0; i<ZKNLISTOBJ_SUB_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_SetPos(
-			wk, ZKNLISTOBJ_IDX_POKEICON_S+i, POKEICON_PX, POKEICON_PY+POKEICON_SY*(i+1), CLSYS_DRAW_SUB );
-	}
-}
-*/
-
-void ZKNLISTOBJ_ChgListPosAnm( ZKNLISTMAIN_WORK * wk, u32 pos, BOOL flg )
-{
-	u16	i;
-	s16	py;
-	s16	x, y;
-
-	py = POKEICON_PY + POKEICON_SY * pos;
-
-	for( i=0; i<ZKNLISTOBJ_MAIN_POKEICON_MAX; i++ ){
-		ZKNLISTOBJ_GetPos( wk, ZKNLISTOBJ_IDX_POKEICON+i, &x, &y, CLSYS_DRAW_MAIN );
-		if( y == py ){
-			break;
-		}
-	}
-
-	if( flg == TRUE ){
-		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_POKEICON+i, POKEICON_ANM_HPMAX );
-	}else{
-		ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_POKEICON+i, POKEICON_ANM_DEATH );
-	}
-}
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		未表示のポケモンアイコンのインデックス取得
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		disp		表示画面
+ *
+ * @return	インデックス
+ */
+//--------------------------------------------------------------------------------------------
 u32 ZKNLISTOBJ_GetChgPokeIconIndex( ZKNLISTMAIN_WORK * wk, BOOL disp )
 {
 	u32	i;
@@ -960,7 +871,19 @@ u32 ZKNLISTOBJ_GetChgPokeIconIndex( ZKNLISTMAIN_WORK * wk, BOOL disp )
 	return 0;
 }
 
-void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンアイコン表示
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		mons		ポケモン番号
+ * @param		py			表示Ｙ座標
+ * @param		disp		表示画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTOBJ_PutPokeList( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp )
 {
 	u32	obj;
 	u32	sex, form;
@@ -983,7 +906,17 @@ void ZKNLISTOBJ_PutPokeList2( ZKNLISTMAIN_WORK * wk, u16 mons, s16 py, BOOL disp
 	}
 }
 
-void ZKNLISTOBJ_PutScrollList2( ZKNLISTMAIN_WORK * wk, s8 mv )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストスクロール時のＯＢＪ動作
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		mv			移動量
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTOBJ_PutScrollList( ZKNLISTMAIN_WORK * wk, s8 mv )
 {
 	u32	i;
 	s16	x, y;
@@ -1015,6 +948,15 @@ void ZKNLISTOBJ_PutScrollList2( ZKNLISTMAIN_WORK * wk, s8 mv )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンアイコンの表示状況テーブルを作成
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_SetPutPokeIconFlag( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
@@ -1036,6 +978,15 @@ void ZKNLISTOBJ_SetPutPokeIconFlag( ZKNLISTMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		表示されているポケモンアイコンを非表示にする
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_VanishJumpPokeIcon( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
@@ -1056,6 +1007,16 @@ void ZKNLISTOBJ_VanishJumpPokeIcon( ZKNLISTMAIN_WORK * wk )
 	wk->iconPutSub = 0;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンアイコンアニメ切り替え
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		pos			カーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_ChangePokeIconAnime( ZKNLISTMAIN_WORK * wk, u32 pos )
 {
 	u32	i;
@@ -1079,13 +1040,16 @@ void ZKNLISTOBJ_ChangePokeIconAnime( ZKNLISTMAIN_WORK * wk, u32 pos )
 	}
 }
 
-
-
-
-
-
-
-// スクロールバー
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールバー配置
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		py			Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
 {
 	if( py < SCROLL_BAR_UY ){
@@ -1096,53 +1060,18 @@ void ZKNLISTOBJ_SetScrollBar( ZKNLISTMAIN_WORK * wk, u32 py )
 	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, py, CLSYS_DRAW_MAIN );
 }
 
-/*
-u32 ZKNLISTOBJ_GetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
-{
-	u32	max;
-	u32	cnt;
-	s16	x, y;
-
-	ZKNLISTOBJ_GetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, &x, &y, CLSYS_DRAW_MAIN );
-	max = ZKNLISTMAIN_GetListScrollMax( wk->list );
-
-	if( y == SCROLL_BAR_UY ){
-		cnt = 0;
-	}else if( y == SCROLL_BAR_DY ){
-		cnt = max;
-	}else{
-//		cnt = ( ( (max+1) << 8 ) / ( SCROLL_BAR_DY - SCROLL_BAR_UY ) * ( y - SCROLL_BAR_UY ) ) >> 8;
-		cnt = ( ( max << 8 ) / ( SCROLL_BAR_DY - SCROLL_BAR_UY ) * ( y - SCROLL_BAR_UY ) ) >> 8;
-	}
-
-	return cnt;
-}
-*/
-/*
-void ZKNLISTOBJ_SetListScrollBarPos( ZKNLISTMAIN_WORK * wk )
-{
-	u32	max;
-	s16	scroll;
-	s16	y;
-	
-	scroll = ZKNLISTMAIN_GetListScroll( wk->list );
-	max    = ZKNLISTMAIN_GetListScrollMax( wk->list );
-
-	if( scroll == 0 ){
-		y = SCROLL_BAR_UY;
-	}else if( scroll == max ){
-		y = SCROLL_BAR_DY;
-	}else{
-		y = ( ( ( (SCROLL_BAR_DY-SCROLL_BAR_UY) << 8 ) / max * scroll ) >> 8 ) + SCROLL_BAR_UY;
-	}
-
-	ZKNLISTOBJ_SetPos( wk, ZKNLISTOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, y, CLSYS_DRAW_MAIN );
-}
-*/
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ切り替え矢印アニメ
+ *
+ * @param		wk			図鑑リストワーク
+ * @param		anm			TRUE = アクティブ, FALSE = パッシブ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm )
 {
-//	if( ZKNLISTOBJ_CheckAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT ) == FALSE || anm == FALSE ){
 	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ||
 			anm == FALSE ){
 		if( FRAMELIST_GetScrollCount( wk->lwk ) == 0 ){
@@ -1151,7 +1080,6 @@ void ZKNLISTOBJ_SetListPageArrowAnime( ZKNLISTMAIN_WORK * wk, BOOL anm )
 			ZKNLISTOBJ_SetAutoAnm( wk, ZKNLISTOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT );
 		}
 	}
-//	if( ZKNLISTOBJ_CheckAnm( wk, ZKNLISTOBJ_IDX_TB_RIGHT ) == FALSE || anm == FALSE ){
 	if( ZKNLISTOBJ_GetAnm(wk,ZKNLISTOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
 			anm == FALSE ){
 		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE ){

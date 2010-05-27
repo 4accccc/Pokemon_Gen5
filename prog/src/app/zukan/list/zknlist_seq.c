@@ -76,6 +76,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //	グローバル
 //============================================================================================
 
+// メインシーケンス
 static const pZKNLIST_FUNC MainSeq[] = {
 	MainSeq_Init,
 	MainSeq_Release,
@@ -92,8 +93,16 @@ static const pZKNLIST_FUNC MainSeq[] = {
 };
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL ZKNLISTSEQ_MainSeq( ZKNLISTMAIN_WORK * wk )
 {
 	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
@@ -103,12 +112,20 @@ BOOL ZKNLISTSEQ_MainSeq( ZKNLISTMAIN_WORK * wk )
 
 	ZKNLISTOBJ_AnmMain( wk );
 	ZKNLISTBMP_PrintUtilTrans( wk );
-//	BGWINFRM_MoveMain( wk->wfrm );
 	ZKNCOMM_ScrollBaseBG( GFL_BG_FRAME3_M, GFL_BG_FRAME3_S, &wk->BaseScroll );
 
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：初期化
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 {
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
@@ -134,7 +151,6 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 
 	ZKNLISTBMP_Init( wk );
 	ZKNLISTOBJ_Init( wk );
-//	ZKNLISTBGWFRM_Init( wk );
 
 	ZKNLISTMAIN_LoadLocalNoList( wk );
 	ZKNLISTMAIN_MakeList( wk );
@@ -159,9 +175,18 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_INIT_LIST_WAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：解放
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 {
-	if( ZKNLISTMAIN_MainSrameScroll( wk ) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
+	if( ZKNLISTMAIN_MainFrameScroll( wk ) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
 		return MAINSEQ_RELEASE;
 	}
 
@@ -173,7 +198,6 @@ static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTMAIN_FreeList( wk );
 	ZKNLISTMAIN_FreeLocalNoList( wk );
 
-//	ZKNLISTBGWFRM_Exit( wk );
 	ZKNLISTOBJ_Exit( wk );
 	ZKNLISTBMP_Exit( wk );
 
@@ -197,6 +221,15 @@ static int MainSeq_Release( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_END;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ワイプ待ち
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Wipe( ZKNLISTMAIN_WORK * wk )
 {
 	if( PaletteFadeCheck(wk->pfd) == 0 ){
@@ -205,9 +238,15 @@ static int MainSeq_Wipe( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_WIPE;
 }
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：リスト初期化待ち
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitListWait( ZKNLISTMAIN_WORK * wk )
 {
 	switch( wk->listInit ){
@@ -226,12 +265,11 @@ static int MainSeq_InitListWait( ZKNLISTMAIN_WORK * wk )
 			ZKNLISTMAIN_SetPalFadeSeq( wk, 16, 0 );
 			ZKNLISTMAIN_SetFrameScrollParam( wk, -ZKNCOMM_BAR_SPEED );
 			wk->listInit++;
-//			return SetFadeIn( wk, MAINSEQ_MAIN );
 		}
 		break;
 
 	case 2:
-		if( ZKNLISTMAIN_MainSrameScroll( wk ) == FALSE && PaletteFadeCheck(wk->pfd) == 0 ){
+		if( ZKNLISTMAIN_MainFrameScroll( wk ) == FALSE && PaletteFadeCheck(wk->pfd) == 0 ){
 			wk->listInit = 0;
 			return MAINSEQ_MAIN;
 		}
@@ -240,6 +278,15 @@ static int MainSeq_InitListWait( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_INIT_LIST_WAIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：メイン
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 {
 	int	seq;
@@ -250,7 +297,6 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 
 	switch( ret ){
 	case FRAMELIST_RET_CURSOR_ON:		// カーソル表示
-//		PMSND_PlaySE( ZKNLIST_SE_DECIDE );
 		break;
 
 	case FRAMELIST_RET_MOVE:				// カーソル移動
@@ -279,7 +325,7 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 		ret = ZKNLISTUI_ListMain( wk );
 
 		switch( ret ){
-		case ZKNLISTUI_ID_POKE:				// 02: ポケモン正面絵
+		case ZKNLISTUI_ID_POKE:				// 00: ポケモン正面絵
 			{
 				int	pos = FRAMELIST_GetListPos( wk->lwk );
 				if( CheckInfoData( wk, pos ) == TRUE ){
@@ -289,13 +335,13 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 			}
 			break;
 
-		case ZKNLISTUI_ID_ICON1:			// 03: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON2:			// 04: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON3:			// 05: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON4:			// 06: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON5:			// 07: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON6:			// 08: ポケモンアイコン
-		case ZKNLISTUI_ID_ICON7:			// 09: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON1:			// 01: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON2:			// 02: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON3:			// 03: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON4:			// 04: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON5:			// 05: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON6:			// 06: ポケモンアイコン
+		case ZKNLISTUI_ID_ICON7:			// 07: ポケモンアイコン
 			{
 				int	pos = FRAMELIST_GetScrollCount( wk->lwk ) + ret - ZKNLISTUI_ID_ICON1;
 				if( CheckInfoData( wk, pos ) == TRUE ){
@@ -306,13 +352,13 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 			}
 			break;
 
-		case ZKNLISTUI_ID_START:			// 10: スタート
+		case ZKNLISTUI_ID_START:			// 08: スタート
 			PMSND_PlaySE( ZKNLIST_SE_DECIDE );
 			wk->dat->retMode = ZKNLIST_RET_SEARCH;
 			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
 			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_START, ZKNLISTOBJ_ANM_START_ANM, MAINSEQ_END_SET );
 
-		case ZKNLISTUI_ID_SELECT:			// 11: セレクト
+		case ZKNLISTUI_ID_SELECT:			// 09: セレクト
 			PMSND_PlaySE( ZKNLIST_SE_DECIDE );
 			if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){
 				ZUKANSAVE_SetZukanMode( wk->dat->savedata, FALSE );
@@ -323,24 +369,24 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
 			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_SELECT, ZKNLISTOBJ_ANM_SELECT_ANM, MAINSEQ_END_SET );
 
-		case ZKNLISTUI_ID_Y:					// 14: Ｙ
+		case ZKNLISTUI_ID_Y:					// 10: Ｙ
 			PMSND_PlaySE( ZKNLIST_SE_Y );
 			SetShortCut( wk );
 			break;
 
-		case ZKNLISTUI_ID_X:					// 15: Ｘ
+		case ZKNLISTUI_ID_X:					// 11: Ｘ
 			PMSND_PlaySE( ZKNLIST_SE_CLOASE );
 			wk->dat->retMode = ZKNLIST_RET_EXIT_X;
 			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
 			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_EXIT, APP_COMMON_BARICON_EXIT_ON, MAINSEQ_END_SET );
 
-		case ZKNLISTUI_ID_RETURN:			// 16: 戻る
+		case ZKNLISTUI_ID_RETURN:			// 12: 戻る
 			PMSND_PlaySE( ZKNLIST_SE_CANCEL );
 			wk->dat->retMode = ZKNLIST_RET_EXIT;
 			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
 			return SetButtonAnm( wk, ZKNLISTOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON, MAINSEQ_END_SET );
 
-		case ZKNLISTUI_ID_CANCEL:			// キャンセルボタン
+		case ZKNLISTUI_ID_CANCEL:			// 13: キャンセルボタン
 			PMSND_PlaySE( ZKNLIST_SE_CANCEL );
 			wk->dat->retMode = ZKNLIST_RET_EXIT;
 			SetDefaultMons( wk, FRAMELIST_GetListPos(wk->lwk) );
@@ -366,6 +412,15 @@ static int MainSeq_Main( ZKNLISTMAIN_WORK * wk )
 	return seq;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ページ切り替え
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PageMove( ZKNLISTMAIN_WORK * wk )
 {
 	if( FRAMELIST_Main( wk->lwk ) == FRAMELIST_RET_NONE ){
@@ -375,21 +430,15 @@ static int MainSeq_PageMove( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_PAGE_MOVE;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ボタンアニメ
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk )
 {
 	if( ZKNLISTOBJ_CheckAnm( wk, wk->buttonID ) == FALSE ){
@@ -398,6 +447,15 @@ static int MainSeq_ButtonAnm( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_BUTTON_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：リスト項目アニメ
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk )
 {
 	switch( wk->buttonSeq ){
@@ -427,9 +485,7 @@ static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk )
 	case 4:
 		if( wk->buttonCnt == 0 ){
 			wk->buttonSeq = 0;
-//			return SetFadeOut( wk, MAINSEQ_RELEASE );
 			return MAINSEQ_END_SET;
-//			return MAINSEQ_MAIN;
 		}else{
 			wk->buttonCnt--;
 		}
@@ -438,19 +494,32 @@ static int MainSeq_ItemAnm( ZKNLISTMAIN_WORK * wk )
 	return MAINSEQ_ITEM_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：終了設定
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndSet( ZKNLISTMAIN_WORK * wk )
 {
-//	wk->frameScroll = 2;
-//	return SetFadeOut( wk, MAINSEQ_RELEASE );
-
 	ZKNLISTMAIN_SetPalFadeSeq( wk, 0, 16 );
 	ZKNLISTMAIN_SetFrameScrollParam( wk, ZKNCOMM_BAR_SPEED );
 	return MAINSEQ_RELEASE;
 }
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		初期パレットフェード設定
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetInitPalFade( ZKNLISTMAIN_WORK * wk )
 {
 	PaletteWorkSet_VramCopy( wk->pfd, FADE_MAIN_BG, 0, FADE_PAL_ALL_SIZE );
@@ -461,6 +530,16 @@ static void SetInitPalFade( ZKNLISTMAIN_WORK * wk )
 	ZKNLISTMAIN_SetPalFadeSeq( wk, 16, 16 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードインセット
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetFadeIn( ZKNLISTMAIN_WORK * wk, int next )
 {
 	ZKNLISTMAIN_SetPalFadeSeq( wk, 16, 0 );
@@ -468,6 +547,16 @@ static int SetFadeIn( ZKNLISTMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードアウトセット
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetFadeOut( ZKNLISTMAIN_WORK * wk, int next )
 {
 	ZKNLISTMAIN_SetPalFadeSeq( wk, 0, 16 );
@@ -475,6 +564,18 @@ static int SetFadeOut( ZKNLISTMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボタンアニメセット
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		id		ボタンＩＤ
+ * @param		anm		アニメ番号
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetButtonAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm, int next )
 {
 	ZKNLISTOBJ_SetAutoAnm( wk, id, anm );
@@ -483,6 +584,17 @@ static int SetButtonAnm( ZKNLISTMAIN_WORK * wk, u32 id, u32 anm, int next )
 	return MAINSEQ_BUTTON_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト項目チェック
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		pos		項目位置
+ *
+ * @retval	"TRUE = 項目あり"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL CheckInfoData( ZKNLISTMAIN_WORK * wk, int pos )
 {
 	if( GET_LIST_INFO( FRAMELIST_GetItemParam(wk->lwk,pos) ) == 0 ){
@@ -491,6 +603,16 @@ static BOOL CheckInfoData( ZKNLISTMAIN_WORK * wk, int pos )
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		デフォルトポケモン設定
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		pos		項目位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetDefaultMons( ZKNLISTMAIN_WORK * wk, int pos )
 {
 	if( CheckInfoData( wk, pos ) == TRUE ){
@@ -498,14 +620,32 @@ static void SetDefaultMons( ZKNLISTMAIN_WORK * wk, int pos )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目作成
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		pos		項目位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static int SetInfoData( ZKNLISTMAIN_WORK * wk, int pos )
 {
-//	wk->dat->retMons = GET_LIST_MONS( FRAMELIST_GetItemParam(wk->lwk,pos) );
 	SetDefaultMons( wk, pos );
 	wk->dat->retMode = ZKNLIST_RET_INFO;
 	return MAINSEQ_ITEM_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ショートカット設定
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void SetShortCut( ZKNLISTMAIN_WORK * wk )
 {
 	if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_LIST ) == TRUE ){

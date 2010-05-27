@@ -32,10 +32,10 @@
 // 後方確保用ヒープＩＤ
 #define	HEAPID_ZUKAN_LIST_L		( GFL_HEAP_LOWID(HEAPID_ZUKAN_LIST) )
 
-#define	ZKNLISTMAIN_MBG_PAL_TOUCHBAR	( 14 )
-#define	ZKNLISTMAIN_MBG_PAL_FONT			( 15 )
-
-#define	ZKNLISTMAIN_SBG_PAL_FONT			( 15 )
+// ＢＧパレット番号
+#define	ZKNLISTMAIN_MBG_PAL_TOUCHBAR	( 14 )		// タッチバー
+#define	ZKNLISTMAIN_MBG_PAL_FONT			( 15 )		// メイン画面フォントパレット
+#define	ZKNLISTMAIN_SBG_PAL_FONT			( 15 )		// サブ画面フォントパレット
 
 // タッチバー定義
 #define	ZKNLISTMAIN_TOUCH_BAR_PX		( 0 )
@@ -54,14 +54,9 @@
 #define	LIST_INFO_MASK		( 0xf0000000 )
 #define	LIST_INFO_SHIFT		( 28 )
 
-#define	SET_LIST_PARAM(p,m)	( ( p << LIST_INFO_SHIFT ) | m )
-#define	GET_LIST_MONS(a)		( a & LIST_MONS_MASK )
-#define	GET_LIST_INFO(a)		( ( a & LIST_INFO_MASK ) >> LIST_INFO_SHIFT )
-
-
-//typedef struct _ZUKAN_LIST_WORK	ZUKAN_LIST_WORK;
-//typedef void (*pZUKAN_LIST_CALLBACK)(void*,s16,s16,s16,s16,u32);
-
+#define	SET_LIST_PARAM(p,m)	( ( p << LIST_INFO_SHIFT ) | m )							// リストパラメータ設定
+#define	GET_LIST_MONS(a)		( a & LIST_MONS_MASK )												// リストパラメータからポケモン番号を取得
+#define	GET_LIST_INFO(a)		( ( a & LIST_INFO_MASK ) >> LIST_INFO_SHIFT )	// リストパラメータから登録情報を取得
 
 // リスト画面ワーク
 typedef struct {
@@ -72,18 +67,11 @@ typedef struct {
 
 	PALETTE_FADE_PTR	pfd;		// パレットフェードデータ
 
-//	int	key_repeat_speed;
-//	int	key_repeat_wait;
-
 	int	mainSeq;		// メインシーケンス
 	int	nextSeq;		// 次のシーケンス
 	int	wipeSeq;		// ワイプ後のシーケンス
 
-//	BGWINFRM_WORK * wfrm;			// ウィンドウフレーム
-//	u16 * nameBG[2];
-
 	PRINT_UTIL	win[ZKNLISTBMP_WINIDX_MAX];		// BMPWIN
-//	u8 * nameBmp;
 
 	GFL_FONT * font;						// 通常フォント
 	GFL_MSGDATA * mman;					// メッセージデータマネージャ
@@ -130,7 +118,7 @@ typedef int (*pZKNLIST_FUNC)(ZKNLISTMAIN_WORK*);
 /**
  * @brief		VBLANK関数設定
  *
- * @param		wk		図鑑リスト画面ワーク
+ * @param		wk		図鑑リストワーク
  *
  * @return	none
  */
@@ -141,28 +129,95 @@ extern void ZKNLISTMAIN_InitVBlank( ZKNLISTMAIN_WORK * wk );
 /**
  * @brief		VBLANK関数削除
  *
- * @param		wk		図鑑リスト画面ワーク
+ * @param		wk		図鑑リストワーク
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_ExitVBlank( ZKNLISTMAIN_WORK * wk );
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		HBLANK関数設定
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_InitHBlank( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		HBLANK関数削除
+ *
+ * @param		wk			図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_ExitHBlank( ZKNLISTMAIN_WORK * wk );
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_InitVram(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM設定取得
+ *
+ * @param		none
+ *
+ * @return	VRAM設定データ
+ */
+//--------------------------------------------------------------------------------------------
 extern const GFL_DISP_VRAM * ZKNLISTMAIN_GetVramBankData(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_InitBg(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ解放
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_ExitBg(void);
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧグラフィック読み込み
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_LoadBgGraphic(void);
 
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		パレットフェード初期化
  *
- * @param		wk		図鑑リスト画面ワーク
+ * @param		wk		図鑑リストワーク
  *
  * @return	none
  */
@@ -173,7 +228,7 @@ extern void ZKNLISTMAIN_InitPaletteFade( ZKNLISTMAIN_WORK * wk );
 /**
  * @brief		パレットフェード解放
  *
- * @param		wk		図鑑リスト画面ワーク
+ * @param		wk		図鑑リストワーク
  *
  * @return	none
  */
@@ -184,7 +239,7 @@ extern void ZKNLISTMAIN_ExitPaletteFade( ZKNLISTMAIN_WORK * wk );
 /**
  * @brief		パレットフェードリクエスト
  *
- * @param		wk			図鑑リスト画面ワーク
+ * @param		wk			図鑑リストワーク
  * @param		start		開始濃度
  * @param		end			終了濃度
  *
@@ -192,6 +247,7 @@ extern void ZKNLISTMAIN_ExitPaletteFade( ZKNLISTMAIN_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_SetPalFadeSeq( ZKNLISTMAIN_WORK * wk, u8 start, u8 end );
+
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -250,6 +306,62 @@ extern void ZKNLISTMAIN_ExitMsg( ZKNLISTMAIN_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief	  地方図鑑番号リスト作成
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_LoadLocalNoList( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  地方図鑑番号リスト解放
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_FreeLocalNoList( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  タブフレーム初期位置設定
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_InitFrameScroll( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  タブフレームスクロール設定
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void ZKNLISTMAIN_SetFrameScrollParam( ZKNLISTMAIN_WORK * wk, s16 val );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  タブフレームスクロール
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @retval	"TRUE = スクロール中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
+extern BOOL ZKNLISTMAIN_MainFrameScroll( ZKNLISTMAIN_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief	  リスト作成
  *
  * @param		wk		図鑑リストワーク
@@ -269,10 +381,3 @@ extern void ZKNLISTMAIN_MakeList( ZKNLISTMAIN_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern void ZKNLISTMAIN_FreeList( ZKNLISTMAIN_WORK * wk );
-
-extern void ZKNLISTMAIN_LoadLocalNoList( ZKNLISTMAIN_WORK * wk );
-extern void ZKNLISTMAIN_FreeLocalNoList( ZKNLISTMAIN_WORK * wk );
-
-extern void ZKNLISTMAIN_InitFrameScroll( ZKNLISTMAIN_WORK * wk );
-extern void ZKNLISTMAIN_SetFrameScrollParam( ZKNLISTMAIN_WORK * wk, s16 val );
-extern BOOL ZKNLISTMAIN_MainSrameScroll( ZKNLISTMAIN_WORK * wk );

@@ -29,7 +29,6 @@
 #define FCOL_SP00BN		( PRINTSYS_LSB_Make(12,13,0) )	// フォントカラー：サブ００黒抜
 #define FCOL_SP15WN		( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：サブ１５白抜
 
-
 // BMPWIN関連
 // ポケモン名
 #define	BMPWIN_NAME_M_FRM		( GFL_BG_FRAME2_M )
@@ -40,7 +39,6 @@
 #define	BMPWIN_NAME_SY			( 3 )
 #define	BMPWIN_NAME_M_PAL		( 1 )
 #define	BMPWIN_NAME_S_PAL		( 1 )
-
 // タイトル
 #define	BMPWIN_TITLE_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_TITLE_PX			( 1 )
@@ -48,7 +46,6 @@
 #define	BMPWIN_TITLE_SX			( 17 )
 #define	BMPWIN_TITLE_SY			( 3 )
 #define	BMPWIN_TITLE_PAL		( 4 )
-
 // 見つけた数
 #define	BMPWIN_SEENUM_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_SEENUM_PX		( 2 )
@@ -56,7 +53,6 @@
 #define	BMPWIN_SEENUM_SX		( 13 )
 #define	BMPWIN_SEENUM_SY		( 3 )
 #define	BMPWIN_SEENUM_PAL		( 4 )
-
 // 捕まえた数
 #define	BMPWIN_GETNUM_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_GETNUM_PX		( 16 )
@@ -69,8 +65,6 @@
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
-//static void CreateNameBmp( ZKNLISTMAIN_WORK * wk );
-//static void DeleteNameBmp( ZKNLISTMAIN_WORK * wk );
 static void PutTitleStr( ZKNLISTMAIN_WORK * wk );
 
 
@@ -78,75 +72,9 @@ static void PutTitleStr( ZKNLISTMAIN_WORK * wk );
 //	グローバル
 //============================================================================================
 
+// BMPWINデータ
 static const u8	BmpWinData[][6] =
 {
-/*
-	{	// ポケモン名（メイン画面）
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-	{
-		BMPWIN_NAME_M_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_M_PAL
-	},
-
-	{	// ポケモン名（サブ画面）
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-	{
-		BMPWIN_NAME_S_FRM, BMPWIN_NAME_PX, BMPWIN_NAME_PY,
-		BMPWIN_NAME_SX, BMPWIN_NAME_SY, BMPWIN_NAME_S_PAL
-	},
-*/
 	{	// タイトル
 		BMPWIN_TITLE_FRM, BMPWIN_TITLE_PX, BMPWIN_TITLE_PY,
 		BMPWIN_TITLE_SX, BMPWIN_TITLE_SY, BMPWIN_TITLE_PAL
@@ -184,8 +112,6 @@ void ZKNLISTBMP_Init( ZKNLISTMAIN_WORK * wk )
 											dat[0], dat[1], dat[2], dat[3], dat[4], dat[5], GFL_BMP_CHRAREA_GET_B );
 	}
 
-//	CreateNameBmp( wk );
-
 	PutTitleStr( wk );
 }
 
@@ -201,8 +127,6 @@ void ZKNLISTBMP_Init( ZKNLISTMAIN_WORK * wk )
 void ZKNLISTBMP_Exit( ZKNLISTMAIN_WORK * wk )
 {
 	u32	i;
-
-//	DeleteNameBmp( wk );
 
 	for( i=0; i<ZKNLISTBMP_WINIDX_MAX; i++ ){
 		GFL_BMPWIN_Delete( wk->win[i].win );
@@ -229,58 +153,6 @@ void ZKNLISTBMP_PrintUtilTrans( ZKNLISTMAIN_WORK * wk )
 		PRINT_UTIL_Trans( &wk->win[i], wk->que );
 	}
 }
-
-/*
-static void CreateNameBmp( ZKNLISTMAIN_WORK * wk )
-{
-	ARCHANDLE * ah;
-
-	NNSG2dCharacterData * chr;
-	void * chrBuff;
-	u8 * chrData;
-
-	NNSG2dScreenData * scrn;
-	void * scrnBuff;
-	u16 * scrnData;
-
-	u8	px, py, sx, sy;
-
-	u16	i, j;
-
-	wk->nameBmp = GFL_HEAP_AllocMemory( HEAPID_ZUKAN_LIST, BMPWIN_NAME_SX * BMPWIN_NAME_SY * 0x20 );
-
-	sx = BMPWIN_NAME_SX;
-	sy = BMPWIN_NAME_SY;
-	px = BMPWIN_NAME_PX;
-	py = BMPWIN_NAME_PY;
-
-	ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_LIST );
-
-	scrnBuff = GFL_ARCHDL_UTIL_LoadScreen(
-							ah, NARC_zukan_gra_list_listframe_NSCR, FALSE, &scrn, HEAPID_ZUKAN_LIST_L );
-	scrnData = (u16 *)scrn->rawData;
-
-	chrBuff = GFL_ARCHDL_UTIL_LoadBGCharacter(
-							ah, NARC_zukan_gra_list_listframe_bgd_NCGR, FALSE, &chr, HEAPID_ZUKAN_LIST_L );
-	chrData = (u8 *)chr->pRawData;
-
-	GFL_ARC_CloseDataHandle( ah );
-
-	for( i=0; i<sy; i++ ){
-		for( j=0; j<sx; j ++ ){
-			GFL_STD_MemCopy32( &chrData[(scrnData[(py+i)*16+px+j]&0x3ff)*0x20], &wk->nameBmp[(i*sx+j)*0x20], 0x20 );
-		}
-	}
-
-	GFL_HEAP_FreeMemory( chrBuff );
-	GFL_HEAP_FreeMemory( scrnBuff );
-}
-
-static void DeleteNameBmp( ZKNLISTMAIN_WORK * wk )
-{
-	GFL_HEAP_FreeMemory( wk->nameBmp );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -351,8 +223,16 @@ static void PrintScreenTrans( PRINT_UTIL * util )
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(util->win) );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		サブ画面の文字列表示
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		idx		BMPWIN index
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutSubDispStr( ZKNLISTMAIN_WORK * wk, u32 idx )
 {
 	ARCHANDLE * ah;
@@ -399,6 +279,15 @@ static void PutSubDispStr( ZKNLISTMAIN_WORK * wk, u32 idx )
 	GFL_HEAP_FreeMemory( scrnBuff );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイトル表示
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 {
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_TITLE );
@@ -413,6 +302,15 @@ static void PutTitleStr( ZKNLISTMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_TITLE] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン登録数表示（捕獲数・見た数）
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk )
 {
 	u32	see, get;
@@ -442,6 +340,15 @@ void ZKNLISTBMP_PutPokeEntryStr( ZKNLISTMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_GETNUM] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索結果数表示
+ *
+ * @param		wk		図鑑リストワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNLISTBMP_PutPokeSearchStr( ZKNLISTMAIN_WORK * wk )
 {
 	PutSubDispStr( wk, ZKNLISTBMP_WINIDX_GETNUM );
@@ -454,30 +361,19 @@ void ZKNLISTBMP_PutPokeSearchStr( ZKNLISTMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNLISTBMP_WINIDX_GETNUM] );
 }
 
-
-/*
-void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, u32 winIdx, s32 listPos )
-{
-	u8 * bmpBuff;
-
-	if( listPos < 0 ){ return; }
-	
-	bmpBuff = GFL_BMP_GetCharacterAdrs( GFL_BMPWIN_GetBmp(wk->win[winIdx].win) );
-
-	GFL_STD_MemCopy32( wk->nameBmp, bmpBuff, BMPWIN_NAME_SX * BMPWIN_NAME_SY * 0x20 );
-
-	// 図鑑番号
-	WORDSET_RegisterNumber(
-		wk->wset, 0, ZKNLISTMAIN_GetListMons( wk->list,listPos), 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
-	ExStrPrint( wk, winIdx, str_poek_num, 0, 4, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
-	// 名前
-	PRINTTOOL_PrintColor(
-		&wk->win[winIdx], wk->que, 28, 4,
-		ZKNLISTMAIN_GetListStr(wk->list,listPos), wk->font, FCOL_WP01WN, PRINTTOOL_MODE_LEFT );
-}
-*/
-
-void ZKNLISTBMP_PutPokeList2( ZKNLISTMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * name, u32 num )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上の文字列表示（ポケモン名・図鑑番号）
+ *
+ * @param		wk		図鑑リストワーク
+ * @param		util	PRINT_UTIL
+ * @param		name	ポケモン名
+ * @param		num		図鑑番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNLISTBMP_PutPokeList( ZKNLISTMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * name, u32 num )
 {
 	STRBUF * str;
 	PRINT_QUE * que;
