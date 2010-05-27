@@ -151,10 +151,16 @@ void * GameBeacon_Init(int *seq, void *pwk)
 	GAME_BEACON_SYS_PTR gbs;
   GAMESYS_WORK *gsys = pwk;
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
 	
 	gbs = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(GAME_BEACON_SYS));
 	gbs->gamedata = gamedata;
 	gbs->palace_check_zoneid = ZONE_ID_MAX;
+
+  if(GameCommSys_GetLastCommNo(game_comm) == GAME_COMM_NO_INVASION
+      && GameCommSys_GetLastStatus(game_comm) == GAME_COMM_LAST_STATUS_INTRUDE_ERROR){
+    GameBeacon_SetErrorWait(gbs);
+  }
 	return gbs;
 }
 
@@ -446,6 +452,11 @@ static GBS_BEACON * GameBeacon_BeaconSearch(GAME_BEACON_SYS_PTR gbs, int *hit_in
           }
         }
       }
+      else{
+        //メンバー最大に達している為、無視
+        GFL_NET_WLResetGFBss(i);  //ビーコンバッファクリア
+        bcon_buff = NULL;
+      }
   	}
   }
   
@@ -590,6 +601,7 @@ static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a ,
 void GameBeacon_SetErrorWait(GAME_BEACON_SYS_PTR gbs)
 {
   gbs->error_wait = GBS_ERROR_WAIT_TIMER;
+  OS_TPrintf("常時通信のエラーウェイト設定\n");
 }
 
 //--------------------------------------------------------------

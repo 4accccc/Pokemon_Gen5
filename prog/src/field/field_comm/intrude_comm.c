@@ -54,7 +54,7 @@
 static void  IntrudeComm_FinishInitCallback( void* pWork );
 static void  IntrudeComm_FinishTermCallback( void* pWork );
 static void * IntrudeComm_GetBeaconData(void* pWork);
-static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon);
+static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon, int max_member_num);
 static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon);
 static BOOL  IntrudeComm_CheckConnectService(GameServiceID GameServiceID1 , GameServiceID GameServiceID2, void* pWork );
 static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork);
@@ -131,9 +131,12 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   MYSTATUS *myst = GAMEDATA_GetMyStatus(gamedata);
   NetID net_id;
-  int i;
+  int i, max_member_num = FIELD_COMM_MEMBER_MAX;
+
+  if(invalid_parent->my_invasion == TRUE && Intrude_CheckTutorialComplete(gamedata) == FALSE){
+    max_member_num = 2; //チュートリアルをこなすまでは最大二人接続
+  }
   
-  OS_TPrintf("intcomm alloc size = 0x%x\n", sizeof(INTRUDE_COMM_SYS));
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
   intcomm->game_comm = invalid_parent->game_comm;
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
@@ -142,7 +145,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   intcomm->connect_map_count = 1; //パレスマップに入った時点で1つは自動で連結している為
   Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
   MISSION_Init(&intcomm->mission);
-  IntrudeComm_CreateBeaconData(gamedata, &intcomm->send_beacon);
+  IntrudeComm_CreateBeaconData(gamedata, &intcomm->send_beacon, max_member_num);
   FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
   for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){
     intcomm->search_child[i] = GFL_STR_CreateBuffer(PERSON_NAME_SIZE+EOM_SIZE, HEAPID_APP_CONTROL);
@@ -357,7 +360,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     if(Intrude_OtherPlayerExistence() == FALSE){
       intcomm->other_player_timeout++;
       if(intcomm->other_player_timeout > OTHER_PLAYER_TIMEOUT){
-        OS_TPrintf("例外エラー aaa \n");
+        OS_TPrintf("例外エラー int\n");
         GameCommSys_ExitReq(intcomm->game_comm);
         break;
       }
@@ -708,13 +711,17 @@ static void * IntrudeComm_GetBeaconData(void* pWork)
  * 送信するビーコンデータを作成する
  *
  * @param   beacon		
+ * @param   max_member_num    接続出来る最大人数(-1の場合は値更新しない)
  */
 //--------------------------------------------------------------
-static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon)
+static void IntrudeComm_CreateBeaconData(GAMEDATA *gamedata, GBS_BEACON *beacon, int max_member_num)
 {
+  
   beacon->gsid = WB_NET_PALACE_SERVICEID;
   beacon->member_num = GFL_NET_GetConnectNum();
-  beacon->member_max = FIELD_COMM_MEMBER_MAX;
+  if(max_member_num != -1){
+    beacon->member_max = max_member_num;
+  }
   beacon->error = GFL_NET_SystemGetErrorCode();
   beacon->beacon_type = GBS_BEACONN_TYPE_PALACE;
   MyStatus_Copy(GAMEDATA_GetMyStatus(gamedata), &beacon->intrude_myst);
@@ -735,7 +742,7 @@ static BOOL IntrudeComm_DiffSendBeacon(GAMEDATA *gamedata, GBS_BEACON *beacon)
   
   if(beacon->member_num != GFL_NET_GetConnectNum()
       || beacon->error != GFL_NET_SystemGetErrorCode()){
-    IntrudeComm_CreateBeaconData(gamedata, beacon);
+    IntrudeComm_CreateBeaconData(gamedata, beacon, -1);
     NET_WHPIPE_BeaconSetInfo();
     return TRUE;
   }

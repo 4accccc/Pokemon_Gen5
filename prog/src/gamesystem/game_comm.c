@@ -284,6 +284,10 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     if(func_tbl->init_func != NULL){
       gcsp->app_work = func_tbl->init_func(&sub_work->func_seq, gcsp->parent_work);
     }
+    //新しく起動した通信初期化内で前の通信番号や最終ステータスが取れるように
+    //init_func後に今起動しているゲーム番号で更新するようにする
+    gcsp->last_comm_no = gcsp->game_comm_no;
+    gcsp->last_status = GAME_COMM_LAST_STATUS_NULL;
     GameCommSub_SeqSet(sub_work, GCSSEQ_INIT_WAIT);
     break;
   case GCSSEQ_INIT_WAIT:
@@ -378,8 +382,6 @@ void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *p
   GF_ASSERT(gcsp->game_comm_no == GAME_COMM_NO_NULL);
   
   gcsp->game_comm_no = game_comm_no;
-  gcsp->last_comm_no = game_comm_no;
-  gcsp->last_status = GAME_COMM_LAST_STATUS_NULL;
   gcsp->parent_work = parent_work;
   gcsp->exitcallback_func = NULL;
   gcsp->exitcallback_parentwork = NULL;
