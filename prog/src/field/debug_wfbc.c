@@ -10,7 +10,7 @@
  *	ÉÇÉWÉÖÅ[ÉãñºÅF
  */
 //]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
-
+#ifdef PM_DEBUG
 
 #include "debug_wfbc.h"
 
@@ -293,4 +293,5 @@ static BOOL ev_DEBUG_WFBC_PeopleCheckNextID( u32 index, const EVENT_DEBUG_WFBC_P
 
 
 
+#endif //PM_DEBUG
 
