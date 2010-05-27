@@ -4329,6 +4329,7 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+  IRC_POKETRADE_EndSubMojiBG(pWork);
   POKMEONTRADE_RemoveCoreResource(pWork);
 
   DEBUGWIN_ExitProc();
