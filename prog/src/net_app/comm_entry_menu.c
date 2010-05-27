@@ -810,6 +810,7 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
   
   case _SEQ_GAME_START:
+    
     _StreamMsgSet(em, msg_game_start);
     em->seq = _SEQ_GAME_START_WAIT;
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
@@ -1750,6 +1751,7 @@ static void _MemberInfo_Setup(COMM_ENTRY_MENU_PTR em)
 //--------------------------------------------------------------
 static void _MemberInfo_Exit(COMM_ENTRY_MENU_PTR em)
 {
+  FLDMSGBG *fldmsg_bg = FIELDMAP_GetFldMsgBG(em->fieldWork);
   if(em->fldmsgwin_title != NULL){
     FLDMSGWIN_Delete(em->fldmsgwin_title);
     em->fldmsgwin_title = NULL;
@@ -1758,6 +1760,7 @@ static void _MemberInfo_Exit(COMM_ENTRY_MENU_PTR em)
     FLDMSGWIN_Delete(em->fldmsgwin_list);
     em->fldmsgwin_list = NULL;
   }
+  FLDMSGBG_ClearPrintQue( fldmsg_bg );
 }
 
 //--------------------------------------------------------------
