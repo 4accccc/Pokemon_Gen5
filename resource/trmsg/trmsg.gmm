@@ -3976,28 +3976,30 @@
 	</row>
 
 	<row id="TRID_MOUNT_03_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">わがはいは　なぜ　あなをほるのか？
-おぬしは　なぜ　たたかうのか▽
-それを　たしかめようでは　ないか▼</language>
-		<language name="JPN_KANJI" width="216">我輩は　なぜ　穴を掘るのか？
-おぬしは　なぜ　戦うのか▽
-それを　確かめようでは　ないか▼</language>
+		<language name="JPN" width="216">やまを　こえるとは　それまでの
+おのれを　こえると　いうこと！▼
+いままでに　なんども　やまを
+こえた　ポケモンたちに　かてるか？▼</language>
+		<language name="JPN_KANJI" width="216">山を　越えるとは　それまでの
+己を　越えると　いうこと！▼
+今までに　幾度も　山を越えた
+ポケモンたちに　勝てるか？▼</language>
 	</row>
 
 	<row id="TRID_MOUNT_03_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">おぬしの　いままでの　けいけん……
-それが　つよさの　みなもとか！</language>
-		<language name="JPN_KANJI" width="216">おぬしの　今までの　経験……
-それが　強さの　源か！</language>
+		<language name="JPN" width="216">オレさま　という
+それなりの　やまを　こえたな！</language>
+		<language name="JPN_KANJI" width="216">オレさま　という
+それなりの　山を　越えたな！</language>
 	</row>
 
 	<row id="TRID_MOUNT_03_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">たたかっただけ　つよくなる
-ほっただけ　あなが　ひろがる……▽
-もくてきがあれば　むだなことはない！</language>
-		<language name="JPN_KANJI" width="216">戦っただけ　強くなる
-掘っただけ　穴が　広がる……▽
-目的があれば　無駄なことはない！</language>
+		<language name="JPN" width="216">やまおとこは　いただきを　めざす▼
+ポケモントレーナーは
+ポケモンリーグを　めざす！</language>
+		<language name="JPN_KANJI" width="216">やまおとこは　頂を　目指す▼
+ポケモントレーナーは
+ポケモンリーグを　目指す！</language>
 	</row>
 
 	<row id="TRID_NURSE_01_TRMSG_FIGHT_START">
@@ -6821,30 +6823,28 @@
 	</row>
 
 	<row id="TRID_MOUNT_05_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">やまを　こえるとは　それまでの
-おのれを　こえると　いうこと！▼
-いままでに　なんども　やまを
-こえた　ポケモンたちに　かてるか？▼</language>
-		<language name="JPN_KANJI" width="216">山を　越えるとは　それまでの
-己を　越えると　いうこと！▼
-今までに　幾度も　山を越えた
-ポケモンたちに　勝てるか？▼</language>
+		<language name="JPN" width="216">わがはいは　なぜ　あなをほるのか？
+おぬしは　なぜ　たたかうのか▽
+それを　たしかめようでは　ないか▼</language>
+		<language name="JPN_KANJI" width="216">我輩は　なぜ　穴を掘るのか？
+おぬしは　なぜ　戦うのか▽
+それを　確かめようでは　ないか▼</language>
 	</row>
 
 	<row id="TRID_MOUNT_05_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">オレさま　という
-それなりの　やまを　こえたな！</language>
-		<language name="JPN_KANJI" width="216">オレさま　という
-それなりの　山を　越えたな！</language>
+		<language name="JPN" width="216">おぬしの　いままでの　けいけん……
+それが　つよさの　みなもとか！</language>
+		<language name="JPN_KANJI" width="216">おぬしの　今までの　経験……
+それが　強さの　源か！</language>
 	</row>
 
 	<row id="TRID_MOUNT_05_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">やまおとこは　いただきを　めざす▼
-ポケモントレーナーは
-ポケモンリーグを　めざす！</language>
-		<language name="JPN_KANJI" width="216">やまおとこは　頂を　目指す▼
-ポケモントレーナーは
-ポケモンリーグを　目指す！</language>
+		<language name="JPN" width="216">たたかっただけ　つよくなる
+ほっただけ　あなが　ひろがる……▽
+もくてきがあれば　むだなことはない！</language>
+		<language name="JPN_KANJI" width="216">戦っただけ　強くなる
+掘っただけ　穴が　広がる……▽
+目的があれば　無駄なことはない！</language>
 	</row>
 
 	<row id="TRID_WORKER2_15_TRMSG_FIGHT_START">
@@ -10214,26 +10214,34 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_17_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">ポケモンを　つかう　トレーナー
-おまえの　つよさ　みせてみろ！▼</language>
-		<language name="JPN_KANJI" width="216">ポケモンを　使う　トレーナー
-おまえの　強さ　みせてみろ！▼</language>
+		<language name="JPN" width="216">オマエ……　だれかに
+あやつられて　ここに　きただろう▼
+オレに　かてたら
+その　ひみつ　おしえてやるよ▼</language>
+		<language name="JPN_KANJI" width="216">オマエ……　だれかに
+操られて　ここに　来ただろう▼
+オレに　勝てたら
+その　秘密　教えてやるよ▼</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_17_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">……なるほど
-よく　ポケモンを　つかいやがる</language>
-		<language name="JPN_KANJI" width="216">……なるほど
-よく　ポケモンを　使いやがる</language>
+		<language name="JPN" width="216">チェッ！　まさか
+まけてしまうとはな……</language>
+		<language name="JPN_KANJI" width="216">チェッ！　まさか
+負けてしまうとはな……</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_17_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ひとが　ポケモンを　つかうことで
-つよい　よわいの　きょうそうが▽
-うまれてしまう……　それでいいのか？</language>
-		<language name="JPN_KANJI" width="216">人が　ポケモンを　使うことで
-強い　弱いの　競争が▽
-生まれてしまう……　それでいいのか？</language>
+		<language name="JPN" width="216">われらの　おうさまを　サポートする
+しちけんじんの　ゲーチスさま▼
+ゲーチスさまには　３にんの
+ぶかが　いるのだ……▽
+そのなも　ダークトリニティ！</language>
+		<language name="JPN_KANJI" width="216">我らの　王様を　サポートする
+七賢人の　ゲーチスさま▼
+ゲーチスさまには　３人の
+部下が　いるのだ……▽
+その名も　ダークトリニティ！</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_18_TRMSG_FIGHT_START">
@@ -10306,34 +10314,26 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_20_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">オマエ……　だれかに
-あやつられて　ここに　きただろう▼
-オレに　かてたら
-その　ひみつ　おしえてやるよ▼</language>
-		<language name="JPN_KANJI" width="216">オマエ……　だれかに
-操られて　ここに　来ただろう▼
-オレに　勝てたら
-その　秘密　教えてやるよ▼</language>
+		<language name="JPN" width="216">ポケモンを　つかう　トレーナー
+おまえの　つよさ　みせてみろ！▼</language>
+		<language name="JPN_KANJI" width="216">ポケモンを　使う　トレーナー
+おまえの　強さ　みせてみろ！▼</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_20_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">チェッ！　まさか
-まけてしまうとはな……</language>
-		<language name="JPN_KANJI" width="216">チェッ！　まさか
-負けてしまうとはな……</language>
+		<language name="JPN" width="216">……なるほど
+よく　ポケモンを　つかいやがる</language>
+		<language name="JPN_KANJI" width="216">……なるほど
+よく　ポケモンを　使いやがる</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_20_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">われらの　おうさまを　サポートする
-しちけんじんの　ゲーチスさま▼
-ゲーチスさまには　３にんの
-ぶかが　いるのだ……▽
-そのなも　ダークトリニティ！</language>
-		<language name="JPN_KANJI" width="216">我らの　王様を　サポートする
-七賢人の　ゲーチスさま▼
-ゲーチスさまには　３人の
-部下が　いるのだ……▽
-その名も　ダークトリニティ！</language>
+		<language name="JPN" width="216">ひとが　ポケモンを　つかうことで
+つよい　よわいの　きょうそうが▽
+うまれてしまう……　それでいいのか？</language>
+		<language name="JPN_KANJI" width="216">人が　ポケモンを　使うことで
+強い　弱いの　競争が▽
+生まれてしまう……　それでいいのか？</language>
 	</row>
 
 	<row id="TRID_HAKAIW1_08_TRMSG_FIGHT_START">
