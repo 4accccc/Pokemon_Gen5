@@ -21,6 +21,11 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+// ポケモンＯＢＪ表示範囲取得マクロ
+#define	POKE_LX(a)	( a - POKE2DGRA_POKEMON_CHARA_WIDTH*8/2 )
+#define	POKE_RX(a)	( a + POKE2DGRA_POKEMON_CHARA_WIDTH*8/2 )
+#define	POKE_UY(a)	( a - POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
+#define	POKE_DY(a)	( a + POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
 
 
 //============================================================================================
@@ -32,7 +37,7 @@ static int HitCheckPokeObj( DPCMAIN_WORK * wk );
 //============================================================================================
 //	グローバル
 //============================================================================================
-
+// タッチテーブル
 static const GFL_UI_TP_HITTBL TpHitTbl[] =
 {
 	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1,  8,  31 },		// 06: ページ左
@@ -44,7 +49,15 @@ static const GFL_UI_TP_HITTBL TpHitTbl[] =
 
 
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ選択インターフェースメイン
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	入力結果
+ */
+//--------------------------------------------------------------------------------------------
 int DPCUI_PageMain( DPCMAIN_WORK * wk )
 {
 	int	ret;
@@ -82,6 +95,15 @@ int DPCUI_PageMain( DPCMAIN_WORK * wk )
 	return DPCUI_ID_NONE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン選択インターフェースメイン
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	入力結果
+ */
+//--------------------------------------------------------------------------------------------
 int DPCUI_PokeMain( DPCMAIN_WORK * wk )
 {
 	int	ret;
@@ -104,12 +126,6 @@ int DPCUI_PokeMain( DPCMAIN_WORK * wk )
 		return DPCUI_ID_RIGHT;
 	}
 
-/*
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
-		return DPCUI_ID_MODE_CHANGE;
-	}
-*/
-
 	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
 		return DPCUI_ID_RETURN;
 	}
@@ -117,11 +133,15 @@ int DPCUI_PokeMain( DPCMAIN_WORK * wk )
 	return DPCUI_ID_NONE;
 }
 
-#define	POKE_LX(a)	( a - POKE2DGRA_POKEMON_CHARA_WIDTH*8/2 )
-#define	POKE_RX(a)	( a + POKE2DGRA_POKEMON_CHARA_WIDTH*8/2 )
-#define	POKE_UY(a)	( a - POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
-#define	POKE_DY(a)	( a + POKE2DGRA_POKEMON_CHARA_HEIGHT*8/2 )
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンＯＢＪタッチチェック
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	入力結果
+ */
+//--------------------------------------------------------------------------------------------
 static int HitCheckPokeObj( DPCMAIN_WORK * wk )
 {
 	u32	i;

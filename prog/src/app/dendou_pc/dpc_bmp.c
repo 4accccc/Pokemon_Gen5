@@ -30,16 +30,6 @@
 #define	BMPWIN_TITLE_SY		( 2 )
 #define	BMPWIN_TITLE_PAL	( 3 )
 
-/*
-// ページ
-#define	BMPWIN_PAGE_FRM		( GFL_BG_FRAME3_M )
-#define	BMPWIN_PAGE_PX		( 5 )
-#define	BMPWIN_PAGE_PY		( 21 )
-#define	BMPWIN_PAGE_SX		( 5 )
-#define	BMPWIN_PAGE_SY		( 3 )
-#define	BMPWIN_PAGE_PAL		( 3 )
-*/
-
 // 情報
 #define	BMPWIN_INFO_FRM		( GFL_BG_FRAME1_S )
 #define	BMPWIN_INFO_PX		( 4 )
@@ -74,18 +64,15 @@
 #define FCOL_FNTOAM		( PRINTSYS_LSB_Make(6,8,0) )		// フォントカラー：フォントOAM
 
 
-//============================================================================================
-//	プロトタイプ宣言
-//============================================================================================
-
-
-//============================================================================================
-//	グローバル
-//============================================================================================
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BMP初期化
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_Init( DPCMAIN_WORK * wk )
 {
 	GFL_BMPWIN_Init( HEAPID_DENDOU_PC );
@@ -95,13 +82,6 @@ void DPCBMP_Init( DPCMAIN_WORK * wk )
 																			BMPWIN_TITLE_PX, BMPWIN_TITLE_PY,
 																			BMPWIN_TITLE_SX, BMPWIN_TITLE_SY,
 																			BMPWIN_TITLE_PAL, GFL_BMP_CHRAREA_GET_B );
-/*
-	wk->win[DPCBMP_WINID_PAGE].win = GFL_BMPWIN_Create(
-																			BMPWIN_PAGE_FRM,
-																			BMPWIN_PAGE_PX, BMPWIN_PAGE_PY,
-																			BMPWIN_PAGE_SX, BMPWIN_PAGE_SY,
-																			BMPWIN_PAGE_PAL, GFL_BMP_CHRAREA_GET_B );
-*/
 	wk->win[DPCBMP_WINID_INFO].win = GFL_BMPWIN_Create(
 																			BMPWIN_INFO_FRM,
 																			BMPWIN_INFO_PX, BMPWIN_INFO_PY,
@@ -109,14 +89,31 @@ void DPCBMP_Init( DPCMAIN_WORK * wk )
 																			BMPWIN_INFO_PAL, GFL_BMP_CHRAREA_GET_B );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BMP解放
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_Exit( DPCMAIN_WORK * wk )
 {
 	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_TITLE].win );
-//	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_PAGE].win );
 	GFL_BMPWIN_Delete( wk->win[DPCBMP_WINID_INFO].win );
 	GFL_BMPWIN_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		文字列転送
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_PrintUtilTrans( DPCMAIN_WORK * wk )
 {
 	u32	i;
@@ -127,13 +124,30 @@ void DPCBMP_PrintUtilTrans( DPCMAIN_WORK * wk )
 	}
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクリーン反映
+ *
+ * @param		util		PRINT_UTIL
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PrintScreenTrans( PRINT_UTIL * util )
 {
 	GFL_BMPWIN_MakeScreen( util->win );
 	GFL_BG_LoadScreenV_Req( GFL_BMPWIN_GetFrame(util->win) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイトル表示
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_PutTitle( DPCMAIN_WORK * wk )
 {
 	DPC_PARTY_DATA * pt;
@@ -174,23 +188,21 @@ void DPCBMP_PutTitle( DPCMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[DPCBMP_WINID_TITLE] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ表示
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_PutPage( DPCMAIN_WORK * wk )
 {
 	STRBUF * str;
 	u8	px, sx;
 
 	if( wk->pageMax == 1 ){ return; }
-/*
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[DPCBMP_WINID_PAGE].win), 0 );
-
-	PRINTTOOL_PrintFractionColor(
-		&wk->win[DPCBMP_WINID_PAGE], wk->que, wk->font,
-		GFL_BMPWIN_GetScreenSizeX(wk->win[DPCBMP_WINID_PAGE].win)*8/2,
-		4,
-		FCOL_MP03WN, wk->page+1, wk->pageMax, HEAPID_DENDOU_PC );
-
-	PrintScreenTrans( &wk->win[DPCBMP_WINID_PAGE] );
-*/
 
 	GFL_BMP_Clear( wk->fobmp, 0 );
 
@@ -225,24 +237,17 @@ void DPCBMP_PutPage( DPCMAIN_WORK * wk )
 	GFL_STR_DeleteBuffer( str );
 
 	BmpOam_ActorBmpTrans( wk->foact );
-
-/*
-	STRBUF * str;
-	u32	x;
-
-	str = GFL_STR_CreateBuffer( BOX_TRAYNAME_BUFSIZE, HEAPID_BOX_APP_L );
-
-	BOXDAT_GetBoxName( syswk->dat->sv_box, tray, str );
-	GFL_BMP_Clear( syswk->app->fobj[idx].bmp, 0 );
-	x = ( BOX2OBJ_FNTOAM_BOXNAME_SX * 8 - PRINTSYS_GetStrWidth( str, syswk->app->font, 0 ) ) / 2;
-	PRINTSYS_PrintColor( syswk->app->fobj[idx].bmp, x, 0, str, syswk->app->font, FCOL_FNTOAM );
-
-	GFL_STR_DeleteBuffer( str );
-
-	BmpOam_ActorBmpTrans( syswk->app->fobj[idx].oam );
-*/
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン情報表示
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_PutInfo( DPCMAIN_WORK * wk )
 {
 	DENDOU_POKEMON_DATA * poke;
@@ -333,6 +338,15 @@ void DPCBMP_PutInfo( DPCMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[DPCBMP_WINID_INFO] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン情報クリア
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCBMP_ClearInfo( DPCMAIN_WORK * wk )
 {
 	GFL_BMPWIN_ClearScreen( wk->win[DPCBMP_WINID_INFO].win );

@@ -36,7 +36,6 @@
 //	プロトタイプ宣言
 //============================================================================================
 static void VBlankTask( GFL_TCB * tcb, void * work );
-static void HBlankTask( GFL_TCB * tcb, void * work );
 
 
 //============================================================================================
@@ -118,45 +117,44 @@ static void VBlankTask( GFL_TCB * tcb, void * work )
 	OS_SetIrqCheckFlag( OS_IE_V_BLANK );
 }
 
-void DPCMAIN_InitHBlank( DPCMAIN_WORK * wk )
-{
-//	wk->htask = GFUser_HIntr_CreateTCB( HBlankTask, wk, 0 );
-}
-
-void DPCMAIN_ExitHBlank( DPCMAIN_WORK * wk )
-{
-//	GFL_TCB_DeleteTask( wk->htask );
-}
-
-/*
-static void HBlankTask( GFL_TCB * tcb, void * work )
-{
-	s32	vcount = GX_GetVCount();
-
-	if( vcount >= 168 ){
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );		// 背景
-		GFL_BG_SetPriority( GFL_BG_FRAME1_M, 3 );		// スポットライト
-		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 2 );		// タイトル背景
-	}else{
-		GFL_BG_SetPriority( GFL_BG_FRAME0_M, 3 );		// 背景
-		GFL_BG_SetPriority( GFL_BG_FRAME1_M, 2 );		// スポットライト
-		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 1 );		// タイトル背景
-	}
-}
-*/
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM設定
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCMAIN_InitVram(void)
 {
 	GFL_DISP_ClearVRAM( 0 );
 	GFL_DISP_SetBank( &VramTbl );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		VRAM設定取得
+ *
+ * @param		none
+ *
+ * @return	VRAM設定データ
+ */
+//--------------------------------------------------------------------------------------------
 const GFL_DISP_VRAM * DPCMAIN_GetVramBankData(void)
 {
 	return &VramTbl;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCMAIN_InitBg(void)
 {
 	GFL_BG_Init( HEAPID_DENDOU_PC );
@@ -224,6 +222,15 @@ void DPCMAIN_InitBg(void)
 		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BG解放
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCMAIN_ExitBg(void)
 {
 	GFL_DISP_GX_SetVisibleControl(
@@ -241,6 +248,15 @@ void DPCMAIN_ExitBg(void)
 	GFL_BG_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGグラフィック読み込み
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCMAIN_LoadBgGraphic(void)
 {
 	ARCHANDLE * ah;
@@ -332,6 +348,16 @@ void DPCMAIN_RequestPaletteFade( DPCMAIN_WORK * wk )
 	PaletteTrans_AutoSet( wk->pfd, 1 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットフェードチェック
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL DPCMAIN_CheckPaletteFade( DPCMAIN_WORK * wk )
 {
 	if( PaletteFadeCheck( wk->pfd ) != 0 ){
@@ -340,7 +366,6 @@ BOOL DPCMAIN_CheckPaletteFade( DPCMAIN_WORK * wk )
 	PaletteTrans_AutoSet( wk->pfd, 0 );
 	return FALSE;
 }
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -405,8 +430,15 @@ void DPCMAIN_ExitMsg( DPCMAIN_WORK * wk )
 	GFL_MSG_Delete( wk->mman );
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  ポケモンデータ作成
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 {
 	SAVE_CONTROL_WORK * sv;
@@ -451,32 +483,18 @@ void DPCMAIN_CreatePokeData( DPCMAIN_WORK * wk )
 			}
 		}
 		SaveControl_Extra_Unload( sv, SAVE_EXTRA_ID_DENDOU );
-
-// 仮処理
-#if 0
-		{
-			u32	k;
-			for( k=5; k>=1; k-- ){
-				wk->party[wk->pageMax].pokeMax = k;
-				for( i=0; i<wk->party[wk->pageMax].pokeMax; i++ ){
-					wk->party[wk->pageMax].dat[i].personalRandom = wk->party[0].dat[i].personalRandom;
-					wk->party[wk->pageMax].dat[i].idNumber = wk->party[0].dat[i].idNumber;
-					wk->party[wk->pageMax].dat[i].monsno = MONSNO_HINOARASI + k*i;
-					wk->party[wk->pageMax].dat[i].level = wk->party[0].dat[i].level;
-					wk->party[wk->pageMax].dat[i].formNumber = 0;
-					wk->party[wk->pageMax].dat[i].sex = wk->party[0].dat[i].sex;
-					for( j=0; j<4; j++ ){
-						wk->party[wk->pageMax].dat[i].waza[j] = wk->party[0].dat[i].waza[j];
-					}
-				}
-				wk->pageMax++;
-			}
-		}
-#endif
-
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  ポケモンデータ解放
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCMAIN_ExitPokeData( DPCMAIN_WORK * wk )
 {
 	u16	i, j;

@@ -83,6 +83,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //	グローバル
 //============================================================================================
 
+// メインシーケンス
 static const pDENDOUPC_FUNC MainSeq[] = {
 	MainSeq_Init,
 	MainSeq_Release,
@@ -100,15 +101,25 @@ static const pDENDOUPC_FUNC MainSeq[] = {
 	MainSeq_EndSet,
 };
 
+// ポケモン移動速度
 static const u8 PokeMoveSpeed[] = { 5, 5, 5, 5, 4, 4 };
 
+// ポケモン数に対応した移動量
+static const u8 PokeMoveCount[] = {
+	DPCOBJ_POKEMAX1_SPACE_RAD,
+	DPCOBJ_POKEMAX2_SPACE_RAD,
+	DPCOBJ_POKEMAX3_SPACE_RAD,
+	DPCOBJ_POKEMAX4_SPACE_RAD,
+	DPCOBJ_POKEMAX5_SPACE_RAD,
+	DPCOBJ_POKEMAX6_SPACE_RAD,
+};
 
 
 //--------------------------------------------------------------------------------------------
 /**
  * @brief		メインシーケンス
  *
- * @param		wk		ワーク
+ * @param		wk		殿堂入りＰＣ画面ワーク
  *
  * @retval	"TRUE = 処理中"
  * @retval	"FALSE = 終了"
@@ -127,6 +138,15 @@ int DPCSEQ_MainSeq( DPCMAIN_WORK * wk )
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Init( DPCMAIN_WORK * wk )
 {
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
@@ -162,14 +182,21 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 	GFL_NET_ReloadIcon();
 
 	DPCMAIN_InitVBlank( wk );
-	DPCMAIN_InitHBlank( wk );
 
 	return SetFadeIn( wk, MAINSEQ_PAGE_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Release( DPCMAIN_WORK * wk )
 {
-	DPCMAIN_ExitHBlank( wk );
 	DPCMAIN_ExitVBlank( wk );
 
 	DPCOBJ_Exit( wk );
@@ -196,6 +223,15 @@ static int MainSeq_Release( DPCMAIN_WORK * wk )
 	return MAINSEQ_END;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Wipe( DPCMAIN_WORK * wk )
 {
 	if( PRINTSYS_QUE_IsFinished( wk->que ) == TRUE ){
@@ -206,6 +242,15 @@ static int MainSeq_Wipe( DPCMAIN_WORK * wk )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk )
 {
 	if( DPCOBJ_CheckAnm( wk, wk->buttonID ) == FALSE ){
@@ -214,7 +259,15 @@ static int MainSeq_ButtonAnm( DPCMAIN_WORK * wk )
 	return MAINSEQ_BUTTON_ANM;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PageMain( DPCMAIN_WORK * wk )
 {
 	int	ret;
@@ -274,6 +327,15 @@ static int MainSeq_PageMain( DPCMAIN_WORK * wk )
 	return MAINSEQ_PAGE_MAIN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PageChange( DPCMAIN_WORK * wk )
 {
 	wk->pokePos = 0;
@@ -287,8 +349,15 @@ static int MainSeq_PageChange( DPCMAIN_WORK * wk )
 	return MAINSEQ_PAGE_MAIN;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PokeInit( DPCMAIN_WORK * wk )
 {
 	switch( wk->subSeq ){
@@ -331,6 +400,15 @@ static int MainSeq_PokeInit( DPCMAIN_WORK * wk )
 	return MAINSEQ_POKE_INIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 {
 	int	ret;
@@ -397,6 +475,15 @@ static int MainSeq_PokeMain( DPCMAIN_WORK * wk )
 	return MAINSEQ_POKE_MAIN;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PokeExit( DPCMAIN_WORK * wk )
 {
 	switch( wk->subSeq ){
@@ -421,6 +508,15 @@ static int MainSeq_PokeExit( DPCMAIN_WORK * wk )
 	return MAINSEQ_POKE_EXIT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_PokeMove( DPCMAIN_WORK * wk )
 {
 	u32	i;
@@ -445,18 +541,31 @@ static int MainSeq_PokeMove( DPCMAIN_WORK * wk )
 	return MAINSEQ_POKE_MOVE;
 }
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndSet( DPCMAIN_WORK * wk )
 {
 	return SetFadeOut( wk, MAINSEQ_RELEASE );
 }
 
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードイン設定
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetFadeIn( DPCMAIN_WORK * wk, int next )
 {
 	WIPE_SYS_Start(
@@ -466,6 +575,16 @@ static int SetFadeIn( DPCMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードアウト設定
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		next	フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetFadeOut( DPCMAIN_WORK * wk, int next )
 {
 	WIPE_SYS_Start(
@@ -475,6 +594,18 @@ static int SetFadeOut( DPCMAIN_WORK * wk, int next )
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボタンアニメ設定
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		ボタンＩＤ
+ * @param		anm		アニメ番号
+ * @param		next	アニメ後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetButtonAnime( DPCMAIN_WORK * wk, u32 id, u32 anm, int next )
 {
 	DPCOBJ_SetAutoAnm( wk, id, anm );
@@ -483,7 +614,17 @@ static int SetButtonAnime( DPCMAIN_WORK * wk, u32 id, u32 anm, int next )
 	return MAINSEQ_BUTTON_ANM;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ切り替え
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		mv		切り替え方向
+ *
+ * @retval	"TRUE = 切り替え可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL ChangePage( DPCMAIN_WORK * wk, s8 mv )
 {
 	s8	tmp = wk->page;
@@ -501,6 +642,17 @@ static BOOL ChangePage( DPCMAIN_WORK * wk, s8 mv )
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン切り替え
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		mv		切り替え方向
+ *
+ * @retval	"TRUE = 切り替え可"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL ChangePoke( DPCMAIN_WORK * wk, s8 mv )
 {
 	s8	tmp = wk->pokePos;
@@ -518,6 +670,17 @@ static BOOL ChangePoke( DPCMAIN_WORK * wk, s8 mv )
 	return TRUE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン移動方向取得
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		pos		位置
+ *
+ * @retval	"TRUE = 現在位置が画面左"
+ * @retval	"FALSE = 現在位置が画面右"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL GetPokeMoveVec( DPCMAIN_WORK * wk, u32 pos )
 {
 	s16	x, y;
@@ -530,6 +693,18 @@ static BOOL GetPokeMoveVec( DPCMAIN_WORK * wk, u32 pos )
 	return FALSE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン移動量取得
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		now		現在位置
+ * @param		pos		移動位置
+ * @param		mv		位置方向
+ *
+ * @return	移動量
+ */
+//--------------------------------------------------------------------------------------------
 static u8 GetPokeRotationVal( DPCMAIN_WORK * wk, s8 now, s8 pos, s8 mv )
 {
 	u8	i;
@@ -548,16 +723,16 @@ static u8 GetPokeRotationVal( DPCMAIN_WORK * wk, s8 now, s8 pos, s8 mv )
 	return i;
 }
 
-
-static const u8 PokeMoveCount[] = {
-	DPCOBJ_POKEMAX1_SPACE_RAD,
-	DPCOBJ_POKEMAX2_SPACE_RAD,
-	DPCOBJ_POKEMAX3_SPACE_RAD,
-	DPCOBJ_POKEMAX4_SPACE_RAD,
-	DPCOBJ_POKEMAX5_SPACE_RAD,
-	DPCOBJ_POKEMAX6_SPACE_RAD,
-};
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン移動データ作成
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		mv		移動量
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv )
 {
 	s16	pos1, pos2;
@@ -593,6 +768,16 @@ static void MakePokePosRad( DPCMAIN_WORK * wk, s8 mv )
 	wk->pokeMoveCnt = PokeMoveCount[wk->party[wk->page].pokeMax-1] / GFL_STD_Abs(wk->pokeMove) * GFL_STD_Abs(mv);
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモン移動
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @retval	"TRUE = 移動中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 static BOOL MovePokeObj( DPCMAIN_WORK * wk )
 {
 	u32	id;

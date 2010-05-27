@@ -24,11 +24,13 @@
 //============================================================================================
 #define	RES_NONE	( 0xffffffff )		// リソースなし
 
+// パレットデータ
 #define	PALNUM_POKEGRA	( 0 )
 #define	PALSIZ_POKEGRA	( 12 )
 #define	PALNUM_TB				( PALNUM_POKEGRA + PALSIZ_POKEGRA )
 #define	PALSIZ_TB				( APP_COMMON_BARICON_PLT_NUM )
 
+// フォントＯＡＭデータ
 #define	FOAM_PAGE_PX		( 5*8 )
 #define	FOAM_PAGE_PY		( 21*8 )
 #define	FOAM_PAGE_SX		( DPCBMP_PAGE_SX )
@@ -50,6 +52,18 @@ typedef struct {
 	u16	disp;
 
 }DPC_CLWK_DATA;
+
+// ポケモン配置データ
+typedef struct {
+	u16	rad;			// 角度
+	u16	evy;			// 濃度
+}POKE_PUT_DATA;
+
+// ポケモンＯＢＪの回転データ
+#define	POKE_CX_FX32	( 128 << FX32_SHIFT )		// 動作中心Ｘ座標 (fx32型)
+#define	POKE_CY_FX32	( 88 << FX32_SHIFT )		// 動作中心Ｙ座標 (fx32型)
+#define	POKE_RX_FX32	( 100 << FX32_SHIFT )		// Ｘ半径 (fx32型)
+#define	POKE_RY_FX32	( 44 << FX32_SHIFT )		// Ｙ半径 (fx32型)
 
 
 //============================================================================================
@@ -94,6 +108,7 @@ static const DPC_CLWK_DATA ClactParamTbl[] =
 	},
 };
 
+// セルアクターデータ：ポケモン
 static const DPC_CLWK_DATA PokeClactParamTbl[] =
 {
 	{
@@ -128,9 +143,27 @@ static const DPC_CLWK_DATA PokeClactParamTbl[] =
 	},
 };
 
+// ポケモン配置データ
+static const POKE_PUT_DATA PokePutRad[6][6] =
+{
+	{ { 90, 0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },		// １匹
+	{ { 90, 0 }, { 270, 12 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
+	{ { 90, 0 }, { 210, 10 }, { 330, 10 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
+	{ { 90, 0 }, { 180,  7 }, { 270, 12 }, {   0,  7 }, {   0,  0 }, {  0, 0 } },
+	{ { 90, 0 }, { 162,  8 }, { 234, 10 }, { 306, 10 }, {  18,  8 }, {  0, 0 } },
+	{ { 90, 0 }, { 150,  8 }, { 210, 10 }, { 270, 12 }, { 330, 10 }, { 30, 8 } },		// ６匹
+};
 
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ初期化
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_Init( DPCMAIN_WORK * wk )
 {
 	InitClact();
@@ -142,6 +175,15 @@ void DPCOBJ_Init( DPCMAIN_WORK * wk )
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ解放
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_Exit( DPCMAIN_WORK * wk )
 {
 	FontOamExit( wk );
@@ -150,6 +192,15 @@ void DPCOBJ_Exit( DPCMAIN_WORK * wk )
 	GFL_CLACT_SYS_Delete();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪアニメメイン
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_AnmMain( DPCMAIN_WORK * wk )
 {
 	u32	i;
@@ -162,6 +213,17 @@ void DPCOBJ_AnmMain( DPCMAIN_WORK * wk )
 	GFL_CLACT_SYS_Main();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ表示切り替え
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ * @param		flg		TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, u32 id, BOOL flg )
 {
 	if( wk->clwk[id] != NULL ){
@@ -169,6 +231,17 @@ void DPCOBJ_SetVanish( DPCMAIN_WORK * wk, u32 id, BOOL flg )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪオートアニメ設定
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ * @param		anm		アニメ番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_SetAutoAnm( DPCMAIN_WORK * wk, u32 id, u32 anm )
 {
 	GFL_CLACT_WK_SetAnmFrame( wk->clwk[id], 0 );
@@ -176,11 +249,34 @@ void DPCOBJ_SetAutoAnm( DPCMAIN_WORK * wk, u32 id, u32 anm )
 	GFL_CLACT_WK_SetAutoAnmFlag( wk->clwk[id], TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		アニメチェック
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ *
+ * @retval	"TRUE = アニメ中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL DPCOBJ_CheckAnm( DPCMAIN_WORK * wk, u32 id )
 {
 	return GFL_CLACT_WK_CheckAnmActive( wk->clwk[id] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ座標設定
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ * @param		x			Ｘ座標
+ * @param		y			Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_SetPos( DPCMAIN_WORK * wk, u32 id, s16 x, s16 y )
 {
 	GFL_CLACTPOS	pos;
@@ -190,6 +286,18 @@ void DPCOBJ_SetPos( DPCMAIN_WORK * wk, u32 id, s16 x, s16 y )
 	GFL_CLACT_WK_SetPos( wk->clwk[id], &pos, CLSYS_DRAW_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＢＪ座標取得
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ * @param		x			Ｘ座標
+ * @param		y			Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_GetPos( DPCMAIN_WORK * wk, u32 id, s16 * x, s16 * y )
 {
 	GFL_CLACTPOS	pos;
@@ -199,10 +307,15 @@ void DPCOBJ_GetPos( DPCMAIN_WORK * wk, u32 id, s16 * x, s16 * y )
 	*y = pos.y;
 }
 
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクターシステム初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitClact(void)
 {
 	const GFL_CLSYS_INIT init = {
@@ -225,6 +338,15 @@ static void InitClact(void)
 	GFL_CLACT_SYS_Create( &init, DPCMAIN_GetVramBankData(), HEAPID_DENDOU_PC );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース初期化
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitResource( DPCMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -263,6 +385,16 @@ static void InitResource( DPCMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		キャラリソース削除
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		idx		キャラリソースインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResChr( DPCMAIN_WORK * wk, u32 idx )
 {
 	if( wk->chrRes[idx] != RES_NONE ){
@@ -270,6 +402,17 @@ static void ExitResChr( DPCMAIN_WORK * wk, u32 idx )
 		wk->chrRes[idx] = RES_NONE;
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		パレットリソース削除
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		idx		パレットリソースインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResPal( DPCMAIN_WORK * wk, u32 idx )
 {
 	if( wk->palRes[idx] != RES_NONE ){
@@ -277,6 +420,17 @@ static void ExitResPal( DPCMAIN_WORK * wk, u32 idx )
 		wk->palRes[idx] = RES_NONE;
 	}
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルリソース削除
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		idx		セルリソースインデックス
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResCel( DPCMAIN_WORK * wk, u32 idx )
 {
 	if( wk->celRes[idx] != RES_NONE ){
@@ -285,6 +439,15 @@ static void ExitResCel( DPCMAIN_WORK * wk, u32 idx )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース削除
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResource( DPCMAIN_WORK * wk )
 {
 	u32	i;
@@ -300,6 +463,16 @@ static void ExitResource( DPCMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター作成
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		prm		セルアクターデータ
+ *
+ * @return	GFL_CLWK
+ */
+//--------------------------------------------------------------------------------------------
 static GFL_CLWK * CleateClact( DPCMAIN_WORK * wk, const DPC_CLWK_DATA * prm )
 {
 	return GFL_CLACT_WK_Create(
@@ -310,6 +483,15 @@ static GFL_CLWK * CleateClact( DPCMAIN_WORK * wk, const DPC_CLWK_DATA * prm )
 					&prm->dat, prm->disp, HEAPID_DENDOU_PC );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター追加
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void AddClact( DPCMAIN_WORK * wk )
 {
 	u32	i;
@@ -332,14 +514,33 @@ static void AddClact( DPCMAIN_WORK * wk )
 	}
 }
 
-static void DelClact( DPCMAIN_WORK * wk, u32 idx )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター削除（個別）
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DelClact( DPCMAIN_WORK * wk, u32 id )
 {
-	if( wk->clwk[idx] != NULL ){
-		GFL_CLACT_WK_Remove( wk->clwk[idx] );
-		wk->clwk[idx] = NULL;
+	if( wk->clwk[id] != NULL ){
+		GFL_CLACT_WK_Remove( wk->clwk[id] );
+		wk->clwk[id] = NULL;
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター削除（全て）
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DelClactAll( DPCMAIN_WORK * wk )
 {
 	u32	i;
@@ -350,21 +551,15 @@ static void DelClactAll( DPCMAIN_WORK * wk )
 	GFL_CLACT_UNIT_Delete( wk->clunit );
 }
 
-typedef struct {
-	u16	rad;
-	u16	evy;
-}POKE_PUT_DATA;
-
-static const POKE_PUT_DATA PokePutRad[6][6] =
-{
-	{ { 90, 0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 270, 12 }, {   0,  0 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 210, 10 }, { 330, 10 }, {   0,  0 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 180,  7 }, { 270, 12 }, {   0,  7 }, {   0,  0 }, {  0, 0 } },
-	{ { 90, 0 }, { 162,  8 }, { 234, 10 }, { 306, 10 }, {  18,  8 }, {  0, 0 } },
-	{ { 90, 0 }, { 150,  8 }, { 210, 10 }, { 270, 12 }, { 330, 10 }, { 30, 8 } },
-};
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンＯＢＪ追加
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -458,6 +653,15 @@ void DPCOBJ_AddPoke( DPCMAIN_WORK * wk )
 	DPCOBJ_ChangePokePriority( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		デフォルトのポケモンＯＢＪを取得
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	OBJ ID
+ */
+//--------------------------------------------------------------------------------------------
 u32 DPCOBJ_GetDefaultPoke( DPCMAIN_WORK * wk )
 {
 	if( wk->pokeSwap == 0 ){
@@ -466,12 +670,17 @@ u32 DPCOBJ_GetDefaultPoke( DPCMAIN_WORK * wk )
 	return DPCOBJ_ID_POKE01;
 }
 
-
-#define	POKE_CX_FX32	( 128 << FX32_SHIFT )		// 動作中心Ｘ座標 (fx32型)
-#define	POKE_CY_FX32	( 88 << FX32_SHIFT )		// 動作中心Ｙ座標 (fx32型)
-#define	POKE_RX_FX32	( 100 << FX32_SHIFT )		// Ｘ半径 (fx32型)
-#define	POKE_RY_FX32	( 44 << FX32_SHIFT )		// Ｙ半径 (fx32型)
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンＯＢＪ配置
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		id		OBJ ID
+ * @param		rad		角度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad )
 {
 	fx32	vx, vy;
@@ -486,7 +695,15 @@ void DPCOBJ_SetPokePos( DPCMAIN_WORK * wk, u32 id, u32 rad )
 	DPCOBJ_SetPos( wk, id, px, py );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンＯＢＪプライオリティ変更
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
 {
 	u32	id;
@@ -521,6 +738,19 @@ void DPCOBJ_ChangePokePriority( DPCMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ポケモンＯＢＪ明るさ変更
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		flg		設定フラグ
+ *
+ * @return	none
+ *
+ * @li	flg = TRUE : 配置位置によって明るさを設定
+ * @li	flg = FALSE : デフォルトの明るさ
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg )
 {
 	u16	pos;
@@ -550,9 +780,9 @@ void DPCOBJ_InitFadeEvy( DPCMAIN_WORK * wk, BOOL flg )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＯＡＭフォント初期化
+ * @brief		ＯＡＭフォント初期化
  *
- * @param
+ * @param		wk		殿堂入りＰＣ画面ワーク
  *
  * @return	none
  */
@@ -585,9 +815,9 @@ static void FontOamInit( DPCMAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * ＯＡＭフォント削除
+ * @brief		ＯＡＭフォント削除
  *
- * @param
+ * @param		wk		殿堂入りＰＣ画面ワーク
  *
  * @return	none
  */
@@ -599,6 +829,16 @@ static void FontOamExit( DPCMAIN_WORK * wk )
 	BmpOam_Exit( wk->fntoam );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＯＡＭフォント表示切り替え
+ *
+ * @param		wk		殿堂入りＰＣ画面ワーク
+ * @param		flg		TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void DPCOBJ_FontOamVanish( DPCMAIN_WORK * wk, BOOL flg )
 {
 	BmpOam_ActorSetDrawEnable( wk->foact, flg );
