@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T22:44:43"/>
+	<create user="matsumiya" host="W00224" date="2010-05-27T13:48:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,10 +357,10 @@
 
 	<row id="CROWD_MSG01">
 		<comment>群集用</comment>
-		<language name="JPN" width="256">ゆっくり　ゆっくり　いきるけど
-あるく　スピードは　はやいんだ</language>
-		<language name="JPN_KANJI" width="256">ゆっくり　ゆっくり　生きるけど
-あるく　スピードは　速いんだ</language>
+		<language name="JPN" width="256">あるく　スピードは　はやいけど
+ゆっくり　のんびり　いきるんだ</language>
+		<language name="JPN_KANJI" width="256">歩く　スピードは　速いけど
+ゆっくり　のんびり　生きるんだ</language>
 	</row>
 
 	<row id="CROWD_MSG02">
@@ -404,9 +404,13 @@
 	<row id="CROWD_MSG07">
 		<comment>群集用</comment>
 		<language name="JPN" width="256">この　まちは
-ねむらない　まち……</language>
+ねむらない　まち……▼
+わたしは　ねむる……
+おはだの　ために</language>
 		<language name="JPN_KANJI" width="256">この　街は
-眠らない　街……</language>
+眠らない　街……▼
+わたしは　眠る……
+お肌の　ために</language>
 	</row>
 
 	<row id="CROWD_MSG08">
