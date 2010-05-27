@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ibe_mana" host="W00191" date="2010-05-22T15:27:26" source="m_dun0603_00_00c.mb"/>
+	<create user="ibe_mana" host="W00191" date="2010-05-27T22:00:11" source="m_dun0603_00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ibe_mana" host="W00191" date="2010-05-22T15:27:26" source="m_dun0603_00_00c.mb"/>
+<original_create user="ibe_mana" host="W00191" date="2010-05-27T22:00:11" source="m_dun0603_00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -1215,7 +1215,7 @@
 					<tex st="-208.000000 144.000000"/>
 					<pos_xy xy="-3.250000 0.500000"/>
 					<tex st="192.000000 0.000000"/>
-					<pos_xz xz="3.000000 -0.500000"/>
+					<pos_xz xz="3.000000 4.000000"/>
 					<tex st="208.000000 0.000000"/>
 					<pos_xy xy="3.250000 0.500000"/>
 					<tex st="208.000000 -16.000000"/>
@@ -1263,7 +1263,7 @@
 					<tex st="176.000000 -176.000000"/>
 					<pos_xy xy="2.750000 0.250000"/>
 					<tex st="176.000000 -16.000000"/>
-					<pos_xz xz="2.750000 -0.750000"/>
+					<pos_xz xz="2.750000 4.000000"/>
 					<tex st="192.000000 -16.000000"/>
 					<pos_xy xy="3.000000 0.250000"/>
 					<tex st="192.000000 -32.000000"/>
