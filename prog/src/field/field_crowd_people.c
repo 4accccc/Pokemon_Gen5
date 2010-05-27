@@ -97,7 +97,6 @@ static MMDL_HEADER s_MMDL_HEADER =
 ///	意地悪動作　定数
 //=====================================
 #define FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID (1) // 何歩前までチェックするのか？
-
 #define FIELD_CROWD_PEOPLE_PUT_PAR (10) // FIELD_CROWD_PEOPLE_PUT_PAR回に一回意地悪がでる
 
 
@@ -646,6 +645,9 @@ static void FIELD_CROWD_PEOPLE_WK_Init( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSYS* p_
   obj_code = cp_data->boot_data.obj_code_tbl[ rand % cp_data->boot_data.obj_code_num ];
 
   s_MMDL_HEADER.obj_code = obj_code;
+
+  //スクリプト用に再抽選
+  rand = GFUser_GetPublicRand(0);
 
   //　OBJ独自の情報の決定
   p_wk->id = FIELD_CROWD_PEOPLE_ID + idx;
