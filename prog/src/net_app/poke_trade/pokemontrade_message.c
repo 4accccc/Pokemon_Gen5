@@ -1293,9 +1293,13 @@ APP_TASKMENU_WIN_WORK* POKEMONTRADE_MESSAGE_CancelButtonStart(POKEMON_TRADE_WORK
   GFL_MSG_GetString(pWork->pMsgData, msgno, pWork->appitem[0].str);
   pWork->appitem[0].msgColor = APP_TASKMENU_ITEM_MSGCOLOR;
   pWork->appitem[0].type = APP_TASKMENU_WIN_TYPE_NORMAL;
-  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
-                                    pWork->appitem, 24-16, 24-3, 15, pWork->heapID);
+  
+//  pWork->pAppWin =APP_TASKMENU_WIN_Create( pWork->pAppTaskRes,
+  //                                  pWork->appitem, 16-8, 24-3, 16, pWork->heapID);
+  pWork->pAppWin =APP_TASKMENU_WIN_CreateEx(pWork->pAppTaskRes,
+                                    pWork->appitem, 16-8, 24-3, 16, 3 ,FALSE,TRUE, pWork->heapID);
 
+  
   GFL_STR_DeleteBuffer(pWork->appitem[0].str);
 
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );

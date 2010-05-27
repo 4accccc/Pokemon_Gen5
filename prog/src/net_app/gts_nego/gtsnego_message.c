@@ -1409,7 +1409,7 @@ static void _NameMessage(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMy)
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExStrBuf  );
   
   if(pWork->nameMsgWin==NULL){
-    pWork->nameMsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 12 , 10, 10 , 3 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+    pWork->nameMsgWin = GFL_BMPWIN_Create( GFL_BG_FRAME1_M , 11 , 10, 10 , 3 ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   pwin = pWork->nameMsgWin;
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 0);
