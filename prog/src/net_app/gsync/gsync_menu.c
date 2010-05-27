@@ -420,6 +420,7 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
   GAMESYNC_MENU* pWork = (GAMESYNC_MENU*)param;
   {
 
+    GFL_CLACT_WK_StopAnmCallBack(pWork->buttonObj[pWork->bttnid]);
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[pWork->bttnid] , FALSE );
 
     if(pWork->selectType == GAMESYNC_RETURNMODE_UTIL){
