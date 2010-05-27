@@ -45,7 +45,7 @@ EVENT_END
 /*							ÉèÉãÉrÉã						*/
 /************************************************************/
 EVENT_START	ev_h04r0401_poke20_01
-	_EASY_BALLOONWIN_TALKOBJ_MSG( msg_h04r0401_poke20_01 )
+	_EASY_TALK_POKEVOICE(MONSNO_505,msg_h04r0401_poke20_01)
 EVENT_END
 
 
