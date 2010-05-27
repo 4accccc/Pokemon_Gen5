@@ -197,7 +197,8 @@ static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork)
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
 
   pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
-  POKETRADE_MESSAGE_WindowOpen(pWork);
+  //POKETRADE_MESSAGE_WindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowOpenCustom(pWork, TRUE, FALSE);
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
@@ -232,12 +233,12 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
   else if(pWork->bEncountMessageEach){
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_34, pWork->pMessageStrBufEx );
     WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
-    POKETRADE_MESSAGE_WindowOpen(pWork);
+    POKETRADE_MESSAGE_WindowOpenCustom(pWork, TRUE, FALSE);
   }
   else{
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_50, pWork->pMessageStrBufEx );
     WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
-    POKETRADE_MESSAGE_WindowOpen(pWork);
+    POKETRADE_MESSAGE_WindowOpenCustom(pWork, TRUE, FALSE);
   }
 
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);

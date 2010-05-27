@@ -377,7 +377,7 @@ static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
   WORDSET_RegisterPlayerName( pWork->pWordSet, 1, pWork->pFriend  );
   WORDSET_ExpandStr( pWork->pWordSet, pWork->pMessageStrBuf, pWork->pMessageStrBufEx);
   GFL_BG_FillScreen( GX_PLANEMASK_BG2, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
-  POKETRADE_MESSAGE_WindowOpenCustom(pWork,FALSE,FALSE);
+  POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
 
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
   G2S_BlendNone();
