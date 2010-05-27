@@ -566,9 +566,10 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
   case _WAIT_NET_END:
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
       NetErr_ErrWorkInit();
+      (*seq) = _FIELD_OPEN;
     }
     if(GFL_NET_IsExit()){
-      (*seq) ++;
+      (*seq) = _FIELD_OPEN;
     }
     break;
   case _FIELD_OPEN:
