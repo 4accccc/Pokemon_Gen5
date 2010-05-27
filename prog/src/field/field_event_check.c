@@ -76,7 +76,6 @@
 #include "field_gimmick_d06.h"
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
-#include "../../../resource/fldmapdata/flagwork/work_define.h"  // for WK_OTHER_DISCOVER_EGG
 
 #include "waza_tool/wazano_def.h"
 #include "field/field_comm/intrude_main.h"
