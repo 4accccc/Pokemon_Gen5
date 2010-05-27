@@ -250,7 +250,7 @@ EVENT_START   ev_r08_hakaim_02
 	ENDIF
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
-EVENT_END 	//時間帯の取得
+EVENT_END 	
 
 /**************************************************************/
 /*  R08 パラソル1の会話用イベントスクリプト                    */
@@ -292,8 +292,13 @@ EVENT_START   ev_r08_ambrella_02
 			
 		ENDIF
 		
-		_FLAG_SET(TMFLG_R08_STONE_GET)
+		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
 		
+		//-----------------------------//
+		_FLAG_SET(TMFLG_R08_STONE_GET)
+		//-----------------------------//
 	ELSE
 		_BALLOONWIN_TALKOBJ_MSG(msg_r08_rock_ambrella_06)
 		_LAST_KEYWAIT()
