@@ -836,7 +836,7 @@ static void _modeAppWinFlash(CG_WIRELESS_MENU* pWork)
 
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[pWork->bttnid] );
 
   _CHANGE_STATE(pWork,_modeAppWinFlash2);
 

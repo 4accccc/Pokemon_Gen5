@@ -935,7 +935,7 @@ static void _modeButtonFlash(IRC_BATTLE_MENU* pWork)
   }
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[objno],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[objno], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[objno] );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[objno] );
   
   _CHANGE_STATE(pWork,_modeButtonFlash2);
 
@@ -1103,7 +1103,7 @@ static void _modeSelectEntryButtonFlash(IRC_BATTLE_MENU* pWork)
   cbwk.p_func = _modeAppWinFlashCallback2; // コールバック関数
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[i],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[i], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[i] );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[i] );
 
   _CHANGE_STATE(pWork, _modeSelectEntryButtonFlash2);
 }
@@ -1137,7 +1137,7 @@ static void _modeAppWinFlash2(IRC_BATTLE_MENU* pWork)
   cbwk.p_func = _modeAppWinFlash4; // コールバック関数
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid], TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[pWork->bttnid] );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[pWork->bttnid] );
   _CHANGE_STATE(pWork,_modeAppWinFlash5);
 }
 
@@ -1247,7 +1247,7 @@ int i;
   cbwk.p_func = _modeTemotiOrBoxButtonCallback2; // コールバック関数
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[bno],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[bno], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[bno] );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[bno] );
   _CHANGE_STATE(pWork,_modeTemotiOrBoxButtonFlash2);
 }
 
@@ -1388,7 +1388,7 @@ int i;
   cbwk.p_func = _modeSelectBattleTypeButtonCallback2; // コールバック関数
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[i],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[i], &cbwk );
-  GFL_CLACT_WK_StartAnm( pWork->buttonObj[i] );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[i] );
   _CHANGE_STATE(pWork,_modeSelectBattleTypeButtonFlash2);
 }
 
