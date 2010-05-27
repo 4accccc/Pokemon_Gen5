@@ -590,7 +590,7 @@ static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk,
 static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage );
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BOOL fConfDamage, u16* damage );
 static void scproc_Koraeru( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause );
 static void scEvent_KoraeruExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppKoraeruCause cause );
 static void scproc_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, u32 poke_cnt, BTL_POKEPARAM** bppAry );
@@ -740,7 +740,7 @@ static void scPut_CantAction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConfCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_MeromeroAct( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage );
-static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick );
+static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, BOOL fStdMsg );
 static void scPut_WazaMsg( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scPut_CureSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT* oldCont );
 static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx* exCode );
@@ -778,7 +778,7 @@ static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacke
 static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scEvent_SpecialActPriorityWorked( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scEvent_BeforeFight( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza );
-static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
+static u32 scproc_CalcConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
   WazaID orgWazaID, WazaID actWazaID, BTL_HANDEX_STR_PARAMS* str );
 static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* param );
@@ -6212,7 +6212,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
     }
     // ワザでこおりが溶ける
     else if( fWazaMelt && (sick == POKESICK_KOORI ) ){
-      scPut_CurePokeSick( wk, attacker, sick );
+      scPut_CurePokeSick( wk, attacker, sick, FALSE );
       SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriMeltWaza, BPP_GetID(attacker), waza );
     }
   }
@@ -6395,7 +6395,7 @@ static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* a
   }
 
   if( f_cured ){
-    scPut_CurePokeSick( wk, attacker, sick );
+    scPut_CurePokeSick( wk, attacker, sick, TRUE );
   }
 
   return f_wazaMelt;
@@ -6415,8 +6415,7 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
   // こんらんなら自爆ダメージチェック
   if( fail_cause == SV_WAZAFAIL_KONRAN )
   {
-    u16 conf_dmg = scEvent_CalcConfDamage( wk, attacker );
-    scPut_ConfDamage( wk, attacker, conf_dmg );
+    scproc_CalcConfDamage( wk, attacker );
     if( scproc_CheckDeadCmd(wk, attacker) ){
       if( scproc_CheckShowdown(wk) ){
         return;
@@ -6931,7 +6930,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     dmg_tmp = dmg[i];
     if( !BPP_MIGAWARI_IsExist(bpp[i]) ){
       dmg[i] = MarumeDamage( bpp[i], dmg[i] );
-      koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], &dmg[i] );
+      koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], TRUE, &dmg[i] );
     }
     dmg_sum += dmg[i];
     if( dmg_tmp ){
@@ -7136,18 +7135,20 @@ static void scEvent_WazaDamageDetermine( BTL_SVFLOW_WORK* wk,
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] ワザによるダメージを「こらえる」かどうかチェック
+ * [Event] ワザ・混乱自爆によるダメージを「こらえる」かどうかチェック
  * ※「こらえる」= HPが1残る
  *
  * @param   wk
- * @param   defender    ワザダメージをくらうポケ
- * @param   damage      [io] ダメージ量（こらえた場合、HPが１残るように補正される）
+ * @param   attacker
+ * @param   defender
+ * @param   fWazaDamage   ワザによるダメージの場合TRUE／混乱ダメージならFALSEを指定
+ * @param   damage
  *
- * @retval  BppKoraeruCause   「こらえる」理由／こらえない場合は BPP_KORAE_NONE
+ * @retval  BppKoraeruCause
  */
 //----------------------------------------------------------------------------------
 static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, u16* damage )
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BOOL fWazaDamage, u16* damage )
 {
   if( BPP_GetValue(defender, BPP_HP) > (*damage) )
   {
@@ -7160,6 +7161,7 @@ static BppKoraeruCause scEvent_CheckKoraeru( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_Push();
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_GEN_FLAG,  fWazaDamage );
       BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_KORAERU_CAUSE, cause );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_KORAERU_CHECK );
       cause = BTL_EVENTVAR_GetValue( BTL_EVAR_KORAERU_CAUSE );
@@ -7492,7 +7494,7 @@ static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     {
       if( BPP_GetPokeSick(bpp) == POKESICK_KOORI )
       {
-        scPut_CurePokeSick( wk, bpp, POKESICK_KOORI );
+        scPut_CurePokeSick( wk, bpp, POKESICK_KOORI, TRUE );
       }
     }
   }
@@ -7702,7 +7704,6 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
   BTL_EVENTVAR_Pop();
 }
 
-
 //------------------------------------------------------------------
 // サーバーフロー下請け： たたかう > ダメージワザ系 > ダメージ値計算
 //------------------------------------------------------------------
@@ -7761,10 +7762,8 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     defGuard  = scEvent_getDefenderGuard( wk, attacker, defender, wazaParam, criticalFlag );
     {
       atkLevel = BPP_GetValue( attacker, BPP_LEVEL );
+      fxDamage = BTL_CALC_DamageBase( wazaPower, atkPower, atkLevel, defGuard );
 
-      fxDamage = (wazaPower * atkPower * (atkLevel*2/5+2));
-      fxDamage = fxDamage / defGuard / 50;
-      fxDamage += 2;
       BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_WazaParam, wazaParam->wazaID, wazaParam->wazaType);
       BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_BaseDamage, fxDamage);
     }
@@ -9014,7 +9013,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         }
         else
         {
-          BppKoraeruCause korae_cause = scEvent_CheckKoraeru( wk, attacker, target, &damage );
+          BppKoraeruCause korae_cause = scEvent_CheckKoraeru( wk, attacker, target, TRUE, &damage );
 
           if( korae_cause == BPP_KORAE_NONE ){
             scproc_Ichigeki_Succeed( wk, target, wazaParam, affAbout );
@@ -10979,7 +10978,7 @@ static void scPut_ConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damag
  * ワザ出し判定時のポケモン系状態異常回復処理
  */
 //--------------------------------------------------------------------------
-static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick )
+static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSick sick, BOOL fStdMsg )
 {
   u8 pokeID = BPP_GetID( bpp );
 
@@ -10987,16 +10986,19 @@ static void scPut_CurePokeSick( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, WazaSic
   SCQUE_PUT_OP_CurePokeSick( wk->que, pokeID );
   SCQUE_PUT_ACT_SickIcon( wk->que, pokeID, POKESICK_NULL );
 
-  switch( sick ){
-  case POKESICK_NEMURI:
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriWake, pokeID );
-    break;
-  case POKESICK_KOORI:
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriMelt, pokeID );
-    break;
-  default:
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PokeSick_Cure, pokeID );
-    break;
+  if( fStdMsg )
+  {
+    switch( sick ){
+    case POKESICK_NEMURI:
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NemuriWake, pokeID );
+      break;
+    case POKESICK_KOORI:
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriMelt, pokeID );
+      break;
+    default:
+      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PokeSick_Cure, pokeID );
+      break;
+    }
   }
 }
 //--------------------------------------------------------------------------
@@ -11792,17 +11794,30 @@ static void scEvent_BeforeFight( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, 
  * @retval  u16   ダメージ値
  */
 //--------------------------------------------------------------------------
-static u16 scEvent_CalcConfDamage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
+static u32 scproc_CalcConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker )
 {
-  u16 dmg = roundMin( BPP_GetValue(attacker, BPP_MAX_HP)/8, 1 );
+  u32 atk, guard, level, ratio;
+  u16 dmg;
+  BppKoraeruCause  korae_cause;
 
-  BTL_EVENTVAR_Push();
+  atk = BPP_GetValue( attacker, BPP_ATTACK );
+  guard = BPP_GetValue( attacker, BPP_DEFENCE );
+  level = BPP_GetValue( attacker, BPP_LEVEL );
 
-  BTL_EVENTVAR_SetValue( BTL_EVAR_CONF_DMG, dmg );
-  BTL_EVENT_CallHandlers( wk, BTL_EVENT_CALC_CONF_DAMAGE );
-  dmg = BTL_EVENTVAR_GetValue( BTL_EVAR_CONF_DMG );
+  dmg = BTL_CALC_DamageBase( 40, atk, level, guard );
 
-  BTL_EVENTVAR_Pop();
+  ratio = 100 - BTL_CALC_GetRand( 16 );
+  dmg = (dmg * ratio) / 100;
+  if( dmg == 0 ){
+    dmg = 1;
+  }
+
+  korae_cause = scEvent_CheckKoraeru( wk, attacker, attacker, FALSE, &dmg );
+  scPut_ConfDamage( wk, attacker, dmg );
+
+  if( korae_cause != BPP_KORAE_NONE ){
+    scproc_Koraeru( wk, attacker, korae_cause );
+  }
   return dmg;
 }
 //----------------------------------------------------------------------------------

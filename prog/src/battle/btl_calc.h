@@ -66,6 +66,8 @@ extern void BTL_CALC_ResetSys( const GFL_STD_RandContext* randContext );
 extern void BTL_CALC_QuitSys( void );
 extern u32 BTL_CALC_GetRand( u32 range );
 
+extern u32 BTL_CALC_DamageBase( u32 wazaPower, u32 atkPower, u32 atkLevel, u32 defGuard );
+
 extern u16 BTL_CALC_StatusRank( u16 defaultVal, u8 rank );
 extern u8 BTL_CALC_HitPer( u8 defPer, u8 rank );
 extern BOOL BTL_CALC_CheckCritical( u8 rank );

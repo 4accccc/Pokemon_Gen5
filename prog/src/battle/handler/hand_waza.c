@@ -5228,7 +5228,9 @@ static void handler_Mineuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_ATTACKER );
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_ATTACKER );
+    }
   }
 }
 //----------------------------------------------------------------------------------
@@ -5300,7 +5302,9 @@ static void handler_Koraeru_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     // 貼り付き中なら「こらえる」発動
     if( work[ WORKIDX_STICK] )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_DEFENDER );
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_KORAERU_CAUSE, BPP_KORAE_WAZA_DEFENDER );
+      }
 //      BTL_EVENT_FACTOR_Remove( myHandle );  // １ターン２回以上こらえるためにコメントアウト
     }
   }

@@ -7358,7 +7358,6 @@ static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* ar
 static BOOL scProc_OP_CureSickDependPoke( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );
-  TAYA_Printf("依存状態回復, ポケ=%d, 依存対象ポケ=%d\n", args[0], args[1] );
   BPP_CureWazaSickDependPoke( bpp, args[1] );
   return TRUE;
 }

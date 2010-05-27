@@ -313,6 +313,29 @@ BtlTypeAff BTL_CALC_TypeAffMul( BtlTypeAff aff1, BtlTypeAff aff2 )
   }
 }
 
+
+//=============================================================================================
+/**
+ * 基本ダメージ計算
+ *
+ * @param   wazaPow
+ * @param   atkPower
+ * @param   atkLevel
+ * @param   defGuard
+ *
+ * @retval  u32
+ */
+//=============================================================================================
+u32 BTL_CALC_DamageBase( u32 wazaPower, u32 atkPower, u32 atkLevel, u32 defGuard )
+{
+  u32 damage;
+
+  damage = (wazaPower * atkPower * (atkLevel*2/5+2));
+  damage = damage / defGuard / 50;
+  damage += 2;
+  return damage;
+}
+
 //--------------------------------------------------------------
 /**
  *  相性ダメージ計算
