@@ -251,7 +251,7 @@ static const BG_FONT_INIT_DATA BGFontInitData[ BG_FONT_NUM ] =
     BGFONT_TITLE_STRING_COLOR_S,    // 影のカラー番号
     BGFONT_TITLE_STRING_COLOR_B,    // 背景のカラー番号
     MESSAGE_STATIC,                 // 参照するメッセージデータ
-    str_select_title,               // 使用する文字列
+    str_check_title,                // 使用する文字列
     FALSE,                          // 自力センタリングの有無
   },
   { // 上画面 調査項目の補足文
