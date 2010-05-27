@@ -123,10 +123,11 @@ struct _RESEARCH_RADAR_LIST_WORK {
   GFL_TCB*    VBlankTask;      // VBlankÉ^ÉCÉ~ÉìÉOíÜÇ…çsÇ§É^ÉXÉN
 
   // ÉtÉâÉO
-  BOOL stateEndFlag;   // åªç›ÇÃèÛë‘Ç™èIóπÇµÇΩÇ©Ç«Ç§Ç©
-  BOOL palFadeOutFlag; // ÉtÉFÅ[ÉhÉAÉEÉgíÜÇ©Ç«Ç§Ç©
-  BOOL finishFlag;     // ÉäÉXÉgâÊñ Ç™èIóπÇµÇΩÇ©Ç«Ç§Ç©
-  RRL_RESULT finishResult; // ÉäÉXÉgâÊñ ÇÃèIóπåãâ 
+  BOOL stateEndFlag;          // åªç›ÇÃèÛë‘Ç™èIóπÇµÇΩÇ©Ç«Ç§Ç©
+  BOOL palFadeOutFlag;        // ÉtÉFÅ[ÉhÉAÉEÉgíÜÇ©Ç«Ç§Ç©
+  BOOL topicCursorActiveFlag; // ÉJÅ[É\ÉãÇ™ÉAÉNÉeÉBÉuÇ©Ç«Ç§Ç©
+  BOOL finishFlag;            // ÉäÉXÉgâÊñ Ç™èIóπÇµÇΩÇ©Ç«Ç§Ç©
+  RRL_RESULT finishResult;    // ÉäÉXÉgâÊñ ÇÃèIóπåãâ 
 };
 
 
@@ -198,8 +199,8 @@ static void SetMenuItemCursorOff( RRL_WORK* work, MENU_ITEM menuItem ); // ÉJÅ[É
 // í≤ç∏çÄñ⁄
 static void SetTopicCursorPosDirect( RRL_WORK* work, int topciID ); // í≤ç∏çÄñ⁄ÉJÅ[É\ÉãÇÃà íuÇê›íËÇ∑ÇÈ ( íºíléwíË ) 
 static void SetTopicCursorNextPos( RRL_WORK* work, int stride ); // í≤ç∏çÄñ⁄ÉJÅ[É\ÉãÇÃà⁄ìÆêÊÇê›íËÇ∑ÇÈ ( ÉIÉtÉZÉbÉgéwíË )
-static void SetTopicButtonCursorOn( const RRL_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
-static void SetTopicButtonCursorOff( const RRL_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
+static void SetTopicButtonCursorOn( RRL_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢ÇÈèÛë‘Ç…Ç∑ÇÈ
+static void SetTopicButtonCursorOff( RRL_WORK* work ); // ÉJÅ[É\ÉãÇ™èÊÇ¡ÇƒÇ¢Ç»Ç¢èÛë‘Ç…Ç∑ÇÈ
 static void SetTopicButtonInvestigating( const RRL_WORK* work, u8 topicID ); // í≤ç∏íÜÇÃèÛë‘Ç…Ç∑ÇÈ
 static void SetTopicButtonNotInvestigating( const RRL_WORK* work, u8 topicID ); // í≤ç∏íÜÇ≈Ç»Ç¢èÛë‘Ç…ñﬂÇ∑
 static u8 CalcScreenLeftOfTopicButton( const RRL_WORK* work, u8 topicID ); // í≤ç∏çÄñ⁄ÇÃç∂è„xç¿ïWÇéZèoÇ∑ÇÈ ( ÉXÉNÉäÅ[ÉìíPà  )
@@ -657,12 +658,9 @@ static void MainState_STANDBY( RRL_WORK* work )
       ( GFL_UI_TP_HitTrg( work->scrollTouchHitTable ) == SCROLL_TOUCH_AREA_BAR ) ) {
     // ÉXÉNÉçÅ[ÉãëÄçÏâ¬î\
     if( CheckScrollControlCan( work ) == TRUE ) {
-      MoveTopicCursorDirect( work, work->topicCursorPos ); // ÉJÅ[É\ÉãÉZÉbÉg
-      UpdateTopicDetailStrings_at_Now( work );             // è„âÊñ ÇÃè⁄ç◊ï∂éöóÒÇÉJÅ[É\Éãà íuÇ…çáÇÌÇπÇÈ
-      ShowTopicDetailStrings( work );                      // è„âÊñ ÇÃè⁄ç◊ï\é¶äJén
       FinishCurrentState( work );                          // RRL_STATE_KEY_WAIT èÛë‘èIóπ
       RegisterNextState( work, RRL_STATE_SLIDE_CONTROL );  // => RRL_STATE_SLIDE_CONTROL 
-      RegisterNextState( work, RRL_STATE_KEY_WAIT );       // ==> RRL_STATE_KEY_WAIT 
+      RegisterNextState( work, RRL_STATE_STANDBY );       // ==> RRL_STATE_STANDBY 
     }
     return;
   }
@@ -876,7 +874,6 @@ static void MainState_SLIDE_CONTROL( RRL_WORK* work )
     // ÉXÉâÉCÉ_Å[Ç™í‚é~
     if( IsSliderMoving( work ) == FALSE ) {
       UpdateTopicDetailStrings_at_Now( work ); // è„âÊñ ÇÃí≤ç∏çÄñ⁄ê‡ñæï∂ÇçXêV
-      ShowTopicDetailStrings( work );          // è„âÊñ ÇÃè⁄ç◊ï\é¶äJén
       FinishCurrentState( work );
     }
     break;
@@ -1604,11 +1601,27 @@ static void AdjustTopicCursor_to_ScrollCursor( RRL_WORK* work )
   int max = GetMaxScrollCursorMarginPos();
   int curTop = CalcScrollCursorPosOfTopicButtonTop( work->topicCursorPos );
   int curBottom = CalcScrollCursorPosOfTopicButtonBottom( work->topicCursorPos );
+
   if( curBottom <= min ) {
-    MoveTopicCursorDirect( work, CalcTopicID_byScrollCursorPos(curBottom + TOPIC_BUTTON_HEIGHT/2) );
+    u8 newTopicID = CalcTopicID_byScrollCursorPos( curBottom + TOPIC_BUTTON_HEIGHT/2 );
+
+    if( work->topicCursorActiveFlag ) {
+      MoveTopicCursorDirect( work, newTopicID );
+    }
+    else {
+      SetTopicCursorPosDirect( work, newTopicID ); // ÉJÅ[É\Éãà íuÇÃçXêVÇÃÇ›
+    }
   }
+
   if( max <= curTop ) {
-    MoveTopicCursorDirect( work, CalcTopicID_byScrollCursorPos(curTop - TOPIC_BUTTON_HEIGHT/2) );
+    u8 newTopicID = CalcTopicID_byScrollCursorPos( curTop - TOPIC_BUTTON_HEIGHT/2 );
+
+    if( work->topicCursorActiveFlag ) {
+      MoveTopicCursorDirect( work, newTopicID );
+    }
+    else {
+      SetTopicCursorPosDirect( work, newTopicID ); // ÉJÅ[É\Éãà íuÇÃçXêVÇÃÇ›
+    }
   }
 }
 
@@ -1958,7 +1971,7 @@ static void SetTopicCursorNextPos( RRL_WORK* work, int stride )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicButtonCursorOn( const RRL_WORK* work )
+static void SetTopicButtonCursorOn( RRL_WORK* work )
 {
   u8 topicID;
   u8 BGFrame;
@@ -1977,6 +1990,9 @@ static void SetTopicButtonCursorOn( const RRL_WORK* work )
   // ÉXÉNÉäÅ[ÉìçXêV
   GFL_BG_ChangeScreenPalette( BGFrame, left, top, width, height, paletteNo );
   GFL_BG_LoadScreenV_Req( BGFrame );
+
+  // ÉtÉâÉOÉZÉbÉg
+  work->topicCursorActiveFlag = TRUE;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -1986,7 +2002,7 @@ static void SetTopicButtonCursorOn( const RRL_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------------------
-static void SetTopicButtonCursorOff( const RRL_WORK* work )
+static void SetTopicButtonCursorOff( RRL_WORK* work )
 {
   u8 topicID;
   u8 BGFrame;
@@ -2005,6 +2021,9 @@ static void SetTopicButtonCursorOff( const RRL_WORK* work )
   // ÉXÉNÉäÅ[ÉìçXêV
   GFL_BG_ChangeScreenPalette( BGFrame, left, top, width, height, paletteNo );
   GFL_BG_LoadScreenV_Req( BGFrame );
+
+  // ÉtÉâÉOÉäÉZÉbÉg
+  work->topicCursorActiveFlag = FALSE;
 }
 
 //-----------------------------------------------------------------------------------------
@@ -3648,27 +3667,28 @@ static RRL_WORK* CreateListWork( HEAPID heapID )
 //-----------------------------------------------------------------------------------------
 static void InitListWork( RRL_WORK* work )
 {
-  work->recoveryData         = NULL;
-  work->state                = RRL_STATE_SETUP;
-  work->stateCount           = 0;
-  work->stateEndFlag         = FALSE;
-  work->waitFrame            = WAIT_FRAME_BUTTON;
-  work->menuCursorPos        = MENU_ITEM_DETERMINATION_OK;
-  work->topicCursorPos       = 0;
-  work->topicCursorNextPos   = 0;
-  work->selectableTopicNum   = 0;
-  work->selectedTopicID      = TOPIC_ID_DUMMY;
-  work->VBlankTCBSystem      = GFUser_VIntr_GetTCBSYS();
-  work->scrollCursorPos      = MIN_SCROLL_CURSOR_POS;
-  work->scrollCursorPos_prev = MIN_SCROLL_CURSOR_POS;
-  work->scrollStartPos       = 0;
-  work->scrollEndPos         = 0;
-  work->scrollFrames         = 0;
-  work->scrollFrameCount     = 0;
-  work->palFadeOutFlag       = FALSE;
-  work->finishResult         = RRL_RESULT_TO_TOP;
-  work->finishFlag           = FALSE;
-  work->VBlankTask           = NULL;
+  work->recoveryData          = NULL;
+  work->state                 = RRL_STATE_SETUP;
+  work->stateCount            = 0;
+  work->stateEndFlag          = FALSE;
+  work->waitFrame             = WAIT_FRAME_BUTTON;
+  work->menuCursorPos         = MENU_ITEM_DETERMINATION_OK;
+  work->topicCursorPos        = 0;
+  work->topicCursorNextPos    = 0;
+  work->selectableTopicNum    = 0;
+  work->selectedTopicID       = TOPIC_ID_DUMMY;
+  work->VBlankTCBSystem       = GFUser_VIntr_GetTCBSYS();
+  work->scrollCursorPos       = MIN_SCROLL_CURSOR_POS;
+  work->scrollCursorPos_prev  = MIN_SCROLL_CURSOR_POS;
+  work->scrollStartPos        = 0;
+  work->scrollEndPos          = 0;
+  work->scrollFrames          = 0;
+  work->scrollFrameCount      = 0;
+  work->palFadeOutFlag        = FALSE;
+  work->topicCursorActiveFlag = FALSE;
+  work->finishResult          = RRL_RESULT_TO_TOP;
+  work->finishFlag            = FALSE;
+  work->VBlankTask            = NULL;
 
   InitStateQueue( work );
   InitMessages( work );
