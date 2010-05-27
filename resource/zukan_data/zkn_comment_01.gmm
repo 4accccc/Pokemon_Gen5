@@ -1897,7 +1897,7 @@
 ちょっとでも　でんきが　あふれると
 じぶんじしんが　しびれてしまう。</language>
 		<language name="JPN_KANJI">ほほの　電気袋は　小さく
-ちょっとでも　電気が　溢れると
+ちょっとでも　電気が　あふれると
 自分自身が　しびれてしまう。</language>
 	</row>
 
@@ -3690,7 +3690,7 @@
 がけから　とびおりている。</language>
 		<language name="JPN_KANJI">青空を　飛ぶことを　夢見て
 毎日　飛ぶ　練習のために
-崖から　飛び降りている。</language>
+ガケから　飛び降りている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_372_000">
@@ -4625,7 +4625,7 @@
 ひじをのばし　かたなのように
 へんか　させて　はげしく　たたかう。　　</language>
 		<language name="JPN_KANJI">だれかを　守ろうと　したとき
-肘を伸ばし　刀のように
+ひじを伸ばし　刀のように
 変化　させて　激しく　戦う。</language>
 	</row>
 
@@ -4812,10 +4812,10 @@
 	<row id="ZKN_COMMENT_01_496_000">
 		<language name="JPN">じめんを　すべるように　はしる。
 すばやい　うごきで　てきを　まどわせ
-ツルのムチで　しとめるのだ。</language>
+つるのムチで　しとめるのだ。</language>
 		<language name="JPN_KANJI">地面を　滑るように　走る。
-素早い　動きで　敵を　惑わせ
-ツルのムチで　しとめるのだ。</language>
+素早い　動きで　敵を　まどわせ
+つるのムチで　しとめるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_497_000">
@@ -5062,18 +5062,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_524_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">６かくけいの　みみを　もつ。
+ちていで　あっしゅくされた　からだは
+てつに　まけないくらい　かたい。</language>
+		<language name="JPN_KANJI">６角形の　耳を　もつ。
+地底で　圧縮された　体は
+鉄に　負けないくらい　硬い。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_525_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">パワーが　みなぎると　オレンジいろの
+けっしょうが　ひかり　かがやく。
+ほらあなで　ちかすいを　さがす。</language>
+		<language name="JPN_KANJI">パワーが　みなぎると　オレンジ色の
+結晶が　光り　輝く。
+洞穴で　地下水を　探す。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_526_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">たいないの　コアで　エネルギーを
+あっしゅくして　うちだす　こうげきは
+やまを　ふきとばす　いりょく。</language>
+		<language name="JPN_KANJI">体内の　コアで　エネルギーを
+圧縮して　撃ち出す　攻撃は
+山を　吹き飛ばす　威力。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_527_000">
@@ -5260,7 +5272,7 @@
 		<language name="JPN">どんなに　ほそい　すきまでも
 かぜのように　くぐりぬけてしまう。
 しろい　けだまを　のこしていく。</language>
-		<language name="JPN_KANJI">どんなに　細い　隙間でも
+		<language name="JPN_KANJI">どんなに　細い　すきまでも
 風のように　潜り抜けてしまう。
 白い　毛玉を　残していく。</language>
 	</row>
@@ -5486,7 +5498,7 @@
 なでて　あいさつ。しっぽの　ていれを
 かかさず　いつも　きれいにしている。</language>
 		<language name="JPN_KANJI">しっぽで　おたがいの　体を
-なでて　挨拶。しっぽの　手入れを
+なでて　あいさつ。しっぽの　手入れを
 欠かさず　いつも　きれいにしている。</language>
 	</row>
 
@@ -5608,8 +5620,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きせつに　よって　すみかを　かえる。
+ひとびとは　アントレスの　ツノで
+きせつの　うつりかわりを　かんじる。</language>
+		<language name="JPN_KANJI">季節によって　住処を　変える。
+人々は　アントレスの　ツノで
+季節の　移り変わりを　感じる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_587_000">
@@ -5973,8 +5989,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_627_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きゃくりょくで　きのみを　くだく。
+どんなに　つよい　あいてでも
+ゆうかんに　たちむかう　しゅうせい。</language>
+		<language name="JPN_KANJI">脚力で　きのみを　砕く。
+どんなに　強い　相手でも
+勇敢に　立ち向かう　習性。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_628_000">
@@ -6793,18 +6813,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_001">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きせつに　よって　すみかを　かえる。
+ひとびとは　アントレスの　ツノで
+きせつの　うつりかわりを　かんじる。</language>
+		<language name="JPN_KANJI">季節によって　住処を　変える。
+人々は　アントレスの　ツノで
+季節の　移り変わりを　感じる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_002">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きせつに　よって　すみかを　かえる。
+ひとびとは　アントレスの　ツノで
+きせつの　うつりかわりを　かんじる。</language>
+		<language name="JPN_KANJI">季節によって　住処を　変える。
+人々は　アントレスの　ツノで
+季節の　移り変わりを　感じる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_586_003">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きせつに　よって　すみかを　かえる。
+ひとびとは　アントレスの　ツノで
+きせつの　うつりかわりを　かんじる。</language>
+		<language name="JPN_KANJI">季節によって　住処を　変える。
+人々は　アントレスの　ツノで
+季節の　移り変わりを　感じる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_648_001">
