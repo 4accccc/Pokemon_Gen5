@@ -17,6 +17,7 @@
 #include "script_local.h"
 #include "scrcmd.h"
 #include "event_look_elboard.h"
+#include "sound/pm_sndsys.h"
 
 
 #if 0  // ニュースの管理方法を変更し, 不要になったために削除 2009.12.17
@@ -95,6 +96,8 @@ VMCMD_RESULT EvCmdLookElboard( VMHANDLE *core, void *wk )
   FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   u16               frame = SCRCMD_GetVMWorkValue( core, work );  // コマンド第一引数
   GMEVENT* event;
+
+  PMSND_PlaySE( SEQ_SE_MESSAGE );
 
   // イベント呼び出し
   event = EVENT_LookElboard( gsys, fieldmap, frame );
