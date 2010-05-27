@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-26T17:36:09"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-05-27T12:04:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="27" top="106" right="732" bottom="726" maximized="no" rayout="Vertical2">
+	<dialog left="464" top="274" right="1169" bottom="894" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="8" top="31" right="481" bottom="429" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1145,9 +1145,9 @@ msg_c03r0801_hint_02</comment>
 		<comment>リタイア用・</comment>
 		<attribute name="キャラ指定">INFORMATIONM</attribute>
 		<language name="JPN" width="256">かしこまりました
-そのまま　おまち　くださいませ</language>
+そのまま　おまち　くださいませ▼</language>
 		<language name="JPN_KANJI" width="256">かしこまりました
-そのまま　お待ち　くださいませ</language>
+そのまま　お待ち　くださいませ▼</language>
 	</row>
 
 	<row id="msg_c03r0801_retire_02" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
@@ -1176,12 +1176,12 @@ msg_c03r0801_hint_02</comment>
 ごじょうせん　ありがとうございます[BE:01:ページ切り替え（クリア）]
 ほんじつの　ロイヤルイッシュごうには
 [2:00:１桁:3]にん　トレーナーが　います[BE:00:ページ切り替え（行送り）]
-ごゆっくり　おたのしみ　くださいませ</language>
+ごゆっくり　おたのしみ　くださいませ▼</language>
 		<language name="JPN_KANJI" width="256">ロイヤルイッシュ号の
 ご乗船　ありがとうございます[BE:01:ページ切り替え（クリア）]
 本日の　ロイヤルイッシュ号には
 [2:00:１桁:3]人　トレーナーが　います[BE:00:ページ切り替え（行送り）]
-ごゆっくり　お楽しみ　くださいませ</language>
+ごゆっくり　お楽しみ　くださいませ▼</language>
 	</row>
 
 	<row id="msg_c03r0801_ex_02" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,,,,#ff0000,,,,,,">
