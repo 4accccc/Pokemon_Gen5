@@ -663,6 +663,7 @@ static void _Setup_MessageExit(MONOLITH_SETUP *setup)
 	GFL_MSG_Delete(setup->mm_power_explain);
 	GFL_MSG_Delete(setup->mm_monolith);
 	WORDSET_Delete(setup->wordset);
+	PRINTSYS_QUE_Clear(setup->printQue);
 	PRINTSYS_QUE_Delete(setup->printQue);
 	GFL_FONT_Delete(setup->font_handle);
 	GFL_TCBL_Exit(setup->tcbl_sys);

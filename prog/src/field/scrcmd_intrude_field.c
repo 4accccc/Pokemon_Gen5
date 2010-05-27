@@ -62,13 +62,14 @@ typedef struct{
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   WORDSET *wordset;
+  u16 *ret_wk;      ///<結果代入先　TRUE:正常終了　FALSE:エラー。モノリス画面を開いてはいけない
 }EVENT_MISSION_CHOICE_LIST;
 
 
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys);
+static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys, u16 *ret_wk);
 static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, void * work );
 
 static GMEVENT * EVENT_Intrude_PalaceInDisguise(GAMESYS_WORK * gsys);
@@ -101,8 +102,9 @@ VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk )
   SCRCMD_WORK*  work = (SCRCMD_WORK*)wk;
   SCRIPT_WORK*   scw = SCRCMD_WORK_GetScriptWork( work );
   GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
+	u16 *ret_wk		= SCRCMD_GetVMWork( core, work );
   
-  SCRIPT_CallEvent( scw, EVENT_Intrude_MissionChoiceListReq(gsys) );
+  SCRIPT_CallEvent( scw, EVENT_Intrude_MissionChoiceListReq(gsys, ret_wk) );
   return VMCMD_RESULT_SUSPEND;
 }
 
@@ -115,13 +117,15 @@ VMCMD_RESULT EvCmdIntrudeMissionChoiceListReq( VMHANDLE *core, void *wk )
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys)
+static GMEVENT * EVENT_Intrude_MissionChoiceListReq(GAMESYS_WORK * gsys, u16 *ret_wk)
 {
   GMEVENT *event;
   EVENT_MISSION_CHOICE_LIST *emcl;
   
   event = GMEVENT_Create( gsys, NULL, _event_MissionChoiceListReq, sizeof(EVENT_MISSION_CHOICE_LIST) );
   emcl = GMEVENT_GetEventWork(event);
+  emcl->ret_wk = ret_wk;
+  *(emcl->ret_wk) = FALSE;
   
   return event;
 }
@@ -149,6 +153,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
   EVENT_MISSION_CHOICE_LIST *emcl = work;
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   INTRUDE_COMM_SYS_PTR intcomm;
+  BOOL my_palace = FALSE;
   enum{
     SEQ_INIT,
     SEQ_LIST_REQ,
@@ -187,6 +192,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
 
 	  if(intcomm == NULL || Intrude_GetPalaceArea(intcomm) == GAMEDATA_GetIntrudeMyID(gamedata)){
       FLDMSGWIN_Print( emcl->msgWin, 0, 0, plc_mono_01 );
+      my_palace = TRUE;
     }
     else{
       STRBUF *expand_buf = GFL_STR_CreateBuffer(256, HEAPID_FIELDMAP);
@@ -203,6 +209,12 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
 
     if(GFL_NET_GetConnectNum() <= 1){
       OS_TPrintf("ミッションリスト：一人のため、受信はしない\n");
+      if(my_palace == FALSE){
+        *(emcl->ret_wk) = FALSE;  //他人のモノリスにいるのに自分一人
+      }
+      else{
+        *(emcl->ret_wk) = TRUE;
+      }
       *seq = SEQ_MSG_WAIT;
       break;
     }
@@ -226,6 +238,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     break;
   case SEQ_MONOLITH_STATUS_RECEIVE_WAIT:
     if(IntrudeField_MonolithStatus_CheckOcc(&intcomm->monolith_status) == TRUE){
+      *(emcl->ret_wk) = TRUE;
       *seq = SEQ_MSG_WAIT;
     }
     break;
@@ -244,6 +257,10 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     }
     break;
   case SEQ_FINISH:
+    if(GFUser_GetPublicRand(10) < 8){
+      OS_TPrintf("ccc FALSE!!\n");
+      *(emcl->ret_wk) = FALSE;
+    }
     return GMEVENT_RES_FINISH;
   }
 

@@ -173,6 +173,10 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_End( GFL_PROC * proc, int * seq, vo
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PALACEMAP_WORK *mpw = mywk;
+
+  if(PRINTSYS_QUE_IsFinished(appwk->setup->printQue) == FALSE){
+    return GFL_PROC_RES_CONTINUE;
+  }
   
   GFL_DISP_GX_SetVisibleControlDirect(GX_PLANEMASK_BG3);
 

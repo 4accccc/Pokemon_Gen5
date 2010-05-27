@@ -258,6 +258,10 @@ static GFL_PROC_RESULT MonolithStatusProc_End( GFL_PROC * proc, int * seq, void 
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_STATUS_WORK *msw = mywk;
+
+  if(PRINTSYS_QUE_IsFinished(appwk->setup->printQue) == FALSE){
+    return GFL_PROC_RES_CONTINUE;
+  }
   
   GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
 

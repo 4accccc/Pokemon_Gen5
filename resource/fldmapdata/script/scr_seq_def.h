@@ -8758,10 +8758,11 @@
  * 侵入コマンド　ミッション選択候補リスト要求リクエスト
  */
 //--------------------------------------------------------------
-#define _INTRUDE_MISSION_CHOICE_LIST_REQ() _ASM_INTRUDE_MISSION_CHOICE_LIST_REQ
+#define _INTRUDE_MISSION_CHOICE_LIST_REQ(ret_wk) _ASM_INTRUDE_MISSION_CHOICE_LIST_REQ ret_wk
 
-  .macro  _ASM_INTRUDE_MISSION_CHOICE_LIST_REQ
+  .macro  _ASM_INTRUDE_MISSION_CHOICE_LIST_REQ    ret_wk
   .short  EV_SEQ_INTRUDE_MISSION_CHOICE_LIST_REQ
+  .short  \ret_wk
   .endm
 
 //--------------------------------------------------------------

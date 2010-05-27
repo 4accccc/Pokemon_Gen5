@@ -100,68 +100,69 @@ EVENT_START ev_palace01_monolith
   ELSE  //通常のモノリス処理
   
     //ミッション選択候補リストを要求(fieldmapオーバーレイに配置の為、フェードアウト中は回避)
-    _INTRUDE_MISSION_CHOICE_LIST_REQ()
+    _INTRUDE_MISSION_CHOICE_LIST_REQ( SCWK_ANSWER )
+    IF $SCWK_ANSWER == TRUE THEN
     
-    _MAP_FADE_BLACK_OUT()
-    _MAP_FADE_END_CHECK()
-    _FIELD_CLOSE()
+      _MAP_FADE_BLACK_OUT()
+      _MAP_FADE_END_CHECK()
+      _FIELD_CLOSE()
 
-    _CALL_MONOLITH_PROC()
+      _CALL_MONOLITH_PROC()
 
-    _FIELD_OPEN()
-    _MAP_FADE_BLACK_IN()
-    _MAP_FADE_END_CHECK()
-    
-    //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
-    _GET_MISSION_ENTRY( SCWK_ANSWER )
-  	IF $SCWK_ANSWER == TRUE THEN
-    	//初めて受注したミッションならチュートリアルメッセージ表示
-    	IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
-      	_FLAG_SET( SYS_FLAG_PALACE_MISSION_START )
+      _FIELD_OPEN()
+      _MAP_FADE_BLACK_IN()
+      _MAP_FADE_END_CHECK()
+      
+      //モノリス画面を抜けた時にミッションエントリーしていたならば、待機イベント呼び出し
+      _GET_MISSION_ENTRY( SCWK_ANSWER )
+    	IF $SCWK_ANSWER == TRUE THEN
+      	//初めて受注したミッションならチュートリアルメッセージ表示
+      	IF FLAG_OFF( SYS_FLAG_PALACE_MISSION_START ) THEN
+        	_FLAG_SET( SYS_FLAG_PALACE_MISSION_START )
+        	
+      	  _CALL sub_get_area_oldman_objid
+
+        	//パレスじじい：主人公を見る
+        	_OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
+        	_OBJ_ANIME_WAIT()
+        	
+        	//主人公：じじいを見る
+        	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+        	_OBJ_ANIME_WAIT()
+        	
+        	//「ミッションを開始したな！ワープが出来るぞ！」
+        	_BALLOONWIN_OBJMSG( plc_help_02, area_oldman_objid )
+        	_LAST_KEYWAIT()
+        	_MSGWIN_CLOSE()
+
+      	ENDIF
       	
-    	  _CALL sub_get_area_oldman_objid
+    	  //ミッション開始待ち
+    	  _MISSION_START_WAIT_EVENT()
+    	ELSIF FLAG_OFF( SYS_FLAG_PALACE_DPOWER ) THEN
+    	  _CHECK_EQP_GPOWER( SCWK_ANSWER )
+    	  IF $SCWK_ANSWER == TRUE THEN
+    	    
+    	    _FLAG_SET( SYS_FLAG_PALACE_DPOWER )
 
-      	//パレスじじい：主人公を見る
-      	_OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
-      	_OBJ_ANIME_WAIT()
-      	
-      	//主人公：じじいを見る
-      	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-      	_OBJ_ANIME_WAIT()
-      	
-      	//「ミッションを開始したな！ワープが出来るぞ！」
-      	_BALLOONWIN_OBJMSG( plc_help_02, area_oldman_objid )
-      	_LAST_KEYWAIT()
-      	_MSGWIN_CLOSE()
+      	  _CALL sub_get_area_oldman_objid
+    	    
+        	//パレスじじい：主人公を見て
+        	_OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
+        	_OBJ_ANIME_WAIT()
 
-    	ENDIF
-    	
-  	  //ミッション開始待ち
-  	  _MISSION_START_WAIT_EVENT()
-  	ELSIF FLAG_OFF( SYS_FLAG_PALACE_DPOWER ) THEN
-  	  _CHECK_EQP_GPOWER( SCWK_ANSWER )
-  	  IF $SCWK_ANSWER == TRUE THEN
-  	    
-  	    _FLAG_SET( SYS_FLAG_PALACE_DPOWER )
+        	//主人公：じじいを見る
+        	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
+        	_OBJ_ANIME_WAIT()
+        	
+        	//「それはすれ違いで使えるのだ！」
+        	_BALLOONWIN_OBJMSG( plc_help_05, area_oldman_objid )
+        	_LAST_KEYWAIT()
+        	_MSGWIN_CLOSE()
 
-    	  _CALL sub_get_area_oldman_objid
-  	    
-      	//パレスじじい：主人公を見て
-      	_OBJ_ANIME( area_oldman_objid, anm_stay_dir_r )
-      	_OBJ_ANIME_WAIT()
-
-      	//主人公：じじいを見る
-      	_OBJ_ANIME( MMDL_ID_PLAYER, anm_stay_walk_l )
-      	_OBJ_ANIME_WAIT()
-      	
-      	//「それはすれ違いで使えるのだ！」
-      	_BALLOONWIN_OBJMSG( plc_help_05, area_oldman_objid )
-      	_LAST_KEYWAIT()
-      	_MSGWIN_CLOSE()
-
-  	  ENDIF
+    	  ENDIF
+      ENDIF
     ENDIF
-  
   ENDIF
   
 EVENT_END

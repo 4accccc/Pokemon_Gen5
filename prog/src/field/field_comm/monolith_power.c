@@ -634,6 +634,10 @@ static GFL_PROC_RESULT MonolithPowerSelectProc_End( GFL_PROC * proc, int * seq, 
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_PWSELECT_WORK *mpw = mywk;
 
+  if(PRINTSYS_QUE_IsFinished(appwk->setup->printQue) == FALSE){
+    return GFL_PROC_RES_CONTINUE;
+  }
+
   GFL_DISP_GXS_SetVisibleControlDirect(GX_PLANEMASK_BG3);
 
   GFL_TCB_DeleteTask( mpw->vintr_tcb );
