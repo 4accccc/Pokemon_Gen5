@@ -15597,6 +15597,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     }
 
     SCQUE_PUT_ACT_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
+    handexSub_putString( wk, &param->exStr );
 
     // とくせい書き換え直前イベント
     {
@@ -15610,8 +15611,6 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     BPP_ChangeTokusei( bpp, param->tokuseiID );
     SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
     BTL_HANDLER_TOKUSEI_Add( bpp );
-
-    handexSub_putString( wk, &param->exStr );
 
     SCQUE_PUT_TOKWIN_OUT( wk->que, param->pokeID );
 

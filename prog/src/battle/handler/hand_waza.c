@@ -1947,7 +1947,6 @@ static void handler_Denjiha_NoEff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * なやみのタネ
@@ -2045,7 +2044,6 @@ static const BtlEventHandlerTable*  ADD_Yuwaku( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
 static void handler_Yuwaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -2243,7 +2241,6 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     }/* if( rand < 30) */
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * おしゃべり
@@ -2413,7 +2410,6 @@ static const BtlEventHandlerTable*  ADD_RyuuNoIkari( u32* numElems )
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
-
 static void handler_RyuuNoIkari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -3027,7 +3023,6 @@ static void handler_Ibiki_CheckFail_2( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     }
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * あくむ
@@ -3203,7 +3198,6 @@ static void handler_Daibakuhatsu_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     param->pokeID = pokeID;
   }
 }
-
 //----------------------------------------------------------------------------------
 /**
  * きあいだめ
@@ -3237,8 +3231,6 @@ static void handler_Kiaidame( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     }
   }
 }
-
-
 //----------------------------------------------------------------------------------
 /**
  * じゅうでん
@@ -3791,8 +3783,6 @@ static void handler_TripleKick_HitCount( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_AVOID_FLAG, TRUE );
   }
 }
-
-
 //----------------------------------------------------------------------------------
 /**
  * ジャイロボール
@@ -3824,8 +3814,6 @@ static void handler_GyroBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
-
-
 //----------------------------------------------------------------------------------
 /**
  * リベンジ
