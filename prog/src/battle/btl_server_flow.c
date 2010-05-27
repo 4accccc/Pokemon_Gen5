@@ -340,6 +340,7 @@ struct _BTL_SVFLOW_WORK {
   u8      fMemberOutIntr;
   u8      fWinBGMPlayWild;
   u8      MemberOutIntrPokeCount;
+  u8      thruDeadMsgPokeID;
   u8      MemberOutIntrPokeID[ BTL_POS_MAX ];
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];
@@ -944,11 +945,6 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->prevExeWaza = WAZANO_NULL;
   wk->bagMode = bagMode;
   wk->getPokePos = BTL_POS_NULL;
-  wk->nigeruCount = 0;
-  wk->wazaEffIdx = 0;
-  wk->fMemberOutIntr = FALSE;
-  wk->fWinBGMPlayWild = FALSE;
-  wk->cmdBuildStep = 0;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
   clearWorks( wk );
@@ -982,6 +978,13 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   Hem_Init( &wk->HEManager );
   eventWork_Init( &wk->eventWork );
   BTL_HANDLER_SIDE_InitSystem();
+
+  wk->nigeruCount = 0;
+  wk->wazaEffIdx = 0;
+  wk->fMemberOutIntr = FALSE;
+  wk->fWinBGMPlayWild = FALSE;
+  wk->cmdBuildStep = 0;
+  wk->thruDeadMsgPokeID = BTL_POKEID_NULL;
 }
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
@@ -6636,6 +6639,7 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   FLAG_SET flagSet;
 
   bpp = BTL_POKESET_Get( targets, 0 );
+  wk->thruDeadMsgPokeID = BPP_GetID( bpp );
 
   // 複数回ヒットはエフェクトにカメラ演出を入れず、ズームインコマンドを生成する
   if( BTL_MAIN_IsWazaEffectEnable(wk->mainModule) )
@@ -6682,10 +6686,16 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_Hit_PluralTimes, hitCount );
   }
 
+  if( BPP_IsDead(bpp) ){
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, BPP_GetID(bpp) );
+  }
+
   // カメラズームインをリセット
   if( targetPos != BTL_POS_NULL ){
     SCQUE_PUT_ACT_EffectSimple( wk->que, BTLEFF_CAMERA_INIT );
   }
+
+  wk->thruDeadMsgPokeID = BTL_POKEID_NULL;
 
   return dmg_sum;
 }
@@ -10125,8 +10135,10 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       BTL_DEADREC_Add( &wk->deadRec, pokeID );
 
       // ラストのシン・ムは「○○は　たおれた」メッセージを表示しない
-      if( (BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND_EX) == FALSE)
-      ||  (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_CLIENT_PLAYER)
+      // 複数回攻撃を受けている最中のポケモンも同様
+      if( ((BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_LEGEND_EX) == FALSE) ||
+          (BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_CLIENT_PLAYER))
+      &&  (wk->thruDeadMsgPokeID != pokeID)
       ){
         SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Dead, pokeID );
       }
