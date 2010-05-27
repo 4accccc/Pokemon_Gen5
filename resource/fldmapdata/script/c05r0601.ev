@@ -101,7 +101,7 @@ EVENT_START   ev_c05r0601_sunglasses_01
 				_BALLOONWIN_OBJMSG(msg_c05r0601_sunglasses_03,C05R0601_SUNGLASSES_01)
 				_BALLOONWIN_CLOSE()
 				
-				_ITEM_EVENT_KEYWAIT ( ITEM_TATUZINNOOBI,1 ) 
+				_ITEM_EVENT_NOWAIT ( ITEM_TATUZINNOOBI,1 ) 
 				
 				//======================================//
 				
