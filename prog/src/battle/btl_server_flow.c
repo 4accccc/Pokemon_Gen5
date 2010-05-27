@@ -9622,7 +9622,6 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     StoreFrontPokeOrderAgility( wk, pokeSet );
     wk->turnCheckStep = 1;
 
-    SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
     scproc_turncheck_CommSupport( wk );
   }
 
@@ -9640,6 +9639,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     /* fallthru */
   case 2:
     wk->turnCheckStep++;
+    SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
     if( scproc_turncheck_weather(wk, pokeSet) ){
       fExpGet = TRUE;
       break;
