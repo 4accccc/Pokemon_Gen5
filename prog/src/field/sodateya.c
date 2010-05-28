@@ -16,6 +16,7 @@
 #include "print/global_msg.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
+#include "poke_tool/status_rcv.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_personal.h"
 #include "poke_tool/poke_memo.h"
@@ -145,6 +146,7 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos )
 
   // ƒ|ƒPƒ‚ƒ“‚ðˆÚ“® (ŽèŽ‚¿¨ˆç‚Ä‰®)
   poke = PokeParty_GetMemberPointer( party, pos );
+  STATUS_RCV_PokeParam_RecoverAll( poke );
   SODATEYA_WORK_SetPokemon( sodateya->work, index, poke );
   PokeParty_Delete( party, pos );
 
