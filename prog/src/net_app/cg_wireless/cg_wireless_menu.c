@@ -895,28 +895,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
   case _SELECTMODE_TV:
     pWork->selectType = CG_WIRELESS_RETURNMODE_TV;
 
-    {
-      int i,num;
-      u8 selfMacAdr[6];
-      GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
-      pWork->dbw->aTVT.mode = CTM_PARENT;
-      pWork->dbw->aTVT.gameData = pWork->gamedata;
-      num = pIn->maxBeaconNum;
 
-      {
-        int index = WIH_DWC_TVTCallCheck(GAMEDATA_GetWiFiList(pWork->gamedata));
-        if(index != -1){
-          u8 *macAddress = GFL_NET_GetBeaconMacAddress( index );
-          u8 ii;
-          pWork->dbw->aTVT.mode = CTM_CHILD;
-          for( ii=0;ii<6;ii++ )
-          {
-            pWork->dbw->aTVT.macAddress[ii] = macAddress[ii];
-          }
-          //          OS_TPrintf("子機になった\n");
-        }
-      }
-    }
     PMSND_PlaySystemSE(_SE_DESIDE);
     _CHANGE_STATE(pWork,_modeAppWinFlash);
     break;
@@ -1374,6 +1353,22 @@ static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork )
   }
 }
 
+static void _setTVTParentMac(CG_WIRELESS_MENU* pWork, int index)
+{
+  {
+    int i;
+    u8 selfMacAdr[6];
+    GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
+    {
+      u8 *macAddress = GFL_NET_GetBeaconMacAddress( index );
+      pWork->dbw->aTVT.mode = CTM_CHILD;
+      GFL_STD_MemCopy(macAddress, pWork->dbw->aTVT.macAddress, 6);
+    }
+  }
+}
+
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   テレビトランシーバーのBEACONを拾ったら、親の名前をセット
@@ -1400,6 +1395,9 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
       GFL_BMPWIN_MakeScreen(pWork->nameWin);
       GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, TRUE );
       GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+
+      _setTVTParentMac(pWork, index);  //接続者を記録
+      
     }
     GFL_STR_DeleteBuffer(pName);
     {
@@ -1555,7 +1553,14 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
 
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
+    {
+      GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
+      pWork->dbw->aTVT.mode = CTM_PARENT;
+      pWork->dbw->aTVT.gameData = pWork->gamedata;
+    }
   }
+
+
   GFL_NET_ReloadIcon();
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
 
