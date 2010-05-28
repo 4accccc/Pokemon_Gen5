@@ -81,6 +81,7 @@ static void EggCordinate_Seikaku_basic( const PARENT* parent, EGG_PARAM* egg ); 
 static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_Tokusei_index( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id ); // 特性
 static void EggCordinate_Tokusei( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id );
+static const POKEMON_PARAM* GetBasePokemon_for_Tokusei( const PARENT* parent );
 static void EggCordinate_Friend( EGG_PARAM* egg, HEAPID heap_id ); // なつき度 ( 孵化カウント )
 static void EggCordinate_AbilityRnd_select_by_item( const PARENT* parent, EGG_PARAM* egg ); // 個体乱数
 static void EggCordinate_AbilityRnd_select_at_random( const PARENT* parent, EGG_PARAM* egg );
@@ -381,12 +382,9 @@ static void EggCordinate_MonsNo_item( const PARENT* parent, EGG_PARAM* egg )
   }
 }
 
-
-//---------------------------------------------------------------------------------------- 
 /**
- * @brief 子ポケモンのベースとなる親ポケモンを取得する
+ * @brief 子ポケモンのモンスターNo.決定のベースとなる親ポケモンを取得する
  */
-//---------------------------------------------------------------------------------------- 
 static const POKEMON_PARAM* GetBasePokemon_for_monsno( const PARENT* parent )
 {
   u32 mother_monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
@@ -474,14 +472,11 @@ static void EggCordinate_Form_basurao( const PARENT* parent, EGG_PARAM* egg )
   }
 }
 
-//---------------------------------------------------------------------------------------- 
 /**
- * @brief 子ポケモンのベースとなる親ポケモンを取得する
+ * @brief 子ポケモンのフォルム決定のベースとなる親ポケモンを取得する
  */
-//---------------------------------------------------------------------------------------- 
 static const POKEMON_PARAM* GetBasePokemon_for_form( const PARENT* parent )
 {
-  u32 monsno_father = PP_Get( parent->father, ID_PARA_monsno, NULL );
   u32 mother_monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
 
   // 母親がメタモン ==> 父親
@@ -558,20 +553,21 @@ static void EggCordinate_Seikaku_kawarazunoisi( const PARENT* parent, EGG_PARAM*
 static void EggCordinate_Tokusei_index( const PARENT* parent, EGG_PARAM* egg, HEAPID heap_id )
 {
   u32 rnd;
-  u32 mother_tokusei_idx;
+  u32 base_tokusei_idx;
 
-  // 母親の特性番号を取得
+  // ベースポケモンの特性インデックスを取得
   {
-    u32 mother_monsno  = PP_Get( parent->mother, ID_PARA_monsno, NULL );
-    u32 mother_formno  = PP_Get( parent->mother, ID_PARA_form_no, NULL );
-    u32 mother_tokusei = PP_Get( parent->mother, ID_PARA_speabino, NULL );
-    mother_tokusei_idx = GetTokuseiIndex( mother_monsno, mother_formno, mother_tokusei, heap_id );
+    const POKEMON_PARAM* base_poke = GetBasePokemon_for_Tokusei( parent );
+    u32 base_monsno  = PP_Get( base_poke, ID_PARA_monsno, NULL );
+    u32 base_formno  = PP_Get( base_poke, ID_PARA_form_no, NULL );
+    u32 base_tokusei = PP_Get( base_poke, ID_PARA_speabino, NULL );
+    base_tokusei_idx = GetTokuseiIndex( base_monsno, base_formno, base_tokusei, heap_id );
   }
 
   rnd = GFUser_GetPublicRand0(100);  // 乱数取得[0, 99]
 
   // 特性番号を決定
-  switch( mother_tokusei_idx ) {
+  switch( base_tokusei_idx ) {
   default:
   // 母が特性1
   case 0:
@@ -621,6 +617,23 @@ static void EggCordinate_Tokusei( const PARENT* parent, EGG_PARAM* egg, HEAPID h
     if( egg->tokusei == TOKUSYU_NULL ) {
       egg->tokusei = tokusei_list[0];
     } 
+  }
+}
+
+/**
+ * @brief 子ポケモンの特性決定のベースとなるポケモンを取得する
+ */
+static const POKEMON_PARAM* GetBasePokemon_for_Tokusei( const PARENT* parent )
+{
+  u32 mother_monsno = PP_Get( parent->mother, ID_PARA_monsno, NULL );
+
+  // 母親がメタモン ==> 父親
+  if( mother_monsno == MONSNO_METAMON ) {
+    return parent->father;
+  }
+  // 通常 ==> 母親
+  else {
+    return parent->mother;
   }
 }
 
