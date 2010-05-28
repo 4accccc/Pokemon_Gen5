@@ -216,6 +216,8 @@ typedef enum
   STEP_FADE_IN_BEFORE,              // フェードイン開始待ち
   STEP_FADE_IN,                     // フェードイン中
   STEP_BELT_OPEN,                   // ベルト開き中
+  STEP_TEXT_SIGN_0,
+  STEP_TEXT_SIGN_1,
   STEP_TEXT_SIGN,                   // 「おや！？　ようすが……！」表示中
   STEP_DEMO_CRY,                    // デモ鳴き中
   STEP_BGM_INTRO,                   // イントロBGM再生中
@@ -223,10 +225,14 @@ typedef enum
 
   // 進化した場合
   STEP_BGM_CONGRATULATE,            // おめでとうBGM再生開始
+  STEP_TEXT_CONGRATULATE_0,
+  STEP_TEXT_CONGRATULATE_1,
   STEP_TEXT_CONGRATULATE,           // 「おめでとう！　しんかした！」表示中
 
   // 進化キャンセルした場合
   STEP_BGM_CANCEL_SHINKA_POP,       // 進化BGMをPOPして再生開始
+  STEP_TEXT_CANCEL_0,
+  STEP_TEXT_CANCEL_1,
   STEP_TEXT_CANCEL,                 // 「あれ……？　へんかが　とまった！」表示中
 
   // 進化条件を処理する
@@ -253,9 +259,13 @@ typedef enum
 
   // 技忘れ
   STEP_WAZA_CONFIRM_PREPARE,        // 次のQの準備
+  STEP_WAZA_FORGET_0,
+  STEP_WAZA_FORGET_1,
   STEP_WAZA_FORGET,                 // 「つかいかたを　きれいにわすれた！」表示中
   STEP_WAZA_FORGET_MASTER,          // 「あたらしく　おぼえた！」表示中
   STEP_WAZA_ABANDON_PREPARE,        // 次のQの準備
+  STEP_WAZA_ABANDON_Q_0,
+  STEP_WAZA_ABANDON_Q_1,
   STEP_WAZA_ABANDON_Q,              // 「おぼえるのを　あきらめますか？」表示中
   STEP_WAZA_ABANDON_YN,             // 選択
   STEP_WAZA_NOT_MASTER,             // 「おぼえずに　おわった！」表示中
@@ -292,6 +302,15 @@ static const u32 preset_sound_table[] =
   SEQ_ME_SHINKAOME,
 };
 */
+
+// VBlank中にテキストを表示するBG面のONとOFFを切り替える
+typedef enum
+{
+  TEXT_SHOW_VBLANK_REQ_NONE,
+  TEXT_SHOW_VBLANK_REQ_ON,
+  TEXT_SHOW_VBLANK_REQ_OFF,
+}
+TEXT_SHOW_VBLANK_REQ;
 
 
 //=============================================================================
@@ -352,6 +371,7 @@ typedef struct
   GFL_MSGDATA*                text_msgdata_wazaoboe;
   STRBUF*                     text_strbuf;
   APP_KEYCURSOR_WORK*         text_keycursor_wk;  // メッセージ送りキーカーソルアイコン
+  TEXT_SHOW_VBLANK_REQ        text_show_vblank_req;  // VBlank中にテキストを表示するBG面のONとOFFを切り替える
 
   // YESNO_MENU
   GFL_MSGDATA*                yesno_menu_msgdata;
@@ -671,15 +691,34 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
           && ShinkaDemo_ObjIsEndAnime( param, work ) )
       {
         // 次へ
-        work->step = STEP_TEXT_SIGN;
+        //work->step = STEP_TEXT_SIGN;
+        work->step = STEP_TEXT_SIGN_0;
 
         ShinkaDemo_TextWinfrmShow( param, work, TRUE );
+        //ShinkaDemo_MakeTextStream(
+        //    work,
+        //    work->text_msgdata_shinka, SHINKADEMO_ShinkaBeforeMsg, NULL,
+        //    TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+        //    TAG_REGIST_TYPE_NONE, NULL );
+      }
+    }
+    break;
+  case STEP_TEXT_SIGN_0:
+    {
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_ON;
+      // 次へ
+      work->step = STEP_TEXT_SIGN_1;
+    }
+    break;
+  case STEP_TEXT_SIGN_1:
+    {
         ShinkaDemo_MakeTextStream(
             work,
             work->text_msgdata_shinka, SHINKADEMO_ShinkaBeforeMsg, NULL,
             TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
             TAG_REGIST_TYPE_NONE, NULL );
-      }
+        // 次へ
+        work->step = STEP_TEXT_SIGN;
     }
     break;
   case STEP_TEXT_SIGN:
@@ -688,7 +727,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       {
         if( ShinkaDemo_TextWaitInput( work ) )
         {
-          ShinkaDemo_TextWininClear( work, TEXT_WININ_ZERO_COLOR );
+          //ShinkaDemo_TextWininClear( work, TEXT_WININ_ZERO_COLOR );
           ShinkaDemo_TextWinfrmShow( param, work, FALSE );
 
           // 次へ
@@ -869,12 +908,31 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       ShinkaDemo_SoundPlayCongratulate( param, work );
 
       ShinkaDemo_TextWinfrmShow( param, work, TRUE );
+      //ShinkaDemo_MakeTextStream(
+      //    work,
+      //    work->text_msgdata_shinka, SHINKADEMO_ShinkaMsg, NULL,
+      //    TAG_REGIST_TYPE_WORD, work->poke_nick_name_strbuf,
+      //    TAG_REGIST_TYPE_POKE_MONS_NAME, work->pp );
+
+      // 次へ
+      //work->step = STEP_TEXT_CONGRATULATE;
+      work->step = STEP_TEXT_CONGRATULATE_0;
+    }
+    break;
+  case STEP_TEXT_CONGRATULATE_0:
+    {
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_ON;
+      // 次へ
+      work->step = STEP_TEXT_CONGRATULATE_1;
+    }
+    break;
+  case STEP_TEXT_CONGRATULATE_1:
+    {
       ShinkaDemo_MakeTextStream(
           work,
           work->text_msgdata_shinka, SHINKADEMO_ShinkaMsg, NULL,
           TAG_REGIST_TYPE_WORD, work->poke_nick_name_strbuf,
           TAG_REGIST_TYPE_POKE_MONS_NAME, work->pp );
-
       // 次へ
       work->step = STEP_TEXT_CONGRATULATE;
     }
@@ -926,12 +984,31 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       ShinkaDemo_SoundPopShinka( param, work );
      
       ShinkaDemo_TextWinfrmShow( param, work, TRUE );
+      //ShinkaDemo_MakeTextStream(
+      //    work,
+      //    work->text_msgdata_shinka, SHINKADEMO_ShinkaCancelMsg, NULL,
+      //    TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+      //    TAG_REGIST_TYPE_NONE, NULL );
+
+      // 次へ
+      //work->step = STEP_TEXT_CANCEL;
+      work->step = STEP_TEXT_CANCEL_0;
+    }
+    break;
+  case STEP_TEXT_CANCEL_0:
+    {
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_ON;
+      // 次へ
+      work->step = STEP_TEXT_CANCEL_1;
+    }
+    break;
+  case STEP_TEXT_CANCEL_1:
+    {
       ShinkaDemo_MakeTextStream(
           work,
           work->text_msgdata_shinka, SHINKADEMO_ShinkaCancelMsg, NULL,
           TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
           TAG_REGIST_TYPE_NONE, NULL );
-
       // 次へ
       work->step = STEP_TEXT_CANCEL;
     }
@@ -1337,14 +1414,33 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   case STEP_WAZA_CONFIRM_PREPARE:
     {
       // 次へ
-      work->step = STEP_WAZA_FORGET;
+      //work->step = STEP_WAZA_FORGET;
+      work->step = STEP_WAZA_FORGET_0;
       
       ShinkaDemo_TextWinfrmShow( param, work, TRUE );  // フィールド技選択の後は消えているので
+      //ShinkaDemo_MakeTextStream(
+      //  work,
+      //  work->text_msgdata_wazaoboe, msg_waza_oboe_06, ShinkaDemo_TextStreamForgetCallBack,
+      //  TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+      //  TAG_REGIST_TYPE_WAZA, &work->wazawasure_no );
+    }
+    break;
+  case STEP_WAZA_FORGET_0:
+    {
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_ON;
+      // 次へ
+      work->step = STEP_WAZA_FORGET_1;
+    }
+    break;
+  case STEP_WAZA_FORGET_1:
+    {
       ShinkaDemo_MakeTextStream(
         work,
         work->text_msgdata_wazaoboe, msg_waza_oboe_06, ShinkaDemo_TextStreamForgetCallBack,
         TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
         TAG_REGIST_TYPE_WAZA, &work->wazawasure_no );
+      // 次へ
+      work->step = STEP_WAZA_FORGET;
     }
     break;
   case STEP_WAZA_FORGET:
@@ -1379,14 +1475,33 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   case STEP_WAZA_ABANDON_PREPARE:
     {
       // 次へ
-      work->step = STEP_WAZA_ABANDON_Q;
+      //work->step = STEP_WAZA_ABANDON_Q;
+      work->step = STEP_WAZA_ABANDON_Q_0;
 
       ShinkaDemo_TextWinfrmShow( param, work, TRUE );  // フィールド技選択の後は消えているので
+      //ShinkaDemo_MakeTextStream(
+      //  work,
+      //  work->text_msgdata_wazaoboe, msg_waza_oboe_08, NULL,
+      //  TAG_REGIST_TYPE_NONE, NULL,
+      //  TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+    }
+    break;
+  case STEP_WAZA_ABANDON_Q_0:
+    {
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_ON;
+      // 次へ
+      work->step = STEP_WAZA_ABANDON_Q_1;
+    }
+    break;
+  case STEP_WAZA_ABANDON_Q_1:
+    {
       ShinkaDemo_MakeTextStream(
         work,
         work->text_msgdata_wazaoboe, msg_waza_oboe_08, NULL,
         TAG_REGIST_TYPE_NONE, NULL,
         TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+      // 次へ
+      work->step = STEP_WAZA_ABANDON_Q;
     }
     break;
   case STEP_WAZA_ABANDON_Q:
@@ -1587,7 +1702,7 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 
     GFL_BG_SetVisible( BG_FRAME_M_POKEMON                , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_BELT                   , VISIBLE_ON );
-    GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_ON );
+    //GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_ON );
   
     GFL_BG_SetVisible( BG_FRAME_S_BACK                  , VISIBLE_ON );
     //GFL_BG_SetVisible( BG_FRAME_S_BUTTON                , VISIBLE_ON );
@@ -2057,6 +2172,23 @@ static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   SHINKA_DEMO_WORK* work = (SHINKA_DEMO_WORK*)wk;
 
+  // VBlank中にテキストを表示するBG面のONとOFFを切り替える
+  switch( work->text_show_vblank_req )
+  {
+  case TEXT_SHOW_VBLANK_REQ_ON:
+    {
+      GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_ON );
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_NONE;
+    }
+    break;
+  case TEXT_SHOW_VBLANK_REQ_OFF:
+    {
+      GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_OFF );
+      work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_NONE;
+    }
+    break;
+  }
+
   // バトルステータス
   {
     // パレットフェード
@@ -2120,6 +2252,10 @@ static void ShinkaDemo_TextInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wor
 
   // メッセージ送りキーカーソルアイコン
   work->text_keycursor_wk = APP_KEYCURSOR_Create( TEXT_WININ_BACK_COLOR, TRUE, TRUE, work->heap_id );
+
+  // VBlank中にテキストを表示するBG面のONとOFFを切り替える
+  work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_NONE;
+  GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_OFF );
 }
 
 //-------------------------------------
@@ -2311,6 +2447,7 @@ static void ShinkaDemo_TextWininClear( SHINKA_DEMO_WORK* work, u8 col_code )
 //=====================================
 static void ShinkaDemo_TextWinfrmShow( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work, BOOL is_on )
 {
+/*
   if( is_on )
   {
     BmpWinFrame_Write(
@@ -2323,8 +2460,23 @@ static void ShinkaDemo_TextWinfrmShow( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WOR
   {
     BmpWinFrame_Clear( work->text_winin_bmpwin, WINDOW_TRANS_ON_V );
   }
-}
+*/
 
+  if( is_on )
+  {
+    BmpWinFrame_Write(
+        work->text_winin_bmpwin,
+        WINDOW_TRANS_ON,
+        GFL_ARCUTIL_TRANSINFO_GetPos(work->text_winfrm_tinfo),
+        BG_PAL_POS_M_TEXT_FRAME );
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_winin_bmpwin), TEXT_WININ_BACK_COLOR );
+    GFL_BMPWIN_MakeTransWindow( work->text_winin_bmpwin );
+  }
+  else
+  {
+    work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_OFF;
+  }
+}
 
 //-------------------------------------
 /// YESNO_MENUの初期化処理
