@@ -647,6 +647,7 @@ void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_TOKUSEI, pokeID)) != NULL )
   {
     u16 tokuseiID = BTL_EVENT_FACTOR_GetSubID( factor );
+    TAYA_Printf("とくせいハンドラ削除：%p\n", factor );
     BTL_EVENT_FACTOR_Remove( factor );
   }
 }
@@ -4934,58 +4935,73 @@ static BOOL handler_Bukiyou_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 // メンバー入場ハンドラ
 static void handler_Bukiyou_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[0] == 0 ){
-    BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Bukiyou_SkipCheck );
-    work[0] = 1;
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    if( work[0] == 0 ){
+      BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Bukiyou_SkipCheck );
+      work[0] = 1;
+    }
   }
 }
 // とくせい書き換え直前ハンドラ
 static void handler_Bukiyou_PreChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    handler_Bukiyou_IekiFixed( myHandle, flowWk, pokeID, work );
+    BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
+    {
+      handler_Bukiyou_IekiFixed( myHandle, flowWk, pokeID, work );
+    }
   }
 }
 // いえき確定ハンドラ
 static void handler_Bukiyou_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
 //  BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
-  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-  if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
-    param->pokeID = pokeID;
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
+    {
+      BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+      param->pokeID = pokeID;
+    }
   }
 }
 
 // ワザ出し成否チェックハンドラ
 static void handler_Bukiyou_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
 
-  work[2] = 0;
+    work[2] = 0;
 
-  if( (waza == WAZANO_SIZENNOMEGUMI)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  ){
-    work[2] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_TOKUSEI );
+    if( (waza == WAZANO_SIZENNOMEGUMI)
+    &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+    ){
+      work[2] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_TOKUSEI );
+    }
   }
 }
 // ワザ出し失敗確定ハンドラ
 static void handler_Bukiyou_ExeFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( work[2] )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    u8  targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+    if( work[2] )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      u8  targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
 
-    param->header.tokwin_flag = TRUE;
-    HANDEX_STR_Setup( &(param->str), BTL_STRTYPE_SET, BTL_STRID_SET_WazaCantUse );
-    HANDEX_STR_AddArg( &(param->str), pokeID );
-    HANDEX_STR_AddArg( &(param->str), BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
+      param->header.tokwin_flag = TRUE;
+      HANDEX_STR_Setup( &(param->str), BTL_STRTYPE_SET, BTL_STRID_SET_WazaCantUse );
+      HANDEX_STR_AddArg( &(param->str), pokeID );
+      HANDEX_STR_AddArg( &(param->str), BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
 
-    work[2] = 0;
+      work[2] = 0;
+    }
   }
 }
 
