@@ -2503,6 +2503,7 @@ static void _cancelTimingSync2(POKEMON_TRADE_WORK* pWork)
     pWork->pokemonGTSSeq[1]= POKEMONTORADE_SEQ_WAIT;
     for(i=0;i<6;i++){
       pWork->GTSSelectIndex[i/3][i%3]=-1;
+      GFL_STD_MemClear(pWork->GTSSelectPP[i/3][i%3], POKETOOL_GetWorkSize());
     }
     _CHANGE_STATE(pWork,_touchState);
   }

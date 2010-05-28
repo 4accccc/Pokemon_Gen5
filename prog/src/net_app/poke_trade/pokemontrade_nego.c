@@ -149,6 +149,9 @@ void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork)
     for(i = 0;i < GTS_NEGO_POKESLT_MAX;i++){
       pWork->GTSSelectIndex[j][i] = -1;
       pWork->GTSSelectBoxno[j][i] = -1;
+      if(pWork->GTSSelectPP[j][i]){
+        GFL_STD_MemClear(pWork->GTSSelectPP[j][i], POKETOOL_GetWorkSize());
+      }
     }
   }
 
