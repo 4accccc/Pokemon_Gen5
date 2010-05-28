@@ -130,8 +130,11 @@ EVENT_START ev_waza_wasure_oyaji
 
 	_TALK_OBJ_START()
 
-	//えーと……わしは　だれ　じゃったっけっか？
-	_BALLOONWIN_TALKOBJ_MSG( msg_wasure_01 )
+	IF FLAG_OFF(FH_01) THEN
+  	//えーと……わしは　だれ　じゃったっけっか？
+  	_BALLOONWIN_TALKOBJ_MSG( msg_wasure_01 )
+  	_FLAG_SET(FH_01)
+  ENDIF
 	//おぬし　ポケモンの　わざをわすれさせに　きたのじゃな
 	_BALLOONWIN_TALKOBJ_MSG( msg_wasure_02 )
 	_YES_NO_WIN( yn_ret )
