@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="obata_toshihiro" host="W00209" date="2010-04-23T15:17:10"/>
+	<create user="obata_toshihiro" host="W00168" date="2010-05-28T11:29:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,9 +428,19 @@
 		<language name="JPN_KANJI" width="240">育て屋のタマゴを捨てる</language>
 	</row>
 
-	<row id="sodateya_tamago_hatch" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+	<row id="sodateya_tamago_breed" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<language name="JPN" width="240">手持ちのタマゴを温める</language>
 		<language name="JPN_KANJI" width="240">手持ちのタマゴを温める</language>
+	</row>
+
+	<row id="sodateya_tamago_hatch" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="240">手持ちのタマゴ誕生</language>
+		<language name="JPN_KANJI" width="240">手持ちのタマゴ誕生</language>
+	</row>
+
+	<row id="sodateya_tamago_delete" text-color="#000000,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
+		<language name="JPN" width="240">末尾ポケを削除</language>
+		<language name="JPN_KANJI" width="240">末尾ポケを削除</language>
 	</row>
 
 	<flowchart-group-list>

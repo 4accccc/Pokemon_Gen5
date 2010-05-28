@@ -14,6 +14,7 @@
 #include "event_debug_local.h"
 #include "pokemon_egg.h"
 #include "sodateya.h"
+#include "field/zonedata.h"
 
 #include "arc/message.naix"
 #include "msg/msg_debug_sodateya.h"
@@ -51,14 +52,16 @@ static const FLDMENUFUNC_HEADER menuHeader =
 //=============================================================================
 static const FLDMENUFUNC_LIST menuList[] = 
 {
-  {sodateya_azukeru,      (void*)sodateya_azukeru},      // ‚ ‚¸‚¯‚é
-  {sodateya_hikitoru,     (void*)sodateya_hikitoru},     // ‚Ğ‚«‚Æ‚é
-  {sodateya_shiiku_1,     (void*)sodateya_shiiku_1},     // ”ˆç‚·‚é ( 100•à•ª )
-  {sodateya_shiiku_2,     (void*)sodateya_shiiku_2},     // ”ˆç‚·‚é ( 1–œ•à•ª )
-  {sodateya_shiiku_3,     (void*)sodateya_shiiku_3},     // ”ˆç‚·‚é ( 100–œ•à•ª )
-  {sodateya_tamago_get,   (void*)sodateya_tamago_get},   // ƒ^ƒ}ƒS‚ğ–á‚¤
-  {sodateya_tamago_del,   (void*)sodateya_tamago_del},   // ƒ^ƒ}ƒS‚ğÌ‚Ä‚é
-  {sodateya_tamago_hatch, (void*)sodateya_tamago_hatch}, // ƒ^ƒ}ƒS‚ğ‰·‚ß‚é
+  {sodateya_azukeru,       (void*)sodateya_azukeru},       // ‚ ‚¸‚¯‚é
+  {sodateya_hikitoru,      (void*)sodateya_hikitoru},      // ‚Ğ‚«‚Æ‚é
+  {sodateya_shiiku_1,      (void*)sodateya_shiiku_1},      // ”ˆç‚·‚é ( 100•à•ª )
+  {sodateya_shiiku_2,      (void*)sodateya_shiiku_2},      // ”ˆç‚·‚é ( 1–œ•à•ª )
+  {sodateya_shiiku_3,      (void*)sodateya_shiiku_3},      // ”ˆç‚·‚é ( 100–œ•à•ª )
+  {sodateya_tamago_get,    (void*)sodateya_tamago_get},    // ƒ^ƒ}ƒS‚ğ–á‚¤
+  {sodateya_tamago_del,    (void*)sodateya_tamago_del},    // ƒ^ƒ}ƒS‚ğÌ‚Ä‚é
+  {sodateya_tamago_breed,  (void*)sodateya_tamago_breed},  // ƒ^ƒ}ƒS‚ğ‰·‚ß‚é
+  {sodateya_tamago_hatch,  (void*)sodateya_tamago_hatch},  // ƒ^ƒ}ƒS‚ğ›z‚·
+  {sodateya_tamago_delete, (void*)sodateya_tamago_delete}, // ƒ^ƒ}ƒS‚ğ›z‚·
 };
 
 //=============================================================================
@@ -99,7 +102,9 @@ static void DebugSodateya_Hikitoru( EVENT_WORK* work ); // ˆç‚Ä‰®‚Ìæ“ªƒ|ƒPƒ‚ƒ“‚
 static void DebugSodateya_Shiiku( EVENT_WORK* work, u32 time ); // —a‚¯‚½ƒ|ƒPƒ‚ƒ“‚ğ”ˆç‚·‚é
 static void DebugSodateya_TamagoGet( EVENT_WORK* work ); // ƒ^ƒ}ƒS‚ğ–á‚¤
 static void DebugSodateya_TamagoDel( EVENT_WORK* work ); // ƒ^ƒ}ƒS‚ğÌ‚Ä‚é
-static void DebugSodateya_TamagoHatch( EVENT_WORK* work ); // ƒ^ƒ}ƒS‚ğ‰·‚ß‚é
+static void DebugSodateya_TamagoBreed( EVENT_WORK* work ); // ƒ^ƒ}ƒS‚ğ‰·‚ß‚é
+static void DebugSodateya_TamagoHatch( EVENT_WORK* work ); // ƒ^ƒ}ƒS‚ğ›z‚·
+static void DebugSodateya_DeleteTailPoke( EVENT_WORK* work ); // ––”öƒ|ƒPƒ‚ƒ“‚ğíœ‚·‚é
 
 
 //=============================================================================
@@ -164,14 +169,16 @@ static GMEVENT_RESULT DebugMenuSodateyaEvent( GMEVENT *event, int *seq, void *wk
 
   case 2: 
     switch( work->select ) {
-    case sodateya_azukeru:      DebugSodateya_Azukeru( work );           break;
-    case sodateya_hikitoru:     DebugSodateya_Hikitoru( work );          break;
-    case sodateya_shiiku_1:     DebugSodateya_Shiiku( work, 100 );       break;
-    case sodateya_shiiku_2:     DebugSodateya_Shiiku( work, 10000 );     break;
-    case sodateya_shiiku_3:     DebugSodateya_Shiiku( work, 1000000 );   break;
-    case sodateya_tamago_get:   DebugSodateya_TamagoGet( work );         break;
-    case sodateya_tamago_del:   DebugSodateya_TamagoDel( work );         break;
-    case sodateya_tamago_hatch: DebugSodateya_TamagoHatch( work );       break;
+    case sodateya_azukeru:       DebugSodateya_Azukeru( work );          break;
+    case sodateya_hikitoru:      DebugSodateya_Hikitoru( work );         break;
+    case sodateya_shiiku_1:      DebugSodateya_Shiiku( work, 100 );      break;
+    case sodateya_shiiku_2:      DebugSodateya_Shiiku( work, 10000 );    break;
+    case sodateya_shiiku_3:      DebugSodateya_Shiiku( work, 1000000 );  break;
+    case sodateya_tamago_get:    DebugSodateya_TamagoGet( work );        break;
+    case sodateya_tamago_del:    DebugSodateya_TamagoDel( work );        break;
+    case sodateya_tamago_breed:  DebugSodateya_TamagoBreed( work );      break;
+    case sodateya_tamago_hatch:  DebugSodateya_TamagoHatch( work );      break;
+    case sodateya_tamago_delete: DebugSodateya_DeleteTailPoke( work );   break;
     } 
 
     // ƒLƒƒƒ“ƒZƒ‹‚ÅI—¹
@@ -322,7 +329,7 @@ static void DebugSodateya_TamagoDel( EVENT_WORK* work )
  * @param work
  */
 //-----------------------------------------------------------------------------
-static void DebugSodateya_TamagoHatch( EVENT_WORK* work )
+static void DebugSodateya_TamagoBreed( EVENT_WORK* work )
 {
   POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
   int        poke_num = PokeParty_GetPokeCount( party );
@@ -337,6 +344,57 @@ static void DebugSodateya_TamagoHatch( EVENT_WORK* work )
     if( tamago_flag ) {
       PP_Put( pp, ID_PARA_friend, 0 );  // ›z‰»•à”
     }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ƒ^ƒ}ƒS‚ğ›z‚·
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void DebugSodateya_TamagoHatch( EVENT_WORK* work )
+{
+  POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
+  int        poke_num = PokeParty_GetPokeCount( party );
+  MYSTATUS*  owner    = GAMEDATA_GetMyStatus( work->gameData );
+  u32        zone_id  = FIELDMAP_GetZoneID( work->fieldmap );
+  u32        place_id = ZONEDATA_GetPlaceNameID( zone_id );
+
+  int i;
+
+  // è‚¿‚É‚ ‚é‘S‚Ä‚Ìƒ^ƒ}ƒS‚ğ›z‰»‚³‚¹‚é
+  for( i=0; i<poke_num; i++ )
+  {
+    POKEMON_PARAM* poke = PokeParty_GetMemberPointer( party, i );
+    u32 tamago_flag = PP_Get( poke, ID_PARA_tamago_flag, NULL );
+    if( tamago_flag ) {
+      PP_Birth( poke, owner, place_id, work->heap_id );
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * @brief ––”öƒ|ƒPƒ‚ƒ“‚ğíœ‚·‚é
+ *
+ * @param work
+ */
+//-----------------------------------------------------------------------------
+static void DebugSodateya_DeleteTailPoke( EVENT_WORK* work )
+{
+  POKEPARTY* party    = GAMEDATA_GetMyPokemon( work->gameData );
+  int        poke_num = PokeParty_GetPokeCount( party );
+
+  if( 2 <= poke_num ) {
+    PokeParty_Delete( party, poke_num - 1 );
+    PMSND_StopSE();
+    PMSND_PlaySE( SEQ_SE_DECIDE2 );
+  }
+  else {
+    PMSND_StopSE();
+    PMSND_PlaySE( SEQ_SE_BEEP );
   }
 }
 
