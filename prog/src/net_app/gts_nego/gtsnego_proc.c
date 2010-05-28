@@ -1738,6 +1738,7 @@ static void _friendSelectWait( GTSNEGO_WORK *pWork )
   if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
     _pAppWinDel(pWork);
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
+    WIFINEGOSV_DEBUG_PrintFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
     _CHANGE_STATE(pWork,_modeDebugAdd);
     pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
     return;

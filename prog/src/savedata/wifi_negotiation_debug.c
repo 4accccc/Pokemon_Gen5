@@ -65,4 +65,21 @@ void WIFINEGOSV_DEBUG_AddFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 addnum)
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   デバッグプリント
+ * @param   数
+ */
+//--------------------------------------------------------------------------------------------
+void WIFINEGOSV_DEBUG_PrintFriend(WIFI_NEGOTIATION_SAVEDATA* pSV)
+{
+  int i;
+  
+  for(i = 0; i < 100;i++){
+    int no = WIFI_NEGOTIATION_SV_GetFriend(pSV,i);
+    OS_TPrintf("LISTNO %d  ID %d\n",i,no);
+  }
+}
+
+
 #endif
