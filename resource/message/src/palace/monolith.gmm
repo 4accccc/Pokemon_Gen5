@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-27T12:34:39"/>
+	<create user="ohmori" host="W00223" date="2010-05-28T15:07:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -676,25 +676,25 @@
 
 	<row id="msg_mono_pow_up_003" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">◆　ホワイトＬｖ：[2:02:３桁:0]　でうけとれます　◆
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]◆　ホワイトＬｖ：[2:02:３桁:0]　でうけとれます　◆
 
+いまのＬｖ
+◇ブラックＬｖ：[2:02:３桁:2]　　　◆ホワイトＬｖ：[2:02:３桁:1]</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]◆　ホワイトＬｖ：[2:02:３桁:0]　で受け取れます　◆
 
-◇ラックＬｖ：[2:02:３桁:2]　　　◆ホワイトＬｖ：[2:02:３桁:1]</language>
-		<language name="JPN_KANJI" width="256">◆　ホワイトＬｖ：[2:02:３桁:0]　で受け取れます　◆
-
-
+今のＬｖ
 ◇ブラックＬｖ：[2:02:３桁:2]　　　◆ホワイトＬｖ：[2:02:３桁:1]</language>
 	</row>
 
 	<row id="msg_mono_pow_up_004" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>パワー画面：上</comment>
-		<language name="JPN" width="256">◇　ブラックＬｖ：[2:02:３桁:0]　でうけとれます　◇
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]◇　ブラックＬｖ：[2:02:３桁:0]　でうけとれます　◇
 
-
+いまのＬｖ
 ◇ブラックＬｖ：[2:02:３桁:2]　　　◆ホワイトＬｖ：[2:02:３桁:1]</language>
-		<language name="JPN_KANJI" width="256">◇　ブラックＬｖ：[2:02:３桁:0]　で受け取れます　◇
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]◇　ブラックＬｖ：[2:02:３桁:0]　で受け取れます　◇
 
-
+今のＬｖ
 ◇ブラックＬｖ：[2:02:３桁:2]　　　◆ホワイトＬｖ：[2:02:３桁:1]</language>
 	</row>
 
