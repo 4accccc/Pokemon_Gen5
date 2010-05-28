@@ -284,6 +284,8 @@ REPORT_WORK * REPORT_Init( GAMESYS_WORK * gs, HEAPID heapID )
 	InitObj( wk );
 	InitBmp( wk );
 
+  GFL_NET_ReloadIcon();
+
 	wk->vtask = GFUser_VIntr_CreateTCB( VBlankTask_SaveTimeMarkObj, wk, 0 );
 
 	return wk;
