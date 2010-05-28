@@ -471,11 +471,24 @@ extern BOOL PMSDAT_CorrectData( PMS_DATA* data, BOOL is_word_null_correct, HEAPI
  *
  *	@param[in,out]  word                  不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
  *	@param[in]      is_word_null_correct  PMS_WORD_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *	@param[in]      is_deco_use           デコメを使用してもいいときはTRUE、デコメを使用してはいけないときはFALSE
  *
  *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
  */
 //-----------------------------------------------------------------------------
-extern BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct );
+extern BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct, BOOL is_deco_use );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+ *
+ *	@param[in,out]  deco_id                 不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
+ *	@param[in]      is_decoid_null_correct  PMS_DECOID_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *
+ *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PMSDAT_CorrectDecoId( PMS_DECO_ID* deco_id, BOOL is_decoid_null_correct );
 
 
 #endif

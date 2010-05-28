@@ -558,7 +558,12 @@ void WORDSET_RegisterHexNumber( WORDSET* wordset, u32 bufID, u32 number, u32 ket
 //------------------------------------------------------------------
 void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word )
 {
-  PMSW_GetStr( word, wordset->tmpBuf , wordset->heapID );
+  // データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+  PMS_WORD correct_word = word;
+  PMSDAT_CorrectWord( &correct_word, FALSE, FALSE );
+
+  //PMSW_GetStr( word, wordset->tmpBuf , wordset->heapID );
+  PMSW_GetStr( correct_word, wordset->tmpBuf , wordset->heapID );
   RegisterWord( wordset, bufID, wordset->tmpBuf, NULL );
 }
 //------------------------------------------------------------------
@@ -573,11 +578,16 @@ void WORDSET_RegisterPMSWord( WORDSET* wordset, u32 bufID, PMS_WORD word )
 //------------------------------------------------------------------
 void WORDSET_RegisterPMSDeco( WORDSET* wordset, u32 bufID, PMS_DECO_ID decoID )
 {
+  // データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+  PMS_DECO_ID correct_deco_id = decoID;
+  PMSDAT_CorrectDecoId( &correct_deco_id, FALSE );
+
   GF_ASSERT_MSG( bufID < wordset->max, "bufID=%d, wordmax=%d", bufID, wordset->max );
 
   if( bufID < wordset->max )
   {
-    wordset->word[bufID].param.deco_id = decoID;
+    //wordset->word[bufID].param.deco_id = decoID;
+    wordset->word[bufID].param.deco_id = correct_deco_id;
   }
 }
 

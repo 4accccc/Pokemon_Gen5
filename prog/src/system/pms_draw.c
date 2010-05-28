@@ -891,8 +891,14 @@ static void _unit_print( PMS_DRAW_UNIT* unit, PRINT_QUE* print_que, GFL_FONT* fo
   u8 wordCount;
   BOOL null_req[ PMS_WORD_MAX ] = { 0 };
 
-  GF_ASSERT_MSG( unit->b_useflag == FALSE, "PMS_DRAW_Print 二重呼出!" );
+  // データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+  PMS_DATA correct_pms;
+  PMSDAT_Copy( &correct_pms, pms );
+  pms = &correct_pms;
+  PMSDAT_CorrectData( pms, TRUE, heap_id );
 
+  GF_ASSERT_MSG( unit->b_useflag == FALSE, "PMS_DRAW_Print 二重呼出!" );
+  
   // プリント設定初期化
   PRINT_UTIL_Setup( &unit->print_util, win );
 

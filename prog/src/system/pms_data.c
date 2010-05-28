@@ -812,9 +812,14 @@ void PMSDAT_SetDebugRandom( PMS_DATA* pms )
 #endif
 
 
-// データのsentenceが不正だった場合、これに変更する
+// データが不正だった場合、これに変更する
+// データsentence
 #define PMSDAT_CORRECT_SENTENCE_TYPE  (PMS_TYPE_MAIL)
 #define PMSDAT_CORRECT_SENTENCE_ID    (pmss_mail_01)
+// データword
+#define PMSDAT_CORRECT_WORD           (correct01)
+// データdeco_id
+#define PMSDAT_CORRECT_DECO_ID        (PMS_DECOID_ORG)
 
 //----------------------------------------------------------------------------
 /**
@@ -848,7 +853,7 @@ BOOL PMSDAT_CorrectData( PMS_DATA* data, BOOL is_word_null_correct, HEAPID heap_
   for( i=0; i<max; i++ )
   {
     BOOL is_word_correct;
-    is_word_correct = PMSDAT_CorrectWord( &(data->word[i]), is_word_null_correct );
+    is_word_correct = PMSDAT_CorrectWord( &(data->word[i]), is_word_null_correct, TRUE );
     if( !is_word_correct )  // sentenceチェックの結果を打ち消さないように
     {
       is_correct = FALSE;
@@ -864,11 +869,12 @@ BOOL PMSDAT_CorrectData( PMS_DATA* data, BOOL is_word_null_correct, HEAPID heap_
  *
  *	@param[in,out]  word                  不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
  *	@param[in]      is_word_null_correct  PMS_WORD_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *	@param[in]      is_deco_use           デコメを使用してもいいときはTRUE、デコメを使用してはいけないときはFALSE
  *
  *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
  */
 //-----------------------------------------------------------------------------
-BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct )
+extern BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct, BOOL is_deco_use )
 {
   BOOL is_correct = TRUE;
 
@@ -883,18 +889,28 @@ BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct )
   {
     if( *word == PMS_WORD_NULL )
     {
-      *word = correct01;
+      *word = PMSDAT_CORRECT_WORD;
       return FALSE;
     }
   }
 
   if( PMSW_IsDeco(*word) )
   {
-    PMS_DECO_ID deco_id = PMSW_GetDecoID(*word);
-    // デコメならばデコメIDがあっているか
-    if( !(PMS_DECOID_ORG <= deco_id && deco_id < PMS_DECOID_MAX) )
+    if( is_deco_use )
     {
-      *word = correct01;
+      // デコメを使用してもいいとき
+      PMS_DECO_ID deco_id = PMSW_GetDecoID(*word);
+      // デコメならばデコメIDがあっているか
+      if( !(PMS_DECOID_ORG <= deco_id && deco_id < PMS_DECOID_MAX) )
+      {
+        *word = PMSDAT_CORRECT_WORD;
+        is_correct = FALSE;
+      }
+    }
+    else
+    {
+      // デコメを使用してはいけないとき
+      *word = PMSDAT_CORRECT_WORD;
       is_correct = FALSE;
     }
   }
@@ -905,9 +921,48 @@ BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct )
     // 単語ならば、単語ナンバーがあっているか
     if( !GetWordSorceID( *word, &file_id, &word_id ) )
     {
-      *word = correct01;
+      *word = PMSDAT_CORRECT_WORD;
       is_correct = FALSE;
     }
+  }
+
+  return is_correct;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+ *
+ *	@param[in,out]  deco_id                 不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
+ *	@param[in]      is_decoid_null_correct  PMS_DECOID_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *
+ *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PMSDAT_CorrectDecoId( PMS_DECO_ID* deco_id, BOOL is_decoid_null_correct )
+{
+  BOOL is_correct = TRUE;
+
+  if( is_decoid_null_correct )
+  {
+    if( *deco_id == PMS_DECOID_NULL )
+    {
+      return TRUE;
+    } 
+  }
+  else
+  {
+    if( *deco_id == PMS_DECOID_NULL )
+    {
+      *deco_id = PMSDAT_CORRECT_DECO_ID;
+      return FALSE;
+    }
+  }
+
+  if( !(PMS_DECOID_ORG <= (*deco_id) && (*deco_id) < PMS_DECOID_MAX) )
+  {
+    *deco_id = PMSDAT_CORRECT_DECO_ID;
+    is_correct = FALSE;
   }
 
   return is_correct;
