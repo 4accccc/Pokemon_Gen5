@@ -427,7 +427,9 @@ static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
 
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
                                      u32 str_id, BOOL text_stream_need_input );
+
 static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+static BOOL Btl_Rec_Sel_TextWaitStreamOne( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
 static void Btl_Rec_Sel_TextStartPrint( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,  // ストリームじゃないテキストウィンドウ
                                      u32 str_id );
@@ -1476,7 +1478,22 @@ static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_W
 
   work->text_stream_need_input = text_stream_need_input;
 }
+
 static BOOL Btl_Rec_Sel_TextWaitStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  // 30フレーム/秒のときは60フレーム/秒に比べて文字送りが遅いので、2回呼び30フレームでも60フレームと同じ速度を実現する
+  BOOL ret;
+  ret = Btl_Rec_Sel_TextWaitStreamOne( param, work );
+  if( !ret )
+  {
+    if( GFL_UI_GetFrameRate() == GFL_UI_FRAMERATE_30 )
+    {
+      ret = Btl_Rec_Sel_TextWaitStreamOne( param, work );
+    }
+  }
+  return ret;
+}
+static BOOL Btl_Rec_Sel_TextWaitStreamOne( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   BOOL ret = FALSE;
 
