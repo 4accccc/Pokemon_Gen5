@@ -1057,10 +1057,15 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
       {
         //選択中なので基本進まない。
         //親が最終決定をしたらすすむ
-        if( em->game_start == TRUE ||
-            em->game_cancel == TRUE)
+        if( em->game_start == TRUE )
         {
-          em->seq = _SEQ_MEMBER_INIT;
+          em->seq = _SEQ_GAME_START;
+          _ParentWait_ExitCnacel(em);
+        }
+        else
+        if( em->game_cancel == TRUE)
+        {
+          em->seq = _SEQ_CANCEL_INIT;
           _ParentWait_ExitCnacel(em);
         }
       }

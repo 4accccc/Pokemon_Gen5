@@ -3303,6 +3303,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
       }
       
       clsys->entry_bit = CommEntryMenu_Exit(clsys->entry_menu);
+      clsys->entry_menu = NULL;
       switch(entry_result){
       case COMM_ENTRY_RESULT_SUCCESS:      //メンバーが集まった
         (*seq) = 100;
@@ -3368,11 +3369,11 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
   
   case 200: //キャンセル
     UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_019);
+    clsys->mine.entry_answer = COMM_ENTRY_ANSWER_REFUSE;
     (*seq)++;
     break;
   case 201:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
-      clsys->mine.entry_answer = COMM_ENTRY_ANSWER_REFUSE;
       UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
       _PlayerMinePause(unisys, fieldWork, TRUE);
       return TRUE;
