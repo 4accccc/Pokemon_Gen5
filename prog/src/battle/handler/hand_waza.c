@@ -9489,7 +9489,7 @@ static void handler_Yakitukusu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_TomoeNage( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION_L2,  handler_TomoeNage   },         // ダメージ直後
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,  handler_TomoeNage   },         // ダメージ直後
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9500,7 +9500,7 @@ static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     BTL_HANDEX_PARAM_PUSHOUT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
 
-    param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     param->effectNo = (BTL_EVENT_FACTOR_GetSubID(myHandle) == WAZANO_KARI_TOMOENAGE)?
                           BTLEFF_TOMOENAGE_RETURN : BTLEFF_DRAGONTAIL_RETURN;
   }

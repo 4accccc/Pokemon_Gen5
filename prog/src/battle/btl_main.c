@@ -4807,20 +4807,24 @@ const STRBUF* BTL_MAIN_GetClientTrainerName( const BTL_MAIN_MODULE* wk, u8 clien
 }
 u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  if( BTL_MAIN_IsClientNPC(wk, clientID) )
-  {
-    return wk->trainerParam[ clientID ].ai_bit;
-  }
-  else
+  if( BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_WILD )
   {
     if( BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_MOVE_POKE) ){
+      TAYA_Printf("移動ポケAI\n");
       return AI_THINK_BIT_MV_POKE;
     }
     else if( BTL_MAIN_GetRule(wk) == BTL_RULE_DOUBLE )
     {
+      TAYA_Printf("野生ダブルAI\n");
       return AI_THINK_BIT_DOUBLE;
     }
   }
+  else if( BTL_MAIN_IsClientNPC(wk, clientID) )
+  {
+    TAYA_Printf("NPC-AI\n");
+    return wk->trainerParam[ clientID ].ai_bit;
+  }
+  TAYA_Printf("AIなんもなし\n");
   return 0x00;
 }
 

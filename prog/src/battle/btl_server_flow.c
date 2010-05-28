@@ -6526,28 +6526,6 @@ static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
 }
 //----------------------------------------------------------------------------------
 /**
- * ワザダメージに対する反応処理
- *
- * @param   wk
- * @param   attacker
- * @param   defender
- * @param   wazaParam
- * @param   affinity
- * @param   damage
- * @param   critical_flag
- */
-//----------------------------------------------------------------------------------
-static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
-  const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag )
-{
-  u32 hem_state = Hem_PushState( &wk->HEManager );
-
-  scEvent_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, critical_flag );
-  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-  Hem_PopState( &wk->HEManager, hem_state );
-}
-//----------------------------------------------------------------------------------
-/**
  * ワザダメージ１回１陣営毎の終了処理
  *
  * @param   wk
@@ -8861,6 +8839,61 @@ static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   SCQUE_PUT_OP_MigawariDelete( wk->que, pokeID );
   SCQUE_PUT_ACT_MigawariDelete( wk->que, pos );
 }
+//----------------------------------------------------------------------------------
+/**
+ * ワザダメージに対する反応処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   wazaParam
+ * @param   affinity
+ * @param   damage
+ * @param   critical_flag
+ */
+//----------------------------------------------------------------------------------
+static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
+  const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag )
+{
+  u32 hem_state = Hem_PushState( &wk->HEManager );
+
+  scEvent_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, critical_flag );
+  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  Hem_PopState( &wk->HEManager, hem_state );
+}
+//--------------------------------------------------------------------------
+/**
+ * [Event] ワザダメージ受けた後の反応処理
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   waza
+ * @param   aff
+ * @param   damage
+ * @param   criticalFlag
+ *
+ */
+//--------------------------------------------------------------------------
+static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BtlTypeAff aff,
+  u32 damage, BOOL criticalFlag )
+{
+  u8 defPokeID = BPP_GetID( defender );
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, defPokeID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEAFF, aff );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
+
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION_L2 );
+  BTL_EVENTVAR_Pop();
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -10918,6 +10951,7 @@ static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   BOOL result = FALSE;
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, result );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_TAMETURN_SKIP );
     result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
@@ -11353,39 +11387,6 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
     return damage;
   }
   return 0;
-}
-//--------------------------------------------------------------------------
-/**
- * [Event] ワザダメージ受けた後の反応処理
- *
- * @param   wk
- * @param   attacker
- * @param   defender
- * @param   waza
- * @param   aff
- * @param   damage
- * @param   criticalFlag
- *
- */
-//--------------------------------------------------------------------------
-static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BtlTypeAff aff,
-  u32 damage, BOOL criticalFlag )
-{
-  u8 defPokeID = BPP_GetID( defender );
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, defPokeID );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEAFF, aff );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
-
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION_L2 );
-  BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
 /**

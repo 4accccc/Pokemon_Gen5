@@ -3262,8 +3262,9 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_PowefulHarb( u32* numElems )
 // 溜めスキップチェック
 static void handler_PowefulHarb_CheckTameSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != WAZANO_HURIIFOORU)
+  ){
     if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) ){
       work[0] = 1;
     }
