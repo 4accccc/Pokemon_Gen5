@@ -1371,7 +1371,7 @@ static void  FIELD_MENU_UpdateTP( FIELD_MENU_WORK* work )
     { 72,112 ,136,248},   // 
     {120,160 ,  8,120},   // 
     {120,160 ,136,248},   // 
-    {168,192 ,  0,255},   // 「×」ボタン(MENU_BUTTON_END)
+    {168,191, 224,248},   // 「×」ボタン(MENU_BUTTON_END)   
     {GFL_UI_TP_HIT_END,0,0,0},
   };
   
