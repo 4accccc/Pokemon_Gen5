@@ -2059,7 +2059,7 @@ SRCS_OVERLAY_NAGIHASHI_DEBUG	= test/nagihashi/debug_nagi.c \
 
 # 保坂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
-SRCS_OVERLAY_DEBUG_HOSAKA   = test/hosaka/debug_3d_demo.c
+SRCS_OVERLAY_HOSAKA_DEBUG   = test/hosaka/d_hosaka.c
 
 # 3Dデモ再生アプリ
 #===> SRCS_OVERLAY_TITLE

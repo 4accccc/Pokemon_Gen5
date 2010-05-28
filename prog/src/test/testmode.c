@@ -1094,10 +1094,13 @@ static BOOL TESTMODE_ITEM_SelectFuncNakamura( TESTMODE_WORK *work , const int id
   return TRUE;
 }
 
-#include "hosaka/debug_hosaka_menu.c"
+//#include "hosaka/debug_hosaka_menu.c"
+FS_EXTERN_OVERLAY(hosaka_debug);
+extern const GFL_PROC_DATA DHosakaMainProcData;
 static BOOL TESTMODE_ITEM_SelectFuncHosaka( TESTMODE_WORK *work , const int idx )
 {
-  TESTMODE_COMMAND_ChangeMenu( work , menuHosaka , NELEMS(menuHosaka) );
+  TESTMODE_COMMAND_ChangeProc( work, FS_OVERLAY_ID(hosaka_debug), &DHosakaMainProcData, NULL );
+//  TESTMODE_COMMAND_ChangeMenu( work , menuHosaka , NELEMS(menuHosaka) );
   return TRUE;
 }
 static BOOL TESTMODE_ITEM_BackTopMenu( TESTMODE_WORK *work , const int idx )
