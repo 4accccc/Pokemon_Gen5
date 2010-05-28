@@ -356,6 +356,9 @@ VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
   u32 mons_day;
   BOOL tamago;
   RTCDate now_date;
+  u32 mons_get_year;
+  u32 mons_get_month;
+  u32 mons_get_day;
 
   // 目的の情報を取得
   target_monsno = FIELD_WFBC_EVENT_GetWFPokeCatchEventMonsNo( p_event );
@@ -372,26 +375,34 @@ VMCMD_RESULT EvCmdWfbc_CheckWFTargetPokemon( VMHANDLE *core, void *wk )
     POKEMON_PARAM * pp = PokeParty_GetMemberPointer( p_party, i );
 
     monsno    = PP_Get( pp, ID_PARA_monsno, NULL );
-    mons_year = PP_Get( pp, ID_PARA_get_year, NULL );
-    mons_month= PP_Get( pp, ID_PARA_get_month, NULL );
-    mons_day  = PP_Get( pp, ID_PARA_get_day, NULL );
-    mons_getplace = PP_Get( pp, ID_PARA_get_place, NULL );
+    mons_year = PP_Get( pp, ID_PARA_birth_year, NULL );
+    mons_month= PP_Get( pp, ID_PARA_birth_month, NULL );
+    mons_day  = PP_Get( pp, ID_PARA_birth_day, NULL );
+    mons_getplace = PP_Get( pp, ID_PARA_birth_place, NULL );
     tamago    = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+
+    mons_get_year = PP_Get( pp, ID_PARA_get_year, NULL );
+    mons_get_month= PP_Get( pp, ID_PARA_get_month, NULL );
+    mons_get_day  = PP_Get( pp, ID_PARA_get_day, NULL );
 
     TOMOYA_Printf( "target monsno %d  == monsno %d\n", target_monsno, monsno );
     TOMOYA_Printf( "tamago %d\n", tamago );
     TOMOYA_Printf( "get_place %d == WF%d\n", mons_getplace, MAPNAME_WC10 );
     TOMOYA_Printf( "year%d month%d day%d == now year%d month%d day%d \n", 
         mons_year, mons_month, mons_day, now_date.year, now_date.month, now_date.day );
+
+    TOMOYA_Printf( "tamago year%d month%d day%d\n", 
+        mons_get_year, mons_get_month, mons_get_day );
     
-    if( (monsno == target_monsno) && (tamago == FALSE) && (mons_getplace == MAPNAME_WC10) )
+    // 捕獲？
+    if( (monsno == target_monsno) && (tamago == FALSE) && 
+        (mons_getplace == MAPNAME_WC10) && ((mons_get_year + mons_get_day + mons_get_month) == 0) )
     {
       *ret_if_1 = TRUE;
       if( (*ret_temoti) == 0xffff )
       {  // 最初のヒットのみ
         (*ret_temoti) = i;
       }
-
       
       // 日時も一致？
       if( (mons_year == now_date.year) && (mons_month == now_date.month) && (mons_day == now_date.day) )
