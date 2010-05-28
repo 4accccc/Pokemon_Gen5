@@ -53,6 +53,8 @@
 
 #if DEBUG_ONLY_FOR_ohno
 #define _NET_DEBUG (1)
+#elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
+#define _NET_DEBUG (1)
 #else
 #define _NET_DEBUG (0)
 #endif
@@ -824,7 +826,8 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
       u32 cupNo   = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_CUPNO );
       u32 status  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_STATUS );
 
-      if( cupNo != 0 && (status == DREAM_WORLD_MATCHUP_SIGNUP || status ==DREAM_WORLD_MATCHUP_ENTRY ) )
+      if( cupNo != 0 && 
+          (status <= DREAM_WORLD_MATCHUP_SIGNUP && status <= DREAM_WORLD_MATCHUP_RETIRE ) )
       { 
 
         //WIFI大会に参加していたらもう一度確認
