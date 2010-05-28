@@ -6738,8 +6738,9 @@ static void scproc_Fight_Damage_KoriCure( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     BTL_POKESET_SeekStart( targets );
     while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
     {
-      if( BPP_GetPokeSick(bpp) == POKESICK_KOORI )
-      {
+      if( (BPP_GetPokeSick(bpp) == POKESICK_KOORI)
+      &&  (!BPP_MIGAWARI_IsExist(bpp))
+      ){
         scPut_CurePokeSick( wk, bpp, POKESICK_KOORI, TRUE );
       }
     }
