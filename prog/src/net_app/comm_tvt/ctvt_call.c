@@ -231,10 +231,13 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
 {
   const HEAPID heapId = COMM_TVT_GetHeapId( work );
   ARCHANDLE* arcHandle = COMM_TVT_GetArcHandle( work );
+  const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
 
   //MISCをスクロールするのでキャラ表示に使うのでMSGに展開  
 
-  if( COMM_TVT_IsReqWarn( work ) == FALSE )
+  if( initWork->mode != CTM_CHILD &&
+      initWork->mode != CTM_WIFI &&
+      COMM_TVT_IsReqWarn( work ) == FALSE )
   {
     GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
                       CTVT_FRAME_SUB_MSG , 0 , CTVT_BMPWIN_CGX*0x20, FALSE , heapId );
@@ -373,7 +376,6 @@ void CTVT_CALL_InitMode( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWork )
   GFL_BG_SetScrollReq( CTVT_FRAME_SUB_MISC , GFL_BG_SCROLL_Y_SET , 0 );
   
   {
-    const COMM_TVT_INIT_WORK *initWork = COMM_TVT_GetInitWork( work );
     if( initWork->mode == CTM_CHILD ||
         initWork->mode == CTM_WIFI )
     {
@@ -706,7 +708,8 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
         PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
       }
     }
-    if( GFL_UI_TP_GetTrg() == TRUE )
+    if( GFL_UI_TP_GetTrg() == TRUE ||
+        COMM_TVT_GetFinishReq( work ) == TRUE )
     {
       PMSND_PlaySystemSE( CTVT_SND_DECIDE );
       BmpWinFrame_Clear( callWork->msgWin , WINDOW_TRANS_ON_V );
@@ -1154,9 +1157,24 @@ static void CTVT_CALL_UpdateBeacon( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
               //情報が変わっていないか？
               if( serviceType != callWork->memberData[mem].serviceType )
               {
+                u8 j;
                 isEntry = FALSE;
                 isRefresh = TRUE;
                 registNo = mem;
+
+                for( j=0;j<3;j++ )
+                {
+                  if( callWork->checkIdx[j] == mem )
+                  {
+                    callWork->checkIdx[j] = CTVT_CALL_INVALID_NO;
+                    isUpdateBar = TRUE;
+                  }
+                }
+                if( callWork->checkIdxParent == mem )
+                {
+                  callWork->checkIdxParent = CTVT_CALL_INVALID_NO;
+                  isUpdateBar = TRUE;
+                }
               }
               if( serviceType == WB_NET_COMM_TVT )
               {
