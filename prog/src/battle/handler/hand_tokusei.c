@@ -4818,12 +4818,12 @@ static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, Pok
     {
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
       {
+#if 0
         BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
         param->header.tokwin_flag = TRUE;
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
         HANDEX_STR_AddArg( &param->str, pokeID );
-      }else{
-//        OS_TPrintf("『ひらいしん』だがターゲットを書き換えられず（%d)\n", pokeID );
+#endif
       }
     }
   }

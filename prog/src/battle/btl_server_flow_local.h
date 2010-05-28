@@ -14,12 +14,12 @@
 #include "btl_event_factor.h"
 
 enum {
-  HANDLER_EXHIBISION_WORK_TOTALSIZE = 512,    ///< ハンドラ反応情報を格納するワークのトータルサイズ
+  HANDLER_EXHIBISION_WORK_TOTALSIZE = 800,    ///< ハンドラ反応情報を格納するワークのトータルサイズ
   NIGERU_COUNT_MAX = 30,                      ///< 「にげる」選択回数カウンタの最大値
   MEMBER_CHANGE_COUNT_MAX = 255,              ///< 入れ替えカウンタ最大値（バトル検定用）
   AFFCOUNTER_MAX = 9999,                      ///< 相性カウンタ最大値（バトル検定用）
 
-  EVENT_HANDLER_TMP_WORK_SIZE = 512,
+  EVENT_HANDLER_TMP_WORK_SIZE = 320,          ///< ハンドラが一時的に利用するバッファのサイズ
 };
 
 
@@ -351,3 +351,6 @@ struct _BTL_SVFLOW_WORK {
   u8          handlerTmpWork[ EVENT_HANDLER_TMP_WORK_SIZE ];
 };
 
+
+
+extern HandExResult BTL_SVF_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );

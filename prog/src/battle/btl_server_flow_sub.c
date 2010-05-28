@@ -35,6 +35,7 @@
 #include "handler\hand_pos.h"
 #include "btl_server_local.h"
 #include "btl_server.h"
+#include "btl_hem.h"
 
 #include "btl_server_flow_def.h"
 #include "btl_server_flow_sub.h"
@@ -55,6 +56,7 @@ static BOOL correctTargetDead( BTL_SVFLOW_WORK* wk, BtlRule rule, const BTL_POKE
   const SVFL_WAZAPARAM* wazaParam, BtlPokePos targetPos, BTL_POKESET* rec );
 static BTL_POKEPARAM* get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos, u8 pokeSideIdx );
 static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
+static u8 checkTemptPokeID( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 targetPokeID );
 static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 defaultTargetPokeID );
 static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
@@ -256,7 +258,7 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   if( bpp )
   {
     u8 targetPokeID = BPP_GetID( bpp );
-    u8 temptPokeID = scEvent_GetWazaTargetTempt( wk, attacker, wazaParam, targetPokeID );
+    u8 temptPokeID = checkTemptPokeID( wk, attacker, wazaParam, targetPokeID );
     if( temptPokeID != BTL_POKEID_NULL ){
       bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, temptPokeID );
     }
@@ -359,7 +361,7 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   if( bpp )
   {
     u8 targetPokeID = BPP_GetID( bpp );
-    u8 temptPokeID = scEvent_GetWazaTargetTempt( wk, attacker, wazaParam, targetPokeID );
+    u8 temptPokeID = checkTemptPokeID( wk, attacker, wazaParam, targetPokeID );
     if( temptPokeID != BTL_POKEID_NULL ){
       bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, temptPokeID );
     }
@@ -509,6 +511,15 @@ static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos )
   clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
 
   return BTL_PARTY_GetMemberData( clwk->party, posIdx );
+}
+
+static u8 checkTemptPokeID( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 targetPokeID )
+{
+  u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+  u8 temptPokeID = scEvent_GetWazaTargetTempt( wk, attacker, wazaParam, targetPokeID );
+  BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
+  return temptPokeID;
 }
 
 //----------------------------------------------------------------------------------
