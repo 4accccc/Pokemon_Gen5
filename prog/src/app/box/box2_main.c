@@ -1456,8 +1456,8 @@ static void PokeDataBoxMoveParty( BOX2_SYS_WORK * syswk, u32 getPos, u32 putPos 
   // シェイミならフォルムチェンジ
   if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_SHEIMI ){
     PP_ChangeFormNo( pp, FORMNO_SHEIMI_LAND );
-	  ZUKANSAVE_SetPokeSee( GAMEDATA_GetZukanSave(syswk->dat->gamedata), pp );
 		BOX2MAIN_FormChangeRenew( syswk, getPos );
+	  ZUKANSAVE_SetPokeSee( GAMEDATA_GetZukanSave(syswk->dat->gamedata), pp );
   }
 
   BOXDAT_PutPokemonBox( syswk->dat->sv_box, tray, PP_GetPPPPointerConst(pp) );
