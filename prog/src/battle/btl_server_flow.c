@@ -252,7 +252,7 @@ static void scproc_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
 static void scEvent_PrevWazaDamage( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, u32 poke_cnt, BTL_POKEPARAM** bppAry );
 static void wazaDmgRec_Add( BTL_SVFLOW_WORK* wk, BtlPokePos atkPos, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, u16 damage );
 static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage, BOOL fMigawariHit );
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag );
 static void scproc_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
@@ -6265,7 +6265,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   {
     scproc_CheckShrink( wk, wazaParam, attacker, bpp[i] );
     scproc_Damage_Drain( wk, wazaParam, attacker, bpp[i], dmg[i] );
-    scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i] );
+    scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i], FALSE );
     scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i] );
     scproc_CheckItemReaction( wk, bpp[i] );
   }
@@ -6547,7 +6547,7 @@ static void wazaDmgRec_Add( BTL_SVFLOW_WORK* wk, BtlPokePos atkPos, const BTL_PO
  */
 //--------------------------------------------------------------------------
 static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
-  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage )
+  BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage, BOOL fMigawriHit )
 {
   WazaCategory category = WAZADATA_GetCategory( wazaParam->wazaID );
 
@@ -6556,12 +6556,12 @@ static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPAR
     scproc_Fight_Damage_AddEffect( wk, wazaParam, attacker, attacker );
     break;
   case WAZADATA_CATEGORY_DAMAGE_EFFECT:
-    if( !BPP_MIGAWARI_IsExist(defender) ){
+    if( !fMigawriHit ){
       scproc_Fight_Damage_AddEffect( wk, wazaParam, attacker, defender );
     }
     break;
   case WAZADATA_CATEGORY_DAMAGE_SICK:
-    if( !BPP_MIGAWARI_IsExist(defender) ){
+    if( !fMigawriHit ){
       scproc_Fight_Damage_AddSick( wk, wazaParam, attacker, defender );
     }
     break;
@@ -8880,7 +8880,7 @@ static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   }
 
   scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
-  scproc_WazaAdditionalEffect( wk, wazaParam, attacker, target, damage );
+  scproc_WazaAdditionalEffect( wk, wazaParam, attacker, target, damage, TRUE );
   scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
 
   return damage;
