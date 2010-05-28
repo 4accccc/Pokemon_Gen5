@@ -487,9 +487,9 @@ static void _Write_Status(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MON
     GFL_MSG_GetString(setup->mm_monolith, msg_mono_st_006, strbuf);
     
     WORDSET_RegisterNumber(setup->wordset, 0, hour, 3, 
-      STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT);
     WORDSET_RegisterNumber(setup->wordset, 1, minute, 2, 
-      STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+      STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
     WORDSET_ExpandStr( setup->wordset, expand_strbuf, strbuf );
     PRINT_UTIL_Print(&msw->print_util[BMPWIN_TIME], setup->printQue, 
       0, 0, expand_strbuf, setup->font_handle);
