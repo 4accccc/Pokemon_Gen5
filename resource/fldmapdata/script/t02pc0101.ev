@@ -44,13 +44,10 @@ INIT_EVENT_START	ev_init_t02pc0101
 			_OBJ_POS_CHANGE( T02PC0101_SUPPORT_01, 9, 0, 15, DIR_RIGHT )
 	
 		ENDIF
-  ELSE
-
-    //すべてのイベントが終わっている時のみ、配達員の制御
-    _GLOBAL_CALL  SCRID_INIT_POSTMAN
-
-	
 	ENDIF
+
+  //配達員の制御
+  _GLOBAL_CALL  SCRID_INIT_POSTMAN
 
 INIT_EVENT_END
 
@@ -59,10 +56,8 @@ INIT_EVENT_END
 /************************************************************/
 INIT_EVENT_START  ev_recover_t02pc0101
 
-    IF $WK_SCENE_T02 > 2 THEN
-        //すべてのイベントが終わっている時のみ、配達員の制御
-        _GLOBAL_CALL  SCRID_RECOVER_POSTMAN
-    ENDIF
+  //配達員の制御
+  _GLOBAL_CALL  SCRID_RECOVER_POSTMAN
 
     
 INIT_EVENT_END
