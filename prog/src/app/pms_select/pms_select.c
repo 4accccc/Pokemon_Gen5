@@ -953,7 +953,7 @@ static void PMSSelect_GRAPHIC_UnLoad( PMS_SELECT_MAIN_WORK* wk )
   GFL_UI_SetTouchOrKey( wk->b_touch?GFL_APP_END_TOUCH:GFL_APP_END_KEY );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 }
 
 //-----------------------------------------------------------------------------

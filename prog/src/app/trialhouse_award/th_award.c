@@ -489,7 +489,7 @@ static GFL_PROC_RESULT Th_Award_ProcExit( GFL_PROC* proc, int* seq, void* pwk, v
   TH_AWARD_WORK*     work     = (TH_AWARD_WORK*)mywk;
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();

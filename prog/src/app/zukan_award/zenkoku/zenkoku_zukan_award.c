@@ -424,8 +424,8 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcExit( GFL_PROC* proc, int* seq, v
   ZENKOKU_ZUKAN_AWARD_WORK*     work     = (ZENKOKU_ZUKAN_AWARD_WORK*)mywk;
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
-
+  // 終了するときは通信アイコンに対して何もしない
+  
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();
 

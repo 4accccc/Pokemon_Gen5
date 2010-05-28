@@ -352,7 +352,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcExit( GFL_PROC* proc, int* seq, void* pw
   ZUKAN_INFO_Exit( work->zukan_info_work );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
   // 後片付け
   {

@@ -305,7 +305,7 @@ static GFL_PROC_RESULT Zukan_Detail_ProcExit( GFL_PROC* proc, int* seq, void* pw
   }
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
   // ヒープ
   {

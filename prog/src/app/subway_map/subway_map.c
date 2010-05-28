@@ -263,7 +263,7 @@ static GFL_PROC_RESULT Subway_Map_ProcExit( GFL_PROC* proc, int* seq, void* pwk,
   SUBWAY_MAP_WORK*     work     = (SUBWAY_MAP_WORK*)mywk;
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();

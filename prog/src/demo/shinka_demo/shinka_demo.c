@@ -1857,7 +1857,7 @@ static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ) );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 }
 
 //-------------------------------------

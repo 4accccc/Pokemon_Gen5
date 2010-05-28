@@ -272,7 +272,7 @@ static GFL_PROC_RESULT Manual_ProcExit( GFL_PROC* proc, int* seq, void* pwk, voi
   }
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
   // VBlank中TCB
   GFL_TCB_DeleteTask( work->vblank_tcb );

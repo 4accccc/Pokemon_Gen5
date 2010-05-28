@@ -501,7 +501,7 @@ GFL_PROC_RESULT PMSInput_Quit( GFL_PROC * proc, int * seq , void *pwk, void *myw
 	DestructWork( mywk, proc );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_SYSTEM );
 	GFL_HEAP_DeleteHeap( HEAPID_PMS_INPUT_VIEW );

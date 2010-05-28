@@ -753,8 +753,7 @@ void DOWSING_Exit( DOWSING_WORK* work )
   GFL_HEAP_FreeMemory( work );
 
   // 通信アイコン
-  //GFL_NET_WirelessIconEasy_DefaultLCD();
-  //GFL_NET_WirelessIconEasyEnd();
+  // 終了するときは通信アイコンに対して何もしない
 }
 
 

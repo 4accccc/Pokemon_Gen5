@@ -725,7 +725,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcExit( GFL_PROC* proc, int* seq, void* pwk
   BTL_REC_SEL_WORK*     work     = (BTL_REC_SEL_WORK*)mywk;
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+  // 終了するときは通信アイコンに対して何もしない
 
   // パレットフェード
   Btl_Rec_Sel_PfExit( param, work );
