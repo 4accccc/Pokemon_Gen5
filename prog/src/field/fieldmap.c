@@ -248,6 +248,14 @@ enum {
   MMDL_BBD_OFFS_POS_Y   = FX32_CONST(-4),
 };
 
+//プロジェクションマトリクスを操作する際のＺオフセット
+enum {
+  ///通常の射影行列補正値
+  PROJ_MAT_Z_OFS        =	(310+0xb8),
+
+  ///砂漠地形での射影行列補正値
+  PROJ_MAT_Z_OFS_DESERT = 310,
+};
 
 //--------------------------------------------------------------
 /**
@@ -341,6 +349,8 @@ struct _FIELDMAP_WORK
 	VecFx32 now_pos;
   
   fx32 bbdact_y_offs;      ///<動作モデルBLACT描画時のYオフセット
+
+  fx32 pro_mat_z_offs;    ///<描画時の射影に対する補正値
 
 	const DEPEND_FUNCTIONS *func_tbl;
 	void *mapCtrlWork;
@@ -451,6 +461,7 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
 static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID );
 static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
 
+static fx32 ZONEDATA_GetProjMatZOffsValue( u16 zone_id );
 
 
 //data
@@ -582,19 +593,12 @@ static MAINSEQ_RESULT mainSeqFunc_setup_system(GAMESYS_WORK *gsys, FIELDMAP_WORK
 			GFL_G3D_VMANLNK, FIELD_3D_VRAM_SIZE,
       GFL_G3D_VMANLNK, FIELD_3D_PLTT_SIZE,
 			FIELD_3D_DTCM_SIZE, fieldWork->heapID, fldmap_G3D_CallBackSetUp );
-#ifdef  PM_DEBUG
-	DEBUG_GFL_G3D_SetVManSize( FIELD_3D_VRAM_SIZE, FIELD_3D_PLTT_SIZE );
-#endif
 
 	//３Ｄデータのロード
 	fldmap_G3D_Load( fieldWork );
 	
 	//配置物設定
 	fieldWork->g3Dmapper = FLDMAPPER_Create( fieldWork->heapID, GAMEDATA_GetSeasonID(fieldWork->gamedata) );
-
-	TAMADA_Printf("TEX:%06x PLT:%04x\n",
-			DEBUG_GFL_G3D_GetBlankTextureSize(),
-			DEBUG_GFL_G3D_GetBlankPaletteSize());
 
 	//VBlankTCB
 	fieldWork->g3dVintr =
@@ -744,6 +748,9 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
         FLDNOGRID_MAPPER_ResistDataArc( fieldWork->nogridMapper, raildata, fieldWork->heapID );  
       }
     }
+    //描画時の射影に対する補正値
+    fieldWork->pro_mat_z_offs = ZONEDATA_GetProjMatZOffsValue( fieldWork->map_id );
+
     SET_CHECK("setup: cameraArea");  //デバッグ：処理負荷計測
 
     //CAMERA_AREAの反映
@@ -2440,8 +2447,6 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
  * @retval nothing
  */
 //--------------------------------------------------------------
-//プロジェクションマトリクスを操作する際のＺオフセット
-#define	PRO_MAT_Z_OFS	(310+0xb8)
 
 // topフレームでの描画
 // ３D描画環境の初期化
@@ -3487,16 +3492,7 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
 		org_pm = *m;
 		pm = org_pm;
 
-#if 0
-    {
-      FIELD_STATUS * fldstatus =
-        GAMEDATA_GetFieldStatus( fieldWork->gamedata );
-      fx32 proj_z_value = FIELD_STATUS_GetProjectionZValue( fldstatus );
-      pm._32 += FX_Mul( pm._22, proj_z_value );
-    }
-#else
-		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS );
-#endif
+		pm._32 += FX_Mul( pm._22, fieldWork->pro_mat_z_offs );
     
 		NNS_G3dGlbSetProjectionMtx(&pm);
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
@@ -3534,13 +3530,13 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     }
     
     SET_CHECK("update_tail:bbd draw 2");
-#if 1
+
 		pm = org_pm;
-		pm._32 += FX_Mul( pm._22, PRO_MAT_Z_OFS / 2 );
+		pm._32 += FX_Mul( pm._22, fieldWork->pro_mat_z_offs / 2 );
 		NNS_G3dGlbSetProjectionMtx(&pm);
 		NNS_G3dGlbFlush();		  //　ジオメトリコマンドを転送
     NNS_G3dGeFlushBuffer(); // 転送まち
-#endif
+
     GFL_BBDACT_Draw( fieldWork->subBbdActSys,
         fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     
@@ -3907,6 +3903,8 @@ static fx32 calcBbdActYOffset( const FIELDMAP_WORK * fieldmap )
   return offs;
 }
 
+//==================================================================
+//==================================================================
 #ifdef PM_DEBUG
 static void DbgVramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
 {
@@ -3915,4 +3913,32 @@ static void DbgVramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
 }
 
 #endif
+
+
+//==================================================================
+/**
+ * @brief ゾーンごとの射影補正値を取り出す
+ * @date  2010.05.28
+ * @author  tamada GAMEFREAK inc.
+ *
+ * 自転車めり込み問題への対処として、人物ビルボードなどの射影調整を
+ * おこなった結果、砂漠の表現に問題が出たため、今まで一律に適用していた
+ * 射影の値を場所ごとに可変とした。
+ * 本来は外部化した値を取得する仕組みを作るべきだが、時期が時期なので
+ * 直接ここに作成する。
+ */
+//==================================================================
+static fx32 ZONEDATA_GetProjMatZOffsValue( u16 zone_id )
+{
+  switch ( zone_id )
+  {   //リゾートデザートおよび、R04の場合のみ以前の射影オフセット
+  case ZONE_ID_R04:
+  case ZONE_ID_D03R0101:
+  case ZONE_ID_D03:
+    return PROJ_MAT_Z_OFS_DESERT;
+  default:
+    return PROJ_MAT_Z_OFS;
+  }
+}
+
 
