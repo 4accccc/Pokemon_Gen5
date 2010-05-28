@@ -1149,7 +1149,8 @@ sub_receipt_challenge_wifi:
   _MSGWIN_CLOSE()
   
   //バトルサブウェイ挑戦中のビーコンセット
-  _BEACON_SET_REQ_SUBWAY_START()
+  //100528 wifiトレイン挑戦中は出さない事になりました。
+  //_BEACON_SET_REQ_SUBWAY_START()
   
   //デモ　出発
   _CALL sub_receipt_demo_start_train
