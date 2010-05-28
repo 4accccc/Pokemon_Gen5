@@ -2682,13 +2682,7 @@ static BOOL subproc_WazaEffect( int* seq, void* wk_adrs )
   case 2:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      msgWinVisible_Disp( &wk->msgwinVisibleWork, FALSE );
-      (*seq)++;
-    }
-    break;
-  case 3:
-    if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
-    {
+//      msgWinVisible_Disp( &wk->msgwinVisibleWork, FALSE );
       PMSND_StopSE();
       (*seq)++;
     }

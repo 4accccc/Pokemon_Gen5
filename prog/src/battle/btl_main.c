@@ -4814,7 +4814,7 @@ u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID )
   else
   {
     if( BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_MOVE_POKE) ){
-      return AI_THINK_NO_MV_POKE;
+      return AI_THINK_BIT_MV_POKE;
     }
     else if( BTL_MAIN_GetRule(wk) == BTL_RULE_DOUBLE )
     {
