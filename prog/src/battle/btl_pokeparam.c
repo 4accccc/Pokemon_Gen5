@@ -66,7 +66,6 @@ typedef struct {
 typedef struct {
   POKEMON_PARAM*  ppSrc;
   const POKEMON_PARAM*  ppFake;
-//  BPP_WAZA            backup_waza[ PTL_WAZA_MAX ];
   u32   exp;
   u16   monsno;
   u16   hpMax;        ///< Å‘åHP
@@ -80,6 +79,9 @@ typedef struct {
   u8    fHensin     : 1;
   u8    fFakeEnable : 1;
   u8    fBtlIn      : 1;
+
+  u8  confrontRecCount;
+  u8  confrontRec[ BTL_POKEID_MAX ];
 
 }BPP_CORE_PARAM;
 
@@ -156,9 +158,6 @@ struct _BTL_POKEPARAM {
   u8               dmgrecCount[ WAZADMG_REC_TURN_MAX ];
   u8               dmgrecTurnPtr;
   u8               dmgrecPtr;
-
-  u8  confrontRecCount;
-  u8  confrontRec[ BTL_POKEID_MAX ];
 
   u16 migawariHP;
 
@@ -3245,7 +3244,7 @@ BOOL BPP_MIGAWARI_AddDamage( BTL_POKEPARAM* bpp, u16* damage )
 //----------------------------------------------------------------------------------
 static void ConfrontRec_Clear( BTL_POKEPARAM* bpp )
 {
-  bpp->confrontRecCount = 0;
+  bpp->coreParam.confrontRecCount = 0;
 }
 //=============================================================================================
 /**
@@ -3258,16 +3257,16 @@ static void ConfrontRec_Clear( BTL_POKEPARAM* bpp )
 void BPP_CONFRONT_REC_Set( BTL_POKEPARAM* bpp, u8 pokeID )
 {
   u32 i;
-  for(i=0; i<bpp->confrontRecCount; ++i)
+  for(i=0; i<bpp->coreParam.confrontRecCount; ++i)
   {
-    if( bpp->confrontRec[i] == pokeID ){
+    if( bpp->coreParam.confrontRec[i] == pokeID ){
       return;
     }
   }
-  if( i < NELEMS(bpp->confrontRec) ){
+  if( i < NELEMS(bpp->coreParam.confrontRec) ){
     BTL_Printf("ƒ|ƒP[%d]‚ª[%d]‚Æ‘Î–Ê‚µ‚½\n", bpp->coreParam.myID, pokeID);
-    bpp->confrontRec[i] = pokeID;
-    bpp->confrontRecCount++;
+    bpp->coreParam.confrontRec[i] = pokeID;
+    bpp->coreParam.confrontRecCount++;
   }
 }
 //=============================================================================================
@@ -3281,7 +3280,7 @@ void BPP_CONFRONT_REC_Set( BTL_POKEPARAM* bpp, u8 pokeID )
 //=============================================================================================
 u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp )
 {
-  return bpp->confrontRecCount;
+  return bpp->coreParam.confrontRecCount;
 }
 //=============================================================================================
 /**
@@ -3295,8 +3294,8 @@ u8 BPP_CONFRONT_REC_GetCount( const BTL_POKEPARAM* bpp )
 //=============================================================================================
 u8 BPP_CONFRONT_REC_GetPokeID( const BTL_POKEPARAM* bpp, u8 idx )
 {
-  if( idx < bpp->confrontRecCount ){
-    return bpp->confrontRec[ idx ];
+  if( idx < bpp->coreParam.confrontRecCount ){
+    return bpp->coreParam.confrontRec[ idx ];
   }
   return BTL_POKEID_NULL;
 }
