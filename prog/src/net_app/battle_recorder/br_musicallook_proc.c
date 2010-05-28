@@ -215,6 +215,14 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 	BR_MUSICALLOOK_WORK				*p_wk	= p_wk_adrs;
 	BR_MUSICALLOOK_PROC_PARAM	*p_param	= p_param_adrs;
 
+  //エラー時の解放処理
+  Br_MusicalLook_Photo_DeleteMainDisplay( p_wk, p_param );
+  Br_MusicalLook_Photo_DeleteSubDisplay( p_wk, p_param );
+  Br_MusicalLook_Photo_DeleteProfile( p_wk, p_param );
+  Br_MusicalLook_Search_DeleteDisplay( p_wk, p_param );
+  Br_MusicalLook_Download_DeleteDisplay( p_wk, p_param );
+
+
   //シーケンス管理破棄
   BR_SEQ_Exit( p_wk->p_seq );
 
