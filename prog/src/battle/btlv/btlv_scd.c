@@ -123,6 +123,8 @@ struct _BTLV_SCD {
   u8                cursor_flag;    //下画面カーソルフラグ
   u8                bagMode;
   u8                shooterEnergy;
+  u8                forceQuitSeq    : 7;
+  u8                fForceQuitDoing : 1;
 
   u8                yesno_seq;
   int               yesno_result;
@@ -183,6 +185,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->pokesel_param = NULL;
   wk->bagMode = bagMode;
   wk->shooterEnergy = 0;
+  wk->forceQuitSeq = 0;
+  wk->fForceQuitDoing = FALSE;
 
   wk->cursor_flag = 0;
 
@@ -1319,14 +1323,35 @@ u8* BTLV_SCD_GetCursorFlagPtr( BTLV_SCD* wk )
 //=============================================================================================
 void   BTLV_SCD_ForceQuitInput_Notify( BTLV_SCD* wk )
 {
-  BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
-  BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
+  if( wk->fForceQuitDoing == FALSE ){
+    wk->forceQuitSeq = 0;
+    wk->fForceQuitDoing = TRUE;
+  }
 }
 
 
 BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk )
 {
-  return !BTLV_INPUT_CheckExecute( wk->biw );
+  switch( wk->forceQuitSeq ){
+  case 0:
+    if( !BTLV_INPUT_CheckExecute( wk->biw ) ){
+      wk->forceQuitSeq++;
+    }
+    break;
+  case 1:
+    BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+    wk->forceQuitSeq++;
+    break;
+  case 2:
+    if( !BTLV_INPUT_CheckExecute( wk->biw ) ){
+      wk->forceQuitSeq++;
+    }
+    break;
+  case 3:
+    wk->fForceQuitDoing = FALSE;
+    return TRUE;
+  }
+  return FALSE;
 }
 
 //=============================================================================================
