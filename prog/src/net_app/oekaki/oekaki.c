@@ -7,13 +7,11 @@
  *
  * @todo
  *   ・接続制限の関数をまだUNION_APPのものにしていない(VIRTUAL_CONNECT_LIMIT)
- *   ・同じく接続制限用にビーコン通知の書き換え処理がまだ行われていない（BEACON_CHANGE)
  *
  */
 //============================================================================================
 #define DEBUGPLAY_ONE ( 0 )
 #define VIRTUAL_CONNECT_LIMIT
-#define BEACON_CHANGE
 
 #include <gflib.h>
 #include <calctool.h>
@@ -497,10 +495,6 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
     // 入れ替わっていた上下画面出力を元に戻す
     GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
-    // ビーコン書き換え
-#ifdef BEACON_CHANGE
-//    Union_BeaconChange( UNION_PARENT_MODE_FREE );
-#endif
 
     (*seq)++;
     break;
@@ -2980,10 +2974,6 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
     break;
   case 2:case 3:case 4:
     // まだ入れるよ
-#ifdef BEACON_CHANGE
-//    Union_BeaconChange( UNION_PARENT_MODE_OEKAKI_FREE );
-#endif
-
     // 接続人数が減った場合は接続最大人数も減らす
     if(num<wk->connectBackup){
       if(wk->banFlag==OEKAKI_BAN_ON){
@@ -2994,11 +2984,7 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
     }
     break;
   case 5:
-
-#ifdef BEACON_CHANGE
-    // いっぱいです
-//    Union_BeaconChange( UNION_PARENT_MODE_OEKAKINOW );
-#endif
+    // 満員です。
     break;
   }
 
@@ -3323,9 +3309,10 @@ static void _comm_friend_add( OEKAKI_WORK *wk )
                                 GAMEDATA_GetSaveControlWork( wk->param->gamedata));
   int i;
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
-    if(Union_App_GetMystatus(wk->param->uniapp,i)!=NULL){
+    const MYSTATUS *mystatus = Union_App_GetMystatus(wk->param->uniapp,i);
+    if(mystatus!=NULL){
       if(GFL_NET_SystemGetCurrentID()!=i){
-        EtcSave_SetAcquaintance( etc_save, i );
+        EtcSave_SetAcquaintance( etc_save, MyStatus_GetID(mystatus) );
         OS_Printf("id=%dを友達登録\n", i);
       }
     }

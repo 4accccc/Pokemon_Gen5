@@ -7,17 +7,13 @@
  * @data    2010.01.20
  *
  * @todo 
- * ・同期セーブが入っていない(VIRTUAL_SAVE_FUNC)
  * ・セーブの時の会話ウインドウ右下でアイコンくるくるが入っていない(WINDOW_SAVE_ICON)
- * ・通信アイコンのパレットがパレットフェードで狂う(WMICON_PALETTE)
  */
 //******************************************************************************
 #include <gflib.h>
 #include <calctool.h>
 
-#define VIRTUAL_SAVE_FUNC
 //#defein WINDOW_SAVE_ICON  
-//#define WMICON_PALETTE  
 
 #include "system/main.h"
 #include "arc/arc_def.h"
@@ -1959,7 +1955,7 @@ static void _comm_friend_func( GURU2MAIN_WORK *g2m )
   for(i=0;i<G2MEMBER_MAX;i++){
     if( g2m->comm.my_status[i]!=NULL ){   // 接続できていて、
       if(i!=GFL_NET_SystemGetCurrentID()){  // 自分の通信IDじゃなければ
-        EtcSave_SetAcquaintance( etc_save, i);
+        EtcSave_SetAcquaintance( etc_save, MyStatus_GetID(g2m->comm.my_status[i]));
         OS_Printf("id=%dを友達登録\n", i);
       }
     }
@@ -2676,21 +2672,6 @@ static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
   return( RET_NON );
 }
 
-#ifdef VIRTUAL_SAVE_FUNC
-void  CommSyncronizeSaveInit( int *seq );
-int CommSyncronizeSave( SAVE_CONTROL_WORK *sv, int *seq );
-
-void  CommSyncronizeSaveInit( int *seq )
-{
-   *seq = 0;
-}
-
-
-int CommSyncronizeSave( SAVE_CONTROL_WORK *sv, int *seq )
-{
-  return TRUE;
-}
-#endif
 
 //--------------------------------------------------------------
 /**
@@ -2704,7 +2685,6 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
   if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
     Guru2MainFriendEggExchange( g2m, g2m->front_eggact->comm_id );
-//    CommSyncronizeSaveInit( &g2m->save_seq );
     // 通信同期セーブ開始
     g2m->NetSaveWork = NET_SAVE_Init( HEAPID_GURU2, g2m->g2p->param->gamedata);
 #ifdef WINDOW_SAVE_ICON
@@ -3628,16 +3608,6 @@ static void guru2_ClActResLoad( GURU2MAIN_WORK *g2m )
   //アイコンセット
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_GURU2 );
 
-#ifdef WMICON_PALETTE  
-  { //パレットフェードに通信アイコンパレット転送
-    NNSG2dPaletteData *palData;
-    void *pal = WirelessIconPlttResGet( HEAPID_GURU2 );
-    NNS_G2dGetUnpackedPaletteData( pal, &palData );
-    PaletteWorkSet( pfd, palData->pRawData,
-      FADE_MAIN_OBJ, WM_ICON_PALETTE_NO*16, 32 );
-    GFL_HEAP_FreeMemory( pal );
-  }
-#endif
 }
 
 //--------------------------------------------------------------
