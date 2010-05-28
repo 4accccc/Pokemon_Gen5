@@ -150,22 +150,24 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Main( GFL_PROC * proc, int * seq
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_POWEREXPLAIN_WORK *pew = mywk;
   int i;
-
+  u8 trans_ret[BMPWIN_MAX];
+  
   if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
   
   for(i = 0; i < BMPWIN_MAX; i++){
-    PRINT_UTIL_Trans(&pew->print_util[i], appwk->setup->printQue);
+    trans_ret[i] = PRINT_UTIL_Trans(&pew->print_util[i], appwk->setup->printQue);
   }
   
   switch(*seq){
   case 0:
-    if(appwk->common->power_eqp_update == TRUE){
+    if(appwk->common->power_eqp_update == TRUE && trans_ret[BMPWIN_EQP] == TRUE){
       _Write_EqpPower(appwk, appwk->setup, pew);
       appwk->common->power_eqp_update = FALSE;
     }
-    if(appwk->common->power_select_no != pew->print_select_gpower_id){
+    if(appwk->common->power_select_no != pew->print_select_gpower_id
+        && trans_ret[BMPWIN_EXPLAIN] == TRUE){
       _Write_SelectPower(appwk, appwk->setup, pew);
       pew->print_select_gpower_id = appwk->common->power_select_no;
     }
