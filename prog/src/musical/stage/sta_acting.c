@@ -2073,6 +2073,10 @@ const u8 STA_ACT_GetPokeEquipPoint( ACTING_WORK *work , const u8 pokeNo )
 {
   return work->initWork->musPoke[pokeNo]->point;
 }
+const u8 STA_ACT_GetPokeTempPoint( ACTING_WORK *work , const u8 pokeNo )
+{
+  return work->tempPoint[pokeNo];
+}
 
 void STA_ACT_SetLockScroll( ACTING_WORK *work , const BOOL flg )
 {

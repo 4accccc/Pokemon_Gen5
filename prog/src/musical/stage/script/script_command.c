@@ -1237,27 +1237,28 @@ SCRIPT_FUNC_DEF( PokeActionComeNearToTop )
   //対象選択
   {
     u8 i;
-    u8 maxPoint = 0;
+    u16 maxPoint = 0;
     //最高点をチェック
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      if( maxPoint < STA_ACT_GetPokeEquipPoint( work->actWork , i ) )
+      const u16 point = STA_ACT_GetPokeTempPoint( work->actWork , i ) + STA_ACT_GetPokeEquipPoint( work->actWork , i );
+      if( maxPoint < point )
       {
-        maxPoint = STA_ACT_GetPokeEquipPoint( work->actWork , i );
+        maxPoint = point;
       }
     }
     //トップかのチェック
     // todoトップが複数人いたらどうする？
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      if( maxPoint == STA_ACT_GetPokeEquipPoint( work->actWork , i ) )
+      const u16 point = STA_ACT_GetPokeTempPoint( work->actWork , i ) + STA_ACT_GetPokeEquipPoint( work->actWork , i );
+      if( maxPoint == point )
       {
-        topPoke = STA_ACT_GetPokeEquipPoint( work->actWork , i );
+        topPoke = i;
       }
     }
   }
   
-  topPoke = GFUser_GetPublicRand0(4);
   SCRIPT_TPrintf("Top[%d]\n",topPoke);
   //相対位置のチェック
   {

@@ -59,6 +59,7 @@ void STA_ACT_CalcRank( ACTING_WORK *work );
 const u8 STA_ACT_GetUseItemAttentionPoke( ACTING_WORK *work );
 const BOOL STA_ACT_IsUsingItemSelf( ACTING_WORK *work );
 void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE type , const u8 selfIdx );
+const u8 STA_ACT_GetPokeTempPoint( ACTING_WORK *work , const u8 pokeNo );
 
 //エディタ用
 
