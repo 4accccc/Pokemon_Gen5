@@ -389,6 +389,14 @@ void BR_RES_LoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID, HEAPID heapID )
 				BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
     break;
 
+  case BR_RES_BG_BVSEARCH_AREA_S:
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_data_NCGR,
+        BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_battle_recorder_gra_batt_rec_find_d5_NSCR,
+				BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
+    break;
+
   case BR_RES_BG_BVSEARCH_PLACE_S:
     GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_battle_recorder_gra_batt_rec_data_NCGR,
         BG_FRAME_S_WIN, 0, 0, FALSE, heapID );
@@ -460,6 +468,8 @@ void BR_RES_UnLoadBG( BR_RES_WORK *p_wk, BR_RES_BGID bgID )
   case BR_RES_BG_PHOTO_SEND_S:
     /* fallthrough */
   case BR_RES_BG_BVSEARCH_MENU_S:
+    /* fallthrough */
+  case BR_RES_BG_BVSEARCH_AREA_S:
     /* fallthrough */
   case BR_RES_BG_BVSEARCH_PLACE_S:
     /* fallthrough */

@@ -139,7 +139,10 @@ static BOOL Br_BvSearch_Seq_Place_Exit( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC
 static BOOL Br_BvSearch_Seq_Poke_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param );
 static BOOL Br_BvSearch_Seq_Poke_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param );
 static BOOL Br_BvSearch_Seq_Poke_Exit( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param );
-
+//エリア指定画面
+static BOOL Br_BvSearch_Seq_Area_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param );
+static BOOL Br_BvSearch_Seq_Area_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param );
+static BOOL Br_BvSearch_Seq_Area_Exit( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param );
 //-------------------------------------
 ///	その他
 //=====================================
@@ -199,6 +202,7 @@ enum
   SUBSEQ_MENU,
   SUBSEQ_SELECT_PLACE,
   SUBSEQ_SEARCH_POKE,
+  SUBSEQ_SELECT_AREA,
 };
 
 static const SUBSEQ_FUNCTION sc_subseq_tbl[][SUBSEQ_MAX] =
@@ -217,6 +221,11 @@ static const SUBSEQ_FUNCTION sc_subseq_tbl[][SUBSEQ_MAX] =
     Br_BvSearch_Seq_Poke_Init,
     Br_BvSearch_Seq_Poke_Main,
     Br_BvSearch_Seq_Poke_Exit,
+  },
+  {
+    Br_BvSearch_Seq_Area_Init,
+    Br_BvSearch_Seq_Area_Main,
+    Br_BvSearch_Seq_Area_Exit,
   },
 };
 
@@ -675,7 +684,7 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
           MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
           int country_code = MyStatus_GetMyNation( p_status );
           int local_code   = MyStatus_GetMyArea( p_status );
-          if( country_code == 0 )
+          if( country_code == 0 && local_code == 0 )
           { 
             BR_TEXT_Print( p_wk->p_text, p_param->p_res, msg_725 );
             PMSND_PlaySE( BR_SND_SE_NG );
@@ -693,18 +702,12 @@ static BOOL Br_BvSearch_Seq_Menu_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
               BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
             }
             PMSND_PlaySE( BR_SND_SE_OK );
-            if( p_param->search_data.local_code == BATTLE_REC_SEARCH_LOCAL_CODE_NONE )
-            { 
-              MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
-              p_param->search_data.country_code = country_code;
-              p_param->search_data.local_code   = local_code;
-            }
-            else
-            { 
-              p_param->search_data.country_code = BATTLE_REC_SEARCH_COUNTRY_CODE_NONE;
-              p_param->search_data.local_code   = BATTLE_REC_SEARCH_LOCAL_CODE_NONE;
-            }
+
+            p_param->search_data.country_code = BATTLE_REC_SEARCH_COUNTRY_CODE_NONE;
+            p_param->search_data.local_code   = BATTLE_REC_SEARCH_LOCAL_CODE_NONE;
             Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_AREA );
+            p_wk->next_sub_seq  = SUBSEQ_SELECT_AREA;
+            return TRUE;
           }
         }
         break;
@@ -1035,6 +1038,238 @@ static BOOL Br_BvSearch_Seq_Poke_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地域選択  初期化
+ *
+ *	@param	BR_BVSEARCH_WORK	*p_wk ワーク
+ *	@param	*p_param                  引数
+ *
+ *	@return TRUEで終了  FALSEで回り続ける（メインのみ）
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_BvSearch_Seq_Area_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param )
+{
+  GFL_FONT *p_font;
+  GFL_MSGDATA *p_msg; 
+
+
+  p_font  = BR_RES_GetFont( p_param->p_res );
+  p_msg   = BR_RES_GetMsgData( p_param->p_res );
+
+  //リソース取得
+  BR_RES_LoadBG( p_param->p_res, BR_RES_BG_BVSEARCH_AREA_S, p_wk->heapID );
+
+  //リストデータ作成
+  { 
+    STRBUF  *p_str_dst  = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+    //メッセージ
+    {
+      MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
+      int country_code = MyStatus_GetMyNation( p_status );
+      int local_code   = MyStatus_GetMyArea( p_status );
+
+
+      WORDSET * p_word  = BR_RES_GetWordSet( p_param->p_res );
+
+      STRBUF  *p_str_src = GFL_MSG_CreateString( p_msg, msg_730 );
+
+      if( WIFI_COUNTRY_CountryCodeToPlaceIndexMax( country_code ) == 0 )
+      {
+        //地域がない国ならば国名表示
+        WORDSET_RegisterCountryName( p_word, 0, country_code );
+      }
+      else
+      {
+        //地域がある国ならば地域表示
+        WORDSET_RegisterLocalPlaceName( p_word, 0, country_code, local_code );
+      }
+
+      WORDSET_ExpandStr( p_word, p_str_dst, p_str_src );
+
+      GFL_STR_DeleteBuffer( p_str_src );
+    }
+
+    //リスト作成
+    {
+      p_wk->p_list_data = BmpMenuWork_ListCreate( 1, p_wk->heapID );
+      BmpMenuWork_ListAddString( p_wk->p_list_data,
+         p_str_dst, 0, p_wk->heapID  );
+    }
+    GFL_STR_DeleteBuffer( p_str_dst );
+  }
+  //リスト作成
+  {
+    static const BR_LIST_PARAM sc_list_param  =
+    { 
+      NULL,
+      0,
+      5,
+      3,
+      22,
+      12,
+      PLT_BG_S_FONT,
+      BG_FRAME_S_FONT,
+      4,
+      BR_LIST_TYPE_TOUCH,
+      NULL,
+      NULL,
+    };
+    BR_LIST_PARAM list_param  = sc_list_param;
+    list_param.cp_list  = p_wk->p_list_data;
+    list_param.list_max = 1;
+    list_param.p_res    = p_param->p_res;
+    list_param.p_unit   = p_param->p_unit;
+
+    p_wk->p_list  = BR_LIST_Init( &list_param, p_wk->heapID );
+  } 
+  //ボタン作成
+  { 
+    static const struct
+    { 
+      u8 x;
+      u8 y;
+      u8 anmseq;
+      u16 msgID;
+    } sc_btn_data[ BR_BVSEARCH_BTNID_PLACE_MAX  ]  =
+    { 
+      { 
+        80,
+        168,
+        0,
+        msg_05,
+      },
+    };
+
+    int i;
+    GFL_CLWK_DATA cldata;
+    BR_RES_OBJ_DATA res;
+
+    GFL_STD_MemClear( &cldata, sizeof(GFL_CLWK_DATA) );
+
+    BR_RES_GetOBJRes( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, &res );
+
+    for( i = 0; i < BR_BVSEARCH_BTNID_PLACE_MAX; i++ )
+    { 
+      cldata.pos_x    = sc_btn_data[ i ].x;
+      cldata.pos_y    = sc_btn_data[ i ].y;
+      cldata.anmseq   = sc_btn_data[ i ].anmseq;
+      cldata.softpri  = 1;
+      p_wk->p_btn[i] = BR_BTN_Init( &cldata,  sc_btn_data[ i ].msgID, BR_BTN_DATA_SHORT_WIDTH,CLSYS_DRAW_SUB, p_param->p_unit, p_wk->p_bmpoam, p_font, p_msg, &res, p_wk->heapID );
+    }
+;
+  }
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地域選択  破棄
+ *
+ *	@param	BR_BVSEARCH_WORK	*p_wk ワーク
+ *	@param	*p_param                  引数
+ *
+ *	@return TRUEで終了  FALSEで回り続ける（メインのみ）
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_BvSearch_Seq_Area_Exit( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param )
+{
+  //ボタン破棄
+  { 
+    int i;
+    for( i = 0; i < BR_BVSEARCH_BTNID_PLACE_MAX; i++ )
+    { 
+      if( p_wk->p_btn[i] )
+      { 
+        BR_BTN_Exit( p_wk->p_btn[i] );
+        p_wk->p_btn[i]  = NULL;
+      }
+    }
+  }
+
+  //リスト破棄
+  BR_LIST_Exit( p_wk->p_list );
+  p_wk->p_list  = NULL;
+  BmpMenuWork_ListDelete( p_wk->p_list_data );
+  p_wk->p_list_data = NULL;
+
+  //リソース破棄
+  BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_BVSEARCH_AREA_S );
+  GFL_BG_LoadScreenReq( BG_FRAME_S_FONT );
+
+  return TRUE;
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  地域選択  メイン
+ *
+ *	@param	BR_BVSEARCH_WORK	*p_wk ワーク
+ *	@param	*p_param                  引数
+ *
+ *	@return TRUEで終了  FALSEで回り続ける（メインのみ）
+ */
+//-----------------------------------------------------------------------------
+static BOOL Br_BvSearch_Seq_Area_Main( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_PARAM *p_param )
+{
+  u32 x, y;
+  u32 select;
+  BOOL cancel;
+
+  BR_LIST_Main( p_wk->p_list );
+  select  = BR_LIST_GetSelect( p_wk->p_list );
+
+  cancel  = GFL_UI_TP_GetPointTrg( &x, &y );
+  cancel  &= BR_BTN_GetTrg( p_wk->p_btn[BR_BVSEARCH_BTNID_PLACE_RETURN], x, y );
+
+  //決定
+  if( select != BR_LIST_SELECT_NONE )
+  { 
+    //エフェクト
+    { 
+      u32 x, y;
+      GFL_POINT pos;
+
+      GFL_UI_TP_GetPointTrg( &x, &y );
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+    }
+
+    //地域設定
+    {
+      MYSTATUS  *p_status = GAMEDATA_GetMyStatus( p_param->p_gamedata );
+      int country_code = MyStatus_GetMyNation( p_status );
+      int local_code   = MyStatus_GetMyArea( p_status );
+      p_param->search_data.country_code = country_code;
+      p_param->search_data.local_code   = local_code;
+    }
+
+    Br_BvSearch_PrintMainDisplay( p_wk, p_param, BRSEARCH_DISP_PRINT_AREA );
+    p_wk->next_sub_seq  = SUBSEQ_MENU;
+    return TRUE;
+  }
+
+  //キャンセル
+  if( cancel )
+  { 
+    //エフェクト
+    { 
+      u32 x, y;
+      GFL_POINT pos;
+
+      GFL_UI_TP_GetPointTrg( &x, &y );
+      pos.x = x;
+      pos.y = y;
+      BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_SUB ], BR_BALLEFF_MOVE_EMIT, &pos );
+    }
+
+    p_wk->next_sub_seq  = SUBSEQ_MENU;
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
 //=============================================================================
 /**
  *    上画面
@@ -1196,14 +1431,36 @@ static void Br_BvSearch_PrintMainDisplay( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PR
     break;
   case BRSEARCH_DISP_PRINT_AREA:
     { 
-      if( p_param->search_data.local_code != 0 )
-      { 
-        BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_AREA ], p_msg, msg_722, p_font, BR_PRINT_COL_NORMAL );
-      }
-      else
+      if( p_param->search_data.country_code == BATTLE_REC_SEARCH_COUNTRY_CODE_NONE
+          && p_param->search_data.local_code == BATTLE_REC_SEARCH_LOCAL_CODE_NONE )
       {
         BR_MSGWIN_PrintColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_AREA ], p_msg,
           msg_722, p_font, BR_PRINT_COL_NORMAL );
+      }
+      else
+      {
+        WORDSET * p_word  = BR_RES_GetWordSet( p_param->p_res );
+
+        STRBUF  *p_str_src = GFL_MSG_CreateString( p_msg, msg_23 );
+        STRBUF  *p_str_dst  = GFL_STR_CreateBuffer( 128, p_wk->heapID );
+  
+        if( WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_param->search_data.country_code ) == 0 )
+        {
+          //地域がない国ならば国名表示
+          WORDSET_RegisterCountryName( p_word, 0, p_param->search_data.country_code );
+        }
+        else
+        {
+          //地域がある国ならば地域表示
+          WORDSET_RegisterLocalPlaceName( p_word, 0, p_param->search_data.country_code, p_param->search_data.local_code );
+        }
+
+        WORDSET_ExpandStr( p_word, p_str_dst, p_str_src );
+
+        BR_MSGWIN_PrintBufColor( p_wk->p_msgwin_m[ BR_BVSEARCH_MSGWINID_M_AREA ], p_str_dst, p_font, BR_PRINT_COL_NORMAL );
+
+        GFL_STR_DeleteBuffer( p_str_src );
+        GFL_STR_DeleteBuffer( p_str_dst );
       }
     }
     break;
