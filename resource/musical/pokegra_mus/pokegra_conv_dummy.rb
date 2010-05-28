@@ -13,6 +13,8 @@ POKEGURA_DATA_DIR = ENV['PROJECT_ROOT'] + "../pokemon_wb_doc/pokegra_mus/"
 #変換後データのディレクトリ
 OUTPUT_DIR = "./data/"
 TEMP_DIR = "./temp/"
+OUTPUT_DIR_CHECK = "./data"
+TEMP_DIR_CHECK = "./temp"
 
 #アーカイバー
 NARC_CONVERT = "nnsarc -r -l -n -i"
@@ -420,10 +422,10 @@ end
 #---------------------------------------------------------
 #メイン
 #---------------------------------------------------------
-unless FileTest.exist?(OUTPUT_DIR)
+unless FileTest.exist?(OUTPUT_DIR_CHECK)
   FileUtils.mkdir_p(OUTPUT_DIR)
 end
-unless FileTest.exist?(TEMP_DIR)
+unless FileTest.exist?(TEMP_DIR_CHECK)
   FileUtils.mkdir_p(TEMP_DIR)
 end
 
