@@ -20,6 +20,7 @@
 //ARM9優先の場合に必要なリセットの為の処理
 static PMExitCallbackInfo myInfo;
 static void myExitCallback(void *arg);
+static BOOL bHardResetFlg=FALSE;
 
 
 //VRAM転送マネージャ定義(NNS関数)
@@ -107,10 +108,11 @@ void MachineSystem_Init(void)
   if(OS_IsRunOnTwl()){
 #endif
     //ARM9優先の場合に必要なハードリセットの為の処理
+    bHardResetFlg=FALSE;
     PM_SetExitCallbackInfo( &myInfo, myExitCallback, (void*)0 );
-    PM_AppendPostExitCallback( &myInfo );
+    PM_AppendPreExitCallback( &myInfo );
   }
-#endif
+#endif//
 }
 
 //------------------------------------------------------------------
@@ -120,6 +122,12 @@ void MachineSystem_Init(void)
 //------------------------------------------------------------------
 void MachineSystem_Main(void)
 {
+  if(bHardResetFlg){  //ハードリセットコールバックが呼ばれた
+    if(!PM_GetAutoExit()){  //自分が処理しなければいけない事を確認する
+      MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);  //ARM7優先に切り替える
+      PM_ReadyToExit();  //ハードリセット後処理開始（もどってこない）
+    }
+  }
 }
 
 //------------------------------------------------------------------
@@ -290,8 +298,8 @@ static void MachineSystem_MbInitFile(void)
 static void myExitCallback(void *arg)
 {
 #pragma unused(arg)
-  //優先権を変更する事でハードリセット処理がうまくいく
-  MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);
+  PM_SetAutoExit(FALSE); //ハードリセットを任せることなく この後処理する
+  bHardResetFlg=TRUE;   //ハードリセットフラグON
 }
 
 
