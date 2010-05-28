@@ -391,8 +391,7 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
   BOOL attr_hitch;
   MMDL *player_mmdl;
   
-  if(cps->update_stop == TRUE || GAMESYSTEM_CheckFieldMapWork(cps->gsys) == FALSE 
-      || FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(cps->gsys)) == FALSE){
+  if(cps->update_stop == TRUE){
     return FALSE;
   }
 
