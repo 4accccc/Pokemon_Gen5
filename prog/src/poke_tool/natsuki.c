@@ -163,7 +163,7 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID
 	// Ž©•ª‚ª•ßŠl‚³‚ê‚½êŠ‚¾‚Æ‚à‚¤‚Pã‚ª‚é
   if( placeID )
   { 
-	  if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_place, NULL ) == placeID ) )
+	  if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_birth_place, NULL ) == placeID ) )
     {
 		  natsukitmp++;
 	  }

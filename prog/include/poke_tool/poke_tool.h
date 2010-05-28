@@ -400,14 +400,14 @@ enum{
 
   ID_PARA_oyaname,              //親の名前（STRBUF使用）
   ID_PARA_oyaname_raw,            //親の名前（STRCODE配列使用 ※許可制）
-  ID_PARA_get_year,             //捕まえた年
-  ID_PARA_get_month,              //捕まえた月
-  ID_PARA_get_day,              //捕まえた日
-  ID_PARA_birth_year,             //生まれた年
-  ID_PARA_birth_month,            //生まれた月
-  ID_PARA_birth_day,              //生まれた日
-  ID_PARA_get_place,              //捕まえた場所
-  ID_PARA_birth_place,            //生まれた場所
+  ID_PARA_get_year,             //タマゴをもらった年
+  ID_PARA_get_month,            //タマゴをもらった月
+  ID_PARA_get_day,              //タマゴをもらった日
+  ID_PARA_birth_year,           //タマゴが孵化した・捕獲した年
+  ID_PARA_birth_month,          //タマゴが孵化した・捕獲した月
+  ID_PARA_birth_day,            //タマゴが孵化した・捕獲した日
+  ID_PARA_get_place,            //タマゴをもらった場所
+  ID_PARA_birth_place,          //タマゴが孵化した・捕獲した場所
   ID_PARA_pokerus,              //ポケルス
   ID_PARA_get_ball,             //捕まえたボール
   ID_PARA_get_level,              //捕まえたレベル
