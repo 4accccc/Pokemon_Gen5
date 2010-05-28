@@ -1181,8 +1181,12 @@ static GMEVENT_RESULT CrossInEvent( GMEVENT* event, int* seq, void* wk )
   case 4:
     {
       FLDMSGBG * fmb = FIELDMAP_GetFldMsgBG( work->fieldmap );
-      FLDMSGBG_TranceResourceParts( fmb, MSGBG_TRANS_RES_FONTPAL );
-      (*seq)++;
+
+      if ( FLDMSGBG_WaitResetBGResource( fmb ) )
+      {
+        FLDMSGBG_TranceResourceParts( fmb, MSGBG_TRANS_RES_FONTPAL );
+        (*seq)++;
+      }
     }
     break;
   case 5:

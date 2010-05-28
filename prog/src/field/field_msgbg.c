@@ -353,6 +353,7 @@ static void syswin_ClearBmp( GFL_BMPWIN *bmpwin );
 static void syswin_DeleteBmp( GFL_BMPWIN *bmpwin );
 
 static void setBGResource( FLDMSGBG *fmb, const BOOL trans );
+static void setBGResourceNoLoad3D( FLDMSGBG *fmb, const BOOL trans );
 static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk );
 static void setBG1Resource( FLDMSGBG *fmb );
 static void resetBG2Control( BOOL cnt_set );
@@ -459,7 +460,13 @@ void FLDMSGBG_SetupResource( FLDMSGBG *fmb )
 //--------------------------------------------------------------
 void FLDMSGBG_SetupResourceNoTrans( FLDMSGBG *fmb )
 {
-  setBGResource( fmb, FALSE );
+//  setBGResource( fmb, FALSE );
+  setBGResourceNoLoad3D( fmb, FALSE );
+  if( fmb->pVBlankTCB == NULL ){
+    fmb->pVBlankTCB = GFUser_VIntr_CreateTCB( tcbSetBG1Resource, fmb, 0 );
+  }else{
+    GF_ASSERT( 0 );
+  }
 }
 
 //--------------------------------------------------------------
@@ -4961,6 +4968,95 @@ static void setBGResource( FLDMSGBG *fmb, const BOOL trans )
 
 //--------------------------------------------------------------
 /**
+ * BGリソース初期化3Ｄロードを行わない関数
+ * @param fmb FLDMSGBG*
+ * @param trans   アーカイブをロードして転送するか？
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void setBGResourceNoLoad3D( FLDMSGBG *fmb, const BOOL trans )
+{
+  fmb->bgFrame = FLDMSGBG_BGFRAME; //不透明BG
+  
+  { //BG初期化
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_MSG_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_MSG_COLORMODE,
+      FLDBG_MFRM_MSG_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_MSG_PRI, 0, 0, FALSE
+    };
+    
+    GFL_BG_SetBGControl( fmb->bgFrame, &bgcntText, GFL_BG_MODE_TEXT );
+  }
+  
+  fmb->bgFrameBld = FLDMSGBG_BGFRAME_BLD; //半透明BG
+  
+  { //BG初期化
+    GFL_BG_BGCNT_HEADER bgcntText = {
+      0, 0, FLDBG_MFRM_EFF1_SCRSIZE, 0,
+      GFL_BG_SCRSIZ_256x256, FLDBG_MFRM_EFF1_COLORMODE,
+      FLDBG_MFRM_EFF1_SCRBASE,
+      FLDBG_MFRM_MSG_CHARBASE, FLDBG_MFRM_MSG_CHARSIZE,
+      GX_BG_EXTPLTT_01, FLDBG_MFRM_EFF1_PRI, 0, 0, FALSE
+    };
+    
+    GFL_BG_SetBGControl( fmb->bgFrameBld, &bgcntText, GFL_BG_MODE_TEXT );
+  }
+  
+  { //BGキャラ、スクリーン初期化
+    GFL_BG_FillCharacter( //クリアキャラ
+        fmb->bgFrame, CHARNO_CLEAR, 1, 0 );
+    
+    GFL_BG_FillScreen( fmb->bgFrame,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+    GFL_BG_FillScreen( fmb->bgFrameBld,
+      0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+
+    GFL_BG_LoadScreenReq( fmb->bgFrame );
+    GFL_BG_LoadScreenReq( fmb->bgFrameBld );
+  }
+ 
+  if (trans){
+    // パレット・システムウインドウ
+    transBGResource( fmb->bgFrame, fmb->heapID );
+  }
+
+  { //TALKMSGWIN
+    if( fmb->g3Dcamera != NULL ){
+      TALKMSGWIN_SYS_SETUP setup;
+      setup.heapID = fmb->heapID;
+      setup.g3Dcamera = fmb->g3Dcamera;
+      setup.fontHandle = fmb->fontHandle;
+      setup.chrNumOffs = CHARNO_BALLOONWIN;
+      setup.ini.frameID = FLDMSGBG_BGFRAME;
+      setup.ini.winPltID = PANO_TALKMSGWIN;
+      setup.ini.fontPltID = PANO_FONT_TALKMSGWIN;
+      fmb->talkMsgWinSys = TALKMSGWIN_SystemCreate( &setup );
+//      TALKMSGWIN_SystemTrans3DResource( fmb->talkMsgWinSys );
+    }
+  }
+  
+  { //ブレンド
+    int plane1 = GX_BLEND_PLANEMASK_BG2; 
+    int plane2 = GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 |
+      GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_OBJ;
+    G2_SetBlendAlpha( plane1, plane2, 16, 4 );
+  }
+  
+#if 0
+  GFL_BG_SetPriority( fmb->bgFrame, FLDBG_MFRM_MSG_PRI );
+  GFL_BG_SetPriority( fmb->bgFrameBld, FLDBG_MFRM_EFF1_PRI );
+#endif
+  
+  GFL_BG_SetVisible( fmb->bgFrame, VISIBLE_ON );
+  GFL_BG_SetVisible( fmb->bgFrameBld, VISIBLE_ON );
+  
+  fmb->deriveFont_plttNo = PANO_FONT;
+}
+
+//--------------------------------------------------------------
+/**
  * BGリソース初期化 BG1とキャラ、パレットリソースのみ
  * @param fmb FLDMSGBG*
  * @retval nothing
@@ -5017,12 +5113,15 @@ static void setBG1Resource( FLDMSGBG *fmb )
 static void tcbSetBG1Resource( GFL_TCB *tcb, void *wk )
 {
   FLDMSGBG *fmb = wk;
-  
 
-  TALKMSGWIN_SystemTrans3DResource( fmb->talkMsgWinSys );
+  //カードアクセスしている場合は処理を行わない
+  if ( !PMSND_IsAccessCARD() )
+  {
+    TALKMSGWIN_SystemTrans3DResource( fmb->talkMsgWinSys );
   
-  fmb->pVBlankTCB = NULL;
-  GFL_TCB_DeleteTask( tcb );
+    fmb->pVBlankTCB = NULL;
+    GFL_TCB_DeleteTask( tcb );
+  }
 }
  
 
