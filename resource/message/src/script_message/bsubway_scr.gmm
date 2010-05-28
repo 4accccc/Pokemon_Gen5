@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-05-27T20:29:19"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-05-28T11:49:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="80" top="132" right="785" bottom="752" maximized="no" rayout="Vertical2">
+	<dialog left="117" top="169" right="822" bottom="789" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1310,30 +1310,52 @@
 		<language name="JPN_KANJI" width="256">test</language>
 	</row>
 
-	<row id="msg_bsw_ttown_00">
-		<comment>トレインタウン受付　初回</comment>
-		<language name="JPN" width="256">カナワタウンは　どうのこうの
-でんしゃに　のりますか？</language>
-		<language name="JPN_KANJI" width="256">カナワタウンは　どうのこうの
-でんしゃに　のりますか？</language>
+	<row id="msg_bsw_ttown_00" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
+		<language name="JPN" width="256">NO DATA</language>
+		<language name="JPN_KANJI" width="256">NO DATA</language>
 	</row>
 
 	<row id="msg_bsw_ttown_01">
-		<comment>トレインタウン受付</comment>
-		<language name="JPN" width="256">でんしゃに　のりますか？</language>
-		<language name="JPN_KANJI" width="256">でんしゃに　のりますか？</language>
+		<comment>♂
+トレインタウン受付
+・「はい／いいえ」表示</comment>
+		<language name="JPN" width="256">カナワタウンいき　でんしゃに
+じょうしゃ　しますか？</language>
+		<language name="JPN_KANJI" width="256">カナワタウン行き　電車に
+乗車しますか？</language>
 	</row>
 
 	<row id="msg_bsw_ttown_02">
-		<comment>トレインタウン受付</comment>
-		<language name="JPN" width="256">では　いってらっしゃーい！</language>
-		<language name="JPN_KANJI" width="256">では　いってらっしゃーい！</language>
+		<comment>♂
+トレインタウン受付
+・「はい」を選択なら</comment>
+		<language name="JPN" width="256">まもなく　はっしゃ　いたします
+ごじょうしゃ　ください！▼</language>
+		<language name="JPN_KANJI" width="256">まもなく　発車いたします
+ご乗車ください！▼</language>
 	</row>
 
 	<row id="msg_bsw_ttown_03">
-		<comment>トレインタウン受付</comment>
-		<language name="JPN" width="256">またの　おこしを！</language>
-		<language name="JPN_KANJI" width="256">またの　おこしを！</language>
+		<comment>♂
+トレインタウン受付
+・「いいえ」を選択なら
+※話しかけ開始</comment>
+		<language name="JPN" width="256">それでは　またの　ごりようを
+おまちして　おります！</language>
+		<language name="JPN_KANJI" width="256">それでは　またの　ご利用を
+お待ちして　おります！</language>
+	</row>
+
+	<row id="msg_bsw_ttown_04">
+		<comment>♂
+トレインタウン受付
+・「いいえ」を選択なら
+※POS起動</comment>
+		<language name="JPN" width="256">それでは　またの　ごりようを
+おまちして　おります！▼</language>
+		<language name="JPN_KANJI" width="256">それでは　またの　ご利用を
+お待ちして　おります！▼</language>
 	</row>
 
 	<flowchart-group-list>
