@@ -167,6 +167,12 @@ BEACON_VIEW_PTR BEACON_VIEW_Init(GAMESYS_WORK *gsys, FIELD_SUBSCREEN_WORK *subsc
   wk->active = FALSE;  //無効値で初期化
   BeaconView_SetViewPassive( wk, TRUE );
 
+#ifdef PM_DEBUG
+  //スルーフラグが立っている状態で初期化された場合、最初の一回のアップデートのみする
+  if(DEBUG_BEACON_STATUS_GetStackCheckThrowFlag(wk->b_status) == TRUE ){
+    GAMEBEACON_Stack_Update( wk->infoStack );
+  }
+#endif  //PM_DEBUG
   return wk;
 }
 
