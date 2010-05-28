@@ -935,7 +935,8 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     }
 
     if( wk->flowResult == SVFLOW_RESULT_POKE_CHANGE ){
-      reqChangePokeForServer( wk );
+      // 途中交代しようとしてるなら死亡ポケの分はリクエスト出しちゃだめ
+//      reqChangePokeForServer( wk );
       return i+1;
     }
 
