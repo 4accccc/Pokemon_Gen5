@@ -27,6 +27,7 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static u16 CalcTokHandlerPriority( const BTL_POKEPARAM* bpp );
 static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Ikaku( u32* numElems );
 static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -407,7 +408,7 @@ static void handler_Sousyoku_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sousyoku( u32* numElems );
 static void handler_ItazuraGokoro( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_ItazuraGokoro( u32* numElems );
-static void handler_MagicMirror_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MagicMirror_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicMirror( u32* numElems );
 static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -616,7 +617,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     {
       if( funcTbl[i].tokusei == tokusei )
       {
-        u16 agi = BPP_GetValue( pp, BPP_AGILITY );
+        u16 agi = CalcTokHandlerPriority( pp );
         u8 pokeID = BPP_GetID( pp );
         u32 numHandlers;
         const BtlEventHandlerTable* handlerTable;
@@ -647,7 +648,6 @@ void BTL_HANDLER_TOKUSEI_Remove( const BTL_POKEPARAM* pp )
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_TOKUSEI, pokeID)) != NULL )
   {
     u16 tokuseiID = BTL_EVENT_FACTOR_GetSubID( factor );
-    TAYA_Printf("Ç∆Ç≠ÇπÇ¢ÉnÉìÉhÉâçÌèúÅF%p\n", factor );
     BTL_EVENT_FACTOR_Remove( factor );
   }
 }
@@ -661,21 +661,30 @@ void BTL_HANDLER_TOKUSEI_Pause( const BTL_POKEPARAM* pp )
 void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp2 )
 {
   BTL_EVENT_FACTOR *factor1, *factor2;
-  u8 ID_1, ID_2;
+  u16 pri_1, pri_2;
+  u8  ID_1, ID_2;
 
   ID_1 = BPP_GetID( pp1 );
   ID_2 = BPP_GetID( pp2 );
+  pri_1 = CalcTokHandlerPriority( pp1 );
+  pri_2 = CalcTokHandlerPriority( pp2 );
   factor1 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_1 );
   factor2 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_2 );
 
-  if( factor1 && factor2 )
-  {
-    u16 pri_1 = BPP_GetValue( pp1, BPP_AGILITY );
-    u16 pri_2 = BPP_GetValue( pp2, BPP_AGILITY );
 
+  if( factor1 )
+  {
     BTL_EVENT_FACTOR_ChangePokeParam( factor1, ID_2, pri_2 );
+  }
+  if( factor2 )
+  {
     BTL_EVENT_FACTOR_ChangePokeParam( factor2, ID_1, pri_1 );
   }
+}
+
+static u16 CalcTokHandlerPriority( const BTL_POKEPARAM* bpp )
+{
+  return BPP_GetValue_Base( bpp, BPP_AGILITY );
 }
 
 //=============================================================================================
