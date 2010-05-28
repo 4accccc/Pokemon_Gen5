@@ -317,14 +317,12 @@ const MUS_POKE_EQUIP_POS	DUP_FIT_ITEM_GetEquipPos( FIT_ITEM_WORK *item )
 #define USE_LONG_SIZE (0)
 const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 {
-	GFL_BBD_TEXSIZ texSize;
 #if USE_LONG_SIZE
 	u8 xRate,yRate;
 #endif //USE_LONG_SIZE
 	GFL_POINT ofsPos;
 	GFL_POINT rotOfs;
 	s16 subX,subY;
-	u16 arcIdx = MUS_ITEM_DRAW_GetArcIdx( item->itemState->itemId );
 #if USE_LONG_SIZE
 	MUS_ITEM_DRAW_GetPicSize( item->itemWork , &xRate,&yRate );
 #endif //USE_LONG_SIZE
@@ -362,8 +360,26 @@ const BOOL DUP_FIT_ITEM_CheckHit( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 }
 const u32 DUP_FIT_ITEM_CheckLength( FIT_ITEM_WORK *item , u32 posX , u32 posY )
 {
-	const s16 subX = item->pos.x - posX;
-	const s16 subY = item->pos.y - posY;
+	GFL_POINT ofsPos;
+	GFL_POINT rotOfs;
+	s16 subX,subY;
+
+	MUS_ITEM_DRAW_GetOffsetPos( item->itemWork , &ofsPos );
+	if( MUS_ITEM_DRAW_GetUseOffset( NULL , item->itemWork ) == TRUE )
+	{
+    u16 rot;
+    MUS_ITEM_DRAW_GetRotation( NULL , item->itemWork , &rot );
+    rotOfs.x = FX_FX32_TO_F32(FX_CosIdx( rot ) * ofsPos.x - FX_SinIdx( rot ) * ofsPos.y);
+    rotOfs.y = FX_FX32_TO_F32(FX_SinIdx( rot ) * ofsPos.x + FX_CosIdx( rot ) * ofsPos.y);
+		subX = (item->pos.x-rotOfs.x) - posX;
+		subY = (item->pos.y-rotOfs.y) - posY;
+	}
+	else
+	{
+		subX = item->pos.x - posX;
+		subY = item->pos.y - posY;
+	}
+  
 	return ( subX*subX + subY*subY );
 }
 

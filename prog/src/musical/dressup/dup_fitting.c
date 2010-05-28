@@ -3235,15 +3235,13 @@ static void DUP_CHECK_UpdateTpMain( FITTING_WORK *work )
     FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupEquip );
     while( item != NULL )
     {
-      GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( item );
-      const u16 subX = (itemPos->x - work->tpx)*(itemPos->x - work->tpx);
-      const u16 subY = (itemPos->y - work->tpy)*(itemPos->y - work->tpy);
-      if( minLen > subX+subY )
+      const u32 len = DUP_FIT_ITEM_CheckLength( item , work->tpx , work->tpy );
+      if( minLen > len )
       {
         nearItem = item;
-        minLen = subX+subY;
+        minLen = len;
       }
-      DUP_TPrintf("Len[%d][%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId,subX+subY);
+      DUP_TPrintf("Len[%d][%d]\n",DUP_FIT_ITEM_GetItemState(item)->itemId,len);
       item = DUP_FIT_ITEM_GetNextItem(item);
     }
     if( nearItem != NULL )
@@ -3270,19 +3268,37 @@ static void DUP_CHECK_UpdateTpHoldingItem( FITTING_WORK *work )
   fx32 subX;
   fx32 subY;
   u16 tpAngle;
-
-  GFL_POINT *itemPos = DUP_FIT_ITEM_GetPosition( work->holdItem );
-  subX = FX32_CONST((s32)work->tpx - itemPos->x);
-  subY = FX32_CONST((s32)work->tpy - itemPos->y);
+  GFL_POINT itemPos;
+  u16 equipPos = DUP_FIT_ITEM_GetEquipPos( work->holdItem );
+  MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , equipPos );
+  
+  MUS_ITEM_DRAW_WORK *itemWork = DUP_FIT_ITEM_GetItemDrawWork( work->holdItem );
+  GFL_POINT *itemTempPos = DUP_FIT_ITEM_GetPosition( work->holdItem );
+/*
+  if( MUS_ITEM_DRAW_GetUseOffset( NULL , itemWork ) == TRUE )
+  {
+    GFL_POINT ofsPos,rotOfs;
+    MUS_ITEM_DRAW_GetOffsetPos( itemWork , &ofsPos );
+    rotOfs.x = FX_FX32_TO_F32(FX_CosIdx( equipData->itemRot ) * ofsPos.x - FX_SinIdx( equipData->itemRot ) * ofsPos.y);
+    rotOfs.y = FX_FX32_TO_F32(FX_SinIdx( equipData->itemRot ) * ofsPos.x + FX_CosIdx( equipData->itemRot ) * ofsPos.y);
+    itemPos.x = itemTempPos->x - rotOfs.x ;
+    itemPos.y = itemTempPos->y - rotOfs.y;
+  }
+  else
+*/
+  {
+    itemPos.x = itemTempPos->x;
+    itemPos.y = itemTempPos->y;
+  }
+  subX = FX32_CONST((s32)work->tpx - itemPos.x);
+  subY = FX32_CONST((s32)work->tpy - itemPos.y);
   tpAngle = FX_Atan2Idx(subX,subY);
   
   if( work->befAngleEnable == TRUE )
   {
     u16 rot;
     s32 subAngle = work->befAngle - tpAngle;
-    u16 equipPos = DUP_FIT_ITEM_GetEquipPos( work->holdItem );
     s16 angle = work->initWork->musPoke->equip[equipPos].angle;
-    MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->drawWork , equipPos );
     
     angle += subAngle;
     
