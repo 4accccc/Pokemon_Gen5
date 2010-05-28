@@ -107,7 +107,6 @@ static inline void DWC_TOOL_BADWORD_Start( DWC_TOOL_BADWORD_WORK *p_wk, const ST
                              p_wk->badword_result,
                              &p_wk->badword_num,
                              DWC_PROF_REGION_ALL );
-  GF_ASSERT( ret );
 }
 //----------------------------------------------------------------------------
 /**
