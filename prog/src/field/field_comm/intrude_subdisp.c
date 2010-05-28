@@ -1949,6 +1949,10 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
 
   if(intsub->infomsg_wait > 0){
     intsub->infomsg_wait--;
+    if(intsub->infomsg_wait == 0 && intcomm == NULL){ //侵入通信も起動していないならクリア
+      GFL_BMP_Clear( GFL_BMPWIN_GetBmp(intsub->printutil_info.win), 0 );
+      GFL_BMPWIN_TransVramCharacter( intsub->printutil_info.win );
+    }
     return;
   }
   

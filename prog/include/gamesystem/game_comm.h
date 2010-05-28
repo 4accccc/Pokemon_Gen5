@@ -142,6 +142,7 @@ extern u8 GameCommStatus_GetPlayerStatus_InvasionNetID(GAME_COMM_SYS_PTR gcsp, i
 extern u8 GameCommStatus_GetPlayerStatus_RomVersion(GAME_COMM_SYS_PTR gcsp, int comm_net_id);
 extern void GameCommStatus_InitPlayerStatus(GAME_COMM_SYS_PTR gcsp);
 extern BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *dest_msg);
+extern void GameCommInfo_QueAllClear(GAME_COMM_SYS_PTR gcsp);
 extern void GameCommInfo_MessageEntry_GetPower(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid);
 extern void GameCommInfo_MessageEntry_IntrudePalace(GAME_COMM_SYS_PTR gcsp, int player_netid, int target_netid);
 extern void GameCommInfo_MessageEntry_PalaceConnect(GAME_COMM_SYS_PTR gcsp, int player_netid);

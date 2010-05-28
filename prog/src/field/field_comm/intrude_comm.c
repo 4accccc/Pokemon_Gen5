@@ -473,7 +473,8 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
-  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
+  GAME_COMM_SYS_PTR game_comm = invalid_parent->game_comm;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
   int i;
   BOOL exit_ok = FALSE;
   
@@ -503,13 +504,12 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
     
     //切断する時の状態をLAST_STATUSにセット
     if(intcomm->error == TRUE || NetErr_App_CheckError()){
-      GameCommSys_SetLastStatus(invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
+      GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_ERROR);
     }
     else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
       if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == TRUE){
         //自分が達成者
-        GameCommSys_SetLastStatus(
-          invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS);
+        GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_SUCCESS);
       }
       else{
         MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
@@ -522,19 +522,16 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
         }
         if(i < FIELD_COMM_MEMBER_MAX){
           //他に達成者がいた
-          GameCommSys_SetLastStatus(
-            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL);
+          GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_FAIL);
         }
         else{ //達成者がいないのでタイムアウト
-          GameCommSys_SetLastStatus(
-            invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
+          GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_MISSION_TIMEOUT);
         }
       }
     }
     else{ //エラーでもなくミッションの終了でもない。退出による終了
       if(intcomm->recv_profile > 1){ //誰かと繋がっていた状態で終了
-        GameCommSys_SetLastStatus(
-          invalid_parent->game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
+        GameCommSys_SetLastStatus(game_comm, GAME_COMM_LAST_STATUS_INTRUDE_WAYOUT);
       }
       else{  //誰とも接続していない状態で終了
         ;
@@ -554,6 +551,8 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
         && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
       GAMESYSTEM_SetFieldCommErrorReq(invalid_parent->gsys, TRUE);
     }
+    
+    GameCommInfo_QueAllClear(game_comm);
     return TRUE;
   }
   return FALSE;

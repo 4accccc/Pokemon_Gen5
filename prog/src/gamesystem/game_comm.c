@@ -817,6 +817,24 @@ BOOL GameCommInfo_GetMessage(GAME_COMM_SYS_PTR gcsp, GAME_COMM_INFO_MESSAGE *des
 
 //==================================================================
 /**
+ * インフォメーションメッセージのキュー全てをクリアする
+ *
+ * @param   gcsp		
+ */
+//==================================================================
+void GameCommInfo_QueAllClear(GAME_COMM_SYS_PTR gcsp)
+{
+  int i;
+  
+  for(i = 0; i < COMM_INFO_QUE_MAX; i++){
+    gcsp->info.msg_que[i].use = FALSE;
+  }
+  gcsp->info.space_pos = 0;
+  gcsp->info.now_pos = 0;
+}
+
+//==================================================================
+/**
  * インフォメーションメッセージ登録：「xxxx」は「xxxx」のパレスからパワーをもらった
  *
  * @param   gcsp		
