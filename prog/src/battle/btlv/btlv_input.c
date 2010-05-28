@@ -1133,8 +1133,16 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
     biw->waruagaki_clunit = NULL;
   }
 
-  GFL_BMPWIN_Delete( biw->bmp_win );
-  GFL_BMPWIN_Delete( biw->bmp_win_shooter );
+  if( biw->bmp_win )
+  { 
+    GFL_BMPWIN_Delete( biw->bmp_win );
+    biw->bmp_win = NULL;
+  }
+  if( biw->bmp_win_shooter )
+  {  
+    GFL_BMPWIN_Delete( biw->bmp_win_shooter );
+    biw->bmp_win_shooter = NULL;
+  }
 
   INFOWIN_Exit();
 
@@ -1146,7 +1154,11 @@ void  BTLV_INPUT_ExitBG( BTLV_INPUT_WORK *biw )
     biw->main_loop = NULL;
   }
 
-  GFL_ARC_CloseDataHandle( biw->handle );
+  if( biw->handle )
+  { 
+    GFL_ARC_CloseDataHandle( biw->handle );
+    biw->handle = NULL;
+  }
 
   biw->scr_type = BTLV_INPUT_SCRTYPE_STANDBY;
 }
