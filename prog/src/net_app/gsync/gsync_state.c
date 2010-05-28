@@ -153,6 +153,8 @@ struct _G_SYNC_WORK {
   int getdataCount;
   int countTimer;
   BOOL bEnd;
+  BOOL errEnd;     // エラーの時に電源切断かどうか
+  BOOL bAccount;   //アカウント取得済みかどうか
   int zzzCount;
   int notNetEffect;  ///< 通信して無い場合のエフェクト
   int lvup;
@@ -465,15 +467,14 @@ static void _anmcallbackfunc( u32 param, fx32 currentFrame )
   GSYNC_DISP_BedSyncPokemonStart(pWork->pDispWork);
 }
 
-
 //------------------------------------------------------------------------------
 /**
- * @brief   ゲームシンク完了
+ * @brief   ポケモンを起こしてセーブ領域を変更
  * @retval  none
  */
 //------------------------------------------------------------------------------
 
-static void _wakeupAction7(G_SYNC_WORK* pWork)
+static void _pokemonArise(G_SYNC_WORK* pWork)
 {
   DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
@@ -481,7 +482,6 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pp);
     pWork->pp=NULL;
   }
-
   if(BOXDAT_GetEmptyTrayNumberAndPos( pWork->pBox, &pWork->trayno, &pWork->indexno )){
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize()) ;
 
@@ -507,7 +507,20 @@ static void _wakeupAction7(G_SYNC_WORK* pWork)
     pWork->pp = pp;
     DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
   }
+}
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ゲームシンク完了
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _wakeupAction7(G_SYNC_WORK* pWork)
+{
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
+  pWork->errEnd = FALSE;
 
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
 
@@ -609,10 +622,9 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
 
 static void _wakeupAction_1(G_SYNC_WORK* pWork)
 {
-
+  pWork->errEnd = TRUE;
+  _pokemonArise(pWork);
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
-
-  
   _CHANGE_STATE(_wakeupAction_save2);
 }
 
@@ -1823,9 +1835,9 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
 {
   GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
 
-#if (defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
+#if 0//(defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
 #else
-  if(GMTIME_IsPenaltyMode(pGMT)){  //ペナルティー中は眠る事ができない
+  if(GMTIME_IsPenaltyMode(pGMT) &&  pWork->bAccount ){  //ペナルティー中は眠る事ができない+アカウント取得済み
     _CHANGE_STATE(_wakeupActionFailed);
     return;
   }
@@ -2253,6 +2265,8 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
     pWork->pBox = GAMEDATA_GetBoxManager(pParent->gameData);
     pWork->trayno = pParent->boxNo;
     pWork->indexno = pParent->boxIndex;
+    pWork->bAccount = DREAMWORLD_SV_GetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
+
     switch(pParent->selectType){
     case GSYNC_CALLTYPE_INFO:      //起こす
       GF_ASSERT(profileID);
@@ -2313,13 +2327,14 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   GSYNC_DISP_Main(pWork->pDispWork);
   GSYNC_MESSAGE_Main(pWork->pMessageWork);
 
-  if(GFL_NET_IsInit()){
-    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
-      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
-      ret = GFL_PROC_RES_FINISH;
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    if(pWork->errEnd){
+      NetErr_DispCall( TRUE );
     }
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+    GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
+    ret = GFL_PROC_RES_FINISH;
   }
   return ret;
 }
