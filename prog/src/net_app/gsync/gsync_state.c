@@ -1835,7 +1835,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
 {
   GMTIME* pGMT = SaveData_GetGameTime(pWork->pSaveData);
 
-#if 0//(defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
+#if (defined(DEBUG_ONLY_FOR_ohno) | defined(DEBUG_ONLY_FOR_mizuguchi_mai))
 #else
   if(GMTIME_IsPenaltyMode(pGMT) &&  pWork->bAccount ){  //ペナルティー中は眠る事ができない+アカウント取得済み
     _CHANGE_STATE(_wakeupActionFailed);
