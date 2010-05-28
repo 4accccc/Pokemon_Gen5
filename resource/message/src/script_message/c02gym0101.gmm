@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T20:29:26"/>
+	<create user="matsumiya" host="W00224" date="2010-05-28T11:44:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -461,9 +461,9 @@
 ・続けてhakaim1_01</comment>
 		<attribute name="キャラ指定">C02ジムリーダー
 アロエ</attribute>
-		<language name="JPN" width="256">アロエ『ちょっと　あんたたち！
+		<language name="JPN" width="256">アロエ『ちょっと　アンタたち！
 おふざけは　よしとくれ！！▼</language>
-		<language name="JPN_KANJI" width="256">アロエ『ちょっと　あんたたち！
+		<language name="JPN_KANJI" width="256">アロエ『ちょっと　アンタたち！
 おふざけは　よしとくれ！！▼</language>
 	</row>
 
