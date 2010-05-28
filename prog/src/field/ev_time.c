@@ -224,7 +224,7 @@ static void UpdateMinuteEvent(GAMEDATA * gdata, s32 diff_minute, const RTCTime *
     SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork(gdata);
     ppt = SaveData_GetTemotiPokemon(sv);
     season = GAMEDATA_GetSeasonID(gdata);
-    SHEIMI_NFORM_ChangeNormal_TimeUpdate(ppt, diff_minute, now, season);
+    SHEIMI_NFORM_ChangeNormal_TimeUpdate(gdata, ppt, diff_minute, now, season);
   }  
 
   // 電光掲示板のチャンピオンニュース表示残り時間をデクリメント

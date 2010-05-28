@@ -591,7 +591,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
       //ペナルティ時間を設定する
       GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
       //シェイミのフォルムを戻す
-      SHEIMI_NFORM_ChangeNormal(ppt);
+      SHEIMI_NFORM_ChangeNormal(cmw->gamedata, ppt);
     }
     //現在のDS本体情報を今後の設定とする
     SYSTEMDATA_Update( sysdt );

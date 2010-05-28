@@ -9,8 +9,9 @@
 
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
+#include "gamesystem/gamedata_def.h"
 
-extern void SHEIMI_NFORM_ChangeNormal(POKEPARTY *ppt);
-extern BOOL SHEIMI_NFORM_ChangeNormal_TimeUpdate(POKEPARTY *ppt, int min_diff, const RTCTime * now, int inSeason);
+extern void SHEIMI_NFORM_ChangeNormal(GAMEDATA * gdata, POKEPARTY *ppt);
+extern BOOL SHEIMI_NFORM_ChangeNormal_TimeUpdate(GAMEDATA * gdata, POKEPARTY *ppt, int min_diff, const RTCTime * now, int inSeason);
 
 
