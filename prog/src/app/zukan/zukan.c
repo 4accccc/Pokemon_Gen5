@@ -37,13 +37,13 @@ enum {
 	SEQ_INFO_CALL,				// 情報呼び出し(INFO,MAP,VOICE,FORMのどれかを呼び出す)
 	SEQ_INFO_END,					// 情報終了後
 
-
 	SEQ_SEARCH_CALL,			// 検索呼び出し
 	SEQ_SEARCH_END,				// 検索終了後
 
 	SEQ_PROC_FINISH,			// 図鑑終了
 };
 
+// 図鑑メインワーク
 typedef struct {
 	ZUKAN_PARAM * prm;			// 外部データ
 
@@ -229,6 +229,15 @@ static GFL_PROC_RESULT ZukanProc_End( GFL_PROC * proc, int * seq, void * pwk, vo
 	return GFL_PROC_RES_FINISH;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト解放
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void FreeListData( ZUKAN_MAIN_WORK * wk )
 {
 	if( wk->list != NULL ){
@@ -237,13 +246,31 @@ static void FreeListData( ZUKAN_MAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		各処理の終了待ちへ
+ *
+ * @param		wk		図鑑メインワーク
+ * @param		next	終了後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int NextProcCall( ZUKAN_MAIN_WORK * wk, int next )
 {
 	wk->nextSeq = next;
 	return SEQ_LOCAL_PROC_WAIT;
 }
 
-// 各処理の終了待ち
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：各処理の終了待ち
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_LocalProcWait( ZUKAN_MAIN_WORK * wk )
 {
 	if( wk->procStatus != GFL_PROC_MAIN_VALID ){
@@ -254,7 +281,13 @@ static int MainSeq_LocalProcWait( ZUKAN_MAIN_WORK * wk )
 
 
 //--------------------------------------------------------------------------------------------
-//	トップ
+/**
+ * @brief		メインシーケンス：トップ画面呼び出し
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
 //--------------------------------------------------------------------------------------------
 static int MainSeq_CallTop( ZUKAN_MAIN_WORK * wk )
 {
@@ -271,6 +304,15 @@ static int MainSeq_CallTop( ZUKAN_MAIN_WORK * wk )
 	return NextProcCall( wk, SEQ_TOP_END );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：トップ画面終了後
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndTop( ZUKAN_MAIN_WORK * wk )
 {
 	ZUKANTOP_DATA * top;
@@ -301,7 +343,13 @@ static int MainSeq_EndTop( ZUKAN_MAIN_WORK * wk )
 
 
 //--------------------------------------------------------------------------------------------
-//	リスト
+/**
+ * @brief		メインシーケンス：リスト画面呼び出し
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
 //--------------------------------------------------------------------------------------------
 static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 {
@@ -326,6 +374,15 @@ static int MainSeq_CallList( ZUKAN_MAIN_WORK * wk )
 	return NextProcCall( wk, SEQ_LIST_END );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：リスト画面終了後
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 {
 	ZUKANLIST_DATA * list;
@@ -382,7 +439,13 @@ static int MainSeq_EndList( ZUKAN_MAIN_WORK * wk )
 
 
 //--------------------------------------------------------------------------------------------
-//	検索
+/**
+ * @brief		メインシーケンス：検索画面呼び出し
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
 //--------------------------------------------------------------------------------------------
 static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk )
 {
@@ -401,6 +464,15 @@ static int MainSeq_CallSearch( ZUKAN_MAIN_WORK * wk )
 	return NextProcCall( wk, SEQ_SEARCH_END );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：検索画面終了後
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
 {
 	ZUKANSEARCH_DATA * search;
@@ -436,11 +508,11 @@ static int MainSeq_EndSearch( ZUKAN_MAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		図鑑詳細画面
+ * @brief		メインシーケンス：図鑑詳細画面呼び出し
  *
- * @param		wk     ZUKAN_MAIN_WORK
+ * @param		wk		図鑑メインワーク
  *
- * @return	次のメインシーケンス
+ * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
 static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
@@ -476,6 +548,15 @@ static int MainSeq_CallDetail( ZUKAN_MAIN_WORK * wk )
   return NextProcCall( wk, SEQ_INFO_END );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：図鑑詳細画面終了後
+ *
+ * @param		wk		図鑑メインワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
 {
 	ZUKAN_DETAIL_PARAM*   detail;
@@ -513,4 +594,3 @@ static int MainSeq_EndDetail( ZUKAN_MAIN_WORK * wk )
 
 	return ret;
 }
-
