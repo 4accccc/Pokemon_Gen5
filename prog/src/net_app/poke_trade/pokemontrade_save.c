@@ -697,6 +697,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
       if(MONSNO_492 == PP_Get( pp , ID_PARA_monsno ,NULL)){
         if(FORMNO_492_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
           PP_ChangeFormNo(pp,FORMNO_SHEIMI_LAND);
+          ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
         }
       }
       BOXDAT_PutPokemonPos(pWork->pBox, pWork->pParentWork->selectBoxno,
