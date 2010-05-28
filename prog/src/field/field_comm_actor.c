@@ -11,6 +11,9 @@
 
 #include "field_comm_actor.h"
 
+//SCRID_DUMMY
+#include "../../../resource/fldmapdata/script/common_scr_def.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -455,7 +458,7 @@ static const MMDL_HEADER fldcommActro_MMdlHeader =
   MV_COMM_ACTOR,
   0,  ///<イベントタイプ
   0,  ///<イベントフラグ
-  0,  ///<イベントID
+  SCRID_DUMMY,  ///<イベントID
   0,  ///<指定方向
   0,  ///<指定パラメタ 0
   0,  ///<指定パラメタ 1
