@@ -77,6 +77,8 @@ sub_waza_teacher_dragon:
         _RET
     ENDIF
 
+    //どのポケモンにおぼえさせる？
+    _BALLOONWIN_OBJMSG_WB( msg_skillteach_dragon_05w, msg_skillteach_dragon_05b, SCWK_TARGET_OBJID, POS_DEFAULT )
     _BALLOONWIN_CLOSE()
     //ポケモン選択
     _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_DRAGON, SCWK_ANSWER, select_pos )
@@ -176,6 +178,8 @@ sub_waza_teacher_powerful:
         _RET
     ENDIF
 
+    //どのポケモンにおぼえさせる？
+    _BALLOONWIN_TALKOBJ_MSG( msg_skillteach_powerful_05 )
     _BALLOONWIN_CLOSE()
     //ポケモン選択
     _SKILLTEACH_SELECT_POKEMON( SCR_SKILLTEACH_MODE_STRONGEST, SCWK_ANSWER, select_pos )
