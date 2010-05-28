@@ -2912,13 +2912,10 @@ sub_bsw_ttown_receipt_talk:
     _GET_TRAIN_TOWN_COND( WK_OTHER_T05_TRAIN )
     _CALL sub_ttown_demo_start_train
     
+    //マップ遷移
     _MAP_FADE_BLACK_OUT()
     _MAP_FADE_END_CHECK()
     _MAP_CHANGE_NO_FADE( ZONE_ID_T05, 22, 0, 54, DIR_LEFT )
-    
-    _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
-    _TIME_WAIT( 60 ) //ちょっと待つ
-    
     _MAP_FADE_BLACK_IN()
     _MAP_FADE_END_CHECK()
   ELSE
@@ -2988,8 +2985,6 @@ ev_bsw_ttown_demo_train_arrival:
   _OBJ_ANIME( objid_receipt, anm_receipt_demo_train_arrival_receipt0 )
   _OBJ_ANIME_WAIT()
   
-  //SE再生
-
   //マップフェードイン
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
