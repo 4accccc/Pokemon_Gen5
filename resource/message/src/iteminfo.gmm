@@ -4664,7 +4664,7 @@
 
 	<row id="ITEMINFO_504">
 		<language name="JPN" width="256">チョウジめいぶつの　まんじゅう。
-おおみやげひん　として　ゆうめい。
+おみやげひん　として　ゆうめい。
 </language>
 		<language name="JPN_KANJI" width="256">ジョウト地方　にある
 チョウジタウン名物の　まんじゅう。
@@ -4674,7 +4674,7 @@
 	<row id="ITEMINFO_505">
 		<language name="JPN" width="256">ポケスロンの　きろくが　はいっている。
 ゆうしょう　かいすうが
-きろくされた　カード。</language>
+</language>
 		<language name="JPN_KANJI" width="256">ポケスロンの　記録が　はいっている。
 優勝　回数が
 記録された　カード。</language>
