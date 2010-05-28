@@ -1900,7 +1900,9 @@ static int SubSeq_MessageWait( WORLDTRADE_WORK *wk )
 //------------------------------------------------------------------
 static int SubSeq_MessageClearWait( WORLDTRADE_WORK *wk )
 {
-	if( GF_MSG_PrintEndCheck( &wk->print )==0){
+	if( GF_MSG_PrintEndCheck( &wk->print )==0
+      && (GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg())
+      ){
 		BmpWinFrame_Clear( wk->TalkWin, WINDOW_TRANS_ON );
 		wk->subprocess_seq = wk->subprocess_nextseq;
 	}
