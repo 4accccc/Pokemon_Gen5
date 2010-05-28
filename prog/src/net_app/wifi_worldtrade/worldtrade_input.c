@@ -329,7 +329,7 @@ static const u8 nation_table[][2]={
 #define INPUT_BACK_H		(  2 )	// もどるH
 #define INPUT_POKENAME_W	(  8 )	// ポケモン名W
 #define INPUT_POKENAME_H	(  2 )	// ポケモン名H
-#define INPUT_NAME_PAGE_W	(  3 )	// 名前表示状態ページ数W
+#define INPUT_NAME_PAGE_W	(  5 )	// 名前表示状態ページ数W
 #define INPUT_NAME_PAGE_H	(  1 )	// 名前表示状態ページ数H
 #define INPUT_SEXSELECT_W	(  8 )	// 性別選択W
 #define INPUT_SEXSELECT_H	(  2 )	// 性別選択H
@@ -343,7 +343,7 @@ static const u8 nation_table[][2]={
 #define INPUT_NATION_NONE_SELECT_X ( 1 )	// 国名「きにしない」位置X
 #define INPUT_NATION_NONE_SELECT_Y ( 2 )	// 国名「きにしない」位置Y
 
-#define INPUT_PAGE_X		(  6 )	// レベルとポケモン名のページ表示座標
+#define INPUT_PAGE_X		(  5 )	// レベルとポケモン名のページ表示座標
 #define INPUT_PAGE_Y		( 14 )
 
 #define INPUT_NATION_PAGE_X			( 14 )	// 国名ページ位置X
@@ -4071,9 +4071,16 @@ static void PagePrint( BGWINFRM_WORK *wfwk, NUMFONT *numfont, GFL_BMPWIN *win, i
 {
 	// 「ページ数 ／ ページMAX」描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), INPUTPLATE_PAGE_COLOR_DATA );
-	NUMFONT_WriteNumber( numfont, page+1, 1, NUMFONT_MODE_LEFT, win,  0, 0 );
-	NUMFONT_WriteMark(   numfont, NUMFONT_MARK_SLASH, win, 8, 0 );
-	NUMFONT_WriteNumber( numfont,  max, 1, NUMFONT_MODE_LEFT, win, 8*2, 0 );
+  if( page + 1 < 10 )
+  {
+    NUMFONT_WriteNumber( numfont, page+1, 2, NUMFONT_MODE_RIGHT, win,  8, 0 );
+  }
+  else
+  {
+    NUMFONT_WriteNumber( numfont, page+1, 2, NUMFONT_MODE_RIGHT, win,  0, 0 );
+  }
+	NUMFONT_WriteMark(   numfont, NUMFONT_MARK_SLASH, win, 8*2, 0 );
+	NUMFONT_WriteNumber( numfont,  max, 2, NUMFONT_MODE_LEFT, win, 8*3, 0 );
 
 	// BGFrameに反映
 	GFL_BMPWIN_TransVramCharacter( win );

@@ -253,6 +253,7 @@ extern void WT_PRINT_ClearBuffer( WT_PRINT *wk );
 
 //NUMFONT
 #define NUMFONT_MODE_LEFT			(STR_NUM_DISP_LEFT)
+#define NUMFONT_MODE_RIGHT		(STR_NUM_DISP_SPACE)
 #define NUMFONT_MARK_SLASH		(0)
 
 typedef struct _NUMFONT NUMFONT;
