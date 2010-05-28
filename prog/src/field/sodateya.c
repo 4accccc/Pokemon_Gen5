@@ -13,6 +13,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/perapvoice.h"
 #include "savedata/sodateya_work.h" 
+#include "savedata/zukan_savedata.h" 
 #include "print/global_msg.h"
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
@@ -75,6 +76,7 @@ static void SetR03OldmanEventWork( FIELDMAP_WORK* fieldmap );
 static void ResetR03OldmanEventWork( FIELDMAP_WORK* fieldmap );
 static void RecoverPokemon( POKEMON_PARAM* poke );
 static void ResetSheimiForm( POKEMON_PARAM* poke );
+static void RegisterPokemonInZukan( SODATEYA* sodateya, POKEMON_PARAM* poke );
 
 
 //========================================================================================
@@ -202,10 +204,28 @@ void SODATEYA_TakeBackPokemon( SODATEYA* sodateya, int index, POKEPARTY* party )
   exp  = SODATEYA_WORK_GetGrowUpExp( sodateya->work, index );
   GrowUpPokemon( (POKEMON_PARAM*)poke, exp );
 
+  // }ŠÓ“o˜^
+  RegisterPokemonInZukan( sodateya, (POKEMON_PARAM*)poke );
+
   // ƒ|ƒPƒ‚ƒ“‚ðˆÚ“® (ˆç‚Ä‰®¨ŽèŽ‚¿)
   PokeParty_Add( party, poke );
   SODATEYA_WORK_ClrPokemon( sodateya->work, index );
   SortSodateyaPokemon( sodateya->work );
+}
+
+/**
+ * @brief ƒ|ƒPƒ‚ƒ“‚ð}ŠÓ‚É“o˜^‚·‚é
+ */
+static void RegisterPokemonInZukan( SODATEYA* sodateya, POKEMON_PARAM* poke )
+{
+  GAMESYS_WORK*   gameSystem = FIELDMAP_GetGameSysWork( sodateya->fieldmap );
+  GAMEDATA*       gameData   = GAMESYSTEM_GetGameData( gameSystem );
+  ZUKAN_SAVEDATA* zukanSave  = GAMEDATA_GetZukanSave( gameData );
+  u32             monsno     = PP_Get( poke, ID_PARA_monsno, NULL );
+
+  if( ZUKANSAVE_GetPokeGetFlag( zukanSave, monsno ) == FALSE ) {
+    ZUKANSAVE_SetPokeGet( zukanSave, poke );
+  }
 }
 
 //----------------------------------------------------------------------------------------
