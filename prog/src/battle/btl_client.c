@@ -2732,6 +2732,23 @@ static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8*
   return firstIdx;
 }
 
+/**
+ *  アイテム装備効果有効かチェック
+ */
+static BOOL IsItemEffective( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
+{
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) ){
+    return FALSE;
+  }
+  if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){
+    return FALSE;
+  }
+  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_BUKIYOU ){
+    return FALSE;
+  }
+  return TRUE;
+
+}
 
 //----------------------------------------------------------------------------------
 /**
@@ -2765,9 +2782,8 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
   }
   #endif
 
-  if( (BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU)
-  &&  (BPP_CheckSick(procPoke, WAZASICK_SASIOSAE))
-  ){
+  if( IsItemEffective(wk, procPoke) )
+  {
     // 入れ替え可否判定のみ「きれいなぬけがら」チェック
     if( fCheckChange ){
       if( BPP_GetItem(procPoke) == ITEM_KIREINANUKEGARA ){
@@ -5499,9 +5515,6 @@ static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
-
-
-
 /**
  * 【アクション】単体ダメージ演出  [0]:pokeID, [1]:affAbout [2]:wazaID
  */
