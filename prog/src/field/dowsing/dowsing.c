@@ -754,6 +754,7 @@ void DOWSING_Exit( DOWSING_WORK* work )
 
   // 通信アイコン
   GFL_NET_WirelessIconEasy_DefaultLCD();
+  GFL_NET_WirelessIconEasyEnd();
 }
 
 
