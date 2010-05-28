@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T12:11:00"/>
+	<create user="matsumiya" host="W00224" date="2010-05-28T16:40:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -307,9 +307,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
+	<dialog left="1284" top="199" right="1989" bottom="827" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="543"/>
@@ -643,10 +643,10 @@
 　いいえ→oldwoman_03</comment>
 		<attribute name="キャラ指定">おばあさん</attribute>
 		<language name="JPN" width="256">[1:01:ポケモン種族名:0]を　ひきとるなら
-りょうきんは　[2:03:４桁:1]円　だよ▽
+りょうきんは　[2:04:５桁:1]円　だよ▽
 ひきとるかい？</language>
 		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]を　ひきとるなら
-料金は　[2:03:４桁:1]円　だよ▽
+料金は　[2:04:５桁:1]円　だよ▽
 ひきとるかい？</language>
 	</row>
 
