@@ -853,7 +853,7 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Map_ProcInit( ZKNDTL_PROC* proc, int* seq
     work->state                    = STATE_TOP;
     work->scroll_state             = SCROLL_STATE_DOWN;
     work->pokeicon_scroll_state    = SCROLL_STATE_DOWN;
-    work->season_id                = GAMEDATA_GetSeasonID(gamedata);
+    work->season_id                = GAMEDATA_GetSeasonID(gamedata);  // ƒnƒCƒŠƒ“ƒN‚Å‚ÌN“üæ‚Ì‹Gß‚Å‚Í‚È‚­Aí‚ÉŽ©•ª‚Ì‹Gß‚ðŽæ“¾‚µ‚½‚¢‚©‚çA‚±‚ÌŠÖ”‚ÅOK
     work->select_data_idx          = DATA_IDX_NONE;
 
     work->draw_season_area_step                  = DRAW_SEASON_AREA_STEP_NONE;
@@ -2507,6 +2507,7 @@ static void PokeiconExit( u32 ncg, GFL_CLWK* clwk )
 //=====================================
 static u8 Zukan_Detail_Map_GetPlayerPosDataIdx( ZUKAN_DETAIL_MAP_PARAM* param, ZUKAN_DETAIL_MAP_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
+#if 0
   GAMEDATA*       gamedata  = ZKNDTL_COMMON_GetGamedata(cmn);
   PLAYER_WORK*    player_wk = GAMEDATA_GetMyPlayerWork( gamedata );
   u16             zone_id   = PLAYERWORK_getZoneID( player_wk );
@@ -2542,6 +2543,23 @@ static u8 Zukan_Detail_Map_GetPlayerPosDataIdx( ZUKAN_DETAIL_MAP_PARAM* param, Z
   }
 
   return player_pos_data_idx;
+#else
+  GAMEDATA*       gamedata  = ZKNDTL_COMMON_GetGamedata(cmn);
+  PLAYER_WORK*    player_wk = GAMEDATA_GetMyPlayerWork( gamedata );
+  u16             zone_id   = PLAYERWORK_getZoneID( player_wk );
+ 
+  u8  player_pos_data_idx  = DATA_IDX_NONE;
+  
+  u16 zone_group = TOWNMAP_UTIL_GetRootZoneID( gamedata, zone_id );
+  u16 data_idx   = TOWNMAP_DATA_SearchRootZoneID( work->townmap_data, zone_group );
+
+  if( data_idx != TOWNMAP_DATA_ERROR )
+  {
+    player_pos_data_idx = (u8)data_idx;
+  }
+
+  return player_pos_data_idx;
+#endif
 }
 
 //-------------------------------------
