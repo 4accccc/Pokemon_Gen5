@@ -331,7 +331,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // ‚Â‚©‚Ü‚¦‚½”N
   { INPUTBOX_TYPE_NUM,   DMPSTR_YEAR,        LX_GET_YEAR_CAP,   LY_GET_YEAR_CAP,
     LX_GET_YEAR_BOX,     LY_GET_YEAR_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_year,    PAGE_1,  255,  0 },
+    ID_PARA_get_year,    PAGE_1,  99,  0 },
   // ‚Â‚©‚Ü‚¦‚½ŒŽ
   { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_GET_MONTH_CAP,     LY_GET_MONTH_CAP,
     LX_GET_MONTH_BOX,    LY_GET_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
@@ -347,7 +347,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // ‚¤‚Ü‚ê‚½”N
   { INPUTBOX_TYPE_NUM,   DMPSTR_YEAR,        LX_BIRTH_YEAR_CAP,   LY_BIRTH_YEAR_CAP,
     LX_BIRTH_YEAR_BOX,   LY_BIRTH_YEAR_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_birth_year,  PAGE_1,  255,  0 },
+    ID_PARA_birth_year,  PAGE_1,  99,  0 },
   // ‚¤‚Ü‚ê‚½ŒŽ
   { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_BIRTH_MONTH_CAP,     LY_BIRTH_MONTH_CAP,
     LX_BIRTH_MONTH_BOX,  LY_BIRTH_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
