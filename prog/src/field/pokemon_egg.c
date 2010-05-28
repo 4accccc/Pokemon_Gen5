@@ -70,7 +70,7 @@ static void EggCordinate_MonsNo_basic( const PARENT* parent, EGG_PARAM* egg ); /
 static void EggCordinate_MonsNo_nidoran( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_MonsNo_barubiito( const PARENT* parent, EGG_PARAM* egg );
 static void EggCordinate_MonsNo_fione( const PARENT* parent, EGG_PARAM* egg );
-static void EggCordinate_MonsNo_item( const PARENT* parent, EGG_PARAM* egg );
+static void EggCordinate_MonsNo_baby( const PARENT* parent, EGG_PARAM* egg );
 static const POKEMON_PARAM* GetBasePokemon_for_monsno( const PARENT* parent );
 static void EggCordinate_Form_basic( const PARENT* parent, EGG_PARAM* egg ); // フォルム
 static void EggCordinate_Form_karanakusi( const PARENT* parent, EGG_PARAM* egg );
@@ -142,7 +142,7 @@ void POKEMON_EGG_Create(
   EggCordinate_MonsNo_nidoran( &parent, &egg_param );
   EggCordinate_MonsNo_barubiito( &parent, &egg_param );
   EggCordinate_MonsNo_fione( &parent, &egg_param );
-  EggCordinate_MonsNo_item( &parent, &egg_param ); 
+  EggCordinate_MonsNo_baby( &parent, &egg_param ); 
   EggCordinate_Form_basic( &parent, &egg_param ); // フォルム
   EggCordinate_Form_karanakusi( &parent, &egg_param ); 
   EggCordinate_Form_minomutti( &parent, &egg_param );
@@ -340,44 +340,46 @@ static void EggCordinate_MonsNo_fione( const PARENT* parent, EGG_PARAM* egg )
 
 //---------------------------------------------------------------------------------------- 
 /**
- * @brief タマゴのモンスターナンバーを決定する ( 例外ケース：所持アイテム )
+ * @brief タマゴのモンスターナンバーを決定する ( 例外ケース：べビィポケモン )
  */
 //---------------------------------------------------------------------------------------- 
-static void EggCordinate_MonsNo_item( const PARENT* parent, EGG_PARAM* egg )
+static void EggCordinate_MonsNo_baby( const PARENT* parent, EGG_PARAM* egg )
 {
   int i;
   const POKEMON_PARAM* base_poke;
   u32 base_monsno, base_itemno;
+  u32 father_item, mother_item;
 
   const int table_size = 12;
-  u32 exception_table[table_size][3] = // 例外テーブル
+  const u32 exception_table[ table_size ][3] = // 例外テーブル
   {
-    // 元ポケモン      // アイテム          // 子ポケモン
-    {MONSNO_MARIRU,    ITEM_USIONOOKOU,     MONSNO_MARIRU},
-    {MONSNO_MARIRURI,  ITEM_USIONOOKOU,     MONSNO_MARIRU},
-    {MONSNO_SOONANSU,  ITEM_NONKINOOKOU,    MONSNO_SOONANSU},
-    {MONSNO_BARIYAADO, ITEM_AYASIIOKOU,     MONSNO_BARIYAADO},
-    {MONSNO_USOKKII,   ITEM_GANSEKIOKOU,    MONSNO_USOKKII},
-    {MONSNO_KABIGON,   ITEM_MANPUKUOKOU,    MONSNO_KABIGON},
-    {MONSNO_MANTAIN,   ITEM_SAZANAMINOOKOU, MONSNO_MANTAIN},
-    {MONSNO_ROZERIA,   ITEM_OHANANOOKOU,    MONSNO_ROZERIA},
-    {MONSNO_ROZUREIDO, ITEM_OHANANOOKOU,    MONSNO_ROZERIA},
-    {MONSNO_RAKKII,    ITEM_KOUUNNOOKOU,    MONSNO_RAKKII},
-    {MONSNO_HAPINASU,  ITEM_KOUUNNOOKOU,    MONSNO_RAKKII},
-    {MONSNO_TIRIIN,    ITEM_KIYOMENOOKOU,   MONSNO_TIRIIN},
+    // べビィポケモン  // 必須アイテム      // 子ポケモン
+    {MONSNO_RURIRI,    ITEM_USIONOOKOU,     MONSNO_MARIRU},
+    {MONSNO_SOONANO,   ITEM_NONKINOOKOU,    MONSNO_SOONANSU},
+    {MONSNO_MANENE,    ITEM_AYASIIOKOU,     MONSNO_BARIYAADO},
+    {MONSNO_USOHATI,   ITEM_GANSEKIOKOU,    MONSNO_USOKKII},
+    {MONSNO_GONBE,     ITEM_MANPUKUOKOU,    MONSNO_KABIGON},
+    {MONSNO_TAMANTA,   ITEM_SAZANAMINOOKOU, MONSNO_MANTAIN},
+    {MONSNO_SUBOMII,   ITEM_OHANANOOKOU,    MONSNO_ROZERIA},
+    {MONSNO_PINPUKU,   ITEM_KOUUNNOOKOU,    MONSNO_RAKKII},
+    {MONSNO_RIISYAN,   ITEM_KIYOMENOOKOU,   MONSNO_TIRIIN},
   };
 
   base_poke   = GetBasePokemon_for_monsno( parent );
   base_monsno = PP_Get( base_poke, ID_PARA_monsno, NULL );
   base_itemno = PP_Get( base_poke, ID_PARA_item, NULL );
 
+  father_item = PP_Get( parent->father, ID_PARA_item, NULL );
+  mother_item = PP_Get( parent->mother, ID_PARA_item, NULL );
+
   // 例外テーブルとの照合
   for( i=0; i<table_size; i++ )
   {
-    // 元ポケが特定アイテムを持っていなかったら, 子ポケモンが変化
-    if( ( base_monsno == exception_table[i][0] ) &&
-        ( base_itemno != exception_table[i][1] ) ) {
+    if( (egg->monsno == exception_table[i][0]) &&
+        (father_item != exception_table[i][1]) &&
+        (mother_item != exception_table[i][1]) ) {
       egg->monsno = exception_table[i][2];
+      break;
     }
   }
 }
