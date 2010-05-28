@@ -193,7 +193,7 @@ int REPORTEVENT_Main( FMENU_REPORT_EVENT_WORK * wk, int * seq )
       // 違うセーブデータがある
 //      }else if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
       if( SaveControl_IsOverwritingOtherData(wk->sv) == TRUE ){
-        SetReportMsg( wk, msg_common_report_08 );
+        SetReportMsg( wk, msg_common_report_07 );
         *seq = REPORT_SEQ_RESULT_NG_MSG_WAIT;
 /*
       // セーブデータがある
