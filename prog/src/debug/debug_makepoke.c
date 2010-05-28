@@ -11,6 +11,7 @@
 #include "system/main.h"
 #include "print/printsys.h"
 #include "print/str_tool.h"
+#include "print/global_msg.h"
 #include "poke_tool/monsno_def.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
@@ -663,6 +664,7 @@ static int inputbox_type_switch( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
   }
   pp_update( wk, wk->boxIdx, val );
   box_update( wk, wk->boxIdx, val );
+  box_relation( wk, wk->boxIdx );
 
   return SEQ_WAIT_CTRL;
 }
@@ -1513,6 +1515,22 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
   case INPUTBOX_ID_FORM:
   case INPUTBOX_ID_ITEM:
     box_setup_form_change( wk );
+    break;
+  case INPUTBOX_ID_TAMAGO:
+    {
+      u8 tamago_flg = box_getvalue( wk, INPUTBOX_ID_TAMAGO );
+
+      //ニックネーム
+      if(tamago_flg){
+        GFL_MSG_GetString( wk->msgData, DMPSTR_EGG_NAME, wk->tmpbuf );
+      }else{
+        GFL_MSG_GetString( GlobalMsg_PokeName, box_getvalue( wk, INPUTBOX_ID_POKETYPE ), wk->tmpbuf );
+      }
+      PP_Put( wk->dst, ID_PARA_nickname, (u32)wk->tmpbuf );
+      box_setup( wk, INPUTBOX_ID_NICKNAME, wk->dst );
+      box_setup( wk, INPUTBOX_ID_NICKNAME_FLG, wk->dst );
+    } 
+    break;
 
   case INPUTBOX_ID_POKERUS:
   case INPUTBOX_ID_GET_LEVEL:
