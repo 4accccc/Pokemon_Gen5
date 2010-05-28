@@ -137,7 +137,8 @@ static void _PartySet(BOOL bBattleBox,EVENT_IRCBATTLE_WORK *dbw)
     PokeParty_Copy(party, dbw->pParty);
     GFL_HEAP_FreeMemory(party);
   }
-  _ModifyLevelPokeParty(dbw->pParty);
+  STATUS_RCV_PokeParty_RecoverAll(dbw->pParty);  //全回復
+  _ModifyLevelPokeParty(dbw->pParty);  //レベル補正
 }
 
 //パーティーを３名に削る
@@ -426,7 +427,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       GF_ASSERT(0);
       break;
     }
-    STATUS_RCV_PokeParty_RecoverAll(dbw->pParty);  //全回復
+//    STATUS_RCV_PokeParty_RecoverAll(dbw->pParty);  //全回復
     BATTLE_PARAM_SetPokeParty( dbw->para, dbw->pParty, BTL_CLIENT_PLAYER );
     BTL_SETUP_AllocRecBuffer( dbw->para, GFL_HEAPID_APP); //録画バッファ確保
 //    GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM( gsys, dbw->para->musicDefault, FSND_FADE_FAST, FSND_FADE_NONE ) );
