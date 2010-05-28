@@ -335,11 +335,11 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // Ç¬Ç©Ç‹Ç¶ÇΩåé
   { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_GET_MONTH_CAP,     LY_GET_MONTH_CAP,
     LX_GET_MONTH_BOX,    LY_GET_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_month,   PAGE_1,  255,  0 },
+    ID_PARA_get_month,   PAGE_1,  12,  0 },
   // Ç¬Ç©Ç‹Ç¶ÇΩì˙
   { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_GET_DAY_CAP,       LY_GET_DAY_CAP,
     LX_GET_DAY_BOX,      LY_GET_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_day,     PAGE_1,  255,  0 },
+    ID_PARA_get_day,     PAGE_1,  31,  0 },
   // Ç§Ç‹ÇÍÇΩèÍèä
   { INPUTBOX_TYPE_NUM,   DMPSTR_BIRTH_PLACE,   LX_BIRTH_PLACE_CAP,   LY_BIRTH_PLACE_CAP,
     LX_BIRTH_PLACE_BOX,  LY_BIRTH_PLACE_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
@@ -351,9 +351,9 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // Ç§Ç‹ÇÍÇΩåé
   { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_BIRTH_MONTH_CAP,     LY_BIRTH_MONTH_CAP,
     LX_BIRTH_MONTH_BOX,  LY_BIRTH_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_birth_month, PAGE_1,  255,  0 },
+    ID_PARA_birth_month, PAGE_1,  12,  0 },
   // Ç§Ç‹ÇÍÇΩì˙
   { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_BIRTH_DAY_CAP,       LY_BIRTH_DAY_CAP,
     LX_BIRTH_DAY_BOX,    LY_BIRTH_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_birth_day,   PAGE_1,  255,  0 },
+    ID_PARA_birth_day,   PAGE_1,  31,  0 },
 };
