@@ -372,6 +372,7 @@ typedef struct
   STRBUF*                     text_strbuf;
   APP_KEYCURSOR_WORK*         text_keycursor_wk;  // メッセージ送りキーカーソルアイコン
   TEXT_SHOW_VBLANK_REQ        text_show_vblank_req;  // VBlank中にテキストを表示するBG面のONとOFFを切り替える
+  BOOL                        text_bg_frame_show_state;  // BG_FRAME_M_TEXTが表示されているときTRUE
 
   // YESNO_MENU
   GFL_MSGDATA*                yesno_menu_msgdata;
@@ -690,16 +691,24 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       if(    ( !ShinkaDemo_SoundCheckFadeOutField( param, work ) )
           && ShinkaDemo_ObjIsEndAnime( param, work ) )
       {
-        // 次へ
-        //work->step = STEP_TEXT_SIGN;
-        work->step = STEP_TEXT_SIGN_0;
+        if( work->text_bg_frame_show_state )
+        {
+          // 次へ
+          work->step = STEP_TEXT_SIGN_1;
+        }
+        else
+        {
+          // 次へ
+          //work->step = STEP_TEXT_SIGN;
+          work->step = STEP_TEXT_SIGN_0;
 
-        ShinkaDemo_TextWinfrmShow( param, work, TRUE );
-        //ShinkaDemo_MakeTextStream(
-        //    work,
-        //    work->text_msgdata_shinka, SHINKADEMO_ShinkaBeforeMsg, NULL,
-        //    TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
-        //    TAG_REGIST_TYPE_NONE, NULL );
+          ShinkaDemo_TextWinfrmShow( param, work, TRUE );
+          //ShinkaDemo_MakeTextStream(
+          //    work,
+          //    work->text_msgdata_shinka, SHINKADEMO_ShinkaBeforeMsg, NULL,
+          //    TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+          //    TAG_REGIST_TYPE_NONE, NULL );
+        }
       }
     }
     break;
@@ -907,16 +916,24 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
 
       ShinkaDemo_SoundPlayCongratulate( param, work );
 
-      ShinkaDemo_TextWinfrmShow( param, work, TRUE );
-      //ShinkaDemo_MakeTextStream(
-      //    work,
-      //    work->text_msgdata_shinka, SHINKADEMO_ShinkaMsg, NULL,
-      //    TAG_REGIST_TYPE_WORD, work->poke_nick_name_strbuf,
-      //    TAG_REGIST_TYPE_POKE_MONS_NAME, work->pp );
+      if( work->text_bg_frame_show_state )
+      {
+        // 次へ
+        work->step = STEP_TEXT_CONGRATULATE_1;
+      }
+      else
+      {
+        ShinkaDemo_TextWinfrmShow( param, work, TRUE );
+        //ShinkaDemo_MakeTextStream(
+        //    work,
+        //    work->text_msgdata_shinka, SHINKADEMO_ShinkaMsg, NULL,
+        //    TAG_REGIST_TYPE_WORD, work->poke_nick_name_strbuf,
+        //    TAG_REGIST_TYPE_POKE_MONS_NAME, work->pp );
 
-      // 次へ
-      //work->step = STEP_TEXT_CONGRATULATE;
-      work->step = STEP_TEXT_CONGRATULATE_0;
+        // 次へ
+        //work->step = STEP_TEXT_CONGRATULATE;
+        work->step = STEP_TEXT_CONGRATULATE_0;
+      }
     }
     break;
   case STEP_TEXT_CONGRATULATE_0:
@@ -982,17 +999,25 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   case STEP_BGM_CANCEL_SHINKA_POP:
     {
       ShinkaDemo_SoundPopShinka( param, work );
-     
-      ShinkaDemo_TextWinfrmShow( param, work, TRUE );
-      //ShinkaDemo_MakeTextStream(
-      //    work,
-      //    work->text_msgdata_shinka, SHINKADEMO_ShinkaCancelMsg, NULL,
-      //    TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
-      //    TAG_REGIST_TYPE_NONE, NULL );
+    
+      if( work->text_bg_frame_show_state )
+      {
+        // 次へ
+        work->step = STEP_TEXT_CANCEL_1;
+      }
+      else
+      {
+        ShinkaDemo_TextWinfrmShow( param, work, TRUE );
+        //ShinkaDemo_MakeTextStream(
+        //    work,
+        //    work->text_msgdata_shinka, SHINKADEMO_ShinkaCancelMsg, NULL,
+        //    TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+        //    TAG_REGIST_TYPE_NONE, NULL );
 
-      // 次へ
-      //work->step = STEP_TEXT_CANCEL;
-      work->step = STEP_TEXT_CANCEL_0;
+        // 次へ
+        //work->step = STEP_TEXT_CANCEL;
+        work->step = STEP_TEXT_CANCEL_0;
+      }
     }
     break;
   case STEP_TEXT_CANCEL_0:
@@ -1413,16 +1438,24 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
   // 技忘れ 
   case STEP_WAZA_CONFIRM_PREPARE:
     {
-      // 次へ
-      //work->step = STEP_WAZA_FORGET;
-      work->step = STEP_WAZA_FORGET_0;
+      if( work->text_bg_frame_show_state )
+      {
+        // 次へ
+        work->step = STEP_WAZA_FORGET_1;
+      }
+      else
+      {
+        // 次へ
+        //work->step = STEP_WAZA_FORGET;
+        work->step = STEP_WAZA_FORGET_0;
       
-      ShinkaDemo_TextWinfrmShow( param, work, TRUE );  // フィールド技選択の後は消えているので
-      //ShinkaDemo_MakeTextStream(
-      //  work,
-      //  work->text_msgdata_wazaoboe, msg_waza_oboe_06, ShinkaDemo_TextStreamForgetCallBack,
-      //  TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
-      //  TAG_REGIST_TYPE_WAZA, &work->wazawasure_no );
+        ShinkaDemo_TextWinfrmShow( param, work, TRUE );  // フィールド技選択の後は消えているので
+        //ShinkaDemo_MakeTextStream(
+        //  work,
+        //  work->text_msgdata_wazaoboe, msg_waza_oboe_06, ShinkaDemo_TextStreamForgetCallBack,
+        //  TAG_REGIST_TYPE_POKE_NICK_NAME, work->pp,
+        //  TAG_REGIST_TYPE_WAZA, &work->wazawasure_no );
+      }
     }
     break;
   case STEP_WAZA_FORGET_0:
@@ -1474,16 +1507,24 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
     break;
   case STEP_WAZA_ABANDON_PREPARE:
     {
-      // 次へ
-      //work->step = STEP_WAZA_ABANDON_Q;
-      work->step = STEP_WAZA_ABANDON_Q_0;
+      if( work->text_bg_frame_show_state )
+      {
+        // 次へ
+        work->step = STEP_WAZA_ABANDON_Q_1;
+      }
+      else
+      { 
+        // 次へ
+        //work->step = STEP_WAZA_ABANDON_Q;
+        work->step = STEP_WAZA_ABANDON_Q_0;
 
-      ShinkaDemo_TextWinfrmShow( param, work, TRUE );  // フィールド技選択の後は消えているので
-      //ShinkaDemo_MakeTextStream(
-      //  work,
-      //  work->text_msgdata_wazaoboe, msg_waza_oboe_08, NULL,
-      //  TAG_REGIST_TYPE_NONE, NULL,
-      //  TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+        ShinkaDemo_TextWinfrmShow( param, work, TRUE );  // フィールド技選択の後は消えているので
+        //ShinkaDemo_MakeTextStream(
+        //  work,
+        //  work->text_msgdata_wazaoboe, msg_waza_oboe_08, NULL,
+        //  TAG_REGIST_TYPE_NONE, NULL,
+        //  TAG_REGIST_TYPE_WAZA, &work->wazaoboe_no );
+      }
     }
     break;
   case STEP_WAZA_ABANDON_Q_0:
@@ -2178,12 +2219,14 @@ static void ShinkaDemo_VBlankFunc( GFL_TCB* tcb, void* wk )
   case TEXT_SHOW_VBLANK_REQ_ON:
     {
       GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_ON );
+      work->text_bg_frame_show_state = TRUE;
       work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_NONE;
     }
     break;
   case TEXT_SHOW_VBLANK_REQ_OFF:
     {
       GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_OFF );
+      work->text_bg_frame_show_state = FALSE;
       work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_NONE;
     }
     break;
@@ -2256,6 +2299,7 @@ static void ShinkaDemo_TextInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wor
   // VBlank中にテキストを表示するBG面のONとOFFを切り替える
   work->text_show_vblank_req = TEXT_SHOW_VBLANK_REQ_NONE;
   GFL_BG_SetVisible( BG_FRAME_M_TEXT                   , VISIBLE_OFF );
+  work->text_bg_frame_show_state = FALSE;
 }
 
 //-------------------------------------
