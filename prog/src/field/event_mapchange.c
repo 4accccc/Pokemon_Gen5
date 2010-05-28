@@ -126,7 +126,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
 
 static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk );
-static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc);
+static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc, BOOL partner);
 static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc);
 
 static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
@@ -2163,7 +2163,7 @@ GMEVENT* EVENT_ChangeMapFromUnion( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
  * @brief 表フィールドからパレスマップに移動するとき
  */
 //------------------------------------------------------------------
-GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos )
+GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecFx32* pos, BOOL partner )
 {
   GMEVENT * event;
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
@@ -2205,7 +2205,7 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
     
     LOCATION_SetDirect( &loc, zone_id, EXITDIR_fromDIR( DIR_UP ), 
       calc_pos.x, calc_pos.y, calc_pos.z );
-    event = EVENT_ChangeMapPalaceWithCheck( gsys, fieldWork, &loc );
+    event = EVENT_ChangeMapPalaceWithCheck( gsys, fieldWork, &loc, partner );
   }
   return event;
 }
@@ -3113,11 +3113,12 @@ typedef struct PALACE_JUMP_tag
   GAMESYS_WORK*  gameSystem;
   GAMEDATA*      gameData;
   FIELDMAP_WORK* fieldmap;
+  BOOL           partner;     ///<TRUE：協力者としてパレスへワープ
 }PALACE_JUMP;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc)
+static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc, BOOL partner)
 {
   PALACE_JUMP* work;
   GMEVENT* event;
@@ -3130,6 +3131,7 @@ static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELD
   work->gameSystem = gameSystem;
   work->gameData = GAMESYSTEM_GetGameData( gameSystem );
   work->fieldmap = fieldmap;
+  work->partner = partner;
 
   return event;
 }
@@ -3267,6 +3269,16 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
         break;
       }
       GameCommSys_ClearLastStatus(game_comm);
+    }
+
+    //協力者としてのワープなのに通信が切れている場合のチェック
+    if(work->partner == TRUE 
+        && Intrude_GetIntrudeStatus(game_comm) != INTRUDE_CONNECT_MISSION_PARTNER){
+      //通信が切れました
+      SCRIPT_CallScript( event, SCRID_FLD_EV_WARP_FAILED_SHUTDOWN, NULL, NULL, FIELDMAP_GetHeapID( work->fieldmap ) );
+      //終了シーケンスへ
+      (*seq) = 2;
+      break;
     }
     
     {

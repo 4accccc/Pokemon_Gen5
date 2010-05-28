@@ -38,11 +38,12 @@
  *
  * @param   gsys		
  * @param   fieldWork		
+ * @param   partner     TRUE:協力者(表フィールドからパレスへ行く時のみ使用)
  *
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 zone_id)
+GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 zone_id, BOOL partner)
 {
   GMEVENT * event;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
@@ -57,7 +58,7 @@ GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u1
 
   //裏フィールド以外から、パレスへ飛ぶ場合、専用のイベントを起動(戻り先を記録、ワープ不可判定)
   if (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && zone_id == ZONE_ID_PALACE01 ){
-    event = EVENT_ChangeMapFldToPalace( gsys, zone_id, &pos );
+    event = EVENT_ChangeMapFldToPalace( gsys, zone_id, &pos, partner );
   }
   else{
     event = EVENT_ChangeMapPalace_to_Palace( gsys, zone_id, &pos );

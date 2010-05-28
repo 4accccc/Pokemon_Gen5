@@ -151,7 +151,7 @@ static GMEVENT_RESULT EVENT_CG_WirelessMain(GMEVENT * event, int *  seq, void * 
               GameCommSys_ExitReq(pComm);
             }
             else{ //âΩÇ‡í êMÇ™ãNìÆÇµÇƒÇ¢Ç»Ç¢
-              intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01);
+              intrude_event = EVENT_IntrudeTownWarp(gsys, pFieldmap, ZONE_ID_PALACE01, FALSE);
               GMEVENT_CallEvent(event,intrude_event);
               *seq = _FIELD_END;
             }

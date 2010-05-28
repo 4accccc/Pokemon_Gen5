@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T22:50:00"/>
+	<create user="matsuda" host="W00142" date="2010-05-28T12:48:44"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -390,6 +390,12 @@
 終了後は　ここに　もどります▼
 ミッションに　参加するため
 相手のハイリンクに　ワープした！▼</language>
+	</row>
+
+	<row id="msg_fld_ev_warp_06" back-color="#80ff80,,,,,,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
+		<comment>ハイリンクのミッションに参加するときのワープ前に通信が切れた</comment>
+		<language name="JPN" width="256">つうしんが　きれました</language>
+		<language name="JPN_KANJI" width="256">通信が　切れました</language>
 	</row>
 
 	<flowchart-group-list>

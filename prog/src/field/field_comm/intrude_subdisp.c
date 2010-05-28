@@ -766,7 +766,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   case _EVENT_REQ_NO_TOWN_WARP:
     PMSND_PlaySE( INTSE_WARP );
     _SetPalFlash_DecideTown(intsub);
-    event = EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id);
+    event = EVENT_IntrudeTownWarp(intsub->gsys, fieldWork, intsub->warp_zone_id, FALSE); //FALSE=palace_to_palace‚Å‚µ‚©Žg—p‚µ‚È‚¢‚Ì‚ÅŠÖŒW‚È‚¢
     break;
   case _EVENT_REQ_NO_PLAYER_WARP:
     PMSND_PlaySE( INTSE_WARP );
@@ -1505,7 +1505,7 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
   int my_area, now_tbl_pos = 0;
   u8 pal_tbl[FIELD_COMM_MEMBER_MAX] = {0, 0, 0};
   s32 tbl_count = 0, actno;
-  static const pos_tbl[2] = {AREA_POST_LEFT, AREA_POST_RIGHT};
+  static const pos_tbl[2] = {AREA_POST_RIGHT, AREA_POST_LEFT};
   
   profile_num = intsub->comm.recv_num;
   my_area = intsub->comm.now_palace_area;

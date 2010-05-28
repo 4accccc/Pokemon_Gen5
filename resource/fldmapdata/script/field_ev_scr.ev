@@ -30,6 +30,7 @@ _EVENT_DATA     ev_fld_ev_warp_success_partner
 _EVENT_DATA     ev_fld_ev_warp_failed
 _EVENT_DATA     ev_fld_ev_warp_failed_mission_target
 _EVENT_DATA     ev_fld_ev_warp_failed_connecting
+_EVENT_DATA     ev_fld_ev_warp_failed_shutdown
 _EVENT_DATA_END
 
 DEFINE_LOCAL  reg_return
@@ -187,6 +188,15 @@ EVENT_END
 EVENT_START ev_fld_ev_warp_failed_connecting
 {
   _SYSWIN_MSG( msg_fld_ev_warp_04 , POS_DOWN )
+  _LAST_KEYWAIT()
+  _SYSWIN_CLOSE()
+}
+EVENT_END
+
+//êiì¸é∏îs(í êMÇ™êÿÇÍÇΩ)
+EVENT_START ev_fld_ev_warp_failed_shutdown
+{
+  _SYSWIN_MSG( msg_fld_ev_warp_06 , POS_DOWN )
   _LAST_KEYWAIT()
   _SYSWIN_CLOSE()
 }

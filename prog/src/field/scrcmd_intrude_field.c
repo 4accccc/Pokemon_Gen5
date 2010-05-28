@@ -42,6 +42,7 @@
 #include "event_intrude.h"
 #include "event_intrude_subscreen.h"
 #include "fieldmap/zone_id.h"
+#include "field/zonedata.h"
 
 
 //==============================================================================
@@ -535,7 +536,7 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
         warp_netid = MISSION_GetMissionTargetNetID(intcomm, &intcomm->mission);
       }
       //GMEVENT_CallEvent(event, EVENT_IntrudeWarpPalace_NetID(gsys, warp_netid));
-      child_event = EVENT_IntrudeTownWarp(gsys, fieldWork, ZONE_ID_PALACE01);
+      child_event = EVENT_IntrudeTownWarp(gsys, fieldWork, ZONE_ID_PALACE01, TRUE);
       if(child_event == NULL){
         return GMEVENT_RES_FINISH;
       }
@@ -544,7 +545,10 @@ static GMEVENT_RESULT _event_MissionStartWaitWarp( GMEVENT * event, int * seq, v
     (*seq)++;
     break;
   case SEQ_MISSION_START_WAIT:
-    GMEVENT_CallEvent(event, EVENT_Intrude_MissionStartWait(gsys));
+    //ゾーンIDがパレスでない場合はワープ失敗
+    if(ZONEDATA_IsPalace(PLAYERWORK_getZoneID( GAMESYSTEM_GetMyPlayerWork(gsys) )) == TRUE){
+      GMEVENT_CallEvent(event, EVENT_Intrude_MissionStartWait(gsys));
+    }
     (*seq)++;
     break;
   case SEQ_FINISH:
