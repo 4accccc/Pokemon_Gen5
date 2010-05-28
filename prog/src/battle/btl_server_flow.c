@@ -8736,6 +8736,7 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     SCQUE_PUT_OP_ChangeTokusei( wk->que, tgtPokeID, atk_tok );
     BTL_HANDLER_TOKUSEI_Swap( attacker, target );
 
+
     if( atk_tok != tgt_tok )
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -14863,27 +14864,31 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BTL_HANDEX_PARAM_HENSIN* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
 
   BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon,  param_header->userPokeID );
-  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
 
-  if( BPP_HENSIN_Set(user, target) )
+  if( BPP_IsFakeEnable(user) )
   {
-    u8 usrPokeID = BPP_GetID( user );
-    u8 tgtPokeID = BPP_GetID( target );
+    BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
 
-    if( param_header->tokwin_flag ){
-      scPut_TokWin_In( wk, user );
+    if( BPP_HENSIN_Set(user, target) )
+    {
+      u8 usrPokeID = BPP_GetID( user );
+      u8 tgtPokeID = BPP_GetID( target );
+
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_In( wk, user );
+      }
+
+      BTL_HANDLER_Waza_RemoveForceAll( user );
+      BTL_HANDLER_TOKUSEI_Remove( user );
+      BTL_HANDLER_TOKUSEI_Add( user );
+      SCQUE_PUT_ACT_Hensin( wk->que, usrPokeID, tgtPokeID );
+
+      handexSub_putString( wk, &param->exStr );
+      if( param_header->tokwin_flag ){
+        scPut_TokWin_Out( wk, user );
+      }
+      return 1;
     }
-
-    BTL_HANDLER_Waza_RemoveForceAll( user );
-    BTL_HANDLER_TOKUSEI_Remove( user );
-    BTL_HANDLER_TOKUSEI_Add( user );
-    SCQUE_PUT_ACT_Hensin( wk->que, usrPokeID, tgtPokeID );
-
-    handexSub_putString( wk, &param->exStr );
-    if( param_header->tokwin_flag ){
-      scPut_TokWin_Out( wk, user );
-    }
-    return 1;
   }
   return 0;
 }
