@@ -2858,6 +2858,7 @@ EVENT_START ev_bsw_ttown_receipt_stopper
 {
   _CALL sub_receipt_demo_stopper
   _TALK_START_SE_PLAY()
+  $SCWK_TEMP0 = TRUE
   _CALL sub_bsw_ttown_receipt_talk
 }
 EVENT_END
@@ -2868,6 +2869,7 @@ EVENT_END
 EVENT_START ev_bsw_ttown_receipt_talk
 {
   _TALK_OBJ_START()
+  $SCWK_TEMP0 = FALSE
   _CALL sub_bsw_ttown_receipt_talk
 }
 EVENT_END
@@ -2877,14 +2879,12 @@ EVENT_END
 //--------------------------------------------------------------
 sub_bsw_ttown_receipt_talk:
 {
-  $ret = FALSE
+  DEFINE_LOCAL pos_event
+  
+  $pos_event = $SCWK_TEMP0
+  
   $msg_id = msg_bsw_ttown_01
-  
-  IF $ret == TRUE THEN
-    $msg_id = msg_bsw_ttown_00 //初回メッセージ
-    //初回フラグセット予定
-  ENDIF
-  
+
   //戻るか？
   _BALLOONWIN_OBJMSG_POS( msg_id, C04R0109_RECEIPT, POS_DOWN )
   _YES_NO_WIN( ret )
@@ -2893,17 +2893,34 @@ sub_bsw_ttown_receipt_talk:
     $msg_id = msg_bsw_ttown_02 //ご乗車下さい
   ELSE
     $msg_id = msg_bsw_ttown_03 //またお越し下さい
+    
+    IF $pos_event == TRUE THEN
+      $msg_id = msg_bsw_ttown_04
+    ENDIF
   ENDIF
   
   _BALLOONWIN_OBJMSG_POS( msg_id, C04R0109_RECEIPT, POS_DOWN )
-  _LAST_KEYWAIT()
+  
+  IF $msg_id == msg_bsw_ttown_03 THEN
+    _LAST_KEYWAIT()
+  ENDIF
+  
   _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
     //トレインタウンの電車状態を決定する
     _GET_TRAIN_TOWN_COND( WK_OTHER_T05_TRAIN )
     _CALL sub_ttown_demo_start_train
-    _MAP_CHANGE( ZONE_ID_T05, 22, 54, DIR_LEFT )
+    
+    _MAP_FADE_BLACK_OUT()
+    _MAP_FADE_END_CHECK()
+    _MAP_CHANGE_NO_FADE( ZONE_ID_T05, 22, 0, 54, DIR_LEFT )
+    
+    _SE_PLAY( SEQ_SE_BDEMO_02 ) //電車発射音
+    _TIME_WAIT( 60 ) //ちょっと待つ
+    
+    _MAP_FADE_BLACK_IN()
+    _MAP_FADE_END_CHECK()
   ELSE
     _CALL sub_receipt_demo_leave_stopper
   ENDIF
@@ -2971,6 +2988,8 @@ ev_bsw_ttown_demo_train_arrival:
   _OBJ_ANIME( objid_receipt, anm_receipt_demo_train_arrival_receipt0 )
   _OBJ_ANIME_WAIT()
   
+  //SE再生
+
   //マップフェードイン
   _MAP_FADE_BLACK_IN()
   _MAP_FADE_END_CHECK()
