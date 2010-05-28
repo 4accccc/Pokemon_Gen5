@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-27T11:56:50"/>
+	<create user="iwasawa" host="W00157" date="2010-05-28T16:07:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -382,6 +382,10 @@
 		<language name="JPN" width="256">レア</language>
 	</row>
 
+	<row id="DMPSTR_RARE_SET">
+		<language name="JPN" width="256">レアセット</language>
+	</row>
+
 	<row id="DMPSTR_HP_RND">
 		<language name="JPN" width="256">rnd</language>
 	</row>
@@ -516,6 +520,14 @@
 
 	<row id="DMPSTR_SLASH">
 		<language name="JPN" width="256">/</language>
+	</row>
+
+	<row id="DMPSTR_PER_RND_H">
+		<language name="JPN" width="256">rnd H</language>
+	</row>
+
+	<row id="DMPSTR_PER_RND_L">
+		<language name="JPN" width="256">rnd L</language>
 	</row>
 
 	<row id="DMPSTR_SICK_NULL">

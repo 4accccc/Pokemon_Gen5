@@ -129,7 +129,10 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
     break;
 
   case SEQ_PROC_END:
-    if( p_wk->pp != NULL && p_wk->p_mp_work.ret_code != DMP_RET_CANCEL)
+    if( p_wk->pp == NULL ){
+      return GMEVENT_RES_FINISH;
+    }
+    if( p_wk->p_mp_work.ret_code != DMP_RET_CANCEL)
     {
       GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
       POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
@@ -142,11 +145,9 @@ static GMEVENT_RESULT debugMenuMakePoke( GMEVENT *p_event, int *p_seq, void *p_w
       }else{
         BOXDAT_PutPokemon( boxman, PP_GetPPPPointer( p_wk->pp ));
       }
-
-      GFL_HEAP_FreeMemory( p_wk->pp );
     }
+    GFL_HEAP_FreeMemory( p_wk->pp );
     return GMEVENT_RES_FINISH;
-    break;
   }
 
   return GMEVENT_RES_CONTINUE ;

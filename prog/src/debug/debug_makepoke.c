@@ -24,6 +24,17 @@
 #include "debug/debug_makepoke.h"
 #include "debug_makepoke_def.h"
 
+enum {
+  SEQ_DRAW_CAPTION = 0,
+  SEQ_DRAW_BOX,
+  SEQ_WAIT_CTRL,
+  SEQ_INPUT_STR,
+  SEQ_INPUT_NICKNAME,
+  SEQ_INPUT_NUM,
+  SEQ_PAGE_CHANGE,
+  SEQ_EXIT,
+};
+
 //--------------------------------------------------------------
 /**
  *  入力補完ワーク
@@ -62,309 +73,6 @@ typedef struct {
   u32  arg2;
 
 }INPUT_BOX_PARAM;
-
-
-static const INPUT_BOX_PARAM InputBoxParams[] = {
-
-  { INPUTBOX_TYPE_STR, DMPSTR_POKEMON, LX_POKETYPE_CAP, LY_POKETYPE_CAP,
-    LX_POKETYPE_BOX, LY_POKETYPE_BOX, 56, LINE_HEIGHT,
-    ID_PARA_monsno, PAGE_0, NARC_message_monsname_dat, 0  },
-
-  { INPUTBOX_TYPE_NUM, DMPSTR_LEVEL,   LX_LEVEL_CAP,  LY_LEVEL_CAP,
-    LX_LEVEL_BOX,   LY_LEVEL_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_level, PAGE_0, 100, 1 },
-
-  { INPUTBOX_TYPE_NUM, DMPSTR_HP_EXP,  LX_EXP_CAP,  LY_EXP_CAP,
-    LX_EXP_BOX,   LY_EXP_BOX,  CALC_NUMBOX_WIDTH(8), LINE_HEIGHT,
-    ID_PARA_exp, PAGE_0, INPUTBOX_NUM_ARG_EXP, 0 },
-
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_SEX,   LX_SEX_CAP,  LY_SEX_CAP,
-    LX_SEX_BOX,   LY_SEX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_sex, PAGE_0, DMPSTR_SEX_MALE, SWITCH_STRNUM_DEFAULT },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_SEIKAKU,    LX_SEIKAKU_CAP,    LY_SEIKAKU_CAP,
-    LX_SEIKAKU_BOX,    LY_SEIKAKU_BOX,    CALC_STRBOX_WIDTH(5),   LINE_HEIGHT,
-    ID_PARA_seikaku, PAGE_0,   NARC_message_chr_dat, 0 },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_TOKUSEI,    LX_TOKUSEI_CAP,    LY_TOKUSEI_CAP,
-    LX_TOKUSEI_BOX,    LY_TOKUSEI_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_speabino, PAGE_0,  NARC_message_tokusei_dat, 0 },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_ITEM,    LX_ITEM_CAP,    LY_ITEM_CAP,
-    LX_ITEM_BOX,    LY_ITEM_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_item, PAGE_0, NARC_message_itemname_dat, 0 },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_WAZA1,   LX_WAZA1_CAP,   LY_WAZA1_CAP,
-    LX_WAZA1_BOX,   LY_WAZA1_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza1, PAGE_0, NARC_message_wazaname_dat,  0 },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_WAZA2,   LX_WAZA2_CAP,   LY_WAZA2_CAP,
-    LX_WAZA2_BOX,   LY_WAZA2_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza2, PAGE_0, NARC_message_wazaname_dat,    0 },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_WAZA3,   LX_WAZA3_CAP,   LY_WAZA3_CAP,
-    LX_WAZA3_BOX,   LY_WAZA3_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza3, PAGE_0, NARC_message_wazaname_dat,    0 },
-
-  { INPUTBOX_TYPE_STR,  DMPSTR_WAZA4,   LX_WAZA4_CAP,   LY_WAZA4_CAP,
-    LX_WAZA4_BOX,   LY_WAZA4_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza4, PAGE_0, NARC_message_wazaname_dat,    0 },
-
-  //---------------------------------------------------
-  // PP系
-  //---------------------------------------------------
-  { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT1,   LX_PPCNT1_CAP,   LY_PPCNT1_CAP,
-    LX_PPCNT1_BOX,   LY_PPCNT1_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count1, PAGE_0, 3,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT2,   LX_PPCNT2_CAP,   LY_PPCNT2_CAP,
-    LX_PPCNT2_BOX,   LY_PPCNT2_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count2, PAGE_0, 3,    0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT3,   LX_PPCNT3_CAP,   LY_PPCNT3_CAP,
-    LX_PPCNT3_BOX,   LY_PPCNT3_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count3, PAGE_0, 3,    0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_PPCNT4,   LX_PPCNT4_CAP,   LY_PPCNT4_CAP,
-    LX_PPCNT4_BOX,   LY_PPCNT4_BOX,   CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_pp_count4, PAGE_0, 3,    0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX1_CAP,  LY_PPMAX1_CAP,
-    LX_PPMAX1_BOX,   LY_PPMAX1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max1, PAGE_0, 100,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX2_CAP,  LY_PPMAX2_CAP,
-    LX_PPMAX2_BOX,   LY_PPMAX2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max2, PAGE_0, 100,    0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX3_CAP,  LY_PPMAX3_CAP,
-    LX_PPMAX3_BOX,   LY_PPMAX3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max3, PAGE_0, 100,    0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SLASH,   LX_PPMAX4_CAP,  LY_PPMAX4_CAP,
-    LX_PPMAX4_BOX,   LY_PPMAX4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp_max4, PAGE_0,  100,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
-    LX_PPEDIT1_BOX,   LY_PPEDIT1_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp1, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX1 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
-    LX_PPEDIT2_BOX,   LY_PPEDIT2_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp2, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX2 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
-    LX_PPEDIT3_BOX,   LY_PPEDIT3_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp3, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX3 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_NULL,   0,   0,
-    LX_PPEDIT4_BOX,   LY_PPEDIT4_BOX,   CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pp4, PAGE_0, INPUTBOX_NUM_ARG_DEPEND,    INPUTBOX_ID_PPMAX4 },
-
-  //---------------------------------------------------
-  // パラメータ系
-  //---------------------------------------------------
-  { INPUTBOX_TYPE_NUM,  DMPSTR_HP_RND,   LX_HPRND_CAP,   LY_HPRND_CAP,
-    LX_HPRND_BOX,    LY_HPRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_hp_rnd, PAGE_0,  31,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_HP_EXP,   LX_HPEXP_CAP,   LY_HPEXP_CAP,
-    LX_HPEXP_BOX,    LY_HPEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hp_exp, PAGE_0,  255,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_HP,   LX_HPVAL_CAP,   LY_HPVAL_CAP,
-    LX_HPVAL_BOX,    LY_HPVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hpmax, PAGE_0,   512,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_SLASH,    LX_HPSLASH_CAP,       LY_HPSLASH_CAP,
-    LX_HPEDIT_BOX,   LY_HPEDIT_BOX,   CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_hp, PAGE_0,      INPUTBOX_NUM_ARG_DEPEND,  INPUTBOX_ID_HPVAL },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_POW_RND,   LX_POWRND_CAP,   LY_POWRND_CAP,
-    LX_POWRND_BOX,    LY_POWRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_pow_rnd, PAGE_0,  31,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_POW_EXP,   LX_POWEXP_CAP,   LY_POWEXP_CAP,
-    LX_POWEXP_BOX,    LY_POWEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_pow_exp, PAGE_0,  255,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_POW,   LX_POWVAL_CAP,   LY_POWVAL_CAP,
-    LX_POWVAL_BOX,    LY_POWVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_pow, PAGE_0,   255,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_DEF_RND,   LX_DEFRND_CAP,   LY_DEFRND_CAP,
-    LX_DEFRND_BOX,    LY_DEFRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_def_rnd, PAGE_0,  31,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_DEF_EXP,   LX_DEFEXP_CAP,   LY_DEFEXP_CAP,
-    LX_DEFEXP_BOX,    LY_DEFEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_def_exp, PAGE_0,  255,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_DEF,   LX_DEFVAL_CAP,   LY_DEFVAL_CAP,
-    LX_DEFVAL_BOX,    LY_DEFVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_def, PAGE_0,   255,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_AGI_RND,   LX_AGIRND_CAP,   LY_AGIRND_CAP,
-    LX_AGIRND_BOX,    LY_AGIRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_agi_rnd, PAGE_0,  31,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_AGI_EXP,   LX_AGIEXP_CAP,   LY_AGIEXP_CAP,
-    LX_AGIEXP_BOX,    LY_AGIEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_agi_exp, PAGE_0,  255,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_AGI,   LX_AGIVAL_CAP,   LY_AGIVAL_CAP,
-    LX_AGIVAL_BOX,    LY_AGIVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_agi, PAGE_0,   255,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_SPW_RND,   LX_SPWRND_CAP,   LY_SPWRND_CAP,
-    LX_SPWRND_BOX,    LY_SPWRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_spepow_rnd, PAGE_0,  31,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_SPW_EXP,   LX_SPWEXP_CAP,   LY_SPWEXP_CAP,
-    LX_SPWEXP_BOX,    LY_SPWEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spepow_exp, PAGE_0,  255,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SPW,   LX_SPWVAL_CAP,   LY_SPWVAL_CAP,
-    LX_SPWVAL_BOX,    LY_SPWVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spepow, PAGE_0,   255,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_SDF_RND,   LX_SDFRND_CAP,   LY_SDFRND_CAP,
-    LX_SDFRND_BOX,    LY_SDFRND_BOX,    CALC_NUMBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_spedef_rnd, PAGE_0,  31,  0 },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_SDF_EXP,   LX_SDFEXP_CAP,   LY_SDFEXP_CAP,
-    LX_SDFEXP_BOX,    LY_SDFEXP_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spedef_exp, PAGE_0,  255,  0 },
-
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_SDF,   LX_SDFVAL_CAP,   LY_SDFVAL_CAP,
-    LX_SDFVAL_BOX,    LY_SDFVAL_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_spedef, PAGE_0,   255,  0 },
-
-  { INPUTBOX_TYPE_FIXSTR,  DMPSTR_TYPE,   LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_TYPE_BOX,    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_type1, PAGE_0,  NARC_message_typename_dat,  0 },
-
-  { INPUTBOX_TYPE_FIXSTR,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_TYPE_BOX+CALC_STRBOX_WIDTH(4),    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,  NARC_message_typename_dat,  0 },
-
-  { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
-
-  { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_HATAKU_BTN,      LY_HATAKU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,      NARC_message_debug_makepoke_dat,  DMPSTR_HATAKUDAKE },
-
-  { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
-    LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE },
-
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_JOUTAI, LX_SICK_CAP,  LY_SICK_CAP,
-    LX_SICK_BOX,    LY_SICK_BOX,  CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_condition, PAGE_0, DMPSTR_SICK_NULL, SWITCH_STRNUM_SICK,
-  },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_NATUKI,  LX_NATSUKI_CAP,  LY_NATSUKI_CAP,
-    LX_NATSUKI_BOX,     LY_NATSUKI_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_friend, PAGE_0,     255, 0,
-  },
-
-  { INPUTBOX_TYPE_NUM,  DMPSTR_FORM,  LX_FORM_CAP,  LY_FORM_CAP,
-    LX_FORM_BOX,        LY_FORM_BOX, CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_form_no, PAGE_0,    31, 0,
-  },
-
-  // たまご
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_TAMAGO, LX_TAMAGO_CAP,  LY_TAMAGO_CAP,
-    LX_TAMAGO_BOX,       LY_TAMAGO_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
-    ID_PARA_tamago_flag, PAGE_0, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
-  },
-  // レア
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_RARE, LX_RARE_CAP,  LY_RARE_CAP,
-    LX_RARE_BOX,           LY_RARE_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
-    ID_PARA_tamago_flag, PAGE_0,   DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
-  },
-
-  //---------------------------------------------------
-  // ２ページ目
-  //---------------------------------------------------
-  // ニックネーム
-  { INPUTBOX_TYPE_NICKNAME,  DMPSTR_NICKNAME,  LX_NICKNAME_CAP,    LY_NICKNAME_CAP,
-    LX_NICKNAME_BOX,  LY_NICKNAME_BOX,  CALC_STRBOX_WIDTH(6),   LINE_HEIGHT,
-    ID_PARA_nickname, PAGE_1,   0, 0 },
-  // ニックネームフラグ
-  { INPUTBOX_TYPE_FIXVAL,  DMPSTR_NULL,      0,   0,
-    LX_NICKNAME_BOX+CALC_STRBOX_WIDTH(7),    LY_NICKNAME_BOX,   CALC_STRBOX_WIDTH(2), LINE_HEIGHT,
-    ID_PARA_nickname_flag, PAGE_1,  1,  0 },
-  // ポケルス
-  { INPUTBOX_TYPE_NUM,  DMPSTR_POKERUS,   LX_POKERUS_CAP,   LY_POKERUS_CAP,
-    LX_POKERUS_BOX,    LY_POKERUS_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_pokerus,  PAGE_1,  255,  0 },
-  // 捕獲レベル
-  { INPUTBOX_TYPE_NUM, DMPSTR_GET_LEVEL,   LX_GET_LEVEL_CAP,  LY_GET_LEVEL_CAP,
-    LX_GET_LEVEL_BOX,   LY_GET_LEVEL_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_level, PAGE_1, 100, 1 },
-  // 捕獲ボール
-  { INPUTBOX_TYPE_STR,  DMPSTR_GET_BALL,    LX_GET_BALL_CAP,    LY_GET_BALL_CAP,
-    LX_GET_BALL_BOX,    LY_GET_BALL_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_get_ball,   PAGE_1, NARC_message_itemname_dat, 0 },
-  // 捕獲カセット
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_GET_CASETTE, LX_GET_CASETTE_CAP,  LY_GET_CASETTE_CAP,
-    LX_GET_CASETTE_BOX,    LY_GET_CASETTE_BOX,  CALC_STRBOX_WIDTH(6), LINE_HEIGHT,
-    ID_PARA_get_cassette,  PAGE_1, DMPSTR_CASETTE_00, 13,
-  },
-  // 国コード
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_COUNTRY, LX_COUNTRY_CAP,  LY_COUNTRY_CAP,
-    LX_COUNTRY_BOX,    LY_COUNTRY_BOX,  CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_country_code,  PAGE_1, DMPSTR_COUNTRY_00, 7,
-  },
-  // つかまえた場所
-  { INPUTBOX_TYPE_NUM,   DMPSTR_GET_PLACE,   LX_GET_PLACE_CAP,   LY_GET_PLACE_CAP,
-    LX_GET_PLACE_BOX,    LY_GET_PLACE_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_get_place,   PAGE_1, 65535,  0 },
-  // つかまえた年
-  { INPUTBOX_TYPE_NUM,   DMPSTR_YEAR,        LX_GET_YEAR_CAP,   LY_GET_YEAR_CAP,
-    LX_GET_YEAR_BOX,     LY_GET_YEAR_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_year,    PAGE_1,  255,  0 },
-  // つかまえた月
-  { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_GET_MONTH_CAP,     LY_GET_MONTH_CAP,
-    LX_GET_MONTH_BOX,    LY_GET_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_month,   PAGE_1,  255,  0 },
-  // つかまえた日
-  { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_GET_DAY_CAP,       LY_GET_DAY_CAP,
-    LX_GET_DAY_BOX,      LY_GET_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_get_day,     PAGE_1,  255,  0 },
-  // うまれた場所
-  { INPUTBOX_TYPE_NUM,   DMPSTR_BIRTH_PLACE,   LX_BIRTH_PLACE_CAP,   LY_BIRTH_PLACE_CAP,
-    LX_BIRTH_PLACE_BOX,  LY_BIRTH_PLACE_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_birth_place, PAGE_1, 65535,  0 },
-  // うまれた年
-  { INPUTBOX_TYPE_NUM,   DMPSTR_YEAR,        LX_BIRTH_YEAR_CAP,   LY_BIRTH_YEAR_CAP,
-    LX_BIRTH_YEAR_BOX,   LY_BIRTH_YEAR_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_birth_year,  PAGE_1,  255,  0 },
-  // うまれた月
-  { INPUTBOX_TYPE_NUM,   DMPSTR_MONTH,      LX_BIRTH_MONTH_CAP,     LY_BIRTH_MONTH_CAP,
-    LX_BIRTH_MONTH_BOX,  LY_BIRTH_MONTH_BOX,  CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_birth_month, PAGE_1,  255,  0 },
-  // うまれた日
-  { INPUTBOX_TYPE_NUM,   DMPSTR_DAY,        LX_BIRTH_DAY_CAP,       LY_BIRTH_DAY_CAP,
-    LX_BIRTH_DAY_BOX,    LY_BIRTH_DAY_BOX,    CALC_NUMBOX_WIDTH(3), LINE_HEIGHT,
-    ID_PARA_birth_day,   PAGE_1,  255,  0 },
-  // 親ID（上位）
-  { INPUTBOX_TYPE_NUM,   DMPSTR_ID_H,   LX_ID_H_CAP,   LY_ID_H_CAP,
-    LX_ID_H_BOX,         LY_ID_H_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_id_no,       PAGE_1, 65535,  0 },
-  // 親ID（下位）
-  { INPUTBOX_TYPE_NUM,   DMPSTR_ID_L,   LX_ID_L_CAP,   LY_ID_L_CAP,
-    LX_ID_L_BOX,         LY_ID_L_BOX,   CALC_NUMBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_id_no,       PAGE_1, 65535,  0 },
-  // イベント配布フラグ
-  { INPUTBOX_TYPE_SWITCH,  DMPSTR_EVENT_FLAG, LX_EVENTGET_CAP,  LY_EVENTGET_CAP,
-    LX_EVENTGET_BOX,       LY_EVENTGET_BOX,  CALC_NUMBOX_WIDTH(2), LINE_HEIGHT+8,
-    ID_PARA_event_get_flag, PAGE_1, DMPSTR_TAMAGO_OFF, SWITCH_STRNUM_DEFAULT
-  },
-};
 
 //--------------------------------------------------------------
 /**
@@ -435,18 +143,34 @@ typedef struct {
 
 }DMP_MAINWORK;
 
+#include "debug_makepoke.cdat"
+
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
 static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT PROC_MAKEPOKE_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+
 static void UpdatePokeExpMinMax( DMP_MAINWORK* wk, const POKEMON_PARAM* pp );
-static void setup_view( DMP_MAINWORK* wk );
-static void cleanup_view( DMP_MAINWORK* wk );
-static BOOL root_ctrl( DMP_MAINWORK* wk );
+static void main_setup_view( DMP_MAINWORK* wk );
+static void main_cleanup_view( DMP_MAINWORK* wk );
+static BOOL main_root_ctrl( DMP_MAINWORK* wk );
+
+//ルートコントロール
+static int root_wait_ctrl( DMP_MAINWORK* wk );
+static int inputbox_type_str( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p );
+static int inputbox_type_num( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p );
+static int inputbox_type_switch( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p );
+static int inputbox_type_btn( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p );
+
 static int check_box_touch( DMP_MAINWORK* wk );
 static BOOL is_hiragana( const STRBUF* buf );
+static void default_waza_set( DMP_MAINWORK* wk, u16 waza );
+static void rare_param_set( DMP_MAINWORK* wk );
+
+
+///サブルーチン
 static void update_dst( DMP_MAINWORK* wk );
 static void print_caption( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p );
 static PRINTSYS_LSB box_sub_get_bgcol( u8 input_type );
@@ -493,59 +217,74 @@ const GFL_PROC_DATA ProcData_DebugMakePoke = {
   PROC_MAKEPOKE_Quit,
 };
 
+////////////////////////////////////////////////////////////////////////////////////
+//==================================================================================
+/*
+ *  メインプロセス
+ */
+//==================================================================================
+////////////////////////////////////////////////////////////////////////////////////
 
 static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
+  const PROCPARAM_DEBUG_MAKEPOKE* proc_param = (const PROCPARAM_DEBUG_MAKEPOKE*)pwk;
+
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_DEBUG_MAKEPOKE,   PROC_HEAP_SIZE );
 
   {
     DMP_MAINWORK* wk = GFL_PROC_AllocWork( proc, sizeof(DMP_MAINWORK), HEAPID_DEBUG_MAKEPOKE );
-    if( wk )
-    {
-      const PROCPARAM_DEBUG_MAKEPOKE* proc_param = (const PROCPARAM_DEBUG_MAKEPOKE*)pwk;
-      
-      wk->heapID = HEAPID_DEBUG_MAKEPOKE;
-      wk->dst = proc_param->dst;
-      wk->src = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
-      wk->proc_param = (PROCPARAM_DEBUG_MAKEPOKE*)proc_param;
-      GFL_STD_MemCopy( wk->dst, wk->src, POKETOOL_GetWorkSize() );
-
-      if( proc_param->oyaStatus ){
-        wk->oyaID = MyStatus_GetID( proc_param->oyaStatus );
-        wk->oyaSex = MyStatus_GetMySex( proc_param->oyaStatus );
-
-        if( proc_param->mode == DMP_MODE_MAKE ){
-          PP_Get(wk->dst,ID_PARA_oyaname_raw, wk->oyaName);
-        }else{
-          STRTOOL_Copy( MyStatus_GetMyName(proc_param->oyaStatus), wk->oyaName, NELEMS(wk->oyaName) );
-        }
-      }else{
-//        static const STRCODE dmyName[] = { L'だ', L'み', L'お', 0xffff };
-        wk->oyaID = 0;
-        wk->oyaSex = 0;
-        GFL_MSG_GetString( wk->msgData, DMPSTR_DMY_OYA_NAME, wk->tmpbuf );
-        //STRTOOL_Copyにしないと、STRBUFのバッファサイズオーバーに引っかかる
-        STRTOOL_Copy( GFL_STR_GetStringCodePointer( wk->tmpbuf), wk->oyaName, NELEMS(wk->oyaName) );
-      }
-      wk->oyaID_org = wk->oyaID;
-
-      if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 )
-      {
-        u32 defaultMonsNo = proc_param->defaultMonsNo;
-        if( (defaultMonsNo == 0)
-        ||  (defaultMonsNo > MONSNO_END)
-        ){
-          defaultMonsNo = MONSNO_MIZYUMARU;
-        }
-        PP_Setup( wk->dst, defaultMonsNo, 5, wk->oyaID  );
-      }
-
-      UpdatePokeExpMinMax( wk, wk->dst );
-      wk->seq = 0;
-      wk->pageNo = PAGE_0;
+    if( wk == NULL ){
+      return GFL_PROC_RES_FINISH;
     }
-  }
+    wk->heapID = HEAPID_DEBUG_MAKEPOKE;
+    wk->dst = proc_param->dst;
+    wk->src = GFL_HEAP_AllocMemory( wk->heapID, POKETOOL_GetWorkSize() );
+    wk->proc_param = (PROCPARAM_DEBUG_MAKEPOKE*)proc_param;
+    GFL_STD_MemCopy( wk->dst, wk->src, POKETOOL_GetWorkSize() );
 
+    if( proc_param->oyaStatus ){
+      wk->oyaID = MyStatus_GetID( proc_param->oyaStatus );
+      wk->oyaSex = MyStatus_GetMySex( proc_param->oyaStatus );
+
+      if( proc_param->mode == DMP_MODE_MAKE ){
+        PP_Get(wk->dst,ID_PARA_oyaname_raw, wk->oyaName);
+      }else{
+        STRTOOL_Copy( MyStatus_GetMyName(proc_param->oyaStatus), wk->oyaName, NELEMS(wk->oyaName) );
+      }
+    }else{
+      wk->oyaID = 0;
+      wk->oyaSex = 0;
+      GFL_MSG_GetString( wk->msgData, DMPSTR_DMY_OYA_NAME, wk->tmpbuf );
+      //STRTOOL_Copyにしないと、STRBUFのバッファサイズオーバーに引っかかる
+      STRTOOL_Copy( GFL_STR_GetStringCodePointer( wk->tmpbuf), wk->oyaName, NELEMS(wk->oyaName) );
+    }
+    wk->oyaID_org = wk->oyaID;
+
+    if( PP_Get(wk->dst, ID_PARA_monsno, NULL) == 0 )
+    {
+      u32 defaultMonsNo = proc_param->defaultMonsNo;
+      if( (defaultMonsNo == 0)
+      ||  (defaultMonsNo > MONSNO_END)
+      ){
+        defaultMonsNo = MONSNO_MIZYUMARU;
+      }
+      PP_Setup( wk->dst, defaultMonsNo, 5, wk->oyaID  );
+    }
+
+    UpdatePokeExpMinMax( wk, wk->dst );
+    wk->seq = 0;
+    wk->pageNo = PAGE_0;
+  }
+  return GFL_PROC_RES_FINISH;
+}
+
+static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+  DMP_MAINWORK* wk = mywk;
+
+  GFL_HEAP_FreeMemory( wk->src );
+  GFL_PROC_FreeWork( proc );
+  GFL_HEAP_DeleteHeap( HEAPID_DEBUG_MAKEPOKE );
   return GFL_PROC_RES_FINISH;
 }
 
@@ -555,29 +294,20 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Main( GFL_PROC* proc, int* seq, void* pwk, 
 
   switch( *seq ){
   case 0:
-    setup_view( wk );
+    main_setup_view( wk );
     (*seq)++;
     break;
   case 1:
-    if( root_ctrl(wk) ){
+    if( main_root_ctrl(wk) ){
       (*seq)++;
     }
     break;
   case 2:
-    cleanup_view( wk );
+    main_cleanup_view( wk );
     return GFL_PROC_RES_FINISH;
   }
 
   return GFL_PROC_RES_CONTINUE;
-}
-static GFL_PROC_RESULT PROC_MAKEPOKE_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
-{
-  DMP_MAINWORK* wk = mywk;
-
-  GFL_HEAP_FreeMemory( wk->src );
-  GFL_PROC_FreeWork( proc );
-  GFL_HEAP_DeleteHeap( HEAPID_DEBUG_MAKEPOKE );
-  return GFL_PROC_RES_FINISH;
 }
 
 
@@ -603,6 +333,13 @@ static void UpdatePokeExpMinMax( DMP_MAINWORK* wk, const POKEMON_PARAM* pp )
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+//==================================================================================
+/*
+ *  メインシーケンス
+ */
+//==================================================================================
+////////////////////////////////////////////////////////////////////////////////////
 
 //----------------------------------------------------------------------------------
 /**
@@ -611,7 +348,7 @@ static void UpdatePokeExpMinMax( DMP_MAINWORK* wk, const POKEMON_PARAM* pp )
  * @param   wk
  */
 //----------------------------------------------------------------------------------
-static void setup_view( DMP_MAINWORK* wk )
+static void main_setup_view( DMP_MAINWORK* wk )
 {
   static const GFL_DISP_VRAM vramBank = {
     GX_VRAM_BG_128_A,           // メイン2DエンジンのBG
@@ -671,7 +408,7 @@ static void setup_view( DMP_MAINWORK* wk )
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_makepoke_dat, wk->heapID );
   wk->strbuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->heapID );
   wk->tmpbuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->heapID );
-  wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
+  wk->printQue = PRINTSYS_QUE_CreateEx( 4096, wk->heapID );
   PRINT_UTIL_Setup( &wk->printUtil, wk->win );
 
 
@@ -689,7 +426,7 @@ static void setup_view( DMP_MAINWORK* wk )
  * @param   wk
  */
 //----------------------------------------------------------------------------------
-static void cleanup_view( DMP_MAINWORK* wk )
+static void main_cleanup_view( DMP_MAINWORK* wk )
 {
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->tmpbuf );
@@ -710,227 +447,255 @@ static void cleanup_view( DMP_MAINWORK* wk )
  * @retval  BOOL    終わったらTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL root_ctrl( DMP_MAINWORK* wk )
+static BOOL main_root_ctrl( DMP_MAINWORK* wk )
 {
-  enum {
-    SEQ_DRAW_CAPTION = 0,
-    SEQ_DRAW_BOX,
-    SEQ_WAIT_CTRL,
-    SEQ_INPUT_STR,
-    SEQ_INPUT_NICKNAME,
-    SEQ_INPUT_NUM,
-    SEQ_PAGE_CHANGE,
-  };
+  if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) == FALSE ){
+    return FALSE;
+  }
 
-  if( PRINT_UTIL_Trans(&wk->printUtil, wk->printQue) )
-  {
-    switch( wk->seq ){
-    case SEQ_DRAW_CAPTION:
-      {
-        int i;
-        for(i=0; i<NELEMS(InputBoxParams); ++i){
-          print_caption( wk, &InputBoxParams[i] );
-        }
+  switch( wk->seq ){
+  case SEQ_DRAW_CAPTION:
+    {
+      int i;
+      for(i=0; i<NELEMS(InputBoxParams); ++i){
+        print_caption( wk, &InputBoxParams[i] );
       }
-      wk->seq = SEQ_DRAW_BOX;
-      break;
-    case SEQ_DRAW_BOX:
-      {
-        int i;
-
-        PP_Renew( wk->dst );
-        for(i=0; i<NELEMS(InputBoxParams); ++i){
-          box_setup( wk, i, wk->dst );
-        }
-        wk->seq = SEQ_WAIT_CTRL;
-      }
-      break;
-    case SEQ_WAIT_CTRL:
-      // L,R によるページ切り替え
-      {
-        u16 keyTrg = GFL_UI_KEY_GetTrg();
-        u8 fChange = FALSE;
-        if( keyTrg & PAD_BUTTON_L )
-        {
-          if( --(wk->pageNo) < 0 ){
-            wk->pageNo = PAGE_MAX - 1;
-          }
-          fChange = TRUE;
-        }
-        else if( keyTrg & PAD_BUTTON_R )
-        {
-          if( ++(wk->pageNo) >= PAGE_MAX ){
-            wk->pageNo = PAGE_0;
-          }
-          fChange = TRUE;
-        }
-        if( fChange ){
-          wk->seq = SEQ_PAGE_CHANGE;
-          break;
-        }
-      }
-
-      wk->boxIdx = check_box_touch( wk );
-      if( wk->boxIdx >= 0 )
-      {
-        const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
-        switch( p->type ){
-        case INPUTBOX_TYPE_STR:
-        case INPUTBOX_TYPE_NICKNAME:
-          {
-            static const GFL_SKB_SETUP setup = {
-              STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
-              GFL_SKB_MODE_KATAKANA, TRUE, 0, PAD_BUTTON_START,
-              PRINT_FRAME, SKB_PALIDX1, SKB_PALIDX2,
-            };
-            wk->skbSetup = setup;
-            box_getstr( wk, wk->boxIdx, wk->strbuf );
-            if( is_hiragana(wk->strbuf) ){
-              wk->skbSetup.mode = GFL_SKB_MODE_HIRAGANA;
-            }
-            wk->skb = GFL_SKB_Create( (void*)(wk->strbuf), &wk->skbSetup, wk->heapID );
-            COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg, wk->heapID );
-            wk->seq = (p->type == INPUTBOX_TYPE_STR)? SEQ_INPUT_STR : SEQ_INPUT_NICKNAME;
-          }
-          break;
-        case INPUTBOX_TYPE_NUM:
-          NumInput_Setup( &wk->numInput, wk->strbuf, wk->win, wk->font,
-              &wk->printUtil, wk->printQue, p, box_getvalue(wk, wk->boxIdx), wk );
-          wk->seq = SEQ_INPUT_NUM;
-          break;
-        case INPUTBOX_TYPE_SWITCH:
-          {
-            int val = box_getvalue( wk, wk->boxIdx );
-            if( wk->touch_prev_flag ){
-              if( --val < 0 ){
-                val = p->arg2-1;
-              }
-            }else{
-              if( ++val >= p->arg2 ){
-                val = 0;
-              }
-            }
-
-            pp_update( wk, wk->boxIdx, val );
-            box_update( wk, wk->boxIdx, val );
-//            box_setup( wk, wk->boxIdx, wk->dst );
-          }
-          break;
-        case INPUTBOX_TYPE_BTN:
-          {
-            u32 i;
-
-            update_dst( wk );
-
-            switch( wk->boxIdx ){
-            case INPUTBOX_ID_HANERU_BUTTON:   // はねるだけボタン
-              PP_SetWazaPos( wk->dst, WAZANO_HANERU, 0 );
-              for(i=1; i<PTL_WAZA_MAX; ++i){
-                PP_SetWazaPos( wk->dst, WAZANO_NULL, i );
-              }
-              break;
-            case INPUTBOX_ID_HATAKU_BUTTON:   // はたくだけボタン
-              PP_SetWazaPos( wk->dst, WAZANO_HATAKU, 0 );
-              for(i=1; i<PTL_WAZA_MAX; ++i){
-                PP_SetWazaPos( wk->dst, WAZANO_NULL, i );
-              }
-              break;
-            default:                          // デフォルトワザセットボタン
-              PP_SetWazaDefault( wk->dst );
-              break;
-            }
-            PP_RecoverWazaPPAll( wk->dst );
-
-            // わざパラメータを反映
-            for(i=0; i<PTL_WAZA_MAX; ++i){
-              box_setup( wk, INPUTBOX_ID_WAZA1+i,   wk->dst );
-              box_setup( wk, INPUTBOX_ID_PPMAX1+i,  wk->dst );
-              box_setup( wk, INPUTBOX_ID_PPCNT1+i,  wk->dst );
-              box_setup( wk, INPUTBOX_ID_PPEDIT1+i, wk->dst );
-            }
-          }
-          break;
-        }
-        break;
-      }
-      {
-        u16 key = GFL_UI_KEY_GetTrg();
-        if( key & PAD_BUTTON_START ){
-          update_dst( wk );
-          wk->proc_param->ret_code = DMP_RET_REWRITE;
-          return TRUE;
-        }
-        if( key & PAD_BUTTON_SELECT ){
-          update_dst( wk );
-          wk->proc_param->ret_code = DMP_RET_COPY;
-          return TRUE;
-        }
-        if( key & PAD_BUTTON_B ){
-          GFL_STD_MemCopy( wk->src, wk->dst, POKETOOL_GetWorkSize() );
-          wk->proc_param->ret_code = DMP_RET_CANCEL;
-          return TRUE;
-        }
-      }
-      break;
-    case SEQ_INPUT_STR:
-      if( COMPSKB_Main(&wk->comp) )
-      {
-        int idx = COMPSKB_GetWordIndex( &wk->comp );
-        if( idx < 0 ){
-          if( GFL_STR_GetBufferLength(wk->strbuf) == 0 ){
-            idx = 0;
-          }
-        }
-        if( idx >= 0 ){
-          box_update( wk, wk->boxIdx, idx );
-          box_relation( wk, wk->boxIdx );
-        }
-        COMPSKB_Cleanup( &wk->comp );
-        GFL_SKB_Delete( wk->skb );
-        wk->seq = SEQ_WAIT_CTRL;
-      }
-      break;
-    case SEQ_INPUT_NICKNAME:
-      if( COMPSKB_Main(&wk->comp) )
-      {
-        const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
-
-        if( GFL_STR_GetBufferLength(wk->strbuf) == 0)
-        {
-          u16  mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
-          GFL_MSGDATA* msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, GFL_HEAP_LOWID(wk->heapID) );
-          GFL_MSG_GetString( msg, mons_no, wk->strbuf );
-          GFL_MSG_Delete( msg );
-        }
-
-        PP_Put( wk->dst, p->paraID, (u32)(wk->strbuf) );
-        box_update( wk, wk->boxIdx, 0 );
-        box_relation( wk, wk->boxIdx );
-
-        COMPSKB_Cleanup( &wk->comp );
-        GFL_SKB_Delete( wk->skb );
-        wk->seq = SEQ_WAIT_CTRL;
-      }
-      break;
-    case SEQ_INPUT_NUM:
-      if( NumInput_Main(&wk->numInput) )
-      {
-        u32 num = NumInput_GetNum( &wk->numInput );
-        box_update( wk, wk->boxIdx, num );
-        box_relation( wk, wk->boxIdx );
-        wk->seq = SEQ_WAIT_CTRL;
-      }
-      break;
-    case SEQ_PAGE_CHANGE:
-      GFL_BMP_Clear( wk->bmp, COLIDX_WHITE );
-      GFL_BMPWIN_TransVramCharacter( wk->win );
-      wk->seq = SEQ_DRAW_CAPTION;
-      break;
     }
+    wk->seq = SEQ_DRAW_BOX;
+    break;
+  case SEQ_DRAW_BOX:
+    {
+      int i;
+
+      PP_Renew( wk->dst );
+      for(i=0; i<NELEMS(InputBoxParams); ++i){
+        box_setup( wk, i, wk->dst );
+      }
+      wk->seq = SEQ_WAIT_CTRL;
+    }
+    break;
+  case SEQ_WAIT_CTRL:
+    //入力取得
+    wk->seq = root_wait_ctrl( wk );
+    break;
+  case SEQ_INPUT_STR:
+    if( COMPSKB_Main(&wk->comp) )
+    {
+      int idx = COMPSKB_GetWordIndex( &wk->comp );
+      if( idx < 0 ){
+        if( GFL_STR_GetBufferLength(wk->strbuf) == 0 ){
+          idx = 0;
+        }
+      }
+      if( idx >= 0 ){
+        box_update( wk, wk->boxIdx, idx );
+        box_relation( wk, wk->boxIdx );
+      }
+      COMPSKB_Cleanup( &wk->comp );
+      GFL_SKB_Delete( wk->skb );
+      wk->seq = SEQ_WAIT_CTRL;
+    }
+    break;
+  case SEQ_INPUT_NICKNAME:
+    if( COMPSKB_Main(&wk->comp) )
+    {
+      const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
+
+      if( GFL_STR_GetBufferLength(wk->strbuf) == 0)
+      {
+        u16  mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+        GFL_MSGDATA* msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, GFL_HEAP_LOWID(wk->heapID) );
+        GFL_MSG_GetString( msg, mons_no, wk->strbuf );
+        GFL_MSG_Delete( msg );
+      }
+
+      PP_Put( wk->dst, p->paraID, (u32)(wk->strbuf) );
+      box_update( wk, wk->boxIdx, 0 );
+      box_relation( wk, wk->boxIdx );
+
+      COMPSKB_Cleanup( &wk->comp );
+      GFL_SKB_Delete( wk->skb );
+      wk->seq = SEQ_WAIT_CTRL;
+    }
+    break;
+  case SEQ_INPUT_NUM:
+    if( NumInput_Main(&wk->numInput) )
+    {
+      u32 num = NumInput_GetNum( &wk->numInput );
+      box_update( wk, wk->boxIdx, num );
+      box_relation( wk, wk->boxIdx );
+      wk->seq = SEQ_WAIT_CTRL;
+    }
+    break;
+  case SEQ_PAGE_CHANGE:
+    GFL_BMP_Clear( wk->bmp, COLIDX_WHITE );
+    GFL_BMPWIN_TransVramCharacter( wk->win );
+    wk->seq = SEQ_DRAW_CAPTION;
+    break;
+  case SEQ_EXIT:
+    return TRUE;
   }
   return FALSE;
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+//==================================================================================
+/*
+ *  メインコントロール
+ */
+//==================================================================================
+////////////////////////////////////////////////////////////////////////////////////
+
+//----------------------------------------------------
+/*
+ *
+ */
+//----------------------------------------------------
+static int root_wait_ctrl( DMP_MAINWORK* wk ) 
+{
+  u16 key = GFL_UI_KEY_GetTrg();
+
+  // L,R によるページ切り替え
+  if( key & PAD_BUTTON_L )
+  {
+    if( --(wk->pageNo) < 0 ){
+      wk->pageNo = PAGE_MAX - 1;
+    }
+    return SEQ_PAGE_CHANGE;
+  }
+  else if( key & PAD_BUTTON_R )
+  {
+    if( ++(wk->pageNo) >= PAGE_MAX ){
+      wk->pageNo = PAGE_0;
+    }
+    return SEQ_PAGE_CHANGE;
+  }
+  
+  //決定/キャンセル
+  if( key & PAD_BUTTON_START ){
+    update_dst( wk );
+    wk->proc_param->ret_code = DMP_RET_REWRITE;
+    return SEQ_EXIT;
+  }
+  if( key & PAD_BUTTON_SELECT ){
+    update_dst( wk );
+    wk->proc_param->ret_code = DMP_RET_COPY;
+    return SEQ_EXIT;
+  }
+  if( key & PAD_BUTTON_B ){
+    GFL_STD_MemCopy( wk->src, wk->dst, POKETOOL_GetWorkSize() );
+    wk->proc_param->ret_code = DMP_RET_CANCEL;
+    return SEQ_EXIT;
+  }
+  wk->boxIdx = check_box_touch( wk );
+ 
+  if( wk->boxIdx >= 0 )
+  {
+    const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
+    switch( p->type ){
+    case INPUTBOX_TYPE_STR:
+    case INPUTBOX_TYPE_NICKNAME:
+      return inputbox_type_str( wk, p );
+    
+    case INPUTBOX_TYPE_NUM:
+      return inputbox_type_num( wk, p );
+    
+    case INPUTBOX_TYPE_SWITCH:
+      return inputbox_type_switch( wk, p );
+    
+    case INPUTBOX_TYPE_BTN:
+      return inputbox_type_btn( wk, p );
+    
+    }
+  }
+  return SEQ_WAIT_CTRL;
+}
+
+/*
+ *
+ */
+static int inputbox_type_str( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
+{
+  static const GFL_SKB_SETUP setup = {
+    STRBUF_LEN, GFL_SKB_STRTYPE_STRBUF,
+    GFL_SKB_MODE_KATAKANA, TRUE, 0, PAD_BUTTON_START,
+    PRINT_FRAME, SKB_PALIDX1, SKB_PALIDX2,
+  };
+  
+  wk->skbSetup = setup;
+  box_getstr( wk, wk->boxIdx, wk->strbuf );
+  
+  if( is_hiragana(wk->strbuf) ){
+    wk->skbSetup.mode = GFL_SKB_MODE_HIRAGANA;
+  }
+  wk->skb = GFL_SKB_Create( (void*)(wk->strbuf), &wk->skbSetup, wk->heapID );
+  COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg, wk->heapID );
+ 
+  return ((p->type == INPUTBOX_TYPE_STR)? SEQ_INPUT_STR : SEQ_INPUT_NICKNAME);
+}
+
+/*
+ *
+ */
+static int inputbox_type_num( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
+{
+  NumInput_Setup( &wk->numInput, wk->strbuf, wk->win, wk->font,
+    &wk->printUtil, wk->printQue, p, box_getvalue(wk, wk->boxIdx), wk );
+  
+  return SEQ_INPUT_NUM;
+}
+
+/*
+ *
+ */
+static int inputbox_type_switch( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
+{
+  int val = box_getvalue( wk, wk->boxIdx );
+  
+  if( wk->touch_prev_flag ){
+    if( --val < 0 ){
+      val = p->arg2-1;
+    }
+  }else{
+    if( ++val >= p->arg2 ){
+      val = 0;
+    }
+  }
+  pp_update( wk, wk->boxIdx, val );
+  box_update( wk, wk->boxIdx, val );
+
+  return SEQ_WAIT_CTRL;
+}
+
+/*
+ *
+ */
+static int inputbox_type_btn( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
+{
+  u32 i;
+
+  update_dst( wk );
+
+  switch( wk->boxIdx ){
+  case INPUTBOX_ID_DEF_BUTTON:   // デフォルトワザセットボタン
+    default_waza_set( wk, WAZANO_NULL );
+    break;
+  case INPUTBOX_ID_HANERU_BUTTON:   // はねるだけボタン
+    default_waza_set( wk, WAZANO_HANERU );
+    break;
+  case INPUTBOX_ID_HATAKU_BUTTON:   // はたくだけボタン
+    default_waza_set( wk, WAZANO_HATAKU );
+    break;
+  case INPUTBOX_ID_RARE_SET_BUTTON: // レアセットボタン
+    rare_param_set( wk );
+    break;
+  }
+  return SEQ_WAIT_CTRL;
+}
+
+/*
+ *
+ */
 static int check_box_touch( DMP_MAINWORK* wk )
 {
   u32 x, y;
@@ -961,6 +726,9 @@ static int check_box_touch( DMP_MAINWORK* wk )
   return -1;
 }
 
+/*
+ *
+ */
 static BOOL is_hiragana( const STRBUF* buf )
 {
   const STRCODE* ptr;
@@ -969,6 +737,57 @@ static BOOL is_hiragana( const STRBUF* buf )
     return TRUE;
   }
   return FALSE;
+}
+
+/*
+ *
+ */
+static void default_waza_set( DMP_MAINWORK* wk, u16 waza )
+{
+  int i;
+
+  if( waza != WAZANO_NULL ){
+    PP_SetWazaPos( wk->dst, waza, 0 );
+    for(i=1; i<PTL_WAZA_MAX; ++i){
+      PP_SetWazaPos( wk->dst, WAZANO_NULL, i );
+    }
+  }else{
+    PP_SetWazaDefault( wk->dst );
+  }
+  PP_RecoverWazaPPAll( wk->dst );
+
+  // わざパラメータを反映
+  for(i=0; i<PTL_WAZA_MAX; ++i){
+    box_setup( wk, INPUTBOX_ID_WAZA1+i,   wk->dst );
+    box_setup( wk, INPUTBOX_ID_PPMAX1+i,  wk->dst );
+    box_setup( wk, INPUTBOX_ID_PPCNT1+i,  wk->dst );
+    box_setup( wk, INPUTBOX_ID_PPEDIT1+i, wk->dst );
+  }
+}
+
+/*
+ *
+ */
+static void rare_param_set( DMP_MAINWORK* wk )
+{
+  int i;
+ 
+  wk->boxValue[ INPUTBOX_ID_RARE ] = TRUE;
+  {
+    u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
+    u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+    u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
+    u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX );
+    u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, TRUE );
+
+    wk->boxValue[ INPUTBOX_ID_PER_RND_H ] = personal_rnd>>16;
+    wk->boxValue[ INPUTBOX_ID_PER_RND_L ] = personal_rnd&0xFFFF;
+  }
+  update_dst( wk );
+
+  box_setup( wk, INPUTBOX_ID_PER_RND_H, wk->dst );
+  box_setup( wk, INPUTBOX_ID_PER_RND_L, wk->dst );
+  box_setup( wk, INPUTBOX_ID_RARE, wk->dst );
 }
 
 //----------------------------------------------------------------------------------
@@ -986,15 +805,20 @@ static void update_dst( DMP_MAINWORK* wk )
 
   mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
   tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
-  sex = box_getvalue( wk, INPUTBOX_ID_SEX );
   level = box_getvalue( wk, INPUTBOX_ID_LEVEL );
+#if 0
+  sex = box_getvalue( wk, INPUTBOX_ID_SEX );
   personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, rare_flag );
-
+#else
+  personal_rnd =  box_getvalue( wk, INPUTBOX_ID_PER_RND_H) << 16;
+  personal_rnd |= box_getvalue( wk, INPUTBOX_ID_PER_RND_L);
+  sex = POKETOOL_GetSex( mons_no, form_no, personal_rnd );
+#endif
   PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
-  if( wk->proc_param->mode == DMP_MODE_D_FIGHT ){
-    PP_Clear( wk->dst );  //MAKEモードでは初期化済みのPPが来るので、ここで初期化しなくていい
-  }
+//  if( wk->proc_param->mode == DMP_MODE_D_FIGHT ){
+  PP_Clear( wk->dst );  //MAKEモードでは初期化済みのPPが来るので、ここで初期化しなくていい
+//  }
   {
     u32 pow_val, exp;
     u8 hp, pow, def, agi, spw, sdf;
@@ -1025,6 +849,9 @@ static void update_dst( DMP_MAINWORK* wk )
       rAgi = PP_Get( wk->dst, ID_PARA_agi_rnd, NULL );
       TAYA_Printf("[[読み込み]] 性別=%d, 個性乱数=%08x\n", sexResult, rndResult);
       TAYA_Printf("             HP:%2d  ATK:%2d  DEF:%2d  SAT:%2d  SDF:%2d  AGI:%2d\n",
+                   rHP, rPow, rDef, rSat, rSde, rAgi );
+      IWASAWA_Printf("[[読み込み]] 性別=%d, 個性乱数=%08x\n", sexResult, rndResult);
+      IWASAWA_Printf("             HP:%2d  ATK:%2d  DEF:%2d  SAT:%2d  SDF:%2d  AGI:%2d\n",
                    rHP, rPow, rDef, rSat, rSde, rAgi );
     }
 
@@ -1264,6 +1091,18 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
       }
     }
     break;
+  
+  case ID_PARA_personal_rnd:
+    {
+      value = PP_Get( pp, p->paraID, NULL );
+      if( boxID == INPUTBOX_ID_PER_RND_L ){
+        value &= 0xffff;
+      }else{
+        value >>= 16;
+        value &= 0xffff;
+      }
+    }
+    break;
 
   case ID_PARA_country_code:
     value = countryCode_formal_to_local( PP_Get(pp, p->paraID, NULL) );
@@ -1282,12 +1121,20 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
 
   switch( boxID ){
   case INPUTBOX_ID_SEX:
+  case INPUTBOX_ID_SEX_FIX:
+#if 0
     if( personal_is_sex_fixed( pp ) ){
       box_write_fixval( wk, boxID, value );
       return;
     }
-    break;
-
+#else
+    if( (p->pageNo == wk->pageNo) ){
+      box_write_fixval( wk, boxID, value );
+    }else{
+      wk->boxValue[ boxID ] = value;
+    }
+    return;
+#endif
   default:
     break;
   }
@@ -1331,16 +1178,24 @@ static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
   const INPUT_BOX_PARAM* p = &InputBoxParams[ boxID ];
 
   switch( boxID ){
+#if 0
   case INPUTBOX_ID_RARE:
     wk->boxValue[ boxID ] = value;
+    {
+      u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
+      u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+      u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
+      u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX );
+      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, value );
+    }
     update_dst( wk );
     break;
-
   case INPUTBOX_ID_SEX:
+  case INPUTBOX_ID_SEX_FIX:
     wk->boxValue[ boxID ] = value;
     update_dst( wk );
     break;
-
+#endif
   case INPUTBOX_ID_GET_CASETTE:
     value = casetteVer_local_to_formal( value );
     PP_Put( wk->dst, p->paraID, value );
@@ -1394,7 +1249,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
   case INPUTBOX_TYPE_FIXSTR:
     {
       GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
-      GFL_MSG_GetString( msgdat, value, wk->strbuf );
+      GFL_MSG_GetString( msgdat, value+p->arg2, wk->strbuf );
       GFL_MSG_Delete( msgdat );
     }
     break;
@@ -1424,6 +1279,9 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
       case INPUTBOX_NUM_ARG_DEPEND:
         keta = calc_keta( box_getvalue(wk, p->arg2) );
         break;
+      case INPUTBOX_NUM_ARG_FORM:
+        keta = 2;
+        break;
       }
       STRTOOL_SetNumber( wk->strbuf, value, keta, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
     }
@@ -1437,6 +1295,52 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
     break;
   }
 }
+
+static void box_setup_renew( DMP_MAINWORK* wk )
+{
+  box_setup( wk, INPUTBOX_ID_TYPE1, wk->dst );
+  box_setup( wk, INPUTBOX_ID_TYPE2, wk->dst );
+  box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
+  box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
+  box_setup( wk, INPUTBOX_ID_FORM, wk->dst );
+  box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
+  box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
+  box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
+  box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
+  box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
+  box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
+  box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
+  box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
+}
+
+static void box_setup_form_change( DMP_MAINWORK* wk )
+{
+  u16 item = box_getvalue( wk, INPUTBOX_ID_ITEM );
+  u16 mons = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+  u16 form = box_getvalue( wk, INPUTBOX_ID_FORM );
+  u8  now_form = PP_Get( wk->dst, ID_PARA_form_no, NULL );
+
+  switch( mons ){
+  case MONSNO_GIRATHINA:
+    form = FORMNO_GIRATHINA_ANOTHER+(item==ITEM_HAKKINDAMA);
+    break;
+  case MONSNO_ARUSEUSU:
+    form = POKETOOL_GetPokeTypeFromItem( item );
+    break;
+  case MONSNO_INSEKUTA:
+    form = POKETOOL_GetPokeInsekutaFromItem( item );
+    break;
+  default:
+    break;
+  }
+  if( form == now_form ){
+    return;
+  }
+  box_update( wk, INPUTBOX_ID_FORM, form );
+  update_dst( wk );
+  box_setup_renew( wk );
+}
+
 //----------------------------------------------------------------------------------
 /**
  * １つのボックス内容が更新された時、関連するボックス＆ポケモンパラメータの更新を行う
@@ -1456,21 +1360,11 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
 
       PP_ChangeMonsNo( wk->dst, monsno );
       PP_Put( wk->dst, ID_PARA_exp, exp );
+      PP_Put( wk->dst, ID_PARA_form_no, 0 );
       PP_Renew( wk->dst );
+      box_setup_form_change( wk );
 
-      box_setup( wk, INPUTBOX_ID_TYPE1, wk->dst );
-      box_setup( wk, INPUTBOX_ID_TYPE2, wk->dst );
-      box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
-      box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
-      box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
-      box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
-      box_setup( wk, INPUTBOX_ID_POWVAL, wk->dst );
-      box_setup( wk, INPUTBOX_ID_DEFVAL, wk->dst );
-      box_setup( wk, INPUTBOX_ID_AGIVAL, wk->dst );
-      box_setup( wk, INPUTBOX_ID_SPWVAL, wk->dst );
-      box_setup( wk, INPUTBOX_ID_SDFVAL, wk->dst );
-      box_setup( wk, INPUTBOX_ID_EXP, wk->dst );
-
+      box_setup_renew( wk );
       UpdatePokeExpMinMax( wk, wk->dst );
     }
     break;
@@ -1598,9 +1492,27 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       u32 id_L = box_getvalue( wk, INPUTBOX_ID_OYAID_L );
       wk->oyaID = (id_H << 16) | (id_L);
       update_dst( wk );
+      
+      box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
     }
     break;
+  
+  case INPUTBOX_ID_PER_RND_H:
+  case INPUTBOX_ID_PER_RND_L:
+    {
+      u8 value;
+      u8 rare;
+      update_dst( wk );
 
+      value = PP_Get( wk->dst, ID_PARA_sex, NULL );
+      wk->boxValue[ INPUTBOX_ID_SEX_FIX] = value;
+      box_update( wk, INPUTBOX_ID_SEX, value );
+      box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
+    }
+    break;
+  case INPUTBOX_ID_FORM:
+  case INPUTBOX_ID_ITEM:
+    box_setup_form_change( wk );
 
   case INPUTBOX_ID_POKERUS:
   case INPUTBOX_ID_GET_LEVEL:
@@ -1658,8 +1570,13 @@ static void NumInput_Setup( NUMINPUT_WORK* wk, STRBUF* buf, GFL_BMPWIN* win, GFL
     wk->numMax = mainWork->pokeExpMax;
     wk->numMin = mainWork->pokeExpMin;
     break;
+  case INPUTBOX_NUM_ARG_FORM:
+    wk->numMax = personal_getparam( mainWork->dst, POKEPER_ID_form_max )-1;
+    wk->numMin = 0;
+    break;
   }
   wk->keta = calc_keta( wk->numMax );
+  IWASAWA_Printf(" num keta = %d max = %d\n", wk->keta, wk->numMax );
   wk->cur_keta = 0;
 
   numinput_sub_setary( wk, value );
@@ -1805,6 +1722,10 @@ static u32 numinput_sub_calcnum( NUMINPUT_WORK* wk )
 static u16 calc_keta( u32 value )
 {
   u32 max, keta;
+
+  if( value > 100000000 ){  //最大10桁
+    return 10;
+  }
   keta = 1;
   max = 10;
   while( max < 100000000 )
@@ -2073,7 +1994,6 @@ static BOOL personal_is_sex_fixed( const POKEMON_PARAM* pp )
   }
   return FALSE;
 }
-
 //==============================================================================================
 //  カセットバージョン変換
 //==============================================================================================
