@@ -116,7 +116,7 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  u32 seq_no;
+  u8 seq_no;
   ALONG_DIR dir_hand_init;
   ALONG_DIR dir_hand;
 }MV_ALONGW_WORK;
@@ -1685,12 +1685,12 @@ static int AlongWall_WallMove(
 {
   u32 ret;
   int dir_hand = work->dir_hand;
-  int dir_move = MMDL_GetDirDisp( mmdl );
+  int dir_move = MMDL_GetDirMove( mmdl );
   
   ret = AlongWall_WallMoveCheck( mmdl, &dir_move, dir_hand );
   
   if( dir_move == DIR_NOT ){          //壁がない
-    dir_move = MMDL_GetDirDisp( mmdl );
+    dir_move = MMDL_GetDirMove( mmdl );
     ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
     MMDL_SetLocalAcmd( mmdl, ac );
     DEBUG_MMDL_PrintState( mmdl, "壁を見失っている", NULL );
@@ -1706,14 +1706,14 @@ static int AlongWall_WallMove(
   
   //移動制限ヒット&両手利き　反転を試みる
   if( (ret & MMDL_MOVEHITBIT_LIM) && work->dir_hand_init == ALONG_LR ){
-    dir_move = MMDL_TOOL_FlipDir( MMDL_GetDirDisp(mmdl) );
+    dir_move = MMDL_TOOL_FlipDir( MMDL_GetDirMove(mmdl) );
     dir_hand = DATA_DirHandFlip[dir_hand];
     work->dir_hand = dir_hand;
     
     ret = AlongWall_WallMoveCheck( mmdl, &dir_move, dir_hand );
     
     if( dir_move == DIR_NOT ){          //壁がない
-      dir_move = MMDL_GetDirDisp( mmdl );
+      dir_move = MMDL_GetDirMove( mmdl );
       ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
       MMDL_SetLocalAcmd( mmdl, ac );
       DEBUG_MMDL_PrintState( mmdl, "壁を見失っている 両手利き", NULL );
@@ -1735,7 +1735,7 @@ static int AlongWall_WallMove(
     ret = AlongWall_WallMoveCheck( mmdl, &dir_move, dir_hand );
     
     if( dir_move == DIR_NOT ){          //壁が無い
-      dir_move = MMDL_GetDirDisp( mmdl );
+      dir_move = MMDL_GetDirMove( mmdl );
       ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
       MMDL_SetLocalAcmd( mmdl, ac );
       DEBUG_MMDL_PrintState( mmdl, "壁を見失っている 壁ヒット", NULL );
@@ -1751,7 +1751,7 @@ static int AlongWall_WallMove(
   }
   
   //移動不可
-  dir_move = MMDL_GetDirDisp( mmdl );  //向きを戻す
+  dir_move = MMDL_GetDirMove( mmdl );  //向きを戻す
   ac = MMDL_ChangeDirAcmdCode( dir_move, AC_STAY_WALK_U_16F );
   MMDL_SetLocalAcmd( mmdl, ac );
   DEBUG_MMDL_PrintState( mmdl, "完全に移動不可", NULL );
