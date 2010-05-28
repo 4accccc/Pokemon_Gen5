@@ -534,9 +534,9 @@ static void Br_MusicalLook_Seq_Download( BR_SEQ_WORK *p_seqwk, int *p_seq, void 
       { 
 
         is_recv = BR_NET_GetDownloadMusicalShot( p_wk->p_param->p_net, p_wk->p_musical_shot_tbl, BR_MUSICALLOOK_RECV_MAX, &p_wk->musical_shot_recv_num );
-
         if( is_recv && p_wk->musical_shot_recv_num )
         { 
+          p_wk->photo_idx = 0;
           BR_SEQ_SetNext( p_seqwk, Br_MusicalLook_Seq_NextPhoto );
         }
         else
