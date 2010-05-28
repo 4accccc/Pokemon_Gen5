@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T16:43:45"/>
+	<create user="matsumiya" host="W00224" date="2010-05-28T15:17:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -400,16 +400,14 @@
 いま　ヒウンシティで　わだいの▽
 スィーツを　かうことが　できるんだよ▼
 でも　きょうは　もう
-ぼくで　うりきれ　みたいだ▼
-かようびは　すいてるから
-また　きてごらんよ！▼</language>
+ぼくで　うりきれ　みたいだ……▽
+また　べつのひに　きてごらんよ▼</language>
 		<language name="JPN_KANJI" width="256">うん？　ここでは
 いま　ヒウンシティで　話題の▽
 スィーツを　買うことが　できるんだよ▼
 でも　今日は　もう
-ぼくで　売り切れ　みたいだ▼
-火曜日は　すいてるから
-また　来てごらんよ！▼</language>
+ぼくで　売り切れ　みたいだ▽
+また　別の日に　来てごらんよ▼</language>
 	</row>
 
 	<row id="msg_c03p09_ice_shop_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -529,9 +527,8 @@
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="msg_c03p09_sign1_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
-		<comment>アトリエの看板
-・仮メッセージ</comment>
+	<row id="msg_c03p09_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>アトリエの看板</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">アトリエ　ヒウン</language>
 		<language name="JPN_KANJI" width="256">アトリエ　ヒウン</language>
@@ -541,9 +538,9 @@
 		<comment>アイス屋の看板</comment>
 		<attribute name="キャラ指定">看板</attribute>
 		<language name="JPN" width="256">ヒウンめいぶつ　ヒウンアイス
-はつ　なつ　あきの　かようびはつばい</language>
+ふゆは　さむいので　おやすみ</language>
 		<language name="JPN_KANJI" width="256">ヒウン名物　ヒウンアイス
-春　夏　秋の　火曜日発売</language>
+冬は　寒いので　販売休止</language>
 	</row>
 
 	<row id="msg_c03p09_businessman1_01" text-color="#000000,,,#ffffff,,#000000,#000000,,,,,,#000000,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
