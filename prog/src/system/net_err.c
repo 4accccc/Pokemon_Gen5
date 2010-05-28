@@ -84,6 +84,14 @@ typedef struct{
 	NET_ERR_STATUS status;		///<エラー画面システムの状況
 	s32 key_timer;				///<キー入力受付までのタイマー
 
+  u16 g2_blend_cnt;   //特殊カラーの取得
+  u16 g2s_blend_cnt;  //特殊カラーの取得
+
+  int sub_visible;    //サブ画面の表示色の設定
+  int sub_wnd;
+  u16 sub_bd_color;
+  u16 dummy2;
+
   //以下エラー情報保存
   GFL_NETSTATE_DWCERROR   wifi_error; //WIFIのエラー
   u8                      error;      //WIFI以外のエラー
@@ -91,7 +99,6 @@ typedef struct{
   u8                      dummy[2];
   NET_ERR_CHECK           err_important_type;  //エラーの重度軽度判別
   u32                     wifi_msg;   //WIFIで表示するものは先に取得するため
-
 }NET_ERR_SYSTEM;
 
 //==============================================================================
@@ -620,6 +627,9 @@ static void Local_ErrDispInit(BOOL fatal_error)
 	GX_SetVisiblePlane(GX_PLANEMASK_BG1);
 	GX_SetVisibleWnd(GX_WNDMASK_NONE);
 
+  nes->sub_wnd  = GXS_GetVisibleWnd();
+  GXS_SetVisibleWnd(GX_WNDMASK_NONE);
+
 	//BG1Control退避
 	nes->bg1cnt = G2_GetBG1Control();
 	G2_SetBG1Control(GX_BG_SCRSIZE_TEXT_256x256, GX_BG_COLORMODE_16, 
@@ -632,16 +642,28 @@ static void Local_ErrDispInit(BOOL fatal_error)
 	GFL_STD_MemCopy16(G2_GetBG1ScrPtr(), nes->push_scrn_p, NETERR_PUSH_SCRNVRAM_SIZE);
 	GFL_STD_MemCopy16((void*)HW_PLTT, nes->push_pltt_p, NETERR_PUSH_PLTTVRAM_SIZE);
 
-	//退避できないもの
-	G2_BlendNone(); //WriteOnlyの為、レジスタ退避が出来ていない
-	
+	//取得関数がないのでレジスタから取得している
+  nes->g2_blend_cnt  = reg_G2_BLDCNT;
+  nes->g2_blend_cnt  = reg_G2S_DB_BLDCNT;
+	G2_BlendNone();
+	G2S_BlendNone();
+
+  //下画面の待避
+  nes->sub_visible = GFL_DISP_GetSubVisible();
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+
+  //下画面はバックドロップを使うので待避
+  nes->sub_bd_color  = *((u16 *)HW_DB_BG_PLTT);
+  *((u16 *)HW_DB_BG_PLTT)  = 0x7eea;
+
 	//エラー画面描画
 	Local_ErrDispDraw();
 	Local_ErrMessagePrint(fatal_error);
-	
+
+
 	//表示ON
 	GX_SetMasterBrightness(0);
-	GXS_SetMasterBrightness(16);	//サブ画面は真っ白
+	GXS_SetMasterBrightness(0);
 }
 
 //--------------------------------------------------------------
@@ -662,6 +684,16 @@ static void Local_ErrDispExit(void)
 	GX_SetMasterBrightness(-16);
 	GXS_SetMasterBrightness(-16);
 	
+  //下画面はバックドロップを使うので待避
+  *((u16 *)HW_DB_BG_PLTT)  = nes->sub_bd_color;
+
+  //下画面の描画設定
+  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+
+  //ブレンドの設定
+  reg_G2_BLDCNT     = nes->g2_blend_cnt;
+  reg_G2S_DB_BLDCNT = nes->g2s_blend_cnt;
+
 	//VRAM復帰
 	GFL_STD_MemCopy16(nes->push_char_p, G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
 	GFL_STD_MemCopy16(nes->push_scrn_p, G2_GetBG1ScrPtr(), NETERR_PUSH_SCRNVRAM_SIZE);
@@ -678,6 +710,8 @@ static void Local_ErrDispExit(void)
 	GX_SetGraphicsMode(nes->dispcnt.dispMode, nes->dispcnt.bgMode, nes->dispcnt.bg0_2d3d);
 	GX_SetVisiblePlane(nes->dispcnt.visiblePlane);
 	GX_SetVisibleWnd(nes->dispcnt.visibleWnd);
+
+  GXS_SetVisibleWnd(nes->sub_wnd);
 
 	//VRAMバンク情報復帰
   GX_ResetBankForSubBG();
