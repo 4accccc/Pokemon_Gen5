@@ -11,6 +11,7 @@
 #include "savedata/mystatus.h"
 #include "system/gfl_use.h"
 #include "poke_tool/poke_tool.h"
+#include "poke_tool/status_rcv.h"
 #include "poke_tool/monsno_def.h"
 #include "poke_tool/poke_personal.h"
 #include "poke_tool/poke_memo.h"
@@ -347,18 +348,21 @@ static void EggCordinate_MonsNo_item( const PARENT* parent, EGG_PARAM* egg )
   const POKEMON_PARAM* base_poke;
   u32 base_monsno, base_itemno;
 
-  const int table_size = 9;
+  const int table_size = 12;
   u32 exception_table[table_size][3] = // 例外テーブル
   {
     // 元ポケモン      // アイテム          // 子ポケモン
     {MONSNO_MARIRU,    ITEM_USIONOOKOU,     MONSNO_MARIRU},
+    {MONSNO_MARIRURI,  ITEM_USIONOOKOU,     MONSNO_MARIRU},
     {MONSNO_SOONANSU,  ITEM_NONKINOOKOU,    MONSNO_SOONANSU},
     {MONSNO_BARIYAADO, ITEM_AYASIIOKOU,     MONSNO_BARIYAADO},
     {MONSNO_USOKKII,   ITEM_GANSEKIOKOU,    MONSNO_USOKKII},
     {MONSNO_KABIGON,   ITEM_MANPUKUOKOU,    MONSNO_KABIGON},
     {MONSNO_MANTAIN,   ITEM_SAZANAMINOOKOU, MONSNO_MANTAIN},
     {MONSNO_ROZERIA,   ITEM_OHANANOOKOU,    MONSNO_ROZERIA},
+    {MONSNO_ROZUREIDO, ITEM_OHANANOOKOU,    MONSNO_ROZERIA},
     {MONSNO_RAKKII,    ITEM_KOUUNNOOKOU,    MONSNO_RAKKII},
+    {MONSNO_HAPINASU,  ITEM_KOUUNNOOKOU,    MONSNO_RAKKII},
     {MONSNO_TIRIIN,    ITEM_KIYOMENOOKOU,   MONSNO_TIRIIN},
   };
 
@@ -1123,7 +1127,7 @@ static void MakeEgg(
   // 仕上げ
   PP_Put( egg, ID_PARA_tamago_flag, TRUE ); 
   PP_Renew( egg );
-  PP_RecoverWazaPPAll( egg );
+  STATUS_RCV_PokeParam_RecoverAll( egg );
 }
 
 //---------------------------------------------------------------------------------------- 
