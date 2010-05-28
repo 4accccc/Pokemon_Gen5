@@ -3241,6 +3241,7 @@ WBM_BTLBOX_WORK	* WBM_BTLBOX_Init( BATTLE_BOX_SAVE * cp_btl_box, GFL_CLUNIT *p_u
     clwk_data.pos_x		= 24;
     clwk_data.pos_y		= 48 - 4;
 		clwk_data.anmseq	= POKEICON_ANM_HPMAX;
+    clwk_data.softpri  = 1;
 		for( i = 0; i < PokeParty_GetPokeCount( p_party ); i++ )
 		{	
       //ƒ|ƒPƒ‚ƒ“
@@ -3266,7 +3267,7 @@ WBM_BTLBOX_WORK	* WBM_BTLBOX_Init( BATTLE_BOX_SAVE * cp_btl_box, GFL_CLUNIT *p_u
           clwk_item_data  = clwk_data;
           clwk_item_data.pos_x  += PLAYERINFO_POKEITEM_X_OFS;
           clwk_item_data.pos_y  += PLAYERINFO_POKEITEM_Y_OFS;
-          clwk_item_data.softpri  = 1;
+          clwk_item_data.softpri  = 0;
           clwk_item_data.anmseq   = 0;
           p_wk->p_clwk[ WBM_BTLBOX_CLWCKID_ITEM_TOP + i]	= GFL_CLACT_WK_Create( p_unit,
               p_wk->res[ WBM_BTLBOX_RESID_POKEITEM_CGR ],
