@@ -1309,12 +1309,18 @@ static BOOL BATTLE_FreeParam( WBM_SYS_SUBPROC_WORK *p_subproc,void *p_param_adrs
     REGULATION          *p_reg    = RegulationData_GetRegulation( p_reg_card );
     u32                 cupNO     = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_CUPNO );
 
-    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, cupNO, p_btl_param, &p_wk->btl_score, WIFIBATTLEMATCH_TYPE_WIFICUP );
+    if( result == WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS )
+    {
+      Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, cupNO, p_btl_param, &p_wk->btl_score, WIFIBATTLEMATCH_TYPE_WIFICUP );
+    }
   }
   else if( p_wk->type == WIFIBATTLEMATCH_TYPE_RNDRATE )
   { 
     REGULATION          *p_reg    = (REGULATION*)PokeRegulation_LoadDataAlloc( REG_RND_SINGLE + p_wk->param.btl_rule, HEAPID_WIFIBATTLEMATCH_SYS );
-    Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, 0, p_btl_param, &p_wk->btl_score,WIFIBATTLEMATCH_TYPE_RNDRATE );
+    if( result == WIFIBATTLEMATCH_BATTLELINK_RESULT_SUCCESS )
+    {
+      Util_SetRecordData( &p_wk->record_data, p_wk->p_player_btl_party, p_wk->p_enemy_btl_party, p_wk->p_enemy_data, p_reg, 0, p_btl_param, &p_wk->btl_score,WIFIBATTLEMATCH_TYPE_RNDRATE );
+    }
     GFL_HEAP_FreeMemory( p_reg );
   }
 
