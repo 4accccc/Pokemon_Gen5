@@ -231,8 +231,10 @@ ZUKAN_INFO_STEP;
 #define ZUKAN_INFO_Y_OFFSET      (-8*3)      // 図鑑の説明画面として下のディスプレイ(メイン)に表示するとき
 
 // 外国語図鑑
-#define FOREIGN_MONSNO_MAX  (493)  // 0はポケモンではないがデータあり、1がフシギダネ、493がアルセウスまで存在する、イッシュから追加された494から存在しない
-#define FOREIGN_MONSNO_GIRATHINA_FORM  (FOREIGN_MONSNO_MAX +1)  // ギラティナだけ別フォルム用のテキストがある(487はフォルム0番、494はフォルム1番のデータ)
+#define FOREIGN_MONSNO_MAX               (493)                    // 0はポケモンではないがデータあり、1がフシギダネ、493がアルセウスまで存在する、イッシュから追加された494から存在しない
+#define FOREIGN_MONSNO_GIRATHINA_FORM    (FOREIGN_MONSNO_MAX +1)  // ギラティナだけ別フォルム用のテキストがある(487はフォルム0番、494はフォルム1番のデータ)
+#define GIRATHINA_FORMNO_DEFAULT_ANOTHER (0)                      // ギラティナのデフォルトのフォルム番号(アナザーフォルム、脚付き)
+#define POKEFOOT_OLD_WHITE_MONSNO        (11)                     // POKEFOOT_MONS_NO_OLD_MAXまで(含む)で足跡の絵のない白紙データ  // monsno=11はトランセル
 
 // 外国語のタイプアイコン
 typedef struct
@@ -1900,7 +1902,7 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
   // 次のフォルムデータの位置を参照できるリスト
   {
     monsno_formno_pos = work->monsno;
-    if( work->monsno == MONSNO_GIRATHINA  && work->formno != 0 )
+    if( work->monsno == MONSNO_GIRATHINA  && work->formno != GIRATHINA_FORMNO_DEFAULT_ANOTHER )
     {
       monsno_formno_pos = FOREIGN_MONSNO_GIRATHINA_FORM;
     }
@@ -2711,7 +2713,7 @@ static void Zukan_Info_CreatePokefoot( ZUKAN_INFO_WORK* work, u32 monsno, OBJ_SW
   ARCHANDLE* handle = work->ah[AH_POKEFOOT];
 
   //if( monsno > MONSNO_ARUSEUSU ) monsno = 1;  // 開発中だけの処理
-  
+    
   work->ncg_pokefoot[swap_idx] = GFL_CLGRP_CGR_Register( handle,  // ncgは圧縮されている
                                      PokeFootCharDataIdxGet((int)monsno),
                                      TRUE, draw_type, work->heap_id );
@@ -2793,8 +2795,17 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
 
   // タイプアイコン
   Zukan_Info_CreateMultiLangTypeicon( work, ZUKAN_INFO_LANG_NONE, work->curr_swap_typeicon );
+
   // ポケモンの足跡
-  Zukan_Info_CreatePokefoot( work, work->monsno, work->curr_swap_pokefoot );
+  {
+    u16 pokefoot_monsno;
+    if( work->monsno == MONSNO_GIRATHINA && work->formno != GIRATHINA_FORMNO_DEFAULT_ANOTHER )
+      pokefoot_monsno = POKEFOOT_OLD_WHITE_MONSNO;
+    else
+      pokefoot_monsno = work->monsno;
+    Zukan_Info_CreatePokefoot( work, pokefoot_monsno, work->curr_swap_pokefoot );
+  }
+
   // タイプアイコンとポケモンの足跡の表示/非表示を設定する
   Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
 }
@@ -2805,8 +2816,17 @@ static void Zukan_Info_CreateForeignOthers( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LA
 
   // タイプアイコン
   Zukan_Info_CreateMultiLangTypeicon( work, lang, work->curr_swap_typeicon );
+
   // ポケモンの足跡
-  Zukan_Info_CreatePokefoot( work, work->monsno, work->curr_swap_pokefoot );
+  {
+    u16 pokefoot_monsno;
+    if( work->monsno == MONSNO_GIRATHINA && work->formno != GIRATHINA_FORMNO_DEFAULT_ANOTHER )
+      pokefoot_monsno = POKEFOOT_OLD_WHITE_MONSNO;
+    else
+      pokefoot_monsno = work->monsno;
+    Zukan_Info_CreatePokefoot( work, pokefoot_monsno, work->curr_swap_pokefoot );
+  }
+
   // タイプアイコンとポケモンの足跡の表示/非表示を設定する
   Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
 }
