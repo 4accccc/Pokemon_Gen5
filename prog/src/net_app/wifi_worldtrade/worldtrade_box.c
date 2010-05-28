@@ -1538,9 +1538,9 @@ static int SubSeq_ExchangeSelectWait( WORLDTRADE_WORK *wk )
 			if(flag==0){
 
         //もしシェイミならばランドフォルムへ戻す
-        if( MONSNO_SHEIMI == PPP_Get(wk->deposit_ppp, ID_PARA_monsno, NULL) )
+        if( MONSNO_SHEIMI == PPP_Get(ppp, ID_PARA_monsno, NULL) )
         {
-          PPP_Put( wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
+          PPP_Put( ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
         }
 
 				ExchangeCheck(wk);
