@@ -2229,6 +2229,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   PMSND_PlayBGM(SEQ_BGM_GTS);
 
+  GFL_NET_ReloadIcon();
+
   _CHANGE_STATE(pWork, _modeSelectMenuInit);
 
   return GFL_PROC_RES_FINISH;
