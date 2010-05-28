@@ -339,6 +339,13 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
   else
   {
     FIELD_MENU_SetMenuItemNo( work , GAMEDATA_GetSubScreenType( gameData ) );
+    work->isUpdateCursor = TRUE;
+    FIELD_MENU_UpdateCursor( work );
+    if(work->isDispCursor){
+      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
+    }else{
+      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
+    }
   }
   
   GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->tempHeapId );
@@ -413,6 +420,8 @@ void FIELD_MENU_ExitMenu( FIELD_MENU_WORK* work )
 //----------------------------------------------------------------------------------
 static void _all_bg_appear( void )
 {
+  GFL_BG_LoadScreenReq( FIELD_MENU_BG_NAME );
+
   GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_ON );
   GFL_BG_SetVisible( FIELD_MENU_BG_BUTTON, VISIBLE_ON );
   GFL_BG_SetVisible( FIELD_MENU_BG_NAME  , VISIBLE_ON );
@@ -652,9 +661,6 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
   };
 
-  // メイン面BGグラフィック解放
-//  FLDMSGBG_ReleaseBGResouce( fld_msg );
-
   GXS_SetMasterBrightness(-16);
   // BG初期化(
   GFL_BG_SetBGControl( FIELD_MENU_BG_BUTTON, &bgCont_Button, GFL_BG_MODE_TEXT );
@@ -668,11 +674,6 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   GFL_BG_SetBGControl( FIELD_MENU_BG_BACK, &bgCont_BackGround, GFL_BG_MODE_TEXT );
   GFL_BG_SetVisible( FIELD_MENU_BG_BACK, VISIBLE_ON );
   GFL_BG_ClearScreen( FIELD_MENU_BG_BACK );
-
-  // メイン面のBG初期化
-//  GFL_BG_SetBGControl( FIELD_MENU_BG_PLATE_M, &bgCont_Plate_M, GFL_BG_MODE_TEXT );
-//  GFL_BG_SetVisible( FIELD_MENU_BG_BACK, VISIBLE_ON );
-  
 
   //フォントをずらした位置に出したいので
   GFL_BG_SetScroll( FIELD_MENU_BG_NAME , GFL_BG_SCROLL_Y_SET , -4 );
@@ -724,9 +725,6 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
   
   GFL_BG_LoadScreenReq( FIELD_MENU_BG_BUTTON );
   
-  //フォント用パレット
-//  GFL_ARC_UTIL_TransVramPalette( ARCID_FONT , NARC_font_default_nclr , PALTYPE_SUB_BG , FIELD_MENU_PLT_FONT * 32, 16*2, work->tempHeapId );
-  
   //セル系システムの作成
   work->cellUnit = GFL_CLACT_UNIT_Create( 8 , 0 , work->heapId );
   
@@ -747,7 +745,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
     cellInitData.anmseq = 0;
     cellInitData.softpri = 0;
     cellInitData.bgpri = 0;
-    //↑矢印
+    // カーソル
     work->cellCursor = GFL_CLACT_WK_Create( work->cellUnit ,
                           work->objRes[FMO_COM_CHR],
                           work->objRes[FMO_COM_PLT],
@@ -758,11 +756,7 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
     GFL_CLACT_WK_SetAutoAnmSpeed( work->cellCursor, FX32_ONE );
     GFL_CLACT_WK_SetAutoAnmFlag( work->cellCursor, TRUE );
     GFL_CLACT_WK_SetBgPri( work->cellCursor, 2 );
-    if(work->isDispCursor){
-      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, TRUE );
-    }else{
-      GFL_CLACT_WK_SetDrawEnable( work->cellCursor, FALSE );
-    }
+
     //タッチバーの「×」
     cellInitData.pos_x = 224;
     cellInitData.pos_y = 168;
@@ -789,14 +783,15 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
  * @param   heap    
  */
 //=============================================================================================
-void FIELDMENU_RewriteInfoScreen( HEAPID heapId )
+void FIELDMENU_RewriteInfoScreen( HEAPID heapId, BOOL isScroll )
 {
   // タッチバーのBGを背景面に転送
   _trans_touchbar_screen( heapId, GFL_BG_FRAME0_S );
 
   // インフォバー・タッチバーの面をOFF
-//  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-  GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+  if(isScroll){
+    GFL_BG_SetVisible( FIELD_MENU_INFOBAR, VISIBLE_OFF );
+  }
 
 }
 
@@ -1049,8 +1044,6 @@ static void FIELD_MENU_InitIcon(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandle, 
   
   GFL_MSG_Delete( msgHandle );
 
-  GFL_BG_LoadScreenReq( FIELD_MENU_BG_NAME );
-
 }
 
 // カーソルをパレットフェードさせるためのテーブル
@@ -1157,16 +1150,6 @@ void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYP
         work->cursorPosX = i%2;
         work->cursorPosY = i/2;
         work->isUpdateCursor = TRUE;
-//        FIELD_MENU_UpdateCursor( work );
-        
-#if 0
-        //FIXME 今はメニューで仮のものがあり、再起動がかからないので
-        //ステータスを初期に戻す処理で対応
-        if( work->state == FMS_FINISH )
-        {
-          work->state = FMS_WAIT_INIT;
-        }
-#endif
       }
     }
   }

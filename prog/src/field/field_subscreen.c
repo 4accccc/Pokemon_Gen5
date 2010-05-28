@@ -976,7 +976,7 @@ static void init_topmenu_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN
     INFOWIN_Init( FIELD_SUBSCREEN_BGPLANE , FIELD_SUBSCREEN_PALLET , gameData , pWork->heapID);
   }
   // INFOWINのスクリーン下部分にタッチバーを書き込む(のでINFOWIN_Initの後に置いてね）
-  FIELDMENU_RewriteInfoScreen( pWork->heapID );
+  FIELDMENU_RewriteInfoScreen( pWork->heapID, isScrollIn );
 }
 
 //----------------------------------------------------------------------------
@@ -1097,12 +1097,12 @@ void FIELD_SUBSCREEN_SetMainLCDNavigationScreen( FIELD_SUBSCREEN_WORK* pWork, HE
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  CGearワーク取得
+ *  @brief  CGearワーク取得
  *
- *	@param	cpWork  ワーク
+ *  @param  cpWork  ワーク
  *
- *	@retval NULL  CGEAR　以外
- *	@retval CGEAR　ワーク
+ *  @retval NULL  CGEAR　以外
+ *  @retval CGEAR　ワーク
  */
 //-----------------------------------------------------------------------------
 void* FIELD_SUBSCREEN_GetCGearWork( const FIELD_SUBSCREEN_WORK* cpWork )
@@ -1526,7 +1526,7 @@ static void init_cgear_power_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSC
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  CGEAR　電源管理　メイン
+ *  @brief  CGEAR　電源管理　メイン
  */
 //-----------------------------------------------------------------------------
 static void update_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bActive )
@@ -1536,7 +1536,7 @@ static void update_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork, BOOL bAct
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  CGEAR 電源管理　破棄
+ *  @brief  CGEAR 電源管理　破棄
  */
 //-----------------------------------------------------------------------------
 static void exit_cgear_power_subscreen( FIELD_SUBSCREEN_WORK* pWork )

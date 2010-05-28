@@ -37,7 +37,7 @@ extern void FIELD_MENU_DrawMenu( FIELD_MENU_WORK* work );
 
 extern const FIELD_MENU_ITEM_TYPE FIELD_MENU_GetMenuItemNo( FIELD_MENU_WORK* work );
 extern void FIELD_MENU_SetMenuItemNo( FIELD_MENU_WORK* work , const FIELD_MENU_ITEM_TYPE itemType );
-extern void FIELDMENU_RewriteInfoScreen( HEAPID heapId );
+extern void FIELDMENU_RewriteInfoScreen( HEAPID heapId, BOOL isScroll );
 extern int FIELDMENU_GetMenuType( GAMEDATA * gamedata, EVENTWORK *ev, int zoneId );
 
 
