@@ -46,6 +46,7 @@ pos = Array.new
 def push_line f, pos, filename, e1, e2, e3
     cnt = 0
     f.each{ |line|
+      #頭から３行は意味がないデータ
       if cnt >= 3 
         s = line.split(",")
         if ( ( s[e2] == "0" && s[e3] == "0" ) == false ) && s[e1] != "" && s[e2] != "" && s[e3] != ""
