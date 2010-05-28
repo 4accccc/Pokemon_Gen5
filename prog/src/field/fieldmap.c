@@ -2441,26 +2441,7 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
  */
 //--------------------------------------------------------------
 //プロジェクションマトリクスを操作する際のＺオフセット
-#ifdef PM_DEBUG
-//デバッグのとき
-
-//海野さん環境
-#ifdef DEBUG_ONLY_FOR_unno
 #define	PRO_MAT_Z_OFS	(310+0xb8)
-#else
-//淵野さん環境
-#ifdef DEBUG_ONLY_FOR_fuchino
-#define	PRO_MAT_Z_OFS	(310+0xb8)
-#else
-//それ以外の人の環境
-#define	PRO_MAT_Z_OFS	(310)
-#endif  //DEBUG_ONLY_FOR_fuchino
-#endif  //DEBUG_ONLY_FOR_unno
-
-#else   // NOT DEF PMDEBUG
-//製品版
-#define	PRO_MAT_Z_OFS	(310)
-#endif  //PM_DEBUG
 
 // topフレームでの描画
 // ３D描画環境の初期化
