@@ -632,21 +632,21 @@ static int MainSeq_Main( VSMLIST_WORK * wk )
 				BGWINFRM_MoveInit( wk->wfrm, BGWF_POKE1_PARAM+i, 1, 0, BPL_COMM_BSX_PLATE );
 			}
 		}
-		PMSND_PlaySE( SEQ_SE_ROTATION_B );
+		PMSND_PlaySE( SEQ_SE_SYS_03 );
 		wk->sub_seq++;
 
 	case 1:
 		if( wk->dat->pos == VS_MULTI_LIST_POS_LEFT ){
 			if( BGWINFRM_MoveCheck( wk->wfrm, BGWF_POKE4_PLATE ) == 0 ){
 				wk->sub_seq++;
-				PMSND_PlaySE( SEQ_SE_SYS_03 );
+				PMSND_PlaySE( SEQ_SE_ROTATION_B );
 				return SetWait( wk, END_WAIT, MAINSEQ_MAIN );
 			}
 			MoveObj( wk, 3, -8 );
 		}else{
 			if( BGWINFRM_MoveCheck( wk->wfrm, BGWF_POKE1_PLATE ) == 0 ){
 				wk->sub_seq++;
-				PMSND_PlaySE( SEQ_SE_SYS_03 );
+				PMSND_PlaySE( SEQ_SE_ROTATION_B );
 				return SetWait( wk, END_WAIT, MAINSEQ_MAIN );
 			}
 			MoveObj( wk, 0, 8 );
@@ -991,6 +991,7 @@ static void InitBmp( VSMLIST_WORK * wk )
 			PutPokeHP( wk, i );
 			PutPokeHPGage( wk, i );
 		}else{
+			GFL_BMPWIN_TransVramCharacter( wk->win[i].win );
 		}
 	}
 }
@@ -1403,6 +1404,7 @@ static void AddObj( VSMLIST_WORK * wk )
 		if( wk->pp[i] == NULL ){
 		  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_POKEICON1+i], FALSE );
 		  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_ITEMICON1+i], FALSE );
+		  GFL_CLACT_WK_SetDrawEnable( wk->clwk[OBJ_HP_GAUGE1+i], FALSE );
 		}else{
 			u16	item;
 			// ポケアイコン
