@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T18:19:27"/>
+	<create user="murakami_naoto" host="W00228" date="2010-05-28T15:09:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="71" top="196" right="776" bottom="824" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -333,7 +333,7 @@
 きかいが　うごくかも　しれない▼
 きみ　よければ
 「じゅうでん」を　おぼえている▽
-ポケモンを　かしてくれないか？▼</language>
+ポケモンを　かしてくれないか？</language>
 		<language name="JPN_KANJI" width="256">どこかに　この街と
 同じ　名前だけど▽
 未来のような　都市が　あるらしい▼
@@ -343,7 +343,7 @@
 機械が　動くかも　しれない▼
 きみ　よければ
 「じゅうでん」を　覚えている▽
-ポケモンを　貸してくれないか？▼</language>
+ポケモンを　貸してくれないか？</language>
 	</row>
 
 	<row id="msg_c08_man1_03w">
@@ -352,9 +352,9 @@
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">そ……　そうか　ざんねんだな
-きがむいたら　また　きてくれ▼</language>
+きがむいたら　また　きてくれ</language>
 		<language name="JPN_KANJI" width="256">そ……　そうか　残念だな
-気が向いたら　また　来てくれ▼</language>
+気が向いたら　また　来てくれ</language>
 	</row>
 
 	<row id="msg_c08_man1_04w">
@@ -548,7 +548,7 @@
 きかいが　うごくかも　しれない▼
 きみ　よければ
 「じゅうでん」を　おぼえている▽
-ポケモンを　かしてくれないか？▼</language>
+ポケモンを　かしてくれないか？</language>
 		<language name="JPN_KANJI" width="256">どこかに　この街と
 同じ　名前だけど▽
 古びた感じの　都市が　あるらしい▼
@@ -558,7 +558,7 @@
 機械が　動くかも　しれない▼
 きみ　よければ
 「じゅうでん」を　覚えている▽
-ポケモンを　貸してくれないか？▼</language>
+ポケモンを　貸してくれないか？</language>
 	</row>
 
 	<row id="msg_c08_man1_03b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -567,9 +567,9 @@
 		<attribute name="キャラ指定">MAN1
 青年</attribute>
 		<language name="JPN" width="256">なんだ……　ざんねんだな
-ほかに　ほうほうも　ないし……▼</language>
+ほかに　ほうほうも　ないし……</language>
 		<language name="JPN_KANJI" width="256">なんだ……　残念だな
-他に　方法も　ないし……▼</language>
+他に　方法も　ないし……</language>
 	</row>
 
 	<row id="msg_c08_man1_04b" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

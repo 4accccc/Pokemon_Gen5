@@ -58,7 +58,6 @@ EVENT_START		 ev_c08r0402_man1_01
 		
 		//はい・いいえ
 		_YES_NO_WIN(SCWK_ANSWER)
-		_MSGWIN_CLOSE()
 		
 		_CALL	ev_event_check
 		
@@ -90,10 +89,11 @@ EVENT_START		 ev_c08r0402_man1_01
 			_MSGWIN_CLOSE()
 			
 			//SEを鳴らす「キィィィイイン」
-			_PLAINWIN_MSG_DOWN( msg_c08_machine_01 )
 			_SE_PLAY(SEQ_SE_FLD_128)
+			//SEのフェードアウトに合わせて、少し待つ
+			_TIME_WAIT(8)
+			_PLAINWIN_MSG_DOWN( msg_c08_machine_01 )
 			_MSGWIN_CLOSE()
-			_SE_WAIT()
 			
 			//未来_過去を見て、感動！ジャンプしちゃうかも
 			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kandou)
@@ -105,6 +105,8 @@ EVENT_START		 ev_c08r0402_man1_01
 
 			//機械で未来/過去を見ている時間
 			_TIME_WAIT(32)
+			
+			_SE_WAIT()
 			
 			//元にもどった事を確認するために、周りをきょろきょろ
 			_OBJ_ANIME(C08R0402_MAN1_01,anm_c08r0402_kyorokyoro)
@@ -154,9 +156,10 @@ EVENT_START		 ev_c08r0402_man1_01
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
+			//-------------------------------//
 			_FLAG_SET(FE_C08R0402_ITEMGET_01)
-			_FLAG_SET(FH_01)
-		
+			//-------------------------------//
+
 		ENDIF
 	
 	ELSE
@@ -175,7 +178,7 @@ ev_event_check:
 
 	//はいを選んだとき
 	IF$SCWK_ANSWER == SCR_YES THEN
-		
+	_MSGWIN_CLOSE()
 		//手持ちのポケモンを選ぶ
 	    _SELECT_TEMOTI_POKE( SCWK_ANSWER, LWK_SEL_POS, 0 )
 	    
