@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-22T18:32:55"/>
+	<create user="shimoyamada" host="W00184" date="2010-05-28T17:35:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -428,7 +428,7 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]
 		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに
 さんか　しますか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に
-さんか　しますか？</language>
+参加　しますか？</language>
 	</row>
 
 	<row id="BC_STR_05">
