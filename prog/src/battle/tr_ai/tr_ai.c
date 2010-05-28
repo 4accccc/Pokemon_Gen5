@@ -34,7 +34,6 @@
 #if defined DEBUG_ONLY_FOR_sogabe | defined DEBUG_ONLY_FOR_morimoto
 #define POINT_VIEW
 #define AI_SEQ_PRINT
-//#define TR_AI_WAZA_CACHE    //技AI内で技データのキャッシュを持つ
 #endif
 #endif
 
@@ -84,12 +83,6 @@ typedef struct{
 
   BtlRule       rule;
   BtlCompetitor competitor;
-
-#ifdef TR_AI_WAZA_CACHE
-  WazaID        wazaID[ TR_AI_WAZATBL_MAX ];
-  WAZA_DATA     *wd[ TR_AI_WAZATBL_MAX ];
-  ARCHANDLE*    waza_handle;
-#endif
 
   HEAPID        heapID;
   ARCHANDLE*    handle;
@@ -297,9 +290,6 @@ static  const BTL_POKEPARAM*  get_bpp( TR_AI_WORK* taw, BtlPokePos pos );
 static  const BTL_POKEPARAM*  get_bpp_from_party( const BTL_PARTY* pty, u8 idx );
 static  void  waza_point_init( TR_AI_WORK* taw );
 static  void  waza_no_stock( TR_AI_WORK* taw );
-#ifdef TR_AI_WAZA_CACHE
-static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no );
-#endif
 static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param );
 static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag );
 static  u32   get_max_damage( TR_AI_WORK* taw, const BTL_POKEPARAM* atk_bpp, const BTL_POKEPARAM* def_bpp, BOOL loss_flag );
@@ -480,18 +470,6 @@ VMHANDLE* TR_AI_Init( const BTL_MAIN_MODULE* wk, BTL_SVFLOW_WORK* svfWork, const
   taw->handle = GFL_ARC_OpenDataHandle( ARCID_TR_AI, heapID );
   taw->item_handle = ITEM_OpenItemDataArcHandle( heapID );
 
-#ifdef TR_AI_WAZA_CACHE
-  taw->waza_handle = WAZADATA_OpenDataHandle( heapID );
-  {
-    int i;
-
-    for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
-    {
-      taw->wd[ i ] = GFL_HEAP_AllocMemory( heapID, WAZADATA_GetWorkSize() );
-    }
-  }
-#endif
-
   taw->wk = wk;
   taw->svfWork = svfWork;
   taw->pokeCon = pokeCon;
@@ -570,13 +548,6 @@ void  TR_AI_Exit( VMHANDLE* vmh )
   GFL_ARC_CloseDataHandle( taw->handle );
   GFL_ARC_CloseDataHandle( taw->item_handle );
 
-#ifdef TR_AI_WAZA_CACHE
-  GFL_ARC_CloseDataHandle( taw->waza_handle );
-  for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
-  {
-    GFL_HEAP_FreeMemory ( taw->wd[ i ] );
-  }
-#endif
   GFL_HEAP_FreeMemory ( taw );
   VM_Delete( vmh );
 
@@ -706,7 +677,7 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
   {
     taw->select_waza_pos = AI_ENEMY_ESCAPE;
   }
-  //@todo 現状サファリはないのでコメント
+  //サファリはないのでコメント
 //  else if(sp->AIWT.AI_STATUSFLAG&AI_STATUSFLAG_SAFARI){
 //    taw->select_waza_pos = AI_ENEMY_SAFARI;
 //  }
@@ -766,8 +737,6 @@ static  BOOL  waza_ai_single( VMHANDLE* vmh, TR_AI_WORK* taw )
 static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
 {
   BtlPokePos  def_pos;
-  u16 waza_no;
-  s8  waza_pos;
   int btl_pos_max = ( taw->rule == BTL_RULE_DOUBLE ) ? 4 : 6;
 
   if( ( taw->status_flag & AI_STATUSFLAG_CONTINUE ) == 0 )
@@ -830,7 +799,7 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
       taw->select_waza_pos = AI_ENEMY_ESCAPE;
     }
 #if 0
-    //@todo 現状サファリはないのでコメント
+    //サファリはないのでコメント
     else if(sp->AIWT.AI_STATUSFLAG&AI_STATUSFLAG_SAFARI)
     {
       pos[client] = AI_ENEMY_SAFARI;
@@ -912,24 +881,16 @@ static  BOOL  waza_ai_plural( VMHANDLE* vmh, TR_AI_WORK* taw )
     taw->select_waza_pos = taw->pos[ taw->select_waza_dir ];
   }
 
-#if 0
-  //@todo シャチでこの処理が必要かどうか要検証
-  waza_no=sp->psp[sp->AIWT.AI_AttackClient].waza[waza_pos];
-
-  if(sp->AIWT.wtd[waza_no].attackrange==RANGE_TUBOWOTUKU){
-    if(BattleWorkMineEnemyCheck(bw,sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient])==0){
-      sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient] = sp->AIWT.AI_AttackClient;
+  { 
+    WazaID waza_no = BPP_WAZA_GetID( taw->atk_bpp, taw->select_waza_pos );
+    if( get_waza_param( taw, waza_no, WAZAPARAM_TARGET ) == WAZA_TARGET_FRIEND_USER_SELECT )
+    { 
+      if( ( taw->select_waza_dir & 1 ) == 0 )
+      {
+        taw->select_waza_dir = taw->atk_btl_poke_pos;
+      }
     }
   }
-
-#if AFTER_MASTER_070320_BT1_EUR_FIX
-  if(waza_no==WAZANO_NOROI){
-    if(ST_ServerWazaNoroiCheck(sp,waza_no,sp->AIWT.AI_AttackClient)==FALSE){
-      sp->AIWT.AI_DirSelectClient[sp->AIWT.AI_AttackClient] = sp->AIWT.AI_AttackClient;
-    }
-  }
-#endif //AFTER_MASTER_070320_BT1_EUR_FIX
-#endif
 
   return FALSE;
 }
@@ -950,7 +911,7 @@ static  void  tr_ai_sequence( VMHANDLE* vmh, TR_AI_WORK* taw )
     switch( taw->seq_no ){
     case AI_SEQ_THINK_INIT:
       {
-        //PPがない場合は技なし @todo PPがない状態ならwaza_pointが0になっているはずなので、そっちでチェック
+        //PPがない場合は技なし
         if( BPP_WAZA_GetPP( taw->atk_bpp, taw->waza_pos ) == 0 )
         {
           taw->waza_no = 0;
@@ -2362,8 +2323,7 @@ static  VMCMD_RESULT  AI_ESCAPE( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_ESCAPE\n");
 #endif
 
-
-  GF_ASSERT_MSG( 0, "未作成" );
+  taw->status_flag |= ( AI_STATUSFLAG_ESCAPE | AI_STATUSFLAG_END );
 
   return taw->vmcmd_result;
 }
@@ -3926,79 +3886,6 @@ static  void  waza_no_stock( TR_AI_WORK* taw )
   }
 }
 
-#ifdef TR_AI_WAZA_CACHE
-//============================================================================================
-/**
- *  技のパラメータインデックス取得
- */
-//============================================================================================
-static  int   get_waza_param_index( TR_AI_WORK* taw, WazaID waza_no )
-{
-  int i;
-
-  for( i = 0 ; i < TR_AI_WAZATBL_MAX ; i++ )
-  {
-    if( taw->wazaID[ i ] == 0 )
-    {
-      taw->wazaID[ i ] = waza_no;
-      GFL_ARC_LoadDataByHandle( taw->waza_handle, waza_no, taw->wd[ i ] );
-      break;
-    }
-    if( taw->wazaID[ i ] == waza_no )
-    {
-      //@todo バブルソートにバグ有り
-      //速度的に問題ないならこの処理はなくていい
-#if 0
-      if( i != 0 )
-      {
-        WAZA_DATA*  wd;
-        WazaID      waza_no_temp;
-
-        wd = taw->wd[ i - 1 ];
-        waza_no_temp = taw->wazaID[ i - 1 ];
-        taw->wd[ i - 1 ] =  taw->wd[ i ];
-        taw->wazaID[ i - 1 ] = taw->wazaID[ i ];
-        taw->wd[ i ] =  wd;
-        taw->wazaID[ i ] = waza_no_temp;
-      }
-#endif
-      break;
-    }
-  }
-  if( i == TR_AI_WAZATBL_MAX )
-  {
-    i--;
-    taw->wazaID[ i ] = waza_no;
-    GFL_ARC_LoadDataByHandle( taw->waza_handle, waza_no, taw->wd[ i ] );
-  }
-
-  return i;
-}
-
-//============================================================================================
-/**
- *  技のパラメータを読み出し
- */
-//============================================================================================
-static  int   get_waza_param( TR_AI_WORK* taw, WazaID waza_no, WazaDataParam param )
-{
-  int index = get_waza_param_index( taw, waza_no );
-
-  return WAZADATA_PTR_GetParam( taw->wd[ index ], param );
-}
-
-//============================================================================================
-/**
- *  技のフラグを読み出し
- */
-//============================================================================================
-static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
-{
-  int index = get_waza_param_index( taw, waza_no );
-
-  return WAZADATA_PTR_GetFlag( taw->wd[ index ], flag );
-}
-#else
 //============================================================================================
 /**
  *  技のパラメータを読み出し
@@ -4018,7 +3905,6 @@ static  BOOL  get_waza_flag( TR_AI_WORK* taw, WazaID waza_no, WazaFlag flag )
 {
   return WAZADATA_GetFlag( waza_no, flag );
 }
-#endif
 
 //============================================================================================
 /**
