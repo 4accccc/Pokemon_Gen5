@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-28T14:25:04"/>
+	<create user="matsuda" host="W00142" date="2010-05-28T12:49:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,7 +372,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="698"/>
 		<band id="3" index="3" style="0000" width="698"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -424,7 +424,7 @@
 	<row id="msg_intrude_004" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>話しかけている相手と通信がきれたとき</comment>
 		<language name="JPN" width="256">あいてとの　かいわが　きれました</language>
-		<language name="JPN_KANJI" width="256">あいてとの　かいわが　きれました</language>
+		<language name="JPN_KANJI" width="256">相手との　会話が　切れました</language>
 	</row>
 
 	<row id="msg_talk_menu_001" back-color="#ffff80,,,#404040,,#404040,#404040,,,,,#404040,,,,,,">
