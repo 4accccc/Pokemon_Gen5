@@ -1116,19 +1116,23 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
   if( work->launch == SHINKADEMO_VIEW_LAUNCH_EVO )
   {
     u8 i;
-    MCSS_ADD_WORK add_wk;
+    //MCSS_ADD_WORK add_wk;
 
     for(i=0; i<POKE_MAX; i++)
     {
       if(i == POKE_BEFORE)
       {
-        MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
+        //MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
+        work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
+                                                      POKE_X_CENTER, POKE_Y, 0 );
       }
       else
       {
-        MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
+        //MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
+        work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->after_pp, MCSS_DIR_FRONT,
+                                                      POKE_X_CENTER, POKE_Y, 0 );
       }
-      work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
+      //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
       MCSS_SetScale( work->poke_set[i].wk, &scale );
 
       if(i == POKE_BEFORE)
@@ -1149,12 +1153,14 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
   else
   {
     u8 i;
-    MCSS_ADD_WORK add_wk;
+    //MCSS_ADD_WORK add_wk;
 
     i = POKE_AFTER;
 
-    MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
-    work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
+    //MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
+    //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
+    work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
+                                                  POKE_X_CENTER, POKE_Y, 0 );
     MCSS_SetScale( work->poke_set[i].wk, &scale );
   }
 
