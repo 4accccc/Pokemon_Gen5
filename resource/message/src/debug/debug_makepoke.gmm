@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-28T16:07:43"/>
+	<create user="iwasawa" host="W00157" date="2010-05-28T21:37:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -468,6 +468,18 @@
 
 	<row id="DMPSTR_SEX_UNKNOWN">
 		<language name="JPN" width="256">？</language>
+	</row>
+
+	<row id="DMPSTR_SEX_SET_FEMALE">
+		<language name="JPN" width="256">セット♀</language>
+	</row>
+
+	<row id="DMPSTR_SEX_SET_MALE">
+		<language name="JPN" width="256">セット♂</language>
+	</row>
+
+	<row id="DMPSTR_SEX_SET_UNKNOWN">
+		<language name="JPN" width="256">こてい</language>
 	</row>
 
 	<row id="DMPSTR_PPCNT1">

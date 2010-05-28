@@ -1122,14 +1122,22 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
   wk->boxEnable[boxID] = FALSE;
 
   switch( boxID ){
+  case INPUTBOX_ID_SEX_SET:
+    if( (p->pageNo == wk->pageNo) ){
+      if( personal_is_sex_fixed( pp ) ){
+        box_write_fixval( wk, boxID, value );
+        return;
+      }
+    }
+    break;
+#if 0
   case INPUTBOX_ID_SEX:
   case INPUTBOX_ID_SEX_FIX:
-#if 0
     if( personal_is_sex_fixed( pp ) ){
       box_write_fixval( wk, boxID, value );
       return;
     }
-#else
+//#else
     if( (p->pageNo == wk->pageNo) ){
       box_write_fixval( wk, boxID, value );
     }else{
@@ -1180,6 +1188,17 @@ static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
   const INPUT_BOX_PARAM* p = &InputBoxParams[ boxID ];
 
   switch( boxID ){
+  case INPUTBOX_ID_SEX_SET:
+    wk->boxValue[ boxID ] = value;
+    {
+      u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
+      u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+      u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
+      u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX );
+      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, value );
+    }
+    update_dst( wk );
+    break;
 #if 0
   case INPUTBOX_ID_RARE:
     wk->boxValue[ boxID ] = value;
@@ -1304,6 +1323,8 @@ static void box_setup_renew( DMP_MAINWORK* wk )
   box_setup( wk, INPUTBOX_ID_TYPE2, wk->dst );
   box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
   box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
+  box_setup( wk, INPUTBOX_ID_SEX_FIX, wk->dst );
+  box_setup( wk, INPUTBOX_ID_SEX_SET, wk->dst );
   box_setup( wk, INPUTBOX_ID_FORM, wk->dst );
   box_setup( wk, INPUTBOX_ID_HPVAL, wk->dst );
   box_setup( wk, INPUTBOX_ID_HPEDIT, wk->dst );
@@ -1499,6 +1520,18 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     }
     break;
   
+  case INPUTBOX_ID_SEX_SET:
+    {
+      u8 form_no = box_getvalue( wk, INPUTBOX_ID_FORM );
+      u16 mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
+      u8 tokusei = box_getvalue( wk, INPUTBOX_ID_TOKUSEI );
+      u8 sex = box_getvalue( wk, INPUTBOX_ID_SEX_SET );
+      u8 rare = box_getvalue( wk, INPUTBOX_ID_RARE );
+      u32 personal_rnd = POKETOOL_CalcPersonalRandEx( wk->oyaID, mons_no, form_no, sex, 0, rare );
+      box_update( wk, INPUTBOX_ID_PER_RND_L, personal_rnd&0xFFFF );
+      box_update( wk, INPUTBOX_ID_PER_RND_H, personal_rnd>>16 );
+    }
+    //ブレイクスルー
   case INPUTBOX_ID_PER_RND_H:
   case INPUTBOX_ID_PER_RND_L:
     {
@@ -1509,6 +1542,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       value = PP_Get( wk->dst, ID_PARA_sex, NULL );
       wk->boxValue[ INPUTBOX_ID_SEX_FIX] = value;
       box_update( wk, INPUTBOX_ID_SEX, value );
+      box_update( wk, INPUTBOX_ID_SEX_SET, value );
       box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
     }
     break;
