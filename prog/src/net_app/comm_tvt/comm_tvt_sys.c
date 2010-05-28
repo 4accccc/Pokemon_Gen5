@@ -800,7 +800,7 @@ static void COMM_TVT_ChangeMode( COMM_TVT_WORK *work )
 static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
 {
   u8 i;
-
+  BOOL isUpdate = FALSE;
   if( work->mode == CTM_DRAW )
   {
     //—Ž‘‚«’†‚ÍXV‚µ‚È‚¢
@@ -865,7 +865,16 @@ static void COMM_TVT_UpdateUpperName( COMM_TVT_WORK *work )
       {
         GFL_BMPWIN_MakeTransWindow_VBlank( work->nameWin[i] );
         work->nameWinUpdateBit -= (1<<i);
+        isUpdate = TRUE;
       }
+    }
+  }
+  if( isUpdate == TRUE )
+  {
+    const u8 talkIdx = CTVT_COMM_GetTalkMember( work , work->commWork );
+    if( talkIdx != CTVT_COMM_INVALID_MEMBER )
+    {
+      COMM_TVT_DispTalkIcon( work , talkIdx );
     }
   }
 }

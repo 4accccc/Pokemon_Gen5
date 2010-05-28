@@ -961,7 +961,14 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       }
       commWork->updateReqTalk = FALSE;
     }
-    
+    if( commWork->tempTalkMember != CTVT_COMM_INVALID_MEMBER &&
+        commWork->member[commWork->tempTalkMember].isEnable == FALSE )
+    {
+      commWork->tempTalkMember = CTVT_COMM_INVALID_MEMBER;
+      commWork->updateTalkMember = TRUE;
+      commWork->updateReqTalk = FALSE;
+    }
+
     if( commWork->updateTalkMember == TRUE )
     {
       const BOOL ret = CTVT_COMM_SendFlg( work , commWork , CCFT_TALK_MEMBER , commWork->tempTalkMember );
@@ -1265,6 +1272,12 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
     if( pkt->value != CTVT_COMM_INVALID_MEMBER )
     {
       COMM_TVT_DispTalkIcon( commWork->parentWork , pkt->value );
+    }
+    else
+    {
+      CTVT_MIC_WORK *micWork = COMM_TVT_GetMicWork(commWork->parentWork);
+      COMM_TVT_EraseTalkIcon( commWork->parentWork );
+      CTVT_MIC_StopWave( micWork );
     }
 
     CTVT_TPrintf("TalkMember [%d].\n",pkt->value);
