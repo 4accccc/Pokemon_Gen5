@@ -59,8 +59,12 @@
 
 /// ループパートに入った時のフレーム
 #define POKE_LOOP_PART_FRAME  ( 5301 )
-#define POKE_LOOP_END_FRAME   ( 5779 )
 
+#if PM_VERSION==VERSION_BLACK
+#define POKE_LOOP_END_FRAME   ( 5619 )
+#else
+#define POKE_LOOP_END_FRAME   ( 5779 )
+#endif
 
 #if PM_VERSION==VERSION_BLACK
 /// タイトル画面の鳴き声を出すポケモンの指定
@@ -1008,13 +1012,15 @@ enum{
 //読み込む3Dリソース
 #if PM_VERSION == VERSION_BLACK
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
-  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbmd, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbca, GFL_G3D_UTIL_RESARC },
 };
+
+#define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_b_camera_bin
 
 #else
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
@@ -1025,6 +1031,8 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
 };
+
+#define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_w_camera_bin
 
 #endif
 
@@ -1120,7 +1128,7 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
   }
   // カメラicaデータをロード
   CG3d->icaAnime = ICA_ANIME_CreateStreamingAlloc(
-      heapID, ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_camera_bin, 10 );
+      heapID, ARCID_DEMO3D_GRA, CAMERA_DATA_BIN_NAME, 10 );
 
 
   //ライトセット
@@ -1228,6 +1236,7 @@ static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame )
   }
   
 }
+
 
 
 //==============================================================================
