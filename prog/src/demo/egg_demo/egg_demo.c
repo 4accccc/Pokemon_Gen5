@@ -184,6 +184,8 @@ typedef enum
   TRUNK_STEP_DEMO_HATCH,
   TRUNK_STEP_DEMO_READY,
   TRUNK_STEP_DEMO_MON,
+  TRUNK_STEP_TEXT_0_0,
+  TRUNK_STEP_TEXT_0_1,
   TRUNK_STEP_TEXT_0,
   TRUNK_STEP_TEXT_1,
   TRUNK_STEP_TM,
@@ -267,6 +269,7 @@ typedef struct
   GFL_ARCUTIL_TRANSINFO       text_winfrm_tinfo;
   GFL_MSGDATA*                text_msgdata_egg;
   STRBUF*                     text_strbuf;
+  BOOL                        text_show_vblank_req;  // TRUEのときテキストを表示するBG面を表示する
 
   // はい・いいえウィンドウ
   BMPWIN_YESNO_DAT            tm_dat;
@@ -642,15 +645,32 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
       if( EGG_DEMO_VIEW_IsEnd( work->view ) )
       {
         // 次へ
-        work->trunk_step = TRUNK_STEP_TEXT_0;
+        //work->trunk_step = TRUNK_STEP_TEXT_0;
+        work->trunk_step = TRUNK_STEP_TEXT_0_0;
 
         Egg_Demo_TextShowWindow( param, work );
-        Egg_Demo_TextMakeStream( param, work, egg_evemt_02 );
+        //Egg_Demo_TextMakeStream( param, work, egg_evemt_02 );
         
         Egg_Demo_SoundPlayCongratulate( param, work );
       }
     }
     break;
+  
+  case TRUNK_STEP_TEXT_0_0:
+    {
+      work->text_show_vblank_req = TRUE;
+      // 次へ
+      work->trunk_step = TRUNK_STEP_TEXT_0_1;
+    }
+    break;
+  case TRUNK_STEP_TEXT_0_1:
+    {
+      Egg_Demo_TextMakeStream( param, work, egg_evemt_02 );
+      // 次へ
+      work->trunk_step = TRUNK_STEP_TEXT_0;
+    }
+    break;
+  
   case TRUNK_STEP_TEXT_0:
     {
       if(    Egg_Demo_TextWaitStream( param, work )
@@ -662,7 +682,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         Egg_Demo_TextMakeStream( param, work, egg_evemt_03 );
       }
     }
-  break;
+    break;
   case TRUNK_STEP_TEXT_1:
     {
       if( Egg_Demo_TextWaitStream( param, work ) )
@@ -832,6 +852,13 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
 static void Egg_Demo_VBlankFunc( GFL_TCB* tcb, void* wk )
 {
   EGG_DEMO_WORK* work = (EGG_DEMO_WORK*)wk;
+
+  // テキストを表示するBG面
+  if( work->text_show_vblank_req )
+  {
+    GFL_BG_SetVisible( BG_FRAME_M_TEXT               , VISIBLE_ON );
+    work->text_show_vblank_req = FALSE;
+  }
 }
 
 //-------------------------------------
@@ -880,7 +907,7 @@ static void Egg_Demo_Init( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 
     GFL_BG_SetVisible( BG_FRAME_M_POKEMON            , VISIBLE_ON );
     GFL_BG_SetVisible( BG_FRAME_M_BELT               , VISIBLE_ON );
-    GFL_BG_SetVisible( BG_FRAME_M_TEXT               , VISIBLE_ON );
+    //GFL_BG_SetVisible( BG_FRAME_M_TEXT               , VISIBLE_ON );  // テキストを表示するBG面
   
     GFL_BG_SetVisible( BG_FRAME_S_BACK               , VISIBLE_ON );
 
@@ -1227,6 +1254,10 @@ static void Egg_Demo_TextInit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
   // NULL初期化
   work->text_stream       = NULL;
   work->text_strbuf       = NULL;
+
+  // テキストを表示するBG面
+  work->text_show_vblank_req = FALSE;
+  GFL_BG_SetVisible( BG_FRAME_M_TEXT               , VISIBLE_OFF );
 }
 static void Egg_Demo_TextExit( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
@@ -1254,10 +1285,17 @@ static void Egg_Demo_TextMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 }
 static void Egg_Demo_TextShowWindow( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
+/*
   BmpWinFrame_Write( work->text_winin_bmpwin, WINDOW_TRANS_ON_V,
       GFL_ARCUTIL_TRANSINFO_GetPos(work->text_winfrm_tinfo),
       BG_PAL_POS_M_TEXT_FRAME );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
+*/
+
+  BmpWinFrame_Write( work->text_winin_bmpwin, WINDOW_TRANS_ON,
+      GFL_ARCUTIL_TRANSINFO_GetPos(work->text_winfrm_tinfo),
+      BG_PAL_POS_M_TEXT_FRAME );
+  GFL_BMPWIN_MakeTransWindow( work->text_winin_bmpwin );
 }
 static void Egg_Demo_TextMakeStream( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work,
                                      u32 str_id )
