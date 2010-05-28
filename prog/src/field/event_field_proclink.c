@@ -96,7 +96,6 @@ typedef enum
   RETURNFUNC_RESULT_USE_SKILL,  // メニューを抜けて技を使う
   RETURNFUNC_RESULT_USE_ITEM,   // メニュを抜けてアイテムを使う
   RETURNFUNC_RESULT_NEXT,       // 次のプロセスへ行く
-  RETURNFUNC_RESULT_DOWSINGMACHINE,       // メニューを抜けてダウジングマシンを使いながら歩ける状態になる
 } RETURNFUNC_RESULT;
 
 typedef enum
@@ -492,8 +491,7 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
 
   case SEQ_JUNCTION:
     if( wk->result == RETURNFUNC_RESULT_RETURN ||
-        wk->result == RETURNFUNC_RESULT_EXIT ||
-        wk->result == RETURNFUNC_RESULT_DOWSINGMACHINE )
+        wk->result == RETURNFUNC_RESULT_EXIT )
     {
       //終了の場合
       *seq  = SEQ_END;
@@ -533,10 +531,6 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     else if( wk->result == RETURNFUNC_RESULT_EXIT )
     { 
       wk->param->result = EVENT_PROCLINK_RESULT_EXIT;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_DOWSINGMACHINE )
-    {
-      wk->param->result = EVENT_PROCLINK_RESULT_DOWSINGMACHINE;
     }
     //アイテムと技はもう入っている
     return GMEVENT_RES_FINISH;
@@ -693,10 +687,6 @@ static GMEVENT_RESULT ProcLinkEvent( GMEVENT *event, int *seq, void *wk_adrs )
     { 
       //技が選択された場合
       wk->param->result = EVENT_PROCLINK_RESULT_SKILL;
-    }
-    else if( wk->result == RETURNFUNC_RESULT_DOWSINGMACHINE )
-    { 
-      wk->param->result = EVENT_PROCLINK_RESULT_DOWSINGMACHINE;
     }
 
     //次へ
@@ -1547,7 +1537,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_Bag(PROCLINK_WORK* wk,void* param_adrs)
     }
     return RETURNFUNC_RESULT_NEXT;
   case BAG_NEXTPROC_DOWSINGMACHINE:
-    return RETURNFUNC_RESULT_DOWSINGMACHINE;
+    wk->param->select_param = EVENT_ITEMUSE_CALL_DOWSINGMACHINE;
+    return RETURNFUNC_RESULT_USE_ITEM;
   
   case BAG_NEXTPROC_HAVE:
     if( ITEM_CheckMail( pBag->ret_item ) == TRUE )
