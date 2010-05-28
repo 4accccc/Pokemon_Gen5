@@ -41,26 +41,33 @@
 #define	PALNUM_FORM_S			( PALNUM_ZKNOBJ_S+PALSIZ_ZKNOBJ_S )	// パレット番号：フォルムＯＢＪ
 #define	PLASIZ_FORM_S			( PALSIZ_FORM )											// パレットサイズ：フォルムＯＢＪ
 
+// チェックマーク表示座標
 #define	MARK_PX				( 140 )
 #define	MARK_PY				( 12 )
 #define	MARK_SY				( 24 )
+// チェックマーク表示座標（フォルム用）
 #define	MARK_PX_FORM	( 140 )
 #define	MARK_PY_FORM	( 20 )
 #define	MARK_SY_FORM	( 40 )
 
+// リスト上のフォルム表示座標
 #define	FORM_PX				( 204 )
 #define	FORM_PY				( 20 )
 
+// スクロールバー表示座標
 #define	SCROLL_BAR_PX	( 252 )
 #define	SCROLL_BAR_UY	( 12 )
 #define	SCROLL_BAR_DY	( 156 )
 
+// メインページのフォルム表示座標
 #define	MAINPAGE_FORM_PX	( 192 )
 #define	MAINPAGE_FORM_PY	( 116 )
 
+// フォルムページのフォルム表示座標
 #define	FORMPAGE_FORM_PX	( 64 )
 #define	FORMPAGE_FORM_PY	( 104 )
 
+// 読み込み中バー表示座標
 #define	LOADING_BAR_PX		( 8 )
 #define	LOADING_BAR_PY		( 168 )
 #define	LOADING_BAR_MVX		( 2 )
@@ -417,24 +424,13 @@ void ZKNSEARCHOBJ_BgPriChange( ZKNSEARCHMAIN_WORK * wk, u32 id, int pri )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		セルアクターパレット変更
+ * @brief		セルアクター初期化
  *
- * @param		wk			図鑑検索画面ワーク
- * @param		id			OBJ ID
- * @param		pal			パレット番号
+ * @param		none
  *
  * @return	none
  */
 //--------------------------------------------------------------------------------------------
-/*
-void ZKNSEARCHOBJ_ChgPltt( ZKNSEARCHMAIN_WORK * wk, u32 id, u32 pal )
-{
-	GFL_CLACT_WK_SetPlttOffs( wk->clwk[id], pal, CLWK_PLTTOFFS_MODE_PLTT_TOP );
-}
-*/
-
-
-
 static void InitClact(void)
 {
 	const GFL_CLSYS_INIT init = {
@@ -457,6 +453,15 @@ static void InitClact(void)
 	GFL_CLACT_SYS_Create( &init, ZKNSEARCHMAIN_GetVramBankData(), HEAPID_ZUKAN_SEARCH );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void InitResource( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -563,6 +568,15 @@ static void InitResource( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リソース解放
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ExitResource( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	i;
@@ -584,6 +598,15 @@ static void ExitResource( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター追加
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void AddClact( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	i;
@@ -652,14 +675,33 @@ static void AddClact( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
-static void DelClact( ZKNSEARCHMAIN_WORK * wk, u32 idx )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター削除（個別）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		id			OBJ ID
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void DelClact( ZKNSEARCHMAIN_WORK * wk, u32 id )
 {
-	if( wk->clwk[idx] != NULL ){
-		GFL_CLACT_WK_Remove( wk->clwk[idx] );
-		wk->clwk[idx] = NULL;
+	if( wk->clwk[id] != NULL ){
+		GFL_CLACT_WK_Remove( wk->clwk[id] );
+		wk->clwk[id] = NULL;
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		セルアクター削除（全て）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void DelClactAll( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	i;
@@ -670,19 +712,15 @@ static void DelClactAll( ZKNSEARCHMAIN_WORK * wk )
 	GFL_CLACT_UNIT_Delete( wk->clunit );
 }
 
-
-
-/*
-void ZKNSEARCHOBJ_VanishAll( ZKNSEARCHMAIN_WORK * wk )
-{
-	u32	i;
-
-	for( i=0; i<ZKNSEARCHOBJ_IDX_MAX; i++ ){
-		ZKNSEARCHOBJ_SetVanish( wk, i, FALSE );
-	}
-}
-*/
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上のＯＢＪを非表示にする
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_VanishList( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	i;
@@ -708,7 +746,15 @@ void ZKNSEARCHOBJ_VanishList( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, FALSE );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページのＯＢＪを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, FALSE );
@@ -727,6 +773,15 @@ void ZKNSEARCHOBJ_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		並び選択ページのＯＢＪを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutRowPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
@@ -735,6 +790,15 @@ void ZKNSEARCHOBJ_PutRowPage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前選択ページのＯＢＪを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutNamePage( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
@@ -750,6 +814,15 @@ void ZKNSEARCHOBJ_PutNamePage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, SCROLL_BAR_UY, CLSYS_DRAW_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ選択ページのＯＢＪを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutTypePage( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
@@ -765,6 +838,15 @@ void ZKNSEARCHOBJ_PutTypePage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, SCROLL_BAR_UY, CLSYS_DRAW_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		色選択ページのＯＢＪを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutColorPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
@@ -780,6 +862,15 @@ void ZKNSEARCHOBJ_PutColorPage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, SCROLL_BAR_UY, CLSYS_DRAW_MAIN );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルム選択ページのＯＢＪを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutFormPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, FALSE );
@@ -798,6 +889,15 @@ void ZKNSEARCHOBJ_PutFormPage( ZKNSEARCHMAIN_WORK * wk )
 
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルム選択ページの選択されているフォルムを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutFormListNow( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( wk->dat->sort->form != ZKNCOMM_LIST_SORT_NONE ){
@@ -811,9 +911,16 @@ void ZKNSEARCHOBJ_PutFormListNow( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
-
-
-// スクロールバー
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		スクロールバー表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		py			Ｙ座標
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py )
 {
 	if( py < SCROLL_BAR_UY ){
@@ -824,18 +931,25 @@ void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py )
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_SCROLL_BAR, SCROLL_BAR_PX, py, CLSYS_DRAW_MAIN );
 }
 
-void ZKNSEARCHOBJ_SetListPageArrowAnime( ZKNSEARCHMAIN_WORK * wk, BOOL anm )
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ切り替え矢印アニメ設定
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHOBJ_SetListPageArrowAnime( ZKNSEARCHMAIN_WORK * wk )
 {
-	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ||
-			anm == FALSE ){
+	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_LEFT) != APP_COMMON_BARICON_CURSOR_LEFT_ON ){
 		if( FRAMELIST_GetScrollCount( wk->lwk ) == 0 ){
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT_OFF );
 		}else{
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_LEFT, APP_COMMON_BARICON_CURSOR_LEFT );
 		}
 	}
-	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ||
-			anm == FALSE ){
+	if( ZKNSEARCHOBJ_GetAnm(wk,ZKNSEARCHOBJ_IDX_TB_RIGHT) != APP_COMMON_BARICON_CURSOR_RIGHT_ON ){
 		if( FRAMELIST_CheckScrollMax( wk->lwk ) == FALSE ){
 			ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RIGHT, APP_COMMON_BARICON_CURSOR_RIGHT_OFF );
 		}else{
@@ -844,7 +958,18 @@ void ZKNSEARCHOBJ_SetListPageArrowAnime( ZKNSEARCHMAIN_WORK * wk, BOOL anm )
 	}
 }
 
-// マーク表示
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		チェックマーク表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		num			マーク番号
+ * @param		py			表示Ｙ座標
+ * @param		disp		表示画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutMark( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp )
 {
 	if( disp == TRUE ){
@@ -859,6 +984,15 @@ void ZKNSEARCHOBJ_PutMark( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		チェックマーク非表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_VanishMark( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, FALSE );
@@ -868,6 +1002,18 @@ void ZKNSEARCHOBJ_VanishMark( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_SW, FALSE );
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK2_SW, FALSE );
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		チェックマーク切り替え
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			位置
+ * @param		flg			TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_ChangeMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, flg );
@@ -878,6 +1024,17 @@ void ZKNSEARCHOBJ_ChangeMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		チェックマーク切り替え（タイプ）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos1		位置１
+ * @param		pos2		位置２
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_ChangeTypeMark( ZKNSEARCHMAIN_WORK * wk, u8	pos1, u8 pos2 )
 {
 	u8	list_pos = FRAMELIST_GetScrollCount( wk->lwk );
@@ -934,6 +1091,17 @@ void ZKNSEARCHOBJ_ChangeTypeMark( ZKNSEARCHMAIN_WORK * wk, u8	pos1, u8 pos2 )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		チェックマージ表示（フォルムページ用）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		py			表示Ｙ座標
+ * @param		disp		表示画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutFormMark( ZKNSEARCHMAIN_WORK * wk, s16 py, BOOL disp )
 {
 	if( disp == TRUE ){
@@ -948,6 +1116,17 @@ void ZKNSEARCHOBJ_PutFormMark( ZKNSEARCHMAIN_WORK * wk, s16 py, BOOL disp )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		チェックマーク切り替え（フォルムページ用）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			位置
+ * @param		flg			TRUE = 表示, FALSE = 非表示
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_ChangeFormMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, flg );
@@ -959,6 +1138,18 @@ void ZKNSEARCHOBJ_ChangeFormMark( ZKNSEARCHMAIN_WORK * wk, u16 pos, BOOL flg )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト上にフォルムを表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		num			フォルム番号
+ * @param		py			Ｙ座標
+ * @param		disp		表示画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_PutFormList( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL disp )
 {
 	if( disp == TRUE ){
@@ -973,6 +1164,16 @@ void ZKNSEARCHOBJ_PutFormList( ZKNSEARCHMAIN_WORK * wk, u16 num, s16 py, BOOL di
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストスクロール
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		mv			スクロール速度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_ScrollList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 {
 	u32	i;
@@ -1004,6 +1205,16 @@ void ZKNSEARCHOBJ_ScrollList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストスクロール（フォルムページ用）
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		mv			スクロール速度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 {
 	u32	i;
@@ -1049,6 +1260,16 @@ void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索中バー表示
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		cnt			表示カウンタ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_MoveLoadingBar( ZKNSEARCHMAIN_WORK * wk, u32 cnt )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_LOADING_BAR, TRUE );

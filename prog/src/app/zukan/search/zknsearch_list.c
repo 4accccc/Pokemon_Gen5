@@ -20,6 +20,7 @@
 
 
 //============================================================================================
+//	プロトタイプ宣言
 //============================================================================================
 static void RowListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp );
 static void RowListCallBack_Move( void * work, u32 listPos, BOOL flg );
@@ -43,10 +44,10 @@ static void FormListCallBack_Scroll( void * work, s8 mv );
 
 
 //============================================================================================
+//	グローバル
 //============================================================================================
 
-//--------------------------------------------------------------------------------------------
-// ならび
+// 並びページタッチデータ
 static const FRAMELIST_TOUCH_DATA RowTouchHitTbl[] =
 {
 	{ {   0,  23, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_ITEM },
@@ -58,13 +59,13 @@ static const FRAMELIST_TOUCH_DATA RowTouchHitTbl[] =
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
-
+// 並びページコールバック
 static const FRAMELIST_CALLBACK	RowListCallBack = {
 	RowListCallBack_Draw,
 	RowListCallBack_Move,
 	RowListCallBack_Scroll,
 };
-
+// 並びページリストデータ
 static const FRAMELIST_HEADER	RowListHeader = {
 	GFL_BG_FRAME1_M,							// 下画面ＢＧ
 	GFL_BG_FRAME1_S,							// 上画面ＢＧ
@@ -99,8 +100,7 @@ static const FRAMELIST_HEADER	RowListHeader = {
 	NULL,
 };
 
-//--------------------------------------------------------------------------------------------
-// なまえ
+// 名前ページタッチデータ
 static const FRAMELIST_TOUCH_DATA NameTouchHitTbl[] =
 {
 	{ {   0,  23, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
@@ -118,13 +118,13 @@ static const FRAMELIST_TOUCH_DATA NameTouchHitTbl[] =
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
-
+// 名前ページコールバック
 static const FRAMELIST_CALLBACK	NameListCallBack = {
 	NameListCallBack_Draw,
 	NameListCallBack_Move,
 	NameListCallBack_Scroll,
 };
-
+// 名前ページリストデータ
 static const FRAMELIST_HEADER	NameListHeader = {
 	GFL_BG_FRAME1_M,							// 下画面ＢＧ
 	GFL_BG_FRAME1_S,							// 上画面ＢＧ
@@ -159,8 +159,7 @@ static const FRAMELIST_HEADER	NameListHeader = {
 	NULL,
 };
 
-//--------------------------------------------------------------------------------------------
-// タイプ
+// タイプページタッチデータ
 static const FRAMELIST_TOUCH_DATA TypeTouchHitTbl[] =
 {
 	{ {   0,  23, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
@@ -178,13 +177,13 @@ static const FRAMELIST_TOUCH_DATA TypeTouchHitTbl[] =
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
-
+// タイプページコールバック
 static const FRAMELIST_CALLBACK	TypeListCallBack = {
 	TypeListCallBack_Draw,
 	TypeListCallBack_Move,
 	TypeListCallBack_Scroll,
 };
-
+// タイプページリストデータ
 static const FRAMELIST_HEADER	TypeListHeader = {
 	GFL_BG_FRAME1_M,							// 下画面ＢＧ
 	GFL_BG_FRAME1_S,							// 上画面ＢＧ
@@ -219,8 +218,7 @@ static const FRAMELIST_HEADER	TypeListHeader = {
 	NULL,
 };
 
-//--------------------------------------------------------------------------------------------
-// いろ
+// 色ページタッチデータ
 static const FRAMELIST_TOUCH_DATA ColorTouchHitTbl[] =
 {
 	{ {   0,  23, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
@@ -238,13 +236,13 @@ static const FRAMELIST_TOUCH_DATA ColorTouchHitTbl[] =
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
-
+// 色ページコールバックデータ
 static const FRAMELIST_CALLBACK	ColorListCallBack = {
 	ColorListCallBack_Draw,
 	ColorListCallBack_Move,
 	ColorListCallBack_Scroll,
 };
-
+// 色ページリストデータ
 static const FRAMELIST_HEADER	ColorListHeader = {
 	GFL_BG_FRAME1_M,							// 下画面ＢＧ
 	GFL_BG_FRAME1_S,							// 上画面ＢＧ
@@ -279,8 +277,7 @@ static const FRAMELIST_HEADER	ColorListHeader = {
 	NULL,
 };
 
-//--------------------------------------------------------------------------------------------
-// フォルム
+// フォルムページタッチデータ
 static const FRAMELIST_TOUCH_DATA FormTouchHitTbl[] =
 {
 	{ {   0,  39, 128+24, 231 }, FRAMELIST_TOUCH_PARAM_SLIDE },
@@ -295,13 +292,13 @@ static const FRAMELIST_TOUCH_DATA FormTouchHitTbl[] =
 
 	{ { GFL_UI_TP_HIT_END, 0, 0, 0 }, 0 },
 };
-
+// フォルムページコールバック
 static const FRAMELIST_CALLBACK	FormListCallBack = {
 	FormListCallBack_Draw,
 	FormListCallBack_Move,
 	FormListCallBack_Scroll,
 };
-
+// フォルムページリストデータ
 static const FRAMELIST_HEADER	FormListHeader = {
 	GFL_BG_FRAME1_M,							// 下画面ＢＧ
 	GFL_BG_FRAME1_S,							// 上画面ＢＧ
@@ -338,8 +335,15 @@ static const FRAMELIST_HEADER	FormListHeader = {
 
 
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		並び選択ページリスト作成
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHLIST_MakeRowList( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -374,6 +378,15 @@ void ZKNSEARCHLIST_MakeRowList( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前選択ページリスト作成
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHLIST_MakeNameList( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -408,6 +421,15 @@ void ZKNSEARCHLIST_MakeNameList( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプページリスト作成
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHLIST_MakeTypeList( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -442,6 +464,15 @@ void ZKNSEARCHLIST_MakeTypeList( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		色ページリスト作成
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHLIST_MakeColorList( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -476,6 +507,15 @@ void ZKNSEARCHLIST_MakeColorList( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルムページリスト作成
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHLIST_MakeFormList( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -509,8 +549,6 @@ void ZKNSEARCHLIST_MakeFormList( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
-
-
 //--------------------------------------------------------------------------------------------
 /**
  * @brief	  リスト削除
@@ -535,8 +573,19 @@ void ZKNSEARCHLIST_FreeList( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストコールバック：並びページ項目表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		itemNum		項目番号
+ * @param		util			項目で使用しているPRINT_UTIL
+ * @param		py				表示Ｙ座標
+ * @param		disp			描画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void RowListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -548,15 +597,49 @@ static void RowListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：並びページカーソル移動
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		listPos		リスト位置
+ * @param		flg				FALSE = 初期化時
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void RowListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：並びページリストスクロール
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		mv				スクロール値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void RowListCallBack_Scroll( void * work, s8 mv )
 {
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストコールバック：名前ページ項目表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		itemNum		項目番号
+ * @param		util			項目で使用しているPRINT_UTIL
+ * @param		py				表示Ｙ座標
+ * @param		disp			描画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void NameListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -568,6 +651,17 @@ static void NameListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：名前ページカーソル移動
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		listPos		リスト位置
+ * @param		flg				FALSE = 初期化時
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void NameListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -575,6 +669,16 @@ static void NameListCallBack_Move( void * work, u32 listPos, BOOL flg )
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：名前ページリストスクロール
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		mv				スクロール値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void NameListCallBack_Scroll( void * work, s8 mv )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -582,9 +686,22 @@ static void NameListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストコールバック：タイプページ項目表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		itemNum		項目番号
+ * @param		util			項目で使用しているPRINT_UTIL
+ * @param		py				表示Ｙ座標
+ * @param		disp			描画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void TypeListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -599,6 +716,17 @@ static void TypeListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：タイプページカーソル移動
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		listPos		リスト位置
+ * @param		flg				FALSE = 初期化時
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void TypeListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -606,6 +734,16 @@ static void TypeListCallBack_Move( void * work, u32 listPos, BOOL flg )
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：タイプページリストスクロール
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		mv				スクロール値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void TypeListCallBack_Scroll( void * work, s8 mv )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -613,9 +751,22 @@ static void TypeListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストコールバック：色ページ項目表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		itemNum		項目番号
+ * @param		util			項目で使用しているPRINT_UTIL
+ * @param		py				表示Ｙ座標
+ * @param		disp			描画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ColorListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -627,6 +778,17 @@ static void ColorListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util,
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：色ページカーソル移動
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		listPos		リスト位置
+ * @param		flg				FALSE = 初期化時
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ColorListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -634,6 +796,16 @@ static void ColorListCallBack_Move( void * work, u32 listPos, BOOL flg )
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：色ページリストスクロール
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		mv				スクロール値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ColorListCallBack_Scroll( void * work, s8 mv )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -641,9 +813,22 @@ static void ColorListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストコールバック：フォルムページ項目表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		itemNum		項目番号
+ * @param		util			項目で使用しているPRINT_UTIL
+ * @param		py				表示Ｙ座標
+ * @param		disp			描画面
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void FormListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, s16 py, BOOL disp )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -656,6 +841,17 @@ static void FormListCallBack_Draw( void * work, u32 itemNum, PRINT_UTIL * util, 
 	ZKNSEARCHOBJ_PutFormList( wk, itemNum, py, disp );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：フォルムページカーソル移動
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		listPos		リスト位置
+ * @param		flg				FALSE = 初期化時
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void FormListCallBack_Move( void * work, u32 listPos, BOOL flg )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -663,6 +859,16 @@ static void FormListCallBack_Move( void * work, u32 listPos, BOOL flg )
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  リストコールバック：フォルムリストスクロール
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		mv				スクロール値
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void FormListCallBack_Scroll( void * work, s8 mv )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -670,5 +876,5 @@ static void FormListCallBack_Scroll( void * work, s8 mv )
 	ZKNSEARCHOBJ_ScrollFormList( wk, mv*-1 );
 
 	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetScrollBarPY(wk->lwk) );
-	ZKNSEARCHOBJ_SetListPageArrowAnime( wk, TRUE );
+	ZKNSEARCHOBJ_SetListPageArrowAnime( wk );
 }

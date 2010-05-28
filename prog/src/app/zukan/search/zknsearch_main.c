@@ -37,10 +37,19 @@
 #define	MENU_BLEND_EV1	( 16 )	// ブレンド係数
 #define	MENU_BLEND_EV2	( 6 )		// ブレンド係数
 
+// タッチバー座標
 #define	TOUCH_BAR_PX		( 0 )
 #define	TOUCH_BAR_PY		( 21 )
 #define	TOUCH_BAR_SX		( 32 )
 #define	TOUCH_BAR_SY		( 3 )
+
+// 検索中ウィンドウ座標
+#define	LOAD_WIN_PX		( 0 )
+#define	LOAD_WIN_PY		( 17 )
+#define	LOAD_WIN_SX		( 32 )
+#define	LOAD_WIN_SY		( 6 )
+
+#define	FRAME_SCROLL_COUNT	( 48 )		// タブフレームのスクロールカウント
 
 
 //============================================================================================
@@ -75,6 +84,7 @@ static const GFL_DISP_VRAM VramTbl = {
 	GX_OBJVRAMMODE_CHAR_1D_128K		// サブOBJマッピングモード
 };
 
+// タイプリストテーブル
 static const u32 SortTypeTbl[] = {
 	POKETYPE_AKU,			// あく
 	POKETYPE_IWA,			// いわ
@@ -95,6 +105,26 @@ static const u32 SortTypeTbl[] = {
 	POKETYPE_MUSHI,		// むし
 };
 
+// フォルムリストの検索番号テーブル
+static const u8 FormListTable[] = {
+	0,		// "丸型"=>0,
+	13,		// "腕型"=>13,
+	1,		// "脚型"=>1,
+	7,		// "多足型"=>7,
+
+	5,		// "四枚羽型"=>5,
+	12,		// "腹這脚無型"=>12,
+	8,		// "直立胴型"=>8,
+	4,		// "四足型"=>4,
+
+	6,		// "集合型"=>6,
+	3,		// "昆虫型"=>3,
+	2,		// "魚型"=>2,
+	9,		// "二足尻尾型"=>9,
+
+	11,		// "二枚羽型"=>11,
+	10,		// "二足人型"=>10,
+};
 
 
 //--------------------------------------------------------------------------------------------
@@ -234,21 +264,44 @@ static void HBlankTask( GFL_TCB * tcb, void * work )
 	}
 }
 
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  VRAM初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_InitVram(void)
 {
 	GFL_DISP_ClearVRAM( 0 );
 	GFL_DISP_SetBank( &VramTbl );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief	  VRAM設定データ取得
+ *
+ * @param		none
+ *
+ * @return	VRAM設定
+ */
+//--------------------------------------------------------------------------------------------
 const GFL_DISP_VRAM * ZKNSEARCHMAIN_GetVramBankData(void)
 {
 	return &VramTbl;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ初期化
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_InitBg(void)
 {
 	GFL_BG_Init( HEAPID_ZUKAN_SEARCH );
@@ -340,6 +393,15 @@ void ZKNSEARCHMAIN_InitBg(void)
 		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧ解放
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ExitBg(void)
 {
 	GFL_DISP_GX_SetVisibleControl(
@@ -357,19 +419,45 @@ void ZKNSEARCHMAIN_ExitBg(void)
 	GFL_BG_Exit();
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧプライオリティ切り替え（メインページ）
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ChangeBgPriorityMenu(void)
 {
 	GFL_BG_SetPriority( GFL_BG_FRAME0_M, 1 );
 	GFL_BG_SetPriority( GFL_BG_FRAME1_M, 0 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧプライオリティ切り替え（各リストページ）
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ChangeBgPriorityList(void)
 {
 	GFL_BG_SetPriority( GFL_BG_FRAME0_M, 0 );
 	GFL_BG_SetPriority( GFL_BG_FRAME1_M, 1 );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ＢＧグラフィック読み込み
+ *
+ * @param		none
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadBgGraphic(void)
 {
 	ARCHANDLE * ah;
@@ -397,11 +485,7 @@ void ZKNSEARCHMAIN_LoadBgGraphic(void)
 		ah, NARC_zukan_gra_search_searchbase_bgu_NCGR, GFL_BG_FRAME2_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
 	GFL_ARCHDL_UTIL_TransVramBgCharacter(
 		ah, NARC_zukan_gra_search_searchbase_bgu_NCGR, GFL_BG_FRAME0_S, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
-/*
-	GFL_ARCHDL_UTIL_TransVramScreen(
-		ah, NARC_zukan_gra_search_search_main_bgd_NSCR,
-		GFL_BG_FRAME1_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
-*/
+
 	GFL_ARCHDL_UTIL_TransVramScreen(
 		ah, NARC_zukan_gra_search_searchbase_bgd_NSCR,
 		GFL_BG_FRAME2_M, 0, 0, FALSE, HEAPID_ZUKAN_SEARCH );
@@ -616,6 +700,15 @@ void ZKNSEARCHMAIN_ExitMsg( ZKNSEARCHMAIN_WORK * wk )
 	GFL_MSG_Delete( wk->mman );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルアニメ初期化
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_InitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -630,11 +723,29 @@ void ZKNSEARCHMAIN_InitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソルアニメ解放
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ExitBlinkAnm( ZKNSEARCHMAIN_WORK * wk )
 {
 	BLINKPALANM_Exit( wk->blink );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGWINFRM初期化
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_InitBgWinFrame( ZKNSEARCHMAIN_WORK * wk )
 {
 	u16 * scr = GFL_BG_GetScreenBufferAdrs( GFL_BG_FRAME0_M );
@@ -650,12 +761,29 @@ void ZKNSEARCHMAIN_InitBgWinFrame( ZKNSEARCHMAIN_WORK * wk )
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME0_M );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGWINFRM削除
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ExitBgWinFrame( ZKNSEARCHMAIN_WORK * wk )
 {
 	BGWINFRM_Exit( wk->wfrm );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページＢＧスクリーン読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadMenuPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -671,6 +799,15 @@ void ZKNSEARCHMAIN_LoadMenuPageScreen( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		並び選択ページＢＧスクリーン読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadRowListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -682,6 +819,15 @@ void ZKNSEARCHMAIN_LoadRowListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前選択ページＢＧスクリーン読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadNameListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -693,6 +839,15 @@ void ZKNSEARCHMAIN_LoadNameListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ選択ページＢＧスクリーン読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadTypeListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -704,6 +859,15 @@ void ZKNSEARCHMAIN_LoadTypeListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		色選択ページＢＧスクリーン読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadColorListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -715,6 +879,15 @@ void ZKNSEARCHMAIN_LoadColorListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルム選択ページＢＧスクリーン読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadFormListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_ZUKAN_GRA, HEAPID_ZUKAN_SEARCH_L );
@@ -726,11 +899,15 @@ void ZKNSEARCHMAIN_LoadFormListPageScreen( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
-#define	LOAD_WIN_PX		( 0 )
-#define	LOAD_WIN_PY		( 17 )
-#define	LOAD_WIN_SX		( 32 )
-#define	LOAD_WIN_SY		( 6 )
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索中ウィンドウ読み込み
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadLoadingWindow( ZKNSEARCHMAIN_WORK * wk )
 {
 	ARCHANDLE * ah;
@@ -750,11 +927,29 @@ void ZKNSEARCHMAIN_LoadLoadingWindow( ZKNSEARCHMAIN_WORK * wk )
 	GFL_ARC_CloseDataHandle( ah );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索中ウィンドウ解放
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_UnloadLoadingWindow( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_HEAP_FreeMemory( wk->loadingBuff );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索中ウィンドウ表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadingWindowOn( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_BG_WriteScreen( GFL_BG_FRAME1_M, wk->loadingBuff, LOAD_WIN_PX, LOAD_WIN_PY, LOAD_WIN_SX, LOAD_WIN_SY );
@@ -772,6 +967,15 @@ void ZKNSEARCHMAIN_LoadingWindowOn( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, 1 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索中ウィンドウ非表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_LOADING_BAR, FALSE );
@@ -789,32 +993,42 @@ void ZKNSEARCHMAIN_LoadingWindowOff( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_EXIT, 0 );
 	ZKNSEARCHOBJ_BgPriChange( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, 0 );
 
-
 	ZKNSEARCHBMP_PutResetStart( wk );
-//	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストのＢＧ面表示リクエスト
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ListBGOn( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->bgVanish = 1;
-//	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
-//	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_ON );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リストのＢＧ面非表示リクエスト
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_ListBGOff( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->bgVanish = 2;
-//	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
-//	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_BG1 | GX_PLANEMASK_BG3, VISIBLE_OFF );
+
 	GFL_BG_ClearScreen( GFL_BG_FRAME1_M );
 	GFL_BG_ClearScreen( GFL_BG_FRAME3_M );
 	GFL_BG_ClearScreen( GFL_BG_FRAME1_S );
-//	GFL_BG_ClearScreen( GFL_BG_FRAME3_S );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_M );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_M );
 	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
-//	GFL_BG_LoadScreenV_Req( GFL_BG_FRAME3_S );
 
 	// タッチバーを残してクリア
 	GFL_BG_FillScreen( GFL_BG_FRAME0_M, 0, 0, 0, 32, 21, 0 );
@@ -824,12 +1038,15 @@ void ZKNSEARCHMAIN_ListBGOff( ZKNSEARCHMAIN_WORK * wk )
 	GFL_BG_SetScrollReq( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, 0 );
 }
 
-
-
-
-
-#define	FRAME_SCROLL_COUNT	( 48 )
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タブＢＧフレーム初期位置設定
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_InitFrameScroll( ZKNSEARCHMAIN_WORK * wk )
 {
 	s16	x, y;
@@ -848,6 +1065,16 @@ void ZKNSEARCHMAIN_InitFrameScroll( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タブＢＧフレームスクロール設定
+ *
+ * @param		wk		図鑑検索画面ワーク
+ * @param		val		スクロール速度
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHMAIN_SetFrameScrollParam( ZKNSEARCHMAIN_WORK * wk, s16 val )
 {
 	wk->frameScrollCnt = FRAME_SCROLL_COUNT;
@@ -856,6 +1083,16 @@ void ZKNSEARCHMAIN_SetFrameScrollParam( ZKNSEARCHMAIN_WORK * wk, s16 val )
 	BGWINFRM_MoveInit( wk->wfrm, 0, 0, val/GFL_STD_Abs(val), FRAME_SCROLL_COUNT/GFL_STD_Abs(val) );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タブＢＧフレームスクロールメイン
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL ZKNSEARCHMAIN_MainSrameScroll( ZKNSEARCHMAIN_WORK * wk )
 {
 	s16	x, y;
@@ -882,12 +1119,29 @@ BOOL ZKNSEARCHMAIN_MainSrameScroll( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		指定位置のタイプ取得
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	タイプ
+ */
+//--------------------------------------------------------------------------------------------
 u32 ZKNSEARCHMAIN_GetSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	return SortTypeTbl[pos];
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプからリスト位置を取得
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	リスト位置
+ */
+//--------------------------------------------------------------------------------------------
 u32 ZKNSEARCHMAIN_GetSortTypeIndex( ZKNSEARCHMAIN_WORK * wk, u32 type )
 {
 	u32	i;
@@ -898,4 +1152,49 @@ u32 ZKNSEARCHMAIN_GetSortTypeIndex( ZKNSEARCHMAIN_WORK * wk, u32 type )
 		}
 	}
 	return ZKNCOMM_LIST_SORT_NONE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルムデータからリストインデックスへ変換
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHMAIN_ConvFormDataToList( ZKNSEARCHMAIN_WORK * wk )
+{
+	u32	i;
+
+	if( wk->dat->sort->form == ZKNCOMM_LIST_SORT_NONE ){
+		return;
+	}
+
+	for( i=0; i<NELEMS(FormListTable); i++ ){
+		if( wk->dat->sort->form == FormListTable[i] ){
+			wk->dat->sort->form = i;
+			break;
+		}
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルムリストインデックスからデータへ変換
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+void ZKNSEARCHMAIN_ConvFormListToData( ZKNSEARCHMAIN_WORK * wk )
+{
+	u32	i;
+
+	if( wk->dat->sort->form == ZKNCOMM_LIST_SORT_NONE ){
+		return;
+	}
+
+	wk->dat->sort->form = FormListTable[wk->dat->sort->form];
 }

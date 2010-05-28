@@ -30,12 +30,6 @@
 
 #define FCOL_MP05			( PRINTSYS_LSB_Make(1,2,6) )		// フォントカラー：検索ウィンドウ用
 
-/*
-#define FCOL_SP00WN		( PRINTSYS_LSB_Make(14,15,0) )	// フォントカラー：サブ００白抜
-#define FCOL_SP00BN		( PRINTSYS_LSB_Make(12,13,0) )	// フォントカラー：サブ００黒抜
-#define FCOL_SP15WN		( PRINTSYS_LSB_Make(15,2,0) )		// フォントカラー：サブ１５白抜
-*/
-
 // BMPWIN関連
 // 上画面ラベル１
 #define	BMPWIN_LABEL1_FRM		( GFL_BG_FRAME3_S )
@@ -51,7 +45,6 @@
 #define	BMPWIN_LABEL2_SX		( 30 )
 #define	BMPWIN_LABEL2_SY		( 3 )
 #define	BMPWIN_LABEL2_PAL		( ZKNSEARCHMAIN_SBG_PAL_FONT )
-
 // メイン画面「ならび」
 #define	BMPWIN_LABEL_ROW_FRM	( GFL_BG_FRAME1_M )
 #define	BMPWIN_LABEL_ROW_PX		( 3 )
@@ -59,7 +52,6 @@
 #define	BMPWIN_LABEL_ROW_SX		( 10 )
 #define	BMPWIN_LABEL_ROW_SY		( 3 )
 #define	BMPWIN_LABEL_ROW_PAL	( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面「なまえ」
 #define	BMPWIN_LABEL_NAME_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_LABEL_NAME_PX		( 3 )
@@ -67,7 +59,6 @@
 #define	BMPWIN_LABEL_NAME_SX		( 10 )
 #define	BMPWIN_LABEL_NAME_SY		( 3 )
 #define	BMPWIN_LABEL_NAME_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面「タイプ」
 #define	BMPWIN_LABEL_TYPE_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_LABEL_TYPE_PX		( 3 )
@@ -75,7 +66,6 @@
 #define	BMPWIN_LABEL_TYPE_SX		( 10 )
 #define	BMPWIN_LABEL_TYPE_SY		( 3 )
 #define	BMPWIN_LABEL_TYPE_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面「いろ」
 #define	BMPWIN_LABEL_COLOR_FRM	( GFL_BG_FRAME1_M )
 #define	BMPWIN_LABEL_COLOR_PX		( 3 )
@@ -83,7 +73,6 @@
 #define	BMPWIN_LABEL_COLOR_SX		( 10 )
 #define	BMPWIN_LABEL_COLOR_SY		( 3 )
 #define	BMPWIN_LABEL_COLOR_PAL	( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面「かたち」
 #define	BMPWIN_LABEL_FORM_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_LABEL_FORM_PX		( 3 )
@@ -91,7 +80,6 @@
 #define	BMPWIN_LABEL_FORM_SX		( 10 )
 #define	BMPWIN_LABEL_FORM_SY		( 3 )
 #define	BMPWIN_LABEL_FORM_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面　並び
 #define	BMPWIN_ITEM_ROW_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_ITEM_ROW_PX		( 19 )
@@ -99,7 +87,6 @@
 #define	BMPWIN_ITEM_ROW_SX		( 10 )
 #define	BMPWIN_ITEM_ROW_SY		( 3 )
 #define	BMPWIN_ITEM_ROW_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面　名前
 #define	BMPWIN_ITEM_NAME_FRM	( GFL_BG_FRAME1_M )
 #define	BMPWIN_ITEM_NAME_PX		( 23 )
@@ -107,7 +94,6 @@
 #define	BMPWIN_ITEM_NAME_SX		( 2 )
 #define	BMPWIN_ITEM_NAME_SY		( 3 )
 #define	BMPWIN_ITEM_NAME_PAL	( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面　タイプ
 #define	BMPWIN_ITEM_TYPE_FRM	( GFL_BG_FRAME1_M )
 #define	BMPWIN_ITEM_TYPE_PX		( 17 )
@@ -115,7 +101,6 @@
 #define	BMPWIN_ITEM_TYPE_SX		( 14 )
 #define	BMPWIN_ITEM_TYPE_SY		( 3 )
 #define	BMPWIN_ITEM_TYPE_PAL	( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面　色
 #define	BMPWIN_ITEM_COLOR_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_ITEM_COLOR_PX		( 19 )
@@ -123,7 +108,6 @@
 #define	BMPWIN_ITEM_COLOR_SX		( 10 )
 #define	BMPWIN_ITEM_COLOR_SY		( 3 )
 #define	BMPWIN_ITEM_COLOR_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // メイン画面「スタート」
 #define	BMPWIN_START_FRM	( GFL_BG_FRAME1_M )
 #define	BMPWIN_START_PX		( 19 )
@@ -131,7 +115,6 @@
 #define	BMPWIN_START_SX		( 10 )
 #define	BMPWIN_START_SY		( 3 )
 #define	BMPWIN_START_PAL	( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // リスト画面ラベル
 #define	BMPWIN_LIST_LABEL_FRM		( GFL_BG_FRAME0_M )
 #define	BMPWIN_LIST_LABEL_PX		( 3 )
@@ -139,7 +122,6 @@
 #define	BMPWIN_LIST_LABEL_SX		( 10 )
 #define	BMPWIN_LIST_LABEL_SY		( 2 )
 #define	BMPWIN_LIST_LABEL_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // リスト画面　項目１
 #define	BMPWIN_LIST_ITEM1_FRM		( GFL_BG_FRAME0_M )
 #define	BMPWIN_LIST_ITEM1_PX		( 2 )
@@ -147,7 +129,6 @@
 #define	BMPWIN_LIST_ITEM1_SX		( 12 )
 #define	BMPWIN_LIST_ITEM1_SY		( 2 )
 #define	BMPWIN_LIST_ITEM1_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // リスト画面　項目２
 #define	BMPWIN_LIST_ITEM2_FRM		( GFL_BG_FRAME0_M )
 #define	BMPWIN_LIST_ITEM2_PX		( 2 )
@@ -155,7 +136,6 @@
 #define	BMPWIN_LIST_ITEM2_SX		( 12 )
 #define	BMPWIN_LIST_ITEM2_SY		( 2 )
 #define	BMPWIN_LIST_ITEM2_PAL		( ZKNSEARCHMAIN_MBG_PAL_FONT )
-
 // 検索結果など
 #define	BMPWIN_SEARCH_WIN_FRM		( GFL_BG_FRAME1_M )
 #define	BMPWIN_SEARCH_WIN_PX		( 1 )
@@ -175,6 +155,7 @@ static void WriteDefaultStr( ZKNSEARCHMAIN_WORK * wk );
 //	グローバル
 //============================================================================================
 
+// BMPWINデータ
 static const u8	BmpWinData[][6] =
 {
 	{	// 上画面ラベル１
@@ -349,6 +330,15 @@ static void PrintScreenTrans( PRINT_UTIL * util )
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		デフォルト文字列描画
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void WriteDefaultStr( ZKNSEARCHMAIN_WORK * wk )
 {
 	// タイトル
@@ -387,6 +377,15 @@ static void WriteDefaultStr( ZKNSEARCHMAIN_WORK * wk )
 		BMPWIN_START_SX*8/2, 4, FCOL_WP15WN, PRINTTOOL_MODE_CENTER );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページ文字表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL1] );
@@ -478,6 +477,15 @@ void ZKNSEARCHBMP_PutMainPage( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_MAIN_ITEM_COLOR] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページラベル表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
 {
 	// 上画面の情報
@@ -487,6 +495,15 @@ void ZKNSEARCHBMP_PutMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL2] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページラベルクリア
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_ClearMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
 {
 	// 上画面の情報をクリア
@@ -494,6 +511,15 @@ void ZKNSEARCHBMP_ClearMainPageLabel( ZKNSEARCHMAIN_WORK * wk )
 	GFL_BMPWIN_TransVramCharacter( wk->win[ZKNSEARCHBMP_WINIDX_LABEL2].win );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		並び選択ページ文字列表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutRowPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL1] );
@@ -514,6 +540,15 @@ void ZKNSEARCHBMP_PutRowPage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHBMP_PutRowItem( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		並び選択ページ選択項目表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutRowItem( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1].win), 0 );
@@ -523,6 +558,15 @@ void ZKNSEARCHBMP_PutRowItem( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前選択ページ文字列表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutNamePage( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL1] );
@@ -543,6 +587,15 @@ void ZKNSEARCHBMP_PutNamePage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHBMP_PutNameItem( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		名前選択ページ選択項目表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutNameItem( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1].win), 0 );
@@ -558,6 +611,15 @@ void ZKNSEARCHBMP_PutNameItem( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ選択ページ文字列表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutTypePage( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL1] );
@@ -578,6 +640,15 @@ void ZKNSEARCHBMP_PutTypePage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHBMP_PutTypeItem( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		タイプ選択ページ選択項目表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutTypeItem( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1].win), 0 );
@@ -607,6 +678,15 @@ void ZKNSEARCHBMP_PutTypeItem( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM2] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		色選択ページ文字列表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutColorPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL1] );
@@ -627,6 +707,15 @@ void ZKNSEARCHBMP_PutColorPage( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHBMP_PutColorItem( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		色選択ページ選択項目表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutColorItem( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1].win), 0 );
@@ -642,6 +731,15 @@ void ZKNSEARCHBMP_PutColorItem( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LIST_ITEM1] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フォルム選択ページ文字列表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutFormPage( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LABEL1] );
@@ -660,7 +758,17 @@ void ZKNSEARCHBMP_PutFormPage( ZKNSEARCHMAIN_WORK * wk )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_LIST_LABEL] );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト項目表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ * @parma		util	PRINT_UTIL
+ * @param		str		文字列
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutListItem( ZKNSEARCHMAIN_WORK * wk, PRINT_UTIL * util, STRBUF * str )
 {
 	PRINT_QUE * que = FRAMELIST_GetPrintQue( wk->lwk );
@@ -668,12 +776,31 @@ void ZKNSEARCHBMP_PutListItem( ZKNSEARCHMAIN_WORK * wk, PRINT_UTIL * util, STRBU
 		util, que, GFL_BMPWIN_GetSizeX(util->win)*8/2, 4, str, wk->font, FCOL_WP01WN, PRINTTOOL_MODE_CENTER );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト項目表示（フォルムページ用）
+ *
+ * @param		wk		図鑑検索画面ワーク
+ * @parma		util	PRINT_UTIL
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutFormListItem( ZKNSEARCHMAIN_WORK * wk, PRINT_UTIL * util )
 {
-//	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(util->win), 1 );
 	GFL_BMPWIN_TransVramCharacter( util->win );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索メッセージウィンドウ表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ * @parma		msg		メッセージＩＤ
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void PrintSearchWin( ZKNSEARCHMAIN_WORK * wk, u32 msg )
 {
 	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->win[ZKNSEARCHBMP_WINIDX_SEARCH_WIN].win), 6 );
@@ -683,23 +810,58 @@ static void PrintSearchWin( ZKNSEARCHMAIN_WORK * wk, u32 msg )
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_SEARCH_WIN] );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索開始メッセージ表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_SearchStart( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintSearchWin( wk, ZKN_SEARCH_INFO_13 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索成功メッセージ表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_SearchComp( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintSearchWin( wk, ZKN_SEARCH_INFO_11 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索失敗メッセージ表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_SearchError( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintSearchWin( wk, ZKN_SEARCH_INFO_12 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索失敗後の「スタート」表示
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHBMP_PutResetStart( ZKNSEARCHMAIN_WORK * wk )
 {
 	PrintScreenTrans( &wk->win[ZKNSEARCHBMP_WINIDX_MAIN_START] );
 }
-

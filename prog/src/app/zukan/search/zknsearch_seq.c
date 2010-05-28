@@ -75,6 +75,13 @@ enum {
 	BUTTON_ANM_OBJ
 };
 
+#define	SORT_COUNT_PUT_WINDOW		( 0 )					// 検索中カウント：ウィンドウ表示
+#define	SORT_COUNT_MAKE_ENGINE	( 1 )					// 検索中カウント：分割検索エンジン作成
+#define	SORT_COUNT_SEARCH				( 2 )					// 検索中カウント：検索開始
+#define	SORT_COUNT_STOP_SE			( 100 )				// 検索中カウント：検索中ＳＥ停止
+#define	SORT_COUNT_SEARCH_END		( 60*2+1 )		// 検索中カウント：検索終了
+
+
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
@@ -124,9 +131,6 @@ static int PageChange( ZKNSEARCHMAIN_WORK * wk, int next );
 
 static void SetShortCut( ZKNSEARCHMAIN_WORK * wk );
 
-static void ConvFormDataToList( ZKNSEARCHMAIN_WORK * wk );
-static void ConvFormListToData( ZKNSEARCHMAIN_WORK * wk );
-
 
 FS_EXTERN_OVERLAY(ui_common);
 
@@ -135,6 +139,7 @@ FS_EXTERN_OVERLAY(ui_common);
 //	グローバル
 //============================================================================================
 
+// メインシーケンス
 static const pZKNSEARCH_FUNC MainSeq[] = {
 	MainSeq_Init,
 	MainSeq_Release,
@@ -172,32 +177,18 @@ static const pZKNSEARCH_FUNC MainSeq[] = {
 	MainSeq_EndSet,
 };
 
-// フォルムリストの検索番号テーブル
-static const u8 FormListTable[] = {
-	0,		// "丸型"=>0,
-	13,		// "腕型"=>13,
-	1,		// "脚型"=>1,
-	7,		// "多足型"=>7,
-
-	5,		// "四枚羽型"=>5,
-	12,		// "腹這脚無型"=>12,
-	8,		// "直立胴型"=>8,
-	4,		// "四足型"=>4,
-
-	6,		// "集合型"=>6,
-	3,		// "昆虫型"=>3,
-	2,		// "魚型"=>2,
-	9,		// "二足尻尾型"=>9,
-
-	11,		// "二枚羽型"=>11,
-	10,		// "二足人型"=>10,
-};
 
 
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL ZKNSEARCHSEQ_MainSeq( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->mainSeq = MainSeq[wk->mainSeq]( wk );
@@ -213,10 +204,15 @@ BOOL ZKNSEARCHSEQ_MainSeq( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 {
 	GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common) );
@@ -261,7 +257,6 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 	wk->page = 0xff;
 
-  //ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );  // モードを設定したいのでリセットする
   // 全部リセットするのではなく、モードだけ変更する 
   if( ZUKANSAVE_GetZukanMode( wk->dat->savedata ) == TRUE ){ 
     wk->dat->sort->mode = ZKNCOMM_LIST_SORT_MODE_ZENKOKU;
@@ -269,11 +264,20 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
   else{
     wk->dat->sort->mode = ZKNCOMM_LIST_SORT_MODE_LOCAL;
   }
-	ConvFormDataToList( wk );		// データからリストへ
+	ZKNSEARCHMAIN_ConvFormDataToList( wk );		// データからリストへ
 
 	return MAINSEQ_INIT_MENU;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：解放
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( ZKNSEARCHMAIN_MainSrameScroll(wk) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
@@ -314,6 +318,15 @@ static int MainSeq_Release( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_END;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：フェード待ち
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_Wipe( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( PaletteFadeCheck(wk->pfd) == 0 ){
@@ -322,8 +335,15 @@ static int MainSeq_Wipe( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_WIPE;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：メイン画面初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( PaletteFadeCheck(wk->pfd) != 0 ){
@@ -335,7 +355,6 @@ static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHMAIN_LoadMenuPageScreen( wk );
 
 	ZKNSEARCHBMP_PutMainPage( wk );
-//	ZKNSEARCHOBJ_VanishAll( wk );
 	ZKNSEARCHOBJ_PutMainPage( wk );
 
 	ZKNSEARCHMAIN_ChangeBgPriorityMenu();
@@ -348,12 +367,20 @@ static int MainSeq_InitMenu( ZKNSEARCHMAIN_WORK * wk )
 		ZKNSEARCHMAIN_SetFrameScrollParam( wk, -ZKNCOMM_BAR_SPEED );
 		ZKNSEARCHMAIN_SetPalFadeSeq( wk, 16, 0 );
 		return MAINSEQ_MAIN_MENU;
-//		return SetWipeIn( wk, MAINSEQ_MAIN_MENU );
 	}
 	ZKNSEARCHUI_MainCursorMoveInit( wk, wk->page );
 	return MAINSEQ_MAIN_MENU;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：メイン画面メイン
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( ZKNSEARCHMAIN_MainSrameScroll(wk) == TRUE || PaletteFadeCheck(wk->pfd) != 0 ){
@@ -402,7 +429,7 @@ static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 
 	case ZKNSEARCHUI_RET:
 		PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
-		ConvFormListToData( wk );		// リストからデータへ
+		ZKNSEARCHMAIN_ConvFormListToData( wk );		// リストからデータへ
 		wk->dat->retMode = ZKNSEARCH_RET_CANCEL;
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_END_SET );
@@ -417,7 +444,7 @@ static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 
 	case CURSORMOVE_CANCEL:					// キャンセル
 		PMSND_PlaySE( ZKNSEARCH_SE_CANCEL );
-		ConvFormListToData( wk );		// リストからデータへ
+		ZKNSEARCHMAIN_ConvFormListToData( wk );		// リストからデータへ
 		wk->dat->retMode = ZKNSEARCH_RET_CANCEL;
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_RETURN, APP_COMMON_BARICON_RETURN_ON );
 		return SetButtonAnm( wk, BUTTON_ANM_OBJ, ZKNSEARCHOBJ_IDX_TB_RETURN, MAINSEQ_END_SET );
@@ -428,6 +455,15 @@ static int MainSeq_MainMenu( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_MAIN_MENU;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：メイン画面終了
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ExitMenu( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHMAIN_ListBGOff( wk );
@@ -437,6 +473,15 @@ static int MainSeq_ExitMenu( ZKNSEARCHMAIN_WORK * wk )
 	return wk->nextSeq;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：検索データリセット
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ResetSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );
@@ -444,81 +489,84 @@ static int MainSeq_ResetSort( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_MAIN_MENU;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：検索開始
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_StartSort( ZKNSEARCHMAIN_WORK * wk )
 {
-	if( wk->loadingCnt == 0 ){
+	// ウィンドウ表示
+	if( wk->loadingCnt == SORT_COUNT_PUT_WINDOW ){
 		PMSND_PlaySE( ZKNSEARCH_SE_LOADING );
 		ZKNSEARCHMAIN_LoadingWindowOn( wk );
 		ZKNSEARCHBMP_SearchStart( wk );
 		ZKNSEARCHBMP_ClearMainPageLabel( wk );
 	}
 
-	if( wk->loadingCnt == 100 ){
+	// 検索中ＳＥ停止
+	if( wk->loadingCnt == SORT_COUNT_STOP_SE ){
 		PMSND_StopSE();
 	}
 
-
-  // 分割検索エンジン
-	if( wk->loadingCnt == 1 ){
-    // 生成
-		ConvFormListToData( wk );		// リストからデータへ
-    wk->egn_wk = ZUKAN_SEARCH_ENGINE_DivInit(
-        wk->dat->savedata,
-				wk->dat->sort,
-				HEAPID_ZUKAN_SYS );
-    wk->egn_st = ZKN_SCH_EGN_DIV_STATE_CONTINUE;
-  }
-  else if( wk->loadingCnt >= 2 && wk->egn_st == ZKN_SCH_EGN_DIV_STATE_CONTINUE ){
-    u16  num;
-    u16* list;
-    // 検索
-    wk->egn_st = ZUKAN_SEARCH_ENGINE_DivSearch(
-               wk->egn_wk,
-               HEAPID_ZUKAN_SYS,
-               &num,
-               &list );
-    if( wk->egn_st == ZKN_SCH_EGN_DIV_STATE_FINISH )
-    {
-      wk->dat->listMax = num;
-      wk->dat->list = list;
-      // 破棄
-      ZUKAN_SEARCH_ENGINE_DivExit(
-               wk->egn_wk
-      );
-    }
-  }
-  if( wk->loadingCnt == (60*2+1) && wk->egn_st == ZKN_SCH_EGN_DIV_STATE_CONTINUE ){  // まだ終わっていないとき
-    wk->loadingCnt = (60*2+1) -1;  // カウントを止めておく
-  }
-
-
-	if( wk->loadingCnt == (60*2+1) ){
-		wk->loadingCnt = 0;
-
-//    分割検索に変更したのでコメントアウト
-//		wk->dat->listMax = ZUKAN_SEARCH_ENGINE_Search(
-//												wk->dat->savedata,
-//												wk->dat->sort,
-//												HEAPID_ZUKAN_SYS,
-//												&wk->dat->list );
-
-		if( wk->dat->listMax != 0 ){
-//			PMSND_StopSE();
-			PMSND_PlaySE( ZKNSEARCH_SE_HIT );
-			ZKNSEARCHBMP_SearchComp( wk );
-		}else{
-//			PMSND_StopSE();
-			PMSND_PlaySE( ZKNSEARCH_SE_ERROR );
-			ZKNSEARCHBMP_SearchError( wk );
-		}
-		return MAINSEQ_RESULT_SORT;
+  // 分割検索エンジン作成
+	if( wk->loadingCnt == SORT_COUNT_MAKE_ENGINE ){
+		ZKNSEARCHMAIN_ConvFormListToData( wk );		// リストからデータへ
+		wk->egn_wk = ZUKAN_SEARCH_ENGINE_DivInit(
+									wk->dat->savedata, wk->dat->sort, HEAPID_ZUKAN_SEARCH_L );
+		wk->egn_st = ZKN_SCH_EGN_DIV_STATE_CONTINUE;
 	}
-	ZKNSEARCHOBJ_MoveLoadingBar( wk, wk->loadingCnt );
-	wk->loadingCnt++;
+
+	// 検索処理
+	if( wk->loadingCnt >= SORT_COUNT_SEARCH && wk->egn_st == ZKN_SCH_EGN_DIV_STATE_CONTINUE ){
+		u16  num;
+		u16 * list;
+		// 検索
+		wk->egn_st = ZUKAN_SEARCH_ENGINE_DivSearch(
+									wk->egn_wk, HEAPID_ZUKAN_SYS, &num, &list );
+		if( wk->egn_st == ZKN_SCH_EGN_DIV_STATE_FINISH ){
+			wk->dat->listMax = num;
+			wk->dat->list = list;
+			// 破棄
+			ZUKAN_SEARCH_ENGINE_DivExit( wk->egn_wk );
+		}
+	}
+
+	// 検索終了
+	if( wk->loadingCnt == SORT_COUNT_SEARCH_END ){
+		if( wk->egn_st == ZKN_SCH_EGN_DIV_STATE_FINISH ){
+			if( wk->dat->listMax != 0 ){
+				PMSND_PlaySE( ZKNSEARCH_SE_HIT );
+				ZKNSEARCHBMP_SearchComp( wk );
+			}else{
+				PMSND_PlaySE( ZKNSEARCH_SE_ERROR );
+				ZKNSEARCHBMP_SearchError( wk );
+			}
+			wk->loadingCnt = 0;
+			return MAINSEQ_RESULT_SORT;
+		}
+	// 検索中
+	}else{
+		ZKNSEARCHOBJ_MoveLoadingBar( wk, wk->loadingCnt );
+		wk->loadingCnt++;
+	}
 
 	return MAINSEQ_START_SORT;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：検索結果
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ResultSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( ZKNSEARCHUI_Result( wk ) == TRUE ){
@@ -533,24 +581,27 @@ static int MainSeq_ResultSort( ZKNSEARCHMAIN_WORK * wk )
 		}else{
 			CURSORMOVE_CursorOnOffSet( wk->cmwk, TRUE );
 		}
-		ConvFormDataToList( wk );		// データからリストへ戻す
+		ZKNSEARCHMAIN_ConvFormDataToList( wk );		// データからリストへ戻す
 		return MAINSEQ_MAIN_MENU;
 	}
 	return MAINSEQ_RESULT_SORT;
 }
 
-
-
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：並びリスト初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitRow( ZKNSEARCHMAIN_WORK * wk )
 {
 	switch( wk->pageSeq ){
 	case 0:
 		wk->page = ZKNSEARCHMAIN_PAGE_ROW;
 		ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
-//		ZKNSEARCHOBJ_VanishAll( wk );
 		ZKNSEARCHBMP_PutRowPage( wk );
 		ZKNSEARCHLIST_MakeRowList( wk );
 		wk->pageSeq++;
@@ -566,6 +617,16 @@ static int MainSeq_InitRow( ZKNSEARCHMAIN_WORK * wk )
 	}
 	return MAINSEQ_INIT_ROW;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：並びリストメイン
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_MainRow( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
@@ -617,6 +678,15 @@ static int MainSeq_MainRow( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_MAIN_ROW;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：並びリスト終了
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ExitRow( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHMAIN_ListBGOff( wk );
@@ -627,13 +697,21 @@ static int MainSeq_ExitRow( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：名前リスト初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitName( ZKNSEARCHMAIN_WORK * wk )
 {
 	switch( wk->pageSeq ){
 	case 0:
 		wk->page = ZKNSEARCHMAIN_PAGE_NAME;
 		ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
-//		ZKNSEARCHOBJ_VanishAll( wk );
 		ZKNSEARCHBMP_PutNamePage( wk );
 		ZKNSEARCHLIST_MakeNameList( wk );
 		wk->pageSeq++;
@@ -650,6 +728,15 @@ static int MainSeq_InitName( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_INIT_NAME;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：名前リストメイン
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
@@ -702,6 +789,16 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 
 	return MAINSEQ_MAIN_NAME;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：名前リスト終了
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ExitName( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHMAIN_ListBGOff( wk );
@@ -711,14 +808,21 @@ static int MainSeq_ExitName( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_INIT_MENU;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：タイプリスト初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitType( ZKNSEARCHMAIN_WORK * wk )
 {
 	switch( wk->pageSeq ){
 	case 0:
 		wk->page = ZKNSEARCHMAIN_PAGE_TYPE;
 		ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
-//		ZKNSEARCHOBJ_VanishAll( wk );
 		ZKNSEARCHBMP_PutTypePage( wk );
 		ZKNSEARCHLIST_MakeTypeList( wk );
 		wk->pageSeq++;
@@ -734,6 +838,16 @@ static int MainSeq_InitType( ZKNSEARCHMAIN_WORK * wk )
 	}
 	return MAINSEQ_INIT_TYPE;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：タイプリストメイン
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
@@ -786,6 +900,16 @@ static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 
 	return MAINSEQ_MAIN_TYPE;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：タイプリスト終了
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ExitType( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHMAIN_ListBGOff( wk );
@@ -796,13 +920,21 @@ static int MainSeq_ExitType( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：色リスト初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitColor( ZKNSEARCHMAIN_WORK * wk )
 {
 	switch( wk->pageSeq ){
 	case 0:
 		wk->page = ZKNSEARCHMAIN_PAGE_COLOR;
 		ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
-//		ZKNSEARCHOBJ_VanishAll( wk );
 		ZKNSEARCHBMP_PutColorPage( wk );
 		ZKNSEARCHLIST_MakeColorList( wk );
 		wk->pageSeq++;
@@ -818,6 +950,16 @@ static int MainSeq_InitColor( ZKNSEARCHMAIN_WORK * wk )
 	}
 	return MAINSEQ_INIT_COLOR;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：色リストメイン
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
@@ -870,6 +1012,16 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 
 	return MAINSEQ_MAIN_COLOR;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：色リスト終了
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ExitColor( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHMAIN_ListBGOff( wk );
@@ -880,13 +1032,21 @@ static int MainSeq_ExitColor( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：フォルムリスト初期化
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk )
 {
 	switch( wk->pageSeq ){
 	case 0:
 		wk->page = ZKNSEARCHMAIN_PAGE_FORM;
 		ZKNSEARCHMAIN_SetBlendAlpha( TRUE );
-//		ZKNSEARCHOBJ_VanishAll( wk );
 		ZKNSEARCHBMP_PutFormPage( wk );
 		ZKNSEARCHLIST_MakeFormList( wk );
 		wk->pageSeq++;
@@ -898,12 +1058,20 @@ static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk )
 			ZKNSEARCHMAIN_ListBGOn( wk );
 			wk->pageSeq = 0;
 			return MAINSEQ_MAIN_FORM;
-//		}else{
-//			ZKNSEARCHOBJ_VanishList( wk );
 		}
 	}
 	return MAINSEQ_INIT_FORM;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：フォルムリストメイン
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
@@ -950,6 +1118,16 @@ static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 
 	return MAINSEQ_MAIN_FORM;
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：フォルムリスト終了
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ExitForm( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHMAIN_ListBGOff( wk );
@@ -960,7 +1138,15 @@ static int MainSeq_ExitForm( ZKNSEARCHMAIN_WORK * wk )
 }
 
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：ボタンアニメ待ち
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( wk->btnMode == BUTTON_ANM_BG ){
@@ -1004,20 +1190,34 @@ static int MainSeq_ButtonAnm( ZKNSEARCHMAIN_WORK * wk )
 	return MAINSEQ_BUTTON_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス：終了設定
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int MainSeq_EndSet( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNSEARCHUI_CursorMoveExit( wk );
 	ZKNSEARCHMAIN_SetFrameScrollParam( wk, ZKNCOMM_BAR_SPEED );
 	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 0, 16 );
 	return MAINSEQ_RELEASE;
-
-//	return SetWipeOut( wk, MAINSEQ_RELEASE );
 }
 
 
-
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ切り替え：並び
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			カーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeSortRow( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	wk->dat->sort->row = pos;
@@ -1026,6 +1226,15 @@ static void ChangeSortRow( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHOBJ_ChangeMark( wk, pos, TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データリセット：並び
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ResetSortRow( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->dat->sort->row = ZKNCOMM_LIST_SORT_ROW_NUMBER;
@@ -1033,6 +1242,16 @@ static void ResetSortRow( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_ChangeMark( wk, 0, TRUE );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ切り替え：名前
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			カーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeSortName( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	u32	list_pos = FRAMELIST_GetScrollCount( wk->lwk ) + pos;
@@ -1048,6 +1267,15 @@ static void ChangeSortName( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHBMP_PutNameItem( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データリセット：名前
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ResetSortName( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->dat->sort->name = ZKNCOMM_LIST_SORT_NONE;
@@ -1055,6 +1283,16 @@ static void ResetSortName( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ切り替え：タイプ
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			カーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	u32	list_pos = ZKNSEARCHMAIN_GetSortType( wk, FRAMELIST_GetScrollCount(wk->lwk)+pos );
@@ -1083,6 +1321,15 @@ static void ChangeSortType( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHOBJ_ChangeTypeMark( wk, wk->dat->sort->type1, wk->dat->sort->type2 );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データリセット：タイプ
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ResetSortType( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->dat->sort->type1 = ZKNCOMM_LIST_SORT_NONE;
@@ -1091,6 +1338,16 @@ static void ResetSortType( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ切り替え：色
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			カーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeSortColor( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	u32	list_pos = FRAMELIST_GetScrollCount( wk->lwk ) + pos;
@@ -1106,6 +1363,15 @@ static void ChangeSortColor( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHBMP_PutColorItem( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データリセット：色
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ResetSortColor( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->dat->sort->color = ZKNCOMM_LIST_SORT_NONE;
@@ -1113,6 +1379,16 @@ static void ResetSortColor( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データ切り替え：フォルム
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		pos			カーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangeSortForm( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	u32	list_pos = FRAMELIST_GetScrollCount( wk->lwk ) + pos;
@@ -1128,6 +1404,15 @@ static void ChangeSortForm( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	ZKNSEARCHOBJ_PutFormListNow( wk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		データリセット：フォルム
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ResetSortForm( ZKNSEARCHMAIN_WORK * wk )
 {
 	wk->dat->sort->form = ZKNCOMM_LIST_SORT_NONE;
@@ -1135,23 +1420,52 @@ static void ResetSortForm( ZKNSEARCHMAIN_WORK * wk )
 	ZKNSEARCHOBJ_VanishMark( wk );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードインセット
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		next		フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetWipeIn( ZKNSEARCHMAIN_WORK * wk, int next )
 {
-//	ZKNCOMM_SetFadeIn( HEAPID_ZUKAN_SEARCH );
 	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 16, 0 );
 	wk->funcSeq = next;
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		フェードアウトセット
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		next		フェード後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetWipeOut( ZKNSEARCHMAIN_WORK * wk, int next )
 {
-//	ZKNCOMM_SetFadeOut( HEAPID_ZUKAN_SEARCH );
 	ZKNSEARCHMAIN_SetPalFadeSeq( wk, 0, 16 );
 	wk->funcSeq = next;
 	return MAINSEQ_WIPE;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ボタンアニメ設定
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		mode		モード
+ * @param		id			ボタンＩＤ
+ * @param		next		アニメ後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int SetButtonAnm( ZKNSEARCHMAIN_WORK * wk, u8 mode, u8 id, int next )
 {
 	wk->btnMode = mode;
@@ -1162,7 +1476,16 @@ static int SetButtonAnm( ZKNSEARCHMAIN_WORK * wk, u8 mode, u8 id, int next )
 	return MAINSEQ_BUTTON_ANM;
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		ページ切り替え
+ *
+ * @param		wk			図鑑検索画面ワーク
+ * @param		next		切り替え後のシーケンス
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static int PageChange( ZKNSEARCHMAIN_WORK * wk, int next )
 {
 	wk->pageSeq = 0;
@@ -1170,6 +1493,15 @@ static int PageChange( ZKNSEARCHMAIN_WORK * wk, int next )
 	return MAINSEQ_EXIT_MENU;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		Ｙボタンショートカット設定
+ *
+ * @param		wk			図鑑検索画面ワーク
+ *
+ * @return	次のシーケンス
+ */
+//--------------------------------------------------------------------------------------------
 static void SetShortCut( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( GAMEDATA_GetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_SEARCH ) == TRUE ){
@@ -1179,33 +1511,4 @@ static void SetShortCut( ZKNSEARCHMAIN_WORK * wk )
 		GAMEDATA_SetShortCut( wk->dat->gamedata, SHORTCUT_ID_ZUKAN_SEARCH, TRUE );
 		ZKNSEARCHOBJ_SetAutoAnm( wk, ZKNSEARCHOBJ_IDX_TB_Y_BUTTON, APP_COMMON_BARICON_CHECK_ON );
 	}
-}
-
-// フォルムデータからリストインデックスへ変換
-static void ConvFormDataToList( ZKNSEARCHMAIN_WORK * wk )
-{
-	u32	i;
-
-	if( wk->dat->sort->form == ZKNCOMM_LIST_SORT_NONE ){
-		return;
-	}
-
-	for( i=0; i<NELEMS(FormListTable); i++ ){
-		if( wk->dat->sort->form == FormListTable[i] ){
-			wk->dat->sort->form = i;
-			break;
-		}
-	}
-}
-
-// フォルムリストインデックスからデータへ変換
-static void ConvFormListToData( ZKNSEARCHMAIN_WORK * wk )
-{
-	u32	i;
-
-	if( wk->dat->sort->form == ZKNCOMM_LIST_SORT_NONE ){
-		return;
-	}
-
-	wk->dat->sort->form = FormListTable[wk->dat->sort->form];
 }

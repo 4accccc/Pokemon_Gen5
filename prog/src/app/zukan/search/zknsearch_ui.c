@@ -20,6 +20,7 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
+// タッチバー上のボタンデータ
 #define	TB_SX			( 24 )
 #define	TB_SY			( 24 )
 #define	TB_PY			( TOUCHBAR_ICON_Y )
@@ -60,7 +61,7 @@ static const CURSORMOVE_DATA MainCursorMoveData[] =
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
-
+// メインページのカーソル移動コールバック
 static const CURSORMOVE_CALLBACK MainCallBack = {
 	MainCallBack_On,
 	MainCallBack_Off,
@@ -84,7 +85,7 @@ static const GFL_UI_TP_HITTBL ListTouchHitTbl[] =
 	{ GFL_UI_TP_HIT_END, 0, 0, 0 }
 };
 
-// リストページタッチ座標
+// リストページタッチ座標（フォルム用）
 static const GFL_UI_TP_HITTBL FormListTouchHitTbl[] =
 {
 	{ TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 },		// 00: 戻る
@@ -98,7 +99,15 @@ static const GFL_UI_TP_HITTBL FormListTouchHitTbl[] =
 };
 
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページのカーソル移動処理初期化
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHUI_MainCursorMoveInit( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	BOOL	flg;
@@ -114,6 +123,15 @@ void ZKNSEARCHUI_MainCursorMoveInit( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	CURSORMOVE_VanishModeSet( wk->cmwk );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページのカーソル移動処理解放
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHUI_CursorMoveExit( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( wk->cmwk != NULL ){
@@ -122,7 +140,17 @@ void ZKNSEARCHUI_CursorMoveExit( ZKNSEARCHMAIN_WORK * wk )
 	}
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		項目のパレット変更
+ *
+ * @param		wk		図鑑検索画面ワーク
+ * @param		pos		位置
+ * @param		pal		パレット番号
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 void ZKNSEARCHUI_ChangeCursorPalette( ZKNSEARCHMAIN_WORK * wk, u32 pos, u32 pal )
 {
 	if( pos <= ZKNSEARCHUI_RESET ){
@@ -132,7 +160,15 @@ void ZKNSEARCHUI_ChangeCursorPalette( ZKNSEARCHMAIN_WORK * wk, u32 pos, u32 pal 
 	}
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインページのカーソル移動処理
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	入力結果
+ */
+//--------------------------------------------------------------------------------------------
 u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = CURSORMOVE_MainCont( wk->cmwk );
@@ -178,6 +214,16 @@ u32 ZKNSEARCHUI_MenuMain( ZKNSEARCHMAIN_WORK * wk )
 	return ret;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		カーソル位置変更
+ *
+ * @param		wk		図鑑検索画面ワーク
+ * @param		pos		カーソル位置移動先
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void ChangePosMenuMainKey( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 {
 	ZKNSEARCHUI_ChangeCursorPalette( wk, CURSORMOVE_PosGet(wk->cmwk), ZKNSEARCHMAIN_MBG_PAL_BUTTON_DEF );
@@ -186,7 +232,17 @@ static void ChangePosMenuMainKey( ZKNSEARCHMAIN_WORK * wk, u32 pos )
 	CURSORMOVE_PosSet( wk->cmwk, pos );
 }
 
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		now_pos		現在のカーソル位置
+ * @param		old_pos		前回のカーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MainCallBack_On( void * work, int now_pos, int old_pos )
 {
 	ZKNSEARCHMAIN_WORK * wk  = work;
@@ -200,6 +256,17 @@ static void MainCallBack_On( void * work, int now_pos, int old_pos )
 	BLINKPALANM_InitAnimeCount( wk->blink );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル非表示
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		now_pos		現在のカーソル位置
+ * @param		old_pos		前回のカーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MainCallBack_Off( void * work, int now_pos, int old_pos )
 {
 	ZKNSEARCHMAIN_WORK * wk;
@@ -210,6 +277,17 @@ static void MainCallBack_Off( void * work, int now_pos, int old_pos )
 	ZKNSEARCHUI_ChangeCursorPalette( wk, now_pos, ZKNSEARCHMAIN_MBG_PAL_BUTTON_DEF );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：カーソル移動
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		now_pos		現在のカーソル位置
+ * @param		old_pos		前回のカーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MainCallBack_Move( void * work, int now_pos, int old_pos )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -219,6 +297,17 @@ static void MainCallBack_Move( void * work, int now_pos, int old_pos )
 	BLINKPALANM_InitAnimeCount( wk->blink );
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		コールバック：タッチ
+ *
+ * @param		work			図鑑検索画面ワーク
+ * @param		now_pos		現在のカーソル位置
+ * @param		old_pos		前回のカーソル位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
 static void MainCallBack_Touch( void * work, int now_pos, int old_pos )
 {
 	ZKNSEARCHMAIN_WORK * wk = work;
@@ -230,6 +319,16 @@ static void MainCallBack_Touch( void * work, int now_pos, int old_pos )
 	}
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		検索結果表示後の入力待ち
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @retval	"TRUE = 入力された"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 BOOL ZKNSEARCHUI_Result( ZKNSEARCHMAIN_WORK * wk )
 {
 	if( wk->loadingCnt == 90 ){
@@ -253,8 +352,15 @@ BOOL ZKNSEARCHUI_Result( ZKNSEARCHMAIN_WORK * wk )
 	return FALSE;
 }
 
-
-
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト入力処理
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	入力結果
+ */
+//--------------------------------------------------------------------------------------------
 int ZKNSEARCHUI_ListMain( ZKNSEARCHMAIN_WORK * wk )
 {
 	int	ret;
@@ -284,6 +390,15 @@ int ZKNSEARCHUI_ListMain( ZKNSEARCHMAIN_WORK * wk )
 	return ret;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		リスト入力処理（フォルム用）
+ *
+ * @param		wk		図鑑検索画面ワーク
+ *
+ * @return	入力結果
+ */
+//--------------------------------------------------------------------------------------------
 int ZKNSEARCHUI_FormListMain( ZKNSEARCHMAIN_WORK * wk )
 {
 	int	ret;
