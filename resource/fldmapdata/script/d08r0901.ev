@@ -22,17 +22,17 @@
 //--------------------------------------------------------------
 _EVENT_DATA    ev_pos_d08R0901_boss_01
 _EVENT_DATA		ev_d08r0901_poke_01
-_EVENT_DATA		ev_init_d08R0901
+_EVENT_DATA		ev_zone_d08R0901
 _EVENT_DATA_END
 
 /**************************************************************/
 /*            FIELD_INIT_LABEL                              　 */
 /**************************************************************/
-INIT_EVENT_START	ev_init_d08R0901
+INIT_EVENT_START	ev_zone_d08R0901
 	
 	//バージョンを取得してOBJを変化させる
 	_GET_ROM_VERSION( SCWK_ANSWER )
-	IF FLAG_ON(FV_D08R0901_PACKAGE_POKE) THEN
+	IF FLAG_OFF(FV_D08R0901_PACKAGE_POKE) THEN
 	
 		IF $SCWK_ANSWER == VERSION_BLACK THEN
 			$OBJCHRWORK0 = SHIN_B
