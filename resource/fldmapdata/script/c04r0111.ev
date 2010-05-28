@@ -684,7 +684,7 @@ EVENT_START ev_c04r0111_home
       _BALLOONWIN_OBJMSG_POS( msg_c04r0111_22, obj_id, POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _MSGWIN_CLOSE()
-        
+       
       IF $SCWK_ANSWER == SCR_YES THEN //送る
         _CHG_COMMON_SCR SCRID_BSW_UPLOAD_WIFI_SCORE
       ELSE //送らない 未ダウンロードフラグセット

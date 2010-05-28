@@ -346,17 +346,16 @@ _RET
 //--------------------------------------------------------------
 sub_bsw_receipt_guide_wifi_upload:
 {
-  IF $ret == SCR_YES THEN
-    _CALL sub_common_wifi_upload_score
+  //アップロード
+  _CALL sub_common_wifi_upload_score
     
-    IF $SCWK_ANSWER == TRUE THEN  //成績を送りました！
-      $SCWK_TEMP0 = msg_bsw_scr_51
-      _CALL sub_bsw_common_bwin_receipt
-      _MSGWIN_CLOSE()
+  IF $SCWK_ANSWER == TRUE THEN  //成績を送りました！
+    $SCWK_TEMP0 = msg_bsw_scr_51
+    _CALL sub_bsw_common_bwin_receipt
+    _MSGWIN_CLOSE()
        
-      //レポート
-      _CALL sub_bsw_common_auto_save
-    ENDIF
+    //レポート
+    _CALL sub_bsw_common_auto_save
   ENDIF
   
   _CALL sub_bsw_common_exit
@@ -368,6 +367,15 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_rekidai_download:
 {
+  //DS本体 通信機能チェック
+  _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == FALSE THEN //通信できません
+    _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+  
   $SCWK_TEMP0 = msg_bsw_scr_33
   _CALL sub_bsw_common_bwin_receipt
   _YES_NO_WIN( ret )
@@ -1020,6 +1028,17 @@ sub_receipt_challenge_wifi:
   //wifi接続フラグをワークがクリアされる前に取得
   _BSUBWAY_TOOL( BSWTOOL_WIFI_CHK_SEL_DL_BTL, BSW_NULL, BSW_NULL, dl_play )
   
+  IF $dl_play == TRUE THEN
+    //DS本体 通信機能チェック
+    _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+
+    IF $SCWK_ANSWER == FALSE THEN //通信できません
+      _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
+  ENDIF
+
   //ワーク作成
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, BSWAY_MODE_WIFI )
   
@@ -2720,6 +2739,15 @@ sub_common_wifi_upload_score:
   //アップロードフラグセット
   _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 1, BSW_NULL, BSW_NULL )
   
+  //DS本体 通信機能チェック
+  _GET_AVAILABLE_WIRELESS( SCWK_ANSWER )
+  
+  IF $SCWK_ANSWER == FALSE THEN //通信できません
+    _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
+    $SCWK_ANSWER = FALSE
+    _RET
+  ENDIF
+  
   //フィールド通信切断
   _CALL sub_common_exit_field_comm
   
@@ -2734,7 +2762,8 @@ sub_common_wifi_upload_score:
   //アップロード
   _BSUBWAY_TOOL( BSWTOOL_WIFI_UPLOAD_SCORE, BSW_NULL, BSW_NULL, ret )
   
-//  _ENABLE_NETWORK_IN_IMPORTANT_EVENT() //通信切断後のビーコンサーチ再開
+  //通信切断後のビーコンサーチ再開
+  _REBOOT_BEACON_SEARCH()
   
   IF $ret == TRUE THEN //送れた
     _BSUBWAY_TOOL( BSWTOOL_WIFI_SET_UPLOAD_FLAG, 0, BSW_NULL, BSW_NULL )
