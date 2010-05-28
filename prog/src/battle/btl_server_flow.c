@@ -4527,8 +4527,10 @@ static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     if( (attacker != bpp)
     &&  (BPP_MIGAWARI_IsExist(bpp))
     ){
-      if( (!fDamage) && (WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru)==FALSE) ){
+      if( (!fDamage) && (WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru)==FALSE) )
+      {
 //      if( scEvent_CheckMigawariExclude(wk, attacker, bpp, wazaParam->wazaID, fDamage) ){
+        TAYA_Printf("DmgFlg=%d, MigawariThru=%d\n", fDamage, WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru));
         BTL_POKESET_Remove( target, bpp );
       }
     }
