@@ -400,6 +400,7 @@ VMCMD_RESULT EvCmdSetPokemonFriendValue( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 /**
  * @brief 手持ちポケモンのモンスターナンバーを取得
+ * @note   タマゴのときは、MONSNO_TAMAGOがセットされます
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -410,8 +411,12 @@ VMCMD_RESULT EvCmdGetPartyPokeMonsNo( VMHANDLE * core, void *wk )
   SCRCMD_WORK*    work = (SCRCMD_WORK*)wk;
   u16*          ret_wk = SCRCMD_GetVMWork( core, wk );       // 結果格納先ワーク
   u16              pos = SCRCMD_GetVMWorkValue( core, wk );  // 判定ポケモン指定
+  u32 tamago_flg;
 
-  *ret_wk = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_monsno );
+  tamago_flg = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_tamago_flag );
+  if (tamago_flg) *ret_wk = MONSNO_TAMAGO;
+  else *ret_wk = SCRCMD_GetTemotiPPValue( work, pos, ID_PARA_monsno );
+  
   return VMCMD_RESULT_CONTINUE;
 }
 
@@ -1223,6 +1228,7 @@ VMCMD_RESULT EvCmdCheckPartyPokeGetPlace( VMHANDLE* core, void* wk )
 //--------------------------------------------------------------
 /**
  * @brief 捕獲日時の取得
+ * @note  捕獲日時は、ID_PARA_birth～に入っています。ID_PARA_get～ではありません
  * @param	core		仮想マシン制御構造体へのポインタ
  * @param wk      SCRCMD_WORKへのポインタ
  * @retval VMCMD_RESULT
@@ -1238,9 +1244,9 @@ VMCMD_RESULT EvCmdGetPartyPokeGetDate( VMHANDLE* core, void* wk )
   POKEMON_PARAM* param;
   if ( SCRCMD_GetTemotiPP( work, pos, &param ) == TRUE )
   {
-    *ret_year = (u16)PP_Get( param, ID_PARA_get_year, NULL );
-    *ret_month = (u16)PP_Get( param, ID_PARA_get_month, NULL );
-    *ret_day = (u16)PP_Get( param, ID_PARA_get_day, NULL );
+    *ret_year = (u16)PP_Get( param, ID_PARA_birth_year, NULL );
+    *ret_month = (u16)PP_Get( param, ID_PARA_birth_month, NULL );
+    *ret_day = (u16)PP_Get( param, ID_PARA_birth_day, NULL );
   }
   else
   {
