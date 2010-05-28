@@ -16,6 +16,7 @@ $EXCEL_CONV_EXE			=	$ENV{"PROJECT_ROOT"}."/tools/exceltool/ExcelSeetConv.exe";
 @TOWNMAP_XLS_HEADER	  = ();		#タウンマップエクセルデータヘッダ
 @TOWNMAP_XLS_DATA		  = ();		#タウンマップエクセルデータのデータ本体
 @TOWNMAP_XLS_REPLACE  = ();		#タウンマップエクセルデータの置き換えデータ本体
+@TOWNMAP_XLS_NGLIST  = ();		#タウンマップエクセルデータのNGLISTデータ本体
 
 @ZONETABLE_XLS_DATA	= ();		#ゾーンテーブルのデータ
 
@@ -24,6 +25,9 @@ $OUTPUTNAME_DATA		= "townmap_data";
 $OUTPUTNAME_PREFIX  = ".dat";
 $OUTPUTNAME_HEADER	= "townmap_data.h";
 $OUTPUTNAME_REPLACE	= "townmap_replace.dat";
+$OUTPUTNAME_REPLACE_CDAT	= "townmap_replace.cdat";
+
+$OUTPUTNAME_ERROR 	= "townmap_error.txt";
 
 #定義名取得用ファイルネーム
 $ZONEID_FILENAME		=	"../../fldmapdata/zonetable/zone_id.h";
@@ -46,7 +50,6 @@ $ZONE_ID_PREFIX     = "ZONE_ID_";
 @USERFLAG_BUFF			= ();	  #headerで指定したユーザー指定フラグ
 %ZONEGROUP_HASH			= ();	  #ゾーングループ用ハッシュ
 @VERSION_TYPE       = ();   #バージョンタイプ
-
 
 #取得したデータ
 @DATA_ZONEID				=	();		#ゾーンID
@@ -83,6 +86,10 @@ $DATA_REPLACE_LENGTH  = 0;  #総数
 @DATA_REPLACE_ZONEID  = (); #置き換え先ゾーングループ
 @DATA_REPLACE_SRCID00  = (); #置き換え元ゾーングループ00
 
+#NGリスト
+$DATA_NGLIST_LENGTH  = 0;  #総数
+@DATA_NGLIST_ID  = (); #タウンマップへ登録しなくてもよいID
+
 #データ総数
 $DATA_LENGTH				  = 0;  #総数
 @DATA_VERSION_LENGTH  = (); #バージョンごとの総数
@@ -116,6 +123,7 @@ if( @ARGV < 1 )
 &EXCEL_GetData( $ARGV[0], "header", \@TOWNMAP_XLS_HEADER );
 &EXCEL_GetData( $ARGV[0], "data", \@TOWNMAP_XLS_DATA );
 &EXCEL_GetData( $ARGV[0], "replace", \@TOWNMAP_XLS_REPLACE );
+&EXCEL_GetData( $ARGV[0], "ng_list", \@TOWNMAP_XLS_NGLIST);
 
 #-------------------------------------
 #	ヘッダ情報を取得
@@ -141,6 +149,7 @@ if( @ARGV < 1 )
 #=====================================
 &TownmapData_ConvertData;
 &TownmapData_ConvertReplace;
+&TownmapData_ConvertNgList;
 
 #-------------------------------------
 #	当たり判定情報に場所の位置を足す
@@ -172,7 +181,62 @@ foreach $ver ( @VERSION_TYPE )
   #	データ化
   &TownmapData_CreateBinaryData( $ver );
 }
-&TownmapData_CreateBinaryReplace;
+#&TownmapData_CreateBinaryReplace;
+&TownmapData_CreateReplaceCdat;
+
+#-------------------------------------
+#	タウンマップに登録されていない、
+#	  ゾーンテーブルのグループがある場合のチェック
+#	  ->登録されてないと、アプリ内でアサートが起こります
+#=====================================
+$is_error = 0;
+open( FILEOUT, ">$OUTPUTNAME_ERROR" );
+foreach my $key ( keys %ZONEGROUP_HASH )
+{ 
+  $is_exist_main = 0;
+  foreach my $id (@DATA_ZONEID)
+  {
+    if( $ZONEGROUP_HASH{$key} == $id )
+    {
+      $is_exist_main = 1;
+      last;
+    }
+  }
+
+  $is_exist_sub = 0;
+  foreach my $rep (@DATA_REPLACE_SRCID00)
+  {
+    if( $ZONEGROUP_HASH{$key} == $rep )
+    {
+      $is_exist_sub = 1;
+      last;
+    }
+  }
+
+  $is_exist_ng  = 0;
+  foreach my $ng (@DATA_NGLIST_ID)
+  {
+    if( $ZONEGROUP_HASH{$key} == $ng )
+    {
+      $is_exist_ng = 1;
+      last;
+    }
+  }
+
+  if( $is_exist_main == 0 && $is_exist_sub == 0 && $is_exist_ng == 0 )
+  {
+    $is_error = 1;
+    print( FILEOUT "$key = $ZONEGROUP_HASH{$key}\n" );
+  }
+}
+close( FILEOUT );
+
+if( $is_error == 1 )
+{
+  print "ゾーンテーブルにおいて、タウンマップへ設定していないゾーングループがありました。\n";
+  print "Townmap_error.txtを参考にreplace等へ追加をしてください。\n";
+  exit(1);
+}
 
 #-------------------------------------
 #	正常終了
@@ -277,7 +341,7 @@ sub TownmapData_ConvertHeader
     {
       if( $line_cnt >= 1 ) 
       {
-        print "$word[1]"."\n";
+        #print "$word[1]"."\n";
         push( @TYPE_BUFF, $word[1] );
       }
     }
@@ -676,8 +740,6 @@ sub TownmapData_ConvertReplace
     $line	=~ s/\r\n//g;
     @word	= split( /,/, $line );
 
-    print @word;
-
     #データ範囲
     if( $word[0] eq "#file_start" )
     {
@@ -736,6 +798,61 @@ sub TownmapData_ConvertReplace
 }
 
 #-------------------------------------
+#	@brief	エクセルNGLISTデータコンバート
+#=====================================
+sub TownmapData_ConvertNgList
+{
+  my $is_start	= 0;
+  foreach $line ( @TOWNMAP_XLS_NGLIST )
+  {
+    $line	=~ s/\r\n//g;
+    @word	= split( /,/, $line );
+
+    #データ範囲
+    if( $word[0] eq "#file_start" )
+    {
+      @TAG_WORD	= @word;
+      $is_start	= 1;
+      next;
+    }
+    elsif( $word[0] eq "#file_end" )
+    {
+      $is_start	= 0;
+    }
+
+    #データ取得
+    if( $is_start == 1 )
+    {
+      for( my $i = 0; $i < @TAG_WORD; $i++ ) 
+      {
+        #タグとデータを取得
+        my $tag	= $TAG_WORD[$i];
+        my $w		= $word[$i];
+
+        #NG_ID
+        if( $tag eq "#ng_id" )
+        {
+          &UndefAssert( $w );
+
+          unless( exists( $ZONEGROUP_HASH{ $w } ) )
+          {
+            print ( "ゾーングループではない値が設定されています $w\n" );
+            exit(1);
+          } 
+
+          push( @DATA_NGLIST_ID, $ZONEGROUP_HASH{ $w } );
+        }
+        #終了
+				elsif( $tag eq "#end" )
+				{
+					$DATA_NGLIST_LENGTH++;
+				}
+			}
+		}
+  }
+}
+
+#-------------------------------------
 #	@brief	ヘッダ作成
 #=====================================
 sub TownmapData_CreateHeader
@@ -750,8 +867,6 @@ sub TownmapData_CreateHeader
   print( FILEOUT "//このファイルはtownmap_data_convによって自動生成されています\n\n" );
   print( FILEOUT "//データ総数\n" );
   print( FILEOUT "#define TOWNMAP_DATA_MAX\t($len)\n\n" );
-  print( FILEOUT "//置き換えデータの総数\n" );
-  print( FILEOUT "#define TOWNMAP_REPLACE_MAX\t($DATA_REPLACE_LENGTH)\n\n" );
   print( FILEOUT "//データエラー値\n" );
   print( FILEOUT "#define TOWNMAP_DATA_ERROR\t($DATA_ERROR_VALUE)\n\n" );
   print( FILEOUT "//場所のタイプ\n" );
@@ -847,6 +962,34 @@ sub TownmapData_CreateBinaryReplace
   close( FILEOUT ); 
 }
 
+#-------------------------------------
+#	@brief	置き換えのCDAT作成
+#	@param version
+#=====================================
+sub TownmapData_CreateReplaceCdat
+{
+  open( FILEOUT, ">$OUTPUTNAME_REPLACE_CDAT" );
+
+  print( FILEOUT "#pragma once\n" );
+  print( FILEOUT "//このファイルはtownmap_data_convによって自動生成されています\n\n" );
+
+  print( FILEOUT "enum{\n" );
+  print( FILEOUT "  TOWNMAP_REPLACE_DST,\n" );
+  print( FILEOUT "  TOWNMAP_REPLACE_SRC00,\n" );
+  print( FILEOUT "  TOWNMAP_REPLACE_MAX,\n" );
+  print( FILEOUT "};\n" );
+
+  print( FILEOUT "#define TOWNMAP_REPLACE_MAX  $DATA_REPLACE_LENGTH\n", );
+
+  print( FILEOUT "static const int sc_townmap_replace_data[][TOWNMAP_REPLACE_MAX] =\n" );
+  print( FILEOUT "{\n" );
+  for( my $i = 0; $i < $DATA_REPLACE_LENGTH; $i++ )
+  {
+    print( FILEOUT "\t{ $DATA_REPLACE_ZONEID[$i], $DATA_REPLACE_SRCID00[$i] },\n" );
+  }
+  print( FILEOUT "};\n" );
+  close( FILEOUT ); 
+}
 
 #-------------------------------------
 #	@brief	デバッグプリント
@@ -967,8 +1110,8 @@ sub GetFlagNumber
 		#print( " $name == $data \n" );
 		if( $data =~ /#define $name\s*([0-9]*)/ )
 		{
-			print( " $name == $data \n" );
-			print "ok $1 \n";
+      #print( " $name == $data \n" );
+      #print "ok $1 \n";
 			return $1;
 		}
 	}
@@ -978,11 +1121,11 @@ sub GetFlagNumber
   {
 		if( $USERFLAG_BUFF[ $i ] eq $name )
 		{
-			print( " $name == $USERFLAG_BUFF[ $i ] \n" );
-			print "ok $USER_DEFINED_FLAG_START_NUM + $i \n";
+      #print( " $name == $USERFLAG_BUFF[ $i ] \n" );
+      #print "ok $USER_DEFINED_FLAG_START_NUM + $i \n";
 			return $USER_DEFINED_FLAG_START_NUM + $i;
 		}
-    print( "$USERFLAG_BUFF[ $i ] == $name\n" );
+    #print( "$USERFLAG_BUFF[ $i ] == $name\n" );
   }
 
   print( "$name not find\n" );

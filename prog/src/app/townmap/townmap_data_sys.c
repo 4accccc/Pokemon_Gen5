@@ -142,12 +142,13 @@ u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID )
   return TOWNMAP_DATA_ERROR;
 }
 
+
 //=============================================================================
 /**
  *    置き換え
  */
 //=============================================================================
-
+#if 0 //cdat化したためなくなりました
 //----------------------------------------------------------------------------
 /**
  *	@brief  置き換えデータ取得
@@ -208,3 +209,5 @@ u16 TOWNMAP_REPLACE_DATA_GetReplace( const TOWNMAP_REPLACE_DATA *cp_wk, u16 zone
 		return TOWNMAP_DATA_ERROR;
 	}
 }
+
+#endif

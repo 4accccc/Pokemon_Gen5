@@ -2619,18 +2619,8 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
 	int i;
   u16 now_zoneID;
   u16 ret;
-  TOWNMAP_REPLACE_DATA *p_replace;
 
   now_zoneID  = TOWNMAP_UTIL_GetRootZoneID( cp_wk->p_gamedata, zoneID );
-
-  p_replace = TOWNMAP_REPLACE_DATA_Alloc( HEAPID_TOWNMAP );
-  ret  =  TOWNMAP_REPLACE_DATA_GetReplace( p_replace, now_zoneID );
-  if( ret != TOWNMAP_DATA_ERROR )
-  { 
-    now_zoneID  = ret;
-  }
-  TOWNMAP_REPLACE_DATA_Free( p_replace );
-
 
 	//ゾーンと完全対応する場所を取得
 	for( i = 0; i < cp_wk->data_num; i++ )
@@ -2656,7 +2646,7 @@ static const PLACE_DATA *PLACE_GetDataByZoneID( const PLACE_WORK *cp_wk, u16 zon
 	}
 #endif
 
-  GF_ASSERT_MSG(0,"タウンマップデータに情報が見つかりませんでした zoneID%d group%d\n",zoneID, now_zoneID );
+  //GF_ASSERT_MSG(0,"タウンマップデータに情報が見つかりませんでした zoneID%d group%d\n",zoneID, now_zoneID );
 
 	return NULL;
 }

@@ -17,6 +17,8 @@
 #include "src/field/evt_lock.h"
 #include "app/townmap_data.h"
 #include "savedata/wifihistory.h"
+#include "fieldmap/zone_id.h"
+#include "app/townmap_data_sys.h"
 
 //=============================================================================
 /**
@@ -52,22 +54,29 @@
 //-----------------------------------------------------------------------------
 u16 TOWNMAP_UTIL_GetRootZoneID( const GAMEDATA* cp_gamedata, u16 now_zoneID )
 {
+
+
+  ZONEID zoneID;
   PLAYER_WORK *p_player;
 
-  return ZONEDATA_GetGroupID( now_zoneID );
+  zoneID  = ZONEDATA_GetGroupID( now_zoneID );
 
-#if 0 //old
-  if( ZONEDATA_IsFieldMatrixID( now_zoneID ) )
-  { 
-    //フィールドにいる状態
-    return now_zoneID;
+  if( zoneID == ZONE_ID_UNION )
+  {
+    return ZONEDATA_GetGroupID( GAMEDATA_GetSpecialLocation( cp_gamedata )->zone_id );
   }
   else
-  { 
-    //フィールド以外にいる状態
-    return GAMEDATA_GetEscapeLocation( cp_gamedata )->zone_id;
+  {
+    u32 ret;
+
+    ret  =  TOWNMAP_REPLACE_DATA_GetReplace( zoneID );
+    if( ret != TOWNMAP_DATA_ERROR )
+    { 
+      zoneID  = ret;
+    }
+
+    return zoneID;
   }
-#endif
 }
 //----------------------------------------------------------------------------
 /**

@@ -11,6 +11,8 @@
 #pragma once
 
 #include "townmap_data.h"
+#include "townmap_replace.cdat"  //arc/
+
 //=============================================================================
 /**
  *					定数宣言
@@ -87,8 +89,37 @@ extern u16 TOWNMAP_DATA_SearchRootZoneID( const TOWNMAP_DATA *cp_wk, u16 zoneID 
 //-------------------------------------
 ///	置き換え情報
 //=====================================
+#if 0 //cdat化したため必要がなくなりました
 typedef struct _TOWNMAP_REPLACE_DATA TOWNMAP_REPLACE_DATA;
 
 extern TOWNMAP_REPLACE_DATA *TOWNMAP_REPLACE_DATA_Alloc( HEAPID heapID );
 extern void TOWNMAP_REPLACE_DATA_Free( TOWNMAP_REPLACE_DATA *p_wk );
 extern u16 TOWNMAP_REPLACE_DATA_GetReplace( const TOWNMAP_REPLACE_DATA *cp_wk, u16 zoneID );
+#endif
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  置き換え関数
+ *
+ *	@param	zoneID  置き換え元ゾーンID
+ *
+ *	@return 置き換え先ゾーンID  もし入っていなければTOWNMAP_DATA_ERROR
+ */
+//-----------------------------------------------------------------------------
+static inline u16 TOWNMAP_REPLACE_DATA_GetReplace( u16 zoneID )
+{
+  {	
+    int i;
+
+    for( i = 0; i < TOWNMAP_REPLACE_MAX; i++ )
+    { 
+
+      if( sc_townmap_replace_data[i][TOWNMAP_REPLACE_SRC00] == zoneID )
+      {
+        return sc_townmap_replace_data[i][TOWNMAP_REPLACE_DST];
+      }
+    }
+
+		return TOWNMAP_DATA_ERROR;
+	}
+}

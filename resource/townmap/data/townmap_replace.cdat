@@ -1,0 +1,14 @@
+#pragma once
+//‚±‚Ìƒtƒ@ƒCƒ‹‚Ítownmap_data_conv‚É‚æ‚Á‚Ä©“®¶¬‚³‚ê‚Ä‚¢‚Ü‚·
+
+enum{
+  TOWNMAP_REPLACE_DST,
+  TOWNMAP_REPLACE_SRC00,
+  TOWNMAP_REPLACE_MAX,
+};
+#define TOWNMAP_REPLACE_MAX  2
+static const int sc_townmap_replace_data[][TOWNMAP_REPLACE_MAX] =
+{
+	{ 136, 264 },
+	{ 240, 241 },
+};
