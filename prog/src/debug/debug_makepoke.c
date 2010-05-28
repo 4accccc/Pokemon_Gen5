@@ -501,8 +501,8 @@ static BOOL main_root_ctrl( DMP_MAINWORK* wk )
     if( COMPSKB_Main(&wk->comp) )
     {
       const INPUT_BOX_PARAM* p = &InputBoxParams[ wk->boxIdx ];
-
-      if( GFL_STR_GetBufferLength(wk->strbuf) == 0)
+      u32 len = GFL_STR_GetBufferLength(wk->strbuf);
+      if( len == 0 || len > 5 )
       {
         u16  mons_no = box_getvalue( wk, INPUTBOX_ID_POKETYPE );
         GFL_MSGDATA* msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_monsname_dat, GFL_HEAP_LOWID(wk->heapID) );
@@ -1415,8 +1415,13 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     {
       u8 idx = updateBoxID - INPUTBOX_ID_PPCNT1;
       u8 cnt = box_getvalue( wk, updateBoxID );
+      u8 pp_max;
       PP_Put( wk->dst, ID_PARA_pp_count1 + idx, cnt );
       box_setup( wk, INPUTBOX_ID_PPMAX1+idx, wk->dst );
+      pp_max = box_getvalue( wk, INPUTBOX_ID_PPMAX1+idx);
+      if( pp_max < box_getvalue( wk, INPUTBOX_ID_PPEDIT1+idx)){
+        box_update( wk, INPUTBOX_ID_PPEDIT1, pp_max );
+      }
     }
     break;
   case INPUTBOX_ID_WAZA1:
@@ -1566,6 +1571,10 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     } 
     break;
 
+  case INPUTBOX_ID_PPEDIT1:
+  case INPUTBOX_ID_PPEDIT2:
+  case INPUTBOX_ID_PPEDIT3:
+  case INPUTBOX_ID_PPEDIT4:
   case INPUTBOX_ID_POKERUS:
   case INPUTBOX_ID_GET_LEVEL:
   case INPUTBOX_ID_GET_PLACE:
