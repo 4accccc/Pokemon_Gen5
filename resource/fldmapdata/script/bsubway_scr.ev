@@ -300,20 +300,19 @@ sub_bsw_receipt_guide_wifi:
     $SCWK_TEMP0 = msg_bsw_scr_50 //アップロードするか？
     _CALL sub_bsw_common_bwin_receipt
     _YES_NO_WIN( ret )
-    _MSGWIN_CLOSE()
-
+    
     IF $ret == SCR_YES THEN //アップロードする
+      _MSGWIN_CLOSE()
       _CALL sub_bsw_receipt_guide_wifi_upload
       _RET
     ENDIF
-  ENDIF
+  ELSE  //ようこそ
+    _CALL sub_receipt_msg_greet
   
-  //ようこそ
-  _CALL sub_receipt_msg_greet
-  
-  IF $SCWK_ANSWER == FALSE THEN //事前チェックで不可
-    _CALL sub_bsw_common_exit
-    _RET
+    IF $SCWK_ANSWER == FALSE THEN //事前チェックで不可
+      _CALL sub_bsw_common_exit
+      _RET
+    ENDIF
   ENDIF
   
   //wifiランクメッセージ
