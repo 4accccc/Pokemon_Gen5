@@ -236,6 +236,10 @@ typedef enum {
 }BtlAddSickFailCode;
 
 
+
+
+
+
 /**
  *  ハンドラ挙動（効果が表出するもの）
  */
