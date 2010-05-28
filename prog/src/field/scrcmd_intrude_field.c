@@ -324,7 +324,7 @@ VMCMD_RESULT EvCmdGetMissionEntry( VMHANDLE *core, void *wk )
   INTRUDE_COMM_SYS_PTR intcomm;
   
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm != NULL && MISSION_GetMissionEntry(&intcomm->mission) == TRUE){
+  if(intcomm != NULL && intcomm->mission_start_event_ended == FALSE && MISSION_GetMissionEntry(&intcomm->mission) == TRUE){
     *ret_wk = TRUE;
   }
   else{
@@ -416,6 +416,7 @@ static GMEVENT_RESULT _event_MissionStartWait( GMEVENT * event, int * seq, void 
   
   switch( *seq ){
   case SEQ_INIT:
+    intcomm->mission_start_event_ended = TRUE;
     IntrudeEventPrint_SetupFieldMsg(&emsw->iem, gsys);
     if(MISSION_FIELD_CheckStatus(&intcomm->mission) == MISSION_STATUS_EXE){
       *seq = SEQ_DISGUISE_EVENT_CHANGE; //既にミッションが始まっている場合はすぐに変身イベントへ
