@@ -585,13 +585,14 @@ static BOOL check_teach_mons( const POKEMON_PARAM * pp, u16 mode )
  * @param wk
  * @param mode    技教えモード指定
  * @param oboeBit ビット単位でどのポケモンに教えられるか？を返すためのワーク
+ * @param natsuki_check なつき度をみるかどうかの指定（TRUE==見る）
  *
  * @retval  SCR_SKILLTEACH_CHECK_RESULT_OK  教えられる
  * @retval  SCR_SKILLTEACH_CHECK_RESULT_POKEMON_NG  対象ポケモンがいない
  * @retval  SCR_SKILLTEACH_CHECK_RESULT_NATSUKI_NG  なつきが足りない
  */
 //--------------------------------------------------------------
-static u32 checkSkillTeach( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit )
+static u32 checkSkillTeach( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit, BOOL natsuki_check )
 {
   GAMEDATA*           gdata = SCRCMD_WORK_GetGameData( wk );
   POKEPARTY*          party = GAMEDATA_GetMyPokemon( gdata );
@@ -614,7 +615,7 @@ static u32 checkSkillTeach( VMHANDLE * core, void * wk, u16 mode, u8 * oboeBit )
       continue;
     }
     has_pokemon_flag = TRUE;
-    if ( PP_Get( pp, ID_PARA_friend, NULL ) >= get_teach_limit_friendly( mode ) )
+    if ( natsuki_check == FALSE || PP_Get( pp, ID_PARA_friend, NULL ) >= get_teach_limit_friendly( mode ) )
     {
       enough_natsuki_flag = TRUE;
       *oboeBit |= ( 1 << pos );
@@ -647,7 +648,7 @@ VMCMD_RESULT EvCmdSkillTeachCheckParty( VMHANDLE* core, void* wk )
   u16 * ret_wk = SCRCMD_GetVMWork( core, work );
   u8 oboeBit;
 
-  *ret_wk = checkSkillTeach( core, wk, mode, &oboeBit );
+  *ret_wk = checkSkillTeach( core, wk, mode, &oboeBit, TRUE );
 
   return VMCMD_RESULT_CONTINUE;
 }
@@ -742,7 +743,7 @@ VMCMD_RESULT EvCmdSkillTeachSelectPokemon( VMHANDLE * core, void * wk )
   GAMESYS_WORK*      gsys = SCRCMD_WORK_GetGameSysWork( work );
 
   u8 learnBit;
-  if ( checkSkillTeach( core, wk, mode, &learnBit ) != SCR_SKILLTEACH_CHECK_RESULT_OK )
+  if ( checkSkillTeach( core, wk, mode, &learnBit, FALSE ) != SCR_SKILLTEACH_CHECK_RESULT_OK )
   {
     *ret_decide = FALSE;
   }
