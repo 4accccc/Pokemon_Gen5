@@ -216,8 +216,9 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
       else{
         CommPlayer_SetParam(intcomm->cps, i, &intcomm->intrude_status[i].player_pack);
         //バトル or ビンゴバトル中なら「！」を表示
-        if(intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BATTLE
-            || intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BINGO_BATTLE){
+        if(intcomm->intrude_status[i].player_pack.vanish == FALSE
+            && (intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BATTLE
+            || intcomm->intrude_status[i].action_status == INTRUDE_ACTION_BINGO_BATTLE)){
           CommPlayer_SetGyoeTask(intcomm->cps, i);
         }
       }
@@ -242,9 +243,19 @@ BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fl
 {
   s16 check_gx, check_gy, check_gz;
   u32 out_index;
+  PLAYER_MOVE_FORM move_form;
   
   if(intcomm == NULL || intcomm->cps == NULL){
     return FALSE;
+  }
+  
+  move_form = FIELD_PLAYER_GetMoveForm(fld_player);
+  switch(move_form){
+  case PLAYER_MOVE_FORM_NORMAL:
+  case PLAYER_MOVE_FORM_CYCLE:
+    break;
+  default:
+    return FALSE; //話しかけができないフォルム(通信相手の画面では非表示)
   }
   
   FIELD_PLAYER_GetFrontGridPos(fld_player, &check_gx, &check_gy, &check_gz);

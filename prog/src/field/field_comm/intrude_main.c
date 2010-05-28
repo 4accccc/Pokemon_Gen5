@@ -182,7 +182,9 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
 
   //プレイヤーステータス送信
   if(intcomm->send_status == TRUE){
-    IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine);
+    if(IntrudeSend_PlayerStatus(intcomm, &intcomm->intrude_status_mine) == TRUE){
+      intcomm->send_status = FALSE;
+    }
   }
   
   //セーブ関連のデータ更新処理
@@ -507,9 +509,13 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
 void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta, BOOL first_status)
 {
   INTRUDE_STATUS *target_status;
+  BOOL vanish;
   
   target_status = &intcomm->intrude_status[net_id];
+  vanish = target_status->player_pack.vanish;  //vanishは受信側で制御するので上書きしない
   GFL_STD_MemCopy(sta, target_status, sizeof(INTRUDE_STATUS));
+  target_status->player_pack.vanish = vanish;
+  
 
   //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
   GameCommStatus_SetPlayerStatus(intcomm->game_comm, net_id, target_status->zone_id,
@@ -542,7 +548,10 @@ void Intrude_UpdatePlayerStatusAll(INTRUDE_COMM_SYS_PTR intcomm)
   }
   
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
-    Intrude_UpdatePlayerStatus(intcomm, net_id);
+    if(intcomm->player_status_update & (1 << net_id)){
+      Intrude_UpdatePlayerStatus(intcomm, net_id);
+      intcomm->player_status_update ^= 1 << net_id;
+    }
   }
 }
 

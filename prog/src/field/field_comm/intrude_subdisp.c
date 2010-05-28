@@ -482,7 +482,7 @@ static void _VblankFunc(GFL_TCB *tcb, void *work);
 static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno);
 static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub);
 static void _TimeScrn_Clear(void);
-static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub);
+static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub, BOOL v_req);
 static BOOL _TutorialMissionNoRecv(INTRUDE_SUBDISP_PTR intsub);
 
 
@@ -937,7 +937,7 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
     GFL_HEAP_FreeMemory(load_data);
   }
   if(_TimeNum_CheckEnable(intsub) == TRUE){
-    _TimeScrn_Recover(intsub);
+    _TimeScrn_Recover(intsub, FALSE);
   }
   
   //パレット転送
@@ -1843,7 +1843,7 @@ static void _IntSub_ActorUpdate_LvNum(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *a
     //ミッション中に数字が表示されていないなら表示
     if(GFL_CLACT_WK_GetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0]) == FALSE){
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_LV_NUM_KETA_0], TRUE);
-      _TimeScrn_Recover(intsub);
+      _TimeScrn_Recover(intsub, TRUE);
     }
   }
   
@@ -2049,19 +2049,28 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       tar_zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
       if(intsub->comm.now_palace_area == intsub->comm.target_palace_area
           && tar_zonesetting != NULL && (tar_zonesetting->zone_id == my_zone_id || tar_zonesetting->reverse_zone_id == my_zone_id)){
-        fx32 offset_x, offset_z;
-        u32 msg_id;
-        offset_x = ist->player_pack.pos.x - player_pos.x;
-        offset_z = ist->player_pack.pos.z - player_pos.z;
-        if(MATH_ABS(offset_x) > MATH_ABS(offset_z)){
-          msg_id = (offset_x > 0) ? msg_invasion_info_016 : msg_invasion_info_017;
+        if(ist->player_pack.vanish == TRUE){ //波乗りなどで姿が見えない
+          GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_018, intsub->strbuf_temp );
+          WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+          msg_on = TRUE;
         }
-        else{
-          msg_id = (offset_z > 0) ? msg_invasion_info_015 : msg_invasion_info_014;
+        else{ //姿は見える
+          fx32 offset_x, offset_z;
+          u32 msg_id;
+
+          offset_x = ist->player_pack.pos.x - player_pos.x;
+          offset_z = ist->player_pack.pos.z - player_pos.z;
+
+          if(MATH_ABS(offset_x) > MATH_ABS(offset_z)){
+            msg_id = (offset_x > 0) ? msg_invasion_info_016 : msg_invasion_info_017;
+          }
+          else{
+            msg_id = (offset_z > 0) ? msg_invasion_info_015 : msg_invasion_info_014;
+          }
+          GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
+          WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
+          msg_on = TRUE;
         }
-        GFL_MSG_GetString(intsub->msgdata, msg_id, intsub->strbuf_temp );
-        WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
-        msg_on = TRUE;
       }
       else{    //同じゾーンにはいないがCursorSで差している場所が同じの時のメッセージ
         const PALACE_ZONE_SETTING *tar_zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
@@ -2381,7 +2390,7 @@ static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub)
     GFL_BMPWIN_MakeScreen(intsub->printutil_info.win);
     GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
     if(_TimeNum_CheckEnable(intsub) == TRUE){
-      _TimeScrn_Recover(intsub);
+      _TimeScrn_Recover(intsub, TRUE);
     }
   }
 }
@@ -2611,14 +2620,20 @@ static void _TimeScrn_Clear(void)
  * [TIME]が書かれているスクリーンに復帰する
  *
  * @param   intsub		
+ * @param   v_req     TRUE:Vブランクで転送　FALSE:即転送
  */
 //--------------------------------------------------------------
-static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub)
+static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub, BOOL v_req)
 {
   GFL_BG_WriteScreenExpand( INTRUDE_FRAME_S_BAR, BG_TIME_SCRN_POS_X, BG_TIME_SCRN_POS_Y, 
     BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y,
     intsub->scrnbuf_time, 0, 0, BG_TIME_SCRN_SIZE_X, BG_TIME_SCRN_SIZE_Y);
-  GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
+  if(v_req == TRUE){
+    GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
+  }
+  else{
+    GFL_BG_LoadScreenReq(INTRUDE_FRAME_S_BAR);
+  }
 }
 
 //--------------------------------------------------------------
