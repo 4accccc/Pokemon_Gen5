@@ -5490,6 +5490,7 @@ static BOOL scProc_ACT_TameWazaHide( BTL_CLIENT* wk, int* seq, const int* args )
 
       BTLV_MCSS_VANISH_FLAG  flag = (args[1])? BTLV_MCSS_VANISH_ON : BTLV_MCSS_VANISH_OFF;
 
+      TAYA_Printf("vanish = %d->%d\n", args[1], flag);
 
       BTLV_ACT_TameWazaHide( wk->viewCore, vpos, flag );
       (*seq)++;

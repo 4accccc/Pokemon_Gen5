@@ -5138,6 +5138,7 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       Hem_PopState( &wk->HEManager, hem_state );
     }
+    scproc_TameLockClear( wk, attacker );
   }
   return FALSE;
 }
