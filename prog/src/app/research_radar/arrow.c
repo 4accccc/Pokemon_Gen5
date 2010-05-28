@@ -428,7 +428,6 @@ static void SetupCellAct( ARROW* arrow, int startX, int startY, int endX, int en
 
   GF_ASSERT( endX <= startX ); // 左にしか伸びない
   GF_ASSERT( startY <= endY ); // 下にしか伸びない
-  GF_ASSERT( CELL_WIDTH/2 <= (startX - endX) ); // 始点と終点間は最低でも1/2キャラないとダメ
 
   frame   = 0;
   cellIdx = 0;
