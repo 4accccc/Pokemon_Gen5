@@ -157,7 +157,7 @@ typedef struct{
   u32               price;            // 選択したどうぐの価格
   u32               buy_max;          // 購入できる最大数
   s16               item_multi;       // 購入する数
-  u16               etc;
+  u16               FirstTrans;       // リストBMPWINの転送をおこなっているか？
 
 
 } SHOP_BUY_APP_WORK;
@@ -513,6 +513,13 @@ enum{
   SHOPBUY_SEQ_END,
 };
 
+// テキストカラー定義
+#define WHITE_TEXT_W_COL  (PRINTSYS_LSB_Make( 15,  2, 15))
+#define BLACK_TEXT_W_COL  (PRINTSYS_LSB_Make(  1,  2, 15))
+#define WHITE_TEXT_B_COL  (PRINTSYS_LSB_Make( 15,  2,  0))
+#define BLUE_TEXT_COL     (PRINTSYS_LSB_Make( 12, 13,  0))
+
+
 //----------------------------------------------------------------------------------
 /**
  * @brief ショップ画面初期化
@@ -717,6 +724,13 @@ static void shop_main( SHOP_BUY_APP_WORK *wk )
     return;
   }
 
+  // BMPの転送待ちの場合があるので、BmpwinOnのタイミングをズラした
+  if(wk->FirstTrans==0){
+    GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
+    wk->FirstTrans++;
+  }
+
+  // リスト処理メイン
   ret = BmpMenuList_Main( wk->menuList );
   if(ret!=BMPMENULIST_NULL)
   {
@@ -1570,7 +1584,7 @@ static void bmpwin_init( SHOP_BUY_APP_WORK *wk )
     STRBUF *str = GFL_MSG_CreateString( wk->shopMsgData, mes_shop_05_01 );
     PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( wk->win[SHOP_BUY_BMPWIN_OKODUKAI]), 
                                             0, 0, str, wk->font, 
-                                            PRINTSYS_LSB_Make(15,2,15) );
+                                            WHITE_TEXT_W_COL );
     GFL_STR_DeleteBuffer( str );
   }
 
@@ -1642,7 +1656,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
   {
     GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( wk->win[SHOP_BUY_BMPWIN_MONEY]);
     GFL_BMP_Clear( bmp, 0 );
-    PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, PRINTSYS_LSB_Make(15,2,15) );
+    PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, WHITE_TEXT_W_COL );
   
   }
 
@@ -1680,7 +1694,7 @@ static void print_carry_item( SHOP_BUY_APP_WORK *wk, u16 itemno )
   {
     GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( wk->win[SHOP_BUY_BMPWIN_NUM]);
     GFL_BMP_Clear( bmp, 15 );
-    PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+    PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, BLACK_TEXT_W_COL );
   
   }
 
@@ -1709,7 +1723,7 @@ static void print_iteminfo( SHOP_BUY_APP_WORK *wk, u16 itemno )
   // 描画(存在しない場合はクリア)
   if(itemno<=ITEM_DATA_MAX){
     str = GFL_MSG_CreateString( wk->itemInfoMsgData, itemno );
-    PRINTSYS_PrintColor( bmp,  0, 0, str, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+    PRINTSYS_PrintColor( bmp,  0, 0, str, wk->font, WHITE_TEXT_B_COL );
     GFL_STR_DeleteBuffer( str );
   }
 
@@ -1751,7 +1765,7 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
                           2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, kake_str );
 
-  PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+  PRINTSYS_PrintColor( bmp,  0, 0, expand, wk->font, BLACK_TEXT_W_COL );
 
   // 「？？？円」
   WORDSET_RegisterNumber( wk->wordSet, 0, number*one_price, 
@@ -1759,9 +1773,9 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
   WORDSET_ExpandStr( wk->wordSet, expand, yen_str );
 
   if(wk->payment==SHOP_PAYMENT_MONEY){
-    PRINTSYS_PrintColor( bmp,  13*3+2, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+    PRINTSYS_PrintColor( bmp,  13*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
   }else{
-    PRINTSYS_PrintColor( bmp,  11*3+2, 0, expand, wk->font, PRINTSYS_LSB_Make(1,2,15) );
+    PRINTSYS_PrintColor( bmp,  11*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
   }
 
   GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_PRICE] );
@@ -1772,6 +1786,9 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
 
   
 }
+
+// リスト描画開始Y位置
+#define SHOP_LIST_LINEY   ( 8 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -1801,7 +1818,7 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   header.label_x   = 0; //ラベル表示Ｘ座標
   header.data_x    = 0; //項目表示Ｘ座標
   header.cursor_x  = 0; //カーソル表示Ｘ座標
-  header.line_y    = 8; //表示Ｙ座標
+  header.line_y    = SHOP_LIST_LINEY; //表示Ｙ座標
   header.f_col     = 12; //表示文字色
   header.b_col     = 0;  //表示背景色
   header.s_col     = 13; //表示文字影色
@@ -1821,8 +1838,32 @@ static void bmpwin_list_init( SHOP_BUY_APP_WORK *wk )
   
 
    wk->menuList = BmpMenuList_Set( &header, 0, 0, wk->heapId );
+  
+}
 
-  GFL_BMPWIN_MakeTransWindow( wk->win[SHOP_BUY_BMPWIN_LIST] );
+//----------------------------------------------------------------------------------
+/**
+ * @brief ハイリンク対策にprintQueを使用しない描画も混ぜたPrintColor
+ *
+ * @param   que   printQue
+ * @param   bmp   BMP
+ * @param   x     x座標
+ * @param   y     y座標
+ * @param   str   描画文字列
+ * @param   font  GFL_FONT
+ * @param   color PRINTSYS_LSB
+ */
+//----------------------------------------------------------------------------------
+static void _callback_print( PRINT_QUE* que, GFL_BMP_DATA *bmp, int x, int y, STRBUF *str, GFL_FONT *font, PRINTSYS_LSB color )
+{
+  // コールバック内で画面にハミ出る部分を描画する時は、printQueではなく
+  // PRINTSYSで直描きしないと間に合わないので分岐させる
+  if(y<=SHOP_LIST_LINEY){
+    PRINTSYS_PrintColor( bmp, x, y, str, font, color );
+    
+  }else{
+    PRINTSYS_PrintQueColor( que, bmp, x, y, str, font, color );
+  }
   
 }
 
@@ -1852,8 +1893,9 @@ static void line_callback(BMPMENULIST_WORK * wk, u32 param, u8 y )
     bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
     
     // 値段描画
-    PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
-                          bmp_w-length, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+    _callback_print(sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
+                            bmp_w-length, y, sbw->expandBuf, sbw->font, BLUE_TEXT_COL );
+    OS_Printf("y=%d\n", y);
   }
 }
 
@@ -1878,8 +1920,8 @@ static void line_callback_waza(BMPMENULIST_WORK * wk, u32 param, u8 y )
       length = PRINTSYS_GetStrWidth( sbw->HaveStr, sbw->font, 0 );
       bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
       // 値段描画
-      PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
-                            bmp_w-length, y, sbw->HaveStr, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+      _callback_print( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
+                            bmp_w-length, y, sbw->HaveStr, sbw->font, BLUE_TEXT_COL );
     // 持ってない
     }else{
       int length,bmp_w;
@@ -1893,8 +1935,8 @@ static void line_callback_waza(BMPMENULIST_WORK * wk, u32 param, u8 y )
       bmp_w  = GFL_BMP_GetSizeX( GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]) );
       
       // 値段描画
-      PRINTSYS_PrintQueColor( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
-                            bmp_w-length, y, sbw->expandBuf, sbw->font, PRINTSYS_LSB_Make(12,13,0) );
+      _callback_print( sbw->printQue, GFL_BMPWIN_GetBmp( sbw->win[SHOP_BUY_BMPWIN_LIST]), 
+                            bmp_w-length, y, sbw->expandBuf, sbw->font, BLUE_TEXT_COL );
       
     }
   }
