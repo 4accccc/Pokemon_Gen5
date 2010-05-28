@@ -24,8 +24,9 @@
 #define CIRCLE_VERTEX_COUNT  (CIRCLE_POINT_COUNT * 3) // 円の描画に使用する頂点の数
 #define DIV_PERCENTAGE       (100.0f / CIRCLE_DIV_COUNT) // ポリゴンあたりが占める割合
 #define MAX_COMPONENT_NUM    (20)  // 円グラフの最大構成要素数
-#define CIRCLE_CENTER_X      (FX16_CONST(-0.707f)) // 円グラフ中心点の x 座標
-#define CIRCLE_CENTER_Y      (FX16_CONST(-0.041f)) // 円グラフ中心点の y 座標
+#define CIRCLE_CENTER_X      (FX16_CONST(-0.699f)) // 円グラフ中心点の x 座標
+#define CIRCLE_CENTER_Y      (FX16_CONST(-0.049f)) // 円グラフ中心点の y 座標
+#define CIRCLE_CENTER_Z      (FX16_CONST(-1.0f)) // 円グラフ中心点の z 座標
 #define CIRCLE_RADIUS        (FX32_CONST(0.491f)) // 円グラフの半径
 #define COMPONENT_POINT_RADIUS (0.42f) // 構成要素を指し示す場所を決定する円の半径
 #define Z_STRIDE             (FX16_CONST(0.05f)) // 構成要素ごとの z 値の間隔
@@ -1201,7 +1202,7 @@ static void UpdateDrawVertices( CIRCLE_GRAPH* graph )
     // 中心点の座標を決定
     centerPos.x = graph->centerPos.x;
     centerPos.y = graph->centerPos.y;
-    centerPos.z = graph->centerPos.z - Z_STRIDE * componentIdx; // 構成要素ごとに異なる z値 で描画する
+    centerPos.z = graph->centerPos.z + Z_STRIDE * componentIdx; // 構成要素ごとに異なる z値 で描画する
 
     // 構成要素が占める割合の範囲内にある, すべての外周頂点が構成するポリゴンを追加する
     for( circlePointIdx=headPointIdx; circlePointIdx <= tailPointIdx; circlePointIdx++ )
@@ -1568,7 +1569,7 @@ static void InitGraph( CIRCLE_GRAPH* graph, HEAPID heapID )
   graph->radius       = CIRCLE_RADIUS;
   graph->componentNum = 0;
 
-  VEC_Fx16Set( &(graph->centerPos), CIRCLE_CENTER_X, CIRCLE_CENTER_Y, 0 );
+  VEC_Fx16Set( &(graph->centerPos), CIRCLE_CENTER_X, CIRCLE_CENTER_Y, CIRCLE_CENTER_Z );
 }
 
 //------------------------------------------------------------------------------

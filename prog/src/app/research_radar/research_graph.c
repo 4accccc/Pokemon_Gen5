@@ -1055,6 +1055,7 @@ static void MainSeq_ANALYZE( RRG_WORK* work )
   switch( GetStateSeq(work) ) {
   case 0:
     SetupResearchData( work );                              // 調査データを再セットアップ
+    ClearNewEntryFlag( work );                              // この時点でデータは最新
     ShowAnalyzeMessage( work );                             //「…かいせきちゅう…」を表示
     SetupMainCircleGraph( work, GRAPH_DISP_MODE_TODAY );    // 円グラフ作成
     SetupMainCircleGraph( work, GRAPH_DISP_MODE_TOTAL );    // 円グラフ作成
@@ -1851,6 +1852,7 @@ static void ChangeQuestionToNext( RRG_WORK* work )
 
   // データを更新
   SetupResearchData( work );   // 調査データを再セットアップ
+  ClearNewEntryFlag( work );   // この時点でデータは最新
   ShiftQuestionIdx( work, 1 ); // 表示する質問インデックスを変更
   work->analyzeFlag = FALSE;   // 解析済みフラグを伏せる
 
@@ -1887,6 +1889,7 @@ static void ChangeQuestionToPrev( RRG_WORK* work )
 
   // データを更新
   SetupResearchData( work );    // 調査データを再セットアップ
+  ClearNewEntryFlag( work );    // この時点でデータは最新
   ShiftQuestionIdx( work, -1 ); // 表示する質問インデックスを変更
   work->analyzeFlag = FALSE;    // 解析済みフラグを伏せる
 
