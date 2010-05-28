@@ -382,6 +382,9 @@ sub_receipt_rekidai_download:
   _MSGWIN_CLOSE()
   
   IF $ret == SCR_YES THEN
+    //セーブ
+    _CALL sub_bsw_common_auto_save
+    
     //フィールド通信切断
     _CALL sub_common_exit_field_comm
     
