@@ -147,12 +147,27 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
   {
     //0番にプレーヤー名
     WORDSET_RegisterPlayerName( wordset, 0, my );
-    //3番に手持ちの先頭ポケモンの種族名
+    //3番に手持ちの先頭ポケモンの種族名(タマゴを除く)
     {
+      int i;
+      int num;
       POKEPARTY*     party = GAMEDATA_GetMyPokemon( gdata );
-      POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, 0 );
-      u32 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-      WORDSET_RegisterPokeMonsNameNo( wordset, 3, monsno );
+      num = PokeParty_GetPokeCount( party );
+      for (i=0;i<num;i++)
+      {
+        BOOL tamago_flg;
+        POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, i );
+        //タマゴではないポケモン
+        tamago_flg = PP_Get( pp, ID_PARA_tamago_flag, NULL );
+        if ( !tamago_flg )
+        {
+          u32 monsno = PP_Get( pp, ID_PARA_monsno, NULL );
+          WORDSET_RegisterPokeMonsNameNo( wordset, 3, monsno );
+          break;
+        }
+      }
+      //タマゴではないポケモンを見つけられなかった
+      if (i == num) GF_ASSERT(0);
     }
   }
 
