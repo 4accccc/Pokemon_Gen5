@@ -766,7 +766,9 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
   wk->printCursor = APP_KEYCURSOR_Create( 15, TRUE, FALSE, wk->heapID );
   wk->printQue = PRINTSYS_QUE_Create(wk->heapID);
 
-
+  // 通信アイコン表示
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID );
+  
   //キーシステム設定
   //GFL_UI_KEY_SetRepeatSpeed( 8/*SYS_KEYREPEAT_SPEED_DEF*/, 4/*SYS_KEYREPEAT_WAIT_DEF*/ );
 
@@ -1333,6 +1335,8 @@ static GFL_PROC_RESULT Earth_Demo_Exit(GFL_PROC * proc, int * seq, void * pwk, v
 {
   EARTH_DEMO_WORK * wk  = (EARTH_DEMO_WORK*)mywk;
   int heapID = wk->heapID;
+
+  GFL_NET_WirelessIconEasyEnd();
 
   PRINTSYS_QUE_Clear( wk->printQue ); 
   PRINTSYS_QUE_Delete(wk->printQue);
