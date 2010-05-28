@@ -592,8 +592,11 @@ EVENT_START ev_c04r0111_home
       IF $SCWK_ANSWER == 0 THEN //初めて倒した
         //トロフィを差し上げます
         _BALLOONWIN_OBJMSG_POS( msg_c04r0111_08, obj_id, POS_DOWN )
+        _ME_PLAY( SEQ_ME_HYOUKA6 )  //ファンファーレ
+        _ME_WAIT()
+        _AB_KEYWAIT_MARK()
         _MSGWIN_CLOSE()
-
+        
         _BSUBWAY_TOOL( BSWTOOL_SET_BOSS_CLEAR_FLAG, play_mode, BSW_NULL, BSW_NULL )
         
         //送信ビーコンセット：バトルサブウェイでトロフィー取得 
