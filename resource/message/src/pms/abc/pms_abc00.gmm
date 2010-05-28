@@ -784,11 +784,6 @@
 	</row>
 
 	<row id="search_abc_78">
-		<language name="JPN" width="216">あんとれす</language>
-		<language name="JPN_KANJI" width="216">あんとれす</language>
-	</row>
-
-	<row id="search_abc_79">
 		<language name="JPN" width="216">あんのーん</language>
 		<language name="JPN_KANJI" width="216">あんのーん</language>
 	</row>

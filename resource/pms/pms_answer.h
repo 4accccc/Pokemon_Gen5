@@ -65,3 +65,4 @@
 #define mypms03 (1485) // ‚ ‚è‚ª‚Æ‚¤
 #define mypms04 (1639) // ‚´‚ñ‚Ë‚ñ
 #define mypms05 (1395) // ‚¢‚¿‚Î‚ñ
+#define correct01 (1697) // ƒ|ƒPƒ‚ƒ“

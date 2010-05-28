@@ -623,6 +623,8 @@ void PMSIV_WORDWIN_SetScrollBarPos( PMSIV_WORDWIN * wk, u32 now, u32 max )
       s16 e = (now +1) * h / (max +1) -1 +SCRLL_BAR_Y;
       s16 c = (s + e) /2;
       pos.y = c;
+	    if( pos.y < SCRLL_BAR_Y )          pos.y = SCRLL_BAR_Y;
+      else if( pos.y > SCRLL_BAR_Y_MAX ) pos.y = SCRLL_BAR_Y_MAX;
     }
     else  // if( max == 0 )
     {

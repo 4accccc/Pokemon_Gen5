@@ -824,8 +824,8 @@
 	</row>
 
 	<row id="search_abc_86">
-		<language name="JPN" width="216">かんくつ</language>
-		<language name="JPN_KANJI" width="216">かんくつ</language>
+		<language name="JPN" width="216">かんしよう</language>
+		<language name="JPN_KANJI" width="216">かんしよう</language>
 	</row>
 
 	<row id="search_abc_87">
@@ -834,43 +834,33 @@
 	</row>
 
 	<row id="search_abc_88">
-		<language name="JPN" width="216">かんしよう</language>
-		<language name="JPN_KANJI" width="216">かんしよう</language>
-	</row>
-
-	<row id="search_abc_89">
-		<language name="JPN" width="216">かんせき</language>
-		<language name="JPN_KANJI" width="216">かんせき</language>
-	</row>
-
-	<row id="search_abc_90">
 		<language name="JPN" width="216">かんせきふうし</language>
 		<language name="JPN_KANJI" width="216">かんせきふうし</language>
 	</row>
 
-	<row id="search_abc_91">
+	<row id="search_abc_89">
 		<language name="JPN" width="216">かんせきほう</language>
 		<language name="JPN_KANJI" width="216">かんせきほう</language>
 	</row>
 
-	<row id="search_abc_92">
+	<row id="search_abc_90">
 		<language name="JPN" width="216">かんせん</language>
 		<language name="JPN_KANJI" width="216">かんせん</language>
 	</row>
 
-	<row id="search_abc_93">
+	<row id="search_abc_91">
 		<language name="JPN" width="216">かんそうはた</language>
 		<language name="JPN_KANJI" width="216">かんそうはた</language>
 	</row>
 
-	<row id="search_abc_94">
+	<row id="search_abc_92">
 		<language name="JPN" width="216">かんたん</language>
 		<language name="JPN_KANJI" width="216">かんたん</language>
 	</row>
 
-	<row id="search_abc_95">
-		<language name="JPN" width="216">かんとろす</language>
-		<language name="JPN_KANJI" width="216">かんとろす</language>
+	<row id="search_abc_93">
+		<language name="JPN" width="216">かんとる</language>
+		<language name="JPN_KANJI" width="216">かんとる</language>
 	</row>
 
 	<flowchart-group-list>

@@ -451,4 +451,32 @@ extern void PMSDAT_SetDebugRandom( PMS_DATA* pms ); // ランダム
 #define PMSDAT_SetDebugRandom(...)      /*  */
 #endif
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+ *
+ *	@param[in,out]  data                  不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
+ *	@param[in]      is_word_null_correct  PMS_WORD_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *	@param[in]      heap_id               一時的に使用するヒープ 
+ *
+ *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PMSDAT_CorrectData( PMS_DATA* data, BOOL is_word_null_correct, HEAPID heap_id );
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+ *
+ *	@param[in,out]  word                  不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
+ *	@param[in]      is_word_null_correct  PMS_WORD_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *
+ *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+extern BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct );
+
+
 #endif
+

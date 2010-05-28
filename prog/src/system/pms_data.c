@@ -810,3 +810,106 @@ void PMSDAT_SetDebugRandom( PMS_DATA* pms )
 }
 
 #endif
+
+
+// データのsentenceが不正だった場合、これに変更する
+#define PMSDAT_CORRECT_SENTENCE_TYPE  (PMS_TYPE_MAIL)
+#define PMSDAT_CORRECT_SENTENCE_ID    (pmss_mail_01)
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+ *
+ *	@param[in,out]  data                  不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
+ *	@param[in]      is_word_null_correct  PMS_WORD_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *	@param[in]      heap_id               一時的に使用するヒープ 
+ *
+ *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSDAT_CorrectData( PMS_DATA* data, BOOL is_word_null_correct, HEAPID heap_id )
+{
+  BOOL is_correct = TRUE;
+  u32  max;
+  u32  i;
+
+  // sentenceチェック
+  if(    ( !(data->sentence_type < PMS_TYPE_MAX) )
+      || ( !(data->sentence_id < PMSDAT_GetSentenceIdMax(data->sentence_type)) ) )
+  {
+    data->sentence_type = PMSDAT_CORRECT_SENTENCE_TYPE;
+    data->sentence_id   = PMSDAT_CORRECT_SENTENCE_ID;
+    is_correct = FALSE;
+  }
+
+  // wordチェック
+  max = get_include_word_max( data->sentence_type, data->sentence_id, GFL_HEAP_LOWID( heap_id ) );
+  if( max > PMS_WORD_MAX ) max = PMS_WORD_MAX;  // 起こり得ないと思うが念のため
+  for( i=0; i<max; i++ )
+  {
+    BOOL is_word_correct;
+    is_word_correct = PMSDAT_CorrectWord( &(data->word[i]), is_word_null_correct );
+    if( !is_word_correct )  // sentenceチェックの結果を打ち消さないように
+    {
+      is_correct = FALSE;
+    }
+  }
+
+  return is_correct;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データの不正チェックを行い、不正だった場合は正しいデータに強制的に変更する
+ *
+ *	@param[in,out]  word                  不正チェックを行うデータ。不正だった場合は正しいデータに変更される。
+ *	@param[in]      is_word_null_correct  PMS_WORD_NULLを正しいとする場合はTRUE、不正とする場合はFALSE
+ *
+ *	@return         データが正しい場合はTRUE、正しくなくて変更した場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct )
+{
+  BOOL is_correct = TRUE;
+
+  if( is_word_null_correct )
+  {
+    if( *word == PMS_WORD_NULL )
+    {
+      return TRUE;
+    }
+  }
+  else
+  {
+    if( *word == PMS_WORD_NULL )
+    {
+      *word = correct01;
+      return FALSE;
+    }
+  }
+
+  if( PMSW_IsDeco(*word) )
+  {
+    PMS_DECO_ID deco_id = PMSW_GetDecoID(*word);
+    // デコメならばデコメIDがあっているか
+    if( !(PMS_DECOID_ORG <= deco_id && deco_id < PMS_DECOID_MAX) )
+    {
+      *word = correct01;
+      is_correct = FALSE;
+    }
+  }
+  else
+  {
+    u32 word_id;
+    u32 file_id;
+    // 単語ならば、単語ナンバーがあっているか
+    if( !GetWordSorceID( *word, &file_id, &word_id ) )
+    {
+      *word = correct01;
+      is_correct = FALSE;
+    }
+  }
+
+  return is_correct;
+}
+

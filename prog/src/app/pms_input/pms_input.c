@@ -1910,7 +1910,14 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // INITIALなら文字消去→これ以上消すものがなければ画面から抜ける
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
-		  wk->category_pos = CATEGORY_POS_ERASE;
+      // Bボタンで消すときは
+      //   文字のところにカーソルがあるときは移動しないし、文字のところのカーソルを消さない
+      //   APP_TASKMENUのところにカーソルがあるときは「けす」のところにカーソルを移動する
+      if(    wk->category_pos == CATEGORY_POS_SELECT
+          || wk->category_pos == CATEGORY_POS_BACK )
+      {
+		    wk->category_pos = CATEGORY_POS_ERASE;
+      }
 
 		  PMSND_PlaySE(SOUND_WORD_DELETE);
 		  PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
@@ -2279,6 +2286,7 @@ static void category_input(PMS_INPUT_WORK* wk,int* seq)
     {
 	    if( wk->key_mode == GFL_APP_KTST_KEY && (!(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)) )  // タッチ→キーに変更したときで、そのときの入力がBボタンでないときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
       {
+			  PMSND_PlaySE(SOUND_MOVE_CURSOR);
         return;
       }
     }
@@ -2286,6 +2294,7 @@ static void category_input(PMS_INPUT_WORK* wk,int* seq)
     {
 	    if(wk->key_mode == GFL_APP_KTST_KEY)  // タッチ→キーに変更したときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
       {
+			  PMSND_PlaySE(SOUND_MOVE_CURSOR);
 			  return;
       }
     }
@@ -2852,6 +2861,7 @@ static void word_input(PMS_INPUT_WORK* wk,int* seq)
 	if(KeyStatusChange(wk,seq)){
 	  if( wk->key_mode == GFL_APP_KTST_KEY && (!(GFL_UI_KEY_GetTrg() & PAD_BUTTON_B)) )  // タッチ→キーに変更したときで、そのときの入力がBボタンでないときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
     {
+			PMSND_PlaySE(SOUND_MOVE_CURSOR);
       return;
     }
   }
