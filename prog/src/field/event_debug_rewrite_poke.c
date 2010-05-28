@@ -133,6 +133,8 @@ static GMEVENT_RESULT debugMenuReWritePoke( GMEVENT *p_event, int *p_seq, void *
       }else{
         BOXDAT_PutPokemon( boxman, PP_GetPPPPointer( p_wk->pp ));
       }
+      //オリジナルは元に戻す
+      POKETOOL_CopyPPtoPP( p_wk->p_src_pp, p_wk->pp );
     }
 
 #if 0 //別にこれは要らないのでは？
