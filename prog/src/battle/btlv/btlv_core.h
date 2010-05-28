@@ -324,6 +324,9 @@ extern void BTLV_QuitTokWin( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_QuitTokWinWait( BTLV_CORE* wk, BtlPokePos pos );
 extern void BTLV_TokWin_Renew_Start( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_TokWin_Renew_Wait( BTLV_CORE* wk, BtlPokePos pos );
+extern void BTLV_TokWin_SwapStart( BTLV_CORE* wk, BtlPokePos pos1, BtlPokePos pos2 );
+extern BOOL BTLV_TokWin_SwapWait( BTLV_CORE* wk );
+
 
 extern void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 vpos );
 extern void BTLV_StartRankUpEffect( BTLV_CORE* wk, u8 vpos );

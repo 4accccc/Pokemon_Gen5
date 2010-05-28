@@ -2164,6 +2164,33 @@ BOOL BTLV_TokWin_Renew_Wait( BTLV_CORE* wk, BtlPokePos pos )
   return BTLV_SCU_TokWin_Renew_Wait( wk->scrnU, pos );
 }
 
+//=============================================================================================
+/**
+ * とくせいウィンドウのスワップ演出（開始）
+ *
+ * @param   wk
+ * @param   pos1
+ * @param   pos2
+ */
+//=============================================================================================
+void BTLV_TokWin_SwapStart( BTLV_CORE* wk, BtlPokePos pos1, BtlPokePos pos2 )
+{
+  BTLV_SCU_TokWin_Swap_Start( wk->scrnU, pos1, pos1 );
+}
+//=============================================================================================
+/**
+ * とくせいウィンドウのスワップ演出（終了待ち）
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_TokWin_SwapWait( BTLV_CORE* wk )
+{
+  return BTLV_SCU_TokWin_Swap_Wait( wk->scrnU );
+}
+
 
 
 void BTLV_StartRankDownEffect( BTLV_CORE* wk, u8 vpos )

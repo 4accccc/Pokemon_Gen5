@@ -110,6 +110,7 @@ typedef enum {
   TASKTYPE_MEMBER_OUT,
   TASKTYPE_WAZA_DAMAGE,
   TASKTYPE_HP_GAUGE,
+  TASKTYPE_TOKWIN_SWAP,
   TASKTYPE_MAX,
 
 }TaskType;
@@ -291,6 +292,7 @@ static void statwin_cleanup( STATUS_WIN* stwin );
 static void statwin_hide( STATUS_WIN* stwin );
 static void statwin_disp_start( STATUS_WIN* stwin );
 static TokwinSide PokePosToTokwinSide( const BTL_MAIN_MODULE* mainModule, BtlPokePos pos );
+static void taskTokWinSwap( GFL_TCBL* tcbl, void* wk_adrs );
 static void tokwin_setupAll( BTLV_SCU* wk, u32 charpos_top );
 static void tokwin_cleanupAll( BTLV_SCU* wk );
 static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash );
@@ -3609,6 +3611,84 @@ BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos )
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
   return tokwin_renew_progress( &wk->tokWin[side] );
 }
+
+
+
+//--------------------------------------------------------
+// とくせいウィンドウスワップ演出
+//--------------------------------------------------------
+typedef struct {
+
+  BTLV_SCU*   parentWork;
+  u16         seq;
+  u16         timer;
+  u8          fDispEnd;
+  u8          fNextStart;
+  u8          fNextDispEnd;
+
+  BtlPokePos   pos;
+  BtlPokePos   next_pos;
+
+  u8*     pTaskCounter;
+
+}TOKWIN_SWAP_WORK;
+
+static TOKWIN_SWAP_WORK* addSwapTask( BTLV_SCU* wk )
+{
+  GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskTokWinSwap, sizeof(TOKWIN_SWAP_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
+  TOKWIN_SWAP_WORK* twk = GFL_TCBL_GetWork( tcbl );
+
+  twk->parentWork = wk;
+  twk->seq = 0;
+  twk->timer = 0;
+  twk->pTaskCounter = &wk->taskCounter[TASKTYPE_TOKWIN_SWAP];
+
+  (*(twk->pTaskCounter))++;
+
+  return twk;
+}
+
+//=============================================================================================
+/**
+ * とくせいウィンドウのスワップ演出（開始）
+ *
+ * @param   wk
+ * @param   pos1
+ * @param   pos2
+ */
+//=============================================================================================
+void BTLV_SCU_TokWin_Swap_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 )
+{
+  TOKWIN_SWAP_WORK* twk = addSwapTask( wk );
+
+  twk->pos = pos1;
+  twk->next_pos = pos2;
+}
+
+//=============================================================================================
+/**
+ * とくせいウィンドウのスワップ演出（終了待ち）
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTLV_SCU_TokWin_Swap_Wait( BTLV_SCU* wk )
+{
+//  return ( wk->taskCounter[ TASKTYPE_TOKWIN_SWAP ] == 0 );
+  return TRUE;
+}
+//-----------------------------------------------------------
+/**
+ *  スワップ演出タスク
+ */
+//-----------------------------------------------------------
+static void taskTokWinSwap( GFL_TCBL* tcbl, void* wk_adrs )
+{
+  // 未実装・未使用
+}
+
 
 static void tokwin_setupAll( BTLV_SCU* wk, u32 charpos_top )
 {

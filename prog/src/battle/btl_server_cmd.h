@@ -113,6 +113,7 @@ typedef enum {
   SC_ACT_MSGWIN_HIDE,       ///< メッセージウィンドウフェードアウト
   SC_TOKWIN_IN,             ///< とくせいウィンドウ表示イン [ClientID]
   SC_TOKWIN_OUT,            ///< とくせいウィンドウ表示アウト [ClientID]
+  SC_TOKWIN_SWAP,           ///< とくせいウィンドウ入れ替え
   SC_MSG_WAZA,              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
   SC_MSG_STD,               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   SC_MSG_SET,               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
@@ -578,6 +579,11 @@ static inline void SCQUE_PUT_TOKWIN_OUT( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
   SCQUE_PUT_Common( que, SC_TOKWIN_OUT, pokeID );
 }
+static inline void SCQUE_PUT_TOKWIN_SWAP( BTL_SERVER_CMD_QUE* que, u8 pokeID_1, u8 pokeID_2 )
+{
+  SCQUE_PUT_Common( que, SC_TOKWIN_SWAP, pokeID_1, pokeID_2 );
+}
+
 
 static inline void SCQUE_PUT_MSG_WAZA( BTL_SERVER_CMD_QUE* que, u8 pokeID, u16 waza )
 {

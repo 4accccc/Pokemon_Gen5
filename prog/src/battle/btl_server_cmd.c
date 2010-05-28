@@ -176,6 +176,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_ACT_MSGWIN_HIDE
   SC_ARGFMT_1byte,            // SC_TOKWIN_IN
   SC_ARGFMT_1byte,            // SC_TOKWIN_OUT
+  SC_ARGFMT_11byte,           // SC_TOKWIN_SWAP
   SC_ARGFMT_12byte, // SC_MSG_WAZA
   SC_ARGFMT_MSG,    // SC_MSG_STD
   SC_ARGFMT_MSG,    // SC_MSG_SET

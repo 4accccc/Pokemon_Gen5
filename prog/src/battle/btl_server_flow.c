@@ -8735,7 +8735,7 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     SCQUE_PUT_OP_ChangeTokusei( wk->que, atkPokeID, tgt_tok );
     SCQUE_PUT_OP_ChangeTokusei( wk->que, tgtPokeID, atk_tok );
     BTL_HANDLER_TOKUSEI_Swap( attacker, target );
-
+//    SCQUE_PUT_TOKWIN_SWAP( atkPokeID, tgtPokeID );
 
     if( atk_tok != tgt_tok )
     {
@@ -14676,14 +14676,19 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
 {
   BTL_HANDEX_PARAM_CHANGE_MEMBER* param = (BTL_HANDEX_PARAM_CHANGE_MEMBER*)param_header;
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-  if( scproc_MemberOutForChange(wk, bpp, param->fIntrDisable) )
-  {
-    BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
 
-    BTL_SERVER_RequestChangePokemon( wk->server, pos );
-    handexSub_putString( wk, &param->exStr );
-    wk->flowResult = SVFLOW_RESULT_POKE_CHANGE;
-    return 1;
+  if( !scproc_CheckShowdown(wk) )
+  {
+    handexSub_putString( wk, &param->preStr );
+    if( scproc_MemberOutForChange(wk, bpp, param->fIntrDisable) )
+    {
+      BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
+
+      BTL_SERVER_RequestChangePokemon( wk->server, pos );
+      handexSub_putString( wk, &param->exStr );
+      wk->flowResult = SVFLOW_RESULT_POKE_CHANGE;
+      return 1;
+    }
   }
   return 0;
 }

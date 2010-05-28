@@ -7360,16 +7360,21 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
 
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
-      BTL_HANDEX_PARAM_MESSAGE* msg_param;
+//      BTL_HANDEX_PARAM_MESSAGE* msg_param;
       BTL_HANDEX_PARAM_ADD_EFFECT* eff_param;
 
+/*
       msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Tonbogaeri );
       HANDEX_STR_AddArg( &msg_param->str, pokeID );
       HANDEX_STR_AddArg( &msg_param->str, clientID );
+*/
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       param->pokeID = pokeID;
+      HANDEX_STR_Setup( &param->preStr, BTL_STRTYPE_SET, BTL_STRID_SET_Tonbogaeri );
+      HANDEX_STR_AddArg( &param->preStr, pokeID );
+      HANDEX_STR_AddArg( &param->preStr, clientID );
 
       eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
       eff_param->effectNo = (BTL_EVENT_FACTOR_GetSubID(myHandle) == WAZANO_TONBOGAERI)?

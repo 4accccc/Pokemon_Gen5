@@ -363,6 +363,7 @@ static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args
 static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_TOKWIN_Swap( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -4967,6 +4968,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_KINOMI,            scProc_ACT_Kinomi         },
     { SC_TOKWIN_IN,             scProc_TOKWIN_In          },
     { SC_TOKWIN_OUT,            scProc_TOKWIN_Out         },
+    { SC_TOKWIN_SWAP,           scProc_TOKWIN_Swap        },
     { SC_OP_HP_MINUS,           scProc_OP_HpMinus         },
     { SC_OP_HP_PLUS,            scProc_OP_HpPlus          },
     { SC_OP_HP_ZERO,            scProc_OP_HpZero          },
@@ -7066,6 +7068,45 @@ static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
   }
   return FALSE;
 }
+//---------------------------------------------------------------------------------------
+/**
+ *  とくせい入れ替え演出  args [0]:pokeID_1, [1]:pokeID_2
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_TOKWIN_Swap( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  // 現状、描画側未実装、未使用。
+  // 本来はbpp書き換え処理もここで行わないと難しい。
+  switch( (*seq) ){
+  case 0:
+    if( BTL_MAINUTIL_IsFriendPokeID(args[0], args[1]) )
+    {
+      return TRUE;
+    }
+    else
+    {
+      BtlPokePos pos1 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
+      BtlPokePos pos2 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[1] );
+
+      BTLV_TokWin_SwapStart( wk->viewCore, pos1, pos2 );
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    if( BTLV_TokWin_SwapWait(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+
+  default:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
 
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args )
 {

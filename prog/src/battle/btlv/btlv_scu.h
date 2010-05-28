@@ -62,6 +62,10 @@ extern BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos );
 extern void BTLV_SCU_TokWin_Renew_Start( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_TokWin_Renew_Wait( BTLV_SCU* wk, BtlPokePos pos );
 
+extern void BTLV_SCU_TokWin_Swap_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 );
+extern BOOL BTLV_SCU_TokWin_Swap_Wait( BTLV_SCU* wk );
+
+
 extern void BTLV_SCU_MoveGauge_Start( BTLV_SCU* wk, BtlPokePos pos1, BtlPokePos pos2 );
 extern BOOL BTLV_SCU_MoveGauge_Wait( BTLV_SCU* wk );
 

@@ -731,6 +731,7 @@ typedef struct {
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
+  BTL_HANDEX_STR_PARAMS    preStr;  ///< 実行開始メッセージ
   BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
   u8                       pokeID;
   u8                       fIntrDisable;  ///< 割り込み（おいうちなど）禁止
