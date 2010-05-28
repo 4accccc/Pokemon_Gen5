@@ -1169,6 +1169,7 @@ SRCS_OVERLAY_BATTLE_RETURN =	field/event_battle_return.c
 SRCS_OVERLAY_BATTLE =	battle/btl_main.c \
 			battle/btl_server.c \
 			battle/btl_server_flow.c \
+			battle/btl_server_flow_sub.c \
 			battle/btl_server_cmd.c \
 			battle/btl_client.c \
 			battle/btl_net.c \
