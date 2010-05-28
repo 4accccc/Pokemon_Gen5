@@ -243,6 +243,8 @@ typedef enum {
   DBGSTR_SVFL_MagicCoatStart,
   DBGSTR_SVFL_MagicCoatReflect,
 
+  DBGSTR_SVFS_RegTargetDouble,
+
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,
   DBGSTR_SC_WriteReservedPos,

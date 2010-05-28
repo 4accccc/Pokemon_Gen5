@@ -25,15 +25,6 @@ void BTL_POKESET_Clear( BTL_POKESET* set )
 }
 
 /**
- *  コピー
- */
-void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
-{
-  GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
-  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_PSET_Copy, dst, dst->count );
-}
-
-/**
  *  ポケモン１体登録（ダメージ記録）
  */
 void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage )
@@ -161,8 +152,13 @@ BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec )
   return (rec->countMax > 0) && (rec->count == 0);
 }
 
-
-
+/**
+ *  単純コピー
+ */
+void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
+{
+  GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
+}
 /**
  *  指定ポケモンと同陣営のデータのみをコピー
  *

@@ -34,10 +34,6 @@ typedef BTL_POKESET  TARGET_POKE_REC;
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-extern u32 BTL_POKESET_CopyFriends( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst );
-extern u32 BTL_POKESET_CopyEnemys( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst );
-extern void BTL_POKESET_RemoveDeadPoke( BTL_POKESET* rec );
-extern void BTL_POKESET_SortByAgility( BTL_POKESET* rec, BTL_SVFLOW_WORK* flowWk );
 
 
 /**
@@ -45,11 +41,6 @@ extern void BTL_POKESET_SortByAgility( BTL_POKESET* rec, BTL_SVFLOW_WORK* flowWk
  */
 extern void BTL_POKESET_Clear( BTL_POKESET* set );
 
-
-/**
- *  コピー
- */
-extern void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst );
 
 /**
  *  ポケモン１体登録（ダメージ記録）
@@ -70,6 +61,31 @@ extern void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp );
  *  ポケモンデータ取得
  */
 extern BTL_POKEPARAM* BTL_POKESET_Get( const BTL_POKESET* rec, u32 idx );
+
+/**
+ *  コピー
+ */
+extern void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst );
+
+/**
+ *  味方だけコピー
+ */
+extern u32 BTL_POKESET_CopyFriends( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst );
+
+/**
+ *  相手だけコピー
+ */
+extern u32 BTL_POKESET_CopyEnemys( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp, BTL_POKESET* dst );
+
+/**
+ *  死んでるのを除外
+ */
+extern void BTL_POKESET_RemoveDeadPoke( BTL_POKESET* rec );
+
+/**
+ *  素早さ順ソート
+ */
+extern void BTL_POKESET_SortByAgility( BTL_POKESET* rec, BTL_SVFLOW_WORK* flowWk );
 
 /**
  *  順番アクセス開始

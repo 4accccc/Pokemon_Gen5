@@ -191,7 +191,7 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 
   BTL_POKEPARAM* bpp = NULL;
 
-  TAYA_Printf("ダブルターゲット：攻撃ポケ=%d, 狙う位置=%d\n", BPP_GetID(attacker), targetPos);
+  BTL_N_Printf( DBGSTR_SVFS_RegTargetDouble, BPP_GetID(attacker), targetPos);
 
   switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）

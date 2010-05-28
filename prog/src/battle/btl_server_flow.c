@@ -3715,6 +3715,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( wk->psetTargetOrg );
     BTL_SVFSUB_RegisterTargets( wk, attacker, actTargetPos, wk->wazaParam, wk->psetTargetOrg );
+    BTL_POKESET_RemoveDeadPoke( wk->psetTargetOrg );
     BTL_POKESET_Copy( wk->psetTargetOrg, wk->psetTarget );
 
     // ここまで来たらワザが出ることは確定
