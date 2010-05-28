@@ -471,7 +471,7 @@ static void PokeGra_GetFileOffset( ARCID arc_id , int mons_no, int form_no, int 
     }
     if( pltt_only )
     { 
-      if( pltt_only_offset )
+      if( ( pltt_only_offset ) && ( form_no ) )
       { 
         *pltt_only_offset = POKEGRA_FILE_MAX * ( MONSNO_MAX + OTHER_FORM_MAX + 1 ) + 13 + POKEGRA_PLTT_ONLY_MAX * ( gra_index + form_no - 1 ) + rare;
       }
