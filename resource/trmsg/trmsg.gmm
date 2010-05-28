@@ -5569,10 +5569,11 @@
 	</row>
 
 	<row id="TRID_BATTLEG_06_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">つるつる　すべる　こおりの　ゆか！
-バランスを　みがくのに　さいこうよ！▼</language>
+		<language name="JPN" width="216">つるつる　すべる　こおりの　ゆか！▼
+バランスかんかくを
+みがくのに　さいこうよ！▼</language>
 		<language name="JPN_KANJI" width="216">ツルツル　滑る　氷の床！
-バランスを　磨くのに　最高よ！▼</language>
+バランス感覚を　磨くのに　最高よ！▼</language>
 	</row>
 
 	<row id="TRID_BATTLEG_06_TRMSG_FIGHT_LOSE">
