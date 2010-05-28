@@ -908,8 +908,8 @@ static void _SetCountry(GTSNEGO_MESSAGE_WORK* pWork,MYSTATUS* pMyStatus)
 void GTSNEGO_MESSAGE_DeleteCountryMsg(GTSNEGO_MESSAGE_WORK* pWork)
 {
   if(pWork->mainMsgWin){
-//    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->mainMsgWin), 0);
-//    GFL_BMPWIN_TransVramCharacter(pWork->mainMsgWin);
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->mainMsgWin), 0);
+    GFL_BMPWIN_TransVramCharacter(pWork->mainMsgWin);
     GFL_BMPWIN_ClearScreen(pWork->mainMsgWin);
     GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_M);
     GFL_BMPWIN_Delete(pWork->mainMsgWin);

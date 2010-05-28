@@ -528,8 +528,7 @@ static void _messageEnd( GTSNEGO_WORK *pWork )
 }
 
 
-
-static void _messagePMS( GTSNEGO_WORK *pWork )
+static void _messagePMS2( GTSNEGO_WORK *pWork )
 {
   PMS_DATA data = {1,1,{1,1}};
   PMS_DATA* pPMS;
@@ -541,22 +540,25 @@ static void _messagePMS( GTSNEGO_WORK *pWork )
     pPMS=&pWork->MatchData.pms;
   }
 
-  pWork->timer--;
+  pWork->timer = _FRIEND_GREE_DOWN_TIME;
+  GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
+  GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
+  _CHANGE_STATE(pWork, _messageEnd);
+}
 
+static void _messagePMS( GTSNEGO_WORK *pWork )
+{
+
+  pWork->timer--;
   if(pWork->timer==20){
     GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_044);
   }
   if(pWork->timer==0){
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
-//    pParent->result = TRUE;
-    pWork->timer = _FRIEND_GREE_DOWN_TIME;
-//    GTSNEGO_MESSAGE_MainMessageDisp(pWork->pMessageWork, GTSNEGO_040);
     GTSNEGO_MESSAGE_DispCountryInfo(pWork->pMessageWork, GTSNEGO_040);
     GTSNEGO_MESSAGE_DeleteCountryMsg(pWork->pMessageWork);
 
-    GTSNEGO_MESSAGE_PMSDrawInit(pWork->pMessageWork, pWork->pDispWork);
-    GTSNEGO_MESSAGE_PMSDisp( pWork->pMessageWork, pPMS);
-    _CHANGE_STATE(pWork, _messageEnd);
+    _CHANGE_STATE(pWork, _messagePMS2);
   }
 }
 
