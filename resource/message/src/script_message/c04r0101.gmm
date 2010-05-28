@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T17:47:49"/>
+	<create user="matsumiya" host="W00224" date="2010-05-28T16:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1284" top="199" right="1989" bottom="827" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -370,9 +370,9 @@
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
 		<language name="JPN" width="256">じゃあ　しょうぶの　まえの
-じこしょうかいを　ひとつ　ヨロシク！</language>
+じこしょうかいを　ひとつ　ヨロシク！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　勝負の　前の
-自己紹介を　ひとつ　ヨロシク！</language>
+自己紹介を　ひとつ　ヨロシク！▼</language>
 	</row>
 
 	<row id="msg_touroku_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -383,9 +383,9 @@
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
 		<language name="JPN" width="256">じゃあ　しょうぶに　まけたときの
-きもちを　ひとつ　ヨロシク！</language>
+きもちを　ひとつ　ヨロシク！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　勝負に　負けたときの
-気持ちを　ひとつ　ヨロシク！</language>
+気持ちを　ひとつ　ヨロシク！▼</language>
 	</row>
 
 	<row id="msg_touroku_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -396,9 +396,9 @@
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
 		<language name="JPN" width="256">じゃあ　しょうぶに　かったときの
-きもちを　ひとつ　ヨロシク！</language>
+きもちを　ひとつ　ヨロシク！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　勝負に　勝ったときの
-気持ちを　ひとつ　ヨロシク！</language>
+気持ちを　ひとつ　ヨロシク！▼</language>
 	</row>
 
 	<row id="msg_touroku_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -409,9 +409,9 @@
 		<attribute name="キャラ指定">BOY1
 少年</attribute>
 		<language name="JPN" width="256">じゃあ　いちばんに　なったときの
-きもちを　ひとつ　ヨロシク！</language>
+きもちを　ひとつ　ヨロシク！▼</language>
 		<language name="JPN_KANJI" width="256">じゃあ　一番に　なったときの
-気持ちを　ひとつ　ヨロシク！</language>
+気持ちを　ひとつ　ヨロシク！▼</language>
 	</row>
 
 	<row id="msg_touroku_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
