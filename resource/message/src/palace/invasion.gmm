@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-20T20:19:44"/>
+	<create user="ohmori" host="W00223" date="2010-05-28T16:30:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1041,17 +1041,17 @@
 	<row id="plc_connect_03" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>ミッション中なので、他のハイリンクにいけないメッセージ</comment>
 		<language name="JPN" width="256">ミッションちゅう　なので
-ハイリンクから　でられない！</language>
+ほかの　ハイリンクに　いけない！</language>
 		<language name="JPN_KANJI" width="256">ミッション中　なので
-ハイリンクから　出られない！</language>
+他のハイリンクに　いけない！</language>
 	</row>
 
 	<row id="plc_connect_04" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
 		<comment>ミッション中なので、他のハイリンクにいけないメッセージ</comment>
 		<language name="JPN" width="256">ミッションちゅう　なので
-ハイリンクから　でられない！</language>
+ほかの　ハイリンクに　いけない！</language>
 		<language name="JPN_KANJI" width="256">ミッション中　なので
-ハイリンクから　出られない！</language>
+他のハイリンクに　いけない！</language>
 	</row>
 
 	<row id="plc_connect_05" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
