@@ -19,7 +19,7 @@
 #include "message.naix"
 #include "print/printsys.h"
 
-#include "sound/snd_strm.h"
+
 
 #include "infowin/infowin.h"
 #include "test/ariizumi/ari_debug.h"
