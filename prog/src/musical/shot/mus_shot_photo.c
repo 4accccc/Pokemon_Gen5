@@ -137,7 +137,7 @@ MUS_SHOT_PHOTO_WORK* MUS_SHOT_PHOTO_InitSystem( MUSICAL_SHOT_DATA *shotData , HE
                                                         shotData->shotPoke[i].sex , 
                                                         shotData->shotPoke[i].form , 
                                                         shotData->shotPoke[i].rare , 
-                                                        0 ,
+                                                        shotData->shotPoke[i].perRand ,
                                                         heapId );
     for( j=0;j<MUSICAL_ITEM_EQUIP_MAX;j++ )
     {

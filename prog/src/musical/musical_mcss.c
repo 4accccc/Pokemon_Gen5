@@ -1133,7 +1133,7 @@ static  void  MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS
       //パッチールぶち
       if( maw->ncec == NARC_pokegra_mus_pfwb_327_NCEC )
       {
-        ARI_TPrintf("パッチーる！\n");
+        ARI_TPrintf("パッチーる！[%08x]\n",maw->rand);
         MCSS_TOOL_MakeBuchiCore( tlw->pCharData->pRawData , maw->rand );
       }
       
