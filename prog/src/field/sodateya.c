@@ -73,6 +73,8 @@ static void CreateEgg( SODATEYA* sodateya, POKEMON_PARAM* egg );
 static void DeletePerapVoice( FIELDMAP_WORK* fieldmap, POKEPARTY* party );
 static void SetR03OldmanEventWork( FIELDMAP_WORK* fieldmap );
 static void ResetR03OldmanEventWork( FIELDMAP_WORK* fieldmap );
+static void RecoverPokemon( POKEMON_PARAM* poke );
+static void ResetSheimiForm( POKEMON_PARAM* poke );
 
 
 //========================================================================================
@@ -137,6 +139,7 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos )
 
   // 格納先インデックスを取得
   index = SODATEYA_WORK_GetPokemonNum( sodateya->work );
+  poke  = PokeParty_GetMemberPointer( party, pos );
 
   // すでに最大数預かっている場合
   if( SODATEYA_POKE_MAX <= index ) {
@@ -145,13 +148,33 @@ void SODATEYA_TakePokemon( SODATEYA* sodateya, POKEPARTY* party, int pos )
   }
 
   // ポケモンを移動 (手持ち→育て屋)
-  poke = PokeParty_GetMemberPointer( party, pos );
-  STATUS_RCV_PokeParam_RecoverAll( poke );
+  RecoverPokemon( poke );
+  ResetSheimiForm( poke );
   SODATEYA_WORK_SetPokemon( sodateya->work, index, poke );
   PokeParty_Delete( party, pos );
 
   // ぺラップ録音データを削除
   DeletePerapVoice( sodateya->fieldmap, party );
+}
+
+/**
+ * @brief ポケモンを全回復させる
+ */
+void RecoverPokemon( POKEMON_PARAM* poke )
+{
+  STATUS_RCV_PokeParam_RecoverAll( poke );
+} 
+
+/**
+ * @brief シェイミをランドフォルムに戻す
+ */
+static void ResetSheimiForm( POKEMON_PARAM* poke )
+{
+  u32 monsno = PP_Get( poke, ID_PARA_monsno, NULL );
+
+  if( monsno == MONSNO_SHEIMI ) {
+    PP_Put( poke, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
+  }
 }
 
 //----------------------------------------------------------------------------------------
