@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T20:48:08"/>
+	<create user="matsumiya" host="W00224" date="2010-05-28T13:02:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="265" right="2012" bottom="893" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="788" top="101" right="1261" bottom="499" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -426,7 +426,7 @@
 
 	<row id="msg_r01_black_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてwhite_01表示</comment>
+・続けてwhite_01</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">じゃ　ぼくも
@@ -451,7 +451,8 @@
 	</row>
 
 	<row id="msg_r01_white_02">
-		<comment>♀</comment>
+		<comment>♀
+・続けてblack_04</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『ちょっと　まって！[BE:01:ページ切り替え（クリア）]
@@ -467,7 +468,8 @@
 	</row>
 
 	<row id="msg_r01_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
-		<comment>♂</comment>
+		<comment>♂
+・続けてwhite_03</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『さあ　いこうか
@@ -477,27 +479,31 @@
 	</row>
 
 	<row id="msg_r01_white_03">
-		<comment>♀</comment>
+		<comment>♀
+・続けてblack_05</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
 		<language name="JPN" width="256">ベル『ちゃんと　きいてよ
-なんなのよお　もう！？[BE:01:ページ切り替え（クリア）]
+なんなのよお　もう！？▼
 どれだけ　ポケモンを　つかまえたか
-みんなで　きょうそう　しようよ？[BE:01:ページ切り替え（クリア）]
-ポケモンずかんの
-つかまえた　かずが▽
-おおい　ひとの　かちね！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『ちゃんと　聞いてよ
-なんなのよお　もう！？[BE:01:ページ切り替え（クリア）]
-どれだけ　ポケモンを　捕まえるか
-みんなで　競争しようよ？[BE:01:ページ切り替え（クリア）]
-ポケモン図鑑の　捕まえた　数が
-多い　人の　勝ちね！[BE:01:ページ切り替え（クリア）]</language>
+みんなで　きょうそう　しようよ？▼
+アララギはかせから　もらった
+ポケモンも　ふくめて▼
+たくさん　ポケモンを　つれている
+ひとが　かち　ね！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『ちゃんと　きいてよ
+なんなのよお　もう！？▼
+どれだけ　ポケモンを　捕まえたか
+みんなで　競争しようよ？▼
+アララギ博士から　もらった
+ポケモンも　ふくめて▼
+たくさん　ポケモンを　連れている
+人が　勝ち　ね！▼</language>
 	</row>
 
 	<row id="msg_r01_black_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・続けてwhite_06表示</comment>
+・続けてwhite_06</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレン『なるほどね
@@ -538,38 +544,39 @@
 	<row id="msg_r01_black_10" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
 ・white_06表示後
-　T02側に出現</comment>
+　T02側に出現
+・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『おや　[1:00:トレーナー名:0]
-ベルと　しょうぶ　するのかい？[BE:01:ページ切り替え（クリア）]
-ぼくも　ベルも
-ポケモンずかんの[BE:00:ページ切り替え（行送り）]
-つかまえた　かずは　２ひき　さ</language>
-		<language name="JPN_KANJI" width="256">チェレン『おや　[1:00:トレーナー名:0]
-ベルと　勝負するのかい？[BE:01:ページ切り替え（クリア）]
-ぼくも　ベルも
-図鑑の　捕まえた数は　２匹さ</language>
+		<language name="JPN" width="256">チェレン『[1:00:トレーナー名:0]
+ベルと　しょうぶ　するんだ？▼
+ぼくも　ベルも　いま　いっしょにいる
+ポケモンは　２ひき　さ▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『[1:00:トレーナー名:0]
+ベルと　勝負するんだ？▼
+ぼくも　ベルも　いま　一緒にいる
+ポケモンは　２匹さ▼</language>
 	</row>
 
-	<row id="msg_r01_white_10">
+	<row id="msg_r01_white_10" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
 ・msg_r01_white_06表示後
 　T02側に出現
 ・はい/いいえの選択肢表示
-・はい選択時で捕まえた数が
+・はい選択時で手持ちの数が
 　　3匹以上→white_12
 　　2匹　　　→_white_13
 　　1匹以下→white_14
-・いいえ選択時→white_11</comment>
+・いいえ選択時→white_11
+・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『どう？　[1:00:トレーナー名:0]
-どちらが　ポケモンを[BE:00:ページ切り替え（行送り）]
-たくさん　つかまえたか　くらべる？</language>
-		<language name="JPN_KANJI" width="256">ベル『どう？　[1:00:トレーナー名:0][BE:01:ページ切り替え（クリア）]
-どちらが　多くの　ポケモンを
-捕まえたか　比べる？</language>
+		<language name="JPN" width="256">ベル『どう？　[1:00:トレーナー名:0]▼
+どちらが　たくさんの
+ポケモンを　つれているか　くらべる？</language>
+		<language name="JPN_KANJI" width="256">ベル『どう？　[1:00:トレーナー名:0]▼
+どちらが　たくさんの
+ポケモンを　連れているか　くらべる？</language>
 	</row>
 
 	<row id="msg_r01_white_11">
@@ -583,58 +590,77 @@
 じゃあ　ここで　待ってるね▼</language>
 	</row>
 
-	<row id="msg_r01_white_12">
+	<row id="msg_r01_white_12" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・はい選択＆3匹以上
-・0＝捕獲数</comment>
+・はい選択＆手持ち3匹以上
+・0＝手持ちのポケモン数</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『[2:00:１桁:0]ひき！？[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『[2:00:１桁:0]ひき！？▼
 すごい！　すごーい！！
-そんなに　ポケモン　つかまえたんだ[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『[2:00:１桁:0]匹！？[BE:01:ページ切り替え（クリア）]
+それだけの　ポケモンが　いてくれると▽
+なんだか　ときめいちゃうよね！▼</language>
+		<language name="JPN_KANJI" width="256">ベル『[2:00:１桁:0]匹！？▼
 すごい！　すごーい！！
-そんなに　ポケモン　捕まえたんだ[BE:01:ページ切り替え（クリア）]</language>
+それだけの　ポケモンが　いてくれると▽
+なんだか　ときめいちゃうよね！▼</language>
 	</row>
 
-	<row id="msg_r01_white_13">
+	<row id="msg_r01_white_13" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・はい選択＆2匹</comment>
+・はい選択＆手持ち2匹
+・0＝プレイヤー名</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『ずかんの　つかまえたかずは……[BE:01:ページ切り替え（クリア）]
+		<language name="JPN" width="256">ベル『[1:00:トレーナー名:0]が
+いま　つれあるいている▽
+ポケモンの　かずは……▼
 ２ひき　ね！
-あたしたち　みんな　いっしょだね[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ベル『図鑑の　捕まえた数は……[BE:01:ページ切り替え（クリア）]
-２匹　ね！
-あたしたち　みんな　一緒だね[BE:01:ページ切り替え（クリア）]</language>
+あたしたち　みんな　おそろいだね▼</language>
+		<language name="JPN_KANJI" width="256">ベル『[1:00:トレーナー名:0]が
+いま　連れ歩いている▽
+ポケモンの　数は……▼
+２匹ね！
+あたしたち　みんな　おそろいだね▼</language>
 	</row>
 
-	<row id="msg_r01_white_14">
+	<row id="msg_r01_white_14" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
 		<comment>♀
-・はい選択＆1匹以下
+・はい選択＆手持ち1匹以下
 ・0＝主人公が最初に選んだポケモン</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『ええ！　１ぴきなの！？▼
-……もっと　つかまえないと
+		<language name="JPN" width="256">ベル『えええ！
+まだ　[1:01:ポケモン種族名:0]　１ぴきなの！？▼
+……ほかの　ポケモンを　つかまえないと
 [1:01:ポケモン種族名:0]が　さみしくないかなあ？▼</language>
-		<language name="JPN_KANJI" width="256">ベル『ええ！　１匹なの！？▼
-もっと　捕まえないと
+		<language name="JPN_KANJI" width="256">ベル『えええ！
+まだ　[1:01:ポケモン種族名:0]　１匹なの！？▼
+……ほかの　ポケモンを　捕まえないと
 [1:01:ポケモン種族名:0]が　さみしくないかなあ？▼</language>
 	</row>
 
 	<row id="msg_r01_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・表示後、ＴＶトランシーバーのコール音再生</comment>
+・表示後、ライブキャスターのコール音再生</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレン『じゃあ
-カラクサタウンに　いこう[BE:00:ページ切り替え（行送り）]
-はかせも　まっている[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">チェレン『じゃあ
-カラクサタウンに　行こう[BE:00:ページ切り替え（行送り）]
-博士も　待っている[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN" width="256">チェレン『ちなみに
+ポケモンずかんを　チェックすれば▼
+いままでに
+みつけた　ポケモンの　かずや▽
+つかまえた　かずが　わかる▼
+じゃあ
+カラクサタウンに　いくよ▽
+はかせが　まっている▼</language>
+		<language name="JPN_KANJI" width="256">チェレン『ちなみに
+ポケモン図鑑を　チェックすれば▼
+いままでに
+みつけた　ポケモンの　数や▽
+捕まえた数が　わかる▼
+じゃあ
+カラクサタウンに　行くよ▽
+博士が　待っている▼</language>
 	</row>
 
 	<row id="msg_r01_black_11a" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
