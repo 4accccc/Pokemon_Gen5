@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T19:03:48"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-28T16:00:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="28" top="149" right="733" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -6337,7 +6337,7 @@ SEE YOU SOON！</language>
 ・担当：穂積
 
 ・クリアフラグ参照</comment>
-		<language name="JPN" width="256">『ら～らら～らら～♪
+		<language name="JPN" width="256">『ラ～ララ～ララ～♪
 きょうの　ミュージカル▼
 キラキラ　ムーブは～♪
 それは～　でんぐりがえし～♪▼
@@ -6355,7 +6355,7 @@ SEE YOU SOON！</language>
 ミュ～ジ～カ～ル～～（ハモリ）♪♪▼
 アナウンサー『……いじょう
 なまちゅうけいでしたぁ</language>
-		<language name="JPN_KANJI" width="256">『ら～らら～らら～♪
+		<language name="JPN_KANJI" width="256">『ラ～ララ～ララ～♪
 今日の　ミュージカル▼
 キラキラ　ムーブは～♪
 それは～　でんぐりがえし～♪▼
@@ -6686,7 +6686,7 @@ SQUIRTというんですよ▼
 キャッキャウフフですね　いいですね▼
 それでは　また　らいしゅう
 さようなら～</language>
-		<language name="JPN_KANJI" width="256">司会　『英語は　苦手だけど
+		<language name="JPN_KANJI" width="256">司会『英語は　苦手だけど
 ポケモンなら　好き▼
 そんな　わがままキッズの
 願いを　かなえる　ポケＱポン！▼
@@ -7416,7 +7416,7 @@ BEAUTIFULは　美しいという　意味
 		<comment>内容未定
 ・ランダム表示
 ・担当：穂積</comment>
-		<language name="JPN" width="256">ここに　とりだしました
+		<language name="JPN" width="256">『ここに　とりだしました
 きょうの　オススメひん！▼
 いっけん　どこにでも　ある
 かわいらしい　ピッピにんぎょう！▼
@@ -7438,7 +7438,7 @@ BEAUTIFULは　美しいという　意味
 キズぐすりとの　おトクセットで
 ２８００００００えんで　かえちゃいます！▽
 いまスグ　おでんわを！</language>
-		<language name="JPN_KANJI" width="256">ここに　とりだしました
+		<language name="JPN_KANJI" width="256">『ここに　とりだしました
 今日の　オススメ品！▼
 一見　どこにでも　ある
 可愛らしい　ピッピにんぎょう！▼
@@ -7465,7 +7465,7 @@ BEAUTIFULは　美しいという　意味
 		<comment>内容未定
 ・ランダム表示
 ・担当：穂積</comment>
-		<language name="JPN" width="256">ここに　とりだしました
+		<language name="JPN" width="256">『ここに　とりだしました
 きょうの　オススメひん！▼
 いっけん　どこにでも　ある
 べんりな　むしよけスプレー！▼
@@ -7480,7 +7480,7 @@ BEAUTIFULは　美しいという　意味
 ゴールドスプレーと
 セットで　３５０００００えん！▽
 いまスグ　おでんわを！</language>
-		<language name="JPN_KANJI" width="256">ここに　とりだしました
+		<language name="JPN_KANJI" width="256">『ここに　とりだしました
 今日の　オススメ品！▼
 一見　どこにでも　ある
 便利な　むしよけスプレー！▼
@@ -7501,7 +7501,7 @@ BEAUTIFULは　美しいという　意味
 		<comment>内容未定
 ・ランダム表示
 ・担当：穂積</comment>
-		<language name="JPN" width="256">ここに　とりだしました
+		<language name="JPN" width="256">『ここに　とりだしました
 きょうの　オススメひん！▼
 いっけん　どこにでも　ある
 たびの　おともである　キズぐすり！▼
@@ -7519,7 +7519,7 @@ BEAUTIFULは　美しいという　意味
 ふつうの　キズぐすりと　おトクセットで▽
 な　なんと！　３００００００えんです！▽
 いまスグ　おでんわを！</language>
-		<language name="JPN_KANJI" width="256">ここに　とりだしました
+		<language name="JPN_KANJI" width="256">『ここに　とりだしました
 今日の　オススメ品！▼
 一見　どこにでも　ある
 旅の　お供である　キズぐすり！▼
@@ -7543,7 +7543,7 @@ BEAUTIFULは　美しいという　意味
 		<comment>内容未定
 ・ランダム表示
 ・担当：穂積</comment>
-		<language name="JPN" width="256">ここに　とりだしました
+		<language name="JPN" width="256">『ここに　とりだしました
 きょうの　オススメひん！▼
 いっけん　どこにでも　ある
 この　モンスターボール　ですね▼
@@ -7565,7 +7565,7 @@ BEAUTIFULは　美しいという　意味
 おトク　セットで
 わずか　２０００００００えん！▽
 いまスグ　おでんわを！</language>
-		<language name="JPN_KANJI" width="256">ここに　取り出しました
+		<language name="JPN_KANJI" width="256">『ここに　取り出しました
 今日の　オススメ品！▼
 一見　どこにでも　ある
 この　モンスターボール　ですね▼
@@ -7593,14 +7593,14 @@ BEAUTIFULは　美しいという　意味
 		<comment>内容未定
 ・ランダム表示
 ・担当：穂積</comment>
-		<language name="JPN" width="256">ここに　とりだしました
+		<language name="JPN" width="256">『ここに　とりだしました
 きょうの　オススメひん！▼
 いっけん　どこにでも　ある
-あなぬけヒモ！▼
+あなぬけのヒモ！▼
 でも　ホラッ　みてください
 この　むすびめ！▼
 そうなんです！▼
-ふなのり　しょくにんによって
+ベテランの　ふなのりによって
 きつーーーく　むすばれているんです！▼
 これなら　バッグの　なかで
 ひもが　こんがらがる▽
@@ -7613,14 +7613,14 @@ BEAUTIFULは　美しいという　意味
 あなぬけのヒモとの　おトク　セットで▽
 なんと　３００００００えん！▽
 いまスグ　おでんわを！</language>
-		<language name="JPN_KANJI" width="256">ここに　取り出しました
+		<language name="JPN_KANJI" width="256">『ここに　取り出しました
 今日の　オススメ品！▼
 一見　どこにでも　ある
-あなぬけヒモ！▼
+あなぬけのヒモ！▼
 でも　ホラッ　見てください
 この　結び目！▼
 そうなんです！▼
-船乗り　職人によって
+ベテランの　船乗りによって
 きつーーーく　結ばれているんです！▼
 これなら　バッグの　中で
 ヒモが　こんがらがる▽
