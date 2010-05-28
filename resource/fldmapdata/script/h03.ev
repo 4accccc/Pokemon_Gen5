@@ -66,7 +66,9 @@ INIT_EVENT_START	ev_zone_h03
 			_TRAINER_FLAG_RESET(TRID_BADRIDER_06)
 			
 			//タグにエンペルトを挿入
-			$WK_OTHER_EMPEROR_MONSNUM = MONSNO_395
+			IF $WK_OTHER_EMPEROR_MONSNUM == 0 THEN
+				$WK_OTHER_EMPEROR_MONSNUM = MONSNO_395
+			ENDIF
 			//==============フラグワーク操作==============//
 		
 		ENDIF
