@@ -24,17 +24,6 @@ extern void POKEMON_EGG_Create(
     HEAPID heap_id, const MYSTATUS* mystatus, int memo, 
     const POKEMON_PARAM* poke1, const POKEMON_PARAM* poke2, POKEMON_PARAM* egg );
 
-//---------------------------------------------------------------------------------------- 
-/**
- * @brief タマゴを孵化させる
- *
- * @param egg     孵化させるタマゴ
- * @param owner   タマゴの所持者
- * @param heap_id 使用するヒープID
- */
-//---------------------------------------------------------------------------------------- 
-extern void POKEMON_EGG_Birth( POKEMON_PARAM* egg, const MYSTATUS* owner, HEAPID heap_id );
-
 
 #ifdef PM_DEBUG
 //---------------------------------------------------------------------------------------- 
