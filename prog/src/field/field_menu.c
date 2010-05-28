@@ -1276,7 +1276,7 @@ static void  FIELD_MENU_UpdateKey( FIELD_MENU_WORK* work )
 
   // カーソル非表示モードの場合はキーを入れると表示ONになる
   if( work->isDispCursor == FALSE &&
-      trg != 0 )
+      (trg|repeat) != 0 )
   {
     // メニュー終了
     if( trg & PAD_BUTTON_B || 
