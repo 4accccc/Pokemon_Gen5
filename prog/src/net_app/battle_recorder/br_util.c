@@ -1351,6 +1351,9 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
     for( i = 0; i < BR_PROFILE_MSGWINID_M_MAX; i++ )
     { 
       p_wk->p_msgwin[i]  = BR_MSGWIN_Init( BG_FRAME_M_FONT, sc_msgwin_data[i].x, sc_msgwin_data[i].y, sc_msgwin_data[i].w, sc_msgwin_data[i].h, PLT_BG_M_FONT, p_que, heapID );
+
+      BR_MSGWIN_SetPos( p_wk->p_msgwin[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE );
+
       switch(i)
       { 
       case BR_PROFILE_MSGWINID_M_NAME:   //●●●のプロフィール
@@ -1370,7 +1373,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
           const u32 month = GDS_Profile_GetMonthBirthday( cp_profile );
           p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-          WORDSET_RegisterNumber( p_word, 0, month, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 0, month, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
           GFL_STR_DeleteBuffer( p_src );
         }
