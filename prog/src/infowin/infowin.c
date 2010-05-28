@@ -421,7 +421,8 @@ void  INFOWIN_Update( void )
 
 void  INFOWIN_Exit( void )
 {
-  GF_ASSERT_MSG(infoWk != NULL ,"Infobar is not initialize!!\n");
+  if( infoWk == NULL )
+    return;
 
   GFL_TCB_DeleteTask( infoWk->vblankFunc );
 
