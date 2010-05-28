@@ -4506,7 +4506,7 @@ static int MainSeq_PartyOutPutEnd( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_POKEMOVE_WORK * work;
 			work = syswk->app->vfunk.work;
 			BOX2MAIN_PokeDataMove( syswk );
-			BOX2MAIN_FormChangeSheimi( syswk, work->get_pos, work->put_pos );
+//			BOX2MAIN_FormChangeSheimi( syswk, work->get_pos, work->put_pos );
 			PokeMoveWorkFree( syswk );
 		}
 		BOX2MAIN_PokeInfoOff( syswk );
@@ -4572,7 +4572,7 @@ static int MainSeq_PartyOutPokeChgEnd( BOX2_SYS_WORK * syswk )
 //	PMSND_PlaySE( SE_BOX2_POKE_PUT );
 
 	BOX2MAIN_PokeDataMove( syswk );
-	BOX2MAIN_FormChangeSheimi( syswk, work->get_pos, work->put_pos );
+//	BOX2MAIN_FormChangeSheimi( syswk, work->get_pos, work->put_pos );
 	PokeMoveWorkFree( syswk );
 
 //	BOX2BMP_SysWinVanishEz( syswk->app, BOX2BMPWIN_ID_MSG4 );

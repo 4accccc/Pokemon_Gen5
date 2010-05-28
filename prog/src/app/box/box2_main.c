@@ -1456,6 +1456,8 @@ static void PokeDataBoxMoveParty( BOX2_SYS_WORK * syswk, u32 getPos, u32 putPos 
   // シェイミならフォルムチェンジ
   if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_SHEIMI ){
     PP_ChangeFormNo( pp, FORMNO_SHEIMI_LAND );
+	  ZUKANSAVE_SetPokeSee( GAMEDATA_GetZukanSave(syswk->dat->gamedata), pp );
+		BOX2MAIN_FormChangeRenew( syswk, getPos );
   }
 
   BOXDAT_PutPokemonBox( syswk->dat->sv_box, tray, PP_GetPPPPointerConst(pp) );
@@ -1513,6 +1515,7 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       PokeDataBoxMoveBox( syswk, syswk->get_tray, work->get_pos, work->put_pos-BOX2OBJ_POKEICON_PUT_MAX );
     }else{
       PokeDataBoxMoveParty( syswk, work->get_pos, work->put_pos-BOX2OBJ_POKEICON_PUT_MAX );
+//			BOX2MAIN_FormChangeSheimi( syswk, work->get_pos, u32 a_pos )
     }
     return;
   }
@@ -1532,9 +1535,11 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       if( ( work->put_pos - BOX2OBJ_POKEICON_TRAY_MAX ) < ppcnt ){
         // ボックス・手持ち間の入れ替え
         PokeDataChangeBoxParty( syswk, &dat[0], &dat[1] );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
       }else{
         // ボックスから手持ちへ移動
         PokeDataMoveBOXtoPARTY( syswk, &dat[0] );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
       }
     }
   }else{
@@ -1543,9 +1548,11 @@ void BOX2MAIN_PokeDataMove( BOX2_SYS_WORK * syswk )
       if( BOX2MAIN_PokeParaGet( syswk, work->put_pos, syswk->tray, ID_PARA_poke_exist, NULL ) != 0 ){
         // 手持ち・ボックス間の入れ替え
         PokeDataChangeBoxParty( syswk, &dat[1], &dat[0] );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
       }else{
         // 手持ちからボックスへ移動
         PokeDataMovePARTYtoBOX( syswk, &dat[work->get_pos-BOX2OBJ_POKEICON_TRAY_MAX] );
+				BOX2MAIN_FormChangeSheimi( syswk, work->put_pos, work->get_pos );
       }
     }else{
       if( ( work->put_pos - BOX2OBJ_POKEICON_TRAY_MAX ) < ppcnt ){
