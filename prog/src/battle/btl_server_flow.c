@@ -4391,6 +4391,8 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 
   if( fEnable )
   {
+    BOOL fMigawariHit = FALSE;
+
     switch( category ){
     case WAZADATA_CATEGORY_SIMPLE_DAMAGE:
     case WAZADATA_CATEGORY_DAMAGE_EFFECT_USER:
@@ -4403,6 +4405,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     // タイプによる無効化チェック
     if( fDamage || (category == WAZADATA_CATEGORY_ICHIGEKI) ){
       flowsub_checkWazaAffineNoEffect( wk, wk->wazaParam, attacker, targetRec, &wk->dmgAffRec );
+      fMigawariHit = TRUE;
     }
 
     // 対象ごとの回避チェック->無効チェック（原因表示はその先に任せる）
@@ -4419,7 +4422,7 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     else
     {
       // みがわり除外チェック
-      scproc_MigawariExclude( wk, wk->wazaParam, attacker, targetRec, fDamage );
+      scproc_MigawariExclude( wk, wk->wazaParam, attacker, targetRec, fMigawariHit );
       // ターゲットが残っていない -> 無効イベント呼び出し後終了
       if( BTL_POKESET_IsRemovedAll(targetRec) )
       {
@@ -4530,7 +4533,6 @@ static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
       if( (!fDamage) && (WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru)==FALSE) )
       {
 //      if( scEvent_CheckMigawariExclude(wk, attacker, bpp, wazaParam->wazaID, fDamage) ){
-        TAYA_Printf("DmgFlg=%d, MigawariThru=%d\n", fDamage, WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru));
         BTL_POKESET_Remove( target, bpp );
       }
     }
