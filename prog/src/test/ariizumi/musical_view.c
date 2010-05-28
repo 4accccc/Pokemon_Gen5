@@ -396,13 +396,13 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
   }
   if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
   {
-    work->rot -= 0x200;
+    work->rot -= 0x100;
     MUS_POKE_DRAW_SetRotation( work->pokeWork , work->rot );
     MUS_POKE_DRAW_SetRotation( work->pokeWorkBack , work->rot );
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+  if( GFL_UI_KEY_GetCont() & PAD_KEY_RIGHT )
   {
-    work->rot += 0x200;
+    work->rot += 0x100;
     MUS_POKE_DRAW_SetRotation( work->pokeWork , work->rot );
     MUS_POKE_DRAW_SetRotation( work->pokeWorkBack , work->rot );
   }

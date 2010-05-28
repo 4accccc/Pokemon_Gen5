@@ -10,12 +10,14 @@ FS_EXTERN_OVERLAY(musical);
 static BOOL TESTMODE_ITEM_SelectFuncDressUp( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncStage( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncShot( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_SelectMusicalView( TESTMODE_WORK *work , const int idx );
 
 static TESTMODE_MENU_LIST menuMusical[] = 
 {
 	{L"ドレスアップ"		,TESTMODE_ITEM_SelectFuncDressUp },
 	{L"ステージ"			,TESTMODE_ITEM_SelectFuncStage },
 	{L"ミュージカルショット"			,TESTMODE_ITEM_SelectFuncShot },
+	{L"ミュージカルビュワー"			,TESTMODE_ITEM_SelectMusicalView },
 	
 	{L"もどる"				,TESTMODE_ITEM_BackTopMenu },
 };
@@ -66,7 +68,6 @@ static BOOL TESTMODE_ITEM_SelectDebPokeList( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_SelectDebPokeStatus( TESTMODE_WORK *work , const int idx );
 #if USE_MUSICAL_EDIT
 static BOOL TESTMODE_ITEM_SelectMusicalEditor( TESTMODE_WORK *work , const int idx );
-static BOOL TESTMODE_ITEM_SelectMusicalView( TESTMODE_WORK *work , const int idx );
 #endif //USE_MUSICAL_EDIT
 
 static BOOL TESTMODE_ITEM_SelectDebDebugAriizumi( TESTMODE_WORK *work , const int idx );
