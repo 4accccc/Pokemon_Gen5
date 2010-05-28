@@ -88,6 +88,7 @@ static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param );
 static void monohiroi_mitsuatsume_check( POKEPARTY* ppt );
 static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, BATT_BG_OBONID obonID );
 static BATT_BG_OBONID get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID );
+static void sheimi_zukan_touroku_check( BTLRET_PARAM* param, POKEPARTY* ppt );
 
 /*--------------------------------------------------------------------------*/
 /* Proc Table                                                               */
@@ -209,6 +210,9 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           BATT_BG_OBONID obonID = get_obonID( &param->btlResult->fieldSituation, wk->heapID );
           minomucchi_form_change_check( param, party, obonID );
         }
+
+        //シェイミ図鑑登録チェック
+        sheimi_zukan_touroku_check( param, party );
 
         // おこづかい増やす
         if( param->btlResult->getMoney > 0 ){
@@ -621,5 +625,37 @@ static  BATT_BG_OBONID  get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID )
     GFL_HEAP_FreeMemory( bbtzst );
 
     return  obonID;
+}
+
+//============================================================================================
+/**
+ *  シェイミ図鑑登録チェック
+ *
+ *  スカイフォルムで戦闘に参加して戦闘中にランドフォルムに戻ったときに図鑑登録をする処理
+ */
+//============================================================================================
+static void sheimi_zukan_touroku_check( BTLRET_PARAM* param, POKEPARTY* ppt )
+{
+  int i;
+
+  //野生戦、トレーナー戦以外では登録チェックしない
+  if( ( param->btlResult->competitor != BTL_COMPETITOR_WILD ) &&
+      ( param->btlResult->competitor != BTL_COMPETITOR_TRAINER ) )
+  {
+    return;
+  }
+
+  for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
+  {
+    if( param->btlResult->fightPokeIndex[ i ] )
+    {
+      POKEMON_PARAM* pp = PokeParty_GetMemberPointer( ppt, i );
+      if( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_SHEIMI ) 
+      { 
+        ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( param->gameData );
+        ZUKANSAVE_SetPokeSee( zukan_savedata, pp );  // 見た  // 図鑑フラグをセットする
+      }
+    }
+  }
 }
 
