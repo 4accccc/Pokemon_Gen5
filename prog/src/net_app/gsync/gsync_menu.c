@@ -405,10 +405,17 @@ static void _modeFadeoutStart(GAMESYNC_MENU* pWork)
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
-  if(GFL_NET_IsInit()){
-    GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
-  }
 
+  switch(pWork->selectType){
+  case GAMESYNC_RETURNMODE_SYNC:
+  case GAMESYNC_RETURNMODE_UTIL:
+    if(GFL_NET_IsInit()){
+      GameCommSys_ExitReq( GAMESYSTEM_GetGameCommSysPtr(pWork->gsys) );
+    }
+    break;
+  default:
+    break;
+  }
 
   _CHANGE_STATE(pWork, _modeFadeout);        // èIÇÌÇË
 }

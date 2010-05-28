@@ -269,6 +269,7 @@ static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
 static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork);
 static void _infoMessageDisp(IRC_BATTLE_MENU* pWork);
 static void _hitAnyKeyWaitMode(IRC_BATTLE_MENU* pWork);
+static void _modeTemotiOrBoxInit(IRC_BATTLE_MENU* pWork);
 
 
 
@@ -1066,7 +1067,18 @@ static void _modeAppWinFlashCallback2(u32 param, fx32 currentFrame )
   IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
 
   if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_MULTH){
+#if 1
+    BATTLE_BOX_SAVE* bxsv;
+    bxsv = BATTLE_BOX_SAVE_GetBattleBoxSave(pWork->dbw->ctrl);
+    if(BATTLE_BOX_SAVE_IsIn(bxsv)){
+      _CHANGE_STATE(pWork, _modeTemotiOrBoxInit);
+    }
+    else{
+      _CHANGE_STATE(pWork, _modeFadeoutStart); //BBOXに何もなければ開始
+    }
+#else
     _CHANGE_STATE(pWork, _modeFadeoutStart);
+#endif
   }
   else{
     _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);        // バトルモード
@@ -1212,9 +1224,21 @@ static void _modeTemotiOrBoxButtonCallback2(u32 param, fx32 currentFrame )
   IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
 
 
+
+
+  
   if(pWork->bBattelBox == _SELECTPOKE_EXIT){
-    
+#if 1
+    if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_MULTH){
+      _CHANGE_STATE(pWork, _modeSelectEntryNumInit);  //バトルモード
+    }
+    else
+    {
+      _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);  //人数選択にもどる
+    }
+#else
     _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);  //人数選択にもどる
+#endif
   }
   else{
     _CHANGE_STATE(pWork, _modeFadeoutStart);
