@@ -1186,19 +1186,19 @@ EVENT_START	ev_pos_c04_btlrec_get
 	_BALLOONWIN_OBJMSG_POS( msg_c04_trainerw_01, MMDL_ID_EVENTOBJ_00, POS_DEFAULT )
 	_MSGWIN_CLOSE()
 	
-	//謎の女性：階段を下りて
-	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_btlrec_trainerw_move_02 )
-	
+	//主人公：道をあける
 	_PLAYER_POS_GET( lwk_x, lwk_z )
 	IF $lwk_x == 421 THEN
-		_TIME_WAIT( 8 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btlrec_player_move_01a )
 	ELSIF $lwk_x == 422 THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btlrec_player_move_01b )
-	ELSE
 		_TIME_WAIT( 8 )
+	ELSE
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_btlrec_player_move_01c )
 	ENDIF
+	//謎の女性：階段を下りて
+	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_btlrec_trainerw_move_02 )
+	
 	_OBJ_ANIME_WAIT()
 	
 	//このギアステーションには
@@ -1269,6 +1269,7 @@ _ANIME_LABEL	anm_btlrec_trainerw_move_02
 //主人公：謎の女性を見て
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_btlrec_player_move_01a
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_STAY_WALK_R_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -1280,6 +1281,7 @@ _ANIME_LABEL	anm_btlrec_player_move_01b
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_btlrec_player_move_01c
+	_ANIME_DATA	AC_WAIT_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
