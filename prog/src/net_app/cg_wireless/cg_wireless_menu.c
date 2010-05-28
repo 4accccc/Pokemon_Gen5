@@ -1611,8 +1611,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
 
-  GAMESYSTEM_CommBootAlways( pWork->gsys );
-  
+  if((pWork->selectType != CG_WIRELESS_RETURNMODE_TV) && (pWork->selectType != CG_WIRELESS_RETURNMODE_PALACE)){
+    GAMESYSTEM_CommBootAlways( pWork->gsys );
+  }
   return retCode;
 }
 
