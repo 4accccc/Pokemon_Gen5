@@ -39,7 +39,7 @@
 #include "btl_server_flow_def.h"
 #include "btl_server_flow_sub.h"
 
-#include "btl_server_flow_local.h"
+
 
 
 /*--------------------------------------------------------------------------*/
@@ -57,6 +57,9 @@ static BTL_POKEPARAM* get_opponent_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos po
 static BTL_POKEPARAM* get_next_pokeparam( BTL_SVFLOW_WORK* wk, BtlPokePos pos );
 static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u8 defaultTargetPokeID );
+static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
+static inline u32 _calc_adjust_level_sub( u32 val );
+static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke );
 
 
 
@@ -558,4 +561,306 @@ static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
     return pokeID;
   }
   return BTL_POKEID_NULL;
+}
+
+
+
+
+//----------------------------------------------------------------------------------
+/**
+ * 経験値計算結果を専用ワークに出力
+ *
+ * @param   wk
+ * @param   party     プレイヤー側パーティ
+ * @param   deadPoke  しんだポケモン
+ * @param   result    [out] 計算結果格納先
+ */
+//----------------------------------------------------------------------------------
+void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result )
+{
+  u32 baseExp = BTL_CALC_CalcBaseExp( deadPoke );
+  u16 memberCount  = BTL_PARTY_GetMemberCount( party );
+  u16 gakusyuCount = 0;
+
+  const BTL_POKEPARAM* bpp;
+  u16 i;
+
+  // トレーナー戦は1.5倍
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER ){
+    baseExp = (baseExp * 15) / 10;
+  }
+
+  // ワーククリア
+  for(i=0; i<BTL_PARTY_MEMBER_MAX; ++i){
+    GFL_STD_MemClear( &result[i], sizeof(CALC_EXP_WORK) );
+  }
+
+  // がくしゅうそうち分の経験値計算
+  for(i=0; i<memberCount; ++i)
+  {
+    // がくしゅうそうちを装備しているポケモンが対象
+    bpp = BTL_PARTY_GetMemberDataConst( party, i );
+    if( !BPP_IsDead(bpp)
+    &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
+    ){
+      ++gakusyuCount;
+    }
+  }
+  if( gakusyuCount )
+  {
+    u32 gakusyuExp = (baseExp / 2);
+    baseExp -= gakusyuExp;
+
+    gakusyuExp /= gakusyuCount;
+    if( gakusyuExp == 0 ){
+      gakusyuExp = 1;
+    }
+
+    for(i=0; i<memberCount; ++i)
+    {
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      if( !BPP_IsDead(bpp)
+      &&  (BPP_GetItem(bpp) == ITEM_GAKUSYUUSOUTI)
+      ){
+        result[i].exp = gakusyuExp;
+      }
+    }
+  }
+
+  BTL_N_Printf( DBGSTR_SVFL_ExpCalc_Base, baseExp );
+
+
+  // 対戦経験値取得
+  {
+    u8 confrontCnt = BPP_CONFRONT_REC_GetCount( deadPoke );
+    u8 aliveCnt = 0;
+    u8 pokeID;
+
+    u32 addExp;
+
+    for(i=0; i<confrontCnt; ++i)
+    {
+      pokeID = BPP_CONFRONT_REC_GetPokeID( deadPoke, i );
+      bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+      if( !BPP_IsDead(bpp) ){
+        ++aliveCnt;
+      }
+    }
+    BTL_N_Printf( DBGSTR_SVFL_ExpCalc_MetInfo, BPP_GetID(deadPoke), confrontCnt, aliveCnt);
+
+    addExp = baseExp / aliveCnt;
+    if( addExp == 0 ){
+      addExp = 1;
+    }
+
+    for(i=0; i<memberCount; ++i)
+    {
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      if( !BPP_IsDead(bpp) )
+      {
+        u8 j;
+        pokeID = BPP_GetID( bpp );
+        for(j=0; j<confrontCnt; ++j)
+        {
+          if( BPP_CONFRONT_REC_GetPokeID(deadPoke, j) == pokeID ){
+            BTL_N_Printf( DBGSTR_SVFL_ExpCalc_DivideInfo, i, addExp);
+            result[i].exp += addExp;
+          }
+        }
+      }
+    }
+  }
+
+  // ボーナス計算
+  for(i=0; i<memberCount; ++i)
+  {
+    if( result[i].exp )
+    {
+      const MYSTATUS* status = BTL_MAIN_GetPlayerStatus( wk->mainModule );
+      const POKEMON_PARAM* pp;
+      u16 myLv, enemyLv;
+      bpp = BTL_PARTY_GetMemberDataConst( party, i );
+      pp = BPP_GetSrcData( bpp );
+
+      // 倒したポケとのレベル差によって経験値が増減する（WBから追加された仕様）
+      myLv = BPP_GetValue( bpp, BPP_LEVEL );
+      enemyLv = BPP_GetValue( deadPoke, BPP_LEVEL );
+      result[i].exp = getexp_calc_adjust_level( bpp, result[i].exp, myLv, enemyLv );
+
+      // 他人が親ならボーナス
+      if( !PP_IsMatchOya(pp, status) )
+      {
+        // 外国の親ならx1.7，そうじゃなければx1.5
+        fx32 ratio;
+        ratio = ( PP_Get(pp, ID_PARA_country_code, NULL) != MyStatus_GetRegionCode(status) )?
+            FX32_CONST(1.7f) : FX32_CONST(1.5f);
+
+        result[i].exp = BTL_CALC_MulRatio( result[i].exp, ratio );
+        result[i].fBonus = TRUE;
+      }
+
+      // しあわせタマゴ持ってたらボーナス x1.5
+      if( BPP_GetItem(bpp) == ITEM_SIAWASETAMAGO ){
+        result[i].exp = BTL_CALC_MulRatio( result[i].exp, FX32_CONST(1.5f) );
+        result[i].fBonus = TRUE;
+      }
+
+      // Ｇパワー補正
+      result[i].exp = GPOWER_Calc_Exp( result[i].exp );
+
+      BTL_N_Printf( DBGSTR_SVFL_ExpCalc_Result, i, result[i].exp);
+    }
+  }
+
+  // 努力値計算
+  for(i=0; i<memberCount; ++i)
+  {
+    if( result[i].exp )
+    {
+      BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, i );
+      PutDoryokuExp( bpp, deadPoke );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 倒されたポケモンと経験値を取得するポケモンのレベル差に応じて経験値を補正する（ＷＢより）
+ *
+ * @param   base_exp      基本経験値（GSまでの仕様による計算結果）
+ * @param   getpoke_lv    経験値を取得するポケモンのレベル
+ * @param   deadpoke_lv   倒されたポケモンのレベル
+ *
+ * @retval  u32   補正後経験値
+ */
+//----------------------------------------------------------------------------------
+static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )
+{
+  u32 denom, numer;
+  fx32 ratio;
+  u32  denom_int, numer_int, result, expMargin;
+
+  numer_int = deadpoke_lv * 2 + 10;
+  denom_int = deadpoke_lv + getpoke_lv + 10;
+
+  numer = _calc_adjust_level_sub( numer_int );
+  denom = _calc_adjust_level_sub( denom_int );
+  ratio = FX32_CONST(numer) / denom;
+
+  result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
+  expMargin = BPP_GetExpMargin( bpp );
+  if( result > expMargin ){
+    result = expMargin;
+  }
+
+  BTL_N_Printf( DBGSTR_SVFL_ExpAdjustCalc,
+      getpoke_lv, deadpoke_lv, ratio, base_exp, result );
+
+  return result;
+}
+/**
+ *  経験値補正計算サブ(2.5乗）
+ */
+static inline u32 _calc_adjust_level_sub( u32 val )
+{
+  fx32  fx_val, fx_sqrt;
+  u64 result;
+
+  fx_val = FX32_CONST( val );
+  fx_sqrt = FX_Sqrt( fx_val );
+  val *= val;
+  result = (val * fx_sqrt) >> FX32_SHIFT;
+
+  return result;
+}
+/**
+ *  努力値計算、結果をSrcデータに反映させる
+ */
+static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
+{
+  /**
+   *  ステータスIndex
+   */
+  enum {
+    _HP = 0,
+    _POW,
+    _DEF,
+    _AGI,
+    _SPOW,
+    _SDEF,
+    _PARAM_MAX,
+  };
+
+  /**
+   *  関連パラメータ（上記ステータスIndex順）
+   */
+  static const struct {
+    u8   personalParamID;   ///< パーソナル贈与努力値ID
+    u16  pokeParamID;       ///< POKEMON_PARAM 努力値ID
+    u16  boostItemID;       ///< 努力値加算アイテムID
+  }RelationTbl[] = {
+
+    { POKEPER_ID_pains_hp,      ID_PARA_hp_exp,     ITEM_PAWAAUEITO   },  // HP
+    { POKEPER_ID_pains_pow,     ID_PARA_pow_exp,    ITEM_PAWAARISUTO  },  // 攻撃
+    { POKEPER_ID_pains_def,     ID_PARA_def_exp,    ITEM_PAWAABERUTO  },  // 防御
+    { POKEPER_ID_pains_agi,     ID_PARA_agi_exp,    ITEM_PAWAAANKURU  },  // 素早さ
+    { POKEPER_ID_pains_spepow,  ID_PARA_spepow_exp, ITEM_PAWAARENZU   },  // 特攻
+    { POKEPER_ID_pains_spedef,  ID_PARA_spedef_exp, ITEM_PAWAABANDO   },  // 特防
+
+  };
+
+  u16 mons_no = BPP_GetMonsNo( deadPoke );
+  u16 form_no = BPP_GetValue( deadPoke, BPP_FORM );
+
+  u8  exp[ _PARAM_MAX ];
+  u8  i;
+
+  // 基本努力値をパーソナルから取得
+  for(i=0; i<_PARAM_MAX; ++i){
+    exp[ i ] = POKETOOL_GetPersonalParam( mons_no, form_no, RelationTbl[i].personalParamID );
+  }
+
+  // きょうせいギプスで倍
+  if( BPP_GetItem(bpp) == ITEM_KYOUSEIGIPUSU )
+  {
+    for(i=0; i<_PARAM_MAX; ++i){
+      exp[ i ] *= 2;
+    }
+  }
+
+  // 各種、努力値増加アイテム分を加算
+  for(i=0; i<_PARAM_MAX; ++i)
+  {
+    if( BPP_GetItem(bpp) == RelationTbl[i].boostItemID ){
+      exp[ i ] += BTL_CALC_ITEM_GetParam( RelationTbl[i].boostItemID, ITEM_PRM_ATTACK );
+    }
+  }
+
+  // Srcデータに反映
+  {
+    POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
+    BOOL fFastMode = PP_FastModeOn( pp );
+
+      // ポケルスで倍
+      if( PP_Get(pp, ID_PARA_pokerus, NULL) )
+      {
+        for(i=0; i<_PARAM_MAX; ++i){
+          exp[ i ] *= 2;
+        }
+      }
+
+      // 努力値合計を取得
+      for(i=0; i<_PARAM_MAX; ++i)
+      {
+        if( exp[i] )
+        {
+          u32 sum = exp[i] + PP_Get( pp, RelationTbl[i].pokeParamID, NULL );
+          if( sum > PARA_EXP_MAX ){
+            sum = PARA_EXP_MAX;
+          }
+          PP_Put( pp, RelationTbl[i].pokeParamID, sum );
+        }
+      }
+
+    PP_FastModeOff( pp, fFastMode );
+  }
 }

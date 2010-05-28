@@ -9,6 +9,14 @@
 //=============================================================================================
 #pragma once
 
+#include "btl_server_flow_local.h"
+
 extern u8 BTL_SVFSUB_RegisterTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BtlPokePos targetPos,
   const SVFL_WAZAPARAM* wazaParam, BTL_POKESET* rec );
+
+
+/**
+ *  レベルアップ計算
+ */
+extern void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPARAM* deadPoke, CALC_EXP_WORK* result );
 
