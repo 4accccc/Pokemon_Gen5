@@ -2323,7 +2323,7 @@ static  VMCMD_RESULT  AI_ESCAPE( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_ESCAPE\n");
 #endif
 
-  taw->status_flag |= ( AI_STATUSFLAG_ESCAPE | AI_STATUSFLAG_END );
+  taw->status_flag |= AI_STATUSFLAG_ESCAPE;
 
   return taw->vmcmd_result;
 }
