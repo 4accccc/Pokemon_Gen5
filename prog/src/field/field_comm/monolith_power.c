@@ -1303,7 +1303,9 @@ static BOOL _ScrollSpeedUpdate(MONOLITH_APP_PARENT *appwk, MONOLITH_PWSELECT_WOR
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE){
         _SetCursorPos(mpw, mpw->cursor_pos, _SET_CURSOR_MODE_KEY);
         GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-        PMSND_PlaySE(MONOLITH_SE_DECIDE);
+        if(mpw->use_power[mpw->cursor_pos] == MONO_USE_POWER_OK){
+          PMSND_PlaySE(MONOLITH_SE_DECIDE);
+        }
         return TRUE;
       }
       else if(GFL_UI_KEY_GetRepeat() & PAD_KEY_UP){
