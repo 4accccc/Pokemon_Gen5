@@ -597,6 +597,7 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
 	switch( *seq ){
   case SEQ_INIT:
     WORDSET_RegisterPlayerName( work->iem.wordset, 0, GAMEDATA_GetMyStatus(gamedata) );
+    WORDSET_RegisterItemName( work->wordset, 1, work->itemdata.item );
     IntrudeEventPrint_StartStream(&work->iem, MissionSecretItemMsgID.arrival[MISSION_FIELD_GetTalkType(intcomm, GAMEDATA_GetIntrudeMyID(gamedata))]);
     (*seq)++;
     break;
