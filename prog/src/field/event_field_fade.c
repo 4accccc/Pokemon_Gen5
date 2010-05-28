@@ -1692,8 +1692,10 @@ static GMEVENT_RESULT FlySkyBrightInEvent( GMEVENT* event, int* seq, void* wk )
 static void ResetFieldBG( FIELDMAP_WORK* fieldmap )
 {
   int mv = GFL_DISP_GetMainVisible();
+	int	sv = GFL_DISP_GetSubVisible();
   FIELDMAP_InitBGMode();
   GFL_DISP_GX_SetVisibleControlDirect( mv );
+	GFL_DISP_GXS_SetVisibleControlDirect( sv );
 }
 //--------------------------------------------------------------------------------------------
 /**
