@@ -4308,26 +4308,22 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   case BMPMENULIST_CANCEL:
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
-//    PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
     _windelandSEcall(wk);
     FriendRequestWaitOff(wk);
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
-//    PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     _windelandSEcall(wk);
     _battleCustomSelectMenu(wk,TRUE);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE2);
     return seq;
   case WIFI_GAME_VCT:
     if( !wk->pParentWork->vchatMain ){
- //     PMSND_PlaySystemSE(SEQ_SE_BEEP);
       return seq;
     }
     else{
-   //   PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
     }
     break;
   case WIFI_GAME_TRADE:
@@ -4343,24 +4339,22 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     else{
 //     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
     }
     break;
   case WIFI_GAME_TVT:
     if( !wk->pParentWork->vchatMain ){
- //     PMSND_PlaySystemSE(SEQ_SE_BEEP);
       return seq;
     }
     else{
- //     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
     }
     break;
   }
   WifiP2PMatch_CommWifiBattleStart( wk, -1 );
   _myStatusChange(wk, WIFI_STATUS_RECRUIT, ret );
-  if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST ){
+  if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST_MW ){
     FriendRequestWaitOn( wk, TRUE );       // ìÆçÏí‚é~Ç≥ÇπÇÈ
   }
   return seq;
