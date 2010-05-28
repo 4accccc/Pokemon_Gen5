@@ -2254,8 +2254,7 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
 
   if(intsub->event_req != _EVENT_REQ_NO_NULL || intsub->wfbc_go == TRUE 
       || GFL_UI_TP_GetPointTrg(&x, &y) == FALSE 
-      || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE
-      || _TutorialMissionNoRecv(intsub) == TRUE){
+      || FIELD_SUBSCREEN_GetAction( subscreen ) != FIELD_SUBSCREEN_ACTION_NONE){
     return;
   }
   
@@ -2289,6 +2288,10 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
         }
       }
     }
+  }
+  
+  if(_TutorialMissionNoRecv(intsub) == TRUE){
+    return; //チュートリアル中でミッションしていないならここまで。
   }
 
   //街タッチ判定
