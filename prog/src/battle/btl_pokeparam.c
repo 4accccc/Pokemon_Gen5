@@ -1265,6 +1265,29 @@ int BPP_GetValue_Base( const BTL_POKEPARAM* bpp, BppValueID vid )
 }
 //=============================================================================================
 /**
+ * srcPPの各パラメータ取得（レベルアップ表示用）
+ *
+ * @param   bpp
+ * @param   info
+ */
+//=============================================================================================
+void BPP_GetPPStatus( const BTL_POKEPARAM* bpp, BTL_LEVELUP_INFO* info )
+{
+  u8 fastFlag = PP_FastModeOn( bpp->coreParam.ppSrc );
+
+  info->hp     = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hp, 0 );
+  info->atk    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
+  info->def    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
+  info->sp_atk = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
+  info->sp_def = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spedef, 0 );
+  info->agi    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_agi, 0 );
+
+  PP_FastModeOff( bpp->coreParam.ppSrc, fastFlag );
+
+}
+
+//=============================================================================================
+/**
  * 能力値を書き換え
  *
  * @param   bpp
@@ -2951,13 +2974,6 @@ BOOL BPP_AddExp( BTL_POKEPARAM* bpp, u32* expRest, BTL_LEVELUP_INFO* info )
         bpp->baseParam.sp_attack  = info->sp_atk;
         bpp->baseParam.sp_defence = info->sp_def;
         bpp->baseParam.agility    = info->agi;
-      }
-      else{
-        bpp->baseParam.attack     += (info->atk - atk);
-        bpp->baseParam.defence    += (info->def - def);
-        bpp->baseParam.sp_attack  += (info->sp_atk - sp_atk);
-        bpp->baseParam.sp_defence += (info->sp_def - sp_def);
-        bpp->baseParam.agility    += (info->agi - agi);
       }
 
       info->level  = bpp->coreParam.level;

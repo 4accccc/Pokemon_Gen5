@@ -233,7 +233,7 @@ struct _BTLV_SCU {
   MSGWIN_VISIBLE   msgwinVisibleWork;
 
   const BTL_POKEPARAM*    lvupBpp;
-  const BTL_LEVELUP_INFO* lvupInfo;
+  BTL_LEVELUP_INFO lvupInfo;
 };
 
 /*--------------------------------------------------------------------------*/
@@ -4034,7 +4034,7 @@ BOOL BTLV_SCU_RecPlayFadeIn_Wait( BTLV_SCU* wk )
 void BTLV_SCU_LvupWin_StartDisp( BTLV_SCU* wk, const BTL_POKEPARAM* bpp, const BTL_LEVELUP_INFO* lvupInfo )
 {
   wk->lvupBpp = bpp;
-  wk->lvupInfo = lvupInfo;
+  wk->lvupInfo = *lvupInfo;
 
   BTL_UTIL_SetupProc( &wk->proc, wk, NULL, lvupWinProc_Disp );
 }
@@ -4104,8 +4104,8 @@ static BOOL lvupWinProc_Disp( int* seq, void* wk_adrs )
 
   case 1:
     BTL_STR_MakeString_LvupInfo_Diff( wk->strBufMain,
-      wk->lvupInfo->hp, wk->lvupInfo->atk, wk->lvupInfo->def, wk->lvupInfo->sp_atk,
-      wk->lvupInfo->sp_def, wk->lvupInfo->agi );
+      wk->lvupInfo.hp, wk->lvupInfo.atk, wk->lvupInfo.def, wk->lvupInfo.sp_atk,
+      wk->lvupInfo.sp_def, wk->lvupInfo.agi );
 
     PRINTSYS_Print( wk->lvupBmp, 0, 0, wk->strBufMain, wk->defaultFont );
     (*seq)++;
@@ -4137,14 +4137,11 @@ static BOOL lvupWinProc_Fwd( int* seq, void* wk_adrs )
   switch( *seq ){
   case 0:
     {
-      u16 hp     = BPP_GetValue_Base( wk->lvupBpp, BPP_MAX_HP );
-      u16 atk    = BPP_GetValue_Base( wk->lvupBpp, BPP_ATTACK );
-      u16 def    = BPP_GetValue_Base( wk->lvupBpp, BPP_DEFENCE );
-      u16 sp_atk = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_ATTACK );
-      u16 sp_def = BPP_GetValue_Base( wk->lvupBpp, BPP_SP_DEFENCE );
-      u16 agi    = BPP_GetValue_Base( wk->lvupBpp, BPP_AGILITY );
+      BPP_GetPPStatus( wk->lvupBpp, &wk->lvupInfo );
 
-      BTL_STR_MakeString_LvupInfo_Param( wk->strBufMain, hp, atk, def, sp_atk, sp_def, agi );
+      BTL_STR_MakeString_LvupInfo_Param( wk->strBufMain,
+        wk->lvupInfo.hp, wk->lvupInfo.atk, wk->lvupInfo.def,
+        wk->lvupInfo.sp_atk, wk->lvupInfo.sp_def, wk->lvupInfo.agi );
       GFL_BMP_Clear( wk->lvupBmp, COLIDX_LVUPWIN_CLEAR );
       PRINTSYS_Print( wk->lvupBmp, 0, 0, wk->strBufMain, wk->defaultFont );
       (*seq)++;

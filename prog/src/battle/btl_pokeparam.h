@@ -274,6 +274,8 @@ extern u8 BPP_WAZA_GetPPShort_Org( const BTL_POKEPARAM* bpp, u8 idx );
 extern int BPP_GetValue( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BPP_GetValue_Base( const BTL_POKEPARAM* pp, BppValueID vid );
 extern int BPP_GetValue_Critical( const BTL_POKEPARAM* pp, BppValueID vid );
+extern void BPP_GetPPStatus( const BTL_POKEPARAM* bpp, BTL_LEVELUP_INFO* info );
+
 
 extern BOOL BPP_IsDead( const BTL_POKEPARAM* pp );
 extern BOOL BPP_IsFightEnable( const BTL_POKEPARAM* bpp );
