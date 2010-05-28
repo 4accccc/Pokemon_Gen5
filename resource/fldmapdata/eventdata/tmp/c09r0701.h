@@ -13,6 +13,7 @@
 #define C09R0701_SHOPM1_01                 1
 #define C09R0701_PCWOMAN1_01               2
 #define C09R0701_SHOPM1_02                 3
+#define C09R0701_DELIVERY                  4
 
 #endif //ZONE_C09R0701_EVC_H
 //‚±‚Ìƒtƒ@ƒCƒ‹‚Í../data/c09r0701.mev‚©‚ç©“®¶¬‚³‚ê‚Ü‚µ‚½

@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/28 17:05:13
+#save date:2010/05/28 17:46:44
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c02pc0101.wms
 #SECTION START:OBJ_EVENT
@@ -274,7 +274,7 @@ FV_POSTMAN
 #Event Script Name
 SCRID_POSTMAN
 #Direction Type Number
-DIR_DOWN
+DIR_RIGHT
 #Parameter 0 Number
 0
 #Parameter 1 Number
@@ -288,7 +288,7 @@ DIR_DOWN
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--136 0 24
+-168 0 -40
 #event number: 9
 #type
 1
