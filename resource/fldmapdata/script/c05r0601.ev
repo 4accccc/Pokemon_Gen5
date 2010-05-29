@@ -228,20 +228,26 @@ EVENT_START   ev_c05r0601_waitress_01
 
 		
 		IF $LWK_BAG_CHK == 0 THEN 
+			_GOLD_WIN_CLOSE()
+			
 		 	_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_03 , C05R0601_WAITRESS_01, POS_DL )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
-			
-			_GOLD_WIN_CLOSE()
 		
 		ELSIF $LWK_GOLD_CHK == 0 THEN
+			_GOLD_WIN_CLOSE()
+			
 		 	_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_04 , C05R0601_WAITRESS_01, POS_DL )
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()		
 			
-			_GOLD_WIN_CLOSE()
-			
+		//購入できた
 		ELSE
+			//レジ音再生
+			_SE_PLAY( SEQ_SE_SYS_22 )		
+			_SUBTRACT_GOLD( LWK_MILK_GOLD )
+			_GOLD_WIN_UPDATE()
+			_SE_WAIT()
 			
 			IF $LWK_MILK_NUM == 1 THEN
 		 		_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_02 , C05R0601_WAITRESS_01, POS_DL )
@@ -253,16 +259,7 @@ EVENT_START   ev_c05r0601_waitress_01
 
 			ENDIF
 			
-			//レジ音再生
-			_SE_PLAY( SEQ_SE_SYS_22 )		
-			_SUBTRACT_GOLD( LWK_MILK_GOLD )
-			_GOLD_WIN_UPDATE()
-			
-			_SE_WAIT()
-			
-			//GOLDWINが即座に消えないための間
-			_TIME_WAIT(30)
-			
+			//金額ウィンドウを消す
 			_GOLD_WIN_CLOSE()
 			
 			_ITEM_EVENT_SUCCESS_NOWAIT( ITEM_MOOMOOMIRUKU, LWK_MILK_NUM )
@@ -271,10 +268,11 @@ EVENT_START   ev_c05r0601_waitress_01
 	
 	//モーモーミルクを買わない場合の処理
 	ELSE
+		_GOLD_WIN_CLOSE()	
+		
 		_BALLOONWIN_OBJMSG_POS( msg_c05r0601_waitress_05  , C05R0601_WAITRESS_01, POS_DL )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
-		_GOLD_WIN_CLOSE()	
 		
 	ENDIF
 	
