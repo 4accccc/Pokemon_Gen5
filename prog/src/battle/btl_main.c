@@ -292,8 +292,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fMoneyDblUp = FALSE;
       wk->MultiAIClientNum = 0;
 
-      TAYA_Printf("musicDef=%d, musicWin=%d\n", setup_param->musicDefault, setup_param->musicWin );
-
       Kentei_ClearField( wk->setupParam );
 
       wk->ppIllusionZoroArc = NULL;
@@ -601,8 +599,6 @@ static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID )
   BTL_TRAINER_DATA* trParam;
   u8 relation_clientID = CommClientRelation( wk->myClientID, clientID );
 
-  TAYA_Printf("自分ClientID=%d, リクエストID=%d, relationID=%d\n", wk->myClientID, clientID, relation_clientID );
-
   trParam = &(wk->trainerParam[clientID]);
 
   if( sp->tr_data[relation_clientID]->tr_id != TRID_NULL ){
@@ -886,6 +882,8 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
     break;
 
   case BTL_MULTIMODE_PA_AA: // AIマルチ
+  case BTL_MULTIMODE_PP_PP: // 通信マルチ
+  case BTL_MULTIMODE_PP_AA: // 通信タッグマルチ
     wk->posCoverClientID[BTL_POS_1ST_1] = BTL_CLIENT_PARTNER;
     wk->posCoverClientID[BTL_POS_2ND_1] = BTL_CLIENT_ENEMY2;
     wk->numClients = 4;
@@ -4810,21 +4808,17 @@ u32 BTL_MAIN_GetClientAIBit( const BTL_MAIN_MODULE* wk, u8 clientID )
   if( BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_WILD )
   {
     if( BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_MOVE_POKE) ){
-      TAYA_Printf("移動ポケAI\n");
       return AI_THINK_BIT_MV_POKE;
     }
     else if( BTL_MAIN_GetRule(wk) == BTL_RULE_DOUBLE )
     {
-      TAYA_Printf("野生ダブルAI\n");
       return AI_THINK_BIT_DOUBLE;
     }
   }
   else if( BTL_MAIN_IsClientNPC(wk, clientID) )
   {
-    TAYA_Printf("NPC-AI\n");
     return wk->trainerParam[ clientID ].ai_bit;
   }
-  TAYA_Printf("AIなんもなし\n");
   return 0x00;
 }
 
