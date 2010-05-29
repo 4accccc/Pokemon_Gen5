@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-29T17:08:34"/>
+	<create user="iwasawa" host="W00157" date="2010-05-29T22:10:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,6 +362,10 @@
 		<language name="JPN" width="256">とくせい</language>
 	</row>
 
+	<row id="DMPSTR_TOKUSEI_3RD">
+		<language name="JPN" width="256">T3</language>
+	</row>
+
 	<row id="DMPSTR_JOUTAI">
 		<language name="JPN" width="256">びょうき</language>
 	</row>
@@ -680,6 +684,22 @@
 
 	<row id="DMPSTR_COUNTRY_06">
 		<language name="JPN" width="256">かんこく</language>
+	</row>
+
+	<row id="DMPSTR_SPEABI_01">
+		<language name="JPN" width="256">とくせい１</language>
+	</row>
+
+	<row id="DMPSTR_SPEABI_02">
+		<language name="JPN" width="256">とくせい２</language>
+	</row>
+
+	<row id="DMPSTR_SPEABI_03">
+		<language name="JPN" width="256">とくせい３</language>
+	</row>
+
+	<row id="DMPSTR_SPEABI_04">
+		<language name="JPN" width="256">とくせいＣ</language>
 	</row>
 
 	<row id="DMPSTR_GET_PLACE">

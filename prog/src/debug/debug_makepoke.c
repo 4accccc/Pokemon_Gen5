@@ -207,6 +207,9 @@ static u8 casetteVer_formal_to_local( u8 val );
 static u8 casetteVer_local_to_formal( u8 val );
 static u8 countryCode_formal_to_local( u8 val );
 static u8 countryCode_local_to_formal( u8 value );
+static u8 personalSpeabi_formal_to_local( const POKEMON_PARAM* pp, u8 val );
+static u8 personalSpeabi_local_to_formal( const POKEMON_PARAM* pp, u8 value );
+static void personalSpeabi_3rd_flag_set( POKEMON_PARAM* pp );
 
 //--------------------------------------------------------------
 /**
@@ -865,7 +868,10 @@ static void update_dst( DMP_MAINWORK* wk )
     PP_Put( wk->dst, ID_PARA_exp, exp );
   }
 
+  // 特性
   PP_Put( wk->dst, ID_PARA_speabino, tokusei );
+  personalSpeabi_3rd_flag_set( wk->dst );
+
   {
     u32 i;
     for(i=0; i<PTL_WAZA_MAX; ++i)
@@ -1113,6 +1119,14 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     value = countryCode_formal_to_local( PP_Get(pp, p->paraID, NULL) );
     break;
 
+  case ID_PARA_speabino:
+    if( boxID == INPUTBOX_ID_TOKUSEI_SWITCH ){
+      value = personalSpeabi_formal_to_local( pp, PP_Get(pp, p->paraID, NULL) );
+    }else{
+      value = PP_Get( pp, p->paraID, NULL );
+    }
+    break;
+
   default:
     if( boxID == INPUTBOX_ID_RARE ){
       value = PP_CheckRare( pp );
@@ -1230,6 +1244,17 @@ static void pp_update( DMP_MAINWORK* wk, u32 boxID, u32 value )
     PP_Put( wk->dst, p->paraID, value );
     break;
 
+  case INPUTBOX_ID_TOKUSEI_SWITCH:
+    value = personalSpeabi_local_to_formal( wk->dst, value );
+    PP_Put( wk->dst, p->paraID, value );
+    personalSpeabi_3rd_flag_set( wk->dst );
+    break;
+
+  case INPUTBOX_ID_TOKUSEI:
+    PP_Put( wk->dst, p->paraID, value );
+    personalSpeabi_3rd_flag_set( wk->dst );
+    break;
+
   default:
     PP_Put( wk->dst, p->paraID, value );
   }
@@ -1343,6 +1368,8 @@ static void box_setup_renew( DMP_MAINWORK* wk )
   box_setup( wk, INPUTBOX_ID_TYPE1, wk->dst );
   box_setup( wk, INPUTBOX_ID_TYPE2, wk->dst );
   box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
+  box_setup( wk, INPUTBOX_ID_TOKUSEI_SWITCH, wk->dst );
+  box_setup( wk, INPUTBOX_ID_TOKUSEI_3RD, wk->dst );
   box_setup( wk, INPUTBOX_ID_SEX, wk->dst );
   box_setup( wk, INPUTBOX_ID_SEX_FIX, wk->dst );
   box_setup( wk, INPUTBOX_ID_SEX_SET, wk->dst );
@@ -1405,6 +1432,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_ChangeMonsNo( wk->dst, monsno );
       PP_Put( wk->dst, ID_PARA_exp, exp );
       PP_Put( wk->dst, ID_PARA_form_no, 0 );
+      personalSpeabi_3rd_flag_set( wk->dst );
       PP_Renew( wk->dst );
       box_setup_form_change( wk );
 
@@ -1583,10 +1611,37 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       box_update( wk, INPUTBOX_ID_RARE, PP_CheckRare( wk->dst ) );
     }
     break;
+  
   case INPUTBOX_ID_FORM:
   case INPUTBOX_ID_ITEM:
     box_setup_form_change( wk );
     break;
+
+  case INPUTBOX_ID_TOKUSEI:
+    {
+      u32 value = box_getvalue( wk, updateBoxID );
+      PP_Put( wk->dst, ID_PARA_speabino, value );
+      personalSpeabi_3rd_flag_set( wk->dst );
+      box_update( wk, INPUTBOX_ID_TOKUSEI_SWITCH,
+          personalSpeabi_formal_to_local( wk->dst, value ) );
+      box_setup( wk, INPUTBOX_ID_TOKUSEI_3RD, wk->dst );
+      IWASAWA_Printf("Setup tokusei %d, switch %d flag %d\n", value,
+          box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH),
+          box_getvalue( wk, INPUTBOX_ID_TOKUSEI_3RD));
+    }
+    break;
+  
+  case INPUTBOX_ID_TOKUSEI_SWITCH:
+    {
+      box_setup( wk, INPUTBOX_ID_TOKUSEI, wk->dst );
+      box_setup( wk, INPUTBOX_ID_TOKUSEI_3RD, wk->dst );
+      IWASAWA_Printf("Setup tokusei %d, switch %d flag %d\n",
+          box_getvalue( wk, INPUTBOX_ID_TOKUSEI),
+          box_getvalue( wk, INPUTBOX_ID_TOKUSEI_SWITCH),
+          box_getvalue( wk, INPUTBOX_ID_TOKUSEI_3RD));
+    }
+    break;
+
   case INPUTBOX_ID_TAMAGO:
     {
       u8 tamago_flg = box_getvalue( wk, INPUTBOX_ID_TAMAGO );
@@ -2136,3 +2191,57 @@ static u8 countryCode_local_to_formal( u8 value )
 {
   return CountryCode[ value ];
 }
+
+//==============================================================================================
+// パーソナル特性コード変換
+//==============================================================================================
+static void speabi_ary_get( const POKEMON_PARAM* pp ,u8* abi )
+{
+  int i;
+
+  for(i = 0;i < 3;i++){
+    abi[i] = personal_getparam(pp,POKEPER_ID_speabi1+i);
+  }
+  IWASAWA_Printf(" Speabi Get %d, %d,%d\n", abi[0],abi[1],abi[2]);
+}
+
+// PP設定 -> ローカル値
+static u8 personalSpeabi_formal_to_local( const POKEMON_PARAM* pp, u8 val )
+{
+  int i;
+  u8  abi[3];
+
+  speabi_ary_get( pp, abi );
+
+  for(i=0; i<3; i++){
+    if( abi[i] == val ){
+      return i;
+    }
+  }
+  return 3;
+}
+static u8 personalSpeabi_local_to_formal( const POKEMON_PARAM* pp, u8 value )
+{
+  u8  abi[3];
+  speabi_ary_get( pp, abi );
+
+  if( value > 2 ){
+    return PP_Get( pp, ID_PARA_speabino, NULL );
+  }
+  if( abi[value] == 0 ){
+    return abi[0];
+  }
+  return abi[ value ];
+}
+static void personalSpeabi_3rd_flag_set( POKEMON_PARAM* pp )
+{
+  u8  abi[3];
+  u8  speabi = PP_Get( pp, ID_PARA_speabino, NULL );
+
+  speabi_ary_get( pp, abi );
+
+  PP_Put( pp, ID_PARA_tokusei_3_flag, (speabi == abi[2]));
+
+  IWASAWA_Printf(" Speabi 3rd = %d abi=%d, %d\n", (speabi == abi[2] ), speabi, abi[2]);
+}
+
