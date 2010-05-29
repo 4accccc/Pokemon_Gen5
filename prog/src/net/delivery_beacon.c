@@ -21,7 +21,7 @@
 #include "net/net_whpipe.h"
 
 #if PM_DEBUG
-#define DELIVDEBUG_PRINT (0)
+#define DELIVDEBUG_PRINT (1)
 #else
 #define DELIVDEBUG_PRINT (0)
 #endif
@@ -34,7 +34,9 @@
 typedef struct 
 {
   u16 crc16;      // CRC16-CCITT 生成多項式 0x1021 初期値0xffff出力XORなし 左送り  このCRCはビーコン単体用
-  u8 data[DELIVERY_BEACON_ONCE_NUM];   // 全体のデータでRC4がかかっている
+  u16 dummy;
+  u32 key;    //CODECキー
+  u8 data[DELIVERY_BEACON_ONCE_NUM];   // 個体のデータでCODECがかかっている
   u8 count;       //何回目のビーコンか
   u8 countMax;       //いくつ連結するのか
   u8 ConfusionID;         // 何の配信なのか  同時配信時にかぶらせないように
@@ -234,8 +236,12 @@ static void _beaconDataDiv(DELIVERY_BEACON_WORK* pWork)
 
       pData = (u8*)pBeacon->data;
 
+      pBeacon->key = GFUser_GetPublicRand(0);
+      
+      GFL_STD_CODED_Coded( pData, DELIVERY_BEACON_ONCE_NUM, pBeacon->key);
       crc = GFL_STD_CrcCalc( pData, DELIVERY_BEACON_ONCE_NUM);
       pBeacon->crc16 = crc;
+
       pBeacon->version  = pInitData->version;
       pBeacon->LangCode = pInitData->LangCode;
     }
@@ -420,6 +426,8 @@ static void _CreateRecvData(DELIVERY_BEACON_WORK* pWork)
 
     pInit = &pWork->aInit;
     pBeacon = &pWork->aSendRecv[0][i];
+
+    GFL_STD_CODED_Coded(  pBeacon->data, DELIVERY_BEACON_ONCE_NUM, pBeacon->key);
 
     if(pInit->data[0].datasize > (block + DELIVERY_BEACON_ONCE_NUM)){
       GFL_STD_MemCopy( pBeacon->data, &pInit->data[0].pData[i*DELIVERY_BEACON_ONCE_NUM],  DELIVERY_BEACON_ONCE_NUM);

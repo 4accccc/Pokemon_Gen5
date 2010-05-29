@@ -45,12 +45,20 @@ typedef struct
 } DELIVERY_IRC;
 
 
+typedef struct{
+  u32 key;
+  u16 crc;
+  u16 dummy;
+} CRCCCTI_STRCT;
+
 typedef void (StateFunc)(DELIVERY_IRC_WORK* pState);
 
 //ローカルワーク
 struct _DELIVERY_IRC_LOCALWORK{
   DELIVERY_IRC_INIT aInit;   //初期化構造体のコピー
   DELIVERY_IRC aRecv;  //配信する、受け取る構造体
+  DELIVERY_DATA* pDevData;
+  u32 key;
   u32 recvFlag;
   u16 bNego;
   u16 crc;
@@ -160,10 +168,11 @@ static void _RecvDeliveryData(const int netID, const int size, const void* pData
 
 static void _Recvcrc16Data(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  const u16* pU16 = pData;
+  const CRCCCTI_STRCT* pcrcst = pData;
   DELIVERY_IRC_WORK *pWork = pWk;
-  
-  pWork->crc = pU16[0];
+
+  pWork->crc = pcrcst->crc;
+  pWork->key = pcrcst->key;
 }
 
 
@@ -223,6 +232,7 @@ static void _sendInit7(DELIVERY_IRC_WORK* pWork)
         if(pWork->crc != GFL_STD_CrcCalc( pWork->aInit.data[0].pData, pWork->aInit.data[0].datasize) ){
           pWork->end = DELIVERY_IRC_FAILED;
         }
+        GFL_STD_CODED_Coded( pWork->aInit.data[0].pData,pWork->aInit.data[0].datasize, pWork->key);
       }
     }
     else{
@@ -303,6 +313,51 @@ static void _sendInit3(DELIVERY_IRC_WORK* pWork)
   }
 }
 
+
+
+
+
+
+static void _sendInit26(DELIVERY_IRC_WORK* pWork)
+
+{
+  CRCCCTI_STRCT crcstr;
+  
+  //言語コードがあったのでCRCを送る
+  if( pWork->bRequestExist == TRUE )
+  { 
+#if DELIVDEBUG_PRINT
+    OS_TPrintf( "子機へ渡すデータは%d番です\n", pWork->dataIdx );
+#endif
+    crcstr.crc = GFL_STD_CrcCalc( pWork->pDevData->pData, pWork->pDevData->datasize);
+    crcstr.key = pWork->key;
+    if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
+                          _CRCCCTI_DATA + _NET_CMD( pWork->aInit.NetDevID ), sizeof(CRCCCTI_STRCT) ,  &crcstr )){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
+      pWork->bNego=FALSE;
+      _CHANGE_STATE(_sendInit3);
+    }
+  }
+  else
+  { 
+#if DELIVDEBUG_PRINT
+    OS_TPrintf( "子機へ渡すデータがなかった\n" );
+#endif
+    //なかったのでないよフラグを渡す
+    pWork->recvFlag = DELIVERY_IRC_FLAG_NO_REQUEST_DATA;
+    if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
+                          _FLAG + _NET_CMD( pWork->aInit.NetDevID ),
+                          sizeof(u32) ,  &pWork->recvFlag )){
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
+      
+      pWork->bNego=FALSE;
+      _CHANGE_STATE(_sendInit3);
+    }
+  }
+}
+
+
+
 static void _sendInit25(DELIVERY_IRC_WORK* pWork)
 
 {
@@ -334,35 +389,13 @@ static void _sendInit25(DELIVERY_IRC_WORK* pWork)
           }
         }
       }
-
-      //言語コードがあったのでCRCを送る
+      _CHANGE_STATE(_sendInit26);
+      //言語コードがあったので暗号化する
       if( pWork->bRequestExist == TRUE )
       { 
-#if DELIVDEBUG_PRINT
-        OS_TPrintf( "子機へ渡すデータは%d番です\n", pWork->dataIdx );
-#endif
-        crc = GFL_STD_CrcCalc( pData->pData, pData->datasize);
-        if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() , _CRCCCTI_DATA + _NET_CMD( pWork->aInit.NetDevID ), sizeof(u16) ,  &crc )){
-          GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
-          pWork->bNego=FALSE;
-          _CHANGE_STATE(_sendInit3);
-        }
-      }
-      else
-      { 
-#if DELIVDEBUG_PRINT
-        OS_TPrintf( "子機へ渡すデータがなかった\n" );
-#endif
-        //なかったのでないよフラグを渡す
-        pWork->recvFlag = DELIVERY_IRC_FLAG_NO_REQUEST_DATA;
-        if( GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle() ,
-              _FLAG + _NET_CMD( pWork->aInit.NetDevID ),
-                          sizeof(u32) ,  &pWork->recvFlag )){
-          GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),  _TIMING_START2, pWork->aInit.NetDevID);
-
-          pWork->bNego=FALSE;
-          _CHANGE_STATE(_sendInit3);
-        }
+        pWork->key = GFUser_GetPublicRand(0);
+        GFL_STD_CODED_Coded( pData->pData, pData->datasize, pWork->key);
+        pWork->pDevData = pData;
       }
     }
     else{
