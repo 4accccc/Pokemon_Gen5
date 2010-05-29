@@ -349,6 +349,10 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
     factor->next->prev = factor->prev;
   }
 
+  if( (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
+    TAYA_Printf("‚Æ‚­‚¹‚¢ƒnƒ“ƒhƒ‰íœ‚³‚ê‚æ‚¤‚Æ‚µ‚Ä‚é pokeID=%d, subID=%d\n", factor->dependID, factor->subID);
+  }
+
   BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType );
   printLinkDebug();
 

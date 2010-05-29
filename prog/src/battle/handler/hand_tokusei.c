@@ -610,7 +610,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
 //  if( !BPP_CheckSick(pp, WAZASICK_IEKI) )
   {
-    u16 tokusei = BPP_GetValue( pp, BPP_TOKUSEI_EFFECTIVE );
+    u16 tokusei = BPP_GetValue( pp, BPP_TOKUSEI );
     int i;
 
     for(i=0; i<NELEMS(funcTbl); i++)
@@ -671,7 +671,6 @@ void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp
   factor1 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_1 );
   factor2 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_2 );
 
-
   if( factor1 )
   {
     BTL_EVENT_FACTOR_ChangePokeParam( factor1, ID_2, pri_2 );
@@ -680,6 +679,7 @@ void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp
   {
     BTL_EVENT_FACTOR_ChangePokeParam( factor2, ID_1, pri_1 );
   }
+
 }
 
 static u16 CalcTokHandlerPriority( const BTL_POKEPARAM* bpp )

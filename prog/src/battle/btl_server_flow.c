@@ -8733,7 +8733,6 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     u8 tgtPokeID = BPP_GetID( target );
 
     wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_SkillSwap, atkPokeID );
 
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -8745,10 +8744,13 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
 
     BPP_ChangeTokusei( attacker, tgt_tok );
     BPP_ChangeTokusei( target, atk_tok );
-    SCQUE_PUT_OP_ChangeTokusei( wk->que, atkPokeID, tgt_tok );
-    SCQUE_PUT_OP_ChangeTokusei( wk->que, tgtPokeID, atk_tok );
     BTL_HANDLER_TOKUSEI_Swap( attacker, target );
-//    SCQUE_PUT_TOKWIN_SWAP( atkPokeID, tgtPokeID );
+
+    SCQUE_PUT_ACT_SwapTokusei( wk->que, atkPokeID, tgtPokeID, tgt_tok, atk_tok );
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_SkillSwap, atkPokeID );
+    SCQUE_PUT_TOKWIN_OUT( wk->que, atkPokeID );
+    SCQUE_PUT_TOKWIN_OUT( wk->que, tgtPokeID );
+
 
     if( atk_tok != tgt_tok )
     {

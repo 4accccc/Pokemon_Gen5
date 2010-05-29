@@ -449,6 +449,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_BALL_THROW:  return "SC_ACT_BALL_THROW";        ///< ボール投げ
   case SC_ACT_ROTATION:  return "SC_ACT_ROTATION";          ///< ローテーション
   case SC_ACT_CHANGE_TOKUSEI:  return "SC_ACT_CHANGE_TOKUSEI";    ///< とくせい変更
+  case SC_ACT_SWAP_TOKUSEI:  return "SC_ACT_SWAP_TOKUSEI";            ///< とくせいスワップ
   case SC_ACT_FAKE_DISABLE:  return "SC_ACT_FAKE_DISABLE";      ///< イリュージョン解除
   case SC_ACT_EFFECT_BYPOS:  return "SC_ACT_EFFECT_BYPOS";      ///< 指定位置にエフェクト発動
   case SC_ACT_EFFECT_BYVECTOR:  return "SC_ACT_EFFECT_BYVECTOR";   ///< 指定発動位置＆終点位置でエフェクト発動
@@ -462,7 +463,6 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_ACT_MSGWIN_HIDE: return "SC_ACT_MSGWIN_HIDE";  ///< メッセージウィンドウフェードアウト
   case SC_TOKWIN_IN:  return "SC_TOKWIN_IN";             ///< とくせいウィンドウ表示イン [ClientID]
   case SC_TOKWIN_OUT:  return "SC_TOKWIN_OUT";            ///< とくせいウィンドウ表示アウト [ClientID]
-  case SC_TOKWIN_SWAP:  return "SC_TOKWIN_SWAP";            ///< とくせいウィンドウ入れ替え
   case SC_MSG_WAZA:  return "SC_MSG_WAZA";              ///< ワザメッセージ表示[ ClientID, wazaIdx ]
   case SC_MSG_STD:  return "SC_MSG_STD";               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]
   case SC_MSG_SET:  return "SC_MSG_SET";               ///< メッセージ表示 [MsgID, numArgs, arg1, arg2, ... ]

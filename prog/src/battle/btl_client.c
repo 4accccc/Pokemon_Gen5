@@ -245,6 +245,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
+static BOOL selact_YubiFuruDebug( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Root( BTL_CLIENT* wk, int* seq );
 static BOOL selact_TrainerMessage( BTL_CLIENT* wk, int* seq );
 static  BOOL  check_tr_message( BTL_CLIENT* wk, u16* msgID );
@@ -265,6 +266,7 @@ static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam );
 static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8* dst );
+static BOOL IsItemEffective( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
 static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID, BOOL fCheckChange );
 static BOOL checkForbitEscapeEffective_Kagefumi( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
 static BOOL checkForbitEscapeEffective_Arijigoku( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke );
@@ -359,6 +361,7 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_BallThrowTrainer( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_Rotation( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_ACT_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectSimple( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_ACT_EffectByPos( BTL_CLIENT* wk, int* seq, const int* args );
@@ -366,7 +369,6 @@ static BOOL scProc_ACT_EffectByVector( BTL_CLIENT* wk, int* seq, const int* args
 static BOOL scProc_ACT_ChangeForm( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_In( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args );
-static BOOL scProc_TOKWIN_Swap( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
@@ -5086,7 +5088,6 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_KINOMI,            scProc_ACT_Kinomi         },
     { SC_TOKWIN_IN,             scProc_TOKWIN_In          },
     { SC_TOKWIN_OUT,            scProc_TOKWIN_Out         },
-    { SC_TOKWIN_SWAP,           scProc_TOKWIN_Swap        },
     { SC_OP_HP_MINUS,           scProc_OP_HpMinus         },
     { SC_OP_HP_PLUS,            scProc_OP_HpPlus          },
     { SC_OP_HP_ZERO,            scProc_OP_HpZero          },
@@ -5139,6 +5140,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_ACT_BALL_THROW_TR,     scProc_ACT_BallThrowTrainer },
     { SC_ACT_ROTATION,          scProc_ACT_Rotation       },
     { SC_ACT_CHANGE_TOKUSEI,    scProc_ACT_ChangeTokusei  },
+    { SC_ACT_SWAP_TOKUSEI,      scProc_ACT_SwapTokusei    },
     { SC_ACT_FAKE_DISABLE,      scProc_ACT_FakeDisable    },
     { SC_ACT_EFFECT_SIMPLE,     scProc_ACT_EffectSimple   },
     { SC_ACT_EFFECT_BYPOS,      scProc_ACT_EffectByPos    },
@@ -6989,6 +6991,101 @@ static BOOL scProc_ACT_ChangeTokusei( BTL_CLIENT* wk, int* seq, const int* args 
 }
 //---------------------------------------------------------------------------------------
 /**
+ *  とくせい入れ替え演出  args [0]:pokeID_1, [1]:pokeID_2 [2]:tokID_1, [3]:tokID_2
+ */
+//---------------------------------------------------------------------------------------
+static BOOL scProc_ACT_SwapTokusei( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  // 現状、描画側未実装、未使用。
+  // 本来はbpp書き換え処理もここで行わないと難しい。
+  static u32 timer = 0;
+
+  u8 poke1_ID = args[0];
+  u8 poke2_ID = args[1];
+  u16 poke1_nextTokID = args[2];
+  u16 poke2_nextTokID = args[3];
+
+  BtlPokePos pos1 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, poke1_ID );
+  BtlPokePos pos2 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, poke2_ID );
+
+  switch( (*seq) ){
+  case 0:
+    if( BTL_MAINUTIL_IsFriendPokeID(poke1_ID, poke2_ID) )
+    {
+      BTL_POKEPARAM* bpp1 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke1_ID );
+      BTL_POKEPARAM* bpp2 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke2_ID );
+      BPP_ChangeTokusei( bpp1, poke1_nextTokID );
+      BPP_ChangeTokusei( bpp2, poke2_nextTokID );
+      return TRUE;
+    }
+    else
+    {
+      BTLV_TokWin_DispStart( wk->viewCore, pos1, FALSE );
+      timer = 8;
+      (*seq)++;
+    }
+    break;
+
+  case 1:
+    BTLV_TokWin_DispWait( wk->viewCore, pos1 );
+    if( timer ){
+      --timer;
+    }else{
+      BTLV_TokWin_DispStart( wk->viewCore, pos2, FALSE );
+      (*seq)++;
+    }
+    break;
+
+  case 2:
+    {
+      u8 wait1 = BTLV_TokWin_DispWait( wk->viewCore, pos1 ) ;
+      u8 wait2 = BTLV_TokWin_DispWait( wk->viewCore, pos2 ) ;
+      if( wait1 && wait2 ){
+        (*seq)++;
+      }
+    }
+    break;
+
+  case 3:
+    {
+      BTL_POKEPARAM* bpp1 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke1_ID );
+      BTL_POKEPARAM* bpp2 = BTL_POKECON_GetPokeParam( wk->pokeCon, poke2_ID );
+      BPP_ChangeTokusei( bpp1, poke1_nextTokID );
+      BPP_ChangeTokusei( bpp2, poke2_nextTokID );
+      timer = 0;
+      (*seq)++;
+    }
+    break;
+
+  case 4:
+    if( ++timer > 8 ){
+      BTLV_TokWin_Renew_Start( wk->viewCore, pos1 );
+      (*seq)++;
+    }
+    break;
+
+  case 5:
+    if( BTLV_TokWin_Renew_Wait( wk->viewCore, pos1 ) ){
+      BTLV_TokWin_Renew_Start( wk->viewCore, pos2 );
+      (*seq)++;
+    }
+    break;
+
+  case 6:
+    if( BTLV_TokWin_Renew_Wait( wk->viewCore, pos2 ) ){
+      (*seq)++;
+    }
+    break;
+
+  default:
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+//---------------------------------------------------------------------------------------
+/**
  *  イリュージョン状態を解除
  *  args .. [0]:対象のポケモンID
  */
@@ -7185,43 +7282,6 @@ static BOOL scProc_TOKWIN_Out( BTL_CLIENT* wk, int* seq, const int* args )
     }
     break;
   }
-  return FALSE;
-}
-//---------------------------------------------------------------------------------------
-/**
- *  とくせい入れ替え演出  args [0]:pokeID_1, [1]:pokeID_2
- */
-//---------------------------------------------------------------------------------------
-static BOOL scProc_TOKWIN_Swap( BTL_CLIENT* wk, int* seq, const int* args )
-{
-  // 現状、描画側未実装、未使用。
-  // 本来はbpp書き換え処理もここで行わないと難しい。
-  switch( (*seq) ){
-  case 0:
-    if( BTL_MAINUTIL_IsFriendPokeID(args[0], args[1]) )
-    {
-      return TRUE;
-    }
-    else
-    {
-      BtlPokePos pos1 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[0] );
-      BtlPokePos pos2 = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, args[1] );
-
-      BTLV_TokWin_SwapStart( wk->viewCore, pos1, pos2 );
-      (*seq)++;
-    }
-    break;
-
-  case 1:
-    if( BTLV_TokWin_SwapWait(wk->viewCore) ){
-      (*seq)++;
-    }
-    break;
-
-  default:
-    return TRUE;
-  }
-
   return FALSE;
 }
 
