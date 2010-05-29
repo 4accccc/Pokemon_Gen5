@@ -296,6 +296,12 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     }
     break;
   case GCSSEQ_UPDATE:
+    if(gcsp->exit_reserve == TRUE){
+      gcsp->exit_reserve = FALSE;
+      GameCommSub_SeqSet(&gcsp->sub_work, GCSSEQ_EXIT);
+      break;
+    }
+    
     func_tbl->update_func(&sub_work->func_seq, gcsp->parent_work, gcsp->app_work);
     break;
   case GCSSEQ_EXIT:
@@ -425,6 +431,8 @@ void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_F
     OS_TPrintf("exit reserve\n");
     GF_ASSERT(gcsp->exit_reserve == FALSE);
     gcsp->exit_reserve = TRUE;  //終了予約
+    gcsp->exitcallback_func = callback_func;
+    gcsp->exitcallback_parentwork = parent_work;
   }
   else{
     OS_TPrintf("既に終了リクエストが発生している\n");
