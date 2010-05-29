@@ -485,6 +485,7 @@ static void _TimeScrn_Clear(void);
 static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub, BOOL v_req);
 static BOOL _TutorialMissionNoRecv(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BGColorScreenChange(INTRUDE_SUBDISP_PTR intsub, int palace_area);
+static BOOL _IntSub_CheckSameZoneID(ZONEID my_zone_id, ZONEID target_zone_id, ZONEID target_reverse_zone_id);
 
 
 //==============================================================================
@@ -2086,7 +2087,7 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
       //“¯‚¶ƒ][ƒ“‚É‚¢‚ê‚Î‹êŠ‚Ì•ûŒü‚ğ•\¦
       tar_zonesetting = IntrudeField_GetZoneSettingData(ist->zone_id);
       if(intsub->comm.now_palace_area == intsub->comm.target_palace_area
-          && tar_zonesetting != NULL && (tar_zonesetting->zone_id == my_zone_id || tar_zonesetting->reverse_zone_id == my_zone_id)){
+          && tar_zonesetting != NULL && _IntSub_CheckSameZoneID(my_zone_id, tar_zonesetting->zone_id, tar_zonesetting->reverse_zone_id) == TRUE){
         if(ist->player_pack.vanish == TRUE){ //”gæ‚è‚È‚Ç‚Åp‚ªŒ©‚¦‚È‚¢
           GFL_MSG_GetString(intsub->msgdata, msg_invasion_info_018, intsub->strbuf_temp );
           WORDSET_ExpandStr(intsub->wordset, intsub->strbuf_info, intsub->strbuf_temp);
@@ -2221,6 +2222,31 @@ static OCCUPY_INFO * _IntSub_GetArreaOccupy(INTRUDE_SUBDISP_PTR intsub)
   }
   
   return area_occupy;
+}
+
+//--------------------------------------------------------------
+/**
+ * ©•ª‚Ìƒ][ƒ“ID‚ª‘Šè‚Ìƒ][ƒ“ID(•\A— )‚Æˆê’v‚µ‚Ä‚¢‚é‚©”»’è(WFBC‚Ì•ÏŠ·‚à‚İ)
+ *
+ * @param   my_zone_id		
+ * @param   target_zone_id		
+ * @param   target_reverse_zone_id		
+ *
+ * @retval  BOOL		TRUE:“¯‚¶ƒ][ƒ“@FALSE:ˆá‚¤ƒ][ƒ“
+ */
+//--------------------------------------------------------------
+static BOOL _IntSub_CheckSameZoneID(ZONEID my_zone_id, ZONEID target_zone_id, ZONEID target_reverse_zone_id)
+{
+  if(my_zone_id == target_zone_id || my_zone_id == target_reverse_zone_id){
+    return TRUE;
+  }
+  if(my_zone_id == ZONE_ID_PLC10 || my_zone_id == ZONE_ID_PLCW10){
+    my_zone_id = my_zone_id == ZONE_ID_PLC10 ? ZONE_ID_PLCW10 : ZONE_ID_PLC10;
+    if(my_zone_id == target_zone_id || my_zone_id == target_reverse_zone_id){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 
