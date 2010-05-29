@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-27T16:09:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-29T17:54:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1784,8 +1784,8 @@
 	</row>
 
 	<row id="msg_n01r0502_boss_last_06" back-color="#8080ff,,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[BE:09:速度コントロール:1]バイバイ！[BE:09:速度コントロール:0]▼</language>
-		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]グッドラック！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN" width="256">[BE:09:速度コントロール:1]サヨナラ……！[BE:09:速度コントロール:0]▼</language>
+		<language name="JPN_KANJI" width="256">[BE:09:速度コントロール:1]サヨナラ……！[BE:09:速度コントロール:0]▼</language>
 	</row>
 
 	<row id="msg_n01r0502_boss_04" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
