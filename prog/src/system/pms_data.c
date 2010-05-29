@@ -342,7 +342,7 @@ STRBUF* PMSDAT_ToStringWithWordCount( const PMS_DATA* pms, u32 heapID, u8 wordCo
       // 空白をあける
       // @@@
       WORDSET_RegisterPMSDeco( wordset, i, 1 );
-      break;
+      //break;  // wordCountの数だけループを回さないといけないので、breakしてはダメ。
     }
   }
 

@@ -329,7 +329,7 @@ static MAIL_TMP_DATA* MailSys_AllocTmpData(const MAIL_DATA* org,int heapID)
   tmp->design  = MailData_GetDesignNo(org);
   tmp->lang    = MailData_GetCountryCode(org);
   tmp->ver     = MailData_GetCasetteVersion(org);
-  tmp->pmsword = MailData_GetFormBit(org);
+  tmp->pmsword = PMS_WORD_NULL;//MailData_GetFormBit(org);
 
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     PMSDAT_Copy( &tmp->msg[i], MailData_GetMsgByIndex((MAIL_DATA*)org, i) );
