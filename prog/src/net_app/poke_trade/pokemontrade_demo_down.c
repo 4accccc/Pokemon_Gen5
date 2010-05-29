@@ -181,7 +181,28 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 }
 
-
+#if 0
+static void _pokemonRedraw(POKEMON_TRADE_WORK* pWork, int mcssno)
+{
+  VecFx32 apos;
+  MCSS_ResetVanishFlag(pWork->pokeMcss[mcssno]);
+  apos.x = _POKEMON_PLAYER_CENTER_POSX;
+  apos.y = _POKEMON_PLAYER_CENTER_POSY;
+  apos.z = _POKEMON_PLAYER_CENTER_POSZ;
+  MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
+  MCSS_SetAnmStopFlag(pWork->pokeMcss[mcssno]);
+  MCSS_GetScale( pWork->pokeMcss[mcssno], &apos );
+  if(apos.x < 0){
+    apos.x = -FX32_ONE*16;
+  }
+  else{
+    apos.x = FX32_ONE*16;
+  }
+  apos.y = FX32_ONE*16;
+  apos.z = FX32_ONE;
+  MCSS_SetScale( pWork->pokeMcss[mcssno], &apos );
+}
+#endif
 
 
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
@@ -417,34 +438,39 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
 
 #if 1
   if(ANMCNTC(_POKEMON_CREATE_TIME) == pWork->anmCount){
-      VecFx32 apos;
+    VecFx32 apos;
 
+    if(!pWork->bEncountMessageEach){     // •sˆê’v‚È‚Ì‚ÅƒWƒƒƒ“ƒv+‰ñ“]
+      _pokemonRedraw(pWork,3);
       _pokemonApperLastCreate(pWork,3);
-    
-    MCSS_ResetVanishFlag(pWork->pokeMcss[3]);
-    apos.x = _POKEMON_PLAYER_CENTER_POSX;
-    apos.y = _POKEMON_PLAYER_CENTER_POSY;
-    apos.z = _POKEMON_PLAYER_CENTER_POSZ;
-    MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
-    MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
-      MCSS_GetScale( pWork->pokeMcss[3], &apos );
-      if(apos.x < 0){
-        apos.x = -FX32_ONE*16;
-      }
-      else{
-        apos.x = FX32_ONE*16;
-      }
-      apos.y = FX32_ONE*16;
-      apos.z = FX32_ONE;
-      MCSS_SetScale( pWork->pokeMcss[3], &apos );
-
-    MCSS_SetPaletteFade( pWork->pokeMcss[3], 16, 16, 0, 0x7fff );
+      MCSS_SetPaletteFade( pWork->pokeMcss[3], 16, 16, 0, 0x7fff );
+    }
+    else{
+      _pokemonRedraw(pWork,3);
+      MCSS_SetVanishFlag( pWork->pokeMcss[3] );
+      _pokemonRedraw(pWork,1);
+      _pokemonApperLastCreate(pWork,3);
+      MCSS_SetPaletteFade( pWork->pokeMcss[1], 16, 16, 0, 0x7fff );
+    }
   }
   if(ANMCNTC(_POKEMON_CREATE_TIME+1) == pWork->anmCount){
     MCSS_SetPaletteFade( pWork->pokeMcss[3], 8, 8, 0, 0x7fff );
   }
   if(ANMCNTC(_POKEMON_CREATE_TIME+2) == pWork->anmCount){
     MCSS_SetPaletteFade( pWork->pokeMcss[3], 0, 0, 0, 0x7fff  );
+  }
+  if(ANMCNTC(_POKEMON_CREATE_TIME) < pWork->anmCount){
+    if(pWork->bEncountMessageEach && (pWork->pMoveMcss[3]) &&
+       (pWork->pMoveMcss[3]->nowcount == _JUMPSHORT_PEEK)){
+      {
+        VecFx32 apos;
+        MCSS_GetPosition( pWork->pokeMcss[1] ,&apos );
+        MCSS_SetPosition( pWork->pokeMcss[3] ,&apos );
+      }
+      MCSS_ResetVanishFlag( pWork->pokeMcss[3] );
+      MCSS_SetVanishFlag( pWork->pokeMcss[1] );
+      pWork->pMoveMcss[3]->pMcss = pWork->pokeMcss[3];
+    }
   }
 #endif
 
@@ -475,6 +501,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
   POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[0],pWork);
   POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[1],pWork);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[2],pWork);
+  POKEMONTRADE_pokeMoveFunc(pWork->pMoveMcss[3],pWork);
 }
 
 
