@@ -279,7 +279,6 @@ enum{
   _EVENT_REQ_NO_NULL,             ///<イベントリクエスト無し
   _EVENT_REQ_NO_TOWN_WARP,        ///<街へワープ
   _EVENT_REQ_NO_PLAYER_WARP,      ///<プレイヤーのいる所へワープ
-  _EVENT_REQ_NO_MISSION_ENTRY,    ///<ミッションに参加
 };
 
 //--------------------------------------------------------------
@@ -802,9 +801,6 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   case _EVENT_REQ_NO_PLAYER_WARP:
     PMSND_PlaySE( INTSE_WARP );
     event = EVENT_IntrudePlayerWarp(intsub->gsys, fieldWork, Intrude_GetWarpPlayerNetID(game_comm));
-    break;
-  case _EVENT_REQ_NO_MISSION_ENTRY:
-    event = EVENT_Intrude_MissionStartWait_Warp(intsub->gsys);
     break;
   }
   if(event != NULL){
@@ -1837,12 +1833,9 @@ static void _IntSub_ActorUpdate_EntryButton(INTRUDE_SUBDISP_PTR intsub, OCCUPY_I
     case MISSION_STATUS_READY:
     case MISSION_STATUS_EXE:
     case MISSION_STATUS_RESULT:
+    case MISSION_STATUS_NOT_ENTRY:
       GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], FALSE);
       BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], FALSE);
-      break;
-    case MISSION_STATUS_NOT_ENTRY:
-      GFL_CLACT_WK_SetDrawEnable(intsub->act[INTSUB_ACTOR_ENTRY], TRUE);
-      BmpOam_ActorSetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_ENTRY], TRUE);
       break;
     default:
       GF_ASSERT(0);
@@ -2402,15 +2395,6 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
     }
   }
   
-  ///参加ボタンタッチ判定
-  if(intcomm != NULL && intsub->comm.m_status == MISSION_STATUS_NOT_ENTRY){
-    _SetRect(ENTRY_BUTTON_POS_X, ENTRY_BUTTON_POS_Y, 
-      ENTRY_BUTTON_HITRANGE_HALF_X, ENTRY_BUTTON_HITRANGE_HALF_Y, &rect);
-    if(_CheckRectHit(x, y, &rect) == TRUE){
-      MISSION_SetMissionEntry(intcomm, &intcomm->mission);
-      intsub->event_req = _EVENT_REQ_NO_MISSION_ENTRY;
-    }
-  }
   ///もどるボタンタッチ判定
   if(intsub->back_exit == FALSE 
       && BmpOam_ActorGetDrawEnable(intsub->entrymsg_bmpoam[ENTRY_BUTTON_MSG_PATERN_BACK]) == TRUE){
