@@ -543,9 +543,9 @@
         <language name="JPN_KANJI" width="256">旅のはじめに選んだポケモンは　
 どのポケモン？　のアンケート</language>
       </row><row id="str_question_09_caption">
-        <language name="JPN" width="256">やすみのひに　もしそとに　あそびにいくなら
+        <language name="JPN" width="256">きゅうじつに　もしそとに　あそびにいくなら
 どこにする？　をあつめた　アンケート</language>
-        <language name="JPN_KANJI" width="256">休みの日に　もし外に遊びに良くなら
+        <language name="JPN_KANJI" width="256">休日に　もし外に遊びに良くなら
 どこにする？　を集めたアンケート</language>
       </row><row id="str_question_10_caption">
         <language name="JPN" width="256">がっこうせいかつで　いちばんすきなのは
