@@ -619,8 +619,14 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
-  GAMEDATA *gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
+  GAMEDATA *gamedata;
   int net_id, my_net_id;
+  
+  if(intcomm == NULL){
+    return;
+  }
+  
+  gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
   
   CommPlayer_Pop(intcomm->cps);
   
@@ -645,6 +651,10 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
 void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork)
 {
   INTRUDE_COMM_SYS_PTR intcomm = app_work;
+  
+  if(intcomm == NULL){
+    return;
+  }
   
 //  intcomm->connect_map_count = 0;
   CommPlayer_Push(intcomm->cps);
