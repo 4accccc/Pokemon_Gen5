@@ -808,7 +808,7 @@ static s32 PrmExp_Up( s32 exp, s32 other, s32 up, s32 limit )
   }
 
   exp += up;
-  if( exp > ITEM_PRMEXP_MAX && limit == 0 ){
+  if( up > 0 && exp > ITEM_PRMEXP_MAX && limit == 0 ){
     exp = ITEM_PRMEXP_MAX;
   }else if( exp < 0 ){
     exp = 0;
