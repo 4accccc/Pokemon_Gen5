@@ -821,7 +821,7 @@ static GMEVENT_RESULT EVENT_MapChangeCommEnd(GMEVENT * event, int *seq, void*wor
   case SEQ_COMM_EXIT_WAIT:
     dsw->wait++;
     if(dsw->msgWin == NULL || dsw->wait > 60){
-      if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){//INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
+      if(GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION){//INVASIONじゃない場合はFIELD_BEACONの場合があるのでINVASIONじゃないかどうかでチェック
         GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
         int i;
         PLAYER_WORK *plwork;
