@@ -251,7 +251,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_FLY_C
 立ち位置チェック	POS_E	いない	NO_FLY_E
 指定されたワークを見て条件分岐	POS_E_FLY	!=	1	NO_FLY_E
-ポケモンSIN移動	POS_E	Y方向	180	360	0.5	32
+ポケモンSIN移動	POS_E	Y方向	180	360	0.5	24
 ラベル	NO_FLY_E
 制御モード変更	継続
 ラベル	SE_L
@@ -328,27 +328,35 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 カメラ移動	追従	初期位置	10	0	8
 立ち位置チェック	POS_AA	いない	NO_EXIST_AA
 ポケモン拡縮	POS_AA	追従	1	1	10	0	0
+ポケモン移動	POS_AA	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_AA
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB
 ポケモン拡縮	POS_BB	追従	1	1	10	0	0
+ポケモン移動	POS_BB	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_BB
 立ち位置チェック	POS_A	いない	NO_EXIST_A
 ポケモン拡縮	POS_A	追従	1	1	10	0	0
+ポケモン移動	POS_A	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_A
 立ち位置チェック	POS_B	いない	NO_EXIST_B
 ポケモン拡縮	POS_B	追従	1	1	10	0	0
+ポケモン移動	POS_B	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_B
 立ち位置チェック	POS_C	いない	NO_EXIST_C
 ポケモン拡縮	POS_C	追従	1	1	10	0	0
+ポケモン移動	POS_C	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_C
 立ち位置チェック	POS_D	いない	NO_EXIST_D
 ポケモン拡縮	POS_D	追従	1	1	10	0	0
+ポケモン移動	POS_D	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_D
 立ち位置チェック	POS_E	いない	NO_EXIST_E
 ポケモン拡縮	POS_E	追従	1	1	10	0	0
+ポケモン移動	POS_E	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_E
 立ち位置チェック	POS_F	いない	NO_EXIST_F
 ポケモン拡縮	POS_F	追従	1	1	10	0	0
+ポケモン移動	POS_F	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_F
 エフェクト終了待ち	すべて
 エフェクト終了
