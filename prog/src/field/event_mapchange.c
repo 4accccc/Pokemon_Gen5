@@ -138,6 +138,8 @@ static void MapChange_SetPlayerMoveFormNormal( GAMEDATA* gamedata );
 
 static void MailBox_SetFirstMail( GAMEDATA* gamedata );
 
+static void SheimiFromBackIllegal(GAMEDATA * gamedata);
+
 //--------------------------------------------------------------
 //  
 //--------------------------------------------------------------
@@ -488,11 +490,15 @@ static GMEVENT_RESULT ContinueMapInEvent(GMEVENT * event, int *seq, void *work)
       cmw->continue_zone_id = spLoc->zone_id;
       MAPCHG_releaseMapTools( gsys ); //動作モデルの開放など
       MAPCHG_setupMapTools( gsys, cmw->continue_zone_id ); //新しいマップモードなど機能指定を行う
+      //セーブ時の時刻がシェイミスカイフォルムの場合、元に戻す処理
+      SheimiFromBackIllegal(gamedata);
       MAPCHG_updateGameData( gsys, spLoc ); //新しいマップID、初期位置をセット
     }
     else
     {
       MAPCHG_setupMapTools( gsys, cmw->continue_zone_id ); //新しいマップモードなど機能指定を行う
+      //セーブ時の時刻がシェイミスカイフォルムの場合、元に戻す処理
+      SheimiFromBackIllegal(gamedata);
       EVTIME_Update( gamedata ); //イベント時間更新
       FIELD_FLAGCONT_INIT_Continue( gamedata, cmw->continue_zone_id ); //コンティニューによるフラグ落とし処理
       //天気ロード決定
@@ -591,7 +597,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
       //ペナルティ時間を設定する
       GMTIME_SetPenaltyTime( SaveData_GetGameTime(svdt) );
       //シェイミのフォルムを戻す
-      SHEIMI_NFORM_ChangeNormal(cmw->gamedata, ppt);
+      SHEIMI_NFORM_ChangeNormalZukanEntry(cmw->gamedata, ppt);
     }
     //現在のDS本体情報を今後の設定とする
     SYSTEMDATA_Update( sysdt );
@@ -3449,4 +3455,23 @@ static void MailBox_SetFirstMail( GAMEDATA* gamedata )
   GFL_HEAP_FreeMemory( mail );
   GFL_STR_DeleteBuffer( strbuf );
   GFL_MSG_Delete( TrainerMsgData );
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 夜の時間帯でスカイフォルムのシェイミがいた場合のイリーガルなフォルム戻し処理
+ *
+ * @param   gamedata    
+ */
+//----------------------------------------------------------------------------------
+static void SheimiFromBackIllegal(GAMEDATA * gamedata)
+{
+  POKEPARTY *ppt;
+  int season;
+  GMTIME * tm;
+  SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork(gamedata);
+  ppt = SaveData_GetTemotiPokemon(sv);
+  season = GAMEDATA_GetSeasonID(gamedata);
+  tm = SaveData_GetGameTime( sv );
+  SHEIMI_NFORM_ChangeNormal_Time(gamedata, ppt, &tm->sv_time, season);
 }

@@ -13,5 +13,6 @@
 
 extern void SHEIMI_NFORM_ChangeNormal(GAMEDATA * gdata, POKEPARTY *ppt);
 extern BOOL SHEIMI_NFORM_ChangeNormal_TimeUpdate(GAMEDATA * gdata, POKEPARTY *ppt, int min_diff, const RTCTime * now, int inSeason);
-
+extern BOOL SHEIMI_NFORM_ChangeNormal_Time(GAMEDATA * gdata, POKEPARTY *ppt, const RTCTime * now, int inSeason);
+extern void SHEIMI_NFORM_ChangeNormalZukanEntry(GAMEDATA * gdata, POKEPARTY *ppt);
 
