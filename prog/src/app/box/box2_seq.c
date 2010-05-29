@@ -2108,6 +2108,7 @@ static int MainSeq_ArrangePokeGetExit( BOX2_SYS_WORK * syswk )
 		break;
 
 	case 2:
+		BOX2BGWFRM_BoxListButtonOn( syswk->app );
 		syswk->app->sub_seq = 0;
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_EXIT;
 	}
