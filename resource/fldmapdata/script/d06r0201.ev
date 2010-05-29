@@ -66,7 +66,7 @@ EVENT_START    ev_d06r0201_middleman1_01
 	    //‚¨‚Æ‚¤‚Æ‚ª‚µ‚á‚×‚é
 	    _BALLOONWIN_OBJMSG_POS(msg_d06r0201_gold2_02,D06R0201_MIDDLEMAN1_02,POS_UL)
 	    _MSGWIN_CLOSE()
-	    _ITEM_EVENT_KEYWAIT(ITEM_KINNOTAMA,1)
+	    _ITEM_EVENT_NOWAIT(ITEM_KINNOTAMA,1)
 	    
 	    //---------------------------------//
 	    _FLAG_SET(FE_D06R0201_GOLDGET)
@@ -136,7 +136,7 @@ EVENT_START    ev_d06r0201_middleman1_02
 	    	_BALLOONWIN_OBJMSG_POS(msg_d06r0201_gold2_02,D06R0201_MIDDLEMAN1_02,POS_UL)
 	    ENDIF
 	    _MSGWIN_CLOSE()
-	    _ITEM_EVENT_KEYWAIT(ITEM_KINNOTAMA,1)
+	    _ITEM_EVENT_NOWAIT(ITEM_KINNOTAMA,1)
 	    
 	    //---------------------------------//
 	    _FLAG_SET(FE_D06R0201_GOLDGET)
