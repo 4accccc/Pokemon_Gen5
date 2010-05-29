@@ -261,11 +261,11 @@ u16 MyStatus_GetID_Low(const MYSTATUS * my)
 
 //---------------------------------------------------------------------------
 /**
- * @brief	GTS・Wifiバトルタワー用Idの取得
- * @param	sysdt		システムデータへのポインタ
- * @param	profileId	[out]GameSpyプロファイルIDを出力するポインタ
- * @param	FriendKey	[out]ともだちコードを出力するポインタ
- * @param	u64			ともだちコードの値（初めて取得したFriendKeyをずっと保持）
+ * @brief GTS・Wifiバトルタワー用Idの取得
+ * @param sysdt   システムデータへのポインタ
+ * @param profileId [out]GameSpyプロファイルIDを出力するポインタ
+ * @param FriendKey [out]ともだちコードを出力するポインタ
+ * @param u64     ともだちコードの値（初めて取得したFriendKeyをずっと保持）
  */
 //---------------------------------------------------------------------------
 s32 MyStatus_GetProfileID( const MYSTATUS* my )
@@ -275,19 +275,19 @@ s32 MyStatus_GetProfileID( const MYSTATUS* my )
 
 //---------------------------------------------------------------------------
 /**
- * @brief	GTS・Wifiバトルタワー用Idの設定(初回のみ代入できる）
- * @param	sysdt		システムデータへのポインタ
- * @param	none
+ * @brief GTS・Wifiバトルタワー用Idの設定(初回のみ代入できる）
+ * @param sysdt   システムデータへのポインタ
+ * @param none
  */
 //---------------------------------------------------------------------------
 void MyStatus_SetProfileID( MYSTATUS* my, s32 profileID )
 {
-	// GTS・Wifiバトルタワー用のID・ともだちコードが
-	// 一回も登録されていなかった場合登録する
-	if( my->profileID==0 ){
-		// 一度登録したら、GameSpyIdが変更になっても変わらない
-		my->profileID = profileID;
-	}
+  // GTS・Wifiバトルタワー用のID・ともだちコードが
+  // 一回も登録されていなかった場合登録する
+  if( my->profileID==0 ){
+    // 一度登録したら、GameSpyIdが変更になっても変わらない
+    my->profileID = profileID;
+  }
 }
 
 
@@ -340,6 +340,8 @@ u8 MyStatus_GetTrainerView( const MYSTATUS *my )
 //==============================================================================
 void MyStatus_SetTrainerView( MYSTATUS *my, u8 view )
 {
+  GF_ASSERT( view<MYSTATUS_UNIONVIEW_MAX*2 ); // 男女８つずつ
+
   my->trainer_view = view;
 }
 
@@ -403,42 +405,43 @@ void  MyStatus_SetRegionCode( MYSTATUS * my, u8 region_code )
 
 //----------------------------------------------------------
 /**
- * @brief	自分の国コードを取得
- * @param	my			自分状態保持ワークへのポインタ
- * @return	int			国指定コード
+ * @brief 自分の国コードを取得
+ * @param my      自分状態保持ワークへのポインタ
+ * @return  int     国指定コード
  */
 //----------------------------------------------------------
 int MyStatus_GetMyNation(const MYSTATUS * my)
 {
-	return my->nation;
+  return my->nation;
 }
 
 //----------------------------------------------------------
 /**
- * @brief	自分の地域コードを取得
- * @param	my			自分状態保持ワークへのポインタ
- * @return	int			地域指定コード
+ * @brief 自分の地域コードを取得
+ * @param my      自分状態保持ワークへのポインタ
+ * @return  int     地域指定コード
  */
 //----------------------------------------------------------
 int MyStatus_GetMyArea(const MYSTATUS * my)
 {
-	return my->area;
+  return my->area;
 }
 
 //----------------------------------------------------------
 /**
- * @brief	自分の地域コードを設定
- * @param	my			自分状態保持ワークへのポインタ
- * @param	nation	
- * @param	area		
+ * @brief 自分の地域コードを設定
+ * @param my      自分状態保持ワークへのポインタ
+ * @param nation  
+ * @param area    
  */
 //----------------------------------------------------------
 void MyStatus_SetMyNationArea(MYSTATUS * my, int nation, int area)
 {
-	GF_ASSERT(nation < WIFI_NATION_MAX);
-	GF_ASSERT(area < WIFI_AREA_MAX);
-	my->nation = nation;
-	my->area = area;
+  GF_ASSERT(nation < WIFI_NATION_MAX);
+  GF_ASSERT(area < WIFI_AREA_MAX);
+
+  my->nation = nation;
+  my->area = area;
 }
 
 
