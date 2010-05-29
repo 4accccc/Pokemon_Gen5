@@ -1820,7 +1820,7 @@ static  VMCMD_RESULT  AI_CHECK_BENCH_COUNT( VMHANDLE* vmh, void* context_work )
   {
     const BTL_POKEPARAM* bpp = get_bpp_from_party( pty, i );
 
-    if( !BPP_IsFightEnable( bpp ) )
+    if( BPP_IsFightEnable( bpp ) )
     {
       taw->calc_work++;
     }
