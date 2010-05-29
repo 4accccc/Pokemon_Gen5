@@ -256,7 +256,7 @@ static void _TownIcon_AllCreate(MONOLITH_PALACEMAP_WORK *mpw, MONOLITH_APP_PAREN
   
   for(i = 0; i < MISSION_LIST_MAX; i++){
     mpw->act_town[i] = MonolithTool_TownIcon_Create(
-      appwk->setup, occupy, i, &TownIconPosTbl[i], COMMON_RESOURCE_INDEX_UP);
+      appwk->setup, occupy, i, &TownIconPosTbl[TownNo_to_Type[i]], COMMON_RESOURCE_INDEX_UP);
   }
 }
 
