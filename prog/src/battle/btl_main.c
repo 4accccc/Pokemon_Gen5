@@ -5133,18 +5133,22 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   // 種々メッセージのタグ解釈不備を解消すべし
   BtlResult result;
 
+  BTL_N_Printf( DBGSTR_MAIN_CheckResultStart );
+
   if( wk->fCommError )
   {
+    BTL_N_Printf( DBGSTR_MAIN_Result_CommError );
     result = BTL_RESULT_COMM_ERROR;
   }
   else if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
   {
+    BTL_N_Printf( DBGSTR_MAIN_Result_Capture );
     result = BTL_RESULT_CAPTURE;
   }
   else if( BTL_ESCAPEINFO_GetCount(&wk->escapeInfo) )
   {
-    TAYA_Printf("逃げたクライアント情報から勝利判定\n");
     result = BTL_ESCAPEINFO_CheckWinner( &wk->escapeInfo, wk->myClientID );
+    BTL_N_Printf( DBGSTR_MAIN_Result_Escape, result );
   }
   else
   {
@@ -5156,7 +5160,6 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
     GFL_STD_MemClear( restPokeCnt, sizeof(restPokeCnt) );
     container = &wk->pokeconForClient;
 
-    BTL_Printf("*** 勝敗チェック ***\n");
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( BTL_MAIN_IsExistClient(wk, i) )
@@ -5172,7 +5175,7 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
       }
     }
 
-    BTL_Printf("残りポケ数  side0=%d, side1=%d\n", restPokeCnt[0], restPokeCnt[1]);
+    BTL_N_Printf( DBGSTR_MAIN_Result_RestCnt, restPokeCnt[0], restPokeCnt[1]);
 
     if( restPokeCnt[0] == restPokeCnt[1] )
     {

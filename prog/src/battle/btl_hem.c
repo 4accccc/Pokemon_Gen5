@@ -18,6 +18,10 @@
 //--------------------------------------------------------------------------------------------------------
 // HandEx
 //--------------------------------------------------------------------------------------------------------
+enum {
+  PRINT_CHANNEL = 0,  // 0:NoPrint 1:StdPrint 2~:ExPrint
+};
+
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
@@ -34,12 +38,7 @@ void BTL_Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 u32 BTL_Hem_PushState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 line )
 {
   u32 state = (wk->stack_ptr<<16) | wk->read_ptr;
-//  BTL_Printf(" *HEM-Push* sp=%d, rp=%d, next_rp=%d\n", wk->stack_ptr, wk->read_ptr, wk->stack_ptr);
-
-  OS_SetPrintOutput_Arm9( 1 );
-  TAYA_Printf("[PUSH - %5d] || sp=%d, rp=%d\n", line, wk->stack_ptr, wk->read_ptr, wk->stack_ptr );
-  OS_SetPrintOutput_Arm9( 0 );
-
+  BTL_N_PrintfEx( DBGSTR_HEM_Push, PRINT_CHANNEL, line, wk->stack_ptr, wk->read_ptr );
   wk->read_ptr = wk->stack_ptr;
   return state;
 }
@@ -49,11 +48,7 @@ void BTL_Hem_PopState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 state, u32 line 
   wk->stack_ptr = (state >> 16) & 0xffff;
   wk->read_ptr  = state & 0xffff;
 
-  OS_SetPrintOutput_Arm9( 1 );
-  TAYA_Printf("[POP  - %5d]    sp=%d, rp=%d ||\n", line, wk->stack_ptr, wk->read_ptr );
-  OS_SetPrintOutput_Arm9( 0 );
-
-//  BTL_Printf(" *HEM-Pop* sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
+  BTL_N_PrintfEx( DBGSTR_HEM_Pop, PRINT_CHANNEL, line, wk->stack_ptr, wk->read_ptr );
 }
 
 u16 BTL_Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk )
@@ -171,11 +166,8 @@ BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEv
       header->userPokeID = userPokeID;
       header->tokwin_flag = 0;
       wk->stack_ptr += size;
-      BTL_Printf("Get Hem Work: ADRS=0x%p, type=%d, size=%d, pokeID=%d\n", header, header->equip, size, userPokeID);
 
-      OS_SetPrintOutput_Arm9( 1 );
-      TAYA_Printf( "HandEx : type=%d, pokeID=%d, size=%d, sp=%d\n", eq_type, userPokeID, size, wk->stack_ptr );
-      OS_SetPrintOutput_Arm9( 0 );
+      BTL_N_Printf( DBGSTR_HEM_PushWork, eq_type, userPokeID, size, wk->stack_ptr );
       return header;
     }
     else

@@ -8579,25 +8579,28 @@ static void handler_YubiWoFuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    // 「ゆびをふる」で出ないワザ一覧
-    static const u16 forbidWazaTbl[] = {
-      WAZANO_YUBIWOHURU,    WAZANO_NEGOTO,      WAZANO_NEKONOTE,
-      WAZANO_MANEKKO,       WAZANO_SAKIDORI,    WAZANO_OUMUGAESI,
-      WAZANO_SIZENNOTIKARA, WAZANO_OSYABERI,    WAZANO_WARUAGAKI,
+    const WazaID* ommitTable;
+    u32 ommitTableElems;
+    WazaID waza;
+    BtlPokePos targetPos;
 
-      WAZANO_SUKETTI,       WAZANO_MONOMANE,    WAZANO_KAUNTAA,
-      WAZANO_MIRAAKOOTO,    WAZANO_MAMORU,      WAZANO_MIKIRI,
-      WAZANO_KORAERU,       WAZANO_MITIDURE,    WAZANO_KONOYUBITOMARE,
-      WAZANO_YOKODORI,      WAZANO_TEDASUKE,    WAZANO_DOROBOU,
-      WAZANO_HOSIGARU,      WAZANO_TORIKKU,     WAZANO_KIAIPANTI,
-      WAZANO_FEINTO,
-    };
+    ommitTable = BTL_TABLES_GetYubiFuruOmmitTable( &ommitTableElems );
+    waza = BTL_CALC_RandWaza( ommitTable, ommitTableElems );
 
-    WazaID     waza = BTL_CALC_RandWaza( forbidWazaTbl, NELEMS(forbidWazaTbl) );
-    BtlPokePos pos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
+    #ifdef PM_DEBUG
+    {
+      BtlPokePos myPos = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      if( GYubiFuruDebugNumber[myPos] > 0 ){
+        waza = GYubiFuruDebugNumber[ myPos ];
+        BTL_TABLES_YubifuruDebugInc( myPos );
+      }
+    }
+    #endif
+
+    targetPos  = BTL_SVFTOOL_ReqWazaTargetAuto( flowWk, pokeID, waza );
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZAID,  waza );
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, pos );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEPOS, targetPos );
   }
 }
 

@@ -33,6 +33,11 @@ typedef enum {
   DBGSTR_MAIN_PerappVoiceComplete,
   DBGSTR_MAIN_MultiAITrainer_SeqStart,
   DBGSTR_MAIN_MultiAITrainer_SendDone,
+  DBGSTR_MAIN_CheckResultStart,
+  DBGSTR_MAIN_Result_CommError,
+  DBGSTR_MAIN_Result_Capture,
+  DBGSTR_MAIN_Result_Escape,
+  DBGSTR_MAIN_Result_RestCnt,
 
   DBGSTR_CLIENT_RETURN_CMD_START,
   DBGSTR_CLIENT_RETURN_CMD_DONE,
@@ -141,6 +146,10 @@ typedef enum {
   DBGSTR_NET_PerappVoiceCheckRaw,
   DBGSTR_NET_PerappVoiceRecvedEnable,
   DBGSTR_NET_PerappVoiceRecvedDisable,
+
+  DBGSTR_HEM_Push,
+  DBGSTR_HEM_Pop,
+  DBGSTR_HEM_PushWork,
 
   DBGSTR_CALCDMG_BaseDamage,
   DBGSTR_CALCDMG_WazaParam,
@@ -326,12 +335,24 @@ typedef enum {
 
 }BtlDebugStrID;
 
-
+#ifdef PM_DEBUG
 extern void BTL_DEBUGPRINT_SetType( BtlPrintType type );
 extern void BTL_DEBUGPRINT_PrintHeader( const char* fileName, u32 line );
 extern void BTL_DEBUGPRINT_PrintDump( const char* caption, const void* data, u32 size );
 extern const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID );
-
+extern BOOL BTL_DEBUGPRINT_IsEnable( const char* filename );
+extern void BTL_DEBUGPRINT_Ctrl( void );
 extern const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd );
+#else
+
+#define BTL_DEBUGPRINT_SetType( type )  /* */
+#define BTL_DEBUGPRINT_PrintHeader( fileName, line ) /* */
+#define BTL_DEBUGPRINT_PrintDump( caption, data, size ) /* */
+#define BTL_DEBUGPRINT_GetFormatStr( strID ) /* */
+#define BTL_DEBUGPRINT_IsEnable( filename ) /* */
+#define BTL_DEBUG_PRINT_Ctrl() /* */
+#define BTL_DEBUGPRINT_GetServerCmdName( cmd ) /* */
+
+#endif
 
 

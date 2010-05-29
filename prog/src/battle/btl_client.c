@@ -37,6 +37,7 @@
 #include "tr_ai/tr_ai.h"
 #include "tr_tool/tr_tool.h"
 
+#include "btl_tables.h"
 #include "btl_client.h"
 
 
@@ -118,6 +119,7 @@ typedef struct {
 #ifdef PM_DEBUG
 static BTLV_CORE* GViewCore = NULL;
 static int GControlableAIClientID = -1;
+static int GYubiCtrlPos;
 #endif
 
 
@@ -209,6 +211,7 @@ struct _BTL_CLIENT {
 
   #ifdef PM_DEBUG
   const BTL_CLIENT* viewOldClient;
+  int               yubifuruDebugRetSeq;
   #endif
 };
 
@@ -1523,6 +1526,105 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
+//----------------------------------------------------------------------
+/**
+ *  ゆびをふるデバッグ
+ */
+//----------------------------------------------------------------------
+#ifdef PM_DEBUG
+static BOOL selact_YubiFuruDebug( BTL_CLIENT* wk, int* seq )
+{
+  switch( *seq ){
+  case 0:
+    TAYA_Printf("ゆびふるデバッグ開始です\n");
+    GYubiCtrlPos = 0;
+    wk->fStdMsgChanged = FALSE;
+    (*seq)++;
+    /* fallthru */
+  case 1:
+    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_YubiFuruDebug );
+    BTLV_STRPARAM_AddArg( &wk->strParam, GYubiCtrlPos );
+    BTLV_STRPARAM_AddArg( &wk->strParam, GYubiFuruDebugNumber[GYubiCtrlPos] );
+    BTLV_STRPARAM_AddArg( &wk->strParam, GYubiFuruDebugNumber[GYubiCtrlPos] );
+    BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
+    (*seq)++;
+    break;
+  case 2:
+    if( !BTLV_WaitMsg(wk->viewCore) ){
+      (*seq)++;
+    }
+    break;
+  case 3:
+    {
+      u16 key = GFL_UI_KEY_GetRepeat();
+      u8 fUpdate = TRUE;
+
+      do  {
+        if( key & PAD_KEY_LEFT ){
+          GYubiCtrlPos = (GYubiCtrlPos)? (GYubiCtrlPos-1) : (BTL_POS_MAX-1);
+          break;
+        }
+        if( key & PAD_KEY_RIGHT ){
+          if( ++GYubiCtrlPos >= (BTL_POS_MAX) ){ GYubiCtrlPos = 0; }
+          break;
+        }
+        if( key & PAD_KEY_UP ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ]++;
+          break;
+        }
+        if( key & PAD_KEY_DOWN ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ]--;
+          break;
+        }
+        if( key & PAD_BUTTON_X ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ] += 10;
+          break;
+        }
+        if( key & PAD_BUTTON_Y ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ] -= 10;
+          break;
+        }
+        if( key & PAD_BUTTON_R ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ] += 100;
+          break;
+        }
+        if( key & PAD_BUTTON_L ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ] -= 100;
+          break;
+        }
+
+        fUpdate = FALSE;
+
+      }while(0);
+
+      if( fUpdate )
+      {
+        if( GYubiFuruDebugNumber[ GYubiCtrlPos ] >= WAZANO_MAX ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ] = 0;
+        }
+        else if( GYubiFuruDebugNumber[ GYubiCtrlPos ] < 0 ){
+          GYubiFuruDebugNumber[ GYubiCtrlPos ] = WAZANO_MAX - 1;
+        }
+        (*seq) = 1;
+        break;
+      }
+      else
+      {
+        if( key & PAD_BUTTON_A ){
+          BTL_TABLES_YubifuruDebugSetEnd();
+          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
+          BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+          BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+          BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
+          ClientSubProc_Set( wk, selact_Root );
+          (*seq) = wk->yubifuruDebugRetSeq;
+        }
+      }
+    }
+  }
+  return FALSE;
+}
+#endif
 
 //----------------------------------------------------------------------
 /**
@@ -1589,6 +1691,22 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     break;
 
   case 4:
+
+    // デバッグ用Print制御
+    BTL_DEBUGPRINT_Ctrl();
+
+    // デバッグ用ゆびをふる制御
+    #ifdef PM_DEBUG
+    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) && (GFL_UI_KEY_GetCont() & PAD_BUTTON_Y) )
+    {
+      if( BTL_MAIN_CheckImServerMachine(wk->mainModule) ){
+        wk->yubifuruDebugRetSeq = (*seq);
+        ClientSubProc_Set( wk, selact_YubiFuruDebug );
+        return FALSE;
+      }
+    }
+    #endif
+
     if( CheckSelactForceQuit(wk, selact_ForceQuit) )
     {
       BTL_N_Printf( DBGSTR_CLIENT_ForceQuitByTimeLimit, wk->myID );

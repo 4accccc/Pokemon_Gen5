@@ -1020,10 +1020,6 @@ void SCQUE_PUT_MsgImpl( BTL_SERVER_CMD_QUE* que, u8 scType, ... )
     BTL_N_PrintfSimpleEx( PRINT_FLAG, DBGSTR_LF );
 
     va_end( list );
-
-    if( strID == BTL_STRID_STD_WazaFail && scType == SC_MSG_STD){
-      TAYA_Printf("うまくきまらんテキスト\n");
-    }
   }
 }
 

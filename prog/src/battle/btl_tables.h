@@ -21,3 +21,15 @@ extern BOOL BTL_TABLES_IsMatchEncoreFail( WazaID waza );
 extern BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza );
 
 
+
+extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
+extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );
+
+
+#ifdef PM_DEBUG
+extern int GYubiFuruDebugNumber[ BTL_POS_MAX ];
+
+extern void BTL_TABLES_YubifuruDebugReset( void );
+extern void BTL_TABLES_YubifuruDebugSetEnd( void );
+extern void BTL_TABLES_YubifuruDebugInc( u8 pos );
+#endif

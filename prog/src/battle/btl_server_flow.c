@@ -99,7 +99,7 @@ static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 po
 static BOOL scproc_Nigeru_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fNigeruCmd );
 static BOOL scEvent_SkipNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -589,9 +589,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
   wk->que = que;
   wk->heapID = heapID;
-  wk->prevExeWaza = WAZANO_NULL;
   wk->bagMode = bagMode;
-  wk->getPokePos = BTL_POS_NULL;
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
   clearWorks( wk );
@@ -630,8 +628,12 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   wk->wazaEffIdx = 0;
   wk->fMemberOutIntr = FALSE;
   wk->fWinBGMPlayWild = FALSE;
+  wk->fEscMsgDisped = FALSE;
   wk->cmdBuildStep = 0;
   wk->thruDeadMsgPokeID = BTL_POKEID_NULL;
+  wk->prevExeWaza = WAZANO_NULL;
+  wk->getPokePos = BTL_POS_NULL;
+
 }
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
@@ -2388,12 +2390,14 @@ static BOOL scproc_Nigeru_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  */
 static BOOL scproc_NigeruSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
-  BOOL fSkipNigeruCalc;
+  BOOL fSkipNigeruCalc = TRUE;
 
-  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD ){
-    fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
-  }else{
-    fSkipNigeruCalc = TRUE;
+  if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD )
+  {
+    u8 escClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+    if( escClientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
+      fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
+    }
   }
 
   #ifdef PM_DEBUG
@@ -2421,7 +2425,7 @@ static BOOL scproc_NigeruSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     }
   }
 
-  return scproc_NigeruCore( wk, bpp );
+  return scproc_NigeruCore( wk, bpp, TRUE );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2448,31 +2452,36 @@ static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
   }
   return FALSE;
 }
-static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fNigeruCmd )
 {
+  u8 escapeClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+
   if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD )
   {
-    u8 escapeClientID;
+    u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+    u8 fEscapeEnemy = ( !BTL_MAINUTIL_IsFriendClientID( escapeClientID, playerClientID) );
 
-    // 逃げ禁止チェック
-    if( !BPP_IsDead(bpp) )
+    // 野生の逃げるコマンドは強制的に逃がす
+    if( !fNigeruCmd )
     {
-      if( !scEvent_SkipNigeruForbid(wk, bpp) )
+      // 逃げ禁止チェック
+      if( !BPP_IsDead(bpp) )
       {
-        u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-        BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
-        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-        BTL_Hem_PopState( &wk->HEManager, hem_state );
-        if( fForbid ){
-          return FALSE;
+        if( !scEvent_SkipNigeruForbid(wk, bpp) )
+        {
+          u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+          BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
+          scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+          BTL_Hem_PopState( &wk->HEManager, hem_state );
+          if( fForbid ){
+            return FALSE;
+          }
         }
       }
     }
 
     // ここまで来たら逃げ確定
-    escapeClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-    BTL_ESCAPEINFO_Add( &wk->escInfo, escapeClientID );
-
+    if( !(wk->fEscMsgDisped) )
     {
       // 特殊な逃げメッセージチェック
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -2482,17 +2491,21 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       // 何もなければ標準メッセージ
       else
       {
-        u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
-        if( BTL_MAINUTIL_IsFriendClientID( escapeClientID, playerClientID) ){
+        if( fEscapeEnemy ){
+          SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeWild, SEQ_SE_NIGERU, BPP_GetID(bpp) );
+        }else{
           SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
         }
       }
       BTL_Hem_PopState( &wk->HEManager, hem_state );
+
+      wk->fEscMsgDisped = TRUE;
     }
-    return TRUE;
+
   }
 
   // サブウェイ戦・通信対戦などは無条件に逃げる
+  BTL_ESCAPEINFO_Add( &wk->escInfo, escapeClientID );
   return TRUE;
 }
 //----------------------------------------------------------------------------------
@@ -14661,7 +14674,7 @@ static u8 scproc_HandEx_quitBattle( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
-  if( scproc_NigeruCore(wk, bpp ) )
+  if( scproc_NigeruCore(wk, bpp, FALSE) )
   {
     wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
     return 1;

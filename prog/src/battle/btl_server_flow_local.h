@@ -307,10 +307,12 @@ struct _BTL_SVFLOW_WORK {
   u8      numRelivePoke;
   u8      nigeruCount;
   u8      wazaEffIdx;
-  u8      fMemberOutIntr;
-  u8      fWinBGMPlayWild;
   u8      MemberOutIntrPokeCount;
   u8      thruDeadMsgPokeID;
+  u8      fMemberOutIntr     : 1;
+  u8      fWinBGMPlayWild    : 1;
+  u8      fEscMsgDisped      : 1;
+
   u8      MemberOutIntrPokeID[ BTL_POS_MAX ];
   u8      relivedPokeID[ BTL_POKEID_MAX ];
   u8      pokeDeadFlag[ BTL_POKEID_MAX ];

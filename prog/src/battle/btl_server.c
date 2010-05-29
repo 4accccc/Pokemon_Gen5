@@ -619,7 +619,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
-      TAYA_Printf("Reset Adapter %d\n", __LINE__ );
 
       // 試合制限時間切れのチェック
       if( BTL_MAIN_CheckGameLimitTimeOver(server->mainModule) )
@@ -643,7 +642,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
-      TAYA_Printf("Reset Adapter %d\n", __LINE__ );
       (*seq)++;
     }
     break;

@@ -61,36 +61,69 @@ void BTL_UTIL_SetPrintType( BtlPrintType type )
   }
 }
 
-void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... )
+void BTL_UTIL_Printf( const char* filename, int line, u32 channel, u32 strID, ... )
 {
   if( PrintSysEnableFlag )
   {
-    const char* fmt_str = BTL_DEBUGPRINT_GetFormatStr( strID );
-    if( fmt_str )
+    if( channel == 0){
+      return;
+    }else{
+      if( --channel ){
+        OS_SetPrintOutput_Arm9( channel );
+      }
+    }
+
     {
-      va_list vlist;
+      const char* fmt_str = BTL_DEBUGPRINT_GetFormatStr( strID );
+      if( fmt_str )
+      {
+        if( BTL_DEBUGPRINT_IsEnable(filename) )
+        {
+          va_list vlist;
 
-      BTL_DEBUGPRINT_PrintHeader( filename, line );
+          BTL_DEBUGPRINT_PrintHeader( filename, line );
+          va_start( vlist, strID );
+          OS_TVPrintf( fmt_str, vlist );
+          va_end( vlist );
+        }
+      }
+    }
 
-      va_start( vlist, strID );
-      OS_TVPrintf( fmt_str, vlist );
-      va_end( vlist );
+    if( channel ){
+      OS_SetPrintOutput_Arm9( 0 );
     }
   }
 }
 
-void BTL_UTIL_PrintfSimple( u32 strID, ... )
+void BTL_UTIL_PrintfSimple( const char* filename, u32 channel, u32 strID, ... )
 {
   if( PrintSysEnableFlag )
   {
-    const char* fmt_str = BTL_DEBUGPRINT_GetFormatStr( strID );
-    if( fmt_str )
-    {
-      va_list vlist;
+    if( channel == 0){
+      return;
+    }else{
+      if( --channel ){
+        OS_SetPrintOutput_Arm9( channel );
+      }
+    }
 
-      va_start( vlist, strID );
-      OS_TVPrintf( fmt_str, vlist );
-      va_end( vlist );
+    {
+      const char* fmt_str = BTL_DEBUGPRINT_GetFormatStr( strID );
+      if( fmt_str )
+      {
+        if( BTL_DEBUGPRINT_IsEnable(filename) )
+        {
+          va_list vlist;
+
+          va_start( vlist, strID );
+          OS_TVPrintf( fmt_str, vlist );
+          va_end( vlist );
+        }
+      }
+    }
+
+    if( channel ){
+      OS_SetPrintOutput_Arm9( 0 );
     }
   }
 }

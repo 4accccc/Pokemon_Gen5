@@ -17,6 +17,7 @@
 
 #include "btl_calc.h"
 
+
 //--------------------------------------------------------------
 /**
  *  Global
@@ -32,6 +33,39 @@ static BOOL is_include( const u16* tbl, u32 tblElems, u16 wazaID );
 static u32 calcWinMoney_Sub( const BSP_TRAINER_DATA* trData, const POKEPARTY * party );
 
 
+
+//--------------------------------------------------------------
+/**
+ *  ランダムコンテキスト内容出力処理
+ */
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+#define DEBUG_RANDOM_PRINT  // define されていれば処理有効
+#endif
+
+#ifdef DEBUG_RANDOM_PRINT
+
+static void _printRandom( BOOL fCounterReset, u32 range )
+{
+  static u32 counter = 0;
+
+  if( fCounterReset ){
+    counter = 0;
+  }
+
+  OS_SetPrintOutput_Arm9( 1 );
+  OS_Printf("---- print random %d times, range=%d ----\n", counter++, range);
+  OS_Printf("x:%0x, mul:%0x, add:%0x\n", gRandContext.x, gRandContext.mul, gRandContext.add);
+  OS_SetPrintOutput_Arm9( 0 );
+}
+#else
+#define _printRandom(resetFlag)  /* */
+#endif
+
+
+
+
+
 //=============================================================================================
 /**
  * システム初期化
@@ -42,8 +76,9 @@ static u32 calcWinMoney_Sub( const BSP_TRAINER_DATA* trData, const POKEPARTY * p
 //=============================================================================================
 void BTL_CALC_InitSys( const GFL_STD_RandContext* randContext, HEAPID heapID )
 {
-  gRandContext = *randContext;
   gWazaStoreWork = GFL_HEAP_AllocClearMemory( heapID, WAZANO_MAX * sizeof(u16) );
+  gRandContext = *randContext;
+  _printRandom( TRUE, 0 );
 }
 //=============================================================================================
 /**
@@ -55,6 +90,7 @@ void BTL_CALC_InitSys( const GFL_STD_RandContext* randContext, HEAPID heapID )
 void BTL_CALC_ResetSys( const GFL_STD_RandContext* randContext )
 {
   gRandContext = *randContext;
+  _printRandom( TRUE, 0 );
 }
 
 //=============================================================================================
@@ -85,6 +121,7 @@ u32 BTL_CALC_GetRand( u32 range )
 {
   u32 result;
   result = GFL_STD_Rand( &gRandContext, range );
+  _printRandom( FALSE, range );
   return result;
 }
 
@@ -1368,12 +1405,14 @@ void BTL_ESCAPEINFO_Add( BTL_ESCAPEINFO* info, u8 clientID )
     {
       info->clientID[i] = clientID;
       info->count++;
+      TAYA_Printf("逃げ情報：ClientID=%d, 追加、トータル%d名\n", info->clientID[i], info->count);
       break;
     }
   }
 }
 u32 BTL_ESCAPEINFO_GetCount( const BTL_ESCAPEINFO* info )
 {
+  TAYA_Printf("逃げ件数情報：%d\n", info->count);
   return info->count;
 }
 

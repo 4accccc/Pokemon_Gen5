@@ -23,6 +23,10 @@ static BtlPrintType GPrintType;
 /*--------------------------------------------------------------------------*/
 static void print_type( void );
 static void print_file_info( const char* filename, int line );
+static void printCtrl_Reset( void );
+static BOOL  printCtrl_isEnable( u32 idx );
+static BOOL printCtrl_isEnableFile( const char* fileName );
+static void printCtrl_putCur( void );
 
 
 
@@ -36,6 +40,8 @@ static void print_file_info( const char* filename, int line );
 void BTL_DEBUGPRINT_SetType( BtlPrintType type )
 {
   GPrintType = type;
+
+  printCtrl_Reset();
 }
 
 void BTL_DEBUGPRINT_PrintDump( const char* caption, const void* data, u32 size )
@@ -82,6 +88,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_Illusion2nd:              return " %d番目のポケ[%d]に変更\n";
   case DBGSTR_MAIN_MultiAITrainer_SeqStart:  return "AIマルチ用トレーナーデータ送受信(idx:%d) 開始\n";
   case DBGSTR_MAIN_MultiAITrainer_SendDone:  return "AIマルチ用トレーナーデータ (ClientID=%d) 送信完了\n";
+  case DBGSTR_MAIN_CheckResultStart:         return "*** 勝敗チェック ***\n";
+  case DBGSTR_MAIN_Result_CommError:         return "  通信エラー\n";
+  case DBGSTR_MAIN_Result_Capture:           return "  捕獲終了\n";
+  case DBGSTR_MAIN_Result_Escape:            return "  逃げて終了\n";
+  case DBGSTR_MAIN_Result_RestCnt:           return "残りポケ数  side0=%d, side1=%d\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
@@ -192,6 +203,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_PerappVoiceRecvedEnable:  return "ペラップボイス受信完了（有効データ）netID=%d, size=%d\n";
   case DBGSTR_NET_PerappVoiceRecvedDisable: return "ペラップボイス受信完了（無効データ）netID=%d, empty=%d\n";
   case DBGSTR_NET_PerappVoiceCheckRaw:      return "ペラップボイス受信チェック: ClientID:%d = netID:%d\n";
+
+  case DBGSTR_HEM_Push:     return "[PUSH - %5d] <- sp=%d, rp=%d\n";
+  case DBGSTR_HEM_Pop:      return "[POP  - %5d]    sp=%d, rp=%d ->\n";
+  case DBGSTR_HEM_PushWork: return "HandEx : type=%d, pokeID=%d, size=%d, sp=%d\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";
@@ -460,6 +475,20 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
 
 //=============================================================================================
 /**
+ * 出力有効状態のファイルか判定
+ *
+ * @param   filename
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_DEBUGPRINT_IsEnable( const char* filename )
+{
+  return printCtrl_isEnableFile( filename );
+}
+
+//=============================================================================================
+/**
  * デバッグ用ヘッダPrint
  *
  * @param   fileName
@@ -483,41 +512,132 @@ static void print_type( void )
     break;
   }
 }
+
+/**
+ *  ファイル名 - 識別シンボル名変換テーブル
+ */
+static const struct {
+  char* longName;
+  char* shortName;
+}FileNames[] = {
+  { "btl_main.c",            "MAI" },
+  { "btl_server.c",          "SVR" },
+  { "btl_client.c",          "CLI" },
+  { "btl_adapter.c",         "ADP" },
+  { "btl_string.c",          "STR" },
+  { "btl_net.c",             "NET" },
+  { "btl_calc.c",            "CAL" },
+  { "btl_sick.c",            "SIC" },
+  { "btl_event.c",           "EVE" },
+  { "btl_pokeparam.c",       "BPP" },
+  { "btl_pokeset.c",         "SET" },
+  { "btl_pospoke_state.c",   "POS" },
+  { "btl_server_cmd.c",      "CMD" },
+  { "btl_server_flow.c",     "SVF" },
+  { "btl_server_flow_sub.c", "SUB" },
+  { "btl_hem.c",             "HEM" },
+  { "btl_field.c",           "FLD" },
+  { "btl_rec.c",             "REC" },
+  { "btlv_core.c",           "VIW" },
+  { "btlv_scu.c",            "scU" },
+  { "btlv_scd.c",            "scD" },
+  { NULL,                    "OTR" },
+};
+
+static u32 gPrintBit = 0;
+static int gCurrent = 0;
+
 static void print_file_info( const char* filename, int line )
 {
-  static const struct {
-    char* longName;
-    char* shortName;
-  }names[] = {
-    { "btl_main.c",           "MAI" },
-    { "btl_server.c",         "SVR" },
-    { "btl_client.c",         "CLI" },
-    { "btl_adapter.c",        "ADP" },
-    { "btl_string.c",         "STR" },
-    { "btl_net.c",            "NET" },
-    { "btl_calc.c",           "CAL" },
-    { "btl_sick.c",           "SIC" },
-    { "btl_event.c",          "EVE" },
-    { "btl_pokeparam.c",      "BPP" },
-    { "btl_pokeset.c",        "SET" },
-    { "btl_pospoke_state.c",  "POS" },
-    { "btl_server_cmd.c",     "CMD" },
-    { "btl_server_flow.c",    "FLW" },
-    { "btl_field.c",          "FLD" },
-    { "btl_rec.c",            "REC" },
-    { "btlv_core.c",          "VIW" },
-    { "btlv_scu.c",           "scU" },
-    { "btlv_scd.c",           "scD" },
-    { NULL,                   "OTR" },
-  };
   u32 i;
 
-  for(i=0; names[i].longName!=NULL; ++i)
+  for(i=0; FileNames[i].longName!=NULL; ++i)
   {
-    if( !GFL_STD_StrCmp(names[i].longName, filename) )
+    if( !GFL_STD_StrCmp(FileNames[i].longName, filename) )
     {
       break;
     }
   }
-  OS_TPrintf( "[%s-%4d]", names[i].shortName, line);
+  OS_TPrintf( "[%s-%4d]", FileNames[i].shortName, line);
 }
+
+
+static void printCtrl_Reset( void )
+{
+  u32 i;
+  gPrintBit = 0;
+  for(i=0; i<NELEMS(FileNames); ++i){
+    gPrintBit |= (1 << i);
+  }
+}
+static BOOL  printCtrl_isEnable( u32 idx )
+{
+  return (gPrintBit & (1<<idx)) != 0;
+}
+
+static BOOL printCtrl_isEnableFile( const char* filename )
+{
+  u32 i;
+
+  for(i=0; FileNames[i].longName!=NULL; ++i)
+  {
+    if( !GFL_STD_StrCmp(FileNames[i].longName, filename) )
+    {
+      break;
+    }
+  }
+  return printCtrl_isEnable( i );
+}
+
+
+static void printCtrl_putCur( void )
+{
+  OS_TPrintf("[PrintCTRL]  %2d [%s] = ", gCurrent, FileNames[gCurrent].shortName );
+  if( printCtrl_isEnable(gCurrent) ){
+    OS_TPrintf("ON\n");
+  }else{
+    OS_TPrintf("OFF\n");
+  }
+
+}
+
+
+void BTL_DEBUGPRINT_Ctrl( void )
+{
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    u16 key = GFL_UI_KEY_GetTrg();
+
+    if( key & PAD_KEY_UP ){
+      if( --gCurrent < 0 ){
+        gCurrent = NELEMS(FileNames) - 1;
+      }
+      printCtrl_putCur();
+    }
+    else if( key & PAD_KEY_DOWN ){
+      if( ++gCurrent >= (NELEMS(FileNames)) ){
+        gCurrent = 0;
+      }
+      printCtrl_putCur();
+    }
+    else if( key & PAD_KEY_LEFT ){
+      gPrintBit &= ~( 1 << gCurrent);
+      printCtrl_putCur();
+    }
+    else if( key & PAD_KEY_RIGHT ){
+      gPrintBit |= ( 1 << gCurrent);
+      printCtrl_putCur();
+    }
+    else if( key & PAD_BUTTON_R )
+    {
+      if( gPrintBit == 0 ){
+        printCtrl_Reset();
+        OS_TPrintf("[PrintCTRL] All ON\n");
+      }else{
+        gPrintBit = 0;
+        OS_TPrintf("[PrintCTRL] All OFF\n");
+      }
+    }
+  }
+}
+

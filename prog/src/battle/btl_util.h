@@ -270,14 +270,14 @@ extern void BTL_UTIL_PRINTSYS_Quit( void );
 #ifdef BTL_PRINT_SYSTEM_ENABLE
 
 extern void BTL_UTIL_SetPrintType( BtlPrintType type );
-extern void BTL_UTIL_Printf( const char* filename, int line, u32 strID, ... );
-extern void BTL_UTIL_PrintfSimple( u32 strID, ... );
+extern void BTL_UTIL_Printf( const char* filename, int line, u32 channel, u32 strID, ... );
+extern void BTL_UTIL_PrintfSimple( const char* filename, u32 channel, u32 strID, ... );
 extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
 
-#define BTL_N_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ )
-#define BTL_N_PrintfEx( flg, ... )  if( flg ){ BTL_UTIL_Printf( __FILE__, __LINE__, __VA_ARGS__ ); }
-#define BTL_N_PrintfSimple( ... ) BTL_UTIL_PrintfSimple( __VA_ARGS__ )
-#define BTL_N_PrintfSimpleEx( flg, ... ) if( flg ){ BTL_UTIL_PrintfSimple( __VA_ARGS__ ); }
+#define BTL_N_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, 1, __VA_ARGS__ )
+#define BTL_N_PrintfEx( ch, ... )  if( ch!=0 ){ BTL_UTIL_Printf( __FILE__, __LINE__, ch, __VA_ARGS__ ); }
+#define BTL_N_PrintfSimple( ... ) BTL_UTIL_PrintfSimple( __FILE__, 1, __VA_ARGS__ )
+#define BTL_N_PrintfSimpleEx( ch, ... ) if( ch!=0 ){ BTL_UTIL_PrintfSimple( __FILE__, ch, __VA_ARGS__ ); }
 
 #else // #ifdef BTL_PRINT_SYSTEM_ENABLE
 
