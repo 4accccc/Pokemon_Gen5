@@ -60,16 +60,16 @@
 /// ループパートに入った時のフレーム
 #define POKE_LOOP_PART_FRAME  ( 5301 )
 
+// 黒・白で違う定義
 #if PM_VERSION==VERSION_BLACK
+/// 黒：ポリゴンデモのループ終了フレームの指定
 #define POKE_LOOP_END_FRAME   ( 5619 )
-#else
-#define POKE_LOOP_END_FRAME   ( 5779 )
-#endif
-
-#if PM_VERSION==VERSION_BLACK
-/// タイトル画面の鳴き声を出すポケモンの指定
+/// 黒：タイトル画面の鳴き声を出すポケモンの指定
 #define PLAY_MONSNO ( MONSNO_RESIRAMU )
 #else
+/// 白：ポリゴンデモのループ終了フレームの指定
+#define POKE_LOOP_END_FRAME   ( 5779 )
+/// 白：タイトル画面の鳴き声を出すポケモンの指定
 #define PLAY_MONSNO ( MONSNO_ZEKUROMU )
 #endif
 
@@ -1011,6 +1011,7 @@ enum{
 
 //読み込む3Dリソース
 #if PM_VERSION == VERSION_BLACK
+// 黒：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbca, GFL_G3D_UTIL_RESARC },
@@ -1019,10 +1020,12 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbca, GFL_G3D_UTIL_RESARC },
 };
-
+// 黒：カメラデータ
 #define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_b_camera_bin
 
 #else
+
+// 黒：モデリングデータ
 static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbca, GFL_G3D_UTIL_RESARC },
@@ -1032,6 +1035,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
 };
 
+// 白：カメラデータ
 #define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_w_camera_bin
 
 #endif
