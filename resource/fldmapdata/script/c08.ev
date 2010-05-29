@@ -334,10 +334,6 @@ EVENT_START   ev_pos_c08_champions_01
 	_OBJ_ANIME( C08_SAGE1_01,anm_c08_sage1_goodbye_02 )
 	_OBJ_ANIME_WAIT()
 	
-	
-	//BGM終了
-	_END_EVENT_BGM()
-	
 	//群集お互いを見る
 	_OBJ_ANIME( C08_OLDMAN_01, anm_c08_croud_panic_d )
 	_OBJ_ANIME( C08_CROWD_03,anm_c08_croud_panic_u )
@@ -358,6 +354,9 @@ EVENT_START   ev_pos_c08_champions_01
 	//画面暗転・プラズマ団OB削除
 	_BLACK_OUT_SLOW()
 	
+	//BGM終了
+	_END_EVENT_BGM()
+	
 	//群集散ってゆくアニメーション
 	_OBJ_ANIME( C08_CROWD_01, anm_c08_croud_goodbye_01 )
 	_OBJ_ANIME( C08_OLDMAN_01,anm_c08_croud_goodbye_01 )
@@ -374,6 +373,9 @@ EVENT_START   ev_pos_c08_champions_01
 	
 	//暗転終了
 	_DISP_FADE_END_CHECK()
+	
+	//タイムウエイト
+	_TIME_WAIT( 8 )
 	
 	//群集・ゲーヂスOBJ削除
 	_OBJ_DEL( C08_OLDMAN_01 )
