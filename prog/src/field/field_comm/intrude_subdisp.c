@@ -473,7 +473,7 @@ static void _SetRect(int x, int y, int half_size_x, int half_size_y, GFL_RECT *r
 static BOOL _CheckRectHit(int x, int y, const GFL_RECT *rect);
 static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id);
 static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub);
-static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 static void _IntSub_CommParamInit(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm);
 static void _SetPalFlash_DecideTown(INTRUDE_SUBDISP_PTR intsub);
@@ -484,6 +484,7 @@ static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub);
 static void _TimeScrn_Clear(void);
 static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub, BOOL v_req);
 static BOOL _TutorialMissionNoRecv(INTRUDE_SUBDISP_PTR intsub);
+static void _IntSub_BGColorScreenChange(INTRUDE_SUBDISP_PTR intsub, int palace_area);
 
 
 //==============================================================================
@@ -583,6 +584,20 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
 	//VブランクTCB登録
 	intsub->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, intsub, 10);
 
+  //アクター更新
+  {
+    PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
+    ZONEID my_zone_id = PLAYERWORK_getZoneID(player_work);
+    OCCUPY_INFO *area_occupy = _IntSub_GetArreaOccupy(intsub);
+
+    _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
+    _IntSub_ActorUpdate_Area(intsub, area_occupy);
+    _IntSub_ActorUpdate_CursorS(intsub, Intrude_Check_CommConnect(game_comm), area_occupy);
+    _IntSub_ActorUpdate_CursorL(intsub, area_occupy, my_zone_id);
+    _IntSub_ActorUpdate_EntryButton(intsub, area_occupy);
+    _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
+  }
+
   return intsub;
 }
 
@@ -597,6 +612,9 @@ void INTRUDE_SUBDISP_Exit(INTRUDE_SUBDISP_PTR intsub)
 {
 	GFL_TCB_DeleteTask(intsub->vintr_tcb);
 
+  //バックグラウンドの色に黒を設定しておく
+  GFL_STD_MemFill16((void*)(HW_DB_BG_PLTT), 0x0000, 2);
+  
   _IntSub_Delete_EntryButton(intsub);
   _IntSub_ActorDelete(intsub);
   _IntSub_ActorResourceUnload(intsub);
@@ -717,24 +735,35 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
   ZONEID my_zone_id = PLAYERWORK_getZoneID(player_work);
   OCCUPY_INFO *area_occupy;
+  BOOL update = FALSE;
   
   area_occupy = _IntSub_GetArreaOccupy(intsub);
 
-  _IntSub_BGBarUpdate(intsub);
-  //BGスクリーンカラー変更チェック
-  _IntSub_BGColorUpdate(intsub);
+  //通信が切れている or 既に結果取得済みの場合はBG更新しない
+  if(intcomm != NULL && MISSION_CheckRecvResult(&intcomm->mission) == FALSE){
+    update = TRUE;
+  }
+  else if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+    update = TRUE;
+  }
   
-  //インフォメーションメッセージ
-  _IntSub_TitleMsgUpdate(intsub, my_zone_id);
-  _IntSub_InfoMsgUpdate(intsub, intcomm, my_zone_id);
+  if(update == TRUE){
+    _IntSub_BGBarUpdate(intsub);
+    //BGスクリーンカラー変更チェック
+    _IntSub_BGColorUpdate(intsub, intcomm);
   
-  //アクター更新
-  _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
-  _IntSub_ActorUpdate_Area(intsub, area_occupy);
-  _IntSub_ActorUpdate_CursorS(intsub, intcomm, area_occupy);
-  _IntSub_ActorUpdate_CursorL(intsub, area_occupy, my_zone_id);
-  _IntSub_ActorUpdate_EntryButton(intsub, area_occupy);
-  _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
+    //インフォメーションメッセージ
+    _IntSub_TitleMsgUpdate(intsub, my_zone_id);
+    _IntSub_InfoMsgUpdate(intsub, intcomm, my_zone_id);
+    
+    //アクター更新
+    _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
+    _IntSub_ActorUpdate_Area(intsub, area_occupy);
+    _IntSub_ActorUpdate_CursorS(intsub, intcomm, area_occupy);
+    _IntSub_ActorUpdate_CursorL(intsub, area_occupy, my_zone_id);
+    _IntSub_ActorUpdate_EntryButton(intsub, area_occupy);
+    _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
+  }
 }
 
 //==================================================================
@@ -750,6 +779,7 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
 GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, FIELD_SUBSCREEN_WORK* subscreen )
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
   GMEVENT *event = NULL;
   
@@ -757,7 +787,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
     return NULL;
   }
   
-  if(intsub->back_exit == TRUE){
+  if(intsub->back_exit == TRUE || (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && Intrude_Check_CommConnect(game_comm) == NULL)){
     FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NORMAL );
     return NULL;
   }
@@ -926,6 +956,8 @@ static void _IntSub_BGLoad(INTRUDE_SUBDISP_PTR intsub, ARCHANDLE *handle)
   GFL_ARCHDL_UTIL_TransVramScreen(
     handle, scrn_data_idx, INTRUDE_FRAME_S_BAR, 0, 
     0x800, TRUE, HEAPID_FIELDMAP);
+  //現在いるパレスエリアのカラースクリーンに変更
+  _IntSub_BGColorScreenChange(intsub, intsub->comm.now_palace_area);
   //[TIME]のスクリーンをバッファに読み込む
   {
     NNSG2dScreenData *scrnData;
@@ -1774,8 +1806,10 @@ static void _IntSub_ActorUpdate_CursorL(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO 
     }
   }
   act = intsub->act[INTSUB_ACTOR_CUR_L];
+#if 0 //自分の色が途中で変わることはありえなくなった 2010.05.29(土)
   GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_CUR_L], 
     INTSUB_ACTOR_PAL_BASE_START + my_net_id, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+#endif
   GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
   GFL_CLACT_WK_SetDrawEnable(act, TRUE);
   
@@ -2409,7 +2443,7 @@ static void _IntSub_BGBarUpdate(INTRUDE_SUBDISP_PTR intsub)
  * @param   intsub		
  */
 //--------------------------------------------------------------
-static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub)
+static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_PTR intcomm)
 {
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(intsub->gsys);
@@ -2420,21 +2454,36 @@ static void _IntSub_BGColorUpdate(INTRUDE_SUBDISP_PTR intsub)
     return;
   }
   
+  _IntSub_BGColorScreenChange(intsub, bg_pal);
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定パレスの色にBGスクリーンのカラーを変更する
+ *
+ * @param   intsub		
+ * @param   palace_area		
+ */
+//--------------------------------------------------------------
+static void _IntSub_BGColorScreenChange(INTRUDE_SUBDISP_PTR intsub, int palace_area)
+{
   GFL_BG_ChangeScreenPalette(
     INTRUDE_FRAME_S_BACKGROUND, _AREA_SCREEN_COLOR_START_X, _AREA_SCREEN_COLOR_START_Y, 
     _AREA_SCREEN_COLOR_SIZE_X, _AREA_SCREEN_COLOR_SIZE_Y, 
-    INTSUB_BG_PAL_BASE_START_BACK + bg_pal);
+    INTSUB_BG_PAL_BASE_START_BACK + palace_area);
   GFL_BG_ChangeScreenPalette(
     INTRUDE_FRAME_S_BAR, _AREA_SCREEN_COLOR_START_X, _AREA_SCREEN_COLOR_START_Y, 
     _AREA_SCREEN_COLOR_SIZE_X, _AREA_SCREEN_COLOR_SIZE_Y, 
-    INTSUB_BG_PAL_BASE_START_TOWN + bg_pal);
+    INTSUB_BG_PAL_BASE_START_TOWN + palace_area);
 
-  GFL_BMPWIN_MakeScreen(intsub->printutil_title.win);
-  GFL_BMPWIN_MakeScreen(intsub->printutil_info.win);
+  if(intsub->printutil_title.win != NULL){
+    GFL_BMPWIN_MakeScreen(intsub->printutil_title.win);
+    GFL_BMPWIN_MakeScreen(intsub->printutil_info.win);
+  }
 
   GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BACKGROUND);
   GFL_BG_LoadScreenV_Req(INTRUDE_FRAME_S_BAR);
-  intsub->now_bg_pal = bg_pal;
+  intsub->now_bg_pal = palace_area;
 }
 
 //--------------------------------------------------------------
@@ -2484,6 +2533,7 @@ static void _IntSub_CommParamUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS
   #else
     GFL_STD_MemClear(&intsub->comm, sizeof(INTRUDE_COMM_PARAM));
   #endif
+    intsub->add_player_count = 1; //自分
   }
   else{
     const MISSION_DATA *md;
