@@ -50,15 +50,11 @@ class EventHeader
     line = stream.gets
     raise DataFormatError unless line =~/# linked worldmap file name/
     line = stream.gets.chomp!  #*.wmsƒtƒ@ƒCƒ‹–¼
-    @wmsFile = line
-    if FileTest.exist? line then
-    else
-      path = File.dirname(stream.path) + "/" + File.basename(@wmsFile)
-      unless FileTest.exist?(path) then
-        raise ReadWMSError, "#{line}‚ª‚Ý‚Â‚©‚è‚Ü‚¹‚ñ"
-      end
-      @wmsFile = path
+    path = File.dirname(stream.path) + "/" + File.basename( line )
+    unless FileTest.exist?(path) then
+      raise ReadWMSError, "#{line}‚ª‚Ý‚Â‚©‚è‚Ü‚¹‚ñ"
     end
+    @wmsFile = path
     File.open(@wmsFile){|file|
       readWMS file
     }
