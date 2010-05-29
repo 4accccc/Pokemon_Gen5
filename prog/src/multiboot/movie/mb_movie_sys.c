@@ -896,19 +896,19 @@ static void MB_MOVIE_LoadResource( MB_MOVIE_WORK *work )
   ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_MYSTERY , work->heapId );
 
   //‰º‰æ–Ê
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fusigi_bg_00_NCLR , 
                     PALTYPE_SUB_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fusigi_bg_00_NCGR ,
                     MB_MOVIE_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fusigi_bg_00_NSCR , 
                     MB_MOVIE_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
   
   //ã‰æ–Ê
-  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fushigi_back_NCLR , 
+  GFL_ARCHDL_UTIL_TransVramPalette( arcHandle , NARC_mystery_fusigi_bg_00_NCLR , 
                     PALTYPE_MAIN_BG , 0 , 0 , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fushigi_back_NCGR ,
+  GFL_ARCHDL_UTIL_TransVramBgCharacter( arcHandle , NARC_mystery_fusigi_bg_00_NCGR ,
                     MB_MOVIE_FRAME_BG , 0 , 0, FALSE , work->heapId );
-  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fushigi_back_NSCR , 
+  GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_mystery_fusigi_bg_00_NSCR , 
                     MB_MOVIE_FRAME_BG ,  0 , 0, FALSE , work->heapId );
 
   GFL_ARC_CloseDataHandle( arcHandle );
