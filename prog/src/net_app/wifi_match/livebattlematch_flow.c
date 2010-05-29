@@ -182,6 +182,7 @@ typedef enum
   LVM_MENU_TYPE_YESNO,
   LVM_MENU_TYPE_MENU,
   LVM_MENU_TYPE_END,
+  LVM_MENU_TYPE_YESNO_DEFAULT_NO,
 }LVM_MENU_TYPE;
 static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE type );
 static void UTIL_LIST_Delete( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
@@ -1317,7 +1318,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_UNREG );
 		break;
   case SEQ_START_LIST_UNREG:
-    UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO ); 
+    UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO_DEFAULT_NO ); 
     *p_seq  = SEQ_WAIT_LIST_UNREG;
 		break;
   case SEQ_WAIT_LIST_UNREG:
@@ -1345,7 +1346,7 @@ static void SEQFUNC_StartCup( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_DECIDE );
 		break;
   case SEQ_START_LIST_DECIDE:
-    UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO ); 
+    UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO_DEFAULT_NO ); 
     *p_seq  = SEQ_WAIT_LIST_DECIDE;
 		break;
   case SEQ_WAIT_LIST_DECIDE:
@@ -2173,6 +2174,10 @@ static void UTIL_LIST_Create( LIVEBATTLEMATCH_FLOW_WORK *p_wk, LVM_MENU_TYPE typ
 
   switch( type )
   { 
+  case LVM_MENU_TYPE_YESNO_DEFAULT_NO:
+    setup.default_idx = 1;
+    /* fallthrough */
+
   case LVM_MENU_TYPE_YESNO:
     setup.strID[0]= LIVE_SELECT_00;
     setup.strID[1]= LIVE_SELECT_01;

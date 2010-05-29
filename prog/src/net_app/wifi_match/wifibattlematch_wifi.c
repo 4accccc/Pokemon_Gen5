@@ -279,6 +279,7 @@ typedef enum
   UTIL_LIST_TYPE_DECIDE,
   UTIL_LIST_TYPE_CUPMENU,
   UTIL_LIST_TYPE_CUPMENU_CONT,
+  UTIL_LIST_TYPE_YESNO_DEFAULT_NO,
 }UTIL_LIST_TYPE;
 static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE type );
 static void Util_List_Delete( WIFIBATTLEMATCH_WIFI_WORK *p_wk );
@@ -3959,7 +3960,7 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_UNREGISTER_LIST );
     break;
   case SEQ_START_UNREGISTER_LIST:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO_DEFAULT_NO );
     *p_seq     = SEQ_SELECT_UNREGISTER_LIST;
     break;
   case SEQ_SELECT_UNREGISTER_LIST:
@@ -3986,7 +3987,7 @@ static void WbmWifiSubSeq_UnRegister( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_CONFIRM_LIST );
     break;
   case SEQ_START_CONFIRM_LIST:
-    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO );
+    Util_List_Create( p_wk, UTIL_LIST_TYPE_YESNO_DEFAULT_NO );
     *p_seq     = SEQ_SELECT_CONFIRM_LIST;
     break;
   case SEQ_SELECT_CONFIRM_LIST:
@@ -4452,6 +4453,9 @@ static void Util_List_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk, UTIL_LIST_TYPE ty
 
     switch( type )
     {
+    case UTIL_LIST_TYPE_YESNO_DEFAULT_NO:
+      setup.default_idx = 1;
+      /* fallthrough */
     case UTIL_LIST_TYPE_YESNO:
       setup.strID[0]= WIFIMATCH_WIFI_SELECT_04;
       setup.strID[1]= WIFIMATCH_WIFI_SELECT_05;
