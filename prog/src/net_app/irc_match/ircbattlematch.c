@@ -729,6 +729,14 @@ static void _RecvMyStatusData(const int netID, const int size, const void* pData
   NET_PRINT("MYSTATUS GET\n");
   MyStatus_Copy(pData, pTargetSt);
 
+  {
+    GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
+    ETC_SAVE_WORK * pETC = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(pGameData) );
+    EtcSave_SetAcquaintance(pETC, MyStatus_GetID(pTargetSt));
+  }
+
+//  void EtcSave_SetAcquaintance(ETC_SAVE_WORK *etcsave, u32 trainer_id)
+  
 }
 
 //--------------------------------------------------------------
@@ -786,8 +794,8 @@ static void _recvFriendCode(const int netID, const int size, const void* pData, 
   pWork->bFriendAdd = GFL_NET_DWC_FriendDataAdd(pGameData, pTargetSt, (DWCFriendData*)pData, pWork->heapID);
 
   {
-    ETC_SAVE_WORK * pETC = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(pGameData) );
-    EtcSave_SetAcquaintance(pETC, MyStatus_GetID(pTargetSt));
+//    ETC_SAVE_WORK * pETC = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(pGameData) );
+//    EtcSave_SetAcquaintance(pETC, MyStatus_GetID(pTargetSt));
   }
 }
 
