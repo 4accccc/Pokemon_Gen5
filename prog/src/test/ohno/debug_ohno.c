@@ -25,6 +25,7 @@
 
 #include "savedata/bsubway_savedata.h"
 #include "savedata/battle_examination.h"
+#include "savedata/save_tbl.h"
 #include "waza_tool/wazano_def.h"
 #include "battle/bsubway_battle_data.h"
 
@@ -1367,3 +1368,40 @@ static void _debug_bsubData(BSUBWAY_PARTNER_DATA* pData, BOOL bSingle)
   }
 }
 
+
+
+
+extern const GFL_SVLD_PARAM SaveParam_Normal;
+
+
+static GFL_PROC_RESULT SaveFriendChangeProcInit(GFL_PROC * proc, int * seq, void * pwk, void * mywk)
+{
+  DEBUG_OHNO_CONTROL * pDOC;
+
+  
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_OHNO_DEBUG, 0x30000 );
+  pDOC = GFL_PROC_AllocWork( proc, sizeof(DEBUG_OHNO_CONTROL), HEAPID_OHNO_DEBUG );
+  GFL_STD_MemClear(pDOC, sizeof(DEBUG_OHNO_CONTROL));
+
+  {
+    WIFI_LIST* list;
+    GFL_SAVEDATA* svdata = GFL_SAVEDATA_Create(&SaveParam_Normal, GFL_HEAPID_APP);
+    GFL_BACKUP_Load(svdata, GFL_HEAPID_APP);
+    //対象のデータを引っ張り出して書き換える
+    list = GFL_SAVEDATA_Get(svdata, GMDATA_ID_WIFILIST);
+    WifiList_Init(list);
+    GFL_BACKUP_Save(svdata);
+  }
+  _CHANGE_STATE( NetTestNone ); // 
+  return GFL_PROC_RES_FINISH;
+}
+
+
+
+
+// プロセス定義データ  赤外線受信テスト
+const GFL_PROC_DATA SaveFriendProcData = {
+  SaveFriendChangeProcInit,
+  DebugOhnoMainProcMain,
+  DebugOhnoMainProcEnd,
+};

@@ -134,6 +134,7 @@ extern const GFL_PROC_DATA PokemonTradeWiFiProcData;
 extern const GFL_PROC_DATA PokemonTradeProcData;
 extern const GFL_PROC_DATA PokemonTradeIrcProcData;
 extern const GFL_PROC_DATA DebugSaveAddrProcData;
+extern const GFL_PROC_DATA SaveFriendProcData;
 
 
 
@@ -213,8 +214,12 @@ static const D_MENULIST DebugMenuList[] = {
     //		&PokemonTradeProcData,
     //		_PokeIrcTradeWorkCreate,
     //		FS_OVERLAY_ID(pokemon_trade)
+//    DEBUG_OHNO_MSG0025,
+//    &NetDeliveryIRCRecvProcData,
+//    NULL,
+//    FS_OVERLAY_ID(ohno_debugapp)
     DEBUG_OHNO_MSG0025,
-    &NetDeliveryIRCRecvProcData,
+    &SaveFriendProcData,
     NULL,
     FS_OVERLAY_ID(ohno_debugapp)
     },

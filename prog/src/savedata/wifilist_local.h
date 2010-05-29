@@ -6,14 +6,12 @@
  * @date	2006.03.02
  */
 //============================================================================================
-#ifndef __WIFILIST_LOCAL_H__
-#define __WIFILIST_LOCAL_H__
+#pragma once
 
 #include "buflen.h"
 
 typedef struct{
-//  STRCODE 		name[BUFLEN_PERSON_NAME];//16*2 32
-  STRCODE 		name[PERSON_NAME_SIZE+EOM_SIZE];  //8*2=16
+  STRCODE 		name[PERSON_NAME_SIZE+EOM_SIZE];
   u32 dummy1;
   u32 dummy2;
   u32 ProfileID;    ///4
@@ -34,9 +32,10 @@ typedef struct{
 struct _WIFI_LIST{
 	DWCUserData		my_dwcuser;							
 	DWCFriendData	friend_dwc[WIFILIST_FRIEND_MAX];	
-	WIFI_FRIEND	friendData[WIFILIST_FRIEND_MAX];		
+	WIFI_FRIEND	friendData[WIFILIST_FRIEND_MAX];
+  u16 dummy;
+  u16 crc;
 };
 
 
 
-#endif
