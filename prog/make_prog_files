@@ -1788,6 +1788,10 @@ SRCS_OVERLAY_DEBUG_MENU_MMDL_LIST = field/event_debug_menu_mmdl_list.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_MENU_WFBC_CHECK = field/debug_wfbc.c
 
+#DEBUG_MENU_INTRUDE
+#===> GROUP_OVERLAY_GIMMICK
+SRCS_OVERLAY_DEBUG_MENU_INTRUDE = field/event_debug_menu_intrude.c
+
 #マイクテスト
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_MICTEST	= app/mictest/mictest.c

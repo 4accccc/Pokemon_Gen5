@@ -98,6 +98,7 @@
 #include "event_debug_demo3d.h" // for DEBUG_EVENT_FLDMENU_Demo3DSelect
 #include "event_debug_sodateya.h" // for DEBUG_EVENT_DebugMenuSodateya
 #include "event_debug_menu_make_egg.h"  // for DEBUG_EVENT_FLDMENU_MakeEgg
+#include "event_debug_menu_intrude.h"   // for DEBUG_EVENT_FLDMENU_Intrude
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SJIStoStrcode
 
@@ -302,6 +303,7 @@ static BOOL debugMenuCallProc_Musical( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_ClearWifiHistory( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_LiveComm( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenu_WfbcDebug( DEBUG_MENU_EVENT_WORK *wk );
 
 static void DbgRestDataUpdate(const u32 inZone);
@@ -388,6 +390,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
   { DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset },  //ミッションリスト再作成
+  { DEBUG_FIELD_INTRUDE,    debugMenu_Intrude },      //ハイリンク
 
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ
   { DEBUG_FIELD_STR44, debugMenuCallProc_UITemplate },        //UIテンプレート
@@ -3404,6 +3407,18 @@ static BOOL debugMenu_MissionReset( DEBUG_MENU_EVENT_WORK *wk )
   OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gmData);
   MISSION_LIST_Create( occupy );
   return FALSE;
+}
+//--------------------------------------------------------------
+/**
+ * デバッグメニュー　ハイリンク
+ */
+//--------------------------------------------------------------
+static BOOL debugMenu_Intrude( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GMEVENT* event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+              FS_OVERLAY_ID( debug_menu_intrude ), DEBUG_EVENT_FLDMENU_Intrude, wk->fieldWork );
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+  return TRUE;
 }
 
 //======================================================================
