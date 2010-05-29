@@ -1571,7 +1571,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
 		break;
   case SEQ_START_MSG_CANCEL_MATCHING: //マッチングやめる
-    PMSND_StopSE();
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
     UTIL_TEXT_Print( p_wk, LIVE_STR_17, WBM_TEXT_TYPE_STREAM );
     *p_seq       = SEQ_WAIT_MSG;
     WBM_SEQ_SetReservSeq( p_seqwk, SEQ_START_LIST_CANCEL_MATCHING );

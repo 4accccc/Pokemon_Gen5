@@ -3093,7 +3093,7 @@ void WBM_WAITICON_SetDrawEnable( WBM_WAITICON_WORK *p_wk, BOOL on_off )
   }
   else
   { 
-    PMSND_StopSE();
+    PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
   }
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_light, on_off );
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_wall, on_off );

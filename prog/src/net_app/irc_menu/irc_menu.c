@@ -1803,6 +1803,8 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 
       MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_005, 0, 0  );
       BUTTON_Reset( &p_wk->btn );
+
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       return;
 		}
   }
@@ -1916,6 +1918,8 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG_CONNECT:
 		if( p_wk->cnt >= RESULT_SEND_CNT )
 		{	
+
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
 			PMSND_PlaySE( IRCMENU_SE_IRC_ON );
 			MSGWND_Print( &p_wk->msgwnd, &p_wk->msg, COMPATI_STR_002, 0, 0  );
 			*p_seq	= SEQ_NEXTPROC;
