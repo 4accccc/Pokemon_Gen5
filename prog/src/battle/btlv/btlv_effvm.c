@@ -5782,7 +5782,7 @@ static  void  EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw )
 { 
   BtlvMcssPos pos;
 
-  for( pos = 0 ; pos < BTLV_MCSS_POS_TOTAL ; pos++ )
+  for( pos = 0 ; pos < BTLV_MCSS_POS_MAX ; pos++ )
   {
     if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) == TRUE )
     {
