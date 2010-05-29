@@ -343,11 +343,6 @@ EVENT_START	ev_pos_c08gym0101_f2_03
 
 			_TRAINER_WIN()
 			
-			//トレーナーメッセージ
-			_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_02,TR_C08GYM0101_F2_03 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
-			
 			//========================================//
 			//POS起動をオフに
 			$WK_SCENE_C08GYM0101 = 1
@@ -407,11 +402,6 @@ EVENT_START	ev_c08gym0101_f2_03
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
 
 				_TRAINER_WIN()
-				
-				//トレーナーメッセージ
-				_BALLOONWIN_OBJMSG( msg_c08gym0101_veteranm4_02,TR_C08GYM0101_F2_03 )
-				_LAST_KEYWAIT()
-				_BALLOONWIN_CLOSE()
 				
 				//========================================//
 				//POS起動をオフに
