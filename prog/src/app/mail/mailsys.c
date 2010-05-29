@@ -264,6 +264,7 @@ static void _set_pmsinput_mode( MAIL_MAIN_DAT* wk, MAIL_PARAM* param )
     wk->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
     wk->tmpPms.sentence_id   = pmss_system_01;
     wk->tmpPms.word[0]       = wk->dat->pmsword;
+
     wk->app_wk = PMSI_PARAM_Create( PMSI_MODE_SINGLE, PMSI_GUIDANCE_DEFAULT,
                                     NULL,TRUE,param->savedata,wk->heapID);
     PMSI_PARAM_SetInitializeDataSingle( wk->app_wk, wk->dat->pmsword );
@@ -329,7 +330,7 @@ static MAIL_TMP_DATA* MailSys_AllocTmpData(const MAIL_DATA* org,int heapID)
   tmp->design  = MailData_GetDesignNo(org);
   tmp->lang    = MailData_GetCountryCode(org);
   tmp->ver     = MailData_GetCasetteVersion(org);
-  tmp->pmsword = PMS_WORD_NULL;//MailData_GetFormBit(org);
+  tmp->pmsword = MailData_GetPmsWord(org);
 
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     PMSDAT_Copy( &tmp->msg[i], MailData_GetMsgByIndex((MAIL_DATA*)org, i) );
@@ -373,7 +374,7 @@ static void MailSys_SetTmpData( MAIL_DATA* org, MAIL_TMP_DATA* tmp )
   }
 
   // 簡易単語コピー
-  MailData_SetFormBit( org, tmp->pmsword );
+  MailData_SetPmsWord( org, tmp->pmsword );
 
   //データを有効化するためにデザインNOを設定
   MailData_SetDesignNo(org,tmp->design);

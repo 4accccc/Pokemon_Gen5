@@ -3443,7 +3443,7 @@ static void MailBox_SetFirstMail( GAMEDATA* gamedata )
   MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[1], 1 );
   MailData_SetMsgByIndex( mail, (PMS_DATA*)&mail_pmsdata[2], 2 );
   // 簡易ワード「トレーナー」セット
-  MailData_SetFormBit( mail, mail04 );
+  MailData_SetPmsWord( mail, mail04 );
 
   // メールボックスにメールをセット
   {

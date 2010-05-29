@@ -785,7 +785,7 @@ void MBBMP_MailMesPut( MAILBOX_SYS_WORK * syswk )
   // ŠÈˆÕ’PŒê•\Ž¦
   syswk->app->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
   syswk->app->tmpPms.sentence_id   = pmss_system_01;
-  syswk->app->tmpPms.word[0]       = MailData_GetFormBit( syswk->app->mail[syswk->lst_pos] );
+  syswk->app->tmpPms.word[0]       = MailData_GetPmsWord( syswk->app->mail[syswk->lst_pos] );
 
   if(syswk->app->tmpPms.word[0]!=0){
     PMS_DRAW_Print( syswk->app->pms_draw_work, 

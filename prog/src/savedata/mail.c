@@ -43,15 +43,15 @@
 //  パディングを行っています
 //=============================================================
 typedef struct _MAIL_DATA{
-  u32 writerID; //<トレーナーID 4                         4
-  u8  sex;      //<主人公の性別 1                         5
-  u8  region;   //<国コード 1                             6
-  u8  version;  //<カセットバージョン 1                   7
-  u8  design;   //<デザインナンバー 1                     8
-  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  // 16        24
-  u16     padding[3];                       //< パディング６バイト   30
-  u16     form_bit;                         // padding領域をプラチナから3体のポケモンの    32
-                                            // フォルム番号として使用(5bit単位)
+  u32 writerID; ///<トレーナーID 4                         4
+  u8  sex;      ///<主人公の性別 1                         5
+  u8  region;   ///<国コード 1                             6
+  u8  version;  ///<カセットバージョン 1                   7
+  u8  design;   ///<デザインナンバー 1                     8
+  STRCODE name[PERSON_NAME_SIZE+EOM_SIZE];  ///< 名前16byte   24
+  u16     padding[3];                       ///< パディング６バイト   30
+  u16     pmsword;                          ///< 簡易単語 32
+
   PMS_DATA  msg[MAILDAT_MSGMAX];            //<文章データ 56
 }_MAIL_DATA;
 
@@ -99,7 +99,7 @@ void MailData_Clear(MAIL_DATA* dat)
 
   GFL_STD_MemFill16(dat->name, GFL_STR_GetEOMCode(), sizeof(dat->name));
 
-  dat->form_bit = 0;
+  dat->pmsword = PMS_WORD_NULL;
   for(i = 0;i < MAILDAT_MSGMAX;i++){
     PMSDAT_Clear(&dat->msg[i]);
   }
@@ -152,7 +152,7 @@ void MailData_Copy(MAIL_DATA* src,MAIL_DATA* dest)
 /**
  *  @brief  メールデータの内容比較
  *
- * @retval  BOOL    一致していたらTRUEを返す
+ *  @retval BOOL    一致していたらTRUEを返す
  */
 BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
 {
@@ -163,7 +163,7 @@ BOOL MailData_Compare(MAIL_DATA* src1,MAIL_DATA* src2)
     (src1->region != src2->region) ||
     (src1->version != src2->version) ||
     (src1->design != src2->design) ||
-    (src1->form_bit != src2->form_bit) ){
+    (src1->pmsword != src2->pmsword) ){
     return FALSE;
   }
   if( GFL_STD_MemComp( src1->name,src2->name,sizeof(src1->name) ) != 0){
@@ -298,16 +298,19 @@ void MailData_SetCasetteVersion(MAIL_DATA* dat,const u8 version)
 
 
 /**
- *  @brief  メールデータ　form_bit取得
+ *  @brief  メールデータ　簡易単語取得（会話ではない）
  */
-u16 MailData_GetFormBit(const MAIL_DATA* dat)
+u16 MailData_GetPmsWord(const MAIL_DATA* dat)
 {
-  return dat->form_bit;
+  return dat->pmsword;
 }
 
-void MailData_SetFormBit( MAIL_DATA* dat, u16 word )
+/**
+ *  @brief  メールデータ　簡易単語セット（会話ではない）
+ */
+void MailData_SetPmsWord( MAIL_DATA* dat, u16 word )
 {
-  dat->form_bit = word;
+  dat->pmsword = word;
 }
 
 /**
@@ -332,33 +335,6 @@ void MailData_SetMsgByIndex(MAIL_DATA* dat, const PMS_DATA* pms,u8 index)
   PMSDAT_Copy(&dat->msg[index],pms);
 }
 
-/**
- *  @brief  メールデータ　簡易文文字列取得(インデックス指定)
- *
- *  @param  dat MAIL_DATA*
- *  @param  index 簡易文インデックス
- *  @param  buf   取得した文字列ポインタの格納場所
- *
- *  @retval FALSE 文字列の取得に失敗(または簡易文が有効なデータではない)
- *  
- *  @li bufに対して内部でメモリを確保しているので、呼び出し側が明示的に解放すること
- *  @li FALSEが返った場合、bufはNULLクリアされる
- */
-BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,HEAPID heapID)
-{
-  if(index >= MAILDAT_MSGMAX){
-    buf = NULL;
-    return FALSE;
-  }
-  
-  if(!PMSDAT_IsEnabled(&dat->msg[index])){
-    buf = NULL;
-    return FALSE;
-  }
-
-  buf = PMSDAT_ToString(&dat->msg[index],heapID);
-  return TRUE;
-}
 
 //=================================================================
 //
@@ -367,14 +343,6 @@ BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,HEAPID 
 static int mail_GetNullData(MAIL_DATA* array,int num);
 static int mail_GetNumEnable(MAIL_DATA* array,int num);
 static MAIL_DATA* mail_GetAddress(MAIL_BLOCK* bloc,MAILBLOCK_ID blockID,int dataID);
-
-/**
- *  @brief  セーブデータブロックへのポインタを取得
-MAIL_BLOCK* SaveData_GetMailBlock(SAVE_CONTROL_WORK* sv)
-{
-  return SaveControl_DataPtrGet( sv, GMDATA_ID_MAILDATA );
-}
- */
 
 //=============================================================================================
 /**

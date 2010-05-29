@@ -1721,7 +1721,7 @@ static void MailView_MsgWrite(MAIL_VIEW_DAT* wk)
   }
   
   // ŠÈˆÕ’PŒê‚ð•`‰æ
-  if(wk->dat->pmsword!=0){
+  if(wk->dat->pmsword!=PMS_WORD_NULL){
     wk->tmpPms.sentence_type = PMS_TYPE_SYSTEM;
     wk->tmpPms.sentence_id   = pmss_system_01;
     wk->tmpPms.word[0]       = wk->dat->pmsword;

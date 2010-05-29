@@ -113,34 +113,13 @@ extern void MailData_SetCasetteVersion(MAIL_DATA* dat,const u8 version);
 
 
 /**
- *  @brief  メールデータ　form_bit取得
- */
-extern u16  MailData_GetFormBit(const MAIL_DATA* dat);
-extern void MailData_SetFormBit( MAIL_DATA* dat, u16 word );
-
-/**
  *  @brief  メールデータ　簡易文取得(インデックス指定版)
  */
 extern PMS_DATA*  MailData_GetMsgByIndex(MAIL_DATA* dat,u8 index);
 extern void MailData_SetMsgByIndex(MAIL_DATA* dat, const PMS_DATA* pms,u8 index);
 
 /**
- *  @brief  メールデータ　簡易文文字列取得(インデックス指定)
- *
- *  @param  dat MAIL_DATA*
- *  @param  index 簡易文インデックス
- *  @param  buf   取得した文字列ポインタの格納場所
- *
- *  @retval FALSE 文字列の取得に失敗(または簡易文が有効なデータではない)
- *  
- *  @li bufに対して内部でメモリを確保しているので、呼び出し側が明示的に解放すること
- *  @li FALSEが返った場合、bufはNULLクリアされる
+ *  @brief  メールデータ　簡易会話単語（簡易会話ではない）
  */
-extern BOOL MailData_GetMsgStrByIndex(const MAIL_DATA* dat,u8 index,STRBUF* buf,HEAPID heapID);
-
-/**
-  * @brief 簡易ワードセット(数値のみ）
-  */
-extern void MailData_SetPmsWord( MAIL_DATA *dat, PMS_WORD word );
-
-
+extern u16  MailData_GetPmsWord(const MAIL_DATA* dat);
+extern void MailData_SetPmsWord( MAIL_DATA* dat, u16 word );
