@@ -103,7 +103,6 @@ typedef struct
   s32               next_seq;
   BOOL              cancel_req;
   BOOL              wifi_cancel;
-  int               server_filenum;
   int               recv_filenum;
   u32               percent;
   u32               recived;
@@ -207,7 +206,8 @@ static MYSTERY_NET_ERROR_REPAIR_TYPE Mystery_Net_Irc_GetErrorRepairType( const M
 //-------------------------------------
 ///	その他
 //=====================================
-static u32 UTIL_StringToHex( const char *buf );
+static u32  UTIL_StringToHex( const char *buf );
+static BOOL UTIL_IsClear( void *p_adrs, u32 size );
 
 //=============================================================================
 /**
@@ -1044,6 +1044,7 @@ static void SEQFUNC_MainIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
  *	・複数のデータがあった場合、プレイヤーごとの固定値からダウンロードするデータをかえる
  *	・ROMバージョンや言語コードが異なるものでも同一サーバー上におく
  *	・ふしぎなおくりもの以外にもレギュレーションデータなども同一サーバー上におく
+ *  ・MYSTERY_Jの属性１がついたものは１０個までサーバーにおくことができる。
  *
  *  ○属性の使い方
  *	属性１）	ふしぎなおくりもの識別子＋言語コード
@@ -1053,8 +1054,11 @@ static void SEQFUNC_MainIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
  *			例	…	FFFFFFFF
  *
  *	属性３）	未使用
- *	}
  *
+ *	○サーバーアクセス頻度を低下させるための条件
+ *	・DWC_NdGetFileListNumAsyncは使用禁止
+ *
+ *	}
  *
  *	@param	SEQ_WORK *p_seqwk   シーケンスワーク
  *	@param	*p_seq              シーケンス
@@ -1067,7 +1071,6 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   { 
     SEQ_INIT,
     SEQ_ATTR,
-    SEQ_FILENUM,
     SEQ_CHECK_ROM,
     SEQ_FILELIST,
     SEQ_CHECKLIST,
@@ -1124,7 +1127,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       }
       else
       { 
-        *p_seq = SEQ_FILENUM;
+        *p_seq = SEQ_FILELIST;
       }
     }
     break;
@@ -1132,44 +1135,18 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 //-------------------------------------
 ///	サーバーのファイルチェック
 //=====================================
-  case SEQ_FILENUM:
-    // サーバーにおかれているファイルの数を得る
-    if( DWC_NdGetFileListNumAsync( &p_nd_data->server_filenum ) == FALSE )
-    {
-      OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
-      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END ); 
-    }
-    else
-    { 
-      WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_FILELIST );
-    }
-    break;
-
   case SEQ_FILELIST:
     { 
-      OS_TPrintf( "server_filenum %d\n", p_nd_data->server_filenum );
-      //ファイルがなかった場合
-      if( p_nd_data->server_filenum == 0 )
-      { 
+      //一気に１０個見に行く
+      if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
+      {
+        OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
         p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
         WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
-        break;
       }
       else
       { 
-        //ファイルが１つ以上あったときには属性を取得する
-
-        if( DWC_NdGetFileListAsync( p_nd_data->fileInfo, 0, MYSTERY_DOWNLOAD_FILE_MAX ) == FALSE)
-        {
-          OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-          p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
-          WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_ERROR, p_seq, SEQ_END, SEQ_END );
-        }
-        else
-        { 
           WIFI_DOWNLOAD_WaitNdCallback( p_nd_data, p_seq, SEQ_CHECK_ROM );
-        }
       }
     }
     break;
@@ -1179,20 +1156,24 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       int i;
       u32 rom_version;
       //ロムバージョンのチェックし、受信可能フラグをつける
-      for( i = 0; i < p_nd_data->server_filenum; i++ )
+      for( i = 0; i < MYSTERY_DOWNLOAD_FILE_MAX; i++ )
       { 
-        rom_version  = UTIL_StringToHex( p_nd_data->fileInfo[ i ].param2 );
-        OS_TPrintf( "[%d}=rom_version%d\n", i, rom_version );
-        
-        if( rom_version & 1<<GET_VERSION() )
-        { 
-          p_nd_data->recvflag[i]  = TRUE;
-          OS_TPrintf( "受信できるバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
-        }
-        else
-        { 
-          p_nd_data->recvflag[i]  = FALSE;
+        //受信できなかったものは０クリアされたまま
+        if( !UTIL_IsClear( &p_nd_data->fileInfo[i], sizeof(DWCNdFileInfo) ) )
+        {
+          rom_version  = UTIL_StringToHex( p_nd_data->fileInfo[ i ].param2 );
+          OS_TPrintf( "[%d}=rom_version%d\n", i, rom_version );
+
+          if( rom_version & 1<<GET_VERSION() )
+          { 
+            p_nd_data->recvflag[i]  = TRUE;
+            OS_TPrintf( "受信できるバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
+          }
+          else
+          { 
+            p_nd_data->recvflag[i]  = FALSE;
           OS_TPrintf( "受信できないバージョン%d %d\n",rom_version, 1<<GET_VERSION() );
+          }
         }
       }
 
@@ -1271,7 +1252,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 //=====================================
   case SEQ_GET_FILE:
     // ファイル読み込み開始
-    OS_TPrintf( "取得するもの target%d max%d ser%d\n", p_nd_data->target, p_nd_data->recv_filenum, p_nd_data->server_filenum );
+    OS_TPrintf( "取得するもの target%d max%d\n", p_nd_data->target, p_nd_data->recv_filenum );
     if(DWC_NdGetFileAsync( &p_nd_data->fileInfo[ p_nd_data->target ], p_nd_data->p_buffer, MYSTERY_DOWNLOAD_GIFT_DATA_SIZE) == FALSE){
       OS_TPrintf( "DWC_NdGetFileAsync: Failed.\n" );
       p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
@@ -1887,4 +1868,31 @@ static u32 UTIL_StringToHex( const char *buf )
 
   NAGI_Printf( "%s==[%d]\n", origin, ret );
   return ret;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ０クリアされているかどうか
+ *
+ *	@param	void *p_adrs  アドレス
+ *	@param	size          バイトサイズ
+ *
+ *	@return TRUEで０クリアされている  FALSEでされていない
+ */
+//-----------------------------------------------------------------------------
+static BOOL UTIL_IsClear( void *p_adrs, u32 size )
+{
+  int i;
+  u32 *p_ptr  = (u32*)p_adrs;
+
+  for( i = 0; i < size/4; i++ )
+  {
+    if( *(p_ptr + i) != 0 )
+    {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
 }
