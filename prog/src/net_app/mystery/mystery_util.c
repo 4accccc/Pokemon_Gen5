@@ -88,7 +88,7 @@ MYSTERY_MSGWIN_WORK * MYSTERY_MSGWIN_Init( MYSTERY_MSGWIN_TRANS_MODE mode, u16 f
   p_wk->mode      = mode;
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512+256, heapID );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, x, y, w, h, plt, GFL_BMP_CHRAREA_GET_B );
@@ -392,7 +392,7 @@ MYSTERY_TEXT_WORK * MYSTERY_TEXT_Init( u16 frm, u8 font_plt, PRINT_QUE *p_que, G
 
 
   //バッファ作成
-	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 512, heapID );
+	p_wk->p_strbuf	= GFL_STR_CreateBuffer( 768, heapID );
 
 	//BMPWIN作成
 	p_wk->p_bmpwin	= GFL_BMPWIN_Create( frm, 1, 19, 30, 4, font_plt, GFL_BMP_CHRAREA_GET_B );
