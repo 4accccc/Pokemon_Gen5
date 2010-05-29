@@ -191,6 +191,7 @@ void GFL_NET_DWC_WriteMyStatus(WIFI_LIST* pList, MYSTATUS* pMyStatus, int addLis
   GFL_STR_DeleteBuffer(pBuf);
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_SEX, MyStatus_GetMySex(pMyStatus));
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_ID, MyStatus_GetID(pMyStatus));
+  WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_GAMESYNC_ID, MyStatus_GetProfileID(pMyStatus));
   WifiList_SetFriendInfo(pList, addListIndex, WIFILIST_FRIEND_UNION_GRA, MyStatus_GetTrainerView(pMyStatus));
 }
 

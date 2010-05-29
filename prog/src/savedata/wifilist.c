@@ -140,6 +140,9 @@ u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
   case WIFILIST_FRIEND_ID:
     result = list->friendData[no].id;
     break;
+  case WIFILIST_GAMESYNC_ID:
+    result = list->friendData[no].GameSyncID;
+    break;
   case WIFILIST_FRIEND_BATTLE_WIN:
     result = list->friendData[no].battle_win;
     break;
@@ -191,6 +194,9 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
   switch(type){
   case WIFILIST_FRIEND_ID:
     list->friendData[no].id = value;
+    break;
+  case WIFILIST_GAMESYNC_ID:
+    list->friendData[no].GameSyncID = value;
     break;
   case WIFILIST_FRIEND_BATTLE_WIN:
     GF_ASSERT(0);

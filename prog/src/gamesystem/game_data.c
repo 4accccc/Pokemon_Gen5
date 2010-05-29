@@ -83,7 +83,7 @@ struct _GAMEDATA{
   POKEPARTY *my_pokeparty;  ///<手持ちポケモンセーブデータへのポインタ
   CONFIG    *config;        ///<コンフィグセーブデータへのポインタ
   BOX_MANAGER *boxMng;      ///<ボックス管理構造体へのポインタ
-  WIFI_LIST* WiFiList;
+  WIFI_LIST* WiFiList;      ///<ともだち手帳データ
   BGM_INFO_SYS* bgm_info_sys; // BGM情報取得システム
 
   MMDLSYS *mmdlsys;

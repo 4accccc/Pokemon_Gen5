@@ -12,7 +12,12 @@
 #include "buflen.h"
 
 typedef struct{
-  STRCODE 		name[BUFLEN_PERSON_NAME];
+//  STRCODE 		name[BUFLEN_PERSON_NAME];//16*2 32
+  STRCODE 		name[PERSON_NAME_SIZE+EOM_SIZE];  //8*2=16
+  u32 dummy1;
+  u32 dummy2;
+  u32 ProfileID;    ///4
+  u32  GameSyncID;   ///4
 	u32				id;
 	u16		battle_win;
 	u16		battle_lose;
