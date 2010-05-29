@@ -165,6 +165,14 @@ ev_c05r0701_waza_check:
 			//アイテム入手処理（ハートのうろこ）
 			_ITEM_EVENT_KEYWAIT ( ITEM_HAATONOUROKO , 1  )
 			
+			//今日の指定わざを台詞内のタグにセット
+			_WAZA_NAME( 0 , WK_OTHER_C05R0701_WAZA )
+			
+			//(わざ名）ってわざ じっさいにつかうと
+			_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_07 , C05R0701_GIRL4_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
+			
 			//==================================//
 
 			//今日の指定タイプ見せイベントは終了
@@ -207,6 +215,14 @@ ev_c05r0701_waza_check:
 			
 			//アイテム入手処理（ハートのうろこ）
 			_ITEM_EVENT_KEYWAIT ( ITEM_HAATONOUROKO , 1  )
+			
+			//今日の指定わざを台詞内のタグにセット
+			_WAZA_NAME( 0 , WK_OTHER_C05R0701_WAZA )
+			
+			//(わざ名）ってわざ じっさいにつかうと
+			_BALLOONWIN_OBJMSG( msg_c05r0701_girl4_07 , C05R0701_GIRL4_01 )
+			_LAST_KEYWAIT()
+			_BALLOONWIN_CLOSE()
 			
 			//==================================//
 
