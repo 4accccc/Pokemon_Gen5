@@ -1289,18 +1289,19 @@ EVENT_START   ev_d05r0201_sage_01
 	
 	ENDIF
 	
+	//ƒ‰ƒCƒoƒ‹‹È’âŽ~
+	_END_EVENT_BGM()
+	
 	//‰æ–ÊˆÃ“]
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
-
+	
+	_TIME_WAIT( 16 )
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL( D05R0201_SAGE_01 )
 	
 	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
-	
-	//ƒ‰ƒCƒoƒ‹‹È’âŽ~
-	_END_EVENT_BGM()
 
 	//========================================/
 	
