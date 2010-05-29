@@ -39,8 +39,8 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
   //特定のモンスターかを調べる
   switch (inMonsNo){
   case MONSNO_530: //ゾロアーク MONSNO_ZOROAAKU
-    *outEffNo = ENCEFFID_ZOROARK;
     *outBgmNo = SEQ_BGM_VS_TSUYOPOKE;
+    *outEffNo = ENCEFFID_ZOROARK;
     return;
   //パッケージ
   case MONSNO_650:  //シン MONSNO_SIN
@@ -56,8 +56,11 @@ void ENCEFFNO_GetWildEncEffNoBgmNo( const int inMonsNo, ENCOUNT_TYPE inEncType, 
     *outEffNo = ENCEFFID_PACKAGE_POKE;
     return;
   case MONSNO_644:  //ドラー MONSNO_DORAA
-  case MONSNO_657:  //ビクティ MONSNO_BIKUTHI
     *outBgmNo = SEQ_BGM_VS_NORAPOKE;
+    *outEffNo = ENCEFFID_EFF_POKE;
+    return;
+  case MONSNO_657:  //ビクティ MONSNO_BIKUTHI
+    *outBgmNo = SEQ_BGM_VS_SETPOKE;
     *outEffNo = ENCEFFID_EFF_POKE;
     return;
   //三銃士  
