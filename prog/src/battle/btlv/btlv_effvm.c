@@ -402,6 +402,7 @@ static  void          MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m,
 static  ARCDATID      EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID );
 static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame );
 static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
+static  void          EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -3818,6 +3819,9 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
   BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
 
+  //初期位置にいないポケモンをチェック
+  EFFVM_CheckPokePosition( bevw );
+
   //仮想マシン停止
   VM_End( vmh );
 
@@ -5764,6 +5768,27 @@ static  int EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw )
   }
 
   return i;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  エフェクト終了後に初期位置にいないポケモンを検索して
+ *          いた場合は、バニッシュして初期位置に戻す
+ *
+ *  @param[in]  bevw      システム管理構造体
+ */
+//-----------------------------------------------------------------------------
+static  void  EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw )
+{ 
+  BtlvMcssPos pos;
+
+  for( pos = 0 ; pos < BTLV_MCSS_POS_TOTAL ; pos++ )
+  {
+    if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) == TRUE )
+    {
+      BTLV_MCSS_CheckPositionSetInitPos( BTLV_EFFECT_GetMcssWork(), pos );
+    }
+  }
 }
 
 //TCB関数
