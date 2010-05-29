@@ -567,34 +567,28 @@ void BTLV_SCU_StartBtlIn( BTLV_SCU* wk, BOOL fChapterSkipMode )
   /*----------------------------------------------*/
   case BTL_RULE_DOUBLE:
     {
-      BOOL fComm = ( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE );
+      switch( competitor ){
+      case BTL_COMPETITOR_WILD:     // 野生
+        BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_double );
+        break;
 
-      if( fComm )
-      {
-        // 通信対戦はこっち
+      // 通信対戦トレーナー
+      case BTL_COMPETITOR_COMM:
         if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
           BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double );
         }else{
           BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_comm_double_multi );
         }
-      }
-      else
-      {
-        switch( competitor ){
-        case BTL_COMPETITOR_WILD:     // 野生
-        default:
-          BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_wild_double );
-          break;
+        break;
 
-        case BTL_COMPETITOR_TRAINER:  // ゲーム内トレーナー
-        case BTL_COMPETITOR_SUBWAY:   // サブウェイトレーナー
-          if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
-            BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
-          }else{
-            BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_multi );
-          }
-          break;
+      case BTL_COMPETITOR_TRAINER:  // ゲーム内トレーナー
+      case BTL_COMPETITOR_SUBWAY:   // サブウェイトレーナー
+        if( !BTL_MAIN_IsMultiMode(wk->mainModule) ){
+          BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_double );
+        }else{
+          BTL_UTIL_SetupProc( &wk->proc, wk, NULL, btlin_trainer_multi );
         }
+        break;
       }
     }
     break;
