@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T18:36:15"/>
+	<create user="matsumiya" host="W00224" date="2010-05-29T20:11:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1005,9 +1005,9 @@
 		<attribute name="キャラ指定">LEADER7
 ハチク</attribute>
 		<language name="JPN" width="256">ハチク『では
-わたしが　あんない　いたします▼</language>
+わたしが　おとも　いたします▼</language>
 		<language name="JPN_KANJI" width="256">ハチク『では
-わたしが　案内いたします▼</language>
+わたしが　お供いたします▼</language>
 	</row>
 
 	<row id="msg_d08_black_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
