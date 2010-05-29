@@ -619,6 +619,7 @@ typedef struct
   ARCDATID          datID;
   int               scr_x;
   int               scr_y;
+  int               wait;
 }TCB_TRANSFORM_WORK;
 
 typedef struct
@@ -761,6 +762,7 @@ static  void  BTLV_INPUT_ClearScreen( BTLV_INPUT_WORK* biw );
 static  PRINTSYS_LSB  PP_FontColorGet( int pp, int pp_max );
 static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp );
 static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw );
+static  void  BTLV_INPUT_SetDrawEnablePokeIcon( BTLV_INPUT_WORK* biw, BOOL flag );
 static  void  BTLV_INPUT_CreateWeatherIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_DeleteWeatherIcon( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_CreateBallGauge( BTLV_INPUT_WORK* biw, BALL_GAUGE_TYPE type );
@@ -1397,6 +1399,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_WAZA )
 #endif
       {
+        BTLV_INPUT_SetDrawEnablePokeIcon( biw, FALSE );
         BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Command, ttw, 1 ), TCB_Transform_CB );
       }
       else
@@ -2113,14 +2116,21 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
+    ttw->wait = 4;
     ttw->seq_no++;
     break;
   case 1:
+    if( --ttw->wait == 0 )
+    { 
+      SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_APPEAR );
+      ttw->seq_no++;
+    }
+    break;
+  case 2:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
@@ -2148,21 +2158,34 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, ttw->datID, GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
-    SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
-    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
-    SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_CLOSE );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
     ttw->seq_no++;
     break;
   case 1:
+    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    ttw->wait = 4;
+    ttw->seq_no++;
+    break;
+  case 2:
+    if( --ttw->wait == 0 )
+    { 
+      SetupScrollUp( ttw->biw, TTW2C_START_SCROLL_X, TTW2C_START_SCROLL_Y, TTW2C_SCROLL_SPEED, TTW2C_SCROLL_COUNT );
+      SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
+      SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_CLOSE );
+      ttw->seq_no++;
+    }
+    break;
+  case 3:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
+      BTLV_INPUT_SetDrawEnablePokeIcon( ttw->biw, TRUE );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win_shooter );
       BTLV_INPUT_FreeTCB( ttw->biw, tcb );
     }
@@ -2302,14 +2325,28 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
 
   switch( ttw->seq_no ){
   case 0:
-    SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
-    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0a_NSCR, 
+                                     GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
+    GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
     ttw->seq_no++;
     break;
   case 1:
+    SetupButtonAnime( ttw->biw, BUTTON_TYPE_WAZA, BUTTON_ANIME_TYPE_VANISH );
+    ttw->seq_no++;
+    ttw->wait = 4;
+    break;
+  case 2:
+    if( --ttw->wait == 0 )
+    { 
+      SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_BACKWARD );
+      ttw->seq_no++;
+    }
+    break;
+  case 3:
     if( ttw->biw->tcb_execute_count == 0 )
     {
       SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED, COMMAND_POS_Y );
@@ -2319,7 +2356,7 @@ static  void  TCB_TransformWaza2Standby( GFL_TCB* tcb, void* work )
       ttw->seq_no++;
     }
     break;
-  case 2:
+  case 4:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
@@ -4124,6 +4161,19 @@ static  void  BTLV_INPUT_DeletePokeIcon( BTLV_INPUT_WORK* biw )
   G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_NONE, FALSE );
   G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_NONE, 0 );
 
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   ポケモンアイコン表示／非表示
+ *
+ * @param[in] biw   システム管理構造体のポインタ
+ * @param[in] flag  TRUE:表示 FALSE:非表示
+ */
+//--------------------------------------------------------------
+static  void  BTLV_INPUT_SetDrawEnablePokeIcon( BTLV_INPUT_WORK* biw, BOOL flag )
+{ 
+  GFL_CLACT_UNIT_SetDrawEnable( biw->pokeicon_clunit, flag );
 }
 
 //--------------------------------------------------------------
