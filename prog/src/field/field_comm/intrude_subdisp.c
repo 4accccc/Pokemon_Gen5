@@ -2334,7 +2334,8 @@ static void _IntSub_TouchUpdate(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_SUBDISP_PT
           }
           else
         #endif
-          {
+          if(intcomm != NULL 
+              && IntrudeField_GetZoneSettingData(intcomm->intrude_status[net_id].zone_id) != NULL){
             intsub->print_touch_player = net_id;
             return;
           }
