@@ -230,6 +230,9 @@ typedef struct
 
   int                   mosaic;
 
+  int                   focus;
+  int                   mepachi;
+
   void*                 resource_data[ RESOURCE_MAX ][ BTLV_MCSS_POS_MAX ];
 }POKEMON_VIEWER_WORK;
 
@@ -407,7 +410,7 @@ static GFL_PROC_RESULT PokemonViewerProcInit( GFL_PROC * proc, int * seq, void *
     u16 tr_type[] = { 
       TRTYPE_HERO, TRTYPE_HERO, 0xffff, 0xffff,
     };
-    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_ROTATION, &bfs, FALSE, tr_type, NULL, NULL, pvw->heapID );
+    BTLV_EFFECT_SETUP_PARAM* besp = BTLV_EFFECT_MakeSetUpParam( BTL_RULE_SINGLE, &bfs, FALSE, tr_type, NULL, NULL, pvw->heapID );
 
     GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN, &dispvramBank, pvw->heapID );
     ZONEDATA_Open( pvw->heapID );
@@ -541,6 +544,38 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
   POKEMON_VIEWER_WORK *pvw = mywk;
   int i, j;
 
+  if( trg & PAD_BUTTON_L )
+  { 
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      pvw->focus = 0;
+    }
+  }
+  if( trg & PAD_BUTTON_R )
+  { 
+    if( !BTLV_EFFECT_CheckExecute() )
+    { 
+      BTLV_EFFECT_Add( BTLEFF_1vs1_POS_AA_FOCUS + pvw->focus );
+      pvw->focus++;
+      if( BTLEFF_1vs1_POS_AA_FOCUS + pvw->focus > BTLEFF_3vs3_CAMERA_ZOOMOUT )
+      { 
+        pvw->focus = 0;
+      }
+    }
+  }
+  if( trg & PAD_BUTTON_SELECT )
+  { 
+    pvw->mepachi ^= 1;
+    for( i = 0 ; i < BTLV_MCSS_POS_MAX ; i++ )
+    { 
+      if( BTLV_EFFECT_CheckExist( i ) )
+      { 
+        BTLV_MCSS_SetMepachiFlag( BTLV_EFFECT_GetMcssWork(), i, BTLV_MCSS_MEPACHI_ALWAYS_OFF - pvw->mepachi );
+      }
+    }
+  }
+
   if( pvw->mcs_enable ){
     MCS_Main();
   }
@@ -589,11 +624,10 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     PokemonViewerCameraWork( pvw );
   }
 #endif
-  if( trg & PAD_BUTTON_SELECT )
+  if( trg & PAD_BUTTON_DEBUG )
   {
     mcss_mode_change( pvw );
   }
-
 #if 0
   if( trg & PAD_BUTTON_L )
   {
@@ -632,6 +666,7 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
   }
 #endif
 
+#if 0
   if( (trg & PAD_BUTTON_DEBUG ) )
   {
     int mcss_pos;
@@ -645,7 +680,6 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
     BTLV_CAMERA_MoveCameraInterpolation( BTLV_EFFECT_GetCameraWork(), &pos, &target, 20, 0, 20 );
     BTLV_MCSS_SetOrthoMode( BTLV_EFFECT_GetMcssWork() );
 
-#if 0
     for( mcss_pos = BTLV_MCSS_POS_AA ; mcss_pos < BTLV_MCSS_POS_MAX ; mcss_pos++ )
     {
       if( BTLV_EFFECT_CheckExist( mcss_pos ) == TRUE )
@@ -657,8 +691,8 @@ static GFL_PROC_RESULT PokemonViewerProcMain( GFL_PROC * proc, int * seq, void *
                    10, 1, 0 );
       }
     }
-#endif
   }
+#endif
 
 #if 0
   { 
@@ -870,6 +904,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         pvw->form_no[ pvw->edit_pos ] = 0;
         pvw->gender = 0;
       }
+#if 0
       if( rep & PAD_BUTTON_L )
       {
         pvw->mons_no[ pvw->edit_pos ] -= 100;
@@ -882,6 +917,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
         pvw->form_no[ pvw->edit_pos ] = 0;
         pvw->gender = 0;
       }
+#endif
       if( ( rep & PAD_BUTTON_X ) && ( pvw->form_no[ pvw->edit_pos ] < pvw->form_max - 1 ) )
       { 
         pvw->form_no[ pvw->edit_pos ]++;
@@ -1049,6 +1085,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       pvw->rare ^= 1;
       create_pokemon ( pvw );
     }
+#if 0
     if( ( trg & PAD_BUTTON_SELECT ) && ( pvw->edit_type == 0 ) )
     {
       pvw->proj ^= 1;
@@ -1062,6 +1099,7 @@ static  BOOL  PokemonViewerSubSequence( POKEMON_VIEWER_WORK *pvw )
       }
       set_pokemon_scale( pvw );
     }
+#endif
     if( trg & PAD_BUTTON_B )
     {
       pvw->edit_mode = 0;
