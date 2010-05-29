@@ -742,6 +742,23 @@ u8 BSUBWAY_SCOREDATA_GetWifiRank( const BSUBWAY_SCOREDATA *bsw_score )
 
 //--------------------------------------------------------------
 /**
+ *  スコアデータ　Wifiランクセット
+ *  @param bsw_score BSUBWAY_SCOREDATA*
+ *  @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCOREDATA_SetWifiRank( BSUBWAY_SCOREDATA *bsw_score, u8 rank )
+{
+  if( (int)rank < 1 || (int)rank > 10 ){
+    GF_ASSERT( 0 );
+    rank = 1;
+  }
+  
+  bsw_score->wifi_rank = rank;
+}
+
+//--------------------------------------------------------------
+/**
  *  @brief  スコアデータ　Wifi連続敗戦カウント操作
  *  @return  操作後のカウント
  */

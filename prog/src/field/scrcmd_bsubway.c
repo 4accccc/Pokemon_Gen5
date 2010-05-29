@@ -2557,6 +2557,55 @@ void BSUBWAY_SCRWORK_DebugSetFlag( GAMESYS_WORK *gsys, u8 flag )
   BSUBWAY_SCOREDATA_DEBUG_SetFlag( scoreData, flag );
 }
 
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　wifiランク取得
+ */
+//--------------------------------------------------------------
+int BSUBWAY_SCRWORK_DebugGetWifiRank( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  
+  return( BSUBWAY_SCOREDATA_GetWifiRank(scoreData) );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　wifiランクセット
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugSetWifiRank( GAMESYS_WORK *gsys, u8 rank )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_SCOREDATA *scoreData = SaveControl_DataPtrGet(
+      save, GMDATA_ID_BSUBWAY_SCOREDATA );
+  
+  BSUBWAY_SCOREDATA_SetWifiRank( scoreData, rank );
+  BSUBWAY_SCOREDATA_SetWifiLoseCount( scoreData, BSWAY_SETMODE_reset );
+  BSUBWAY_SCOREDATA_SetFlag( scoreData,
+    BSWAY_SCOREDATA_FLAG_WIFI_LOSE_F, BSWAY_SETMODE_reset );
+}
+
+//--------------------------------------------------------------
+/**
+ * バトルサブウェイ　wifiルームデータクリア
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_DebugClearWifiRoomData( GAMESYS_WORK *gsys )
+{
+  GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( gdata );
+  BSUBWAY_WIFI_DATA *wifiData = SaveControl_DataPtrGet(
+    save, GMDATA_ID_BSUBWAY_WIFIDATA );
+
+  BSUBWAY_WIFIDATA_ClearPlayerData( wifiData );
+  BSUBWAY_WIFIDATA_ClearRoomDataFlag( wifiData );
+}
+
 //----
 #endif
 //----

@@ -285,6 +285,7 @@ extern void BSUBWAY_SCOREDATA_IncWifiRank( BSUBWAY_SCOREDATA *bsw_score );
 extern void BSUBWAY_SCOREDATA_DecWifiRank( BSUBWAY_SCOREDATA *bsw_score );
 extern u8 BSUBWAY_SCOREDATA_GetWifiRank(
     const BSUBWAY_SCOREDATA *bsw_score );
+extern void BSUBWAY_SCOREDATA_SetWifiRank( BSUBWAY_SCOREDATA *bsw_score, u8 rank );
 extern u8 BSUBWAY_SCOREDATA_SetWifiLoseCount(
     BSUBWAY_SCOREDATA *bsw_score, BSWAY_SETMODE mode );
 extern void BSUBWAY_SCOREDATA_SetUsePokeData( BSUBWAY_SCOREDATA *bsw_score, BSWAY_SCORE_POKE_DATA mode, const BSUBWAY_POKEMON* poke_tbl );

@@ -4738,6 +4738,8 @@ enum
   DEBUG_BSWAY_SET_REGU_OFF,
   DEBUG_BSWAY_SET_BTL_SKIP,
   DEBUG_BSWAY_ANYSTAGE,
+  DEBUG_BSWAY_CHANGE_WIFI_RANK,
+  DEBUG_BSWAY_CLEAR_WIFI_ROOM,
 };
 
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
@@ -4776,6 +4778,9 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   { DEBUG_FIELD_BSW_28, (void*)DEBUG_BSWAY_BTL_S_DOUBLE_49},
   { DEBUG_FIELD_BSW_29, (void*)DEBUG_BSWAY_BTL_S_MULTI_49},
   { DEBUG_FIELD_BSW_30, (void*)DEBUG_BSWAY_ANYSTAGE},
+  
+  { DEBUG_FIELD_BSW_41, (void*)DEBUG_BSWAY_CHANGE_WIFI_RANK },
+  { DEBUG_FIELD_BSW_42, (void*)DEBUG_BSWAY_CLEAR_WIFI_ROOM },
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -5079,7 +5084,7 @@ static void debugMenuCallProc_BSubwayAnyStage(
   GMEVENT_Change( event, debugMenuBSubwayAnyStageEvent,
       sizeof(DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK) );
   work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_EVENT_WORK) );
+  GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_ANYSTAGE_EVENT_WORK) );
   
   work->heapID = heapID;
   work->gmSys = gsys;
@@ -5102,6 +5107,108 @@ static BOOL bsubway_CheckBattleZoneID( DEBUG_BSUBWAY_EVENT_WORK *work )
   FLDSYSWIN_ClearWindow( work->sysWin );
   FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_37 );
   return( FALSE );
+}
+
+//バトルサブウェイデバッグメニュー派生　wifiランク変更
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  FLDMSGBG *fldMsgBG;
+  
+  int rank;
+  int before_rank;
+  
+  STRBUF *strBuf;
+  STRBUF *strTempBuf;
+  GFL_MSGDATA *msgData;
+  WORDSET *wordSet;
+  FLDMSGWIN *msgWin;
+  FLDSYSWIN *sysWin;
+  FLDMENUFUNC *menuFunc;
+}DEBUG_BSW_CHANGE_WIFI_RANK;
+
+static GMEVENT_RESULT debugMenuBSubwayChangeWifiRank(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_BSW_CHANGE_WIFI_RANK *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    {
+      FLDMSGBG * msgbg = FIELDMAP_GetFldMsgBG( work->fieldWork );
+      work->strBuf = GFL_STR_CreateBuffer( 8, work->heapID );
+      work->msgWin = FLDMSGWIN_Add( msgbg, NULL, 1, 1, 8, 2 );
+      work->rank = BSUBWAY_SCRWORK_DebugGetWifiRank( work->gmSys );
+      work->before_rank = -1;
+    }
+    (*seq)++;
+    break;
+  case 1:
+    {
+      int trg = GFL_UI_KEY_GetTrg();
+      int cont = GFL_UI_KEY_GetCont();
+      int repeat = GFL_UI_KEY_GetRepeat();
+      
+      if( trg & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+        FLDMSGWIN_Delete( work->msgWin );
+        GFL_STR_DeleteBuffer( work->strBuf );
+        
+        if( trg & PAD_BUTTON_A ){
+          BSUBWAY_SCRWORK_DebugSetWifiRank( work->gmSys, work->rank );
+        }
+        
+        return( GMEVENT_RES_FINISH );
+      }
+      
+      if( repeat & PAD_KEY_UP ){
+        work->rank--;
+        if( work->rank < 1 ){ work->rank = 1; }
+      }else if( repeat & PAD_KEY_DOWN ){
+        work->rank++;
+        if( work->rank > 10 ){ work->rank = 10; }
+      }else if( repeat & PAD_KEY_LEFT ){
+        work->rank -= 2;
+        if( work->rank < 1 ){ work->rank = 1; }
+      }else if( repeat & PAD_KEY_RIGHT ){
+        work->rank += 2;
+        if( work->rank > 10 ){ work->rank = 10; }
+      }
+      
+      if( work->rank != work->before_rank ){
+        work->before_rank = work->rank;
+        STRTOOL_SetNumber( work->strBuf, work->rank, 5,
+            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
+        FLDMSGWIN_ClearWindow( work->msgWin );
+        FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
+      }
+    }
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+static void debugMenuCallProc_BSubwayChangeWifiRank(
+    GMEVENT *event, DEBUG_BSUBWAY_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_BSW_CHANGE_WIFI_RANK *work;
+  
+  GMEVENT_Change( event, debugMenuBSubwayChangeWifiRank,
+      sizeof(DEBUG_BSW_CHANGE_WIFI_RANK) );
+  work = GMEVENT_GetEventWork( event );
+ GFL_STD_MemClear( work, sizeof(DEBUG_BSW_CHANGE_WIFI_RANK) );
+  
+  work->heapID = heapID;
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->fieldWork = fieldWork;
+  work->fldMsgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 }
 
 //イベント：バトルサブウェイデバッグメニュー
@@ -5389,6 +5496,15 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
           debugMenuCallProc_BSubwayAnyStage( event, work );
         }
         break;
+      case DEBUG_BSWAY_CHANGE_WIFI_RANK: //wifiランク変更
+        chg_event = TRUE;
+        debugMenuCallProc_BSubwayChangeWifiRank( event, work );
+        break;
+      case DEBUG_BSWAY_CLEAR_WIFI_ROOM: //wifiルームデータクリア
+        BSUBWAY_SCRWORK_DebugClearWifiRoomData( work->gmSys );
+        FLDSYSWIN_ClearWindow( work->sysWin );
+        FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_43 );
+        break;
       default:
         break;
       }
@@ -5397,7 +5513,7 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         FLDSYSWIN_Delete( sysWin );
         FLDMENUFUNC_DeleteMenu( menuFunc );
         GFL_MSG_Delete( msgData );
-
+        
         if( next_event != NULL ){
           GMEVENT_CallEvent( event, next_event );
           (*seq)++;
