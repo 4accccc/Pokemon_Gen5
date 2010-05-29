@@ -54,7 +54,6 @@ EVENT_START   ev_h04r0301_fishing_01
 		_MONS_NAME( 0, WK_OTHER_FISHING_MONSNUM )
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_06)
 		_YES_NO_WIN(SCWK_ANSWER)
-		_MSGWIN_CLOSE()
 		
 		//ポケモンがオーダーと合っているか調べる処理	
 		_CALL		ev_poke_chk
@@ -63,9 +62,6 @@ EVENT_START   ev_h04r0301_fishing_01
 	ELSIF FLAG_OFF(TMFLG_H04R0301_FISHING) &&  FLAG_ON(FE_H04R0301_FISHING_RECEPT) THEN
 	
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_13)
-		_MSGWIN_CLOSE()
-		
-		_TIME_WAIT(8)
 		
 		//次のオーダーのポケモンを抽選	
 		_GET_FISHING_ENCOUNT_MONSNO( WK_OTHER_FISHING_MONSNUM )
@@ -99,17 +95,14 @@ ev_poke_select:
 	IF $LWK_TALK_AGAIN == 1 THEN
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_02)
 		_YES_NO_WIN(SCWK_ANSWER)
-		_MSGWIN_CLOSE()
 		
 	ELSE
 			
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_01)
 		_YES_NO_WIN(SCWK_ANSWER)
-		_MSGWIN_CLOSE()
 		
 	ENDIF
 
-	_TIME_WAIT(8)
 	//釣りに挑戦する？に「はい」と答える
 	IF $SCWK_ANSWER == SCR_YES THEN
 		
@@ -145,7 +138,6 @@ _RET
 //選択ポケモンのオーダーとのチェック
 ev_poke_chk:
 	
-	_TIME_WAIT(8)
 	//ポケモンを選択して、イベント主に見せる？に「はい」と答える
 	IF $SCWK_ANSWER == SCR_YES THEN
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_07)
@@ -172,7 +164,7 @@ ev_poke_chk:
 			_MSGWIN_CLOSE()
 			
 			//アイテムを取得する
-			_ITEM_EVENT_KEYWAIT(ITEM_DAIBUBOORU,5)
+			_ITEM_EVENT_NOWAIT(ITEM_DAIBUBOORU,5)
 			
 			//抽選されたポケモンを初期化する
 			$WK_OTHER_FISHING_MONSNUM = 0
