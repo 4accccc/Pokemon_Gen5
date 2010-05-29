@@ -1754,8 +1754,17 @@ BOOL IntrudeField_CheckIntrudeShutdown(GAMESYS_WORK *gsys, u16 zone_id)
   //裏フィールドにいてintcommがない
   // 1.自分のパレス or シンボルマップに来ただけ
   // 2.通信エラーによりintcommが既に解放済み
-  if(ZONEDATA_IsPalace(zone_id) == TRUE || ZONEDATA_IsBingo(zone_id) == TRUE){
+  if(ZONEDATA_IsPalace(zone_id) == TRUE){
     if(GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL){
+      return TRUE;
+    }
+    return FALSE;
+  }
+  else if(ZONEDATA_IsBingo(zone_id) == TRUE){
+    if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
+        || (GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL
+        && GameCommSys_GetLastCommNo(game_comm) == GAME_COMM_NO_INVASION 
+        && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL)){
       return TRUE;
     }
     return FALSE;
