@@ -748,10 +748,21 @@ void PSTATUS_SUB_DrawStr( PSTATUS_WORK *work , PSTATUS_SUB_WORK *subWork , const
     srcStr = GFL_MSG_CreateString( work->msgHandle , mes_status_01_01 ); 
     WORDSET_ExpandStr( wordSet , dstStr , srcStr );
 
-    PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
-            PSTATUS_SUB_STR_NAME_X , PSTATUS_SUB_STR_NAME_Y , 
-            dstStr , work->fontHandle , PSTATUS_STR_COL_BLACK);
-
+#if PM_DEBUG
+    if( PPP_Get( ppp, ID_PARA_fusei_tamago_flag, NULL ) == 1 )
+    {
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
+              PSTATUS_SUB_STR_NAME_X , PSTATUS_SUB_STR_NAME_Y , 
+              dstStr , work->fontHandle , PSTATUS_STR_COL_WHITE);
+    }
+    else
+#endif
+    {
+      PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( subWork->bmpWinUpper ) , 
+              PSTATUS_SUB_STR_NAME_X , PSTATUS_SUB_STR_NAME_Y , 
+              dstStr , work->fontHandle , PSTATUS_STR_COL_BLACK);
+    }
+    
     GFL_STR_DeleteBuffer( nameStr );
     GFL_STR_DeleteBuffer( srcStr );
     GFL_STR_DeleteBuffer( dstStr );
