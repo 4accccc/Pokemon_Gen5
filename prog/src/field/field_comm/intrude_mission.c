@@ -281,12 +281,13 @@ BOOL MISSION_SetMissionData(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *missio
   }
   
   //親の場合、既にmisison_noはセットされているので判定の前に受信フラグをセット
-  MISSION_ClearMissionEntry(intcomm, mission);
+  //MISSION_ClearMissionEntry(intcomm, mission);  一度しか受けれないのでクリアの必要は無くなった 2010.05.29(土)
   if(mdata->accept_netid != INTRUDE_NETID_NULL){
     return new_mission;
   }
   
   *mdata = *src;
+  
   //不正チェック
 #if 0 //もう少ししっかりとデータの取り扱いが決まってから有効にする
   if(mdata->mission_no >= MISSION_NO_MAX || mdata->monolith_type >= MONOLITH_TYPE_MAX){
