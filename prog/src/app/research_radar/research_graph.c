@@ -3475,6 +3475,7 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 static void WatchOutNewEntry( RRG_WORK* work )
 {
   if( GAMEBEACON_Get_NewEntry() == TRUE ) {
+    // 「今日の調査人数」が更新されなければ,「今までの調査人数」も変化しない
     u16 now_today_count = GetTodayCountOfQuestion( work );
     u16 new_today_count = GetTodayCountOfQuestion_from_SaveData( work ); 
     if( now_today_count != new_today_count ) {
