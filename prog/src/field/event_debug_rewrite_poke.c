@@ -85,7 +85,7 @@ GMEVENT * DEBUG_EVENT_DebugMenu_ReWritePoke( GAMESYS_WORK *gsys, void* wk )
   }
   p_ev_wk->p_mp_work.dst  = p_ev_wk->pp;
   p_ev_wk->p_mp_work.oyaStatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) );
-  p_ev_wk->p_mp_work.mode = DMP_MODE_MAKE;
+  p_ev_wk->p_mp_work.mode = DMP_MODE_REWRITE;
 
   return p_event;
 }

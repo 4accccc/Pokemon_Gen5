@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwasawa" host="W00157" date="2010-05-28T21:37:00"/>
+	<create user="iwasawa" host="W00157" date="2010-05-29T17:08:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -592,6 +592,10 @@
 
 	<row id="DMPSTR_GET_CASETTE">
 		<language name="JPN" width="256">カセット</language>
+	</row>
+
+	<row id="DMPSTR_OYA_SEX">
+		<language name="JPN" width="256">おやの♂♀</language>
 	</row>
 
 	<row id="DMPSTR_CASETTE_00">

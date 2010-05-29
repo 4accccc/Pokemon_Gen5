@@ -20,6 +20,7 @@ typedef enum{
 
 typedef enum{
   DMP_MODE_MAKE,
+  DMP_MODE_REWRITE,
   DMP_MODE_D_FIGHT,
 }DEBUG_MAKEPOKE_MODE;
 

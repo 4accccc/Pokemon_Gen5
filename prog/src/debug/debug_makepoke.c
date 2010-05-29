@@ -13,6 +13,7 @@
 #include "print/str_tool.h"
 #include "print/global_msg.h"
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/poke_memo.h"
 #include "waza_tool/wazano_def.h"
 #include "item/item.h"
 #include "buflen.h"
@@ -244,10 +245,14 @@ static GFL_PROC_RESULT PROC_MAKEPOKE_Init( GFL_PROC* proc, int* seq, void* pwk, 
     GFL_STD_MemCopy( wk->dst, wk->src, POKETOOL_GetWorkSize() );
 
     if( proc_param->oyaStatus ){
-      wk->oyaID = MyStatus_GetID( proc_param->oyaStatus );
-      wk->oyaSex = MyStatus_GetMySex( proc_param->oyaStatus );
-
-      if( proc_param->mode == DMP_MODE_MAKE ){
+      if( proc_param->mode != DMP_MODE_REWRITE ){
+        wk->oyaID = MyStatus_GetID( proc_param->oyaStatus );
+        wk->oyaSex = MyStatus_GetMySex( proc_param->oyaStatus );
+      }else{
+        wk->oyaID = PP_Get( wk->src, ID_PARA_id_no, NULL );
+        wk->oyaSex = PP_Get( wk->src, ID_PARA_sex, NULL);
+      }
+      if( proc_param->mode != DMP_MODE_D_FIGHT ){
         PP_Get(wk->dst,ID_PARA_oyaname_raw, wk->oyaName);
       }else{
         STRTOOL_Copy( MyStatus_GetMyName(proc_param->oyaStatus), wk->oyaName, NELEMS(wk->oyaName) );
@@ -818,9 +823,8 @@ static void update_dst( DMP_MAINWORK* wk )
 #endif
   PP_Get( wk->dst, ID_PARA_nickname, (void*)(wk->strbuf) );
 
-//  if( wk->proc_param->mode == DMP_MODE_D_FIGHT ){
-  PP_Clear( wk->dst );  //MAKEモードでは初期化済みのPPが来るので、ここで初期化しなくていい
-//  }
+  PP_Clear( wk->dst );
+  
   {
     u32 pow_val, exp;
     u8 hp, pow, def, agi, spw, sdf;
@@ -954,16 +958,15 @@ static void update_dst( DMP_MAINWORK* wk )
     }
     PP_Put( wk->dst, ID_PARA_get_ball,  getBallID );
   }
+  //親の性別
+  PP_Put( wk->dst, ID_PARA_oyasex, box_getvalue(wk, INPUTBOX_ID_OYA_SEX) );
 
   // 捕獲カセット
   PP_Put( wk->dst, ID_PARA_get_cassette, casetteVer_local_to_formal(box_getvalue(wk, INPUTBOX_ID_GET_CASETTE)) );
-
   // 国コード
   PP_Put( wk->dst, ID_PARA_country_code, countryCode_local_to_formal(box_getvalue(wk, INPUTBOX_ID_COUNTRY)) );
-
   // イベント配布フラグ
   PP_Put( wk->dst, ID_PARA_event_get_flag, box_getvalue(wk, INPUTBOX_ID_EVENTGET_FLAG) );
-
 }
 
 //----------------------------------------------------------------------------------
@@ -1267,9 +1270,27 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
 
   switch( p->type ){
   case INPUTBOX_TYPE_STR:
-  case INPUTBOX_TYPE_FIXSTR:
     {
       GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
+      GFL_MSG_GetString( msgdat, value+p->arg2, wk->strbuf );
+      GFL_MSG_Delete( msgdat );
+    }
+    break;
+  case INPUTBOX_TYPE_FIXSTR:
+    {
+      GFL_MSGDATA* msgdat;
+      switch( p->arg ){
+      case FIXSTR_CODE_PLACE:
+        {
+          msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+              ARCID_MESSAGE, POKE_PLACE_GetMessageDatId( value ), GFL_HEAP_LOWID(wk->heapID) );
+          value = POKE_PLACE_GetMessageId( value );
+        }
+        break;
+      default:
+        msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
+        break;
+      }
       GFL_MSG_GetString( msgdat, value+p->arg2, wk->strbuf );
       GFL_MSG_Delete( msgdat );
     }
@@ -1419,6 +1440,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
       PP_Put( wk->dst, ID_PARA_pp_count1 + idx, cnt );
       box_setup( wk, INPUTBOX_ID_PPMAX1+idx, wk->dst );
       pp_max = box_getvalue( wk, INPUTBOX_ID_PPMAX1+idx);
+      IWASAWA_Printf("pp_cnt %d, pp_max = %d\n",cnt,pp_max);
       if( pp_max < box_getvalue( wk, INPUTBOX_ID_PPEDIT1+idx)){
         box_update( wk, INPUTBOX_ID_PPEDIT1, pp_max );
       }
@@ -1513,6 +1535,16 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
     }
     break;
 
+  case INPUTBOX_ID_GET_PLACE:
+  case INPUTBOX_ID_BIRTH_PLACE:
+    {
+      const INPUT_BOX_PARAM* p = &InputBoxParams[ updateBoxID ];
+      u32 value = box_getvalue( wk, updateBoxID );
+      PP_Put( wk->dst, p->paraID, value );
+      box_update( wk, updateBoxID+1, value );
+    }
+    break;
+
   case INPUTBOX_ID_OYAID_H:
   case INPUTBOX_ID_OYAID_L:
     {
@@ -1577,11 +1609,9 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
   case INPUTBOX_ID_PPEDIT4:
   case INPUTBOX_ID_POKERUS:
   case INPUTBOX_ID_GET_LEVEL:
-  case INPUTBOX_ID_GET_PLACE:
   case INPUTBOX_ID_GET_YEAR:
   case INPUTBOX_ID_GET_MONTH:
   case INPUTBOX_ID_GET_DAY:
-  case INPUTBOX_ID_BIRTH_PLACE:
   case INPUTBOX_ID_BIRTH_YEAR:
   case INPUTBOX_ID_BIRTH_MONTH:
   case INPUTBOX_ID_BIRTH_DAY:
