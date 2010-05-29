@@ -130,7 +130,7 @@ DWCUserData* WifiList_GetMyUserInfo( WIFI_LIST* list )
  * @retval  u32
  */
 //-----------------------------------------------------------------
-u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
+u32 WifiList_GetFriendInfo( WIFI_LIST* list, u32 no, int type )
 {
   u32 result=0;
 
@@ -187,7 +187,7 @@ u32 WifiList_GetFriendInfo( WIFI_LIST* list, int no, int type )
  * @retval  none
  */
 //-----------------------------------------------------------------
-void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
+void WifiList_SetFriendInfo( WIFI_LIST* list, u32 no, int type, u32 value )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
@@ -239,7 +239,7 @@ void WifiList_SetFriendInfo( WIFI_LIST* list, int no, int type, u32 value )
  * @retval  DWCFriendData	*
  */
 //-----------------------------------------------------------------
-DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
+DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, u32 no )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
@@ -257,7 +257,7 @@ DWCFriendData	*WifiList_GetDwcDataPtr( WIFI_LIST* list, int no )
  * @retval  u8 *
  */
 //-----------------------------------------------------------------
-STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
+STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, u32 no )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
 
@@ -272,7 +272,7 @@ STRCODE *WifiList_GetFriendNamePtr( WIFI_LIST *list, int no )
  * @retval  none
  */
 //-----------------------------------------------------------------
-void WifiList_GetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
+void WifiList_GetFriendName( WIFI_LIST *list, u32 no, STRBUF* pBuf )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
   GFL_STR_SetStringCodeOrderLength(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
@@ -286,7 +286,7 @@ void WifiList_GetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
  * @retval  none
  */
 //-----------------------------------------------------------------
-void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
+void WifiList_SetFriendName( WIFI_LIST *list, u32 no, STRBUF* pBuf )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
   GFL_STR_GetStringCode(pBuf, list->friendData[no].name, sizeof(list->friendData[no].name));
@@ -300,7 +300,7 @@ void WifiList_SetFriendName( WIFI_LIST *list, int no, STRBUF* pBuf )
  * @retval  BOOL
  */
 //-----------------------------------------------------------------
-BOOL WifiList_IsFriendData( WIFI_LIST *list, int no )
+BOOL WifiList_IsFriendData( WIFI_LIST *list, u32 no )
 {
   GF_ASSERT( no < WIFILIST_FRIEND_MAX );
   if(no >= WIFILIST_FRIEND_MAX){
@@ -359,7 +359,7 @@ int WifiList_GetFriendDataLastIdx( WIFI_LIST *list )
  * @retval  none
  */
 //-----------------------------------------------------------------
-void WifiList_ResetData( WIFI_LIST *list, int no)
+void WifiList_ResetData( WIFI_LIST *list, u32 no)
 {
   int i;
 
@@ -385,10 +385,11 @@ void WifiList_ResetData( WIFI_LIST *list, int no)
  * @retval  none
  */
 //-----------------------------------------------------------------
-static void WifiList_MoveData( WIFI_LIST *list, int no, int moveNo)
+static void WifiList_MoveData( WIFI_LIST *list, u32 no, int moveNo)
 {
   int i;
 
+  GF_ASSERT( no < WIFILIST_FRIEND_MAX);
   GFL_STD_MemCopy(&list->friendData[moveNo], &list->friendData[no], sizeof(WIFI_FRIEND));
   GFL_STD_MemCopy(&list->friend_dwc[moveNo], &list->friend_dwc[no], sizeof(DWCFriendData));
   GFL_STD_MemClear(&list->friendData[moveNo], sizeof(WIFI_FRIEND));
