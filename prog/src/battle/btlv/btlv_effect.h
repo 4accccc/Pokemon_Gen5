@@ -311,6 +311,7 @@ extern  const BTLV_SCU*   BTLV_EFFECT_GetScu( void );
 extern  int               BTLV_EFFECT_GetPinchBGMFlag( void );
 extern  void              BTLV_EFFECT_SetTrainerBGMChangeFlag( int bgm_no );
 extern  BOOL              BTLV_EFFECT_GetTrainerBGMChangeFlag( void );
+extern  void              BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no );
 extern  void              BTLV_EFFECT_SetBagMode( BtlBagMode bagMode );
 extern  BtlBagMode        BTLV_EFFECT_GetBagMode( void );
 extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func,

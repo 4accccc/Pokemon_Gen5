@@ -6673,7 +6673,8 @@ static BOOL scProc_ACT_BallThrow( BTL_CLIENT* wk, int* seq, const int* args )
         const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, args[0] );
         BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BallThrowS );
         BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID( bpp ) );
-        PMSND_PlayBGM( SEQ_ME_POKEGET );
+        //ピンチBGMが鳴っていたときは、戦闘BGMがPushされているのでチェックしてからSEQ_ME_POKEGETを鳴らす
+        BTLV_EFFECT_SetBGMNoCheckPush( SEQ_ME_POKEGET );
       }
       // 捕獲失敗メッセージ
       else

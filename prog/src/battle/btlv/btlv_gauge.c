@@ -261,7 +261,8 @@ struct _BTLV_GAUGE_WORK
   u32             trainer_bgm_change_flag :1;
   u32             gauge_num_mode          :1;     //3vs3orローテーション時にHPゲージを数字表示にするかフラグ
   u32             yure_angle              :16;
-  u32                                     :11;
+  u32             pinch_bgm_no_check      :1;
+  u32                                     :10;
 
   u32             now_bgm_no;
 
@@ -494,7 +495,10 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     }
   }
   //ピンチBGM再生チェック
-  pinch_bgm_check( bgw );
+  if( bgw->pinch_bgm_no_check == 0 )
+  { 
+    pinch_bgm_check( bgw );
+  }
 }
 
 //============================================================================================
@@ -2092,6 +2096,18 @@ int  BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw )
 
 //--------------------------------------------------------------
 /**
+ * @brief pinch_bgm_flagの格納
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ */
+//--------------------------------------------------------------
+void  BTLV_GAUGE_SetPinchBGMFlag( BTLV_GAUGE_WORK* bgw, BOOL value )
+{ 
+  bgw->pinch_bgm_flag = value;
+}
+
+//--------------------------------------------------------------
+/**
  * @brief   now_bgm_noに曲ナンバーをセット
  *
  * @param bgw     BTLV_GAUGE_WORK管理構造体へのポインタ
@@ -2114,6 +2130,19 @@ void  BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no )
 void  BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value )
 { 
   bgw->trainer_bgm_change_flag = value;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief   pinch_bgm_no_checkをセット
+ *
+ * @param bgw   BTLV_GAUGE_WORK管理構造体へのポインタ
+ * @param value セットする値
+ */
+//--------------------------------------------------------------
+void  BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, BOOL value )
+{ 
+  bgw->pinch_bgm_no_check = value;
 }
 
 //--------------------------------------------------------------

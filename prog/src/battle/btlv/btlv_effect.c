@@ -1648,6 +1648,23 @@ BOOL  BTLV_EFFECT_GetTrainerBGMChangeFlag( void )
 
 //============================================================================================
 /**
+ * @brief  BGMのPush状態をチェックして曲をセット
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no )
+{
+  //ピンチSEがなっているなら、曲がプッシュされているので、Popする
+  if( BTLV_GAUGE_GetPinchBGMFlag( bew->bgw ) == TRUE )
+  { 
+    PMSND_PopBGM();
+  }
+  BTLV_GAUGE_SetPinchBGMNoCheck( bew->bgw, TRUE );
+  BTLV_GAUGE_SetPinchBGMFlag( bew->bgw, FALSE );
+  PMSND_PlayBGM( bgm_no );
+}
+
+//============================================================================================
+/**
  * @brief  バッグモードをセット
  */
 //============================================================================================

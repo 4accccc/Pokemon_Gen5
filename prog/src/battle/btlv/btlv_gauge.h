@@ -58,7 +58,9 @@ extern  BOOL              BTLV_GAUGE_CheckAppearFlag( BTLV_GAUGE_WORK* bgw, Btlv
 extern  void              BTLV_GAUGE_SetStatus( BTLV_GAUGE_WORK* bgw, PokeSick sick, BtlvMcssPos pos );
 extern  void              BTLV_GAUGE_RequestYure( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos );
 extern  int               BTLV_GAUGE_GetPinchBGMFlag( BTLV_GAUGE_WORK* bgw );
+extern  void              BTLV_GAUGE_SetPinchBGMFlag( BTLV_GAUGE_WORK* bgw, BOOL value );
 extern  void              BTLV_GAUGE_SetNowBGMNo( BTLV_GAUGE_WORK* bgw, int bgm_no );
 extern  void              BTLV_GAUGE_SetTrainerBGMChangeFlag( BTLV_GAUGE_WORK* bgw, int value );
+extern  void              BTLV_GAUGE_SetPinchBGMNoCheck( BTLV_GAUGE_WORK* bgw, BOOL value );
 extern  BOOL              BTLV_GAUGE_GetGaugeStatus( BTLV_GAUGE_WORK* bgw, BtlvMcssPos pos, int* color, int* sick_anm );
 
