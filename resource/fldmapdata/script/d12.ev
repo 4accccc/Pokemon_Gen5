@@ -216,7 +216,6 @@ EVENT_START   ev_d12_pilot_01
   //Ç‡Ç«ÇÈÅH
   _BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_01)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
   IF $SCWK_ANSWER == SCR_YES THEN
     //Ç‡Ç«ÇÈÇ≈
   	_BALLOONWIN_TALKOBJ_MSG(msg_d12_mariner_02)
