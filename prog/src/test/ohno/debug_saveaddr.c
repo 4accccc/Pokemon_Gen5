@@ -244,9 +244,12 @@ static BOOL zukandummydata( SAVEADDR_WORK *pWork )
 
 #include "savedata/wifi_negotiation.h"
 
+#include "savedata/wifilist.h"
+#include "savedata/wifilist_local.h"
 
 
 extern MYITEM_PTR* SaveData_GetMyItem(SAVE_CONTROL_WORK * sv);
+extern WIFI_LIST* SaveData_GetWifiListData(SAVE_CONTROL_WORK * sv);
 
 
 
@@ -411,6 +414,10 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     {  //FRIENDCODE
 
+      
+
+      
+
     }
 
     
@@ -441,7 +448,18 @@ static void _keyWait(SAVEADDR_WORK* pWork)
 
     }
 
+    //ƒtƒŒƒ“ƒhProfileID
+    {
+      WIFI_LIST* pWifi = SaveData_GetWifiListData(pWork->pSaveData);
 
+      for(i=0;i<32;i++){
+        pAddr = (u8*)&pWifi->friendData[i].GameSyncID;
+
+  //      OS_TPrintf("%d \n",pWifi->friendData[i].GameSyncID);
+        OS_TPrintf("\"%s%2d\",\"0x%x\",\"%d\"\n", "FRIEND_GAMESYNCID",
+                   i,(u32)pAddr-(u32)topAddr,sizeof(pWifi->friendData[i].GameSyncID));
+      }
+    }
     
 
 

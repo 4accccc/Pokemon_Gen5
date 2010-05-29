@@ -700,6 +700,7 @@ BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
       && NetErr_App_CheckError() == NET_ERR_CHECK_NONE
       && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE
       && Intrude_Check_AlwaysBoot( gsys ) == TRUE
+      && GFL_UI_CheckCoverAndBatt() == FALSE
       && CGEAR_SV_GetCGearONOFF(GAMEDATA_GetCGearSaveData(gsys->gamedata)) )
   {
     return TRUE;
