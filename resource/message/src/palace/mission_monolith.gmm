@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-29T14:51:32"/>
+	<create user="ohmori" host="W00223" date="2010-05-29T15:02:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1949,7 +1949,7 @@
 
 	<row id="plc_mism_06_01" back-color="#80ff80,,,#80ff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>ミッション６：「（道具名）を　うれ！」</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]に　[1:09:どうぐ名:1]を　すばやく
+		<language name="JPN" width="256">[1:00:トレーナー名:0]に　[1:09:どうぐ名:1]を
 おかいどくな　ねだんで　かってもらえ！！
 （ことわられたら　しっぱい！）
 
@@ -1957,7 +1957,7 @@
 せいげんじかん　[2:02:３桁:2]びょう
 
 ごほうび　：　デルダマ　[2:01:２桁:3]こ</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　[1:09:どうぐ名:1]を　素早く
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　[1:09:どうぐ名:1]を
 お買い得な　値段で　買ってもらえ！！
 （断られたら　失敗！）
 
