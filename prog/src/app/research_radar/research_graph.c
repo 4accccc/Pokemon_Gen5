@@ -306,6 +306,7 @@ static u32 GetTotalCountOfAnswer( const RRG_WORK* work ); // Œ»Ý•\Ž¦’†‚Ì‰ñ“š‚É‘
 static u8 GetInvestigatingTopicID( const RRG_WORK* work ); // Œ»Ý’²¸’†‚Ì’²¸€–ÚID‚ðŽæ“¾‚·‚é
 static u8 GetMyAnswerID( const RRG_WORK* work ); // Œ»Ý•\Ž¦’†‚ÌŽ¿–â‚É‘Î‚·‚é, Ž©•ª‚Ì‰ñ“šID‚ðŽæ“¾‚·‚é
 static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work ); // Ž¿–âwƒvƒŒƒCŽžŠÔ‚ÍHx‚É‘Î‚·‚éŽ©•ª‚Ì‰ñ“šID‚ðŽæ“¾‚·‚é
+static u32 GetTodayCountOfQuestion_from_SaveData( const RRG_WORK* work ); // ƒZ[ƒuƒf[ƒ^‚ªŽ‚Â, Œ»Ý•\Ž¦’†‚ÌŽ¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”
 // OBJ
 static u32 GetObjResourceRegisterIndex( const RRG_WORK* work, OBJ_RESOURCE_ID resID ); // OBJƒŠƒ\[ƒX‚Ì“o˜^ƒCƒ“ƒfƒbƒNƒX‚ðŽæ“¾‚·‚é
 static GFL_CLUNIT* GetClactUnit( const RRG_WORK* work, CLUNIT_INDEX unitIdx ); // ƒZƒ‹ƒAƒNƒ^[ƒ†ƒjƒbƒg‚ðŽæ“¾‚·‚é
@@ -3474,7 +3475,11 @@ static void VBlankFunc( GFL_TCB* tcb, void* wk )
 static void WatchOutNewEntry( RRG_WORK* work )
 {
   if( GAMEBEACON_Get_NewEntry() == TRUE ) {
-    work->newEntryFlag = TRUE;
+    u16 now_today_count = GetTodayCountOfQuestion( work );
+    u16 new_today_count = GetTodayCountOfQuestion_from_SaveData( work ); 
+    if( now_today_count != new_today_count ) {
+      work->newEntryFlag = TRUE;
+    }
   }
 }
 
@@ -3981,6 +3986,33 @@ static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work )
   else if( hour <=  90 ) { return ANSWER_ID_143; }
   else if( hour <= 100 ) { return ANSWER_ID_144; }
   else { return ANSWER_ID_145; }
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief ƒZ[ƒuƒf[ƒ^‚ªŽ‚Â, Œ»Ý•\Ž¦’†‚ÌŽ¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl”‚ðŽæ“¾‚·‚é
+ *
+ * @param work
+ *
+ * @return Œ»Ý•\Ž¦’†‚ÌŽ¿–â‚É‘Î‚·‚é, ¡“ú‚Ì‰ñ“šl” ( ƒZ[ƒuƒf[ƒ^‚Ì’l )
+ */
+//-----------------------------------------------------------------------------------------
+static u32 GetTodayCountOfQuestion_from_SaveData( const RRG_WORK* work )
+{
+  GAMEDATA* gameData;
+  SAVE_CONTROL_WORK* save;
+  QUESTIONNAIRE_SAVE_WORK* QSave;
+  u8 questionID;
+  u32 todayCount;
+
+  gameData = GetGameData( work );
+  save     = GAMEDATA_GetSaveControlWork( gameData );
+  QSave    = SaveData_GetQuestionnaire( save ); 
+
+  questionID = GetQuestionID( work );
+  todayCount = QuestionnaireWork_GetTodayCount( QSave, questionID );
+
+  return todayCount;
 }
 
 //-----------------------------------------------------------------------------------------
