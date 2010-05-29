@@ -1426,18 +1426,20 @@ EVENT_START   ev_pos_d01r0101_sage5_01
 	
 	ENDIF
 	
+	//ƒCƒxƒ“ƒg‹È’âŽ~
+	_END_EVENT_BGM()
+	
 	//‰æ–ÊˆÃ“]
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
+	
+	_TIME_WAIT( 16 )
 
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 	_OBJ_DEL( D01R0101_SAGE5_01 )
 	
 	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
-	
-	//ƒ‰ƒCƒoƒ‹‹È’âŽ~
-	_END_EVENT_BGM()
 
 	//========================================/
 	
