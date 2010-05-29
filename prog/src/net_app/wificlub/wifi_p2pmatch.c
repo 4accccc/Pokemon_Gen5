@@ -808,6 +808,7 @@ static int _vchatNegoCheck( WIFIP2PMATCH_WORK *wk, int seq );
 static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq );
 static int _playerDirectInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int MessageEndReturnList( WIFIP2PMATCH_WORK *wk, int seq );
+static int ReturnList( WIFIP2PMATCH_WORK *wk, int seq );
 static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq );
 static int _parentModeCallMenuSendD( WIFIP2PMATCH_WORK *wk, int seq );
 static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  );
@@ -978,6 +979,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectFailed2, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED2
   _playerDirectFailed3, //WIFIP2PMATCH_PLAYERDIRECT_BATTLE_FAILED3
   MessageEndReturnList, //WIFIP2PMATCH_MESSAGEEND_RETURNLIST
+  ReturnList,         //WIFIP2PMATCH_RETURNLIST
   _playerMachineInit1,//WIFIP2PMATCH_PLAYERMACHINE_INIT1
   _playerMachineNoregParent, //WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT
   _playerMachineBattleDecide, //WIFIP2PMATCH_PLAYERMACHINE_BATTLE_DECIDE
@@ -2142,7 +2144,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(wk->pParentWork->seq != WIFI_GAME_NONE){
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
-    if(wk->pParentWork->btalk && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
+    if(wk->state == WIFIP2PMATCH_STATE_TALK && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
       //ここでVCT切断
       DWCRAP_StopVChat();
       WifiP2PMatch_FriendListInit2( wk, seq );
@@ -3390,7 +3392,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   case MCR_RET_MYSELECT:   //パソコンに話しかける
     {  // 募集の行で選択したとき
       if(status == WIFI_STATUS_WAIT){
-        wk->pParentWork->btalk = FALSE;  //NOTダイレクト
+        wk->state = WIFIP2PMATCH_STATE_MACHINE;  //NOTダイレクト
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
@@ -3434,6 +3436,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   u32 check_friend;
   MCR_MOVEOBJ* p_obj;
   u32 status,gamemode;
+
 
   wk->vchatrev = 0;  //マシンでの暫定VCTフラグリセット
 
@@ -3501,7 +3504,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   case MCR_RET_MYSELECT:   //パソコンに話しかける
     {  // 募集の行で選択したとき
       if(status == WIFI_STATUS_WAIT){
-        wk->pParentWork->btalk = FALSE;  //NOTダイレクト
+        wk->state = WIFIP2PMATCH_STATE_MACHINE;  //NOTダイレクト
         PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
         WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
@@ -3889,7 +3892,7 @@ static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
 {
   wk->VChatModeOff = FALSE;
   if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_VCTEND, WB_NET_WIFICLUB)){
-    if(wk->pParentWork->btalk){
+    if(wk->state == WIFIP2PMATCH_STATE_TALK ){
       //ここでVCT切断
       DWCRAP_StopVChat();
       _changeBGMVol( wk, _VOL_DEFAULT );
@@ -4310,6 +4313,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
     _windelandSEcall(wk);
     FriendRequestWaitOff(wk);
+    wk->state = WIFIP2PMATCH_STATE_NONE;
     return seq;
     break;
   case WIFI_GAME_BATTLE_SINGLE_ALL:
@@ -4388,6 +4392,25 @@ static int MessageEndReturnList( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
+//------------------------------------------------------------------
+/**
+ * $brief   リストに戻る  WIFIP2PMATCH_RETURNLIST
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int ReturnList( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  EndMessageWindowOff(wk);
+  GFL_NET_StateWifiMatchEnd(TRUE);
+  _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+  wk->preConnect = -1;
+  // 主人公の動作を許可
+  FriendRequestWaitOff( wk );
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+
+  return seq;
+}
 
 //------------------------------------------------------------------
 /**
@@ -4956,6 +4979,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
         }
       }
     }
+    wk->state = WIFIP2PMATCH_STATE_MACHINE_RECV;
     if(WIFI_STATUS_GetVChatStatus(p_status) == WIFI_STATUS_GetVChatStatus(wk->pMatch)){
       _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
     }
@@ -7206,6 +7230,8 @@ static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk )
     wk->friend_request_wait = FALSE;
     EndMessageWindowOff( wk );
     WIFI_MCR_PlayerMovePause( &wk->matchroom, FALSE );
+
+    wk->state = WIFIP2PMATCH_STATE_NONE;
   }
 }
 
@@ -7401,6 +7427,20 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Main( GFL_PROC * proc, int * seq, void *
   //  if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
   //    WIFI_MCR_Draw( &wk->matchroom );
   //  }
+
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+  {
+    static const char *sc_print_tbl[] =
+    {
+      "なし",
+      "マシーン募集",
+      "募集に参加",
+      "はなしかけた",
+      "られた",
+    };
+    NAGI_Printf( "状態:%s\n", sc_print_tbl[ wk->state ] );
+  }
+#endif
 
   if(wk->SysMsgQue){
     u8 defL, defS, defB;

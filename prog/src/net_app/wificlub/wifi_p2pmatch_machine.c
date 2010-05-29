@@ -19,7 +19,6 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
   u32 fail_bit;
   u16 gamemode = _WifiMyGameModeGet( wk, wk->pMatch );
 
-  wk->pParentWork->btalk = FALSE;  // 
   switch(gamemode){
   case WIFI_GAME_VCT:
     {
@@ -114,14 +113,13 @@ static int _playerMachineBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
   u32 fail_bit;
   u32 regulation = _createRegulation(wk);
   
-  if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
-    if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
-      // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
-      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
-//      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT);
-      return seq;
-    }
+  if(!_regulationCheck(wk)){
+    // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+    //      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+    //      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT );
+    return seq;
   }
 
   {

@@ -33,8 +33,6 @@ static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_npc;
   u32 way;
 
-  wk->pParentWork->btalk = TRUE;  //ダイレクト
-
   OS_TPrintf("_playerDirectInit1Next %d\n",wk->friendNo);
   
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
@@ -69,8 +67,6 @@ static int _playerDirectInit1( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_player;
   MCR_MOVEOBJ* p_npc;
   u32 way;
-
-  wk->pParentWork->btalk = TRUE;  //ダイレクト
 
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
   if(!GFL_NET_IsParentMachine()){
@@ -157,11 +153,17 @@ static int _playerDirectInit5( WIFIP2PMATCH_WORK *wk, int seq )
 
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
   if(GFL_NET_IsParentMachine()){
+
+    wk->state = WIFIP2PMATCH_STATE_TALK;
+
     _friendNameExpand(wk,  wk->friendNo - 1);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_084, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT6);
   }
   else{
+
+    wk->state = WIFIP2PMATCH_STATE_RECV;
+
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
@@ -438,7 +440,7 @@ static int _playerDirectSub23( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_UI_KEY_GetTrg()){
     return seq;
   }
-  if(wk->pParentWork->btalk){
+  if(wk->state == WIFIP2PMATCH_STATE_TALK){
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
   }
   else{
@@ -575,7 +577,6 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   }
   _myStatusChange(wk, status,gamemode);  // 接続中になる
-  wk->pParentWork->btalk = TRUE;  //ダイレクト
 
   switch(wk->directmode){
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
@@ -662,7 +663,7 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
   
   switch(ret){
   case BMPMENULIST_CANCEL:
-    if(wk->pParentWork->btalk){  //会話の流れ
+    if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
       _friendNameExpand(wk,  wk->friendNo - 1);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_084, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT6);
@@ -672,7 +673,7 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   default:
-    if(wk->pParentWork->btalk){  //会話の流れ
+    if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
       _CHANGESTATE(wk, ret);
     }
     else{  //掲示板の流れ
@@ -997,7 +998,7 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5);
   }
   _friendNameExpand(wk,  wk->friendNo - 1);
-  if(wk->pParentWork->btalk){
+  if(wk->state == WIFIP2PMATCH_STATE_TALK){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_014, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
   }
@@ -1048,7 +1049,13 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT2);
     }
     else{
-      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
+
+      if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
+        _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
+      }
+      else{
+        _CHANGESTATE(wk, WIFIP2PMATCH_RETURNLIST);
+      }
     }
   }
   return seq;
@@ -1060,7 +1067,14 @@ static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
   if(GFL_UI_KEY_GetTrg()){
     _Menu_RegulationDelete(wk);
     EndMessageWindowOff(wk);
-    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
+
+
+    if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
+    }
+    else{
+      _CHANGESTATE(wk, WIFIP2PMATCH_RETURNLIST);
+    }
   }
   return seq;
 }
@@ -1182,7 +1196,7 @@ static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
   }
   else{  // いいえを選択した場合
-    if(wk->pParentWork->btalk==FALSE){
+    if(wk->state == WIFIP2PMATCH_STATE_MACHINE){
       wk->command = WIFIP2PMATCH_PLAYERDIRECT_END;
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_071, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
@@ -1218,7 +1232,7 @@ static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
     u32 fail_bit;
 
     if(!_regulationCheck(wk)){        // 選ぶ事ができない
-      if(wk->pParentWork->btalk){
+      if(wk->state == WIFIP2PMATCH_STATE_TALK){
         _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB45);
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
         return seq;
@@ -1643,6 +1657,8 @@ static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectCancelEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+
+  wk->state = WIFIP2PMATCH_STATE_NONE;
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
 
@@ -1685,6 +1701,8 @@ static int _playerDirectCancelEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+
+  wk->state = WIFIP2PMATCH_STATE_NONE;
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
 
@@ -1967,6 +1985,8 @@ static int _playerDirectWaitSendCommand( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerMachineTalkEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+
+  wk->state = WIFIP2PMATCH_STATE_NONE;
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
   GFL_NET_StateWifiMatchEnd(TRUE);
