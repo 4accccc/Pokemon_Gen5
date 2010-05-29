@@ -512,6 +512,7 @@ static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata)
   beacon->trainer_id = MyStatus_GetID( GAMEDATA_GetMyStatus(gamedata) );
   beacon->isTwl = OS_IsRunOnTwl();
   beacon->restrictPhoto = FALSE;
+  beacon->pad_detect_fold = PAD_DetectFold();
   if(beacon->isTwl == TRUE){
   #ifdef SDK_TWL
     beacon->restrictPhoto = OS_IsRestrictPhotoExchange();

@@ -334,7 +334,12 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
 
     Intrude_Main(intcomm);
     
-    if(GFL_NET_IsParentMachine() == TRUE && MISSION_RecvCheck(&intcomm->mission) == FALSE){
+    if(MISSION_CheckResultTimeout(&intcomm->mission) == TRUE){
+      OS_TPrintf("ƒ~ƒbƒVƒ‡ƒ“Ž¸”s‚É‚æ‚éØ’f\n");
+      GameCommSys_ExitReq(intcomm->game_comm);
+      break;
+    }
+    else if(GFL_NET_IsParentMachine() == TRUE && MISSION_RecvCheck(&intcomm->mission) == FALSE){
       s32 start_time = intcomm->mission_start_timeout;
       s32 now_time = GFL_RTC_GetTimeBySecond();
       if(now_time < start_time){  //‰ñ‚èž‚Ý‚ª”­¶

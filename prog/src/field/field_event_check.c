@@ -464,10 +464,12 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return EVENT_CommMissionResult(gsys, fieldWork, req.heapID);
       }
     #else
+      #if 0 //侵入通信メインで管理するように変更 2010.05.29(土)
       //ミッションタイムアウトで失敗
       if(MISSION_CheckResultTimeout(&intcomm->mission) == TRUE){
         return EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_NULL);
       }
+      #endif
     #endif
       //隠しアイテムの目的地到達チェック
       if (req.stepRequest ){
