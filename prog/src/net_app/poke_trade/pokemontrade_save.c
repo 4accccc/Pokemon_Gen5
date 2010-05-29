@@ -105,6 +105,7 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 static void _endBGM(POKEMON_TRADE_WORK* pWork)
 {
   PMSND_PopBGM();
+  pWork->pushSound--;
   PMSND_PauseBGM( FALSE );
   PMSND_FadeInBGM( 60 );
 }
@@ -112,6 +113,7 @@ static void _endBGM(POKEMON_TRADE_WORK* pWork)
 static void _endME(POKEMON_TRADE_WORK* pWork)
 {
   PMSND_PopBGM();
+  pWork->pushSound--;
   PMSND_PauseBGM( FALSE );
   PMSND_FadeInBGM( 24 );
 }
@@ -150,6 +152,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
 
   PMSND_PauseBGM( TRUE );
   PMSND_PushBGM();
+  pWork->pushSound++;
   PMSND_FadeOutBGM( PMSND_FADE_FAST );
 
   pWork->anmCount = 0;

@@ -241,6 +241,7 @@ void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork)
     else if(pWork->demoBGM==8){
       PMSND_PauseBGM( TRUE );
       PMSND_PushBGM();
+      pWork->pushSound++;
       PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
       PMSND_FadeInBGM( 1 );
       pWork->demoBGM=0;
@@ -3895,7 +3896,26 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 }
 
 
-
+///サウンドのエラー時POP
+static void _soundErrRecover(POKEMON_TRADE_WORK* pWork)
+{
+  switch(pWork->pushSound){
+  case 2:
+    PMSND_PopBGM();
+    PMSND_PauseBGM( FALSE );
+    //break throw
+  case 1:
+    PMSND_PopBGM();
+    PMSND_PauseBGM( FALSE );
+    PMSND_FadeInBGM( PMSND_FADE_SHORT );
+    //break throw
+  case 0:
+    break;
+  default:
+    GF_ASSERT(0);
+  }
+  pWork->pushSound = 0;
+}
 
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(dpw_common);
@@ -4307,6 +4327,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
         NetErr_App_ReqErrorDisp();
       }
       pWork->pParentWork->ret = POKEMONTRADE_MOVE_ERROR;
+      _soundErrRecover(pWork);
       retCode = GFL_PROC_RES_FINISH;
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);

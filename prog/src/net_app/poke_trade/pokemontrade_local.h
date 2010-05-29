@@ -730,6 +730,10 @@ struct _POKEMON_TRADE_WORK{
   u8 mojiIconEnd;  //文字点滅アイコンが終わったかどうか
   u8 zenkoku_flag;
   u8 bBackupStart;  //セーブのスタート このフラグが立ってたらエラー復帰不可能
+  u8 pushSound;
+  u8 dummy1;
+  u8 dummy2;
+  u8 dummy3;
 } ;
 
 
