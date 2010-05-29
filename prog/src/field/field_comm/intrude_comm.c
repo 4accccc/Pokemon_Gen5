@@ -590,7 +590,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
 
   bcon_buff = GFL_NET_WLGetDirectGFBss(pBss, &id);
 
-  if(id == WB_NET_FIELDMOVE_SERVICEID){
+  if(id == WB_NET_FIELDMOVE_SERVICEID && bcon_buff->pad_detect_fold == FALSE){
     int i;
     for(i = 0; i < intcomm->search_count; i++){
       if(intcomm->search_child_trainer_id[i] == bcon_buff->trainer_id){

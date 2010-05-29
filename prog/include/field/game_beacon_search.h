@@ -49,7 +49,8 @@ typedef struct
   u8 isTwl:1;           ///<TRUE:TWLƒ‚[ƒh‚Å“®ì‚µ‚Ä‚¢‚é
   
   u8 intrude_ng:1;      ///<TRUE:—“ü‹ÖŽ~
-  u8 padding:7;
+  u8 pad_detect_fold:1; ///<TRUE:DS‚ÌŠW‚ð•Â‚¶‚Ä‚¢‚é(PAD_DetectFold)
+  u8 padding:6;
   
   u32 trainer_id;
   
