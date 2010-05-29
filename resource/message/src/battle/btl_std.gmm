@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-25T21:13:43"/>
+	<create user="taya" host="W00146" date="2010-05-29T23:45:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,12 +339,12 @@
 
 	<dialog left="240" top="137" right="1079" bottom="748" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="832" top="450" right="1263" bottom="848" visible="no"/>
+		<tag-palette left="832" top="450" right="1263" bottom="848" visible="yes"/>
 		<band id="0" index="0" style="0001" width="445"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -933,6 +933,14 @@
 		<comment>逃げることが出来ない状態にされている</comment>
 		<language name="JPN" width="216">にげることが　できない！</language>
 		<language name="JPN_KANJI" width="216">逃げることが　できない！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_EscapeWild">
+		<comment>野生ポケモンが逃げた</comment>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
+にげだした！</language>
+		<language name="JPN_KANJI" width="216">やせいの[1:02:ポケモンニックネーム:0]　は
+にげだした！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_EscapeCant">
@@ -1710,6 +1718,12 @@
 	<row id="BTL_STRID_STD_ResetMove">
 		<language name="JPN" width="216">リセットムーブ！！</language>
 		<language name="JPN_KANJI" width="216">リセットムーブ！！</language>
+	</row>
+
+	<row id="BTL_STRID_STD_YubiFuruDebug">
+		<comment>ゆびをふるデバッグ用</comment>
+		<language name="JPN" width="216">（[2:00:１桁:0]）のゆびをふる　[2:02:３桁:1]：[1:07:わざ名:2]</language>
+		<language name="JPN_KANJI" width="216">（[2:00:１桁:0]）のゆびふる　[2:02:３桁:1]：[1:07:わざ名:2]</language>
 	</row>
 
 	<flowchart-group-list>
