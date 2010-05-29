@@ -74,7 +74,6 @@ EVENT_START ev_scene_d13r0101
   _YES_NO_WIN( SCWK_ANSWER )
   _SYSWIN_CLOSE()
   _CALL doc_battle
-
 EVENT_END
 
 
@@ -89,8 +88,10 @@ EVENT_START	ev_d13r0101_assistantm_01
     //「戦うか？」
     _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_14, D13R0101_ASSISTANTM_01, POS_DR )
     _YES_NO_WIN( SCWK_ANSWER )
-    _BALLOONWIN_CLOSE()
-
+    //戦うときのみウィンドウを閉じる
+    IF $SCWK_ANSWER == 0 THEN
+      _BALLOONWIN_CLOSE()
+    ENDIF
     _CALL doc_battle
 
   CASE 3 THEN //戦闘済
@@ -235,13 +236,12 @@ EVENT_START	ev_bg_d13r0101_pc_01
   //読む？
   _SYSWIN_MSG( msg_d13r0101_pc_01, POS_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
-
   IF $SCWK_ANSWER == 0 THEN
     _SYSWIN_MSG( msg_d13r0101_pc_02, POS_DOWN )
     _LAST_KEYWAIT()
-    _SYSWIN_CLOSE()
-  ENDIF  
+  ENDIF
+  //ウィンドウ閉じて終了
+  _SYSWIN_CLOSE()
 EVENT_END
 
 //--------------------------------------------------------------------
