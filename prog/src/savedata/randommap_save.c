@@ -12,6 +12,8 @@
 
 #include "savedata/randommap_save.h"
 #include "savedata/save_tbl.h"
+#include "poke_tool/poke_tool.h"
+#include "poke_tool/poke_tool_def.h"
 
 //======================================================================
 //	define
@@ -36,6 +38,9 @@ struct _RANDOMMAP_SAVE
   FIELD_WFBC_CORE_ITEM item;
 
   FIELD_WFBC_EVENT event;
+  
+  ///合体ポケモン：将来用に確保(空きブロックが無いのでアライメントが多いここに確保)
+  POKEMON_PARAM united_pokepara;
 };
 
 
