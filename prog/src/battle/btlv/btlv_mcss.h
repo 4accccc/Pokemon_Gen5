@@ -193,6 +193,7 @@ extern  void            BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WOR
 extern  BOOL            BTLV_MCSS_SetAnime( BTLV_MCSS_WORK* bmw, int position, int anm_no );
 extern  void            BTLV_MCSS_SetAnimeEndCheck( BTLV_MCSS_WORK* bmw, int position );
 extern  BOOL            BTLV_MCSS_CheckAnimeExecute( BTLV_MCSS_WORK* bmw, int position );
+extern  void            BTLV_MCSS_CheckPositionSetInitPos( BTLV_MCSS_WORK* bmw, int position );
 
 #ifdef PM_DEBUG
 extern  void            BTLV_MCSS_AddDebug( BTLV_MCSS_WORK *bmw, const MCSS_ADD_DEBUG_WORK *madw, int position );
