@@ -60,6 +60,7 @@ typedef struct
 	INTRUDE_BATTLE_PARENT ibp;
 	int first_talked;
 	BOOL success;
+	BOOL cancel;
 }EVENT_MISSION_BATTLE;
 
 
@@ -214,10 +215,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
     SEQ_BATTLE_OK,
-    SEQ_SEND_ACHIEVE,
-    SEQ_RECV_WAIT,
     SEQ_BATTLE_START_WAIT,
     SEQ_BATTLE_START_TIMING_WAIT,
+    SEQ_SEND_ACHIEVE,
+    SEQ_RECV_WAIT,
     SEQ_BATTLE_COMMON_EVENT,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
@@ -286,16 +287,6 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       MissionBattleMsgID.mission_battle_ok[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
   	(*seq) = SEQ_SEND_ACHIEVE;
 		break;
-	case SEQ_SEND_ACHIEVE:
-    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
-      (*seq)++;
-    }
-    break;
-  case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
-      (*seq) = SEQ_BATTLE_START_WAIT;
-    }
-    break;
   case SEQ_BATTLE_START_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE) == TRUE){
@@ -316,6 +307,17 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
           *seq = SEQ_TALK_CANCEL;
         }
       }
+    }
+    break;
+
+	case SEQ_SEND_ACHIEVE:
+    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
+      (*seq)++;
+    }
+    break;
+  case SEQ_RECV_WAIT:
+		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+      (*seq) = SEQ_BATTLE_START_WAIT;
     }
     break;
 
@@ -340,6 +342,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
 
 	case SEQ_TALK_CANCEL:   //会話キャンセル
+	  talk->cancel = TRUE;
 	  *seq = SEQ_END;
 	  break;
     
@@ -359,6 +362,9 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
 
     if(talk->success == TRUE){
       GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+    }
+    else if(talk->cancel == TRUE){
+      return GMEVENT_RES_FINISH;    //キャンセルで終了
     }
     else{
       GMEVENT_ChangeEvent(
