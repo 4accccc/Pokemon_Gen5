@@ -66,9 +66,9 @@ enum {
 #define	LIST_START_END_WAIT		( wk->testStartEndWait )
 #define	LOGO_PUT_WAIT					( wk->testLogoWait )
 #else
-#define	LIST_START_INIT_WAIT	( 47 )
-#define	LIST_START_END_WAIT		( 41 )
-#define	LOGO_PUT_WAIT					( 160 )
+#define	LIST_START_INIT_WAIT	( 41 )
+#define	LIST_START_END_WAIT		( 0 )
+#define	LOGO_PUT_WAIT					( 166 )
 #endif	// PM_DEBUG
 
 #if	PM_VERSION == LOCAL_VERSION
@@ -298,14 +298,9 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	GXS_SetMasterBrightness( -16 );
 
 #ifdef	PM_DEBUG
-	wk->testStartInitWait = 47;
-	wk->testLogoWait = 160;
-	wk->testStartEndWait = 41;
-/*
-	wk->testStartInitWait = 31;
-	wk->testLogoWait = 128;
-	wk->testStartEndWait = 39;
-*/
+	wk->testStartInitWait = 41;
+	wk->testLogoWait = 166;
+	wk->testStartEndWait = 0;
 #endif	// PM_DEBUG
 
 	InitVram();
@@ -1089,8 +1084,10 @@ static const SR3DCAMERA_PARAM CameraMoveTable[] =
 #else
 	{ { CAMERA_POS_X, CAMERA_POS_Y, CAMERA_POS_Z }, { CAMERA_TARGET_X, CAMERA_TARGET_Y, CAMERA_TARGET_Z } },
 	{ { 1636, 120655, 48453 }, { 0, 124745, 0 } },
-	{ { -25358, 139878, 60723 }, { 23722, 124745, 0 } },
+//	{ { -25358, 139878, 60723 }, { 23722, 124745, 0 } },
+	{ { -39264, 151739, 53361 }, { 179960, 124745, 0 } },
 	{ { -8998, 153784, 137615 }, { 47853, 124745, 0 } },
+
 	{ { -64622, 159919, 81582 }, { 245809, 108794, 129244 } },
 	{ { -19223, 155011, 93443 }, { 199183, 98978, -41718 } },
 	{ { -21677, 148467, 185468 }, { 1908803, 121064, -41718 } },
