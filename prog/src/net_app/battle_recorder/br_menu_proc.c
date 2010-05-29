@@ -236,7 +236,7 @@ static GFL_PROC_RESULT BR_MENU_PROC_Main( GFL_PROC *p_proc, int *p_seq, void *p_
     break;
    
   case SEQ_MAIN:
-    //ブラウザモードならば
+    //ブラウザモードならば色替え可能
     if( p_param->menuID <= BR_BROWSE_MENUID_DELETE_OTHER )
     { 
       if( BR_BTN_SYS_STATE_WAIT == BR_BTN_SYS_GetState( p_wk->p_btn ) )

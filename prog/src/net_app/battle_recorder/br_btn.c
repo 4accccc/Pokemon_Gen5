@@ -319,6 +319,7 @@ BR_BTN_SYS_WORK *BR_BTN_SYS_Init( BR_MENUID menuID, GFL_CLUNIT *p_unit, BR_RES_W
 		p_wk->p_bmpoam		= BmpOam_Init( heapID, p_unit);
     p_wk->p_que       = PRINTSYS_QUE_Create( heapID );
     p_wk->p_balleff   = p_balleff;
+    p_wk->state = BR_BTN_SYS_STATE_BTN_MOVE;
 
     {
       BR_BTN_DATA_SETUP setup;

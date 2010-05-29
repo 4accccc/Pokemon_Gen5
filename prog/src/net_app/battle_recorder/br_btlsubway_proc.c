@@ -1306,30 +1306,30 @@ static void Br_BtlSubway_CreateSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
   } sc_msgwin_data[BR_BTLSUBWAY_MSGWINID_S_MAX]  =
   { 
     {
-      8,
+      4,
       2,
-      16,
+      24,
       2,
       msg_800
     },
     {
-      8,
+      4,
       6,
-      16,
+      24,
       2,
       msg_801
     },
     {
-      8,
+      4,
       10,
-      16,
+      24,
       2,
       msg_802
     },
     {
-      8,
+      4,
       14,
-      16,
+      24,
       2,
       msg_803
     },
@@ -1529,7 +1529,7 @@ static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv )
   BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
                           BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE, BSWAY_SETMODE_get );
 
-  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_SINGLE ); 
+  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_S_SINGLE ); 
 
   return is_clear && win > 0;
 }
@@ -1547,7 +1547,7 @@ static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv )
   BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
                           BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_DOUBLE, BSWAY_SETMODE_get );
 
-  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_DOUBLE ); 
+  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_S_DOUBLE ); 
 
   return is_clear && win > 0;
 }
@@ -1565,7 +1565,7 @@ static BOOL Br_BtlSubway_IsAppearMulti(  BSUBWAY_SCOREDATA *p_sv )
   BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
                           BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_MULTI, BSWAY_SETMODE_get );
 
-  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_MULTI ); 
+  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_S_MULTI ); 
 
   return is_clear && win > 0;
 }
