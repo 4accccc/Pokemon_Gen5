@@ -172,7 +172,7 @@ EVENT_START   ev_pos_c08_champions_01
 		_OBJ_ANIME( MMDL_ID_PLAYER,anm_c08_player_to_crowd_01z175 )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
-	
+
 	//上を向いてゲーヂスにコメント
 	_BALLOONWIN_OBJMSG( msg_c08_champion_02 , C08_CHAMPION_01 )
 	_BALLOONWIN_CLOSE()
@@ -670,10 +670,11 @@ _ANIME_LABEL	anm_c08_player_to_crowd_01z173
 //	ゲーヂス演説イベント：群集の後ろにつく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_player_to_crowd_01z174
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_D_8F,4
-	_ANIME_DATA	AC_WALK_R_8F,5
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -682,9 +683,8 @@ _ANIME_LABEL	anm_c08_player_to_crowd_01z174
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_player_to_crowd_01z175
 	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,3
+	_ANIME_DATA	AC_WALK_D_8F,4
 	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -692,10 +692,11 @@ _ANIME_LABEL	anm_c08_player_to_crowd_01z175
 //	ゲーヂス演説イベント：群集の後ろにつく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_player_to_crowd_01z176
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,2
-	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,4
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
@@ -703,10 +704,9 @@ _ANIME_LABEL	anm_c08_player_to_crowd_01z176
 //	ゲーヂス演説イベント：群集の後ろにつく
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08_player_to_crowd_01z177
-	_ANIME_DATA	AC_WALK_R_8F,6
-	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	AC_WALK_R_8F,4
-	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_R_8F,7
+	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_R_8F,3
 	_ANIME_DATA	AC_STAY_WALK_U_8F,0
 	_ANIME_DATA	ACMD_END,0
 
