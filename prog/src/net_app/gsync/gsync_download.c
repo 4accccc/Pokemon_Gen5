@@ -35,7 +35,6 @@ struct _GSYNC_DOWNLOAD_WORK {
   DWCNdFileInfo     fileInfo;
   int s_callback_flag;
   int s_callback_result;
-  int server_filenum;
   void* pbuffer;
   int size;
   HEAPID heapID;
@@ -134,11 +133,6 @@ void* GSYNC_DOWNLOAD_GetData(GSYNC_DOWNLOAD_WORK* pWork)
 }
 
 
-int GSYNC_DOWNLOAD_GetNum(GSYNC_DOWNLOAD_WORK* pWork)
-{
-  return pWork->server_filenum;
-}
-
 BOOL GSYNC_DOWNLOAD_InitAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {
   pWork->s_callback_flag = FALSE;
@@ -187,27 +181,13 @@ BOOL GSYNC_DOWNLOAD_SetAttr(GSYNC_DOWNLOAD_WORK* pWork, char* typestr, int no)
 }
 
 
-BOOL GSYNC_DOWNLOAD_FileListNumAsync(GSYNC_DOWNLOAD_WORK* pWork)
-{
-  pWork->s_callback_flag = FALSE;
-
-  if( DWC_NdGetFileListNumAsync( &pWork->server_filenum ) == FALSE )
-  {
-    OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
-    return FALSE;
-  }
-  return TRUE;
-}
-
-
-
 BOOL GSYNC_DOWNLOAD_FileListAsync(GSYNC_DOWNLOAD_WORK* pWork)
 {
   pWork->s_callback_flag = FALSE;
 
   if( DWC_NdGetFileListAsync( &pWork->fileInfo, 0, 1 ) == FALSE)
   {
-    OS_TPrintf( "DWC_NdGetFileListNumAsync: Failed.\n" );
+    OS_TPrintf( "DWC_NdGetFileListAsync: Failed.\n" );
     return FALSE;
   }
   return TRUE;

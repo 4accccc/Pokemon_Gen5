@@ -828,6 +828,17 @@ static void _downloadcgear6(G_SYNC_WORK* pWork)
 
 
 
+static void _downloadcgear51(G_SYNC_WORK* pWork)
+{
+  if(GSYNC_DOWNLOAD_FileAsync(pWork->pDownload)){
+    _CHANGE_STATE(_downloadcgear6);
+  }
+  else{
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+}
+
 static void _downloadcgear5(G_SYNC_WORK* pWork)
 {
   if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
@@ -837,31 +848,12 @@ static void _downloadcgear5(G_SYNC_WORK* pWork)
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
   }
-  else if(GSYNC_DOWNLOAD_FileAsync(pWork->pDownload)){
-    _CHANGE_STATE(_downloadcgear6);
-  }
-  else{
-    pWork->ErrorNo = _DOWNLOAD_ERROR;
-    _CHANGE_STATE(_ErrorDisp);
-  }
+  _CHANGE_STATE(_downloadcgear51);
 }
 
 
-static void _downloadcgear4(G_SYNC_WORK* pWork)
+static void _downloadcgear3(G_SYNC_WORK* pWork)
 {
-  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
-    return;
-  }
-  if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
-    pWork->ErrorNo = _DOWNLOAD_ERROR;
-    _CHANGE_STATE(_ErrorDisp);
-    return;
-  }
-  //if(GSYNC_DOWNLOAD_GetNum(pWork->pDownload) != 1){
-  //  pWork->ErrorNo = _DOWNLOAD_ERROR;
-    //_CHANGE_STATE(_ErrorDisp);
-//    return;
-  //}
   if(GSYNC_DOWNLOAD_FileListAsync(pWork->pDownload)){
     _CHANGE_STATE(_downloadcgear5);
   }
@@ -870,18 +862,6 @@ static void _downloadcgear4(G_SYNC_WORK* pWork)
     _CHANGE_STATE(_ErrorDisp);
   }
 }
-
-static void _downloadcgear3(G_SYNC_WORK* pWork)
-{
-  if(GSYNC_DOWNLOAD_FileListNumAsync(pWork->pDownload)){
-    _CHANGE_STATE(_downloadcgear4);
-  }
-  else{
-    pWork->ErrorNo = _DOWNLOAD_ERROR;
-    _CHANGE_STATE(_ErrorDisp);
-  }
-}
-
 
 static void _downloadcgear2(G_SYNC_WORK* pWork)
 {
