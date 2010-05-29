@@ -351,11 +351,11 @@ EVENT_START   ev_pos_c08_champions_01
 	_BALLOONWIN_OBJMSG( msg_c08_crowd3_03 , C08_WOMAN2_01 )
 	_BALLOONWIN_CLOSE()
 	
-	//画面暗転・プラズマ団OB削除
-	_BLACK_OUT_SLOW()
-	
 	//BGM終了
 	_END_EVENT_BGM()
+	
+	//画面暗転・プラズマ団OB削除
+	_BLACK_OUT_SLOW()
 	
 	//群集散ってゆくアニメーション
 	_OBJ_ANIME( C08_CROWD_01, anm_c08_croud_goodbye_01 )
