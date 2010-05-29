@@ -858,35 +858,8 @@ BOOL POKEMONTRADE_IsPokeLanguageMark(int monsno,int moji)
   return FALSE;
 }
 
-
-
-
-
 #endif
 
-
-//------------------------------------------------------------------------------
-/**
- * @brief   îÈì`ãZÇÃåüç∏
- * @param   POKEMON_PASO_PARAM
- * @retval  TRUE  îÈì`ãZÇ‡Çø
- * @retval  FALSE  îÈì`ãZÇ‡Ç¡ÇƒÇ»Ç¢
- */
-//------------------------------------------------------------------------------
-#if 0
-static BOOL _hedenWazaCheck(POKEMON_PASO_PARAM* ppp)
-{
-  int x;
-
-  for(x=0;x<4;x++){
-    int machine = PPP_Get(ppp,POKEPER_ID_machine1+x,NULL);
-    if(ITEM_CheckHidenWaza(machine)){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-#endif
 
 void POKMEONTRADE2D_IconGray(POKEMON_TRADE_WORK* pWork, GFL_CLWK* pCL ,BOOL bGray)
 {
@@ -3434,22 +3407,4 @@ void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray)
 
   POKEMON_TRADE_PaletteFade(pWork, bGray,FADE_SUB_OBJ,0xfffe);
 
-#if 0
-  u32 addr;
-  ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
-  PALETTE_FADE_PTR pP = PaletteFadeInit(pWork->heapID);
-  
-  PaletteFadeWorkAllocSet(pP, FADE_SUB_OBJ, 16 * 32, pWork->heapID);
-  PaletteWorkSetEx_ArcHandle(pP,arcHandlePoke ,POKEICON_GetPalArcIndex() ,pWork->heapID,
-                             FADE_SUB_OBJ, 0, 0, 0);
-  if(bGray){
-    SoftFadePfd(pP, FADE_SUB_OBJ, 0, 16*3, 6, 0);
-  }
-  addr = (u32)PaletteWorkTransWorkGet( pP, FADE_SUB_OBJ );
-  GXS_LoadOBJPltt((void*)addr, 3*32, 3*32);
-
-  PaletteFadeWorkAllocFree(pP,FADE_SUB_OBJ);
-  PaletteFadeFree(pP);
-  GFL_ARC_CloseDataHandle(arcHandlePoke);
-#endif
 }

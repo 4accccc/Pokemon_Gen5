@@ -688,18 +688,21 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
       WIFI_NEGOTIATION_SV_AddChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
     }
+
+    //スカイフォルム>ランドフォルム
+    if(MONSNO_492 == PP_Get( pp , ID_PARA_monsno ,NULL)){
+      if(FORMNO_492_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
+        PP_ChangeFormNo(pp,FORMNO_SHEIMI_LAND);
+        ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
+      }
+    }
+    
     //交換する   // 相手のポケを自分の選んでいた場所に入れる
     if(pWork->pParentWork->selectBoxno == BOXDAT_GetTrayMax(pWork->pBox)){ //てもちの交換の場合
       POKEPARTY* party = pWork->pMyParty;
       PokeParty_SetMemberData(party, pWork->pParentWork->selectIndex, pp);
     }
     else{
-      if(MONSNO_492 == PP_Get( pp , ID_PARA_monsno ,NULL)){
-        if(FORMNO_492_SKY == PP_Get( pp , ID_PARA_form_no ,NULL)){
-          PP_ChangeFormNo(pp,FORMNO_SHEIMI_LAND);
-          ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
-        }
-      }
       BOXDAT_PutPokemonPos(pWork->pBox, pWork->pParentWork->selectBoxno,
                            pWork->pParentWork->selectIndex,
                            (POKEMON_PASO_PARAM*)PP_GetPPPPointerConst(pp));

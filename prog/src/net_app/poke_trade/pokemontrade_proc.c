@@ -76,6 +76,7 @@ static void _recvChangePokemon(const int netID, const int size, const void* pDat
 static void _recvEnd(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 static void _touchState(POKEMON_TRADE_WORK* pWork);
+static void _touchStated(POKEMON_TRADE_WORK* pWork);
 static u8* _setChangePokemonBuffer(int netID, void* pWork, int size);
 static void _changeWaitState(POKEMON_TRADE_WORK* pWork);
 static void _endWaitState(POKEMON_TRADE_WORK* pWork);
@@ -2103,13 +2104,6 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
 
     pWork->pokemonselectno = 0;
 
-//    if(GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY){  // キーの時は位置を補正
-  //    IRC_POKETRADE_SetCursorXY(pWork);
-    //  NET_PRINT("キーの時 %d\n",pWork->x);
-//    }
-  //  else{
-    //  NET_PRINT("PAD時 %d\n",pWork->x);
-//    }
     POKETRADE_MESSAGE_ChangePokemonMyStDisp(pWork, pWork->pokemonselectno , pp);
     GFL_HEAP_FreeMemory(pp);
   }
@@ -3151,7 +3145,6 @@ static void _DeletePokemonState(POKEMON_TRADE_WORK* pWork)
 //--------------------------------------------------------------------------------------------
 static void _touchState(POKEMON_TRADE_WORK* pWork)
 {
-  int i;
 
   GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
 
@@ -3163,20 +3156,36 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;
   }
-
-
   _PokemonReset(pWork,0);
+
   
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     _PokemonReset(pWork,1);
     _userNetCommandClear(pWork);
+    _CHANGE_STATE(pWork,_touchStated);
   }
   else{
-    int myID = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
-
-//    pWork->userNetCommand[myID]=0;
-    GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CANCEL_POKEMON,0,NULL);
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CANCEL_POKEMON,0,NULL)){
+      _CHANGE_STATE(pWork,_touchStated);
+    }
   }
+}
+
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 基本ステート初期化
+ * @param POKEMON_TRADE_WORK* ワーク
+ */
+//--------------------------------------------------------------------------------------------
+static void _touchStated(POKEMON_TRADE_WORK* pWork)
+{
+  int i;
+
+
+
+  
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM2, FALSE);
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_CUTSOM1, TRUE );
