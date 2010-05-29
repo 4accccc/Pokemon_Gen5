@@ -240,11 +240,14 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	//これは　うるわしい　ポケモンと　ひとの　ゆうじょう
 	_BALLOONWIN_OBJMSG_POS( msg_c03r1101_sage1_07 , C03R1101_SAGE1_01,POS_UR )
 	_MSGWIN_CLOSE()
+
+	//BGM終了
+	_END_EVENT_BGM()
 	
 	//画面暗転
 	_BLACK_OUT_SLOW()
 	_DISP_FADE_END_CHECK()
-
+	
 	_TIME_WAIT( 30 )
 
 	//カメラ戻す
@@ -265,14 +268,11 @@ EVENT_START		ev_pos_c03r1101_plazma_01
 	_FLAG_RESET(FV_C03R1101_ITEM_01)
 	_OBJ_ADD(C03R1101_MONSTERBALL_01)
 	//------------------------------------//
-	
+
 	//画面暗転解除
 	_BLACK_IN_SLOW()
 	_DISP_FADE_END_CHECK()
-
-	//BGM終了
-	_END_EVENT_BGM()
-
+	
 	//アイリス：アーティに歩み寄る
 	_OBJ_ANIME( C03R1101_LEADER8W_01, anm_leader8w_talk )
 	_OBJ_ANIME_WAIT()
