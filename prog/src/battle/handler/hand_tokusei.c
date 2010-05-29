@@ -5178,7 +5178,15 @@ static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     // Ç–ÇÈÇ›ämó¶ÇOÇ»ÇÁÅAämó¶10ÅìÇ…
     u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-    if( per == 0 ){
+    if( per == 0 )
+    {
+      #ifdef PM_DEBUG
+      if( BTL_SVFTOOL_GetDebugFlag(flowWk, BTL_DEBUGFLAG_MUST_TOKUSEI) ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, 100 );
+        return;
+      }
+      #endif
+
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, 10 );
     }
   }
