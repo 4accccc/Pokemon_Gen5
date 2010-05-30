@@ -967,7 +967,7 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectBattleGO2,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO2
   _playerDirectBattleGO3,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO3
   _playerDirectBattleGO4,  //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO4
-  _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT
+  _playerDirectNoregParent, //WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT  /ÉåÉMÉÖÉåÅ[ÉVÉáÉìÇ™à·Ç§
   _playerDirectBattleStart, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START
   _playerDirectBattleStart2, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2
   _playerDirectBattleStart3, //  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START3

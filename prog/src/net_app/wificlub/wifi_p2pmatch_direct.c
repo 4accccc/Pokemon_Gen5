@@ -1050,11 +1050,17 @@ static int _playerDirectNoregParent1( WIFIP2PMATCH_WORK *wk, int seq )
     }
     else{
 
-      if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
+      switch(wk->state ){  
+      case WIFIP2PMATCH_STATE_TALK://会話の流れ
         _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
-      }
-      else{
+        break;
+      case WIFIP2PMATCH_STATE_MACHINE_RECV:
+      case WIFIP2PMATCH_STATE_RECV:
+        _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
+        break;
+      default:
         _CHANGESTATE(wk, WIFIP2PMATCH_RETURNLIST);
+        break;
       }
     }
   }
@@ -1068,12 +1074,17 @@ static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
     _Menu_RegulationDelete(wk);
     EndMessageWindowOff(wk);
 
-
-    if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
+    switch(wk->state){
+    case WIFIP2PMATCH_STATE_TALK:  //会話の流れ
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
-    }
-    else{
+      break;
+    case WIFIP2PMATCH_STATE_MACHINE_RECV:
+    case WIFIP2PMATCH_STATE_RECV:
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
+      break;
+    default:
       _CHANGESTATE(wk, WIFIP2PMATCH_RETURNLIST);
+      break;
     }
   }
   return seq;
@@ -1232,12 +1243,19 @@ static int _playerDirectBattleGO4( WIFIP2PMATCH_WORK *wk, int seq )
     u32 fail_bit;
 
     if(!_regulationCheck(wk)){        // 選ぶ事ができない
-      if(wk->state == WIFIP2PMATCH_STATE_TALK){
+      switch(wk->state ){
+      case WIFIP2PMATCH_STATE_TALK:
         _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB45);
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
         return seq;
-      }
-      else{
+      
+      case WIFIP2PMATCH_STATE_MACHINE_RECV:
+      case WIFIP2PMATCH_STATE_RECV: //もし選ぶことができないならば原因を表示
+        _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT);
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+        return seq;
+
+      default:
         _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
         return seq;
