@@ -544,6 +544,7 @@ static u8 scEvent_GetWazaTargetIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_POKEID_DEF, pokeID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FIX_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DECIDE_TARGET );
     pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
   BTL_EVENTVAR_Pop();

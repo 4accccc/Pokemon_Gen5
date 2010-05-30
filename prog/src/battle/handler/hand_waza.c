@@ -700,6 +700,8 @@ static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems );
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FreeFall_FailCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FreeFall_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems );
 static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1691,7 +1693,9 @@ static void handler_KonoyubiTomare_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   &&  (BTL_SVFTOOL_GetRule(flowWk) != BTL_RULE_ROTATION)
   ){
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-    if (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) ){
+    if( (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID))
+    &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != WAZANO_HURIIFOORU)
+    ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
     }
   }
@@ -4978,7 +4982,7 @@ static void handler_Yokodori_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_YokodoriExe );
     HANDEX_STR_AddArg( &param->str, pokeID );
     HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) );
-    TAYA_Printf("よこどりメッセージ反応\n");
+    BTL_EVENT_FACTOR_Remove( myHandle );
   }
 }
 static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -10188,13 +10192,15 @@ static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TAME_START,           handler_FreeFall_TameStart   },   // 溜め開始
-    { BTL_EVENT_TAME_RELEASE,         handler_FreeFall_TameRelease },   // 溜め解放
-    { BTL_EVENT_NOEFFECT_CHECK_L2,    handler_FreeFall_TypeCheck   },
+    { BTL_EVENT_TAME_START,             handler_FreeFall_TameStart   },   // 溜め開始
+    { BTL_EVENT_TAME_RELEASE,           handler_FreeFall_TameRelease },   // 溜め解放
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_FreeFall_FailCheck   },
+    { BTL_EVENT_NOEFFECT_CHECK_L2,      handler_FreeFall_TypeCheck   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
 }
+// 溜め開始
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -10223,30 +10229,27 @@ static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
   }
 }
+// 溜め解放
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_SVFRET_FreeFallRelease( flowWk, pokeID );
-    /*
-    BTL_HANDEX_PARAM_SET_CONTFLAG* param;
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+  }
+}
+// ワザ出し失敗チェック
+static void handler_FreeFall_FailCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8 capturedPokeID = BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) );
 
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = pokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
-
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_CONTFLAG, pokeID );
-    param->pokeID = targetPokeID;
-    param->flag = BPP_CONTFLG_SORAWOTOBU;
-
-    {
-      BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
-      cure_param->poke_cnt = 1;
-      cure_param->pokeID[0] = targetPokeID;
-      cure_param->sickCode = WAZASICK_FREEFALL;
+    if( (capturedPokeID != BTL_POKEID_NULL)
+    &&  (!BTL_SVFTOOL_IsExistPokemon(flowWk, capturedPokeID))
+    ){
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
-    */
   }
 }
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

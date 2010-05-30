@@ -8343,6 +8343,11 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
       return FALSE;
     }
 
+    // フリーフォールで捕まれてる場合は失敗
+    if( BPP_CheckSick(target, WAZASICK_FREEFALL) ){
+      return FALSE;
+    }
+
     // 特殊要因で失敗
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -12959,7 +12964,20 @@ u8 BTL_SVFTOOL_GetPokeChangeCount( BTL_SVFLOW_WORK* wk, u8 clientID )
 {
   return wk->memberChangeCount[ clientID ];
 }
-
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] ポケモンが場にいるか
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsExistPokemon( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  return BTL_POSPOKE_IsExist( &wk->pospokeWork, pokeID );
+}
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] バトルルール取得
