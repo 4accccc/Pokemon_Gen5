@@ -3657,26 +3657,29 @@ void WH_Reset(void)
                 実行します。
                 通常の終了処理には（WH_Resetではなく）この関数を使用します。
    Arguments:   None.
-   Returns:     None.
+   Returns:     成功したらTRUE.
    ---------------------------------------------------------------------- */
-void WH_Finalize(void)
+BOOL WH_Finalize(void)
 {
 	if ((_pWmInfo==NULL) || (_pWmInfo->sSysState == WH_SYSSTATE_IDLE)){
 		WH_TRACE("already WH_SYSSTATE_IDLE\n");
-		return;
+		return TRUE;
 	}
 	WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
 
+  if(_pWmInfo->sSysState==WH_SYSSTATE_BUSY){
+		return FALSE;
+  }
   if (_pWmInfo->sSysState == WH_SYSSTATE_SCANNING){
     WH_TRACE("WH_FinalizeWH_EndScan\n");
 		if (!WH_EndScan()){
 			WH_Reset();
 		}
-		return;
+		return TRUE;
 	}
   if (_pWmInfo->sWH_EndScan){  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
     WH_TRACE("sWH_EndScan\n");
-    return;
+    return TRUE;
   }
 
 
@@ -3686,7 +3689,7 @@ void WH_Finalize(void)
 		// 接続していない・エラー状態などの場合はリセットしておく。
 		WH_ChangeSysState(WH_SYSSTATE_BUSY);
 		WH_Reset();
-		return;
+		return TRUE;
 	}
 
 	WH_ChangeSysState(WH_SYSSTATE_BUSY);
@@ -3724,6 +3727,7 @@ void WH_Finalize(void)
 			WH_Reset();
 		}
 	}
+  return TRUE;
 }
 
 /*---------------------------------------------------------------------------*

@@ -22,10 +22,10 @@
 
 #ifdef PM_DEBUG
 
-//#define DEBUG_WH_BEACON_PRINT_ON  // beacon切り替えタイミングを表示
+//#define DEBUG_WH_BEACON_PRINT_ON (1)  // beacon切り替えタイミングを表示
 
 #if DEBUG_ONLY_FOR_ohno
-//#define DEBUG_WH_BEACON_PRINT_ON  // beacon切り替えタイミングを表示
+#define DEBUG_WH_BEACON_PRINT_ON  (1) // beacon切り替えタイミングを表示
 #endif  //DEBUG_ONLY_FOR_ohno
 
 extern u8 DebugAloneTest;
@@ -196,7 +196,7 @@ static void _changeState(GFL_NETWL* pState,PTRStateFunc state)
 #ifdef GFL_NET_DEBUG
 static void _changeStateDebug(GFL_NETWL* pState,PTRStateFunc state, int line)
 {
-#if DEBUG_ONLY_FOR_ohno
+#if DEBUG_WH_BEACON_PRINT_ON
   NET_PRINT("pipe: %d\n",line);
 #endif
 	_changeState(pState, state);
@@ -725,7 +725,7 @@ static void _whEndErrResetFunc(GFL_NETWL* pNetWL)
     _CHANGE_STATE(_whEndErrResetFunc2);
 	}
 	if(WH_GetSystemState() == WH_SYSSTATE_STOP || WH_GetSystemState() == WH_SYSSTATE_IDLE){
-    _CHANGE_STATE(NULL);
+//    _CHANGE_STATE(NULL);
   }
 }
 
@@ -742,15 +742,17 @@ static void _whEndErrResetFunc(GFL_NETWL* pNetWL)
 BOOL GFL_NET_WLFinalize(void)
 {
 	GFL_NETWL* pNetWL = _pNetWL;
-	if(pNetWL){
-		if(pNetWL->disconnectType == _DISCONNECT_NONE){
-			//            pNetWL->disconnectType = _DISCONNECT_END;
+	if(!pNetWL){
+    return TRUE;
+  }
+    
+  if(pNetWL->disconnectType == _DISCONNECT_NONE){
+    if(WH_Finalize()){
       _CHANGE_STATE(_whEndErrResetFunc);
-			WH_Finalize();
-			return TRUE;
-		}
-	}
-	return FALSE;
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 //-------------------------------------------------------------
@@ -1932,9 +1934,11 @@ static void _whEndFunc(GFL_NETWL* pNetWL)
 
 BOOL GFI_NET_WHPipeEnd(NetDevEndCallback callback)
 {
-	WH_End(callback);
-	_CHANGE_STATE(_whEndFunc);
-	return TRUE;
+  if(WH_End(callback)){
+    _CHANGE_STATE(_whEndFunc);
+    return TRUE;
+  }
+	return FALSE;
 }
 
 
@@ -2015,7 +2019,7 @@ static void _crossScanShootWait(GFL_NETWL* pNetWL)
   pNetWL->CrossRand--;
   
   if( pNetWL->CrossRand == 0){
-			NET_PRINT("_crossScanShootWait WH_EndScan\n");
+//			NET_PRINT("_crossScanShootWait WH_EndScan\n");
     WH_EndScan(); //スキャン終了
     _CHANGE_STATE(_crossScanShootEndWait);  // スキャン終了待ち
 #ifdef DEBUG_WH_BEACON_PRINT_ON

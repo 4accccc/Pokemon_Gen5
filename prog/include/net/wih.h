@@ -720,9 +720,9 @@ extern void WH_Reset(void);
                 実行します。
                 通常の終了処理には（WH_Resetではなく）この関数を使用します。
    Arguments:   None.
-   Returns:     None.
+   Returns:     BOOL
    ---------------------------------------------------------------------- */
-extern void WH_Finalize(void);
+extern BOOL WH_Finalize(void);
 
 /*---------------------------------------------------------------------------*
   Name:         WH_End
