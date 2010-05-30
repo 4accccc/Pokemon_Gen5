@@ -662,16 +662,28 @@ u32 PMSIV_WORDWIN_GetScrollBarPosCount( PMSIV_WORDWIN * wk, u32 max )
   if( max > 0 )
   {
     // 0<= <=max
-    s16 h = SCRLL_BAR_Y_MAX - SCRLL_BAR_Y +1;
-    s16 i;
-    for( i=0; i<=max; i++ )
+    if( pos.y == SCRLL_BAR_Y )
     {
-      s16 s = i * h / (max +1) +SCRLL_BAR_Y;  // s<= <=e
-      s16 e = (i +1) * h / (max +1) -1 +SCRLL_BAR_Y;
-      if( s<=pos.y && pos.y<=e )
+      cnt = 0;
+    }
+    else if( pos.y == SCRLL_BAR_Y_MAX )
+    {
+      cnt = max;
+    }
+    else
+    {
+      s16 h = SCRLL_BAR_Y_MAX - SCRLL_BAR_Y +1;
+      s16 i;
+      for( i=0; i<=max; i++ )
       {
-        cnt = i;
-        break;
+        s16 s = i * h / (max +1) +SCRLL_BAR_Y;  // s<= <=e
+        s16 e = (i +1) * h / (max +1) -1 +SCRLL_BAR_Y;
+        if( s>e ) e = s;  // maxの値があまりに大きいとs>eが起こり得るので、その対策。
+        if( s<=pos.y && pos.y<=e )
+        {
+          cnt = i;
+          break;
+        }
       }
     }
   }
