@@ -43,7 +43,7 @@
 static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar);
 static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork);
 static void _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
-static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork);
+static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork);
 
 
 
@@ -350,7 +350,7 @@ void IRC_POKETRADE_SubStatusInit(POKEMON_TRADE_WORK* pWork,int leftright, int bg
   else{
     GFL_BG_SetScroll( frame, GFL_BG_SCROLL_X_SET, 0 );
   }
-	G2S_SetBlendAlpha( GFL_BG_FRAME3_S|GX_BLEND_PLANEMASK_OBJ, frame , 16, 3 );
+	//G2S_SetBlendAlpha( GFL_BG_FRAME3_S|GX_BLEND_PLANEMASK_OBJ, frame , 16, 3 );
   //G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ , -8 );
   GFL_CLACT_WK_SetDrawEnable( pWork->curIcon[CELL_CUR_SCROLLBAR], FALSE );
 
@@ -1104,8 +1104,6 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     pWork->ringLineNo = line;
     _iconAllDrawDisable(pWork);  // アイコン表示を一旦消す
 
-//    OS_TPrintf("POKETRADE_Line2RingLineIconGet %d \n", POKETRADE_Line2RingLineIconGet(pWork->oldLine));
-
     for(i=0;i < _LING_LINENO_MAX;i++){
       k =  POKETRADE_Line2RingLineIconGet(pWork->oldLine+i);
       
@@ -1116,7 +1114,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
       }
     }
   }
-  IRC_POKETRADE_PokeIcomPosSet(pWork);
+  _POKETRADE_PokeIconPosSet(pWork);
 }
 
 //------------------------------------------------------------------------------
@@ -1127,7 +1125,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
  */
 //------------------------------------------------------------------------------
 
-static void IRC_POKETRADE_PokeIcomPosSet(POKEMON_TRADE_WORK* pWork)
+static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
 {
   int line, i, no, m, subnum=0;
   int x,y;

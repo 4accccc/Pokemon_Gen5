@@ -3316,7 +3316,12 @@ static void _POKE_SetAndSendData1(POKEMON_TRADE_WORK* pWork)
 static void _POKE_SetAndSendData(POKEMON_TRADE_WORK* pWork)
 {
   if(POKEMONTRADE_SuckedMain(pWork)){
-    _CHANGE_STATE(pWork,_POKE_SetAndSendData1);
+    if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
+      _CHANGE_STATE(pWork,_POKE_SetAndSendData1);
+    }
+    else{
+      _CHANGE_STATE(pWork,_POKE_SetAndSendData2);
+    }
   }
 }
 
