@@ -308,6 +308,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_CheckItemReaction:   return "ポケ[%d]の装備アイテム発動チェックします\n";
   case DBGSTR_SVFL_MagicCoatStart:      return "マジックコート跳ね返し %d 件\n";
   case DBGSTR_SVFL_MagicCoatReflect:    return "マジックコート跳ね返し poke(%d) -> (%d)_%d\n";
+  case DBGSTR_SVFL_YokodoriDetermine:   return "ポケ[%d]のワザ[%d]をよこどります\n";
+  case DBGSTR_SVFL_YokodoriExe:         return "よこどりしたポケ=[%d]\n";
 
   case DBGSTR_SVFS_RegTargetDouble:   return "ダブルターゲット：攻撃ポケ=%d, 狙う位置=%d\n";
 
