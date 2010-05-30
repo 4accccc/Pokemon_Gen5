@@ -57,14 +57,16 @@ void IntrudeEventPrint_SetupFieldMsg(INTRUDE_EVENT_MSGWORK *iem, GAMESYS_WORK *g
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   FLDMSGBG *msgBG = FIELDMAP_GetFldMsgBG(fieldWork);
   
-  iem->wordset = WORDSET_Create(INTRUDE_EVENT_HEAPID);
-  iem->msgbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
-  iem->tmpbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
-  iem->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_msg_dat );
-  iem->msgdata_mission = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_dat );
-  iem->msgdata_mission_mono = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_monolith_dat );
-  iem->msgBG = msgBG;
-  iem->print_flag = FALSE;
+  if(iem->wordset == NULL){
+    iem->wordset = WORDSET_Create(INTRUDE_EVENT_HEAPID);
+    iem->msgbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
+    iem->tmpbuf = GFL_STR_CreateBuffer( INTRUDE_EVENT_MSGBUF_SIZE, INTRUDE_EVENT_HEAPID );
+    iem->msgdata = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_msg_dat );
+    iem->msgdata_mission = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_dat );
+    iem->msgdata_mission_mono = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_mission_monolith_dat );
+    iem->msgBG = msgBG;
+    iem->print_flag = FALSE;
+  }
 }
 
 //--------------------------------------------------------------

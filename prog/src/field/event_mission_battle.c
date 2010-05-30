@@ -215,10 +215,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
     SEQ_BATTLE_OK,
-    SEQ_BATTLE_START_WAIT,
-    SEQ_BATTLE_START_TIMING_WAIT,
     SEQ_SEND_ACHIEVE,
     SEQ_RECV_WAIT,
+    SEQ_BATTLE_START_WAIT,
+    SEQ_BATTLE_START_TIMING_WAIT,
     SEQ_BATTLE_COMMON_EVENT,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
@@ -234,6 +234,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
+      IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys); //途中のシーケンスで解放しているので
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
@@ -287,6 +288,16 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
       MissionBattleMsgID.mission_battle_ok[talk->ccew.disguise_talk_type]);
   	(*seq) = SEQ_SEND_ACHIEVE;
 		break;
+	case SEQ_SEND_ACHIEVE:
+    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
+      (*seq)++;
+    }
+    break;
+  case SEQ_RECV_WAIT:
+		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
+      (*seq) = SEQ_BATTLE_START_WAIT;
+    }
+    break;
   case SEQ_BATTLE_START_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE) == TRUE){
@@ -297,7 +308,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   case SEQ_BATTLE_START_TIMING_WAIT:
     if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-      (*seq)++;
+      (*seq) = SEQ_BATTLE_COMMON_EVENT;
     }
     else{ //同期待ちBキャンセル
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
@@ -307,17 +318,6 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
           *seq = SEQ_TALK_CANCEL;
         }
       }
-    }
-    break;
-
-	case SEQ_SEND_ACHIEVE:
-    if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
-      (*seq)++;
-    }
-    break;
-  case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
-      (*seq) = SEQ_BATTLE_START_WAIT;
     }
     break;
 
@@ -442,6 +442,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_LAST_MSG_WAIT){
+      IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys); //途中のシーケンスで解放しているので
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_LAST_MSG_WAIT;
       talk->error = TRUE;
