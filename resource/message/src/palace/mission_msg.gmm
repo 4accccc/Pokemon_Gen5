@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-05-28T12:49:25"/>
+	<create user="ohmori" host="W00223" date="2010-05-30T21:35:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,7 +372,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="698"/>
 		<band id="3" index="3" style="0000" width="698"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -409,10 +409,10 @@
 
 	<row id="msg_intrude_002" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>会話を断る</comment>
-		<language name="JPN" width="256">ごめん！いま　いそがしいんだ！
-また　あとでね！</language>
-		<language name="JPN_KANJI" width="256">ごめん！　今　忙しいんだ！
-また　後でね！</language>
+		<language name="JPN" width="256">……　……　……どうやら
+とりこみちゅうの　ようだ</language>
+		<language name="JPN_KANJI" width="256">……　……　……どうやら
+取り込み中の　ようだ</language>
 	</row>
 
 	<row id="msg_intrude_003" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
@@ -1227,12 +1227,12 @@ w=トレーナー女子（相手が）
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『いけ！
 そこだ！　がんばれ！▼
-あっ！　いま　たたかってるから
-ちょっと　まってて！</language>
+……　……　……どうやら
+たいせんちゅうの　ようだ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『いけ！
 そこだ！　がんばれ！▼
-あっ！　いま　戦ってるから
-ちょっと　待ってて！</language>
+……　……　……どうやら
+対戦中の　ようだ</language>
 	</row>
 
 	<row id="mis_btl_01_m5" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
@@ -1243,12 +1243,12 @@ w=トレーナー女子（相手が）
 [1:00:トレーナー名:0]＝相手の名前</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]『いけ！
 そこよ！　がんばれ！▼
-あっ！　いま　たたかってるから
-ちょっと　まっててね！</language>
+……　……　……どうやら
+たいせんちゅうの　ようだ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『いけ！
 そこよ！　がんばれ！▼
-あっ！　いま　戦ってるから
-ちょっと　待っててね！</language>
+……　……　……どうやら
+対戦中の　ようだ</language>
 	</row>
 
 	<row id="mis_std_01_t1" back-color="#80ff80,,,#c0c0c0,,#c0c0c0,#ff0000,,,,,#c0c0c0,,,,,,">
