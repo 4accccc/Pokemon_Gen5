@@ -660,16 +660,16 @@ BOOL GFL_NET_WLSwitchParentChild(void)
 		}
 		else if(WH_SYSSTATE_BUSY == WH_GetSystemState()){  //しばらく待つ
 		}
-		else{
-			WH_Finalize();
+		else if(WH_Finalize()){
 			pNetWL->bEndScan = 2;
 		}
 		break;
 	case 1:
 		if(WH_SYSSTATE_BUSY != WH_GetSystemState()){
 			NET_PRINT("終了処理----2\n");
-			WH_Finalize();
-			pNetWL->bEndScan = 2;
+      if(WH_Finalize()){
+        pNetWL->bEndScan = 2;
+      }
 		}
 		break;
 	case 2:
@@ -700,8 +700,9 @@ static void _whEndErrResetFunc(GFL_NETWL* pNetWL);
 static void _whEndErrResetFunc2(GFL_NETWL* pNetWL)
 {
 	if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
-    WH_Finalize();
-    _CHANGE_STATE(_whEndErrResetFunc);
+    if(WH_Finalize()){
+      _CHANGE_STATE(_whEndErrResetFunc);
+    }
 	}
 	if(WH_GetSystemState() == WH_SYSSTATE_ERROR){
     _CHANGE_STATE(_whEndErrResetFunc);
@@ -725,7 +726,7 @@ static void _whEndErrResetFunc(GFL_NETWL* pNetWL)
     _CHANGE_STATE(_whEndErrResetFunc2);
 	}
 	if(WH_GetSystemState() == WH_SYSSTATE_STOP || WH_GetSystemState() == WH_SYSSTATE_IDLE){
-//    _CHANGE_STATE(NULL);
+    _CHANGE_STATE(NULL);
   }
 }
 
@@ -1987,10 +1988,13 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL);
 static void _crossScanWait(GFL_NETWL* pNetWL)
 {
   if(!_pNetWL->PauseScan){   //親機固定＝ビーコン発信のみ
-    pNetWL->CrossRand--;
+    if(pNetWL->CrossRand!=0){
+      pNetWL->CrossRand--;
+    }
     if( pNetWL->CrossRand == 0){
-      WH_Finalize();
-      _CHANGE_STATE(_crossScanShootStart);
+      if(WH_Finalize()){
+        _CHANGE_STATE(_crossScanShootStart);
+      }
     }
   }
 }
