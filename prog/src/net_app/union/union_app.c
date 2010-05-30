@@ -554,6 +554,9 @@ void Union_App_Parent_ResetEntryBlock(UNION_APP_PTR uniapp)
 //==================================================================
 void Union_App_Parent_EntryBlockNum(UNION_APP_PTR uniapp, int num)
 {
+  if(GFL_NET_IsInit() == FALSE){
+    return;
+  }
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), TRUE);
   uniapp->entry_block = _ENTRY_TYPE_NUM;
   uniapp->intrude_capacity_max = num;
