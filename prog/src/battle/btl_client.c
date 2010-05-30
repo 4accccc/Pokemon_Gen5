@@ -1695,7 +1695,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   case 4:
 
     // デバッグ用Print制御
-    BTL_DEBUGPRINT_Ctrl();
+//    BTL_DEBUGPRINT_Ctrl();   //NITROでとまるのでコメントにしました
 
     // デバッグ用ゆびをふる制御
     #ifdef PM_DEBUG
