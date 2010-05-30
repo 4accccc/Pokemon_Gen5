@@ -4931,10 +4931,10 @@ static void handler_MagicCoat_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_Yokodori( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA_NO_TARGET,   handler_Yokodori           }, // 未分類ワザ処理
-    { BTL_EVENT_CHECK_WAZA_ROB,                handler_Yokodori_CheckRob  }, // 乗っ取り判定
-    { BTL_EVENT_WAZASEQ_ROB,                   handler_Yokodori_Rob       }, // 乗っ取り確定
-    { BTL_EVENT_TURNCHECK_BEGIN,               handler_Yokodori_TurnCheck }, // ターンチェック
+    { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Yokodori           }, // 未分類ワザ処理
+    { BTL_EVENT_CHECK_WAZA_ROB,      handler_Yokodori_CheckRob  }, // 乗っ取り判定
+    { BTL_EVENT_WAZASEQ_ROB,         handler_Yokodori_Rob       }, // 乗っ取り確定
+    { BTL_EVENT_TURNCHECK_BEGIN,     handler_Yokodori_TurnCheck }, // ターンチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

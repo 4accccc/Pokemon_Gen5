@@ -3870,8 +3870,6 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
     u8 robPokeID = wk->wazaRobParam->robberPokeID[ 0 ];
     BTL_POKEPARAM* robPoke = BTL_POKECON_GetPokeParam( wk->pokeCon, robPokeID );
 
-    BTL_N_Printf( DBGSTR_SVFL_YokodoriExe, robPokeID );
-
     // 乗っ取り（乗っ取ったポケが主体になり、指定されたターゲットにワザを出す）
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -3882,6 +3880,8 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
       // ワザパラメータ差し替え
       scEvent_GetWazaParam( wk, actWaza, robPoke, wk->wazaParam );
       BTL_SVFSUB_RegisterTargets( wk, robPoke, wk->wazaRobParam->targetPos[0], wk->wazaParam, wk->psetRobTarget );
+
+      BTL_N_Printf( DBGSTR_SVFL_YokodoriExe, robPokeID, wk->wazaRobParam->targetPos[0] );
 
       BTL_HANDLER_Waza_Add( robPoke, actWaza );
       scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
