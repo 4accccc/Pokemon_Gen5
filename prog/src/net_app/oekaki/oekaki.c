@@ -5,13 +5,10 @@
  * @author  Akito Mori(移植）
  * @date    09.01.20
  *
- * @todo
- *   ・接続制限の関数をまだUNION_APPのものにしていない(VIRTUAL_CONNECT_LIMIT)
  *
  */
 //============================================================================================
 #define DEBUGPLAY_ONE ( 0 )
-#define VIRTUAL_CONNECT_LIMIT
 
 #include <gflib.h>
 #include <calctool.h>
@@ -189,12 +186,19 @@ const GFL_PROC_DATA OekakiProcData = {
 };
 
 
-#ifdef VIRTUAL_CONNECT_LIMIT
-static void CommStateSetLimitNum( OEKAKI_WORK *wk, int num)
+//----------------------------------------------------------------------------------
+/**
+ * @brief 接続人数制限（num人しか接続できないようにする）
+ *
+ * @param   wk    
+ * @param   num   
+ */
+//----------------------------------------------------------------------------------
+static void CommStateSetLimitNum( OEKAKI_WORK *wk, int num )
 {
-  return;
+  Union_App_Parent_EntryBlockNum( wk->param->uniapp, num );
+  OS_Printf("接続人数を%d人に変更\n", num);
 }
-#endif
 
 //============================================================================================
 //  プロセス関数
@@ -3013,8 +3017,8 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
 
   // 通信接続人数が画像共有人数よりも多くなった場合は離脱禁止フラグを立てる
   if(wk->shareNum < _get_connect_num(wk)){
-    OS_Printf("ban_flag_on:%d,%d\n",wk->shareNum, _get_connect_num(wk));
-    OS_Printf("乱入予定\n");
+//    OS_Printf("ban_flag_on:%d,%d\n",wk->shareNum, _get_connect_num(wk));
+//    OS_Printf("乱入予定\n");
     wk->banFlag = OEKAKI_BAN_ON;
     //乱入を期待する
     wk->bookJoin = 1;
