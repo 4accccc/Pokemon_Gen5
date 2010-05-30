@@ -248,6 +248,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
     if((*seq) < SEQ_GPOWER){
+      IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys); //途中のシーケンスで解放しているので
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_END;
       talk->error = TRUE;
