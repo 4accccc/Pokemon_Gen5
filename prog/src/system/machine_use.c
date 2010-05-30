@@ -18,10 +18,11 @@
 #define FS_DMA_NUMBER	(GFL_DMA_FS_NO)
 
 //ARM9優先の場合に必要なリセットの為の処理
+#if (defined(SDK_TWL))
 static PMExitCallbackInfo myInfo;
 static void myExitCallback(void *arg);
 static BOOL bHardResetFlg=FALSE;
-
+#endif
 
 //VRAM転送マネージャ定義(NNS関数)
 #define VRAMTRANS_MAN_TASKNUM    (48)
@@ -122,12 +123,14 @@ void MachineSystem_Init(void)
 //------------------------------------------------------------------
 void MachineSystem_Main(void)
 {
+#if (defined(SDK_TWL))
   if(bHardResetFlg){  //ハードリセットコールバックが呼ばれた
     if(!PM_GetAutoExit()){  //自分が処理しなければいけない事を確認する
       MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);  //ARM7優先に切り替える
       PM_ReadyToExit();  //ハードリセット後処理開始（もどってこない）
     }
   }
+#endif
 }
 
 //------------------------------------------------------------------
@@ -295,11 +298,12 @@ static void MachineSystem_MbInitFile(void)
  * @brief	ハードリセット時に呼ばれる関数
  */
 //------------------------------------------------------------------
+#if (defined(SDK_TWL))
 static void myExitCallback(void *arg)
 {
 #pragma unused(arg)
   PM_SetAutoExit(FALSE); //ハードリセットを任せることなく この後処理する
   bHardResetFlg=TRUE;   //ハードリセットフラグON
 }
-
+#endif
 
