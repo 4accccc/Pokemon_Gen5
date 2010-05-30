@@ -115,7 +115,6 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gdata = GAMESYSTEM_GetGameData(gsys);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-  INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_RESULT_RECV_WAIT,   //結果受信待ち
     SEQ_INIT,
@@ -130,39 +129,47 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     SEQ_END,
   };
 	
-  intcomm = Intrude_Check_CommConnect(game_comm);
-  // ※BGMのPush,Popがある為、途中でイベントは停止しない
-  //   その為、intcommがNULLかどうかは、その使用ポイントでそれぞれNULL判定をして使用すること！！
+  // ※BGMのPush,Popがある為、エラーによる退出をPushPopの間で行わない事！！
   
 	switch( *seq ){
 	case SEQ_RESULT_RECV_WAIT:  //結果受信待ち
-    if(intcomm == NULL){
-      return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
-    }
-    else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE
-        && Intrude_CheckRecvOccupyResult(intcomm) == TRUE){
-      if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE){
-        return GMEVENT_RES_FINISH;  //達成者でない場合はここで終了
+	  {
+      INTRUDE_COMM_SYS_PTR intcomm = NULL;
+        
+      //結果発表の時点では既に切断処理に行っている場合があるのでCheck_CommConnectでは無く
+      //GameCommから直接取得
+      if(GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+        intcomm = GameCommSys_GetAppWork(game_comm);
       }
       
-      talk->add_white = intcomm->recv_occupy_result.add_white;
-      talk->add_black = intcomm->recv_occupy_result.add_black;
-      IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
-
-      //イベント中、エラーになっても構わないようにintcommから必要なパラメータをここで全て取得
-      //  ※BGMのPush,Popがある為、途中でイベントをやめるにはそこら辺のケアが必要になる
-      {
-        const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
-        
-        GF_ASSERT(mresult != NULL);
-        talk->mresult = *mresult;
-        talk->title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
-        talk->explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
-        
-        talk->mission_result = MISSION_CheckResultMissionMine(intcomm, &intcomm->mission);
-        talk->point = MISSION_GetResultPoint(intcomm, &intcomm->mission);
+      if(intcomm == NULL){
+        return GMEVENT_RES_FINISH;  //結果受信待ちの時だけエラーが起きた場合は即終了
       }
-      (*seq)++;
+      else if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE
+          && Intrude_CheckRecvOccupyResult(intcomm) == TRUE){
+        if(MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE){
+          return GMEVENT_RES_FINISH;  //達成者でない場合はここで終了
+        }
+        
+        talk->add_white = intcomm->recv_occupy_result.add_white;
+        talk->add_black = intcomm->recv_occupy_result.add_black;
+        IntrudeEventPrint_SetupFieldMsg(&talk->iem, gsys);
+
+        //イベント中、エラーになっても構わないようにintcommから必要なパラメータをここで全て取得
+        //  ※BGMのPush,Popがある為、途中でイベントをやめるにはそこら辺のケアが必要になる
+        {
+          const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
+          
+          GF_ASSERT(mresult != NULL);
+          talk->mresult = *mresult;
+          talk->title_msgid = msg_mistype_000 + mresult->mission_data.cdata.type;
+          talk->explain_msgid = mresult->mission_data.cdata.msg_id_contents_monolith;
+          
+          talk->mission_result = MISSION_CheckResultMissionMine(intcomm, &intcomm->mission);
+          talk->point = MISSION_GetResultPoint(intcomm, &intcomm->mission);
+        }
+        (*seq)++;
+      }
     }
     break;
 	  

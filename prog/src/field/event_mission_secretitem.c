@@ -162,7 +162,7 @@ static GMEVENT_RESULT CommMissionItem_MtoT_Talk( GMEVENT *event, int *seq, void 
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){    //intcomm不使用の為、エラーチェックの必要無し   intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -177,9 +177,9 @@ static GMEVENT_RESULT CommMissionItem_MtoT_Talk( GMEVENT *event, int *seq, void 
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionSecretItemMsgID.talk_m_to_t[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionSecretItemMsgID.talk_m_to_t[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_LAST_MSG_WAIT:
@@ -242,7 +242,7 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talk( GMEVENT *event, int *seq, void 
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){    //intcomm不使用の為、エラーチェックの必要無し     intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -257,9 +257,9 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talk( GMEVENT *event, int *seq, void 
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionSecretItemMsgID.talk_t_to_m[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionSecretItemMsgID.talk_t_to_m[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_LAST_MSG_WAIT:
@@ -323,7 +323,7 @@ static GMEVENT_RESULT CommMissionItem_MtoT_Talked( GMEVENT *event, int *seq, voi
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){    //intcomm不使用の為、エラーチェックの必要無し   intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -338,9 +338,9 @@ static GMEVENT_RESULT CommMissionItem_MtoT_Talked( GMEVENT *event, int *seq, voi
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionSecretItemMsgID.talked_m_to_t[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionSecretItemMsgID.talked_m_to_t[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_LAST_MSG_WAIT:
@@ -411,7 +411,7 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talked( GMEVENT *event, int *seq, voi
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){    //intcomm不使用の為、エラーチェックの必要無し   intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -426,9 +426,9 @@ static GMEVENT_RESULT CommMissionItem_TtoM_Talked( GMEVENT *event, int *seq, voi
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionSecretItemMsgID.talked_t_to_m[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionSecretItemMsgID.talked_t_to_m[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_LAST_MSG_WAIT:
@@ -608,7 +608,7 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
       (*seq)++;
     }
     break;

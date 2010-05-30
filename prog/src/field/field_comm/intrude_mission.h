@@ -33,7 +33,7 @@ extern BOOL MISSION_GetMissionComplete(const MISSION_SYSTEM *mission);
 extern MISSION_RESULT * MISSION_GetResultData(MISSION_SYSTEM *mission);
 extern BOOL MISSION_GetMissionPlay(MISSION_SYSTEM *mission);
 extern BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, int achieve_netid);
-extern MISSION_ACHIEVE MISSION_GetAchieveAnswer(MISSION_SYSTEM *mission);
+extern MISSION_ACHIEVE MISSION_GetAchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission);
 extern void MISSION_ClearAchieveAnswer(MISSION_SYSTEM *mission);
 extern void MISSION_SetParentAchieve(MISSION_SYSTEM *mission, MISSION_ACHIEVE achieve);
 extern void MISSION_SetResult(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, const MISSION_RESULT *cp_result);

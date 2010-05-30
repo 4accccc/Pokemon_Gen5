@@ -639,12 +639,16 @@ BOOL MISSION_EntryAchieve(MISSION_SYSTEM *mission, const MISSION_DATA *mdata, in
  * @retval  MISSIN_ACHIEVE		MISSION_ACHIEVE_NULLの場合は返事は未受信
  */
 //==================================================================
-MISSION_ACHIEVE MISSION_GetAchieveAnswer(MISSION_SYSTEM *mission)
+MISSION_ACHIEVE MISSION_GetAchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
 {
-  MISSION_ACHIEVE achieve = mission->parent_achieve_recv;
-  
-  mission->parent_achieve_recv = MISSION_ACHIEVE_NULL;
-  return achieve;
+  if(mission->parent_achieve_recv == MISSION_ACHIEVE_OK){
+    //OKの場合はこのまま結果画面にいけるように結果関連の全てのデータ受信を待つ
+    if(MISSION_CheckRecvResult(mission) == TRUE && Intrude_CheckRecvOccupyResult(intcomm) == TRUE){
+      return MISSION_ACHIEVE_OK;
+    }
+    return MISSION_ACHIEVE_NULL;
+  }
+  return mission->parent_achieve_recv;
 }
 
 //==================================================================
@@ -713,9 +717,9 @@ void MISSION_SetResult(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, co
 {
   MISSION_RESULT *result = &mission->result;
   
-  GF_ASSERT(mission->parent_achieve_recv == FALSE);
+  GF_ASSERT(mission->recv_result == FALSE);
   *result = *cp_result;
-  mission->parent_achieve_recv = TRUE;
+  mission->recv_result = TRUE;
   MISSION_ClearMissionEntry(intcomm, mission);
 }
 
@@ -732,7 +736,7 @@ BOOL MISSION_CheckRecvResult(const MISSION_SYSTEM *mission)
 {
   const MISSION_RESULT *result = &mission->result;
   
-  if(mission->parent_achieve_recv == TRUE 
+  if(mission->recv_result == TRUE 
       && result->mission_data.accept_netid != INTRUDE_NETID_NULL){
     return TRUE;
   }

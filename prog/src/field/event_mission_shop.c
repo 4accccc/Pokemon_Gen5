@@ -201,7 +201,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
     SEQ_MSG_WAIT,
     SEQ_SHOP_OK,
     SEQ_SEND_ACHIEVE,
-    SEQ_RECV_WAIT,
+    SEQ_RECV_WAIT,    //通信はここまで。ここから下は通信不要
     SEQ_SHOP_NG,
     SEQ_NG_SHORT_OF_MONEY,
     SEQ_NG_ITEM_FULL,
@@ -212,7 +212,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(intcomm == NULL && (*seq) <= SEQ_RECV_WAIT){
     if(IntrudeEventPrint_WaitStream(&shop->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -227,7 +227,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      shop->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, shop->ccew.talk_netid) );
+      shop->ccew.iem.wordset, 0, &shop->ccew.talk_myst );
     {
       const MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)shop->ccew.mdata.cdata.data;
       WORDSET_RegisterItemName( shop->ccew.iem.wordset, 1, d_attr->item_no );
@@ -237,7 +237,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
     WORDSET_RegisterPlayerName( 
       shop->ccew.iem.wordset, 3, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.mission_first[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      MissionShopMsgID.mission_first[shop->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
@@ -272,7 +272,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
   case SEQ_SHOP_OK:
     shop->success = TRUE;
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.mission_concluded[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      MissionShopMsgID.mission_concluded[shop->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
 	case SEQ_SEND_ACHIEVE:
@@ -281,24 +281,24 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
       (*seq) = SEQ_LAST_MSG_WAIT;
     }
     break;
   
   case SEQ_SHOP_NG:
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.mission_decline[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      MissionShopMsgID.mission_decline[shop->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
 		break;
   case SEQ_NG_SHORT_OF_MONEY:
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.mission_short_of_money[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      MissionShopMsgID.mission_short_of_money[shop->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
 		break;
   case SEQ_NG_ITEM_FULL:
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.mission_item_full[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      MissionShopMsgID.mission_item_full[shop->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
 		break;
   case SEQ_TALK_CANCEL:
@@ -376,13 +376,9 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     SEQ_MSG_SECOND,
     SEQ_BATTLE_YESNO_SELECT,
     SEQ_CONCLUDED,
-    SEQ_CONCLUDED_MSG,
     SEQ_NG_SHORT_OF_MONEY,
-    SEQ_NG_SHORT_OF_MONEY_MSG,
     SEQ_NG_ITEM_FULL,
-    SEQ_NG_ITEM_FULL_MSG,
     SEQ_NG,
-    SEQ_NG_MSG,
     SEQ_LAST_MSG_WAIT,
     SEQ_MSG_END_BUTTON_WAIT,
     SEQ_END,
@@ -404,20 +400,20 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      shop->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, shop->ccew.talk_netid) );
+      shop->ccew.iem.wordset, 0, &shop->ccew.talk_myst );
     WORDSET_RegisterItemName( shop->ccew.iem.wordset, 1, d_attr->item_no );
     WORDSET_RegisterNumber( shop->ccew.iem.wordset, 2, d_attr->price, 5, 
       STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     WORDSET_RegisterPlayerName( 
       shop->ccew.iem.wordset, 3, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.target_first[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+      MissionShopMsgID.target_first[shop->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&shop->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-        MissionShopMsgID.target_second[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
+        MissionShopMsgID.target_second[shop->ccew.disguise_talk_type]);
       (*seq)++;
     }
     break;
@@ -458,52 +454,40 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
   case SEQ_CONCLUDED:
     if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_OK) == TRUE){
-      *seq = SEQ_CONCLUDED_MSG;
+      MISC_SubGold( GAMEDATA_GetMiscWork(gamedata), d_attr->price );
+      MYITEM_AddItem(GAMEDATA_GetMyItem(gamedata), d_attr->item_no, 1, HEAPID_FIELDMAP);
+      
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, 
+        MissionShopMsgID.target_concluded[shop->ccew.disguise_talk_type]);
+      (*seq) = SEQ_LAST_MSG_WAIT;
     }
-    break;
-  case SEQ_CONCLUDED_MSG:
-    MISC_SubGold( GAMEDATA_GetMiscWork(gamedata), d_attr->price );
-    MYITEM_AddItem(GAMEDATA_GetMyItem(gamedata), d_attr->item_no, 1, HEAPID_FIELDMAP);
-    
-    IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.target_concluded[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
-    (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_NG_SHORT_OF_MONEY:
     if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_SHOT_OF_MONEY) == TRUE){
-      (*seq)++;
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, 
+        MissionShopMsgID.target_short_of_money[shop->ccew.disguise_talk_type]);
+      (*seq) = SEQ_LAST_MSG_WAIT;
     }
-    break;
-  case SEQ_NG_SHORT_OF_MONEY_MSG:
-    IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.target_short_of_money[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
-    (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_NG_ITEM_FULL:
     if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_ITEM_FULL) == TRUE){
-      (*seq)++;
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, 
+        MissionShopMsgID.target_item_full[shop->ccew.disguise_talk_type]);
+      (*seq) = SEQ_LAST_MSG_WAIT;
     }
-    break;
-  case SEQ_NG_ITEM_FULL_MSG:
-    IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.target_item_full[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
-    (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_NG:
     if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_NG) == TRUE){
-      (*seq)++;
+      IntrudeEventPrint_StartStream(&shop->ccew.iem, 
+        MissionShopMsgID.target_decline[shop->ccew.disguise_talk_type]);
+      (*seq) = SEQ_LAST_MSG_WAIT;
     }
-    break;
-  case SEQ_NG_MSG:
-    IntrudeEventPrint_StartStream(&shop->ccew.iem, 
-      MissionShopMsgID.target_decline[MISSION_FIELD_GetTalkType(intcomm, shop->ccew.talk_netid)]);
-    (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_LAST_MSG_WAIT:

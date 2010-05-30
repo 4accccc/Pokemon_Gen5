@@ -291,9 +291,11 @@ typedef struct{
   u8 parent_result_recv;      ///<TRUE:親から結果を受信
   u8 recv_entry_answer_result;  ///<ミッション受注の返事(MISSION_ENTRY_RESULT_???)
   u8 parent_achieve_recv;     ///<親からミッション達成報告を受信(MISSION_ACHIEVE_???)
-  u8 mission_start_ok;        ///<TRUE:親から「ミッション開始宣言」の返答を受け取った
-  u8 mine_entry;              ///<TRUE:ミッション参加している
-  u8 mission_complete;        ///<TRUE:今実行しているミッションは完了した
+  u8 recv_result:1;           ///<TRUE:ミッションの結果を受信した
+  u8 mission_start_ok:1;      ///<TRUE:親から「ミッション開始宣言」の返答を受け取った
+  u8 mine_entry:1;            ///<TRUE:ミッション参加している
+  u8 mission_complete:1;      ///<TRUE:今実行しているミッションは完了した
+  u8        :4;
 }MISSION_SYSTEM;
 
 #endif  //__CONVERT_TYPES__

@@ -9,6 +9,7 @@
 #pragma once
 
 #include "field\field_comm\intrude_message.h"
+#include "savedata/mystatus.h"
 
 
 //==============================================================================
@@ -25,9 +26,13 @@ typedef struct{
 
 	u8 talk_netid;                 ///<話相手のNetID
 	u8 intrude_talk_type;          ///<INTRUDE_TALK_TYPE_xxx
-	u8 padding[2];
+	u8 disguise_talk_type;         ///<話しかけ相手の会話タイプ(MISSION_FIELD_GetTalkType)
+	u8 padding;
 	
 	MISSION_DATA mdata;            ///<実施中のミッションデータ(話しかけた瞬間のデータを保持)
+	
+	MYSTATUS talk_myst;            ///<話しかけた相手のMYSTATUS
+	
 }COMMTALK_COMMON_EVENT_WORK;
 
 

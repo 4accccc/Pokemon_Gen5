@@ -20,6 +20,7 @@
 #include "field/field_comm/intrude_main.h"
 #include "field/field_comm/intrude_comm_command.h"
 #include "field/field_comm/intrude_mission.h"
+#include "field/field_comm/intrude_mission_field.h"
 #include "field/field_comm/intrude_message.h"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_monolith.h"
@@ -395,6 +396,8 @@ static void _CommCommon_Init(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, C
 	ccew->fmmdl_talk = CommPlayer_GetMmdl(intcomm->cps, talk_net_id);
 	ccew->fieldWork = fieldWork;
 	ccew->talk_netid = talk_net_id;
+	ccew->disguise_talk_type = MISSION_FIELD_GetTalkType(intcomm, talk_net_id);
+  MyStatus_Copy( Intrude_GetMyStatus(intcomm, talk_net_id), &ccew->talk_myst );
 	
 	if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
     GFL_STD_MemCopy(MISSION_GetRecvData(&intcomm->mission), &ccew->mdata, sizeof(MISSION_DATA));

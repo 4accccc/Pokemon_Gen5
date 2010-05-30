@@ -97,12 +97,13 @@ void EVENTCHANGE_CommMissionSleep_MtoT_Talk(GMEVENT *event, const COMMTALK_COMMO
   GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 	
   if(intcomm != NULL){  //このタイミングでintcommがNULLの場合は無いが一応
-  	talk->msg_id = Talk_Sleep[MISSION_FIELD_GetTalkType(intcomm, ccew->talk_netid)];
+  	talk->msg_id = Talk_Sleep[ccew->disguise_talk_type];
     WORDSET_RegisterPlayerName( //イベント中にintcommに依存しなくて良いようにここでセット
-      ccew->iem.wordset, 0, Intrude_GetMyStatus(intcomm, ccew->talk_netid) );
+      ccew->iem.wordset, 0, &ccew->talk_myst );
   }
   else{
     GF_ASSERT(0);
+    return;
   }
 
   //話しかけられた事を相手に通知していないので、自分でローカル内のを振り向かせる

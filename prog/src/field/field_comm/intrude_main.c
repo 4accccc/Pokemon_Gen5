@@ -1032,6 +1032,9 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
 //--------------------------------------------------------------
 BOOL Intrude_OtherPlayerExistence(void)
 {
+  if(NetErr_App_CheckError()){
+    return FALSE;
+  }
   if(GFL_NET_GetConnectNum() > 1){
     return TRUE;
   }

@@ -156,7 +156,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talk( GMEVENT *event, int *seq, voi
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){  //intcomm不使用の為、エラーチェックの必要無し   intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -171,7 +171,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talk( GMEVENT *event, int *seq, voi
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
@@ -179,7 +179,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talk( GMEVENT *event, int *seq, voi
       WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkedMsgID.mission_talk[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
@@ -243,7 +243,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){  //intcomm不使用の為、エラーチェックの必要無し   intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -258,7 +258,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
@@ -266,7 +266,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talk( GMEVENT *event, int *seq, voi
       WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.target_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkedMsgID.target_talk[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
@@ -339,7 +339,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_SEND_ACHIEVE,
-    SEQ_RECV_WAIT,
+    SEQ_RECV_WAIT,    //通信はここまで。ここから下は通信不要
     SEQ_MSG_INIT,
     SEQ_MSG_WAIT,
     SEQ_LAST_MSG_WAIT,
@@ -348,7 +348,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(intcomm == NULL && (*seq) <= SEQ_RECV_WAIT){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -367,13 +367,13 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
       (*seq)++;
     }
     break;
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
@@ -381,13 +381,13 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
       WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.mission_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkedMsgID.mission_talked[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-        MissionTalkedMsgID.mission_talked_item[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+        MissionTalkedMsgID.mission_talked_item[talk->ccew.disguise_talk_type]);
   		(*seq)++;
   	}
 		break;
@@ -455,7 +455,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talked( GMEVENT *event, int *seq, v
   };
 	
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL){
+  if(0){  //intcomm不使用の為、エラーチェックの必要無し   intcomm == NULL){
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
@@ -470,7 +470,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talked( GMEVENT *event, int *seq, v
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     WORDSET_RegisterPlayerName( 
       talk->ccew.iem.wordset, 1, GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(gsys) ) );
     {
@@ -478,7 +478,7 @@ static GMEVENT_RESULT CommMissionTalked_TtoM_Talked( GMEVENT *event, int *seq, v
       WORDSET_RegisterGPowerName( talk->ccew.iem.wordset, 2, d_skill->gpower_id );
     }
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionTalkedMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionTalkedMsgID.target_talked[talk->ccew.disguise_talk_type]);
 		(*seq)++;
 		break;
   case SEQ_MSG_WAIT:

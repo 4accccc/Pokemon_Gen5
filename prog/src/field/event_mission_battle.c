@@ -244,16 +244,16 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     WORDSET_RegisterNumber( talk->ccew.iem.wordset, 1, 
       talk->ibp.flat_level, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     {
       int msg_id;
       if(talk->first_talked == FALSE){
-        msg_id = MissionBattleMsgID.mission_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)];
+        msg_id = MissionBattleMsgID.mission_talk[talk->ccew.disguise_talk_type];
       }
       else{
-        msg_id = MissionBattleMsgID.mission_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)];
+        msg_id = MissionBattleMsgID.mission_talked[talk->ccew.disguise_talk_type];
       }
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_id);
     }
@@ -284,7 +284,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
 
   case SEQ_BATTLE_OK:
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionBattleMsgID.mission_battle_ok[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionBattleMsgID.mission_battle_ok[talk->ccew.disguise_talk_type]);
   	(*seq) = SEQ_SEND_ACHIEVE;
 		break;
   case SEQ_BATTLE_START_WAIT:
@@ -316,7 +316,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(&intcomm->mission) != MISSION_ACHIEVE_NULL){
+		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
       (*seq) = SEQ_BATTLE_START_WAIT;
     }
     break;
@@ -331,13 +331,13 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   case SEQ_BATTLE_AFTER_NEXT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionBattleMsgID.mission_battle_after[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionBattleMsgID.mission_battle_after[talk->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_BATTLE_NG:
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionBattleMsgID.mission_battle_ng[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionBattleMsgID.mission_battle_ng[talk->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
@@ -452,16 +452,16 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
 	switch( *seq ){
   case SEQ_MSG_INIT:
     WORDSET_RegisterPlayerName( 
-      talk->ccew.iem.wordset, 0, Intrude_GetMyStatus(intcomm, talk->ccew.talk_netid) );
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     WORDSET_RegisterNumber( talk->ccew.iem.wordset, 1, 
       talk->ibp.flat_level, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
     {
       int msg_id;
       if(talk->first_talked == FALSE){
-        msg_id = MissionBattleMsgID.target_talk[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)];
+        msg_id = MissionBattleMsgID.target_talk[talk->ccew.disguise_talk_type];
       }
       else{
-        msg_id = MissionBattleMsgID.target_talked[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)];
+        msg_id = MissionBattleMsgID.target_talked[talk->ccew.disguise_talk_type];
       }
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_id);
     }
@@ -497,7 +497,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_BATTLE_YES_MSG:
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionBattleMsgID.target_battle_ok[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionBattleMsgID.target_battle_ok[talk->ccew.disguise_talk_type]);
     (*seq)++;
     break;
   case SEQ_BATTLE_YES_WAIT:
@@ -533,7 +533,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_BATTLE_AFTER_NEXT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionBattleMsgID.target_battle_after[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionBattleMsgID.target_battle_after[talk->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
@@ -545,7 +545,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_BATTLE_NG_MSG:
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
-      MissionBattleMsgID.target_battle_ng[MISSION_FIELD_GetTalkType(intcomm, talk->ccew.talk_netid)]);
+      MissionBattleMsgID.target_battle_ng[talk->ccew.disguise_talk_type]);
     (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 

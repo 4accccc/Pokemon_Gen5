@@ -219,9 +219,9 @@ static void _CommonEventChangeSet(GMEVENT *event, const COMMTALK_COMMON_EVENT_WO
   GFL_STD_MemCopy(ccew, &talk->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
 	
   if(intcomm != NULL){  //このタイミングでintcommがNULLの場合は無いが一応
-  	talk->msg_id = msg_tbl[MISSION_FIELD_GetTalkType(intcomm, ccew->talk_netid)];
+  	talk->msg_id = msg_tbl[ccew->disguise_talk_type];
     WORDSET_RegisterPlayerName( //イベント中にintcommに依存しなくて良いようにここでセット
-      ccew->iem.wordset, 0, Intrude_GetMyStatus(intcomm, ccew->talk_netid) );
+      ccew->iem.wordset, 0, &ccew->talk_myst );
   }
   else{
     GF_ASSERT(0);
