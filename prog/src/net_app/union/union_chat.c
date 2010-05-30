@@ -58,6 +58,7 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
     dest->rand = 0;
     OS_GetMacAddress(dest->mac_address);
     dest->sex = MyStatus_GetMySex(myst);
+    dest->friend_type = UNION_CHAT_FRIEND_TYPE_NULL;
   }
   else{
     STRTOOL_Copy(bpc->beacon.name, dest->name, PERSON_NAME_SIZE + EOM_SIZE);
@@ -73,11 +74,9 @@ void UnionChat_AddChat(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc, const PMS_
       
       if(UnionTool_CheckDwcFriend(wifilist, &bpc->beacon) == TRUE){
         dest->friend_type = UNION_CHAT_FRIEND_TYPE_FRIEND;
-        OS_TPrintf("ccc friend\n");
       }
       else if(EtcSave_CheckAcquaintance(etc_save, bpc->beacon.trainer_id) == TRUE){
         dest->friend_type = UNION_CHAT_FRIEND_TYPE_ACQUAINTANCE;
-        OS_TPrintf("ccc acqua\n");
       }
     }
   }
