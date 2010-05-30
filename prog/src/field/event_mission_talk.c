@@ -533,7 +533,9 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
 		break;
   case SEQ_AFTER_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      (*seq)++;
+      if(IntrudeEventPrint_LastKeyWait() == TRUE){
+        (*seq)++;
+      }
     }
     break;
 
