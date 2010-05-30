@@ -584,11 +584,13 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
 	//VブランクTCB登録
 	intsub->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, intsub, 10);
 
-  //アクター更新
+  //初回更新
   {
     PLAYER_WORK *player_work = GAMESYSTEM_GetMyPlayerWork(intsub->gsys);
     ZONEID my_zone_id = PLAYERWORK_getZoneID(player_work);
     OCCUPY_INFO *area_occupy = _IntSub_GetArreaOccupy(intsub);
+
+    _IntSub_TitleMsgUpdate(intsub, my_zone_id);
 
     _IntSub_ActorUpdate_TouchTown(intsub, area_occupy);
     _IntSub_ActorUpdate_Area(intsub, area_occupy);
@@ -743,8 +745,8 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   if(intcomm != NULL && MISSION_CheckRecvResult(&intcomm->mission) == FALSE){
     update = TRUE;
   }
-  else if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
-    update = TRUE;
+  else if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE && GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION && GameCommSys_GetLastStatus(game_comm) == GAME_COMM_LAST_STATUS_NULL){
+    update = TRUE;  //侵入としての通信が完全に終了している状態なら更新してOK
   }
   
   if(update == TRUE){
