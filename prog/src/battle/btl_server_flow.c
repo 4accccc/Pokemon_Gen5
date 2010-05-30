@@ -3680,7 +3680,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       actWaza = reqWaza.wazaID;
       actTargetPos = reqWaza.targetPos;
       scEvent_GetWazaParam( wk, orgWaza, attacker, wk->wazaParam );
-      wk->wazaParam.fReqWaza = TRUE;
+      wk->wazaParam->fReqWaza = TRUE;
       scproc_WazaExe_Decide( wk, attacker, wk->wazaParam );
 
     }else{
