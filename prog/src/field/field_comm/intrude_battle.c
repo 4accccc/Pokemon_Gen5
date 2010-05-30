@@ -29,6 +29,13 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///侵入の対戦でのコマンド選択制限時間(秒)
+#define INTRUDE_BATTLE_LIMIT_COMMAND_TIME   (30)
+
+
+//==============================================================================
 //  構造体定義
 //==============================================================================
 ///侵入通信対戦制御構造体
@@ -148,6 +155,7 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     ibs->para.fieldSituation.bgAttr = BATTLE_BG_ATTR_PALACE;
     ibs->para.musicDefault = SND_INTRUDE_BATTLE_BGM;
     ibs->para.commNetIDBit = (1 << GFL_NET_SystemGetCurrentID()) | (1 << ibp->target_netid);
+    ibs->para.LimitTimeCommand = INTRUDE_BATTLE_LIMIT_COMMAND_TIME;
     (*seq)++;
     break;
   case 1:
