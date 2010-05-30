@@ -275,7 +275,7 @@ extern void BTL_UTIL_PrintfSimple( const char* filename, u32 channel, u32 strID,
 extern void BTL_UTIL_DumpPrintf( const char* caption, const void* data, u32 size );
 
 #define BTL_N_Printf( ... ) BTL_UTIL_Printf( __FILE__, __LINE__, 1, __VA_ARGS__ )
-#define BTL_N_PrintfEx( ch, ... )  if( ch!=0 ){ OS_TPrintf("‚ ‚³‚³‚ ‚ ‚ =%d\n",ch); BTL_UTIL_Printf( __FILE__, __LINE__, ch, __VA_ARGS__ ); }
+#define BTL_N_PrintfEx( ch, ... )  if( ch!=0 ){ BTL_UTIL_Printf( __FILE__, __LINE__, ch, __VA_ARGS__ ); }
 #define BTL_N_PrintfSimple( ... ) BTL_UTIL_PrintfSimple( __FILE__, 1, __VA_ARGS__ )
 #define BTL_N_PrintfSimpleEx( ch, ... ) if( ch!=0 ){ BTL_UTIL_PrintfSimple( __FILE__, ch, __VA_ARGS__ ); }
 

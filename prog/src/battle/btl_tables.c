@@ -58,7 +58,27 @@ BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
   }
   return FALSE;
 }
+/**
+ *  プレッシャー対象ワザ判定
+ */
+BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
+{
+  static const WazaID table[] = {
+    WAZANO_MAZIKKUKOOTO,  WAZANO_YOKODORI,
+  };
+  u32 i;
 
+  for(i=0; i<NELEMS(table); ++i)
+  {
+    if( table[i] == waza ){
+      return TRUE;
+    }
+  }
+
+
+  return FALSE;
+
+}
 
 /**
  *  ゆびをふるで出ないワザテーブル
@@ -76,12 +96,29 @@ static const WazaID YubiFuruOmmit[] = {
   WAZANO_FEINTO,
 };
 
+//=============================================================================================
+/**
+ * ゆびをふる出ないワザテーブル情報取得
+ *
+ * @param   elems   [out] テーブル要素数
+ *
+ * @retval  const WazaID*   テーブルアドレス
+ */
+//=============================================================================================
 const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems )
 {
   *elems = NELEMS(YubiFuruOmmit);
   return YubiFuruOmmit;
 }
-
+//=============================================================================================
+/**
+ * ゆびをふるで出ないワザか判定
+ *
+ * @param   waza
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
 BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza )
 {
   u32 i;

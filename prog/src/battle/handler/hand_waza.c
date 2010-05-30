@@ -4873,7 +4873,6 @@ static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,       handler_MagicCoat_ExeCheck  }, // ワザ出し成否チェックハンドラ
     { BTL_EVENT_UNCATEGORIZE_WAZA,            handler_MagicCoat           }, // 未分類ワザ処理
     { BTL_EVENT_NOEFFECT_CHECK_L3,            handler_MagicCoat_Wait      }, // ワザ無効化ハンドラ
-//    { BTL_EVENT_CHECK_WAZA_ROB,               handler_MagicCoat_CheckRob  }, // ワザ乗っ取り判定
     { BTL_EVENT_WAZASEQ_REFRECT,              handler_MagicCoat_Reflect   }, // ワザ乗っ取り確定
     { BTL_EVENT_TURNCHECK_BEGIN,              handler_MagicCoat_TurnCheck }, // ターンチェック
   };
@@ -4978,6 +4977,7 @@ static void handler_Yokodori_Rob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_YokodoriExe );
     HANDEX_STR_AddArg( &param->str, pokeID );
     HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) );
+    TAYA_Printf("よこどりメッセージ反応\n");
   }
 }
 static void handler_Yokodori_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

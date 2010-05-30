@@ -5105,7 +5105,9 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 // PP消費チェックハンドラ
 static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID )
+  u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+
+  if( atkPokeID != pokeID )
   {
     BOOL fEnable = FALSE;
 
@@ -5122,6 +5124,7 @@ static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       }
     }
     else{
+
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_FIELD_EFFECT ){
         fEnable = TRUE;

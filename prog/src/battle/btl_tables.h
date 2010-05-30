@@ -20,6 +20,10 @@ extern BOOL BTL_TABLES_IsMatchEncoreFail( WazaID waza );
  */
 extern BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza );
 
+/**
+ *  プレッシャー対象ワザ判定
+ */
+extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 
 
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
