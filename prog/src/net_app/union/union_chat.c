@@ -161,7 +161,7 @@ static BOOL UnionChat_CheckSameLog(UNION_CHAT_LOG *log, const u8 *mac_address, u
   int log_no;
   UNION_CHAT_DATA *check_chat;
   
-  for(log_no = UNION_CHAT_LOG_MAX - 1; log_no > -1; log_no--){
+  for(log_no = log->chat_log_count - 1; log_no >= log->chat_log_count - UNION_CHAT_LOG_MAX; log_no--){
     check_chat = UnionChat_GetReadBuffer(log, log_no);
     if(check_chat != NULL){
       if(GFL_STD_MemComp(check_chat->mac_address, mac_address, 6) == 0){
