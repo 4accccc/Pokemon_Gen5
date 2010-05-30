@@ -1349,6 +1349,7 @@ static void _graphicEnd(WIFIP2PMATCH_WORK* wk)
   }
   _TrainerOAMFree( wk );
   _TouchResExit(wk);
+  _UnderScreenReload( wk );
 
 
   // マッチングルーム破棄
@@ -6120,6 +6121,7 @@ static void WifiP2PMatch_UserDispOff( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
   _TrainerOAMFree( wk );
   _TouchResExit(wk);
+  _UnderScreenReload( wk );
 
   MCVSys_UserDispOff( wk );
   MCRSYS_ReloadShadow(wk);
@@ -6315,6 +6317,7 @@ static u32 MCVSys_Updata( WIFIP2PMATCH_WORK *wk, u32 heapID )
 
     _TrainerOAMFree( wk );
     _TouchResExit(wk);
+    _UnderScreenReload( wk );
 
 
     // ボタンメイン
