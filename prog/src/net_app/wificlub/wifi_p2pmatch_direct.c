@@ -1590,6 +1590,7 @@ static int _playerDirectBattleNoregSelectTemoti( WIFIP2PMATCH_WORK *wk, int seq 
 
   if(GFL_UI_KEY_GetTrg()){
     EndMessageWindowOff(wk);
+    
     _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
     _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
 
@@ -1614,6 +1615,8 @@ static int _playerDirectBattleNoregSelectBBox( WIFIP2PMATCH_WORK *wk, int seq )
   }
 
   if(GFL_UI_KEY_GetTrg()){
+    EndMessageWindowOff(wk);
+
     _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
     _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
 
