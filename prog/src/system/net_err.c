@@ -208,6 +208,8 @@ void NetErr_Main(void)
         { 
           const GFL_NETSTATE_DWCERROR *cp_dwc_error  = GFL_NET_StateGetWifiError();
 
+          OS_TPrintf("Wifiエラー番号 code%d ret%d type%d user%d\n", 
+              cp_dwc_error->errorCode, cp_dwc_error->errorRet, cp_dwc_error->errorType, cp_dwc_error->errorUser );
           if( cp_dwc_error->errorUser == ERRORCODE_TIMEOUT
               || cp_dwc_error->errorUser == ERRORCODE_DISCONNECT )
           {
@@ -219,7 +221,7 @@ void NetErr_Main(void)
               || cp_dwc_error->errorUser == ERRORCODE_SENDQUEUE)
           {
             //タイムアウトか相手と切断していたならばならば
-            NetErrSystem.wifi_msg = dwc_message_0015;
+            NetErrSystem.wifi_msg = dwc_error_0015;
           }
           else
           {
@@ -688,7 +690,7 @@ static void Local_ErrDispExit(void)
   *((u16 *)HW_DB_BG_PLTT)  = nes->sub_bd_color;
 
   //下画面の描画設定
-  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+  GFL_DISP_GXS_SetVisibleControlDirect( nes->sub_visible );
 
   //ブレンドの設定
   reg_G2_BLDCNT     = nes->g2_blend_cnt;
