@@ -429,8 +429,10 @@ BOOL PMSND_IsAccessCARD( void )
   if( ((OS_GetIrqMask() & OS_IE_CARD_A_DATA) == 0)  ){
     return FALSE;
   }
-#endif
   return TRUE;
+#else
+  return FALSE;
+#endif
 }
 
 //============================================================================================
