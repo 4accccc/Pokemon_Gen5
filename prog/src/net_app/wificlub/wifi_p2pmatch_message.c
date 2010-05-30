@@ -1716,6 +1716,7 @@ static void _battlePokePartySelectMenu( WIFIP2PMATCH_WORK *wk )
   _modeSelectMenuBase(wk, &_parentInfoBattleMenuListHeader, _parentPokePartyMenuList,
                       elementof(_parentPokePartyMenuList), _MENUTYPE_POKEPARTY,18);
 
+  BmpMenuList_SetCancelMode( wk->sublw, BMPMENULIST_CANCELMODE_NOT );
 
 }
 
