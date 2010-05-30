@@ -1231,6 +1231,20 @@ static void _TouchResExit( WIFIP2PMATCH_WORK *wk )
     TOUCHBAR_Exit(wk->pTouchWork);
     wk->pTouchWork=NULL;
   }
+
+    //    GFL_BG_ScrFill( GFL_BG_FRAME2_S, 0, 0, 0, 32, 24, 0 );
+//    GFL_BG_ClearFrame( GFL_BG_FRAME3_S);
+   // GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME2_S);
+    {
+      ARCHANDLE* p_handle;
+      p_handle = GFL_ARC_OpenDataHandle( ARCID_WIFIP2PMATCH, HEAPID_WIFIP2PMATCH );
+      GFL_ARCHDL_UTIL_TransVramScreenCharOfs( p_handle, NARC_wifip2pmatch_wf_match_btm_NSCR,
+                                              GFL_BG_FRAME0_S, 0,  GFL_ARCUTIL_TRANSINFO_GetPos(wk->bgchrSubBack),
+                                              0, FALSE, HEAPID_WIFIP2PMATCH );
+      GFL_ARC_CloseDataHandle(p_handle);
+    }
+
+
 }
 
 // PAGE 1
