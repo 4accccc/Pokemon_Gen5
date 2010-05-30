@@ -3665,6 +3665,12 @@ BOOL WH_Finalize(void)
 		WH_TRACE("already WH_SYSSTATE_IDLE\n");
 		return TRUE;
 	}
+  if(_pWmInfo->sErrCode!=WM_ERRCODE_SUCCESS){
+		WH_ChangeSysState(WH_SYSSTATE_BUSY);
+		WH_Reset();
+		return TRUE;
+  }
+  
 	WH_TRACE("WH_Finalize, state = %d\n", _pWmInfo->sSysState);
 
   if(_pWmInfo->sSysState==WH_SYSSTATE_BUSY){
