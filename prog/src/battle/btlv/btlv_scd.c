@@ -883,6 +883,7 @@ static void stw_setSelectablePoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* 
 {
   u8 num = BTL_MAIN_ExpandBtlPos( mainModule, exPos, stw->pos );
   stw->selectablePokeCount = num;
+  TAYA_Printf("選択可能ポケ数=%d\n", stw->selectablePokeCount);
 }
 // 確認のみ（ポケモン）をセット
 static void stw_setConfirmPoke( SEL_TARGET_WORK* stw, const BTL_MAIN_MODULE* mainModule, BtlExPos exPos )
@@ -924,12 +925,12 @@ static BOOL stw_is_enable_hitpos( SEL_TARGET_WORK* stw, int hitPos, const BTL_MA
 
     *targetPos = BTL_MAIN_ViewPosToBtlPos( mainModule, hitVpos );
 
-    BTL_Printf( "hitPos=%d, vpos=%d, btlPos=%d\n", hitPos, hitVpos, *targetPos );
+    BTL_N_Printf( DBGSTR_SCD_TargetHitPosConvert, hitPos, hitVpos, *targetPos );
     for(i=0; i<stw->selectablePokeCount; ++i)
     {
       if( *targetPos == stw->pos[i] )
       {
-        BTL_Printf( " btlPos[%d]  Selectable !\n", *targetPos );
+        BTL_N_Printf( DBGSTR_SCD_TargetHitPosFix, *targetPos );
         return TRUE;
       }
     }
@@ -1156,7 +1157,7 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
 
           if( stw_is_enable_hitpos( &wk->selTargetWork, hit, wk->mainModule, &targetPos ) )
           {
-            BTL_Printf("ターゲット決定 ... hitBtn=%d, hitPos=%d, targetPos=%d\n", hit, wk->selTargetWork.pos[hit], targetPos);
+            BTL_N_Printf( DBGSTR_SCD_DecideTargetPos, hit, wk->selTargetWork.pos[hit], targetPos);
             BTL_ACTION_SetFightParam( wk->destActionParam, wk->destActionParam->fight.waza, targetPos );
             wk->selTargetDone = TRUE;
             return TRUE;

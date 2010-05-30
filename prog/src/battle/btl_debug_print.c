@@ -162,6 +162,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_HPCheckByLvup:        return "PPLVUP Client line:%d, pokeID=%d, HP=%d\n";
   case DBGSTR_CLIENT_OP_HPPlus:            return "ポケモンHP回復 : bpp=%p, pokeID=%d, AddHP=%d, ResultHP=%d\n";
   case DBGSTR_CLIENT_OP_MemberIn:          return "メンバー入場 : pos %d<->%d  inPokeID=%d, inPokeHP=%d\n";
+  case DBGSTR_CLIENT_StartWazaTargetSel:   return "対象選択開始へ\n";
 
   case DBGSTR_PSET_Copy:          return "ポケセットコピー  adrs=%p, count=%d\n";
   case DBGSTR_PSET_Add:           return "ポケセット追加    adrs=%p, pokeID=%d, count=%d/%d\n";
@@ -311,7 +312,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_YokodoriDetermine:   return "ポケ[%d]のワザ[%d]をよこどります\n";
   case DBGSTR_SVFL_YokodoriExe:         return "よこどりしたポケ=[%d], 対象位置=%d\n";
 
-  case DBGSTR_SVFS_RegTargetDouble:   return "ダブルターゲット：攻撃ポケ=%d, 狙う位置=%d\n";
+  case DBGSTR_SVFS_RegTargetDouble:   return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
@@ -361,10 +362,15 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SIDE_NoMoreAdd:           return "サイドエフェクトこれ以上登録できない side=%d, eff=%d\n";
 
   case DBGSTR_SCU_RelivePokeAct:        return "Pos[%d]=Vpos[%d] ポケ(%d)が生き返り\n";
+  case DBGSTR_SCD_DecideTargetPos:      return "ターゲット決定 ... hitBtn=%d, hitPos=%d, targetPos=%d\n";
+  case DBGSTR_SCD_TargetHitPosConvert:  return "  HitPos:%d -> vpos:%d -> btlPos:%d\n";
+  case DBGSTR_SCD_TargetHitPosFix:      return "   btlPos:%d  Selectable !\n";
+
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
   case DBGSTR_Item_PinchReactOn:        return "反応あり";
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
   case DBGSTR_HANDWAZA_AlreadyRegistered: return "ポケ[%d]のワザハンドラ[%d]はすでに登録済み\n";
+  case DBGSTR_HANDWAZA_YokorodiDecide:  return "ポケ(%d), よこどりします\n";
 
   case DBGSTR_REC_ReadActStart:         return "rec seek start RP= %d\n";
   case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte\n";

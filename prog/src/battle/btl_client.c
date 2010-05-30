@@ -2086,6 +2086,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
     break;
 
   case SEQ_SELECT_TARGET_START:
+    BTL_N_Printf( DBGSTR_CLIENT_StartWazaTargetSel );
     BTLV_UI_SelectTarget_Start( wk->viewCore, wk->procPoke, wk->procAction );
     (*seq) = SEQ_SELECT_TARGET_WAIT;
     break;

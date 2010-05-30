@@ -4962,6 +4962,7 @@ static void handler_Yokodori_CheckRob( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     {
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID, pokeID) )
       {
+        BTL_N_Printf( DBGSTR_HANDWAZA_YokorodiDecide, pokeID );
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
         work[ 0 ] = 1;
       }

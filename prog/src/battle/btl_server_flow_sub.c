@@ -196,7 +196,7 @@ static u8 registerTarget_double( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
 
   BTL_POKEPARAM* bpp = NULL;
 
-  BTL_N_Printf( DBGSTR_SVFS_RegTargetDouble, BPP_GetID(attacker), targetPos);
+  BTL_N_Printf( DBGSTR_SVFS_RegTargetDouble, wazaParam->targetType, BPP_GetID(attacker), targetPos);
 
   switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）
@@ -282,6 +282,9 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
   u32 i, cnt;
 
   BTL_POKEPARAM* bpp = NULL;
+
+  BTL_N_Printf( DBGSTR_SVFS_RegTargetDouble, wazaParam->targetType, BPP_GetID(attacker), targetPos);
+
 
   switch( wazaParam->targetType ){
   case WAZA_TARGET_OTHER_SELECT:        ///< 自分以外の１体（選択）

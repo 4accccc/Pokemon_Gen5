@@ -3691,6 +3691,8 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
     if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock, fReqWaza) ){ break; }
 
+    // ワザパラメータ確定
+    scEvent_GetWazaParam( wk, actWaza, attacker, wk->wazaParam );
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( wk->psetTargetOrg );
     BTL_SVFSUB_RegisterTargets( wk, attacker, actTargetPos, wk->wazaParam, wk->psetTargetOrg );
@@ -3709,9 +3711,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // 合体ワザ（後発）の発動チェック
     scEvent_CheckCombiWazaExe( wk, attacker, actWaza );
-
-    // ワザパラメータ確定
-    scEvent_GetWazaParam( wk, actWaza, attacker, wk->wazaParam );
 
     // ワザメッセージ出力
     if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &wk->strParam) ){
@@ -4246,6 +4245,7 @@ static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 
     TAYA_Printf("よこどり対象PokeID=%d, 位置=%d\n", robTargetPokeID, robParam->targetPos[0]);
 
+    robParam->robberPokeID[0] = robberPokeID;
     robParam->robberCount = 1;
 
     return TRUE;
@@ -4292,6 +4292,8 @@ static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 
     *robberPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
     *robTargetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+
+    TAYA_Printf("よこどりするポケ=%d, 対象poke=%d\n", *robberPokeID, *robTargetPokeID);
 
   BTL_EVENTVAR_Pop();
 

@@ -106,6 +106,7 @@ typedef enum {
   DBGSTR_CLIENT_HPCheckByLvup,
   DBGSTR_CLIENT_OP_HPPlus,
   DBGSTR_CLIENT_OP_MemberIn,
+  DBGSTR_CLIENT_StartWazaTargetSel,
 
   DBGSTR_BPP_NemuriWakeCheck,
   DBGSTR_BPP_WazaLinkOff,
@@ -314,6 +315,9 @@ typedef enum {
   DBGSTR_VCORE_PluralDamageInfo,
   DBGSTR_VCORE_PluralDamagePoke,
   DBGSTR_SCU_RelivePokeAct,
+  DBGSTR_SCD_DecideTargetPos,
+  DBGSTR_SCD_TargetHitPosConvert,
+  DBGSTR_SCD_TargetHitPosFix,
 
   DBGSTR_POSPOKE_Out,
   DBGSTR_POSPOKE_In,
@@ -323,6 +327,7 @@ typedef enum {
   DBGSTR_Item_PinchReactOn,
   DBGSTR_HANDWAZA_CombiWazaExe,
   DBGSTR_HANDWAZA_AlreadyRegistered,
+  DBGSTR_HANDWAZA_YokorodiDecide,
 
   DBGSTR_REC_ReadActStart,
   DBGSTR_REC_ReadActSkip,
