@@ -933,6 +933,7 @@ static void WH_ChangeSysState(int state)
 		"WH_SYSSTATE_MEASURECHANNEL",
 		"WH_SYSSTATE_CONNECT_FAIL",
 		"WH_SYSSTATE_ERROR",
+		"WH_SYSSTATE_FATAL",
 	};
 	int     prev = _pWmInfo->sSysState;
 	WH_TRACE("%s -> ", statenames[_pWmInfo->sSysState]);
