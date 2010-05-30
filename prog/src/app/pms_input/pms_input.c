@@ -172,6 +172,7 @@ enum {
 
 enum {
 	SEQ_CA_KEYWAIT,
+  SEQ_CA_ERASE_BLINK_WAIT_IN_CATEGORY_INITIAL,
 	SEQ_CA_NEXTPROC,
 	SEQ_CA_NEXTPROC2,
 	SEQ_CA_WAIT_MODE_CHANGE,
@@ -261,8 +262,9 @@ struct _PMS_INPUT_WORK{
 	u16        edit_pos;
 	u16        category_pos;
 	u16        category_pos_prv;
-
-	WORDWIN_WORK   word_win;
+  u16        category_pos_before_erase;  // カテゴリのイニシャルモードにて1文字消去を行った際、カーソルがどのボタンの上にあったかを覚えておく
+	
+  WORDWIN_WORK   word_win;
 
 	SENTENCE_WORK  sentence_wk;
 
@@ -793,6 +795,16 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		if(! PMSIView_WaitCommandAll( wk->vwk ) ){
 			break;
 		}
+    if( wk->key_trg & PAD_KEY_UP )
+    {
+			PMSND_PlaySE(SOUND_MOVE_CURSOR);
+     
+      // 回り込み
+			wk->cmd_button_pos = BUTTON_POS_CANCEL;
+			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
+			(*seq) = SEQ_EDW_BUTTON_KEYWAIT;
+      break;
+    }
 		if( wk->key_trg & (PAD_KEY_DOWN | PAD_BUTTON_START))
 		{
 			PMSND_PlaySE(SOUND_MOVE_CURSOR);
@@ -861,23 +873,29 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 			break;
 		}
 		if( wk->key_trg & PAD_BUTTON_A ){
-			PMSND_PlaySE(SOUND_DECIDE);
-
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
+        if( check_input_complete( wk ) )
+        {
+			    PMSND_PlaySE(SOUND_DECIDE);
+        }
+        else
+        {
+		  	  PMSND_PlaySE(SOUND_DISABLE_BUTTON);
+        }
 				(*seq) = SEQ_EDW_TO_SUBPROC_OK;
 				break;
 			}else{
-				(*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
-					break;
-				}
-			}
-
-			if( wk->key_trg & PAD_BUTTON_B ){
-				PMSND_PlaySE(SOUND_DECIDE);
-				
+			  PMSND_PlaySE(SOUND_CANCEL);
         (*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
 				break;
 			}
+		}
+
+		if( wk->key_trg & PAD_BUTTON_B ){
+			PMSND_PlaySE(SOUND_CANCEL);
+      (*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
+			break;
+		}
 		break;
 	case SEQ_EDW_TO_SUBPROC_OK:
 		(*seq) = SEQ_EDW_RETURN_SUBPROC;
@@ -926,9 +944,9 @@ static int edit_single_touch(PMS_INPUT_WORK* wk)
 	int ret;
 	
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
-		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
-		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
-		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD1_PX,TPED_WORD1_PX+TPED_WORD_SX},
+		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},  // けってい
+		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},  // やめる
+		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD1_PX,TPED_WORD1_PX+TPED_WORD_SX},  // エディットエリアの単語欄
 		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
@@ -949,10 +967,10 @@ static int edit_double_touch(PMS_INPUT_WORK* wk)
 	int ret;
 
 	static const GFL_UI_TP_HITTBL Btn_TpRect[] = {
-		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
-		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},
-		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX0,TPED_WORD2_PX0+TPED_WORD_SX},
-		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX1,TPED_WORD2_PX1+TPED_WORD_SX},
+		{TPED_DCBTN_PY0,TPED_DCBTN_PY0+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},  // けってい
+		{TPED_DCBTN_PY1,TPED_DCBTN_PY1+TPED_DCBTN_SY,TPED_DCBTN_PX,TPED_DCBTN_PX+TPED_DCBTN_SX},  // やめる
+		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX0,TPED_WORD2_PX0+TPED_WORD_SX},  // エディットエリアの単語欄左側
+		{TPED_WORD_PY,TPED_WORD_PY+TPED_WORD_SY,TPED_WORD2_PX1,TPED_WORD2_PX1+TPED_WORD_SX},  // エディットエリアの単語欄右側
 		{GFL_UI_TP_HIT_END,0,0,0}
 	};
 	ret = GFL_UI_TP_HitTrg(Btn_TpRect);
@@ -1087,19 +1105,30 @@ static GFL_PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq )
 	switch( *seq ){
 	case SEQ_EDW_KEYWAIT:
 	case SEQ_EDW_BUTTON_KEYWAIT:
-		if(wk->input_mode == 0){
+		if(wk->input_mode == PMSI_MODE_SINGLE){  // 単語１個モード
 			ret = edit_single_touch(wk);
-		}else{
+		}else{  // if(wk->input_mode == PMSI_MODE_DOUBLE)  // 単語２個モード
 			ret = edit_double_touch(wk);
 		}
 		switch(ret){
 		case 0:	//決定
+      if( check_input_complete( wk ) )
+      {
+        PMSND_PlaySE(SOUND_DECIDE);
+      }
+      else
+      {
+        PMSND_PlaySE(SOUND_DISABLE_BUTTON);
+      }
+			*seq = SEQ_EDW_TO_SUBPROC_OK;
+      break;
 		case 1:	//やめる
-			PMSND_PlaySE(SOUND_DECIDE);
-			*seq = SEQ_EDW_TO_SUBPROC_OK+ret;
+			PMSND_PlaySE(SOUND_CANCEL);
+			*seq = SEQ_EDW_TO_SUBPROC_CANCEL;//SEQ_EDW_TO_SUBPROC_OK+ret;
 			break;
 		case 2:	//単語選択
 		case 3:
+      PMSND_PlaySE(SOUND_DECIDE);
 			wk->category_pos = 0;
 			wk->edit_pos = ret-2;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
@@ -1133,7 +1162,11 @@ static GFL_PROC_RESULT mp_input_single( PMS_INPUT_WORK* wk, int* seq )
 	if(	*seq == SEQ_EDW_KEYWAIT ||
 		*seq == SEQ_EDW_BUTTON_KEYWAIT){
 		if(KeyStatusChange(wk,seq)){
-			return GFL_PROC_RES_CONTINUE;
+	    if(wk->key_mode == GFL_APP_KTST_KEY)  // タッチ→キーに変更したときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
+      {
+			  PMSND_PlaySE(SOUND_MOVE_CURSOR);
+			  return GFL_PROC_RES_CONTINUE;
+      }
 		}
 	}
 	if(wk->key_mode == GFL_APP_KTST_KEY){
@@ -1160,9 +1193,16 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		if(! PMSIView_WaitCommandAll( wk->vwk ) ){
 			break;
 		}
-		if(KeyStatusChange(wk,seq)){
+    if( wk->key_trg & PAD_KEY_UP )
+    {
+			PMSND_PlaySE(SOUND_MOVE_CURSOR);
+
+      // 回り込み
+			wk->cmd_button_pos = BUTTON_POS_CANCEL;
+			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_BUTTON );
+			(*seq) = SEQ_EDW_BUTTON_KEYWAIT;
 			break;
-		}
+    }
 		if( wk->key_trg & (PAD_KEY_DOWN|PAD_BUTTON_START) )
 		{
 			PMSND_PlaySE(SOUND_MOVE_CURSOR);
@@ -1215,9 +1255,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		if(! PMSIView_WaitCommandAll( wk->vwk ) ){
 			break;
 		}
-		if(KeyStatusChange(wk,seq)){
-			break;
-		}
+
 		if( wk->key_trg & PAD_KEY_UP )
 		{
 			PMSND_PlaySE(SOUND_MOVE_CURSOR);
@@ -1256,23 +1294,28 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		}
 
 		if( wk->key_trg & PAD_BUTTON_A ){
-			PMSND_PlaySE(SOUND_DECIDE);
-
 			if( wk->cmd_button_pos == BUTTON_POS_DECIDE ){
+        if( check_input_complete( wk ) )
+        {
+			    PMSND_PlaySE(SOUND_DECIDE);
+        }
+        else
+        {
+		  	  PMSND_PlaySE(SOUND_DISABLE_BUTTON);
+        }
 				(*seq) = SEQ_EDW_TO_SUBPROC_OK;
 				break;
 			}else{
-				(*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
-					break;
-				}
-			}
-
-			if( wk->key_trg & PAD_BUTTON_B ){
-				PMSND_PlaySE(SOUND_DECIDE);
-				
+			  PMSND_PlaySE(SOUND_CANCEL);
         (*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
 				break;
 			}
+    }
+		if( wk->key_trg & PAD_BUTTON_B ){
+			PMSND_PlaySE(SOUND_CANCEL);
+      (*seq) = SEQ_EDW_TO_SUBPROC_CANCEL;
+			break;
+		}
 		break;
 	case SEQ_EDW_TO_SUBPROC_OK:
 		(*seq) = SEQ_EDW_RETURN_SUBPROC;
@@ -1310,7 +1353,11 @@ static GFL_PROC_RESULT mp_input_double( PMS_INPUT_WORK* wk, int* seq )
 	if(	*seq == SEQ_EDW_KEYWAIT ||
 		*seq == SEQ_EDW_BUTTON_KEYWAIT){
 		if(KeyStatusChange(wk,seq)){
-			return GFL_PROC_RES_CONTINUE;
+	    if(wk->key_mode == GFL_APP_KTST_KEY)  // タッチ→キーに変更したときだけ(KeyStatusChange関数内でwk->cb_ktchg_funcを呼ぶ以外は)何もせずに戻る
+      {
+			  PMSND_PlaySE(SOUND_MOVE_CURSOR);
+			  return GFL_PROC_RES_CONTINUE;
+      }
 		}
 	}
 	if(wk->key_mode == GFL_APP_KTST_KEY){
@@ -1835,6 +1882,18 @@ static GFL_PROC_RESULT MainProc_Category( PMS_INPUT_WORK* wk, int* seq )
 
 		break;
 
+  case SEQ_CA_ERASE_BLINK_WAIT_IN_CATEGORY_INITIAL:
+    if( PMSIView_WaitCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL ) )
+    {
+      if( wk->category_pos_before_erase != CATEGORY_POS_ERASE )
+      {
+        wk->category_pos = wk->category_pos_before_erase;
+		    PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );
+      }  
+      (*seq) = SEQ_CA_KEYWAIT;
+    }
+    break;
+
 	case SEQ_CA_NEXTPROC:
 		if( PMSIView_WaitCommandAll( wk->vwk ) )
 		{
@@ -1910,6 +1969,24 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
     // INITIALなら文字消去→これ以上消すものがなければ画面から抜ける
     if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
     {
+      // Bボタンを押して文字を消すときは
+      // カーソルを「けす」のところに移動し、「けす」を点滅させて、カーソルを元のところに戻す
+      wk->category_pos_before_erase = wk->category_pos;
+		  (*seq) = SEQ_CA_ERASE_BLINK_WAIT_IN_CATEGORY_INITIAL;
+
+      if( wk->category_pos != CATEGORY_POS_ERASE )
+      {
+		    wk->category_pos = CATEGORY_POS_ERASE;
+		    PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );
+      }
+
+		  PMSND_PlaySE(SOUND_WORD_DELETE);
+		  PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
+
+      PMSI_SEARCH_Start( wk->swk );
+      PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+
+#if 0      
       // Bボタンで消すときは
       //   文字のところにカーソルがあるときは移動しないし、文字のところのカーソルを消さない
       //   APP_TASKMENUのところにカーソルがあるときは「けす」のところにカーソルを移動する
@@ -1924,12 +2001,19 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 
       PMSI_SEARCH_Start( wk->swk );
       PMSIView_SetCommand( wk->vwk, VCMD_INPUTWORD_UPDATE );
+#endif
     }
     // GROUPは無条件で画面から抜ける
     else
     {
       if( wk->category_mode == CATEGORY_MODE_INITIAL )
-		    wk->category_pos = CATEGORY_POS_BACK;
+      {
+        if( wk->category_pos != CATEGORY_POS_BACK )
+        {
+		      wk->category_pos = CATEGORY_POS_BACK;
+		      PMSIView_SetCommand( wk->vwk, VCMD_MOVE_CATEGORY_CURSOR );
+        }
+      }
       
       PMSND_PlaySE(SOUND_CANCEL); 
       PMSIView_SetCommand( wk->vwk, VCMD_CATEGORY_TO_EDITAREA );
@@ -1960,6 +2044,9 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
       // INITIALなら文字消去→これ以上消すものがなければ禁止音
       if( wk->category_mode == CATEGORY_MODE_INITIAL && PMSI_SEARCH_DelWord( wk->swk ) )
       {
+        wk->category_pos_before_erase = wk->category_pos;
+  		  (*seq) = SEQ_CA_ERASE_BLINK_WAIT_IN_CATEGORY_INITIAL;
+
 		    PMSND_PlaySE(SOUND_WORD_DELETE);  // Aボタンを使っても消去音になった(新)
 		    //PMSND_PlaySE(SOUND_DECIDE);  // Aボタンを使ったので決定音(古)
 		    PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
@@ -2248,6 +2335,9 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
         wk->category_pos = CATEGORY_POS_ERASE;
         if( PMSI_SEARCH_DelWord( wk->swk ) )
         {
+          wk->category_pos_before_erase = wk->category_pos;
+  		    (*seq) = SEQ_CA_ERASE_BLINK_WAIT_IN_CATEGORY_INITIAL;
+
           PMSND_PlaySE(SOUND_WORD_DELETE);
 		      PMSIView_SetCommand( wk->vwk, VCMD_ERASE_BLINK_IN_CATEGORY_INITIAL );
 
@@ -3692,6 +3782,19 @@ u32 PMSI_GetCategoryCursorPos( const PMS_INPUT_WORK* wk )
 	return wk->category_pos;
 }
 
+//------------------------------------------------------------------
+/**
+	* カテゴリカーソル1文字消去を行う前の位置取得
+	*
+	* @param   wk		
+	*
+	* @retval  u32		
+	*/
+//------------------------------------------------------------------
+u32 PMSI_GetCategoryCursorPosBeforeErase( const PMS_INPUT_WORK* wk )
+{
+	return wk->category_pos_before_erase;
+}
 
 //------------------------------------------------------------------
 /**

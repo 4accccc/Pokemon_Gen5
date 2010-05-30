@@ -1896,7 +1896,8 @@ static void Cmd_EraseBlinkInCategoryInitial( GFL_TCB *tcb, void* wk_adrs )
 	case 1:
     if( PMSIV_MENU_IsFinishCategory( vwk->menu_wk, CATEGORY_DECIDE_ID_ERASE ) )
     {
-      if( *vwk->p_key_mode == GFL_APP_KTST_KEY && PMSI_GetCategoryCursorPos(vwk->main_wk) == CATEGORY_POS_ERASE )  // キー 
+      if(    *vwk->p_key_mode == GFL_APP_KTST_KEY && PMSI_GetCategoryCursorPos(vwk->main_wk) == CATEGORY_POS_ERASE
+          && PMSI_GetCategoryCursorPosBeforeErase(vwk->main_wk) == CATEGORY_POS_ERASE )  // キー 
       {
         PMSIV_MENU_TaskMenuSetActive( vwk->menu_wk, 1, TRUE );
       }

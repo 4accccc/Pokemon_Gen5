@@ -227,6 +227,7 @@ extern u32 PMSI_GetEditAreaCursorPos( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetButtonCursorPos( const PMS_INPUT_WORK* wk );
 extern BOOL PMSI_GetEditAreaOrButton( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetCategoryCursorPos( const PMS_INPUT_WORK* wk );
+extern u32 PMSI_GetCategoryCursorPosBeforeErase( const PMS_INPUT_WORK* wk );
 extern u32 PMSI_GetCategoryWordMax( const PMS_INPUT_WORK* wk );
 extern void PMSI_GetCategoryWord( const PMS_INPUT_WORK* wk, u32 word_num, STRBUF* buf );
 extern u32 PMSI_GetWordWinCursorPos( const PMS_INPUT_WORK* wk );
