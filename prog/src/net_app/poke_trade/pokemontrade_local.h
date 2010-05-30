@@ -866,7 +866,8 @@ extern void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no
 extern POKEMON_PARAM* POKEMONTRADE_CreatePokeData(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork);
-
+extern BOOL POKE_GTS_CreateCancelButton(POKEMON_TRADE_WORK* pWork);
+extern void POKE_GTS_DeleteCancelButton(POKEMON_TRADE_WORK* pWork, BOOL bar,BOOL change);
 
 
 #if _TRADE_DEBUG

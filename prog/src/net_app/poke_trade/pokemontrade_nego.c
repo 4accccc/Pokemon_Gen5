@@ -169,6 +169,47 @@ static _pokeGTSSelectNum(POKEMON_TRADE_WORK* pWork)
   return pokenum;
 }
 
+//
+//------------------------------------------------------------------------------
+/**
+ * @brief   GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+ * @param   
+ * @retval  TRUE‚ª‹A‚Á‚Ä‚«‚½‚ç ƒV[ƒPƒ“ƒX‚ði‚ß‚È‚¢
+ */
+//------------------------------------------------------------------------------
+
+BOOL POKE_GTS_CreateCancelButton(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    if(pWork->pAppWin==NULL){
+      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
+    }
+    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
+      POKEMONTRADE_CancelCall();
+      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+ * @param   
+ * @retval  void
+ */
+//------------------------------------------------------------------------------
+
+void POKE_GTS_DeleteCancelButton(POKEMON_TRADE_WORK* pWork, BOOL bar,BOOL change)
+{
+  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, bar, change);
+  }
+}
+
+
 
 //“o˜^‘O‚ÉŒÄ‚Î‚ê‚éŠÖ”‚Ìˆ×ˆêŒÂ­‚È‚¢
 BOOL POKE_GTS_IsFullMode(POKEMON_TRADE_WORK* pWork)
@@ -605,13 +646,17 @@ static void _NEGO_BackSelect8(POKEMON_TRADE_WORK* pWork)
 {
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
 
+  
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),
                                  POKETRADE_FACTOR_TIMING_A,WB_NET_TRADE_SERVICEID)){
+      POKE_GTS_CreateCancelButton(pWork);
       return;
     }
   }
   POKETRADE_MESSAGE_WindowClear(pWork);
+  POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
+  
   _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
 }
 
@@ -657,34 +702,17 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-    if(pWork->pAppWin==NULL){
-      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
-    }
-    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      POKEMONTRADE_CancelCall();
-      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
-      return;
-    }
-  }
-
   if(!CheckNegoWaitTimer(pWork)){
     return;
   }
-
-
-  
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E, WB_NET_TRADE_SERVICEID)){
+      POKE_GTS_CreateCancelButton(pWork);  //GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
       return;
     }
   }
+  POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
 
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, FALSE, FALSE);
-  }
-
-  
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_LAST) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_LAST)){
 
@@ -733,6 +761,28 @@ static void _changePokemonSendDataNetWait(POKEMON_TRADE_WORK* pWork)
 }
 
 
+static void _changePokemonSendDataOk2(POKEMON_TRADE_WORK* pWork)
+{
+  u8 cmd = POKETRADE_FACTOR_TRI_LAST;
+
+  if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
+    cmd = POKETRADE_FACTOR_EGG;
+  }
+  else if(POKEMONTRADE_IsIllegalPokemon(pWork)){
+    cmd = POKETRADE_FACTOR_ILLEGAL;
+  }
+  else if(POKEMONTRADE_IsIllegalPokemonFriend(pWork)){
+    cmd = POKETRADE_FACTOR_ILLEGAL_FRIEND;
+  }
+  else if(POKEMONTRADE_IsMailPokemon(pWork)){
+    cmd = POKETRADE_FACTOR_MAIL;
+  }
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
+    _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);
+    _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
+  }
+}
+
 static void _changePokemonSendDataOk(POKEMON_TRADE_WORK* pWork)
 {
   u8 cmd = POKETRADE_FACTOR_TRI_LAST;
@@ -742,26 +792,26 @@ static void _changePokemonSendDataOk(POKEMON_TRADE_WORK* pWork)
     _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
   }
   else{
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
-      if(POKEMONTRADE_IsEggAndLastBattlePokemonChange(pWork)){
-        cmd = POKETRADE_FACTOR_EGG;
-      }
-      else if(POKEMONTRADE_IsIllegalPokemon(pWork)){
-        cmd = POKETRADE_FACTOR_ILLEGAL;
-      }
-      else if(POKEMONTRADE_IsIllegalPokemonFriend(pWork)){
-        cmd = POKETRADE_FACTOR_ILLEGAL_FRIEND;
-      }
-      else if(POKEMONTRADE_IsMailPokemon(pWork)){
-        cmd = POKETRADE_FACTOR_MAIL;
-      }
-      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
-        _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);
-        _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
-      }
+    if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
+      POKE_GTS_CreateCancelButton(pWork);
+      return;
     }
+    POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
+    _CHANGE_STATE(pWork,_changePokemonSendDataOk2);
   }
 }
+
+
+
+static void _changePokemonSendDataNg2(POKEMON_TRADE_WORK* pWork)
+{
+  u8 cmd = POKETRADE_FACTOR_TRI_BACK;
+  if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
+    _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);
+    _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
+  }
+}
+
 
 static void _changePokemonSendDataNg(POKEMON_TRADE_WORK* pWork)
 {
@@ -769,15 +819,15 @@ static void _changePokemonSendDataNg(POKEMON_TRADE_WORK* pWork)
   if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     pWork->changeFactor[0]=cmd;
     pWork->changeFactor[1]=cmd;
-      _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
+    _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
   }
   else{
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
-      if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_CHANGEFACTOR, 1, &cmd)){
-        _rapTimingStart( GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_E ,pWork);
-        _CHANGE_STATE(pWork, _changePokemonSendDataNetWait);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
-      }
+    if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_F, WB_NET_TRADE_SERVICEID)){
+      POKE_GTS_CreateCancelButton(pWork);  //GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+      return;
     }
+    POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
+    _CHANGE_STATE(pWork, _changePokemonSendDataNg2);// ‚ ‚¢‚Ä‚à‘I‚Ô‚Ü‚Å‘Ò‚Â
   }
 }
 
@@ -840,27 +890,16 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   if(!POKETRADE_MESSAGE_EndCheck(pWork)){
     return;
   }
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-    if(pWork->pAppWin==NULL){
-      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
-    }
-    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      POKEMONTRADE_CancelCall();
-      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
-      return;
-    }
-  }
   if(!CheckNegoWaitTimer(pWork)){
     return;
   }
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_D, WB_NET_TRADE_SERVICEID)){
+      POKE_GTS_CreateCancelButton(pWork);  //GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
       return;
     }
   }
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, FALSE, FALSE);  //
-  }
+  POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
 
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_DECIDE) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_DECIDE)){
@@ -1718,39 +1757,21 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
     targetID = 1 - myID;
   }
 
-  
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-    if(pWork->pAppWin==NULL){
-      POKEMONTRADE_MESSAGE_CancelButtonStart(pWork, gtsnego_info_21);
-    }
-    if(POKEMONTRADE_MESSAGE_ButtonCheck(pWork)){
-      POKEMONTRADE_CancelCall();
-      _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
-      return;
-    }
-  }
-
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),POKETRADE_FACTOR_TIMING_B, WB_NET_TRADE_SERVICEID)){
+      POKE_GTS_CreateCancelButton(pWork);  //GTSƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
       return;
     }
   }
+  POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
   pWork->pokemonGTSStateMode = FALSE;
   pWork->pokemonGTSSeq[0]=POKEMONTORADE_SEQ_NONE;
   pWork->pokemonGTSSeq[1]=POKEMONTORADE_SEQ_NONE;
-  
-  if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
-    POKEMONTRADE_MESSAGE_CancelButtonDelete(pWork, FALSE, FALSE);  //
-  }
 
-  
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_SELECT) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_SELECT)){
 
-
-
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
-//      _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
       _CHANGE_STATE(pWork, _PokeEvilChkPre);
     }
     else{
