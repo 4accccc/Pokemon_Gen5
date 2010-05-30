@@ -312,6 +312,11 @@ VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
 	return &drawWork->rotateOfs;
 }
 
+const VecFx32 *MUS_POKE_DRAW_GetRotateOfsMcss( MUS_POKE_DRAW_WORK *drawWork )
+{
+	return MUS_MCSS_GetRotOfs( drawWork->mcss );
+}
+
 //デバッグ用
 BOOL* MUS_POKE_DRAW_GetEnableRotateOfs( MUS_POKE_DRAW_WORK *drawWork )
 {

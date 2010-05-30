@@ -76,6 +76,7 @@ struct _STA_POKE_WORK
   VecFx32         pokePos;
   VecFx32         scale;
   VecFx32         posOfs; //移動差分(アクション用に
+  VecFx32         rotOfs; //回転差分(グッズ際補正用に
   u16             rotate;
 
   STA_POKE_DIR      dir;
@@ -194,11 +195,11 @@ void  STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
     if( work->pokeWork[idx].isEnable == TRUE )
     {
       STA_POKE_UpdateItemFunc( work , &work->pokeWork[idx] );
-    }
 
-    if( work->pokeWork[idx].updateItemUseFunc != NULL )
-    {
-      work->pokeWork[idx].updateItemUseFunc( work , &work->pokeWork[idx] );
+      if( work->pokeWork[idx].updateItemUseFunc != NULL )
+      {
+        work->pokeWork[idx].updateItemUseFunc( work , &work->pokeWork[idx] );
+      }
     }
   }
   MUS_ITEM_DRAW_UpdateSystem( work->itemDrawSys ); 
@@ -216,15 +217,29 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   {
     VecFx32 musPos;
     VecFx32 musScale;
-    VecFx32 *shadowOfs; //影差分
-    shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
+    //影差分
+    VecFx32 *shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
+    //回転差分
+    VecFx32 *rotOfsTemp = MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
+    VecFx32 rotOfsBase;
     
     //ポケモンの座標
     VEC_Add( &pokeWork->pokePos , &pokeWork->posOfs , &musPos );
-    
+
+    //回転補正
+    {
+      u16 rotZ = pokeWork->rotate;
+      MtxFx33 rotWork;
+      rotOfsBase.x = 0;//rotOfsTemp->x - shadowOfs->x;
+      rotOfsBase.y = rotOfsTemp->y;
+      MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+      MTX_MultVec33( &rotOfsBase , &rotWork , &pokeWork->rotOfs );
+      VEC_Subtract( &rotOfsBase , &pokeWork->rotOfs , &pokeWork->rotOfs );
+    }
+      
     //影の座標を基準に
-    musPos.x = ACT_POS_X_FX(musPos.x - shadowOfs->x);
-    musPos.y = ACT_POS_Y_FX(musPos.y - shadowOfs->y);
+    musPos.x = ACT_POS_X_FX(musPos.x - shadowOfs->x - pokeWork->rotOfs.x );
+    musPos.y = ACT_POS_Y_FX(musPos.y - shadowOfs->y + pokeWork->rotOfs.y );
 //    musPos.z = musPos.z;
     
     MUS_POKE_DRAW_SetPosition( pokeWork->drawWork , &musPos);
@@ -294,7 +309,7 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             const BOOL flipS = ( equipData->scale.x < 0 ? TRUE : FALSE);
             const u16 rotZ = 0x10000-equipData->rot;//( flipS==TRUE ? 0x10000-equipData->rot : equipData->rot);
             u16 itemRot = (0x10000+equipData->itemRot+pokeWork->pokeEquip[ePos]->angle)%0x10000;          
-
+            VecFx32 *shadowOfs = MUS_POKE_DRAW_GetShadowOfs( pokeWork->drawWork );
             MtxFx33 rotWork;
             VecFx32 rotOfs;
             VecFx32 ofs;
@@ -312,14 +327,29 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             {
               tempScaleX = -tempScaleX;
             }
-            
             {
               MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
               VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
             }
+/*
 
-            pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x) + FX32_CONST(work->scrollOffset);
-            pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+            pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x + pokeWork->rotOfs.x - shadowOfs->x) + FX32_CONST(work->scrollOffset);
+            pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y - pokeWork->rotOfs.y);
+*/
+/*
+            if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+            {
+              VEC_Add( &pokeWork->pokePos , &pokeWork->posOfs , &pos );
+
+              pos.x += ofs.x + FX32_CONST(128.0f) + FX32_CONST(work->scrollOffset);
+              pos.y += ofs.y + FX32_CONST(96.0f);
+            }
+            else
+*/
+            {
+              pos.x = equipData->pos.x + ofs.x + FX32_CONST(128.0f) + FX32_CONST(work->scrollOffset);
+              pos.y = equipData->pos.y + ofs.y + FX32_CONST(96.0f);
+            }
             if( MUS_ITEM_DRAW_IsBackItem( pokeWork->itemWork[ePos] ) == TRUE )
             {
               //背面用アイテム

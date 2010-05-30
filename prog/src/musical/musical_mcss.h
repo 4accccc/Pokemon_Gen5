@@ -95,6 +95,7 @@ extern	void			MUS_MCSS_ResetVanishFlag( MUS_MCSS_WORK *mcss );
 
 //MCSS_WORKでデータをコピーする(前後ろ切り替え時 コピー元mcss,コピー先mcss
 extern	void			MUS_MCSS_CopyState( MUS_MCSS_WORK *srcMcss , MUS_MCSS_WORK *dstMcss );
+extern	const VecFx32 *MUS_MCSS_GetRotOfs( MUS_MCSS_WORK *mcss );
 
 #if PM_DEBUG
 extern void MUS_MCSS_SetDebugLoadFlg(  MUS_MCSS_SYS_WORK *mcss_sys , const BOOL flg );

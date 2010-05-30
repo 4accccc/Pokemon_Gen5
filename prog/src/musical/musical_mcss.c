@@ -351,26 +351,6 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
       }
       //Z値は戻す！
       pos.z = mcss->pos.z;
-
-      //前もって、不変なマルチセルデータをカレント行列にかけておく
-      G3_Translate( pos.x, pos.y, pos.z );
-      //カメラの逆行列を掛け合わせる（ビルボード処理）
-      if( mcss_sys->mcss_ortho_mode == 0 ){
-        G3_MultMtx44( &inv_camera );
-      }
-
-      G3_Translate( anim_pos.x, anim_pos.y, 0 );
-      G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ ), FX_CosIdx( anim_SRT_mc.rotZ ) );
-      G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
-      
-      //ここでアイテムデータのマルチセルofsを計算
-      {
-        const fx32 itemOfsx = anim_SRT_mc.px*FX_CosIdx(anim_SRT_mc.rotZ) - anim_SRT_mc.py*FX_SinIdx(anim_SRT_mc.rotZ);
-        const fx32 itemOfsy = anim_SRT_mc.px*FX_SinIdx(anim_SRT_mc.rotZ) + anim_SRT_mc.py*FX_CosIdx(anim_SRT_mc.rotZ);
-        itemOfsMc.x = itemOfsx * anim_SRT_mc.sx;
-        itemOfsMc.y = itemOfsy * anim_SRT_mc.sy;
-        itemOfsMc.z = 0;
-      }
       
       flipFlg = MUS_MCSS_FLIP_NONE;
       if( mcss->scale.x < 0 )
@@ -380,6 +360,30 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
       if( mcss->scale.y < 0 )
       {
         //Y反転は取りあえず保留
+      }
+
+      //前もって、不変なマルチセルデータをカレント行列にかけておく
+      G3_Translate( pos.x, pos.y, pos.z );
+      //カメラの逆行列を掛け合わせる（ビルボード処理）
+      if( mcss_sys->mcss_ortho_mode == 0 ){
+        G3_MultMtx44( &inv_camera );
+      }
+
+      G3_Translate( anim_pos.x, anim_pos.y, 0 );
+      {
+        const u16 mcRot = (flipFlg&MUS_MCSS_FLIP_X?(0x10000-anim_SRT_mc.rotZ):anim_SRT_mc.rotZ);
+        
+        G3_RotZ( -FX_SinIdx( mcRot ), FX_CosIdx( mcRot ) );
+      }
+      G3_Scale( FX_Mul( anim_SRT_mc.sx, mcss->scale.x ), FX_Mul( anim_SRT_mc.sy, mcss->scale.y ), FX32_ONE );
+      
+      //ここでアイテムデータのマルチセルofsを計算
+      {
+        const fx32 itemOfsx = anim_SRT_mc.px*FX_CosIdx(anim_SRT_mc.rotZ) - anim_SRT_mc.py*FX_SinIdx(anim_SRT_mc.rotZ);
+        const fx32 itemOfsy = anim_SRT_mc.px*FX_SinIdx(anim_SRT_mc.rotZ) + anim_SRT_mc.py*FX_CosIdx(anim_SRT_mc.rotZ);
+        itemOfsMc.x = itemOfsx * anim_SRT_mc.sx;
+        itemOfsMc.y = itemOfsy * anim_SRT_mc.sy;
+        itemOfsMc.z = 0;
       }
       
       //回転処理用のオフセットを出しておく
@@ -511,10 +515,12 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
         {
           if( ncec->musCellIdx[musCellArr] != 0xFF )
           {
-            fx32 ofsXF,ofsYF;
+            fx32 ofsXF = 0,ofsYF = 0;
             const u8 clIdx = ncec->musCellIdx[musCellArr];
             MUS_MCSS_CELL_DATA cellData;
-            const u16 rotZ = anim_SRT_mc.rotZ + anim_SRT.rotZ;
+            const u16 mcRot = anim_SRT_mc.rotZ;//(flipFlg&MUS_MCSS_FLIP_X?(0x10000-anim_SRT_mc.rotZ):anim_SRT_mc.rotZ);
+            const u16 cRot = anim_SRT.rotZ;//(flipFlg&MUS_MCSS_FLIP_X?(0x10000-anim_SRT.rotZ):anim_SRT.rotZ);
+            const u16 rotZ = mcRot + cRot;
             const s32 ofsx = mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].pHierDataArray[node].posX;
             const s32 ofsy = mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].pHierDataArray[node].posY;
             //const fx32 itemOfsx = mcss->musInfo[clIdx].ofsX*FX_CosIdx(rotZ) - mcss->musInfo[clIdx].ofsY*FX_SinIdx(rotZ);
@@ -535,8 +541,8 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
             {
               const u32 ofsX2 = ofsx + anim_SRT_mc.px;
               const u32 ofsY2 = ofsy + anim_SRT_mc.py;
-              const u32 ofsXR = ofsX2 * FX_CosIdx(anim_SRT_mc.rotZ) - ofsY2 * FX_SinIdx(anim_SRT_mc.rotZ);
-              const u32 ofsYR = ofsX2 * FX_SinIdx(anim_SRT_mc.rotZ) + ofsY2 * FX_CosIdx(anim_SRT_mc.rotZ);
+              const u32 ofsXR = ofsX2 * FX_CosIdx(mcRot) - ofsY2 * FX_SinIdx(mcRot);
+              const u32 ofsYR = ofsX2 * FX_SinIdx(mcRot) + ofsY2 * FX_CosIdx(mcRot);
               const fx32 ofsXS = FX_Mul( ofsXR , anim_SRT_mc.sx);
               const fx32 ofsYS = FX_Mul( ofsYR , anim_SRT_mc.sy);
               ofsXF += ofsXS;
@@ -652,7 +658,6 @@ static  void  MUS_MCSS_DrawAct( MUS_MCSS_WORK *mcss,
 
   G3_Translate( pos.x, pos.y, *pos_z_default );
 
-  G3_Translate( -mcss->rotOfs.x, mcss->rotOfs.y, 0 );
   G3_RotZ( -FX_SinIdx( anim_SRT_c->rotZ ), FX_CosIdx( anim_SRT_c->rotZ ) );
 
   if( isFlip == MUS_MCSS_FLIP_NONE )
@@ -1288,6 +1293,11 @@ static  void MTX_MultVec44( const VecFx32 *cp_src, const MtxFx44 *cp_m, VecFx32 
 
   *p_w  = (fx32)(((fx64)x * cp_m->_03 + (fx64)y * cp_m->_13 + (fx64)z * cp_m->_23) >> FX32_SHIFT);
     *p_w  += cp_m->_33;// W=1なので足すだけ
+}
+
+const VecFx32 *MUS_MCSS_GetRotOfs( MUS_MCSS_WORK *mcss )
+{
+  return &mcss->rotOfs;
 }
 
 #if PM_DEBUG

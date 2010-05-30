@@ -81,6 +81,7 @@ void MUS_POKE_DRAW_SetPltAddres( MUS_POKE_DRAW_SYSTEM* work , u32 adr );
 MUS_POKE_EQUIP_DATA *MUS_POKE_DRAW_GetEquipData( MUS_POKE_DRAW_WORK *drawWork , const MUS_POKE_EQUIP_POS pos );
 VecFx32 *MUS_POKE_DRAW_GetShadowOfs( MUS_POKE_DRAW_WORK *drawWork );
 VecFx32 *MUS_POKE_DRAW_GetRotateOfs( MUS_POKE_DRAW_WORK *drawWork );
+const VecFx32 *MUS_POKE_DRAW_GetRotateOfsMcss( MUS_POKE_DRAW_WORK *drawWork );
 //デバッグ用
 BOOL* MUS_POKE_DRAW_GetEnableRotateOfs( MUS_POKE_DRAW_WORK *drawWork );
 BOOL* MUS_POKE_DRAW_GetEnableShadowOfs( MUS_POKE_DRAW_WORK *drawWork );
