@@ -1311,18 +1311,16 @@ static int _playerDirectBattleStart( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_NET_IsParentMachine()){
     id = 1;
   }
-  
-  if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){
-    ///バトルボックスのみ なのですすむ
-    PokeParty_Copy(wk->bb_party, wk->pParentWork->pPokeParty[id]);
-    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
-  }
-  else if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
-    //てもちのみなのですすむ
+
+  if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )
+      && wk->bb_party == NULL){
+    //てもちが大丈夫＋バトルボックスが空の場合すすむ
     PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
   }
   else{
+    //上記以外はかならず選択肢に進む
+
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1009, FALSE);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2);
   }
@@ -1394,11 +1392,35 @@ static int _playerDirectBattleStart3( WIFIP2PMATCH_WORK *wk, int seq )
   case BMPMENULIST_CANCEL:
     return seq;
   case _TEMOTI:
-    PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
-    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
+    if(POKE_REG_OK!=_CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit )){ 
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_TEMOTI);
+
+      _pokeIconResourceDelete(wk);
+      _DeletePokeStatus(wk);
+      wk->SubListWin = _BmpWinDel(wk->SubListWin);
+      BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
+      BmpMenuWork_ListDelete( wk->submenulist );
+      return seq;
+    }
+    else{
+      PokeParty_Copy(GAMEDATA_GetMyPokemon(wk->pGameData), wk->pParentWork->pPokeParty[id]);
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
+    }
     break;
   case _BATTLEBOX:
-    {
+    if(POKE_REG_OK!=_CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit )){
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
+      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_BBOX);
+
+      _pokeIconResourceDelete(wk);
+      _DeletePokeStatus(wk);
+      wk->SubListWin = _BmpWinDel(wk->SubListWin);
+      BmpMenuList_Exit(wk->sublw, NULL, &wk->singleCur[_MENUTYPE_POKEPARTY]);
+      BmpMenuWork_ListDelete( wk->submenulist );
+      return seq;
+    }
+    else {
       PokeParty_Copy(wk->bb_party, wk->pParentWork->pPokeParty[id]);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START4);
     }
@@ -1551,12 +1573,73 @@ static int _playerDirectBattleStart7( WIFIP2PMATCH_WORK *wk, int seq )
   return SEQ_OUT;            //終了シーケンスへ
 }
 
+//------------------------------------------------------------------
+/**
+ * @brief   手持ちかバトルボックス選択後、手持ちが不正  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_TEMOTI
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _playerDirectBattleNoregSelectTemoti( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u32 fail_bit;
 
+  if(!WifiP2PMatchMessageEndCheck(wk)){
+    return seq;
+  }
 
+  if(GFL_UI_KEY_GetTrg()){
+    EndMessageWindowOff(wk);
+    _CheckRegulation_Temoti(wk->pRegulation, wk->pGameData, &fail_bit );
+    _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_TEMOTI);
 
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_WAIT);
+  }
+  return seq;
+}
 
+//------------------------------------------------------------------
+/**
+ * @brief   手持ちかバトルボックス選択後、ボックスが不正  WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_BBOX
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _playerDirectBattleNoregSelectBBox( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  u32 fail_bit;
 
+  if(!WifiP2PMatchMessageEndCheck(wk)){
+    return seq;
+  }
 
+  if(GFL_UI_KEY_GetTrg()){
+    _CheckRegulation_BBox(wk->pRegulation, wk->bb_party, &fail_bit );
+    _Menu_RegulationSetup(wk, fail_bit, wk->pParentWork->shooter , REGWIN_TYPE_NG_BBOX);
+
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_WAIT);
+  }
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   手持ちかバトルボックス選択後 不正表示待ち WIFIP2PMATCH_PLAYERDIRECT_BATTLE_NOREG_SELECT_WAIT
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _playerDirectBattleNoregSelectWait( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if(GFL_UI_KEY_GetTrg()){
+    _Menu_RegulationDelete(wk);
+
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1009, FALSE);
+    _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_START2);
+  }
+
+  return seq;
+}
 
 //------------------------------------------------------------------
 /**
