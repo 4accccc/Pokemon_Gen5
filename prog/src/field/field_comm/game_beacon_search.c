@@ -86,7 +86,7 @@ static void GameBeacon_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWork)
 static void GameBeacon_DisconnectCallBack(void* pWork);
 static const GBS_BEACON * GameBeacon_CompareBeacon( const GBS_BEACON *beacon_a , const GBS_BEACON *beacon_b );
 static void GameBeacon_SetBeaconParam(GBS_BEACON *beacon, GAMEDATA *gamedata);
-static void GameBeacon_ExitCallback_toInvasion(void *pWork);
+static void GameBeacon_ExitCallback_toInvasion(void *pWork, BOOL exit_pileup);
 
 
 //==============================================================================
@@ -617,10 +617,11 @@ void GameBeacon_SetErrorWait(GAME_BEACON_SYS_PTR gbs)
 /**
  * GameComm終了コールバック：侵入通信を起動
  *
- * @param   pWork		GAMESYS_WORK
+ * @param   pWork		      GAMESYS_WORK
+ * @param   exit_pileup   TRUE:多重に終了リクエストが発生している
  */
 //--------------------------------------------------------------
-static void GameBeacon_ExitCallback_toInvasion(void *pWork)
+static void GameBeacon_ExitCallback_toInvasion(void *pWork, BOOL exit_pileup)
 {
   EXITCALLBACK_WORK *exw = pWork;
   GAMESYS_WORK *gsys;
@@ -635,7 +636,9 @@ static void GameBeacon_ExitCallback_toInvasion(void *pWork)
   GFL_HEAP_FreeMemory(exw);
   exw = NULL;
   
-  if(GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE 
+  //多重に終了リクエストがかかっている場合は外部から通信終了をさせようとしている人がいるので
+  //侵入を立ち上げずに終わる
+  if(exit_pileup == FALSE && GAMESYSTEM_CommBootAlways_Check(gsys) == TRUE 
       && GameCommSys_GetPalaceNotConnectFlag(gcsp) == FALSE){
     if(GFL_NET_IsInit() == FALSE && GameCommSys_BootCheck(gcsp) == GAME_COMM_NO_NULL){
       FIELD_INVALID_PARENT_WORK *invalid_parent;

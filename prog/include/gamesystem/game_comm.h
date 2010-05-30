@@ -92,7 +92,7 @@ typedef enum{
 typedef struct _GAME_COMM_SYS * GAME_COMM_SYS_PTR;
 
 ///ExitCallback‚ÌŒ^
-typedef void (*GAMECOMM_EXITCALLBACK_FUNC)(void*);
+typedef void (*GAMECOMM_EXITCALLBACK_FUNC)(void*, BOOL);
 
 
 //==============================================================================

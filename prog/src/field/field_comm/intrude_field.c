@@ -125,7 +125,7 @@ static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork
 static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
 static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk );
-static void _ExitCallback_toInvasion(void *pWork);
+static void _ExitCallback_toInvasion(void *pWork, BOOL exit_pileup);
 static void _InvasionCommBoot(GAMESYS_WORK *gsys);
 static GMEVENT_RESULT EventMissionTargetWarp(GMEVENT * event, int *seq, void*work);
 
@@ -1200,12 +1200,15 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
  * 常時通信終了コールバック：侵入通信を起動
  *
  * @param   pWork		GAMESYS_WORK
+ * @param   exit_pileup   TRUE:多重に終了リクエストが発生している
  */
 //--------------------------------------------------------------
-static void _ExitCallback_toInvasion(void *pWork)
+static void _ExitCallback_toInvasion(void *pWork, BOOL exit_pileup)
 {
   GAMESYS_WORK *gsys = pWork;
-  _InvasionCommBoot(gsys);
+  if(exit_pileup == FALSE){
+    _InvasionCommBoot(gsys);
+  }
 }
 
 //--------------------------------------------------------------

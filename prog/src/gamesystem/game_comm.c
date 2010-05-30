@@ -95,9 +95,11 @@ typedef struct{
 
 ///ゲーム通信管理ワーク構造体
 typedef struct _GAME_COMM_SYS{
-  GAMEDATA *gamedata;                 ///<ゲームデータへのポインタ
-  u8 exit_reserve;                      ///<終了予約
-  u8 palace_not_connect;              ///<TRUE:パレスに接続しない
+  GAMEDATA *gamedata;                   ///<ゲームデータへのポインタ
+  u8 exit_reserve:1;                    ///<終了予約
+  u8 exit_pileup:1;                     ///<TRUE:多重に終了リクエストがかかっている
+  u8 palace_not_connect:1;              ///<TRUE:パレスに接続しない
+  u8          :5;
   GAME_COMM_NO game_comm_no;
   GAME_COMM_NO last_comm_no;            ///<最後に実行していたGAME_COMM_NO
   GAME_COMM_LAST_STATUS last_status;    ///<最後に実行していたGAME_COMM_NOの終了状態
@@ -328,10 +330,12 @@ void GameCommSys_Main(GAME_COMM_SYS_PTR gcsp)
     {//終了コールバック
       GAMECOMM_EXITCALLBACK_FUNC exit_callback = gcsp->exitcallback_func;
       void *exit_parentwork = gcsp->exitcallback_parentwork;
+      BOOL exit_pileup = gcsp->exit_pileup;
       gcsp->exitcallback_func = NULL;
       gcsp->exitcallback_parentwork = NULL;
+      gcsp->exit_pileup = FALSE;
       if(exit_callback != NULL){
-        exit_callback(exit_parentwork);
+        exit_callback(exit_parentwork, exit_pileup);
       }
     }
     break;
@@ -391,6 +395,7 @@ void GameCommSys_Boot(GAME_COMM_SYS_PTR gcsp, GAME_COMM_NO game_comm_no, void *p
   gcsp->parent_work = parent_work;
   gcsp->exitcallback_func = NULL;
   gcsp->exitcallback_parentwork = NULL;
+  gcsp->exit_pileup = FALSE;
   GFL_STD_MemClear(&gcsp->sub_work, sizeof(GAME_COMM_SUB_WORK));
   GameCommStatus_InitPlayerStatus(gcsp);
 }
@@ -436,6 +441,7 @@ void GameCommSys_ExitReqCallback(GAME_COMM_SYS_PTR gcsp, GAMECOMM_EXITCALLBACK_F
   }
   else{
     OS_TPrintf("既に終了リクエストが発生している\n");
+    gcsp->exit_pileup = TRUE;
     //どちらもコールバックが設定されている場合は危険な為ASSERTにする
     if(gcsp->exitcallback_func != NULL && callback_func != NULL){
       GF_ASSERT(0);
