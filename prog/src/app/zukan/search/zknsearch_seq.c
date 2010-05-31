@@ -486,6 +486,7 @@ static int MainSeq_ResetSort( ZKNSEARCHMAIN_WORK * wk )
 {
 	ZKNCOMM_ResetSortData( wk->dat->savedata, wk->dat->sort );
 	ZKNSEARCHBMP_PutMainPage( wk );
+	ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_FORM_LABEL, FALSE );
 	return MAINSEQ_MAIN_MENU;
 }
 
