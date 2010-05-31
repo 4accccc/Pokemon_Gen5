@@ -804,7 +804,9 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Warp( GMEVENT* event, int* seq, void*
     { 
       FIELD_TASK_MAN* man;
       man = FIELDMAP_GetTaskManager( fieldmap );
-      if( FIELD_TASK_MAN_IsAllTaskEnd(man) ) { (*seq)++; }
+      if( FIELD_TASK_MAN_IsAllTaskEnd(man) && !GFL_FADE_CheckFade() ) { 
+        (*seq)++; 
+      }
     }
     break;
   case 2:
