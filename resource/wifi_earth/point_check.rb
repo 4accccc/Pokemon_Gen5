@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 #===================================================================
 #
-# @brief  wifi_earch 頂点チェックツール
+# @brief  wifi_earch 座標チェックツール
 #
 # @data   10.05.28
 # @author genya_hosaka
@@ -73,6 +73,8 @@ File.open( FILE_WORLD, "r" ){|f|
 
 puts pos
 
+puts "一致したのは↓"
+
 #配列コピー
 pos2 = pos.dup
 
@@ -98,5 +100,5 @@ pos.each{ |elem|
   }
 }
 
-puts "一致チェック終了！"
+puts "↑以上。一致チェック終了！"
 
