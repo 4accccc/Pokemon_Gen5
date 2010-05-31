@@ -343,8 +343,10 @@ typedef struct{
 ///ユニオンで送受信するビーコンデータ
 typedef struct{
   u8 connect_mac_address[6];  ///<接続したい人へのMacAddress
-  u8 connect_num:4;           ///<現在の接続人数
+  u8 connect_num:3;           ///<現在の接続人数
+  u8 entry_ng:1;              ///<乱入を締め切っている
   u8 trainer_view:4;          ///<トレーナータイプ(ユニオンルーム内での見た目)
+  
   u8 chat_type:3;             ///<UNION_CHAT_TYPE_xxx
   u8 sex:1;                   ///<性別
   u8 data_valid:1;            ///<UNION_BEACON_VALID:このビーコンデータは有効なものである

@@ -778,6 +778,13 @@ static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beac
     WifiList_GetMyFriendData( wifilist, &beacon->dwcfriend );
   }
   
+  if(unisys->alloc.uniapp != NULL){
+    beacon->entry_ng = UnionAppSystem_GetEntryNGFlag(unisys->alloc.uniapp);
+  }
+  else{
+    beacon->entry_ng = FALSE;
+  }
+  
   //送信データ完成
   beacon->data_valid = UNION_BEACON_VALID;
   unisys->send_beacon_update = TRUE;

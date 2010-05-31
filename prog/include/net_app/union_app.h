@@ -84,6 +84,7 @@ extern void UnionAppSystem_SetIntrudeReady(UNION_APP_PTR uniapp, NetID net_id);
 extern void UnionAppSystem_SetLeaveChild(UNION_APP_PTR uniapp, NetID net_id);
 extern u32 UnionAppSystem_GetBasicSize(void);
 extern void UnionAppSystem_IntrudeReadySetup(UNION_APP_PTR uniapp);
+extern BOOL UnionAppSystem_GetEntryNGFlag(UNION_APP_PTR uniapp);
 
 
 //--------------------------------------------------------------

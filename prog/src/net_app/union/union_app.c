@@ -485,6 +485,35 @@ void UnionAppSystem_IntrudeReadySetup(UNION_APP_PTR uniapp)
   uniapp->basic_status.member_bit |= 1 << GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 }
 
+//==================================================================
+/**
+ * —“ü‹ÖŽ~ó‘Ô‚Ìƒtƒ‰ƒO‚ðŽæ“¾‚·‚é
+ *
+ * @param   uniapp		
+ *
+ * @retval  BOOL		TRUE:—“ü‹ÖŽ~‚Å‚ ‚é@FALSE:—“üOK
+ */
+//==================================================================
+BOOL UnionAppSystem_GetEntryNGFlag(UNION_APP_PTR uniapp)
+{
+  if(uniapp == NULL){
+    return FALSE;
+  }
+  
+  switch(uniapp->entry_block){
+  case _ENTRY_TYPE_OK:
+    return FALSE;
+  case _ENTRY_TYPE_NG:
+    return TRUE;
+  case _ENTRY_TYPE_NUM:
+    if(uniapp->intrude_capacity_count < uniapp->intrude_capacity_max){
+      return FALSE;
+    }
+    return TRUE;
+  }
+  
+  return FALSE;
+}
 
 
 //==============================================================================

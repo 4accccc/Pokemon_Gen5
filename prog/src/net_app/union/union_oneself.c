@@ -2148,7 +2148,8 @@ static BOOL OneselfSeq_TalkPlayGameUpdate_Parent(UNION_SYSTEM_PTR unisys, UNION_
       }
       break;
     case UNION_PLAY_CATEGORY_GURUGURU:  //‚®‚é‚®‚éŒðŠ·
-      if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)){
+      if(unisys->receive_beacon[buf_no].beacon.connect_num < UnionMsg_GetMemberMax(play_category)
+          && unisys->receive_beacon[buf_no].beacon.entry_ng == FALSE){
         UnionMsg_TalkStream_PrintPack(unisys, fieldWork, 
           UnionMsg_GetMsgID_GurugurIntrude(situ->mycomm.talk_pc->beacon.sex));
         (*seq) = LOCALSEQ_MINIGAME_YESNO_SETUP;
