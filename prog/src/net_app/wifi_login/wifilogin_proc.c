@@ -630,7 +630,6 @@ static void _modeProfileWait2(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork,_connectionStart);
     }
     else{
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
       _CHANGE_STATE(pWork,_callbackFunciton);
     }
@@ -662,7 +661,6 @@ static void _modeLoginWait2(WIFILOGIN_WORK* pWork)
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-//      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
@@ -787,7 +785,6 @@ static void _modeDifferDSWait7(WIFILOGIN_WORK* pWork)
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,_callbackFunciton);
     }
     WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
@@ -844,7 +841,6 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
     }
     else{
       pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-      GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
       _CHANGE_STATE(pWork,_callbackFunciton);
     }
   }
