@@ -219,6 +219,8 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     SEQ_RECV_WAIT,
     SEQ_BATTLE_START_WAIT,
     SEQ_BATTLE_START_TIMING_WAIT,
+    SEQ_BATTLE_START_LAST_TIMING,
+    SEQ_BATTLE_START_LAST_TIMING_WAIT,
     SEQ_BATTLE_COMMON_EVENT,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
@@ -307,8 +309,7 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_BATTLE_START_TIMING_WAIT:
     if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
-      IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-      (*seq) = SEQ_BATTLE_COMMON_EVENT;
+      (*seq) = SEQ_BATTLE_START_LAST_TIMING;
     }
     else{ //同期待ちBキャンセル
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
@@ -318,6 +319,22 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
           *seq = SEQ_TALK_CANCEL;
         }
       }
+    }
+    break;
+  case SEQ_BATTLE_START_LAST_TIMING:    //キャンセルできない状態でもう一度同期
+    if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_BATTLE_START_LAST_TIMING_WAIT:
+    if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST, talk->ccew.talk_netid) == TRUE){
+      IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
+      (*seq) = SEQ_BATTLE_COMMON_EVENT;
+    }
+    else if(Intrude_GetTalkAnswer(intcomm) == INTRUDE_TALK_STATUS_CANCEL){
+      //相手からキャンセルが届いている
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
+      *seq = SEQ_LAST_MSG_WAIT;
     }
     break;
 
@@ -426,6 +443,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     SEQ_BATTLE_YES_MSG,
     SEQ_BATTLE_YES_WAIT,
     SEQ_BATTLE_START_TIMING_WAIT,
+    SEQ_BATTLE_START_LAST_TIMING,
+    SEQ_BATTLE_START_LAST_TIMING_WAIT,
     SEQ_BATTLE_COMMON_EVENT,
     SEQ_BATTLE_AFTER_NEXT,
     SEQ_BATTLE_NG,
@@ -510,8 +529,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_BATTLE_START_TIMING_WAIT:
     if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
-      IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
-      (*seq)++;
+      (*seq) = SEQ_BATTLE_START_LAST_TIMING;
     }
     else{ //同期待ちBキャンセル
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
@@ -522,6 +540,27 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
           GameCommSys_ExitReq(game_comm);
         }
       }
+      else if(Intrude_GetTalkAnswer(intcomm) == INTRUDE_TALK_STATUS_CANCEL){
+        //相手からキャンセルが届いている
+        IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
+        *seq = SEQ_LAST_MSG_WAIT;
+      }
+    }
+    break;
+  case SEQ_BATTLE_START_LAST_TIMING:    //キャンセルできない状態でもう一度同期
+    if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_BATTLE_START_LAST_TIMING_WAIT:
+    if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST, talk->ccew.talk_netid) == TRUE){
+      IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
+      (*seq) = SEQ_BATTLE_COMMON_EVENT;
+    }
+    else if(Intrude_GetTalkAnswer(intcomm) == INTRUDE_TALK_STATUS_CANCEL){
+      //相手からキャンセルが届いている
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
+      *seq = SEQ_LAST_MSG_WAIT;
     }
     break;
 

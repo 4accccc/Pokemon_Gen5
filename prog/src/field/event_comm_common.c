@@ -523,6 +523,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
       FIRST_TALK_RET first_ret = EVENT_INTRUDE_FirstTalkSeq(intcomm, &talk->ccew, &talk->first_talk_seq);
       switch(first_ret){
       case FIRST_TALK_RET_OK:
+        Intrude_ClearTalkAnswer(intcomm);
         *seq = SEQ_TALK_OK;
         break;
       case FIRST_TALK_RET_NG:
@@ -587,6 +588,7 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 
 	switch( *seq ){
 	case SEQ_INIT:
+    Intrude_ClearTalkAnswer(intcomm);
     MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( talk->ccew.fieldWork ) );
 	  *seq = SEQ_SEND_ANSWER;
 	  break;
