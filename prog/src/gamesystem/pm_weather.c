@@ -16,6 +16,7 @@
 #include "system/ds_system.h"
 
 #include "gamesystem/pm_weather.h"
+#include "gamesystem/pm_season.h"
 
 #include "field/move_pokemon.h"
 #include "field/calender.h"
@@ -54,6 +55,7 @@
  *					プロトタイプ宣言
 */
 //-----------------------------------------------------------------------------
+static BOOL CheckGameDataHaveRTCSeasonID( const GAMEDATA* p_gamedata );
 static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const GAMEDATA* cp_data, int zone_id );
 static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
@@ -101,10 +103,35 @@ u8 PM_WEATHER_GetZoneWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_id )
     return weather;
   }
 
+  if( CheckGameDataHaveRTCSeasonID( p_data ) ) {
+    // カレンダーを参照して天気を取得する.
+    // (カレンダーに登録されていないゾーンの天気は, ゾーンテーブルに従う.)
+    return CALENDER_GetWeather_today( calender, zone_id );
+  }
+  else {
+    // ゲームデータの季節とRTCの季節に整合性がない場合, ゾーンテーブルに従う
+    return ZONEDATA_GetWeatherID( zone_id );
+  } 
+}
 
-  // カレンダーを参照して天気を取得する.
-  // (カレンダーに登録されていないゾーンの天気は, ゾーンテーブルに従う.)
-	return CALENDER_GetWeather_today( calender, zone_id );
+//----------------------------------------------------------------------------
+/**
+ * @brief ゲーム内季節とRTCから算出した季節が等しいかどうか？
+ *
+ * @param p_gamesystem
+ */
+//----------------------------------------------------------------------------
+static BOOL CheckGameDataHaveRTCSeasonID( const GAMEDATA* p_gamedata )
+{
+  u8 gamedata_season = GAMEDATA_GetSeasonID( p_gamedata );
+  u8 rtc_season = PMSEASON_GetRealTimeSeasonID();
+
+  if( gamedata_season == rtc_season ) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
 }
 
 
