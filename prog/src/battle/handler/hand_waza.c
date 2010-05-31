@@ -9514,8 +9514,8 @@ static void handler_TomoeNage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Utiotosu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,  handler_Utiotosu               },   // ダメージ直後
-    { BTL_EVENT_CHECK_POKE_HIDE,    handler_Kaminari_checkHide     },  // 消えポケヒットチェック
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_Utiotosu               },  // ダメージ直後
+    { BTL_EVENT_CHECK_POKE_HIDE,         handler_Kaminari_checkHide     },  // 消えポケヒットチェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9525,7 +9525,7 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     u8 msgFlag = FALSE;
 
     if( BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID) )
