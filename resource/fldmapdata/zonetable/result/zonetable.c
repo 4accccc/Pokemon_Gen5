@@ -8108,7 +8108,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_D13,
 		MAPNAME_D13,
 		1,
-		WEATHER_NO_SUNNY,
+		WEATHER_NO_MIST,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -10386,7 +10386,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_PLR06,
 		MAPNAME_P_R6,
 		1,
-		WEATHER_NO_RAIN,
+		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
@@ -11270,7 +11270,7 @@ static const ZONEDATA ZoneData[] = {
     ZONE_ID_R06,
 		MAPNAME_R6,
 		1,
-		WEATHER_NO_RAIN,
+		WEATHER_NO_SUNNY,
     TRUE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
