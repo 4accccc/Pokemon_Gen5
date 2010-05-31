@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-28T12:55:04"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T18:17:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -264,14 +264,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1241" top="228" right="1741" bottom="837" maximized="no" rayout="Vertical2">
+	<dialog left="1635" top="210" right="2430" bottom="819" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="15" top="568" right="488" bottom="966" visible="yes"/>
-		<band id="0" index="1" style="0000" width="492"/>
+		<band id="0" index="1" style="0000" width="620"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="492"/>
-		<band id="4" index="0" style="0000" width="591"/>
+		<band id="3" index="4" style="0000" width="460"/>
+		<band id="4" index="0" style="0000" width="787"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1641,12 +1641,12 @@
 	<row id="wc10_25_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">VETERANM
 ケン</attribute>
-		<language name="JPN" width="256">ひろい　考えを　もつことで
+		<language name="JPN" width="256">ひろい　かんがえを　もつことで
 しぜんと　じぶん▽
 じぶんと　ポケモン▽
 いろんなことに　きづかされるよ▼
 さっき　そこで　ニドラン♂を
-みたとき　そう思ったんだ</language>
+みたとき　そう　おもったんだ</language>
 		<language name="JPN_KANJI" width="256">広い　考えを　持つことで
 自然と　自分▽
 自分と　ポケモン▽

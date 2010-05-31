@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-05-28T17:45:39"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T18:12:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -750,7 +750,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">めずらしかった？
 わたしの　ポケモン！▼
-中でも　ミノマダムは
+なかでも　ミノマダムは
 わたしの　おきにいりなの！</language>
 		<language name="JPN_KANJI" width="256">珍しかった？
 わたしの　ポケモン！▼
