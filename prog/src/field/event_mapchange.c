@@ -868,6 +868,10 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
   switch( *seq )
   {
   case MAPCORE_SEQ_FIELD_CLOSE:
+    {
+      FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gameData );
+      FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_MAPCHG );
+    }
     //フィールドマップを終了待ち
     GMEVENT_CallEvent( event, EVENT_FieldClose_FieldProcOnly(gameSystem, fieldmap) );
     (*seq)++;

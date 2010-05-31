@@ -39,6 +39,7 @@ typedef enum{
 typedef enum{
   PROC_ACTION_FIELD,    ///<フィールド中
   PROC_ACTION_BATTLE,   ///<戦闘中
+  PROC_ACTION_MAPCHG,   ///<マップ遷移中
 }PROC_ACTION;
 
 //======================================================================

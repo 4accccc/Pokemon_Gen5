@@ -1051,6 +1051,12 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   }
 #endif
 
+  if ( GAMESYSTEM_GetEvent( fieldWork->gsys ) == NULL )
+  { //イベントがない状態の時==通常フィールド状態
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( fieldWork->gamedata );
+    FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_FIELD );
+  }
+
   if (GAMEDATA_GetIsSave( fieldWork->gamedata )) return MAINSEQ_RESULT_CONTINUE;
 
   if (fieldWork->MainHookFlg)
