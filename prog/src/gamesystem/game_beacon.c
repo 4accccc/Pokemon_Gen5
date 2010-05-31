@@ -252,9 +252,6 @@ static void BeaconInfo_Set(GAMEBEACON_SYSTEM *bsys, const GAMEBEACON_INFO *info)
       if(search_question_id != INVESTIGATING_QUESTION_NULL){
         if(search_question_id == QUESTION_ID_PLAY_TIME){
           answer = info->play_hour / 10;
-          if(info->play_hour % 10 == 0 && info->play_min > 0){
-            answer++;
-          }
           answer++; //0‚Í–³‰ñ“š‚È‚Ì‚Å1ƒCƒ“ƒNƒŠƒƒ“ƒg
           if(answer > GetAnswerNum_byQuestionID(search_question_id)){
             answer = GetAnswerNum_byQuestionID(search_question_id);
