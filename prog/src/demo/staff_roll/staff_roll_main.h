@@ -16,8 +16,8 @@
 
 
 //============================================================================================
+//	定数定義
 //============================================================================================
-#define	SRMAIN_DRAW_3D		// 定義を有効にすると３Ｄが有効になります
 
 #define	SRMAIN_CAMERA_REQ_MAX		( 16 )
 
@@ -56,21 +56,6 @@ typedef struct {
 	u16	cnt;
 }SR3DCAMERA_REQ_PARAM;
 
-/*
-typedef struct {
-	const SR3DCAMERA_PARAM * tbl;		// 座標テーブル
-	SR3DCAMERA_PARAM	param;				// 移動先
-	SR3DCAMERA_PARAM	val;					// 移動値
-
-	u16	tblMax;		// テーブル数
-	u16	pos;
-
-	u16	cnt;
-	u16	cntMax;
-
-	BOOL	flg;
-}SR3DCAMERA_MOVE;
-*/
 
 typedef struct {
 	const SR3DCAMERA_PARAM * tbl;		// 座標テーブル
@@ -93,18 +78,7 @@ typedef struct {
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
 
-/*
-	// OBJ
-	GFL_CLUNIT * clunit;
-	GFL_CLWK * clwk;
-	u32	chrRes;
-	u32	palRes;
-	u32	celRes;
-*/
-
-#ifdef	SRMAIN_DRAW_3D
 	GFL_G3D_UTIL * g3d_util;
-//	GFL_G3D_SCENE * g3d_scene;
 	GFL_G3D_CAMERA * g3d_camera;
 	GFL_G3D_LIGHTSET * g3d_light;
 	u32	g3d_obj_id;
@@ -113,18 +87,12 @@ typedef struct {
 
 	SR3DCAMERA_MOVE	cameraMove;
 
-#endif	// SRMAIN_DRAW_3D
-
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント
 	GFL_MSGDATA * mman;									// メッセージデータマネージャ
-//	WORDSET * wset;											// 単語セット
 	STRBUF * exp;												// メッセージ展開領域
-//	PRINT_QUE * que;										// プリントキュー
 
 	PRINT_UTIL	util[2];			// BMPWIN
-//	u8	vBmp[0x20*32*32*2];		// 仮想ＢＭＰ
 	u8	bmpTransFlag;
-//	u8	bmpShitfFlag;
 
 	u8	labelType;
 	u8	labelSeq;
@@ -163,6 +131,17 @@ typedef int (*pSRMAIN_FUNC)(SRMAIN_WORK*);
 
 
 //============================================================================================
+//	プロトタイプ宣言
 //============================================================================================
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		メインシーケンス
+ *
+ * @param		wk		ワーク
+ *
+ * @retval	"TRUE = 処理中"
+ * @retval	"FALSE = それ以外"
+ */
+//--------------------------------------------------------------------------------------------
 extern BOOL SRMAIN_Main( SRMAIN_WORK * wk );
