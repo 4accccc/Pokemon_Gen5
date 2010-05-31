@@ -78,23 +78,23 @@ static void BmpWinInit(OEKAKI_WORK *wk, GFL_PROC* proc);
 static void BmpWinDelete( OEKAKI_WORK *wk );
 static void SetCursor_Pos( GFL_CLWK *act, int x, int y );
 static void NormalTouchFunc(OEKAKI_WORK *wk);
-static int Oekaki_MainNormal( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_MainNormal( OEKAKI_WORK *wk, int seq );
 static void EndSequenceCommonFunc( OEKAKI_WORK *wk );
-static int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndSelectAnswerWait( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndSelectAnswerNG( OEKAKI_WORK *wk, int seq );
-static int  Oekaki_EndChild( OEKAKI_WORK *wk, int seq );
-static int  Oekaki_EndChildWait( OEKAKI_WORK *wk, int seq );
-static int  Oekaki_EndChildWait2( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq );
-static int Oekaki_ForceEnd( OEKAKI_WORK *wk, int seq );
-static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq );
-static int Oekaki_ForceEndSynchronize( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndParentOnly( OEKAKI_WORK *wk, int seq );
-static int Oekaki_EndParentOnlyWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectAnswerWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectAnswerNG( OEKAKI_WORK *wk, int seq );
+static  int  Oekaki_EndChild( OEKAKI_WORK *wk, int seq );
+static  int  Oekaki_EndChildWait( OEKAKI_WORK *wk, int seq );
+static  int  Oekaki_EndChildWait2( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_ForceEnd( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_ForceEndSynchronize( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndParentOnly( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndParentOnlyWait( OEKAKI_WORK *wk, int seq );
 static void DrawPoint_to_Line(  GFL_BMPWIN *win,   const u8 *brush,  int px, int py, int *sx, int *sy,   int count, int flag );
 static void Stock_OldTouch( TOUCH_INFO *all, OLD_TOUCH_INFO *stock );
 static void DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, OLD_TOUCH_INFO *old, int draw );
@@ -102,41 +102,42 @@ static void MoveCommCursor( OEKAKI_WORK *wk );
 static void DebugTouchDataTrans( OEKAKI_WORK *wk );
 static void CursorColTrans(u16 *CursorCol);
 static void NameCheckPrint( GFL_BMPWIN *win[], PRINTSYS_LSB color, OEKAKI_WORK *wk );
-static int ConnectCheck( OEKAKI_WORK *wk );
+static  int ConnectCheck( OEKAKI_WORK *wk );
 static void LineDataSendRecv( OEKAKI_WORK *wk );
-static int MyStatusCheck( OEKAKI_WORK *wk );
+static  int MyStatusCheck( OEKAKI_WORK *wk );
 static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait );
-static int EndMessageWait( PRINT_STREAM *stream );
+static  int EndMessageWait( PRINT_STREAM *stream );
 static void EndMessageWindowOff( OEKAKI_WORK *wk );
-static int OnlyParentCheck( OEKAKI_WORK *wk );
-static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq );
-static int Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq );
-static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq );
-static int MyStatusGetNum( OEKAKI_WORK *wk );
-static int Oekaki_NewMemberWait( OEKAKI_WORK *wk, int seq );
-static int Oekaki_NewMember( OEKAKI_WORK *wk, int seq );
-static int Oekaki_NewMemberEnd( OEKAKI_WORK *wk, int seq );
+static  int OnlyParentCheck( OEKAKI_WORK *wk );
+static  int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq );
+static  int MyStatusGetNum( OEKAKI_WORK *wk );
+static  int Oekaki_NewMemberWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_NewMember( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_NewMemberEnd( OEKAKI_WORK *wk, int seq );
 static void PalButtonAppearChange( GFL_CLWK *act[], int no);
 static void EndButtonAppearChange( GFL_CLWK *act, BOOL flag );
 static void _BmpWinPrint_Rap(
-      GFL_BMPWIN * win, void * src,
-      int src_x, int src_y, int src_dx, int src_dy,
-      int win_x, int win_y, int win_dx, int win_dy );
+             GFL_BMPWIN * win, void * src,
+             int src_x, int src_y, int src_dx, int src_dy,
+             int win_x, int win_y, int win_dx, int win_dy );
 static void ChangeConnectMax( OEKAKI_WORK *wk, int plus );
-static int ConnectNumControl( OEKAKI_WORK *wk );
-static int Oekaki_ForceEndWaitNop( OEKAKI_WORK *wk, int seq );
+static  int ConnectNumControl( OEKAKI_WORK *wk );
+static  int Oekaki_ForceEndWaitNop( OEKAKI_WORK *wk, int seq );
 static void SetNextSequence( OEKAKI_WORK *wk, int nextSequence );
 static void OekakiSequenceControl( OEKAKI_WORK *wk, int proc_seq );
 
-static int FakeEndYesNoSelect( OEKAKI_WORK  *wk );
+static  int FakeEndYesNoSelect( OEKAKI_WORK  *wk );
 static void SetTouchpanelData( TOUCH_INFO *touchResult, TP_ONE_DATA *tpData, int brush_color, int brush );
-static int _get_connect_bit( OEKAKI_WORK *wk );
-static int _get_connect_num( OEKAKI_WORK *wk );
+static  int _get_connect_bit( OEKAKI_WORK *wk );
+static  int _get_connect_num( OEKAKI_WORK *wk );
 static void _disp_on( void );
 static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork);
 static void OEKAKI_leave_callback(NetID net_id, const MYSTATUS *mystatus, void *userwork);
 static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk );
-static u32 YesNoMenuMain( OEKAKI_WORK *wk );
+static  u32 YesNoMenuMain( OEKAKI_WORK *wk );
+static void YesNoMenuDelete( OEKAKI_WORK *wk );
 static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
 static void _comm_friend_add( OEKAKI_WORK *wk );
 
@@ -196,9 +197,16 @@ const GFL_PROC_DATA OekakiProcData = {
 //----------------------------------------------------------------------------------
 static void CommStateSetLimitNum( OEKAKI_WORK *wk, int num )
 {
-  Union_App_Parent_EntryBlockNum( wk->param->uniapp, num );
-  OS_Printf("接続人数を%d人に変更\n", num);
+//  Union_App_Parent_EntryBlockNum( wk->param->uniapp, num );
+//  OS_Printf("接続人数を%d人に変更\n", num);
 }
+
+static void ConnectLimitSet( OEKAKI_WORK *wk, int num)
+{
+  Union_App_Parent_EntryBlockNum( wk->param->uniapp, num );
+  OS_Printf("乱入人数を%d人に設定\n", num);
+}
+
 
 //============================================================================================
 //  プロセス関数
@@ -291,11 +299,6 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     // 接続している反対側のIDのメンバーを通信友達登録
     _comm_friend_add(wk);
 
-    // 3台まで接続可能に書き換え(開始した時は２人でここにくるのであと一人だけ入れるようにしておく）
-    if(GFL_NET_SystemGetCurrentID()==0){
-          CommStateSetLimitNum(wk, 3);
-    }
-
     //無線アイコン表示
     GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_OEKAKI );
 
@@ -344,10 +347,16 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
     // ワイプ処理待ち
     if( WIPE_SYS_EndCheck() ){
       // 乱入OK状態にする
-      Union_App_Parent_ResetEntryBlock( wk->param->uniapp );
+//      Union_App_Parent_ResetEntryBlock( wk->param->uniapp );
 
       // 乱入・退出コールバック登録
       Union_App_SetCallback( wk->param->uniapp, OEKAKI_entry_callback, OEKAKI_leave_callback, wk);
+      // 1人まで乱入可能の設定に(開始した時は２人でここにくるのであと一人だけ入れるようにしておく）
+      if(GFL_NET_SystemGetCurrentID()==0){
+//        CommStateSetLimitNum(wk, 1);
+        ConnectLimitSet(wk,1);
+      }
+
 #if 0
       // 自分が子機で接続台数が２台以上だった場合はもう絵が描かれている
       if(GFL_NET_SystemGetCurrentID()!=0){
@@ -476,6 +485,11 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
     //OAMレンダラー破棄
     GFL_CLACT_SYS_Delete();
     
+    // はい・いいえが残っている時用の解放処理
+    if(wk->app_menuwork){
+      YesNoMenuDelete( wk );
+    }
+    
     // BMPウィンドウ開放
     BmpWinDelete( wk );
 
@@ -521,7 +535,6 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
 
     GFL_HEAP_DeleteHeap( HEAPID_OEKAKI );
 
-    CommStateSetLimitNum(wk,2);
 
     return GFL_PROC_RES_FINISH;
   }
@@ -1701,6 +1714,7 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
     // 親機は接続拒否を解除
     if(GFL_NET_SystemGetCurrentID()==0){
       CommStateSetLimitNum(wk, _get_connect_num(wk)+1);
+      ConnectLimitSet(wk,1);
       wk->banFlag = OEKAKI_BAN_OFF;
     }
 
@@ -1939,6 +1953,7 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
     if(GFL_NET_SystemGetCurrentID()==0){
 //      CommStateSetEntryChildEnable(TRUE);
       CommStateSetLimitNum( wk, _get_connect_num(wk)+1);
+      ConnectLimitSet(wk,1);
       wk->banFlag = OEKAKI_BAN_OFF;
     }
     break;
@@ -2814,7 +2829,7 @@ static int MyStatusGetNum( OEKAKI_WORK *wk )
 /**
  * @brief   MYSTATUSの取得状況に変化があったか？
  *
- * @param   wk    
+ * @param   wk
  *
  * @retval  int   あったら1,  無い場合は0
  */
@@ -2844,7 +2859,7 @@ static int MyStatusCheck( OEKAKI_WORK *wk )
  *
  * @param   wk    
  *
- * @retval  none    
+ * @retval  none  
  */
 //------------------------------------------------------------------
 static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait )
@@ -2934,8 +2949,10 @@ static void ChangeConnectMax( OEKAKI_WORK *wk, int plus )
     if(num>5){
       num = 5;
     }
-    CommStateSetLimitNum(wk, num);
-    OS_Printf("接続人数を %d人に変更\n",num);
+//    CommStateSetLimitNum(wk, num);
+    ConnectLimitSet(wk,1);
+
+//    OS_Printf("接続人数を %d人に変更\n",num);
   }
 
 }
@@ -3261,6 +3278,8 @@ static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk )
   // はい・いいえメニュー開始
   menuwork = APP_TASKMENU_OpenMenu( &init, wk->app_res );
   
+  OS_Printf("はい・いいえ開始\n");
+  
   return menuwork;
 }
 
@@ -3287,16 +3306,31 @@ static u32 YesNoMenuMain( OEKAKI_WORK *wk )
     }else{
       ret = YESNO_RET_NO;
     }
-    // 終了処理
-    APP_TASKMENU_CloseMenu( wk->app_menuwork );
-    GFL_STR_DeleteBuffer( wk->yn_menuitem[1].str );
-    GFL_STR_DeleteBuffer( wk->yn_menuitem[0].str );
-    APP_TASKMENU_RES_Delete( wk->app_res );
-    wk->app_menuwork = NULL;
+    // はい・いいえメニュー解放
+    YesNoMenuDelete( wk );
   }
 
   return ret;
   
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief はい・いいえ解放処理
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void YesNoMenuDelete( OEKAKI_WORK *wk )
+{
+  // 終了処理
+  APP_TASKMENU_CloseMenu( wk->app_menuwork );
+  GFL_STR_DeleteBuffer( wk->yn_menuitem[1].str );
+  GFL_STR_DeleteBuffer( wk->yn_menuitem[0].str );
+  APP_TASKMENU_RES_Delete( wk->app_res );
+  wk->app_menuwork = NULL;
+  OS_Printf("はい・いいえ終了\n");
+
 }
 
 
