@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-27T17:20:01"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T17:22:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="117" right="1988" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="527"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="259"/>
-		<band id="3" index="4" style="0000" width="436"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="3" index="4" style="0000" width="433"/>
+		<band id="4" index="0" style="0000" width="694"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -491,12 +491,12 @@
 ほんを　さがしてるの？▼
 ……えーと　たしか
 「はじめまして　ポケモンちゃん」は▽
-いりぐちに　ちかい　ほんだなよ</language>
+いりぐちに　ちかい　ほんだなよ▼</language>
 		<language name="JPN_KANJI" width="256">あら？
 本を　探してるの？▼
 ……えーと　確か
 「はじめまして　ポケモンちゃん」は▽
-入り口に　近い　本棚よ</language>
+入り口に　近い　本棚よ▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_02" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -541,13 +541,13 @@
 ジムの　いりぐちで　たたかった
 ポケモンを　おもいだしてみて▼
 ヒントは　ここから
-ひだりの　ほんだなよ！</language>
+ひだりの　ほんだなよ！▼</language>
 		<language name="JPN_KANJI" width="256">うふふ！　残念！▼
 あなたが　ジムで　初めて　出会った
 ポケモンは　ポカブでは　ありません！▼
 ジムの　入り口で　戦った
 ポケモンを　思い出してみて▽
-ヒントは　ここから　左の　本棚よ！</language>
+ヒントは　ここから　左の　本棚よ！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_02_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -558,11 +558,11 @@
 ジムの　いりぐちで　たたかった
 ポケモンは　なんだったかしら？▼
 ヒントは　ここから
-ひだりの　ほんだなよ！</language>
+ひだりの　ほんだなよ！▼</language>
 		<language name="JPN_KANJI" width="256">うふふ！　そうね！▼
 ジムの　入り口で　戦った
 ポケモンは　なんだったかしら？▽
-ヒントは　ここから　左の　本棚よ！</language>
+ヒントは　ここから　左の　本棚よ！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_02_3" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -572,10 +572,10 @@
 		<language name="JPN" width="256">このジムで　はじめて　であった
 ポケモンは　わかったかしら？▼
 ヒントは　ここから
-ひだりの　ほんだなよ！</language>
+ひだりの　ほんだなよ！▼</language>
 		<language name="JPN_KANJI" width="256">このジムで　初めて　出会った
 ポケモンは　わかったかしら？▽
-ヒントは　ここから　左の　本棚よ！</language>
+ヒントは　ここから　左の　本棚よ！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_03" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -621,7 +621,7 @@
 とは　ちょっと　ちがうわね▼
 ……このメモの　こたえは
 もしかしたら　いきものでは▽
-ないかも　しれないわね！　うふふ！</language>
+ないかも　しれないわね！　うふふ！▼</language>
 		<language name="JPN_KANJI" width="256">うふふ！　残念！▼
 私の　見てる
 ポカブの　本には▼
@@ -632,7 +632,7 @@
 とは　ちょっと　違うわね▼
 ……このメモの　答えは　もしかしたら
 生き物では　ないかも　しれないわね！▽
-うふふ！</language>
+うふふ！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_03_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -649,7 +649,7 @@
 とは　ちょっと　ちがうわ▼
 ……このメモの　こたえは
 もしかしたら　いきものでは▽
-ないかも　しれないわね！　うふふ！</language>
+ないかも　しれないわね！　うふふ！▼</language>
 		<language name="JPN_KANJI" width="256">わ！　すごい！
 その通りよ！▼
 私の　見てる
@@ -661,7 +661,7 @@
 とは　ちょっと　違うわ▼
 ……このメモの　答えは　もしかしたら
 生き物では　ないかも　しれないわね！▽
-うふふ！</language>
+うふふ！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_03_3" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -672,13 +672,13 @@
 この　もんだいは　とけたかしら？▼
 ……このメモの　こたえは　もしかしたら
 いきものでは　ないかも　しれないわね！▽
-うふふ！</language>
+うふふ！▼</language>
 		<language name="JPN_KANJI" width="256">「体内で　炎が　燃え上がり
 頭から　煙を出して　走る」▽
 この　問題は　解けたかしら？▼
 ……このメモの　答えは　もしかしたら
 生き物では　ないかも　しれないわね！▽
-うふふ！</language>
+うふふ！▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_04" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -721,13 +721,13 @@
 ……そういえば　むかし
 きのみを　ぐつぐつ　あっためてつくる▽
 おかしを　みたことが　あるわ▽
-なんて　なまえ　だったかしら？</language>
+なんて　なまえ　だったかしら？▼</language>
 		<language name="JPN_KANJI" width="256">もう！
 冗談ばっかり！▼
 ……そういえば　昔
 木の実を　ぐつぐつ　温めて作る▽
 お菓子を　見たことが　あるわ▽
-なんて　名前だったかしら？</language>
+なんて　名前だったかしら？▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_04_2" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -738,13 +738,13 @@
 ……そういえば　むかし
 きのみを　ぐつぐつ　あっためてつくる▽
 おかしを　みたことが　あるわ▽
-なんて　なまえ　だったかしら？</language>
+なんて　なまえ　だったかしら？▼</language>
 		<language name="JPN_KANJI" width="256">そ　そうよね……
 ほっとしたわ▼
 ……そういえば　昔
 木の実を　ぐつぐつ　温めて作る▽
 お菓子を　見たことが　あるわ▽
-なんて　名前　だったかしら？</language>
+なんて　名前　だったかしら？▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_04_3" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
@@ -753,11 +753,11 @@
 		<language name="JPN" width="256">むかし　きのみを
 ぐつぐつ　あっためて　つくる▽
 おかしを　みたことが　あるわ▽
-なんて　なまえ　だったかしら？</language>
+なんて　なまえ　だったかしら？▼</language>
 		<language name="JPN_KANJI" width="256">昔　木の実を
 ぐつぐつ　温めて　作る▽
 お菓子を　見たことが　あるわ▽
-なんて　名前　だったかしら？</language>
+なんて　名前　だったかしら？▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_girl3_05" back-color="#ffff00,,,,,,,,,,,,,,,,,,">
