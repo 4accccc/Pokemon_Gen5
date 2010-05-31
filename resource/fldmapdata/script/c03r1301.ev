@@ -106,7 +106,9 @@ EVENT_START   ev_c03r1301_sunglasses_01
 		
 		//「いいえ」
 		ELSE
-		_MSGWIN_CLOSE()
+		IF $LWK_DIR != DIR_UP THEN
+			_MSGWIN_CLOSE()
+		ENDIF
 		
 			//ボディガード下を再度見る
 			_CALL ev_c03r1301_lookdown
