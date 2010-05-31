@@ -723,7 +723,7 @@ EVENT_START		ev_c01gym0101_leader1b_01
 			}
 			
 			//～～は　コーンから　トライバッジを　もらった
-			_SYSWIN_MSG( msg_c01gym0101_leader1_07b , POS_DOWN )
+			_SYSWIN_MSG( msg_c01gym0101_leader1_07b , POS_DEFAULT )
 			_SYSWIN_CLOSE()
 
 			//コーン：デントの場所へ移動
@@ -890,7 +890,7 @@ EVENT_START		ev_c01gym0101_leader1a_01
 			}
 
 			//～～は　ポッドから　トライバッジを　もらった
-			_SYSWIN_MSG( msg_c01gym0101_leader1_07a , POS_DOWN )
+			_SYSWIN_MSG( msg_c01gym0101_leader1_07a , POS_DEFAULT )
 			_SYSWIN_CLOSE()
 		
 			//ポッド：デントの場所へ移動
@@ -1061,7 +1061,7 @@ EVENT_START		ev_c01gym0101_leader1c_01
 			}
 
 			//～～は　デントから　トライバッジを　もらった
-			_SYSWIN_MSG( msg_c01gym0101_leader1_07c , POS_DOWN )
+			_SYSWIN_MSG( msg_c01gym0101_leader1_07c , POS_DEFAULT )
 			_SYSWIN_CLOSE()
 		
 			//ジムバッジは　トレーナーの　つよさの　あかし！
