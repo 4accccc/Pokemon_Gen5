@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T14:36:39"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-05-31T18:42:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="28" top="149" right="733" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -350,7 +350,7 @@
 世界中から　トレーナーが▽
 集まってくる　施設です！▼
 もし　お客様に
-遠く離れた　場所で　暮らす
+遠く離れた　場所で　暮らす▽
 お友達が　いらっしゃれば▼
 感動の　再会など
 果たせるのでは　ないでしょうか！▼</language>
