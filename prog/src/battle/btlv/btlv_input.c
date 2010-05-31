@@ -4049,8 +4049,8 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     if( max > 1 )
     {
       GXS_SetVisibleWnd( GX_WNDMASK_W0 | GX_WNDMASK_W1 );
-      G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
-      G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, TRUE );
+      G2S_SetWnd0InsidePlane( GX_WND_PLANEMASK_ALL, ( max > 1 ) );
+      G2S_SetWnd1InsidePlane( GX_WND_PLANEMASK_ALL, ( max == 3 ) );
       G2S_SetWndOutsidePlane( GX_WND_PLANEMASK_ALL, FALSE );
       G2S_SetBlendBrightness( GX_BLEND_PLANEMASK_OBJ, -8 );
     }
