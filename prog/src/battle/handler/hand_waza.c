@@ -3100,7 +3100,7 @@ static const BtlEventHandlerTable*  ADD_Oiuti( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MENBERCHANGE_INTR, handler_Oiuti_Intr     },  // 入れ替え割り込みハンドラ
     { BTL_EVENT_CALC_HIT_CANCEL,   handler_Oiuti_HitCheck },  // ヒットチェック計算をスキップ
-    { BTL_EVENT_WAZA_DMG_PROC2,    handler_Oiuti_Dmg      },  // ダメージ計算最終チェック
+    { BTL_EVENT_WAZA_POWER_BASE,   handler_Oiuti_Dmg      },  // ダメージ計算最終チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3144,7 +3144,7 @@ static void handler_Oiuti_Dmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   {
     if( BTL_SVFTOOL_IsMemberOutIntr(flowWk) )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -3658,7 +3658,7 @@ static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems )
     { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Korogaru_NoEffect  },  // ワザ出し失敗確定ハンドラ
     { BTL_EVENT_WAZA_AVOID,              handler_Korugaru_Avoid     },  // ワザはずれたハンドラ
     { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT,  handler_Korogaru_NoEffect  },   // ワザ無効ハンドラ
-    { BTL_EVENT_WAZA_POWER,              handler_Korogaru_Pow       },
+    { BTL_EVENT_WAZA_POWER_BASE,         handler_Korogaru_Pow       },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3736,7 +3736,7 @@ static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
       mul *= 2;
     }
 
-    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(mul) );
+    HandCommon_MulWazaBasePower( mul );
 
     work[0]++;
     if( work[0] >= work[1] ){
@@ -3806,13 +3806,13 @@ static void handler_GyroBall( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 }
 //----------------------------------------------------------------------------------
 /**
- * リベンジ
+ * リベンジ・ゆきなだれ
  */
 //----------------------------------------------------------------------------------
 static const BtlEventHandlerTable*  ADD_Revenge( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER, handler_Revenge },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE, handler_Revenge },    // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3832,7 +3832,7 @@ static void handler_Revenge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       if( (rec.pokeID == target_pokeID)
       &&  (rec.damage != 0)
       ){
-        BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+        HandCommon_MulWazaBasePower( 2 );
         break;
       }
     }
@@ -3920,7 +3920,7 @@ static void handler_Karagenki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Sippegaesi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER, handler_Sippegaesi },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE, handler_Sippegaesi },    // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3932,7 +3932,7 @@ static void handler_Sippegaesi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
     if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -4082,7 +4082,7 @@ static void handler_Yatuatari( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_MezamasiBinta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,          handler_MezamasiBinta             }, // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE,         handler_MezamasiBinta             }, // ワザ威力チェックハンドラ
     { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_MezamasiBinta_AfterDamage }, // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -4097,7 +4097,7 @@ static void handler_MezamasiBinta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     if( (!BPP_MIGAWARI_IsExist(bpp))
     &&  (BPP_CheckSick(bpp, WAZASICK_NEMURI))
     ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -4124,7 +4124,7 @@ static void handler_MezamasiBinta_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_S
 static const BtlEventHandlerTable*  ADD_Kituke( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,          handler_Kituke             },  // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE,         handler_Kituke             },  // ワザ威力チェックハンドラ
     { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_Kituke_AfterDamage },  // ダメージプロセス終了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -4140,7 +4140,7 @@ static void handler_Kituke( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     if( (!BPP_MIGAWARI_IsExist(bpp))
     &&  (BPP_CheckSick(bpp, WAZASICK_MAHI))
     ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -4370,7 +4370,7 @@ static void handler_RenzokuGiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_Dameosi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,   handler_Dameosi },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE,   handler_Dameosi },    // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4381,8 +4381,9 @@ static void handler_Dameosi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
 
-    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_DAMAGED) ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_DAMAGED) )
+    {
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -4487,7 +4488,7 @@ static const BtlEventHandlerTable*  ADD_Tatumaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_POKE_HIDE,   handler_Tatumaki_checkHide },  // 消えポケヒットチェック
-    { BTL_EVENT_WAZA_DMG_PROC2,    handler_Tatumaki },     // ダメージ最終チェック
+    { BTL_EVENT_WAZA_POWER_BASE,   handler_Tatumaki },     // ダメージ最終チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4508,7 +4509,7 @@ static void handler_Tatumaki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
     if( BPP_CONTFLAG_Get(target, BPP_CONTFLG_SORAWOTOBU) )
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -4761,7 +4762,6 @@ static void handler_MezameruPower_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
-
 }
 //----------------------------------------------------------------------------------
 /**
@@ -9047,7 +9047,7 @@ static void handler_BenomShock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable*  ADD_Tatarime( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,   handler_Tatarime },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE,   handler_Tatarime },    // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9058,8 +9058,9 @@ static void handler_Tatarime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   {
     // ポケ系状態状態の相手に威力２倍
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    if( BPP_GetPokeSick(bpp) != POKESICK_NULL ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+    if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
+    {
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -9071,7 +9072,7 @@ static void handler_Tatarime( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Acrobat( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER,   handler_Acrobat },    // ワザ威力チェックハンドラ
+    { BTL_EVENT_WAZA_POWER_BASE,   handler_Acrobat },    // ワザ威力チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -9083,7 +9084,7 @@ static void handler_Acrobat( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     // 自分がどうぐを装備していない時に威力２倍
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetItem(bpp) == ITEM_DUMMY_DATA ){
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }
@@ -10017,7 +10018,7 @@ static const BtlEventHandlerTable*  ADD_Rinsyou( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXE_START,    handler_Rinsyou  },     // ワザだし確定
-    { BTL_EVENT_WAZA_POWER,        handler_Rinsyou_Pow },  // 威力計算
+    { BTL_EVENT_WAZA_POWER_BASE,   handler_Rinsyou_Pow },  // 威力計算
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -10048,7 +10049,7 @@ static void handler_Rinsyou_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     // 既に自分のワザがレコードされているので１件を越えてたら２番目以降と判定
     if( BTL_WAZAREC_GetUsedWazaCount(rec, wazaID, thisTurn) > 1)
     {
-      BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(2) );
+      HandCommon_MulWazaBasePower( 2 );
     }
   }
 }

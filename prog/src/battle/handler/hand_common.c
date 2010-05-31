@@ -118,5 +118,12 @@ void HandCommon_MagicCoat_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
   }
 }
 
-
+/**
+ *  ÉèÉUäÓñ{à–óÕílÇnî{Ç…
+ */
+void HandCommon_MulWazaBasePower( u32 ratio )
+{
+  u32 pow = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_POWER ) * ratio;
+  BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
+}
 
