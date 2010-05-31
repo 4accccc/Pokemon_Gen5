@@ -207,12 +207,6 @@ void  STA_POKE_UpdateSystem_Item( STA_POKE_SYS *work )
 
 static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
-#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X )
-  {
-    STA_POKE_SetFrontBack( work , pokeWork , !pokeWork->isFront );
-  }
-#endif
   //if( pokeWork->isUpdate == TRUE )
   {
     VecFx32 musPos;
@@ -550,6 +544,7 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
       pokeWork->itemRes[ePos] = MUS_ITEM_DRAW_LoadResource( itemNo );
       pokeWork->itemWork[ePos] = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , itemNo , pokeWork->itemRes[ePos] , &pokeWork->pokePos );
       MUS_ITEM_DRAW_SetSize( work->itemDrawSys , pokeWork->itemWork[ePos] , FX16_CONST(0.25f) , FX16_CONST(0.25f) );
+      MUS_ITEM_DRAW_SetDrawEnable( work->itemDrawSys , pokeWork->itemWork[ePos] , FALSE );
       //ACT_BBD_SIZE(32.0f)
     }
     else
@@ -1055,3 +1050,12 @@ const VecFx32* STA_POKE_GetRotOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWo
   return MUS_POKE_DRAW_GetRotateOfs( pokeWork->drawWork );
 }
 
+
+MUS_POKE_DRAW_WORK* STA_POKE_GetMusPokeWork( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
+{
+  return pokeWork->drawWork;
+}
+MUS_POKE_DRAW_SYSTEM* STA_POKE_GetMusPokeSys( STA_POKE_SYS *work )
+{
+  return work->drawSys;
+}

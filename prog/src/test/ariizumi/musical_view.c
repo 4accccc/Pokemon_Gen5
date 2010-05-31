@@ -85,8 +85,6 @@ typedef struct
   GFL_BMPWIN    *strWin;
 
   MUS_POKE_DRAW_SYSTEM *pokeDrawSys;
-//  MUS_POKE_DRAW_WORK   *pokeWork;
-//  MUS_POKE_DRAW_WORK   *pokeWorkBack;
   
   STA_POKE_SYS  *pokeSys;
   STA_POKE_WORK *pokeWork;
@@ -94,8 +92,6 @@ typedef struct
 
 
   MUS_ITEM_DRAW_SYSTEM  *itemDrawSys;
-  MUS_ITEM_DRAW_WORK  *itemWork[MUS_POKE_EQUIP_MAX];
-  GFL_G3D_RES     *itemRes[MUS_POKE_EQUIP_MAX];
 
   BOOL  updateWin;
   BOOL  isUseMcs;
@@ -356,42 +352,10 @@ static void MUSICAL_VIEW_UnLoadPoke( MUS_VIEW_LOCAL_WORK *work )
 
 static void MUSICAL_VIEW_LoadItem( MUS_VIEW_LOCAL_WORK *work )
 {
-  /*
-  u8 ePos;  //equipPos
-  MUSICAL_POKE_PARAM *musPoke = work->musPoke;
-  VecFx32 pos1 = {FX32_CONST( 64.0f ),FX32_CONST( 128.0f ),FX32_CONST(40.0f)};
-  VecFx32 pos2 = {FX32_CONST(192.0f ),FX32_CONST( 128.0f ),FX32_CONST(40.0f)};
-  for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
-  {
-    const u16 itemNo = musPoke->equip[ePos].itemNo;
-    if( itemNo != MUSICAL_ITEM_INVALID )
-    {
-      work->itemRes[ePos] = MUS_ITEM_DRAW_LoadResource( itemNo );
-      work->itemWork[ePos] = MUS_ITEM_DRAW_AddResource( work->itemDrawSys , itemNo , work->itemRes[ePos] , &pos1 );
-      MUS_ITEM_DRAW_SetSize( work->itemDrawSys , work->itemWork[ePos] , FX16_CONST(0.25f) , FX16_CONST(0.25f) );
-    }
-    else
-    {
-      work->itemRes[ePos] = NULL;
-      work->itemWork[ePos] = NULL;
-    }
-  }
-  */
 }
 
 static void MUSICAL_VIEW_UnLoadItem( MUS_VIEW_LOCAL_WORK *work )
 {
-  /*
-  u8 i;
-  for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
-  {
-    if( work->itemRes[i] != NULL )
-    {
-      MUS_ITEM_DRAW_DelItem( work->itemDrawSys , work->itemWork[i] );
-      MUS_ITEM_DRAW_DeleteResource( work->itemRes[i] );
-    }
-  }
-  */
 }
 
 static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
@@ -577,8 +541,11 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
       break;
     case 20:
       {
-        //MUS_POKE_StepAnime( work->pokeSys , work->pokeWork , FX32_ONE );
-        //MUS_POKE_StepAnime( work->pokeSys , work->pokeWorkBack , FX32_ONE );
+        MUS_POKE_DRAW_SYSTEM *musPokeSys = STA_POKE_GetMusPokeSys( work->pokeSys );
+        MUS_POKE_DRAW_WORK *musPokeWork = STA_POKE_GetMusPokeWork( work->pokeSys ,work->pokeWork );
+        MUS_POKE_DRAW_WORK *musPokeWorkBack = STA_POKE_GetMusPokeWork( work->pokeSys ,work->pokeWorkBack );
+        MUS_POKE_StepAnime( musPokeSys , musPokeWork , FX32_ONE );
+        MUS_POKE_StepAnime( musPokeSys , musPokeWorkBack , FX32_ONE );
       }
       break;
     }
@@ -630,13 +597,15 @@ static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
 
 static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
 {
+  MUS_POKE_DRAW_WORK *musPokeWork = STA_POKE_GetMusPokeWork( work->pokeSys , work->pokeWork );
+  MUS_POKE_DRAW_WORK *musPokeWorkBack = STA_POKE_GetMusPokeWork( work->pokeSys , work->pokeWorkBack );
   work->cnt++;
-/*
+
   //座標チェック
   {
     u8 i;
     {
-      BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(work->pokeWork);
+      BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(musPokeWork);
       if( *flg == TRUE )
       {
         if( work->posStateRot[0] == 0 )
@@ -654,7 +623,7 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       *flg = FALSE;
     }
     {
-      BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(work->pokeWork);
+      BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(musPokeWork);
       if( *flg == TRUE )
       {
         if( work->posStateShadow[0] == 0 )
@@ -672,7 +641,7 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       *flg = FALSE;
     }
     {
-      BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(work->pokeWorkBack);
+      BOOL *flg = MUS_POKE_DRAW_GetEnableRotateOfs(musPokeWorkBack);
       if( *flg == TRUE )
       {
         if( work->posStateRot[1] == 0 )
@@ -690,7 +659,7 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       *flg = FALSE;
     }
     {
-      BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(work->pokeWorkBack);
+      BOOL *flg = MUS_POKE_DRAW_GetEnableShadowOfs(musPokeWorkBack);
       if( *flg == TRUE )
       {
         if( work->posStateShadow[1] == 0 )
@@ -710,7 +679,7 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
 
     for( i=0;i<MUS_POKE_EQUIP_MAX;i++ )
     {
-      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->pokeWork , i );
+      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( musPokeWork , i );
       if( equipData->isEnable == TRUE )
       {
         if( work->posState[i] == 0 )
@@ -728,7 +697,7 @@ static void MUSICAL_VIEW_UpdateAutoTest( MUS_VIEW_LOCAL_WORK *work )
       }
     }
   }
-*/  
+
   //リロード
   if( work->cnt >= MUS_VIEW_TEST_TIME ||
       (work->cnt >= MUS_VIEW_TEST_TIME_QUICK && work->isQuickTest == TRUE ))
@@ -799,10 +768,12 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
 {
   int ePos;
   VecFx32 pos;
-  /*
+  MUS_POKE_DRAW_WORK *musPokeWork = STA_POKE_GetMusPokeWork( work->pokeSys , work->pokeWork );
+  MUS_POKE_DRAW_WORK *musPokeWorkBack = STA_POKE_GetMusPokeWork( work->pokeSys , work->pokeWorkBack );
+
   for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
   {
-    MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->pokeWork , ePos );
+    MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( musPokeWork , ePos );
     u8 scrPosX = (ePos%2==0?10:26);
     u8 scrPosY = 12 + (ePos/2)*2;
     if( equipData->isEnable == TRUE )
@@ -823,27 +794,6 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
 
       MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(equipData->pos.x+ofs.x+rotOfs.x) , 3 ,scrPosX   , scrPosY );
       MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(equipData->pos.y+ofs.y+rotOfs.y) , 3 ,scrPosX+4 , scrPosY );
-      if( work->itemWork[ePos] != NULL )
-      { 
-        GFL_POINT itemOfs;
-        pos.x = (equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
-        pos.y = (equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-        if( MUS_ITEM_DRAW_IsBackItem( work->itemWork[ePos] ) == TRUE )
-        {
-          pos.z = FX32_CONST(0.0f); //後ろ！
-        }
-        else
-        {
-          pos.z = FX32_CONST(60.0f);  //ポケの前に出す
-        }
-
-        MUS_ITEM_DRAW_SetPosition(  work->itemDrawSys , 
-                      work->itemWork[ePos] ,
-                      &pos );
-        MUS_ITEM_DRAW_SetRotation(  work->itemDrawSys , 
-                      work->itemWork[ePos] ,
-                      itemRot-rotZ );
-      }
     }
     else
     {
@@ -852,8 +802,8 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
       GFL_BG_WriteScreen( MUS_VIEW_BG_SUB , &chrNo , scrPosX+2,scrPosY,3,1);
     }
     {
-      VecFx32 *shadowOfs = MUS_POKE_DRAW_GetShadowOfs( work->pokeWork );
-      VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( work->pokeWork );
+      VecFx32 *shadowOfs = MUS_POKE_DRAW_GetShadowOfs( musPokeWork );
+      VecFx32 *rotOfs = MUS_POKE_DRAW_GetRotateOfs( musPokeWork );
       MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(shadowOfs->x) , 3 ,10 , 22 );
       MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(shadowOfs->y) , 3 ,14 , 22 );
       MUSICAL_VIEW_UpdateNumberFunc( F32_CONST(rotOfs->x) , 3 ,26 , 22 );
@@ -872,27 +822,27 @@ static void MUSICAL_VIEW_UpdatePoke( MUS_VIEW_LOCAL_WORK *work )
     if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) )
     {
       VecFx32 *shadowOfs; //影差分
-      shadowOfs = MUS_POKE_DRAW_GetShadowOfs( work->pokeWork );
+      shadowOfs = MUS_POKE_DRAW_GetShadowOfs( musPokeWork );
       //影の座標を基準に
       pos.x = MUSICAL_POS_X_FX( FX32_CONST(64.0f)-shadowOfs->x);
       pos.y = MUSICAL_POS_Y_FX( FX32_CONST(128.0f)-shadowOfs->y);
     }
     
-    MUS_POKE_DRAW_SetPosition( work->pokeWork , &pos);
+    MUS_POKE_DRAW_SetPosition( musPokeWork , &pos);
   }
   {
     VecFx32 pos = {MUSICAL_POS_X(192.0f ),MUSICAL_POS_Y( 128.0f ),FX32_CONST(40.0f)};
     if( !(GFL_UI_KEY_GetCont() & PAD_BUTTON_R) )
     {
       VecFx32 *shadowOfs; //影差分
-      shadowOfs = MUS_POKE_DRAW_GetShadowOfs( work->pokeWorkBack );
+      shadowOfs = MUS_POKE_DRAW_GetShadowOfs( musPokeWorkBack );
       //影の座標を基準に
       pos.x = MUSICAL_POS_X_FX( FX32_CONST(192.0f)-shadowOfs->x);
       pos.y = MUSICAL_POS_Y_FX( FX32_CONST(128.0f)-shadowOfs->y);
     }
-    MUS_POKE_DRAW_SetPosition( work->pokeWorkBack , &pos);
+    MUS_POKE_DRAW_SetPosition( musPokeWorkBack , &pos);
   }
-*/
+
   if( work->isRefresh == TRUE )
   {
     work->musPoke->mcssParam.monsno = work->monsno;
@@ -1016,11 +966,11 @@ static void MUSICAL_VIEW_UpdateNumberFunc( const s32 num , const u8 digit , cons
 
 static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
 {
-  /*
   int ePos;
   VecFx32 pos;
   MtxFx33       mtxBillboard;
   VecFx16       vecN;
+  MUS_POKE_DRAW_WORK *musPokeWork = STA_POKE_GetMusPokeWork( work->pokeSys , work->pokeWork );
   G3_PushMtx();
   G3_MtxMode( GX_MTXMODE_POSITION_VECTOR );
   //カメラ設定取得
@@ -1052,7 +1002,7 @@ static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
   {
     if( work->isDispBit & (1<<ePos) )
     {
-      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( work->pokeWork , ePos );
+      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( musPokeWork , ePos );
       if( equipData->isEnable == TRUE )
       {
         const u16 itemRot = equipData->itemRot;
@@ -1097,7 +1047,6 @@ static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
     }
   } 
   G3_PopMtx(1);
-*/
 }
 
 

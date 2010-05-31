@@ -70,6 +70,8 @@ void STA_POKE_SetPokeDir( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const S
 void STA_POKE_SetFrontBack( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isFront );
 void STA_POKE_SetDrawItem( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const BOOL isDrawItem );
 const VecFx32* STA_POKE_GetRotOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+MUS_POKE_DRAW_WORK* STA_POKE_GetMusPokeWork( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork );
+MUS_POKE_DRAW_SYSTEM* STA_POKE_GetMusPokeSys( STA_POKE_SYS *work );
 
 //アイテム使用
 void STA_POKE_UseItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , MUS_POKE_EQUIP_POS ePos );
