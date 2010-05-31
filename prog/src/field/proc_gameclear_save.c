@@ -261,6 +261,8 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
   //メイン画面フェードイン待ち
   case GAMECLEAR_SEQ_FADEIN_WAIT:
     if( GFL_FADE_CheckFade() == FALSE ) {
+      (*seq) = GAMECLEAR_SEQ_KEY_WAIT;
+#if 0
       if ( para->clear_mode == GAMECLEAR_MODE_FIRST ) {
         //ゲームクリア　おめでとう！
         scr_msg_print( wk, msg_gameclear_first_01, 0, 0 );
@@ -271,9 +273,9 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
         scr_msg_print( wk, msg_gameclear_01, 0, 0 );
         wk->next_seq = GAMECLEAR_SEQ_KEY_WAIT;
         (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
-    }
-      
+    } 
     GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
+#endif
     }
     break;
 
@@ -282,10 +284,12 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     if( wk->otherSaveExist ) {
       (*seq) ++; 
     }
-    else if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+    //else if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
+    else {
       //「レポートをかいています　でんげんをきらないでください」
       PMSND_PlaySE( SEQ_SE_DECIDE1 );
       scr_msg_print( wk, msg_gameclear_report_01, 0, 0 );
+      GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
       wk->next_seq = GAMECLEAR_SEQ_SAVETYPE_BRANCH;
       (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
       GAMEDATA_SaveAsyncStart( wk->gamedata );
@@ -358,12 +362,14 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     if (wk->otherSaveExist==FALSE && wk->saveSuccessFlag) {
       //「レポートをかきました」
       scr_msg_print( wk, msg_gameclear_report_02, 0, 0 );
+      GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
       wk->next_seq = GAMECLEAR_SEQ_MSG_END;
       (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
       PMSND_PlaySE( SEQ_SE_SAVE );
     } else {
       //「レポートがかけませんでした」
       scr_msg_print( wk, msg_gameclear_report_03, 0, 0 );
+      GFL_BMPWIN_MakeTransWindow( wk->bmpwin );
       wk->next_seq = GAMECLEAR_SEQ_MSG_END;
       (*seq)       = GAMECLEAR_SEQ_MSG_WAIT;
     }

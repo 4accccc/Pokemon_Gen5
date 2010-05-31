@@ -36,6 +36,7 @@
 //==============================================================================================
 //==============================================================================================
 #define MAX_SEQ_NUM (16) // 実行するシーケンスの最大数
+#define WAIT_FRAME (120)
 
 
 //==============================================================================================
@@ -54,10 +55,11 @@ typedef struct {
   STAFFROLL_DATA      staffRollDemoParam; // スタッフロール デモのパラメータ
   THE_END_PARAM       theEndDemoParam;    // 「THE END」デモ画面用のパラメータ
 
-  int nowSeq;    // 現在のシーケンス
+  int nowSeq; // 現在のシーケンス
   int seqArray[ MAX_SEQ_NUM ]; // 実行シーケンス配列
+  int waitCount; // 待ちフレーム数カウンタ
 
-}GAMECLEAR_WORK;
+} GAMECLEAR_WORK;
 
 
 //============================================================================================
@@ -76,7 +78,8 @@ enum {
   GMCLEAR_SEQ_ENDING_DEMO,      // エンディングデモ
   GMCLEAR_SEQ_CLEAR_SCRIPT,     // ゲームクリアスクリプト処理
   GMCLEAR_SEQ_SAVE_MESSAGE,     // セーブ中メッセージ表示
-  GMCLEAR_SEQ_THE_END,          // 「THE END」表示
+  GMCLEAR_SEQ_FRAME_WAIT,       // フレーム経過待ち
+  GMCLEAR_SEQ_THE_END,          //「THE END」表示
   GMCLEAR_SEQ_END,              // 終了
 };
 
@@ -194,6 +197,14 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
     NowSeqFinish( work, seq );
     break;
 
+  case GMCLEAR_SEQ_FRAME_WAIT:
+    if( WAIT_FRAME < work->waitCount ) {
+      work->waitCount = 0;
+      NowSeqFinish( work, seq );
+    }
+    work->waitCount++;
+    break;
+
   case GMCLEAR_SEQ_THE_END:
     GMEVENT_CallProc( event, 
         FS_OVERLAY_ID(the_end), &THE_END_ProcData, &work->theEndDemoParam );
@@ -231,6 +242,7 @@ GMEVENT * EVENT_GameClear( GAMESYS_WORK * gsys, GAMECLEAR_MODE mode )
   gcwk->gamedata = gamedata;
   gcwk->clear_mode = mode;
   gcwk->mystatus = GAMEDATA_GetMyStatus( gamedata );
+  gcwk->waitCount = 0;
 
   //子プロセスに渡すパラメータ
   gcwk->para_child.gsys = gsys;
@@ -319,10 +331,13 @@ static void SetupSequence( GAMECLEAR_WORK* work )
     work->seqArray[pos++] = GMCLEAR_SEQ_FIELD_CLOSE_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL;
     work->seqArray[pos++] = GMCLEAR_SEQ_STAFF_ROLL_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_ENDING_DEMO;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
     work->seqArray[pos++] = GMCLEAR_SEQ_CLEAR_SCRIPT;
-    work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;
     work->seqArray[pos++] = GMCLEAR_SEQ_SAVE_MESSAGE;
+    work->seqArray[pos++] = GMCLEAR_SEQ_FRAME_WAIT;
+    work->seqArray[pos++] = GMCLEAR_SEQ_THE_END;
     work->seqArray[pos++] = GMCLEAR_SEQ_END;
     break;
   case GAMECLEAR_MODE_DENDOU:
