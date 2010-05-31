@@ -5029,6 +5029,30 @@ void BTL_MAIN_NotifyPokemonLevelup( BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp )
 }
 //=============================================================================================
 /**
+ * アイテム使用によるなつき度上昇処理
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   itemNo
+ */
+//=============================================================================================
+void BTL_MAIN_CalcNatsukiItemUse( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, u16 itemNo )
+{
+  u8 pokeID = BPP_GetID( bpp );
+
+  const BTL_POKEPARAM* bppServer = BTL_POKECON_GetPokeParamConst( &wk->pokeconForServer, pokeID );
+  const BTL_POKEPARAM* bppClient = BTL_POKECON_GetPokeParamConst( &wk->pokeconForClient, pokeID );
+
+  POKEMON_PARAM* ppServer = (POKEMON_PARAM*)BPP_GetSrcData( bppServer );
+  POKEMON_PARAM* ppClient = (POKEMON_PARAM*)BPP_GetSrcData( bppClient );
+
+  const BTL_FIELD_SITUATION* sit = BTL_MAIN_GetFieldSituation( wk );
+
+  NATSUKI_CalcUseItem( ppServer, itemNo, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+  NATSUKI_CalcUseItem( ppClient, itemNo, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
+}
+//=============================================================================================
+/**
  * ポケモン捕獲通知をクライアントから受け取り、ゲームシステム（レコード、ビーコン）に通知
  *
  * @param   wk

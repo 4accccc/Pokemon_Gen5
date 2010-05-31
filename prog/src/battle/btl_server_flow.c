@@ -2832,6 +2832,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       if( wk->bagMode != BBAG_MODE_SHOOTER ){
         BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
+        BTL_MAIN_CalcNatsukiItemUse( wk->mainModule, target, itemID );
       }
     }
     else{
@@ -4292,8 +4293,6 @@ static BOOL scEvent_CheckWazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 
     *robberPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
     *robTargetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-
-    TAYA_Printf("ÇÊÇ±Ç«ÇËÇ∑ÇÈÉ|ÉP=%d, ëŒè€poke=%d\n", *robberPokeID, *robTargetPokeID);
 
   BTL_EVENTVAR_Pop();
 

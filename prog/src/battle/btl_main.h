@@ -107,6 +107,7 @@ extern void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos 
 extern void BTL_MAIN_AddBonusMoney( BTL_MAIN_MODULE* wk, u32 volume );
 extern void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_NotifyPokemonLevelup( BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp );
+extern void BTL_MAIN_CalcNatsukiItemUse( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, u16 itemNo );
 extern void BTL_MAIN_NotifyPokemonGetToGameSystem( BTL_MAIN_MODULE* wk, const BTL_POKEPARAM* bpp );
 extern u32 BTL_MAIN_FixRegularMoney( BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk );
