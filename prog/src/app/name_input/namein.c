@@ -3475,14 +3475,14 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
 {
   BOOL ret  = FALSE;
 
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_DECIDE )
   { 
     p_req->anm_pos  = p_wk->cursor;
     p_req->is_push    = TRUE;
 
     ret = TRUE;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL )
+  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL )
   { 
     GFL_POINT pos;
     //アニメ
@@ -3491,7 +3491,7 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     p_req->type = KEYMAP_KEYTYPE_DELETE;
     ret = TRUE;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT )
+  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT )
   { 
     GFL_POINT pos;
     GFL_RECT  rect;
@@ -3506,7 +3506,7 @@ static BOOL Keyboard_BtnReq( KEYBOARD_WORK *p_wk, KEYBOARD_INPUT_REQUEST *p_req 
     p_req->anm_pos  = p_wk->cursor;
     ret = TRUE;
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_R )
+  if( GFL_UI_KEY_GetTrg() == PAD_BUTTON_R )
   { 
     //自動変換
     //アニメはしない
@@ -4982,11 +4982,11 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       {
       case PRINTSTREAM_STATE_RUNNING:
         {
-          if( GFL_UI_KEY_GetCont()&(PAD_BUTTON_A|PAD_BUTTON_B) || GFL_UI_TP_GetCont() )
+          if( GFL_UI_KEY_GetCont()&(PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) || GFL_UI_TP_GetCont() )
           {
             PRINTSYS_PrintStreamShortWait( p_ps_wk->p_stream, 0 );
 #ifdef NAMEIN_KEY_TOUCH
-            if( GFL_UI_KEY_GetCont()&(PAD_BUTTON_A|PAD_BUTTON_B) )
+            if( GFL_UI_KEY_GetCont()&(PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
               GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
             else
               GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
@@ -5001,11 +5001,11 @@ static void SEQFUNC_PrintStream( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         break;
       case PRINTSTREAM_STATE_PAUSE:
         {
-          if( GFL_UI_KEY_GetTrg()&(PAD_BUTTON_A|PAD_BUTTON_B) || GFL_UI_TP_GetTrg() )
+          if( GFL_UI_KEY_GetTrg()&(PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) || GFL_UI_TP_GetTrg() )
           {
             PRINTSYS_PrintStreamReleasePause( p_ps_wk->p_stream );
 #ifdef NAMEIN_KEY_TOUCH
-            if( GFL_UI_KEY_GetTrg()&(PAD_BUTTON_A|PAD_BUTTON_B) )
+            if( GFL_UI_KEY_GetTrg()&(PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL) )
               GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
             else
               GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
@@ -5066,7 +5066,7 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     //不正文字メッセージを消す処理
     if( p_wk->is_illegal_msg == TRUE )
     { 
-      if( input != KEYBOARD_INPUT_NONE || ICON_IsTrg( &p_wk->icon ) || (GFL_UI_KEY_GetTrg() & ~PAD_BUTTON_A) )
+      if( input != KEYBOARD_INPUT_NONE || ICON_IsTrg( &p_wk->icon ) || (GFL_UI_KEY_GetTrg() & ~PAD_BUTTON_DECIDE) )
       { 
         //文字描画
         if( p_wk->p_param->mode == NAMEIN_POKEMON )
