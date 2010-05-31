@@ -340,6 +340,8 @@ static void InitMenuState( MENU_WORK* menu, int max, int pos );
 static MENU_RESULT  CtrlMenuState( MENU_WORK* menu , u16 key );
 static u32 get_menu_cursor_pos( const MENU_WORK* menu );
 static void SubProc_ChangeCategoryMode( PMS_INPUT_WORK* wk, int* seq );
+static void init_category_pos( PMS_INPUT_WORK* wk );
+
 
 //==============================================================
 // GFL_PROC-DATA
@@ -825,8 +827,8 @@ static GFL_PROC_RESULT mp_input_single_key(PMS_INPUT_WORK* wk,int *seq )
 		{
 			PMSND_PlaySE(SOUND_DECIDE);
 
-			wk->category_pos = 0;
-			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
+      init_category_pos( wk );
+      PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
 			(*seq) = SEQ_EDW_TO_SELECT_CATEGORY;
 			break;
 		}
@@ -1129,7 +1131,7 @@ static GFL_PROC_RESULT mp_input_touch(PMS_INPUT_WORK* wk,int *seq )
 		case 2:	//単語選択
 		case 3:
       PMSND_PlaySE(SOUND_DECIDE);
-			wk->category_pos = 0;
+      init_category_pos( wk );
 			wk->edit_pos = ret-2;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
 			*seq = SEQ_EDW_TO_SELECT_CATEGORY;
@@ -1245,7 +1247,7 @@ static GFL_PROC_RESULT mp_input_double_key( PMS_INPUT_WORK* wk, int* seq )
 		{
 			PMSND_PlaySE(SOUND_DECIDE);
 
-			wk->category_pos = 0;
+      init_category_pos( wk );
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
 			(*seq) = SEQ_EDW_TO_SELECT_CATEGORY;
 			break;
@@ -1477,7 +1479,7 @@ static GFL_PROC_RESULT mp_input_sentence_key( PMS_INPUT_WORK* wk, int* seq )
 		{
 			PMSND_PlaySE(SOUND_DECIDE);
 
-			wk->category_pos = 0;
+      init_category_pos( wk );
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
 			(*seq) = SEQ_EDS_TO_SELECT_CATEGORY;
 			break;
@@ -1675,7 +1677,7 @@ static GFL_PROC_RESULT mp_input_sentence_touch( PMS_INPUT_WORK* wk, int* seq )
 		case edit_sentence_touch_Btn_TpRect_num:	//単語選択
     case edit_sentence_touch_Btn_TpRect_num +1:
 			PMSND_PlaySE(SOUND_DECIDE);
-			wk->category_pos = 0;
+      init_category_pos( wk );
 			wk->edit_pos = ret-edit_sentence_touch_Btn_TpRect_num;
 			PMSIView_SetCommand( wk->vwk, VCMD_EDITAREA_TO_CATEGORY );
 			*seq = SEQ_EDS_TO_SELECT_CATEGORY;
@@ -1957,7 +1959,7 @@ static void category_input_key(PMS_INPUT_WORK* wk,int* seq)
 	){
 		PMSND_PlaySE(SOUND_CHANGE_CATEGORY);
 		wk->category_mode ^= 1;
-		wk->category_pos = 0;
+    init_category_pos( wk );
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_ENABLE );
 		(*seq) = SEQ_CA_WAIT_MODE_CHANGE;
 		return;
@@ -2258,7 +2260,7 @@ static void category_input_touch(PMS_INPUT_WORK* wk,int* seq)
 	case 2:
 		PMSND_PlaySE(SOUND_CHANGE_CATEGORY);
 		wk->category_mode ^= 1;
-		wk->category_pos = 0;
+		init_category_pos( wk ); 
 		PMSIView_SetCommand( wk->vwk, VCMD_CHANGE_CATEGORY_MODE_ENABLE );
 		(*seq) = SEQ_CA_WAIT_MODE_CHANGE;
 		return;
@@ -2498,15 +2500,17 @@ static BOOL keycheck_category_group_mode( PMS_INPUT_WORK* wk )
 	}
 	else
 	{
-		if( wk->key_repeat & (PAD_KEY_UP) )
+    wk->category_pos_prv = CATEGORY_POS_BACK;
+		
+    if( wk->key_repeat & (PAD_KEY_UP) )
 		{
-			wk->category_pos = next_pos_tbl[CATEGORY_GROUP_MAX].up_pos + (wk->category_pos_prv % 3);
+      wk->category_pos = CATEGORY_GROUP_PICTURE;
 			return TRUE;
 		}
 
 		if( wk->key_repeat & (PAD_KEY_DOWN) )
 		{
-			wk->category_pos = next_pos_tbl[CATEGORY_GROUP_MAX].down_pos + (wk->category_pos_prv % 3);
+      wk->category_pos = CATEGORY_GROUP_SKILL;
 			return TRUE;
 		}
 
@@ -2567,7 +2571,12 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 	{
 		if( wk->key_repeat & PAD_KEY_UP )
 		{
-      int pos_prv = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+      int pos_prv;
+      if( INI_A<=wk->category_pos_prv && wk->category_pos_prv<=INI_BOU )
+        pos_prv = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+      else
+        pos_prv = CATEGORY_POS_DISABLE;
+
       if( wk->category_pos == CATEGORY_POS_SELECT )
       {
         if( INI_NA <= pos_prv && pos_prv <= INI_NO ) wk->category_pos = pos_prv;
@@ -2588,7 +2597,12 @@ static BOOL keycheck_category_initial_mode( PMS_INPUT_WORK* wk )
 		}
 		else if( wk->key_repeat & PAD_KEY_DOWN )
 		{
-      int pos_prv = PMSI_INITIAL_DAT_GetColTopCode( wk->category_pos_prv );
+      int pos_prv;
+      if( INI_A<=wk->category_pos_prv && wk->category_pos_prv<=INI_BOU )
+        pos_prv = PMSI_INITIAL_DAT_GetColBottomCode( wk->category_pos_prv );
+      else
+        pos_prv = CATEGORY_POS_DISABLE;
+
       if( wk->category_pos == CATEGORY_POS_SELECT )
       {
         if( INI_A <= pos_prv && pos_prv <= INI_O ) wk->category_pos = pos_prv;
@@ -4043,5 +4057,22 @@ void PMSI_GetSearchResultString( const PMS_INPUT_WORK* wk, u32 result_idx, STRBU
 BOOL PMSI_CheckInputComplete( const PMS_INPUT_WORK* wk )
 {
   return check_input_complete( (PMS_INPUT_WORK*)wk );  // constはずしはイヤだが、check_input_completeでwkを変更してないからまあよしとする
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  他の画面からカテゴリに遷移してきたとき、カテゴリをグループからイニシャルに(またはその逆に)変更したとき、カーソルの位置を初期化する
+ *
+ *	@param	PMS_INPUT_WORK* wk ワーク
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void init_category_pos( PMS_INPUT_WORK* wk )
+{
+  wk->category_pos               = 0;
+  wk->category_pos_prv           = CATEGORY_POS_DISABLE;
+  wk->category_pos_before_erase  = CATEGORY_POS_ERASE;
 }
 
