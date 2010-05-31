@@ -32,13 +32,19 @@ _EVENT_DATA_END
 DEFINE_LOCAL select_pos	// 選択ポケモン
 DEFINE_LOCAL teach_waza_id
 
+//------------------------------------------------------------------------------
+//※注意
+//技をあきらめたときに内部(sub_skillteacher_system)で SCWK_PARAM2 をキーに処理している箇所がありますので
+//値の受け渡し等に $SCWK_PARAM2 を使用しないで下さい
+//------------------------------------------------------------------------------
 
 
 //======================================================================
 //======================================================================
-/**************************************************************/
-/*  りゅうせいぐんを教えてくれる人                            */
-/**************************************************************/
+/************************************************************************/
+/*  りゅうせいぐんを教えてくれる人                                      */
+/* 内部で SCWK_PARAM2 を使用しますので SCWK_PARAM2 は使用しないで下さい */
+/************************************************************************/
 //EVENT_START ev_waza_teacher_dragon
 ev_waza_teacher_dragon:
 
@@ -127,6 +133,8 @@ sub_waza_teacher_dragon:
     ENDSWITCH
 
     $teach_waza_id = WAZANO_RYUUSEIGUN
+
+    $SCWK_PARAM2 = 0      //技をあきらめた場合は_LAST_KEYWAIT
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
@@ -140,9 +148,10 @@ sub_waza_teacher_dragon:
 
 //======================================================================
 //======================================================================
-/**************************************************************/
-/* 最強技を教えてくれる人                                     */
-/**************************************************************/
+/************************************************************************/
+/* 最強技を教えてくれる人                                               */
+/* 内部で SCWK_PARAM2 を使用しますので SCWK_PARAM2 は使用しないで下さい */
+/************************************************************************/
 EVENT_START ev_waza_teacher_powerful
 
   _TALK_OBJ_START()
@@ -241,6 +250,7 @@ sub_waza_teacher_powerful:
 
     _BALLOONWIN_CLOSE()
     //$teach_waza_id = WAZANO_RYUUSEIGUN
+    $SCWK_PARAM2 = 0      //技をあきらめた場合は_LAST_KEYWAIT
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
@@ -254,9 +264,10 @@ sub_waza_teacher_powerful:
 
 //======================================================================
 //======================================================================
-/**************************************************************/
-/* 合体技を教えてくれる人                                     */
-/**************************************************************/
+/************************************************************************/
+/* 合体技を教えてくれる人                                               */
+/* 内部で SCWK_PARAM2 を使用しますので SCWK_PARAM2 は使用しないで下さい */
+/************************************************************************/
 EVENT_START   ev_waza_teacher_coalescence
   _TALK_OBJ_START()
 
@@ -360,6 +371,7 @@ sub_waza_teacher_coalescence:
 
     _BALLOONWIN_CLOSE()
     //$teach_waza_id = WAZANO_RYUUSEIGUN
+    $SCWK_PARAM2 = 0      //技をあきらめた場合は_LAST_KEYWAIT
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
@@ -453,7 +465,12 @@ sub_skillteacher_wasure_ask_retire:
     _TEMOTI_NICK_NAME( 0, select_pos )
     _WAZA_NAME( 1, teach_waza_id )
     _SYSWIN_MSG( msg_skillteach_system_04 , POS_DEFAULT )
-    _LAST_KEYWAIT()
+    //最終キー待ち分岐
+    IF $SCWK_PARAM2 == 0 THEN
+      _LAST_KEYWAIT()
+    ELSE
+      _AB_KEYWAIT_MARK()
+    ENDIF  
     _SYSWIN_CLOSE()
     $user_result = TRUE //終了
     _RET
@@ -519,10 +536,12 @@ sub_skillteacher_wasure_core:
 // IN: SCWK_PARAM0    手持ちポケモンの位置
 // IN: SCWK_PARAM1    覚えさせる技ＩＤ
 // OUT:SCWK_ANSWER    覚えた：TRUE　覚えなかった：FALSE
+// 内部で SCWK_PARAM2 を使用しますので SCWK_PARAM2を値受け渡しに使用しないでください
 /**************************************************************/
 ev_skill_learn:
   $select_pos = $SCWK_PARAM0
   $teach_waza_id = $SCWK_PARAM1
+  $SCWK_PARAM2 = 1      //技をあきらめた場合は_AB_KEYWAIT_MARK
   _CALL sub_skillteacher_system
   _CHG_LOCAL_SCR
 _END
