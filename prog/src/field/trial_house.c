@@ -24,6 +24,8 @@
 
 #include "field/th_rank_calc.h"   //for TH_CALC_Rank  inline
 
+#include "field_saveanime.h"      //for   FIELD_SAVEANIME_
+
 #define DOWNLOAD_BIT_MAX  (128)
 
 #define BEACON_SEARCH_TIME  (4)
@@ -45,6 +47,7 @@ typedef struct
   GAMESYS_WORK *gsys;
   void* pWork;
   u32 Type;
+  FIELD_SAVEANIME* bgAnime;
 }EXA_SAVE_WORK;
 
 static void SetDLDataType( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr );
@@ -664,7 +667,14 @@ GMEVENT *TRIAL_HOUSE_InvalidDLData( GAMESYS_WORK *gsys, TRIAL_HOUSE_WORK_PTR ptr
   evt_wk->gsys = gsys;
   evt_wk->pWork = NULL;
   evt_wk->Type = inClearType;
-  
+
+  {
+    FIELDMAP_WORK *fieldWork;
+    fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+    evt_wk->bgAnime = FIELD_SAVEANIME_Create( GFL_HEAP_LOWID(HEAPID_FIELDMAP), fieldWork );
+    FIELD_SAVEANIME_Start( evt_wk->bgAnime );
+  }
+
   return event;
   
 /**  
@@ -836,6 +846,8 @@ static GMEVENT_RESULT SaveUsedKeyEvt( GMEVENT *event, int *seq, void *wk )
     {
       SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_BATTLE_EXAMINATION);
       GFL_HEAP_FreeMemory(evt_wk->pWork);
+      FIELD_SAVEANIME_End( evt_wk->bgAnime );
+      FIELD_SAVEANIME_Delete( evt_wk->bgAnime );
       //èIóπ
       return( GMEVENT_RES_FINISH );
     }
