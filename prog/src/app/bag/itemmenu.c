@@ -1747,6 +1747,15 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     return;
   }
 
+  // タッチスクロール
+  if( _itemScrollCheck(pWork) )
+  {
+//    bChange = TRUE;
+    pWork->oamlistpos_old = 0xffff;
+    _windowRewrite(pWork);
+    return;
+  }
+
   // カーソルなしの状態から入力があった場合、カーソルを表示して抜ける
   if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
   {
@@ -1832,14 +1841,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
 //      _CHANGE_STATE(pWork,_itemMovePosition);
       ChangeStateItemMovePosition( pWork );
     }
-    return;
-  }
-  // タッチスクロール
-  else if( _itemScrollCheck(pWork) )
-  {
-//    bChange = TRUE;
-    pWork->oamlistpos_old = 0xffff;
-    _windowRewrite(pWork);
     return;
   }
   // キー操作
