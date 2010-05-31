@@ -22,6 +22,7 @@ end
 file_list = Dir.glob( "../../prog/src/**/*" ) # プログラムソース
 file_list += Dir.glob( "../../resource/fldmapdata/script/**/*.ev" ) # スクリプト
 file_list.each do |filename|
+  puts filename
   file = File::open( filename, "r" )
   lines = nil
   if File.file?( file ) then
@@ -44,9 +45,9 @@ end
 # 出力
 out_file = File.open( "result.txt", "w" )
 all_se_list.each do |label|
-  out_file.puts( label )
+  out_file.puts( "#{label}\r" )
   se_hash[ label ].each do |filename|
-    out_file.puts( "\t#{filename}" )
+    out_file.puts( "\t#{filename}\r" )
   end
 end
 out_file.close

@@ -1,3 +1,3 @@
 Path=c:\cygwin\bin; 
-ruby ./se_listup.rb
+ruby -Ks ./se_listup.rb
 pause
