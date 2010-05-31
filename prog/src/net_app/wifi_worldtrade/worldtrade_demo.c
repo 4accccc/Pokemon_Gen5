@@ -27,6 +27,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/pokeparty.h"
 #include "savedata/box_savedata.h"
+#include "item/itemequip.h"
 
 #include "item/itemsym.h"
 
@@ -191,8 +192,11 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 				SHINKA_COND shinka_cond;
 				OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-				shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item,
+
+				shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, 
+            (u32)wk->demoPokePara,
             GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData( wk->param->gamesys ) ), &shinka_cond, HEAPID_WORLDTRADE );
+
 				if(shinkano!=0){
 
           SHINKA_DEMO_PARAM *p_param;
@@ -236,18 +240,46 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 			}else if(wk->sub_process_mode==MODE_DOWNLOAD || wk->sub_process_mode==MODE_DOWNLOAD_EX){
 				// 自分のポケモンを引き取ったら交換されてた?
 				POKEMON_PARAM *pp     = RecvPokemonParamPointerGet( wk, wk->sub_process_mode );
+        u16 other_poke  = wk->UploadPokemonData.wantSimple.characterNo;
 				POKEMON_PARAM *backup = PokemonParam_AllocWork(HEAPID_WORLDTRADE);
 				WorldTradeData_GetPokemonData( wk->param->worldtrade_data, backup );
 				if(PP_Get(pp,ID_PARA_monsno,NULL)!=PP_Get(backup,ID_PARA_monsno,NULL)
 					|| PP_Get(pp,ID_PARA_personal_rnd,NULL)!=PP_Get(backup,ID_PARA_personal_rnd,NULL)){
 
 					int item     = PP_Get( pp, ID_PARA_item, NULL );
-					int shinkano;
+					int shinkano = 0;
 					SHINKA_COND shinka_cond;
+          u32 param = 0;
+          BOOL is_check  = TRUE;
 					OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-					shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN, item,
-            GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData( wk->param->gamesys ) ), &shinka_cond, HEAPID_WORLDTRADE );
+          //チョボマキとカブルモは交換じゃないと進化しない
+          if( (PP_Get(pp,ID_PARA_monsno,NULL) == MONSNO_571 && other_poke == MONSNO_561 )
+                || ( PP_Get(pp,ID_PARA_monsno,NULL) == MONSNO_561 && other_poke == MONSNO_571 ) )
+          {
+            if( wk->is_trade_download )
+            {
+              is_check = TRUE;
+            }
+            else
+            {
+              is_check  = FALSE;
+            }
+          }
+          else
+          {
+            is_check  = TRUE;
+          }
+          wk->is_trade_download = FALSE;
+
+          if( is_check )
+          {
+            shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN,
+              (u32)backup,
+              GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData( wk->param->gamesys ) ),
+              &shinka_cond, HEAPID_WORLDTRADE );
+          }
+
 					if(shinkano!=0){
             SHINKA_DEMO_PARAM *p_param;
 
@@ -364,6 +396,8 @@ int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
     wk->sub_proc_wk = NULL;
   }
 
+  wk->is_trade_download = FALSE;
+
   WorldTrade_InitSystem( wk );
 
 	// ボックス画面に戻る
@@ -446,7 +480,7 @@ static void EvoPokemonUpdate( WORLDTRADE_WORK *wk )
 {
 	POKEMON_PARAM *pp = RecvPokemonParamPointerGet( wk, wk->sub_process_mode );
 	
-	if(wk->EvoPokeInfo.boxno==18){
+	if(wk->EvoPokeInfo.boxno==WORLDTRADE_BOX_TEMOTI){
 		// てもちの時
 		WT_PokeCopyPPtoPP( pp, PokeParty_GetMemberPointer( wk->param->myparty, wk->EvoPokeInfo.pos ) );
 	}else{

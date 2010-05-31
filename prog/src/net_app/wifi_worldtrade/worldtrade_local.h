@@ -605,6 +605,8 @@ typedef struct _WORLDTRADE_WORK{
   GFL_PROCSYS *local_proc;
   GFL_PROC_MAIN_STATUS local_proc_status;
 
+  BOOL  is_trade_download;
+
 #ifdef PM_DEBUG
 	int 					frame;									//
 	int						framenum[9][2];							//

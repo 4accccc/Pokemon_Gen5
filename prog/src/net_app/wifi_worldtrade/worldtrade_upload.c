@@ -1037,6 +1037,8 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 			if(wk->UploadPokemonData.isTrade){
 				OS_TPrintf(" download is right! but traded\n");
 
+        wk->is_trade_download = TRUE;
+
 				wk->subprocess_seq = SUBSEQ_SERVER_TRADE_CHECK;
 			}else{
 				OS_TPrintf(" download is right!\n");
@@ -1504,15 +1506,8 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 				break;
 			// 受け取れる
 			case POKEMON_RECV_OK:
-#ifdef REPAIR_060804
-				// こっちがバグ修正しているほう
 				wk->subprocess_seq   = SUBSEQ_DOWNLOAD_EX_START;
 				wk->sub_out_flg = 1;
-#else
-				WorldTrade_SubProcessChange( wk, WORLDTRADE_UPLOAD, MODE_DOWNLOAD_EX );
-				wk->subprocess_seq  = SUBSEQ_END;
-#endif
-
 				break;
 			}
 			break;
@@ -2743,7 +2738,7 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 	// なにはともあれてもちに入れようとする
 	// ボックスに入れようとしている時にポケモンにメールがついている場合は
 	// てもちに入れるようにする
-	boxno = 18;
+	boxno = WORLDTRADE_BOX_TEMOTI;
 
 	if(PokeParty_GetPokeCount(wk->param->myparty)==6){
 		// てもちがいっぱいだったらボックスに
@@ -2783,14 +2778,14 @@ static void DownloadPokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, int 
 	}
 
 	// てもち(てもちが一杯はこの時点だとどうしようもないのでこないようにしないと）
-	if(boxno==18){
+	if(boxno==WORLDTRADE_BOX_TEMOTI){
 		int num;
 
 		// メールがついているので、手持ちにしか受け取れない
 		PokeParty_Add(wk->param->myparty, pp);
 		num = PokeParty_GetPokeCount( wk->param->myparty );
 
-		wk->EvoPokeInfo.boxno = 18;
+		wk->EvoPokeInfo.boxno = WORLDTRADE_BOX_TEMOTI;
 		wk->EvoPokeInfo.pos   = num-1;
 
 	}else{

@@ -523,6 +523,14 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 
 		break;
 	case MODE_SEX:
+		// ‚à‚Ç‚é
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+									word_table[10][0],		word_table[10][1],	
+									INPUT_BACK_W, 			INPUT_BACK_H, 
+									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+
 		// «•Ê‘I‘ğ
 		for(i=0;i<MODE_SEX_WIN_NUM;i++){
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
@@ -532,6 +540,10 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
+
+		
+		break;
+	case MODE_LEVEL:
 		// ‚à‚Ç‚é
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
@@ -539,9 +551,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-		
-		break;
-	case MODE_LEVEL:
+
 		// ƒŒƒxƒ‹‘I‘ğ
 		for(i=0;i<MODE_LEVEL_WIN_NUM;i++){
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
@@ -559,14 +569,6 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B);
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_LEVEL_WIN_NUM]), INPUTPLATE_PAGE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_LEVEL_WIN_NUM] );
-
-		// ‚à‚Ç‚é
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
 		break;
 
