@@ -5431,7 +5431,7 @@ static void handler_KudakeruYoroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       fEffective = TRUE;
     }
 
-    if( fEffective )
+    if( fEffective && (!BPP_IsDead(bpp)) )
     {
       BTL_HANDEX_PARAM_RANK_EFFECT* param;
 
