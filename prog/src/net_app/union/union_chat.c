@@ -160,12 +160,17 @@ static BOOL UnionChat_CheckSameLog(UNION_CHAT_LOG *log, const u8 *mac_address, u
   int log_no;
   UNION_CHAT_DATA *check_chat;
   
-  for(log_no = log->chat_log_count - 1; log_no >= log->chat_log_count - UNION_CHAT_LOG_MAX; log_no--){
+  for(log_no = log->chat_log_count; log_no > log->chat_log_count - UNION_CHAT_LOG_MAX; log_no--){
+    if(log_no < 0){
+      return TRUE;
+    }
     check_chat = UnionChat_GetReadBuffer(log, log_no);
     if(check_chat != NULL){
       if(GFL_STD_MemComp(check_chat->mac_address, mac_address, 6) == 0){
         if(check_chat->rand != rand){
           return TRUE;  //同じ人物の直前のログが違うrandコードの為、新規の発言
+        }
+        else{
         }
         return FALSE;
       }

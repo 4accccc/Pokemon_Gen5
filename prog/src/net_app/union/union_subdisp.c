@@ -1570,7 +1570,7 @@ static void _UniSub_CheckPageSkip(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR uni
   
   view_no = unisys->chat_log.chat_view_no;
   high = unisys->chat_log.chat_log_count;
-  low = unisys->chat_log.chat_log_count - UNION_CHAT_LOG_MAX;
+  low = unisys->chat_log.chat_log_count - (UNION_CHAT_LOG_MAX - 1);
   if(low < UNION_CHAT_VIEW_LOG_NUM-1){
     low = UNION_CHAT_VIEW_LOG_NUM-1;
   }
