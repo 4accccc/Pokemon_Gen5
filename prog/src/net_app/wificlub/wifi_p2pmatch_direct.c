@@ -440,7 +440,7 @@ static int _playerDirectSub23( WIFIP2PMATCH_WORK *wk, int seq )
   if(!GFL_UI_KEY_GetTrg()){
     return seq;
   }
-  if(wk->state == WIFIP2PMATCH_STATE_TALK){
+  if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_RECV)){
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
   }
   else{
@@ -663,7 +663,7 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
   
   switch(ret){
   case BMPMENULIST_CANCEL:
-    if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
+    if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_RECV)){  //会話の流れ
       _friendNameExpand(wk,  wk->friendNo - 1);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_084, FALSE);
       _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_INIT6);
@@ -673,7 +673,7 @@ static int _playerDirectBattle2( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   default:
-    if(wk->state == WIFIP2PMATCH_STATE_TALK){  //会話の流れ
+    if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_RECV)){ //会話の流れ
       _CHANGESTATE(wk, ret);
     }
     else{  //掲示板の流れ
@@ -998,7 +998,7 @@ static int _playerDirectBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_VCTCHANGE5);
   }
   _friendNameExpand(wk,  wk->friendNo - 1);
-  if(wk->state == WIFIP2PMATCH_STATE_TALK){
+  if((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_RECV)){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_014, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
   }
@@ -1207,7 +1207,7 @@ static int _playerDirectBattleGO3( WIFIP2PMATCH_WORK *wk, int seq )
     EndMessageWindowOff(wk);
   }
   else{  // いいえを選択した場合
-    if(wk->state == WIFIP2PMATCH_STATE_MACHINE){
+    if((wk->state == WIFIP2PMATCH_STATE_MACHINE)  || (wk->state == WIFIP2PMATCH_STATE_MACHINE_RECV)){
       wk->command = WIFIP2PMATCH_PLAYERDIRECT_END;
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_071, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);

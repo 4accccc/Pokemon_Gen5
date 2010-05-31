@@ -734,6 +734,7 @@ static void WifiP2P_SetLobbyBgm( void );
 
 
 static void _errorDisp(WIFIP2PMATCH_WORK* wk);
+static void _windelandSEcall(WIFIP2PMATCH_WORK *wk);
 
 static void FriendRequestWaitOn( WIFIP2PMATCH_WORK* wk, BOOL msg_on );
 static void FriendRequestWaitOff( WIFIP2PMATCH_WORK* wk );
@@ -2926,14 +2927,10 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
   _myVChatStatusOrgSet(wk);
 
-  //    _timeWaitIconDel(wk);   timeWait内でMsgWinを破棄しているということはメッセージ終了でもOK↓
-  EndMessageWindowOff(wk);
+  _windelandSEcall(wk);
 
-  //GFL_CLACT_SYS_Delete();//
   MI_CpuClear8(wk->index2NoBackUp, WIFIP2PMATCH_MEMBER_MAX);
 
-
-  // GFL_BG_ClearFrame(  GFL_BG_FRAME3_M);
 
   if(wk->menulist){
     GFL_BMPWIN_Delete(wk->ListWin);
@@ -4293,10 +4290,12 @@ static int _parentModeSelectMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static void _windelandSEcall(WIFIP2PMATCH_WORK *wk)
 {
-  wk->SubListWin = _BmpWinDel(wk->SubListWin);
-  BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
-  BmpMenuWork_ListDelete( wk->submenulist );
-  EndMessageWindowOff(wk);
+  if(wk->SubListWin){
+    wk->SubListWin = _BmpWinDel(wk->SubListWin);
+    BmpMenuList_Exit(wk->sublw, NULL,  &wk->singleCur[_MENUTYPE_GAME]);
+    BmpMenuWork_ListDelete( wk->submenulist );
+    EndMessageWindowOff(wk);
+  }
 }
 
 
