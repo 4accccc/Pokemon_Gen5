@@ -4257,7 +4257,7 @@ static const BtlEventHandlerTable*  ADD_Kirifuda( u32* numElems )
 static void handler_Kirifuda( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   static const u16 powTbl[] = {
-    0, 200, 80, 60, 50, 40,
+    200, 80, 60, 50, 40,
   };
 
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
@@ -4267,14 +4267,15 @@ static void handler_Kirifuda( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     u8 wazaIdx;
 
     wazaIdx = BPP_WAZA_SearchIdx( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-    if( wazaIdx != PTL_WAZA_MAX ){
+    if( wazaIdx != PTL_WAZA_MAX )
+    {
       u8 pp = BPP_WAZA_GetPP( bpp, wazaIdx );
+      TAYA_Printf("Œ»Ý‚ÌPP=%d\n", pp);
       if( pp >= NELEMS(powTbl) ){
         pp = NELEMS(powTbl) - 1;
       }
       pow = powTbl[ pp ];
     }else{
-      GF_ASSERT(0);
       pow = powTbl[ (NELEMS(powTbl)-1) ];
     }
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
