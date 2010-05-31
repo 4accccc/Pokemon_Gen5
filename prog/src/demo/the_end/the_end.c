@@ -89,7 +89,7 @@ enum
 #define FADE_IN_WAIT  (0)
 #define FADE_OUT_WAIT (0)
 
-#define THE_END_APPEAR_WAIT ( 240 )
+#define THE_END_APPEAR_WAIT ( 15*60 )
 #define LOGO_APPEAR_WAIT    ( 240 )
 
 //=============================================================================
@@ -319,10 +319,11 @@ static GFL_PROC_RESULT TheEnd_ProcMain( GFL_PROC* proc, int* seq, void* pwk, voi
     }
     break;
   case SEQ_MAIN2:
-    if(++work->wait>THE_END_APPEAR_WAIT){
+    if( (GFL_UI_KEY_GetTrg() & ( PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_START )) ||
+        (++work->wait>THE_END_APPEAR_WAIT) ) {
       *seq = SEQ_FADE_OUT2;
       // フェードアウト(見える→黒)
-        StartBrightnessFade( 0, 16, FADE_OUT_WAIT );
+      StartBrightnessFade( 0, 16, FADE_OUT_WAIT );
     }
     break;
   case SEQ_FADE_OUT2:
