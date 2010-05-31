@@ -512,10 +512,14 @@ void Intrude_SetPlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INT
   BOOL vanish;
   
   target_status = &intcomm->intrude_status[net_id];
-  vanish = target_status->player_pack.vanish;  //vanishは受信側で制御するので上書きしない
+  //vanishは受信側で制御するので上書きしない。但し送信側から非表示設定が来ている時は受け取る
+  vanish = target_status->player_pack.vanish;
   GFL_STD_MemCopy(sta, target_status, sizeof(INTRUDE_STATUS));
   target_status->player_pack.vanish = vanish;
-  
+  target_status->force_vanish = sta->player_pack.vanish;
+  if(sta->player_pack.vanish == TRUE){
+    target_status->player_pack.vanish = TRUE;
+  }
 
   //プレイヤーステータスにデータセット　※game_commに持たせているのを変えるかも
   GameCommStatus_SetPlayerStatus(intcomm->game_comm, net_id, target_status->zone_id,
@@ -573,7 +577,11 @@ static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_i
   if(net_id != GFL_NET_SystemGetCurrentID()){
     INTRUDE_STATUS *mine_st = &intcomm->intrude_status_mine;
     
-    if(target_status->player_pack.player_form != PLAYER_MOVE_FORM_NORMAL
+    if(target_status->force_vanish == TRUE){
+      //強制的に非表示
+      target_status->player_pack.vanish = TRUE;
+    }
+    else if(target_status->player_pack.player_form != PLAYER_MOVE_FORM_NORMAL
         && target_status->player_pack.player_form != PLAYER_MOVE_FORM_CYCLE){
       //表示できない形態ならば非表示
       target_status->player_pack.vanish = TRUE;
@@ -890,7 +898,11 @@ BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
 //==================================================================
 void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status)
 {
-  GF_ASSERT(intcomm->talk.answer_talk_status == INTRUDE_TALK_STATUS_NULL);
+  //キャンセルはいつでも受け入れる
+  if(talk_status != INTRUDE_TALK_STATUS_CANCEL){
+    GF_ASSERT(intcomm->talk.answer_talk_status == INTRUDE_TALK_STATUS_NULL);
+  }
+  
   if(intcomm->talk.talk_netid == net_id){
     intcomm->talk.answer_talk_netid = net_id;
     intcomm->talk.answer_talk_status = talk_status;
@@ -934,6 +946,18 @@ INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm)
     }
   }
   return INTRUDE_TALK_STATUS_NULL;
+}
+
+//==================================================================
+/**
+ * 会話の返事受信データをクリア
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_ClearTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  intcomm->talk.answer_talk_status = INTRUDE_TALK_STATUS_NULL;
 }
 
 

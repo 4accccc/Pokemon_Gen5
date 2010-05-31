@@ -131,6 +131,7 @@ typedef enum{
 enum{
     INTRUDE_TIMING_EXIT = 20,
     INTRUDE_TIMING_MISSION_BATTLE_BEFORE,       ///<ミッションバトル開始前
+    INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST,  ///<ミッションバトル開始前の最後の同期取り
     INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE,   ///<通信対戦のコマンドADD前
     INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER,    ///<通信対戦のコマンドADD後
 };
@@ -172,13 +173,14 @@ typedef struct{
   u16 action_status:6; ///<実行中のアクション(INTRUDE_ACTION_???)
   u16 detect_fold:1;  ///<TRUE:蓋を閉じている
   
-  u16 disguise_no;   ///<変装番号
+  u16 disguise_no;    ///<変装番号
   u8 disguise_type:4; ///<変装タイプ(TALK_TYPE_xxx)
   u8 disguise_sex:1;  ///<変装中の性別
   u8 mission_entry:1; ///<TRUE:ミッションに参加している
   u8 season:2;        ///<四季(PMSEASON)
-  u8 pm_version:7;    ///<PM_VERSION
+  u8 pm_version:6;    ///<PM_VERSION
   u8 tutorial:1;      ///<TRUE:チュートリアル中
+  u8 force_vanish:1;  ///<TRUE:強制的に非表示
 }INTRUDE_STATUS;
 
 ///プロフィールデータ(送信のみに使用。受信は各々のバッファに分かれる)

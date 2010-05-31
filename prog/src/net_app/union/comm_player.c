@@ -48,7 +48,8 @@ typedef struct{
   u16 dir;
   u8 player_form:4; ///<PLAYER_MOVE_FORM
   u8 map_attr_hitch:1;
-  u8  :5;
+  u8 vanish:1;
+  u8  :4;
   u8 padding;
 }MINE_PLAYER;
 
@@ -261,6 +262,7 @@ void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
   
   for(i = 0; i < COMM_PLAYER_MAX; i++){
     if(cps->act[i].occ == TRUE){
+  OS_TPrintf("aaa PushVanish = %d netID=%d\n", cps->act[i].vanish, i);
       CommPlayer_Del(cps, i);
       cps->act[i].push_flag = TRUE;
       OS_TPrintf("CommPlayer Push! %d\n", i);
@@ -296,7 +298,8 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
     if(cps->act[i].push_flag == TRUE){
       pack.pos = cps->act[i].pos;
       pack.dir = cps->act[i].dir;
-      pack.vanish = cps->act[i].vanish;
+  OS_TPrintf("aaa PopVanish = %d netID=%d\n", cps->act[i].vanish, i);
+      pack.vanish = FALSE;  //cps->act[i].vanish;
       pack.player_form = cps->act[i].player_form;
       pack.map_attr_hitch = cps->act[i].map_attr_hitch;
       CommPlayer_Add(cps, i, cps->act[i].obj_code, &pack);
@@ -376,13 +379,11 @@ void CommPlayer_SetParam(COMM_PLAYER_SYS_PTR cps, int index, const COMM_PLAYER_P
  * @param   pack		自分座標データ代入先(通信で座標をやり取りする場合、このデータを送ってください)
  *
  * @retval  BOOL		TRUE:更新あり。　FALSE:以前と値が変わっていない
- *
- * packには座標の更新の有無に関わらず常に今の値が代入されます
- * 初回のデータ送信といった、データ更新に限らず送りたい場合でもちゃんとした値が入ります
  */
 //==================================================================
 BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pack)
 {
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(cps->gsys);
   MINE_PLAYER *mine = &cps->mine;
   PLAYER_WORK * player;
   VecFx32 draw_pos;
@@ -390,16 +391,26 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
   PLAYER_MOVE_FORM form;
   BOOL attr_hitch;
   MMDL *player_mmdl;
+  BOOL vanish = FALSE;
   
   if(cps->update_stop == TRUE){
     return FALSE;
   }
 
-  player = GAMEDATA_GetMyPlayerWork(GAMESYSTEM_GetGameData(cps->gsys));
+  player = GAMEDATA_GetMyPlayerWork(gamedata);
   
   form = PLAYERWORK_GetMoveForm( player );
 
-  if(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE 
+  if( FIELD_STATUS_GetProcAction( GAMEDATA_GetFieldStatus(gamedata) ) == PROC_ACTION_MAPCHG ){
+    //マップチェンジ中はプレイヤー座標が左上を指してしまうタイミングがある為、
+    ///非表示にする。座標も現在のは送らない
+    vanish = TRUE;
+    dir = mine->dir;
+    draw_pos = mine->pos;
+    form = mine->player_form;
+    attr_hitch = mine->map_attr_hitch;
+  }
+  else if(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE 
       && FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(cps->gsys)) == TRUE){
     FIELDMAP_WORK *fieldWork;
     FIELD_PLAYER * fld_player;
@@ -425,16 +436,17 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
   
   pack->dir = dir;
   pack->pos = draw_pos;
-  pack->vanish = FALSE;
+  pack->vanish = vanish;
   pack->player_form = form;
   pack->map_attr_hitch = attr_hitch;
 
   if(dir != mine->dir || form != mine->player_form || attr_hitch != mine->map_attr_hitch
-      || GFL_STD_MemComp(&draw_pos, &mine->pos, sizeof(VecFx32)) != 0){
+      || vanish != mine->vanish || GFL_STD_MemComp(&draw_pos, &mine->pos, sizeof(VecFx32)) != 0){
     mine->dir = dir;
     mine->pos = draw_pos;
     mine->player_form = form;
     mine->map_attr_hitch = attr_hitch;
+    mine->vanish = vanish;
     return TRUE;
   }
   return FALSE;

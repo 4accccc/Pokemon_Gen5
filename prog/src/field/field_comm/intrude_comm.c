@@ -632,10 +632,20 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   }
   
   gamedata = GameCommSys_GetGameData(invalid_parent->game_comm);
+  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
   
   CommPlayer_Pop(intcomm->cps);
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(net_id == my_net_id){
+      continue;
+    }
+    if(CommPlayer_CheckOcc(intcomm->cps, net_id) == TRUE){
+      intcomm->intrude_status[net_id].player_pack.vanish 
+        = intcomm->intrude_status[net_id].force_vanish;
+      CommPlayer_SetParam(intcomm->cps, net_id, &intcomm->intrude_status[net_id].player_pack);
+    }
+  }
   
-  my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
   //マップ切り替えで通信プレイヤーの位置反映の貯め、Statusの更新を行う
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     if(net_id != my_net_id && (intcomm->recv_profile & (1 << net_id))){
