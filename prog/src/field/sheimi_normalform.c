@@ -123,11 +123,12 @@ BOOL SHEIMI_NFORM_ChangeNormal_Time(GAMEDATA * gdata, POKEPARTY *ppt, const RTCT
   night = PM_RTC_GetTimeZoneChangeHour( inSeason, TIMEZONE_NIGHT );
   morning = PM_RTC_GetTimeZoneChangeHour( inSeason, TIMEZONE_MORNING );
 
+  rc = FALSE;
 	//Œ»Ý‚ªNGŽž‚Ìê‡(t‚Ì‚Æ‚«20:00 ` 27:59  night`morning)
 	if(time->hour >= night || time->hour < morning){
 //		NOZOMU_Printf("ƒVƒFƒCƒ~ form XV\n");
 		SHEIMI_NFORM_ChangeNormalZukanEntry(gdata, ppt);
-		return TRUE;
+		rc = TRUE;
 	}
   return rc;
 }
