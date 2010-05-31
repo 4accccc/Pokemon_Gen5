@@ -283,7 +283,6 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_RARE_BB
 ポケモンアニメ	POS_BB	アニメスタート
 ポケモン影バニッシュ	POS_BB	バニッシュオフ
-ポケモン移動	POS_BB	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_BB_6
 立ち位置チェック	POS_B	いない	NO_EXIST_B_6
 指定されたワークを見て条件分岐	POS_B_RARE	==	0	NO_RARE_B
@@ -291,7 +290,6 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_RARE_B
 ポケモンアニメ	POS_B	アニメスタート
 ポケモン影バニッシュ	POS_B	バニッシュオフ
-ポケモン移動	POS_B	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_B_6
 立ち位置チェック	POS_D	いない	NO_EXIST_D_6
 指定されたワークを見て条件分岐	POS_D_RARE	==	0	NO_RARE_D
@@ -299,7 +297,6 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_RARE_D
 ポケモンアニメ	POS_D	アニメスタート
 ポケモン影バニッシュ	POS_D	バニッシュオフ
-ポケモン移動	POS_D	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_D_6
 立ち位置チェック	POS_F	いない	NO_EXIST_F_6
 指定されたワークを見て条件分岐	POS_F_RARE	==	0	NO_RARE_F
@@ -307,8 +304,20 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ラベル	NO_RARE_F
 ポケモンアニメ	POS_F	アニメスタート
 ポケモン影バニッシュ	POS_F	バニッシュオフ
-ポケモン移動	POS_F	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_F_6
+エフェクト終了待ち	すべて
+立ち位置チェック	POS_BB	いない	NO_EXIST_BB_7
+ポケモン移動	POS_BB	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_BB_7
+立ち位置チェック	POS_B	いない	NO_EXIST_B_7
+ポケモン移動	POS_B	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_B_7
+立ち位置チェック	POS_D	いない	NO_EXIST_D_7
+ポケモン移動	POS_D	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_D_7
+立ち位置チェック	POS_F	いない	NO_EXIST_F_7
+ポケモン移動	POS_F	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_F_7
 エフェクト終了待ち	すべて
 エフェクト終了
 &
