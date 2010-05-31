@@ -78,7 +78,7 @@ SEQ_SE_SYS_26			ポケモン眠る
 
 typedef void (StateFunc)(G_SYNC_WORK* pState);
 
-#define _DOWNLOAD_ERROR  (GSYNC_ERR008-GSYNC_ERR001+1)
+#define _DOWNLOAD_ERROR  (GSYNC_ERR010)
 
 //
 // PHP とのインターフェース構造体
@@ -161,6 +161,7 @@ struct _G_SYNC_WORK {
   int percent;
   int lv1timer;
   int time;
+  int uploadCount;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
   char tempbuffer[30];
   u8 musicalNo;      ///< webで選択した番号  無い場合 0
@@ -322,12 +323,28 @@ static void _modeFadeStart(G_SYNC_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
+static void _ErrorDisp3(G_SYNC_WORK* pWork)
+{
+  if(!GSYNC_DOWNLOAD_ResultEnd(pWork->pDownload)){
+    return;
+  }
+  GSYNC_DOWNLOAD_Exit(pWork->pDownload);
+  pWork->pDownload=NULL;
+  _CHANGE_STATE(_networkClose);
+}
+
 static void _ErrorDisp2(G_SYNC_WORK* pWork)
 {
-
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
-//  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
-    _CHANGE_STATE(_networkClose);
+    if(pWork->pDownload){
+      if(GSYNC_DOWNLOAD_ExitAsync(pWork->pDownload)){
+        _CHANGE_STATE(_ErrorDisp3);
+      }
+      _CHANGE_STATE(_networkClose);
+    }
+    else{
+      _CHANGE_STATE(_networkClose);
+    }
   }
 }
 
@@ -336,8 +353,11 @@ static void _ErrorDisp(G_SYNC_WORK* pWork)
 {
   int gmm = GSYNC_ERR001 + pWork->ErrorNo - 1;
 
-  if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
-    gmm = DREAM_WORLD_SERVER_ERROR_ETC - 1 + GSYNC_ERR001;
+  if(_DOWNLOAD_ERROR == pWork->ErrorNo){
+    gmm = GSYNC_ERR010;
+  }
+  else if((pWork->ErrorNo <= 0) || (pWork->ErrorNo >= DREAM_WORLD_SERVER_ERROR_MAX)){
+    gmm = GSYNC_ERR009;
   }
   GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
   
@@ -476,7 +496,7 @@ static void _anmcallbackfunc( u32 param, fx32 currentFrame )
 
 static void _pokemonArise(G_SYNC_WORK* pWork)
 {
-  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+  DREAMWORLD_SAVEDATA* pDreamSave = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
 
   if(pWork->pp){
     GFL_HEAP_FreeMemory(pWork->pp);
@@ -485,7 +505,7 @@ static void _pokemonArise(G_SYNC_WORK* pWork)
   if(BOXDAT_GetEmptyTrayNumberAndPos( pWork->pBox, &pWork->trayno, &pWork->indexno )){
     POKEMON_PARAM* pp = GFL_HEAP_AllocClearMemory( pWork->heapID, POKETOOL_GetWorkSize()) ;
 
-    GFL_STD_MemCopy(DREAMWORLD_SV_GetSleepPokemon(pDream), pp, POKETOOL_GetWorkSize());
+    GFL_STD_MemCopy(DREAMWORLD_SV_GetSleepPokemon(pDreamSave), pp, POKETOOL_GetWorkSize());
 
     if(pWork->lvup!=0){  //レベル更新
       int level = PP_Get( pp, ID_PARA_level, 0);
@@ -505,7 +525,9 @@ static void _pokemonArise(G_SYNC_WORK* pWork)
     BOXDAT_PutPokemon(pWork->pBox, PP_GetPPPPointerConst(pp));
     
     pWork->pp = pp;
-    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
+    DREAMWORLD_SV_SetSleepPokemonFlg(pDreamSave,FALSE);
+    DREAMWORLD_SV_SetUploadCount(pDreamSave, pWork->uploadCount);
+    
   }
 }
 
@@ -784,9 +806,12 @@ static void _downloadcgearend(G_SYNC_WORK* pWork)
   if(GSYNC_DOWNLOAD_ResultError(pWork->pDownload)){
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
+    return;
   }
   GSYNC_DOWNLOAD_Exit(pWork->pDownload);
   pWork->pDownload=NULL;
+
+  
 
   if(pWork->percent < 100){
     pWork->percent+=10;
@@ -823,7 +848,9 @@ static void _downloadcgear6(G_SYNC_WORK* pWork)
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
   }
-  _CHANGE_STATE(_downloadcgear7);
+  else{
+    _CHANGE_STATE(_downloadcgear7);
+  }
 }
 
 
@@ -848,7 +875,13 @@ static void _downloadcgear5(G_SYNC_WORK* pWork)
     pWork->ErrorNo = _DOWNLOAD_ERROR;
     _CHANGE_STATE(_ErrorDisp);
   }
-  _CHANGE_STATE(_downloadcgear51);
+  else if(GSYNC_DOWNLOAD_GetSize(pWork->pDownload)==0){
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
+  }
+  else{
+    _CHANGE_STATE(_downloadcgear51);
+  }
 }
 
 
@@ -1048,7 +1081,7 @@ static void _datacheck(G_SYNC_WORK* pWork, DREAMWORLD_SAVEDATA* pDreamSave,DREAM
   }
   if(!pDream->bGet && (DREAMWORLD_SV_GetUploadCount(pDreamSave) != pDream->uploadCount))
   {
-    DREAMWORLD_SV_SetUploadCount(pDreamSave, pDream->uploadCount);
+    pWork->uploadCount = pDream->uploadCount;
     pWork->musicalNo = pDream->musicalNo;      ///< webで選択した番号  無い場合 0
     pWork->cgearNo = pDream->cgearNo; //  u8 cgearNo;        ///< webで選択した番号  無い場合 0
     pWork->zukanNo = pDream->zukanNo; //  u8 zukanNo;        ///< webで選択した番号  無い場合 0
