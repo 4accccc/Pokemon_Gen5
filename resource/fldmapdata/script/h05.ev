@@ -636,8 +636,8 @@ _OBJ_ANIME( H05_MINEZUMI_03, anm_common_dancejump )
 _TIME_WAIT( 5 )
 _OBJ_ANIME( H05_MINEZUMI_04, anm_common_dancejump )
 _TIME_WAIT( 5 )
-_OBJ_ANIME_WAIT()
 _VOICE_WAIT()
+_OBJ_ANIME_WAIT()
 
 _CAMERA_START()		//カメラ操作開始
 _CAMERA_PURGE()		//カメラのバインドを解く
@@ -672,10 +672,11 @@ CASE 0 THEN
 	
 	//みぎゅう！？
 	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
+	_VOICE_WAIT()
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
-	_VOICE_WAIT()
+	
 	
 	//========================================/
 	
@@ -701,10 +702,9 @@ CASE 1 THEN
 	
 	//みぎゅう！？
 	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
+	_VOICE_WAIT()
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
-	
-	_VOICE_WAIT()
 
 	//========================================/
 	
@@ -729,10 +729,11 @@ CASE 2 THEN
 	
 	//みぎゅう！？
 	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
+	_VOICE_WAIT()
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
-	_VOICE_WAIT()
+	
 	
 	//========================================/
 	
@@ -757,10 +758,11 @@ CASE 3 THEN
 	
 	//みぎゅう！？
 	_GIZAPLAINWIN_MSG_POS( msg_h05_poke17_01, POS_UP )
+	_VOICE_WAIT()
 	_AB_KEYWAIT_MARK()
 	_GIZAPLAINWIN_CLOSE()
 	
-	_VOICE_WAIT()
+	
 	
 	//========================================/
 	
@@ -1558,7 +1560,6 @@ _TALK_OBJ_START()
 		//その　ミネズミちゃんが
 		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		//はい選択
 		IF $SCWK_ANSWER == SCR_YES THEN
@@ -1570,6 +1571,10 @@ _TALK_OBJ_START()
 			ELSE
 				_CALL ev_hazure
 			ENDIF
+			
+		//いいえ選択
+		ELSE
+			_MSGWIN_CLOSE()
 		
 		ENDIF
 	
@@ -1594,7 +1599,6 @@ _TALK_OBJ_START()
 		//その　ミネズミちゃんが
 		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		//はい選択
 		IF $SCWK_ANSWER == SCR_YES THEN
@@ -1606,7 +1610,9 @@ _TALK_OBJ_START()
 			ELSE
 				_CALL ev_hazure
 			ENDIF
-		
+		//いいえ選択
+		ELSE
+			_MSGWIN_CLOSE()
 		ENDIF
 	
 	//ショーではない
@@ -1630,7 +1636,6 @@ _TALK_OBJ_START()
 		//その　ミネズミちゃんが
 		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		//はい選択
 		IF $SCWK_ANSWER == SCR_YES THEN
@@ -1642,7 +1647,9 @@ _TALK_OBJ_START()
 			ELSE
 				_CALL ev_hazure
 			ENDIF
-		
+		//いいえ選択
+		ELSE
+			_MSGWIN_CLOSE()
 		ENDIF
 	
 	//ショーではない
@@ -1666,7 +1673,6 @@ _TALK_OBJ_START()
 		//その　ミネズミちゃんが
 		_BALLOONWIN_OBJMSG_POS( msg_h05_woman2_08 , H05_WOMAN2_01, POS_DEFAULT )
 		_YES_NO_WIN( SCWK_ANSWER )
-		_MSGWIN_CLOSE()
 		
 		//はい選択
 		IF $SCWK_ANSWER == SCR_YES THEN
@@ -1678,7 +1684,9 @@ _TALK_OBJ_START()
 			ELSE
 				_CALL ev_hazure
 			ENDIF
-		
+		//いいえ選択
+		ELSE
+			_MSGWIN_CLOSE()
 		ENDIF
 	
 	//ショーではない
