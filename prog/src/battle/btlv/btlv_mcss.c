@@ -2675,11 +2675,10 @@ static  void  BTLV_MCSS_CallBackFunctorFrame( u32 data, fx32 currentFrame )
     return;
   }
 
-  //NONSTOPアニメだと1時間くらい放置したときにズレがでるので、Restartを呼んでおく
-  MCSS_RestartAnime( bmw->btlv_mcss[ index ].mcss );
-
   if( MCSS_GetStopCellAnms( bmw->btlv_mcss[ index ].mcss ) == MCSS_CELL_ANIM_NONSTOP )
   {
+    //NONSTOPアニメだと1時間くらい放置したときにズレがでるので、Restartを呼んでおく
+    MCSS_RestartAnime( bmw->btlv_mcss[ index ].mcss );
     return;
   }
 
