@@ -258,33 +258,33 @@ static  const VecFx32 trainer_pos_table[]={
 //============================================================================================
 static  const fx32 poke_scale_single_table[]={
   0x1030,   //POS_AA
-  0x11bf,   //POS_BB  fix
+  0x11bf,   //POS_BB
 };
 
 static  const fx32 poke_scale_double_table[]={
-  0x000010f0, //POS_A
-  0x00001205, //POS_B
-  0x00000f00, //POS_C
+  0x000010e8, //POS_A
+  0x0000118e, //POS_B
+  0x00000f1a, //POS_C
   0x00001320, //POS_D
 };
 
 static  const fx32 poke_scale_triple_table[]={
-  0x00001200, //POS_A
-  0x00001200, //POS_B
+  0x000011f0, //POS_A
+  0x000011f0, //POS_B
   0x00001270, //POS_C
-  0x000011b0, //POS_D
-  0x00000ed4, //POS_E
-  0x00001400, //POS_F
+  0x0000110e, //POS_D
+  0x00000ec4, //POS_E
+  0x000013f0, //POS_F
 };
 
 static  const fx32 poke_scale_rotate_table[]={
 #ifdef ROTATION_NEW_SYSTEM
-  0x00001270, //POS_A
-  0x000011b0, //POS_B
-  0x00001200, //POS_C
-  0x00001200, //POS_D
-  0x00000ed4, //POS_E
-  0x00001400, //POS_F
+  0x00001040, //POS_A
+  0x0000109c, //POS_B
+  0x000009a1, //POS_C
+  0x00001440, //POS_D
+  0x000004b3, //POS_E
+  0x00001610, //POS_F
 #else
   0x000010f0, //POS_A
   0x00001205, //POS_B
