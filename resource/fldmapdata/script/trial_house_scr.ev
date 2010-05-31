@@ -233,9 +233,11 @@ charange:
   //ダウンロードデータの場合、使用したデータことにする
   IF $download_flg == TRUE THEN
     //「じゅんび」
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_012, SCWK_TARGET_OBJID, POS_DL )
+    _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_012 )
     //キー書き換え（内部で裏セーブ）
     _TH_CLEAR_DL_DATA( TH_DL_DATA_CLEAR_TYPE_USED )
+    //ウィンドウクローズ
+    _SYSWIN_CLOSE()
   ENDIF
 
   //トライアルハウス参加レコード加算
