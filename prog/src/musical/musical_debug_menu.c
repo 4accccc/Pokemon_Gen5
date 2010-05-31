@@ -157,7 +157,7 @@ static void MD_U_Arr( void* userWork , DEBUGWIN_ITEM* item )
 static void MD_D_Arr( void* userWork , DEBUGWIN_ITEM* item )
 {
   int pos = (int)userWork;
-  DEBUGWIN_ITEM_SetNameV( item , "‚Î‚µ‚å%d[%d]",pos+1,musicalDebugWork->arr[pos]+1 );
+  DEBUGWIN_ITEM_SetNameV( item , "ƒLƒƒƒ‰%d[%d‚Î‚ñ]",pos+1,musicalDebugWork->arr[pos]+1 );
 }
 
 static void MD_U_EnableNpc( void* userWork , DEBUGWIN_ITEM* item )
