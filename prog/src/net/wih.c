@@ -3666,7 +3666,7 @@ BOOL WH_Finalize(void)
 		return TRUE;
 	}
   if(_pWmInfo->sErrCode!=WM_ERRCODE_SUCCESS){
-		WH_ChangeSysState(WH_SYSSTATE_BUSY);
+//		WH_ChangeSysState(WH_SYSSTATE_BUSY);
 		WH_Reset();
 		return TRUE;
   }

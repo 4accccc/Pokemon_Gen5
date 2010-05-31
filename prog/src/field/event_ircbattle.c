@@ -381,6 +381,12 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_IRCBATTLE)){
       (*seq) ++;
     }
+    if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){
+      NetErr_DispCallPushPop();
+      NetErr_ExitNetSystem();
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+      (*seq) = _WAIT_NET_END;
+    }
     break;
   case _PLAY_EVENT_BGM:
 
@@ -437,6 +443,15 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     (*seq) ++;
     break;
   case _TIMINGBATTLE:
+    if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){
+      BATTLE_PARAM_Delete(dbw->para);
+      dbw->para = NULL;
+      NetErr_DispCallPushPop();
+      NetErr_ExitNetSystem();
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+      (*seq) = _WAIT_NET_END;
+      break;
+    }
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGBATTLE, WB_NET_IRCBATTLE)==FALSE){
       break;
     }
