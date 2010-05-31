@@ -332,7 +332,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	VecFx32										pos,anim_pos;
 	MtxFx44										inv_camera;
 	u16												rotate;
-	u8							flipFlg;
+	u8							          flipFlg;
 
 	G3_PushMtx();
 	G3_MtxMode( GX_MTXMODE_PROJECTION );
@@ -344,11 +344,11 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	//ビルボード回転行列を求める
 	{
 		MtxFx43						camera;
-		MtxFx33						rotate;
+		MtxFx33						rotate_mtx;
 
 		MTX_Inverse43( NNS_G3dGlbGetCameraMtx(), &camera );	//カメラ逆行列取得
-		MTX_Copy43To33( &camera, &rotate );		//カメラ逆行列から回転行列を取り出す
-		MTX_Copy33To44( &rotate, &inv_camera );
+		MTX_Copy43To33( &camera, &rotate_mtx );		//カメラ逆行列から回転行列を取り出す
+		MTX_Copy33To44( &rotate_mtx, &inv_camera );
 	}
 
 	for( index = 0 ; index < mcss_sys->mcss_max ; index++ ){
@@ -440,10 +440,15 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				G3_MultMtx44( &inv_camera );
 			}
 
-			rotate = mcss->rotate.z >> FX32_SHIFT;
+      if( mcss->rotate.z )
+      { 
+			  SOGABE_Printf("mc_rotZ:%x rotZ:%x\n", anim_SRT_mc.rotZ, mcss->rotate.z >> FX32_SHIFT );
+      }
+
+			rotate = ( anim_SRT_mc.rotZ + ( mcss->rotate.z >> FX32_SHIFT ) ) & 0xffff; 
 
 			G3_Translate( anim_pos.x, anim_pos.y, 0 );
-			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
+			G3_RotZ( -FX_SinIdx( rotate ), FX_CosIdx( rotate ) );
 			{	
 				VecFx32	scale;
 
@@ -472,7 +477,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 			//影用の回転
 			G3_RotX( FX_SinIdx( mcss->shadow_rotate ), FX_CosIdx( mcss->shadow_rotate ) );
 			G3_Translate( MCSS_CONST( anim_SRT_mc.px ), MCSS_CONST( -anim_SRT_mc.py ), 0 );
-			G3_RotZ( -FX_SinIdx( anim_SRT_mc.rotZ + rotate ), FX_CosIdx( anim_SRT_mc.rotZ + rotate ) );
+			G3_RotZ( -FX_SinIdx( rotate ), FX_CosIdx( rotate ) );
 			{	
 				VecFx32	scale;
 
