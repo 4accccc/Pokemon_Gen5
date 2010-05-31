@@ -1477,17 +1477,19 @@ void STA_ACT_CalcRank( ACTING_WORK *work )
 //--------------------------------------------------------------
 //  BGMŠÖŒW
 //--------------------------------------------------------------
-void  STA_ACT_ReadyBgm( ACTING_WORK *work )
+void  STA_ACT_ReadyBgm( ACTING_WORK *work , const u16 seqNo )
 {
+  ARI_TPrintf("ReadyLinkSeqWaveData[%d]\n",seqNo);
   work->isReadyExBgm = TRUE;
-  PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , SEQ_BGM_MSL_DL_01 );
+  PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , seqNo );
 }
 
-void  STA_ACT_StartBgm( ACTING_WORK *work )
+void  STA_ACT_StartBgm( ACTING_WORK *work , const u16 seqNo )
 {
   GF_ASSERT_MSG( work->isReadyExBgm == TRUE , "Download bgm is not ready!!!\nPlz [SCRIPT_ENUM_BgmReady]!!\n" );
+  ARI_TPrintf("PlayLinkSeqWaveData[%d]\n",seqNo);
   work->isPlayExBgm = TRUE;
-  PMDSND_PlayExtraMusic(SEQ_BGM_MSL_DL_01);
+  PMDSND_PlayExtraMusic(seqNo);
   //NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
 }
 
@@ -1499,10 +1501,10 @@ void  STA_ACT_StopBgm( ACTING_WORK *work )
   //SOUNDMAN_UnloadHierarchyPlayer();
 }
 
-void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 dstNum , const u16 srcNum )
+void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 arcNum , const u16 dstNum , const u16 srcNum )
 {
-  ARI_TPrintf("LinkSeqWaveData[%d][%d]\n",dstNum,srcNum);
-  PMDSND_ChangeWaveData( WAVE_MUS_WB_MSL_DL_DUMMY_01 , dstNum , work->bgmWaveData , srcNum );
+  ARI_TPrintf("LinkSeqWaveData[%d][%d][%d]\n",arcNum,dstNum,srcNum);
+  PMDSND_ChangeWaveData( arcNum , dstNum , work->bgmWaveData , srcNum );
 }
 
 void  STA_ACT_StartSeqBgm( ACTING_WORK *work , const u32 seqNo )

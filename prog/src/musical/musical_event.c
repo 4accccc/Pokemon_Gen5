@@ -174,7 +174,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   GMEVENT *event;
   MUSICAL_EVENT_WORK *evWork;
   
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, GFL_HEAP_LOWID(HEAPID_MUSICAL_STRM) , 0x40000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, GFL_HEAP_LOWID(HEAPID_MUSICAL_STRM) , 0x42000 );
 
   ARI_TPrintf("CreateMusicalEvent[%d]\n",isComm);
   

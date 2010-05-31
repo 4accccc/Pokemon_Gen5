@@ -1973,10 +1973,11 @@ SCRIPT_FUNC_DEF( BgmReady )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 seqNo = ScriptFunc_GetValueS32();
 
   SCRIPT_PRINT_LABEL(BgmReady);
 
-  STA_ACT_ReadyBgm( work->actWork );
+  STA_ACT_ReadyBgm( work->actWork , seqNo );
 
   return SFT_CONTINUE;
 }
@@ -1985,11 +1986,11 @@ SCRIPT_FUNC_DEF( BgmStart )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
-  const s32 bgmNo = ScriptFunc_GetValueS32();
+  const s32 seqNo = ScriptFunc_GetValueS32();
   
   SCRIPT_PRINT_LABEL(BgmStart);
 
-  STA_ACT_StartBgm( work->actWork );
+  STA_ACT_StartBgm( work->actWork , seqNo );
 
   return SFT_CONTINUE;
 }
@@ -2009,12 +2010,13 @@ SCRIPT_FUNC_DEF( BgmSetDataLink )
 {
   STA_SCRIPT_WORK *scriptWork = (STA_SCRIPT_WORK*)context_work;
   STA_SCRIPT_SYS *work = scriptWork->sysWork;
+  const s32 arcNo = ScriptFunc_GetValueS32();
   const s32 dstNo = ScriptFunc_GetValueS32();
   const s32 scrNo = ScriptFunc_GetValueS32();
 
   SCRIPT_PRINT_LABEL(BgmSetDataLink);
   
-  STA_ACT_SetBgmLinkNumber( work->actWork , dstNo , scrNo );
+  STA_ACT_SetBgmLinkNumber( work->actWork , arcNo , dstNo , scrNo );
   
   return SFT_CONTINUE;
 }

@@ -985,11 +985,15 @@
 /**
  * @brief BGM：準備 (SEQの後に行い、準備→データ関連付け→再生)
  *
- * #param_num 0
+ * #param_num 1
+ * @param seqNo BGM番号(1174～
+ *
+ * #param VALUE_INT seqNo
  */
 //======================================================================
-  .macro  ComBgmReady
+  .macro  ComBgmReady seqNo
   .short  SCRIPT_ENUM_BgmReady
+  .long \seqNo
   .endm
 
 //======================================================================
@@ -997,14 +1001,14 @@
  * @brief BGM：再生
  *
  * #param_num 1
- * @param bgmNo BGM番号
+ * @param seqNo BGM番号(1174～
  *
- * #param VALUE_INT bgmNo
+ * #param VALUE_INT seqNo
  */
 //======================================================================
-  .macro  ComBgmStart bgmNo
+  .macro  ComBgmStart seqNo
   .short  SCRIPT_ENUM_BgmStart
-  .long \bgmNo
+  .long \seqNo
   .endm
 
 //======================================================================
@@ -1022,16 +1026,19 @@
 /**
  * @brief BGM：データ関連付け
  *
- * #param_num 2
- * @param dstIdx Bankの方の番号
- * @param srcIdx Waveの方の番号
+ * #param_num 3
+ * @param arcIdx Bankの番号(1174～
+ * @param dstIdx Bankの方の番号(39～/11～/12～/21～
+ * @param srcIdx Waveの方の番号(0～3
  *
+ * #param VALUE_INT arcIdx
  * #param VALUE_INT dstIdx
  * #param VALUE_INT srcIdx
  */
 //======================================================================
-  .macro  ComBgmSetDataLink dstIdx srcIdx
+  .macro  ComBgmSetDataLink arcIdx dstIdx srcIdx
   .short  SCRIPT_ENUM_BgmSetDataLink
+  .long \arcIdx
   .long \dstIdx
   .long \srcIdx
   .endm
