@@ -103,7 +103,7 @@ _TALK_OBJ_START()
 				_MSGWIN_CLOSE()
 			
 				//カセキその１入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_HUTANOKASEKI, 1 )
+				_ITEM_EVENT_NOWAIT( ITEM_HUTANOKASEKI, 1 )
 
 				//========================================//
 				
@@ -121,7 +121,7 @@ _TALK_OBJ_START()
 				_MSGWIN_CLOSE()
 			
 				//カセキその２入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_HANENOKASEKI, 1 )
+				_ITEM_EVENT_NOWAIT( ITEM_HANENOKASEKI, 1 )
 				
 				//========================================//
 				
@@ -172,7 +172,7 @@ _TALK_OBJ_START()
 				_MSGWIN_CLOSE()
 			
 				//カセキその１入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_HUTANOKASEKI, 1 )
+				_ITEM_EVENT_NOWAIT( ITEM_HUTANOKASEKI, 1 )
 
 				//========================================//
 				
@@ -190,7 +190,7 @@ _TALK_OBJ_START()
 				_MSGWIN_CLOSE()
 			
 				//カセキその２入手処理
-				_ITEM_EVENT_KEYWAIT( ITEM_HANENOKASEKI, 1 )
+				_ITEM_EVENT_NOWAIT( ITEM_HANENOKASEKI, 1 )
 
 				//========================================//
 				
