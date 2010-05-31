@@ -719,7 +719,7 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
   //--------
   // ↓キー
   if( ( trg & PAD_KEY_DOWN ) ||
-      ( (key & PAD_KEY_DOWN) && (work->topicCursorPos < TOPIC_ID_MAX) && (10 < GetKeyContCount(work)) ) ) {
+      ( (key & PAD_KEY_DOWN) && (work->topicCursorPos < GetSelectableTopicNum(work)-1) && (10 < GetKeyContCount(work)) ) ) {
     SetTopicButtonCursorOff( work );                   // 移動前の項目を元に戻す
     SetTopicCursorNextPos( work, 1 );                  // 移動先を設定
     FinishCurrentState( work );                        // RRL_STATE_KEY_WAIT 状態終了
