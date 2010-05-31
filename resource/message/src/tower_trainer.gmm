@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T13:59:58"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T14:02:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -274,7 +274,7 @@
 	</tag-table>
 
 	<columns>
-		<id position="0" width="117"/>
+		<id position="0" width="173"/>
 		<group default=" 0:デフォルト" position="-1" width="100">
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
@@ -305,13 +305,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1669" top="224" right="2170" bottom="799" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
-		<band id="0" index="0" style="0000" width="493"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="326"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -8479,17 +8479,13 @@
 こんかいは　しょうりに　むかって
 まいしん　できた　ようす▼
 ですが　あなたさまの　じつりょくも
-さすがの　ひとこと　です▼
-では　クダリ
-なにかございましたら　どうぞ！</language>
+さすがの　ひとこと　です</language>
 		<language name="JPN_KANJI">わたくし　ノボリと　クダリの
 二両編成▼
 今回は　勝利に　向かって
 まい進　できた　様子▼
 ですが　あなたさまの　実力も
-さすがの　一言です▼
-では　クダリ
-なにかございましたら　どうぞ！</language>
+さすがの　一言です</language>
 	</row>
 
 	<row id="mes_tower_tr_311_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
