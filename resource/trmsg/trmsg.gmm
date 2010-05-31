@@ -7367,9 +7367,9 @@
 
 	<row id="TRID_BACKPACKERW_07_TRMSG_FIGHT_AFTER_GIFTITEM_BEFORE">
 		<language name="JPN" width="216">タビノ　トチュウデ　ミツケタモノデス
-ワタシ　イラナイ　アナタ　アゲマス</language>
+ワタシ　イラナイ　アナタ　アゲマス▼</language>
 		<language name="JPN_KANJI" width="216">旅ノ　途中デ　見ツケタモノデス
-私　イラナイ　アナタ　アゲマス</language>
+私　イラナイ　アナタ　アゲマス▼</language>
 	</row>
 
 	<row id="TRID_BACKPACKERW_07_TRMSG_FIGHT_AFTER_GIFTITEM_AFTER">
