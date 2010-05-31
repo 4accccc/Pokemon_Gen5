@@ -12,27 +12,6 @@
 //============================================================================================
 //	定数定義
 //============================================================================================
-/*
-// メニューウィンドウ４つ分のサイズ
-#define	BOX2BMP_POKEMENU_SX		( 11 )
-#define	BOX2BMP_POKEMENU_SY		( 3 )
-
-//「てもちポケモン」サイズ
-#define	BOX2BMP_BTN_TEMOCHI_SX	( 11 )
-#define	BOX2BMP_BTN_TEMOCHI_SY	( 3 )
-//「ポケモンいどう」サイズ
-#define	BOX2BMP_BTN_IDOU_SX		( 11 )
-#define	BOX2BMP_BTN_IDOU_SY		( 3 )
-//「もどる」サイズ
-#define	BOX2BMP_BTN_MODORU_SX	( 8 )
-#define	BOX2BMP_BTN_MODORU_SY	( 3 )
-//「ポケモンをあずける」サイズ
-#define	BOX2BMP_BOXMVMENU_SX	( 11 )
-#define	BOX2BMP_BOXMVMENU_SY	( 6 )
-//「ボックスをきりかえる」サイズ
-#define	BOX2BMP_BOXMVBTN_SX		( 17 )
-#define	BOX2BMP_BOXMVBTN_SY		( 3 )
-*/
 
 // メニューボタンデータ
 typedef struct {
@@ -44,18 +23,17 @@ typedef struct {
 enum {
 	BOX2BMP_BUTTON_TYPE_WHITE = 0,	// 白
 	BOX2BMP_BUTTON_TYPE_CANCEL,			// キャンセル用
-//	BOX2BMP_BUTTON_TYPE_RED,				// 赤
 };
 
 // 逃がすメッセージ表示ID
 enum {
 	BOX2BMP_MSGID_POKEFREE_CHECK = 0,	// ほんとうに　にがしますか？
-	BOX2BMP_MSGID_POKEFREE_ENTER,		// @0を　そとに　にがしてあげた
-	BOX2BMP_MSGID_POKEFREE_BY,			// ばいばい　@0！
-	BOX2BMP_MSGID_POKEFREE_EGG,			// タマゴを　にがすことは　できません！
+	BOX2BMP_MSGID_POKEFREE_ENTER,			// @0を　そとに　にがしてあげた
+	BOX2BMP_MSGID_POKEFREE_BY,				// ばいばい　@0！
+	BOX2BMP_MSGID_POKEFREE_EGG,				// タマゴを　にがすことは　できません！
 	BOX2BMP_MSGID_POKEFREE_RETURN,		// @0が　もどってきちゃった！
-	BOX2BMP_MSGID_POKEFREE_FEAR,		// しんぱい　だったのかな……
-	BOX2BMP_MSGID_POKEFREE_ONE,			// たたかうポケモンが　いなくなります！
+	BOX2BMP_MSGID_POKEFREE_FEAR,			// しんぱい　だったのかな……
+	BOX2BMP_MSGID_POKEFREE_ONE,				// たたかうポケモンが　いなくなります！
 };
 
 // ボックステーマ変更メッセージ表示ID
@@ -90,17 +68,16 @@ enum {
 
 // VBLANKで表示するメッセージID
 enum {
-	BOX2BMP_MSGID_VBLANK_AZUKERU = 0,		// ボックスに　おけます！
-	BOX2BMP_MSGID_VBLANK_TSURETEIKU,		// てもちに　くわえることが　できます！
-	BOX2BMP_MSGID_VBLANK_AZUKERU_ERR,		// このボックスは　いっぱいです！
+	BOX2BMP_MSGID_VBLANK_AZUKERU = 0,			// ボックスに　おけます！
+	BOX2BMP_MSGID_VBLANK_TSURETEIKU,			// てもちに　くわえることが　できます！
+	BOX2BMP_MSGID_VBLANK_AZUKERU_ERR,			// このボックスは　いっぱいです！
 	BOX2BMP_MSGID_VBLANK_TSURETEIKU_ERR,	// てもちは　いっぱいです！
-	BOX2BMP_MSGID_VBLANK_ITEM_SET,			// どうぐを　もたせます
-	BOX2BMP_MSGID_VBLANK_ITEM_INIT,			// @0を　どうしますか？
-	BOX2BMP_MSGID_VBLANK_MAIL_ERR,			// メールを　もっています！
-	BOX2BMP_MSGID_VBLANK_CAPSULE_ERR,		// ボールカプセルを　もっています！
+	BOX2BMP_MSGID_VBLANK_ITEM_SET,				// どうぐを　もたせます
+	BOX2BMP_MSGID_VBLANK_ITEM_INIT,				// @0を　どうしますか？
+	BOX2BMP_MSGID_VBLANK_MAIL_ERR,				// メールを　もっています！
 	BOX2BMP_MSGID_VBLANK_BATTLE_POKE_ERR,	// たたかうポケモンが　いなくなります！
-	BOX2BMP_MSGID_VBLANK_MAIL_MOVE,			// メールは　いどうできません！
-	BOX2BMP_MSGID_VBLANK_ITEM_MOVE,			// ポケモンに　セット！
+	BOX2BMP_MSGID_VBLANK_MAIL_MOVE,				// メールは　いどうできません！
+	BOX2BMP_MSGID_VBLANK_ITEM_MOVE,				// ポケモンに　セット！
 };
 
 
@@ -167,8 +144,8 @@ extern void BOX2BMP_DefStrPut( BOX2_SYS_WORK * syswk );
 /**
  * @brief		上画面ポケモンデータ表示
  *
- * @param		syswk	ボックス画面システムワーク
- * @param		info	表示データ
+ * @param		syswk		ボックス画面システムワーク
+ * @param		info		表示データ
  *
  * @return	none
  */

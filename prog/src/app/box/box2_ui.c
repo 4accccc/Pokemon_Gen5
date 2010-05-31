@@ -61,61 +61,43 @@ static void CursorMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 static void CursorMoveCallBack_Dummy( void * work, int now_pos, int old_pos );
 
-//static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyOutMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos );
-//static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos );
-//static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos );
-
-//static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos );
 static void PartyInMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BoxArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos );
 static void BoxArrangeMainCallBack_Move( void * work, int now_pos, int old_pos );
 
-//static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePokeMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyPokeMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxItemArrangeMainCallBack_Touch( void * work, int now_pos, int old_pos );
 static void BoxItemArrangeMainCallBack_Move( void * work, int now_pos, int old_pos );
 
-//static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxItemArrangePartyMoveCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxItemArrangePartyMoveCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxThemaChgCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxThemaChgCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void WallPaperChgCallBack_On( void * work, int now_pos, int old_pos );
 static void WallPaperChgCallBack_Move( void * work, int now_pos, int old_pos );
 static void WallPaperChgCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BoxJumpCallBack_On( void * work, int now_pos, int old_pos );
 static void BoxJumpCallBack_Move( void * work, int now_pos, int old_pos );
 static void BoxJumpCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BattleBoxMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BattleBoxMainCallBack_Move( void * work, int now_pos, int old_pos );
 static void BattleBoxMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos );
 static void BattleBoxPartyMainCallBack_Move( void * work, int now_pos, int old_pos );
 static void BattleBoxPartyMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
-//static void SleepMainCallBack_On( void * work, int now_pos, int old_pos );
 static void SleepMainCallBack_Move( void * work, int now_pos, int old_pos );
 static void SleepMainCallBack_Touch( void * work, int now_pos, int old_pos );
 
@@ -146,7 +128,6 @@ static const CURSORMOVE_DATA PartyOutMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyOutMainCallBack = {
-//	PartyOutMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Move,
@@ -165,17 +146,10 @@ static const CURSORMOVE_DATA PartyOutBoxSelCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyOutBoxSelCallBack = {
-//	CursorMoveCallBack_Dummy,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Dummy,
 	CursorMoveCallBack_Dummy,
-/*
-	PartyOutBoxSelCallBack_On,
-	CursorMoveCallBack_Off,
-	PartyOutBoxSelCallBack_Move,
-	PartyOutBoxSelCallBack_Touch,
-*/
 };
 
 // マーキング
@@ -253,7 +227,6 @@ static const CURSORMOVE_DATA PartyInMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK PartyInMainCallBack = {
-//	PartyInMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	CursorMoveCallBack_Move,
@@ -271,7 +244,6 @@ static const CURSORMOVE_DATA BoxThemaChgCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxThemaChgCallBack = {
-//	BoxThemaChgCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxThemaChgCallBack_Move,
@@ -291,7 +263,6 @@ static const CURSORMOVE_DATA WallPaperChgCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK WallPaperChgCallBack = {
-//	WallPaperChgCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	WallPaperChgCallBack_Move,
@@ -352,13 +323,11 @@ static const CURSORMOVE_DATA BoxArrangeMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	39, 41, 40, 40, { 112, 135, 168, 255 } },	// 40: にがす
 	{ 212, 136-4, 0, 0,	40, 36, 41, 41, { 136, 159, 168, 255 } },	// 41: とじる
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	42, 42, 42, 42, { 0, 8, 120, 136 } },		// 42: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangeMainCallBack = {
-//	BoxArrangeMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangeMainCallBack_Move,
@@ -418,13 +387,11 @@ static const CURSORMOVE_DATA BoxArrangePokeMoveCursorMoveData[] =
 	{  0,   0, 0, 0,	40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },		// 40: ステータス
 	{  0,   0, 0, 0,	41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },		// 41: 戻る
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	42, 42, 42, 42, { 0, 8, 120, 136 } },		// 42: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePokeMoveCallBack = {
-//	BoxArrangePokeMoveCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePokeMoveCallBack_Move,
@@ -453,13 +420,11 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	12, 14, 13, 13, { 112, 135, 168, 255 } },	// 13: にがす
 	{ 212, 136-4, 0, 0,	13,  9, 14, 14, { 136, 159, 168, 255 } },	// 14: とじる
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	15, 15, 15, 15, { 0, 8, 120, 136 } },		// 15: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePartyPokeCallBack = {
-//	BoxArrangePartyMoveCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePartyMoveCallBack_Move,
@@ -519,13 +484,11 @@ static const CURSORMOVE_DATA BoxArrangePartyPokeMoveCursorMoveData[] =
 	{  0,   0, 0, 0,	40, 40, 40, 40, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_03, TOUCHBAR_ICON_X_03+TOUCHBAR_ICON_WIDTH-1 } },		// 40: ステータス
 	{  0,   0, 0, 0,	41, 41, 41, 41, { TOUCHBAR_ICON_Y, TOUCHBAR_ICON_Y+TOUCHBAR_ICON_HEIGHT-1, TOUCHBAR_ICON_X_07, TOUCHBAR_ICON_X_07+TOUCHBAR_ICON_WIDTH-1 } },		// 41: 戻る
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	42, 42, 42, 42, { 0, 8, 120, 136 } },		// 42: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxArrangePartyPokeMoveCallBack = {
-//	BoxArrangePartyPokeMoveCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxArrangePartyPokeMoveCallBack_Move,
@@ -582,13 +545,11 @@ static const CURSORMOVE_DATA BoxItemArrangeMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	36, 38, 37, 37, { 112, 135, 168, 255 } },	// 37: バッグへ or もたせる
 	{ 212, 136-4, 0, 0,	37, 36, 38, 38, { 136, 159, 168, 255 } },	// 38: とじる
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	39, 39, 39, 39, { 0, 8, 120, 136 } },		// 39: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxItemArrangeMainCallBack = {
-//	BoxItemArrangeMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxItemArrangeMainCallBack_Move,
@@ -620,7 +581,6 @@ static const CURSORMOVE_DATA BoxItemArrangePartyPokeCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxItemArrangePartyPokeCallBack = {
-//	BoxItemArrangePartyMoveCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxItemArrangePartyMoveCallBack_Move,
@@ -642,7 +602,6 @@ static const CURSORMOVE_DATA BoxJumpCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BoxJumpCallBack = {
-//	BoxJumpCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BoxJumpCallBack_Move,
@@ -701,13 +660,11 @@ static const CURSORMOVE_DATA BattleBoxMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	37, 39, 38, 38, { 112, 135, 168, 255 } },	// 38: もちもの
 	{ 212, 136-4, 0, 0,	38, 36, 39, 39, { 136, 159, 168, 255 } },	// 39: やめる
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	40, 40, 40, 40, { 0, 8, 120, 136 } },		// 40: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BattleBoxMainCallBack = {
-//	BattleBoxMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BattleBoxMainCallBack_Move,
@@ -734,13 +691,11 @@ static const CURSORMOVE_DATA BattleBoxPartyMainCursorMoveData[] =
 	{ 212, 112-4, 0, 0,	10, 12, 11, 11, { 112, 135, 168, 255 } },	// 11: もちもの
 	{ 212, 136-4, 0, 0,	11,  9, 12, 12, { 136, 159, 168, 255 } },	// 12: とじる
 
-	// CONV_BUTTON_IN
 	{ 0, 0, 0, 0,	13, 13, 13, 13, { 0, 8, 120, 136 } },		// 13: 便利モード
 
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK BattleBoxPartyMainCallBack = {
-//	BattleBoxPartyMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	BattleBoxPartyMainCallBack_Move,
@@ -797,7 +752,6 @@ static const CURSORMOVE_DATA SleepMainCursorMoveData[] =
 	{ 0, 0, 0, 0,	0, 0, 0, 0,	{ GFL_UI_TP_HIT_END, 0, 0, 0 } }
 };
 static const CURSORMOVE_CALLBACK SleepMainCallBack = {
-//	SleepMainCallBack_On,
 	CursorMoveCallBack_On,
 	CursorMoveCallBack_Off,
 	SleepMainCallBack_Move,
@@ -999,7 +953,7 @@ void BOX2UI_CursorMoveChange( BOX2_SYS_WORK * syswk, u32 id, u32 pos )
 							MoveDataTable[id].cb,
 							syswk,
 							flg,
-							pos,					// pos
+							pos,
 							HEAPID_BOX_APP );
 
 	CURSORMOVE_VanishModeSet( syswk->app->cmwk );
@@ -1044,8 +998,6 @@ void BOX2UI_PutHandCursor( BOX2_SYS_WORK * syswk, int pos )
 
 	pw = CURSORMOVE_GetMoveData( syswk->app->cmwk, pos );
 
-//	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
-
 	x = pw->px;
 	y = pw->py;
 	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y, CLSYS_DEFREND_MAIN );
@@ -1081,8 +1033,6 @@ static void CursorObjMove( BOX2_SYS_WORK * syswk, int pos )
 static void CursorMoveCallBack_On( void * work, int now_pos, int old_pos )
 {
 	BOX2_SYS_WORK * syswk = work;
-
-//	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
 
 	CursorObjMove( syswk, now_pos );
 	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
@@ -1183,86 +1133,34 @@ u32 BOX2UI_PartyOutMain( BOX2_SYS_WORK * syswk )
 	now = CURSORMOVE_PosGet( syswk->app->cmwk );
 	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
-//	if( ret < NELEMS(PartyOutMainCursorMoveData) ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			if( ret >= BOX2UI_PTOUT_MAIN_AZUKERU && ret <= BOX2UI_PTOUT_MAIN_CLOSE ){
-				CURSORMOVE_PosSet( syswk->app->cmwk, now );
-				CursorObjMove( syswk, now );
-				return CURSORMOVE_NONE;
-			}
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-				GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-				return BOX2UI_PTOUT_MAIN_RETURN1;
-			}
-			if( ret == BOX2UI_PTOUT_MAIN_RETURN1 ){
-				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-				return BOX2UI_PTOUT_MAIN_RETURN1;
-			}
-			if( ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
-				CURSORMOVE_PosSet( syswk->app->cmwk, now );
-				return BOX2UI_PTOUT_MAIN_RETURN2;
-			}
-		}else{
-			if( ret == BOX2UI_PTOUT_MAIN_RETURN1 || ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
-				CURSORMOVE_PosSet( syswk->app->cmwk, now );
-				CursorObjMove( syswk, now );
-				return CURSORMOVE_NONE;
-			}
+	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+		if( ret >= BOX2UI_PTOUT_MAIN_AZUKERU && ret <= BOX2UI_PTOUT_MAIN_CLOSE ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			CursorObjMove( syswk, now );
+			return CURSORMOVE_NONE;
 		}
-//		return ret;
-//	}
-
-/*
-	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_PTOUT_MAIN_CLOSE;
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_PTOUT_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_PTOUT_MAIN_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+			return BOX2UI_PTOUT_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_PTOUT_MAIN_RETURN2;
+		}
+	}else{
+		if( ret == BOX2UI_PTOUT_MAIN_RETURN1 || ret == BOX2UI_PTOUT_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			CursorObjMove( syswk, now );
+			return CURSORMOVE_NONE;
 		}
 	}
-*/
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ポケモンをあずける」メイン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void PartyOutMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			if( syswk->get_pos != BOX2MAIN_GETPOS_NONE &&
-					syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-				now_pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
-			}else{
-				now_pos = BOX2UI_PTOUT_MAIN_POKE1;
-			}
-		}else{
-			if( now_pos != BOX2UI_PTOUT_MAIN_AZUKERU &&
-					now_pos != BOX2UI_PTOUT_MAIN_STATUS &&
-					now_pos != BOX2UI_PTOUT_MAIN_MARKING &&
-					now_pos != BOX2UI_PTOUT_MAIN_FREE &&
-					now_pos != BOX2UI_PTOUT_MAIN_CLOSE ){
-				now_pos = BOX2UI_PTOUT_MAIN_AZUKERU;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1360,43 +1258,32 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 	now = CURSORMOVE_PosGet( syswk->app->cmwk );
 	ret = CURSORMOVE_MainCont( syswk->app->cmwk );
 
-//	if( ret < NELEMS(PartyInMainCursorMoveData) ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			if( ret >= BOX2UI_PTIN_MAIN_TSURETEIKU && ret <= BOX2UI_PTIN_MAIN_CLOSE ){
-				CURSORMOVE_PosSet( syswk->app->cmwk, now );
-				CursorObjMove( syswk, now );
-				return CURSORMOVE_NONE;
-			}
-			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
-				GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
-				return BOX2UI_PTIN_MAIN_RETURN1;
-			}
-			if( ret == BOX2UI_PTIN_MAIN_RETURN1 ){
-				GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
-				return BOX2UI_PTIN_MAIN_RETURN1;
-			}
-			if( ret == BOX2UI_PTIN_MAIN_RETURN2 ){
-				CURSORMOVE_PosSet( syswk->app->cmwk, now );
-				return BOX2UI_PTIN_MAIN_RETURN2;
-			}
-		}else{
-			if( ret == BOX2UI_PTIN_MAIN_RETURN1 ||
-					ret == BOX2UI_PTIN_MAIN_RETURN2 ){
-				CURSORMOVE_PosSet( syswk->app->cmwk, now );
-				CursorObjMove( syswk, now );
-				return CURSORMOVE_NONE;
-			}
+	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
+		if( ret >= BOX2UI_PTIN_MAIN_TSURETEIKU && ret <= BOX2UI_PTIN_MAIN_CLOSE ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			CursorObjMove( syswk, now );
+			return CURSORMOVE_NONE;
 		}
-//		return ret;
-//	}
-
-/*
-	if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_PTIN_MAIN_CLOSE;
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
+			return BOX2UI_PTIN_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_PTIN_MAIN_RETURN1 ){
+			GFL_UI_SetTouchOrKey( GFL_APP_END_TOUCH );
+			return BOX2UI_PTIN_MAIN_RETURN1;
+		}
+		if( ret == BOX2UI_PTIN_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			return BOX2UI_PTIN_MAIN_RETURN2;
+		}
+	}else{
+		if( ret == BOX2UI_PTIN_MAIN_RETURN1 ||
+				ret == BOX2UI_PTIN_MAIN_RETURN2 ){
+			CURSORMOVE_PosSet( syswk->app->cmwk, now );
+			CursorObjMove( syswk, now );
+			return CURSORMOVE_NONE;
 		}
 	}
-*/
 
 	if( ret == CURSORMOVE_NONE ){
 		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
@@ -1411,57 +1298,6 @@ u32 BOX2UI_PartyInMain( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ポケモンをつれていく」メイン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void PartyInMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			switch( now_pos ){
-			case BOX2UI_PTIN_MAIN_LEFT:
-			case BOX2UI_PTIN_MAIN_RIGHT:
-				now_pos = BOX2UI_PTIN_MAIN_NAME;
-				break;
-
-			case BOX2UI_PTIN_MAIN_NAME:
-				break;
-
-			default:
-				if( syswk->get_pos != BOX2MAIN_GETPOS_NONE && syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos;
-				}else{
-					now_pos = BOX2UI_PTIN_MAIN_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_PTIN_MAIN_TSURETEIKU &&
-					now_pos != BOX2UI_PTIN_MAIN_STATUS &&
-					now_pos != BOX2UI_PTIN_MAIN_MARKING &&
-					now_pos != BOX2UI_PTIN_MAIN_FREE &&
-					now_pos != BOX2UI_PTIN_MAIN_CLOSE ){
-				now_pos = BOX2UI_PTIN_MAIN_TSURETEIKU;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1535,11 +1371,6 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_ARRANGE_MAIN_CLOSE;
-		}
-*/
 	}
 
 	if( ret == CURSORMOVE_NONE ){
@@ -1555,65 +1386,6 @@ u32 BOX2UI_BoxArrangeMain( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ボックスをせいりする」メイン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxArrangeMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-	const CURSORMOVE_DATA * pw;
-	
-	syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			switch( now_pos ){
-			case BOX2UI_ARRANGE_MAIN_LEFT:
-			case BOX2UI_ARRANGE_MAIN_RIGHT:
-				now_pos = BOX2UI_ARRANGE_MAIN_NAME;
-				break;
-
-			case BOX2UI_ARRANGE_MAIN_NAME:
-			case BOX2UI_ARRANGE_MAIN_PARTY:
-			case BOX2UI_ARRANGE_MAIN_RETURN1:
-			case BOX2UI_ARRANGE_MAIN_RETURN2:
-				break;
-
-			default:
-				if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos;
-				}else{
-					now_pos = BOX2UI_ARRANGE_MAIN_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_ARRANGE_MAIN_GET ||
-				now_pos != BOX2UI_ARRANGE_MAIN_STATUS ||
-				now_pos != BOX2UI_ARRANGE_MAIN_ITEM ||
-				now_pos != BOX2UI_ARRANGE_MAIN_MARKING ||
-				now_pos != BOX2UI_ARRANGE_MAIN_FREE ||
-				now_pos != BOX2UI_ARRANGE_MAIN_CLOSE ){
-
-				now_pos = BOX2UI_ARRANGE_MAIN_GET;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1698,44 +1470,6 @@ void BOX2UI_SetTouchBarIconPokeGet( BOX2_SYS_WORK * syswk, u32 pos )
 	}
 	BOX2OBJ_SetTouchBarButton( syswk, ret, BOX2OBJ_TB_ICON_OFF, status );
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ボックスをせいりする」ポケモン移動操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxArrangePokeMoveCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-
-	syswk = work;
-
-//	CursorObjMove( syswk, now_pos );
-
-	if( now_pos == BOX2UI_ARRANGE_PGT_LEFT ||			// 31: ボックス切り替え矢印（左）
-			now_pos == BOX2UI_ARRANGE_PGT_RIGHT ||		// 32: ボックス切り替え矢印（右）
-			now_pos == BOX2UI_ARRANGE_PGT_TRAY1 ||		// 33: トレイアイコン
-			now_pos == BOX2UI_ARRANGE_PGT_TRAY6 ||		// 38: トレイアイコン
-			now_pos == BOX2UI_ARRANGE_PGT_STATUS ||		// 40: ステータス
-			now_pos == BOX2UI_ARRANGE_PGT_RET ){			// 41: 戻る
-		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
-		now_pos = syswk->app->old_cur_pos;
-	}else{
-		CursorObjMove( syswk, now_pos );
-	}
-
-	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
-
-	syswk->app->old_cur_pos = now_pos;
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -1876,62 +1610,10 @@ u32 BOX2UI_BoxArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_ARRANGE_PARTY_CLOSE;
-		}
-*/
 	}
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ボックスをせいりする」手持ちポケモン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-	const CURSORMOVE_DATA * pw;
-	
-	syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			if( now_pos >= BOX2UI_ARRANGE_PARTY_BOXLIST ){
-				if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
-				}else{
-					now_pos = BOX2UI_ARRANGE_PARTY_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_ARRANGE_PARTY_GET ||
-				now_pos != BOX2UI_ARRANGE_PARTY_STATUS ||
-				now_pos != BOX2UI_ARRANGE_PARTY_ITEM ||
-				now_pos != BOX2UI_ARRANGE_PARTY_MARKING ||
-				now_pos != BOX2UI_ARRANGE_PARTY_FREE ||
-				now_pos != BOX2UI_ARRANGE_PARTY_CLOSE ){
-
-				now_pos = BOX2UI_ARRANGE_PARTY_GET;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2009,40 +1691,6 @@ u32 BOX2UI_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「ボックスをせいりする」ポケモン移動操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxArrangePartyPokeMoveCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-//	CursorObjMove( syswk, now_pos );
-
-	if( now_pos == BOX2UI_ARRANGE_PTGT_LEFT ||		// 31: ボックス切り替え矢印（左）
-			now_pos == BOX2UI_ARRANGE_PTGT_RIGHT ||		// 32: ボックス切り替え矢印（右）
-			now_pos == BOX2UI_ARRANGE_PTGT_STATUS ||	// 40: ステータス
-			now_pos == BOX2UI_ARRANGE_PTGT_RET ){			// 41: 戻る
-		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
-		now_pos = syswk->app->old_cur_pos;
-	}else{
-		CursorObjMove( syswk, now_pos );
-	}
-
-	BOX2UI_SetTouchBarIconPokeGet( syswk, now_pos );
-
-	syswk->app->old_cur_pos = now_pos;
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2147,11 +1795,6 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_ITEM_MAIN_CLOSE;
-		}
-*/
 	}
 
 	if( ret == CURSORMOVE_NONE ){
@@ -2167,65 +1810,6 @@ u32 BOX2UI_BoxItemArrangeMain( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「もちものをせいりする」メイン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxItemArrangeMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-	const CURSORMOVE_DATA * pw;
-	
-	syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			switch( now_pos ){
-			case BOX2UI_ITEM_MAIN_LEFT:
-			case BOX2UI_ITEM_MAIN_RIGHT:
-				now_pos = BOX2UI_ITEM_MAIN_NAME;
-				break;
-
-			case BOX2UI_ITEM_MAIN_NAME:
-			case BOX2UI_ITEM_MAIN_PARTY:
-			case BOX2UI_ITEM_MAIN_RETURN1:
-			case BOX2UI_ITEM_MAIN_RETURN2:
-				break;
-
-			default:
-				if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos;
-				}else{
-					now_pos = BOX2UI_ITEM_MAIN_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_ITEM_MAIN_MENU1 ||
-					now_pos != BOX2UI_ITEM_MAIN_MENU2 ||
-					now_pos != BOX2UI_ITEM_MAIN_CLOSE ){
-				if( CURSORMOVE_MoveTableBitCheck(syswk->app->cmwk,BOX2UI_ITEM_MAIN_MENU1) == TRUE ){
-					now_pos = BOX2UI_ITEM_MAIN_MENU1;
-				}else{
-					now_pos = BOX2UI_ITEM_MAIN_MENU2;
-				}
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2319,61 +1903,10 @@ u32 BOX2UI_BoxItemArrangePartyMoveMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_ITEM_PARTY_CLOSE;
-		}
-*/
 	}
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「もちものをせいりする」手持ちポケモン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxItemArrangePartyMoveCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			if( now_pos != BOX2UI_ITEM_PARTY_MENU1 ||
-					now_pos != BOX2UI_ITEM_PARTY_MENU2 ||
-					now_pos != BOX2UI_ITEM_PARTY_CLOSE ){
-				if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
-				}else{
-					now_pos = BOX2UI_ITEM_PARTY_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_ITEM_PARTY_MENU1 ||
-					now_pos != BOX2UI_ITEM_PARTY_MENU2 ||
-					now_pos != BOX2UI_ITEM_PARTY_CLOSE ){
-				if( CURSORMOVE_MoveTableBitCheck(syswk->app->cmwk,BOX2UI_ITEM_PARTY_MENU1) == TRUE ){
-					now_pos = BOX2UI_ITEM_PARTY_MENU1;
-				}else{
-					now_pos = BOX2UI_ITEM_PARTY_MENU2;
-				}
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2424,27 +1957,6 @@ static void BoxItemArrangePartyMoveCallBack_Touch( void * work, int now_pos, int
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		ボックステーマ変更操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxThemaChgCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-	CursorObjMove( syswk, now_pos );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		ボックステーマ変更操作コールバック関数：カーソル移動時
  *
  * @param		work			ボックス画面システムワーク
@@ -2488,27 +2000,6 @@ static void BoxThemaChgCallBack_Touch( void * work, int now_pos, int old_pos )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		壁紙変更操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	動作結果
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void WallPaperChgCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-	CursorObjMove( syswk, now_pos );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		壁紙変更操作コールバック関数：カーソル移動時
  *
  * @param		work			ボックス画面システムワーク
@@ -2549,39 +2040,6 @@ static void WallPaperChgCallBack_Touch( void * work, int now_pos, int old_pos )
 //============================================================================================
 //	ボックスジャンプ
 //============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		ボックスジャンプコールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BoxJumpCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-
-	syswk = work;
-
-//	CursorObjMove( syswk, now_pos );
-
-	if( now_pos == BOX2UI_BOXJUMP_TRAY1 ||		// 00: トレイアイコン
-			now_pos == BOX2UI_BOXJUMP_TRAY6 ||		// 05: トレイアイコン
-			now_pos == BOX2UI_BOXJUMP_RET ){			// 06: 戻る
-		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
-		now_pos = syswk->app->old_cur_pos;
-	}else{
-		CursorObjMove( syswk, now_pos );
-	}
-
-	syswk->app->old_cur_pos = now_pos;
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2688,11 +2146,6 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_BATTLEBOX_MAIN_CLOSE;
-		}
-*/
 	}
 
 	if( ret == CURSORMOVE_NONE ){
@@ -2708,63 +2161,6 @@ u32 BOX2UI_BattleBoxMain( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「バトルボックス」メイン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BattleBoxMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-	const CURSORMOVE_DATA * pw;
-
-	syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			switch( now_pos ){
-			case BOX2UI_BATTLEBOX_MAIN_LEFT:
-			case BOX2UI_BATTLEBOX_MAIN_RIGHT:
-				now_pos = BOX2UI_BATTLEBOX_MAIN_NAME;
-				break;
-
-			case BOX2UI_BATTLEBOX_MAIN_NAME:
-			case BOX2UI_BATTLEBOX_MAIN_PARTY:
-			case BOX2UI_BATTLEBOX_MAIN_RETURN1:
-			case BOX2UI_BATTLEBOX_MAIN_RETURN2:
-				break;
-
-			default:
-				if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos;
-				}else{
-					now_pos = BOX2UI_BATTLEBOX_MAIN_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_BATTLEBOX_MAIN_GET ||
-					now_pos != BOX2UI_BATTLEBOX_MAIN_STATUS ||
-					now_pos != BOX2UI_BATTLEBOX_MAIN_ITEM ||
-					now_pos != BOX2UI_BATTLEBOX_MAIN_CLOSE ){
-
-				now_pos = BOX2UI_BATTLEBOX_MAIN_GET;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2856,57 +2252,10 @@ u32 BOX2UI_BattleBoxPartyMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_BATTLEBOX_PARTY_CLOSE;
-		}
-*/
 	}
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「バトルボックス」パーティポケモン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void BattleBoxPartyMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			if( now_pos >= BOX2UI_BATTLEBOX_PARTY_BOXLIST ){
-				if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos - BOX2OBJ_POKEICON_TRAY_MAX;
-				}else{
-					now_pos = BOX2UI_BATTLEBOX_PARTY_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_BATTLEBOX_PARTY_GET ||
-				now_pos != BOX2UI_BATTLEBOX_PARTY_STATUS ||
-				now_pos != BOX2UI_BATTLEBOX_PARTY_ITEM ||
-				now_pos != BOX2UI_BATTLEBOX_PARTY_CLOSE ){
-
-				now_pos = BOX2UI_BATTLEBOX_PARTY_GET;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2990,11 +2339,6 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
 			CursorObjMove( syswk, now );
 			return CURSORMOVE_NONE;
 		}
-/*
-		if( ret == CURSORMOVE_CANCEL ){
-			return BOX2UI_SLEEP_MAIN_CLOSE;
-		}
-*/
 	}
 
 	if( ret == CURSORMOVE_NONE ){
@@ -3010,56 +2354,6 @@ u32 BOX2UI_SleepMain( BOX2_SYS_WORK * syswk )
 
 	return ret;
 }
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「寝かすポケモンをえらぶ」メイン操作コールバック関数：カーソル表示時
- *
- * @param		work			ボックス画面システムワーク
- * @param		now_pos		現在の位置
- * @param		old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void SleepMainCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	if( old_pos != CURSORMOVE_ONOFF_DIRECT ){
-		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == FALSE ){
-			switch( now_pos ){
-			case BOX2UI_SLEEP_MAIN_LEFT:
-			case BOX2UI_SLEEP_MAIN_RIGHT:
-				now_pos = BOX2UI_SLEEP_MAIN_NAME;
-				break;
-
-			case BOX2UI_SLEEP_MAIN_NAME:
-			case BOX2UI_SLEEP_MAIN_RETURN:
-				break;
-
-			default:
-				if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-					now_pos = syswk->get_pos;
-				}else{
-					now_pos = BOX2UI_SLEEP_MAIN_POKE1;
-				}
-			}
-		}else{
-			if( now_pos != BOX2UI_SLEEP_MAIN_SET ||
-					now_pos != BOX2UI_SLEEP_MAIN_CLOSE ){
-				now_pos = BOX2UI_SLEEP_MAIN_SET;
-			}
-		}
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	CursorObjMove( syswk, now_pos );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
-}
-*/
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -3441,202 +2735,3 @@ u32 BOX2UI_HitCheckModeChange(void)
 {
 	return HitCheckCont( &BoxArrangeMainCursorMoveData[BOX2UI_ARRANGE_MAIN_PARTY], 1 );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//	旧処理
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「ポケモンをあずける」預けるトレイ選択コールバック関数：カーソル表示時
- *
- * @param	work		ボックス画面システムワーク
- * @param	now_pos		現在の位置
- * @param	old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void PartyOutBoxSelCallBack_On( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk;
-	const CURSORMOVE_DATA * pw;
-	u8	x, y;
-
-	syswk = work;
-
-	if( now_pos == BOX2UI_PTOUT_BOXSEL_LEFT || now_pos == BOX2UI_PTOUT_BOXSEL_RIGHT ){
-		now_pos = syswk->box_mv_pos % BOX2OBJ_TRAYICON_MAX;
-		syswk->app->old_cur_pos = now_pos;
-	}
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	pw = CURSORMOVE_GetMoveData( syswk->app->cmwk, now_pos );
-
-	x = pw->px;
-	y = pw->py;
-	BOX2OBJ_SetPos( syswk->app, BOX2OBJ_ID_HAND_CURSOR, x, y, CLSYS_DEFREND_MAIN );
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
-
-	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
-	}else{
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
-	}
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「ポケモンをあずける」預けるトレイ選択コールバック関数：カーソル移動時
- *
- * @param	work		ボックス画面システムワーク
- * @param	now_pos		現在の位置
- * @param	old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void PartyOutBoxSelCallBack_Move( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_TRAY );
-	}else{
-		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_HAND_CURSOR, BOX2OBJ_ANM_HAND_NORMAL );
-	}
-
-	//「あずける」からトレイへの移動
-	if( old_pos == BOX2UI_PTOUT_BOXSEL_ENTER && now_pos == BOX2UI_PTOUT_BOXSEL_TRAY1 ){
-		now_pos = syswk->app->old_cur_pos;
-		CURSORMOVE_PosSetEx( syswk->app->cmwk, now_pos, BOX2UI_PTOUT_BOXSEL_ENTER, BOX2UI_PTOUT_BOXSEL_ENTER );
-	}
-
-	// 前回位置更新
-	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-		syswk->app->old_cur_pos = now_pos;
-	}
-
-	// トレイ左から右へのループ
-	if( now_pos == BOX2UI_PTOUT_BOXSEL_TRAY1 && old_pos == BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-		if( syswk->box_mv_pos + 1 >= syswk->trayMax ){
-			syswk->box_mv_pos = 0;
-		}else{
-			syswk->box_mv_pos++;
-		}
-		BOX2OBJ_TrayIconChange( syswk );
-		BOX2OBJ_BoxMoveNameSet( syswk );
-		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
-//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_RA, BOX2OBJ_ANM_R_ARROW_ON );
-		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
-		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
-		return;
-	}
-
-	// トレイ右から左へのループ
-	if( now_pos == BOX2UI_PTOUT_BOXSEL_TRAY6 && old_pos == BOX2UI_PTOUT_BOXSEL_TRAY1 ){
-		if( syswk->box_mv_pos - 1 < 0 ){
-			syswk->box_mv_pos = syswk->trayMax - 1;
-		}else{
-			syswk->box_mv_pos--;
-		}
-		BOX2OBJ_TrayIconChange( syswk );
-		BOX2OBJ_BoxMoveNameSet( syswk );
-		BOX2OBJ_BoxMoveCursorSet( syswk );
-		BOX2BMP_BoxMoveNameWrite( syswk, 0 );
-//		BOX2OBJ_AnmSet( syswk->app, BOX2OBJ_ID_BOXMV_LA, BOX2OBJ_ANM_L_ARROW_ON );
-		BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
-		BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
-		return;
-	}
-
-	if( now_pos >= BOX2UI_PTOUT_BOXSEL_TRAY1 && now_pos <= BOX2UI_PTOUT_BOXSEL_TRAY6 ){
-		if( old_pos != BOX2UI_PTOUT_BOXSEL_ENTER ){
-			syswk->box_mv_pos = BOX2MAIN_MV_TRAY_DEF(syswk->box_mv_pos) + now_pos;
-			BOX2OBJ_BoxMoveNameSet( syswk );
-			BOX2BMP_BoxMoveNameWrite( syswk, 0 );
-		}
-	}
-
-	BOX2UI_CursorMoveVFuncWorkSet( syswk->app, now_pos, old_pos );
-	BOX2MAIN_VFuncReq( syswk->app, BOX2MAIN_VFuncCursorMove );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * 「ポケモンをあずける」預けるトレイ選択コールバック関数：タッチ時
- *
- * @param	work		ボックス画面システムワーク
- * @param	now_pos		現在の位置
- * @param	old_pos		前回の位置
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-static void PartyOutBoxSelCallBack_Touch( void * work, int now_pos, int old_pos )
-{
-	BOX2_SYS_WORK * syswk = work;
-
-	CURSORMOVE_PosSet( syswk->app->cmwk, now_pos );
-
-	if( now_pos != BOX2UI_PTOUT_BOXSEL_LEFT && now_pos != BOX2UI_PTOUT_BOXSEL_RIGHT ){
-		CursorObjMove( syswk, now_pos );
-	}
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * Ｙステータスボタンチェック
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @retval	"TRUE = 起動可"
- * @retval	"FALSE = 起動不可"
- */
-//--------------------------------------------------------------------------------------------
-/*
-BOOL BOX2UI_YStatusButtonCheck( BOX2_SYS_WORK * syswk )
-{
-	if( BOX2BGWFRM_YStatusButtonCheck(syswk->app->wfrm) == FALSE ){
-		return FALSE;
-	}
-
-	if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_Y ){
-		return TRUE;
-	}
-
-	if( GFL_UI_TP_HitTrg( YStatusHitTbl ) != GFL_UI_TP_HIT_NONE ){
-		return TRUE;
-	}
-
-	return FALSE;
-}
-*/

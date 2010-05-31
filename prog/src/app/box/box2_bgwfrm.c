@@ -27,20 +27,15 @@
 // マーキング
 #define	MARKING_FRM_SX	( 11 )						// マーキングフレームＸサイズ
 #define	MARKING_FRM_SY	( 15 )						// マーキングフレームＹサイズ
-//#define	MARKING_FRM_PX	( 32 - MARKING_FRM_SX )		// マーキングフレームＸ表示座標
-//#define	MARKING_FRM_PY	( 26 )						// マーキングフレームＸ表示座標
-
-//#define	MARKING_ON_CHR	( 0x2b )					// マーキングキャラ開始位置 ( ON )
-//#define	MARKING_OFF_CHR	( 0x0b )					// マーキングキャラ開始位置 ( OFF )
 
 // 手持ちポケモンフレーム
-#define	PARTYPOKE_FRM_SX	( BOX2BGWFRM_PARTYPOKE_SX )		// 手持ちポケモンフレームＸサイズ
-#define	PARTYPOKE_FRM_SY	( 15 )		// 手持ちポケモンフレームＹサイズ
-#define	PARTYPOKE_FRM_PX	( 2 )		// 手持ちポケモンフレームＸ表示座標
-#define	PARTYPOKE_FRM_PY	( 21 )		// 手持ちポケモンフレームＹ表示座標
-#define	WINFRM_PARTYPOKE_LX	( BOX2BGWFRM_PARTYPOKE_LX )
-#define	WINFRM_PARTYPOKE_RX	( 21 )
-#define	WINFRM_PARTYPOKE_PY	( BOX2BGWFRM_PARTYPOKE_PY )
+#define	PARTYPOKE_FRM_SX					( BOX2BGWFRM_PARTYPOKE_SX )		// 手持ちポケモンフレームＸサイズ
+#define	PARTYPOKE_FRM_SY					( 15 )												// 手持ちポケモンフレームＹサイズ
+#define	PARTYPOKE_FRM_PX					( 2 )													// 手持ちポケモンフレームＸ表示座標
+#define	PARTYPOKE_FRM_PY					( 21 )												// 手持ちポケモンフレームＹ表示座標
+#define	WINFRM_PARTYPOKE_LX				( BOX2BGWFRM_PARTYPOKE_LX )
+#define	WINFRM_PARTYPOKE_RX				( 21 )
+#define	WINFRM_PARTYPOKE_PY				( BOX2BGWFRM_PARTYPOKE_PY )
 #define	WINFRM_PARTYPOKE_INIT_PY	( 24 )
 #define	WINFRM_PARTYPOKE_RET_PX		( 24 )
 #define	WINFRM_PARTYPOKE_RET_PY		( 15 )
@@ -49,91 +44,32 @@
 #define BOXMOVE_FRM_SX			( 11 )		// ボックス移動フレームＸサイズ
 #define BOXMOVE_FRM_SY			( 21 )		// ボックス移動フレームＹサイズ
 #define BOXMV_PTOUT_FRM_SX	( 32 )		// ボックス移動フレームＸサイズ
-#define BOXMV_PTOUT_FRM_SY	( 7 )		// ボックス移動フレームＹサイズ
-
-// 壁紙変更フレーム
-#define WPCHG_FRM_SX		( 32 )		// ボックス移動フレームＸサイズ
-#define WPCHG_FRM_SY		( 7 )		// ボックス移動フレームＹサイズ
-
-// BGWINフレームデータ
-#define	SUBDISP_ITEM_FRM_SX			( 32 )
-#define	SUBDISP_ITEM_FRM_SY			( 9 )
-#define	SUBDISP_ITEM_FRM_IN_PX	( 0 )
-#define	SUBDISP_ITEM_FRM_IN_PY	( 24 )
-#define	SUBDISP_WAZA_FRM_SX			( 12 )
-#define	SUBDISP_WAZA_FRM_SY			( 10 )
-#define	SUBDISP_WAZA_FRM_IN_PX	( 32 )
-#define	SUBDISP_WAZA_FRM_IN_PY	( 12 )
+#define BOXMV_PTOUT_FRM_SY	( 7 )			// ボックス移動フレームＹサイズ
 
 // ポケモン選択メニューフレームデータ
 #define	WINFRM_MENU_INIT_PX	( 32 )		// 表示Ｘ座標
-#define	WINFRM_MENU_PX		( 21 )		// 表示Ｘ座標
-#define	WINFRM_MENU_PY		( 2 )		// 表示Ｙ座標
-#define	WINFRM_MENU_SY		( 3 )		// 表示Ｙサイズ
-
-//「ボックスをきりかえる」ボタンフレームデータ
-#define	WINFRM_BOXCHG_BTN_PX			( 0 )
-#define	WINFRM_BOXCHG_BTN_PY			( 21 )
-#define	WINFRM_BOXCHG_BTN_INIT_PY	( 24 )
-
-//「Ｙようすをみる」ボタンフレームデータ
-#define	WINFRM_Y_ST_BTN_PX			( 0 )
-#define	WINFRM_Y_ST_BTN_PY			( 21 )
-#define	WINFRM_Y_ST_BTN_INIT_PY	( 24 )
+#define	WINFRM_MENU_PX			( 21 )		// 表示Ｘ座標
+#define	WINFRM_MENU_PY			( 2 )		// 表示Ｙ座標
+#define	WINFRM_MENU_SY			( 3 )		// 表示Ｙサイズ
 
 //「てもちポケモン」フレームデータ
 #define	WINFRM_TEMOCHI_PX		( 0 )
 #define	WINFRM_TEMOCHI_PY		( 21 )
-//#define	WINFRM_TEMOCHI_OUT_PY	( 24 )
 //「ボックスリスト」フレームデータ
-#define	WINFRM_BOXLIST_PX			( 0 )
-#define	WINFRM_BOXLIST_PY			( 21 )
-//#define	WINFRM_IDOU_OUT_PY		( 24 )
-//「もどる」フレームデータ
-#define	WINFRM_MODORU_PX		( 24 )
-#define	WINFRM_MODORU_PY		( 21 )
-#define	WINFRM_MODORU_OUT_PY	( 24 )
-
-// マーキング配置データ
-//#define	MARK_DEF_PX		( 3 )
-//#define	MARK_DEF_PY		( 1 )
-//#define	MARK_DEF_SX		( 4 )
-//#define	MARK_DEF_SY		( 3 )
+#define	WINFRM_BOXLIST_PX		( 0 )
+#define	WINFRM_BOXLIST_PY		( 21 )
 
 // マーキングフレームデータ
-#define	WINFRM_MARK_PX			( 21 )
-#define	WINFRM_MARK_PY			( 5 )
+#define	WINFRM_MARK_PX					( 21 )
+#define	WINFRM_MARK_PY					( 5 )
 #define	WINFRM_MARK_IN_START_PY	( 24 )
-#define	WINFRM_MARK_MV_CNT		( WINFRM_MARK_IN_START_PY - WINFRM_MARK_PY )
-
-// ボックス移動メニューフレームデータ
-#define	WINFRM_BOXMV_MENU_PX		( 21 )
-#define	WINFRM_BOXMV_MENU_PY		( 14 )
-#define	WINFRM_BOXMV_MENU_INIT_PX	( 32 )
-#define	WINFRM_BOXMV_MENU_SX		( 11 )
+#define	WINFRM_MARK_MV_CNT			( WINFRM_MARK_IN_START_PY - WINFRM_MARK_PY )
 
 // トレイ選択フレームデータ
 #define	WINFRM_TRAYMOVE_IN_PX		( 32 )
 #define	WINFRM_TRAYMOVE_IN_PY		( 0 )
 #define	WINFRM_TRAYMOVE_OUT_PX	( 21 )
 #define	WINFRM_TRAYMOVE_OUT_PY	( 0 )
-
-// ボックステーマ変更メニューフレームデータ
-#define	WINFRM_BOXTHEMA_MENU_SX		( 11 )
-//#define	WINFRM_BOXTHEMA_MENU_SY		( 14 )
-#define	WINFRM_BOXTHEMA_MENU_PX		( WINFRM_BOXMV_MENU_PX )
-#define	WINFRM_BOXTHEMA_MENU1_PY	( 8 )
-#define	WINFRM_BOXTHEMA_MENU2_PY	( WINFRM_BOXTHEMA_MENU1_PY + 6 )
-#define	WINFRM_BOXTHEMA_MENU3_PY	( WINFRM_BOXTHEMA_MENU2_PY + 3 )
-#define	WINFRM_BOXTHEMA_MENU_OUT_PX	( 32 )
-
-// 壁紙変更フレームデータ
-#define	WINFRM_WALLPAPER_PX			( 0 )
-#define	WINFRM_WALLPAPER_IN_PY		( -WPCHG_FRM_SY )
-#define	WINFRM_WALLPAPER_OUT_PY		( 0 )
-
-//#define	BOXPARTY_BTN_SPD	( 8 )	// 「てもちポケモン」「ポケモンいどう」ボタンスクロール速度
-#define	BOXPARTY_BTN_CNT	( 3 )	// 「てもちポケモン」「ポケモンいどう」ボタンスクロールカウント
 
 
 //============================================================================================
@@ -176,44 +112,12 @@ void BOX2BGWFRM_Init( BOX2_SYS_WORK * syswk )
 
 	// マーキングフレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MARK, GFL_BG_FRAME1_M, MARKING_FRM_SX, MARKING_FRM_SY );
+	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MARK, NARC_box_gra_box_mark_bg_lz_NSCR );
+	BOX2BMP_MarkingButtonFrmPut( syswk );
 
 	// ボックス移動フレーム
 	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME1_M, BOXMOVE_FRM_SX, BOXMOVE_FRM_SY );
 	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
-
-	// ボックス移動フレーム
-//	BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_BOXMV_MENU, GFL_BG_FRAME1_M, BOX2BMP_BOXMVMENU_SX, BOX2BMP_BOXMVMENU_SY );
-/*
-	if( syswk->dat->callMode == BOX_MODE_AZUKERU ){
-		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME0_M, BOXMV_PTOUT_FRM_SX, BOXMV_PTOUT_FRM_SY );
-		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_partyout_bg_lz_NSCR );
-	}else{
-		BGWINFRM_Add( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, GFL_BG_FRAME1_M, BOXMOVE_FRM_SX, BOXMOVE_FRM_SY );
-		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MOVE, NARC_box_gra_box_move_bg_lz_NSCR );
-	}
-*/
-/*	上画面　技・アイテムフレーム
-	if( syswk->dat->callMode == BOX_MODE_ITEM ){
-		BGWINFRM_Add(
-			appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
-			GFL_BG_FRAME2_S, SUBDISP_ITEM_FRM_SX, SUBDISP_ITEM_FRM_SY );
-		BGWINFRM_FramePut(
-			appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
-			SUBDISP_ITEM_FRM_IN_PX, SUBDISP_ITEM_FRM_IN_PY );
-		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, NARC_box_gra_sub_item_frm_lz_NSCR );
-	}else{
-		BGWINFRM_Add(
-			appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
-			GFL_BG_FRAME2_S, SUBDISP_WAZA_FRM_SX, SUBDISP_WAZA_FRM_SY );
-		BGWINFRM_FramePut(
-			appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
-			SUBDISP_WAZA_FRM_IN_PX, SUBDISP_WAZA_FRM_IN_PY );
-		FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, NARC_box_gra_sub_waza_frm_lz_NSCR );
-	}
-*/
-
-	FrameArcLoad( appwk->wfrm, BOX2MAIN_WINFRM_MARK, NARC_box_gra_box_mark_bg_lz_NSCR );
-	BOX2BMP_MarkingButtonFrmPut( syswk );
 
 	PokeMenuInitPosSet( appwk->wfrm );
 }
@@ -861,223 +765,3 @@ BOOL BOX2BGWFRM_CheckBoxMoveFrm( BGWINFRM_WORK * wk )
 	}
 	return FALSE;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//============================================================================================
-//	旧処理
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * 手持ちポケモンフレーム非表示
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_PartyPokeFrameOff( BOX2_SYS_WORK * syswk )
-{
-	GFL_BG_FillScreen(
-		GFL_BG_FRAME1_M, 0,
-		PARTYPOKE_FRM_PX, PARTYPOKE_FRM_PY,
-		PARTYPOKE_FRM_SX, PARTYPOKE_FRM_SY, GFL_BG_SCRWRT_PALNL );
-}
-*/
-
-
-//============================================================================================
-//	上画面：技フレーム
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面技フレームインセット
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispWazaFrmInSet( BOX2_APP_WORK * appwk )
-{
-	if( appwk->subdisp_waza_put == 0 ){ return; }
-	BGWINFRM_MoveInit( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, -1, 0, SUBDISP_WAZA_FRM_SX );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面技フレームアウトセット
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispWazaFrmOutSet( BOX2_APP_WORK * appwk )
-{
-	if( appwk->subdisp_waza_put == 0 ){ return; }
-	BGWINFRM_MoveInit( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP, 1, 0, SUBDISP_WAZA_FRM_SX );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面技フレーム画面内に配置
- *
- * @param	appwk	ボックス画面アプリワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispWazaFrmInPosSet( BOX2_APP_WORK * appwk )
-{
-	if( appwk->subdisp_waza_put == 0 ){ return; }
-	BGWINFRM_FrameOff( appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP );
-	BGWINFRM_FramePut(
-		appwk->wfrm, BOX2MAIN_WINFRM_SUBDISP,
-		SUBDISP_WAZA_FRM_IN_PX-SUBDISP_WAZA_FRM_SX, SUBDISP_WAZA_FRM_IN_PY );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面技フレーム画面外に配置
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispWazaFrmOutPosSet( BGWINFRM_WORK * wk )
-{
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_SUBDISP );
-	BGWINFRM_FramePut(
-		wk, BOX2MAIN_WINFRM_SUBDISP, SUBDISP_WAZA_FRM_IN_PX, SUBDISP_WAZA_FRM_IN_PY );
-}
-*/
-
-
-//============================================================================================
-//	上画面：持ち物フレーム
-//============================================================================================
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面持ち物フレームインセット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispItemFrmInSet( BGWINFRM_WORK * wk )
-{
-	s8	px, py;
-
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_SUBDISP, &px, &py );
-	if( py == SUBDISP_ITEM_FRM_IN_PY-SUBDISP_ITEM_FRM_SY ){
-		return;
-	}
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_SUBDISP, 0, -1, SUBDISP_ITEM_FRM_SY-(SUBDISP_ITEM_FRM_IN_PY-py) );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面持ち物フレームアウトセット
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispItemFrmOutSet( BGWINFRM_WORK * wk )
-{
-	s8	px, py;
-
-	BGWINFRM_PosGet( wk, BOX2MAIN_WINFRM_SUBDISP, &px, &py );
-	if( py == SUBDISP_ITEM_FRM_IN_PY ){
-		return;
-	}
-	BGWINFRM_MoveInit( wk, BOX2MAIN_WINFRM_SUBDISP, 0, 1, SUBDISP_ITEM_FRM_IN_PY-py );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面持ち物フレームを画面内に配置
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispItemFrmInPosSet( BGWINFRM_WORK * wk )
-{
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_SUBDISP );
-	BGWINFRM_FramePut(
-		wk, BOX2MAIN_WINFRM_SUBDISP, SUBDISP_ITEM_FRM_IN_PX, SUBDISP_ITEM_FRM_IN_PY-SUBDISP_ITEM_FRM_SY );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面持ち物フレームを画面外に配置
- *
- * @param	wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispItemFrmOutPosSet( BGWINFRM_WORK * wk )
-{
-	BGWINFRM_FrameOff( wk, BOX2MAIN_WINFRM_SUBDISP );
-	BGWINFRM_FramePut(
-		wk, BOX2MAIN_WINFRM_SUBDISP, SUBDISP_ITEM_FRM_IN_PX, SUBDISP_ITEM_FRM_IN_PY );
-}
-*/
-
-//--------------------------------------------------------------------------------------------
-/**
- * サブ画面ウィンドウ動作
- *
- * @param	syswk	ボックス画面システムワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-/*
-void BOX2BGWFRM_SubDispWinFrmMove( BOX2_SYS_WORK * syswk )
-{
-	if( syswk->dat->callMode != BOX_MODE_ITEM ){
-		BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP );
-	}else{
-		BGWINFRM_MoveOne( syswk->app->wfrm, BOX2MAIN_WINFRM_SUBDISP );
-		BOX2OBJ_ItemIconPutSub( syswk->app );
-	}
-}
-*/

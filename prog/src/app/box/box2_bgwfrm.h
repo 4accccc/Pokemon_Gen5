@@ -17,11 +17,7 @@
 
 // 手持ちポケモンフレームデータ
 #define	BOX2BGWFRM_PARTYPOKE_LX	( 2 )
-//#define	WINFRM_PARTYPOKE_RX	( 21 )
 #define	BOX2BGWFRM_PARTYPOKE_PY	( 6 )
-//#define	WINFRM_PARTYPOKE_INIT_PY	( 24 )
-//#define	WINFRM_PARTYPOKE_RET_PX		( 24 )
-//#define	WINFRM_PARTYPOKE_RET_PY		( 15 )
 #define	BOX2BGWFRM_PARTYPOKE_SX	( 11 )		// 手持ちポケモンフレームＸサイズ
 #define	BOX2BGWFRM_PARTYPOKE_SY	( 15 )		// 手持ちポケモンフレームＹサイズ
 
@@ -178,17 +174,6 @@ extern BOOL BOX2BGWFRM_CheckPartyPokeFrameLeft( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		手持ちポケモンフレームが左にあるかポケモンメニューボタンを画面内に配置
- *
- * @param		wk		ＢＧウィンドウフレームワーク
- *
- * @return	none
- */
-//--------------------------------------------------------------------------------------------
-extern void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
-
-//--------------------------------------------------------------------------------------------
-/**
  * @brief		手持ちポケモンフレームが表示中か
  *
  * @param		wk		ＢＧウィンドウフレームワーク
@@ -200,6 +185,17 @@ extern void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BOX2BGWFRM_CheckPartyPokeFrame( BGWINFRM_WORK * wk );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		手持ちポケモンフレームが左にあるかポケモンメニューボタンを画面内に配置
+ *
+ * @param		wk		ＢＧウィンドウフレームワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+extern void BOX2BGWFRM_PokeMenuOpenPosSet( BGWINFRM_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -24,7 +24,6 @@
 //	てもちポケモン
 //--------------------------------------------------------------------------------------------
 #define  SE_BOX2_OPEN_PARTY_TRAY		( SEQ_SE_SYS_42 )		// 手持ちウィンドウを開く
-//#define  SE_BOX2_CLOSE_PARTY_TRAY		( SEQ_SE_SELECT1 )		// 手持ちウィンドウを閉じる
 
 //--------------------------------------------------------------------------------------------
 //	操作
@@ -36,9 +35,3 @@
 #define  SE_BOX2_CHANGE_TRAY			( SEQ_SE_SELECT1 )		// トレイ切り替え
 
 #define  SE_BOX2_WARNING					( SEQ_SE_BEEP )		// 警告音(最後の1匹を逃がそうとした時)
-
-//#define  SE_BOX2_DISABLE_BUTTON		( SEQ_SE_SELECT1 )		// 押せないボタンを押したとき
-
-//#define  SE_BOX2_ITEM_WITHDRAW		( SEQ_SE_SELECT1 )		// アイテムあずかる
-//#define  SE_BOX2_ITEM_SET					( SEQ_SE_SELECT1 )		// アイテムもたせる
-//#define  SE_BOX2_ITEM_SWAP				( SEQ_SE_SELECT1 )		// アイテムとりかえる

@@ -13,10 +13,6 @@
 #include "system/main.h"
 #include "app/box2.h"
 
-/*
-#include "savedata/config.h"
-*/
-
 #include "box2_seq.h"
 #include "box2_main.h"
 #include "box2_obj.h"
@@ -69,10 +65,6 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 	syswk->get_tray = BOX2MAIN_GETPOS_NONE;
 	syswk->next_seq = BOX2SEQ_MAINSEQ_START;
 
-	// 取得用領域作成
-//	syswk->getPP = PP_CreateByPPP( BOXDAT_GetPokeDataAddress(syswk->dat->sv_box,0,0), HEAPID_BOX_SYS );
-//	PPP_Clear( syswk->getPPP );
-
 	// トレイの開放
 	if( syswk->trayMax != BOX_MAX_TRAY ){
 		u16	max;
@@ -99,18 +91,6 @@ static GFL_PROC_RESULT Box2Proc_Init( GFL_PROC * proc, int * seq, void * pwk, vo
 
 	// ローカルＰＲＯＣ作成
 	syswk->localProc = GFL_PROC_LOCAL_boot( HEAPID_BOX_SYS );
-
-
-/*
-	syswk->box    = SaveData_GetBoxData( syswk->dat->savedata );
-	syswk->party  = SaveData_GetTemotiPokemon( syswk->dat->savedata );
-	syswk->item   = SaveData_GetMyItem( syswk->dat->savedata );
-	syswk->config = SaveData_GetConfig( syswk->dat->savedata );
-
-	syswk->get_pos = BOX2MAIN_GETPOS_NONE;
-
-	syswk->cur_rcv_pos = 0;
-*/
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -156,8 +136,6 @@ static GFL_PROC_RESULT Box2Proc_End( GFL_PROC * proc, int * seq, void * pwk, voi
 	BOX2_SYS_WORK * syswk = mywk;
 
 	BOXDAT_SetCureentTrayNumber( syswk->dat->sv_box, syswk->tray );		// カレントトレイ更新
-
-//	GFL_HEAP_FreeMemory( syswk->getPP );
 
 	GFL_PROC_LOCAL_Exit( syswk->localProc );
 
