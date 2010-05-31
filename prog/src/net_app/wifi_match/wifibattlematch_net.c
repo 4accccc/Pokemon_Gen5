@@ -2656,7 +2656,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
   //ルールによって送るものが違う
   switch( cp_data->btl_rule )
   { 
-  case BTL_RULE_SINGLE:    ///< シングル
+  case WIFIBATTLEMATCH_BTLRULE_SINGLE:    ///< シングル
     ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_SINGLE, 1 );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
@@ -2674,7 +2674,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     }
     break;
 
-  case BTL_RULE_DOUBLE:    ///< ダブル
+  case WIFIBATTLEMATCH_BTLRULE_DOUBLE:    ///< ダブル
     ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_DOUBLE, 1 );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
@@ -2692,7 +2692,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     }
     break;
 
-  case BTL_RULE_TRIPLE:    ///< トリプル
+  case WIFIBATTLEMATCH_BTLRULE_TRIPLE:    ///< トリプル
     ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_TRIPLE, 1 );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
@@ -2710,7 +2710,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     }
     break;
 
-  case BTL_RULE_ROTATION:  ///< ローテーション
+  case WIFIBATTLEMATCH_BTLRULE_ROTATE:  ///< ローテーション
     ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_ROTATE, 1 );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
@@ -2722,6 +2722,24 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
       return ret;
     }
     ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, !is_win );
+    if( ret != DWC_SC_RESULT_NO_ERROR )
+    { 
+      return ret;
+    }
+    break;
+
+  case WIFIBATTLEMATCH_BTLRULE_SHOOTER:  ///< シューター
+    ret = DWC_ScReportAddByteValue( p_my->mReport, KEY_ARENA_GAMETYPE_1V1_SHOOTER, 1 );
+    if( ret != DWC_SC_RESULT_NO_ERROR )
+    { 
+      return ret;
+    }
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_WIN_COUNTER, is_win );
+    if( ret != DWC_SC_RESULT_NO_ERROR )
+    { 
+      return ret;
+    }
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_LOSE_COUNTER, !is_win );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
