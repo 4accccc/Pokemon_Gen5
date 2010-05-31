@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-27T12:23:32"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-29T16:10:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -744,8 +744,8 @@
 	</row>
 
 	<row id="BTD_TR_83">
-		<language name="JPN">メルセデス</language>
-		<language name="JPN_KANJI">メルセデス</language>
+		<language name="JPN">ロージー</language>
+		<language name="JPN_KANJI">ロージー</language>
 	</row>
 
 	<row id="BTD_TR_84">

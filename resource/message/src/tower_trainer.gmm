@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-05-28T18:20:23"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-05-29T16:23:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="326"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -2284,9 +2284,9 @@
 
 クリノスケ</comment>
 		<language name="JPN">ワタシ　トテモ　メジャーデ
-ビックナ　アーティスト　ディス！</language>
+ビッグナ　アーティスト　ディス！</language>
 		<language name="JPN_KANJI">ワタシ　トテモ　メジャーデ
-ビックナ　アーティスト　ディス！</language>
+ビッグナ　アーティスト　ディス！</language>
 	</row>
 
 	<row id="mes_tower_tr_077_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -2438,7 +2438,7 @@
 	<row id="mes_tower_tr_083_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>さぎょういん１－１
 
-メルセデス</comment>
+ロージー</comment>
 		<language name="JPN">げんばで　きたえた　ワシらの　ちから
 いま　みせちゃるけえのぉ！</language>
 		<language name="JPN_KANJI">現場で　鍛えた　ワシらの　力
@@ -2446,7 +2446,7 @@
 	</row>
 
 	<row id="mes_tower_tr_083_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>メルセデス</comment>
+		<comment>ロージー</comment>
 		<language name="JPN">どうじゃ！　ワシの　ポケモンは！
 パワフル　じゃろうがー！！</language>
 		<language name="JPN_KANJI">どうじゃ！　ワシの　ポケモンは！！
@@ -2454,7 +2454,7 @@
 	</row>
 
 	<row id="mes_tower_tr_083_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
-		<comment>メルセデス</comment>
+		<comment>ロージー</comment>
 		<language name="JPN">おかしいのう　なんでかのう
 ちからで　まけるはず　ないんじゃが</language>
 		<language name="JPN_KANJI">おかしいのう　なんでかのう
@@ -2531,9 +2531,9 @@
 
 	<row id="mes_tower_tr_086_03">
 		<comment>ピアジェ</comment>
-		<language name="JPN">オッサンも　ガキも　そこそこ
+		<language name="JPN">オッサンも　ガキも　けっこう
 たのしめるのが　ポケモンだな</language>
-		<language name="JPN_KANJI">オッサンも　ガキも　そこそこ
+		<language name="JPN_KANJI">オッサンも　ガキも　結構
 楽しめるのが　ポケモンだな</language>
 	</row>
 
@@ -3258,9 +3258,9 @@
 	<row id="mes_tower_tr_114_03">
 		<comment>パンタード</comment>
 		<language name="JPN">パパ……　ママ……
-もうすぐ　そばにいくね……</language>
+わたし　どうしたらいいの……</language>
 		<language name="JPN_KANJI">パパ……　ママ……
-もうすぐ　そばにいくね……</language>
+わたし　どうしたらいいの……</language>
 	</row>
 
 	<row id="mes_tower_tr_115_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -3646,7 +3646,7 @@
 
 ゾーエ</comment>
 		<language name="JPN">ゲームは　じんせいだけど
-じんせいは　ゲームじゃない</language>
+じんせいは　ゲームじゃないよ</language>
 		<language name="JPN_KANJI">ゲームは　人生だけど
 人生は　ゲームじゃないよ</language>
 	</row>
@@ -6483,17 +6483,17 @@
 
 	<row id="mes_tower_tr_241_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>セドリック</comment>
-		<language name="JPN">ハハハッ　せなかの　バックみたいに
+		<language name="JPN">ハハハッ　せなかの　バッグみたいに
 ビッグだろ？　オレさまってやつは！</language>
-		<language name="JPN_KANJI">ハハハッ　背中の　バックみたいに
+		<language name="JPN_KANJI">ハハハッ　背中の　バッグみたいに
 ビッグだろ？　オレさまって奴は！</language>
 	</row>
 
 	<row id="mes_tower_tr_241_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>セドリック</comment>
-		<language name="JPN">このバックには　まだまだポケモンが
+		<language name="JPN">このバッグには　まだまだポケモンが
 って　あな　あいてるじゃん　これ</language>
-		<language name="JPN_KANJI">このバックには　まだまだポケモンが
+		<language name="JPN_KANJI">このバッグには　まだまだポケモンが
 って　穴　開いてるじゃん　これ</language>
 	</row>
 
@@ -6517,9 +6517,9 @@
 
 	<row id="mes_tower_tr_242_03">
 		<comment>シモン</comment>
-		<language name="JPN">オレの　バックの　なかには　そらが
+		<language name="JPN">オレの　バッグの　なかには　そらが
 ひろがってる　つまり　カラなのさ</language>
-		<language name="JPN_KANJI">オレの　バックの　なかには　空が
+		<language name="JPN_KANJI">オレの　バッグの　なかには　空が
 広がってる　つまり　カラなのさ</language>
 	</row>
 
