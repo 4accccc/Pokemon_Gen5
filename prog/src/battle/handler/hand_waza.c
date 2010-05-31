@@ -4886,13 +4886,19 @@ static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems )
 // ワザ出し成否チェックハンドラ
 static void handler_MagicCoat_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  u8 wazaUserPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+
+  if( wazaUserPokeID == pokeID )
   {
     // 現ターン最後の行動なら失敗
     if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
     {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
+  }
+  else if( !BTL_MAINUTIL_IsFriendPokeID(pokeID, wazaUserPokeID) )
+  {
+    HandCommon_MagicCoat_CheckSideEffWaza( myHandle, flowWk, pokeID, work );
   }
 }
 // 未分類ワザ処理
@@ -7058,7 +7064,6 @@ static const BtlEventHandlerTable*  ADD_Hensin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_UNCATEGORIZE_WAZA,   handler_Hensin    }, // 未分類ワザ
-//    { BTL_EVENT_DECREMENT_PP_VOLUME, handler_Hensin_PP }, // PP消費チェック
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7073,28 +7078,8 @@ static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hensin );
     HANDEX_STR_AddArg( &param->exStr, pokeID );
     HANDEX_STR_AddArg( &param->exStr, param->pokeID );
-
-    {
-      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      work[0] = BPP_HENSIN_Check( bpp );  // 変身中に、さらにへんしんを使ったフラグ
-    }
   }
 }
-// PP消費チェック
-static void handler_Hensin_PP( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    if( work[0] == 0 )
-    {
-      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      if( BPP_HENSIN_Check(bpp) ){
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
-      }
-    }
-  }
-}
-
 //----------------------------------------------------------------------------------
 /**
  * みかづきのまい
@@ -8943,6 +8928,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         if( (waza == WAZANO_NULL)
         ||  (waza == WAZANO_KAUNTAA)
         ||  (waza == WAZANO_MIRAAKOOTO)
+        ||  (waza == WAZANO_METARUBAASUTO)
         ||  (!WAZADATA_IsDamage(waza))
         ){
           break;
@@ -10272,7 +10258,7 @@ static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT,    handler_InisieNoUta   },   // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

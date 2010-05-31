@@ -64,7 +64,9 @@ BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
 BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
 {
   static const WazaID table[] = {
-    WAZANO_MAZIKKUKOOTO,  WAZANO_YOKODORI,
+    WAZANO_YOKODORI, WAZANO_HUUIN,
+    WAZANO_MAKIBISI, WAZANO_DOKUBISI, WAZANO_SUTERUSUROKKU,
+
   };
   u32 i;
 

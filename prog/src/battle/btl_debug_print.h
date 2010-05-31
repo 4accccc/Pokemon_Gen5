@@ -254,6 +254,7 @@ typedef enum {
   DBGSTR_SVFL_MagicCoatReflect,
   DBGSTR_SVFL_YokodoriDetermine,
   DBGSTR_SVFL_YokodoriExe,
+  DBGSTR_SVFL_YokodoriInfo,
 
   DBGSTR_SVFS_RegTargetDouble,
 

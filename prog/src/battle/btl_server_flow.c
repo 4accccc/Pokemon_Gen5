@@ -4243,7 +4243,7 @@ static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
       robParam->targetPos[0] = BTL_POS_NULL;
     }
 
-    TAYA_Printf("よこどり対象PokeID=%d, 位置=%d\n", robTargetPokeID, robParam->targetPos[0]);
+    BTL_N_Printf( DBGSTR_SVFL_YokodoriInfo, robTargetPokeID, robParam->targetPos[0]);
 
     robParam->robberPokeID[0] = robberPokeID;
     robParam->robberCount = 1;
@@ -5279,8 +5279,11 @@ static void scproc_FreeFall_CheckRelease( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bp
     {
       scPut_CureSick( wk, capturedBpp, WAZASICK_FREEFALL, NULL );
       scPut_ResetContFlag( wk, capturedBpp, BPP_CONTFLG_SORAWOTOBU );
-      SCQUE_PUT_ACT_TameWazaHide( wk->que, capturedPokeID, FALSE );
-      scPut_Message_Set( wk, capturedBpp, BTL_STRID_SET_FreeFall_End );
+
+      if( BTL_POSPOKE_IsExist(&wk->pospokeWork, capturedPokeID) ){
+        SCQUE_PUT_ACT_TameWazaHide( wk->que, capturedPokeID, FALSE );
+        scPut_Message_Set( wk, capturedBpp, BTL_STRID_SET_FreeFall_End );
+      }
     }
 
     scPut_SetBppCounter( wk, bpp, BPP_COUNTER_FREEFALL, 0 );
@@ -5751,8 +5754,10 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
     break;
 
   case SV_WAZAFAIL_TOKUSEI:
+  case  SV_WAZAFAIL_NO_REACTION:
     // とくせいの場合、各ハンドラに任せる
     break;
+
   default:
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail, pokeID );
     break;
@@ -5812,10 +5817,9 @@ static u32 scEvent_DecrementPPVolume( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
       u32 i = 0;
       BTL_POKEPARAM* bpp;
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, BTL_POKESET_GetCount(rec) );
-      TAYA_Printf("対象ポケ数=%d\n", BTL_POKESET_GetCount(rec));
+
       while( (bpp=BTL_POKESET_Get(rec, i)) != NULL )
       {
-        TAYA_Printf("対象ポケID(%d)=%d\n", i, BPP_GetID(bpp));
         BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
         ++i;
       }
@@ -14908,7 +14912,7 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 
   BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon,  param_header->userPokeID );
 
-  if( BPP_IsFakeEnable(user) )
+  if( !BPP_IsFakeEnable(user) )
   {
     BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
 

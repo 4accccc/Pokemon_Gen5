@@ -2755,13 +2755,15 @@ static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       BTL_HANDEX_PARAM_RECOVER_HP* param;
 
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, 0 );
+//      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, 0 );
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
       param->pokeID = pokeID;
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      param->header.tokwin_flag = TRUE;
+
+//      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
 
     }
   }
@@ -5107,26 +5109,20 @@ static void handler_Pressure( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 {
   u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 
-  if( atkPokeID != pokeID )
+  if( !BTL_MAINUTIL_IsFriendPokeID(atkPokeID, pokeID) )
   {
     BOOL fEnable = FALSE;
 
-    u32 cnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
-    if( cnt )
-    {
-      u32 i;
-      for(i=0; i<cnt; ++i)
-      {
-        if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1+i) == pokeID ){
-          fEnable = TRUE;
-          break;
-        }
-      }
+    if( HandCommon_CheckTargetPokeID(pokeID) ){
+      fEnable = TRUE;
     }
     else{
 
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_FIELD_EFFECT ){
+        fEnable = TRUE;
+      }
+      else if( BTL_TABLES_IsPressureEffectiveWaza(waza) ){
         fEnable = TRUE;
       }
     }
@@ -6518,6 +6514,11 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_ItazuraGokoro( u32* numElems )
  * ワザ“マジックコート”で跳ね返せる技を跳ね返す。
  */
 //------------------------------------------------------------------------------
+// ワザ出し成否チェックハンドラ
+static void handler_MagicMirror_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  HandCommon_MagicCoat_CheckSideEffWaza( myHandle, flowWk, pokeID, work );
+}
 // 無効化チェックハンドラ
 static void handler_MagicMirror_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -6534,8 +6535,9 @@ static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicMirror( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L3,  handler_MagicMirror_Wait    },  // わざ乗っ取り判定ハンドラ
-    { BTL_EVENT_WAZASEQ_REFRECT,    handler_MagicMirror_Reflect },  // わざ跳ね返し確定
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND,  handler_MagicMirror_ExeCheck  }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,       handler_MagicMirror_Wait      }, // わざ乗っ取り判定ハンドラ
+    { BTL_EVENT_WAZASEQ_REFRECT,         handler_MagicMirror_Reflect   }, // わざ跳ね返し確定
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

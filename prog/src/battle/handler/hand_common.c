@@ -61,6 +61,25 @@ BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
   return FALSE;
 }
 
+
+/**
+ *  マジックコート（相手が使うサイドエフェクトでマジックコート対象ワザは失敗
+ */
+void HandCommon_MagicCoat_CheckSideEffWaza( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  u8 wazaUserPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( !BTL_MAINUTIL_IsFriendClientID(wazaUserPokeID, pokeID) )
+  {
+    WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+    if( (WAZADATA_GetCategory(waza) == WAZADATA_CATEGORY_SIDE_EFFECT)
+    &&  (WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat))
+    ){
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_NO_REACTION) ){
+        BTL_SVFRET_AddMagicCoatAction( flowWk, pokeID, wazaUserPokeID );
+      }
+    }
+  }
+}
 /**
  *  マジックコート（自分がワザ対象なら無効化）
  */
@@ -70,6 +89,7 @@ void HandCommon_MagicCoat_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MAGICCOAT_FLAG) == FALSE)
   ){
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+
     if( WAZADATA_GetFlag(waza, WAZAFLAG_MagicCoat) )
     {
       if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_NOEFFECT_FLAG, TRUE) )
