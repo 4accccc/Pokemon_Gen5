@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T16:27:25"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T17:32:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="540"/>
 		<band id="3" index="4" style="0000" width="155"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -472,10 +472,10 @@
 		<attribute name="キャラクター">LEADER5
 ヤーコン</attribute>
 		<language name="JPN" width="256">ヤーコン『いやいや　れいは　いらんよ[BE:01:ページ切り替え（クリア）]
-アンタの　おなかまが
+あんたの　おなかまが
 ポケモンを　うばおうとしていたんでね[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ヤーコン『いやいや　礼はいらんよ[BE:01:ページ切り替え（クリア）]
-アンタの　お仲間が
+あんたの　お仲間が
 ポケモンを　奪おうとしていたんでね[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
