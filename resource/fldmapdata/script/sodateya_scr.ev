@@ -491,7 +491,7 @@ take_back_pokemon_core:
 
   // éøñ‚Åuà¯Ç´éÊÇÈÇ©Ç¢?Åv
   _SODATEYA_NICK_NAME( 0, select_sodateya_pos )
-  _NUMBER( 1, charge, 4 )
+  _NUMBER( 1, charge, 5 )
   _BALLOONWIN_OBJMSG_POS( msg_sodateya_oldwoman_13, SCWK_TARGET_OBJID, POS_DOWN ) 
   _YES_NO_WIN( ask_retval )
 
