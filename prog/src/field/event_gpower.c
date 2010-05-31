@@ -60,6 +60,7 @@ typedef struct POWER_CHECK_WORK{
 
   FLDMSGBG* fmb;
   FLDSYSWIN* win;
+  MMDLSYS * mmdl_sys;
   FLDSYSWIN_STREAM* winStream;
   GFL_BMPWIN* bmpwin;
   GFL_MSGDATA* msgData;
@@ -158,7 +159,6 @@ GMEVENT* EVENT_GPowerEnableListCheck( GAMESYS_WORK * gsys, void* work )
   wk = GMEVENT_GetEventWork(event);
 
   sub_InitPowerCheckWork( wk, gsys, fieldmap );
-
   return event;
 }
 
@@ -171,6 +171,7 @@ static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, F
   wk->fieldmap = fieldmap;
   wk->gdata = GAMESYSTEM_GetGameData(gsys);
   wk->fmb = FIELDMAP_GetFldMsgBG( wk->fieldmap );
+  wk->mmdl_sys = FIELDMAP_GetMMdlSys( wk->fieldmap );
 
   wk->p_data = GPOWER_PowerData_LoadAlloc( wk->heapID );
   wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE,
@@ -180,6 +181,8 @@ static void sub_InitPowerCheckWork( POWER_CHECK_WORK* wk, GAMESYS_WORK * gsys, F
  
   wk->s_buf = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->s_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
+  
+  MMDLSYS_PauseMoveProc( wk->mmdl_sys );
 }
 
 static void sub_ReleasePowerCheckWork( POWER_CHECK_WORK* wk )
@@ -189,6 +192,8 @@ static void sub_ReleasePowerCheckWork( POWER_CHECK_WORK* wk )
   WORDSET_Delete( wk->wset );
   GFL_MSG_Delete( wk->msgData );
   GPOWER_PowerData_Unload( wk->p_data );
+
+  MMDLSYS_ClearPauseMoveProc( wk->mmdl_sys );
 }
 
 
