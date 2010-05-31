@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-28T16:00:23"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T18:29:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="28" top="149" right="733" bottom="777" maximized="no" rayout="Vertical2">
+	<dialog left="1576" top="139" right="2281" bottom="767" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -5201,7 +5201,7 @@ HAVE A NICE DAY！　ムチュッ！</language>
 つれてる　トレーナーに▽
 あうと　すかさず　きいちゃうっ！▼
 そんなわけで　またいつか
-会いましょうネ！　ADIOS！</language>
+あいましょうネ！　ADIOS！</language>
 		<language name="JPN_KANJI" width="256">ジョディ『ニャッホイ　みなさん！
 『TRADE&apos;N TALK』の　時間よ！▼
 今週の　一言
@@ -6292,7 +6292,7 @@ SEE YOU SOON！</language>
 はいって　おれらと　たのしく
 つりしねぇと！▼
 アナウンサー『でも　つりって
-１人で　たのしみたい　ひとって▽
+ひとりで　たのしみたい　ひとって▽
 おおくないですかぁ？▼
 つりめいじん『んなこた　ねぇよ！
 ひとりで　やるより　ふたり！▽

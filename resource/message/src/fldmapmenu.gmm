@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T16:20:13"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T18:28:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -267,7 +267,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -365,7 +365,7 @@
 	</row>
 
 	<row id="FLDMAPMENU_STR13">
-		<language name="JPN" width="256">設定を　せんたくしました</language>
+		<language name="JPN" width="256">せっていを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">設定を選択しました</language>
 	</row>
 
