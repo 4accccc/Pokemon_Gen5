@@ -49,9 +49,15 @@ EVENT_START   ev_d12r0101_policeman_01
 	IF $SCWK_ANSWER == SCR_YES THEN
     _BALLOONWIN_CLOSE()
     //âÒïúèàóù
-    _TEMOTI_POKEMON_KAIFUKU()
-    _ME_PLAY( SEQ_ME_ASA )
-		_ME_WAIT()
+    {
+      _BLACK_OUT()
+      _DISP_FADE_END_CHECK()
+      _TEMOTI_POKEMON_KAIFUKU()
+      _ME_PLAY( SEQ_ME_ASA )
+		  _ME_WAIT()
+      _BLACK_IN()
+      _DISP_FADE_END_CHECK()
+    }
     //Ç∆ÇﬂÇƒÇ≠ÇÍ
     $msg = msg_d12r0101_policeman02_02
 	ELSE
