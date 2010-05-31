@@ -32,7 +32,7 @@
 //============================================================================================
 
 #ifdef PM_DEBUG
-#define	LOCAL_VERSION		( VERSION_WHITE )		// デバッグ用（コミット時はブラックにすること！）
+#define	LOCAL_VERSION		( VERSION_BLACK )		// デバッグ用（コミット時はブラックにすること！）
 #else
 #define	LOCAL_VERSION		( VERSION_BLACK )		// 製品版はブラックを基本とする
 #endif	// PM_DEBUG
