@@ -1539,6 +1539,7 @@ static void RequestCheck_PLAY( FIELD_SOUND* fieldSound )
     ChangeState( fieldSound, FSND_STATE_FADE_OUT );
     break;
   case FSND_BGM_REQUEST_PUSH: 
+    FadeOutBGM( fieldSound );
     ChangeState( fieldSound, FSND_STATE_PUSH );
     break;
   case FSND_BGM_REQUEST_POP: 
