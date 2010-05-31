@@ -891,6 +891,16 @@ static int SubSeq_Start( WORLDTRADE_WORK *wk)
 		SubSeq_MessagePrint( wk, msg, 1, 0, 0x0f0f, 0 );
 		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_MAIN );
 
+
+    if( GFL_UI_CheckTouchOrKey() == GFL_APP_END_TOUCH )
+    { 
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 0);
+    }
+    else
+    {
+      GFL_CLACT_WK_SetDrawEnable( wk->CursorActWork, 1);
+    }
+
 //		SubSeq_MessagePrint( wk, msg_gtc_01_018, 1, 0, 0x0f0f );
 //		WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_MAIN );
 //		wk->subprocess_seq = SUBSEQ_MAIN;

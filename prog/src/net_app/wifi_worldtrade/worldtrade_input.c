@@ -388,6 +388,13 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 
 	// 名前入力頭文字１
 	case MODE_HEADWORD_1:
+		// もどる
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+									word_table[10][0],		word_table[10][1],	
+									INPUT_BACK_W, 			INPUT_BACK_H, 
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 		// 子音BMPWIN確保
 		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
@@ -397,6 +404,11 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 		//	GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
+
+		break;
+
+	// 名前入力頭文字２
+	case MODE_HEADWORD_2:
 		// もどる
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
@@ -405,10 +417,6 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
-		break;
-
-	// 名前入力頭文字２
-	case MODE_HEADWORD_2:
 		// 母音BMPWIN確保
 		wk->MenuBmp[0]	= GFL_BMPWIN_Create( wk->BgFrame,
 								   word_table[11][0],		word_table[11][1],	
@@ -425,6 +433,10 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[i]), INPUTPLATE_BASE_COLOR_DATA );
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
+		break;
+
+	// 名前入力
+	case MODE_POKEMON_NAME:
 		// もどる
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
@@ -432,10 +444,7 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-		break;
 
-	// 名前入力
-	case MODE_POKEMON_NAME:
 		for(i=0;i<MODE_POKENAME_WIN_NUM;i++){
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
 									   name_table[i][0],		name_table[i][1],	
@@ -453,7 +462,8 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_POKENAME_WIN_NUM]), INPUTPLATE_PAGE_COLOR_DATA  );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_POKENAME_WIN_NUM] );
-
+		break;
+	case MODE_NATION_HEAD1:
 		// もどる
 		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
 									word_table[10][0],		word_table[10][1],	
@@ -461,8 +471,8 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
-		break;
-	case MODE_NATION_HEAD1:
+
+
 		// 子音BMPWIN確保
 		for(i=0;i<MODE_NATION_HEADWORD1_WIN_NUM;i++){
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
@@ -473,13 +483,6 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 			//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[i] );
 		}
 
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									word_table[10][0],		word_table[10][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
 		// 「きにしない」
 		wk->MenuBmp[BMPWIN_NONE_SELECT_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
@@ -492,6 +495,14 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 
 		break;
 	case MODE_NATION:
+		// もどる
+		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
+									nation_table[5][0],		nation_table[5][1],	
+									INPUT_BACK_W, 			INPUT_BACK_H, 
+									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
+		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
+		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
+
 		// 国名BMPWIN確保
 		for(i=0;i<MODE_NATION_WIN_NUM;i++){
 			wk->MenuBmp[i]	= GFL_BMPWIN_Create( wk->BgFrame,
@@ -509,14 +520,6 @@ static void select_bmpwin_add( WORLDTRADE_INPUT_WORK *wk, int mode )
 									   WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
 		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[MODE_NATION_WIN_NUM]), INPUTPLATE_BASE_COLOR_DATA );
 		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[MODE_NATION_WIN_NUM] );
-
-		// もどる
-		wk->MenuBmp[BMPWIN_SELECT_END_WIN]	= GFL_BMPWIN_Create( wk->BgFrame,
-									nation_table[5][0],		nation_table[5][1],	
-									INPUT_BACK_W, 			INPUT_BACK_H, 
-									WORLDTRADE_INPUT_PAL,  	GFL_BMP_CHRAREA_GET_B );
-		GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuBmp[BMPWIN_SELECT_END_WIN]), INPUTPLATE_BASE_COLOR_DATA );
-		//GFL_BMPWIN_MakeTransWindow( wk->MenuBmp[BMPWIN_SELECT_END_WIN] );
 
 		break;
 	case MODE_SEX:
@@ -2240,6 +2243,9 @@ static void HeadWord1_Init( WORLDTRADE_INPUT_WORK *wk, int type, int x )
 	}
 //	SelectFrameBoxWrite( scr, word_table[10][0]-1, word_table[10][1]-1, SELECT_BOX_END );
 
+// もどる
+	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+
 	// 文字列描画
 	{
 		int i;
@@ -2276,8 +2282,7 @@ static void HeadWord1_Init( WORLDTRADE_INPUT_WORK *wk, int type, int x )
 
 	}
 
-	// もどる
-	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+
 
 	// 国選択の時は「きにしない」を追加する
 	if(type==MODE_NATION_HEAD1){
@@ -2796,39 +2801,32 @@ static int	wi_seq_head1_return( WORLDTRADE_INPUT_WORK *wk )
 	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_name3_lz_nscr, 1 );
 	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 	select_bmpwin_add( wk, MODE_HEADWORD_1 );
-	// アカサタナハマヤラワBMPWIN確保
-	{
-		int i;
-		for(i=0;i<10;i++){
-//			SelectFrameBoxWrite( scr, word_table[i][0], word_table[i][1], SELECT_BOX_N_LETTER );
-		}
-	}
-//	SelectFrameBoxWrite( scr, 9, 15, SELECT_BOX_END );
-
-	{
-		int i;
-		STRBUF *strbuf;
-		PRINTSYS_LSB color;
-		
-        MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
-		for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
-			strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_10_001+i );
-			if(PokeSeeCount_Category(wk, i) == TRUE){
-                color = SEARCH_MOJI_COLOR_NORMAL;
-                wk->see_check[i] = TRUE;
-            }
-            else{
-                color = SEARCH_MOJI_COLOR_GRAY;
-                wk->see_check[i] = FALSE;
-            }
-
-			WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, color, &wk->print );
-			GFL_STR_DeleteBuffer(strbuf);
-		}
-	}
 
 	// もどる
 	touch_print( wk->BgWinFrm, wk->MsgManager, wk->MenuBmp[BMPWIN_SELECT_END_WIN], msg_gtc_03_009, &wk->print );
+
+	// アカサタナハマヤラワ書き込み
+	{
+    int i;
+		STRBUF *strbuf;
+		PRINTSYS_LSB color;
+		
+    MI_CpuFill8(wk->see_check, TRUE, SEE_CHECK_MAX);
+    for(i=0;i<MODE_HEADWORD1_WIN_NUM;i++){
+      strbuf = GFL_MSG_CreateString( wk->MsgManager, msg_gtc_10_001+i );
+      if(PokeSeeCount_Category(wk, i) == TRUE){
+        color = SEARCH_MOJI_COLOR_NORMAL;
+        wk->see_check[i] = TRUE;
+      }
+      else{
+        color = SEARCH_MOJI_COLOR_GRAY;
+        wk->see_check[i] = FALSE;
+      }
+
+      WorldTrade_Input_SysPrint( wk->BgWinFrm, wk->MenuBmp[i], strbuf,  2, color, &wk->print );
+      GFL_STR_DeleteBuffer(strbuf);
+    }
+	}
 
 	BGWINFRM_FramePut( wk->BgWinFrm, 0, HEAD1_REWRITE_INIT_X, 0 );
 	BGWINFRM_FrameOn( wk->BgWinFrm, 0 );	
