@@ -304,7 +304,7 @@ typedef enum{
 } _SELECTANIM_ENUM;
 #define _SELECT_ANIME_WAIT (16)
 
-#define _SELECT_ANIME_OBJ_MAX ( 24 )
+#define _SELECT_ANIME_OBJ_MAX ( 20 )
 
 //-------------------------------------
 ///	パネルパレット情報
