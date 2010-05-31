@@ -9,6 +9,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 制御モード変更	継続
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_1
 ポケモン拡縮	POS_BB	ダイレクト	0	0	0	0	0
+ポケモンバニッシュ	POS_BB	バニッシュオン
 ポケモンアニメ	POS_BB	アニメストップ
 ポケモン影バニッシュ	POS_BB	バニッシュオン
 指定されたワークを見て条件分岐	POS_BB_JUMP	==	1	NO_EXIST_BB_1
@@ -18,6 +19,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ラベル	NO_EXIST_BB_1
 立ち位置チェック	POS_B	いない	NO_EXIST_B_1
 ポケモン拡縮	POS_B	ダイレクト	0	0	0	0	0
+ポケモンバニッシュ	POS_B	バニッシュオン
 ポケモンアニメ	POS_B	アニメストップ
 ポケモン影バニッシュ	POS_B	バニッシュオン
 指定されたワークを見て条件分岐	POS_B_JUMP	==	1	NO_EXIST_B_1
@@ -27,6 +29,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ラベル	NO_EXIST_B_1
 立ち位置チェック	POS_D	いない	NO_EXIST_D_1
 ポケモン拡縮	POS_D	ダイレクト	0	0	0	0	0
+ポケモンバニッシュ	POS_D	バニッシュオン
 ポケモンアニメ	POS_D	アニメストップ
 ポケモン影バニッシュ	POS_D	バニッシュオン
 指定されたワークを見て条件分岐	POS_D_JUMP	==	1	NO_EXIST_D_1
@@ -36,6 +39,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 ラベル	NO_EXIST_D_1
 立ち位置チェック	POS_F	いない	NO_EXIST_F_1
 ポケモン拡縮	POS_F	ダイレクト	0	0	0	0	0
+ポケモンバニッシュ	POS_F	バニッシュオン
 ポケモンアニメ	POS_F	アニメストップ
 ポケモン影バニッシュ	POS_F	バニッシュオン
 指定されたワークを見て条件分岐	POS_F_JUMP	==	1	NO_EXIST_F_1
@@ -117,6 +121,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 パーティクル再生すべて	be_ball_001_1	POS_BB	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_BB	16	16	0	31:31:31
 ポケモン拡縮	POS_BB	追従	1.2	1.2	32	0	0
+ポケモンバニッシュ	POS_BB	バニッシュオフ
 ポケモン鳴き声	POS_BB	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生	0
 ラベル	NO_EXIST_BB_3
 立ち位置チェック	POS_B	いない	NO_EXIST_B_3
@@ -125,6 +130,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 パーティクル再生すべて	be_ball_001_1	POS_B	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_B	16	16	0	31:31:31
 ポケモン拡縮	POS_B	追従	1.2	1.2	32	0	0
+ポケモンバニッシュ	POS_B	バニッシュオフ
 ポケモン鳴き声	POS_B	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生	0
 ラベル	NO_EXIST_B_3
 立ち位置チェック	POS_D	いない	NO_EXIST_D_3
@@ -133,6 +139,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 パーティクル再生すべて	be_ball_001_1	POS_D	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_D	16	16	0	31:31:31
 ポケモン拡縮	POS_D	追従	1.2	1.2	32	0	0
+ポケモンバニッシュ	POS_D	バニッシュオフ
 ポケモン鳴き声	POS_D	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生	0
 ラベル	NO_EXIST_D_3
 立ち位置チェック	POS_F	いない	NO_EXIST_F_3
@@ -141,6 +148,7 @@ SE再生	SEQ_SE_BOWA2	デフォルト	真ん中	0:0:127	0:0:0
 パーティクル再生すべて	be_ball_001_1	POS_F	方向無し	4:0:0	1:1:1	1
 ポケモンパレットフェード	POS_F	16	16	0	31:31:31
 ポケモン拡縮	POS_F	追従	1.2	1.2	32	0	0
+ポケモンバニッシュ	POS_F	バニッシュオフ
 ポケモン鳴き声	POS_F	BTLEFF_NAKIGOE_PINCH_PITCH	0	0	0	正再生	0
 ラベル	NO_EXIST_F_3
 エフェクト終了待ち	ポケモン
