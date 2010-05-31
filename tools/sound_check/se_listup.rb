@@ -25,20 +25,20 @@ file_list += Dir.glob( "../../resource/wazaeffect/**/*.esf" ) # 技エフェクト
 file_list.each do |filename|
   puts filename
   file = File::open( filename, "r" )
-  lines = nil
-  if File.file?( file ) then
-    lines = file.readlines
-  end
+  if File.file?( file ) == false then 
+    file.close
+    next 
+  end 
+  lines = file.readlines
   file.close
 
-  if lines then 
-    lines.each do |line|
-      if line =~ /(SEQ_SE_\w*)/ then 
-        label = $1
-        if all_se_list.include?( label ) then
-          se_hash[ label ] << filename
-        end
+  lines.each do |line|
+    while line =~ /(SEQ_SE_\w*)/
+      label = $1
+      if all_se_list.include?( label ) then
+        se_hash[ label ] << filename
       end
+      line.gsub!( label, "" )
     end
   end
 end
