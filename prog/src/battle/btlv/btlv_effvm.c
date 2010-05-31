@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -4287,6 +4287,8 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       pos_cnt = 0;
       if( rule == BTL_RULE_SINGLE )
       {
+        pos_cnt = 1;
+        pos[ 0 ] = bevw->attack_pos ^ 1;
         break;
       }
       switch( bevw->param.waza_range ){
