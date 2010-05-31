@@ -21,6 +21,7 @@ end
 # 検索
 file_list = Dir.glob( "../../prog/src/**/*" ) # プログラムソース
 file_list += Dir.glob( "../../resource/fldmapdata/script/**/*.ev" ) # スクリプト
+file_list += Dir.glob( "../../resource/wazaeffect/**/*.esf" ) # 技エフェクト
 file_list.each do |filename|
   puts filename
   file = File::open( filename, "r" )
