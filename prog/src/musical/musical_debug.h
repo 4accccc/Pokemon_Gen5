@@ -11,6 +11,7 @@
 
 #pragma once
 
+#include "musical/musical_system.h"
 #include "musical/musical_define.h"
 
 #if PM_DEBUG

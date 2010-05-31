@@ -25,6 +25,7 @@
 #include "musical/stage/sta_snd_def.h"  //îèéËâπÇÃíËã`
 
 #include "test/ariizumi/ari_debug.h"
+#include "musical/musical_debug_menu.h"
 
 //======================================================================
 //	define
@@ -1840,18 +1841,32 @@ const BOOL MUS_COMM_Send_MusicalIndex( MUS_COMM_WORK* work )
   u8 idxArr[MUSICAL_COMM_MEMBER_NUM];
   u8 i,j;
   u32 sendBit = 0;
-  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+#if PM_DEBUG
+  MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+  if( debWork != NULL && 
+      debWork->enableArr == TRUE )
   {
-    idxArr[i] = i;
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      idxArr[i] = debWork->arr[i];
+    }
   }
-  for( j=0;j<10;j++ )
+  else
+#endif
   {
     for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
     {
-      u8 swapIdx = GFL_STD_MtRand0(MUSICAL_COMM_MEMBER_NUM);
-      u8 temp = idxArr[i];
-      idxArr[i] = idxArr[swapIdx];
-      idxArr[swapIdx] = temp;
+      idxArr[i] = i;
+    }
+    for( j=0;j<10;j++ )
+    {
+      for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+      {
+        u8 swapIdx = GFL_STD_MtRand0(MUSICAL_COMM_MEMBER_NUM);
+        u8 temp = idxArr[i];
+        idxArr[i] = idxArr[swapIdx];
+        idxArr[swapIdx] = temp;
+      }
     }
   }
   

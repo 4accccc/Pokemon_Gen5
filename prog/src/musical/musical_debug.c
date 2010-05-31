@@ -12,6 +12,7 @@
 #include "musical_entry.cdat"
 #include "musical_debug.h"
 #include "poke_tool/poke_tool.h"
+#include "debug/debugwin_sys.h"
 
 #if PM_DEBUG
 const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u16 monsNo , const HEAPID heapId )
@@ -86,4 +87,5 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
   POKE_PERSONAL_CloseHandle( perData );
   return TRUE;
 }
+
 #endif

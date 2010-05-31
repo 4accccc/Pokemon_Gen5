@@ -51,6 +51,9 @@
 #include "net_app/irc_match/ircbattlematch.h"
 
 #include "test/ariizumi/ari_debug.h"
+#if PM_DEBUG
+#include "musical/musical_debug_menu.h"
+#endif
 
 //======================================================================
 //  define
@@ -1002,12 +1005,18 @@ static void EvCmdMusical_InitCommon( SCRIPT_WORK *sc , GAMEDATA *gameData )
   GAMEDATA_SetMusicalScrWork( gameData , musScriptWork );
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical));
   GFL_OVERLAY_Load(FS_OVERLAY_ID(musical_shot));
+#if PM_DEBUG
+  MUSICAL_DEBUG_InitDebugMenu( musScriptWork , HEAPID_PROC );
+#endif
 }
 static void EvCmdMusical_ExitCommon( MUSICAL_SCRIPT_WORK *musScriptWork , GAMEDATA *gameData )
 {
   GF_ASSERT_MSG( musScriptWork->eventWork == NULL , "イベントワークが開放してない！" );
   GF_ASSERT_MSG( musScriptWork->commWork == NULL , "通信ワークが開放してない！" );
   
+#if PM_DEBUG
+  MUSICAL_DEBUG_TermDebugMenu();
+#endif
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical_shot));
   GFL_OVERLAY_Unload(FS_OVERLAY_ID(musical));
   GFL_HEAP_FreeMemory( musScriptWork );

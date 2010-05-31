@@ -1585,7 +1585,8 @@ SRCS_OVERLAY_MUSICAL = musical/mus_poke_data.c \
         musical/stage/script/script_command.c \
         musical/stage/script/script_table.c \
 		musical/comm/mus_comm_lobby.c \
-		musical/comm/mus_comm_func.c 
+		musical/comm/mus_comm_func.c \
+		musical/musical_debug_menu.c 
 
 # ミュージカルドレスアップ
 #===> SRCS_OVERLAY_DEV_WIFI

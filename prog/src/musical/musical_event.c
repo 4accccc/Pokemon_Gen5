@@ -52,6 +52,7 @@
 #include "musical/musical_event.h"
 
 #include "debug/debug_flg.h"
+#include "musical/musical_debug_menu.h"
 #include "musical_reward_table.cdat" //景品テーブル
 //======================================================================
 //  define
@@ -234,21 +235,34 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
     {
       u8 i,j;
       const u16 sumPoint = MUSICAL_SAVE_GetSumPoint(evWork->musSave);
-      for( i=0;i<MUSICAL_POKE_MAX;i++ )
-      {
-        evWork->musicalIndex[i] = i;
-      }
-      for( j=0;j<10;j++ )
+#if PM_DEBUG
+      MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+      if( debWork != NULL && 
+          debWork->enableArr == TRUE )
       {
         for( i=0;i<MUSICAL_POKE_MAX;i++ )
         {
-          u8 swapIdx = GFUser_GetPublicRand0(MUSICAL_POKE_MAX);
-          u8 temp = evWork->musicalIndex[i];
-          evWork->musicalIndex[i] = evWork->musicalIndex[swapIdx];
-          evWork->musicalIndex[swapIdx] = temp;
+          evWork->musicalIndex[i] = debWork->arr[i];
         }
       }
-      
+      else
+#endif
+      {
+        for( i=0;i<MUSICAL_POKE_MAX;i++ )
+        {
+          evWork->musicalIndex[i] = i;
+        }
+        for( j=0;j<10;j++ )
+        {
+          for( i=0;i<MUSICAL_POKE_MAX;i++ )
+          {
+            u8 swapIdx = GFUser_GetPublicRand0(MUSICAL_POKE_MAX);
+            u8 temp = evWork->musicalIndex[i];
+            evWork->musicalIndex[i] = evWork->musicalIndex[swapIdx];
+            evWork->musicalIndex[swapIdx] = temp;
+          }
+        }
+      }
       evWork->selfIdx = evWork->musicalIndex[0];
       
       //マップ遷移前に演目のデータだけ必要(NPCキャラを出すため

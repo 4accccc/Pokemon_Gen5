@@ -18,6 +18,7 @@
 #include "musical/mus_item_data.h"
 #include "musical/stage/sta_local_def.h"
 #include "test/ariizumi/ari_debug.h"
+#include "musical/musical_debug_menu.h"
 
 //======================================================================
 //	define
@@ -97,6 +98,9 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
 {
   u8 i;
   MUSICAL_PROGRAM_WORK *progWork = GFL_HEAP_AllocMemory( heapId , sizeof( MUSICAL_PROGRAM_WORK ) );
+#if PM_DEBUG
+  MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+#endif
 //  MUSICAL_PROGRAM_DATA *progData = GFL_HEAP_AllocMemory( heapId , sizeof( MUSICAL_PROGRAM_DATA ) );
   progWork->progData = distData->programData;
 
@@ -144,6 +148,17 @@ MUSICAL_PROGRAM_WORK* MUSICAL_PROGRAM_InitProgramData( HEAPID heapId , MUSICAL_D
   
   
   //NPC‚Ì’Š‘I
+  #if PM_DEBUG
+  if( debWork != NULL && 
+      debWork->forceNpc == TRUE )
+  {
+    for( i=0;i<MUSICAL_POKE_MAX;i++ )
+    {
+      progWork->npcArr[i] = debWork->npc[i];
+    }
+  }
+  else
+  #endif
   {
     u8 dataArr[6]={0,0,0,0,0,0};
     u8 dataNum = 0;
