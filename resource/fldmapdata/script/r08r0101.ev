@@ -335,8 +335,7 @@ sp_poke_main_event:
   //○○にきせきのつるぎを覚えさせる?
   _SYSWIN_MSG( msg_r08r0101_narrator_04, POS_DOWN )
   _YES_NO_WIN( SCWK_ANSWER )
-  _SYSWIN_CLOSE()
-  IF $SCWK_ANSWER == 0 THEN
+  IF $SCWK_ANSWER == 0 THEN   //※コモンスクリプト内でシステムウィンドウを表示するので、ウィンドウクローズしない
     //SCWK_PARAM0：ポケモン位置　SCWK_PARAM1：覚えさせる技ＩＤ
     $SCWK_PARAM0 = $target_poke_pos
     $SCWK_PARAM1 = WAZANO_SINPINOTURUGI
@@ -349,6 +348,8 @@ sp_poke_main_event:
       $skill_learn = TRUE      //覚えた
     ENDIF
   ELSE
+    //ウィンドウクローズ
+    _SYSWIN_CLOSE()
     $skill_learn = FALSE
   ENDIF
 
