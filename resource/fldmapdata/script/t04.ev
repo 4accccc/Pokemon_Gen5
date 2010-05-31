@@ -308,32 +308,21 @@ ev_t04_boy_to_house:
 	_PLAYER_DIR_GET( LWK_DIR )
 	SWITCH $LWK_DIR
 	CASE DIR_LEFT THEN
-		_OBJ_ANIME( T04_BOY3_01, anm_left_goto_house_01 )
+		_OBJ_ANIME( T04_BOY3_01, anm_boy3_goto_house_01 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left_goto_house_01 )
 		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( T04_BOY3_01, anm_left_goto_house_02 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left_goto_house_02 )
-		_OBJ_ANIME_WAIT()
 	CASE DIR_RIGHT THEN
-		_OBJ_ANIME( T04_BOY3_01, anm_right_goto_house_01 )
+		_OBJ_ANIME( T04_BOY3_01, anm_boy3_goto_house_01 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right_goto_house_01 )
 		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( T04_BOY3_01, anm_right_goto_house_02 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_right_goto_house_02 )
-		_OBJ_ANIME_WAIT()
-	CASE DIR_UP THEN
-		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_01 )
+	CASE DIR_UP THEN //このケースには来ない
+		_OBJ_ANIME( T04_BOY3_01, anm_boy3_down_goto_house_01 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_01 )
-		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_02 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_02 )
 		_OBJ_ANIME_WAIT()
 	CASE DIR_DOWN THEN
-		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_01 )
+		_OBJ_ANIME( T04_BOY3_01, anm_boy3_down_goto_house_01 )
+		_TIME_WAIT( 32 )
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_01 )
-		_OBJ_ANIME_WAIT()
-		_OBJ_ANIME( T04_BOY3_01, anm_down_goto_house_02 )
-		_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_down_goto_house_02 )
 		_OBJ_ANIME_WAIT()
 	ENDSWITCH
 	
@@ -368,63 +357,38 @@ _RET
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_left_goto_house_01
 	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 	
 _ANIME_LABEL	anm_player_right_goto_house_01
 	_ANIME_DATA	AC_WALK_R_8F,1
-	_ANIME_DATA	AC_STAY_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,6
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_down_goto_house_01
-	_ANIME_DATA	AC_WALK_L_8F,1
-	_ANIME_DATA	AC_STAY_WALK_R_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_player_left_goto_house_02
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_player_right_goto_house_02
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_player_down_goto_house_02
-	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_STAY_WALK_U_8F,1
 	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_player_down_goto_house_end
-	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
 //	巨大別荘：息子誘導アニメ
 //--------------------------------------------------------------------
-_ANIME_LABEL	anm_left_goto_house_01
-	_ANIME_DATA	AC_WALK_U_8F,1
+_ANIME_LABEL	anm_boy3_goto_house_01
+	_ANIME_DATA	AC_WALK_U_8F,7
+	_ANIME_DATA	ACMD_END,0
+
+_ANIME_LABEL	anm_boy3_down_goto_house_01
+	_ANIME_DATA	AC_WALK_R_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,2
+	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_STAY_WALK_D_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,5
 	_ANIME_DATA	ACMD_END,0
 	
-_ANIME_LABEL	anm_right_goto_house_01
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_down_goto_house_01
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_left_goto_house_02
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	ACMD_END,0
-	
-_ANIME_LABEL	anm_right_goto_house_02
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	ACMD_END,0
-
-_ANIME_LABEL	anm_down_goto_house_02
-	_ANIME_DATA	AC_WALK_U_8F,6
-	_ANIME_DATA	ACMD_END,0
-
 /**************************************************************/
 /*			T04		看板									  */
 /**************************************************************/
