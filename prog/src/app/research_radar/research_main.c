@@ -150,6 +150,8 @@ static void LoadSubBGResources( HEAPID heapID );
 static void LoadMainBGResources( HEAPID heapID );
 static void UpdateRingAnime( const RESEARCH_WORK* work );
 
+static void BootGameComm( const RESEARCH_WORK* work );
+
 
 //===============================================================================
 // ■プロセス 定義データ
@@ -249,6 +251,8 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
   RESEARCH_WORK* work = wk;
   PROC_MAIN_SEQ  next_seq;
 
+  BootGameComm( work );
+
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   next_seq = ProcMain_SETUP ( work );  break;
   case PROC_MAIN_SEQ_MENU:    next_seq = ProcMain_MENU  ( work );  break;
@@ -258,15 +262,32 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
   default:  GF_ASSERT(0);
   }
 
-  UpdateRingAnime( work ); // 上画面のリングアニメーションを更新
-  CountUpFrame( work ); // フレームカウンタ更新
+  UpdateRingAnime( work );
+  CountUpFrame( work );
 
-  // シーケンスを更新
   if( *seq != next_seq ) {
     ChangeMainProcSeq( work, seq, next_seq );
   }
 
   return GFL_PROC_RES_CONTINUE;
+}
+
+/**
+ * @brief 通信を復帰させる
+ */
+static void BootGameComm( const RESEARCH_WORK* work )
+{
+  BOOL comm_recovery;
+
+  // 通信の復帰
+  comm_recovery = GAMESYSTEM_CommBootAlways( work->gameSystem );
+
+  if( comm_recovery ) {
+    // 通信アイコンの復帰
+    GFL_NET_ChangeIconPosition( 240, 0 );
+    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
+    GFL_NET_ReloadIcon();
+  } 
 }
 
 
