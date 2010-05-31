@@ -369,6 +369,8 @@ typedef BOOL (*GFL_NET_MYDWCConnectModeCheckFunc) (int index,void* pWork);
 #define ERRORCODE_SYSTEM (STEPMATCH_SUCCESS+11)     //システムが意図していないエラー lightなエラー
 #define ERRORCODE_SENDQUEUE (STEPMATCH_SUCCESS+12)     //送信キューに入らなかったエラーlightなエラー
 
+#define ERRORCODE_USER_TIMEOUT (STEPMATCH_SUCCESS+13)     //自分でWIFIエラーにセットするエラー  ユーザー指定タイムアウト
+
 
 #if GFL_NET_WIFI //wifi
 // ここから下はデバイスが逆アクセスする為に必要なものなので使用しないでください
