@@ -192,6 +192,7 @@ zoroaaku_core:
   _VOICE_PLAY( MONSNO_ZOROAAKU, 0 )
   _GIZAPLAINWIN_MSG_POS( msg_r16r0201_zoro_01, POS_UP)
   _VOICE_WAIT()
+  _AB_KEYWAIT_MARK()
   _GIZAPLAINWIN_CLOSE()
 
   //èóê´Ç≥ÇÁÇ…ÅAé©ã@Ç…ãﬂÇ√Ç≠
