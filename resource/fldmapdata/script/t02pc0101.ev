@@ -487,7 +487,12 @@ EVENT_START   ev_t02pc0101_support_01
 	
 	//博士イベント終了後なら
 	ELSE
-		_EASY_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_white_02 )
+		_TALK_OBJ_START()
+		_BALLOONWIN_TALKOBJ_MSG( msg_t02pc0101_white_02 )
+		_MSGWIN_CLOSE()
+		
+		_OBJ_ANIME( T02PC0101_SUPPORT_01, anm_stay_r )
+		_OBJ_ANIME_WAIT()
 
 	ENDIF
 
