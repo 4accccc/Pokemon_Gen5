@@ -537,7 +537,7 @@ static GFL_PROC_RESULT MicTestProc_Init( GFL_PROC *proc,int *seq, void *pwk, voi
 
   // TCB
   p_wk->tcbWork = GFL_HEAP_AllocMemory( p_wk->heap_id , GFL_TCB_CalcSystemWorkSize( 5 ) );
-  p_wk->tcbSys = GFL_TCB_Init( 5 , p_wk->tcbWork );
+  p_wk->tcbSys  = GFL_TCB_Init( 5 , p_wk->tcbWork );
   
   p_wk->tcbVBlank = GFUser_VIntr_CreateTCB( MicTest_VBlankFunction, p_wk, 1 );
 
@@ -583,13 +583,15 @@ static GFL_PROC_RESULT MicTestProc_Exit( GFL_PROC *proc,int *seq, void *pwk, voi
 {
   MICTEST_MAIN_WORK* p_wk = mywk;
 
+  //  MIC
+  MicTest_MIC_Exit( &p_wk->mic );
+
+  // TCB
   GFL_TCB_DeleteTask( p_wk->tcbVBlank );
 
   GFL_TCB_Exit( p_wk->tcbSys );
   GFL_HEAP_FreeMemory( p_wk->tcbWork );
 
-  //  MIC
-  MicTest_MIC_Exit( &p_wk->mic );
 
   //  OBJ
   MicTest_OBJ_DeleteClact( &p_wk->obj );
