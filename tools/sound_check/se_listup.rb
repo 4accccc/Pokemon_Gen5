@@ -22,6 +22,8 @@ end
 file_list = Dir.glob( "../../prog/src/**/*" ) # プログラムソース
 file_list += Dir.glob( "../../resource/fldmapdata/script/**/*.ev" ) # スクリプト
 file_list += Dir.glob( "../../resource/wazaeffect/**/*.esf" ) # 技エフェクト
+file_list += Dir.glob( "../../resource/fld3d_ci_se/ci_se_tbl.cdat" ) # 3Dカットイン
+file_list += Dir.glob( "../../resource/demo3d/data/*.cdat" ) # 3Dデモ
 file_list.each do |filename|
   puts filename
   file = File::open( filename, "r" )
