@@ -438,6 +438,9 @@ static void _ghttpInfoWait0(PDWACC_WORK* pWork)
 
 static void _dispAccCode2(PDWACC_WORK* pWork)
 {
+	if(!WIPE_SYS_EndCheck()){
+    return;
+  }
   if(GFL_UI_KEY_GetTrg()){
 
     PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
