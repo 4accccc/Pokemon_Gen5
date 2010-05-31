@@ -3718,7 +3718,7 @@ static int MainSeq_PartyOutMain( BOX2_SYS_WORK * syswk )
 			BOX2MAIN_PokeInfoPut( syswk, ret );
 			return PartyPokeGetDrop( syswk, ret );
 		}else{
-			CURSORMOVE_PosSet( syswk->app->cmwk, ret+BOX2OBJ_POKEICON_TRAY_MAX );
+			CURSORMOVE_PosSet( syswk->app->cmwk, ret-BOX2OBJ_POKEICON_TRAY_MAX );
 			BOX2UI_PutHandCursor( syswk, ret+BOX2OBJ_POKEICON_TRAY_MAX );
 			BOX2MAIN_PokeInfoOff( syswk );
 			if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
