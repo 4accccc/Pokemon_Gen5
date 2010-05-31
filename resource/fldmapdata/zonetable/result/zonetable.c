@@ -8145,7 +8145,7 @@ static const ZONEDATA ZoneData[] = {
 		WEATHER_NO_SUNNY,
     FALSE,
 		0,        // camera id
-		MC_TYPE_DUNGEON,  // map_chg_type
+		MC_TYPE_ROOM,  // map_chg_type
 		9,
 		FALSE,
 		TRUE,
