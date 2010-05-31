@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-05-28T11:49:30"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T15:59:56"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -945,11 +945,11 @@
 	<row id="msg_bsw_scr_54">
 		<comment>マルチ</comment>
 		<language name="JPN" width="256">おともだちと　おなじ
-[1:01:ポケモン種族名:0]を　えらんで　います！▼[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]を　えらんで　います！▼
 おともだちと　そうだん　してから
 また　おこし　ください</language>
 		<language name="JPN_KANJI" width="256">お友達と　同じ
-[1:01:ポケモン種族名:0]を　選んでいます！▼[BE:01:ページ切り替え（クリア）]
+[1:01:ポケモン種族名:0]を　選んでいます！▼
 お友達と　相談してから
 また　お越しください</language>
 	</row>
