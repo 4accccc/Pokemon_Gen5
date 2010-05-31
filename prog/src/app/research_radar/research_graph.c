@@ -3976,16 +3976,16 @@ static u8 GetMyAnswerID_PlayTime( const RRG_WORK* work )
   time     = GAMEDATA_GetPlayTimeWork( gameData );
   hour     = PLAYTIME_GetHour( time );
 
-  if( hour <=10 ) { return ANSWER_ID_135; }
-  else if( hour <=  20 ) { return ANSWER_ID_136; }
-  else if( hour <=  30 ) { return ANSWER_ID_137; }
-  else if( hour <=  40 ) { return ANSWER_ID_138; }
-  else if( hour <=  50 ) { return ANSWER_ID_139; }
-  else if( hour <=  60 ) { return ANSWER_ID_140; }
-  else if( hour <=  70 ) { return ANSWER_ID_141; }
-  else if( hour <=  80 ) { return ANSWER_ID_142; }
-  else if( hour <=  90 ) { return ANSWER_ID_143; }
-  else if( hour <= 100 ) { return ANSWER_ID_144; }
+  if( hour < 10 ) { return ANSWER_ID_135; }
+  else if( hour <  20 ) { return ANSWER_ID_136; }
+  else if( hour <  30 ) { return ANSWER_ID_137; }
+  else if( hour <  40 ) { return ANSWER_ID_138; }
+  else if( hour <  50 ) { return ANSWER_ID_139; }
+  else if( hour <  60 ) { return ANSWER_ID_140; }
+  else if( hour <  70 ) { return ANSWER_ID_141; }
+  else if( hour <  80 ) { return ANSWER_ID_142; }
+  else if( hour <  90 ) { return ANSWER_ID_143; }
+  else if( hour < 100 ) { return ANSWER_ID_144; }
   else { return ANSWER_ID_145; }
 }
 
