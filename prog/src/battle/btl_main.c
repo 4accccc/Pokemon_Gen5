@@ -115,6 +115,7 @@ struct _BTL_MAIN_MODULE {
   BTL_CLIENT*   client[ BTL_CLIENT_MAX ];
   BTL_TRAINER_DATA   trainerParam[ BTL_CLIENT_MAX ];
   const MYSTATUS*    playerStatus;
+  u8                 fClientQuit[ BTL_CLIENT_MAX ];
 
   // サーバが計算時に書き換えても良い一時使用パラメータ領域と、
   // サーバコマンドを受け取ったクライアントが実際に書き換えるパラメータ領域
@@ -204,6 +205,8 @@ static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq );
 static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk );
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk );
+static void NotifyCommErrorToLocalClient( BTL_MAIN_MODULE* wk );
+static BOOL  CheckAllClientQuit( BTL_MAIN_MODULE* wk );
 static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static u8 expandPokePos_double( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
 static u8 expandPokePos_triple( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst );
@@ -245,6 +248,8 @@ static void Bspstore_RecordData( BTL_MAIN_MODULE* wk );
 static u8 CommClientRelation( u8 myClientID, u8 targetClientID );
 static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp );
 static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk );
+
+
 
 
 //--------------------------------------------------------------
@@ -1974,13 +1979,16 @@ static BOOL MainLoop_StandAlone( BTL_MAIN_MODULE* wk )
 
 static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 {
-  if( BTL_NET_CheckError() )
+  if( wk->fCommError == FALSE )
   {
-    BTL_N_Printf( DBGSTR_MAIN_CommError );
-    wk->fCommError = TRUE;
-    return TRUE;
+    if( BTL_NET_CheckError() )
+    {
+      BTL_N_Printf( DBGSTR_MAIN_CommError, __LINE__ );
+      wk->fCommError = TRUE;
+      NotifyCommErrorToLocalClient( wk );
+    }
   }
-  else
+
   {
     BOOL quitFlag = FALSE;
     int i;
@@ -1992,10 +2000,14 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 
     for(i=0; i<BTL_CLIENT_MAX; i++)
     {
-      if( wk->client[i] )
+      if( wk->client[i] && (wk->fClientQuit[i] == FALSE) )
       {
-        BTL_CLIENT_Main( wk->client[i] );
+        wk->fClientQuit[i] = BTL_CLIENT_Main( wk->client[i] );
       }
+    }
+
+    if( CheckAllClientQuit(wk) ){
+      quitFlag = TRUE;
     }
 
     BTLV_CORE_Main( wk->viewCore );
@@ -2006,12 +2018,16 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 
 static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
 {
-  if( BTL_NET_CheckError() )
+  if( wk->fCommError == FALSE )
   {
-    wk->fCommError = TRUE;
-    return TRUE;
+    if( BTL_NET_CheckError() )
+    {
+      BTL_N_Printf( DBGSTR_MAIN_CommError, __LINE__ );
+      wk->fCommError = TRUE;
+      NotifyCommErrorToLocalClient( wk );
+    }
   }
-  else
+
   {
     BOOL quitFlag = FALSE;
     int i;
@@ -2034,6 +2050,36 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
   }
 }
 
+/**
+ *  同一マシンに存在する全クライアントに通信エラー通知
+ */
+static void NotifyCommErrorToLocalClient( BTL_MAIN_MODULE* wk )
+{
+  u32 i;
+  for(i=0; i<BTL_CLIENT_MAX; i++)
+  {
+    if( wk->client[i] ){
+      BTL_CLIENT_NotifyCommError( wk->client[i] );
+    }
+  }
+}
+/**
+ *  同一マシンに存在する全クライアントの終了フラグチェック
+ */
+static BOOL  CheckAllClientQuit( BTL_MAIN_MODULE* wk )
+{
+  u32 i;
+  for(i=0; i<BTL_CLIENT_MAX; i++)
+  {
+    if( wk->client[i] )
+    {
+      if( wk->fClientQuit[i] == FALSE ){
+        return FALSE;
+      }
+    }
+  }
+  return TRUE;
+}
 
 
 

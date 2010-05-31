@@ -85,6 +85,8 @@ extern BTL_CLIENT* BTL_CLIENT_Create(
 
 
 extern void BTL_CLIENT_Delete( BTL_CLIENT* wk );
+extern void BTL_CLIENT_NotifyCommError( BTL_CLIENT* wk );
+
 
 extern void BTL_CLIENT_GetEscapeInfo( const BTL_CLIENT* wk, BTL_ESCAPEINFO* dst );
 extern BOOL BTL_CLIENT_IsGameTimeOver( const BTL_CLIENT* wk );

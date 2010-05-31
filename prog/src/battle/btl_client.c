@@ -187,6 +187,8 @@ struct _BTL_CLIENT {
   BTL_POKESELECT_RESULT   pokeSelResult;
 
   HEAPID heapID;
+  u16  EnemyPokeHPBase;
+  u16  AITrainerMsgID;
   u8   myID;
   u8   myType;
   u8   myState;
@@ -196,12 +198,11 @@ struct _BTL_CLIENT {
   u8   change_escape_code;
   u8   fForceQuitSelAct;
   u8   cmdCheckTimingCode;
-  u8   fAITrainerBGMChanged;
   u8   actionAddCount;
   u8   wazaInfoPokeIdx;
   u8   wazaInfoWazaIdx;
-  u16  EnemyPokeHPBase;
-  u16  AITrainerMsgID;
+  u8   fAITrainerBGMChanged;
+  u8   fCommError;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -506,6 +507,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->gameLimitTime = 0;
   wk->fForceQuitSelAct = FALSE;
   wk->fAITrainerBGMChanged = FALSE;
+  wk->fCommError = FALSE;
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
@@ -559,6 +561,11 @@ void BTL_CLIENT_Delete( BTL_CLIENT* wk )
   BTL_ADAPTER_Delete( wk->adapter );
 
   GFL_HEAP_FreeMemory( wk );
+}
+
+void BTL_CLIENT_NotifyCommError( BTL_CLIENT* wk )
+{
+  wk->fCommError = TRUE;
 }
 
 /**
@@ -779,12 +786,24 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
           wk->myState = SEQ_RETURN_TO_SV;
         }
       }
+      else
+      {
+        if( wk->fCommError ){
+          BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+          return TRUE;
+        }
+      }
     }
     break;
 
   case SEQ_EXEC_CMD:
     if( wk->subProc(wk, &wk->subSeq) )
     {
+      if( wk->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
+
       // １コマンド終了毎に、録画プレイヤーがブラックアウトさせているかチェック
       if( RecPlayer_CheckBlackOut(&wk->recPlayer) )
       {

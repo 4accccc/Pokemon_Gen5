@@ -331,6 +331,8 @@ BTLV_SCU*  BTLV_SCU_Create( const BTLV_CORE* vcore,
   wk->strBufSubB = GFL_STR_CreateBuffer( SUB_STRBUF_LEN, heapID );
   wk->msgwinVisibleFlag = FALSE;
 
+  wk->tokWinCgrHead = NULL;
+
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
   PRINT_UTIL_Setup( &wk->printUtil, wk->win );
 
@@ -3714,7 +3716,11 @@ static void tokwin_cleanupAll( BTLV_SCU* wk )
       wk->tokWin[i].bmp = NULL;
     }
   }
-  GFL_HEAP_FreeMemory( wk->tokWinCgrHead );
+
+  if( wk->tokWinCgrHead ){
+    GFL_HEAP_FreeMemory( wk->tokWinCgrHead );
+    wk->tokWinCgrHead = NULL;
+  }
 }
 // •\Ž¦ŠJŽn
 static void tokwin_disp_first( TOK_WIN* tokwin, BtlPokePos pos, BOOL fFlash )

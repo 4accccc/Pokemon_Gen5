@@ -99,6 +99,7 @@ struct _BTL_SERVER {
   u32         exitTimer;
   u8          enemyPutPokeID;
   u8          quitStep;
+  u8          fCommError;
 
 
   BTL_SERVER_CMD_QUE  queBody;
@@ -182,6 +183,7 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
   sv->changePokeCnt = 0;
   sv->giveupClientCnt = 0;
   sv->bagMode = bagMode;
+  sv->fCommError = FALSE;
   sv->randContext = *randContext;
   sv->strbuf = GFL_STR_CreateBuffer( SERVER_STRBUF_SIZE, heapID );
 
@@ -293,8 +295,6 @@ void BTL_SERVER_CmdCheckMode( BTL_SERVER* server, u8 clientID, u8 numCoverPos )
   }
 }
 
-
-
 //--------------------------------------------------------------------------------------
 /**
  * 全クライアント生成・接続完了後のスタートアップ処理
@@ -366,6 +366,17 @@ BOOL BTL_SERVER_Main( BTL_SERVER* sv )
     }
   }
   return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * 通信エラー発生の通知を受ける
+ *
+ * @param   sv
+ */
+//----------------------------------------------------------------------------------
+void BTL_SERVER_NotifyCommError( BTL_SERVER* sv )
+{
+  sv->fCommError = TRUE;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -441,6 +452,11 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
+
 
       // 入場演出処理後、捕獲デモ以外の処理
       if( BTL_MAIN_GetCompetitor(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
@@ -467,6 +483,10 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
       (*seq)++;
     }
     break;
@@ -556,15 +576,12 @@ BOOL BTL_SERVER_IntrLevelup_Main( BTL_SERVER* server )
 {
   switch( server->intrSeq ){
   case 0:
-    TAYA_Printf("割り込みレベルアップ開始：コマンドsize=%d\n", server->que->writePtr );
     SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
     server->intrSeq++;
     break;
   case 1:
     if( WaitAllAdapterReply(server) )
     {
-      TAYA_Printf("割り込みレベルアップ終了\n");
-
       ResetAdapterCmd( server );
       SCQUE_Init( server->que );
       server->intrSeq++;
@@ -604,6 +621,11 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_Printf( DBGSTR_SERVER_ShooterChargeCmdDoneAll );
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
+      ResetAdapterCmd( server );
       (*seq)++;
     }
     break;
@@ -619,6 +641,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
 
       // 試合制限時間切れのチェック
       if( BTL_MAIN_CheckGameLimitTimeOver(server->mainModule) )
@@ -642,6 +668,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
       (*seq)++;
     }
     break;
@@ -671,6 +701,10 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SVFL_AllClientCmdPlayComplete, server->flowResult);
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_DEFAULT:
@@ -687,9 +721,7 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           if( (competitor == BTL_COMPETITOR_WILD) &&  (rule == BTL_RULE_SINGLE) ){
             setMainProc( server, ServerMain_ConfirmChangeOrEscape );
           }else{
-            TAYA_Printf("Que write size (LINE=%d) = %d\n", __LINE__, server->que->writePtr);
             setMainProc( server, ServerMain_SelectPokemonCover );
-
           }
         }
         break;
@@ -764,7 +796,8 @@ static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq )
     (*seq)++;
     break;
   case 1:
-    if( WaitAllAdapterReply(server) ){
+    if( WaitAllAdapterReply(server) )
+    {
       u8 clientID = BTL_MAIN_GetPlayerClientID( server->mainModule );
       const u8* result;
 
@@ -816,6 +849,11 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAllAdapterReply(server) )
     {
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
+
       if( Irekae_IsNeedConfirm(server) )
       {
         server->enemyPutPokeID = Irekae_GetEnemyPutPokeID( server );
@@ -831,6 +869,11 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
+
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
         (*seq)++;
@@ -844,6 +887,10 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
   case 3:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
       (*seq)++;
     }
     break;
@@ -867,6 +914,10 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_POKE_COVER:
@@ -967,6 +1018,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
 
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){
@@ -980,6 +1035,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   case 2:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
       (*seq)++;
     }
     break;
@@ -1001,6 +1060,10 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_POKE_CHANGE:
@@ -1054,6 +1117,10 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
       SetAdapterCmd( server, BTL_ACMD_NOTIFY_TIMEUP );
       (*seq)++;
     }
@@ -1062,6 +1129,10 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      if( server->fCommError ){
+        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+        return TRUE;
+      }
       setMainProc( server, ServerMain_ExitBattle );
     }
     break;
@@ -1680,6 +1751,10 @@ static BOOL WaitAllAdapterReply( BTL_SERVER* server )
 {
   int i;
   BOOL ret = TRUE;
+
+  if( server->fCommError ){
+    return TRUE;
+  }
 
   for(i=0; i<BTL_CLIENT_MAX; i++)
   {

@@ -3671,6 +3671,10 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       scproc_WazaExecuteFailed( wk, attacker, orgWaza, SV_WAZAFAIL_OTHER );
       break;
     }
+
+    // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
+    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock, fReqWaza) ){ break; }
+
     // 派生ワザ呼び出しする場合、メッセージ出力＆ワザ出し確定イベント
     fReqWaza = ( reqWaza.wazaID != WAZANO_NULL );
     if( fReqWaza )
@@ -3680,6 +3684,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       BTL_HANDLER_Waza_Add( attacker, reqWaza.wazaID );
       actWaza = reqWaza.wazaID;
       actTargetPos = reqWaza.targetPos;
+
       scEvent_GetWazaParam( wk, orgWaza, attacker, wk->wazaParam );
       wk->wazaParam->fReqWaza = TRUE;
       scproc_WazaExe_Decide( wk, attacker, wk->wazaParam );
@@ -3689,11 +3694,9 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
       actTargetPos = orgTargetPos;
     }
 
-    // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
-    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock, fReqWaza) ){ break; }
-
     // ワザパラメータ確定
     scEvent_GetWazaParam( wk, actWaza, attacker, wk->wazaParam );
+
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( wk->psetTargetOrg );
     BTL_SVFSUB_RegisterTargets( wk, attacker, actTargetPos, wk->wazaParam, wk->psetTargetOrg );

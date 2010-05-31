@@ -285,6 +285,7 @@ typedef enum {
   DBGSTR_SV_SendActRecord,
   DBGSTR_SV_SendActRecordFailed,
   DBGSTR_SV_ExitBattle,
+  DBGSTR_SV_CommError,
 
   DBGSTR_EVENT_AddFactorInfo,
   DBGSTR_EV_AddFactor,
