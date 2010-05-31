@@ -7769,7 +7769,11 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
 
 	case SUB_PROC_MODE_TB_BOX_GET:		// ボックスのポケモンのタッチバーから（掴んでいる時）
-		if( syswk->tray == syswk->get_tray ){
+		// 手持ち取得時は他の手持ちアイコンを右フレームイン前の位置に移動
+		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+			BOX2OBJ_PartyPokeIconFrmInSetRight( syswk );
+			BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
+		}else if( syswk->tray == syswk->get_tray ){
 			BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
 		}else{
 			BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
