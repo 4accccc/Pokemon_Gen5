@@ -44,6 +44,7 @@ class ColumnID
 	attr :cBGM_AUTUMN, true
 	attr :cBGM_WINTER, true
 	attr :cWEATHER, true
+  attr :cPROJECTION, true
 	attr :cCAMERA, true
 	attr :cCAMERA_AREA, true
 	attr :cBATTLEBG, true
@@ -100,6 +101,8 @@ class ColumnID
 				@cWEATHER = c_count
 			when "CAMERA"
 				@cCAMERA = c_count
+      when "PROJECTION"
+        @cPROJECTION = c_count
 			when "CAMERA_AREA"
 				@cCAMERA_AREA = c_count
 			when "BATTLE_BG"
@@ -258,6 +261,14 @@ class ZoneDataFile < OutputFile
 		bgm_autumn = column[@cl.cBGM_AUTUMN]
 		bgm_winter = column[@cl.cBGM_WINTER]
 		weather = "WEATHER_NO_#{column[@cl.cWEATHER].upcase}"
+    projection = case column[@cl.cPROJECTION]
+                 when "›"
+                   "TRUE"
+                 when "~"
+                   "FALSE"
+                 else
+                   raise Exception
+                 end
 		camera = "#{column[@cl.cCAMERA]}"
 		camera_area = "#{column[@cl.cCAMERA_AREA]}"
     if camera_area == "›"
@@ -315,8 +326,9 @@ class ZoneDataFile < OutputFile
 		#{name},
 		#{placename_flag},
 		#{weather},
-		#{camera},
-		#{map_chg_type},
+    #{projection},
+		#{camera},        // camera id
+		#{map_chg_type},  // map_chg_type
 		#{battle_bg},
 		#{bicycle_flag},
 		#{dash_flag},

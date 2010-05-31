@@ -461,7 +461,7 @@ static void fldmap_ClearMapCtrlWork( FIELDMAP_WORK *fieldWork );
 static void setupCameraArea( FIELDMAP_WORK *fieldWork, u32 zone_id, HEAPID heapID );
 static void setupWfbc( GAMEDATA* gdata, FIELDMAP_WORK *fieldWork, u32 zone_id );
 
-static fx32 ZONEDATA_GetProjMatZOffsValue( u16 zone_id );
+static fx32 fldmap_getProjMatZOffsValue( u16 zone_id );
 
 
 //data
@@ -749,7 +749,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
       }
     }
     //描画時の射影に対する補正値
-    fieldWork->pro_mat_z_offs = ZONEDATA_GetProjMatZOffsValue( fieldWork->map_id );
+    fieldWork->pro_mat_z_offs = fldmap_getProjMatZOffsValue( fieldWork->map_id );
 
     SET_CHECK("setup: cameraArea");  //デバッグ：処理負荷計測
 
@@ -3934,16 +3934,15 @@ static void DbgVramDumpCallBack( u32 addr, u32 szByte, void* pUserData )
  * 直接ここに作成する。
  */
 //==================================================================
-static fx32 ZONEDATA_GetProjMatZOffsValue( u16 zone_id )
+static fx32 fldmap_getProjMatZOffsValue( u16 zone_id )
 {
-  switch ( zone_id )
-  {   //リゾートデザートおよび、R04の場合のみ以前の射影オフセット
-  case ZONE_ID_R04:
-  case ZONE_ID_D03R0101:
-  case ZONE_ID_D03:
-    return PROJ_MAT_Z_OFS_DESERT;
-  default:
+  if ( ZONEDATA_GetProjectionType( zone_id ) == TRUE )
+  { //通常の射影オフセット（2010.05.28新規）
     return PROJ_MAT_Z_OFS;
+  }
+  else
+  { //指定したゾーンによっては以前の射影オフセット
+    return PROJ_MAT_Z_OFS_DESERT;
   }
 }
 

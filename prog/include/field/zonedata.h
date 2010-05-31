@@ -113,6 +113,11 @@ extern void ZONEDATA_GetStartPos(u16 zone_id, VecFx32 * pos);
 extern void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos);
 
 //------------------------------------------------------------------
+//  射影オフセットタイプの取得
+//------------------------------------------------------------------
+extern u8 ZONEDATA_GetProjectionType( u16 zone_id );
+
+//------------------------------------------------------------------
 //	カメラ指定IDの取得
 //------------------------------------------------------------------
 extern u8 ZONEDATA_GetCameraID(u16 zone_id);

@@ -434,6 +434,18 @@ void ZONEDATA_GetStartRailPos(u16 zone_id, VecFx32 * pos)
 
 //------------------------------------------------------------------
 /**
+ * @brief 射影オフセットタイプの取得
+ * @param zone_id ゾーン指定ID
+ * @return  u8    射影オフセットタイプ
+ */
+//------------------------------------------------------------------
+u8 ZONEDATA_GetProjectionType( u16 zone_id )
+{
+  ZONEDATA * zoneData = loadZoneData( zone_id );
+  return zoneData->projection;
+}
+//------------------------------------------------------------------
+/**
  * @brief カメラ指定IDの取得
  * @param zone_id ゾーン指定ID
  * @return  u8    カメラ指定IDの値
