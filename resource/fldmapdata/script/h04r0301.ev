@@ -24,7 +24,7 @@ _EVENT_DATA_END
 
 
 /**************************************************************/
-/*  C02R0501 WOMAN2の会話用イベントスクリプト*/
+/*  H04R0301 フィッシングの会話用イベントスクリプト*/
 /**************************************************************/
 EVENT_START   ev_h04r0301_fishing_01
 //--------------------------------------------------------------------------------//	
@@ -73,8 +73,10 @@ EVENT_START   ev_h04r0301_fishing_01
 		_MSGWIN_CLOSE()
 		
 		//タイムフラグと、イベント中？フラグをON
+		/*----------------------------------*/
 		_FLAG_SET(TMFLG_H04R0301_FISHING)
 		_FLAG_SET(FE_H04R0301_FISHING_RECEPT)
+		/*----------------------------------*/
 	
 	//イベントをクリアしている
 	ELSIF FLAG_ON(TMFLG_H04R0301_FISHING) &&  $WK_OTHER_FISHING_MONSNUM == 0 THEN
@@ -112,15 +114,16 @@ ev_poke_select:
 		//ポケモン名をタグにセット
 		_MONS_NAME( 0, WK_OTHER_FISHING_MONSNUM )
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_04)
-		_MSGWIN_CLOSE()
 		
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_05)
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 		
 		//タイムフラグと、イベント中？フラグをON
+		/*----------------------------------*/
 		_FLAG_SET(TMFLG_H04R0301_FISHING)
 		_FLAG_SET(FE_H04R0301_FISHING_RECEPT)
+		/*----------------------------------*/
 		
 	//釣りに挑戦する？に「いいえ」と答える			
 	ELSE
@@ -129,7 +132,9 @@ ev_poke_select:
 		_MSGWIN_CLOSE()
 		
 		//再度会話したときに、短いメッセージが出るように、会話したことを保存
+		/*----------------------------------*/
 		$LWK_TALK_AGAIN = 1
+		/*----------------------------------*/
 		
 	ENDIF
 _RET
@@ -167,8 +172,9 @@ ev_poke_chk:
 			_ITEM_EVENT_NOWAIT(ITEM_DAIBUBOORU,5)
 			
 			//抽選されたポケモンを初期化する
+			/*----------------------------------*/
 			$WK_OTHER_FISHING_MONSNUM = 0
-//			_FLAG_RESET(FE_H04R0301_FISHING_RECEPT)
+			/*----------------------------------*/
 		
 		//ポケモンの種類がオーダーと違う場合
 		ELSIF $WK_OTHER_FISHING_MONSNUM  !=  $LWK_MONSNUM THEN
@@ -193,22 +199,4 @@ ev_poke_chk:
 	ENDIF
 	
 _RET
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
