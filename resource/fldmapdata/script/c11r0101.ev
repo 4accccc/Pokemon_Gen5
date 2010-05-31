@@ -250,7 +250,7 @@ EVENT_START ev_c11r0101_pos01
   _OBJ_ANIME( UN_ENTRANCE_POLICEMAN_01, anm_step_dir_down)
   _OBJ_ANIME_WAIT()
   //「こっちこいや」吹き出しを下に出す
-  _BALLOONWIN_OBJMSG_POS(msg_policeman_01_00, UN_ENTRANCE_POLICEMAN_01, POS_DL)
+  _BALLOONWIN_OBJMSG_POS(msg_policeman_01_00, UN_ENTRANCE_POLICEMAN_01, POS_DR)
   _BALLOONWIN_CLOSE()   //アニメに続くのでクローズ
 
   //ガードマン左2歩下向き
