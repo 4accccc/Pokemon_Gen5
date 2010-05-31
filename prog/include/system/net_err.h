@@ -70,6 +70,24 @@ extern NET_ERR_CHECK NetErr_App_CheckConnectError(u32 net_bit);
 extern void NetErr_App_ReqErrorDisp(void);
 extern BOOL NetErr_App_FatalDispCall(void);
 
+
+//PUSHPOP使用時、場合によってはシーケンス移動やメッセージ描画中などで、
+//エラー画面終了時後に表示が変わるものがある
+//その際、PUSHPOPは１フレーム内で遷移を行なうので、PUSHPOP終了後に表示を変えてしまうと
+//綺麗に画面が切り替わらない
+//なので、この関数でPUSUPOPを抜けても黒画面のまま戻ってこさせることで、
+//暗転中に表示切り替えを行なうためのモード設定を行なう　2010/05/30 nagihashi
+//
+//※！　このモード設定を使ってる方は、自分のPROC終了時、クリアするのを忘れないこと！
+typedef enum
+{
+  NET_ERR_PUSHPOP_MODE_NORMAL,
+  NET_ERR_PUSHPOP_MODE_BLACKOUT,  //黒いままで抜けてくる
+}NET_ERR_PUSHPOP_MODE;
+extern void NetErr_SetPushPopMode( NET_ERR_PUSHPOP_MODE pushpop_mode );
+extern void NetErr_ClearPushPopMode( void );
+extern void NetErr_ResetPushPopBrightness( void );
+
 //--------------------------------------------------------------
 //  デバッグ用
 //--------------------------------------------------------------

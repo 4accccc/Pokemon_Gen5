@@ -92,6 +92,8 @@ typedef struct{
   u16 sub_bd_color;
   u16 dummy2;
 
+  NET_ERR_PUSHPOP_MODE  pushpop_mode;
+
   //以下エラー情報保存
   GFL_NETSTATE_DWCERROR   wifi_error; //WIFIのエラー
   u8                      error;      //WIFI以外のエラー
@@ -111,7 +113,7 @@ static NET_ERR_SYSTEM NetErrSystem = {0};
 //==============================================================================
 static BOOL NetErr_DispMain(BOOL fatal_error);
 static void Local_ErrDispInit(BOOL fatal_error);
-static void Local_ErrDispExit(void);
+static void Local_ErrDispExit(BOOL is_black_continue);
 static BOOL Local_SystemOccCheck(void);
 static void Local_ErrDispDraw(void);
 static void Local_ErrMessagePrint(BOOL fatal_error);
@@ -214,18 +216,21 @@ void NetErr_Main(void)
               || cp_dwc_error->errorUser == ERRORCODE_DISCONNECT )
           {
             //タイムアウトか相手と切断していたならばならば
+            //「あいてとのせつだんがきれました」
             NetErrSystem.wifi_msg = dwc_message_0022;
           }
           else if( cp_dwc_error->errorUser == ERRORCODE_CRC
               || cp_dwc_error->errorUser == ERRORCODE_SYSTEM 
-              || cp_dwc_error->errorUser == ERRORCODE_SENDQUEUE)
+              || cp_dwc_error->errorUser == ERRORCODE_SENDQUEUE
+              || cp_dwc_error->errorUser == ERRORCODE_USER_TIMEOUT )
           {
-            //タイムアウトか相手と切断していたならばならば
+            //システムエラーならば
+            //つうしんえらーがはっせい」
             NetErrSystem.wifi_msg = dwc_error_0015;
           }
           else
           {
-            //DWCのエラーならば
+            //DWCのエラーならば、タイプによる
             NetErrSystem.wifi_msg = GFL_NET_DWC_ErrorType( cp_dwc_error->errorCode,
                 cp_dwc_error->errorType);
           }
@@ -269,6 +274,43 @@ BOOL NetErr_App_FatalDispCall(void)
   return NetErr_DispCall(TRUE);
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PUSHPOP終了モードの設定
+ *
+ *	@param	NET_ERR_PUSHPOP_MODE pushpop_mode モード
+ */
+//-----------------------------------------------------------------------------
+void NetErr_SetPushPopMode( NET_ERR_PUSHPOP_MODE pushpop_mode )
+{
+  NET_ERR_SYSTEM *nes = &NetErrSystem;
+  nes->pushpop_mode = pushpop_mode;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PUSHPOP終了モードのクリア
+ *
+ */
+//-----------------------------------------------------------------------------
+void NetErr_ClearPushPopMode( void )
+{
+  NetErr_SetPushPopMode( NET_ERR_PUSHPOP_MODE_NORMAL );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  PUSHPOPでNET_ERR_PUSHPOP_MODE_BLACKOUTに設定場合の
+ *	        輝度もどし
+ */
+//-----------------------------------------------------------------------------
+void NetErr_ResetPushPopBrightness( void )
+{
+  NET_ERR_SYSTEM *nes = &NetErrSystem;
+  GX_SetMasterBrightness(nes->master_brightness);
+  GXS_SetMasterBrightness(nes->master_brightness_sub);
+}
+
 //==================================================================
 /**
  * Push,Pop有のエラー画面一発呼び出し　※軽度エラー専用。通信の終了処理は行いません
@@ -279,6 +321,8 @@ BOOL NetErr_App_FatalDispCall(void)
 //==================================================================
 void NetErr_DispCallPushPop(void)
 {
+  NET_ERR_SYSTEM *nes = &NetErrSystem;
+
 	if(Local_SystemOccCheck() == FALSE){
 		GF_ASSERT(0); //システムが作られていない
 		return;
@@ -298,7 +342,11 @@ void NetErr_DispCallPushPop(void)
 	}
 	
 	//エラー画面終了
-	Local_ErrDispExit();
+
+  {
+    BOOL is_black_continue  = (nes->pushpop_mode == NET_ERR_PUSHPOP_MODE_BLACKOUT);
+    Local_ErrDispExit( is_black_continue );
+  }
 }
 
 //==================================================================
@@ -325,7 +373,7 @@ void NetErr_DispCallFatal(void)
 	}
 	
 	//エラー画面終了
-	Local_ErrDispExit();
+	Local_ErrDispExit(FALSE);
 }
 
 
@@ -582,7 +630,7 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		}
 		
 		//エラー画面終了
-		Local_ErrDispExit();
+		Local_ErrDispExit(FALSE);
 		NetErr_ErrWorkInit();
 		nes->key_timer = 0;
   	return TRUE;
@@ -673,7 +721,7 @@ static void Local_ErrDispInit(BOOL fatal_error)
  * @brief   エラー画面を終了させ、元の画面に復帰させる
  */
 //--------------------------------------------------------------
-static void Local_ErrDispExit(void)
+static void Local_ErrDispExit(BOOL is_black_continue)
 {
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 	int x, y;
@@ -726,8 +774,11 @@ static void Local_ErrDispExit(void)
 	GX_VBlankIntr(nes->v_intr);
 	
 	//表示ON
-	GX_SetMasterBrightness(nes->master_brightness);
-	GXS_SetMasterBrightness(nes->master_brightness_sub);
+  if( !is_black_continue )
+  {
+    GX_SetMasterBrightness(nes->master_brightness);
+    GXS_SetMasterBrightness(nes->master_brightness_sub);
+  }
 }
 
 //--------------------------------------------------------------
@@ -878,6 +929,12 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
           msgno = dwc_error_0012;
         }
       }
+      if( fatal_error == TRUE )
+      {
+        msgno = dwc_error_0016;
+      }
+
+
       OS_TPrintf("エラーメッセージ %d \n",msgno);
     }
     else

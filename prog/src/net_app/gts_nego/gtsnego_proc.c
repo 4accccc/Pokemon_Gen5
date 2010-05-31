@@ -192,6 +192,9 @@ struct _GTSNEGO_WORK {
   BOOL keyMode;
   BOOL bSingle;
   DWC_TOOL_BADWORD_WORK aBadWork;
+
+  BOOL is_pushpop_err;  //
+  u32   err_repair_cnt;
 };
 
 
@@ -1975,6 +1978,19 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 {
   GTSNEGO_DISP_ScrollReset(pWork->pDispWork);
 
+  //‚à‚µ‚àPUSHPPOPƒGƒ‰[‚Å‚±‚±‚É–ß‚Á‚½ê‡‹P“x‚ð–ß‚·
+  //‚·‚®‚É–ß‚³‚È‚¢‚Ì‚ÍV_Req‚âCLACT‚Ì”½‰f‚ð‘Ò‚Â‚½‚ß
+  if( pWork->is_pushpop_err )
+  {
+    if( pWork->err_repair_cnt++ < 3 )
+    {
+      return;
+    }
+
+    NetErr_ResetPushPopBrightness();
+    pWork->is_pushpop_err  = FALSE;
+  }
+
   if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
   }
@@ -2177,7 +2193,6 @@ static void _checkReturnState(GTSNEGO_WORK* pWork)
   if(pWork->dbw->result != EVENT_GTSNEGO_EXIT){
     GFL_NET_SetAutoErrorCheck(FALSE);
     GFL_NET_SetNoChildErrorCheck(FALSE);
-    GFL_NET_StateWifiMatchEnd(TRUE);
 
     GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
@@ -2186,6 +2201,9 @@ static void _checkReturnState(GTSNEGO_WORK* pWork)
     GTSNEGO_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     GTSNEGO_MESSAGE_ResetDispSet(pWork->pMessageWork);
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
+
+    pWork->is_pushpop_err   = TRUE;
+    pWork->err_repair_cnt   = 0;
 
     pWork->dbw->result=EVENT_GTSNEGO_EXIT;
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
@@ -2232,6 +2250,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
   PMSND_PlayBGM(SEQ_BGM_GTS);
 
   GFL_NET_ReloadIcon();
+
+  NetErr_SetPushPopMode( NET_ERR_PUSHPOP_MODE_BLACKOUT );
 
   _CHANGE_STATE(pWork, _modeSelectMenuInit);
 
@@ -2300,6 +2320,8 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
 {
   EVENT_GTSNEGO_WORK* pEv=pwk;
   GTSNEGO_WORK* pWork = mywk;
+
+  NetErr_ClearPushPopMode();
 
   if(!WIPE_SYS_EndCheck()){
     return GFL_PROC_RES_CONTINUE;
