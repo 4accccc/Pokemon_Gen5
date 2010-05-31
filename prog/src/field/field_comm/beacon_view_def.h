@@ -180,8 +180,7 @@ typedef enum{
 #define BVIEW_SE_CANCEL (SEQ_SE_CANCEL1)
 #define BVIEW_SE_UPDOWN (SEQ_SE_SELECT4)
 #define BVIEW_SE_NEW_PLAYER (SEQ_SE_SYS_11)
-#define BVIEW_SE_ICON   (SEQ_SE_MESSAGE)
-#define BVIEW_SE_THANKS (SEQ_SE_SELECT2)
+#define BVIEW_SE_ICON   (SEQ_SE_SELECT2)
 
 ///////////////////////////////////////////////////
 //BMPŠÖ˜A
