@@ -694,6 +694,7 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
   UNION_MY_SITUATION *situ = &unisys->my_situation;
   UNION_BEACON *beacon;
   MMDL *mmdl;
+  UNION_APPEAL play_appeal_no;
   
   beacon = &unichara->parent_pc->beacon;
   
@@ -710,13 +711,14 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
   }
   
   //話しかけ相手ならばプレイヤーの方向を向く
+  play_appeal_no = UnionTool_PlayCategory_to_AppealNo(beacon->play_category);
   if(situ->mycomm.talk_obj_id == UNION_CHARA_GetCharaIndex(unichara->parent_pc, unichara)){
     UNION_CHAR_EventReq(unichara, BPC_EVENT_STATUS_TALKING);
     return TRUE;
   }
   else if(situ->appeal_no != UNION_APPEAL_NULL //アピール番号が一致していればジャンプ
-      && (situ->appeal_no == UnionTool_PlayCategory_to_AppealNo(beacon->play_category)
-      || situ->appeal_no == beacon->appeal_no)   //アピール番号一致
+      && (situ->appeal_no == play_appeal_no
+      || (play_appeal_no == UNION_APPEAL_NULL && situ->appeal_no == beacon->appeal_no)) //アピール一致
       && unichara->child_no == 0                //親だけ
       && UnionMsg_GetMemberMax(beacon->play_category) > beacon->connect_num){ //接続人数未満
     mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
