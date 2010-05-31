@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T21:47:41"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T22:19:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -360,10 +360,10 @@
 バックパッカー♀</attribute>
 		<language name="JPN" width="256">やっぱり　カセキが　きになる？[BE:01:ページ切り替え（クリア）]
 いいよ！　どちらか
-えらんだ　カセキを　あげるから！[BE:01:ページ切り替え（クリア）]</language>
+えらんだ　カセキを　あげるから！</language>
 		<language name="JPN_KANJI" width="256">やっぱり　カセキが　気になる？[BE:01:ページ切り替え（クリア）]
 いいよ！　どちらか
-選んだ　カセキを　あげるから！[BE:01:ページ切り替え（クリア）]</language>
+選んだ　カセキを　あげるから！</language>
 	</row>
 
 	<row id="msg_d04r0101_backpackerw_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
