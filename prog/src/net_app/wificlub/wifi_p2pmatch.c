@@ -4732,7 +4732,7 @@ static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
     _myStatusChange(wk, WIFI_STATUS_CALL, WIFI_GAME_UNIONMATCH);  // åƒÇ—Ç©ÇØë“ã@íÜÇ…Ç»ÇÈ
   }
 
-  if(GFL_UI_KEY_GetTrg()){
+  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_068, FALSE);
     _yenowinCreateM2(wk);
 
@@ -4757,6 +4757,8 @@ static int _DirectConnectWait2( WIFIP2PMATCH_WORK *wk, int seq  )
   }
   else{  // Ç¢Ç¢Ç¶ÇëIëÇµÇΩèÍçá
     EndMessageWindowOff(wk);
+    WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CONNECTWAIT);
   }
   return seq;
