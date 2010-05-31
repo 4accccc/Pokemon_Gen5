@@ -116,18 +116,29 @@ void MISSION_Update(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission)
 {
   //親機でミッション発動しているなら失敗までの秒数をカウントする
   if(GFL_NET_IsParentMachine() == TRUE 
-      && MISSION_RecvCheck(mission) == TRUE 
-      && mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
-    if(mission->data.variable.ready_timer > 0){
-      if(mission->send_mission_start == _SEND_MISSION_START_NULL 
-          && _GetMissionTime(mission) > mission->data.variable.ready_timer){
-        mission->send_mission_start = _SEND_MISSION_START_SEND_REQ;
+      && MISSION_RecvCheck(mission) == TRUE){
+    if(mission->result.mission_data.accept_netid == INTRUDE_NETID_NULL){
+      if(mission->data.variable.ready_timer > 0){
+        if(mission->send_mission_start == _SEND_MISSION_START_NULL 
+            && _GetMissionTime(mission) > mission->data.variable.ready_timer){
+          mission->send_mission_start = _SEND_MISSION_START_SEND_REQ;
+        }
+      }
+      else if(mission->mission_start_ok == TRUE){
+        if(_GetMissionTime(mission) > mission->data.variable.exe_timer){
+          GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
+          if(mission->result.mission_fail == FALSE){
+            MISSION_SetMissionFail(intcomm, mission, GAMEDATA_GetIntrudeMyID(gamedata));
+          }
+        }
       }
     }
-    else if(mission->mission_start_ok == TRUE){
-      if(_GetMissionTime(mission) > mission->data.variable.exe_timer){
-        GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-        MISSION_SetMissionFail(intcomm, mission, GAMEDATA_GetIntrudeMyID(gamedata));
+    else{ //誰か達成者がいる
+      if(mission->mission_start_ok == TRUE){
+        if(_GetMissionTime(mission) > mission->data.variable.exe_timer){
+          //ミッションの制限時間に達したが成功して終了
+          mission->mission_timeend_success = TRUE;
+        }
       }
     }
   }
@@ -720,7 +731,7 @@ void MISSION_SetResult(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mission, co
   GF_ASSERT(mission->recv_result == FALSE);
   *result = *cp_result;
   mission->recv_result = TRUE;
-  MISSION_ClearMissionEntry(intcomm, mission);
+  //MISSION_ClearMissionEntry(intcomm, mission);
 }
 
 //==================================================================
@@ -881,6 +892,20 @@ BOOL MISSION_CheckResultTimeout(MISSION_SYSTEM *mission)
   return FALSE;
 }
 
+//==================================================================
+/**
+ * ミッション達成後、ミッションの制限時間に達したか確認
+ *
+ * @param   mission		
+ *
+ * @retval  BOOL		TRUE:達成してミッションの制限時間も終了している
+ * @retval  BOOL    FALSE:いずれかの条件を満たしていない
+ */
+//==================================================================
+BOOL MISSION_CheckSuccessTimeEnd(MISSION_SYSTEM *mission)
+{
+  return mission->mission_timeend_success;
+}
 
 //==============================================================================
 //

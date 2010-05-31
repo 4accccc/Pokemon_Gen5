@@ -295,7 +295,8 @@ typedef struct{
   u8 mission_start_ok:1;      ///<TRUE:親から「ミッション開始宣言」の返答を受け取った
   u8 mine_entry:1;            ///<TRUE:ミッション参加している
   u8 mission_complete:1;      ///<TRUE:今実行しているミッションは完了した
-  u8        :4;
+  u8 mission_timeend_success:1;   ///<TRUE:ミッションの制限時間に達した
+  u8        :3;
 }MISSION_SYSTEM;
 
 #endif  //__CONVERT_TYPES__
