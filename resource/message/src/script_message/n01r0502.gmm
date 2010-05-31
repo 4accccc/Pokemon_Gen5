@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-29T17:54:05"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T14:34:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -832,8 +832,8 @@
 　逃走→ポケモンに話しかけこのメッセージから再開</comment>
 		<attribute name="キャラ指定">ポケモン
 ゼクロム</attribute>
-		<language name="JPN" width="256">ババリバリッシュ！！▼</language>
-		<language name="JPN_KANJI" width="256">ババリバリッシュ！！▼</language>
+		<language name="JPN" width="256">ババリバリッシュ！！</language>
+		<language name="JPN_KANJI" width="256">ババリバリッシュ！！</language>
 	</row>
 
 	<row id="msg_n01r0502_pokemon_01b" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -849,8 +849,8 @@
 　逃走→ポケモンに話しかけこのメッセージから再開</comment>
 		<attribute name="キャラ指定">ポケモン
 レシラム</attribute>
-		<language name="JPN" width="256">ンバーニンガガッ！！▼</language>
-		<language name="JPN_KANJI" width="256">ンバーニンガガッ！！▼</language>
+		<language name="JPN" width="256">ンバーニンガガッ！！</language>
+		<language name="JPN_KANJI" width="256">ンバーニンガガッ！！</language>
 	</row>
 
 	<row id="msg_n01r0502_pokemon_02w" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
