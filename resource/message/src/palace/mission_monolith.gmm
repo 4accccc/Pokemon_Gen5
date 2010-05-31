@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-29T15:02:52"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T18:23:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -970,7 +970,7 @@
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「たまごふかパワー　Ｓ」を　与えよ！
+「たまごふかパワー　Ｓ」を　あたえよ！
 （３０ふん　タマゴが　かえりやすくなる）
 
 
@@ -1750,7 +1750,7 @@
 	<row id="plc_mism_05_27" back-color="#ffff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　６ばんどうろ　の
-たてにながい　橋のまんなかに　かくせ！
+たてにながい　はしのまんなかに　かくせ！
 （はなしかけられると　やりなおし！）
 
 
