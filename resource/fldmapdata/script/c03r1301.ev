@@ -60,11 +60,10 @@ EVENT_START   ev_c03r1301_sunglasses_01
 		//ここを通るか質問
 		_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_01,C03R1301_SUNGLASSES_01)
 		_YES_NO_WIN( SCWK_ANSWER )
-		_BALLOONWIN_CLOSE()
 		
 		//「はい」
 		IF $SCWK_ANSWER == SCR_YES THEN
-			
+					
 			//主人公性別取得
 			_GET_MY_SEX ( LWK_SEX )
 			
@@ -107,11 +106,13 @@ EVENT_START   ev_c03r1301_sunglasses_01
 		
 		//「いいえ」
 		ELSE
+		_MSGWIN_CLOSE()
 		
 			//ボディガード下を再度見る
 			_CALL ev_c03r1301_lookdown
 			
 			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_05 , C03R1301_SUNGLASSES_01 )
+			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 		
 		ENDIF
@@ -181,15 +182,17 @@ _ANIME_LABEL	anm_c03r1301_sunglasses_ok_def
 /**************************************************************/
 EVENT_START   ev_pos_c03r1301_sunglasses_02
 {
+	
 	//主人公の方に振り向く
 	_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
-	_OBJ_ANIME( MMDL_ID_PLAYER , anm_c03r1301_player_look_right )
+	IF $LWK_DIR != DIR_RIGHT THEN
+		_OBJ_ANIME( MMDL_ID_PLAYER , anm_c03r1301_player_look_right )	
+	ENDIF
 	_OBJ_ANIME_WAIT()
 	
 	//ここを通るか質問
 	_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_01,C03R1301_SUNGLASSES_01)
 	_YES_NO_WIN( SCWK_ANSWER )
-	_BALLOONWIN_CLOSE()
 	
 	//「はい」
 	IF $SCWK_ANSWER == SCR_YES THEN
@@ -235,16 +238,20 @@ EVENT_START   ev_pos_c03r1301_sunglasses_02
 			
 			//==================================//
 		
-		//「いいえ」
-		ELSE
-			//ボディガード下を再度見る
-			_CALL ev_c03r1301_lookdown
-					
-			_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_05 , C03R1301_SUNGLASSES_01 )
-			_LAST_KEYWAIT()
-			_BALLOONWIN_CLOSE()
+	//「いいえ」
+	ELSE
+	_MSGWIN_CLOSE()
+	
+		//ボディガード下を再度見る
+		_CALL ev_c03r1301_lookdown
 		
-		ENDIF
+		_BALLOONWIN_OBJMSG( msg_c03r1301_sunglasses_06 , C03R1301_SUNGLASSES_01 )
+		_BALLOONWIN_CLOSE()
+		
+		_OBJ_ANIME(MMDL_ID_PLAYER,anm_player_pushed)
+		_OBJ_ANIME_WAIT()
+		
+	ENDIF
 }
 EVENT_END
 
@@ -321,6 +328,13 @@ _ANIME_LABEL	anm_c03r1301_sunglasses_look_down
 	_ANIME_DATA	AC_STAY_WALK_D_8F,1
 	_ANIME_DATA	ACMD_END,0
 
+//--------------------------------------------------------------
+//	主人公が後ろに引く
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_player_pushed
+	_ANIME_DATA	AC_WALK_D_8F,1
+	_ANIME_DATA	ACMD_END,0
+	
 /**************************************************************/
 /*	C03R1301	boy4										*/
 /**************************************************************/
