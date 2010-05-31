@@ -2837,13 +2837,9 @@ static  VMCMD_RESULT  AI_FLDEFF_CHECK( VMHANDLE* vmh, void* context_work )
 static  VMCMD_RESULT  AI_CHECK_SIDEEFF_COUNT( VMHANDLE* vmh, void* context_work )
 {
   TR_AI_WORK* taw = (TR_AI_WORK*)context_work;
-  int side = ( int )VMGetU32( vmh );
-  int flag = ( int )VMGetU32( vmh );
-  BtlPokePos  pos = get_poke_pos( taw, side );
-
-  //flagÇ≈Ç‹Ç´Ç—ÇµÅAÇ«Ç≠Ç—ÇµÇï™äÚ
-  // @todo çÏÇ¡ÇΩÇØÇ«Ç±ÇÍÇ≈Ç¢Ç¢Ç©ämîF
-  BtlSideEffect  effect = (flag)? BTL_SIDEEFF_MAKIBISI : BTL_SIDEEFF_DOKUBISI;
+  int side              = ( int )VMGetU32( vmh );
+  BtlSideEffect effect  = ( BtlSideEffect )VMGetU32( vmh );
+  BtlPokePos  pos       = get_poke_pos( taw, side );
 
 #ifdef AI_SEQ_PRINT
   OS_TPrintf("AI_CHECK_SIDEEFF_COUNT\n");
