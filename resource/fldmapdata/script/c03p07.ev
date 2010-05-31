@@ -97,21 +97,19 @@ EVENT_END
 EVENT_START		ev_pos_c03p07_rival_01
 //WK_SCENE_C03P07が０のときに起動
 
-	//階段SE
-	_SE_PLAY( SEQ_SE_KAIDAN )
 	//ライバル出現
 	_OBJ_ADD_EX( 25,48,DIR_LEFT,MMDL_ID_EVENTOBJ_00,RIVEL,MV_DMY )
 	
-	//階段音とビックリマーク音がかぶらないように
-	_TIME_WAIT(10)
+	//主人公：！マーク
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_gyoe )
 	_OBJ_ANIME_WAIT()
-	_SE_WAIT()
 	
 	//自機を押してライバルが１歩進む
+	_SE_PLAY( SEQ_SE_KAIDAN )	//階段SE
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
 	_OBJ_ANIME( MMDL_ID_EVENTOBJ_00, anm_rival_move )
 	_OBJ_ANIME_WAIT()
+	_SE_WAIT()
 
 	_CAMERA_START()		//カメラ操作開始
     _CAMERA_PURGE()		//対象物とカメラのバインドを解く
@@ -149,7 +147,6 @@ EVENT_START		ev_pos_c03p07_rival_01
 
 	//階段SE
 	_SE_PLAY( SEQ_SE_KAIDAN )
-	_TIME_WAIT(10)
 	
 	//ジムリーダー３出現
 	_OBJ_ADD_EX( 25,48,DIR_LEFT,MMDL_ID_EVENTOBJ_00,LEADER3,MV_DMY )
