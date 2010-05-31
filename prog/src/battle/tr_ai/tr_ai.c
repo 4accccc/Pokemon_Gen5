@@ -1705,7 +1705,6 @@ static  VMCMD_RESULT  AI_COMP_POWER( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_COMP_POWER\n");
 #endif
 
-  //@todo 作成したけど、これで良いか後で確認
   {
     int i;
     u8  atkPokeID = BPP_GetID( taw->atk_bpp );
@@ -2780,7 +2779,6 @@ static  VMCMD_RESULT  AI_IF_ALREADY_MORAIBI( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_IF_ALREADY_MORAIBI\n");
 #endif
 
-  //@todo 作ったけどこれで良いか後で確認
   if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) ){
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }
@@ -2804,7 +2802,6 @@ static  VMCMD_RESULT  AI_IF_HAVE_ITEM( VMHANDLE* vmh, void* context_work )
   OS_TPrintf("AI_IF_HAVE_ITEM\n");
 #endif
 
-  //@todo 作ったけどこれで良いか後で確認
   if( item == have_item ){
     VMCMD_Jump( vmh, vmh->adrs + adrs );
   }
