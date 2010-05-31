@@ -1186,7 +1186,7 @@ void ZKNSEARCHOBJ_ScrollList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 		ZKNSEARCHOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
 		ZKNSEARCHOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_MAIN );
 
-		if( (y+mv) <= -24 || (y+mv) >= 255 ){
+		if( (y+mv) <= -12 || (y+mv) >= 204 ){
 			ZKNSEARCHOBJ_SetVanish( wk, i, FALSE );
 		}
 	}
@@ -1198,7 +1198,7 @@ void ZKNSEARCHOBJ_ScrollList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 		ZKNSEARCHOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_SUB );
 		ZKNSEARCHOBJ_SetPos( wk, i+2, x, y+mv, CLSYS_DRAW_SUB );	// OBJ win
 
-		if( (y+mv) <= -24 || (y+mv) >= 255 ){
+		if( (y+mv) <= -12 || (y+mv) >= 204 ){
 			ZKNSEARCHOBJ_SetVanish( wk, i, FALSE );
 			ZKNSEARCHOBJ_SetVanish( wk, i+2, FALSE );		// OBJ win
 		}
@@ -1227,13 +1227,13 @@ void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 		ZKNSEARCHOBJ_GetPos( wk, i, &x, &y, CLSYS_DRAW_MAIN );
 		ZKNSEARCHOBJ_SetPos( wk, i, x, y+mv, CLSYS_DRAW_MAIN );
 
-		if( (y+mv) <= -24 || (y+mv) >= 255 ){
+		if( (y+mv) <= -20 || (y+mv) >= 220 ){
 			ZKNSEARCHOBJ_SetVanish( wk, i, FALSE );
 		}
 	}
 	ZKNSEARCHOBJ_GetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_M, &x, &y, CLSYS_DRAW_MAIN );
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_M, x, y+mv, CLSYS_DRAW_MAIN );
-	if( (y+mv) <= -24 || (y+mv) >= 255 ){
+	if( (y+mv) <= -20 || (y+mv) >= 220 ){
 		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_M, FALSE );
 	}
 
@@ -1246,7 +1246,7 @@ void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 
 		ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_FORM_MAX+i, x, y+mv, CLSYS_DRAW_SUB );
 
-		if( (y+mv) <= -32 || (y+mv) >= 255 ){
+		if( (y+mv) <= -28 || (y+mv) >= 212 ){
 			ZKNSEARCHOBJ_SetVanish( wk, i, FALSE );
 			ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_FORM_MAX+i, FALSE );
 		}
@@ -1254,7 +1254,7 @@ void ZKNSEARCHOBJ_ScrollFormList( ZKNSEARCHMAIN_WORK * wk, s8 mv )
 	ZKNSEARCHOBJ_GetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_S, &x, &y, CLSYS_DRAW_SUB );
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_S, x, y+mv, CLSYS_DRAW_SUB );
 	ZKNSEARCHOBJ_SetPos( wk, ZKNSEARCHOBJ_IDX_MARK1_SW, x, y+mv, CLSYS_DRAW_SUB );
-	if( (y+mv) <= -32 || (y+mv) >= 255 ){
+	if( (y+mv) <= -28 || (y+mv) >= 212 ){
 		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_S, FALSE );
 		ZKNSEARCHOBJ_SetVanish( wk, ZKNSEARCHOBJ_IDX_MARK1_SW, FALSE );
 	}
