@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T19:14:41"/>
+	<create user="matsumiya" host="W00224" date="2010-05-31T16:10:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -596,12 +596,30 @@
 　クリア後</comment>
 		<attribute name="キャラ指定">ジムリーダー
 シャガ</attribute>
-		<language name="JPN" width="256">おおく　かたらぬ
-ただ　ひとこと……▼
-ありがとう</language>
-		<language name="JPN_KANJI" width="256">多くは　語らぬ
-ただ　一言……▼
-ありがとう</language>
+		<language name="JPN" width="256">ポケモンも　ひとも
+ときの　ながれに　よって▽
+おいるのでは　ない▼
+こころに　あふれていた
+エネルギーを　からしてしまったとき▽
+おいていくのだ▼
+こころに　エネルギーを
+みたしてくれるのは▼
+しんじつか　りそうか
+はたまた　ゆめか……▼
+それは　なにを　のぞみ
+いきるのかで　かわるのだろう</language>
+		<language name="JPN_KANJI" width="256">ポケモンも　人も
+時の　流れに　よって▽
+老いるのでは　ない▼
+こころに　あふれていた
+エネルギーを　枯らしてしまったとき▽
+老いていくのだ▼
+こころに　エネルギーを
+満たしてくれるのは▼
+真実か　理想か
+はたまた　夢か……▼
+それは　なにを　望み
+生きるのかで　変わるのだろう</language>
 	</row>
 
 	<row id="msg_c08gym0101_veteranm4_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
