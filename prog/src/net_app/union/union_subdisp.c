@@ -211,7 +211,7 @@ static void _UniSub_MenuBarLoad(UNION_SUBDISP_PTR unisub);
 static void _UniSub_MenuBarFree(UNION_SUBDISP_PTR unisub);
 static void _UniSub_BmpWinCreate(UNION_SUBDISP_PTR unisub);
 static void _UniSub_BmpWinDelete(UNION_SUBDISP_PTR unisub);
-static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub);
+static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR unisys);
 static void _UniSub_IconPalChange(UNION_SUBDISP_PTR unisub, int act_index);
 static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *log);
 static void _UniSub_Chat_DispWrite(UNION_SUBDISP_PTR unisub, UNION_CHAT_DATA *chat, u8 write_pos);
@@ -327,6 +327,13 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
 //==================================================================
 void UNION_SUBDISP_Exit(UNION_SUBDISP_PTR unisub)
 {
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(unisub->gsys);
+  UNION_SYSTEM_PTR unisys = GameCommSys_GetAppWork(game_comm);
+
+  if(unisys != NULL){
+    unisys->chat_call = FALSE;
+  }
+  
   PMS_DRAW_Exit(unisub->pmsdraw);
   _UniSub_MenuBarFree(unisub);
   _UniSub_ActorDelete(unisub);
@@ -414,7 +421,7 @@ void UNION_SUBDISP_Draw(UNION_SUBDISP_PTR unisub, BOOL bActive)
   if(bActive == TRUE){
     u32 icon_update;
     
-    icon_update = _UniSub_TouchUpdate(unisub);
+    icon_update = _UniSub_TouchUpdate(unisub, unisys);
     if(unisys != NULL && icon_update == TRUE){
       switch(unisub->appeal_no){
       case UNION_APPEAL_BATTLE:      //êÌì¨
@@ -777,7 +784,7 @@ static void _UniSub_ActorDelete(UNION_SUBDISP_PTR unisub)
  * @param   unisub		
  */
 //--------------------------------------------------------------
-static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
+static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR unisys)
 {
   u32 x, y;
   int i;
@@ -800,17 +807,14 @@ static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub)
     crect.left = clpos.x - 10;
     crect.right = clpos.x + 10;
     if(crect.left < x && crect.right > x && crect.top < y && crect.bottom > y){
-      if(i == UNISUB_ACTOR_APPEAL_CHAT){
-        FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(unisub->gsys);
-        FIELD_SUBSCREEN_WORK *subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-        
-        FIELD_SUBSCREEN_SetAction(subscreen, FIELD_SUBSCREEN_ACTION_UNION_CHAT);
+      if(i == UNISUB_ACTOR_APPEAL_CHAT && unisys != NULL){
+        unisys->chat_call = TRUE;
       }
       else{
         _UniSub_IconPalChange(unisub, i);
 //        if(unisub->appeal_no != UNION_APPEAL_NULL 
+        PMSND_PlaySE(UNION_SE_APPEAL_ICON_TOUCH);
       }
-      PMSND_PlaySE(UNION_SE_APPEAL_ICON_TOUCH);
       return TRUE;
     }
   }

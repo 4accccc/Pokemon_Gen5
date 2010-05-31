@@ -58,7 +58,8 @@ typedef struct _UNION_SYSTEM{
   u8 minigame_entry_answer;           ///<乱入希望の返事(UNION_MINIGAME_ENTRY_ANSWER)
   u8 minigame_entry_req_answer_ok_bit;  ///<乱入希望の返事(OK) ビット管理
   u8 minigame_entry_req_answer_ng_bit;  ///<乱入希望の返事(NG) ビット管理
-  u8 padding[2];
+  u8 chat_call;                       ///<TRUE:チャット入力画面呼び出し
+  u8 padding;
   
   UNION_MY_SITUATION my_situation;    ///<自分の状況
   UNION_BEACON my_beacon;             ///<自分の送信ビーコン

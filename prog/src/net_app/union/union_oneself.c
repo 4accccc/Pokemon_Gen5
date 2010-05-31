@@ -787,6 +787,7 @@ static BOOL OneselfSeq_NormalInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *s
 
   _PlayerMinePause(unisys, fieldWork, FALSE);
   
+  unisys->chat_call = FALSE;
 
   return TRUE;
 }
@@ -866,13 +867,9 @@ static BOOL OneselfSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION 
   }
   
   //チャット入力のショートカットボタン押下チェック
-  {
-    FIELD_SUBSCREEN_WORK * subscreen = FIELDMAP_GetFieldSubscreenWork(fieldWork);
-
-    if(FIELD_SUBSCREEN_GetAction(subscreen) == FIELD_SUBSCREEN_ACTION_UNION_CHAT){
-      UnionOneself_ReqStatus(unisys, UNION_STATUS_CHAT_CALL);
-      return TRUE;
-    }
+  if(unisys->chat_call == TRUE){
+    UnionOneself_ReqStatus(unisys, UNION_STATUS_CHAT_CALL);
+    return TRUE;
   }
 
   //出口チェック
@@ -1028,6 +1025,14 @@ static BOOL OneselfSeq_ChatCallUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 {
   switch(*seq){
   case 0:
+    if(unisys->chat_call == FALSE){
+      //ここでFALSEになっているという事はシーケンス遷移中に他のイベント(Xメニュー)が起動した
+      //このままここで終了する
+      return TRUE;
+    }
+    
+    unisys->chat_call = FALSE;
+    PMSND_PlaySE(UNION_SE_APPEAL_ICON_TOUCH);
     {
       PMS_SELECT_PARAM  *initParam;
       PMS_DATA  pmsDat;
