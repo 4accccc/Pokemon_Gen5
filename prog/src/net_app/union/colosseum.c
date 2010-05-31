@@ -396,19 +396,20 @@ void Colosseum_Clear_ReceivePokeParty(COLOSSEUM_SYSTEM_PTR clsys, BOOL except_fo
 //==================================================================
 void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *gsys, COMM_BTL_DEMO_PARAM *cbdp, HEAPID heap_id)
 {
-  int net_id, member_max, set_id, stand_pos, my_pos, my_net_id;
+  int net_id, member_max, set_id, stand_pos, my_pos, my_net_id, tr_no;
   
   GFL_STD_MemClear(cbdp, sizeof(COMM_BTL_DEMO_PARAM));
   
   cbdp->type = COMM_BTL_DEMO_TYPE_MULTI_START;
   member_max = 0;
   for(net_id = 0; net_id < COLOSSEUM_MEMBER_MAX; net_id++){
-    member_max++;
     if(clsys->recvbuf.pokeparty_occ[net_id] == FALSE){
       cbdp->type = COMM_BTL_DEMO_TYPE_NORMAL_START;
       break;
     }
+    member_max++;
   }
+  GF_ASSERT(member_max == 2 || member_max == 4);
   
   my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   my_pos = clsys->recvbuf.stand_position[my_net_id];
@@ -426,8 +427,10 @@ void Colosseum_SetupBattleDemoParent(COLOSSEUM_SYSTEM_PTR clsys, GAMESYS_WORK *g
         set_id = COMM_BTL_DEMO_TRDATA_C;
       }
     }
+    tr_no = set_id + (stand_pos >> 1);
+    GF_ASSERT(tr_no < member_max);
     _BattleDemoParent_SetTrainerData(
-      clsys, &cbdp->trainer_data[set_id + (stand_pos >> 1)], net_id, heap_id);
+      clsys, &cbdp->trainer_data[tr_no], net_id, heap_id);
   }
   
   cbdp->record = GAMEDATA_GetRecordPtr( GAMESYSTEM_GetGameData(gsys) );
