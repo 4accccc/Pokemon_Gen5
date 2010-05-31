@@ -1271,6 +1271,10 @@ static  void  Gauge_CalcEXP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     dotto_offset = 1;
   }
   dotto_offset = GFL_STD_Abs( bgcl->exp_add / dotto_offset );
+  if( dotto_offset == 0 )
+  {
+    dotto_offset = 1;
+  }
   calc_exp = GaugeProc( bgcl->exp_max, bgcl->exp, bgcl->exp_add, &bgcl->exp_work, BTLV_GAUGE_EXP_CHARMAX, dotto_offset );
   PutGaugeOBJ( bgw, bgcl, BTLV_GAUGE_REQ_EXP );
   if(calc_exp == -1)
