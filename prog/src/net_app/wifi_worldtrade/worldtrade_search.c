@@ -1275,7 +1275,10 @@ static int SubSeq_SearchCheck( WORLDTRADE_WORK *wk )
 			WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SERVER_QUERY );
 
 			// •\Ž¦‚³‚ê‚Ä‚¢‚éŒŸõŒ‹‰Ê‚n‚a‚i‚ª‚¢‚éê‡‚Í‰B‚·
-			WorldTrade_SubLcdMatchObjHide( wk );
+      if( wk->SearchResult > 0 )
+      {
+        WorldTrade_SubLcdMatchObjHide( wk );
+      }
 			
 		}
 		
