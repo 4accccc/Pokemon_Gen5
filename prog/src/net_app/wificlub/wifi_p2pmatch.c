@@ -2305,9 +2305,14 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
 
     p_status = WifiFriendMatchStatusGet( i );
     status = _WifiMyStatusGet( wk, p_status );
+    if(DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus( i )){
+      status = WIFI_GAME_NONE;
+    }
     if((wk->matchStatusBackup[i]  != status) ||
        (wk->matchVchatBackup[i]  != WIFI_STATUS_GetVChatStatus(p_status)) ){
 
+      OS_TPrintf("%d ステータス変更 %d\n",i,status);
+      
       // オブジェクトワーク
       p_obj = MCRSYS_GetMoveObjWork( wk, i+1 );
 
@@ -2327,17 +2332,16 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
           //NPCをジャンプ動作にする
           WIFI_MCR_NpcMoveSet( &wk->matchroom, p_obj,  MCR_NPC_MOVE_JUMP );
         }
-
-        wk->matchStatusBackup[i] = status;
-        wk->matchVchatBackup[i] = WIFI_STATUS_GetVChatStatus(p_status);
 #if 1
         {
           WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_UNION_GRA, WIFI_STATUS_GetTrainerView(p_status));
           WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_SEX, WIFI_STATUS_GetSex(p_status));
         }
 #endif
-        num++;
       }
+      wk->matchStatusBackup[i] = status;
+      wk->matchVchatBackup[i] = WIFI_STATUS_GetVChatStatus(p_status);
+      num++;
     }
   }
   return num;
@@ -3088,6 +3092,9 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
           WifiP2PMatch_UserDispOff_Target( wk, wk->index2NoBackUp[i], HEAPID_WIFIP2PMATCH );  // その人がした画面に詳細表示されているなら消す
           out_flag = TRUE;
         }
+        else{
+          MCVSys_BttnDel( wk, wk->index2NoBackUp[i] );
+        }
       }
 
       // INチェック
@@ -3119,7 +3126,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
           // オブジェが登録できなかったので予約登録
           // （これだとボタンを押すことが出来ない）
           MCVSys_BttnSet( wk, wk->index2No[i], MCV_BTTN_FRIEND_TYPE_RES );
-          wk->index2No[i] = 0;  // 入ってきたのはなかったことにする
+   //       wk->index2No[i] = 0;  // 入ってきたのはなかったことにする
         }
       }
     }
@@ -6826,7 +6833,6 @@ static void MCVSys_BttnDraw( WIFIP2PMATCH_WORK *wk )
     // スクリーンクリア
     //    GFL_BG_ScrFill( GFL_BG_FRAME2_S, 0, 0, 0, 32, 24, 0 );
     GFL_BG_ClearFrame( GFL_BG_FRAME3_S);
-    
    // GFL_BG_ClearScreenCodeVReq(GFL_BG_FRAME2_S);
 /*    {
       ARCHANDLE* p_handle;
