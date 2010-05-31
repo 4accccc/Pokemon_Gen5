@@ -31,9 +31,8 @@
 #define D07R0301_TR_GROUND_06             10
 #define D07R0301_TR_GROUND_07             11
 #define D07R0301_FLD_ITEM_02              12
-#define D07R0301_FLD_ITEM_03              13
-#define D06R0301_FLD_ITEM_04              14
-#define D07R0301_ROCK_01                  15
+#define D06R0301_FLD_ITEM_04              13
+#define D07R0301_ROCK_01                  14
 
 #endif //ZONE_D07R0301_EVC_H
 //Ç±ÇÃÉtÉ@ÉCÉãÇÕ../data/d07r0301.mevÇ©ÇÁé©ìÆê∂ê¨Ç≥ÇÍÇ‹ÇµÇΩ
