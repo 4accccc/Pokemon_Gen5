@@ -99,7 +99,6 @@ _TALK_OBJ_START()
 
 				//カセキその１　なんだ
 				_BALLOONWIN_OBJMSG_POS( msg_d04r0101_backpackerw_02,D04R0101_BACKPACKERW_01,POS_DOWN )
-				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 				//カセキその１入手処理
@@ -117,7 +116,6 @@ _TALK_OBJ_START()
 
 				//カセキその２　なんだ
 				_BALLOONWIN_OBJMSG_POS( msg_d04r0101_backpackerw_03,D04R0101_BACKPACKERW_01,POS_DOWN )
-				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 				//カセキその２入手処理
@@ -168,7 +166,6 @@ _TALK_OBJ_START()
 
 				//カセキその１　なんだ
 				_BALLOONWIN_OBJMSG_POS( msg_d04r0101_backpackerw_02,D04R0101_BACKPACKERW_01,POS_DOWN )
-				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 				//カセキその１入手処理
@@ -186,7 +183,6 @@ _TALK_OBJ_START()
 
 				//カセキその２　なんだ
 				_BALLOONWIN_OBJMSG_POS( msg_d04r0101_backpackerw_03,D04R0101_BACKPACKERW_01,POS_DOWN )
-				_LAST_KEYWAIT()
 				_MSGWIN_CLOSE()
 			
 				//カセキその２入手処理
