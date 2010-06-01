@@ -1300,20 +1300,24 @@ static void handler_Kasoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_ACTION_DONE) )
+    {
+      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
 
-    param->header.tokwin_flag = TRUE;
-    param->rankType = BPP_AGILITY_RANK;
-    param->poke_cnt = 1;
-    param->pokeID[0] = pokeID;
-    param->rankVolume = 1;
+      param->header.tokwin_flag = TRUE;
+      param->rankType = BPP_AGILITY_RANK;
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->rankVolume = 1;
+    }
 //    param->fAlmost = TRUE;
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kasoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END, handler_Kasoku },
+    { BTL_EVENT_TURNCHECK_END,         handler_Kasoku          },
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
