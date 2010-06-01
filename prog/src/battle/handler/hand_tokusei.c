@@ -2757,16 +2757,12 @@ static void handler_PoisonHeal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       BTL_HANDEX_PARAM_RECOVER_HP* param;
 
-//      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, 0 );
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_DAMAGE, 0 );
 
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 8 );
       param->pokeID = pokeID;
       param->header.tokwin_flag = TRUE;
-
-//      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
-
     }
   }
 }
@@ -6031,7 +6027,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunakaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CALC_AGILITY,     handler_Sunakaki           },    /// すばやさ計算ハンドラ
-    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
+//    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -6121,6 +6117,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_POWER, handler_SunanoTikara   },    // ワザ威力計算ハンドラ
+//    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
+
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

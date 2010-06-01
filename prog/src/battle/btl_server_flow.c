@@ -135,6 +135,7 @@ static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
 static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID );
+static u8 ItemEff_Mental_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID );
 static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, BppValueID rankType );
 static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
@@ -3213,7 +3214,7 @@ static u8 ItemEff_KonranRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
 }
 static u8 ItemEff_MeromeroRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_MEROMERO );
+  return ItemEff_Mental_Cure( wk, bpp, itemID, itemParam, WAZASICK_MEROMERO );
 }
 static u8 ItemEff_EffectGuard( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
@@ -3409,6 +3410,37 @@ static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     }
   }
   return FALSE;
+}
+/**
+ *  メンタルハーブ専用
+ */
+static u8 ItemEff_Mental_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID )
+{
+  if( !BPP_IsDead(bpp) && (!BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(bpp))) )
+  {
+    WazaSick sickID;
+    u8  result = 0;
+    u32 idx = 0;
+    while( 1 )
+    {
+      sickID = BTL_TABLES_GetMentalSickID( idx++ );
+      if( sickID == WAZASICK_NULL ){
+        break;
+      }
+      if( BPP_CheckSick(bpp, sickID) )
+      {
+        u8 pokeID = BPP_GetID( bpp );
+        BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+        param->sickCode = sickID;
+        result = 1;
+      }
+    }
+    return result;
+  }
+  return FALSE;
+
 }
 /**
  *  ランクアップ系共通
@@ -9558,8 +9590,19 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
 
       SCQUE_PUT_ACT_Dead( wk->que, pokeID );
       scproc_ClearPokeDependEffect( wk, poke );
-
       BPP_Clear_ForDead( poke );
+
+      // 野生戦でプレイヤー勝利ならこの時点でBGM再生コマンド
+      if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+      &&  (wk->fWinBGMPlayWild == FALSE)
+      &&  scproc_CheckShowdown(wk)
+      &&  CheckPlayerSideAlive(wk)
+      ){
+        u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
+        SCQUE_PUT_ACT_PlayWinBGM( wk->que, WinBGM );
+        wk->fWinBGMPlayWild = TRUE;
+      }
+
       // プレイヤーのポケモンが死んだ時になつき度計算
       if( BTL_MAINUTIL_PokeIDtoClientID(pokeID) == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
       {
@@ -9762,18 +9805,6 @@ static BOOL getexp_make_cmd( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const CALC_E
         u32 exp   = calcExp[i].exp;
         u16 strID = (calcExp[i].fBonus)? BTL_STRID_STD_GetExp_Bonus : BTL_STRID_STD_GetExp;
         u8  pokeID = BPP_GetID( bpp );
-
-        // 野生戦でプレイヤー勝利ならこの時点でBGM再生コマンド
-        if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
-        &&  (wk->fWinBGMPlayWild == FALSE)
-        &&  scproc_CheckShowdown(wk)
-        &&  CheckPlayerSideAlive(wk)
-        ){
-          u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
-
-          SCQUE_PUT_ACT_PlayWinBGM( wk->que, WinBGM );
-          wk->fWinBGMPlayWild = TRUE;
-        }
 
 //        BTL_Printf("経験値はいったメッセージ :strID=%d, pokeID=%d, exp=%d\n", strID, pokeID, exp);
         SCQUE_PUT_MSG_STD( wk->que, strID, pokeID, exp );
@@ -10076,6 +10107,16 @@ static WazaSick trans_sick_code( const BTL_POKEPARAM* bpp, BtlWazaSickEx* exCode
       result = WAZASICK_KONRAN;
     }
     *exCode = WAZASICK_NULL;
+    break;
+
+  case WAZASICK_EX_MENTAL:  // メンタルハーブ
+    {
+      result = BTL_CALC_CheckMentalSick( bpp );
+      if( result == WAZASICK_NULL ){
+        *exCode = WAZASICK_NULL;
+      }
+      return result;
+    }
     break;
 
   case WAZASICK_NULL:

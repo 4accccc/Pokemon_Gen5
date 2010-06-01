@@ -122,6 +122,8 @@ extern WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect );
 extern BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok );
 
 extern BOOL BTL_CALC_IsCantRecvTokusei( PokeTokusei tok );
+extern WazaSick BTL_CALC_CheckMentalSick( const BTL_POKEPARAM* bpp );
+
 
 
 

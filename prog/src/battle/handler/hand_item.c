@@ -1032,6 +1032,16 @@ static BOOL common_sickcode_match( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSi
   case WAZASICK_EX_POKEFULL:
     return  (BPP_GetPokeSick(bpp) != POKESICK_NULL);
     break;
+  case WAZASICK_EX_MENTAL:
+    {
+      WazaSick sickID = BTL_CALC_CheckMentalSick( bpp );
+      if( sickID != WAZASICK_NULL ){
+        TAYA_Printf("èÛë‘àŸèÌÉRÅ[Éh=%d..\n", sickID);
+        return TRUE;
+      }
+      return FALSE;
+    }
+    break;
   default:
     return BPP_CheckSick( bpp, sickCode );
   }
@@ -2250,7 +2260,7 @@ static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 }
 static void handler_MentalHerb_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_useForSick( myHandle, flowWk, pokeID, WAZASICK_MEROMERO );
+  common_useForSick( myHandle, flowWk, pokeID, WAZASICK_EX_MENTAL );
 }
 static void handler_MentalHerb_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {

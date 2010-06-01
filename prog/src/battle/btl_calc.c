@@ -13,6 +13,7 @@
 #include "tr_tool\tr_tool.h"
 
 #include "btl_common.h"
+#include "btl_tables.h"
 #include "btl_util.h"
 
 #include "btl_calc.h"
@@ -918,6 +919,32 @@ BOOL BTL_CALC_IsCantRecvTokusei( PokeTokusei tok )
     }
   }
   return FALSE;
+}
+
+//=============================================================================================
+/**
+ * 「メンタルハーブ」で治る対象の状態異常チェック
+ *
+ * @param   bpp
+ *
+ * @retval  WazaSick
+ */
+//=============================================================================================
+WazaSick BTL_CALC_CheckMentalSick( const BTL_POKEPARAM* bpp )
+{
+  WazaSick result = WAZASICK_NULL;
+  u32 i = 0;
+  while( 1 )
+  {
+    result = BTL_TABLES_GetMentalSickID( i++ );
+    if( result == WAZASICK_NULL ){
+      break;
+    }
+    if( BPP_CheckSick(bpp, result) ){
+      return result;
+    }
+  }
+  return result;
 }
 
 

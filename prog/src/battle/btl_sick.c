@@ -450,6 +450,7 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
     { WAZASICK_TYOUHATSU,     BTL_STRID_SET_ChouhatuCure,     -1                                },
     { WAZASICK_FLYING,        BTL_STRID_SET_DenjiFuyuCure,    -1                                },
     { WAZASICK_KAIHUKUHUUJI,  BTL_STRID_SET_KaifukuFujiCure,  -1                                },
+    { WAZASICK_ICHAMON,       BTL_STRID_SET_IchamonCure,      -1                                },
 
     { WAZASICK_KONRAN,        BTL_STRID_SET_KonranCure,       BTL_STRID_SET_UseItem_CureKonran  },
     { WAZASICK_MEROMERO,      BTL_STRID_SET_MeromeroCure,     BTL_STRID_SET_UseItem_CureMero    },
@@ -458,8 +459,13 @@ static int getCureStrID( WazaSick sick, BOOL fUseItem )
   u32 i;
 
   for(i=0; i<NELEMS(dispatchTbl); ++i){
-    if( dispatchTbl[i].sick == sick ){
-      return (fUseItem)? dispatchTbl[i].strID_useItem : dispatchTbl[i].strID_notItem;
+    if( dispatchTbl[i].sick == sick )
+    {
+      int strID = (fUseItem)? dispatchTbl[i].strID_useItem : dispatchTbl[i].strID_notItem;
+      if( strID < 0 ){
+        strID = dispatchTbl[i].strID_notItem;
+      }
+      return strID;
     }
   }
 
@@ -482,7 +488,8 @@ BOOL BTL_SICK_MakeDefaultCureMsg( WazaSick sickID, BPP_SICK_CONT oldCont, const 
 {
   BOOL fUseItem = (itemID != ITEM_DUMMY_DATA );
   int strID = getCureStrID( sickID, fUseItem );
-  if( strID >= 0 ){
+  if( strID >= 0 )
+  {
     HANDEX_STR_Setup( str, BTL_STRTYPE_SET, strID );
     HANDEX_STR_AddArg( str, BPP_GetID( bpp ) );
     if( fUseItem ){

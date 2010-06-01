@@ -221,6 +221,7 @@ typedef enum {
 
   WAZASICK_EX_POKEFULL = WAZASICK_MAX,  ///< ‘Sƒ|ƒPƒ‚ƒ“ŒnˆÙí‚ª‘ÎÛ
   WAZASICK_EX_POKEFULL_PLUS,            ///< ‘Sƒ|ƒPƒ‚ƒ“ŒnˆÙí{‚±‚ñ‚ç‚ñ‚à‘ÎÛ
+  WAZASICK_EX_MENTAL,
 
 }BtlWazaSickEx;
 

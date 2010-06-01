@@ -26,9 +26,17 @@ extern BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza );
 extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 
 
+/**
+ *  Ç≥Ç´Ç«ÇËé∏îsëŒè€ÉèÉUîªíË
+ */
+extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );
+
+
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
 extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );
 extern BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID );
+extern WazaSick  BTL_TABLES_GetMentalSickID( u32 idx );
+
 
 
 

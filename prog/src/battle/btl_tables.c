@@ -59,6 +59,26 @@ BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
   return FALSE;
 }
 /**
+ *  さきどり失敗ワザ判定
+ */
+BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
+{
+  static const WazaID table[] = {
+    WAZANO_NULL, WAZANO_MIRAAKOOTO, WAZANO_KAUNTAA, WAZANO_METARUBAASUTO,
+    WAZANO_KIAIPANTI,
+  };
+  u32 i;
+
+  for(i=0; i<NELEMS(table); ++i)
+  {
+    if( table[i] == waza ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+/**
  *  プレッシャー対象ワザ判定
  */
 BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
@@ -79,6 +99,7 @@ BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
 
   return FALSE;
 }
+
 
 /**
  *  ゆびをふるで出ないワザテーブル
@@ -159,6 +180,29 @@ BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID )
   return FALSE;
 }
 
+//=============================================================================================
+/**
+ * メンタルハーブで治す状態異常テーブル順番アクセス
+ *
+ * @param   idx   0～
+ *
+ * @retval  WazaSick    有効Idxの時、状態異常コード／それ以外 WAZASICK_NULL
+ */
+//=============================================================================================
+WazaSick  BTL_TABLES_GetMentalSickID( u32 idx )
+{
+  static const WazaSick table[] = {
+    WAZASICK_MEROMERO,      WAZASICK_ICHAMON,   WAZASICK_KANASIBARI,
+    WAZASICK_KAIHUKUHUUJI,  WAZASICK_ENCORE,
+  };
+
+  if( idx < NELEMS(table) ){
+    TAYA_Printf("idx=%d, sickCode=%d\n", idx, table[idx]);
+    return table[idx];
+  }
+  TAYA_Printf(" SickCode = NULL\n");
+  return WAZASICK_NULL;
+}
 
 
 #ifdef PM_DEBUG

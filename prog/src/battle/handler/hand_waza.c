@@ -8806,6 +8806,7 @@ static void handler_Negoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
         waza = BPP_WAZA_GetID( bpp, i );
         if( (isReqWazaForbid(waza, forbidWazaTbl, NELEMS(forbidWazaTbl)) == FALSE)
         &&  (WAZADATA_GetFlag(waza, WAZAFLAG_Tame) == FALSE)
+        &&  (waza != WAZANO_KIAIPANTI)
         ){
           work[cnt++] = waza;
         }
@@ -8934,14 +8935,11 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 
         // 相手がダメージワザを選択していない場合も失敗
         waza = BTL_ACTION_GetWazaID( &action );
-        if( (waza == WAZANO_NULL)
-        ||  (waza == WAZANO_KAUNTAA)
-        ||  (waza == WAZANO_MIRAAKOOTO)
-        ||  (waza == WAZANO_METARUBAASUTO)
-        ||  (!WAZADATA_IsDamage(waza))
-        ){
-          break;
-        }
+        if( !WAZADATA_IsDamage(waza) ){ break; }
+
+        // さきどり禁止ワザなら失敗
+        if( BTL_TABLES_IsSakidoriFailWaza(waza) ){ break; }
+
 
         // ここまで来たら成功
         fSucceess = TRUE;
