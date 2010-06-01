@@ -382,7 +382,6 @@ static u8 _TreeEnable(GAMEDATA *gamedata, FLD_EXP_OBJ_CNT_PTR exobj_cnt, INTRUDE
   palace_area = GAMEDATA_GetIntrudePalaceArea(gamedata);
   //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
   map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
-  OS_TPrintf("aaa palace_area = %d my_id=%d, map_offset=%d\n", palace_area, GAMEDATA_GetIntrudeMyID(gamedata), map_offset);
   if(map_offset < 0){
     map_offset = GAMEDATA_GetIntrudeNum(gamedata) + map_offset;
   }
