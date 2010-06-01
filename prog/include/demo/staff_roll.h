@@ -26,10 +26,10 @@ typedef struct {
 
 // 呼び出しモード
 enum {
-	STAFFROLL_MODE_NORMAL = 0,
-	STAFFROLL_MODE_FAST,
+	STAFFROLL_MODE_NORMAL = 0,		// 通常
+	STAFFROLL_MODE_FAST,					// スキップあり
 #ifdef	PM_DEBUG
-	STAFFROLL_MODE_DEBUG,
+	STAFFROLL_MODE_DEBUG,					// デバッグ用
 #endif
 };
 
