@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-04-02T18:56:12"/>
+	<create user="tamada" host="W00139" date="2010-06-01T15:00:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -429,11 +429,11 @@
 		<language name="JPN" width="256">……「[1:09:どうぐ名:0]」が
 バッグに　いっぱいの　ようですね▼
 「[1:09:どうぐ名:0]」を　へらしたら
-のこりの　カケラを　わたしましょう</language>
+のこりの　カケラを　わたしましょう▼</language>
 		<language name="JPN_KANJI" width="256">……「[1:09:どうぐ名:0]」が
 バッグに　一杯の　ようですね▼
 「[1:09:どうぐ名:0]」を　減らしたら
-残りの　カケラを　わたしましょう</language>
+残りの　カケラを　わたしましょう▼</language>
 	</row>
 
 	<row id="msg_pdw_item_01" back-color=",,,,,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,,#c0c0c0,,">

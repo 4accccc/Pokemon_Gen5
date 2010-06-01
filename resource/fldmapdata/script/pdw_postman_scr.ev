@@ -94,10 +94,9 @@ sub_postman_main:
           //「受け取れなかった！」
           // SCWK_ANSWER == 引数：NGアイテムのインデックス
           _PDW_POSTMAN_REQUEST( SCR_PDW_POSTMAN_REQ_NG_ITEM, SCWK_ANSWER )
-          _SYSWIN_MSG( msg_pdw_postman_05 , POS_DEFAULT )
+          _BALLOONWIN_OBJMSG_POS( msg_pdw_postman_05 , SCWK_TARGET_OBJID, POS_DOWN )
           $SCWK_ANSWER += 1
       ENDWHILE
-      _SYSWIN_CLOSE()
   ENDIF
 
   //またのごりようをおまちしております
