@@ -857,6 +857,8 @@ static void _matchingState( GTSNEGO_WORK *pWork )
     if(GFL_NET_STATE_MATCHED != GFL_NET_StateGetWifiStatus()){
       return;
     }
+    GFL_NET_SetAutoErrorCheck(TRUE);
+    GFL_NET_SetNoChildErrorCheck(TRUE);
   }
 
   {
@@ -864,8 +866,6 @@ static void _matchingState( GTSNEGO_WORK *pWork )
     GTSNEGO_MESSAGE_InfoMessageDispLine(pWork->pMessageWork,GTSNEGO_021);
     pWork->timer = _FRIEND_LOOKAT_DOWN_TIME;
     GTSNEGO_MESSAGE_CancelButtonDeleteForce(pWork->pMessageWork);
-    GFL_NET_SetAutoErrorCheck(TRUE);
-    GFL_NET_SetNoChildErrorCheck(TRUE);
     _CHANGE_STATE(pWork, _lookatDownState);
   }
 }
