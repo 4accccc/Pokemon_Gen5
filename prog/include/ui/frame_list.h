@@ -36,8 +36,6 @@
 
 #define	FRAMELIST_SPEED_MAX		( 6 )				// スクロール速度の段階
 
-#define	FRAMELIST_RAIL_TOUCH_NONE		( 0xffffffff )		// タッチされてないときのレールモードタッチＹ座標
-
 // タッチパラメータ
 typedef enum {
 	FRAMELIST_TOUCH_PARAM_SLIDE = 0,					// スライド
@@ -229,30 +227,6 @@ extern u32 FRAMELIST_Main( FRAMELIST_WORK * wk );
  */
 //--------------------------------------------------------------------------------------------
 extern u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		レールモード時のタッチＹ座標を取得
- *
- * @param		wk			ワーク
- *
- * @retval	"FRAMELIST_RAIL_TOUCH_NONE != タッチＹ座標"
- * @retval	"FRAMELIST_RAIL_TOUCH_NONE = タッチされてない or レールモードじゃない"
- */
-//--------------------------------------------------------------------------------------------
-extern u32 FRAMELIST_GetRailTouchPosY( FRAMELIST_WORK * wk );
-
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		レールモードかどうか
- *
- * @param		wk			ワーク
- *
- * @retval	"TRUE = はい"
- * @retval	"FALSE = いいえ"
- */
-//--------------------------------------------------------------------------------------------
-extern BOOL FRAMELIST_CheckRailMode( FRAMELIST_WORK * wk );
 
 //--------------------------------------------------------------------------------------------
 /**

@@ -742,8 +742,6 @@ static int MainSeq_MainName( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
 
-	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetRailTouchPosY(wk->lwk) );
-
 	switch( ret ){
 	case 0:
 	case 1:
@@ -854,8 +852,6 @@ static int MainSeq_InitType( ZKNSEARCHMAIN_WORK * wk )
 static int MainSeq_MainType( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
-
-	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetRailTouchPosY(wk->lwk) );
 
 	switch( ret ){
 	case 0:
@@ -969,8 +965,6 @@ static int MainSeq_MainColor( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
 
-	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetRailTouchPosY(wk->lwk) );
-
 	switch( ret ){
 	case 0:
 	case 1:
@@ -1082,8 +1076,6 @@ static int MainSeq_InitForm( ZKNSEARCHMAIN_WORK * wk )
 static int MainSeq_MainForm( ZKNSEARCHMAIN_WORK * wk )
 {
 	u32	ret = FRAMELIST_Main( wk->lwk );
-
-	ZKNSEARCHOBJ_SetScrollBar( wk, FRAMELIST_GetRailTouchPosY(wk->lwk) );
 
 	switch( ret ){
 	case 0:

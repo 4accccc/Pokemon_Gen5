@@ -923,9 +923,6 @@ void ZKNSEARCHOBJ_PutFormListNow( ZKNSEARCHMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void ZKNSEARCHOBJ_SetScrollBar( ZKNSEARCHMAIN_WORK * wk, u32 py )
 {
-	if( py == FRAMELIST_RAIL_TOUCH_NONE ){
-		return;
-	}
 	if( py < SCROLL_BAR_UY ){
 		py = SCROLL_BAR_UY;
 	}else if( py > SCROLL_BAR_DY ){
