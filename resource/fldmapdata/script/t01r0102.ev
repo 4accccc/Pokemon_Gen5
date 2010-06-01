@@ -283,12 +283,10 @@ ev_first_pkeget:
 
 	ENDIF
 	
-	//～～を手に入れた
-	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
-	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )
-	
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_POKEGET )
+	_PLAYER_NAME( 0 )	 //プレイヤー名を反映
+	_SYSWIN_MSG( msg_t01r0102_ball_get_01, POS_DOWN )	//～～を手に入れた
 	_ME_WAIT()
 	_AB_KEYWAIT_MARK()
 	_SYSWIN_CLOSE()
