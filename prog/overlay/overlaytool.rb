@@ -4,6 +4,7 @@
 #  TWL専用に改造                          2009.04.15 k.ohno
 #  拡張メモリ対応の為にソース整理         2010.01.13 tamada
 #  オーバーレイグループ記述に対応         2010.02.22 tamada
+#  CRYPTOの一部を常駐化                   2010.06.01 k.ohno
 #----------------------------------------------------------------------------
 
 
@@ -46,6 +47,10 @@ Static main
   Address		$(ADDRESS_STATIC)
   Object		$(OBJS_STATIC)
   Library		$(LLIBS) $(GLIBS) $(CW_LIBS)
+  
+  #CRYPTOの一部を常駐化
+  Object  OBJECT(CRYPTO_RC4Init, libcrypto.$HYB.a) (.text)
+  Object  OBJECT(CRYPTO_RC4Encrypt, libcrypto.$HYB.a) (.text)
 
   #	スタックサイズ　IRQスタックサイズ
   #	(省略時にはスタックサイズは0(最大限度まで確保)、IRQ スタックサイズは 0x800 バイト)
