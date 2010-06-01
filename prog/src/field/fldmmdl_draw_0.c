@@ -23,7 +23,7 @@
 /// 連れ歩きポケモン表示オフセット
 //--------------------------------------------------------------
 #define MMDL_POKE_OFS_UPDOWN		(FX32_CONST(1))
-#define MMDL_POKE_OFS_RIGHTLEFT	(FX32_CONST(10))
+#define MMDL_POKE_OFS_RIGHTLEFT	(FX32_CONST(0))
 #define MMDL_POKE_OFS_RIGHTLEFT_S	(FX32_CONST(2))
 
 //======================================================================
@@ -1339,18 +1339,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   pause_f = MMDL_CheckDrawPause( mmdl );
   anmcmd_f = MMDL_CheckMoveBitAcmd( mmdl );
   
-  /*
-   *  金銀で必要だったanmcmd_fによる分岐
-   *  アニメコマンド発行中(ジャンプ中など)は上下アニメを止める処理が必要だった
-   *  WBでは連れ歩きOBJに対して、アニメコマンドを発行することがないので、
-   *  分岐をフックしている
-   */
-
-#if 0 //wb_none
   if( pause_f || anmcmd_f ){
-#else
-  if( pause_f ){
-#endif
     //Yオフセットのみ引き継ぐ
     MMDL_GetVectorDrawOffsetPos( mmdl, &vec );
     vec.x = vec.z = 0;
@@ -1359,23 +1348,14 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   //向きから描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
 
-#if 0 //wb_none
   if( anmcmd_f ){
     work->offs_frame++; 
   }else if( !pause_f ){
-    work->offs_frame++; 
     if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
-      vec.y -= FX32_CONST(2);
+      vec.y -= FX32_CONST(1.5);
     }
-  }
-#else
- if( !pause_f ){
     work->offs_frame++; 
-    if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
-      vec.y -= FX32_CONST(2);
-    }
   }
-#endif
   MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
 }
 
@@ -1390,18 +1370,24 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
 		case DIR_DOWN:
 			outVec->z -= MMDL_POKE_OFS_UPDOWN;
 			break;
-    }
-	}else{
 #if 0
-		switch(dir){
 		case DIR_LEFT:
-			outVec->x += MMDL_POKE_OFS_RIGHTLEFT_S;
+			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT;
 			break;
 		case DIR_RIGHT:
+			outVec->x += MMDL_POKE_OFS_RIGHTLEFT;
+			break;
+#endif
+    }
+	}else{
+		switch(dir){
+		case DIR_LEFT:
 			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT_S;
 			break;
+		case DIR_RIGHT:
+			outVec->x += MMDL_POKE_OFS_RIGHTLEFT_S;
+			break;
 		}
-#endif
 	}
 }
 
