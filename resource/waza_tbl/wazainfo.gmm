@@ -2559,11 +2559,11 @@
 	</row>
 
 	<row id="WAZAINFO_241">
-		<language name="JPN" width="216">５ターンの　あいだ　ひざしを　つよくして
-ほのおタイプの
+		<language name="JPN" width="216">５ターンの　あいだ　ひざしを
+つよくして　ほのおタイプの
 わざの　いりょくを　あげる。</language>
-		<language name="JPN_KANJI" width="216">５ターンの　あいだ　日差しを　つよくして
-ほのおタイプの
+		<language name="JPN_KANJI" width="216">５ターンの　あいだ　日差しを
+つよくして　ほのおタイプの
 技の　威力を　あげる。</language>
 	</row>
 
@@ -4674,12 +4674,12 @@
 	</row>
 
 	<row id="WAZAINFO_476">
-		<language name="JPN" width="216">イライラ　してしまう　こなを　ふりかけて
-ちゅういを　ひく。あいての　こうげきを
-すべて　じぶんに　むけさせる。</language>
-		<language name="JPN_KANJI" width="216">イライラしてしまう　粉を　ふりかけて
-注意を　ひく。相手の　攻撃を
-すべて　自分に　むけさせる。</language>
+		<language name="JPN" width="216">イライラさせる　こなを　じぶんに
+ふりかけて　ちゅういを　ひく。あいての
+こうげきを　すべて　じぶんに　むける。</language>
+		<language name="JPN_KANJI" width="216">イライラさせる　粉を　自分に
+ふりかけて　注意を　ひく。相手の
+攻撃を　すべて　自分に　むける。</language>
 	</row>
 
 	<row id="WAZAINFO_477">
