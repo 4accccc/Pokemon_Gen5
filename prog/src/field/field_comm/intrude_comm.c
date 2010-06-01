@@ -500,7 +500,8 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
       exit_ok = TRUE;
     }
     else{ //裏フィールドにいる場合はパレスへ戻ってから解放
-      if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata)) ) == TRUE){
+      if(ZONEDATA_IsPalace( PLAYERWORK_getZoneID(GAMEDATA_GetMyPlayerWork(gamedata)) ) == TRUE
+          && GAMESYSTEM_CheckFieldMapWork(invalid_parent->gsys) == TRUE){
         exit_ok = TRUE;
       }
     }
