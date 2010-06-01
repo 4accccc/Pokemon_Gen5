@@ -135,7 +135,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
 
       shotData->shotPoke[0].monsno = MONSNO_PIKATYUU;
       shotData->shotPoke[1].monsno = MONSNO_PIKUSII;
-      shotData->shotPoke[2].monsno = MONSNO_PURUNSU;
+      shotData->shotPoke[2].monsno = MONSNO_510;
       shotData->shotPoke[3].monsno = MONSNO_509;
       
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
