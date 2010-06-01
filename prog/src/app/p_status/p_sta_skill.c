@@ -1870,6 +1870,7 @@ static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKI
   GFL_CLACTPOS cellPos;
   int newCursorPos = skillWork->cursorPos;
   int moveVal;
+  u16 tempWazaNo;
   if( GFL_UI_KEY_GetTrg() == PAD_KEY_UP )
   {
     moveVal = -1;
@@ -1894,7 +1895,15 @@ static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKI
     {
       newCursorPos += moveVal;
     }
-  }while( PPP_Get( ppp , ID_PARA_waza1+newCursorPos , NULL ) == 0 );
+    if( newCursorPos < 4 )
+    {
+      tempWazaNo = PPP_Get( ppp , ID_PARA_waza1+newCursorPos , NULL );
+    }
+    else
+    {
+      tempWazaNo = work->psData->waza;
+    }
+  }while( tempWazaNo == 0 );
 
   PSTATUS_SKILL_UpdateCursorPos( work , skillWork , newCursorPos );
 }
