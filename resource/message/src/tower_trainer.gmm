@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T18:30:38"/>
+	<create user="matsumiya" host="W00224" date="2010-06-01T12:42:05"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -8142,7 +8142,7 @@
 じぶんを　つらぬけるか……▼
 しょうり　もしくは　はいぼく
 どちらに　むかうのか……▽
-では　しゅっぱつ　しんこうーッ！！▼</language>
+では　しゅっぱつ　しんこうーッ！！</language>
 		<language name="JPN_KANJI">本日は　バトルサブウェイ
 ご乗車　ありがとうございます▼
 わたくし　サブウェイマスターの
@@ -8156,7 +8156,7 @@
 自分を　貫けるか……▼
 勝利　もしくは　敗北
 どちらに　向かうのか……▽
-では　出発　進行ーッ！！▼</language>
+では　出発　進行ーッ！！</language>
 	</row>
 
 	<row id="mes_tower_tr_307_02" text-color=",,,#000000,,,,,,,,,,,,,," back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -8219,7 +8219,7 @@
 かたねば　わからない　ということです▼
 ですので　こんかいも
 ぜんりょくで　おあいて　いたします▽
-では　しゅっぱつ　しんこうーッ！！▼</language>
+では　しゅっぱつ　しんこうーッ！！</language>
 		<language name="JPN_KANJI">ようこそ　お待ちしておりました！▼
 改めて　自己紹介を……▼
 わたくし　サブウェイマスターの
@@ -8233,7 +8233,7 @@
 勝たねば　わからない　ということです▼
 ですので　今回も
 全力で　お相手いたします▽
-では　出発　進行ーッ！！▼</language>
+では　出発　進行ーッ！！</language>
 	</row>
 
 	<row id="mes_tower_tr_308_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -8298,7 +8298,7 @@
 なにより　だいすき▼
 じゃ　それぞれの　ポケモンが
 さまざまな　わざを　くりひろげる▽
-すっごい　しょうぶ　はじめる▼</language>
+すっごい　しょうぶ　はじめる</language>
 		<language name="JPN_KANJI">ぼく　クダリ▼
 サブウェイマスターを　してる▼
 ダブルバトルが　好き▼
@@ -8308,7 +8308,7 @@
 なにより　大好き▼
 じゃ　それぞれの　ポケモンが
 さまざまな　技を　繰り広げる▽
-すっごい　勝負　はじめる▼</language>
+すっごい　勝負　はじめる</language>
 	</row>
 
 	<row id="mes_tower_tr_309_02">
@@ -8371,7 +8371,7 @@
 こんかいは　すごく　ほんき
 ぜんぜん　ほんき▼
 だって　ポケモンしょうぶは
-しんけん　でないと　つまらない▼</language>
+しんけん　でないと　つまらない</language>
 		<language name="JPN_KANJI">やあ　おぼえてる？
 ぼく　クダリ▼
 サブウェイマスターを　してる▼
@@ -8383,7 +8383,7 @@
 今回は　すごく　本気
 全然　本気▼
 だって　ポケモン勝負は
-真剣でないと　つまらない▼</language>
+真剣でないと　つまらない</language>
 	</row>
 
 	<row id="mes_tower_tr_310_02">
