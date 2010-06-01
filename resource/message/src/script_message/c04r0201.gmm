@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T18:13:46"/>
+	<create user="matsumiya" host="W00224" date="2010-06-01T16:33:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -419,14 +419,16 @@
 ＝オーナー</attribute>
 		<language name="JPN" width="256">ふーむ！　なんというか　きみたち
 いい　かんじの　トレーナーですねえ！▼
-ポケモンに　グッズを　きかざることを
+ポケモンに　グッズを　つけて
+きかざってあげることを▽
 ドレスアップと　いうのですが▽
 ぜひ　やってみて　くれませんか？▼
 こちらの　グッズケースを
 プレゼント　しますから！▼</language>
 		<language name="JPN_KANJI" width="256">ふーむ！　なんというか　きみたち
 いい感じの　トレーナーですねえ！▼
-ポケモンに　グッズを　着飾ることを
+ポケモンに　グッズを　つけて
+着飾ってあげることを▽
 ドレスアップと　いうのですが▽
 ぜひ　やってみて　くれませんか？▼
 こちらの　グッズケースを
@@ -447,12 +449,12 @@
 		<attribute name="キャラ指定">GENTLEMAN
 ＝オーナー</attribute>
 		<language name="JPN" width="256">その　グッズケースの　なかに
-ポケモンに　きかざる　ための▽
+ポケモンを　きかざる　ための▽
 グッズが　はいっています！▼
 では　まずは　ポケモンを
 えらんで　くださいませ！▼</language>
 		<language name="JPN_KANJI" width="256">その　グッズケースの　中に
-ポケモンに　着飾る　ための▽
+ポケモンを　着飾る　ための▽
 グッズが　入っています！▼
 では　まずは　ポケモンを
 選んで　くださいませ！▼</language>
