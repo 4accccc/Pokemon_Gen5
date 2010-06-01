@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-22T18:10:26"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-01T18:26:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -432,9 +432,9 @@
 応募してきた友達がいたときの
 メッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんから
-おうぼが　ありました！</language>
+さんかの　もうしこみが　ありました！</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんから
-応募が　ありました！</language>
+参加の　申し込みが　ありました！</language>
 	</row>
 
 	<row id="msg_wifilobby_009">
@@ -695,10 +695,8 @@
 	<row id="msg_wifilobby_043">
 		<comment>友達が申し込みをしてきたときに
 接続準備をしている状態のメッセージ</comment>
-		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
-もうしこんで　きました！</language>
-		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-申し込んで　きました！</language>
+		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと　せつぞくします！</language>
+		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんと　接続します！</language>
 	</row>
 
 	<row id="msg_wifilobby_044" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
