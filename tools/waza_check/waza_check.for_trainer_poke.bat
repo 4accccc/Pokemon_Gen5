@@ -14,5 +14,5 @@ exceltabconv.exe ../waza_check/data/wb_item.xls
 
 cd ../waza_check/script
 ruby -Ks -I ./hash;./hash_conv;./personal;./trainer update_hash.rb
-ruby -Ks -I ./hash;./hash_conv;./personal;./trainer main.rb
+ruby -Ks -I ./hash;./hash_conv;./personal;./trainer waza_check_for_trainer_poke.rb
 pause
