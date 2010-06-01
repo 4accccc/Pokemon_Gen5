@@ -394,34 +394,48 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
 
     dbw->para =BATTLE_PARAM_Create(HEAPID_PROC);
 
+
+    /*
+     *  2010/06/01 nagihashi
+     *
+     *  録画タイプ覚書  （tetsujiさんshimoyamadaさんへ聞き取り）
+     *
+     *  赤外線対戦は、ほかと異なり以下のルールです。
+     *  「参加制限なし」「強制LV５０」「シューター有り」
+     *
+     *  参加制限がなしということを優先して制限なしにしています。
+     *  強制５０ですがFLATを指定しません。
+     *
+     */
+
     dbw->demo_prm.record = GAMEDATA_GetRecordPtr(dbw->gamedata);
     dbw->demo_prm.fight_count=0;
     switch(dbw->selectType){
     case EVENTIRCBTL_ENTRYMODE_SINGLE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
-      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_SINGLE_FREE;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_SINGLE_FREE_SHOOTER;
       BTL_SETUP_Single_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_DOUBLE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
-      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_DOUBLE_FREE;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_DOUBLE_FREE_SHOOTER;
       BTL_SETUP_Double_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_TRI:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
-      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_TRIPLE_FREE;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_TRIPLE_FREE_SHOOTER;
       BTL_SETUP_Triple_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_ROTATE:
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_NORMAL_START;
-      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_ROTATION_FREE;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_ROTATION_FREE_SHOOTER;
       BTL_SETUP_Rotation_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle() , BTL_COMM_DS, HEAPID_PROC );
       break;
     case EVENTIRCBTL_ENTRYMODE_MULTH:
       {
         int commpos[]= {0,2,1,3};
       dbw->demo_prm.type = COMM_BTL_DEMO_TYPE_MULTI_START;
-      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_MULTI_FREE;
+      dbw->demo_prm.battle_mode = BATTLE_MODE_COLOSSEUM_MULTI_FREE_SHOOTER;
       BTL_SETUP_Multi_Comm( dbw->para , dbw->gamedata , GFL_NET_HANDLE_GetCurrentHandle(),
                             BTL_COMM_DS,  commpos[dbw->irc_match.MultiNo[GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() )]]  , HEAPID_PROC );
       dbw->para->multiMode = 1;
