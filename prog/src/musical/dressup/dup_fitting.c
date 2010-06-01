@@ -2706,11 +2706,11 @@ static const BOOL DUP_FIT_UpdateTpPokeCheck( FITTING_WORK *work )
     work->sortAnimeEndAngle = 0x10000 + work->listAngle%LIST_ONE_ANGLE;
     //listAngle‚Ì‚ ‚Ü‚è‚ª‚O‚¾‚Á‚½‚ç
     //1T”¼‚Ì‚Æ‚«‚¾‚¯—LŒø‚É‚·‚é
-    if( work->sortAnimeEndAngle == 0x10000 )
+    if( work->sortAnimeEndAngle >= 0x10000 &&
+        work->sortAnimeEndAngle <= 0x10002 )  //ŒvŽZŒë·EEE
     {
       work->sortAnimeEndAngle += LIST_ONE_ANGLE;
     }
-    
     DUP_FIT_CalcItemListAngle( work , work->listAngle , 0 , LIST_SIZE_X , LIST_SIZE_Y );
     
     PMSND_PlaySE( DUP_SE_POKE_TOUCH );
