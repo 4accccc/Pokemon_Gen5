@@ -240,7 +240,8 @@ zoroaaku_core:
   SWITCH $SCWK_ANSWER
   CASE SCR_WILD_BTL_RET_ESCAPE, SCR_WILD_BTL_RET_WIN THEN //勝利した場合、あるいは逃げた場合
     //シーンワーク更新 ゾロアークとバトルした（捕獲してない）
-    $WK_SCENE_R16R0201 = 1  
+    $WK_SCENE_R16R0201 = 1
+
   CASE SCR_WILD_BTL_RET_CAPTURE THEN      //捕まえた場合
     _CALL backpacker_evt
     //対象ポケモンお役御免(イベント後フラグをセット)
@@ -249,7 +250,7 @@ zoroaaku_core:
     $WK_SCENE_R16R0201 = 2
   ENDSWITCH
 
-  IF $SCWK_ANSWER == SCR_WILD_BTL_RET_WIN THEN    //勝ったとき
+  IF $SCWK_ANSWER != SCR_WILD_BTL_RET_CAPTURE THEN    //捕まえたとき以外
     //「すがたをけした」
     _SYSWIN_MSG(msg_r16r0201_narrator_02, POS_DOWN)
     _LAST_KEYWAIT()
