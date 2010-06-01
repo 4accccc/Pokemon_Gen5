@@ -41,16 +41,8 @@ EVENT_START		ev_c03p14_recept_01
 	_UN_GET_COUNTRY_NUM( TRUE, SCWK_TEMP0 )
 	//ジオネットに自分の国コードを登録しているかチェック
 	_UN_IS_SETTING_MYCOUNTRY( SCWK_TEMP1 )
-	IF $SCWK_TEMP0 == 0 || $SCWK_TEMP1 == FALSE THEN
-		//海外の人と交換したことがない or 自分の国を登録していない
-		
-		//国境って何のために……
-		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DEFAULT )
-		_LAST_KEYWAIT()
-		_MSGWIN_CLOSE()
-
-	ELSE
-		//海外の人と交換したことがある
+	IF $SCWK_TEMP0 != 0 && $SCWK_TEMP1 == TRUE THEN
+		//海外の人と交換したことがある & 自分の出身地を登録している
 		
 		WHILE $lwk_loop != 555
 			
@@ -88,7 +80,15 @@ EVENT_START		ev_c03p14_recept_01
 			ENDSWITCH
 		
 		ENDWHILE
-	
+
+	ELSE
+		//海外の人と交換したことがない。自分の国を登録していない
+		
+		//国境って何のために……
+		_BALLOONWIN_OBJMSG_POS( msg_c03p14_infomationw_02, C03P14_RECEPT_01, POS_DEFAULT )
+		_LAST_KEYWAIT()
+		_MSGWIN_CLOSE()
+		
 	ENDIF
 	
 	}
@@ -112,6 +112,7 @@ ev_select_yes:
 	IF $SCWK_ANSWER == DIR_UP THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01u )
 	ELSIF $SCWK_ANSWER == DIR_DOWN THEN
+		//配置モデルの配置変更に合わせて受付の位置を変更したため、下向きで話しかけらなくなりました[100601]
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01d )
 	ELSIF $SCWK_ANSWER == DIR_LEFT THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER, anm_recept_ply_move_01l )
@@ -136,7 +137,6 @@ _RET
 //主人公：船へ
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_recept_ply_move_01u
-	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_STAY_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
@@ -147,7 +147,7 @@ _ANIME_LABEL	anm_recept_ply_move_01d
 	_ANIME_DATA	ACMD_END,0
 
 _ANIME_LABEL	anm_recept_ply_move_01l
-	_ANIME_DATA	AC_WALK_D_8F,2
+	_ANIME_DATA	AC_WALK_D_8F,1
 	_ANIME_DATA	AC_WALK_L_8F,1
 	_ANIME_DATA	ACMD_END,0
 
