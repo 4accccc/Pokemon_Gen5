@@ -348,7 +348,6 @@ EVENT_START   ev_h04_baker_01
 							
 				_CAMERA_MOVE(9694,0,970795,5210112,0,3244032,24 )	//一番最後の引数は移動にかかるフレーム数
 				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-				_CAMERA_WAIT_MOVE()	//カメラ移動待ち
 				
 		  		_PLAINWIN_MSG_UP(msg_h04_waitress_07)
 		  		
@@ -369,7 +368,6 @@ EVENT_START   ev_h04_baker_01
 		  		_PLAINWIN_MSG_UP(msg_h04_waitress_08)
 		  		
 		  		_PLAINWIN_MSG_UP(msg_h04_waitress_09)
-		  		_LAST_KEYWAIT()
 		  		_MSGWIN_CLOSE()
 
 				//自機にカメラを戻す
@@ -380,7 +378,7 @@ EVENT_START   ev_h04_baker_01
 
 		  	ELSE
 			  	//それじゃあ、よろしくね！
-			  	_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_09)
+			  	_BALLOONWIN_TALKOBJ_MSG(msg_h04_waitress_09a)
 			  	_LAST_KEYWAIT()
 			  	_MSGWIN_CLOSE()
 		  	ENDIF
