@@ -683,34 +683,35 @@ void BeaconView_LogCounterGet( BEACON_VIEW_PTR wk, u8* sex_ct, u8* version_ct)
 static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 old_log_max ) 
 {
   u8 version_ct = 0, sex_ct = 0;
+  
+  //ログ内カウンター収集
+  BeaconView_LogCounterGet( wk, &sex_ct, &version_ct);
 
   //海外版ロムとすれ違ったか？
   if( GAMEBEACON_Get_PmLanguage( info ) != PM_LANG ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_HATCH_UP );
   }
+  //ログにいる自分と異なるカセットバージョンのプレイヤーが20人か？
+  if( wk->old_version_ct != version_ct && version_ct == 20 ){
+    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_NATSUKI_UP );
+  }
   //すれ違い人数が100の倍数になったか？
   if( ( wk->log_count % 100 ) == 0 ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_SALE );
-  }else if( sp_gpower_ZoromeCheck( wk->log_count )){
-    //すれ違い人数が3桁以上のゾロ目になったか？
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_CAPTURE_UP );
   }
   //プレイヤーリストが30人埋まったか？
   if( old_log_max == (BS_LOG_MAX-1) && wk->ctrl.max == BS_LOG_MAX ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_EXP_UP );
   }
-
-  //ログ内カウンター収集
-  BeaconView_LogCounterGet( wk, &sex_ct, &version_ct);
-  
   //ログにいる自分と異なる性別のプレイヤーが20人か？
   if( wk->old_sex_ct != sex_ct && sex_ct == 20 ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_MONEY_UP );
   }
-  //ログにいる自分と異なるカセットバージョンのプレイヤーが20人か？
-  if( wk->old_version_ct != version_ct && version_ct == 20 ){
-    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_NATSUKI_UP );
+  //すれ違い人数が3桁以上のゾロ目になったか？
+  if( sp_gpower_ZoromeCheck( wk->log_count )){
+    sp_gpower_RequestSet( wk, SP_GPOWER_REQ_CAPTURE_UP );
   }
+  
   wk->old_sex_ct = sex_ct;
   wk->old_version_ct = version_ct;
 }
