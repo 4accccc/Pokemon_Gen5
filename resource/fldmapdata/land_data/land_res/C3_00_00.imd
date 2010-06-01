@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-05-21T09:08:34" source="C3_light0514.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-06-01T11:58:32" source="C3_light0530.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-05-21T09:08:34" source="C3_light0514.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-06-01T11:58:32" source="C3_light0530.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -37,262 +37,262 @@
 		path="C:/home/wb_data3d/field/out05/map/tex/c3_billboard.tga"
 	>
 		<bitmap size="2048">
-			0000 0000 0404 0404 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			0808 0808 0c0c 0c0c f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			1010 1010 1414 1414 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			2020 2020 2424 2424 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			3030 3030 3434 3434 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			4040 4040 4444 4444 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			5858 5858 5c5c 5c5c f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			6868 6868 6c6c 6c6c f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			8078 7878 847c 7c7c f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			9090 9090 9494 9494 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			a0a0 a0a0 a4a4 a4a4 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			b8b8 b8b8 bcbc bcbc f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			c8c8 c8c8 cccc cccc f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			d8d8 d8d8 dcdc dcdc f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			e8e8 e8e8 ecec ecec f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f0f0 f0f0 f4f4 f4f4 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 faf8
-			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
-			fcfc fcfc fbfb fbfb fbfb fcfc fcfc fcfc
-			fcfc fcfc fcfc fcfc fcfc fafb f8f8 fcfc
-			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
-			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
-			fcfc fcfc fafa fafa f8fa fcfb fcfc fcfc
-			fcfc fcfc fcfc fcfc fcfc f8fa f8f8 fcfc
-			fcfc fcfc fcfc fcfc fcfc fcfc fcfc fcfc
-			fcfc fcfc fbfc fbfb fbfb fbfb fbfb fbfb
-			fbfb fbfb fafa fafa f8fa fbf8 fcfc fcfc
-			fcfc fcfc fcfc fcfc fcfc f8fa f8f8 fcfc
-			fbfb fbfb fbfb fbfb fbfb fcfc fcfc fcfc
-			fcfc fcfc fbfc f9f9 f9f9 f9f9 f9f9 f9f9
-			f9f8 fbfb fafa fafa f8fa f8f8 fcfb fcfc
-			fbfb fcfb fcfc fcfc fcfc f8fa f8f8 fbfc
-			fafa fafa fafa fafa fbfa fcfc fcfc fcfc
-			fcfc fcfc fbfc f9f9 f9f9 f9f9 f9f9 f9f9
-			f9f8 fbfb fafa fafa f8fa f8f8 fcf8 fcfc
-			fbfb fcfb fcfc fcfc fcfc f8fa f8f8 fafb
-			f8f8 f9f9 f9f9 f9f9 fbf9 fcfc fcfc fcfc
-			fcfc fcfc fbfc f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 fbf9 fafa fafa f8fa f8f8 fcf8 fcfc
-			fbfb fcfb fcfc fcfc fcfc f8fa f8f8 f8fa
-			f8f8 f9f9 f9f9 f9f9 fbf9 fcfc fcfc fcfc
-			fcfc fcfc fbfc f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 fbf9 fafa fafa f8fa f8f8 fcf8 fcfc
-			fbfb fcfb fcfc fbfb fcfb f8fa f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 faf9 fcfb fcfc fcfc
-			fcfc fcfc fbfc f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fafa fafa f8fa f8f8 fcf8 fbfc
-			fbfb fbfb fcfc fbfb fbfb f8fa f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 faf9 fcfb fcfc fcfc
-			fcfc fcfc fbfc f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fafa fafa f8fa f8f8 fcf8 fbfc
-			fbfb fbfb fcfc fbfb fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 faf9 fcfb fcfc fcfc
-			fcfc fbfb fbfb f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fafa fafa f8fa f8f8 f9f8 fbfc
-			fbfb fbfb fcfc fafb fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 faf9 fcfb fcfc fcfc
-			fcfc fbfb fbfb f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fafa fafa f8fa f8f8 f9f8 fbf9
-			fbfb fbfb fcfc f8fa fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 faf9 fbfb fbfb fcfc
-			fcfc fbfb fbfb f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fafa fafa f8fa f8f8 f9f8 f9f9
-			fbfb fbfb fafc f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fcfc
-			fbfb fbfb fbfb f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fafa fafa f8fa f8f8 f9f8 f9f9
-			fbf9 fbfb f8fa f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fcfc
-			fbfb fbfb fbfb f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f8fa f8f8 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fcfc
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f8f9 f8f8 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fcfc
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f8 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fcfc
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f8 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fbfb
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fbfb
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fbfb
-			fbfb f9fb f9f9 f9f9 f9f9 f9f9 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 fbf8 fbfb
-			fbfb f8fb f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fbfb f8fb f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f9f9 f9f9 f9f9 f9f9 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 fbf8
-			fafb f8fa f8f8 f8f8 f8f8 f8f8 f9f9 f9f9
-			f8f8 f8f8 fbfb f9fb f9f9 f8f9 f9f8 f9f9
-			fbf9 fafb f8f8 f8f8 fafa f8f8 f8f8 f8f8
-			f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 f8f8 faf8
+			0101 0101 0505 0505 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			0909 0909 0d0d 0d0d f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			1111 1111 1515 1515 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			2121 2121 2525 2525 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			3131 3131 3535 3535 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			4141 4141 4545 4545 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			5959 5959 5d5d 5d5d f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			6969 6969 6d6d 6d6d f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			8179 7979 857d 7d7d f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			9191 9191 9595 9595 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			a1a1 a1a1 a5a5 a5a5 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			b9b9 b9b9 bdbd bdbd f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			c9c9 c9c9 cdcd cdcd f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			d9d9 d9d9 dddd dddd f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			e9e9 e9e9 eded eded f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f1f1 f1f1 f5f5 f5f5 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fafa fafa
+			f9f9 f9f9 fcfc fafc fafa f9fa faf9 fafa
+			f8fa f8f8 f9f9 f9f9 fbfb f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fbf9
+			0505 0505 0505 0505 0505 0505 0505 0505
+			fc05 fcfc fcfc fcfc fcfc fdfd fdfd fdfd
+			fdfd fdfd fdfd fdfd fdfd fdfd fdfd 05fd
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 fdfd fdfd fdfd fdfd fdfd fdfd
+			fcfd fafa fafa fafa f9fa fdfc fdfd fdfd
+			fdfd fdfd fdfd fdfd fdfd fdfd fdfd 05fd
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 fcfd fcfc fcfc fcfc fcfc fcfc
+			fcfc fafa fafa fafa f9fa fcf9 fdfd fdfd
+			fcfd fcfc fdfd fdfd fdfd fdfd fdfd 05fd
+			0505 0505 0505 0505 0505 0505 0505 0505
+			0505 0505 fcfd fafa fafa fafa fafa fafa
+			fcf9 fafa fafa fafa f9fa f9f9 fdfc fdfd
+			fcfd fcf9 fdfd fdfd fdfd fdfd fdfd fdfd
+			fdfd fdfd fdfd fdfd fdfd 0505 0505 0505
+			0505 0505 fcfd fafa fafa fafa fafa fafa
+			f9f9 fafa fafa fafa f9fa f9f9 fcf9 fdfd
+			fcfc fcf9 fdfc fdfd fdfd fdfd fdfd fcfc
+			fcfc fcfc fcfc fcfc fdfc 0505 0505 0505
+			0505 0505 fcfd fafa fafa fafa fafa fafa
+			f9f9 faf9 fafa fafa f9fa f9f9 fcf9 fdfd
+			f9fc f9f8 fdfc fdfd fdfd fdfd fcfd fbfb
+			fbfb fbfb fbfb fbfb fdfc 0505 0505 0505
+			0505 0505 fcfd fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 fcf9 fcfc
+			f9fc f9f8 fcfc fdfc fdfd fdfd fafc faf9
+			fafa fafa fafa fbfa fdfc 0505 0505 0505
+			fdfd fdfd fcfd fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 fcfc
+			f8f9 f8f8 fcf9 fdfc fdfd fcfd f9fa faf9
+			fafa fafa fafa fbfa fdfc 0505 0505 0505
+			fafa fafa fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 fcfa
+			f8f9 f8f8 fcf9 fcfb fcfc fafc f9f9 faf9
+			f9f9 f9f9 f9f9 fbfa fdfc 0505 0505 0505
+			f8fa f8f8 f8f8 fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f9fa
+			f8f8 f8f8 f9f8 fbfa fbfb f9fa f9f9 faf9
+			fafa fafa fafa fbfa fdfc fdfd fdfd 05fd
+			f8fa f8f8 f8f8 fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f9fa
+			f8f8 f8f8 f9f8 fbfa fafb f9f9 f9f9 faf9
+			fafa fafa fafa fbfa fcfc fcfc fcfc 05fd
+			f8fa f8f8 f8f8 fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fbfa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 05fd
+			f8fa f8f8 f8f8 fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			f9f9 f9f9 f9f9 f9fa f9f9 f9f9 fcf9 05fd
+			f8fa f8f8 f8f8 fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 05fd
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 05fd
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 05fd
+			f8fa faf8 fafa fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			f9f9 f9f9 f9f9 f9fa f9f9 f9f9 fcf9 05fd
+			f8fa faf8 fafa fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 05fd
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 fdfd
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 fcf9 fcfc
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			f9f9 f9f9 f9f9 f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa f9f9 fafa f9f9 fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 faf9
+			fafa fafa fafa f9fa f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fcf9
+			f8fa faf8 fafa fafa fafa fafa fafa fafa
+			f9f9 f9f9 fafa fafa f9fa f9f9 faf9 f8fa
+			f8f8 f8f8 f8f8 fafa fafa f9f9 f9f9 f9f9
+			f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 f9f9 fbf9
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="c3_sky2"
@@ -590,7 +590,7 @@
 
 <tex_palette_array size="3">
 	<tex_palette index="0" name="c3_billboard_pl" color_size="8">
-		56b5 5ef7 6b5a 739c 7fff 7fff 7fff 7fff
+		4e73 56b5 5ef7 6b5a 739c 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="1" name="c3_sky2_pl" color_size="16">
 		5a31 5e94 66d6 6f18 735a 777b 7b9c 7bbd
@@ -661,7 +661,7 @@
 		alpha="31"
 		wire_mode="off"
 		polygon_mode="modulate"
-		polygon_id="0"
+		polygon_id="32"
 		fog_flag="on"
 		depth_test_decal="off"
 		translucent_update_depth="off"
@@ -842,21 +842,23 @@
 			<primitive_array size="1">
 				<primitive index="0" type="quads" vertex_size="8">
 					<mtx idx="0"/>
-					<tex st="-0.500000 89.000000"/>
+					<tex st="0.000000 63.000000"/>
 					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xyz xyz="0.757080 0.408691 -0.249023"/>
-					<tex st="-95.500000 89.000000"/>
+					<tex st="-64.000000 63.000000"/>
 					<pos_xy xy="-0.828369 0.408691"/>
+					<nrm xyz="0.000000 0.000000 -1.000000"/>
 					<pos_xy xy="-0.828369 -0.216309"/>
-					<tex st="-0.500000 89.000000"/>
+					<tex st="0.000000 63.000000"/>
 					<pos_xy xy="0.757080 -0.216309"/>
-					<tex st="-95.500000 32.625000"/>
+					<tex st="-64.000000 32.625000"/>
+					<nrm xyz="0.000000 0.000000 0.998047"/>
 					<pos_xy xy="-0.828369 1.247559"/>
-					<tex st="-95.500000 63.375000"/>
+					<tex st="-64.000000 63.375000"/>
 					<pos_xy xy="-0.828369 0.408691"/>
-					<tex st="-0.500000 63.375000"/>
+					<tex st="0.000000 63.375000"/>
 					<pos_xy xy="0.757080 0.408691"/>
-					<tex st="-0.500000 32.625000"/>
+					<tex st="0.000000 32.625000"/>
 					<pos_xy xy="0.757080 1.247559"/>
 				</primitive>
 			</primitive_array>
