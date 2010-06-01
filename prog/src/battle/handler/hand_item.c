@@ -1036,7 +1036,6 @@ static BOOL common_sickcode_match( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSi
     {
       WazaSick sickID = BTL_CALC_CheckMentalSick( bpp );
       if( sickID != WAZASICK_NULL ){
-        TAYA_Printf("èÛë‘àŸèÌÉRÅ[Éh=%d..\n", sickID);
         return TRUE;
       }
       return FALSE;
@@ -2252,7 +2251,7 @@ static void handler_MentalHerb_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_CheckSick(bpp, WAZASICK_MEROMERO) )
+    if( BTL_CALC_CheckMentalSick(bpp) != WAZASICK_NULL )
     {
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
