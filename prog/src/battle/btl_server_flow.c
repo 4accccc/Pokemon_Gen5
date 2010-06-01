@@ -255,7 +255,7 @@ static void wazaDmgRec_Add( BTL_SVFLOW_WORK* wk, BtlPokePos atkPos, const BTL_PO
 static void scproc_WazaAdditionalEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage, BOOL fMigawariHit );
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
-  const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag );
+  const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag, BOOL fMigawari );
 static void scproc_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   const SVFL_WAZAPARAM* wazaParam, u32 damage );
 static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
@@ -458,7 +458,7 @@ static BOOL scEvent_CheckCritical( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u32 damage, BOOL* fMustEnable );
 static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BtlTypeAff aff,
-  u32 damage, BOOL criticalFlag );
+  u32 damage, BOOL fCritical, BOOL fMigawari );
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u8 atkPokeID );
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
@@ -6253,7 +6253,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     scproc_CheckShrink( wk, wazaParam, attacker, bpp[i] );
     scproc_Damage_Drain( wk, wazaParam, attacker, bpp[i], dmg[i] );
     scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i], FALSE );
-    scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i] );
+    scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i], FALSE );
     scproc_CheckItemReaction( wk, bpp[i] );
   }
 
@@ -8242,7 +8242,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
         wazaDmgRec_Add( wk, atkPos, attacker, target, wazaParam, damage );
 
         scproc_CheckDeadCmd( wk, target );
-        scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, FALSE );
+        scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, FALSE, FALSE );
       }
       else
       {
@@ -8860,7 +8860,7 @@ static u16 scproc_Migawari_Damage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
 
   scproc_Damage_Drain( wk, wazaParam, attacker, target, damage );
   scproc_WazaAdditionalEffect( wk, wazaParam, attacker, target, damage, TRUE );
-  scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical );
+  scproc_WazaDamageReaction( wk, attacker, target, wazaParam, aff, damage, fCritical, TRUE );
 
   return damage;
 }
@@ -8897,11 +8897,11 @@ static void scproc_Migawari_Delete( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  */
 //----------------------------------------------------------------------------------
 static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender,
-  const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag )
+  const SVFL_WAZAPARAM* wazaParam, BtlTypeAff affinity, u32 damage, BOOL critical_flag, BOOL fMigawari )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
 
-  scEvent_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, critical_flag );
+  scEvent_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, critical_flag, fMigawari );
   scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
@@ -8921,7 +8921,7 @@ static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
 //--------------------------------------------------------------------------
 static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BtlTypeAff aff,
-  u32 damage, BOOL criticalFlag )
+  u32 damage, BOOL fCritical, BOOL fMigawari )
 {
   u8 defPokeID = BPP_GetID( defender );
 
@@ -8932,7 +8932,8 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEAFF, aff );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, criticalFlag );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, fCritical );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_MIGAWARI_FLAG, fMigawari );
 
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION_L2 );
