@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define DEBUG_OS_PRINT
+//#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -4452,6 +4452,21 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
     }
     else{
       pos[ 0 ] = BTLV_MCSS_POS_ERROR;
+    }
+    break;
+  case BTLEFF_POKEMON_ALL:
+    {
+      BtlvMcssPos check_pos;
+
+      pos_cnt = 0;
+      for( check_pos = BTLV_MCSS_POS_AA ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
+      {
+        if( BTLV_EFFECT_CheckExist( check_pos ) )
+        {
+          pos[ pos_cnt ] = check_pos;
+          pos_cnt++;
+        }
+      }
     }
     break;
   default:
