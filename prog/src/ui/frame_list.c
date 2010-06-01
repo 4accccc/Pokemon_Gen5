@@ -92,6 +92,7 @@ struct _FRAMELIST_WORK {
 	u8	railHitPos;									// レールタッチテーブル位置
 	u8	railTop;										// レール最上部のＹ座標
 	u8	railBottom;									// レール最下部のＹ座標
+	u8	railFlag;										// レール処理フラグ
 
 	u8	slideSeq;
 	s8	slideVec;
@@ -1325,6 +1326,7 @@ static void InitRailMove( FRAMELIST_WORK * wk, int pos )
 
 	wk->railHit[1].rect.top = GFL_UI_TP_HIT_END;
 
+	wk->railFlag = TRUE;
 	wk->mainSeq = MAINSEQ_RAIL;
 }
 
@@ -1372,8 +1374,43 @@ u32 FRAMELIST_GetScrollBarPY( FRAMELIST_WORK * wk )
 		}
 		i++;
 	}
-
 	return SCROLLBAR_GetPosY( wk->listScrollMax, wk->listScroll, ty, by, wk->hed.barSize );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		レールモード時のタッチＹ座標を取得
+ *
+ * @param		wk			ワーク
+ *
+ * @retval	"TRUE = はい"
+ * @retval	"FALSE = いいえ"
+ */
+//--------------------------------------------------------------------------------------------
+u32 FRAMELIST_GetRailTouchPosY( FRAMELIST_WORK * wk )
+{
+	if( wk->railFlag == TRUE ){
+		u32	x, y;
+		if( GFL_UI_TP_GetPointCont( &x, &y ) == TRUE ){
+			return y;
+		}
+	}
+	return FRAMELIST_RAIL_TOUCH_NONE;
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		レールモードかどうか
+ *
+ * @param		wk			ワーク
+ *
+ * @retval	"TRUE = はい"
+ * @retval	"FALSE = いいえ"
+ */
+//--------------------------------------------------------------------------------------------
+BOOL FRAMELIST_CheckRailMode( FRAMELIST_WORK * wk )
+{
+	return wk->railFlag;
 }
 
 //--------------------------------------------------------------------------------------------
@@ -1396,6 +1433,7 @@ static BOOL MainRailMove( FRAMELIST_WORK * wk )
 	}
 
 	if( GFL_UI_TP_HitCont( wk->railHit ) == GFL_UI_TP_HIT_NONE ){
+		wk->railFlag = FALSE;
 		wk->mainSeq = MAINSEQ_MAIN;
 		return FALSE;
 	}
