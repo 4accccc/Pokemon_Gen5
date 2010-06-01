@@ -8260,45 +8260,45 @@
 	</row>
 
 	<row id="TRID_RANGERM_06_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">ここにいる　やつらを　しょっぴいて
-レンジャーに　にゅうたい　させたいわ▼</language>
-		<language name="JPN_KANJI" width="216">ここにいる　やつらを　しょっぴいて
-レンジャーに　入隊させたいわ▼</language>
-	</row>
-
-	<row id="TRID_RANGERM_06_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">あんっ！　しびれるー！
-アナタも　グーッドね！</language>
-		<language name="JPN_KANJI" width="216">あんっ！　しびれるー！
-アナタも　グーッドね！</language>
-	</row>
-
-	<row id="TRID_RANGERM_06_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">アンタ　レンジャーに　なりなさいよ！
-ハードに　しごいて　きたえてあげる！</language>
-		<language name="JPN_KANJI" width="216">アンタ　レンジャーに　なりなさいよ！
-ハードに　しごいて　鍛えてあげる！</language>
-	</row>
-
-	<row id="TRID_RANGERW_06_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">しあい　みてたら
 からだを　うごかしたく　なるな！▼</language>
 		<language name="JPN_KANJI" width="216">試合　観てたら
 体を　動かしたく　なるな！▼</language>
 	</row>
 
-	<row id="TRID_RANGERW_06_TRMSG_FIGHT_LOSE">
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">いい　あせ　かいたな！</language>
 		<language name="JPN_KANJI" width="216">いい汗　かいたな！</language>
 	</row>
 
-	<row id="TRID_RANGERW_06_TRMSG_FIGHT_AFTER">
+	<row id="TRID_RANGERM_06_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">ドームも　いいけど▼
 やっぱ　だいしぜんの　なかで
 スポーツ　したいよな</language>
 		<language name="JPN_KANJI" width="216">ドームも　いいけど▼
 やっぱ　大自然の　中で
 スポーツ　したいよな</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">ここにいる　やつらを　しょっぴいて
+レンジャーに　にゅうたい　させたいわ▼</language>
+		<language name="JPN_KANJI" width="216">ここにいる　やつらを　しょっぴいて
+レンジャーに　入隊させたいわ▼</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">あんっ！　しびれるー！
+アナタも　グーッドね！</language>
+		<language name="JPN_KANJI" width="216">あんっ！　しびれるー！
+アナタも　グーッドね！</language>
+	</row>
+
+	<row id="TRID_RANGERW_06_TRMSG_FIGHT_AFTER">
+		<language name="JPN" width="216">アンタ　レンジャーに　なりなさいよ！
+ハードに　しごいて　きたえてあげる！</language>
+		<language name="JPN_KANJI" width="216">アンタ　レンジャーに　なりなさいよ！
+ハードに　しごいて　鍛えてあげる！</language>
 	</row>
 
 	<row id="TRID_SCHOOLB_05_TRMSG_FIGHT_START">
