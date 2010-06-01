@@ -312,12 +312,15 @@ static GMEVENT_RESULT ev_TrainerMsgBefore(
   switch( *seq )
   {
   case 0:
-    if( FLDTALKMSGWIN_Print(work->balloonWin) == TRUE ){
-      (*seq)++;
+    if( FLDTALKMSGWIN_Print(work->balloonWin) == FALSE ){
+      break;
     }
-    break;
+    (*seq)++;
   case 1:
+    FLDTALKMSGWIN_WriteKeyWaitCursor( work->balloonWin );
+     
     if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
+      PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
       FLDTALKMSGWIN_StartClose( work->balloonWin );
       (*seq)++;
     }
@@ -328,7 +331,7 @@ static GMEVENT_RESULT ev_TrainerMsgBefore(
       return( GMEVENT_RES_FINISH );
     }
   }
-
+  
   return( GMEVENT_RES_CONTINUE );
 }
 
