@@ -117,7 +117,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_c03p15_leader8w_01
 _TALK_OBJ_START()
-	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader8w_03, msg_c03p15_leader8w_04, C03P15_LEADER8W_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader8w_03a, msg_c03p15_leader8w_04a, C03P15_LEADER8W_01, POS_DEFAULT )
 	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 EVENT_END
@@ -281,7 +281,6 @@ EVENT_START		ev_scene_c03p15_plazmaevent_01
 	_OBJ_ANIME_WAIT()
 	
 	_BALLOONWIN_OBJMSG_MF( msg_c03p15_leader8w_03, msg_c03p15_leader8w_04, C03P15_LEADER8W_01, POS_DEFAULT )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 	//ÉJÉÅÉâñﬂÇ∑
