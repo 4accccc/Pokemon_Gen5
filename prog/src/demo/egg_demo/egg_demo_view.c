@@ -86,7 +86,7 @@ STEP;
 // マナフィ
 // パーティクルのフレームとポケモンアニメーションのフレームを連携させる
 #define MANAFI_PARTICLE_BURST_FRAME   (300)  // パーティクルエフェクトDEMO_MANA01, DEMO_MANA02は全部で300フレームあるらしい。
-#define MANAFI_POKE_ANIME_INDEX (0)
+#define MANAFI_POKE_ANIME_INDEX (1)
 
 #define MANAFI_EGG_SE_FRAME_01  ( 10)  // 1つ目
 //#define MANAFI_EGG_SE_FRAME_02  (100)  // 2つ目  // 2つ目は1つ目が終わってからすぐ鳴らすことにする
@@ -1029,6 +1029,8 @@ static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
 
 #endif
   }
+
+  MCSS_SetAnmStopFlag( work->mcss_wk );  // 生成時にこれを呼んでおかないと、何故か0番のアニメが再生されてしまう。
 }
 //-------------------------------------
 /// MCSSポケモン終了処理
