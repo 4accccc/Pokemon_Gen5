@@ -864,6 +864,7 @@ static void WO_DispInit( WO_WORK * wk )
   GX_SetVisiblePlane( 0 );
   GXS_SetVisiblePlane( 0 );
 
+
   p_handle = GFL_ARC_OpenDataHandle( ARCID_WAZAOSHIE_GRA, HEAPID_WAZAOSHIE );
 
   WO_VramBankSet();       // VRAM設定
@@ -1093,6 +1094,7 @@ static void WO_BgSet( void )
   GFL_BG_SetClearCharacter( SFRM_MSG,   32, 0, HEAPID_WAZAOSHIE );
 
   G2_BlendNone();
+  G2S_BlendNone();
 
   //上画面をサブ,下画面をメインに変更
 //  GX_SetDispSelect(GX_DISP_SELECT_SUB_MAIN);
