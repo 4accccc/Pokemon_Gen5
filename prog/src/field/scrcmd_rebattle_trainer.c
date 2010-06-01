@@ -188,20 +188,23 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
 
   GF_ASSERT( cp_data );
 
+  GF_ASSERT( index0 < RB_DATA_TBL_MAX );
+  GF_ASSERT( index1 < RB_DATA_TBL_MAX );
+  GF_ASSERT( index2 < RB_DATA_TBL_MAX );
   
-  TOMOYA_Printf( "設定情報 0　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index0 ].code, cp_data[ RB_RANDOM_START+index0 ].trainer_id );
-  TOMOYA_Printf( "設定情報 1　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index1 ].code, cp_data[ RB_RANDOM_START+index1 ].trainer_id );
-  TOMOYA_Printf( "設定情報 2　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index2 ].code, cp_data[ RB_RANDOM_START+index2 ].trainer_id );
+  TOMOYA_Printf( "設定情報 0　OBJCode[%d] TrainerID[%d]\n", cp_data[ index0 ].code, cp_data[ index0 ].trainer_id );
+  TOMOYA_Printf( "設定情報 1　OBJCode[%d] TrainerID[%d]\n", cp_data[ index1 ].code, cp_data[ index1 ].trainer_id );
+  TOMOYA_Printf( "設定情報 2　OBJCode[%d] TrainerID[%d]\n", cp_data[ index2 ].code, cp_data[ index2 ].trainer_id );
 
   // 見た目設定
-  EVENTDATA_ChangeNPCObjCode( evdata, objid0, cp_data[ RB_RANDOM_START+index0 ].code );
-  EVENTDATA_ChangeNPCObjCode( evdata, objid1, cp_data[ RB_RANDOM_START+index1 ].code );
-  EVENTDATA_ChangeNPCObjCode( evdata, objid2, cp_data[ RB_RANDOM_START+index2 ].code );
+  EVENTDATA_ChangeNPCObjCode( evdata, objid0, cp_data[ index0 ].code );
+  EVENTDATA_ChangeNPCObjCode( evdata, objid1, cp_data[ index1 ].code );
+  EVENTDATA_ChangeNPCObjCode( evdata, objid2, cp_data[ index2 ].code );
   
   // トレーナーIDを設定
-  EVENTDATA_ChangeNPCEventID( evdata, objid0, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index0 ].trainer_id ) );
-  EVENTDATA_ChangeNPCEventID( evdata, objid1, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index1 ].trainer_id ) );
-  EVENTDATA_ChangeNPCEventID( evdata, objid2, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ RB_RANDOM_START+index2 ].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid0, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ index0 ].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid1, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ index1 ].trainer_id ) );
+  EVENTDATA_ChangeNPCEventID( evdata, objid2, SCRIPT_GetTrainerScriptID_ByTrainerID( cp_data[ index2 ].trainer_id ) );
 
 	return VMCMD_RESULT_CONTINUE;
 }
@@ -289,13 +292,13 @@ VMCMD_RESULT EvCmdReBattleTrainerGetRndTrIndex( VMHANDLE *core, void *wk )
     random_max--;
   }
 
-  *ret_index0 = index[0];
-  *ret_index1 = index[1];
-  *ret_index2 = index[2];
+  *ret_index0 = index[0] + RB_RANDOM_START;
+  *ret_index1 = index[1] + RB_RANDOM_START;
+  *ret_index2 = index[2] + RB_RANDOM_START;
 
-  *ret_index3 = index[3];
-  *ret_index4 = index[4];
-  *ret_index5 = index[5];
+  *ret_index3 = index[3] + RB_RANDOM_START;
+  *ret_index4 = index[4] + RB_RANDOM_START;
+  *ret_index5 = index[5] + RB_RANDOM_START;
 
 	return VMCMD_RESULT_CONTINUE;
 }
