@@ -109,6 +109,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 	$write = pack "L",$cells;
 	print WRITE_NCE $write;
 
+  $cells_size = $cells;
   @write_data;
   @cell_index;
   @cell_min_x;
@@ -389,6 +390,11 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
 
       $index = $cell_index[ $cell_anm_index ];
 
+      if( $index >= $cells_size ){
+        print "存在しないセルを参照しています\n";
+        die;
+      }
+
 		  if( $size_min_x > $cell_anm_pos_x + $cell_min_x[ $index ] ){
 			  $size_min_x	= $cell_anm_pos_x + $cell_min_x[ $index ];
 		  }
@@ -452,6 +458,7 @@ use constant MCSS_SHIFT		=>	8;			#ポリゴン1辺の重み（FX32_SHIFTと同値）
   }
 
   @node = ();
+  $cell_anm_max_size = @cell_anm_max;
 
   if( $multi_cell_anms > 1 ){
     for( $mca = 0 ; $mca < $multi_cell_anms ; $mca++ ){
