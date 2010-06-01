@@ -128,7 +128,7 @@ static GMEVENT_RESULT debugMenuIntrudeEvent( GMEVENT *event, int *seq, void *wk 
 
   case 2: 
     // ハイリンクデバッグ
-    if ( work->select )
+    if ( work->select && work->select != FLDMENUFUNC_CANCEL )
     {
       CALL_FUNC func = (CALL_FUNC)work->select;
       func( work->fieldmap );
