@@ -2347,6 +2347,10 @@ GMEVENT* EVENT_ChangeMapByConnect( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fiel
     // 特別脱出先設定
     Escape_SetSPEscapeLocation( gameData, &work->loc_req );
   }
+  { //通信相手に自分がマップ遷移状態であることを通知できるようにセット
+    FIELD_STATUS * fldstatus = GAMEDATA_GetFieldStatus( gameData );
+    FIELD_STATUS_SetProcAction( fldstatus, PROC_ACTION_MAPCHG );
+  }
   return event;
 }
 
