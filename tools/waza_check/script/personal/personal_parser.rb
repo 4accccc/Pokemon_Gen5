@@ -12,6 +12,26 @@ $all_oshiewaza_list = [
   "りゅうせいぐん",
 ] 
 
+# タマゴグループ
+$egg_group_list = [
+"なし", # 不正値
+"怪獣", 
+"水棲", 
+"虫",
+"鳥",
+"動物",
+"妖精",
+"植物",
+"人型",
+"甲殻",
+"無機物",
+"不定形",
+"魚",
+"メタモン",
+"ドラゴン",
+"無生殖",
+]
+
 
 class PersonalDataParser
   def intialize
@@ -42,6 +62,27 @@ class PersonalDataParser
   def get_mons_name( personal_items )
     mons_name = personal_items[ PERSONAL_PARAM::POKENAME ] 
     return mons_name
+  end
+
+  def get_egg_group_list( mons_name )
+    egg_group_list = Array.new
+    egg_group_list << get_egg_group1( mons_name )
+    egg_group_list << get_egg_group2( mons_name )
+    return egg_group_list
+  end
+
+  def get_egg_group1( mons_name )
+    personal_items = get_personal_items( mons_name )
+    egg_group_idx = personal_items[ PERSONAL_PARAM::EGG_GROUP1 ].to_i
+    egg_group = $egg_group_list[ egg_group_idx ]
+    return egg_group
+  end
+
+  def get_egg_group2( mons_name )
+    personal_items = get_personal_items( mons_name )
+    egg_group_idx = personal_items[ PERSONAL_PARAM::EGG_GROUP2 ].to_i
+    egg_group = $egg_group_list[ egg_group_idx ]
+    return egg_group
   end
 
   def get_evolve_poke_list( mons_name )
