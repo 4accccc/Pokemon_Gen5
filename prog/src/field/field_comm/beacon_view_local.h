@@ -163,6 +163,8 @@ typedef struct _BEACON_VIEW{
   u8                    newLogIdx;
   u8                    newLogWait;
   u8                    old_list_max;
+  u8                    old_sex_ct;   //ログ内の性別が異なる人数
+  u8                    old_version_ct;  //ログ内のカセットバージョンが異なる人数
   BOOL                  first_entry_f;
 
   int       active;

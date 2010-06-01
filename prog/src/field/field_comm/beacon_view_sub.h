@@ -104,3 +104,8 @@ extern void BeaconView_UpDownAnmSet( BEACON_VIEW_PTR wk, SCROLL_DIR dir );
  */
 extern void BeaconView_UpDownViewSet( BEACON_VIEW_PTR wk );
 
+/*
+ *  @brief  ログ内カウンター収集
+ */
+extern void BeaconView_LogCounterGet( BEACON_VIEW_PTR wk, u8* sex_ct, u8* version_ct);
+

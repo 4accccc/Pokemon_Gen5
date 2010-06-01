@@ -717,7 +717,7 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
 #ifdef DEBUG_ONLY_FOR_iwasawa
 //    wk->my_data.power = 1;
 #endif
-    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
+//    wk->my_power_f = (wk->my_data.power == GPOWER_ID_NULL);
   }
   wk->game_comm = GAMESYSTEM_GetGameCommSysPtr( wk->gsys );
   wk->wifi_list = GAMEDATA_GetWiFiList( wk->gdata );
@@ -743,6 +743,8 @@ static void _sub_DataSetup(BEACON_VIEW_PTR wk)
   //Gパワーデータ取得
   wk->gpower_data = GPOWER_PowerData_LoadAlloc( wk->heap_sID );
 
+  //ログ内カウンター取得
+  BeaconView_LogCounterGet( wk, &wk->old_sex_ct, &wk->old_version_ct);
 }
 
 //--------------------------------------------------------------

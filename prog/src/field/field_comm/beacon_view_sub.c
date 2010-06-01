@@ -655,15 +655,35 @@ void BeaconView_UpDownViewSet( BEACON_VIEW_PTR wk )
   obj_UpDownViewSet( wk );
 }
 
+/*
+ *  @brief  ログ内カウンター収集
+ */
+void BeaconView_LogCounterGet( BEACON_VIEW_PTR wk, u8* sex_ct, u8* version_ct)
+{
+  int i;
+  u16 time;
+
+  *sex_ct = 0;
+  *version_ct = 0;
+
+  for( i = 0;i < wk->ctrl.max;i++ ){
+    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo2, &time, i );
+    if( GAMEBEACON_Get_Sex(wk->tmpInfo2) != wk->my_data.sex ){
+      (*sex_ct) += 1;
+    }
+    if( GAMEBEACON_Get_PmVersion( wk->tmpInfo2 ) != wk->my_data.pm_version ){
+      (*version_ct) += 1; 
+    }
+  }
+}
+
 ////////////////////////////////////////////////////////////////////////////
 //特殊Gパワー発動条件チェック
 ////////////////////////////////////////////////////////////////////////////
 
 static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info, u8 old_log_max ) 
 {
-  int i;
   u8 version_ct = 0, sex_ct = 0;
-  u16 time;
 
   //海外版ロムとすれ違ったか？
   if( GAMEBEACON_Get_PmLanguage( info ) != PM_LANG ){
@@ -682,23 +702,18 @@ static void sp_gpower_ConditionCheck( BEACON_VIEW_PTR wk, GAMEBEACON_INFO* info,
   }
 
   //ログ内カウンター収集
-  for( i = 0;i < wk->ctrl.max;i++ ){
-    GAMEBEACON_InfoTblRing_GetBeacon( wk->infoLog, wk->tmpInfo2, &time, i );
-    if( GAMEBEACON_Get_Sex(wk->tmpInfo2) != wk->my_data.sex ){
-      ++sex_ct;
-    }
-    if( GAMEBEACON_Get_PmVersion( wk->tmpInfo2 ) != wk->my_data.pm_version ){
-      ++version_ct; 
-    }
-  }
+  BeaconView_LogCounterGet( wk, &sex_ct, &version_ct);
+  
   //ログにいる自分と異なる性別のプレイヤーが20人か？
-  if( sex_ct == 20 ){
+  if( wk->old_sex_ct != sex_ct && sex_ct == 20 ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_MONEY_UP );
   }
   //ログにいる自分と異なるカセットバージョンのプレイヤーが20人か？
-  if( version_ct == 20 ){
+  if( wk->old_version_ct != version_ct && version_ct == 20 ){
     sp_gpower_RequestSet( wk, SP_GPOWER_REQ_NATSUKI_UP );
   }
+  wk->old_sex_ct = sex_ct;
+  wk->old_version_ct = version_ct;
 }
 
 //----------------------------------------------------------
