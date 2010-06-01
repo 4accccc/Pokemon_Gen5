@@ -733,7 +733,7 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, v
       FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
     }
     // SE
-    PMSND_PlaySE( SEQ_SE_FLD_05 );
+    PMSND_PlaySE( SEQ_SE_FLD_86 );
     // カメラ演出開始
     work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
     work->FCamAnimeData.frame = 60;
