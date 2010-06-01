@@ -584,7 +584,6 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->server = server;
   wk->pokeCon = pokeCon;
   wk->mainModule = mainModule;
-  wk->simulationCounter = 0;
   wk->numActOrder = 0;
   wk->turnCount = 0;
   wk->flowResult = SVFLOW_RESULT_DEFAULT;
@@ -635,6 +634,8 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   wk->thruDeadMsgPokeID = BTL_POKEID_NULL;
   wk->prevExeWaza = WAZANO_NULL;
   wk->getPokePos = BTL_POS_NULL;
+  wk->simulationCounter = 0;
+  wk->turnCheckStep = 0;
 }
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
@@ -3333,6 +3334,7 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
   u32 cnt, volume, i;
   u8 pokeID = BPP_GetID( bpp );
   u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
+  u8 fEffective = FALSE;
 
   cnt = BPP_WAZA_GetCount_Org( bpp );
 
@@ -3349,13 +3351,17 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
       param->wazaIdx = i;
       param->pokeID = pokeID;
       param->volume = volume;
+      fEffective = TRUE;
     }
   }
 
-  msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
-  HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PP_AllRecover );
-  HANDEX_STR_AddArg( &msg_param->str, pokeID );
-  return 1;
+  if( fEffective ){
+    msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PP_AllRecover );
+    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+  }
+
+  return fEffective;
 }
 static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
@@ -9107,7 +9113,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     wk->simulationCounter = 0;
 
     OS_SetPrintOutput_Arm9( 1 );
-    TAYA_Printf( " ============= turn END =============\n" );
+//    TAYA_Printf( " ============= turn END =============\n" );
     OS_SetPrintOutput_Arm9( 0 );
 
     return FALSE;

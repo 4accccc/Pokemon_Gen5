@@ -6030,7 +6030,8 @@ static void handler_Hatomune_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunakaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_AGILITY, handler_Sunakaki   },    /// すばやさ計算ハンドラ
+    { BTL_EVENT_CALC_AGILITY,     handler_Sunakaki           },    /// すばやさ計算ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

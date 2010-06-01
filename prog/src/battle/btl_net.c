@@ -324,7 +324,7 @@ static void recv_serverVer( const int netID, const int size, const void* pData, 
 
       for(i=0; i<BTL_NET_CONNECT_MACHINE_MAX; i++)
       {
-        if( (swk->recvTable[netID].recvedFlag) && (swk->recvTable[i].version == swk->maxVersion) )
+        if( (swk->recvTable[i].recvedFlag) && (swk->recvTable[i].version == swk->maxVersion) )
         {
           Sys->serverNetID = i;
           BTL_N_Printf( DBGSTR_NET_ServerDetermine, i);
