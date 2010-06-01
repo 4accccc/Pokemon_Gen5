@@ -2814,8 +2814,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
 
 #ifndef SAKE_REPORT_NONE
-    //WIFIBATTLEMATCH_SC_StartSession( p_wk->p_net ) ;
-
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_WIFICUP, 0, NULL, FALSE );
 
 
@@ -2825,7 +2823,6 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_WAIT_SESSION:
 #ifndef SAKE_REPORT_NONE
-//    if( WIFIBATTLEMATCH_SC_ProcessSession( p_wk->p_net ) )
     if( WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net ) )
 #endif  //SAKE_REPORT_NONE
     { 

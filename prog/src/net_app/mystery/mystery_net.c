@@ -109,6 +109,7 @@ typedef struct
   u32               contentlen;
   u32               target;
   char              *p_buffer;
+  u32               async_timeout;
 } WIFI_DOWNLOAD_DATA;
 
 //-------------------------------------
@@ -1263,6 +1264,7 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
       p_nd_data->percent = 0;
       s_callback_flag   = FALSE;
       s_callback_result = DWC_ND_ERROR_NONE;
+      p_nd_data->async_timeout  = 0;
       *p_seq = SEQ_GETTING_FILE;
     }
     break;
@@ -1270,6 +1272,13 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_GETTING_FILE:
     // ファイル読み込み中
     DWC_NdProcess();
+    if( p_nd_data->async_timeout++ > WIFI_ND_TIMEOUT_SYNC )
+    {
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_USER_TIMEOUT );
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data,ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_CANCEL, SEQ_CANCEL );
+    }
+
     if( s_callback_flag == FALSE )
     {
       // ファイル読み込み中
@@ -1345,6 +1354,14 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
   case SEQ_WAIT_CALLBACK:
     //コールバック処理を待つ
     DWC_NdProcess();
+
+    if( p_nd_data->async_timeout++ > WIFI_ND_TIMEOUT_SYNC )
+    {
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_USER_TIMEOUT );
+      p_wk->recv_status  = MYSTERY_NET_RECV_STATUS_FAILED;
+      WIFI_DOWNLOAD_WaitNdCleanCallback( p_nd_data, ND_RESULT_DOWNLOAD_CANCEL, p_seq, SEQ_END, SEQ_END ); 
+    }
+
     if( s_callback_flag )
     { 
       s_callback_flag = FALSE;
@@ -1368,6 +1385,13 @@ static void SEQFUNC_WifiDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
   case SEQ_WAIT_CLEANUP_CALLBACK:
     DWC_NdProcess();
+
+    if( p_nd_data->async_timeout++ > WIFI_ND_TIMEOUT_SYNC )
+    {
+      GFL_NET_StateSetWifiError( 0, 0, 0, ERRORCODE_USER_TIMEOUT );
+      *p_seq  = p_nd_data->next_seq;
+    }
+
     if( s_cleanup_callback_flag )
     { 
       s_cleanup_callback_flag = FALSE;
@@ -1464,6 +1488,7 @@ static void WIFI_DOWNLOAD_WaitNdCallback( WIFI_DOWNLOAD_DATA *p_wk, int *p_seq, 
   s_callback_flag   = FALSE;
   s_callback_result = DWC_ND_ERROR_NONE;
   p_wk->next_seq  = next_seq;
+  p_wk->async_timeout  = 0;
   *p_seq          = 100;
 }
 //----------------------------------------------------------------------------
@@ -1482,6 +1507,7 @@ static void WIFI_DOWNLOAD_WaitNdCleanCallback( WIFI_DOWNLOAD_DATA *p_wk, int res
   s_cleanup_callback_flag = FALSE;
   s_callback_result       = result;
   p_wk->next_seq          = next_seq;
+  p_wk->async_timeout  = 0;
   *p_seq                  = 200;
 
   if( !DWC_NdCleanupAsync(  ) ){  //FALSEの場合コールバックが呼ばれない

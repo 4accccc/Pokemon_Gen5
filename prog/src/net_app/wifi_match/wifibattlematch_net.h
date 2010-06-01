@@ -272,8 +272,6 @@ extern BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( const WIFIBATTLEMATCH_NET_WORK 
 //-------------------------------------
 ///	ATLAS統計・競争関係（SC）
 //=====================================
-extern void WIFIBATTLEMATCH_SC_StartSession( WIFIBATTLEMATCH_NET_WORK *p_wk );
-extern BOOL WIFIBATTLEMATCH_SC_ProcessSession( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
 typedef enum
 { 

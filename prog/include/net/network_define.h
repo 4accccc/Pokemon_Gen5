@@ -19,6 +19,8 @@
 #define GAME_ID           2911              // ゲームID
 
 
+#define WIFI_ND_TIMEOUT_SYNC   (60*60*2)     //２分のタイムアウト
+
 
 #if 0
 

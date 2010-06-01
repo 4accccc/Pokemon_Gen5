@@ -2697,7 +2697,7 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
         if( p_wk->mode == WIFIBATTLEMATCH_TYPE_RNDFREE )
         { 
           GFL_MSG_GetString( p_msg, WIFIMATCH_STR_013, p_src );
-          WORDSET_RegisterNumber( p_word, 0, cp_data->win_cnt, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+          WORDSET_RegisterNumber( p_word, 0, cp_data->win_cnt, 5, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_str, p_src );
           color = PLAYERINFO_STR_COLOR_WHITE;
         }
@@ -2706,7 +2706,7 @@ static void MatchInfo_Bmpwin_Create( MATCHINFO_WORK * p_wk, const WIFIBATTLEMATC
           if( p_wk->is_rate )
           { 
             GFL_MSG_GetString( p_msg, WIFIMATCH_STR_009, p_src );
-            WORDSET_RegisterNumber( p_word, 0, cp_data->rate, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_HANKAKU );
+            WORDSET_RegisterNumber( p_word, 0, cp_data->rate, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
             WORDSET_ExpandStr( p_word, p_str, p_src );
             color = PLAYERINFO_STR_COLOR_WHITE;
           }
