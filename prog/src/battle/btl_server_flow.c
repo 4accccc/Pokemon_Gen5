@@ -25,6 +25,7 @@
 #include "btl_pokeset.h"
 #include "btl_shooter.h"
 #include "btl_calc.h"
+#include "btl_tables.h"
 #include "btlv\btlv_effect.h"
 
 #include "handler\hand_tokusei.h"
@@ -3436,12 +3437,15 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
  */
 static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  u8 pokeID = BPP_GetID( bpp );
+  if( !BTL_TABLES_CheckItemCallNoEffect(itemID) )
+  {
+    u8 pokeID = BPP_GetID( bpp );
 
-  BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
+    BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
 
-//  scproc_CheckItemReaction( wk, bpp );
-  return scproc_UseItemEquip( wk, bpp );
+    return scproc_UseItemEquip( wk, bpp );
+  }
+  return FALSE;
 }
 /**
  *  シューター専用：スキルコール

@@ -28,6 +28,8 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
 extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );
+extern BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID );
+
 
 
 #ifdef PM_DEBUG

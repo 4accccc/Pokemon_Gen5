@@ -77,9 +77,7 @@ BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
     }
   }
 
-
   return FALSE;
-
 }
 
 /**
@@ -132,6 +130,35 @@ BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza )
   }
   return FALSE;
 }
+
+//=============================================================================================
+/**
+ * アイテムコールで発動してはいけないアイテムか判定
+ *
+ * @param   itemID
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID )
+{
+  static const u16 table[] = {
+    ITEM_KIAINOHATIMAKI,  ITEM_PAWAHURUHAABU,   ITEM_DASSYUTUBOTAN,
+    ITEM_ZYAPONOMI,       ITEM_RENBUNOMI,       ITEM_IBANNOMI,
+    ITEM_SENSEINOTUME,    ITEM_KYUUKON,         ITEM_ZYUUDENTI,
+  };
+  u32 i;
+
+  for(i=0; i<NELEMS(table); ++i)
+  {
+    if( table[i] == itemID ){
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
+
 
 
 #ifdef PM_DEBUG
