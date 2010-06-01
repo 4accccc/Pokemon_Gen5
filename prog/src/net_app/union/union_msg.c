@@ -1200,6 +1200,10 @@ static void _WordsetSetDefaultData(UNION_SYSTEM_PTR unisys)
 //--------------------------------------------------------------
 static void _SetPmsAisatsu(GAMEDATA * gamedata, u8 region)
 {
+  SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
+  PMSW_SAVEDATA *pmssave = SaveData_GetPMSW( sv_ctrl );
+	u16 lang = region - LANG_JAPAN;
+
 	if(region>=LANG_JAPAN && region <=LANG_KOREA){
 		static const s32 AisatsuFlagTable[] = {
 			PMSW_AISATSU_JP,	// 日本語
@@ -1207,20 +1211,18 @@ static void _SetPmsAisatsu(GAMEDATA * gamedata, u8 region)
 			PMSW_AISATSU_FR,	// フランス語
 			PMSW_AISATSU_IT,	// イタリア語
 			PMSW_AISATSU_GE,	// ドイツ語
-			-1,					// 無効言語ナンバー
+			PMSW_AISATSU_NO,	// 無効言語ナンバー
 			PMSW_AISATSU_SP,	// スペイン語
 			PMSW_AISATSU_KO,  // 韓国語
 		};
 
-		u16 lang = region - LANG_JAPAN;
 		if( (lang < NELEMS(AisatsuFlagTable)) && (AisatsuFlagTable[lang] >= 0) )
 		{
-      SAVE_CONTROL_WORK *sv_ctrl = GAMEDATA_GetSaveControlWork(gamedata);
-      PMSW_SAVEDATA *pmssave = SaveData_GetPMSW( sv_ctrl );
-      
 			PMSW_SetAisatsuFlag( pmssave,  AisatsuFlagTable[lang] );
-			OS_Printf("簡易会話に %d　を追加\n", PMSW_AISATSU_JP+( region - LANG_JAPAN ) );
 		}
+		else{
+      PMSW_SetAisatsuFlag( pmssave,  PMSW_AISATSU_NO );
+    }
 	}
 }
 
