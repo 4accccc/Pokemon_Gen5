@@ -2058,7 +2058,6 @@ static void ShinkaDemo_SoundPlayWazaoboe( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_
   if( work->sound_step == SOUND_STEP_SHINKA )
   {
     ShinkaDemo_SoundPushShinka( param, work );
-    //PMSND_PlaySE( SEQ_SE_LVUP );  // btl_client.cを参考にした
     PMSND_PlayBGM( SEQ_ME_LVUP );  // btl_client.cを参考にした  // MEの場合は、自動的にpush, popしてくれるらしいが、音の終わりを知りたいので手動でpush, popすることにした。
     work->sound_step = SOUND_STEP_WAZAOBOE;
   }
