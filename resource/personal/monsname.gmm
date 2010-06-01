@@ -3214,13 +3214,13 @@
 	</row>
 
 	<row id="MONSNAME_564">
-		<language name="JPN" width="216">カセッキ</language>
-		<language name="JPN_KANJI" width="216">カセッキ</language>
+		<language name="JPN" width="216">プロトーガ</language>
+		<language name="JPN_KANJI" width="216">プロトーガ</language>
 	</row>
 
 	<row id="MONSNAME_565">
-		<language name="JPN" width="216">アバゴウラ</language>
-		<language name="JPN_KANJI" width="216">アバゴウラ</language>
+		<language name="JPN" width="216">アバゴーラ</language>
+		<language name="JPN_KANJI" width="216">アバゴーラ</language>
 	</row>
 
 	<row id="MONSNAME_566">
@@ -3354,13 +3354,13 @@
 	</row>
 
 	<row id="MONSNAME_592">
-		<language name="JPN" width="216">プルンス</language>
-		<language name="JPN_KANJI" width="216">プルンス</language>
+		<language name="JPN" width="216">プルリル</language>
+		<language name="JPN_KANJI" width="216">プルリル</language>
 	</row>
 
 	<row id="MONSNAME_593">
-		<language name="JPN" width="216">プルンゲル</language>
-		<language name="JPN_KANJI" width="216">プルンゲル</language>
+		<language name="JPN" width="216">ブルンゲル</language>
+		<language name="JPN_KANJI" width="216">ブルンゲル</language>
 	</row>
 
 	<row id="MONSNAME_594">
@@ -3469,8 +3469,8 @@
 	</row>
 
 	<row id="MONSNAME_615">
-		<language name="JPN" width="216">アイスゴン</language>
-		<language name="JPN_KANJI" width="216">アイスゴン</language>
+		<language name="JPN" width="216">フリージオ</language>
+		<language name="JPN_KANJI" width="216">フリージオ</language>
 	</row>
 
 	<row id="MONSNAME_616">
@@ -3489,13 +3489,13 @@
 	</row>
 
 	<row id="MONSNAME_619">
-		<language name="JPN" width="216">グラップ</language>
-		<language name="JPN_KANJI" width="216">グラップ</language>
+		<language name="JPN" width="216">コジョフー</language>
+		<language name="JPN_KANJI" width="216">コジョフー</language>
 	</row>
 
 	<row id="MONSNAME_620">
-		<language name="JPN" width="216">グラッパー</language>
-		<language name="JPN_KANJI" width="216">グラッパー</language>
+		<language name="JPN" width="216">コジョンド</language>
+		<language name="JPN_KANJI" width="216">コジョンド</language>
 	</row>
 
 	<row id="MONSNAME_621">

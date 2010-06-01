@@ -572,8 +572,8 @@
 #define		MONSNO_539		( 561 )		//シンボラー
 #define		MONSNO_526		( 562 )		//デスマス
 #define		MONSNO_510		( 563 )		//デスカーン
-#define		MONSNO_622		( 564 )		//カセッキ
-#define		MONSNO_623		( 565 )		//アバゴウラ
+#define		MONSNO_622		( 564 )		//プロトーガ
+#define		MONSNO_623		( 565 )		//アバゴーラ
 #define		MONSNO_624		( 566 )		//アーケン
 #define		MONSNO_625		( 567 )		//アーケオス
 #define		MONSNO_573		( 568 )		//ヤブクロン
@@ -600,8 +600,8 @@
 #define		MONSNO_572		( 589 )		//シュバルゴ
 #define		MONSNO_580		( 590 )		//タマゲタケ
 #define		MONSNO_581		( 591 )		//モロバレル
-#define		MONSNO_513		( 592 )		//プルンス
-#define		MONSNO_536		( 593 )		//プルンゲル
+#define		MONSNO_513		( 592 )		//プルリル
+#define		MONSNO_536		( 593 )		//ブルンゲル
 #define		MONSNO_501		( 594 )		//ママンボウ
 #define		MONSNO_577		( 595 )		//バチュル
 #define		MONSNO_578		( 596 )		//デンチュラ
@@ -623,12 +623,12 @@
 #define		MONSNO_509		( 612 )		//オノノクス
 #define		MONSNO_531		( 613 )		//クマシュン
 #define		MONSNO_532		( 614 )		//ツンベアー
-#define		MONSNO_621		( 615 )		//アイスゴン
+#define		MONSNO_621		( 615 )		//フリージオ
 #define		MONSNO_561		( 616 )		//チョボマキ
 #define		MONSNO_562		( 617 )		//アギルダー
 #define		MONSNO_589		( 618 )		//マッギョ
-#define		MONSNO_630		( 619 )		//グラップ
-#define		MONSNO_631		( 620 )		//グラッパー
+#define		MONSNO_630		( 619 )		//コジョフー
+#define		MONSNO_631		( 620 )		//コジョンド
 #define		MONSNO_629		( 621 )		//クリムガン
 #define		MONSNO_604		( 622 )		//ゴビット
 #define		MONSNO_605		( 623 )		//ゴルーグ
