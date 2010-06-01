@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-05-27T19:28:18"/>
+	<create user="taya" host="W00146" date="2010-06-01T20:40:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -760,7 +760,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつが　がくっと　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率が　がくっと下がった！</language>
+回避率が　がくっと下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankdownLv3_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -810,7 +810,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]の
 かいひりつが　がくーんと　さがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]の
-かいひ率が　がくーんと下がった！</language>
+回避率が　がくーんと下がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_RankupMax_ATK" back-color=",,,#ffff00,,,,,,,,,,,,,,,">
@@ -2916,7 +2916,7 @@
 かいひりつが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で▽
-かいひ率が　上がった！</language>
+回避率が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_RankupEx_ATK">
