@@ -124,9 +124,6 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
   }
 }
 
-#重複をカットした、ランダム開始インデックス取得
-$RANDOM_START_IDX = &GET_LabelID( $LABEL[$RANDOM_START_IDX] );
-
 
 #ヘッダーの取得
 open( FILEOUT, ">".$ARGV[2].".h" );
