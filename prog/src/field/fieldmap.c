@@ -430,7 +430,7 @@ static void fldmap_G3D_Unload( FIELDMAP_WORK * fieldWork );
 static void	fldmap_G3D_VBlank( GFL_TCB* tcb, void* work );
 static void	fldmap_G3D_BBDTrans(
 		GFL_BBDACT_TRANSTYPE type, u32 dst, u32 src, u32 siz );
-static void FIELD_EDGEMARK_Setup(const AREADATA * areadata);
+static void FIELD_EDGEMARK_Setup(const AREADATA * areadata, const u16 zone_id);
 static void fieldmap_G3D_BBDSetColorParam( FIELDMAP_WORK * fieldWork );
 
 //fldmmdl
@@ -832,7 +832,7 @@ static MAINSEQ_RESULT mainSeqFunc_setup(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     fieldWork->ExpObjCntPtr = FLD_EXP_OBJ_Create ( EXP_OBJ_RES_MAX, EXP_OBJ_MAX, fieldWork->heapID );
     
     //エッジマーキング設定セットアップ
-    FIELD_EDGEMARK_Setup( fieldWork->areadata );
+    FIELD_EDGEMARK_Setup( fieldWork->areadata, FIELDMAP_GetZoneID( fieldWork ) );
 
     SET_CHECK("setup: fogs");  //デバッグ：処理負荷計測
     // フォグシステム生成
@@ -2606,9 +2606,10 @@ static void	fldmap_G3D_BBDTrans(
 /**
  * @brief エッジマーキング設定反映
  * @param areadata
+ * @param zone_id
  */
 //--------------------------------------------------------------
-static void FIELD_EDGEMARK_Setup(const AREADATA * areadata)
+static void FIELD_EDGEMARK_Setup(const AREADATA * areadata, const u16 zone_id)
 {
   static GXRgb edgeTable[8];
   int edgemark_type = AREADATA_GetEdgeMarkingType(areadata);
@@ -2618,7 +2619,11 @@ static void FIELD_EDGEMARK_Setup(const AREADATA * areadata)
     G3X_EdgeMarking(FALSE);
     return;
   }
-  G3X_EdgeMarking(TRUE);
+  
+  //ビンゴマップを除く裏フィールドのときはエッジマーキングをつけない
+  if ( ZONEDATA_IsPalaceFieldNoBingo( zone_id) ) G3X_EdgeMarking(FALSE);
+  else G3X_EdgeMarking(TRUE);
+
   GFL_ARC_LoadData((void *)edgeTable, ARCID_FIELD_EDGEMARK, edgemark_type);
   //プログラム用エッジカラー設定（インデックス7番を使用します）
   edgeTable[7] = GX_RGB(16,16,16);

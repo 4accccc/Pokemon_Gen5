@@ -859,6 +859,22 @@ BOOL ZONEDATA_IsBingo(u16 zone_id)
 
 //==================================================================
 /**
+ * ビンゴマップを除く裏フィールドかどうかのチェック
+ * @param   zone_id   ゾーン指定ID
+ * @retval  BOOL    該当したらTRUE
+ */
+//==================================================================
+BOOL ZONEDATA_IsPalaceFieldNoBingo(u16 zone_id)
+{
+  if( (zone_id >= ZONE_ID_PLC04) && (zone_id <= ZONE_ID_PLT04) ) //裏フィールド
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+//==================================================================
+/**
  * WFBCかどうか
  * @param   zone_id   ゾーン指定ID
  * @retval  BOOL    ビンゴマップだったらTRUE
