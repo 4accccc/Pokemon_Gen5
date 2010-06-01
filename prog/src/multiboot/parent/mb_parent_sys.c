@@ -185,7 +185,7 @@ typedef enum
   MPMS_POST_POKE_RET_POST,
   MPMS_POST_POKE_FINISH,
   
-  MPMS_BOX_NOT_ENOUGH,
+  MPMS_BOX_NOT_ENOUGH_INIT,
   MPMS_BOX_NOT_ENOUGH_WAIT,
 
   MPMS_WAIT_CHECK_LOCK_CAPSULE,
@@ -2308,7 +2308,7 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
         else
         if( sendVal == MCMV_POKETRANS_NG )
         {
-          work->movieState = MPMS_BOX_NOT_ENOUGH;
+          work->movieState = MPMS_BOX_NOT_ENOUGH_INIT;
         }
         else
         {
@@ -2350,6 +2350,20 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
     break;
   
   case MPMS_POST_POKE_FINISH:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
+    {
+      work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
+    }
+    break;
+
+  case MPMS_BOX_NOT_ENOUGH_INIT:
+    MB_MSG_MessageHide( work->msgWork );
+    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_2LINE );
+    MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_04 , MSGSPEED_GetWait() );
+    work->movieState = MPMS_BOX_NOT_ENOUGH_WAIT;
+    break;
+
+  case MPMS_BOX_NOT_ENOUGH_WAIT:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
       work->movieState = MPMS_WAIT_CHECK_LOCK_CAPSULE;
