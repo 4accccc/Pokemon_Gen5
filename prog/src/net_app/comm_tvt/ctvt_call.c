@@ -603,9 +603,9 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
       CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
       if( COMM_TVT_GetConnectNum( work ) >= 2 )
       {
-        PMSND_StopSE();
         if( callWork->isPlayCallAnswer == FALSE )
         {
+          PMSND_StopSE();
           PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
         }
         callWork->state = CCS_FADEOUT;
@@ -701,9 +701,9 @@ const COMM_TVT_MODE CTVT_CALL_Main( COMM_TVT_WORK *work , CTVT_CALL_WORK *callWo
   case CCS_DISP_WARN:
     if( COMM_TVT_GetConnectNum( work ) >= 2 )
     {
-      PMSND_StopSE();
       if( callWork->isPlayCallAnswer == FALSE )
       {
+        PMSND_StopSE();
         callWork->isPlayCallAnswer = TRUE;
         PMSND_PlaySystemSE( CTVT_SND_CALL_ANSWER );
       }

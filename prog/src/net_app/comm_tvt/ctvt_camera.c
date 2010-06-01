@@ -702,13 +702,13 @@ static const BOOL CTVT_CAMERA_UpdateMemberState( CTVT_CAMERA_WORK *camWork ,CTVT
     if( ret == FALSE )
     {
       memWork->isUpdate = FALSE;
-      memWork->isNew = FALSE;
     }
     if( memWork->isFirst == TRUE )
     {
       memWork->isFirst = FALSE;
       PMSND_PlaySystemSE( CTVT_SND_SLIDE_IN );
     }
+    memWork->isNew = FALSE;
 
     return TRUE;
   }
