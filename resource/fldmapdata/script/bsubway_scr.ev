@@ -1068,7 +1068,6 @@ sub_receipt_challenge_wifi:
     _CALL sub_bsw_common_report
     
     IF $SCWK_ANSWER == 1 THEN //レポートキャンセル
-      _CALL sub_bsw_common_exit
       _RET
     ENDIF
   ELSE //新規プレイ
@@ -1082,7 +1081,6 @@ sub_receipt_challenge_wifi:
     _CALL sub_bsw_common_report
     
     IF $SCWK_ANSWER == 1 THEN //レポートキャンセル
-      _CALL sub_bsw_common_exit
       _RET
     ENDIF
    
