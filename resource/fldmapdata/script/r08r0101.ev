@@ -111,13 +111,13 @@ common_root:
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
       _OBJ_ANIME_WAIT()
       //「ひとが　はじめた　いくさ」
-      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_02 , R08R0101_OLDMAN1_01, POS_UR )
       _BALLOONWIN_CLOSE()
       //じいさん左向く
       _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
       _OBJ_ANIME_WAIT()
       //「おやがわり」
-      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_03 , R08R0101_OLDMAN1_01, POS_DR )
+      _BALLOONWIN_OBJMSG_POS( msg_r08r0101_guide_03 , R08R0101_OLDMAN1_01, POS_UR )
       _BALLOONWIN_CLOSE()
       //自機の隣に戻って左向き
       _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_move3 )
@@ -171,8 +171,8 @@ common_root:
     {
       DEFINE_LOCAL msg
       //じいさん自機のほうを向く
-      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
-      _OBJ_ANIME_WAIT()
+//      _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
+//      _OBJ_ANIME_WAIT()
       //一度でも技覚えた？
       IF FLAG_OFF( FE_R08R0101_LEG_FIRST ) THEN   //まだ覚えてない
         //「ポケモン探してる」
@@ -448,7 +448,13 @@ player_talk_move:
   ENDSWITCH
   
   _OBJ_ANIME_WAIT()
-}  
+
+  IF $dir != DIR_RIGHT THEN
+    //爺さん左向く
+    _OBJ_ANIME( R08R0101_OLDMAN1_01, anm_oldman_left )
+    _OBJ_ANIME_WAIT()
+  ENDIF
+}
 _RET
 
 //--------------------------------------------------------------------
@@ -488,7 +494,7 @@ _ANIME_LABEL	anm_player_right
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------------
-//自機上向き
+//自機上向き(爺さんも使う)
 //--------------------------------------------------------------------
 _ANIME_LABEL	anm_player_up
   _ANIME_DATA	AC_STAY_WALK_U_8F,1
