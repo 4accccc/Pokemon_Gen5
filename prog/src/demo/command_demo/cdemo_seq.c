@@ -64,7 +64,7 @@ static const BGFRM_ANM_DATA ModeData[] =
 {
 	{	ARCID_GF_LOGO_MOVIE, 134, 256*192*2, 0 },				// ゲームフリークロゴ
 	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2 },		// オープニングムービー１
-	{	ARCID_OP_DEMO2_MOVIE, 228, 256*192*2, 0 },			// オープニングムービー２
+	{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0 },			// オープニングムービー２
 };
 
 

@@ -28,7 +28,7 @@ SUBDIRS	=
 include	$(PROJECT_RSCDIR)\macro_define
 
 # 自動でリソースを集める
-bsources:=$(wildcard *.bmp)
+bsources:=$(wildcard *.tga)
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
