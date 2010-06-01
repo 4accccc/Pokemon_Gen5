@@ -749,7 +749,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       {
         msg[0] = conArr[0]+MUSICAL_AUDIENCE_CON_01;
         //ÇPà Ç™íPì∆Ç≈ÇQ,ÇRà Ç™àÍèè
-        if( conArr[1] == conArr[2] )
+        if( pointArr[1] == pointArr[2] )
         {
           msg[1] = MUSICAL_AUDIENCE_CON_05;
         }

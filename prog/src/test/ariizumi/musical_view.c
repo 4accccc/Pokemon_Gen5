@@ -1067,7 +1067,10 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   work->isRefresh = FALSE;
   work->isRefreshItem = FALSE;
   work->isRefreshName = TRUE;
+  work->monsno = 0;
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
   work->monsno = 117;
+#endif
   work->sex = 0;
   work->form = 0;
   work->rare = 0;
