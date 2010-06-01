@@ -14982,10 +14982,13 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   {
     BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
 
+//    TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(user), __LINE__);
     if( BPP_HENSIN_Set(user, target) )
     {
       u8 usrPokeID = BPP_GetID( user );
       u8 tgtPokeID = BPP_GetID( target );
+
+//      TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(user), __LINE__);
 
       if( param_header->tokwin_flag ){
         scPut_TokWin_In( wk, user );

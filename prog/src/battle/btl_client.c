@@ -6286,7 +6286,10 @@ static BOOL scProc_ACT_Hensin( BTL_CLIENT* wk, int* seq, const int* args )
       BtlvMcssPos  atkVpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[0] );
       BtlvMcssPos  tgtVpos = BTL_MAIN_PokeIDtoViewPos( wk->mainModule, wk->pokeCon, args[1] );
 
+//      TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(atkPoke), __LINE__);
       BPP_HENSIN_Set( atkPoke, tgtPoke );
+//      TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(atkPoke), __LINE__);
+
 
       BTLV_Hensin_Start( wk->viewCore, atkVpos, tgtVpos );
       (*seq)++;

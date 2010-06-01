@@ -3200,7 +3200,6 @@ BOOL BPP_HENSIN_Set( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* target )
       WazaWork_UpdateNumber( &bpp->waza[i], target->waza[i].surface.number, 5, FALSE );
     }
 
-    clearWazaSickWork( bpp, TRUE );
     flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
     flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
