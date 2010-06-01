@@ -810,40 +810,44 @@ static void _recvThreePokemon3(const int netID, const int size, const void* pDat
   _recvThreePokemon(netID, size, pData, pWk, pNetHandle, 2);
 }
 
-//_NETCMD_THREE_SELECT1_BOX ポケモン３匹みせあい BOXか手持ちか
-static void _recvThreePokemon1Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+
+static void _recvThreePokemonBoxRecv(u8 bFlg, u8 num, int netID,void* pWk,GFL_NETHANDLE* pNetHandle)
 {
   POKEMON_TRADE_WORK *pWork = pWk;
-  const u8* pRecvData = pData;
 
   if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
     return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
   }
-  OS_TPrintf("メールセット%d \n",pRecvData[0]);
-  pWork->bGTSSelectPokeBox[netID][0] = pRecvData[0];
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    pWork->bGTSSelectPokeBox[0][num] = bFlg;
+  }
+  else{
+    pWork->bGTSSelectPokeBox[1][num] = bFlg;
+  }
+}
+
+
+//_NETCMD_THREE_SELECT1_BOX ポケモン３匹みせあい BOXか手持ちか
+static void _recvThreePokemon1Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  const u8* pRecvData = pData;
+
+  _recvThreePokemonBoxRecv(pRecvData[0], 0, netID, pWk, pNetHandle);
 }
 
 //_NETCMD_THREE_SELECT2_BOX ポケモン３匹みせあい BOXか手持ちか
 static void _recvThreePokemon2Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  POKEMON_TRADE_WORK *pWork = pWk;
   const u8* pRecvData = pData;
 
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-  }
-  pWork->bGTSSelectPokeBox[netID][1] = pRecvData[0];
+  _recvThreePokemonBoxRecv(pRecvData[0], 1, netID, pWk, pNetHandle);
 }
 //_NETCMD_THREE_SELECT3_BOX ポケモン３匹みせあい BOXか手持ちか
 static void _recvThreePokemon3Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
-  POKEMON_TRADE_WORK *pWork = pWk;
   const u8* pRecvData = pData;
 
-  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
-    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
-  }
-  pWork->bGTSSelectPokeBox[netID][2] = pRecvData[0];
+  _recvThreePokemonBoxRecv(pRecvData[0], 2, netID, pWk, pNetHandle);
 }
 
 //_NETCMD_SELECT_POKEMON_BOX 2 ポケモン見せ合う BOXか手持ちか
@@ -888,6 +892,7 @@ static void _recvFriendBoxNum(const int netID, const int size, const void* pData
   }
   pWork->friendBoxNum = pRecvData[0];
   pWork->friendMailBoxFULL = pRecvData[1];
+  NET_PRINT("メールボックス%d\n",pWork->friendMailBoxFULL);
 }
 
 
@@ -1280,6 +1285,8 @@ BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
   }
   
   item = PP_Get( pp , ID_PARA_item ,NULL);
+
+  OS_TPrintf("メール%d FULL%d BOX%d \n", ITEM_CheckMail(item), pWork->friendMailBoxFULL, bBox);
   if(ITEM_CheckMail(item)){
     if(pWork->friendMailBoxFULL && !bBox){
       return TRUE;
