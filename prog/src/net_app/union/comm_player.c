@@ -35,8 +35,7 @@ typedef struct{
   u8 occ:1;         ///<この構造体全体のデータ有効・無効(TRUE:有効)
   u8 push_flag:1;
   u8 player_form:4; ///<PLAYER_MOVE_FORM
-  u8 map_attr_hitch:1;
-  u8 :1;
+  u8 :2;
   u8 padding[3];
   
   FLDEFF_TASK *fldeff_gyoe_task;  ///<「！」エフェクト動作タスク
@@ -47,9 +46,8 @@ typedef struct{
   VecFx32 pos;
   u16 dir;
   u8 player_form:4; ///<PLAYER_MOVE_FORM
-  u8 map_attr_hitch:1;
   u8 vanish:1;
-  u8  :4;
+  u8  :5;
   u8 padding;
 }MINE_PLAYER;
 
@@ -262,7 +260,6 @@ void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps)
   
   for(i = 0; i < COMM_PLAYER_MAX; i++){
     if(cps->act[i].occ == TRUE){
-  OS_TPrintf("aaa PushVanish = %d netID=%d\n", cps->act[i].vanish, i);
       CommPlayer_Del(cps, i);
       cps->act[i].push_flag = TRUE;
       OS_TPrintf("CommPlayer Push! %d\n", i);
@@ -298,10 +295,8 @@ void CommPlayer_Pop(COMM_PLAYER_SYS_PTR cps)
     if(cps->act[i].push_flag == TRUE){
       pack.pos = cps->act[i].pos;
       pack.dir = cps->act[i].dir;
-  OS_TPrintf("aaa PopVanish = %d netID=%d\n", cps->act[i].vanish, i);
       pack.vanish = FALSE;  //cps->act[i].vanish;
       pack.player_form = cps->act[i].player_form;
-      pack.map_attr_hitch = cps->act[i].map_attr_hitch;
       CommPlayer_Add(cps, i, cps->act[i].obj_code, &pack);
       OS_TPrintf("CommPlayer Pop! %d\n", i);
     }
@@ -389,7 +384,6 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
   VecFx32 draw_pos;
   u16 dir;
   PLAYER_MOVE_FORM form;
-  BOOL attr_hitch;
   MMDL *player_mmdl;
   BOOL vanish = FALSE;
   
@@ -408,7 +402,6 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
     dir = mine->dir;
     draw_pos = mine->pos;
     form = mine->player_form;
-    attr_hitch = mine->map_attr_hitch;
   }
   else if(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE 
       && FIELDMAP_IsReady(GAMESYSTEM_GetFieldMapWork(cps->gsys)) == TRUE){
@@ -416,36 +409,37 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
     FIELD_PLAYER * fld_player;
     MMDL *player_mmdl;
     u32 attr;
+    PLAYER_DRAW_FORM draw_form;
     
     fieldWork = GAMESYSTEM_GetFieldMapWork(cps->gsys);
     fld_player = FIELDMAP_GetFieldPlayer(fieldWork);
     player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
+    draw_form = FIELD_PLAYER_GetDrawForm( fld_player );
     
-    MMDL_GetDrawVectorPos(player_mmdl, &draw_pos);
-    dir = FIELD_PLAYER_GetDir(fld_player);
-    if(MMDL_GetMapPosAttr( player_mmdl, &draw_pos, &attr ) == TRUE){
-      attr_hitch = MAPATTR_GetHitchFlag( attr );
+    if(draw_form == PLAYER_DRAW_FORM_ITEMGET){  //跳ねるアニメをするのでこの時だけ実座標
+      FIELD_PLAYER_GetPos(fld_player, &draw_pos);
     }
+    else{
+      MMDL_GetDrawVectorPos(player_mmdl, &draw_pos);
+    }
+    dir = FIELD_PLAYER_GetDir(fld_player);
   }
   else{
     const VecFx32 *p_pos = PLAYERWORK_getPosition(player);
     draw_pos = *p_pos;
     dir = PLAYERWORK_getDirection_Type(player);
-    attr_hitch = pack->map_attr_hitch;  //取得できない為、値を継続
   }
   
   pack->dir = dir;
   pack->pos = draw_pos;
   pack->vanish = vanish;
   pack->player_form = form;
-  pack->map_attr_hitch = attr_hitch;
 
-  if(dir != mine->dir || form != mine->player_form || attr_hitch != mine->map_attr_hitch
+  if(dir != mine->dir || form != mine->player_form 
       || vanish != mine->vanish || GFL_STD_MemComp(&draw_pos, &mine->pos, sizeof(VecFx32)) != 0){
     mine->dir = dir;
     mine->pos = draw_pos;
     mine->player_form = form;
-    mine->map_attr_hitch = attr_hitch;
     mine->vanish = vanish;
     return TRUE;
   }

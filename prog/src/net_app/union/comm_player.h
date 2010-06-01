@@ -27,8 +27,7 @@ typedef struct{
   VecFx32 pos;
   u16 dir;
   u8 player_form;       ///<PLAYER_MOVE_FORM
-  u8 map_attr_hitch:1;  ///<TRUE:侵入不可のアトリビュートの上にいる
-  u8 padding:7;
+  u8 padding;
 }COMM_PLAYER_PACKAGE;
 
 

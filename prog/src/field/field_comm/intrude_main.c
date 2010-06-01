@@ -588,10 +588,6 @@ static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_i
       //表示できない形態ならば非表示
       target_status->player_pack.vanish = TRUE;
     }
-    else if(target_status->player_pack.map_attr_hitch == TRUE){
-      //通行できない地形にいるなら非表示
-      target_status->player_pack.vanish = TRUE;
-    }
     else if(ZONEDATA_IsPalace(target_status->zone_id) == TRUE && ZONEDATA_IsPalace(mine_st->zone_id) == TRUE){
       //お互いパレス島に居るなら表示
       target_status->player_pack.vanish = FALSE;
