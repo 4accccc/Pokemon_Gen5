@@ -92,6 +92,7 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
 {
   SCRCMD_WORK *work = wk;
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
   FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   INTRUDE_COMM_SYS_PTR intcomm = NULL;
@@ -105,7 +106,11 @@ VMCMD_RESULT EvCmdIntrudeConnectMapSetting( VMHANDLE *core, void *wk )
     IntrudeField_ConnectMap(fieldWork, gsys, intcomm);
   }
   else{
-    IntrudeField_ConnectMapOne(fieldWork);
+    int connect_num = GAMEDATA_GetIntrudeNum(gamedata) - 1; //-1=Ž©•ª‚Ì•ª
+    if(connect_num < 1){
+      connect_num = 1;    //Å’áˆê‚Â‚Í˜AŒ‹‚·‚é
+    }
+    IntrudeField_ConnectMapNum(fieldWork, connect_num);
   }
   
   MONOLITH_AddConnectAllMap(fieldWork);

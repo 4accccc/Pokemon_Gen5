@@ -1449,19 +1449,29 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 
 //==================================================================
 /**
- * マップ単品連結
+ * マップ指定数連結
  *
  * @param   fieldWork		
+ * @param   connect_num 連結する数
  */
 //==================================================================
-void IntrudeField_ConnectMapOne(FIELDMAP_WORK *fieldWork)
+void IntrudeField_ConnectMapNum(FIELDMAP_WORK *fieldWork, int connect_num)
 {
-  MAP_MATRIX *mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
+  MAP_MATRIX *mmatrix;
+  
+  if(connect_num >= FIELD_COMM_MEMBER_MAX){
+    GF_ASSERT(0);
+    connect_num = FIELD_COMM_MEMBER_MAX - 1;
+  }
+  
+  mmatrix = MAP_MATRIX_Create( HEAPID_FIELDMAP );
   MAP_MATRIX_Init(mmatrix,
       NARC_map_matrix_palace02_mat_bin, ZONE_ID_PALACE01, GFL_HEAP_LOWID( HEAPID_FIELDMAP ));
-
-  OS_TPrintf("--- Map連結 One ----\n");
-  FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+  
+  for( ; connect_num > 0; connect_num--){
+    OS_TPrintf("--- Map連結 One ----\n");
+    FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+  }
 
   MAP_MATRIX_Delete( mmatrix );
 }

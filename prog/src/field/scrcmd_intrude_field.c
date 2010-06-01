@@ -584,10 +584,8 @@ VMCMD_RESULT EvCmdIntrudeGetPalaceAreaOffset( VMHANDLE *core, void *wk )
   GAMESYS_WORK *gsys = SCRCMD_WORK_GetGameSysWork( work );
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
-  INTRUDE_COMM_SYS_PTR intcomm;
   
-  intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL || Intrude_GetPalaceArea(gamedata) == GAMEDATA_GetIntrudeMyID(gamedata)){
+  if(Intrude_GetPalaceArea(gamedata) == GAMEDATA_GetIntrudeMyID(gamedata)){
     *ret_wk = 0;
   }
   else{
