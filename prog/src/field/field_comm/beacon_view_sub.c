@@ -316,6 +316,7 @@ BOOL BeaconView_CheckStack( BEACON_VIEW_PTR wk )
     wk->newLogPanel = panel_GetPanelFromDataIndex( wk, wk->newLogIdx );
   }else{
     wk->newLogPanel = NULL;
+    wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
   }
 
   //パネルが非表示か、Bitmapの書き込み中でなければsub_seqを進めておく
@@ -435,8 +436,6 @@ BOOL BeaconView_SubSeqLogEntry( BEACON_VIEW_PTR wk )
     break;
   case 2:
     //新規
-    wk->log_count = MISC_CrossComm_IncSuretigaiCount( wk->misc_sv );    
-
     draw_LogNumWindow( wk );
     draw_MenuWindow( wk, msg_sys_now_record, &wk->eff_task_ct );
   
