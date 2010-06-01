@@ -2461,7 +2461,7 @@
 		<language name="JPN" width="256">とても　ながくて　かたい　クキ。
 カモネギに　もたせると　わざが
 きゅうしょに　あたりやすくなる。</language>
-		<language name="JPN_KANJI" width="256">とても　長くてて　硬い　クキ。
+		<language name="JPN_KANJI" width="256">とても　長くて　硬い　クキ。
 カモネギに　持たせると　技が
 急所に　当たりやすくなる。</language>
 	</row>
@@ -3172,8 +3172,8 @@
 		<language name="JPN" width="256">５ターンの　あいだ　ひざしを
 つよくして　ほのおタイプの
 わざの　いりょくを　あげる。</language>
-		<language name="JPN_KANJI" width="256">５ターンの　あいだ　日差しを　つよくして
-ほのおタイプの
+		<language name="JPN_KANJI" width="256">５ターンの　あいだ　日差しを
+つよくして　ほのおタイプの
 技の　威力を　あげる。</language>
 	</row>
 
@@ -3596,7 +3596,7 @@
 そらから　おとして　こうげきする。
 つれさられた　あいては　うごけない。</language>
 		<language name="JPN_KANJI" width="256">１ターン目で　相手を　空へ　連れさり
-２ターン目に　落としてて　攻撃する。
+２ターン目に　落として　攻撃する。
 連れさられた　相手は　動けない。</language>
 	</row>
 
@@ -4117,7 +4117,7 @@
 		<language name="JPN" width="256">たたかいたい　トレーナーを
 おしえてくれる　きかい。
 あるくと　でんちが　たまる。</language>
-		<language name="JPN_KANJI" width="256">戦いいたい　トレーナーを
+		<language name="JPN_KANJI" width="256">戦いたい　トレーナーを
 教えてくれる　機械。
 歩くと　電池が　たまる。</language>
 	</row>
@@ -4520,10 +4520,10 @@
 
 	<row id="ITEMINFO_488">
 		<language name="JPN" width="256">みどりの　ぼんぐり。
-ふしぎと　こおばしい　かおりがする。
+ふしぎと　こうばしい　かおりがする。
 </language>
 		<language name="JPN_KANJI" width="256">みどりの　ぼんぐり。
-不思議と　こおばしい　かおりがする。
+不思議と　こうばしい　かおりがする。
 </language>
 	</row>
 
@@ -5411,7 +5411,7 @@
 
 	<row id="ITEMINFO_587">
 		<language name="JPN" width="256">３０００ねんほど　むかしの
-ぶんめいで　つくられた　つぼ。
+ぶんめいで　つくられた　ツボ。
 マニアが　たかく　かってくれる。</language>
 		<language name="JPN_KANJI" width="256">３０００年ほど　昔の
 文明で　つくられた　ツボ。
@@ -5671,19 +5671,19 @@
 	</row>
 
 	<row id="ITEMINFO_616">
-		<language name="JPN" width="256">シンの　にくたいが　ほろび
+		<language name="JPN" width="256">レシラムの　にくたいが　ほろび
 へんかした　すがた。えいゆうの
 とうじょうを　まっていると　される。</language>
-		<language name="JPN_KANJI" width="256">シンの　肉体が　滅び
+		<language name="JPN_KANJI" width="256">レシラムの　肉体が　滅び
 変化した　姿。　英雄の
 登場を　待っていると　される。</language>
 	</row>
 
 	<row id="ITEMINFO_617">
-		<language name="JPN" width="256">ムの　にくたいが　ほろび
+		<language name="JPN" width="256">ゼクロムの　にくたいが　ほろび
 へんかした　すがた。えいゆうの
 とうじょうを　まっていると　される。</language>
-		<language name="JPN_KANJI" width="256">ムの　肉体が　滅び
+		<language name="JPN_KANJI" width="256">ゼクロムの　肉体が　滅び
 変化した　姿。　英雄の
 登場を　待っていると　される。</language>
 	</row>
