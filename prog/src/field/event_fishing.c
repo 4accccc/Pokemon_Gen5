@@ -198,6 +198,8 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
     //フォルムチェンジ
     FIELD_PLAYER_ChangeDrawForm( wk->fplayer, PLAYER_DRAW_FORM_FISHING );
     MMDL_SetDrawStatus( wk->player_mmdl, DRAW_STA_FISH_START );
+    PMSND_PlaySE( SEQ_SE_FLD_19 );
+
     (*seq)++;
     break;
 
