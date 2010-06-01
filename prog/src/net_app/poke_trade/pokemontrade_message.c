@@ -1018,7 +1018,7 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
 
   {//Ž©•ª‚ÌˆÊ’u’²®
     VecFx32 apos;
-    apos.x = _MCSS_POS_X(52);
+    apos.x = _MCSS_POS_X(56);
     apos.y = _MCSS_POS_Y(4);
     apos.z = _MCSS_POS_Z(0);
     MCSS_SetPosition( pWork->pokeMcss[mcssno] ,&apos );
