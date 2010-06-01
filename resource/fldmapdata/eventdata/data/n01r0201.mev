@@ -1,5 +1,5 @@
 #event data
-#save date:2010/06/01 14:23:18
+#save date:2010/06/01 16:03:11
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\n01r0201.wms
 #SECTION START:OBJ_EVENT
@@ -71,9 +71,9 @@ EXIT_TYPE_STAIRS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--152 0 40
+-152 0 24
 #size
-1 5
+1 4
 #event number: 1
 #Door Event Label
 DOOR_ID_N01R0201_N01R0301_EXIT01
