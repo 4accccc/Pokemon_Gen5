@@ -5,7 +5,7 @@
 
 require "constant.rb" # for —ñ‹“Žq‚Ì’è‹`
 
-class PARA
+class PERSONAL_PARAM
   enum_const_set %w[
     POKENAME
     SHINKA_POKE1

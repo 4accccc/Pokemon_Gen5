@@ -3,11 +3,12 @@
 # @author obata
 # @date   2010.05.28
 
-require "waza_check.rb" 
+require "personal_accessor.rb" 
 
 
 class Pokemon
   def initialize
+    @personal_accessor = PersonalAccessor.new
     @mons_name = nil
     @level     = 0
     @waza_list = Array.new
@@ -24,7 +25,7 @@ class Pokemon
   end
 
   def setup_default_waza
-    @waza_list = GetDefaultWazaList( @mons_name, @level )
+    @waza_list = @personal_accessor.get_default_waza_list( @mons_name, @level )
   end
 
   def set_waza_list( waza_list )

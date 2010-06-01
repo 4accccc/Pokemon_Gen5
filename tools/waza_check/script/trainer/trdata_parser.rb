@@ -3,96 +3,9 @@
 # @author obata
 # @date   2010.05.28 
 
-require "constant.rb"
+require "trdata_index.rb"
 require "trainer.rb"
-
-
-class PARA
-  enum_const_set %w[
-    FIGHT_TYPE
-    DATA_TYPE
-    GOLD
-    GENDER
-    TR_ID
-    TR_TYPE
-    TR_NAME
-    POKE1_POW
-    POKE1_LV
-    POKE1_GENDER
-    POKE1_FORM
-    POKE2_POW
-    POKE2_LV
-    POKE2_GENDER
-    POKE2_FORM
-    POKE3_POW
-    POKE3_LV
-    POKE3_GENDER
-    POKE3_FORM
-    POKE4_POW
-    POKE4_LV
-    POKE4_GENDER
-    POKE4_FORM
-    POKE5_POW
-    POKE5_LV
-    POKE5_GENDER
-    POKE5_FORM
-    POKE6_POW
-    POKE6_LV
-    POKE6_GENDER
-    POKE6_FORM
-    AI
-    POKE1_ITEM
-    POKE2_ITEM
-    POKE3_ITEM
-    POKE4_ITEM
-    POKE5_ITEM
-    POKE6_ITEM
-    USE_ITEM1
-    USE_ITEM2
-    USE_ITEM3
-    USE_ITEM4
-    POKE1_WAZA1
-    POKE1_WAZA2
-    POKE1_WAZA3
-    POKE1_WAZA4
-    POKE2_WAZA1
-    POKE2_WAZA2
-    POKE2_WAZA3
-    POKE2_WAZA4
-    POKE3_WAZA1
-    POKE3_WAZA2
-    POKE3_WAZA3
-    POKE3_WAZA4
-    POKE4_WAZA1
-    POKE4_WAZA2
-    POKE4_WAZA3
-    POKE4_WAZA4
-    POKE5_WAZA1
-    POKE5_WAZA2
-    POKE5_WAZA3
-    POKE5_WAZA4
-    POKE6_WAZA1
-    POKE6_WAZA2
-    POKE6_WAZA3
-    POKE6_WAZA4
-    POKE1_NAME
-    POKE2_NAME
-    POKE3_NAME
-    POKE4_NAME
-    POKE5_NAME
-    POKE6_NAME
-    HP_RECOVER
-    GIFT_ITEM
-    POKE1_SPEABI
-    POKE2_SPEABI
-    POKE3_SPEABI
-    POKE4_SPEABI
-    POKE5_SPEABI
-    POKE6_SPEABI
-    MAX
-  ]
-end
-
+require "monsname_converter.rb"
 
 MAX_POKEMON_NUM = 6
 MAX_WAZA_NUM = 4
@@ -129,7 +42,7 @@ def GetPokemonNum( trdata_items )
   poke_num = 0
   0.upto( MAX_POKEMON_NUM - 1 ) do |poke_idx|
     mons_name = trdata_items[ PARA::POKE1_NAME + poke_idx ]
-    if mons_name != nil then poke_num = poke_num + 1 end
+    if mons_name != nil && mons_name != "" then poke_num = poke_num + 1 end
   end
   return poke_num
 end
@@ -137,6 +50,7 @@ end
 def GetMonsName( trdata_items, poke_idx )
   item_idx = PARA::POKE1_NAME + poke_idx
   mons_name = trdata_items[ item_idx ]
+  mons_name = ConvertMonsName( mons_name )
   return mons_name
 end
 
@@ -156,7 +70,7 @@ def GetWazaList( trdata_items, poke_idx )
   waza_list = Array.new
   0.upto( MAX_WAZA_NUM - 1 ) do |waza_idx|
     waza_name = GetWazaName( trdata_items, poke_idx, waza_idx )
-    if waza_name != nil then waza_list << waza_name end
+    if waza_name != nil && waza_name != "" then waza_list << waza_name end
   end
   return waza_list
 end
@@ -182,9 +96,9 @@ end
 
 # main #####################################################################
 
-def GetTrainerList
+def GetTrainerList( filename )
 
-  trdata_file = File::open( "trainer_wb.csv", "r" )
+  trdata_file = File::open( filename, "r" )
   trdata_lines = trdata_file.readlines
   trdata_file.close
 

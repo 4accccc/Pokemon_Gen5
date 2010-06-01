@@ -3,7 +3,7 @@
 # @author obata
 # @date   2010.05.26 
 
-require "personal_index.rb"
+require "personal_parser.rb"
 require "machine_wazaname_hash.rb"
 
 
@@ -68,33 +68,48 @@ end
 
 # main ######################################################
 
-usable_wazamachine_list = Array.new
+def CreateMachineWazaHash( personal_filename, output_path )
 
-personal_file = File::open( "personal_wb.csv", "r" )
-personal_lines = personal_file.readlines
-personal_file.close
+  personal_parser = PersonalDataParser.new
+  personal_parser.load_personal_file( personal_filename )
 
+  out_data = Array.new
+  out_data << "$machinewaza_hash = {"
 
-output_file = File::open( "machinewaza_hash.rb", "w" )
-output_file.puts( "$machinewaza_hash = {" )
+  $monsname.each do |mons_name| 
+    if mons_name == "Å|Å|Å|Å|Å|" then
+      next
+    end 
 
-personal_lines.each do |line|
-  line.gsub!( "\"", "" )
-  line.gsub!( /\s/, "" )
-  items = line.split( "," )
-  mons_name = items[ PARA::POKENAME ]
-  output_file.puts( "\t\"#{mons_name}\"=>[" )
-  machine_data = items[ PARA::WAZA_MACHINE ]
-  machine_data_split = machine_data.split( // )
-  0.upto( machine_data_split.size - 1 ) do |machine_idx|
-    if machine_data_split[ machine_idx ] == "Åú" then 
-      machine_name = GetWazaMachineName( machine_idx + 1 )
-      machine_name = CorrectWazaMachineName_byHidenMachineRecovery( machine_name )
-      waza_name = $machine_wazaname_hash[ machine_name ]
-      output_file.puts( "\t\t\"#{waza_name}\"," )
+    usable_waza_machine_list = Array.new
+    machine_list = personal_parser.get_usable_waza_machine_list( mons_name )
+
+    # îÈì`É}ÉVÉìïúäàÇ…Ç∆Ç‡Ç»Ç§ïœä∑
+    machine_list.each do |machine_name|
+      usable_waza_machine_list << CorrectWazaMachineName_byHidenMachineRecovery( machine_name )
     end
-  end
-  output_file.puts( "\t]," )
-end
 
-output_file.puts( "}" )
+    machine_waza_list = Array.new
+    usable_waza_machine_list.each do |machine_name|
+      machine_waza_list << $machine_wazaname_hash[ machine_name ]
+    end
+
+    # èoóÕÉfÅ[É^çÏê¨
+    out_data << "\t\"#{mons_name}\"=>["
+    machine_waza_list.each do |waza_name|
+      out_data << "\t\t\"#{waza_name}\","
+    end
+    out_data << "\t],"
+  end
+
+  out_data << "}"
+
+  # èoóÕ
+  output_filename = output_path + "machinewaza_hash.rb"
+  output_file = File::open( output_filename, "w" )
+  out_data.each do |data|
+    output_file.puts( data )
+  end
+  output_file.close
+
+end
