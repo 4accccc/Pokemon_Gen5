@@ -54,8 +54,8 @@ enum {
 //------------------------------------------------------------------
 //  ヒープサイズ定義
 //------------------------------------------------------------------
-#define HEAPSIZE_SYSTEM (0x008000)
-#define HEAPSIZE_APP    (0x181000)   // PL,GSでは約0x13A000
+#define HEAPSIZE_SYSTEM (0x006000)
+#define HEAPSIZE_APP    (0x180000)   // PL,GSでは約0x13A000
 #define HEAPSIZE_DSI    (0x486000)   // DSIは16M
 
 //------------------------------------------------------------------
@@ -99,7 +99,8 @@ static void mcsRecv( void );
 #endif
 
 static GFL_USE_VINTR_FUNC GflUseVintrFunc;
-
+static void *extraHeapBuffer = NULL;
+static OSHeapHandle extraHeapHandle;
 //=============================================================================================
 //
 //      関数
@@ -135,6 +136,15 @@ void GFLUser_Init(void)
   InitFileSystem();
 #endif
 
+#ifndef MULTI_BOOT_MAKE
+  if ( OS_IsRunOnTwl() == FALSE )
+  {
+  }
+  else
+  {
+  }
+#endif
+
   //ヒープシステム初期化
   if( OS_IsRunOnTwl() ){//DSIなら
     GFL_HEAP_Init(&hihDSi[0],GFL_HEAPID_MAX,HEAPID_CHILD_MAX,0); //メインアリーナ
@@ -148,6 +158,23 @@ void GFLUser_Init(void)
 
 #ifndef MULTI_BOOT_MAKE
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SAVE, HEAPSIZE_SAVE );
+
+  //特殊ヒープ領域確保
+  //ハイブリッドモード時にNITRO起動だと先頭16kbがヒープとして確保可能
+  //TWLの場合は多いから普通にとる
+  
+  if ( OS_IsRunOnTwl() == FALSE )
+  {
+    OS_InitAlloc( OS_ARENA_MAIN, OS_GetMainArenaLo(), OS_GetMainArenaHi(), HEAPID_CHILD_MAX );
+    extraHeapHandle = OS_CreateExtraHeap( OS_ARENA_MAIN );
+    extraHeapBuffer = OS_AllocFromHeap( OS_ARENA_MAIN, extraHeapHandle, 0x3F00 );
+    GFL_HEAP_CreateHeapInBuffer( extraHeapBuffer , 0x3F00 , HEAPID_EXTRA );
+  }
+  else
+  {
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_EXTRA, 0x3F00 );
+  }
+  
 #endif //MULTI_BOOT_MAKE
 
   //STD 標準ライブラリ初期化（乱数やCRC）

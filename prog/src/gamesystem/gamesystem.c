@@ -127,7 +127,7 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
   //ゲームイベント中に生成するべきメモリ（イベント終了で解放）の場合はこのHEAPで
 	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_PROC, HEAPSIZE_PROC );
 	//パレスしながら戦闘もフィールドもするのでここで確保
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
+	GFL_HEAP_CreateHeap( HEAPID_EXTRA, HEAPID_APP_CONTROL, HEAPSIZE_APP_CONTROL );
 	
 	gsys = GFL_PROC_AllocWork(proc, work_size, HEAPID_WORLD);
 	GFL_STD_MemClear(gsys, work_size);

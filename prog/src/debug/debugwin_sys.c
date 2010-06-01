@@ -159,7 +159,7 @@ void DEBUGWIN_InitSystem( u8* charArea , u16* scrnArea , u16* plttArea )
     return;
   }
   
-  GFL_HEAP_CreateHeap( GFL_HEAPID_SYSTEM, GFL_HEAP_LOWID(HEAPID_DEBUGWIN), DEBUGWIN_HEAPSIZE );
+  GFL_HEAP_CreateHeap( HEAPID_EXTRA, GFL_HEAP_LOWID(HEAPID_DEBUGWIN), DEBUGWIN_HEAPSIZE );
 
   debWork = GFL_HEAP_AllocMemory( HEAPID_DEBUGWIN , sizeof(DEBUGWIN_SYSTEM_WORK) );
   debWork->flg = 0;
