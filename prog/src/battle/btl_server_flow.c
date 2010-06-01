@@ -5898,8 +5898,10 @@ static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 
     u8 pokeID = BPP_GetID( attacker );
 
     BPP_WAZA_DecrementPP( attacker, wazaIdx, vol );
-    BPP_WAZA_SetUsedFlag( attacker, wazaIdx );
     SCQUE_PUT_OP_PPMinus( wk->que, pokeID, wazaIdx, vol );
+
+    BPP_WAZA_SetUsedFlag( attacker, wazaIdx );
+    SCQUE_PUT_OP_WazaUsed( wk->que, pokeID, wazaIdx );
   }
 }
 
@@ -13535,11 +13537,9 @@ void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_typ
   if( BTL_Hem_IsPushed(&wk->HEManager) )
   {
     if( BTL_Hem_IsExistWork(&wk->HEManager) ){
-      TAYA_Printf("ワーク確保前に残ってるワークを処理\n");
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     }
   }
-  TAYA_Printf("ワーク確保  eq_type=%d, userPokeID=%d\n", eq_type, userPokeID);
 
   return BTL_Hem_PushWork( &wk->HEManager, eq_type, userPokeID );
 }

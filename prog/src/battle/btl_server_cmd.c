@@ -97,6 +97,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_1byte,            // SC_OP_HP_ZERO
   SC_ARGFMT_53bit_1byte,      // SC_OP_PP_MINUS
   SC_ARGFMT_53bit_1byte,      // SC_OP_PP_MINUS_ORG
+  SC_ARGFMT_53bit,            // SC_OP_WAZA_USED
   SC_ARGFMT_53bit_1byte,      // SC_OP_PP_PLUS
   SC_ARGFMT_53bit_1byte,      // SC_OP_PP_PLUS_ORG
   SC_ARGFMT_53bit_1byte,      // SC_OP_RANK_UP

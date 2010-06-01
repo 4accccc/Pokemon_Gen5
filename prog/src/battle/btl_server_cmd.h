@@ -33,6 +33,7 @@ typedef enum {
   SC_OP_HP_ZERO,            ///< HP0 にする [ pokeID ]
   SC_OP_PP_MINUS,           ///< PPマイナス （仮ワザワーク用）
   SC_OP_PP_MINUS_ORG,       ///< PPマイナス （真ワザワーク用）
+  SC_OP_WAZA_USED,          ///< ワザ使用記録
   SC_OP_PP_PLUS,            ///< PPプラス   （仮ワザワーク用）
   SC_OP_PP_PLUS_ORG,        ///< PPプラス   （真ワザワーク用）
   SC_OP_RANK_UP,            ///< ステータスランクアップ  [ClientID, StatusType, プラス量]
@@ -197,6 +198,10 @@ static inline void SCQUE_PUT_OP_PPMinus( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 
 static inline void SCQUE_PUT_OP_PPMinus_Org( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx, u8 value )
 {
   SCQUE_PUT_Common( que, SC_OP_PP_MINUS_ORG, pokeID, wazaIdx, value );
+}
+static inline void SCQUE_PUT_OP_WazaUsed( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx )
+{
+  SCQUE_PUT_Common( que, SC_OP_WAZA_USED, pokeID, wazaIdx );
 }
 static inline void SCQUE_PUT_OP_PPPlus( BTL_SERVER_CMD_QUE* que, u8 pokeID, u8 wazaIdx, u8 value )
 {

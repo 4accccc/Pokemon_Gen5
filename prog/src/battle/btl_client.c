@@ -374,6 +374,7 @@ static BOOL scProc_OP_HpMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPMinus_Org( BTL_CLIENT* wk, int* seq, const int* args );
+static BOOL scProc_OP_WazaUsed( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus( BTL_CLIENT* wk, int* seq, const int* args );
 static BOOL scProc_OP_PPPlus_Org( BTL_CLIENT* wk, int* seq, const int* args );
@@ -5115,6 +5116,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_HP_ZERO,            scProc_OP_HpZero          },
     { SC_OP_PP_MINUS,           scProc_OP_PPMinus         },
     { SC_OP_PP_MINUS_ORG,       scProc_OP_PPMinus_Org     },
+    { SC_OP_WAZA_USED,          scProc_OP_WazaUsed        },
     { SC_OP_PP_PLUS,            scProc_OP_PPPlus          },
     { SC_OP_PP_PLUS_ORG,        scProc_OP_PPPlus_Org      },
     { SC_OP_RANK_UP,            scProc_OP_RankUp          },
@@ -7346,6 +7348,18 @@ static BOOL scProc_OP_PPMinus_Org( BTL_CLIENT* wk, int* seq, const int* args )
 
   return TRUE;
 }
+static BOOL scProc_OP_WazaUsed( BTL_CLIENT* wk, int* seq, const int* args )
+{
+  u8 pokeID = args[0];
+  u8 wazaIdx = args[1];
+
+  BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+  BPP_WAZA_SetUsedFlag( bpp, wazaIdx );
+
+  return TRUE;
+}
+
+
 static BOOL scProc_OP_HpZero( BTL_CLIENT* wk, int* seq, const int* args )
 {
   BTL_POKEPARAM* pp = BTL_POKECON_GetPokeParam( wk->pokeCon, args[0] );

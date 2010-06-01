@@ -2887,7 +2887,6 @@ static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* w
         }
       }
 
-      TAYA_Printf("カウンターターゲットPOKEID=%d\n", targetPokeID);
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
     }
   }
@@ -2967,7 +2966,7 @@ static void handler_Totteoki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         ++usedCnt;
       }
     }
-    TAYA_Printf("とっておき：wazaCnt=%d, usedCnt=%d\n", wazaCnt, usedCnt);
+
     if( (!fMaster)
     ||  (wazaCnt < 2)
     ||  (usedCnt < (wazaCnt-1))
