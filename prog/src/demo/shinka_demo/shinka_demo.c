@@ -77,7 +77,8 @@ FS_EXTERN_OVERLAY(poke_status);
 *  定数定義
 */
 //=============================================================================
-#define HEAP_SIZE              (0x80000)               ///< ヒープサイズ
+#define HEAP_SYS_SIZE          (0x10000)               ///< 他PROCへ移行している際も解放しないシステムのヒープサイズ
+#define HEAP_SIZE              (0x70000)               ///< ヒープサイズ
 
 // BGフレーム
 #define BG_FRAME_M_POKEMON           (GFL_BG_FRAME0_M)        // プライオリティ2
@@ -324,6 +325,7 @@ TEXT_SHOW_VBLANK_REQ;
 typedef struct
 {
   // グラフィック、フォントなど
+  HEAPID                      heap_sys_id;  // 他PROCへ移行している際も解放しないシステムのヒープ
   HEAPID                      heap_id;
   SHINKADEMO_GRAPHIC_WORK*    graphic;
   GFL_FONT*                   font;
@@ -522,11 +524,12 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
 
   // ヒープ
   {
-    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SHINKA_DEMO, HEAP_SIZE );
-    work = GFL_PROC_AllocWork( proc, sizeof(SHINKA_DEMO_WORK), HEAPID_SHINKA_DEMO );
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SHINKA_DEMO_SYS, HEAP_SYS_SIZE );
+    
+    work = GFL_PROC_AllocWork( proc, sizeof(SHINKA_DEMO_WORK), HEAPID_SHINKA_DEMO_SYS );
     GFL_STD_MemClear( work, sizeof(SHINKA_DEMO_WORK) );
     
-    work->heap_id       = HEAPID_SHINKA_DEMO;
+    work->heap_sys_id   = HEAPID_SHINKA_DEMO_SYS;
   }
 
   // ステップ
@@ -543,7 +546,7 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
     // ポケモン
     work->pp            = PokeParty_GetMemberPointer( param->ppt, param->shinka_pos );
     // (古い)ニックネーム
-    work->poke_nick_name_strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, work->heap_id );
+    work->poke_nick_name_strbuf = GFL_STR_CreateBuffer( STRBUF_LENGTH, work->heap_sys_id );
     PP_Get( work->pp, ID_PARA_nickname, work->poke_nick_name_strbuf );
   }
 
@@ -562,7 +565,7 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
 
   // フィールドステータス
   {
-    work->psData      = GFL_HEAP_AllocClearMemory( work->heap_id, sizeof(PSTATUS_DATA) );
+    work->psData      = GFL_HEAP_AllocClearMemory( work->heap_sys_id, sizeof(PSTATUS_DATA) );
   }
 
   // フェードイン(黒→黒)
@@ -582,10 +585,13 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   work->se_from_white = FALSE;
 
   // ローカルPROCシステムを作成
-  work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
+  work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_sys_id );
 
   // 初期化処理
   ShinkaDemo_Init( param, work );
+  // 通信アイコン
+  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_sys_id );
+  GFL_NET_ReloadIcon();
 
 
 #ifdef NOT_USE_STATUS_BATTLE
@@ -609,6 +615,8 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
 
   // 終了処理
   ShinkaDemo_Exit( param, work );
+  // 通信アイコン
+  // 終了するときは通信アイコンに対して何もしない
 
   // ローカルPROCシステムを破棄
   GFL_PROC_LOCAL_Exit( work->local_procsys ); 
@@ -638,7 +646,7 @@ static GFL_PROC_RESULT ShinkaDemoProcExit( GFL_PROC * proc, int * seq, void * pw
   // ヒープ
   {
     GFL_PROC_FreeWork( proc );
-    GFL_HEAP_DeleteHeap( HEAPID_SHINKA_DEMO );
+    GFL_HEAP_DeleteHeap( HEAPID_SHINKA_DEMO_SYS );
   }
 
   return GFL_PROC_RES_FINISH;
@@ -1086,7 +1094,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
     {
       {
         // 技覚えチェック
-        work->wazaoboe_no = PP_CheckWazaOboe( work->pp, &work->wazaoboe_index, work->heap_id );
+        work->wazaoboe_no = PP_CheckWazaOboe( work->pp, &work->wazaoboe_index, work->heap_sys_id );
         if( work->wazaoboe_no == PTL_WAZAOBOE_NONE )
         {
           // 次へ
@@ -1207,7 +1215,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       {
         // 終了処理
         ShinkaDemo_Exit( param, work );
-        
+        // 通信アイコン
+        // 終了するときは通信アイコンに対して何もしない
+
         // 次へ
         work->step = STEP_WAZA_STATUS_FIELD;
 
@@ -1262,6 +1272,9 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
  
       // 初期化処理
       ShinkaDemo_Init( param, work );
+      // 通信アイコン
+      GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_sys_id );
+      GFL_NET_ReloadIcon();
 
       // フェードイン(黒→見える)
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, STATUS_FADE_IN_WAIT );
@@ -1317,21 +1330,21 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         } 
 
         // バトルステータス用タスク
-        work->tcbsys_work = GFL_HEAP_AllocMemory( work->heap_id, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
+        work->tcbsys_work = GFL_HEAP_AllocMemory( work->heap_sys_id, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
         GFL_STD_MemClear( work->tcbsys_work, GFL_TCB_CalcSystemWorkSize(TCBSYS_TASK_MAX) );
         work->tcbsys = GFL_TCB_Init( TCBSYS_TASK_MAX, work->tcbsys_work );
  
         // パレットフェード
-        work->pfd = PaletteFadeInit( work->heap_id );
+        work->pfd = PaletteFadeInit( work->heap_sys_id );
         PaletteTrans_AutoSet( work->pfd, TRUE );
-        PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_BG, 0x1e0, work->heap_id );
-        PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_OBJ, 0x1e0, work->heap_id );
+        PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_BG, 0x1e0, work->heap_sys_id );
+        PaletteFadeWorkAllocSet( work->pfd, FADE_SUB_OBJ, 0x1e0, work->heap_sys_id );
 
         // バトルステータス
         work->bplist_data.gamedata    = param->gamedata;
         work->bplist_data.pp          = (POKEPARTY*)param->ppt;
         work->bplist_data.font        = work->font;
-        work->bplist_data.heap        = work->heap_id;
+        work->bplist_data.heap        = work->heap_sys_id;
         work->bplist_data.mode        = BPL_MODE_WAZASET;
         work->bplist_data.end_flg     = FALSE;
         work->bplist_data.sel_poke    = param->shinka_pos;
@@ -1393,7 +1406,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
 
         // 下画面の生成
         SHINKADEMO_GRAPHIC_InitBGSub( work->graphic );
-        work->yesno_menu_work = YESNO_MENU_CreateRes( work->heap_id,
+        work->yesno_menu_work = YESNO_MENU_CreateRes( work->heap_sys_id,
                                   BG_FRAME_S_BUTTON, 0, BG_PAL_POS_S_BUTTON,
                                   OBJ_PAL_POS_S_CURSOR,
                                   SHINKADEMO_GRAPHIC_GetClunit(work->graphic),
@@ -1690,6 +1703,12 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
 //=====================================
 static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
+  // ヒープ
+  {
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_SHINKA_DEMO, HEAP_SIZE );
+    work->heap_id       = HEAPID_SHINKA_DEMO;
+  }
+
   // オーバーレイ
   GFL_OVERLAY_Load( FS_OVERLAY_ID( ui_common ) );
 
@@ -1811,10 +1830,6 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
                     0, 0 );
     // パーティクルのアルファをきれいに出すため
     // ev1とev2は使われない  // TWLプログラミングマニュアル「2D面とのαブレンディング」参考
-
-  // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
-  GFL_NET_ReloadIcon();
 }
 
 //-------------------------------------
@@ -1856,8 +1871,10 @@ static void ShinkaDemo_Exit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   // オーバーレイ
   GFL_OVERLAY_Unload( FS_OVERLAY_ID( ui_common ) );
 
-  // 通信アイコン
-  // 終了するときは通信アイコンに対して何もしない
+  // ヒープ
+  {
+    GFL_HEAP_DeleteHeap( HEAPID_SHINKA_DEMO );
+  }
 }
 
 //-------------------------------------
@@ -2677,13 +2694,13 @@ static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, 
     MYITEM_PTR myitem_ptr = GAMEDATA_GetMyItem( param->gamedata );
 
     if(    ( PokeParty_GetPokeCount(param->ppt) < PokeParty_GetPokeCountMax(param->ppt) )  // パーティに空きがある
-        && ( MYITEM_CheckItem( myitem_ptr, ITEM_MONSUTAABOORU, 1, work->heap_id ) ) )      // 普通のモンスターボールを持っている
+        && ( MYITEM_CheckItem( myitem_ptr, ITEM_MONSUTAABOORU, 1, work->heap_sys_id ) ) )      // 普通のモンスターボールを持っている
     {
       BOOL ret;
       POKEMON_PARAM* nukenin_pp;
 
       // ヌケニン誕生
-      nukenin_pp = GFL_HEAP_AllocClearMemory( work->heap_id, POKETOOL_GetWorkSize() );
+      nukenin_pp = GFL_HEAP_AllocClearMemory( work->heap_sys_id, POKETOOL_GetWorkSize() );
       POKETOOL_CopyPPtoPP( (POKEMON_PARAM*)(work->pp), nukenin_pp );
       PP_ChangeMonsNo( nukenin_pp, MONSNO_NUKENIN );  // 進化
 
@@ -2729,7 +2746,7 @@ static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, 
 
       //メールデータ
       {
-        MAIL_DATA* mail_data = MailData_CreateWork( work->heap_id );
+        MAIL_DATA* mail_data = MailData_CreateWork( work->heap_sys_id );
         PP_Put( nukenin_pp, ID_PARA_mail_data, (u32)mail_data );
         GFL_HEAP_FreeMemory( mail_data );
       }
@@ -2754,7 +2771,7 @@ static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, 
       PokeParty_Add( (POKEPARTY*)(param->ppt), nukenin_pp );  // constはずし
 
       // 普通のモンスターボールを減らす
-      ret = MYITEM_SubItem( myitem_ptr, ITEM_MONSUTAABOORU, 1, work->heap_id );
+      ret = MYITEM_SubItem( myitem_ptr, ITEM_MONSUTAABOORU, 1, work->heap_sys_id );
       GF_ASSERT_MSG( ret, "SHINKADEMO : モンスターボールを減らせませんでした。\n" );
 
       // 後始末
