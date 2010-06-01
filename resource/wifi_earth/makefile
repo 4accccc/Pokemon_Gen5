@@ -75,6 +75,7 @@ $(TARGETDIR)/$(targetname2).narc: $(targetname2).narc
 	$(COPY) $(targetname2).narc $(TARGETDIR)
 	$(COPY) $(targetname2).naix $(TARGETDIR) 
 	$(COPY) gts_country_list.cdat ../..\prog/src/net_app/wifi_worldtrade
+	$(COPY) sort_list.cdat ../..\prog/src/net_app/wifi_earth
 
 #------------------------------------------------------------------------------
 #	make clean ÉãÅ[Éã

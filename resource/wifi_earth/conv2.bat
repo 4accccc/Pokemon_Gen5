@@ -56,3 +56,5 @@ ruby wifiearth_gmm.rb POL.txt wifi_place_msg_POL.gmm
 ruby wifiearth_gmm.rb RUS.txt wifi_place_msg_RUS.gmm
 ruby wifiearth_gmm.rb SWE.txt wifi_place_msg_SWE.gmm
 ruby wifiearth_gmm.rb USA.txt wifi_place_msg_USA.gmm
+
+ruby wifiearth_cdat.rb aiueo.txt sort_list.cdat
