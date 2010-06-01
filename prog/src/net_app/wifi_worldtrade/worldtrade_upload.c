@@ -1041,6 +1041,7 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 
 				wk->subprocess_seq = SUBSEQ_SERVER_TRADE_CHECK;
 			}else{
+
 				OS_TPrintf(" download is right!\n");
 				// ƒf[ƒ^•œŒ³
 				DownloadPokemonDataAdd( wk, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data,
