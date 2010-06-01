@@ -7137,33 +7137,35 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   u32 itemID = BPP_GetItem( bpp );
   u32 hem_state_1st;
-  BOOL result;
+  BOOL result = FALSE;
 
-  hem_state_1st = BTL_Hem_PushState( &wk->HEManager );
-  result = !scEvent_CheckItemEquipFail( wk, bpp, itemID );
-  if( result )
+  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(bpp)) )
   {
-    u32 hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
-    scEvent_ItemEquip( wk, bpp );
+    hem_state_1st = BTL_Hem_PushState( &wk->HEManager );
+    result = !scEvent_CheckItemEquipFail( wk, bpp, itemID );
+    if( result )
+    {
+      u32 hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
+      scEvent_ItemEquip( wk, bpp );
 
-    scPut_UseItemAct( wk, bpp );
-    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
-      scproc_ConsumeItem( wk, bpp, itemID );
+      scPut_UseItemAct( wk, bpp );
+      if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
+        scproc_ConsumeItem( wk, bpp, itemID );
+      }
+
+      if( scproc_HandEx_Root(wk, itemID) == HandExResult_NULL ){
+        result = FALSE;
+      }
+
+      BTL_Hem_PopState( &wk->HEManager, hem_state_2nd );
+    }
+    else
+    {
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     }
 
-    if( scproc_HandEx_Root(wk, itemID) == HandExResult_NULL ){
-      result = FALSE;
-    }
-
-    BTL_Hem_PopState( &wk->HEManager, hem_state_2nd );
-
+    BTL_Hem_PopState( &wk->HEManager, hem_state_1st );
   }
-  else
-  {
-    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-  }
-
-  BTL_Hem_PopState( &wk->HEManager, hem_state_1st );
   return result;
 }
 //----------------------------------------------------------------------------------
@@ -9509,8 +9511,10 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
   BTL_Printf("ダメージ値=%d\n", damage);
   if( damage > 0 )
   {
-    if( scproc_SimpleDamage_CheckEnable(wk, bpp, damage) ){
-      scproc_SimpleDamage_Core( wk, bpp, damage, &wk->strParam );
+    if( scproc_SimpleDamage_CheckEnable(wk, bpp, damage) )
+    {
+      handexSub_putString( wk, &wk->strParam );
+      scproc_SimpleDamage_Core( wk, bpp, damage, NULL );
     }
   }
 }
@@ -11445,7 +11449,6 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   BTL_EVENTVAR_Push();
-    TAYA_Printf("アイテムしようポケ=%d\n", BPP_GetID(bpp));
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_USE_ITEM );
   BTL_EVENTVAR_Pop();
