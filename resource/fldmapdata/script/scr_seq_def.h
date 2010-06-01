@@ -8075,16 +8075,22 @@
  * @param objid0         設定するOBJ識別ID  
  * @param objid1         設定するOBJ識別ID  
  * @param objid2         設定するOBJ識別ID  
+ * @param index0         設定するNPCインデックス
+ * @param index1         設定するNPCインデックス  
+ * @param index2         設定するNPCインデックス  
  */
 //--------------------------------------------------------------
-#define _REBATTLE_TRAINER_SETUP_RND_TR( objid0, objid1, objid2 ) \
-    _ASM_REBATTLE_TRAINER_SETUP_RND_TR objid0, objid1, objid2
+#define _REBATTLE_TRAINER_SETUP_RND_TR( objid0, objid1, objid2, index0, index1, index2 ) \
+    _ASM_REBATTLE_TRAINER_SETUP_RND_TR objid0, objid1, objid2, index0, index1, index2
   
-  .macro _ASM_REBATTLE_TRAINER_SETUP_RND_TR objid0, objid1, objid2
+  .macro _ASM_REBATTLE_TRAINER_SETUP_RND_TR objid0, objid1, objid2, index0, index1, index2
   .short EV_SEQ_REBATTLE_TRAINER_SETUP_RND_TR
   .short \objid0
   .short \objid1
   .short \objid2
+  .short \index0
+  .short \index1
+  .short \index2
   .endm
 
 //--------------------------------------------------------------
@@ -11400,3 +11406,25 @@
   .short EV_SEQ_LEG_WAIT_BALL_POKE_APP
   .endm
 
+
+//--------------------------------------------------------------
+/**
+ * @def _REBATTLE_TRAINER_GET_RNDTR_INDEX
+ * @brief 再戦トレーナー　ランダムNPC　抽選処理
+ *
+ * @param 
+ */
+//--------------------------------------------------------------
+#define _REBATTLE_TRAINER_GET_RNDTR_INDEX( ret_index0, ret_index1, ret_index2, ret_index3, ret_index4, ret_index5 ) \
+    _ASM_REBATTLE_TRAINER_GET_RNDTR_INDEX ret_index0, ret_index1, ret_index2, ret_index3, ret_index4, ret_index5
+  
+  .macro _ASM_REBATTLE_TRAINER_GET_RNDTR_INDEX ret_index0, ret_index1, ret_index2, ret_index3, ret_index4, ret_index5
+  .short EV_SEQ_REBATTLE_TRAINER_GET_RNDTR_INDEX
+  .short \ret_index0
+  .short \ret_index1
+  .short \ret_index2
+  .short \ret_index3
+  .short \ret_index4
+  .short \ret_index5
+  .endm
+  

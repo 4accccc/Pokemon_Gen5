@@ -79,4 +79,4 @@
 #define RB_YOUCHIEN_WOMAN (76)
 #define RB_MAX (77)
 #define RB_DATA_TBL_MAX (107)
-#define RB_RANDOM_START (56)
+#define RB_RANDOM_START (25)

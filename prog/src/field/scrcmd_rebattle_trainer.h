@@ -43,6 +43,8 @@ extern VMCMD_RESULT EvCmdReBattleTrainerSetUp2vs2TrID( VMHANDLE *core, void *wk 
 extern VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk );
 extern VMCMD_RESULT EvCmdReBattleTrainerClearTrEventFlag( VMHANDLE *core, void *wk );
 
+extern VMCMD_RESULT EvCmdReBattleTrainerGetRndTrIndex( VMHANDLE *core, void *wk );
+
 #ifdef _cplusplus
 }	// extern "C"{
 #endif

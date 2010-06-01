@@ -83,7 +83,6 @@ foreach $one ( @EXCEL_FILE )
       $BADGE_NUM[ $DATA_NUM ] = $line[$IDX_GADGE];
       $TR_ID[ $DATA_NUM ] = $line[$IDX_TRID];
       $OBJCODE[ $DATA_NUM ] = $line[$IDX_OBJCODE];
-      $DATA_NUM ++;
 
       if( $random_start_idx_in == 0 ){
         if( "".$line[ $IDX_RANDOM ] eq "ランダム" ){
@@ -91,6 +90,8 @@ foreach $one ( @EXCEL_FILE )
           $random_start_idx_in = 1;
         }
       }
+
+      $DATA_NUM ++;
     }
   }
 }
@@ -122,6 +123,9 @@ for( $i=0; $i<$DATA_NUM; $i++ ){
     $label_num ++;
   }
 }
+
+#重複をカットした、ランダム開始インデックス取得
+$RANDOM_START_IDX = &GET_LabelID( $LABEL[$RANDOM_START_IDX] );
 
 
 #ヘッダーの取得

@@ -180,36 +180,15 @@ VMCMD_RESULT EvCmdReBattleTrainerSetUpRndTr( VMHANDLE *core, void *wk )
   u16 objid0 = SCRCMD_GetVMWorkValue( core, work );
   u16 objid1 = SCRCMD_GetVMWorkValue( core, work );
   u16 objid2 = SCRCMD_GetVMWorkValue( core, work );
-  u16 index0;
-  u16 index1;
-  u16 index2;
-  u16 random_max;
-  int i;
+  u16 index0 = SCRCMD_GetVMWorkValue( core, work );
+  u16 index1 = SCRCMD_GetVMWorkValue( core, work );
+  u16 index2 = SCRCMD_GetVMWorkValue( core, work );
   EVENTDATA_SYSTEM * evdata = GAMEDATA_GetEventData( SCRCMD_WORK_GetGameData(work) );
   const REBATTLE_TRAINER_DATA* cp_data = SCRIPT_GetReBattleTrainerData(sc);
 
   GF_ASSERT( cp_data );
 
   
-  random_max = RB_DATA_TBL_MAX - RB_RANDOM_START;
-
-
-  // 3つ抽選
-  index0 = GFUser_GetPublicRand( random_max );
-  index1 = GFUser_GetPublicRand( random_max );
-  index2 = GFUser_GetPublicRand( random_max );
-
-  // かぶらないように
-  if( index0 == index1 ){
-    index1 = (index0 + 1) % random_max;
-  }
-  if( index0 == index2 ){
-    index2 = (index0 + 2) % random_max;
-  }
-  if( index1 == index2 ){
-    index2 = (index1 + 1) % random_max;
-  }
-
   TOMOYA_Printf( "設定情報 0　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index0 ].code, cp_data[ RB_RANDOM_START+index0 ].trainer_id );
   TOMOYA_Printf( "設定情報 1　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index1 ].code, cp_data[ RB_RANDOM_START+index1 ].trainer_id );
   TOMOYA_Printf( "設定情報 2　OBJCode[%d] TrainerID[%d]\n", cp_data[ RB_RANDOM_START+index2 ].code, cp_data[ RB_RANDOM_START+index2 ].trainer_id );
@@ -254,6 +233,72 @@ VMCMD_RESULT EvCmdReBattleTrainerClearTrEventFlag( VMHANDLE *core, void *wk )
 }
 
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief　再戦トレーナー　ランダムNPCインデックスの抽選
+ */
+//-----------------------------------------------------------------------------
+VMCMD_RESULT EvCmdReBattleTrainerGetRndTrIndex( VMHANDLE *core, void *wk )
+{
+  SCRCMD_WORK *work = wk;
+  SCRIPT_WORK *sc = SCRCMD_WORK_GetScriptWork( work );
+  u16 *ret_index0	= SCRCMD_GetVMWork( core, work );
+  u16 *ret_index1	= SCRCMD_GetVMWork( core, work );
+  u16 *ret_index2	= SCRCMD_GetVMWork( core, work );
+  u16 *ret_index3	= SCRCMD_GetVMWork( core, work );
+  u16 *ret_index4	= SCRCMD_GetVMWork( core, work );
+  u16 *ret_index5	= SCRCMD_GetVMWork( core, work );
+  u16 random_max = RB_DATA_TBL_MAX - RB_RANDOM_START;
+  int i, j, k;
+  u16 index[6] = {0};
+  s16 data_index;
+  BOOL setup;
+
+  // かぶらないように乱数設定
+  for( i=0; i<6; i++ ){
+
+    setup = FALSE;
+
+    // 抽選
+    data_index = GFUser_GetPublicRand( random_max );
+
+    // かぶらない数値の先頭からdata_index目の数値を使用
+    for( j=0; j<(RB_DATA_TBL_MAX - RB_RANDOM_START); j++ ){
+
+      // かぶりチェック
+      for( k=0; k<i; k++ ){
+        if( index[k] == j ){
+          // スキップ
+          break;
+        }
+      }
+
+      if( k==i ){ // かぶり無しなら、data_indexをへらし、マイナスになったNPCを使用する。
+        data_index --;
+        if( data_index < 0 ){
+          index[i] = j;
+          setup = TRUE;
+          break;
+        }
+      }
+    }
+
+    GF_ASSERT( setup );
+
+    // 1体抽選からはずす
+    random_max--;
+  }
+
+  *ret_index0 = index[0];
+  *ret_index1 = index[1];
+  *ret_index2 = index[2];
+
+  *ret_index3 = index[3];
+  *ret_index4 = index[4];
+  *ret_index5 = index[5];
+
+	return VMCMD_RESULT_CONTINUE;
+}
 
 
 

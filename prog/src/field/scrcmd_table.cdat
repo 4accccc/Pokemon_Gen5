@@ -900,6 +900,9 @@
   DEF_CMD( EvCmdRailMapChangeNoFade, EV_SEQ_RAIL_MAP_CHANGE_NO_FADE )
 
   DEF_CMD( EvCmdPlayerUpDownPos, EV_SEQ_PLAYER_UPDOWN_POS )
+  
+  // 再戦トレーナー　ランダムNPCの抽選
+  DEF_CMD( EvCmdReBattleTrainerGetRndTrIndex, EV_SEQ_REBATTLE_TRAINER_GET_RNDTR_INDEX )
 
   END_CMD
   //スクリプトコマンドテーブル終了
