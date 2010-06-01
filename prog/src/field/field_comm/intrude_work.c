@@ -247,9 +247,8 @@ OCCUPY_INFO * Intrude_GetOccupyInfo(INTRUDE_COMM_SYS_PTR intcomm, int palace_are
  * @retval  MYSTATUS *		
  */
 //==================================================================
-MYSTATUS * Intrude_GetMyStatus(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
+MYSTATUS * Intrude_GetMyStatus(GAMEDATA *gamedata, int net_id)
 {
-  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   MYSTATUS *myst;
   
   if(net_id == GAMEDATA_GetIntrudeMyID(gamedata)){
@@ -286,9 +285,9 @@ MISSION_CHOICE_LIST * Intrude_GetChoiceList(INTRUDE_COMM_SYS_PTR intcomm, int pa
  * @retval  u8		パレスエリアNo
  */
 //==================================================================
-u8 Intrude_GetPalaceArea(INTRUDE_COMM_SYS_PTR intcomm)
+u8 Intrude_GetPalaceArea(const GAMEDATA *gamedata)
 {
-  return intcomm->intrude_status_mine.palace_area;
+  return GAMEDATA_GetIntrudePalaceArea(gamedata);
 }
 
 //==================================================================
@@ -326,21 +325,20 @@ WFBC_COMM_DATA * Intrude_GetWfbcCommData(INTRUDE_COMM_SYS_PTR intcomm)
  * @param   game_comm		
  *
  * @retval  int		自分がいるROMのPM_VERSION
- *                (通信していない、侵入していない、通信エラー中は自分のPM_VERSION)
  */
 //==================================================================
 u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+  GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
   const MYSTATUS *myst;
   u8 palace_area;
   
-  if(intcomm == NULL){
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
     return GET_VERSION();
   }
   
-  palace_area = Intrude_GetPalaceArea(intcomm);
-  myst = Intrude_GetMyStatus(intcomm, palace_area);
+  palace_area = GAMEDATA_GetIntrudePalaceArea(gamedata);
+  myst = Intrude_GetMyStatus(gamedata, palace_area);
   return MyStatus_GetRomCode( myst );
 }
 
@@ -351,24 +349,22 @@ u8 Intrude_GetRomVersion(GAME_COMM_SYS_PTR game_comm)
  * @param   game_comm		
  *
  * @retval  u8		自分がいるROMの季節ID
- *                (通信していない、侵入していない、通信エラー中は自分のROMの季節)
  */
 //==================================================================
 u8 Intrude_GetSeasonID(GAME_COMM_SYS_PTR game_comm)
 {
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   GAMEDATA *gamedata = GameCommSys_GetGameData(game_comm);
   u8 palace_area;
   
-  if(intcomm == NULL){
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
     return GAMEDATA_GetSeasonID(gamedata);
   }
   
-  palace_area = Intrude_GetPalaceArea(intcomm);
+  palace_area = Intrude_GetPalaceArea(gamedata);
   if(palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
     return GAMEDATA_GetSeasonID(gamedata);
   }
-  return intcomm->intrude_status[palace_area].season;
+  return GAMEDATA_GetIntrudeSeasonID(gamedata, palace_area);
 }
 
 //==================================================================
@@ -457,12 +453,7 @@ GRAYSCALE_TYPE Intrude_CheckGrayScaleMap(GAME_COMM_SYS_PTR game_comm, GAMEDATA *
     return GRAYSCALE_TYPE_NULL;
   }
   
-  if(intcomm != NULL){  //intcommがある場合はintcommから持ってくる
-    invasion_netid = Intrude_GetPalaceArea(intcomm);
-  }
-  else{
-    invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, GAMEDATA_GetIntrudeMyID(gamedata));
-  }
+  invasion_netid = Intrude_GetPalaceArea(gamedata);
   
   if(invasion_netid == GAMEDATA_GetIntrudeMyID(gamedata)){
     return GRAYSCALE_TYPE_NULL;

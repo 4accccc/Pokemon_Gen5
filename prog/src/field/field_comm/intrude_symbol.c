@@ -46,7 +46,7 @@ NetID IntrudeSymbol_CheckIntrudeNetID(GAME_COMM_SYS_PTR game_comm, GAMEDATA *gam
   
   intcomm = Intrude_Check_CommConnect(game_comm);
   if(NetErr_App_CheckError()){
-    NetID invasion_netid = GameCommStatus_GetPlayerStatus_InvasionNetID(game_comm, my_netid);
+    NetID invasion_netid = GAMEDATA_GetIntrudePalaceArea(gamedata);
     if(invasion_netid == my_netid){
       return INTRUDE_NETID_NULL;
     }

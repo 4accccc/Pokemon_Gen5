@@ -213,12 +213,14 @@ BOOL IntrudeSend_Shutdown(INTRUDE_COMM_SYS_PTR intcomm)
 static void _IntrudeRecv_MemberNum(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   const u8 *member_num = pData;
   
 	if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     return;   //自分のデータは受け取らない
   }
   intcomm->member_num = *member_num;
+  GAMEDATA_SetIntrudeNum(gamedata, *member_num);
   OS_TPrintf("member_num受信 %d\n", *member_num);
 }
 

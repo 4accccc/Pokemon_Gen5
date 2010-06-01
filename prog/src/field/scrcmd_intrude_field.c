@@ -191,7 +191,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
       emcl->wordset = WORDSET_Create(HEAPID_PROC);
     }
 
-	  if(intcomm == NULL || Intrude_GetPalaceArea(intcomm) == GAMEDATA_GetIntrudeMyID(gamedata)){
+	  if(intcomm == NULL || Intrude_GetPalaceArea(gamedata) == GAMEDATA_GetIntrudeMyID(gamedata)){
       FLDMSGWIN_Print( emcl->msgWin, 0, 0, plc_mono_01 );
       my_palace = TRUE;
     }
@@ -200,7 +200,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
       STRBUF *src_buf = GFL_MSG_CreateString( emcl->msgData, plc_mono_02 );
       
       WORDSET_RegisterPlayerName( 
-        emcl->wordset, 0, Intrude_GetMyStatus( intcomm, Intrude_GetPalaceArea(intcomm) ) );
+        emcl->wordset, 0, Intrude_GetMyStatus( gamedata, Intrude_GetPalaceArea(gamedata) ) );
       WORDSET_ExpandStr(emcl->wordset, expand_buf, src_buf);
       FLDMSGWIN_PrintStrBuf( emcl->msgWin, 0, 0, expand_buf );
       
@@ -222,18 +222,18 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
     (*seq)++;
     //break;
   case SEQ_LIST_REQ:
-    if(IntrudeSend_MissionListReq(intcomm, Intrude_GetPalaceArea(intcomm)) == TRUE){
+    if(IntrudeSend_MissionListReq(intcomm, Intrude_GetPalaceArea(gamedata)) == TRUE){
       (*seq)++;
     }
     break;
   case SEQ_LIST_RECEIVE_WAIT:
     if(MISSION_MissionList_CheckOcc(
-        &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE){
+        &intcomm->mission.list[Intrude_GetPalaceArea(gamedata)]) == TRUE){
       (*seq)++;
     }
     break;
   case SEQ_MONOLITH_STATUS_REQ:
-    if(IntrudeSend_MonolithStatusReq(intcomm, Intrude_GetPalaceArea(intcomm)) == TRUE){
+    if(IntrudeSend_MonolithStatusReq(intcomm, Intrude_GetPalaceArea(gamedata)) == TRUE){
       (*seq)++;
     }
     break;
@@ -587,11 +587,11 @@ VMCMD_RESULT EvCmdIntrudeGetPalaceAreaOffset( VMHANDLE *core, void *wk )
   INTRUDE_COMM_SYS_PTR intcomm;
   
   intcomm = Intrude_Check_CommConnect(game_comm);
-  if(intcomm == NULL || Intrude_GetPalaceArea(intcomm) == GAMEDATA_GetIntrudeMyID(gamedata)){
+  if(intcomm == NULL || Intrude_GetPalaceArea(gamedata) == GAMEDATA_GetIntrudeMyID(gamedata)){
     *ret_wk = 0;
   }
   else{
-    int area_offset = Intrude_GetPalaceArea(intcomm) - GAMEDATA_GetIntrudeMyID(gamedata);
+    int area_offset = Intrude_GetPalaceArea(gamedata) - GAMEDATA_GetIntrudeMyID(gamedata);
     if(area_offset < 0){
       area_offset += FIELD_COMM_MEMBER_MAX;
     }

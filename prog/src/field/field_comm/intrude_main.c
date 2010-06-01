@@ -131,6 +131,7 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
     if(now_member > intcomm->member_num){
       intcomm->member_num = now_member;
       intcomm->member_send_req = TRUE;
+      GAMEDATA_SetIntrudeNum(gamedata, intcomm->member_num);
     }
   }
   if(intcomm->member_send_req == TRUE){
@@ -456,6 +457,7 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
   //プロフィール送信時でも自分のパレス番号が入っていない場合はセット
   if(intcomm->intrude_status_mine.palace_area == PALACE_AREA_NO_NULL){
     intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
+    GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
   }
   intcomm->send_profile.status = intcomm->intrude_status_mine;
 }
@@ -622,7 +624,7 @@ static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_i
 
   //変装によるOBJCODEが変わっているチェック
   if(CommPlayer_CheckOcc(intcomm->cps, net_id) == TRUE){
-    u16 obj_code = Intrude_GetObjCode(target_status, Intrude_GetMyStatus(intcomm, net_id));
+    u16 obj_code = Intrude_GetObjCode(target_status, Intrude_GetMyStatus(GameCommSys_GetGameData(intcomm->game_comm), net_id));
     if(obj_code != CommPlayer_GetObjCode(intcomm->cps, net_id)){
       CommPlayer_Del(intcomm->cps, net_id);
       CommPlayer_Add(intcomm->cps, net_id, obj_code, &target_status->player_pack);

@@ -1085,7 +1085,7 @@ static GMEVENT_RESULT EVENT_MapChangeIntrude( GMEVENT* event, int* seq, void* wk
     if(intcomm == NULL){
       *seq = SEQ_COMM_ERROR;
     }
-    else if(IntrudeSend_WfbcReq(intcomm, Intrude_GetPalaceArea(intcomm)) == TRUE){
+    else if(IntrudeSend_WfbcReq(intcomm, Intrude_GetPalaceArea(gameData)) == TRUE){
       (*seq)++;
     }
     break;
@@ -2276,6 +2276,8 @@ GMEVENT * EVENT_ChangeMapFromPalace( GAMESYS_WORK * gameSystem )
   GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);
   if(Intrude_Check_CommConnect(GAMESYSTEM_GetGameCommSysPtr(gameSystem)) == NULL){
     GAMEDATA_SetIntrudeMyID(gamedata, 0);
+    GAMEDATA_SetIntrudePalaceArea(gamedata, 0);
+    GAMEDATA_SetIntrudeNum(gamedata, 1);
   }
 //  PMSND_PlaySE( SEQ_SE_FLD_131 ); //SEの確認用にエフェクトは無いけどあてておく
 

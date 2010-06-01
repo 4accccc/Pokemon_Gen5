@@ -437,9 +437,9 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   if(intcomm != NULL 
       && intcomm->intrude_status_mine.palace_area != GAMEDATA_GetIntrudeMyID(gamedata)
       && MISSION_MissionList_CheckOcc(
-        &intcomm->mission.list[Intrude_GetPalaceArea(intcomm)]) == TRUE
+        &intcomm->mission.list[Intrude_GetPalaceArea(gamedata)]) == TRUE
       && intcomm->monolith_status.occ == TRUE){
-    palace_area = Intrude_GetPalaceArea(intcomm);
+    palace_area = Intrude_GetPalaceArea(gamedata);
     list = Intrude_GetChoiceList(intcomm, palace_area);
     parent->list = *list;
     parent->monolith_status = intcomm->monolith_status;

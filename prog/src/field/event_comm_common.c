@@ -397,7 +397,7 @@ static void _CommCommon_Init(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, C
 	ccew->fieldWork = fieldWork;
 	ccew->talk_netid = talk_net_id;
 	ccew->disguise_talk_type = MISSION_FIELD_GetTalkType(intcomm, talk_net_id);
-  MyStatus_Copy( Intrude_GetMyStatus(intcomm, talk_net_id), &ccew->talk_myst );
+  MyStatus_Copy( Intrude_GetMyStatus(GAMESYSTEM_GetGameData(gsys),talk_net_id), &ccew->talk_myst );
 	
 	if(MISSION_RecvCheck(&intcomm->mission) == TRUE){
     GFL_STD_MemCopy(MISSION_GetRecvData(&intcomm->mission), &ccew->mdata, sizeof(MISSION_DATA));

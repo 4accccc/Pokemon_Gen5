@@ -107,9 +107,12 @@ struct _GAMEDATA{
   u8 intrude_num;         ///<侵入している時の接続人数
   u8 intrude_my_id;       ///<侵入している自分のNetID
   u8 intrude_reverse_area;  ///<TRUE:裏フィールド侵入中
+  u8 intrude_palace_area;   ///<現在侵入中のパレスエリア番号(自分が今いるROM番号)
   
   u8 is_save;             ///<TRUE:セーブ実行中
   u8 symbol_map_id;       ///<シンボルマップの現在位置
+  
+  u8 intrude_season[FIELD_COMM_MEMBER_MAX];    ///<通信相手の季節
   u8 pad;
   
   OCCUPY_INFO occupy[OCCUPY_ID_MAX];    ///<占拠情報
@@ -1129,6 +1132,19 @@ int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata)
 
 //==================================================================
 /**
+ * 侵入接続人数セット
+ *
+ * @param   gamedata    GAMEDATAへのポインタ
+ * @param   接続人数
+ */
+//==================================================================
+void GAMEDATA_SetIntrudeNum(GAMEDATA *gamedata, int member_num)
+{
+  gamedata->intrude_num = member_num;
+}
+
+//==================================================================
+/**
  * 侵入時の自分のNetIDを取得
  *
  * @param   gamedata    GAMEDATAへのポインタ
@@ -1182,6 +1198,62 @@ void GAMEDATA_SetIntrudeReverseArea(GAMEDATA *gamedata, u8 reverse_flag)
 {
   gamedata->intrude_reverse_area = reverse_flag;
   OS_TPrintf("gamedata 裏フィールド侵入フラグセット =%d\n", reverse_flag);
+}
+
+//==================================================================
+/**
+ * 侵入中のパレスエリア番号を取得
+ *
+ * @param   gamedata		
+ *
+ * @retval  int		パレスエリア番号(player_id)
+ */
+//==================================================================
+int GAMEDATA_GetIntrudePalaceArea(const GAMEDATA *gamedata)
+{
+  return gamedata->intrude_palace_area;
+}
+
+//==================================================================
+/**
+ * 侵入中のパレスエリア番号をセット
+ *
+ * @param   gamedata		
+ * @param   palace_area		パレスエリア番号(player_id)
+ */
+//==================================================================
+void GAMEDATA_SetIntrudePalaceArea(GAMEDATA *gamedata, int palace_area)
+{
+  gamedata->intrude_palace_area = palace_area;
+}
+
+//==================================================================
+/**
+ * 侵入相手の季節を取得
+ *
+ * @param   gamedata		
+ * @param   player_id		プレイヤーID
+ *
+ * @retval  u8		季節
+ */
+//==================================================================
+u8 GAMEDATA_GetIntrudeSeasonID(const GAMEDATA *gamedata, int player_id)
+{
+  return gamedata->intrude_season[player_id];
+}
+
+//==================================================================
+/**
+ * 侵入相手の季節を設定
+ *
+ * @param   gamedata		
+ * @param   player_id		プレイヤーID
+ * @param   season      季節
+ */
+//==================================================================
+void GAMEDATA_SetIntrudeSeasonID(GAMEDATA *gamedata, int player_id, u8 season)
+{
+  gamedata->intrude_season[player_id] = season;
 }
 
 //----------------------------------------------------------------------------

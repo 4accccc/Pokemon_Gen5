@@ -398,7 +398,7 @@ static u8 _TreeEnable(GAMEDATA *gamedata, FLD_EXP_OBJ_CNT_PTR exobj_cnt, INTRUDE
     occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   }
   else{
-    pm_version = MyStatus_GetRomCode( Intrude_GetMyStatus(intcomm, palace_area) );
+    pm_version = MyStatus_GetRomCode( Intrude_GetMyStatus(gamedata, palace_area) );
     occupy = GAMEDATA_GetOccupyInfo(gamedata, palace_area);
   }
   tree_w_lv = _GetTreeLevel( OccupyInfo_GetWhiteLevel(occupy) );

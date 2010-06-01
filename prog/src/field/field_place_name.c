@@ -1353,8 +1353,8 @@ static void UpdatePlaceName( FIELD_PLACE_NAME* system )
     // 侵入先のプレイヤー名を展開
     GAME_COMM_SYS_PTR gameComm = GAMESYSTEM_GetGameCommSysPtr( system->gameSystem );
     INTRUDE_COMM_SYS_PTR intrudeComm= Intrude_Check_CommConnect( gameComm );
-    u8 intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
-    MYSTATUS* status = Intrude_GetMyStatus( intrudeComm, intrudeNetID );
+    u8 intrudeNetID = Intrude_GetPalaceArea( system->gameData );
+    MYSTATUS* status = Intrude_GetMyStatus( system->gameData, intrudeNetID );
     STRBUF* strbuf = GFL_MSG_CreateString( system->message, MAPNAME_INTRUDE );
     GFL_MSG_GetString( system->message,	strID, system->nameBuf );
     WORDSET_RegisterPlayerName( system->wordset, 0, status );
@@ -1394,7 +1394,7 @@ static BOOL CheckIntrudeField( const FIELD_PLACE_NAME* system, u16 zoneID )
   myNetID = GAMEDATA_GetIntrudeMyID( system->gameData );
 
   if( intrudeComm ) {
-    intrudeNetID = Intrude_GetPalaceArea( intrudeComm );
+    intrudeNetID = Intrude_GetPalaceArea( system->gameData );
 
     // 他人のフィールドにいる
     if( FIELD_STATUS_GetMapMode( fieldStatus ) == MAPMODE_INTRUDE ) { 

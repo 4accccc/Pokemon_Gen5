@@ -690,7 +690,7 @@ void INTRUDE_SUBDISP_Update(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   //WFBCへのワープチェック
   if(intcomm != NULL){
     if(intsub->wfbc_go == TRUE){
-      int palace_area = Intrude_GetPalaceArea(intcomm);
+      int palace_area = Intrude_GetPalaceArea(gamedata);
       
       if(GFL_NET_IsConnectMember(palace_area) == FALSE){
         intsub->wfbc_go = FALSE;
@@ -2048,8 +2048,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
   }
 
   if(msg_on == FALSE && intcomm != NULL && intsub->print_touch_player != INTRUDE_NETID_NULL 
-      && Intrude_GetMyStatus(intcomm, intsub->print_touch_player) != NULL){
-    MYSTATUS *myst = Intrude_GetMyStatus(intcomm, intsub->print_touch_player);
+      && Intrude_GetMyStatus(gamedata, intsub->print_touch_player) != NULL){
+    MYSTATUS *myst = Intrude_GetMyStatus(gamedata, intsub->print_touch_player);
     u32 msg_id;
     if(intcomm->intrude_status[intsub->print_touch_player].action_status == INTRUDE_ACTION_BATTLE){
       msg_id = msg_invasion_info_025;

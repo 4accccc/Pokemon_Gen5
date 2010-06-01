@@ -478,6 +478,17 @@ extern int GAMEDATA_GetIntrudeNum(const GAMEDATA *gamedata);
 
 //==================================================================
 /**
+ * 侵入接続人数取得
+ *
+ * @param   gamedata    GAMEDATAへのポインタ
+ *
+ * @retval  int   接続人数
+ */
+//==================================================================
+extern void GAMEDATA_SetIntrudeNum(GAMEDATA *gamedata, int member_num);
+
+//==================================================================
+/**
  * 侵入時の自分のNetIDを取得
  *
  * @param   gamedata    GAMEDATAへのポインタ
@@ -518,6 +529,50 @@ extern int GAMEDATA_GetIntrudeReverseArea(const GAMEDATA *gamedata);
  */
 //==================================================================
 extern void GAMEDATA_SetIntrudeReverseArea(GAMEDATA *gamedata, u8 reverse_flag);
+
+//==================================================================
+/**
+ * 侵入中のパレスエリア番号を取得
+ *
+ * @param   gamedata		
+ *
+ * @retval  int		パレスエリア番号(player_id)
+ */
+//==================================================================
+extern int GAMEDATA_GetIntrudePalaceArea(const GAMEDATA *gamedata);
+
+//==================================================================
+/**
+ * 侵入中のパレスエリア番号をセット
+ *
+ * @param   gamedata		
+ * @param   palace_area		パレスエリア番号(player_id)
+ */
+//==================================================================
+extern void GAMEDATA_SetIntrudePalaceArea(GAMEDATA *gamedata, int palace_area);
+
+//==================================================================
+/**
+ * 侵入相手の季節を取得
+ *
+ * @param   gamedata		
+ * @param   player_id		プレイヤーID
+ *
+ * @retval  u8		季節
+ */
+//==================================================================
+extern u8 GAMEDATA_GetIntrudeSeasonID(const GAMEDATA *gamedata, int player_id);
+
+//==================================================================
+/**
+ * 侵入相手の季節を設定
+ *
+ * @param   gamedata		
+ * @param   player_id		プレイヤーID
+ * @param   season      季節
+ */
+//==================================================================
+extern void GAMEDATA_SetIntrudeSeasonID(GAMEDATA *gamedata, int player_id, u8 season);
 
 //----------------------------------------------------------------------------
 /**

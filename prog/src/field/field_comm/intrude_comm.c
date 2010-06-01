@@ -152,6 +152,8 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   }
 
   GAMEDATA_SetIntrudeMyID(gamedata, 0);
+  GAMEDATA_SetIntrudePalaceArea(gamedata, 0);
+  GAMEDATA_SetIntrudeNum(gamedata, 1);
   
   //もし意図しないタイミングでアクセスしても問題が無いように
   //NetIDのMYSTATSUエリアには自分のMyStatusをコピーしておく
@@ -281,6 +283,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
         intcomm->intrude_status_mine.pm_version = GET_VERSION();
         intcomm->intrude_status_mine.season = GAMEDATA_GetSeasonID(gamedata);
+        GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
         if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
           intcomm->intrude_status_mine.tutorial = TRUE;
         }
@@ -549,6 +552,8 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 
     if(GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE){
       GAMEDATA_SetIntrudeMyID(gamedata, 0); //既に表にいる場合はこのタイミングでセット
+      GAMEDATA_SetIntrudePalaceArea(gamedata, 0);
+      GAMEDATA_SetIntrudeNum(gamedata, 1);
     }
     
     for(i = 0; i < INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX; i++){

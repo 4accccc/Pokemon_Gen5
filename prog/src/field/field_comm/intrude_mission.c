@@ -940,7 +940,7 @@ static void MISSION_SetTargetInfo(INTRUDE_COMM_SYS_PTR intcomm, MISSION_TARGET_I
   
   target->net_id = net_id;
   
-  myst = Intrude_GetMyStatus(intcomm, target->net_id);
+  myst = Intrude_GetMyStatus(GameCommSys_GetGameData(intcomm->game_comm), target->net_id);
   MyStatus_CopyNameStrCode(myst, target->name, PERSON_NAME_SIZE + EOM_SIZE);
   target->sex = MyStatus_GetMySex(myst);
 }
@@ -968,7 +968,7 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   }
   
   occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
-  myst = Intrude_GetMyStatus(intcomm, palace_area);
+  myst = Intrude_GetMyStatus(GameCommSys_GetGameData(intcomm->game_comm), palace_area);
   pm_version = MyStatus_GetRomCode( myst );
   pm_version = Intrude_GetIntrudeRomVersion(pm_version, MyStatus_GetID(myst));
   
