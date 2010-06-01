@@ -505,6 +505,9 @@ static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
                               const BMPMENULIST_HEADER* listheader,const EARTH_BMPLIST* list);
 static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
                                     const BMPMENULIST_HEADER* listheader,u32 listarcID);
+static void Earth_BmpListAddGmmEnableList( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
+                                    const BMPMENULIST_HEADER* listheader,u32 listarcID);
+
 static void Earth_BmpListDel( EARTH_DEMO_WORK* wk );
 
 static void Earth_MyPlaceInfoWinSet( EARTH_DEMO_WORK* wk );
@@ -1015,8 +1018,11 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
 
   case EARTHDEMO_SEQ_REGISTRATIONLIST_NATION: //国別登録リスト設定
     wk->my_nation_tmp = 0;//登録情報テンポラリ初期化
-    Earth_BmpListAddGmmAll
-      (wk, &EarthPlaceListWinData, &PlaceListHeader, NARC_message_wifi_place_msg_world_dat);
+//    Earth_BmpListAddGmmAll
+//      (wk, &EarthPlaceListWinData, &PlaceListHeader, NARC_message_wifi_place_msg_world_dat);
+      Earth_BmpListAddGmmEnableList
+        (wk, &EarthPlaceListWinData, &PlaceListHeader, NARC_message_wifi_place_msg_world_dat);
+
     *seq = EARTHDEMO_SEQ_REGISTRATIONLIST_NATION2;  //国別登録リスト選択へ
     break;
 
@@ -2150,13 +2156,41 @@ static void Earth_BmpListAdd( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
   GFL_BMPWIN_TransVramCharacter(wk->listwin);
 }
 
+
+static void _set_bmplist( EARTH_DEMO_WORK *wk, const BMPMENULIST_HEADER *listheader, int listcount )
+{
+  BMPMENULIST_HEADER  listheader_tmp;
+
+  //プリントキューハンドル作成
+  PRINT_UTIL_Setup(&wk->printUtil, wk->listwin);
+
+  //メニュービットマップリストヘッダ作成
+  listheader_tmp = *listheader;
+  listheader_tmp.list = wk->bmplistdata;
+  listheader_tmp.count = listcount; //1originのため補正
+  listheader_tmp.win  = wk->listwin;
+  listheader_tmp.call_back = Earth_BmpListMoveSeCall;
+  listheader_tmp.font_size_x = 12;
+  listheader_tmp.font_size_y = GFL_FONT_GetLineHeight( wk->fontHandle );
+  listheader_tmp.print_util = &wk->printUtil;
+  listheader_tmp.print_que = wk->printQue;
+  listheader_tmp.font_handle = wk->fontHandle;
+
+  //メニュービットマップリスト作成
+  wk->bmplist = BmpMenuList_Set(&listheader_tmp, 0, 0, wk->heapID);
+  BmpMenuList_SetCursorBmp(wk->bmplist, wk->heapID);
+
+  //ウインドウ描画
+  BmpWinFrame_Write(wk->listwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
+  GFL_BMPWIN_TransVramCharacter(wk->listwin);
+
+}
 //----------------------------------
 //リスト表示２:gmmファイル一括、リスト選択返り値はリストの順番と同じ(1orgin)
 //----------------------------------
 static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
                                     const BMPMENULIST_HEADER* listheader,u32 listarcID)
 {
-  BMPMENULIST_HEADER  listheader_tmp;
   GFL_MSGDATA* msg_man;
   u32 listcount;
   int i;
@@ -2177,28 +2211,39 @@ static void Earth_BmpListAddGmmAll( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* wind
   //メッセージデータ破棄
   GFL_MSG_Delete(msg_man);
 
-  //プリントキューハンドル作成
-  PRINT_UTIL_Setup(&wk->printUtil, wk->listwin);
+  _set_bmplist(wk, listheader, listcount-1);
+}
 
-  //メニュービットマップリストヘッダ作成
-  listheader_tmp = *listheader;
-  listheader_tmp.list = wk->bmplistdata;
-  listheader_tmp.count = listcount-1; //1originのため補正
-  listheader_tmp.win  = wk->listwin;
-  listheader_tmp.call_back = Earth_BmpListMoveSeCall;
-  listheader_tmp.font_size_x = 12;
-  listheader_tmp.font_size_y = GFL_FONT_GetLineHeight( wk->fontHandle );
-  listheader_tmp.print_util = &wk->printUtil;
-  listheader_tmp.print_que = wk->printQue;
-  listheader_tmp.font_handle = wk->fontHandle;
 
-  //メニュービットマップリスト作成
-  wk->bmplist = BmpMenuList_Set(&listheader_tmp, 0, 0, wk->heapID);
-  BmpMenuList_SetCursorBmp(wk->bmplist, wk->heapID);
+#include "sort_list.cdat"   // EnableCountryList
 
-  //ウインドウ描画
-  BmpWinFrame_Write(wk->listwin, WINDOW_TRANS_ON, EARTH_MENUWINCHR_NUM, EARTH_MENUWIN_PAL);
-  GFL_BMPWIN_TransVramCharacter(wk->listwin);
+//----------------------------------
+//リスト表示３:gmmファイルから登録可能国だけリストに入れる
+//----------------------------------
+static void Earth_BmpListAddGmmEnableList( EARTH_DEMO_WORK * wk, const BMPWIN_DAT* windata,
+                                    const BMPMENULIST_HEADER* listheader,u32 listarcID)
+{
+  GFL_MSGDATA* msg_man;
+  int i;
+
+  //メニュービットマップ追加
+  wk->listwin = _createBmpWin( windata, TRUE );
+  //メッセージマネージャ作成
+  msg_man = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, listarcID, wk->heapID);
+
+  //メニューリスト用文字列バッファ作成
+  wk->bmplistdata = BmpMenuWork_ListCreate(COUNTRY_ENABLE_MAX,wk->heapID);
+
+  //メニューリスト用文字列バッファ取得
+  for( i=0; i<COUNTRY_ENABLE_MAX; i++ ){ //1オリジンのため
+    BmpMenuWork_ListAddArchiveString(wk->bmplistdata, msg_man, 
+                                     EnableCountryList[i], 
+                                     EnableCountryList[i], wk->heapID);
+  }
+  //メッセージデータ破棄
+  GFL_MSG_Delete(msg_man);
+
+  _set_bmplist(wk, listheader, COUNTRY_ENABLE_MAX);
 }
 
 //----------------------------------
