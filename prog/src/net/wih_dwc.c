@@ -192,9 +192,10 @@ static BOOL _scanAPReserveed( WMBssDesc* pChk )
 
 
   for(i = 0;i < 3;i++){
-    if(GFL_STD_StrLen(_localWork->cfg->slot[i].ap.ssid[0]) > 0){
-//      NET_PRINT("SSIDchk %d %s\n",i,_localWork->cfg->slot[i].ap.ssid[0]);
-      if(0==GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid[0], pChk->ssid, WM_SIZE_SSID)){
+    int len = GFL_STD_StrLen(_localWork->cfg->slot[i].ap.ssid[0]);
+    if(len > 0){
+     // NET_PRINT("SSIDCHK %s\n",pChk->ssid);
+      if(0==GFL_STD_MemComp(_localWork->cfg->slot[i].ap.ssid[0], pChk->ssid, len)){
       //  NET_PRINT("SSIDFIND %s\n",pChk->ssid);
         return TRUE;
       }
@@ -276,7 +277,7 @@ static void _levelMax(_BEACONCATCH_STR* pBS)
 static BOOL _scanPrivacy( WMBssDesc* pChk )
 {
 
-  if(!(pChk->capaInfo & WCM_NETWORK_CAPABILITY_PRIVACY)){
+  if((pChk->capaInfo & WCM_NETWORK_CAPABILITY_PRIVACY)){
     return TRUE;
   }
   return FALSE;
@@ -371,7 +372,7 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
         retcode |= GAME_COMM_STATUS_BIT_WIFI_ZONE;
       }
       else if(DWC_ParseWMBssDesc(_localWork->ScanMemory,bss,&ap)){
-//        OS_TPrintf("DWCApInfo %d\n",ap.aptype);
+        OS_TPrintf("DWCApInfo %d\n",ap.aptype);
         switch(ap.aptype){
         case DWC_APINFO_TYPE_USER0:
         case DWC_APINFO_TYPE_USER1:
@@ -400,7 +401,10 @@ GAME_COMM_STATUS_BIT WIH_DWC_GetAllBeaconTypeBit(WIFI_LIST * list)
       continue;
     }
     if(!_scanPrivacy(&pS->sBssDesc)){
-      retcode |= GAME_COMM_STATUS_BIT_WIFI_FREE;
+      if(pS->sBssDesc.ssidLength!=0){
+        OS_TPrintf("FREE %s\n",pS->sBssDesc.ssid);
+        retcode |= GAME_COMM_STATUS_BIT_WIFI_FREE;
+      }
     }
   }
   if(_localWork->AllBeaconNum>0){
