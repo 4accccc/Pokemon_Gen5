@@ -7346,8 +7346,9 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
-    {
+    if( (BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID))
+    &&  (BTL_SVFTOOL_ReserveMemberChangeAction(flowWk))
+    ){
       u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
 
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
@@ -7454,8 +7455,9 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )
-    {
+    if( (BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID))
+    &&  (BTL_SVFTOOL_ReserveMemberChangeAction(flowWk))
+    ){
       BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
       BTL_HANDEX_PARAM_CHANGE_MEMBER* change_param;
 

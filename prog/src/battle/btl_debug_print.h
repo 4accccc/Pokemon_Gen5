@@ -150,6 +150,8 @@ typedef enum {
 
   DBGSTR_HEM_Push,
   DBGSTR_HEM_Pop,
+  DBGSTR_HEM_PushEx,
+  DBGSTR_HEM_PopEx,
   DBGSTR_HEM_PushWork,
 
   DBGSTR_CALCDMG_BaseDamage,
@@ -255,6 +257,7 @@ typedef enum {
   DBGSTR_SVFL_YokodoriDetermine,
   DBGSTR_SVFL_YokodoriExe,
   DBGSTR_SVFL_YokodoriInfo,
+  DBGSTR_SVFL_HandExRoot,
 
   DBGSTR_SVFS_RegTargetDouble,
 
@@ -330,6 +333,8 @@ typedef enum {
   DBGSTR_HANDWAZA_CombiWazaExe,
   DBGSTR_HANDWAZA_AlreadyRegistered,
   DBGSTR_HANDWAZA_YokorodiDecide,
+  DBGSTR_HANDITEM_OujaCheck,
+  DBGSTR_HANDITEM_OujaEffective,
 
   DBGSTR_REC_ReadActStart,
   DBGSTR_REC_ReadActSkip,

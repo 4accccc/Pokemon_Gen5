@@ -126,7 +126,7 @@ typedef struct {
 }WAZA_ROB_PARAM;
 
 /**
- * ポケセットのスタック構造１件分
+ * １アクションごと必要なパラメータスタック構造１件分
  */
 typedef struct {
 
@@ -143,6 +143,7 @@ typedef struct {
   WAZA_ROB_PARAM  wazaRobParam;
   WAZA_ROB_PARAM  magicCoatParam;
   BtlPokePos      defaultTargetPos;
+  u8              fMemberChangeReserve;
 
 }POKESET_STACK_UNIT;
 
@@ -190,6 +191,20 @@ typedef struct {
 
   u16  stack_ptr;
   u16  read_ptr;
+//  u8   f_prev_result;
+//  u8   f_total_result;
+
+  union {
+    u32 state;
+    struct {
+      u16  useItem;            ///< アイテム利用による呼び出しならアイテムナンバー
+      u16  fPushed      :  1;  ///< １度でもワーク確保された
+      u16  fUsed        :  1;  ///< １度でも使用された
+      u16  fPrevSucceed :  1;  ///< 前回の使用が成功した
+      u16  fSucceed     :  1;  ///< １度でも成功した
+      u16  _padd        : 12;  ///< １度でも成功した
+    };
+  };
 
   u8   workBuffer[ HANDLER_EXHIBISION_WORK_TOTALSIZE ];
 
@@ -312,6 +327,7 @@ struct _BTL_SVFLOW_WORK {
   u8      fMemberOutIntr     : 1;
   u8      fWinBGMPlayWild    : 1;
   u8      fEscMsgDisped      : 1;
+  u8      fMemberChangeReserve : 1;
 
   u8      MemberOutIntrPokeID[ BTL_POS_MAX ];
   u8      relivedPokeID[ BTL_POKEID_MAX ];

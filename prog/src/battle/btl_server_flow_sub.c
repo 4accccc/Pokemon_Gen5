@@ -600,8 +600,6 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
   const BTL_POKEPARAM* bpp;
   u16 i;
 
-  TAYA_Printf("基礎経験値=%d\n", baseExp);
-
   // トレーナー戦は1.5倍
   if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_TRAINER ){
     baseExp = (baseExp * 15) / 10;
@@ -703,10 +701,7 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
       myLv = BPP_GetValue( bpp, BPP_LEVEL );
       enemyLv = BPP_GetValue( deadPoke, BPP_LEVEL );
 
-      TAYA_Printf("レベル差補正前の経験値=%d, myLv=%d, enemyLv=%d\n", result[i].exp, myLv, enemyLv);
       result[i].exp = getexp_calc_adjust_level( bpp, result[i].exp, myLv, enemyLv );
-      TAYA_Printf("レベル差補正後の経験値=%d\n", result[i].exp);
-
 
       // 他人が親ならボーナス
       if( !PP_IsMatchOya(pp, status) )
@@ -757,7 +752,6 @@ void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL_POKEPA
 static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv )
 {
   u32 denom, numer;
-  fx32 ratio;
   u32  denom_int, numer_int, result, expMargin;
 
   numer_int = deadpoke_lv * 2 + 10;
@@ -765,8 +759,6 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
 
   numer = _calc_adjust_level_sub( numer_int );
   denom = _calc_adjust_level_sub( denom_int );
-//  ratio = FX32_CONST(numer) / denom;
-//  result = BTL_CALC_MulRatio( base_exp, ratio ) + 1;
 
   result = ((base_exp * numer) / denom) + 1;
 
@@ -776,7 +768,7 @@ static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16
   }
 
   BTL_N_Printf( DBGSTR_SVFL_ExpAdjustCalc,
-      getpoke_lv, deadpoke_lv, numer, denom, ratio, base_exp, result );
+      getpoke_lv, deadpoke_lv, numer, denom, base_exp, result );
 
   return result;
 }

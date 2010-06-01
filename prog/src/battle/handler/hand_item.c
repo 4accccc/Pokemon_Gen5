@@ -660,10 +660,10 @@ static BTL_EVENT_FACTOR* AddItemEventCore( const BTL_POKEPARAM* bpp, u16 itemID 
  *
  */
 //=============================================================================================
-void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* pp )
+void BTL_HANDLER_ITEM_Remove( const BTL_POKEPARAM* bpp )
 {
   BTL_EVENT_FACTOR* factor;
-  u8 pokeID = BPP_GetID( pp );
+  u8 pokeID = BPP_GetID( bpp );
 
   while( (factor = BTL_EVENT_SeekFactor(BTL_EVENT_FACTOR_ITEM, pokeID)) != NULL )
   {
@@ -2402,9 +2402,12 @@ static void handler_OujaNoSirusi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
   {
     // ひるみ確率０なら、アイテム威力値に書き換え
     u8 per = BTL_EVENTVAR_GetValue( BTL_EVAR_ADD_PER );
-    if( per == 0 ){
+    BTL_N_Printf( DBGSTR_HANDITEM_OujaCheck, per );
+    if( per == 0 )
+    {
       per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
+      BTL_N_Printf( DBGSTR_HANDITEM_OujaEffective, per );
     }
   }
 }
@@ -4882,10 +4885,12 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DELAY_ATTACK_FLAG) == FALSE )
   ){
     // 控えに交替可能メンバーがいるなら、どうぐ使用ハンドラ呼び出し
-    //（割り込みアクション時を除く）
+    //（割り込みアクション時＆すでにメンバー入れ替え行動を取ろうとしているポケモンがいる場合を除く）
     if( (!BTL_SVFTOOL_IsMemberOutIntr(flowWk))
     &&  (BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID))
+    &&  (BTL_SVFTOOL_ReserveMemberChangeAction(flowWk))
     ){
+      TAYA_Printf("脱出ポケID=%d\n", pokeID);
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
   }
@@ -4893,6 +4898,7 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 // どうぐ使用ハンドラ
 static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  TAYA_Printf("反応ポケID=%d, 自分=%d\n", BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID), pokeID);
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )

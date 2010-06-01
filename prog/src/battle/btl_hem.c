@@ -33,39 +33,55 @@ void BTL_Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 {
   wk->stack_ptr = 0;
   wk->read_ptr = 0;
+  wk->state = 0;
 }
 
 u32 BTL_Hem_PushState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 line )
 {
+#if BTL_HEM_OBO
+  u32 state = wk->state;
+  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushEx, line, wk->fPushed, wk->fUsed, wk->fPrevSucceed, wk->fSucceed, wk->useItem );
+  wk->state = 0;
+  wk->useItem = ITEM_DUMMY_DATA;
+  return state;
+#else
   u32 state = (wk->stack_ptr<<16) | wk->read_ptr;
   BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
-  wk->read_ptr = wk->stack_ptr;
+  return state;
+#endif
+}
+
+u32 BTL_Hem_PushStateUseItem_Impl( HANDLER_EXHIBISION_MANAGER* wk, u16 itemNo, u32 line )
+{
+  u32 state = wk->state;
+  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushEx, line, wk->fPushed, wk->fUsed, wk->fPrevSucceed, wk->fSucceed, wk->useItem );
+  wk->state = 0;
+  wk->useItem = itemNo;
   return state;
 }
 
 void BTL_Hem_PopState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 state, u32 line )
 {
+#if BTL_HEM_OBO
+  wk->state = state;
+  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PopEx, line, wk->fPushed, wk->fUsed, wk->fPrevSucceed, wk->fSucceed, wk->useItem );
+#else
   wk->stack_ptr = (state >> 16) & 0xffff;
   wk->read_ptr  = state & 0xffff;
-
   BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Pop, line, wk->stack_ptr, wk->read_ptr );
-}
-
-u16 BTL_Hem_GetStackPtr( const HANDLER_EXHIBISION_MANAGER* wk )
-{
-  return wk->stack_ptr;
+#endif
 }
 
 BTL_HANDEX_PARAM_HEADER* BTL_Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk )
 {
-  if( wk->read_ptr < wk->stack_ptr )
+//  if( wk->read_ptr < wk->stack_ptr )
+  if( (wk->read_ptr==0) && (wk->stack_ptr!=0) )
   {
     BTL_HANDEX_PARAM_HEADER* header = (BTL_HANDEX_PARAM_HEADER*)(&wk->workBuffer[wk->read_ptr]);
-    wk->read_ptr += header->size;
-//    BTL_Printf(" *HEM-Read sp=%d, rp=%d\n", wk->stack_ptr, wk->read_ptr);
+//    wk->read_ptr += header->size;
+    wk->stack_ptr = 0;
 
     GF_ASSERT( header->equip < BTL_HANDEX_MAX );
-    GF_ASSERT( wk->read_ptr <= wk->stack_ptr );
 
     return header;
   }
@@ -73,6 +89,43 @@ BTL_HANDEX_PARAM_HEADER* BTL_Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk )
   {
     return NULL;
   }
+}
+
+BOOL BTL_Hem_IsExistWork( const HANDLER_EXHIBISION_MANAGER* wk )
+{
+  return ( wk->stack_ptr != 0 );
+}
+
+u16 BTL_Hem_GetUseItemNo( const HANDLER_EXHIBISION_MANAGER* wk )
+{
+  return wk->useItem;
+}
+
+BOOL BTL_Hem_IsPushed( const HANDLER_EXHIBISION_MANAGER* wk )
+{
+  return wk->fPushed;
+}
+BOOL BTL_Hem_IsUsed( const HANDLER_EXHIBISION_MANAGER* wk )
+{
+  return wk->fUsed;
+}
+void BTL_Hem_SetResult( HANDLER_EXHIBISION_MANAGER* wk, BOOL fSucceed  )
+{
+  if( fSucceed ){
+    wk->fPrevSucceed = TRUE;
+    wk->fSucceed = TRUE;
+  }else{
+    wk->fPrevSucceed = FALSE;
+  }
+  wk->fUsed = TRUE;
+}
+BOOL BTL_Hem_GetPrevResult( const HANDLER_EXHIBISION_MANAGER* wk  )
+{
+  return wk->fPrevSucceed;
+}
+BOOL BTL_Hem_GetTotalResult( const HANDLER_EXHIBISION_MANAGER* wk )
+{
+  return wk->fSucceed;
 }
 
 BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID )
@@ -165,7 +218,9 @@ BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEv
       header->size = size;
       header->userPokeID = userPokeID;
       header->tokwin_flag = 0;
+
       wk->stack_ptr += size;
+      wk->fPushed = TRUE;
 
       BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushWork, eq_type, userPokeID, size, wk->stack_ptr );
       return header;

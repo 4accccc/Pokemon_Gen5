@@ -206,10 +206,10 @@ static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 static void scproc_TameLockClear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, BOOL* fFailMsgDisped );
 static void scproc_FreeFall_CheckRelease( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fReleaseProc );
-static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 fWazaLock, u8 fReqWaza );
+static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 fWazaLock );
 static BOOL scEvent_ExeFailThrew( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza, SV_WazaFailCause cause );
 static SV_WazaFailCause scEvent_CheckWazaExecute( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlEventType eventID );
-static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock, BOOL fReqWaza );
+static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock );
 static BOOL scproc_Fight_CheckConf( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scproc_Fight_CheckMeroMero( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scproc_PokeSickCure_WazaCheck( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza );
@@ -629,11 +629,11 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   wk->fMemberOutIntr = FALSE;
   wk->fWinBGMPlayWild = FALSE;
   wk->fEscMsgDisped = FALSE;
+  wk->fMemberOutIntr = FALSE;
   wk->cmdBuildStep = 0;
   wk->thruDeadMsgPokeID = BTL_POKEID_NULL;
   wk->prevExeWaza = WAZANO_NULL;
   wk->getPokePos = BTL_POS_NULL;
-
 }
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
@@ -2801,9 +2801,19 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   {
     if( itemID == ShooterItemParam[i].itemID )
     {
-      if( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, targetPokeID) != BTL_POS_NULL )
+      BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+
+      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+        if( (pos != BTL_POS_NULL) && (pos > BTL_POS_2ND_0) ){
+          pos = BTL_POS_NULL;
+        }
+      }
+
+      if( pos != BTL_POS_NULL )
       {
-        ShooterItemParam[i].func( wk, target, itemID, 0, actParam );
+        if( !ShooterItemParam[i].func( wk, target, itemID, 0, actParam ) ){
+          scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_NoEffect, 0, NULL );
+        }
       }
       else
       {
@@ -3432,10 +3442,7 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
 
 //  scproc_CheckItemReaction( wk, bpp );
-  scproc_UseItemEquip( wk, bpp );
-
-  // @todo 使えるアイテムが無ければ「しかし効果が無かった」とか必要？
-  return TRUE;
+  return scproc_UseItemEquip( wk, bpp );
 }
 /**
  *  シューター専用：スキルコール
@@ -3443,10 +3450,13 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+  HandExResult  result;
+
   scEvent_AfterMemberIn( wk, bpp );
-  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  result = scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
-  return TRUE;
+
+  return (result != HandExResult_NULL);
 }
 /**
  *  シューター専用：アイテムドロップ
@@ -3673,7 +3683,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     }
 
     // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
-    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock, fReqWaza) ){ break; }
+    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock ) ){ break; }
 
     // 派生ワザ呼び出しする場合、メッセージ出力＆ワザ出し確定イベント
     fReqWaza = ( reqWaza.wazaID != WAZANO_NULL );
@@ -3726,7 +3736,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     }
 
     // ワザ出し失敗判定２（ＰＰ減少後）
-    if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock, fReqWaza )){
+    if( scproc_Fight_CheckWazaExecuteFail_2nd(wk, attacker, actWaza, fWazaLock )){
        break;
     }
 
@@ -5308,7 +5318,7 @@ static void scproc_FreeFall_CheckRelease( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bp
  * @retval  SV_WazaFailCause    失敗した場合失敗コード／成功の場合 SV_WAZAFAIL_NULL
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 fWazaLock, u8 fReqWaza )
+static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u8 fWazaLock )
 {
   SV_WazaFailCause  cause = SV_WAZAFAIL_NULL;
   PokeSick sick = POKESICK_NULL;
@@ -5327,7 +5337,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
     }
 
      // PPがゼロ
-    if( (!fWazaLock) && (!fReqWaza) )
+    if( !fWazaLock )
     {
       u8 wazaIdx = BPP_WAZA_SearchIdx( attacker, waza );
       if( (wazaIdx != PTL_WAZA_MAX)
@@ -5479,7 +5489,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
   }
   return FALSE;
 }
-static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock, BOOL fReqWaza )
+static BOOL scproc_Fight_CheckWazaExecuteFail_2nd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaLock )
 {
   if( waza != WAZANO_WARUAGAKI )
   {
@@ -7092,7 +7102,6 @@ static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u
   if( value )
   {
     scPut_SimpleHp( wk, bpp, value, TRUE );
-    scproc_CheckItemReaction( wk, bpp );
     BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_DAMAGED );
 
     if( str != NULL ){
@@ -7100,13 +7109,14 @@ static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u
       HANDEX_STR_Clear( str );
     }
 
+    scproc_CheckItemReaction( wk, bpp );
+
     if( scproc_CheckDeadCmd(wk, bpp) ){
       if( scproc_CheckShowdown(wk) ){
         return TRUE;
       }
     }
 
-    scproc_CheckItemReaction( wk, bpp );
     return TRUE;
   }
 
@@ -7119,7 +7129,7 @@ static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u
  * @param   wk
  * @param   bpp
  *
- * @retval  BOOL  特殊要因により装備アイテムの使用が出来なければFALSE／それ以外TRUE
+ * @retval  BOOL  装備アイテム使用したらTRUE／装備なし・使用できない場合FALSE
  */
 //----------------------------------------------------------------------------------
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
@@ -7132,7 +7142,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   result = !scEvent_CheckItemEquipFail( wk, bpp, itemID );
   if( result )
   {
-    u32 hem_state_2nd = BTL_Hem_PushState( &wk->HEManager );
+    u32 hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
     scEvent_ItemEquip( wk, bpp );
 
     scPut_UseItemAct( wk, bpp );
@@ -7140,9 +7150,12 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       scproc_ConsumeItem( wk, bpp, itemID );
     }
 
-    scproc_HandEx_Root( wk, itemID );
+    if( scproc_HandEx_Root(wk, itemID) == HandExResult_NULL ){
+      result = FALSE;
+    }
 
     BTL_Hem_PopState( &wk->HEManager, hem_state_2nd );
+
   }
   else
   {
@@ -8938,8 +8951,6 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
 static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, BTL_POKESET* targets, BOOL* fFailMsgEnable )
 {
-  u16 sp = BTL_Hem_GetStackPtr( &wk->HEManager );
-
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     {
@@ -8974,7 +8985,7 @@ static BOOL scEvent_UnCategoryWaza( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     }
   BTL_EVENTVAR_Pop();
 
-  return (sp != BTL_Hem_GetStackPtr(&wk->HEManager));
+  return BTL_Hem_IsPushed( &wk->HEManager );
 }
 
 
@@ -11433,6 +11444,7 @@ static u32 scEvent_CalcKickBack( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
   BTL_EVENTVAR_Push();
+    TAYA_Printf("アイテムしようポケ=%d\n", BPP_GetID(bpp));
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_USE_ITEM );
   BTL_EVENTVAR_Pop();
@@ -12739,6 +12751,23 @@ BOOL BTL_SVFTOOL_IsExistBenchPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] 既にメンバー入れ替えアクションを実行しようとしているポケモンがいるか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_ReserveMemberChangeAction( BTL_SVFLOW_WORK* wk )
+{
+  if( wk->fMemberChangeReserve ){
+    return FALSE;
+  }
+  wk->fMemberChangeReserve = TRUE;
+  return TRUE;
+}
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 該当位置にいる生存しているポケモンIDを配列に格納＆数を返す
  *
  * @param   wk
@@ -13360,22 +13389,6 @@ void BTL_SVFRET_FreeFallRelease( BTL_SVFLOW_WORK* wk, u8 atkPokeID )
   scproc_FreeFall_CheckRelease( wk, attacker, TRUE );
 }
 
-//=============================================================================================
-/**
- * HandEx ワーク１件取得
- *
- * @param   wk
- * @param   eq_type
- * @param   userPokeID
- *
- * @retval  void*
- */
-//=============================================================================================
-void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID )
-{
-  return BTL_Hem_PushWork( &wk->HEManager, eq_type, userPokeID );
-}
-
 //---------------------------------------------------------------------------------------------
 // 当ターン生き返りポケレコード
 //---------------------------------------------------------------------------------------------
@@ -13480,6 +13493,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->wazaRobParam   = &unit->wazaRobParam;
   wk->magicCoatParam = &unit->magicCoatParam;
   wk->defaultTargetPos = unit->defaultTargetPos;
+  wk->fMemberChangeReserve = unit->fMemberChangeReserve;
 
   if( fClear ){
     BTL_POKESET_Clear( wk->psetTargetOrg );
@@ -13495,6 +13509,7 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
     GFL_STD_MemClear( wk->wazaRobParam, sizeof(*(wk->wazaRobParam)) );
     GFL_STD_MemClear( wk->magicCoatParam, sizeof(*(wk->magicCoatParam)) );
     wk->defaultTargetPos = BTL_POS_NULL;
+    wk->fMemberChangeReserve = 0;
   }
 }
 
@@ -13505,6 +13520,45 @@ HandExResult BTL_SVF_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
   return scproc_HandEx_Root( wk, useItemID );
 }
 
+//=============================================================================================
+/**
+ * HandEx ワーク１件取得
+ *
+ * @param   wk
+ * @param   eq_type
+ * @param   userPokeID
+ *
+ * @retval  void*
+ */
+//=============================================================================================
+void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID )
+{
+  if( BTL_Hem_IsPushed(&wk->HEManager) )
+  {
+    if( BTL_Hem_IsExistWork(&wk->HEManager) ){
+      TAYA_Printf("ワーク確保前に残ってるワークを処理\n");
+      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    }
+  }
+  TAYA_Printf("ワーク確保  eq_type=%d, userPokeID=%d\n", eq_type, userPokeID);
+
+  return BTL_Hem_PushWork( &wk->HEManager, eq_type, userPokeID );
+}
+//=============================================================================================
+/**
+ * 確保済みワークを即実行
+ *
+ * @param   wk
+ */
+//=============================================================================================
+void BTL_SVF_HANDEX_Flush( BTL_SVFLOW_WORK* wk )
+{
+  if( BTL_Hem_IsExistWork(&wk->HEManager) ){
+    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  }
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * ハンドラ反応スタック処理ルート
@@ -13513,18 +13567,21 @@ HandExResult BTL_SVF_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
  * @param   useItemID   アイテム使用による呼び出しの場合、そのアイテムID／それ以外、ITEM_DUMMY_DATA
  */
 //----------------------------------------------------------------------------------
-static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
+static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 itemNo_Dmy )
 {
   BTL_HANDEX_PARAM_HEADER* handEx_header;
-  u8 fExecute, fSucceed, fPrevSucceed;
+  u16 useItemID = BTL_Hem_GetUseItemNo( &wk->HEManager );
+  u8 fPrevSucceed;
 
-  fExecute = FALSE;
-  fSucceed = FALSE;
-  fPrevSucceed = TRUE;
+  if( BTL_Hem_IsUsed(&wk->HEManager) ){
+    fPrevSucceed = BTL_Hem_GetPrevResult(&wk->HEManager);
+  }else{
+    fPrevSucceed = TRUE;
+  }
 
   while( (handEx_header = BTL_Hem_ReadWork(&wk->HEManager)) != NULL )
   {
-    BTL_Printf("ProcHandEX : ADRS=0x%p, type=%d\n", handEx_header, handEx_header->equip);
+    BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExRoot, handEx_header, handEx_header->equip);
     if( handEx_header->failSkipFlag && (fPrevSucceed == FALSE) ){
       continue;
     }
@@ -13534,7 +13591,7 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
         continue;
       }
     }
-    fExecute = TRUE;
+
     switch( handEx_header->equip ){
     case BTL_HANDEX_TOKWIN_IN:          fPrevSucceed = scproc_HandEx_TokWinIn( wk, handEx_header ); break;
     case BTL_HANDEX_TOKWIN_OUT:         fPrevSucceed = scproc_HandEx_TokWinOut( wk, handEx_header ); break;
@@ -13597,12 +13654,15 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID )
     default:
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
+
     if( fPrevSucceed ){
-      fSucceed = TRUE;
+      BTL_Hem_SetResult( &wk->HEManager, fPrevSucceed );
     }
   }
 
-  if( fExecute ){
+  if( BTL_Hem_IsUsed(&wk->HEManager) )
+  {
+    BOOL fSucceed = BTL_Hem_GetTotalResult( &wk->HEManager );
     return (fSucceed)? HandExResult_Enable : HandExResult_Fail;
   }
 
@@ -14722,8 +14782,9 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   BTL_HANDEX_PARAM_CHANGE_MEMBER* param = (BTL_HANDEX_PARAM_CHANGE_MEMBER*)param_header;
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
-  if( !scproc_CheckShowdown(wk) )
-  {
+  if( (!scproc_CheckShowdown(wk))
+  &&  (wk->flowResult == SVFLOW_RESULT_DEFAULT)
+  ){
     handexSub_putString( wk, &param->preStr );
     if( scproc_MemberOutForChange(wk, bpp, param->fIntrDisable) )
     {

@@ -207,6 +207,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_HEM_Push:     return "[PUSH - %5d] <- sp=%d, rp=%d\n";
   case DBGSTR_HEM_Pop:      return "[POP  - %5d]    sp=%d, rp=%d ->\n";
+  case DBGSTR_HEM_PushEx:   return "[PUSH - %5d] fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
+  case DBGSTR_HEM_PopEx:    return "[POP  - %5d] fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
   case DBGSTR_HEM_PushWork: return "HandEx : type=%d, pokeID=%d, size=%d, sp=%d\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
@@ -270,7 +272,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_ExpCalc_MetInfo:     return "死亡ポケ[%d]が対面した相手ポケの数=%d, その内、生きてる数=%d\n";
   case DBGSTR_SVFL_ExpCalc_DivideInfo:  return "メンバーIdx[%d]のポケに経験値%dを分配\n";
   case DBGSTR_SVFL_ExpCalc_Result:      return "メンバーIdx[%d]のポケに対し、最終経験値=%d\n";
-  case DBGSTR_SVFL_ExpAdjustCalc:       return "自分Lv=%d, 敵Lv=%d, num=%d, denom=%d, 倍率=%08x, 基本経験値=%d -> 補正後経験値=%d\n";
+  case DBGSTR_SVFL_ExpAdjustCalc:       return "自分Lv=%d, 敵Lv=%d, num=%d, denom=%d, 基本経験値=%d -> 補正後経験値=%d\n";
   case DBGSTR_SVFL_RecDataSendComped:   return "操作記録データの送信完了\n";
   case DBGSTR_SVFL_SendServerCmd:       return "サーバコマンド送信します ... result=%d\n";
   case DBGSTR_SVFL_AllClientCmdPlayComplete:  return "全クライアントのコマンド再生終了...result=%d\n";
@@ -312,6 +314,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_YokodoriDetermine:   return "ポケ[%d]のワザ[%d]をよこどります\n";
   case DBGSTR_SVFL_YokodoriExe:         return "よこどりしたポケ=[%d], 対象位置=%d\n";
   case DBGSTR_SVFL_YokodoriInfo:        return "よこどり対象PokeID=%d, 位置=%d\n";
+  case DBGSTR_SVFL_HandExRoot:          return "ProcHandEX : ADRS=0x%p, type=%d\n";
 
   case DBGSTR_SVFS_RegTargetDouble:   return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
 
@@ -373,6 +376,9 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
   case DBGSTR_HANDWAZA_AlreadyRegistered: return "ポケ[%d]のワザハンドラ[%d]はすでに登録済み\n";
   case DBGSTR_HANDWAZA_YokorodiDecide:  return "ポケ(%d), よこどりします\n";
+  case DBGSTR_HANDITEM_OujaCheck:       return "おうじゃのしるしチェック：デフォルトひるみ率=%d\n";
+  case DBGSTR_HANDITEM_OujaEffective:   return "おうじゃのしるし有効：ひるみ率=%d\n";
+
 
   case DBGSTR_REC_ReadActStart:         return "rec seek start RP= %d\n";
   case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte\n";
