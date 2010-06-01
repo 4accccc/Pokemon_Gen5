@@ -217,6 +217,7 @@ static void _modeSelectMenuWait(GTSNEGO_WORK* pWork);
 static void _profileIDCheck(GTSNEGO_WORK* pWork);
 static void _messageEndCheck(GTSNEGO_WORK* pWork);
 static void _cancelFlash(GTSNEGO_WORK* pWork);
+static void _pAppWinDel( GTSNEGO_WORK *pWork );
 
 static void _modeReportInit(GTSNEGO_WORK* pWork);
 static void _modeReportWait(GTSNEGO_WORK* pWork);
@@ -947,12 +948,15 @@ static int _evalcallback(int index, void* param)
       else{
         value-=40;
       }
+#if DEBUG_ONLY_FOR_ohno
+#else
       for(i=0;i<EVENT_GTSNEGO_RECONNECT_NUM;i++){
         if((profile == pEv->profileID[i]) && (profile!=0)){
           value = 0;
           break;
         }
       }
+#endif
     }
   }
   OHNO_Printf("評価コールバック %d %d %d %d %d\n",value,pWork->changeMode,targetlv,targetmy,targetfriend);
@@ -1096,6 +1100,45 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
 
 
 
+
+
+
+#if PM_DEBUG
+
+static void _levelSelectWait( GTSNEGO_WORK *pWork );
+
+
+static void _modeDebugAdd2( GTSNEGO_WORK *pWork )
+{
+  EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+  int kkk;
+  
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    GTSNEGO_MESSAGE_AppMenuClose(pWork->pAppTask);
+  //  GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
+    pWork->pAppTask=NULL;
+    pWork->pAppWin = GTSNEGO_MESSAGE_SearchButtonStart(pWork->pMessageWork,GTSNEGO_023);
+    TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
+    switch(selectno){
+    case 0:
+      {
+        for(kkk=0;kkk<(EVENT_GTSNEGO_RECONNECT_NUM-1);kkk++){
+          pEv->profileID[kkk] = kkk+1;
+        }
+        pEv->profileID[kkk] = 0;
+        pEv->count = 99;
+      }
+      //break throw
+    case 1:
+      _CHANGE_STATE(pWork,_levelSelectWait);
+      break;
+    }
+  }
+}
+
+#endif
+
 //------------------------------------------------------------------
 /**
  * $brief   レベル確認待ち
@@ -1159,6 +1202,25 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
     }
   }
 
+
+#if PM_DEBUG
+  {
+    EVENT_GTSNEGO_WORK* pEv=pWork->dbw;
+    int kkk;
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_X){
+      for(kkk=0;kkk<EVENT_GTSNEGO_RECONNECT_NUM;kkk++){
+        OS_TPrintf("ID %d = %d\n",kkk,pEv->profileID[kkk]);
+      }
+    }
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
+      _pAppWinDel(pWork);
+      GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_DEBUG_002);
+      _CHANGE_STATE(pWork,_modeDebugAdd2);
+      pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
+      return;
+    }
+  }
+#endif
   
   if(bHit){
     GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork, pWork->pAppWin, pWork->key2);
