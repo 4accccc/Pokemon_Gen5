@@ -48,6 +48,7 @@
 // サウンド読み込みスレッド
 extern OSThread soundLoadThread;
 
+static BOOL isARM9preference(void);
 static  void  SkeltonHBlankFunc(void);
 static  void  SkeltonVBlankFunc(void);
 static  void  GameInit(void);
@@ -195,7 +196,7 @@ void NitroMain(void)
 
     // VBLANK待ち
     GFL_G3D_SwapBuffers();
-    if(GFL_NET_SystemGetConnectNum() > 1){
+    if(isARM9preference() == FALSE){
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 
       GameVBlankFunc();
@@ -219,6 +220,28 @@ void NitroMain(void)
 
   GameExit();
 }
+
+
+//------------------------------------------------------------------
+/**
+ * brief  ARM9に切り替えるかどうか
+ */
+//------------------------------------------------------------------
+static BOOL isARM9preference(void)
+{
+  if(GFL_NET_SystemGetConnectNum() > 1){  //接続中
+    return FALSE;
+  }
+  if(GFL_NET_IsIrcConnect()){   //赤外線
+    return FALSE;
+  }
+  if(GFL_NET_IsWifiConnect()){  //WIFI接続
+    return FALSE;
+  }
+  return TRUE;
+}
+
+
 
 //------------------------------------------------------------------
 /**
