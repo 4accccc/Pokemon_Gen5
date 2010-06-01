@@ -322,7 +322,9 @@ static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp
 
   if( fLinkSurface )
   {
-    for(i=0; i<PTL_WAZA_MAX; i++){
+   TAYA_Printf("ワザ使用フラグ初期化 pokeID=%d\n", bpp->coreParam.myID );
+    for(i=0; i<PTL_WAZA_MAX; i++)
+    {
       bpp->waza[i].truth.usedFlag = FALSE;
       bpp->waza[i].truth.usedFlagFix = FALSE;
     }
@@ -455,6 +457,7 @@ static BOOL WazaCore_SetupByPP( BPP_WAZA_CORE* core, POKEMON_PARAM* pp, u8 index
 
   if( core->number != next_number )
   {
+    TAYA_Printf("使用フラグ再設定によるクリア\n");
     core->usedFlag = FALSE;
     core->usedFlagFix = FALSE;
   }
@@ -553,6 +556,8 @@ static void reflectWazaPP( BTL_POKEPARAM* bpp )
 static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
 {
   u32 i;
+
+ TAYA_Printf("ワザ使用フラグクリアー pokeID=%d\n", bpp->coreParam.myID );
   for(i=0; i<NELEMS(bpp->waza); ++i){
     WazaWork_ClearUsedFlag( &bpp->waza[i] );
   }
@@ -1061,6 +1066,15 @@ void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* bpp, u8 wazaIdx )
     bpp->usedWazaCount++;
   }
   pWaza->surface.usedFlag = TRUE;
+
+  {
+    TAYA_Printf( "wazaIdx=%d, adrs=%p\n", wazaIdx, &(pWaza->surface) );
+  }
+
+  if( pWaza->fLinked ){
+    pWaza->truth.usedFlag = pWaza->surface.usedFlag;
+    pWaza->truth.usedFlagFix = pWaza->surface.usedFlagFix;
+  }
 }
 //=============================================================================================
 /**

@@ -91,11 +91,13 @@ u8 BTL_SVFSUB_RegisterTargets( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Btl
     intrPokeID = scEvent_GetWazaTargetIntr( wk, attacker, wazaParam );
   }
 
+  /*
   if( BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, intrPokeID) == BTL_POS_NULL ){
     intrPokeID = BTL_POKEID_NULL;
   }else{
     BTL_N_Printf( DBGSTR_SVFL_IntrTargetPoke, intrPokeID);
   }
+  */
 
   BTL_POKESET_Clear( rec );
   wk->defaultTargetPos = BTL_POS_NULL;

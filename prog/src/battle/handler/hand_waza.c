@@ -2844,7 +2844,21 @@ static void common_Counter_ExeCheck( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
     if( !common_Counter_GetRec(bpp, dmgType, &rec) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
-    else
+  }
+}
+//----------------------------------------------------------------------------------
+//
+// カウンター系共通：ターゲット決定
+//
+//----------------------------------------------------------------------------------
+static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    BPP_WAZADMG_REC  rec;
+
+    if( common_Counter_GetRec(bpp, dmgType, &rec) )
     {
       u8 targetPokeID = rec.pokeID;
 
@@ -2864,29 +2878,18 @@ static void common_Counter_ExeCheck( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* wo
           if( pos != BTL_POS_NULL ){
             targetPokeID = BTL_SVFTOOL_GetExistPokeID( flowWk, pos );
           }
+
+          // それも居ない場合、外れるけど最初のターゲット
+          if( targetPokeID == BTL_POKEID_NULL ){
+
+            targetPokeID = rec.pokeID;
+          }
         }
       }
 
-      // 対象が既に場にいない＆その場に他のポケもいないなら失敗
-      if( targetPokeID == BTL_POKEID_NULL )
-      {
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
-      }
-
-      work[0] = targetPokeID;
+      TAYA_Printf("カウンターターゲットPOKEID=%d\n", targetPokeID);
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
     }
-  }
-}
-//----------------------------------------------------------------------------------
-//
-// カウンター系共通：ターゲット決定
-//
-//----------------------------------------------------------------------------------
-static void common_Counter_SetTarget( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, WazaDamageType dmgType )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, work[0] );
   }
 }
 //----------------------------------------------------------------------------------
@@ -2953,17 +2956,20 @@ static void handler_Totteoki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 wazaCnt = BPP_WAZA_GetCount( bpp );
-    u8 usedCnt, i;
-    for(usedCnt=0, i=0; i<wazaCnt; ++i)
+    u8 usedCnt, fMaster,i;
+    for(usedCnt=0, i=0, fMaster=FALSE; i<wazaCnt; ++i)
     {
       if( BPP_WAZA_GetID(bpp, i) == WAZANO_TOTTEOKI ){
+        fMaster = TRUE;
         continue;
       }
       if( BPP_WAZA_CheckUsedInAlive(bpp,i) ){
         ++usedCnt;
       }
     }
-    if( (wazaCnt < 2)
+    TAYA_Printf("とっておき：wazaCnt=%d, usedCnt=%d\n", wazaCnt, usedCnt);
+    if( (!fMaster)
+    ||  (wazaCnt < 2)
     ||  (usedCnt < (wazaCnt-1))
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );

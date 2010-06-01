@@ -2741,7 +2741,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   };
 
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-  u8 targetPokeID;
+  u8 targetPokeID, fShooterEffective;
   BTL_POKEPARAM* target = NULL;
   int i, itemParam;
   u32 hem_state;
@@ -2755,6 +2755,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   }
 
   // ○○は××を使った！
+  fShooterEffective = FALSE;
   {
     u8 pokeID = BPP_GetID( bpp );
     u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
@@ -2771,9 +2772,15 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
     {
       // シューター用
       BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+        if( (pos != BTL_POS_NULL) && (pos > BTL_POS_2ND_0) ){
+          pos = BTL_POS_NULL;
+        }
+      }
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Shooter, clientID, targetPokeID, itemID );
       if( pos != BTL_POS_NULL ){
         SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_SHOOTER_EFFECT );
+        fShooterEffective = TRUE;
       }
     }
   }
@@ -2801,15 +2808,7 @@ static void scproc_TrainerItem_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u1
   {
     if( itemID == ShooterItemParam[i].itemID )
     {
-      BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
-
-      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
-        if( (pos != BTL_POS_NULL) && (pos > BTL_POS_2ND_0) ){
-          pos = BTL_POS_NULL;
-        }
-      }
-
-      if( pos != BTL_POS_NULL )
+      if( fShooterEffective )
       {
         if( !ShooterItemParam[i].func( wk, target, itemID, 0, actParam ) ){
           scPut_Message_StdEx( wk, BTL_STRID_STD_UseItem_NoEffect, 0, NULL );
