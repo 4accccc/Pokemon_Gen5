@@ -24,7 +24,7 @@ extern GMEVENT* EVENT_DISAPPEAR_Anawohoru(
 
 // テレポート
 extern GMEVENT* EVENT_DISAPPEAR_Teleport( 
-    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap ); 
+    GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, BOOL teleport_f ); 
 // ワープ
 extern GMEVENT* EVENT_DISAPPEAR_Warp( 
     GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap );

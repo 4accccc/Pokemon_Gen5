@@ -51,6 +51,7 @@ typedef struct {
   FIELDMAP_WORK*    fieldmap;
   FIELD_CAMERA_MODE camera_mode; // イベント開始時のカメラモード
   int               frame;       // フレーム数カウンタ
+  BOOL              teleport_f;  // テレポートとユニオンルーム退場が同じイベントなので、SE分岐のためフラグを持つ(100601 iwasawa)
 
   // 流砂イベント
   VecFx32       sandStreamPos; // 流砂中心部の位置
@@ -190,16 +191,16 @@ GMEVENT* EVENT_DISAPPEAR_Anawohoru(
 
 //------------------------------------------------------------------------------------------
 /**
- * @brief 退場イベントを作成する( テレポート )
+ * @brief 退場イベントを作成する( テレポート/ユニオンルームからの退場兼用 )
  *
  * @param parent     親イベント
  * @param gsys       ゲームシステム
  * @param fieldmap   フィールドマップ
- *
+ * @param teleport_f  テレポートでの呼び出しならTRUE 内部でSE分岐に使用
  * @return 作成したイベント
  */
 //------------------------------------------------------------------------------------------
-GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap )
+GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP_WORK* fieldmap, BOOL teleport_f )
 {
   GMEVENT*   event;
   EVENT_WORK* work;
@@ -212,6 +213,7 @@ GMEVENT* EVENT_DISAPPEAR_Teleport( GMEVENT* parent, GAMESYS_WORK* gsys, FIELDMAP
   work->gameSystem = gsys;
   work->fieldmap   = fieldmap;
   work->frame      = 0;
+  work->teleport_f = teleport_f;
 
   return event;
 }
@@ -733,7 +735,11 @@ static GMEVENT_RESULT EVENT_FUNC_DISAPPEAR_Teleport( GMEVENT* event, int* seq, v
       FIELD_TASK_MAN_AddTask( taskMan, fade_out, wait );
     }
     // SE
-    PMSND_PlaySE( SEQ_SE_FLD_86 );
+    if( work->teleport_f ){
+      PMSND_PlaySE( SEQ_SE_FLD_86 );  //テレポートは専用SE
+    }else{
+      PMSND_PlaySE( SEQ_SE_FLD_05 );  //その他は通常ワープ音
+    }
     // カメラ演出開始
     work->FCamAnimeWork = FCAM_ANIME_CreateWork( fieldmap );
     work->FCamAnimeData.frame = 60;

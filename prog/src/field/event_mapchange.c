@@ -1507,7 +1507,7 @@ static GMEVENT_RESULT EVENT_MapChangeByTeleport( GMEVENT* event, int* seq, void*
     break;
   case 1: 
     // 退場イベント
-    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap, TRUE ) );
     (*seq)++;
     break;
   case 2:
@@ -1706,7 +1706,7 @@ static GMEVENT_RESULT EVENT_MapChangeFromUnion( GMEVENT * event, int *seq, void 
   {
   case 0:
     // 退場イベント
-    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap ) );
+    GMEVENT_CallEvent( event, EVENT_DISAPPEAR_Teleport( event, gameSystem, fieldmap, FALSE ) );
     (*seq)++;
     break;
   case 1:
