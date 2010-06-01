@@ -121,6 +121,7 @@ EVENT_START		ev_h04r0501_woman2_01
 	_SE_WAIT()
 	
 	//ビレッジ民家のミネズミを消して、ワンダーブリッジに表示
+	/*----------------------------------*/
 	_OBJ_DEL(H04R0501_POKE17_01)
 	_OBJ_DEL(H04R0501_POKE17_02)
 	_OBJ_DEL(H04R0501_POKE17_03)
@@ -129,6 +130,7 @@ EVENT_START		ev_h04r0501_woman2_01
 	_FLAG_SET(FV_H04R0501_MINEZUMI)
 	_FLAG_RESET(FV_H05_MINEZUMI)
 	_FLAG_RESET(FV_H04R0501_GUEST)
+	/*----------------------------------*/
 
 EVENT_END
 
