@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-28T15:32:22"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-05-31T23:13:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1284" top="199" right="1989" bottom="827" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1847,6 +1847,13 @@ no.206
 		<language name="JPN_KANJI" width="256">そいつは　貴重な　木の実らしいが
 オレは　ツマミに　するくらいしか▽
 使い方　わかんねえからな</language>
+	</row>
+
+	<row id="msg_c04r0111_sign1_01" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,,,,#8080ff,,,,,,">
+		<comment>看板分類：路線図</comment>
+		<attribute name="キャラ指定">看板：路線図</attribute>
+		<language name="JPN" width="256">イッシュちほうの　ろせんずだ▼</language>
+		<language name="JPN_KANJI" width="256">イッシュ地方の　路線図がある▼</language>
 	</row>
 
 	<flowchart-group-list>

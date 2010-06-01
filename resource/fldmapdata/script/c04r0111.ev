@@ -20,6 +20,7 @@ _EVENT_DATA ev_c04r0111_receipt_talk  //受付話し掛け
 _EVENT_DATA ev_c04r0111_partner_talk  //パートナー話し掛け
 _EVENT_DATA ev_c04r0111_npc_talk      //NPC話し掛け
 _EVENT_DATA ev_c04r0111_home          //ゲームクリア後のホーム
+_EVENT_DATA ev_bg_c04r0111_sign1_01      //路線図 GFBTS595対処
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -945,3 +946,18 @@ _ANIME_LABEL anm_demo_train_starting_partner
   _ANIME_DATA AC_WAIT_1F,8
   _ANIME_DATA AC_VANISH_ON,1
   _ANIME_DATA ACMD_END,0
+
+
+//--------------------------------------------------------------
+//  路線図
+//--------------------------------------------------------------
+EVENT_START	ev_bg_c04r0111_sign1_01
+	_TALK_START_SE_PLAY()
+	
+	_SYSWIN_MSG( msg_c04r0111_sign1_01, POS_DOWN )
+	_MSGWIN_CLOSE()
+	
+	_CALL_SUBWAY_ROUTE_MAP()
+
+EVENT_END
+
