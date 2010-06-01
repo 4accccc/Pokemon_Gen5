@@ -152,7 +152,7 @@ EVENT_START		ev_c02gym0101_ad_01
 		IF $SCWK_TEMP0 == 0 THEN
 			//持ってない
 			//あの扉の　先が
-			_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_06a)
+			_EASY_BALLOONWIN_TALKOBJ_MSG  ( msg_c02gym0101_ad_06b)
 		
 		ELSE
 			//持ってる
@@ -298,7 +298,6 @@ EVENT_START		ev_pos_c02gym0101_ad_01
 		_OBJ_ANIME_WAIT()
 		
 		_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_06a, C02GYM0101_AD_01,POS_UR )
-		_LAST_KEYWAIT() 
 		_BALLOONWIN_CLOSE()
 
 		_CAMERA_DEF_MOVE(32)//引数は移動にかかるフレーム数
@@ -664,13 +663,11 @@ EVENT_START		ev_pos_c02gym0101_leader_01
 	
 	//副館長が喋る
 	_BALLOONWIN_OBJMSG_POS( msg_c02gym0101_ad_07a , C02GYM0101_AD_01, POS_DR )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 	
 	//ジムリーダー：消す
 	_OBJ_DEL( MMDL_ID_EVENTOBJ_00 )
 
-//	_CAMERA_START()		//カメラ操作開始
    	_CAMERA_DEF_MOVE(8)
     _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 	_CAMERA_BIND()		//カメラバインド
