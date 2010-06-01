@@ -389,7 +389,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
   { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
-  { DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset },  //ミッションリスト再作成
+  //{ DEBUG_FIELD_MISSION_RESET, debugMenu_MissionReset },  //ミッションリスト再作成
   { DEBUG_FIELD_INTRUDE,    debugMenu_Intrude },      //ハイリンク
 
   { DEBUG_FIELD_TITLE_04, (void*)BMPMENULIST_LABEL },       //○アプリ

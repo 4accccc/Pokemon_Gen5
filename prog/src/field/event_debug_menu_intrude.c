@@ -23,9 +23,13 @@
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/flagwork/work_define.h"
 
+#include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
+#include "field/field_comm/intrude_mission.h" //MISSION_LIST_Create
 //======================================================================
 //======================================================================
 static void clearTutorial( FIELDMAP_WORK * fieldmap );
+static void dumpPlayerInfo( FIELDMAP_WORK * fieldmap );
+static void resetMissionList( FIELDMAP_WORK * fieldmap );
 
 //======================================================================
 //======================================================================
@@ -59,7 +63,9 @@ static const FLDMENUFUNC_HEADER menuHeader =
 //--------------------------------------------------------------
 static const FLDMENUFUNC_LIST menuList[] = 
 {
-  {STR_INTRUDE_TUTORIAL_CLEAR,     (void*)0},      // チュートリアルクリア
+  {STR_INTRUDE_TUTORIAL_CLEAR,     (void*)clearTutorial},      // チュートリアルクリア
+  {STR_INTRUDE_DUMP_PLAYER,       (void*)dumpPlayerInfo},      // プレイヤー情報
+  {STR_INTRUDE_MISSION_RESET,     (void*)resetMissionList},      // ミッションリスト再作成
 };
 
 //--------------------------------------------------------------
@@ -90,7 +96,9 @@ typedef struct {
 
 } EVENT_WORK;
 
-
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+typedef void (*CALL_FUNC)( FIELDMAP_WORK * );
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
@@ -120,22 +128,24 @@ static GMEVENT_RESULT debugMenuIntrudeEvent( GMEVENT *event, int *seq, void *wk 
 
   case 2: 
     // ハイリンクデバッグ
+    if ( work->select )
     {
+      CALL_FUNC func = (CALL_FUNC)work->select;
+      func( work->fieldmap );
 
+#if 0
       // 作成
       if( work->select == 0 ) { 
         //「チュートリアルクリア」
         clearTutorial( work->fieldmap );
-       // egg = DEBUG_POKEMON_EGG_CreatePlainEgg( work->gameData, work->heapID );
       }
       else if( work->select == 1 ) { 
-        //「もうすぐ孵化」
-        //egg = DEBUG_POKEMON_EGG_CreateQuickEgg( work->gameData, work->heapID );
+        dumpPlayerInfo( work->fieldmap );
       }
       else if( work->select == 2 ) { 
-        //「だめタマゴ」
-        //egg = DEBUG_POKEMON_EGG_CreateIllegalEgg( work->gameData, work->heapID );
+        resetMissionList( work->fieldmap );
       }
+#endif
     }
     (*seq)++;
   case 3:
@@ -185,6 +195,34 @@ static void clearTutorial( FIELDMAP_WORK * fieldmap )
   EVENTWORK_SetEventFlag( ev, SYS_FLAG_PALACE_DPOWER );
 
   *( EVENTWORK_GetEventWorkAdrs( ev, WK_SCENE_PALACE01 ) ) = 1;
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void dumpPlayerInfo( FIELDMAP_WORK * fieldmap )
+{
+  GAMESYS_WORK * gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  int i;
+  for ( i = 0; i < PLAYER_MAX; i++ )
+  {
+    PLAYER_WORK * player = GAMEDATA_GetPlayerWork( gamedata, i );
+    OS_Printf(">>>PLAYER_ID:%d\n", i);
+    OS_Printf("ZONEID:%d POS(%d,%d,%d)\n", player->zoneID,
+        FX_Whole(player->position.x), FX_Whole(player->position.y), FX_Whole(player->position.z) );
+    OS_Printf("TRAINERID:%d, ProfID:%d ROM:%d\n", MyStatus_GetID(&player->mystatus),
+        MyStatus_GetProfileID(&player->mystatus), MyStatus_GetRomCode(&player->mystatus) );
+  }
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void resetMissionList( FIELDMAP_WORK * fieldmap )
+{
+  GAMESYS_WORK * gsys = FIELDMAP_GetGameSysWork( fieldmap );
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo( gamedata );
+  MISSION_LIST_Create( occupy );
 }
 
 #endif //PM_DEBUG
