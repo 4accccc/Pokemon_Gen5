@@ -36,7 +36,7 @@ FS_EXTERN_OVERLAY(gds_comm);
 //’S“–ŽÒ‚Ì‚Ý‚ÌPRINTƒIƒ“
 #ifdef DEBUG_BR_NET_PRINT_ON
 #if defined( DEBUG_ONLY_FOR_toru_nagihashi )
-#define BR_NET_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
+//#define BR_NET_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
 #elif defined( DEBUG_ONLY_FOR_shimoyamada )
 #define BR_NET_Printf(...)  OS_TPrintf(__VA_ARGS__)
 #endif  //defined

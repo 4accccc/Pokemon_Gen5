@@ -1113,6 +1113,7 @@ static void Br_Rank_CreatePokeIcon( BR_RANK_WORK *p_wk, GFL_CLUNIT *p_unit, HEAP
         //CLWKì¬
         cldata.pos_x  = 106+4 + j * 24;
         cldata.pos_y  =  76-4 + i * 24;
+        cldata.softpri= 6-j;//‰E‚És‚­‚Ù‚Ç—Dæ“x‚ª‚‚­‚È‚é
         p_wk->p_poke[i][j]  = GFL_CLACT_WK_Create( p_unit,
             p_wk->cgr[i][j], p_wk->plt, p_wk->cel,
             &cldata, CLSYS_DRAW_MAIN, heapID );

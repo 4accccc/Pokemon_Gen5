@@ -1373,7 +1373,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
           const u32 month = GDS_Profile_GetMonthBirthday( cp_profile );
           p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-          WORDSET_RegisterNumber( p_word, 0, month, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( p_word, 0, month, 2, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
           WORDSET_ExpandStr( p_word, p_strbuf, p_src );
           GFL_STR_DeleteBuffer( p_src );
         }
