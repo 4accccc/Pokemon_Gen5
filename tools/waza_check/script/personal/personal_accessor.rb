@@ -5,6 +5,8 @@ require "machinewaza_hash.rb"
 require "kowaza_hash.rb"
 require "oshiewaza_hash.rb"
 require "reverse_evolve_poke_hash.rb"
+require "egg_group_hash.rb"
+require "egg_group_poke_list_hash.rb"
 
 
 class PersonalAccessor 
@@ -125,5 +127,25 @@ class PersonalAccessor
   def get_reverse_evolve_poke_list( mons_name )
     reverse_evolve_poke_list = $reverse_evolve_poke_hash[ mons_name ]
     return reverse_evolve_poke_list
+  end
+
+  def get_egg_group_list( mons_name )
+    egg_group_list = $egg_group_hash[ mons_name ]
+    return egg_group_list
+  end
+
+  def get_egg_group1( mons_name )
+    egg_group_list = get_egg_group_list( mons_name )
+    return egg_group_list[0]
+  end
+
+  def get_egg_group2( mons_name )
+    egg_group_list = get_egg_group_list( mons_name )
+    return egg_group_list[1]
+  end
+
+  def get_poke_list_belong_to_egg_group( egg_group_name )
+    poke_list = $egg_group_poke_list_hash[ egg_group_name ]
+    return poke_list
   end
 end

@@ -32,6 +32,12 @@ $egg_group_list = [
 "ñ≥ê∂êB",
 ]
 
+# ê´ï 
+GENDER_TYPE_MALE_ONLY = 0
+GENDER_TYPE_NORMAL = 127
+GENDER_TYPE_FEMALE_ONLY = 254
+GENDER_TYPE_UNKNOWN = 255
+
 
 class PersonalDataParser
   def intialize
@@ -62,6 +68,17 @@ class PersonalDataParser
   def get_mons_name( personal_items )
     mons_name = personal_items[ PERSONAL_PARAM::POKENAME ] 
     return mons_name
+  end
+
+  def get_gender_type( mons_name )
+    personal_items = get_personal_items( mons_name )
+    gender_type = personal_items[ PERSONAL_PARAM::GENDER ].to_i
+    if gender_type != GENDER_TYPE_MALE_ONLY &&
+       gender_type != GENDER_TYPE_FEMALE_ONLY &&
+       gender_type != GENDER_TYPE_UNKNOWN then
+      gender_type = GENDER_TYPE_NORMAL
+    end
+    return gender_type
   end
 
   def get_egg_group_list( mons_name )
