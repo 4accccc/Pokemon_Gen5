@@ -361,8 +361,8 @@
 	</row>
 
 	<row id="man_txt_cate_no_005">
-		<language name="JPN">メニューの　こうもく</language>
-		<language name="JPN_KANJI">メニューの　項目</language>
+		<language name="JPN">メニューに　ついて</language>
+		<language name="JPN_KANJI">メニューに　ついて</language>
 	</row>
 
 	<row id="man_txt_cate_no_006">
@@ -801,15 +801,7 @@
 
 	<row id="man_txt_page_no_001_004_002">
 		<language name="JPN">バトル大会周りの詳細が分かり次第追加</language>
-		<language name="JPN_KANJI">Ｗｉ－Ｆｉや　イベント会場で
-行われる　大会に　参加します
-
-バトル大会に　参加するためには
-お手元の　パソコンから　ポケモンの
-インターネット公式サイト
-「ポケモンだいすきクラブ」に
-ログインして　参加登録をしておく
-必要が　あります</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_001_005_001">
@@ -822,28 +814,12 @@
 などに　さんかすることが　できます
 
 くわしくはホームページをごらんください</language>
-		<language name="JPN_KANJI">Ｗｉ－Ｆｉや　イベント会場で
-行われる　大会に　参加します
-
-バトル大会に　参加するためには
-お手元の　パソコンから　ポケモンの
-インターネット公式サイト
-「ポケモンだいすきクラブ」に
-ログインして　参加登録をしておく
-必要が　あります</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_001_005_002">
 		<language name="JPN">ゲームシンク周りの詳細が分かり次第追加</language>
-		<language name="JPN_KANJI">Ｗｉ－Ｆｉや　イベント会場で
-行われる　大会に　参加します
-
-バトル大会に　参加するためには
-お手元の　パソコンから　ポケモンの
-インターネット公式サイト
-「ポケモンだいすきクラブ」に
-ログインして　参加登録をしておく
-必要が　あります</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_001_006_001">
@@ -871,15 +847,7 @@
 		<language name="JPN">バトル大会やゲームシンクをするには
 まずここで設定をしておく必要があるよ、
 的なことの説明</language>
-		<language name="JPN_KANJI">お使いの　ＤＳ本体で
-Ｗｉ－Ｆｉ通信を　するための
-設定ができます
-
-Ｗｉ－Ｆｉ設定をすると
-インターネットを通じて
-世界中の　人たちと
-ポケモン交換や　対戦が
-できるように　なります</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_001_007_001">
@@ -1068,14 +1036,7 @@
 
 Ｃギアの　「ＩＲ」つうしんを　えらんだあと
 「たいせん」を　えらんでください</language>
-		<language name="JPN_KANJI">友達に　通信対戦を
-申し込む　方法は
-次の　４つが　あります
-
-・ＩＲ通信で　はじめる
-・ユニオンルームから　はじめる
-・Ｗｉ－Ｆｉクラブから　はじめる
-・グローバルターミナルから　はじめる</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_002_004_003">
@@ -1491,15 +1452,7 @@
 
 	<row id="man_txt_page_no_003_002_001">
 		<language name="JPN">▼のマークを　タッチすると</language>
-		<language name="JPN_KANJI">Ｃ－ＧＥＡＲの　下のほうに　表示された
-横長のマークを　タッチすると
-近くで　同じように　Ｃ－ＧＥＡＲを
-使っている人が　表示されます
-その人の　様子や
-プロフィールが　わかったり
-あいさつを　したりすることが　できます
-また　相手にも
-自分の様子が　知らされます</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_003_002_002">
@@ -1753,30 +1706,12 @@
 		<language name="JPN">もうちょっと追記が必要そう
 通信相手がいる場所に移動する方法とか
 バージョンアップ後確認</language>
-		<language name="JPN_KANJI">通信相手の　ハイリンクにも
-ハイルツリーがあります
-ハイルツリーに向かって　Ａボタンを押すと
-ミッションを　受けることが　できます
-
-ミッションには
-話をしたり　ポケモン勝負をしたり
-いろいろ　種類が　あります
-あと　制限時間も　あります</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_003_010_001">
-		<language name="JPN">もうちょっと追記が必要そう
-通信相手がいる場所に移動する方法とか
-バージョンアップ後確認</language>
-		<language name="JPN_KANJI">通信相手の　ハイリンクにも
-ハイルツリーがあります
-ハイルツリーに向かって　Ａボタンを押すと
-ミッションを　受けることが　できます
-
-ミッションには
-話をしたり　ポケモン勝負をしたり
-いろいろ　種類が　あります
-あと　制限時間も　あります</language>
+		<language name="JPN">未入力</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_003_011_001">
@@ -1797,14 +1732,8 @@
 	</row>
 
 	<row id="man_txt_page_no_003_012_001">
-		<language name="JPN">みてい</language>
-		<language name="JPN_KANJI">ハイリンクの　出口は　ハイリンクの
-真ん中にある　ハイルツリーの
-ちょうど　真下に　あります
-出口は　丸く　オレンジ色です
-
-出口の　上に　立つと
-ハイリンクから　出ることが　できます</language>
+		<language name="JPN">未入力</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_003_013_001">
@@ -1913,15 +1842,7 @@
 
 	<row id="man_txt_page_no_003_016_001">
 		<language name="JPN">デジタル選手証のことにも触れること。</language>
-		<language name="JPN_KANJI">対戦で　よく使う　ポケモンを
-１～６匹まで　登録して　おけます
-友達と　対戦するときは
-バトルボックスに　登録したポケモンで
-勝負するか　手持ちの　ポケモンで
-勝負するかを　選ぶことができます
-バトルボックスに
-なにも　登録していない　場合は
-手持ちの　ポケモンで　勝負をします</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<row id="man_txt_page_no_005_001_001">
@@ -2776,15 +2697,8 @@
 	</row>
 
 	<row id="man_txt_page_no_008_006_001">
-		<language name="JPN">みてい</language>
-		<language name="JPN_KANJI">便利ボタンには　２５こ　まで
-機能や　道具を　登録して　おけます
-登録を　解除したい　場合は
-四角の　マークを　タッチして
-チェックを　はずして　ください
-２つ以上　登録していると
-セレクトボタンで　便利ボタンの
-項目を　並び替える　ことができます</language>
+		<language name="JPN">未入力</language>
+		<language name="JPN_KANJI">未入力</language>
 	</row>
 
 	<flowchart-group-list>
