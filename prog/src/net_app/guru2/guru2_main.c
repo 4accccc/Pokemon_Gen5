@@ -88,7 +88,7 @@
 
 #define G2M_TEMPWORK_SIZE (32)
 
-#define GURU2_MSG_WAIT_FRAME (FRAME_SEC*4)
+#define GURU2_MSG_WAIT_FRAME (FRAME_SEC*6)
 #define GURU2_RESULT_NAME_WAIT_FRAME (FRAME_SEC*4)
 #define GURU2_RESULT_MSG_WAIT_FRAME (FRAME_SEC*4)
 
@@ -2602,7 +2602,7 @@ static RET Guru2Subproc_OmakeAreaMsgWait( GURU2MAIN_WORK *g2m )
 {
   if( g2m->frame < GURU2_MSG_WAIT_FRAME ){
     g2m->frame++;
-  }else if( _me_end_check() == FALSE ){
+  } else {
     g2m->frame = 0;
     g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_INIT;
   }
