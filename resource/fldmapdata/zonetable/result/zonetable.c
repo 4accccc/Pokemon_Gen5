@@ -9499,7 +9499,7 @@ static const ZONEDATA ZoneData[] = {
 		SEQ_BGM_PALACE,
 		enc_dummy,
 		NARC_eventdata_palace01_bin,
-    ZONE_ID_UNION,
+    ZONE_ID_PALACE01,
 		MAPNAME_PALACE,
 		1,
 		WEATHER_NO_SUNNY,
