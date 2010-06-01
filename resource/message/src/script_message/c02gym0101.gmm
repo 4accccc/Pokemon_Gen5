@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T20:43:02"/>
+	<create user="matsumiya" host="W00224" date="2010-06-01T18:13:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1292" top="178" right="1997" bottom="806" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="733" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -553,14 +553,13 @@
 	</row>
 
 	<row id="msg_c02gym0101_ad_07a" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
-		<comment>♂
-・仮メッセージ</comment>
+		<comment>♂</comment>
 		<attribute name="キャラ指定">副館長（Assistant Director）
 助手♂</attribute>
 		<language name="JPN" width="256">キダチ『あっ　あっ！？
-おいかけないと　いけないですよね</language>
+おいかけないと　いけないですよね▼</language>
 		<language name="JPN_KANJI" width="256">キダチ『あっ　あっ！？
-追いかけないと　いけないですよね</language>
+追いかけないと　いけないですよね▼</language>
 	</row>
 
 	<row id="msg_c02gym0101_ad_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
