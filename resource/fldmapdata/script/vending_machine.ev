@@ -90,6 +90,14 @@ EVENT_START ev_vending_machine01
         //所持金は？
         _CHECK_GOLD( SCWK_ANSWER, gold )
         IF $SCWK_ANSWER == TRUE THEN    //足りる
+          //決定ＳＥ待ち
+          _SE_WAIT() 
+          //ちょっと時間待つ
+          _TIME_WAIT(10) 
+          //飲み物出てくる音
+          _SE_PLAY( SEQ_SE_FLD_06 )
+          //ＳＥ待ち
+          _SE_WAIT()
           //代金減算
           _SUBTRACT_GOLD( gold )
           //所持金表示更新
@@ -108,6 +116,10 @@ EVENT_START ev_vending_machine01
             //抽選する
             _GET_RND( ans, 32 )
             IF $ans == 0 THEN //あたり
+              //飲み物出てくる音
+              _SE_PLAY( SEQ_SE_FLD_06 )
+              //ＳＥ待ち
+              _SE_WAIT()
               //タグ０番にアイテムセット
               _ITEM_NAME( 0, item )
               //「あたり！もう一本」
