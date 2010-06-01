@@ -39,10 +39,6 @@ extern void CGEAR_PICTURE_SAVE_Init(CGEAR_PICTURE_SAVEDATA* pSV);
 extern void* CGEAR_PICTURE_SAVE_GetPicture(CGEAR_PICTURE_SAVEDATA* pSV);
 extern void* CGEAR_PICTURE_SAVE_GetPalette(CGEAR_PICTURE_SAVEDATA* pSV);
 extern BOOL CGEAR_PICTURE_SAVE_IsPalette(CGEAR_PICTURE_SAVEDATA* pSV);
-extern void CGEAR_PICTURE_SAVE_SetData(CGEAR_PICTURE_SAVEDATA* pSV, void* picture, void* palette);
-#if 0
-void CGEAR_PICTURE_SAVE_SetData(CGEAR_PICTURE_SAVEDATA* pSV, void* picture, void* palette,void* scr);
-#endif
 
 //----------------------------------------------------------
 //	セーブデータ取得のための関数

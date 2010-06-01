@@ -1304,6 +1304,31 @@ static void _wakeupActionFailed(G_SYNC_WORK* pWork)
   _CHANGE_STATE(_wakeupActionFailed1);
 }
 
+
+
+static void _wakeupActionBoxFailed1(G_SYNC_WORK* pWork)
+{
+ if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
+    _CHANGE_STATE(_networkClose);
+  }
+}
+
+
+
+
+static void _wakeupActionBoxFailed(G_SYNC_WORK* pWork)
+{
+ if(!GSYNC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork)){
+    return;
+  }
+  GSYNC_MESSAGE_InfoMessageDisp(pWork->pMessageWork, GSYNC_030);
+  _CHANGE_STATE(_wakeupActionBoxFailed1);
+}
+
+
 //------------------------------------------------------------------------------
 /**
  * @brief   ƒ|ƒPƒ‚ƒ“‹N‚±‚µˆ—
@@ -1314,7 +1339,7 @@ static void _wakeupActionFailed(G_SYNC_WORK* pWork)
 static void _wakeupAction3(G_SYNC_WORK* pWork)
 {
 
-  if(pWork->zzzCount%_ZZZCOUNT==0){
+  if(pWork->zzzCount % _ZZZCOUNT==0){
     PMSND_PlaySE(SEQ_SE_SYS_26);
   }
   pWork->zzzCount++;
@@ -1324,8 +1349,12 @@ static void _wakeupAction3(G_SYNC_WORK* pWork)
     int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
 
     if(selectno==0){
-      _CHANGE_STATE(_wakeupAction4);
-      
+      if(FALSE == BOXDAT_GetEmptyTrayNumberAndPos( pWork->pBox, &pWork->trayno, &pWork->indexno )){
+        _CHANGE_STATE(_wakeupActionBoxFailed);
+      }
+      else{
+        _CHANGE_STATE(_wakeupAction4);
+      }
     }
     else{
       _CHANGE_STATE(_networkClose);
