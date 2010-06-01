@@ -124,6 +124,7 @@ enum{
   UNION_STATUS_COLOSSEUM_POKELIST_READY,    ///<コロシアム：ポケモンリスト呼び出し前の全員待ち
   UNION_STATUS_COLOSSEUM_POKELIST_BEFORE_DATA_SHARE,  ///<コロシアム：ポケモンリスト呼び出し前の全員データ送受信
   UNION_STATUS_COLOSSEUM_POKELIST_BATTLE,    ///<コロシアム：ポケモンリスト呼び出し>バトル呼び出し
+  UNION_STATUS_COLOSSEUM_LEAVE_YESNO,   ///<コロシアム：「はい・いいえ」選択
   UNION_STATUS_COLOSSEUM_LEAVE,         ///<コロシアム：退出処理
   UNION_STATUS_COLOSSEUM_TRAINER_CARD,  ///<コロシアム：トレーナーカード呼び出し
   

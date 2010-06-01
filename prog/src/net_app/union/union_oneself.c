@@ -117,6 +117,7 @@ static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_S
 static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
+static BOOL OneselfSeq_ColosseumLeaveYesNoUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 
@@ -368,6 +369,11 @@ static const ONESELF_FUNC_DATA OneselfFuncTbl[] = {
   {//UNION_STATUS_COLOSSEUM_POKELIST_BATTLE
     NULL,
     OneselfSeq_ColosseumPokelistBattle,
+    NULL,
+  },
+  {//UNION_STATUS_COLOSSEUM_LEAVE_YESNO
+    NULL,
+    OneselfSeq_ColosseumLeaveYesNoUpdate,
     NULL,
   },
   {//UNION_STATUS_COLOSSEUM_LEAVE
@@ -3229,6 +3235,7 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
     if(clsys->entry_menu != NULL){
       CommEntryMenu_Exit(clsys->entry_menu);
     }
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
   
@@ -3415,6 +3422,7 @@ static BOOL OneselfSeq_ColosseumFirstDataSharingUpdate(UNION_SYSTEM_PTR unisys, 
   GF_ASSERT(clsys != NULL);
 
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
   
@@ -3555,6 +3563,7 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
   u32 out_index;
   
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 
@@ -3572,10 +3581,16 @@ static BOOL OneselfSeq_ColosseumNormal(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATI
         return TRUE;
       }
       
-      //出口 or 誰かの退出受信チェック
-      if(ColosseumTool_ReceiveCheck_Leave(clsys) == TRUE 
-          || ColosseumTool_CheckWayOut(fieldWork) == TRUE){
+      //誰かの退出受信チェック
+      if(ColosseumTool_ReceiveCheck_Leave(clsys) == TRUE){
         UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
+        _PlayerMinePause(unisys, fieldWork, TRUE);
+        return TRUE;
+      }
+      
+      //自分の出口到達チェック
+      if(ColosseumTool_CheckWayOut(fieldWork) == TRUE){
+        UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE_YESNO);
         _PlayerMinePause(unisys, fieldWork, TRUE);
         return TRUE;
       }
@@ -3616,6 +3631,7 @@ static BOOL OneselfSeq_ColosseumStandPosition(UNION_SYSTEM_PTR unisys, UNION_MY_
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 
@@ -3705,6 +3721,7 @@ static BOOL OneselfSeq_ColosseumStandingBack(UNION_SYSTEM_PTR unisys, UNION_MY_S
   u16 anm_code;
   
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 
@@ -3780,6 +3797,7 @@ static BOOL OneselfSeq_ColosseumUsePartySelect(UNION_SYSTEM_PTR unisys, UNION_MY
   
 #if 0 //通信しているものがないのでチェックしない
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 #endif
@@ -3928,6 +3946,7 @@ static BOOL OneselfSeq_ColosseumPokelistReady(UNION_SYSTEM_PTR unisys, UNION_MY_
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
   
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 
@@ -4032,6 +4051,7 @@ static BOOL OneselfSeq_ColosseumPokelistBeforeDataShare(UNION_SYSTEM_PTR unisys,
   int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
   
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 
@@ -4153,6 +4173,7 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
   };
   
   if(*seq < _SEQ_SUBPROC_CALL && _UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 
@@ -4278,6 +4299,82 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
 
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_STANDING_BACK);
     return TRUE;
+  }
+  
+  return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * コロシアム、出口座標にたった：更新
+ *
+ * @param   unisys    
+ * @param   situ    
+ * @param   fieldWork   
+ * @param   seq   
+ *
+ * @retval  BOOL    
+ */
+//--------------------------------------------------------------
+static BOOL OneselfSeq_ColosseumLeaveYesNoUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
+{
+  COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
+  FIELD_PLAYER * player = FIELDMAP_GetFieldPlayer(fieldWork);
+  MMDL *player_mmdl = FIELD_PLAYER_GetMMdl(player);
+  enum{
+    _SEQ_MSG,
+    _SEQ_MSG_WAIT,
+    _SEQ_YESNO_WAIT,
+    _SEQ_UP_MOVE,
+    _SEQ_UP_MOVE_WAIT,
+  };
+  
+  if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
+    return TRUE;
+  }
+
+  switch(*seq){
+  case _SEQ_MSG:
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_021);
+    (*seq)++;
+    break;
+  case _SEQ_MSG_WAIT:
+    if(UnionMsg_TalkStream_Check(unisys) == FALSE){
+      break;
+    }
+
+    UnionMsg_YesNo_Setup(unisys, fieldWork);
+    (*seq)++;
+    break;
+  case _SEQ_YESNO_WAIT:
+    {
+      BOOL result;
+      if(UnionMsg_YesNo_SelectLoop(unisys, &result) == TRUE){
+        UnionMsg_YesNo_Del(unisys);
+        if(result == FALSE){  //「いいえ」：上に移動させる
+          *seq = _SEQ_UP_MOVE;
+        }
+        else{
+          UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_LEAVE);
+          return TRUE;
+        }
+      }
+    }
+    break;
+  case _SEQ_UP_MOVE:
+    if(MMDL_CheckPossibleAcmd(player_mmdl) == TRUE){
+      MMDL_SetAcmd(player_mmdl, AC_WALK_U_16F);
+      (*seq)++;
+    }
+    break;
+  case _SEQ_UP_MOVE_WAIT:
+    if(MMDL_CheckEndAcmd(player_mmdl) == TRUE){
+      MMDL_EndAcmd(player_mmdl);
+      UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_NORMAL);
+      return TRUE;
+    }
+    break;
   }
   
   return FALSE;
@@ -4457,6 +4554,7 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
 
 #if 0 //通信しないのでチェックしない
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
+    UnionMsg_AllDel(unisys);
     return TRUE;
   }
 #endif
