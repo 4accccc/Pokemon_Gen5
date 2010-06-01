@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-26T12:06:58"/>
+	<create user="matsumiya" host="W00224" date="2010-06-01T21:09:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="332" top="267" right="832" bottom="895" maximized="no" rayout="Vertical2">
+	<dialog left="1570" top="270" right="2070" bottom="898" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="492"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -334,12 +334,12 @@
 カゴメ　むかし　ばなしでも▽
 きいて　いかんかね？▼
 バーさんの　はなし　じゃから
-ちと　ながくなるがな▼</language>
+ちと　ながくなるがな</language>
 		<language name="JPN_KANJI" width="256">ちょいと　そこの　旅人さんや
 カゴメ昔話　でも▽
 聞いて　いかんかね？▼
 バーさんの　話じゃから
-ちと　長くなるがな▼</language>
+ちと　長くなるがな</language>
 	</row>
 
 	<row id="sg_t03_oldwoman1_02" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
