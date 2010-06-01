@@ -2460,7 +2460,6 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
     COMPATIBLE_IRC_Cancel( p_wk->p_param->p_irc );
     p_wk->p_param->result	= IRCRHYTHM_RESULT_RETURN;
     SEQ_End( p_wk );
-    PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
     return;
   }	
 
@@ -2505,7 +2504,6 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	case SEQ_MSG_PRINT_END:
 		if( p_wk->cnt >= RESULT_SEND_CNT )
 		{	
-      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
 			PMSND_PlaySE( IRCMENU_SE_IRC_ON );
 			MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, RHYTHM_STR_003, 0, 0 );
 			*p_seq	= SEQ_CALC;

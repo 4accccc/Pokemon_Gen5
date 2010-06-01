@@ -2811,7 +2811,6 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   if( *p_seq < SEQ_MSG_PRINT_END && APPBAR_GetTrg(p_wk->p_appbar) == APPBAR_ICON_RETURN )
   {
     p_wk->p_param->result = IRCAURA_RESULT_RETURN;
-    PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
     SEQ_End( p_wk );
     return;
   }
@@ -2870,7 +2869,6 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
   case SEQ_MSG_PRINT_END:
     if( p_wk->cnt >= RESULT_SEND_CNT )
     {
-      PMSND_StopSE_byPlayerID( SEPLAYER_SE2 );
       PMSND_PlaySE( IRCMENU_SE_IRC_ON );
       MSGWND_Print( &p_wk->msgwnd[MSGWNDID_TEXT], &p_wk->msg, AURA_STR_005, 0, 0 );
       *p_seq  = SEQ_CALC;
