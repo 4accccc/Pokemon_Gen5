@@ -46,6 +46,8 @@
 #define MCSS_VCOUNT_BORDER_LOW          ( 192 )   //テクスチャ転送するときのVCOUNTの境界
 #define MCSS_VCOUNT_BORDER_HIGH         ( 208 )//( 213 )   //テクスチャ転送するときのVCOUNTの境界
                                                   //(192~213がレンダリングエンジンのブランク期間）
+                                                  //
+#define MCSS_NCEC_HEADER_SIZE ( 12 )
 
 #define MCSS_FLIP_NONE	(0)  //そのまま
 #define MCSS_FLIP_X		(1)   //X反転
@@ -1888,7 +1890,7 @@ static	void	MCSS_LoadResource( MCSS_SYS_WORK *mcss_sys, int count, const MCSS_AD
 	mcss->mcss_ncec = GFL_ARC_LoadDataAlloc( maw->arcID, maw->ncec, mcss->heapID );
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
-    u32 size = 12 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    u32 size = MCSS_NCEC_HEADER_SIZE + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
     mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
     mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
   }
@@ -1995,7 +1997,7 @@ static	void	MCSS_LoadResourceByHandle( MCSS_SYS_WORK *mcss_sys, int count, const
 	mcss->mcss_ncec = GFL_ARC_LoadDataAllocByHandle( handle, maw->ncec, mcss->heapID );
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
-    u32 size = 8 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    u32 size = MCSS_NCEC_HEADER_SIZE + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
     mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
     mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
   }
@@ -2671,7 +2673,7 @@ static	void	MCSS_LoadResourceDebug( MCSS_SYS_WORK *mcss_sys, int count, const MC
 	mcss->mcss_ncec = madw->ncec;
   { 
 	  //静止アニメーション時にパターンアニメするノードデータ（独自フォーマット）
-    u32 size = 8 + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
+    u32 size = MCSS_NCEC_HEADER_SIZE + sizeof( MCSS_NCEC ) * mcss->mcss_ncec->cells;
     mcss->mcss_ncen = ( MCSS_NCEN_WORK *)(mcss->mcss_ncec);
     mcss->mcss_ncen += ( size / sizeof( MCSS_NCEN_WORK ) );
   }
