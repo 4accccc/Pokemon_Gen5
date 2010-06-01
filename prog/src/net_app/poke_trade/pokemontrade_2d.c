@@ -1055,19 +1055,27 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
 {
   int linest = POKETRADE_boxScrollNum2Line(pWork);
   int lineend = linest + 10;
-
+  int maincur;
+  
   *line = linest + 2;
-  if(*line > pWork->TRADEBOX_LINEMAX){
+  if(*line > pWork->TRADEBOX_LINEMAX){  //てもちになる
     *line = linest + 2 - pWork->TRADEBOX_LINEMAX;
   }
 
-  if(lineend > pWork->TRADEBOX_LINEMAX){
-    if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= pWork->TRADEBOX_LINEMAX){
+  if(lineend > pWork->TRADEBOX_LINEMAX){ //てもちになる
+    maincur = pWork->MainObjCursorLine;
+    if(pWork->MainObjCursorLine < 20){  //メインカーソルが一周している場合
+      maincur = pWork->MainObjCursorLine + 2 + pWork->TRADEBOX_LINEMAX; //計算の為に伸ばす
+    }
+    if((linest <= maincur) && (maincur <= lineend)){
       return TRUE;
     }
-    else if(0 <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= lineend){
-      return TRUE;
-    }
+ //   if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= pWork->TRADEBOX_LINEMAX){
+  //    return TRUE;
+  //  }
+  //  else if(0 <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= lineend){
+  //    return TRUE;
+   // }
   }
   else{
     if(linest <= pWork->MainObjCursorLine && pWork->MainObjCursorLine <= lineend){
