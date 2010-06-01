@@ -83,11 +83,14 @@ EVENT_END
 /**************************************************************/
 /*                                                            */
 /**************************************************************/
-//EVENT_START ev_debug_tamada
+EVENT_START ev_debug_tamada
 {
-ev_debug_tamada:
-  _SET_TEMOTI_WAZA( 0, 0, WAZANO_DAIBINGU )
-  _CHG_COMMON_SCR SCRID_HIDEN_DIVING
+  _START_EVENT_BGM( SEQ_BGM_E_SUPPORT )
+  _TIME_WAIT( 60 )
+  _LAST_KEYWAIT()
+  _END_EVENT_BGM()
+  //_SET_TEMOTI_WAZA( 0, 0, WAZANO_DAIBINGU )
+  //_CHG_COMMON_SCR SCRID_HIDEN_DIVING
   //_MAP_CHANGE( ZONE_ID_C03R0301, 7, 7, DIR_LEFT )
   //_TRAINER_BTL_SET( TRID_VETERANW_03, 0 )
   //_TRAINER_MULTI_BTL_SET( TRID_SUPPORT_01, TRID_RIVAL_01, TRID_MINI_01 )
@@ -1303,12 +1306,18 @@ EVENT_START ev_debug_common
 			//シナリオクリア後にかかる処理を呼び出す
 			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			
+      //設定した特殊接続先からゲームを開始するリクエストをクリア＝＝コンティニュー時にその場から
+      _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+
 		ELSIF $SCWK_ANSWER == 1 THEN
 			
 			//殿堂入り後にかかる処理を呼び出す（シナリオクリアフラグをセットした状態でクリア後処理をよぶ）
 			_FLAG_SET( SYS_FLAG_GAME_CLEAR )
 			_GLOBAL_CALL	SCRID_INIT_GAMECLEAR_SCRIPT
 			
+      //設定した特殊接続先からゲームを開始するリクエストをクリア＝＝コンティニュー時にその場から
+      _FLAG_RESET( SYS_FLAG_SPEXIT_REQUEST )
+
 		ELSIF $SCWK_ANSWER == 10 THEN
 			
 			_SET_BADGE_FLAG( BADGE_ID_01 )
