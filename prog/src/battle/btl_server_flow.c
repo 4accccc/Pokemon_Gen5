@@ -10411,7 +10411,7 @@ static void scPut_AddSickFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
     case WAZASICK_KOORI:  SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KoriAlready, pokeID ); break;
     case WAZASICK_KONRAN: SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KonranAlready, pokeID ); break;
     default:
-      SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_NoEffect, pokeID );
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
     }
     return;
 
