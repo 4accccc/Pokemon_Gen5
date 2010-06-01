@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-01T16:06:44"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-01T16:20:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2921,7 +2921,7 @@
 
 	<row id="mes_tower_tr_101_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>カメ</comment>
-		<language name="JPN">ふあーあ……　ねっむいよぉ……
+		<language name="JPN">ふあーあっ……　ねっむいよぉ……
 もう　アタシ　げんかい……</language>
 		<language name="JPN_KANJI">ふあーあっ……　ねっむいよぉ……
 もう　アタシ　限界……</language>
@@ -3250,17 +3250,17 @@
 	<row id="mes_tower_tr_114_02">
 		<comment>パンタード</comment>
 		<language name="JPN">パパ……　ママ……　みててくれた？
-わたし　やったよ……</language>
+アタシ　やった……　やったよ……</language>
 		<language name="JPN_KANJI">パパ……　ママ……　見ててくれた？
-わたし　やったよ……</language>
+アタシ　やった……　やったよ……</language>
 	</row>
 
 	<row id="mes_tower_tr_114_03">
 		<comment>パンタード</comment>
 		<language name="JPN">パパ……　ママ……
-わたし　どうしたらいいの……</language>
+アタシ　どうしたらいいの……</language>
 		<language name="JPN_KANJI">パパ……　ママ……
-わたし　どうしたらいいの……</language>
+アタシ　どうしたらいいの……</language>
 	</row>
 
 	<row id="mes_tower_tr_115_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
