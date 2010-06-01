@@ -961,14 +961,14 @@ void MISSION_MissionList_Create(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mi
   const OCCUPY_INFO *occupy;
   u8 monolith_type, pm_version;
   const MYSTATUS *myst;
-  
+  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   list = &mission->list[palace_area];
   if(list->occ == TRUE){
     return; //Šù‚Éì¬Ï‚Ý
   }
   
-  occupy = Intrude_GetOccupyInfo(intcomm, palace_area);
-  myst = Intrude_GetMyStatus(GameCommSys_GetGameData(intcomm->game_comm), palace_area);
+  occupy = Intrude_GetOccupyInfo(gamedata, palace_area);
+  myst = Intrude_GetMyStatus(gamedata, palace_area);
   pm_version = MyStatus_GetRomCode( myst );
   pm_version = Intrude_GetIntrudeRomVersion(pm_version, MyStatus_GetID(myst));
   

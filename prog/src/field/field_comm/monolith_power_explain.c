@@ -152,7 +152,7 @@ static GFL_PROC_RESULT MonolithPowerExplainProc_Main( GFL_PROC * proc, int * seq
   int i;
   u8 trans_ret[BMPWIN_MAX];
   
-  if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
+  if(appwk->up_proc_finish == TRUE){// || appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
   

@@ -19,7 +19,6 @@
 ///モノリス画面呼び出しようのParentWork
 typedef struct{
   GAMESYS_WORK *gsys;
-  INTRUDE_COMM_SYS_PTR intcomm;
   MISSION_CHOICE_LIST list;     ///<選択候補のミッション一覧
   MONOLITH_STATUS monolith_status;
   u8 palace_area;

@@ -222,9 +222,8 @@ BOOL Intrude_GetTargetTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_no, u8 ta
  * @retval  OCCUPY_INFO *		
  */
 //==================================================================
-OCCUPY_INFO * Intrude_GetOccupyInfo(INTRUDE_COMM_SYS_PTR intcomm, int palace_area)
+OCCUPY_INFO * Intrude_GetOccupyInfo(GAMEDATA *gamedata, int palace_area)
 {
-  GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
   OCCUPY_INFO *occupy;
   
   if(palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){

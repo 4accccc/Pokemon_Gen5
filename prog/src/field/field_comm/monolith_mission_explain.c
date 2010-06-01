@@ -17,6 +17,7 @@
 #include "mission_types.h"
 #include "intrude_mission.h"
 #include "intrude_types.h"
+#include "intrude_work.h"
 
 #include "monolith.naix"
 
@@ -63,7 +64,7 @@ static void _Setup_BmpWin_Create(MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK 
 static void _Setup_BmpWin_Exit(MONOLITH_MSEXPLAIN_WORK *mmw);
 static void _Setup_BmpOam_Create(MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw);
 static void _Setup_BmpOam_Exit(MONOLITH_MSEXPLAIN_WORK *mmw);
-static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw, int select_town);
+static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw, INTRUDE_COMM_SYS_PTR intcomm, int select_town);
 
 
 //==============================================================================
@@ -161,10 +162,12 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_Main( GFL_PROC * proc, int * s
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSEXPLAIN_WORK *mmw = mywk;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int i;
   int print_finish_count = 0;
 
-  if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
+  if(appwk->up_proc_finish == TRUE){// || appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
 
@@ -177,7 +180,7 @@ static GFL_PROC_RESULT MonolithMissionExplainProc_Main( GFL_PROC * proc, int * s
   }
   if(print_finish_count == BMPWIN_MAX){
     if(mmw->view_town != appwk->common->mission_select_no){
-      _Write_MissionExplain(appwk, appwk->setup, mmw, appwk->common->mission_select_no);
+      _Write_MissionExplain(appwk, appwk->setup, mmw, intcomm, appwk->common->mission_select_no);
       mmw->view_town = appwk->common->mission_select_no;
     }
   }
@@ -364,7 +367,7 @@ static void _Setup_BmpOam_Exit(MONOLITH_MSEXPLAIN_WORK *mmw)
  * @param   select_town		
  */
 //--------------------------------------------------------------
-static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw, int select_town)
+static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *setup, MONOLITH_MSEXPLAIN_WORK *mmw, INTRUDE_COMM_SYS_PTR intcomm, int select_town)
 {
   STRBUF *str_type, *str_explain, *expand_explain;
   u32 explain_msgid;
@@ -376,11 +379,11 @@ static void _Write_MissionExplain(MONOLITH_APP_PARENT *appwk, MONOLITH_SETUP *se
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(mmw->bmpwin[BMPWIN_TYPE]), 0x0000);
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(mmw->bmpwin[BMPWIN_EXPLAIN]), 0x0000);
 
-  if(select_town == SELECT_MISSION_ENFORCEMENT 
-      && MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //念のため2重にチェック
+  if(select_town == SELECT_MISSION_ENFORCEMENT && intcomm != NULL
+      && MISSION_RecvCheck(&intcomm->mission) == TRUE){  //念のため2重にチェック
     //ミッション実施中
     const MISSION_DATA *mdata;
-    mdata = MISSION_GetRecvData(&appwk->parent->intcomm->mission);
+    mdata = MISSION_GetRecvData(&intcomm->mission);
     cdata = &mdata->cdata;
     target = &mdata->target_info;
   }

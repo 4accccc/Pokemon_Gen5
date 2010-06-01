@@ -454,7 +454,6 @@ VMCMD_RESULT EvCmdCallMonolithProc( VMHANDLE *core, void *wk )
   }
 
   parent->gsys = gsys;
-  parent->intcomm = intcomm;
   parent->palace_area = palace_area;
   
   EVFUNC_CallSubProc(core, work, FS_OVERLAY_ID(monolith), &MonolithProcData, parent, NULL, NULL);

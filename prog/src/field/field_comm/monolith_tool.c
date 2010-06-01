@@ -668,9 +668,6 @@ void MonolithTool_Bmpoam_BGPriSet(MONOLITH_SETUP *setup, MONOLITH_BMPSTR *bmpstr
 //==================================================================
 MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
 {
-  if(appwk->parent->intcomm == NULL){
-    return GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys));
-  }
   return Intrude_GetMyStatus(GAMESYSTEM_GetGameData(appwk->parent->gsys), appwk->parent->palace_area);
 }
 
@@ -685,10 +682,7 @@ MYSTATUS * MonolithTool_GetMystatus(MONOLITH_APP_PARENT *appwk)
 //==================================================================
 OCCUPY_INFO * MonolithTool_GetOccupyInfo(MONOLITH_APP_PARENT *appwk)
 {
-  if(appwk->parent->intcomm == NULL){
-    return GAMEDATA_GetMyOccupyInfo(GAMESYSTEM_GetGameData(appwk->parent->gsys));
-  }
-  return Intrude_GetOccupyInfo(appwk->parent->intcomm, appwk->parent->palace_area);
+  return Intrude_GetOccupyInfo(GAMESYSTEM_GetGameData(appwk->parent->gsys), appwk->parent->palace_area);
 }
 
 //==================================================================

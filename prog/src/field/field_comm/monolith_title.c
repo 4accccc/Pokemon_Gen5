@@ -20,6 +20,7 @@
 #include "monolith_snd_def.h"
 #include "field/eventwork.h"
 #include "../../../../resource/fldmapdata/flagwork/flag_define.h" //SYS_FLAG_
+#include "intrude_work.h"
 
 
 //==============================================================================
@@ -288,6 +289,8 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_TITLE_WORK *mtw = mywk;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   int tp_ret;
   enum{
     _SEQ_MAIN,
@@ -363,8 +366,8 @@ static GFL_PROC_RESULT MonolithTitleProc_Main( GFL_PROC * proc, int * seq, void 
         (*seq)--;
         break;
       }
-      else if(appwk->parent->intcomm != NULL 
-          && MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //ミッション受注済み
+      else if(intcomm != NULL 
+          && MISSION_RecvCheck(&intcomm->mission) == TRUE){  //ミッション受注済み
         PMSND_PlaySE(MONOLITH_SE_DECIDE);
         _Set_MsgStream(mtw, appwk->setup, msg_mono_title_004);
         (*seq) = _SEQ_STREAM_WAIT;

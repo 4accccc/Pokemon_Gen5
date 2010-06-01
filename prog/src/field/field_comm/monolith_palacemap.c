@@ -144,7 +144,7 @@ static GFL_PROC_RESULT MonolithPalaceMapProc_Main( GFL_PROC * proc, int * seq, v
 	MONOLITH_PALACEMAP_WORK *mpw = mywk;
   int tp_ret;
   
-  if(appwk->up_proc_finish == TRUE || appwk->force_finish == TRUE){
+  if(appwk->up_proc_finish == TRUE){// || appwk->force_finish == TRUE){
     return GFL_PROC_RES_FINISH;
   }
   

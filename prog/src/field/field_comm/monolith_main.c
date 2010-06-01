@@ -24,6 +24,7 @@
 #include "app/app_menu_common.h"
 #include "system/net_err.h"
 #include "intrude_comm_command.h"
+#include "intrude_work.h"
 
 
 
@@ -241,6 +242,8 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
 {
   MONOLITH_SYSTEM *monosys = mywk;
   MONOLITH_PARENT_WORK *parent = pwk;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(parent->gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   enum{
     SEQ_INIT,
     SEQ_MONOLITH_IN,
@@ -259,7 +262,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     (*seq)++;
     break;
   case SEQ_MONOLITH_IN:
-    if(parent->intcomm == NULL || NetErr_App_CheckError()){
+    if(intcomm == NULL || NetErr_App_CheckError()){
       (*seq)++;
     }
     else{
@@ -302,7 +305,8 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
       
       //‰º‰æ–Ê‚ªŽå“±Œ ‚ðˆ¬‚é‚Ì‚Å‰º‚©‚çˆ—
       down_status = GFL_PROC_LOCAL_Main(monosys->procsys_down);
-      if(monosys->app_parent.next_menu_index == MONOLITH_MENU_END){
+      if(monosys->app_parent.next_menu_index == MONOLITH_MENU_END
+          || (down_status != GFL_PROC_MAIN_VALID && monosys->app_parent.force_finish == TRUE)){
         monosys->app_parent.up_proc_finish = TRUE;
       }
       else if(monosys->menu_index != monosys->app_parent.next_menu_index
@@ -343,7 +347,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     (*seq)++;
     break;
   case SEQ_MONOLITH_OUT:
-    if(parent->intcomm == NULL || NetErr_App_CheckError()){
+    if(intcomm == NULL || NetErr_App_CheckError()){
       (*seq)++;
     }
     else{

@@ -295,6 +295,8 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
 {
   MONOLITH_APP_PARENT *appwk = pwk;
 	MONOLITH_MSSELECT_WORK *mmw = mywk;
+	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(appwk->parent->gsys);
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   enum{
     SEQ_INIT,
     SEQ_FIRST_STREAM,
@@ -315,14 +317,16 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
   _Msselect_PanelUpdate(appwk, mmw);
   _Msselect_CancelIconUpdate(mmw);
 
-  if(appwk->force_finish == TRUE){
+  if(appwk->force_finish == TRUE && (*seq) == SEQ_TOP){
     return GFL_PROC_RES_FINISH;
   }
   
   switch(*seq){
   case SEQ_INIT:
-    if(MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){  //ミッション受注済み
-      _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
+    if(intcomm != NULL){
+      if(MISSION_RecvCheck(&intcomm->mission) == TRUE){  //ミッション受注済み
+        _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
+      }
     }
     *seq = SEQ_FIRST_STREAM;
     break;
@@ -366,7 +370,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       int trg = GFL_UI_KEY_GetTrg();
       int tp_ret = GFL_UI_TP_HitTrg(TownTouchRect);
 
-      if(MISSION_RecvCheck(&appwk->parent->intcomm->mission) == TRUE){
+      if(intcomm != NULL && MISSION_RecvCheck(&intcomm->mission) == TRUE){
         OS_TPrintf("誰かがミッションを受注した\n");
         _Msselect_ViewChange(appwk, mmw, VIEW_ENFORCEMENT);
         mmw->no_select = TRUE;
@@ -477,7 +481,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       mmw->send_entry_req.cdata = appwk->setup->mission_cdata_array[TownNo_to_Type[appwk->common->mission_select_no]];
       mmw->send_entry_req.monolith_type = appwk->parent->list.monolith_type;
       mmw->send_entry_req.target_info = appwk->parent->list.target_info;
-      if(IntrudeSend_MissionOrderConfirm(appwk->parent->intcomm, &mmw->send_entry_req) == TRUE){
+      if(intcomm == NULL || IntrudeSend_MissionOrderConfirm(intcomm, &mmw->send_entry_req) == TRUE){
         *seq = SEQ_ORDER_WAIT;
       }
     }
@@ -486,7 +490,11 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
     {
       MISSION_ENTRY_RESULT result;
       
-      result = MISSION_GetRecvEntryAnswer(&appwk->parent->intcomm->mission);
+      if(intcomm == NULL){
+        *seq = SEQ_TOP;
+      }
+      
+      result = MISSION_GetRecvEntryAnswer(&intcomm->mission);
       if(result == MISSION_ENTRY_RESULT_OK){
         _Set_MsgStream(mmw, appwk->setup, msg_mono_mis_002);
         *seq = SEQ_ORDER_OK_STREAM_WAIT;
@@ -512,7 +520,9 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
         _Clear_MsgStream(mmw);
         PMSND_PlaySE(MONOLITH_SE_MSG);
         if((*seq) == SEQ_ORDER_OK_STREAM_WAIT){
-          MISSION_SetMissionEntry(appwk->parent->intcomm, &appwk->parent->intcomm->mission);  //受注者の為、参加セット
+          if(intcomm != NULL){
+            MISSION_SetMissionEntry(intcomm, &intcomm->mission);  //受注者の為、参加セット
+          }
           mmw->order_end = TRUE;
           *seq = SEQ_FINISH;
         }
