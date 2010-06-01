@@ -492,6 +492,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
       
       if(intcomm == NULL){
         *seq = SEQ_TOP;
+        break;
       }
       
       result = MISSION_GetRecvEntryAnswer(&intcomm->mission);
