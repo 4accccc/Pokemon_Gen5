@@ -488,6 +488,8 @@ void Intrude_SetProfile(INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_
   occupy = GAMEDATA_GetOccupyInfo(gamedata, net_id);
   GFL_STD_MemCopy(&profile->occupy, occupy, sizeof(OCCUPY_INFO));
   
+  GAMEDATA_SetIntrudeSeasonID(gamedata, net_id, profile->status.season);
+  
   Intrude_SetPlayerStatus(intcomm, net_id, &profile->status, TRUE);
   
   intcomm->recv_profile |= 1 << net_id;
