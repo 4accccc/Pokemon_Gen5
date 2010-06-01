@@ -3081,6 +3081,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
       PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
       PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
+      GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //一瞬見えるカーソルプレート対策
     }
     break;
     
@@ -3092,6 +3093,7 @@ static void PLIST_SelectMenuExit( PLIST_WORK *work )
       PLIST_MSG_OpenWindow( work , work->msgWork , PMT_MENU );
       PLIST_MSG_DrawMessageNoWait( work , work->msgWork , mes_pokelist_03_02 );
       PLIST_MENU_OpenMenu( work , work->menuWork , itemArr );
+      GFL_BG_LoadScreenReq( PLIST_BG_MENU );  //一瞬見えるカーソルプレート対策
     }
     break;
 
