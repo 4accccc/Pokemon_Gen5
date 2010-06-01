@@ -1555,6 +1555,7 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
 static u8 DEBUG_WFBCPeople_mode = 0;
 static s8 DEBUG_WFBCPeople_index = 0;
 static s8 DEBUG_WFBCPeople_npc_id = 0;
+static s8 DEBUG_WFBCPeople_mood = 0;
 
 
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
@@ -1898,7 +1899,7 @@ static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item 
     if( p_array[ DEBUG_WFBCPeople_index ].data_in == FALSE ){
 
       p_array[ DEBUG_WFBCPeople_index ].npc_id  = DEBUG_WFBCPeople_npc_id;
-      p_array[ DEBUG_WFBCPeople_index ].mood  = 50;
+      p_array[ DEBUG_WFBCPeople_index ].mood  = DEBUG_WFBCPeople_mood;
       p_array[ DEBUG_WFBCPeople_index ].one_day_msk  = FIELD_WFBC_ONEDAY_MSK_INIT;
       p_array[ DEBUG_WFBCPeople_index ].data_in = TRUE;
 
@@ -1910,6 +1911,7 @@ static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item 
     }else{
 
       p_array[ DEBUG_WFBCPeople_index ].npc_id = DEBUG_WFBCPeople_npc_id;
+      p_array[ DEBUG_WFBCPeople_index ].mood  = DEBUG_WFBCPeople_mood;
 
     }
 
@@ -1925,16 +1927,49 @@ static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item 
 
     // インデックス設定
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+
+      FIELD_WFBC_CORE_PEOPLE* p_array;
+      
+      if( DEBUG_WFBCPeople_mode == 0 ){
+        // 表
+        p_array = p_wk->people;
+      }else{
+        // 裏
+        p_array = p_wk->back_people;
+      }
+
       if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
         DEBUG_WFBCPeople_index = (DEBUG_WFBCPeople_index + 1) % FIELD_WFBC_PEOPLE_MAX;
+        // 今のそいつの情報を引き継ぐ
+        DEBUG_WFBCPeople_npc_id = p_array[ DEBUG_WFBCPeople_index ].npc_id;
+        DEBUG_WFBCPeople_mood = p_array[ DEBUG_WFBCPeople_index ].mood;
+        
         DEBUGWIN_RefreshScreen();
       }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
         DEBUG_WFBCPeople_index --;
         if( DEBUG_WFBCPeople_index < 0 ){
           DEBUG_WFBCPeople_index += FIELD_WFBC_PEOPLE_MAX;
         }
+        // 今のそいつの情報を引き継ぐ
+        DEBUG_WFBCPeople_npc_id = p_array[ DEBUG_WFBCPeople_index ].npc_id;
+        DEBUG_WFBCPeople_mood = p_array[ DEBUG_WFBCPeople_index ].mood;
+
         DEBUGWIN_RefreshScreen();
       }
+    }
+    // MOOD
+    else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT ){
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+        DEBUG_WFBCPeople_mood = (DEBUG_WFBCPeople_mood + 20) % FIELD_WFBC_MOOD_MAX;
+        DEBUGWIN_RefreshScreen();
+      }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+        DEBUG_WFBCPeople_mood -= 20;
+        if( DEBUG_WFBCPeople_mood < 0 ){
+          DEBUG_WFBCPeople_mood += FIELD_WFBC_MOOD_MAX;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+
     }
     // NPC_ID
     else{
@@ -1955,9 +1990,9 @@ static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item 
 static void DEBWIN_Draw_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item )
 {
   if( DEBUG_WFBCPeople_mode == 0 ){
-    DEBUGWIN_ITEM_SetNameV( item , "N idx %d npc %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id );
+    DEBUGWIN_ITEM_SetNameV( item , "N idx %d npc %d mood %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id, DEBUG_WFBCPeople_mood );
   }else{
-    DEBUGWIN_ITEM_SetNameV( item , "B idx %d npc %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id );
+    DEBUGWIN_ITEM_SetNameV( item , "B idx %d npc %d mood %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id, DEBUG_WFBCPeople_mood );
   }
 }
   
