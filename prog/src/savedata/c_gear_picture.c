@@ -95,6 +95,7 @@ BOOL CGEAR_PICTURE_SAVE_IsPalette(CGEAR_PICTURE_SAVEDATA* pSV)
  * @brief   CGEARパネルタイプ設定する
  * @param   picture     キャラクターデータ
  * @param   palette     パレットデータ
+ * @param   scr     スクリーンデータ
  * @return	
  */
 //--------------------------------------------------------------------------------------------
@@ -103,7 +104,14 @@ void CGEAR_PICTURE_SAVE_SetData(CGEAR_PICTURE_SAVEDATA* pSV, void* picture, void
   GFL_STD_MemCopy(picture, pSV->picture, CGEAR_PICTURTE_CHAR_SIZE);
   GFL_STD_MemCopy(palette, pSV->palette, CGEAR_PICTURTE_PAL_SIZE);
 }
-
+#if 0
+void CGEAR_PICTURE_SAVE_SetData(CGEAR_PICTURE_SAVEDATA* pSV, void* picture, void* palette,void* scr)
+{
+  GFL_STD_MemCopy(picture, pSV->picture, CGEAR_PICTURTE_CHAR_SIZE);
+  GFL_STD_MemCopy(palette, pSV->palette, CGEAR_PICTURTE_PAL_SIZE);
+  GFL_STD_MemCopy(scr, pSV->scr, CGEAR_PICTURTE_SCR_SIZE);
+}
+#endif
 //----------------------------------------------------------
 //	セーブデータ取得のための関数
 //----------------------------------------------------------
