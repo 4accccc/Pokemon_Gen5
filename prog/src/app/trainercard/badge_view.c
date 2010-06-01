@@ -116,6 +116,9 @@ typedef struct {
   s8 DirX;      
   s8 DirY;
   u8 Snd;
+  u8 wait;
+  u8 etc;
+  u8 etc2;
   int BeforeX;
   int BeforeY;
 }SCRATCH_WORK;
@@ -2426,6 +2429,7 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
 #define MAX_SCRUCH  (40)
 #define BADGE_SE_CHANGE_LINE  (BADGE_POLISH_RATE*5+BADGE_POLISH_RATE/2)
 #define REV_SPEED (FX32_SHIFT - wk->RevSpeed)
+#define SCRATCH_WAIT  ( 5 )
 
 //----------------------------------------------------------------------------------
 /**
@@ -2437,10 +2441,15 @@ static void Trans_BadgePalette( BADGEVIEW_WORK *wk )
 //----------------------------------------------------------------------------------
 static void _play_scratch_se( SCRATCH_WORK *sc, int polish )
 {
-  if(polish > BADGE_SE_CHANGE_LINE){
-    PMSND_PlaySE( SEQ_SE_SYS_34 );
+  if(sc->wait==0){
+    if(polish > BADGE_SE_CHANGE_LINE){
+      PMSND_PlaySE( SEQ_SE_SYS_34 );
+    }else{
+      PMSND_PlaySE( SEQ_SE_SYS_33 );
+    }
+    sc->wait = 5;
   }else{
-    PMSND_PlaySE( SEQ_SE_SYS_33 );
+    sc->wait--;
   }
 }
 
