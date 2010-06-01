@@ -854,6 +854,7 @@ void STA_POKE_UpdateItemUse_Throw( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork 
   itemUseWork->graAcc += STA_POKE_ITEMUSE_THROW_ADD_ACC;
   pos.x -= STA_POKE_ITEMUSE_THROW_SPD;
   pos.y += itemUseWork->graAcc;
+  pos.z = FX32_CONST(200);
 
   MUS_ITEM_DRAW_SetPosition( work->itemDrawSys , 
                 pokeWork->itemWork[itemUseWork->equipPos] ,
