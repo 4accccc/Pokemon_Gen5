@@ -911,13 +911,19 @@ static GMEVENT_RESULT EVENT_FUNC_MapChangeCore( GMEVENT* event, int* seq, void* 
     {
       TOMOYA_Printf( "season %d\n", work->nextSeason );
       PMSEASON_SetSeasonID( gameData, work->nextSeason );
-      //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
       {
         u8 season;
         POKEPARTY *party;
+        RTCTime now;
+        GMTIME * tm;
+        SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork(gameData);
+        tm = SaveData_GetGameTime( sv );
         season = GAMEDATA_GetSeasonID(gameData);
         party = GAMEDATA_GetMyPokemon(gameData);
+        //季節ポケモンフォルムチェンジ条件を満たしたので、手持ちの季節ポケモンをフォルムチェンジさせる
         SEASONPOKE_FORM_ChangeForm(gameData, party, season);
+        //シェイミのフォルム戻しチェック。スカイフォルム禁止時間ならランドフォルムに戻す
+        SHEIMI_NFORM_ChangeNormal_Time(gameData, party, &tm->sv_time, season);
       }
     }
 
