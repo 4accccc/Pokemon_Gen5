@@ -225,7 +225,7 @@ static void PokeCon_Clear( BTL_POKE_CONTAINER* pokecon );
 static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static int GetIllusionTargetIndex( const POKEPARTY* party );
 static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon );
-static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
+static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID, BOOL fDefaultForm );
 static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID );
 static POKEPARTY* PokeCon_GetSrcParty( BTL_POKE_CONTAINER* pokecon, u8 clientID );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
@@ -3344,7 +3344,7 @@ BOOL BTL_MAIN_IsPokeListMultiMode( BTL_MAIN_MODULE* wk )
  */
 POKEPARTY* BTL_MAIN_GetClientSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
 {
-  PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID );
+  PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID, FALSE );
   return PokeCon_GetSrcParty( &wk->pokeconForClient, clientID );
 }
 /**
@@ -3357,7 +3357,7 @@ POKEPARTY* BTL_MAIN_GetClientMultiSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
     u8 friendClientID = GetFriendCrientID( clientID );
     if( BTL_MAIN_IsExistClient(wk, friendClientID) )
     {
-      PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID );
+      PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID, FALSE );
       return PokeCon_GetSrcParty( &wk->pokeconForClient, friendClientID );
     }
   }
@@ -3927,7 +3927,7 @@ static void PokeCon_Release( BTL_POKE_CONTAINER* pokecon )
   }
 }
 // バトルパーティの内容をオリジナルパーティデータに反映させる
-static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID )
+static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, u8 clientID, BOOL fDefaultForm )
 {
   POKEPARTY* srcParty = PokeCon_GetSrcParty( pokecon, clientID );
   BTL_PARTY* btlParty = BTL_POKECON_GetPartyData( pokecon, clientID );
@@ -3941,7 +3941,7 @@ static void PokeCon_RefrectBtlParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODUL
   for(i=0; i<memberCount; ++i)
   {
     bpp = BTL_PARTY_GetMemberData( btlParty, i );
-    BPP_ReflectToPP( bpp, FALSE );
+    BPP_ReflectToPP( bpp, fDefaultForm );
     pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
     PokeParty_Add( wk->tmpParty, pp );
   }
@@ -5136,6 +5136,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     POKEPARTY* srcParty;
 
     PokeCon_RefrectBtlPartyStartOrder( &wk->pokeconForServer, wk, wk->myClientID );
+
     srcParty = PokeCon_GetSrcParty( &wk->pokeconForServer, wk->myClientID );
 
     // ジムリーダー、四天王、チャンピオンならなつき度アップ
@@ -5188,7 +5189,7 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     u8 clientID = BTL_MAIN_GetOpponentClientID( wk, wk->myClientID, 0 );
     POKEPARTY* srcParty;
 
-    PokeCon_RefrectBtlParty( &wk->pokeconForServer, wk, clientID );
+    PokeCon_RefrectBtlParty( &wk->pokeconForServer, wk, clientID, TRUE );
     srcParty = PokeCon_GetSrcParty( &wk->pokeconForServer, clientID );
     PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_ENEMY1 ] );
   }
