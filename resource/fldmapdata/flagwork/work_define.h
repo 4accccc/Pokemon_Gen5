@@ -248,12 +248,12 @@
 #define WK_OTHER_T04R0401_LEADER6        16668 /* 0x411c サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
 #define WK_OTHER_T04R0401_LEADER4        16669 /* 0x411d サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
 #define WK_OTHER_T04R0401_LEADER2        16670 /* 0x411e サザナミタウン別荘：日替わり固定のメッセージを格納（夏のみ） */
-		/* not used 16671(0x411f) */
-		/* not used 16672(0x4120) */
-		/* not used 16673(0x4121) */
-		/* not used 16674(0x4122) */
-		/* not used 16675(0x4123) */
-		/* not used 16676(0x4124) */
+#define WK_OTHER_SPORTS_RND_TR0          16671 /* 0x411f ビッグスタジアムのランダム配置トレーナー１人目 */
+#define WK_OTHER_SPORTS_RND_TR1          16672 /* 0x4120 ビッグスタジアムのランダム配置トレーナー２人目 */
+#define WK_OTHER_SPORTS_RND_TR2          16673 /* 0x4121 ビッグスタジアムのランダム配置トレーナー３人目 */
+#define WK_OTHER_SPORTS_RND_TR3          16674 /* 0x4122 リトルコートのランダム配置トレーナー１人目 */
+#define WK_OTHER_SPORTS_RND_TR4          16675 /* 0x4123 リトルコートのランダム配置トレーナー２人目 */
+#define WK_OTHER_SPORTS_RND_TR5          16676 /* 0x4124 リトルコートのランダム配置トレーナー３人目 */
 		/* not used 16677(0x4125) */
 		/* not used 16678(0x4126) */
 		/* not used 16679(0x4127) */
