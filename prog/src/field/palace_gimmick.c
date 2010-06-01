@@ -375,30 +375,22 @@ static u8 _TreeEnable(GAMEDATA *gamedata, FLD_EXP_OBJ_CNT_PTR exobj_cnt, INTRUDE
 {
   GFL_G3D_OBJSTATUS* status;
   OBJ_INDEX obj_id;
-  int pm_version;
   int tree_w_lv, tree_b_lv;
   const OCCUPY_INFO *occupy;
   int palace_area, map_offset;
   
-  if(intcomm == NULL){
-    palace_area = 0;
-    map_offset = 0;
-  }
-  else{
-    palace_area = intcomm->intrude_status_mine.palace_area;
-    //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
-    map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
-    if(map_offset < 0){
-      map_offset = intcomm->member_num + map_offset;
-    }
+  palace_area = GAMEDATA_GetIntrudePalaceArea(gamedata);
+  //子機の場合、palace_area == 0 が左端、ではなく自分のNetIDのパレスが左端の為。
+  map_offset = palace_area - GAMEDATA_GetIntrudeMyID(gamedata);
+  OS_TPrintf("aaa palace_area = %d my_id=%d, map_offset=%d\n", palace_area, GAMEDATA_GetIntrudeMyID(gamedata), map_offset);
+  if(map_offset < 0){
+    map_offset = GAMEDATA_GetIntrudeNum(gamedata) + map_offset;
   }
   
-  if(intcomm == NULL || palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
-    pm_version = PM_VERSION;
+  if(palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
     occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   }
   else{
-    pm_version = MyStatus_GetRomCode( Intrude_GetMyStatus(gamedata, palace_area) );
     occupy = GAMEDATA_GetOccupyInfo(gamedata, palace_area);
   }
   tree_w_lv = _GetTreeLevel( OccupyInfo_GetWhiteLevel(occupy) );
