@@ -3536,6 +3536,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->pocketno = BAG_POKE_MAX-1;
     }
 //    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		KTST_SetDraw( pWork, FALSE );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
     return;
   // ポケット切り替え右ボタン
@@ -3546,6 +3547,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
       pWork->pocketno = 0;
     }
 //    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		KTST_SetDraw( pWork, FALSE );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
     return;
   // ソートボタン
@@ -3628,10 +3630,11 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
   }
 
   if(pocketno != -1){
+		u32	old = pWork->pocketno;
+		pWork->pocketno = pocketno;
     PMSND_PlaySE( SE_BAG_BAG_GRA );
     // ポケットカーソル移動
-    _pocketCursorChange(pWork, pWork->pocketno, pocketno);
-    pWork->pocketno = pocketno;
+		_pocketCursorChange( pWork, old, pWork->pocketno );
     // ソートボタン表示切替
     SORT_ModeReset( pWork );
 
@@ -3875,7 +3878,6 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
   pWork->oamlistpos_old = pWork->oamlistpos;
 
   state(pWork);
-  _dispMain(pWork);
 //  SORT_Draw(pWork);
 
   // セルリスト更新
@@ -3896,6 +3898,8 @@ static GFL_PROC_RESULT FieldItemMenuProc_Main( GFL_PROC * proc, int * seq, void 
     ITEMDISP_CellVramTrans( pWork );
     pWork->bCellChange = 0;
   }
+
+  _dispMain(pWork);
 
 //  PRINTSYS_QUE_Main(pWork->SysMsgQue);
   ITEMDISP_PrintUtilTrans( pWork );
