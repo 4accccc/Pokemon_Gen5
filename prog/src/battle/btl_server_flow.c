@@ -1411,7 +1411,16 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
 
     // 行動による優先順（優先度高いほど数値大）
     switch( actParam->gen.cmd ){
-    case BTL_ACTION_ESCAPE:   actionPri = 4; break;
+    case BTL_ACTION_ESCAPE:
+      if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
+      &&  (order[i].clientID == BTL_CLIENT_ENEMY1)
+      ){
+        // 野生ポケモンの「にげる」は「たたかう」と同じプライオリティに（移動ポケ用）
+        actionPri = 0;
+      }else{
+        actionPri = 4;
+      }
+      break;
     case BTL_ACTION_CHANGE:   actionPri = 3; break;
     case BTL_ACTION_ITEM:     actionPri = 2; break;
     case BTL_ACTION_ROTATION: actionPri = 1; break;
@@ -13855,9 +13864,10 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
   scPut_UseItemAct( wk, bpp );
+  handexSub_putString( wk, &param->exStr );
   scPut_ConsumeItem( wk, bpp );
   scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
-  handexSub_putString( wk, &param->exStr );
+
 
   return 1;
 }
