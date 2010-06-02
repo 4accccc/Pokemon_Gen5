@@ -552,6 +552,12 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     _SEQ_FINISH,
   };
 
+  if(NetErr_App_CheckError()){
+    if((*seq) > _SEQ_INIT && (*seq) <= _SEQ_MINIGAME_PROC){
+      *seq = _SEQ_APP_FREE;
+    }
+  }
+  
   if(unisys->alloc.uniapp != NULL){
     UnionAppSystem_Update(unisys->alloc.uniapp, unisys);
   }
@@ -699,9 +705,11 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     break;
 
   case _SEQ_APP_FREE:
-    UnionAppSystem_FreeAppWork(unisys->alloc.uniapp);
-    unisys->alloc.uniapp = NULL;
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_app ) );
+    if(unisys->alloc.uniapp != NULL){
+      UnionAppSystem_FreeAppWork(unisys->alloc.uniapp);
+      unisys->alloc.uniapp = NULL;
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( union_app ) );
+    }
     *seq = _SEQ_FIELD_OPEN;
     break;
 	case _SEQ_FIELD_OPEN:

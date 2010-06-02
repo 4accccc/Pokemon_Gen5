@@ -150,6 +150,9 @@ BOOL UnionAppSystem_SetEntryUser(UNION_APP_PTR uniapp, NetID net_id, const MYSTA
 //==================================================================
 void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
 {
+  if(NetErr_App_CheckError()){
+    return;
+  }
   if(uniapp->shutdown == TRUE){
     return;
   }
