@@ -241,6 +241,18 @@ BOOL NHTTP_RAP_StartConnect(NHTTP_RAP_WORK* pWork)
 }
 
 
+void NHTTP_RAP_ErrorClean(NHTTP_RAP_WORK* pWork)
+{
+  if(pWork){
+    if(pWork->handle){
+      NHTTPDeleteConnection(pWork->handle);
+      pWork->handle=NULL;
+      NHTTPCleanup();
+    }
+  }
+}
+
+
 /*
 NHTTP_ERROR_SYSTEM  	-1  	ハンドル不正によるエラー。
 引数で渡しているコネクションハンドルが不正の場合に返ります。
