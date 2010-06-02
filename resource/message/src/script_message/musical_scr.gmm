@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-06-01T18:22:25"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-02T18:01:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="492"/>
 		<band id="4" index="0" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -398,8 +398,8 @@
 ・ミュージカル確認用
 　テスト受付メッセージ</comment>
 		<attribute name="キャラ指定">MAN2</attribute>
-		<language name="JPN">それでは　ひかえしつへ　どうぞ！▼</language>
-		<language name="JPN_KANJI">それでは　控え室へ　どうぞ！▼</language>
+		<language name="JPN">それでは　こちらへ　どうぞ！▼</language>
+		<language name="JPN_KANJI">それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_musical_test_03">
@@ -1077,9 +1077,9 @@ msg_musical_recept_06を
 赤外線通信orワイヤレス通信が成功して終了した場合
 アプリへ移行</comment>
 		<language name="JPN" width="256">おまたせいたしました
-それでは　ひかえしつへ　どうぞ！▼</language>
+それでは　こちらへ　どうぞ！▼</language>
 		<language name="JPN_KANJI" width="256">お待たせいたしました
-それでは　控え室へ　どうぞ！▼</language>
+それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_musical_recept_08" back-color="#80ff80,,,,,#8080ff,,#80ff80,,,#80ff80,,,#80ff80,,,#80ff80,,">
@@ -1109,8 +1109,8 @@ msg_musical_recept_06を
 
 	<row id="msg_musical_fitting_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
 		<comment>ミュージカル試着室専用受付メッセージ</comment>
-		<language name="JPN">それでは　しちゃくしつへ　どうぞ！▼</language>
-		<language name="JPN_KANJI">それでは　試着室へ　どうぞ！▼</language>
+		<language name="JPN">それでは　こちらへ　どうぞ！▼</language>
+		<language name="JPN_KANJI">それでは　こちらへ　どうぞ！▼</language>
 	</row>
 
 	<row id="msg_musical_fitting_03" back-color="#ffff80,,,,,#8080ff,,#ffff80,,,#ffff80,,,#ffff80,,,#ffff80,,">
