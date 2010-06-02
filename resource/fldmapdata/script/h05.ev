@@ -555,6 +555,8 @@ ev_buy_poke:
 
 	//Ç¢ÇÁÇ»Ç¢èÍçá
 	ELSE
+		_GOLD_WIN_CLOSE()
+		
 		_BALLOONWIN_OBJMSG_POS(msg_h05_middleman_07,H05_MIDDLEMAN1_01, POS_DOWN )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
