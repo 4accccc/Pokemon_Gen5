@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T18:02:12"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-02T18:22:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -603,9 +603,9 @@ Ariizumi100506</comment>
 
 	<row id="msg_game_ng">
 		<language name="JPN">[1:00:トレーナー名:0]から　ＮＧとの
-へんじが　きてしまいました…</language>
+へんじが　きてしまいました…[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI">[1:00:トレーナー名:0]から　ＮＧとの
-返事が　きてしまいました…</language>
+返事が　きてしまいました…[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_game_wait_parent" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -621,9 +621,9 @@ Ariizumi100506</comment>
 		<comment>子機：接続
 Ariizumi100506</comment>
 		<language name="JPN" width="240">[1:00:トレーナー名:0]から　ＯＫとの
-へんじが　きました</language>
+へんじが　きました[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI">[1:00:トレーナー名:0]から　ＯＫとの
-返事が　きました</language>
+返事が　きました[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="msg_game_wait_member" back-color=",,,#ffff80,,,,,,,,,,,,,,">
