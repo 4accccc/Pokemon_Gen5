@@ -9,6 +9,7 @@
 #pragma once
 
 #include "print/printsys.h"
+#include "savedata/mystatus.h"
 #include "savedata/myitem_savedata.h"
 #include "item/shooter_item.h"
 
@@ -45,6 +46,7 @@ typedef u8 BBagBallUse;
 // 外部設定データ
 typedef struct {
 
+	MYSTATUS * mystatus;	///< プレイヤーデータ
   MYITEM_PTR  myitem; ///< アイテムセーブデータ
   GFL_FONT*   font;   ///< 使用フォントハンドル
   BtlBagMode  mode;   ///< 制御モード

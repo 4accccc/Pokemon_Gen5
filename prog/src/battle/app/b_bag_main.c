@@ -15,9 +15,11 @@
 #include "system/wipe.h"
 #include "sound/pm_sndsys.h"
 #include "font/font.naix"
+#include "item/itemuse_def.h"
 
 #include "../btlv/btlv_effect.h"
 #include "msg/msg_b_bag.h"
+#include "msg/msg_bag.h"
 
 #include "b_app_tool.h"
 
@@ -740,35 +742,60 @@ static int BBAG_SeqUseSelect( BBAG_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int BBAG_ItemUse( BBAG_WORK * wk )
 {
-  BBAG_DATA * dat = wk->dat;
+	BBAG_DATA * dat = wk->dat;
 
-  // シューター時
-  if( dat->mode == BBAG_MODE_SHOOTER ){
-    // エネルギーが足りない
-    if( dat->energy < BBAGITEM_GetCost( dat->ret_item ) ){
-      GFL_MSG_GetString( wk->mman, mes_b_bag_m16, wk->msg_buf );
-      BattleBag_TalkMsgSet( wk );
-      wk->ret_seq = SEQ_BBAG_ERR;
-      return SEQ_BBAG_MSG_WAIT;
-    }
-  }
+	// シューター時
+	if( dat->mode == BBAG_MODE_SHOOTER ){
+		// エネルギーが足りない
+		if( dat->energy < BBAGITEM_GetCost( dat->ret_item ) ){
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m16, wk->msg_buf );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
+	}
 
 	// ボール使用チェック
 	if( wk->poke_id == BBAG_POKE_BALL ){
 		// 手持ち・ボックスに空きがない
 		if( dat->ball_use == BBAG_BALLUSE_POKEMAX ){
-      GFL_MSG_GetString( wk->mman, mes_b_bag_m12, wk->msg_buf );
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m12, wk->msg_buf );
 			BattleBag_TalkMsgSet( wk );
 			wk->ret_seq = SEQ_BBAG_ERR;
 			return SEQ_BBAG_MSG_WAIT;
 		}
 		// 野生ダブル・敵が２匹のため使用不可
 		if( dat->ball_use == BBAG_BALLUSE_DOUBLE ){
-      GFL_MSG_GetString( wk->mman, mes_b_bag_m11, wk->msg_buf );
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m11, wk->msg_buf );
 			BattleBag_TalkMsgSet( wk );
 			wk->ret_seq = SEQ_BBAG_ERR;
 			return SEQ_BBAG_MSG_WAIT;
 		}
+		// 野生ダブル・先頭のポケモン動作でないので使用不可
+		if( dat->ball_use == BBAG_BALLUSE_NOT_FIRST ){
+			GFL_MSGDATA * mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_bag_dat, wk->dat->heap );
+			STRBUF * str = GFL_MSG_CreateString( mman, msg_bag_057 );
+			WORDSET_RegisterPlayerName( wk->wset, 0, dat->mystatus );
+			WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+			GFL_STR_DeleteBuffer( str );
+			GFL_MSG_Delete( mman );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
+	}
+
+	// 逃げるアイテム使用チェック
+	if( dat->wild_flg == 1 && ITEM_GetParam(dat->ret_item,ITEM_PRM_BATTLE,dat->heap) == ITEMUSE_BTL_ESCAPE ){
+		GFL_MSGDATA * mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_bag_dat, wk->dat->heap );
+		STRBUF * str = GFL_MSG_CreateString( mman, msg_bag_057 );
+		WORDSET_RegisterPlayerName( wk->wset, 0, dat->mystatus );
+		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+		GFL_STR_DeleteBuffer( str );
+		GFL_MSG_Delete( mman );
+		BattleBag_TalkMsgSet( wk );
+		wk->ret_seq = SEQ_BBAG_ERR;
+		return SEQ_BBAG_MSG_WAIT;
 	}
 
   return SEQ_BBAG_ENDSET;
