@@ -9,7 +9,7 @@ COLUMN_KOWAZA_FIRST = 7
 COLUMN_KOWAZA_LAST  = 22
 
 
-def CreateKowazaHash( kowaza_filename, output_path )
+def OutputEggWazaHash( kowaza_filename, output_path )
 
   kowaza_file = File::open( kowaza_filename, "r" )
   kowaza_lines = kowaza_file.readlines
@@ -17,7 +17,7 @@ def CreateKowazaHash( kowaza_filename, output_path )
   kowaza_file.close
 
   out_data = Array.new
-  out_data << "$kowaza_hash = {" 
+  out_data << "$eggwaza_hash = {" 
 
   kowaza_lines.each do |line|
     items = line.split( /\s/ )
@@ -41,7 +41,7 @@ def CreateKowazaHash( kowaza_filename, output_path )
   out_data << "}"
 
   # o—Í
-  output_filename = output_path + "kowaza_hash.rb"
+  output_filename = output_path + "eggwaza_hash.rb"
   output_file = File::open( output_filename, "w" )
   out_data.each do |data|
     output_file.puts( data )

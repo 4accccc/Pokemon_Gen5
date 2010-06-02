@@ -10,6 +10,7 @@ class Pokemon
   def initialize
     @personal_accessor = PersonalAccessor.new
     @mons_name = nil
+    @form_name = ""
     @level     = 0
     @waza_list = Array.new
   end 
@@ -20,12 +21,20 @@ class Pokemon
     @mons_name = mons_name
   end
 
+  def fullname
+    return @mons_name + @form_name
+  end
+
+  def set_form_name( form_name )
+    @form_name = form_name
+  end
+
   def set_level( level )
     @level = level
   end
 
   def setup_default_waza
-    @waza_list = @personal_accessor.get_default_waza_list( @mons_name, @level )
+    @waza_list = @personal_accessor.get_default_waza_list( self.fullname, @level )
   end
 
   def set_waza_list( waza_list )

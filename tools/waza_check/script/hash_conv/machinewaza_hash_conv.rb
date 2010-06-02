@@ -68,21 +68,18 @@ end
 
 # main ######################################################
 
-def CreateMachineWazaHash( personal_filename, output_path )
+def OutputMachineWazaHash_from_PersonalDat( personal_filename, output_path )
 
-  personal_parser = PersonalDataParser.new
-  personal_parser.load_personal_file( personal_filename )
+  personal_parser = PersonalDataParser.new( personal_filename )
+  mons_fullname_list = personal_parser.get_mons_fullname_list
 
   out_data = Array.new
   out_data << "$machinewaza_hash = {"
 
-  $monsname.each do |mons_name| 
-    if mons_name == "|||||" then
-      next
-    end 
+  mons_fullname_list.each do |mons_fullname|
 
     usable_waza_machine_list = Array.new
-    machine_list = personal_parser.get_usable_waza_machine_list( mons_name )
+    machine_list = personal_parser.get_usable_waza_machine_list( mons_fullname )
 
     # ”é“`ƒ}ƒVƒ“•œŠˆ‚É‚Æ‚à‚È‚¤•ÏŠ·
     machine_list.each do |machine_name|
@@ -95,14 +92,15 @@ def CreateMachineWazaHash( personal_filename, output_path )
     end
 
     # o—Íƒf[ƒ^ì¬
-    out_data << "\t\"#{mons_name}\"=>["
+    out_data << "\t\"#{mons_fullname}\"=>["
     machine_waza_list.each do |waza_name|
       out_data << "\t\t\"#{waza_name}\","
     end
     out_data << "\t],"
+
   end
 
-  out_data << "}"
+  out_data << "}" 
 
   # o—Í
   output_filename = output_path + "machinewaza_hash.rb"

@@ -6,6 +6,7 @@
 require "trdata_index.rb"
 require "trainer.rb"
 require "monsname_converter.rb"
+require "form_name_hash.rb"
 
 MAX_POKEMON_NUM = 6
 MAX_WAZA_NUM = 4
@@ -54,6 +55,21 @@ def GetMonsName( trdata_items, poke_idx )
   return mons_name
 end
 
+def GetFormName( trdata_items, poke_idx )
+  mons_name = GetMonsName( trdata_items, poke_idx )
+  item_idx = PARA::POKE1_FORM + poke_idx * 4
+  form_idx = trdata_items[ item_idx ].to_i
+  if form_idx == "" || form_idx == nil then 
+    form_idx = 0
+  end
+  form_list = $form_name_hash[ mons_name ]
+  if form_list == nil then
+    return "" # ÉtÉHÅ[ÉÄÇ»Çµ
+  else
+    return form_list[ form_idx ]
+  end
+end
+
 def GetMonsLevel( trdata_items, poke_idx )
   item_idx = PARA::POKE1_LV + ( poke_idx * 4 )
   level = trdata_items[ item_idx ].to_i
@@ -78,10 +94,12 @@ end
 def GetPokemon( trdata_items, poke_idx )
   data_type = GetDataType( trdata_items ) 
   mons_name = GetMonsName( trdata_items, poke_idx )
+  form_name = GetFormName( trdata_items, poke_idx )
   mons_level = GetMonsLevel( trdata_items, poke_idx )
 
   pokemon = Pokemon.new
   pokemon.set_mons_name( mons_name )
+  pokemon.set_form_name( form_name )
   pokemon.set_level( mons_level )
 
   if $waza_data_type_list.include?( data_type ) then

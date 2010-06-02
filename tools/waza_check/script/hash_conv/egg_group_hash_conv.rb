@@ -7,18 +7,18 @@ require "personal_parser.rb"
 require "monsno_hash.rb"
 
 
-def CreateEggGroupHash( personal_filename, output_path )
+def OutputEggGroupHash( personal_filename, output_path )
 
-  personal_parser = PersonalDataParser.new
-  personal_parser.load_personal_file( personal_filename )
+  personal_parser = PersonalDataParser.new( personal_filename )
+  mons_fullname_list = personal_parser.get_mons_fullname_list
 
   out_data = Array.new
   out_data << "$egg_group_hash = {"
 
-  $monsname.each do |mons_name|
-    egg_group1 = personal_parser.get_egg_group1( mons_name )
-    egg_group2 = personal_parser.get_egg_group2( mons_name )
-    out_data << "\t\"#{mons_name}\" => [ \"#{egg_group1}\", \"#{egg_group2}\" ],"
+  mons_fullname_list.each do |mons_fullname|
+    egg_group1 = personal_parser.get_egg_group1( mons_fullname )
+    egg_group2 = personal_parser.get_egg_group2( mons_fullname )
+    out_data << "\t\"#{mons_fullname}\" => [ \"#{egg_group1}\", \"#{egg_group2}\" ],"
   end
 
   out_data << "}"

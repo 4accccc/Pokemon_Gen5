@@ -8,7 +8,7 @@ COLUMN_ITEM_NAME = 2
 COLUMN_WAZA_NAME = 21
 
 
-def CreateMachineWazaNameHash( item_filename, output_path )
+def OutputMachineWazaNameHash( item_filename, output_path )
 
   file = File::open( item_filename, "r" )
   file_lines = file.readlines

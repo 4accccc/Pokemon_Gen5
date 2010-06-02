@@ -7,14 +7,14 @@ require "personal_parser.rb"
 
 
 # 順ハッシュ作成
-def CreateEvolveHash( personal_filename, output_path ) 
+def OutputEvolveHash_from_PersonalData( personal_filename, output_path ) 
   evolve_poke_hash = CreateEvolvePokeHash_from_PersonalData( personal_filename ) 
   out_data = CreateOutputData_of_EvolveHash( evolve_poke_hash, "evolve_poke_hash" ) 
   OutputHashData_to_File( out_data, output_path, "evolve_poke_hash.rb" ) 
 end
 
 # 逆ハッシュ作成
-def CreateReverseEvolveHash( personal_filename, output_path ) 
+def OutputReverseEvolveHash_from_PersonalData( personal_filename, output_path ) 
   reverse_evolve_poke_hash = CreateReverseEvolvePokeHash_from_PersonalData( personal_filename )
   out_data = CreateOutputData_of_EvolveHash( reverse_evolve_poke_hash, "reverse_evolve_poke_hash" ) 
   OutputHashData_to_File( out_data, output_path, "reverse_evolve_poke_hash.rb" ) 
@@ -22,60 +22,53 @@ end
 
 
 def CreateEvolvePokeHash_from_PersonalData( personal_filename ) 
-  personal_parser = PersonalDataParser.new
-  personal_parser.load_personal_file( personal_filename )
-
-  evolve_poke_hash = CreateNullHash_for_EvolvePokeHash()
-
-  $monsname.each do |mons_name| 
-    evolve_poke_list = personal_parser.get_evolve_poke_list( mons_name )
+  personal_parser = PersonalDataParser.new( personal_filename ) 
+  evolve_poke_hash = CreateNullHash_for_EvolvePokeHash( personal_parser )
+  mons_fullname_list = personal_parser.get_mons_fullname_list
+  mons_fullname_list.each do |mons_fullname|
+    evolve_poke_list = personal_parser.get_evolve_poke_list( mons_fullname )
     evolve_poke_list.each do |evolve_mons_name|
-      evolve_poke_hash[ mons_name ] << evolve_mons_name
+      evolve_poke_hash[ mons_fullname ] << evolve_mons_name
     end
   end
-
   return evolve_poke_hash
 end
 
 def CreateReverseEvolvePokeHash_from_PersonalData( personal_filename ) 
-  personal_parser = PersonalDataParser.new
-  personal_parser.load_personal_file( personal_filename )
-
-  reverse_evolve_poke_hash = CreateNullHash_for_EvolvePokeHash()
-
-  $monsname.each do |mons_name| 
-    evolve_poke_list = personal_parser.get_evolve_poke_list( mons_name )
+  personal_parser = PersonalDataParser.new( personal_filename ) 
+  evolve_poke_hash = CreateNullHash_for_EvolvePokeHash( personal_parser )
+  mons_fullname_list = personal_parser.get_mons_fullname_list
+  mons_fullname_list.each do |mons_fullname|
+    evolve_poke_list = personal_parser.get_evolve_poke_list( mons_fullname )
     evolve_poke_list.each do |evolve_mons_name|
-      reverse_evolve_poke_hash[ evolve_mons_name ] << mons_name
+      evolve_poke_hash[ evolve_mons_name ] << mons_fullname
     end
   end
-
-  return reverse_evolve_poke_hash
+  return evolve_poke_hash
 end
 
-def CreateNullHash_for_EvolvePokeHash
-  hash = Hash.new
-  $monsname.each do |mons_name| 
-    hash[ mons_name ] = Array.new
+def CreateNullHash_for_EvolvePokeHash( personal_parser )
+  evolve_poke_hash = Hash.new
+  mons_fullname_list = personal_parser.get_mons_fullname_list
+  mons_fullname_list.each do |mons_fullname|
+    evolve_poke_hash[ mons_fullname ] = Array.new
   end
-  return hash
+  return evolve_poke_hash
 end
 
-def CreateOutputData_of_EvolveHash( hash, hash_name )
+def CreateOutputData_of_EvolveHash( evolve_poke_hash, hash_name )
   out_data = Array.new
   out_data << "$#{hash_name} = {" 
-
-  $monsname.each do |mons_name| 
-    out_data << "\t\"#{mons_name}\"=>[" 
-
-    evolve_poke_list = hash[ mons_name ] 
+  mons_fullname_list = evolve_poke_hash.keys
+  mons_fullname_list.each do |mons_fullname|
+    out_data << "\t\"#{mons_fullname}\"=>[" 
+    evolve_poke_list = evolve_poke_hash[ mons_fullname ] 
     evolve_poke_list.each do |evolve_mons_name|
       out_data << "\t\t\"#{evolve_mons_name}\","
     end
     out_data << "\t],"
   end 
-  out_data << "}"
-
+  out_data << "}" 
   return out_data
 end
 

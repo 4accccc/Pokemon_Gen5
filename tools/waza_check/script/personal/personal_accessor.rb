@@ -1,27 +1,26 @@
-require "monsno_hash.rb"
-require "wazaoboe_hash.rb"
-require "wazaoboe_lv_hash.rb"
+require "levelwaza_hash.rb"
+require "levelwaza_learninglevel_hash.rb"
 require "machinewaza_hash.rb"
-require "kowaza_hash.rb"
-require "oshiewaza_hash.rb"
+require "eggwaza_hash.rb"
+require "teachwaza_hash.rb"
 require "reverse_evolve_poke_hash.rb"
 require "egg_group_hash.rb"
 require "egg_group_poke_list_hash.rb"
 
 
 class PersonalAccessor 
-  def get_levelup_waza_list( mons_name )
-    waza_list = $wazaoboe_hash[ mons_name ]
+  def get_levelwaza_list( mons_fullname )
+    waza_list = $levelwaza_hash[ mons_fullname ]
   end
 
-  def get_levelup_wazalevel_list( mons_name )
-    waza_level_list = $wazaoboe_lv_hash[ mons_name ]
+  def get_levelwaza_learninglevel_list( mons_fullname )
+    level_list = $levelwaza_learninglevel_hash[ mons_fullname ]
     return waza_level_list
   end
 
-  def get_wazalevel_list_of( mons_name, waza_name ) 
-    waza_list = get_levelup_waza_list( mons_name )
-    wazalevel_list = get_levelup_wazalevel_list( mons_name )
+  def get_wazalevel_list_of( mons_fullname, waza_name ) 
+    waza_list = get_levelwaza_list( mons_fullname )
+    wazalevel_list = get_levelwaza_learninglevel_list( mons_fullname )
     level_list = Array.new
     0.upto( waza_list.size - 1 ) do |waza_idx|
       if waza_list[ waza_idx ] == waza_name then
@@ -31,8 +30,8 @@ class PersonalAccessor
     return level_list
   end
 
-  def check_waza_learning_by_levelup( mons_name, waza_name )
-    waza_list = $wazaoboe_hash[ mons_name ]
+  def check_waza_learning_by_levelup( mons_fullname, waza_name )
+    waza_list = $levelwaza_hash[ mons_fullname ]
     if waza_list && waza_list.include?( waza_name ) then
       return true
     else
@@ -40,9 +39,9 @@ class PersonalAccessor
     end
   end
 
-  def check_waza_learning_by_levelup_at( mons_name, mons_level, waza_name )
-    waza_list = $wazaoboe_hash[ mons_name ]
-    wazalevel_list = $wazaoboe_lv_hash[ mons_name ]
+  def check_waza_learning_by_levelup_at( mons_fullname, mons_level, waza_name )
+    waza_list = $levelwaza_hash[ mons_fullname ]
+    wazalevel_list = $levelwaza_learninglevel_hash[ mons_fullname ]
     0.upto( wazalevel_list.size - 1 ) do |waza_idx|
       check_waza_name = waza_list[ waza_idx ]
       check_waza_level = wazalevel_list[ waza_idx ]
@@ -53,10 +52,11 @@ class PersonalAccessor
     return false
   end
 
-  def get_default_waza_list( mons_name, mons_level )
+  def get_default_waza_list( mons_fullname, mons_level )
+    puts mons_fullname
     default_waza_list = Array.new
-    levelup_waza_list = $wazaoboe_hash[ mons_name ]
-    levelup_wazalevel_list = $wazaoboe_lv_hash[ mons_name ]
+    levelup_waza_list = $levelwaza_hash[ mons_fullname ]
+    levelup_wazalevel_list = $levelwaza_learninglevel_hash[ mons_fullname ]
     0.upto( levelup_wazalevel_list.size - 1 ) do |waza_idx|
       waza_name = levelup_waza_list[ waza_idx ]
       waza_level = levelup_wazalevel_list[ waza_idx ]
@@ -71,8 +71,8 @@ class PersonalAccessor
     return default_waza_list
   end
 
-  def check_waza_learning_by_machine( mons_name, waza_name )
-    machine_waza_list = $machinewaza_hash[ mons_name ]
+  def check_waza_learning_by_machine( mons_fullname, waza_name )
+    machine_waza_list = $machinewaza_hash[ mons_fullname ]
     if machine_waza_list && machine_waza_list.include?( waza_name ) then
       return true
     else
@@ -80,8 +80,8 @@ class PersonalAccessor
     end
   end
 
-  def check_waza_learning_by_egg( mons_name, waza_name )
-    egg_waza_list = $kowaza_hash[ mons_name ]
+  def check_waza_learning_by_egg( mons_fullname, waza_name )
+    egg_waza_list = $eggwaza_hash[ mons_fullname ]
     if egg_waza_list && egg_waza_list.include?( waza_name ) then
       return true
     else
@@ -89,8 +89,8 @@ class PersonalAccessor
     end
   end
 
-  def check_waza_learning_by_teach( mons_name, waza_name )
-    teach_waza_list = $oshiewaza_hash[ mons_name ]
+  def check_waza_learning_by_teach( mons_fullname, waza_name )
+    teach_waza_list = $teachwaza_hash[ mons_fullname ]
     if teach_waza_list && teach_waza_list.include?( waza_name ) then
       return true
     else
@@ -98,21 +98,21 @@ class PersonalAccessor
     end
   end
 
-  def check_waza_learning( mons_name, mons_level, waza_name )
+  def check_waza_learning( mons_fullname, mons_level, waza_name )
     # 自身のチェック
-    if mons_name == "ドーブル" then
+    if mons_fullname == "ドーブル" then
       return true 
-    elsif check_waza_learning_by_teach( mons_name, waza_name ) then
+    elsif check_waza_learning_by_teach( mons_fullname, waza_name ) then
       return true
-    elsif check_waza_learning_by_egg( mons_name, waza_name ) then
+    elsif check_waza_learning_by_egg( mons_fullname, waza_name ) then
       return true
-    elsif check_waza_learning_by_machine( mons_name, waza_name ) then
+    elsif check_waza_learning_by_machine( mons_fullname, waza_name ) then
       return true
-    elsif check_waza_learning_by_levelup_at( mons_name, mons_level, waza_name ) then
+    elsif check_waza_learning_by_levelup_at( mons_fullname, mons_level, waza_name ) then
       return true
     end 
     # 進化前ポケモンを再帰チェック
-    reverse_evolve_poke_list = get_reverse_evolve_poke_list( mons_name )
+    reverse_evolve_poke_list = get_reverse_evolve_poke_list( mons_fullname )
     if reverse_evolve_poke_list != nil then
       reverse_evolve_poke_list.each do |prev_poke|
         if check_waza_learning( prev_poke, mons_level, waza_name ) then
@@ -124,23 +124,23 @@ class PersonalAccessor
     return false
   end
 
-  def get_reverse_evolve_poke_list( mons_name )
-    reverse_evolve_poke_list = $reverse_evolve_poke_hash[ mons_name ]
+  def get_reverse_evolve_poke_list( mons_fullname )
+    reverse_evolve_poke_list = $reverse_evolve_poke_hash[ mons_fullname ]
     return reverse_evolve_poke_list
   end
 
-  def get_egg_group_list( mons_name )
-    egg_group_list = $egg_group_hash[ mons_name ]
+  def get_egg_group_list( mons_fullname )
+    egg_group_list = $egg_group_hash[ mons_fullname ]
     return egg_group_list
   end
 
-  def get_egg_group1( mons_name )
-    egg_group_list = get_egg_group_list( mons_name )
+  def get_egg_group1( mons_fullname )
+    egg_group_list = get_egg_group_list( mons_fullname )
     return egg_group_list[0]
   end
 
-  def get_egg_group2( mons_name )
-    egg_group_list = get_egg_group_list( mons_name )
+  def get_egg_group2( mons_fullname )
+    egg_group_list = get_egg_group_list( mons_fullname )
     return egg_group_list[1]
   end
 

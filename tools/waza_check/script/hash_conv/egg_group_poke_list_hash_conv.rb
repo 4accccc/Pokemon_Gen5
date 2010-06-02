@@ -7,10 +7,10 @@ require "personal_parser.rb"
 require "monsno_hash.rb"
 
 
-def CreateEggGroupPokeListHash( personal_filename, output_path )
+def OutputEggGroupPokeListHash( personal_filename, output_path )
 
-  personal_parser = PersonalDataParser.new
-  personal_parser.load_personal_file( personal_filename )
+  personal_parser = PersonalDataParser.new( personal_filename )
+  mons_fullname_list = personal_parser.get_mons_fullname_list
 
   # ‹ó‚ÌƒnƒbƒVƒ…‚ğì¬
   egg_group_poke_list_hash = Hash.new
@@ -19,17 +19,12 @@ def CreateEggGroupPokeListHash( personal_filename, output_path )
   end
 
   # ƒ|ƒPƒ‚ƒ“–¼‚ğƒnƒbƒVƒ…‚ÉŠ„‚èU‚é
-  $monsname.each do |mons_name|
-    if mons_name == "|||||" then
-      next
-    end
-
-    egg_group1 = personal_parser.get_egg_group1( mons_name )
-    egg_group2 = personal_parser.get_egg_group2( mons_name )
-
-    egg_group_poke_list_hash[ egg_group1 ] << mons_name
+  mons_fullname_list.each do |mons_fullname| 
+    egg_group1 = personal_parser.get_egg_group1( mons_fullname )
+    egg_group2 = personal_parser.get_egg_group2( mons_fullname ) 
+    egg_group_poke_list_hash[ egg_group1 ] << mons_fullname
     if egg_group1 != egg_group2 then
-      egg_group_poke_list_hash[ egg_group2 ] << mons_name
+      egg_group_poke_list_hash[ egg_group2 ] << mons_fullname
     end
   end
 
@@ -39,8 +34,8 @@ def CreateEggGroupPokeListHash( personal_filename, output_path )
   $egg_group_list.each do |egg_group_name|
     poke_list = egg_group_poke_list_hash[ egg_group_name ]
     out_data << "\t\"#{egg_group_name}\" => ["
-    poke_list.each do |mons_name|
-      out_data << "\t\t\"#{mons_name}\","
+    poke_list.each do |mons_fullname|
+      out_data << "\t\t\"#{mons_fullname}\","
     end
     out_data << "\t],"
   end
