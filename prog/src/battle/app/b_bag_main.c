@@ -772,7 +772,7 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 		}
 		// 野生ダブル・先頭のポケモン動作でないので使用不可
 		if( dat->ball_use == BBAG_BALLUSE_NOT_FIRST ){
-			GFL_MSG_GetString( wk->mman, mes_b_bag_m17, wk->msg_buf );
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m18, wk->msg_buf );
 			BattleBag_TalkMsgSet( wk );
 			wk->ret_seq = SEQ_BBAG_ERR;
 			return SEQ_BBAG_MSG_WAIT;
