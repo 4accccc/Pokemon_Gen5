@@ -137,7 +137,7 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
     result = CAMERA_Init();
     if(result == CAMERA_RESULT_FATAL_ERROR)
     {
-        OS_TPanic("CAMERA_Init was failed.");
+        GF_PANIC("CAMERA_Init was failed.");
     }
     if(result == CAMERA_RESULT_ILLEGAL_STATUS)
     {
@@ -157,7 +157,7 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
     result = CAMERA_I2CActivate(work->currentCamera);
     if (result == CAMERA_RESULT_FATAL_ERROR)
     {
-        OS_TPanic("CAMERA_I2CActivate was failed. (%d)\n", result);
+        GF_PANIC("CAMERA_I2CActivate was failed. (%d)\n", result);
     }
     if(result == CAMERA_RESULT_ILLEGAL_STATUS)
     {
@@ -202,7 +202,7 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
       DSP_OpenStaticComponentG711(file);
       if (!DSP_LoadG711(file, 0xFF, 0xFF))
       {
-        OS_TPanic("can't allocate WRAM Slot");
+        GF_PANIC("can't allocate WRAM Slot");
       }
     }
     GFL_UI_SoftResetSetFunc( CAMERA_SYS_SoftResetCallBack , work );
@@ -372,7 +372,7 @@ static void CAMERA_SYS_VSyncCallBack(CAMERAResult result)
     ret = CAMERA_I2CActivate(work->currentCamera);
     if(ret == CAMERA_RESULT_FATAL_ERROR)
     {
-      OS_Panic("CAMERA FATAL ERROR\n");
+      GF_PANIC("CAMERA FATAL ERROR\n");
     }
     work->stabilizedCount = 0;
     work->switchFlag = FALSE;

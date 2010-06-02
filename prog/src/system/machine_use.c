@@ -274,7 +274,7 @@ static void MachineSystem_MbInitFile(void)
       newRom.card_lock_id = (u32)OS_GetLockID();
       if (!FS_RegisterArchiveName(newRom.arc, name, (u32)STD_GetStringLength(name)))
       {
-        OS_TPanic("error! FS_RegisterArchiveName(%s) failed.\n", name);
+        GF_PANIC("error! FS_RegisterArchiveName(%s) failed.\n", name);
       }
       else
       {
@@ -284,7 +284,7 @@ static void MachineSystem_MbInitFile(void)
                           fat->offset, fat->length, fnt->offset, fnt->length,
                           MyRom_ReadCallback, MyRom_WriteDummyCallback))
         {
-            OS_TPanic("error! FS_LoadArchive() failed.\n");
+            GF_PANIC("error! FS_LoadArchive() failed.\n");
         }
       }
     }

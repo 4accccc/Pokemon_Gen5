@@ -2040,7 +2040,7 @@ static SNDEXFrequency GetI2SFrequency(void)
             break;
         case SNDEX_RESULT_FATAL_ERROR:      // ívñΩìIÇ»ÉGÉâÅ[
         default:
-            OS_Panic("Fatal error (%d).\n", result);
+            GF_PANIC("Fatal error (%d).\n", result);
             /* never return */
         }
     }
