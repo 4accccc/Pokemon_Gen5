@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-04T13:24:36"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T17:37:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1452" top="256" right="2157" bottom="884" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -296,11 +296,11 @@
 		<comment>♀
 ・フィーリングチェックのデータがない</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">わたし　フィーリングうらないし▼
+		<language name="JPN" width="256">わたしは　フィーリングうらないし▼
 よのなか　Ｃギアを　つかって
 フィーリングチェックを　している▽
 ヒトが　おおいんですってね</language>
-		<language name="JPN_KANJI" width="256">わたし　フィーリングうらないし▼
+		<language name="JPN_KANJI" width="256">わたしは　フィーリング占い師▼
 世の中　Ｃ－ＧＥＡＲを　使って
 フィーリングチェックを　している▽
 ヒトが　多いんですってね</language>
@@ -315,7 +315,7 @@
 ・データが1つしかないとき
 　→middlewoman2_05</comment>
 		<attribute name="キャラ指定">MIDDLEWOMAN2</attribute>
-		<language name="JPN" width="256">わたし　フィーリングうらないし▼
+		<language name="JPN" width="256">わたしは　フィーリングうらないし▼
 フィーリングチェックの　せいせきから
 あなたの　きょうの　ラッキーマンを▽
 ずばっと　あてちゃうわ！▽
