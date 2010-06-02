@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-30T21:35:05"/>
+	<create user="ohmori" host="W00223" date="2010-06-02T12:53:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -512,8 +512,8 @@
 	</row>
 
 	<row id="msg_invasion_mission_sys001" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング][1:00:トレーナー名:0]が　ミッションたっせい！</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング][1:00:トレーナー名:0]が　ミッション達成！</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング][1:00:トレーナー名:0]が　ミッションたっせい！[BE:02:ウェイト変更（単発）:90]</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング][1:00:トレーナー名:0]が　ミッション達成！[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="msg_invasion_mission_sys002" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
@@ -522,8 +522,8 @@
 	</row>
 
 	<row id="msg_invasion_mission_sys003" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
-		<language name="JPN" width="256">デルダマを　[2:01:２桁:0]こ　てにいれた！▼</language>
-		<language name="JPN_KANJI" width="256">デルダマを　[2:01:２桁:0]個　手に入れた！▼</language>
+		<language name="JPN" width="256">デルダマを　[2:01:２桁:0]こ　てにいれた！[BE:02:ウェイト変更（単発）:90]</language>
+		<language name="JPN_KANJI" width="256">デルダマを　[2:01:２桁:0]個　手に入れた！[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="msg_invasion_mission_sys004" back-color="#ffff80,,,,,,#ff0000,,,,,,,,,,,">
@@ -677,36 +677,36 @@
 
 	<row id="msg_invasion_mission_03" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の表示（成功）</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッション　たっせい！</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッション　達成！</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッション　たっせい！[BE:02:ウェイト変更（単発）:90]</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッション　達成！[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="msg_invasion_mission_04" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の表示（失敗）</comment>
-		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッション　しっぱい……</language>
-		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッション　失敗……</language>
+		<language name="JPN" width="256">[BD:02:Ｘセンタリング]ミッション　しっぱい……[BE:02:ウェイト変更（単発）:90]</language>
+		<language name="JPN_KANJI" width="256">[BD:02:Ｘセンタリング]ミッション　失敗……[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="msg_invasion_mission_clear_01" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ポイント表示</comment>
-		<language name="JPN" width="256">デルダマを　[2:01:２桁:0]こ　てにいれた！</language>
-		<language name="JPN_KANJI" width="256">デルダマを　[2:01:２桁:0]個　手に入れた！</language>
+		<language name="JPN" width="256">デルダマを　[2:01:２桁:0]こ　てにいれた！[BE:02:ウェイト変更（単発）:90]</language>
+		<language name="JPN_KANJI" width="256">デルダマを　[2:01:２桁:0]個　手に入れた！[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="msg_invasion_mission_clear_02" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ブラックレベルの表示</comment>
 		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
-◇ブラックＬｖが　[2:02:３桁:0]あがった！</language>
+◇ブラックＬｖが　[2:02:３桁:0]あがった！[BE:02:ウェイト変更（単発）:90]</language>
 		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
-◇ブラックＬｖが　[2:02:３桁:0]上がった！</language>
+◇ブラックＬｖが　[2:02:３桁:0]上がった！[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="msg_invasion_mission_clear_03" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>ミッション終了時の　獲得ホワイトレベルの表示</comment>
 		<language name="JPN" width="256">しあわせが　あつまり　ハイリンクの
-◆ホワイトＬｖが　[2:02:３桁:0]あがった！</language>
+◆ホワイトＬｖが　[2:02:３桁:0]あがった！[BE:02:ウェイト変更（単発）:90]</language>
 		<language name="JPN_KANJI" width="256">幸せが　集まり　ハイリンクの
-◆ホワイトＬｖが　[2:02:３桁:0]上がった！</language>
+◆ホワイトＬｖが　[2:02:３桁:0]上がった！[BE:02:ウェイト変更（単発）:90]</language>
 	</row>
 
 	<row id="mis_m01_01_t1" back-color="#00ff00,,,#ffff80,,,#ff0000,,,,,,,,,,,">
