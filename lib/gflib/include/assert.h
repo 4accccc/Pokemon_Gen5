@@ -13,7 +13,10 @@
 extern "C" {
 #endif
 
+//デバッグ定義がなければ
+#ifdef PM_DEBUG
 #define	GF_ASSERT_ENABLE
+#endif//PM_DEBUG
 
 
 #ifdef	GF_ASSERT_ENABLE
