@@ -2243,9 +2243,6 @@ FS_EXTERN_OVERLAY(battle);
       break;
     }
 
-    setupFieldSituation( &wk->fieldSit, &wk->saveData );
-    setDebugParams( &wk->saveData, &wk->setupParam );
-
     // •ßŠlƒfƒ‚
     if( wk->saveData.btlType == BTLTYPE_DEMO_CAPTURE )
     {
@@ -2412,6 +2409,10 @@ FS_EXTERN_OVERLAY(battle);
     {
       BTL_SETUP_AllocRecBuffer( &wk->setupParam, wk->heapID );
     }
+
+    setupFieldSituation( &wk->fieldSit, &wk->saveData );
+    setDebugParams( &wk->saveData, &wk->setupParam );
+
     (*seq) = SEQ_BTL_START;
     break;
 
