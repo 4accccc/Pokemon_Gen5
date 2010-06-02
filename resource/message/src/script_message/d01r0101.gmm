@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T17:06:50"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T19:53:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -514,11 +514,11 @@
 ・移動すると下記のポケモンのアニメ</comment>
 		<attribute name="キャラ指定">友達♀
 ベル</attribute>
-		<language name="JPN" width="256">ベル『！▼
+		<language name="JPN" width="256">ベル『ねえねえ！▼
 なんだか　かべの　むこうから
 ものおと　きこえなかった！？▽
 ねえねえ　いってみようよ！</language>
-		<language name="JPN_KANJI" width="256">ベル『！▼
+		<language name="JPN_KANJI" width="256">ベル『ねえねえ！▼
 なんだか　壁の　向こうから
 物音　聞こえなかった！？▽
 ねえねえ　行ってみようよ！</language>
