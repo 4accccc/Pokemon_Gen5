@@ -21,6 +21,7 @@
 #include "msg/msg_oekaki.h"
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
+#include "system/net_err.h"
 #include "system/gfl_use.h"
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
@@ -139,6 +140,7 @@ static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk );
 static  u32 YesNoMenuMain( OEKAKI_WORK *wk );
 static void YesNoMenuDelete( OEKAKI_WORK *wk );
 static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
+static void Oekaki_PrintFunc( OEKAKI_WORK *wk );
 static void _comm_friend_add( OEKAKI_WORK *wk );
 
 
@@ -423,18 +425,21 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   }
   GFL_CLACT_SYS_Main();             // セルアクター常駐関数
   GFL_TCBL_Main( wk->pMsgTcblSys );
-  PRINTSYS_QUE_Main( wk->printQue );
-  {
-    int i;
-    for(i=0;i<OEKAKI_PRINT_UTIL_NAME_WIN4+1;i++){
-      PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
-    }
-    PRINT_UTIL_Trans( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue );
+  Oekaki_PrintFunc(wk);
 
+  // フェード中じゃない時に通信エラーチェック
+  if( WIPE_SYS_EndCheck() ){
+    if(NetErr_App_CheckError()!=NET_ERR_STATUS_NULL){
+      OS_Printf("------------------------通信エラー--------------------\n");
+      return ( GFL_PROC_RES_FINISH );
+    }
   }
+
   
   return GFL_PROC_RES_CONTINUE;
 }
+
+
 
 #define DEFAULT_NAME_MAX    18
 
@@ -504,14 +509,8 @@ GFL_PROC_RESULT OekakiProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk
     (*seq)++;
     break;
   case 1:
-    // 通信終了
-  //  CommStateExitUnion();
-//    CommStateSetLimitNum(1);
-//    CommStateUnionBconCollectionRestart();
-//    UnionRoomView_ObjInit( param->view );
-
     // 入れ替わっていた上下画面出力を元に戻す
-    GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+//    GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
 
 
     (*seq)++;
@@ -825,6 +824,7 @@ static void FreeWork( OEKAKI_WORK *wk )
 //--------------------------------------------------------------------------------------------
 static void BgExit( void )
 {
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
 
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
@@ -1655,7 +1655,7 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
 
   if(wk->AllTouchResult[0].banFlag==OEKAKI_BAN_ON && GFL_NET_SystemGetCurrentID()!=0){
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
-
+    APP_TASKMENU_ShowOnly( wk->app_menuwork );
     if(FakeEndYesNoSelect(wk)){
       // 親機に禁止されているときはＳＥのみ
       PMSND_PlaySE(OEKAKI_BS_SE);
@@ -1943,6 +1943,8 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
                                 Union_App_GetMystatus(wk->param->uniapp, 0)); 
     seq = SEQ_LEAVE;
     OS_Printf("OEKAKI_MODE_FORCE_ENDにかきかえ\n");
+    // 乱入禁止
+    Union_App_Parent_EntryBlock(wk->param->uniapp);
     break;
   case YESNO_RET_NO:           //いいえ
     SetNextSequence( wk, OEKAKI_MODE );
@@ -3358,3 +3360,22 @@ static void _comm_friend_add( OEKAKI_WORK *wk )
 
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 文字列描画関連呼び出し処理
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void Oekaki_PrintFunc( OEKAKI_WORK *wk )
+{
+  int i;
+  PRINTSYS_QUE_Main( wk->printQue );
+  for(i=0;i<OEKAKI_PRINT_UTIL_NAME_WIN4+1;i++){
+    PRINT_UTIL_Trans( &wk->printUtil[i], wk->printQue );
+  }
+  PRINT_UTIL_Trans( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue );
+
+
+}

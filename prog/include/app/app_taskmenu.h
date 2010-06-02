@@ -96,6 +96,7 @@ extern const u8 APP_TASKMENU_GetCursorPos( APP_TASKMENU_WORK *work );
 extern const void APP_TASKMENU_SetActive( APP_TASKMENU_WORK *work, BOOL isActive );
 extern void APP_TASKMENU_SetDisableKey( APP_TASKMENU_WORK *work , const BOOL flg );
 extern void APP_TASKMENU_SetCursorPos( APP_TASKMENU_WORK *work, int pos );
+extern void APP_TASKMENU_ShowOnly( APP_TASKMENU_WORK *work );
 
 //横メニューなどで使用する、単発窓
 //横メニューの際は、「けってい」「やめる」など、複数ウィンドウを作成してください
