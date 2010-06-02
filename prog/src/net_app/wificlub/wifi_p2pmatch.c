@@ -266,6 +266,7 @@ typedef struct{  // スクリーン用RECT構造体
 #define _TIMING_POKEPARTY_END  (17)// タイミングをそろえる
 #define _TIMING_VCTEND  (18)// タイミングをそろえる
 #define _TIMING_VCTST  (19)// タイミングをそろえる
+#define _TIMING_DISCONNECT_END  (21)// タイミングをそろえる
 
 #define _RECONECTING_WAIT_TIME (20)  //再接続時間
 
@@ -820,6 +821,7 @@ static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq);
 static int WifiP2PMatch_VCTDisconnectSend3(WIFIP2PMATCH_WORK *wk, int seq);
 static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq );
 
+static int WifiP2PMatch_ReconectingWaitPre(WIFIP2PMATCH_WORK *wk, int seq);
 
 
 static BOOL _myVChatStatusToggle(WIFIP2PMATCH_WORK *wk);
@@ -1029,6 +1031,8 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectCancelEndNext, //WIFIP2PMATCH_PLAYERDIRECT_CANCELEND_NEXT
   _playerDirectSub45, //WIFIP2PMATCH_PLAYERDIRECT_SUB45
   WifiP2PMatch_FriendListMain_MW, //WIFIP2PMATCH_MODE_FRIENDLIST_MW
+  WifiP2PMatch_ReconectingWaitPre, //WIFIP2PMATCH_RECONECTING_WAIT_PRE
+
 };
 
 
@@ -2151,7 +2155,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
 
   if(wk->pParentWork->seq != WIFI_GAME_NONE){
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
-    if(wk->state == WIFIP2PMATCH_STATE_TALK && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
+    if(((wk->state == WIFIP2PMATCH_STATE_TALK) || (wk->state == WIFIP2PMATCH_STATE_RECV))
+       && (!GFL_NET_DWC_IsDisconnect())){  //話しかけ接続時
       //ここでVCT切断
       DWCRAP_StopVChat();
       WifiP2PMatch_FriendListInit2( wk, seq );
@@ -2160,12 +2165,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
     }
     else{  //相手と切断
-      GFL_NET_SetAutoErrorCheck(FALSE);
-      GFL_NET_SetNoChildErrorCheck(FALSE);
-      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
-      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
-      wk->timer = _RECONECTING_WAIT_TIME;
-      _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTEND, WB_NET_WIFICLUB);
+      _CHANGESTATE(wk, WIFIP2PMATCH_VCTEND_COMMSEND2);
     }
   }
   else
@@ -2183,6 +2184,31 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
   }
   return seq;
 }
+
+
+#if 0
+
+//WIFIP2PMATCH_VCTEND_COMMSEND2
+static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
+{
+  wk->VChatModeOff = FALSE;
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_VCTEND, WB_NET_WIFICLUB)){
+
+WIFIP2PMATCH_RECONECTING_WAIT_PRE
+
+
+if(GFL_NET_HANDLE_IsTime(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_DISCONNECT_END, WB_NET_WIFICLUB);
+
+
+      GFL_NET_SetAutoErrorCheck(FALSE);
+      GFL_NET_SetNoChildErrorCheck(FALSE);
+
+
+      GFL_NET_StateWifiMatchEnd(TRUE);  // マッチングを切る
+      _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+      wk->timer = _RECONECTING_WAIT_TIME;
+      _CHANGESTATE(wk, WIFIP2PMATCH_RECONECTING_WAIT);
+#endif
 
 
 //------------------------------------------------------------------
@@ -3914,15 +3940,30 @@ static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
       _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
       GFL_NET_SetAutoErrorCheck(FALSE);
       GFL_NET_SetNoChildErrorCheck(FALSE);
-      GFL_NET_StateWifiMatchEnd(TRUE);
-      wk->preConnect = -1;
-      wk->timer = _RECONECTING_WAIT_TIME;
-      EndMessageWindowOff(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_RECONECTING_WAIT);
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_DISCONNECT_END, WB_NET_WIFICLUB);
+      _CHANGESTATE(wk,WIFIP2PMATCH_RECONECTING_WAIT_PRE);
     }
   }
   return seq;
 }
+
+
+
+//WIFIP2PMATCH_RECONECTING_WAIT_PRE
+static int WifiP2PMatch_ReconectingWaitPre(WIFIP2PMATCH_WORK *wk, int seq)
+{
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_DISCONNECT_END, WB_NET_WIFICLUB)
+     || (GFL_NET_HANDLE_GetNumNegotiation()!=2 )){
+    GFL_NET_StateWifiMatchEnd(TRUE);
+    wk->preConnect = -1;
+    wk->timer = _RECONECTING_WAIT_TIME;
+    EndMessageWindowOff(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_RECONECTING_WAIT);
+  }
+  return seq;
+}
+
+
 
 //WIFIP2PMATCH_VCTEND_COMMSEND3
 static int WifiP2PMatch_VCTDisconnectSend3(WIFIP2PMATCH_WORK *wk, int seq)
