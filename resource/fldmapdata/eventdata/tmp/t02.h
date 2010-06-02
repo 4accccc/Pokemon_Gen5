@@ -54,6 +54,5 @@
 #define ZONE_T02_EVB_H
 
 #define T02_SIGN1_01                      0
-#define T02_SIGN2_01                      1
 
 #endif //ZONE_T02_EVB_H
