@@ -1199,11 +1199,12 @@ void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms)
 {
   GFL_BMPWIN* pwin;
   int i;
+  GFL_POINT offset={0,5};
 
   if(pWork->pmsMsgWin==NULL){
     pWork->pmsMsgWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_M ,
-      2 , 16, 28 ,2 ,
+      2 , 15, 28 , 5 ,
       _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
   }
   
@@ -1215,7 +1216,10 @@ void GTSNEGO_MESSAGE_PMSDisp(GTSNEGO_MESSAGE_WORK* pWork,PMS_DATA* pms)
     PMS_DRAW_SetNullColorPallet( pWork->pms_draw_work, 0 );
     PMS_DRAW_SetPrintColor( pWork->pms_draw_work, PRINTSYS_LSB_Make( 15, 2, 0) );
     
-    PMS_DRAW_Print( pWork->pms_draw_work, pwin,  pms, 0 );
+
+    PMS_DRAW_PrintOffset(pWork->pms_draw_work, pwin,  pms, 0, &offset );
+
+//    PMS_DRAW_Print( pWork->pms_draw_work, pwin,  pms, 0 );
     
 //    PRINTSYS_Print(GFL_BMPWIN_GetBmp(pwin) ,0,0, pWork->pStrBuf, pWork->pFontHandle );
     GFL_BMPWIN_TransVramCharacter(pwin);

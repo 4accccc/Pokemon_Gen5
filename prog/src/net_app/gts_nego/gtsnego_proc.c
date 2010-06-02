@@ -41,6 +41,7 @@
 #include "savedata/wifi_negotiation.h"
 #include "savedata/system_data.h"
 #include "savedata/etc_save.h"
+#include "savedata/my_pms_data.h"
 
 #include "msg/msg_gtsnego.h"
 #include "../../field/event_gtsnego.h"
@@ -761,11 +762,16 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
   }
   else if(GFL_NET_HANDLE_GetNumNegotiation()==2){
     EVENT_GTSNEGO_WORK *pParent = pWork->dbw;
+    const MYPMS_DATA *p_wk = SaveData_GetMyPmsDataConst(pWork->pSave);
+
     pParent->aUser[0].selectLV = pWork->chageLevel;
     pParent->aUser[0].selectType = pWork->myChageType;
     OHNO_Printf("myChageType %d %d\n",pWork->chageLevel,pWork->myChageType);
 
-    WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
+    //WIFI_NEGOTIATION_SV_GetMsg(GAMEDATA_GetWifiNegotiation(pWork->pGameData),&pWork->myMatchData.pms);
+
+    MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &pWork->myMatchData.pms );
+
     pWork->myMatchData.num = WIFI_NEGOTIATION_SV_GetChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
     _CHANGE_STATE(pWork,_timingCheck);
