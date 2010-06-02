@@ -139,6 +139,7 @@ typedef struct {
   BTL_POKESET     psetTmp;
   WAZAEFF_CTRL    effCtrl;
   SVFL_WAZAPARAM  wazaParam;
+  SVFL_WAZAPARAM  wazaParamOrg;
   HITCHECK_PARAM  hitCheck;
   WAZA_ROB_PARAM  wazaRobParam;
   WAZA_ROB_PARAM  magicCoatParam;
@@ -353,6 +354,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_POKESET         pokesetMemberInProc;
 
   SVFL_WAZAPARAM         *wazaParam;
+  SVFL_WAZAPARAM         *wazaParamOrg;
   BTL_POSPOKE_WORK       pospokeWork;
   BTL_HANDEX_STR_PARAMS  strParam;
   CALC_EXP_WORK          calcExpWork[ BTL_PARTY_MEMBER_MAX ];

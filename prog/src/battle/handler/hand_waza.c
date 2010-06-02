@@ -5834,13 +5834,10 @@ static void handler_Haradaiko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_Feint( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CHECK_MAMORU_BREAK,  handler_Feint_MamoruBreak },  // まもる無効化チェック
-    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_Feint_AfterDamage },  // ダメージ処理後
+    { BTL_EVENT_CHECK_MAMORU_BREAK, handler_Feint_MamoruBreak  }, // まもる無効化チェック
+    { BTL_EVENT_DAMAGEPROC_END_HIT, handler_Feint_AfterDamage  }, // ダメージ処理後
 
-    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Feint_Decide },  // ワザ出し確定
-//    { BTL_EVENT_WAZASEQ_START,       handler_Feint_Start },  // ワザ処理開始
-//    { BTL_EVENT_WAZASEQ_END,         handler_Feint_End   },  // ワザ処理終了
-
+    { BTL_EVENT_WAZA_EXE_DECIDE,    handler_Feint_Decide       }, // ワザ出し確定
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

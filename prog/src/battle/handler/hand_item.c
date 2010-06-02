@@ -2869,7 +2869,7 @@ static void handler_FutoiHone( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariHachimaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,    handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_CALL_DECIDE,   handler_Kodawari_Common_WazaExe    }, // ワザ名出力確定ハンドラ
     { BTL_EVENT_ITEMSET_DECIDE,     handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
     { BTL_EVENT_ATTACKER_POWER,     handler_KodawariHachimaki_Pow      }, // 攻撃力決定ハンドラ
   };
@@ -2898,7 +2898,7 @@ static void handler_KodawariHachimaki_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariMegane( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Kodawari_Common_WazaExe    }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_CALL_DECIDE,    handler_Kodawari_Common_WazaExe    }, // ワザ名出力確定ハンドラ
     { BTL_EVENT_ITEMSET_DECIDE,      handler_Kodawari_Common_ItemChange }, // アイテム変更確定ハンドラ
     { BTL_EVENT_ATTACKER_POWER,      handler_KodawariMegane_Pow         }, // 攻撃力決定ハンドラ
   };
@@ -2927,7 +2927,7 @@ static void handler_KodawariMegane_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KodawariScarf( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXE_DECIDE,     handler_Kodawari_Common_WazaExe      }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZA_CALL_DECIDE,    handler_Kodawari_Common_WazaExe      }, // ワザ名出力確定ハンドラ
     { BTL_EVENT_ITEMSET_DECIDE,      handler_Kodawari_Common_ItemChange   }, // アイテム変更確定ハンドラ
     { BTL_EVENT_CALC_AGILITY,        handler_KodawariScarf                }, // 素早さ計算ハンドラ
   };
