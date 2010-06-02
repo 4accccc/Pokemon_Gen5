@@ -602,6 +602,8 @@ struct _BTLV_INPUT_WORK
   int                   active_index;       //コマンド選択しているポケモンのインデックス
   BOOL                  henshin_flag;
 
+  u16                   bag_pal[ 0x10 ];    //バッグボタンパレットを退避しておく
+
   //ローテーション用POKEMON_PARAM
 #ifdef ROTATION_NEW_SYSTEM
   const BTL_POKEPARAM*  rotate_bpp[ BTLV_INPUT_POKEICON_MAX ];
@@ -788,6 +790,8 @@ static  int   BTLV_INPUT_GetTCBIndex( BTLV_INPUT_WORK* biw );
 static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw );
 static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos );
 static  void  set_cursor_pos( BTLV_INPUT_WORK* biw );
+static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw );
+static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw );
 
 static  inline  void  SePlayOpen( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlaySelect( BTLV_INPUT_WORK* biw );
@@ -1349,6 +1353,15 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       for( i = 0 ; i < 4 ; i++ )
       {
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
+      }
+      { 
+        const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( BTLV_EFFECT_GetMainModule() );
+        //バッグがシューターモードではないか、使用できない場合はエネルギー表示なし
+        if( ( ( bicp->bagMode == BBAG_MODE_SHOOTER ) && ( shooter->shooter_use == FALSE ) ) ||
+              ( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_SUBWAY ) )
+        { 
+          biw->button_exist[ 1 ] = FALSE;  //押せるボタンかどうかチェック
+        }
       }
 
       BTLV_INPUT_DeletePokeIcon( biw );
@@ -1949,6 +1962,12 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
   PaletteWorkSet_ArcHandle( biw->pfd, biw->handle, NARC_battgra_wb_battle_w_bg_NCLR,
                             biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
 
+  //バッグボタンパレットを退避しておく
+  { 
+    u16*  pal = PaletteWorkDefaultWorkGet( BTLV_EFFECT_GetPfd(), FADE_SUB_BG );
+    MI_CpuCopy16( &pal[ 0x10 * 2 ], &biw->bag_pal, 0x20 );
+  }
+
   biw->objcharID = GFL_CLGRP_CGR_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCGR, FALSE,
                                            CLSYS_DRAW_SUB, biw->heapID );
   biw->objcellID = GFL_CLGRP_CELLANIM_Register( biw->handle, NARC_battgra_wb_battle_w_obj_NCER,
@@ -2003,6 +2022,7 @@ static  void  TCB_TransformStandby2Command( GFL_TCB* tcb, void* work )
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    change_bag_button_pal( ttw->biw );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
@@ -2117,6 +2137,7 @@ static  void  TCB_TransformCommand2Waza( GFL_TCB* tcb, void* work )
     SetupScrollUp( ttw->biw, TTC2W_START_SCROLL_X, TTC2W_START_SCROLL_Y, TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
     SetupScreenAnime( ttw->biw, 0, SCREEN_ANIME_DIR_FORWARD );
     SetupBallGaugeMove( ttw->biw, BALL_GAUGE_MOVE_OPEN );
+    pop_bag_button_pal( ttw->biw );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_OFF );
@@ -2159,6 +2180,7 @@ static  void  TCB_TransformWaza2Command( GFL_TCB* tcb, void* work )
     GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg1a_NSCR,
                                      GFL_BG_FRAME1_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win_shooter );
+    change_bag_button_pal( ttw->biw );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TSA_SCROLL_X2 );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TSA_SCROLL_Y2 );
@@ -2381,6 +2403,7 @@ static  void  TCB_TransformStandby2YesNo( GFL_TCB* tcb, void* work )
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_X_SET, TTS2C_FRAME1_SCROLL_X );
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
+    pop_bag_button_pal( ttw->biw );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
@@ -2618,6 +2641,7 @@ static  void  TCB_TransformCommand2Rotate( GFL_TCB* tcb, void* work )
      GFL_ARCHDL_UTIL_TransVramScreen( ttw->biw->handle, NARC_battgra_wb_battle_w_bg0h_NSCR,
                                       GFL_BG_FRAME0_S, 0, 0, FALSE, ttw->biw->heapID );
     GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
+    pop_bag_button_pal( ttw->biw );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
     SetupScrollUp( ttw->biw, rotate_scroll_table[ ttw->biw->rotate_scr ][ 0 ],
                    rotate_scroll_table[ ttw->biw->rotate_scr ][ 1 ], TTC2W_SCROLL_SPEED, TTC2W_SCROLL_COUNT );
@@ -5083,6 +5107,29 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
     biw->cursor_pos = 0;
     break;
   }
+}
+
+//=============================================================================================
+//  バッグボタンパレットをシューターモードにあわせて変更
+//=============================================================================================
+static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
+{ 
+  const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( BTLV_EFFECT_GetMainModule() );
+  if( ( ( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER ) && ( shooter->shooter_use == FALSE ) ) ||
+        ( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_SUBWAY ) )
+  { 
+    u16 pal[ 0x10 ];
+    SoftFade( biw->bag_pal, pal, 0x10, 8, 0 );
+    PaletteWorkSet( BTLV_EFFECT_GetPfd(), &pal, FADE_SUB_BG, 0x20, 0x20 );
+  }
+}
+
+//=============================================================================================
+//  退避していたバッグボタンパレットをリロード
+//=============================================================================================
+static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw )
+{ 
+  PaletteWorkSet( BTLV_EFFECT_GetPfd(), &biw->bag_pal, FADE_SUB_BG, 0x20, 0x20 );
 }
 
 //=============================================================================================
