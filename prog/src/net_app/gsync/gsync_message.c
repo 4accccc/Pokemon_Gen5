@@ -193,11 +193,8 @@ void GSYNC_MESSAGE_Main(GSYNC_MESSAGE_WORK* pWork)
 void GSYNC_MESSAGE_End(GSYNC_MESSAGE_WORK* pWork)
 {
   int i;
-  
-  if(pWork->pTimeIcon){
-    TIMEICON_Exit(pWork->pTimeIcon);
-    pWork->pTimeIcon=NULL;
-  }
+
+  GSYNC_MESSAGE_InfoMessageEnd(pWork);
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
@@ -345,6 +342,10 @@ void GSYNC_MESSAGE_InfoMessageEnd(GSYNC_MESSAGE_WORK* pWork)
   if(pWork->pTimeIcon){
     TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
+  }
+  if(pWork->pStream){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+    pWork->pStream = NULL;
   }
   BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
   GFL_BMPWIN_ClearScreen(pWork->infoDispWin);

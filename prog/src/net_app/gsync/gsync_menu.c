@@ -1425,6 +1425,9 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   pWork->yoffset--;
   GFL_CLACT_SYS_Main();
 
+
+
+  
   return retCode;
 }
 
@@ -1466,16 +1469,13 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
   GFL_HEAP_FreeMemory(pWork->pVramOBJ);
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   APP_KEYCURSOR_Delete( pWork->pKeyCursor );
-  GFL_TCBL_Exit(pWork->pMsgTcblSys);
   GFL_BG_FreeBGControl(_SUBSCREEN_BGPLANE);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
-  //  if(pWork->pAppWin){
-  //    APP_TASKMENU_WIN_Delete(pWork->pAppWin);
-  //  }
+  GFL_TCBL_Exit(pWork->pMsgTcblSys);
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
 
