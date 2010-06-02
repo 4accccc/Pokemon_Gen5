@@ -624,6 +624,7 @@ static void _menuFriendPokemon(POKEMON_TRADE_WORK* pWork)
       _CHANGE_STATE(pWork, _pokemonStatusStart);
       break;
     case 1:  //‚à‚Ç‚é
+      TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
       _select6PokeSubMask(pWork);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
@@ -656,7 +657,7 @@ static void _NEGO_BackSelect8(POKEMON_TRADE_WORK* pWork)
   }
   POKETRADE_MESSAGE_WindowClear(pWork);
   POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
-  
+  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
   _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
 }
 
@@ -900,6 +901,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     }
   }
   POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
+  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
 
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_DECIDE) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_DECIDE)){
@@ -1056,6 +1058,7 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
 
     _select6PokeSubMask(pWork);
     _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
+    TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
     WIPE_SYS_Start( WIPE_PATTERN_M , WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   }
@@ -1149,6 +1152,7 @@ static void _menuMyPokemon(POKEMON_TRADE_WORK* pWork)
       break;
     case 2:  //‚à‚Ç‚é
       _select6PokeSubMask(pWork);
+      TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
     }
@@ -1324,6 +1328,7 @@ static void _NEGO_Select6CancelWait2(POKEMON_TRADE_WORK* pWork)
       break;
     default: //‚¢‚¢‚¦
       POKETRADE_MESSAGE_WindowClear(pWork);
+      TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
       _CHANGE_STATE(pWork, POKETRADE_NEGO_Select6keywait);
       break;
     }
@@ -1392,19 +1397,12 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
     POKEMONTRADE_StartPokeSelectSixButton(pWork,pWork->pokemonselectno);
     PMSND_PlaySystemSE(SEQ_SE_SELECT1);
   }
-/*
-  if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL){
-    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
-    return;
-  }
-   */
   TOUCHBAR_Main(pWork->pTouchWork);
   switch( TOUCHBAR_GetTrg(pWork->pTouchWork )){
   case TOUCHBAR_ICON_RETURN:
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_15, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
+    TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
     _CHANGE_STATE(pWork, _NEGO_Select6CancelWait );
     break;
   default:
@@ -1425,6 +1423,8 @@ static void POKETRADE_NEGO_Select6keywaitMsg2(POKEMON_TRADE_WORK* pWork)
   }
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     POKETRADE_MESSAGE_WindowClear(pWork);
+    TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+
     _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywait);
   }
 }
@@ -1435,6 +1435,7 @@ static void POKETRADE_NEGO_Select6keywaitMsg(POKEMON_TRADE_WORK* pWork)
   GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_12, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
   pWork->NegoWaitTime = _GTSINFO12_WAIT;
+
   _CHANGE_STATE(pWork,POKETRADE_NEGO_Select6keywaitMsg2);
 }
 
@@ -1530,8 +1531,7 @@ static void _Select6Init(POKEMON_TRADE_WORK* pWork)
 //  POKETRADE_TOUCHBAR_Init(pWork);
 
   TOUCHBAR_SetVisible(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
-  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
-
+  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, FALSE);
 
   POKETRADE_MESSAGE_SixStateDisp(pWork , GFL_BG_FRAME2_S);//‚U‘Ì•\Ž¦
   

@@ -868,6 +868,7 @@ extern BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKE_GTS_CreateCancelButton(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_DeleteCancelButton(POKEMON_TRADE_WORK* pWork, BOOL bar,BOOL change);
+extern void POKEMON_TRADE_PaletteFade(POKEMON_TRADE_WORK* pWork, BOOL bFade, int type, int paletteBIT);
 
 
 #if _TRADE_DEBUG

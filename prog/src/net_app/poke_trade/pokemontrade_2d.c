@@ -3379,7 +3379,7 @@ static void _PaletteFadeSingle3(POKEMON_TRADE_WORK* pWork, int type, int palette
   PaletteFadeFree(pP);
 }
 
-static void POKEMON_TRADE_PaletteFade(POKEMON_TRADE_WORK* pWork, BOOL bFade, int type, int paletteBIT)
+void POKEMON_TRADE_PaletteFade(POKEMON_TRADE_WORK* pWork, BOOL bFade, int type, int paletteBIT)
 {
   u32 addr;
 

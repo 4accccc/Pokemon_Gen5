@@ -2350,7 +2350,7 @@ static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
   GFL_NET_ReloadIcon();
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
-  POKETRADE_MESSAGE_WindowOpen(pWork);
+  POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
   //メッセージ時計アイコン
   POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
 
