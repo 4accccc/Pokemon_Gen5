@@ -387,6 +387,7 @@ sub_waza_teacher_coalescence:
 /*  合体技教えの人のところの張り紙                            */
 /**************************************************************/
 EVENT_START   ev_bg_waza_teacher_coalescence
+	//未使用です。マップに配置してません。
 	_EASY_BGWIN_MSG( msg_skillteach_coalescence_11, TYPE_TOWN )
 EVENT_END
 
