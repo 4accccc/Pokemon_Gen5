@@ -433,6 +433,8 @@ download:
 
       //通信中
       _SYSWIN_MSG_ALLPUT_DOWN( msg_trialhouse_034 )
+      _TIME_WAIT(1) //画面に反映
+      _SYSWIN_TIMEICON( SCR_SYSWIN_TIMEICON_ON )  // タイムアイコンON
       //ビーコンサーチ処理
       _TH_SEARCH_BEACON( SCWK_ANSWER )
       _SYSWIN_CLOSE()
