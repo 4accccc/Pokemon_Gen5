@@ -90,8 +90,6 @@ EVENT_START ev_vending_machine01
         //ŠŽ‹à‚ÍH
         _CHECK_GOLD( SCWK_ANSWER, gold )
         IF $SCWK_ANSWER == TRUE THEN    //‘«‚è‚é
-          //Œˆ’è‚r‚d‘Ò‚¿
-          _SE_WAIT() 
           //‚¿‚å‚Á‚ÆŽžŠÔ‘Ò‚Â
           _TIME_WAIT(10) 
           //ˆù‚Ý•¨o‚Ä‚­‚é‰¹
