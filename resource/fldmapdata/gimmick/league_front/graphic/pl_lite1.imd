@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-04-15T00:59:07" source="pl_lite1.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-06-02T12:38:33" source="pl_lite1.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-04-15T00:59:07" source="pl_lite1.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-06-02T12:38:33" source="pl_lite1.mb"/>
 <original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
@@ -32,44 +32,28 @@
 <tex_image_array size="2">
 	<tex_image index="0" name="out32_han1"
 		width="16" height="32" original_width="16" original_height="32"
-		format="palette256"
+		format="palette16"
 		color0_mode="color"
 		palette_name="out32_han1_pl"
 		path="C:/home/wb_data3d/field/out32/chip/tex/out32_han1.tga"
 	>
-		<bitmap size="256">
+		<bitmap size="128">
 			0000 0000 0000 0000 0000 0000 0000 0000
+			1111 1111 1111 1111 2222 2222 2222 2222
+			2222 2222 2222 2222 1111 1111 1111 1111
+			2222 2222 2222 2222 1111 1111 1111 1111
+			8888 3345 3333 8855 dddd 469a 6444 dda9
+			dddd 469a 6444 dda9 efff 7bce b777 feec
+			ffff 7bce b777 feec efff 7bce b777 feec
+			efff 7bce b777 feec efff 7bce b777 ffec
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0a0a 0a0a 0507 0304 0303 0403 0705 0a0a
-			1010 0e10 0b0c 0608 0606 0806 0c0b 100e
-			1010 0e10 0b0c 0608 0606 0806 0c0b 100e
-			1414 1213 0f11 090d 0909 0d09 110f 1312
-			1414 1213 0f11 090d 0909 0d09 110f 1312
-			1414 1213 0f11 090d 0909 0d09 110f 1312
-			1414 1213 0f11 090d 0909 0d09 110f 1312
-			1414 1213 0f11 090d 0909 0d09 110f 1312
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0000 0000 0000 0000 0000 0000 0000 0000
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0101 0101 0101 0101 0101 0101 0101 0101
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
-			0202 0202 0202 0202 0202 0202 0202 0202
+			1111 1111 1111 1111 2222 2222 2222 2222
+			2222 2222 2222 2222 1111 1111 1111 1111
+			2222 2222 2222 2222 1111 1111 1111 1111
+			0000 0000 0000 0000 1111 1111 1111 1111
+			1111 1111 1111 1111 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
+			2222 2222 2222 2222 2222 2222 2222 2222
 		</bitmap>
 	</tex_image>
 	<tex_image index="1" name="out32_han2"
@@ -92,10 +76,9 @@
 </tex_image_array>
 
 <tex_palette_array size="2">
-	<tex_palette index="0" name="out32_han1_pl" color_size="24">
-		21d2 2a97 32fb 7e07 7e47 7ea6 7eaa 7ee5
-		7eea 7f0d 7f25 7f29 7f49 7f4d 7f69 7f6d
-		7f89 7f8d 7fad 7fcd 7fce 7fff 7fff 7fff
+	<tex_palette index="0" name="out32_han1_pl" color_size="16">
+		21d2 2a97 32fb 7e27 7eaa 7ee5 7eea 7f0d
+		7f25 7f29 7f49 7f4d 7f6d 7f89 7f8d 7fcd
 	</tex_palette>
 	<tex_palette index="1" name="out32_han2_pl" color_size="24">
 		7e07 7e47 7ea6 7eaa 7ee5 7eea 7f0d 7f25
@@ -126,8 +109,8 @@
 		tex_tiling="flip flip"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.500000 0.500000"
-		tex_gen_mode="tex"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
 	/>
 	<material index="1" name="out32_han2_1"
 		light0="off" light1="off" light2="off" light3="off"
@@ -150,8 +133,8 @@
 		tex_tiling="repeat repeat"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
-		tex_translate="0.500000 0.500000"
-		tex_gen_mode="tex"
+		tex_translate="0.000000 0.000000"
+		tex_gen_mode="none"
 	/>
 </material_array>
 
