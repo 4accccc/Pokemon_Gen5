@@ -104,7 +104,7 @@ static void STA_AUDI_SetAudienceDir( STA_AUDI_SYS *work , STA_AUDI_WORK *audiWor
 static void STA_AUDI_CheckAudienceState( STA_AUDI_SYS *work );
 static void STA_AUDI_SetAudienceState_Default( STA_AUDI_SYS *work );
 
-static const u16 audiCharNum[4] = {0x08,0x10,0x88,0x90};
+static const u16 audiCharNum[4] = {0x10,0x90,0x08,0x88};
 
 //--------------------------------------------------------------
 //  èâä˙âª

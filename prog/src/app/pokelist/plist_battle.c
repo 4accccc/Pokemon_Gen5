@@ -399,6 +399,7 @@ static void PLIST_BATTLE_UpdateBattleParam( PLIST_WORK *work , PLIST_BATTLE_PARA
 static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *work , POKEMON_PARAM *pp , const u8 posX , const u8 posY )
 {
   PLIST_BATTLE_POKE_ICON *iconWork = GFL_HEAP_AllocMemory( work->heapId , sizeof(PLIST_BATTLE_POKE_ICON) );
+  const u32 isEgg = PP_Get( pp , ID_PARA_tamago_flag , NULL );
   //ポケアイコン
   {
     ARCHANDLE *arcHandle = GFL_ARC_OpenDataHandle( ARCID_POKEICON , work->heapId );
@@ -457,17 +458,20 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
     //HPバーの色を使う！
     iconWork->sexStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX + 3 , charY, 
           3 , 2 , PLIST_BG_SUB_PLT_HP_BAR , GFL_BMP_CHRAREA_GET_B );
-    if( sex == PTL_SEX_MALE )
+    if( isEgg == FALSE )
     {
-      const PRINTSYS_LSB fontColBlue = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_BLUE , PLIST_FONT_PARAM_SHADOW_BLUE , 0 );
-      PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_28 ,
-                      modX+4 , 0 , fontColBlue );
-    }
-    else if( sex == PTL_SEX_FEMALE )
-    {
-      const PRINTSYS_LSB fontColRed = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_RED , PLIST_FONT_PARAM_SHADOW_RED , 0 );
-      PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_29 ,
-                      modX+4 , 0 , fontColRed );
+      if( sex == PTL_SEX_MALE )
+      {
+        const PRINTSYS_LSB fontColBlue = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_BLUE , PLIST_FONT_PARAM_SHADOW_BLUE , 0 );
+        PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_28 ,
+                        modX+4 , 0 , fontColBlue );
+      }
+      else if( sex == PTL_SEX_FEMALE )
+      {
+        const PRINTSYS_LSB fontColRed = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_RED , PLIST_FONT_PARAM_SHADOW_RED , 0 );
+        PLIST_UTIL_DrawStrFunc( work , iconWork->sexStrWin , mes_pokelist_01_29 ,
+                        modX+4 , 0 , fontColRed );
+      }
     }
   }
   //レベル
@@ -481,13 +485,16 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
     iconWork->lvStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX , charY + 3 , 
           5 , 1 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
 
-    WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
+    if( isEgg == FALSE )
+    {
+      WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
 
-    PLIST_UTIL_DrawValueStrFuncSys( work , iconWork->lvStrWin , 
-                      wordSet , mes_pokelist_01_03 , 
-                      modX , 0 , PLIST_FONT_BATTLE_PARAM );
+      PLIST_UTIL_DrawValueStrFuncSys( work , iconWork->lvStrWin , 
+                        wordSet , mes_pokelist_01_03 , 
+                        modX , 0 , PLIST_FONT_BATTLE_PARAM );
 
-    WORDSET_Delete( wordSet );
+      WORDSET_Delete( wordSet );
+    }
   }
   iconWork->isUpdateStr = TRUE;
   

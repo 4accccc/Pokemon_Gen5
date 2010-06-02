@@ -713,7 +713,7 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
       GAMEDATA *gdata = SCRCMD_WORK_GetGameData( work );
       MUSICAL_SAVE* musSave = GAMEDATA_GetMusicalSavePtr( gdata );
       u16 msg[3];
-      u8 i,j;
+      u8 i,ii,j;
       //ややこしいのでプログラム内処理
       u8 conArr[4];
       u8 pointArr[4];
@@ -723,18 +723,20 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
         conArr[i] = i;
         pointArr[i] = MUSICAL_SAVE_GetBefCondition( musSave , i );
       }
-      for( i=0;i<MCT_MAX;i++ )
+      for( i=1;i<MCT_MAX;i++ )
       {
-        for( j=i+1;j<MCT_MAX;j++ )
+        for( j=0;j<MCT_MAX-i;j++ )
         {
-          if( pointArr[i] < pointArr[j] )
+          const u8 arr1 = j;
+          const u8 arr2 = j+1;
+          if( pointArr[arr1] < pointArr[arr2] )
           {
-            u8 temp = pointArr[i];
-            pointArr[i] = pointArr[j];
-            pointArr[j] = temp;
-            temp = conArr[i];
-            conArr[i] = conArr[j];
-            conArr[j] = temp;
+            u8 temp = pointArr[arr1];
+            pointArr[arr1] = pointArr[arr2];
+            pointArr[arr2] = temp;
+            temp = conArr[arr1];
+            conArr[arr1] = conArr[arr2];
+            conArr[arr2] = temp;
           }
         }
       }
@@ -758,7 +760,21 @@ VMCMD_RESULT EvCmdMusicalWord( VMHANDLE *core, void *wk )
           msg[1] = conArr[1]+MUSICAL_AUDIENCE_CON_01;
         }
       }
-      msg[2] = conArr[3]+MUSICAL_AUDIENCE_CON_01;
+      
+      //最下位コンディション
+      if( pointArr[1] == pointArr[3] )
+      {
+        msg[2] = conArr[1]+MUSICAL_AUDIENCE_CON_01;
+      }
+      else
+      if( pointArr[2] == pointArr[3] )
+      {
+        msg[2] = conArr[2]+MUSICAL_AUDIENCE_CON_01;
+      }
+      else
+      {
+        msg[2] = conArr[3]+MUSICAL_AUDIENCE_CON_01;
+      }
       {
         GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_common_dat , heapId );
         for( i=0;i<3;i++ )
