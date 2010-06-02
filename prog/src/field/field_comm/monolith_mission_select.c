@@ -517,7 +517,7 @@ static GFL_PROC_RESULT MonolithMissionSelectProc_Main( GFL_PROC * proc, int * se
   case SEQ_ORDER_OK_STREAM_WAIT:
   case SEQ_ORDER_NG_STREAM_WAIT:
     if(_Wait_MsgStream(appwk->setup, mmw) == TRUE){
-      if(GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))){
+      if((*seq) == SEQ_ORDER_OK_STREAM_WAIT || ((*seq) == SEQ_ORDER_NG_STREAM_WAIT && (GFL_UI_TP_GetTrg() || (GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL))))){
         _Clear_MsgStream(mmw);
         PMSND_PlaySE(MONOLITH_SE_MSG);
         if((*seq) == SEQ_ORDER_OK_STREAM_WAIT){
