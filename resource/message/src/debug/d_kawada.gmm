@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kawada_koji" host="W00215" date="2010-05-23T14:53:59"/>
+	<create user="kawada_koji" host="W00215" date="2010-06-01T22:29:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,9 +312,9 @@
 		</language>
 	</columns>
 
-	<dialog left="233" top="332" right="938" bottom="960" maximized="no" rayout="Vertical2">
+	<dialog left="524" top="149" right="1229" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="744" top="131" right="1217" bottom="529" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -411,13 +411,173 @@
 	</row>
 
 	<row id="top_menu14">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+		<language name="JPN" width="256">マニュアル</language>
+		<language name="JPN_KANJI" width="256">マニュアル</language>
 	</row>
 
 	<row id="top_menu15">
-		<language name="JPN" width="256">マニュアル</language>
-		<language name="JPN_KANJI" width="256">マニュアル</language>
+		<language name="JPN" width="256">しんかカメラ</language>
+		<language name="JPN_KANJI" width="256">進化カメラ</language>
+	</row>
+
+	<row id="top_menu16">
+		<language name="JPN" width="256">タマゴカメラ</language>
+		<language name="JPN_KANJI" width="256">タマゴカメラ</language>
+	</row>
+
+	<row id="top_menu17">
+		<language name="JPN" width="256">ずかん　なかカメラ</language>
+		<language name="JPN_KANJI" width="256">図鑑　中カメラ</language>
+	</row>
+
+	<row id="top_menu18">
+		<language name="JPN" width="256">ずかん　ひだりカメラ</language>
+		<language name="JPN_KANJI" width="256">図鑑　左カメラ</language>
+	</row>
+
+	<row id="top_menu19">
+		<language name="JPN" width="256">ずかん　みぎカメラ</language>
+		<language name="JPN_KANJI" width="256">図鑑　右カメラ</language>
+	</row>
+
+	<row id="top_menu20">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu21">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu22">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu23">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu24">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu25">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu26">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu27">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu28">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu29">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu30">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="top_menu31">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="poke_name">
+		<language name="JPN" width="256">[1:01:ポケモン種族名:0]</language>
+		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]</language>
+	</row>
+
+	<row id="poke_mons_no">
+		<language name="JPN" width="256">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="poke_gra_no">
+		<language name="JPN" width="256">[2:02:３桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:02:３桁:0]</language>
+	</row>
+
+	<row id="poke_form_no">
+		<language name="JPN" width="256">[2:01:２桁:0]</language>
+		<language name="JPN_KANJI" width="256">[2:01:２桁:0]</language>
+	</row>
+
+	<row id="poke_sex_male">
+		<language name="JPN" width="256">オス</language>
+		<language name="JPN_KANJI" width="256">オス</language>
+	</row>
+
+	<row id="poke_sex_female">
+		<language name="JPN" width="256">メス</language>
+		<language name="JPN_KANJI" width="256">メス</language>
+	</row>
+
+	<row id="poke_sex_none">
+		<language name="JPN" width="256">なし</language>
+		<language name="JPN_KANJI" width="256">なし</language>
+	</row>
+
+	<row id="poke_color_normal">
+		<language name="JPN" width="256">ノーマル</language>
+		<language name="JPN_KANJI" width="256">ノーマル</language>
+	</row>
+
+	<row id="poke_color_rare">
+		<language name="JPN" width="256">レア</language>
+		<language name="JPN_KANJI" width="256">レア</language>
+	</row>
+
+	<row id="label_poke_name">
+		<language name="JPN" width="256">ポケモンめい</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
+	</row>
+
+	<row id="label_poke_mons_no">
+		<language name="JPN" width="256">ぜんこくＮｏ</language>
+		<language name="JPN_KANJI" width="256">全国Ｎｏ</language>
+	</row>
+
+	<row id="label_poke_gra_no">
+		<language name="JPN" width="256">グラフィックＮｏ</language>
+		<language name="JPN_KANJI" width="256">グラフィックＮｏ</language>
+	</row>
+
+	<row id="label_poke_form_no">
+		<language name="JPN" width="256">フォルムＮｏ</language>
+		<language name="JPN_KANJI" width="256">フォルムＮｏ</language>
+	</row>
+
+	<row id="label_poke_sex">
+		<language name="JPN" width="256">せいべつ</language>
+		<language name="JPN_KANJI" width="256">性別</language>
+	</row>
+
+	<row id="label_poke_color">
+		<language name="JPN" width="256">いろ</language>
+		<language name="JPN_KANJI" width="256">色</language>
+	</row>
+
+	<row id="label_dummy">
+		<language name="JPN" width="256">ダミー</language>
+		<language name="JPN_KANJI" width="256">ダミー</language>
 	</row>
 
 	<flowchart-group-list>

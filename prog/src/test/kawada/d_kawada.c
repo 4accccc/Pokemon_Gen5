@@ -96,7 +96,7 @@ FS_EXTERN_OVERLAY(manual);
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 16 )
+#define	TOP_MENU_SIZ	( 19 )
 
 #define POKE_LIST_NUM_G (24)
 #define POKE_LIST_NUM  (13)
@@ -163,11 +163,12 @@ typedef struct {
   ZUKAN_DETAIL_PARAM* zukan_detail_param;
   u16                 poke_list[POKE_LIST_NUM];
 
-  // テスト
-  D_KAWADA_TEST_PARAM*  d_test_param;
-
   // マニュアル
   MANUAL_PARAM*       manual_param;
+
+  // テスト
+  D_KAWADA_TEST_SHINKA_PARAM*  d_test_shinka_param;
+  D_KAWADA_TEST_EGG_PARAM*     d_test_egg_param;
 
 }KAWADA_MAIN_WORK;
 
@@ -192,8 +193,12 @@ enum {
 	MAIN_SEQ_EGG_DEMO_CALL,
 	MAIN_SEQ_SHINKA_DEMO_CALL,
 	MAIN_SEQ_ZUKAN_DETAIL_CALL,
-	MAIN_SEQ_D_TEST_CALL,
 	MAIN_SEQ_MANUAL_CALL,
+	MAIN_SEQ_D_TEST_SHINKA_CALL,
+	MAIN_SEQ_D_TEST_EGG_CALL,
+	MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL,
+	MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL,
+	MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL,
   // ここまで
 	
   MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN,
@@ -210,9 +215,13 @@ enum {
 	MAIN_SEQ_EGG_DEMO_CALL_RETURN,
 	MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
 	MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN,
-	MAIN_SEQ_D_TEST_CALL_RETURN,
 	MAIN_SEQ_MANUAL_CALL_RETURN,
-	
+	MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN,
+	MAIN_SEQ_D_TEST_EGG_CALL_RETURN,
+	MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN,
+	MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN,
+	MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN,
+
   MAIN_SEQ_END,
 };
 
@@ -292,13 +301,17 @@ static void ShinkaDemoExit( KAWADA_MAIN_WORK* wk );
 static void ZukanDetailInit( KAWADA_MAIN_WORK* wk );
 static void ZukanDetailExit( KAWADA_MAIN_WORK* wk );
 
-// テスト
-static void D_TestInit( KAWADA_MAIN_WORK* wk );
-static void D_TestExit( KAWADA_MAIN_WORK* wk );
-
 // ゲーム内マニュアル
 static void ManualInit( KAWADA_MAIN_WORK* wk );
 static void ManualExit( KAWADA_MAIN_WORK* wk );
+
+// テスト
+static void D_TestShinkaInit( KAWADA_MAIN_WORK* wk );
+static void D_TestShinkaExit( KAWADA_MAIN_WORK* wk );
+static void D_TestEggInit( KAWADA_MAIN_WORK* wk );
+static void D_TestEggExit( KAWADA_MAIN_WORK* wk );
+static void D_TestZukanFormInit( KAWADA_MAIN_WORK* wk, u8 center_left_right );
+static void D_TestZukanFormExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
@@ -595,18 +608,6 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
 
-  // テスト
-  case MAIN_SEQ_D_TEST_CALL:
-    D_TestInit(wk);
-		wk->main_seq = MAIN_SEQ_D_TEST_CALL_RETURN;
-    break;
-  case MAIN_SEQ_D_TEST_CALL_RETURN:
-    D_TestExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
-    break;
-
-
   // ゲーム内マニュアル
   case MAIN_SEQ_MANUAL_CALL:
     ManualInit(wk);
@@ -619,6 +620,63 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
 
+  // テスト
+  // 進化デモカメラ
+  case MAIN_SEQ_D_TEST_SHINKA_CALL:
+    D_TestShinkaInit(wk);
+		wk->main_seq = MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN;
+    break;
+  case MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN:
+    D_TestShinkaExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+  // タマゴ孵化デモカメラ
+  case MAIN_SEQ_D_TEST_EGG_CALL:
+    D_TestEggInit(wk);
+		wk->main_seq = MAIN_SEQ_D_TEST_EGG_CALL_RETURN;
+    break;
+  case MAIN_SEQ_D_TEST_EGG_CALL_RETURN:
+    D_TestEggExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+
+  // 図鑑フォルム中カメラ
+  case MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL:
+    D_TestZukanFormInit(wk, 0);
+		wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN;
+    break;
+  case MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN:
+    D_TestZukanFormExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+  
+  // 図鑑フォルム左カメラ
+  case MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL:
+    D_TestZukanFormInit(wk, 1);
+		wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN;
+    break;
+  case MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN:
+    D_TestZukanFormExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+    
+    // 図鑑フォルム右カメラ
+  case MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL:
+    D_TestZukanFormInit(wk, 2);
+		wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN;
+    break;
+  case MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN:
+    D_TestZukanFormExit(wk);
+		FadeInSet( wk, MAIN_SEQ_INIT );
+		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    break;
+ 
+  
 	}
 
   return GFL_PROC_RES_CONTINUE;
@@ -1434,19 +1492,6 @@ static void ZukanDetailGExit( KAWADA_MAIN_WORK* wk )
   ZONEDATA_Close();
 }
 
-// テスト
-static void D_TestInit( KAWADA_MAIN_WORK* wk )
-{
-  wk->d_test_param = D_KAWADA_TEST_AllocParam(
-                              wk->heapID,
-                              0 );
-  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &D_KAWADA_TEST_ProcData, wk->d_test_param );
-}
-static void D_TestExit( KAWADA_MAIN_WORK* wk )
-{
-  D_KAWADA_TEST_FreeParam( wk->d_test_param );
-}
-
 // ゲーム内マニュアル
 static void ManualInit( KAWADA_MAIN_WORK* wk )
 {
@@ -1458,5 +1503,41 @@ static void ManualInit( KAWADA_MAIN_WORK* wk )
 static void ManualExit( KAWADA_MAIN_WORK* wk )
 {
   GFL_HEAP_FreeMemory( wk->manual_param );
+}
+
+// テスト
+static void D_TestShinkaInit( KAWADA_MAIN_WORK* wk )
+{
+  wk->d_test_shinka_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof( D_KAWADA_TEST_SHINKA_PARAM ) );
+ 
+  //wk->d_test_shinka_param-> = ;
+  //wk->d_test_shinka_param-> = ;
+
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &D_KAWADA_TEST_ShinkaProcData, wk->d_test_shinka_param );
+}
+static void D_TestShinkaExit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_HEAP_FreeMemory( wk->d_test_shinka_param );
+}
+
+static void D_TestEggInit( KAWADA_MAIN_WORK* wk )
+{
+  wk->d_test_egg_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof( D_KAWADA_TEST_EGG_PARAM ) );
+
+  //wk->d_test_egg_param-> = ;
+  //wk->d_test_egg_param-> = ;
+
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &D_KAWADA_TEST_EggProcData, wk->d_test_egg_param );
+}
+static void D_TestEggExit( KAWADA_MAIN_WORK* wk )
+{
+  GFL_HEAP_FreeMemory( wk->d_test_egg_param );
+}
+
+static void D_TestZukanFormInit( KAWADA_MAIN_WORK* wk, u8 center_left_right )
+{
+}
+static void D_TestZukanFormExit( KAWADA_MAIN_WORK* wk )
+{
 }
 
