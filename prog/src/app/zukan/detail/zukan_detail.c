@@ -9,7 +9,6 @@
  */
 //============================================================================
 #define DEBUG_KAWADA
-#define HEAPID_ZUKAN_DETAIL (HEAPID_SHINKA_DEMO)
 
 
 // インクルード
@@ -216,6 +215,11 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
     GFL_STD_MemClear( work, sizeof(ZUKAN_DETAIL_WORK) );
     
     work->heap_id       = HEAPID_ZUKAN_DETAIL;
+
+    // 使い分け
+    // HEAPID_ZUKAN_DETAIL         各画面でよく変わるもの
+    // HEAPID_ZUKAN_DETAIL_COMMON  全画面で共通で使用するもの
+    // HEAPID_ZUKAN_DETAIL_SYS     各画面で1度決めたら変わらないもの
   }
 
   // 次の指示を初期化
