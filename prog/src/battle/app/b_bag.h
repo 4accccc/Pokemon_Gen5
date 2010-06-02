@@ -1,12 +1,12 @@
 //============================================================================================
 /**
- * @file		b_bag.h
- * @brief		戦闘用バッグ画面 外部公開ファイル
- * @author	Hiroyuki Nakamura
- * @date		05.02.10
+ * @file    b_bag.h
+ * @brief   戦闘用バッグ画面 外部公開ファイル
+ * @author  Hiroyuki Nakamura
+ * @date    05.02.10
  */
 //============================================================================================
-#pragma	once
+#pragma once
 
 #include "print/printsys.h"
 #include "savedata/myitem_savedata.h"
@@ -38,6 +38,7 @@ enum BBagBallUse_tag {
   BBAG_BALLUSE_TRUE = 0,    // 使用可能
   BBAG_BALLUSE_POKEMAX,     // 手持ち・ボックスに空きがないため使用不可
   BBAG_BALLUSE_DOUBLE,      // 野生ダブル・敵が２匹のため使用不可
+  BBAG_BALLUSE_NOT_FIRST,   // 野生ダブル・先頭のポケモン動作でないので使用不可
 };
 typedef u8 BBagBallUse;
 
@@ -60,10 +61,10 @@ typedef struct {
   BAG_CURSOR* bagcursor;  ///< バッグカーソルの管理構造体ポインタ
 
   BOOL time_out_flg;    // 強制終了フラグ TRUE = 強制終了　※バトル側がリアルタイムで変更します
-
-	BOOL comm_err_flg;		// 通信エラー時の強制終了フラグ
+  BOOL comm_err_flg;    // 通信エラー時の強制終了フラグ
 
   BBagBallUse   ball_use;       // ボールを投げられるか
+  u8            wild_flg;       // 野生戦かどうか（逃げアイテム使用可否の判別用）
 
   u8  ret_page;       // 使用したアイテムのポケット
   u8 * cursor_flg;    // カーソル表示フラグ
@@ -71,7 +72,7 @@ typedef struct {
   s16 item_pos[BATTLE_BAG_POKE_MAX];  // アイテム位置
   s16 item_scr[BATTLE_BAG_POKE_MAX];  // アイテムスクロールカウンタ
 
-	BOOL	commFlag;			// 通信対戦かどうか　TRUE = 通信対戦
+  BOOL  commFlag;     // 通信対戦かどうか　TRUE = 通信対戦
 
 }BBAG_DATA;
 
@@ -82,9 +83,9 @@ typedef struct {
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		戦闘用バッグタスク追加
+ * @brief   戦闘用バッグタスク追加
  *
- * @param		dat   バッグデータ
+ * @param   dat   バッグデータ
  *
  * @return  none
  */

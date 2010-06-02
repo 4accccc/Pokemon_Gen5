@@ -15,6 +15,7 @@
 #include "waza_tool\wazano_def.h"
 #include "item\item.h"
 #include "item\itemtype_def.h"
+#include "item\itemuse_def.h"
 #include "poke_tool\shinka_check.h"
 #include "gamesystem\g_power.h"
 
@@ -26,6 +27,7 @@
 #include "btl_pokeset.h"
 #include "btl_shooter.h"
 #include "btl_calc.h"
+#include "btl_tables.h"
 #include "btlv\btlv_effect.h"
 
 #include "handler\hand_tokusei.h"
@@ -62,6 +64,38 @@ static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 static u32 getexp_calc_adjust_level( const BTL_POKEPARAM* bpp, u32 base_exp, u16 getpoke_lv, u16 deadpoke_lv );
 static inline u32 _calc_adjust_level_sub( u32 val );
 static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke );
+static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
+    u8* yure_cnt, u8* fCritical );
+static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk );
+static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID );
+static BOOL CheckCaptureCritical( BTL_SVFLOW_WORK* wk, fx32 capture_value );
+static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_PoisonRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_YakedoRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_KooriRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_MahiRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_KonranRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_MeromeroRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_EffectGuard( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_AttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_DefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_SPAttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_SPDefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_AgilityRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_HitRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_CriticalUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID );
+static u8 ItemEff_Mental_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID );
+static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, BppValueID rankType );
+static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 
 
 
@@ -881,3 +915,877 @@ static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
     PP_FastModeOff( pp, fFastMode );
   }
 }
+
+
+
+//-----------------------------------------------------------------------------------
+// サーバーフロー：アイテム使用
+//-----------------------------------------------------------------------------------
+TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx )
+{
+  typedef u8 (*pItemEffFunc)( BTL_SVFLOW_WORK*, BTL_POKEPARAM*, u16, int, u8 );
+
+  static const struct {
+    u16            effect;
+    pItemEffFunc   func;
+  }ItemParallelEffectTbl[] = {
+    { ITEM_PRM_SLEEP_RCV,     ItemEff_SleepRcv      },   // 眠り回復
+    { ITEM_PRM_POISON_RCV,    ItemEff_PoisonRcv     },   // 毒回復
+    { ITEM_PRM_BURN_RCV,      ItemEff_YakedoRcv     },   // 火傷回復
+    { ITEM_PRM_ICE_RCV,       ItemEff_KooriRcv      },   // 氷回復
+    { ITEM_PRM_PARALYZE_RCV,  ItemEff_MahiRcv       },   // 麻痺回復
+    { ITEM_PRM_PANIC_RCV,     ItemEff_KonranRcv     },   // 混乱回復
+    { ITEM_PRM_MEROMERO_RCV,  ItemEff_MeromeroRcv   },   // メロメロ回復
+    { ITEM_PRM_ABILITY_GUARD, ItemEff_EffectGuard   },   // 能力ガード
+    { ITEM_PRM_DEATH_RCV,     ItemEff_Relive        },   // 瀕死回復
+    { ITEM_PRM_ATTACK_UP,     ItemEff_AttackRank    },   // 攻撃力アップ
+    { ITEM_PRM_DEFENCE_UP,    ItemEff_DefenceRank   },   // 防御力アップ
+    { ITEM_PRM_SP_ATTACK_UP,  ItemEff_SPAttackRank  },   // 特攻アップ
+    { ITEM_PRM_SP_DEFENCE_UP, ItemEff_SPDefenceRank },   // 特防アップ
+    { ITEM_PRM_AGILITY_UP,    ItemEff_AgilityRank   },   // 素早さアップ
+    { ITEM_PRM_HIT_UP,        ItemEff_HitRank       },   // 命中率アップ
+    { ITEM_PRM_CRITICAL_UP,   ItemEff_CriticalUp    },   // クリティカル率アップ
+    { ITEM_PRM_PP_RCV,        ItemEff_PP_Rcv        },   // PP回復
+    { ITEM_PRM_ALL_PP_RCV,    ItemEff_AllPP_Rcv     },   // PP回復（全ての技）
+    { ITEM_PRM_HP_RCV,        ItemEff_HP_Rcv        },   // HP回復
+  };
+
+  static const struct {
+    u16           itemID;
+    pItemEffFunc  func;
+  }ShooterItemParam[] = {
+    { ITEM_AITEMUKOORU,     ShooterEff_ItemCall  },
+    { ITEM_SUKIRUKOORU,     ShooterEff_SkillCall },
+    { ITEM_AITEMUDOROPPU,   ShooterEff_ItemDrop  },
+    { ITEM_HURATTOKOORU,    ShooterEff_FlatCall  },
+  };
+
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
+  u8 targetPokeID, fShooterEffective;
+  BTL_POKEPARAM* target = NULL;
+  int i, itemParam;
+  u32 hem_state;
+  BtlPokePos targetPos;
+
+  // @todo targetIdx = 自パーティの何番目のポケモンに使うか？という意味だが、マルチでも有効だと話が違ってきます
+  if( targetIdx != BTL_PARTY_MEMBER_MAX ){
+    BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+    target = BTL_PARTY_GetMemberData( party, targetIdx );
+    targetPokeID = BPP_GetID( target );
+    BTL_N_Printf( DBGSTR_SVFL_TrainerItemTarget, targetIdx, targetPokeID );
+  }
+
+  // ○○は××を使った！  メッセージ
+  fShooterEffective = FALSE;
+  {
+    u8 pokeID = BPP_GetID( bpp );
+    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+
+    // 通常バッグ用
+    if( wk->bagMode != BBAG_MODE_SHOOTER )
+    {
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Self, clientID, itemID );
+
+      if( clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
+        BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_USE_SHOOTER_COUNT );
+      }
+    }else
+    {
+      // シューター用
+      BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
+        if( (pos != BTL_POS_NULL) && (pos > BTL_POS_2ND_0) ){
+          pos = BTL_POS_NULL;
+        }
+      }
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Shooter, clientID, targetPokeID, itemID );
+      if( pos != BTL_POS_NULL ){
+        SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_SHOOTER_EFFECT );
+        fShooterEffective = TRUE;
+      }
+    }
+  }
+
+  // ボール投げならボール投げシーケンスへ
+  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
+  {
+    if( scproc_TrainerItem_BallRoot( wk, bpp, itemID ) ){
+      BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
+    }
+    return TRITEM_RESULT_NORMAL;
+  }
+
+  // 逃げアイテムなら逃げシーケンスへ
+  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_BATTLE) == ITEMUSE_BTL_ESCAPE )
+  {
+//    BTL_SVFRET_UseEscapeItem( wk, bpp );
+    return TRITEM_RESULT_ESCAPE;
+  }
+
+  // 対象位置ID
+  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+
+  // シューター独自のアイテム処理
+  for(i=0; i<NELEMS(ShooterItemParam); ++i)
+  {
+    if( itemID == ShooterItemParam[i].itemID )
+    {
+      if( fShooterEffective )
+      {
+        if( ShooterItemParam[i].func( wk, target, itemID, 0, actParam ) )
+        {
+          if( targetPos != BTL_POS_NULL ){
+            SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
+          }
+        }
+        else{
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
+        }
+      }
+      else
+      {
+        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PokeNotExist, targetPokeID );
+      }
+      return TRITEM_RESULT_NORMAL;
+    }
+  }
+
+  // 通常のアイテム処理
+  {
+    BOOL fEffective = FALSE;
+    hem_state = BTL_Hem_PushState( &wk->HEManager );
+    for(i=0; i<NELEMS(ItemParallelEffectTbl); ++i)
+    {
+      itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemParallelEffectTbl[i].effect );
+      if( itemParam ){
+        if( ItemParallelEffectTbl[i].func(wk, target, itemID, itemParam, actParam) ){
+          fEffective = TRUE;
+        }
+      }
+    }
+    // 使用効果あり
+    if( fEffective )
+    {
+      if( targetPos != BTL_POS_NULL ){
+        SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
+      }
+
+      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+      if( wk->bagMode != BBAG_MODE_SHOOTER )
+      {
+        BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
+        BTL_MAIN_CalcNatsukiItemUse( wk->mainModule, target, itemID );
+      }
+    }
+    else{
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
+    }
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
+  }
+
+  return TRITEM_RESULT_NORMAL;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * ボール使用ルート
+ *
+ * @param   wk
+ * @param   bpp
+ * @param   itemID
+ *
+ * @retval  ボールを消費する場合はTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_TrainerItem_BallRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+{
+  BtlPokePos  targetPos = BTL_POS_NULL;
+  BTL_POKEPARAM* targetPoke = NULL;
+
+  // 投げる位置（生きているポケモンをシークして最初のヒット位置）を決める
+  {
+    u8 posAry[ BTL_POS_MAX ];
+    u8 basePos, posCnt, i;
+    BtlExPos exPos;
+
+    basePos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, BPP_GetID(bpp) );
+    exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, basePos );
+    posCnt = BTL_MAIN_ExpandBtlPos( wk->mainModule, exPos, posAry );
+
+    for(i=0; i<posCnt; ++i)
+    {
+      targetPoke = BTL_POKECON_GetFrontPokeData( wk->pokeCon, posAry[i] );
+      if( !BPP_IsDead(targetPoke) ){
+        targetPos = posAry[i];
+        break;
+      }
+    }
+  }
+
+  // 野生戦 = 通常処理
+  if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD )
+  {
+    if( targetPos != BTL_POS_NULL )
+    {
+      u8 yure_cnt, fSuccess, fCritical, fZukanRegister;
+
+      fSuccess = CalcCapturePokemon( wk, bpp, targetPoke, itemID, &yure_cnt, &fCritical );
+//      OS_TPrintf("捕獲 .. critical=%d\n", fCritical);
+
+      if( fSuccess )
+      {
+        wk->flowResult = SVFLOW_RESULT_POKE_GET;
+        wk->getPokePos = targetPos;
+        fZukanRegister = !BTL_MAIN_IsZukanRegistered( wk->mainModule, targetPoke );
+        BPP_SetCaptureBallID( targetPoke, itemID );
+      }
+      else{
+        fZukanRegister = FALSE;
+      }
+
+      SCQUE_PUT_ACT_BallThrow( wk->que, targetPos, yure_cnt, fSuccess, fZukanRegister, fCritical, itemID );
+    }
+
+    return TRUE;
+  }
+  // トレーナー戦では失敗（ボールは減らない）
+  else
+  {
+    if( targetPos != BTL_POS_NULL ){
+      SCQUE_PUT_ACT_BallThrowTrainer( wk->que, targetPos, itemID );
+    }
+    return FALSE;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ボール投げ効果計算
+ *
+ * @param   wk
+ * @param   myPoke
+ * @param   targetPoke
+ * @param   ballID
+ * @param   yure_cnt    [out] 揺れ演出の発生回数
+ * @param   fCritical   [out] クリティカルフラグ
+ *
+ * @retval  BOOL    捕獲できる場合はTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL CalcCapturePokemon( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke,u16 ballID,
+    u8* yure_cnt, u8* fCritical )
+{
+  *fCritical = FALSE;
+
+  if( ballID == ITEM_MASUTAABOORU ){
+    *yure_cnt = BTL_CAPTURE_BALL_YURE_CNT_MAX;
+    return TRUE;
+  }
+  else
+  {
+    u32 hp_base = BPP_GetValue( targetPoke, BPP_MAX_HP ) * 3;
+    u32 hp_value = ( hp_base - BPP_GetValue(targetPoke, BPP_HP) * 2 );
+    fx32 capture_value = FX32_CONST( hp_value );
+
+//    OS_TPrintf("捕獲値：初期 %08x(%d) ..MaxHPx3=%d, HPVal=%d\n", capture_value, capture_value>>FX32_SHIFT, hp_base, hp_value );
+
+    // 草むらＢ補正
+    if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_HIGH_LV_ENC) )
+    {
+      fx32 kusa_ratio = GetKusamuraCaptureRatio( wk );
+      capture_value = FX_Mul( capture_value, kusa_ratio );
+    }
+
+    // 種族ごとの捕獲値計算
+    {
+      u16 mons_no = BPP_GetMonsNo( targetPoke );
+      u16 form_no = BPP_GetValue( targetPoke, BPP_FORM );
+      u16 ratio = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_get_rate );
+      capture_value *= ratio;
+//      OS_TPrintf("捕獲値：種族補正 %08x(%d) ..（monsno=%d, ratio=%d)\n",
+//          capture_value, capture_value>>FX32_SHIFT, mons_no, ratio);
+    }
+
+    // ボールによる捕獲率補正
+    {
+      fx32 ball_ratio = CalcBallCaptureRatio( wk, myPoke, targetPoke, ballID );
+      capture_value = FX_Mul( capture_value, ball_ratio );
+
+//      OS_TPrintf("捕獲値：ボール補正 %08x(%d) ..（BallID=%d, ratio=%08x)\n",
+//          capture_value, capture_value>>FX32_SHIFT, ballID, ball_ratio);
+    }
+
+    capture_value /= hp_base;
+//    OS_TPrintf("捕獲値：基本 %08x(%d) .. (MaxHPx3 = %d)\n",
+//          capture_value, capture_value>>FX32_SHIFT, hp_base);
+
+
+    // 状態異常による補正
+    switch( BPP_GetPokeSick(targetPoke) ){
+    case POKESICK_NEMURI:
+    case POKESICK_KOORI:
+      capture_value = FX_Mul( capture_value, FX32_CONST(2.5) );
+      break;
+    case POKESICK_DOKU:
+    case POKESICK_MAHI:
+    case POKESICK_YAKEDO:
+      capture_value = FX_Mul( capture_value, FX32_CONST(1.5) );
+      break;
+    }
+  //  OS_TPrintf("捕獲値：最終 %08x(%d)\n",
+//          capture_value, capture_value>>FX32_SHIFT);
+
+    // Ｇパワー補正
+    capture_value = GPOWER_Calc_Capture( capture_value );
+
+    // クリティカルチェック
+    *fCritical = CheckCaptureCritical( wk, capture_value );
+
+    if( capture_value >= FX32_CONST(255) ){
+      *yure_cnt = (*fCritical)? 1 : BTL_CAPTURE_BALL_YURE_CNT_MAX;
+      return TRUE;
+    }
+    else
+    {
+      s32 check_value;
+      u32 check_count, captured_count, i;
+
+      check_count = (*fCritical)? 1 : BTL_CAPTURE_BALL_YURE_CNT_MAX;
+
+      capture_value = FX_Div( FX32_CONST(255), capture_value );
+      capture_value = FX_Sqrt( capture_value );
+      capture_value = FX_Sqrt( capture_value );
+
+      capture_value = FX_Div( FX32_CONST(65536), capture_value );
+      check_value = FX_Whole( capture_value );
+//      OS_TPrintf("CheckValue=%08x(%d)\n", capture_value, check_value);
+      *yure_cnt = 0;
+      for(i=0; i<check_count; ++i)
+      {
+        if( BTL_CALC_GetRand(65536) < check_value ){
+          ++(*yure_cnt);
+        }else{
+          return FALSE;
+        }
+      }
+      return TRUE;
+    }
+  }
+}
+/**
+ *  草むら補正率を取得
+ */
+static fx32 GetKusamuraCaptureRatio( BTL_SVFLOW_WORK* wk )
+{
+  u32 capturedPokeCnt = BTL_MAIN_GetZukanCapturedCount( wk->mainModule );
+
+  if( capturedPokeCnt > 600 ){
+    return FX32_CONST(1);
+  }
+  if( capturedPokeCnt > 450 ){
+    return FX32_CONST(0.9f);
+  }
+  if( capturedPokeCnt > 300 ){
+    return FX32_CONST(0.8f);
+  }
+  if( capturedPokeCnt > 150 ){
+    return FX32_CONST(0.7f);
+  }
+  if( capturedPokeCnt > 30 ){
+    return FX32_CONST(0.5f);
+  }
+
+  return FX32_CONST(0.3f);
+
+}
+/**
+ *  ボールによる捕獲率計算
+ */
+static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPoke, const BTL_POKEPARAM* targetPoke, u16 ballID )
+{
+  switch( ballID ){
+  case ITEM_SUUPAABOORU:  return FX32_CONST(1.5f);
+  case ITEM_HAIPAABOORU:  return FX32_CONST(2.0f);
+
+  case ITEM_NETTOBOORU: // ネットボール
+    if( BPP_IsMatchType(targetPoke, POKETYPE_MIZU) || BPP_IsMatchType(targetPoke, POKETYPE_MUSHI) ){
+      return FX32_CONST(3);
+    }
+    break;
+
+  case ITEM_DAIBUBOORU: // ネットボール
+    if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_FISHING) ){
+      return FX32_CONST(3.5f);
+    }
+    {
+      const BTL_FIELD_SITUATION* fldSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+      if( fldSit->bgAttr == BATTLE_BG_ATTR_WATER ){
+        return FX32_CONST(3.5f);
+      }
+    }
+    break;
+
+  case ITEM_NESUTOBOORU: // ネストボール
+    {
+      u16 targetLevel = BPP_GetValue( targetPoke, BPP_LEVEL );
+
+      if( targetLevel < 30 )
+      {
+        u16 levelDiff = 41 - targetLevel;
+        if( levelDiff > 40 ){
+          levelDiff = 40;
+        }
+        return FX32_CONST(levelDiff) / 10;
+      }
+    }
+    break;
+
+  case ITEM_RIPIITOBOORU: // リピートボール
+    if( BTL_MAIN_IsZukanRegistered(wk->mainModule, targetPoke) ){
+      return FX32_CONST(3);
+    }
+    break;
+
+  case ITEM_TAIMAABOORU:  // タイマーボール
+    {
+      fx32 ratio = FX32_CONST(1) + FX32_CONST(0.3f) * wk->turnCount;
+      if( ratio > FX32_CONST(4) ){
+        ratio = FX32_CONST(4);
+      }
+      return ratio;
+    }
+    break;
+
+  case ITEM_DAAKUBOORU:  // ダークボール
+    {
+      const BTL_FIELD_SITUATION* fldSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
+      if( (fldSit->bgType == BATTLE_BG_TYPE_CAVE) || (fldSit->bgType == BATTLE_BG_TYPE_CAVE_DARK) ){
+        return FX32_CONST(3.5);
+      }
+      // @ todo 時間帯による暗さも対象か？
+//      if( (fldSit->bgType != BATTLE_BG_TYPE_ROOM) ||
+    }
+    break;
+
+  case ITEM_KUIKKUBOORU:  // クイックボール
+    if( wk->turnCount == 0 )
+    {
+      return FX32_CONST(5);
+    }
+    break;
+
+  }
+  return FX32_CONST(1);
+}
+//----------------------------------------------------------------------------------
+/**
+ * 捕獲クリティカル発生チェック
+ *
+ * @param   wk
+ * @param   capture_value   計算後の捕獲変数（固定小数 0～255）
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL CheckCaptureCritical( BTL_SVFLOW_WORK* wk, fx32 capture_value )
+{
+  u32 capturedPokeCnt = BTL_MAIN_GetZukanCapturedCount( wk->mainModule );
+
+  fx32 ratio = 0;
+
+  if( capturedPokeCnt > 600 ){
+    ratio = FX32_CONST(2.5);
+  }else if(  capturedPokeCnt > 450 ){
+    ratio = FX32_CONST(2.0f);
+  }else if(  capturedPokeCnt > 300 ){
+    ratio = FX32_CONST(1.5f);
+  }else if(  capturedPokeCnt > 150 ){
+    ratio = FX32_CONST(1.0f);
+  }else if(  capturedPokeCnt > 30 ){
+    ratio = FX32_CONST(0.5f);
+  }else{
+    return FALSE;
+  }
+
+  if( capture_value > FX32_CONST(255) ){
+    capture_value = FX32_CONST(255);
+  }
+  capture_value = FX_Mul( capture_value, ratio ) / 6;
+  if( BTL_CALC_GetRand(256) < FX_Whole(capture_value) )
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+// アイテム効果：ねむり回復
+static u8 ItemEff_SleepRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_NEMURI );
+}
+static u8 ItemEff_PoisonRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_DOKU );
+}
+static u8 ItemEff_YakedoRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_YAKEDO );
+}
+static u8 ItemEff_KooriRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_KOORI );
+}
+static u8 ItemEff_MahiRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_MAHI );
+}
+static u8 ItemEff_KonranRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Cure( wk, bpp, itemID, itemParam, WAZASICK_KONRAN );
+}
+static u8 ItemEff_MeromeroRcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Mental_Cure( wk, bpp, itemID, itemParam, WAZASICK_MEROMERO );
+}
+static u8 ItemEff_EffectGuard( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  BtlSide side = BTL_MAINUTIL_PokeIDtoSide( BPP_GetID(bpp) );
+  BPP_SICK_CONT cont = BPP_SICKCONT_MakeTurn( 5 );
+  if( BTL_HANDLER_SIDE_Add(side, BTL_SIDEEFF_SIROIKIRI, cont) )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_SiroiKiri );
+    HANDEX_STR_AddArg( &param->str, side );
+    return TRUE;
+  }
+  return FALSE;
+}
+static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  if( BPP_IsDead(bpp))
+  {
+    u8 pokeID = BPP_GetID( bpp );
+    BTL_HANDEX_PARAM_RELIVE* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RELIVE, pokeID );
+    param->pokeID = pokeID;
+
+    itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
+    switch( itemParam ){
+    case ITEM_RECOVER_HP_FULL:
+      param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
+    case ITEM_RECOVER_HP_HALF:
+      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 2 ); break;
+    default:
+      param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
+    }
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+
+//    TAYA_Printf("ポケモン(ID:%d)生き返る -> HP=%d\n", pokeID, param->recoverHP);
+
+    // 当ターンに生き返ったポケモンを記録
+    BTL_SVFRET_AddRelivePokeRecord( wk, pokeID );
+    return TRUE;
+  }
+  return FALSE;
+}
+static u8 ItemEff_AttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_ATTACK_RANK );
+}
+static u8 ItemEff_DefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_DEFENCE_RANK );
+}
+static u8 ItemEff_SPAttackRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_SP_ATTACK_RANK );
+}
+static u8 ItemEff_SPDefenceRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_SP_DEFENCE_RANK );
+}
+static u8 ItemEff_AgilityRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_AGILITY_RANK );
+}
+static u8 ItemEff_HitRank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  return ItemEff_Common_Rank( wk, bpp, itemID, itemParam, BPP_HIT_RATIO );
+}
+static u8 ItemEff_CriticalUp( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  u8 result = FALSE;
+  if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_KIAIDAME) )
+  {
+    BPP_CONTFLAG_Set( bpp, BPP_CONTFLG_KIAIDAME );
+    SCQUE_PUT_OP_SetContFlag( wk->que, BPP_GetID(bpp), BPP_CONTFLG_KIAIDAME );
+
+    result = TRUE;
+  }
+  if( itemParam > 1 ){
+    --itemParam;
+    if( BPP_AddCriticalRank(bpp, itemParam) ){
+      SCQUE_PUT_OP_AddCritical( wk->que, BPP_GetID(bpp), itemParam );
+      result = TRUE;
+    }
+  }
+  if( result )
+  {
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KiaiDame, BPP_GetID(bpp) );
+    return TRUE;
+  }
+  return FALSE;
+}
+static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  if( BPP_WAZA_GetCount_Org(bpp) > actParam )
+  {
+    u8 pokeID = BPP_GetID( bpp );
+    u8 volume = BPP_WAZA_GetPPShort_Org( bpp, actParam );
+    u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
+    if( ppValue != ITEM_RECOVER_PP_FULL ){
+      if( volume > ppValue ){
+        volume = ppValue;
+      }
+    }
+    if( volume )
+    {
+      BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
+      param->volume = volume;
+      param->pokeID = pokeID;
+      param->wazaIdx = actParam;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PP_Recover );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID_Org(bpp, actParam) );
+      return 1;
+    }
+  }
+  return 0;
+}
+static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  BTL_HANDEX_PARAM_MESSAGE* msg_param;
+  u32 cnt, volume, i;
+  u8 pokeID = BPP_GetID( bpp );
+  u8 ppValue = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_PP_RCV_POINT );
+  u8 fEffective = FALSE;
+
+  cnt = BPP_WAZA_GetCount_Org( bpp );
+
+  for(i=0; i<cnt; ++i)
+  {
+    volume = BPP_WAZA_GetPPShort_Org( bpp, i );
+    if( volume > ppValue ){
+      volume = ppValue;
+    }
+
+    if( volume )
+    {
+      BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
+      param->wazaIdx = i;
+      param->pokeID = pokeID;
+      param->volume = volume;
+      fEffective = TRUE;
+    }
+  }
+
+  if( fEffective ){
+    msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PP_AllRecover );
+    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+  }
+
+  return fEffective;
+}
+static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  if( !BPP_IsHPFull(bpp)
+  &&  !BPP_IsDead(bpp)
+  ){
+    u8 pokeID = BPP_GetID( bpp );
+    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_HP, pokeID );
+    param->pokeID = pokeID;
+    param->fFailCheckThru = TRUE;
+    itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
+    switch( itemParam ){
+    case ITEM_RECOVER_HP_FULL:
+      param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
+    case ITEM_RECOVER_HP_HALF:
+      param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
+    default:
+      param->recoverHP = itemParam; break;
+    }
+
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+
+    return 1;
+  }
+  return 0;
+}
+
+/**
+ *  状態異常治し系共通
+ */
+static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID )
+{
+  if( !BPP_IsDead(bpp) )
+  {
+    if( BPP_CheckSick(bpp, sickID) )
+    {
+      BTL_HANDEX_PARAM_CURE_SICK* param;
+      u8 pokeID = BPP_GetID( bpp );
+      param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->sickCode = sickID;
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+/**
+ *  メンタルハーブ専用
+ */
+static u8 ItemEff_Mental_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, WazaSick sickID )
+{
+  if( !BPP_IsDead(bpp) && (!BTL_POSPOKE_IsExist(&wk->pospokeWork, BPP_GetID(bpp))) )
+  {
+    WazaSick sickID;
+    u8  result = 0;
+    u32 idx = 0;
+    while( 1 )
+    {
+      sickID = BTL_TABLES_GetMentalSickID( idx++ );
+      if( sickID == WAZASICK_NULL ){
+        break;
+      }
+      if( BPP_CheckSick(bpp, sickID) )
+      {
+        u8 pokeID = BPP_GetID( bpp );
+        BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+        param->sickCode = sickID;
+        result = 1;
+      }
+    }
+    return result;
+  }
+  return FALSE;
+
+}
+/**
+ *  ランクアップ系共通
+ */
+static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, BppValueID rankType )
+{
+  u8 pokeID = BPP_GetID( bpp );
+
+  if( (BTL_POSPOKE_GetPokeExistPos(&wk->pospokeWork, pokeID) != BTL_POS_NULL )
+  &&  !BPP_IsDead(bpp)
+  ){
+    if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
+    {
+      BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RANK_EFFECT, pokeID );
+      param->poke_cnt = 1;
+      param->pokeID[0] = pokeID;
+      param->rankType = rankType;
+      param->rankVolume = itemParam;
+      param->fAlmost = TRUE;
+      return 1;
+    }
+  }
+  else
+  {
+    BTL_Printf("場に出ていないのでランク効果なし\n");
+  }
+
+  return 0;
+}
+/**
+ *  シューター専用：アイテムコール
+ */
+static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  if( !BTL_TABLES_CheckItemCallNoEffect(itemID) )
+  {
+    u8 pokeID = BPP_GetID( bpp );
+
+    BTL_N_Printf( DBGSTR_SVFL_UseItemCall, BPP_GetID(bpp) );
+
+    return BTL_SVFRET_UseItemEquip( wk, bpp );
+  }
+  return FALSE;
+}
+/**
+ *  シューター専用：スキルコール
+ */
+static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+  HandExResult  result;
+
+  BTL_SVFRET_Event_AfterMemberIn( wk, bpp );
+  result = BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
+
+  return (result != HandExResult_NULL);
+}
+/**
+ *  シューター専用：アイテムドロップ
+ */
+static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  u16 equipItemID = BPP_GetItem( bpp );
+  if( equipItemID != ITEM_DUMMY_DATA )
+  {
+    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    {
+      BTL_HANDEX_PARAM_SET_ITEM* param;
+      u8 pokeID = BPP_GetID( bpp );
+
+      param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_SET_ITEM, pokeID );
+      param->pokeID = pokeID;
+      param->itemID = ITEM_DUMMY_DATA;
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_ItemDrop );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, equipItemID );
+
+      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+    }
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
+    return TRUE;
+  }
+  return FALSE;
+}
+/**
+ *  シューター専用：フラットコール
+ */
+static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
+{
+  u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+  {
+    BTL_HANDEX_PARAM_RESET_RANK* reset_param;
+    BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u8 pokeID = BPP_GetID( bpp );
+
+    reset_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RESET_RANK, pokeID );
+    msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
+
+    reset_param->poke_cnt = 1;
+    reset_param->pokeID[0] = pokeID;
+
+    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_FlatCall );
+  }
+  BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
+  return TRUE;
+}
+
+
+
+
+

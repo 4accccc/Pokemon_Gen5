@@ -18,6 +18,28 @@
 #include "btl_common.h"
 #include "btl_tables.h"
 
+//----------------------------------------------------------------------------------
+/**
+ * テーブル要素に該当値が存在するか判定
+ *
+ * @param   value       判定する値
+ * @param   table       テーブルアドレス
+ * @param   tableElems  テーブル要素数
+ *
+ * @retval  BOOL    該当値がテーブルに含まれたらTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL checkTableElems( u16 value, const u16* table, u32 tableElems )
+{
+  u32 i;
+  for(i=0; i<tableElems; ++i)
+  {
+    if( table[i] == value ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
 
 /**
  *  アンコール除外対象のワザか判定
@@ -28,54 +50,33 @@ BOOL BTL_TABLES_IsMatchEncoreFail( WazaID waza )
     WAZANO_NULL,    WAZANO_ANKOORU,  WAZANO_OUMUGAESI,
     WAZANO_HENSIN,  WAZANO_MONOMANE, WAZANO_SUKETTI,
   };
-  u32 i;
 
-  for(i=0; i<NELEMS(table); ++i)
-  {
-    if( table[i] == waza ){
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return checkTableElems( waza, table, NELEMS(table) );
 }
 /**
  *  ものまね失敗対象のワザ判定
  */
 BOOL BTL_TABLES_IsMatchMonomaneFail( WazaID waza )
 {
-  static const WazaID table[] = {
+  static const u16 table[] = {
     WAZANO_NULL,    WAZANO_SUKETTI,   WAZANO_MONOMANE,
     WAZANO_HENSIN,  WAZANO_WARUAGAKI, WAZANO_YUBIWOHURU,
     WAZANO_OSYABERI
   };
-  u32 i;
 
-  for(i=0; i<NELEMS(table); ++i)
-  {
-    if( table[i] == waza ){
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return checkTableElems( waza, table, NELEMS(table) );
 }
 /**
  *  さきどり失敗ワザ判定
  */
 BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
 {
-  static const WazaID table[] = {
+  static const u16 table[] = {
     WAZANO_NULL, WAZANO_MIRAAKOOTO, WAZANO_KAUNTAA, WAZANO_METARUBAASUTO,
     WAZANO_KIAIPANTI,
   };
-  u32 i;
 
-  for(i=0; i<NELEMS(table); ++i)
-  {
-    if( table[i] == waza ){
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return checkTableElems( waza, table, NELEMS(table) );
 }
 
 /**
@@ -83,27 +84,71 @@ BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
  */
 BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )
 {
-  static const WazaID table[] = {
+  static const u16 table[] = {
     WAZANO_YOKODORI, WAZANO_HUUIN,
     WAZANO_MAKIBISI, WAZANO_DOKUBISI, WAZANO_SUTERUSUROKKU,
 
   };
-  u32 i;
 
-  for(i=0; i<NELEMS(table); ++i)
-  {
-    if( table[i] == waza ){
-      return TRUE;
-    }
-  }
+  return checkTableElems( waza, table, NELEMS(table) );
+}
 
-  return FALSE;
+/**
+ *  アイテムコールで発動してはいけないアイテムか判定
+ */
+BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID )
+{
+  static const u16 table[] = {
+    ITEM_KIAINOHATIMAKI,  ITEM_PAWAHURUHAABU,   ITEM_DASSYUTUBOTAN,
+    ITEM_ZYAPONOMI,       ITEM_RENBUNOMI,       ITEM_IBANNOMI,
+    ITEM_SENSEINOTUME,    ITEM_KYUUKON,         ITEM_ZYUUDENTI,
+  };
+
+  return checkTableElems( itemID, table, NELEMS(table) );
 }
 
 
 /**
+ *  使用する対象ポケモンの選択を行う必要が無いアイテムか判別
+ */
+BOOL BTL_TABLES_IsNoTargetItem( u16 itemID )
+{
+  static const u16 table[] = {
+    ITEM_ENEKONOSIPPO,  ITEM_PIPPININGYOU,
+  };
+
+  return checkTableElems( itemID, table, NELEMS(table) );
+}
+
+//=============================================================================================
+/**
+ * メンタルハーブで治す状態異常テーブル順番アクセス
+ *
+ * @param   idx   0～
+ *
+ * @retval  WazaSick    有効Idxの時、状態異常コード／それ以外 WAZASICK_NULL
+ */
+//=============================================================================================
+WazaSick  BTL_TABLES_GetMentalSickID( u32 idx )
+{
+  static const WazaSick table[] = {
+    WAZASICK_MEROMERO,      WAZASICK_ICHAMON,   WAZASICK_KANASIBARI,
+    WAZASICK_KAIHUKUHUUJI,  WAZASICK_ENCORE,    WAZASICK_TYOUHATSU,
+  };
+
+  if( idx < NELEMS(table) ){
+    return table[idx];
+  }
+  return WAZASICK_NULL;
+}
+
+
+
+//--------------------------------------------------------------------------
+/**
  *  ゆびをふるで出ないワザテーブル
  */
+//--------------------------------------------------------------------------
 static const WazaID YubiFuruOmmit[] = {
   WAZANO_YUBIWOHURU,    WAZANO_NEGOTO,      WAZANO_NEKONOTE,
   WAZANO_MANEKKO,       WAZANO_SAKIDORI,    WAZANO_OUMUGAESI,
@@ -152,64 +197,19 @@ BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza )
   return FALSE;
 }
 
-//=============================================================================================
-/**
- * アイテムコールで発動してはいけないアイテムか判定
- *
- * @param   itemID
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID )
-{
-  static const u16 table[] = {
-    ITEM_KIAINOHATIMAKI,  ITEM_PAWAHURUHAABU,   ITEM_DASSYUTUBOTAN,
-    ITEM_ZYAPONOMI,       ITEM_RENBUNOMI,       ITEM_IBANNOMI,
-    ITEM_SENSEINOTUME,    ITEM_KYUUKON,         ITEM_ZYUUDENTI,
-  };
-  u32 i;
-
-  for(i=0; i<NELEMS(table); ++i)
-  {
-    if( table[i] == itemID ){
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-
-//=============================================================================================
-/**
- * メンタルハーブで治す状態異常テーブル順番アクセス
- *
- * @param   idx   0～
- *
- * @retval  WazaSick    有効Idxの時、状態異常コード／それ以外 WAZASICK_NULL
- */
-//=============================================================================================
-WazaSick  BTL_TABLES_GetMentalSickID( u32 idx )
-{
-  static const WazaSick table[] = {
-    WAZASICK_MEROMERO,      WAZASICK_ICHAMON,   WAZASICK_KANASIBARI,
-    WAZASICK_KAIHUKUHUUJI,  WAZASICK_ENCORE,
-  };
-
-  if( idx < NELEMS(table) ){
-    TAYA_Printf("idx=%d, sickCode=%d\n", idx, table[idx]);
-    return table[idx];
-  }
-  TAYA_Printf(" SickCode = NULL\n");
-  return WAZASICK_NULL;
-}
-
+/*--------------------------------------------------------------------------------------------*/
+/* デバッグ用「ゆびをふる」コントロール                                                       */
+/*--------------------------------------------------------------------------------------------*/
 
 #ifdef PM_DEBUG
+
+/**
+ *  デバッグ「ゆびをふるテーブル（グローバル）」
+ */
 int GYubiFuruDebugNumber[ BTL_POS_MAX ];
 
 /**
- *  デバッグ用「ゆびをふるテーブル」リセット
+ *  「ゆびをふるテーブル」リセット
  */
 void BTL_TABLES_YubifuruDebugReset( void )
 {
@@ -219,7 +219,7 @@ void BTL_TABLES_YubifuruDebugReset( void )
   }
 }
 /**
- *  外部から適当に操作した「ゆびをふるテーブル」の禁止ワザを補正
+ *  外部から適当に操作した「ゆびをふるテーブル」に禁止ワザが設定されていたら補正
  */
 void BTL_TABLES_YubifuruDebugSetEnd( void )
 {
@@ -232,7 +232,7 @@ void BTL_TABLES_YubifuruDebugSetEnd( void )
   }
 }
 /**
- *  「ゆびをふるテーブル」のナンバーをインクリメント（禁止ワザをスキップ）
+ *  「ゆびをふるテーブル」のナンバーをインクリメント（禁止ワザはスキップ）
  */
 void BTL_TABLES_YubifuruDebugInc( u8 pos )
 {

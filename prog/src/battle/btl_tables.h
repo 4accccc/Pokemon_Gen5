@@ -35,9 +35,17 @@ extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
 extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );
 extern BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID );
+
+
+/**
+ *  メンタルハーブ対応の状態異常チェック
+ */
 extern WazaSick  BTL_TABLES_GetMentalSickID( u32 idx );
 
-
+/**
+ *  使用する対象ポケモンの選択を行う必要が無いアイテムか判別
+ */
+extern BOOL BTL_TABLES_IsNoTargetItem( u16 itemNo );
 
 
 #ifdef PM_DEBUG

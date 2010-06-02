@@ -262,8 +262,8 @@ static void shooterCost_Init( BTL_CLIENT* wk );
 static void shooterCost_Save( BTL_CLIENT* wk, u8 procPokeIdx, u8 cost );
 static u8 shooterCost_Get( BTL_CLIENT* wk, u8 procPokeIdx );
 static u8 shooterCost_GetSum( BTL_CLIENT* wk );
-static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
-static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
+static BOOL checkActionForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
+static BOOL checkWazaForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action );
 static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL_POKEPARAM* bpp );
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam );
 static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8* dst );
@@ -1481,7 +1481,7 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
     for(i=0; i<wk->numCoverPos; ++i)
     {
       bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, i );
-      if( !is_action_unselectable(wk, bpp,  NULL) ){
+      if( !checkActionForceSet(wk, bpp,  NULL) ){
         wk->firstPokeIdx = i;
         break;
       }
@@ -1521,7 +1521,7 @@ static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq )
         wk->procPoke = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
         wk->procAction = &wk->actionParam[ wk->procPokeIdx ];
         BTL_ACTION_SetNULL( wk->procAction );
-        if( !is_action_unselectable(wk, wk->procPoke,  wk->procAction) )
+        if( !checkActionForceSet(wk, wk->procPoke,  wk->procAction) )
         {
           u8 usableWazaFlag[ PTL_WAZA_MAX ];
           u8 wazaIdx = StoreSelectableWazaFlag( wk, wk->procPoke, usableWazaFlag );
@@ -1664,7 +1664,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
 
     BTL_N_Printf( DBGSTR_CLIENT_SelectActionRoot, wk->procPokeIdx, BPP_GetID(wk->procPoke), wk->procAction );
 
-    if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+    if( checkActionForceSet(wk, wk->procPoke,  wk->procAction) ){
       BTL_N_Printf( DBGSTR_CLIENT_SelectActionSkip, wk->procPokeIdx );
       ClientSubProc_Set( wk, selact_CheckFinish );
     }
@@ -1784,7 +1784,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
         {
           wk->procPokeIdx--;
           bpp = BTL_POKECON_GetClientPokeData( wk->pokeCon, wk->myID, wk->procPokeIdx );
-          if( !is_action_unselectable(wk, bpp, NULL) )
+          if( !checkActionForceSet(wk, bpp, NULL) )
           {
             wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
             // 「もどる」先のポケモンが、既に「ポケモン」で交換対象を選んでいた場合はその情報をPopする
@@ -1988,7 +1988,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
   case SEQ_START:
     if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION )
     {
-      if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
+      if( checkWazaForceSet( wk, wk->procPoke, wk->procAction ) ){
         ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
         (*seq) = SEQ_SELECT_WAZA_START;
@@ -2000,7 +2000,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
       setupRotationParams( wk, &wk->rotWazaSelParam );
       (*seq) = SEQ_SELECT_ROTATION_WAZA_START;
       #else
-      if( is_waza_unselectable( wk, wk->procPoke, wk->procAction ) ){
+      if( checkWazaForceSet( wk, wk->procPoke, wk->procAction ) ){
         ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
         (*seq) = SEQ_SELECT_WAZA_START;
@@ -2280,7 +2280,8 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
   case 0:
     {
       u8 cost_sum = shooterCost_GetSum( wk );
-      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum );
+      u8 fFirstPokemon = (wk->procPokeIdx == wk->firstPokeIdx );
+      BTLV_ITEMSELECT_Start( wk->viewCore, wk->bagMode, wk->shooterEnergy, cost_sum, fFirstPokemon );
       (*seq)++;
     }
     break;
@@ -2573,7 +2574,7 @@ static u8 shooterCost_GetSum( BTL_CLIENT* wk )
  * @retval  BOOL      不可状態ならTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
+static BOOL checkActionForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
 {
   // 死んでたらNULLデータを返す
   if( BPP_IsDead(bpp) )
@@ -2638,7 +2639,7 @@ static BOOL is_action_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BT
  * @retval  BOOL      ワザ選択不可状態ならTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL is_waza_unselectable( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
+static BOOL checkWazaForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
 {
   u32 wazaCount = BPP_WAZA_GetCount( bpp );
   u32 i;
@@ -3688,7 +3689,7 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
       else
       {
         // 行動選択できないチェック
-        if( is_action_unselectable(wk, wk->procPoke,  wk->procAction) ){
+        if( checkActionForceSet(wk, wk->procPoke,  wk->procAction) ){
           (*seq) = SEQ_INC;
           break;
         }

@@ -22,6 +22,7 @@
 #include "../btl_action.h"
 #include "../btl_calc.h"
 #include "../btl_util.h"
+#include "../btl_tables.h"
 #include "../app/b_bag.h"
 #include "../app/b_plist.h"
 
@@ -669,7 +670,7 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     //下画面演出終了待ち
     if( BTLV_SCD_WaitActionSelect( core->scrnD ) != BTL_ACTION_NULL )
     {
-      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0 );
+      BTLV_ITEMSELECT_Start( core, BBAG_MODE_GETDEMO, 0, 0, TRUE );
       (*seq)++;
     }
     break;
@@ -1215,7 +1216,7 @@ void BTLV_StartWazaInfoView( BTLV_CORE* wk, u8 pokeIdx, u8 wazaIdx )
  * @param   energy
  */
 //=============================================================================================
-void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy )
+void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_energy, u8 fFirstPokemon )
 {
   if( wk->selectItemSeq == 0 )
   {
@@ -1232,11 +1233,17 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.shooter_item_bit = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
     wk->bagData.commFlag = (BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE);
     wk->bagData.comm_err_flg = FALSE;
+    wk->bagData.wild_flg = (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD);
     wk->bagData.end_flg = FALSE;
 
 
+    // 先頭のポケモン行動時しか投げられない
+    if( !fFirstPokemon ){
+      wk->bagData.ball_use = BBAG_BALLUSE_NOT_FIRST;
+    }
     // 手持ち・ボックスが満杯なら投げられない
-    if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) ){
+    else if( BTL_MAIN_GetSetupStatusFlag(wk->mainModule, BTL_STATUS_FLAG_BOXFULL) )
+    {
       wk->bagData.ball_use = BBAG_BALLUSE_POKEMAX;
     // ２体以上居て野生戦なら投げられない
     }else if(
@@ -1337,11 +1344,11 @@ BOOL BTLV_ITEMSELECT_Wait( BTLV_CORE* wk )
  case SEQ_START_SCENE_POKELIST:
     if( (wk->bagData.ret_item != ITEM_DUMMY_DATA)
     &&  (wk->bagData.ret_page != BBAG_POKE_BALL)
+    &&  (!BTL_TABLES_IsNoTargetItem(wk->bagData.ret_item))
     ){
       wk->plistData.item = wk->bagData.ret_item;
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle_plist ) );
       BattlePokeList_TaskAdd( &wk->plistData );
-      BTL_Printf("アイテム選択:%d\n", wk->plistData.item);
       wk->selectItemSeq = SEQ_WAIT_SCENE_POKELIST;
     }else{
       wk->selectItemSeq = SEQ_START_RECOVER;
