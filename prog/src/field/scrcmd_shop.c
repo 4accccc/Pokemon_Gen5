@@ -774,7 +774,7 @@ static int shop_buy_printwait( SHOP_BUY_APP_WORK *wk )
     }
   }else if( state == PRINTSTREAM_STATE_PAUSE )
   {
-    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
+    if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE || GFL_UI_KEY_GetTrg()&PAD_BUTTON_CANCEL){
       PRINTSYS_PrintStreamReleasePause( wk->printStream );
       PMSND_PlaySE( SEQ_SE_SELECT1 );
     }
