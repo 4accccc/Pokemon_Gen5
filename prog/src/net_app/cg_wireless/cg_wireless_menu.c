@@ -1367,6 +1367,19 @@ static void _setTVTParentMac(CG_WIRELESS_MENU* pWork, int index)
   }
 }
 
+static void _resetTVTMac(CG_WIRELESS_MENU* pWork)
+{
+  {
+    int i;
+    u8 macAddress[6]={0,0,0,0,0,0};
+    GFLNetInitializeStruct* pIn = GFL_NET_GetNETInitStruct();
+    {
+      pWork->dbw->aTVT.mode = CTM_PARENT;
+      GFL_STD_MemCopy(macAddress, pWork->dbw->aTVT.macAddress, 6);
+    }
+  }
+}
+
 
 
 //------------------------------------------------------------------------------
@@ -1418,6 +1431,7 @@ static void _setTVTParentName(CG_WIRELESS_MENU* pWork)
     GFL_CLACT_WK_SetDrawEnable( pWork->TVTCallName, FALSE );
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->nameWin), 0 );
     GFL_BMPWIN_TransVramCharacter(pWork->nameWin);
+    _resetTVTMac(pWork);
     if(19 == GFL_CLACT_WK_GetAnmSeq(pWork->buttonObj[1])){
       GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[1],FALSE);
       GFL_CLACT_WK_SetAnmSeq( pWork->buttonObj[1], 11 );
