@@ -410,7 +410,7 @@ GMEVENT* EVENT_FieldDoorInAnime( ENTRANCE_EVDATA* evdata )
   work->ECamWork = ENTRANCE_CAMERA_CreateWork( evdata->fieldmap );
   work->ECamParam.exitType  = evdata->exit_type_in;
   work->ECamParam.situation = ECAM_SITUATION_IN;
-  work->ECamParam.oneStep   = ECAM_ONESTEP_ON;
+  work->ECamParam.oneStep   = ECAM_ONESTEP_OFF;
 
   // ƒhƒA‚ðŒŸõ
   GetPlayerFrontPos( evdata->fieldmap, &work->doorSearchPos );
