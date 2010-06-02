@@ -24,6 +24,7 @@
 #include "savedata/mystatus.h"
 #include "savedata/etc_save.h"
 #include "net/net_save.h"     // NET_SAVE_Init,
+#include "system/net_err.h"
 
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -143,8 +144,8 @@
 #define BGF_BG2_S_CHAR_OFFS (32*0)
 #define BGF_BG3_S_CHAR_OFFS (32*0)
 
-#define BGF_PANO_MENU_WIN (15)  ///<ウィンドウパレット
-#define BGF_PANO_TALK_WIN (14)  ///<会話ウィンドウパレット
+#define BGF_PANO_MENU_WIN (15)  ///< ウィンドウパレット
+#define BGF_PANO_TALK_WIN (14)  ///< 会話ウィンドウパレット
 
 #define BGF_CHSIZE_NAME (4*10)    ///<名前入力オフセット
 
@@ -1271,6 +1272,9 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
     WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
     WIPE_FADE_BLACK, 8, 1, HEAPID_GURU2 );
   OS_Printf("g2m=%08x, g2p=%08x, g2c=%08x\n", (u32)g2m, (u32)g2p, (u32)g2p->g2c);
+
+  // 子機がいない場合はエラーになる。
+  GFL_NET_SetNoChildErrorCheck(TRUE);
   
   return( GFL_PROC_RES_FINISH );
 }
@@ -1286,8 +1290,10 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
 {
   GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)mywk;
+
   
   // プリントキュー削除
+  PRINTSYS_QUE_Clear( g2m->msgwork.printQue );
   PRINTSYS_QUE_Delete( g2m->msgwork.printQue );
 
    //ワーク反映
@@ -1346,7 +1352,9 @@ GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   GURU2MAIN_WORK *g2m = (GURU2MAIN_WORK *)mywk;
   
 //  OS_Printf("g2m->comm.play_max=%d\n", g2m->comm.play_max);
-  OS_Printf("join_bit=%d\n", g2m->g2c->comm_game_join_bit);
+//  OS_Printf("join_bit=%d\n", g2m->g2c->comm_game_join_bit);
+  // 通信エラー検出
+
   do{
     #ifdef GURU2_DEBUG_ON
     DEBUG_Proc( g2m );
@@ -1366,6 +1374,15 @@ GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
 
   // タスクメイン
   GFL_TCB_Main( g2m->tcbSys );
+
+  // フェード中じゃない時に通信エラーチェック
+  if( WIPE_SYS_EndCheck() ){
+    if(NetErr_App_CheckError()!=NET_ERR_STATUS_NULL){
+      OS_Printf("------------------------通信エラー--------------------\n");
+      NetErr_App_ReqErrorDisp();
+      return ( GFL_PROC_RES_FINISH );
+    }
+  }
   return( GFL_PROC_RES_CONTINUE );
 }
 
@@ -1785,7 +1802,7 @@ static RET Guru2Subproc_DameTamagoCheckWait( GURU2MAIN_WORK *g2m )
   }else if( Guru2MainCommEggDataOKCountCheck(g2m) == g2m->comm.play_max ){
     g2m->seq_no = SEQNO_MAIN_EGG_ADD_INIT;
   }
-  
+
   return( RET_NON );
 }
 
@@ -2466,7 +2483,7 @@ static RET Guru2Subproc_ResultInit( GURU2MAIN_WORK *g2m )
 {
   int i,id;
   int no = g2m->front_eggact->play_no;
-  
+
   for( i = 0; i < g2m->comm.play_max; i++ ){
     id = g2m->egg.eact[no].comm_id;
     Guru2NameWin_WriteIDColor( g2m, g2m->comm.my_name_buf[id], i, id );
@@ -2707,6 +2724,15 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
 static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
 {
   BOOL ret = NET_SAVE_Main( g2m->NetSaveWork ); // 通信同期セーブメイン
+
+  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    NetErr_DispCall( TRUE );
+    NetErr_App_ReqErrorDisp();
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+    return (RET_NON);
+  }
+
   
   if( ret ){
 #ifdef WINDOW_SAVE_ICON
@@ -2792,6 +2818,7 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
 //      CommStateUnionBconCollectionRestart();
       OS_Printf("通信切断開始\n");
       // 通信コマンドテーブル解放
+      GFL_NET_SetNoChildErrorCheck(FALSE);
       GFL_NET_DelCommandTable( GFL_NET_CMD_GURUGURU );
       Union_App_Shutdown( _get_unionwork(g2m) );  // 通信切断開始
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
@@ -3740,7 +3767,7 @@ static void Guru2TalkWin_Write( GURU2MAIN_WORK *g2m, u32 msgno )
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
   BmpWinFrame_Write( bmpwin,
-    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_MENU_WIN );
+    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_TALK_WIN );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
@@ -3778,7 +3805,7 @@ static void Guru2TalkWin_WritePlayer(
   GFL_STR_DeleteBuffer( str );
   
   BmpWinFrame_Write( bmpwin,
-    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_MENU_WIN );
+    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_TALK_WIN );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
@@ -3812,7 +3839,7 @@ static void Guru2TalkWin_WriteItem(
   GFL_STR_DeleteBuffer( str );
   
   BmpWinFrame_Write( bmpwin,
-    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_MENU_WIN );
+    WINDOW_TRANS_OFF, BGF_CHARNO_MENU, BGF_PANO_TALK_WIN );
   
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_WHITE );
   
@@ -3834,7 +3861,7 @@ static void Guru2TalkWin_Clear( GURU2MAIN_WORK *g2m )
   MSGWORK *msg = &g2m->msgwork;
   GFL_BMPWIN *bmpwin = msg->bmpwin_talk;
   
-  BmpWinFrame_Clear( bmpwin, WINDOW_TRANS_OFF );
+  BmpWinFrame_Clear( bmpwin, WINDOW_TRANS_ON );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_NULL );
   GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
@@ -3944,7 +3971,7 @@ static void Guru2NameWin_Clear( GURU2MAIN_WORK *g2m, int no )
   MSGWORK *msg       = &g2m->msgwork;
   GFL_BMPWIN *bmpwin = msg->bmpwin_name[no];
   
-  BmpWinFrame_Clear( bmpwin, WINDOW_TRANS_OFF );
+  BmpWinFrame_Clear( bmpwin, WINDOW_TRANS_ON );
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(bmpwin), BMP_COL_NULL );
   GFL_BMPWIN_MakeTransWindow_VBlank( bmpwin );
 }
@@ -4110,7 +4137,7 @@ static void Disc_Update( GURU2MAIN_WORK *g2m )
   AngleAdd( &fa, disc->rotate_offs_fx );
   AngleAdd( &fa, disc->rotate_draw_offs_fx );
   disc->rotate.y = (360 - FX32_NUM( fa )) % 360;    //反転させ時計回りに
-  OS_Printf("disc->rotate.y = %d\n", disc->rotate.y);
+//  OS_Printf("disc->rotate.y = %d\n", disc->rotate.y);
   
   disc->draw_pos.x = disc->pos.x + disc->offs_egg.x + disc->offs.x;
   disc->draw_pos.y = disc->pos.y + disc->offs_egg.y + disc->offs.y;
