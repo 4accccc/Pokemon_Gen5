@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-25T16:11:03"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T18:02:12"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -596,9 +596,9 @@ Ariizumi100506</comment>
 
 	<row id="msg_game_start">
 		<language name="JPN">メンバーが　そろいました！
-それでは　へやへ　どうぞ！</language>
+それでは　こちらへ　どうぞ！</language>
 		<language name="JPN_KANJI">メンバーが　そろいました！
-それでは　部屋へ　どうぞ！</language>
+それでは　こちらへ　どうぞ！</language>
 	</row>
 
 	<row id="msg_game_ng">
