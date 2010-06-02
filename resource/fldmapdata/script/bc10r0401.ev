@@ -158,8 +158,13 @@ EVENT_START   ev_bc10r0401_boss
 		$LWK_MONEY += 10000
 		_NUMBER( 3 , LWK_MONEY , 5 )
 		
+		//ì¸éËSEÉvÉåÉC
+		_SE_PLAY( SEQ_SE_SYS_22 )
+		
 		//10000â~éÛÇØéÊÇ¡ÇΩÅI
-		_SYSWIN_MSG_ALLPUT( msg_bc10r0401_gentleman_05 , POS_DEFAULT )
+		_SYSWIN_MSG( msg_bc10r0401_gentleman_05 , POS_DEFAULT )
+		_SE_WAIT()
+		_AB_KEYWAIT_MARK()
 		_SYSWIN_CLOSE()
 		
 		//Ç®ã‡ÇëùÇ‚Ç∑
