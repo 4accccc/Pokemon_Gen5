@@ -41,7 +41,7 @@ static u32 calcWinMoney_Sub( const BSP_TRAINER_DATA* trData, const POKEPARTY * p
  */
 //--------------------------------------------------------------
 #ifdef PM_DEBUG
-#define DEBUG_RANDOM_PRINT  // define ‚³‚ê‚Ä‚¢‚ê‚Îˆ——LŒø
+//#define DEBUG_RANDOM_PRINT  // define ‚³‚ê‚Ä‚¢‚ê‚Îˆ——LŒø
 #endif
 
 #ifdef DEBUG_RANDOM_PRINT
@@ -54,13 +54,13 @@ static void _printRandom( BOOL fCounterReset, u32 range )
     counter = 0;
   }
 
-  OS_SetPrintOutput_Arm9( 1 );
+  OS_SetPrintOutput_Arm9( 2 );
   OS_Printf("---- print random %d times, range=%d ----\n", counter++, range);
   OS_Printf("x:%0x, mul:%0x, add:%0x\n", gRandContext.x, gRandContext.mul, gRandContext.add);
   OS_SetPrintOutput_Arm9( 0 );
 }
 #else
-#define _printRandom(resetFlag)  /* */
+#define _printRandom(resetFlag, range)  /* */
 #endif
 
 

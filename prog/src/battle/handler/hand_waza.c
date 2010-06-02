@@ -6057,7 +6057,7 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       hp_param->recoverHP = (BPP_GetValue(bpp, BPP_MAX_HP) - BPP_GetValue(bpp, BPP_HP));
       hp_param->header.failSkipFlag = TRUE;
 
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE);
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, FALSE );
     }
   }
 }

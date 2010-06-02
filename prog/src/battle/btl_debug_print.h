@@ -258,6 +258,9 @@ typedef enum {
   DBGSTR_SVFL_YokodoriExe,
   DBGSTR_SVFL_YokodoriInfo,
   DBGSTR_SVFL_HandExRoot,
+  DBGSTR_SVFL_HandExContFail,
+  DBGSTR_SVFL_HandExContDead,
+  DBGSTR_SVFL_HandExSetResult,
 
   DBGSTR_SVFS_RegTargetDouble,
 

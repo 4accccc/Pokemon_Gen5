@@ -12824,13 +12824,15 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 itemNo_Dmy )
 
   while( (handEx_header = BTL_Hem_ReadWork(&wk->HEManager)) != NULL )
   {
-    BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExRoot, handEx_header, handEx_header->equip);
+    BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExRoot, handEx_header, handEx_header->equip, handEx_header->failSkipFlag, fPrevSucceed);
     if( handEx_header->failSkipFlag && (fPrevSucceed == FALSE) ){
+      BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExContFail );
       continue;
     }
     if( handEx_header->autoRemoveFlag ){
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParamConst( wk->pokeCon, handEx_header->userPokeID );
       if( BPP_IsDead(bpp) ){
+        BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExContDead );
         continue;
       }
     }
@@ -12898,9 +12900,8 @@ static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 itemNo_Dmy )
       GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
     }
 
-    if( fPrevSucceed ){
-      BTL_Hem_SetResult( &wk->HEManager, fPrevSucceed );
-    }
+    BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExSetResult, fPrevSucceed );
+    BTL_Hem_SetResult( &wk->HEManager, fPrevSucceed );
   }
 
   if( BTL_Hem_IsUsed(&wk->HEManager) )

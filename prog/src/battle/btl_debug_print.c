@@ -314,7 +314,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_YokodoriDetermine:   return "ポケ[%d]のワザ[%d]をよこどります\n";
   case DBGSTR_SVFL_YokodoriExe:         return "よこどりしたポケ=[%d], 対象位置=%d\n";
   case DBGSTR_SVFL_YokodoriInfo:        return "よこどり対象PokeID=%d, 位置=%d\n";
-  case DBGSTR_SVFL_HandExRoot:          return "ProcHandEX : ADRS=0x%p, type=%d\n";
+  case DBGSTR_SVFL_HandExRoot:          return "ProcHandEX : ADRS=0x%p, type=%d, fFailSkip=%d, fPrevSucceed=%d\n";
+  case DBGSTR_SVFL_HandExContFail:      return  "  skip (prev handEx failed)\n";
+  case DBGSTR_SVFL_HandExContDead:      return  "  skip (user pokemon dead)\n";
+  case DBGSTR_SVFL_HandExSetResult:     return  "  set result = %d\n";
+
 
   case DBGSTR_SVFS_RegTargetDouble:   return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
 

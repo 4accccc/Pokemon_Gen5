@@ -262,15 +262,12 @@ typedef enum {
   BTL_ITEMREACTION_PP,      ///< PP減少による
   BTL_ITEMREACTION_SICK,    ///< 状態異常による
 }BtlItemReaction;
-
 /**
  *  ハンドラ挙動（効果が表出するもの）
  */
 typedef enum {
 
   BTL_HANDEX_USE_ITEM,      ///< アイテム使用
-
-  /*--- 以下、アイテム使用以外の効果に使う ---*/
   BTL_HANDEX_TOKWIN_IN,           ///< とくせいウィンドウイン
   BTL_HANDEX_TOKWIN_OUT,          ///< とくせいウィンドウアウト
   BTL_HANDEX_ITEM_EFFECT,         ///< アイテム発動エフェクト
