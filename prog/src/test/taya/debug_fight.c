@@ -1106,6 +1106,7 @@ static void setupBagItem( GAMEDATA* gameData, HEAPID heapID )
   MYITEM_AddItem( myItem, ITEM_SUPESYARUGAADO, 99, heapID );
   MYITEM_AddItem( myItem, ITEM_PIPPININGYOU, 99, heapID );
   MYITEM_AddItem( myItem, ITEM_ENEKONOSIPPO, 99, heapID );
+  MYITEM_AddItem( myItem, ITEM_MENTARUHAABU, 99, heapID );
 
 }
 
@@ -2233,7 +2234,6 @@ FS_EXTERN_OVERLAY(battle);
     if( wk->saveData.recMode == DBF_RECMODE_PLAY )
     {
       if( LoadRecord(wk, wk->saveData.recBufID, &wk->setupParam) ){
-//        BATTLE_PARAM_SetPokeParty( &wk->setupParam, wk->partyPlayer, BTL_CLIENT_PLAYER );
         (*seq) = SEQ_BTL_START;
       }else{
         // データが正しくロードできなければBEEPを鳴らしてルートへ戻す
@@ -2244,6 +2244,7 @@ FS_EXTERN_OVERLAY(battle);
     }
 
     setupFieldSituation( &wk->fieldSit, &wk->saveData );
+    setDebugParams( &wk->saveData, &wk->setupParam );
 
     // 捕獲デモ
     if( wk->saveData.btlType == BTLTYPE_DEMO_CAPTURE )
@@ -2416,7 +2417,6 @@ FS_EXTERN_OVERLAY(battle);
 
   case SEQ_BTL_START:
     changeScene_start( wk );
-    setDebugParams( &wk->saveData, &wk->setupParam );
     PMSND_PlayBGM( wk->setupParam.musicDefault );
     GFL_PROC_LOCAL_CallProc( wk->subProc, FS_OVERLAY_ID(battle), &BtlProcData, &wk->setupParam );
     (*seq) = SEQ_BTL_RETURN;
