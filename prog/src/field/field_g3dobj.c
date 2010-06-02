@@ -23,12 +23,12 @@ enum
   TEX_TRANS_WAIT,
 };
 
-enum
+typedef enum
 {
   OBJ_USE_FALSE = 0,
   OBJ_USE_TRUE,
   OBJ_USE_RES_WAIT,
-};
+}OBJ_USE_FLAG;
 
 //======================================================================
 //  struct
@@ -51,11 +51,13 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  u8 useFlag;
-  u8 cullingFlag;
-  u8 vanishFlag;
-  u8 dmy;
-
+  OBJ_USE_FLAG useFlag:2;
+  u32 cullingFlag:1;
+  u32 vanishFlag:1;
+  u32 outerDrawFlag:1;
+  u32 frameFlag:1;
+  u32 padding_bit:32-6;
+  
   u16 resIdx; //使用するリソースインデックス
   u16 mdlIdx; //使用するモデルインデックス
     
@@ -216,13 +218,14 @@ void FLD_G3DOBJ_CTRL_Draw( FLD_G3DOBJ_CTRL *ctrl )
   
   while( i < ctrl->obj_max ){
     if( obj->useFlag == OBJ_USE_TRUE ){
-      if( obj->vanishFlag == FALSE ){
+      if( obj->outerDrawFlag == FALSE && obj->vanishFlag == FALSE ){
         if( obj->cullingFlag == TRUE ){
           GFL_G3D_DRAW_DrawObjectCullingON( obj->pObj, &obj->status );
         }else{
           GFL_G3D_DRAW_DrawObject( obj->pObj, &obj->status );
         }
       }
+      obj->frameFlag = FALSE;
     }
     obj++;
     i++;
@@ -555,6 +558,63 @@ void FLD_G3DOBJ_CTRL_SetAnimeFrame(
 	    GFL_G3D_OBJECT_SetAnimeFrame( obj->pObj, anm_no, (int*)&frame );
     }
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * オブジェクトをユーザー側から独自に描画する
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @param idx 指定するobjインデックス
+ * @param flag TRUE=独自で描画、FALSE=FLD_G3DOBJ_CTRL側で描画
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_CTRL_SetOuterDrawFlag(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag )
+{
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  obj->outerDrawFlag = flag;
+}
+
+//--------------------------------------------------------------
+/**
+ * オブジェクトを独自で描画する
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @param idx 指定するobjインデックス
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_CTRL_DrawObject( 
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx )
+{
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  
+  if( obj->useFlag == OBJ_USE_TRUE ){
+    GF_ASSERT( obj->outerDrawFlag == TRUE );
+    if( obj->vanishFlag == FALSE ){
+      if( obj->cullingFlag == TRUE ){
+        GFL_G3D_DRAW_DrawObjectCullingON( obj->pObj, &obj->status );
+      }else{
+        GFL_G3D_DRAW_DrawObject( obj->pObj, &obj->status );
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 1フレーム毎にクリアされるフレームフラグをセット
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @param idx 指定するobjインデックス
+ * @param flag セットするフラグ
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void FLD_G3DOBJ_CTRL_SetFrameFlag(  
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag )
+{
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  obj->frameFlag = flag;
 }
 
 //======================================================================

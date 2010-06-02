@@ -1694,8 +1694,12 @@ static BOOL BlActAddReserve_RegistResource( MMDL_BLACTCONT *pBlActCont,
   
 #if 1  
   GF_ASSERT_MSG( 0,
-      "MMDL BLACT REG RESOURCE MAX OBJCODE %d", code );
+      "MMDL BLACT RESERVE REG RES MAX:CODE %d", code );
+#else
+  D_MMDL_Printf( 0,
+      "MMDL BLACT RESERVE REG RES MAX:CODE %d", code );
 #endif
+  
   return( FALSE );
 }
 
