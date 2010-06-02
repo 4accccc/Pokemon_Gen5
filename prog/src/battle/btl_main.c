@@ -178,6 +178,7 @@ static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static u8 checkBagMode( const BATTLE_SETUP_PARAM* setup );
 static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
+static void setup_common_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
 static void trainerParam_SetupForRecPlay( BTL_MAIN_MODULE* wk, u8 clientID );
 static u8 CheckNumFrontPos( const BTL_MAIN_MODULE* wk, u8 clientID );
 static void setupCommon_TrainerParam( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp );
@@ -567,25 +568,8 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
 {
   wk->myClientID = sp->commPos;;
   wk->myOrgPos = BTL_MAIN_GetClientPokePos( wk, wk->myClientID, 0 );
-  {
-    u8 relation_0 = CommClientRelation( wk->myClientID, 0 );
-    u8 relation_1 = CommClientRelation( wk->myClientID, 1 );
 
-    // バトル用ポケモンパラメータ＆パーティデータを生成
-    srcParty_Set( wk, 0, sp->party[ relation_0 ] );
-    srcParty_Set( wk, 1, sp->party[ relation_1 ] );
-
-    {
-      u8 relation_2 = CommClientRelation( wk->myClientID, 2 );
-      u8 relation_3 = CommClientRelation( wk->myClientID, 3 );
-      if( sp->party[ relation_2 ] != NULL ){
-        srcParty_Set( wk, 2, sp->party[relation_2] );
-      }
-      if( sp->party[ relation_3 ] != NULL ){
-        srcParty_Set( wk, 3, sp->party[relation_3] );
-      }
-    }
-  }
+  setup_common_srcParty( wk, sp );
 
   {
     PERAPVOICE* pVoice = SaveData_GetPerapVoice( GAMEDATA_GetSaveControlWork(sp->gameData) );
@@ -595,6 +579,30 @@ static void setup_alone_common_ClientID_and_srcParty( BTL_MAIN_MODULE* wk, const
 
   BTL_N_Printf( DBGSTR_DEBUGFLAG_BIT, sp->DebugFlagBit );
 }
+/**
+ *  スタンドアロンモードでパーティデータ生成（録画再生対応）
+ */
+static void setup_common_srcParty( BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* sp )
+{
+  u8 relation_0 = CommClientRelation( wk->myClientID, 0 );
+  u8 relation_1 = CommClientRelation( wk->myClientID, 1 );
+
+  // バトル用ポケモンパラメータ＆パーティデータを生成
+  srcParty_Set( wk, 0, sp->party[ relation_0 ] );
+  srcParty_Set( wk, 1, sp->party[ relation_1 ] );
+
+  {
+    u8 relation_2 = CommClientRelation( wk->myClientID, 2 );
+    u8 relation_3 = CommClientRelation( wk->myClientID, 3 );
+    if( sp->party[ relation_2 ] != NULL ){
+      srcParty_Set( wk, 2, sp->party[relation_2] );
+    }
+    if( sp->party[ relation_3 ] != NULL ){
+      srcParty_Set( wk, 3, sp->party[relation_3] );
+    }
+  }
+}
+
 /**
  *  録画再生時用のトレーナーパラメータセット
  */
@@ -3816,6 +3824,10 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
   for(i=0; i<poke_count; ++i, ++pokeID)
   {
     pp = PokeParty_GetMemberPointer( party_src, i );
+    if( i==0 )
+    {
+      TAYA_Printf("ClientID=%d, 1stPokePP=%d\n", PP_Get(pp, ID_PARA_pp1, NULL));
+    }
     pokecon->pokeParam[ pokeID ] = BTL_POKEPARAM_Create( pp, pokeID, HEAPID_BTL_SYSTEM );
     BTL_PARTY_AddMember( party, pokecon->pokeParam[ pokeID ] );
   }
@@ -4924,9 +4936,10 @@ const MYSTATUS* BTL_MAIN_GetCommSuppoortPlayerData( const BTL_MAIN_MODULE* wk )
 static void srcParty_Init( BTL_MAIN_MODULE* wk )
 {
   u32 i;
-  for(i=0; i<NELEMS(wk->srcParty); ++i){
-    wk->srcParty[i] = NULL;
-    wk->srcPartyForServer[i] = NULL;
+  for(i=0; i<NELEMS(wk->srcParty); ++i)
+  {
+    wk->srcParty[i] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
+    wk->srcPartyForServer[i] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
   }
   wk->tmpParty = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
 }
@@ -4953,16 +4966,17 @@ static void srcParty_Quit( BTL_MAIN_MODULE* wk )
 // パーティデータ領域確保
 static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party )
 {
-  if( wk->srcParty[clientID] == NULL )
+  if( wk->srcParty[clientID] != NULL )
   {
-    wk->srcParty[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
-    wk->srcPartyForServer[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
+    PokeParty_InitWork( wk->srcParty[clientID] );
+    PokeParty_InitWork( wk->srcPartyForServer[clientID] );
     PokeParty_Copy( party, wk->srcParty[clientID] );
     PokeParty_Copy( party, wk->srcPartyForServer[clientID] );
 
+    if( PokeParty_GetPokeCount(wk->srcPartyForServer[clientID]) )
     {
       POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->srcPartyForServer[clientID], 0 );
-      TAYA_Printf("SrcParty[%d] Set 1stPoke PP=%d\n", clientID, PP_Get(pp, ID_PARA_pp1, NULL) );
+      TAYA_Printf("SrcParty[%d] Set 1stPoke Adrs=%p, PP=%d\n", clientID, pp, PP_Get(pp, ID_PARA_pp1, NULL) );
     }
   }
 }
@@ -4971,10 +4985,12 @@ static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID, BOOL fForServe
 {
   GF_ASSERT( wk->srcParty[clientID] );
 
-  if( fForServer ){
+  if( fForServer )
+  {
+    if( PokeParty_GetPokeCount(wk->srcPartyForServer[clientID]) )
     {
       POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->srcPartyForServer[clientID], 0 );
-      TAYA_Printf("SrcParty[%d] Get 1stPoke PP=%d\n", clientID, PP_Get(pp, ID_PARA_pp1, NULL) );
+      TAYA_Printf("SrcParty[%d] Get 1stPoke Adrs=%p, PP=%d\n", clientID, pp, PP_Get(pp, ID_PARA_pp1, NULL) );
     }
 
     return wk->srcPartyForServer[ clientID ];
@@ -5398,9 +5414,11 @@ void BTL_MAIN_ResetForRecPlay( BTL_MAIN_MODULE* wk, u32 nextTurnNum )
   u8 bagMode = checkBagMode( wk->setupParam );
 
   BTL_CALC_ResetSys( &wk->randomContext );
+  setup_common_srcParty( wk, wk->setupParam );
 
   PokeCon_Clear( &wk->pokeconForClient );
   PokeCon_Clear( &wk->pokeconForServer );
+
   for(i=0; i<BTL_CLIENT_MAX; ++i)
   {
     if( BTL_MAIN_IsExistClient(wk, i) )

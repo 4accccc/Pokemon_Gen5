@@ -7981,6 +7981,13 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
     }
+
+    if( atk_tok == POKETOKUSEI_BUKIYOU ){
+      scproc_CheckItemReaction( wk, attacker );
+    }
+    if( tgt_tok == POKETOKUSEI_BUKIYOU ){
+      scproc_CheckItemReaction( wk, target );
+    }
   }
   else{
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
@@ -13170,6 +13177,9 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
             {
               handexSub_putString( wk, &param->exStr );
             }
+            if( check_sick == WAZASICK_SASIOSAE ){
+              scproc_CheckItemReaction( wk, pp_target );
+            }
             result = 1;
           }
         }
@@ -13718,6 +13728,10 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 
     if( param_header->tokwin_flag ){
       SCQUE_PUT_TOKWIN_OUT( wk->que, param_header->userPokeID );
+    }
+
+    if( prevTokusei == POKETOKUSEI_BUKIYOU ){
+      scproc_CheckItemReaction( wk, bpp );
     }
 
     return 1;

@@ -4908,9 +4908,6 @@ static void handler_Bukiyou_PreChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_EVENT_FACTOR_DettachSkipCheckHandler( myHandle );
-    {
-      handler_Bukiyou_IekiFixed( myHandle, flowWk, pokeID, work );
-    }
   }
 }
 // ‚¢‚¦‚«Šm’èƒnƒ“ƒhƒ‰
