@@ -23,15 +23,21 @@
 //============================================================================================
 #define	CDEMO_SKIP_KEY		(PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_START)		// スキップボタン
 
-#define	BGFRM_ANM_FILE_OPEN_TICK	( 56862 )		// 一つのファイルを読み込むための時間
+#define	BGFRM_ANM_FILE_OPEN_TICK			( 66667 )
+#define	BGFRM_ANM_FILE_OPEN_TICK_1ST	( 56862 )		// 一つのファイルを読み込むための時間
 
 typedef struct {
 	u16	arcID;					// アークＩＤ
 	u16	frmMax;					// フレーム数
 	u32	byteSize;				// バイトサイズ
 	u32	byteOffset;			// 転送開始オフセット
+	OSTick	waitTick;		// 一つのファイルを読み込むための時間
 }BGFRM_ANM_DATA;
-
+/*
+42760224
+ 5333333
+48093557
+*/
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -62,9 +68,10 @@ static const pCommDemoFunc MainSeq[] = {
 // モード別データ
 static const BGFRM_ANM_DATA ModeData[] =
 {
-	{	ARCID_GF_LOGO_MOVIE, 134, 256*192*2, 0 },				// ゲームフリークロゴ
-	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2 },		// オープニングムービー１
-	{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0 },			// オープニングムービー２
+	{	ARCID_GF_LOGO_MOVIE, 134, 256*192*2, 0, BGFRM_ANM_FILE_OPEN_TICK },					// ゲームフリークロゴ
+	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2, BGFRM_ANM_FILE_OPEN_TICK_1ST },	// オープニングムービー１
+//	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2, BGFRM_ANM_FILE_OPEN_TICK },	// オープニングムービー１
+	{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0, BGFRM_ANM_FILE_OPEN_TICK },				// オープニングムービー２
 };
 
 
@@ -271,6 +278,7 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 {
 	const BGFRM_ANM_DATA * dat = &ModeData[wk->dat->mode];
 
+/*
 	if( wk->bfTick == 0 ){
 		wk->bfTick = OS_GetTick();
 	}else{
@@ -281,6 +289,19 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 			return CDEMOSEQ_MAIN_BG_SCRN_ANM;
 		}else{
 			wk->stTick -= BGFRM_ANM_FILE_OPEN_TICK;
+		}
+	}
+*/
+	if( wk->bfTick == 0 ){
+		wk->bfTick = OS_GetTick();
+	}else{
+		wk->afTick = OS_GetTick();
+		wk->stTick = wk->stTick + OS_TicksToMicroSeconds( wk->afTick - wk->bfTick );
+		wk->bfTick = wk->afTick;
+		if( wk->stTick < dat->waitTick ){
+			return CDEMOSEQ_MAIN_BG_SCRN_ANM;
+		}else{
+			wk->stTick -= dat->waitTick;
 		}
 	}
 
