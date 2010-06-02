@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T21:26:19"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T17:34:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -308,14 +308,18 @@
 	<row id="msg_r01r0101_backpackerw_01">
 		<comment>♂</comment>
 		<attribute name="キャラ指定">BACKPACKERW</attribute>
-		<language name="JPN" width="256">みずぎは　もってるけれど
-ちょっとばかり　セクシーすぎるの……▼
-ひでんわざ　なみのりを　おぼえられる
-ポケモンも　つれていないし……</language>
-		<language name="JPN_KANJI" width="256">水着は　持ってるけれど
-ちょっとばかり　セクシーすぎるの……▼
-秘伝技　なみのりを　覚えられる
-ポケモンも　連れていないし……</language>
+		<language name="JPN" width="256">おかねの　むだづかいは
+ダメなこと　だけど▼
+じかんの　むだづかいは
+もっともっと　ダメだよね！▼
+いましか　できないことって
+ぜったいに　あるはずだもん！</language>
+		<language name="JPN_KANJI" width="256">お金の　無駄遣いは
+ダメなこと　だけど▼
+時間の　無駄遣いは
+もっともっと　ダメだよね！▼
+いましか　できないことって
+絶対に　あるはずだもん！</language>
 	</row>
 
 	<flowchart-group-list>
