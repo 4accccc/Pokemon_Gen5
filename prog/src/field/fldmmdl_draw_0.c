@@ -904,6 +904,28 @@ const MMDL_DRAW_PROC_LIST DATA_MMDL_DRAWPROCLIST_PCAzukeHero =
 //  釣り自機
 //======================================================================
 //--------------------------------------------------------------
+//動作モデル位置からのオフセットベクトルに、
+//カメラの逆行列をかけて、ビルボードに対して正確な位置オフセットを算出する
+//--------------------------------------------------------------
+static void getBillboardOffset(
+    const GFL_G3D_CAMERA * g3Dcamera, const VecFx32 * org_ofs, VecFx32 * bbd_ofs )
+{
+  VecFx32		camPos, camUp, target;
+  MtxFx43		mtx43;
+  MtxFx33 mtx33; 
+
+  GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+  GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+  GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+
+  MTX_LookAt( &camPos, &camUp, &target, &mtx43 ); //カメラ行列取得
+  MTX_Copy43To33( &mtx43, &mtx33 );               //並行移動成分はいらないので3x3行列にコピー
+  MTX_Inverse33( &mtx33, &mtx33 );			          //カメラ逆行列生成
+
+  //カメラ逆行列で回転させる＝＝カメラ行列で回転させても正位置になるはずのベクトル
+  MTX_MultVec33( org_ofs, &mtx33, bbd_ofs );
+}
+//--------------------------------------------------------------
 /**
  * 釣りアニメ　表示別にオフセットセット
  * @param
@@ -992,9 +1014,14 @@ static void DrawFishingHero_Draw( MMDL *mmdl )
     pos.z += offs.z;
   }
   
-  { //64x64補正
-    pos.y += NUM_FX32( -12 );
-    pos.z += NUM_FX32( 8 );
+  { //64x64補正：カメラ位置からオフセットを計算する
+    VecFx32 offs = { 0, -FX32_CONST(13), 0 };
+    MMDLSYS * mmdlsys = MMDL_GetMMdlSys( mmdl );
+    FIELDMAP_WORK * fieldmap = MMDLSYS_GetFieldMapWork( mmdlsys );
+    FIELD_CAMERA * fld_cam = FIELDMAP_GetFieldCamera( fieldmap );
+    const GFL_G3D_CAMERA * g3Dcamera = FIELD_CAMERA_GetCameraPtr( fld_cam );
+    getBillboardOffset( g3Dcamera, &offs, &offs );
+    VEC_Add( &pos, &offs, &pos );
   }
 
   GFL_BBD_SetObjectTrans(
