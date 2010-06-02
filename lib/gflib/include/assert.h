@@ -27,6 +27,8 @@ extern void GFL_AssertMsg(const char * filename, unsigned int line_no, const cha
 #define GF_ASSERT_MSG(exp, ... )		\
 	(exp)? ((void)0): GFL_AssertMsg(__FILE__, __LINE__, __VA_ARGS__ );
 //#define GF_ASSERT_Printf( ... )		((exp)? ((void)0);
+//
+#define GF_PANIC(...)         GF_ASSERT_MSG(0,__VA_ARGS__)
 
 
 /* ASSERT情報出力をユーザ定義するための関数型定義 */
@@ -43,6 +45,8 @@ extern void GFL_ASSERT_SetDisplayFunc( GFL_ASSERT_DispInitFunc initFunc, GFL_ASS
 
 #define GF_ASSERT(exp)				((void)0);
 #define GF_ASSERT_MSG(exp, ...)		((void)0);
+
+#define GF_PANIC(...)         OS_Panic(__VA_ARGS__)
 
 #endif
 
