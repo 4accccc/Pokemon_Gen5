@@ -29,6 +29,8 @@
 
 
 #define _BEACON_CHANGE_COUNT (0)
+#define _BEACON_RECV_CONFUSION_ID_NONE  (0xFF)
+
 
 //ビーコン単体の中身
 typedef struct 
@@ -39,7 +41,7 @@ typedef struct
   u8 data[DELIVERY_BEACON_ONCE_NUM];   // 個体のデータでCODECがかかっている
   u8 count;       //何回目のビーコンか
   u8 countMax;       //いくつ連結するのか
-  u8 ConfusionID;         // 何の配信なのか  同時配信時にかぶらせないように
+  u8 ConfusionID;         // 送信側が設定する値、受信側はビーコンに入っているコンフユージョンIDしかみない
   u8 LangCode;     //言語コード
   u32 version;      //バージョンのビット
 } DELIVERY_BEACON;
@@ -52,6 +54,8 @@ struct _DELIVERY_BEACON_LOCALWORK{
   DELIVERY_BEACON_INIT aInit;   //初期化構造体のコピー
   DELIVERY_BEACON aSendRecv[DELIVERY_IRC_SEND_DATA_MAX][DELIVERY_BEACON_MAX_NUM];  //配信する、受け取る構造体
   int nowCount;
+  u8 recv_confusionID;   ///受信側が一度でも受け取ったID（_BEACON_RECV_CONFUSION_ID_NONE）
+  u8  dummy[3];
   StateFunc* state;      ///< ハンドルのプログラム状態
 };
 
@@ -336,7 +340,6 @@ static BOOL  _recvCheck(DELIVERY_BEACON_WORK* pWork)
 {
   int i;
   int max = pWork->aSendRecv[0][0].countMax;
-  u8 ConfusionID = pWork->aSendRecv[0][0].ConfusionID;  //0のビーコン情報と同じ物をそろえる
 
   if(max == 0){
     return FALSE;
@@ -344,11 +347,6 @@ static BOOL  _recvCheck(DELIVERY_BEACON_WORK* pWork)
   for(i = 0;i < max;i++){
     DELIVERY_BEACON* pBeacon = &pWork->aSendRecv[0][i];
     if(max != pBeacon->countMax){
-      return  FALSE;
-    }
-    if(ConfusionID != pBeacon->ConfusionID){
-      // IDがちがったら消す
-      GFL_STD_MemClear( pBeacon,  sizeof(DELIVERY_BEACON));
       return  FALSE;
     }
   }
@@ -372,16 +370,30 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
     if(pBeacon==NULL){
       continue;
     }
-  
+
     //言語チェック
     if( (pBeacon->LangCode != pWork->aInit.data[0].LangCode) )
     { 
+      //受け取ったものは違うものなので破棄
+      GFL_NET_WLResetWMBssDesc(i);
       continue;
     }
 
     //バージョンチェック
     if( (pBeacon->version & pWork->aInit.data[0].version) == 0 )
     { 
+      //受け取ったものは違うものなので破棄
+      GFL_NET_WLResetWMBssDesc(i);
+      continue;
+    }
+
+    //コンフユージョンIDチェック
+    //初回か、２度目以降コンフユージョンIDが違う
+    if( !(pBeacon->ConfusionID == pWork->recv_confusionID
+      || pWork->recv_confusionID == _BEACON_RECV_CONFUSION_ID_NONE) )
+    {
+      //受け取ったものは違うものなので破棄
+      GFL_NET_WLResetWMBssDesc(i);
       continue;
     }
 
@@ -401,12 +413,22 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
 #if DELIVDEBUG_PRINT
       OS_TPrintf("間違ったデータ\n");
 #endif
+      //受け取ったものは違うものなので破棄
+      GFL_NET_WLResetWMBssDesc(i);
       continue; //間違ったデータ
     }
     //取得
 #if DELIVDEBUG_PRINT
     OS_TPrintf("取得%d \n",index);
 #endif
+
+    if( pWork->recv_confusionID == _BEACON_RECV_CONFUSION_ID_NONE )
+    {
+      pWork->recv_confusionID = pBeacon->ConfusionID;
+#if DELIVDEBUG_PRINT
+    OS_TPrintf("初回 コンフユージョンID=%d \n",pWork->recv_confusionID);
+#endif
+    }
     GFL_NET_WLFIXScan( i ); //スキャンを限定する
 
     GFL_STD_MemCopy( pBeacon, &pWork->aSendRecv[0][index],  sizeof(DELIVERY_BEACON));
@@ -467,6 +489,7 @@ BOOL DELIVERY_BEACON_RecvStart(DELIVERY_BEACON_WORK* pWork)
     return FALSE;
   }
   aGFLNetInit.gsid = pWork->aInit.NetDevID;
+  pWork->recv_confusionID = _BEACON_RECV_CONFUSION_ID_NONE;
   _beaconAlloc( pWork );
   GFL_NET_Init(&aGFLNetInit, _recvInit, pWork);
   _CHANGE_STATE( _not );
