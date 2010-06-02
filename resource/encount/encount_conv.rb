@@ -114,8 +114,8 @@ class CEncTable
     WATER_MONS_NUM.times{ |i|
       @mons_list << $_enc_poke.new 
       cp = @mons_list.last()
-      cp.lv_min = column[i].to_i 
-      cp.lv_max = column[i+1].to_i 
+      cp.lv_min = column[i*2].to_i 
+      cp.lv_max = column[i*2+1].to_i 
       cp.form = form_get(column[i+(WATER_MONS_NUM*2)])
     }
     column.slice!(0..(WATER_MONS_DATA_LEN-1))
