@@ -122,7 +122,8 @@ extern void NHTTP_RAP_PokemonEvilCheckReset(NHTTP_RAP_WORK* pWork,NHTTP_POKECHK_
 //------------------------------------------------------------------------------
 extern int NHTTP_RAP_ProcessPercent(NHTTP_RAP_WORK* pWork);
 
-
+//ƒGƒ‰[‚ª‹N‚«‚½‚Ì‰ñ•œˆ—
+extern void NHTTP_RAP_ErrorClean(NHTTP_RAP_WORK* pWork);
 
 
 #if PM_DEBUG
