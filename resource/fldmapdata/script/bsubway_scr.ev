@@ -2189,7 +2189,6 @@ sub_receipt_demo_train_arrival:
     $SCWK_TEMP0 = msg_bsw_scr_94
     $SCWK_TEMP1 = msg_bsw_scr_95
     _CALL sub_bsw_common_bwin_partner
-    _AB_KEYWAIT()
     _MSGWIN_CLOSE()
 
     //パートナー分かれるアニメ

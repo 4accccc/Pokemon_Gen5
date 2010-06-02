@@ -822,7 +822,6 @@ sub_train_battle_win_next_menu:
       //休むか
       _SYSWIN_MSG( msg_c04r0110_07 , POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
-      _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == 0 THEN //はい
         //受付コンテニュー状態に
@@ -833,11 +832,14 @@ sub_train_battle_win_next_menu:
         _BSUBWAY_TOOL( BSWSUB_SAVE_REST_PLAY_DATA, BSW_NULL, BSW_NULL, BSW_NULL )
         //戦闘後のワーク開放
         _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
+        
         //ワーク開放
         _BSUBWAY_WORK_RELEASE()
+        
         //レポート
         _SYSWIN_MSG( msg_c04r0110_08 , POS_DOWN )
         _REPORT_CALL( SCWK_ANSWER )
+        
         //フェードアウト
         _BLACK_OUT()
         _DISP_FADE_END_CHECK()
@@ -852,7 +854,7 @@ sub_train_battle_win_next_menu:
       _SYSWIN_CLOSE()
       
       IF $SCWK_ANSWER == 0 THEN
-        _CALL sub_common_retmap_lose_retire //受付へ
+        _CALL sub_common_retmap_retire //受付へ
         $loop = 0
       ENDIF
     ENDSWITCH
@@ -908,7 +910,6 @@ sub_train_battle_win_next_menu_comm_multi:
     ENDIF
     
     _BMPMENU_START()
-    _SYSWIN_CLOSE()
     
     $LOCALWORK0 = 0
     
@@ -943,7 +944,7 @@ sub_train_battle_win_next_menu_comm_multi:
         _TIME_WAIT( 30 )
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, comm_ret )
         _SYSWIN_CLOSE()
-        _CALL sub_common_retmap_lose_retire //受付へ
+        _CALL sub_common_retmap_retire //受付へ
       ELSE //相手続ける
         //移動アニメ
         _CALL sub_anm_jiki_next_car_multi
@@ -1000,7 +1001,7 @@ sub_train_battle_win_next_menu_comm_multi:
         _TIME_WAIT( 30 )
         _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_RETIRE_WAIT, BSW_NULL, comm_ret )
         _SYSWIN_CLOSE()
-        _CALL sub_common_retmap_lose_retire //受付へ
+        _CALL sub_common_retmap_retire //受付へ
         $loop = 0
       ENDIF
     ENDSWITCH
@@ -1155,12 +1156,11 @@ _RET
 //  共通処理
 //======================================================================
 //--------------------------------------------------------------
-//  敗北、リタイア共通　受付戻り
+//  敗北共通　受付戻り
 //--------------------------------------------------------------
 sub_common_retmap_lose_retire:
 {
   DEFINE_LOCAL ret
-  DEFINE_LOCAL play_mode
   
   //戦闘録画済みフラグ取得
   _BSUBWAY_TOOL( BSWSUB_GET_BTLREC_FINISH_FLAG, BSW_NULL, BSW_NULL, ret )
@@ -1176,6 +1176,17 @@ sub_common_retmap_lose_retire:
     ENDIF
   ENDIF
   
+  _CALL sub_common_retmap_retire
+}
+_RET
+
+//--------------------------------------------------------------
+//  リタイア共通　受付戻り
+//--------------------------------------------------------------
+sub_common_retmap_retire:
+{
+  DEFINE_LOCAL play_mode
+
   //受付制御　キャンセルゲームに
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER_LOSE
   
@@ -1210,6 +1221,7 @@ sub_common_retmap_lose_retire:
   _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
 }
 _RET
+ 
 
 //--------------------------------------------------------------
 //  通信エラー時の受付戻り
