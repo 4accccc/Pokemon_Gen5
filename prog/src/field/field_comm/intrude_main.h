@@ -95,6 +95,7 @@ extern u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst);
 extern BOOL Intrude_OtherPlayerExistence(void);
 extern void Intrude_MyMonolithStatusSet(GAMEDATA *gamedata, MONOLITH_STATUS *monost);
 extern BOOL Intrude_CheckRecvOccupyResult(INTRUDE_COMM_SYS_PTR intcomm);
+extern void Intrude_SetTimeOutStopFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL stop);
 
 //--------------------------------------------------------------
 //  不正チェック

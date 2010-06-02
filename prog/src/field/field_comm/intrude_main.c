@@ -1144,3 +1144,18 @@ BOOL Intrude_CheckNG_Item(u16 item_no)
   }
   return FALSE;
 }
+
+//==================================================================
+/**
+ * タイムアウトによる切断の有効・無効を設定する
+ *
+ * @param   intcomm		
+ * @param   stop		  TRUE:タイムアウトによる切断を行わない
+ *              		  FALSE:タイムアウトによる切断をする
+ */
+//==================================================================
+void Intrude_SetTimeOutStopFlag(INTRUDE_COMM_SYS_PTR intcomm, BOOL stop)
+{
+  intcomm->timeout_stop = stop;
+  OS_TPrintf("timeout stop = %d\n", stop);
+}

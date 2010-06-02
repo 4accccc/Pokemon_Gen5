@@ -407,6 +407,8 @@ static void _CommCommon_Init(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS_PTR intcomm, C
 
 	//侵入システムのアクションステータスを更新
 	Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_TALK);
+	
+	intcomm->mission_battle_timing_bit = 0;
 }
 
 //==================================================================

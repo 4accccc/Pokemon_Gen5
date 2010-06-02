@@ -105,7 +105,7 @@ extern BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_OccupyResult(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_OtherMonolithIn(void);
 extern BOOL IntrudeSend_OtherMonolithOut(void);
-extern BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no);
+extern BOOL IntrudeSend_MissionBattleTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no);
 extern BOOL IntrudeSend_PlayerSupport(
   INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, SUPPORT_TYPE support_type);
 extern BOOL IntrudeSend_SecretItem(NetID send_netid, const INTRUDE_SECRET_ITEM_SAVE *itemdata);

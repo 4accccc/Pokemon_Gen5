@@ -130,10 +130,16 @@ typedef enum{
 ///同期取り番号
 enum{
     INTRUDE_TIMING_EXIT = 20,
-    INTRUDE_TIMING_MISSION_BATTLE_BEFORE,       ///<ミッションバトル開始前
-    INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST,  ///<ミッションバトル開始前の最後の同期取り
     INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE,   ///<通信対戦のコマンドADD前
     INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER,    ///<通信対戦のコマンドADD後
+};
+
+///バトルミッション同期タイミングbit
+enum{
+  MISSION_BATTLE_TIMING_BIT_FIRST = 1 << 0,
+  MISSION_BATTLE_TIMING_BIT_SECOND = 1 << 1,
+  
+  MISSION_BATTLE_TIMING_BIT_ALL = MISSION_BATTLE_TIMING_BIT_FIRST | MISSION_BATTLE_TIMING_BIT_SECOND,
 };
 
 ///石版タイプ
@@ -275,21 +281,22 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号
   u8 area_occupy_update;      ///<TRUE:侵入しているエリアの占拠情報を受信した(下画面やり取り)
   u8 send_occupy;             ///<TRUE:自分の占拠情報を送信リクエスト
-  u8 recv_target_timing_no;   ///<相手指定タイミングコマンドの同期番号の受信バッファ
-  
-  u16 other_player_timeout;   ///<自分一人になった場合、通信終了へ遷移するまでのタイムアウト
-  u8 recv_target_timing_netid;  ///<相手指定タイミングコマンドの送信者のNetID
   u8 wfbc_req;                ///<WFBCパラメータ要求フラグ(bit管理)
   
+  u16 other_player_timeout;   ///<自分一人になった場合、通信終了へ遷移するまでのタイムアウト
   u8 wfbc_recv;               ///<TRUE:WFBCパラメータを受信した
   u8 new_mission_recv;        ///<TRUE:新規にミッションを受信した
+  
+  s16 exit_wait;              ///<通信切断時のタイムアウトカウンタ
   u8 palace_in;               ///<TRUE:パレス島に訪れた
   u8 warp_player_netid;       ///<ワープ先のプレイヤーNetID
   
   MONOLITH_STATUS monolith_status;  ///<モノリスステータス
-  s16 exit_wait;              ///<通信切断時のタイムアウトカウンタ
+
   u8 monost_req;              ///<モノリスステータス要求リクエスト(bit管理)
   u8 search_count;
+  u8 player_status_update;    ///<プレイヤーステータス更新情報(bit管理)
+  u8 padding;
   
   STRBUF *search_child[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
   u32 search_child_trainer_id[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
@@ -303,13 +310,12 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 error:1;                 ///<TRUE:エラー発生
   u8 live_comm_status:1;      ///<ライブ通信画面用フラグ
   u8 mission_start_event_ended:1; ///<TRUE:ミッション開始画面を表示した
-  u8      :4;
+  u8 mission_battle_timing_bit:2;     ///<バトルミッションタイミング受信bit(MISSION_BATTLE_TIMING_BIT)
+  u8 timeout_stop:1;          ///<TRUE:タイムアウトによる切断を行わない
+  u8      :1;
   
   u32 mission_start_timeout:31;  ///<ミッション開始前までのタイムアウト時刻をカウント
   u32 mission_start_timeout_warning:1;  ///<「ミッション開始前のタイムアウトしそう」警告発生中
-
-  u8 player_status_update;    ///<プレイヤーステータス更新情報(bit管理)
-  u8 padding[3];
 }INTRUDE_COMM_SYS;
 
 

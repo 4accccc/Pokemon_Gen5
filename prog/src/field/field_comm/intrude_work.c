@@ -192,21 +192,21 @@ int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm)
 
 //==================================================================
 /**
- * 相手指定のタイミングコマンドが受信できているか確認します
+ * ミッションバトル用の相手指定のタイミングコマンドが受信できているか確認します
  *
  * @param   intcomm		
- * @param   timing_no		    同期番号
+ * @param   timing_bit	    同期番号
  * @param   target_netid		同期相手のNetID
  *
  * @retval  BOOL		TRUE:同期取り完了。　FALSE:同期待ち
  */
 //==================================================================
-BOOL Intrude_GetTargetTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_no, u8 target_netid)
+BOOL Intrude_GetMissionBattleTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_bit, u8 target_netid)
 {
-  u8 recv_timing_no = intcomm->recv_target_timing_no;
+  u8 recv_timing_no = intcomm->mission_battle_timing_bit;
   
-  if(timing_no == recv_timing_no && target_netid == intcomm->recv_target_timing_netid){
-    intcomm->recv_target_timing_no = 0;
+  if(timing_bit & recv_timing_no){
+    intcomm->mission_battle_timing_bit ^= 1;
     return TRUE;
   }
   return FALSE;

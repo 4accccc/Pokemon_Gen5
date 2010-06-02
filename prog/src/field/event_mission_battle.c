@@ -297,18 +297,19 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_RECV_WAIT:
 		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
+      Intrude_SetTimeOutStopFlag(intcomm, TRUE);
       (*seq) = SEQ_BATTLE_START_WAIT;
     }
     break;
   case SEQ_BATTLE_START_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE) == TRUE){
+      if(IntrudeSend_MissionBattleTiming(intcomm, talk->ccew.talk_netid, MISSION_BATTLE_TIMING_BIT_FIRST) == TRUE){
         (*seq)++;
       }
     }
     break;
   case SEQ_BATTLE_START_TIMING_WAIT:
-    if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
+    if(Intrude_GetMissionBattleTimingNo(intcomm, MISSION_BATTLE_TIMING_BIT_FIRST, talk->ccew.talk_netid) == TRUE){
       (*seq) = SEQ_BATTLE_START_LAST_TIMING;
     }
     else{ //同期待ちBキャンセル
@@ -322,12 +323,12 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     }
     break;
   case SEQ_BATTLE_START_LAST_TIMING:    //キャンセルできない状態でもう一度同期
-    if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST) == TRUE){
+    if(IntrudeSend_MissionBattleTiming(intcomm, talk->ccew.talk_netid, MISSION_BATTLE_TIMING_BIT_SECOND) == TRUE){
       (*seq)++;
     }
     break;
   case SEQ_BATTLE_START_LAST_TIMING_WAIT:
-    if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST, talk->ccew.talk_netid) == TRUE){
+    if(Intrude_GetMissionBattleTimingNo(intcomm, MISSION_BATTLE_TIMING_BIT_SECOND, talk->ccew.talk_netid) == TRUE){
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
       (*seq) = SEQ_BATTLE_COMMON_EVENT;
     }
@@ -376,6 +377,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
+
+    if(intcomm != NULL){
+      Intrude_SetTimeOutStopFlag(intcomm, FALSE);
+    }
 
     if(talk->success == TRUE){
       GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
@@ -512,6 +517,7 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_BATTLE_YES:
     if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_BATTLE) == TRUE){
+      Intrude_SetTimeOutStopFlag(intcomm, TRUE);
       *seq = SEQ_BATTLE_YES_MSG;
     }
     break;
@@ -522,13 +528,13 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
   case SEQ_BATTLE_YES_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
-      if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE) == TRUE){
+      if(IntrudeSend_MissionBattleTiming(intcomm, talk->ccew.talk_netid, MISSION_BATTLE_TIMING_BIT_FIRST) == TRUE){
         (*seq)++;
       }
     }
     break;
   case SEQ_BATTLE_START_TIMING_WAIT:
-    if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE, talk->ccew.talk_netid) == TRUE){
+    if(Intrude_GetMissionBattleTimingNo(intcomm, MISSION_BATTLE_TIMING_BIT_FIRST, talk->ccew.talk_netid) == TRUE){
       (*seq) = SEQ_BATTLE_START_LAST_TIMING;
     }
     else{ //同期待ちBキャンセル
@@ -548,12 +554,12 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     }
     break;
   case SEQ_BATTLE_START_LAST_TIMING:    //キャンセルできない状態でもう一度同期
-    if(IntrudeSend_TargetTiming(intcomm, talk->ccew.talk_netid, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST) == TRUE){
+    if(IntrudeSend_MissionBattleTiming(intcomm, talk->ccew.talk_netid, MISSION_BATTLE_TIMING_BIT_SECOND) == TRUE){
       (*seq)++;
     }
     break;
   case SEQ_BATTLE_START_LAST_TIMING_WAIT:
-    if(Intrude_GetTargetTimingNo(intcomm, INTRUDE_TIMING_MISSION_BATTLE_BEFORE_LAST, talk->ccew.talk_netid) == TRUE){
+    if(Intrude_GetMissionBattleTimingNo(intcomm, MISSION_BATTLE_TIMING_BIT_SECOND, talk->ccew.talk_netid) == TRUE){
       IntrudeEventPrint_ExitFieldMsg(&talk->ccew.iem);
       (*seq) = SEQ_BATTLE_COMMON_EVENT;
     }
@@ -606,6 +612,9 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_END:
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
+    if(intcomm != NULL){
+      Intrude_SetTimeOutStopFlag(intcomm, FALSE);
+    }
     return GMEVENT_RES_FINISH;
   }
 	return GMEVENT_RES_CONTINUE;

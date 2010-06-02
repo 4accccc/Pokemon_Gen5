@@ -53,7 +53,7 @@ extern int Intrude_GetWarpPlayerNetID(GAME_COMM_SYS_PTR game_comm);
 extern void Intrude_SetWarpTown(GAME_COMM_SYS_PTR game_comm, int town_tblno);
 extern int Intrude_GetWarpTown(GAME_COMM_SYS_PTR game_comm);
 extern u8 Intrude_GetIntrudeRomVersion(u8 pm_version, u32 trainer_id);
-extern BOOL Intrude_GetTargetTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_no, u8 target_netid);
+extern BOOL Intrude_GetMissionBattleTimingNo(INTRUDE_COMM_SYS_PTR intcomm, u8 timing_bit, u8 target_netid);
 extern OCCUPY_INFO * Intrude_GetOccupyInfo(GAMEDATA *gamedata, int palace_area);
 extern MYSTATUS * Intrude_GetMyStatus(GAMEDATA *gamedata, int net_id);
 extern MISSION_CHOICE_LIST * Intrude_GetChoiceList(INTRUDE_COMM_SYS_PTR intcomm, int palace_area);

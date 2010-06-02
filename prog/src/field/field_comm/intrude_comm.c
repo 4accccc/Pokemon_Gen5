@@ -360,7 +360,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
         }
       }
     }
-    else if(GFL_NET_IsParentMachine() == TRUE && MISSION_CheckSuccessTimeEnd(&intcomm->mission) == TRUE){
+    else if(intcomm->timeout_stop == FALSE && GFL_NET_IsParentMachine() == TRUE && MISSION_CheckSuccessTimeEnd(&intcomm->mission) == TRUE){
       OS_TPrintf("ミッション成功してタイムアウトによる切断\n");
       GameCommSys_ExitReq(intcomm->game_comm);
     }

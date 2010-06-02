@@ -49,7 +49,7 @@ static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void*
 static void _IntrudeRecv_OccupyResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OtherMonolithIn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OtherMonolithOut(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
-static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionBattleTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_PlayerSupport(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_SecretItem(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_GPowerEquip(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -94,7 +94,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_OccupyResult, NULL},           //INTRUDE_CMD_OCCUPY_RESULT
   {_IntrudeRecv_OtherMonolithIn, NULL},        //INTRUDE_CMD_OTHER_MONOLITH_IN
   {_IntrudeRecv_OtherMonolithOut, NULL},       //INTRUDE_CMD_OTHER_MONOLITH_OUT
-  {_IntrudeRecv_TargetTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
+  {_IntrudeRecv_MissionBattleTiming, NULL},           //INTRUDE_CMD_TARGET_TIMING
   {_IntrudeRecv_PlayerSupport, NULL},          //INTRUDE_CMD_PLAYER_SUPPORT
   {_IntrudeRecv_SecretItem, NULL},             //INTRUDE_CMD_SECRET_ITEM
   {_IntrudeRecv_GPowerEquip, NULL},            //INTRUDE_CMD_GPOWER_EQUIP
@@ -1615,7 +1615,7 @@ BOOL IntrudeSend_OtherMonolithOut(void)
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * @brief   コマンド受信：相手指定のタイミングコマンド
+ * @brief   コマンド受信：ミッションバトル用のタイミングコマンド(相手指定)
  * @param   netID      送ってきたID
  * @param   size       パケットサイズ
  * @param   pData      データ
@@ -1624,7 +1624,7 @@ BOOL IntrudeSend_OtherMonolithOut(void)
  * @retval  none  
  */
 //--------------------------------------------------------------
-static void _IntrudeRecv_TargetTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+static void _IntrudeRecv_MissionBattleTiming(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const u8 *timing_no = pData;
@@ -1633,25 +1633,24 @@ static void _IntrudeRecv_TargetTiming(const int netID, const int size, const voi
     return;
   }
   
-  OS_TPrintf("受信：相手指定タイミングコマンド netID=%d, timing_no=%d\n", netID, *timing_no);
-  GF_ASSERT_MSG(intcomm->recv_target_timing_no == 0, 
-    "before %d, new %d\n", intcomm->recv_target_timing_no, *timing_no);
+  OS_TPrintf("受信：ミッションバトル用タイミングコマンド netID=%d, timing_no=%d\n", netID, *timing_no);
+  GF_ASSERT_MSG((intcomm->mission_battle_timing_bit & (*timing_no)) == 0, 
+    "before %d, new %d\n", intcomm->mission_battle_timing_bit, *timing_no);
   
-  intcomm->recv_target_timing_no = *timing_no;
-  intcomm->recv_target_timing_netid = netID;
+  intcomm->mission_battle_timing_bit |= *timing_no;
 }
 
 //==================================================================
 /**
- * データ送信：相手指定のタイミングコマンド
+ * データ送信：ミッションバトル用のタイミングコマンド(相手指定)
  *
  * @param   intcomm		
- * @param   timing_no		タイミング番号
+ * @param   timing_no		タイミング番号(MISSION_BATTLE_TIMING_BIT)
  *
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_TargetTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no)
+BOOL IntrudeSend_MissionBattleTiming(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid, u8 timing_no)
 {
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
