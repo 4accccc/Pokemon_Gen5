@@ -5822,6 +5822,8 @@ static int MainSeq_StrInRcv( BOX2_SYS_WORK * syswk )
 {
 	int	next;
 
+	BOX2MAIN_PokeInfoOff( syswk );
+
 	switch( syswk->dat->callMode ){
 	case BOX_MODE_TURETEIKU:	// ‚Â‚ê‚Ä‚¢‚­
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_PTIN_MAIN, BOX2UI_PTIN_MAIN_NAME );
