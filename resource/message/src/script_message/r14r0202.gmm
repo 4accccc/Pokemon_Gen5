@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-13T11:22:59"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T11:46:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1316" top="178" right="2021" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="782" top="144" right="1255" bottom="542" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -303,7 +303,7 @@ CLEANINGM</attribute>
 あんたも　ランドロスさまの　ほこらに
 あいさつしていくが　ええ</language>
 		<language name="JPN_KANJI" width="256">この　土地は　ランドロス様に
-守られる　おるからのう[BE:01:ページ切り替え（クリア）]
+守られて　おるからのう[BE:01:ページ切り替え（クリア）]
 豊かな　土と　多くの　実りを
 約束されて　おるのじゃ[BE:01:ページ切り替え（クリア）]
 あんたも　ランドロス様の　ほこらに
