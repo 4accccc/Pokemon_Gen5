@@ -1379,7 +1379,6 @@ GFL_PROC_RESULT Guru2MainProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   if( WIPE_SYS_EndCheck() ){
     if(NetErr_App_CheckError()!=NET_ERR_STATUS_NULL){
       OS_Printf("------------------------í êMÉGÉâÅ[--------------------\n");
-      NetErr_App_ReqErrorDisp();
       return ( GFL_PROC_RES_FINISH );
     }
   }
@@ -2727,7 +2726,6 @@ static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
 
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
     NetErr_DispCall( TRUE );
-    NetErr_App_ReqErrorDisp();
     WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
     WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     return (RET_NON);
