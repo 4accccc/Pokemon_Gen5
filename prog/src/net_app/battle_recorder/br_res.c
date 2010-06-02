@@ -764,7 +764,7 @@ void BR_RES_LoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID, HEAPID heapID )
 void BR_RES_UnLoadOBJ( BR_RES_WORK *p_wk, BR_RES_OBJID objID )
 {
 	BR_RES_OBJ_DATA *p_data	= &p_wk->obj[ objID ];
-	GF_ASSERT( p_wk->obj_flag[ objID ] == TRUE );
+	GF_ASSERT_MSG( p_wk->obj_flag[ objID ] == TRUE, "‚·‚Å‚É‰ð•úÏ‚Ý %d\n",  objID );
 
 	switch( objID )
 	{	

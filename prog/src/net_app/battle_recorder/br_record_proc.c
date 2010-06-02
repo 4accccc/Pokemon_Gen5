@@ -76,6 +76,20 @@ typedef enum
   BR_RECORD_MSGWINID_M_MAX  = BR_RECORD_MSGWINID_M_BTL_MAX,
 } BR_RECORD_MSGWINID_M;
 
+//-------------------------------------
+///	生成番号  画面の生成・解放チェックに使用
+//=====================================
+typedef enum
+{
+  BR_RECORD_CREATE_ID_MAIN_DISP_M,
+  BR_RECORD_CREATE_ID_MAIN_DISP_S,
+  BR_RECORD_CREATE_ID_PROFILE,
+  BR_RECORD_CREATE_ID_DOWNLOAD,
+  BR_RECORD_CREATE_ID_SAVE,
+
+  BR_RECORD_CREATE_ID_MAX,
+} BR_RECORD_CREATE_ID;
+
 
 //=============================================================================
 /**
@@ -119,6 +133,9 @@ typedef struct
   BOOL                  can_save;
 
   BR_RECORD_PROC_PARAM	*p_param;
+
+
+  BOOL                  is_create[BR_RECORD_CREATE_ID_MAX];
 } BR_RECORD_WORK;
 
 //=============================================================================
@@ -338,6 +355,13 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 
 	BR_RECORD_WORK				*p_wk	= p_wk_adrs;
 	BR_RECORD_PROC_PARAM	*p_param	= p_param_adrs;
+
+  //解放
+  Br_Record_DeleteMainDisplayProfile( p_wk, p_param );
+  Br_Record_DeleteMainDisplay( p_wk, p_param );
+  Br_Record_DeleteSubDisplay( p_wk, p_param );
+  Br_Record_Download_DeleteDisplay( p_wk, p_param );
+  Br_Record_Save_DeleteDisplay( p_wk, p_param );
 
   //返す値
   p_param->is_secure  = p_wk->is_secure;
@@ -1452,6 +1476,13 @@ static void Br_Record_CreateMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
     },
   };
 
+  //作成されていれば作らない
+  if( p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_M] )
+  {
+    return;
+  }
+  p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_M]  = TRUE;
+
   if( Br_Record_Check2vs2( p_wk->p_header ) )
   { 
     BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_DOUBLE, p_wk->heapID );
@@ -1732,6 +1763,13 @@ static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD
 {
   if( p_wk->p_profile_disp == NULL )
   { 
+    //作成されていれば作らない
+    if( p_wk->is_create[BR_RECORD_CREATE_ID_PROFILE] )
+    {
+      return;
+    }
+    p_wk->is_create[BR_RECORD_CREATE_ID_PROFILE]  = TRUE;
+
     p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_wk->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
   }
 }
@@ -1745,10 +1783,18 @@ static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD
 //-----------------------------------------------------------------------------
 static void Br_Record_DeleteMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 { 
+  //作成されていなければ解放しない
+  if( !p_wk->is_create[BR_RECORD_CREATE_ID_PROFILE] )
+  {
+    return;
+  }
+
   if( p_wk->p_profile_disp )
   { 
     BR_PROFILE_DeleteMainDisplay( p_wk->p_profile_disp );
     p_wk->p_profile_disp  = NULL;
+
+    p_wk->is_create[BR_RECORD_CREATE_ID_PROFILE]  = FALSE;
   }
 }
 //----------------------------------------------------------------------------
@@ -1761,6 +1807,13 @@ static void Br_Record_DeleteMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD
 //-----------------------------------------------------------------------------
 static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
 { 
+
+  //作成されていなければ解放しない
+  if( !p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_M] )
+  {
+    return;
+  }
+
   //OBJ破棄
   { 
     int i;
@@ -1807,6 +1860,8 @@ static void Br_Record_DeleteMainDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_P
   BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_M_BTL_SINGLE );
 
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
+
+  p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_M]  = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1837,6 +1892,13 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
   };
   GFL_FONT *p_font;
   GFL_MSGDATA *p_msg;
+
+  //作成されていれば作らない
+  if( p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_S] )
+  {
+    return;
+  }
+  p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_S]  = TRUE;
 
 	BR_RES_LoadBG( p_param->p_res, BR_RES_BG_RECORD_S, p_wk->heapID );
 	BR_RES_LoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S, p_wk->heapID );
@@ -1905,6 +1967,12 @@ static void Br_Record_CreateSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 //-----------------------------------------------------------------------------
 static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 { 
+
+  //作成されていなければ解放しない
+  if( !p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_S] )
+  {
+    return;
+  }
   {
     int i = BR_RECORD_MSGWINID_S_PROFILE;
     {
@@ -1932,6 +2000,9 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S ); 
 	BR_RES_UnLoadBG( p_param->p_res, BR_RES_BG_RECORD_S );
+
+
+  p_wk->is_create[BR_RECORD_CREATE_ID_MAIN_DISP_S]  = FALSE;
 }
 
 //----------------------------------------------------------------------------
@@ -1944,6 +2015,13 @@ static void Br_Record_DeleteSubDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PA
 //-----------------------------------------------------------------------------
 static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 { 
+  //作成されていれば作らない
+  if( p_wk->is_create[BR_RECORD_CREATE_ID_DOWNLOAD] )
+  {
+    return;
+  }
+  p_wk->is_create[BR_RECORD_CREATE_ID_DOWNLOAD]  = TRUE;
+
   //ダウンロード用の絵を作成
   if( p_wk->p_text == NULL )
   { 
@@ -1966,12 +2044,20 @@ static void Br_Record_Download_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
 //-----------------------------------------------------------------------------
 static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM	*p_param )
 { 
+  //作成されていなければ解放しない
+  if( !p_wk->is_create[BR_RECORD_CREATE_ID_DOWNLOAD] )
+  {
+    return;
+  }
+
   BR_BALLEFF_StartMove( p_wk->p_balleff[ CLSYS_DRAW_MAIN ], BR_BALLEFF_MOVE_NOP, NULL );
   if( p_wk->p_text )
   { 
     BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
     p_wk->p_text  = NULL;
   }
+
+  p_wk->is_create[BR_RECORD_CREATE_ID_DOWNLOAD]  = FALSE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1983,6 +2069,14 @@ static void Br_Record_Download_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_P
 //-----------------------------------------------------------------------------
 static void Br_Record_Save_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
 { 
+  //作成されていれば作らない
+  if( p_wk->is_create[BR_RECORD_CREATE_ID_SAVE] )
+  {
+    return;
+  }
+  p_wk->is_create[BR_RECORD_CREATE_ID_SAVE]  = TRUE;
+
+
   if( p_wk->p_text == NULL )
   { 
     p_wk->p_text  = BR_TEXT_Init( p_param->p_res, p_wk->p_que, p_wk->heapID );
@@ -2038,6 +2132,13 @@ static void Br_Record_Save_CreateDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_
 //-----------------------------------------------------------------------------
 static void Br_Record_Save_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_PARAM *p_param )
 { 
+
+  //作成されていなければ解放しない
+  if( !p_wk->is_create[BR_RECORD_CREATE_ID_SAVE] )
+  {
+    return;
+  }
+
   //メッセージウィンドウ
   {
     int i;
@@ -2061,6 +2162,8 @@ static void Br_Record_Save_DeleteDisplay( BR_RECORD_WORK * p_wk, BR_RECORD_PROC_
     BR_TEXT_Exit( p_wk->p_text, p_param->p_res );
     p_wk->p_text  = NULL;
   }
+
+  p_wk->is_create[BR_RECORD_CREATE_ID_SAVE]  = FALSE;
 }
 
 //----------------------------------------------------------------------------
