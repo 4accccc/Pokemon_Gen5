@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T17:40:14"/>
+	<create user="morimoto" host="W00220" date="2010-06-02T20:05:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1280" top="208" right="1985" bottom="836" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1330,8 +1330,8 @@
 	</row>
 
 	<row id="msg_bsw_scr_101">
-		<language name="JPN" width="256">test</language>
-		<language name="JPN_KANJI" width="256">test</language>
+		<language name="JPN" width="256">つうしん　たいきちゅう</language>
+		<language name="JPN_KANJI" width="256">通信　待機中</language>
 	</row>
 
 	<row id="msg_bsw_ttown_00" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">
