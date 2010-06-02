@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-06-01T16:50:31"/>
+	<create user="fuchino" host="W00152" date="2010-06-02T13:28:32"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -29,8 +29,48 @@
 
 <box_test pos_scale="0" xyz="-0.500000 -0.500000 -0.500000" whd="1.000000 1.000000 1.000000"/>
 
-<tex_image_array size="5">
-	<tex_image index="0" name="c8_gake1_w"
+<tex_image_array size="7">
+	<tex_image index="0" name="c8_fence_b"
+		width="16" height="32" original_width="16" original_height="32"
+		format="palette16"
+		color0_mode="transparency"
+		palette_name="c8_fence_b_pl"
+		path="C:/home/wb_data3d/field/out13/chip/tex/c8_fence_b.tga"
+	>
+		<bitmap size="128">
+			8475 6666 6666 5748 8475 6666 6666 5748
+			8475 6666 6666 5748 8475 6666 6666 5748
+			2222 2222 2222 2222 2233 2222 2222 3322
+			0244 0000 0000 4420 0245 0000 0000 5420
+			0245 0000 0000 5420 0245 0000 0000 5420
+			0245 0000 0000 5420 0245 0000 0000 5420
+			0245 0000 0000 5420 0245 0000 0000 5420
+			0245 0000 0000 5420 0245 0000 0000 5420
+			0245 0000 0000 5420 0245 0000 0000 5420
+			0245 0000 0000 5420 0245 0000 0000 5420
+			0245 0000 0000 5420 3245 3333 3333 5423
+			5322 5555 5555 2235 5544 5555 5555 4455
+			3333 3333 3333 3333 3333 3333 3333 3333
+			1111 1111 1111 1111 1222 2222 2222 2221
+			1333 2222 2222 3331 1333 1111 1111 3331
+			1222 1111 1111 2221 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="1" name="c8_fence_b2"
+		width="16" height="16" original_width="16" original_height="16"
+		format="palette4"
+		color0_mode="transparency"
+		palette_name="c8_fence_b2_pl"
+		path="C:/home/wb_data3d/field/out13/chip/tex/c8_fence_b2.tga"
+	>
+		<bitmap size="32">
+			0000 0000 0000 0000 0000 0000 aa90 06aa
+			ffd0 07ff aa90 06aa 0000 0000 0000 0000
+			0000 0000 0000 0000 aa90 06aa ffd0 07ff
+			aa90 06aa 0000 0000 0000 0000 0000 0000
+		</bitmap>
+	</tex_image>
+	<tex_image index="2" name="c8_gake1_w"
 		width="16" height="8" original_width="16" original_height="8"
 		format="palette16"
 		color0_mode="color"
@@ -44,7 +84,7 @@
 			3341 2333 3333 2332 1110 2211 2222 0222
 		</bitmap>
 	</tex_image>
-	<tex_image index="1" name="c8_michi01b"
+	<tex_image index="3" name="c8_michi01b"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="transparency"
@@ -86,7 +126,7 @@
 			4444 4444 6555 0123 3210 5556 4444 4444
 		</bitmap>
 	</tex_image>
-	<tex_image index="2" name="c8_michi01b_s"
+	<tex_image index="4" name="c8_michi01b_s"
 		width="16" height="16" original_width="16" original_height="16"
 		format="palette16"
 		color0_mode="color"
@@ -104,7 +144,7 @@
 			5220 c000 0003 0232 7000 0007 0000 0000
 		</bitmap>
 	</tex_image>
-	<tex_image index="3" name="c8_michi01w"
+	<tex_image index="5" name="c8_michi01w"
 		width="32" height="32" original_width="32" original_height="32"
 		format="palette16"
 		color0_mode="color"
@@ -146,7 +186,7 @@
 			5525 8125 6777 6777 7782 7777 6157 5555
 		</bitmap>
 	</tex_image>
-	<tex_image index="4" name="c8_michi03b"
+	<tex_image index="6" name="c8_michi03b"
 		width="32" height="16" original_width="32" original_height="16"
 		format="palette16"
 		color0_mode="transparency"
@@ -174,22 +214,29 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="5">
-	<tex_palette index="0" name="c8_gake1_w_pl" color_size="8">
+<tex_palette_array size="7">
+	<tex_palette index="0" name="c8_fence_b2_pl" color_size="4">
+		7c1f 564e 7ff1 7ff4
+	</tex_palette>
+	<tex_palette index="1" name="c8_fence_b_pl" color_size="16">
+		1084 520d 564e 5a91 62d2 6b14 779a 5ab2
+		6b36 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+	</tex_palette>
+	<tex_palette index="2" name="c8_gake1_w_pl" color_size="8">
 		3211 3672 3a74 3e96 42b7 46d8 46f9 4b1b
 	</tex_palette>
-	<tex_palette index="1" name="c8_michi01b_pl" color_size="8">
+	<tex_palette index="3" name="c8_michi01b_pl" color_size="8">
 		7fe0 672a 5eee 6311 5ef3 6314 6735 7fff
 	</tex_palette>
-	<tex_palette index="2" name="c8_michi01b_s_pl" color_size="16">
+	<tex_palette index="4" name="c8_michi01b_s_pl" color_size="16">
 		7bc2 7fe0 7bc3 77c3 7ba3 77a3 7fe1 7bc1
 		7fc1 7ba2 7ba4 7fe2 7bc4 77a4 7be1 77c2
 	</tex_palette>
-	<tex_palette index="3" name="c8_michi01w_pl" color_size="16">
+	<tex_palette index="5" name="c8_michi01w_pl" color_size="16">
 		3672 3a74 3e96 3eb6 3eb7 42b7 46d8 46f9
 		4b1b 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="4" name="c8_michi03b_pl" color_size="16">
+	<tex_palette index="6" name="c8_michi03b_pl" color_size="16">
 		7fe0 45ed 4a0e 4e4d 5aae 5eee 7393 6b52
 		5ef0 6311 6732 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
@@ -300,19 +347,23 @@
 
 <ex_nns_3dme>
 	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
-	<ex_tex_image_array size="5">
+	<ex_tex_image_array size="7">
 		<ex_tex_image index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="2" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="3" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_image index="6" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="5">
+	<ex_tex_palette_array size="7">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="3" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="4" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="5" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="6" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
