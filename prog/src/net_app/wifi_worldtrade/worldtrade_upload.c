@@ -1159,14 +1159,7 @@ static int Subseq_DownloadFinishResult( WORLDTRADE_WORK *wk )
 		// 最後のつめを行おうとしたら交換が成立してしまった。
 		// エラーが起きた事にして外にだしてしまう→もどってくれば交換が成立してます。
 		case DPW_TR_ERROR_ILLIGAL_REQUEST:
-			wk->ConnectErrorNo = result;
-			wk->subprocess_seq = SUBSEQ_ERROR_MESSAGE;
-
-
-      NetErr_ExitNetSystem();
-      GFL_NET_StateClearWifiError();
-      NetErr_ErrWorkInit();
-      GFL_NET_StateResetError();
+			NetErr_DispCallFatal();
 			break;
 	// -----------------------------------------
 	// 共通エラー処理

@@ -251,33 +251,20 @@ int WorldTrade_Demo_Main(WORLDTRADE_WORK *wk, int seq)
 					SHINKA_COND shinka_cond;
           u32 param = 0;
           BOOL is_check  = TRUE;
-					OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
 
-          //チョボマキとカブルモは交換じゃないと進化しない
-          if( (PP_Get(pp,ID_PARA_monsno,NULL) == MONSNO_571 && other_poke == MONSNO_561 )
-                || ( PP_Get(pp,ID_PARA_monsno,NULL) == MONSNO_561 && other_poke == MONSNO_571 ) )
-          {
-            if( wk->is_trade_download )
-            {
-              is_check = TRUE;
-            }
-            else
-            {
-              is_check  = FALSE;
-            }
-          }
-          else
-          {
-            is_check  = TRUE;
-          }
-          wk->is_trade_download = FALSE;
 
-          if( is_check )
+          if( wk->is_trade_download )
           {
+            OS_Printf( "進化チェック %d\n",PP_Get(pp,ID_PARA_monsno,NULL));
+            wk->is_trade_download = FALSE;
             shinkano=SHINKA_Check( NULL, pp, SHINKA_TYPE_TUUSHIN,
               (u32)backup,
               GAMEDATA_GetSeasonID( GAMESYSTEM_GetGameData( wk->param->gamesys ) ),
               &shinka_cond, HEAPID_WORLDTRADE );
+          }
+          else
+          {
+            OS_Printf( "交換していないので、進化しない\n" );
           }
 
 					if(shinkano!=0){
