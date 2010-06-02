@@ -65,6 +65,13 @@ typedef struct _COMM_PLAYER_SYS{
 
 
 //==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static void _FieldCommActorSys_CheckCreate(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps);
+
+
+
+//==============================================================================
 //
 //  
 //
@@ -94,20 +101,6 @@ COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id)
   cps->gsys = gsys;
   cps->heap_id = heap_id;
 
-  if(GAMESYSTEM_CheckFieldMapWork(gsys) == TRUE){
-    //フィールドが存在しない場合、act_ctrlはここでは作られないが
-    //CommPlayer_Popをgame_commのフィールド作成時のコールバックで呼んでおけば
-    //フィールド作成と同時に改めてact_ctrlが作られるので問題ない
-    FIELDMAP_WORK *fieldWork;
-    MMDLSYS *fldMdlSys;
-
-    fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
-    if(FIELDMAP_IsReady(fieldWork) == TRUE){
-      fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
-      cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(max, fldMdlSys, heap_id);
-    }
-  }
-  
   return cps;
 }
 
@@ -147,9 +140,11 @@ void CommPlayer_Exit(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps)
  * @param   cps		
  */
 //==================================================================
-void CommPlayer_Update(COMM_PLAYER_SYS_PTR cps)
+void CommPlayer_Update(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps)
 {
   int index;
+  
+  _FieldCommActorSys_CheckCreate(gsys, cps);
   
   //フィールドエフェクトを実行しているものがあれば、終了状態を監視し、ワークの初期化等を行う
   if(GAMESYSTEM_CheckFieldMapWork(cps->gsys) == TRUE){
@@ -231,7 +226,6 @@ void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index)
   }
   
   if(cps->act_ctrl == NULL){
-    GF_ASSERT(0);
     return;
   }
   
@@ -460,7 +454,9 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
 //==================================================================
 BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gz, u32 *out_index)
 {
-  GF_ASSERT(cps->act_ctrl != NULL);
+  if(cps->act_ctrl == NULL){
+    return;
+  }
   return FIELD_COMM_ACTOR_CTRL_SearchGridPos(cps->act_ctrl, gx, gz, out_index);
 }
 
@@ -508,4 +504,30 @@ MMDL * CommPlayer_GetMmdl(COMM_PLAYER_SYS_PTR cps, int index)
   GF_ASSERT(cps->act_ctrl != NULL);
   GF_ASSERT(cps->act[index].occ == TRUE);
   return FIELD_COMM_ACTOR_CTRL_GetMMdl(cps->act_ctrl, index);
+}
+
+//--------------------------------------------------------------
+/**
+ * フィールドが存在していれば通信プレイヤーシステムを作成する
+ *
+ * @param   gsys		
+ * @param   cps		
+ */
+//--------------------------------------------------------------
+static void _FieldCommActorSys_CheckCreate(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps)
+{
+  FIELDMAP_WORK *fieldWork;
+  MMDLSYS *fldMdlSys;
+
+  if(cps->act_ctrl != NULL){
+    return;
+  }
+  
+  fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
+  if(fieldWork == NULL || FIELDMAP_IsReady(fieldWork) == FALSE){
+    return;
+  }
+  
+  fldMdlSys = FIELDMAP_GetMMdlSys(fieldWork);
+  cps->act_ctrl = FIELD_COMM_ACTOR_CTRL_Create(cps->max, fldMdlSys, cps->heap_id);
 }

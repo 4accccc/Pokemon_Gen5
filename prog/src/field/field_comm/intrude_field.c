@@ -201,7 +201,7 @@ void IntrudeField_UpdateCommSystem( FIELDMAP_WORK *fieldWork ,
   my_net_id = GAMEDATA_GetIntrudeMyID(gamedata);
 
   Intrude_UpdatePlayerStatusAll(intcomm);
-  CommPlayer_Update(intcomm->cps);
+  CommPlayer_Update(gameSys, intcomm->cps);
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(i == my_net_id){
       continue;

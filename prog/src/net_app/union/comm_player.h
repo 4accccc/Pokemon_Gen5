@@ -36,7 +36,7 @@ typedef struct{
 //==============================================================================
 extern COMM_PLAYER_SYS_PTR CommPlayer_Init(int max, GAMESYS_WORK *gsys, HEAPID heap_id);
 extern void CommPlayer_Exit(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps);
-extern void CommPlayer_Update(COMM_PLAYER_SYS_PTR cps);
+extern void CommPlayer_Update(GAMESYS_WORK *gsys, COMM_PLAYER_SYS_PTR cps);
 extern void CommPlayer_Add(COMM_PLAYER_SYS_PTR cps, int index, u16 obj_code, const COMM_PLAYER_PACKAGE *pack);
 extern void CommPlayer_Del(COMM_PLAYER_SYS_PTR cps, int index);
 extern void CommPlayer_Push(COMM_PLAYER_SYS_PTR cps);
