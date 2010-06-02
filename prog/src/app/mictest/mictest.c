@@ -820,7 +820,7 @@ static void SEQFUNC_Main( MICTEST_SEQ_WORK *p_seq_wk, u32 *p_seq )
     break;
 
   case SEQ_MAIN:
-    if( IsProcEndTrg() ) {
+    if( IsProcEndTrg() && SND_MIC_IsAmpOnWaitFlag()) {
       PMSND_PlaySE( SEQ_SE_CANCEL1 );
       *p_seq = SEQ_EXIT;
     }
