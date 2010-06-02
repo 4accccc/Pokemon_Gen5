@@ -1557,6 +1557,7 @@ static void STRINPUT_DecideChangeStr( STRINPUT_WORK *p_wk )
   }
   p_wk->change_idx  = 0;
   p_wk->change_str[ p_wk->change_idx ] = GFL_STR_GetEOMCode();
+  p_wk->is_update = TRUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -3074,6 +3075,7 @@ static void KEYBOARD_Main( KEYBOARD_WORK *p_wk, const STRINPUT_WORK *cp_strinput
     if( STRINPUT_IsInputEnd( cp_strinput ) )
     { 
       KEYMAP_GetCursorByKeyType( &p_wk->keymap, KEYMAP_KEYTYPE_DECIDE, &p_wk->cursor );
+      p_wk->input = KEYBOARD_INPUT_LAST;
     }
     p_wk->state = KEYBOARD_STATE_WAIT;
     break;
@@ -5172,6 +5174,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
     case KEYBOARD_INPUT_CHAGETYPE:  //入力タイプ変更
       STRINPUT_DeleteChangeStr( &p_wk->strinput );
       break;
+    case KEYBOARD_INPUT_LAST: //最後まで入力した
+      STRINPUT_DecideChangeStr( &p_wk->strinput );
+      break;
     case KEYBOARD_INPUT_EXIT:       //終了  
       //変換文字列がなかったら終了
       if( STRINPUT_GetChangeStrLength( & p_wk->strinput) == 0 )
@@ -5224,8 +5229,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
       }
       else
       {
-        //変換文字列があったら確定にする
+        //変換文字列があったら確定
         STRINPUT_DecideChangeStr( &p_wk->strinput );
+        PMSND_PlaySE( NAMEIN_SE_DECIDE );
       }
       break;
     case KEYBOARD_INPUT_NONE:       //何もしていない
@@ -5244,9 +5250,9 @@ static void SEQFUNC_Main( SEQ_WORK *p_seqwk, int *p_seq, void *p_param )
         { 
           STRINPUT_SetLongStr( &p_wk->strinput, GFL_STR_GetStringCodePointer(p_default) );
           GFL_STR_DeleteBuffer( p_default );
-
-          PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
         }
+
+        PMSND_PlaySE( NAMEIN_SE_DECIDE_STR );
       }
       break;
     case KEYBOARD_INPUT_SHIFT:      //シフト

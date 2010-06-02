@@ -280,6 +280,7 @@ typedef enum
   KEYBOARD_INPUT_SHIFT,       //シフト
   KEYBOARD_INPUT_SPACE,       //スペース
   KEYBOARD_INPUT_AUTOCHANGE,   //Rボタン用自動変換
+  KEYBOARD_INPUT_LAST,        //最後まで入力した
 }KEYBOARD_INPUT;
 
 //-------------------------------------
