@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T15:42:14"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T17:40:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1008,12 +1008,12 @@
 きみ　マルチトレインに
 ちょうせんするの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　ちょうせんするには
-パートナーが　ひつようなんだ</language>
+パートナーが　ひつようなんだ▼</language>
 		<language name="JPN_KANJI" width="256">こんにちは！　ぼく　トウヤ！[BE:01:ページ切り替え（クリア）]
 きみ　マルチトレインに
 挑戦するの　はじめて　でしょ？[BE:01:ページ切り替え（クリア）]
 マルチトレインに　挑戦するには
-パートナーが　必要なんだ</language>
+パートナーが　必要なんだ▼</language>
 	</row>
 
 	<row id="msg_bsw_scr_58" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
