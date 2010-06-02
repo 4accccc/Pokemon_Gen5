@@ -821,7 +821,7 @@ static void _modeDifferDSWait5(WIFILOGIN_WORK* pWork)
       u32 status  = Regulation_GetCardParam( p_reg_card, REGULATION_CARD_STATUS );
 
       if( cupNo != 0 && 
-          (status <= DREAM_WORLD_MATCHUP_SIGNUP && status <= DREAM_WORLD_MATCHUP_RETIRE ) )
+          ( DREAM_WORLD_MATCHUP_SIGNUP <= status  && status <= DREAM_WORLD_MATCHUP_RETIRE ) )
       { 
 
         //WIFI大会に参加していたらもう一度確認
