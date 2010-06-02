@@ -69,8 +69,11 @@ static void common_useForSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static BOOL common_sickcode_match( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSickEx sickCode );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HimeriNomi( u32* numElems );
 static void handler_HimeriNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HimeriNomi_wazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static u8 common_Himeri_LastWazaIdx( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
+static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BOOL fZeroOnly );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OrenNomi( u32* numElems );
 static void handler_OrenNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_OrenNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -286,11 +289,11 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KowamotePlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KoutetsuPlate( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OokinaNekko( u32* numElems );
 static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static  const BtlEventHandlerTable*  HAND_ADD_ITEM_Kemuridama( u32* numElems );
 static void handler_Kemuridama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kemuridama_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_ADD_ITEM_OmamoriKoban( u32* numElems );
 static void handler_OmamoriKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static  const BtlEventHandlerTable*  HAND_ADD_ITEM_Kemuridama( u32* numElems );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SarasaraIwa( u32* numElems );
@@ -706,7 +709,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_ITEM_TMP_Add( const BTL_POKEPARAM* bpp, u16 itemI
     if( factor )
     {
       BTL_EVENT_FACTOR_SetTmpItemFlag( factor );
-//      BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_TMP_FLAG, TRUE );
+      BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_TMP_FLAG, TRUE );
       return factor;
     }
   }
@@ -1054,24 +1057,31 @@ static BOOL common_sickcode_match( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSi
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HimeriNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_DECREMENT_PP_DONE,      handler_HimeriNomi },
-    { BTL_EVENT_USE_ITEM,               handler_HimeriNomi_Use },
-    { BTL_EVENT_USE_ITEM_TMP,           handler_HimeriNomi_Use },
+    { BTL_EVENT_WAZASEQ_END,            handler_HimeriNomi_wazaEnd },
+    { BTL_EVENT_DECREMENT_PP_DONE,      handler_HimeriNomi         },
+    { BTL_EVENT_ITEMSET_FIXED,          handler_HimeriNomi         },
+    { BTL_EVENT_USE_ITEM,               handler_HimeriNomi_Use     },
+    { BTL_EVENT_USE_ITEM_TMP,           handler_HimeriNomi_UseTmp  },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+static void handler_HimeriNomi_wazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    if( common_Himeri_LastWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
+    {
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    }
+  }
 }
 static void handler_HimeriNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8 waza_idx = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_IDX );
-    if( (waza_idx < BPP_WAZA_GetCount(bpp))    // へんしん直後だと、選択ワザIdx>=所持ワザ数が有り得るのではじく
-    &&  (BPP_WAZA_GetPP(bpp, waza_idx) == 0)
-    ){
-      // work[0] = 対象ワザインデックスの受け渡し用に使う
-      work[0] = waza_idx;
+    if( common_Himeri_LastWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
+    {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
     }
   }
@@ -1080,39 +1090,95 @@ static void handler_HimeriNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
-    param->volume = 10;
-    param->pokeID = pokeID;
-    param->wazaIdx = work[0];
-    param->fSurfacePP = TRUE;
+    handler_HimeriNomi_common( myHandle, flowWk, pokeID, work, TRUE );
   }
 }
 static void handler_HimeriNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[WORKIDX_TMP_FLAG] )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8 waza_cnt, PP, PPMax, diffMin, minIdx, i;
+    handler_HimeriNomi_common( myHandle, flowWk, pokeID, work, FALSE );
+  }
+}
+/**
+ *  ヒメリのみ用：直前に使ったワザのPPが0の場合、そのワザのIndexを返す／それ以外 PTL_WAZA_MAX を返す
+ */
+static u8 common_Himeri_LastWazaIdx( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      // 直前に使ったワザのPPが0なら最優先
+  WazaID waza = BPP_GetPrevOrgWazaID( bpp );
+  u8  wazaIdx = BPP_WAZA_SearchIdx( bpp, waza );
 
-    waza_cnt = BPP_WAZA_GetCount( bpp );
-    for(i=0; i<waza_cnt; ++i)
-    {
-      BPP_WAZA_GetParticular( bpp, i, &PP, &PPMax );
-      if( PP == 0 ){  // 残りPP=0 のワザは優先する
-        minIdx = i;
+  if( (wazaIdx != PTL_WAZA_MAX)
+  &&  (BPP_WAZA_GetPP(bpp, wazaIdx) == 0)
+  ){
+    return wazaIdx;
+  }
+
+  return PTL_WAZA_MAX;
+}
+/**
+ *  いろんな使われ方をするヒメリのみの共通処理
+ */
+static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BOOL fZeroOnly )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u8 wazaIdx = PTL_WAZA_MAX;
+
+  do{
+      // 直前に使ったワザのPPが0なら最優先
+      wazaIdx = common_Himeri_LastWazaIdx( flowWk, pokeID );
+      if( wazaIdx != PTL_WAZA_MAX )
+      {
         break;
       }
-      if( i == 0 ){
-        minIdx = 0;
-        diffMin = PPMax - PP;
-      }else if( (PPMax - PP) < diffMin ){
-        diffMin = PPMax - PP;
-        minIdx = i;
+
+      // それ以外にPP=0のワザがあれば使う（0番から順サーチ）
+      {
+        u32 waza_cnt = BPP_WAZA_GetCount( bpp );
+        u32 i;
+
+        for(i=0; i<waza_cnt; ++i)
+        {
+          if(BPP_WAZA_GetPP( bpp, i ) == 0){
+            wazaIdx = i;
+            break;
+          }
+        }
+        if( wazaIdx != PTL_WAZA_MAX ){
+          break;
+        }
+
+        // 場合によりPPが１つでも減っていたら使う（0番から順サーチ）
+        if( !fZeroOnly )
+        {
+          for(i=0; i<waza_cnt; ++i)
+          {
+            if(BPP_WAZA_GetPPShort(bpp, i) != 0){
+              wazaIdx = i;
+              break;
+            }
+          }
+        }
       }
-    }
-    work[0] = minIdx;
-    handler_HimeriNomi_Use( myHandle, flowWk, pokeID, work );
+
+  }while(0);
+
+  if( wazaIdx != PTL_WAZA_MAX )
+  {
+    BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
+    param->volume = 10;
+    param->pokeID = pokeID;
+    param->wazaIdx = wazaIdx;
+    param->fSurfacePP = TRUE;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_RecoverPP );
+    HANDEX_STR_AddArg( &param->exStr, pokeID );
+    HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID(bpp, wazaIdx) );
+    return TRUE;
   }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -2949,11 +3015,9 @@ static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   enum {
     KODAWARI_SICKID = WAZASICK_KODAWARI,
   };
-  // こだわり状態になっていないなら、自分をこだわり状態にする
+
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( !BPP_CheckSick(bpp, KODAWARI_SICKID) )
     {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
@@ -2961,6 +3025,7 @@ static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVF
       param->pokeID = pokeID;
       param->sickID = KODAWARI_SICKID;
       param->sickCont = BPP_SICKCONT_MakePermanentParam( waza );
+      param->overWriteMode = BTL_SICK_OW_STRONG;
     }
   }
 }

@@ -241,8 +241,16 @@ typedef enum {
 
 }BtlAddSickFailCode;
 
+/**
+ *  状態異常上書きモード
+ */
+typedef enum {
+  BTL_SICK_OW_NONE = 0,   ///< 上書きできない
+  BTL_SICK_OW_POKESICK,   ///< 他の基本状態異常にかかっている時、無視して書き換え
+  BTL_SICK_OW_STRONG,     ///< なんでも上書き
+}BtlSickOverWriteMode_tag;
 
-
+typedef u8 BtlSickOverWriteMode;
 
 
 
@@ -266,6 +274,7 @@ typedef enum {
   BTL_HANDEX_DECREMENT_PP,        ///< PP減少
   BTL_HANDEX_CURE_SICK,           ///< 状態異常を回復
   BTL_HANDEX_ADD_SICK,            ///< 状態異常にする
+  BTL_HANDEX_SET_SICKCONT,        ///< 状態異常のパラメータ再設定
   BTL_HANDEX_RANK_EFFECT,         ///< ランク増減効果
   BTL_HANDEX_SET_RANK,            ///< ランクを指定地に強制書き換え
   BTL_HANDEX_RESET_RANK,          ///< ランク効果を全てフラットに
@@ -443,7 +452,9 @@ typedef struct {
  u8   volume;                        ///< PP量
  u8   pokeID;                        ///< 対象ポケモンID
  u8   wazaIdx;                       ///< 対象ワザインデックス
- u8   fSurfacePP;                    ///< 仮ワザワークのPPを対象にする
+ u8   fSurfacePP       : 1;          ///< 仮ワザワークのPPを対象にする
+ u8   fDeadPokeEnable  : 1;          ///< ひん死のポケモンにも有効（トレーナー道具使用時）
+ u8   _padd            : 6;
  BTL_HANDEX_STR_PARAMS     exStr;    ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_PP;
 
@@ -468,8 +479,8 @@ typedef struct {
  BPP_SICK_CONT  sickCont;            ///< 状態異常継続パラメータ
  u8   fAlmost;                       ///< ほぼ確定フラグ（特殊要因で失敗した場合に原因メッセージを表示する）
  u8   fStdMsgDisable;                ///< 標準メッセージオフ
- u8   fPokeSickOverWrite;            ///< 他の基本状態異常にかかっていても上書きする
  u8   pokeID;                        ///< 対象ポケモンID
+ BtlSickOverWriteMode  overWriteMode;///< 上書きモード
  BTL_HANDEX_STR_PARAMS  exStr;       ///< 特殊メッセージ表示（標準メッセージはオフ）
 }BTL_HANDEX_PARAM_ADD_SICK;
 

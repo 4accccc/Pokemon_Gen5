@@ -260,9 +260,9 @@ static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, BOOL fDefaultMsgEnable );
 static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fPokeSickOverWrite, BOOL fDispFailResult );
+  WazaSick sick, BPP_SICK_CONT sickCont, BtlSickOverWriteMode overWriteMode, BOOL fDispFailResult );
 static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fPokeSickOverWrite );
+  WazaSick sick, BPP_SICK_CONT sickCont, BtlSickOverWriteMode overWriteMode );
 static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr );
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
@@ -2856,15 +2856,15 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
   do {
 
+    // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
+    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock ) ){ break; }
+
     // 派生ワザ呼び出しパラメータチェック＆失敗判定
     if( !scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, &reqWaza) ){
       scPut_WazaMsg( wk, attacker, orgWaza );
       scproc_WazaExecuteFailed( wk, attacker, orgWaza, SV_WAZAFAIL_OTHER );
       break;
     }
-
-    // ワザ出し失敗判定１（ポケモン系状態異常＆こんらん、メロメロ、ひるみ）
-    if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock ) ){ break; }
 
     // 派生ワザ呼び出しする場合、メッセージ出力＆ワザ出し確定イベント
     fReqWaza = ( reqWaza.wazaID != WAZANO_NULL );
@@ -2890,7 +2890,6 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     else{
       *(wk->wazaParam) = *(wk->wazaParamOrg);
     }
-
 
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( wk->psetTargetOrg );
@@ -5062,9 +5061,6 @@ static BOOL scproc_decrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 waza
   if( volume )
   {
     scPut_DecrementPP( wk, bpp, wazaIdx, volume );
-    if( scEvent_DecrementPP_Reaction(wk, bpp, wazaIdx) ){
-      scproc_UseItemEquip( wk, bpp );
-    }
     return TRUE;
   }
 
@@ -6666,7 +6662,7 @@ static void scEvent_WazaSickCont( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
 static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fAlmost, BOOL fDefaultMsgEnable )
 {
-  if( scproc_AddSickCheckFail(wk, target, attacker, sick, sickCont, FALSE, fAlmost) == FALSE )
+  if( scproc_AddSickCheckFail(wk, target, attacker, sick, sickCont, BTL_SICK_OW_NONE, fAlmost) == FALSE )
   {
     scproc_AddSickCore( wk, target, attacker, sick, sickCont, fDefaultMsgEnable, NULL );
     return TRUE;
@@ -6677,10 +6673,10 @@ static BOOL scproc_AddSickRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
 * 状態異常成否チェック
 */
 static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fPokeSickOverWrite, BOOL fDispFailResult )
+  WazaSick sick, BPP_SICK_CONT sickCont, BtlSickOverWriteMode overWriteMode, BOOL fDispFailResult )
 {
   // 基本ルールによる失敗
-  BtlAddSickFailCode fail_code = addsick_check_fail_std( wk, target, sick, sickCont, fPokeSickOverWrite );
+  BtlAddSickFailCode fail_code = addsick_check_fail_std( wk, target, sick, sickCont, overWriteMode );
   if( fail_code != BTL_ADDSICK_FAIL_NULL )
   {
     BTL_N_Printf( DBGSTR_SVFL_AddSickFailCode, fail_code );
@@ -6712,18 +6708,21 @@ static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
  *  状態異常失敗チェック（基本ルール）
  */
 static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaSick sick, BPP_SICK_CONT sickCont, BOOL fPokeSickOverWrite )
+  WazaSick sick, BPP_SICK_CONT sickCont, BtlSickOverWriteMode overWriteMode )
 {
   // すでに同じ状態異常になっているなら失敗
-  if( BPP_CheckSick(target, sick) ){
-    return BTL_ADDSICK_FAIL_ALREADY;
+  if( BPP_CheckSick(target, sick) )
+  {
+    if( overWriteMode != BTL_SICK_OW_STRONG ){
+      return BTL_ADDSICK_FAIL_ALREADY;
+    }
   }
 
   // すでに基本状態異常になっているなら、他の基本状態異常にはならない
-  if( (!fPokeSickOverWrite)
-  &&  (sick < POKESICK_MAX)
+  if( (sick < POKESICK_MAX)
+  &&  (BPP_GetPokeSick(target) != POKESICK_NULL)
   ){
-    if( BPP_GetPokeSick(target) != POKESICK_NULL ){
+    if( overWriteMode == BTL_SICK_OW_NONE ){
       return BTL_ADDSICK_FAIL_OTHER;
     }
   }
@@ -13089,7 +13088,7 @@ static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
-    if( BPP_IsFightEnable(pp_target) )
+    if( BPP_IsFightEnable(pp_target) || (param->fDeadPokeEnable) )
     {
       BOOL fOrgWaza = (!(param->fSurfacePP));
       if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx, fOrgWaza) )
@@ -13114,8 +13113,16 @@ static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 //  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-    if( !BPP_IsDead(target) ){
-      scproc_decrementPP( wk, target, param->wazaIdx, param->volume );
+    if( !BPP_IsDead(target) )
+    {
+      if( scproc_decrementPP(wk, target, param->wazaIdx, param->volume) )
+      {
+        handexSub_putString( wk, &param->exStr );
+        if( scEvent_DecrementPP_Reaction(wk, target, param->wazaIdx ) )
+        {
+          scproc_UseItemEquip( wk, target );
+        }
+      }
       return 1;
     }
   }
@@ -13197,7 +13204,7 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
       BTL_N_Printf( DBGSTR_SVFL_HandEx_AddSick, param->pokeID, param->sickID, param->fAlmost );
 
       if( !scproc_AddSickCheckFail(wk, target, pp_user, param->sickID, param->sickCont,
-        param->fPokeSickOverWrite, param->fAlmost) )
+        param->overWriteMode, param->fAlmost) )
       {
         if( param->header.tokwin_flag ){
           scPut_TokWin_In( wk, pp_user );

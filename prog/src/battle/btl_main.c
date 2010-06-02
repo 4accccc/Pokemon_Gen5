@@ -4959,6 +4959,11 @@ static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* par
     wk->srcPartyForServer[clientID] = PokeParty_AllocPartyWork( HEAPID_BTL_SYSTEM );
     PokeParty_Copy( party, wk->srcParty[clientID] );
     PokeParty_Copy( party, wk->srcPartyForServer[clientID] );
+
+    {
+      POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->srcPartyForServer[clientID], 0 );
+      TAYA_Printf("SrcParty[%d] Set 1stPoke PP=%d\n", clientID, PP_Get(pp, ID_PARA_pp1, NULL) );
+    }
   }
 }
 // パーティデータ取得
@@ -4967,6 +4972,11 @@ static POKEPARTY* srcParty_Get( BTL_MAIN_MODULE* wk, u8 clientID, BOOL fForServe
   GF_ASSERT( wk->srcParty[clientID] );
 
   if( fForServer ){
+    {
+      POKEMON_PARAM* pp = PokeParty_GetMemberPointer( wk->srcPartyForServer[clientID], 0 );
+      TAYA_Printf("SrcParty[%d] Get 1stPoke PP=%d\n", clientID, PP_Get(pp, ID_PARA_pp1, NULL) );
+    }
+
     return wk->srcPartyForServer[ clientID ];
   }else{
     return wk->srcParty[ clientID ];

@@ -1556,6 +1556,7 @@ static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
       param->volume = volume;
       param->pokeID = pokeID;
       param->wazaIdx = actParam;
+      param->fDeadPokeEnable = TRUE;
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PP_Recover );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID_Org(bpp, actParam) );
@@ -1587,6 +1588,7 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
       param->wazaIdx = i;
       param->pokeID = pokeID;
       param->volume = volume;
+      param->fDeadPokeEnable = TRUE;
       fEffective = TRUE;
     }
   }

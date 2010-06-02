@@ -6047,7 +6047,7 @@ static void handler_Nemuru( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
       sick_param->sickID = WAZASICK_NEMURI;
       sick_param->sickCont = BTL_CALC_MakeWazaSickCont_Turn( 3 );
       sick_param->fAlmost = TRUE;
-      sick_param->fPokeSickOverWrite = TRUE;
+      sick_param->overWriteMode = BTL_SICK_OW_POKESICK;
 
       HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Nemuru );
       HANDEX_STR_AddArg( &sick_param->exStr, pokeID );
@@ -6477,18 +6477,15 @@ static void handler_Urami( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       if( volume )
       {
         BTL_HANDEX_PARAM_PP*      decpp_param;
-        BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
         decpp_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DECREMENT_PP, pokeID );
         decpp_param->pokeID = targetPokeID;
         decpp_param->volume = volume;
         decpp_param->wazaIdx = wazaIdx;
-
-        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Urami );
-        HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
-        HANDEX_STR_AddArg( &msg_param->str, prev_waza );
-        HANDEX_STR_AddArg( &msg_param->str, volume );
+        HANDEX_STR_Setup( &decpp_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Urami );
+        HANDEX_STR_AddArg( &decpp_param->exStr, targetPokeID );
+        HANDEX_STR_AddArg( &decpp_param->exStr, prev_waza );
+        HANDEX_STR_AddArg( &decpp_param->exStr, volume );
       }
     }
   }

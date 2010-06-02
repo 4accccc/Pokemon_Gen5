@@ -823,12 +823,20 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
       wk->myState = SEQ_READ_ACMD;
       BTL_N_Printf( DBGSTR_CLIENT_RETURN_CMD_DONE, wk->myID, wk->returnDataSize );
     }
+    if( wk->fCommError ){
+      BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+      return TRUE;
+    }
     break;
 
   case SEQ_RETURN_TO_SV_QUIT:
     if( BTL_ADAPTER_ReturnCmd(wk->adapter, wk->returnDataPtr, wk->returnDataSize) ){
       wk->myState = SEQ_QUIT;
       BTL_N_Printf( DBGSTR_CLIENT_ReplyToQuitCmd, wk->myID );
+    }
+    if( wk->fCommError ){
+      BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
+      return TRUE;
     }
     break;
 
@@ -2706,13 +2714,14 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam )
 {
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
-  if( !BTL_CALC_BITFLG_Check(wk->fieldEffectFlag, BTL_FLDEFF_MAGICROOM) )
+  if( IsItemEffective(wk, bpp) )
   {
-    if( (BPP_CheckSick(bpp, WAZASICK_KODAWARI))
-    &&  (BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) != POKETOKUSEI_BUKIYOU)
-    ){
+    if( BPP_CheckSick(bpp, WAZASICK_KODAWARI) )
+    {
       BPP_SICK_CONT  cont = BPP_GetSickCont( bpp, WAZASICK_KODAWARI );
       WazaID  kodawariWaza = BPP_SICKCONT_GetParam( cont );
+
+      TAYA_Printf("こだわり状態です。waza=%d\n", kodawariWaza);
 
       // こだわり対象のワザを覚えていて、それ以外のワザを使おうとしたらダメ
       if( (BPP_WAZA_IsUsable(bpp, kodawariWaza))
@@ -2883,12 +2892,15 @@ static u8 StoreSelectableWazaFlag( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, u8*
 static BOOL IsItemEffective( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
 {
   if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) ){
+    TAYA_Printf("マジックルーム効いてるから道具効果なし\n");
     return FALSE;
   }
   if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){
+    TAYA_Printf("さしおさえだから道具効果なし\n");
     return FALSE;
   }
   if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_BUKIYOU ){
+    TAYA_Printf("ぶきようだから道具効果なし\n");
     return FALSE;
   }
   return TRUE;
