@@ -291,6 +291,7 @@ typedef struct
   u8                 x;
   u8                 y;
   u8                 anim;
+  u8                 soft_pri;
 }
 PI_DATA;
 
@@ -455,7 +456,8 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
 static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
-                     u32 monsno, u32 formno, u32 sex, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri );
+                     u32 monsno, u32 formno, u32 sex, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri,
+                     u8 soft_pri );
 static void DeletePokeicon( UI_EASY_CLWK_RES* res, GFL_CLWK* clwk );
 
 // バトルモードから表示するテキストID、ポケアイコンの並べ方を決める
@@ -1992,13 +1994,15 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
         {
           if( j == PI_POS_R )
           {
-            work->pi_data[j][i].x      = 11*8+12 + 3*8*i;
-            work->pi_data[j][i].y      =  8*8;
+            work->pi_data[j][i].x        = 11*8+12 + 3*8*i;
+            work->pi_data[j][i].y        =  8*8;
+            work->pi_data[j][i].soft_pri = PI_PARTY_NUM - i;  // 左から6,5,4,3,2,1となるように
           }
           else
           {
-            work->pi_data[j][i].x      =  3*8+12 + 3*8*i;
-            work->pi_data[j][i].y      = 14*8;
+            work->pi_data[j][i].x        =  3*8+12 + 3*8*i;
+            work->pi_data[j][i].y        = 14*8;
+            work->pi_data[j][i].soft_pri = PI_PARTY_NUM - i;  // 左から6,5,4,3,2,1となるように
           }
         }
         else  // 4人対戦
@@ -2007,26 +2011,30 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
           {
             if( i < 3 )
             {
-              work->pi_data[j][i].x      = 20*8+12 + 3*8*i;
-              work->pi_data[j][i].y      =  8*8;
+              work->pi_data[j][i].x        = 20*8+12 + 3*8*i;
+              work->pi_data[j][i].y        =  8*8;
+              work->pi_data[j][i].soft_pri = PI_PARTY_NUM - i;  // 左から6,5,4となるように
             }
             else
             {
-              work->pi_data[j][i].x      = 20*8+12 + 3*8*(i-3);
-              work->pi_data[j][i].y      = 11*8;
+              work->pi_data[j][i].x        = 20*8+12 + 3*8*(i-3);
+              work->pi_data[j][i].y        = 11*8;
+              work->pi_data[j][i].soft_pri = PI_PARTY_NUM - i;  // 左から3,2,1となるように
             }
           }
           else
           {
             if( i< 3 )
             {
-              work->pi_data[j][i].x      =  3*8+12 + 3*8*i;
-              work->pi_data[j][i].y      = 11*8;
+              work->pi_data[j][i].x        =  3*8+12 + 3*8*i;
+              work->pi_data[j][i].y        = 11*8;
+              work->pi_data[j][i].soft_pri = PI_PARTY_NUM - i;  // 左から6,5,4となるように
             }
             else
             {
-              work->pi_data[j][i].x      =  3*8+12 + 3*8*(i-3);
-              work->pi_data[j][i].y      = 14*8;
+              work->pi_data[j][i].x        =  3*8+12 + 3*8*(i-3);
+              work->pi_data[j][i].y        = 14*8;
+              work->pi_data[j][i].soft_pri = PI_PARTY_NUM - i;  // 左から3,2,1となるように
             }
           }
         }
@@ -2045,7 +2053,8 @@ static void Btl_Rec_Sel_PiInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
                                        clunit, work->heap_id, CLSYS_DRAW_MAIN, OBJ_PAL_POS_M_PI,
                                        work->pi_data[j][i].monsno, work->pi_data[j][i].formno, work->pi_data[j][i].sex,
                                        work->pi_data[j][i].egg, &(work->pi_data[j][i].res),
-                                       work->pi_data[j][i].x, work->pi_data[j][i].y, work->pi_data[j][i].anim, 1 );
+                                       work->pi_data[j][i].x, work->pi_data[j][i].y, work->pi_data[j][i].anim, 1,
+                                       work->pi_data[j][i].soft_pri );
       }
     }
   }
@@ -2065,7 +2074,8 @@ static void Btl_Rec_Sel_PiExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work
   }
 }
 static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_TYPE draw_type, u8 pltt_line,
-                     u32 monsno, u32 formno, u32 sex, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri )
+                     u32 monsno, u32 formno, u32 sex, BOOL egg, UI_EASY_CLWK_RES* res, u8 x, u8 y, u8 anim, u8 bg_pri,
+                     u8 soft_pri )
 {
   GFL_CLWK* clwk;
 
@@ -2091,7 +2101,7 @@ static GFL_CLWK* CreatePokeicon( GFL_CLUNIT* clunit, HEAPID heap_id, CLSYS_DRAW_
   GFL_CLACT_WK_SetBgPri( clwk, bg_pri );
   
   // 上にアイテムアイコンを描画するので優先度を下げておく
-  GFL_CLACT_WK_SetSoftPri( clwk, 1 );
+  GFL_CLACT_WK_SetSoftPri( clwk, soft_pri );
   // オートアニメ ON
   GFL_CLACT_WK_SetAutoAnmFlag( clwk, TRUE );
 
@@ -2238,7 +2248,8 @@ void Btl_Rec_Sel_PfCreateDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
                                clunit, work->heap_id, CLSYS_DRAW_MAIN, OBJ_PAL_POS_M_PI,
                                1, 0, 0,
                                FALSE, &(work->pf_dummy_pi_res),
-                               0, 0, 0, 1 );
+                               0, 0, 0, 1,
+                               1 );
 }
 void Btl_Rec_Sel_PfDeleteDummyPokeicon( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
