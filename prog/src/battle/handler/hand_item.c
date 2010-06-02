@@ -4727,15 +4727,17 @@ static void handler_RedCard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     if( BTL_SVFTOOL_GetExistFrontPokePos(flowWk, targetPokeID) != BTL_POS_NULL )
     {
       BTL_HANDEX_PARAM_CONSUME_ITEM* consume_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
-      BTL_HANDEX_PARAM_PUSHOUT* push_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
 
       HANDEX_STR_Setup( &consume_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_RedCard );
       HANDEX_STR_AddArg( &consume_param->exStr, pokeID );
       HANDEX_STR_AddArg( &consume_param->exStr, targetPokeID );
 
-      push_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-      push_param->fIgnoreLevel = TRUE;
-      push_param->effectNo = BTLEFF_DRAGONTAIL_RETURN;
+      {
+        BTL_HANDEX_PARAM_PUSHOUT* push_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_PUSHOUT, pokeID );
+        push_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+        push_param->fIgnoreLevel = TRUE;
+        push_param->effectNo = BTLEFF_DRAGONTAIL_RETURN;
+      }
     }
   }
 }
@@ -4899,7 +4901,6 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
     &&  (BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID))
     &&  (BTL_SVFTOOL_ReserveMemberChangeAction(flowWk))
     ){
-      TAYA_Printf("脱出ポケID=%d\n", pokeID);
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
     }
   }
@@ -4907,7 +4908,6 @@ static void handler_DassyutuButton_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 // どうぐ使用ハンドラ
 static void handler_DassyutuButton_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  TAYA_Printf("反応ポケID=%d, 自分=%d\n", BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID), pokeID);
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     if( BTL_SVFTOOL_IsExistBenchPoke(flowWk, pokeID) )

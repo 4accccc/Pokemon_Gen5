@@ -1795,7 +1795,6 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
     reset_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_RANK, pokeID );
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
 
     {
       BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
@@ -1804,6 +1803,7 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       reset_param->poke_cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, reset_param->pokeID );
     }
 
+    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_RankReset );
   }
 }
@@ -4275,7 +4275,6 @@ static void handler_Kirifuda( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( wazaIdx != PTL_WAZA_MAX )
     {
       u8 pp = BPP_WAZA_GetPP( bpp, wazaIdx );
-      TAYA_Printf("Œ»Ý‚ÌPP=%d\n", pp);
       if( pp >= NELEMS(powTbl) ){
         pp = NELEMS(powTbl) - 1;
       }
@@ -5033,7 +5032,7 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
           if( !HandCommon_CheckCantStealPoke(flowWk, pokeID) )
           {
             BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
-            BTL_HANDEX_PARAM_SET_EFFECT_IDX* effParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_EFFECT_IDX, pokeID );
+            BTL_HANDEX_PARAM_SET_EFFECT_IDX* effParam;
 
             param->pokeID = target_pokeID;
             HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Dorobou );
@@ -5041,6 +5040,7 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
             HANDEX_STR_AddArg( &param->exStr, target_pokeID );
             HANDEX_STR_AddArg( &param->exStr, BPP_GetItem(target) );
 
+            effParam = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_EFFECT_IDX, pokeID );
             effParam->header.failSkipFlag = TRUE;
             effParam->effIndex = BTLV_WAZAEFF_DOROBOU_STEAL;
           }
@@ -5506,7 +5506,6 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
         work[WORKIDX_STICK] = 1;
         work[0] = GAMAN_STATE_2ND;
-        TAYA_Printf("Gaman EventFactor=%p, work0 adrs=%p \n", myHandle, work );
       }
       break;
     case GAMAN_STATE_2ND:
@@ -5581,7 +5580,7 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
           }
         }
 
-        TAYA_Printf("‚ª‚Ü‚ñ‚Ì‘ÎÛ=%d\n", targetPokeID);
+//        TAYA_Printf("‚ª‚Ü‚ñ‚Ì‘ÎÛ=%d\n", targetPokeID);
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
         break;
@@ -7357,15 +7356,7 @@ static void handler_TonboGaeri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
 
       BTL_HANDEX_PARAM_CHANGE_MEMBER* param;
-//      BTL_HANDEX_PARAM_MESSAGE* msg_param;
       BTL_HANDEX_PARAM_ADD_EFFECT* eff_param;
-
-/*
-      msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Tonbogaeri );
-      HANDEX_STR_AddArg( &msg_param->str, pokeID );
-      HANDEX_STR_AddArg( &msg_param->str, clientID );
-*/
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       param->pokeID = pokeID;
@@ -9177,7 +9168,7 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       pow = 40;
     }
 
-    TAYA_Printf("AtkWeight=%d, DefWeight=%d, ratio=%d .. pow=%d\n", atk_weight, tgt_weight, weight_ratio, pow);
+//    TAYA_Printf("AtkWeight=%d, DefWeight=%d, ratio=%d .. pow=%d\n", atk_weight, tgt_weight, weight_ratio, pow);
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
@@ -9448,11 +9439,10 @@ static void handler_ClearSmog( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
     reset_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_RANK, pokeID );
-    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-
     reset_param->poke_cnt = 1;
     reset_param->pokeID[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
 
+    msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
     HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_RankReset );
     HANDEX_STR_AddArg( &msg_param->str, reset_param->pokeID[0] );
   }
