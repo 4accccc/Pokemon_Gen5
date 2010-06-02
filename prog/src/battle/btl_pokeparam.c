@@ -3113,6 +3113,7 @@ BOOL BPP_IsFakeEnable( const BTL_POKEPARAM* bpp )
 void BPP_FakeDisable( BTL_POKEPARAM* bpp )
 {
   bpp->coreParam.fFakeEnable = FALSE;
+  bpp->coreParam.ppFake = NULL;
 }
 
 
