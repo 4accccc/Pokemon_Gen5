@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-24T17:17:23"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T19:27:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -359,10 +359,10 @@ C03ジムリーダー</attribute>
 ・はい/いいえの選択肢</comment>
 		<attribute name="キャラ指定">特殊な岩</attribute>
 		<language name="JPN" width="256">ためしのいわが　ある……[BE:01:ページ切り替え（クリア）]
-[1:01:ポケモン種族名:0]に
+[1:02:ポケモンニックネーム:0]に
 こわさせて　みますか？</language>
 		<language name="JPN_KANJI" width="256">試しの岩が　ある……[BE:01:ページ切り替え（クリア）]
-[1:01:ポケモン種族名:0]に
+[1:02:ポケモンニックネーム:0]に
 壊させて　みますか？</language>
 	</row>
 
@@ -371,9 +371,9 @@ C03ジムリーダー</attribute>
 ・アイテム入手処理
 　No091「ほしのかけら」</comment>
 		<attribute name="キャラ指定">特殊な岩</attribute>
-		<language name="JPN" width="256">[1:01:ポケモン種族名:0]は
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
 ためしのいわを　こわそうとした！▼</language>
-		<language name="JPN_KANJI" width="256">[1:01:ポケモン種族名:0]は
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
 試しの岩を　壊そうとした！▼</language>
 	</row>
 
