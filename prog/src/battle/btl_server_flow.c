@@ -221,8 +221,8 @@ static void scproc_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* atta
   const SVFL_WAZAPARAM* wazaParam, u32 damage );
 static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, u32 damage );
-static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlItemReaction reactionType );
+static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlItemReaction reactionType );
 static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
 static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets, u32 dmgTotal, BOOL fDelayAttack );
 static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender );
@@ -2780,10 +2780,11 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u
     }
   }
 
+  ActOrder_ForceDone( wk, pokeID );
+
+  scproc_ClearPokeDependEffect( wk, outPoke );
   BPP_Clear_ForOut( outPoke );
   SCQUE_PUT_OP_OutClear( wk->que, BPP_GetID(outPoke) );
-
-  ActOrder_ForceDone( wk, pokeID );
 
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
@@ -2793,7 +2794,6 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u
   }
 
   BTL_POSPOKE_PokeOut( &wk->pospokeWork, pokeID );
-  scproc_ClearPokeDependEffect( wk, outPoke );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -5439,7 +5439,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     scproc_Damage_Drain( wk, wazaParam, attacker, bpp[i], dmg[i] );
     scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i], FALSE );
     scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i], FALSE );
-    scproc_CheckItemReaction( wk, bpp[i] );
+    scproc_CheckItemReaction( wk, bpp[i], BTL_ITEMREACTION_HP );
   }
 
   // ひんしチェック
@@ -5794,7 +5794,7 @@ static void scEvent_WazaDamageSideAfter( BTL_SVFLOW_WORK* wk,
  * @param   bpp
  */
 //----------------------------------------------------------------------------------
-static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlItemReaction reactionType )
 {
   if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
   {
@@ -5802,7 +5802,7 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
     BTL_N_Printf( DBGSTR_SVFL_CheckItemReaction, BPP_GetID(bpp));
 
-    scEvent_CheckItemReaction( wk, bpp );
+    scEvent_CheckItemReaction( wk, bpp, reactionType );
     scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
@@ -5815,10 +5815,11 @@ static void scproc_CheckItemReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  * @param   bpp
  */
 //----------------------------------------------------------------------------------
-static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BtlItemReaction reactionType )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ITEM_REACTION, reactionType );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_ITEM_REACTION );
   BTL_EVENTVAR_Pop();
 }
@@ -6295,7 +6296,7 @@ static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u
       HANDEX_STR_Clear( str );
     }
 
-    scproc_CheckItemReaction( wk, bpp );
+    scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
 
     if( scproc_CheckDeadCmd(wk, bpp) ){
       if( scproc_CheckShowdown(wk) ){
@@ -6847,7 +6848,7 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
   }
 
   // アイテム反応イベントへ
-  scproc_CheckItemReaction( wk, target );
+  scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_SICK );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -7983,10 +7984,10 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
     }
 
     if( atk_tok == POKETOKUSEI_BUKIYOU ){
-      scproc_CheckItemReaction( wk, attacker );
+      scproc_CheckItemReaction( wk, attacker, BTL_ITEMREACTION_GEN );
     }
     if( tgt_tok == POKETOKUSEI_BUKIYOU ){
-      scproc_CheckItemReaction( wk, target );
+      scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_GEN );
     }
   }
   else{
@@ -8012,7 +8013,7 @@ static void scproc_Migawari_Create( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       if( pos != BTL_POS_NULL )
       {
         scPut_SimpleHp( wk, bpp, -migawariHP, TRUE );
-        scproc_CheckItemReaction( wk, bpp );
+        scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
 
         BPP_MIGAWARI_Create( bpp, migawariHP );
         SCQUE_PUT_OP_MigawariCreate( wk->que, BPP_GetID(bpp), migawariHP );
@@ -8602,7 +8603,7 @@ static void scproc_FieldEff_End( BTL_SVFLOW_WORK* wk, BtlFieldEffect effect )
     {
       if( BPP_IsFightEnable(bpp) )
       {
-        scproc_CheckItemReaction( wk, bpp );
+        scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
       }
     }
   }
@@ -13074,7 +13075,7 @@ static u8 scproc_HandEx_shiftHP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
       BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID[i] );
       if( !BPP_IsDead(pp_target) ){
         scPut_SimpleHp( wk, pp_target, param->volume[i], !param->fEffectDisable );
-        scproc_CheckItemReaction( wk, pp_target );
+        scproc_CheckItemReaction( wk, pp_target, BTL_ITEMREACTION_HP );
         result = 1;
       }
     }
@@ -13178,7 +13179,7 @@ static u8 scproc_HandEx_cureSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
               handexSub_putString( wk, &param->exStr );
             }
             if( check_sick == WAZASICK_SASIOSAE ){
-              scproc_CheckItemReaction( wk, pp_target );
+              scproc_CheckItemReaction( wk, pp_target, BTL_ITEMREACTION_GEN );
             }
             result = 1;
           }
@@ -13731,7 +13732,7 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     }
 
     if( prevTokusei == POKETOKUSEI_BUKIYOU ){
-      scproc_CheckItemReaction( wk, bpp );
+      scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
     }
 
     return 1;
@@ -13780,7 +13781,7 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
     SCQUE_PUT_OP_ClearConsumedItem( wk->que, param->pokeID );
   }
 
-  scproc_CheckItemReaction( wk, bpp );
+  scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
   return 1;
 }
 /**
@@ -13823,8 +13824,8 @@ static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
     handexSub_itemSet( wk, target, selfItem );
   }
 
-  scproc_CheckItemReaction( wk, self );
-  scproc_CheckItemReaction( wk, target );
+  scproc_CheckItemReaction( wk, self, BTL_ITEMREACTION_GEN );
+  scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_GEN );
 
   return 1;
 }
@@ -13837,7 +13838,7 @@ static u8 scproc_HandEx_EquipItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
   const BTL_HANDEX_PARAM_EQUIP_ITEM* param = (const BTL_HANDEX_PARAM_EQUIP_ITEM*)(param_header);
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
-  scproc_CheckItemReaction( wk, bpp );
+  scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
   return 1;
 }
 /**
@@ -14041,6 +14042,7 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
   if( (!scproc_CheckShowdown(wk))
+  &&  (BPP_FreeFallCounterToPokeID(BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) == BTL_POKEID_NULL))
   &&  (wk->flowResult == SVFLOW_RESULT_DEFAULT)
   ){
     handexSub_putString( wk, &param->preStr );

@@ -70,6 +70,7 @@ static BOOL common_sickcode_match( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWazaSi
 static const BtlEventHandlerTable* HAND_ADD_ITEM_HimeriNomi( u32* numElems );
 static void handler_HimeriNomi_wazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_HimeriNomi_get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_ppDec( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_HimeriNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -1061,7 +1062,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_HimeriNomi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZASEQ_END,            handler_HimeriNomi_wazaEnd },
     { BTL_EVENT_CHECK_ITEM_REACTION,    handler_HimeriNomi_reaction},
-    { BTL_EVENT_ITEMSET_FIXED,          handler_HimeriNomi_reaction},
+    { BTL_EVENT_ITEMSET_FIXED,          handler_HimeriNomi_get     },
     { BTL_EVENT_DECREMENT_PP_DONE,      handler_HimeriNomi_ppDec   },
     { BTL_EVENT_USE_ITEM,               handler_HimeriNomi_Use     },
     { BTL_EVENT_USE_ITEM_TMP,           handler_HimeriNomi_UseTmp  },
@@ -1083,8 +1084,20 @@ static void handler_HimeriNomi_wazaEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 // アイテム反応汎用
 static void handler_HimeriNomi_reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM_REACTION) != BTL_ITEMREACTION_HP)
+  ){
+    if( common_Himeri_EnableWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
+    {
+      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
+    }
+  }
+}
+// アイテム入手
+static void handler_HimeriNomi_get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  ){
     if( common_Himeri_EnableWazaIdx(flowWk, pokeID) != PTL_WAZA_MAX )
     {
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_USE_ITEM, pokeID );

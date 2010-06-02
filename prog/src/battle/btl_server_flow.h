@@ -253,6 +253,15 @@ typedef enum {
 typedef u8 BtlSickOverWriteMode;
 
 
+/**
+ *  アイテム反応リクエストタイプ
+ */
+typedef enum {
+  BTL_ITEMREACTION_GEN = 0, ///< 汎用
+  BTL_ITEMREACTION_HP,      ///< HP減少による
+  BTL_ITEMREACTION_PP,      ///< PP減少による
+  BTL_ITEMREACTION_SICK,    ///< 状態異常による
+}BtlItemReaction;
 
 /**
  *  ハンドラ挙動（効果が表出するもの）
