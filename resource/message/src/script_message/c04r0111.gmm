@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-01T17:39:02"/>
+	<create user="morimoto" host="W00220" date="2010-06-02T22:46:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1292" top="178" right="1997" bottom="806" maximized="no" rayout="Vertical2">
+	<dialog left="1463" top="180" right="2168" bottom="808" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -563,19 +563,23 @@
 それでは　ごゆっくり　どうぞ</language>
 	</row>
 
-	<row id="msg_c04r0111_30">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+	<row id="msg_c04r0111_30" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">チャレンジが　ちゅうだん　されました</language>
+		<language name="JPN_KANJI" width="256">チャレンジが　中断　されました</language>
 	</row>
 
-	<row id="msg_c04r0111_31">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+	<row id="msg_c04r0111_31" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ぼくは　どんな　ポケモンを
+さんか　させればいい？</language>
+		<language name="JPN_KANJI" width="256">僕は　どんな　ポケモンを
+参加　させればいい？</language>
 	</row>
 
-	<row id="msg_c04r0111_32">
-		<language name="JPN" width="256">テスト</language>
-		<language name="JPN_KANJI" width="256">テスト</language>
+	<row id="msg_c04r0111_32" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">わたしは　どんな　ポケモンを
+さんか　させればいい？</language>
+		<language name="JPN_KANJI" width="256">私は　どんな　ポケモンを
+参加　させればいい？</language>
 	</row>
 
 	<row id="msg_c04r0111_boy2_1">
@@ -1856,6 +1860,69 @@ no.206
 		<attribute name="キャラ指定">看板：路線図</attribute>
 		<language name="JPN" width="256">イッシュちほうの　ろせんずだ▼</language>
 		<language name="JPN_KANJI" width="256">イッシュ地方の　路線図がある▼</language>
+	</row>
+
+	<row id="msg_c04r0111_33" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">こうげきじゅうし</language>
+		<language name="JPN_KANJI" width="256">攻撃重視</language>
+	</row>
+
+	<row id="msg_c04r0111_34" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">ぼうぎょじゅうし</language>
+		<language name="JPN_KANJI" width="256">防御重視</language>
+	</row>
+
+	<row id="msg_c04r0111_35" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<language name="JPN" width="256">バランスじゅうし</language>
+		<language name="JPN_KANJI" width="256">バランス重視</language>
+	</row>
+
+	<row id="msg_c04r0111_36" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">わかった　こうげきじゅうし　だね！
+じゃ　はじめよう！▼</language>
+		<language name="JPN_KANJI" width="256">わかった　攻撃重視だね！
+じゃ　はじめよう！▼</language>
+	</row>
+
+	<row id="msg_c04r0111_37" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">わかった　ぼうぎょじゅうし　だね！
+じゃ　はじめよう！▼</language>
+		<language name="JPN_KANJI" width="256">わかった　防御重視だね！
+じゃ　はじめよう！▼</language>
+	</row>
+
+	<row id="msg_c04r0111_38" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>マルチ　パートナー男</comment>
+		<language name="JPN" width="256">わかった　バランスじゅうし　だね！
+じゃ　はじめよう！▼</language>
+		<language name="JPN_KANJI" width="256">わかった　バランス重視だね！
+じゃ　はじめよう！▼</language>
+	</row>
+
+	<row id="msg_c04r0111_39" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">わかったわ　こうげきじゅうし　ね！
+じゃ　はじめましょ！▼</language>
+		<language name="JPN_KANJI" width="256">わかったわ　攻撃重視ね！
+じゃ　はじめましょ！▼</language>
+	</row>
+
+	<row id="msg_c04r0111_40" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">わかったわ　ぼうぎょじゅうし　ね！
+じゃ　はじめましょ！▼</language>
+		<language name="JPN_KANJI" width="256">わかったわ　防御重視ね！
+じゃ　はじめましょ！▼</language>
+	</row>
+
+	<row id="msg_c04r0111_41" back-color="#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,#ff78ff,,,#ff78ff,,#ff78ff,#ff78ff,,,#ff78ff,,">
+		<comment>マルチ　パートナー女</comment>
+		<language name="JPN" width="256">わかったわ　バランスじゅうし　ね！
+じゃ　はじめましょ！▼</language>
+		<language name="JPN_KANJI" width="256">わかったわ　バランス重視ね！
+じゃ　はじめましょ！▼</language>
 	</row>
 
 	<flowchart-group-list>
