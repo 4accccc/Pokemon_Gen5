@@ -27,6 +27,7 @@
 
 #include "../../demo/shinka_demo/shinka_demo_graphic.h"
 #include "../../demo/egg_demo/egg_demo_graphic.h"
+#include "../../app/zukan/detail/zukan_detail_graphic.h"
 #include "d_test.h"
 
 // アーカイブ
@@ -40,6 +41,7 @@
 // オーバーレイ
 FS_EXTERN_OVERLAY(shinka_demo);
 FS_EXTERN_OVERLAY(egg_demo);
+FS_EXTERN_OVERLAY(zukan_detail);
 
 
 //=============================================================================
@@ -135,6 +137,8 @@ typedef enum
   D_TEST_CMN_BG_COLOR_ENUM_GRAY,
   D_TEST_CMN_BG_COLOR_ENUM_DWHITE,
   D_TEST_CMN_BG_COLOR_ENUM_WHITE,
+  D_TEST_CMN_BG_COLOR_ENUM_RED,
+  D_TEST_CMN_BG_COLOR_ENUM_GREEN,
   D_TEST_CMN_BG_COLOR_ENUM_BLUE,
   D_TEST_CMN_BG_COLOR_ENUM_MAX,
 }
@@ -147,12 +151,16 @@ static const u16 d_test_cmn_bg_color_enum[D_TEST_CMN_BG_COLOR_ENUM_MAX] =
   0x4210,
   0x6318,
   0x7fff,
+  0x0f3e,
+  0x2790,
   0x7b10,
 };
 
 // テキスト
 enum
 {
+  D_TEST_CMN_TEXT_DUMMY,
+  
   D_TEST_CMN_TEXT_LABEL_POKE_NAME,
   D_TEST_CMN_TEXT_LABEL_POKE_MONS_NO,
   D_TEST_CMN_TEXT_LABEL_POKE_GRA_NO,
@@ -173,19 +181,21 @@ enum
 static const u8 d_test_cmn_bmpwin_setup[D_TEST_CMN_TEXT_MAX][9] =
 {
   // frmnum           posx  posy  sizx  sizy  palnum                     dir                    x  y (x,yは無視してセンタリングすることもある)
-  {  BG_FRAME_S_TEXT,    4,    2,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,    4,    4,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,    4,    6,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,    4,    8,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,    4,   10,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,    4,   12,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,    2,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
   
-  {  BG_FRAME_S_TEXT,   18,    2,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,   18,    4,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,   18,    6,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,   18,    8,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,   18,   10,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
-  {  BG_FRAME_S_TEXT,   18,   12,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_B, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,    2,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,    4,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,    6,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,    8,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,   10,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,    4,   12,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  
+  {  BG_FRAME_S_TEXT,   18,    2,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,   18,    4,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,   18,    6,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,   18,    8,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,   18,   10,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
+  {  BG_FRAME_S_TEXT,   18,   12,   12,    2, BG_PAL_POS_S_FONT_DEFAULT, GFL_BMP_CHRAREA_GET_F, 0, 0 },
 };
 
 #define D_TEST_CMN_STRBUF_LEN (64)  // 文字数(これだけあれば足りるでしょう)
@@ -1732,6 +1742,7 @@ static GFL_PROC_RESULT D_Test_ShinkaProcInit( GFL_PROC* proc, int* seq, void* pw
   // グラフィックなど
   {
     work->graphic    = SHINKADEMO_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id );
+    SHINKADEMO_GRAPHIC_InitBGSub( work->graphic );
   }
 
   // VBlank中TCB
@@ -1739,7 +1750,7 @@ static GFL_PROC_RESULT D_Test_ShinkaProcInit( GFL_PROC* proc, int* seq, void* pw
 
   // 共通使用できる事柄
   {
-    VecFx32  mcss_pos    = { 0, FX_F32_TO_FX32(-190.0f), FX_F32_TO_FX32(-800.0f) };
+    VecFx32  mcss_pos    = { FX_F32_TO_FX32(0.0f), FX_F32_TO_FX32(-18.0f), 0 };
     VecFx32  mcss_scale  = { FX_F32_TO_FX32(16.0f), FX_F32_TO_FX32(16.0f), FX32_ONE };
 
     work->cmn_wk = D_Test_CmnInit( work->heap_id );
@@ -1784,6 +1795,7 @@ static GFL_PROC_RESULT D_Test_ShinkaProcExit( GFL_PROC* proc, int* seq, void* pw
 
   // グラフィックなど
   {
+    SHINKADEMO_GRAPHIC_ExitBGSub( work->graphic );
     SHINKADEMO_GRAPHIC_Exit( work->graphic );
   }
 
@@ -1852,10 +1864,14 @@ static void D_Test_ShinkaMcssSetOfsPositionFunc(void* d_test_cmn_wk)
     f32      ofs_position_x;
     VecFx32  ofs_position;
 
+    //size_y   *= 16.0f / 16.0f;  // 意味ないのでコメントアウトした
     if( size_y > 96.0f ) size_y = 96.0f;
 
-    ofs_position_y = ( 96.0f - size_y ) / 2.0f + offset_y;
-    ofs_position_x = - offset_x;
+    //offset_y *= 16.0f / 16.0f;  // 意味ないのでコメントアウトした
+    //offset_x *= 16.0f / 16.0f;  // 意味ないのでコメントアウトした
+
+    ofs_position_y = ( ( 96.0f - size_y ) / 2.0f + offset_y ) * (0.33f);
+    ofs_position_x = - offset_x * (0.33f);
       
     ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = FX_F32_TO_FX32(ofs_position_y);  ofs_position.z = 0;
     MCSS_SetOfsPosition( cmn_wk->mcss_wk, &ofs_position );
@@ -2118,5 +2134,290 @@ static void D_Test_EggMcssSetOfsPositionFunc(void* d_test_cmn_wk)
 }
 
 
+
+
+
+
+
+
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+/**
+*  図鑑フォルムカメラ
+*/
+//=============================================================================
+//=============================================================================
+//=============================================================================
+//=============================================================================
+
+#define HEAPID_D_TEST_ZUKAN_FORM     (HEAPID_SHINKA_DEMO)
+#define HEAP_SIZE_D_TEST_ZUKAN_FORM  (0x90000)
+
+
+//=============================================================================
+/**
+*  定数定義
+*/
+//=============================================================================
+
+
+//=============================================================================
+/**
+*  構造体宣言
+*/
+//=============================================================================
+//-------------------------------------
+/// PROC ワーク
+//=====================================
+typedef struct
+{
+  // ヒープ、パラメータなど
+  HEAPID                             heap_id;
+  D_KAWADA_TEST_ZUKAN_FORM_PARAM*    param;
+
+  // グラフィックなど
+  ZUKAN_DETAIL_GRAPHIC_WORK*         graphic;
+
+  // VBlank中TCB
+  GFL_TCB*                           vblank_tcb;
+
+  // 共通使用できる事柄
+  D_TEST_COMMON_WORK*                cmn_wk;
+}
+D_TEST_ZUKAN_FORM_WORK;
+
+
+//=============================================================================
+/**
+*  ローカル関数のプロトタイプ宣言
+*/
+//=============================================================================
+// VBlank関数
+static void D_Test_ZukanFormVBlankFunc( GFL_TCB* tcb, void* wk );
+
+// オフセットを設定する関数
+static void D_Test_ZukanFormMcssSetOfsPositionFunc(void* d_test_cmn_wk);
+
+
+//=============================================================================
+/**
+*  PROC
+*/
+//=============================================================================
+static GFL_PROC_RESULT D_Test_ZukanFormProcInit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT D_Test_ZukanFormProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static GFL_PROC_RESULT D_Test_ZukanFormProcMain( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+
+const GFL_PROC_DATA    D_KAWADA_TEST_ZukanFormProcData =
+{
+  D_Test_ZukanFormProcInit,
+  D_Test_ZukanFormProcMain,
+  D_Test_ZukanFormProcExit,
+};
+
+
+//=============================================================================
+/**
+*  外部公開関数定義
+*/
+//=============================================================================
+//------------------------------------------------------------------
+/**
+ *  @brief           
+ *
+ *  @param[in]       
+ *
+ *  @retval          
+ */
+//------------------------------------------------------------------
+
+
+//=============================================================================
+/**
+*  ローカル関数定義(PROC)
+*/
+//=============================================================================
+//-------------------------------------
+/// PROC 初期化処理
+//=====================================
+static GFL_PROC_RESULT D_Test_ZukanFormProcInit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+  D_TEST_ZUKAN_FORM_WORK*  work;
+
+  // オーバーレイ
+  GFL_OVERLAY_Load( FS_OVERLAY_ID(zukan_detail) );
+
+  // ヒープ、パラメータなど
+  {
+    GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_D_TEST_ZUKAN_FORM, HEAP_SIZE_D_TEST_ZUKAN_FORM );
+    work = GFL_PROC_AllocWork( proc, sizeof(D_TEST_ZUKAN_FORM_WORK), HEAPID_D_TEST_ZUKAN_FORM );
+    GFL_STD_MemClear( work, sizeof(D_TEST_ZUKAN_FORM_WORK) );
+    
+    work->heap_id  = HEAPID_D_TEST_ZUKAN_FORM;
+    work->param    = (D_KAWADA_TEST_ZUKAN_FORM_PARAM*)pwk;
+  }
+
+  // グラフィックなど
+  {
+    work->graphic    = ZUKAN_DETAIL_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, work->heap_id, TRUE );
+
+    // 切り替え
+    {
+      // グラフィックスモード設定
+      GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D );
+    }
+  }
+
+  // VBlank中TCB
+  work->vblank_tcb = GFUser_VIntr_CreateTCB( D_Test_ZukanFormVBlankFunc, work, 1 );
+
+  // 共通使用できる事柄
+  {
+    VecFx32  mcss_pos;
+    VecFx32  mcss_scale;
+
+    switch( work->param->mode )
+    {
+    case 0:
+      {
+        mcss_pos.x   = FX_F32_TO_FX32(0.0f);   mcss_pos.y   = FX_F32_TO_FX32(-24.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
+        mcss_scale.x = FX_F32_TO_FX32(16.0f);  mcss_scale.y = FX_F32_TO_FX32(16.0f);   mcss_scale.z = FX32_ONE;
+      }
+      break;
+    case 1:
+      {
+        mcss_pos.x   = FX_F32_TO_FX32(-64.0f);  mcss_pos.y   = FX_F32_TO_FX32(-24.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
+        mcss_scale.x = FX_F32_TO_FX32(16.0f);   mcss_scale.y = FX_F32_TO_FX32(16.0f);   mcss_scale.z = FX32_ONE;
+      }
+      break;
+    case 2:
+      {
+        mcss_pos.x   = FX_F32_TO_FX32(64.0f);  mcss_pos.y   = FX_F32_TO_FX32(-24.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
+        mcss_scale.x = FX_F32_TO_FX32(16.0f);  mcss_scale.y = FX_F32_TO_FX32(16.0f);   mcss_scale.z = FX32_ONE;
+      }
+      break;
+    }
+
+    work->cmn_wk = D_Test_CmnInit( work->heap_id );
+    D_Test_CmnMcssSet(
+      work->cmn_wk,
+      &mcss_pos,
+      &mcss_scale,
+      D_Test_ZukanFormMcssSetOfsPositionFunc );
+  }
+
+  // 最初のポケモン
+  {
+    int  mons_no;
+    int  form_no;
+    int  sex;
+    int  rare;
+    BOOL egg;
+    int  dir;
+    u32  personal_rnd;
+    D_Test_CmnPokeGetFirstPokeFirstForm( work->cmn_wk, &mons_no, &form_no, &sex, &rare, &egg, &dir, &personal_rnd );
+    D_Test_CmnPokeChange( work->cmn_wk, mons_no, form_no, sex, rare, egg, dir, personal_rnd );
+  }
+
+  // フェードイン(ただちに見えるように)
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 0, 0 );
+
+  return GFL_PROC_RES_FINISH;
+}
+
+//-------------------------------------
+/// PROC 終了処理
+//=====================================
+static GFL_PROC_RESULT D_Test_ZukanFormProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+  D_TEST_ZUKAN_FORM_WORK*  work  = (D_TEST_ZUKAN_FORM_WORK*)mywk;
+
+  // 共通使用できる事柄
+  D_Test_CmnExit( work->cmn_wk );
+
+  // VBlank中TCB
+  GFL_TCB_DeleteTask( work->vblank_tcb );
+
+  // グラフィックなど
+  {
+    // 切り替え
+    {
+      // グラフィックスモード設定
+      GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_2D );
+    }
+
+    ZUKAN_DETAIL_GRAPHIC_Exit( work->graphic );
+  }
+
+  // ヒープ、パラメータなど
+  {
+    GFL_PROC_FreeWork( proc );
+    GFL_HEAP_DeleteHeap( HEAPID_D_TEST_ZUKAN_FORM );
+  }
+
+  // オーバーレイ
+  GFL_OVERLAY_Unload( FS_OVERLAY_ID(zukan_detail) );
+
+  return GFL_PROC_RES_FINISH;
+}
+
+//-------------------------------------
+/// PROC 主処理
+//=====================================
+static GFL_PROC_RESULT D_Test_ZukanFormProcMain( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
+{
+  D_TEST_ZUKAN_FORM_WORK*     work     = (D_TEST_ZUKAN_FORM_WORK*)mywk;
+
+  BOOL res = D_Test_CmnInput( work->cmn_wk );
+
+  if( res )
+  {
+    return GFL_PROC_RES_FINISH;
+  }
+  
+  // メイン
+  D_Test_CmnMain( work->cmn_wk );
+ 
+  // 3D描画
+  ZUKAN_DETAIL_GRAPHIC_3D_StartDraw( work->graphic );
+  D_Test_CmnDraw3D( work->cmn_wk );  // 共通使用できる事柄
+  ZUKAN_DETAIL_GRAPHIC_3D_EndDraw( work->graphic );
+
+  return GFL_PROC_RES_CONTINUE;
+}
+
+//=============================================================================
+/**
+*  ローカル関数定義
+*/
+//=============================================================================
+//-------------------------------------
+/// VBlank関数
+//=====================================
+static void D_Test_ZukanFormVBlankFunc( GFL_TCB* tcb, void* wk )
+{
+  D_TEST_ZUKAN_FORM_WORK* work = (D_TEST_ZUKAN_FORM_WORK*)wk;
+}
+
+//-------------------------------------
+/// オフセットを設定する関数
+//=====================================
+static void D_Test_ZukanFormMcssSetOfsPositionFunc(void* d_test_cmn_wk)
+{
+  D_TEST_COMMON_WORK* cmn_wk = (D_TEST_COMMON_WORK*)d_test_cmn_wk;
+
+  {
+    f32      offset_x = (f32)MCSS_GetOffsetX( cmn_wk->mcss_wk );  // 右にずれているとき+, 左にずれているとき-
+    f32      ofs_position_x;
+    VecFx32  ofs_position;
+
+    ofs_position_x = - offset_x;
+    
+    ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = 0;  ofs_position.z = 0;
+    MCSS_SetOfsPosition( cmn_wk->mcss_wk, &ofs_position );
+  }
+}
 
 

@@ -96,7 +96,7 @@ FS_EXTERN_OVERLAY(manual);
 //============================================================================================
 //	定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 19 )
+#define	TOP_MENU_SIZ	( 20 )
 
 #define POKE_LIST_NUM_G (24)
 #define POKE_LIST_NUM  (13)
@@ -167,8 +167,9 @@ typedef struct {
   MANUAL_PARAM*       manual_param;
 
   // テスト
-  D_KAWADA_TEST_SHINKA_PARAM*  d_test_shinka_param;
-  D_KAWADA_TEST_EGG_PARAM*     d_test_egg_param;
+  D_KAWADA_TEST_SHINKA_PARAM*      d_test_shinka_param;
+  D_KAWADA_TEST_EGG_PARAM*         d_test_egg_param;
+  D_KAWADA_TEST_ZUKAN_FORM_PARAM*  d_test_zukan_form_param;
 
 }KAWADA_MAIN_WORK;
 
@@ -1253,8 +1254,11 @@ static void ShinkaDemoInit( KAWADA_MAIN_WORK* wk )
   }
   else
   {
-    monsno_before = MONSNO_PIZYON;//MONSNO_KAMEERU;
-    monsno_after  = MONSNO_PIZYOTTO;//MONSNO_RIZAADON;
+    //monsno_before = MONSNO_PIZYON;//MONSNO_KAMEERU;
+    //monsno_after  = MONSNO_PIZYOTTO;//MONSNO_RIZAADON;
+    
+    monsno_before = MONSNO_IIBUI;
+    monsno_after  = MONSNO_BURAKKII;
   }
 
   ZONEDATA_Open( wk->heapID );
@@ -1536,8 +1540,14 @@ static void D_TestEggExit( KAWADA_MAIN_WORK* wk )
 
 static void D_TestZukanFormInit( KAWADA_MAIN_WORK* wk, u8 center_left_right )
 {
+  wk->d_test_zukan_form_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof( D_KAWADA_TEST_ZUKAN_FORM_PARAM ) );
+
+  wk->d_test_zukan_form_param->mode = center_left_right;
+
+  GFL_PROC_LOCAL_CallProc( wk->local_procsys, NO_OVERLAY_ID, &D_KAWADA_TEST_ZukanFormProcData, wk->d_test_zukan_form_param );
 }
 static void D_TestZukanFormExit( KAWADA_MAIN_WORK* wk )
 {
+  GFL_HEAP_FreeMemory( wk->d_test_zukan_form_param );
 }
 
