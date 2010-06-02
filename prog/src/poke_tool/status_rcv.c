@@ -411,7 +411,7 @@ u8 STATUS_RCV_Recover( POKEMON_PARAM * pp, u16 item, u16 pos, u16 place, u32 hea
   // •mŽ€‰ñ•œ or ‘Sˆõ•mŽ€‰ñ•œ
   if( ( ITEM_GetBufParam(dat,ITEM_PRM_DEATH_RCV) != 0 ||
       ITEM_GetBufParam(dat,ITEM_PRM_ALL_DEATH_RCV) != 0 )
-    && ITEM_GetBufParam( dat, ITEM_PRM_LV_UP ) != 0 ){
+    && ITEM_GetBufParam( dat, ITEM_PRM_LV_UP ) == 0 ){
     if( tmp[0] == 0 ){
       HP_Recover( pp, tmp[0], tmp[1], ITEM_GetBufParam(dat,ITEM_PRM_HP_RCV_POINT) );
       use_flg = TRUE;
