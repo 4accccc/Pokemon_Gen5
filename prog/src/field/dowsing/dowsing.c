@@ -11,6 +11,9 @@
 //#define DEBUG_KAWADA
 
 
+#define DOWSING_NO_BLINK  // これが定義されているとき、液晶画面のような明滅演出をしない。
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -1209,8 +1212,10 @@ static void Dowsing_VBlankFunc( GFL_TCB* tcb, void* wk )
     if( work->rear_pal_pos < 2 ) pal_pos = 0;
     else                         pal_pos = 1;
     work->rear_pal_pos++;
+#ifndef DOWSING_NO_BLINK
     GFL_BG_ChangeScreenPalette( BG_FRAME_S_REAR, 0, 0, 32, 24, pal_pos );
     GFL_BG_LoadScreenReq( BG_FRAME_S_REAR );
+#endif
   }
 }
 
@@ -1304,6 +1309,13 @@ static void Dowsing_BgInit( DOWSING_WORK* work )
         tempHeapId );
 
   GFL_ARC_CloseDataHandle( handle );
+
+#ifdef DOWSING_NO_BLINK
+  {
+    u8 pal_pos = 1;
+    GFL_BG_ChangeScreenPalette( BG_FRAME_S_REAR, 0, 0, 32, 24, pal_pos );
+  }
+#endif
 
   GFL_BG_LoadScreenV_Req( BG_FRAME_S_REAR );
 
