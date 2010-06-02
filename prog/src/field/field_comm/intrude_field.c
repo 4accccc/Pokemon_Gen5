@@ -1496,6 +1496,7 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   int obj_code;
   int sex;
   MYSTATUS *myst;
+  VecFx32 offset_pos = {0,0,0};
   
   if(GAMESYSTEM_CheckFieldMapWork( gsys ) == FALSE){
     return;
@@ -1531,6 +1532,8 @@ void IntrudeField_PlayerDisguise(INTRUDE_COMM_SYS_PTR intcomm, GAMESYS_WORK *gsy
   fld_player = FIELDMAP_GetFieldPlayer( fieldWork );
 
   FIELD_PLAYER_ChangeOBJCode( fld_player, obj_code );
+  //連れ歩きポケモンはdraw_offsetをずらしているので変身後は初期化する
+  MMDL_SetVectorDrawOffsetPos( FIELD_PLAYER_GetMMdl(fld_player), &offset_pos );
   if(disguise_code == DISGUISE_NO_NULL){
     FIELD_PLAYER_ClearOBJCodeFix( fld_player );
   }
