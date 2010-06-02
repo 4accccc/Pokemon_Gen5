@@ -515,6 +515,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     _SEQ_SEND_GAMECANCEL,
     _SEQ_CANCEL_MSG,
     _SEQ_CANCEL_MSG_WAIT,
+    _SEQ_CANCEL_WAIT,
     _SEQ_COLOSSEUM_PARENT_ONLY,
     _SEQ_COLOSSEUM_PARENT_ONLY_MSG_WAIT,
     _SEQ_FINISH,
@@ -656,7 +657,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
   case _SEQ_SEND_GAMECANCEL:
     if(CemSend_GameCancel(em->mp_mode) == TRUE){
       em->entry_result = COMM_ENTRY_RESULT_CANCEL;
-      em->seq = _SEQ_FINISH;
+      em->seq = _SEQ_CANCEL_WAIT;
     }
     break;
 
@@ -667,10 +668,17 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
   case _SEQ_CANCEL_MSG_WAIT:
     if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
     {
+      em->seq = _SEQ_CANCEL_WAIT;
+    }
+    break;
+  case _SEQ_CANCEL_WAIT:
+    //子機抜けるまで待ち
+    if( GFL_NET_GetConnectNum() <= 1 )
+    {
       em->seq = _SEQ_FINISH;
     }
     break;
-  
+
   case _SEQ_COLOSSEUM_PARENT_ONLY:  //コロシアムで親が一人になった
     _StreamMsgSet(em, msg_connect_07_01);
     em->seq = _SEQ_COLOSSEUM_PARENT_ONLY_MSG_WAIT;
@@ -1408,11 +1416,15 @@ static void CommEntryMenu_ExaminationUpdate(COMM_ENTRY_MENU_PTR em)
         }
       }
       FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+      //決定とメッセージ送りが同時に来るので1フレーム待つ
       yesno->menufunc = NULL;
-      _StreamMsgSet(em, msg_connect_02_01);
-      em->examination_occ = FALSE;
-      yesno->seq = 0;
+      yesno->seq++;
     }
+    break;
+  case 3:
+    _StreamMsgSet(em, msg_connect_02_01);
+    em->examination_occ = FALSE;
+    yesno->seq = 0;
     break;
   }
 }
