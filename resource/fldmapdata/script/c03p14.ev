@@ -38,7 +38,7 @@ EVENT_START		ev_c03p14_recept_01
 	DEFINE_LOCAL	lwk_select
 
 	//交換した国数をチェック（自分以外の国と交換したことがあるか）
-	_UN_GET_COUNTRY_NUM( TRUE, SCWK_TEMP0 )
+	_UN_GET_COUNTRY_NUM( FALSE, SCWK_TEMP0 )
 	//ジオネットに自分の国コードを登録しているかチェック
 	_UN_IS_SETTING_MYCOUNTRY( SCWK_TEMP1 )
 	IF $SCWK_TEMP0 != 0 && $SCWK_TEMP1 == TRUE THEN
