@@ -20,5 +20,6 @@
 #define ZONE_C03P10_EVB_H
 
 #define BGID_C03P10_SIGN_01               0
+#define BGID_C03P10_SIGN_02               1
 
 #endif //ZONE_C03P10_EVB_H
