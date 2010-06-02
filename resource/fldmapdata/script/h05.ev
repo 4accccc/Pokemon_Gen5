@@ -450,7 +450,7 @@ ev_buy_poke:
 	_TALK_OBJ_START()
 	
 	//男性だった場合
-	_BALLOONWIN_OBJMSG_MF( msg_h05_middleman_01, msg_h05_middleman_02, H05_MIDDLEMAN1_01, POS_DEFAULT )
+	_BALLOONWIN_OBJMSG_MF( msg_h05_middleman_01, msg_h05_middleman_02, H05_MIDDLEMAN1_01, POS_DOWN )
 	
 	//所持金の表示
 	_GOLD_WIN_OPEN( MENU_X1, MENU_Y1 )
@@ -475,19 +475,19 @@ ev_buy_poke:
 		
 		//所持金が足りない
 		IF $LWK_GOLD_CHK == 0 THEN
-			_BALLOONWIN_OBJMSG(msg_h05_middleman_05,H05_MIDDLEMAN1_01)
+			_GOLD_WIN_CLOSE()
+			
+			_BALLOONWIN_OBJMSG_POS(msg_h05_middleman_05,H05_MIDDLEMAN1_01, POS_DOWN )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
-			
-			_GOLD_WIN_CLOSE()
 		
 		//手持ちがいっぱいなら
 		ELSIF $LWK_POKE_COUNT == 6 THEN
-			_BALLOONWIN_OBJMSG(msg_h05_middleman_06,H05_MIDDLEMAN1_01)
+			_GOLD_WIN_CLOSE()
+			
+			_BALLOONWIN_OBJMSG_POS(msg_h05_middleman_06,H05_MIDDLEMAN1_01, POS_DOWN )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
-			
-			_GOLD_WIN_CLOSE()
 		
 		//500円があって手持ちに空きがあれば持ちタイプに合わせてポケモンを渡す	
 		ELSE
@@ -504,12 +504,13 @@ ev_buy_poke:
 			_SUBTRACT_GOLD( 500 )
 			_GOLD_WIN_UPDATE()
 			//プレイヤー名はコイキングを買った！
-			_SYSWIN_MSG( msg_h05_middleman_03, POS_DEFAULT )
+			_SYSWIN_MSG( msg_h05_middleman_03, POS_DOWN )
 			
 			//ウィンドウを閉じる
 			_ME_WAIT()
 			_AB_KEYWAIT_MARK()
 			_MSGWIN_CLOSE()
+			_GOLD_WIN_CLOSE()
 			
 			//コイキングを入手
 			_ADD_POKEMON_TO_PARTY( SCWK_ANSWER, MONSNO_129, 0, 5 )
@@ -518,7 +519,7 @@ ev_buy_poke:
 			_SET_PARTY_POKE_PARAM( LWK_POKE_COUNT , SCR_POKEPARA_AGI_RND , 31)
 			
 			//名前をつけますか？
-			_SYSWIN_MSG(msg_h05_middleman_04, POS_DEFAULT )
+			_SYSWIN_MSG(msg_h05_middleman_04, POS_DOWN )
 			DEFINE_LOCAL NAME_YESNO01
 			_YES_NO_WIN( NAME_YESNO01 )
 			_SYSWIN_CLOSE()
@@ -538,7 +539,7 @@ ev_buy_poke:
 			ENDIF
 		
 			//会話終了
-			_BALLOONWIN_OBJMSG(msg_h05_middleman_08,H05_MIDDLEMAN1_01)
+			_BALLOONWIN_OBJMSG_POS(msg_h05_middleman_08,H05_MIDDLEMAN1_01, POS_DOWN )
 			_LAST_KEYWAIT()
 			_BALLOONWIN_CLOSE()
 			
@@ -554,13 +555,11 @@ ev_buy_poke:
 
 	//いらない場合
 	ELSE
-		_BALLOONWIN_OBJMSG(msg_h05_middleman_07,H05_MIDDLEMAN1_01)
+		_BALLOONWIN_OBJMSG_POS(msg_h05_middleman_07,H05_MIDDLEMAN1_01, POS_DOWN )
 		_LAST_KEYWAIT()
 		_BALLOONWIN_CLOSE()
 	
 	ENDIF
-	
-	_GOLD_WIN_CLOSE()
 
 _RET
 
