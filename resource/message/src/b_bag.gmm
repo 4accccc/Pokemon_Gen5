@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-11T21:28:04"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-06-02T15:39:57"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -724,6 +724,16 @@
 		<comment>シューター時にエネルギーが足りないとき</comment>
 		<language name="JPN" font=" 1:small" width="216">エネルギーが　たりません</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">エネルギーが　足りません</language>
+	</row>
+
+	<row id="mes_b_bag_m17">
+		<comment>逃げるアイテム使用不可</comment>
+		<language name="JPN" font=" 1:small" width="216">アララギの　ことば……
+こういう　ものには▽
+つかいどきが　あるのよ</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">アララギの　言葉……
+こういう　ものには▽
+使いどきが　あるのよ</language>
 	</row>
 
 	<flowchart-group-list>
