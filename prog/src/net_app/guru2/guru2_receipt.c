@@ -475,8 +475,10 @@ GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void
 //  wk->g2c->comm_game_join_bit = Union_App_GetMemberNetBit(_get_unionwork(wk));
   
   // メッセージ表示用システム解放
-  PRINTSYS_QUE_Delete( wk->printQue );
+  GFL_TCBL_DeleteAll( wk->pMsgTcblSys );
   GFL_TCBL_Exit( wk->pMsgTcblSys );
+  PRINTSYS_QUE_Clear( wk->printQue );
+  PRINTSYS_QUE_Delete( wk->printQue );
 
   // セルアクター終了
   ReleaseCellActor( wk );
