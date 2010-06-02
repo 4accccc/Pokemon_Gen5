@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-01T14:33:00"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T11:37:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="536" top="55" right="1241" bottom="683" maximized="no" rayout="Vertical2">
+	<dialog left="1439" top="167" right="2144" bottom="795" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1767,7 +1767,7 @@
 さて　うちおとす　ですが
 これは　ものを　なげまして▽
 とんでいる　あいてを　じめんに▽
-おとすと　という　こてんてき▽
+おとす　という　こてんてき▽
 そして　げんしてきな　わざですね▼
 にちじょうでの　こうかてきな
 つかいかたと　いたしましてはね▼
@@ -1797,7 +1797,7 @@
 さて　うちおとす　ですが
 これは　ものを　投げまして▽
 飛んでいる　相手を　地面に▽
-落とすと　という　古典的▽
+落とす　という　古典的▽
 そして　原始的な　技ですね▼
 日常での　効果的な
 使い方と　いたしましてはね▼
@@ -6383,12 +6383,12 @@ SEE YOU SOON！</language>
 ・クリアフラグ参照</comment>
 		<language name="JPN" width="256">アナウンサー『きょうの
 イッシュビュー！▼
-きょうは　サザナミタウンンに　すむ
+きょうは　サザナミタウンに　すむ
 おおがねもちを▽
 しょうかい　しまぁす！▼
 こんにちわぁ！
 おーーーきな　ごうてい　ですね！▼
-だんせい『わしの　コレクションが
+だんせい『オレの　コレクションが
 みえるかね？　かね？▼
 コレクションをには
 これくらいの　ひろさが▽
@@ -6399,17 +6399,17 @@ SEE YOU SOON！</language>
 だんせい『うみの　そこに
 ねむっているような　とっても▽
 レアな　どうぐたちさ！　さ！▼
-どうだ　キミ！！
+どうだ　きみ！！
 なにか　もっていないかね？！　カネ？！▼
 アナウンサー『ひっ……！▼
 さっ……　サザナミタウンからの
 レポート　でしたぁ！</language>
 		<language name="JPN_KANJI" width="256">アナウンサー『今日の　イッシュビュー！▼
-今日は　サザナミタウンンに　住む
+今日は　サザナミタウンに　住む
 大金持ちを　紹介しまぁす！▼
 こんにちわぁ！
 おーーーきな　豪邸ですね！▼
-男性『わしの　コレクションが
+男性『おれの　コレクションが
 見えるかね？　かね？▼
 コレクションには　これくらいの　広さが
 必要だと　思わんかね？　かね？▼
@@ -6418,7 +6418,7 @@ SEE YOU SOON！</language>
 コレクション　なんですかー？▼
 男性『海の　底に　眠っているような
 とっても　レアな　道具達さ！　さ！▼
-どうだ　キミ！！
+どうだ　きみ！！
 なにか　持っていないかね？　カネ？▼
 アナウンサー『ひっ……！▼
 さっ……　サザナミタウンからの
