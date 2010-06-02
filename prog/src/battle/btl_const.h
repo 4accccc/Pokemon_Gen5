@@ -47,7 +47,7 @@ enum {
   BTL_BIND_TURN_MAX = 6,        ///< まきつき系の継続ターン数最大値
 
 
-  BTL_CONF_EXE_RATIO = 30,    ///< 混乱時の自爆確率
+  BTL_CONF_EXE_RATIO = 50,    ///< 混乱時の自爆確率
   BTL_CONF_TURN_MIN = 2,
   BTL_CONF_TURN_MAX = 5,
   BTL_CONF_TURN_RANGE = (BTL_CONF_TURN_MAX - BTL_CONF_TURN_MIN)+1,
