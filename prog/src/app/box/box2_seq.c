@@ -1637,6 +1637,9 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
 				return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN );
 			}else{
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
+				BOX2UI_PutHandCursor( syswk, ret );
+				BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
 				BOX2MAIN_PokeInfoOff( syswk );
 			}
 			return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
@@ -2546,6 +2549,9 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2MAIN_PokeInfoPut( syswk, ret );
 				return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN );
 			}else{
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
+				BOX2UI_PutHandCursor( syswk, ret );
+				BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
 				BOX2MAIN_PokeInfoOff( syswk );
 			}
 			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
@@ -2561,6 +2567,9 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 				BOX2MAIN_PokeInfoPut( syswk, ret );
 				return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN );
 			}else{
+				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
+				BOX2UI_PutHandCursor( syswk, ret );
+				BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
 				BOX2MAIN_PokeInfoOff( syswk );
 			}
 			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
