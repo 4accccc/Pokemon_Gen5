@@ -925,10 +925,10 @@ static void PSTATUS_SKILL_DrawStrStatus( PSTATUS_WORK *work , PSTATUS_SKILL_WORK
 static void PSTATUS_SKILL_DrawHPBar( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 {
   const POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
-  const u8 hpMax = PP_Get( pp , ID_PARA_hpmax , NULL );
-  const u8 hp = PP_Get( pp , ID_PARA_hp , NULL );
+  const u16 hpMax = PP_Get( pp , ID_PARA_hpmax , NULL );
+  const u16 hp = PP_Get( pp , ID_PARA_hp , NULL );
 
-  const u8 rate = 100*hp/hpMax;
+  const u16 rate = 100*hp/hpMax;
   u8 len = PSTATUS_SKILL_HPBAR_LEN*hp/hpMax;
   u8 inCol,outCol;
   GFL_BMP_DATA *bmp = GFL_BMPWIN_GetBmp( skillWork->upBmpWin[PSBT_HP_GAUGE] );
