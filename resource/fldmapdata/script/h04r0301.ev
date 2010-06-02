@@ -154,42 +154,48 @@ ev_poke_chk:
 		//手持ちのポケモンを選択する
 		_SELECT_TEMOTI_POKE( LWK_POKE_SELECT_CHK , LWK_POKE_SELECT , 0 )
 		
-		//選んだポケモンのナンバーを取得する
-		_GET_PARTY_POKE_MONSNO( LWK_MONSNUM, LWK_POKE_SELECT )
+		IF $LWK_POKE_SELECT_CHK == TRUE THEN
 		
-		//ポケモン名をタグにセット
-		_MONS_NAME( 0, LWK_MONSNUM )
-		
-		//捕獲日を取得する
-		_GET_TEMOTI_GETDATE( LWK_YEAR2, LWK_MONTH2, LWK_DAY2, LWK_POKE_SELECT )
-		
-		//ポケモンの種類、捕獲日がオーダーとあっている場合
-		IF $WK_OTHER_FISHING_MONSNUM == $LWK_MONSNUM && $LWK_MONTH1 == $LWK_MONTH2 && $LWK_DAY1  == $LWK_DAY2 THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_08)
-			_MSGWIN_CLOSE()
+			//選んだポケモンのナンバーを取得する
+			_GET_PARTY_POKE_MONSNO( LWK_MONSNUM, LWK_POKE_SELECT )
 			
-			//アイテムを取得する
-			_ITEM_EVENT_NOWAIT(ITEM_DAIBUBOORU,5)
+			//ポケモン名をタグにセット
+			_MONS_NAME( 0, LWK_MONSNUM )
 			
-			//抽選されたポケモンを初期化する
-			/*----------------------------------*/
-			$WK_OTHER_FISHING_MONSNUM = 0
-			/*----------------------------------*/
-		
-		//ポケモンの種類がオーダーと違う場合
-		ELSIF $WK_OTHER_FISHING_MONSNUM  !=  $LWK_MONSNUM THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_10)
+			//捕獲日を取得する
+			_GET_TEMOTI_GETDATE( LWK_YEAR2, LWK_MONTH2, LWK_DAY2, LWK_POKE_SELECT )
+			
+			//ポケモンの種類、捕獲日がオーダーとあっている場合
+			IF $WK_OTHER_FISHING_MONSNUM == $LWK_MONSNUM && $LWK_MONTH1 == $LWK_MONTH2 && $LWK_DAY1  == $LWK_DAY2 THEN
+				_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_08)
+				_MSGWIN_CLOSE()
+				
+				//アイテムを取得する
+				_ITEM_EVENT_NOWAIT(ITEM_DAIBUBOORU,5)
+				
+				//抽選されたポケモンを初期化する
+				/*----------------------------------*/
+				$WK_OTHER_FISHING_MONSNUM = 0
+				/*----------------------------------*/
+			
+			//ポケモンの種類がオーダーと違う場合
+			ELSIF $WK_OTHER_FISHING_MONSNUM  !=  $LWK_MONSNUM THEN
+				_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_10)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()		
+				
+			//ポケモンの種類がオーダーと違う場合
+			ELSIF $LWK_MONTH1 != $LWK_MONTH2 || $LWK_DAY1  != $LWK_DAY2  THEN
+				_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_09)
+				_LAST_KEYWAIT()
+				_MSGWIN_CLOSE()
+			
+			ENDIF
+		ELSE
+			_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_11)
 			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()		
-			
-		//ポケモンの種類がオーダーと違う場合
-		ELSIF $LWK_MONTH1 != $LWK_MONTH2 || $LWK_DAY1  != $LWK_DAY2  THEN
-			_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_09)
-			_LAST_KEYWAIT()
-			_MSGWIN_CLOSE()
-		
+			_MSGWIN_CLOSE() 
 		ENDIF
-		
 	//ポケモンを選択して、イベント主に見せる？に「いいえ」と答える
 	ELSE
 		_BALLOONWIN_TALKOBJ_MSG(msg_h01r0301_fising_11)
