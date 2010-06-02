@@ -39,6 +39,12 @@
 #include "poke_tool/status_rcv.h"
 
 
+//==============================================================================
+//  定数定義
+//==============================================================================
+///結果ウィンドウを表示している時間
+#define RESULT_WINDOW_PRINT_TIME      (30 * 2)
+
 
 //======================================================================
 //	typedef struct
@@ -63,6 +69,7 @@ typedef struct
 	s32 point;
 	u8 add_white;
 	u8 add_black;
+	u16 wait;
 }COMMTALK_EVENT_WORK;
 
 
@@ -182,7 +189,8 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     (*seq)++;
     break;
   case SEQ_RESULT_KEY_WAIT:
-    if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
+    talk->wait++;
+    if(talk->wait > RESULT_WINDOW_PRINT_TIME){
       IntrudeEventPrint_ExitExtraMsgWin(&talk->iem);
       (*seq) = SEQ_POINT_GET_CHECK;
     }
@@ -252,10 +260,8 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     break;
 
   case SEQ_POINT_GET_MSG_END_BUTTON_WAIT:
-    if(IntrudeEventPrint_LastKeyWait() == TRUE){
-      GameCommInfo_MessageEntry_MissionSuccess(game_comm);
-      (*seq) = SEQ_END;
-    }
+    GameCommInfo_MessageEntry_MissionSuccess(game_comm);
+    (*seq) = SEQ_END;
     break;
 
   case SEQ_MISSION_FAIL:    //ミッション失敗
