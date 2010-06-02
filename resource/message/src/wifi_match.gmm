@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-31T20:32:00"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T12:31:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1472" top="397" right="2177" bottom="1025" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="42" right="1024" bottom="440" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -801,9 +801,9 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 	<row id="WIFIMATCH_WIFI_STR_15">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">バトルボックスの　ポケモンを
-たいかいに　とうろくします[BE:01:ページ切り替え（クリア）]
+たいかいに　とうろく　します[BE:01:ページ切り替え（クリア）]
 ちゅうい！
-いちど　とうろくすると[BE:00:ページ切り替え（行送り）]
+いちど　とうろく　すると[BE:00:ページ切り替え（行送り）]
 さんかを　かいじょ　するまで[BE:00:ページ切り替え（行送り）]
 バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
 だしいれ　できなくなります[BE:01:ページ切り替え（クリア）]
@@ -940,7 +940,7 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_WIFI_STR_27">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">げんざい　とうろくしている
+		<language name="JPN" width="256">げんざい　とうろく　している
 たいかいは　ありません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">現在　登録している
 大会は　ありません[BE:01:ページ切り替え（クリア）]</language>
@@ -1070,12 +1070,12 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 ポケモンが　１ひきも　いません[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールを　かくにんして
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
-おいてください[BE:01:ページ切り替え（クリア）]</language>
+セットして　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルボックスに
 ポケモンが　１匹も　いません[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールを　確認して
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
-おいてください[BE:01:ページ切り替え（クリア）]</language>
+セットして　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_40">
