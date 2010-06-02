@@ -7790,7 +7790,6 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 			BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
 		}else{
 			BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
-			BOX2OBJ_Vanish( syswk->app, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS], TRUE );
 		}
 		BOX2MAIN_HandGetPokeSet( syswk );
 		BOX2OBJ_ChgPokeCursorPriority( syswk, BOX2OBJ_POKEICON_GET_POS );
@@ -7802,6 +7801,7 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 		if( syswk->tb_status_pos >= BOX2UI_ARRANGE_PGT_TRAY2 && syswk->tb_status_pos <= BOX2UI_ARRANGE_PGT_TRAY5 ){
 			BOX2OBJ_ChangeTrayName( syswk, syswk->tb_status_pos-BOX2UI_ARRANGE_PGT_TRAY2, TRUE );
 		}
+		BOX2OBJ_PokeCursorAdd2( syswk, BOX2OBJ_POKEICON_GET_POS );
 		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
 
 	case SUB_PROC_MODE_TB_PARTY:			// 手持ちのポケモンのタッチバーから
@@ -7812,11 +7812,16 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 
 	case SUB_PROC_MODE_TB_PARTY_GET:	// 手持ちのポケモンのタッチバーから（掴んでいる時）
 		PartyFrmSetRight( syswk );
-		BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
+			BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
+		}else{
+			BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
+		}
 		BOX2MAIN_HandGetPokeSet( syswk );
 		BOX2OBJ_ChgPokeCursorPriority( syswk, BOX2OBJ_POKEICON_GET_POS );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->tb_status_pos );
 		BOX2BGWFRM_BoxListButtonOn( syswk->app );
+		BOX2OBJ_PokeCursorAdd2( syswk, BOX2OBJ_POKEICON_GET_POS );
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 	}
 
@@ -7862,10 +7867,16 @@ static int RcvStatus_ModeBattleBox( BOX2_SYS_WORK * syswk )
 
 	case SUB_PROC_MODE_TB_PARTY_GET:	// 手持ちのポケモンのタッチバーから（掴んでいる時）
 		PartyFrmSetRight( syswk );
-		BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
+			BOX2OBJ_PokeIconChange( syswk, syswk->get_tray, syswk->get_pos, syswk->app->pokeicon_id[BOX2OBJ_POKEICON_GET_POS] );
+		}else{
+			BOX2OBJ_GetPokeIcon( syswk->app, syswk->get_pos );
+		}
 		BOX2MAIN_HandGetPokeSet( syswk );
+		BOX2OBJ_ChgPokeCursorPriority( syswk, BOX2OBJ_POKEICON_GET_POS );
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, syswk->tb_status_pos );
 		CURSORMOVE_MoveTableBitOff( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_BOXLIST );
+		BOX2OBJ_PokeCursorAdd2( syswk, BOX2OBJ_POKEICON_GET_POS );
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
 	}
 

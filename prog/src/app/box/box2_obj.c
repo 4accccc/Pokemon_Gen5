@@ -1116,7 +1116,9 @@ void BOX2OBJ_PokeIconChange( BOX2_SYS_WORK * syswk, u32 tray, u32 pos, u32 id )
 
 	BOX2OBJ_Vanish( appwk, id, FALSE );
 
-	if( BOX2MAIN_PokeParaGet( syswk, pos, syswk->tray, ID_PARA_poke_exist, NULL ) == 0 ){
+	// BTS3823‘Îˆ‚Å•ÏX
+//	if( BOX2MAIN_PokeParaGet( syswk, pos, syswk->tray, ID_PARA_poke_exist, NULL ) == 0 ){
+	if( BOX2MAIN_PokeParaGet( syswk, pos, tray, ID_PARA_poke_exist, NULL ) == 0 ){
 		return;
 	}
 
