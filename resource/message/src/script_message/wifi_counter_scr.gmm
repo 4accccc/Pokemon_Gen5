@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-27T19:35:33"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-03T01:06:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1044" top="398" right="1749" bottom="1026" maximized="no" rayout="Vertical2">
+	<dialog left="1076" top="418" right="1781" bottom="1046" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="475" top="626" right="994" bottom="1024" visible="no"/>
 		<band id="0" index="1" style="0000" width="453"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="242"/>
 		<band id="3" index="4" style="0000" width="453"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1283,10 +1283,10 @@ http://www.pokemon-gl.com/
 		<comment>ルール／ローテーション</comment>
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">ローテーションバトルは　ポケモンが
-５～６ひき　ひつようです[BE:01:ページ切り替え（クリア）]
+４～６ひき　ひつようです[BE:01:ページ切り替え（クリア）]
 たたかうまえに　あいてと
 ポケモンの　みせあいを　おこない[BE:00:ページ切り替え（行送り）]
-５ひき　えらんで　たいせんします[BE:01:ページ切り替え（クリア）]
+４ひき　えらんで　たいせんします[BE:01:ページ切り替え（クリア）]
 つれていく　ポケモンは　すべて　ちがう
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 もたせる　どうぐも　すべて　ちがう
@@ -1294,10 +1294,10 @@ http://www.pokemon-gl.com/
 また　とくべつな　ポケモンや　タマゴは
 つれていくことは　できません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">ローテーションバトルは　ポケモンが
-５～６匹　必要です[BE:01:ページ切り替え（クリア）]
+４～６匹　必要です[BE:01:ページ切り替え（クリア）]
 戦うまえに　相手と
 ポケモンの　見せ合いを　行い[BE:00:ページ切り替え（行送り）]
-５匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
+４匹　選んで　対戦します[BE:01:ページ切り替え（クリア）]
 連れていく　ポケモンは　すべて　違う
 ポケモンで　なくては　ならず[BE:01:ページ切り替え（クリア）]
 持たせる　道具も　すべて　違う
@@ -1395,6 +1395,55 @@ http://www.pokemon-gl.com/
 		<attribute name="キャラ指定">ランダムマッチ</attribute>
 		<language name="JPN" width="256">やめる</language>
 		<language name="JPN_KANJI" width="256">やめる</language>
+	</row>
+
+	<row id="msg_gts_normal_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>手持ちとボックスが一杯のエラー</comment>
+		<attribute name="キャラ指定">ＧＴＳ</attribute>
+		<language name="JPN" width="256">……あら？[BE:01:ページ切り替え（クリア）]
+おきゃくさま　てもちも　ボックスも
+ポケモンで　いっぱい　ですよ[BE:01:ページ切り替え（クリア）]
+ＧＴＳを　ごりように　なるには
+てもち　か　ボックス　に[BE:00:ページ切り替え（行送り）]
+あきを　つくって　ください[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……あら？[BE:01:ページ切り替え（クリア）]
+お客さま　手持ちも　ボックスも
+ポケモンで　一杯　ですよ[BE:01:ページ切り替え（クリア）]
+ＧＴＳを　ご利用に　なるには
+手持ち　か　ボックス　に[BE:00:ページ切り替え（行送り）]
+空きを　つくって　ください[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gts_normal_err02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>手持ちに2匹いないエラー</comment>
+		<attribute name="キャラ指定">ＧＴＳ</attribute>
+		<language name="JPN" width="256">……あら？
+おきゃくさま！[BE:01:ページ切り替え（クリア）]
+ポケモンを　２ひき　いじょう
+おもちで　ないと[BE:00:ページ切り替え（行送り）]
+ＧＴＳを　ごりよう　いただけません[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……あら？
+お客さま！[BE:01:ページ切り替え（クリア）]
+ポケモンを　２匹　以上
+お持ちで　ないと[BE:00:ページ切り替え（行送り）]
+ＧＴＳを　ご利用　いただけません[BE:01:ページ切り替え（クリア）]</language>
+	</row>
+
+	<row id="msg_gts_nego_err01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+		<comment>手持ちに2匹いないエラー</comment>
+		<attribute name="キャラ指定">GTS-NEGO</attribute>
+		<language name="JPN" width="256">……あら？
+おきゃくさま！[BE:01:ページ切り替え（クリア）]
+ポケモンを　２ひき　いじょう
+おもちで　ないと[BE:00:ページ切り替え（行送り）]
+ＧＴＳネゴシエーションを[BE:00:ページ切り替え（行送り）]
+ごりよう　いただけません[BE:01:ページ切り替え（クリア）]</language>
+		<language name="JPN_KANJI" width="256">……あら？
+お客さま！[BE:01:ページ切り替え（クリア）]
+ポケモンを　２匹　以上
+お持ちで　ないと[BE:00:ページ切り替え（行送り）]
+ＧＴＳネゴシエーションを[BE:00:ページ切り替え（行送り）]
+ご利用　いただけません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<flowchart-group-list>
