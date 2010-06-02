@@ -142,6 +142,7 @@ struct _G_SYNC_WORK {
   SAVE_CONTROL_WORK* pSaveData;
   GAMEDATA* pGameData;
   MUSICAL_DIST_SAVE* pMusical;
+  DREAMWORLD_SAVEDATA* pBackupDream;
   u8* pZknWork;
   u8* pCGearWork;
   void* pTopAddr;
@@ -152,9 +153,6 @@ struct _G_SYNC_WORK {
   int req;
   int getdataCount;
   int countTimer;
-  BOOL bEnd;
-  BOOL errEnd;     // エラーの時に電源切断かどうか
-  BOOL bAccount;   //アカウント取得済みかどうか
   int zzzCount;
   int notNetEffect;  ///< 通信して無い場合のエフェクト
   int lvup;
@@ -170,6 +168,10 @@ struct _G_SYNC_WORK {
   u8 downloadType;
   u8 msgBit;
   u8 bGet;
+  u8 bBox2SleepSaveData; //寝かせた
+  u8 errEnd;     // エラーの時に電源切断かどうか
+  u8 bAccount;   //アカウント取得済みかどうか
+  u8 bSaveDataAsync;
 };
 
 
@@ -378,13 +380,13 @@ static void _networkClose1(G_SYNC_WORK* pWork)
 static void _networkClose(G_SYNC_WORK* pWork)
 {
   pWork->pParent->selectType = GAMESYNC_RETURNMODE_EXIT;
-  if(!GFL_NET_IsInit()){
+//  if(!GFL_NET_IsInit()){
     _CHANGE_STATE(_modeFadeStart);
-  }
-  else{
-    GFL_NET_Exit(NULL);
-    _CHANGE_STATE(_networkClose1);
-  }
+//  }
+//  else{
+//    GFL_NET_Exit(NULL);
+//    _CHANGE_STATE(_networkClose1);
+//  }
 }
 
 
@@ -622,6 +624,7 @@ static void _wakeupAction_save2(G_SYNC_WORK* pWork)
   if(GAMEDATA_SaveAsyncMain(pWork->pGameData) != SAVE_RESULT_OK){
     return;
   }
+  pWork->bSaveDataAsync = FALSE;
 
   if(GFL_NET_IsInit()){
     if(NHTTP_RAP_ConectionCreate(NHTTPRAP_URL_DOWNLOAD_FINISH, pWork->pNHTTPRap)){
@@ -646,6 +649,7 @@ static void _wakeupAction_1(G_SYNC_WORK* pWork)
 {
   pWork->errEnd = TRUE;
   _pokemonArise(pWork);
+  pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   _CHANGE_STATE(_wakeupAction_save2);
 }
@@ -1980,13 +1984,33 @@ static void _upeffectLoop6(G_SYNC_WORK* pWork)
 
 static void _updateSave2(G_SYNC_WORK* pWork)
 {
+  int result;
   if(pWork->percent < _UPSAVE_PROCESS_PERCENT){
     pWork->percent++;
   }
   GSYNC_DISP_SetPerfomance(pWork->pDispWork, pWork->percent);
 
-  if(GAMEDATA_SaveAsyncMain(pWork->pGameData) == SAVE_RESULT_OK){
+  result = GAMEDATA_SaveAsyncMain(pWork->pGameData);
+  switch(result){
+  case SAVE_RESULT_LAST:
+    if(pWork->pBackupDream){
+      GFL_HEAP_FreeMemory(pWork->pBackupDream);
+      pWork->pBackupDream=NULL;
+    }
+    pWork->bBox2SleepSaveData=FALSE;
+    break;
+  case SAVE_RESULT_NG:
+    GFL_NET_StateSetWifiError( 
+      0, 
+      0, 
+      0, 
+      ERRORCODE_SYSTEM );
+    GFL_NET_StateSetError(0);
+    break;
+  case SAVE_RESULT_OK:
+    pWork->bSaveDataAsync=FALSE;
     _CHANGE_STATE(_upeffectLoop6);
+    break;
   }
 }
 
@@ -1994,9 +2018,16 @@ static void _updateSave2(G_SYNC_WORK* pWork)
 
 static void _updateSave(G_SYNC_WORK* pWork)
 {
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
+  //バックアップドリームワールドデータ作成
+  pWork->pBackupDream = DREAMWORLD_SV_AllocWork(pWork->heapID);
+
+  GFL_STD_MemCopy(pDream, pWork->pBackupDream, DREAMWORLD_SV_GetWorkSize());
+
+
   //受信した時間
   {
-    DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
     RTCDate date;
     GFL_RTC_GetDate( &date );
     DREAMWORLD_SV_SetTime(pDream , GFDATE_Set(date.year,date.month,date.day,date.week));
@@ -2013,7 +2044,7 @@ static void _updateSave(G_SYNC_WORK* pWork)
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
     RECORD_Inc(pRec, RECID_PDW_SLEEP_POKEMON);
   }
-  
+  pWork->bSaveDataAsync=TRUE;
   GAMEDATA_SaveAsyncStart(pWork->pGameData);
   
   _CHANGE_STATE(_updateSave2);
@@ -2265,6 +2296,7 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
     pWork->pp = pp;
     BOXDAT_ClearPokemon(pWork->pBox, pWork->trayno, pWork->indexno );
     DREAMWORLD_SV_SetSleepPokemonFlg(pDream,TRUE);
+    pWork->bBox2SleepSaveData = TRUE;
   }
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed);
   GSYNC_DISP_ObjInit(pWork->pDispWork, NANR_gsync_obj_bed_shadow);
@@ -2273,9 +2305,33 @@ static void _BoxPokeMove(G_SYNC_WORK* pWork)
 
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンを眠るエリアから元に戻す
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void _BoxPokeRemove(G_SYNC_WORK* pWork)
+{
+  POKEMON_PASO_PARAM* ppp;
+  DREAMWORLD_SAVEDATA* pDream = DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData);
+
+  if(pWork->pBackupDream){
+    GFL_STD_MemCopy(pWork->pBackupDream,pDream,DREAMWORLD_SV_GetWorkSize());
+    GFL_HEAP_FreeMemory(pWork->pBackupDream);
+    pWork->pBackupDream = NULL;
+  }
+  if(pWork->bBox2SleepSaveData){
+    POKEMON_PARAM* pp= DREAMWORLD_SV_GetSleepPokemon(pDream);
+    BOXDAT_PutPokemonPos( pWork->pBox, pWork->trayno, pWork->indexno, PP_GetPPPPointerConst(pp) );
+    PP_Clear(pp);
+    DREAMWORLD_SV_SetSleepPokemonFlg(pDream,FALSE);
+    pWork->bBox2SleepSaveData = FALSE;
+  }
+}
+
 FS_EXTERN_OVERLAY(dpw_common);
-
-
 
 //------------------------------------------------------------------------------
 /**
@@ -2370,12 +2426,20 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   GSYNC_MESSAGE_Main(pWork->pMessageWork);
 
   if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+    NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+
+    if(pWork->bSaveDataAsync){
+      GAMEDATA_SaveAsyncCancel( pWork->pGameData );
+      pWork->bSaveDataAsync = FALSE;
+    }
+    _BoxPokeRemove(pWork);
     if(pWork->errEnd){
       NetErr_DispCall( TRUE );
     }
     WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
     WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
     GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
+    pWork->pParent->selectType = GAMESYNC_RETURNMODE_ERROR;
     ret = GFL_PROC_RES_FINISH;
   }
   return ret;

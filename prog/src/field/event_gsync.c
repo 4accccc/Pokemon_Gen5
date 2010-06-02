@@ -73,11 +73,14 @@ enum _EVENT_IRCBATTLE {
   _PLAY_FIELD_BGM,
   _FADEIN_WIFIUTIL,
   _CALL_GAMESYNC,
+  _CALL_LOGIN,
   _WAIT_GAMESYNCLOGIN,
   _GAMESYNC_MAINPROC,
   _WAIT_GAMESYNC_MAINPROC,
   _GAMESYNC_CALLBOX,
   _GAMESYNC_CALLBOX_WAIT,
+  _WIFI_LOGOUT,
+  _WIFI_LOGOUT2,
 };
 
 static GMEVENT* EVENT_GSync(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldmap);
@@ -129,11 +132,11 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       *seq = _FIELD_OPEN;
     }
     break;
-  case _NETEND:
-    if(!GFL_NET_IsInit()){
-      *seq = _FIELD_OPEN;
-    }
-    break;
+//  case _NETEND:
+//    if(!GFL_NET_IsInit()){
+//      *seq = _FIELD_OPEN;
+//    }
+//    break;
   case _FIELD_FADEOUT:
     (*seq)++;
     break;
@@ -197,14 +200,18 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         (*seq) = _GAMESYNC_MAINPROC;  //BOXから表示をして終了するために
       }
       else{
+        dbw->aLoginWork.mode = WIFILOGIN_MODE_NORMAL;
         PMSND_PauseBGM( TRUE ); // BGMを一時停止        
         PMSND_PushBGM();
         dbw->push=TRUE;
-        dbw->aLoginWork.pSvl = &dbw->aSVL;
-        GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
         (*seq)++;
       }
     }
+    break;
+  case _CALL_LOGIN:
+    dbw->aLoginWork.pSvl = &dbw->aSVL;
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogin_ProcData, &dbw->aLoginWork);
+    (*seq)++;
     break;
   case _WAIT_GAMESYNCLOGIN:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
@@ -233,16 +240,20 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
       else if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP_NOACC){
         (*seq)=_GAMESYNC_CALLBOX;
       }
+      else if(dbw->selectType==GAMESYNC_RETURNMODE_ERROR){
+        dbw->aLoginWork.mode = WIFILOGIN_MODE_ERROR;
+        (*seq)= _CALL_LOGIN;
+      }
       else{// if(dbw->selectType==GAMESYNC_RETURNMODE_EXIT){
-        GAMESYSTEM_CommBootAlways(gsys);
-        GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
-        (*seq)=_CALL_GAMESYNC_MENU;
-        if(dbw->push){
-          PMSND_PopBGM();
-          PMSND_PauseBGM( FALSE ); // BGMを解除
-          PMSND_FadeInBGM( PMSND_FADE_NORMAL );
-          dbw->push=FALSE;
-        }
+//        GAMESYSTEM_CommBootAlways(gsys);
+//        GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+        (*seq) = _WIFI_LOGOUT;
+   //     if(dbw->push){
+    //      PMSND_PopBGM();
+   //       PMSND_PauseBGM( FALSE ); // BGMを解除
+   //       PMSND_FadeInBGM( PMSND_FADE_NORMAL );
+   //       dbw->push=FALSE;
+       // }
       }
     }
     break;
@@ -256,17 +267,21 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     dbw->boxParam.sleepTable = (u16*)dbw->selectPokeList.pokemonList;
     dbw->boxParam.zknMode = 0;								// 図鑑ナンバー表示モード
     dbw->boxParam.callMode = BOX_MODE_SLEEP;	// 寝かせる;					// 呼び出しモード
-   // GFL_PROC_SysCallProc( FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
     GMEVENT_CallProc(event,FS_OVERLAY_ID(box), &BOX2_ProcData, &dbw->boxParam );
-
     (*seq)++;
     break;
   case _GAMESYNC_CALLBOX_WAIT:
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      NetErr_App_ReqErrorDisp();
+      NetErr_DispCall(FALSE);
+      dbw->aLoginWork.mode = WIFILOGIN_MODE_ERROR;
+      *seq = _CALL_LOGIN;
+      break;
+    }
     dbw->boxNo = dbw->boxParam.retTray;      		// 終了時に開いていたトレイ（寝かせる用）
     dbw->boxIndex = dbw->boxParam.retPoke;   		// 終了時に選択された位置（寝かせる用
     if((BOX_RET_SEL_NONE==dbw->boxParam.retTray) && (BOX_RET_SEL_NONE==dbw->boxParam.retPoke)){
-      GFL_NET_Exit(NULL);
-      *seq = _NETEND;
+      *seq = _WIFI_LOGOUT;
     }
     else{
       if(dbw->selectType == GAMESYNC_RETURNMODE_BOXJUMP_NOACC){
@@ -276,6 +291,26 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         dbw->selectType = GSYNC_CALLTYPE_BOXSET;  // ポケモンセット後
       }
       (*seq) = _GAMESYNC_MAINPROC;
+    }
+    break;
+  case _WIFI_LOGOUT:
+    dbw->logout.gamedata = GAMESYSTEM_GetGameData(gsys);
+    dbw->logout.bg = WIFILOGIN_BG_DREAM_WORLD;
+    dbw->logout.display = WIFILOGIN_DISPLAY_DOWN;
+    GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &dbw->logout);
+    (*seq)++;
+    break;
+  case _WIFI_LOGOUT2:
+    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
+      GAMESYSTEM_CommBootAlways(gsys);
+      GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+      (*seq)=_CALL_GAMESYNC_MENU;
+      if(dbw->push){
+        PMSND_PopBGM();
+        PMSND_PauseBGM( FALSE ); // BGMを解除
+        PMSND_FadeInBGM( PMSND_FADE_NORMAL );
+        dbw->push=FALSE;
+      }
     }
     break;
   default:

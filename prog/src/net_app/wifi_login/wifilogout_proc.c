@@ -148,7 +148,7 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Init
   WIFILOGOUT_PARAM  *p_param  = p_param_adrs;
 
   //ヒープ作成
-	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFILOGOUT, 0x10000 );
+	GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFILOGOUT, 0x18000 );
 
 	//プロセスワーク作成
 	p_wk	= GFL_PROC_AllocWork( p_proc, sizeof(WIFILOGOUT_WORK), HEAPID_WIFILOGOUT );

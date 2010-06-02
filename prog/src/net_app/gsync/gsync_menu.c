@@ -1425,9 +1425,6 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   pWork->yoffset--;
   GFL_CLACT_SYS_Main();
 
-
-
-  
   return retCode;
 }
 

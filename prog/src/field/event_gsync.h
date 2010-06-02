@@ -14,6 +14,7 @@
 #include "gamesystem/game_event.h"
 #include "field/fieldmap.h"
 #include "net_app/wifi_login.h"
+#include "net_app/wifi_logout.h"
 #include "net/dreamworld_netdata.h"
 #include "app/box2.h"
 #include "app/box_mode.h"
@@ -66,6 +67,7 @@ typedef struct {
   int PlayBGM;
   DREAM_WORLD_SERVER_POKEMONLIST_DATA selectPokeList;
   WIFILOGIN_PARAM aLoginWork;
+  WIFILOGOUT_PARAM   logout;
   BOX2_GFL_PROC_PARAM boxParam;
 } EVENT_GSYNC_WORK;
 
