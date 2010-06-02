@@ -7770,6 +7770,10 @@ static int RcvStatus_ModeSeiri( BOX2_SYS_WORK * syswk )
 		return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_MAIN;
 
 	case SUB_PROC_MODE_TB_BOX:				// ボックスのポケモンのタッチバーから
+		// 手持ち取得モードから開始したとき
+		if( syswk->get_start_mode == 1 ){
+			BOX2OBJ_PartyPokeIconFrmInSetRight( syswk );
+		}
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MOVE, syswk->get_pos );
 		BOX2MAIN_InitBoxMoveFrameScroll( syswk );
 		while( BOX2MAIN_VFuncBoxMoveFrmIn(syswk) ){}
