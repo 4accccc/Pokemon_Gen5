@@ -9930,7 +9930,7 @@ static const ZONEDATA ZoneData[] = {
 	{//ZONE_ID_PLC07 = 292
 		RSC_GRID_DEFAULT,
 		MMLID_NOENTRY,
-		AREA_ID_OUT10,
+		AREA_ID_OUT11,
 		MATRIX_ID_PALACEFIELD,
 		NARC_script_seq_plc07_bin,
 		NARC_script_seq_sp_plc07_bin,	//NARC_script_seq_sp_plc07_bin,
