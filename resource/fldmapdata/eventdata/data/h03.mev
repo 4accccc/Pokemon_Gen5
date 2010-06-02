@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/28 19:37:08
+#save date:2010/06/02 18:54:40
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\h03.wms
 #SECTION START:OBJ_EVENT
@@ -98,11 +98,11 @@ DIR_UP
 #Move Limit X Number
 2
 #Move Limit Z Number
-31
+28
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--72 0 -1720
+-104 0 -1720
 #event number: 3
 #type
 1
@@ -129,7 +129,7 @@ DIR_DOWN
 #Move Limit X Number
 2
 #Move Limit Z Number
-34
+31
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
@@ -160,11 +160,11 @@ DIR_UP
 #Move Limit X Number
 2
 #Move Limit Z Number
-32
+31
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
--88 0 -872
+-104 0 -872
 #event number: 5
 #type
 1
@@ -195,7 +195,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-72 0 -1080
+88 0 -1080
 #event number: 6
 #type
 1
