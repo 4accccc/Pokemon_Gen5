@@ -176,7 +176,6 @@ typedef struct {
 
   PSTATUS_DATA  psd;
   GFL_PROC * subProc;
-/*↑[GS_CONVERT_TAG]*/
 
   int seq;          // 現在のシーケンス
   int next_seq;     // 次のシーケンス
@@ -631,7 +630,6 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
 //  WO_ScrollCursorPut( wk ,0, FALSE);
 
   return GFL_PROC_RES_FINISH;
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -645,7 +643,6 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
  */
 //--------------------------------------------------------------------------------------------
 GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
-/*↑[GS_CONVERT_TAG]*/
 {
   WO_WORK * wk  = mywk;
 
@@ -718,10 +715,10 @@ GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
   WO_3DMain(&wk->p3d);
   GFL_CLACT_SYS_Main( );
   GFL_TCBL_Main( wk->pMsgTcblSys );
+
   PRINTSYS_QUE_Main( wk->printQue );
 
   return GFL_PROC_RES_CONTINUE;
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -735,10 +732,8 @@ GFL_PROC_RESULT WazaOshieProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *
  */
 //--------------------------------------------------------------------------------------------
 GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *mywk )
-/*↑[GS_CONVERT_TAG]*/
 {
   WO_WORK * wk  = mywk;
-/*↑[GS_CONVERT_TAG]*/
 
 
 
@@ -752,13 +747,10 @@ GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 
 
   GFL_PROC_FreeWork( proc );          // ワーク開放
-/*↑[GS_CONVERT_TAG]*/
 
   GFL_HEAP_DeleteHeap( HEAPID_WAZAOSHIE );
-/*↑[GS_CONVERT_TAG]*/
 
   return GFL_PROC_RES_FINISH;
-/*↑[GS_CONVERT_TAG]*/
 }
 
 
@@ -896,7 +888,6 @@ static void WO_DispInit( WO_WORK * wk )
   wk->vBlankTcb = GFUser_VIntr_CreateTCB( WO_VBlank , wk , 16 );
 
   GFL_ARC_CloseDataHandle( p_handle );
-/*↑[GS_CONVERT_TAG]*/
   
   InitTaskMenu(wk); // タスクメニュー初期化
 }
@@ -1112,7 +1103,6 @@ static void WO_BgSet( void )
 static void WO_BgExit( void )
 {
   GFL_DISP_GXS_SetVisibleControl(
-/*↑[GS_CONVERT_TAG]*/
     GX_PLANEMASK_BG0 | GX_PLANEMASK_BG2 |
     GX_PLANEMASK_BG3 | GX_PLANEMASK_OBJ, VISIBLE_OFF );
 
@@ -1408,25 +1398,19 @@ static int WO_SeqSelectInputCheck( WO_WORK * wk )
 {
   if(wk->key_mode == GFL_APP_KTST_TOUCH){
     if(GFL_UI_TP_GetCont() != 0){ //
-/*↑[GS_CONVERT_TAG]*/
       return FALSE;
     }
     if(GFL_UI_KEY_GetCont() != 0){
-/*↑[GS_CONVERT_TAG]*/
       wk->key_mode = GFL_APP_KTST_KEY;
-/*↑[GS_CONVERT_TAG]*/
       WO_InputModeChange(wk);
       return TRUE;
     }
   }else{
     if(GFL_UI_KEY_GetCont() != 0){
-/*↑[GS_CONVERT_TAG]*/
       return FALSE;
     }
     if(GFL_UI_TP_GetCont() != 0){
-/*↑[GS_CONVERT_TAG]*/
       wk->key_mode = GFL_APP_KTST_TOUCH;
-/*↑[GS_CONVERT_TAG]*/
       WO_InputModeChange(wk);
       return FALSE;
     }
@@ -2021,12 +2005,10 @@ static void WO_WazaListMake( WO_WORK * wk )
   wk->sel_max = (u8)WO_WazaTableNumGet( wk );
 
   wk->ld = BmpMenuWork_ListCreate( wk->sel_max, HEAPID_WAZAOSHIE );
-/*↑[GS_CONVERT_TAG]*/
   i = wk->ld[0].param;
 
   mman = GFL_MSG_Create(
       GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wazaname_dat, HEAPID_WAZAOSHIE );
-/*↑[GS_CONVERT_TAG]*/
 
   for( i=0; i<wk->sel_max; i++ ){
     if( wk->dat->waza_tbl[i] != WAZAOSHIE_TBL_MAX ){
@@ -2112,7 +2094,6 @@ static void BattleWazaParamPut( WO_WORK * wk, u32 prm )
 
   if( prm != BMPMENULIST_CANCEL ){
     GFL_MSGDATA * mman;
-/*↑[GS_CONVERT_TAG]*/
     u32 tmp;
 
     // 威力
@@ -2151,11 +2132,8 @@ static void BattleWazaParamPut( WO_WORK * wk, u32 prm )
   }
 
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_BTL_INFO] );
-/*↑[GS_CONVERT_TAG]*/
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_PRM_ATTACK] );
-/*↑[GS_CONVERT_TAG]*/
   GFL_BMPWIN_MakeTransWindow_VBlank( wk->win[WIN_PRM_HIT] );
-/*↑[GS_CONVERT_TAG]*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2306,7 +2284,7 @@ static BOOL WO_TalkMsgCallBack( u32 value )
     return PMSND_CheckPlaySE();
 
   case 2:   // SE終了待ち
-    return PMSND_CheckPlaySE();       //Snd_MePlayCheckBgmPlay(); MEはどうやって再生する？
+    return PMSND_CheckPlaySE();
   case 3:   // "ポカン"
     PMSND_PlaySE( SEQ_SE_KON );
     break;
@@ -3191,7 +3169,6 @@ static int WO_SeqPstCall( WO_WORK * wk )
                         FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &wk->psd );
 
 //  wk->subProc = GFL_PROC_Create( &PokeStatusProcData, &wk->psd, HEAPID_WAZAOSHIE );
-/*↑[GS_CONVERT_TAG]*/
   return SEQ_PST_WAIT;
 }
 
