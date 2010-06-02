@@ -165,16 +165,15 @@ static u8 PLIST_ITEM_RecoverCheck( u16 item )
   // HP回復
   if( ITEM_GetBufParam( dat, ITEM_PRM_HP_RCV ) != 0 )
   {
-    if( ITEM_GetBufParam( dat, ITEM_PRM_DEATH_RCV ) != 0)
-    {
-      GFL_HEAP_FreeMemory( dat );
-      return ITEM_TYPE_DEATH_RCV;
-    }
-    else
-    {
-      GFL_HEAP_FreeMemory( dat );
-      return ITEM_TYPE_HP_RCV;
-    }
+    GFL_HEAP_FreeMemory( dat );
+    return ITEM_TYPE_HP_RCV;
+  }
+
+  // 瀕死回復
+  if( ITEM_GetBufParam( dat, ITEM_PRM_DEATH_RCV ) != 0)
+  {
+    GFL_HEAP_FreeMemory( dat );
+    return ITEM_TYPE_DEATH_RCV;
   }
 
   // ドーピング系
