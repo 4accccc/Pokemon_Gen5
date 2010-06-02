@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-27T13:05:17"/>
+	<create user="matsumiya" host="W00224" date="2010-06-02T18:12:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -611,6 +611,21 @@
 親孝行でも　してるんだなァ！</language>
 	</row>
 
+	<row id="msg_h03_badrider1_03a" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+イベント終了
+</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">ケッ！　それで　いいんだよォ！
+かがやく　あしたがある　チビっこは▽
+チャッチャと　おうちに　かえって▽
+おやこうこう　してるんだなァ！▼</language>
+		<language name="JPN_KANJI" width="256">ケッ！　それで　いいんだよォ！
+輝く　明日がある　チビっ子は▽
+チャッチャと　お家に　帰って▽
+親孝行でも　してるんだなァ！▼</language>
+	</row>
+
 	<row id="msg_h03_badrider1_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♂
 イベント終了
@@ -629,6 +644,26 @@
 ケンカする　度胸　あんなら▽
 この　ブリッジの　どっかに　いる▽
 オレたちの　ヘッドと　やってみろやァ！</language>
+	</row>
+
+	<row id="msg_h03_badrider1_04a" back-color="#ff8080,,,,,,,,,,,,,,,,,,">
+		<comment>♂
+イベント終了
+
+※再戦可能。次回登場は再戦できます。</comment>
+		<attribute name="キャラ指定">BADRIDER</attribute>
+		<language name="JPN" width="256">テメー　オイラに　かったくらいで
+きもちよく　なってんじゃ　ねーぞ！▼
+ブラック[1:01:ポケモン種族名:0]と　マジで
+ケンカする　どきょう　あんなら▽
+この　ブリッジの　どっかに　いる▽
+オレたちの　ヘッドと　やってみろやァ！▼</language>
+		<language name="JPN_KANJI" width="256">テメー　オイラに　勝ったくらいで
+気持良く　なってんじゃ　ねーぞ！▼
+ブラック[1:01:ポケモン種族名:0]と　マジで
+ケンカする　度胸　あんなら▽
+この　ブリッジの　どっかに　いる▽
+オレたちの　ヘッドと　やってみろやァ！▼</language>
 	</row>
 
 	<row id="msg_h03_badrider1_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
