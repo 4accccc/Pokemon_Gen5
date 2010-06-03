@@ -15,6 +15,10 @@
 #define DOWSING_SEARCH_DIV  // これが定義されているとき、1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
 #define DOWSING_SEARCH_LOST_PREV  // これが定義されているとき、前見付けていたものがなくなったら、1フレーム何も発見できないようにしておく。
 
+#ifdef DOWSING_SEARCH_DIV
+  #define DOWSING_SEARCH_DIV_FIRST_FULL  // これが定義されているとき、初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
+#endif
+
 
 // インクルード
 #include <gflib.h>
@@ -548,6 +552,10 @@ struct _DOWSING_WORK
 #ifdef DOWSING_SEARCH_DIV
   // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
   BOOL                        b_item_search_restart;  // TRUEのとき最初からサーチし直す
+  #ifdef DOWSING_SEARCH_DIV_FIRST_FULL
+    // 初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
+    BOOL                      b_item_search_first;  // TRUEのとき初回やアイテム発見後
+  #endif
 #endif
 
   // アイテムサーチ
@@ -675,6 +683,10 @@ DOWSING_WORK*    DOWSING_Init(
 #ifdef DOWSING_SEARCH_DIV
   // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
   work->b_item_search_restart = TRUE;
+  #ifdef DOWSING_SEARCH_DIV_FIRST_FULL
+    // 初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
+    work->b_item_search_first = TRUE;
+  #endif
 #endif
 
   // アイテムサーチ
@@ -888,6 +900,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   if( search ) 
   {
     u16  item_search_count  = 0;
+    u16  item_search_num;
 
     s32 rect_x_min = player_grid_pos_x - AREA_ORIGIN_X;  // rect_x_min<= <rect_x_max
     s32 rect_x_max = player_grid_pos_x + AREA_WIDTH - AREA_ORIGIN_X;
@@ -915,7 +928,22 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
       work->b_item_search_restart = FALSE;
     }
 
-    for( item_search_count=0; item_search_count<ITEM_SEARCH_NUM_PER_FRAME+1; item_search_count++ )
+  #ifndef DOWSING_SEARCH_DIV_FIRST_FULL
+    item_search_num = ITEM_SEARCH_NUM_PER_FRAME +1;
+  #else
+    // 初回とアイテム発見後だけ、全アイテムサーチを行うことにする。
+    if( work->b_item_search_first )
+    {
+      item_search_num = 0xFFFF;  // 全アイテムをサーチするように、最大数にしておく。全アイテムをサーチしたらbreakしてくれるので大丈夫。
+      work->b_item_search_first = FALSE;
+    }
+    else
+    {
+      item_search_num = ITEM_SEARCH_NUM_PER_FRAME +1;
+    }
+  #endif
+
+    for( item_search_count=0; item_search_count<item_search_num; item_search_count++ )
 #endif
     {
       u16 table_idx;  // item_rod_tableのインデックス
@@ -966,6 +994,10 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
           else
           {
             // 前回一番近くに見付けていたアイテムがもうないので、1フレーム探索を止める
+            work->b_item_search_restart = TRUE;
+  #ifdef DOWSING_SEARCH_DIV_FIRST_FULL
+            work->b_item_search_first = TRUE;
+  #endif
             break;
           }
   #endif
