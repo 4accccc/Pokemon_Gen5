@@ -434,7 +434,17 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case P2P_BATTLE2:
-    {
+    if(ep2p->subProcParam.result == WIFICLUB_BATTLE_SUBPROC_RESULT_ERROR_NEXT_LOGIN){
+      if(GFL_NET_IsInit()){
+        (*seq) = P2P_MATCH_BOARD;
+      }
+      else{
+        ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+        (*seq)  = P2P_INIT2;
+      }
+      break;
+    }
+    else{
       _pokeListWorkOut(ep2p,GAMESYSTEM_GetGameData(pClub->gsys),(*seq)  );
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
@@ -443,7 +453,13 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case P2P_TIMING_SYNC_CALL_BATTLE:
-    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_WIFICLUB)){
+    if( !GFL_NET_IsInit() || (NET_ERR_CHECK_NONE != NetErr_App_CheckError())){
+      NetErr_ExitNetSystem();
+      NetErr_DispCallPushPop();
+      ep2p->login.mode = WIFILOGIN_MODE_ERROR;
+      (*seq)  = P2P_INIT2;
+    }
+    else if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_LOCALMATCHNO, WB_NET_WIFICLUB)){
       (*seq) ++;
     }
     break;
