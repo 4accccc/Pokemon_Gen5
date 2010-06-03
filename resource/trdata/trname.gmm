@@ -1379,8 +1379,8 @@
 	</row>
 
 	<row id="juggling_03">
-		<language name="JPN" width="216">ニック</language>
-		<language name="JPN_KANJI" width="216">ニック</language>
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
 	</row>
 
 	<row id="juggling_04">
@@ -2964,8 +2964,8 @@
 	</row>
 
 	<row id="elitem_18">
-		<language name="JPN" width="216">トウヤ</language>
-		<language name="JPN_KANJI" width="216">トウヤ</language>
+		<language name="JPN" width="216">エツヤ</language>
+		<language name="JPN_KANJI" width="216">エツヤ</language>
 	</row>
 
 	<row id="tanpan_15">
@@ -3419,8 +3419,8 @@
 	</row>
 
 	<row id="elitem_22">
-		<language name="JPN" width="216">トウヤ</language>
-		<language name="JPN_KANJI" width="216">トウヤ</language>
+		<language name="JPN" width="216">エツヤ</language>
+		<language name="JPN_KANJI" width="216">エツヤ</language>
 	</row>
 
 	<row id="elitem_23">

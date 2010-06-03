@@ -646,9 +646,9 @@
 #define		MONSNO_642		( 635 )		//サザンドラ
 #define		MONSNO_643		( 636 )		//メラルバ
 #define		MONSNO_644		( 637 )		//ウルガモス
-#define		MONSNO_645		( 638 )		//アトス
-#define		MONSNO_646		( 639 )		//ポルトス
-#define		MONSNO_647		( 640 )		//アラミス
+#define		MONSNO_645		( 638 )		//コバルオン
+#define		MONSNO_646		( 639 )		//テラキオン
+#define		MONSNO_647		( 640 )		//ビリジオン
 #define		MONSNO_648		( 641 )		//トルネロス
 #define		MONSNO_649		( 642 )		//ボルトロス
 #define		MONSNO_650		( 643 )		//レシラム
