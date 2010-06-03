@@ -284,7 +284,6 @@ static GFL_PROC_RESULT GameClearMsgProc_Main( GFL_PROC * proc, int * seq, void *
     if( wk->otherSaveExist ) {
       (*seq) ++; 
     }
-    //else if( (trg & PAD_BUTTON_A) || (trg & PAD_BUTTON_B) ) {
     else {
       //「レポートをかいています　でんげんをきらないでください」
       PMSND_PlaySE( SEQ_SE_DECIDE1 );
@@ -470,6 +469,7 @@ static GFL_PROC_RESULT GameClearMsgProc_End( GFL_PROC * proc, int * seq, void * 
 //----------------------------------------------------------------------------------
 static void _init_display( GAMECLEAR_MSG_WORK *wk, GAMECLEAR_MSG_PARAM *para )
 {
+  GFL_DISP_SetDispSelect( GFL_DISP_3D_TO_MAIN );
   GX_SetBankForLCDC(GX_VRAM_LCDC_ALL);
   MI_CpuClearFast((void *)HW_LCDC_VRAM, HW_LCDC_VRAM_SIZE);
   (void)GX_DisableBankForLCDC();
