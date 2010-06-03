@@ -514,7 +514,6 @@ BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork )
 
   if(exit_ok == TRUE){
     OS_TPrintf("intcomm free\n");
-    COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
     FIELD_WFBC_COMM_DATA_Exit(&intcomm->wfbc_comm_data);
     GAMEDATA_ClearPalaceWFBCCoreData( gamedata );
     //GAMEDATA_SetIntrudeReverseArea(gamedata, FALSE);

@@ -657,6 +657,7 @@ static GMEVENT_RESULT Intrude_BattleHelpAfterEvent( GMEVENT *event, int *seq, vo
     *seq = SEQ_END;
     break;
   case SEQ_END:
+    COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(GAMESYSTEM_GetGameData(gsys)));
     GFL_HEAP_FreeMemory(work->myst);
     //IntrudeEventPrint_ExitFieldMsg(&work->iem);
     return GMEVENT_RES_FINISH;
