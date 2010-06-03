@@ -227,13 +227,12 @@ EVENT_START	ev_t01_rival_01
 		_FLAG_SET( FV_T01_SUPPORT )
 		//========================================//
 
+		//マップ遷移するのでドアアニメの削除をしていません
+		//_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )		//ドア解放
+
 		//マップ遷移処理
 		_MAP_CHANGE( ZONE_ID_T01R0401, 4, 11, DIR_UP )
 
-		//ドア解放
-		_BMODEL_ANIME_SET( DOOR_ANIME_ID, SCR_BMANM_DOOR_CLOSE )
-		_BMODEL_ANIME_WAIT( DOOR_ANIME_ID )
-		_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )
 		}
 
 	ELSE
