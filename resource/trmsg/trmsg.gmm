@@ -13069,12 +13069,12 @@ puo accadere ancora di tutto!</language>
 	<row id="TRID_HAKAIM1_28_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">２００ねん　いじょう　むかしに
 つくられた　とうだいの　ちかで▽
-まぼろしの　ポケモンが▽
-ねむって　いたのだ……！</language>
+まぼろしの　ポケモン▽
+ビクティニが ねむって　いたのだ……！</language>
 		<language name="JPN_KANJI" width="216">２００年以上　昔に
 つくられた　灯台の　地下で▽
-幻の　ポケモンが▽
-眠っていたのだ……！</language>
+幻の　ポケモン▽
+ビクティニが　眠っていたのだ……！</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_29_TRMSG_FIGHT_START">
@@ -13100,10 +13100,10 @@ puo accadere ancora di tutto!</language>
 
 	<row id="TRID_HAKAIM1_30_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">しまの　せまい　ちかしつに
-とじこめられた　ポケモンを▽
+とじこめられた　ビクティニを▽
 かいほう　してやるのだ！▼</language>
 		<language name="JPN_KANJI" width="216">島の　狭い　地下室に
-閉じ込められた　ポケモンを▽
+閉じ込められた　ビクティニを▽
 解放してやるのだ！▼</language>
 	</row>
 
@@ -13116,15 +13116,15 @@ puo accadere ancora di tutto!</language>
 
 	<row id="TRID_HAKAIM1_30_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">みがってな　にんげんが
-ポケモンを　くるしめるのだ……</language>
+ビクティニを　くるしめるのだ……</language>
 		<language name="JPN_KANJI" width="216">身勝手な　人間が
-ポケモンを　苦しめるのだ……</language>
+ビクティニを　苦しめるのだ……</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_31_TRMSG_FIGHT_START">
-		<language name="JPN" width="216">この　しまに　いる　ポケモンは
+		<language name="JPN" width="216">この　しまに　いる　ビクティニは
 むげんの　エネルギーを　つくりだす！▼</language>
-		<language name="JPN_KANJI" width="216">この島に　いる　ポケモンは
+		<language name="JPN_KANJI" width="216">この島に　いる　ビクティニは
 無限の　エネルギーを　つくりだす！▼</language>
 	</row>
 
@@ -13134,10 +13134,10 @@ puo accadere ancora di tutto!</language>
 	</row>
 
 	<row id="TRID_HAKAIM1_31_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">ポケモンの　エネルギーを　あびると
+		<language name="JPN" width="216">ビクティニの　エネルギーを　あびると
 あらゆる　しょうぶごとに▽
 かつことが　できるのだ！</language>
-		<language name="JPN_KANJI" width="216">ポケモンの　エネルギーを　浴びると
+		<language name="JPN_KANJI" width="216">ビクティニの　エネルギーを　浴びると
 あらゆる　勝負事に▽
 勝つことが　できるのだ！</language>
 	</row>
