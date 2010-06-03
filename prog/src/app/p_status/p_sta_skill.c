@@ -1407,11 +1407,21 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
       work->isActiveBarButton == FALSE )
   {
     //–ß‚é‚ª‰Ÿ‚³‚ê‚½
+    //“ü‚ê‘Ö‚¦‚ÌƒLƒƒƒ“ƒZƒ‹
     PSTATUS_SetActiveBarButton( work , TRUE );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkCur , FALSE );
     PSTATUS_SKILL_DispStatusPage( work , skillWork );
+    
+    if( skillWork->isChangeMode == TRUE )
+    {
+      PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
+      GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
+      skillWork->isChangeMode = FALSE;
+      skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
+    }
+
     work->ktst = GFL_APP_END_TOUCH;
     PMSND_PlaySystemSE(PSTATUS_SND_CANCEL);
   }
