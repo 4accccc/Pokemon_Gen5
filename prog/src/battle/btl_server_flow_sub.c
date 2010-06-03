@@ -1492,7 +1492,7 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
       param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 2 ); break;
-		case ITEM_RECOVER_HP_QUOT:
+    case ITEM_RECOVER_HP_QUOT:
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 4 ); break;
     default:
       param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
@@ -1635,7 +1635,7 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
       param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
-		case ITEM_RECOVER_HP_QUOT:
+    case ITEM_RECOVER_HP_QUOT:
       param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 4 ); break;
     default:
       param->recoverHP = itemParam; break;
@@ -1853,15 +1853,16 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
   {
     u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
     u8 playerSide = BTL_MAIN_GetClientSide( wk->mainModule, playerClientID );
+    u8 enemySide = playerSide ^ 1;
 
     // どちらか全滅、もう一方は生き残りのケース -> 簡単
-    if( (alivePokeCnt[0] == 0) && (alivePokeCnt[1] != 0) )
+    if( (alivePokeCnt[playerSide] == 0) && (alivePokeCnt[enemySide] != 0) )
     {
-      return (playerSide == 1)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+      return BTL_RESULT_LOSE;
     }
-    if( (alivePokeCnt[1] == 0) && (alivePokeCnt[0] != 0) )
+    if( (alivePokeCnt[enemySide] == 0) && (alivePokeCnt[playerSide] != 0) )
     {
-      return (playerSide == 0)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+      return BTL_RESULT_WIN;
     }
 
     // 厳密判定が不要なら引き分け

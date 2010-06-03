@@ -3567,9 +3567,15 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
  * @param   result
  */
 //=============================================================================================
-void BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result )
+BtlResult BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result )
 {
   wk->serverResult = result;
+  return checkWinner( wk );
+}
+
+BtlResult BTL_MAIN_GetBattleResult( BTL_MAIN_MODULE* wk )
+{
+  return checkWinner( wk );
 }
 
 //=============================================================================================
@@ -3737,21 +3743,6 @@ static void NatsukiPut( const BTL_MAIN_MODULE* wk, BTL_POKEPARAM* bpp, u32 calcI
 
   NATSUKI_Calc( ppServer, calcID, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
   NATSUKI_Calc( ppClient, calcID, sit->zoneID, GFL_HEAP_LOWID(wk->heapID) );
-}
-
-
-//=============================================================================================
-/**
- * ÉvÉåÉCÉÑÅ[ë§Ç™èüÇ¡ÇΩÇ©îªíË
- *
- * @param   wk
- *
- * @retval  BtlResult
- */
-//=============================================================================================
-BtlResult BTL_MAIN_ChecBattleResult( BTL_MAIN_MODULE* wk )
-{
-  return checkWinner( wk );
 }
 
 

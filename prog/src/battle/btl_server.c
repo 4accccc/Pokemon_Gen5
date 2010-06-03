@@ -738,8 +738,12 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
           return FALSE;
         }
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        setMainProc( server, ServerMain_ExitBattle );
-        return FALSE;
+        {
+          BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
+          BTL_MAIN_NotifyBattleResult( server->mainModule, result );
+          setMainProc( server, ServerMain_ExitBattle );
+          return FALSE;
+        }
       default:
         GF_ASSERT(0);
         /* fallthru */
@@ -1152,9 +1156,7 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 {
-  BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
-
-  BTL_MAIN_NotifyBattleResult( server->mainModule, result );
+  BtlResult result = BTL_MAIN_GetBattleResult( server->mainModule );
 
   server->btlResultContext.resultCode = result;
   server->btlResultContext.clientID = BTL_MAIN_GetPlayerClientID( server->mainModule );
