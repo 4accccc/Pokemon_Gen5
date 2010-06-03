@@ -5085,9 +5085,9 @@
 		<language name="JPN" width="256">BGM-E-EPIROGUE-W</language>
 		<language name="JPN_KANJI" width="256">BGM-E-EPIROGUE-W</language>
 	</row>
-	<row id="msg_seq_bgm_06">
-		<language name="JPN" width="256">BGM-06</language>
-		<language name="JPN_KANJI" width="256">BGM-06</language>
+	<row id="msg_seq_bgm_gf_logo">
+		<language name="JPN" width="256">BGM-GF-LOGO</language>
+		<language name="JPN_KANJI" width="256">BGM-GF-LOGO</language>
 	</row>
 	<row id="msg_seq_bgm_msl_dl_01">
 		<language name="JPN" width="256">BGM-MSL-DL-01</language>
