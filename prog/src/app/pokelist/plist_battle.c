@@ -480,13 +480,13 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
     const u8 charX = posX/8;
     const u8 charY = posY/8;
     const u8 modX = posX%8;
-    WORDSET *wordSet = WORDSET_Create( work->heapId );
 
     iconWork->lvStrWin = GFL_BMPWIN_Create( PLIST_BG_SUB_BATTLE_STR , charX , charY + 3 , 
           5 , 1 , PLIST_BG_SUB_PLT_FONT , GFL_BMP_CHRAREA_GET_B );
 
     if( isEgg == FALSE )
     {
+      WORDSET *wordSet = WORDSET_Create( work->heapId );
       WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
 
       PLIST_UTIL_DrawValueStrFuncSys( work , iconWork->lvStrWin , 
