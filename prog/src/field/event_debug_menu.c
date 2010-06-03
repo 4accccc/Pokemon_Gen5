@@ -6312,7 +6312,7 @@ static void SetZukanLocal( DEBUG_ZUKAN_WORK * wk, u16 count, u32 mode )
   u32 i;
   buf = POKE_PERSONAL_GetZenkokuToChihouArray( wk->heapID, NULL );
   for( i=1; i<=MONSNO_END; i++ ){
-    if( buf[i] != 0 ){
+    if( buf[i] != POKEPER_CHIHOU_NO_NONE ){
       SetZukanDataOne( wk, i, 0, PM_LANG, mode );
       count --;
     }
