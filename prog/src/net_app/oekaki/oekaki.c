@@ -107,7 +107,7 @@ static  int ConnectCheck( OEKAKI_WORK *wk );
 static void LineDataSendRecv( OEKAKI_WORK *wk );
 static  int MyStatusCheck( OEKAKI_WORK *wk );
 static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait );
-static  int EndMessageWait( PRINT_STREAM *stream );
+static  int EndMessageWait( OEKAKI_WORK *wk );
 static void EndMessageWindowOff( OEKAKI_WORK *wk );
 static  int OnlyParentCheck( OEKAKI_WORK *wk );
 static  int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq );
@@ -254,8 +254,8 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     // BGシステム初期化
     BgInit();          
 
-    WIPE_SetBrightness( WIPE_DISP_MAIN,WIPE_FADE_BLACK );
-    WIPE_SetBrightness( WIPE_DISP_SUB,WIPE_FADE_BLACK );
+    GX_SetMasterBrightness(-16);
+    GXS_SetMasterBrightness(-16);
 
     // 輝度変更セット
     WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEIN, WIPE_TYPE_HOLEIN, WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
@@ -1191,8 +1191,10 @@ static void BmpWinDelete( OEKAKI_WORK *wk )
   int i;
 
   // メッセージ表示用システム解放
-  PRINTSYS_QUE_Delete( wk->printQue );
+  GFL_TCBL_DeleteAll( wk->pMsgTcblSys );
   GFL_TCBL_Exit( wk->pMsgTcblSys );
+  PRINTSYS_QUE_Clear( wk->printQue );
+  PRINTSYS_QUE_Delete( wk->printQue );
 
   
   for(i=0;i<OEKAKI_MEMBER_MAX;i++){
@@ -1625,7 +1627,7 @@ static int Oekaki_NewMemberEnd( OEKAKI_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq )
 {
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
 
     // はい・いいえ開始
     wk->app_menuwork = YesNoMenuInit( wk );
@@ -1854,7 +1856,7 @@ static int  Oekaki_EndChild( OEKAKI_WORK *wk, int seq )
 static int  Oekaki_EndChildWait( OEKAKI_WORK *wk, int seq )
 {     
 
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     wk->wait = 0;
     SetNextSequence( wk, OEKAKI_MODE_END_CHILD_WAIT2 );
   }
@@ -1899,7 +1901,7 @@ static int  Oekaki_EndChildWait2( OEKAKI_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq )
 {
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
 
     // はい・いいえ開始
     wk->app_menuwork = YesNoMenuInit( wk );
@@ -2003,7 +2005,7 @@ static int Oekaki_ForceEnd( OEKAKI_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq )
 {
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     SetNextSequence( wk, OEKAKI_MODE_FORCE_END_SYNCHRONIZE );
     GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),
                                   OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE);
@@ -2087,7 +2089,7 @@ static int Oekaki_EndParentOnly( OEKAKI_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Oekaki_EndParentOnlyWait( OEKAKI_WORK *wk, int seq )
 {
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     SetNextSequence( wk, OEKAKI_MODE_END_CHILD_WAIT2 );
   }
 
@@ -2109,7 +2111,7 @@ static int Oekaki_EndParentOnlyWait( OEKAKI_WORK *wk, int seq )
 static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 {
   // ●●●さんがかえりました
-//  if( EndMessageWait( wk->printStream ) ){
+//  if( EndMessageWait( wk ) ){
 //    //表示中のメッセージがある場合は強制停止
 //    //GF_STR_PrintForceStop(wk->MsgIndex);
 //    PRINTSYS_PrintStreamDelete( wk->printStream );
@@ -2147,7 +2149,7 @@ static int Oekaki_LogoutChildMesWait( OEKAKI_WORK *wk, int seq )
     wk->err_num = 0;
   }
 
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     SetNextSequence( wk, OEKAKI_MODE_LOGOUT_CHILD_CLOSE );
     wk->wait = 0;
   }
@@ -2884,6 +2886,11 @@ static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait )
     PRINT_UTIL_PrintColor( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue, 
                            0, 0, wk->TalkString, wk->font, STRING_COL_MSG );
   }else{
+    // printStreamする瞬間に他の描画を積んでいるようであればそのタスクを消す（後勝ち）
+    if(wk->printStream!=NULL){
+      PRINTSYS_PrintStreamDelete( wk->printStream );
+    }
+    // 文字列描画タスク登録
     wk->printStream = PRINTSYS_PrintStream( wk->MsgWin, 0, 0, wk->TalkString, wk->font,
                                             MSGSPEED_GetWait(), wk->pMsgTcblSys, 
                                             1, HEAPID_OEKAKI, 0x0f0f );
@@ -2903,17 +2910,18 @@ static void EndMessagePrint( OEKAKI_WORK *wk, int msgno, int wait )
  * @retval  int   0:表示中  1:終了
  */
 //------------------------------------------------------------------
-static int EndMessageWait( PRINT_STREAM *stream )
+static int EndMessageWait( OEKAKI_WORK *wk )
 {
   PRINTSTREAM_STATE state;
-  state = PRINTSYS_PrintStreamGetState( stream );
+  state = PRINTSYS_PrintStreamGetState( wk->printStream );
   if(state==PRINTSTREAM_STATE_PAUSE){
     if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      PRINTSYS_PrintStreamReleasePause( stream );
+      PRINTSYS_PrintStreamReleasePause( wk->printStream );
     }
     return 0;
   }else if(state==PRINTSTREAM_STATE_DONE){
-    PRINTSYS_PrintStreamDelete( stream );
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    wk->printStream = NULL;
     return 1;
   }
   return 0;
