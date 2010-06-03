@@ -32,3 +32,9 @@ extern void BTL_SVFSUB_CalcExp( BTL_SVFLOW_WORK* wk, BTL_PARTY* party, const BTL
  */
 extern TrItemResult  BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx );
 
+
+/**
+ *  èüîsîªíË
+ */
+extern BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk );
+

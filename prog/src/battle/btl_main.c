@@ -139,9 +139,9 @@ struct _BTL_MAIN_MODULE {
   int       msgSpeed;
   u16       LimitTimeGame;
   u16       LimitTimeCommand;
+  BtlResult serverResult;
 
   BTL_ESCAPEINFO  escapeInfo;
-  jmp_buf         setjmpBuf;
 
   BTL_PROC    subProc;
   int         subSeq;
@@ -297,6 +297,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fBGMFadeOutDisable = FALSE;
       wk->fMoneyDblUp = FALSE;
       wk->MultiAIClientNum = 0;
+      wk->serverResult = BTL_RESULT_DRAW;
 
       Kentei_ClearField( wk->setupParam );
 
@@ -3543,7 +3544,7 @@ BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag )
 
 //=============================================================================================
 /**
- * 捕獲したポケモン位置の通知を受け付け
+ * サーバから捕獲したポケモン位置の通知を受け付け
  *
  * @param   wk
  * @param   pos
@@ -3556,9 +3557,21 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
     u8 clientID, posIdx;
     btlPos_to_cliendID_and_posIdx( wk, pos, &clientID, &posIdx );
     wk->setupParam->capturedPokeIdx = posIdx;
-    BTL_Printf("捕獲ポケ位置=%d, Index=%d\n", pos, posIdx );
   }
 }
+//=============================================================================================
+/**
+ * サーバから勝敗判定結果を受け付け
+ *
+ * @param   wk
+ * @param   result
+ */
+//=============================================================================================
+void BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result )
+{
+  wk->serverResult = result;
+}
+
 //=============================================================================================
 /**
  * 通信対戦時コマンド整合性チェックエラー発生通知を受け付け
@@ -5224,9 +5237,15 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
 //----------------------------------------------------------------------------------------------
 // 勝敗判定
 //----------------------------------------------------------------------------------------------
+BOOL BTL_MAIN_IsResultStrictMode( const BTL_MAIN_MODULE* wk )
+{
+  BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk );
+
+  return (competitor == BTL_COMPETITOR_SUBWAY) || (competitor == BTL_COMPETITOR_COMM);
+}
+
 static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
 {
-  // 種々メッセージのタグ解釈不備を解消すべし
   BtlResult result;
 
   BTL_N_Printf( DBGSTR_MAIN_CheckResultStart );
@@ -5248,41 +5267,7 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   }
   else
   {
-    BTL_POKE_CONTAINER* container;
-
-    u32 i;
-    u8 restPokeCnt[2];
-
-    GFL_STD_MemClear( restPokeCnt, sizeof(restPokeCnt) );
-    container = &wk->pokeconForClient;
-
-    for(i=0; i<BTL_CLIENT_MAX; ++i)
-    {
-      if( BTL_MAIN_IsExistClient(wk, i) )
-      {
-        BTL_PARTY* party = BTL_POKECON_GetPartyData( container, i );
-        if( BTL_PARTY_GetMemberCount(party) )
-        {
-          u8 side = BTL_MAIN_GetClientSide( wk, i );
-          u8 aliveCnt = BTL_PARTY_GetAliveMemberCount( party );
-          BTL_Printf("クライアント(%d)の生き残りポケモン数=%d\n", i, aliveCnt);
-          restPokeCnt[side] += aliveCnt;
-        }
-      }
-    }
-
-    BTL_N_Printf( DBGSTR_MAIN_Result_RestCnt, restPokeCnt[0], restPokeCnt[1]);
-
-    if( restPokeCnt[0] == restPokeCnt[1] )
-    {
-      result = BTL_RESULT_DRAW;
-    }
-    else
-    {
-      u8 winSide = (restPokeCnt[0] > restPokeCnt[1])? 0 : 1;
-      result = (winSide == BTL_MAIN_GetClientSide(wk, wk->myClientID))?
-            BTL_RESULT_WIN : BTL_RESULT_LOSE;
-    }
+    return wk->serverResult;
   }
 
   wk->setupParam->result = result;

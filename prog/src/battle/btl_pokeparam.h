@@ -119,6 +119,7 @@ typedef enum {
   BPP_CONTFLG_MIKURUNOMI,
   BPP_CONTFLG_CANT_ACTION,      ///< ”½“®‚Å“®‚¯‚È‚¢
   BPP_CONTFLG_MORAIBI,
+  BPP_CONTFLG_BATONTOUCH,
 
   BPP_CONTFLG_MAX,
   BPP_CONTFLG_NULL = BPP_CONTFLG_MAX,
@@ -405,7 +406,7 @@ extern void BPP_SetItem( BTL_POKEPARAM* pp, u16 itemID );
 extern void BPP_WAZA_SetUsedFlag( BTL_POKEPARAM* pp, u8 wazaIdx );
 extern void BPP_WAZA_UpdateID( BTL_POKEPARAM* pp, u8 wazaIdx, WazaID waza, u8 ppMax, BOOL fPermenent );
 extern BOOL BPP_WAZA_IsUsable( const BTL_POKEPARAM* bpp, WazaID waza );
-extern void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user );
+extern void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user );
 extern void BPP_ReflectToPP( BTL_POKEPARAM* bpp, BOOL fDefaultForm );
 extern void BPP_ReflectByPP( BTL_POKEPARAM* bpp );
 extern void BPP_SetSrcPP( BTL_POKEPARAM* bpp, POKEMON_PARAM* pp );

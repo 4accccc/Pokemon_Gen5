@@ -1152,7 +1152,9 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
 //----------------------------------------------------------------------------------
 static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
 {
-  BtlResult result = BTL_MAIN_ChecBattleResult( server->mainModule );
+  BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
+
+  BTL_MAIN_NotifyBattleResult( server->mainModule, result );
 
   server->btlResultContext.resultCode = result;
   server->btlResultContext.clientID = BTL_MAIN_GetPlayerClientID( server->mainModule );
@@ -1178,14 +1180,6 @@ static BOOL ServerMain_ExitBattle( BTL_SERVER* server, int* seq )
     case BTL_COMPETITOR_WILD:
       if( result == BTL_RESULT_WIN )
       {
-        /*
-        if( BTL_MAIN_GetSetupStatusFlag(server->mainModule, BTL_STATUS_FLAG_LEGEND_EX) == FALSE )
-        {
-          u16 winBGM = BTL_MAIN_GetWinBGMNo( server->mainModule );
-          PMSND_PlayBGM( winBGM );
-        }
-        */
-//        setMainProc( server, ServerMain_ExitBattle_KeyWait );
         setMainProc( server, ServerMain_ExitBattle_WinWild );
       }
       else if( (result == BTL_RESULT_LOSE) || (result == BTL_RESULT_DRAW) ){

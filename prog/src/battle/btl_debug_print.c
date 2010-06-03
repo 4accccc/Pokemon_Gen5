@@ -92,7 +92,6 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_Result_CommError:         return "  通信エラー\n";
   case DBGSTR_MAIN_Result_Capture:           return "  捕獲終了\n";
   case DBGSTR_MAIN_Result_Escape:            return "  逃げて終了\n";
-  case DBGSTR_MAIN_Result_RestCnt:           return "残りポケ数  side0=%d, side1=%d\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
@@ -320,7 +319,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HandExSetResult:     return  "  set result = %d\n";
 
 
-  case DBGSTR_SVFS_RegTargetDouble:   return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
+  case DBGSTR_SVFS_RegTargetDouble:     return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
+  case DBGSTR_SVFS_Result_RestCnt:      return "残りポケ数  side0=%d, side1=%d\n";
+  case DBGSTR_SVFS_LastPokeID:          return "最後まで生きてたポケID=%d\n";
+  case DBGSTR_SVFL_DeadPokeCount:       return "倒したポケ数= %d vs %d\n";
+  case DBGSTR_SVFL_HPRatio:             return "残HP [side:%d]  総和=%d, 割合=%d\n";
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";

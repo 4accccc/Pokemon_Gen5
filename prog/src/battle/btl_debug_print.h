@@ -263,6 +263,10 @@ typedef enum {
   DBGSTR_SVFL_HandExSetResult,
 
   DBGSTR_SVFS_RegTargetDouble,
+  DBGSTR_SVFS_Result_RestCnt,
+  DBGSTR_SVFS_LastPokeID,
+  DBGSTR_SVFL_DeadPokeCount,
+  DBGSTR_SVFL_HPRatio,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

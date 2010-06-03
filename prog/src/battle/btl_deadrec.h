@@ -16,15 +16,23 @@ enum {
 };
 
 /**
- *  ポケ死亡レコード
+ *  ポケ死亡レコード（ターン単位）
+ */
+
+typedef struct {
+  u8 cnt;
+  u8 fExpChecked[ BTL_POKEID_MAX ];    ///< 経験値チェック処理済みフラグ（ポケモンID毎）
+  u8 deadPokeID[ BTL_POKEID_MAX ];
+}BTL_DEADREC_UNIT;
+
+/**
+ *  ポケ死亡レコード（本体）
  */
 typedef struct {
 
-  struct {
-    u8 cnt;
-    u8 fDead[ BTL_POKEID_MAX ];          ///< 死亡フラグ（ポケモンID毎）
-    u8 fExpChecked[ BTL_POKEID_MAX ];    ///< 経験値チェック処理済みフラグ（ポケモンID毎）
-  }record[BTL_DEADREC_TURN_MAX];
+
+  BTL_DEADREC_UNIT  record[ BTL_DEADREC_TURN_MAX ];
+
 
 }BTL_DEADREC;
 
@@ -37,4 +45,5 @@ extern u8 BTL_DEADREC_GetCount( const BTL_DEADREC* wk, u8 turn );
 extern u8 BTL_DEADREC_GetPokeID( const BTL_DEADREC* wk, u8 turn, u8 idx );
 extern BOOL BTL_DEADREC_GetExpCheckedFlag( const BTL_DEADREC* wk, u8 turn, u8 idx );
 extern void BTL_DEADREC_SetExpCheckedFlag( BTL_DEADREC* wk, u8 turn, u8 idx );
+extern u8 BTL_DEADREC_GetLastDeadPokeID( const BTL_DEADREC* wk );
 

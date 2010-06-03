@@ -4,6 +4,9 @@
  * @brief ポケモンWB バトルシステム サーバコマンド生成処理（サブルーチン群）
  * @author  taya
  *
+ *  元々 btl_server_flow.c 内にあった関数を、あまりに見通しが悪くなってきたので無理矢理に分離したものです。
+ *  そういうわけでソースを読むときは btl_server_flow.c と行きつ戻りつしないとならない点もありご迷惑をおかけします…。
+ *
  * @date  2010.05.28  作成
  */
 //=============================================================================================
@@ -96,9 +99,16 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
 static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam );
+static BtlResult CheckResult_AliveBoth( BTL_SVFLOW_WORK* wk, const u8* alivePokeCnt, const u8* totalPokeCnt, u8 playerSide );
+static void calcHPRatio( BTL_SVFLOW_WORK* wk, int* HP_sum, int* HP_ratio, u8 side );
 
 
 
+/*====================================================================================================*/
+/*                                                                                                    */
+/*  ワザ対象ポケモン格納                                                                              */
+/*                                                                                                    */
+/*====================================================================================================*/
 
 //--------------------------------------------------------------------------
 /**
@@ -617,6 +627,12 @@ static u8 scEvent_GetWazaTargetTempt( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 
 
 
+/*====================================================================================================*/
+/*                                                                                                    */
+/*  経験値計算処理                                                                                    */
+/*                                                                                                    */
+/*====================================================================================================*/
+
 //----------------------------------------------------------------------------------
 /**
  * 経験値計算結果を専用ワークに出力
@@ -917,10 +933,11 @@ static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
 }
 
 
-
-//-----------------------------------------------------------------------------------
-// サーバーフロー：アイテム使用
-//-----------------------------------------------------------------------------------
+/*====================================================================================================*/
+/*                                                                                                    */
+/*  トレーナーアイテム使用                                                                            */
+/*                                                                                                    */
+/*====================================================================================================*/
 TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx )
 {
   typedef u8 (*pItemEffFunc)( BTL_SVFLOW_WORK*, BTL_POKEPARAM*, u16, int, u8 );
@@ -1789,5 +1806,175 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 
 
 
+/*====================================================================================================*/
+/*                                                                                                    */
+/*  勝敗判定                                                                                          */
+/*                                                                                                    */
+/*====================================================================================================*/
 
+//=============================================================================================
+/**
+ * 勝敗判定
+ *
+ * @param   wk
+ *
+ * @retval  BtlResult   勝敗コード
+ */
+//=============================================================================================
+BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
+{
+  u8 alivePokeCnt[2], totalPokeCnt[2];
+  u8 playerClientID;
+  u32 i;
+
+// 両陣営の生き残りポケ数＆総ポケ数カウント
+  alivePokeCnt[0] = alivePokeCnt[1] = 0;
+  totalPokeCnt[0] = totalPokeCnt[1] = 0;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( BTL_MAIN_IsExistClient(wk->mainModule, i) )
+    {
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, i );
+      if( BTL_PARTY_GetMemberCount(party) )
+      {
+        u8 side = BTL_MAIN_GetClientSide( wk->mainModule, i );
+        alivePokeCnt[ side ] += BTL_PARTY_GetAliveMemberCount( party );
+        totalPokeCnt[ side ] += BTL_PARTY_GetMemberCount( party );
+      }
+    }
+  }
+  BTL_N_Printf( DBGSTR_SVFS_Result_RestCnt, alivePokeCnt[0], alivePokeCnt[1] );
+
+  {
+    u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
+    u8 playerSide = BTL_MAIN_GetClientSide( wk->mainModule, playerClientID );
+
+    // どちらか全滅、もう一方は生き残りのケース -> 簡単
+    if( (alivePokeCnt[0] == 0) && (alivePokeCnt[1] != 0) )
+    {
+      return (playerSide == 1)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+    }
+    if( (alivePokeCnt[1] == 0) && (alivePokeCnt[0] != 0) )
+    {
+      return (playerSide == 0)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+    }
+
+    // 厳密判定が不要なら引き分け
+    if( !BTL_MAIN_IsResultStrictMode(wk->mainModule) ){
+      return BTL_RESULT_DRAW;
+    }
+
+    // 両方全滅 -> 最後に倒れた側の勝ち
+    if( alivePokeCnt[0] == 0 )
+    {
+      u8 lastPokeID = BTL_DEADREC_GetLastDeadPokeID( &wk->deadRec );
+      if( lastPokeID != BTL_POKEID_NULL )
+      {
+        u8 lastPokeSide = BTL_MAINUTIL_PokeIDtoSide( lastPokeID );
+
+        BTL_N_Printf( DBGSTR_SVFS_LastPokeID, lastPokeID );
+
+        return (lastPokeSide == playerSide)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+      }
+      else{
+        // （有り得ないけどねんのため）
+        return BTL_RESULT_DRAW;
+      }
+    }
+    // 両方生き残り（タイムアウト等）
+    else
+    {
+      return CheckResult_AliveBoth( wk, alivePokeCnt, totalPokeCnt, playerSide );
+    }
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * 両陣営生き残り時の厳密な勝敗判定
+ *
+ * @param   wk
+ * @param   playerSide
+ *
+ * @retval  BtlResult
+ */
+//----------------------------------------------------------------------------------
+static BtlResult CheckResult_AliveBoth( BTL_SVFLOW_WORK* wk, const u8* alivePokeCnt, const u8* totalPokeCnt, u8 playerSide )
+{
+  int deadPoke[ 2 ];
+  u8 winSide;
+
+  // 倒したポケ数で優勢な方が勝ち
+  deadPoke[0] = totalPokeCnt[0] - alivePokeCnt[0];
+  deadPoke[1] = totalPokeCnt[1] - alivePokeCnt[1];
+  BTL_N_Printf( DBGSTR_SVFL_DeadPokeCount, deadPoke[0], deadPoke[1]);
+
+  if( deadPoke[0] != deadPoke[1] ){
+    winSide = (deadPoke[0] > deadPoke[1])? 0 : 1;
+    return (winSide == playerSide)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+  }
+
+  // …それでも引き分けなら残りHP割合で優勢な方の勝ち
+  {
+    int HP_total[ 2 ];
+    int HP_ratio[ 2 ];
+
+    calcHPRatio( wk, &HP_total[0], &HP_ratio[0], 0 );
+    calcHPRatio( wk, &HP_total[1], &HP_ratio[1], 1 );
+
+    BTL_N_Printf( DBGSTR_SVFL_HPRatio, 0, HP_total[0], HP_ratio[0] );
+    BTL_N_Printf( DBGSTR_SVFL_HPRatio, 1, HP_total[1], HP_ratio[1] );
+
+    if( HP_ratio[0] != HP_ratio[1] ){
+      winSide = (HP_ratio[0] > HP_ratio[1])? 0 : 1;
+      return (winSide == playerSide)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+    }
+    // …まだ引き分けなら残りHP総和で優勢な方の勝ち
+    if( HP_total[0] != HP_total[1] ){
+      winSide = (HP_total[0] > HP_total[1])? 0 : 1;
+      return (winSide == playerSide)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
+    }
+
+    return BTL_RESULT_DRAW;
+  }
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * 指定陣営側パーティのHP残総和＆割合計算
+ *
+ * @param   wk
+ * @param   HP_sum      [out] 総和を格納
+ * @param   HP_ratio    [out] 割合を格納
+ * @param   side
+ */
+//----------------------------------------------------------------------------------
+static void calcHPRatio( BTL_SVFLOW_WORK* wk, int* HP_sum, int* HP_ratio, u8 side )
+{
+  u32 i;
+  u32 HPMax_sum = 0;
+
+  *HP_sum = 0;
+  *HP_ratio = 0;
+
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( (BTL_MAIN_IsExistClient(wk->mainModule, i))
+    &&  (BTL_MAIN_GetClientSide(wk->mainModule, i) == side)
+    ){
+      BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, i );
+      u32 member_count = BTL_PARTY_GetMemberCount( party );
+      u32 p;
+      for(p=0; p<member_count; ++p)
+      {
+        const BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberDataConst( party, p );
+        HPMax_sum += BPP_GetValue( bpp, BPP_MAX_HP );
+        (*HP_sum) += BPP_GetValue( bpp, BPP_HP );
+      }
+    }
+  }
+
+  *HP_ratio = (HPMax_sum * 100) / (*HP_sum);
+}
 

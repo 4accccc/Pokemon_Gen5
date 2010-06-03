@@ -7450,6 +7450,7 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     ){
       BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
       BTL_HANDEX_PARAM_CHANGE_MEMBER* change_param;
+      BTL_HANDEX_PARAM_SET_CONTFLAG*  flag_param;
 
       eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
       eff_param->effect = BTL_POSEFF_BATONTOUCH;
@@ -7460,6 +7461,11 @@ static void handler_BatonTouch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
       change_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_MEMBER, pokeID );
       change_param->pokeID = pokeID;
       change_param->fIntrDisable = TRUE;
+
+      flag_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_CONTFLAG, pokeID );
+      flag_param->pokeID = pokeID;
+      flag_param->flag = BPP_CONTFLG_BATONTOUCH;
+      flag_param->header.failSkipFlag = TRUE;
     }
   }
 }

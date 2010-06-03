@@ -3247,7 +3247,12 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Trace( u32* numElems )
 // 入場ハンドラ
 static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  u8 inPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+
+  // とくせい変化行動が残っていたらまずいので処理させる
+  BTL_SVF_HANDEX_Flush( flowWk );
+
+  if( inPokeID == pokeID )
   {
     u8  allPokeID[ BTL_POSIDX_MAX ];
     u8  targetPokeID[ BTL_POSIDX_MAX ];
@@ -3257,6 +3262,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
     BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
+
 
     pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, allPokeID );
     targetCnt = 0;
@@ -3288,6 +3294,10 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
       BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
+  }
+  else if(!BTL_MAINUTIL_IsFriendPokeID(inPokeID, pokeID) )
+  {
+
   }
 }
 //------------------------------------------------------------------------------

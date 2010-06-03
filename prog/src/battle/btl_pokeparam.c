@@ -2412,23 +2412,17 @@ void BPP_Clear_ForDead( BTL_POKEPARAM* bpp )
   flgbuf_clear( bpp->turnFlag, sizeof(bpp->turnFlag) );
   flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
 
-//  reflectWazaPP( bpp );
-  BPP_MIGAWARI_Delete( bpp );
-
   clearHensin( bpp );
   WazaWorkSys_ClearSurface( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
-
   BPP_CombiWaza_ClearParam( bpp );
+  BPP_FakeDisable( bpp );
 
+  BPP_MIGAWARI_Delete( bpp );
   clearWazaSickWork( bpp, TRUE );
-//  ConfrontRec_Clear( bpp );
   Effrank_Init( &bpp->varyParam );
 
-  if( bpp->coreParam.ppFake ){
-    bpp->coreParam.fFakeEnable = TRUE;
-  }
   bpp->formNo = bpp->coreParam.defaultFormNo;
   bpp->tokusei = bpp->coreParam.defaultTokusei;
 }
@@ -2448,22 +2442,25 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
    * 退場時に継続フラグクリアはさせてはいけない
    */
 
-//  reflectWazaPP( bpp );
   clearHensin( bpp );
   WazaWorkSys_ClearSurface( bpp );
   clearUsedWazaFlag( bpp );
   clearCounter( bpp );
   BPP_CombiWaza_ClearParam( bpp );
+  BPP_FakeDisable( bpp );
 
-//  ConfrontRec_Clear( bpp );
-  if( bpp->coreParam.ppFake ){
-    bpp->coreParam.fFakeEnable = TRUE;
+  if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_BATONTOUCH) )
+  {
+    BPP_MIGAWARI_Delete( bpp );
+    clearWazaSickWork( bpp, TRUE );
+    Effrank_Init( &bpp->varyParam );
+    flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
   }
+
   bpp->formNo = bpp->coreParam.defaultFormNo;
   bpp->tokusei = bpp->coreParam.defaultTokusei;
 
   PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_form_no, bpp->formNo );
-//  PP_Put( (POKEMON_PARAM*)(bpp->coreParam.ppSrc), ID_PARA_speabino, bpp->tokusei );
 }
 //=============================================================================================
 /**
@@ -2490,7 +2487,7 @@ void BPP_Clear_ForIn( BTL_POKEPARAM* bpp )
  * @param   user      受け継がせる側
  */
 //=============================================================================================
-void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
+void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
 {
   u32 i;
 
@@ -2524,6 +2521,13 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
     BPP_SetBaseStatus( target, BPP_DEFENCE, atk );
     BTL_Printf("パワートリック引き継ぎ: Atk(%d) <-> Def(%d)\n", atk, def);
   }
+
+  // 受け継がせたらクリア
+  BPP_MIGAWARI_Delete( user );
+  clearWazaSickWork( user, TRUE );
+  Effrank_Init( &user->varyParam );
+  flgbuf_clear( user->contFlag, sizeof(user->contFlag) );
+
 }
 
 //=============================================================================================
