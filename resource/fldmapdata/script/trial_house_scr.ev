@@ -146,7 +146,8 @@ charange:
   DEFINE_LOCAL    party_sel
   DEFINE_LOCAL    regulation
   DEFINE_LOCAL    btl_mode
-  
+  DEFINE_LOCAL    entry_ct
+
   //ダウンロードデータで遊ぶかをセットする
   _TH_SET_DL_FLG( download_flg )
 
@@ -287,8 +288,9 @@ charange:
 
     _TH_CALC_BTL_RESULT( result_rank, point )
 
-    //ランクアップしたら、すれ違い通信用データをセット
-    IF $before_rank < $result_rank THEN
+    //ランクアップor初回挑戦なら、すれ違い通信用データをセット
+    _GET_RECORD( RECID_TRIALHOUSE_COUNT, entry_ct )
+    IF $before_rank < $result_rank || $entry_ct == 1 THEN
       _BEACON_SET_REQ_TRIAL_HOUSE_RANK( result_rank )
     ENDIF
 
