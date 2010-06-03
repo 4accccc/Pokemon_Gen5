@@ -1355,8 +1355,8 @@ static void DrawTsurePoke_Draw( MMDL *mmdl )
 
 static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u8 dir )
 {
-  VecFx32 vec;
-  BOOL pause_f, anmcmd_f;
+  VecFx32 vec,ofs;
+  BOOL pause_f;
   const OBJCODE_PARAM* obj_prm;
   
   obj_prm = MMDL_GetOBJCodeParam( mmdl );
@@ -1364,26 +1364,20 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   VEC_Set(&vec,0,0,0);
 
   pause_f = MMDL_CheckDrawPause( mmdl );
-  anmcmd_f = MMDL_CheckMoveBitAcmd( mmdl );
-  
-  if( pause_f || anmcmd_f ){
+  MMDL_GetVectorDrawOffsetPos( mmdl, &ofs );
+
+  if( pause_f || ofs.y > 0){
     //Yオフセットのみ引き継ぐ
-    MMDL_GetVectorDrawOffsetPos( mmdl, &vec );
-    vec.x = vec.z = 0;
+    vec.y = ofs.y;
+  }else if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
+    vec.y -= FX32_CONST(1.5);
   }
-
-  //向きから描画オフセットをセット
+  //向きからX/Z描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
-
-  if( anmcmd_f ){
-    work->offs_frame++; 
-  }else if( !pause_f ){
-    if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
-      vec.y -= FX32_CONST(1.5);
-    }
-    work->offs_frame++; 
-  }
+  
   MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
+  
+  work->offs_frame++; 
 }
 
 static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PARAM* obj_prm, VecFx32* outVec)
