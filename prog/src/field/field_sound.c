@@ -1137,9 +1137,7 @@ void FSND_StandByNextMapBGM(
     nextBGM = GetZoneBGM( gameData, nextZoneID, nextSeasonID ); 
   }
 
-  if( nextBGM != PMSND_GetBGMsoundNo() ) {
-    FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextBGM, FSND_FADE_NORMAL );
-  }
+  FIELD_SOUND_RegisterRequest_STAND_BY( fieldSound, nextBGM, FSND_FADE_NORMAL );
 }
 
 //---------------------------------------------------------------------------------
