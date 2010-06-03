@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T18:28:17"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T15:37:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -234,7 +234,7 @@
 			<list entry="0" japanese="デフォルト" english="Default" colorID="0"/>
 		</group>
 		<number position="-1" width="100"/>
-		<comment position="1" width="100"/>
+		<comment position="1" width="111"/>
 		<erase position="-1" width="100"/>
 		<language japanese="JPN" english="JPN">
 			<message position="2" width="274"/>
@@ -339,32 +339,38 @@
 		<language name="JPN_KANJI" width="256">　</language>
 	</row>
 
-	<row id="FLDMAPMENU_STR08">
+	<row id="FLDMAPMENU_STR08" text-color=",,,#ffffff,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">ずかんを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">図鑑を選択しました</language>
 	</row>
 
-	<row id="FLDMAPMENU_STR09">
+	<row id="FLDMAPMENU_STR09" text-color=",,,#ffffff,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">ポケモンステータスを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">ポケモンステータスを選択しました</language>
 	</row>
 
-	<row id="FLDMAPMENU_STR10">
+	<row id="FLDMAPMENU_STR10" text-color=",,,#ffffff,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">バッグを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">バッグを選択しました</language>
 	</row>
 
-	<row id="FLDMAPMENU_STR11">
+	<row id="FLDMAPMENU_STR11" text-color=",,,#ffffff,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">トレーナーカードを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">トレーナーカードを選択しました</language>
 	</row>
 
-	<row id="FLDMAPMENU_STR12">
+	<row id="FLDMAPMENU_STR12" text-color=",,,#ffffff,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">レポートを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">レポートを選択しました</language>
 	</row>
 
-	<row id="FLDMAPMENU_STR13">
+	<row id="FLDMAPMENU_STR13" text-color=",,,#ffffff,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,,,,,,#404040,,,,,,">
+		<comment>未使用</comment>
 		<language name="JPN" width="256">せっていを　せんたくしました</language>
 		<language name="JPN_KANJI" width="256">設定を選択しました</language>
 	</row>
