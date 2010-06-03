@@ -696,6 +696,11 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, waza, GFL_HEAP_LOWID( bevw->heapID ) );
     //HPゲージ非表示
     BTLV_EFFECT_SetGaugeDrawEnable( FALSE, BTLEFF_GAUGE_ALL );
+    
+    //BG非表示
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
 
     bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
     //BGMのマスターボリュームを下げる
@@ -2477,8 +2482,6 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     NNSG2dScreenData* scrnData;
     NNSG2dPaletteData* palData;
 
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
     ofs_p = (u32*)&bevw->dpd->adrs[ 0 ];
@@ -2535,8 +2538,6 @@ static VMCMD_RESULT VMEC_BG_LOAD( VMHANDLE *vmh, void *context_work )
     return bevw->control_mode;
   }
 #endif
-  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
-  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
   GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
 
   GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WAZAEFF_GRA, datID + 1, GFL_BG_FRAME3_M, 0, 0, 0, GFL_HEAP_LOWID( bevw->heapID ) );
@@ -3826,6 +3827,9 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   VM_End( vmh );
 
   //BG周りの設定をデフォルトに戻しておく
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
+  GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
   if( bevw->set_priority_flag )
   {
     const BTLV_SCU* scu = BTLV_EFFECT_GetScu();
@@ -3835,8 +3839,6 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
     }
     GFL_BG_SetPriority( GFL_BG_FRAME3_M, 0 );
     bevw->set_priority_flag = 0;
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_ON );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_ON );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, bevw->temp_scr_x );
     GFL_BG_SetScroll( GFL_BG_FRAME3_M, GFL_BG_SCROLL_Y_SET, bevw->temp_scr_y );
   }
