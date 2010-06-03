@@ -68,7 +68,7 @@ static const pCommDemoFunc MainSeq[] = {
 // モード別データ
 static const BGFRM_ANM_DATA ModeData[] =
 {
-	{	ARCID_GF_LOGO_MOVIE, 134, 256*192*2, 0, BGFRM_ANM_FILE_OPEN_TICK },					// ゲームフリークロゴ
+	{	ARCID_GF_LOGO_MOVIE, 105, 256*192*2, 0, BGFRM_ANM_FILE_OPEN_TICK },					// ゲームフリークロゴ
 	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2, BGFRM_ANM_FILE_OPEN_TICK_1ST },	// オープニングムービー１
 //	{	ARCID_CDEMO_DATA, 752, 256*170*2, 256*11*2, BGFRM_ANM_FILE_OPEN_TICK },	// オープニングムービー１
 	{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0, BGFRM_ANM_FILE_OPEN_TICK },				// オープニングムービー２
