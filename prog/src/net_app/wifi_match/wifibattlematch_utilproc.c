@@ -233,6 +233,9 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_LISTAFTER_PROC_Main( GFL_PROC *p_proc, in
 //-----------------------------------------------------------------------------
 static void UTIL_WIFI_Init( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATCH_LISTAFTER_PARAM *p_param, HEAPID heapID )
 { 
+#if 0 //以下のことはタイミングしてから行った方がよいので、移動
+
+
   GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
   GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
   GFL_OVERLAY_Load( FS_OVERLAY_ID(wifibattlematch_core));
@@ -241,6 +244,7 @@ static void UTIL_WIFI_Init( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( 
       p_param->p_net_data,
       p_param->p_param->p_game_data, NULL, heapID );
+#endif
 }
 //----------------------------------------------------------------------------
 /**
@@ -257,6 +261,8 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
 { 
   enum
   { 
+    SEQ_START_TIMING_INIT,
+    SEQ_WAIT_TIMING_INIT,
     SEQ_INIT,
     SEQ_START_TIMING_S,
     SEQ_WAIT_TIMING_S,
@@ -265,6 +271,8 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
     SEQ_START_TIMING_E,
     SEQ_WAIT_TIMING_E,
     SEQ_END,
+    SEQ_START_TIMING_EXIT,
+    SEQ_WAIT_TIMING_EXIT,
   };
 
   //エラー
@@ -294,7 +302,30 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
   //シーケンス
   switch( *p_seq )
   { 
+
+  case SEQ_START_TIMING_INIT:
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),16, WB_NET_WIFIMATCH);
+    (*p_seq)++;
+    break;
+
+  case SEQ_WAIT_TIMING_INIT:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),16, WB_NET_WIFIMATCH) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_INIT:
+
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(wifibattlematch_core));
+
+    //ネットモジュールの作成
+    p_wk->p_net   = WIFIBATTLEMATCH_NET_Init( 
+        p_param->p_net_data,
+        p_param->p_param->p_game_data, NULL, HEAPID_WIFIBATTLEMATCH_SUB );
+
     (*p_seq)++;
     break;
 
@@ -337,7 +368,30 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
     break;
 
   case SEQ_END:
-    return TRUE;
+
+    //ネットモジュール破棄
+    WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
+    p_wk->p_net = NULL;
+
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_core));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+
+    (*p_seq)++;
+    break;
+
+  case SEQ_START_TIMING_EXIT:
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),19, WB_NET_WIFIMATCH);
+    (*p_seq)++;
+    break;
+
+  case SEQ_WAIT_TIMING_EXIT:
+    if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),19, WB_NET_WIFIMATCH) )
+    {
+      return TRUE;
+    }
+    break;
+
   }
 
   return FALSE;
@@ -352,12 +406,15 @@ static BOOL UTIL_WIFI_Main( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATC
 //-----------------------------------------------------------------------------
 static void UTIL_WIFI_Exit( WIFIBATTLEMATCH_LISTAFTER_WORK *p_wk, WIFIBATTLEMATCH_LISTAFTER_PARAM *p_param )
 { 
-  //ネットモジュール破棄
-  WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
+  if( p_wk->p_net )
+  {
+    //ネットモジュール破棄
+    WIFIBATTLEMATCH_NET_Exit( p_wk->p_net );
 
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_core));
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
-  GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(wifibattlematch_core));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
+  }
 }
 
 //=============================================================================

@@ -744,6 +744,8 @@ int GFL_NET_DWC_StartMatchFilter( char* filterStr,int numEntry,DWCEvalPlayerCall
   _dWork->sendbufflag = 0;
 
   _dWork->closedflag = TRUE;	// 080602 tomoya
+
+  _dWork->stepMatchResult = STEPMATCH_CONNECT;
   return 1;
 }
 

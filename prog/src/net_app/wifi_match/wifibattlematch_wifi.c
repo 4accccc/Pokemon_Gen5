@@ -73,7 +73,6 @@ FS_EXTERN_OVERLAY(dpw_common);
 //#define MYPOKE_SELFCHECK        //自分のポケモンを送ったとき、サケとチェックし署名も証明させる
 //#define DEBUG_REGULATION_DATA   //レギュレーションデータを作成する
 //#define REGULATION_CHECK_ON     //パーティのレギュレーションチェックを強制ONにする
-//#define SAKE_REPORT_NONE          //レポートをしない
 
 #define DEBUGWIN_USE
 #endif //PM_DEBUG
@@ -2493,22 +2492,32 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     }
     break;
   case SEQ_WAIT_MATCHING:
-    //マッチング待ち
-    if( WIFIBATTLEMATCH_NET_WaitMatchMake( p_wk->p_net ) )
-    { 
-      *p_seq = SEQ_START_SENDDATA;
+    //マッチングエラー
+    {
+      //エラー
+      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
+      { 
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+        break;
+
+      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+        break;
+      }
     }
-
-    //エラー
-    switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE ) )
-    { 
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:       //戻る
-      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
-      break;
-
-    case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-      WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-      break;
+    {
+      //マッチング待ち
+      WIFIBATTLEMATCH_NET_MATCHMAKE_STATE state = WIFIBATTLEMATCH_NET_WaitMatchMake( p_wk->p_net );
+      //マッチング終了待ち
+      if( WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_SUCCESS == state ) 
+      { 
+        *p_seq = SEQ_START_SENDDATA;
+      }
+      else if( WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_FAILED == state )
+      {
+        *p_seq = SEQ_START_MATCH;
+      }
     }
     break;
 
@@ -2813,47 +2822,46 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_WIFIBATTLEMATCH_SC, WBM_SC_HEAP_SIZE );
     DWC_RAPCOMMON_SetSubHeapID( DWC_ALLOCTYPE_GS, WBM_SC_HEAP_SIZE, HEAPID_WIFIBATTLEMATCH_SC );
 
-#ifndef SAKE_REPORT_NONE
     WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_AFTER, WIFIBATTLEMATCH_TYPE_WIFICUP, 0, NULL, FALSE );
-
-
-#endif //SAKE_REPORT_NONE
     *p_seq  = SEQ_WAIT_SESSION;
     break;
 
   case SEQ_WAIT_SESSION:
-#ifndef SAKE_REPORT_NONE
-    if( WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net ) )
-#endif  //SAKE_REPORT_NONE
-    { 
-      DWC_RAPCOMMON_ResetSubHeapID();
-      GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-
-      *p_seq  = SEQ_END_MATCHING_MSG;
-    }
-    else
     {
-      //エラー
-      switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net );
+      if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
-        DWC_RAPCOMMON_ResetSubHeapID();
-        GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
+        *p_seq  = SEQ_END_MATCHING_MSG;
+      }
+      
+      if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE )
+      {
+        //エラー
+        switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
+        { 
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
+          DWC_RAPCOMMON_ResetSubHeapID();
+          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
-        break;
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
+          break;
 
-      case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
-        DWC_RAPCOMMON_ResetSubHeapID();
-        GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
+        case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+          DWC_RAPCOMMON_ResetSubHeapID();
+          GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
-        WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
-        break;
+          WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
+          break;
+        }
       }
     }
     break;
 
   case SEQ_END_MATCHING_MSG:
+
+    DWC_RAPCOMMON_ResetSubHeapID();
+    GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
+
     GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
     WBM_TEXT_Print( p_wk->p_text, p_wk->p_msg, WIFIMATCH_TEXT_012, WBM_TEXT_TYPE_WAIT );
     *p_seq = SEQ_WAIT_MSG;
@@ -3088,23 +3096,22 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
     break;
 
   case SEQ_START_REPORT_ATLAS:
-#ifndef SAKE_REPORT_NONE
     {
       BOOL is_error = p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
       WIFIBATTLEMATCH_SC_StartReport( p_wk->p_net, WIFIBATTLEMATCH_SC_REPORT_TYPE_BTL_SCORE, WIFIBATTLEMATCH_TYPE_WIFICUP, p_param->p_param->btl_rule, p_param->cp_btl_score, is_error );
     }
-#endif // SAKE_REPORT_NONE
     *p_seq = SEQ_WAIT_REPORT_ATLAS;
     break;
   case SEQ_WAIT_REPORT_ATLAS:
     { 
-#ifndef SAKE_REPORT_NONE
-      if( WIFIBATTLEMATCH_SC_ProcessReport( p_wk->p_net ) )
-#endif
+      WIFIBATTLEMATCH_NET_SC_STATE  state = WIFIBATTLEMATCH_SC_ProcessReport(p_wk->p_net );
+      if( state == WIFIBATTLEMATCH_NET_SC_STATE_SUCCESS )
       { 
+
         *p_seq = SEQ_SC_HEAP_EXIT;
       }
-      else
+      
+      if( state != WIFIBATTLEMATCH_NET_SC_STATE_UPDATE  )
       {
         //エラー
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, TRUE ) )
@@ -3128,7 +3135,6 @@ static void WbmWifiSeq_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_
   case SEQ_SC_HEAP_EXIT:
     DWC_RAPCOMMON_ResetSubHeapID();
     GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
-
 
     //相手に切断されていたら、録画を飛ばす
     if( p_param->mode == WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR )
