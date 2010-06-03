@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-05-13T17:26:39"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-03T18:34:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="258" top="244" right="963" bottom="872" maximized="no" rayout="Vertical2">
+	<dialog left="139" top="250" right="844" bottom="878" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -357,7 +357,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -445,6 +445,22 @@
 		<language name="JPN_KANJI">シタン『それで　夢に見るような
 家具デザイン　を　考えたの▼
 この　中でどれが　いちばん　夢に
+出てくるくらい　ステキだと　思う？</language>
+	</row>
+
+	<row id="pdw_furniture_menu_05_02">
+		<comment>♀：PDW用の家具入手
+・初回イベント後やめるで再話しかけ時
+・メッセージ表示後
+　カタログメニューが開く</comment>
+		<attribute name="キャラ指定">WOMANB</attribute>
+		<language name="JPN">シタン『あら　ワタシの　ゆめの
+かぐデザインに　つきあってくれるの？▼
+この　なかでどれが　いちばん　ゆめに
+でてくるくらい　ステキだと　おもう？</language>
+		<language name="JPN_KANJI">シタン『あら　ワタシの　夢の
+家具デザインに　つきあってくれるの？▼
+この　中でどれが　一番　夢に
 出てくるくらい　ステキだと　思う？</language>
 	</row>
 
