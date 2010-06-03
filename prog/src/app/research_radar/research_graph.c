@@ -5676,10 +5676,6 @@ static BOOL CheckIntrudeShutdown( const RRG_WORK* work )
 
   switch( comm_no ) {
   case GAME_COMM_NO_INVASION: // 侵入が終了されるのを待つ
-    if( GameCommSys_CheckSystemWaiting( game_comm ) == FALSE ) {
-      GF_ASSERT(0); // 切断リクエストをかけたはずが通常起動している
-      GameCommSys_ExitReq( game_comm ); //改めて切断を行う
-    }
     break;
 
   case GAME_COMM_NO_NULL:
