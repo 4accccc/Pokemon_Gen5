@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-06-03T17:08:01"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-03T18:04:16"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -494,7 +494,7 @@
 	<row id="msg_gate_c1_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報4</comment>
 		<language name="JPN" width="256">◇みどりゆたかなていえんが　こころを　あたたかく　させてくれます</language>
-		<language name="JPN_KANJI" width="256">◇緑豊かな庭園が　心を暖かく　させてくれます</language>
+		<language name="JPN_KANJI" width="256">◇緑豊かな庭園が　心を温かく　させてくれます</language>
 	</row>
 
 	<row id="msg_gate_c1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -506,7 +506,7 @@
 	<row id="msg_gate_c1_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報6</comment>
 		<language name="JPN" width="256">◇トレーナーズスクールでは　ポケモンのきそから　まなべます</language>
-		<language name="JPN_KANJI" width="256">◇トレーナーズスクールでは　ポケモンの基礎から教えてくれます</language>
+		<language name="JPN_KANJI" width="256">◇トレーナーズスクールでは　ポケモンの基礎から学べます</language>
 	</row>
 
 	<row id="msg_gate_c1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -541,8 +541,8 @@
 
 	<row id="msg_gate_c2_03" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c2についての地域情報3</comment>
-		<language name="JPN" width="256">◇シッポウジムは　しょうぶとちしきを　たんきゅうできる　はくぶつかん</language>
-		<language name="JPN_KANJI" width="256">◇シッポウジムは　博物館　　勝負と知識を　探求できます</language>
+		<language name="JPN" width="256">◇シッポウジムは　しょうぶとちしきを　たんきゅうできる　はくぶつかんです</language>
+		<language name="JPN_KANJI" width="256">◇シッポウジムは　勝負と知識を　探求できる　博物館です</language>
 	</row>
 
 	<row id="msg_gate_c2_04" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1154,7 +1154,7 @@
 	<row id="msg_gate_bc_06" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>bcについての地域情報6</comment>
 		<language name="JPN" width="256">◇あつまったひとが　りゅうつうをかえ　しなものがかわります</language>
-		<language name="JPN_KANJI" width="256">◇集まった人が　流通を買え　品物がかわります</language>
+		<language name="JPN_KANJI" width="256">◇集まった人が　流通を変え　品物が変わります</language>
 	</row>
 
 	<row id="msg_gate_bc_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
