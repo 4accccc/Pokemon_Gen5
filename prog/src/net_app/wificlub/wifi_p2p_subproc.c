@@ -345,6 +345,10 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
     {
       procWork->psData.isExitRequest = TRUE;
     }
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      procWork->psData.isExitRequest = TRUE;
+    }
 
     if( GFL_PROC_LOCAL_Main( procWork->procSys ) == GFL_PROC_MAIN_NULL )
     {
@@ -362,10 +366,16 @@ static GFL_PROC_RESULT WIFICLUB_BATTLE_SUB_PROC_Main( GFL_PROC *p_proc, int *p_s
   //エラー処理ここで起きたら復帰が難しいので切断
   if( GFL_NET_IsInit() )
   { 
-    if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
-    { 
-      p_param->result = WIFICLUB_BATTLE_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
-      return GFL_PROC_RES_FINISH;
+    if( procWork->state != IBSS_MAIN_POKELIST && 
+        procWork->state != IBSS_EXIT_POKELIST &&
+        procWork->state != IBSS_MAIN_POKESTATUS && 
+        procWork->state != IBSS_EXIT_POKESTATUS )
+    {
+      if( GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE) != GFL_NET_DWC_ERROR_RESULT_NONE )
+      { 
+        p_param->result = WIFICLUB_BATTLE_SUBPROC_RESULT_ERROR_NEXT_LOGIN;
+        return GFL_PROC_RES_FINISH;
+      }
     }
   }
 
