@@ -242,6 +242,7 @@ static GFL_PROC_RESULT PokeListProc_Init( GFL_PROC * proc, int * seq , void *pwk
     ARI_TPrintf("item[%d]\n",plWork->plData->item);
     ARI_TPrintf("waza[%d]\n",plWork->plData->waza);
     ARI_TPrintf("zone[%d]\n",plWork->plData->zone_id );
+    ARI_TPrintf("mailPos[%d]\n",plWork->plData->mail_pos);
     ARI_TPrintf("---Print initialize state---\n");
 #endif
    

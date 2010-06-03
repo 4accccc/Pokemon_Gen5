@@ -195,6 +195,7 @@ typedef struct
   int shinka_cond;  // 進化条件ワーク
   
   //WBより追加
+  u16 mail_pos;
   u8  wazaLearnBit; //イベントなど特殊な技覚えで外から覚えられるやつのbitをもらう
                     // PL_MODE_SELECT_WAZAの時のみ有効
   u8  season;       //シェイミ時間変化対応

@@ -1787,7 +1787,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         //実データのセット
         MAIL_DATA* mailData = MAIL_AllocMailData( work->plData->mailblock ,
                                                   MAILBLOCK_PASOCOM ,
-                                                  work->plData->ret_sel,
+                                                  work->plData->mail_pos,
                                                   work->heapId );
 
         PP_Put( work->selectPokePara , ID_PARA_mail_data , (u32)mailData );

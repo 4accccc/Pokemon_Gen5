@@ -1198,7 +1198,7 @@ static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u1
   pld->item      = item;
 //  pld->fsys      = syswk->dat->fsys;
 //  pld->kt_status = syswk->dat->kt_status;
-  pld->ret_sel   = pos;
+  pld->mail_pos  = pos;
 
   syswk->subProcWork = pld;
 }
