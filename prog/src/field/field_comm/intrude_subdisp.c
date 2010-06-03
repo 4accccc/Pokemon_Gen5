@@ -519,7 +519,7 @@ enum{
 
 ///各通信プレイヤー毎にずらす値
 static const s8 WearOffset[FIELD_COMM_MEMBER_MAX][2] = {
-  {-4, -4}, {4, -4}, {0, 4},
+  {0, -4}, {-4, -4}, {4, -4},
 };
 
 
