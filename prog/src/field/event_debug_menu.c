@@ -254,8 +254,6 @@ static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_CreateFeelingData( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk );
-static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
-static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk );
 
 
 static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk );
@@ -408,7 +406,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },//Cギアー写真
   { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
   { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
-  { DEBUG_FIELD_STR50, debugMenuCallProc_WazaOshie },         //技教え
   { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
   { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
@@ -3895,99 +3892,6 @@ static GMEVENT_RESULT debugMenuDelicateCamera( GMEVENT *p_event, int *p_seq, voi
 
 
 
-//======================================================================
-//  技思い出し画面テスト呼び出し
-//======================================================================
-FS_EXTERN_OVERLAY(waza_oshie);
-//-------------------------------------
-/// 技思い出し画面テスト用ワーク
-//=====================================
-typedef struct
-{
-  GAMESYS_WORK        *p_gamesys;
-  GMEVENT             *p_event;
-  FIELDMAP_WORK       *p_field;
-  WAZAOSHIE_DATA      param;
-} DEBUG_WAZAOSHIE_EVENT_WORK;
-static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
-
-//----------------------------------------------------------------------------
-/**
- *  @brief  技思い出し画面
- *
- *  @param  DEBUG_MENU_EVENT_WORK *p_wk   ワーク
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-static BOOL debugMenuCallProc_WazaOshie( DEBUG_MENU_EVENT_WORK *p_wk )
-{
-  GAMESYS_WORK  *p_gamesys  = p_wk->gmSys;
-  GMEVENT       *p_event    = p_wk->gmEvent;
-  FIELDMAP_WORK *p_field    = p_wk->fieldWork;
-  DEBUG_WAZAOSHIE_EVENT_WORK  *p_param;
-  GAMEDATA *gmData = GAMESYSTEM_GetGameData(p_gamesys);
-  POKEPARTY *party = GAMEDATA_GetMyPokemon(gmData);
-  SAVE_CONTROL_WORK *sv = GAMEDATA_GetSaveControlWork(gmData);
-
-  // イベント起動
-  GMEVENT_Change( p_event, debugMenuWazaOshie, sizeof(DEBUG_WAZAOSHIE_EVENT_WORK) );
-  p_param = GMEVENT_GetEventWork( p_event );
-  GFL_STD_MemClear( p_param, sizeof(DEBUG_WAZAOSHIE_EVENT_WORK) );
-
-  p_param->p_gamesys     = p_gamesys;
-  p_param->p_event       = p_event;
-  p_param->p_field       = p_field;
-
-//  p_param->param.gsys    = p_gamesys;
-  p_param->param.pp   = PokeParty_GetMemberPointer( party, 0 );
-  p_param->param.myst = SaveData_GetMyStatus(sv);   // 自分データ
-  p_param->param.cfg  = SaveData_GetConfig(sv);     // コンフィグデータ
-  p_param->param.gsys = p_gamesys;
-  p_param->param.waza_tbl   = WAZAOSHIE_GetRemaindWaza( p_param->param.pp, HEAPID_WORLD );
-
-  OS_Printf( "技教え Start\n" );
-
-  return TRUE;
-
-}
-//----------------------------------------------------------------------------
-/**
- *  @brief  デバッグ技思い出し画面接続用イベント
- *
- *  @param  GMEVENT *event  GMEVENT
- *  @param  *seq            シーケンス
- *  @param  *work           ワーク
- *
- *  @return 終了コード
- */
-//-----------------------------------------------------------------------------
-static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs )
-{
-  enum
-  {
-    SEQ_CALL_PROC,
-    SEQ_EXIT,
-  };
-
-  DEBUG_WAZAOSHIE_EVENT_WORK  *p_wk = p_wk_adrs;
-
-  switch(*p_seq )
-  {
-  case SEQ_CALL_PROC:
-
-    GMEVENT_CallEvent( p_event, EVENT_FieldSubProc( p_wk->p_gamesys, p_wk->p_field,
-                                                    FS_OVERLAY_ID(waza_oshie), &WazaOshieProcData, &p_wk->param ) );
-
-    *p_seq  = SEQ_EXIT;
-    break;
-
-  case SEQ_EXIT:
-    return GMEVENT_RES_FINISH;
-  }
-
-  return GMEVENT_RES_CONTINUE ;
-}
 
 
 //======================================================================
