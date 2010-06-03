@@ -459,6 +459,26 @@ u16 MP_CheckMovePokeWeather( GAMEDATA * gdata, u16 zone_id )
   return WEATHER_NO_NONE; //変更なし 
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * いずれかの移動ポケモンが移動中かどうかをBOOLで返す
+ *
+ * @retval  TRUE ライカミ/カザカミが移動中
+ * @retval  FALSE 移動中でない
+ */
+//--------------------------------------------------------------------------------------------
+BOOL MP_CheckMovePokeValid( GAMEDATA* gdata )
+{
+	ENC_SV_PTR enc;
+	enc = EncDataSave_GetSaveDataPtr( GAMEDATA_GetSaveControlWork( gdata ) );
+	
+  if(  EncDataSave_IsMovePokeValid( enc, MOVE_POKE_RAIKAMI) ||
+       EncDataSave_IsMovePokeValid( enc, MOVE_POKE_KAZAKAMI) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
 /////////////////////////////////////////////////////////////////////
 //ローカル
 
