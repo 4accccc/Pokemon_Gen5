@@ -608,7 +608,8 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
       }
     }
 
-    if(Intrude_CheckZonePalaceConnect(bcon_buff->info.zone_id) == FALSE){
+    if(ZONEDATA_IsPalace(bcon_buff->info.zone_id) == TRUE
+        || Intrude_CheckZonePalaceConnect(bcon_buff->info.zone_id) == FALSE){
       return;
     }
     GAMEBEACON_Get_PlayerNameToBuf(
