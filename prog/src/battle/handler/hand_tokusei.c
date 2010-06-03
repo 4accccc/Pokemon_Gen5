@@ -3249,20 +3249,23 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 {
   u8 inPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
 
+  u8 targetPokeID = BTL_POKEID_NULL;
+  PokeTokusei nextTok = POKETOKUSEI_NULL;
+
   // とくせい変化行動が残っていたらまずいので処理させる
   BTL_SVF_HANDEX_Flush( flowWk );
 
+  // 自分が入場したタイミングは相手を全部見てランダム
   if( inPokeID == pokeID )
   {
     u8  allPokeID[ BTL_POSIDX_MAX ];
-    u8  targetPokeID[ BTL_POSIDX_MAX ];
+    u8  checkPokeID[ BTL_POSIDX_MAX ];
     const BTL_POKEPARAM* bpp;
     u8  pokeCnt, targetCnt, i;
-    PokeTokusei  tok;
+    PokeTokusei tok;
 
     BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
     BtlExPos   exPos = EXPOS_MAKE( BTL_EXPOS_AREA_ENEMY, myPos );
-
 
     pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, exPos, allPokeID );
     targetCnt = 0;
@@ -3272,34 +3275,45 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       tok = BPP_GetValue( bpp, BPP_TOKUSEI );
       if( !BTL_TABLES_CheckTraceFailTokusei(tok) )
       {
-        targetPokeID[ targetCnt++ ] = allPokeID[i];
+        checkPokeID[ targetCnt++ ] = allPokeID[i];
       }
     }
 
     if( targetCnt )
     {
-      BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;
-
       u8 idx = (targetCnt==1)? 0 : BTL_CALC_GetRand( targetCnt );
-      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[idx] );
+      bpp = BTL_SVFTOOL_GetPokeParam( flowWk, checkPokeID[idx] );
 
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
-      param->pokeID = pokeID;
-      param->tokuseiID = BPP_GetValue( bpp, BPP_TOKUSEI );
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trace );
-      HANDEX_STR_AddArg( &param->exStr, targetPokeID[idx] );
-      HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
-
-      BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      nextTok = BPP_GetValue( bpp, BPP_TOKUSEI );
+      targetPokeID = BPP_GetID( bpp );
     }
   }
+  // 相手が入場したタイミング
   else if(!BTL_MAINUTIL_IsFriendPokeID(inPokeID, pokeID) )
   {
+    const BTL_POKEPARAM* inPoke = BTL_SVFTOOL_GetPokeParam( flowWk, inPokeID );
+    PokeTokusei tok = BPP_GetValue( inPoke, BPP_TOKUSEI );
 
+    if( !BTL_TABLES_CheckTraceFailTokusei(tok) )
+    {
+      nextTok = tok;
+      targetPokeID = inPokeID;
+    }
+  }
+
+  if( (nextTok != POKETOKUSEI_NULL) && (pokeID != BTL_POKEID_NULL) )
+  {
+    BTL_HANDEX_PARAM_CHANGE_TOKUSEI* param;
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
+    param->pokeID = pokeID;
+    param->tokuseiID = nextTok;
+    param->header.tokwin_flag = TRUE;
+    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trace );
+    HANDEX_STR_AddArg( &param->exStr, targetPokeID );
+    HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
   }
 }
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「しぜんかいふく」
