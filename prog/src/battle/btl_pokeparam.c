@@ -2515,8 +2515,9 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, const BTL_POKEPARAM* user )
 
   // 特定の継続フラグを引き継ぎ（今のところパワートリックだけ）
   if( BPP_CONTFLAG_Get(user, BPP_CONTFLG_POWERTRICK) ){
-    u8 atk, def;
+    u16 atk, def;
     BPP_CONTFLAG_Set(target, BPP_CONTFLG_POWERTRICK);
+
     atk = BPP_GetValue_Base( target, BPP_ATTACK );
     def = BPP_GetValue_Base( target, BPP_DEFENCE );
     BPP_SetBaseStatus( target, BPP_ATTACK, def );

@@ -6702,8 +6702,8 @@ static void handler_PowerTrick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_STATUS, pokeID );
 
     param->pokeID  = pokeID;
-    param->attack  = BPP_GetValue_Base( bpp, BPP_DEFENCE_RANK );
-    param->defence = BPP_GetValue_Base( bpp, BPP_ATTACK_RANK );
+    param->attack  = BPP_GetValue_Base( bpp, BPP_DEFENCE );
+    param->defence = BPP_GetValue_Base( bpp, BPP_ATTACK );
     param->fAttackEnable  = TRUE;
     param->fDefenceEnable = TRUE;
 
