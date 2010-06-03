@@ -530,8 +530,8 @@
 	</row>
 
 	<row id="GTSNEGO_041" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">[2:04:５桁:0]かい</language>
-		<language name="JPN_KANJI" width="256">[2:04:５桁:0]回</language>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:1][2:04:５桁:0]かい</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:1][2:04:５桁:0]回</language>
 	</row>
 
 	<row id="GTSNEGO_042" back-color="#ffff00,,,,,,,,,,,,,,,,,">
@@ -550,8 +550,8 @@
 	</row>
 
 	<row id="GTSNEGO_045" back-color="#ffff00,,,,,,,,,,,,,,,,,">
-		<language name="JPN" width="256">こうかんすう</language>
-		<language name="JPN_KANJI" width="256">交換数</language>
+		<language name="JPN" width="256">[BD:03:Ｘ右寄せ:1]こうかんすう</language>
+		<language name="JPN_KANJI" width="256">[BD:03:Ｘ右寄せ:1]交換数</language>
 	</row>
 
 	<row id="GTSNEGO_046" back-color="#ffff00,,,,,,,,,,,,,,,,,">
