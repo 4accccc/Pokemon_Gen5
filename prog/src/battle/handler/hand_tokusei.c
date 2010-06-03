@@ -6558,6 +6558,7 @@ static void handler_Syuukaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     u16 usedItem = BPP_GetConsumedItem( bpp );
     if( (usedItem != ITEM_DUMMY_DATA)
     &&  (ITEM_CheckNuts(usedItem))
+    &&  (BPP_GetItem(bpp) == ITEM_DUMMY_DATA)
     ){
       if( (BTL_SVFTOOL_GetWeather(flowWk) == BTL_WEATHER_SHINE)
       ||  (Tokusei_IsExePer(flowWk, 50))
