@@ -1965,6 +1965,7 @@ static  void  BTLV_INPUT_LoadResource( BTLV_INPUT_WORK* biw )
                             biw->heapID, FADE_SUB_BG, 0x1e0, 0 );
 
   //バッグボタンパレットを退避しておく
+  if( biw->main_loop_tcb_flag == TRUE )
   { 
     u16*  pal = PaletteWorkDefaultWorkGet( BTLV_EFFECT_GetPfd(), FADE_SUB_BG );
     MI_CpuCopy16( &pal[ 0x10 * 2 ], &biw->bag_pal, 0x20 );
@@ -5131,7 +5132,10 @@ static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  inline  void  pop_bag_button_pal( BTLV_INPUT_WORK* biw )
 { 
-  PaletteWorkSet( BTLV_EFFECT_GetPfd(), &biw->bag_pal, FADE_SUB_BG, 0x20, 0x20 );
+  if( biw->main_loop_tcb_flag == TRUE )
+  { 
+    PaletteWorkSet( BTLV_EFFECT_GetPfd(), &biw->bag_pal, FADE_SUB_BG, 0x20, 0x20 );
+  }
 }
 
 //=============================================================================================
