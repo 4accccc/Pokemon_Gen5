@@ -112,12 +112,13 @@ void PRINTTOOL_PrintFraction(
 	str = GFL_MSG_CreateString( mman, str_slash );
 	siz = PRINTSYS_GetStrWidth( str, font, 0 );
 	PRINTTOOL_Print( wk, que, x, y, str, font, PRINTTOOL_MODE_CENTER );
+	x -= PutSizeGet( str, font, PRINTTOOL_MODE_CENTER );
 	GFL_STR_DeleteBuffer( str );
 	// nowPrm
 	str = GFL_MSG_CreateString( mman, str_now_param );
 	WORDSET_RegisterNumber( wset, 0, nowPrm, NUM_KETA, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wset, buf, str );
-	PRINTTOOL_Print( wk, que, x-(siz/2), y, buf, font, PRINTTOOL_MODE_RIGHT );
+	PRINTTOOL_Print( wk, que, x, y, buf, font, PRINTTOOL_MODE_RIGHT );
 	GFL_STR_DeleteBuffer( str );
 	// maxPrm
 	str = GFL_MSG_CreateString( mman, str_max_param );
@@ -166,12 +167,13 @@ void PRINTTOOL_PrintFractionColor(
 	str = GFL_MSG_CreateString( mman, str_slash );
 	siz = PRINTSYS_GetStrWidth( str, font, 0 );
 	PRINTTOOL_PrintColor( wk, que, x, y, str, font, color, PRINTTOOL_MODE_CENTER );
+	x -= PutSizeGet( str, font, PRINTTOOL_MODE_CENTER );
 	GFL_STR_DeleteBuffer( str );
 	// nowPrm
 	str = GFL_MSG_CreateString( mman, str_now_param );
 	WORDSET_RegisterNumber( wset, 0, nowPrm, NUM_KETA, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
 	WORDSET_ExpandStr( wset, buf, str );
-	PRINTTOOL_PrintColor( wk, que, x-(siz/2), y, buf, font, color, PRINTTOOL_MODE_RIGHT );
+	PRINTTOOL_PrintColor( wk, que, x, y, buf, font, color, PRINTTOOL_MODE_RIGHT );
 	GFL_STR_DeleteBuffer( str );
 	// maxPrm
 	str = GFL_MSG_CreateString( mman, str_max_param );
