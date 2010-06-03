@@ -1797,7 +1797,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
         PP_Put( work->selectPokePara , ID_PARA_item , work->plData->item );
         
         //ƒ[ƒ‹íœˆ—
-        MAIL_DelMailData( work->plData->mailblock , MAILBLOCK_PASOCOM , work->plData->ret_sel );
+        MAIL_DelMailData( work->plData->mailblock , MAILBLOCK_PASOCOM , work->plData->mail_pos );
         
         PLIST_MessageWaitInit( work , mes_pokelist_04_64 , TRUE , PLIST_MSGCB_ExitCommon );
       }
