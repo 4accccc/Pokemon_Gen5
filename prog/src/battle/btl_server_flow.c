@@ -266,8 +266,8 @@ static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL
 static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_POKEPARAM* attacker,
   WazaSick sick, BPP_SICK_CONT sickCont, BOOL fDefaultMsgEnable, const BTL_HANDEX_STR_PARAMS* exStr );
 static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk );
-static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  );
-static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick );
+static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaSick sick  );
+static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaSick sick );
 static void scEvent_PokeSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker,
   PokeSick sick, BPP_SICK_CONT sickCont );
 static void scEvent_WazaSickFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaSick sick );
@@ -2012,7 +2012,7 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
         rand = BTL_CALC_GetRand( 256 );
         if( rand < (lv_poke - lv_border) )
         {
-          if( !scEvent_WazaSick_CheckFail(wk, bpp, POKESICK_NEMURI) ){
+          if( !scEvent_WazaSick_CheckFail(wk, bpp, bpp, POKESICK_NEMURI) ){
             return SABOTAGE_GO_SLEEP;
           }
         }
@@ -6693,12 +6693,12 @@ static BOOL scproc_AddSickCheckFail( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target,
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
 
-    BOOL fFail = scEvent_WazaSick_CheckFail( wk, target, sick );
+    BOOL fFail = scEvent_WazaSick_CheckFail( wk, attacker, target, sick );
 
     if( fFail )
     {
       if( fDispFailResult ){
-        scEvent_AddSick_Failed( wk, target, sick );
+        scEvent_AddSick_Failed( wk, target, attacker, sick );
         scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       }
     }
@@ -6887,7 +6887,7 @@ static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk )
  * @retval  BOOL    é∏îsÇ∑ÇÈèÍçáÇÕTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick  )
+static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaSick sick  )
 {
   BOOL fFail = FALSE;
   BTL_EVENTVAR_Push();
@@ -6908,10 +6908,11 @@ static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
  * @param   sick
  */
 //----------------------------------------------------------------------------------
-static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaSick sick )
+static void scEvent_AddSick_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, const BTL_POKEPARAM* attacker, WazaSick sick )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
+    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_SICKID, sick );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ADDSICK_FAILED );
   BTL_EVENTVAR_Pop();

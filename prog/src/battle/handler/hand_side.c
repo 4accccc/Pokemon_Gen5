@@ -359,8 +359,9 @@ static const BtlEventHandlerTable* ADD_SIDE_Sinpinomamori( u32* numElems )
 static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide) )
-  {
+  if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)  // é©ï™Ç≈é©ï™Ç…ë≈Ç¬ÉèÉUÅiÇÀÇﬁÇÈìôÅjÇ…ÇÕå¯Ç©Ç»Ç¢
+  ){
     WazaSick  sickID = BTL_EVENTVAR_GetValue( BTL_EVAR_SICKID );
     if( BTL_CALC_IsBasicSickID(sickID)
     ||  (sickID == WAZASICK_KONRAN)
