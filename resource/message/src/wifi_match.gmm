@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T12:31:09"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T15:48:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -585,7 +585,7 @@
 		<language name="JPN" width="256">つうしん　たいきちゅうです……
 しばらく　おまちください</language>
 		<language name="JPN_KANJI" width="256">通信　待機中です……
-しばらく　おまちください</language>
+しばらく　お待ちください</language>
 	</row>
 
 	<row id="WIFIMATCH_DARTY_01">
