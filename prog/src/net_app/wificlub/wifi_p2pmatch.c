@@ -3499,6 +3499,12 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
     }
     wk->localTime = 0;
   }
+  else if(GFL_NET_DWC_GetDisconnectNewPlayer() != -1){
+    _friendNameExpand(wk, GFL_NET_DWC_GetDisconnectNewPlayer());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+    return seq;
+  }
 
 
   // èÛë‘ÇéÊìæ

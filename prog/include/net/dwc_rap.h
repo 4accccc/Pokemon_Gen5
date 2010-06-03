@@ -300,6 +300,7 @@ extern u32 mydwc_GetBitmap(void);
 //==============================================================================
 extern int GFL_NET_DWC_IsNewPlayer(void);
 extern void GFL_NET_DWC_ResetNewPlayer(void);
+extern s16 GFL_NET_DWC_GetDisconnectNewPlayer(void);
 
 //==============================================================================
 /**

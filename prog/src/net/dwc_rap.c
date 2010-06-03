@@ -97,10 +97,10 @@ typedef struct
   int isvchat;
   int friendindex;   // 今から接続するフレンドのリストインデックス
   int newFriendConnect;  // 接続してきたらTRUE 2006.05.24 k.ohno
-  BOOL bVChat;     // VCHATONOFF
   BOOL bConnectCallback;
   int vchatcodec;
-
+  s16 canceled_matching;
+  s16 bVChat;     // VCHATONOFF
   int timeoutflag;
 
   int sendintervaltime[_WIFI_NUM_MAX];		// 前回データを送信してからのフレーム数。
@@ -2325,6 +2325,8 @@ int GFL_NET_DWC_StartGame( int target,int maxnum, BOOL bVCT )
   _dWork->closedflag = TRUE;	// 080602	tomoya
   _dWork->friendindex = target;
   _dWork->maxConnectNum = maxnum;
+  _dWork->canceled_matching = -1;
+
   //    OHNO_PRINT("max %d\n",_dWork->maxConnectNum);
   if(bVCT){
     num=2;
@@ -2479,6 +2481,7 @@ DWCConnectionClosedCallbackが呼び出されます。
         // 繋いでいた子機が、接続をキャンセルした。
         MYDWC_DEBUGPRINT("Client (friendListIndex = %d) canceled matching.\n\n", index);
         // 繋いできた子機がいなくなった。2006.7.3 yoshihara
+        _dWork->canceled_matching = index;
         _dWork->newFriendConnect = -1;
       }
     }
@@ -2701,6 +2704,20 @@ void GFL_NET_DWC_ResetNewPlayer(void)
   }
 }
 
+
+//==============================================================================
+/**
+ * つながろうとしていた子機の切断を取得
+ * @retval  切断した子機INDEX
+ */
+//==============================================================================
+s16 GFL_NET_DWC_GetDisconnectNewPlayer(void)
+{
+  if(_dWork){
+    return _dWork->canceled_matching;
+  }
+  return -1;
+}
 //==============================================================================
 /**
  * VCHATのONOFF     k.ohno 06.05.24
