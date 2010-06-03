@@ -128,7 +128,7 @@ ev_symbol_pokemon_main:
       ELSE
         _CALL sub_sympoke_move
         //もりのひろばへいどうした！
-        _SYSWIN_MSG( msg_symbolmap_poke_09, POS_DEFAULT )
+        _SYSWIN_MSG( msg_symbolmap_poke_10, POS_DEFAULT )
         _SYSWIN_CLOSE()
         //マップに入り直す
         _SYMBOL_MAP_WARP( DIR_NOT )
