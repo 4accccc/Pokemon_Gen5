@@ -346,7 +346,7 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
 		MONSNO_DARUTANISU,	// ダルタニス
 		MONSNO_MERODHIA,		// メロディア
 		MONSNO_INSEKUTA,		// インセクタ
-		MONSNO_BIKUTHI,			// ビクティ
+		MONSNO_657,					// ビクティ
   };
 
   // チェック除外ポケモンチェック
@@ -377,7 +377,7 @@ static BOOL check_LocalCompMonsno( u16 monsno )
 		MONSNO_DARUTANISU,	// ダルタニス
 		MONSNO_MERODHIA,		// メロディア
 		MONSNO_INSEKUTA,		// インセクタ
-		MONSNO_BIKUTHI,			// ビクティ
+		MONSNO_657,					// ビクティ
   };
 
   // チェック除外ポケモンチェック
