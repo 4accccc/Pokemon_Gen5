@@ -725,10 +725,10 @@ static void gjiki_PlaySE(
     
     {
       GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( gjiki->fieldWork );
-      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
-      u8 season = GAMEDATA_GetSeasonID( gdata );
+//      GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+      u8 season = PMSEASON_GetConsiderCommSeason( gsys );
       MMDL_GetVectorPos( mmdl, &pos );
-    
+
       if( gjiki_PlaySECore(gjiki,set,&pos,FALSE,season) == FALSE ){
         MMDL_TOOL_AddDirVector( dir, &pos, GRID_FX32 );
         gjiki_PlaySECore( gjiki, set, &pos, TRUE, season );
