@@ -259,6 +259,9 @@ static GMEVENT_RESULT FieldFishingEvent(GMEVENT * event, int * seq, void *work)
   case SEQ_TOO_SLOW:
     sub_DelLureAnime( wk );
     if(wk->bsp != NULL){
+      if( wk->enc_type == ENC_TYPE_EFFECT){ //エフェクト破棄
+        EFFECT_ENC_EffectDelete( wk->fld_enc );
+      }
       BATTLE_PARAM_Delete(wk->bsp);
     }
     //つりそこなった回数  
