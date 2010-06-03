@@ -4941,7 +4941,7 @@
 おおくの　トレーナーを　ひきつける。</language>
 		<language name="JPN_KANJI">神出鬼没な　ポケモン。
 美しい　スタイルと　毛並みが
-多くの　トレーナーを　惹きつける。</language>
+多くの　トレーナーを　ひきつける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_511_000">
@@ -5422,13 +5422,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_564_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">こだいの　かせきから　ふっかつした。
+ふかさ　１０００メートルまで
+せんすいすることが　できる。</language>
+		<language name="JPN_KANJI">古代の　化石から　復活した。
+深さ　１０００メートルまで
+潜水することが　できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_565_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">うみと　りくちで　せいかつする。
+はりてで　タンカーの　ふなぞこに
+あなを　あける　パワーの　もちぬし。</language>
+		<language name="JPN_KANJI">海と　陸地で　生活する。
+張り手で　タンカーの　船底に
+穴を　開ける　パワーの　持ち主。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_566_000">
@@ -5613,10 +5621,10 @@
 
 	<row id="ZKN_COMMENT_01_586_000">
 		<language name="JPN">きせつに　よって　すみかを　かえる。
-ひとびとは　アントレスの　ツノで
+ひとびとは　メブキジカの　ツノで
 きせつの　うつりかわりを　かんじる。</language>
 		<language name="JPN_KANJI">季節によって　住処を　変える。
-人々は　アントレスの　ツノで
+人々は　メブキジカの　ツノで
 季節の　移り変わりを　感じる。</language>
 	</row>
 
@@ -5666,13 +5674,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_592_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">うすい　ベールのような　うでで
+あいての　からだを　しばりつけたまま
+うみの　そこへ　しずんでいくのだ。</language>
+		<language name="JPN_KANJI">薄い　ベールのような　腕で
+相手の　体を　縛りつけたまま
+海の　底へ　沈んでいくのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_593_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">プルンゲルの　すみかに　まよいこんだ
+ふねは　しずめられて　のりくみいんの
+いのちは　すいとられて　しまうのだ。</language>
+		<language name="JPN_KANJI">プルンゲルの　住処に　迷い込んだ
+船は　沈められて　乗組員の　命は
+吸い取られて　しまうのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_594_000">
@@ -5865,8 +5881,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_615_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">たいおんが　あがると　すいじょうきに
+なって　すがたを　けす。たいおんが
+さがると　もとの　こおりに　もどる。</language>
+		<language name="JPN_KANJI">体温が　上がると　水蒸気に　なって
+姿を　消す。体温が　下がると
+元の　氷に　戻る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_616_000">
@@ -5897,13 +5917,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_619_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ながれるような　れんぞく　こうげきを
+くりだして　てきを　あっとうする。
+するどい　ツメで　てきを　きりさく。</language>
+		<language name="JPN_KANJI">流れるような　連続　攻撃を
+繰り出して　敵を　圧倒する。
+鋭い　ツメで　敵を　切り裂く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_620_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">うでの　たいもうを　ムチのように
+あつかう。りょううでの　こうげきは
+めにも　とまらぬ　はやさ。</language>
+		<language name="JPN_KANJI">腕の　体毛を　ムチのように
+あつかう。両腕の　攻撃は
+目にも　止まらぬ　速さ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_621_000">
@@ -6060,18 +6088,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_638_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ポケモンを　まもるため　にんげんと
+あらそった　でんせつの　ポケモン。
+ちんちゃく　れいせいな　せいかく。</language>
+		<language name="JPN_KANJI">ポケモンを　守るため
+人間と　争った　伝説の　ポケモン。
+沈着　冷静な　性格。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_639_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">にんげん　どうしの　せんそうによって
+すみかを　うしなった　ポケモンたちを
+まもるため　にんげんと　たたかった。</language>
+		<language name="JPN_KANJI">人間　同士の　戦争によって
+住処を　失った　ポケモンたちを
+守るため　人間と　戦った。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_640_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">なかまを　まもるため　にんげんに
+たたかいを　いどんだ　ポケモン。
+でんせつで　かたりつがれている。</language>
+		<language name="JPN_KANJI">仲間を　守るため
+人間に　戦いを　挑んだ　ポケモン。
+伝説で　語り継がれている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_641_000">

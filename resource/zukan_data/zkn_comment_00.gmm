@@ -5422,13 +5422,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_564_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">およそ　１おくねんまえの　うみを
+およいでいた。りくちへ　あがって
+えものに　おそいかかる　こともある。</language>
+		<language name="JPN_KANJI">およそ　１億年前の　海を
+泳いでいた。陸地へ　上がって
+獲物に　襲いかかる　こともある。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_565_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">アゴの　ちからが　けたちがい。
+えものと　いっしょに　てっこつや
+いわも　かみくだいて　たべてしまう。</language>
+		<language name="JPN_KANJI">アゴの　力が　けたちがい。
+獲物と　一緒に　鉄骨や　岩も
+かみ砕いて　食べてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_566_000">
@@ -5666,13 +5674,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_592_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">えものを　どくで　しびれさせて
+８０００メートルの　しんかいに
+あるという　すみかに　つれていく。</language>
+		<language name="JPN_KANJI">獲物を　毒で　しびれさせて
+８０００メートルの　深海に
+あるという　住処に　連れて行く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_593_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">からだに　すいこんだ　かいすいを
+いきおいよく　ふきだして　すすむ。
+せいめいエネルギーが　だいこうぶつ。</language>
+		<language name="JPN_KANJI">体に　吸い込んだ　海水を
+勢いよく　吹き出して　前進する。
+生命エネルギーが　大好物。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_594_000">
@@ -5865,8 +5881,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_615_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">ゆきぐもの　なかで　うまれた。
+こおりの　けっしょうで　できた
+くさりで　えものを　つかまえる。</language>
+		<language name="JPN_KANJI">雪雲の　中で　生まれた。
+氷の　結晶で　できた　鎖で
+獲物を　捕まえる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_616_000">
@@ -5897,13 +5917,21 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_619_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">かれいな　れんぞくわざの　つかいて。
+せいしん　とういつすると　わざの
+キレと　スピードが　ますのだ。</language>
+		<language name="JPN_KANJI">華麗な　連続技の　使い手。
+精神　統一すると
+技の　キレと　スピードが　増すのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_620_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">うでの　ながい　たいもうを
+てきに　たたきつけて　たたかう。
+ムチのように　てきを　いためつける。</language>
+		<language name="JPN_KANJI">腕の　長い　体毛を
+敵に　たたきつけて　戦う。
+ムチのように　敵を　痛めつける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_621_000">
@@ -6060,18 +6088,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_638_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">はがねの　からだと　こころを　もつ。
+にらみつけるだけで　きょうぼうな
+ポケモンも　したがわせてしまう。</language>
+		<language name="JPN_KANJI">鋼の　体と　心を　持つ。
+にらみつけるだけで　凶暴な
+ポケモンも　従わせてしまう。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_639_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きょだいな　じょうへきを　いちげきで
+とっぱするほどの　とっしんりょく。
+でんせつで　かたられる　ポケモン。</language>
+		<language name="JPN_KANJI">巨大な　城壁を
+一撃で　突破するほどの　突進力。
+伝説で　語られる　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_640_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">あたまの　ツノは　するどい　やいば。
+つむじかぜのような　うごきで　てきを
+ほんろうして　すばやく　きりつける。</language>
+		<language name="JPN_KANJI">頭の　ツノは　鋭い　刃。
+旋風のような　動きで　敵を
+ほんろうして　すばやく　切りつける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_641_000">
