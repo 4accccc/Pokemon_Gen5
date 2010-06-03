@@ -1072,6 +1072,8 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
   
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , TRUE );
 
+  if( WIPE_SYS_EndCheck() == FALSE ) return;    //20100603 add saito
+
   tpno = GFL_UI_TP_HitTrg(_tp_data);
   if(-1!=tpno){   //É^ÉbÉ`èàóù
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
