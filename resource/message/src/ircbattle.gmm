@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T16:24:38"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-03T14:44:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -342,14 +342,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1490" top="188" right="2195" bottom="816" maximized="no" rayout="Vertical2">
+	<dialog left="602" top="389" right="1102" bottom="1017" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="58" top="61" right="531" bottom="459" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -572,8 +572,8 @@
 	</row>
 
 	<row id="IRCBTL_STR_36">
-		<language name="JPN" width="256">すすむ</language>
-		<language name="JPN_KANJI" width="256">すすむ</language>
+		<language name="JPN" width="256">けってい</language>
+		<language name="JPN_KANJI" width="256">けってい</language>
 	</row>
 
 	<row id="IRCBTL_STR_37">
@@ -597,9 +597,9 @@
 
 	<row id="IRCBTL_STR_40">
 		<language name="JPN" width="256">[2:00:１桁:0]にんと　つうしんちゅう
-すすむで　さんかを　しめきります</language>
+　けっていで　すすむ</language>
 		<language name="JPN_KANJI" width="256">[2:00:１桁:0]人と　通信中
-すすむで　参加を　締め切ります</language>
+　けっていで　進む</language>
 	</row>
 
 	<row id="IRCBTL_STR_41">
