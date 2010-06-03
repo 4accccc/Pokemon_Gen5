@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T18:17:30"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T17:16:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -452,7 +452,8 @@
 
 	<row id="msg_c07r0401_gentleman_12">
 		<comment>♂
-・レベル差が1～24</comment>
+・レベル差が1～24
+　もらえないので→gentleman_14</comment>
 		<attribute name="キャラ指定">GENTLEMAN
 紳士</attribute>
 		<language name="JPN" width="256">なるほど！　わずかだが　たしかに
