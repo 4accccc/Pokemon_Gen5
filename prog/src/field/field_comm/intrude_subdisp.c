@@ -1914,6 +1914,11 @@ static void _IntSub_TitleMsgUpdate(INTRUDE_SUBDISP_PTR intsub, ZONEID my_zone_id
   int print_type = _TITLE_PRINT_NULL;
   u32 msg_id;
   
+  if(PRINTSYS_QUE_IsExistTarget( 
+      intsub->print_que, GFL_BMPWIN_GetBmp(intsub->printutil_title.win) ) == TRUE){
+    return;
+  }
+  
   if(ZONEDATA_IsPalace(my_zone_id) == TRUE || ZONEDATA_IsBingo(my_zone_id) == TRUE){
     if(intsub->comm.now_palace_area == GAMEDATA_GetIntrudeMyID(gamedata)){
       print_type = _TITLE_PRINT_MY_PALACE;
