@@ -19,6 +19,7 @@
 #include "message.naix"
 //mine
 #include "worldtrade_adapter.h"
+
 //=============================================================================
 /**
  *          定数宣言
@@ -392,9 +393,9 @@ void GF_STR_PrintColor( GFL_BMPWIN *bmpwin, u8 font_idx, STRBUF *str, int x, int
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  ストリームなどを一括消去
+ *  @brief  ストリームなどを一括消去
  *
- *	@param	WT_PRINT *wk  ワーク
+ *  @param  WT_PRINT *wk  ワーク
  */
 //-----------------------------------------------------------------------------
 void WT_PRINT_ClearBuffer( WT_PRINT *wk )
@@ -441,14 +442,14 @@ struct _NUMFONT
 };
 //----------------------------------------------------------------------------
 /**
- *	@brief  NUMFONT作成
+ *  @brief  NUMFONT作成
  *
- *	@param	int a   いらない
- *	@param	b       いらない
- *	@param	c       いらない
- *	@param	heapID  ヒープID
+ *  @param  int a   いらない
+ *  @param  b       いらない
+ *  @param  c       いらない
+ *  @param  heapID  ヒープID
  *
- *	@return NUMFONTハンドル
+ *  @return NUMFONTハンドル
  */
 //-----------------------------------------------------------------------------
 NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID )
@@ -459,7 +460,7 @@ NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID )
   p_wk->heapID  = heapID;
   
   p_wk->p_font  = GFL_FONT_Create( ARCID_FONT, NARC_font_num_gftr,
-			    GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
+          GFL_FONT_LOADTYPE_FILE, FALSE, heapID );
   p_wk->p_que     = PRINTSYS_QUE_Create( heapID );
   p_wk->p_msg     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_wifi_gts_dat, heapID );
   p_wk->p_wordset = WORDSET_Create( heapID );
@@ -469,9 +470,9 @@ NUMFONT * NUMFONT_Create( int a, int b, int c, HEAPID heapID )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  NUMFONT消去
+ *  @brief  NUMFONT消去
  *
- *	@param	NUMFONT *wk ワーク
+ *  @param  NUMFONT *wk ワーク
  */
 //-----------------------------------------------------------------------------
 void NUMFONT_Delete( NUMFONT *wk )
@@ -484,9 +485,9 @@ void NUMFONT_Delete( NUMFONT *wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  NUMFONTメイン処理
+ *  @brief  NUMFONTメイン処理
  *
- *	@param	NUMFONT *wk ワーク
+ *  @param  NUMFONT *wk ワーク
  */
 //-----------------------------------------------------------------------------
 void NUMFONT_Main( NUMFONT *wk )
@@ -507,15 +508,15 @@ void NUMFONT_Main( NUMFONT *wk )
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  NUMFONTへ数字書き込み
+ *  @brief  NUMFONTへ数字書き込み
  *
- *	@param	NUMFONT *wk ワーク
- *	@param	num     数値
- *	@param	keta    数値の桁
- *	@param	mode    左詰めとか右詰めとか
- *	@param	*bmpwin     書き込みBITMAP
- *	@param	x       座標X
- *	@param	y       座標Y
+ *  @param  NUMFONT *wk ワーク
+ *  @param  num     数値
+ *  @param  keta    数値の桁
+ *  @param  mode    左詰めとか右詰めとか
+ *  @param  *bmpwin     書き込みBITMAP
+ *  @param  x       座標X
+ *  @param  y       座標Y
  */
 //-----------------------------------------------------------------------------
 void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *bmpwin, int x, int y )
@@ -552,13 +553,13 @@ void NUMFONT_WriteNumber( NUMFONT *wk, int num, int keta, int mode, GFL_BMPWIN *
 }
 //----------------------------------------------------------------------------
 /**
- *	@brief  NUMFONTへマーク書き込み
+ *  @brief  NUMFONTへマーク書き込み
  *
- *	@param	NUMFONT *wk ワーク
- *	@param	mark      マーク
- *	@param	*bmpwin   BMPWIN
- *	@param	x         座標X
- *	@param	y         座標Y
+ *  @param  NUMFONT *wk ワーク
+ *  @param  mark      マーク
+ *  @param  *bmpwin   BMPWIN
+ *  @param  x         座標X
+ *  @param  y         座標Y
  */
 //-----------------------------------------------------------------------------
 void NUMFONT_WriteMark( NUMFONT *wk, int mark, GFL_BMPWIN *bmpwin, int x, int y )
