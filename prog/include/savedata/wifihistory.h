@@ -1,13 +1,13 @@
 //============================================================================================
 /**
- * @file	wifihistory.h
+ * @file  wifihistory.h
  * @brief
- * @date	2006.03.25
+ * @date  2006.03.25
  */
 //============================================================================================
 
-#ifndef	__WIFIHISTORY_H__
-#define	__WIFIHISTORY_H__
+#ifndef __WIFIHISTORY_H__
+#define __WIFIHISTORY_H__
 
 #include "savedata/save_control.h"
 #include "savedata/mystatus.h"
@@ -17,26 +17,26 @@
 //============================================================================================
 //----------------------------------------------------------
 /**
- * @brief	WiFi通信履歴データの不完全型宣言
+ * @brief WiFi通信履歴データの不完全型宣言
  */
 //----------------------------------------------------------
 typedef struct _WIFI_HISTORY WIFI_HISTORY;
 
 ///WiFi通信履歴を残す国の数
-#define	WIFI_NATION_MAX		(256)
+#define WIFI_NATION_MAX   (256)
 
 ///WiFi通信履歴を残す国のそれぞれの地域コードの最大数
-#define	WIFI_AREA_MAX		(64)
+#define WIFI_AREA_MAX   (64)
 
 
-///日本の地球儀定義(本当はcountry103なんだけ参照できないので）
-#define WIFI_NATION_JAPAN	( 103 ) 
+///日本の地球儀定義(本当はcountry105なんだけ参照できないので）
+#define WIFI_NATION_JAPAN ( 105 ) 
 
 ///国名のある国の数（wifi_earth/wifi_place_msg_world.gmm）
-#define	WIFI_COUNTRY_MAX		(234)
+#define WIFI_COUNTRY_MAX    (233)
 
 ///地域名のある地域の数（wifi_earth/wifi_place_msg_USA.gmm）
-#define	WIFI_AREADATA_MAX		(52)
+#define WIFI_AREADATA_MAX   (52)
 
 typedef enum
 {
@@ -45,16 +45,16 @@ typedef enum
 
 //----------------------------------------------------------
 /**
- * @brief	WiFi通信履歴データの状態定義
+ * @brief WiFi通信履歴データの状態定義
  */
 //----------------------------------------------------------
 typedef enum {
-	WIFIHIST_STAT_NODATA = 0,	///<まだ通信したことがない
-	WIFIHIST_STAT_NEW = 1,		///<本日初めて通信した
-	WIFIHIST_STAT_EXIST = 2,	///<通信したことがある
-	WIFIHIST_STAT_MINE = 3,		///<自分の場所
+  WIFIHIST_STAT_NODATA = 0, ///<まだ通信したことがない
+  WIFIHIST_STAT_NEW = 1,    ///<本日初めて通信した
+  WIFIHIST_STAT_EXIST = 2,  ///<通信したことがある
+  WIFIHIST_STAT_MINE = 3,   ///<自分の場所
 
-	WIFIHIST_STAT_MAX,
+  WIFIHIST_STAT_MAX,
 }WIFIHIST_STAT;
 
 typedef enum {
@@ -107,5 +107,5 @@ extern UNITEDNATIONS_SAVE *WIFIHISTORY_GetUNDataPtr(WIFI_HISTORY * wh);
 extern BOOL WIFIHISTORY_SetCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode);
 extern BOOL WIFIHISTORY_CheckCountryBit(WIFI_HISTORY * wh, const u32 inCountryCode);
 
-#endif	/* __WIFIHISTORY_H__ */
+#endif  /* __WIFIHISTORY_H__ */
 
