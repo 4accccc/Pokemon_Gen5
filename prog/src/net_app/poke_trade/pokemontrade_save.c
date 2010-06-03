@@ -43,6 +43,7 @@
 #include "savedata/wifihistory.h"
 #include "savedata/wifihistory_local.h"
 #include "savedata/undata_update.h"
+#include "../comm_wifihistory.h"
 
 
 
@@ -658,7 +659,14 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
 
   WIFI_NEGOTIATION_SV_SetFriend(GAMEDATA_GetWifiNegotiation(pWork->pGameData),
                                 pWork->pFriend);
-  
+
+  {
+    WIFI_HISTORY* pWH = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(pWork->pGameData));
+    const MYSTATUS* pBuff[2];
+    pBuff[0] = pWork->pMy;
+    pBuff[1] = pWork->pFriend;
+    Comm_WifiHistoryCheck(pWH, pBuff, 2);
+  }
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);

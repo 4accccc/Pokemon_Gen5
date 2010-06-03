@@ -3037,6 +3037,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , HEAPID_WIFIP2PMATCH );
 
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+  FriendRequestWaitOff(wk);
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
   return seq;
