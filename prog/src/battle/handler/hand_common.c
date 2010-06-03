@@ -47,15 +47,42 @@ BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
 
 /**
  *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック
- * （野生戦で相手の場合をチェック）
  */
 BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
 {
+  // 野生戦で相手の場合をチェック
   if( BTL_SVFTOOL_GetCompetitor(flowWk) == BTL_COMPETITOR_WILD )
   {
     u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
     if( (clientID == BTL_CLIENT_ENEMY1) || (clientID == BTL_CLIENT_ENEMY1) ){
       return TRUE;
+    }
+  }
+  // ギラティナ・アルセウス・インセクタのチェック
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u16 monsno = BPP_GetMonsNo( bpp );
+    u16 itemID = BPP_GetItem( bpp );
+
+    switch( monsno ){
+    case MONSNO_GIRATHINA:
+      if( itemID == ITEM_HAKKINDAMA ){  // ギラティナのはっきんだまはNG
+        return TRUE;
+      }
+      break;
+
+    case MONSNO_ARUSEUSU:
+      if( BTL_TABLES_IsMatchAruseusPlate(itemID) ){  // アルセウスのプレートはNG
+        return TRUE;
+      }
+      break;
+
+    case MONSNO_INSEKUTA:
+      if( BTL_TABLES_IsMatchInsectaCasette(itemID) ){  // インセクタのカセットはNG
+        return TRUE;
+      }
+      break;
+
     }
   }
   return FALSE;

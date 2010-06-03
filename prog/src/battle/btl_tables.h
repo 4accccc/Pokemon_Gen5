@@ -41,7 +41,15 @@ extern BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID );
  */
 extern BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID );
 
+/**
+ *  アルセウスのプレート判定
+ */
+extern BOOL BTL_TABLES_IsMatchAruseusPlate( u16 itemID );
 
+/**
+ *  インセクタのカセット判定
+ */
+extern BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID );
 
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
 extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );

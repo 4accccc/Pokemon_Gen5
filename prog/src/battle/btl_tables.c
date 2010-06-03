@@ -147,6 +147,49 @@ BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID )
 }
 
 
+/**
+ *  アルセウスのプレート判定
+ */
+BOOL BTL_TABLES_IsMatchAruseusPlate( u16 itemID )
+{
+  static const u16 table[] = {
+    ITEM_HINOTAMAPUREETO,
+    ITEM_SIZUKUPUREETO,
+    ITEM_IKAZUTIPUREETO,
+    ITEM_MIDORINOPUREETO,
+    ITEM_TURARANOPUREETO,
+    ITEM_KOBUSINOPUREETO,
+    ITEM_MOUDOKUPUREETO,
+    ITEM_DAITINOPUREETO,
+    ITEM_AOZORAPUREETO,
+    ITEM_HUSIGINOPUREETO,
+    ITEM_TAMAMUSIPUREETO,
+    ITEM_GANSEKIPUREETO,
+    ITEM_MONONOKEPUREETO,
+    ITEM_RYUUNOPUREETO,
+    ITEM_KOWAMOTEPUREETO,
+    ITEM_KOUTETUPUREETO,
+  };
+
+  return checkTableElems( itemID, table, NELEMS(table) );
+}
+
+/**
+ *  インセクタのカセット判定
+ */
+BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID )
+{
+  static const u16 table[] = {
+    ITEM_AKUAKASETTO,
+    ITEM_INAZUMAKASETTO,
+    ITEM_BUREIZUKASETTO,
+    ITEM_HURIIZUKASETTO,
+  };
+
+  return checkTableElems( itemID, table, NELEMS(table) );
+}
+
+
 //=============================================================================================
 /**
  * メンタルハーブで治す状態異常テーブル順番アクセス
