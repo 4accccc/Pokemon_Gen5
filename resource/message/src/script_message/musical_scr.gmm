@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-06-02T18:01:21"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T15:31:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,9 +349,9 @@
 		</language>
 	</columns>
 
-	<dialog left="15" top="27" right="515" bottom="1003" maximized="no" rayout="Vertical2">
+	<dialog left="1744" top="39" right="2244" bottom="1015" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="1100" top="66" right="1573" bottom="464" visible="yes"/>
+		<tag-palette left="807" top="66" right="1280" bottom="464" visible="yes"/>
 		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
@@ -1003,10 +1003,10 @@
 msg_musical_recept_06を
 選択肢として表示</comment>
 		<language name="JPN" width="256">せきがいせんつうしんと
-ワイヤレスつうしん▼
+ＤＳワイヤレスつうしん▼
 どちらに　されますか？</language>
 		<language name="JPN_KANJI" width="256">赤外線通信と
-ワイヤレス通信▼
+ＤＳワイヤレス通信▼
 どちらに　されますか？</language>
 	</row>
 
@@ -1020,8 +1020,8 @@ msg_musical_recept_06を
 	<row id="msg_musical_recept_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
 		<comment>通信受付の選択肢
 選択後msg_musical_recept_wl_01</comment>
-		<language name="JPN" width="256">ワイヤレスつうしん</language>
-		<language name="JPN_KANJI" width="256">ワイヤレス通信</language>
+		<language name="JPN" width="256">ＤＳワイヤレスつうしん</language>
+		<language name="JPN_KANJI" width="256">ＤＳワイヤレス通信</language>
 	</row>
 
 	<row id="msg_musical_recept_ir_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,#80ff80,,,#80ff80,,#80ff80,#80ff80,,,#80ff80,,">
@@ -1066,9 +1066,9 @@ msg_musical_recept_06を
 リーダーではい…msg_musical_recept_wl_03
 グループではい…msg_musical_recept_iwl_04
 いいえ…msg_musical_test_03</comment>
-		<language name="JPN" width="256">ワイヤレスつうしんを
+		<language name="JPN" width="256">ＤＳワイヤレスつうしんを
 かいし　しますか？</language>
-		<language name="JPN_KANJI" width="256">ワイヤレス通信を
+		<language name="JPN_KANJI" width="256">ＤＳワイヤレス通信を
 開始しますか？</language>
 	</row>
 
