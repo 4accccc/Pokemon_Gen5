@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsushima" host="W00181" date="2010-06-01T18:27:13"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T14:46:43"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="171" top="135" right="876" bottom="823" maximized="no" rayout="Vertical2">
+	<dialog left="1471" top="129" right="2176" bottom="817" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -306,35 +306,35 @@
 むてきの　ちからを
 てにいれることが　できるのだ！▼
 それが　この　まぼろしの　ポケモン
-ビクティ●だ！▼</language>
+ビクティニだ！▼</language>
 		<language name="JPN_KANJI" width="256">その　ポケモンを　手にした　者は
 あらゆる　勝負で▽
 勝利することが　できるという…▼
 無敵の　力を
 手に入れることが　できるのだ！▼
 それが　この　幻の　ポケモン
-ビクティ●だ！▼</language>
+ビクティニだ！▼</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_02" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>●１グリッド前進してから、セリフ。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">ここは　ビクティ●を　かくまうために
+		<language name="JPN" width="256">ここは　ビクティニを　かくまうために
 つくられた　ひみつの　へや▼
 ２００ねんまえ　ある　だいふごうが
 しまを　まるごと　かいとって▼
-この　ちかしつに　ビクティ●を
+この　ちかしつに　ビクティニを
 かくしてしまったのだ▼
-それいらい　ビクティ●を
+それいらい　ビクティニを
 みた　ものは　いなくなり▽
 まぼろしの　ポケモンと　なったのだ…▼</language>
-		<language name="JPN_KANJI" width="256">ここは　ビクティ●を　かくまうために
+		<language name="JPN_KANJI" width="256">ここは　ビクティニを　かくまうために
 作られた　秘密の　部屋▼
 ２００年前　ある　大富豪が
 島を　まるごと　買い取って▼
-この　地下室に　ビクティ●を
+この　地下室に　ビクティニを
 隠してしまったのだ▼
-それ以来　ビクティ●を
+それ以来　ビクティニを
 見た　者は　いなくなり▽
 幻の　ポケモンと　なったのだ…▼</language>
 	</row>
@@ -345,14 +345,14 @@
 ●セリフの後、戦闘開始。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">われわれ　プラズマだんが
-ビクティ●を　ここから　かいほうして▼
+ビクティニを　ここから　かいほうして▼
 われわれの　もくてきを
 じつげんさせるため▽
 その　ちからを　つかわせてもらう！▼
 おまえのような　こどもに
 ジャマは　させない！▼</language>
 		<language name="JPN_KANJI" width="256">我々　プラズマだんが
-ビクティ●を　ここから　解放して▼
+ビクティニを　ここから　解放して▼
 我々の　目的を
 実現させるため▽
 その　力を　使わせてもらう！▼
@@ -367,22 +367,22 @@
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">おまえの　ちからを
 みあやまっていたようだ…[BE:01:ページ切り替え（クリア）]
-しかし　ビクティ●は
+しかし　ビクティニは
 ひとすじなわでは　いかないぞ…[BE:01:ページ切り替え（クリア）]
 みろ…[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">お前の　力を
 見誤っていたようだ…[BE:01:ページ切り替え（クリア）]
-しかし　ビクティ●は
+しかし　ビクティニは
 一筋縄では　いかないぞ…[BE:01:ページ切り替え（クリア）]
 みろ…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_05" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>●セリフ後に、１グリッド右へ後退してから、
-ビクティ方向を向いて、セリフ。
+　ビクティニ方向を向いて、セリフ。
 
-●ビクティを捕獲するまで、話しかけたときは
-このセリフを繰り返す。</comment>
+●ビクティニを捕獲するまで、話しかけたときは
+　このセリフを繰り返す。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
 		<language name="JPN" width="256">おまえの　ちからを　たしかめようと
 こころまちに　しているようだ…[BE:01:ページ切り替え（クリア）]
@@ -393,33 +393,33 @@
 	</row>
 
 	<row id="msg_d12r0102_plasma02_06" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<comment>●ビクティ捕獲後
+		<comment>●ビクティニ捕獲後
 ・主人公ポジション（GRIDX=4/GRIDZ=4）下向き
 ・プラズマ団ポジション（GRIDX=6/GRIDZ=8）上向き
 
-●セリフ後、プラズマ団幹部は部屋を逃げるように
-出て行く。</comment>
+●セリフ後、
+　プラズマ団幹部は部屋を逃げるように出て行く。</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">ビクティ●と　ともに　いきることは
-ビクティ●の　かこくな　うんめいを[BE:00:ページ切り替え（行送り）]
+		<language name="JPN" width="256">ビクティニと　ともに　いきることは
+ビクティニの　かこくな　うんめいを[BE:00:ページ切り替え（行送り）]
 ひきうけると　いうことだ…[BE:01:ページ切り替え（クリア）]
 おまえに　その　かくごが　あるのか
 いつか　ためさせて　もらうぞ…！[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ビクティ●と　ともに　生きることは
-ビクティ●の　過酷な　運命も[BE:00:ページ切り替え（行送り）]
+		<language name="JPN_KANJI" width="256">ビクティニと　ともに　生きることは
+ビクティニの　過酷な　運命も[BE:00:ページ切り替え（行送り）]
 ともにすると　いうことだ…[BE:01:ページ切り替え（クリア）]
 お前に　その　覚悟が　あるのか
 いつか　ためさせてもらうぞ…！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_d12r0102_plasma02_07" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
-		<comment>●ビクティを倒したときのセリフ</comment>
+		<comment>●ビクティニを倒したときのセリフ</comment>
 		<attribute name="キャラ指定">HAKAIM</attribute>
-		<language name="JPN" width="256">ビクティ●は　まだ　ちかくにいて
+		<language name="JPN" width="256">ビクティニは　まだ　ちかくにいて
 おまえの　うごきを　みているぞ…[BE:01:ページ切り替え（クリア）]
 おまえが　へやを　いちど　でていけば
 また　もどってくるだろうな…</language>
-		<language name="JPN_KANJI" width="256">ビクティ●は　まだ　近くにいて
+		<language name="JPN_KANJI" width="256">ビクティニは　まだ　近くにいて
 お前の　動きを　見ているぞ…[BE:01:ページ切り替え（クリア）]
 お前が　部屋を　一度　出て行けば
 また　戻ってくるだろうな…</language>
@@ -433,13 +433,13 @@
 	</row>
 
 	<row id="msg_d12r0102_narrator_01">
-		<comment>●ビクティを倒した場合のメッセージ。
+		<comment>●ビクティニを倒した場合のメッセージ。
 
-●マップに入り直すとビクティは復活。</comment>
+●マップに入り直すとビクティニは復活。</comment>
 		<attribute name="キャラ指定">ナレーション</attribute>
-		<language name="JPN" width="256">ビクティ●は　ちかしつから
+		<language name="JPN" width="256">ビクティニは　ちかしつから
 すがたを　けしてしまった…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ビクティ●は　地下室から
+		<language name="JPN_KANJI" width="256">ビクティニは　地下室から
 姿を　消してしまった…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
