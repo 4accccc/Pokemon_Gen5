@@ -603,6 +603,7 @@ static const u16 sc_WFBC_PALACE_TALK_START_IDX[FIELD_WFBC_CORE_TYPE_MAX] =
 static void EVENT_WFBC_WFBC_TalkStart( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg_idx, int* p_seq, u16 next_seq );
 static void EVENT_WFBC_WFBC_TalkStartYesNo( WFBC_PALACE_TALK_WK* p_wk, u16 palace_msg_idx, int* p_seq, u16 yes_next_seq, u16 no_next_seq );
 static BOOL EVENT_WFBC_WFBC_TalkMain( WFBC_PALACE_TALK_WK* p_wk );
+static BOOL EVENT_WFBC_WFBC_TalkEnd( WFBC_PALACE_TALK_WK* p_wk );
 
 //----------------------------------------------------------------------------
 /**
@@ -889,6 +890,12 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
 
   // 終了
   case WFBC_PALACE_TALK_SEQ_END:  
+
+    // 会話windowが閉じるのをまつ
+    if( EVENT_WFBC_WFBC_TalkEnd( p_work ) == FALSE ){
+      break;
+    }
+    
     // 後始末
     {
       GFL_STR_DeleteBuffer( p_work->p_strbuf );
@@ -1066,6 +1073,34 @@ static BOOL EVENT_WFBC_WFBC_TalkMain( WFBC_PALACE_TALK_WK* p_wk )
   return FALSE;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  強制会話終了
+ *
+ *	@param	p_wk 
+ */
+//-----------------------------------------------------------------------------
+static BOOL EVENT_WFBC_WFBC_TalkEnd( WFBC_PALACE_TALK_WK* p_wk )
+{
+  if( p_wk->p_talkwin ){
+
+    //CLOSE中に対処
+    if( (p_wk->talk_seq == WFBC_PALACE_TALKSYS_SEQ_CLOSE_WAIT)){
+
+      if(!FLDTALKMSGWIN_WaitClose(p_wk->p_talkwin)){
+        return FALSE;
+      }
+
+      p_wk->p_talkwin = NULL;
+    }else{
+
+      FLDTALKMSGWIN_Delete( p_wk->p_talkwin );
+      p_wk->p_talkwin = NULL;
+    }
+  }
+
+  return TRUE;
+}
 
 
 
