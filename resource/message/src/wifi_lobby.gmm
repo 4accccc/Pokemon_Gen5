@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-03T19:13:32"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-03T20:35:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1024,9 +1024,9 @@
 		<comment>待機中の自分に
 友達が話しかけてきたときのメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんが
-はなしかけて　きました！</language>
+はなしかけて　きました……</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんが
-話しかけて　きました！</language>
+話しかけて　きました……</language>
 	</row>
 
 	<row id="msg_wifilobby_083" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
@@ -1245,9 +1245,9 @@
 		<comment>待機中の友達に
 話しかけたときのメッセージ</comment>
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんの
-へんじを　まっています！</language>
+へんじを　まっています……</language>
 		<language name="JPN_KANJI" width="216">[1:00:トレーナー名:0]さんの
-返事を　待っています！</language>
+返事を　待っています……</language>
 	</row>
 
 	<row id="msg_wifilobby_1019" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
