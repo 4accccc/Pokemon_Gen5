@@ -203,7 +203,7 @@ VMCMD_RESULT EvCmdAddMovePokemon( VMHANDLE* core, void* wk )
  * MVPOKE_STATE_NONE‘¼
  */
 //--------------------------------------------------------------------
-#define FISHING_ENC_POKE_ZONE_MAX  (5)
+#define FISHING_ENC_POKE_ZONE_MAX  (6)
 #define FISHING_ENC_POKE_MAX  (FISHING_ENC_POKE_ZONE_MAX*(ENC_MONS_NUM_FISHING+ENC_MONS_NUM_FISHING_SP))
 
 /*
@@ -235,6 +235,7 @@ VMCMD_RESULT EvCmdGetFishingEncountMonsNo( VMHANDLE* core, void* wk )
   static const u16 zone_tbl[FISHING_ENC_POKE_ZONE_MAX] = {
     ZONE_ID_H04,
     ZONE_ID_R01,
+    ZONE_ID_R03,
     ZONE_ID_R03R0301,
     ZONE_ID_R13,
     ZONE_ID_W17
