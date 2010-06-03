@@ -851,12 +851,12 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
     MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_11 , MSGSPEED_GetWait() );
     MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
     work->state = MPS_WAIT_FAIL_FIRST_CONNECT;
+    MB_COMM_ExitComm( work->commWork );
     break;
   
   case MPS_WAIT_FAIL_FIRST_CONNECT:
     if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
-      MB_COMM_ExitComm( work->commWork );
       work->state = MPS_WAIT_EXIT_COMM;
     }
   
@@ -2402,9 +2402,13 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
       if( ret == MMYR_RET1 || ret == MMYR_RET2 )
       {
         MYITEM_PTR myItem = GAMEDATA_GetMyItem( work->initWork->gameData );
+        MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
+        MISC *miscData = GAMEDATA_GetMiscWork( work->initWork->gameData );
+
         if( ret == MMYR_RET1 &&
-           (MYITEM_CheckItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId ) == TRUE ||
-            MYITEM_CheckItem( myItem , ITEM_WAZAMASIN95 , 1 , work->heapId ) == TRUE) )
+            EVTLOCK_CheckEvtLock( miscData , EVT_LOCK_NO_LOCKCAPSULE , myStatus ) == TRUE )
+//           (MYITEM_CheckItem( myItem , ITEM_ROKKUKAPUSERU , 1 , work->heapId ) == TRUE ||
+//            MYITEM_CheckItem( myItem , ITEM_WAZAMASIN95 , 1 , work->heapId ) == TRUE) )
         {
           //Ç‡Ç§éùÇ¡ÇƒÇÈ
           work->yesNoRet = MMYR_RET2; //ã≠êßÇ¢Ç¢Ç¶
