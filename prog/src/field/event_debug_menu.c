@@ -139,6 +139,8 @@
 
 #include "debug_wfbc.h"
 
+#include "savedata/irc_compatible_savedata.h"
+
 FS_EXTERN_OVERLAY( d_iwasawa );
 
 //======================================================================
@@ -249,6 +251,7 @@ static BOOL debugMenuCallProc_ControlLinerCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_ControlDelicateCamera( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_ControlShortCut( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenu_CreateFeelingData( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_BeaconFriendCode( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_WifiBattleMatch( DEBUG_MENU_EVENT_WORK *wk );
 static GMEVENT_RESULT debugMenuWazaOshie( GMEVENT *p_event, int *p_seq, void *p_wk_adrs );
@@ -378,6 +381,8 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   //{ DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
   { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeList },  //シンボルポケモン作成
   { DEBUG_FIELD_STR71, debugMenuCallProc_Musical },  //ミュージカル
+  { DEBUG_FIELD_STR74, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
+  { DEBUG_FIELD_STR75, debugMenu_CreateFeelingData },           //フィーリング作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
@@ -409,7 +414,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
-  { DEBUG_FIELD_STR47, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
   { DEBUG_FIELD_STR73, debugMenu_WfbcDebug },                   //WFBCオートチェック
 
 };
@@ -3244,6 +3248,147 @@ static BOOL debugMenu_CreateMusicalShotData( DEBUG_MENU_EVENT_WORK *wk )
   MUSICAL_DEBUG_CreateDummyData( MUSICAL_SAVE_GetMusicalShotData( musSave ), MONSNO_PIKATYUU , HEAPID_PROC );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
+
+  return FALSE;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  フィーリングデータを１つ追加
+ *
+ *	@param	p_sv_ctrl セーブコントロール
+ */
+//-----------------------------------------------------------------------------
+static void FEELINGCHECK_AddRankData( SAVE_CONTROL_WORK *p_sv_ctrl )
+{	
+	IRC_COMPATIBLE_SAVEDATA *p_sv	= IRC_COMPATIBLE_SV_GetSavedata( p_sv_ctrl );
+	{	
+		STRCODE	str[128];
+		u16	strlen;
+		u16 idx;
+		static const struct
+		{	
+			u16 * p_str;
+      u8  str_len;
+      u8  sex;
+      u8  month;
+      u8  day;
+			u32 ID;
+      u16 mons_no;
+		} scp_debug_rank_data[]	=
+		{	
+			{	
+				L"いちたろう",
+        5,
+        1,
+        10,
+        22,
+				0x573,
+        1,
+			},
+			{	
+				L"じろう",
+        3,
+        1,
+        1,
+        27,
+				0x785,
+        2,
+			},
+			{	
+				L"さぶろう",
+        4,
+        1,
+        4,
+        8,
+				0x123,
+        3,
+			},
+			{	
+				L"しろう",
+        3,
+        1,
+        7,
+        14,
+				0x987,
+        4,
+			},
+			{	
+				L"ごろう",
+        3,
+        0,
+        2,
+        15,
+				0x782,
+        5,
+			},
+			{	
+				L"ろくろう",
+        4,
+        0,
+        8,
+        2,
+				0x191,
+        6,
+			},
+			{	
+				L"ななお",
+        3,
+        0,
+        1,
+        7,
+				0x232,
+        7,
+			},
+			{	
+				L"はちべえ",
+        4,
+        0,
+        11,
+        27,
+				0x595,
+        8,
+			},
+			{	
+				L"くろう",
+        3,
+        0,
+        10,
+        18,
+				0x999,
+        9,
+			}
+		};
+		u16 *p_str;
+
+		idx	= GFUser_GetPublicRand( NELEMS(scp_debug_rank_data) );
+
+		p_str	= scp_debug_rank_data[idx].p_str;
+
+		strlen	= scp_debug_rank_data[idx].str_len;
+		GFL_STD_MemCopy(p_str, str, strlen*2);
+		str[strlen]	= GFL_STR_GetEOMCode();
+
+		//セーブする
+		IRC_COMPATIBLE_SV_AddRanking( p_sv, str,
+        GFUser_GetPublicRand( 101 ), scp_debug_rank_data[idx].sex, scp_debug_rank_data[idx].month, scp_debug_rank_data[idx].day, scp_debug_rank_data[idx].ID,
+  scp_debug_rank_data[idx].mons_no, 0, PTL_SEX_MALE, 0 );
+	}
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  
+ *
+ *	@param	DEBUG_MENU_EVENT_WORK *wk ワーク
+ *	@retval TRUE続行  FALSE終了
+ */
+//-----------------------------------------------------------------------------
+static BOOL debugMenu_CreateFeelingData( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork(wk->gdata);
+  FEELINGCHECK_AddRankData( p_sv );
 
   return FALSE;
 }
