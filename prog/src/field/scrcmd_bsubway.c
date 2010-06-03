@@ -1054,20 +1054,20 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //í“¬Œ‹‰ÊŽæ“¾
   case BSWSUB_GET_BATTLE_RESULT:
 #ifdef DEBUG_BSW_FORCE_BTL_WIN
-    *ret_wk = SCR_BATTLE_RESULT_WIN;
+    *ret_wk = BSW_BTL_RESULT_WIN;
 #else
     if( bsw_scr->btl_setup_param == NULL ){
       GF_ASSERT( 0 );
-      *ret_wk = SCR_BATTLE_RESULT_WIN;
+      *ret_wk = BSW_BTL_RESULT_LOSE;
     }else{
 //    BtlResult res = GAMEDATA_GetLastBattleResult( gdata );
       BtlResult res = bsw_scr->btl_setup_param->result;
       BtlCompetitor cp = BTL_COMPETITOR_SUBWAY;
       
       if( res == BTL_RESULT_WIN ){
-        *ret_wk = SCR_BATTLE_RESULT_WIN;
+        *ret_wk = BSW_BTL_RESULT_WIN;
       }else{
-        *ret_wk = SCR_BATTLE_RESULT_LOSE;
+        *ret_wk = BSW_BTL_RESULT_LOSE;
       }
     }
 #endif

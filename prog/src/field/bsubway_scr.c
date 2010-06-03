@@ -246,11 +246,38 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
   }
   
   bsw_scr->play_mode = buf[0];
-
+  
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
   
-  BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+  //変更のみ。ステージ数のリセットは行わない
+//BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+}
+
+//--------------------------------------------------------------
+/**
+ * BSUBWAY_SCRWORK　通信マルチモードからAIマルチモードへ変更。
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_ChangeMultiMode( BSUBWAY_SCRWORK *bsw_scr )
+{
+  u8 buf[4];
+  
+  if( bsw_scr->play_mode == BSWAY_MODE_COMM_MULTI ){
+    buf[0] = BSWAY_MODE_MULTI;
+  }else if( bsw_scr->play_mode == BSWAY_MODE_S_COMM_MULTI ){
+    buf[0] = BSWAY_MODE_S_MULTI;
+  }
+  
+  bsw_scr->play_mode = buf[0];
+  
+  BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
+      BSWAY_PLAYDATA_ID_playmode, buf );
+  
+  //変更のみ。ステージ数のリセットは行わない
+//BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
 }
 
 //--------------------------------------------------------------

@@ -865,9 +865,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_PLAY_MODE, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-//  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -888,12 +887,10 @@ sub_receipt_challenge_multi_comm:
     _MSGWIN_CLOSE()
     
     IF $comm_ret == FALSE THEN
-      _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+      _CALL sub_bsw_common_comm_error_end
+      _CALL sub_bsw_common_exit
+      _RET
     ENDIF
-    
-    _CALL sub_bsw_common_comm_exit
-    _RET
-
   ENDIF
   
   //受信バッファクリア
@@ -903,9 +900,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_POKE_SELECT, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -937,10 +933,12 @@ sub_receipt_challenge_multi_comm:
     _MSGWIN_CLOSE()
     
     IF $comm_ret == FALSE THEN
-      _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+      _CALL sub_bsw_common_comm_error_end
+    ELSE
+      _CALL sub_bsw_common_comm_timing_end
     ENDIF
     
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -951,9 +949,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_MYST, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-//  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -967,9 +964,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_BTL_TRAINER_SET, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -987,9 +983,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
-//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -1016,9 +1011,8 @@ sub_receipt_challenge_multi_comm:
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_AUTO_SAVE, BSW_NULL, comm_ret )
    
   IF $comm_ret == FALSE THEN
-//    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    _CALL sub_bsw_common_comm_exit
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
     _RET
   ENDIF
  
@@ -2327,30 +2321,40 @@ sub_bsw_common_exit:
 _RET 
 
 //--------------------------------------------------------------
-//  受付　通信切断して終了処理
+//  受付　通信終了
 //--------------------------------------------------------------
-sub_bsw_common_comm_exit:
+sub_bsw_common_comm_end:
 {
-  DEFINE_LOCAL comm_flag
+  _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
+  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　通信終了　同期あり
+//--------------------------------------------------------------
+sub_bsw_common_comm_timing_end:
+{
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SIO_END, BSW_NULL, comm_ret )
   
-  _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
-  
-  //通信中であれば同期して切断
-  IF $comm_flag == TRUE THEN
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SIO_END, BSW_NULL, comm_ret )
-    
-    IF $comm_ret == FALSE THEN
-      _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
-    ENDIF
-    
-    _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+  IF $comm_ret == FALSE THEN
+    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
   
-  _CALL sub_bsw_common_exit
+  _CALL sub_bsw_common_comm_end
 }
-_RET 
+_RET
+
+//--------------------------------------------------------------
+//  受付　通信終了　エラー発生リクエスト在り
+//--------------------------------------------------------------
+sub_bsw_common_comm_error_end:
+{
+  _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+  _CALL sub_bsw_common_comm_end
+}
+_RET
 
 //--------------------------------------------------------------
 //  受付　レポートエラー

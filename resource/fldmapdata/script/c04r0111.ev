@@ -27,7 +27,9 @@ _EVENT_DATA_END
 //  共通利用ローカル変数
 //--------------------------------------------------------------
 DEFINE_LOCAL msg_id
+DEFINE_LOCAL ret
 DEFINE_LOCAL comm_ret
+DEFINE_LOCAL play_mode
 
 //======================================================================
 //  バトルサブウェイ　ホーム　初期化、復帰
@@ -37,8 +39,6 @@ DEFINE_LOCAL comm_ret
 //--------------------------------------------------------------
 INIT_EVENT_START ev_init_c04r0111_home
 {
-  DEFINE_LOCAL play_mode
-  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //受付　座標を変更
@@ -64,8 +64,6 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 INIT_EVENT_START ev_recover_c04r0111_home
 {
-  DEFINE_LOCAL play_mode
-  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   _CHECK_CONTINUE_RECOVER( SCWK_ANSWER )
@@ -100,8 +98,6 @@ INIT_EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_receipt_talk
 {
-  DEFINE_LOCAL play_mode
-  
   _TALK_OBJ_START()
   
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN //途中駅
@@ -133,8 +129,6 @@ EVENT_END
 //--------------------------------------------------------------
 sub_challenge_continue_mode:
 {
-  DEFINE_LOCAL play_mode
-  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   SWITCH $play_mode
@@ -164,8 +158,6 @@ _RET
 //--------------------------------------------------------------
 sub_challenge_continue:
 {
-  DEFINE_LOCAL play_mode
-   
   //受付をエラー状態に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
   
@@ -205,146 +197,136 @@ _RET
 //--------------------------------------------------------------
 sub_challenge_continue_comm_multi:
 {
-  DEFINE_LOCAL ret
-  DEFINE_LOCAL play_mode
-  
   //お友達の選択を待っています
   _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
   
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
   
-  //選択結果送信開始同期
+  //送信前同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, comm_ret )
   
   _MSGWIN_CLOSE()
   
   IF $comm_ret == FALSE THEN
-    _CALL sub_challenge_continue_comm_multi_error
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
     _RET
   ENDIF
   
+  //選択結果を送受信
   $LOCALWORK0 = BSWAY_COMM_HOME_SEL_NEXT
    
-  //選択結果送信
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
-  //選択結果受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
   
   IF $LOCALWORK0 == BSWAY_COMM_HOME_SEL_END THEN //相手終了
-    //挑戦を終了
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_20 )
-    _TIME_WAIT( 30 )
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_RETIRE_WAIT, BSW_NULL, comm_ret )
-    _MSGWIN_CLOSE()
-    
-    //通信切断
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SIO_END, BSW_NULL, comm_ret )
-    _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-    _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-    
-    _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
-
-    //受付対応　ゲーム後へ
-    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
-    
-    //電車発車デモ
-    _CALL sub_demo_train_starting
-    
-    //ワーク開放
-//    _BSUBWAY_WORK_RELEASE()
-    
-    //ホーム制御　無しに
-    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
-    
-    //受付へと戻る
-    _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
-  ELSE //相手続ける
-    _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
-
-    //受付をエラー状態に
-    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
-    
-    //車内を乗車状態に
-    $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_FIRST
-  
-    //プレイモード取得
-    _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  
-    //戻り場所を受付に
-    _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
-  
-    //受信バッファクリア
-    _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
-
-    //トレーナーセット開始
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_BTL_TRAINER_SET, BSW_NULL, comm_ret )
-    
-    IF $comm_ret == FALSE THEN
-      _MSGWIN_CLOSE()
-      _CALL sub_challenge_continue_comm_multi_error
-      _RET
-    ENDIF
-    
-    //親機なら対戦トレーナー抽選
-    _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, BSW_NULL, ret )
-    
-    IF $ret == 0 THEN //親機なら対戦トレーナーセット
-      //トレーナー抽選
-      _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
-      //子機に選んだデータを送信
-      _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
-    ELSE //子機は親からデータを受け取る
-      _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
-    ENDIF
-  
-    //ポケモンメンバーロード
-    _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
-  
-    //レポート
-    _REPORT_CALL( SCWK_ANSWER )
-    _MSGWIN_CLOSE()
-    
-    //通信同期待ち
-    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_AUTO_SAVE, BSW_NULL, comm_ret )
-    
-    IF $comm_ret == FALSE THEN
-      _CALL sub_challenge_continue_comm_multi_error
-      _RET
-    ENDIF
-    
-    //電車発車デモ
-    _CALL sub_demo_train_starting
-    
-    //ホーム制御　無しに
-    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
-    
-    //マップ移動
-    _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
+    _CALL sub_challenge_continue_comm_multi_cancel
+  ELSE //続けて挑戦
+    _CALL sub_challenge_continue_comm_multi_ok
   ENDIF
 }
 _RET
 
 //--------------------------------------------------------------
-//  comm 続けてチャレンジ　通信エラー
+//  受付　続けてチャレンジ　commマルチ　相手は終了
 //--------------------------------------------------------------
-sub_challenge_continue_comm_multi_error:
+sub_challenge_continue_comm_multi_cancel:
 {
-  //通信切断
-  _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_20 ) //相手は終了を選びました
+  _TIME_WAIT( 30 )
+  _MSGWIN_CLOSE()
   
-  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+  //通信終了
+  _CALL sub_common_comm_timing_end_reqfade  //通信終了
+   
+  //受付に戻る
+  _CALL sub_challenge_continue_comm_error_retmap
+}
+_RET
 
+//--------------------------------------------------------------
+//  受付　続けてチャレンジ　commマルチ　相手も継続
+//--------------------------------------------------------------
+sub_challenge_continue_comm_multi_ok:
+{
+  _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
+  
+  //受付をエラー状態に
+  $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
+   
+  //車内を乗車状態に
+  $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_FIRST
+    
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //戻り場所を受付に
+  _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //受信バッファクリア
+  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+
+  //トレーナーセット開始前の同期
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_BTL_TRAINER_SET, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  //親機なら対戦トレーナー抽選
+  _BSUBWAY_TOOL( BSWSUB_COMM_GET_CURRENT_ID, BSW_NULL, BSW_NULL, ret )
+  
+  IF $ret == 0 THEN //親機なら対戦トレーナーセット
+    //トレーナー抽選
+    _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
+    //子機に選んだデータを送信
+    _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, ret )
+  ELSE //子機は親からデータを受け取る
+      _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
+  ENDIF
+  
+  //ポケモンメンバーロード
+  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
+  
+  //レポート
+  _REPORT_CALL( SCWK_ANSWER )
+  _MSGWIN_CLOSE()
+  
+  //通信同期待ち
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_AUTO_SAVE, BSW_NULL, comm_ret )
+
+  IF $comm_ret == FALSE THEN
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  //電車発車デモ
+  _CALL sub_demo_train_starting
+  
+  //ホーム制御　無しに
+  $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
+  
+  //マップ移動
+  _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
+}
+_RET
+
+//--------------------------------------------------------------
+//  comm 続けてチャレンジ　通信エラー時の受付戻り
+//--------------------------------------------------------------
+sub_challenge_continue_comm_error_retmap:
+{
   //受付対応　ゲーム後へ
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
   
   //電車発車デモ
   _CALL sub_demo_train_starting
-
-  //マップフェードアウト後にエラー画面表示
-  _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP, BSW_NULL, BSW_NULL, BSW_NULL )
-
+  
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
     
@@ -358,73 +340,69 @@ _RET
 //--------------------------------------------------------------
 sub_mapchg_receipt:
 {
-  DEFINE_LOCAL play_mode
   DEFINE_LOCAL comm_flag
   
   //ライモンシティに戻るか
   _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_13 )
   _YES_NO_WIN( SCWK_ANSWER )
   
-  IF $SCWK_ANSWER == 0 THEN
-    //戻ります
-    _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_14 )
-    
-    //プレイモード取得
-    _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-    
-    //通信中であれば終了を伝える
-    _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
-    
-    IF $comm_flag == TRUE THEN
-      //お友達の選択を待っています
-      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_19 )
-      
-      //受信バッファクリア
-      _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
-      
-      //選択開始同期
-      _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, comm_ret )
-      
-      $LOCALWORK0 = BSWAY_COMM_HOME_SEL_END
-      
-      IF $comm_ret == TRUE THEN
-        //選択結果送信
-        _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
-        //選択結果受信
-        _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
-      ENDIF
-
-      //戻ります
-      _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_20 )
-      _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_RETIRE_WAIT, BSW_NULL, comm_ret )
-      _TIME_WAIT( 30 )
-      
-      //通信切断
-      _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SIO_END, BSW_NULL, comm_ret )
-      _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-      _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
-      
-      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
-    ENDIF
-    
-    //ウィンドウクローズ
+  IF $SCWK_ANSWER != SCR_YES THEN
     _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+
+  //では戻ります
+  _BALLOONWIN_TALKOBJ_MSG( msg_c04r0111_14 )
+  
+  //ウィンドウクローズ
+  _MSGWIN_CLOSE()
     
-    //受付対応　ゲーム後へ
-    $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
+  //通信中であれば専用の処理へ
+  _BSUBWAY_TOOL( BSWSUB_GET_COMM_FLAG, BSW_NULL, BSW_NULL, comm_flag )
     
-    //電車発車デモ
-    _CALL sub_demo_train_starting
+  IF $comm_flag == TRUE THEN
+    _CALL sub_mapchg_receipt_comm_multi
+  ENDIF
+  
+  //受付対応　ゲーム後へ
+  $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_AFTER
     
-    //ワーク開放
-//    _BSUBWAY_WORK_RELEASE()
+  //電車発車デモ
+  _CALL sub_demo_train_starting
     
-    //ホーム制御　無しに
-    $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
+  //ワーク開放
+//_BSUBWAY_WORK_RELEASE()
     
-    //受付へと戻る
-    _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
+  //ホーム制御　無しに
+  $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
+    
+  //受付へと戻る
+  _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
+}
+_RET
+ 
+//--------------------------------------------------------------
+//  ホーム　受付話し掛け  ライモンシティに戻る　通信マルチ時の処理
+//--------------------------------------------------------------
+sub_mapchg_receipt_comm_multi:
+{
+  //お友達の選択を待っています
+  _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
+  
+  //受信バッファクリア
+  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //送信前同期
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade //エラー切断
   ELSE
+    $LOCALWORK0 = BSWAY_COMM_HOME_SEL_END //戻る
+    _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
+    _CALL sub_common_comm_timing_end_reqfade //同期後切断
     _MSGWIN_CLOSE()
   ENDIF
 }
@@ -440,7 +418,6 @@ EVENT_START ev_c04r0111_partner_talk
 { 
   DEFINE_LOCAL sex
   DEFINE_LOCAL renshou
-  DEFINE_LOCAL play_mode
   
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, renshou )
@@ -476,8 +453,6 @@ EVENT_END
 //--------------------------------------------------------------
 EVENT_START ev_c04r0111_npc_talk
 {
-  DEFINE_LOCAL play_mode
-  
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   IF $play_mode == BSWAY_MODE_WIFI THEN //WiFi NPC用メッセージ表示
@@ -525,9 +500,7 @@ _RET
 EVENT_START ev_c04r0111_home
 {
   DEFINE_LOCAL obj_id
-  DEFINE_LOCAL ret
   DEFINE_LOCAL boss_f
-  DEFINE_LOCAL play_mode
   DEFINE_LOCAL point
   
   //受付OBJ ID
@@ -714,7 +687,7 @@ EVENT_START ev_c04r0111_home
   _SYSWIN_MSG( msg_c04r0111_01 , POS_DOWN )
   _REPORT_CALL( SCWK_ANSWER )
   _SYSWIN_CLOSE()
-
+  
   IF $WK_OTHER_BSUBWAY_HOME == BSWAY_SCENE_HOME_STOPOVER THEN
     //途中駅　また話し掛けてくれ
     _BALLOONWIN_OBJMSG_POS( msg_c04r0111_09, obj_id, POS_DOWN )
@@ -750,7 +723,6 @@ EVENT_END
 //--------------------------------------------------------------
 sub_demo_train_arrival:
 {
-  DEFINE_LOCAL play_mode
   DEFINE_LOCAL ai_multi
   
   //プレイモード取得
@@ -860,7 +832,6 @@ _ANIME_LABEL anm_demo_train_arrival_partner
 //--------------------------------------------------------------
 sub_demo_train_starting:
 {
-  DEFINE_LOCAL play_mode
   DEFINE_LOCAL ai_multi
   
   //マップフェードアウト
@@ -947,7 +918,76 @@ _ANIME_LABEL anm_demo_train_starting_partner
   _ANIME_DATA AC_VANISH_ON,1
   _ANIME_DATA ACMD_END,0
 
+//======================================================================
+//  共通処理
+//======================================================================
+//--------------------------------------------------------------
+//  通信終了
+//--------------------------------------------------------------
+sub_common_comm_end:
+{
+  _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
+  _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+}
+_RET
 
+//--------------------------------------------------------------
+//  通信終了、フェードアウト後に通信エラー画面表示
+//--------------------------------------------------------------
+sub_common_comm_error_end_reqfade:
+{
+  //フェードアウト後にエラー画面
+  _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP, BSW_NULL, BSW_NULL, BSW_NULL )
+  _CALL sub_common_comm_end
+}
+_RET
+
+//--------------------------------------------------------------
+//  通信終了、自由移動開始時にエラー画面表示
+//--------------------------------------------------------------
+sub_common_comm_error_end_reqfree:
+{
+  //移動開始時にエラー画面
+   _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+  _CALL sub_common_comm_end
+}
+_RET
+
+//--------------------------------------------------------------
+//  通信終了、同期あり　マップ遷移後にエラー画面表示
+//--------------------------------------------------------------
+sub_common_comm_timing_end_reqfade:
+{
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SIO_END, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP, BSW_NULL, BSW_NULL, BSW_NULL )
+  ENDIF
+  
+  _CALL sub_common_comm_end
+}
+_RET
+
+//--------------------------------------------------------------
+//  通信終了、同期あり　自由移動開始時にエラー画面表示
+//--------------------------------------------------------------
+sub_common_comm_timing_end_reqfree:
+{
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SIO_END, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    //移動開始時にエラー画面
+    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+  ENDIF
+  
+  _CALL sub_common_comm_end
+}
+_RET
+
+//======================================================================
+//  路線図
+//======================================================================
 //--------------------------------------------------------------
 //  路線図
 //--------------------------------------------------------------

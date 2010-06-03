@@ -443,13 +443,20 @@
 #define BTRAIN_POS_MAX (2) //最大
 
 //--------------------------------------------------------------
-///
+/// バトルサブウェイOBJ ID
 //--------------------------------------------------------------
 #define BSW_TRAIN_OBJID_JIKI (0xe0)
 #define BSW_TRAIN_OBJID_PARTNER (0xe1)
 #define BSW_TRAIN_OBJID_TRAINER_0 (0xe2)
 #define BSW_TRAIN_OBJID_TRAINER_1 (0xe3)
 #define BSW_HOME_OBJID_NPC_FIRST (0x80)
+
+//--------------------------------------------------------------
+/// バトルサブウェイ専用　戦闘結果
+//--------------------------------------------------------------
+#define BSW_BTL_RESULT_LOSE (0) //負け
+#define BSW_BTL_RESULT_WIN  (1) //勝ち
+#define BSW_BTL_RESULT_COMM_ERROR (2) //通信バトル用 通信エラー
 
 //--------------------------------------------------------------
 //  デバッグ用フラグ

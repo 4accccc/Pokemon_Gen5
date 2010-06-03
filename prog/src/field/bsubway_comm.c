@@ -832,9 +832,8 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   KAGAYA_Printf( "WIFI受付 バトルサブウェイ　リタイア結果を受信\n" );
   KAGAYA_Printf( "id_no = %d, result = %d\n", netID, recv_buf[0] );
 #endif
-
+  
   num = 0;
-  bsw_scr->comm_check_work = 0;
   bsw_scr->comm_receive_count++;
 
 #ifdef DEBUG_BSW_PRINT
@@ -846,14 +845,16 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
   if( GFL_NET_SystemGetCurrentID() == netID ){
     return;
   }
-
+  
 #ifdef DEBUG_BSW_PRINT
   KAGAYA_Printf( "sio multi retire = %d,%d\n",
       bsw_scr->retire_f, recv_buf[0] );
 #endif
   
+  bsw_scr->comm_check_work = BSWAY_COMM_HOME_SEL_NEXT;
+  
   if( bsw_scr->retire_f || recv_buf[0] ){
-    bsw_scr->comm_check_work = 1;
+    bsw_scr->comm_check_work = BSWAY_COMM_HOME_SEL_END;
   }
 }
 
