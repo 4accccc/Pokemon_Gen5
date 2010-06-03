@@ -132,6 +132,8 @@ typedef struct _BTLV_EFFECT_WORK        BTLV_EFFECT_WORK;
 
 typedef void  (BTLV_EFFECT_TCB_CALLBACK_FUNC)( GFL_TCB* tcb );
 
+#define BTLV_EFFECT_GAUGE_YURE_STOP ( BTLV_MCSS_POS_MAX )
+
 //OBJパレット使用内訳
 enum{
   BTLV_OBJ_PLTT_HP_GAUGE    = 0x20 * 0,   //0-5:HPゲージ（6本分）
