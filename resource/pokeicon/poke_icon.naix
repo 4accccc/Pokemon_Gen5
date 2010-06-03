@@ -1432,20 +1432,16 @@ enum {
 	NARC_poke_icon_poke_icon_527_autumn_f_NCGR = 1418,
 	NARC_poke_icon_poke_icon_527_winter_m_NCGR = 1419,
 	NARC_poke_icon_poke_icon_527_winter_f_NCGR = 1420,
-	NARC_poke_icon_poke_icon_653_b_m_NCGR = 1421,
-	NARC_poke_icon_poke_icon_653_b_f_NCGR = 1422,
-	NARC_poke_icon_poke_icon_653_c_m_NCGR = 1423,
-	NARC_poke_icon_poke_icon_653_c_f_NCGR = 1424,
-	NARC_poke_icon_poke_icon_655_step_m_NCGR = 1425,
-	NARC_poke_icon_poke_icon_655_step_f_NCGR = 1426,
-	NARC_poke_icon_poke_icon_656_aqua_m_NCGR = 1427,
-	NARC_poke_icon_poke_icon_656_aqua_f_NCGR = 1428,
-	NARC_poke_icon_poke_icon_656_inazuma_m_NCGR = 1429,
-	NARC_poke_icon_poke_icon_656_inazuma_f_NCGR = 1430,
-	NARC_poke_icon_poke_icon_656_blaze_m_NCGR = 1431,
-	NARC_poke_icon_poke_icon_656_blaze_f_NCGR = 1432,
-	NARC_poke_icon_poke_icon_656_freeze_m_NCGR = 1433,
-	NARC_poke_icon_poke_icon_656_freeze_f_NCGR = 1434
+	NARC_poke_icon_poke_icon_655_step_m_NCGR = 1421,
+	NARC_poke_icon_poke_icon_655_step_f_NCGR = 1422,
+	NARC_poke_icon_poke_icon_656_aqua_m_NCGR = 1423,
+	NARC_poke_icon_poke_icon_656_aqua_f_NCGR = 1424,
+	NARC_poke_icon_poke_icon_656_inazuma_m_NCGR = 1425,
+	NARC_poke_icon_poke_icon_656_inazuma_f_NCGR = 1426,
+	NARC_poke_icon_poke_icon_656_blaze_m_NCGR = 1427,
+	NARC_poke_icon_poke_icon_656_blaze_f_NCGR = 1428,
+	NARC_poke_icon_poke_icon_656_freeze_m_NCGR = 1429,
+	NARC_poke_icon_poke_icon_656_freeze_f_NCGR = 1430
 };
 
 /* NARC_POKE_ICON_NAIX_ */

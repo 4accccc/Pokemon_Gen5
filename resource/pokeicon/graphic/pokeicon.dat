@@ -714,11 +714,9 @@ const u8 IconPalAtr[] = {
 	0x11,		// 704 : poke_icon_527_summer_m
 	0x00,		// 705 : poke_icon_527_autumn_m
 	0x11,		// 706 : poke_icon_527_winter_m
-	0x00,		// 707 : poke_icon_653_b_m
-	0x00,		// 708 : poke_icon_653_c_m
-	0x00,		// 709 : poke_icon_655_step_m
-	0x22,		// 710 : poke_icon_656_aqua_m
-	0x22,		// 711 : poke_icon_656_inazuma_m
-	0x22,		// 712 : poke_icon_656_blaze_m
-	0x22,		// 713 : poke_icon_656_freeze_m
+	0x00,		// 707 : poke_icon_655_step_m
+	0x22,		// 708 : poke_icon_656_aqua_m
+	0x22,		// 709 : poke_icon_656_inazuma_m
+	0x22,		// 710 : poke_icon_656_blaze_m
+	0x22,		// 711 : poke_icon_656_freeze_m
 };
