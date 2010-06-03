@@ -445,7 +445,7 @@ const char* BTL_DEBUGPRINT_GetServerCmdName( int cmd )
   case SC_OP_MIGAWARI_CREATE:  return "SC_OP_MIGAWARI_CREATE";    ///< みがわり作成
   case SC_OP_MIGAWARI_DELETE:  return "SC_OP_MIGAWARI_DELETE";    ///< みがわり削除
   case SC_OP_SHOOTER_CHARGE:  return "SC_OP_SHOOTER_CHARGE";     ///< シューターエネルギーチャージ
-  case SC_OP_SET_FAKESRC:  return "SC_OP_SET_FAKESRC";        ///< イリュージョン用参照ポケモン変更
+  case SC_OP_SET_ILLUSION:  return "SC_OP_SET_ILLUSION";        ///< イリュージョン用参照ポケモン変更
   case SC_OP_CLEAR_CONSUMED_ITEM:  return "SC_OP_CLEAR_CONSUMED_ITEM";///< アイテム消費情報のクリア
   case SC_OP_CURESICK_DEPEND_POKE: return "SC_OP_CURESICK_DEPEND_POKE";
   case SC_ACT_WAZA_EFFECT:  return "SC_ACT_WAZA_EFFECT";

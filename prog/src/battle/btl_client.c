@@ -5165,7 +5165,7 @@ static BOOL SubProc_UI_ServerCmd( BTL_CLIENT* wk, int* seq )
     { SC_OP_MIGAWARI_CREATE,    scProc_OP_MigawariCreate  },
     { SC_OP_MIGAWARI_DELETE,    scProc_OP_MigawariDelete  },
     { SC_OP_SHOOTER_CHARGE,     scProc_OP_ShooterCharge   },
-    { SC_OP_SET_FAKESRC,        scProc_OP_SetFakeSrc      },
+    { SC_OP_SET_ILLUSION,       scProc_OP_SetFakeSrc      },
     { SC_OP_CLEAR_CONSUMED_ITEM,scProc_OP_ClearConsumedItem },
     { SC_OP_CURESICK_DEPEND_POKE,scProc_OP_CureSickDependPoke},
     { SC_OP_WAZADMG_REC,        scProc_OP_AddWazaDamage   },

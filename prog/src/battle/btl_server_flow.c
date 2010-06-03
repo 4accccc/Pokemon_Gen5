@@ -2600,7 +2600,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
 
   {
-    SCQUE_PUT_OP_SetIllusionForParty( wk->que, clientID, nextPokeIdx );
+    SCQUE_PUT_OP_SetIllusionForParty( wk->que, clientID );
     BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
   }
 
@@ -9851,7 +9851,7 @@ static void scPut_IllusionSet( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec )
   for(i=0; i<rec->count; ++i)
   {
     party = BTL_POKECON_GetPartyData( wk->pokeCon, rec->clientID[i] );
-    SCQUE_PUT_OP_SetIllusionForParty( wk->que, rec->clientID[i], 0 );
+    SCQUE_PUT_OP_SetIllusionForParty( wk->que, rec->clientID[i] );
     BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
   }
 }
@@ -14283,11 +14283,11 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BTL_HANDEX_PARAM_HENSIN* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
 
   BTL_POKEPARAM* user = BTL_POKECON_GetPokeParam( wk->pokeCon,  param_header->userPokeID );
+  BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
 
-  if( !BPP_IsFakeEnable(user) )
-  {
-    BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon,  param->pokeID );
-
+  if( (!BPP_IsFakeEnable(user))
+  &&  (!BPP_IsFakeEnable(target))
+  ){
 //    TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(user), __LINE__);
     if( BPP_HENSIN_Set(user, target) )
     {

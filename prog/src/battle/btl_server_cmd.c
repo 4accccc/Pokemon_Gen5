@@ -133,7 +133,7 @@ static const u8 ServerCmdToFmtTbl[] = {
   SC_ARGFMT_12byte,           // SC_OP_MIGAWARI_CREATE
   SC_ARGFMT_1byte,            // SC_OP_MIGAWARI_DELETE
   SC_ARGFMT_44bit,            // SC_OP_SHOOTER_CHARGE
-  SC_ARGFMT_44bit,            // SC_OP_SET_FAKESRC
+  SC_ARGFMT_1byte,            // SC_OP_SET_ILLUSION
   SC_ARGFMT_1byte,            // SC_OP_CLEAR_CONSUMED_ITEM
   SC_ARGFMT_11byte,           // SC_OP_CURESICK_DEPEND_POKE
   SC_ARGFMT_5555bit_22byte,   // SC_OP_WAZADMG_REC

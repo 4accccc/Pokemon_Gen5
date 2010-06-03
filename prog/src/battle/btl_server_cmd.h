@@ -69,7 +69,7 @@ typedef enum {
   SC_OP_MIGAWARI_CREATE,    ///< みがわり作成
   SC_OP_MIGAWARI_DELETE,    ///< みがわり削除
   SC_OP_SHOOTER_CHARGE,     ///< シューターエネルギーチャージ
-  SC_OP_SET_FAKESRC,        ///< イリュージョン用参照ポケモン変更
+  SC_OP_SET_ILLUSION,       ///< イリュージョン用参照ポケモン変更
   SC_OP_CLEAR_CONSUMED_ITEM,///< アイテム消費情報のクリア
   SC_OP_CURESICK_DEPEND_POKE,///< ポケモン依存状態異常のクリア
   SC_OP_WAZADMG_REC,        ///< ワザダメージ記録
@@ -362,9 +362,9 @@ static inline void SCQUE_PUT_OP_ShooterCharge( BTL_SERVER_CMD_QUE* que, u8 clien
 {
   SCQUE_PUT_Common( que, SC_OP_SHOOTER_CHARGE, clientID, increment );
 }
-static inline void SCQUE_PUT_OP_SetIllusionForParty( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
+static inline void SCQUE_PUT_OP_SetIllusionForParty( BTL_SERVER_CMD_QUE* que, u8 clientID )
 {
-  SCQUE_PUT_Common( que, SC_OP_SET_FAKESRC, clientID, memberIdx );
+  SCQUE_PUT_Common( que, SC_OP_SET_ILLUSION, clientID );
 }
 static inline void SCQUE_PUT_OP_ClearConsumedItem( BTL_SERVER_CMD_QUE* que, u8 pokeID )
 {
