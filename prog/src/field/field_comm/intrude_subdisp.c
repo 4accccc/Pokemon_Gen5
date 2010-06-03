@@ -1536,7 +1536,6 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
   int my_area, now_tbl_pos = 0;
   u8 pal_tbl[FIELD_COMM_MEMBER_MAX] = {0, 0, 0};
   s32 tbl_count = 0, actno;
-  static const pos_tbl[2] = {AREA_POST_RIGHT, AREA_POST_LEFT};
   
   profile_num = intsub->comm.recv_num;
   my_area = intsub->comm.now_palace_area;
@@ -1558,8 +1557,12 @@ static void _IntSub_ActorUpdate_Area(INTRUDE_SUBDISP_PTR intsub, OCCUPY_INFO *ar
     if(now_tbl_pos == i){
       continue;
     }
-    GF_ASSERT(actno < NELEMS(pos_tbl));
-    pos.x = pos_tbl[actno];
+    if(pal_tbl[i] == my_area+1 || (pal_tbl[i] == 0 && my_area == profile_num-1)){
+      pos.x = AREA_POST_RIGHT;
+    }
+    else{
+      pos.x = AREA_POST_LEFT;
+    }
     act = intsub->act[INTSUB_ACTOR_AREA_0 + actno];
     GFL_CLACT_WK_SetPos(act, &pos, INTSUB_CLACT_REND_SUB);
     GFL_CLACT_WK_SetPlttOffs(act, 
