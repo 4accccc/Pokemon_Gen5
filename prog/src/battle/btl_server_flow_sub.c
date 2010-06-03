@@ -1492,6 +1492,8 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
       param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 2 ); break;
+		case ITEM_RECOVER_HP_QUOT:
+      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 4 ); break;
     default:
       param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
     }
@@ -1633,6 +1635,8 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
       param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
     case ITEM_RECOVER_HP_HALF:
       param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
+		case ITEM_RECOVER_HP_QUOT:
+      param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 4 ); break;
     default:
       param->recoverHP = itemParam; break;
     }
