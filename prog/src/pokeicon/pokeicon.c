@@ -215,7 +215,10 @@ const u8 POKEICON_GetPalNum( u32 mons_no, u32 form_no, BOOL egg )
     }
     else
     { 
-      mons_no = ( MONSNO_MAX + 1 ) +  ( gra_index + form_no - 1 );
+      if( form_no )
+      { 
+        mons_no = ( MONSNO_MAX + 1 ) +  ( gra_index + form_no - 1 );
+      }
     }
   }
 #ifdef GENDER_VER
