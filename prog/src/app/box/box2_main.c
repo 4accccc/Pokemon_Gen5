@@ -978,6 +978,7 @@ void BOX2MAIN_InitBoxMoveFrameScroll( BOX2_SYS_WORK * syswk )
 {
   BOX2OBJ_BoxMoveObjInit( syswk );
   BOX2OBJ_InitBoxMoveCursorPos( syswk->app );
+	BOX2OBJ_EndTrayCursorScroll( syswk );
   BOX2BMP_BoxMoveNameWrite( syswk, 0 );
   BOX2BGWFRM_BoxMoveFrmInSet( syswk->app->wfrm );
 }
@@ -4267,6 +4268,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 				// 手持ちキャンセルのとき
 				if( put_pos == BOX2MAIN_GETPOS_NONE && syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
           BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
+					BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
           PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
           vf->seq = SEIRI_SEQ_CANCEL_TRAYFRM_OUT;
           break;
@@ -4474,7 +4476,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
   case SEIRI_SEQ_TRAYFRM_IN:      // トレイフレームイン
     if( BOX2MAIN_VFuncBoxMoveFrmIn( syswk ) == 0 ){
-      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_TRAY;
+//      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_TRAY;
       vf->seq = SEIRI_SEQ_ICON_GET;
     }
     if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == TRUE ){
@@ -4500,7 +4502,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
   case SEIRI_SEQ_PARTYFRM_IN:     // パーティフレームイン
     if( BOX2BGWFRM_PartyPokeFrameMove( syswk ) == FALSE ){
-      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
+//      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
       vf->seq = SEIRI_SEQ_ICON_GET;
     }
     if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == TRUE ){
@@ -4533,7 +4535,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
   case SEIRI_SEQ_CANCEL_PARTYFRM_IN:    // パーティフレームイン（キャンセル処理）
     if( BOX2BGWFRM_PartyPokeFrameMove( syswk ) == FALSE ){
-      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
+//      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
       // 参照中のトレイ
       put_pos = TrayPokePutAreaCheck( syswk->app->tpx, syswk->app->tpy );
       PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos );
