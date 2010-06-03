@@ -278,7 +278,7 @@ static void setupMainWin( BTLV_SCD* wk )
 void BTLV_SCD_RestartUI( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
-  BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
+  BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
 }
 /**
  *  UIÄ‹N“®‚ÌŠ®—¹‘Ò‚¿
@@ -647,7 +647,7 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
       {
         BTL_ACTION_SetEscapeParam( wk->destActionParam );
         BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
-        BTLV_EFFECT_SetGaugeYure( BTLV_MCSS_POS_MAX );
+        BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
         (*seq)++;
       }
       else{
@@ -1270,6 +1270,7 @@ BOOL BTLV_SCD_SelectRotate_Wait( BTLV_SCD* wk, BtlRotateDir* result )
 void BTLV_SCD_SelectRotate_ForceQuit( BTLV_SCD* wk )
 {
   BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+  BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
 }
 
 //=============================================================================================
@@ -1341,6 +1342,7 @@ BOOL BTLV_SCD_ForceQuitInput_Wait( BTLV_SCD* wk )
     break;
   case 1:
     BTLV_INPUT_CreateScreen( wk->biw, BTLV_INPUT_SCRTYPE_STANDBY, NULL );
+    BTLV_EFFECT_SetGaugeYure( BTLV_EFFECT_GAUGE_YURE_STOP );
     wk->forceQuitSeq++;
     break;
   case 2:
