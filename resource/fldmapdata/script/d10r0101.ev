@@ -20,6 +20,7 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_zone_d10r0101
+_EVENT_DATA    ev_recover_d10r0101
 _EVENT_DATA_END
 
 
@@ -27,12 +28,24 @@ _EVENT_DATA_END
 /*					ZONE_CHANGE_SCRIPT						*/
 /************************************************************/
 INIT_EVENT_START	ev_zone_d10r0101
+	_CALL	ev_exit_change
+INIT_EVENT_END
+
+/************************************************************/
+/*					FIELD_RECOVER_SCRIPT					*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d10r0101
+	_CALL	ev_exit_change
+INIT_EVENT_END
+
+
+//接続イベントの位置変更処理
+ev_exit_change:
 	//地底部が雪が積もっている状態ならマップ接続先を変更
-	IF $WK_SCENE_D10_LEG == 1 THEN
+	IF $WK_SCENE_D10_LEG == 1 && FLAG_OFF( FV_D10R0401_POKE10 ) THEN
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0101_D10R0201_EXIT01, 23, 0, 45 )
 		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0101_D10R0301_EXIT01, 23, -6, 50 )	
 	ENDIF
-
-INIT_EVENT_END
+_RET
 
 

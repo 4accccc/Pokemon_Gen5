@@ -6,5 +6,6 @@
 
 //スクリプトデータID定義
 #define SCRID_ZONE_D10R0101 (1)
+#define SCRID_RECOVER_D10R0101 (2)
 
 #endif //_D10R0101_DEF_H_
