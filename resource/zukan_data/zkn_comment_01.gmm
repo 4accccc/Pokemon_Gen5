@@ -4792,8 +4792,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_494_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">しょうりを　もたらす　ポケモン。
+ビクティニを　つれた　トレーナーは
+どんな　しょうぶにも　かてるという。</language>
+		<language name="JPN_KANJI">勝利を　もたらす　ポケモン。
+ビクティニを　連れた　トレーナーは
+どんな　勝負にも　勝てるという。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_495_000">
