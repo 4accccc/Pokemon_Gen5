@@ -603,7 +603,15 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
         }
         else{
           em->seq = _SEQ_ENTRY;
-          _StreamMsgSet(em, msg_connect_02_01);
+          if( CommEntryMenu_GetCompletionNum(em) > 1 &&
+              em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
+          {
+            _StreamMsgSet(em, msg_connect_02_01_01);
+          }
+          else
+          {
+            _StreamMsgSet(em, msg_connect_02_01);
+          }
         }
       }
     }
@@ -1287,6 +1295,15 @@ static void CommEntryMenu_ListUpdate(COMM_ENTRY_MENU_PTR em)
   if(em->draw_player_num != player_num){
     _ParentEntry_NumDraw(em, player_num);
     em->draw_player_num = player_num;
+    
+    //ƒvƒŒƒCƒ„[‚ªŒ¸‚Á‚½Žž‚¾‚¯
+    if( CommEntryMenu_InterruptCheck(em) == TRUE &&
+        em->yesno.menufunc == NULL &&
+        em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL &&
+        player_num == 1 )
+    {
+      _StreamMsgSet(em, msg_connect_02_01);
+    }
   }
 }
 
@@ -1422,7 +1439,15 @@ static void CommEntryMenu_ExaminationUpdate(COMM_ENTRY_MENU_PTR em)
     }
     break;
   case 3:
-    _StreamMsgSet(em, msg_connect_02_01);
+    if( CommEntryMenu_GetCompletionNum(em) > 1 &&
+        em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
+    {
+      _StreamMsgSet(em, msg_connect_02_01_01);
+    }
+    else
+    {
+      _StreamMsgSet(em, msg_connect_02_01);
+    }
     em->examination_occ = FALSE;
     yesno->seq = 0;
     break;
@@ -1569,7 +1594,15 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em)
     yesno->breakup_type = BREAKUP_TYPE_OK;
     break;
   case 100: //‚â‚Á‚Ï‰ðŽU‚Í‚µ‚È‚¢
-    _StreamMsgSet(em, msg_connect_02_01);
+    if( CommEntryMenu_GetCompletionNum(em) > 1 &&
+        em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
+    {
+      _StreamMsgSet(em, msg_connect_02_01_01);
+    }
+    else
+    {
+      _StreamMsgSet(em, msg_connect_02_01);
+    }
     yesno->seq = 0xff;
     break;
   case 0xff:
