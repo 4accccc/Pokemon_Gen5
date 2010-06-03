@@ -3365,7 +3365,7 @@ POKEPARTY* BTL_MAIN_GetClientMultiSrcParty( BTL_MAIN_MODULE* wk, u8 clientID )
     u8 friendClientID = GetFriendCrientID( clientID );
     if( BTL_MAIN_IsExistClient(wk, friendClientID) )
     {
-      PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, clientID, FALSE );
+      PokeCon_RefrectBtlParty( &wk->pokeconForClient, wk, friendClientID, FALSE );
       return PokeCon_GetSrcParty( &wk->pokeconForClient, friendClientID );
     }
   }
