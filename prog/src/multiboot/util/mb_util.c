@@ -133,7 +133,9 @@ void MB_UTIL_ConvertPPP( const void *src , POKEMON_PASO_PARAM *dst , const DLPLA
       PPP_ChangeFormNo( dst , 0 );
     }
   }
-
+  
+  //なつきを70に修正
+  PPP_Put( dst , ID_PARA_friend , 70 );
 
   //トレーナーメモ対応
   {
