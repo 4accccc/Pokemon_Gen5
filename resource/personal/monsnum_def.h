@@ -502,7 +502,7 @@
 #define		MONSNO_491		( 491 )		//ダークライ
 #define		MONSNO_492		( 492 )		//シェイミ
 #define		MONSNO_493		( 493 )		//アルセウス
-#define		MONSNO_657		( 494 )		//ビクティ
+#define		MONSNO_657		( 494 )		//ビクティニ
 #define		MONSNO_551		( 495 )		//ツタージャ
 #define		MONSNO_552		( 496 )		//ジャノビー
 #define		MONSNO_553		( 497 )		//ジャローダ

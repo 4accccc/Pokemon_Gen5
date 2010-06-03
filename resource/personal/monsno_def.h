@@ -505,7 +505,7 @@
 #define		MONSNO_DAAKURAI			( 491 )
 #define		MONSNO_SHEIMI				( 492 )
 #define		MONSNO_ARUSEUSU			( 493 )
-#define		MONSNO_BIKUTHI			( 494 )
+#define		MONSNO_BIKUTHINI		( 494 )
 #define		MONSNO_TUTAAZYA			( 495 )
 #define		MONSNO_ZYANOBII			( 496 )
 #define		MONSNO_ZYAROODA			( 497 )
