@@ -1979,6 +1979,7 @@ static void calcHPRatio( BTL_SVFLOW_WORK* wk, int* HP_sum, int* HP_ratio, u8 sid
     }
   }
 
-  *HP_ratio = (HPMax_sum * 100) / (*HP_sum);
+
+  *HP_ratio = ((*HP_sum)*100) / HPMax_sum;
 }
 

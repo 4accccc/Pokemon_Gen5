@@ -276,6 +276,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Fuyuu( u32* numElems );
 static void handler_FusiginaMamori( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_FusiginaMamori( u32* numElems );
 static void handler_Namake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Namake_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Namake( u32* numElems );
 static void handler_Simerike( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Simerike_Effective( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4213,19 +4214,39 @@ static void handler_Namake( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
+    #if 0
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 poke_turn = BPP_GetTurnCount( bpp );
     u8 appear_turn = BPP_GetAppearTurn( bpp );
-    BTL_Printf("ポケターン=%d, システムターン=%d\n", poke_turn, appear_turn);
+
     if( (poke_turn&1) != (appear_turn&1) ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_NAMAKE );
     }
+    #else
+    if( work[0] )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_NAMAKE );
+      work[0] = 0;
+    }
+    else{
+      work[0] = 1;
+    }
+    #endif
+  }
+}
+// とくせい書き換え直後ハンドラ
+static void handler_Namake_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    work[0] = 1;
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Namake( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_1ST,       handler_Namake }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_1ST,   handler_Namake      }, // ワザ出し成否チェックハンドラ
+    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,     handler_Namake_Get  }, // とくせい書き換え直後ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
