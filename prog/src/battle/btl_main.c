@@ -3567,12 +3567,20 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
  * @param   result
  */
 //=============================================================================================
-BtlResult BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result )
+void BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result )
 {
   wk->serverResult = result;
-  return checkWinner( wk );
 }
 
+//=============================================================================================
+/**
+ *
+ *
+ * @param   wk
+ *
+ * @retval  BtlResult
+ */
+//=============================================================================================
 BtlResult BTL_MAIN_GetBattleResult( BTL_MAIN_MODULE* wk )
 {
   return checkWinner( wk );

@@ -114,7 +114,7 @@ extern u32 BTL_MAIN_FixRegularMoney( BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_FixLoseMoney( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_BGMFadeOutDisable( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_ReflectPokeWazaOboe( BTL_MAIN_MODULE* wk, u8 pokeID );
-extern BtlResultBTL_MAIN_NotifyBattleResult BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result );
+extern void BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result );
 extern BtlResult BTL_MAIN_GetBattleResult( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_NotifyCmdCheckError( BTL_MAIN_MODULE* wk );
 extern void BTL_MAIN_RECORDDATA_Inc( const BTL_MAIN_MODULE* wk, int recID );
