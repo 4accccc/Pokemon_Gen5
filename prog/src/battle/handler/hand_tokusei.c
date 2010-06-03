@@ -3264,11 +3264,12 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     {
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, allPokeID[i] );
       tok = BPP_GetValue( bpp, BPP_TOKUSEI );
-      if( !BTL_CALC_IsCantRecvTokusei(tok) || (tok == POKETOKUSEI_FUSIGINAMAMORI) )
+      if( !BTL_TABLES_CheckTraceFailTokusei(tok) )
       {
         targetPokeID[ targetCnt++ ] = allPokeID[i];
       }
     }
+
     if( targetCnt )
     {
       BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;

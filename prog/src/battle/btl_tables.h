@@ -31,6 +31,17 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
  */
 extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );
 
+/**
+ *  トレースできないとくせい判定
+ */
+extern BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID );
+
+/**
+ *  「なりきり」できないとくせい判定
+ */
+extern BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID );
+
+
 
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
 extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );

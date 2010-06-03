@@ -7312,13 +7312,13 @@ static void handler_Narikiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
     PokeTokusei  tok = BPP_GetValue( target, BPP_TOKUSEI );
 
-    if( !BTL_CALC_IsCantRecvTokusei(tok))
+    if( !BTL_TABLES_CheckNarikiriFailTokusei(tok))
     {
       BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  tok_param;
 
       tok_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
       tok_param->pokeID = pokeID;
-      tok_param->tokuseiID = BPP_GetValue( target, BPP_TOKUSEI );
+      tok_param->tokuseiID = tok;
 
       HANDEX_STR_Setup( &tok_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Narikiri );
       HANDEX_STR_AddArg( &tok_param->exStr, pokeID );

@@ -120,6 +120,33 @@ BOOL BTL_TABLES_IsNoTargetItem( u16 itemID )
   return checkTableElems( itemID, table, NELEMS(table) );
 }
 
+/**
+ *  トレースできないとくせい判定
+ */
+BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID )
+{
+  static const u16 table[] = {
+    POKETOKUSEI_TOREESU,       POKETOKUSEI_TENKIYA,         POKETOKUSEI_MARUTITAIPU,
+    POKETOKUSEI_FURAWAAGIFUTO, POKETOKUSEI_DARUMAMOODO,     POKETOKUSEI_IRYUUJON,
+    POKETOKUSEI_KAWARIMONO,
+  };
+
+  return checkTableElems( tokuseiID, table, NELEMS(table) );
+}
+
+/**
+ *  「なりきり」できないとくせい判定
+ */
+BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID )
+{
+  if( tokuseiID == POKETOKUSEI_FUSIGINAMAMORI ){
+    return TRUE;
+  }
+
+  return BTL_TABLES_CheckTraceFailTokusei( tokuseiID );
+}
+
+
 //=============================================================================================
 /**
  * メンタルハーブで治す状態異常テーブル順番アクセス
