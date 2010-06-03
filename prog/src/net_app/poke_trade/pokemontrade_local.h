@@ -731,9 +731,9 @@ struct _POKEMON_TRADE_WORK{
   u8 zenkoku_flag;
   u8 bBackupStart;  //セーブのスタート このフラグが立ってたらエラー復帰不可能
   u8 pushSound;
+  u8 vtask;   //20100603 add saito  dummyがあったので差し替えました。
   u8 dummy1;
   u8 dummy2;
-  u8 dummy3;
 } ;
 
 

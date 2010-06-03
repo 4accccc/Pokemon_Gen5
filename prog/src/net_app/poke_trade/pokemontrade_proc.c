@@ -1419,6 +1419,9 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
   BOOL bReturn=FALSE;
   int line;
 
+  if ( pWork->vtask ) return;    //20100603 add saito
+  if( WIPE_SYS_EndCheck() == FALSE ) return;    //20100603 add saito
+
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){  // Å‰‚ÉƒL[‚ª“ü‚Á‚½ê‡
     if(GFL_UI_KEY_GetTrg()){
       pWork->padMode=TRUE;

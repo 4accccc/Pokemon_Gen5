@@ -60,7 +60,7 @@ static void _select6keywait(POKEMON_TRADE_WORK* pWork);
 static void _pokeLvMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork);
 static void _pokeSexMsgDisp(POKEMON_PARAM* pp,GFL_BMP_DATA* pWin,int x,int y,POKEMON_TRADE_WORK* pWork,BOOL bGTSNEGO, BOOL bShu);
 
-
+static void WndMaskTask( GFL_TCB *p_tcb, void *p_work );
 
 //------メッセージ関連
 
@@ -823,6 +823,9 @@ void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
 
 //--------------------------------------------------------------
 //	ポケモンステータス表示の初期化
+//	@note この関数はpokemontrade_nego.cとpokemontrade_proc.cでコールされています。
+//	@note ウィンドウマスク処理はpokemontrade_proc.cからコールされたときのみなのです。
+//	@note マスク処理をするＶタスクの終了監視はpokemontrade_proc.cで行っております　20100603 saito
 //--------------------------------------------------------------
 
 
@@ -852,6 +855,9 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
 
 //    POKETRADE2D_IconAllGray(pWork,TRUE);
 
+    //vタスク監視初期化
+    pWork->vtask = 0;     //20100603 add Saito
+#if 0     //20100603 move Saito    
     {
       G2S_SetWnd1InsidePlane(
         GX_WND_PLANEMASK_OBJ,
@@ -872,6 +878,11 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
       GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
      // GXS_SetVisibleWnd( GX_WNDMASK_W1 );
     }
+#else
+    //vタスク監視開始
+    pWork->vtask = 1;
+    GFUser_VIntr_CreateTCB(WndMaskTask, pWork, 0 );
+#endif
   }
   //G2S_BlendNone();
   TOUCHBAR_SetVisible( pWork->pTouchWork, TOUCHBAR_ICON_RETURN ,TRUE );
@@ -1345,4 +1356,43 @@ BOOL POKEMONTRADE_MESSAGE_ButtonCheck(POKEMON_TRADE_WORK* pWork)
   }
   return FALSE;
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	Vブランクタスク
+ *
+ *	@param	GFL_TCB *p_tcb
+ *	@param	*p_work 
+ *
+ *	@return
+ */
+//-----------------------------------------------------------------------------
+static void WndMaskTask( GFL_TCB *p_tcb, void *p_work )
+{
+  POKEMON_TRADE_WORK* pWork = p_work;
+
+  G2S_SetWnd1InsidePlane(
+    GX_WND_PLANEMASK_OBJ,
+    FALSE );
+  G2S_SetWnd1Position( 128-8*10, 0, 128+8*10, 32 );
+  G2S_SetWnd0InsidePlane(
+    GX_WND_PLANEMASK_BG0|
+    GX_WND_PLANEMASK_OBJ,
+    FALSE );
+  G2S_SetWnd0Position( 224, 169, 255, 192 );
+  G2S_SetWndOutsidePlane(
+    GX_WND_PLANEMASK_BG0|
+    GX_WND_PLANEMASK_BG1|
+    GX_WND_PLANEMASK_BG2|
+    GX_WND_PLANEMASK_BG3|
+    GX_WND_PLANEMASK_OBJ,
+    TRUE );
+  GXS_SetVisibleWnd( GX_WNDMASK_W0|GX_WNDMASK_W1 );
+  // GXS_SetVisibleWnd( GX_WNDMASK_W1 );
+  
+  //タスク終了
+  pWork->vtask = 0;
+  GFL_TCB_DeleteTask( p_tcb );
+}
+
 
