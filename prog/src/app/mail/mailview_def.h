@@ -47,9 +47,9 @@ enum{
 #define BMPL_M03_CGX  (BMPL_M02_CGX-BMPL_MSG_SIZ)
 
 // 一言簡易会話ワード
-#define BMPL_PMS_PX   ( 10 )
+#define BMPL_PMS_PX   (  8 )
 #define BMPL_PMS_PY   ( 19 )
-#define BMPL_PMS_SX   (  9 )
+#define BMPL_PMS_SX   ( 11 )
 #define BMPL_PMS_SY   (  2 )
 
 // メール作成者名

@@ -118,9 +118,9 @@
 #define BMPWIN_MAILMSG3_CGX ( BMPWIN_MAILMSG2_CGX + BMPWIN_MAILMSG_SX * BMPWIN_MAILMSG_SY )
 
 // ä»à’íPåÍ
-#define BMPWIN_PMSWORD_PX   ( 10 )
+#define BMPWIN_PMSWORD_PX   (  8 )
 #define BMPWIN_PMSWORD_PY   ( 19 )
-#define BMPWIN_PMSWORD_SX   (  9 )
+#define BMPWIN_PMSWORD_SX   ( 11 )
 #define BMPWIN_PMSWORD_SY   (  2 )
 
 // çÏê¨é“ñº
