@@ -4289,8 +4289,18 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       pos_cnt = 0;
       if( rule == BTL_RULE_SINGLE )
       {
-        pos_cnt = 1;
-        pos[ 0 ] = bevw->attack_pos ^ 1;
+        switch( bevw->param.waza_range ){
+        case WAZA_TARGET_ALL:                 ///< 場に出ている全ポケ
+        case WAZA_TARGET_FIELD:               ///< 場全体（天候など）
+          pos_cnt = 2;
+          pos[ 0 ] = bevw->attack_pos;
+          pos[ 1 ] = bevw->attack_pos ^ 1;
+          break;
+        default:
+          pos_cnt = 1;
+          pos[ 0 ] = bevw->attack_pos ^ 1;
+          break;
+        }
         break;
       }
       switch( bevw->param.waza_range ){
@@ -4348,9 +4358,8 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
         else
         {
           BtlvMcssPos check_pos;
-          BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
 
-          for( check_pos = BTLV_MCSS_POS_A ; check_pos <= end_pos ; check_pos++ )
+          for( check_pos = BTLV_MCSS_POS_A ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
           {
             if( bevw->attack_pos != check_pos )
             {
@@ -4372,7 +4381,8 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
         {
           BtlvMcssPos check_pos;
           BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_A : BTLV_MCSS_POS_B;
-          BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
+          BtlvMcssPos end_pos = ( ( rule == BTL_RULE_TRIPLE ) || ( rule == BTL_RULE_ROTATION ) ) ?
+                                BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
 
           if( rule == BTL_RULE_TRIPLE )
           {
@@ -4400,9 +4410,8 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
         {
           BtlvMcssPos check_pos;
           BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_A : BTLV_MCSS_POS_B;
-          BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
 
-          for( check_pos = start_pos ; check_pos <= end_pos ; check_pos += 2 )
+          for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
           {
             if( BTLV_EFFECT_CheckExist( check_pos ) )
             {
@@ -4417,9 +4426,8 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
         {
           BtlvMcssPos check_pos;
           BtlvMcssPos start_pos = ( bevw->attack_pos & 1 ) ? BTLV_MCSS_POS_B : BTLV_MCSS_POS_A;
-          BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
 
-          for( check_pos = start_pos ; check_pos <= end_pos ; check_pos += 2 )
+          for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
           {
             if( BTLV_EFFECT_CheckExist( check_pos ) )
             {
@@ -4433,9 +4441,8 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       case WAZA_TARGET_FIELD:               ///< 場全体（天候など）
         {
           BtlvMcssPos check_pos;
-          BtlvMcssPos end_pos = ( rule == BTL_RULE_TRIPLE ) ? BTLV_MCSS_POS_F : BTLV_MCSS_POS_D;
 
-          for( check_pos = BTLV_MCSS_POS_A ; check_pos <= end_pos ; check_pos++ )
+          for( check_pos = BTLV_MCSS_POS_A ; check_pos <= BTLV_MCSS_POS_F ; check_pos++ )
           {
             if( BTLV_EFFECT_CheckExist( check_pos ) )
             {
