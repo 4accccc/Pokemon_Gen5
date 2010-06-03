@@ -1907,6 +1907,7 @@ static void _IntrudeRecv_SecretItem(const int netID, const int size, const void*
   OS_TPrintf("受信：隠しアイテム netID=%d\n", netID);
   if(intcomm->recv_secret_item_flag == FALSE){
     GFL_STD_MemCopy(itemdata, &intcomm->recv_secret_item, sizeof(INTRUDE_SECRET_ITEM_SAVE));
+    intcomm->recv_secret_item_flag = TRUE;
   }
 }
 
