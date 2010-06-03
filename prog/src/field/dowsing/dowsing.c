@@ -12,7 +12,8 @@
 
 
 #define DOWSING_NO_BLINK  // これが定義されているとき、液晶画面のような明滅演出をしない。
-#define DOWSING_SEARCH_DIV  // これが定義されているとき、1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+//#define DOWSING_SEARCH_DIV  // これが定義されているとき、1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+#define DOWSING_SEARCH_LOST_PREV  // これが定義されているとき、前見付けていたものがなくなったら、1フレーム何も発見できないようにしておく。
 
 
 // インクルード
@@ -886,10 +887,7 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   // アイテムサーチ
   if( search ) 
   {
-#ifdef DOWSING_SEARCH_DIV
-    // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
-    u16  item_search_count;
-#endif
+    u16  item_search_count  = 0;
 
     s32 rect_x_min = player_grid_pos_x - AREA_ORIGIN_X;  // rect_x_min<= <rect_x_max
     s32 rect_x_max = player_grid_pos_x + AREA_WIDTH - AREA_ORIGIN_X;
@@ -922,23 +920,55 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     {
       u16 table_idx;  // item_rod_tableのインデックス
 
+#ifndef DOWSING_SEARCH_DIV
+  #ifdef DOWSING_SEARCH_LOST_PREV
+      // 前見付けていたものがなくなったら、1フレーム何も発見できないようにしておく。
+      if( item_search_count == 0 )
+      {
+        item_search_count++;
+        // 前回一番近くに見付けていたアイテムがまだあるか確認する
+        if( work->item_info_prev.type != ITEM_TYPE_NONE )
+        {
+          if( ItemSearchExist( work->item_search_wk, &(work->item_info_prev) ) )
+          {
+            // 前回一番近くに見付けていたアイテムがまだあるので、ここでは何もしない
+          }
+          else
+          {
+            // 前回一番近くに見付けていたアイテムがもうないので、1フレーム探索を止める
+            break;
+          }
+        }
+      }
+  #endif
+#endif
 #ifdef DOWSING_SEARCH_DIV
       // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
       if( item_search_count == 0 )
       {
         // 前回一番近くに見付けていたアイテムがまだあるか確認する
-        if( ItemSearchExist( work->item_search_wk, &(work->item_info_prev) ) )
+        if( work->item_info_prev.type != ITEM_TYPE_NONE )
         {
-          // 前回一番近くに見付けていたアイテムがまだあるので、それをまず判定対象とする
-          item_info.type = work->item_info_prev.type;
-          if( item_info.type == ITEM_TYPE_HIDE )
+          if( ItemSearchExist( work->item_search_wk, &(work->item_info_prev) ) )
           {
-            item_info.info.hide.item_data = work->item_info_prev.info.hide.item_data;
+            // 前回一番近くに見付けていたアイテムがまだあるので、それをまず判定対象とする
+            item_info.type = work->item_info_prev.type;
+            if( item_info.type == ITEM_TYPE_HIDE )
+            {
+              item_info.info.hide.item_data = work->item_info_prev.info.hide.item_data;
+            }
+            else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
+            {
+              item_info.info.intrude.item_posdata = work->item_info_prev.info.intrude.item_posdata;
+            }
           }
-          else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
+  #ifdef DOWSING_SEARCH_LOST_PREV
+          else
           {
-            item_info.info.intrude.item_posdata = work->item_info_prev.info.intrude.item_posdata;
+            // 前回一番近くに見付けていたアイテムがもうないので、1フレーム探索を止める
+            break;
           }
+  #endif
         }
       }
       else
