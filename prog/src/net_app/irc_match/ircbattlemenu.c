@@ -267,7 +267,7 @@ static void _CreateButtonObj2(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj3(IRC_BATTLE_MENU* pWork);
 static void _CreateButtonObj(IRC_BATTLE_MENU* pWork);
 static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork);
-static void _infoMessageDisp(IRC_BATTLE_MENU* pWork);
+static void _infoMessageDisp(IRC_BATTLE_MENU* pWork, const BOOL allput);
 static void _hitAnyKeyWaitMode(IRC_BATTLE_MENU* pWork);
 static void _modeTemotiOrBoxInit(IRC_BATTLE_MENU* pWork);
 
@@ -980,7 +980,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
       if(PokeParty_GetPokeCountNotEgg(party) < 2 ){
 //      if(PokeParty_GetPokeCount(party) < 2 && 0 == BOXDAT_GetPokeExistCountTotal(GAMEDATA_GetBoxManager(pWork->pGameData))){
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_45, pWork->pStrBuf );
-        _infoMessageDisp(pWork);
+        _infoMessageDisp(pWork, FALSE);
         _CHANGE_STATE(pWork,_modeKeyWait);
         break;
       }
@@ -1836,15 +1836,15 @@ static BOOL _infoMessageEndCheck(IRC_BATTLE_MENU* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   説明ウインドウ表示
+ * @param   pWork
+ * @param   allput    TRUE:一括表示　FALSE:非一括表示   
  * @retval  none
  */
 //------------------------------------------------------------------------------
-
-static void _infoMessageDisp(IRC_BATTLE_MENU* pWork)
+static void _infoMessageDisp(IRC_BATTLE_MENU* pWork, const BOOL allput)
 {
   GFL_BMPWIN* pwin;
 
-  
   if(pWork->infoDispWin==NULL){
     pWork->infoDispWin = GFL_BMPWIN_Create(
       GFL_BG_FRAME1_S ,
@@ -1856,8 +1856,16 @@ static void _infoMessageDisp(IRC_BATTLE_MENU* pWork)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
-  pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
+  if (!allput)
+  {
+    pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
+  }
+  else
+  {
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp(pwin), 0, 0, pWork->pStrBuf, pWork->pFontHandle );
+    pWork->pStream = NULL;
+  }
 
   BmpWinFrame_Write( pwin, WINDOW_TRANS_ON_V, GFL_ARCUTIL_TRANSINFO_GetPos(pWork->bgchar), _BUTTON_WIN_PAL );
 
@@ -1885,7 +1893,7 @@ static void _modeReportInit(IRC_BATTLE_MENU* pWork)
   
   GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_26, pWork->pStrBuf );
   
-  _infoMessageDisp(pWork);
+  _infoMessageDisp(pWork, FALSE);
 
   _CHANGE_STATE(pWork,_modeReportWait);
 }
@@ -1971,12 +1979,12 @@ static void _modeReportWait2(IRC_BATTLE_MENU* pWork)
     if(selectno==0){
       if(SaveControl_IsOverwritingOtherData( GAMEDATA_GetSaveControlWork(pWork->pGameData))){
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_46, pWork->pStrBuf );
-        _infoMessageDisp(pWork);
+        _infoMessageDisp(pWork, FALSE);
         _CHANGE_STATE(pWork,  _hitAnyKeyWaitMode);
       }
       else{
         GFL_MSG_GetString( pWork->pMsgData, IRCBTL_STR_29, pWork->pStrBuf );
-        _infoMessageDisp(pWork);
+        _infoMessageDisp(pWork, TRUE);
         _MESSAGE_WindowTimeIconStart(pWork);
         _CHANGE_STATE(pWork,_modeReporting);
       }

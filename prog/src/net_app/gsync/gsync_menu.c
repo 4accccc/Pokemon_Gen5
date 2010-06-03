@@ -1236,7 +1236,12 @@ static void _modeReportWait2(GAMESYNC_MENU* pWork)
       }
       else{
         GFL_MSG_GetString( pWork->pMsgData, GAMESYNC_007, pWork->pStrBuf );
+#if 0   //20100603 del Saito        
         _infoMessageDisp(pWork);
+#else
+        //一括表示
+        _infoMessageDispHeight( pWork,4,FALSE);
+#endif
         _MESSAGE_WindowTimeIconStart(pWork);
         //セーブ開始
         _CHANGE_STATE(pWork,_modeReporting);
