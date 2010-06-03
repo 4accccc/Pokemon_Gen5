@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T18:58:40"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T11:08:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1503" top="184" right="2208" bottom="804" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -292,8 +292,8 @@
 	</lock>
 
 
-	<row id="msg_r06r0203_legend1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
-		<comment>●アトス初期位置（GRIDX=7 GRIDZ=4）
+	<row id="msg_r06r0203_legend1_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+		<comment>●コバルオン初期位置（GRIDX=7 GRIDZ=4）
 
 ・話し掛けたとき
 ・戦闘開始前</comment>
@@ -302,7 +302,7 @@
 		<language name="JPN_KANJI" width="256">こふおおおおーっ！</language>
 	</row>
 
-	<row id="msg_r06r0203_legend1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r06r0203_legend1_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 ・初回時（続けてじいさんが出てくる）
@@ -315,7 +315,7 @@
 洞穴の　どこかへ　消えてしまった…▼</language>
 	</row>
 
-	<row id="msg_r06r0203_legend1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,#ff8080,,,#ff8080,,#ff8080,#ff8080,,,#ff8080,,">
+	<row id="msg_r06r0203_legend1_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>・戦闘後
 ・ポケモンを倒した場合のメッセージ
 ・２回目以降（メッセージ表示後にイベント終了）
@@ -329,8 +329,8 @@
 	</row>
 
 	<row id="msg_r06r0203_guide_01">
-		<comment>●アトスに勝利した場合
-・アトス戦闘後、事情通老人が歩み寄る。
+		<comment>●コバルオンに勝利した場合
+・コバルオン戦闘後、事情通老人が歩み寄る。
 ・主人公の左隣まで進む。
 （GRIDX=5 GRIDZ=4）
 
@@ -339,55 +339,56 @@
 		<attribute name="キャラ指定">事情通老人</attribute>
 		<language name="JPN" width="256">おぬしが　ポケモンと　こころを
 かよわせて　はっきした　つよさは[BE:00:ページ切り替え（行送り）]
-アトス●●にも　つうじたじゃろう[BE:01:ページ切り替え（クリア）]
+コバルオンにも　つうじたじゃろう[BE:01:ページ切り替え（クリア）]
 おぬしと　おぬしの　ポケモンが
 さらに　きたえられ　つよくなれば[BE:00:ページ切り替え（行送り）]
 また　ここに　もどってくるじゃろう[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おぬしが　ポケモンと　心を
 通わせて　発揮した　強さは[BE:00:ページ切り替え（行送り）]
-アトス●●にも　通じたじゃろう[BE:01:ページ切り替え（クリア）]
+コバルオンにも　通じたじゃろう[BE:01:ページ切り替え（クリア）]
 おぬしと　おぬしの　ポケモンが
 さらに　きたえられ　強くなれば[BE:00:ページ切り替え（行送り）]
 また　ここに　もどってくるじゃろう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r06r0203_guide_02">
-		<comment>●アトスを捕獲した場合
+		<comment>●コバルオンを捕獲した場合
 ・戦闘終了後、事情通老人が歩み寄る。
 
 ・セリフ後、msg_d06r0203_guide_03へ。</comment>
 		<attribute name="キャラ指定">事情通老人</attribute>
-		<language name="JPN" width="256">アトス●●は　おぬしを　つうじて
+		<language name="JPN" width="256">コバルオンは　おぬしを　つうじて
 ひとと　ポケモンが　たすけあい[BE:00:ページ切り替え（行送り）]
 くらす　せかいに　かわった　ことを[BE:00:ページ切り替え（行送り）]
 かんじとった　ようじゃな[BE:01:ページ切り替え（クリア）]
-アトス●●は　おぬしと　ともに
+コバルオンは　おぬしと　ともに
 いきる　ことを　のぞんだのじゃろう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アトス●●は　おぬしを　通じて
+		<language name="JPN_KANJI" width="256">コバルオンは　おぬしを　通じて
 人と　ポケモンが　助け合い[BE:00:ページ切り替え（行送り）]
 暮らす　世界に　変わった　ことを[BE:00:ページ切り替え（行送り）]
 感じとった　ようじゃな[BE:01:ページ切り替え（クリア）]
-アトス●●は　おぬしと　ともに
+コバルオンは　おぬしと　ともに
 生きる　ことを　望んだのじゃろう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_r06r0203_guide_03">
 		<comment>・喋ったあと、来た道を戻っていく。
 
-●ポルトス（D09R1501）とアラミス（D02R0201）を
-塞ぐ岩が外れます。</comment>
+●テラキオン（D09R1501）と
+　ビリジオン（D02R0201）を
+　塞ぐ岩が外れます。</comment>
 		<attribute name="キャラ指定">事情通老人</attribute>
-		<language name="JPN" width="256">アトス●●が　おぬしと　たたかい
+		<language name="JPN" width="256">コバルオンが　おぬしと　たたかい
 こころを　かよわせた　ことは[BE:01:ページ切り替え（クリア）]
 つよい　きずなで　むすばれている
-ポルトス●と　アラミス●にも[BE:00:ページ切り替え（行送り）]
+テラキオンと　ビリジオンにも[BE:00:ページ切り替え（行送り）]
 すぐに　つたわる　はずじゃ[BE:01:ページ切り替え（クリア）]
 かれらも　おぬしの　こころを
 みきわめたいと　おもっとる　じゃろう[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アトス●●が　おぬしと　戦い
+		<language name="JPN_KANJI" width="256">コバルオンが　おぬしと　戦い
 心を　通わせた　ことは[BE:01:ページ切り替え（クリア）]
 強い　きずなで　結ばれている
-ポルトス●と　アラミス●にも[BE:00:ページ切り替え（行送り）]
+テラキオンと　ビリジオンにも[BE:00:ページ切り替え（行送り）]
 すぐに　伝わる　はずじゃ[BE:01:ページ切り替え（クリア）]
 彼らも　おぬしの　心を
 みきわめたいと　思っとる　じゃろう[BE:01:ページ切り替え（クリア）]</language>
@@ -398,14 +399,14 @@
 
 ・喋り終えると、帰っていく。</comment>
 		<attribute name="キャラ指定">事情通老人</attribute>
-		<language name="JPN" width="256">ポルトス●と　アラミス●が
+		<language name="JPN" width="256">テラキオンと　ビリジオンが
 ひとを　とおざける　ための[BE:00:ページ切り替え（行送り）]
 しょうがいぶつは　なくなるじゃろう[BE:01:ページ切り替え（クリア）]
 かれらを　さがすか　どうかは
 おぬし　しだい　じゃがな…[BE:01:ページ切り替え（クリア）]
 かれらは　まちがいなく
 おぬしを　まっておるぞ…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">ポルトス●と　アラミス●が
+		<language name="JPN_KANJI" width="256">テラキオンと　ビリジオンが
 人を　遠ざける　ための[BE:00:ページ切り替え（行送り）]
 障害物は　なくなるじゃろう[BE:01:ページ切り替え（クリア）]
 彼らを　探すか　どうかは
@@ -414,7 +415,7 @@
 おぬしを　待っておるぞ…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・pos起動（GRIDX=17~19 GRIDZ=15）
 ※r0203へ通じる階段の手前。
 
@@ -443,7 +444,7 @@
 耳を　傾けてみんか？</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_06" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●「はい」
 
 ・戦争と大火事と伝説ポケモンの昔話　その１
@@ -458,14 +459,14 @@
 ポケモンたちは　ほのおと　けむりに
 まかれて　にげばを　うしなった…[BE:01:ページ切り替え（クリア）]
 そこに　あらわれたのが　でんせつの
-アトス●●[BE:00:ページ切り替え（行送り）]
-ポルトス●[BE:00:ページ切り替え（行送り）]
-アラミス●　じゃった！[BE:01:ページ切り替え（クリア）]
-ポルトス●は　もちまえの　かいりきで
+コバルオン[BE:00:ページ切り替え（行送り）]
+テラキオン[BE:00:ページ切り替え（行送り）]
+ビリジオン　じゃった！[BE:01:ページ切り替え（クリア）]
+テラキオンは　もちまえの　かいりきで
 にげみちを　ふさぐ　いわを　こわした[BE:01:ページ切り替え（クリア）]
-アラミス●は　すばやい　みのこなしで
+ビリジオンは　すばやい　みのこなしで
 ひのこから　ポケモンを　まもった[BE:01:ページ切り替え（クリア）]
-そして　アトス●●は
+そして　コバルオンは
 おびえる　ポケモンたちを　みちびき[BE:00:ページ切り替え（行送り）]
 やける　もりから　にがしたのじゃ[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">人と　ポケモンが　べつべつの
@@ -476,32 +477,32 @@
 ポケモンたちは　炎と　煙に
 まかれて　逃げ場を　失った…[BE:01:ページ切り替え（クリア）]
 そこに　あらわれたのが　伝説の
-アトス●●[BE:00:ページ切り替え（行送り）]
-ポルトス●[BE:00:ページ切り替え（行送り）]
-アラミス●　じゃった！[BE:01:ページ切り替え（クリア）]
-ポルトス●は　持ち前の　怪力で
+コバルオン[BE:00:ページ切り替え（行送り）]
+テラキオン[BE:00:ページ切り替え（行送り）]
+ビリジオン　じゃった！[BE:01:ページ切り替え（クリア）]
+テラキオンは　持ち前の　怪力で
 逃げ道を　ふさぐ　岩を　壊した[BE:01:ページ切り替え（クリア）]
-アラミス●は　すばやい　身のこなしで
+ビリジオンは　すばやい　身のこなしで
 火の粉から　ポケモンを　守った[BE:01:ページ切り替え（クリア）]
-そして　アトス●●は
+そして　コバルオンは
 おびえる　ポケモンたちを　導き[BE:00:ページ切り替え（行送り）]
 焼ける　森から　逃がしたのじゃ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・戦争と大火事と伝説ポケモンの昔話　その２
 
 ・正面を向いてから、セリフ。
 
 </comment>
 		<attribute name="キャラ指定">事情通老人</attribute>
-		<language name="JPN" width="256">アトス●●　ポルトス●　アラミス●は
+		<language name="JPN" width="256">コバルオン　テラキオン　ビリジオンは
 いくさを　はじめた　れんちゅうを[BE:00:ページ切り替え（行送り）]
 あっとうてきな　ちからで　けちらした[BE:01:ページ切り替え（クリア）]
 れんちゅうは　３ひきの　ちからに
 おそれを　なして[BE:00:ページ切り替え（行送り）]
 ようやく　いくさを　やめたのじゃ…[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">アトス●●　ポルトス●　アラミス●は
+		<language name="JPN_KANJI" width="256">コバルオン　テラキオン　ビリジオンは
 戦を　はじめた　連中を[BE:00:ページ切り替え（行送り）]
 圧倒的なな　力で　けちらした[BE:01:ページ切り替え（クリア）]
 連中は　３匹の　力に
@@ -509,7 +510,7 @@
 ようやく　戦を　やめたのじゃ…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・戦争と大火事と伝説ポケモンの昔話　その３
 
 ・再び主人公の正面に戻ってきてから、セリフ。
@@ -527,7 +528,7 @@
 彼らは　わかっていたのじゃな…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・戦争と大火事と伝説ポケモンの昔話　その４
 
 ・段差を上り、背中を向けたまま、セリフ。</comment>
@@ -544,7 +545,7 @@
 彼らは　伝説に　なったのじゃ…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_10" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・戦争と大火事と伝説ポケモンの昔話　その５
 
 ・正面を向いて、セリフ。</comment>
@@ -567,7 +568,7 @@
 襲いかかって　くるじゃろう[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_11" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・戦争と大火事と伝説ポケモンの昔話　その６
 
 ・段差の途中で、セリフ。</comment>
@@ -586,7 +587,7 @@
 彼らは　知らないまま　なのじゃ[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_12" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・戦争と大火事と伝説ポケモンの昔話　その７
 
 ・もう1歩進み、主人公の前に立ち、セリフ。</comment>
@@ -607,7 +608,7 @@
 彼らも　選ぶじゃろう…[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_13" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>・繰り返しのセリフ</comment>
 		<attribute name="キャラ指定">事情通老人</attribute>
 		<language name="JPN" width="256">ひとと　ポケモン　だけではない…
@@ -620,7 +621,7 @@
 一番なんじゃ…</language>
 	</row>
 
-	<row id="msg_r06r0203_guide_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
+	<row id="msg_r06r0203_guide_14" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●「いいえ」のセリフ
 
 ・喋り終えると、初期グリッドへ戻る。</comment>

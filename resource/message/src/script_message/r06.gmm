@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T17:05:22"/>
+	<create user="matsumiya" host="W00224" date="2010-06-03T11:04:06"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 
 	<row id="msg_r06_oldman1_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・アトス（仮）とエンカウント前
+・コバルオンとエンカウント前
 ・r06r0201の近くに配置</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">この　６ばんどうろに　ある
@@ -303,29 +303,29 @@
 おおむかし　イッシュの　ポケモンを▽
 ひのうみから　まもったといわれる▼
 すごい　ポケモン……
-アトス●●が　いると　いう▼
+コバルオンが　いると　いう▼
 みずのうえを　すすめるという
 なみのりの　わざが　つかえるなら▽
-その　アトス●●にも　あえるかもな</language>
+その　コバルオンにも　あえるかもな</language>
 		<language name="JPN_KANJI" width="256">この　６番道路に　ある
 フキヨセの洞穴……▼
 その奥には
 大昔　イッシュの　ポケモンを▽
 火の海から　守ったといわれる▼
 すごい　ポケモン……
-アトス●●が　いると　いう▼
+コバルオンが　いると　いう▼
 水上を　進めるという
 なみのりの　技が　使えるなら▽
-その　アトス●●にも　会えるかもな</language>
+その　コバルオンにも　会えるかもな</language>
 	</row>
 
 	<row id="msg_r06_oldman1_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>♂
-・アトス（仮）とエンカウント後</comment>
+・コバルオンとエンカウント後</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
-		<language name="JPN" width="256">アトス●●には　なかまとも　いうべき
+		<language name="JPN" width="256">コバルオンには　なかまとも　いうべき
 ポケモンが　いるとも　きいたが……</language>
-		<language name="JPN_KANJI" width="256">アトス●●には　仲間ともいうべき
+		<language name="JPN_KANJI" width="256">コバルオンには　仲間ともいうべき
 ポケモンが　いるとも　きいたが……</language>
 	</row>
 
