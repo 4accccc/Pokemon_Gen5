@@ -76,8 +76,7 @@ struct _BTL_EVENT_FACTOR {
   u32       tmpItemFlag    :  1;  ///< アイテム用一時利用フラグ
   u32       rmReserveFlag  :  1;  ///< 削除予約フラグ
   u32       callingEventID : 16;  ///< 反応中イベントID
-  u32       newComerFlag   :  1;  ///< 登録直後フラグ
-  u32       _padd          : 15;
+  u32       _padd          : 16;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -228,6 +227,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->priority = calcFactorPriority( factorType, priority );
 
     BTL_N_Printf( DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority, newFactor );
+    BTL_N_PrintfEx( 3, DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority, newFactor );
 
     newFactor->factorType = factorType;
     newFactor->prev = NULL;
@@ -241,7 +241,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->tmpItemFlag = FALSE;
     newFactor->skipCheckHandler = NULL;
     newFactor->dependID = dependID;
-    newFactor->newComerFlag = TRUE;
     newFactor->rmReserveFlag = FALSE;
     if( isDependPokeFactorType(factorType) ){
       newFactor->pokeID = dependID;
@@ -523,12 +522,6 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
   BTL_EVENT_FACTOR* factor;
   BTL_EVENT_FACTOR* next_factor;
 
-  // 登録されたてフラグをクリア
-  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
-  {
-    factor->newComerFlag = FALSE;
-  }
-
 
   for( factor=FirstFactorPtr; factor!=NULL; )
   {
@@ -536,7 +529,6 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
 
     if( ( factor->callingFlag == FALSE )
     &&  ( factor->sleepFlag == FALSE )
-    &&  ( factor->newComerFlag == FALSE )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
     ){
       const BtlEventHandlerTable* tbl = factor->handlerTable;
@@ -554,11 +546,18 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
             // 呼び出し中に削除された
             if( factor->rmReserveFlag )
             {
+              BTL_N_PrintfEx( 3, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor );
               BTL_EVENT_FACTOR_Remove( factor );
             }
           }
           break;
         }
+      }
+    }
+    else
+    {
+      if( factor->callingFlag ){
+        BTL_N_PrintfEx( 3, DBGSTR_EVENT_SkipByCallingFlg, factor->dependID, factor );
       }
     }
 

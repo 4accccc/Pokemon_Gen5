@@ -3294,14 +3294,17 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     {
       u8 idx = (targetCnt==1)? 0 : BTL_CALC_GetRand( targetCnt );
       bpp = BTL_SVFTOOL_GetPokeParam( flowWk, checkPokeID[idx] );
-
       nextTok = BPP_GetValue( bpp, BPP_TOKUSEI );
       targetPokeID = BPP_GetID( bpp );
     }
+    else{
+      work[0] = 1; // 待機状態へ
+    }
   }
-  // 相手が入場したタイミング
-  else if(!BTL_MAINUTIL_IsFriendPokeID(inPokeID, pokeID) )
-  {
+  // 相手が入場したタイミングに待機状態なら反応
+  else if( (!BTL_MAINUTIL_IsFriendPokeID(inPokeID, pokeID))
+  &&        (work[0] == 1)
+  ){
     const BTL_POKEPARAM* inPoke = BTL_SVFTOOL_GetPokeParam( flowWk, inPokeID );
     PokeTokusei tok = BPP_GetValue( inPoke, BPP_TOKUSEI );
 
@@ -3323,6 +3326,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trace );
     HANDEX_STR_AddArg( &param->exStr, targetPokeID );
     HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
+    BTL_N_PrintfEx( 3, DBGSTR_HANDTOK_TRACE_Add, pokeID );
   }
 }
 
@@ -5102,6 +5106,7 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Pressure );
        HANDEX_STR_AddArg( &param->str, pokeID );
+       BTL_N_PrintfEx( 3, DBGSTR_HANDTOK_PressureIn, pokeID, myHandle );
     }
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }

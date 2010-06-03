@@ -317,6 +317,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HandExContFail:      return  "  skip (prev handEx failed)\n";
   case DBGSTR_SVFL_HandExContDead:      return  "  skip (user pokemon dead)\n";
   case DBGSTR_SVFL_HandExSetResult:     return  "  set result = %d\n";
+  case DBGSTR_SVFL_HandExTokChangeAdd:  return  "とくせい書き換えハンドラ pokeID=%d, factor=%p\n";
+  case DBGSTR_SVFL_HandExTokChangeEventCall: return "とくせい書き換え後イベントコール pokeID=%d\n";
+  case DBGSTR_SVFL_HandExTokChangeEventCallEnd : return "とくせい書き換え後イベント終了\n";
+  case DBGSTR_SVFL_MemberInEventBegin: return "メンバー入場イベント pokeID=%d 開始\n";
+  case DBGSTR_SVFL_MemberInEventEnd :  return "メンバー入場イベント pokeID=%d 終了\n";
 
 
   case DBGSTR_SVFS_RegTargetDouble:     return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
@@ -358,6 +363,11 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
 
   case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x, adrs=%p\n";
+  case DBGSTR_EVENT_RmvFactorCalling:   return " 呼び出し中に削除されたFactor pokeID=%d, adrs=%p\n";
+  case DBGSTR_EVENT_SkipByNewComerFlg:  return "  新入りにつきスキップ Factor pokeID=%d, adrs=%p\n";
+  case DBGSTR_EVENT_SkipByCallingFlg:   return "  自己呼び出し中につきスキップ Factor pokeID=%d, adrs=%p\n";
+  case DBGSTR_EVENT_ClearNewComFlag:    return "　新入りフラグクリア pokeID=%d, adrs=%p\n";
+
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";
   case DBGSTR_EV_DelFactor:             return "[DEL] DEL Factor=%p Depend=%d, Type=%d [DEL]\n";
   case DBGSTR_EV_LinkInfoHeader:        return "***** [[EV Chain]] *****\n";
@@ -385,6 +395,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_HANDWAZA_YokorodiDecide:  return "ポケ(%d), よこどりします\n";
   case DBGSTR_HANDITEM_OujaCheck:       return "おうじゃのしるしチェック：デフォルトひるみ率=%d\n";
   case DBGSTR_HANDITEM_OujaEffective:   return "おうじゃのしるし有効：ひるみ率=%d\n";
+  case DBGSTR_HANDTOK_TRACE_Add:        return "トレース発動します pokeID=%d\n";
+  case DBGSTR_HANDTOK_PressureIn:       return "プレッシャー発動します  pokeID=%d, factor=%p\n";
 
 
   case DBGSTR_REC_ReadActStart:         return "rec seek start RP= %d\n";

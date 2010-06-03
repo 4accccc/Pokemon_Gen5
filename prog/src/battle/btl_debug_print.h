@@ -261,6 +261,11 @@ typedef enum {
   DBGSTR_SVFL_HandExContFail,
   DBGSTR_SVFL_HandExContDead,
   DBGSTR_SVFL_HandExSetResult,
+  DBGSTR_SVFL_HandExTokChangeAdd,
+  DBGSTR_SVFL_HandExTokChangeEventCall,
+  DBGSTR_SVFL_HandExTokChangeEventCallEnd,
+  DBGSTR_SVFL_MemberInEventBegin,
+  DBGSTR_SVFL_MemberInEventEnd,
 
   DBGSTR_SVFS_RegTargetDouble,
   DBGSTR_SVFS_Result_RestCnt,
@@ -298,6 +303,10 @@ typedef enum {
   DBGSTR_SV_CommError,
 
   DBGSTR_EVENT_AddFactorInfo,
+  DBGSTR_EVENT_RmvFactorCalling,
+  DBGSTR_EVENT_SkipByNewComerFlg,
+  DBGSTR_EVENT_SkipByCallingFlg,
+  DBGSTR_EVENT_ClearNewComFlag,
   DBGSTR_EV_AddFactor,
   DBGSTR_EV_DelFactor,
   DBGSTR_EV_LinkInfoHeader,
@@ -342,6 +351,8 @@ typedef enum {
   DBGSTR_HANDWAZA_YokorodiDecide,
   DBGSTR_HANDITEM_OujaCheck,
   DBGSTR_HANDITEM_OujaEffective,
+  DBGSTR_HANDTOK_TRACE_Add,
+  DBGSTR_HANDTOK_PressureIn,
 
   DBGSTR_REC_ReadActStart,
   DBGSTR_REC_ReadActSkip,
