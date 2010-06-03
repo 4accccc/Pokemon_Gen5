@@ -1289,7 +1289,7 @@ void BPP_GetPPStatus( const BTL_POKEPARAM* bpp, BTL_LEVELUP_INFO* info )
 {
   u8 fastFlag = PP_FastModeOn( bpp->coreParam.ppSrc );
 
-  info->hp     = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hp, 0 );
+  info->hp     = PP_Get( bpp->coreParam.ppSrc, ID_PARA_hpmax, 0 );
   info->atk    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_pow, 0 );
   info->def    = PP_Get( bpp->coreParam.ppSrc, ID_PARA_def, 0 );
   info->sp_atk = PP_Get( bpp->coreParam.ppSrc, ID_PARA_spepow, 0 );
