@@ -447,6 +447,9 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     SEQ_INIT,
     SEQ_FIRST_TALK,
     SEQ_TALK_OK,
+    SEQ_SEND_ACHIEVE_CHECK,
+    SEQ_WAIT_ACHIEVE_CHECK,
+    SEQ_CHANGE_EVENT,
     SEQ_TALK_CANCEL,
     SEQ_FINISH,
   };
@@ -456,7 +459,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) <= SEQ_TALK_OK){
+    if((*seq) <= SEQ_CHANGE_EVENT){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
       *seq = SEQ_FINISH;
       return GMEVENT_RES_CONTINUE;
@@ -538,7 +541,30 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     }
     break;
 
-  case SEQ_TALK_OK:   //各イベントへ枝分かれ
+  case SEQ_TALK_OK:
+    (*seq)++;
+    break;
+  case SEQ_SEND_ACHIEVE_CHECK:
+	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_WAIT_ACHIEVE_CHECK:
+    {
+      MISSION_ACHIEVE_USER ans = MISSION_GetAnswerAchieveUser(&intcomm->mission);
+      switch(ans){
+      case MISSION_ACHIEVE_USER_USE:  //達成者がいる
+        talk->ccew.intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;  //通常会話にする
+        (*seq)++;
+        break;
+      case MISSION_ACHIEVE_USER_NONE:
+        (*seq)++;
+        break;
+      }
+    }
+    break;
+  
+  case SEQ_CHANGE_EVENT:    //各イベントへ枝分かれ
     _EventChangeTalk(event, talk, intcomm);
     return GMEVENT_RES_CONTINUE;
     
@@ -572,6 +598,8 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
     SEQ_SEND_ANSWER,
     SEQ_PLAYER_DIR_CHANGE,
     SEQ_PLAYER_DIR_CHANGE_WAIT,
+	  SEQ_SEND_ACHIEVE_CHECK,
+    SEQ_WAIT_ACHIEVE_CHECK,
     SEQ_ANSWER_SEND_WAIT,
     SEQ_FINISH,
   };
@@ -626,6 +654,26 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	    (*seq)++;
   	}
 	  break;
+	case SEQ_SEND_ACHIEVE_CHECK:
+	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_WAIT_ACHIEVE_CHECK:
+    {
+      MISSION_ACHIEVE_USER ans = MISSION_GetAnswerAchieveUser(&intcomm->mission);
+      switch(ans){
+      case MISSION_ACHIEVE_USER_USE:  //達成者がいる
+        talk->ccew.intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;  //通常会話にする
+        (*seq)++;
+        break;
+      case MISSION_ACHIEVE_USER_NONE:
+        (*seq)++;
+        break;
+      }
+    }
+    break;
+
   case SEQ_ANSWER_SEND_WAIT:   //各イベントへ枝分かれ
     _EventChangeTalked(event, talk, intcomm);
   	return GMEVENT_RES_CONTINUE;

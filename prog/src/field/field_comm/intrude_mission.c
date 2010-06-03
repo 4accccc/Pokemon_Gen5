@@ -247,6 +247,18 @@ void MISSION_Set_DataSendReq(MISSION_SYSTEM *mission)
 
 //==================================================================
 /**
+ * ミッション結果送信リクエストを設定する
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_Set_ResultSendReq(MISSION_SYSTEM *mission)
+{
+  mission->result_send_req = TRUE;
+}
+
+//==================================================================
+/**
  * ミッションリストをセット
  *
  * @param   mission		代入先
@@ -408,6 +420,17 @@ static void MISSION_SendUpdate(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *mis
   if(mission->send_mission_start == _SEND_MISSION_START_SEND_REQ){
     if(IntrudeSend_MissionStart(intcomm, mission) == TRUE){
       mission->send_mission_start = _SEND_MISSION_START_SENDED;
+    }
+  }
+  
+  if(mission->send_answer_achieve_check_usenone_bit > 0){
+    if(IntrudeSend_MissionAnswerAchieveUserNone(mission->send_answer_achieve_check_usenone_bit) == TRUE){
+      mission->send_answer_achieve_check_usenone_bit = 0;
+    }
+  }
+  if(mission->send_answer_achieve_check_use_bit > 0){
+    if(IntrudeSend_MissionAnswerAchieveUserUse(mission->send_answer_achieve_check_use_bit) == TRUE){
+      mission->send_answer_achieve_check_use_bit = 0;
     }
   }
 }
@@ -577,6 +600,56 @@ BOOL MISSION_GetMissionPlay(MISSION_SYSTEM *mission)
     return TRUE;
   }
   return FALSE;
+}
+
+//==================================================================
+/**
+ * 受信：ミッション達成者がいるかどうかを調査要求
+ *
+ * @param   mission		
+ * @param   net_id		調査を要求しているNetID
+ */
+//==================================================================
+void MISSION_Recv_CheckAchieveUser(MISSION_SYSTEM *mission, int net_id)
+{
+  MISSION_RESULT *result = &mission->result;
+
+  if(result->achieve_netid[0] == INTRUDE_NETID_NULL){
+    mission->send_answer_achieve_check_usenone_bit |= 1 << net_id;
+  }
+  else{
+    mission->send_answer_achieve_check_use_bit |= 1 << net_id;
+  }
+}
+
+//==================================================================
+/**
+ * ミッション達成者がいたかどうかの返事を取得
+ *
+ * @param   mission		
+ *
+ * @retval  MISSION_ACHIEVE_USER		
+ */
+//==================================================================
+MISSION_ACHIEVE_USER MISSION_GetAnswerAchieveUser(MISSION_SYSTEM *mission)
+{
+  MISSION_ACHIEVE_USER ret;
+  
+  ret = mission->recv_answer_achieve_check_use;
+  MISSION_SetRecvBufAnswerAchieveUserBuf(mission, MISSION_ACHIEVE_USER_NULL);
+  return ret;
+}
+
+//==================================================================
+/**
+ * ミッション達成者がいるかどうかの受信バッファをクリア
+ *
+ * @param   mission		
+ */
+//==================================================================
+void MISSION_SetRecvBufAnswerAchieveUserBuf(MISSION_SYSTEM *mission, MISSION_ACHIEVE_USER data)
+{
+  mission->recv_answer_achieve_check_use = data;
 }
 
 //--------------------------------------------------------------

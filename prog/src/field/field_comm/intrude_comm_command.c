@@ -45,6 +45,9 @@ static void _IntrudeRecv_MissionClientStartAnswer(const int netID, const int siz
 static void _IntrudeRecv_MissionAchieve(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionAchieveAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MissionResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionCheckAchieveUser(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionAnswerAchieveUserUse(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_MissionAnswerAchieveUserNone(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OccupyInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OccupyResult(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_OtherMonolithIn(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -90,6 +93,9 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
   {_IntrudeRecv_MissionAchieveAnswer, NULL},   //INTRUDE_CMD_MISSION_ACHIEVE_ANSWER
   {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
+  {_IntrudeRecv_MissionCheckAchieveUser, NULL},//INTRUDE_CMD_MISSION_CHECK_ACHIEVE_USER
+  {_IntrudeRecv_MissionAnswerAchieveUserUse, NULL},//INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_USE
+  {_IntrudeRecv_MissionAnswerAchieveUserNone, NULL},//INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_NONE
   {_IntrudeRecv_OccupyInfo, NULL},             //INTRUDE_CMD_OCCUPY_INFO
   {_IntrudeRecv_OccupyResult, NULL},           //INTRUDE_CMD_OCCUPY_RESULT
   {_IntrudeRecv_OtherMonolithIn, NULL},        //INTRUDE_CMD_OTHER_MONOLITH_IN
@@ -348,6 +354,7 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
       //現在の参加人数、ミッションも送信する
       intcomm->member_send_req = TRUE;
       MISSION_Set_DataSendReq(&intcomm->mission);
+      MISSION_Set_ResultSendReq(&intcomm->mission);
     }
   }
   else{
@@ -1310,6 +1317,15 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
   }
 #endif
   
+  if(mresult->mission_data.accept_netid == INTRUDE_NETID_NULL){
+    OS_TPrintf("受信：ミッション結果：無効データ\n");
+    return;
+  }
+  if(MISSION_CheckRecvResult(&intcomm->mission) == TRUE){
+    OS_TPrintf("受信：ミッション結果：受信済み\n");
+    return;
+  }
+  
   //自分がミッションのターゲットだった
   if(mresult->mission_data.target_info.net_id 
       == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
@@ -1391,6 +1407,148 @@ BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTE
     INTRUDE_CMD_MISSION_RESULT, sizeof(MISSION_RESULT), &mission->result);
   if(ret == TRUE){
     OS_TPrintf("送信：ミッション結果\n");
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ミッション達成者がいるかを調べる
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionCheckAchieveUser(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  OS_TPrintf("受信：ミッション達成者確認 netID=%d\n", netID);
+  MISSION_Recv_CheckAchieveUser(&intcomm->mission, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ミッション達成者がいるかを調べる
+ *
+ * @param   intcomm         
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionCheckAchieveUser(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  OS_TPrintf("送信：ミッション達成者確認 \n");
+  MISSION_SetRecvBufAnswerAchieveUserBuf(&intcomm->mission, MISSION_ACHIEVE_USER_NULL);
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), 
+    GFL_NET_NO_PARENTMACHINE, INTRUDE_CMD_MISSION_CHECK_ACHIEVE_USER, 
+    0, NULL, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：「ミッション達成者がいるか」の返事（いる）
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionAnswerAchieveUserUse(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  OS_TPrintf("受信：ミッション達成者確認の返事：いる\n");
+  MISSION_SetRecvBufAnswerAchieveUserBuf(&intcomm->mission, MISSION_ACHIEVE_USER_USE);
+}
+
+//==================================================================
+/**
+ * データ送信：「ミッション達成者がいるか」の返事（いる）
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionAnswerAchieveUserUse(u8 send_netid_bit)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  ret = GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid_bit, INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_USE, 
+    0, NULL, FALSE, FALSE, FALSE);
+  if(ret == TRUE){
+    OS_TPrintf("送信：ミッション達成者確認の返事：いる\n");
+  }
+  return ret;
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：「ミッション達成者がいるか」の返事（いない）
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_MissionAnswerAchieveUserNone(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  
+  OS_TPrintf("受信：ミッション達成者確認の返事：いない\n");
+  MISSION_SetRecvBufAnswerAchieveUserBuf(&intcomm->mission, MISSION_ACHIEVE_USER_NONE);
+}
+
+//==================================================================
+/**
+ * データ送信：「ミッション達成者がいるか」の返事（いない）
+ *
+ * @param   intcomm         
+ * @param   mission         ミッションデータ
+ *
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_MissionAnswerAchieveUserNone(u8 send_netid_bit)
+{
+  BOOL ret;
+
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+  
+  ret = GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
+    send_netid_bit, INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_NONE, 
+    0, NULL, FALSE, FALSE, FALSE);
+  if(ret == TRUE){
+    OS_TPrintf("送信：ミッション達成者確認の返事：いない\n");
   }
   return ret;
 }

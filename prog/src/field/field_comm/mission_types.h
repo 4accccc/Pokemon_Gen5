@@ -72,6 +72,13 @@ typedef enum{
 ///ミッション達成で上がるレベル数
 #define MISSION_ACHIEVE_ADD_LEVEL   (1)
 
+///ミッション達成者がいるかどうかの結果
+typedef enum{
+  MISSION_ACHIEVE_USER_NULL,    ///<返事なし
+  MISSION_ACHIEVE_USER_USE,     ///<達成者がいる
+  MISSION_ACHIEVE_USER_NONE,    ///<達成者はいない
+}MISSION_ACHIEVE_USER;
+
 //==============================================================================
 //  コンバータから出力されるデータの構造体
 //==============================================================================
@@ -285,7 +292,9 @@ typedef struct{
   u8 send_mission_start;      ///<準備期間終了。ミッション開始を送信(_SEND_MISSION_START_xxx)
   u8 start_client_bit;        ///<子から「ミッション開始宣言」を受信した(bit管理)
   u8 send_start_client_bit;   ///<子への「ミッション開始宣言」の返事送信bit
-
+  u8 send_answer_achieve_check_usenone_bit; ///<子への「ミッション達成者いません」の返事
+  u8 send_answer_achieve_check_use_bit;     ///<子への「ミッション達成者います」の返事
+  
   //子が持つデータ
   u8 parent_data_recv;        ///<TRUE:親からミッションデータを受信
   u8 parent_result_recv;      ///<TRUE:親から結果を受信
@@ -296,7 +305,8 @@ typedef struct{
   u8 mine_entry:1;            ///<TRUE:ミッション参加している
   u8 mission_complete:1;      ///<TRUE:今実行しているミッションは完了した
   u8 mission_timeend_success:1;   ///<TRUE:ミッションの制限時間に達した
-  u8        :3;
+  u8 recv_answer_achieve_check_use:2; ///<MISSION_ACHIEVE_USER
+  u8        :1;
 }MISSION_SYSTEM;
 
 #endif  //__CONVERT_TYPES__

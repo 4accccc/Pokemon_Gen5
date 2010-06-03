@@ -45,6 +45,9 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_MISSION_ACHIEVE,                ///<ミッション達成報告
   INTRUDE_CMD_MISSION_ACHIEVE_ANSWER,         ///<ミッション達成報告の返事
   INTRUDE_CMD_MISSION_RESULT,                 ///<ミッション結果
+  INTRUDE_CMD_MISSION_CHECK_ACHIEVE_USER,       ///<ミッション達成者がいるかを調べる
+  INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_USE,  ///<「ミッション達成者がいるか」の返事（いる）
+  INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_NONE, ///<「ミッション達成者がいるか」の返事（いない）
   INTRUDE_CMD_OCCUPY_INFO,                    ///<占拠情報
   INTRUDE_CMD_OCCUPY_RESULT,                  ///<占拠結果
   INTRUDE_CMD_OTHER_MONOLITH_IN,              ///<他人のモノリス入室
@@ -101,6 +104,9 @@ extern BOOL IntrudeSend_MissionAchieve(
 extern BOOL IntrudeSend_MissionAchieveAnswer(INTRUDE_COMM_SYS_PTR intcomm, 
   MISSION_ACHIEVE achieve, int send_netid);
 extern BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *mission);
+extern BOOL IntrudeSend_MissionCheckAchieveUser(INTRUDE_COMM_SYS_PTR intcomm);
+extern BOOL IntrudeSend_MissionAnswerAchieveUserUse(u8 send_netid_bit);
+extern BOOL IntrudeSend_MissionAnswerAchieveUserNone(u8 send_netid_bit);
 extern BOOL IntrudeSend_OccupyInfo(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_OccupyResult(INTRUDE_COMM_SYS_PTR intcomm);
 extern BOOL IntrudeSend_OtherMonolithIn(void);
