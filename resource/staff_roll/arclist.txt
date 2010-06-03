@@ -12,3 +12,6 @@
 "staffroll_w.nsbmd"
 "staffroll_w.nsbca"
 "staffroll_w.nsbtp"
+
+"staffroll_font.nclr"
+

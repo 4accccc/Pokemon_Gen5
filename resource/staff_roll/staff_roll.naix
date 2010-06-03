@@ -22,7 +22,8 @@ enum {
 	NARC_staff_roll_staffroll_b_nsbtp = 8,
 	NARC_staff_roll_staffroll_w_nsbmd = 9,
 	NARC_staff_roll_staffroll_w_nsbca = 10,
-	NARC_staff_roll_staffroll_w_nsbtp = 11
+	NARC_staff_roll_staffroll_w_nsbtp = 11,
+	NARC_staff_roll_staffroll_font_nclr = 12
 };
 
 /* NARC_STAFF_ROLL_NAIX_ */

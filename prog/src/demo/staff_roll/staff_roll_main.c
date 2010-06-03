@@ -79,12 +79,13 @@ enum {
 
 #if	PM_VERSION == LOCAL_VERSION
 #define	BG_COLOR		( 0 )														// バックグラウンドカラー
-#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(15,2,0) )	// フォントカラー：デフォルト
+#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
+#define	FCOL_WP00R	( PRINTSYS_MACRO_LSB(3,4,0) )		// フォントカラー：赤
 #else
 #define	BG_COLOR		( 0xffff )											// バックグラウンドカラー
-#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(1,2,0) )		// フォントカラー：デフォルト
+#define	FCOL_WP00V	( PRINTSYS_MACRO_LSB(5,6,0) )		// フォントカラー：デフォルト
+#define	FCOL_WP00R	( PRINTSYS_MACRO_LSB(7,8,0) )		// フォントカラー：赤
 #endif
-#define	FCOL_WP00R	( PRINTSYS_MACRO_LSB(3,4,0) )		// フォントカラー：赤
 #define	FCOL_WP00B	( PRINTSYS_MACRO_LSB(5,6,0) )		// フォントカラー：青
 #define	FCOL_WP00Y	( PRINTSYS_MACRO_LSB(7,8,0) )		// フォントカラー：黄
 #define	FCOL_WP00G	( PRINTSYS_MACRO_LSB(9,10,0) )	// フォントカラー：緑
@@ -744,12 +745,14 @@ static void LoadBgGraphic(void)
 	GFL_ARC_CloseDataHandle( ah );
 
 	// フォントパレット
-	GFL_ARC_UTIL_TransVramPalette(
-		ARCID_FONT, NARC_font_default_nclr,
+	ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
+	GFL_ARCHDL_UTIL_TransVramPalette(
+		ah, NARC_staff_roll_staffroll_font_nclr,
 		PALTYPE_MAIN_BG, MBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
-	GFL_ARC_UTIL_TransVramPalette(
-		ARCID_FONT, NARC_font_default_nclr,
+	GFL_ARCHDL_UTIL_TransVramPalette(
+		ah, NARC_staff_roll_staffroll_font_nclr,
 		PALTYPE_SUB_BG, SBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
+	GFL_ARC_CloseDataHandle( ah );
 
 	// バックグラウンドカラー
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
@@ -771,15 +774,17 @@ static void LoadBgGraphic(void)
 static void LoadLogoPalette( SRMAIN_WORK * wk, BOOL flg )
 {
 	if( flg == TRUE ){
-		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL );
+		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( TITLE_RES_ARCID, HEAPID_STAFF_ROLL_L );
 		GFL_ARCHDL_UTIL_TransVramPalette(
 			ah, TITLE_RES_LOGO_NCLR, PALTYPE_MAIN_BG, 0, 0, HEAPID_STAFF_ROLL );
 		GFL_ARC_CloseDataHandle( ah );
 	}else{
 		// フォントパレット
-		GFL_ARC_UTIL_TransVramPalette(
-			ARCID_FONT, NARC_font_default_nclr,
+		ARCHANDLE * ah = GFL_ARC_OpenDataHandle( ARCID_STAFF_ROLL, HEAPID_STAFF_ROLL_L );
+		GFL_ARCHDL_UTIL_TransVramPalette(
+			ah, NARC_staff_roll_staffroll_font_nclr,
 			PALTYPE_MAIN_BG, MBG_PAL_FONT*0x20, 0x20, HEAPID_STAFF_ROLL );
+		GFL_ARC_CloseDataHandle( ah );
 	}
 	// バックグラウンドカラー
 	GFL_BG_SetBackGroundColor( GFL_BG_FRAME1_M, BG_COLOR );
