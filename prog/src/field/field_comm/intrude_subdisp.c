@@ -230,7 +230,7 @@ enum{
 //  
 //--------------------------------------------------------------
 ///街アイコンのタッチ判定の矩形ハーフサイズ
-#define TOWN_ICON_HITRANGE_HALF   (12)
+#define TOWN_ICON_HITRANGE_HALF   (16)
 
 enum{
   BG_BAR_TYPE_SINGLE,   ///<一人用のBGスクリーン(palace_bar.nsc)
