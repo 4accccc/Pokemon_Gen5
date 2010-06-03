@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-03T20:35:35"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-03T21:16:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1057,13 +1057,6 @@
 ライブキャスターを　しますか？</language>
 	</row>
 
-	<row id="msg_wifilobby_1046" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
-		<language name="JPN" width="216">しゃしんデータの　そうじゅしんを
-おこないますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="216">写真データの　送受信を
-行いますが　よろしいですか？</language>
-	</row>
-
 	<row id="msg_wifilobby_087" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<language name="JPN" width="216">[1:00:トレーナー名:0]さんと
 こうかんを　しますか？</language>
@@ -1384,6 +1377,14 @@
 ６ひき　えらんでください</language>
 		<language name="JPN_KANJI" width="216">それでは　参加する　ポケモンを
 ６匹　選んでください</language>
+	</row>
+
+	<row id="msg_wifilobby_1046" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
+		<comment>写真データ送受信の確認メッセージ</comment>
+		<language name="JPN" width="216">しゃしんデータの　そうじゅしんを
+おこないますが　よろしいですか？</language>
+		<language name="JPN_KANJI" width="216">写真データの　送受信を
+行いますが　よろしいですか？</language>
 	</row>
 
 	<flowchart-group-list>
