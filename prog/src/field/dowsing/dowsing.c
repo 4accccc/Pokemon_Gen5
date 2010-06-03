@@ -12,6 +12,7 @@
 
 
 #define DOWSING_NO_BLINK  // これが定義されているとき、液晶画面のような明滅演出をしない。
+#define DOWSING_SEARCH_DIV  // これが定義されているとき、1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
 
 
 // インクルード
@@ -408,6 +409,11 @@ typedef enum
 }
 PF_STATE;
 
+#ifdef DOWSING_SEARCH_DIV
+  // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+  #define  ITEM_SEARCH_NUM_PER_FRAME  (10)  // 1フレームで何個のアイテムをサーチするか
+#endif
+
 
 //=============================================================================
 /**
@@ -538,6 +544,11 @@ struct _DOWSING_WORK
   PF_REQ                      pf_req;
   PF_STATE                    pf_state;
 
+#ifdef DOWSING_SEARCH_DIV
+  // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+  BOOL                        b_item_search_restart;  // TRUEのとき最初からサーチし直す
+#endif
+
   // アイテムサーチ
   ITEM_SEARCH_WORK*           item_search_wk;
 };
@@ -659,6 +670,11 @@ DOWSING_WORK*    DOWSING_Init(
 
   // 初期状態で描画を更新しておく
   DOWSING_Draw( work, TRUE );
+
+#ifdef DOWSING_SEARCH_DIV
+  // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+  work->b_item_search_restart = TRUE;
+#endif
 
   // アイテムサーチ
   {
@@ -870,6 +886,11 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
   // アイテムサーチ
   if( search ) 
   {
+#ifdef DOWSING_SEARCH_DIV
+    // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+    u16  item_search_count;
+#endif
+
     s32 rect_x_min = player_grid_pos_x - AREA_ORIGIN_X;  // rect_x_min<= <rect_x_max
     s32 rect_x_max = player_grid_pos_x + AREA_WIDTH - AREA_ORIGIN_X;
     s32 rect_z_min = player_grid_pos_z - AREA_ORIGIN_Y;  // rect_z_min<= <rect_z_max
@@ -883,12 +904,49 @@ void DOWSING_Update( DOWSING_WORK* work, BOOL active )
     u16       distance_min_table_idx;  // item_rod_tableのインデックス
     ITEM_INFO distance_min_item_info;  // 最小を見付けたときtypeがITEM_TYPE_NONEでなくなる
     distance_min_item_info.type = ITEM_TYPE_NONE;
-   
+  
+#ifndef DOWSING_SEARCH_DIV
     ItemSearchRestart( work->item_search_wk );
     
     while( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ) )
+#else
+    // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+    if( work->b_item_search_restart )
+    {
+      ItemSearchRestart( work->item_search_wk );
+      work->b_item_search_restart = FALSE;
+    }
+
+    for( item_search_count=0; item_search_count<ITEM_SEARCH_NUM_PER_FRAME+1; item_search_count++ )
+#endif
     {
       u16 table_idx;  // item_rod_tableのインデックス
+
+#ifdef DOWSING_SEARCH_DIV
+      // 1フレームで全アイテムをサーチせずに、何フレームかに分けて全アイテムをサーチするようにする。
+      if( item_search_count == 0 )
+      {
+        // 前回一番近くに見付けていたアイテムがまだあるか確認する
+        if( ItemSearchExist( work->item_search_wk, &(work->item_info_prev) ) )
+        {
+          // 前回一番近くに見付けていたアイテムがまだあるので、それをまず判定対象とする
+          item_info.type = work->item_info_prev.type;
+          if( item_info.type == ITEM_TYPE_HIDE )
+          {
+            item_info.info.hide.item_data = work->item_info_prev.info.hide.item_data;
+          }
+          else if( work->item_info_prev.type == ITEM_TYPE_INTRUDE )
+          {
+            item_info.info.intrude.item_posdata = work->item_info_prev.info.intrude.item_posdata;
+          }
+        }
+      }
+      else
+      {
+        work->b_item_search_restart = !( ItemSearchGet( work->item_search_wk, &item_info, item_search_type ) );
+        if( work->b_item_search_restart ) break;
+      }
+#endif
 
       // 自分のいるゾーンIDとアイテムのゾーンIDが同じか
       if( zone_id == MAP_MATRIX_ZONE_ID_NON )
