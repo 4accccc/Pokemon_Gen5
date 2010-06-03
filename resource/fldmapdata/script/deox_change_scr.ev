@@ -114,6 +114,9 @@ form_change:
   //フォルムチェンジ(図鑑登録含む)
  _CHANGE_FORM_NO( SEL_POS, FORM_NO )
 
+ //タグ番号0番に選択したデオキシスのニックネームを格納
+ _TEMOTI_NICK_NAME( 0, SEL_POS )
+
  //鳴き声
  _VOICE_PLAY( MONSNO_DEOKISISU, 0 )   //フォルムによる鳴き声の違いは無いので、0で鳴らす
    //フォルム別にメッセージを変更
