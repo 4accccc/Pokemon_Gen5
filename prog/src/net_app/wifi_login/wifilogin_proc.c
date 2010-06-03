@@ -464,6 +464,10 @@ static void _saveEndWait(WIFILOGIN_WORK* pWork)
       _CHANGE_STATE(pWork, _callbackFunciton);  //接続完了
     }
   }
+  else
+  {
+    _checkError(pWork);
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -720,6 +724,7 @@ static void _checkError( WIFILOGIN_WORK* pWork )
     case DWC_ETYPE_SHUTDOWN_GHTTP:
     case DWC_ETYPE_SHUTDOWN_ND:
       //エラー画面
+      WIFILOGIN_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_TitleEnd(pWork->pMessageWork);
       WIFILOGIN_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
       NetErr_DispCallPushPop();
@@ -1083,6 +1088,11 @@ static void _modeSvlStart2(WIFILOGIN_WORK* pWork)
   if( DWC_SVLGetTokenAsync("", pWork->dbw->pSvl) ){
     _CHANGE_STATE(pWork, _modeSvlGetMain);
   }
+  else
+  {
+    //失敗したらエラーだしてもう一度
+    _checkError(pWork );
+  }
 }
 
 
@@ -1111,16 +1121,13 @@ static void _modeSvlGetMain(WIFILOGIN_WORK* pWork)
     NET_PRINT("svltoken = %s\n", pSvl->svltoken);
     _CHANGE_STATE(pWork, _callbackFunciton);
   }
-  else if(state == DWC_SVL_STATE_ERROR) {
-    dwcerror = DWC_GetLastErrorEx(&errorcode, &dwcerrortype);
-    _CHANGE_STATE(pWork, _callbackFunciton);
-    NET_PRINT("Failed to get SVL Token\n");
-    NET_PRINT("DWCError = %d, errorcode = %d, DWCErrorType = %d\n", dwcerror, errorcode, dwcerrortype);
+  else if(state == DWC_SVL_STATE_ERROR
+      || state == DWC_SVL_STATE_DIRTY 
+      || state == DWC_SVL_STATE_CANCELED ) {
+    NET_PRINT("SVL error.\n");
+    _checkError(pWork );
   }
-  else if(state == DWC_SVL_STATE_CANCELED) {
-    NET_PRINT("SVL canceled.\n");
-    _CHANGE_STATE(pWork, _callbackFunciton);
-  }
+
 }
 
 //------------------------------------------------------------------------------
