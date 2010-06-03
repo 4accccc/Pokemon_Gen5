@@ -189,7 +189,7 @@ void BEACON_VIEW_Exit(BEACON_VIEW_PTR wk)
   GFL_TCBL_DeleteAll( wk->pTcbSys );
   
   //通信アイコン位置指定解除
-  GFL_NET_WirelessIconEasy_DefaultLCD();
+//  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   _sub_BmpWinDelete( wk );
   _sub_ActorDelete( wk );
