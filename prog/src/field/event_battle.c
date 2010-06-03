@@ -207,6 +207,7 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
     //このイベント自体がサブイベントの場合、何もせずに戻る
     if ( wbew->sub_event_f == TRUE )
     {
+      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       return GMEVENT_RES_FINISH;
     }
 
@@ -214,6 +215,7 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
     if (FIELD_BATTLE_IsLoseResult(GAMEDATA_GetLastBattleResult(gamedata), BTL_COMPETITOR_WILD) == TRUE)
     {
       //負けた場合は敗北処理へ
+      COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
       GMEVENT_ChangeEvent( event, EVENT_NormalLose(gsys) );
     }
     else
@@ -238,6 +240,7 @@ static GMEVENT_RESULT wildBattleEvent( GMEVENT * event, int *seq, void *wk )
     break;
   
   case 3:
+    COMM_PLAYER_SUPPORT_Init(GAMEDATA_GetCommPlayerSupportPtr(gamedata));
     return GMEVENT_RES_FINISH;
     break;
   }
