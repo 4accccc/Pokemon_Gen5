@@ -1044,8 +1044,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_130">
-		<language name="JPN" width="256">All  Battle  Composition</language>
-		<language name="JPN_KANJI" width="256">All  Battle  Composition</language>
+		<language name="JPN" width="256">All  Battle  Music</language>
+		<language name="JPN_KANJI" width="256">All  Battle  Music</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_131">

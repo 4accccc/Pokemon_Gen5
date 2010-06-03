@@ -493,9 +493,11 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 			wk->wait = 0;
 			wk->subSeq++;
 		}else{
+/*
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 				OS_Printf( "[0] push a button : wait = %d\n", wk->wait );
 			}
+*/
 			if( wk->skipFlag == 1 ){
 				wk->wait += SKIP_SPEED;
 			}else{
@@ -516,9 +518,11 @@ static int MainSeq_StartWait( SRMAIN_WORK * wk )
 			wk->subSeq = 0;
 			return MAINSEQ_MAIN;
 		}else{
+/*
 			if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 				OS_Printf( "[2] push a button : wait = %d\n", wk->wait );
 			}
+*/
 			if( wk->skipFlag == 1 ){
 				wk->wait += SKIP_SPEED;
 			}else{
@@ -555,7 +559,7 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 			return MAINSEQ_MAIN;
 		}
 		// I—¹
-		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ){
+		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 			return SetFadeOut( wk, MAINSEQ_RELEASE );
 		}
 	}
@@ -1459,7 +1463,7 @@ static void CheckSkip( SRMAIN_WORK * wk )
 {
 	if( wk->dat->fastMode != STAFFROLL_MODE_NORMAL ){
 		if( wk->skipCount == 0 ){
-			if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+			if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B) ){
 				wk->skipFlag = 1;
 			}else{
 				wk->skipFlag = 0;
@@ -1839,9 +1843,11 @@ static BOOL PutLogo( SRMAIN_WORK * wk )
 			wk->listWait = 0;
 			wk->labelSeq++;
 		}
+/*
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
 			OS_Printf( "[1] push a button : start %d, wait = %d\n", LOGO_PUT_WAIT, wk->listWait );
 		}
+*/
 		break;
 
 	case 3:
