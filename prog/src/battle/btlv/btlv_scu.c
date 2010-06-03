@@ -838,10 +838,6 @@ static BOOL btlin_wild_single( int* seq, void* wk_adrs )
     if( BTLV_SCU_WaitMsg(wk) )
     {
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
-#if 0
-      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-#endif
       (*seq)++;
     }
     break;
@@ -973,6 +969,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     {
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
       BTLV_EFFECT_AddByPos( subwk->viewPos, BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
+      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
@@ -984,13 +981,11 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
       BTLV_BALL_GAUGE_PARAM bbgp;
 
       bbgp_make( wk, &bbgp, BTL_MAIN_GetPlayerClientID(wk->mainModule), BTLV_BALL_GAUGE_TYPE_MINE );
-      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_ENEMY );
       BTLV_EFFECT_SetBallGauge( &bbgp );
       (*seq)++;
     }
     break;
   case 7:
-//    if( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) )
     {
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_2_SOLO );
@@ -998,7 +993,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
     }
     break;
   case 8:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( !BTLV_EFFECT_CheckExecute() ) && ( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) ) )
     {
       subwk->viewPos = BTLV_MCSS_POS_AA;
       subwk->pokePos = BTL_MAIN_ViewPosToBtlPos( wk->mainModule, subwk->viewPos );
@@ -1016,10 +1011,7 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 9:
     if( BTLV_SCU_WaitMsg(wk) )
     {
-#if 0
-      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->pp), subwk->viewPos );
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-#endif
+      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
@@ -1032,7 +1024,6 @@ static BOOL btlin_trainer_single( int* seq, void* wk_adrs )
   case 11:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       statwin_disp_start( &wk->statusWin[ subwk->pokePos ] );
       return TRUE;
     }
@@ -1987,7 +1978,7 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
     break;
 
   case 2:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( !BTLV_EFFECT_CheckExecute() ) && ( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) ) )
     {
       subwk->vpos = BTLV_MCSS_POS_AA;
       subwk->clientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
@@ -2009,10 +2000,6 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
     {
       BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
-#if 0
-      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp), subwk->vpos );
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-#endif
       (*seq)++;
     }
     break;
@@ -2092,7 +2079,7 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
     break;
 
   case 2:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( !BTLV_EFFECT_CheckExecute() ) && ( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) ) )
     {
       u32 i;
       u16 strID;
@@ -2193,7 +2180,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
     break;
 
   case 2:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( !BTLV_EFFECT_CheckExecute() ) && ( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) ) )
     {
       u32 i;
       u16 strID;
@@ -2300,7 +2287,7 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
     break;
 
   case 2:
-    if( !BTLV_EFFECT_CheckExecute() )
+    if( ( !BTLV_EFFECT_CheckExecute() ) && ( !BTLV_EFFECT_CheckExecuteBallGauge( BTLV_BALL_GAUGE_TYPE_MINE ) ) )
     {
       u32 i;
       u16 strID;
