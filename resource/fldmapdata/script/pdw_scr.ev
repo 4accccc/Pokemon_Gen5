@@ -54,8 +54,6 @@ EVENT_START ev_pdw_furniture_menu
         //"あっ　とつぜんゴメンねワタシ　かぐのデザイナーをしているの▼(略)
         _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_08, SCWK_TARGET_OBJID, POS_DOWN )
         
-        $WK_SCENE_C02R0101 = TRUE
-        
         _CHG_COMMON_SCR SCRID_PDW_FURNITURE_SELECT_ROUTINE
       ELSE
         _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_CHECK_SELECT , 0 , 0 , SCWK_ANSWER )
@@ -88,8 +86,14 @@ ev_pdw_furniture_select_routine:
     //フラグ落とす
     _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_RESET_SYNC_FURNITURE , 0 , 0 , 0 )
   ELSE
-    //"この　カタログから　さいこうのかぐを　１つ　えらんでほしいの！"
-    _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_05_02, SCWK_TARGET_OBJID, POS_DOWN )
+    IF $WK_SCENE_C02R0101 == FALSE THEN
+      //初回イベント
+      _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_05, SCWK_TARGET_OBJID, POS_DOWN )
+      $WK_SCENE_C02R0101 = TRUE
+    ELSE        
+      //"この　カタログから　さいこうのかぐを　１つ　えらんでほしいの！"
+      _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_05_02, SCWK_TARGET_OBJID, POS_DOWN )
+    ENDIF
   ENDIF
   
   _PDW_SET_FURNITURE_WORD( 0 , 0 )
