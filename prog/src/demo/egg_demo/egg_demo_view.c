@@ -981,6 +981,7 @@ static void Egg_Demo_View_McssInit( EGG_DEMO_VIEW_WORK* work )
   {
     work->mcss_wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
                         0, POKE_Y, FX_F32_TO_FX32(-800.0f) );//-800.0f) );
+    MCSS_SetShadowVanishFlag( work->mcss_wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
 
 #ifdef DEBUG_KAWADA
     {

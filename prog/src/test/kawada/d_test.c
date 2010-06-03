@@ -871,6 +871,7 @@ static void D_Test_CmnPokeChange(
     }
     MCSS_TOOL_MakeMAWParam( mons_no, form_no, sex, rare, egg, &add_wk, dir );
     work->mcss_wk = MCSS_Add( work->mcss_sys_wk, work->mcss_pos.x, work->mcss_pos.y, work->mcss_pos.z, &add_wk );
+    MCSS_SetShadowVanishFlag( work->mcss_wk, TRUE );  // ‰e‚ðÁ‚µ‚Ä‚¨‚©‚È‚¢‚ÆA¬‚³‚È“_‚Æ‚µ‚Ä‰e‚ª•\Ž¦‚³‚ê‚Ä‚µ‚Ü‚¤B
     MCSS_SetScale( work->mcss_wk, &work->mcss_scale );
     if( work->mcss_set_ofs_position_func )
     {

@@ -2518,7 +2518,8 @@ static MCSS_WORK* PokeInit( MCSS_SYS_WORK* mcss_sys_wk,
   }
   MCSS_TOOL_MakeMAWParam( mons_no, form_no, sex, rare, egg, &add_wk, dir );
   poke_wk = MCSS_Add( mcss_sys_wk, 0, 0, 0, &add_wk );
-  
+  MCSS_SetShadowVanishFlag( poke_wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
+
   MCSS_SetAnmStopFlag( poke_wk );
   MCSS_SetScale( poke_wk, &scale );
   //PokeAdjustOfsPos( poke_wk );  // 地面原点で問題ないので、オフセットしない。

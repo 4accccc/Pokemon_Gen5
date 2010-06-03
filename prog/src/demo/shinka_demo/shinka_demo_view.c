@@ -1125,12 +1125,14 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
         //MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
         work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
                                                       POKE_X_CENTER, POKE_Y, 0 );
+        MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // ‰e‚ðÁ‚µ‚Ä‚¨‚©‚È‚¢‚ÆA¬‚³‚È“_‚Æ‚µ‚Ä‰e‚ª•\Ž¦‚³‚ê‚Ä‚µ‚Ü‚¤B 
       }
       else
       {
         //MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
         work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->after_pp, MCSS_DIR_FRONT,
                                                       POKE_X_CENTER, POKE_Y, 0 );
+        MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // ‰e‚ðÁ‚µ‚Ä‚¨‚©‚È‚¢‚ÆA¬‚³‚È“_‚Æ‚µ‚Ä‰e‚ª•\Ž¦‚³‚ê‚Ä‚µ‚Ü‚¤B 
       }
       //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
       MCSS_SetScale( work->poke_set[i].wk, &scale );
@@ -1161,6 +1163,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
     //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
     work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
                                                   POKE_X_CENTER, POKE_Y, 0 );
+    MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // ‰e‚ðÁ‚µ‚Ä‚¨‚©‚È‚¢‚ÆA¬‚³‚È“_‚Æ‚µ‚Ä‰e‚ª•\Ž¦‚³‚ê‚Ä‚µ‚Ü‚¤B 
     MCSS_SetScale( work->poke_set[i].wk, &scale );
   }
 
