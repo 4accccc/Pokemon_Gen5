@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-05-29T17:34:47"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-06-03T12:43:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2114,6 +2114,16 @@ LR→補完&quot;</language>
 	<row id="DEBUG_FIELD_INTRUDE">
 		<language name="JPN" width="240">ハイリンク</language>
 		<language name="JPN_KANJI" width="240">ハイリンク</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR74">
+		<language name="JPN" width="240">ミュージカルショットさくせい</language>
+		<language name="JPN_KANJI" width="240">ミュージカルショット作成</language>
+	</row>
+
+	<row id="DEBUG_FIELD_STR75">
+		<language name="JPN" width="240">フィーリングスコアさくせい</language>
+		<language name="JPN_KANJI" width="240">フィーリングスコア作成</language>
 	</row>
 
 	<flowchart-group-list>
