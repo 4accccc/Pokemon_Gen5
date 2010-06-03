@@ -197,6 +197,25 @@ void FIELD_COMM_ACTOR_CTRL_DeleteActro(
 BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
     FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gz, u32 *outID )
 {
+  int i = 0;
+  FIELD_COMM_ACTOR *act = act_ctrl->act_tbl;
+  
+  for( ; i < act_ctrl->max; i++, act++ ){
+    if( act->mmdl != NULL ){
+      if( MMDL_HitCheckXZ(act->mmdl,gx,gz,TRUE) ){
+        *outID = act->id;
+        return( TRUE );
+      }
+    }
+  }
+  
+  return( FALSE );
+}
+
+#if 0 //old 100603 通信アクターのみをチェックする
+BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
+    FIELD_COMM_ACTOR_CTRL *act_ctrl, s16 gx, s16 gz, u32 *outID )
+{
   MMDL *mmdl;
   
   mmdl = MMDLSYS_SearchGridPos( act_ctrl->mmdlsys, gx, gz, FALSE );
@@ -215,6 +234,7 @@ BOOL FIELD_COMM_ACTOR_CTRL_SearchGridPos(
   
   return( FALSE );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
