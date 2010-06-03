@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-03T12:35:38"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-03T15:24:49"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -265,7 +265,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1429" top="317" right="2134" bottom="937" maximized="no" rayout="Vertical2">
+	<dialog left="4" top="219" right="709" bottom="839" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -295,7 +295,7 @@
 
 
 	<row id="msg_d20r0801_bg1_01">
-		<comment>リフーゲは　たった　１人で
+		<comment>王は　たった　１人で
 １０００人の　敵を　跳ね除けた</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">IRSPE③HIXEIJIH
@@ -305,7 +305,7 @@ KRMO</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_02">
-		<comment>リフーゲは　１日で
+		<comment>王は　１日で
 １００００人を　仲間に　した</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">CEHERM
@@ -315,7 +315,7 @@ KRMOHIRMSN④</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_03">
-		<comment>リフーゲは　１日で
+		<comment>王は　１日で
 １０００００匹の　生き物を　呼んだ</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">WKRMIF⑤HIPPEG
@@ -325,7 +325,7 @@ KRMO</language>
 	</row>
 
 	<row id="msg_d20r0801_bg1_04">
-		<comment>リフーゲは　私たちの
+		<comment>王は　私たちの
 希望であり　未来である</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">IVYXYJHREITSL
@@ -336,7 +336,7 @@ WMKRMO</language>
 
 	<row id="msg_d20r0801_bg1_05" text-color=",,,,,,#ffff00,,,,,,,,,,,,">
 		<comment>ここに　偉大なる王
-リフーゲを　たたえる</comment>
+（神を表す記号表示）を　たたえる</comment>
 		<attribute name="キャラ指定">BG</attribute>
 		<language name="JPN" font=" 2:shinden" width="224">⑥KRMOXEIVKILX</language>
 		<language name="JPN_KANJI" font=" 2:shinden" width="224">⑥KRMOXEIVKILX</language>
