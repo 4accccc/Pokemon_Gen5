@@ -25,7 +25,7 @@
 //#define DEBUG_WH_BEACON_PRINT_ON (1)  // beacon切り替えタイミングを表示
 
 #if DEBUG_ONLY_FOR_ohno
-#define DEBUG_WH_BEACON_PRINT_ON  (1) // beacon切り替えタイミングを表示
+#define DEBUG_WH_BEACON_PRINT_ON  (0) // beacon切り替えタイミングを表示
 #endif  //DEBUG_ONLY_FOR_ohno
 
 extern u8 DebugAloneTest;

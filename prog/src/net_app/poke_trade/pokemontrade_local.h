@@ -48,6 +48,8 @@
 #include "app/app_keycursor.h"
 
 
+#define FIRST_NATUKIDO  (70)		///交換されたポケモンに入れるなつき度
+
 ///3Dモデルのタイプ
 typedef enum
 {
@@ -606,6 +608,7 @@ struct _POKEMON_TRADE_WORK{
 //  u32 pokeIconNcgResOrg[BOX_POKESET_MAX+ TEMOTI_POKEMAX];
    
   u32 pokeIconNcgRes[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  GFL_CLWK* markIcon2;
   GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* markIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* searchIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];

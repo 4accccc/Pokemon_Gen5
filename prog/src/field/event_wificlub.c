@@ -632,12 +632,13 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   pClub->fieldmap = fieldmap;
   pClub->event = event;
   pClub->bFieldEnd = bFieldEnd;
-
+  
   pClub->pMatchParam = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof(WIFIP2PMATCH_PROC_PARAM));
   pClub->pMatchParam->pMatch = GFL_HEAP_AllocClearMemory(GetHeapLowID(HEAPID_PROC), sizeof( WIFI_STATUS ));
   pClub->pMatchParam->pGameData = GAMESYSTEM_GetGameData(pClub->gsys);
   pClub->pMatchParam->pSaveData = GAMEDATA_GetSaveControlWork(pClub->pMatchParam->pGameData);
   pClub->pMatchParam->vchatMain = TRUE;
+  pClub->pMatchParam->bTalk = WIFIP2PMATCH_STATE_NONE;  //‚±‚ê‚Í•K—v‚È‚Ì‚Åí‚Á‚Ä‚Í‚¢‚¯‚Ü‚¹‚ñ
 
   pClub->pGameData =  pClub->pMatchParam->pGameData;
   pClub->pWifiList = GAMEDATA_GetWiFiList(pClub->pGameData);

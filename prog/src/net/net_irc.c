@@ -15,7 +15,7 @@
 
 
 
-#if DEBUG_ONLY_FOR_ohno
+#if 0 //DEBUG_ONLY_FOR_ohno
 
 #define IRC_PRINT(...)  (void) ((OS_TPrintf(__VA_ARGS__)))
 

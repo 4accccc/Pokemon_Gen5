@@ -1002,7 +1002,9 @@ static void BmpWinDelete( WIFIP2PMATCH_WORK *wk )
     wk->ListWin=NULL;
   }
   if(wk->SysMsgWin){
-    GFL_BMPWIN_Delete(wk->SysMsgWin);
+    GFL_BMPWIN_ClearScreen(wk->SysMsgWin);
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_M );
+    _BmpWinDel(wk->SysMsgWin);
     wk->SysMsgWin = NULL;
   }
   if(wk->lw){

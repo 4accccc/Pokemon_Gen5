@@ -662,8 +662,14 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
   {
     POKEMON_PARAM* pp=PokeParty_GetMemberPointer( pWork->pParentWork->pParty, 0 );
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
-    
+
     STATUS_RCV_PokeParam_RecoverAll(pp); //回復
+    {
+      // 交換されたポケモンに入れるなつき度
+      u8 friend = FIRST_NATUKIDO;
+      PP_Put(pp, ID_PARA_friend, friend);
+    }
+    
     //ポケメモ
     if(PP_Get(pp,ID_PARA_tamago_flag,NULL)){
       POKE_MEMO_SetTrainerMemoPP( pp, POKE_MEMO_EGG_TRADE,

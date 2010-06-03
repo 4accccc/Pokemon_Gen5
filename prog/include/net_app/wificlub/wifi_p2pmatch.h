@@ -39,7 +39,8 @@ typedef struct {
   u8 friendNo;  //対戦している人の番号
   u8 shooter;         //戦うようのシューター
   u8 shooterSelect;   //自分で選択したシューター
-  u8 dummy3[2]; 
+  u8 bTalk;   //話したか募集か
+  u8 dummy3; 
 }WIFIP2PMATCH_PROC_PARAM;
 
 extern const GFL_PROC_DATA WifiP2PMatchProcData;

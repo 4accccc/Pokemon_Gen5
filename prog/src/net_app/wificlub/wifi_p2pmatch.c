@@ -2737,6 +2737,12 @@ static int WifiP2PMatch_ReConnectingWait( WIFIP2PMATCH_WORK *wk, int seq )
     return seq;
   }
 
+  if(wk->rpm){
+    PokeRegulation_DeletePrintMsg(wk->rpm);
+    wk->rpm = NULL;
+  }
+
+  
   if(GFL_NET_StateIsWifiLoginMatchState()){
     //OS_TPrintf("WIFIÚ‘±Š®—¹\n");
     if( WIFI_MCR_GetInitFlag( &wk->matchroom ) == TRUE ){
@@ -7424,6 +7430,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   wk->pConfig = SaveData_GetConfig(pParentWork->pSaveData);
   wk->initSeq = pParentWork->seq;    // P2P‚©DPW‚©
 
+  wk->state = pParentWork->bTalk;
+  
   if(pParentWork->seq != WIFI_GAME_NONE){
     _initBGMVol( wk, WIFI_STATUS_PLAYING);
   }
@@ -7561,6 +7569,8 @@ static GFL_PROC_RESULT WifiP2PMatchProc_End( GFL_PROC * proc, int * seq, void * 
   if( !WIPE_SYS_EndCheck() ){
     return GFL_PROC_RES_CONTINUE;
   }
+
+  pParentWork->bTalk =  wk->state;
 
   if(wk->pRegulation){
     Regulation_Copy(wk->pRegulation, pParentWork->pRegulation);
