@@ -51,7 +51,7 @@ typedef struct
 //--------------------------------------------------------------
 typedef struct
 {
-  OBJ_USE_FLAG useFlag:2;
+  u32 useFlag:2;
   u32 cullingFlag:1;
   u32 vanishFlag:1;
   u32 outerDrawFlag:1;
