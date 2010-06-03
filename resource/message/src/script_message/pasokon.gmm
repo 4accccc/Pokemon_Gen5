@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-07T16:24:17"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-03T19:51:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -433,10 +433,10 @@
 		<comment>■壁紙追加メッセージ１
 一度読んだら、次から表示されません。</comment>
 		<language name="JPN" width="256">おめでとうございます！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグせいはの　きねんとして
+はじめて　クリアした　きねんとして
 かべがみが　ついか　されました！[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">おめでとうございます！[BE:01:ページ切り替え（クリア）]
-ポケモンリーグ制覇の　記念として
+初めて　クリアした　記念として
 壁紙が　追加されました！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
