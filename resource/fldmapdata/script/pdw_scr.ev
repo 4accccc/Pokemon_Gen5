@@ -89,7 +89,7 @@ ev_pdw_furniture_select_routine:
     _PDW_FURNITURE_TOOLS( PDW_FURNITURE_TOOLS_RESET_SYNC_FURNITURE , 0 , 0 , 0 )
   ELSE
     //"この　カタログから　さいこうのかぐを　１つ　えらんでほしいの！"
-    _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_05, SCWK_TARGET_OBJID, POS_DOWN )
+    _BALLOONWIN_OBJMSG_POS( pdw_furniture_menu_05_02, SCWK_TARGET_OBJID, POS_DOWN )
   ENDIF
   
   _PDW_SET_FURNITURE_WORD( 0 , 0 )
