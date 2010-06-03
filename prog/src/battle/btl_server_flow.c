@@ -54,7 +54,7 @@ static BOOL ActOrderProc_OnlyPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION*
 static BOOL scproc_CheckShowdown( BTL_SVFLOW_WORK* wk );
 static BOOL CheckPlayerSideAlive( BTL_SVFLOW_WORK* wk );
 static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
-static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk );
+static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
 static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -390,6 +390,7 @@ static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContF
 static void scPut_ResetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
 static void scPut_SetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
 static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTurnFlag flag );
+static void scPut_IllusionSet( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec );
 static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* outPoke );
 static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   WazaID orgWazaid, BtlPokePos orgTargetPos, REQWAZA_WORK* reqWaza );
@@ -838,16 +839,20 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
 
   scproc_AfterMemberIn( wk );
   scproc_CheckExpGet( wk );
-  reqChangePokeForServer( wk );
+  reqChangePokeForServer( wk, &wk->clientIDRec );
 
   {
     u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
     if( numDeadPoke == numDeadPokeAfter ){
       return SVFLOW_RESULT_DEFAULT;
     }else{
-      if( scproc_CheckShowdown(wk) == FALSE){
+      if( scproc_CheckShowdown(wk) == FALSE)
+      {
+        scPut_IllusionSet( wk, &wk->clientIDRec );
         return SVFLOW_RESULT_POKE_COVER;
-      }else{
+      }
+      else
+      {
         return SVFLOW_RESULT_BTL_SHOWDOWN;
       }
     }
@@ -893,7 +898,6 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
 
     if( wk->flowResult == SVFLOW_RESULT_POKE_CHANGE ){
       // 途中交代しようとしてるなら死亡ポケの分はリクエスト出しちゃだめ
-//      reqChangePokeForServer( wk );
       return i+1;
     }
 
@@ -934,7 +938,9 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     if( relivePokeRec_CheckNecessaryPokeIn(wk)
     ||  (numDeadPoke != 0)
     ){
-      reqChangePokeForServer( wk );
+      reqChangePokeForServer( wk, &wk->clientIDRec );
+      scPut_IllusionSet( wk, &wk->clientIDRec );
+
       wk->flowResult = SVFLOW_RESULT_POKE_COVER;
       return wk->numActOrder;
     }
@@ -1172,11 +1178,13 @@ void BTL_SVFLOW_MakeRotationCommand( BTL_SVFLOW_WORK* wk, u8 clientID, BtlRotate
  * @retval  BOOL  誰かが死んでいて交換する必要ある場合はTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
+static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec )
 {
   u8 posAry[ BTL_POSIDX_MAX ];
   u8 empty_pos_cnt, clientID, i;
   u8 result = FALSE;
+
+  rec->count = 0;
 
   for(clientID=0; clientID<BTL_CLIENT_MAX; ++clientID)
   {
@@ -1191,6 +1199,8 @@ static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk )
         BTL_N_PrintfSimple( DBGSTR_csv, posAry[i] );
       }
       BTL_N_PrintfSimple( DBGSTR_LF );
+
+      rec->clientID[ rec->count++ ] = clientID;
       result = TRUE;
     }
   }
@@ -2583,24 +2593,22 @@ static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* b
 //----------------------------------------------------------------------------------
 static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx )
 {
-  SVCL_WORK* clwk;
+  BTL_PARTY* party;
   BTL_POKEPARAM* bpp;
   u8 pokeID;
 
-  clwk = BTL_SERVER_GetClientWork( wk->server, clientID );
+  party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
 
   {
-    BTL_POKEPARAM* tmpBpp = BTL_PARTY_GetMemberData( clwk->party, nextPokeIdx );
-    if( BPP_GetValue(tmpBpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON ){
-      SCQUE_PUT_OP_SetFakeSrcMember( wk->que, clientID, nextPokeIdx );
-      BTL_MAIN_SetFakeSrcMember( wk->mainModule, clwk->party, nextPokeIdx );
-    }
+    SCQUE_PUT_OP_SetIllusionForParty( wk->que, clientID, nextPokeIdx );
+    BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
   }
 
   if( posIdx != nextPokeIdx ){
-    BTL_PARTY_SwapMembers( clwk->party, posIdx, nextPokeIdx );
+    BTL_PARTY_SwapMembers( party, posIdx, nextPokeIdx );
+    // @todo クライアントに通知は？
   }
-  bpp = BTL_PARTY_GetMemberData( clwk->party, posIdx );
+  bpp = BTL_PARTY_GetMemberData( party, posIdx );
   pokeID = BPP_GetID( bpp );
 
   BTL_MAIN_RegisterZukanSeeFlag( wk->mainModule, clientID, bpp );
@@ -4405,8 +4413,11 @@ static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
 }
 static void scproc_TameLockClear( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker )
 {
-  scPut_CureSick( wk, attacker, WAZASICK_TAMELOCK, NULL );
-  BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_TAMEHIDE_OFF );
+  if( BPP_CheckSick(attacker, WAZASICK_TAMELOCK) )
+  {
+    scPut_CureSick( wk, attacker, WAZASICK_TAMELOCK, NULL );
+    BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_TAMEHIDE_OFF );
+  }
 
   {
     BppContFlag contFlag = CheckPokeHideState( attacker );
@@ -9824,6 +9835,25 @@ static void scPut_ResetTurnFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppTur
 {
   BPP_TURNFLAG_ForceOff( bpp, flag );
   SCQUE_PUT_OP_ResetTurnFlag( wk->que, BPP_GetID(bpp), flag );
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put] イリュージョン再設定
+ *
+ * @param   wk
+ * @param   rec
+ */
+//----------------------------------------------------------------------------------
+static void scPut_IllusionSet( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec )
+{
+  u32 i;
+  BTL_PARTY* party;
+  for(i=0; i<rec->count; ++i)
+  {
+    party = BTL_POKECON_GetPartyData( wk->pokeCon, rec->clientID[i] );
+    SCQUE_PUT_OP_SetIllusionForParty( wk->que, rec->clientID[i], 0 );
+    BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
+  }
 }
 
 //---------------------------------------------------------------------------------------------

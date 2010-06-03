@@ -753,6 +753,7 @@ static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }
 }
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「せいしんりょく」
@@ -1077,6 +1078,15 @@ static void handler_SlowStart_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     }
   }
 }
+static void handler_SlowStart_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[4] == 0 )
+  {
+    handler_SlowStart_MemberIn( myHandle, flowWk, pokeID, work );
+    work[4] = 1;
+  }
+}
+
 // ターンチェック終了ハンドラ
 static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -1101,10 +1111,10 @@ static void handler_SlowStart_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SlowStart( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_CALC_AGILITY,         handler_SlowStart_Agility   },  // すばやさ計算ハンドラ
-    { BTL_EVENT_ATTACKER_POWER,       handler_SlowStart_AtkPower  },  // 攻撃力計算ハンドラ
     { BTL_EVENT_MEMBER_IN,            handler_SlowStart_MemberIn  },  // メンバー入場ハンドラ
     { BTL_EVENT_CHANGE_TOKUSEI_AFTER, handler_SlowStart_MemberIn  },  // とくせい書き換え直後ハンドラ
+    { BTL_EVENT_CALC_AGILITY,         handler_SlowStart_Agility   },  // すばやさ計算ハンドラ
+    { BTL_EVENT_ATTACKER_POWER,       handler_SlowStart_AtkPower  },  // 攻撃力計算ハンドラ
     { BTL_EVENT_TURNCHECK_END,        handler_SlowStart_TurnCheck },  // ターンチェック終了ハンドラ
 
   };
@@ -1574,7 +1584,7 @@ static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     HANDEX_STR_AddArg( &param->exStr, pokeID );
   }
 }
-// ポケ入場ハンドラ
+// ポケ入場・とくせい取得後ハンドラ
 static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( checkFlowerGiftEnablePokemon(flowWk, pokeID) )
@@ -3308,6 +3318,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
     param->pokeID = pokeID;
     param->tokuseiID = nextTok;
+    param->fSkipMemberInEvent = TRUE;
     param->header.tokwin_flag = TRUE;
     HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Trace );
     HANDEX_STR_AddArg( &param->exStr, targetPokeID );

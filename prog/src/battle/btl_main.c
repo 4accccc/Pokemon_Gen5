@@ -4744,38 +4744,39 @@ BTL_POKEPARAM* BTL_PARTY_GetAliveTopMember( BTL_PARTY* party )
  * とくせい「イリュージョン」を持つメンバーの参照ポケデータ更新
  *
  * @param   party
- * @param   memberIdx
  */
 //----------------------------------------------------------------------
-void BTL_MAIN_SetFakeSrcMember( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, u8 memberIdx )
+void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party )
 {
-  BTL_POKEPARAM* bpp = party->member[ memberIdx ];
+  int lastPokeIdx, i;
 
-  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
+  // 最後尾にいて生きてるポケがイリュージョン対象
+  for(lastPokeIdx=(party->memberCount-1); lastPokeIdx>0; --lastPokeIdx)
   {
-    int idx;
-    for(idx=(party->memberCount-1); idx>0; --idx)
-    {
-      if(BPP_IsFightEnable(party->member[idx])){
-        break;
-      }
+    if(BPP_IsFightEnable(party->member[lastPokeIdx])){
+      break;
     }
-    if( (idx>memberIdx) )
+  }
+
+  for(i=0; i<party->memberCount; ++i)
+  {
+    BTL_POKEPARAM* bpp = party->member[ i ];
+    // イリュージョン持ちなら対象を更新
+    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
     {
-      BTL_POKEPARAM* refPoke;
-
-      refPoke = party->member[idx];
-      BPP_SetViewSrcData( bpp, BPP_GetSrcData(refPoke) );
-
-      BTL_N_Printf( DBGSTR_MAIN_Illusion1st, memberIdx, BPP_GetID(bpp));
-      BTL_N_PrintfSimple( DBGSTR_MAIN_Illusion2nd, idx, BPP_GetID(refPoke));
+      BTL_POKEPARAM* bppRef = party->member[ lastPokeIdx ];
+      BPP_SetViewSrcData( bpp, BPP_GetSrcData(bppRef) );
+      BTL_N_Printf( DBGSTR_MAIN_Illusion1st, i, BPP_GetID(bpp));
+      BTL_N_PrintfSimple( DBGSTR_MAIN_Illusion2nd, lastPokeIdx, BPP_GetID(bppRef));
     }
     // 自身が最後尾にいる場合、イリュージョンは無効（ただし野生ゾロアークの特殊処理は除外）
     else if( BPP_GetViewSrcData(bpp) != wk->ppIllusionZoroArc )
     {
       BPP_ClearViewSrcData( bpp );
     }
+
   }
+
 }
 
 

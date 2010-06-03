@@ -285,6 +285,15 @@ typedef enum {
   HandExResult_Enable,  ///< ”½‰ž‚à‚ ‚èAŒø‰Ê‚à‚ ‚Á‚½
 }HandExResult;
 
+/**
+ *  ClientID ‹L˜^
+ */
+typedef struct {
+  u8  count;
+  u8  clientID[ BTL_CLIENT_MAX ];
+}CLIENTID_REC;
+
+
 
 //-----------------------------------------------------
 /**
@@ -309,6 +318,7 @@ struct _BTL_SVFLOW_WORK {
   HITCHECK_PARAM*         hitCheckParam;
   BTL_ESCAPEINFO          escInfo;
   BTL_LEVELUP_INFO        lvupInfo;
+  CLIENTID_REC            clientIDRec;
   u32                     simulationCounter;
   u8                      cmdBuildStep;
   u8                      actOrderStep;
