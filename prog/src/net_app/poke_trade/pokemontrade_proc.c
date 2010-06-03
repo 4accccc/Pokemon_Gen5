@@ -1853,11 +1853,15 @@ static void _notWazaChangePoke(POKEMON_TRADE_WORK* pWork)
 
 static void _dispSubStateWait2(POKEMON_TRADE_WORK* pWork)
 {
-
+#if 0   //20100603 del    Saito
   POKEMON_PASO_PARAM* ppp =
     IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
                                        pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
   POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+#else
+  POKEMON_PARAM* pp = POKEMONTRADE_CreatePokeData(pWork->pBox,
+                                                    pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
+#endif
   POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork,FALSE);
   POKETRADE_MESSAGE_ChangePokemonMyStDisp(pWork, pWork->pokemonselectno ,  pp);
   _PokemonIconRenew(pWork);
@@ -2074,9 +2078,14 @@ static void _dispSubState(POKEMON_TRADE_WORK* pWork)
   }
 
   {
+#if 0   //20100603 del    Saito
     POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox,
                                                                  pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
     POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
+#else
+    POKEMON_PARAM* pp = POKEMONTRADE_CreatePokeData(pWork->pBox,
+                                                    pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
+#endif
 
     pWork->pokemonselectno = 0;
 
