@@ -30,6 +30,9 @@
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 
 
+SDK_COMPILER_ASSERT(INTRUDE_BCON_PLAYER_PRINT_LIFE < 256);  //search_print_lifeがu8なので
+
+
 //==============================================================================
 //  定数定義
 //==============================================================================
@@ -61,6 +64,7 @@ static void  IntrudeComm_ErrorCallBack(GFL_NETHANDLE* pNet,int errNo, void* pWor
 static void  IntrudeComm_DisconnectCallBack(void* pWork);
 static void IntrudeComm_HardConnect(void* pWork,int hardID);
 static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level);
+static void _SearchBconLifeDec(INTRUDE_COMM_SYS_PTR intcomm);
 
 
 //==============================================================================
@@ -263,6 +267,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   }
   
   IntrudeComm_DiffSendBeacon(gamedata, &intcomm->send_beacon);
+  _SearchBconLifeDec(intcomm);
   
   switch(*seq){
   case 0:
@@ -586,8 +591,8 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
   GBS_BEACON *bcon_buff;
   GameServiceID id;
   
-  if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX || GFL_NET_GetConnectNum() > 1
-      || intcomm->error == TRUE || NetErr_App_CheckError()){
+  if(intcomm->search_count >= INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX 
+      || GFL_NET_GetConnectNum() > 1 || intcomm->error == TRUE || NetErr_App_CheckError()){
     return;
   }
   
@@ -618,6 +623,7 @@ static void _SetScanBeaconData(WMBssDesc* pBss, void *pWork, u16 level)
 	  intcomm->search_child_lang[intcomm->search_count] = GAMEBEACON_Get_PmLanguage(&bcon_buff->info);
 	  
   	intcomm->search_child_trainer_id[intcomm->search_count] = bcon_buff->trainer_id;
+  	intcomm->search_print_life = 0;
   	intcomm->search_count++;
   }
 }
@@ -823,3 +829,25 @@ static void  IntrudeComm_DisconnectCallBack(void* pWork)
   OS_TPrintf("切断コールバック呼ばれた\n");
 }
 
+//--------------------------------------------------------------
+/**
+ * 近くにいる人のビーコンLifeを減らす
+ *
+ * @param   intcomm		
+ */
+//--------------------------------------------------------------
+static void _SearchBconLifeDec(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  int i;
+
+  if(intcomm->search_count > 0){
+    intcomm->search_print_life++;
+    if(intcomm->search_print_life > INTRUDE_BCON_PLAYER_PRINT_LIFE){
+      for(i = 0; i < intcomm->search_count; i++){
+      	intcomm->search_child_trainer_id[i] = 0;
+      }
+      intcomm->search_print_life = 0;
+      intcomm->search_count = 0;
+    }
+  }
+}

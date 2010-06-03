@@ -158,7 +158,8 @@ enum{
 
 ///近くにいるビーコンの人物を表示する最大数
 #define INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX   (2)
-
+///近くにいるビーコンの人物情報をリセットする時間
+#define INTRUDE_BCON_PLAYER_PRINT_LIFE        (30 * 5)
 
 //==============================================================================
 //  型定義
@@ -295,8 +296,8 @@ typedef struct _INTRUDE_COMM_SYS{
 
   u8 monost_req;              ///<モノリスステータス要求リクエスト(bit管理)
   u8 search_count;
+  u8 search_print_life;       ///<
   u8 player_status_update;    ///<プレイヤーステータス更新情報(bit管理)
-  u8 padding;
   
   STRBUF *search_child[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
   u32 search_child_trainer_id[INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX];
