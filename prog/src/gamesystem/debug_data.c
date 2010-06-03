@@ -348,6 +348,7 @@ static void addIntrudeSecretItem(
 
   GFL_STR_DeleteBuffer( namebuf );
 }
+#if 0
 //--------------------------------------------------------------
 /**
  * @brief   デバッグ用に隠されアイテムを加える
@@ -369,6 +370,7 @@ static void DEBUG_INTRUDE_MakeSecretItem( GAMEDATA * gamedata, HEAPID heapID )
 
   GFL_MSG_Delete( msgman );
 }
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -421,7 +423,7 @@ static void DEBUG_QuestionnaireParam( GAMEDATA *gamedata )
 //--------------------------------------------------------------
 void DEBUG_SetStartData( GAMEDATA * gamedata, HEAPID heapID )
 {
-  DEBUG_INTRUDE_MakeSecretItem( gamedata, heapID );
+  //DEBUG_INTRUDE_MakeSecretItem( gamedata, heapID );
   DEBUG_MYITEM_MakeBag( gamedata, heapID );
   DEBUG_MyPokeAdd( gamedata, heapID );
   DEBUG_IntrudeParam( gamedata, heapID );
