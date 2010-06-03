@@ -198,7 +198,7 @@ static GMEVENT_RESULT PokeWinEvt( GMEVENT* event, int* seq, void* work )
 
   switch(*seq){
   case 0:
-    if ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE )
+    if ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL) )
     {
       //âï˙èàóù
       DelPokeObj( evt_wk );
