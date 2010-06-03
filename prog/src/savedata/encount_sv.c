@@ -273,9 +273,10 @@ u8 EncDataSave_IsMovePokeValid(ENC_SV_PTR inEncData, const u8 inTargetPoke)
  * @return	none
  */
 //==============================================================================
-void EncDataSave_ClearMovePokeData(MPD_PTR *outMPData)
+void EncDataSave_ClearMovePokeData(MPD_PTR outMPData)
 {
-	MI_CpuClear8((*outMPData), sizeof(MV_POKE_DATA));
+	MI_CpuClear8(outMPData, sizeof(MV_POKE_DATA));
+  outMPData->zoneID = MVPOKE_ZONE_NULL;
 
 #if (CRC_LOADCHECK && CRCLOADCHECK_GMDATA_ID_ENCOUNT)
 	SVLD_SetCrc(GMDATA_ID_ENCOUNT);

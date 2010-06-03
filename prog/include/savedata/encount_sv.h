@@ -42,7 +42,7 @@ extern void EncDataSave_SetMovePokeZoneIdx(	ENC_SV_PTR outEncData,
 											const u8 inTargetPoke,
 											const u8 inZoneIndex	);
 extern u8 EncDataSave_IsMovePokeValid(ENC_SV_PTR inEncData, const u8 inTargetPoke);
-extern void EncDataSave_ClearMovePokeData(MPD_PTR *outMPData);
+extern void EncDataSave_ClearMovePokeData(MPD_PTR outMPData);
 extern MPD_PTR	EncDataSave_GetMovePokeDataPtr(ENC_SV_PTR inEncData, const u8 inTargetPoke);
 extern u32 EncDataSave_GetMovePokeDataParam(const MPD_PTR inMPData,
 											const u8 inParamID);

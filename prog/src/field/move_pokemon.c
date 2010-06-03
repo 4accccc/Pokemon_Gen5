@@ -39,6 +39,8 @@
 #define MOVE_POKE_RAIKAMI_LV	(40)
 #define MOVE_POKE_KAZAKAMI_LV		(40)
 
+#define TIME_LOC_ZONE_MAX (4)
+
 typedef struct MP_LOC_DATA_tag
 {
 	u16 BranchNum;
@@ -48,7 +50,7 @@ typedef struct MP_LOC_DATA_tag
 typedef struct MP_TIME_LOC_DATA
 {
   u16 num;
-  u16 zone[4];
+  u8  zone_idx[TIME_LOC_ZONE_MAX];
 }MP_TIME_LOC_DATA;
 
 enum{
@@ -70,6 +72,7 @@ enum{
 	ZONE_IDX_R18,		//15
   ZONE_IDX_MAX,
   ZONE_IDX_HIDE = ZONE_IDX_MAX,
+  ZONE_IDX_NONE = 0xFF,
 };
 
 static const u16 DATA_ZoneTbl[MVPOKE_LOCATION_MAX+1] = {
@@ -106,7 +109,7 @@ static const MP_TIME_LOC_DATA DATA_TimeLocation[] = {
 static inline u16 GetZoneID( u8 zone_idx );
 static u8 MonsNoToMovePokeID(u16 monsno);
 
-static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke );
+static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke, const u8 egnore_zone_idx );
 
 static void UpdateData(	ENC_SV_PTR data,
 						const u8 inTargetPoke,
@@ -126,8 +129,7 @@ static MPD_PTR GetMovePokeDataByMonsNo(ENC_SV_PTR inEncData, const int inMonsNo)
 //--------------------------------------------------------------------------------------------
 void MP_JumpMovePokemon(ENC_SV_PTR inEncData, u8 season, const u8 inTarget)
 {
-  MPD_PTR	mpd = EncDataSave_GetMovePokeDataPtr( inEncData, inTarget );
-  JumpMovePokeTimeLocation( inEncData, season, inTarget );
+  JumpMovePokeTimeLocation( inEncData, season, inTarget, ZONE_IDX_NONE );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -323,8 +325,8 @@ void MP_AddMovePoke( GAMEDATA* gdata, const u8 inTargetPoke)
 
 	GFL_HEAP_FreeMemory(poke_param);
 
-	//初回移動ポケモン出現場所決定
-  MP_JumpMovePokemon( enc, GAMEDATA_GetSeasonID( gdata ), inTargetPoke);
+	//初回移動ポケモン出現場所決定(追加イベントが起こるR07は、初回の対象から外す)
+  JumpMovePokeTimeLocation( enc, GAMEDATA_GetSeasonID( gdata ), inTargetPoke, ZONE_IDX_R07 );
   
   //ステータス更新
   EncDataSave_SetMovePokeState( enc, inTargetPoke, MVPOKE_STATE_MOVE );
@@ -408,7 +410,8 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
 	if( (( bsp->result == BTL_RESULT_WIN )||(bsp->result == BTL_RESULT_DRAW)) && (hp == 0) ) {
 
 		//エンカウントした移動ポケモンデータをクリア
-		EncDataSave_ClearMovePokeData(&mpd);
+		EncDataSave_ClearMovePokeData(mpd);
+    EncDataSave_SetMovePokeZoneIdx( enc_sv, move_poke_id, ZONE_IDX_HIDE );
 
 		//倒したセット
 		EncDataSave_SetMovePokeState( enc_sv, move_poke_id, MVPOKE_STATE_DOWN );
@@ -417,7 +420,8 @@ void MP_SetAfterBattle(GAMEDATA * gdata, BATTLE_SETUP_PARAM *bsp)
 	}else if( bsp->result == BTL_RESULT_CAPTURE ) {
 
 		//エンカウントした移動ポケモンデータをクリア
-		EncDataSave_ClearMovePokeData(&mpd);
+		EncDataSave_ClearMovePokeData(mpd);
+    EncDataSave_SetMovePokeZoneIdx( enc_sv, move_poke_id, ZONE_IDX_HIDE );
 
 		//捕獲したセット
 		EncDataSave_SetMovePokeState( enc_sv, move_poke_id, MVPOKE_STATE_GET );
@@ -528,18 +532,20 @@ static u8 MonsNoToMovePokeID(u16 monsno)
  * @return
  */
 //--------------------------------------------------------------------------------------------
-static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke )
+static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTargetPoke, const u8 egnore_zone_idx )
 {
-	u16 move_poke_now_zone, timezone;
+	u16 now_zone_idx, timezone;
   const MP_TIME_LOC_DATA* loc;
 
 	//今自分がいる場所は対象外とする
-	move_poke_now_zone = GetZoneID( EncDataSave_GetMovePokeZoneIdx(data,inTargetPoke) );
+	now_zone_idx = EncDataSave_GetMovePokeZoneIdx(data,inTargetPoke);
+
   //タイムローケーション取得
   timezone = PM_RTC_GetTimeZone( season );
   loc = &DATA_TimeLocation[timezone];
 
-  if( move_poke_now_zone != MVPOKE_ZONE_NULL &&
+  //連続して隠れることはない
+  if( now_zone_idx != ZONE_IDX_HIDE &&
       GFUser_GetPublicRand0(100) < 20){
     //隠れる
 		UpdateData(	data, inTargetPoke, ZONE_IDX_HIDE, GetZoneID(ZONE_IDX_HIDE));
@@ -547,16 +553,39 @@ static void JumpMovePokeTimeLocation( ENC_SV_PTR data, u8 season, const u8 inTar
 		return;
   }
 
+  //飛び先候補のゾーンをチェック
+  {
+    int i,num;
+    u8 zone_idx;
+    u16 zone;
+    u8 zone_tbl[TIME_LOC_ZONE_MAX];
+
+    num = 0;
+    for(i = 0;i < loc->num;i++){
+	    zone_idx = loc->zone_idx[i];
+
+		  if( zone_idx != now_zone_idx && zone_idx != egnore_zone_idx){
+        zone_tbl[num++] = zone_idx;
+      }
+    }
+    zone_idx = zone_tbl[GFUser_GetPublicRand0( num )];
+    zone = GetZoneID(zone_idx);
+	  UpdateData(	data, inTargetPoke, zone_idx, zone);
+	  IWASAWA_Printf("%dへジャンプ TimeZone:%d\n",zone, timezone );
+  }
+#if 0
   while(1){
-	  u8 zone_idx = loc->zone[GFUser_GetPublicRand0(loc->num)];
+	  u8 zone_idx = loc->zone_idx[GFUser_GetPublicRand0(loc->num)];
     u16 zone = GetZoneID( zone_idx );
 
-		if( zone != move_poke_now_zone ){
-			UpdateData(	data, inTargetPoke, zone_idx, zone);
-			IWASAWA_Printf("%dへジャンプ TimeZone:%d\n",zone, timezone );
-			break;
-		}
+		if( zone == now_zone_idx ){
+      continue;
+    }
+		UpdateData(	data, inTargetPoke, zone_idx, zone);
+		IWASAWA_Printf("%dへジャンプ TimeZone:%d\n",zone, timezone );
+		break;
 	}
+#endif
 }
 
 //--------------------------------------------------------------------------------------------
