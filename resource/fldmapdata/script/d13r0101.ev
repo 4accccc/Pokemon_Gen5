@@ -106,7 +106,7 @@ doc_first_evt:
   //カメラ移動
   _CAMERA_START()
   _CAMERA_PURGE()		//対象物とカメラのバインドを解く
-	_CAMERA_MOVE(9688,0,970752,425984,0,425984,8)
+  _CAMERA_MOVE(9688,0,970752,425984,0,229376,16)
   _CAMERA_WAIT_MOVE()	//カメラ移動待ち
 
   _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_turn )
@@ -120,17 +120,15 @@ doc_first_evt:
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_move )
   _OBJ_ANIME_WAIT()
 
-  //カメラ戻し
-  _CAMERA_DEF_MOVE( 8 )
-  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
-	_CAMERA_BIND()		//カメラバインド
-	_CAMERA_END()		//カメラ操作終了
-
   //「まさか」
   _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_02, D13R0101_ASSISTANTM_01, POS_DR )
   _BALLOONWIN_CLOSE()
+  
+  _CAMERA_MOVE(9688,0,970752,425984,0,294912,8)
   _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_down )
   _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  
   //「インセクタ」  
   _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_03, D13R0101_ASSISTANTM_01, POS_DR )
   _BALLOONWIN_CLOSE()
@@ -138,8 +136,13 @@ doc_first_evt:
   _GIZAWIN_OBJMSG_POS( msg_d13r0101_assistm_04, D13R0101_ASSISTANTM_01, POS_DR )
   _GIZAWIN_CLOSE()
 
+  //カメラ戻し
+  _CAMERA_DEF_MOVE( 12 )
   _OBJ_ANIME( D13R0101_ASSISTANTM_01, anm_doc_down )
   _OBJ_ANIME_WAIT()
+  _CAMERA_WAIT_MOVE()	//カメラ移動待ち
+  _CAMERA_BIND()		//カメラバインド
+  _CAMERA_END()		//カメラ操作終了
   //「しかし」
   _BALLOONWIN_OBJMSG_POS( msg_d13r0101_assistm_05, D13R0101_ASSISTANTM_01, POS_DR )
   _BALLOONWIN_CLOSE()
