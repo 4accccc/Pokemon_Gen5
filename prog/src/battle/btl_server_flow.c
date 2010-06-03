@@ -552,6 +552,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
   clearWorks( wk );
+  BTL_FIELD_Init( BTL_WEATHER_NONE );
 
   return wk;
 }
@@ -560,6 +561,7 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk )
 {
   clearWorks( wk );
+  BTL_FIELD_Init( BTL_WEATHER_NONE );
 }
 
 static void clearWorks( BTL_SVFLOW_WORK* wk )

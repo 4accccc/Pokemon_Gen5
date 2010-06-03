@@ -333,7 +333,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
     {
       BTL_MAIN_MODULE* wk = mywk;
       BTL_ADAPTERSYS_Init( wk->setupParam->commMode );
-      BTL_FIELD_Init( BTL_WEATHER_NONE );
       setSubProcForSetup( &wk->subProc, wk, wk->setupParam );
       wk->subSeq = 0;
       trainerParam_Init( wk );
