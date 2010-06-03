@@ -1469,7 +1469,9 @@ static int BPL_SeqEndSet( BPLIST_WORK * wk )
 {
   // マルチモード時の選択位置補正
   if( BattlePokeList_MultiCheck( wk ) == TRUE ){
-    wk->dat->sel_poke /= 2;
+		if( wk->dat->sel_poke != BPL_SEL_EXIT ){
+	    wk->dat->sel_poke /= 2;
+		}
   }
 
   PaletteFadeReq(
