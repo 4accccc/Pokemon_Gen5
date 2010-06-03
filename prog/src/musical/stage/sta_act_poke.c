@@ -399,7 +399,7 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
 //    pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y + shadowOfs->y );
     pos.x = ACT_POS_X_FX(pokeWork->pokePos.x );
     pos.y = ACT_POS_Y_FX(pokeWork->pokePos.y );
-    pos.z = 5.0f;
+    pos.z = 50.0f;
     GFL_BBD_SetObjectTrans( work->bbdSys , pokeWork->shadowBbdIdx , &pos );
   }
 }
