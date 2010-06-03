@@ -382,8 +382,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       (*seq) ++;
     }
     if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){
-      NetErr_DispCallPushPop();
       NetErr_ExitNetSystem();
+      NetErr_DispCallPushPop();
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
       (*seq) = _WAIT_NET_END;
     }
@@ -460,8 +460,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     if(NET_ERR_CHECK_NONE!=NetErr_App_CheckError()){
       BATTLE_PARAM_Delete(dbw->para);
       dbw->para = NULL;
-      NetErr_DispCallPushPop();
       NetErr_ExitNetSystem();
+      NetErr_DispCallPushPop();
       GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
       (*seq) = _WAIT_NET_END;
       break;

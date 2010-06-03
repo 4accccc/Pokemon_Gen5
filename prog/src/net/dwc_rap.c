@@ -1179,6 +1179,9 @@ static void LoginCallback(DWCError error, int profileID, void *param)
 static void recvTimeoutCallback(u8 aid, void* param)
 {
   MYDWC_DEBUGPRINT("DWCタイムアウト - %d",aid);
+  if(aid >= 2){
+    return;
+  }
   // コネクションを閉じる
   if( _dWork->timeoutflag )
   {
@@ -1370,6 +1373,9 @@ static int  EvaluateAnybodyCallback(int index, void* param)
 static void SendDoneCallback( int size, u8 aid,void* param )
 {
 #pragma unused(size)
+  if(aid >= 2){
+    return;
+  }
   // 送信バッファをあける
   _dWork->sendbufflag = 0;
   _dWork->sendintervaltime[aid] = 0;
@@ -1403,13 +1409,15 @@ static void _setOpVchat(u32 topcode)
   ---------------------------------------------------------------------------*/
 static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
 {
-#pragma unused( aid, buffer, size )
-
   u32 topcode;
   topcode = (buffer[3] << 24) | (buffer[2] << 16) | (buffer[1] << 8) | buffer[0];
 
   //	MYDWC_DEBUGPRINT("[%d,%d,%d,%d]", buffer[0], buffer[1], buffer[2], buffer[3]);
   //  MYDWC_DEBUGPRINT("-受信-\n");
+  GF_ASSERT(aid < 2);  //BTS 3869 ライブラリから0xffが帰ってきてるのを確認したい
+  if(aid >= 2){
+    return;
+  }
 
   // 一度受信してはじめてタイムアウトを設定する。
   _dWork->timeoutflag = 1;
@@ -1419,24 +1427,17 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
     _setOpVchat( topcode );
     _dWork->opseqno = buffer[MYDWC_PACKET_SEQNO_POS];
     _dWork->sendAck = TRUE;
-   // OS_TPrintf("++recv command\n");
-
   }
   else if( (topcode & MYDWC_PACKETYPE_MASK) == MYDWC_CHECK_PACKET ){  //arc returnコマンド
-   // OS_TPrintf("++recv ack\n");
     _dWork->sendFinish = TRUE;
     return;
   }
   else {
     if( myvct_checkData( aid, buffer,size ) ) return;
     // 無意味な情報（コネクションを保持するためのものと思われる）
-    //    _setOpVchat( topcode );
     return;
   }
-  //	MYDWC_DEBUGPRINT( "受信(%d)\n",*((s32*)buffer) );
-  //NET_PRINT( "受信(%d)\n",aid );
 
-#if 1
   {
     u16 *temp = (u16*)buffer + 2;
 
@@ -1452,30 +1453,6 @@ static void UserRecvCallback( u8 aid, u8* buffer, int size,void* param )
       }
     }
   }
-#else
-  {
-    u16 *temp = (u16*)mydwc_AllocFunc( NULL, size - 4, 4);
-    if(temp==NULL){
-      return;
-    }
-
-    MI_CpuCopy8(buffer + 4, (void*)temp, size - 4);
-
-    if( DWC_GetMyAID() == 0 )
-    {
-      // 自分が親の場合…クライントからサーバに対して送られてきたものと判断。
-      // サーバ用受信関数を呼び出す。
-      if( _dWork->serverCallback != NULL ) _dWork->serverCallback(aid, temp, size-4);
-    } else {
-      // サーバからクライアントに対して送られてきたものと判断。
-      if( _dWork->clientCallback != NULL ){
-        _dWork->clientCallback(aid, temp, size-4);
-      }
-    }
-
-    mydwc_FreeFunc(NULL, temp, size - 4);
-  }
-#endif
 }
 
 /*---------------------------------------------------------------------------*
@@ -1501,6 +1478,10 @@ static void ConnectionClosedCallback(DWCError error,
 #pragma unused(param, index)
   MYDWC_DEBUGPRINT("ConnectionClosedCallback %d %d %d %d %d\n",error,isLocal, isServer,aid,_dWork->closedflag);
 
+  if(aid >= 2){
+    return;
+  }
+  
   _dWork->sendbufflag = 0;
   _dWork->setupErrorCount = 0;
   _dWork->bConnectCallback = FALSE;

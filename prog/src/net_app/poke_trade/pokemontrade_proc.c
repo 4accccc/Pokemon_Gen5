@@ -43,6 +43,7 @@
 #include "box_m_obj_NANR_LBLDEFS.h"
 #include "p_st_obj_d_NANR_LBLDEFS.h"
 #include "wb_trade_obj01_NANR_LBLDEFS.h"
+#include "net/dwc_rapcommon.h"
 
 #include "net_app/pokemontrade.h"
 #include "net_app/connect_anm.h"
@@ -4281,6 +4282,12 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork) && (pWork->pNetSave==NULL)){
     if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      if(pWork->pNHTTP){
+        NHTTP_RAP_ErrorClean(pWork->pNHTTP);
+        NHTTP_RAP_End(pWork->pNHTTP);
+        pWork->pNHTTP  = NULL;
+        DWC_RAPCOMMON_ResetSubHeapID();
+      }
       if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
         NetErr_DispCall( TRUE );
       }
@@ -4322,6 +4329,13 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
     return GFL_PROC_RES_CONTINUE;
   }
 
+
+  
+
+
+
+
+  
   GFL_HEAP_FreeMemory(pWork->pVramOBJ);
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
