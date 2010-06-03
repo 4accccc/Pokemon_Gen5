@@ -531,7 +531,7 @@ EVENT_START   ev_scene_r07_movepoke_02
 	//★Blackの場合
 	IF $LCW_VERSION == VERSION_BLACK THEN
 		_VOICE_PLAY(  MONSNO_649,  0 )
-		_GIZAWIN_OBJMSG_POS  (  msg_r07_pokemon_01b , MMDL_ID_EVENTOBJ_00 , POS_DR )
+		_GIZAPLAINWIN_MSG_POS  (  msg_r07_pokemon_01b ,  POS_DOWN )
 		_VOICE_WAIT()
 		_AB_KEYWAIT_MARK()
 		
@@ -539,13 +539,13 @@ EVENT_START   ev_scene_r07_movepoke_02
 	//★Whiteの場合
 	ELSE
 		_VOICE_PLAY(  MONSNO_649,  0 )
-		_GIZAWIN_OBJMSG_POS  (  msg_r07_pokemon_01w , MMDL_ID_EVENTOBJ_00 , POS_DR )
+		_GIZAPLAINWIN_MSG_POS  (  msg_r07_pokemon_01w ,  POS_DOWN )
 		_VOICE_WAIT()
 		_AB_KEYWAIT_MARK()
 	ENDIF
 	
 	//ギザウィン表示待ち
-	_GIZAWIN_CLOSE()
+	_MSGWIN_CLOSE()
 	
 	//天気変更待ち
 	_TIME_WAIT ( 160 )
