@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-05-20T15:14:32"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-03T17:08:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -469,8 +469,8 @@
 	<row id="msg_gate_common_cm_07" back-color="#ff8080,,,#ff8080,,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>各ゲート共通メッセージ
 ・一言cM/日曜</comment>
-		<language name="JPN" width="256">◇「イッシュさいだいの　ショッピングエリア　なんでもそろう！」ショッピングモール　ナイン</language>
-		<language name="JPN_KANJI" width="256">◇「イッシュ最大の　ショッピングエリア　なんでもそろう！」ショッピングモール　ナイン</language>
+		<language name="JPN" width="256">◇「イッシュさいだいの　ショッピングエリア　なんでもそろう！」ショッピングモール　アールナイン</language>
+		<language name="JPN_KANJI" width="256">◇「イッシュ最大の　ショッピングエリア　なんでもそろう！」ショッピングモール　アールナイン</language>
 	</row>
 
 	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -481,8 +481,8 @@
 
 	<row id="msg_gate_c1_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報2</comment>
-		<language name="JPN" width="256">◇げんかんさきにあるかいだんは　ゆきをさけるためです</language>
-		<language name="JPN_KANJI" width="256">◇玄関先にある階段は　雪を避けるためです</language>
+		<language name="JPN" width="256">◇げんかんさきにあるかいだんは　ゆきをさけるためにあります</language>
+		<language name="JPN_KANJI" width="256">◇玄関先にある階段は　雪を避けるためにあります</language>
 	</row>
 
 	<row id="msg_gate_c1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -517,8 +517,8 @@
 
 	<row id="msg_gate_c1_08" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
 		<comment>c1についての地域情報8</comment>
-		<language name="JPN" width="256">◇げんかんさきにあるかいだんは　ゆきをさけるためです</language>
-		<language name="JPN_KANJI" width="256">◇玄関先にある階段は　雪を避けるためです</language>
+		<language name="JPN" width="256">◇げんかんさきにあるかいだんは　ゆきをさけるためにあります</language>
+		<language name="JPN_KANJI" width="256">◇玄関先にある階段は　雪を避けるためにあります</language>
 	</row>
 
 	<row id="msg_gate_c1_09" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -679,8 +679,8 @@
 
 	<row id="msg_gate_c4_08" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>c4についての地域情報8</comment>
-		<language name="JPN" width="256">◇ギアステーションからは トレインタウンへ いくことが できます</language>
-		<language name="JPN_KANJI" width="256">◇ギアステーションからは　トレインタウンに　行くことが　できます</language>
+		<language name="JPN" width="256">◇ギアステーションからは カナワタウンへ いくことが できます</language>
+		<language name="JPN_KANJI" width="256">◇ギアステーションからは　カナワタウンに　行くことが　できます</language>
 	</row>
 
 	<row id="msg_gate_c4_09" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
@@ -697,8 +697,8 @@
 
 	<row id="msg_gate_c5_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c5についての地域情報2</comment>
-		<language name="JPN" width="256">◇むかしは　すいじょうからの　かぜをうけ　ほせんが　はしっていました</language>
-		<language name="JPN_KANJI" width="256">◇昔は　水上からの　風を受け　帆船が　走っていました</language>
+		<language name="JPN" width="256">◇むかしは　すいじょうからの　かぜをうける　はんせんが　はしっていました</language>
+		<language name="JPN_KANJI" width="256">◇昔は　水上からの　風を受ける　帆船が　走っていました</language>
 	</row>
 
 	<row id="msg_gate_c5_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
