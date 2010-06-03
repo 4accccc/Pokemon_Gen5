@@ -28,6 +28,7 @@ _EVENT_DATA		ev_t01r0401_pokemon_01
 _EVENT_DATA		ev_t01r0401_rival_01
 _EVENT_DATA		ev_t01r0401_support_01
 _EVENT_DATA		ev_t01r0401_support_02		//殿堂入り後サポート
+_EVENT_DATA		ev_zone_t01r0401
 _EVENT_DATA_END
 
 
@@ -37,6 +38,64 @@ _EVENT_DATA_END
 //		ゾーン内での使用を禁止します							//
 //																//
 //--------------------------------------------------------------//
+
+
+/************************************************************/
+/*					ZONE_CHANGE_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_zone_t01r0401
+
+	//アララギ娘の表示チェック
+	IF $WK_SCENE_T02PC0101 >= 3 THEN
+		//T02ポケセン誘導イベント後ならチェック処理へ
+		_CALL	ev_hakase2_vanish_chk
+	ENDIF
+	
+	//アララギ父の表示チェック
+	IF $WK_SCENE_C06 >= 1 THEN
+		//C06フキヨセでアララギ父と出会っているならチェック処理へ
+		_CALL	ev_hakase1_vanish_chk
+	ENDIF
+
+INIT_EVENT_END
+
+
+//アララギ娘の表示チェック
+ev_hakase2_vanish_chk:
+	//とりあえず表示状態に
+	_FLAG_RESET( FV_T01R0401_HAKASE2 )
+
+	//４番道路ライブキャスターイベント後で、ライモンゲートの博士が表示状態なら、研究所は非表示
+	IF $WK_SCENE_R04 >= 2 && FLAG_OFF( FV_C04R0601_POS_HAKASE ) THEN
+		_FLAG_SET( FV_T01R0401_HAKASE2 )
+	ENDIF
+
+	//電気石の洞穴の博士が表示状態なら、研究所の博士は非表示
+	IF FLAG_OFF( FV_D06R0101_FRIENDS ) THEN
+		_FLAG_SET( FV_T01R0401_HAKASE2 )
+	ENDIF
+
+	//シッポウ博物館前の博士が表示状態なら、研究所の博士は非表示
+	IF FLAG_OFF( FV_C02_STONEEVENT_01 ) THEN
+		_FLAG_SET( FV_T01R0401_HAKASE2 )
+	ENDIF
+_RET
+
+//アララギ父の表示チェック
+ev_hakase1_vanish_chk:
+	//とりあえず表示状態に
+	_FLAG_RESET( FV_T01R0401_HAKASE1 )
+	
+	//C07セッカシティの博士イベント後で、リュウラセンの塔前or内部の博士が表示状態なら、研究所は非表示
+	IF $WK_SCENE_C07 >= 2 && FLAG_OFF( FV_D08R0101_EVENT_01 ) || FLAG_OFF( FV_D08_HAKASE1_01 ) THEN
+			_FLAG_SET( FV_T01R0401_HAKASE1 )
+	ENDIF
+	
+	//シッポウ博物館前の博士が表示状態なら、研究所の博士は非表示
+	IF FLAG_OFF( FV_C02_STONEEVENT_01 ) THEN
+		_FLAG_SET( FV_T01R0401_HAKASE1 )
+	ENDIF
+_RET
 
 
 /************************************************************/
