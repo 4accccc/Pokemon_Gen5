@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-01T18:28:47"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-03T17:37:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="359" top="171" right="859" bottom="799" maximized="no" rayout="Vertical2">
+	<dialog left="123" top="506" right="623" bottom="1134" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="325"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -853,10 +853,10 @@
 		<comment>おじょうさま１
 
 ウォン</comment>
-		<language name="JPN">すてきな　トレーナーさん！
-しょうぶも　すてきなのかしら？　</language>
-		<language name="JPN_KANJI">素敵な　トレーナーさん！
-勝負も　素敵なのかしら？</language>
+		<language name="JPN">パッとみ　すてきな　トレーナー！
+しょうぶも　すてきだと　いいけれど</language>
+		<language name="JPN_KANJI">パッと見　素敵な　トレーナー！
+勝負も　素敵だと　いいけれど</language>
 	</row>
 
 	<row id="mes_tower_tr_021_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -869,10 +869,10 @@
 
 	<row id="mes_tower_tr_021_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ウォン</comment>
-		<language name="JPN">すてきな　しょうぶ　ありがとう
-かっこよかったと　おもいます</language>
-		<language name="JPN_KANJI">素敵な　勝負　ありがとう
-かっこよかったと　思います</language>
+		<language name="JPN">あら　しょうぶも　すてきだなんて……
+わたしも　コロっと　いっちゃいそ……</language>
+		<language name="JPN_KANJI">あら　勝負も　素敵だなんて……
+私も　コロッと　いっちゃいそ……</language>
 	</row>
 
 	<row id="mes_tower_tr_022_01">
@@ -1101,18 +1101,18 @@
 
 	<row id="mes_tower_tr_031_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>モンロー</comment>
-		<language name="JPN">ぽけもんさん　たち
-どうも　ありがとぉ！</language>
-		<language name="JPN_KANJI">ぽけもんさん　たち
-どうも　ありがとぉ！</language>
+		<language name="JPN">むひひ！　やったあ！　やったあ！
+ぽけもんさん　どうも　ありがとぉ！</language>
+		<language name="JPN_KANJI">むひひ！　やったあ！　やったあ！
+ぽけもんさん　どうも　ありがとぉ！</language>
 	</row>
 
 	<row id="mes_tower_tr_031_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>モンロー</comment>
-		<language name="JPN">えー　ぽけもんさーん
-もっと　がんばってよぉー</language>
-		<language name="JPN_KANJI">えー　ぽけもんさーん
-もっと　がんばってよぉー</language>
+		<language name="JPN">ぶぶぶー！　そんなあ　ぽけもんさーん
+もっと　いっぱい　がんばってよぉー</language>
+		<language name="JPN_KANJI">ぶぶぶー！　そんなあ　ぽけもんさーん
+もっと　いっぱい　がんばってよぉー</language>
 	</row>
 
 	<row id="mes_tower_tr_032_01">
@@ -1198,25 +1198,25 @@
 
 セルジブデ</comment>
 		<language name="JPN">びんぼうりょこうの　さいちゅうです
-それは　それで　オツな　もんです</language>
+これは　これで　オツな　もんですわ</language>
 		<language name="JPN_KANJI">貧乏旅行の　最中です
-それは　それで　オツな　もんです</language>
+これは　これで　オツな　もんですわ</language>
 	</row>
 
 	<row id="mes_tower_tr_035_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>セルジブデ</comment>
 		<language name="JPN">りょこうは　びんぼうなうち
-わかいうちに　かぎります！</language>
+わかいうちに　かぎりますぜ！</language>
 		<language name="JPN_KANJI">旅行は　貧乏なうち
-若いうちに　限ります！</language>
+若いうちに　限りますぜ！</language>
 	</row>
 
 	<row id="mes_tower_tr_035_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>セルジブデ</comment>
-		<language name="JPN">うう……　おなかが　すいた……
-なにか　わけてください……</language>
-		<language name="JPN_KANJI">うう……　お腹が　空いた……
-なにか　分けてください……</language>
+		<language name="JPN">うう……　おなかが　ペコペコで……
+なにか　おめぐみくだせえ……</language>
+		<language name="JPN_KANJI">うう……　お腹が　ペコペコで……
+なにか　お恵みくだせえ……</language>
 	</row>
 
 	<row id="mes_tower_tr_036_01">
@@ -1354,9 +1354,9 @@
 
 ジムジロウ</comment>
 		<language name="JPN">ヘーイ！　らっしゃいっ！
-いきが　いいの　そろってますぜ！</language>
+いきが　いいの　そろってますゼ！</language>
 		<language name="JPN_KANJI">ヘーイ！　らっしゃいっ！
-粋が　いいの　そろってますぜ！</language>
+粋が　いいの　そろってますゼ！</language>
 	</row>
 
 	<row id="mes_tower_tr_041_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -1474,9 +1474,9 @@
 	<row id="mes_tower_tr_045_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>フツ</comment>
 		<language name="JPN">あいが　あれば　なんでもできるはず
-あいさえ　あれば　かてるはず</language>
+あいさえ　あれば　かてるはずでは？</language>
 		<language name="JPN_KANJI">愛が　あれば　何でもできるはず
-愛さえあれば　勝てるはず</language>
+愛さえあれば　勝てるはずでは？</language>
 	</row>
 
 	<row id="mes_tower_tr_046_01">
@@ -1499,9 +1499,9 @@
 
 	<row id="mes_tower_tr_046_03">
 		<comment>ムラクモ</comment>
-		<language name="JPN">アウ！！　なんてこったい！！
+		<language name="JPN">アフウ！！　なんてこったい！！
 ワシの　ポケモンちゃんがぁー</language>
-		<language name="JPN_KANJI">アウ！！　何てこった！！
+		<language name="JPN_KANJI">アフウ！！　何てこった！！
 ワシの　ポケモンちゃんがぁー</language>
 	</row>
 
@@ -1510,9 +1510,9 @@
 
 トツカ</comment>
 		<language name="JPN">しぶちょうの　めいよを　かけて
-いざ　まいるぞっ！！</language>
-		<language name="JPN_KANJI">支部長の　めいよを　かけて
-いざ　まいるぞっ！！</language>
+いざ！　じんじょうに　まいるぞっ！！</language>
+		<language name="JPN_KANJI">支部長の　名誉を　かけて
+いざ！　尋常に　参るぞっ！！</language>
 	</row>
 
 	<row id="mes_tower_tr_047_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -1665,26 +1665,26 @@
 		<comment>つりびと１
 
 ディプロ</comment>
-		<language name="JPN">つりびとだからね　こういうばしょでも
-サオもってるけどさ　じゃまだなコレ</language>
-		<language name="JPN_KANJI">釣り人だからね　こういう場所でも
-サオもってるけどさ　邪魔だなコレ</language>
+		<language name="JPN">つりびとだからよ　こういうばしょでも
+サオもってるけどさ　じゃまだわなコレ</language>
+		<language name="JPN_KANJI">釣り人だからよ　こういう場所でも
+サオもってるけどさ　邪魔だわなコレ</language>
 	</row>
 
 	<row id="mes_tower_tr_053_02" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ディプロ</comment>
-		<language name="JPN">しょうぶは　かったけど　このサオは
-とくに　ひつようなかったよな</language>
-		<language name="JPN_KANJI">勝負は　勝ったけれど　このサオは
-特に　必要なかったよな</language>
+		<language name="JPN">しょうぶにゃ　かったが　このサオは
+とくに　ひつよう　なかったよな</language>
+		<language name="JPN_KANJI">勝負にゃ　勝ったが　このサオは
+特に　必要　なかったよな</language>
 	</row>
 
 	<row id="mes_tower_tr_053_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ディプロ</comment>
-		<language name="JPN">もー　じゃまくさいな　このサオ！
-もうオレ　つり　やめちゃお！</language>
-		<language name="JPN_KANJI">もー　邪魔臭いな　このサオ！
-もうオレ　釣り　辞めちゃお！</language>
+		<language name="JPN">あーもー　じゃまくさいな　このサオ！
+もうオレ　つりびと　やめちゃお！</language>
+		<language name="JPN_KANJI">あーもー　邪魔臭いな　このサオ！
+もうオレ　つりびと　辞めちゃお！</language>
 	</row>
 
 	<row id="mes_tower_tr_054_01">
@@ -2039,10 +2039,10 @@
 
 	<row id="mes_tower_tr_067_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>ボブ</comment>
-		<language name="JPN">ようちゅういでー　ありますっ！
-マークするでー　ありますっ！</language>
-		<language name="JPN_KANJI">要注意でー　ありますっ！
-マークするでー　ありますっ！</language>
+		<language name="JPN">キミ　ようちゅういでー　ありますっ！
+マークしちゃうでー　ありますっ！</language>
+		<language name="JPN_KANJI">キミ　要注意でー　ありますっ！
+マークしちゃうでー　ありますっ！</language>
 	</row>
 
 	<row id="mes_tower_tr_068_01">
@@ -2430,9 +2430,9 @@
 	<row id="mes_tower_tr_082_03">
 		<comment>ツルコ</comment>
 		<language name="JPN">もーっ！　ほんと　かわいいわーっ！
-わたしごのみに　そだてちゃいたい！</language>
+あたしごのみに　そだてちゃいたい！</language>
 		<language name="JPN_KANJI">もーっ！　ほんと　可愛いわーっ！
-私好みに　育てちゃいたい！</language>
+あたし好みに　育てちゃいたい！</language>
 	</row>
 
 	<row id="mes_tower_tr_083_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -2817,10 +2817,10 @@
 
 	<row id="mes_tower_tr_097_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>サダ</comment>
-		<language name="JPN">ヤバーッ！　もうこんなじかん！
-かえって　しごとしないとーっ！</language>
-		<language name="JPN_KANJI">ヤバーッ！　もうこんな時間！
-帰って　仕事しないとーっ！</language>
+		<language name="JPN">ヤバーッ！　もう　こんなじかん！
+かえって　しごと　しないとーっ！</language>
+		<language name="JPN_KANJI">ヤバーッ！　もう　こんな時間！
+帰って　仕事　しないとーっ！</language>
 	</row>
 
 	<row id="mes_tower_tr_098_01">
@@ -4320,9 +4320,9 @@
 
 	<row id="mes_tower_tr_156_02">
 		<comment>ムネチカ</comment>
-		<language name="JPN">クラウンヲ　ダカラト　イッテ
+		<language name="JPN">クラウン　ダカラト　イッテ
 ミクビッテハ　イケマセンナァ</language>
-		<language name="JPN_KANJI">クラウンヲ　ダカラト　イッテ
+		<language name="JPN_KANJI">クラウン　ダカラト　イッテ
 見クビッテハ　イケマセンナァ</language>
 	</row>
 
