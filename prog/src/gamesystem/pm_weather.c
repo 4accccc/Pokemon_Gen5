@@ -59,6 +59,7 @@ static BOOL CheckGameDataHaveRTCSeasonID( const GAMEDATA* p_gamedata );
 static u16 PM_WEATHER_GetPalaceWeather( const GAMESYS_WORK* cp_gamesystem, const GAMEDATA* cp_data, int zone_id );
 static u16 PM_WEATHER_GetEventWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
 static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* p_data, int zone_id );
+static inline BOOL PM_WEATHER_IsMovePokeWeather( u32 weather_no );
 
 //----------------------------------------------------------------------------
 /**
@@ -159,11 +160,27 @@ void PM_WEATHER_UpdateZoneChangeWeatherNo( GAMESYS_WORK* p_gamesystem, int zone_
 void PM_WEATHER_UpdateSaveLoadWeatherNo( GAMEDATA* p_data, int zone_id )
 {
   u16 weather  = MP_CheckMovePokeWeather( p_data, zone_id );
+  u16 last_weather = GAMEDATA_GetWeatherNo( p_data );
 
   // 移動ポケモン優先
   if( weather != WEATHER_NO_NONE )
   {
     GAMEDATA_SetWeatherNo( p_data, weather );
+  }else{
+
+    // 移動ポケモンの動作後で、ライカミカザカミ天気の場合には、ZoneTableの天気にする。
+    // 移動ポケモンの動作前の場合には、イベントでライカミカザカミにしていることがあるので
+    // クリアすることはしない。
+    //
+    // 移動ポケモン　動作後にライカミ、カザカミ天気にしている場合が発生すると、
+    // このクリア処理が悪さをする。　注意！！
+    if( PM_WEATHER_IsMovePokeWeather( last_weather ) ){
+      if( MP_CheckMovePokeValid( p_data ) == TRUE ){
+
+        // 天気クリア   デフォルトの天気を使用する。
+        GAMEDATA_SetWeatherNo( p_data, ZONEDATA_GetWeatherID( zone_id ) );
+      }
+    }
   }
 }
 
@@ -315,3 +332,24 @@ static u16 PM_WEATHER_GetBirthDayWeather( GAMESYS_WORK* p_gamesystem, GAMEDATA* 
   }
   return WEATHER_NO_NONE;
 }
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  移動ポケモン天気かチェックする
+ *
+ *	@param	weather_no  天気ナンバー
+ *
+ *	@retval TRUE    移動ポケモン天気
+ *	@retval FALSE   通常天気
+ */
+//-----------------------------------------------------------------------------
+static inline BOOL PM_WEATHER_IsMovePokeWeather( u32 weather_no )
+{
+  if( (weather_no == WEATHER_NO_RAIKAMI) || (weather_no == WEATHER_NO_KAZAKAMI) ){
+    return TRUE;
+  }
+  return FALSE;
+}
+
