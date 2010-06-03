@@ -1123,9 +1123,20 @@ sub_battle_comm_multi:
 {
   //対戦前台詞(見栄えの為、上のOBJから
   _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_UR, 1, BSW_TRAIN_OBJID_TRAINER_1, BSW_NULL )
-
+  
   //対戦前台詞
   _BSUBWAY_TOOL( BSWSUB_TRAINER_BEFORE_MSG_DR, 0, BSW_TRAIN_OBJID_TRAINER_0, BSW_NULL )
+  
+  //相手のメッセージ表示完了待ち
+  _SYSWIN_MSG_ALLPUT( msg_c04r0110_16, POS_DOWN )
+  _TIME_WAIT( 15 )
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_ROUND_BEFORE_MSG_WAIT, BSW_NULL, comm_ret )
+  _MSGWIN_CLOSE()
+  
+  IF $comm_ret == FALSE THEN
+    $SCWK_ANSWER = SCR_BATTLE_RESULT_LOSE 
+    _RET
+  ENDIF
   
   //互いに近づく
   _CALL sub_anm_battle_start_multi

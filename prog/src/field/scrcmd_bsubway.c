@@ -774,7 +774,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     break;
   //WiFi 前回の記録をアップロード
   case BSWTOOL_WIFI_UPLOAD_SCORE:
-
     wifibsubway_param.mode = WIFI_BSUBWAY_MODE_SCORE_UPLOAD;
     wifibsubway_param.ret_wk = ret_wk;
 

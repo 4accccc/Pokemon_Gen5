@@ -88,6 +88,7 @@ extern void BSUBWAY_SCRWORK_CommSendPlayerData(
 extern void BSUBWAY_SCRWORK_CommSendTrainerData( BSUBWAY_SCRWORK *bsw_scr );
 extern void BSUBWAY_SCRWORK_CommSendRetireSelect(
     BSUBWAY_SCRWORK *bsw_scr, u16 retire );
+extern void BSUBWAY_SCRWORK_CommSendPlayMode( BSUBWAY_SCRWORK *bsw_scr );
 extern BOOL BSUBWAY_SCRWORK_CommSendData(
     BSUBWAY_SCRWORK *bsw_scr, u16 mode, u16 param );
 extern void BSUBWAY_SCRWORK_CommRecieveDataStart(

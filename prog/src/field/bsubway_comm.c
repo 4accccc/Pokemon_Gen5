@@ -36,6 +36,7 @@ enum
   FC_BSUBWAY_TR_DATA,
   FC_BSUBWAY_RETIRE_SELECT,
   FC_BSUBWAY_MYSTATUS_DATA,
+  FC_BSUBWAY_PLAY_MODE,
   FC_BSUBWAY_MAX,
 };
 
@@ -66,6 +67,9 @@ static void commCmd_FrWiFiCounterTowerRecvBufRetireSelect(
 static void commCmd_FrRecvMyStatusData(
     int netID, const int size, const void *pData,
     void *pWork, GFL_NETHANDLE *pNetHandle );
+static void commCmd_RecvBufPlayMode(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle );
 
 //======================================================================
 //  通信データ
@@ -79,6 +83,7 @@ static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] =
   {commCmd_FrWiFiCounterTowerRecvBufTrainerData, NULL},
   {commCmd_FrWiFiCounterTowerRecvBufRetireSelect, NULL},
   {commCmd_FrRecvMyStatusData, NULL},
+  {commCmd_RecvBufPlayMode,NULL},
 };
 
 /*
@@ -437,6 +442,19 @@ void BSUBWAY_SCRWORK_CommSendRetireSelect(
 
 //--------------------------------------------------------------
 /**
+ * @brief  バトルサブウェイ　通信マルチ　プレイモードを互いに送信
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+void BSUBWAY_SCRWORK_CommSendPlayMode( BSUBWAY_SCRWORK *bsw_scr )
+{
+  u32 *pSendBuf = (u32*)bsw_scr->send_buf;
+  *pSendBuf = bsw_scr->play_mode;
+}
+
+//--------------------------------------------------------------
+/**
  * バトルサブウェイ　データ送信
  * @param bsw_scr BSUBWAY_SCRWORK
  * @retval BOOL TRUE=送信成功
@@ -467,6 +485,10 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
       MYSTATUS *mystatus = GAMEDATA_GetMyStatus( gdata );
       MyStatus_Copy( mystatus, (MYSTATUS*)bsw_scr->send_buf );
     }
+    break;
+  case BSWAY_COMM_PLAY_MODE:
+    command = FC_BSUBWAY_PLAY_MODE;
+    BSUBWAY_SCRWORK_CommSendPlayMode( bsw_scr );
     break;
   default:
     GF_ASSERT( 0 );
@@ -873,4 +895,49 @@ static void commCmd_FrRecvMyStatusData(
   }
    
   MI_CpuCopy8( recv_buf, &bsw_scr->mystatus_fr, sizeof(MYSTATUS) );
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  recv_bufのバトルサブウェイ送られてきたプレイモードを取得
+ * @param   id_no    送信者のネットID
+ * @param   size    受信データサイズ
+ * @param   pData    受信データ
+ * @param   work    FRONTIER_SYSTEMへのポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void commCmd_RecvBufPlayMode(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle )
+{
+  int num;
+  u16 ret;
+  BSUBWAY_SCRWORK *bsw_scr = pWork;
+  const u16 *recv_buf = pData;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　プレイモードを受信\n" );
+  KAGAYA_Printf( "netID = %d\n", netID );
+#endif
+  
+  ret = 0;
+  num = 0;
+  bsw_scr->comm_receive_count++;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
+#endif
+  
+  //自分のデータは受け取らない
+  if( GFL_NET_SystemGetCurrentID() != netID ){
+    u32 play_mode = (u32)recv_buf[0];
+    
+    if( bsw_scr->play_mode != play_mode ){
+      bsw_scr->comm_check_work = FALSE;
+    }else{
+      bsw_scr->comm_check_work = TRUE;
+    }
+  }
 }

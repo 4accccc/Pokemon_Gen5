@@ -585,7 +585,8 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_challenge_multi:
 {
-  $play_mode = BSWAY_MODE_MULTI
+  //ゾーン別プレイモード取得
+  _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //ワーク作成
   _BSUBWAY_WORK_CREATE( BSWAY_PLAY_NEW, play_mode )
@@ -613,14 +614,19 @@ sub_receipt_challenge_multi:
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
-    
-    $play_mode = BSWAY_MODE_COMM_MULTI //ワーク切り替え
+
+    IF $play_mode == BSWAY_MODE_S_MULTI THEN
+      $play_mode = BSWAY_MODE_S_COMM_MULTI
+    ELSE
+      $play_mode = BSWAY_MODE_COMM_MULTI //ワーク切り替え
+    ENDIF
+
     _BSUBWAY_TOOL( BSWSUB_CHG_WORK_COMM_MULTI_MODE, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
-  
+ 
   //ポケモン選択
   _CALL sub_bsw_common_pokemon_select
-  
+
   IF $SCWK_ANSWER == 0 THEN //参加不可
     _BSUBWAY_TOOL( BSWTOOL_DEBUG_CHK_FLAG, BSW_DEBUG_FLAG_REGU_OFF, BSW_NULL, debug_mode )
     IF $debug_mode == FALSE THEN
@@ -824,7 +830,7 @@ sub_receipt_challenge_multi_comm:
     _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //やめる
     _BMPMENU_START()
     
-    IF $ret == 2 THEN //やめる
+    IF $ret == 2 || $ret == EV_WIN_B_CANCEL THEN //やめる
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
@@ -854,8 +860,46 @@ sub_receipt_challenge_multi_comm:
    
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //互いのプレイモード確認前の通信同期
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_PLAY_MODE, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+//  _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
+    _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+    _CALL sub_bsw_common_comm_exit
+    _RET
+  ENDIF
+  
+  //互いのプレイモードを確認
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAY_MODE, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAY_MODE, BSW_NULL, ret )
+  
+  //プレイモードが違う
+  IF $ret == FALSE THEN
+    $SCWK_TEMP0 = msg_bsw_scr_56
+    _CALL sub_bsw_common_bwin_receipt
+    _MSGWIN_CLOSE()
+    
+    //相手のメッセージ表示完了待ち
+    _SYSWIN_MSG_ALLPUT( msg_bsw_scr_101, POS_DOWN )
+    _TIME_WAIT( 15 )
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_PLAYMODE_ERROR_MSG_WAIT, BSW_NULL, comm_ret )
+    _MSGWIN_CLOSE()
+    
+    IF $comm_ret == FALSE THEN
+      _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+    ENDIF
+    
+    _CALL sub_bsw_common_comm_exit
+    _RET
 
-	//通信同期(お友達の選択を待っています)
+  ENDIF
+  
+  //受信バッファクリア
+  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+	
+  //ポケモンデータ交換前の通信同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_POKE_SELECT, BSW_NULL, comm_ret )
   
   IF $comm_ret == FALSE THEN
@@ -884,6 +928,18 @@ sub_receipt_challenge_multi_comm:
     ENDIF
     
     _CALL sub_bsw_common_bwin_receipt
+    _MSGWIN_CLOSE()
+    
+    //相手のメッセージ表示完了待ち
+    _SYSWIN_MSG_ALLPUT( msg_bsw_scr_101, POS_DOWN )
+    _TIME_WAIT( 15 )
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_REGU_ERROR_MSG_WAIT, BSW_NULL, comm_ret )
+    _MSGWIN_CLOSE()
+    
+    IF $comm_ret == FALSE THEN
+      _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+    ENDIF
+    
     _CALL sub_bsw_common_comm_exit
     _RET
   ENDIF
@@ -2282,6 +2338,11 @@ sub_bsw_common_comm_exit:
   //通信中であれば同期して切断
   IF $comm_flag == TRUE THEN
     _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SIO_END, BSW_NULL, comm_ret )
+    
+    IF $comm_ret == FALSE THEN
+      _BSUBWAY_TOOL( BSWSUB_COMM_REQ_ERROR_DISP_FLD, BSW_NULL, BSW_NULL, BSW_NULL )
+    ENDIF
+    
     _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
     _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
     _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, FALSE, BSW_NULL, BSW_NULL )
