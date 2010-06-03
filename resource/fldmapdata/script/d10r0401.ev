@@ -20,7 +20,36 @@
 //               スクリプトテーブル
 //--------------------------------------------------------------
 _EVENT_DATA    ev_d10r0401_poke10_01
+_EVENT_DATA    ev_init_d10r0401
+_EVENT_DATA    ev_recover_d10r0401
 _EVENT_DATA_END
+
+
+/************************************************************/
+/*					FIELD_INIT_SCRIPT						*/
+/************************************************************/
+INIT_EVENT_START	ev_init_d10r0401
+	_CALL	ev_exit_change
+INIT_EVENT_END
+
+
+/************************************************************/
+/*					FIELD_RECOVER_SCRIPT					*/
+/************************************************************/
+INIT_EVENT_START	ev_recover_d10r0401
+	_CALL	ev_exit_change
+INIT_EVENT_END
+
+
+//接続イベントの位置変更処理
+ev_exit_change:
+	//地底部が晴れている状態（ライがいない）ならマップ接続先を変更
+	IF FLAG_ON( FV_D10R0401_POKE10 ) THEN
+		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0401_D10R0201_EXIT01, 16, 0, 30 )
+		_SXY_MOVE_EXIT_EVENT( DOOR_ID_D10R0401_D10R0301_EXIT01, 16, 0, 31 )
+	ENDIF
+_RET
+
 
 
 /************************************************************/
