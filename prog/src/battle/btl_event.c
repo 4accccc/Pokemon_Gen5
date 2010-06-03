@@ -69,16 +69,20 @@ struct _BTL_EVENT_FACTOR {
   const BtlEventHandlerTable* handlerTable;
   BtlEventSkipCheckHandler  skipCheckHandler;
   BtlEventFactorType  factorType;
-  u32       priority    : 20;  ///< ソートプライオリティ
-  u32       numHandlers :  8;  ///< ハンドラテーブル要素数
-  u32       callingFlag :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
-  u32       sleepFlag   :  1;  ///< 休眠フラグ
-  u32       tmpItemFlag :  1;  ///< アイテム用一時利用フラグ
-  u32       dmy         :  1;
+  u32       priority       : 20;  ///< ソートプライオリティ
+  u32       numHandlers    :  8;  ///< ハンドラテーブル要素数
+  u32       callingFlag    :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
+  u32       sleepFlag      :  1;  ///< 休眠フラグ
+  u32       tmpItemFlag    :  1;  ///< アイテム用一時利用フラグ
+  u32       rmReserveFlag  :  1;  ///< 削除予約フラグ
+  u32       callingEventID : 16;  ///< 反応中イベントID
+  u32       newComerFlag   :  1;  ///< 登録直後フラグ
+  u32       _padd          : 15;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
   u8        pokeID;     ///< ポケ依存イベントならポケID／それ以外BTL_POKEID_NULL
+
 };
 
 /*--------------------------------------------------------------------------*/
@@ -88,7 +92,6 @@ static BTL_EVENT_FACTOR  Factors[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FactorStack[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FirstFactorPtr;
 static u16 StackPtr;
-
 
 /**
 * イベント変数スタック
@@ -238,6 +241,8 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->tmpItemFlag = FALSE;
     newFactor->skipCheckHandler = NULL;
     newFactor->dependID = dependID;
+    newFactor->newComerFlag = TRUE;
+    newFactor->rmReserveFlag = FALSE;
     if( isDependPokeFactorType(factorType) ){
       newFactor->pokeID = dependID;
     }else{
@@ -315,7 +320,6 @@ void BTL_EVENT_RemoveIsolateFactors( void )
     next = factor->next;
     if( factor->factorType == BTL_EVENT_FACTOR_ISOLATE )
     {
-      TAYA_Printf("分離ファクター見つけた:削除します\n");
       BTL_EVENT_FACTOR_Remove( factor );
     }
     factor = next;
@@ -333,6 +337,11 @@ void BTL_EVENT_RemoveIsolateFactors( void )
 //=============================================================================================
 void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
 {
+  if( factor->callingFlag )
+  {
+    factor->rmReserveFlag = TRUE;
+    return;
+  }
 
   if( factor == FirstFactorPtr )
   {
@@ -349,9 +358,6 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
     factor->next->prev = factor->prev;
   }
 
-  if( (factor->factorType == BTL_EVENT_FACTOR_TOKUSEI) ){
-    TAYA_Printf("とくせいハンドラ削除されようとしてる pokeID=%d, subID=%d\n", factor->dependID, factor->subID);
-  }
 
   BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType );
   printLinkDebug();
@@ -421,6 +427,19 @@ u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor )
 u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor )
 {
   return factor->pokeID;
+}
+//=============================================================================================
+/**
+ * 自分を呼び出しているイベントIDを取得
+ *
+ * @param   factor
+ *
+ * @retval  BtlEventType
+ */
+//=============================================================================================
+BtlEventType BTL_EVENT_FACTOR_GetCallingEventID( const BTL_EVENT_FACTOR* factor )
+{
+  return factor->callingEventID;
 }
 //=============================================================================================
 /**
@@ -504,12 +523,20 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
   BTL_EVENT_FACTOR* factor;
   BTL_EVENT_FACTOR* next_factor;
 
+  // 登録されたてフラグをクリア
+  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
+  {
+    factor->newComerFlag = FALSE;
+  }
+
+
   for( factor=FirstFactorPtr; factor!=NULL; )
   {
     next_factor = factor->next;
 
     if( ( factor->callingFlag == FALSE )
     &&  ( factor->sleepFlag == FALSE )
+    &&  ( factor->newComerFlag == FALSE )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
     ){
       const BtlEventHandlerTable* tbl = factor->handlerTable;
@@ -521,8 +548,14 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
           if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
           {
             factor->callingFlag = TRUE;
+            factor->callingEventID = eventID;
             tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
             factor->callingFlag = FALSE;
+            // 呼び出し中に削除された
+            if( factor->rmReserveFlag )
+            {
+              BTL_EVENT_FACTOR_Remove( factor );
+            }
           }
           break;
         }

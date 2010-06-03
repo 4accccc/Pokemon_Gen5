@@ -20,7 +20,7 @@
 
 
 enum {
-  EVENT_HANDLER_WORK_ELEMS = 8,       ///< ハンドラごとに割り当てられるローカルワーク要素数(int)
+  EVENT_HANDLER_WORK_ELEMS = 7,       ///< ハンドラごとに割り当てられるローカルワーク要素数(int)
   EVENT_WAZA_STICK_MAX = 8,           ///< １体につき貼り付くことが出来るワザ数の最大値
 };
 
@@ -81,6 +81,7 @@ extern BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri );
 extern u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor );
+extern BtlEventType BTL_EVENT_FACTOR_GetCallingEventID( const BTL_EVENT_FACTOR* factor );
 extern int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx );
 extern void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int value );
 extern void BTL_EVENT_FACTOR_SetTmpItemFlag( BTL_EVENT_FACTOR* factor );
@@ -88,6 +89,7 @@ extern u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler );
 extern void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_ConvertForIsolate( BTL_EVENT_FACTOR* factor );
+
 
 //=============================================================================================
 /**

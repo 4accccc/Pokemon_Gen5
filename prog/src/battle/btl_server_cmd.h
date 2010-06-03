@@ -362,7 +362,7 @@ static inline void SCQUE_PUT_OP_ShooterCharge( BTL_SERVER_CMD_QUE* que, u8 clien
 {
   SCQUE_PUT_Common( que, SC_OP_SHOOTER_CHARGE, clientID, increment );
 }
-static inline void SCQUE_PUT_OP_SetFakeSrcMember( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
+static inline void SCQUE_PUT_OP_SetIllusionForParty( BTL_SERVER_CMD_QUE* que, u8 clientID, u8 memberIdx )
 {
   SCQUE_PUT_Common( que, SC_OP_SET_FAKESRC, clientID, memberIdx );
 }
