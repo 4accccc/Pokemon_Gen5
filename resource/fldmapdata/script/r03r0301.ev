@@ -183,7 +183,8 @@ EVENT_START   ev_pos_r03r0301_rival_01
 			$WK_SCENE_R03_PLASMA = 2
 				
 			//======================================//
-		_TRAINER_LOSE()
+			
+			_TRAINER_LOSE()
 		ENDIF
 
 	ELSIF $WK_SYS_FIRST_POKETYPE == FIRST_POKETYPE_HONOO THEN	
@@ -203,6 +204,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 			$WK_SCENE_R03_PLASMA = 2
 				
 			//======================================//
+			_TRAINER_LOSE()
 		ENDIF
 		
 	ELSE
@@ -222,6 +224,7 @@ EVENT_START   ev_pos_r03r0301_rival_01
 			$WK_SCENE_R03_PLASMA = 2
 				
 			//======================================//
+			_TRAINER_LOSE()
 		ENDIF
 			
 	ENDIF
