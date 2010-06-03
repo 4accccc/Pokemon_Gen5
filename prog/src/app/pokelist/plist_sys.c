@@ -1629,6 +1629,7 @@ static void PLIST_TermMode_Select_Decide( PLIST_WORK *work )
   case PL_MODE_SET_MUSICAL:
     PLIST_SelectMenuInit( work );
     //’†‚Åˆê‚Éƒƒjƒ…[‚ğŠJ‚­
+    GFL_BG_LoadScreenReq(PLIST_BG_MENU);
     PLIST_InitMode_Menu( work );
     
     break;

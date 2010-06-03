@@ -127,7 +127,12 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   {
     TIMEICON_Exit( msgWork->timeIcon );
   }
-
+  if( msgWork->printHandle != NULL )
+  {
+    PRINTSYS_PrintStreamDelete(msgWork->printHandle);
+    GFL_STR_DeleteBuffer( msgWork->streamStr );
+  }
+  
   APP_KEYCURSOR_Delete( msgWork->cursorWork );
   GFL_TCBL_Exit( msgWork->tcblSys );
   GFL_HEAP_FreeMemory( msgWork );
