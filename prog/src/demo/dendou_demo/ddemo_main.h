@@ -96,6 +96,9 @@ typedef struct {
 	int	mainSeq;
 	int	subSeq;
 	int	nextSeq;
+
+	BOOL	endFlag;
+
 }DDEMOMAIN_WORK;
 
 typedef int (*pDDEMOMAIN_FUNC)(DDEMOMAIN_WORK*);

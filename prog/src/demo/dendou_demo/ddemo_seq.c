@@ -55,6 +55,8 @@
 #define	DEF_2ND_POKEOUT_WAIT			( 128 )																					// ポケモン画面アウト開始ウェイト
 #define	DEF_2ND_POKEOUT_SPEED			( -8 )																					// ポケモン画面アウト速度
 #define	DEF_2ND_POKEOUT_COUNT			( 32+12-DEF_2ND_POKEIN_COUNT )									// ポケモン画面アウト移動カウント
+#define	DEF_2ND_FADE_DIV					( 188 )																					// 終了画面フェード分割数
+#define	DEF_2ND_BGM_FADE					( 220 )																					// 終了BGMフェードフレーム数
 
 
 //============================================================================================
@@ -73,7 +75,7 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk );
 static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk );
 
 static int SetFadeIn( DDEMOMAIN_WORK * wk, int next );
-static int SetFadeOut( DDEMOMAIN_WORK * wk, int next );
+static int SetFadeOut( DDEMOMAIN_WORK * wk, int next, int div );
 
 static int SetWait( DDEMOMAIN_WORK * wk, int wait );
 
@@ -460,7 +462,7 @@ static int MainSeq_1stMain( DDEMOMAIN_WORK * wk )
 				DDEMOOBJ_MoveFontOamPos( wk );
 			}else{
 				wk->subSeq++;
-				return SetFadeOut( wk, MAINSEQ_1ST_MAIN );
+				return SetFadeOut( wk, MAINSEQ_1ST_MAIN, WIPE_DEF_DIV );
 			}
 		}
 		break;
@@ -551,6 +553,14 @@ static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 {
+	// 終了チェック
+	if( wk->endFlag == TRUE ){
+		if( WIPE_SYS_EndCheck() == TRUE && PMSND_CheckFadeOnBGM() == FALSE ){
+			PMSND_StopBGM();
+			return MAINSEQ_2ND_EXIT;
+		}
+	}
+
 	switch( wk->subSeq ){
 	case 0:		// 初期化
 		wk->subSeq++;
@@ -674,10 +684,12 @@ static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 	if( wk->subSeq >= 6 ){
 		DDEMOOBJ_SetRandomFlash( wk );
 	}
-	if( wk->subSeq >= 8 ){
+	if( wk->subSeq >= 8 && wk->endFlag == FALSE ){
 		if( ( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_A|PAD_BUTTON_B) ) ||
 				GFL_UI_TP_GetTrg() == TRUE ){
-			return SetFadeOut( wk, MAINSEQ_2ND_EXIT );
+			wk->endFlag = TRUE;
+		  PMSND_FadeOutBGM( DEF_2ND_BGM_FADE );
+			SetFadeOut( wk, MAINSEQ_2ND_EXIT, DEF_2ND_FADE_DIV );
 		}
 	}
 
@@ -709,15 +721,16 @@ static int SetFadeIn( DDEMOMAIN_WORK * wk, int next )
  *
  * @param		wk		ワーク
  * @param		next	フェード後のシーケンス
+ * @param		div		フェード分割数
  *
  * @return	次のシーケンス
  */
 //--------------------------------------------------------------------------------------------
-static int SetFadeOut( DDEMOMAIN_WORK * wk, int next )
+static int SetFadeOut( DDEMOMAIN_WORK * wk, int next, int div )
 {
 	WIPE_SYS_Start(
 		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, HEAPID_DENDOU_DEMO );
+		WIPE_FADE_BLACK, div, WIPE_DEF_SYNC, HEAPID_DENDOU_DEMO );
 	wk->nextSeq = next;
 	return MAINSEQ_WIPE;
 }
