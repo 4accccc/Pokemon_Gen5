@@ -235,7 +235,7 @@ static void _modeSelectBattleTypeInit(CG_WIRELESS_MENU* pWork);
 static void _buttonWindowDelete(CG_WIRELESS_MENU* pWork);
 static void _ReturnButtonStart(CG_WIRELESS_MENU* pWork);
 static void _UpdatePalletAnime(CG_WIRELESS_MENU* pWork );
-
+static void _buttonWindowDeleteF3S(int no, CG_WIRELESS_MENU* pWork);  //20100604 add Saito
 
 
 #ifdef _NET_DEBUG
@@ -451,6 +451,26 @@ static void _buttonWindowDelete2(int no, CG_WIRELESS_MENU* pWork)
   }
   pWork->buttonWin[i] = NULL;
   GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief	BGフレーム3（サブ画面）のウィンドウを消去
+ *
+ *	@param	no		ボタンID
+ *	@param	p_work		ワーク
+ */
+//-----------------------------------------------------------------------------
+static void _buttonWindowDeleteF3S(int no, CG_WIRELESS_MENU* pWork)
+{
+  int i=no;
+  if(pWork->buttonWin[i]){
+    GFL_BMPWIN_ClearScreen(pWork->buttonWin[i]);
+    BmpWinFrame_Clear(pWork->buttonWin[i], WINDOW_TRANS_OFF);
+    GFL_BMPWIN_Delete(pWork->buttonWin[i]);
+  }
+  pWork->buttonWin[i] = NULL;
+  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME3_S);
 }
 
 //----------------------------------------------------------------------------
@@ -1004,11 +1024,13 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
     switch(no){
     case INTRUDE_CONNECT_NULL:              ///<接続されていない
       GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+      _buttonWindowDeleteF3S(_HI_NAMAE, pWork); //20100604 add Saito
       GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_001, pWork->pStrBuf );
       _buttonWindowCreate2(0,  pWork, wind_wireless1);
       break;
     case INTRUDE_CONNECT_INTRUDE:           ///<ハイリンク接続時(ミッションが行われていない)
       GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+      _buttonWindowDeleteF3S(_HI_NAMAE, pWork); //20100604 add Saito
       GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_016, pWork->pStrBuf );
       _buttonWindowCreate2(0,  pWork, wind_wireless2);
       break;
@@ -1016,6 +1038,7 @@ static void _UpdateMessage(CG_WIRELESS_MENU* pWork)
       {
         int no2 = Intrude_GetMissionEntryNum(pComm);
         GFL_CLACT_WK_SetDrawEnable( pWork->HiName, FALSE );
+        _buttonWindowDeleteF3S(_HI_NAMAE, pWork); //20100604 add Saito
         WORDSET_RegisterNumber( pWork->pWordSet, 0,  no2, 1,STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
         GFL_MSG_GetString(  pWork->pMsgData, CGEAR_WIRLESS_017, pWork->pExpStrBuf );
         WORDSET_ExpandStr( pWork->pWordSet, pWork->pStrBuf, pWork->pExpStrBuf );
