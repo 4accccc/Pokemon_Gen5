@@ -664,8 +664,8 @@ sub_gts_normal_exchange:
     _RET
   ENDIF
 
-  //戦える手持ちが2匹以上チェック
-  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_BATTLE_ENABLE )
+  //タマゴでない手持ちが2匹以上チェック
+  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_NOT_EGG )
   IF $party_ct < 2 THEN
     //手持ちが2匹以上いないと利用できません
     _BALLOONWIN_OBJMSG_POS( msg_gts_normal_err02 , SCWK_TARGET_OBJID, POS_DL )
@@ -835,8 +835,8 @@ sub_gts_nego_exchange:
   DEFINE_LOCAL  i_ret
   DEFINE_LOCAL  party_ct
   
-  //戦える手持ちが2匹以上チェック
-  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_BATTLE_ENABLE )
+  //タマゴでない手持ちが2匹以上チェック
+  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_NOT_EGG )
   IF $party_ct < 2 THEN
     //手持ちが2匹以上いないと利用できません
     _BALLOONWIN_OBJMSG_POS( msg_gts_nego_err01 , SCWK_TARGET_OBJID, POS_DL )
