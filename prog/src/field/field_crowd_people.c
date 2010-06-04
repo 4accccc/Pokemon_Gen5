@@ -327,7 +327,7 @@ static void FIELD_CROWD_PEOPLE_TASK_Update( FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_
 
 // 
 static FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_GetClearWk( FIELD_CROWD_PEOPLE* p_sys );
-static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD_PEOPLE* cp_sys, u16 gx, u16 gz, u16 move_dir, u16 type );
+static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD_PEOPLE* cp_sys, u16 gx, u16 gz, u16 move_dir, u16 type, u32* p_hit );
 
 //-------------------------------------
 ///	ワーク管理
@@ -555,11 +555,12 @@ static FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_GetClearWk( FIELD_CROWD_PEOPLE*
  *	@param	gz          グリッドZ
  *	@param	move_dir    動作方向
  *	@param	type        タイプ 
+ *	@param  p_hit       完全一致チェック用
  *
  *	@return 人物ワーク
  */
 //-----------------------------------------------------------------------------
-static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD_PEOPLE* cp_sys, u16 gx, u16 gz, u16 move_dir, u16 type )
+static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD_PEOPLE* cp_sys, u16 gx, u16 gz, u16 move_dir, u16 type, u32* p_hit )
 {
   int i;
   s16 move_x;
@@ -589,6 +590,8 @@ static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD
     move_z = 0;
     break;
   }
+
+  *p_hit = FALSE;
   
 
   for( i=0; i<FIELD_CROWD_PEOPLE_MAX; i++ )
@@ -609,6 +612,12 @@ static const FIELD_CROWD_PEOPLE_WK* FIELD_CROWD_PEOPLE_Search( const FIELD_CROWD
         }
         if( dif_z != 0 ){
           dif_z /= MATH_ABS( dif_z );
+        }
+
+        // 完全一致もチェック
+        if( (dif_x == 0) && (dif_z == 0) ){
+          *p_hit = TRUE;
+          return &cp_sys->people_wk[i];
         }
 
         // 移動方向が一致したら、OK
@@ -1031,6 +1040,7 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPL
   u16 type = FIELD_CROWD_PEOPLE_TYPE_NORMAL;
   u32 rand = GFUser_GetPublicRand( 0 );
   s32 move_grid;
+  u32 hit;
   
   // 起動グリッド決定
   if( (cp_point->move_dir == DIR_UP) || (cp_point->move_dir == DIR_DOWN) )
@@ -1054,12 +1064,18 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_SetUpPeople( const FIELD_CROWD_PEOPL
 
   // 動作タイプ決定
   // そのグリッド上に話せる人がいなければ、話せる意地悪な人を出す。
-  if( FIELD_CROWD_PEOPLE_Search( cp_sysdata, gx, gz, cp_point->move_dir, FIELD_CROWD_PEOPLE_TYPE_NASTY ) == NULL )
+  if( FIELD_CROWD_PEOPLE_Search( cp_sysdata, gx, gz, cp_point->move_dir, FIELD_CROWD_PEOPLE_TYPE_NASTY, &hit ) == NULL )
   {
     if( (rand % FIELD_CROWD_PEOPLE_PUT_PAR) == 0 )
     {
       type = FIELD_CROWD_PEOPLE_TYPE_NASTY;
     }
+  }
+
+  // 完全一致だった場合、初期化しない。
+  if( hit ){
+    TOMOYA_Printf( "完全一致！！！！\n" );
+    return ;
   }
 
   move_grid = cp_point->move_grid - add_grid;

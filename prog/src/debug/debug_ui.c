@@ -240,10 +240,10 @@ static BOOL DebugUI_OverWriteCallback( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DE
   }
     
   // L+SELECT‚Í•ÛŽ
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
-    if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) ){
-      p_data->trg |= (PAD_BUTTON_SELECT);
-      p_data->cont |= (PAD_BUTTON_L);
+  if( GFL_UI_KEY_GetTrg() & DEBUGWIN_TRG_KEY ){
+    if( (GFL_UI_KEY_GetCont() & DEBUGWIN_CONT_KEY) ){
+      p_data->trg |= (DEBUGWIN_TRG_KEY);
+      p_data->cont |= (DEBUGWIN_CONT_KEY);
     }
   }
 
