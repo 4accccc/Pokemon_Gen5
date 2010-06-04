@@ -1683,7 +1683,13 @@ void FLDMENUFUNC_DeleteMenu( FLDMENUFUNC *menuFunc )
 //--------------------------------------------------------------
 u32 FLDMENUFUNC_ProcMenu( FLDMENUFUNC *menuFunc )
 {
-  u32 ret = BmpMenuList_Main( menuFunc->pMenuListWork );
+  u32 ret;
+
+  if(FLDMSGBG_CheckFinishPrint( menuFunc->fmb ) == FALSE){
+    return FLDMENUFUNC_NULL;
+  }
+  
+  ret = BmpMenuList_Main( menuFunc->pMenuListWork );
   
   if( ret == BMPMENULIST_NULL ){
     return( FLDMENUFUNC_NULL );
