@@ -3800,13 +3800,6 @@ static void CONFIRM_Start( CONFIRM_WORK *p_wk, int wait )
   GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
 
   MSGWND_Print( &p_wk->msg, mes_config_comment20, wait, FALSE );
-
-  if( GFL_NET_IsInit() )
-  { 
-    //通信アイコンがBGにかぶるので位置を変える
-    GFL_NET_ChangeIconPosition(-16,-16);
-    GFL_NET_ReloadIcon();
-  }
 }
 
 //----------------------------------------------------------------------------
@@ -3841,13 +3834,6 @@ static void CONFIRM_PrintErrMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
 
     GFL_MSG_Delete( p_msg );
   }
-
-  if( GFL_NET_IsInit() )
-  { 
-    //通信アイコンがBGにかぶるので位置を変える
-    GFL_NET_ChangeIconPosition(-16,-16);
-    GFL_NET_ReloadIcon();
-  }
 }
 //----------------------------------------------------------------------------
 /**
@@ -3861,13 +3847,6 @@ static void CONFIRM_PrintMessage( CONFIRM_WORK *p_wk, u32 strID, int wait )
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG0 | GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BG2 | GX_BLEND_PLANEMASK_OBJ , 8 );
   GFL_BG_SetVisible( GRAPHIC_BG_GetFrame(GRAPHIC_BG_FRAME_DECIDE_M), TRUE );
   MSGWND_Print( &p_wk->msg, strID, wait, TRUE );
-
-  if( GFL_NET_IsInit() )
-  { 
-    //通信アイコンがBGにかぶるので位置を変える
-    GFL_NET_ChangeIconPosition(-16,-16);
-    GFL_NET_ReloadIcon();
-  }
 }
 //----------------------------------------------------------------------------
 /**
