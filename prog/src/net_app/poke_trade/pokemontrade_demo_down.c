@@ -139,6 +139,15 @@ void POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo(POKEMON_TRADE_WORK* pWork)
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );
 
 //  _CHANGE_STATE(pWork,_changeDemo_ModelT1);
+
+  ///フラグ設定
+  {
+    _apperFlgCheck(pWork, &pWork->bByebyeMessageEach, &pWork->bByebyeNoJump, pWork->pFriend, TRUE);
+    NET_PRINT("さよならメッセージ %d\n",pWork->bByebyeMessageEach);
+    _apperFlgCheck(pWork, &pWork->bEncountMessageEach, &pWork->bEncountNoJump, pWork->pMy, FALSE);
+    NET_PRINT("おかえりメッセージ %d\n",pWork->bEncountMessageEach);
+  }
+
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade2);
 
 
