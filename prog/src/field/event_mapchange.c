@@ -3002,7 +3002,8 @@ static void MAPCHG_setupMapTools( GAMESYS_WORK * gsys, u16 zone_id )
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_UNION);
   }
   else if ( ZONEDATA_IsColosseum( zone_id )
-      || ZONEDATA_IsMusicalWaitingRoom( zone_id ) )
+      || ZONEDATA_IsMusicalWaitingRoom( zone_id )
+      || ZONEDATA_IsPlBoat( zone_id ) )
   {
     GAMEDATA_SetSubScreenMode(gamedata, FIELD_SUBSCREEN_NOGEAR);
   }
