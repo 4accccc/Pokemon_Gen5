@@ -33,7 +33,6 @@
 
 #include "title_res.h"
 
-#include "title1.naix"
 #include "demo3d.naix"
 #include "title/title.h"
 
