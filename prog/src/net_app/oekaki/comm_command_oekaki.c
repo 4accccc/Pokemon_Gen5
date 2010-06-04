@@ -50,11 +50,6 @@ static void CommOekakiBoardEndChild(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void CommOekakiBoardEnd(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void CommOekakiBoardChildJoin(
-    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-static void CommOekakiBoardFreeze(
-    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
-
 
 
 // CommCommandOekaki.cから定義するコマンドで対応するコールバック関数
@@ -67,8 +62,6 @@ const NetRecvFuncTable _OekakiCommPacketTbl[] = {
   {CommOekakiBoardReStart,       NULL  },          // CO_OEKAKI_RESTART,   乱入者処理が終わったので再会
   {CommOekakiBoardEndChild,      NULL  },          // CO_OEKAKI_END_CHILD,   子機が離脱
   {CommOekakiBoardEnd,           NULL  },          // CO_OEKAKI_END,     終了
-  {CommOekakiBoardChildJoin,     NULL  },          // CO_OEKAKI_CHILD_JOIN   子機が乱入を宣言
-  {CommOekakiBoardFreeze,        NULL  },          // CO_OEKAKI_OUT_CONTROL  離脱禁止期間
 };
 
 //  {CommOekakiBoardPicture,       _getPictureSize, _setPictureBuff}, // CO_OEKAKI_GRAPHICDATA  みんなで描いていた画像データ
@@ -143,9 +136,10 @@ static void CommOekakiBoardPicture(
       wk->send_num++;
       Oekaki_GraphicDataSend(wk, wk->send_num, pNetHandle);
     }else{
-//      CommSendData_ServerSide( CO_OEKAKI_RESTART, NULL, 0);
-      u32 ret;
-      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_RESTART, 0, NULL);
+//      u32 ret;
+//      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_RESTART, 0, NULL);
+      // 再開
+      Oekaki_SendDataRequest( wk, CO_OEKAKI_RESTART, 0 );
       
     }
   }
@@ -260,7 +254,6 @@ static void CommOekakiBoardEndChild(
     const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
 {
   OEKAKI_WORK *wk = (OEKAKI_WORK*)pWk;
-  COMM_OEKAKI_END_CHILD_WORK trans_work;
   COMM_OEKAKI_END_CHILD_WORK *recieve_work = (COMM_OEKAKI_END_CHILD_WORK*)pData;
   u32 ret;
 
@@ -271,18 +264,18 @@ static void CommOekakiBoardEndChild(
     if(GFL_NET_SystemGetCurrentID()==0){
       // 子機から(親機が受け取る)
       // 子機がいなくなった事を全員に通知する
-      trans_work = *recieve_work;
-      trans_work.ridatu_id = netID;
-      trans_work.oya_share_num = wk->shareNum;
+      wk->send_req.trans_work = *recieve_work;
+      wk->send_req.trans_work.ridatu_id = netID;
+      wk->send_req.trans_work.oya_share_num = wk->shareNum;
       switch(recieve_work->request){
       case COEC_REQ_RIDATU_CHECK:
         if(wk->shareNum != Union_App_GetMemberNum( wk->param->uniapp ) 
             || wk->shareNum != MATH_CountPopulation(Union_App_GetMemberNetBit(wk->param->uniapp))){
-          trans_work.ridatu_kyoka = FALSE;  //離脱NG！
+          wk->send_req.trans_work.ridatu_kyoka = FALSE;  //離脱NG！
         }
         else{
           wk->ridatu_bit |= 1 << netID;
-          trans_work.ridatu_kyoka = TRUE;
+          wk->send_req.trans_work.ridatu_kyoka = TRUE;
           //離脱OKなので参加制限をかける(乱入があればそちら側で制限がはずされるはず)
 //          CommStateSetLimitNum(Union_App_GetMemberNum( wk->param->uniapp ));
             Union_App_Parent_ResetEntryBlock( wk->param->uniapp);   // 乱入OK
@@ -292,10 +285,9 @@ static void CommOekakiBoardEndChild(
         break;
       }
 
-//    CommSendData_ServerSide( CO_OEKAKI_END_CHILD, &trans_work, 
-//        sizeof(COMM_OEKAKI_END_CHILD_WORK) );
-      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_END_CHILD, 
-                            sizeof(COMM_OEKAKI_END_CHILD_WORK), &trans_work);
+//      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_END_CHILD, 
+//                            sizeof(COMM_OEKAKI_END_CHILD_WORK), &trans_work);
+      Oekaki_SendDataRequest( wk, CO_OEKAKI_END_CHILD, 0 );
 
       OS_Printf("子機%dから離脱を受け取った→送信\n",netID);
     }
@@ -385,69 +377,6 @@ static void CommOekakiBoardEnd(
     OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_FORCE_END, 0  );
   }
 }
-
-//==============================================================================
-/**
- * @brief   ３台目・４台目・５台目の子機が「絵をちょーだい」と言う
- *
- * @param   netID   
- * @param   size    
- * @param   pData   
- * @param   pWk   
- *
- * @retval  none    
- */
-//==============================================================================
-static void CommOekakiBoardChildJoin(
-    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
-{
-  OEKAKI_WORK *wk = (OEKAKI_WORK*)pWk;
-  u32 ret;
-  u8 id;
-  GF_ASSERT(GFL_NET_SystemGetCurrentID()==0 && "子機がうけとった");
-OS_Printf("_子機(%d)からの乱入／絵のください通知\n",netID);
-  // 親機が受け取ったら(というか親しか受け取らないけど）
-  if(GFL_NET_SystemGetCurrentID()==0){
-    if(wk->firstChild!=0){
-      id  = netID;
-    
-      // 全台に「これから絵を送るので止まってください」と送信する
-//      CommSendData_ServerSide( CO_OEKAKI_STOP, &id, 1 );
-      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_STOP, 1, &id);
-
-      OS_Printf("子機(%d = %d)からの乱入／絵のください通知\n",id,netID);
-    }else{
-      OS_Printf("最初の子機%dからの乱入なので無視する\n",netID);
-      wk->firstChild = 1;
-    }
-  }
-  // お絵かき時には接続切断でエラー扱いしない(途中でTRUE,TRUEに戻る事があるので再度）
-//  CommStateSetErrorCheck(FALSE,TRUE);
-  
-}
-
-//------------------------------------------------------------------
-/**
- * @brief   離脱禁止コマンド到着
- *
- * @param   netID   
- * @param   size    
- * @param   pData   
- * @param   pWk   
- *
- * @retval  none    
- */
-//------------------------------------------------------------------
-static void CommOekakiBoardFreeze(
-    const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
-{
-  OEKAKI_WORK *wk = (OEKAKI_WORK*)pWk;
-
-  // 離脱禁止
-  wk->banFlag = 1;
-}
-
-
 
 
 //------------------------------------------------------------------

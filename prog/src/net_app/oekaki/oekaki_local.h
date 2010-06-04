@@ -79,7 +79,9 @@ enum{
   OEKAKI_MODE_END_SELECT,
   OEKAKI_MODE_END_SELECT_WAIT,
   OEKAKI_MODE_END_SELECT_ANSWER_WAIT,
+  OEKAKI_MODE_END_SELECT_PARENT_CALL,
   OEKAKI_MODE_END_SELECT_ANSWER_OK,
+  OEKAKI_MODE_END_SELECT_SEND_OK,
   OEKAKI_MODE_END_SELECT_ANSWER_NG,
 
   OEKAKI_MODE_END_CHILD,
@@ -88,6 +90,7 @@ enum{
 
   OEKAKI_MODE_END_SELECT_PARENT,
   OEKAKI_MODE_END_SELECT_PARENT_WAIT,
+  OEKAKI_MODE_END_SELECT_PARENT_SEND_END,
 
   OEKAKI_MODE_FORCE_END,
   OEKAKI_MODE_FORCE_END_WAIT,
@@ -165,6 +168,31 @@ typedef struct{
   u8  no;
   u8  dummy[3];
 }OEKAKIG_SPLIT_DATA;
+
+//--------------------------------------------------------------
+/**
+ * @brief   この構造体の中身を替えたら、必ず通信関数テーブルで
+ *          CommRecordCornerEndChildを使用している箇所の送受信サイズを変更すること！！
+ *      ファイル：comm_command_record.c, comm_command_oekaki.c, comm_command_field.c
+ */
+//--------------------------------------------------------------
+typedef struct{
+  u8 ridatu_id;       ///<離脱者のID
+  u8 oya_share_num;   ///<親の持つshareNum
+  u8 request;         ///<命令コード
+  u8 ridatu_kyoka;    ///<TRUE:離脱OK、FALSE:離脱NG
+}COMM_OEKAKI_END_CHILD_WORK;
+
+//====================================================
+/// データ送信リクエスト構造体
+//====================================================
+typedef struct{
+    int command;       // 通信コマンド
+    u8  id;             // 乱入者ID
+    u8  etc[3];
+    COMM_OEKAKI_END_CHILD_WORK trans_work;  // 子機離脱宣言用ワーク
+} OEKAKI_SEND_REQUEST;
+
 
 enum{
   OEKAKI_PRINT_UTIL_NAME_WIN0=0,
@@ -252,6 +280,7 @@ struct OEKAKI_WORK{
   u8            canvas_buf[OEKAKI_GRAPHI_SIZE];
   OEKAKIG_SPLIT_DATA    send_buf;
   OEKAKIG_SPLIT_DATA    split_temp[OEKAKI_MEMBER_MAX];
+  OEKAKI_SEND_REQUEST   send_req;
 
   s32           err_num;                  // 通信終了をみるためのワーク
   u32           ridatu_bit;               // 離脱しようとしている子のBit
@@ -274,19 +303,6 @@ struct OEKAKI_WORK{
 #endif
 };
 
-//--------------------------------------------------------------
-/**
- * @brief   この構造体の中身を替えたら、必ず通信関数テーブルで
- *          CommRecordCornerEndChildを使用している箇所の送受信サイズを変更すること！！
- *      ファイル：comm_command_record.c, comm_command_oekaki.c, comm_command_field.c
- */
-//--------------------------------------------------------------
-typedef struct{
-  u8 ridatu_id;       ///<離脱者のID
-  u8 oya_share_num;   ///<親の持つshareNum
-  u8 request;         ///<命令コード
-  u8 ridatu_kyoka;    ///<TRUE:離脱OK、FALSE:離脱NG
-}COMM_OEKAKI_END_CHILD_WORK;
 
 enum{
   COEC_REQ_RIDATU_CHECK,  ///<離脱確認
@@ -298,6 +314,7 @@ extern void OekakiBoardCommSendPokeData(int netID, POKEPARTY *party, int no);
 extern void OekakiBoardCommSend(int netID, int command, int pos);
 extern void OekakiBoard_MainSeqCheckChange( OEKAKI_WORK *wk, int seq, u8 id );
 extern void OekakiBoard_MainSeqForceChange( OEKAKI_WORK *wk, int seq, u8 id  );
+extern void Oekaki_SendDataRequest( OEKAKI_WORK *wk, int command, int id );
 
 
 #endif

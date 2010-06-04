@@ -30,8 +30,6 @@ enum{
   CO_OEKAKI_RESTART,   
   CO_OEKAKI_END_CHILD, 
   CO_OEKAKI_END,     
-  CO_OEKAKI_CHILD_JOIN,
-  CO_OEKAKI_OUT_CONTROL,
 };
 extern void OEKAKIBOARD_CommandInitialize( void* pWk );
 

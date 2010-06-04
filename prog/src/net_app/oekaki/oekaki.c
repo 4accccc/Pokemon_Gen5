@@ -84,13 +84,16 @@ static void EndSequenceCommonFunc( OEKAKI_WORK *wk );
 static  int Oekaki_EndSelectPutString( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_EndSelectAnswerWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectParentCall( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectSendOK( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_EndSelectAnswerNG( OEKAKI_WORK *wk, int seq );
 static  int  Oekaki_EndChild( OEKAKI_WORK *wk, int seq );
 static  int  Oekaki_EndChildWait( OEKAKI_WORK *wk, int seq );
 static  int  Oekaki_EndChildWait2( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_EndSelectParent( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq );
+static  int Oekaki_EndSelectParentSendEnd( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_ForceEnd( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq );
 static  int Oekaki_ForceEndSynchronize( OEKAKI_WORK *wk, int seq );
@@ -142,11 +145,15 @@ static void YesNoMenuDelete( OEKAKI_WORK *wk );
 static void OekakiResetYesNoWin(OEKAKI_WORK *wk);
 static void Oekaki_PrintFunc( OEKAKI_WORK *wk );
 static void _comm_friend_add( OEKAKI_WORK *wk );
+static void Oekaki_SendFunc( OEKAKI_WORK *wk );
 
 
+//====================================================
+/// シーケンス管理構造体
+//====================================================
 typedef struct{
-  int (*func)(OEKAKI_WORK *wk, int seq);
-  int execOn_SeqLeave;
+  int (*func)(OEKAKI_WORK *wk, int seq);  // 関数
+  int execOn_SeqLeave;                    // 実行可能フラグ
 }OEKAKI_FUNC_TABLE;
 
 static OEKAKI_FUNC_TABLE FuncTable[]={
@@ -158,13 +165,16 @@ static OEKAKI_FUNC_TABLE FuncTable[]={
   {Oekaki_EndSelectPutString, 1,},  // OEKAKI_MODE_END_SELECT,
   {Oekaki_EndSelectWait,      1,},  // OEKAKI_MODE_END_SELECT_WAIT,
   {Oekaki_EndSelectAnswerWait,1,},  // OEKAKI_MODE_END_SELECT_ANSWER_WAIT
+  {Oekaki_EndSelectParentCall,1,},  // OEKAKI_MODE_END_SELECT_PARENT_CALL
   {Oekaki_EndSelectAnswerOK,  1,},  // OEKAKI_MODE_END_SELECT_ANSWER_OK
+  {Oekaki_EndSelectSendOK,    1,},  // OEKAKI_MODE_END_SELECT_SEND_OK
   {Oekaki_EndSelectAnswerNG,  1,},  // OEKAKI_MODE_END_SELECT_ANSWER_NG
   {Oekaki_EndChild,           1,},  // OEKAKI_MODE_END_CHILD
   {Oekaki_EndChildWait,       1,},  // OEKAKI_MODE_END_CHILD_WAIT
   {Oekaki_EndChildWait2,      1,},  // OEKAKI_MODE_END_CHILD_WAIT2
   {Oekaki_EndSelectParent,    1,},  // OEKAKI_MODE_END_SELECT_PARENT
   {Oekaki_EndSelectParentWait,1,},  // OEKAKI_MODE_END_SELECT_PARENT_WAIT
+  {Oekaki_EndSelectParentSendEnd,1,},  // OEKAKI_MODE_END_SELECT_PARENT_SEND_END
   {Oekaki_ForceEnd,           1,},  // OEKAKI_MODE_FORCE_END
   {Oekaki_ForceEndWait,       1,},  // OEKAKI_MODE_FORCE_END_WAIT
   {Oekaki_ForceEndSynchronize,1,},  // OEKAKI_MODE_FORCE_END_SYNCHRONIZE
@@ -345,32 +355,13 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
   case SEQ_IN:
     // ワイプ処理待ち
     if( WIPE_SYS_EndCheck() ){
-      // 乱入OK状態にする
-//      Union_App_Parent_ResetEntryBlock( wk->param->uniapp );
-
       // 乱入・退出コールバック登録
       Union_App_SetCallback( wk->param->uniapp, OEKAKI_entry_callback, OEKAKI_leave_callback, wk);
       // 1人まで乱入可能の設定に(開始した時は２人でここにくるのであと一人だけ入れるようにしておく）
       if(GFL_NET_SystemGetCurrentID()==0){
-//        CommStateSetLimitNum(wk, 1);
         ConnectLimitSet(wk,1);
       }
 
-#if 0
-      // 自分が子機で接続台数が２台以上だった場合はもう絵が描かれている
-      if(GFL_NET_SystemGetCurrentID()!=0){
-        if( (MyStatusGetNum(wk)>2) ){
-          // 子機乱入リクエスト
-          GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(),CO_OEKAKI_CHILD_JOIN, NULL, 0);
-          OS_Printf("乱入します\n");
-        }
-        *seq = SEQ_MAIN;
-        break;
-      }else{
-        //親はメインへ
-        *seq = SEQ_MAIN;
-      }
-#endif
       //親はメインへ
       *seq = SEQ_MAIN;
 
@@ -420,6 +411,11 @@ GFL_PROC_RESULT OekakiProc_Main( GFL_PROC * proc, int *seq, void *pwk, void *myw
     }
     break;
   }
+  
+  // データ送信リクエスト処理
+  Oekaki_SendFunc( wk );
+
+
   GFL_CLACT_SYS_Main();             // セルアクター常駐関数
   GFL_TCBL_Main( wk->pMsgTcblSys );
   Oekaki_PrintFunc(wk);
@@ -576,15 +572,9 @@ static void OEKAKI_entry_callback(NetID net_id, const MYSTATUS *mystatus, void *
   
   // 別な子機の乱入に対処
   if(GFL_NET_SystemGetCurrentID()==0){
-      int ret;
-      u8 id  = net_id;
       // 2台目以降の子機の乱入
       // 全台に「これから絵を送るので止まってください」と送信する
-      ret=GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_STOP, 1, &id);
-      
-      if(ret==FALSE){
-        GF_ASSERT("乱入コールバック送信失敗\n");
-      }
+      Oekaki_SendDataRequest( wk, CO_OEKAKI_STOP, net_id );
   }
 
   // 接続したメンバーを通信友達登録
@@ -1678,24 +1668,12 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
 
   result = YesNoMenuMain( wk );
   switch(result){       //やめますか？
-//  case TOUCH_SW_RET_YES:            //はい
   case YESNO_RET_YES:
       if(GFL_NET_SystemGetCurrentID()==0){    
         SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT );
         EndMessagePrint( wk, msg_oekaki_05, 1 );    // リーダーがやめると…
       }else{
-        COMM_OEKAKI_END_CHILD_WORK coec;
-        
-        MI_CpuClear8(&coec, sizeof(COMM_OEKAKI_END_CHILD_WORK));
-        coec.request = COEC_REQ_RIDATU_CHECK;
-        coec.ridatu_id = GFL_NET_SystemGetCurrentID();
-        
-        wk->status_end = TRUE;
-        wk->ridatu_wait = 0;
-  
-        SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_WAIT );
-        GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(),CO_OEKAKI_END_CHILD, 
-                          sizeof(COMM_OEKAKI_END_CHILD_WORK), &coec );
+        SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT_CALL );
         BmpWinFrame_Clear( wk->MsgWin, WINDOW_TRANS_OFF );
       }
   
@@ -1703,7 +1681,6 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
       GFL_BMPWIN_MakeTransWindow( wk->OekakiBoard );
   
     break;
-//  case TOUCH_SW_RET_NO:           //いいえ
   case YESNO_RET_NO:
     SetNextSequence( wk, OEKAKI_MODE );
     EndButtonAppearChange( wk->EndIconActWork, FALSE );
@@ -1724,6 +1701,34 @@ static int Oekaki_EndSelectWait( OEKAKI_WORK *wk, int seq )
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
 
+  return seq;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 親機が一旦お絵かき終了を選択したのでまずは子機に操作禁止を伝える
+ *
+ * @param   wk    
+ * @param   seq   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static int Oekaki_EndSelectParentCall( OEKAKI_WORK *wk, int seq )
+{
+  COMM_OEKAKI_END_CHILD_WORK coec;
+  
+  MI_CpuClear8(&coec, sizeof(COMM_OEKAKI_END_CHILD_WORK));
+  coec.request = COEC_REQ_RIDATU_CHECK;
+  coec.ridatu_id = GFL_NET_SystemGetCurrentID();
+  
+  if(GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(),CO_OEKAKI_END_CHILD, 
+                    sizeof(COMM_OEKAKI_END_CHILD_WORK), &coec ))
+  {
+    SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_WAIT );
+  }
+
+  EndSequenceCommonFunc( wk );    //終了選択時の共通処理
   return seq;
 }
 
@@ -1775,23 +1780,43 @@ static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq )
   wk->ridatu_wait++;
   OS_TPrintf("ridatu_wait = %d\n", wk->ridatu_wait);
   if(wk->ridatu_wait > 30){
-    COMM_OEKAKI_END_CHILD_WORK coec;
-    
-    MI_CpuClear8(&coec, sizeof(COMM_OEKAKI_END_CHILD_WORK));
-    coec.request = COEC_REQ_RIDATU_EXE;
-    coec.ridatu_id = GFL_NET_SystemGetCurrentID();
-
-    GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), CO_OEKAKI_END_CHILD, 
-                      sizeof(COMM_OEKAKI_END_CHILD_WORK), &coec );
-
+    SetNextSequence( wk, OEKAKI_MODE_END_SELECT_SEND_OK );
     wk->ridatu_wait = 0;
-    SetNextSequence( wk, OEKAKI_MODE_END_CHILD );
   }
 
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
   return seq;
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 子機離脱を送信
+ *
+ * @param   wk    
+ * @param   seq   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static  int Oekaki_EndSelectSendOK( OEKAKI_WORK *wk, int seq )
+{
+  COMM_OEKAKI_END_CHILD_WORK coec;
+  
+  MI_CpuClear8(&coec, sizeof(COMM_OEKAKI_END_CHILD_WORK));
+  coec.request = COEC_REQ_RIDATU_EXE;
+  coec.ridatu_id = GFL_NET_SystemGetCurrentID();
+
+  if(GFL_NET_SendData( GFL_NET_HANDLE_GetCurrentHandle(), CO_OEKAKI_END_CHILD, 
+                    sizeof(COMM_OEKAKI_END_CHILD_WORK), &coec ))
+  {
+    SetNextSequence( wk, OEKAKI_MODE_END_CHILD );
+  }
+  
+  EndSequenceCommonFunc( wk );    //終了選択時の共通処理
+  return seq;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -1936,15 +1961,7 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
 
   switch(result){       //やめますか？
   case YESNO_RET_YES:            //はい
-    SetNextSequence( wk, OEKAKI_MODE_FORCE_END );
-    GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), 
-                      CO_OEKAKI_END, NULL, 0 );  //終了通知
-    // 親機（自分）の名前をWORDSET
-    WORDSET_RegisterPlayerName( wk->WordSet, 0, 
-                                Union_App_GetMystatus(wk->param->uniapp, 0)); 
-    seq = SEQ_LEAVE;
-    OS_Printf("OEKAKI_MODE_FORCE_ENDにかきかえ\n");
-    // 乱入禁止
+    SetNextSequence( wk, OEKAKI_MODE_END_SELECT_PARENT_SEND_END );
     Union_App_Parent_EntryBlock(wk->param->uniapp);
     break;
   case YESNO_RET_NO:           //いいえ
@@ -1954,7 +1971,6 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
 
     // 親機は接続拒否を解除
     if(GFL_NET_SystemGetCurrentID()==0){
-//      CommStateSetEntryChildEnable(TRUE);
       CommStateSetLimitNum( wk, _get_connect_num(wk)+1);
       ConnectLimitSet(wk,1);
       wk->banFlag = OEKAKI_BAN_OFF;
@@ -1967,6 +1983,35 @@ static int Oekaki_EndSelectParentWait( OEKAKI_WORK *wk, int seq )
   return seq;
   
 }
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 親が終了を送信
+ *
+ * @param   wk    
+ * @param   seq   
+ *
+ * @retval  int   
+ */
+//----------------------------------------------------------------------------------
+static  int Oekaki_EndSelectParentSendEnd( OEKAKI_WORK *wk, int seq )
+{
+  //終了通知
+  if(GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), 
+                    CO_OEKAKI_END, NULL, 0 ))
+  {
+    SetNextSequence( wk, OEKAKI_MODE_FORCE_END );
+    // 親機（自分）の名前をWORDSET
+    WORDSET_RegisterPlayerName( wk->WordSet, 0, 
+                                Union_App_GetMystatus(wk->param->uniapp, 0)); 
+    seq = SEQ_LEAVE;
+    OS_Printf("OEKAKI_MODE_FORCE_ENDにかきかえ\n");
+  }
+  
+  EndSequenceCommonFunc( wk );    //終了選択時の共通処理
+  return seq;
+}
+
 
 //------------------------------------------------------------------
 /**
@@ -3385,4 +3430,65 @@ static void Oekaki_PrintFunc( OEKAKI_WORK *wk )
   PRINT_UTIL_Trans( &wk->printUtil[OEKAKI_PRINT_UTIL_MSG], wk->printQue );
 
 
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief 成功するまで送信処理を呼び出す関数（ループにつき一回）
+ *
+ * @param   wk    OEKAKI_WORK *wk
+ *
+ * @retval  none
+ */
+//----------------------------------------------------------------------------------
+static void Oekaki_SendFunc( OEKAKI_WORK *wk )
+{
+
+  switch(wk->send_req.command){
+  // 2台目以降の子機の乱入
+  // 全台に「これから絵を送るので止まってください」と送信する（親から）
+  case CO_OEKAKI_STOP:
+    if(GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), 
+                         CO_OEKAKI_STOP, 1, &wk->send_req.id))
+    {
+      wk->send_req.command = 0;
+    }
+    break;
+  // 画像送信が終わったので元に戻っていいよ命令（親から）
+  case CO_OEKAKI_RESTART:
+    if(GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_RESTART, 0, NULL))
+    {
+      wk->send_req.command = 0;
+    }
+    break;
+  // 親機が終了するので子機も強制終了と告知（親から）
+  case CO_OEKAKI_END_CHILD:
+    if(GFL_NET_SendData( GFL_NET_GetNetHandle( GFL_NET_NETID_SERVER), CO_OEKAKI_END_CHILD,
+                            sizeof(COMM_OEKAKI_END_CHILD_WORK), &wk->send_req.trans_work))
+    {
+      wk->send_req.command = 0;
+    }
+    break;
+  default:
+    break;
+  }
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief データ送信リクエスト
+ *
+ * @param   wk    
+ * @param   command   
+ * @param   id    
+ */
+//----------------------------------------------------------------------------------
+void Oekaki_SendDataRequest( OEKAKI_WORK *wk, int command, int id )
+{
+  if(wk->send_req.command==0){
+    wk->send_req.command = command;
+    wk->send_req.id = id;
+  }else{
+    GF_ASSERT_MSG(0,"送信リクエストが重複した\n");
+  }
 }
