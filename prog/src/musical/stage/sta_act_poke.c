@@ -353,12 +353,12 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
             if( MUS_ITEM_DRAW_IsFrontItem( pokeWork->itemWork[ePos] ) == TRUE )
             {
               //前面用アイテム
-              pos.z = pokeWork->pokePos.z+FX32_CONST(2.0f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.1f));
+              pos.z = pokeWork->pokePos.z+FX32_CONST(10.0f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.5f));
             }
             else
             {
               //ポケの前に出す
-              pos.z = pokeWork->pokePos.z+FX32_CONST(1.0f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.1f));
+              pos.z = pokeWork->pokePos.z+FX32_CONST(5.0f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.5f));
             }
 
             //OS_Printf("[%.2f][%.2f]\n",F32_CONST(equipData->pos.z),F32_CONST(pokePos.z));
