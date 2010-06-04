@@ -2393,7 +2393,7 @@ static int SubSeq_ExchangeScreen1( WORLDTRADE_WORK *wk )
 		if(wk->SubLcdTouchOK){
 			// 必ず中央を指定する（＝０）
 			int result=0;
-				GFL_CLACT_WK_SetAnmSeq( wk->SubActWork[result+1], 16+result*4 );
+				//GFL_CLACT_WK_SetAnmSeq( wk->SubActWork[result+1], 16+result*4 );
 				wk->subprocess_seq     = SUBSEQ_END; 
 				WorldTrade_SubProcessChange( wk, WORLDTRADE_PARTNER, MODE_FROM_SEARCH );
 				wk->TouchTrainerPos = result;

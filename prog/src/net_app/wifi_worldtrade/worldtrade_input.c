@@ -4071,14 +4071,7 @@ static void PagePrint( BGWINFRM_WORK *wfwk, NUMFONT *numfont, GFL_BMPWIN *win, i
 {
 	// 「ページ数 ／ ページMAX」描画
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(win), INPUTPLATE_PAGE_COLOR_DATA );
-  if( page + 1 < 10 )
-  {
-    NUMFONT_WriteNumber( numfont, page+1, 2, NUMFONT_MODE_RIGHT, win,  8, 0 );
-  }
-  else
-  {
-    NUMFONT_WriteNumber( numfont, page+1, 2, NUMFONT_MODE_RIGHT, win,  0, 0 );
-  }
+  NUMFONT_WriteNumber( numfont, page+1, 2, NUMFONT_MODE_RIGHT, win,  0, 0 );
 	NUMFONT_WriteMark(   numfont, NUMFONT_MARK_SLASH, win, 8*2, 0 );
 	NUMFONT_WriteNumber( numfont,  max, 2, NUMFONT_MODE_LEFT, win, 8*3, 0 );
 

@@ -121,7 +121,7 @@ static int Subseq_ServerTradeCheckEnd( WORLDTRADE_WORK *wk );
 static int SubSeq_TimeoutSave( WORLDTRADE_WORK *wk );
 static int SubSeq_TimeoutSaveWait( WORLDTRADE_WORK *wk );
 static int Subseq_DownloadExFinish( WORLDTRADE_WORK *wk );
-static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, Dpw_Tr_Data *tr );
+static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *recv_pp, Dpw_Tr_Data *recv_tr, POKEMON_PARAM *send_pp );
 
 static int Subseq_StartCancelAsync( WORLDTRADE_WORK *wk );
 static int Subseq_WaitCancelAsync( WORLDTRADE_WORK *wk );
@@ -938,6 +938,8 @@ static int Subseq_UploadFinishResult( WORLDTRADE_WORK *wk )
 		switch(result){
 		case 0:		// 正常に動作している
 			// アップロード成功。セーブする。
+      
+      wk->serverWaitTime  = 0;
 			OS_TPrintf(" upload success.\n");
 			wk->subprocess_seq = SUBSEQ_SAVE_LAST;
 			break;
@@ -1036,8 +1038,6 @@ static int Subseq_DownloadResult( WORLDTRADE_WORK *wk )
 			// もう一度サーバーチェックに戻る
 			if(wk->UploadPokemonData.isTrade){
 				OS_TPrintf(" download is right! but traded\n");
-
-        wk->is_trade_download = TRUE;
 
 				wk->subprocess_seq = SUBSEQ_SERVER_TRADE_CHECK;
 			}else{
@@ -1264,7 +1264,7 @@ static int Subseq_ExchangeResult( WORLDTRADE_WORK *wk )
 			// 地球儀情報登録
 			WifiHistoryDataSet( wk->param->wifihistory, &wk->ExchangePokemonData );
 
-			MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->ExchangePokemonData.postData.data, &wk->ExchangePokemonData );
+			MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->ExchangePokemonData.postData.data, &wk->ExchangePokemonData, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data );
 
 			break;
 
@@ -1502,6 +1502,8 @@ static int Subseq_ServerTradeCheckResult( WORLDTRADE_WORK *wk )
 			case POKEMON_RECV_OK:
 				wk->subprocess_seq   = SUBSEQ_DOWNLOAD_EX_START;
 				wk->sub_out_flg = 1;
+
+        wk->is_trade_download = TRUE;
 				break;
 			}
 			break;
@@ -1762,12 +1764,12 @@ static void AfterTradeCheck_ProcessControl( WORLDTRADE_WORK *wk )
  * @retval  none		
  */
 //------------------------------------------------------------------
-static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, Dpw_Tr_Data *tr )
+static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *recv_pp, Dpw_Tr_Data *recv_tr, POKEMON_PARAM *send_pp )
 {
 	// スコア加算->なくなりました
 	//RECORD_Score_Add( wk->param->record, SCORE_ID_WORLD_TRADE );
 
-	OS_Printf("exchange poke adr = %08x\n", (u32)pp);
+	OS_Printf("exchange poke adr = %08x\n", (u32)recv_pp);
 
 	// レコード用処理
 	RECORD_Inc( wk->param->record, RECID_WIFI_TRADE );
@@ -1775,18 +1777,47 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp,
   //  知り合いに登録
   { 
     ETC_SAVE_WORK *p_etc  = SaveData_GetEtc( wk->param->savedata );
-    EtcSave_SetAcquaintance( p_etc, tr->trainerID );
+    EtcSave_SetAcquaintance( p_etc, recv_tr->trainerID );
   }
 
-  //国連データセーブ
   //GTS用友達
   { 
-    MYSTATUS  *p_status = MakePartnerStatusData( tr );
+    MYSTATUS  *p_status = MakePartnerStatusData( recv_tr );
     {
       WIFI_NEGOTIATION_SAVEDATA *p_nego   = WIFI_NEGOTIATION_SV_GetSaveData(wk->param->savedata);
       WIFI_NEGOTIATION_SV_SetFriend( p_nego, p_status );
     }
     GFL_HEAP_FreeMemory( p_status );
+  }
+
+  //国連データ
+  { 
+    MYSTATUS  *p_status = MakePartnerStatusData( recv_tr );
+
+    UNITEDNATIONS_SAVE  un_data;
+    u16 send_poke;
+    GFL_STD_MemClear( &un_data, sizeof(UNITEDNATIONS_SAVE) );
+
+    MyStatus_Copy( p_status, &un_data.aMyStatus );
+
+    if( send_pp  )
+    {
+      send_poke = PP_Get( send_pp, ID_PARA_monsno, NULL );
+    }
+    else
+    {
+      send_poke = recv_tr->postSimple.characterNo;
+    }
+
+    un_data.recvPokemon = PP_Get( recv_pp, ID_PARA_monsno, NULL );
+    un_data.sendPokemon = send_poke;
+    un_data.favorite    = recv_tr->favorite;
+    un_data.nature      = recv_tr->nature;
+    un_data.countryCount= recv_tr->countryCount;
+    UNDATAUP_Update( wk->param->wifihistory, &un_data );
+    GFL_HEAP_FreeMemory( p_status );
+
+    NAGI_Printf( "recv=%d send=%d\n", un_data.recvPokemon, un_data.sendPokemon );
   }
 
 #if 0	//TV_OFF
@@ -1800,7 +1831,7 @@ static void MakeTradeExchangeInfomation( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp,
 #endif
 
 #ifdef PHC_EVENT_CHECK
-	if( PP_Get(pp,ID_PARA_country_code, NULL) != CasetteLanguage ){
+	if( PP_Get(recv_pp,ID_PARA_country_code, NULL) != CasetteLanguage ){
 		PHC_SVDATA *phc_svdata = SaveData_GetPhcSaveData( wk->param->savedata );
 		PhcSvData_SetCourseOpenFlag( phc_svdata, PHC_WIFI_OPEN_COURSE_NO );
 	}else{
@@ -1917,7 +1948,7 @@ static int Subseq_DownloadExStart( WORLDTRADE_WORK *wk)
 	WifiHistoryDataSet( wk->param->wifihistory, &wk->UploadPokemonData );
 
 	// 交換成立時の追加情報作成処理
-	MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data, &wk->UploadPokemonData );
+	MakeTradeExchangeInfomation( wk, (POKEMON_PARAM*)wk->UploadPokemonData.postData.data, &wk->UploadPokemonData, NULL );
 
 	// 引き取った事にする
 	WorldTradeData_SetFlag( wk->param->worldtrade_data, 0 );
@@ -2888,25 +2919,6 @@ static void ExchangePokemonDataAdd( WORLDTRADE_WORK *wk, POKEMON_PARAM *pp, POKE
 
 	}
 
-  //交換時にしか上げたポケモンが分からないため
-  { 
-    MYSTATUS  *p_status = MakePartnerStatusData( tr );
-
-    UNITEDNATIONS_SAVE  un_data;
-    GFL_STD_MemClear( &un_data, sizeof(UNITEDNATIONS_SAVE) );
-
-    MyStatus_Copy( p_status, &un_data.aMyStatus );
-
-    un_data.recvPokemon = PP_Get( pp, ID_PARA_monsno, NULL );
-    un_data.sendPokemon = PP_Get( sendpp, ID_PARA_monsno, NULL );
-    un_data.favorite    = tr->favorite;
-    un_data.nature      = tr->nature;
-    un_data.countryCount= tr->countryCount;
-    UNDATAUP_Update( wk->param->wifihistory, &un_data );
-    GFL_HEAP_FreeMemory( p_status );
-  }
-
-
 
 /* GTSで自分でポケモンを預けている時に、自分から検索してポケモンを交換した際
    セーブデータの「ポケモンをGTSに預けているフラグ」を落としてしまっているバグに対処 */
@@ -2967,6 +2979,7 @@ static void TradeDateUpDate( WORLDTRADE_DATA *worldtrade_data, int trade_type )
 static void WifiHistoryDataSet( WIFI_HISTORY *wifiHistory, Dpw_Tr_Data *trData )
 {
 
+  OS_Printf("Nation=%d area=%d langCode=%d\n", trData->countryCode, trData->localCode, trData->langCode );
 	Comm_WifiHistoryDataSet( wifiHistory, trData->countryCode, trData->localCode, trData->langCode );
 	
 }
