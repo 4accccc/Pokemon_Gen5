@@ -5,56 +5,86 @@
 
 require "monsno_hash.rb"
 require "evolve_hash_conv.rb"
+require "personal_parser.rb"
+require "seed_poke_hash_conv.rb"
 
-
-def UpdateReverseSeedPokeHash( personal_filename, output_path )
+def OutputReverseSeedPokeHash_from_PersonalData( personal_filename, output_path )
+  personal_parser = PersonalDataParser.new( personal_filename ) 
   reverse_seed_poke_hash = CreateReverseSeedPokeHash_from_PersonalData( personal_filename )
-  out_data = CreateOutputData_of_ReverseSeedPokeHash( reverse_seed_poke_hash )
+  reverse_seed_poke_hash = RegisterExceptionalBabyPokemon( reverse_seed_poke_hash )
+  out_data = CreateOutputData_of_ReverseSeedPokeHash( personal_parser, reverse_seed_poke_hash )
   OutputReverseSeedPokeHashData_to_File( out_data, output_path, "reverse_seed_poke_hash.rb" )
 end
 
 def CreateReverseSeedPokeHash_from_PersonalData( personal_filename )
-  reverse_seed_poke_hash = CreateNullHash_for_ReverseSeedPokeHash()
-  reverse_evolve_hash = CreateReverseEvolvePokeHash_from_PersonalData( personal_filename )
-  $monsname.each do |mons_name|
-    seed_mons_name = GetSeedPokemon( reverse_evolve_hash, mons_name )
-    reverse_seed_poke_hash[ seed_mons_name ] << mons_name
+  personal_parser = PersonalDataParser.new( personal_filename ) 
+  mons_fullname_list = personal_parser.get_mons_fullname_list
+  reverse_seed_poke_hash = CreateNullHash_for_ReverseSeedPokeHash( personal_parser )
+  seed_poke_hash = CreateSeedPokeHash_from_PersonalData( personal_parser )
+  mons_fullname_list.each do |mons_fullname|
+    seed_poke_list = seed_poke_hash[ mons_fullname ]
+    seed_poke_list.each do |seed_mons_name|
+      reverse_seed_poke_hash[ seed_mons_name ] << mons_fullname
+    end
   end
   return reverse_seed_poke_hash
 end
 
-def GetSeedPokemon( reverse_evolve_hash, mons_name )
-  seed_mons_name = GetPrevEvolvePokemon( reverse_evolve_hash, mons_name )
-  if seed_mons_name == nil || seed_mons_name == mons_name then
-    return mons_name
+def GetSeedPokemon( reverse_evolve_hash, mons_fullname )
+  seed_mons_name = GetPrevEvolvePokemon( reverse_evolve_hash, mons_fullname )
+  if seed_mons_name == nil || seed_mons_name == mons_fullname then
+    return mons_fullname
   else
     return GetSeedPokemon( reverse_evolve_hash, seed_mons_name )
   end
 end
 
-def GetPrevEvolvePokemon( reverse_evolve_hash, mons_name ) 
-  prev_mons_list = reverse_evolve_hash[ mons_name ]
+def GetSeedPokemonList( reverse_evolve_hash, mons_fullname )
+  seed_poke_list = Array.new
+end
+
+def GetPrevEvolvePokemon( reverse_evolve_hash, mons_fullname ) 
+  prev_mons_list = reverse_evolve_hash[ mons_fullname ]
   if prev_mons_list == nil then
-    return mons_name
+    return mons_fullname
   else 
     return prev_mons_list[0]
   end
 end
 
-def CreateNullHash_for_ReverseSeedPokeHash
+def CreateNullHash_for_ReverseSeedPokeHash( personal_parser )
   hash = Hash.new
-  $monsname.each do |mons_name|
-    hash[ mons_name ] = Array.new
+  mons_fullname_list = personal_parser.get_mons_fullname_list
+  mons_fullname_list.each do |mons_fullname|
+    hash[ mons_fullname ] = Array.new
   end
   return hash
 end
 
-def CreateOutputData_of_ReverseSeedPokeHash( reverse_seed_poke_hash )
+# 例外ケースを登録する ( べビィポケモン )
+def RegisterExceptionalBabyPokemon( reverse_seed_poke_hash )
+  reverse_seed_poke_hash[ "マリル" ] << "マリル"
+  reverse_seed_poke_hash[ "マリル" ] << "マリルリ"
+  reverse_seed_poke_hash[ "ソーナンス" ] << "ソーナンス"
+  reverse_seed_poke_hash[ "バリヤード" ] << "バリヤード"
+  reverse_seed_poke_hash[ "ウソッキー" ] << "ウソッキー"
+  reverse_seed_poke_hash[ "マンタイン" ] << "マンタイン"
+  reverse_seed_poke_hash[ "カビゴン" ] << "カビゴン"
+  reverse_seed_poke_hash[ "ロゼリア" ] << "ロゼリア"
+  reverse_seed_poke_hash[ "ロゼリア" ] << "ロズレイド"
+  reverse_seed_poke_hash[ "ラッキー" ] << "ラッキー"
+  reverse_seed_poke_hash[ "ラッキー" ] << "ハピナス"
+  reverse_seed_poke_hash[ "チリーン" ] << "チリーン"
+  return reverse_seed_poke_hash
+end
+
+def CreateOutputData_of_ReverseSeedPokeHash( personal_parser, reverse_seed_poke_hash )
   out_data = Array.new
   out_data << "$reverse_seed_poke_hash = {"
-  $monsname.each do |mons_name|
-    out_data << "\t\"#{mons_name}\" => ["
-    ev_poke_list = reverse_seed_poke_hash[ mons_name ]
+  mons_fullname_list = personal_parser.get_mons_fullname_list
+  mons_fullname_list.each do |mons_fullname|
+    out_data << "\t\"#{mons_fullname}\" => ["
+    ev_poke_list = reverse_seed_poke_hash[ mons_fullname ]
     ev_poke_list.each do |evolve_poke_name|
       out_data << "\t\t\"#{evolve_poke_name}\","
     end

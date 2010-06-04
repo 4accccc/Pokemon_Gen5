@@ -132,11 +132,19 @@ class PersonalDataParser
   def convert_to_mons_fullname_list( mons_name )
     fullname_list = Array.new
     form_list = get_form_name_list( mons_name )
-    form_list.each do |form_name|
-      fullname = mons_name + form_name
-      fullname_list << fullname
+    if form_list == nil then
+      fullname_list << mons_name
+    else
+      form_list.each do |form_name|
+        fullname = mons_name + form_name
+        fullname_list << fullname
+      end
     end
     return fullname_list
+  end
+
+  def get_mons_name( mons_fullname )
+    return mons_fullname.gsub( /[a-z]/, "" )
   end
 
   def get_gender_type( mons_fullname )

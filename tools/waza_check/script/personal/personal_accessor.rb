@@ -1,3 +1,4 @@
+require "form_name_hash.rb"
 require "levelwaza_hash.rb"
 require "levelwaza_learninglevel_hash.rb"
 require "machinewaza_hash.rb"
@@ -119,8 +120,32 @@ class PersonalAccessor
           return true
         end
       end
-    end
+    end 
+    return false
+  end
 
+  # タマゴ技以外の方法で覚えるかどうか？
+  def check_waza_learning_except_eggwaza( mons_fullname, mons_level, waza_name )
+    # 自身のチェック
+    if mons_fullname == "ドーブル" then
+      return true 
+    elsif check_waza_learning_by_teach( mons_fullname, waza_name ) then
+      return true
+    elsif check_waza_learning_by_machine( mons_fullname, waza_name ) then
+      return true
+    elsif check_waza_learning_by_levelup_at( mons_fullname, mons_level, waza_name ) then
+      return true
+    end 
+    # 進化前ポケモンを再帰チェック
+    # ( 技を覚えるまで進化をキャンセルした場合への対応 )
+    reverse_evolve_poke_list = get_reverse_evolve_poke_list( mons_fullname )
+    if reverse_evolve_poke_list != nil then
+      reverse_evolve_poke_list.each do |prev_poke|
+        if check_waza_learning_except_eggwaza( prev_poke, mons_level, waza_name ) then
+          return true
+        end
+      end
+    end 
     return false
   end
 
@@ -147,5 +172,33 @@ class PersonalAccessor
   def get_poke_list_belong_to_egg_group( egg_group_name )
     poke_list = $egg_group_poke_list_hash[ egg_group_name ]
     return poke_list
+  end
+
+  def get_eggwaza_list( mons_fullname )
+    eggwaza_list = $eggwaza_hash[ mons_fullname ]
+    return eggwaza_list
+  end
+
+  def check_eggwaza_exist( mons_fullname )
+    egg_waza_list = get_eggwaza_list( mons_fullname )
+    if egg_waza_list == nil then
+      return false
+    else
+      return true
+    end
+  end
+
+  def get_mons_fullname_list( mons_name )
+    fullname_list = Array.new
+    form_list = $form_name_hash[ mons_name ]
+    form_list.each do |form_name|
+      fullname = mons_name + form_name
+      fullname_list << fullname
+    end
+    return fullname_list
+  end
+
+  def get_all_mons_fullname_list
+    return $mons_fullname_list
   end
 end

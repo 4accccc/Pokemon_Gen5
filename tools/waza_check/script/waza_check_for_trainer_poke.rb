@@ -25,6 +25,6 @@ trainer_list.each do |trainer|
 end
 
 # o—Í
-out_file = File::open( "../result.txt", "w" )
+out_file = File::open( "../result_trainer.txt", "w" )
 out_file.puts( out_data )
 out_file.close 

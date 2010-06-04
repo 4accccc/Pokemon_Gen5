@@ -8,8 +8,11 @@ COLUMN_MONS_NAME    = 2
 COLUMN_KOWAZA_FIRST = 7
 COLUMN_KOWAZA_LAST  = 22
 
+require "personal_parser.rb"
 
-def OutputEggWazaHash( kowaza_filename, output_path )
+def OutputEggWazaHash( personal_filename, kowaza_filename, output_path )
+
+  personal_parser = PersonalDataParser.new( personal_filename )
 
   kowaza_file = File::open( kowaza_filename, "r" )
   kowaza_lines = kowaza_file.readlines
@@ -17,7 +20,7 @@ def OutputEggWazaHash( kowaza_filename, output_path )
   kowaza_file.close
 
   out_data = Array.new
-  out_data << "$eggwaza_hash = {" 
+  out_data << "$eggwaza_hash = {"
 
   kowaza_lines.each do |line|
     items = line.split( /\s/ )
@@ -31,11 +34,15 @@ def OutputEggWazaHash( kowaza_filename, output_path )
       end
     end
 
-    out_data << "\t\"#{mons_name}\"=>["
-    kowaza_list.each do |waza_name|
-      out_data << "\t\t\"#{waza_name}\","
+    mons_fullname_list = personal_parser.convert_to_mons_fullname_list( mons_name )
+    mons_fullname_list.each do |mons_fullname|
+
+      out_data << "\t\"#{mons_fullname}\"=>["
+      kowaza_list.each do |waza_name|
+        out_data << "\t\t\"#{waza_name}\","
+      end
+      out_data << "\t],"
     end
-    out_data << "\t],"
   end
 
   out_data << "}"

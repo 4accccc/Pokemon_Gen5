@@ -8582,7 +8582,7 @@ $levelwaza_learninglevel_hash = {
 		90,
 		100,
 	],
-	"ビクティ" => [
+	"ビクティニ" => [
 		1,
 		1,
 		1,
@@ -11301,7 +11301,7 @@ $levelwaza_learninglevel_hash = {
 		90,
 		100,
 	],
-	"アトス" => [
+	"コバルオン" => [
 		1,
 		1,
 		7,
@@ -11317,7 +11317,7 @@ $levelwaza_learninglevel_hash = {
 		67,
 		73,
 	],
-	"ポルトス" => [
+	"テラキオン" => [
 		1,
 		1,
 		7,
@@ -11333,7 +11333,7 @@ $levelwaza_learninglevel_hash = {
 		67,
 		73,
 	],
-	"アラミス" => [
+	"ビリジオン" => [
 		1,
 		1,
 		7,
