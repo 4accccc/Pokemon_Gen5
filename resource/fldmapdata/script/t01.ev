@@ -215,8 +215,6 @@ EVENT_START	ev_t01_rival_01
 			
 		ENDIF
 
-		_SE_WAIT()
-
 		//ライバル、サポートのOBJ削除
 		_OBJ_DEL( T01_RIVAL_01 )
 		_OBJ_DEL( T01_SUPPORT_01 )
