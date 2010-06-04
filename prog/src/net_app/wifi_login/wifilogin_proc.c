@@ -1190,12 +1190,13 @@ static GFL_PROC_RESULT WiFiLogin_ProcInit( GFL_PROC * proc, int * seq, void * pw
     if(GFL_NET_IsInit()){       // 接続中
       GF_ASSERT(0);
 
-    }
-    else{
-      //接続開始 プロファイル検査
-      _CHANGE_STATE(pWork,_profileIDCheck);
+      //製品版でここに来た時のため処理を入れておく
+      NetErr_ExitNetSystem();
+      NetErr_ErrWorkInit();
     }
 
+    //接続開始 プロファイル検査
+    _CHANGE_STATE(pWork,_profileIDCheck);
   }
 
   if( pWork->dbw->bg == WIFILOGIN_BG_NORMAL )
