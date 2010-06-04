@@ -96,6 +96,9 @@ static const u32 _cellpal[]=
 
 #define MSG_COUNTDOWN_FRAMENUM (30*3)
 
+// CGEAR キャラクタデータ
+#define GEAR_CGX_SIZE_MAX ( 32*20*32 )
+
 //--------------------------------------------
 // 画面構成定義
 //--------------------------------------------
@@ -2809,8 +2812,13 @@ static void _gearArcCreate(C_GEAR_WORK* pWork, int sex, u32 bgno, BOOL pal_trans
 
 
   // サブ画面BGキャラ転送
-  pWork->subchar = GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( pWork->handle, _bgcgx[bgno][sex],
-                                                                GEAR_MAIN_FRAME, 0, FALSE, HEAPID_FIELD_SUBSCREEN);
+  {
+    u32 pos;
+    pos = GFL_BG_AllocCharacterArea( GEAR_MAIN_FRAME, GEAR_CGX_SIZE_MAX, GFL_BG_CHRAREA_GET_F );
+    pWork->subchar = GFL_ARCUTIL_TRANSINFO_Make( pos, GEAR_CGX_SIZE_MAX );
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( pWork->handle, _bgcgx[bgno][sex],
+                                          GEAR_MAIN_FRAME, pos, 0, FALSE, HEAPID_FIELD_SUBSCREEN);
+  }
 
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(pWork->handle,
                                          NARC_c_gear_c_gear01_NSCR,
@@ -2877,18 +2885,15 @@ static void _gearDecalScreenArcCreate(C_GEAR_WORK* pWork,BOOL bDecal)
 {
   u32 scrno=0;
 
-  if(bDecal){
-    scrno = NARC_c_gear_c_gear00_NSCR;
-  }
-  else{
+  if(bDecal == FALSE){
     scrno = NARC_c_gear_c_gear00_nodecal_NSCR;
+    GFL_ARCHDL_UTIL_TransVramScreenCharOfs(pWork->handle,
+                                           scrno,
+                                           GEAR_BMPWIN_FRAME, 0,
+                                           GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
+                                           HEAPID_FIELD_SUBSCREEN);
   }
 
-  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(pWork->handle,
-                                         scrno,
-                                         GEAR_BMPWIN_FRAME, 0,
-                                         GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
-                                         HEAPID_FIELD_SUBSCREEN);
 }
 
 
@@ -4111,6 +4116,7 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
     int i;
     u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELD_SUBSCREEN,SAVESIZE_EXTRA_CGEAR_PICTURE);
     SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(pGameSys));
+    u16* screen;
 
 
     if(LOAD_RESULT_OK== SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELD_SUBSCREEN,
@@ -4120,16 +4126,23 @@ static BOOL _loadExData(C_GEAR_WORK* pWork,GAMESYS_WORK* pGameSys)
       {
         u16 crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_CHAR_SIZE+CGEAR_PICTURTE_PAL_SIZE+CGEAR_PICTURTE_SCR_SIZE );
         u16 crc2 = CGEAR_SV_GetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave));
+        u32 char_ofs = GFL_ARCUTIL_TRANSINFO_GetPos( pWork->subchar );
         if(crc == crc2){
           if(CGEAR_PICTURE_SAVE_IsPalette(pPic)){
             ret = TRUE;
             for(i=0;i<CGEAR_DECAL_SIZEY;i++){
-              GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, (5 + i)*32);
+              GFL_BG_LoadCharacter(GEAR_MAIN_FRAME,&pCGearWork[CGEAR_DECAL_SIZEX * 32 * i],CGEAR_DECAL_SIZEX * 32, char_ofs + (5 + i)*32);
             }
             GFL_BG_LoadPalette(GEAR_MAIN_FRAME,pPic->palette,CGEAR_PICTURTE_PAL_SIZE, 32*0x0a );
+
+            GFL_BG_LoadScreenBuffer(GEAR_BMPWIN_FRAME,pPic->scr,CGEAR_PICTURTE_SCR_SIZE );
+            screen = GFL_BG_GetScreenBufferAdrs( GEAR_BMPWIN_FRAME );
+            for( i=0; i<CGEAR_PICTURTE_SCR_SIZE/2; i++ ){
+              screen[i] += char_ofs;
+            }
+            GFL_BG_LoadScreenReq(GEAR_BMPWIN_FRAME);
+            TOMOYA_Printf( "Decal ON\n" );
           }
-          GFL_BG_LoadScreen(GEAR_MAIN_FRAME,pPic->scr,CGEAR_PICTURTE_SCR_SIZE, 0 );
-          GFL_BG_LoadScreenReq(GEAR_MAIN_FRAME);
         }
 #if PM_DEBUG
         else{

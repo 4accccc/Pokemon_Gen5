@@ -1049,6 +1049,7 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
 
   NNSG2dCharacterData* charData;
   NNSG2dPaletteData* palData;
+  NNSG2dScreenData* scrData;
   void* pArc;
   u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
   CGEAR_PICTURE_SAVEDATA* pPic=(CGEAR_PICTURE_SAVEDATA*)pCGearWork;
@@ -1069,9 +1070,10 @@ static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
   }
   GFL_HEAP_FreeMemory(pArc);
 
-  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_decal_NCLR, FALSE, HEAPID_FIELDMAP);
-  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
-    GFL_STD_MemCopy(palData->pRawData, pPic->palette, CGEAR_PICTURTE_PAL_SIZE);
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_c_gear00_NSCR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedScreenData( pArc, &scrData ) ){
+    TOMOYA_Printf( "scrData size %d == %d\n", scrData->szByte, CGEAR_PICTURTE_SCR_SIZE );
+    GFL_STD_MemCopy(scrData->rawData, pPic->scr, CGEAR_PICTURTE_SCR_SIZE);
   }
   GFL_HEAP_FreeMemory(pArc);
 
