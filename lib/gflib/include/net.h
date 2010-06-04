@@ -643,16 +643,12 @@ extern void GFL_NET_ReloadIcon(void);
 //==============================================================================
 /**
  * @brief   通信アイコンを上下指定で右上にリロードします
- * @param   MAIN_SUB_ICON_MODE  上画面か下画面か
-
-  MAIN_SUB_MODE_TOP,	 上画面に出続ける
-  MAIN_SUB_MODE_BOTTOM,下画面に出続ける
-
+ * @param   bTop		TRUEだと上画面／FALSEだと下画面
  * @param   読み込むための一時ヒープ
  * @retval  none
  */
 //==============================================================================
-extern void GFL_NET_ReloadIconTopOrBottom(MAIN_SUB_ICON_MODE mode,HEAPID id);
+extern void GFL_NET_ReloadIconTopOrBottom(BOOL bTop,HEAPID id);
 
 //==============================================================================
 /**
