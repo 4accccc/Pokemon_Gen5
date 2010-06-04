@@ -36,6 +36,7 @@
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/rtc_tool.h"
+#include "system/ds_system.h"
 
 #include "gamesystem/msgspeed.h"
 #include "poke_tool/monsno_def.h"
@@ -140,7 +141,8 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 #define WIFI_P2PMATCH_EXHEAP_SIZE ( 0x10000 )
 
 
-
+#define SE_CALL_SIGN  (SEQ_SE_W055_01)  //SEQ_SE_SYS_101
+#define SE_CALL_SIGN_PLAYER  (SEPLAYER_SE1)  //SEQ_SE_SYS_101
 
 
 /*********************************************************************************************
@@ -840,6 +842,12 @@ static int WifiP2PMatch_FirstSaving2( WIFIP2PMATCH_WORK *wk, int seq );
 static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_VCTConnectMain( WIFIP2PMATCH_WORK *wk, int seq );
 static int WifiP2PMatch_VCTDisconnectSendEnd(WIFIP2PMATCH_WORK *wk, int seq);
+static int _modeTVT1YesNo( WIFIP2PMATCH_WORK* wk, int seq );
+static int _modeTVT1Wait( WIFIP2PMATCH_WORK* wk, int seq );
+static int _modeTVT2YesNo( WIFIP2PMATCH_WORK* wk, int seq );
+static int _modeTVT2Wait( WIFIP2PMATCH_WORK* wk, int seq );
+static int _modeTVT3YesNo( WIFIP2PMATCH_WORK* wk, int seq );
+static int _modeTVT3Wait( WIFIP2PMATCH_WORK* wk, int seq );
 
 
 
@@ -1032,8 +1040,18 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectSub45, //WIFIP2PMATCH_PLAYERDIRECT_SUB45
   WifiP2PMatch_FriendListMain_MW, //WIFIP2PMATCH_MODE_FRIENDLIST_MW
   WifiP2PMatch_ReconectingWaitPre, //WIFIP2PMATCH_RECONECTING_WAIT_PRE
+  _modeTVT1YesNo,    //WIFIP2PMATCH_MODE_TVTMESSAGE1_YESNO
+  _modeTVT1Wait,  //WIFIP2PMATCH_MODE_TVTMESSAGE1_WAIT
+  _modeTVT2YesNo,    //  WIFIP2PMATCH_MODE_TVTMESSAGE2_YESNO
+  _modeTVT2Wait,  // WIFIP2PMATCH_MODE_TVTMESSAGE2_WAIT
+  _modeTVT3YesNo,    //  WIFIP2PMATCH_MODE_TVTMESSAGE3_YESNO
+  _modeTVT3Wait,  // WIFIP2PMATCH_MODE_TVTMESSAGE3_WAIT
+  _modeTVT4YesNo,    //  WIFIP2PMATCH_MODE_TVTMESSAGE4_YESNO
+  _modeTVT4Wait,  // WIFIP2PMATCH_MODE_TVTMESSAGE4_WAIT
 
 };
+
+
 
 
 
@@ -3348,8 +3366,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
           gamemode = _WifiMyGameModeGet( wk, WifiFriendMatchStatusGet( n ) );
           wk->friendNo = n + 1;
           //OS_TPrintf("ダイレクト番号セット%d\n", wk->friendNo);
-          PMSND_PlaySE_byPlayerID( SEQ_SE_SYS_101,SEPLAYER_SYS );
-//          PMSND_PlaySE_byPlayerID( SEQ_SE_DECIDE1,SEPLAYER_SE1 );
+          PMSND_PlaySE_byPlayerID( SE_CALL_SIGN,SE_CALL_SIGN_PLAYER );
           _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALLGAME_INIT);
           return seq;
         }
@@ -3362,7 +3379,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
     OS_TPrintf("接続 %d\n",wk->DirectModeNo);
-    PMSND_PlaySE_byPlayerID( SEQ_SE_SYS_101,SEPLAYER_SYS );
+    PMSND_PlaySE_byPlayerID( SE_CALL_SIGN,SE_CALL_SIGN_PLAYER );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -3494,7 +3511,7 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   checkMatch = _checkParentConnect(wk);
   if( (0 !=  checkMatch) && (wk->preConnect != -1) ){ // 接続してきた
     OS_TPrintf("接続 %d\n",wk->DirectModeNo);
-    PMSND_PlaySE_byPlayerID( SEQ_SE_SYS_101,SEPLAYER_SYS );
+    PMSND_PlaySE_byPlayerID( SE_CALL_SIGN,SE_CALL_SIGN_PLAYER );
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CALL_INIT);
     return seq;
   }
@@ -3596,7 +3613,7 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
   // だれかが話しかけてきた
   int n = wk->friendNo -1;
 
-  if(PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SYS )){
+  if(PMSND_CheckPlaySE_byPlayerID( SE_CALL_SIGN_PLAYER )){
     return seq;
   }
   
@@ -4413,12 +4430,20 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     }
     break;
   case WIFI_GAME_TVT:
-    if( !wk->pParentWork->vchatMain ){
+    if( !wk->pParentWork->vchatMain ){   //TVT選択不可
       return seq;
     }
     else{
-      _windelandSEcall(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+      if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange()){  //許可
+        _windelandSEcall(wk);
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE1_YESNO);
+        return seq;
+      }
+      else{
+        _windelandSEcall(wk);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+      }
     }
     break;
   }
@@ -4429,6 +4454,141 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   return seq;
 
+}
+
+//------------------------------------------------------------------
+/**
+ * $brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE1_YESNO
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT1YesNo( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    // はいいいえウインドウを出す
+    _yenowinCreateM2(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE1_WAIT);
+  }
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE1_WAIT
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT1Wait( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  int i;
+  int ret;
+  ret = _bmpMenu_YesNoSelectMain(wk);
+
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }else if(ret == 0){ // はいを選択した場合
+    WifiP2PMatch_CommWifiBattleStart( wk, -1 );
+    _myStatusChange(wk, WIFI_STATUS_RECRUIT, WIFI_GAME_TVT );
+    FriendRequestWaitOn( wk, TRUE );       // 動作停止させる
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+  }
+  else{  // いいえを選択した場合
+    FriendRequestWaitOff(wk);
+    wk->state = WIFIP2PMATCH_STATE_NONE;
+    EndMessageWindowOff(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+  }
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE2_YESNO
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT2YesNo( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    // はいいいえウインドウを出す
+    _yenowinCreateM2(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE2_WAIT);
+  }
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE2_WAIT
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT2Wait( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  int i;
+  int ret;
+  WIFI_STATUS* p_status=&wk->targetStatus;
+  int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+  MCR_MOVEOBJ* p_npc;
+
+  ret = _bmpMenu_YesNoSelectMain(wk);
+  p_npc = MCRSYS_GetMoveObjWork( wk, friendNo );
+
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }else if(ret == 0){ // はいを選択した場合
+    wk->state = WIFIP2PMATCH_STATE_MACHINE_RECV;
+    if(WIFI_STATUS_GetVChatStatus(p_status) == WIFI_STATUS_GetVChatStatus(wk->pMatch)){
+      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
+    }
+    else{
+      if(WIFI_STATUS_GetVChatStatus(wk->pMatch)){//自分がON
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_070, FALSE);
+      }
+      else{
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_069, FALSE);
+      }
+      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_VCHAT_NEGO);
+    }
+  }
+  else{  // いいえを選択した場合
+    wk->state = WIFIP2PMATCH_STATE_NONE;
+    EndMessageWindowOff(wk);
+    _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+    wk->preConnect = -1;
+    // 主人公の動作を許可
+    FriendRequestWaitOff( wk );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST);
+
+    // NPCを元に戻す
+    if( p_npc != NULL ){
+      WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
+    }
+
+
+  }
+  return seq;
 }
 
 
@@ -5021,14 +5181,13 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
   default:
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     gamemode = _WifiMyGameModeGet( wk, p_status );
-#if defined(SDK_TWL)
     if(gamemode == WIFI_GAME_TVT){
-      if(OS_IsRunOnTwl() && OS_IsRestrictPhotoExchange()){   // ペアレンタルコントロール
-        WifiP2PMatchMessagePrint(wk, msg_wifilobby_1012, FALSE);
-        _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+      if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange()){  //許可
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE2_YESNO);
+        return seq;
       }
     }
-#endif
     if(gamemode == WIFI_GAME_TRADE){
       if(!_tradeNumCheck(wk)){
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
@@ -5161,24 +5320,21 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
   if(wk->cancelEnableTimer < 0  ){
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_CANCEL_ENABLE_WAIT);
   }
-//  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_TIMEOUT ){
-//    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
-//    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-//  }
-//  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL){
- //   _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
- //   WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
- //   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
- // }
-//  else if((GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_DISCONNECTING) || (GFL_NET_StateIsWifiDisconnect())){
-//    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
- //   WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
-//    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
-//  }
-//  else if(GFL_NET_StateIsWifiError()){
-//    _errorDisp(wk);
- // }
+  else if(GFL_NET_StateGetWifiStatus() == GFL_NET_STATE_FAIL ){
+    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+  }
+  else if(GFL_NET_DWC_GetStepMatchResult() == GFL_NET_STATE_FAIL){
+    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_012, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+  }
+  else if((GFL_NET_DWC_GetStepMatchResult() == GFL_NET_STATE_DISCONNECTING) || (GFL_NET_StateIsWifiDisconnect())){
+    _friendNameExpand(wk, GFL_NET_DWC_GetFriendIndex());
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_015, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_DISCONNECT);
+  }
   else if(GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED){  // 相手に接続した
 
     // ２～４人募集でないとき
@@ -5291,7 +5447,7 @@ static int _parentModeCallMenuInit( WIFIP2PMATCH_WORK *wk, int seq )
   int myvchat;
 
 
-  if(PMSND_CheckPlaySE_byPlayerID( SEPLAYER_SE1 )){
+  if(PMSND_CheckPlaySE_byPlayerID( SE_CALL_SIGN_PLAYER )){
     return seq;
   }
   

@@ -43,17 +43,14 @@ BOOL PokeRegulationCheckLegend(u16 monsno)
     MONSNO_251,			// セレビィ
     MONSNO_385,			// ジラーチ
     MONSNO_386,		// デオキシス
-    MONSNO_489,				// フィオネ
     MONSNO_490,			// マナフィ
     MONSNO_491,		// ダークライ
     MONSNO_492,			// シェイミ
     MONSNO_493,		// アルセウス
-		MONSNO_652,	// ツチノカミ
-		MONSNO_653,					// ライ
 		MONSNO_654,	// ダルタニス
 		MONSNO_655,		// メロディア
 		MONSNO_656,		// インセクタ
-		MONSNO_657,			// ビクティ
+		MONSNO_657,			// ビクティニ
   };
 
   for(i=0;i < elementof(cut_check_monsno) ;i++){

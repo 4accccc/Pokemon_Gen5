@@ -244,8 +244,14 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_RETURN);
     }
     else{
-      wk->command=WIFIP2PMATCH_PLAYERDIRECT_TVT;
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+      if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange()){  //許可
+        WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE3_YESNO);
+      }
+      else{
+        wk->command=WIFIP2PMATCH_PLAYERDIRECT_TVT;
+        _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+      }
     }
     break;
   case WIFI_GAME_TRADE:
@@ -275,6 +281,123 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
   BmpMenuWork_ListDelete( wk->submenulist );
   return seq;
 }
+
+
+
+//
+
+//------------------------------------------------------------------
+/**
+ * $brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE3_YESNO
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT3YesNo( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    // はいいいえウインドウを出す
+    _yenowinCreateM2(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE3_WAIT);
+  }
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE3_WAIT
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT3Wait( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  int i;
+  int ret;
+  ret = _bmpMenu_YesNoSelectMain(wk);
+
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }else if(ret == 0){ // はいを選択した場合
+    wk->command=WIFIP2PMATCH_PLAYERDIRECT_TVT;
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  }
+  else{  // いいえを選択した場合
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_CANCELEND;
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  }
+  return seq;
+}
+
+
+
+
+//------------------------------------------------------------------
+/**
+ * $brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE4_YESNO
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT4YesNo( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    // はいいいえウインドウを出す
+    _yenowinCreateM2(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE4_WAIT);
+  }
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   TVT確認メッセージ  WIFIP2PMATCH_MODE_TVTMESSAGE4_WAIT
+ * @param   wk
+ * @param   seq
+ * @retval  int
+ */
+//------------------------------------------------------------------
+
+static int _modeTVT4Wait( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  int i;
+  int ret;
+  ret = _bmpMenu_YesNoSelectMain(wk);
+
+  WIFI_MCR_PCAnmMain( &wk->matchroom ); // パソコンアニメメイン
+
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }else if(ret == 0){ // はいを選択した場合
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
+    EndMessageWindowOff(wk);
+  }
+  else{  // いいえを選択した場合
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_SUB_FAILED;
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+
+//    wk->command = WIFIP2PMATCH_PLAYERDIRECT_CANCELEND;
+//    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  }
+  return seq;
+}
+
+
+
+
+
 
 //------------------------------------------------------------------
 /**
@@ -410,6 +533,10 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
     if(FALSE == _tradeNumCheck(wk) && (wk->directmode == WIFIP2PMATCH_PLAYERDIRECT_TRADE)){
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
+    }
+    else if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange() && (wk->directmode == WIFIP2PMATCH_PLAYERDIRECT_TVT) ){  //許可
+      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE4_YESNO);
     }
     else{
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUBSTARTCALL);
