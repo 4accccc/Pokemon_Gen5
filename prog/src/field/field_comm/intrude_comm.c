@@ -166,6 +166,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
     MyStatus_Copy(myst, dest_myst);
   }
   
+  //OS_TPrintf("aaa 空きヒープ %d  size intcom=%d\n", GFL_HEAP_GetHeapFreeSize(HEAPID_APP_CONTROL), sizeof(INTRUDE_COMM_SYS));
   return intcomm;
 }
 
@@ -642,6 +643,7 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   FIELD_INVALID_PARENT_WORK *invalid_parent = pwk;
   GAMEDATA *gamedata;
   int net_id, my_net_id;
+  BOOL force_vanish;
   
   if(intcomm == NULL){
     return;
@@ -665,7 +667,9 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   //マップ切り替えで通信プレイヤーの位置反映の貯め、Statusの更新を行う
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
     if(net_id != my_net_id && (intcomm->recv_profile & (1 << net_id))){
+      force_vanish = intcomm->intrude_status[net_id].force_vanish;
       Intrude_SetPlayerStatus(intcomm, net_id, &intcomm->intrude_status[net_id], FALSE);
+      intcomm->intrude_status[net_id].force_vanish = force_vanish;
     }
   }
 }
