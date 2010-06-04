@@ -79,9 +79,9 @@ void DEBUG_UI_INPUT_Update( void )
     u32 tp_x, tp_y;
 
     // L(cont) + SELECT(trg)ÇÃèÍçáÅAñ≥éãÅB
-    if( (GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT) &&
-        (GFL_UI_KEY_GetCont() & PAD_BUTTON_L) ){
-      TOMOYA_Printf( "L+SELECT???\n" );
+    if( (GFL_UI_KEY_GetTrg() & DEBUGWIN_TRG_KEY) &&
+        (GFL_UI_KEY_GetCont() & DEBUGWIN_CONT_KEY) ){
+      TOMOYA_Printf( "R+Y???\n" );
       return ;
     }
     if( DEBUGWIN_IsActive() ){

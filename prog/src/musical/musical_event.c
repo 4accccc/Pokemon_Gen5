@@ -85,7 +85,7 @@ typedef enum
   MES_TERM_MUSICAL_SHOT,
 
   MES_CALL_HALL_EVENT,
-  MES_FINIHS_EVENT,
+  MES_FINIHS_EVENT,     //10
 
   MES_ENTER_WAITROOM_FIRST_BEF_COMM,
   MES_ENTER_WAITROOM_FIRST_BEF_COMM2,
@@ -98,7 +98,7 @@ typedef enum
   MES_EXIT_WAITROOM_SECOND,
 
   MES_ENTER_WAITROOM_THIRD,
-  MES_WAITROOM_THIRD,
+  MES_WAITROOM_THIRD,   //20
   MES_EXIT_WAITROOM_THIRD,
 
   MES_ERROR_INIT,
@@ -379,8 +379,10 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   //------------------------------
   case MES_EXIT_FIELD:
     {
-      if( evWork->isNetErr == TRUE )
+      if( evWork->isNetErr == TRUE  &&
+          evWork->subSeq == 0 )
       {
+        //フェード中に抜けると困るので
         evWork->state = MES_ERROR_INIT;
       }
       else
@@ -441,8 +443,10 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     
   case MES_EXIT_WAITROOM_SECOND:
     {
-      if( evWork->isNetErr == TRUE )
+      if( evWork->isNetErr == TRUE &&
+          evWork->subSeq == 0 )
       {
+        //フェード中に抜けると困るので
         evWork->state = MES_ERROR_INIT;
       }
       else
