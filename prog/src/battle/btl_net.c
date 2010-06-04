@@ -11,6 +11,7 @@
 
 #include "net\network_define.h"
 #include "system\net_err.h"
+#include "print\str_tool.h"
 
 #include "btl_common.h"
 #include "btl_server_cmd.h"
@@ -43,6 +44,8 @@ enum {
   CMD_TO_SERVER,
 };
 
+// 通信で送受信可能なトレーナー名文字数
+#define BTL_COMM_TRAINERNAME_MAX  (32)
 
 /*--------------------------------------------------------------------------*/
 /* Structures                                                               */
@@ -62,6 +65,18 @@ typedef struct {
   };
 
 }TMP_SEND_BUFFER;
+
+//---------------------------------------------------
+/**
+ *  トレーナー通信用データ
+ */
+//---------------------------------------------------
+typedef struct {
+  BSP_TRAINER_DATA  base_data;
+  STRCODE           trainer_name[BTL_COMM_TRAINERNAME_MAX];
+  u32               trainer_name_length;
+} BSP_TRAINER_SEND_DATA;
+
 
 //---------------------------------------------------
 /**
@@ -168,6 +183,9 @@ static inline u8* recvBuf_getBufAdrs( RECV_BUFFER* buf );
 static inline void recvBuf_setRecvedSize( RECV_BUFFER* buf, u16 size );
 static inline u32 recvBuf_getData( const RECV_BUFFER* buf, const void** ppData );
 
+static BSP_TRAINER_SEND_DATA* create_SendTrainerData( const BSP_TRAINER_DATA* tr_data, HEAPID heapID );
+static void delete_SendTrainerData( BSP_TRAINER_SEND_DATA* send_tr_data );
+static void get_SendTrainerDataInBaseData( const BSP_TRAINER_SEND_DATA* send_tr_data, BSP_TRAINER_DATA* tr_data );
 
 
 //static const NetRecvFuncTable RecvFuncTable[] = {
@@ -767,9 +785,16 @@ const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID )
 // AI用トレーナーデータを連絡する（サーバ→全マシン）
 BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data )
 {
-  BOOL result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
-        sizeof(BSP_TRAINER_DATA),
-        tr_data,
+  BOOL result;
+  BSP_TRAINER_SEND_DATA* send_buf;
+
+  // 送信用情報を生成
+  send_buf = create_SendTrainerData( tr_data, GFL_HEAP_LOWID(Sys->heapID) );
+  
+  
+  result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
+        sizeof(BSP_TRAINER_SEND_DATA),
+        send_buf,
         FALSE,     // 優先度を高くする
         TRUE,     // 同一コマンドがキューに無い場合のみ送信する
         TRUE      // GFL_NETライブラリの外で保持するバッファを使用
@@ -777,6 +802,9 @@ BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data )
   if( result ){
     BTL_N_Printf( DBGSTR_NET_SendAITrainerData, tr_data->tr_id );
   }
+
+  delete_SendTrainerData( send_buf );
+  
   return result;
 }
 static u8* getbuf_AI_trainerData( int netID, void* pWork, int size )
@@ -786,7 +814,7 @@ static u8* getbuf_AI_trainerData( int netID, void* pWork, int size )
 }
 static void recv_AI_trainerData( const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle )
 {
-  BTL_N_Printf( DBGSTR_NET_RecvAITrainerData, ((const BSP_TRAINER_DATA*)pData)->tr_id  );
+  BTL_N_Printf( DBGSTR_NET_RecvAITrainerData, ((const BSP_TRAINER_SEND_DATA*)pData)->base_data.tr_id  );
   Sys->tmpExBufferUsedSize = size;
 }
 // AIトレーナーデータ受信完了したか
@@ -796,13 +824,14 @@ BOOL BTL_NET_IsRecved_AI_TrainerData( void )
 }
 
 // 受信したAIトレーナーデータを取得
-const BSP_TRAINER_DATA* BTL_NET_Get_AI_TrainerData( void )
+void BTL_NET_Get_AI_TrainerData( BSP_TRAINER_DATA* tr_data )
 {
   GF_ASSERT(Sys->tmpExBuffer != NULL);
   GF_ASSERT(Sys->tmpExBufferUsedSize != 0);
 
-  return Sys->tmpExBuffer;
+  get_SendTrainerDataInBaseData( Sys->tmpExBuffer, tr_data );
 }
+
 void BTL_NET_Clear_AI_TrainerData( void )
 {
   GF_ASSERT(Sys->tmpExBuffer != NULL);
@@ -817,6 +846,45 @@ void BTL_NET_EndNotifyPlayerData( void )
 {
   clearAllTmpBuffer();
 }
+
+// 送信用トレーナー情報の生成・受信後のベーストレーナー情報の取得
+static BSP_TRAINER_SEND_DATA* create_SendTrainerData( const BSP_TRAINER_DATA* tr_data, HEAPID heapID )
+{
+  BSP_TRAINER_SEND_DATA* send_tr_data;
+  
+  send_tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof(BSP_TRAINER_SEND_DATA) );
+
+  // ベース情報を保存
+  GFL_STD_MemCopy( tr_data, &send_tr_data->base_data, sizeof(BSP_TRAINER_DATA) );
+
+  // 送信トレーナー名バッファをEOMで初期化
+  GFL_STD_MemFill16( send_tr_data->trainer_name, GFL_STR_GetEOMCode(), sizeof(STRCODE)*BTL_COMM_TRAINERNAME_MAX );
+
+  // トレーナー名を保存
+  if( tr_data->name ){
+    send_tr_data->trainer_name_length = GFL_STR_GetBufferLength( tr_data->name );
+    GF_ASSERT( send_tr_data->trainer_name_length < BTL_COMM_TRAINERNAME_MAX );
+    STRTOOL_Copy( GFL_STR_GetStringCodePointer( tr_data->name ), send_tr_data->trainer_name, send_tr_data->trainer_name_length );
+    TOMOYA_Printf( "trainer send name length %d\n", send_tr_data->trainer_name_length );
+  }
+  
+  return send_tr_data;
+}
+static void delete_SendTrainerData( BSP_TRAINER_SEND_DATA* send_tr_data )
+{
+  GFL_HEAP_FreeMemory( send_tr_data );
+}
+static void get_SendTrainerDataInBaseData( const BSP_TRAINER_SEND_DATA* send_tr_data, BSP_TRAINER_DATA* tr_data )
+{
+  STRBUF* name;
+  TOMOYA_Printf( "trainer get name length %d\n", send_tr_data->trainer_name_length );
+
+  name = tr_data->name;
+  GFL_STD_MemCopy( &send_tr_data->base_data, tr_data, sizeof(BSP_TRAINER_DATA) );
+  tr_data->name = name;
+  GFL_STR_SetEncodedString( tr_data->name, send_tr_data->trainer_name, send_tr_data->trainer_name_length );
+}
+
 
 /**
  *  全ての一時利用バッファを解放

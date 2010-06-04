@@ -1606,7 +1606,11 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
   case 8:
     if( BTL_NET_IsRecved_AI_TrainerData() )
     {
-      const BSP_TRAINER_DATA*  trData = BTL_NET_Get_AI_TrainerData();
+      //const BSP_TRAINER_DATA*  trData = BTL_NET_Get_AI_TrainerData();
+      const BSP_TRAINER_DATA*  trData;
+      //既存のワークにSERVERから取得したトレーナー情報を格納
+      BTL_NET_Get_AI_TrainerData( wk->setupParam->tr_data[ wk->MultiAIClientID ] );
+      trData = wk->setupParam->tr_data[ wk->MultiAIClientID ];
 
       BTL_N_Printf( DBGSTR_MAIN_RecvedMultiAITrainer, wk->MultiAIClientID, trData->tr_id );
 
