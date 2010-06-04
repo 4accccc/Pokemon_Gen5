@@ -10106,6 +10106,7 @@ static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* user = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 myItemID = BPP_GetItem( user );
     if( (myItemID != ITEM_DUMMY_DATA)
+    &&  (!ITEM_CheckMail(myItemID))
     &&  (BPP_GetItem(target) == ITEM_DUMMY_DATA)
     ){
       BTL_HANDEX_PARAM_SET_ITEM* param;
