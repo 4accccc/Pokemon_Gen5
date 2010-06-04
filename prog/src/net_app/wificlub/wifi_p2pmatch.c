@@ -3175,6 +3175,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
           // （これだとボタンを押すことが出来ない）
           MCVSys_BttnSet( wk, wk->index2No[i], MCV_BTTN_FRIEND_TYPE_RES );
    //       wk->index2No[i] = 0;  // 入ってきたのはなかったことにする
+
         }
       }
     }
@@ -3200,6 +3201,55 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
 
   return friend_num;
 }
+
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  友達の出入りを管理する   OBJ登録していないお友達検査
+ *
+ *  @param  wk  ワーク
+ *
+ *  @retval 今の友達の数
+ */
+//-----------------------------------------------------------------------------
+static void MCRSYS_ContFiendInOut2( WIFIP2PMATCH_WORK* wk )
+{
+  int friend_num;
+  int i, j;
+  MCR_MOVEOBJ* p_obj;
+  BOOL match;
+  WIFI_STATUS* p_status;
+  BOOL in_flag;
+
+  in_flag = FALSE;
+  for( i=0; i<WIFIP2PMATCH_MEMBER_MAX; i++ ){
+    if(wk->index2No[i] != 0){ 
+      p_obj = MCRSYS_GetMoveObjWork( wk, wk->index2No[i] );
+      if(p_obj){
+        continue;
+      }
+      p_status = WifiFriendMatchStatusGet( wk->index2No[i]-1 );
+      
+      p_obj = WIFI_MCR_SetNpc( &wk->matchroom,
+                                 WIFI_STATUS_GetTrainerView(p_status), wk->index2No[i] );
+      // 登録できたかチェック
+      if( p_obj ){
+        MCVSys_BttnSet( wk, wk->index2No[i], MCV_BTTN_FRIEND_TYPE_IN );
+        MCRSYS_SetMoveObjWork( wk, p_obj );
+        in_flag = TRUE;
+      }
+    }
+  }
+  //出入りSE
+  if( in_flag == TRUE ){
+    PMSND_PlaySE( SEQ_SE_FLD_05 );
+  }
+}
+
+
+
 
 //----------------------------------------------------------------------------
 /**
@@ -3239,6 +3289,9 @@ static void MCRSYS_SetFriendObj( WIFIP2PMATCH_WORK* wk, u32 heapID )
 
   // 状態が変わったら何かを変える
   MCRSYS_ContFriendStatus( wk, heapID );
+
+  //邪魔されたお友達検査
+  MCRSYS_ContFiendInOut2( wk );
 }
 
 //------------------------------------------------------------------
