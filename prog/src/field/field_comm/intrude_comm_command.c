@@ -1375,11 +1375,13 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
     intcomm->send_occupy_result_send_req = TRUE;
   }
   
+#if 0
   if(MISSION_RecvCheck(&intcomm->mission) == FALSE 
       || MISSION_GetMissionEntry(&intcomm->mission) == FALSE){
     OS_TPrintf("受信：ミッション結果：ミッションに参加していない為、結果を受け取らない\n");
     return;
   }
+#endif
   
   OS_TPrintf("受信：ミッション結果\n");
   MISSION_SetResult(intcomm, &intcomm->mission, mresult);
