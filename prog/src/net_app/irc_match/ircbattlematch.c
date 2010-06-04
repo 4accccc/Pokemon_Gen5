@@ -875,7 +875,6 @@ static void _modeSuccessMessageKeyWait(IRC_BATTLE_MATCH* pWork)
 
 static void _modeSuccessMessage(IRC_BATTLE_MATCH* pWork)
 {
-
   if(pWork->bFriendAdd){
     int aMsgBuff[]={IRCBTL_STR_43};
     _msgWindowCreate(aMsgBuff, pWork);
@@ -1028,6 +1027,13 @@ static void _modeCheckStart33(IRC_BATTLE_MATCH* pWork)
                             sizeof(DWCFriendData),&friendData)){
           GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGNO_DS,WB_NET_IRCBATTLE);
           _CHANGE_STATE(pWork,_modeCheckStart4);
+          //メニューウィンドウがあるかもしれないので、ここでクローズする 201009604 add Saito
+          if (pWork->pAppTask)
+          {
+            NOZOMU_Printf("メニュー閉じます\n");
+            APP_TASKMENU_CloseMenu(pWork->pAppTask);
+            pWork->pAppTask=NULL;
+          }
         }
       }
       break;
