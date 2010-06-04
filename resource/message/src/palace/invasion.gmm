@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-28T16:30:08"/>
+	<create user="ohmori" host="W00223" date="2010-06-04T12:07:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,14 +365,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1084" top="127" right="1859" bottom="790" maximized="no" rayout="Vertical2">
+	<dialog left="623" top="345" right="1398" bottom="1008" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="291" right="473" bottom="915" visible="yes"/>
 		<band id="0" index="0" style="0000" width="591"/>
 		<band id="1" index="1" style="0000" width="174"/>
 		<band id="2" index="2" style="0000" width="767"/>
 		<band id="3" index="3" style="0000" width="767"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -736,22 +736,22 @@
 [1:00:トレーナー名:0]が　います</language>
 	</row>
 
-	<row id="msg_invasion_info_012" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_012" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：近くに居るプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]のせかい　と
-せつぞくちゅう　です……</language>
+せつぞくちゅう……　おまちください</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の世界　と
-接続中　です……</language>
+接続中……　お待ちください</language>
 	</row>
 
-	<row id="msg_invasion_info_013" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_013" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：近くに居るプレイヤー</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]のせかい　と
-せつぞくちゅう　です……</language>
+せつぞくちゅう……　おまちください</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]と　[1:00:トレーナー名:1]の世界　と
-接続中　です……</language>
+接続中……　お待ちください</language>
 	</row>
 
 	<row id="msg_invasion_info_014" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -826,14 +826,14 @@
 遊びに　来ています</language>
 	</row>
 
-	<row id="msg_invasion_info_022" back-color="#ffff80,,,#80ff80,,,,,,,,,,,,,,">
+	<row id="msg_invasion_info_022" back-color="#ffff80,,,#80ff80,,,#ff0000,,,,,,,,,,,">
 		<comment>状況メッセージ
 タグ0,1：橋の上で近くにだれかがいるとき、
 チュートリアル専用のメッセージ</comment>
 		<language name="JPN" width="256">つうしんちゅう……　ハイリンクの
-まわりにいる　ひとを　さがしています</language>
+まわりにいる　あいてを　さがしています</language>
 		<language name="JPN_KANJI" width="256">通信中……　ハイリンクの
-周りにいる　人を　探しています</language>
+周りにいる　相手を　探しています</language>
 	</row>
 
 	<row id="msg_invasion_info_023" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
@@ -1062,12 +1062,22 @@
 姿が　変わった！</language>
 	</row>
 
-	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,#ffff00,,,,,,,,,,,">
+	<row id="plc_connect_06" back-color="#ffff80,,,#ff8080,,,#ff0000,,,,,,,,,,,">
 		<comment>通信接続メッセージ：侵入できない</comment>
 		<language name="JPN" width="256">……まだ　どのせかいとも
 せつぞく　できていません</language>
 		<language name="JPN_KANJI" width="256">……まだ　どの世界とも
 接続　出来ていません</language>
+	</row>
+
+	<row id="plc_connect_06_02" back-color="#ffff80,,,#ff8080,,,#ff0000,,,,,,,,,,,">
+		<comment>通信接続メッセージ：侵入できない
+plc_connect_06の続き
+100604追加</comment>
+		<language name="JPN" width="256">あいてが　みつかるまで　しばらく
+はしのうえで　おまちください</language>
+		<language name="JPN_KANJI" width="256">相手が　見つかるまで　しばらく
+橋の上で　お待ちください</language>
 	</row>
 
 	<row id="plc_connect_07" back-color="#ffff80,,,#ff8080,,,,,,,,,,,,,,">
