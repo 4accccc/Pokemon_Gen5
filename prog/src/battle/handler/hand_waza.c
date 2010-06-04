@@ -3220,7 +3220,7 @@ static void handler_Daibakuhatsu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_S
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-      param->pokeID = pokeID;
+    param->pokeID = pokeID;
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }

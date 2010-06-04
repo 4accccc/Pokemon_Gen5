@@ -939,130 +939,157 @@ static void PutDoryokuExp( BTL_POKEPARAM* bpp, const BTL_POKEPARAM* deadPoke )
 /*====================================================================================================*/
 TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, u8 actParam, u8 targetIdx )
 {
-  typedef u8 (*pItemEffFunc)( BTL_SVFLOW_WORK*, BTL_POKEPARAM*, u16, int, u8 );
-
-  static const struct {
-    u16            effect;
-    pItemEffFunc   func;
-  }ItemParallelEffectTbl[] = {
-    { ITEM_PRM_SLEEP_RCV,     ItemEff_SleepRcv      },   // 眠り回復
-    { ITEM_PRM_POISON_RCV,    ItemEff_PoisonRcv     },   // 毒回復
-    { ITEM_PRM_BURN_RCV,      ItemEff_YakedoRcv     },   // 火傷回復
-    { ITEM_PRM_ICE_RCV,       ItemEff_KooriRcv      },   // 氷回復
-    { ITEM_PRM_PARALYZE_RCV,  ItemEff_MahiRcv       },   // 麻痺回復
-    { ITEM_PRM_PANIC_RCV,     ItemEff_KonranRcv     },   // 混乱回復
-    { ITEM_PRM_MEROMERO_RCV,  ItemEff_MeromeroRcv   },   // メロメロ回復
-    { ITEM_PRM_ABILITY_GUARD, ItemEff_EffectGuard   },   // 能力ガード
-    { ITEM_PRM_DEATH_RCV,     ItemEff_Relive        },   // 瀕死回復
-    { ITEM_PRM_ATTACK_UP,     ItemEff_AttackRank    },   // 攻撃力アップ
-    { ITEM_PRM_DEFENCE_UP,    ItemEff_DefenceRank   },   // 防御力アップ
-    { ITEM_PRM_SP_ATTACK_UP,  ItemEff_SPAttackRank  },   // 特攻アップ
-    { ITEM_PRM_SP_DEFENCE_UP, ItemEff_SPDefenceRank },   // 特防アップ
-    { ITEM_PRM_AGILITY_UP,    ItemEff_AgilityRank   },   // 素早さアップ
-    { ITEM_PRM_HIT_UP,        ItemEff_HitRank       },   // 命中率アップ
-    { ITEM_PRM_CRITICAL_UP,   ItemEff_CriticalUp    },   // クリティカル率アップ
-    { ITEM_PRM_PP_RCV,        ItemEff_PP_Rcv        },   // PP回復
-    { ITEM_PRM_ALL_PP_RCV,    ItemEff_AllPP_Rcv     },   // PP回復（全ての技）
-    { ITEM_PRM_HP_RCV,        ItemEff_HP_Rcv        },   // HP回復
+  enum {
+    RANGE_FULL,   ///< 前衛・後衛・控えに全て効く
+    RANGE_VIEW,   ///< 前衛・後衛（画面に見えている）に効く
+    RANGE_FRONT,  ///< 前衛にのみ効く
+  };
+  enum {
+    AREA_FRONT,    ///< 前衛
+    AREA_BACK,     ///< 後衛（ローテのみ）
+    AREA_RESERVE,  ///< 控え
   };
 
+  typedef u8 (*pItemEffFunc)( BTL_SVFLOW_WORK*, BTL_POKEPARAM*, u16, int, u8 );
+
+  // 通常アイテム効果＆範囲テーブル
   static const struct {
-    u16           itemID;
-    pItemEffFunc  func;
-  }ShooterItemParam[] = {
-    { ITEM_AITEMUKOORU,     ShooterEff_ItemCall  },
-    { ITEM_SUKIRUKOORU,     ShooterEff_SkillCall },
-    { ITEM_AITEMUDOROPPU,   ShooterEff_ItemDrop  },
-    { ITEM_HURATTOKOORU,    ShooterEff_FlatCall  },
+    u16            effect;
+    u8             range;
+    u8             fShooterOnly;
+    pItemEffFunc   func;
+  }ItemEffectTable[] = {
+    { ITEM_PRM_SLEEP_RCV,     RANGE_FULL,  FALSE, ItemEff_SleepRcv      },   // 眠り回復
+    { ITEM_PRM_POISON_RCV,    RANGE_FULL,  FALSE, ItemEff_PoisonRcv     },   // 毒回復
+    { ITEM_PRM_BURN_RCV,      RANGE_FULL,  FALSE, ItemEff_YakedoRcv     },   // 火傷回復
+    { ITEM_PRM_ICE_RCV,       RANGE_FULL,  FALSE, ItemEff_KooriRcv      },   // 氷回復
+    { ITEM_PRM_PARALYZE_RCV,  RANGE_FULL,  FALSE, ItemEff_MahiRcv       },   // 麻痺回復
+    { ITEM_PRM_PANIC_RCV,     RANGE_FULL,  FALSE, ItemEff_KonranRcv     },   // 混乱回復
+    { ITEM_PRM_MEROMERO_RCV,  RANGE_FULL,  FALSE, ItemEff_MeromeroRcv   },   // メンタル回復
+    { ITEM_PRM_ABILITY_GUARD, RANGE_VIEW,  FALSE, ItemEff_EffectGuard   },   // 能力ガード
+    { ITEM_PRM_DEATH_RCV,     RANGE_FULL,  FALSE, ItemEff_Relive        },   // 瀕死回復
+    { ITEM_PRM_ATTACK_UP,     RANGE_VIEW,  FALSE, ItemEff_AttackRank    },   // 攻撃力アップ
+    { ITEM_PRM_DEFENCE_UP,    RANGE_VIEW,  FALSE, ItemEff_DefenceRank   },   // 防御力アップ
+    { ITEM_PRM_SP_ATTACK_UP,  RANGE_VIEW,  FALSE, ItemEff_SPAttackRank  },   // 特攻アップ
+    { ITEM_PRM_SP_DEFENCE_UP, RANGE_VIEW,  FALSE, ItemEff_SPDefenceRank },   // 特防アップ
+    { ITEM_PRM_AGILITY_UP,    RANGE_VIEW,  FALSE, ItemEff_AgilityRank   },   // 素早さアップ
+    { ITEM_PRM_HIT_UP,        RANGE_VIEW,  FALSE, ItemEff_HitRank       },   // 命中率アップ
+    { ITEM_PRM_CRITICAL_UP,   RANGE_VIEW,  FALSE, ItemEff_CriticalUp    },   // クリティカル率アップ
+    { ITEM_PRM_PP_RCV,        RANGE_FULL,  FALSE, ItemEff_PP_Rcv        },   // PP回復
+    { ITEM_PRM_ALL_PP_RCV,    RANGE_FULL,  FALSE, ItemEff_AllPP_Rcv     },   // PP回復（全ての技）
+    { ITEM_PRM_HP_RCV,        RANGE_FULL,  FALSE, ItemEff_HP_Rcv        },   // HP回復
+    // 以下シューター専用
+    { ITEM_AITEMUKOORU,       RANGE_FRONT, TRUE,  ShooterEff_ItemCall  },
+    { ITEM_SUKIRUKOORU,       RANGE_FRONT, TRUE,  ShooterEff_SkillCall },
+    { ITEM_AITEMUDOROPPU,     RANGE_FRONT, TRUE,  ShooterEff_ItemDrop  },
+    { ITEM_HURATTOKOORU,      RANGE_FRONT, TRUE,  ShooterEff_FlatCall  },
   };
 
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-  u8 targetPokeID, fShooterEffective;
+  u8 targetPokeID, targetArea;
   BTL_POKEPARAM* target = NULL;
   int i, itemParam;
   u32 hem_state;
   BtlPokePos targetPos;
 
-  // @todo targetIdx = 自パーティの何番目のポケモンに使うか？という意味だが、マルチでも有効だと話が違ってきます
-  if( targetIdx != BTL_PARTY_MEMBER_MAX ){
+  // 対象ポケモンの各種情報決定
+  if( targetIdx != BTL_PARTY_MEMBER_MAX )
+  {
     BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+    u8 frontPosCount = BTL_MAIN_GetClientFrontPosCount( wk->mainModule, clientID );
+
     target = BTL_PARTY_GetMemberData( party, targetIdx );
     targetPokeID = BPP_GetID( target );
+    targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
+    targetArea = (targetIdx < frontPosCount)? AREA_FRONT : AREA_RESERVE;
+    if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION) && (targetArea == AREA_RESERVE) )
+    {
+      if( targetIdx < BTL_ROTATION_VISIBLE_POS )
+      {
+        targetArea = AREA_BACK;
+      }
+    }
     BTL_N_Printf( DBGSTR_SVFL_TrainerItemTarget, targetIdx, targetPokeID );
   }
 
   // ○○は××を使った！  メッセージ
-  fShooterEffective = FALSE;
+  if( wk->bagMode != BBAG_MODE_SHOOTER )
   {
-    u8 pokeID = BPP_GetID( bpp );
-    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
-
     // 通常バッグ用
-    if( wk->bagMode != BBAG_MODE_SHOOTER )
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Self, clientID, itemID );
+
+    // ボール投げならボール投げシーケンスへ
+    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
     {
-      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Self, clientID, itemID );
-
-      if( clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
-        BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_USE_SHOOTER_COUNT );
-      }
-    }else
-    {
-      // シューター用
-      BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
-      if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION ){
-        if( (pos != BTL_POS_NULL) && (pos > BTL_POS_2ND_0) ){
-          pos = BTL_POS_NULL;
-        }
-      }
-      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Shooter, clientID, targetPokeID, itemID );
-      if( pos != BTL_POS_NULL ){
-        SCQUE_PUT_ACT_EffectByPos( wk->que, pos, BTLEFF_SHOOTER_EFFECT );
-        fShooterEffective = TRUE;
-      }
-    }
-  }
-
-  // ボール投げならボール投げシーケンスへ
-  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
-  {
-    if( scproc_TrainerItem_BallRoot( wk, bpp, itemID ) ){
-      BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
-    }
-    return TRITEM_RESULT_NORMAL;
-  }
-
-  // 逃げアイテムなら逃げシーケンスへ
-  if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_BATTLE) == ITEMUSE_BTL_ESCAPE )
-  {
-//    BTL_SVFRET_UseEscapeItem( wk, bpp );
-    return TRITEM_RESULT_ESCAPE;
-  }
-
-  // 対象位置ID
-  targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
-
-  // シューター専用のアイテム処理
-  for(i=0; i<NELEMS(ShooterItemParam); ++i)
-  {
-    if( itemID == ShooterItemParam[i].itemID )
-    {
-      if( fShooterEffective )
-      {
-        if( ShooterItemParam[i].func( wk, target, itemID, 0, actParam ) )
-        {
-          if( targetPos != BTL_POS_NULL ){
-            SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
-          }
-        }
-        else{
-          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
-        }
-      }
-      else
-      {
-        SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_PokeNotExist, targetPokeID );
+      if( scproc_TrainerItem_BallRoot( wk, bpp, itemID ) ){
+        BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
       }
       return TRITEM_RESULT_NORMAL;
+    }
+    // 逃げアイテムなら逃げシーケンスへ
+    if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_BATTLE) == ITEMUSE_BTL_ESCAPE )
+    {
+      return TRITEM_RESULT_ESCAPE;
+    }
+  }
+  else{
+    // シューター用
+    SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Shooter, clientID, targetPokeID, itemID );
+  }
+
+
+  // その場に効く道具か判定
+  {
+    BOOL fEffective = (targetArea == AREA_FRONT);
+
+    if( fEffective == FALSE )
+    {
+      for(i=0; i<NELEMS(ItemEffectTable); ++i)
+      {
+        if( ((ItemEffectTable[i].fShooterOnly) && (itemID == ItemEffectTable[i].effect))
+        ||  ((!ItemEffectTable[i].fShooterOnly) && (BTL_CALC_ITEM_GetParam(itemID, ItemEffectTable[i].effect)))
+        ){
+          u8 range = ItemEffectTable[i].range;
+          if( range == RANGE_FULL ){
+            fEffective = TRUE;
+            break;
+          }
+          if( (range == RANGE_VIEW) && (targetArea < AREA_RESERVE) ){
+            fEffective = TRUE;
+            break;
+          }
+        }
+      }
+    }
+
+    // 効かないよ
+    if( !fEffective ){
+      SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_ItemNoEffPos );
+      return TRITEM_RESULT_NORMAL;
+    }
+  }
+
+  if( wk->bagMode == BBAG_MODE_SHOOTER )
+  {
+    // シューターのかっこいい演出
+    SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_SHOOTER_EFFECT );
+
+    // シューター専用のアイテム処理
+    for(i=0; i<NELEMS(ItemEffectTable); ++i)
+    {
+      if( ItemEffectTable[i].fShooterOnly && (itemID == ItemEffectTable[i].effect) )
+      {
+        u16 que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_EFFECT_BYPOS );
+        if( ItemEffectTable[i].func(wk, target, itemID, 0, actParam) )
+        {
+          SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
+        }
+        else
+        {
+          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
+        }
+        return TRITEM_RESULT_NORMAL;
+      }
     }
   }
 
@@ -1072,11 +1099,12 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     u16  que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_EFFECT_BYPOS );
 
     hem_state = BTL_Hem_PushState( &wk->HEManager );
-    for(i=0; i<NELEMS(ItemParallelEffectTbl); ++i)
+    for(i=0; i<NELEMS(ItemEffectTable); ++i)
     {
-      itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemParallelEffectTbl[i].effect );
-      if( itemParam ){
-        if( ItemParallelEffectTbl[i].func(wk, target, itemID, itemParam, actParam) ){
+      itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemEffectTable[i].effect );
+      if( itemParam )
+      {
+        if( ItemEffectTable[i].func(wk, target, itemID, itemParam, actParam) ){
           fEffective = TRUE;
         }
       }
@@ -1086,11 +1114,8 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     {
       if( targetPos != BTL_POS_NULL )
       {
-        SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos );
-//        SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
+        SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
       }
-
-//      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
       if( wk->bagMode != BBAG_MODE_SHOOTER )
       {
         BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );

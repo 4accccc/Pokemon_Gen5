@@ -5303,6 +5303,7 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   BTL_POKEPARAM* bpp;
   u8 damaged_poke_cnt;
 
+  // コイツは現在「プレゼント」でしか使われていない
   scproc_Fight_Damage_ToRecover( wk, attacker, wazaParam, targets );
 
   damaged_poke_cnt = 0;
@@ -6352,6 +6353,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
       }
 
       scEvent_ItemEquip( wk, bpp );
+
       if( scproc_HandEx_Result(wk) == HandExResult_NULL ){
         result = FALSE;
       }
