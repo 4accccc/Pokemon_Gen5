@@ -57,11 +57,9 @@ FS_EXTERN_OVERLAY(ui_common);
 //=====================================
 #ifdef PM_DEBUG
 #define GAMESYS_NONE_MOVE //ゲームシステムがなくても動く
-
-
-#define SCROLL_MOVE_NONE  //スクロールなし版
 #endif //PM_DEBUG
 
+#define SCROLL_MOVE_NONE  //スクロールなし版
 
 //-------------------------------------
 /// 切り替えマクロ
