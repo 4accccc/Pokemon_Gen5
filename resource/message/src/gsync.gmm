@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-06-01T17:52:03"/>
+	<create user="matsumiya" host="W00224" date="2010-06-04T12:08:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1287" top="195" right="1992" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="1354" top="-10" right="2059" bottom="618" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -375,20 +375,20 @@
 	<row id="GSYNC_001">
 		<language name="JPN" width="256">ねかしつけている　ところです
 しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">寝かしつけている所です
+		<language name="JPN_KANJI" width="256">寝かしつけている　ところです
 しばらく　お待ちください</language>
 	</row>
 
 	<row id="GSYNC_002">
-		<language name="JPN" width="256">ゲームシンクが かんりょう しました</language>
+		<language name="JPN" width="256">ゲームシンクが　かんりょう　しました</language>
 		<language name="JPN_KANJI" width="256">ゲームシンクが　完了しました</language>
 	</row>
 
 	<row id="GSYNC_003">
-		<language name="JPN" width="256">ポケモンを　おこして
-よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">ポケモンを　起こして
-よろしいですか？</language>
+		<language name="JPN" width="256">ポケモンを
+おこして　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">ポケモンを
+起こして　よろしいですか？</language>
 	</row>
 
 	<row id="GSYNC_004">
@@ -397,8 +397,8 @@
 	</row>
 
 	<row id="GSYNC_005">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が目を覚ました！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>
 
 	<row id="GSYNC_006">
@@ -408,25 +408,26 @@
 
 	<row id="GSYNC_007">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
-スヤスヤねむりはじめた！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]はスヤスヤ眠りはじめた！</language>
+スヤスヤ　ねむりはじめた！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
+スヤスヤ　眠りはじめた！</language>
 	</row>
 
 	<row id="GSYNC_008">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が目を覚ました！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>
 
 	<row id="GSYNC_009">
-		<language name="JPN" width="256">ゲームシンクのエネルギーぎれです
-じゅうでんまで　１にちかかります</language>
-		<language name="JPN_KANJI" width="256">ゲームシンクのエネルギー切れです
+		<language name="JPN" width="256">ゲームシンクの　エネルギーぎれです
+じゅうでんまで　１にち　かかります</language>
+		<language name="JPN_KANJI" width="256">ゲームシンクの　エネルギー切れです
 充電まで　１日かかります</language>
 	</row>
 
 	<row id="GSYNC_010">
-		<language name="JPN" width="256">まだゆめをみていないみたい</language>
-		<language name="JPN_KANJI" width="256">まだ夢を見ていないみたい</language>
+		<language name="JPN" width="256">まだ　ゆめを　みていないみたい</language>
+		<language name="JPN_KANJI" width="256">まだ　夢を　みていないみたい</language>
 	</row>
 
 	<row id="GSYNC_011">
@@ -435,32 +436,33 @@
 	</row>
 
 	<row id="GSYNC_012">
-		<language name="JPN" width="256">ボックスにねむらせるポケモンがいません</language>
-		<language name="JPN_KANJI" width="256">ＢＯＸにねむらせるポケモンがいません</language>
+		<language name="JPN" width="256">ボックスに　ねむらせる
+ポケモンが　いません</language>
+		<language name="JPN_KANJI" width="256">ボックスに　眠らせる
+ポケモンが　いません</language>
 	</row>
 
 	<row id="GSYNC_013">
-		<language name="JPN" width="256">いまはゆめをみているようだ</language>
-		<language name="JPN_KANJI" width="256">今は夢を見ているようだ</language>
+		<language name="JPN" width="256">いまは　ゆめを　みているようだ</language>
+		<language name="JPN_KANJI" width="256">今は　夢を　みているようだ</language>
 	</row>
 
 	<row id="GSYNC_014">
-		<language name="JPN" width="256">ぜんかいのゆめの　カケラを
-ハイリンクで▽
-うけとっていませんが▼
-ポケモンをおこしても
-よろしいですか？</language>
-		<language name="JPN_KANJI" width="256">前回の夢のカケラを
+		<language name="JPN" width="256">ぜんかいの　ゆめのカケラを
+ハイリンクで　うけとっていませんが▼
+ポケモンを
+おこしても　よろしいですか？</language>
+		<language name="JPN_KANJI" width="256">前回の　ゆめのカケラを
 ハイリンクで　受け取っていませんが▼
-ポケモンを起こしても
-よろしいですか？</language>
+ポケモンを
+起こしても　よろしいですか？</language>
 	</row>
 
 	<row id="GSYNC_015">
 		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]は
-レベルが[2:01:２桁:1]アップしました</language>
+レベルが　[2:01:２桁:1]アップしました</language>
 		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]は
-レベルが[2:01:２桁:1]アップしました</language>
+レベルが　[2:01:２桁:1]アップしました</language>
 	</row>
 
 	<row id="GSYNC_016">
@@ -476,15 +478,13 @@
 	<row id="GSYNC_017">
 		<comment>1つ変更があった</comment>
 		<language name="JPN" width="256">Ｃギアのスキンがかわりました</language>
-		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲのスキンが変わりました
-</language>
+		<language name="JPN_KANJI" width="256">Ｃ－ＧＥＡＲのスキンが変わりました</language>
 	</row>
 
 	<row id="GSYNC_018">
 		<comment>1つ変更があった</comment>
 		<language name="JPN" width="256">ミュージカルのえんもくがかわりました</language>
-		<language name="JPN_KANJI" width="256">ミュージカルの演目が変わりました
-</language>
+		<language name="JPN_KANJI" width="256">ミュージカルの演目が変わりました</language>
 	</row>
 
 	<row id="GSYNC_019">
@@ -519,40 +519,48 @@
 
 	<row id="GSYNC_ERR001" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーのようりょうオーバーです</language>
-		<language name="JPN_KANJI" width="256">サーバーの容量オーバーです</language>
+		<language name="JPN" width="256">サーバーの
+ようりょうオーバー　です</language>
+		<language name="JPN_KANJI" width="256">サーバーの
+容量オーバーです</language>
 	</row>
 
 	<row id="GSYNC_ERR002" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバーにすでにデータがあります</language>
-		<language name="JPN_KANJI" width="256">サーバーに既にデータがあります</language>
+		<language name="JPN" width="256">サーバーに
+すでに　データが　あります</language>
+		<language name="JPN_KANJI" width="256">サーバーに
+既に　データが　あります</language>
 	</row>
 
 	<row id="GSYNC_ERR003" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">アップロードされたデータが
 こわれて　います</language>
-		<language name="JPN_KANJI" width="256">アップロードされたデータが壊れています</language>
+		<language name="JPN_KANJI" width="256">アップロードされた
+データが　壊れています</language>
 	</row>
 
 	<row id="GSYNC_ERR004" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">アップロードされたデータがふせいです</language>
-		<language name="JPN_KANJI" width="256">アップロードされたデータが不正です</language>
+		<language name="JPN" width="256">アップロードされた
+データが　ふせいです</language>
+		<language name="JPN_KANJI" width="256">アップロードされた
+データが　不正です</language>
 	</row>
 
 	<row id="GSYNC_ERR005" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">サーバにデータがありません</language>
-		<language name="JPN_KANJI" width="256">サーバにデータがありません</language>
+		<language name="JPN" width="256">サーバーに　データがありません</language>
+		<language name="JPN_KANJI" width="256">サーバーに　データがありません</language>
 	</row>
 
 	<row id="GSYNC_ERR006" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉのサービスは
 しゅうりょう　いたしました</language>
-		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉのサービスは終了いたしました</language>
+		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉの　サービスは
+終了いたしました</language>
 	</row>
 
 	<row id="GSYNC_ERR007" back-color=",,,#ffff00,,,,,,,,,,,,,,">
@@ -569,30 +577,32 @@
 
 	<row id="GSYNC_ERR009" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">ゲームシンクにしっぱいしました</language>
+		<language name="JPN" width="256">ゲームシンクに　しっぱいしました</language>
 		<language name="JPN_KANJI" width="256">ゲームシンクに失敗しました</language>
 	</row>
 
 	<row id="GSYNC_ERR010" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">ダウンロードしたデータがこわれています</language>
-		<language name="JPN_KANJI" width="256">ダウンロードしたデータが壊れています</language>
+		<language name="JPN" width="256">ダウンロードした
+データが　こわれています</language>
+		<language name="JPN_KANJI" width="256">ダウンロードした
+データが　壊れています</language>
 	</row>
 
 	<row id="GSYNC_023">
-		<language name="JPN" width="256">ねかしつけたポケモンのゆめを
+		<language name="JPN" width="256">ねかしつけた　ポケモンのゆめを
 インターネットで
 あそぶことが　できます</language>
-		<language name="JPN_KANJI" width="256">寝かしつけたポケモンの夢を
-インターネットで遊ぶことができます！</language>
+		<language name="JPN_KANJI" width="256">寝かしつけた　ポケモンの夢を
+インターネットで　遊ぶことができます！</language>
 	</row>
 
 	<row id="GSYNC_024">
 		<language name="JPN" width="256">ポケモンのゆめを　あそぶには
 ゲームシンクせっていが
 ひつようです</language>
-		<language name="JPN_KANJI" width="256">ポケモンの夢を遊ぶためには
-ゲームシンク設定が必要です</language>
+		<language name="JPN_KANJI" width="256">ポケモンの夢を　遊ぶためには
+ゲームシンク設定が　必要です</language>
 	</row>
 
 	<row id="GSYNC_025">
@@ -600,12 +610,12 @@
 ついて　くわしくは
 せつめいしょを　ごらんください</language>
 		<language name="JPN_KANJI" width="256">ゲームシンク設定について
-詳しくは説明書をご覧ください</language>
+詳しくは　説明書を　ご覧ください</language>
 	</row>
 
 	<row id="GSYNC_026">
-		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
-		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]がめをさました！</language>
+		<language name="JPN" width="256">[1:02:ポケモンニックネーム:0]が　めをさました！</language>
+		<language name="JPN_KANJI" width="256">[1:02:ポケモンニックネーム:0]が　目を覚ました！</language>
 	</row>
 
 	<row id="GSYNC_027">
@@ -619,8 +629,7 @@
 書かれていますので▽
 レポートが　書けません！▼
 詳しくは
-取り扱い説明書を▽
-ごらんください</language>
+取り扱い説明書を　ご覧ください</language>
 	</row>
 
 	<row id="GSYNC_028">
@@ -660,7 +669,7 @@ http://www.pokemon-gl.com/
 		<language name="JPN" width="256">ボックスのなかが　いっぱいです！▼
 ボックスの　ポケモンを　１ぴき
 へらさないと　おこすことができません</language>
-		<language name="JPN_KANJI" width="256">ボックスの中が　いっぱいです！▼
+		<language name="JPN_KANJI" width="256">ボックスの中が　一杯です！▼
 ボックスの　ポケモンを　１匹
 減らさないと　起こすことができません</language>
 	</row>
