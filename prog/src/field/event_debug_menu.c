@@ -2396,7 +2396,7 @@ static BOOL debugMenuCallProc_MyItemMax( DEBUG_MENU_EVENT_WORK *wk )
   u32 i;
   MYITEM_PTR myitem = GAMEDATA_GetMyItem(GAMESYSTEM_GetGameData(wk->gmSys));
 
-  for( i = 0; i < ITEM_DATA_MAX; i++ ){
+  for( i = 0; i <= ITEM_DATA_MAX; i++ ){
     if( ITEM_CheckEnable( i ) ){
       MYITEM_AddItem(myitem , i, 999, GFL_HEAPID_APP );
     }
