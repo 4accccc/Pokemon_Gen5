@@ -701,7 +701,8 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     MBMAIN_SelBoxDel( syswk );
     {
       MAIL_DATA * md = syswk->app->mail[ syswk->lst_pos ];
-      PokeListWorkCreate( syswk, PL_MODE_MAILBOX, ITEM_MailNumGet(MailData_GetDesignNo(md)), 0 );
+      PokeListWorkCreate( syswk, PL_MODE_MAILBOX, ITEM_MailNumGet(MailData_GetDesignNo(md)), 
+                          syswk->sel_page*MBMAIN_MAILLIST_MAX+CURSORMOVE_PosGet(syswk->app->cmwk));
     }
     syswk->subProcType = SUBPROC_TYPE_PL_PUT;
     syswk->next_seq = MBSEQ_MAINSEQ_SUBPROC_CALL;
