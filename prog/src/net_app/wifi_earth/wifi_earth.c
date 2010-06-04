@@ -771,6 +771,10 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
 
   // 通信アイコン表示
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID );
+  GFL_NET_ReloadIcon();
+  GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); 
+  
+  
   
   //キーシステム設定
   //GFL_UI_KEY_SetRepeatSpeed( 8/*SYS_KEYREPEAT_SPEED_DEF*/, 4/*SYS_KEYREPEAT_WAIT_DEF*/ );
@@ -885,15 +889,6 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
   } else {
     wk->tptrg = GFL_UI_TP_GetPointTrg(&wk->tpx, &wk->tpy); 
   }
-
-  // 金銀で追加したタッチ=Aボタン処理はなくしました。
-//  // 地球儀モード以外ならタッチ=Aボタン
-//  if( (*seq) != EARTHDEMO_SEQ_EARTH_DISPON &&
-//    (*seq) != EARTHDEMO_SEQ_MOVE_EARTH && 
-//    (*seq) != EARTHDEMO_SEQ_MOVE_CAMERA )
-//  { 
-//    if( GFL_UI_TP_GetTrg() ){ wk->trg = PAD_BUTTON_A; }
-//  }
 
   switch(*seq){
   //-----------------------------------------------------------
