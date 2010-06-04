@@ -1301,6 +1301,10 @@ static BOOL EvCmdMusicalEntryChild( VMHANDLE *core, void *wk )
     (*musScriptWork->scriptRet) = MUSICAL_COMM_ENTRY_CHILD_CANCEL ;
     ret = TRUE;
     break;
+  case COMM_ENTRY_RESULT_ERROR:        //ƒGƒ‰[‚ÅI—¹
+    (*musScriptWork->scriptRet) = MUSICAL_COMM_ENTRY_PARENT_ERROR;
+    ret = TRUE;
+    break;
   }
   
   if( ret == TRUE )

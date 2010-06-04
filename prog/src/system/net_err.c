@@ -449,7 +449,7 @@ void NetErr_DEBUG_ErrorSet(void)
 	NET_ERR_SYSTEM *nes = &NetErrSystem;
 
   //WiFi
-#if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi )
+#if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi ) | defined( DEBUG_ONLY_FOR_ariizumi_nobuhiko )
 //  GFL_NET_StateSetWifiError( -30000, DWC_ETYPE_DISCONNECT, 1, 0 );
   NetErr_ErrorSet();
 #endif

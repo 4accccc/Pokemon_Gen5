@@ -410,6 +410,11 @@ u32 CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
   completion_bit = CommEntryMenu_GetCompletionBit(em);
   
   _MemberInfo_Exit(em);
+  if( em->yesno.menufunc != NULL )
+  {
+    FLDMENUFUNC_DeleteMenu(em->yesno.menufunc);
+    em->yesno.menufunc = NULL;
+  }
   
   GFL_STR_DeleteBuffer(em->strbuf_num_expand);
   GFL_STR_DeleteBuffer(em->strbuf_num_template);
@@ -704,6 +709,12 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     return TRUE;
   }
   
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    em->entry_result = COMM_ENTRY_RESULT_ERROR;
+    return TRUE;
+  }
+  
   return FALSE;
 }
 
@@ -896,7 +907,15 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     _MemberInfo_Exit(em);
     return TRUE;
   }
-  
+    
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    _ParentWait_ExitCnacel(em);
+    _ParentSearchList_Exit(em);
+    em->entry_result = COMM_ENTRY_RESULT_ERROR;
+    return TRUE;
+  }
+
   return FALSE;
 }
 
@@ -1024,7 +1043,14 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     _MemberInfo_Exit(em);
     return TRUE;
   }
-  
+    
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    _ParentWait_ExitCnacel(em);
+    em->entry_result = COMM_ENTRY_RESULT_ERROR;
+    return TRUE;
+  }
+
   return FALSE;
 }
 
@@ -1195,7 +1221,14 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     _MemberInfo_Exit(em);
     return TRUE;
   }
-  
+    
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+  {
+    _ParentWait_ExitCnacel(em);
+    em->entry_result = COMM_ENTRY_RESULT_ERROR;
+    return TRUE;
+  }
+
   return FALSE;
 }
 
@@ -2276,6 +2309,7 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
            em->game_cancel == TRUE)
         {
           FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+          yesno->menufunc = NULL;
           psl->final_select = PARENT_SEARCH_LIST_SELECT_OK;
           psl->local_seq = _SEQ_FINISH;
         }
@@ -2554,6 +2588,7 @@ static void _ParentWait_ExitCnacel( COMM_ENTRY_MENU_PTR em )
   if( yesno->menufunc != NULL )
   {
     FLDMENUFUNC_DeleteMenu(yesno->menufunc);
+    yesno->menufunc = NULL;
   }
 }
 //==================================================================
