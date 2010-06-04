@@ -1410,7 +1410,7 @@ static void Mystery_Album_RemoveCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index )
   //カード消去
   MYSTERYDATA_RemoveCardData( p_wk->setup.p_sv, card_index);
 
-  //カード作り直し
+  //カードデータ作り直し
   { 
     int i;
     for( i = 0; i < MYSTERY_DATA_GetCardMax( p_wk->setup.p_sv ); i++ )
@@ -1430,6 +1430,25 @@ static void Mystery_Album_RemoveCard( MYSTERY_ALBUM_WORK *p_wk, u32 card_index )
   }
 
 
+  //下画面カードリソース
+  {
+    int i;
+    if( p_wk->p_card[card_index] )
+    { 
+      MYSTERY_CARD_Exit( p_wk->p_card[card_index] );
+      p_wk->p_card[card_index]  = NULL;
+    }
+
+    for( i = card_index; i < MYSTERY_ALBUM_CARD_MAX-1; i++ )
+    {
+      if( p_wk->p_card[i] == NULL )
+      {
+        MYSTERY_CARD_WORK *p_temp = p_wk->p_card[i];
+        p_wk->p_card[i] = p_wk->p_card[i+1];
+        p_wk->p_card[i+1] = p_temp;
+      }
+    }
+  }
 
   p_wk->is_change = TRUE;
 }
