@@ -254,9 +254,6 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     // BGシステム初期化
     BgInit();          
 
-    GX_SetMasterBrightness(-16);
-    GXS_SetMasterBrightness(-16);
-
     // 輝度変更セット
     WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEIN, WIPE_TYPE_HOLEIN, WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
     
@@ -824,7 +821,9 @@ static void FreeWork( OEKAKI_WORK *wk )
 //--------------------------------------------------------------------------------------------
 static void BgExit( void )
 {
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+//  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 16, 0 );
+  GX_SetMasterBrightness(-16);
+  GXS_SetMasterBrightness(-16);
 
   GFL_BG_FreeBGControl( GFL_BG_FRAME1_S );
   GFL_BG_FreeBGControl( GFL_BG_FRAME0_S );
