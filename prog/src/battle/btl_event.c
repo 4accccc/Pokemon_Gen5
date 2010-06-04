@@ -651,25 +651,13 @@ void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor )
 }
 
 
-BTL_EVENT_FACTOR* BTL_EVENT_SeekFactorCore( BtlEventFactorType factorType )
-{
-  BTL_EVENT_FACTOR* factor;
-
-  for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
-  {
-    if( factor->factorType == factorType ){
-      return factor;
-    }
-  }
-  return NULL;
-}
 BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 dependID )
 {
   BTL_EVENT_FACTOR* factor;
 
   for( factor=FirstFactorPtr; factor!=NULL; factor=factor->next )
   {
-    if( (factor->factorType == factorType) && (factor->dependID == dependID) )
+    if( (factor->factorType == factorType) && (factor->dependID == dependID) && (factor->rmReserveFlag==FALSE) )
     {
       return factor;
     }
@@ -685,7 +673,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor )
 
     factor = factor->next;
     while( factor ){
-      if( (factor->factorType == type) && (factor->dependID == dependID) ){
+      if( (factor->factorType == type) && (factor->dependID == dependID) && (factor->rmReserveFlag==FALSE) ){
         return factor;
       }
       factor = factor->next;

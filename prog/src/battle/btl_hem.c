@@ -31,32 +31,34 @@ enum {
 
 void BTL_Hem_Init( HANDLER_EXHIBISION_MANAGER* wk )
 {
-  wk->stack_ptr = 0;
-  wk->read_ptr = 0;
   wk->state = 0;
+  GFL_STD_MemClear( wk->workBuffer, sizeof(wk->workBuffer) );
 }
 
 u32 BTL_Hem_PushState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 line )
 {
-#if BTL_HEM_OBO
   u32 state = wk->state;
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushEx, line, wk->fPushed, wk->fUsed, wk->fPrevSucceed, wk->fSucceed, wk->useItem );
-  wk->state = 0;
+
   wk->useItem = ITEM_DUMMY_DATA;
-  return state;
-#else
-  u32 state = (wk->stack_ptr<<16) | wk->read_ptr;
+  wk->read_ptr = wk->stack_ptr;
+  wk->fSucceed = 0;
+  wk->fPrevSucceed = 0;
+
   BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
+
   return state;
-#endif
 }
 
 u32 BTL_Hem_PushStateUseItem_Impl( HANDLER_EXHIBISION_MANAGER* wk, u16 itemNo, u32 line )
 {
   u32 state = wk->state;
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushEx, line, wk->fPushed, wk->fUsed, wk->fPrevSucceed, wk->fSucceed, wk->useItem );
-  wk->state = 0;
+
   wk->useItem = itemNo;
+  wk->read_ptr = wk->stack_ptr;
+  wk->fSucceed = 0;
+  wk->fPrevSucceed = 0;
+
+  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
   return state;
 }
 
@@ -64,24 +66,21 @@ void BTL_Hem_PopState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 state, u32 line 
 {
 #if BTL_HEM_OBO
   wk->state = state;
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PopEx, line, wk->fPushed, wk->fUsed, wk->fPrevSucceed, wk->fSucceed, wk->useItem );
 #else
   wk->stack_ptr = (state >> 16) & 0xffff;
   wk->read_ptr  = state & 0xffff;
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Pop, line, wk->stack_ptr, wk->read_ptr );
 #endif
+  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Pop, line, wk->stack_ptr, wk->read_ptr );
 }
 
 BTL_HANDEX_PARAM_HEADER* BTL_Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk )
 {
-//  if( wk->read_ptr < wk->stack_ptr )
-  if( (wk->read_ptr==0) && (wk->stack_ptr!=0) )
+  if( wk->read_ptr < wk->stack_ptr )
+//  if( (wk->read_ptr==0) && (wk->stack_ptr!=0) )
   {
     BTL_HANDEX_PARAM_HEADER* header = (BTL_HANDEX_PARAM_HEADER*)(&wk->workBuffer[wk->read_ptr]);
-//    wk->read_ptr += header->size;
-    wk->stack_ptr = 0;
-
-    GF_ASSERT( header->equip < BTL_HANDEX_MAX );
+    wk->read_ptr += header->size;
+//    wk->stack_ptr = 0;
 
     return header;
   }
@@ -101,10 +100,6 @@ u16 BTL_Hem_GetUseItemNo( const HANDLER_EXHIBISION_MANAGER* wk )
   return wk->useItem;
 }
 
-BOOL BTL_Hem_IsPushed( const HANDLER_EXHIBISION_MANAGER* wk )
-{
-  return wk->fPushed;
-}
 BOOL BTL_Hem_IsUsed( const HANDLER_EXHIBISION_MANAGER* wk )
 {
   return wk->fUsed;
@@ -128,6 +123,17 @@ BOOL BTL_Hem_GetTotalResult( const HANDLER_EXHIBISION_MANAGER* wk )
   return wk->fSucceed;
 }
 
+//=============================================================================================
+/**
+ * ƒ[ƒNƒƒ‚ƒŠ‚PŒŠm•Û
+ *
+ * @param   wk
+ * @param   eq_type
+ * @param   userPokeID
+ *
+ * @retval  BTL_HANDEX_PARAM_HEADER*
+ */
+//=============================================================================================
 BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID )
 {
   static const struct {
@@ -218,9 +224,10 @@ BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEv
       header->size = size;
       header->userPokeID = userPokeID;
       header->tokwin_flag = 0;
+      header->usingFlag = 1;
 
       wk->stack_ptr += size;
-      wk->fPushed = TRUE;
+//      wk->read_ptr = wk->stack_ptr;
 
       BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushWork, eq_type, userPokeID, size, wk->stack_ptr );
       return header;
@@ -236,4 +243,32 @@ BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEv
   }
   return NULL;
 }
+//=============================================================================================
+/**
+ * ƒ[ƒNƒƒ‚ƒŠ‚PŒ•Ô‹p
+ *
+ * @param   wk
+ * @param   exWork
+ */
+//=============================================================================================
+void BTL_Hem_PopWork( HANDLER_EXHIBISION_MANAGER* wk, void* exWork )
+{
+  BTL_HANDEX_PARAM_HEADER* header = (BTL_HANDEX_PARAM_HEADER*) exWork;
 
+  if( header->size <= wk->stack_ptr )
+  {
+    u32 btm = ((u32)(exWork) - (u32)(wk->workBuffer)) + header->size;
+    if( btm == wk->stack_ptr )
+    {
+      wk->stack_ptr -= header->size;
+    }
+    else
+    {
+      GF_ASSERT_MSG(0, "exWork pop error! workSize=%d, endPtr=%d\n", header->size, btm );
+    }
+  }
+  else
+  {
+    GF_ASSERT_MSG(0, "exWork pop over! workSize=%d, sp=%d\n", header->size, wk->stack_ptr );
+  }
+}

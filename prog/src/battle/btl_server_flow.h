@@ -337,13 +337,14 @@ typedef enum {
  *  ハンドラ挙動ワーク共有ヘッダ
  */
 typedef struct {
-  u8    equip;             ///< ハンドラ挙動（BtlEventHandlerEquip）
-  u8    userPokeID;        ///< ハンドラ主体のポケモンID
-  u8    size;              ///< 構造体サイズ
-  u8    tokwin_flag  : 1;  ///< 主体ポケモンのとくせい効果であることを表示する
-  u8    failSkipFlag : 1;  ///< 直前の命令が失敗したらスキップされる
-  u8    autoRemoveFlag : 1;///< 主体ポケモンが死んでいたら自動削除
-  u8    padding : 5;       ///< パディング
+  u32    equip          : 8; ///< ハンドラ挙動（BtlEventHandlerEquip）
+  u32    userPokeID     : 5; ///< ハンドラ主体のポケモンID
+  u32    size           :10; ///< 構造体サイズ
+  u32    tokwin_flag    : 1; ///< 主体ポケモンのとくせい効果であることを表示する
+  u32    failSkipFlag   : 1; ///< 直前の命令が失敗したらスキップされる
+  u32    autoRemoveFlag : 1; ///< 主体ポケモンが死んでいたら自動削除
+  u32    usingFlag      : 1; ///< 使用中フラグ
+  u32    _padding       : 5; ///< パディング
 }BTL_HANDEX_PARAM_HEADER;
 
 /**
@@ -925,7 +926,9 @@ typedef struct {
 
 
 extern void* BTL_SVF_HANDEX_Push( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
-extern void BTL_SVF_HANDEX_Flush( BTL_SVFLOW_WORK* wk );
+extern void BTL_SVF_HANDEX_PushRun( BTL_SVFLOW_WORK* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+extern void BTL_SVF_HANDEX_Pop( BTL_SVFLOW_WORK* wk, void* handExWork );
+
 extern u8 BTL_SVFTOOL_ExpandPokeID( BTL_SVFLOW_WORK* wk, BtlExPos exPos, u8* dst_pokeID );
 
 

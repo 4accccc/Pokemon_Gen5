@@ -140,29 +140,30 @@ static void cont_Yadorigi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
     }
 
     dmg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-    dmg_param->pokeID = pokeID;
-    dmg_param->damage = damage;
-    HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
-    HANDEX_STR_AddArg( &dmg_param->exStr, pokeID );
-
-    // ダメージが成功したらエフェクト
-    {
-      // エフェクト側の from, to の解釈が逆っぽいのでこうする。
-      dmg_param->fExEffect = TRUE;
-      dmg_param->effectNo = BTLEFF_YADORIGI;
-      dmg_param->pos_from = pos_to;
-      dmg_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-    }
+      dmg_param->pokeID = pokeID;
+      dmg_param->damage = damage;
+      HANDEX_STR_Setup( &dmg_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_YadorigiTurn );
+      HANDEX_STR_AddArg( &dmg_param->exStr, pokeID );
+      // ダメージが成功したらエフェクト
+      {
+        // エフェクト側の from, to の解釈が逆っぽいのでこうする。
+        dmg_param->fExEffect = TRUE;
+        dmg_param->effectNo = BTLEFF_YADORIGI;
+        dmg_param->pos_from = pos_to;
+        dmg_param->pos_to = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+      }
+    BTL_SVF_HANDEX_Pop( flowWk, dmg_param );
 
     // 続けて回復
     if( recoverPokeID != BTL_POKEID_NULL )
     {
       BTL_HANDEX_PARAM_DRAIN* drain_param;
       drain_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
-      drain_param->header.failSkipFlag = TRUE;
-      drain_param->recoverPokeID = recoverPokeID;
-      drain_param->damagedPokeID = pokeID;
-      drain_param->recoverHP = damage;
+        drain_param->header.failSkipFlag = TRUE;
+        drain_param->recoverPokeID = recoverPokeID;
+        drain_param->damagedPokeID = pokeID;
+        drain_param->recoverHP = damage;
+      BTL_SVF_HANDEX_Pop( flowWk, drain_param );
     }
   }
 }
@@ -173,21 +174,15 @@ static void cont_NeWoHaru( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
 {
   if( !BPP_IsHPFull(bpp) )
   {
-    /*
-    BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-    param->recoverHP = BTL_CALC_QuotMaxHP_Zero( bpp, 16 );
-    param->pokeID = pokeID;
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-    */
     // 「おおきなねっこ」対象にするため、ドレイン回復を使う
     BTL_HANDEX_PARAM_DRAIN* drain_param;
     drain_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
-    drain_param->recoverPokeID = pokeID;
-    drain_param->damagedPokeID = BTL_POKEID_NULL;
-    drain_param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
-    HANDEX_STR_Setup( &drain_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
-    HANDEX_STR_AddArg( &drain_param->exStr, pokeID );
+      drain_param->recoverPokeID = pokeID;
+      drain_param->damagedPokeID = BTL_POKEID_NULL;
+      drain_param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+      HANDEX_STR_Setup( &drain_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruRecover );
+      HANDEX_STR_AddArg( &drain_param->exStr, pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, drain_param );
   }
 }
 /**
@@ -214,24 +209,26 @@ static void cont_Bind( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
 
-    param->pokeID = pokeID;
-    if( BPP_SICKCONT_GetFlag(cont) ){ // フラグONなら２倍（しめつけバンド対応）
-      param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
-    }else{
-      param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
-    }
+      param->pokeID = pokeID;
+      if( BPP_SICKCONT_GetFlag(cont) ){ // フラグONなら２倍（しめつけバンド対応）
+        param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+      }else{
+        param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+      }
 
-    if( effNo != -1 )
-    {
-      param->fExEffect = TRUE;
-      param->effectNo = effNo;
-      param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
-      param->pos_to = BTL_POS_NULL;
-    }
+      if( effNo != -1 )
+      {
+        param->fExEffect = TRUE;
+        param->effectNo = effNo;
+        param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+        param->pos_to = BTL_POS_NULL;
+      }
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Bind );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-    HANDEX_STR_AddArg( &param->exStr, waza );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Bind );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_AddArg( &param->exStr, waza );
+
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 /**
@@ -242,38 +239,30 @@ static void cont_AquaRing( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeI
   if( !BPP_IsHPFull(bpp)
   &&  !BPP_IsDead(bpp)
   ){
-    #if 0
-    BTL_HANDEX_PARAM_RECOVER_HP* param;
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_HP, pokeID );
-    param->pokeID = pokeID;
-    param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-    #else
-
     // 「おおきなねっこ」対象にするため、ドレイン回復を使う
     BTL_HANDEX_PARAM_DRAIN* drain_param;
     drain_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DRAIN, pokeID );
-    drain_param->recoverPokeID = pokeID;
-    drain_param->damagedPokeID = BTL_POKEID_NULL;
-    drain_param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
-    HANDEX_STR_Setup( &drain_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
-    HANDEX_STR_AddArg( &drain_param->exStr, pokeID );
-    #endif
+      drain_param->recoverPokeID = pokeID;
+      drain_param->damagedPokeID = BTL_POKEID_NULL;
+      drain_param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 16 );
+      HANDEX_STR_Setup( &drain_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_AquaRingRecover );
+      HANDEX_STR_AddArg( &drain_param->exStr, pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, drain_param );
   }
 }
 /**
  *  アンコール：継続
  */
-static void cont_Encore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 pokeID )
+static void cont_Encore( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 pokeID )
 {
   WazaID  encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(bpp, WAZASICK_ENCORE) );
   if( BPP_WAZA_GetPP_ByNumber(bpp, encoreWaza) == 0 )
   {
-    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
-    param->sickCode = WAZASICK_ENCORE;
-    param->pokeID[0] = pokeID;
-    param->poke_cnt = 1;
+    BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+      param->sickCode = WAZASICK_ENCORE;
+      param->pokeID[0] = pokeID;
+      param->poke_cnt = 1;
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 
@@ -287,7 +276,8 @@ static void turncheck_cureProc( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp, u8 
   if( BTL_SICK_MakeDefaultCureMsg(sick, oldCont, bpp, ITEM_DUMMY_DATA, &str) )
   {
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    param->str = str;
+      param->str = str;
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 
   switch( sick ){
@@ -304,10 +294,11 @@ static void cure_Akubi( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
   {
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-    param->fAlmost = TRUE;
-    param->sickID = WAZASICK_NEMURI;
-    param->sickCont = BPP_SICKCONT_MakeTurn( turns );
-    param->pokeID = pokeID;
+      param->fAlmost = TRUE;
+      param->sickID = WAZASICK_NEMURI;
+      param->sickCont = BPP_SICKCONT_MakeTurn( turns );
+      param->pokeID = pokeID;
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 
@@ -317,7 +308,8 @@ static void cure_HorobiNoUta( BTL_SVFLOW_WORK* flowWk, BTL_POKEPARAM* bpp )
   {
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-    param->pokeID = pokeID;
+      param->pokeID = pokeID;
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 
@@ -338,7 +330,8 @@ static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 //  BTL_HANDLER_ITEM_Add( bpp );
   u8 pokeID = BPP_GetID( bpp );
   BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
-  param->pokeID = BPP_GetID( bpp );
+    param->pokeID = BPP_GetID( bpp );
+  BTL_SVF_HANDEX_Pop( flowWk, param );
 }
 
 static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SICK_CONT oldCont )
@@ -346,9 +339,10 @@ static void cure_Bind( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp, BPP_SI
   u8 pokeID = BPP_GetID( bpp );
   WazaID waza = BPP_SICKCONT_GetParam( oldCont );
   BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-  HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_BindCure );
-  HANDEX_STR_AddArg( &param->str, pokeID );
-  HANDEX_STR_AddArg( &param->str, waza );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_BindCure );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+    HANDEX_STR_AddArg( &param->str, waza );
+  BTL_SVF_HANDEX_Pop( flowWk, param );
 }
 
 
@@ -583,9 +577,9 @@ void BTL_SICKEVENT_CheckPushOutFail( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARA
     {
       u8 pokeID = BPP_GetID( bpp );
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruStick );
-      HANDEX_STR_AddArg( &param->str, pokeID );
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_NeWoHaruStick );
+        HANDEX_STR_AddArg( &param->str, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
     }
   }
 }

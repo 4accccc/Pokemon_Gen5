@@ -206,8 +206,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_HEM_Push:     return "[PUSH - %5d] <- sp=%d, rp=%d\n";
   case DBGSTR_HEM_Pop:      return "[POP  - %5d]    sp=%d, rp=%d ->\n";
-  case DBGSTR_HEM_PushEx:   return "[PUSH - %5d] fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
-  case DBGSTR_HEM_PopEx:    return "[POP  - %5d] fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
+  case DBGSTR_HEM_PushEx:   return "[PUSH - %5d] sp=%d, fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
+  case DBGSTR_HEM_PopEx:    return "[POP  - %5d] sp=%d, fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
   case DBGSTR_HEM_PushWork: return "HandEx : type=%d, pokeID=%d, size=%d, sp=%d\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ÉèÉUèÓïÒÅFID=%d, Type=%d\n";

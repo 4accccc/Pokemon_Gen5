@@ -377,8 +377,9 @@ static void handler_side_SinpiNoMamori_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SinpiNoMamori_Exe );
-    HANDEX_STR_AddArg( &param->str, pokeID );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SinpiNoMamori_Exe );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, param );
     work[0] = 0;
   }
 }
@@ -413,9 +414,10 @@ static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   if( work[0] )
   {
     u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
-    HANDEX_STR_AddArg( &param->str, pokeID );
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 //--------------------------------------------------------------------------------------
@@ -496,10 +498,11 @@ static void handler_side_StealthRock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     {
       BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
 
-      param->pokeID = pokeID;
-      param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_StealthRockDamage );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
+        param->pokeID = pokeID;
+        param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_StealthRockDamage );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
     }
   }
 }
@@ -605,12 +608,12 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       }
       {
         BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
-        const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-
-        param->pokeID = pokeID;
-        param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MakibisiDamage );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
+          const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+          param->pokeID = pokeID;
+          param->damage = BTL_CALC_QuotMaxHP( bpp, denom );
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MakibisiDamage );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
       }
     }
   }
@@ -641,22 +644,24 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
       {
         BTL_HANDEX_PARAM_SIDEEFF_REMOVE* side_param;
         side_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SIDEEFF_REMOVE, pokeID );
-        side_param->side = mySide;
-        BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
-        BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_DOKUBISI );
+          side_param->side = mySide;
+          BTL_CALC_BITFLG_Construction( side_param->flags, sizeof(side_param->flags) );
+          BTL_CALC_BITFLG_Set( side_param->flags, BTL_SIDEEFF_DOKUBISI );
+        BTL_SVF_HANDEX_Pop( flowWk, side_param );
       }
       else
       {
         BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, BTL_POKEID_NULL );
 
-        param->sickID = WAZASICK_DOKU;
-        if( getMyAddCounter(myHandle, mySide) > 1 ){
-          param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
-        }else{
-          param->sickCont = BPP_SICKCONT_MakePermanent();
-        }
+          param->sickID = WAZASICK_DOKU;
+          if( getMyAddCounter(myHandle, mySide) > 1 ){
+            param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
+          }else{
+            param->sickCont = BPP_SICKCONT_MakePermanent();
+          }
 
-        param->pokeID = pokeID;
+          param->pokeID = pokeID;
+        BTL_SVF_HANDEX_Pop( flowWk, param );
       }
     }
   }
@@ -713,10 +718,12 @@ static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     {
       BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
 
-      param->pokeID = pokeID;
-      param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BurningDamage );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
+        param->pokeID = pokeID;
+        param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BurningDamage );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+
+      BTL_SVF_HANDEX_Pop( flowWk, param );
     }
   }
 }

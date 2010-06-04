@@ -566,7 +566,6 @@ static u8 checkTemptPokeID( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, 
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   u8 temptPokeID = scEvent_GetWazaTargetTempt( wk, attacker, wazaParam, targetPokeID );
-  BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
   return temptPokeID;
 }
@@ -1087,7 +1086,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
       }
 
-      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+//      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
       if( wk->bagMode != BBAG_MODE_SHOOTER )
       {
         BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
@@ -1472,8 +1471,9 @@ static u8 ItemEff_EffectGuard( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
   if( BTL_HANDLER_SIDE_Add(side, BTL_SIDEEFF_SIROIKIRI, cont) )
   {
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, BTL_POKEID_NULL );
-    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_SiroiKiri );
-    HANDEX_STR_AddArg( &param->str, side );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_SiroiKiri );
+      HANDEX_STR_AddArg( &param->str, side );
+    BTL_SVF_HANDEX_Pop( wk, param );
     return TRUE;
   }
   return FALSE;
@@ -1484,22 +1484,22 @@ static u8 ItemEff_Relive( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
   {
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_RELIVE* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RELIVE, pokeID );
-    param->pokeID = pokeID;
+      param->pokeID = pokeID;
+      itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
+      switch( itemParam ){
+      case ITEM_RECOVER_HP_FULL:
+        param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
+      case ITEM_RECOVER_HP_HALF:
+        param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 2 ); break;
+      case ITEM_RECOVER_HP_QUOT:
+        param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 4 ); break;
+      default:
+        param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
+      }
 
-    itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
-    switch( itemParam ){
-    case ITEM_RECOVER_HP_FULL:
-      param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
-    case ITEM_RECOVER_HP_HALF:
-      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 2 ); break;
-    case ITEM_RECOVER_HP_QUOT:
-      param->recoverHP = BTL_CALC_QuotMaxHP( bpp, 4 ); break;
-    default:
-      param->recoverHP = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT ); break;
-    }
-
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Relive );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    BTL_SVF_HANDEX_Pop( wk, param );
 
 //    TAYA_Printf("ƒ|ƒPƒ‚ƒ“(ID:%d)¶‚«•Ô‚é -> HP=%d\n", pokeID, param->recoverHP);
 
@@ -1572,13 +1572,14 @@ static u8 ItemEff_PP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
     if( volume )
     {
       BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
-      param->volume = volume;
-      param->pokeID = pokeID;
-      param->wazaIdx = actParam;
-      param->fDeadPokeEnable = TRUE;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PP_Recover );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
-      HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID_Org(bpp, actParam) );
+        param->volume = volume;
+        param->pokeID = pokeID;
+        param->wazaIdx = actParam;
+        param->fDeadPokeEnable = TRUE;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_PP_Recover );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+        HANDEX_STR_AddArg( &param->exStr, BPP_WAZA_GetID_Org(bpp, actParam) );
+      BTL_SVF_HANDEX_Pop( wk, param );
       return 1;
     }
   }
@@ -1604,18 +1605,21 @@ static u8 ItemEff_AllPP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID
     if( volume )
     {
       BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_PP, pokeID );
-      param->wazaIdx = i;
-      param->pokeID = pokeID;
-      param->volume = volume;
-      param->fDeadPokeEnable = TRUE;
+        param->wazaIdx = i;
+        param->pokeID = pokeID;
+        param->volume = volume;
+        param->fDeadPokeEnable = TRUE;
+      BTL_SVF_HANDEX_Pop( wk, param );
       fEffective = TRUE;
     }
   }
 
-  if( fEffective ){
+  if( fEffective )
+  {
     msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PP_AllRecover );
-    HANDEX_STR_AddArg( &msg_param->str, pokeID );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_PP_AllRecover );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
+    BTL_SVF_HANDEX_Pop( wk, msg_param );
   }
 
   return fEffective;
@@ -1627,23 +1631,23 @@ static u8 ItemEff_HP_Rcv( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, i
   ){
     u8 pokeID = BPP_GetID( bpp );
     BTL_HANDEX_PARAM_RECOVER_HP* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RECOVER_HP, pokeID );
-    param->pokeID = pokeID;
-    param->fFailCheckThru = TRUE;
-    itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
-    switch( itemParam ){
-    case ITEM_RECOVER_HP_FULL:
-      param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
-    case ITEM_RECOVER_HP_HALF:
-      param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
-    case ITEM_RECOVER_HP_QUOT:
-      param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 4 ); break;
-    default:
-      param->recoverHP = itemParam; break;
-    }
+      param->pokeID = pokeID;
+      param->fFailCheckThru = TRUE;
+      itemParam = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_HP_RCV_POINT );
+      switch( itemParam ){
+      case ITEM_RECOVER_HP_FULL:
+        param->recoverHP = BPP_GetValue( bpp, BPP_MAX_HP ); break;
+      case ITEM_RECOVER_HP_HALF:
+        param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 2 ); break;
+      case ITEM_RECOVER_HP_QUOT:
+        param->recoverHP = BTL_CALC_QuotMaxHP(bpp, 4 ); break;
+      default:
+        param->recoverHP = itemParam; break;
+      }
 
-    HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
-    HANDEX_STR_AddArg( &param->exStr, pokeID );
-
+      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HP_Recover );
+      HANDEX_STR_AddArg( &param->exStr, pokeID );
+    BTL_SVF_HANDEX_Pop( wk, param );
     return 1;
   }
   return 0;
@@ -1661,9 +1665,10 @@ static u8 ItemEff_Common_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
       BTL_HANDEX_PARAM_CURE_SICK* param;
       u8 pokeID = BPP_GetID( bpp );
       param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
-      param->sickCode = sickID;
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+        param->sickCode = sickID;
+      BTL_SVF_HANDEX_Pop( wk, param );
       return TRUE;
     }
   }
@@ -1689,9 +1694,10 @@ static u8 ItemEff_Mental_Cure( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
       {
         u8 pokeID = BPP_GetID( bpp );
         BTL_HANDEX_PARAM_CURE_SICK* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_CURE_SICK, pokeID );
-        param->poke_cnt = 1;
-        param->pokeID[0] = pokeID;
-        param->sickCode = sickID;
+          param->poke_cnt = 1;
+          param->pokeID[0] = pokeID;
+          param->sickCode = sickID;
+        BTL_SVF_HANDEX_Pop( wk, param );
         result = 1;
       }
     }
@@ -1713,11 +1719,12 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     if( BPP_IsRankEffectValid(bpp, rankType, itemParam) )
     {
       BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RANK_EFFECT, pokeID );
-      param->poke_cnt = 1;
-      param->pokeID[0] = pokeID;
-      param->rankType = rankType;
-      param->rankVolume = itemParam;
-      param->fAlmost = TRUE;
+        param->poke_cnt = 1;
+        param->pokeID[0] = pokeID;
+        param->rankType = rankType;
+        param->rankVolume = itemParam;
+        param->fAlmost = TRUE;
+      BTL_SVF_HANDEX_Pop( wk, param );
       return 1;
     }
   }
@@ -1752,7 +1759,7 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
   HandExResult  result;
 
   BTL_SVFRET_Event_AfterMemberIn( wk, bpp );
-  result = BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  result = BTL_SVF_HandEx_Result( wk );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
   return (result != HandExResult_NULL);
@@ -1771,13 +1778,12 @@ static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
       u8 pokeID = BPP_GetID( bpp );
 
       param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_SET_ITEM, pokeID );
-      param->pokeID = pokeID;
-      param->itemID = ITEM_DUMMY_DATA;
-      HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_ItemDrop );
-      HANDEX_STR_AddArg( &param->exStr, pokeID );
-      HANDEX_STR_AddArg( &param->exStr, equipItemID );
-
-      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        param->pokeID = pokeID;
+        param->itemID = ITEM_DUMMY_DATA;
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_ItemDrop );
+        HANDEX_STR_AddArg( &param->exStr, pokeID );
+        HANDEX_STR_AddArg( &param->exStr, equipItemID );
+      BTL_SVF_HANDEX_Pop( wk, param );
     }
     BTL_Hem_PopState( &wk->HEManager, hem_state );
     return TRUE;
@@ -1796,14 +1802,14 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
     u8 pokeID = BPP_GetID( bpp );
 
     reset_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_RESET_RANK, pokeID );
+      reset_param->poke_cnt = 1;
+      reset_param->pokeID[0] = pokeID;
+    BTL_SVF_HANDEX_Pop( wk, reset_param );
+
     msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
-
-    reset_param->poke_cnt = 1;
-    reset_param->pokeID[0] = pokeID;
-
-    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_FlatCall );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_FlatCall );
+    BTL_SVF_HANDEX_Pop( wk, msg_param );
   }
-  BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
   return TRUE;
 }

@@ -14,7 +14,7 @@
 #include "btl_event_factor.h"
 
 enum {
-  HANDLER_EXHIBISION_WORK_TOTALSIZE = 800,    ///< ハンドラ反応情報を格納するワークのトータルサイズ
+  HANDLER_EXHIBISION_WORK_TOTALSIZE = 500,    ///< ハンドラ反応情報を格納するワークのトータルサイズ
   NIGERU_COUNT_MAX = 30,                      ///< 「にげる」選択回数カウンタの最大値
   MEMBER_CHANGE_COUNT_MAX = 255,              ///< 入れ替えカウンタ最大値（バトル検定用）
   AFFCOUNTER_MAX = 9999,                      ///< 相性カウンタ最大値（バトル検定用）
@@ -190,20 +190,21 @@ typedef struct {
  */
 typedef struct {
 
-  u16  stack_ptr;
-  u16  read_ptr;
+//  u16  stack_ptr;
+//  u16  read_ptr;
 //  u8   f_prev_result;
 //  u8   f_total_result;
 
   union {
     u32 state;
     struct {
-      u16  useItem;            ///< アイテム利用による呼び出しならアイテムナンバー
-      u16  fPushed      :  1;  ///< １度でもワーク確保された
-      u16  fUsed        :  1;  ///< １度でも使用された
-      u16  fPrevSucceed :  1;  ///< 前回の使用が成功した
-      u16  fSucceed     :  1;  ///< １度でも成功した
-      u16  _padd        : 12;  ///< １度でも成功した
+      u32  useItem      : 10;
+      u32  stack_ptr    :  9;
+      u32  read_ptr     :  9;
+      u32  fPrevSucceed :  1;  ///< 前回の使用が成功した
+      u32  fSucceed     :  1;  ///< １度でも成功した
+      u32  fUsed        :  1;  ///< １度でも実行された
+      u32  _padd        :  1;
     };
   };
 
@@ -383,4 +384,4 @@ struct _BTL_SVFLOW_WORK {
 
 
 
-extern HandExResult BTL_SVF_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 useItemID );
+extern HandExResult BTL_SVF_HandEx_Result( BTL_SVFLOW_WORK* wk );

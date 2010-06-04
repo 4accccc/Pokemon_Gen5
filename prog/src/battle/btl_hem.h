@@ -22,6 +22,8 @@ extern void BTL_Hem_PopState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 state, u3
 extern BTL_HANDEX_PARAM_HEADER* BTL_Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk );
 extern BOOL BTL_Hem_IsPushed( const HANDLER_EXHIBISION_MANAGER* wk );
 extern BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEventHandlerExhibition eq_type, u8 userPokeID );
+extern void BTL_Hem_PopWork( HANDLER_EXHIBISION_MANAGER* wk, void* exWork );
+
 
 
 extern BOOL BTL_Hem_IsExistWork( const HANDLER_EXHIBISION_MANAGER* wk );
