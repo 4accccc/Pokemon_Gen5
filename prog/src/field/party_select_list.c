@@ -284,7 +284,7 @@ BOOL PARTY_SELECT_LIST_Main(PARTY_SELECT_LIST_PTR psl)
     }
     break;
   case 2: //‘I‘ð‘Ò‚¿
-    {
+    if(FLDMSGBG_CheckFinishPrint(psl->msgBG) == TRUE){
       u32 menu_ret = _Print_SelectMenu(psl);
       
       if(menu_ret != FLDMENUFUNC_NULL){
