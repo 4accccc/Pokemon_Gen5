@@ -141,8 +141,8 @@ extern WIFI_DEBUG_BATTLE_WK WIFI_DEBUG_BATTLE_Work;
 #define WIFI_P2PMATCH_EXHEAP_SIZE ( 0x10000 )
 
 
-#define SE_CALL_SIGN  (SEQ_SE_W055_01)  //SEQ_SE_SYS_101
-#define SE_CALL_SIGN_PLAYER  (SEPLAYER_SE1)  //SEQ_SE_SYS_101
+#define SE_CALL_SIGN  (SEQ_SE_SYS_101)  //SEQ_SE_SYS_101  ,SEQ_SE_W055_01
+#define SE_CALL_SIGN_PLAYER  (SEPLAYER_SYS)  //SEQ_SE_SYS_101
 
 
 /*********************************************************************************************
