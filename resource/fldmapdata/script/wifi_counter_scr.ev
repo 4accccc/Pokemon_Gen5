@@ -650,7 +650,29 @@ _RET
 sub_gts_normal_exchange:
 {
   DEFINE_LOCAL  i_ret
- 
+  
+  DEFINE_LOCAL  box_ct
+  DEFINE_LOCAL  party_ct
+
+  //手持ちとボックスいっぱいチェック
+  _GET_BOX_POKE_COUNT( box_ct, POKECOUNT_MODE_EMPTY )
+  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_EMPTY )
+  IF $box_ct == 0 && $party_ct == 0 THEN
+    //手持ちもボックスもいっぱいですね
+    _BALLOONWIN_OBJMSG_POS( msg_gts_normal_err01 , SCWK_TARGET_OBJID, POS_DL )
+    $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
+    _RET
+  ENDIF
+
+  //戦える手持ちが2匹以上チェック
+  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_BATTLE_ENABLE )
+  IF $party_ct < 2 THEN
+    //手持ちが2匹以上いないと利用できません
+    _BALLOONWIN_OBJMSG_POS( msg_gts_normal_err02 , SCWK_TARGET_OBJID, POS_DL )
+    $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
+    _RET
+  ENDIF
+
   //本体無線通信設定チェック
   _CALL sub_available_wireless_check
   IF $SCWK_ANSWER == FALSE THEN
@@ -811,6 +833,16 @@ _RET
 sub_gts_nego_exchange:
 {
   DEFINE_LOCAL  i_ret
+  DEFINE_LOCAL  party_ct
+  
+  //戦える手持ちが2匹以上チェック
+  _GET_PARTY_POKE_COUNT( party_ct, POKECOUNT_MODE_BATTLE_ENABLE )
+  IF $party_ct < 2 THEN
+    //手持ちが2匹以上いないと利用できません
+    _BALLOONWIN_OBJMSG_POS( msg_gts_nego_err01 , SCWK_TARGET_OBJID, POS_DL )
+    $reg_return = SEQ_SUB_GTS_NORMAL_EXIT
+    _RET
+  ENDIF
   
   //本体無線通信設定チェック
   _CALL sub_available_wireless_check
