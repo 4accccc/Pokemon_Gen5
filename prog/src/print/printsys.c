@@ -14,6 +14,7 @@
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 
+#include "debug/debug_flg.h" //DEBUG_FLG_Å`
 
 //==============================================================
 // Consts
@@ -520,6 +521,12 @@ void PRINTSYS_QUE_Clear( PRINT_QUE* que )
 //--------------------------------------------------------------------------
 static inline BOOL IsNetConnecting( void )
 {
+#ifdef  PM_DEBUG
+  if ( DEBUG_FLG_GetFlg( DEBUG_FLG_FakeNetConnect ) == TRUE )
+  {
+    return TRUE;
+  }
+#endif
   return (GFL_NET_GetConnectNum() != 0);
 }
 
