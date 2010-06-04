@@ -442,8 +442,8 @@ EVENT_START	ev_t05_itemtrader_02
 	//交換道具をセット
 	$lwk_sub_item = ITEM_HOSINOKAKERA
 	$lwk_sub_item_num = 1
-	$lwk_add_item = ITEM_PIIPIIEIDO
-	$lwk_add_item_num = 10
+	$lwk_add_item = ITEM_POINTOAPPU
+	$lwk_add_item_num = 1
 	
 	//道具名をセット
 	_ITEM_NAME( 0, lwk_sub_item )
