@@ -729,6 +729,15 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       GFL_NET_StateClearWifiError();
       break;
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
+
+      //  もしDWCのエラーがなかった場合エラーを立てる
+      //  システムエラーやGDBの結果等一部はDWCのエラーがたたないので
+      if( NET_ERR_CHECK_NONE == NetErr_App_CheckError() )
+      {
+        GFL_NET_StateSetWifiError(0, 0, 0, ERRORCODE_SYSTEM );
+        NetErr_ErrorSet();
+      }
+
       NetErr_App_ReqErrorDisp();
       break;
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_FATAL:       //電源切断
@@ -1055,6 +1064,8 @@ WIFIBATTLEMATCH_NET_MATCHMAKE_STATE WIFIBATTLEMATCH_NET_WaitMatchMake( WIFIBATTL
         {
           GFL_NET_StateClearWifiError();  //WIFIエラー詳細情報クリア
           GFL_NET_StateResetError();      //NET内エラー情報クリア
+          NetErr_ErrWorkInit();           //エラーシステム情報クリア
+          GFL_NET_StateWifiMatchEnd(TRUE);
         }
       }
       return WIFIBATTLEMATCH_NET_MATCHMAKE_STATE_FAILED;
@@ -5213,15 +5224,15 @@ static WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_GDB_GetErrorRepairT
     // 正常
     break;
   case DWC_GDB_ASYNC_RESULT_SECRET_KEY_INVALID:   ///< 無効な秘密鍵
-    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN;
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
   case DWC_GDB_ASYNC_RESULT_SERVICE_DISABLED:     ///< サービスが無効
-    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN;
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
   case DWC_GDB_ASYNC_RESULT_CONNECTION_TIMEOUT:   ///< タイムアウト
     return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN;
   case DWC_GDB_ASYNC_RESULT_CONNECTION_ERROR:     ///< 接続エラー
     return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
   case DWC_GDB_ASYNC_RESULT_MALFORMED_RESPONSE:   ///< 間違った形式の応答
-    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN;
+    return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
   case DWC_GDB_ASYNC_RESULT_OUT_OF_MEMORY:        ///< メモリ不足
     return WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT;
   case DWC_GDB_ASYNC_RESULT_DATABASE_UNAVAILABLE: ///< データベースが使用できない
