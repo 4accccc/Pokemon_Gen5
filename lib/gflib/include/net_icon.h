@@ -45,12 +45,6 @@ extern void GFL_NET_WirelessSetForceXYPos(u16 x,u16 y);
 #define WM_ICON_PAL_SIZE	( 16 * 2 )
 
 
-// メイン画面・サブ画面の切り替えに合わせる動作モード
-typedef enum {
-  MAIN_SUB_MODE_DEFAULT,	///< 何もしない（メインに出続ける）
-  MAIN_SUB_MODE_TOP,		///< 上画面に出続ける
-  MAIN_SUB_MODE_BOTTOM,	///< 下画面に出続ける
-}MAIN_SUB_ICON_MODE;
 
 extern void GFL_NET_WirelessSetReserveMode(MAIN_SUB_ICON_MODE mode);
 

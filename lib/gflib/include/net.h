@@ -179,6 +179,12 @@ enum{
 };
 
 
+// メイン画面・サブ画面の切り替えに合わせる動作モード
+typedef enum {
+  MAIN_SUB_MODE_DEFAULT,	///< 何もしない
+  MAIN_SUB_MODE_TOP,		///< 上画面に出続ける
+  MAIN_SUB_MODE_BOTTOM,	///< 下画面に出続ける
+}MAIN_SUB_ICON_MODE;
 
 
 
@@ -633,6 +639,20 @@ extern void GFL_NET_ChangeIconPosition(int x,int y);
  */
 //==============================================================================
 extern void GFL_NET_ReloadIcon(void);
+
+//==============================================================================
+/**
+ * @brief   通信アイコンを上下指定で右上にリロードします
+ * @param   MAIN_SUB_ICON_MODE  上画面か下画面か
+
+  MAIN_SUB_MODE_TOP,	 上画面に出続ける
+  MAIN_SUB_MODE_BOTTOM,下画面に出続ける
+
+ * @param   読み込むための一時ヒープ
+ * @retval  none
+ */
+//==============================================================================
+extern void GFL_NET_ReloadIconTopOrBottom(MAIN_SUB_ICON_MODE mode,HEAPID id);
 
 //==============================================================================
 /**
