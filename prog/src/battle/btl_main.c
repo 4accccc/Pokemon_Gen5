@@ -237,6 +237,7 @@ static void trainerParam_Init( BTL_MAIN_MODULE* wk );
 static void trainerParam_Clear( BTL_MAIN_MODULE* wk );
 static void trainerParam_StorePlayer( BTL_TRAINER_DATA* dst, HEAPID heapID, const MYSTATUS* playerData );
 static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAINER_DATA* trData );
+static void trainerParam_StoreCommNPCTrainer( BTL_TRAINER_DATA* dst, const BTL_TRAINER_SEND_DATA* trSendData );
 static void srcParty_Init( BTL_MAIN_MODULE* wk );
 static void srcParty_Quit( BTL_MAIN_MODULE* wk );
 static void srcParty_Set( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* party );
@@ -1606,15 +1607,11 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
   case 8:
     if( BTL_NET_IsRecved_AI_TrainerData() )
     {
-      //const BSP_TRAINER_DATA*  trData = BTL_NET_Get_AI_TrainerData();
-      const BSP_TRAINER_DATA*  trData;
-      //既存のワークにSERVERから取得したトレーナー情報を格納
-      BTL_NET_Get_AI_TrainerData( wk->setupParam->tr_data[ wk->MultiAIClientID ] );
-      trData = wk->setupParam->tr_data[ wk->MultiAIClientID ];
+      const BTL_TRAINER_SEND_DATA*  trSendData = BTL_NET_Get_AI_TrainerData();
 
-      BTL_N_Printf( DBGSTR_MAIN_RecvedMultiAITrainer, wk->MultiAIClientID, trData->tr_id );
+      BTL_N_Printf( DBGSTR_MAIN_RecvedMultiAITrainer, wk->MultiAIClientID, trSendData->base_data.tr_id );
 
-      trainerParam_StoreNPCTrainer( &wk->trainerParam[ wk->MultiAIClientID ], trData );
+      trainerParam_StoreCommNPCTrainer( &wk->trainerParam[ wk->MultiAIClientID ], trSendData );
       BTL_NET_Clear_AI_TrainerData();
 
       wk->MultiAIDataSeq++;
@@ -4806,7 +4803,12 @@ static void trainerParam_Clear( BTL_MAIN_MODULE* wk )
   {
     if( wk->trainerParam[i].playerStatus ){
       GFL_HEAP_FreeMemory( wk->trainerParam[i].playerStatus );
+      wk->trainerParam[i].playerStatus = NULL;
+    }
+
+    if( wk->trainerParam[i].name ){
       GFL_HEAP_FreeMemory( wk->trainerParam[i].name );
+      wk->trainerParam[i].name = NULL;
     }
   }
   for(i=0; i<NELEMS(wk->perappVoice); ++i)
@@ -4837,7 +4839,7 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
   {
     dst->trainerID = trData->tr_id;
     dst->trainerType = trData->tr_type;
-    dst->name = trData->name;
+    dst->name = GFL_STR_CreateCopyBuffer( trData->name, HEAPID_BTL_SYSTEM );
     dst->ai_bit = trData->ai_bit;
     GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );
 
@@ -4856,6 +4858,38 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
     PMSDAT_Clear( &dst->lose_word );
   }
 }
+static void trainerParam_StoreCommNPCTrainer( BTL_TRAINER_DATA* dst, const BTL_TRAINER_SEND_DATA* trSendData )
+{
+  
+  dst->playerStatus = NULL;
+
+  if( trSendData )
+  {
+    const BSP_TRAINER_DATA* trData =  &trSendData->base_data;
+
+    dst->trainerID = trData->tr_id;
+    dst->trainerType = trData->tr_type;
+    dst->name = GFL_STR_CreateBuffer( trSendData->trainer_name_length, HEAPID_BTL_SYSTEM );
+    GFL_STR_SetEncodedString( dst->name, trSendData->trainer_name, trSendData->trainer_name_length );
+    dst->ai_bit = trData->ai_bit;
+    GFL_STD_MemCopy( trData->use_item, dst->useItem, sizeof(trData->use_item) );
+
+    PMSDAT_Copy( &dst->win_word, &trData->win_word );
+    PMSDAT_Copy( &dst->lose_word, &trData->lose_word );
+  }
+  else{
+    u32 i;
+    dst->trainerID = TRID_NULL;
+    dst->trainerType = 0;
+    dst->name = NULL;
+    for(i=0; i<NELEMS(dst->useItem); ++i){
+      dst->useItem[i] = ITEM_DUMMY_DATA;
+    }
+    PMSDAT_Clear( &dst->win_word );
+    PMSDAT_Clear( &dst->lose_word );
+  }
+}
+
 BOOL BTL_MAIN_IsClientNPC( const BTL_MAIN_MODULE* wk, u8 clientID )
 {
   return ( wk->trainerParam[clientID].playerStatus == NULL );

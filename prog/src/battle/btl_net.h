@@ -17,6 +17,7 @@
 enum {
   BTL_NET_SERVER_VERSION = 100,
   BTL_NET_CONNECT_MACHINE_MAX = 4,  ///< 同時接続するマシン台数最大
+  BTL_COMM_TRAINERNAME_MAX = 32,    ///< 通信で送受信可能なトレーナー名文字数
 };
 
 typedef enum {
@@ -65,6 +66,20 @@ typedef struct {
 }BTLNET_AIDATA_CONTAINER;
 
 
+//---------------------------------------------------
+/**
+ *  トレーナー通信用データ
+ */
+//---------------------------------------------------
+typedef struct {
+  BSP_TRAINER_DATA  base_data;
+
+  // トレーナー名実データ
+  STRCODE           trainer_name[BTL_COMM_TRAINERNAME_MAX];
+  u32               trainer_name_length;
+} BTL_TRAINER_SEND_DATA;
+
+
 extern void BTL_NET_InitSystem( GFL_NETHANDLE* netHandle, u16 netIDBit, HEAPID heapID );
 extern void BTL_NET_QuitSystem( void );
 extern BOOL BTL_NET_CheckError( void );
@@ -105,7 +120,7 @@ extern const MYSTATUS* BTL_NET_GetPlayerData( u8 clientID );
 extern BOOL BTL_NET_StartNotify_AI_PartyData( const BTLNET_AIDATA_CONTAINER* container );
 extern BOOL BTL_NET_IsRecved_AI_PartyData( u8 clientID );
 extern BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data );
-extern void BTL_NET_Get_AI_TrainerData( BSP_TRAINER_DATA* tr_data );
+extern const BTL_TRAINER_SEND_DATA* BTL_NET_Get_AI_TrainerData( void );
 extern void BTL_NET_Clear_AI_TrainerData( void );
 extern BOOL BTL_NET_IsRecved_AI_TrainerData( void );
 
