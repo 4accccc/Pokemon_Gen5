@@ -4860,7 +4860,7 @@ static void trainerParam_StoreNPCTrainer( BTL_TRAINER_DATA* dst, const BSP_TRAIN
 }
 static void trainerParam_StoreCommNPCTrainer( BTL_TRAINER_DATA* dst, const BTL_TRAINER_SEND_DATA* trSendData )
 {
-  
+
   dst->playerStatus = NULL;
 
   if( trSendData )
@@ -5305,8 +5305,8 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   }
   else
   {
-    BTL_N_Printf( DBGSTR_MAIN_Result_ServerCalc, result );
     result = wk->serverResult;
+    BTL_N_Printf( DBGSTR_MAIN_Result_ServerCalc, result );
   }
 
   wk->setupParam->result = result;

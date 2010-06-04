@@ -1357,6 +1357,26 @@ static void CmdLimit_End( BTL_CLIENT* wk )
     BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_COMMAND_TIME, FALSE, FALSE );
   }
 }
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+/**
+ *  ››‚Í‚Ç‚¤‚·‚éH@•¶Žš—ñIDŽæ“¾
+ */
+static void SetupSelectStartStr( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, BTLV_STRPARAM* strParam )
+{
+  if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_ROTATION )
+  {
+    BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
+    BTLV_STRPARAM_AddArg( strParam, BPP_GetID(procPoke) );
+    BTLV_STRPARAM_SetWait( strParam, 0 );
+  }
+  else
+  {
+    BTLV_STRPARAM_Setup( strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectRotation );
+    BTLV_STRPARAM_AddArg( strParam, wk->myID );
+    BTLV_STRPARAM_SetWait( strParam, 0 );
+  }
+}
 
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
@@ -1642,9 +1662,10 @@ static BOOL selact_YubiFuruDebug( BTL_CLIENT* wk, int* seq )
       {
         if( key & PAD_BUTTON_A ){
           BTL_TABLES_YubifuruDebugSetEnd();
-          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
-          BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
-          BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+//          BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, SelActStrID(wk) );
+//          BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+//          BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+          SetupSelectStartStr( wk, wk->procPoke, &wk->strParam );
           BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
           ClientSubProc_Set( wk, selact_Root );
           (*seq) = wk->yubifuruDebugRetSeq;
@@ -1694,9 +1715,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
     if( (wk->prevPokeIdx != wk->procPokeIdx)
     ||  (wk->fStdMsgChanged)
     ){
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
-      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
-      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+      SetupSelectStartStr( wk, wk->procPoke, &wk->strParam );
       BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
       wk->fStdMsgChanged = FALSE;
       wk->prevPokeIdx = wk->procPokeIdx;
@@ -2409,9 +2428,10 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_MSG_RETURN:
     if( BTLV_WaitMsg(wk->viewCore) )
     {
-      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_SelectAction );
-      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
-      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+//      BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, SelActStrID(wk) );
+//      BTLV_STRPARAM_AddArg( &wk->strParam, BPP_GetID(wk->procPoke) );
+//      BTLV_STRPARAM_SetWait( &wk->strParam, 0 );
+      SetupSelectStartStr( wk, wk->procPoke, &wk->strParam );
       BTLV_PrintMsgAtOnce( wk->viewCore, &wk->strParam );
       (*seq) = SEQ_WAIT_MSG_RETURN_END;
     }

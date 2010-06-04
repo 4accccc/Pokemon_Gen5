@@ -209,9 +209,11 @@ typedef struct {
   struct {
 
     u16         damage;
-    u8          pokeID;
-    u8          fCritical;
-    BtlTypeAff  aff;
+    u16         pokeID     : 5;
+    u16         affine     : 4;
+    u16         fCritical  : 1;
+    u16         fFixDamage : 1;
+    u16         _padd      : 5;
 
   }record[ BTL_POS_MAX ];
 

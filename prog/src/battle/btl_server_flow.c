@@ -236,7 +236,7 @@ static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza, BOOL fDelayAttack );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
-    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fEnableRand, u16* dstDamage );
+    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fSimurationMode, u16* dstDamage );
 static void scproc_Fight_Damage_Kickback( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, u32 wazaDamage );
 static BOOL scproc_SimpleDamage_CheckEnable( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage );
 static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
@@ -5137,9 +5137,57 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
 }
 
-static void BTL_CALCDAMAGE_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* target, BTL_CALC_DAMAGE_REC* dmgRec )
+static void BTL_CALCDAMAGE_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* target,
+  const SVFL_WAZAPARAM* wazaParam, const BTL_DMGAFF_REC* affRec, fx32 dmg_ratio, BTL_CALC_DAMAGE_REC* dmgRec )
 {
+  BTL_POKEPARAM* bpp;
+  u32 c;
+  u16 damage;
 
+  dmgRec->count = 0;
+  c = 0;
+
+  BTL_POKESET_SeekStart( target );
+  while( (bpp = BTL_POKESET_SeekNext(target) ) != NULL )
+  {
+    dmgRec->record[c].pokeID = BPP_GetID( bpp );
+    dmgRec->record[c].fCritical = scEvent_CheckCritical( wk, attacker, bpp, wazaParam->wazaID );
+    dmgRec->record[c].affine = DMGAFF_REC_Get( affRec, dmgRec->record[c].pokeID );
+    dmgRec->record[c].fFixDamage = scEvent_CalcDamage( wk, attacker, bpp, wazaParam, dmgRec->record[c].affine,
+        dmg_ratio, dmgRec->record[c].fCritical, FALSE, &damage );
+
+    // 固定ダメージなら相性等倍、クリティカル無しとして処理
+    if( dmgRec->record[c].fFixDamage )
+    {
+      dmgRec->record[c].fCritical = FALSE;
+      dmgRec->record[c].affine = BTL_TYPEAFF_100;
+    }
+  }
+
+  #if 0
+  BTL_POKEPARAM* bpp;
+
+  BTL_POKESET_SeekStart( targets );
+  while( (bpp = BTL_POKESET_SeekNext(targets) ) != NULL )
+  {
+  }
+    bpp[i] = BTL_POKESET_Get( targets, i );
+    critical_flg[i] = scEvent_CheckCritical( wk, attacker, bpp[i], wazaParam->wazaID );
+    fFixDamage = scEvent_CalcDamage( wk, attacker, bpp[i], wazaParam, affAry[i], dmg_ratio, critical_flg[i], TRUE, &dmg[i] );
+    if( fFixDamage ){
+      affAry[i] = BTL_TYPEAFF_100;
+      critical_flg[i] = FALSE;
+    }
+    dmg_tmp = dmg[i];
+    if( !BPP_MIGAWARI_IsExist(bpp[i]) ){
+      dmg[i] = MarumeDamage( bpp[i], dmg[i] );
+      koraeru_cause[i] = scEvent_CheckKoraeru( wk, attacker, bpp[i], TRUE, &dmg[i] );
+    }
+    dmg_sum += dmg[i];
+    if( dmg_tmp ){
+      AffCounter_CountUp( &wk->affCounter, wk, attacker, bpp[i], affAry[i] );
+    }
+#endif
 }
 
 /**
@@ -5162,8 +5210,10 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   BTL_POKESET_CopyEnemys( targets, attacker, wk->psetEnemy );
 
   // ダメージ計算結果をワークに保存
-  BTL_CALCDAMAGE_Set( wk, attacker, wk->psetFriend, wk->calcDmgFriend );
-  BTL_CALCDAMAGE_Set( wk, attacker, wk->psetEnemy, wk->calcDmgEnemy );
+//  BTL_CALCDAMAGE_Set( wk, attacker, wk->psetFriend, wazaParam, affRec, dmg_ratio, wk->calcDmgFriend );
+//  BTL_CALCDAMAGE_Set( wk, attacker, wk->psetEnemy, wazaParam, affRec, dmg_ratio, wk->calcDmgEnemy );
+
+//  scproc_SingleCount
 
   if( BTL_POKESET_GetCount( wk->psetFriend ) )
   {
@@ -5364,7 +5414,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   {
     bpp[i] = BTL_POKESET_Get( targets, i );
     critical_flg[i] = scEvent_CheckCritical( wk, attacker, bpp[i], wazaParam->wazaID );
-    fFixDamage = scEvent_CalcDamage( wk, attacker, bpp[i], wazaParam, affAry[i], dmg_ratio, critical_flg[i], TRUE, &dmg[i] );
+    fFixDamage = scEvent_CalcDamage( wk, attacker, bpp[i], wazaParam, affAry[i], dmg_ratio, critical_flg[i], FALSE, &dmg[i] );
     if( fFixDamage ){
       affAry[i] = BTL_TYPEAFF_100;
       critical_flg[i] = FALSE;
@@ -6147,7 +6197,7 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 //----------------------------------------------------------------------------------
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
-    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fEnableRand, u16* dstDamage )
+    BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fSimurationMode, u16* dstDamage )
 {
   enum {
     PRINT_FLG = TRUE,
@@ -6215,7 +6265,7 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     if( !BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_DMG_RAND_OFF) )
     {
       u16 ratio;
-      if( fEnableRand ){
+      if( !fSimurationMode ){
         ratio = 100 - BTL_CALC_GetRand( 16 );
       }else{
         ratio = 85;
@@ -11925,7 +11975,7 @@ u32 BTL_SVFTOOL_SimulationDamage( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeI
     scEvent_GetWazaParam( wk, waza, attacker, &wazaParam );
 
     scEvent_CalcDamage( wk, attacker, defender, &wazaParam, aff,
-      BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE, fEnableRand, &damage );
+      BTL_CALC_DMG_TARGET_RATIO_NONE, FALSE, !fEnableRand, &damage );
 
     wk->simulationCounter--;
 

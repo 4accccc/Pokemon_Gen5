@@ -1035,6 +1035,10 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   else{
     // シューター用
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_Shooter, clientID, targetPokeID, itemID );
+
+    if( clientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
+      BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_USE_SHOOTER_COUNT );
+    }
   }
 
 
