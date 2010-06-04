@@ -11,14 +11,8 @@
 // 1‚Â‚Ì’²¸ˆË—Š‚Å’²‚×‚éŽ¿–â‚ÌÅ‘å”
 #define MAX_QNUM_PER_RESEARCH_REQ (3)
 
-// ’²¸‘àƒ‰ƒ“ƒN
-#define RESEARCH_MEMBER_RANK_C  (0)
-#define RESEARCH_MEMBER_RANK_B  (1)
-#define RESEARCH_MEMBER_RANK_A  (2)
-#define RESEARCH_MEMBER_RANK_S  (3)
-#define RESEARCH_MEMBER_RANK_SS (4)
 
-///’²¸‘àƒ‰ƒ“ƒN
+//’²¸‘àƒ‰ƒ“ƒN
 #define RESEARCH_TEAM_RANK_0 (0)
 #define RESEARCH_TEAM_RANK_1 (1)
 #define RESEARCH_TEAM_RANK_2 (2)
