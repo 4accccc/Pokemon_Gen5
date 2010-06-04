@@ -18,6 +18,8 @@
 #define	GLOBAL	extern
 #endif
 
+#include "pokefoot.naix"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -25,13 +27,13 @@
 //-----------------------------------------------------------------------------
 #define POKEFOOT_MONS_NO_OLD_MAX  (493)  // <=493までが前世代のデータ
 
-#define POKEFOOT_ARC_PLTT		( 0 )		// パレットインデックス
-#define POKEFOOT_ARC_CELL		( 2 )		// セルインデックス(mons_noが0<= <=POKEFOOT_MONS_NO_OLD_MAX)
-#define POKEFOOT_ARC_CELLANM	( 1 )		// セルアニメインデックス
-#define POKEFOOT_ARC_CELL_NEW       ( 4 )		// セルインデックス(mons_noがPOKEFOOT_MONS_NO_OLD_MAX< )
-#define POKEFOOT_ARC_CELLANM_NEW    ( 3 )		// セルアニメインデックス
-#define POKEFOOT_ARC_CHAR_DMMY	( 5 )		// poke_foot_000
-#define POKEFOOT_ARC_CHAR_START	( 6	)		// キャラクタ開始インデックス
+#define POKEFOOT_ARC_PLTT         NARC_pokefoot_poke_foot_NCLR      //( 0 )		// パレットインデックス
+#define POKEFOOT_ARC_CELL         NARC_pokefoot_poke_foot_000_NCER  //( 2 )		// セルインデックス(mons_noが0<= <=POKEFOOT_MONS_NO_OLD_MAX)
+#define POKEFOOT_ARC_CELLANM      NARC_pokefoot_poke_foot_000_NANR  //( 1 )		// セルアニメインデックス
+#define POKEFOOT_ARC_CELL_NEW     NARC_pokefoot_poke_foot_600_NCER  //( 4 )		// セルインデックス(mons_noがPOKEFOOT_MONS_NO_OLD_MAX< )
+#define POKEFOOT_ARC_CELLANM_NEW  NARC_pokefoot_poke_foot_600_NANR  //( 3 )		// セルアニメインデックス
+#define POKEFOOT_ARC_CHAR_DMMY    NARC_pokefoot_poke_foot_000_NCGR  //( 5 )		// poke_foot_000
+#define POKEFOOT_ARC_CHAR_START   NARC_pokefoot_poke_foot_001_NCGR  //( 6	)		// キャラクタ開始インデックス
 
 //-----------------------------------------------------------------------------
 /**
