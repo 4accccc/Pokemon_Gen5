@@ -10481,17 +10481,17 @@
 	</row>
 
 	<row id="TRID_HAKAIM1_26_TRMSG_FIGHT_LOSE">
-		<language name="JPN" width="216">まけても　いうわよ
-プラーズマー</language>
-		<language name="JPN_KANJI" width="216">負けても　いうわよ
-プラーズマー</language>
-	</row>
-
-	<row id="TRID_HAKAIW1_10_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">なに！　まだまだ
 たたかえそうだな！</language>
 		<language name="JPN_KANJI" width="216">なに！　まだまだ
 戦えそうだな！</language>
+	</row>
+
+	<row id="TRID_HAKAIW1_10_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">まけても　いうわよ
+プラーズマー</language>
+		<language name="JPN_KANJI" width="216">負けても　いうわよ
+プラーズマー</language>
 	</row>
 
 	<row id="TRID_SUPPORT_04_TRMSG_FIGHT_FIRST_DAMAGE">
@@ -11882,11 +11882,11 @@ I will never forget it!</language>
 	<row id="TRID_BACKPACKERM_09_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">The scenery I've seen...
 People I've met...▽
-Pokemon we've traded moves with...▼
+Pok?mon we've traded moves with...▼
 I etch them into my memory.</language>
 		<language name="JPN_KANJI" width="216">The scenery I've seen...
 People I've met...▽
-Pokemon we've traded moves with...▼
+Pok?mon we've traded moves with...▼
 I etch them into my memory.</language>
 	</row>
 
