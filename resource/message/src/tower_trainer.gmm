@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-03T22:37:25"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-04T17:00:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="179" top="399" right="679" bottom="1027" maximized="no" rayout="Vertical2">
+	<dialog left="240" top="520" right="740" bottom="1148" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="325"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -419,18 +419,18 @@
 
 	<row id="mes_tower_tr_004_02">
 		<comment>スミス</comment>
-		<language name="JPN">こぞうだけど　ポケモンのうでなら
-おとなにもまけるきが　しないね</language>
-		<language name="JPN_KANJI">小僧だけど　ポケモンの腕なら
-大人にも負ける気が　しないね</language>
+		<language name="JPN">こぞうだけど　ポケモンの　うでなら
+おとなにも　まけるきが　しないね</language>
+		<language name="JPN_KANJI">小僧だけど　ポケモンの　腕なら
+大人にも　負ける気が　しないね</language>
 	</row>
 
 	<row id="mes_tower_tr_004_03">
 		<comment>スミス</comment>
 		<language name="JPN">ふえーん！　まだ　こぞうなのにー！
-ほんきのしょうぶなんて　ひどいよー</language>
+ほんきの　しょうぶなんて　ひどいよー</language>
 		<language name="JPN_KANJI">ふえーん！　まだ　小僧なのにー！
-本気の勝負なんて　ひどいよー</language>
+本気の　勝負なんて　ひどいよー</language>
 	</row>
 
 	<row id="mes_tower_tr_005_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -879,9 +879,9 @@
 		<comment>おじょうさま２
 
 ペソ</comment>
-		<language name="JPN">どんなポケモンを　つかうの？
+		<language name="JPN">どんな　ポケモンが　このみなの？
 ほら　みせてごらんなさいな！</language>
-		<language name="JPN_KANJI">どんなポケモンを　使うの？
+		<language name="JPN_KANJI">どんな　ポケモンが　好みなの？
 ほら　見せてごらんなさいな！</language>
 	</row>
 
@@ -1708,9 +1708,9 @@
 	<row id="mes_tower_tr_054_03">
 		<comment>ジャガー</comment>
 		<language name="JPN">あーあ　にがした　えものは
-おおきいだス</language>
+なんとも　おおきいだス</language>
 		<language name="JPN_KANJI">あーあ　逃がした　獲物は
-大きいだス</language>
+何とも　大きいだス</language>
 	</row>
 
 	<row id="mes_tower_tr_055_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -1735,7 +1735,7 @@
 		<comment>ポロ</comment>
 		<language name="JPN">かさがっ　かさが　おれちゃったっ！
 ただの　おねえさんに　なっちゃう！</language>
-		<language name="JPN_KANJI">傘がっ　傘が　おれちゃったっ！
+		<language name="JPN_KANJI">傘がっ　傘が　折れちゃったっ！
 ただの　お姉さんに　なっちゃう！</language>
 	</row>
 
@@ -2493,8 +2493,8 @@
 ネタロウ</comment>
 		<language name="JPN">しごとあがりの　ポケモンしょうぶが
 こどくな　オレの　ゆいいつのごらく</language>
-		<language name="JPN_KANJI">仕事上がりの　ポケモンしょうぶが
-孤独な　オレの　唯一の娯楽</language>
+		<language name="JPN_KANJI">仕事上がりの　ポケモン勝負が
+孤独な　オレの　唯一の　娯楽</language>
 	</row>
 
 	<row id="mes_tower_tr_085_02" back-color=",,,#ffff80,,,,,,,,,,,,,,">
@@ -3355,8 +3355,10 @@
 
 	<row id="mes_tower_tr_118_02">
 		<comment>ツバル</comment>
-		<language name="JPN">あなた　こうりつ　わるすぎ</language>
-		<language name="JPN_KANJI">あなた　効率　悪すぎ</language>
+		<language name="JPN">あなた　こうりつ　わるすぎ
+もっと　テキパキしないとね</language>
+		<language name="JPN_KANJI">あなた　効率　悪すぎ
+もっと　テキパキしないとね</language>
 	</row>
 
 	<row id="mes_tower_tr_118_03">
