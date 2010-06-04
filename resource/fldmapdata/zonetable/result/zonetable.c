@@ -3587,7 +3587,7 @@ static const ZONEDATA ZoneData[] = {
 		MAPNAME_C5HODOMOE,
 		0,
 		WEATHER_NO_SUNNY,
-    FALSE,
+    TRUE,
 		0,        // camera id
 		MC_TYPE_ROOM,  // map_chg_type
 		9,
