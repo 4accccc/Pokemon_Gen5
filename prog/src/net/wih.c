@@ -2445,7 +2445,7 @@ static void WH_PortReceiveCallback(void *arg)
 		if (cb->state == WM_STATECODE_PORT_RECV)
 		{
 			// データを受信したので、コールバックを呼びます。
-      OS_TPrintf("WH_PortReceiveCallback %d\n",cb->aid);
+      //OS_TPrintf("WH_PortReceiveCallback %d\n",cb->aid);
 			(*_pWmInfo->sReceiverFunc) (cb->aid, cb->data, cb->length);
 		}
 		else if (cb->state == WM_STATECODE_DISCONNECTED)
