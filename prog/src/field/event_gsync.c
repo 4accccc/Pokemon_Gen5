@@ -234,7 +234,10 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _WAIT_GAMESYNC_MAINPROC:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP){
+      if(dbw->selectType == GSYNC_RETURNMODE_BOXNULL){
+        (*seq)=_CALL_GAMESYNC_MENU;
+      }
+      else if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP){
         (*seq)=_GAMESYNC_CALLBOX;
       }
       else if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP_NOACC){
@@ -244,16 +247,8 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
         dbw->aLoginWork.mode = WIFILOGIN_MODE_ERROR;
         (*seq)= _CALL_LOGIN;
       }
-      else{// if(dbw->selectType==GAMESYNC_RETURNMODE_EXIT){
-//        GAMESYSTEM_CommBootAlways(gsys);
-//        GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+      else{
         (*seq) = _WIFI_LOGOUT;
-   //     if(dbw->push){
-    //      PMSND_PopBGM();
-   //       PMSND_PauseBGM( FALSE ); // BGM‚ð‰ðœ
-   //       PMSND_FadeInBGM( PMSND_FADE_NORMAL );
-   //       dbw->push=FALSE;
-       // }
       }
     }
     break;

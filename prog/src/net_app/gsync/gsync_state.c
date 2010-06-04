@@ -1806,7 +1806,7 @@ static void _BoxNullMsg2(G_SYNC_WORK* pWork)
 
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
 //  if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE|PAD_BUTTON_CANCEL)){
-    pWork->pParent->selectType = GAMESYNC_RETURNMODE_EXIT;
+    pWork->pParent->selectType = GSYNC_RETURNMODE_BOXNULL;
     GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
     _CHANGE_STATE(_modeFadeStart);
   }
