@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-04T15:28:07"/>
+	<create user="matsumiya" host="W00224" date="2010-06-04T17:13:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="244" right="1280" bottom="642" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -820,13 +820,12 @@ Wi-Fi</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">もっと　はやく！
 もっと　とおくへ！▼
-ぼくたち　ぎじゅつしゃの
-スピリットが▽
+ぼくたち　エンジニアの　スピリットが
 そそぎこまれて　いるんだ！</language>
 		<language name="JPN_KANJI" width="256">もっと速く！
 もっと遠くへ！▼
-僕たち　技術者の
-スピリットが　注ぎこまれているんだ！</language>
+僕たち　エンジニアの　スピリットが
+注ぎこまれて　いるんだ！</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -886,18 +885,19 @@ Wi-Fi</comment>
 いろんな　テストを　しているところさ▼
 フリーゲージトレインと　いってね
 しゃりんを　スライドさせて▽
-どんな　レールの　うえでも▽
-はしれる　すごい　しゃりょうなのさ！</language>
+どんなレールの　うえでも　はしれる▽
+すごい　しゃりょう　なのさ！</language>
 		<language name="JPN_KANJI" width="256">じつは　レールの　幅は
 線路によって　違うものなんだ▼
 高速で　走行する　路線は
 レールの　幅が　少し　広いんだ▼
 だもんで　普通は　別の　レールを
 同じ　電車では　走れない！▽
-だが　フリーゲージトレインは　ちがう！▼
+だが　フリーゲージトレインは　違う！▼
 どんな　レールの　上も
-車輪を　スライドさせて　スイスイ　走る！▽
-とっても　テクニシャンな　トレインなのさ！</language>
+車輪を　スライドさせて▽
+スイスイ　走る！　とっても▽
+テクニシャンな　トレインなのさ！</language>
 	</row>
 
 	<row id="msg_t05_recept_01">
