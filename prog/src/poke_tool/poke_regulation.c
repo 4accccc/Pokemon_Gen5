@@ -428,10 +428,13 @@ int PokeRegulationMatchLookAtPokeParty(const REGULATION* pReg, POKEPARTY * party
     if(PokeRegulationCheckPokeParaLookAt(pReg, pp, FailedBit ) == FALSE){
       ret = POKE_REG_ILLEGAL_POKE; // 個体が引っかかった
     }
-    monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
-    itemTbl[i] = (u16)PP_Get( pp, ID_PARA_item, NULL );
-    formTbl[i] = (u16)PP_Get( pp, ID_PARA_form_no, NULL );
-    level += PP_Get(pp,ID_PARA_level,NULL);
+    //たまご参戦不可   //タマゴは手持ちにいても良いが　人数には数えない
+    if( PP_Get(pp, ID_PARA_tamago_flag, NULL ) == 0 ){
+      monsTbl[i] = (u16)PP_Get( pp, ID_PARA_monsno, NULL );
+      itemTbl[i] = (u16)PP_Get( pp, ID_PARA_item, NULL );
+      formTbl[i] = (u16)PP_Get( pp, ID_PARA_form_no, NULL );
+      level += PP_Get(pp,ID_PARA_level,NULL);
+    }
   }
   
   // 同じポケモン
