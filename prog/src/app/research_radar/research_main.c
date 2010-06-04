@@ -6,6 +6,7 @@
  * @date   2010.02.02
  */
 ///////////////////////////////////////////////////////////////////////////////// 
+#include "net/wih_dwc.h"
 #include "app/research_radar.h"
 #include "research_common.h"
 #include "research_common_def.h"
@@ -278,6 +279,9 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
 static void BootGameComm( const RESEARCH_WORK* work )
 {
   BOOL comm_recovery;
+  GAMEDATA* game_data = GAMESYSTEM_GetGameData( work->gameSystem );
+
+  WIH_DWC_GetAllBeaconTypeBit( GAMEDATA_GetWiFiList( game_data ) );
 
   // ’ÊM‚Ì•œ‹A
   comm_recovery = GAMESYSTEM_CommBootAlways( work->gameSystem );
