@@ -586,7 +586,7 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6NoMine_C[] = {
 };
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6NoMine_R[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 3,  1,  0,  0,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  6 },  //0
+  { { 3,  1,  2,  2,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
@@ -622,20 +622,20 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6EnemySel_R[] = {
 ///< ‘ŠŽè‘¤‘S‚Ä
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_L[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 5,  3,  5,  3,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  { { 5,  3,  5,  3,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
 ///< “G‘¤w‰c
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_C[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 5,  1,  5,  1,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
+  { { 5,  1,  5,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  5,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_R[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 3,  1,  3,  1,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  6 },  //0
+  { { 3,  1,  3,  1,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  3,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
@@ -643,19 +643,19 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Enemy_R[] = {
 ///< Ž©•ª‚Ì‚Ý & ‘ŠŽè‘¤‚P‘Ìƒ‰ƒ“ƒ_ƒ€ & ‚ä‚Ñ‚ð‚Ó‚é‚È‚Ç“ÁŽêŒ^
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine_L[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 0,  0,  0,  0,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  6 },  //0
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine_C[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 2,  2,  2,  2,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  6 },  //0
+  { { 2,  2,  2,  2,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  2,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine_R[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 4,  4,  4,  4,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  6 },  //0
+  { { 4,  4,  4,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
@@ -709,7 +709,7 @@ static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6All[] = {
 ///< Ž©•ª‘¤w‰c
 static const BTLV_INPUT_KEYTBL  PokeSeleMenuKey6Mine[] = {
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
-  { { 0,  4,  0,  4,  -1, 1 },  BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  6 },  //0
+  { { 0,  4,  0,  4,  -1, -1 }, BTLV_INPUT_NOMOVE,  1,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  6 },  //0
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R                   A   B
   { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  6,  6 },  //1
 };
