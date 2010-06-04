@@ -940,6 +940,8 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
     else
     { 
       //その他の場合
+      //ワイヤレスや赤外線でのエラーか
+      //エラーが発生していないのにNetErr_DispCallFatalを呼び出した場合
       WORDSET_RegisterNumber( wordset, 0, nes->error, 5, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
 
       mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
