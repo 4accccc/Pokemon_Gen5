@@ -110,6 +110,9 @@ static BOOL ShortCutMenu_Close_Callback( const EVENT_PROCLINK_PARAM *param, void
 //アイテム使用NGメッセージ表示イベント生成
 static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type );
 
+//リボン画面を開けるかチェック
+static BOOL ShortCutMenu_IsOpenRibbon( EVENT_SHORTCUTMENU_WORK	*p_wk );
+
 //=============================================================================
 /**
  *					外部公開
@@ -308,23 +311,7 @@ static GMEVENT_RESULT ShortCutMenu_MainEvent( GMEVENT *p_event, int *p_seq, void
 
         if( shortcutID == SHORTCUT_ID_PSTATUS_RIBBON )
         { 
-          //リボンの場合は、手持ち内にリボンをつけているポケモンがいれば飛ぶが
-          //いなければエラーメッセージ
-          GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
-          POKEPARTY *p_party  =  GAMEDATA_GetMyPokemon(p_gamedata);
-          BOOL is_ribbon  = FALSE;
-          POKEMON_PARAM *p_pp;
-          int i;
-          for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
-          { 
-            p_pp  = PokeParty_GetMemberPointer( p_party, i );
-            if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && PP_CheckRibbon( p_pp ) )
-            { 
-              is_ribbon = TRUE;
-            }
-          }
-
-          if( is_ribbon == FALSE )
+          if( !ShortCutMenu_IsOpenRibbon(p_wk) )
           { 
             ribbon_status_err = TRUE;
           }
@@ -546,6 +533,9 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 		SEQ_ITEM_CALL,
 		SEQ_ITEM_ERROR,
 		SEQ_ITEM_RETURN,
+
+    SEQ_RIBBON_ERROR,
+    SEQ_RIBBON_RETURN,
 	};
 
 	EVENT_SHORTCUTMENU_WORK	*p_wk	= p_wk_adrs;
@@ -570,6 +560,7 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 			{	// 起動チェック
 				ITEMCHECK_ENABLE	enable;
 				BOOL	err = FALSE;
+        BOOL  ribbon_status_err = FALSE;
 				BOOL reverse_use, check_item;
 				check_item = GetItemCheckEnable( shortcutID, &enable, &reverse_use );
 				if(reverse_use == FALSE
@@ -583,9 +574,21 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 						err = TRUE;
 					}
 				}
+        if( shortcutID == SHORTCUT_ID_PSTATUS_RIBBON )
+        { 
+          if( !ShortCutMenu_IsOpenRibbon(p_wk) )
+          { 
+            ribbon_status_err = TRUE;
+          }
+        }
 				// 起動エラー
 				if( err == TRUE ){
 					*p_seq = SEQ_ITEM_ERROR;
+        }
+        else if( ribbon_status_err == TRUE )
+        { 
+          //リボン画面エラー
+          *p_seq  = SEQ_RIBBON_ERROR;
 				// 起動
 				}else{
 					switch( call_type )
@@ -689,6 +692,24 @@ static GMEVENT_RESULT ShortCutMenu_OneEvent( GMEVENT *p_event, int *p_seq, void 
 
 	case SEQ_ITEM_RETURN:
 		//GFL_OVERLAY_Unload( FS_OVERLAY_ID(itemuse) );
+		{
+   		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
+      MMDLSYS_ClearPauseMoveProc( p_fldmdl );
+		}
+		return GMEVENT_RES_FINISH;
+
+
+  case SEQ_RIBBON_ERROR:
+    //メモリ解放
+    GFL_HEAP_FreeMemory( p_wk->p_link );
+    p_wk->p_link	= NULL;
+
+    //NGメッセージ表示
+    GMEVENT_CallEvent(p_event, EVENT_ItemuseNGMsgCall( p_wk->p_gamesys, 2 ) );
+    *p_seq	= SEQ_RIBBON_RETURN;
+    break;
+
+  case SEQ_RIBBON_RETURN:
 		{
    		MMDLSYS *p_fldmdl = FIELDMAP_GetMMdlSys( p_wk->p_fieldmap );
       MMDLSYS_ClearPauseMoveProc( p_fldmdl );
@@ -1073,3 +1094,31 @@ static GMEVENT* EVENT_ItemuseNGMsgCall(GAMESYS_WORK * gsys, u8 type )
   return event;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  リボン画面を開けるか確認
+ *
+ *	@param	EVENT_SHORTCUTMENU_WORK	*p_wk ワーク 
+ *
+ *	@return TRUEで開ける  FALSEで開けない
+ */
+//-----------------------------------------------------------------------------
+static BOOL ShortCutMenu_IsOpenRibbon( EVENT_SHORTCUTMENU_WORK	*p_wk )
+{
+  //リボンの場合は、手持ち内にリボンをつけているポケモンがいれば飛ぶが
+  //いなければエラーメッセージ
+  GAMEDATA  *p_gamedata = GAMESYSTEM_GetGameData(p_wk->p_gamesys);
+  POKEPARTY *p_party  =  GAMEDATA_GetMyPokemon(p_gamedata);
+  POKEMON_PARAM *p_pp;
+  int i;
+  for( i = 0; i < PokeParty_GetPokeCount(p_party); i++ )
+  { 
+    p_pp  = PokeParty_GetMemberPointer( p_party, i );
+    if( PP_Get( p_pp, ID_PARA_poke_exist, NULL ) && PP_CheckRibbon( p_pp ) )
+    { 
+      return TRUE;
+    }
+  }
+
+  return FALSE;
+}
