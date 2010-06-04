@@ -301,7 +301,6 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
     break;
   }
 
-  GFL_TCBL_Main( infoWork->tcblSys );
   if( infoWork->printHandle != NULL  )
   {
     if( PRINTSYS_PrintStreamGetState( infoWork->printHandle ) == PRINTSTREAM_STATE_DONE )
@@ -317,10 +316,11 @@ void MUS_SHOT_INFO_UpdateSystem( MUS_SHOT_INFO_WORK *infoWork )
     if( PRINTSYS_QUE_IsFinished( infoWork->printQue ) == TRUE )
     {
       infoWork->isUpdateQue = FALSE;
-      GFL_BMPWIN_TransVramCharacter( infoWork->msgWin );
       infoWork->timeIcon = TIMEICON_CreateTcbl( infoWork->tcblSys , infoWork->msgWin , 0x0F , TIMEICON_DEFAULT_WAIT , infoWork->heapId );
+      GFL_BMPWIN_TransVramCharacter( infoWork->msgWin );
     }
   }
+  GFL_TCBL_Main( infoWork->tcblSys );
 
   //ƒXƒNƒ[ƒ‹Œn
   infoWork->bgScrollCnt++;
