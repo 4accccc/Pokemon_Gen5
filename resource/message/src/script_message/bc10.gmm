@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T11:40:05"/>
+	<create user="matsumiya" host="W00224" date="2010-06-04T14:20:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -330,7 +330,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="491" top="185" right="1196" bottom="805" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -401,7 +401,7 @@
 そんな　ことばが　にあう　まちだよね</language>
 		<language name="JPN_KANJI" width="256">充分な　刺激は
 人の　成長を　早くする▽
-そんな言葉が　似合う　街だよね</language>
+そんな　言葉が　似合う　街だよね</language>
 	</row>
 
 	<row id="bc10_02_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -488,52 +488,56 @@
 サイコーに　キマってるだろ？</language>
 	</row>
 
-	<row id="bc10_04_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_04_01" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
-		<language name="JPN" width="256">サトコ『わたしと
-ポケモンしょうぶ　しまっし！▽
-ちょっと　てごわい　ですよ▼</language>
-		<language name="JPN_KANJI" width="256">サトコ『わたしと
-ポケモン勝負　しまっし！▽
-ちょっと　てごわい　ですよ▼</language>
+		<language name="JPN" width="256">サトコ『あのおんね！　わたしと
+ポケモンしょうぶ　せんけー！▼
+あいそらしい　ポケモン
+たくさん　もっとれんてー！▼</language>
+		<language name="JPN_KANJI" width="256">サトコ『あのおんね！　わたしと
+ポケモン勝負　せんけー！▼
+あいそらしい　ポケモン
+たくさん　持っとれんてー！▼</language>
 	</row>
 
-	<row id="bc10_04_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_04_02" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
-		<language name="JPN" width="256">え～んなっ　つよいですね！▼
-わたしの　ポケモンじゃ
-はが　たちません</language>
-		<language name="JPN_KANJI" width="256">え～んなっ　強いですね！▼
-わたしの　ポケモンじゃ
-はが　たちません</language>
+		<language name="JPN" width="256">なんなん！？▼
+あなた　すっごい　つよいねー！
+わたしじゃ　かなわんわー！</language>
+		<language name="JPN_KANJI" width="256">なんなん！？▼
+あなた　すっごい　強いねー！
+わたしじゃ　敵わんわー！</language>
 	</row>
 
-	<row id="bc10_04_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_04_03" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
-		<language name="JPN" width="256">あせくらしい　せいかつが
-ちょっと　きゅうくつに　なりました▼
-だいしぜんで　あしを　のばしたいです</language>
-		<language name="JPN_KANJI" width="256">あせくらしい　生活が
-ちょっと　きゅうくつに　なりました▼
-大自然で　足を　伸ばしたいです</language>
+		<language name="JPN" width="256">ちゃわちゃわした　せいかつが
+くるしくなったしー▼
+ひろいところで
+いんぎらぁっと　したいねん！</language>
+		<language name="JPN_KANJI" width="256">ちゃわちゃわした　生活が
+苦しくなったしー▼
+広いところで
+いんぎらぁっと　したいねん！</language>
 	</row>
 
-	<row id="bc10_04_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_04_04" text-color=",,,#ff0000,,,,,,,,,,,,,,," back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<comment>※金沢弁を使用します</comment>
 		<attribute name="キャラ指定">OL
 サトコ</attribute>
-		<language name="JPN" width="256">ブラックシティに　ついていくのは
-がっぱに　なりますが▽
-あんがい　おもしろいですね</language>
-		<language name="JPN_KANJI" width="256">ブラックシティに　ついていくのは
-がっぱに　なりますが▽
-案外　おもしろいですね</language>
+		<language name="JPN" width="256">マチに　ついていくのは
+えらい　たいへんだけど▽
+けっこう　たのしんどるわー！</language>
+		<language name="JPN_KANJI" width="256">マチに　ついていくのは
+えらい　大変だけど▽
+結構　楽しんどるわー！</language>
 	</row>
 
 	<row id="bc10_05_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -541,10 +545,10 @@
 マサオ</attribute>
 		<language name="JPN" width="256">マサオ『この　ブラックシティ　だと
 ノリが　のりに　のって▽
-ぜんぜん　しょうぶで　まけないのだ！▼</language>
+ぜんぜん　しょうぶに　まけないのだ！▼</language>
 		<language name="JPN_KANJI" width="256">マサオ『この　ブラックシティ　だと
 ノリが　のりに　のって▽
-ぜんぜん　勝負で　負けないのだ！▼</language>
+ぜんぜん　勝負に　負けないのだ！▼</language>
 	</row>
 
 	<row id="bc10_05_02" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -580,28 +584,26 @@
 そんな　ここが　大好きさ！</language>
 	</row>
 
-	<row id="bc10_06_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_06_01" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
-		<language name="JPN" width="256">ミキ『こんにちはぁー▼
-とつぜんだけど　アタシと
+		<language name="JPN" width="256">ミキ『こんにちわぁー▼
+とつぜんだけどー　アタシと
 ポケモンしょうぶ　しましょうー▼
-しょうぶは　いつだって　とつぜんなの▼</language>
-		<language name="JPN_KANJI" width="256">ミキ『こんにちはぁー▼
-突然だけど　アタシと
+はじまりは　いつだって　とつぜんなの▼</language>
+		<language name="JPN_KANJI" width="256">ミキ『こんにちわぁー▼
+突然だけどー　アタシと
 ポケモン勝負　しましょうー▼
-勝負は　いつだって　突然なの▼</language>
+始まりは　いつだって　突然なの▼</language>
 	</row>
 
-	<row id="bc10_06_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_06_02" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">GIRL2
 ミキ</attribute>
-		<language name="JPN" width="256">あれれ？　もう　まけちゃった
-けっこう　じしんが　あったのになぁー▽
-ごめんね　わたしの　ポケモンちゃん</language>
-		<language name="JPN_KANJI" width="256">あれれ？　もう　負けちゃった
-けっこう　自信が　あったのになぁー▽
-ごめんね　わたしの　ポケモンちゃん</language>
+		<language name="JPN" width="256">あれれー？　もう　まけちゃったー
+おわりは　いつだって　とつぜんね</language>
+		<language name="JPN_KANJI" width="256">あれれー？　もう　負けちゃった
+終わりは　いつだって　突然ね</language>
 	</row>
 
 	<row id="bc10_06_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -610,7 +612,7 @@
 		<language name="JPN" width="256">さわがしすぎて　マイペースな
 アタシには　めが　まわっちゃうわぁー▽
 ホワイトフォレストで　おちつきたいわ</language>
-		<language name="JPN_KANJI" width="256">さわがしすぎて　マイペースな
+		<language name="JPN_KANJI" width="256">騒がしすぎて　マイペースな
 アタシには　目が　回っちゃうわぁー▽
 ホワイトフォレストで　落ち着きたいわ</language>
 	</row>
@@ -665,62 +667,62 @@
 ここは　集中できないのかも</language>
 	</row>
 
-	<row id="bc10_07_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="bc10_07_04" back-color="#ff8080,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">FIGHTERM
 タクマ</attribute>
 		<language name="JPN" width="256">セイ！　セイ！　セイ！！
-つよいやつが　あつまる　ここは▼
-しゅぎょうを　するのに
+つよい　やつが　あつまる　ここは▼
+うでだめしを　するのに
 さいてきの　かんきょうだよ！</language>
 		<language name="JPN_KANJI" width="256">セイ！　セイ！　セイ！！
-強いやつが　集まる　ここは▼
-修行を　するのに
+強い　やつが　集まる　ここは▼
+腕試しを　するのに
 最適の　環境だよ！</language>
 	</row>
 
-	<row id="bc10_08_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_08_01" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
 		<language name="JPN" width="256">カレン『ヤー！　テイ！　エイヤー！▼
 じゅんびは　オッケー
-てあわせ　おねがいします！▼</language>
+おてあわせ　ねがいます！▼</language>
 		<language name="JPN_KANJI" width="256">カレン『ヤー！　テイ！　エイヤー！▼
 準備は　オッケー！
-手合わせ　お願いします！▼</language>
+お手合わせ　願います！▼</language>
 	</row>
 
-	<row id="bc10_08_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_08_02" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
 		<language name="JPN" width="256">ありがとうございましたー！▼
 じぶんの　しゅぎょうが　まだまだ
 たりてないことが　わかったわ！</language>
 		<language name="JPN_KANJI" width="256">ありがとうございましたー！▼
-じぶんの　修行が　まだまだ
+自分の　修行が　まだまだ
 足りてないことが　わかったわ！</language>
 	</row>
 
-	<row id="bc10_08_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_08_03" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
-		<language name="JPN" width="256">しょうぶのなかで　
-まなぶことが　おおいけど▼
+		<language name="JPN" width="256">しょうぶの　なかで　
+まなぶことは　おおいけど▼
 そろそろ　まなんだことを
-じっせん　するために▽
+さらに　たかめる　ために▽
 もりで　しゅぎょうが　したいわね</language>
-		<language name="JPN_KANJI" width="256">勝負のなかで　
-学ぶことが　多いけど▼
+		<language name="JPN_KANJI" width="256">勝負の　なかで　
+学ぶことは　多いけど▼
 そろそろ　学んだことを
-実践するために▽
+さらに　高める　ために▽
 森で　修行が　したいわね</language>
 	</row>
 
 	<row id="bc10_08_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">FIGHTERW
 カレン</attribute>
-		<language name="JPN" width="256">しょうぶで　まなぶことが　おおいわ！
+		<language name="JPN" width="256">しょうぶで　まなぶことは　おおいわ！
 もっと　もっと　しょうぶしたいわ！</language>
-		<language name="JPN_KANJI" width="256">勝負で　学ぶことが　多いわ！
+		<language name="JPN_KANJI" width="256">勝負で　学ぶことは　多いわ！
 もっと　もっと　勝負したいわ！</language>
 	</row>
 
@@ -730,8 +732,8 @@
 		<language name="JPN" width="256">トモタカ『どうも！　おせわになってます▼
 おちかづきの　しるしに
 ポケモンしょうぶ　いかが　ですか！▼</language>
-		<language name="JPN_KANJI" width="256">トモタカ『どうも！　おせわになってます▼
-おちかづきの　しるしに
+		<language name="JPN_KANJI" width="256">トモタカ『どうも！　お世話になってます▼
+お近づきの　印に
 ポケモン勝負　いかが　ですか！▼</language>
 	</row>
 
@@ -741,18 +743,20 @@
 		<language name="JPN" width="256">いよっ！
 イッシュいちの　おてまえで！</language>
 		<language name="JPN_KANJI" width="256">いよっ！
-イッシュいちの　おてまえで！</language>
+イッシュいちの　お手前で！</language>
 	</row>
 
-	<row id="bc10_09_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="bc10_09_03" back-color="#ff8080,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
 		<language name="JPN" width="256">モノが　あふれてる　ブラックシティで
-たりないものが　あるとすれば▽
-それは　いやしです！　いやされたーい</language>
+たりないものが　あるとすれば……▼
+それは　みどりです！
+いやしです！　いやされたーい</language>
 		<language name="JPN_KANJI" width="256">モノが　あふれてる　ブラックシティで
-足りないものが　あるとすれば▽
-それは　いやしです！　いやされたーい</language>
+足りないものが　あるとすれば……▼
+それは　緑です！
+いやしです！　いやされたーい</language>
 	</row>
 
 	<row id="bc10_09_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -767,11 +771,13 @@
 	<row id="bc10_10_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERM
 ジュンイチ</attribute>
-		<language name="JPN" width="256">ジュンイチ『この　ブラックシティいち
-エリートで　ある　この　ぼくに▽
+		<language name="JPN" width="256">ジュンイチ『この　ブラックシティで
+いちばんの　エリートで　ある▽
+この　ぼくに▽
 かてるわけ　ないんじゃない？▼</language>
-		<language name="JPN_KANJI" width="256">ジュンイチ『この　ブラックシティいち
-エリートで　ある　この　ぼくに▽
+		<language name="JPN_KANJI" width="256">ジュンイチ『この　ブラックシティで
+一番の　エリートで　ある▽
+この　ぼくに▽
 勝てるわけ　ないんじゃない？▼</language>
 	</row>
 
@@ -800,9 +806,9 @@
 	<row id="bc10_10_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERM
 ジュンイチ</attribute>
-		<language name="JPN" width="256">シティの　クールさが
+		<language name="JPN" width="256">シティの　クールさは
 ぼくを　ひきたてる　スパイスだね</language>
-		<language name="JPN_KANJI" width="256">シティの　クールさが
+		<language name="JPN_KANJI" width="256">シティの　クールさは
 ぼくを　ひきたてる　スパイスだね</language>
 	</row>
 
@@ -813,7 +819,7 @@
 ふかく　しんこきゅう……▽
 あたまが　さえたら　いざ　しょうぶ！▼</language>
 		<language name="JPN_KANJI" width="256">カズホ『勝負を　するまえに
-ふかく　深呼吸……▽
+深く　深呼吸……▽
 頭が　さえたら　いざ勝負！▼</language>
 	</row>
 
@@ -823,7 +829,7 @@
 		<language name="JPN" width="256">かんがえすぎて　まけちゃった……
 ときには　からっぽも　いいかもね</language>
 		<language name="JPN_KANJI" width="256">考えすぎて　負けちゃった……
-ときには　からっぽも　いいかもね</language>
+時には　からっぽも　いいかもね</language>
 	</row>
 
 	<row id="bc10_11_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -843,20 +849,22 @@
 アイディアが　たくさん　でるわ</language>
 		<language name="JPN_KANJI" width="256">エキサイトな　ブラックシティに
 エキサイトに　刺激されて▽
-アイディアが　たくさん　でるわ</language>
+アイディアが　たくさん　出るわ</language>
 	</row>
 
-	<row id="bc10_12_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_12_01" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">TRAINERW
 レナ</attribute>
 		<language name="JPN" width="256">レナ『ポケモントレーナーとして
 たびを　はじめてから▽
 あまり　まけたことが　ないのよね……▼
-あなた　わたしを　まかして　くれる？▼</language>
+あなた……
+わたしを　まかして　くれる？▼</language>
 		<language name="JPN_KANJI" width="256">レナ『ポケモントレーナーとして
 旅を　始めてから▽
 あまり　負けたことが　ないのよね……▼
-あなた　わたしを　負かしてくれる？▼</language>
+あなた……
+わたしを　負かしてくれる？▼</language>
 	</row>
 
 	<row id="bc10_12_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -865,7 +873,7 @@
 		<language name="JPN" width="256">ほんとうに　まかしちゃったのね……
 おかしいな　すこし　くやしいの</language>
 		<language name="JPN_KANJI" width="256">本当に　負かしちゃったのね……
-おかしいな　すこし　くやしいの</language>
+おかしいな　少し　くやしいの</language>
 	</row>
 
 	<row id="bc10_12_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -876,7 +884,7 @@
 だから　ホワイトフォレストは
 おちつくのかも……</language>
 		<language name="JPN_KANJI" width="256">どんなものも　最後は
-自然に　帰るらしいわ▼
+自然に　帰る　らしいわ▼
 だから　ホワイトフォレストは
 落ち着くのかも……</language>
 	</row>
@@ -945,14 +953,14 @@
 どんな　ポケモンを　だすのかな？▼</language>
 	</row>
 
-	<row id="bc10_14_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
+	<row id="bc10_14_02" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BACKPACKERW
 ヒロミ</attribute>
 		<language name="JPN" width="256">じしんが　ないときは
 したみて　あるく……▽
 これも　ひとつの　ちえよね</language>
 		<language name="JPN_KANJI" width="256">自信が　ないときは
-下みて　歩く……▽
+うつむいて　歩く……▽
 これも　ひとつの　知恵よね</language>
 	</row>
 
@@ -1011,7 +1019,7 @@
 ホワイトフォレストに　つれてゆくか</language>
 	</row>
 
-	<row id="bc10_15_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="bc10_15_04" back-color="#ff8080,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
 		<language name="JPN" width="256">やはり　わたしには
@@ -1021,7 +1029,7 @@
 		<language name="JPN_KANJI" width="256">やはり　わたしには
 ここが　あっている▼
 変化し　発展する　様子は
-じつに　気持ちが　たかまる！</language>
+実に　気持ちが　高まる！</language>
 	</row>
 
 	<row id="bc10_16_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1172,15 +1180,15 @@
 本当に　すばらしいわ！</language>
 	</row>
 
-	<row id="bc10_19_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="bc10_19_03" back-color="#ff8080,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">OL
 ユミコ</attribute>
 		<language name="JPN" width="256">なんだか　こうりつばかり
 おいもとめる　せいかつにも▽
-つかれてきちゃった　きがする</language>
+つかれてきちゃった……</language>
 		<language name="JPN_KANJI" width="256">なんだか　効率ばかり
 追い求める　生活にも▽
-つかれてきちゃった　気がする</language>
+疲れてきちゃった……</language>
 	</row>
 
 	<row id="bc10_19_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1316,7 +1324,7 @@
 ぶつける　だけじゃなくて▼
 最近　もうちょっと
 きちんと　人の話を▽
-聞きたいなって　思うんだ……▼
+ききたいなって　思うんだ……▼
 ホワイトフォレストで
 ゆったり　したいな</language>
 	</row>
@@ -1397,7 +1405,6 @@
 	</row>
 
 	<row id="bc10_24_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
-		<comment>くたびれる</comment>
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
 		<language name="JPN" width="256">なんだか　こんなに　せっかちな
@@ -1413,7 +1420,7 @@
 ヒロノリ</attribute>
 		<language name="JPN" width="256">タイム イズ マネー！▼
 ブラックシティでは
-このことばが　じっせんできて▽
+この　ことばが　じっせんできて▽
 じつに　すばらしいよねぇ</language>
 		<language name="JPN_KANJI" width="256">タイム イズ マネー！▼
 ブラックシティでは
@@ -1638,7 +1645,7 @@
 わたしの　たびには　ピッタリのまち！</language>
 		<language name="JPN_KANJI" width="256">ブラックシティでは
 ポケモン勝負が　楽しめるから▽
-わたしの旅には　ピッタリの街！</language>
+わたしの　旅には　ピッタリの街！</language>
 	</row>
 
 	<row id="bc10_30_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
@@ -1679,7 +1686,7 @@
 けいさん　された　うつくしさ……▽
 こころが　おどりますわ</language>
 		<language name="JPN_KANJI" width="256">人がつくった　この街の
-計算　された　美しさ……▽
+計算された　美しさ……▽
 心が　躍りますわ</language>
 	</row>
 
