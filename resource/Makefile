@@ -68,7 +68,6 @@ SUBDIRS	=	wmi \
 			wifi_2dchar \
 			wifi_leading_obj \
 			trainer_case \
-			yn_touch \
 			mysign \
 			pms \
 			pms_gra \
@@ -84,7 +83,6 @@ SUBDIRS	=	wmi \
 			code_input \
 			wazatype_icon \
 			wifi_note \
-			selbox \
 			particle/wazaeffect \
 			others \
 			wazaeffect \
