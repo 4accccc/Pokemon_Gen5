@@ -37,6 +37,9 @@
 #define STA_POKE_ITEMUSE_THROW_SPD (FX32_CONST(0.7f)) //横移動速度
 #define STA_POKE_ITEMUSE_THROW_SIZE_ADD (FX32_CONST(0.003f)) 
 
+#define STA_POKE_EYE_BLINK_CNT (120)
+#define STA_POKE_EYE_BLINK_CNT_OFS (5)
+
 
 //======================================================================
 //  enum
@@ -78,6 +81,8 @@ struct _STA_POKE_WORK
   VecFx32         posOfs; //移動差分(アクション用に
   VecFx32         rotOfs; //回転差分(グッズ際補正用に
   u16             rotate;
+  BOOL            mepachiFlg;
+  u16             mepathiCnt;
 
   STA_POKE_DIR      dir;
   MUS_POKE_DRAW_WORK    *drawWork;
@@ -253,6 +258,21 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
     
     //アイテムの更新要る？
     pokeWork->isUpdate = FALSE;
+  }
+  
+  //目パチ
+  pokeWork->mepathiCnt += GFUser_GetPublicRand(2);
+  if( pokeWork->mepathiCnt > STA_POKE_EYE_BLINK_CNT )
+  {
+    MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , TRUE );
+  }
+  else
+  {
+    MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , FALSE );
+  }
+  if( pokeWork->mepathiCnt > STA_POKE_EYE_BLINK_CNT+STA_POKE_EYE_BLINK_CNT_OFS )
+  {
+    pokeWork->mepathiCnt = GFUser_GetPublicRand(STA_POKE_EYE_BLINK_CNT)/3;
   }
 }
 
@@ -571,6 +591,8 @@ STA_POKE_WORK* STA_POKE_CreatePoke( STA_POKE_SYS *work , MUSICAL_POKE_PARAM *mus
     BOOL flg = TRUE;
     GFL_BBD_SetObjectDrawEnable( work->bbdSys , pokeWork->shadowBbdIdx , &flg );
   }
+  pokeWork->mepathiCnt = GFUser_GetPublicRand(150)/2;
+  pokeWork->mepachiFlg = TRUE;
   return pokeWork;
 }
 
@@ -983,11 +1005,14 @@ void STA_POKE_SetPositionOffset( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , 
 void STA_POKE_StartAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
   MUS_POKE_DRAW_StartAnime( pokeWork->drawWork );
+  pokeWork->mepachiFlg = TRUE;
 }
 
 void STA_POKE_StopAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork )
 {
   MUS_POKE_DRAW_StopAnime( pokeWork->drawWork );
+  pokeWork->mepachiFlg = FALSE;
+  MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , FALSE );
 }
 
 void STA_POKE_ChangeAnime( STA_POKE_SYS *work , STA_POKE_WORK *pokeWork , const u8 anmIdx )

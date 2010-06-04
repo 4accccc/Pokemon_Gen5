@@ -286,6 +286,17 @@ void MUS_POKE_DRAW_SetFrontBack( MUS_POKE_DRAW_WORK *drawWork , const BOOL isDis
   }
 }
 
+void MUS_POKE_DRAW_SetMepachiFlg( MUS_POKE_DRAW_WORK *drawWork , BOOL flg )
+{
+  if( flg == TRUE )
+  {
+    MUS_MCSS_SetMepachiFlag( drawWork->mcss );
+  }
+  else
+  {
+    MUS_MCSS_ResetMepachiFlag( drawWork->mcss );
+  }
+}
 
 //MCSSシステムのテクスチャ読み込みアドレスの変更(読み込み前に！
 void MUS_POKE_DRAW_SetTexAddres(  MUS_POKE_DRAW_SYSTEM* work , u32 adr )

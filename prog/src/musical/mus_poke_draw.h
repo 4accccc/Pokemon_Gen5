@@ -73,6 +73,7 @@ void MUS_POKE_DRAW_ChangeAnime( MUS_POKE_DRAW_WORK *drawWork , const u8 anmIdx )
 
 void MUS_POKE_DRAW_FlipFrontBack( MUS_POKE_DRAW_WORK *drawWork );
 void MUS_POKE_DRAW_SetFrontBack( MUS_POKE_DRAW_WORK *drawWork , const BOOL isFront );
+void MUS_POKE_DRAW_SetMepachiFlg( MUS_POKE_DRAW_WORK *drawWork , BOOL flg );
 
 //MCSSシステムのテクスチャ読み込みアドレスの変更(読み込み前に！
 void MUS_POKE_DRAW_SetTexAddres( MUS_POKE_DRAW_SYSTEM* work , u32 adr );
