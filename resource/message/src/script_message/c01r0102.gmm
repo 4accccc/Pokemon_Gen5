@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-04T14:36:40"/>
+	<create user="matsumiya" host="W00224" date="2010-06-04T16:44:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="920" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="439" right="1280" bottom="837" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -834,30 +834,28 @@
 ポケモンたいせん　や
 ポケモンこうかん　を▽
 たのしむことが　できるのよ▼
-もうすこし　くわしく
-せつめい　するとね▼
-ポケモンセンター２Ｆで
-ポケモンを　こうかん　したりすると▼
-そのひとを　ともだちてちょうに
-とうろくすることが　できるの▼
-また　ともだちコードを　おしえあって
-ともだちてちょうに▽
-とうろく　することも　できるの▼</language>
+とうろくの　しかたを
+くわしく　せつめい　するとね▼
+バッグの　たいせつなものの　なかの
+ともだちてちょうを　つかって▽
+ともだちから　おそわった　コードを▽
+ちょくせつ　にゅうりょくするか▼
+Ｃギアの　ＩＲつうしんを　つかえば
+ばっちり　とうろく　できます！▼</language>
 		<language name="JPN_KANJI" width="256">その　ともだちてちょう　に
 登録した　おともだちと▽
 ＷｉーＦｉコネクションを　使って▼
 ポケモン対戦や
 ポケモン交換を▽
 たのしむことが　できるのよ▼
-もう少し　詳しく
-説明するとね▼
-ポケモンセンター２Ｆで
-ポケモンを　交換したりすると▼
-その人を　ともだちてちょうに
-登録することが　できるの▼
-また　ともだちコードを　教えあって
-ともだちてちょうに▽
-登録することも　できるの▼</language>
+登録の　仕方を
+詳しく　説明するとね▼
+バッグの　大切なものの　中の
+ともだちてちょうを　使って▽
+友達から　教わった　コードを▽
+直接　入力するか▼
+Ｃ－ＧＥＡＲの　ＩＲ通信を　使えば
+ばっちり　登録できます！▼</language>
 	</row>
 
 	<row id="msg_c01r0102_girl3_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
