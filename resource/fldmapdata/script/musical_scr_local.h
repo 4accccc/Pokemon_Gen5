@@ -110,6 +110,7 @@
 #define MUSICAL_TOOL_COMM_IR_CONNECT (18) //赤外線接続
 #define MUSICAL_TOOL_COMM_CHECK_ERROR (19) //エラーチェック
 #define MUSICAL_TOOL_IS_COMM (20) //通信か？
+#define MUSICAL_TOOL_COMM_CALL_ERROR (21) //エラーチェック＆呼び出し
 
 #define MUSICAL_TOOL_PRINT (100) //デバッグ出力
 

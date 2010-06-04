@@ -826,13 +826,17 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     break;
   
   case _SEQ_GAME_START:
-    
-    _StreamMsgSet(em, msg_game_start);
+    if( em->game_type == COMM_ENTRY_GAMETYPE_COLOSSEUM )
+    {
+      //ミュージカルとサブウェイは外で出す
+      _StreamMsgSet(em, msg_game_start);
+    }
     em->seq = _SEQ_GAME_START_WAIT;
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     break;
   case _SEQ_GAME_START_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    if( em->game_type != COMM_ENTRY_GAMETYPE_COLOSSEUM ||
+        FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
     {
       if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
       {
@@ -962,12 +966,17 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     break;
   
   case _SEQ_GAME_START:
-    _StreamMsgSet(em, msg_game_start);
+    if( em->game_type == COMM_ENTRY_GAMETYPE_COLOSSEUM )
+    {
+      //ミュージカルとサブウェイは外で出す
+      _StreamMsgSet(em, msg_game_start);
+    }
     em->seq = _SEQ_GAME_START_WAIT;
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     break;
   case _SEQ_GAME_START_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    if( em->game_type != COMM_ENTRY_GAMETYPE_COLOSSEUM ||
+        FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
     {
       if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
       {
@@ -1128,12 +1137,17 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     break;
   
   case _SEQ_GAME_START:
-    _StreamMsgSet(em, msg_game_start);
+    if( em->game_type == COMM_ENTRY_GAMETYPE_COLOSSEUM )
+    {
+      //ミュージカルとサブウェイは外で出す
+      _StreamMsgSet(em, msg_game_start);
+    }
     em->seq = _SEQ_GAME_START_WAIT;
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     break;
   case _SEQ_GAME_START_WAIT:
-    if(FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
+    if( em->game_type != COMM_ENTRY_GAMETYPE_COLOSSEUM ||
+        FLDMSGWIN_STREAM_Print(em->fld_stream) == TRUE)
     {
       if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
       {

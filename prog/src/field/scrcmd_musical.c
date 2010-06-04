@@ -999,6 +999,20 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
       *ret_wk = FALSE;
     }
     break;
+
+  case MUSICAL_TOOL_COMM_CALL_ERROR:
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
+    {
+      GAMESYSTEM_SetFieldCommErrorReq( gsys , TRUE );
+      //NetErr_App_ReqErrorDisp();
+      *ret_wk = TRUE;
+    }
+    else
+    {
+      *ret_wk = FALSE;
+    }
+    break;
+
   case MUSICAL_TOOL_PRINT:
     ARI_TPrintf("----------------------------\n");
     ARI_TPrintf("ScriptMusTools Print[%d][%d]\n",val1,val2);
