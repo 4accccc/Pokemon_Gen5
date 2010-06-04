@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-04T14:31:54"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-04T16:37:24"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="288" top="137" right="993" bottom="757" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1522,7 +1522,7 @@
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
 		<language name="JPN" width="256">なんと！　じんせいの
-せいぱいからの　たのみだぞ！？▽
+せんぱいからの　たのみだぞ！？▽
 きがむいたら　たのんだぞ　わかもの</language>
 		<language name="JPN_KANJI" width="256">なんと！　人生の
 先輩からの　頼みだぞ！？▽
@@ -2258,71 +2258,78 @@
 楽しみだよ</language>
 	</row>
 
-	<row id="plwc10_24_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_01" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『いやぁー　これから
-ブラックシティに　いくんだよ▽
-あたらしい　せいかつ　たのしみだねぇ</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『いやぁー　これから
-ブラックシティに　行くんだよ▽
-新しい生活　楽しみだねぇ</language>
+		<language name="JPN" width="256">ヒロノリ『チャーンっス！　チャンス！
+ブラックシティで　ビジネスチャンス！▽
+バッチリ　かせいじゃうっスよー！</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『チャーンっス！　チャンス！
+ブラックシティで　ビジネスチャンス！▽
+バッチリ　稼いじゃうっスよー！</language>
 	</row>
 
-	<row id="plwc10_24_02" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_02" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『うーん　ブラックシティで
-ムダのない　せいかつを　してみたい</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『うーん　ブラックシティで
-ムダのない　生活を　してみたい</language>
+		<language name="JPN" width="256">ヒロノリ『だれも　やっていないことを
+ビジネスにしようと　さがしているけど▼
+だれも　やってないから
+みつからねーっス！</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『だれも　やっていないことを
+ビジネスにしようと　探しているけど▼
+だれも　やってないから
+みつからねーっス！</language>
 	</row>
 
-	<row id="plwc10_24_03" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_03" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『ブラックシティ！▼
-かっきが　あって
-まいにちが　たのしそうだよねぇ</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『ブラックシティ！▼
-活気があって
-毎日が　楽しそうだよねぇ</language>
+		<language name="JPN" width="256">ヒロノリ『いなかまち　ならではの
+ビジネスチャンスを　さがしたっスが▼
+そんなに　うまい　はなし
+ころがってなんか　ないっスねぇ……</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『田舎町　ならではの
+ビジネスチャンスを　探したっスが▼
+そんなに　うまい話
+転がってなんか　ないっスねぇ……</language>
 	</row>
 
-	<row id="plwc10_24_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_04" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『いやぁー　ぼく
-この　のんびりとした▽
-せいかつしゅうかんを▽
-あらためたいんだよねぇ▼
-ブラックシティに
-つれていって　くれない？</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『いやぁー　ぼく
-この　のんびりとした▽
-生活習慣を　改めたいんだよねぇ▼
-ブラックシティに
-連れていってくれない？</language>
+		<language name="JPN" width="256">ヒロノリ『チャーンスなんて
+ここには　なかったっスよー！▼
+ビッグチャンス　ねらうほうが
+オレの　しょうに　あうっスよ！▼
+わるいっスけど　ブラックシティに
+つれていって　くれないっスか？</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『チャーンスなんて
+ここには　なかったっスよー！▼
+ビッグチャンス　ねらうほうが
+オレの　性に　あうっスよ！▼
+悪いっスけど　ブラックシティに
+連れていって　くれないっスか？</language>
 	</row>
 
-	<row id="plwc10_24_05" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_05" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">そんなぁー
-つれてってよぉー</language>
-		<language name="JPN_KANJI" width="256">そんなぁー
-連れてってよぉー</language>
+		<language name="JPN" width="256">ビジネスマンは　にんたいっスから
+つれていってくれるまで　まつっスよ！</language>
+		<language name="JPN_KANJI" width="256">ビジネスマンは　忍耐っスから
+連れていってくれるまで　待つっスよ！</language>
 	</row>
 
-	<row id="plwc10_24_06" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_06" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">あー　やっぱり
-べつの　ブラックシティに▽
-いくことに　しちゃった！</language>
-		<language name="JPN_KANJI" width="256">あー　やっぱり
-別の　ブラックシティに▽
-行くことに　しちゃった！</language>
+		<language name="JPN" width="256">あっ！　なんか　ほかの
+ビジネス　おもいついちゃったっス！▽
+ごめんっスけど　いくの　やめるっス！</language>
+		<language name="JPN_KANJI" width="256">あっ！　なんか　他の
+ビジネス　思いついちゃったっス！▽
+ごめんっスけど　行くの　やめるっス！</language>
 	</row>
 
 	<row id="plwc10_24_07" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -2332,15 +2339,15 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="plwc10_24_08" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
+	<row id="plwc10_24_08" back-color="#80ff80,,,#ff8080,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">あたらしい　まちかー
-たのしみだなぁ▽
-つれていってくれて　ありがとね</language>
-		<language name="JPN_KANJI" width="256">新しい　街かー
-楽しみだなぁ▽
-連れていってくれて　ありがとね</language>
+		<language name="JPN" width="256">やーりぃーっスよ！▼
+ブラックシティで　ビッグチャンスを
+ものに　しちゃうっス！</language>
+		<language name="JPN_KANJI" width="256">やーりぃーっスよ！▼
+ブラックシティで　ビッグチャンスを
+ものに　しちゃうっス！</language>
 	</row>
 
 	<row id="plwc10_25_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -4095,7 +4102,7 @@
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
 		<language name="JPN" width="256">なんと！　じんせいの
-せいぱいからの　たのみだぞ！？▽
+せんぱいからの　たのみだぞ！？▽
 きがむいたら　たのんだぞ　わかもの</language>
 		<language name="JPN_KANJI" width="256">なんと！　人生の
 先輩からの　頼みだぞ！？▽
@@ -4887,76 +4894,78 @@
 楽しみだよ</language>
 	</row>
 
-	<row id="plbc10_24_01" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_01" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『いやぁー　これから
-ホワイトフォレストに　いくんだよ▽
-あたらしいせいかつ　たのしみだねぇ</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『いやぁー　これから
-ホワイトフォレストに　行くんだよ▽
-新しい生活　楽しみだねぇ</language>
+		<language name="JPN" width="256">ヒロノリ『ホワイトフォレストで
+チャーンっス！　ビジネスチャンス！▽
+バッチリ　かせいじゃうっスよー！</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『ホワイトフォレストで
+チャーンっス！　ビジネスチャンス！▽
+バッチリ　かせいじゃうっスよー！</language>
 	</row>
 
-	<row id="plbc10_24_02" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_02" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『……うーん
-ホワイトフォレスト　で▼
-のんびりと　すごす　せいかつが
-してみたいなぁ……</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『……うーん
-ホワイトフォレスト　で▼
-のんびりと　過ごす　生活が
-してみたいなぁ……</language>
+		<language name="JPN" width="256">ヒロノリ『なにか　おもいついても
+だいたい　だれか　やってるっスねー▼
+おかねを　かせぐのは
+らくじゃねーっスよ！</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『なにか　思いついても
+大体　先に　やってるっスねー▼
+お金を　かせぐのは
+楽じゃねーっスよ！</language>
 	</row>
 
-	<row id="plbc10_24_03" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_03" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『……うーん
-ホワイトフォレスト　か▼
-のんびりと　くらせそうで
-まいにち　たのしそうだよねぇ</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『……うーん
-ホワイトフォレスト　か▼
-のんびりと　暮らせそうで
-毎日　楽しそうだよねぇ</language>
+		<language name="JPN" width="256">ヒロノリ『シティ　ならではの
+ビジネスチャンスを　さがしたっスが▼
+そんなに　うまい　はなし
+ころがってなんか　ないっスねぇ……</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『シティ　ならではの
+ビジネスチャンスを　探したっスが▼
+そんなに　うまい話
+転がってなんか　ないっスねぇ……</language>
 	</row>
 
-	<row id="plbc10_24_04" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_04" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『いやぁー　ぼく　いまの
-せっかちな　せいかつしゅうかんを▽
-あらためたいんだよねぇ▼
-ホワイトフォレストに
-つれていって　くれない？</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『いやぁー　ぼく　今の
-せっかちな　生活習慣を▽
-改めたいんだよねぇ▼
-ホワイトフォレストに
-連れていって　くれない？</language>
+		<language name="JPN" width="256">ヒロノリ『チャーンスなんて
+ここには　なかったっスよー！▼
+あなばの　ビジネス　さがすほうが
+オレの　しょうに　あうっスよ！▼
+わるいっスけど　ホワイトフォレストに
+つれていって　くれないっスか？</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『チャーンスなんて
+ここには　なかったっスよー！▼
+ビッグチャンス　ねらうほうが
+オレの　性に　あうっスよ！▼
+悪いっスけど　ホワイトフォレストに
+連れていって　くれないっスか？</language>
 	</row>
 
-	<row id="plbc10_24_05" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_05" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">そんなぁー
-つれてってよぉー</language>
-		<language name="JPN_KANJI" width="256">そんなぁー
-連れてってよぉー</language>
+		<language name="JPN" width="256">ビジネスマンは　にんたいっスから
+つれていってくれるまで　まつっスよ！</language>
+		<language name="JPN_KANJI" width="256">ビジネスマンは　忍耐っスから
+連れていってくれるまで　待つっスよ！</language>
 	</row>
 
-	<row id="plbc10_24_06" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_06" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">あー　やっぱり　べつの
-ホワイトフォレスト　に▽
-いくことにしちゃった！</language>
-		<language name="JPN_KANJI" width="256">あー　やっぱり　別の
-ホワイトフォレスト　に▽
-行くことにしちゃった！</language>
+		<language name="JPN" width="256">あっ！　なんか　ほかの
+ビジネス　おもいついちゃったっス！▽
+ごめんっスけど　いくの　やめるっス！</language>
+		<language name="JPN_KANJI" width="256">あっ！　なんか　他の
+ビジネス　思いついちゃったっス！▽
+ごめんっスけど　行くの　やめるっス！</language>
 	</row>
 
 	<row id="plbc10_24_07" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
@@ -4966,15 +4975,15 @@
 		<language name="JPN_KANJI" width="256">no data</language>
 	</row>
 
-	<row id="plbc10_24_08" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="plbc10_24_08" back-color="#ffff80,,,#ff8080,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">あたらしい　まちかー
-たのしみだなぁ！▽
-つれていってくれて　ありがとね</language>
-		<language name="JPN_KANJI" width="256">新しい　街かー
-楽しみだなぁ！▽
-連れていってくれて　ありがとね</language>
+		<language name="JPN" width="256">やーりぃーっスよ！▼
+ホワイトフォレストで
+サクセス　しちゃうっスよー！</language>
+		<language name="JPN_KANJI" width="256">やーりぃーっスよ！▼
+ホワイトフォレストで
+サクセス　しちゃうっスよー！</language>
 	</row>
 
 	<row id="plbc10_25_01" back-color="#ffff80,,,#ffff80,,#ff0000,#ffff80,,,,,,#ffff80,,,,,,">

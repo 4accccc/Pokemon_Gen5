@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-04T14:20:04"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-04T16:28:42"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -338,7 +338,7 @@
 		<band id="2" index="3" style="0000" width="325"/>
 		<band id="3" index="4" style="0000" width="370"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1389,43 +1389,47 @@
 	<row id="bc10_24_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ヒロノリ『ほらほら！
-はやく　ポケモンしょうぶ　しよう！▼</language>
-		<language name="JPN_KANJI" width="256">ヒロノリ『ほらほら！
-はやく　ポケモン勝負　しよう！▼</language>
+		<language name="JPN" width="256">ヒロノリ『ポケモンしょうぶで
+ビジネスの　けいきづけっス！！▼
+きみに　かって　オレは
+ビッグチャンスを　つかむっスよ！▼</language>
+		<language name="JPN_KANJI" width="256">ヒロノリ『ポケモン勝負で
+ビジネスの　景気づけっス！！▼
+きみに　勝って　オレは
+ビッグチャンスを　つかむっスよ！▼</language>
 	</row>
 
 	<row id="bc10_24_02" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">まけるときも　すばやくまける
-じかんの　ムダが　ありませんよー</language>
-		<language name="JPN_KANJI" width="256">負けるときも　すばやく負ける
-時間の　ムダが　ありませんよー</language>
+		<language name="JPN" width="256">オレの　ビッグチャンスが……！？
+はかなく　きえていくっス！！</language>
+		<language name="JPN_KANJI" width="256">オレの　ビッグチャンスが……！？
+はかなく　消えていくっス！！</language>
 	</row>
 
 	<row id="bc10_24_03" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">なんだか　こんなに　せっかちな
-まいにちを　すごしていると▽
-こころが　かさついちゃう　なあ……</language>
-		<language name="JPN_KANJI" width="256">なんだか　こんなに　せっかちな
-毎日を　すごしていると▽
-心が　かさついちゃう　なあ……</language>
+		<language name="JPN" width="256">ビジネスチャンスは　かんたんに
+ころがってくるもんじゃねーっスね……▼
+あー　ホワイトフォレストのほうが
+オレに　あってるきが　するっス……</language>
+		<language name="JPN_KANJI" width="256">ビジネスチャンスは　簡単に
+転がってくるもんじゃねーっスね……▼
+あー　ホワイトフォレストのほうが
+オレに　あってる気が　するっス……</language>
 	</row>
 
 	<row id="bc10_24_04" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">タイム イズ マネー！▼
-ブラックシティでは
-この　ことばが　じっせんできて▽
-じつに　すばらしいよねぇ</language>
-		<language name="JPN_KANJI" width="256">タイム イズ マネー！▼
-ブラックシティでは
-この言葉が　実践できて▽
-実に　すばらしいよねぇ</language>
+		<language name="JPN" width="256">じかんは　かぎり　あるっスよ！▼
+ちからを　いつも　だしきって
+こうかい　しないように　したいっス！</language>
+		<language name="JPN_KANJI" width="256">時間は　限り　あるっスよ！▼
+力を　いつも　出しきって
+後悔　しないように　したいっス！</language>
 	</row>
 
 	<row id="bc10_25_01" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
