@@ -7630,7 +7630,9 @@ static void handler_Teleport_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
   // Šª‚«•t‚©‚ê‚Ä‚¢‚½‚çŽ¸”s
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_CheckSick(bpp, WAZASICK_BIND) ){
+    if( (BPP_CheckSick(bpp, WAZASICK_BIND))
+    &&  (BPP_CheckSick(bpp, WAZASICK_TOOSENBOU))
+    ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
     }
   }

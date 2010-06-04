@@ -598,6 +598,7 @@ static const struct {
   { ITEM_OOKINANEKKO,       HAND_ADD_ITEM_OokinaNekko     },
   { ITEM_KEMURIDAMA,        HAND_ADD_ITEM_Kemuridama      },
   { ITEM_OMAMORIKOBAN,      HAND_ADD_ITEM_OmamoriKoban    },
+  { ITEM_KOUUNNOOKOU,       HAND_ADD_ITEM_OmamoriKoban    },
 
 
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // ‚µ‚ñ‚©‚Ì‚«‚¹‚«
