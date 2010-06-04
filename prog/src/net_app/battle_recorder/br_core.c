@@ -94,9 +94,6 @@ typedef struct
 
 	//引数
 	BR_CORE_PARAM		*p_param;
-
-  //以下プロセス間の繋ぎ
-  BR_BVRANK_MODE  rank_mode;
 } BR_CORE_WORK;
 
 //=============================================================================
@@ -1010,7 +1007,7 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
     const BR_MENU_PROC_PARAM  *cp_menu_param = cp_pre_param;
     p_param->mode       = cp_menu_param->next_mode;
 
-    p_wk->rank_mode = p_param->mode;
+    p_wk->p_param->p_data->rank_mode = p_param->mode;
 
     //カーソル位置はレコード画面とランク画面の間しか保持しない（厳密にはバトルの行き戻りも）ので、
     //他から来た場合クリアする
@@ -1022,7 +1019,7 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
     p_param->mode         = BR_BVRANK_MODE_SEARCH;
     p_param->search_data  = cp_search_param->search_data;
     
-    p_wk->rank_mode = p_param->mode;
+    p_wk->p_param->p_data->rank_mode = p_param->mode;
 
     //カーソル位置はレコード画面とランク画面の間しか保持しない（厳密にはバトルの行き戻りも）ので、
     //他から来た場合クリアする
@@ -1030,7 +1027,7 @@ static void BR_BVRANK_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, cons
   }
   else if( preID == BR_PROCID_RECORD )
   {
-    p_param->mode         = p_wk->rank_mode;
+    p_param->mode         = p_wk->p_param->p_data->rank_mode;
     p_param->is_return    = TRUE;
   }
   else
