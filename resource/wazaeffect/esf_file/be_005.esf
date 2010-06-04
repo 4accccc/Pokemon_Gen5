@@ -3,6 +3,7 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\w_005.spa
 #001
 %00
+HPゲージ表示／非表示	表示	すべて
 制御モード変更	継続
 カメラ移動	追従	初期位置	16	0	14
 射影モード	正射影	すべて
