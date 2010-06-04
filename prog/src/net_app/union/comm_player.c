@@ -455,7 +455,7 @@ BOOL CommPlayer_Mine_DataUpdate(COMM_PLAYER_SYS_PTR cps, COMM_PLAYER_PACKAGE *pa
 BOOL CommPlayer_SearchGridPos(COMM_PLAYER_SYS_PTR cps, s16 gx, s16 gz, u32 *out_index)
 {
   if(cps->act_ctrl == NULL){
-    return;
+    return FALSE;
   }
   return FIELD_COMM_ACTOR_CTRL_SearchGridPos(cps->act_ctrl, gx, gz, out_index);
 }
