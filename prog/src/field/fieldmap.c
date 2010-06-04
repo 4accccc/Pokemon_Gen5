@@ -138,7 +138,7 @@
 #include "test/performance.h"
 
 //#define DEBUG_FIELDMAP_SETUP_SPEED_CHECK  //setupでの処理負荷を表示
-//#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
+#define DEBUG_FIELDMAP_INOUT_SPEED_CHECK  //FIELDMAP出入での処理負荷を表示
 //#define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK    // フィールドマップ描画にかかる処理時間を求める
 //#define DEBUG_FIELDMAP_UPDATETOP_SPEED_CHECK  //update_topでの処理負荷を見る
 //#define DEBUG_FIELDMAP_UPDATETAIL_SPEED_CHECK  //update_tailでの処理負荷を見る
@@ -964,15 +964,22 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
   FLDMAPPER_AllSetUp( fieldWork->g3Dmapper );
 
   if( fieldWork->fldMMdlSys != NULL ){
+#if 0
     MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
 
     if ( MMDL_BLACTCONT_IsThereReserve(fieldWork->fldMMdlSys) == TRUE ){
       return MAINSEQ_RESULT_CONTINUE;
     }
+#endif
+    do {
+      MMDLSYS_UpdateProc( fieldWork->fldMMdlSys );
+      //VBlank期間用関数だが、暗転中にVRAM登録処理するだけなので副作用がない
+      MMDL_BLACTCONT_ProcVBlank( fieldWork->fldMMdlSys );
+    } while ( MMDL_BLACTCONT_IsThereReserve(fieldWork->fldMMdlSys) == TRUE );
   }
 
   // 天気待ち
-  while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys)  ){
+  while( FIELD_WEATHER_IsLoading(fieldWork->weather_sys) ){
 	  FIELD_WEATHER_Main( fieldWork->weather_sys, HEAPID_WEATHER );
   }
 
