@@ -227,7 +227,6 @@
   ARCID_DEMO3D_2DGRA "demo3d_2dgra.narc" # 3Dデモ再生アプリ2Dリソース
   ARCID_GYM_DRAGON  "fieldmap/gym_dragon.narc"  #ドラゴンジム
   ARCID_SCR_CAM_PRM "fieldmap/scr_cam_prm.narc" #スクリプトカメラパラメータ
-  ARCID_TITLETEST   "title1.narc"  #タイトルサンプル
   ARCID_CORP        "corp.narc"   #コーポレーション表記
   ARCID_FLD_TRADE_POKE "fld_trade_poke.narc"  #ゲーム内交換ポケモンデータ
   ARCID_ELBOARD_SPNEWS "spnews.narc"  # 電光掲示板 臨時ニュースデータ
