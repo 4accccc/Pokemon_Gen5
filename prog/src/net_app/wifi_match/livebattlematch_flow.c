@@ -79,7 +79,7 @@
 //-------------------------------------
 ///	ƒVƒ“ƒN
 //=====================================
-#define ENEMYDATA_WAIT_SYNC    (180+300)
+#define ENEMYDATA_WAIT_SYNC    (300)
 #define MATCHING_MSG_WAIT_SYNC (120)
 #define SELECTPOKE_MSG_WAIT_SYNC (60)
 
@@ -1749,7 +1749,7 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 		break;
 
   case SEQ_CHECK_SHOW:        //Œ©‚¹‡‚¢‚Í‚ ‚é‚©
-    if( p_wk->cnt++ > ENEMYDATA_WAIT_SYNC )
+    if( p_wk->cnt++ > SELECTPOKE_MSG_WAIT_SYNC )
     { 
       REGULATION      *p_reg  = RegulationData_GetRegulation( p_wk->p_regulation );
 

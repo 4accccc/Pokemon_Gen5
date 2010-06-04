@@ -384,7 +384,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
     //ブラウザモードでも通信アイコンをだす
     if( GFL_NET_IsInit() )
     { 
-      GFL_NET_WirelessSetForceXYPos(GFL_WICON_POSX,GFL_WICON_POSY);
+      GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
       GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_BATTLE_RECORDER_CORE );
       GFL_NET_ReloadIcon();
     }

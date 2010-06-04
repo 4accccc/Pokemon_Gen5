@@ -190,6 +190,9 @@ typedef struct
   u32 cancel_seq;
   u32 match_timeout;
 
+  //選手証更新
+  BOOL  is_card_update;
+
 #ifdef DEBUGWIN_USE
   u32 playerinfo_mode;
   u32 matchinfo_mode;
@@ -254,13 +257,14 @@ static void WbmRndSubSeq_EvilCheck( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMATCH_CORE_RETMODE mode );
 static void Util_PlayerInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_RND_WORK *p_wk );
+static BOOL Util_PlayerInfo_MoveOut( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATTLEMATCH_CORE_RETMODE mode );
 //対戦相手のカード作成
 static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBATTLEMATCH_ENEMYDATA *cp_enemy_data );
 static void Util_MatchInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_MatchInfo_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
 //スコアセーブ
-static void Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_RND_WORK *cp_wk );
+static BOOL Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_RND_WORK *cp_wk );
 static void Util_SaveFreeScore( RNDMATCH_DATA *p_rndmatch, WIFIBATTLEMATCH_BTLRULE btl_rule, BtlResult btl_result );
 //選択肢作成
 typedef enum
@@ -947,6 +951,10 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
     SEQ_START_CREATE_SAKE,
     SEQ_WAIT_CREATE_SAKE,
 
+    SEQ_CHECK_CARD,
+    SEQ_START_CARDIN_OUT,
+    SEQ_WAIT_CARDIN_OUT,
+
     SEQ_START_CARDIN,
     SEQ_WAIT_CARDIN,
     SEQ_END,
@@ -988,7 +996,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
 
         //※１受信してきたデータをセーブワークに入れる
-        Util_SaveRateScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_wk );
+        p_wk->is_card_update  = Util_SaveRateScore( p_param->p_rndmatch, p_param->p_param->btl_rule, p_wk );
         Util_RenewalMyData( p_param->p_player_data, p_wk );
 
         //消したくない情報を常駐に保存
@@ -1062,6 +1070,37 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
     //-------------------------------------
     ///	自分のカード処理
     //=====================================
+  case SEQ_CHECK_CARD:
+    //作成されていなかったら出てくるだけ
+    if( p_wk->p_playerinfo == NULL )
+    {
+      *p_seq       = SEQ_START_CARDIN;
+    }
+    else
+    {
+      //作成されて更新されていたら、出て行き入ってくる
+      if( p_wk->is_card_update )
+      {
+        *p_seq       = SEQ_START_CARDIN_OUT;
+      }
+      //作成されて更新されていなかったら何もしない
+      else
+      {
+        *p_seq        = SEQ_END;
+      }
+    }
+    p_wk->is_card_update  = FALSE;
+    break;
+  case SEQ_START_CARDIN_OUT:
+    *p_seq       = SEQ_WAIT_CARDIN_OUT;
+    break;
+  case SEQ_WAIT_CARDIN_OUT:
+    if( Util_PlayerInfo_MoveOut( p_wk ) )
+    {
+      Util_PlayerInfo_Delete( p_wk );
+      *p_seq       = SEQ_START_CARDIN;
+    }
+    break;
   case SEQ_START_CARDIN:
     //自分の情報を表示
     Util_PlayerInfo_Create( p_wk, WIFIBATTLEMATCH_CORE_RETMODE_RATE );
@@ -3094,6 +3133,19 @@ static BOOL Util_PlayerInfo_Move( WIFIBATTLEMATCH_RND_WORK *p_wk )
 }
 //----------------------------------------------------------------------------
 /**
+ *	@brief  自分のカードをスライドアウト
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk  ワーク
+ *
+ *	@return TRUEで完了  FALSEで処理中
+ */
+//-----------------------------------------------------------------------------
+static BOOL Util_PlayerInfo_MoveOut( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{
+  return PLAYERINFO_MoveOutMain( p_wk->p_playerinfo );
+}
+//----------------------------------------------------------------------------
+/**
  *	@brief  自分のカードを作成  すでにスライドインしている版
  *
  *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk  ワーク
@@ -3173,11 +3225,13 @@ static BOOL Util_MatchInfo_Main( WIFIBATTLEMATCH_RND_WORK *p_wk )
  *	@param	RNDMATCH_DATA *p_save セーブ
  *	@param	mode                  ルール
  *	@param	WIFIBATTLEMATCH_RND_WORK *cp_wk ワーク
+ *	@retval TRUEセーブと受信してきたデータで差があった  FALSE同じ
  */
 //-----------------------------------------------------------------------------
-static void Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_RND_WORK *cp_wk )
+static BOOL Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_RND_WORK *cp_wk )
 { 
   u32 rate, win_cnt, lose_cnt, btl_cnt;
+  BOOL ret  = FALSE;
 
   switch( btl_rule )
   { 
@@ -3217,10 +3271,24 @@ static void Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE b
     break;
   } 
 
+  //スコアとセーブデータに差があるかチェック
+  if( rate == RNDMATCH_GetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_RATE )
+      && win_cnt == RNDMATCH_GetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_WIN )
+      && lose_cnt == RNDMATCH_GetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_LOSE ) )
+  {
+    ret = FALSE;
+  }
+  else
+  {
+    ret = TRUE;
+  }
+
   //セーブデータ
   RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_RATE, rate );
   RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_WIN, win_cnt );
-  RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_LOSE, btl_cnt );
+  RNDMATCH_SetParam( p_save, RNDMATCH_TYPE_RATE_SINGLE + btl_rule, RNDMATCH_PARAM_IDX_LOSE, lose_cnt );
+
+  return ret;
 }
 
 //----------------------------------------------------------------------------

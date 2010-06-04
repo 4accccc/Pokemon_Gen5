@@ -2073,7 +2073,7 @@ static void GRAPHIC_OBJ_Init( GRAPHIC_OBJ_WORK *p_wk, const GFL_DISP_VRAM* cp_vr
 
   if( GFL_NET_IsInit() )
   { 
-    GFL_NET_WirelessSetForceXYPos(GFL_WICON_POSX,GFL_WICON_POSY);
+    GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
     GFL_NET_WirelessIconEasy_HoldLCD( TRUE, heapID );
     GFL_NET_ReloadIcon();
   }

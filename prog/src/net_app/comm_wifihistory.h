@@ -35,7 +35,7 @@ static inline void Comm_WifiHistoryDataSet( WIFI_HISTORY *wifiHistory, int Natio
 #endif
   
   // çëÅEínàÊÇìoò^
-  //  OS_Printf("no=%d\n", WIFIHISTORY_GetStat(wifiHistory, Nation, Area ));
+    OS_Printf("no=%d, Nation=%d area=%d langCode=%d\n", WIFIHISTORY_GetStat(wifiHistory, Nation, Area ), Nation, Area, langCode );
   if(WIFIHISTORY_GetStat( wifiHistory, Nation, Area )==WIFIHIST_STAT_NODATA){
     WIFIHISTORY_SetStat( wifiHistory, Nation, Area, WIFIHIST_STAT_NEW );
   }

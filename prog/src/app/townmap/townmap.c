@@ -960,7 +960,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
   if( GFL_NET_IsInit() )
   { 
-    GFL_NET_WirelessSetForceXYPos(GFL_WICON_POSX,GFL_WICON_POSY);
+    GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
     GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_TOWNMAP );
     GFL_NET_ReloadIcon();
   }
@@ -2664,7 +2664,7 @@ static BOOL PLACEDATA_IsVisiblePlaceName( const PLACE_DATA *cp_wk )
   u16 arrive_flag	= TOWNMAP_DATA_GetParam( cp_wk->cp_data, cp_wk->data_idx, TOWNMAP_DATA_PARAM_ARRIVE_FLAG );
   //到着フラグが設定してある場所は、到着フラグがONでないと名所を表示できない
 
-  return (arrive_flag != TOWNMAP_DATA_ERROR ) && cp_wk->is_arrive && !cp_wk->is_hide;
+  return ((arrive_flag != TOWNMAP_DATA_ERROR ) && cp_wk->is_arrive && !cp_wk->is_hide) || (arrive_flag == TOWNMAP_DATA_ERROR );
 }
 //----------------------------------------------------------------------------
 /**

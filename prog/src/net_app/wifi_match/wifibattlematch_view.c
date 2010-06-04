@@ -605,6 +605,7 @@ void PLAYERINFO_RND_Exit( PLAYERINFO_WORK *p_wk )
   //ワーク破棄
 	GFL_HEAP_FreeMemory( p_wk );
 }
+
 //=============================================================================
 /**
  *					WIFI大会外部公開関数
