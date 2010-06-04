@@ -434,7 +434,7 @@ EVENT_START ev_hide_item_046
 EVENT_END
 
 EVENT_START ev_hide_item_047
-//‚S”Ô“¹˜H ( 419, 532 )
+//‚S”Ô“¹˜H ( 435, 534 )
 	_ITEM_EVENT_HIDEITEM( 25, 1, FLAG_HIDEITEM_047 )// ‚·‚²‚¢ƒLƒY‚®‚·‚è
 EVENT_END
 
