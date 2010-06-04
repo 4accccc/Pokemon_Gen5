@@ -585,7 +585,10 @@ void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *c
   u8 i;
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
   camWork->isWaitAllRefresh = TRUE;
-  camWork->isRefreshClear = isClear;
+  if( camWork->isRefreshClear == FALSE )
+  {
+    camWork->isRefreshClear = isClear;
+  }
 
   camWork->isUpdateBit = 0;
   camWork->waitAllConut = 0;
