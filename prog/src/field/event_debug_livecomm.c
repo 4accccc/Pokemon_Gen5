@@ -770,7 +770,7 @@ static GMEVENT_RESULT event_LiveCommFromFieldMain( GMEVENT * event, int *seq, vo
         DEBUG_RecvBeaconBufferClear();
         break;
       case MENU_MY_GPOWER:
-        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 1, 0, GPOWER_ID_EGG_INC_S+1,
+        GMEVENT_CallEvent( event, event_CreateEventNumInput( wk, 1, 0, GPOWER_ID_CAPTURE_S+1,
             ninput_SetDebugParam, ninput_GetDebugParam) );
         break;
       }
