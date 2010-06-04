@@ -555,6 +555,10 @@ void FIELDMAP_Delete( FIELDMAP_WORK *fieldWork )
   
   //GAMESYSTEM内で保持しているワークをNULLに
   GAMESYSTEM_SetFieldMapWork( gsys, NULL );
+
+  //通信アイコン強制破棄
+  GFL_NET_WirelessIconEasyEnd();
+  GFL_NET_WirelessSetForceXYPos(0,0); //座標固定リセット
 }
 
 //======================================================================
