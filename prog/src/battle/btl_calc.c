@@ -1432,24 +1432,22 @@ void BTL_ESCAPEINFO_Add( BTL_ESCAPEINFO* info, u8 clientID )
     {
       info->clientID[i] = clientID;
       info->count++;
-      TAYA_Printf("逃げ情報：ClientID=%d, 追加、トータル%d名\n", info->clientID[i], info->count);
+//      TAYA_Printf("逃げ情報：ClientID=%d, 追加、トータル%d名\n", info->clientID[i], info->count);
       break;
     }
   }
 }
 u32 BTL_ESCAPEINFO_GetCount( const BTL_ESCAPEINFO* info )
 {
-  TAYA_Printf("逃げ件数情報：%d\n", info->count);
   return info->count;
 }
 
-BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myClientID )
+BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myClientID, BtlCompetitor competitor )
 {
   BOOL fMyTeamEscaped = FALSE;
   BOOL fOtherTeamEscaped = FALSE;
   u32 i;
 
-  TAYA_Printf("逃げたクライアント数=%d\n", info->count);
 
   for(i=0; i<info->count; ++i)
   {
@@ -1462,8 +1460,14 @@ BtlResult BTL_ESCAPEINFO_CheckWinner( const BTL_ESCAPEINFO* info, u8 myClientID 
     }
   }
 
-  if( fMyTeamEscaped && fOtherTeamEscaped ){
-    TAYA_Printf("両チームが逃げたから引き分け\n");
+  if( fMyTeamEscaped && fOtherTeamEscaped )
+  {
+    TAYA_Printf("両チームが逃げて...\n");
+    if( (competitor == BTL_COMPETITOR_WILD) || (competitor == BTL_COMPETITOR_TRAINER) ){
+      TAYA_Printf("  野生か通常トレーナーなので自分が逃げたのと同じ\n");
+      return BTL_RESULT_RUN;
+    }
+    TAYA_Printf(" 通信かサブウェイなので引き分け\n");
     return BTL_RESULT_DRAW;
   }
   if( fMyTeamEscaped ){

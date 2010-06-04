@@ -38,6 +38,7 @@ typedef enum {
   DBGSTR_MAIN_Result_Capture,
   DBGSTR_MAIN_Result_Escape,
   DBGSTR_MAIN_Result_RestCnt,
+  DBGSTR_MAIN_Result_ServerCalc,
 
   DBGSTR_CLIENT_RETURN_CMD_START,
   DBGSTR_CLIENT_RETURN_CMD_DONE,

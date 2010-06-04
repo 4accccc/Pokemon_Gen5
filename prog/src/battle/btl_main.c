@@ -5300,12 +5300,13 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   }
   else if( BTL_ESCAPEINFO_GetCount(&wk->escapeInfo) )
   {
-    result = BTL_ESCAPEINFO_CheckWinner( &wk->escapeInfo, wk->myClientID );
+    result = BTL_ESCAPEINFO_CheckWinner( &wk->escapeInfo, wk->myClientID, BTL_MAIN_GetCompetitor(wk) );
     BTL_N_Printf( DBGSTR_MAIN_Result_Escape, result );
   }
   else
   {
-    return wk->serverResult;
+    BTL_N_Printf( DBGSTR_MAIN_Result_ServerCalc, result );
+    result = wk->serverResult;
   }
 
   wk->setupParam->result = result;

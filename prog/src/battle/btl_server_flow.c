@@ -5136,6 +5136,12 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
 
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
 }
+
+static void BTL_CALCDAMAGE_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKESET* target, BTL_CALC_DAMAGE_REC* dmgRec )
+{
+
+}
+
 /**
 * １回ヒットワザ（対象は１体以上）
 */
@@ -5154,6 +5160,10 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   // 敵・味方を別々のSetにコピー
   BTL_POKESET_CopyFriends( targets, attacker, wk->psetFriend );
   BTL_POKESET_CopyEnemys( targets, attacker, wk->psetEnemy );
+
+  // ダメージ計算結果をワークに保存
+  BTL_CALCDAMAGE_Set( wk, attacker, wk->psetFriend, wk->calcDmgFriend );
+  BTL_CALCDAMAGE_Set( wk, attacker, wk->psetEnemy, wk->calcDmgEnemy );
 
   if( BTL_POKESET_GetCount( wk->psetFriend ) )
   {
@@ -12785,6 +12795,8 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
   wk->hitCheckParam  = &unit->hitCheck;
   wk->wazaRobParam   = &unit->wazaRobParam;
   wk->magicCoatParam = &unit->magicCoatParam;
+  wk->calcDmgFriend  = &unit->calcDmgFriend;
+  wk->calcDmgEnemy   = &unit->calcDmgEnemy;
   wk->defaultTargetPos = unit->defaultTargetPos;
   wk->fMemberChangeReserve = unit->fMemberChangeReserve;
 
@@ -12802,6 +12814,9 @@ static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear )
     GFL_STD_MemClear( wk->hitCheckParam, sizeof(*(wk->hitCheckParam)) );
     GFL_STD_MemClear( wk->wazaRobParam, sizeof(*(wk->wazaRobParam)) );
     GFL_STD_MemClear( wk->magicCoatParam, sizeof(*(wk->magicCoatParam)) );
+    GFL_STD_MemClear( wk->calcDmgFriend, sizeof(*(wk->calcDmgFriend)) );
+    GFL_STD_MemClear( wk->calcDmgEnemy, sizeof(*(wk->calcDmgEnemy)) );
+
     wk->defaultTargetPos = BTL_POS_NULL;
     wk->fMemberChangeReserve = 0;
   }

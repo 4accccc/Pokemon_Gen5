@@ -125,28 +125,6 @@ typedef struct {
   u8  targetPokeID[ BTL_POS_MAX ];
 }WAZA_ROB_PARAM;
 
-/**
- * １アクションごと必要なパラメータスタック構造１件分
- */
-typedef struct {
-
-  BTL_POKESET     TargetOrg;
-  BTL_POKESET     Target;
-  BTL_POKESET     Friend;
-  BTL_POKESET     Enemy;
-  BTL_POKESET     Damaged;
-  BTL_POKESET     RobTarget;
-  BTL_POKESET     psetTmp;
-  WAZAEFF_CTRL    effCtrl;
-  SVFL_WAZAPARAM  wazaParam;
-  SVFL_WAZAPARAM  wazaParamOrg;
-  HITCHECK_PARAM  hitCheck;
-  WAZA_ROB_PARAM  wazaRobParam;
-  WAZA_ROB_PARAM  magicCoatParam;
-  BtlPokePos      defaultTargetPos;
-  u8              fMemberChangeReserve;
-
-}POKESET_STACK_UNIT;
 
 /**
  *  アクション優先順記録構造体
@@ -218,8 +196,51 @@ typedef struct {
 typedef struct {
 
   BtlTypeAff   aff[ BTL_POKEID_MAX ];
-
 } BTL_DMGAFF_REC;
+
+
+/**
+ *  ダメージ計算結果格納用ワーク
+ */
+typedef struct {
+
+  u32 count;
+
+  struct {
+
+    u16         damage;
+    u8          pokeID;
+    u8          fCritical;
+    BtlTypeAff  aff;
+
+  }record[ BTL_POS_MAX ];
+
+} BTL_CALC_DAMAGE_REC;
+
+/**
+ * １アクションごと必要なパラメータスタック構造１件分
+ */
+typedef struct {
+
+  BTL_POKESET     TargetOrg;
+  BTL_POKESET     Target;
+  BTL_POKESET     Friend;
+  BTL_POKESET     Enemy;
+  BTL_POKESET     Damaged;
+  BTL_POKESET     RobTarget;
+  BTL_POKESET     psetTmp;
+  WAZAEFF_CTRL    effCtrl;
+  SVFL_WAZAPARAM  wazaParam;
+  SVFL_WAZAPARAM  wazaParamOrg;
+  HITCHECK_PARAM  hitCheck;
+  WAZA_ROB_PARAM  wazaRobParam;
+  WAZA_ROB_PARAM  magicCoatParam;
+  BTL_CALC_DAMAGE_REC   calcDmgFriend;
+  BTL_CALC_DAMAGE_REC   calcDmgEnemy;
+  BtlPokePos      defaultTargetPos;
+  u8              fMemberChangeReserve;
+
+}POKESET_STACK_UNIT;
 
 /**
  * 複数フラグを u32 で管理
@@ -358,6 +379,8 @@ struct _BTL_SVFLOW_WORK {
   BTL_POKESET*   psetDamaged;
   BTL_POKESET*   psetRobTarget;
   BTL_POKESET*   psetTmp;
+  BTL_CALC_DAMAGE_REC* calcDmgFriend;
+  BTL_CALC_DAMAGE_REC* calcDmgEnemy;
   POKESET_STACK_UNIT  pokesetUnit[ BTL_POS_MAX+1 ];
   u32            pokesetStackPtr;
 

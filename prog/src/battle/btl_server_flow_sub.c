@@ -1998,7 +1998,7 @@ static BtlResult CheckResult_AliveBoth( BTL_SVFLOW_WORK* wk, const u8* alivePoke
  *
  * @param   wk
  * @param   HP_sum      [out] ‘˜a‚ğŠi”[
- * @param   HP_ratio    [out] Š„‡‚ğŠi”[
+ * @param   HP_ratio    [out] Š„‡i%j‚ğŠi”[
  * @param   side
  */
 //----------------------------------------------------------------------------------

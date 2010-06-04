@@ -92,6 +92,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_MAIN_Result_CommError:         return "  通信エラー\n";
   case DBGSTR_MAIN_Result_Capture:           return "  捕獲終了\n";
   case DBGSTR_MAIN_Result_Escape:            return "  逃げて終了\n";
+  case DBGSTR_MAIN_Result_ServerCalc:        return "  サーバ計算結果コード=%d\n";
 
   case DBGSTR_CLIENT_RETURN_CMD_START:       return "ID[%d], 返信開始へ\n";
   case DBGSTR_CLIENT_RETURN_CMD_DONE:        return "ID[%d], %d byte 返信しました\n";
