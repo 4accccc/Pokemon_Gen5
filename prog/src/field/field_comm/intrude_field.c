@@ -88,7 +88,8 @@ typedef struct{
   GFL_MSGDATA *msgData;
   FLDMSGWIN *msgWin;
   PALACE_NG_TYPE ng_type;
-  u16 dir;
+  u16 key_dir;
+  u16 player_dir;
 }EVENT_PALACE_NGWIN;
 
 ///バリアーイベント用ワーク
@@ -121,7 +122,7 @@ static GMEVENT * EVENT_ChildCommEnd(GAMESYS_WORK * gsys, FIELDMAP_WORK * fieldma
 static GMEVENT_RESULT EventChildCommEnd(GMEVENT * event, int *seq, void*work);
 static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, GAME_COMM_SYS_PTR game_comm, FIELD_PLAYER *pcActor);
 static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, FIELD_PLAYER *pcActor, INTRUDE_COMM_SYS_PTR intcomm);
-static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir, PALACE_NG_TYPE ng_type);
+static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 player_dir, u16 key_dir, PALACE_NG_TYPE ng_type);
 static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk );
 static GMEVENT * EVENT_PalaceBarrierMove( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir );
 static GMEVENT_RESULT _EventPalaceBarrierMove( GMEVENT *event, int *seq, void *wk );
@@ -317,7 +318,7 @@ BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
  * @retval  GMEVENT *		
  */
 //--------------------------------------------------------------
-static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 dir, PALACE_NG_TYPE ng_type)
+static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *fld_player, u16 player_dir, u16 key_dir, PALACE_NG_TYPE ng_type)
 {
   EVENT_PALACE_NGWIN *ngwin;
   GMEVENT * event;
@@ -329,7 +330,8 @@ static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork
   
   ngwin->fieldWork = fieldWork;
   ngwin->player_mmdl = FIELD_PLAYER_GetMMdl(fld_player);
-  ngwin->dir = dir;
+  ngwin->player_dir = player_dir;
+  ngwin->key_dir = key_dir;
   ngwin->ng_type = ng_type;
   
   return event;
@@ -349,9 +351,40 @@ static GMEVENT * EVENT_PalaceNGWin( GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork
 static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk )
 {
   EVENT_PALACE_NGWIN *ngwin = wk;
+  enum{
+    _SEQ_DIR_CHECK,
+    _SEQ_DIR_WAIT,
+    _SEQ_NGWIN,
+    _SEQ_NGWIN_STREAM_WAIT,
+    _SEQ_NGWIN_KEY_WAIT,
+    _SEQ_NGWIN_NEXT,
+    _SEQ_NGWIN_NEXT_WAIT,
+    _SEQ_NGWIN_NEXT_KEY_WAIT,
+    _SEQ_NGWIN_CLOSE,
+    _SEQ_BACK_STEP,
+    _SEQ_BACK_STEP_WAIT,
+  };
   
   switch(*seq){
-  case 0:
+  case _SEQ_DIR_CHECK:
+    if(MMDL_CheckPossibleAcmd(ngwin->player_mmdl) == TRUE){
+      u16 code = (ngwin->key_dir == DIR_RIGHT) ? AC_DIR_R : AC_DIR_L;
+      if(MMDL_GetDirDisp(ngwin->player_mmdl) != ngwin->key_dir){
+        MMDL_SetAcmd(ngwin->player_mmdl, code);
+        (*seq)++;
+      }
+      else{
+        *seq = _SEQ_NGWIN;
+      }
+    }
+    break;
+  case _SEQ_DIR_WAIT:
+    if(MMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
+      MMDL_EndAcmd(ngwin->player_mmdl);
+      (*seq)++;
+    }
+    break;
+  case _SEQ_NGWIN:
     MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( ngwin->fieldWork ) );
     {
       u32 msg_id;
@@ -369,31 +402,53 @@ static GMEVENT_RESULT _EventPalaceNGWinEvent( GMEVENT *event, int *seq, void *wk
       (*seq)++;
     }
     break;
-  case 1:
+  case _SEQ_NGWIN_STREAM_WAIT:
     if( FLDMSGWIN_CheckPrintTrans(ngwin->msgWin) == TRUE ){
       (*seq)++;
     } 
     break;
-  case 2:
+  case _SEQ_NGWIN_KEY_WAIT:
+    if(ngwin->ng_type == PALACE_NG_TYPE_NOT_CONNECT){
+      if( GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL) ){
+        (*seq)++;
+      }
+    }
+    else{
+      if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
+        (*seq) = _SEQ_NGWIN_CLOSE;
+      }
+    }
+    break;
+  case _SEQ_NGWIN_NEXT:
+    FLDMSGWIN_ClearWindow(ngwin->msgWin);
+    FLDMSGWIN_Print( ngwin->msgWin, 0, 0, plc_connect_06_02 );
+    (*seq)++;
+    break;
+  case _SEQ_NGWIN_NEXT_WAIT:
+    if( FLDMSGWIN_CheckPrintTrans(ngwin->msgWin) == TRUE ){
+      (*seq)++;
+    } 
+    break;
+  case _SEQ_NGWIN_NEXT_KEY_WAIT:
     {
       if( GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY ){
         (*seq)++;
       }
     }
     break;
-  case 3:
+  case _SEQ_NGWIN_CLOSE:
     FLDMSGWIN_Delete( ngwin->msgWin );
     GFL_MSG_Delete( ngwin->msgData );
     (*seq)++;
     break;
-  case 4:
+  case _SEQ_BACK_STEP:
     if(MMDL_CheckPossibleAcmd(ngwin->player_mmdl) == TRUE){
-      u16 code = (ngwin->dir == DIR_RIGHT) ? AC_WALK_L_16F : AC_WALK_R_16F;
+      u16 code = (ngwin->key_dir == DIR_RIGHT) ? AC_WALK_L_16F : AC_WALK_R_16F;
       MMDL_SetAcmd(ngwin->player_mmdl, code);
       (*seq)++;
     }
     break;
-  case 5:
+  case _SEQ_BACK_STEP_WAIT:
     if(MMDL_CheckEndAcmd(ngwin->player_mmdl) == TRUE){
       MMDL_EndAcmd(ngwin->player_mmdl);
    	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(ngwin->fieldWork));
@@ -674,11 +729,12 @@ GMEVENT * Intrude_CheckPosEvent(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys,
  * @param   now_pos		    現在の座標
  * @param   front_pos		  進行方向の座標
  * @param   player_dir		自機の移動方向
+ * @param   next_key_dir  キーの先読み
  *
  * @retval  GMEVENT *		
  */
 //==================================================================
-GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *pcActor, const VecFx32 *now_pos, const VecFx32 *front_pos, u16 player_dir)
+GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_PLAYER *pcActor, const VecFx32 *now_pos, u16 player_dir, u16 next_key_dir)
 {
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
@@ -688,12 +744,12 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   now_gx = FX32_TO_GRID(now_pos->x) % PALACE_MAP_LEN_GRID;
   
   //パレスマップの橋で左側へ行こうとしている
-  if(player_dir == DIR_LEFT){
+  if(next_key_dir == DIR_LEFT){
     if(now_gx == 0){
       event_dir = DIR_LEFT;
     }
   }
-  else if(player_dir == DIR_RIGHT){
+  else if(next_key_dir == DIR_RIGHT){
     if(now_gx == PALACE_MAP_LEN_GRID - 1){
       event_dir = DIR_RIGHT;
     }
@@ -701,10 +757,10 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   
   if(event_dir != DIR_NOT){
     if(intcomm == NULL || GFL_NET_GetConnectNum() <= 1 || intcomm->member_num < 2){
-      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, event_dir, PALACE_NG_TYPE_NOT_CONNECT);
+      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, player_dir, event_dir, PALACE_NG_TYPE_NOT_CONNECT);
     }
     else if(MISSION_GetMissionPlay(&intcomm->mission) == TRUE){
-      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, event_dir, PALACE_NG_TYPE_MISSION_PLAY);
+      return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, player_dir, event_dir, PALACE_NG_TYPE_MISSION_PLAY);
     }
     else{
       return EVENT_PalaceBarrierMove(gsys, fieldWork, pcActor, event_dir);

@@ -206,8 +206,6 @@ static GMEVENT * checkPushExit(EV_REQUEST * req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
     GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
-static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT * checkNormalEncountEvent( const EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 
 
@@ -243,6 +241,7 @@ static GMEVENT* checkPosEvent( EV_REQUEST* req );
 static GMEVENT* checkPosEvent_core( EV_REQUEST * req, u16 dir );
 static GMEVENT* checkPosEvent_OnlyDirection( EV_REQUEST * req );
 static GMEVENT* checkPosEvent_prefetchDirection( EV_REQUEST * req );
+static GMEVENT * checkPosEvent_IntrudeDirection( EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork );
 static GMEVENT* checkPosEvent_sandstream( EV_REQUEST* req );
 
 //--------------------------------------------------------------
@@ -394,6 +393,13 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
     event = checkPosEvent_prefetchDirection( &req );
     if (event)
     {
+      return event;
+    }
+  }
+  //POSイベント：方向指定ありチェック：侵入
+  {
+    event = checkPosEvent_IntrudeDirection( &req, gsys, fieldWork );
+    if( event != NULL ){
       return event;
     }
   }
@@ -604,10 +610,6 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
       return event;
     }
     event = checkPushGimmick(&req, gsys, fieldWork);
-    if( event != NULL ){
-      return event;
-    }
-    event = checkPushIntrude(&req, gsys, fieldWork);
     if( event != NULL ){
       return event;
     }
@@ -1533,6 +1535,43 @@ static GMEVENT * checkPosEvent_prefetchDirection( EV_REQUEST * req )
 
 //--------------------------------------------------------------
 /**
+ * @brief POSイベントチェック：キーの先読み
+ * @param req EV_REQUEST
+ * @return 起動したPOSイベント
+ *
+ * Pushイベントでは抜けるタイミングがあるのでPOSイベントのキー先読みでチェックしている
+ */
+//--------------------------------------------------------------
+static GMEVENT * checkPosEvent_IntrudeDirection( EV_REQUEST * req, GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
+{
+  GMEVENT * event = NULL;
+  u16 next_dir;
+
+  if(ZONEDATA_IsPalace(req->map_id) == FALSE){
+    return NULL;
+  }
+  
+#if 0
+  if(req->player_dir != DIR_NOT){
+    event = Intrude_CheckPushEvent(gsys, fieldWork, req->field_player, req->now_pos, req->player_dir);
+    if(event != NULL){
+      return event;
+    }
+  }
+#endif
+
+  //キーを先読み
+  next_dir = FIELD_PLAYER_GetKeyDir( req->field_player, req->key_cont );
+  if ( next_dir == DIR_NOT )//|| next_dir == req->player_dir )
+  {
+    return NULL;
+  }
+
+  return Intrude_CheckPushEvent(gsys, fieldWork, req->field_player, req->now_pos, req->player_dir, next_dir);
+}
+
+//--------------------------------------------------------------
+/**
  * @brief 流砂アトリビュートチェック
  *
  * @param req EV_REQUEST
@@ -2365,32 +2404,6 @@ static GMEVENT * checkPushGimmick(const EV_REQUEST * req,
   
   return NULL;
 }
-
-//--------------------------------------------------------------
-/**
- * イベント キー入力：侵入ギミック起動チェック
- *
- * @param req   イベントチェック用ワーク
- * @param gsys GAMESYS_WORK
- * @param fieldWork FIELDMAP_WORK
- * @retval GMEVENT NULL イベント無し
- */
-//--------------------------------------------------------------
-static GMEVENT * checkPushIntrude(const EV_REQUEST * req,
-    GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork )
-{
-  VecFx32 front_pos;
-  int idx;
-
-  if(ZONEDATA_IsPalace(req->map_id) == FALSE){
-    return NULL;
-  }
-  
-  setFrontPos(req, &front_pos);
-  return Intrude_CheckPushEvent(gsys, fieldWork, req->field_player, req->now_pos, &front_pos, req->player_dir);
-}
-
-
 
 //--------------------------------------------------------------
 /**
