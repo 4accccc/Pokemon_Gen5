@@ -122,6 +122,13 @@ static inline BOOL DWC_TOOL_BADWORD_Wait( DWC_TOOL_BADWORD_WORK *p_wk, BOOL *p_i
 { 
   BOOL ret;
   ret = DWC_CheckProfanityProcess() == DWC_PROF_STATE_SUCCESS;
+
+  if( ret )
+  {
+    *p_is_bad_word  = (p_wk->badword_num > 0);
+    
+  }
+
   return ret;
 }
 
