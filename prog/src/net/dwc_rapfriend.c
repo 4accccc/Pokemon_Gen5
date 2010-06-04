@@ -249,6 +249,7 @@ BOOL GFL_NET_DWC_FriendDataAdd(GAMEDATA* pGameData, MYSTATUS* pMyStatus,DWCFrien
     }
     ret = _dwcfriend_CheckFriendByToken(pFriend,WifiList_GetMyUserInfo(pList),pFL);
     if(ret == DWCFRIEND_INLIST){ //ìØàÍ
+      GFL_NET_DWC_FriendDataWrite(pGameData, pMyStatus, pFriend, i, heapID, 2);
       return FALSE;
     }
     else if(ret == DWCFRIEND_OVERWRITE){ //è„èëÇ´
