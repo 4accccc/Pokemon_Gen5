@@ -436,6 +436,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   case P2P_BATTLE2:
     if(ep2p->subProcParam.result == WIFICLUB_BATTLE_SUBPROC_RESULT_ERROR_NEXT_LOGIN){
       if(GFL_NET_IsInit()){
+        pClub->pMatchParam->bTalk = WIFIP2PMATCH_STATE_NONE;
         (*seq) = P2P_MATCH_BOARD;
       }
       else{

@@ -3957,7 +3957,8 @@ static int WifiP2PMatch_VCTDisconnectSendEnd(WIFIP2PMATCH_WORK *wk, int seq)
 static int WifiP2PMatch_VCTDisconnectSend2(WIFIP2PMATCH_WORK *wk, int seq)
 {
   wk->VChatModeOff = FALSE;
-  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_VCTEND, WB_NET_WIFICLUB)){
+
+  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_VCTEND, WB_NET_WIFICLUB) || (GFL_NET_HANDLE_GetNumNegotiation()!=2 )){
     if((wk->state == WIFIP2PMATCH_STATE_TALK ) || (wk->state == WIFIP2PMATCH_STATE_RECV )){
       //Ç±Ç±Ç≈VCTêÿíf
       DWCRAP_StopVChat();
