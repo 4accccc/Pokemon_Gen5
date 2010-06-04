@@ -659,7 +659,7 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 	case MODE_SERVER_CHECK:	
 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, MSG_ALLPUT, 0x0f0f );
 		// 「ようすをみる」に行く前にサーバーチェックを行う
-		wk->subprocess_seq = SUBSEQ_SERVER_TRADE_CHECK;
+    WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SERVER_TRADE_CHECK );
 		break;
 	case MODE_POKEMON_EVO_SAVE:
 		// 「ポケモンレポートをかいています。でんげんをきらないでください」
