@@ -2795,9 +2795,10 @@ static GFL_PROC_RESULT IrcBattleMatchProcMain( GFL_PROC * proc, int * seq, void 
 {
   IRC_BATTLE_MATCH* pWork = mywk;
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
-  
+  GAMEDATA* pGameData = pWork->pBattleWork->gamedata;
   StateFunc* state = pWork->state;
 
+  
   pWork->bBGBlack = ircBGAnimMain(&pWork->aIrcBgWork);
 
   if(state != NULL){

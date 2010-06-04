@@ -1572,10 +1572,8 @@ static GFL_PROC_RESULT CG_WirelessMenuProcInit( GFL_PROC * proc, int * seq, void
       pWork->dbw->aTVT.mode = CTM_PARENT;
       pWork->dbw->aTVT.gameData = pWork->gamedata;
     }
+    GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
   }
-
-
-  GFL_NET_ReloadIcon();
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
 
   return GFL_PROC_RES_FINISH;

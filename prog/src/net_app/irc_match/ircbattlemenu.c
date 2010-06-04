@@ -43,6 +43,7 @@
 #include "ir_ani_NANR_LBLDEFS.h"
 #include "savedata/battle_box_save.h"
 #include "app/app_keycursor.h"  //APP_TASKMENU_INITWORK
+#include "net/wih_dwc.h"
 
 
 #if DEBUG_ONLY_FOR_ohno
@@ -2148,7 +2149,8 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
   StateFunc* state = pWork->state;
 
-//  ircBGAnimMain(&pWork->aIrcBgWork);
+  //ŒÄ‚ñ‚Å‚Ü‚·‚ª‚Â‚©‚Á‚Ä‚Ü‚¹‚ñ LEVELXV‚Ì‚½‚ß
+  WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(pWork->pGameData));
 
   if(state != NULL){
     state(pWork);
