@@ -2185,6 +2185,7 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
   FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork( gsys );
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   VecFx32 calc_pos = *pos;
+  fx32 child_offset = 0;
   
   //裏フィールド以外から、パレスへ飛ぶ場合通常フィールドへの戻り先を記録しておく
   {
@@ -2216,8 +2217,9 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
       if(map_offset < 0){
         map_offset = intcomm->member_num + map_offset;
       }
+      child_offset = GRID_FX32; //主プレイヤーの１つ隣に飛ばす
     }
-    calc_pos.x += PALACE_MAP_LEN * map_offset;
+    calc_pos.x += PALACE_MAP_LEN * map_offset + child_offset;
     
     LOCATION_SetDirect( &loc, zone_id, EXITDIR_fromDIR( DIR_UP ), 
       calc_pos.x, calc_pos.y, calc_pos.z );
