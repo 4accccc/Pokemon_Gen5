@@ -520,9 +520,6 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
   POKEMON_PARAM* pp;
   u32 monsno;
   u32 waza1, waza2, waza3, waza4;
-  u32 pp1, pp2, pp3, pp4;
-  u32 pp_count1, pp_count2, pp_count3, pp_count4;
-  u32 pp_max1, pp_max2, pp_max3, pp_max4;
 
 
   event = EVENT_TrainerBattle( gsys, fieldmap, rule, partner_id, tr_id0, tr_id1, flags );
@@ -542,18 +539,6 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
     waza2 = PP_Get( pp, ID_PARA_waza2, NULL );
     waza3 = PP_Get( pp, ID_PARA_waza3, NULL );
     waza4 = PP_Get( pp, ID_PARA_waza4, NULL );
-    pp1 = PP_Get( pp, ID_PARA_pp1, NULL );
-    pp2 = PP_Get( pp, ID_PARA_pp2, NULL );
-    pp3 = PP_Get( pp, ID_PARA_pp3, NULL );
-    pp4 = PP_Get( pp, ID_PARA_pp4, NULL );
-    pp_count1 = PP_Get( pp, ID_PARA_pp_count1, NULL );
-    pp_count2 = PP_Get( pp, ID_PARA_pp_count2, NULL );
-    pp_count3 = PP_Get( pp, ID_PARA_pp_count3, NULL );
-    pp_count4 = PP_Get( pp, ID_PARA_pp_count4, NULL );
-    pp_max1 = PP_Get( pp, ID_PARA_pp_max1, NULL );
-    pp_max2 = PP_Get( pp, ID_PARA_pp_max2, NULL );
-    pp_max3 = PP_Get( pp, ID_PARA_pp_max3, NULL );
-    pp_max4 = PP_Get( pp, ID_PARA_pp_max4, NULL );
 
     PP_SetupEx( pp, monsno, 
         TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ),
@@ -568,22 +553,10 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
     PP_Put( pp, ID_PARA_nickname_raw, (u32)TRPOKE_AFTER_SV_GetNickName( trpoke_sv, trade_type ) );
 
     // ãZÇê›íË
-    PP_Put( pp, ID_PARA_waza1, waza1 );
-    PP_Put( pp, ID_PARA_waza2, waza2 );
-    PP_Put( pp, ID_PARA_waza3, waza3 );
-    PP_Put( pp, ID_PARA_waza4, waza4 );
-    PP_Put( pp, ID_PARA_pp1, pp1 );
-    PP_Put( pp, ID_PARA_pp2, pp2 );
-    PP_Put( pp, ID_PARA_pp3, pp3 );
-    PP_Put( pp, ID_PARA_pp4, pp4 );
-    PP_Put( pp, ID_PARA_pp_count1, pp_count1 );
-    PP_Put( pp, ID_PARA_pp_count2, pp_count2 );
-    PP_Put( pp, ID_PARA_pp_count3, pp_count3 );
-    PP_Put( pp, ID_PARA_pp_count4, pp_count4 );
-    PP_Put( pp, ID_PARA_pp_max1, pp_max1 );
-    PP_Put( pp, ID_PARA_pp_max2, pp_max2 );
-    PP_Put( pp, ID_PARA_pp_max3, pp_max3 );
-    PP_Put( pp, ID_PARA_pp_max4, pp_max4 );
+    PP_SetWazaPos( pp, waza1, 0 );
+    PP_SetWazaPos( pp, waza2, 1 );
+    PP_SetWazaPos( pp, waza3, 2 );
+    PP_SetWazaPos( pp, waza4, 3 );
 
   }else{
 
