@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-02T00:36:46"/>
+	<create user="taya" host="W00146" date="2010-06-03T12:12:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -427,7 +427,7 @@
 		<band id="2" index="3" style="0000" width="520"/>
 		<band id="3" index="4" style="0000" width="175"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -4742,19 +4742,19 @@
 
 	<row id="BTL_STRID_SET_HeartSwap">
 		<comment>ハートスワップ</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
 能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_HeartSwap_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
 能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_HeartSwap_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　相手と自分の
 能力変化を　入れ替えた！</language>
@@ -4762,48 +4762,54 @@
 
 	<row id="BTL_STRID_SET_PowerSwap">
 		<comment>パワースワップ</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-せめる　のうりょくへんかを▽
-いれかえた！</language>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
+こうげきと　とくこうの▽
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
-攻める　能力変化を　入れ替えた！</language>
+攻撃と　とくこうの▽
+能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_PowerSwap_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-せめる　のうりょくへんかを▽
-いれかえた！</language>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
+こうげきと　とくこうの▽
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-攻める　能力変化を　入れ替えた！</language>
+攻撃と　とくこうの▽
+能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_PowerSwap_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-せめる　のうりょくへんかを▽
-いれかえた！</language>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
+こうげきと　とくこうの▽
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-攻める　能力変化を　入れ替えた！</language>
+攻撃と　とくこうの▽
+能力変化を　入れ替えた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_GuardSwap">
 		<comment>ガードスワップ</comment>
-		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-まもる　のうりょくへんかを▽
-いれかえた！</language>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
+ぼうぎょと　とくぼうの▽
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
-守る　能力変化を　入れ替えた！</language>
+防御と　とくぼうの▽
+能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_GuardSwap_Y">
-		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-まもる　のうりょくへんかを▽
-いれかえた！</language>
+		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
+ぼうぎょと　とくぼうの▽
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-守る　能力変化を　入れ替えた！</language>
+防御と　とくぼうの▽
+能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_GuardSwap_E">
-		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてと　じぶんの
-まもる　のうりょくへんかを▽
-いれかえた！</language>
+		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は　あいてとじぶんの
+ぼうぎょと　とくぼうの▽
+のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-守る　能力変化を　入れ替えた！</language>
+防御と　とくぼうの▽
+能力変化を　入れ替えた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_Trick">
