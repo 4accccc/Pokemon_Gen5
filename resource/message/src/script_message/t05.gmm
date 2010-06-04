@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-04T14:58:15"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-06-04T15:28:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1499" top="191" right="2204" bottom="811" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="244" right="1280" bottom="642" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -451,12 +451,12 @@ Sシングル</comment>
 カメラ切り替え１（左→右）
 Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">この　しゃりょうは
-スーパーダブルトレイン！▽
-さいしんがたの　しゃりょうだよ！</language>
-		<language name="JPN_KANJI" width="256">この　車両は
-スーパーダブルトレイン！▽
-最新型の　車両なのです！</language>
+		<language name="JPN" width="256">この　スーパーダブルトレインは
+あたらしい　りょうさんがたの▽
+しゃりょうなんだ！</language>
+		<language name="JPN_KANJI" width="256">この　スーパーダブルトレインは
+現在　もっとも　活躍している▽
+新しい　量産車両　なのです</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_05" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -477,12 +477,12 @@ Sダブル</comment>
 カメラ切り替え１（左→右）
 Sマルチ</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">この　スーパーマルチトレインは
-あたらしい　りょうさんがたの▽
-しゃりょうなんだ！</language>
-		<language name="JPN_KANJI" width="256">この　スーパーマルチトレインは
-現在　もっとも　活躍している▽
-新しい　量産車両　なのです</language>
+		<language name="JPN" width="256">この　しゃりょうは
+スーパーマルチトレイン！▽
+さいしんがたの　しゃりょうだよ！</language>
+		<language name="JPN_KANJI" width="256">この　車両は
+スーパーマルチトレイン！▽
+最新型の　車両なのです！</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_07" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -592,12 +592,12 @@ Sシングル</comment>
 カメラ切り替え２（前→後）
 Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">かげんそく　せいのうの　こうじょう！
-しゃりょうせいぎょの　じどうか！▽
-さいしん　ぎじゅつの　かたまりさ！</language>
-		<language name="JPN_KANJI" width="256">加減速性能の　向上！
-自動列車制御システムの　導入！▽
-最新技術が　詰め込まれた　試験車両さ！</language>
+		<language name="JPN" width="256">ムダのない　せんれんされた　デザイン！
+りょうさんしゃ　とくゆうの▽
+きのうびを　かんじる　フォルム！</language>
+		<language name="JPN_KANJI" width="256">無駄のない　洗練された　デザイン！
+量産車がもつ　特有の▽
+機能美を　感じる　フォルム！</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk2_05" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -620,12 +620,12 @@ Sダブル</comment>
 カメラ切り替え２（前→後）
 Sマルチ</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">ムダのない　せんれんされた　デザイン！
-りょうさんしゃ　とくゆうの▽
-きのうびを　かんじる　フォルム！</language>
-		<language name="JPN_KANJI" width="256">無駄のない　洗練された　デザイン！
-量産車がもつ　特有の▽
-機能美を　感じる　フォルム！</language>
+		<language name="JPN" width="256">かげんそく　せいのうの　こうじょう！
+しゃりょうせいぎょの　じどうか！▽
+さいしん　ぎじゅつの　かたまりさ！</language>
+		<language name="JPN_KANJI" width="256">加減速性能の　向上！
+自動列車制御システムの　導入！▽
+最新技術が　詰め込まれた　試験車両さ！</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk2_07" back-color="#80ffff,,,#80ffff,,#80ffff,#80ffff,,,,,,#80ffff,,,,,,">
@@ -761,19 +761,18 @@ Sシングル</comment>
 終了メッセージ
 Sダブル</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">ほかにも　かいせいブレーキ　とか
-しゃたい　けいしゃシステム　とか▽
-うんたら　かんたらシステム　とか▽
-ほんなら　でんがなシステム　とか▼
-……とにかく　さいしんの
-ぎじゅつが　フェスティバル　なんだ！</language>
-		<language name="JPN_KANJI" width="256">ほかにも　回生ブレーキの　搭載に
-車体傾斜システムの　改良！▽
-地震警報システムに▽
-トルネード監視装置　なんてのもあるね！▼
-ちょっと　ムダな
-機能も　ついちゃったけど……▼
-まあ　試験車両　だから！</language>
+		<language name="JPN" width="256">スーパーシングルトレインとは
+おなじ　しゃりょうを　つかっていてね▽
+カラーリングが　ちがうだけ　なんだよ▼
+バトルサブウェイの　れきしに　のこる
+すぐれた　しゃりょうと　いえます▽
+んー　スンバラシイ！</language>
+		<language name="JPN_KANJI" width="256">スーパーシングルトレインとは
+同型の　車両を　採用しています▽
+カラーリングが　違うだけ　なんですね▼
+バトルサブウェイの　歴史に　残る
+優れた　車両と　いえます▽
+んー　スンバラシイ！</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -799,18 +798,19 @@ Sダブル</comment>
 終了メッセージ
 Sマルチ</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">スーパーシングルトレインとは
-おなじ　しゃりょうを　つかっていてね▽
-カラーリングが　ちがうだけ　なんだよ▼
-バトルサブウェイの　れきしに　のこる
-すぐれた　しゃりょうと　いえます▽
-んー　スンバラシイ！</language>
-		<language name="JPN_KANJI" width="256">スーパーシングルトレインとは
-同型の　車両を　採用しています▽
-カラーリングが　違うだけ　なんですね▼
-バトルサブウェイの　歴史に　残る
-優れた　車両と　いえます▽
-んー　スンバラシイ！</language>
+		<language name="JPN" width="256">ほかにも　かいせいブレーキ　とか
+しゃたい　けいしゃシステム　とか▽
+うんたら　かんたらシステム　とか▽
+ほんなら　でんがなシステム　とか▼
+……とにかく　さいしんの
+ぎじゅつが　フェスティバル　なんだ！</language>
+		<language name="JPN_KANJI" width="256">ほかにも　回生ブレーキの　搭載に
+車体傾斜システムの　改良！▽
+地震警報システムに▽
+トルネード監視装置　なんてのもあるね！▼
+ちょっと　ムダな
+機能も　ついちゃったけど……▼
+まあ　試験車両　だから！</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
