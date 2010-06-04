@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-03T12:12:11"/>
+	<create user="taya" host="W00146" date="2010-06-04T20:59:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2696,6 +2696,14 @@
 もう　にげられない！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 もう　逃げられない！</language>
+	</row>
+
+	<row id="BTL_STRID_SET_EscapeFailed">
+		<comment>逃げようとしたターンに禁止ワザをくらった</comment>
+		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は
+にげられない！</language>
+		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
+逃げられない！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_CantChangeTok">
