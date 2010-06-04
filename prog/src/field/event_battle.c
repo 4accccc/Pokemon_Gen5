@@ -519,7 +519,6 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
   TRPOKE_AFTER_SAVE* trpoke_sv = GAMEDATA_GetTrPokeAfterSaveData( gdata );
   POKEMON_PARAM* pp;
   u32 monsno;
-  u32 waza1, waza2, waza3, waza4;
 
 
   event = EVENT_TrainerBattle( gsys, fieldmap, rule, partner_id, tr_id0, tr_id1, flags );
@@ -535,10 +534,6 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
 
     // MonsNo Wazaà¯åpÇ¨
     monsno = PP_Get( pp, ID_PARA_monsno, NULL );
-    waza1 = PP_Get( pp, ID_PARA_waza1, NULL );
-    waza2 = PP_Get( pp, ID_PARA_waza2, NULL );
-    waza3 = PP_Get( pp, ID_PARA_waza3, NULL );
-    waza4 = PP_Get( pp, ID_PARA_waza4, NULL );
 
     PP_SetupEx( pp, monsno, 
         TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ),
@@ -551,12 +546,6 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
       PP_Put( pp, ID_PARA_speabino, TRPOKE_AFTER_SV_GetSpeabino3( trpoke_sv, trade_type ) );
     }
     PP_Put( pp, ID_PARA_nickname_raw, (u32)TRPOKE_AFTER_SV_GetNickName( trpoke_sv, trade_type ) );
-
-    // ãZÇê›íË
-    PP_SetWazaPos( pp, waza1, 0 );
-    PP_SetWazaPos( pp, waza2, 1 );
-    PP_SetWazaPos( pp, waza3, 2 );
-    PP_SetWazaPos( pp, waza4, 3 );
 
   }else{
 
