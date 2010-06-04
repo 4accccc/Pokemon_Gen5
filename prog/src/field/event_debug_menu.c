@@ -388,7 +388,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },  //通信開始
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
-  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
+//  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
   { DEBUG_FIELD_GEONET, debugMenuCallProc_Geonet },         //ジオネット呼び出し
   { DEBUG_FIELD_GEONET_CLEAR, debugMenu_ClearWifiHistory }, //ジオネット情報クリア
   { DEBUG_FIELD_LIVE_COMM, debugMenu_LiveComm },  //ライブ通信デバッグ
@@ -404,15 +404,14 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_STR47, debugMenu_ControlShortCut },           //Yボタン登録最大
   { DEBUG_FIELD_STR51  , debugMenuCallProc_OpenGTSNegoMenu }, //GTSネゴ
   { DEBUG_FIELD_STR55,   debugMenuCallProc_CGEARPictureSave },//Cギアー写真
-  { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
-  { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
-  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
-  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
+//  { DEBUG_FIELD_STR42, debugMenuCallProc_WifiGts },           //GTS
+//  { DEBUG_FIELD_STR48, debugMenuCallProc_GDS },               //GDS
+//  { DEBUG_FIELD_STR56, debugMenuCallProc_WifiBattleMatch },   //WIFI世界対戦
+//  { DEBUG_FIELD_STR59, debugMenuCallProc_BattleRecorder },        //バトルレコーダー
   { DEBUG_FIELD_BSW_00, debugMenuCallProc_BSubway },                //バトルサブウェイ
   { DEBUG_FIELD_ZUKAN_04, debugMenuCallProc_Zukan },            //ずかん
   { DEBUG_FIELD_STR66,  debugMenuCallProc_RingTone },           //着信音
-  { DEBUG_FIELD_STR73, debugMenu_WfbcDebug },                   //WFBCオートチェック
-
+  { DEBUG_FIELD_STR73, debugMenu_WfbcDebug }                   //WFBCオートチェック
 };
 
 
@@ -423,7 +422,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
  */
 //------------------------------------------------------------------------
 #if defined DEBUG_ONLY_FOR_toru_nagihashi
-  #define QuickJumpStart   DEBUG_FIELD_STR48
+  #define QuickJumpStart   DEBUG_FIELD_STR41
 #elif defined DEBUG_ONLY_FOR_matsumiya
   #define QuickJumpStart   DEBUG_FIELD_STR03
   #define QuickJumpSelect  DEBUG_FIELD_STR17_01
