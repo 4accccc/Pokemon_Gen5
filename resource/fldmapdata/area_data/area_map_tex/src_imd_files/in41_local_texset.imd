@@ -3,7 +3,7 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-02-24T23:52:54"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-06-04T15:56:17"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
@@ -35,7 +35,7 @@
 		format="palette4"
 		color0_mode="color"
 		palette_name="black_pl"
-		path="C:/home/wb_data3d/field/out05/map/tex/black.tga"
+		path="C:/home/wb_data3d/field/in41/chip/tex/black.tga"
 	>
 		<bitmap size="8">
 			0000 0000 0000 0000 0000 0000 0000 0000
@@ -46,7 +46,7 @@
 		format="palette16"
 		color0_mode="transparency"
 		palette_name="c5m4_pl"
-		path="C:/home/wb_data3d/build_model/outdoor/c5_market_01/tex/c5m4.tga"
+		path="C:/home/wb_data3d/field/in41/chip/tex/c5m4.tga"
 	>
 		<bitmap size="256">
 			bbbb bbbb bbbb bbbb bbbb bbbb bbbb bbbb
@@ -337,9 +337,9 @@
 	>
 		<bitmap size="64">
 			2222 2222 2222 2222 4432 4323 3234 2344
-			4442 4424 4244 2444 3321 3212 2123 1233
+			4432 4323 3234 2344 3321 3212 2123 1233
 			3321 3212 2123 1233 3321 3212 2123 1233
-			3321 3212 2123 1233 4000 0000 0004 0040
+			3321 3212 2123 1233 0000 0000 0000 0000
 			0000 0000 0000 0000 3321 3212 2123 1233
 			3321 3212 2123 1233 3321 3212 2123 1233
 			3321 3212 2123 1233 1111 1111 1111 1111
@@ -428,70 +428,70 @@
 		path="C:/home/wb_data3d/field/in41/chip/tex/in41_kago02.tga"
 	>
 		<bitmap size="512">
-			0000 0a0a 0b0a 0b0b 0a0a 0a0a 000a 0000
-			0000 0a0a 0b0a 0b0b 0a0a 0a0a 000a 0000
-			0a00 0f0e 110e 1111 0b11 0d0e 0d0d 000d
-			0a00 0f0e 1c0e 1c1c 0b1c 0d0e 0d0d 000d
-			0d0d 0d0d 1111 1616 1111 120d 0d12 000a
-			0d0d 0d0d 1c1c 1f1f 1c1c 120d 0d12 000a
-			0d0a 1112 1616 0303 1616 0505 0505 0a0e
-			0d0a 1c12 1f1f 0303 1f1f 0202 0202 0a0e
-			0e0a 110d 1116 0303 0511 0c05 050c 0a05
-			0e0a 1c0d 1c1f 0303 021c 0802 0208 0a02
-			0f09 1105 1611 1616 0c05 1e0c 0c1e 050c
-			0f09 1c02 1f1c 1f1f 0801 0308 0803 0208
-			0500 0c05 1111 1111 0c05 1e05 051e 050c
-			0200 0802 1c1c 1c1c 0802 0302 0203 0208
-			0c05 1e0c 0c1e 050c 0505 0c0c 0c0c 0505
-			0802 0308 0803 0208 0202 0808 0808 0202
-			0c05 1e05 051e 050c 050d 0505 0505 0905
-			0802 0302 0203 0208 020d 0202 0202 0902
-			0505 0c0c 0c0c 0505 120d 1414 0d0d 090e
-			0202 0808 0808 0202 120d 1414 0d0d 090e
-			0509 0505 0505 0d05 0d06 1414 0d14 090d
-			0209 0202 0202 0d02 0d06 1414 0d14 090d
-			0900 120d 0d0d 060d 0e06 0d0d 120d 000d
-			0900 120d 0d0d 060d 0e06 0d0d 120d 000d
-			0900 0d0d 0a0d 0609 0a06 0f0a 0d0d 000d
-			0900 0d0d 0a0d 0609 0a06 0f0a 0d0d 000d
-			0000 0a09 090a 0a09 090a 0a0a 0909 0000
-			0000 0a09 090a 0a09 090a 0a0a 0909 0000
-			0000 0900 0009 0900 0009 0909 0000 0000
-			0000 0900 0009 0900 0009 0909 0000 0000
+			0000 0c0c 0d0c 0d0d 0c0c 0c0c 000c 0000
+			0000 0c0c 0d0c 0d0d 0c0c 0c0c 000c 0000
+			0c00 1110 1310 1313 0d13 0f10 0f0f 000f
+			0c00 1110 2210 2222 0d22 0f10 0f0f 000f
+			0f0f 0f0f 1313 1b1b 1313 140f 0f14 000c
+			0f0f 0f0f 2222 2626 2222 140f 0f14 000c
+			0f0c 1314 1b1b 0303 1b1b 0606 0606 0c10
+			0f0c 2214 2626 1c03 2626 0202 0202 0c10
+			100c 130f 131b 0303 0613 0e07 070e 0c06
+			100c 220f 2226 1c1c 0222 0a02 020a 0c02
+			110b 1306 1b13 1b1b 0e06 250e 0e1c 060e
+			110b 2202 2622 2626 0a01 030a 0a15 020a
+			0600 0e07 1313 1313 0e06 1c07 071c 060e
+			0200 0a02 2222 2222 0a02 1502 0215 020a
+			0e06 250e 0e1c 070e 0706 0e0e 0e0e 0607
+			0a02 030a 0a15 020a 0202 0a0a 0a0a 0202
+			0e06 1c07 071c 060e 060f 0606 0606 0b06
+			0a02 1502 0215 020a 020f 0202 0202 0b02
+			0706 0e0e 0e0e 0607 140f 1818 0f0f 0b10
+			0202 0a0a 0a0a 0202 140f 1818 0f0f 0b10
+			060b 0606 0606 0f06 0f08 1814 0f18 0b0f
+			020b 0202 0202 0f02 0f08 1814 0f18 0b0f
+			0b00 140f 0f0f 080f 1008 0f0f 140f 000f
+			0b00 140f 0f0f 080f 1008 0f0f 140f 000f
+			0b00 0f0f 0c0f 080b 0c08 110c 0f0f 000f
+			0b00 0f0f 0c0f 080b 0c08 110c 0f0f 000f
+			0000 0c0b 0b0c 0c0b 0b0c 0c0c 0b0b 0000
+			0000 0c0b 0b0c 0c0b 0b0c 0c0c 0b0b 0000
+			0000 0b00 000b 0b00 000b 0b0b 0000 0000
+			0000 0b00 000b 0b00 000b 0b0b 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0a0a 0a0a 0b00 0a0a 0a0a 000a 0000
-			0000 0000 0000 0000 0000 1919 1919 0000
-			0a00 1a0e 1a1a 0e1a 0b0b 0e0e 0a0e 0000
-			0000 0d0a 0d0d 0b0d 190a 1b19 191b 0019
-			0e0a 1a1a 1d1d 1a1a 0e0e 0d0d 0d0d 000a
-			0a00 0f0e 120e 0d0a 1b19 071b 1b07 191b
-			1a0a 1d1d 0707 1d1d 0d1a 1212 0e0d 000e
-			0e0a 1919 1919 190e 1b19 0719 1907 191b
-			1a0a 1a1d 0707 1d1a 1a1a 1a1a 0e1a 0a0e
-			190a 1b19 191b 1919 1919 1b1b 1b1b 1919
-			1a09 1d1a 1d1d 1a1d 1a1a 1d1d 1a1a 0a0a
-			1b19 071b 1b07 191b 190d 1919 1919 0a19
-			0900 1a1a 1a1a 1a1a 1d10 0707 1d1d 091a
-			1b19 0719 1907 191b 1919 0404 0a04 090a
-			0d09 120d 1010 1717 1010 0707 1d1a 001a
-			1919 1b1b 1b1b 1919 0419 1818 0418 1204
-			1309 100d 1717 1515 1717 1d10 1a1d 091a
-			1909 1919 1919 0419 1804 2018 1820 0418
-			0f09 100e 1017 1515 1710 1a10 1a1a 090e
-			0d0d 0412 1804 0418 1804 1c04 041c 0418
-			0a09 100b 1710 1717 1017 0d10 0f0e 090a
-			0d09 1804 2018 1820 0404 1818 1818 0404
-			0900 120d 1010 1010 1010 1412 0a0d 0909
-			0a09 1804 1c04 041c 0418 0404 0404 1204
-			0d00 0d12 0d0d 0606 0d0a 140d 0d14 0009
-			090d 0404 1818 1818 0404 060d 0d06 0d0d
-			0d00 0d0d 090a 0606 090a 0d0a 0d0d 0000
-			0d0d 0412 0404 0404 1204 0d14 0a06 0d09
-			0000 0900 0009 0900 0009 0909 0000 0000
-			120d 0d0d 060d 0a06 0d0d 1414 090d 0000
+			0000 0c0c 0c0c 0d00 0c0c 0c0c 000c 0000
+			0000 0000 0000 0000 0000 1f1f 1f1f 0000
+			0c00 1d10 2323 101d 0d0d 1010 0c10 0000
+			0000 0f0c 0f0f 0d0f 1f0c 201f 1f20 001f
+			100c 231d 2424 1d23 1010 0f0f 0f0f 000c
+			0c00 1110 1410 0f0c 201f 0920 2015 1f20
+			230c 2424 1609 2424 0f1d 1414 100f 0010
+			100c 1f1f 1f1f 1010 201f 151f 1f15 1f20
+			230c 2324 1616 2423 1d23 2323 101d 0c10
+			1e0c 201f 1f20 101e 1f1e 2020 2020 1e1f
+			1d0b 2423 2424 2324 231d 2424 1d23 0c0c
+			201f 0920 2015 1f20 1e0c 1f1f 1f1f 0c1e
+			0b00 231d 1223 1212 2412 1609 2424 0b1d
+			201f 151f 1f15 1f20 0c0b 0404 1104 0b0c
+			0f0b 140f 1a12 1a1a 121a 1616 2421 001d
+			1f1e 2020 2020 1e1f 040b 1c1c 041c 1404
+			170b 120f 1a1a 1519 1a1a 2412 2324 0b1d
+			1e0b 1f1f 1f1f 0c1e 1c11 271c 1c27 041c
+			110b 1210 121a 1515 1a12 2312 1d23 0b10
+			0f0f 0414 1c04 041c 1c04 2204 0422 051c
+			0c0b 120d 1a1a 1a1a 1a1a 0f12 1110 0b0c
+			0f0b 1c04 271c 1c27 0404 1c1c 1c1c 1105
+			0b00 140f 1212 1212 1212 1814 0c0f 0b0b
+			0c0b 1c05 2204 0422 111c 0505 0505 1411
+			0f00 0f14 0f0f 0808 0f0c 140f 0f18 000b
+			0b0f 0511 1c1c 1c1c 1105 080f 0f08 0f0f
+			0f00 0f0f 0b0c 0808 0b0c 0f0c 0f0f 0000
+			0f0f 1114 0505 0505 1411 0f18 0c08 0f0b
+			0000 0b00 000b 0b00 000b 0b0b 0000 0000
+			140f 0f0f 080f 0c08 0f0f 1814 0b0f 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0d00 090d 0609 0906 0009 0d0d 000d 0000
+			0f00 0b0f 080b 0b08 000b 0f0f 000f 0000
 		</bitmap>
 	</tex_image>
 	<tex_image index="13" name="in41_mat01"
@@ -682,21 +682,15 @@
 		</bitmap>
 	</tex_image>
 	<tex_image index="20" name="r_box01"
-		width="16" height="16" original_width="16" original_height="16"
-		format="palette16"
-		color0_mode="transparency"
-		palette_name="box01"
+		width="8" height="16" original_width="8" original_height="16"
+		format="palette4"
+		color0_mode="color"
+		palette_name="r_box01_pl"
 		path="C:/home/wb_data3d/build_model/indoor/box01/tex/r_box01.tga"
 	>
-		<bitmap size="64">
-			0000 0000 0000 0000 5500 5555 5555 0005
-			1150 3211 2112 0051 1150 3211 1112 0052
-			1150 3211 1112 0051 1150 3211 1112 0051
-			1150 3211 1112 0051 1250 3211 1112 0051
-			2150 3211 1112 0051 2250 3222 2222 0052
-			3350 4333 3333 0053 3350 3333 3333 0053
-			3450 3333 3333 0054 4450 3333 4333 0054
-			5500 5555 5555 0005 0000 0000 0000 0000
+		<bitmap size="16">
+			9001 9001 9001 9001 9001 9005 9011 9555
+			aaaa 5555 5555 5555 5555 5555 5556 555a
 		</bitmap>
 	</tex_image>
 	<tex_image index="21" name="white_gra"
@@ -718,7 +712,7 @@
 	</tex_image>
 </tex_image_array>
 
-<tex_palette_array size="23">
+<tex_palette_array size="24">
 	<tex_palette index="0" name="black_pl" color_size="4">
 		0000 7fff 7fff 7fff
 	</tex_palette>
@@ -765,14 +759,14 @@
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="12" name="in41_kago02_pl" color_size="40">
-		0000 0095 00b7 037f 039f 06ff 0da2 0fdd
-		109b 1209 12ab 12cd 13bf 1603 16d0 1f12
-		251f 263f 26a7 2b35 2b47 2bbf 32df 35bf
-		37df 51ff 5e40 5ebf 639c 6f64 77dd 77de
-		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
+		0000 0095 00b7 037f 039f 03f6 06ff 075f
+		0da2 0fdd 109b 1209 12ab 12cd 13bf 1603
+		16d0 1f12 215f 263f 26a7 26bf 27ec 2b35
+		2b47 2bbf 2d9f 32df 37bf 3ec3 51ff 565f
+		5ebf 5ec0 639c 6722 6f64 77dd 77de 7fff
 	</tex_palette>
 	<tex_palette index="13" name="in41_kago_pl" color_size="8">
-		190a 256d 2dd1 3a55 4ed8 7fff 7fff 7fff
+		1d2c 256d 2dd1 3234 4ab7 7fff 7fff 7fff
 	</tex_palette>
 	<tex_palette index="14" name="in41_mat01_pl" color_size="4">
 		352d 4d93 7fff 7fff
@@ -798,10 +792,13 @@
 		7f09 7f93 1603 2b47 26a7 73ff 2e5f 42bf
 		5f5f 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="21" name="white_gra" color_size="8">
+	<tex_palette index="21" name="r_box01_pl" color_size="4">
+		479f 3f1b 3275 2dcf
+	</tex_palette>
+	<tex_palette index="22" name="white_gra" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
-	<tex_palette index="22" name="white_gra_pl" color_size="8">
+	<tex_palette index="23" name="white_gra_pl" color_size="8">
 		7fff 7fff 7fff 7fff 7fff 7fff 7fff 7fff
 	</tex_palette>
 </tex_palette_array>
@@ -935,7 +932,7 @@
 		<ex_tex_image index="20" disp_pos="0.000000 0.000000"/>
 		<ex_tex_image index="21" disp_pos="0.000000 0.000000"/>
 	</ex_tex_image_array>
-	<ex_tex_palette_array size="23">
+	<ex_tex_palette_array size="24">
 		<ex_tex_palette index="0" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="1" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="2" disp_pos="0.000000 0.000000"/>
@@ -959,6 +956,7 @@
 		<ex_tex_palette index="20" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="21" disp_pos="0.000000 0.000000"/>
 		<ex_tex_palette index="22" disp_pos="0.000000 0.000000"/>
+		<ex_tex_palette index="23" disp_pos="0.000000 0.000000"/>
 	</ex_tex_palette_array>
 	<ex_material_array size="1">
 		<ex_material index="0" disp_pos="0.000000 240.000000"/>
