@@ -730,16 +730,16 @@ static void _checkError( WIFILOGIN_WORK* pWork )
       NetErr_DispCallPushPop();
       WIFILOGIN_DISP_ResetErrorDisplay(pWork->pDispWork);
 
-      //エラークリア
-      GFL_NET_StateClearWifiError();
-      NetErr_ErrWorkInit();
-      GFL_NET_StateResetError();
-
       //強制切断
       if( GFL_NET_IsInit() )
       {
         NetErr_ExitNetSystem();
       }
+
+      //エラークリア
+      GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
+      GFL_NET_StateResetError();
 
       //再接続へ
       WIFILOGIN_MESSAGE_SystemMessageDisp(pWork->pMessageWork, dwc_message_0019);
@@ -999,12 +999,18 @@ static void _callbackFunciton(WIFILOGIN_WORK* pWork)
         break;
       case WIFILOGIN_CALLBACK_RESULT_FAILED:
         pWork->dbw->result  = WIFILOGIN_RESULT_CANCEL;
-        _CHANGE_STATE(pWork,_logoutStart);
+        //_CHANGE_STATE(pWork,_logoutStart);
+
+        if( NET_ERR_CHECK_NONE == NetErr_App_CheckError() )
+        {
+          GFL_NET_StateSetWifiError(0, DWC_ETYPE_SHUTDOWN_GHTTP, 0, 0 );
+          NetErr_ErrorSet();
+        }
+
+        _checkError(pWork);
         break;
       }
     }
-
-    _checkError(pWork);
   }
   else
   { 

@@ -76,7 +76,7 @@ typedef enum
   ENTER_RESULT_ERROR,
 }ENTER_RESULT;
 static BOOL Enter_WifiConnectionLogin( WORLDTRADE_WORK *wk );
-static BOOL Enter_WifiConnectionLoginWait( WORLDTRADE_WORK *wk );
+static ENTER_RESULT Enter_WifiConnectionLoginWait( WORLDTRADE_WORK *wk );
 static BOOL Enter_DpwTrInit( WORLDTRADE_WORK *wk );
 static BOOL Enter_ServerStart( WORLDTRADE_WORK *wk );
 
@@ -314,72 +314,21 @@ static BOOL Enter_WifiConnectionLogin( WORLDTRADE_WORK *wk )
  * @retval  TRUEで終了
  */
 //------------------------------------------------------------------
-static BOOL Enter_WifiConnectionLoginWait( WORLDTRADE_WORK *wk )
+static ENTER_RESULT Enter_WifiConnectionLoginWait( WORLDTRADE_WORK *wk )
 {
 	switch(DWC_NASLoginProcess()){
 	case DWC_NASLOGIN_STATE_SUCCESS:
 		OS_Printf("GameSpyサーバーログイン成功\n");
-    return TRUE;
+    return ENTER_RESULT_END;
 		break;
-#if 0 //net_errでひかかるため
 	case DWC_NASLOGIN_STATE_ERROR:
 	case DWC_NASLOGIN_STATE_CANCELED:
 	case DWC_NASLOGIN_STATE_DIRTY:
-//		WorldTrade_TimeIconDel(wk);
-		OS_Printf("GameSpyサーバーログイン失敗\n");
-		{
-			int errCode;
-			DWCErrorType errType;
-			DWCError dwcError;
-			dwcError = DWC_GetLastErrorEx( &errCode, &errType );
-			wk->ErrorRet  = dwcError;
-			wk->ErrorCode = errCode;
-
-			DWC_ClearError();
-			DWC_CleanupInet();
-
-			//ありえないはずだが、どのエラーにも引っかからない可能性を考慮し、初期値として次のシーケンスを先に設定しておく
-			wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
-
-			switch(errType){
-			case DWC_ETYPE_LIGHT:
-			case DWC_ETYPE_SHOW_ERROR:
-				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
-				break;
-			case DWC_ETYPE_SHUTDOWN_GHTTP:
-				DWC_ShutdownGHTTP();
-				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
-				break;
-			case DWC_ETYPE_DISCONNECT:
-				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
-				break;
-			case DWC_ETYPE_SHUTDOWN_FM:
-				OS_TPrintf("DWC_ETYPE_SHUTDOWN_FM!\n");
-				DWC_ShutdownFriendsMatch();
-				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
-				break;
-			case DWC_ETYPE_SHUTDOWN_ND:	//このシーケンスではありえないので一応強制ふっとばしにする
-				OS_TPrintf("DWC_ETYPE_SHUTDOWN_ND!\n");
-				//break;
-			case DWC_ETYPE_FATAL:
-				// 強制ふっとばし
-        NetErr_DispCallFatal();
-				break;
-			}
-
-			// 20000番台をキャッチしたらerrTypeが何であろうとリセットエラーへ
-			if(errCode<-20000 && errCode >=-29999){
-//				CommSetErrorReset(COMM_ERROR_RESET_TITLE);
-				OS_Printf("dwcError = %d  errCode = %d, errType = %d\n", dwcError, errCode, errType);
-				wk->subprocess_seq = ENTER_DWC_ERROR_PRINT;
-			}
-		}
-		break;
-#endif 
+    return ENTER_RESULT_ERROR;
 	}
 	
 	
-	return FALSE;
+	return ENTER_RESULT_CONTINUE;
 }
 
 
@@ -806,6 +755,7 @@ static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogInCallBack( WIFILOGIN_MESSAGE_WORK
 
     SEQ_ERROR_START,
     SEQ_ERROR_WAIT,
+    SEQ_ERROR_END,
   };
 
   WORLDTRADE_WORK *wk = p_callback_wk;
@@ -819,9 +769,14 @@ static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogInCallBack( WIFILOGIN_MESSAGE_WORK
     }
     break;
   case SEQ_LOGIN_WAIT:
-    if( Enter_WifiConnectionLoginWait( wk ) )
+    switch( Enter_WifiConnectionLoginWait( wk ) )
     { 
+    case ENTER_RESULT_END:
       wk->wifi_seq++;
+      break;
+    case ENTER_RESULT_ERROR:
+      wk->wifi_seq  = SEQ_ERROR_END;
+      break;
     }
     break;
   case SEQ_DPW_INIT:
@@ -857,6 +812,7 @@ static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogInCallBack( WIFILOGIN_MESSAGE_WORK
     switch( Enter_ProfileResult( wk ) )
     { 
     case ENTER_RESULT_END:
+      wk->wifi_seq  = 0;
       return WIFILOGIN_CALLBACK_RESULT_SUCCESS;
       break;
     case ENTER_RESULT_ERROR:
@@ -874,10 +830,12 @@ static WIFILOGIN_CALLBACK_RESULT Enter_WifiLogInCallBack( WIFILOGIN_MESSAGE_WORK
   case SEQ_ERROR_WAIT:
     if( Enter_ServerServiceEnd( wk, p_msg ) )
     { 
-      wk->wifi_seq  = 0;
-      return WIFILOGIN_CALLBACK_RESULT_FAILED;
+      wk->wifi_seq++;
     }
     break;
+  case SEQ_ERROR_END:
+    wk->wifi_seq  = 0;
+    return WIFILOGIN_CALLBACK_RESULT_FAILED;
   }
 
   return WIFILOGIN_CALLBACK_RESULT_CONTINUE;
@@ -1016,6 +974,9 @@ static BOOL Enter_ServerServiceEnd( WORLDTRADE_WORK *wk, WIFILOGIN_MESSAGE_WORK 
 		break;
 	case 3:
 	//	if(GF_MSG_PrintEndCheck( &wk->print )==0){
+
+    OS_TPrintf( "Dpw_Trを終了しました\n" );
+    Dpw_Tr_End();
 			wk->local_seq++;
 	//	}
 		break;
