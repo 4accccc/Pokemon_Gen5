@@ -119,4 +119,9 @@ extern BOOL MYSTERY_CARD_IsEndEffect( const MYSTERY_CARD_WORK *cp_wk );
 extern u32 MYSTERY_CARD_GetWorkSize( void );
 
 //transä÷êîÇçsÇ»Ç§Ç‹Ç≈âÊñ îΩâfÇÕçsÇ¢Ç‹ÇπÇÒ
-extern void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk );
+typedef enum
+{
+  MYSTERY_CARD_TRANS_TYPE_NORMAL, //í èÌ
+  MYSTERY_CARD_TRANS_TYPE_NOBG,   //BGì]ëóÇ»Çµ
+}MYSTERY_CARD_TRANS_TYPE;
+extern void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_TRANS_TYPE type );

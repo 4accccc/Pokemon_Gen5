@@ -565,7 +565,7 @@ MYSTERY_ALBUM_WORK * MYSTERY_ALBUM_Init( const MYSTERY_ALBUM_SETUP *cp_setup, HE
             p_wk->p_card_res, cp_setup->p_gamedata, heapID );
       }
     }
-    MYSTERY_CARD_Trans( p_wk->p_card[0] );
+    MYSTERY_CARD_Trans( p_wk->p_card[0], MYSTERY_CARD_TRANS_TYPE_NORMAL );
     GFL_HEAP_CheckHeapSafe( HEAPID_MYSTERYGIFT );
   }
 
@@ -658,7 +658,8 @@ void MYSTERY_ALBUM_Main( MYSTERY_ALBUM_WORK *p_wk )
       if( MYSTERY_CARD_DATA_IsExist( p_data ) )
       { 
         is_exist  = TRUE;
-        MYSTERY_CARD_Trans( p_wk->p_card[ Mystery_Album_GetNowCardIndex( p_wk ) ] );
+        //高速化のためにBG読まない（すでに読んでいるので）
+        MYSTERY_CARD_Trans( p_wk->p_card[ Mystery_Album_GetNowCardIndex( p_wk ) ], MYSTERY_CARD_TRANS_TYPE_NOBG );
       }
     }
 
@@ -3245,6 +3246,7 @@ struct _MYSTERY_CARD_WORK
   GAMEDATA *p_gamedata;
   GFL_TCB *p_trans_task;
   BOOL    is_task_end;
+  MYSTERY_CARD_TRANS_TYPE trans_type;
 
   //シルエットメインメモリ読み込み用
   void *p_chr_buff;
@@ -3261,6 +3263,7 @@ struct _MYSTERY_CARD_WORK
  */
 //=============================================================================
 static void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, const MYSTERY_CARD_DATA *cp_data, HEAPID heapID );
+static void MYSTERY_CARD_ChangePalettleBG( const MYSTERY_CARD_SETUP *cp_setup, const MYSTERY_CARD_DATA *cp_data, HEAPID heapID );
 static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_RES *p_res, HEAPID heapID );
 //シルエット動作関数
 static void MOVE_SHAKE_Init( MOVE_SHAKE_WORK *p_wk, u16 init_angle, s16 x, s16 y );
@@ -3880,6 +3883,47 @@ static void MYSTERY_CARD_LoadResourceBG( const MYSTERY_CARD_SETUP *cp_setup, con
  *	@param	heapID                  ヒープID
  */
 //-----------------------------------------------------------------------------
+static void MYSTERY_CARD_ChangePalettleBG( const MYSTERY_CARD_SETUP *cp_setup, const MYSTERY_CARD_DATA *cp_data, HEAPID heapID )
+{
+  PALTYPE         paltype;
+
+  //描画先をチェック
+  if( cp_setup->back_frm < GFL_BG_FRAME0_S )
+  { 
+    paltype   = PALTYPE_MAIN_BG;
+  }
+  else
+  { 
+    paltype   = PALTYPE_SUB_BG;
+  }
+
+  {
+    //上画面ならばもらったとき。下画面ならばアルバムの中
+    const u16 load_scr  = cp_setup->back_frm > GFL_BG_FRAME3_M ?
+      NARC_mystery_fushigi_card_album_NSCR: NARC_mystery_fushigi_card_view_NSCR;
+
+    const u16 src_ofs = MYSTERY_CARD_DATA_GetCardPltOfs( cp_data );
+
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_MYSTERY, heapID );
+    //BG
+    GFL_ARCHDL_UTIL_TransVramPaletteEx( p_handle, NARC_mystery_fushigi_card_NCLR,
+        paltype, src_ofs*0x20, cp_setup->back_plt_num*0x20, 0x20, heapID );
+    GFL_BG_ChangeScreenPalette( cp_setup->back_frm, 0, 0,34,24, cp_setup->back_plt_num );
+
+    GFL_BG_LoadScreenReq( cp_setup->back_frm );
+
+    GFL_ARC_CloseDataHandle( p_handle ); 
+  }
+}
+//----------------------------------------------------------------------------
+/**
+ *	@brief  OBJ読み込み
+ *
+ *	@param	MYSTERY_CARD_WORK *p_wk ワーク
+ *	@param	*p_res                  リソース
+ *	@param	heapID                  ヒープID
+ */
+//-----------------------------------------------------------------------------
 static void MYSTERY_CARD_LoadResourceOBJ( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_RES *p_res, HEAPID heapID )
 { 
   //アイコン作成
@@ -4164,7 +4208,15 @@ static void MYSTERY_CARD_TransTask( GFL_TCB *p_tcb, void *p_wk_adrs )
     p_wk->is_task_end = TRUE;
 
     //BG転送
-    MYSTERY_CARD_LoadResourceBG( &p_wk->p_res->setup, &p_wk->data, p_wk->heapID );
+    switch( p_wk->trans_type )
+    {
+    case MYSTERY_CARD_TRANS_TYPE_NORMAL:
+      MYSTERY_CARD_LoadResourceBG( &p_wk->p_res->setup, &p_wk->data, p_wk->heapID );
+      break;
+    case MYSTERY_CARD_TRANS_TYPE_NOBG:
+      MYSTERY_CARD_ChangePalettleBG( &p_wk->p_res->setup, &p_wk->data, p_wk->heapID );
+      break;
+    }
 
     //OBJ反映
     MYSTERY_CARD_LoadResourceOBJ( p_wk, p_wk->p_res, p_wk->heapID );
@@ -4183,10 +4235,12 @@ static void MYSTERY_CARD_TransTask( GFL_TCB *p_tcb, void *p_wk_adrs )
  *	@brief  画面反映
  *
  *	@param	MYSTERY_CARD_WORK *p_wk ワーク
+ *	@param  type                    転送タイプ
  */
 //-----------------------------------------------------------------------------
-void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk )
+void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk, MYSTERY_CARD_TRANS_TYPE type )
 { 
+  p_wk->trans_type  = type;
   if( p_wk->p_trans_task == NULL )
   { 
     p_wk->p_trans_task  = GFUser_VIntr_CreateTCB( MYSTERY_CARD_TransTask, p_wk, 0 );
@@ -4205,9 +4259,9 @@ void MYSTERY_CARD_Trans( MYSTERY_CARD_WORK *p_wk )
 //-----------------------------------------------------------------------------
 void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
 { 
-  GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FRM_S );
+//  GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FRM_S );
   GFL_BG_ClearScreen( MYSTERY_ALBUM_CARD_FONT_S );
-  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
+//  GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FRM_S );
   GFL_BG_LoadScreenReq( MYSTERY_ALBUM_CARD_FONT_S );
   GFL_CLACT_WK_SetDrawEnable( p_wk->p_icon, FALSE );
   { 
@@ -4218,6 +4272,7 @@ void MYSTERY_CARD_RES_Clear( MYSTERY_CARD_RES *p_wk )
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_silhouette, FALSE );
   }
 
+  GFL_BG_SetVisible( MYSTERY_ALBUM_CARD_FRM_S, FALSE );
 }
 
 //=============================================================================

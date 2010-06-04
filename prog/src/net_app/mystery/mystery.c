@@ -2342,7 +2342,7 @@ static void SEQFUNC_Demo( MYSTERY_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 
       { 
         p_wk->p_card  = MYSTERY_CARD_Init( &p_wk->data.data, p_wk->p_card_res, p_wk->p_gamedata, HEAPID_MYSTERYGIFT );
-        MYSTERY_CARD_Trans( p_wk->p_card );
+        MYSTERY_CARD_Trans( p_wk->p_card, MYSTERY_CARD_TRANS_TYPE_NORMAL );
       }
     }
     *p_seq  = SEQ_START_CARD_EFFECT;
