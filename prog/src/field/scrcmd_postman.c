@@ -463,6 +463,11 @@ static u16  PFuncSetFailurePokemonWords( WORDSET * wordset, GIFT_PACK_DATA * gpd
 //--------------------------------------------------------------
 static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DATA * gpd )
 {
+  //2010.06.04  tamada
+  //不正な贈り物配布対策として、どんなアイテムでも、手持ちが一杯でも、
+  //受け取るようにする。（そうでないとカードが消せない）
+  return TRUE;
+#if 0
   u16 item_no;
   HEAPID heapID = SCRCMD_WORK_GetHeapID( work );
   MYITEM_PTR myitem = GAMEDATA_GetMyItem( gamedata );
@@ -470,6 +475,7 @@ static BOOL PFuncCheckItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_D
   item_no = MYSTERY_CreateItem(gpd);
 
   return MYITEM_AddCheck( myitem, item_no, 1, heapID );
+#endif
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -482,7 +488,8 @@ static void PFuncAddItem( SCRCMD_WORK * work, GAMEDATA * gamedata, GIFT_PACK_DAT
   BOOL result;
 
   result = MYITEM_AddItem( myitem, item_no, 1, heapID );
-  GF_ASSERT( result );
+  //2010.06.04  tamada  不正贈り物対策：手持ちに加えられなくてもAssertにしない
+  //GF_ASSERT( result );
 }
 //--------------------------------------------------------------
 /// アイテムのタイプ取得
