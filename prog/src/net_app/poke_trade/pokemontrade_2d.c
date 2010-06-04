@@ -488,7 +488,7 @@ void IRC_POKETRADE_SendVramBoxNameChar(POKEMON_TRADE_WORK* pWork)
 
   for(i=0;i< pWork->BOX_TRAY_MAX+1;i++){
     if(pWork->BoxNameWin[i]==NULL){
-      pWork->BoxNameWin[i] = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, (i % 3) * 10 , (i / 3) * 2, 10, 2, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_B);
+      pWork->BoxNameWin[i] = GFL_BMPWIN_Create(GFL_BG_FRAME1_S, (i % 3) * 10 , (i / 3) * 2, 16, 2, _BUTTON_MSG_PAL,GFL_BMP_CHRAREA_GET_B);
     }
     if(i == pWork->BOX_TRAY_MAX){
       GFL_MSG_GetString(  pWork->pMsgData, POKETRADE_STR_19, pWork->pStrBuf );
@@ -3414,3 +3414,6 @@ void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray)
   POKEMON_TRADE_PaletteFade(pWork, bGray,FADE_SUB_OBJ,0xfffe);
 
 }
+
+
+

@@ -1033,6 +1033,7 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
   IRC_POKETRADE_CreatePokeIconResource(pWork);  // ポケモンアイコンCLACT+リソース常駐化
 
+  IRC_POKETRADE_SendVramBoxNameChar(pWork);
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
   IRC_POKETRADE_GraphicInitSubDisp(pWork);
 
