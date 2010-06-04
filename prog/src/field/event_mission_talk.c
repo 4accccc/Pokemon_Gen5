@@ -522,6 +522,8 @@ static GMEVENT_RESULT CommMissionTalk_TtoM_Talked( GMEVENT *event, int *seq, voi
 
   case SEQ_AFTER_MSG_INIT:
     IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
+    WORDSET_RegisterPlayerName( 
+      talk->ccew.iem.wordset, 0, &talk->ccew.talk_myst );
     IntrudeEventPrint_StartStream(&talk->ccew.iem, 
       MissionTalkMsgID.target_talked_get[talk->talk_type]);
   	(*seq)++;
