@@ -3456,6 +3456,9 @@ static int	wi_seq_nation_head1_exit( WORLDTRADE_INPUT_WORK *wk )
 			}
 			GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
 			wk->seq  = WI_SEQ_WINWAIT;
+
+      BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
+
 			wk->next = WI_SEQ_NATION_INIT;
 		}
 	}
@@ -3636,6 +3639,10 @@ static int	wi_seq_nation_head2_exit( WORLDTRADE_INPUT_WORK *wk )
 		}
 		GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, 7 );
 		wk->seq  = WI_SEQ_WINWAIT;
+
+
+    BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
+
 		wk->next = WI_SEQ_NATION_INIT;
 	}
 	return BMPMENU_NULL;
@@ -3679,16 +3686,12 @@ static int	wi_seq_nation_head2_return( WORLDTRADE_INPUT_WORK *wk )
 //------------------------------------------------------------------
 static int	wi_seq_nation_init( WORLDTRADE_INPUT_WORK *wk )
 {
-	u16 *scr;
   u8 page_max;
 
 	BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
-	scr = BGWINFRM_FrameBufGet( wk->BgWinFrm, 0 );
 
 	// Žq‰¹“ª•¶Žš“ü—Í—pBMPWIN‚ÌŠm•Û
 	select_bmpwin_add( wk, MODE_NATION );
-
-//	SelectFrameBoxWrite( scr, 22, 15, SELECT_BOX_END );
 	
 	wk->listMax = WorldTrade_NationSortListMake( &wk->NameList, wk->CountryNameManager, 
 												 head2pokename[wk->Head1]+wk->Head2 );
@@ -3758,6 +3761,8 @@ static int	wi_seq_nation_main( WORLDTRADE_INPUT_WORK *wk )
 	case BMPMENU_CANCEL:
 		GFL_CLACT_WK_SetDrawEnable( wk->CursorAct, 1 );
     GFL_CLACT_WK_SetAnmSeq( wk->CursorAct, GFL_CLACT_WK_GetAnmSeq( wk->CursorAct ) + 9 );
+
+    BGWINFRM_FrameSetArc( wk->BgWinFrm, 0, ARCID_WORLDTRADE_GRA, NARC_worldtrade_search_sub_lz_nscr, 1 );
 		wk->seq  = WI_SEQ_WINWAIT_RETURN;
 		wk->next = WI_SEQ_NATION_CANCEL_EXIT;
 		break;

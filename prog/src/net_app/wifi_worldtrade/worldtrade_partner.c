@@ -186,8 +186,8 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 
 	PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012, &wk->print, PRINTSYS_LSB_Make(15,2,0) );	// 住んでいる場所
 
-	TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019, &wk->print );	// 「こうかんする」
-	TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 , &wk->print);	// 「もどる」
+  TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019, &wk->print );	// 「こうかんする」
+  TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 , &wk->print);	// 「もどる」
 
 	// 「ほしいポケモン」か「すんでいるばしょ」の描画
 	ChangePage( wk );
@@ -528,19 +528,19 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 		TALK_WIN_X, TALK_WIN_Y, TALK_WIN_SX, TALK_WIN_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );
 
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
+	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
 	// 「こうかんする」
 	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		MENU_EXCHANGE1_X, MENU_EXCHANGE1_Y, MENU_EXCHANGE1_SX, MENU_EXCHANGE1_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[0]), 0x0000 );
+	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[0]), 0x0000 );
 
 	// 「もどる」
 	wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
 		MENU_EXCHANGE2_X, MENU_EXCHANGE2_Y, MENU_EXCHANGE2_SX, MENU_EXCHANGE2_SY, 
 		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
-	GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0000 );
+	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0000 );
 
 	// BG0面BMPWIN情報ウインドウ確保
 	{
@@ -573,8 +573,8 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 				s_offset += info_bmpwin_table[i][2]*info_bmpwin_table[i][3];
 				
 			}
-			GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
-			GFL_BMPWIN_MakeTransWindow( wk->InfoWin[i] );
+			//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->InfoWin[i]), 0x0000 );
+			GFL_BMPWIN_MakeTransWindow_VBlank( wk->InfoWin[i] );
 		}
 	}
 
