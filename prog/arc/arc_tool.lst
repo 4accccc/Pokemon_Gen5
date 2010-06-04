@@ -111,7 +111,6 @@
   ARCID_WIFI_EARTH_PLACE  "wifi_earth_place.narc" #WI-FI地球画面の地域データ
   ARCID_SHOP_GRA    "shop_gra.narc"   #ショップ画面グラフィック
   ARCID_WAZATYPE_ICON   "wazatype_icon.narc"    #技タイプアイコン
-  ARCID_LOBBY_TRGRA   "debug/lobby_trfgra.narc"     #Wi-Fi広場用トレーナーグラフィック(PLのtrgra)
   ARCID_FIELD_WEATHER "field_weather.narc"  #フィールド天気グラフィック
   ARCID_SCRSEQ    "fieldmap/script_seq.narc"    #スクリプトシーケンス
   $DEBUG_YES ARCID_DEBUG_SYM "fieldmap/debug_symbol.narc"  #シンボル名テーブル（デバッグ用）
