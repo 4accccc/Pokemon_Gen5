@@ -93,7 +93,6 @@
   ARCID_POWER     "power.narc"      #パレスのパワーデータ
   ARCID_MONOLITH  "monolith.narc"     #モノリスグラフィック
   ARCID_FLDMMLD   "debug/mmodel.narc"
-  ARCID_YN_TOUCH    "yn_touch.narc"     #YesNoボタン
   ARCID_MYSIGN    "mysign.narc"     #サイン(トレーナーカード)
   ARCID_TRAINERCARD "trainer_case.narc"   #トレーナーカード
   ARCID_TRC_UNION   "trc_union.narc"    #ユニオンルーム トレーナーカード キャラ絵
@@ -123,7 +122,6 @@
   ARCID_FIELD_WEATHER_LIGHT "field_weather_light.narc"  #フィールド天気ライトデータ
   ARCID_WIFI_NOTE   "wifi_note.narc"  #友だち手帳
   ARCID_TRF_GRA   "trgra/trbgra.narc" #トレーナー(仮
-  ARCID_SELBOX_GRA  "selbox_gra.narc"     #selbox用
   ARCID_OTHERS    "others.narc"
   ARCID_WAZAEFF_SEQ "wazaeffect/waza_eff.narc"  #技エフェクトシーケンス
   ARCID_BATTLEEFF_SEQ "wazaeffect/battle_eff.narc"  #戦闘エフェクトシーケンス
