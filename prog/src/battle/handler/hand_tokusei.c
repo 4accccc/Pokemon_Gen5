@@ -6601,9 +6601,12 @@ static void handler_MagicMirror_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 // ‚í‚´’µ‚Ë•Ô‚µŠm’èƒnƒ“ƒhƒ‰
 static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-  HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
-  BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+    HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
+    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+  }
 }
 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicMirror( u32* numElems )
