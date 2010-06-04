@@ -2233,18 +2233,7 @@ static BOOL checkConnectIsFreeExit( const CONNECT_DATA * cnct )
 //--------------------------------------------------------------
 static BOOL checkConnectExitDir(const CONNECT_DATA* cnct, u16 player_dir)
 {
-  EXIT_DIR exit_dir;
-
-  exit_dir = CONNECTDATA_GetExitDir( cnct );
-  if (
-      (player_dir == DIR_UP && exit_dir == EXIT_DIR_DOWN) ||
-      (player_dir == DIR_DOWN && exit_dir == EXIT_DIR_UP) ||
-      (player_dir == DIR_LEFT && exit_dir == EXIT_DIR_RIGHT) ||
-      (player_dir == DIR_RIGHT && exit_dir == EXIT_DIR_LEFT))
-  {
-    return TRUE;
-  }
-  return FALSE;
+  return CONNECTDATA_IsEnableDir( cnct, player_dir );
 }
 
 //--------------------------------------------------------------

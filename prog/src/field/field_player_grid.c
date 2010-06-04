@@ -3533,6 +3533,13 @@ static BOOL gjiki_CheckDirDoor( FIELD_PLAYER_GRID *gjiki, u16 dir )
   if( idx == EXIT_ID_NONE ){
     return( FALSE );
   }
+  { //出入口の持つ方向とあっているか？のチェック
+    const CONNECT_DATA * cnct = EVENTDATA_GetConnectByID( evdata, idx );
+    if( CONNECTDATA_IsEnableDir( cnct, dir ) == FALSE ){
+      return ( FALSE );
+    }
+  }
   
   return( TRUE );
 }
+

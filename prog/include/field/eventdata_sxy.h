@@ -108,8 +108,14 @@ extern LOC_EXIT_OFS CONNECTDATA_GetExitOfs(const CONNECT_DATA * connect, const V
 extern LOC_EXIT_OFS CONNECTDATA_GetRailExitOfs(const CONNECT_DATA * connect, const RAIL_LOCATION* loc);
 
 //------------------------------------------------------------------
+//  出入口データの持つEXIT_DIRを返す
 //------------------------------------------------------------------
 extern EXIT_DIR CONNECTDATA_GetExitDir(const CONNECT_DATA * connect);
+
+//------------------------------------------------------------------
+//  出入口データの持つDIRを返す（EXIT_DIRを変換する）
+//------------------------------------------------------------------
+extern BOOL CONNECTDATA_IsEnableDir(const CONNECT_DATA * connect, u16 dir);
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------

@@ -708,6 +708,27 @@ EXIT_DIR CONNECTDATA_GetExitDir(const CONNECT_DATA * connect)
 {
   return connect->exit_dir;
 }
+
+//------------------------------------------------------------------
+/**
+ * @brief 出入口データの持つ方向のチェック
+ * @param connect
+ * @param dir
+ */
+//------------------------------------------------------------------
+BOOL CONNECTDATA_IsEnableDir(const CONNECT_DATA * connect, u16 dir)
+{
+  if (
+      (dir == DIR_UP && connect->exit_dir == EXIT_DIR_DOWN) ||
+      (dir == DIR_DOWN && connect->exit_dir == EXIT_DIR_UP) ||
+      (dir == DIR_LEFT && connect->exit_dir == EXIT_DIR_RIGHT) ||
+      (dir == DIR_RIGHT && connect->exit_dir == EXIT_DIR_LEFT))
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
 //------------------------------------------------------------------
 /**
  * @brief
