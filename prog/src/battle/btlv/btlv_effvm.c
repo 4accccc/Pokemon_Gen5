@@ -5053,7 +5053,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     {
       spin_axis = SPL_FLD_SPIN_AXIS_TYPE_X;
     }
-    OS_Printf("angle:%f axis:%d\n",FX_FX32_TO_F32(angle),spin_axis);
+    SOGABE_Printf("angle:%f axis:%d\n",FX_FX32_TO_F32(angle),spin_axis);
     GFL_PTC_SetEmitterSpinAxisType( emit, &spin_axis );
 
     GFL_PTC_SetEmitterAxis( emit, &dir );
