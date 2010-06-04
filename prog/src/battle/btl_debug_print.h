@@ -150,9 +150,8 @@ typedef enum {
 
   DBGSTR_HEM_Push,
   DBGSTR_HEM_Pop,
-  DBGSTR_HEM_PushEx,
-  DBGSTR_HEM_PopEx,
   DBGSTR_HEM_PushWork,
+  DBGSTR_HEM_PophWork,
 
   DBGSTR_CALCDMG_BaseDamage,
   DBGSTR_CALCDMG_WazaParam,

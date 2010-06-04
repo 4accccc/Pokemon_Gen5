@@ -3334,7 +3334,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       HANDEX_STR_AddArg( &param->exStr, targetPokeID );
       HANDEX_STR_AddArg( &param->exStr, param->tokuseiID );
     BTL_SVF_HANDEX_Pop( flowWk, param );
-    BTL_N_PrintfEx( 3, DBGSTR_HANDTOK_TRACE_Add, pokeID );
+    BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_HANDTOK_TRACE_Add, pokeID );
   }
 }
 
@@ -5148,7 +5148,7 @@ static void handler_Pressure_MemberIN( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Pressure );
          HANDEX_STR_AddArg( &param->str, pokeID );
        BTL_SVF_HANDEX_Pop( flowWk, param );
-       BTL_N_PrintfEx( 3, DBGSTR_HANDTOK_PressureIn, pokeID, myHandle );
+       BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_HANDTOK_PressureIn, pokeID, myHandle );
     }
     BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
   }

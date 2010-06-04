@@ -1041,7 +1041,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   // 対象位置ID
   targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, targetPokeID );
 
-  // シューター独自のアイテム処理
+  // シューター専用のアイテム処理
   for(i=0; i<NELEMS(ShooterItemParam); ++i)
   {
     if( itemID == ShooterItemParam[i].itemID )
@@ -1069,6 +1069,8 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   // 通常のアイテム処理
   {
     BOOL fEffective = FALSE;
+    u16  que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_EFFECT_BYPOS );
+
     hem_state = BTL_Hem_PushState( &wk->HEManager );
     for(i=0; i<NELEMS(ItemParallelEffectTbl); ++i)
     {
@@ -1082,8 +1084,10 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     // 使用効果あり
     if( fEffective )
     {
-      if( targetPos != BTL_POS_NULL ){
-        SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
+      if( targetPos != BTL_POS_NULL )
+      {
+        SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos );
+//        SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_USE_ITEM );
       }
 
 //      BTL_SVF_HandEx_Root( wk, ITEM_DUMMY_DATA );
@@ -1375,6 +1379,11 @@ static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPo
     {
       const BTL_FIELD_SITUATION* fldSit = BTL_MAIN_GetFieldSituation( wk->mainModule );
       if( (fldSit->bgType == BATTLE_BG_TYPE_CAVE) || (fldSit->bgType == BATTLE_BG_TYPE_CAVE_DARK) ){
+        return FX32_CONST(3.5);
+      }
+      if( (BTL_TABLES_IsOutdoorBGType(fldSit->bgType))
+      &&  ((fldSit->hour >= 21) || (fldSit->hour < 5))
+      ){
         return FX32_CONST(3.5);
       }
       // @ todo 時間帯による暗さも対象か？
@@ -1871,10 +1880,17 @@ BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk )
       return BTL_RESULT_WIN;
     }
 
-    // 厳密判定が不要なら引き分け
+    // 厳密判定が不要ならこの時点で引き分け
     if( !BTL_MAIN_IsResultStrictMode(wk->mainModule) ){
       return BTL_RESULT_DRAW;
     }
+
+    //---------------------------------------------------
+    /*
+     *  サブウェイ・通信対戦用の厳密判定
+     */
+    //---------------------------------------------------
+
 
     // 両方全滅 -> 最後に倒れた側の勝ち
     if( alivePokeCnt[0] == 0 )

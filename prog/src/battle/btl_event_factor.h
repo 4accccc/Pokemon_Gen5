@@ -84,6 +84,7 @@ extern BtlEventType BTL_EVENT_FACTOR_GetCallingEventID( const BTL_EVENT_FACTOR* 
 extern int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx );
 extern void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int value );
 extern void BTL_EVENT_FACTOR_SetTmpItemFlag( BTL_EVENT_FACTOR* factor );
+extern void BTL_EVENT_FACTOR_SetRecallEnable( BTL_EVENT_FACTOR* factor );
 extern u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor );
 extern void BTL_EVENT_FACTOR_AttachSkipCheckHandler( BTL_EVENT_FACTOR* factor, BtlEventSkipCheckHandler handler );
 extern void BTL_EVENT_FACTOR_DettachSkipCheckHandler( BTL_EVENT_FACTOR* factor );

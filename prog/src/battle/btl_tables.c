@@ -13,7 +13,7 @@
 #include "waza_tool\wazano_def.h"
 #include "item\itemsym.h"
 #include "item\item.h"
-
+#include "battle\battle_bg_def.h"
 
 #include "btl_common.h"
 #include "btl_tables.h"
@@ -189,6 +189,26 @@ BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID )
   return checkTableElems( itemID, table, NELEMS(table) );
 }
 
+
+/**
+ *  BGタイプから屋外かどうか判定（ダークボール用）
+ */
+BOOL BTL_TABLES_IsOutdoorBGType( u16 bgType )
+{
+  static const u16 table[] = {
+    BATTLE_BG_TYPE_GRASS,         ///< 草むら
+    BATTLE_BG_TYPE_GRASS_SEASON,  ///< 草むら(四季有り)
+    BATTLE_BG_TYPE_CITY,          ///< 街
+    BATTLE_BG_TYPE_CITY_SEASON,   ///< 街(四季有り)
+    BATTLE_BG_TYPE_CAVE,          ///< 洞窟
+    BATTLE_BG_TYPE_CAVE_DARK,     ///< 洞窟(暗い)
+    BATTLE_BG_TYPE_FOREST,        ///< 森
+    BATTLE_BG_TYPE_MOUNTAIN,      ///< 山
+    BATTLE_BG_TYPE_SEA,           ///< 海
+    BATTLE_BG_TYPE_SAND,          ///< 砂漠
+  };
+  return checkTableElems( bgType, table, NELEMS(table) );
+}
 
 //=============================================================================================
 /**

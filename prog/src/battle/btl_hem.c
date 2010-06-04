@@ -44,7 +44,7 @@ u32 BTL_Hem_PushState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 line )
   wk->fSucceed = 0;
   wk->fPrevSucceed = 0;
 
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
+  BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
 
   return state;
 }
@@ -58,19 +58,14 @@ u32 BTL_Hem_PushStateUseItem_Impl( HANDLER_EXHIBISION_MANAGER* wk, u16 itemNo, u
   wk->fSucceed = 0;
   wk->fPrevSucceed = 0;
 
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
+  BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_Push, line, wk->stack_ptr, wk->read_ptr );
   return state;
 }
 
 void BTL_Hem_PopState_Impl( HANDLER_EXHIBISION_MANAGER* wk, u32 state, u32 line )
 {
-#if BTL_HEM_OBO
   wk->state = state;
-#else
-  wk->stack_ptr = (state >> 16) & 0xffff;
-  wk->read_ptr  = state & 0xffff;
-#endif
-  BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_Pop, line, wk->stack_ptr, wk->read_ptr );
+  BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_Pop, line, wk->stack_ptr, wk->read_ptr );
 }
 
 BTL_HANDEX_PARAM_HEADER* BTL_Hem_ReadWork( HANDLER_EXHIBISION_MANAGER* wk )
@@ -229,7 +224,7 @@ BTL_HANDEX_PARAM_HEADER* BTL_Hem_PushWork( HANDLER_EXHIBISION_MANAGER* wk, BtlEv
       wk->stack_ptr += size;
 //      wk->read_ptr = wk->stack_ptr;
 
-      BTL_N_PrintfEx( PRINT_CHANNEL, DBGSTR_HEM_PushWork, eq_type, userPokeID, size, wk->stack_ptr );
+      BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_PushWork, eq_type, userPokeID, size, wk->stack_ptr );
       return header;
     }
     else
@@ -257,10 +252,15 @@ void BTL_Hem_PopWork( HANDLER_EXHIBISION_MANAGER* wk, void* exWork )
 
   if( header->size <= wk->stack_ptr )
   {
-    u32 btm = ((u32)(exWork) - (u32)(wk->workBuffer)) + header->size;
+    u32 basePos = ((u32)(exWork) - (u32)(wk->workBuffer));
+    u32 btm = basePos + header->size;
+
     if( btm == wk->stack_ptr )
     {
       wk->stack_ptr -= header->size;
+
+      BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_HEM_PophWork,
+          header->equip, header->userPokeID, header->size, wk->stack_ptr, basePos );
     }
     else
     {

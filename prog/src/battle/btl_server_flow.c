@@ -472,7 +472,6 @@ static void PSetStack_Pop( BTL_SVFLOW_WORK* wk );
 static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear );
 static HandExResult scproc_HandEx_Result( BTL_SVFLOW_WORK* wk );
 static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_header );
-static HandExResult scproc_HandEx_Root( BTL_SVFLOW_WORK* wk, u16 itemNo_Dmy );
 static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_ItemEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -1473,7 +1472,6 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     BTL_Printf("行動プライオリティ決定！ Client{%d-%d}'s actionPri=%d, wazaPri=%d, agility=%d\n",
         i, j, actionPri, wazaPri, agility );
 
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
 
     // プライオリティ値とクライアントIDを対にして配列に保存
@@ -2495,11 +2493,10 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
     {
       // 特殊な逃げメッセージチェック
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      if( scEvent_NigeruExMessage(wk, bpp) ){
-//        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-      }
+      BOOL fSpMsgDisped = scEvent_NigeruExMessage( wk, bpp );
+
       // 何もなければ標準メッセージ
-      else
+      if( !fSpMsgDisped )
       {
         if( fEscapeEnemy ){
           SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeWild, SEQ_SE_NIGERU, BPP_GetID(bpp) );
@@ -2607,14 +2604,13 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
 
   if( posIdx != nextPokeIdx ){
+    // クライアントへの通知は SCQUE_PUT_OP_MemberIn
     BTL_PARTY_SwapMembers( party, posIdx, nextPokeIdx );
-    // @todo クライアントに通知は？
   }
   bpp = BTL_PARTY_GetMemberData( party, posIdx );
   pokeID = BPP_GetID( bpp );
 
   BTL_MAIN_RegisterZukanSeeFlag( wk->mainModule, clientID, bpp );
-
 
   BTL_HANDLER_TOKUSEI_Add( bpp );
   BTL_HANDLER_ITEM_Add( bpp );
@@ -6349,13 +6345,13 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     if( result )
     {
       u32 hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
-      scEvent_ItemEquip( wk, bpp );
 
       scPut_UseItemAct( wk, bpp );
       if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
         scproc_ConsumeItem( wk, bpp, itemID );
       }
 
+      scEvent_ItemEquip( wk, bpp );
       if( scproc_HandEx_Result(wk) == HandExResult_NULL ){
         result = FALSE;
       }
@@ -11240,12 +11236,12 @@ static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 //--------------------------------------------------------------------------
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
-  BTL_N_PrintfEx( 3, DBGSTR_SVFL_MemberInEventBegin, BPP_GetID(bpp) );
+  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventBegin, BPP_GetID(bpp) );
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_MEMBER_IN );
   BTL_EVENTVAR_Pop();
-  BTL_N_PrintfEx( 3, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
+  BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_MemberInEventEnd, BPP_GetID(bpp) );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -12885,13 +12881,13 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
   }
 
   if( handEx_header->failSkipFlag && (fPrevSucceed == FALSE) ){
-    BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExContFail );
+    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_SVFL_HandExContFail );
     return;
   }
   if( handEx_header->autoRemoveFlag ){
     const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParamConst( wk->pokeCon, handEx_header->userPokeID );
     if( BPP_IsDead(bpp) ){
-      BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExContDead );
+      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_SVFL_HandExContDead );
       return;
     }
   }
@@ -12959,7 +12955,7 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
     GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
   }
 
-  BTL_N_PrintfEx( 2, DBGSTR_SVFL_HandExSetResult, fPrevSucceed );
+  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_SVFL_HandExSetResult, fPrevSucceed );
   BTL_Hem_SetResult( &wk->HEManager, fPrevSucceed );
 }
 
@@ -13772,7 +13768,6 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     SCQUE_PUT_OP_ChangeTokusei( wk->que, param->pokeID, param->tokuseiID );
     {
       BTL_EVENT_FACTOR* p = BTL_HANDLER_TOKUSEI_Add( bpp );
-      BTL_N_PrintfEx( 3, DBGSTR_SVFL_HandExTokChangeAdd, param->pokeID, p );
     }
 
 
@@ -13782,9 +13777,9 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
     if( prevTokusei != param->tokuseiID )
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      BTL_N_PrintfEx( 3, DBGSTR_SVFL_HandExTokChangeEventCall, param->pokeID );
+      BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_HandExTokChangeEventCall, param->pokeID );
       scEvent_ChangeTokuseiAfter( wk, param->pokeID );
-      BTL_N_PrintfEx( 3, DBGSTR_SVFL_HandExTokChangeEventCallEnd );
+      BTL_N_PrintfEx( PRINT_CHANNEL_PRESSURE, DBGSTR_SVFL_HandExTokChangeEventCallEnd );
 
       BTL_Hem_PopState( &wk->HEManager, hem_state );
     }

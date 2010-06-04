@@ -204,11 +204,10 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_NET_PerappVoiceRecvedDisable: return "ペラップボイス受信完了（無効データ）netID=%d, empty=%d\n";
   case DBGSTR_NET_PerappVoiceCheckRaw:      return "ペラップボイス受信チェック: ClientID:%d = netID:%d\n";
 
-  case DBGSTR_HEM_Push:     return "[PUSH - %5d] <- sp=%d, rp=%d\n";
-  case DBGSTR_HEM_Pop:      return "[POP  - %5d]    sp=%d, rp=%d ->\n";
-  case DBGSTR_HEM_PushEx:   return "[PUSH - %5d] sp=%d, fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
-  case DBGSTR_HEM_PopEx:    return "[POP  - %5d] sp=%d, fPushed:%d fUsed=%d fPrevSucceed=%d, fSucceed=%d, UseItem=%d\n";
-  case DBGSTR_HEM_PushWork: return "HandEx : type=%d, pokeID=%d, size=%d, sp=%d\n";
+  case DBGSTR_HEM_Push:     return "[STATE PUSH -%5d] << sp=%d, rp=%d\n";
+  case DBGSTR_HEM_Pop:      return "[STATE POP  -%5d]    sp=%d, rp=%d >>\n";
+  case DBGSTR_HEM_PushWork: return "[work PUSH]: type=%d, pokeID=%d, size=%3d, sp=%d\n";
+  case DBGSTR_HEM_PophWork: return "[work  POP]: type=%d, pokeID=%d, size=%3d, sp=%d, myPos=%d,\n";
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";
@@ -365,7 +364,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x, adrs=%p\n";
   case DBGSTR_EVENT_RmvFactorCalling:   return " 呼び出し中に削除されたFactor pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_SkipByNewComerFlg:  return "  新入りにつきスキップ Factor pokeID=%d, adrs=%p\n";
-  case DBGSTR_EVENT_SkipByCallingFlg:   return "  自己呼び出し中につきスキップ Factor pokeID=%d, adrs=%p\n";
+  case DBGSTR_EVENT_SkipByCallingFlg:   return "  自己呼び出し中につきスキップ pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_ClearNewComFlag:    return "　新入りフラグクリア pokeID=%d, adrs=%p\n";
 
   case DBGSTR_EV_AddFactor:             return "[ADD] Factor=%p Depend=%d Type=%d, Pri=%06x [ADD]\n";

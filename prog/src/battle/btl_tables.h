@@ -51,6 +51,13 @@ extern BOOL BTL_TABLES_IsMatchAruseusPlate( u16 itemID );
  */
 extern BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID );
 
+
+/**
+ *  BGタイプから屋外かどうか判定（ダークボール用）
+ */
+extern BOOL BTL_TABLES_IsOutdoorBGType( u16 bgType );
+
+
 extern const WazaID* BTL_TABLES_GetYubiFuruOmmitTable( u32* elems );
 extern BOOL BTL_TABLES_IsYubiFuruOmmit( WazaID waza );
 extern BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID );

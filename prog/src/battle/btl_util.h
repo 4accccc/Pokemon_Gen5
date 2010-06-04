@@ -269,6 +269,14 @@ extern void BTL_UTIL_PRINTSYS_Quit( void );
 
 #ifdef BTL_PRINT_SYSTEM_ENABLE
 
+enum {
+  PRINT_CHANNEL_PRESSURE = 0,
+  PRINT_CHANNEL_EVENTSYS = 3,
+  PRINT_CHANNEL_HEMSYS = 3,
+};
+
+
+
 extern void BTL_UTIL_SetPrintType( BtlPrintType type );
 extern void BTL_UTIL_Printf( const char* filename, int line, u32 channel, u32 strID, ... );
 extern void BTL_UTIL_PrintfSimple( const char* filename, u32 channel, u32 strID, ... );

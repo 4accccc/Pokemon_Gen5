@@ -69,14 +69,15 @@ struct _BTL_EVENT_FACTOR {
   const BtlEventHandlerTable* handlerTable;
   BtlEventSkipCheckHandler  skipCheckHandler;
   BtlEventFactorType  factorType;
-  u32       priority       : 20;  ///< ソートプライオリティ
-  u32       numHandlers    :  8;  ///< ハンドラテーブル要素数
-  u32       callingFlag    :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
-  u32       sleepFlag      :  1;  ///< 休眠フラグ
-  u32       tmpItemFlag    :  1;  ///< アイテム用一時利用フラグ
-  u32       rmReserveFlag  :  1;  ///< 削除予約フラグ
-  u32       callingEventID : 16;  ///< 反応中イベントID
-  u32       _padd          : 16;
+  u32       priority         : 20;  ///< ソートプライオリティ
+  u32       numHandlers      :  8;  ///< ハンドラテーブル要素数
+  u32       callingFlag      :  1;  ///< 呼び出し中を再呼び出ししないためのフラグ
+  u32       sleepFlag        :  1;  ///< 休眠フラグ
+  u32       tmpItemFlag      :  1;  ///< アイテム用一時利用フラグ
+  u32       rmReserveFlag    :  1;  ///< 削除予約フラグ
+  u32       callingEventID   : 16;  ///< 反応中イベントID
+  u32       recallEnableFlag : 1;   ///< 再帰呼び出し許可
+  u32       _padd            : 15;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -242,6 +243,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->skipCheckHandler = NULL;
     newFactor->dependID = dependID;
     newFactor->rmReserveFlag = FALSE;
+    newFactor->recallEnableFlag = FALSE;
     if( isDependPokeFactorType(factorType) ){
       newFactor->pokeID = dependID;
     }else{
@@ -466,7 +468,19 @@ void BTL_EVENT_FACTOR_SetTmpItemFlag( BTL_EVENT_FACTOR* factor )
 {
   factor->tmpItemFlag = TRUE;
 }
-
+//=============================================================================================
+/**
+ * 同一ハンドラの再帰呼び出し許可（アイテム用）
+ *
+ * @param   factor
+ */
+//=============================================================================================
+void BTL_EVENT_FACTOR_SetRecallEnable( BTL_EVENT_FACTOR* factor )
+{
+  if( factor->callingFlag ){
+    factor->recallEnableFlag = TRUE;
+  }
+}
 //=============================================================================================
 /**
  * ワーク内容を設定
@@ -527,7 +541,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
   {
     next_factor = factor->next;
 
-    if( ( factor->callingFlag == FALSE )
+    if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
     &&  ( factor->sleepFlag == FALSE )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
     ){
@@ -542,7 +556,12 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
             factor->callingFlag = TRUE;
             factor->callingEventID = eventID;
             tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
-            factor->callingFlag = FALSE;
+
+            if( factor->recallEnableFlag ){
+              factor->recallEnableFlag = FALSE;
+            }else{
+              factor->callingFlag = FALSE;
+            }
             // 呼び出し中に削除された
             if( factor->rmReserveFlag )
             {
