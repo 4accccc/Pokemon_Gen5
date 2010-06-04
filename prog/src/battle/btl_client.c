@@ -5834,12 +5834,15 @@ static BOOL scProc_ACT_ConfDamage( BTL_CLIENT* wk, int* seq, const int* args )
       if( !BTL_CLIENT_IsChapterSkipMode(wk) ){
         PMSND_PlaySE( SEQ_SE_KOUKA_M );
       }
-      BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
+
+      BTLV_ACT_DamageEffectSingle_Start( wk->viewCore, WAZANO_HATAKU, pos, BTL_TYPEAFF_ABOUT_NORMAL );
+//      BTLV_ACT_SimpleHPEffect_Start( wk->viewCore, pos );
       (*seq)++;
     }
     break;
   case 2:
-    if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+//    if( BTLV_ACT_SimpleHPEffect_Wait(wk->viewCore) )
+    if( BTLV_ACT_DamageEffectSingle_Wait(wk->viewCore) )
     {
       return TRUE;
     }

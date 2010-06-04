@@ -1045,6 +1045,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   // その場に効く道具か判定
   {
     BOOL fEffective = (targetArea == AREA_FRONT);
+    TAYA_Printf("対象Index=%d, デフォルトでは効果=%d\n", targetIdx, fEffective);
 
     if( fEffective == FALSE )
     {
@@ -1054,6 +1055,8 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         ||  ((!ItemEffectTable[i].fShooterOnly) && (BTL_CALC_ITEM_GetParam(itemID, ItemEffectTable[i].effect)))
         ){
           u8 range = ItemEffectTable[i].range;
+          TAYA_Printf("その道具のrange=%d ... \n");
+
           if( range == RANGE_FULL ){
             fEffective = TRUE;
             break;
@@ -1071,6 +1074,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_ItemNoEffPos );
       return TRITEM_RESULT_NORMAL;
     }
+          TAYA_Printf("効果あり\n");
   }
 
   if( wk->bagMode == BBAG_MODE_SHOOTER )
@@ -1108,6 +1112,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       itemParam = BTL_CALC_ITEM_GetParam( itemID, ItemEffectTable[i].effect );
       if( itemParam )
       {
+        TAYA_Printf("アイテムID=%d, 効果=%dあり Idx=%d\n", itemID, itemParam, i);
         if( ItemEffectTable[i].func(wk, target, itemID, itemParam, actParam) ){
           fEffective = TRUE;
         }

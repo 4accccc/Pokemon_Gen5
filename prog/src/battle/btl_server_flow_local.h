@@ -204,16 +204,20 @@ typedef struct {
  */
 typedef struct {
 
-  u32 count;
+  u8 real_hit_count;
+  u8 migawari_hit_count;
+  u8 total_hit_count;
 
   struct {
 
     u16         damage;
     u16         pokeID     : 5;
-    u16         affine     : 4;
+    u16         affine     : 4;   ///< ダメージ相性（ BtlTypeAff @ btl_calc.h ）
+    u16         koraeru    : 4;   ///< こらえ原因（ BppKoraeruCause @ btl_pokeparam.h )
     u16         fCritical  : 1;
     u16         fFixDamage : 1;
-    u16         _padd      : 5;
+    u16         fMigawari  : 1;
+
 
   }record[ BTL_POS_MAX ];
 

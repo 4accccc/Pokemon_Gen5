@@ -540,12 +540,23 @@ void BTL_SICKEVENT_CheckNotEffectByType( BTL_SVFLOW_WORK* flowWk, const BTL_POKE
   }
 
   // 「うちおとす」状態なら、地面ワザが等倍
-  if( BPP_CheckSick(defender, WAZASICK_FLYING_CANCEL) ){
+  if( BPP_CheckSick(defender, WAZASICK_FLYING_CANCEL) )
+  {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_JIMEN ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FLAT_FLAG, TRUE );
     }
   }
-
+}
+/**-------------------------------------------------------------
+ * 逃げ禁止チェックハンドラ
+ *------------------------------------------------------------*/
+void BTL_SICKEVENT_CheckEscapeForbit( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
+{
+  if( (BPP_CheckSick(bpp, WAZASICK_TOOSENBOU))
+  ||  (BPP_CheckSick(bpp, WAZASICK_BIND))
+  ){
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
 }
 /**-------------------------------------------------------------
  * 飛行フラグチェックハンドラ
