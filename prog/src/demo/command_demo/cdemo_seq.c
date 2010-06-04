@@ -49,6 +49,8 @@ static int MainSeq_AlphaBlend( CDEMO_WORK * wk );
 static int MainSeq_BgScrnAnm( CDEMO_WORK * wk );
 static int MainSeq_Main( CDEMO_WORK * wk );
 
+static void LoadBGBmp( ARCHANDLE * ah, u32 id, u32 offset, u32 siz, u32 frm );
+
 
 //============================================================================================
 //	グローバル
@@ -282,9 +284,9 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 	if( wk->bfTick == 0 ){
 		wk->bfTick = OS_GetTick();
 	}else{
-		wk->afTick = OS_GetTick();
-		wk->stTick = wk->stTick + OS_TicksToMicroSeconds( wk->afTick - wk->bfTick );
-		wk->bfTick = wk->afTick;
+		OSTick	tick = OS_GetTick();
+		wk->stTick = wk->stTick + OS_TicksToMicroSeconds( tick - wk->bfTick );
+		wk->bfTick = tick;
 		if( wk->stTick < BGFRM_ANM_FILE_OPEN_TICK ){
 			return CDEMOSEQ_MAIN_BG_SCRN_ANM;
 		}else{
@@ -295,9 +297,9 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 	if( wk->bfTick == 0 ){
 		wk->bfTick = OS_GetTick();
 	}else{
-		wk->afTick = OS_GetTick();
-		wk->stTick = wk->stTick + OS_TicksToMicroSeconds( wk->afTick - wk->bfTick );
-		wk->bfTick = wk->afTick;
+		OSTick	tick = OS_GetTick();
+		wk->stTick = wk->stTick + OS_TicksToMicroSeconds( tick - wk->bfTick );
+		wk->bfTick = tick;
 		if( wk->stTick < dat->waitTick ){
 			return CDEMOSEQ_MAIN_BG_SCRN_ANM;
 		}else{
@@ -305,17 +307,16 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		}
 	}
 
+/*
 	switch( wk->bgsa_seq ){
 	case 0:
 		{
 			void * buf;
-//			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin, TRUE, HEAPID_COMMAND_DEMO_L );
 			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, 0, TRUE, HEAPID_COMMAND_DEMO_L );
 			DC_FlushRange( buf, dat->byteSize );
 	    GX_LoadBG2Bmp( buf, dat->byteOffset, dat->byteSize );
 			GFL_HEAP_FreeMemory( buf );
 			wk->bgsa_num += 1;
-//			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
 			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
 			DC_FlushRange( buf, dat->byteSize );
 	    GX_LoadBG3Bmp( buf, dat->byteOffset, dat->byteSize );
@@ -344,7 +345,6 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		GFL_BG_SetPriority( GFL_BG_FRAME2_M+((wk->bgsa_load+1)&1), 1 );
 		if( wk->bgsa_num < dat->frmMax ){
 			void * buf;
-//			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, NARC_op_demo_op001_LZ_bin+wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
 			buf = GFL_ARCHDL_UTIL_Load( wk->gra_ah, wk->bgsa_num, TRUE, HEAPID_COMMAND_DEMO_L );
 			DC_FlushRange( buf, dat->byteSize );
 			if( ((wk->bgsa_load+1)&1) == 0 ){
@@ -370,9 +370,60 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		wk->bgsa_cnt++;
 		break;
 	}
+*/
+	switch( wk->bgsa_seq ){
+	case 0:
+		LoadBGBmp( wk->gra_ah, wk->bgsa_num, dat->byteOffset, dat->byteSize, 0 );
+		wk->bgsa_num += 1;
+		LoadBGBmp( wk->gra_ah, wk->bgsa_num, dat->byteOffset, dat->byteSize, 1 );
+		wk->bgsa_num += 1;
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M, 0 );
+		GFL_BG_SetPriority( GFL_BG_FRAME3_M, 1 );
+		wk->bgsa_seq = 1;
+		break;
 
-//	OS_Printf( "seq tick = %d\n", OS_TicksToMicroSeconds( OS_GetTick() ) );
+	case 1:
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M+(wk->bgsa_load^1), 0 );
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M+wk->bgsa_load, 1 );
+		LoadBGBmp( wk->gra_ah, wk->bgsa_num, dat->byteOffset, dat->byteSize, wk->bgsa_load );
+		wk->bgsa_num += 1;
+		if( wk->bgsa_num >= dat->frmMax ){
+			wk->bgsa_seq = 2;
+		}else{
+			wk->bgsa_load ^= 1;
+		}
+		break;
+
+	case 2:
+		return CDEMOSEQ_MAIN_MAIN;
+	}
 
 	return CDEMOSEQ_MAIN_BG_SCRN_ANM;
 }
 
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		BGスクリーンアニメ・BGグラフィック読み込み
+ *
+ * @param		ah		アークハンドル
+ * @param		id		グラフィックID
+ * @param		offset	読み込み先オフセット（バイト単位）
+ * @param		siz			グラフィックデータサイズ
+ * @param		frm			読込先BG　0 = BG2, 1 = BG3
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void LoadBGBmp( ARCHANDLE * ah, u32 id, u32 offset, u32 siz, u32 frm )
+{
+	void * buf = GFL_ARCHDL_UTIL_Load( ah, id, TRUE, HEAPID_COMMAND_DEMO_L );
+
+	DC_FlushRange( buf, siz );
+	if( frm == 0 ){
+    GX_LoadBG2Bmp( buf, offset, siz );
+	}else{
+    GX_LoadBG3Bmp( buf, offset, siz );
+	}
+
+	GFL_HEAP_FreeMemory( buf );
+}

@@ -612,10 +612,12 @@ static int Comm_BgScreenAnime( CDEMO_WORK * wk, const int * comm )
 //	wk->bgsa_pal  = NCLR_START_IDX + comm[1];
 //	wk->bgsa_scr  = NSCR_START_IDX + comm[1];
 	wk->bgsa_num  = 0;
-	wk->bgsa_wait = comm[1];
-	wk->bgsa_cnt  = 0;
+//	wk->bgsa_wait = comm[1];
+//	wk->bgsa_cnt  = 0;
 	wk->bgsa_load = 0;
 	wk->bgsa_seq  = 0;
+	wk->bfTick = 0;
+	wk->stTick = 0;
 
 	wk->main_seq = CDEMOSEQ_MAIN_BG_SCRN_ANM;
 

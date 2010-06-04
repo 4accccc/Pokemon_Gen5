@@ -49,17 +49,17 @@ typedef struct {
 	// ＢＧスクリーン切り替えアニメ
 //	u16	frmMax;
 	u16	bgsa_num;
-	u8	bgsa_wait;
-	u8	bgsa_cnt;
-	u16	bgsa_load;
-	u16	bgsa_seq;
+	u8	bgsa_load;
+	u8	bgsa_seq;
+	OSTick	bfTick;
+	OSTick	stTick;
+//	u8	bgsa_wait;
+//	u8	bgsa_cnt;
 //	int	bgsa_chr;
 //	int	bgsa_pal;
 //	int	bgsa_scr;
 //	OSTick	dfTick;
-	OSTick	bfTick;
-	OSTick	afTick;
-	OSTick	stTick;
+//	OSTick	afTick;
 //	s64	stTick;
 
 	int	main_seq;
