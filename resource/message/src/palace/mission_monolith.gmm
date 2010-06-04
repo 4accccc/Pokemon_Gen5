@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T18:23:17"/>
+	<create user="ohmori" host="W00223" date="2010-06-03T23:39:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -372,7 +372,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="685"/>
 		<band id="3" index="3" style="0000" width="685"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -942,7 +942,7 @@
 
 制限時間　[2:02:３桁:2]秒
 
-ごほうび　：　デルダマ　[2:01:２桁:3]こ</language>
+ごほうび　：　デルダマ　[2:01:２桁:3]個</language>
 	</row>
 
 	<row id="plc_mism_02_12" back-color="#80ff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -963,7 +963,7 @@
 
 制限時間　[2:02:３桁:2]秒
 
-ごほうび　：　デルダマ　[2:01:２桁:3]こ</language>
+ごほうび　：　デルダマ　[2:01:２桁:3]個</language>
 	</row>
 
 	<row id="plc_mism_02_13" back-color="#80ff80,,,,,#ffff80,,,,,,#ffff80,,,,,,">
@@ -984,7 +984,7 @@
 
 制限時間　[2:02:３桁:2]秒
 
-ごほうび　：　デルダマ　[2:01:２桁:3]こ</language>
+ごほうび　：　デルダマ　[2:01:２桁:3]個</language>
 	</row>
 
 	<row id="plc_mism_03_01" back-color="#ffff80,,,#ffff80,,#80ff80,,,,,,#80ff80,,,,,,">
