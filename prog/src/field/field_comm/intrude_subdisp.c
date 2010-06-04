@@ -2076,7 +2076,8 @@ static void _IntSub_InfoMsgUpdate(INTRUDE_SUBDISP_PTR intsub, INTRUDE_COMM_SYS_P
     //ミッション発動中の場合はミッション関連のメッセージを優先して表示
     //ミッションは状況を示すメッセージの為、キューに貯めずに現在の状態をそのまま表示
     
-    if(intsub->comm.m_status == MISSION_STATUS_EXE && intcomm != NULL){
+    if(intsub->comm.m_status == MISSION_STATUS_EXE && intcomm != NULL
+        && intsub->comm.p_md->cdata.type != MISSION_TYPE_ITEM){
       const PALACE_ZONE_SETTING *tar_zonesetting;
       FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(intsub->gsys);
       INTRUDE_STATUS *ist = &intcomm->intrude_status[intsub->comm.p_md->target_info.net_id];
