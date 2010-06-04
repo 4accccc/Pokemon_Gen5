@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-03T21:32:26"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-06-04T14:52:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1513" top="207" right="2013" bottom="817" maximized="no" rayout="Vertical2">
+	<dialog left="-1274" top="112" right="-569" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
-		<band id="0" index="0" style="0000" width="492"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="325"/>
-		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1412,20 +1412,17 @@
 
 	<row id="msg_gtc_error_005">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳに　せつぞく
-できませんでした[BE:01:ページ切り替え（クリア）]
-うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+できませんでした[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳに　接続
 できませんでした[BE:01:ページ切り替え（クリア）]
-受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
+</language>
 	</row>
 
 	<row id="msg_gtc_error_006">
 		<language name="JPN" font=" 1:small" width="216">ＧＴＳとの　つうしんが
-せつだん　されました[BE:01:ページ切り替え（クリア）]
-うけつけに　もどります[BE:01:ページ切り替え（クリア）]</language>
+せつだん　されました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　通信が
-切断されました[BE:01:ページ切り替え（クリア）]
-受付に　もどります[BE:01:ページ切り替え（クリア）]</language>
+切断されました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_gtc_error_006_01">
