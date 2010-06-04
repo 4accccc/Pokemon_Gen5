@@ -1455,7 +1455,9 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       if( ( biw->main_loop_tcb_flag == TRUE ) &&
         ( ( biw->type == BTLV_INPUT_TYPE_DOUBLE ) || ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ) )
       { 
+        BTLV_EFFECT_Stop();
         BTLV_EFFECT_Add( BTLEFF_3vs3_CAMERA_ZOOMOUT );
+        BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NO_STOP );
       }
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )

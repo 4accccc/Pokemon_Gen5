@@ -4478,6 +4478,23 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
       }
     }
     break;
+  case BTLEFF_POKEMON_SIDE_MINE:
+  case BTLEFF_POKEMON_SIDE_ENEMY:
+    {
+      BtlvMcssPos check_pos;
+      BtlvMcssPos start_pos = ( pos_flag == BTLEFF_POKEMON_SIDE_MINE ) ? BTLV_MCSS_POS_AA : BTLV_MCSS_POS_BB;
+
+      pos_cnt = 0;
+      for( check_pos = start_pos ; check_pos <= BTLV_MCSS_POS_F ; check_pos += 2 )
+      {
+        if( BTLV_EFFECT_CheckExist( check_pos ) )
+        {
+          pos[ pos_cnt ] = check_pos;
+          pos_cnt++;
+        }
+      }
+    }
+    break;
   default:
     OS_TPrintf("定義されていないフラグが指定されています\n");
     GF_ASSERT( 0 );
@@ -5036,6 +5053,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     {
       spin_axis = SPL_FLD_SPIN_AXIS_TYPE_X;
     }
+    OS_Printf("angle:%f axis:%d\n",FX_FX32_TO_F32(angle),spin_axis);
     GFL_PTC_SetEmitterSpinAxisType( emit, &spin_axis );
 
     GFL_PTC_SetEmitterAxis( emit, &dir );

@@ -2090,34 +2090,51 @@ static  void  camera_work_check( void )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      static  int camera_work_num[ 3 ] = {
+      static  int camera_work_num[ 6 ] = {
         BTLEFF_CAMERA_WORK,
-        BTLEFF_CAMERA_WORK_MIDDLE,
-        BTLEFF_CAMERA_WORK_SHORT,
+        BTLEFF_CAMERA_WORK_ROTATE_R_L,
+        BTLEFF_CAMERA_WORK_ROTATE_L_R,
+        BTLEFF_CAMERA_WORK_UPDOWN_E_M,
+        BTLEFF_CAMERA_WORK_UPDOWN_M_E,
+        BTLEFF_CAMERA_WORK_TRIANGLE,
       };
-      static  int wcs_camera_work_num[ 2 ] = {
-        BTLEFF_WCS_CAMERA_WORK_E_M,
-        BTLEFF_WCS_CAMERA_WORK_M_E,
+      static  int wcs_camera_work_num[ 6 ] = {
+        //BTLEFF_WCS_CAMERA_WORK_E_M,
+        //BTLEFF_WCS_CAMERA_WORK_M_E,
+        BTLEFF_CAMERA_WORK,
+        BTLEFF_CAMERA_WORK_ROTATE_R_L,
+        BTLEFF_CAMERA_WORK_ROTATE_L_R,
+        BTLEFF_CAMERA_WORK_UPDOWN_E_M,
+        BTLEFF_CAMERA_WORK_UPDOWN_M_E,
+        BTLEFF_CAMERA_WORK_TRIANGLE,
       };
       int eff_no;
 
       if( BTL_MAIN_GetSetupStatusFlag( bew->besp.mainModule, BTL_STATUS_FLAG_CAMERA_WCS ) )
       {
-        eff_no = wcs_camera_work_num[ bew->camera_work_num ];
-        bew->camera_work_num ^= 1;
-      }
-      else
-      {
-        eff_no = camera_work_num[ bew->camera_work_num ];
         while( 1 )
         {
-          int no = GFL_STD_MtRand( 3 );
+          int no = GFL_STD_MtRand( NELEMS( wcs_camera_work_num ) );
           if( bew->camera_work_num != no )
           {
             bew->camera_work_num = no;
             break;
           }
         }
+        eff_no = wcs_camera_work_num[ bew->camera_work_num ];
+      }
+      else
+      {
+        while( 1 )
+        {
+          int no = GFL_STD_MtRand( NELEMS( camera_work_num ) );
+          if( bew->camera_work_num != no )
+          {
+            bew->camera_work_num = no;
+            break;
+          }
+        }
+        eff_no = camera_work_num[ bew->camera_work_num ];
       }
       BTLV_EFFECT_Add( eff_no );
       bew->execute_flag = TRUE;
