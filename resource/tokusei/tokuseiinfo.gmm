@@ -812,10 +812,10 @@
 	</row>
 
 	<row id="TOKUSEIINFO_060">
-		<language name="JPN" width="216">どうぐを　とられない。
-</language>
-		<language name="JPN_KANJI" width="216">道具を　取られない。
-</language>
+		<language name="JPN" width="216">ねんちゃくして
+どうぐを　まもる。</language>
+		<language name="JPN_KANJI" width="216">ねんちゃくして
+道具を　守る。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_061">
