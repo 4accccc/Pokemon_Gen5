@@ -261,18 +261,21 @@ static void STA_POKE_UpdatePokeFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
   }
   
   //–Úƒpƒ`
-  pokeWork->mepathiCnt += GFUser_GetPublicRand(2);
-  if( pokeWork->mepathiCnt > STA_POKE_EYE_BLINK_CNT )
+  if( pokeWork->mepachiFlg == TRUE )
   {
-    MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , TRUE );
-  }
-  else
-  {
-    MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , FALSE );
-  }
-  if( pokeWork->mepathiCnt > STA_POKE_EYE_BLINK_CNT+STA_POKE_EYE_BLINK_CNT_OFS )
-  {
-    pokeWork->mepathiCnt = GFUser_GetPublicRand(STA_POKE_EYE_BLINK_CNT)/3;
+    pokeWork->mepathiCnt += GFUser_GetPublicRand(2);
+    if( pokeWork->mepathiCnt > STA_POKE_EYE_BLINK_CNT )
+    {
+      MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , TRUE );
+    }
+    else
+    {
+      MUS_POKE_DRAW_SetMepachiFlg( pokeWork->drawWork , FALSE );
+    }
+    if( pokeWork->mepathiCnt > STA_POKE_EYE_BLINK_CNT+STA_POKE_EYE_BLINK_CNT_OFS )
+    {
+      pokeWork->mepathiCnt = GFUser_GetPublicRand(STA_POKE_EYE_BLINK_CNT)/3;
+    }
   }
 }
 
