@@ -264,9 +264,11 @@
 #define	BTLEFF_BG_ALPHA_ROUNDTRIP_LONG	      ( EFFTOOL_CALCTYPE_ROUNDTRIP_LONG )
 
 //BG表示/非表示
-#define	BTLEFF_STAGE			( 0 )
-#define	BTLEFF_FIELD			( 1 )
-#define	BTLEFF_EFFECT			( 2 )
+#define	BTLEFF_STAGE			  ( 0 )
+#define	BTLEFF_FIELD			  ( 1 )
+#define	BTLEFF_EFFECT			  ( 2 )
+#define	BTLEFF_STAGE_MINE	  ( 3 )
+#define	BTLEFF_STAGE_ENEMY	( 4 )
 
 #define	BTLEFF_VANISH_OFF	( 0 )
 #define	BTLEFF_VANISH_ON	( 1 )
@@ -1713,8 +1715,8 @@ ex)
  * @param	bg_num	操作する背景
  * @param	sw			表示/非表示を指定
  *
- * #param	COMBOBOX_TEXT	お盆  フィールド  エフェクト
- * #param	COMBOBOX_VALUE  BTLEFF_STAGE  BTLEFF_FIELD  BTLEFF_EFFECT
+ * #param	COMBOBOX_TEXT	お盆  フィールド  エフェクト  お盆（自分）  お盆（相手）
+ * #param	COMBOBOX_VALUE  BTLEFF_STAGE  BTLEFF_FIELD  BTLEFF_EFFECT BTLEFF_STAGE_MINE BTLEFF_STAGE_ENEMY
  * #param	COMBOBOX_TEXT 非表示  表示
  * #param	COMBOBOX_VALUE  BTLEFF_VANISH_ON BTLEFF_VANISH_OFF
  */

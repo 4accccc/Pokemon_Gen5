@@ -1198,13 +1198,19 @@ void  BTLV_EFFECT_SetVanishFlag( int model, int flag )
   switch( model )
   {
   case BTLEFF_STAGE:
-    BTLV_STAGE_SetVanishFlag( bew->bsw, flag );
+    BTLV_STAGE_SetVanishFlag( bew->bsw, BTLV_STAGE_MAX, flag );
     break;
   case BTLEFF_FIELD:
     BTLV_FIELD_SetVanishFlag( bew->bfw, flag );
     break;
   case BTLEFF_EFFECT:
     GFL_BG_SetVisible( GFL_BG_FRAME3_M, flag ^ 1 );
+    break;
+  case BTLEFF_STAGE_MINE:
+    BTLV_STAGE_SetVanishFlag( bew->bsw, BTLV_STAGE_MINE, flag );
+    break;
+  case BTLEFF_STAGE_ENEMY:
+    BTLV_STAGE_SetVanishFlag( bew->bsw, BTLV_STAGE_ENEMY, flag );
     break;
   }
 }

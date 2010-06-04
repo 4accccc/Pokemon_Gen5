@@ -62,8 +62,8 @@ struct _BTLV_STAGE_WORK
 	GFL_G3D_OBJ*            stage_obj[ BTLV_STAGE_MAX ];
 	GFL_G3D_OBJSTATUS       stage_status[ BTLV_STAGE_MAX ];
   EFFTOOL_PAL_FADE_WORK   epfw;
-  u32                     vanish_flag :1;
-  u32                                 :31;
+  u32                     vanish_flag :2;
+  u32                                 :30;
 	HEAPID		  	          heapID;
 };
 
@@ -351,13 +351,11 @@ void	BTLV_STAGE_Draw( BTLV_STAGE_WORK* bsw )
 {
 	int	i;
 
-  if( bsw->vanish_flag )
-  { 
-    return;
-  }
-
 	for( i = 0 ; i < BTLV_STAGE_MAX ; i++ ){
-		GFL_G3D_DRAW_DrawObject( bsw->stage_obj[ i ], &bsw->stage_status[ i ] );
+    if( ( bsw->vanish_flag & 1 << i ) == 0 )
+    { 
+		  GFL_G3D_DRAW_DrawObject( bsw->stage_obj[ i ], &bsw->stage_status[ i ] );
+    }
 	}
 }
 
@@ -403,12 +401,34 @@ BOOL	BTLV_STAGE_CheckExecutePaletteFade( BTLV_STAGE_WORK* bsw )
  *	バニッシュフラグセット
  *
  * @param[in]	bsw   BTLV_STAGE管理ワークへのポインタ
+ * @param[in]	dir   セットするお盆の方向
  * @param[in]	flag  セットするフラグ( BTLV_STAGE_VANISH_ON BTLV_STAGE_VANISH_OFF )
  */
 //============================================================================================
-void	BTLV_STAGE_SetVanishFlag( BTLV_STAGE_WORK* bsw, BTLV_STAGE_VANISH flag )
+void	BTLV_STAGE_SetVanishFlag( BTLV_STAGE_WORK* bsw, BTLV_STAGE_DIR dir, BTLV_STAGE_VANISH flag )
 { 
-  bsw->vanish_flag = flag;
+  if( dir == BTLV_STAGE_MAX )
+  { 
+    if( flag )
+    { 
+      bsw->vanish_flag = BTLV_STAGE_VANISH_ALL_ON;
+    }
+    else
+    { 
+      bsw->vanish_flag = BTLV_STAGE_VANISH_OFF;
+    }
+  }
+  else
+  { 
+    if( flag )
+    { 
+      bsw->vanish_flag |= 1 << dir; 
+    }
+    else
+    { 
+      bsw->vanish_flag &= ( 0x03 ^ ( 1 << dir ) );
+    }
+  }
 }
 
 //============================================================================================
