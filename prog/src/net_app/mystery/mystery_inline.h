@@ -351,7 +351,6 @@ static inline int Mystery_CreateItem(const GIFT_PACK_DATA* pPack)
     return ITEM_DUMMY_DATA;
   }
 
-
   return pGift->itemNo;
 }
 
@@ -369,5 +368,14 @@ static inline int Mystery_CreateGPower(const GIFT_PACK_DATA* pPack)
   if(pPack->gift_type != MYSTERYGIFT_TYPE_POWER){
     return GPOWER_ID_NULL;
   }
-  return pGift->type;
+
+  //配布データ以外が来たら不正
+  if( GPOWER_ID_EGG_INC_S <= pGift->type && pGift->type <= GPOWER_ID_CAPTURE_S )
+  {
+    return pGift->type;
+  }
+  else
+  {
+    return GPOWER_ID_NULL;
+  }
 }

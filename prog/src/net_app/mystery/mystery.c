@@ -3217,7 +3217,7 @@ static void UTIL_CreateGuideText( MYSTERY_WORK *p_wk, HEAPID heapID )
       },
       //–{•¶
       {
-        2,7,28,13, 0, NULL, MYSTERY_MSGWIN_POS_ABSOLUTE, 0, 0, MYSTERY_MSGWIN_WHITE_COLOR,
+        2,6,28,15, 0, NULL, MYSTERY_MSGWIN_POS_ABSOLUTE, 0, 4, MYSTERY_MSGWIN_WHITE_COLOR,
       },
     };
     tbl[0].p_strbuf = GFL_STR_CreateBuffer( GIFT_DATA_CARD_TITLE_MAX+1, heapID );
