@@ -290,14 +290,14 @@ EVENT_START   ev_pos_r07_movepoke_01
 	//予約スクリプト
 	_RESERVE_SCRIPT( SCRID_RESERVE_R07R0301_MOVEPOKE_01 )
 	
+	//マップ遷移するのでドアアニメの削除をしていません
+	//_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )		//ドア解放
+	
 	//シーン切り替え
 	_MAP_CHANGE( ZONE_ID_R07R0301, 6, 9, DIR_UP )
 	
 	//カメラ操作終了
 	_CAMERA_END()		//カメラ操作終了
-	
-	//マップ遷移するのでドアアニメの削除をしていません
-	//_BMODEL_ANIME_DELETE( DOOR_ANIME_ID )		//ドア解放
 	
 	}
 	
