@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-05T16:02:45"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-05T17:20:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,13 +357,13 @@
 		</language>
 	</columns>
 
-	<dialog left="1421" top="171" right="1921" bottom="797" maximized="no" rayout="Vertical2">
+	<dialog left="104" top="166" right="809" bottom="794" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
-		<band id="0" index="0" style="0000" width="492"/>
+		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="325"/>
-		<band id="3" index="3" style="0000" width="591"/>
+		<band id="2" index="2" style="0000" width="697"/>
+		<band id="3" index="3" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -7778,48 +7778,48 @@ BEAUTIFULは　美しいという　意味
 こちらを　じっと　みてくる▽
 ポケモンが　いまして▼
 あまりにも　じっと　みるものですから
-さいしょ　わたくしに▽
+さいしょ　アタクシに▽
 みとれているのかと▽
 おもったんですけれど▼
 うみの　ほうを　スッと　ゆびさしてから
 きえてしまったのですわ▼
-わたくし　きになって
+アタクシ　きになって
 うみに　ちかづきましたの▽
 ……そしたら　なんてこと！▼
 ガケの　うえから
 おおきな　いわが　おちてきましたの！▼
-たった　いままで　わたくしが
+たった　いままで　アタクシが
 たっていた　ところに！▼
 あの　ポケモンは　ぜったい
 みらいを　よんでいたに▽
 ちがいありません！▼
-うつくしい　わたくしの　みらいを
+うつくしい　アタクシの　みらいを
 まもって　くださったのですわ！▼
 イッシュニュース『……いじょう
 Ｄさんの　レポートでした</language>
 		<language name="JPN_KANJI" width="256">イッシュニュース『次の　ニュースは
 未来を　読む　ポケモンについてです▼
 Ｄさん『アタクシ　優雅に　浜辺を
-サンポして　いましたの▼
+散歩して　いましたの▼
 そしたら　遠くに　なにやら
 こちらを　じっと　見てくる▽
 ポケモンが　いまして▼
 あまりにも　じっと　見るものですから
-最初　わたくしに　みとれているのかと▽
+最初　アタクシに　みとれているのかと▽
 思ったんですけれど▼
 海の方を　スッと　指さしてから
 消えて　しまったのですわ▼
-わたくし　気になって
+アタクシ　気になって
 海に　近づきましたの▽
 ……そしたら　なんてこと！▼
 ガケの　上から　大きな　岩が
 落ちてきましたの！▼
-たった　今まで　わたくしが
+たった　今まで　アタクシが
 立っていた　ところに！▼
 あの　ポケモンは　絶対
 未来を　読んでいたに▽
 違いありません！▼
-美しい　わたくしの　未来を
+美しい　アタクシの　未来を
 守って　くださったのですわ！▼
 イッシュニュース『……以上
 Ｄさんの　レポートでした</language>
