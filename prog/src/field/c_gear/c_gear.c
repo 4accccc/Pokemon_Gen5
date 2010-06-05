@@ -2960,6 +2960,9 @@ static void _createSubBg(C_GEAR_WORK* pWork)
 
   // アルファ値設定
   _setUpSubAlpha( pWork );
+
+  // 一応ｗｉｎｄｏｗを消しておく
+  GXS_SetVisibleWnd( GX_WNDMASK_NONE );
 }
 
 //----------------------------------------------------------------------------
@@ -4197,10 +4200,6 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   C_GEAR_WORK *pWork = NULL;
   BOOL ret = FALSE;
 
-  //GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_CGEAR, 0x8000 );
-
-  // OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
-
   pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, sizeof( C_GEAR_WORK ) );
   pWork->heapID = HEAPID_FIELD_SUBSCREEN;
   pWork->pCGSV = pCGSV;
@@ -4280,8 +4279,6 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
   }
 
 
-  //  _PFadeToBlack(pWork);
-  //  OS_TPrintf("zzzz start field_heap = %x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_FIELD_SUBSCREEN));
 
   //SleepMode_ColorUpdateExの結果を実行
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
@@ -4345,17 +4342,6 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
   // スリープチェック
   _cgear_SleepCheck( pWork, bAction );
-
-  /*
-  // スリープ時は強制停止
-  if( SleepMode_IsSleep( pWork ) && 
-      (pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS) ){
-    //イベントによる着信音の制御はfield_event_check.cに任せる2010.05.14 tamada
-    //FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-    //FSND_StopTVTRingTone( fsnd );
-    pWork->tvt_snd = FALSE;
-  }
-  */
 
   if( !SleepMode_IsSleep( pWork ) )
   {
