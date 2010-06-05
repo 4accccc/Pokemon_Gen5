@@ -284,6 +284,7 @@ typedef enum
   SOUND_STEP_WAIT,
   SOUND_STEP_FIELD_FADE_OUT,
   SOUND_STEP_INTRO,
+  SOUND_STEP_SHINKA_LOAD,
   SOUND_STEP_SHINKA,
   SOUND_STEP_SHINKA_PUSH,
   SOUND_STEP_SHINKA_FADE_OUT,
@@ -362,6 +363,7 @@ typedef struct
   // OBJ
   u32                         obj_res[OBJ_RES_MAX];
   GFL_CLWK*                   obj_clwk[OBJ_CELL_MAX];
+  BOOL                        obj_exist;  // TRUEのときobj_res, obj_clwk全てあり、FALSEのとき全てなし
 
   // TEXT
   PRINT_STREAM*               text_stream;
@@ -1740,13 +1742,15 @@ static void ShinkaDemo_Init( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
   ShinkaDemo_BgInit( param, work );
   // OBJ
   {
+    work->obj_exist = FALSE;
     if( work->step == STEP_FADE_IN_BEFORE )
     {
       ShinkaDemo_ObjInit( param, work );
     }
     else
     {
-      ShinkaDemo_ObjInitAfterEvolution( param, work );
+      // OBJ幕が開いたところから始まるので、OBJは生成しないことにする(OBJは開けばBGと同じところに来るので、なくてもいい)
+      //ShinkaDemo_ObjInitAfterEvolution( param, work );
     }
   }
 
@@ -1931,6 +1935,16 @@ static void ShinkaDemo_SoundMain( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* wo
       }
     }
     break;
+  case SOUND_STEP_SHINKA_LOAD:
+    {
+      // BGMの分割ロードを利用してみる
+      BOOL play_start = PMSND_PlayBGMdiv( SEQ_BGM_KOUKAN, &(work->sound_div_seq), FALSE );
+      if( play_start )
+      {
+        work->sound_step = SOUND_STEP_SHINKA;
+      }
+    }
+    break;
   case SOUND_STEP_SHINKA:
     {
     }
@@ -2007,10 +2021,20 @@ static BOOL ShinkaDemo_SoundCheckPlayIntro( SHINKA_DEMO_PARAM* param, SHINKA_DEM
 }
 static void ShinkaDemo_SoundPlayShinka( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
+/*
+BGMの分割ロードを利用してみることにしたのでコメントアウト
   if( work->sound_step == SOUND_STEP_WAIT )
   {
     PMSND_PlayBGM(SEQ_BGM_KOUKAN);  // Shinkaの曲名がKOUKAN
     work->sound_step = SOUND_STEP_SHINKA;
+  }
+*/
+  if( work->sound_step == SOUND_STEP_WAIT )
+  {
+    // BGMの分割ロードを利用してみる
+    work->sound_div_seq = 0;
+    PMSND_PlayBGMdiv( SEQ_BGM_KOUKAN, &(work->sound_div_seq), TRUE );  // Shinkaの曲名がKOUKAN
+    work->sound_step = SOUND_STEP_SHINKA_LOAD;
   }
 }
 static void ShinkaDemo_SoundPushShinka( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
@@ -2170,6 +2194,8 @@ static void ShinkaDemo_ObjInit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work
         work->heap_id );
     GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[i], FALSE );
   }
+
+  work->obj_exist = TRUE;
 }
 static void ShinkaDemo_ObjInitAfterEvolution( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
@@ -2186,40 +2212,59 @@ static void ShinkaDemo_ObjInitAfterEvolution( SHINKA_DEMO_PARAM* param, SHINKA_D
 }
 static void ShinkaDemo_ObjExit( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  // CLWK破棄
-  u8 i;
-  for( i=0; i<OBJ_CELL_MAX; i++ )
+  if( work->obj_exist )
   {
-    GFL_CLACT_WK_Remove( work->obj_clwk[i] );
-  }
+    // CLWK破棄
+    u8 i;
+    for( i=0; i<OBJ_CELL_MAX; i++ )
+    {
+      GFL_CLACT_WK_Remove( work->obj_clwk[i] );
+    }
 
-  // リソース破棄
-  GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_BELT_NCE] );
-  GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_BELT_NCG] );
-  GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_BELT_NCL] );
+    // リソース破棄
+    GFL_CLGRP_CELLANIM_Release( work->obj_res[OBJ_RES_BELT_NCE] );
+    GFL_CLGRP_CGR_Release( work->obj_res[OBJ_RES_BELT_NCG] );
+    GFL_CLGRP_PLTT_Release( work->obj_res[OBJ_RES_BELT_NCL] );
+
+    work->obj_exist = FALSE;
+  }
 }
 static void ShinkaDemo_ObjStartAnime( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  u8 i;
-  for( i=0; i<OBJ_CELL_MAX; i++ )
+  if( work->obj_exist )
   {
-    GFL_CLACT_WK_SetAnmIndex( work->obj_clwk[i], 0 );
-    GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[i], TRUE );
+    u8 i;
+    for( i=0; i<OBJ_CELL_MAX; i++ )
+    {
+      GFL_CLACT_WK_SetAnmIndex( work->obj_clwk[i], 0 );
+      GFL_CLACT_WK_SetAutoAnmFlag( work->obj_clwk[i], TRUE );
+    }
   }
 }
 static BOOL ShinkaDemo_ObjIsEndAnime( SHINKA_DEMO_PARAM* param, SHINKA_DEMO_WORK* work )
 {
-  BOOL b_end = TRUE;
-  u8 i;
-  for( i=0; i<OBJ_CELL_MAX; i++ )
+  if( work->obj_exist )
   {
-    if( GFL_CLACT_WK_CheckAnmActive( work->obj_clwk[i] ) )
+    BOOL b_end = TRUE;
+    u8 i;
+    for( i=0; i<OBJ_CELL_MAX; i++ )
     {
-      b_end = FALSE;
-      break;
+      if( GFL_CLACT_WK_CheckAnmActive( work->obj_clwk[i] ) )
+      {
+        b_end = FALSE;
+        break;
+      }
     }
+    if( b_end )  // OBJ幕が開き切ったら、もうなくてもいいのでなしにする
+    {
+      ShinkaDemo_ObjExit( param, work );
+    }
+    return b_end;
   }
-  return b_end;
+  else
+  {
+    return TRUE;
+  }
 }
 
 //-------------------------------------

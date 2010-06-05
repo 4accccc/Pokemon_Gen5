@@ -207,7 +207,7 @@ static const PARTICLE_PLAY_DATA particle_play_data_tbl[] =
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA01 },
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA02 },
   {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA03 },
-  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA04 },
+  {    0,     PARTICLE_SPA_FILE_0,         DEMO_SINKA04 },  // Ç±ÇÍÇÇ»Ç≠ÇπÇŒèàóùóéÇøÇµÇ»Ç≠Ç»ÇÈ
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA05 },
   {  500,     PARTICLE_SPA_FILE_0,         DEMO_SINKA06 },
   {  755/*563*//*620*/,     PARTICLE_SPA_FILE_0,         DEMO_SINKA07 },

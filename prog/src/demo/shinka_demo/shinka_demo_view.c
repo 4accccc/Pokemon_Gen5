@@ -12,6 +12,12 @@
 //#define DEBUG_CODE
 
 
+#define DEF_SPEED_UP_A  // これが定義されているとき、スピードアップされている
+#define DEF_SPEED_UP_B  // これが定義されているとき、スピードアップされている(MTX_RotY43)(うまくスピードアップできておらずかえって遅いかも)
+//Cは定義しないほうが早い#define DEF_SPEED_UP_C  // これが定義されているとき、スピードアップされている(VEC_Normalize)(うまくスピードアップできておらずかえって遅いかも)
+#define DEF_SPEED_UP_D  // これが定義されているとき、スピードアップされている(FX_InvSqrt)(うまくスピードアップできておらずかえって遅いかも)
+
+
 // インクルード
 #include <gflib.h>
 #include "system/gfl_use.h"
@@ -213,11 +219,33 @@ INDEPENDENT_SPIRAL_INDIVIDUAL_STATE;
 #define INDEPENDENT_SPIRAL_ZX_END_SPEED   (1)   // INDEPENDENT_SPIRAL_INDIVIDUAL_STATE_END状態のZX方向のスピード
 #define INDEPENDENT_SPIRAL_Y_END_SPEED    (1)   // INDEPENDENT_SPIRAL_INDIVIDUAL_STATE_END状態のY方向のスピード
 
+
+// 事前に計算できるものは計算しておく↓
+#define INDEPENDENT_SPIRAL_ZX_START_SPEED_SQ_E_FX32 ((fx32) 0x000011acL)  // ( FX32_CONST( INDEPENDENT_SPIRAL_ZX_START_SPEED * INDEPENDENT_SPIRAL_ZX_START_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
+#define INDEPENDENT_SPIRAL_Y_START_SPEED_SQ_E_FX32  ((fx32) 0x000011acL)  // ( FX32_CONST( INDEPENDENT_SPIRAL_Y_START_SPEED * INDEPENDENT_SPIRAL_Y_START_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
+
+#define INDEPENDENT_SPIRAL_Y_START_SPEED_FX32  ((fx32) 0x00001000L)  // ( FX32_CONST( INDEPENDENT_SPIRAL_Y_START_SPEED ) )
+
+#define INDEPENDENT_SPIRAL_ZX_END_SPEED_SQ_FX32  ((fx32) 0x00001000L)  // ( FX32_CONST( INDEPENDENT_SPIRAL_ZX_END_SPEED * INDEPENDENT_SPIRAL_ZX_END_SPEED ) )
+#define INDEPENDENT_SPIRAL_Y_END_SPEED_SQ_FX32   ((fx32) 0x00001000L)  // ( FX32_CONST( INDEPENDENT_SPIRAL_Y_END_SPEED * INDEPENDENT_SPIRAL_Y_END_SPEED ) )
+
+#define INDEPENDENT_SPIRAL_Y_END_SPEED_FX32  ((fx32) 0x00001000L)  // ( FX32_CONST( INDEPENDENT_SPIRAL_Y_END_SPEED ) )
+
+#define INDEPENDENT_SPIRAL_ZX_END_SPEED_SQ_E_FX32 ((fx32) 0x000011acL)  // ( FX32_CONST( INDEPENDENT_SPIRAL_ZX_END_SPEED * INDEPENDENT_SPIRAL_ZX_END_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
+#define INDEPENDENT_SPIRAL_Y_END_SPEED_SQ_E_FX32  ((fx32) 0x000011acL)  // ( FX32_CONST( INDEPENDENT_SPIRAL_Y_END_SPEED * INDEPENDENT_SPIRAL_Y_END_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
+// 事前に計算できるものは計算しておく↑
+
+
 #define INDEPENDENT_SPIRAL_ZX_FIRST_VEL   (1)  // 初速
 #define INDEPENDENT_SPIRAL_Y_FIRST_VEL    (1)
 
 #define INDEPENDENT_SPIRAL_PREV_RATE      (1)   // 前の動きをどれくらいの割合残すか
 #define INDEPENDENT_SPIRAL_CURR_RATE      (9)   // 今回の動きをどれくらいの割合出すか
+
+#ifdef DEF_SPEED_UP_A
+  #define INDEPENDENT_SPIRAL_PREV_RATE_FX32 ((fx32) 0x00000199L)  // 割り切れていないので、
+  #define INDEPENDENT_SPIRAL_CURR_RATE_FX32 ((fx32) 0x00000e00L)  // 足してもFX32_ONEにはなりません。
+#endif
 
 #define INDEPENDENT_SPIRAL_E_FX32         (FX32_SIN6)  // 微小量
 
@@ -877,7 +905,19 @@ void SHINKADEMO_VIEW_Main( SHINKADEMO_VIEW_WORK* work )
     break;
   }
 
+#ifndef DEF_SPEED_UP_A
   MCSS_Main( work->mcss_sys_wk );
+#else
+  //if( STEP_EVO_CHANGE_OPENING_WHITE_TO_COLOR_START <= work->step && work->step <= STEP_EVO_CHANGE_ENDING_BEFORE_REPLACE_WAIT )
+  if( !(work->is_mcss_draw) )
+  {
+    // 何もしない
+  }
+  else
+  {
+    MCSS_Main( work->mcss_sys_wk );
+  }
+#endif
 
   IndependentPokeManagerMain( work );
 }
@@ -2141,6 +2181,16 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
     // 全体の位置設定
     G3_Translate(poke_wk->pos.x, poke_wk->pos.y, poke_wk->pos.z);
 
+#ifdef DEF_SPEED_UP_A
+    G3_PolygonAttr( 
+        GX_LIGHTMASK_NONE,//GX_LIGHTMASK_0,			  // ライトを反映  // ライトなし用の設定GX_LIGHTMASK_NONE
+        GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
+        GX_CULL_BACK,             // カリング
+        0,                         // ポリゴンＩＤ ０
+        31,					  // アルファ値  // パーティクルより手前に描画するには半透明にするしか手がない・・・
+        GX_POLYGON_ATTR_MISC_NONE );
+#endif
+
     {
       //int max;
       //max = INDEPENDENT_PANEL_NUM_X * INDEPENDENT_PANEL_NUM_Y;
@@ -2173,6 +2223,7 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
 
         G3_PushMtx();
 	      
+#ifndef DEF_SPEED_UP_A
         G3_PolygonAttr(
             GX_LIGHTMASK_NONE,//GX_LIGHTMASK_0,			  // ライトを反映  // ライトなし用の設定GX_LIGHTMASK_NONE
             GX_POLYGONMODE_MODULATE,	  // モジュレーションポリゴンモード
@@ -2180,6 +2231,7 @@ static void IndependentPokeDraw( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap_id 
             panel_wk->polygon_id,                         // ポリゴンＩＤ ０
             panel_wk->alpha,					  // アルファ値  // パーティクルより手前に描画するには半透明にするしか手がない・・・
             GX_POLYGON_ATTR_MISC_NONE );
+#endif
 
         // 位置設定
 		    G3_Translate(panel_wk->pos.x, panel_wk->pos.y, panel_wk->pos.z);
@@ -2424,9 +2476,21 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
           int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx );
           if( total_theta_idx >= 0x10000 ) total_theta_idx -= 0x10000;
 
+#ifndef DEF_SPEED_UP_B
           ideal_pos.x = FX_MUL( panel_wk->steady_r, FX_CosIdx( total_theta_idx ) );
           ideal_pos.z = FX_MUL( panel_wk->steady_r, FX_SinIdx( total_theta_idx ) );
-          
+#else
+          {
+            MtxFx43 mtx;
+            VecFx32 vec;
+            MTX_RotY43( &mtx, FX_SinIdx( total_theta_idx ), FX_CosIdx( total_theta_idx ) );
+            vec.x = panel_wk->steady_r;
+            vec.y = 0;
+            vec.z = 0;
+            MTX_MultVec43( &vec, &mtx, &(ideal_pos) );
+          }
+#endif
+
           ideal_pos.y = panel_wk->steady_pos_y;
 
           if( panel_wk->state == INDEPENDENT_SPIRAL_INDIVIDUAL_STATE_BEFORE_START )
@@ -2483,8 +2547,8 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
               dis_zx_sq = FX_MUL( dir.x, dir.x ) + FX_MUL( dir.z, dir.z );
               dis_y_sq = FX_MUL( dir.y, dir.y );
 
-              if(    ( dis_zx_sq < FX32_CONST( INDEPENDENT_SPIRAL_ZX_START_SPEED * INDEPENDENT_SPIRAL_ZX_START_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
-                  && ( dis_y_sq < FX32_CONST( INDEPENDENT_SPIRAL_Y_START_SPEED * INDEPENDENT_SPIRAL_Y_START_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 ) )
+              if(    ( dis_zx_sq < INDEPENDENT_SPIRAL_ZX_START_SPEED_SQ_E_FX32 )
+                  && ( dis_y_sq < INDEPENDENT_SPIRAL_Y_START_SPEED_SQ_E_FX32 ) )
               {
                 // 安定軌道に乗った
                 panel_wk->pos.x = panel_wk->steady_pos.x;
@@ -2517,12 +2581,12 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
               {
                 BOOL zx_finish = FALSE;
                 BOOL y_finish  = FALSE;
-                if( dis_zx_sq < FX32_CONST( INDEPENDENT_SPIRAL_ZX_START_SPEED * INDEPENDENT_SPIRAL_ZX_START_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 ) 
+                if( dis_zx_sq < INDEPENDENT_SPIRAL_ZX_START_SPEED_SQ_E_FX32 ) 
                 {
                   // ZX方向は安定軌道に乗った
                   zx_finish = TRUE;
                 }
-                else if( dis_y_sq < FX32_CONST( INDEPENDENT_SPIRAL_Y_START_SPEED * INDEPENDENT_SPIRAL_Y_START_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
+                else if( dis_y_sq < INDEPENDENT_SPIRAL_Y_START_SPEED_SQ_E_FX32 )
                 {
                   // Y方向は安定軌道に乗った
                   y_finish  = TRUE;
@@ -2538,16 +2602,44 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
                 {
                   // ZX方向
                   {
+#ifndef DEF_SPEED_UP_C
+  #ifndef DEF_SPEED_UP_D
                     fx32 dis_zx = FX_Sqrt( dis_zx_sq );
                     fx32 add_x = FX_Div( dir.x, dis_zx ) * INDEPENDENT_SPIRAL_ZX_START_SPEED;
                     fx32 add_z = FX_Div( dir.z, dis_zx ) * INDEPENDENT_SPIRAL_ZX_START_SPEED;
+  #else
+                    fx32 inv_dis_zx = FX_InvSqrt( dis_zx_sq ) * INDEPENDENT_SPIRAL_ZX_START_SPEED;
+                    fx32 add_x = FX_MUL( dir.x, inv_dis_zx );
+                    fx32 add_z = FX_MUL( dir.z, inv_dis_zx );
+  #endif
+#else
+                    VecFx32  dir_zx;
+                    VecFx32  add;
+                    fx32     add_x;
+                    fx32     add_z;
+                    dir_zx.x = dir.x;
+                    dir_zx.y = 0;
+                    dir_zx.z = dir.z;
+                    VEC_Normalize( &dir_zx, &add );
+                    add_x = add.x * INDEPENDENT_SPIRAL_ZX_START_SPEED;
+                    add_z = add.z * INDEPENDENT_SPIRAL_ZX_START_SPEED;
+#endif
 
+#ifndef DEF_SPEED_UP_A
                     panel_wk->pos.x = panel_wk->pos.x \
                         + FX_Div( FX_MUL( panel_wk->pos.x - panel_wk->pos_prev.x, FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE) ), FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE+INDEPENDENT_SPIRAL_CURR_RATE) ) \
                         + FX_Div( FX_MUL( add_x, FX32_CONST(INDEPENDENT_SPIRAL_CURR_RATE) ), FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE+INDEPENDENT_SPIRAL_CURR_RATE) );
                     panel_wk->pos.z = panel_wk->pos.z \
                         + FX_Div( FX_MUL( panel_wk->pos.z - panel_wk->pos_prev.z, FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE) ), FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE+INDEPENDENT_SPIRAL_CURR_RATE) ) \
                         + FX_Div( FX_MUL( add_z, FX32_CONST(INDEPENDENT_SPIRAL_CURR_RATE) ), FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE+INDEPENDENT_SPIRAL_CURR_RATE) );
+#else
+                    panel_wk->pos.x = panel_wk->pos.x \
+                        + FX_MUL( panel_wk->pos.x - panel_wk->pos_prev.x, INDEPENDENT_SPIRAL_PREV_RATE_FX32 ) \
+                        + FX_MUL( add_x, INDEPENDENT_SPIRAL_CURR_RATE_FX32 );
+                    panel_wk->pos.z = panel_wk->pos.z \
+                        + FX_MUL( panel_wk->pos.z - panel_wk->pos_prev.z, INDEPENDENT_SPIRAL_PREV_RATE_FX32 ) \
+                        + FX_MUL( add_z, INDEPENDENT_SPIRAL_CURR_RATE_FX32 );
+#endif
                   }
                 }
 
@@ -2560,12 +2652,27 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
                 {
                   // Y方向
                   {
+#ifndef DEF_SPEED_UP_A
                     fx32 dis_y = FX_Sqrt( dis_y_sq );
                     fx32 add_y = FX_Div( dir.y, dis_y ) * INDEPENDENT_SPIRAL_Y_START_SPEED;
                     
                     panel_wk->pos.y = panel_wk->pos.y \
                         + FX_Div( FX_MUL( panel_wk->pos.y - panel_wk->pos_prev.y, FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE) ), FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE+INDEPENDENT_SPIRAL_CURR_RATE) ) \
                         + FX_Div( FX_MUL( add_y, FX32_CONST(INDEPENDENT_SPIRAL_CURR_RATE) ), FX32_CONST(INDEPENDENT_SPIRAL_PREV_RATE+INDEPENDENT_SPIRAL_CURR_RATE) );
+#else
+                    fx32     add_y;
+                    if( dir.y >= 0 )
+                    {
+                      add_y = INDEPENDENT_SPIRAL_Y_START_SPEED_FX32;
+                    }
+                    else
+                    {
+                      add_y = - INDEPENDENT_SPIRAL_Y_START_SPEED_FX32;  //FX32_CONST( - INDEPENDENT_SPIRAL_Y_START_SPEED );
+                    }
+                    panel_wk->pos.y = panel_wk->pos.y \
+                        + FX_MUL( panel_wk->pos.y - panel_wk->pos_prev.y, INDEPENDENT_SPIRAL_PREV_RATE_FX32 ) \
+                        + FX_MUL( add_y, INDEPENDENT_SPIRAL_CURR_RATE_FX32 );
+#endif
                   }
                 }
 
@@ -2628,8 +2735,20 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
           int total_theta_idx = ( panel_wk->steady_theta_idx + poke_wk->spi_theta_idx );
           if( total_theta_idx >= 0x10000 ) total_theta_idx -= 0x10000;
 
+#ifndef DEF_SPEED_UP_B
           panel_wk->pos.x = FX_MUL( panel_wk->steady_r, FX_CosIdx( total_theta_idx ) );
           panel_wk->pos.z = FX_MUL( panel_wk->steady_r, FX_SinIdx( total_theta_idx ) );
+#else
+          {
+            MtxFx43 mtx;
+            VecFx32 vec;
+            MTX_RotY43( &mtx, FX_SinIdx( total_theta_idx ), FX_CosIdx( total_theta_idx ) );
+            vec.x = panel_wk->steady_r;
+            vec.y = 0;
+            vec.z = 0;
+            MTX_MultVec43( &vec, &mtx, &(panel_wk->pos) );
+          }
+#endif
 
           panel_wk->pos.y = panel_wk->steady_pos_y; 
         }
@@ -2755,8 +2874,20 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
             else
             {
               // 順番が来るのを待つ
+#ifndef DEF_SPEED_UP_B
               panel_wk->pos.x = FX_MUL( panel_wk->steady_r, FX_CosIdx( total_theta_idx ) );
               panel_wk->pos.z = FX_MUL( panel_wk->steady_r, FX_SinIdx( total_theta_idx ) );
+#else
+              {
+                MtxFx43 mtx;
+                VecFx32 vec;
+                MTX_RotY43( &mtx, FX_SinIdx( total_theta_idx ), FX_CosIdx( total_theta_idx ) );
+                vec.x = panel_wk->steady_r;
+                vec.y = 0;
+                vec.z = 0;
+                MTX_MultVec43( &vec, &mtx, &(panel_wk->pos) );
+              }
+#endif
 
               panel_wk->pos.y = panel_wk->steady_pos_y;
             }
@@ -2766,8 +2897,20 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
           {
             if( panel_wk->count == 0 )  // 最初は慣性で飛び出す
             {
+#ifndef DEF_SPEED_UP_B
               panel_wk->pos.x = FX_MUL( panel_wk->steady_r, FX_CosIdx( total_theta_idx ) );
               panel_wk->pos.z = FX_MUL( panel_wk->steady_r, FX_SinIdx( total_theta_idx ) );
+#else
+              {
+                MtxFx43 mtx;
+                VecFx32 vec;
+                MTX_RotY43( &mtx, FX_SinIdx( total_theta_idx ), FX_CosIdx( total_theta_idx ) );
+                vec.x = panel_wk->steady_r;
+                vec.y = 0;
+                vec.z = 0;
+                MTX_MultVec43( &vec, &mtx, &(panel_wk->pos) );
+              }
+#endif
 
               panel_wk->pos.y = panel_wk->steady_pos_y;
 
@@ -2787,6 +2930,7 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
                 dis_zx_sq = FX_MUL( dir.x, dir.x ) + FX_MUL( dir.z, dir.z );
                 dis_y_sq = FX_MUL( dir.y, dir.y );
 
+#ifndef DEF_SPEED_UP_A
                 dis_zx = FX_Sqrt( dis_zx_sq );
                 dis_y = FX_Sqrt( dis_y_sq );
 
@@ -2809,6 +2953,52 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
                 {
                   add.y = dir.y;
                 }
+#else
+                if( dis_zx_sq > INDEPENDENT_SPIRAL_ZX_END_SPEED_SQ_FX32 )
+                {
+#ifndef DEF_SPEED_UP_C
+  #ifndef DEF_SPEED_UP_D
+                  dis_zx = FX_Sqrt( dis_zx_sq );
+                  add.x = FX_Div( dir.x, dis_zx ) * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+                  add.z = FX_Div( dir.z, dis_zx ) * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+  #else
+                  fx32 inv_dis_zx = FX_InvSqrt( dis_zx_sq ) * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+                  add.x = FX_MUL( dir.x, inv_dis_zx );
+                  add.z = FX_MUL( dir.z, inv_dis_zx );
+  #endif
+#else
+                  VecFx32  dir_zx;
+                  VecFx32  add_tmp;
+                  dir_zx.x = dir.x; 
+                  dir_zx.y = 0; 
+                  dir_zx.z = dir.z; 
+                  VEC_Normalize( &dir_zx, &add_tmp );
+                  add.x = add_tmp.x * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+                  add.z = add_tmp.z * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+#endif
+                }
+                else
+                {
+                  add.x = dir.x;
+                  add.z = dir.z;
+                }
+
+                if( dis_y_sq > INDEPENDENT_SPIRAL_Y_END_SPEED_SQ_FX32 ) 
+                {
+                  if( dir.y >= 0 )
+                  {
+                    add.y = INDEPENDENT_SPIRAL_Y_END_SPEED_FX32;
+                  }
+                  else
+                  {
+                    add.y = - INDEPENDENT_SPIRAL_Y_END_SPEED_FX32;  // FX32_CONST( - INDEPENDENT_SPIRAL_Y_END_SPEED );
+                  }
+                }
+                else
+                {
+                  add.y = dir.y;
+                }
+#endif
 
                 panel_wk->pos.x += add.x;
                 panel_wk->pos.y += add.y;
@@ -2834,8 +3024,8 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
               dis_zx_sq = FX_MUL( dir.x, dir.x ) + FX_MUL( dir.z, dir.z );
               dis_y_sq = FX_MUL( dir.y, dir.y );
 
-              if(    ( dis_zx_sq < FX32_CONST( INDEPENDENT_SPIRAL_ZX_END_SPEED * INDEPENDENT_SPIRAL_ZX_END_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 )
-                  && ( dis_y_sq < FX32_CONST( INDEPENDENT_SPIRAL_Y_END_SPEED * INDEPENDENT_SPIRAL_Y_END_SPEED ) +INDEPENDENT_SPIRAL_E_FX32 ) )
+              if(    ( dis_zx_sq < INDEPENDENT_SPIRAL_ZX_END_SPEED_SQ_E_FX32 )
+                  && ( dis_y_sq < INDEPENDENT_SPIRAL_Y_END_SPEED_SQ_E_FX32 ) )
               {
                 // 配置位置に着いた
                 panel_wk->pos.x = panel_wk->start_end_pos.x;
@@ -2848,6 +3038,7 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
               }
               else
               {
+#ifndef DEF_SPEED_UP_A
                 dis_zx = FX_Sqrt( dis_zx_sq );
                 dis_y = FX_Sqrt( dis_y_sq );
 
@@ -2870,6 +3061,52 @@ static void IndependentPokeMainSpiral( INDEPENDENT_POKE_WORK* poke_wk, HEAPID he
                 {
                   add.y = dir.y;
                 }
+#else
+                if( dis_zx_sq > INDEPENDENT_SPIRAL_ZX_END_SPEED_SQ_FX32 ) 
+                {
+#ifndef DEF_SPEED_UP_C
+  #ifndef DEF_SPEED_UP_D
+                  dis_zx = FX_Sqrt( dis_zx_sq );
+                  add.x = FX_Div( dir.x, dis_zx ) * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+                  add.z = FX_Div( dir.z, dis_zx ) * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+  #else
+                  fx32 inv_dis_zx = FX_InvSqrt( dis_zx_sq ) * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+                  add.x = FX_MUL( dir.x, inv_dis_zx );
+                  add.z = FX_MUL( dir.z, inv_dis_zx );
+  #endif
+#else
+                  VecFx32  dir_zx;
+                  VecFx32  add_tmp;
+                  dir_zx.x = dir.x; 
+                  dir_zx.y = 0; 
+                  dir_zx.z = dir.z; 
+                  VEC_Normalize( &dir_zx, &add_tmp );
+                  add.x = add_tmp.x * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+                  add.z = add_tmp.z * INDEPENDENT_SPIRAL_ZX_END_SPEED;
+#endif
+                }
+                else
+                {
+                  add.x = dir.x;
+                  add.z = dir.z;
+                }
+
+                if( dis_y_sq > INDEPENDENT_SPIRAL_Y_END_SPEED_SQ_FX32 )
+                {
+                  if( dir.y >= 0 )
+                  {
+                    add.y = INDEPENDENT_SPIRAL_Y_END_SPEED_FX32;
+                  }
+                  else
+                  {
+                    add.y = - INDEPENDENT_SPIRAL_Y_END_SPEED_FX32;  // FX32_CONST( - INDEPENDENT_SPIRAL_Y_END_SPEED );
+                  }
+                }
+                else
+                {
+                  add.y = dir.y;
+                }
+#endif
 
                 panel_wk->pos.x += add.x;
                 panel_wk->pos.y += add.y;
@@ -2985,12 +3222,33 @@ static void IndependentPokePalTrans( INDEPENDENT_POKE_WORK* poke_wk, HEAPID heap
     s16 g_s = ( raw_data[i] & GX_RGB_G_MASK ) >> GX_RGB_G_SHIFT;
     s16 b_s = ( raw_data[i] & GX_RGB_B_MASK ) >> GX_RGB_B_SHIFT;
 
+#ifndef DEF_SPEED_UP_A
     s16 r = (s16)( r_s + (r_e - r_s) * ( poke_wk->pal_rate ) / 31.0f );
     s16 g = (s16)( g_s + (g_e - g_s) * ( poke_wk->pal_rate ) / 31.0f );
     s16 b = (s16)( b_s + (b_e - b_s) * ( poke_wk->pal_rate ) / 31.0f );
     r = MATH_CLAMP( r, 0, 31 );
     g = MATH_CLAMP( g, 0, 31 );
     b = MATH_CLAMP( b, 0, 31 );
+#else
+    s16 r;
+    s16 g;
+    s16 b;
+    if( poke_wk->pal_rate == 31 )
+    {
+      r = r_e;
+      g = g_e;
+      b = b_e;
+    }
+    else
+    {
+      r = r_s + ( ( (r_e - r_s) *  poke_wk->pal_rate ) >> 5 );
+      g = g_s + ( ( (g_e - g_s) *  poke_wk->pal_rate ) >> 5 );
+      b = b_s + ( ( (b_e - b_s) *  poke_wk->pal_rate ) >> 5 );
+      r = MATH_CLAMP( r, 0, 31 );
+      g = MATH_CLAMP( g, 0, 31 );
+      b = MATH_CLAMP( b, 0, 31 );
+    }
+#endif
 
     poke_wk->pal_curr[i] = GX_RGB(r, g, b);
   }
