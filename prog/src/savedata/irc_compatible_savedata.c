@@ -12,6 +12,7 @@
 #include "system/main.h"
 #include "print/str_tool.h"
 #include "buflen.h"
+#include "system/gfl_use.h"
 #include "savedata/save_tbl.h"
 
 #include "savedata/irc_compatible_savedata.h"
@@ -285,12 +286,28 @@ u32 IRC_COMPATIBLE_SV_GetBestBioRhythm( const IRC_COMPATIBLE_SAVEDATA *cp_sv, u8
 
   for( i = 0; i < max; i++ )
   { 
-    dif = MATH_IAbs( (s32)IRC_COMPATIBLE_SV_GetBioRhythm( cp_sv, i, cp_now_date ) - (s32)player_bio );
+    dif = MATH_IAbs( (s32)IRC_COMPATIBLE_SV_GetScore( cp_sv, i ) - (s32)player_bio );
 
-    if( best_dif > dif )
+    //ìØÇ∂ÇæÇ¡ÇΩÇÁÉâÉìÉ_ÉÄÇ≈åàíË
+    if( best_dif == dif )
+    {
+      u32 temp_array[2];
+      temp_array[0] = best_idx;
+      temp_array[1] = i;
+      best_idx  = temp_array[ GFUser_GetPublicRand( NELEMS(temp_array) ) ];
+
+      NAGI_Printf( "%dÇ∆%dÇÃÉâÉìÉ_ÉÄÇ≈%dÇ…Ç»Ç¡ÇΩ\n", temp_array[0], temp_array[1], best_idx );
+    }
+    //à·Ç§èÍçáÇÕÇÊÇËãﬂÇ¢ï˚
+    else if( best_dif > dif )
     { 
+
+      NAGI_Printf( "ç∑Ç™[%d]=%dÇ∆[%d]=%dÇæÇ¡ÇΩÇÃÇ≈",  i, dif, best_idx, best_dif );
+
       best_idx  = i;
       best_dif  = dif;
+
+      NAGI_Printf( "%dÇ…Ç»Ç¡ÇΩ\n",  best_idx );
     }
   }
 
