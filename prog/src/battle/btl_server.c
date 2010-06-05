@@ -931,7 +931,11 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
         (*seq) = 5;
         break;
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        setMainProc( server, ServerMain_ExitBattle );
+        {
+          BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
+          BTL_MAIN_NotifyBattleResult( server->mainModule, result );
+          setMainProc( server, ServerMain_ExitBattle );
+        }
         break;
       case SVFLOW_RESULT_BTL_QUIT:
         BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
@@ -1080,7 +1084,11 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
         setMainProc( server, ServerMain_SelectPokemonCover );
         break;
       case SVFLOW_RESULT_BTL_SHOWDOWN:
-        setMainProc( server, ServerMain_ExitBattle );
+        {
+          BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
+          BTL_MAIN_NotifyBattleResult( server->mainModule, result );
+          setMainProc( server, ServerMain_ExitBattle );
+        }
         break;
       case SVFLOW_RESULT_BTL_QUIT:
         BTL_N_Printf( DBGSTR_SVFL_GotoQuit );
