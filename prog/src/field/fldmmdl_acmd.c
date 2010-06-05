@@ -54,7 +54,7 @@ enum
 };
 
 ///その場ジャンプ用 6フレーム
-#define AC_STAY_JUMP_HEIGHT_12_6 (AC_JUMP_HEIGHT_6)
+#define AC_STAY_JUMP_HEIGHT_12_6 (AC_JUMP_HEIGHT_8)
 
 #define AC_JUMP_H_TBL_MAX (16)///<高さテーブル要素数
 #define AC_JUMP_H_TBL_FRAME_MAX (AC_JUMP_H_TBL_MAX-1)///<高さテーブル要素数
