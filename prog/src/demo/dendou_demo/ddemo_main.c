@@ -886,27 +886,22 @@ void DDEMOMAIN_InitMcss( DDEMOMAIN_WORK * wk )
 	wk->mcss = MCSS_Init( 1, HEAPID_DENDOU_DEMO );
 
 	MCSS_SetTextureTransAdrs( wk->mcss, 0 );
-	MCSS_ResetOrthoMode( wk->mcss );
+	MCSS_SetOrthoMode( wk->mcss );
 
 	{
-    static const VecFx32 cam_pos = { FX32_CONST(-41.0f), FX32_CONST(0.0f), FX32_CONST(101.0f) };
-    static const VecFx32 cam_target = { FX32_CONST(0.0f), FX32_CONST(0.0f), FX32_CONST(-1.0f) };
-    static const VecFx32 cam_up = { 0, FX32_ONE, 0 };
+    static const VecFx32 cam_pos = { FX_F32_TO_FX32(0.0f), FX_F32_TO_FX32(30.0f), FX_F32_TO_FX32(3000.0f) };
+    static const VecFx32 cam_target = { FX_F32_TO_FX32(0.0f), FX_F32_TO_FX32(1.0f), FX_F32_TO_FX32(0.0f) };
+    static const VecFx32 cam_up = { FX_F32_TO_FX32( 0.0f ), FX_F32_TO_FX32(30.0f), FX_F32_TO_FX32(0.0f) };
 
-    // ³ŽË‰eƒJƒƒ‰
-    wk->mcssCamera = GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH, 
-                      FX32_ONE*192.0f,
-                      0,
-                      0,
-                      FX32_ONE*256.0f,
-                      (FX32_ONE),
-                      (FX32_ONE*400),
-                      NULL,
-                      &cam_pos,
-                      &cam_up,
-                      &cam_target,
+    wk->mcssCamera = GFL_G3D_CAMERA_CreateOrtho(
+											FX32_CONST(96),
+											-FX32_CONST(96),
+											-FX32_CONST(128),
+											FX32_CONST(128),
+											defaultCameraNear, defaultCameraFar, 0,
+											&cam_pos, &cam_up, &cam_target,
                       HEAPID_DENDOU_DEMO );
-    
+
     GFL_G3D_CAMERA_Switching( wk->mcssCamera );
 	}
 }
@@ -946,7 +941,7 @@ void DDEMOMAIN_AddMcss( DDEMOMAIN_WORK * wk )
 
 	MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
 
-	wk->mcssWork = MCSS_Add( wk->mcss, FX32_CONST(256+48), FX32_CONST(48), 0, &add );
+	wk->mcssWork = MCSS_Add( wk->mcss, FX32_CONST(128+48), FX32_CONST(-96+48), 0, &add );
 	MCSS_SetScale( wk->mcssWork, &scale );
 	MCSS_SetAnmStopFlag( wk->mcssWork );
 }

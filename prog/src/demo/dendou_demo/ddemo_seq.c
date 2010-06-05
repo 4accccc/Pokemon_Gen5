@@ -51,10 +51,10 @@
 #define	DEF_2ND_POKEIN_WAIT_MAX		( 256 )																					// ポケモン表示開始ウェイト
 #define	DEF_2ND_POKEIN_WAIT				( 128 )																					// 次のポケモン表示開始ウェイト
 #define	DEF_2ND_POKEIN_SPEED			( -8 )																					// ポケモン画面イン速度
-#define	DEF_2ND_POKEIN_COUNT			( 19 )																					// ポケモン画面イン移動カウント
+#define	DEF_2ND_POKEIN_COUNT			( 20 )																					// ポケモン画面イン移動カウント
 #define	DEF_2ND_POKEOUT_WAIT			( 128 )																					// ポケモン画面アウト開始ウェイト
 #define	DEF_2ND_POKEOUT_SPEED			( -8 )																					// ポケモン画面アウト速度
-#define	DEF_2ND_POKEOUT_COUNT			( 32+12-DEF_2ND_POKEIN_COUNT )									// ポケモン画面アウト移動カウント
+#define	DEF_2ND_POKEOUT_COUNT			( 44-DEF_2ND_POKEIN_COUNT )											// ポケモン画面アウト移動カウント
 #define	DEF_2ND_FADE_DIV					( 188 )																					// 終了画面フェード分割数
 #define	DEF_2ND_BGM_FADE					( 220 )																					// 終了BGMフェードフレーム数
 
