@@ -35,6 +35,7 @@
 #include "event_mission_help_after.h"
 #include "system/main.h"
 #include "event_comm_result.h"
+#include "event_gpower.h"
 
 #include "../../../resource/fldmapdata/script/common_scr_def.h"
 #include "../../../resource/fldmapdata/script/item_get_scr_def.h" //SCRID_`
@@ -545,6 +546,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Battle( GMEVENT *event, int *seq, voi
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
         MissionHelpMsgID.recover_m_to_t[talk->ccew.disguise_talk_type]);
+      PMSND_PlaySE( SE_POWER_USE );
       (*seq)++;
     }
     break;

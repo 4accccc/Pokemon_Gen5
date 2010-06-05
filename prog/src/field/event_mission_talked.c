@@ -389,6 +389,7 @@ static GMEVENT_RESULT CommMissionTalked_MtoT_Talked( GMEVENT *event, int *seq, v
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, 
         MissionTalkedMsgID.mission_talked_item[talk->ccew.disguise_talk_type]);
+      PMSND_PlaySE( SE_POWER_USE );
   		(*seq)++;
   	}
 		break;

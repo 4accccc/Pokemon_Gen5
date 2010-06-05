@@ -9,6 +9,8 @@
 
 #pragma once
 
+#define SE_POWER_USE  (SEQ_SE_W295_01)
+
 typedef struct _GPOWER_EFFECT_PARAM{
   GPOWER_ID g_power;
   BOOL      mine_f;
