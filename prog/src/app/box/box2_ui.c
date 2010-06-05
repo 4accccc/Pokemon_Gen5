@@ -1510,12 +1510,14 @@ static void BoxArrangePokeMoveCallBack_Touch( void * work, int now_pos, int old_
 	BOX2_SYS_WORK * syswk = work;
 
 	if( now_pos == BOX2UI_ARRANGE_PGT_LEFT ||			// 31: ボックス切り替え矢印（左）
-			now_pos == BOX2UI_ARRANGE_PGT_RIGHT ||		// 32: ボックス切り替え矢印（右）
-			now_pos == BOX2UI_ARRANGE_PGT_TRAY1 ||		// 33: トレイアイコン
-			now_pos == BOX2UI_ARRANGE_PGT_TRAY6 ||		// 38: トレイアイコン
-			now_pos == BOX2UI_ARRANGE_PGT_STATUS ||		// 40: ステータス
-			now_pos == BOX2UI_ARRANGE_PGT_RET ||			// 41: 戻る
-			now_pos == BOX2UI_ARRANGE_PGT_CONV ){			// 42: 便利モード
+			now_pos == BOX2UI_ARRANGE_PGT_RIGHT ){		// 32: ボックス切り替え矢印（右）
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PGT_NAME );
+		now_pos = BOX2UI_ARRANGE_PGT_NAME;
+	}else if( now_pos == BOX2UI_ARRANGE_PGT_TRAY1 ||	// 33: トレイアイコン
+			now_pos == BOX2UI_ARRANGE_PGT_TRAY6 ||				// 38: トレイアイコン
+			now_pos == BOX2UI_ARRANGE_PGT_STATUS ||				// 40: ステータス
+			now_pos == BOX2UI_ARRANGE_PGT_RET ||					// 41: 戻る
+			now_pos == BOX2UI_ARRANGE_PGT_CONV ){					// 42: 便利モード
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
 		now_pos = syswk->app->old_cur_pos;
 	}else{
@@ -1732,10 +1734,12 @@ static void BoxArrangePartyPokeMoveCallBack_Touch( void * work, int now_pos, int
 	BOX2_SYS_WORK * syswk = work;
 
 	if( now_pos == BOX2UI_ARRANGE_PTGT_LEFT ||		// 31: ボックス切り替え矢印（左）
-			now_pos == BOX2UI_ARRANGE_PTGT_RIGHT ||		// 32: ボックス切り替え矢印（右）
-			now_pos == BOX2UI_ARRANGE_PTGT_STATUS ||	// 40: ステータス
-			now_pos == BOX2UI_ARRANGE_PTGT_RET ||			// 41: 戻る
-			now_pos == BOX2UI_ARRANGE_PTGT_CONV ){		// 42: 便利モード
+			now_pos == BOX2UI_ARRANGE_PTGT_RIGHT ){		// 32: ボックス切り替え矢印（右）
+		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_NAME );
+		now_pos = BOX2UI_ARRANGE_PTGT_NAME;
+	}else if( now_pos == BOX2UI_ARRANGE_PTGT_STATUS ||	// 40: ステータス
+			now_pos == BOX2UI_ARRANGE_PTGT_RET ||						// 41: 戻る
+			now_pos == BOX2UI_ARRANGE_PTGT_CONV ){					// 42: 便利モード
 		CURSORMOVE_PosSet( syswk->app->cmwk, syswk->app->old_cur_pos );
 		now_pos = syswk->app->old_cur_pos;
 	}else{

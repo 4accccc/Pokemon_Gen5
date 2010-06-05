@@ -1639,8 +1639,9 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 				return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN );
 			}else{
 				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-				BOX2UI_PutHandCursor( syswk, ret );
 				BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
+				syswk->app->old_cur_pos = ret;
+				BOX2UI_PutHandCursor( syswk, ret );
 				BOX2MAIN_PokeInfoOff( syswk );
 			}
 			return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
@@ -1672,7 +1673,6 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 	case BOX2UI_ARRANGE_PGT_LEFT:		// 31: ボックス切り替え矢印（左）
 		PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
 		BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PGT_NAME );
 		BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PGT_NAME );
 		// 未取得
 		if( syswk->poke_get_key == 0 ){
@@ -2551,8 +2551,9 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 				return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN );
 			}else{
 				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-				BOX2UI_PutHandCursor( syswk, ret );
 				BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
+				syswk->app->old_cur_pos = ret;
+				BOX2UI_PutHandCursor( syswk, ret );
 				BOX2MAIN_PokeInfoOff( syswk );
 			}
 			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
@@ -2569,8 +2570,9 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 				return BoxPartyPokeGet( syswk, ret, BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN );
 			}else{
 				CURSORMOVE_PosSet( syswk->app->cmwk, ret );
-				BOX2UI_PutHandCursor( syswk, ret );
 				BOX2UI_SetTouchBarIconPokeGet( syswk, ret );
+				syswk->app->old_cur_pos = ret;
+				BOX2UI_PutHandCursor( syswk, ret );
 				BOX2MAIN_PokeInfoOff( syswk );
 			}
 			return BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
@@ -2592,7 +2594,6 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 
 	case BOX2UI_ARRANGE_PTGT_LEFT:		// 37: ボックス切り替え矢印（左）
 		PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
-		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_NAME );
 		BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PTGT_NAME );
 		// 未取得
 		if( syswk->poke_get_key == 0 ){
