@@ -347,9 +347,11 @@ void GSYNC_MESSAGE_InfoMessageEnd(GSYNC_MESSAGE_WORK* pWork)
     PRINTSYS_PrintStreamDelete( pWork->pStream );
     pWork->pStream = NULL;
   }
-  BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
-  GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
-  GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  if(pWork->infoDispWin){
+    BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
+    GFL_BG_LoadScreenV_Req(GFL_BG_FRAME1_S);
+  }
 }
 
 //------------------------------------------------------------------------------
