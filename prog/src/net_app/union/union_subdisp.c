@@ -808,6 +808,7 @@ static BOOL _UniSub_TouchUpdate(UNION_SUBDISP_PTR unisub, UNION_SYSTEM_PTR unisy
     if(crect.left < x && crect.right > x && crect.top < y && crect.bottom > y){
       if(i == UNISUB_ACTOR_APPEAL_CHAT && unisys != NULL){
         unisys->chat_call = TRUE;
+        return FALSE;
       }
       else{
         _UniSub_IconPalChange(unisub, i);
