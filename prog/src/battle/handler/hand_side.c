@@ -359,7 +359,7 @@ static const BtlEventHandlerTable* ADD_SIDE_Sinpinomamori( u32* numElems )
 static void handler_side_SinpiNoMamori_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
-  TAYA_Printf("使用者=%d, 対象=%d\n", BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK), pokeID );
+
   if( (BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)  // 自分で自分に打つワザ（ねむる等）には効かない
   ){

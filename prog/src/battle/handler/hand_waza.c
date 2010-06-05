@@ -9445,8 +9445,6 @@ static void handler_EchoVoice( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       }
     }
 
-    TAYA_Printf( "É^Å[Éìåpë±êî=%d\n", cont_cnt );
-
     {
       u32 pow;
       switch( cont_cnt ){

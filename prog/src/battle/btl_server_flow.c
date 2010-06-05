@@ -389,7 +389,7 @@ static void scPut_Message_Set( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u1
 static void scPut_Message_StdEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, const int* args );
 static void scPut_Message_SetEx( BTL_SVFLOW_WORK* wk, u16 strID, u32 argCnt, const int* args );
 static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value );
-static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID, BOOL fOrgWaza );
+static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, BOOL fOrgWaza );
 static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scPut_SetContFlag( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BppContFlag flag );
@@ -6400,13 +6400,18 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     if( result )
     {
       u32 hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
+      u8 fConsume = FALSE;
 
       scPut_UseItemAct( wk, bpp );
       if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
         scproc_ConsumeItem( wk, bpp );
+        fConsume = TRUE;
       }
-
       scEvent_ItemEquip( wk, bpp );
+
+      if( fConsume ){
+        scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );
+      }
 
       if( scproc_HandEx_Result(wk) == HandExResult_NULL ){
         result = FALSE;
@@ -6458,8 +6463,6 @@ static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
   scPut_ConsumeItem( wk, bpp );
   scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
-
-  scproc_ItemChange( wk, bpp, itemID );
 
   /*  かるわざだけで利用していた。必要なくなったはず。
   {
@@ -9842,7 +9845,7 @@ static void scPut_DecreaseHP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 value
  * @param   itemID    アイテムを使った効果の場合はアイテムID
  */
 //----------------------------------------------------------------------------------
-static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, u16 itemID, BOOL fOrgWaza )
+static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx, u8 volume, BOOL fOrgWaza )
 {
   u8 pokeID = BPP_GetID( bpp );
   WazaID waza;
@@ -9856,11 +9859,6 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
   {
     waza = BPP_WAZA_IncrementPP( bpp, wazaIdx, volume );
     SCQUE_PUT_OP_PPPlus( wk->que, pokeID, wazaIdx, volume );
-  }
-
-  if( itemID != ITEM_DUMMY_DATA )
-  {
-    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_UseItem_RecoverPP, pokeID, itemID, waza );
   }
 }
 //----------------------------------------------------------------------------------
@@ -13293,7 +13291,7 @@ static u8 scproc_HandEx_recoverPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
       BOOL fOrgWaza = (!(param->fSurfacePP));
       if( !BPP_WAZA_IsPPFull(pp_target, param->wazaIdx, fOrgWaza) )
       {
-        scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, itemID, fOrgWaza );
+        scPut_RecoverPP( wk, pp_target, param->wazaIdx, param->volume, fOrgWaza );
         handexSub_putString( wk, &param->exStr );
         return 1;
       }
@@ -14099,6 +14097,8 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   handexSub_putString( wk, &param->exStr );
 
   scproc_ConsumeItem( wk, bpp );
+  scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );
+
 //  scPut_ConsumeItem( wk, bpp );
 //  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
 
