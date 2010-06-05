@@ -6944,7 +6944,7 @@ static GMEVENT_RESULT debugMenuMusical( GMEVENT *event, int *seq, void *wk )
             MUSICAL_SHOT_DATA *shotData = MUSICAL_SAVE_GetMusicalShotData( musSave );
 
             GFL_OVERLAY_Load( FS_OVERLAY_ID(gds_debug) );
-            MUSICAL_DEBUG_CreateDummyData( shotData , 513 , work->heapId );
+            MUSICAL_DEBUG_CreateDummyData( shotData , 643 , work->heapId );
             GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_debug));
           }
           break;

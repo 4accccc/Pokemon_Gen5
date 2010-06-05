@@ -98,10 +98,11 @@ FS_EXTERN_OVERLAY(musical);
 static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   SHOT_LOCAL_WORK *work;
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_SHOT, 0x60000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_SHOT, 0x80000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(SHOT_LOCAL_WORK), HEAPID_MUSICAL_SHOT );
   work->heapId = HEAPID_MUSICAL_SHOT;
+  ARI_TPrintf("LeastHeap[0x%x]\n",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
   ARI_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
   if( pwk == NULL )
   {
@@ -114,7 +115,7 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
       RTCDate date;
       MUSICAL_SHOT_DATA *shotData = work->shotInitWork->musShotData;
       GFL_RTC_GetDate( &date );
-      shotData->bgNo = 1;
+      shotData->bgNo = 3;
       shotData->spotBit = 2;
       shotData->year = date.year;
       shotData->month = date.month;
@@ -133,10 +134,10 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
       shotData->title[11] = L'ƒŠ';
       shotData->title[12] = GFL_STR_GetEOMCode();
 
-      shotData->shotPoke[0].monsno = MONSNO_PIKATYUU;
-      shotData->shotPoke[1].monsno = MONSNO_PIKUSII;
-      shotData->shotPoke[2].monsno = MONSNO_510;
-      shotData->shotPoke[3].monsno = MONSNO_509;
+      shotData->shotPoke[0].monsno = 643;
+      shotData->shotPoke[1].monsno = 643;
+      shotData->shotPoke[2].monsno = 643;
+      shotData->shotPoke[3].monsno = 643;
       
       for( i=0;i<MUSICAL_POKE_MAX;i++ )
       {

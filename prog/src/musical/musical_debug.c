@@ -24,7 +24,7 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
   perData = POKE_PERSONAL_OpenHandle( monsNo , 0 ,heapId );
 
   GFL_RTC_GetDate( &date );
-  shotData->bgNo = 0;
+  shotData->bgNo = 3;
   shotData->year = date.year;
   shotData->month = date.month;
   shotData->day = date.day;
@@ -80,8 +80,31 @@ const BOOL MUSICAL_DEBUG_CreateDummyData( MUSICAL_SHOT_DATA* shotData , const u1
       shotData->shotPoke[i].equip[j].angle = 0;
       shotData->shotPoke[i].equip[j].equipPos = MUS_POKE_EQU_EAR_R; //MUS_POKE_EQU_INVALID;
     }
-    shotData->shotPoke[i].equip[0].itemNo = 19;
-    shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_L;
+      shotData->shotPoke[i].equip[0].itemNo = 11;
+      shotData->shotPoke[i].equip[0].angle = 0;
+      shotData->shotPoke[i].equip[0].equipPos = MUS_POKE_EQU_HAND_R;
+      shotData->shotPoke[i].equip[1].itemNo = 11;
+      shotData->shotPoke[i].equip[1].angle = 0;
+      shotData->shotPoke[i].equip[1].equipPos = MUS_POKE_EQU_HAND_L;
+      shotData->shotPoke[i].equip[2].itemNo = 11;
+      shotData->shotPoke[i].equip[2].angle = 0;
+      shotData->shotPoke[i].equip[2].equipPos = MUS_POKE_EQU_WAIST;
+      shotData->shotPoke[i].equip[3].itemNo = 11;
+      shotData->shotPoke[i].equip[3].angle = 0;
+      shotData->shotPoke[i].equip[3].equipPos = MUS_POKE_EQU_FACE;
+      shotData->shotPoke[i].equip[4].itemNo = 11;
+      shotData->shotPoke[i].equip[4].angle = 0;
+      shotData->shotPoke[i].equip[4].equipPos = MUS_POKE_EQU_HEAD;
+      shotData->shotPoke[i].equip[5].itemNo = 11;
+      shotData->shotPoke[i].equip[5].angle = 0;
+      shotData->shotPoke[i].equip[5].equipPos = MUS_POKE_EQU_EAR_L;
+      shotData->shotPoke[i].equip[6].itemNo = 11;
+      shotData->shotPoke[i].equip[6].angle = 0;
+      shotData->shotPoke[i].equip[6].equipPos = MUS_POKE_EQU_EAR_R;
+      shotData->shotPoke[i].equip[7].itemNo = 11;
+      shotData->shotPoke[i].equip[7].angle = 0;
+      shotData->shotPoke[i].equip[7].equipPos = MUS_POKE_EQU_BODY;
+      
   }
   
   POKE_PERSONAL_CloseHandle( perData );
