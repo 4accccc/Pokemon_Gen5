@@ -73,11 +73,6 @@ static void DEBWIN_Draw_RTC_hour( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_RTC_minute( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_RTC_sec( void* userWork , DEBUGWIN_ITEM* item );
 
-static void DEBWIN_U_PDW_Account( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBWIN_D_PDW_Account( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBWIN_U_PDW_SetFurniture( void* userWork , DEBUGWIN_ITEM* item );
-static void DEBWIN_D_PDW_SetFurniture( void* userWork , DEBUGWIN_ITEM* item );
-
 static const BOOL DEBWIN_UTIL_UpdateU32( u32 *value , const u32 min, const u32 max );
 static const BOOL DEBWIN_UTIL_UpdateBOOL( BOOL *value );
 
@@ -96,7 +91,6 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   sysGroupWork->bgmFlag = TRUE;
   
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUPID_SYSTEM , "System" , heapId );
-  DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUPID_PDW , "PDW" , heapId );
   
   //System下
   DEBUGWIN_AddGroupToGroup( DEBUGWIN_GROUPID_RTC , "RTC" , DEBUGWIN_GROUPID_SYSTEM , heapId );
@@ -116,10 +110,6 @@ void DEBUGWIN_AddSystemGroup( const HEAPID heapId )
   DEBUGWIN_AddItemToGroup( "てきよう",DEBWIN_Update_RTC_apply , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
   DEBUGWIN_AddItemToGroup( "しゅとく",DEBWIN_Update_RTC_get , (void*)sysGroupWork , DEBUGWIN_GROUPID_RTC , heapId );
 
-  //PDW下
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_U_PDW_Account   ,DEBWIN_D_PDW_Account   , (void*)sysGroupWork , DEBUGWIN_GROUPID_PDW , heapId );
-  DEBUGWIN_AddItemToGroupEx( DEBWIN_U_PDW_SetFurniture   ,DEBWIN_D_PDW_SetFurniture   , (void*)sysGroupWork , DEBUGWIN_GROUPID_PDW , heapId );
-  
   
   DEBUG_FLG_CreateDebugGoupe( heapId );
 }
@@ -309,85 +299,6 @@ static void DEBWIN_Draw_RTC_sec( void* userWork , DEBUGWIN_ITEM* item )
 {
   DEBUG_SYS_GROUP_WORK *work = (DEBUG_SYS_GROUP_WORK*)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "びょう[%2d]",work->rtcTime.second );
-}
-
-#pragma mark [> PWD
-
-static void DEBWIN_U_PDW_Account( void* userWork , DEBUGWIN_ITEM* item )
-{
-  DREAMWORLD_SAVEDATA *pdwSave = DREAMWORLD_SV_GetDreamWorldSaveData(SaveControl_GetPointer());
-  BOOL isAccount = DREAMWORLD_SV_GetAccount( pdwSave );
-  if( DEBWIN_UTIL_UpdateBOOL( &isAccount ) == TRUE )
-  {
-    DREAMWORLD_SV_SetAccount( pdwSave , isAccount );
-    DEBUGWIN_RefreshScreen();
-  }
-}
-
-static void DEBWIN_D_PDW_Account( void* userWork , DEBUGWIN_ITEM* item )
-{
-  DREAMWORLD_SAVEDATA *pdwSave = DREAMWORLD_SV_GetDreamWorldSaveData(SaveControl_GetPointer());
-  BOOL isAccount = DREAMWORLD_SV_GetAccount( pdwSave );
-  
-  if( isAccount )
-  {
-    DEBUGWIN_ITEM_SetNameV( item , "アカウントO");
-  }
-  else
-  {
-    DEBUGWIN_ITEM_SetNameV( item , "アカウントX");
-  }
-}
-
-static void DEBWIN_U_PDW_SetFurniture( void* userWork , DEBUGWIN_ITEM* item )
-{
-  DREAMWORLD_SAVEDATA *pdwSave = DREAMWORLD_SV_GetDreamWorldSaveData(SaveControl_GetPointer());
-  DREAM_WORLD_FURNITUREDATA *topFurData = DREAMWORLD_SV_GetFurnitureData( pdwSave , 0 );
-  BOOL setEnable = FALSE;
-  if( topFurData->id == DREAM_WORLD_INVALID_FURNITURE )
-  {
-    setEnable = TRUE;
-  }
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
-  {
-    u8 i;
-    for( i=0;i<DREAM_WORLD_DATA_MAX_FURNITURE;i++ )
-    {
-      DREAM_WORLD_FURNITUREDATA *furData = DREAMWORLD_SV_GetFurnitureData( pdwSave , i );
-      if( setEnable == TRUE )
-      {
-        furData->id = i+1;
-        furData->furnitureName[0] = L'か';
-        furData->furnitureName[1] = L'ぐ';
-        furData->furnitureName[2] = L'の';
-        furData->furnitureName[3] = L'な';
-        furData->furnitureName[4] = L'ま';
-        furData->furnitureName[5] = L'え';
-        furData->furnitureName[6] = L'1'+i;
-        furData->furnitureName[7] = 0xFFFF;
-      }
-      else
-      {
-        furData->id = DREAM_WORLD_INVALID_FURNITURE;
-      }
-    }
-    DEBUGWIN_RefreshScreen();
-  }
-}
-
-static void DEBWIN_D_PDW_SetFurniture( void* userWork , DEBUGWIN_ITEM* item )
-{
-  DREAMWORLD_SAVEDATA *pdwSave = DREAMWORLD_SV_GetDreamWorldSaveData(SaveControl_GetPointer());
-  DREAM_WORLD_FURNITUREDATA *topFurData = DREAMWORLD_SV_GetFurnitureData( pdwSave , 0 );
-  if( topFurData->id == DREAM_WORLD_INVALID_FURNITURE ||
-      topFurData->id == 0 )
-  {
-    DEBUGWIN_ITEM_SetNameV( item , "かぐカタログX");
-  }
-  else
-  {
-    DEBUGWIN_ITEM_SetNameV( item , "かぐカタログO");
-  }
 }
 
 #pragma mark [> util
