@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-03T13:00:12"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-05T15:23:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="268" top="162" right="768" bottom="788" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -807,7 +807,7 @@
 その　１ねんご　には
 [2:08:９桁:1]かいの▽
 かいもので▼
-[2:08:９桁:2]えんを
+[2:08:９桁:2]円を
 つかうのだった！</language>
 		<language name="JPN_KANJI" width="256">アニメ『ポケモントレーナー
 [1:00:トレーナー名:0]！』　第４話▼
@@ -2159,7 +2159,7 @@
 こういった　場合ですね▼
 すかさず　この技を　使いますと
 それまでの　ふたりの　仲を▽
-改めて　問われると　という▽
+改めて　問われる　という▽
 効果を　発揮いたしますね▼
 アナウンサー『なるほど……
 勉強に　なりましたね▼
@@ -7436,7 +7436,7 @@ BEAUTIFULは　美しいという　意味
 ピッピにんぎょう！▽
 いまなら　なんと！▼
 キズぐすりとの　おトクセットで
-２８００００００えんで　かえちゃいます！▽
+２８００００００円で　かえちゃいます！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">『ここに　とりだしました
 今日の　オススメ品！▼
@@ -7478,7 +7478,7 @@ BEAUTIFULは　美しいという　意味
 そんな　フローラル　むしよけスプレー！
 いまだと　なんと！▼
 ゴールドスプレーと
-セットで　３５０００００えん！▽
+セットで　３５０００００円！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">『ここに　とりだしました
 今日の　オススメ品！▼
@@ -7517,7 +7517,7 @@ BEAUTIFULは　美しいという　意味
 いまなら　なんと！▼
 こうかの　たかい
 ふつうの　キズぐすりと　おトクセットで▽
-な　なんと！　３００００００えんです！▽
+な　なんと！　３００００００円です！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">『ここに　とりだしました
 今日の　オススメ品！▼
@@ -7611,7 +7611,7 @@ BEAUTIFULは　美しいという　意味
 むすばれた　あなぬけのヒモ！▼
 いまなら　おてがるに　つかえる
 あなぬけのヒモとの　おトク　セットで▽
-なんと　３００００００えん！▽
+なんと　３００００００円！▽
 いまスグ　おでんわを！</language>
 		<language name="JPN_KANJI" width="256">『ここに　取り出しました
 今日の　オススメ品！▼
