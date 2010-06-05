@@ -37,6 +37,8 @@ enum
   FC_BSUBWAY_RETIRE_SELECT,
   FC_BSUBWAY_MYSTATUS_DATA,
   FC_BSUBWAY_PLAY_MODE,
+  FC_BSUBWAY_HOME_SELECT_BOX_TEMOTI,
+  FC_BSUBWAY_HOME_SELECT_POKEMON,
   FC_BSUBWAY_MAX,
 };
 
@@ -70,6 +72,12 @@ static void commCmd_FrRecvMyStatusData(
 static void commCmd_RecvBufPlayMode(
     int netID, const int size, const void *pData,
     void *pWork, GFL_NETHANDLE *pNetHandle );
+static void commCmd_RecvBufHomeSelectBoxTemoti(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle );
+static void commCmd_RecvBufHomeSelectPokemon(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle );
 
 //======================================================================
 //  通信データ
@@ -84,6 +92,8 @@ static const NetRecvFuncTable data_RecvFuncTbl[FC_BSUBWAY_CMD_MAX] =
   {commCmd_FrWiFiCounterTowerRecvBufRetireSelect, NULL},
   {commCmd_FrRecvMyStatusData, NULL},
   {commCmd_RecvBufPlayMode,NULL},
+  {commCmd_RecvBufHomeSelectBoxTemoti,NULL},
+  {commCmd_RecvBufHomeSelectPokemon,NULL},
 };
 
 /*
@@ -386,7 +396,7 @@ u16 BSUBWAY_SCRWORK_CommReceiveRetireSelect(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_CommSendPlayerData(
+static void commSendPlayerData(
     BSUBWAY_SCRWORK *bsw_scr, GAMEDATA *gdata )
 {
   int i;
@@ -418,7 +428,7 @@ void BSUBWAY_SCRWORK_CommSendPlayerData(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_CommSendTrainerData( BSUBWAY_SCRWORK *bsw_scr )
+static void commSendTrainerData( BSUBWAY_SCRWORK *bsw_scr )
 {
   MI_CpuCopy8( bsw_scr->trainer, bsw_scr->send_buf,
       BSUBWAY_STOCK_TRAINER_MAX*2);
@@ -432,7 +442,7 @@ void BSUBWAY_SCRWORK_CommSendTrainerData( BSUBWAY_SCRWORK *bsw_scr )
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_CommSendRetireSelect(
+static void commSendRetireSelect(
     BSUBWAY_SCRWORK *bsw_scr, u16 retire )
 {
   //自分の選択結果をワークに保存
@@ -447,10 +457,38 @@ void BSUBWAY_SCRWORK_CommSendRetireSelect(
  * @retval nothing
  */
 //--------------------------------------------------------------
-void BSUBWAY_SCRWORK_CommSendPlayMode( BSUBWAY_SCRWORK *bsw_scr )
+static void commSendPlayMode( BSUBWAY_SCRWORK *bsw_scr )
 {
   u32 *pSendBuf = (u32*)bsw_scr->send_buf;
   *pSendBuf = bsw_scr->play_mode;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  バトルサブウェイ　通信マルチ　ボックスor手持ち選択の結果を送信
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void commSendHomeSelectBoxTemoti(
+    BSUBWAY_SCRWORK *bsw_scr, u32 result )
+{
+  u32 *pSendBuf = (u32*)bsw_scr->send_buf;
+  *pSendBuf = result;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  バトルサブウェイ　通信マルチ　ポケモン選択の結果送信
+ * @param bsw_scr BSUBWAY_SCRWORK
+ * @retval nothing
+ */
+//--------------------------------------------------------------
+static void commSendHomeSelectPokemon(
+    BSUBWAY_SCRWORK *bsw_scr, u32 result )
+{
+  u32 *pSendBuf = (u32*)bsw_scr->send_buf;
+  *pSendBuf = result;
 }
 
 //--------------------------------------------------------------
@@ -469,15 +507,15 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
   switch( mode ){
   case BSWAY_COMM_PLAYER_DATA:  //ポケモン選択
     command = FC_BSUBWAY_PLAYER_DATA;
-    BSUBWAY_SCRWORK_CommSendPlayerData( bsw_scr, gdata );
+    commSendPlayerData( bsw_scr, gdata );
     break;
   case BSWAY_COMM_TR_DATA:  //抽選トレーナー
     command = FC_BSUBWAY_TR_DATA;
-    BSUBWAY_SCRWORK_CommSendTrainerData( bsw_scr );
+    commSendTrainerData( bsw_scr );
     break;
   case BSWAY_COMM_RETIRE_SELECT:  //リタイアを選ぶか？
     command = FC_BSUBWAY_RETIRE_SELECT;
-    BSUBWAY_SCRWORK_CommSendRetireSelect( bsw_scr, param );
+    commSendRetireSelect( bsw_scr, param );
     break;
   case BSWAY_COMM_MYSTATUS_DATA: //MYSTATUS送信
     command = FC_BSUBWAY_MYSTATUS_DATA;
@@ -488,7 +526,15 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
     break;
   case BSWAY_COMM_PLAY_MODE:
     command = FC_BSUBWAY_PLAY_MODE;
-    BSUBWAY_SCRWORK_CommSendPlayMode( bsw_scr );
+    commSendPlayMode( bsw_scr );
+    break;
+  case BSWAY_COMM_HOME_SELECT_BOX_TEMOTI:
+    command = FC_BSUBWAY_HOME_SELECT_BOX_TEMOTI;
+    commSendHomeSelectBoxTemoti( bsw_scr, param );
+    break;
+  case BSWAY_COMM_HOME_SELECT_POKEMON:
+    command = FC_BSUBWAY_HOME_SELECT_POKEMON;
+    commSendHomeSelectPokemon( bsw_scr, param );
     break;
   default:
     GF_ASSERT( 0 );
@@ -940,5 +986,85 @@ static void commCmd_RecvBufPlayMode(
     }else{
       bsw_scr->comm_check_work = TRUE;
     }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  送られてきた途中駅でのボックスor手持ち選択の結果を取得
+ * @param   id_no    送信者のネットID
+ * @param   size    受信データサイズ
+ * @param   pData    受信データ
+ * @param   work    FRONTIER_SYSTEMへのポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void commCmd_RecvBufHomeSelectBoxTemoti(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle )
+{
+  int num;
+  u16 ret;
+  BSUBWAY_SCRWORK *bsw_scr = pWork;
+  const u16 *recv_buf = pData;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　BOXorTemotiを受信\n" );
+  KAGAYA_Printf( "netID = %d\n", netID );
+#endif
+  
+  ret = 0;
+  num = 0;
+  bsw_scr->comm_receive_count++;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
+#endif
+  
+  //自分のデータは受け取らない
+  if( GFL_NET_SystemGetCurrentID() != netID ){
+    u32 result = (u32)recv_buf[0];
+    bsw_scr->comm_check_work = result;
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief  送られてきた途中駅でのポケモン選択の結果を送信
+ * @param   id_no    送信者のネットID
+ * @param   size    受信データサイズ
+ * @param   pData    受信データ
+ * @param   work    FRONTIER_SYSTEMへのポインタ
+ * @return  none
+ */
+//--------------------------------------------------------------
+static void commCmd_RecvBufHomeSelectPokemon(
+    int netID, const int size, const void *pData,
+    void *pWork, GFL_NETHANDLE *pNetHandle )
+{
+  int num;
+  u16 ret;
+  BSUBWAY_SCRWORK *bsw_scr = pWork;
+  const u16 *recv_buf = pData;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "WIFI受付 バトルサブウェイ　ポケモン選択結果を受信\n" );
+  KAGAYA_Printf( "netID = %d\n", netID );
+#endif
+  
+  ret = 0;
+  num = 0;
+  bsw_scr->comm_receive_count++;
+  
+#ifdef DEBUG_BSW_PRINT  
+  KAGAYA_Printf( "bsw_scr->comm_receive_count = %d\n",
+      bsw_scr->comm_receive_count );
+#endif
+  
+  //自分のデータは受け取らない
+  if( GFL_NET_SystemGetCurrentID() != netID ){
+    u32 result = (u32)recv_buf[0];
+    bsw_scr->comm_check_work = result;
   }
 }

@@ -35,6 +35,10 @@ _EVENT_DATA ev_bsw_ttown_receipt_stopper
 _EVENT_DATA ev_bsw_ttown_demo_train_arrival
 _EVENT_DATA ev_bsw_debug_map_chg_train
 _EVENT_DATA ev_bsw_upload_wifi_score
+_EVENT_DATA ev_bsw_select_btl_box
+_EVENT_DATA ev_bsw_select_pokemon
+_EVENT_DATA ev_bsw_select_ai_multi_pokemon
+_EVENT_DATA ev_bsw_comm_multi_error_msg_samepoke
 _EVENT_DATA_END
 
 //--------------------------------------------------------------
@@ -626,7 +630,7 @@ sub_receipt_challenge_multi:
  
   //ポケモン選択
   _CALL sub_bsw_common_pokemon_select
-
+  
   IF $SCWK_ANSWER == 0 THEN //参加不可
     _BSUBWAY_TOOL( BSWTOOL_DEBUG_CHK_FLAG, BSW_DEBUG_FLAG_REGU_OFF, BSW_NULL, debug_mode )
     IF $debug_mode == FALSE THEN
@@ -673,8 +677,6 @@ _RET
 //--------------------------------------------------------------
 sub_receipt_challenge_multi_ai:
 {
-  DEFINE_LOCAL partner_no
-  
   //サポート登場デモ
   _CALL sub_receipt_demo_partner_in
   
@@ -689,8 +691,6 @@ sub_receipt_challenge_multi_ai:
   _BMPMENU_MAKE_LIST( msg_bsw_scr_65, 2 ) //バランス重視
   _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる
   _BMPMENU_START()
-  
-  $partner_no = $SCWK_ANSWER
   
   SWITCH $SCWK_ANSWER
   CASE 0 THEN //攻撃
@@ -719,11 +719,8 @@ sub_receipt_challenge_multi_ai:
   
   _CALL sub_bsw_common_bwin_partner
   _MSGWIN_CLOSE()
-
-  //パートナーナンバーセット
-  _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, partner_no, BSW_NULL, BSW_NULL )
-
-  //パートナーロード
+  
+  //セットされたパートナーナンバーからパートナーロード
   _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_SEVEN, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //トレーナー抽選
@@ -825,8 +822,8 @@ sub_receipt_challenge_multi_comm:
     _CALL sub_bsw_common_bwin_receipt
     
     _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, ret )
-    _BMPMENU_MAKE_LIST( msg_bsw_scr_74, 0 ) //リーダー
     _BMPMENU_MAKE_LIST( msg_bsw_scr_75, 1 ) //グループ
+    _BMPMENU_MAKE_LIST( msg_bsw_scr_74, 0 ) //リーダー
     _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 2 ) //やめる
     _BMPMENU_START()
     
@@ -848,16 +845,24 @@ sub_receipt_challenge_multi_comm:
     ENDIF
     
     IF $SCWK_ANSWER == FALSE THEN //失敗
-      _BSUBWAY_TOOL( BSWSUB_COMM_END, BSW_NULL, BSW_NULL, BSW_NULL )
-      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
+      _CALL sub_bsw_common_comm_end
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
   ENDIF    
   
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+  
   //通信中フラグON
   _BSUBWAY_TOOL( BSWSUB_SET_COMM_FLAG, TRUE, BSW_NULL, BSW_NULL )
-   
+  
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
   
@@ -2416,26 +2421,39 @@ sub_common_map_change_train:
 _RET
 
 //--------------------------------------------------------------
-//  受付　ポケモン参加選択
+//  受付　ポケモン参加選択　コア部分
+//  @param SCWK_TEMP0 メッセージを表示するOBJID
 //  @retval SCWK_ANSWER 0=参加不可
 //--------------------------------------------------------------
-sub_bsw_common_pokemon_select:
+sub_bsw_common_pokemon_select_core:
 {
+  //それでは参加するポケモンを
+  _BALLOONWIN_OBJMSG_POS( msg_bsw_scr_23, SCWK_TEMP0, POS_DOWN )
+  _MSGWIN_CLOSE()
+  
   _BSUBWAY_TOOL( BSWSUB_GET_USE_BTL_BOX_FLAG, BSW_NULL, BSW_NULL, ret )
   
   IF $ret == FALSE THEN //手持ち
     _TEMOTI_POKEMON_KAIFUKU() //回復
   ENDIF
   
-  //それでは参加するポケモンを
-  $SCWK_TEMP0 = msg_bsw_scr_23
-  _CALL sub_bsw_common_bwin_receipt
-  _MSGWIN_CLOSE()
-  
   //ポケモン選択
   _BSUBWAY_TOOL( BSWSUB_SELECT_POKE, BSW_NULL, BSW_NULL, BSW_NULL )
   //ポケモン選択結果
   _BSUBWAY_TOOL( BSWSUB_GET_ENTRY_POKE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　ポケモン参加選択
+//  @retval SCWK_ANSWER 0=参加不可
+//--------------------------------------------------------------
+sub_bsw_common_pokemon_select:
+{
+  _CALL sub_bsw_common_get_objid_receipt
+  $SCWK_TEMP0 = $SCWK_ANSWER
+  
+  _CALL sub_bsw_common_pokemon_select_core
 }
 _RET
 
@@ -2900,6 +2918,104 @@ _RET
 ev_bsw_upload_wifi_score:
 {
   _CALL sub_common_wifi_upload_score
+  _CHG_LOCAL_SCR
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　手持ちorバトルボックス選択、事前レギュチェック
+//  @retval SCWK_ANSWER TRUE=完了 FALSE=キャンセル、エラー
+//--------------------------------------------------------------
+ev_bsw_select_btl_box:
+{
+  _CALL sub_bsw_common_select_btl_box
+  _CHG_LOCAL_SCR
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　ポケモン参加選択
+//  @param SCWK_TEMP0 メッセージを表示するOBJID
+//  @retval SCWK_ANSWER 0=参加不可
+//--------------------------------------------------------------
+ev_bsw_select_pokemon:
+{
+  _CALL sub_bsw_common_pokemon_select_core
+  _CHG_LOCAL_SCR
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　AIマルチのポケモン選択。
+//  ポケモン選択後のパートナーロードも行う
+//  @param SCWK_TEMP0 OBJ ID
+//  @retval SCWK_ANSWER TRUE=選択 FALSE=やめる
+//--------------------------------------------------------------
+ev_bsw_select_ai_multi_pokemon:
+{
+  DEFINE_LOCAL obj_id
+  
+  $obj_id = $SCWK_TEMP0
+  
+  //どんなポケモンを参加させる？
+  _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_103, msg_bsw_scr_102, obj_id, POS_DOWN )
+  
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_63, 0 ) //攻撃重視
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_64, 1 ) //防御重視
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_65, 2 ) //バランス重視
+  _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる
+  _BMPMENU_START()
+  
+  SWITCH $SCWK_ANSWER
+  CASE 0 THEN //攻撃
+    _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 0, BSW_NULL, BSW_NULL )
+    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_66, msg_bsw_scr_69, obj_id, POS_DOWN )
+    $SCWK_ANSWER = TRUE
+  CASE 1 THEN //防御
+    _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 1, BSW_NULL, BSW_NULL )
+    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_67, msg_bsw_scr_70, obj_id, POS_DOWN )
+    $SCWK_ANSWER = TRUE
+  CASE 2 THEN //バランス
+    _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 2, BSW_NULL, BSW_NULL )
+    _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_68, msg_bsw_scr_71, obj_id, POS_DOWN )
+    $SCWK_ANSWER = TRUE
+  DEFAULT //やめる
+    $SCWK_ANSWER = FALSE
+  ENDSWITCH
+  
+  _MSGWIN_CLOSE()
+  
+  //セットされたパートナーナンバーからパートナーロード
+  IF $SCWK_ANSWER == TRUE THEN
+    _BSUBWAY_TOOL( BSWSUB_CHOICE_BTL_SEVEN, BSW_NULL, BSW_NULL, BSW_NULL )
+  ENDIF
+  
+  _CHG_LOCAL_SCR
+}
+_RET
+
+//--------------------------------------------------------------
+//  受付　通信マルチのポケモン被りメッセージ
+//  BSWSUB_COMM_RECV_BUFでBSWAY_COMM_PLAYER_DATAを実行後が条件。
+//  @param SCWK_TEMP0 OBJ ID
+//  @param SCWK_TEMP1 被っている数
+//--------------------------------------------------------------
+ev_bsw_comm_multi_error_msg_samepoke:
+{
+  IF $SCWK_TEMP1 == 1 THEN
+    _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+    _MONS_NAME( 0, ret )
+    _BALLOONWIN_OBJMSG_POS( msg_bsw_scr_54, SCWK_TEMP0, POS_DOWN )
+  ELSE
+    _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 0, BSW_NULL, ret )
+    _MONS_NAME( 0, ret )
+    _BSUBWAY_TOOL( BSWSUB_GET_MEMBER_POKENO, 1, BSW_NULL, ret )
+    _MONS_NAME( 1, ret )
+    _BALLOONWIN_OBJMSG_POS( msg_bsw_scr_55, SCWK_TEMP0, POS_DOWN )
+  ENDIF
+  
+  _MSGWIN_CLOSE()
   _CHG_LOCAL_SCR
 }
 _RET

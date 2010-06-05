@@ -158,14 +158,61 @@ _RET
 //--------------------------------------------------------------
 sub_challenge_continue:
 {
+  DEFINE_LOCAL receipt_id
+  
+  $receipt_id = $SCWK_TARGET_OBJID
+  
+  //手持ちかバトルボックスどちらか
+  _CHG_COMMON_SCR SCRID_BSW_SELECT_BTL_BOX
+  
+  IF $SCWK_ANSWER == FALSE THEN //キャンセル
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_31, receipt_id, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //それでは参加するポケモンを選択
+  $SCWK_TEMP0 = $receipt_id
+  _CHG_COMMON_SCR SCRID_BSW_SELECT_POKEMON
+  
+  IF $SCWK_ANSWER == 0 THEN //参加不可
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_31, SCWK_TEMP0, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //プレイモード取得
+  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
+  
+  //AIマルチの際は相手の参加ポケモン選択
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    //パートナーOBJを再配置
+    _CALL sub_challenge_continue_set_obj_partner
+    
+    $receipt_id = C04R0111_RECEIPT1 //左側の受付OBJに
+    
+    $SCWK_TEMP0 = C04R0111_PARTNER //パートナーOBJ
+    _CHG_COMMON_SCR SCRID_BSW_SELECT_AI_MULTI_POKEMON
+    
+    //自機左へ向きなおす
+    _OBJ_ANIME( MMDL_ID_PLAYER, anm_challenge_continue_turn_left )
+    _OBJ_ANIME_WAIT()
+    
+    IF $SCWK_ANSWER == FALSE THEN //チャレンジ中断しました
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_31, receipt_id, POS_DOWN )
+      _LAST_KEYWAIT()
+      _MSGWIN_CLOSE()
+      _RET
+    ENDIF
+  ENDIF
+  
   //受付をエラー状態に
   $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
   
   //車内を乗車状態に
   $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_FIRST
-  
-  //プレイモード取得
-  _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //戻り場所を受付に
   _BSUBWAY_TOOL( BSWSUB_SET_PLAY_MODE_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -189,6 +236,35 @@ sub_challenge_continue:
   
   //マップ移動
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
+}
+_RET
+
+//アニメデータ　AIマルチ　自機受付側に向く
+_ANIME_LABEL anm_challenge_continue_turn_left
+  _ANIME_DATA AC_STAY_WALK_L_8F,1
+  _ANIME_DATA ACMD_END,0
+
+//--------------------------------------------------------------
+//  受付　続けてチャレンジ aiマルチの配置に
+//--------------------------------------------------------------
+sub_challenge_continue_set_obj_partner:
+{
+  //マップフェードアウト
+  _BLACK_OUT()
+  _DISP_FADE_END_CHECK()
+  
+  //受付を右に
+  _BSUBWAY_TOOL( BSWTOOL_SET_OBJ_DIR, C04R0111_RECEIPT1, DIR_RIGHT, BSW_NULL )
+  
+  //自機初期設定
+  _OBJ_POS_CHANGE( MMDL_ID_PLAYER, 18, 0, 14, DIR_RIGHT )
+  
+  //パートナーを隣に
+  _OBJ_POS_CHANGE( C04R0111_PARTNER, 19, 0, 14, DIR_LEFT )
+  _BSUBWAY_TOOL( BSWTOOL_OBJ_PAUSE, C04R0111_PARTNER, 0, BSW_NULL )
+  
+  //マップフェードイン開始
+  _BLACK_IN()
 }
 _RET
 
@@ -250,6 +326,180 @@ _RET
 //--------------------------------------------------------------
 sub_challenge_continue_comm_multi_ok:
 {
+  DEFINE_LOCAL result
+  
+  //受信バッファクリア
+  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //同期 0
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE0, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  //手持ちかバトルボックスどちらか
+  _CHG_COMMON_SCR SCRID_BSW_SELECT_BTL_BOX
+  $result = $SCWK_ANSWER //FALSE=キャンセル
+  
+  //お友達の選択を待っています
+  _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
+
+  //同期 1
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE1, BSW_NULL, comm_ret )
+
+  IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_HOME_SELECT_BOX_TEMOTI, result, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_HOME_SELECT_BOX_TEMOTI, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE || $result == FALSE THEN //キャンセル
+    _SYSWIN_CLOSE()
+
+    //同期 2
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE2, BSW_NULL, comm_ret )
+    
+    IF $comm_ret == FALSE THEN
+      _CALL sub_common_comm_error_end_reqfade
+      _CALL sub_challenge_continue_comm_error_retmap
+      _RET
+    ENDIF
+    
+    IF $result == TRUE THEN //自分は参加だった
+      //中断されました
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_30, SCWK_TARGET_OBJID, POS_DOWN )
+    ELSE
+      //中断しました
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_31, SCWK_TARGET_OBJID, POS_DOWN )
+    ENDIF
+    
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //同期 3
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE3, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  _SYSWIN_CLOSE()
+  
+  //それでは参加するポケモンを選択
+  $SCWK_TEMP0 = $SCWK_TARGET_OBJID
+  _CHG_COMMON_SCR SCRID_BSW_SELECT_POKEMON
+  
+  $result = $SCWK_ANSWER
+  
+  //お友達の選択を待っています
+  _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
+  
+  //同期 4
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE4, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  //ポケモン選択の結果を送信
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_HOME_SELECT_POKEMON, result, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_HOME_SELECT_POKEMON, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == 0 || $result == 0 THEN //選択キャンセル
+    _SYSWIN_CLOSE()
+    
+    //同期 5
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE5, BSW_NULL, comm_ret )
+    
+    IF $comm_ret == FALSE THEN
+      _CALL sub_common_comm_error_end_reqfade
+      _CALL sub_challenge_continue_comm_error_retmap
+      _RET
+    ENDIF
+    
+    IF $result != 0 THEN //自分は参加だった
+      //中断されました
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_30, SCWK_TARGET_OBJID, POS_DOWN )
+    ELSE
+      //中断しました
+      _BALLOONWIN_OBJMSG_POS( msg_c04r0111_31, SCWK_TARGET_OBJID, POS_DOWN )
+    ENDIF
+    
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //受信バッファクリア
+  _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //ポケモンデータ交換前の通信同期 6
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE6, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  //お互いが選んだポケモンデータを交換
+  _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, comm_ret )
+  
+  IF $comm_ret != 0 THEN //ポケモン被りで終了
+    _SYSWIN_CLOSE()
+    
+    $SCWK_TEMP0 = $SCWK_TARGET_OBJID
+    $SCWK_TEMP1 = $comm_ret
+    _CHG_COMMON_SCR SCRID_BSW_COMM_MULTI_ERROR_MSG_SAMEPOKE
+    
+    //相手のメッセージ表示完了待ち
+    _SYSWIN_MSG_ALLPUT( msg_c04r0111_19, POS_DOWN )
+    _TIME_WAIT( 15 )
+    _MSGWIN_CLOSE()
+    
+    //同期 7
+    _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE7, BSW_NULL, comm_ret )
+    
+    IF $comm_ret == FALSE THEN
+      _CALL sub_common_comm_error_end_reqfade
+      _CALL sub_challenge_continue_comm_error_retmap
+      _RET
+    ENDIF
+
+    //中断されました
+    _BALLOONWIN_OBJMSG_POS( msg_c04r0111_30, SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
+    _MSGWIN_CLOSE()
+    _RET
+  ENDIF
+  
+  //レポート前の同期 8
+  _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_SELPOKE8, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
   _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
   
   //受付をエラー状態に
@@ -874,7 +1124,7 @@ sub_demo_train_starting:
     _TIME_WAIT( 20 ) //アニメを待つ
   ENDIF
   
-  //フェードイ30ンチェック
+  //フェードインチェック
   _DISP_FADE_END_CHECK()
   
   //自機乗車アニメ

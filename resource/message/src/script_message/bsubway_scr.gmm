@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-03T15:34:02"/>
+	<create user="kagaya" host="W00143" date="2010-06-04T22:25:36"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1360" top="132" right="2065" bottom="752" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="200" right="1280" bottom="598" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -271,7 +271,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1334,6 +1334,23 @@
 	<row id="msg_bsw_scr_101">
 		<language name="JPN" width="256">つうしん　たいきちゅう</language>
 		<language name="JPN_KANJI" width="256">通信　待機中</language>
+	</row>
+
+	<row id="msg_bsw_scr_102">
+		<comment>AIマルチ　途中駅メッセージ</comment>
+		<language name="JPN" width="256">ぼくは　どんな　ポケモンを
+さんか　させればいい？</language>
+		<language name="JPN_KANJI" width="256">僕は　どんな　ポケモンを
+参加　させればいい？</language>
+	</row>
+
+	<row id="msg_bsw_scr_103">
+		<comment>AIマルチ　途中駅メッセージ</comment>
+		<language name="JPN" width="256">わたしは　どんな　ポケモンを
+さんか　させればいい？
+</language>
+		<language name="JPN_KANJI" width="256">私は　どんな　ポケモンを
+参加　させればいい？</language>
 	</row>
 
 	<row id="msg_bsw_ttown_00" text-color=",,,#ffffff,,,,,,,,,,,,,,," back-color="#404040,,,#404040,,#404040,#404040,,,,,,#404040,,,,,,">

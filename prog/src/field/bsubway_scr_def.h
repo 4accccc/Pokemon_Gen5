@@ -14,7 +14,7 @@
 //  define
 //======================================================================
 #ifdef DEBUG_ONLY_FOR_kagaya
-//#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
+#define DEBUG_BSW_CLEAR_1 //定義で1回戦闘のみでクリア
 //#define DEBUG_BSW_COMM_MULTI_BTL_SKIP //定義で通信マルチバトルをスキップ
 //#define DEBUG_BSW_BTL_SKIP //定義で戦闘スキップ
 //#define DEBUG_BSW_NORMAL_CLEAR //定義で即ノーマルクリア
@@ -315,7 +315,8 @@
 #define BSWSUB_COMM_GET_OBJCODE_KO (BSWSUB_COMM_START_NO+12)
 #define BSWSUB_COMM_REQ_ERROR_DISP (BSWSUB_COMM_START_NO+13)
 #define BSWSUB_COMM_REQ_ERROR_DISP_FLD (BSWSUB_COMM_START_NO+14)
-#define BSWSUB_COMM_END_NO (BSWSUB_COMM_START_NO+15)
+#define BSWSUB_COMM_CHK_NET_ERROR (BSWSUB_COMM_START_NO+15)
+#define BSWSUB_COMM_END_NO (BSWSUB_COMM_START_NO+16)
 
 #define BSWSUB_DEBUG_SET_SELECT_POKE (BSWSUB_DEBUG_START_NO+1)
 #define BSWSUB_DEBUG_END_NO (BSWSUB_DEBUG_START_NO+2)
@@ -350,6 +351,15 @@
 #define BSW_COMM_MULTI_HOME_BTL_TRAINER_SET 102
 #define BSW_COMM_MULTI_HOME_AUTO_SAVE       103
 #define BSW_COMM_MULTI_HOME_SIO_END         104
+#define BSW_COMM_MULTI_HOME_SELPOKE0        105
+#define BSW_COMM_MULTI_HOME_SELPOKE1        106
+#define BSW_COMM_MULTI_HOME_SELPOKE2        107
+#define BSW_COMM_MULTI_HOME_SELPOKE3        108
+#define BSW_COMM_MULTI_HOME_SELPOKE4        109
+#define BSW_COMM_MULTI_HOME_SELPOKE5        110
+#define BSW_COMM_MULTI_HOME_SELPOKE6        111
+#define BSW_COMM_MULTI_HOME_SELPOKE7        112
+#define BSW_COMM_MULTI_HOME_SELPOKE8        113
 
 //--------------------------------------------------------------
 //  通信マルチ　参加メニュー結果
@@ -408,11 +418,13 @@
 #define SB_SALON_PLAYER_SY    (2)
 
 //通信定義(プラチナで追加)
-#define BSWAY_COMM_PLAYER_DATA    (0)
-#define BSWAY_COMM_TR_DATA      (1)
-#define BSWAY_COMM_RETIRE_SELECT  (2)
-#define BSWAY_COMM_MYSTATUS_DATA (3)
-#define BSWAY_COMM_PLAY_MODE (4)
+#define BSWAY_COMM_PLAYER_DATA            (0)
+#define BSWAY_COMM_TR_DATA                (1)
+#define BSWAY_COMM_RETIRE_SELECT          (2)
+#define BSWAY_COMM_MYSTATUS_DATA          (3)
+#define BSWAY_COMM_PLAY_MODE              (4)
+#define BSWAY_COMM_HOME_SELECT_BOX_TEMOTI (5)
+#define BSWAY_COMM_HOME_SELECT_POKEMON    (6)
 
 //--------------------------------------------------------------
 //  列車種類 FLDEFF_BTRAIN_TYPEと同一である事

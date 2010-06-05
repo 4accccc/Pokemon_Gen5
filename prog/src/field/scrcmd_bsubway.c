@@ -1495,6 +1495,13 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   case BSWSUB_COMM_REQ_ERROR_DISP_FLD:
     GAMESYSTEM_SetFieldCommErrorReq( gsys, TRUE );
     break;
+  //通信エラーチェック
+  case BSWSUB_COMM_CHK_NET_ERROR:
+    *ret_wk = FALSE;
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
+      *ret_wk = TRUE;
+    }
+    break;
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:

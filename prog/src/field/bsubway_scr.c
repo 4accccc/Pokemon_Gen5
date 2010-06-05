@@ -1129,10 +1129,12 @@ void BSUBWAY_SCRWORK_PreparBattleBox( BSUBWAY_SCRWORK *bsw_scr )
 {
   GF_ASSERT( BSUBWAY_PLAYDATA_GetData(
         bsw_scr->playData,BSWAY_PLAYDATA_ID_use_battle_box, NULL ) );
-
-  if( bsw_scr->btl_box_party != NULL ){
-    GF_ASSERT( 0 );
-  }else{
+  
+  if( bsw_scr->btl_box_party != NULL ){ //ŠJ•ú‚ª•K—v
+    GFL_HEAP_FreeMemory( bsw_scr->btl_box_party );
+  }
+  
+  {
     SAVE_CONTROL_WORK *save = GAMEDATA_GetSaveControlWork( bsw_scr->gdata );
     BATTLE_BOX_SAVE *bb_save = BATTLE_BOX_SAVE_GetBattleBoxSave( save );
     bsw_scr->btl_box_party =
