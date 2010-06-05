@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-20T21:46:06"/>
+	<create user="matsumiya" host="W00224" date="2010-06-05T17:37:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="109" right="2012" bottom="737" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -420,30 +420,28 @@
 休ませて　あげないと！[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_t01r0101_mama_04" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ライブキャスター入手処理</comment>
 		<attribute name="キャラ指定">主人公ママ</attribute>
 		<language name="JPN" width="256">ポケモン
 げんきに　なったわね！▼
-そうだ！　これこれ！
-ライブキャスター！！[BE:00:ページ切り替え（行送り）]
-しゅうりから　もどってきてたわ！[BE:01:ページ切り替え（クリア）]</language>
+あと　でかけるなら
+ライブキャスターを　わすれないでね▼</language>
 		<language name="JPN_KANJI" width="256">ポケモン
 元気に　なったわね！▼
-そうだ！　これこれ！
-ライブキャスター！！[BE:00:ページ切り替え（行送り）]
-修理から　戻ってきてたわ！[BE:01:ページ切り替え（クリア）]</language>
+あと　でかけるなら
+ライブキャスターを　わすれないでね▼</language>
 	</row>
 
-	<row id="msg_t01r0101_mama_04_01" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_t01r0101_mama_04_01" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>♀
 ・ポケモン図鑑入手まで繰り返し</comment>
 		<language name="JPN" width="256">あなたも　はかせに
-おれいを　いわないとね！▽
+おれいを　いうんでしょ！？▽
 じゃ　いってらっしゃい！</language>
 		<language name="JPN_KANJI" width="256">あなたも　博士に
-お礼を　いわないとね！▽
+お礼を　いうんでしょ！？▽
 じゃ　いってらっしゃい！</language>
 	</row>
 
