@@ -33,7 +33,11 @@ EVENT_START	ev_tamagetake_enc
 
 	_TALK_OBJ_START()
 	
-	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv ) 
+	//ジャンプ演出
+	_OBJ_ANIME( SCWK_TARGET_OBJID, anm_jump )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv )
 	//parameter0に間違って 0 が入力されている場合 5 に修正
 	IF $lwk_poke_lv == 0 THEN
 		$lwk_poke_lv = 5
@@ -64,8 +68,11 @@ EVENT_START	ev_morobareru_enc
 
 	_TALK_OBJ_START()
 	
-	_TIME_WAIT( 16 )
-	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv ) 
+	//ジャンプ演出
+	_OBJ_ANIME( SCWK_TARGET_OBJID, anm_jump )
+	_OBJ_ANIME_WAIT()
+	
+	_OBJ_GET_PARAM( SCWK_TARGET_OBJID, SCR_OBJPARAM0, lwk_poke_lv )
 	//parameter0に間違って 0 が入力されている場合 5 に修正
 	IF $lwk_poke_lv == 0 THEN
 		$lwk_poke_lv = 5
@@ -85,5 +92,12 @@ EVENT_START	ev_morobareru_enc
 
 }
 EVENT_END
+
+//--------------------------------------------------------------------
+//ジャンプ演出（共通）
+//--------------------------------------------------------------------
+_ANIME_LABEL	anm_jump
+	_ANIME_DATA	AC_STAY_JUMP_D_8F,2
+	_ANIME_DATA	ACMD_END,0
 
 
