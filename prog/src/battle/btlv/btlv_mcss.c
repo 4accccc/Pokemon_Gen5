@@ -425,6 +425,9 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
           int sick_anm;
           int index = BTLV_MCSS_GetIndex( bmw, pos );
 
+          //g‘ã‚í‚è‚ª‚Å‚Ä‚¢‚é‚È‚ç‰½‚à‚µ‚È‚¢
+          if( BTLV_MCSS_GetStatusFlag( bmw, pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) continue;
+
           if( bmw->btlv_mcss[ index ].sick_set_flag == 1 )
           { 
             if( bmw->evy_dir == 0 )
@@ -1664,6 +1667,7 @@ void  BTLV_MCSS_SetMigawari( BTLV_MCSS_WORK* bmw, int position, int sw, BOOL fla
     maw.nmar = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NMAR : NARC_pokegra_wb_pbwb_migawari_NMAR;
     maw.ncec = position & 1 ? NARC_pokegra_wb_pfwb_migawari_NCEC : NARC_pokegra_wb_pbwb_migawari_NCEC;
     MCSS_ReloadResource( bmw->mcss_sys, bmw->btlv_mcss[ index ].mcss, &maw );
+    BTLV_MCSS_ResetPaletteFadeBaseColor( bmw, position );
     if( flag )
     {
       bmw->btlv_mcss[ index ].status_flag |= BTLV_MCSS_STATUS_FLAG_MIGAWARI;
