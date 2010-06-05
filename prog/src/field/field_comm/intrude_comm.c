@@ -255,7 +255,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
   }
 
   //ƒXƒŠ[ƒv‚É“ü‚ë‚¤‚Æ‚µ‚Ä‚¢‚éê‡‚ÍØ’f
-  if(GFL_UI_CheckCoverAndBatt() == TRUE){
+  if(GFL_UI_CheckCoverAndBatt() == TRUE && intcomm->timeout_stop == FALSE){
     GameCommSys_ExitReq(intcomm->game_comm);
     return;
   }
