@@ -332,19 +332,19 @@ _ANIME_LABEL anm_doctor_pokecen2
 _ANIME_LABEL anm_player_pokecen_up
 	_ANIME_DATA		AC_WALK_U_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_VANISH_ON, 1
+	//_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_player_pokecen_left
 	_ANIME_DATA		AC_WALK_L_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_VANISH_ON, 1
+	//_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 _ANIME_LABEL anm_player_pokecen_right
 	_ANIME_DATA		AC_WALK_R_8F,1
 	_ANIME_DATA		AC_WALK_U_8F,1
-	_ANIME_DATA		AC_VANISH_ON, 1
+	//_ANIME_DATA		AC_VANISH_ON, 1
 	_ANIME_DATA		ACMD_END,0
 
 /************************************************************/
