@@ -246,6 +246,7 @@ static GFL_PROC_RESULT BR_MUSICALLOOK_PROC_Exit( GFL_PROC *p_proc, int *p_seq, v
 
 	return GFL_PROC_RES_FINISH;
 }
+#include "debug/debug_nagihashi.h"
 //----------------------------------------------------------------------------
 /**
  *	@brief	ミュージカルを見るプロセス	メイン処理
