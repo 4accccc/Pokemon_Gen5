@@ -511,8 +511,6 @@ void BTLV_SCD_ForceQuitSelect( BTLV_SCD* wk )
 
 
 #include "data\command_sel.cdat"
-#include "msg/msg_d_soga.h"
-#include "message.naix"
 
 static BOOL selectAction_init( int* seq, void* wk_adrs )
 {
