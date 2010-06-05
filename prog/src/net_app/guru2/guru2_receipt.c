@@ -25,6 +25,7 @@
 #include "msg/msg_guru2_receipt.h"
 #include "system/wipe.h"
 #include "system/bmp_winframe.h"
+#include "system/net_err.h"
 #include "print/printsys.h"
 #include "poke_tool/monsno_def.h"
 #include "system/bmp_menu.h"
@@ -90,7 +91,7 @@ static BOOL NameCheckPrint( GFL_BMPWIN *win, int frame, PRINTSYS_LSB color, GURU
 static int  ConnectCheck( GURU2RC_WORK *wk );
 static BOOL  MyStatusCheck( GURU2RC_WORK *wk );
 static void RecordMessagePrint( GURU2RC_WORK *wk, int msgno, int all_put );
-static int  EndMessageWait( PRINT_STREAM *stream );
+static int  EndMessageWait( GURU2RC_WORK *wk );
 static void EndMessageWindowOff( GURU2RC_WORK *wk );
 static int  OnlyParentCheck( GURU2RC_WORK *wk );
 static int  MyStatusGetNum( GURU2RC_WORK *wk );
@@ -264,21 +265,10 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
     // 通信コマンドを交換リスト用に変更
     Guru2Comm_CommandInit( g2p->g2c );
     
-    // ぐるぐる交換受付モードに変更
-    // CommStateUnionGuru2Change();
-    
-      // 3台まで接続可能に書き換え
-      // CommStateSetLimitNum(3);
-    
-    // 親だったら「レコード通信募集中」にビーコン書き換え
-    //if(GFL_NET_SystemGetCurrentID()==0){
-    //  Union_BeaconChange( UNION_PARENT_MODE_GURU2_FREE );
-    //}
     
     // 通信アイコン表示
     GFL_NET_WirelessIconEasy_HoldLCD( TRUE , HEAPID_GURU2 );
-  
-  //  MakeSendData( wk->g2p->param.sv, &wk->g2c->send_data );
+    GFL_NET_ReloadIcon();
   
     GFL_ARC_CloseDataHandle( p_handle );
 
@@ -440,6 +430,14 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
     break;
   }
   
+  // フェード中じゃない時に通信エラーチェック
+  if( WIPE_SYS_EndCheck() ){
+    if(NetErr_App_CheckError()!=NET_ERR_STATUS_NULL){
+      OS_Printf("------------------------通信エラー--------------------\n");
+      return ( GFL_PROC_RES_FINISH );
+    }
+  }
+
   GFL_CLACT_SYS_Main();               // セルアクター常駐関数
   _print_func(wk);
   
@@ -448,14 +446,6 @@ GFL_PROC_RESULT Guru2ReceiptProc_Main( GFL_PROC * proc, int *seq, void *pwk, voi
 }
 
 
-
-
-
-#define DEFAULT_NAME_MAX    18
-
-// ダイヤ・パールで変わるんだろう
-#define MALE_NAME_START     0
-#define FEMALE_NAME_START   18
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -470,9 +460,6 @@ GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void
 {
   int i;
   GURU2RC_WORK *wk = (GURU2RC_WORK *)mywk;
-  
-  // 現在の接続状態をbit情報で保存(これ以降は変動しないはずなので）
-//  wk->g2c->comm_game_join_bit = Union_App_GetMemberNetBit(_get_unionwork(wk));
   
   // メッセージ表示用システム解放
   GFL_TCBL_DeleteAll( wk->pMsgTcblSys );
@@ -489,8 +476,6 @@ GFL_PROC_RESULT Guru2ReceiptProc_End( GFL_PROC * proc, int *seq, void *pwk, void
   // BGL削除
   BgExit( );
 
-  // 通信終了
-  
   // メッセージマネージャー・ワードセットマネージャー解放
   GFL_MSG_Delete( wk->MsgManager );
   WORDSET_Delete( wk->WordSet );
@@ -1156,6 +1141,10 @@ static void CenteringPrint(GFL_BMPWIN *win, STRBUF *strbuf, GFL_FONT *font)
 //------------------------------------------------------------------
 static void BmpWinDelete( GURU2RC_WORK *wk )
 {
+  // はい・いいえメニューが開いたままだったら解放
+  if(wk->YesNoMenuWork!=NULL){
+    BmpMenu_YesNoMenuExit( wk->YesNoMenuWork );
+  }
 
   GFL_BMPWIN_Delete( wk->TrainerNameWin );
   GFL_BMPWIN_Delete( wk->TitleWin );
@@ -1203,23 +1192,16 @@ static void SetCursor_Pos( GFL_CLWK *act, int x, int y )
 //------------------------------------------------------------------
 static int Record_MainInit( GURU2RC_WORK *wk, int seq )
 {
-  GFL_NET_SetAutoErrorCheck( FALSE ); // 子機の出入りが確定するまではエラー扱いしない
   // 親の時はAボタンで開始メッセージ。子機は開始待ちメッセージ
   if(GFL_NET_SystemGetCurrentID()==0){
-
-/* ぐるぐる交換受付で3人以上の時、０．５秒ぐらいのタイミングで子機が抜けて親を一人にすると
- 「つごうがつかないメンバーが…」というメッセージが２重に表示されてウインドウ内で  
-  表示が壊れてしまうバグを対処 */
-#if AFTER_MASTER_070424_RECORDCONER_FIX
+      GFL_NET_SetAutoErrorCheck( FALSE ); 
     // 接続人数が2人より多い場合は「Aボタンでかいし」を表示
     if(Union_App_GetMemberNum(_get_unionwork(wk))>=2){
       RecordMessagePrint(wk, msg_guru2_receipt_01_01, 0 );
     }
-#else
-    RecordMessagePrint(wk, msg_guru2_receipt_01_01, 0 );
-
-#endif
   }else{
+    // 子機には通信エラーが発生する
+    GFL_NET_SetAutoErrorCheck( TRUE ); 
     RecordMessagePrint(wk, msg_guru2_receipt_01_07, 0 );
   }
   
@@ -1416,7 +1398,7 @@ static void SequenceChange_MesWait( GURU2RC_WORK *wk, int next )
 //------------------------------------------------------------------
 static int Record_MessageWaitSeq( GURU2RC_WORK *wk, int seq )
 {
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     wk->seq = wk->nextseq;
   }
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
@@ -1571,7 +1553,6 @@ static int Record_EndSelectWait( GURU2RC_WORK *wk, int seq )
     wk->YesNoMenuWork = NULL;
   }
 
-
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
 
   return seq;
@@ -1710,32 +1691,20 @@ static int Record_StartSelectWait( GURU2RC_WORK *wk, int seq )
     
   ret = BmpMenu_YesNoSelectMain( wk->YesNoMenuWork );
 
-
   if(ret!=BMPMENU_NULL){
     if(ret==BMPMENU_CANCEL){
       int flag = GURU2COMM_BAN_NONE;
       // 離脱禁止解除通達
       Union_App_Parent_ResetEntryBlock(_get_unionwork(wk));
-//      Guru2Comm_SendData(wk->g2c, G2COMM_RC_BAN, &flag, 1 );
 
       // ビーコン状態変更
-      ////ChangeConnectMax( wk, 1 );
-//      SequenceChange_MesWait( wk, RECORD_MODE_INIT );
       wk->seq = RECORD_MODE_INIT;
     }else{
       // 絶対ここにくるのは親だけど
       if(GFL_NET_SystemGetCurrentID()==0){
-        /*
-        SequenceChange_MesWait(
-          wk, RECORD_MODE_STAET_RECORD_COMMAND );
-        //まぜています
-        RecordMessagePrint( wk, msg_guru2_receipt_01_11, 1 );
-        */
-        
                 // 接続禁止に書き換え
         wk->seq = RECORD_MODE_START_RECORD_COMMAND;
         wk->start_num = MyStatusGetNum(wk);
-//        Union_BeaconChange( UNION_PARENT_MODE_GURU2 );
       }else{
         GF_ASSERT(0);
       }
@@ -2073,15 +2042,11 @@ static int Record_EndParentOnly( GURU2RC_WORK *wk, int seq )
 /* ぐるぐる交換受付で3人以上の時、０．５秒ぐらいのタイミングで子機が抜けて親を一人にすると
  「つごうがつかないメンバーが…」というメッセージが２重に表示されてウインドウ内で  
   表示が壊れてしまうバグを対処 */
-#if AFTER_MASTER_070424_RECORDCONER_FIX
   // メッセージ表示中は呼び出さないようにする
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     RecordMessagePrint( wk, msg_guru2_receipt_01_08, 0 ); // リーダーが抜けたので解散します。
+    wk->seq = RECORD_MODE_END_PARENT_ONLY_WAIT;
   }
-#else
-    RecordMessagePrint( wk, msg_guru2_receipt_01_08, 0 ); // リーダーが抜けたので解散します。
-#endif
-  wk->seq = RECORD_MODE_END_PARENT_ONLY_WAIT;
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
 
@@ -2100,7 +2065,7 @@ static int Record_EndParentOnly( GURU2RC_WORK *wk, int seq )
 //------------------------------------------------------------------
 static int Record_EndParentOnlyWait( GURU2RC_WORK *wk, int seq )
 {
-  if( EndMessageWait( wk->printStream ) ){
+  if( EndMessageWait( wk ) ){
     wk->seq = RECORD_MODE_END_CHILD_WAIT;
   }
 
@@ -2123,11 +2088,6 @@ static int Record_EndParentOnlyWait( GURU2RC_WORK *wk, int seq )
 static int Record_LogoutChildMes( GURU2RC_WORK *wk, int seq )
 {
   // ●●●さんがかえりました
-  if( EndMessageWait( wk->printStream ) == 0){
-    //表示中のメッセージがある場合は強制停止
-//    GF_STR_PrintForceStop(wk->printStream);
-    PRINTSYS_PrintStreamStop( wk->printStream );
-  }
   RecordMessagePrint(wk, msg_guru2_receipt_01_14, 1 );
   wk->seq = RECORD_MODE_LOGOUT_CHILD_WAIT;
 
@@ -2326,11 +2286,6 @@ void Guru2Rc_MainSeqForceChange( GURU2RC_WORK *wk, int seq, u8 id  )
     }
     break;
   case RECORD_MODE_RECORD_SEND_DATA:
-    if(EndMessageWait(wk->printStream) == 0){
-      //表示中のメッセージがある場合は強制停止
-//      GF_STR_PrintForceStop(wk->printStream);
-    PRINTSYS_PrintStreamStop( wk->printStream );
-    }
     RecordMessagePrint( wk, msg_guru2_receipt_01_11, 0 );   // 「まぜています」表示
     if(wk->YesNoMenuWork!=NULL){
       BmpMenu_YesNoMenuExit( wk->YesNoMenuWork );
@@ -2359,9 +2314,8 @@ void Guru2Rc_MainSeqForceChange( GURU2RC_WORK *wk, int seq, u8 id  )
   case RECORD_MODE_END_SELECT_ANSWER_NG:
     break;
   case RECORD_MODE_GURU2_POKESEL_START:
-    if(EndMessageWait(wk->printStream) == 0){
+    if(EndMessageWait(wk) == 0){
       //表示中のメッセージがある場合は強制停止
-//      GF_STR_PrintForceStop(wk->printStream);
       PRINTSYS_PrintStreamStop( wk->printStream );
   }
     
@@ -2763,18 +2717,18 @@ static void RecordMessagePrint( GURU2RC_WORK *wk, int msgno, int all_put )
 
   // 文字列描画開始
   if(all_put == 0){
-//    wk->printStream = GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, GetTalkSpeed(wk), NULL);
+    // 既に文字列描画が走っていても強制的に終了させて上書きする
+    if(wk->printStream!=NULL){
+      PRINTSYS_PrintStreamDelete( wk->printStream );
+    }
     wk->printStream = PRINTSYS_PrintStream( wk->MsgWin, 0,0, wk->TalkString,
                                             wk->font, MSGSPEED_GetWait(), wk->pMsgTcblSys,
                                             0,HEAPID_GURU2, 15 );
   }
   else{
     //一括表示の場合はMsgIndexが0xffになるので注意！
-//    GF_STR_PrintSimple( wk->MsgWin, FONT_TALK, wk->TalkString, 0, 0, MSG_ALLPUT, NULL);
     PRINT_UTIL_PrintColor( &wk->printUtil, wk->printQue, 0,0, wk->TalkString, 
                            wk->font, PRINTSYS_LSB_Make(2,3,0) );
-
-
   }
 
   GFL_BMPWIN_MakeTransWindow( wk->MsgWin );
@@ -2789,16 +2743,21 @@ static void RecordMessagePrint( GURU2RC_WORK *wk, int msgno, int all_put )
  * @retval  int   
  */
 //------------------------------------------------------------------
-static int EndMessageWait( PRINT_STREAM *stream )
+static int EndMessageWait( GURU2RC_WORK *wk )
 {
   PRINTSTREAM_STATE state;
-  state = PRINTSYS_PrintStreamGetState( stream );
+  if(wk->printStream==NULL){
+    return 1;
+  }
+
+  state = PRINTSYS_PrintStreamGetState( wk->printStream );
   if(state==PRINTSTREAM_STATE_PAUSE){
     if(GFL_UI_KEY_GetTrg()&PAD_BUTTON_DECIDE){
-      PRINTSYS_PrintStreamReleasePause( stream );
+      PRINTSYS_PrintStreamReleasePause( wk->printStream );
     }
   }else if(state==PRINTSTREAM_STATE_DONE){
-    PRINTSYS_PrintStreamDelete( stream );
+    PRINTSYS_PrintStreamDelete( wk->printStream );
+    wk->printStream = NULL;
     return 1;
   }
   return 0;
