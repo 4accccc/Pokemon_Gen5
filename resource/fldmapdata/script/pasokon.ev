@@ -81,6 +81,7 @@ EVENT_START ev_pc
     _BMPMENU_MAKE_LIST( msg_pc_window_07, msg_pc_window_07 )  // ヘルプを見る
     _BMPMENU_MAKE_LIST( msg_pc_window_06, msg_pc_window_06 )  // スイッチをきる
     _BMPMENU_START_BREAKABLE()
+    _SYSWIN_CLOSE()
 
     _TIME_WAIT(3) // メニュー決定音SEとアクセスSEが重ならないように待つ
 
