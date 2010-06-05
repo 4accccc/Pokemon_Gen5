@@ -3407,6 +3407,19 @@ void FIELD_PLAYER_GRID_CheckSpecialDrawForm(
 
 //--------------------------------------------------------------
 /**
+ * 自機が特殊移動の場合は元に戻す。
+ * @param gjiki
+ * @retval nothing
+ * @note 今の所、該当箇所は尾瀬ゆれ状態のみ
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_GRID_ResetSpecialMove( FIELD_PLAYER_GRID *gjiki )
+{
+  gjiki_ClearUnderForceMove( gjiki );
+}
+
+//--------------------------------------------------------------
+/**
  * 自機が波乗りイベント終了直後か
  * @param gjiki
  * @retval BOOL

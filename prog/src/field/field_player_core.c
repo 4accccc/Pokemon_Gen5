@@ -202,6 +202,8 @@ FIELD_PLAYER_CORE * FIELD_PLAYER_CORE_Create(
     if( fixcode == OBJCODEMAX ){
       FIELD_PLAYER_CORE_ResetMoveForm( player_core );
     }
+    
+    
 	}
 	
 #if 0 // MoveFormがセーブされるようになったため、不要なはず。2010.04.14

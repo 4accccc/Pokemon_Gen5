@@ -273,6 +273,7 @@ static void MMdl_GetAttrMoveBefore( MMDL * mmdl )
 static void MMdl_ProcMoveStartFirst( MMDL * mmdl )
 {
   if( MMDL_CheckMoveBit(mmdl,MMDL_MOVEBIT_MOVE_START) ){
+    MMDL_CallMoveProcAfterDrawInit( mmdl );
     MMdl_MapAttrProc_MoveStartFirst( mmdl );
   }
   

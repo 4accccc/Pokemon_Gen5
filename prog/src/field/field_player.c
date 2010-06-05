@@ -1219,6 +1219,27 @@ void FIELD_PLAYER_CheckSpecialDrawForm(
 
 //--------------------------------------------------------------
 /**
+ * 自機が特殊移動の際は元に戻す
+ * @param fld_player
+ * @retval nothing
+ * @note 今の所、該当箇所はグリッド移動の凍り床
+ */
+//--------------------------------------------------------------
+void FIELD_PLAYER_ResetSpecialMove( FIELD_PLAYER *fld_player )
+{
+  if( FIELDMAP_GetBaseSystemType(
+        fld_player->fieldWork) == FLDMAP_BASESYS_GRID ){
+    FIELD_PLAYER_GRID_ResetSpecialMove( fld_player->gridwk );
+  }
+  else
+  {
+    OS_Printf( "rail not support\n" );
+    GF_ASSERT(0);
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * 自機が波乗りイベント終了直後か
  * @param fld_player FIELD_PLAYER
  * @retval BOOL TRUE=終了直後

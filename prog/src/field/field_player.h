@@ -211,6 +211,7 @@ extern BOOL FIELD_PLAYER_CheckTakinoboriUse(
     FIELD_PLAYER *fld_player, MAPATTR nattr, MAPATTR fattr );
 extern void FIELD_PLAYER_CheckSpecialDrawForm(
     FIELD_PLAYER *fld_player, BOOL menu_open_flag );
+extern void FIELD_PLAYER_ResetSpecialMove( FIELD_PLAYER *fld_player );
 extern BOOL FIELD_PLAYER_CheckNaminoriEventEnd( FIELD_PLAYER *fld_player );
 extern void FIELD_PLAYER_SetNaminoriEventEnd( FIELD_PLAYER *fld_player, BOOL flag );
 extern BOOL FIELD_PLAYER_CheckPossibleDash( FIELD_PLAYER *fld_player );

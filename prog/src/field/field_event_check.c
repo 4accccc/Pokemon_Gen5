@@ -728,7 +728,10 @@ GMEVENT * FIELD_EVENT_CheckNormal_Wrap( GAMESYS_WORK *gsys, void *work )
     // 自機が特殊表示の場合は元に戻す
     FIELD_PLAYER_CheckSpecialDrawForm(
         FIELDMAP_GetFieldPlayer(fieldmap_work), menu_open_flag );
-
+    
+    // 自機が特殊移動の際は元に戻す
+    FIELD_PLAYER_ResetSpecialMove( FIELDMAP_GetFieldPlayer(fieldmap_work) );
+    
     // 群集 windowを消去
     crowdpeople = FIELDMAP_GetCrowdPeopleSys( fieldmap_work );
     if( crowdpeople ){
