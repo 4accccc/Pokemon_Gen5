@@ -22,7 +22,7 @@
 //フェードに関する時間
 #define _POKEUP_WHITEOUT_START (266)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト
 #define _POKEUP_WHITEOUT_TIMER (20)       //絵コンテ６番モンスターボールが打ちあがった際のホワイトアウト時間 1/
-#define _POKEUP_WHITEIN_START  (295)      //絵コンテ７番ポケモン交換シーン前のフェードイン
+#define _POKEUP_WHITEIN_START  (301)      //絵コンテ７番ポケモン交換シーン前のフェードイン
 #define _POKEUP_WHITEIN_TIMER (25)        //絵コンテ７番ポケモン交換シーン前のフェードイン時間
 
 #define _POKECHANGE_WHITEOUT_START (651)  //絵コンテ１４番ポケモン交換シーンのホワイトアウト
