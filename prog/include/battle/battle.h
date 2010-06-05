@@ -311,6 +311,7 @@ typedef struct {
 
   u8 cmdIllegalFlag      : 1;  // コマンド不正チェックフラグ（子機のみ操作。親機は常にFALSE）
   u8 recPlayCompleteFlag : 1;  // 録画再生モードで最後まで再生できたらTRUE。それ以外はFALSE
+  u8 WifiBadNameFlag     : 1;  // Wifiで対戦相手が不正名だったらTRUE。それ以外はFALSE
 
   u8 fightPokeIndex[ TEMOTI_POKEMAX ];  // 戦闘に出たポケモンのパーティ内Indexと同じ位置がTRUEになる（それ以外はFALSE）
 
