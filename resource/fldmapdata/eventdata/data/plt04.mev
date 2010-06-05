@@ -1,5 +1,5 @@
 #event data
-#save date:2010/05/27 15:44:31
+#save date:2010/06/05 19:51:12
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\plt04.wms
 #SECTION START:OBJ_EVENT
@@ -255,7 +255,7 @@ EXIT_TYPE_INTRUDE
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-536 -80 88
+536 -80 72
 #size
 1 1
 #Map Event List Data End
