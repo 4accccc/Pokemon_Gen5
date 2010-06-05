@@ -216,6 +216,8 @@ static void DEB_SD_PRINT_PrintCore( const char *str )
 static void DEB_SD_PRINT_AssertDispMain( const char* str )
 {
   //内容の表示と書き出し
+  //実機でのみ止ったので動作しないように・・・
+  /*
   DEB_SD_TPrintf(str);
   //DEB_SD_PRINT_PrintCore( str );
   if( sdPrintWork->isCallAssert == FALSE )
@@ -223,7 +225,7 @@ static void DEB_SD_PRINT_AssertDispMain( const char* str )
     sdPrintWork->isCallAssert = TRUE;
     DEB_SD_PRINT_UpdateSystem();
   }
-  
+  */
   if( OS_GetConsoleType() & (OS_CONSOLE_NITRO|OS_CONSOLE_TWL) )
   {
     // ROM実行用（可能なら情報をLCD表示）
