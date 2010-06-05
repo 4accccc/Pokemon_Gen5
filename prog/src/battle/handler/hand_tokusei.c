@@ -337,6 +337,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicGuard( u32* numElems );
 static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Akusyuu( u32* numElems );
 static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Karuwaza_BeforeItemSet( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Karuwaza( u32* numElems );
 static void handler_Karuwaza_Consumed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -5246,18 +5247,23 @@ static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Karuwaza( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ITEM_CONSUMED,  handler_Karuwaza_Consumed }, // 装備アイテム消費後ハンドラ
-    { BTL_EVENT_CALC_AGILITY,   handler_Karuwaza_Agility  }, // すばやさ計算ハンドラ
+    { BTL_EVENT_ITEMSET_DECIDE,  handler_Karuwaza_BeforeItemSet  }, // アイテム書き換え直前
+    { BTL_EVENT_CALC_AGILITY,    handler_Karuwaza_Agility        }, // すばやさ計算ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
-// 装備アイテム消費後ハンドラ
-static void handler_Karuwaza_Consumed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// アイテム書き換え直前ハンドラ
+static void handler_Karuwaza_BeforeItemSet( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    work[0] = 1;    // アイテム消費したらフラグON
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM) == ITEM_DUMMY_DATA)
+  ){
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
+    {
+      work[0] = 1;    // アイテム消費したらフラグON
+    }
   }
 }
 // すばやさ計算ハンドラ

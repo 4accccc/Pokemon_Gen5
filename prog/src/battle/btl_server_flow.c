@@ -248,7 +248,7 @@ static BOOL scproc_SimpleDamage_CheckEnable( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM*
 static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u32 damage, BTL_HANDEX_STR_PARAMS* str );
 static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
-static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scEvent_ConsumeItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u16 itemID );
 static void scproc_KillPokemon( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_Fight_Damage_AddSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target );
@@ -514,7 +514,7 @@ static u8 scproc_HandEx_EquipItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_H
 static u8 scproc_HandEx_useItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_ItemSP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
-static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
+static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID );
 static u8 scproc_HandEx_updateWaza( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_counter( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -4533,7 +4533,7 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
       }
       // いちゃもんによる失敗チェック
       if( BPP_CheckSick(attacker, WAZASICK_ICHAMON)
-      &&  (BPP_GetPrevWazaID(attacker) == waza)
+      &&  (BPP_GetPrevOrgWazaID(attacker) == waza)
       ){
         cause = SV_WAZAFAIL_ICHAMON;
         break;
@@ -6403,7 +6403,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
       scPut_UseItemAct( wk, bpp );
       if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_SPEND) ){
-        scproc_ConsumeItem( wk, bpp, itemID );
+        scproc_ConsumeItem( wk, bpp );
       }
 
       scEvent_ItemEquip( wk, bpp );
@@ -6452,17 +6452,32 @@ static BOOL scEvent_CheckItemEquipFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
  * @param   itemID
  */
 //----------------------------------------------------------------------------------
-static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
+static void scproc_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
+  u16 itemID = BPP_GetItem( bpp );
+
   scPut_ConsumeItem( wk, bpp );
   scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
 
+  scproc_ItemChange( wk, bpp, itemID );
+
+  /*  かるわざだけで利用していた。必要なくなったはず。
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     scEvent_ConsumeItem( wk, bpp, itemID );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
+  */
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Put] 所持アイテムを消費した情報を記録
+ */
+//----------------------------------------------------------------------------------
+static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+{
+  BPP_ConsumeItem( bpp );
+  SCQUE_PUT_OP_ConsumeItem( wk->que, BPP_GetID(bpp) );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -6480,6 +6495,33 @@ static void scEvent_ConsumeItem( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, 
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_ITEM, itemID );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_ITEM_CONSUMED );
   BTL_EVENTVAR_Pop();
+}
+//----------------------------------------------------------------------------------
+// アイテム書き換え共通処理
+//----------------------------------------------------------------------------------
+static void scproc_ItemChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 nextItemID )
+{
+  u8 pokeID = BPP_GetID( bpp );
+  u16 prevItemID = BPP_GetItem( bpp );
+  u32 hem_state;
+
+  // アイテム書き換え確定ハンドラ呼び出し
+  hem_state = BTL_Hem_PushState( &wk->HEManager );
+  scEvent_ItemSetDecide( wk, bpp, nextItemID );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
+
+  BTL_HANDLER_ITEM_Remove( bpp );
+  SCQUE_PUT_OP_SetItem( wk->que, pokeID, nextItemID );
+  BPP_SetItem( bpp, nextItemID );
+
+  // アイテム書き換え完了ハンドラ呼び出し
+  if( nextItemID != ITEM_DUMMY_DATA ){
+    BTL_HANDLER_ITEM_Add( bpp );
+  }
+
+  hem_state = BTL_Hem_PushState( &wk->HEManager );
+  scEvent_ItemSetFixed( wk, bpp );
+  BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 
 
@@ -9829,17 +9871,6 @@ static void scPut_RecoverPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u8 wazaIdx
 static void scPut_UseItemAct( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   SCQUE_PUT_ACT_KINOMI( wk->que, BPP_GetID(bpp) );
-}
-//----------------------------------------------------------------------------------
-/**
- * [Put] 所持アイテムを削除
- */
-//----------------------------------------------------------------------------------
-static void scPut_ConsumeItem( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
-{
-  BTL_HANDLER_ITEM_Remove( bpp );
-  BPP_ConsumeItem( bpp );
-  SCQUE_PUT_OP_ConsumeItem( wk->que, BPP_GetID(bpp) );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -13935,7 +13966,7 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   }
 
   // ここまで来たら成功
-  handexSub_itemSet( wk, bpp, param->itemID );
+  scproc_ItemChange( wk, bpp, param->itemID );
 
   if( param_header->tokwin_flag ){
     SCQUE_PUT_TOKWIN_IN( wk->que, param_header->userPokeID );
@@ -13991,8 +14022,8 @@ static u8 scproc_HandEx_swapItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HE
   }
 
   {
-    handexSub_itemSet( wk, self, targetItem );
-    handexSub_itemSet( wk, target, selfItem );
+    scproc_ItemChange( wk, self, targetItem );
+    scproc_ItemChange( wk, target, selfItem );
   }
 
   scproc_CheckItemReaction( wk, self, BTL_ITEMREACTION_GEN );
@@ -14066,39 +14097,13 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 
   scPut_UseItemAct( wk, bpp );
   handexSub_putString( wk, &param->exStr );
-  scPut_ConsumeItem( wk, bpp );
-  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
+
+  scproc_ConsumeItem( wk, bpp );
+//  scPut_ConsumeItem( wk, bpp );
+//  scPut_SetTurnFlag( wk, bpp, BPP_TURNFLG_ITEM_CONSUMED );
 
 
   return 1;
-}
-
-//----------------------------------------------------------------------------------
-// アイテム書き換え共通処理
-//----------------------------------------------------------------------------------
-static void handexSub_itemSet( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID )
-{
-  u8 pokeID = BPP_GetID( bpp );
-  u16 prevItemID = BPP_GetItem( bpp );
-  u32 hem_state;
-
-  // アイテム書き換え確定ハンドラ呼び出し
-  hem_state = BTL_Hem_PushState( &wk->HEManager );
-  scEvent_ItemSetDecide( wk, bpp, itemID );
-  BTL_Hem_PopState( &wk->HEManager, hem_state );
-
-  BTL_HANDLER_ITEM_Remove( bpp );
-  SCQUE_PUT_OP_SetItem( wk->que, pokeID, itemID );
-  BPP_SetItem( bpp, itemID );
-
-  // アイテム書き換え完了ハンドラ呼び出し
-  if( itemID != ITEM_DUMMY_DATA )
-  {
-    BTL_HANDLER_ITEM_Add( bpp );
-    hem_state = BTL_Hem_PushState( &wk->HEManager );
-    scEvent_ItemSetFixed( wk, bpp );
-    BTL_Hem_PopState( &wk->HEManager, hem_state );
-  }
 }
 
 /**
