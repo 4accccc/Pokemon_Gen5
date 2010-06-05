@@ -9440,7 +9440,12 @@ static void handler_EchoVoice( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       if( BTL_WAZAREC_IsUsedWaza(rec, wazaID, turn_cnt--) ){
         ++cont_cnt;
       }
+      else{
+        break;
+      }
     }
+
+    TAYA_Printf( "É^Å[Éìåpë±êî=%d\n", cont_cnt );
 
     {
       u32 pow;
