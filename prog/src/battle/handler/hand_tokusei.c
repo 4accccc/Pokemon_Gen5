@@ -3988,11 +3988,6 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tyosui( u32* numElems )
  *  とくせい「ちくでん」
  */
 //------------------------------------------------------------------------------
-// ダメージワザ回復化チェックハンドラ
-static void handler_Tikuden_Check( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  common_DmgToRecover_Check( flowWk, pokeID, work, POKETYPE_DENKI );
-}
 // ワザ無効チェックレベル３
 static void handler_Tikuden_CheckEx( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -4004,7 +3999,6 @@ static void handler_Tikuden_CheckEx( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tikuden( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-//    { BTL_EVENT_DMG_TO_RECOVER_CHECK,   handler_Tikuden_Check   }, // ダメージワザ回復チェックハンドラ
     { BTL_EVENT_NOEFFECT_CHECK_L3,      handler_Tikuden_CheckEx },
   };
   *numElems = NELEMS(HandlerTable);
@@ -6136,14 +6130,15 @@ static void handler_Hatomune_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 /**
  *  とくせい「すなかき」
  *
- * 天候がすなあらし状態の時、素早さ２倍になる。
+ * 天候がすなあらし状態の時、素早さ２倍になる＆すなあらしの天候ダメージを受けない
+ *
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunakaki( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CALC_AGILITY,     handler_Sunakaki           },    /// すばやさ計算ハンドラ
-//    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -6226,14 +6221,15 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
 /**
  *  とくせい「すなのちから」
  *
- * 天候がすなあらしの時、地面、岩、鋼ワザの威力が上がる。１．３倍。
+ * 天候がすなあらしの時、地面、岩、鋼ワザの威力が1.3倍になる
+ * ＆すなあらしの天候ダメージを受けない
  */
 //------------------------------------------------------------------------------
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_SunanoTikara( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_POWER, handler_SunanoTikara   },    // ワザ威力計算ハンドラ
-//    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
+    { BTL_EVENT_WAZA_POWER,       handler_SunanoTikara       }, // ワザ威力計算ハンドラ
+    { BTL_EVENT_WEATHER_REACTION, handler_Sunagakure_Weather }, // 天候リアクションハンドラ
 
   };
   *numElems = NELEMS(HandlerTable);
