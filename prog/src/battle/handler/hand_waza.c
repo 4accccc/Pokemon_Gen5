@@ -1327,7 +1327,6 @@ static void handler_Juryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   &&  (BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) == FALSE)
   ){
     BTL_HANDEX_PARAM_ADD_FLDEFF* param;
-    BTL_HANDEX_PARAM_MESSAGE*  msg_param;
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_FLDEFF, pokeID );
       param->effect = BTL_FLDEFF_JURYOKU;
@@ -1335,7 +1334,6 @@ static void handler_Juryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       param->exStr.type = BTL_STRTYPE_STD;
       param->exStr.ID = BTL_STRID_STD_Jyuryoku;
     BTL_SVF_HANDEX_Pop( flowWk, param );
-
 
     BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_JURYOKU_CHECK, pokeID );
   }

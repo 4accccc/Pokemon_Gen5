@@ -10867,11 +10867,8 @@ static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
 //----------------------------------------------------------------------------------
 static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
 {
-  // じゅうりょくが効いていたら誰も浮けない
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) ){
-    return FALSE;
-  }
-  else
+  // ここでは"じゅうりょく"の有無をチェックしない。
+  // （"じゅうりょく発動直後に「じめんにおちた」テキスト表示のチェックに使いたいので）
   {
     u8 floatFlag = BPP_IsMatchType( bpp, POKETYPE_HIKOU );
     u8 failFlag = FALSE;
@@ -14481,14 +14478,13 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
       scproc_TameHideCancel( wk, bpp, BPP_CONTFLG_SORAWOTOBU );
       fFall = TRUE;
     }
-    if( BPP_CheckSick(bpp, WAZASICK_FLYING) ){
-      BPP_CureWazaSick( bpp, WAZASICK_FLYING );
+    if( scEvent_CheckFloating(wk, bpp) )
+    {
       fFall = TRUE;
     }
-    if( BPP_IsMatchType(bpp, POKETYPE_HIKOU) ){
-      fFall = TRUE;
-    }
-    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_FUYUU ){
+    if( BPP_CheckSick(bpp, WAZASICK_FLYING) )
+    {
+      scPut_CureSick( wk, bpp, WAZASICK_FLYING, NULL );
       fFall = TRUE;
     }
 
