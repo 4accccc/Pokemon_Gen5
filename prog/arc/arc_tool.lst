@@ -240,7 +240,6 @@
   ARCID_BMODEL_TEXSET_INDOOR   "fieldmap/bmodel_texset_indoor.narc" #配置モデルテクスチャセットデータ（屋内）
   $VERSION_WHITE  ARCID_ZUKAN_AREA "zukan_area_w.narc"  # 図鑑で使用するポケモンの分布データ
   $VERSION_BLACK  ARCID_ZUKAN_AREA "zukan_area_b.narc"  # 図鑑で使用するポケモンの分布データ
-  ARCID_ENCEFF_MDL   "enceff_mdl.narc" #エンカウントエフェクトアーカイブ
   ARCID_ENTRANCE_CAMERA "entrance_camera.narc"  # 出入り口のカメラ演出データ
   ARCID_ENC_CI_FACE "enc_ci_face.narc"  # エンカウントカットインバストアップ画像データ
   ARCID_COMM_BTL_DEMO_GRA "comm_btl_demo.narc" " 通信バトルデモ
