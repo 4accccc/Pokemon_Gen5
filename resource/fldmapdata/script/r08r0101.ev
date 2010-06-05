@@ -129,6 +129,7 @@ common_root:
       _BALLOONWIN_CLOSE()
       //自機上向き
       _OBJ_ANIME( MMDL_ID_PLAYER, anm_player_up )
+      _OBJ_ANIME_WAIT()
       //ちょっと待つ
       _TIME_WAIT(8)
       //シーンイベント消化　シーンイベント完全終了
