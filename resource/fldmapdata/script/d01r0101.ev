@@ -1246,23 +1246,6 @@ _ANIME_LABEL	anm_d01r0101_support_to_player02
 /**************************************************************/
 EVENT_START   ev_d01r0101_item_01
 
-	//プレイヤーネームを格納
-	_PLAYER_NAME(0)
-
-	//サポート駆け寄って来る
-	_OBJ_ANIME(D01R0101_SUPPORT,anm_d01r0101_support_05)
-	_OBJ_ANIME_WAIT()
-	_BALLOONWIN_OBJMSG(msg_d01r0101_white_05,D01R0101_SUPPORT)
-	_LAST_KEYWAIT()
-	_BALLOONWIN_CLOSE()
-	
-	//======================================//
-
-	//夢イベント終了フラグ起動
-	$WK_SCENE_D01R0101_POKE = 4
-	
-	//======================================//
-	
 EVENT_END
 
 //--------------------------------------------------------------
