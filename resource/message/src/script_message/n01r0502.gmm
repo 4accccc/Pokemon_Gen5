@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T17:24:44"/>
+	<create user="matsumiya" host="W00224" date="2010-06-05T15:52:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1351,13 +1351,13 @@
 いいように　利用するとは……</language>
 	</row>
 
-	<row id="msg_n01r0502_rematch_boss" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
+	<row id="msg_n01r0502_rematch_boss" text-color="#000000,,,#000000,,#000000,,,,,,,,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
 		<comment>ゲーチス戦敗北用</comment>
 		<attribute name="キャラ指定">N</attribute>
 		<language name="JPN" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクの
-すうしきは　まちがって　いたのか？[BE:09:速度コントロール:0]▼</language>
+すうしきは　まちがって　いたのか？[BE:09:速度コントロール:0]</language>
 		<language name="JPN_KANJI" width="256">Ｎ『[BE:09:速度コントロール:1]……ボクの
-数式は　間違って　いたのか？[BE:09:速度コントロール:0]▼</language>
+数式は　間違って　いたのか？[BE:09:速度コントロール:0]</language>
 	</row>
 
 	<row id="msg_n01r0502_rematch_pokemon_01b" text-color="#000000,,,#000000,,#000000,#000000,,,,,,#000000,,,,,," back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
