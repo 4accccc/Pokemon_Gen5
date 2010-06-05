@@ -1951,8 +1951,8 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 {
-
-  if(GFL_NET_IsParentMachine()){
+  //˜b‚µ‚©‚¯‚½‚Ù‚¤
+  if((WIFIP2PMATCH_STATE_TALK==wk->state) || (WIFIP2PMATCH_STATE_MACHINE_RECV==wk->state)){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
   }
   else{
