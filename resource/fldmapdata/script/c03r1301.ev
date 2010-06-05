@@ -184,9 +184,11 @@ _ANIME_LABEL	anm_c03r1301_sunglasses_ok_def
 /**************************************************************/
 EVENT_START   ev_pos_c03r1301_sunglasses_02
 {
+	_PLAYER_DIR_GET(LWK_DIR)
 	
 	//éÂêlåˆÇÃï˚Ç…êUÇËå¸Ç≠
 	_OBJ_ANIME( C03R1301_SUNGLASSES_01 , anm_c03r1301_sunglasses_stey_step_left )
+	
 	IF $LWK_DIR != DIR_RIGHT THEN
 		_OBJ_ANIME( MMDL_ID_PLAYER , anm_c03r1301_player_look_right )	
 	ENDIF
