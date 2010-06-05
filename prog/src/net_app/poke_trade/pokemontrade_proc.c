@@ -2390,6 +2390,7 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
 
   pWork->selectBoxno = -1;
   pWork->selectIndex = -1;
+  pWork->selectMoji = 0;
   pWork->pCatchCLWK = NULL;
   pWork->pSelectCLWK = NULL;
   pWork->pokemonThreeSet = FALSE;
