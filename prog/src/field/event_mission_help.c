@@ -22,6 +22,7 @@
 #include "field/field_comm/intrude_message.h"
 #include "field\field_comm\intrude_mission_field.h"
 #include "field\field_comm\intrude_work.h"
+#include "field\field_comm\intrude_snd_def.h"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_monolith.h"
 #include "msg/msg_mission_msg.h"
@@ -372,6 +373,7 @@ static GMEVENT_RESULT CommMissionHelp_MtoT_Talked( GMEVENT *event, int *seq, voi
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
 
   	//ミッション失敗：パレスへ戻される
+    PMSND_PlaySE( INTSE_WARP );
     GMEVENT_ChangeEvent(event, EVENT_IntrudeWarpPalace(gsys));
     return GMEVENT_RES_CONTINUE;  //ChangeEventで終了する為Finishしない
   }

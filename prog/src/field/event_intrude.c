@@ -21,6 +21,7 @@
 #include "field/field_comm/intrude_comm_command.h"
 #include "field/field_comm/intrude_mission.h"
 #include "field/field_comm/intrude_message.h"
+#include "field\field_comm\intrude_snd_def.h"
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_monolith.h"
 #include "msg/msg_mission_msg.h"
@@ -719,6 +720,9 @@ GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys, MISSION_FORCEWARP_M
   event = GMEVENT_Create( gsys, NULL, EventForceWarpMyPalace, sizeof(EVENT_FORCEWARP) );
   evf = GMEVENT_GetEventWork(event);
   evf->warp_talk = warp_talk;
+
+  PMSND_PlaySE( INTSE_WARP );
+
   return event;
 }
 

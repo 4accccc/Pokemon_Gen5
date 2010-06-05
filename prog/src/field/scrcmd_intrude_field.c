@@ -191,6 +191,7 @@ static GMEVENT_RESULT _event_MissionChoiceListReq( GMEVENT * event, int * seq, v
       emcl->wordset = WORDSET_Create(HEAPID_PROC);
     }
 
+    PMSND_PlaySystemSE( SEQ_SE_MESSAGE );
 	  if(intcomm == NULL || Intrude_GetPalaceArea(gamedata) == GAMEDATA_GetIntrudeMyID(gamedata)){
       FLDMSGWIN_Print( emcl->msgWin, 0, 0, plc_mono_01 );
       my_palace = TRUE;
