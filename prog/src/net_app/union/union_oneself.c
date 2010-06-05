@@ -1185,6 +1185,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       }
       else{ //”FØOK
         if(UnionSend_FirstParentAnswer(UNION_FIRST_PARENT_ANSWER_OK) == TRUE){
+          PMSND_PlaySystemSE( UNION_SE_CONNECT );
           UnionOneself_ReqStatus(unisys, UNION_STATUS_TALK_PARENT);
           UnionMySituation_SetParam(
             unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC,situ->mycomm.calling_pc);
@@ -1257,7 +1258,8 @@ static BOOL OneselfSeq_ConnectReqExit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 //--------------------------------------------------------------
 static BOOL OneselfSeq_ConnectAnswerInit(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
-  PMSND_PlaySystemSE( UNION_SE_TALK_WIN_OPEN );
+//  PMSND_PlaySystemSE( UNION_SE_TALK_WIN_OPEN );
+  PMSND_PlaySystemSE( UNION_SE_CONNECT );
   UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_02);
   _PlayerMinePause(unisys, fieldWork, TRUE);
   return TRUE;

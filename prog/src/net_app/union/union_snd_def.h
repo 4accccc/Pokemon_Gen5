@@ -21,3 +21,6 @@
 #define UNION_SE_TALK_WIN_OPEN      (SEQ_SE_MESSAGE)
 ///会話をキャンセルしてメッセージウィンドウを閉じたときの音
 //#define UNION_SE_TALK_WIN_CANCEL    (SEQ_SE_CANCEL1)
+
+///相手から申し込みがあった時に鳴る音
+#define UNION_SE_CONNECT              (SEQ_SE_SYS_101)
