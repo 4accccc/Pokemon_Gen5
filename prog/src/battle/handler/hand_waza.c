@@ -8694,6 +8694,7 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       eff_param->effectNo = BTLEFF_KIAIPUNCH_TAME;
       eff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
       eff_param->pos_to = BTL_POS_NULL;
+      eff_param->fMsgWinVanish = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, eff_param );
 
 

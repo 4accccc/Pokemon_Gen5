@@ -14527,7 +14527,12 @@ static u8 scproc_HandEx_effectByPos( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 {
   const BTL_HANDEX_PARAM_ADD_EFFECT* param = (const BTL_HANDEX_PARAM_ADD_EFFECT*)(param_header);
 
+  if( param->fMsgWinVanish ){
+    SCQUE_PUT_ACT_MsgWinHide( wk->que, 0 );
+  }
+
   scproc_ViewEffect( wk, param->effectNo, param->pos_from, param->pos_to, param->fQueReserve, param->reservedQuePos );
+
   return 1;
 }
 

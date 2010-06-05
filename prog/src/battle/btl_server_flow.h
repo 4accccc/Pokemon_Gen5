@@ -888,6 +888,7 @@ typedef struct {
   u8   pos_to;                        ///< エフェクト終点位置（不要ならBTL_POS_NULL：初期値(0)はBTL_POS_NULLではないので注意）
   u16  reservedQuePos;                ///< Que予約領域
   u8   fQueReserve;                   ///< Que予約フラグ
+  u8   fMsgWinVanish;                 ///< メッセージウィンドウ消去フラグ
 }BTL_HANDEX_PARAM_ADD_EFFECT;
 
 /**

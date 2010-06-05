@@ -717,13 +717,31 @@ static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( !BPP_IsMatchType(bpp, POKETYPE_HONOO) )
     {
-      BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
+      BTL_HANDEX_PARAM_DAMAGE* param;
+      u32 turnCount = BTL_SVFTOOL_GetTurnCount( flowWk );
 
+      // ターン初回のみエフェクト発動させる
+      if( work[0] == 1 ){
+        if( work[1] != turnCount ){ work[0] = 0; }
+      }
+      if( work[0] == 0 )
+      {
+        BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
+          viewEff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
+          viewEff_param->pos_to   = BTL_POS_NULL;
+          viewEff_param->effectNo = BTL_SIDEEFF_BURNING;
+        BTL_SVF_HANDEX_Pop( flowWk, viewEff_param );
+
+        work[0] = 1;
+        work[1] = BTL_SVFTOOL_GetTurnCount( flowWk );
+      }
+
+
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
         param->pokeID = pokeID;
         param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
         HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_BurningDamage );
         HANDEX_STR_AddArg( &param->exStr, pokeID );
-
       BTL_SVF_HANDEX_Pop( flowWk, param );
     }
   }
