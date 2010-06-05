@@ -132,6 +132,7 @@ typedef struct
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA    rnd_sake_data;  //ランダムマッチ用サケデータ
   WIFIBATTLEMATCH_NET_DATA    net_data;   //通信が終了しても残しておくデータ
   WIFIBATTLEMATCH_RECV_DATA   recv_data;  //サーバーから落としてきたデータ
+  BOOL                        is_dirty_name;  //対戦相手の名前が不正かどうか
 } WIFIBATTLEMATCH_SYS;
 
 //=============================================================================
@@ -714,6 +715,7 @@ static void *WBM_CORE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID,
   p_param->p_gpf_data     = &p_wk->gpf_data;
   p_param->p_wifi_sake_data   = &p_wk->wifi_sake_data;
   p_param->p_rnd_sake_data    = &p_wk->rnd_sake_data;
+  p_param->p_is_dirty_name    = &p_wk->is_dirty_name;
   { 
     BATTLEMATCH_DATA  *p_btlmatch_sv  = SaveData_GetBattleMatch( GAMEDATA_GetSaveControlWork( p_wk->param.p_game_data ) );
     p_param->p_rndmatch     =  BATTLEMATCH_GetRndMatch( p_btlmatch_sv );
@@ -1228,8 +1230,14 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   //レギュレーションの内容を適用
   BATTLE_PARAM_SetRegulation( p_param->p_btl_setup_param, p_reg, GFL_HEAP_LOWID( heapID ) );
 
+  //不正文字
+  if( p_wk->is_dirty_name )
+  {
+    p_param->p_btl_setup_param->WifiBadNameFlag = 1;
+  }
+
 #ifdef WBM_SYS_BATTLE_VSTIME_60
-  p_param->p_btl_setup_param->LimitTimeGame = 60;
+ // p_param->p_btl_setup_param->LimitTimeGame = 60;
 #endif
 
   WBM_SYS_Printf( "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );

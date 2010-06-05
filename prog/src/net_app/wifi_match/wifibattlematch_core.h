@@ -85,6 +85,7 @@ typedef struct
   WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA       *p_wifi_sake_data;
   WIFIBATTLEMATCH_GDB_RND_SCORE_DATA        *p_rnd_sake_data;
   WIFIBATTLEMATCH_NET_DATA    *p_net_data;
+  BOOL                        *p_is_dirty_name;
 } WIFIBATTLEMATCH_CORE_PARAM;
 
 //=============================================================================

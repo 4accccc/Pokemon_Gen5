@@ -1338,6 +1338,7 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitBadWord( p_wk->p_net, &is_badword );
       if( ret )
       { 
+        *p_wk->p_param->p_is_dirty_name  = is_badword;
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
       else
@@ -2409,6 +2410,7 @@ static void WbmRndSeq_Free_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       ret = WIFIBATTLEMATCH_NET_WaitBadWord( p_wk->p_net, &is_badword );
       if( ret )
       { 
+        *p_wk->p_param->p_is_dirty_name  = is_badword;
         *p_seq  = SEQ_START_CANCEL_TIMING;
       }
       else

@@ -727,6 +727,7 @@ WIFIBATTLEMATCH_NET_ERROR_REPAIR_TYPE WIFIBATTLEMATCH_NET_CheckErrorRepairType( 
       NetErr_DispCallPushPop();
       GFL_NET_StateResetError();
       GFL_NET_StateClearWifiError();
+      NetErr_ErrWorkInit();
       break;
     case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //êÿífÇµÉçÉOÉCÉìÇ©ÇÁÇ‚ÇËíºÇµ
 
