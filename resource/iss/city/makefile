@@ -56,15 +56,13 @@ endif
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: city.txt
 	rm -f $(CONVERTDATA)
 	ruby city.rb $< $(BIN)
-	nnsarc -r -l -n -i $(targetname) $(CONVERTDATA)
-	$(NAIXCUT) $(targetname).naix
+	nnsarc -r -l -n $(targetname) $(CONVERTDATA)
 
 endif
 

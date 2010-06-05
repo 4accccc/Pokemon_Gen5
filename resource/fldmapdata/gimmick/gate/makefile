@@ -153,7 +153,6 @@ $(TARGETDIR)/$(targetname_zone).narc: $(targetname_zone).narc
 
 $(TARGETDIR)/$(targetname_spnews).narc: $(targetname_spnews).narc
 	$(COPY) $(targetname_spnews).narc $(TARGETDIR)
-	$(COPY) $(targetname_spnews).naix $(TARGETDIR) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
@@ -170,8 +169,7 @@ $(targetname_zone).narc: $(SETTING_SOURCE)/elboard_zone_data.txt
 $(targetname_spnews).narc: $(SETTING_SOURCE)/elboard_spnews_data.txt
 	rm -f $(CONVERTDATA_SPNEWS)
 	ruby $(SETTING_SOURCE)/elboard_spnews_data.rb $< $(BIN_SPNEWS_DATA)
-	nnsarc -r -l -n -i $(targetname_spnews) $(CONVERTDATA_SPNEWS)
-	$(NAIXCUT) $(targetname_spnews).naix
+	nnsarc -r -l -n $(targetname_spnews) $(CONVERTDATA_SPNEWS)
 
 endif
 
@@ -192,13 +190,11 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f $(targetname_zone).narc
 	rm -f $(targetname_zone).naix
 	rm -f $(targetname_spnews).narc
-	rm -f $(targetname_spnews).naix
 endif
 	rm -f $(TARGETDIR)$(targetname_gate).narc
 	rm -f $(TARGETDIR)$(targetname_gate).naix
 	rm -f $(TARGETDIR)$(targetname_zone).narc
 	rm -f $(TARGETDIR)$(targetname_zone).naix
 	rm -f $(TARGETDIR)$(targetname_spnews).narc
-	rm -f $(TARGETDIR)$(targetname_spnews).naix
 
 

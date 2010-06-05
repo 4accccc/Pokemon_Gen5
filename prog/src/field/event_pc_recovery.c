@@ -10,7 +10,6 @@
 #include "gamesystem/game_event.h"
 #include "fieldmap.h"
 #include "event_pc_recovery.h"
-#include "pc_recovery_anime.naix"
 #include "sound/pm_sndsys.h"
 #include "field_buildmodel.h"
 #include "../../../resource/fldmapdata/build_model/output/buildmodel_indoor.naix"

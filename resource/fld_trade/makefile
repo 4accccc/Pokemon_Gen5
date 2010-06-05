@@ -77,7 +77,6 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
 	$(COPY) -f -u fld_trade.gmm $(GMM_CPY_DIR)
 
 
@@ -96,8 +95,7 @@ file_cp:
 $(targetname).narc: $(MAKE_FILE)
 	ruby $(XLS_TABOUT)/tab_out.rb -tab fld_trade_poke.xls >fld_trade_poke.txt
 	ruby fld_trade_poke.rb fld_trade_poke.txt $(BIN)
-	nnsarc -c -i -n $(targetname).narc -S fld_trade_list.lst
-	$(NAIXCUT) $(targetname).naix
+	nnsarc -c -n $(targetname).narc -S fld_trade_list.lst
 	$(COPY) -f -u fld_trade.gmm $(GMM_CPY_DIR)
 
 else

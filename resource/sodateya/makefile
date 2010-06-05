@@ -47,7 +47,6 @@ subdir:
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
@@ -56,8 +55,7 @@ include conv_data.list
 
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: $(CONVERTDATA)
-	nnsarc -r -l -n -i $(targetname) $^
-	$(NAIXCUT) $(targetname).naix
+	nnsarc -r -l -n $(targetname) $^
 
 $(CONVERTDATA): kowaza_table.txt
 	ruby kowaza_conv.rb conv_data

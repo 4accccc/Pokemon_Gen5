@@ -65,15 +65,13 @@ endif
 # narc のコピーだけ実行する
 $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 	$(COPY) $(targetname).narc $(TARGETDIR)
-	$(COPY) $(targetname).naix $(TARGETDIR) 
 
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: entrance_camera.txt
 	$(COPY) $(EXITTYPE_DEF_FILE) ./
 	ruby entrance_camera.rb $< $(BIN)
-	nnsarc -r -l -n -i $(targetname) $(CONVERT_DATA)
-	$(NAIXCUT) $(targetname).naix 
+	nnsarc -r -l -n $(targetname) $(CONVERT_DATA)
 endif
 
 
@@ -90,9 +88,7 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、中間ファイル削除
 	rm -f *.txt
 	rm -f ./eventdata_type.h
 	rm -f $(targetname).narc
-	rm -f $(targetname).naix
 	rm -f $(CONVERT_DATA)
 	rm -f $(DEBUG_DATA)
 endif
 	rm -f $(TARGETDIR)$(targetname).narc
-	rm -f $(TARGETDIR)$(targetname).naix
