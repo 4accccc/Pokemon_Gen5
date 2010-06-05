@@ -3639,11 +3639,13 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       fMigawariHit = TRUE;
     }
 
-    // 対象ごとの回避チェック->無効チェック（原因表示はその先に任せる）
-    if( category != WAZADATA_CATEGORY_ICHIGEKI ){
+    // 対象ごとの無効チェック->回避チェック（原因表示はその先に任せる）
+    flowsub_checkNotEffect( wk, wk->wazaParam, attacker, targetRec );
+    if( category != WAZADATA_CATEGORY_ICHIGEKI )  // 一撃ワザは独自の回避判定を行うので
+    {
       flowsub_checkWazaAvoid( wk, wk->wazaParam, attacker, targetRec );
     }
-    flowsub_checkNotEffect( wk, wk->wazaParam, attacker, targetRec );
+
     // 最初は居たターゲットが残っていない -> 無効イベント呼び出し後終了
     if( BTL_POKESET_IsRemovedAll(targetRec) )
     {
@@ -6952,6 +6954,14 @@ static BtlAddSickFailCode addsick_check_fail_std( BTL_SVFLOW_WORK* wk, const BTL
     }
   }
 
+  // マルチタイプは「いえき」にならない
+  if( sick == WAZASICK_IEKI )
+  {
+    if( BPP_GetValue(target, BPP_TOKUSEI) == POKETOKUSEI_MARUTITAIPU ){
+      return BTL_ADDSICK_FAIL_OTHER;
+    }
+  }
+
   return BTL_ADDSICK_FAIL_NULL;
 }
 //----------------------------------------------------------------------------------
@@ -8121,8 +8131,8 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
   tgt_tok = BPP_GetValue( target, BPP_TOKUSEI );
 
   if( (atk_tok != tgt_tok)
-  &&  (!BTL_CALC_TOK_CheckCantChange(atk_tok))
-  &&  (!BTL_CALC_TOK_CheckCantChange(tgt_tok))
+  &&  (!BTL_TABLES_CheckSkillSwapFailTokusei(atk_tok))
+  &&  (!BTL_TABLES_CheckSkillSwapFailTokusei(tgt_tok))
   ){
     u8 atkPokeID = BPP_GetID( attacker );
     u8 tgtPokeID = BPP_GetID( target );
@@ -13914,6 +13924,10 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
 
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
   u16 prevTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
+
+  if( BTL_TABLES_IsNeverChangeTokusei(prevTokusei) ){
+    return 0;
+  }
 
   if( ((param->fSameTokEffective) || ( param->tokuseiID != prevTokusei ))
   ){

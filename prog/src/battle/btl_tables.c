@@ -121,29 +121,70 @@ BOOL BTL_TABLES_IsNoTargetItem( u16 itemID )
 }
 
 /**
- *  トレースできないとくせい判定
+ *  「なりきり」に失敗するとくせい判定
  */
-BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID )
+BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID )
 {
   static const u16 table[] = {
     POKETOKUSEI_TOREESU,       POKETOKUSEI_TENKIYA,         POKETOKUSEI_MARUTITAIPU,
     POKETOKUSEI_FURAWAAGIFUTO, POKETOKUSEI_DARUMAMOODO,     POKETOKUSEI_IRYUUJON,
-    POKETOKUSEI_KAWARIMONO,
+    POKETOKUSEI_KAWARIMONO,    POKETOKUSEI_FUSIGINAMAMORI,
   };
+
+  if( BTL_TABLES_IsNeverChangeTokusei(tokuseiID) ){
+    return TRUE;
+  }
 
   return checkTableElems( tokuseiID, table, NELEMS(table) );
 }
 
 /**
- *  「なりきり」できないとくせい判定
+ *  「なかまづくり」に失敗するとくせい判定
  */
-BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID )
+
+BOOL BTL_TABLES_CheckNakamaDukuriFailTokusei( u16 tokuseiID )
 {
+  // 「なりきり」と一緒
+  return BTL_TABLES_CheckTraceFailTokusei( tokuseiID );
+}
+
+/**
+ *  トレースできないとくせい判定
+ */
+BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID )
+{
+  // トレースの場合は「ふしぎなまもり」を許可する
   if( tokuseiID == POKETOKUSEI_FUSIGINAMAMORI ){
+    return FALSE;
+  }
+
+  // あとは「なりきり」と一緒
+  return BTL_TABLES_CheckNarikiriFailTokusei( tokuseiID );
+}
+
+/**
+ *  スキルスワップできないとくせい判定（相手・自分のどちらか一方でも該当したらダメ）
+ */
+BOOL BTL_TABLES_CheckSkillSwapFailTokusei( u16 tokuseiID )
+{
+  static const u16 table[] = {
+    POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
+  };
+
+  if( BTL_TABLES_IsNeverChangeTokusei(tokuseiID) ){
     return TRUE;
   }
 
-  return BTL_TABLES_CheckTraceFailTokusei( tokuseiID );
+  return checkTableElems( tokuseiID, table, NELEMS(table) );
+}
+
+/**
+ *  絶対に書き換わってはいけないとくせい判定
+ */
+BOOL BTL_TABLES_IsNeverChangeTokusei( u16 tokuseiID )
+{
+  // 今んとこマルチタイプだけ
+  return ( tokuseiID == POKETOKUSEI_MARUTITAIPU );
 }
 
 

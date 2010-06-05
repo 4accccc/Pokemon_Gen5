@@ -9599,7 +9599,7 @@ static void handler_NakamaDukuri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 myTokusei = BPP_GetValue( bpp, BPP_TOKUSEI );
 
-    if( !BTL_CALC_IsCantRecvTokusei(myTokusei) )
+    if( !BTL_TABLES_CheckNakamaDukuriFailTokusei(myTokusei) )
     {
       u32 targetCnt = BTL_EVENTVAR_GetValue( BTL_EVAR_TARGET_POKECNT );
       BTL_HANDEX_PARAM_CHANGE_TOKUSEI*  param;

@@ -869,58 +869,6 @@ void BTL_CALC_MakeDefaultWazaSickCont( WazaSick sick, const BTL_POKEPARAM* attac
     break;
   }
 }
-
-//=============================================================================================
-/**
- * 「スキルスワップ」によって交換できないとくせい判定
- *
- * @param   tok
- *
- * @retval  BOOL    コピーできない場合はTRUE
- */
-//=============================================================================================
-BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok )
-{
-  static const u16 prohibits[] = {
-    POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_MARUTITAIPU,
-  };
-  u16 i;
-  for(i=0; i<NELEMS(prohibits); ++i)
-  {
-    if( prohibits[i] == tok )
-    {
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-//=============================================================================================
-/**
- * 「トレース」「なりきり」などを使って自分のとくせいを変更してはいけない対象のとくせいチェック
- *
- * @param   tok
- *
- * @retval  BOOL
- */
-//=============================================================================================
-BOOL BTL_CALC_IsCantRecvTokusei( PokeTokusei tok )
-{
-  static const u16 list[] = {
-    POKETOKUSEI_TOREESU,       POKETOKUSEI_TENKIYA,     POKETOKUSEI_MARUTITAIPU,
-    POKETOKUSEI_FURAWAAGIFUTO, POKETOKUSEI_DARUMAMOODO, POKETOKUSEI_IRYUUJON,
-    POKETOKUSEI_KAWARIMONO,    POKETOKUSEI_FUSIGINAMAMORI,
-  };
-  u16 i;
-
-  for(i=0; i<NELEMS(list); ++i)
-  {
-    if( list[i] == tok ){
-      return TRUE;
-    }
-  }
-  return FALSE;
-}
-
 //=============================================================================================
 /**
  * 「メンタルハーブ」で治る対象の状態異常チェック

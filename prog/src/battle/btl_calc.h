@@ -110,18 +110,7 @@ extern BtlSideEffect  BTL_CALC_WazaIDtoSideEffectID( WazaID waza );
 extern WazaID  BTL_CALC_SideEffectIDtoWazaID( BtlSideEffect sideEffect );
 
 
-//=============================================================================================
-/**
- * 変更できないとくせいのチェック
- *
- * @param   tok     とくせい指定
- *
- * @retval  BOOL    指定されたとくせいに変更するのが禁止ならTRUE
- */
-//=============================================================================================
-extern BOOL BTL_CALC_TOK_CheckCantChange( PokeTokusei tok );
 
-extern BOOL BTL_CALC_IsCantRecvTokusei( PokeTokusei tok );
 extern WazaSick BTL_CALC_CheckMentalSick( const BTL_POKEPARAM* bpp );
 
 

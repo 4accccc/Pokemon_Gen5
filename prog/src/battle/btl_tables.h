@@ -42,6 +42,22 @@ extern BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID );
 extern BOOL BTL_TABLES_CheckNarikiriFailTokusei( u16 tokuseiID );
 
 /**
+ *  「なかまづくり」できないとくせい判定
+ */
+extern BOOL BTL_TABLES_CheckNakamaDukuriFailTokusei( u16 tokuseiID );
+
+/**
+ *  「スキルスワップ」できないとくせい判定
+ */
+extern BOOL BTL_TABLES_CheckSkillSwapFailTokusei( u16 tokuseiID );
+
+
+/**
+ *  絶対に書き換わってはいけないとくせい判定
+ */
+extern BOOL BTL_TABLES_IsNeverChangeTokusei( u16 tokuseiID );
+
+/**
  *  アルセウスのプレート判定
  */
 extern BOOL BTL_TABLES_IsMatchAruseusPlate( u16 itemID );
@@ -50,6 +66,9 @@ extern BOOL BTL_TABLES_IsMatchAruseusPlate( u16 itemID );
  *  インセクタのカセット判定
  */
 extern BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID );
+
+
+
 
 
 /**
