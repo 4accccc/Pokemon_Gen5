@@ -289,6 +289,7 @@ typedef struct
 
   u16 last_side;  // 1つ前がよけか？
   u16 last_dir;   // よけた方向
+
   
 } FIELD_CROWD_PEOPLE_WK;
 
@@ -358,9 +359,9 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
 
 
 // 引数歩前に自機がいないかチェック
-static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDLSYS* cp_fos, MMDL** pp_mmdl, u16 grid );
-static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDL* cp_mmdl, u16 grid );
-static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 move_dir );
+static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDLSYS* cp_fos, MMDL** pp_mmdl, u16 grid, u16 min_grid );
+static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDL* cp_mmdl, u16 grid, u16 min_grid );
+static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 min_grid, u16 move_dir );
 
 
 
@@ -908,6 +909,7 @@ static void FIELD_CROWD_PEOPLE_WK_ThroughMove( FIELD_CROWD_PEOPLE_WK* p_wk, cons
   MMDL_SetAcmd( p_wk->p_mmdl, p_wk->move_acmd + move_dir );
 
   // 設定した方向を保存
+  p_wk->last_side = TRUE;
   p_wk->last_dir = move_dir;
 }
 
@@ -1225,7 +1227,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNormal( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLS
     {
       MMDL* p_hit_mmdl;
       // みんなとぶつかるかチェック
-      if( FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( p_wk, p_fos, &p_hit_mmdl, FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_GRID ) )
+      if( FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( p_wk, p_fos, &p_hit_mmdl, FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_GRID, 0 ) )
       {
         // 避ける動作
         FIELD_CROWD_PEOPLE_WK_ThroughMove( p_wk, p_hit_mmdl );
@@ -1287,7 +1289,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
       MMDL* p_hit_mmdl;
 
       // 主人公とぶつかるかチェック
-      if( FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( p_wk, FIELD_PLAYER_GetMMdl(cp_player), FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID ) )
+      if( FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( p_wk, FIELD_PLAYER_GetMMdl(cp_player), FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID, FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID ) )
       {
         // ぶつかるときにしか話しかけられない。
         // イベント起動あり。
@@ -1295,7 +1297,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
         break;
       }
       // その他の人とぶつかるかチェック
-      else if( FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( p_wk, p_fos, &p_hit_mmdl, FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID ) )
+      else if( FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( p_wk, p_fos, &p_hit_mmdl, FIELD_CROWD_PEOPLE_WK_PLAYER_HIT_NASTY_GRID, 0 ) )
       {
         // その他の人とぶつかってしまったら、通常動作に移行する。
         FIELD_CROWD_PEOPLE_WK_ThroughMove( p_wk, p_hit_mmdl );
@@ -1343,7 +1345,7 @@ static void FIELD_CROWD_PEOPLE_WK_MainNasty( FIELD_CROWD_PEOPLE_WK* p_wk, MMDLSY
  *	@param	grid 
  */
 //-----------------------------------------------------------------------------
-static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDLSYS* cp_fos, MMDL** pp_mmdl, u16 grid )
+static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDLSYS* cp_fos, MMDL** pp_mmdl, u16 grid, u16 min_grid )
 {
 	u32 no = 0;
 	MMDL *mmdl;
@@ -1355,7 +1357,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( const FIELD_CROWD_PEOPLE_WK* c
       {
         // 表示されている？ 
         if( MMDL_CheckStatusBitVanish( mmdl ) == FALSE ){
-          result = FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( cp_wk, mmdl, grid );
+          result = FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( cp_wk, mmdl, grid, min_grid );
           if( result ){
             *pp_mmdl = mmdl;
             return TRUE;
@@ -1380,7 +1382,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontAllMMdl( const FIELD_CROWD_PEOPLE_WK* c
  *	@retval FALSE いない
  */
 //-----------------------------------------------------------------------------
-static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDL* cp_mmdl, u16 grid )
+static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp_wk, const MMDL* cp_mmdl, u16 grid, u16 min_grid )
 {
   s16 player_gx, player_gz;
   s16 my_gx, my_gz;
@@ -1391,15 +1393,14 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp
   my_gx = MMDL_GetGridPosX( cp_wk->p_mmdl );
   my_gz = MMDL_GetGridPosZ( cp_wk->p_mmdl );
   
-  if( FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( my_gx, my_gz, player_gx, player_gz, grid, cp_wk->move_dir ) )
+  if( FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( my_gx, my_gz, player_gx, player_gz, grid, min_grid, cp_wk->move_dir ) )
   {
     return TRUE;
   }
-
   player_gx = MMDL_GetOldGridPosX( cp_playermmdl );
   player_gz = MMDL_GetOldGridPosZ( cp_playermmdl );
   
-  return FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( my_gx, my_gz, player_gx, player_gz, grid, cp_wk->move_dir );
+  return FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( my_gx, my_gz, player_gx, player_gz, grid, min_grid, cp_wk->move_dir );
 }
 
 //----------------------------------------------------------------------------
@@ -1416,7 +1417,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_IsFrontPlayer( const FIELD_CROWD_PEOPLE_WK* cp
  *	@retval FALSE いない
  */
 //-----------------------------------------------------------------------------
-static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 move_dir )
+static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx, s16 pl_gz, u16 grid, u16 min_grid, u16 move_dir )
 {
   s32 grid_dif;
   s32 grid_dif_2;
@@ -1445,7 +1446,7 @@ static BOOL FIELD_CROWD_PEOPLE_WK_TOOL_IsGridHit( s16 mygx, s16 mygz, s16 pl_gx,
     break;
   }
 
-  if( ((grid_dif <= grid) && (grid_dif >= 0)) && (grid_dif_2 == 0) )
+  if( ((grid_dif <= grid) && (grid_dif >= min_grid)) && (grid_dif_2 == 0) )
   {
     return TRUE;
   }
