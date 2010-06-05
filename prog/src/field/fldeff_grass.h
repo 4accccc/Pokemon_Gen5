@@ -33,6 +33,15 @@ typedef enum
   FLDEFF_GRASS_MAX,
 }FLDEFF_GRASSTYPE;
 
+//--------------------------------------------------------------
+/// FLDEFF_GRASSLEN
+//--------------------------------------------------------------
+typedef enum
+{
+  FLDEFF_GRASSLEN_SHORT = 0,
+  FLDEFF_GRASSLEN_LONG,
+  FLDEFF_GRASSLEN_MAX,
+}FLDEFF_GRASSLEN;
 
 //======================================================================
 //  struct
@@ -44,5 +53,6 @@ typedef enum
 extern void * FLDEFF_GRASS_Init( FLDEFF_CTRL *fectrl, HEAPID heapID );
 extern void FLDEFF_GRASS_Delete( FLDEFF_CTRL *fectrl, void *work );
 
+extern FLDEFF_GRASSLEN FLDEFF_GRASS_GetLenType( FLDEFF_GRASSTYPE type );
 extern void FLDEFF_GRASS_SetMMdl( FLDEFF_CTRL *fectrl,
     MMDL *fmmdl, BOOL anm, FLDEFF_GRASSTYPE type );

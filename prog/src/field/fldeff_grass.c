@@ -82,9 +82,12 @@ static void grass_DeleteResource( FLDEFF_GRASS *grass );
 
 static const FLDEFF_TASK_HEADER DATA_grassTaskHeader;
 
+static BOOL check_MMdlPos( TASKWORK_GRASS *work );
+
 static const GRASS_ARCIDX data_ArcIdxTbl[FLDEFF_GRASS_MAX][PMSEASON_TOTAL];
 static const GFL_BBDACT_ANM * const * data_BlActAnm_GrassTbl[FLDEFF_GRASS_MAX];
 static const u16 data_BlActAnmEndNo[FLDEFF_GRASS_MAX];
+static const u8 data_LongShortType[FLDEFF_GRASS_MAX];
 
 //======================================================================
 //	草エフェクト　システム
@@ -186,6 +189,19 @@ static void grass_DeleteResource( FLDEFF_GRASS *grass )
 //======================================================================
 //	草エフェクト　タスク
 //======================================================================
+//--------------------------------------------------------------
+/**
+ * FLDEFF_GRASSTYPEからFLDEFF_GRASSLENを取得
+ * @param type FLDEFF_GRASSTYPE
+ * @retval FLDEFF_GRASSLEN
+ */
+//--------------------------------------------------------------
+FLDEFF_GRASSLEN FLDEFF_GRASS_GetLenType( FLDEFF_GRASSTYPE type )
+{
+  u8 len = data_LongShortType[type];
+  return( len );
+}
+
 //--------------------------------------------------------------
 /**
  * 動作モデル用草エフェクト　追加
@@ -361,15 +377,9 @@ static void grassTask_Update( FLDEFF_TASK *task, void *wk )
       return;
     }
     
-    {
-      int gx = MMDL_GetGridPosX( work->head.fmmdl );
-      int gz = MMDL_GetGridPosZ( work->head.fmmdl );
-      if( work->head.init_gx != gx || work->head.init_gz != gz ){
-         FLDEFF_TASK_CallDelete( task );
-         return;
-      }
+    if( check_MMdlPos(work) == FALSE ){
+      FLDEFF_TASK_CallDelete( task );
     }
-    break;
   }
 }
 
@@ -405,6 +415,52 @@ static const FLDEFF_TASK_HEADER DATA_grassTaskHeader =
   grassTask_Update,
   grassTask_Draw,
 };
+
+//--------------------------------------------------------------
+/**
+ * 草エフェクト用座標チェック処理
+ * @param work TASKWORK_GRASS
+ * @retval BOOL TRUE=座標変更なし FALSE=座標変更あり
+ * 
+ * 以下の対処の為の処理。
+ * BTS4094【草むらを歩いた時の表示優先順位が不自然】
+ * 草むらを画面上方向に歩くと、草が自キャラの手前に
+ * 不自然に表示されるように見えます。
+ * ・草むらA、Bで同様です。
+ * ・長い草むらの場合も上方向に歩くと少しだけ不自然に見えます。
+ * ・いずれの場合も草むらを下方向や横方向に歩いた場合はあまり目立ちません。
+ */
+//--------------------------------------------------------------
+static BOOL check_MMdlPos( TASKWORK_GRASS *work )
+{
+  const MMDL *mmdl = work->head.fmmdl;
+  int gx = MMDL_GetGridPosX( mmdl );
+  int gz = MMDL_GetGridPosZ( mmdl );
+  u8 type = data_LongShortType[work->head.type];
+  
+  if( work->head.init_gx != gx || work->head.init_gz != gz ){
+#if 0
+    if( type != GRASS_SHORT ){ //long
+      return( FALSE );
+    }
+    
+    if( MMDL_GetDirMove(mmdl) != DIR_UP ){
+      return( FALSE );
+    }
+    
+    gx = MMDL_GetOldGridPosX( mmdl );
+    gz = MMDL_GetOldGridPosZ( mmdl );
+    
+    if( work->head.init_gx != gx || work->head.init_gz != gz ){
+      return( FALSE );
+    }
+#else
+    return( FALSE );
+#endif
+  }
+  
+  return( TRUE );
+}
 
 //======================================================================
 //  data
@@ -515,4 +571,17 @@ static const u16 data_BlActAnmEndNo[FLDEFF_GRASS_MAX] =
   3, //FLDEFF_GRASS_SNOW2
   3, //FLDEFF_GRASS_ALLYEAR_SHORT
   3, //FLDEFF_GRASS_ALLYEAR_SHORT2
+};
+
+//種類別長短
+static const u8 data_LongShortType[FLDEFF_GRASS_MAX] = 
+{
+  FLDEFF_GRASSLEN_SHORT, //FLDEFF_GRASS_SHORT
+  FLDEFF_GRASSLEN_SHORT, //FLDEFF_GRASS_SHORT2
+  FLDEFF_GRASSLEN_LONG, //FLDEFF_GRASS_LONG
+  FLDEFF_GRASSLEN_LONG, //FLDEFF_GRASS_LONG2
+  FLDEFF_GRASSLEN_SHORT, //FLDEFF_GRASS_SNOW
+  FLDEFF_GRASSLEN_SHORT, //FLDEFF_GRASS_SNOW2
+  FLDEFF_GRASSLEN_SHORT, //FLDEFF_GRASS_ALLYEAR_SHORT
+  FLDEFF_GRASSLEN_SHORT, //FLDEFF_GRASS_ALLYEAR_SHORT2
 };

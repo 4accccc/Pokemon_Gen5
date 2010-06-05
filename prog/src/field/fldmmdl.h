@@ -48,7 +48,7 @@
 
 #ifdef DEBUG_ONLY_FOR_kagaya
 #define DEBUG_MMDL_DEVELOP
-#define DEBUG_MMDL_DEVELOP_PRINT
+//#define DEBUG_MMDL_DEVELOP_PRINT
 #endif
 
 //#define MMDL_BBD_DRAW_OFFS_Z_USE //有効でビルボード表示位置Z補正有り
