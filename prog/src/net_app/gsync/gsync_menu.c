@@ -1100,6 +1100,11 @@ static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork)
         PRINTSYS_PrintStreamReleasePause( pWork->pStream );
       }
       break;
+    case PRINTSTREAM_STATE_RUNNING:     //20100604 add Saito
+      if(GFL_UI_TP_GetCont()){
+        PRINTSYS_PrintStreamShortWait( pWork->pStream, 0 );
+      }
+      break;  
     default:
       break;
     }
