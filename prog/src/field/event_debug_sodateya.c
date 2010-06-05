@@ -208,8 +208,8 @@ static void DebugSodateya_Azukeru( EVENT_WORK* work )
   int        poke_num   = PokeParty_GetPokeCount( party );
   int        shiiku_num = SODATEYA_GetPokemonNum( sodateya );
 
-  // Ç±ÇÍà»è„óaÇØÇÁÇÍÇ»Ç¢
-  if( 2 <= shiiku_num ) {
+  // óaÇØÇÁÇÍÇ»Ç¢
+  if( (poke_num <= 1) || (2 <= shiiku_num) ) {
     PMSND_StopSE();
     PMSND_PlaySE( SEQ_SE_BEEP );
   }
