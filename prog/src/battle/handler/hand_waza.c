@@ -6660,6 +6660,15 @@ static void handler_HeartSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_SET_RANK* rank_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
+    int* myRankParam = (int*)BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(int) * BPP_RANKVALUE_RANGE );
+    int r;
+
+    // 自分を書き換えちゃう前にランクを保存しておく
+    for(r=BPP_RANKVALUE_START; r<=BPP_RANKVALUE_END; ++r)
+    {
+      myRankParam[ r - BPP_RANKVALUE_START ] = BPP_GetValue( self, r );
+    }
+
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
       rank_param->pokeID      = pokeID;
       rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
@@ -6673,13 +6682,13 @@ static void handler_HeartSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
       rank_param->pokeID      = target_pokeID;
-      rank_param->attack      = BPP_GetValue( self, BPP_ATTACK_RANK );
-      rank_param->defence     = BPP_GetValue( self, BPP_DEFENCE_RANK );
-      rank_param->sp_attack   = BPP_GetValue( self, BPP_SP_ATTACK_RANK );
-      rank_param->sp_defence  = BPP_GetValue( self, BPP_SP_DEFENCE_RANK );
-      rank_param->agility     = BPP_GetValue( self, BPP_AGILITY_RANK );
-      rank_param->hit_ratio   = BPP_GetValue( self, BPP_HIT_RATIO );
-      rank_param->avoid_ratio = BPP_GetValue( self, BPP_AVOID_RATIO );
+      rank_param->attack      = myRankParam[ BPP_ATTACK_RANK - BPP_RANKVALUE_START ];
+      rank_param->defence     = myRankParam[ BPP_DEFENCE_RANK - BPP_RANKVALUE_START ];
+      rank_param->sp_attack   = myRankParam[ BPP_SP_ATTACK_RANK - BPP_RANKVALUE_START ];
+      rank_param->sp_defence  = myRankParam[ BPP_SP_DEFENCE_RANK - BPP_RANKVALUE_START ];
+      rank_param->agility     = myRankParam[ BPP_AGILITY_RANK - BPP_RANKVALUE_START ];
+      rank_param->hit_ratio   = myRankParam[ BPP_HIT_RATIO - BPP_RANKVALUE_START ];
+      rank_param->avoid_ratio = myRankParam[ BPP_AVOID_RATIO - BPP_RANKVALUE_START ];
     BTL_SVF_HANDEX_Pop( flowWk, rank_param );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
@@ -6712,6 +6721,10 @@ static void handler_PowerSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_SET_RANK* rank_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
+    // 自分のを書き換える前に保存
+    int myAtk = BPP_GetValue( self,  BPP_ATTACK_RANK );
+    int mySPAtk = BPP_GetValue( self,  BPP_SP_ATTACK_RANK );
+
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
       rank_param->pokeID = pokeID;
       rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
@@ -6725,8 +6738,8 @@ static void handler_PowerSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
       rank_param->pokeID      = target_pokeID;
-      rank_param->attack      = BPP_GetValue( self,   BPP_ATTACK_RANK );
-      rank_param->sp_attack   = BPP_GetValue( self,   BPP_SP_ATTACK_RANK );
+      rank_param->attack      = myAtk;
+      rank_param->sp_attack   = mySPAtk;
       rank_param->defence     = BPP_GetValue( target, BPP_DEFENCE_RANK );
       rank_param->sp_defence  = BPP_GetValue( target, BPP_SP_DEFENCE_RANK );
       rank_param->agility     = BPP_GetValue( target, BPP_AGILITY_RANK );
@@ -6764,6 +6777,10 @@ static void handler_GuardSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     BTL_HANDEX_PARAM_SET_RANK* rank_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
+    // 自分のを書き換える前に保存
+    int myDef = BPP_GetValue( self,  BPP_DEFENCE_RANK );
+    int mySPDef = BPP_GetValue( self,  BPP_SP_DEFENCE_RANK );
+
     rank_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_RANK, pokeID );
       rank_param->pokeID      = pokeID;
       rank_param->attack      = BPP_GetValue( self,   BPP_ATTACK_RANK );
@@ -6779,8 +6796,8 @@ static void handler_GuardSwap( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
       rank_param->pokeID      = target_pokeID;
       rank_param->attack      = BPP_GetValue( target, BPP_ATTACK_RANK );
       rank_param->sp_attack   = BPP_GetValue( target, BPP_SP_ATTACK_RANK );
-      rank_param->defence     = BPP_GetValue( self,   BPP_DEFENCE_RANK );
-      rank_param->sp_defence  = BPP_GetValue( self,   BPP_SP_DEFENCE_RANK );
+      rank_param->defence     = myDef;
+      rank_param->sp_defence  = mySPDef;
       rank_param->agility     = BPP_GetValue( target, BPP_AGILITY_RANK );
       rank_param->hit_ratio   = BPP_GetValue( target, BPP_HIT_RATIO );
       rank_param->avoid_ratio = BPP_GetValue( target, BPP_AVOID_RATIO );
