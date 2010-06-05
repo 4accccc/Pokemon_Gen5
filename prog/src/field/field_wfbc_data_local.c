@@ -115,6 +115,7 @@ static FIELD_WFBC_CORE_PEOPLE* WFBC_CORE_GetClearPeopleArray( FIELD_WFBC_CORE_PE
 static void WFBC_CORE_SetUpPeople( FIELD_WFBC_CORE_PEOPLE* p_people, u8 npc_id, const MYSTATUS* cp_mystatus, u16 mood, BOOL parent_set );
 static BOOL WFBC_CORE_People_IsGoBack( const FIELD_WFBC_CORE_PEOPLE* cp_people );
 static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add );
+static void WFBC_CORE_People_SetMood( FIELD_WFBC_CORE_PEOPLE* p_people, int mood );
 
 
 //-------------------------------------
@@ -488,9 +489,17 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
       p_wk->people[i].one_day_msk = FIELD_WFBC_ONEDAY_MSK_INIT;
       
       result = WFBC_CORE_People_AddMood( &p_wk->people[i], FIELD_WFBC_MOOD_SUB * diff_day );
-      if( result )
+      
+      // — ‚ª‚¢‚Á‚Ï‚¢‚È‚çÁ‚³‚È‚¢B
+      if( (result) && (WFBC_CORE_IsPeopleArrayFull(p_wk->back_people) == TRUE) ) 
       {
-        
+        TOMOYA_Printf( "‚v‚e‚a‚b@‚m‚n‚s@‚b‚k‚d‚`‚q@‚m‚o‚b\n" );
+        WFBC_CORE_People_SetMood( &p_wk->people[i], 1 );
+      }
+      // — ‚É—]—T‚ª‚ ‚é‚Ì‚ÅÁ‚·B
+      else if( result )
+      {
+
         // ‚à‚µAŽ©•ª‚ª‚v‚e‚a‚b‚É‚¢‚é‚Ì‚Å‚ ‚ê‚ÎAÁ‚·ˆ—‚ðƒXƒLƒbƒv‚·‚éB
         // ‚v‚e‚a‚bˆÈŠO‚És‚Á‚½Œã‚ÉÁ‚¦‚éBBTSF4235
         if( ZONEDATA_IsWfbcCalcMoodSkip( zone_id ) == FALSE ){
@@ -1943,6 +1952,19 @@ static BOOL WFBC_CORE_People_AddMood( FIELD_WFBC_CORE_PEOPLE* p_people, int add 
     p_people->mood += add;
   }
   return ret;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ‹@Œ™’l‚ðÝ’è
+ *
+ *	@param	p_people
+ *	@param	mood 
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_CORE_People_SetMood( FIELD_WFBC_CORE_PEOPLE* p_people, int mood )
+{
+  p_people->mood = mood;
 }
 
 
