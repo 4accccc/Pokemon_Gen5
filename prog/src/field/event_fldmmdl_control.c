@@ -558,6 +558,7 @@ GFL_TCB* PlayerOneStepAnimeStart( FIELDMAP_WORK* fieldmap )
   }
 
   // アニメーションコマンドリストセット
+  MMDL_FreeAcmd( mmdl );
   tcb = MMDL_SetAcmdList( mmdl, anm_table );
 
   return tcb;
