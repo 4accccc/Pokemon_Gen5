@@ -91,7 +91,6 @@
   ARCID_POWER     "power.narc"      #パレスのパワーデータ
   ARCID_MONOLITH  "monolith.narc"     #モノリスグラフィック
   ARCID_FLDMMLD   "debug/mmodel.narc"
-  ARCID_MYSIGN    "mysign.narc"     #サイン(トレーナーカード)
   ARCID_TRAINERCARD "trainer_case.narc"   #トレーナーカード
   ARCID_TRC_UNION   "trc_union.narc"    #ユニオンルーム トレーナーカード キャラ絵
   ARCID_SOUNDTEST   "soundtest.narc"    #サウンドテスト画像（デバッグ）
