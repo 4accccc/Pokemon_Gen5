@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-06-03T20:51:41"/>
+	<create user="matsumiya" host="W00224" date="2010-06-05T17:14:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="139" top="250" right="844" bottom="878" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="248" right="2076" bottom="876" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -379,14 +379,14 @@
 
 
 	<row id="pdw_furniture_menu_01">
-		<language name="JPN">ワタシ　かぐデザイナーを
-している　シタンっていうの▼
+		<language name="JPN">ワタシ　かぐデザイナーの
+シタンって　いうの▼
 でも　いまは　ダメなの……
 いいデザインが　おもいつかなくて……▼
 ゆめに　みるくらいの　ステキな
 かぐ　を　かんがえてるんだけど……</language>
-		<language name="JPN_KANJI">ワタシ　家具デザイナーを
-している　シタンっていうの▼
+		<language name="JPN_KANJI">ワタシ　家具デザイナーの
+シタンって　いうの▼
 でも　今は　ダメなの……
 いいデザインが　思いつかなくて……▼
 夢に　見るくらいの　ステキな
@@ -395,11 +395,11 @@
 
 	<row id="pdw_furniture_menu_02">
 		<language name="JPN" width="401">シタン『んん……
-まだ　あたらしいデザインの▽
+まだ　あたらしい　デザインの▽
 かぐを　おもいつかないの▼
 また　きてくれない？</language>
 		<language name="JPN_KANJI">シタン『んん……
-まだ　新しいデザインの▽
+まだ　新しい　デザインの▽
 家具を　思いつかないの▼
 また　来てくれない？</language>
 	</row>
@@ -424,12 +424,12 @@
 		<attribute name="キャラ指定">WOMANB</attribute>
 		<language name="JPN">シタン『あたらしい　かぐデザイン　を
 かんがえたの　じしんさくよ！▼
-この　なかでどれが　いちばん　ゆめに
+この　なかで　どれが　いちばん　ゆめに
 でてくるくらい　ステキだと　おもう？</language>
 		<language name="JPN_KANJI">シタン『新しい　家具デザイン　を
 考えたの　自信作よ！▼
-この　中でどれが　いちばん　夢に
-出てくるくらい　ステキだと　思う？</language>
+この中で　どれが　一番　夢に
+でてくるくらい　ステキだと　思う？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_05">
@@ -440,12 +440,12 @@
 		<attribute name="キャラ指定">WOMANB</attribute>
 		<language name="JPN">それで　ゆめにみるような
 かぐデザイン　を　かんがえたの▼
-この　なかでどれが　いちばん　ゆめに
+この　なかで　どれが　いちばん　ゆめに
 でてくるくらい　ステキだと　おもう？</language>
 		<language name="JPN_KANJI">それで　夢に見るような
 家具デザイン　を　考えたの▼
-この　中でどれが　いちばん　夢に
-出てくるくらい　ステキだと　思う？</language>
+この中で　どれが　一番　夢に
+でてくるくらい　ステキだと　思う？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_05_02">
@@ -456,12 +456,12 @@
 		<attribute name="キャラ指定">WOMANB</attribute>
 		<language name="JPN">シタン『あら　ワタシの　ゆめの
 かぐデザインに　つきあってくれるの？▼
-この　なかでどれが　いちばん　ゆめに
+この　なかで　どれが　いちばん　ゆめに
 でてくるくらい　ステキだと　おもう？</language>
 		<language name="JPN_KANJI">シタン『あら　ワタシの　夢の
 家具デザインに　つきあってくれるの？▼
-この　中でどれが　一番　夢に
-出てくるくらい　ステキだと　思う？</language>
+この中で　どれが　一番　夢に
+でてくるくらい　ステキだと　思う？</language>
 	</row>
 
 	<row id="pdw_furniture_menu_06">
@@ -469,12 +469,12 @@
 ・いいえ選択時
 ・カタログでやめる選択時も同様</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">そう……　また　きがむいたら▼
-ワタシの　ゆめの　かぐデザインに
-つきあってね</language>
-		<language name="JPN_KANJI">そう……　また　気が向いたら▼
-ワタシの　夢の　家具デザインに
-つきあってね</language>
+		<language name="JPN">そう……　また　きがむいたら
+ワタシの　ゆめの▽
+かぐデザインに　つきあってね</language>
+		<language name="JPN_KANJI">そう……　また　気が向いたら
+ワタシの　夢の▽
+家具デザインに　つきあってね</language>
 	</row>
 
 	<row id="pdw_furniture_menu_07">
@@ -485,14 +485,16 @@
 		<attribute name="キャラ指定">WOMANB</attribute>
 		<language name="JPN">なるほど……　いいセンス　ね
 アドバイス　ありがとう！▼
-きっとこのデザインなら　ゆめに
-でるくらい　ステキなかぐに　なるわ▼
+きっと　この　デザインなら
+ゆめに　でるくらい▽
+ステキな　かぐに　なるわ▼
 また　つぎの　デザインが
 ひらめいたとき　つきあってね！</language>
 		<language name="JPN_KANJI">なるほど……　いいセンス　ね
 アドバイス　ありがとう！▼
-きっとこのデザインなら　夢に
-出るくらい　ステキな家具に　なるわ▼
+きっと　このデザインなら
+夢に　でるくらい▽
+ステキな　家具に　なるわ▼
 また　次の　デザインが
 ひらめいたとき　つきあってね！</language>
 	</row>
@@ -515,24 +517,24 @@
 ・はい→furniture_menu_03
 　いいえ→furniture_menu_04</comment>
 		<attribute name="キャラ指定">WOMANB</attribute>
-		<language name="JPN">あっ　とつぜんゴメンね
-ワタシ　かぐデザイナーを▽
-している　シタン　っていうの▼
-かぐデザイナー　の　だれもが　めざす
-ゆめに　みるような　かぐを▽
-つくることを　めざしているわ▼
+		<language name="JPN">あっ　とつぜん　ゴメンね▼
+ワタシ　かぐデザイナーの
+シタンって　いうの▼
+かぐデザイナー　の　だれもが
+あこがれる　ゆめに　みるような▽
+かぐを　つくることを　めざしているわ▼
 そのかぐを　しった　そのよる
-ゆめにみずには　いられない……！▽
-そんなかぐ　よ▼</language>
-		<language name="JPN_KANJI">あっ　突然ゴメンね
-ワタシ　家具デザイナーを▽
-している　シタン　っていうの▼
-家具デザイナー　の　だれもが　目指す
-夢に　見るような　家具を▽
-作ることを　目指しているわ▼
+ゆめに　みずには　いられない……！▽
+そんな　かぐ　よ▼</language>
+		<language name="JPN_KANJI">あっ　突然　ゴメンね▼
+ワタシ　家具デザイナーの
+シタンって　いうの▼
+家具デザイナーの　だれもが
+あこがれる　夢に　見るような▽
+家具を　つくることを　目指しているわ▼
 その家具を　知った　その夜
 夢に見ずには　いられない……！▽
-そんな家具　よ▼</language>
+そんな　家具よ▼</language>
 	</row>
 
 	<row id="pdw_furniture_menu_sys_01">
