@@ -477,8 +477,8 @@ _ANIME_LABEL	anm_endaf_champion_goodbye_01
 	_ANIME_DATA	AC_WALK_R_8F,4
 	_ANIME_DATA	AC_WALK_U_8F,2
 	_ANIME_DATA	AC_WALK_R_8F,2
-	_ANIME_DATA	AC_WALK_U_8F,2
-	_ANIME_DATA	AC_WALK_L_8F,1
+	_ANIME_DATA	AC_WALK_U_8F,3
+	_ANIME_DATA	AC_WALK_L_8F,2
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
