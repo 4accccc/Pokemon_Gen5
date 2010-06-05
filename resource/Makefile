@@ -66,7 +66,6 @@ SUBDIRS	=	wmi \
 			wifi_union_obj \
 			wifi_leading_obj \
 			trainer_case \
-			mysign \
 			pms \
 			pms_gra \
 			compatible \
