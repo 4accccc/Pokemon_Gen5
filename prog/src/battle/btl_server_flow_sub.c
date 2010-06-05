@@ -1080,7 +1080,9 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   if( wk->bagMode == BBAG_MODE_SHOOTER )
   {
     // シューターのかっこいい演出
-    SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_SHOOTER_EFFECT );
+    if( targetPos != BTL_POS_NULL ){
+      SCQUE_PUT_ACT_EffectByPos( wk->que, targetPos, BTLEFF_SHOOTER_EFFECT );
+    }
 
     // シューター専用のアイテム処理
     for(i=0; i<NELEMS(ItemEffectTable); ++i)
@@ -1420,8 +1422,6 @@ static fx32 CalcBallCaptureRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* myPo
       ){
         return FX32_CONST(3.5);
       }
-      // @ todo 時間帯による暗さも対象か？
-//      if( (fldSit->bgType != BATTLE_BG_TYPE_ROOM) ||
     }
     break;
 
