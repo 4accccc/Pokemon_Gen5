@@ -13,6 +13,10 @@
 #include "poke_tool\pokeparty.h"
 #include  "tr_tool/tr_tool.h"
 #include  "tr_tool/trtype_def.h"
+#include  "btlv/btlv_gauge.h"
+#include  "item\item.h"
+#include  "item\itemtype_def.h"
+
 #include  "btlv/btlv_effect.h"
 #include  "btlv/btlv_gauge.h"
 
@@ -26,6 +30,7 @@
 #include "btl_rec.h"
 #include "btl_server_cmd.h"
 #include "btl_net.h"
+#include "btl_calc.h"
 
 #include "app\b_bag.h"
 #include "app\b_plist.h"
@@ -201,8 +206,10 @@ struct _BTL_CLIENT {
   u8   actionAddCount;
   u8   wazaInfoPokeIdx;
   u8   wazaInfoWazaIdx;
-  u8   fAITrainerBGMChanged;
-  u8   fCommError;
+
+  u8   fAITrainerBGMChanged : 1;
+  u8   fCommError           : 1;
+  u8   fBallSelected        : 1;
 
   u8          myChangePokeCnt;
   u8          myPuttablePokeCnt;
@@ -1492,6 +1499,7 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   wk->procPokeIdx = 0;
   wk->prevPokeIdx = -1;
   wk->firstPokeIdx = 0;
+  wk->fBallSelected = FALSE;
 
   // ダブル以上の時、「既に選ばれているポケモン」を記録するために初期化をここで行う
   setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
@@ -1586,7 +1594,6 @@ static BOOL selact_YubiFuruDebug( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
-    TAYA_Printf("ゆびふるデバッグ開始です\n");
     GYubiCtrlPos = 0;
     wk->fStdMsgChanged = FALSE;
     (*seq)++;
@@ -2340,6 +2347,12 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
         shooterCost_Save( wk, wk->procPokeIdx, cost );
         BTL_ACTION_SetItemParam( wk->procAction, itemID, targetIdx, wazaIdx );
         BTLV_ITEMSELECT_ReflectUsedItem( wk->viewCore );
+
+        // ボールを選択した場合、残りポケモンのアクション選択は全てスキップさせる
+        if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_ITEM_TYPE) == ITEMTYPE_BALL )
+        {
+          wk->fBallSelected = TRUE;
+        }
         ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
 //      (*seq)=SEQ_SELECT_ACTION;
@@ -2500,6 +2513,22 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
     {
       wk->procPokeIdx++;
 
+      if( wk->procPokeIdx < wk->numCoverPos )
+      {
+        if( wk->fBallSelected == FALSE ){
+          BTL_N_Printf( DBGSTR_CLIENT_SelectActionBacktoRoot, wk->procPokeIdx );
+          ClientSubProc_Set( wk, selact_Root );
+          break;
+        }
+        else
+        {
+          while( wk->procPokeIdx < wk->numCoverPos )
+          {
+            BTL_ACTION_SetNULL( &(wk->actionParam[wk->procPokeIdx++]) );
+          }
+        }
+      }
+
       if( wk->procPokeIdx >= wk->numCoverPos )
       {
         u8 actionCnt = wk->numCoverPos + wk->actionAddCount;
@@ -2509,10 +2538,6 @@ static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq )
         wk->returnDataPtr = &(wk->actionParam[0]);
         wk->returnDataSize = sizeof(wk->actionParam[0]) * actionCnt;
         ClientSubProc_Set( wk, selact_Finish );
-      }
-      else{
-        BTL_N_Printf( DBGSTR_CLIENT_SelectActionBacktoRoot, wk->procPokeIdx );
-        ClientSubProc_Set( wk, selact_Root );
       }
     }
     break;
