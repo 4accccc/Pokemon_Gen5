@@ -866,6 +866,29 @@ static void Draw( POKEMON_TRADE_WORK* pWork )
 
 
 
+static void _McssSizeCheck(MCSS_WORK *pWork,VecFx32* pScale)
+{
+//  u16 size_y = MCSS_GetSizeY( pWork );  // マルチセルのおおよそのYサイズを取得
+  u16 size_x = MCSS_GetSizeX( pWork );  // マルチセルのおおよそのXサイズを取得
+//  s16 offset_y = MCSS_GetOffsetY( pWork );  // マルチセルのY方向のズレを取得  // 浮いているとき-, 沈んでいるとき+
+  s16 offset_x = MCSS_GetOffsetX( pWork );  // マルチセルのX方向のズレを取得  // 右にずれているとき+, 左にずれているとき-
+//  f32 ofs_position_y;
+  f32 ofs_position_x;
+  VecFx32  ofs_position;
+  
+//  ofs_position_y = ( POKE_SIZE_MAX - size_y ) / 2.0f + offset_y;
+  if(pScale->x < 0){
+    ofs_position_x = (f32)( offset_x);
+  }
+  else{
+    ofs_position_x = (f32)(-offset_x);
+  }
+  
+  ofs_position.x = FX_F32_TO_FX32(ofs_position_x);
+  ofs_position.y = 0;
+  ofs_position.z = 0;
+  MCSS_SetOfsPosition( pWork, &ofs_position );  // オフセットポジション
+}
 
 //--------------------------------------------------------------
 //	ポケモンMCSS作成
@@ -906,7 +929,9 @@ void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int b
  // pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
   MCSS_SetShadowVanishFlag(pWork->pokeMcss[no] ,TRUE);
+  _McssSizeCheck(pWork->pokeMcss[no], &scale);
 }
+
 
 
 //--------------------------------------------------------------
