@@ -186,8 +186,12 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 
 	PokeLabelPrint( wk->MsgManager, &wk->InfoWin[P_INFOWIN_SUNDEIRUBASHO], msg_gtc_04_012, &wk->print, PRINTSYS_LSB_Make(15,2,0) );	// 住んでいる場所
 
-  TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019, &wk->print );	// 「こうかんする」
-  TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 , &wk->print);	// 「もどる」
+
+  if( wk->is_partner_change == FALSE )
+  {
+    TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_EXCHANGE_WIN], msg_gtc_04_019, &wk->print );	// 「こうかんする」
+    TouchPrint( wk->MsgManager, &wk->MenuWin[MENU_BACK_WIN],     msg_gtc_05_014 , &wk->print);	// 「もどる」
+  }
 
 	// 「ほしいポケモン」か「すんでいるばしょ」の描画
 	ChangePage( wk );
@@ -219,6 +223,7 @@ int WorldTrade_Partner_Init(WORLDTRADE_WORK *wk, int seq)
 #endif
 	wk->subprocess_seq = SUBSEQ_START;
   wk->sub_display_continue  = FALSE;
+  wk->is_partner_change = FALSE;
 
 	return SEQ_FADEIN;
 }
@@ -378,25 +383,30 @@ static void BgGraphicSet( WORLDTRADE_WORK * wk )
 
 
 
+  {
+    ARCHANDLE *p_handle = GFL_ARC_OpenDataHandle( ARCID_WORLDTRADE_GRA, HEAPID_WORLDTRADE );
 
-	// メイン画面BG1キャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter( ARCID_WORLDTRADE_GRA, NARC_worldtrade_poke_view_lz_ncgr,  
-					   GFL_BG_FRAME1_M, 0, 32*3*0x20, 1, HEAPID_WORLDTRADE);
+    // メイン画面BG1キャラ転送
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_poke_view_lz_ncgr,  
+        GFL_BG_FRAME1_M, 0, 32*3*0x20, 1, HEAPID_WORLDTRADE);
 
-	// 上画面ＢＧパレット転送
-	GFL_ARC_UTIL_TransVramPalette(    ARCID_WORLDTRADE_GRA, NARC_worldtrade_poke_view_nclr, 
-					   PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
+    // 上画面ＢＧパレット転送
+    GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_worldtrade_poke_view_nclr, 
+        PALTYPE_MAIN_BG, 0, 16*3*2,  HEAPID_WORLDTRADE);
 
-	// スクリーンは_Initの下の方で行う
+    // スクリーンは_Initの下の方で行う
 
 
-	// -------------サブ画面---------------------
-	// メイン画面BGsキャラ転送
-	GFL_ARC_UTIL_TransVramBgCharacter(  ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win_ncgr,  
-						GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+    // -------------サブ画面---------------------
+    // メイン画面BGsキャラ転送
+    GFL_ARCHDL_UTIL_TransVramBgCharacter( p_handle, NARC_worldtrade_traderoom_win_ncgr,  
+        GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
 
-	GFL_ARC_UTIL_TransVramScreen( ARCID_WORLDTRADE_GRA, NARC_worldtrade_traderoom_win2_nscr,  
-					  GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+    GFL_ARCHDL_UTIL_TransVramScreen( p_handle, NARC_worldtrade_traderoom_win2_nscr,  
+        GFL_BG_FRAME2_S,    0, 0, 0, HEAPID_WORLDTRADE);
+
+    GFL_ARC_CloseDataHandle( p_handle );
+  }
 
 	// 会話フォントパレット転送
 	TalkFontPaletteLoad( PALTYPE_SUB_BG, WORLDTRADE_SUB_TALKFONT_PAL*0x20, HEAPID_WORLDTRADE );
@@ -531,16 +541,20 @@ static void BmpWinInit( WORLDTRADE_WORK *wk )
 	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MsgWin), 0x0000 );
 
 	// 「こうかんする」
-	wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
-		MENU_EXCHANGE1_X, MENU_EXCHANGE1_Y, MENU_EXCHANGE1_SX, MENU_EXCHANGE1_SY, 
-		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
-	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[0]), 0x0000 );
 
-	// 「もどる」
-	wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
-		MENU_EXCHANGE2_X, MENU_EXCHANGE2_Y, MENU_EXCHANGE2_SX, MENU_EXCHANGE2_SY, 
-		WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
-	//GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0000 );
+  if( wk->is_partner_change == FALSE )
+  {
+    wk->MenuWin[0]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+        MENU_EXCHANGE1_X, MENU_EXCHANGE1_Y, MENU_EXCHANGE1_SX, MENU_EXCHANGE1_SY, 
+        WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
+    //GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[0]), 0x0000 );
+
+    // 「もどる」
+    wk->MenuWin[1]	= GFL_BMPWIN_Create( GFL_BG_FRAME0_S,
+        MENU_EXCHANGE2_X, MENU_EXCHANGE2_Y, MENU_EXCHANGE2_SX, MENU_EXCHANGE2_SY, 
+        WORLDTRADE_TALKFONT_SUB_PAL,  GFL_BMP_CHRAREA_GET_B );	
+    //GFL_BMP_Clear( GFL_BMPWIN_GetBmp(wk->MenuWin[1]), 0x0000 );
+  }
 
 	// BG0面BMPWIN情報ウインドウ確保
 	{
@@ -597,11 +611,14 @@ static void BmpWinDelete( WORLDTRADE_WORK *wk )
 	
 	GFL_BMPWIN_Delete( wk->MsgWin );
 
-	GFL_BMPWIN_ClearTransWindow( wk->MenuWin[1] );
-	GFL_BMPWIN_ClearTransWindow( wk->MenuWin[0] );
+  if( wk->is_partner_change == FALSE )
+  {
+    GFL_BMPWIN_ClearTransWindow( wk->MenuWin[1] );
+    GFL_BMPWIN_ClearTransWindow( wk->MenuWin[0] );
                            
-	GFL_BMPWIN_Delete( wk->MenuWin[1] );
-	GFL_BMPWIN_Delete( wk->MenuWin[0] );
+    GFL_BMPWIN_Delete( wk->MenuWin[1] );
+    GFL_BMPWIN_Delete( wk->MenuWin[0] );
+  }
 	{
 		int i;
 		for(i=0;i<PARTNER_INFOWIN_MAX;i++){
@@ -740,6 +757,9 @@ static void DecidePartner( WORLDTRADE_WORK *wk, int result )
 		WorldTrade_SetPartnerCursorPos( wk, result, 0 );
 		PMSND_PlaySE(WORLDTRADE_DECIDE_SE);
 		OS_Printf("人物タッチ%d\n", result);
+
+    wk->sub_display_continue  = TRUE;
+    wk->is_partner_change  = TRUE;
 	}
 
 }
