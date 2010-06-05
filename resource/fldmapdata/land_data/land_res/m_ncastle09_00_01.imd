@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-06-01T18:36:14" source="m_ncastle09_00_00matome.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-06-05T14:00:25" source="m_ncastle09_00_00matome.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-06-01T18:36:14" source="m_ncastle09_00_00matome.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-06-05T14:00:25" source="m_ncastle09_00_00matome.mb"/>
 <original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
@@ -3055,9 +3055,9 @@
 	<polygon index="8" name="polygon8"
 		vertex_size="55" polygon_size="19"
 		triangle_size="7" quad_size="12"
-		volume_min="-2.435547 -1.412598 -3.465088"
+		volume_min="-2.435547 -1.400879 -3.465088"
 		volume_max="2.835449 -1.348633 -0.035645"
-		volume_r="4.245361"
+		volume_r="4.226807"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -3124,7 +3124,7 @@
 				</primitive>
 				<primitive index="4" type="triangle_strip" vertex_size="4">
 					<tex st="8.000000 0.437500"/>
-					<pos_xyz xyz="-2.110840 -1.412598 -3.299072"/>
+					<pos_xyz xyz="-2.110840 -1.355957 -3.299072"/>
 					<tex st="8.062500 0.312500"/>
 					<pos_xz xz="-2.237305 -3.319824"/>
 					<tex st="7.875000 0.437500"/>
@@ -3153,7 +3153,7 @@
 				</primitive>
 				<primitive index="7" type="quads" vertex_size="16">
 					<tex st="7.875000 0.000000"/>
-					<pos_xyz xyz="-1.945801 -1.412598 -3.394287"/>
+					<pos_xyz xyz="-1.945801 -1.355957 -3.394287"/>
 					<tex st="7.687500 0.187500"/>
 					<pos_xz xz="-1.912354 -3.124268"/>
 					<tex st="7.937500 0.375000"/>
@@ -3187,7 +3187,7 @@
 				</primitive>
 				<primitive index="8" type="triangles" vertex_size="3">
 					<tex st="7.937500 0.125000"/>
-					<pos_xyz xyz="-2.338379 -1.412598 -3.093262"/>
+					<pos_xyz xyz="-2.338379 -1.355957 -3.093262"/>
 					<tex st="7.750000 0.375000"/>
 					<pos_xz xz="-2.058594 -2.978027"/>
 					<tex st="8.062500 0.312500"/>
