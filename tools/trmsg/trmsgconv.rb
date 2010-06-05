@@ -72,7 +72,7 @@ end
   }
 
   gmm = GMM::new
-  gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "trmsg.gmm" )
+  gmm.open_gmm( ARGV[ ARGV_READ_GMM_FILE ] , "temp.gmm" )
 
   fp_tbl = open( "trmsgtbl.s", "w" )
   fp_tbl.print( "\t.text\n\n" )
@@ -105,6 +105,21 @@ end
 
   fp_tbl.close
   gmm.close_gmm
+
+  fp_w = open( "trmsg.gmm", "w" )
+
+  #ｅの文字を´つきに変換する
+  open( "temp.gmm" ) {|fp_r|
+    while str = fp_r.gets
+      if str.index("Pok?mon") != nil
+        buf = "Pok" + "%c" % 0xc3 + "%c" % 0xa9 + "mon"
+        str.sub!( "Pok?mon", buf )
+      end
+      fp_w.printf( "%s", str )
+    end
+  }
+
+  fp_w.close
 
   #タイムスタンプ比較用のダミーファイルを生成
   fp_w = open( "out_end", "w" )
