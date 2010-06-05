@@ -48,9 +48,13 @@ enum
 enum
 {
 	AC_JUMP_HEIGHT_12 = 0,		///<高さ12
-	AC_JUMP_HEIGHT_8,			///<高さ8
-	AC_JUMP_HEIGHT_6,			///<高さ6
+	AC_JUMP_HEIGHT_8,			    ///<高さ8
+	AC_JUMP_HEIGHT_6,			    ///<高さ6
+  
 };
+
+///その場ジャンプ用 6フレーム
+#define AC_STAY_JUMP_HEIGHT_12_6 (AC_JUMP_HEIGHT_6)
 
 #define AC_JUMP_H_TBL_MAX (16)///<高さテーブル要素数
 #define AC_JUMP_H_TBL_FRAME_MAX (AC_JUMP_H_TBL_MAX-1)///<高さテーブル要素数
@@ -1751,7 +1755,7 @@ static int AC_Jump_1( MMDL * mmdl )
 static int AC_StayJumpU16F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_UP, 0,
-		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
+		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
 }
@@ -1766,7 +1770,7 @@ static int AC_StayJumpU16F_0( MMDL * mmdl )
 static int AC_StayJumpD16F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_DOWN, 0,
-		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
+		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
 }
@@ -1781,7 +1785,7 @@ static int AC_StayJumpD16F_0( MMDL * mmdl )
 static int AC_StayJumpL16F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_LEFT, 0,
-		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
+		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
 }
@@ -1796,7 +1800,7 @@ static int AC_StayJumpL16F_0( MMDL * mmdl )
 static int AC_StayJumpR16F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_RIGHT, 0,
-		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_1 );
+		GRID_FRAME_16, DRAW_STA_WALK_16F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_1 );
 	
 	return( TRUE );
 }
@@ -1811,7 +1815,7 @@ static int AC_StayJumpR16F_0( MMDL * mmdl )
 static int AC_StayJumpU8F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_UP, 0,
-		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
+		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
 }
@@ -1826,7 +1830,7 @@ static int AC_StayJumpU8F_0( MMDL * mmdl )
 static int AC_StayJumpD8F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_DOWN, 0,
-		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
+		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
 }
@@ -1841,7 +1845,7 @@ static int AC_StayJumpD8F_0( MMDL * mmdl )
 static int AC_StayJumpL8F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_LEFT, 0,
-		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
+		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
 }
@@ -1856,7 +1860,7 @@ static int AC_StayJumpL8F_0( MMDL * mmdl )
 static int AC_StayJumpR8F_0( MMDL * mmdl )
 {
 	AcJumpWorkInit( mmdl, DIR_RIGHT, 0,
-		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_JUMP_HEIGHT_12, AC_JUMP_SPEED_UX16_2 );
+		GRID_FRAME_8, DRAW_STA_WALK_8F, AC_STAY_JUMP_HEIGHT_12_6, AC_JUMP_SPEED_UX16_2 );
 	
 	return( TRUE );
 }
