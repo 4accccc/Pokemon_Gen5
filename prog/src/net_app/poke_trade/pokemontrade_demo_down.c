@@ -481,6 +481,9 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       pWork->pMoveMcss[3]->pMcss = pWork->pokeMcss[3];
     }
   }
+  if(ANMCNTC(_POKEMON_CREATE_TIME+_JUMP_ANMST) == pWork->anmCount){
+    MCSS_ResetAnmStopFlag( pWork->pokeMcss[3] );
+  }
 #endif
 
 

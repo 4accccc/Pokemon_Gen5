@@ -124,3 +124,4 @@ static VecFx32 _shortJumpTbl2[]={
 {0, 0         , 0},
 };
 
+#define _JUMP_ANMST (18)
