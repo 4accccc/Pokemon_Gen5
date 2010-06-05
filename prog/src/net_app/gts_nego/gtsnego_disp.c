@@ -1619,7 +1619,8 @@ static int _getScrollCurPos(GTSNEGO_DISP_WORK* pWork,int pos,int max)
     ret = SCROLLBAR_LENGTH;
   }
   else{
-    ret = (SCROLLBAR_LENGTH * pos) / max;
+    ret = (SCROLLBAR_LENGTH * pos) / (max-1);
+    NET_PRINT("%d  %d %d\n",ret,pos,max);
   }
   return (ret );//+ _OFFSET_SCROLL);
 }

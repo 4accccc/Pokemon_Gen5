@@ -63,7 +63,7 @@ typedef enum{
 #define GTSNEGO_YESNOTYPE_SYS  (1)
 
 #define SCROLLBAR_TOP   (3*8+8-6)  //スクロールバーのTOP
-#define SCROLLBAR_LENGTH   (120+16-8)  //スクロールバーの長さ
+#define SCROLLBAR_LENGTH   (120+16-4)  //スクロールバーの長さ
 #define _OFFSET_SCROLL   (-6)   //カーソル位置からのオフセット
 
 
