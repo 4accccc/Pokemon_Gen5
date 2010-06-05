@@ -49,7 +49,6 @@
 
   ARCID_D_TAYA    "test_graphic/d_taya.narc"    #
   ARCID_RAIL_EDITOR "debug/rail_editor.narc"   # レールエディター
-  ARCID_SNDSTRM     "snd_strm.narc" # サウンドストリーミング
   ARCID_WMI     "wmi.narc"  # 通信アイコン
   ARCID_LAYOUT    "layout.narc" # レイアウトエディタから吐き出したもの
   ARCID_MESSAGE   "message.narc"    # メッセージデータ
@@ -82,7 +81,6 @@
   ARCID_IRCBATTLE   "ircbattle.narc"           #赤外線マッチングバトル
   ARCID_CG_COMM  "cg_comm.narc"           #コミュニケーションギア 接続後
   ARCID_C_GEAR    "c_gear.narc"           #コミュニケーションギア
-  ARCID_WIFI2DCHAR    "wifi2dchar.narc"
   ARCID_WIFILEADING     "wifileadingchar.narc"
   ARCID_WIFIUNIONCHAR   "wifi_unionobj.narc"
   ARCID_WIFIP2PMATCH    "wifip2pmatch.narc"

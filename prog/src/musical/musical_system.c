@@ -14,7 +14,7 @@
 #include "poke_tool/poke_tool.h"
 #include "poke_tool/monsno_def.h"
 
-#include "snd_strm.naix"
+
 
 #include "savedata/musical_save.h"
 #include "savedata/musical_dist_save.h"

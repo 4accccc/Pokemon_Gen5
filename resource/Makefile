@@ -58,14 +58,12 @@ SUBDIRS	=	wmi \
 			font\
 			itemicon\
 			title\
-			snd_strm\
 			mystery\
 			startmenu \
 			ircbattle \
 			wificlub \
 			wifi_login \
 			wifi_union_obj \
-			wifi_2dchar \
 			wifi_leading_obj \
 			trainer_case \
 			mysign \
