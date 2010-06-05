@@ -9637,15 +9637,16 @@ static void handler_ClearSmog( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   ){
     BTL_HANDEX_PARAM_RESET_RANK* reset_param;
     BTL_HANDEX_PARAM_MESSAGE* msg_param;
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
 
     reset_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RESET_RANK, pokeID );
       reset_param->poke_cnt = 1;
-      reset_param->pokeID[0] = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+      reset_param->pokeID[0] = targetPokeID;
     BTL_SVF_HANDEX_Pop( flowWk, reset_param );
 
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_RankReset );
-      HANDEX_STR_AddArg( &msg_param->str, reset_param->pokeID[0] );
+      HANDEX_STR_AddArg( &msg_param->str, targetPokeID );
     BTL_SVF_HANDEX_Pop( flowWk, msg_param );
   }
 }
