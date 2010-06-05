@@ -1968,7 +1968,7 @@ static void _friendSelect( GTSNEGO_WORK *pWork )
 
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
 
-  if(a < 3){
+  if(a <= 3){
     bCursor = FALSE;
   }
   
