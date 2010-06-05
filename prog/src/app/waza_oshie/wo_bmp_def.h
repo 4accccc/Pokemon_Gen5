@@ -363,6 +363,10 @@ enum{
 #define LIST_NUM_OFS  (LIST_NUM-1)
 #define LIST_SY     (24)
 
+// 技タイプアイコンの数
+#define WAZATYPE_ICON_NUM ( 8 )
+
+
 #define CPOS_YMAX     (LIST_NUM+1)
 #define CPOS_XMAX     (3)
 

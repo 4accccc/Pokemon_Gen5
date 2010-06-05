@@ -171,7 +171,10 @@ typedef struct {
   GFL_CLUNIT    *clUnit;
 //  CATS_RES_PTR  crp;
   GFL_CLWK    *cap[WO_CLA_MAX];
+  ARCHANDLE   *TypeIconHandle;
+  int         WazaIconReq[WAZATYPE_ICON_NUM][2];  // 転送用の情報 0:タイプ 1:転送するかどうか
 
+  // MCSS表示用
   WO_3DWORK   p3d;
 
   PSTATUS_DATA  psd;
@@ -218,12 +221,6 @@ typedef struct {
   WO_SEQ_FUNC yes;  // はい
   WO_SEQ_FUNC no;   // いいえ
 }YESNO_FUNC;
-
-// ページ
-enum {
-  WO_PAGE_BATTLE = 0, // 戦闘
-  WO_PAGE_CONTEST   // コンテスト
-};
 
 // メインシーケンス
 enum {
@@ -315,7 +312,8 @@ static void WO_ObjFree( WO_WORK * wk );
 static void WO_3DInit( WO_WORK * wk );
 static void WO_3DMain(WO_3DWORK* wk);
 static void WO_3DRelease( WO_3DWORK * wk );
-static void WO_TypeIconChange( WO_WORK * wk, u16 waza, u16 res_offset );
+static void WO_TypeIconChangeRequest( WO_WORK * wk, u16 waza, u16 res_offset );
+static void WO_TepeIconChangeVblank( WO_WORK *wk );
 static void WO_TypeIconInit( WO_WORK * wk );
 static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr );
 static void WO_KindIconChange( WO_WORK * wk, u16 waza );
@@ -626,8 +624,9 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR );
   wk->next_seq = SEQ_SELECT;
 
-
-//  WO_ScrollCursorPut( wk ,0, FALSE);
+  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WAZAOSHIE );
+  GFL_NET_ReloadIcon();
+  
 
   return GFL_PROC_RES_FINISH;
 }
@@ -735,7 +734,7 @@ GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
 {
   WO_WORK * wk  = mywk;
 
-
+  GFL_NET_WirelessIconEasyEnd();
 
   WO_DispExit( wk );
 
@@ -938,6 +937,8 @@ static void WO_DispExit( WO_WORK * wk )
 static void WO_VBlank( GFL_TCB *tcb, void * work )
 {
   WO_WORK * wk = work;
+
+  WO_TepeIconChangeVblank( wk );
 
   GFL_BG_VBlankFunc( );
 
@@ -1184,6 +1185,7 @@ static void WO_BgGraphicSet( WO_WORK * wk, ARCHANDLE* p_handle )
   // 会話ウィンドウセット
   BmpWinFrame_GraphicSet( SFRM_MSG, WO_TALK_WIN_CGX,WO_PAL_TALK_WIN,
                           MENU_TYPE_SYSTEM, HEAPID_WAZAOSHIE );
+
 }
 
 static void WO_BgGraphicRelease( WO_WORK * wk )
@@ -1830,7 +1832,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE5+i], 1 );
       
       // 技タイプアイコン書き換え
-      WO_TypeIconChange( wk, waza, i+LIST_NUM );
+      WO_TypeIconChangeRequest( wk, waza, i+LIST_NUM );
     }
     //技名
     GFL_MSG_GetString( waza_man, waza , wk->mbuf );
@@ -2555,6 +2557,8 @@ static void WO_ObjFree( WO_WORK * wk )
   GFL_CLACT_UNIT_Delete( wk->clUnit );
   GFL_CLACT_SYS_Delete();
 
+  GFL_ARC_CloseDataHandle( wk->TypeIconHandle );
+
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2679,7 +2683,7 @@ static void CGR_Replace( ARCHANDLE *handle, u32 res_index, u32 ArcId, BOOL compr
 
 //--------------------------------------------------------------------------------------------
 /**
- * タイプアイコン切り替え
+ * タイプアイコン切り替えリクエスト
  *
  * @param wk    ワーク
  * @param waza  技番号
@@ -2688,33 +2692,40 @@ static void CGR_Replace( ARCHANDLE *handle, u32 res_index, u32 ArcId, BOOL compr
  * @return  none
  */
 //--------------------------------------------------------------------------------------------
-static void WO_TypeIconChange( WO_WORK * wk, u16 waza, u16 res_offset )
+static void WO_TypeIconChangeRequest( WO_WORK * wk, u16 waza, u16 res_offset )
 {
-  u32 type;
-  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
+  u32 type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE );
+  wk->WazaIconReq[res_offset][0] = type;
+  wk->WazaIconReq[res_offset][1] = TRUE;
+}
 
-  // 戦闘用
-  if( wk->dat->page == WO_PAGE_BATTLE ){
-    type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE );
-  }else{
-    type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE ) + ICONTYPE_STYLE;
-  }
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 技タイプアイコン切り替え&転送
+ *
+ * @param   wk    
+ */
+//----------------------------------------------------------------------------------
+static void WO_TepeIconChangeVblank( WO_WORK *wk )
+{
   // キャラ書き換え
-  CGR_Replace( handle, wk->clres[0][res_offset+WO_CHR_ID_TYPE1],
-               APP_COMMON_GetPokeTypeCharArcIdx(type), 0, HEAPID_WAZAOSHIE );
-
-  // パレットオフセット変更
-  if(res_offset < LIST_NUM){
-      GFL_CLACT_WK_SetPlttOffs(wk->cap[WO_CLA_TYPE1+res_offset],
-                               APP_COMMON_GetPokeTypePltOffset(type),CLWK_PLTTOFFS_MODE_PLTT_TOP);
-  }else{
-    GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_TYPE1+res_offset],
-                              APP_COMMON_GetPokeTypePltOffset(type), CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  int i;
+  
+  for(i=0;i<WAZATYPE_ICON_NUM;i++){
+    if(wk->WazaIconReq[i][1]){
+      u32 type = wk->WazaIconReq[i][0];
+      // キャラ転送
+      CGR_Replace( wk->TypeIconHandle, wk->clres[0][i+WO_CHR_ID_TYPE1],
+                   APP_COMMON_GetPokeTypeCharArcIdx(type), 0, HEAPID_WAZAOSHIE );
+    
+      // パレットオフセット変更
+      GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_TYPE1+i],
+                                APP_COMMON_GetPokeTypePltOffset(type),
+                                CLWK_PLTTOFFS_MODE_PLTT_TOP);
+      wk->WazaIconReq[i][1] = FALSE;
+    }
   }
-
-  GFL_ARC_CloseDataHandle( handle );
-
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2739,7 +2750,7 @@ static void WO_TypeIconInit( WO_WORK * wk )
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 0 );
     }else{
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 1 );
-      WO_TypeIconChange( wk, wk->dat->waza_tbl[wk->dat->scr+i], i );
+      WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[wk->dat->scr+i], i );
     }
   }
 }
@@ -2766,7 +2777,7 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
       if( clpos.y == TYPE_ICON1_PY ){
         clpos.y = TYPE_ICON4_PY;
         if( wk->dat->waza_tbl[new_scr+LIST_NUM_OFS] != WAZAOSHIE_TBL_MAX ){
-          WO_TypeIconChange( wk, wk->dat->waza_tbl[new_scr+LIST_NUM_OFS], i );
+          WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[new_scr+LIST_NUM_OFS], i );
         }
       }else{
         clpos.y -= SEL_CURSOR_SY;
@@ -2779,7 +2790,7 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
       if( clpos.y == TYPE_ICON4_PY ){
         clpos.y = TYPE_ICON1_PY;
         if( wk->dat->waza_tbl[new_scr] != WAZAOSHIE_TBL_MAX ){
-          WO_TypeIconChange( wk, wk->dat->waza_tbl[new_scr], i );
+          WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[new_scr], i );
         }
       }else{
         clpos.y += SEL_CURSOR_SY;
@@ -2817,19 +2828,9 @@ static void WO_KindIconChange( WO_WORK * wk, u16 waza )
   u32 kind = WAZADATA_GetParam( waza, WAZAPARAM_DAMAGE_TYPE );
   ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
 
-//  CATS_ChangeResourceCharArc(
-//    wk->clUnit, wk->crp, WazaKindIcon_ArcIDGet(),
-//    WazaKindIcon_CgrIDGet(kind), WAZAKINDICON_COMP_CHAR, WO_CHR_ID_KIND );
-
-//  GFL_CLGRP_CGR_ReplaceSrc_VramTransfer( wk->clres[0][WO_CHR_ID_KIND],
-//                                         handle, APP_COMMON_GetWazaKindCharArcIdx(kind),
-//                                         0, HEAPID_WAZAOSHIE );
-
   CGR_Replace( handle, wk->clres[0][WO_CHR_ID_KIND],
                APP_COMMON_GetWazaKindCharArcIdx(kind), 0, HEAPID_WAZAOSHIE );
 
-
-//  CATS_ObjectPaletteSetCap( wk->cap[WO_CLA_KIND], WazaKindIcon_PlttOffsetGet(kind)+TICON_ACTPAL_IDX );
   GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_KIND],
                             APP_COMMON_GetWazaKindPltOffset(kind), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
@@ -2853,6 +2854,9 @@ static void WO_ObjInit( WO_WORK * wk, ARCHANDLE* p_handle )
 
   WO_ClactResManInit( wk );
   WO_ResourceLoad( wk, p_handle );
+
+  // 技タイプアイコンハンドルオープン
+  wk->TypeIconHandle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
 
   for( i=0; i<WO_CLA_MAX; i++ ){
     GFL_CLWK_DATA dat;
