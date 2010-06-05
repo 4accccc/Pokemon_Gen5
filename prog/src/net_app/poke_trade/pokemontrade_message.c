@@ -834,7 +834,7 @@ void POKETRADE_MESSAGE_CreatePokemonParamDisp(POKEMON_TRADE_WORK* pWork,POKEMON_
 {
   GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
 
-  IRC_POKETRADE_MainGraphicExit(pWork);  //上画面VRAM開放
+//  IRC_POKETRADE_MainGraphicExit(pWork);  //上画面VRAM開放
 
   IRC_POKETRADEDEMO_RemoveModel( pWork);  //リールを消す
   POKETRADE_MESSAGE_WindowClear(pWork);  //下のメッセージを消す

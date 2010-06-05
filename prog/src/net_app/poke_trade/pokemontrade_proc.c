@@ -1426,9 +1426,9 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     if(GFL_UI_KEY_GetTrg()){
       pWork->padMode=TRUE;
 
+      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       _changePokemonStatusDispAuto(pWork, pWork->pokemonselectno, FALSE);
 
-      GFL_UI_SetTouchOrKey(GFL_APP_END_KEY);
       return;
     }
   }
@@ -1437,7 +1437,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
 
   switch(GFL_UI_TP_HitTrg(_tp_data)){
   case 0:
-    if(pWork->pokemonselectno!=0){
+    if(pWork->pokemonselectno!=0  || (GFL_UI_CheckTouchOrKey()==GFL_APP_END_KEY)){
       pWork->pokemonselectno = 0;
       GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       PMSND_PlaySystemSE(POKETRADESE_CUR);
@@ -1445,7 +1445,7 @@ static void _pokemonStatusWait(POKEMON_TRADE_WORK* pWork)
     }
     break;
   case 1:
-    if(pWork->pokemonselectno!=1){
+    if(pWork->pokemonselectno!=1 || (GFL_UI_CheckTouchOrKey()==GFL_APP_END_KEY)){
       pWork->pokemonselectno = 1;
       GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
       PMSND_PlaySystemSE(POKETRADESE_CUR);

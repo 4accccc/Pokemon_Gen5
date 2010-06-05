@@ -137,10 +137,11 @@ void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork)
 	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_trade_wb_trade_bg_NCLR,
 																		PALTYPE_MAIN_BG, 0, 0,  pWork->heapID);
 
-
-  pWork->subchar =
-    GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
-                                                 GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
+  if(pWork->subchar==0){
+    pWork->subchar =
+      GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+                                                   GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
+  }
 
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 nscr,
@@ -1433,8 +1434,7 @@ void IRC_POKETRADE_SetMainDispGraphic(POKEMON_TRADE_WORK* pWork)
     GFL_CLACT_SYS_Create(	&fldmapdata_CLSYS_Init, &vramBank, pWork->heapID );
   }
 
-  GFL_BG_DebugPrintCtrl(GFL_BG_SUB_DISP,TRUE);
-
+//  GFL_BG_DebugPrintCtrl(GFL_BG_SUB_DISP,TRUE);デバッグ
   IRC_POKETRADE_SetBgMode(SETUP_TRADE_BG_MODE_NORMAL);
 
   GFL_DISP_GX_SetVisibleControlDirect(0);		//全BG&OBJの表示OFF
@@ -1831,7 +1831,7 @@ void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork)
 	GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
 																				 NARC_trade_wb_trade_stbg03_NSCR,
 																				 GFL_BG_FRAME2_M, 0,
-																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
+																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar), 0, 0,
 																				 pWork->heapID);
 	GFL_ARC_CloseDataHandle( p_handle );
 }
