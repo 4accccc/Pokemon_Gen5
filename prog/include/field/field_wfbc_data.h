@@ -66,6 +66,7 @@ typedef enum {
 
 // 1日のフラグ初期値
 #define FIELD_WFBC_ONEDAY_MSK_INIT  ( FIELD_WFBC_ONEDAY_MSK_BATTLE | FIELD_WFBC_ONEDAY_MSK_INTOWN | FIELD_WFBC_ONEDAY_MSK_TALK )
+#define FIELD_WFBC_ONEDAY_MSK_DUMMYMODE_INIT  ( FIELD_WFBC_ONEDAY_MSK_BATTLE )  // Ｍｏｏｄが０なのに動作する場合の初期化
 
 // ON
 #define FIELD_WFBC_ONEDAY_MSK_ON( val, msk )  ( (val) | (msk) )
@@ -199,6 +200,9 @@ extern void GAMEDATA_ClearPalaceWFBCCoreData( GAMEDATA * gamedata );
 
 // 1日の切り替え管理
 extern void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID heapID );
+
+// WFBCゾーンチェンジでの、ＭＯＯＤチェック
+extern void FIELD_WFBC_CORE_CalcZoneChange( GAMEDATA * gamedata );
 
 //----------------------------------------------------------
 //  ZONEDATAの操作    『常駐』

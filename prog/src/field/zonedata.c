@@ -896,6 +896,29 @@ BOOL ZONEDATA_IsWfbc(u16 zone_id)
 }
 
 //------------------------------------------------------------------
+//  WFBC、人を減らす処理をスキップするゾーン
+//------------------------------------------------------------------
+BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id)
+{
+  static const u16 zone_tbl[] = {
+    ZONE_ID_BC10,
+    ZONE_ID_BC10PCR0101,//ポケセン
+    ZONE_ID_BC10R0101,
+    ZONE_ID_BC10R0201,
+    ZONE_ID_BC10R0301,
+    ZONE_ID_BC10R0401,//デパート
+
+    ZONE_ID_WC10,
+    ZONE_ID_WC10PCR0101,//ポケセン
+    ZONE_ID_WC10R0101,//村長の家
+
+    ZONE_ID_PLC10,
+    ZONE_ID_PLCW10,
+  };
+  return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
+}
+
+//------------------------------------------------------------------
 /**
  * @brief  ミュージカル待合室かどうかのチェック
  * @param  zoneid ゾーン指定ID

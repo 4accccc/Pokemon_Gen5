@@ -233,6 +233,11 @@ extern BOOL ZONEDATA_IsPalaceFieldNoBingo(u16 zone_id);
 extern BOOL ZONEDATA_IsWfbc(u16 zone_id);
 
 //------------------------------------------------------------------
+//  WFBC、人を減らす処理をスキップするゾーン
+//------------------------------------------------------------------
+extern BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id);
+
+//------------------------------------------------------------------
 //  ミュージカル待合室かどうかのチェック
 //------------------------------------------------------------------
 extern BOOL ZONEDATA_IsMusicalWaitingRoom(u16 zone_id);

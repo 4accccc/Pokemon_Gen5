@@ -457,6 +457,8 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
   u16 random;
   FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
   const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  PLAYER_WORK* p_player = GAMEDATA_GetMyPlayerWork( gamedata );
+  u32 zone_id = PLAYERWORK_getZoneID( p_player );
 
   p_wk = GAMEDATA_GetMyWFBCCoreData( gamedata );
   p_item = GAMEDATA_GetWFBCItemData( gamedata );
@@ -488,10 +490,25 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
       result = WFBC_CORE_People_AddMood( &p_wk->people[i], FIELD_WFBC_MOOD_SUB * diff_day );
       if( result )
       {
-        // îwñ ê¢äEë§ÇÃÉèÅ[ÉNÇ…äiî[å„ÉNÉäÉA
-        // ÇØÇ¬ÇÃèÓïÒÇó†ê¢äEÇ…ìnÇ∑ÅB
-        WFBC_CORE_PushPeopleArray( p_wk->back_people, &p_wk->people[i] );
-        FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+        
+        // Ç‡ÇµÅAé©ï™Ç™ÇvÇeÇaÇbÇ…Ç¢ÇÈÇÃÇ≈Ç†ÇÍÇŒÅAè¡Ç∑èàóùÇÉXÉLÉbÉvÇ∑ÇÈÅB
+        // ÇvÇeÇaÇbà»äOÇ…çsÇ¡ÇΩå„Ç…è¡Ç¶ÇÈÅBBTSÅF4235
+        if( ZONEDATA_IsWfbcCalcMoodSkip( zone_id ) == FALSE ){
+          TOMOYA_Printf( "ÇvÇeÇaÇbÅ@ÇsÇhÇlÇdÅ@ÇtÇoÇcÇ`ÇsÇdÅ@ÇcÇnÇmÇd\n" );
+        
+          // îwñ ê¢äEë§ÇÃÉèÅ[ÉNÇ…äiî[å„ÉNÉäÉA
+          // ÇØÇ¬ÇÃèÓïÒÇó†ê¢äEÇ…ìnÇ∑ÅB
+          WFBC_CORE_PushPeopleArray( p_wk->back_people, &p_wk->people[i] );
+          FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+        }else{
+
+          // ÉfÅ[É^Ç∆ÇµÇƒÇ¢Ç»Ç≠Ç»Ç¡ÇΩÇ±Ç∆Ç…Ç»Ç¡ÇΩêlÇÃÉ}ÉXÉNÇÕÅAÇ∑Ç◊ÇƒóéÇ∆Ç∑ÅB
+          // ÉoÉgÉãÇÃÇ›â¬î\
+          // ÇlÇèÇèÇÑÇÃâ¡éZÇÕçsÇÌÇ»Ç¢ÅB
+          p_wk->people[i].one_day_msk = FIELD_WFBC_ONEDAY_MSK_DUMMYMODE_INIT;
+
+        }
+
       }
     }
   }
@@ -573,6 +590,50 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
 
   FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  É}ÉbÉvÉWÉÉÉìÉvÇ≈ÇÃÇvÇeÇaÇbêlï®ó†à⁄ìÆèàóù
+ *
+ *	@param	gamedata  ÉQÅ[ÉÄÉfÅ[É^
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_CalcZoneChange( GAMEDATA * gamedata )
+{
+  int i;
+  BOOL result;
+  FIELD_WFBC_CORE* p_wk;
+  PLAYER_WORK* p_player = GAMEDATA_GetMyPlayerWork( gamedata );
+  u32 zone_id = PLAYERWORK_getZoneID( p_player );
+
+  p_wk = GAMEDATA_GetMyWFBCCoreData( gamedata );
+
+
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_wk->people[i] ) )
+    {
+      
+      result = WFBC_CORE_People_IsGoBack( &p_wk->people[i] );
+      if( result )
+      {
+        // Ç‡ÇµÅAé©ï™Ç™ÇvÇeÇaÇbÇ…Ç¢ÇÈÇÃÇ≈Ç†ÇÍÇŒÅAè¡Ç∑èàóùÇÉXÉLÉbÉvÇ∑ÇÈÅB
+        // ÇvÇeÇaÇbà»äOÇ…çsÇ¡ÇΩå„Ç…è¡Ç¶ÇÈÅBBTSÅF4235
+        if( ZONEDATA_IsWfbcCalcMoodSkip( zone_id ) == FALSE ){
+          TOMOYA_Printf( "ÇvÇeÇaÇbÅ@ÇsÇhÇlÇdÅ@ÇtÇoÇcÇ`ÇsÇdÅ@ÇcÇnÇmÇd\n" );
+        
+          // îwñ ê¢äEë§ÇÃÉèÅ[ÉNÇ…äiî[å„ÉNÉäÉA
+          // ÇØÇ¬ÇÃèÓïÒÇó†ê¢äEÇ…ìnÇ∑ÅB
+          WFBC_CORE_PushPeopleArray( p_wk->back_people, &p_wk->people[i] );
+          FIELD_WFBC_CORE_PEOPLE_Clear( &p_wk->people[i] );
+        }
+      }
+    }
+  }
+  // ãÛÇ¢ÇƒÇ¢ÇÈÉèÅ[ÉNÇÇ¬ÇﬂÇÈ
+  WFBC_CORE_PackPeopleArray( p_wk->people );
+}
+
 
 //----------------------------------------------------------------------------
 /**

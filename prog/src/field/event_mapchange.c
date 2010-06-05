@@ -2921,6 +2921,11 @@ static void MAPCHG_releaseMMdl( GAMEDATA * gamedata )
 //-----------------------------------------------------------------------------
 static void MAPCHG_SetUpWfbc( GAMEDATA * gamedata, const LOCATION *loc )
 {
+  // ‚±‚±‚©‚ç‰º‚ÍAí‚És‚¤ˆ—
+  FIELD_WFBC_CORE_CalcZoneChange( gamedata );
+  
+  
+  // ‚±‚±‚©‚ç‰º‚ÍA‚v‚e‚a‚b‚y‚n‚m‚d‚Å‚Ìˆ—
   if( !ZONEDATA_IsWfbc( loc->zone_id ) )
   {
     return ;
