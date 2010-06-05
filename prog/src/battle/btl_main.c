@@ -38,6 +38,7 @@
 
 #include "btl_main.h"
 
+#include "net/dwc_tool.h"
 
 
 /*--------------------------------------------------------------------------*/
@@ -1566,6 +1567,17 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
         if( playerStatus )
         {
           trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, playerStatus );
+
+          //Wifi‚Ì‘Îí‘ŠŽè‚ª•s³–¼‚¾‚Á‚½‚ç–¼‘O‚ð’u‚«Š·‚¦
+          if( ( i != 0 ) && ( sp->WifiBadNameFlag ) )
+          { 
+            STRCODE name[ BUFLEN_PERSON_NAME ];
+            DWC_TOOL_SetBadNickName( name, BUFLEN_PERSON_NAME, wk->heapID );
+            MyStatus_SetMyName( wk->trainerParam[ i ].playerStatus, name );
+            GFL_STR_DeleteBuffer( wk->trainerParam[ i ].name );
+            wk->trainerParam[ i ].name = DWC_TOOL_CreateBadNickName( wk->heapID );
+          }
+
           Bspstore_PlayerStatus( wk, i, playerStatus );
         }
       }
