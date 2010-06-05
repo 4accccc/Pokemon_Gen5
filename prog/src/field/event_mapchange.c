@@ -126,7 +126,7 @@ static GMEVENT* EVENT_ContinueMapIn( GAMESYS_WORK* gameSystem, GAME_INIT_WORK* g
 
 static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_MapChangePalace( GMEVENT* event, int* seq, void* wk );
-static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc, BOOL partner);
+static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc, BOOL partner, int palace_area);
 static GMEVENT * EVENT_ChangeMapPalace( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc);
 
 static void setNowLoaction(LOCATION * return_loc, FIELDMAP_WORK * fieldmap);
@@ -2223,7 +2223,7 @@ GMEVENT* EVENT_ChangeMapFldToPalace( GAMESYS_WORK* gsys, u16 zone_id, const VecF
     
     LOCATION_SetDirect( &loc, zone_id, EXITDIR_fromDIR( DIR_UP ), 
       calc_pos.x, calc_pos.y, calc_pos.z );
-    event = EVENT_ChangeMapPalaceWithCheck( gsys, fieldWork, &loc, partner );
+    event = EVENT_ChangeMapPalaceWithCheck( gsys, fieldWork, &loc, partner, palace_area );
   }
   return event;
 }
@@ -3144,11 +3144,12 @@ typedef struct PALACE_JUMP_tag
   GAMEDATA*      gameData;
   FIELDMAP_WORK* fieldmap;
   BOOL           partner;     ///<TRUE：協力者としてパレスへワープ
+  u8             palace_area;
 }PALACE_JUMP;
 
 //------------------------------------------------------------------
 //------------------------------------------------------------------
-static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc, BOOL partner)
+static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELDMAP_WORK* fieldmap, LOCATION *loc, BOOL partner, int palace_area)
 {
   PALACE_JUMP* work;
   GMEVENT* event;
@@ -3162,6 +3163,7 @@ static GMEVENT * EVENT_ChangeMapPalaceWithCheck( GAMESYS_WORK* gameSystem, FIELD
   work->gameData = GAMESYSTEM_GetGameData( gameSystem );
   work->fieldmap = fieldmap;
   work->partner = partner;
+  work->palace_area = palace_area;
 
   return event;
 }
@@ -3311,6 +3313,14 @@ static GMEVENT_RESULT EVENT_MapChangePalaceWithCheck( GMEVENT* event, int* seq, 
       break;
     }
     
+    {
+      INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
+      if(intcomm != NULL){
+        intcomm->intrude_status_mine.palace_area = work->palace_area;
+        GAMEDATA_SetIntrudePalaceArea(work->gameData, work->palace_area);
+      }
+    }
+
     {
       GMEVENT* call_event;
       GAMEDATA_SetIntrudeReverseArea(work->gameData, TRUE);

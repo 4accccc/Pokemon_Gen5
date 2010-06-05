@@ -742,7 +742,8 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
   area_occupy = _IntSub_GetArreaOccupy(intsub);
 
   //’ÊM‚ªØ‚ê‚Ä‚¢‚é or Šù‚ÉŒ‹‰ÊŽæ“¾Ï‚Ý‚Ìê‡‚ÍBGXV‚µ‚È‚¢
-  if(intcomm != NULL && MISSION_CheckRecvResult(&intcomm->mission) == FALSE){
+  if(intcomm != NULL 
+      && (MISSION_CheckRecvResult(&intcomm->mission) == FALSE || MISSION_CheckResultMissionMine(intcomm, &intcomm->mission) == FALSE)){
     update = TRUE;
   }
   else if(intcomm == NULL && GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE && GameCommSys_BootCheck(game_comm) != GAME_COMM_NO_INVASION && GameCommSys_GetLastStatus(game_comm) == GAME_COMM_LAST_STATUS_NULL){
