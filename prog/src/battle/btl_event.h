@@ -100,6 +100,7 @@ typedef enum {
   BTL_EVENT_WAZA_DMG_PROC2,         ///< タイプ計算後ダメージ補正ハンドラ
   BTL_EVENT_WAZA_DMG_PROC_END,      ///< ダメージ計算最終
   BTL_EVENT_WAZA_DMG_LAST,          ///< 最終ダメージ補正ハンドラ
+  BTL_EVENT_WAZA_DMG_REACTION_PREV, ///< ダメージ処理直前チェック
   BTL_EVENT_WAZA_DMG_REACTION,      ///< ダメージ処理１体ごとの反応
   BTL_EVENT_WAZA_DMG_REACTION_L2,   ///< ダメージ処理１体ごとの反応（２段階目）
   BTL_EVENT_WAZADMG_SIDE_AFTER,     ///< ダメージを対象全部に与えた後の追加処理（１回のみ）
@@ -269,6 +270,7 @@ typedef enum {
   BTL_EVAR_TYPEMATCH_FLAG,
   BTL_EVAR_CRITICAL_FLAG,
   BTL_EVAR_MIGAWARI_FLAG,
+  BTL_EVAR_RINPUNGUARD_FLG,
   BTL_EVAR_ITEMUSE_FLAG,
   BTL_EVAR_TRICK_FLAG,
   BTL_EVAR_FLAT_FLAG,

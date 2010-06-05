@@ -2344,8 +2344,10 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   }
 
   #ifdef PM_DEBUG
+  // L or R ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚Å‹­§“I‚É“¦‚°‚é
   if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) || ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) ){
-    return TRUE;
+    fForceNigeru = TRUE;
+    fSkipNigeruCalc = TRUE;
   }
   #endif
 
@@ -8250,9 +8252,12 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_CRITICAL_FLAG, fCritical );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_MIGAWARI_FLAG, fMigawari );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_RINPUNGUARD_FLG, FALSE );
 
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION_PREV );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_DMG_REACTION_L2 );
+
   BTL_EVENTVAR_Pop();
 }
 

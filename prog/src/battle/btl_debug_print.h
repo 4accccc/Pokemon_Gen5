@@ -266,12 +266,19 @@ typedef enum {
   DBGSTR_SVFL_HandExTokChangeEventCallEnd,
   DBGSTR_SVFL_MemberInEventBegin,
   DBGSTR_SVFL_MemberInEventEnd,
-
   DBGSTR_SVFS_RegTargetDouble,
   DBGSTR_SVFS_Result_RestCnt,
   DBGSTR_SVFS_LastPokeID,
   DBGSTR_SVFL_DeadPokeCount,
   DBGSTR_SVFL_HPRatio,
+
+  DBGSTR_CALC_EscCheckMyTeam,
+  DBGSTR_CALC_EscInfoAdd,
+  DBGSTR_CALC_EscCheckEnemy,
+  DBGSTR_CALC_EscResultBoth1,
+  DBGSTR_CALC_EscResultBoth2,
+  DBGSTR_CALC_EscResultLose,
+  DBGSTR_CALC_EscResultWin,
 
   DBGSTR_SC_PutCmd,
   DBGSTR_SC_ReservedPos,

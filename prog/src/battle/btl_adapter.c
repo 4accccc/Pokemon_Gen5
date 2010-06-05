@@ -123,7 +123,7 @@ BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, u8 adapterID, BOOL f
   if( AdappterTable[adapterID] == NULL )
   {
     wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_ADAPTER) );
-    BTL_N_Printf( DBGSTR_ADAPTER_Create, adapterID, fCommType);
+    BTL_N_PrintfEx( DBGSTR_ADAPTER_Create, adapterID, fCommType);
 
     wk->netHandle = netHandle;
     wk->myID = adapterID;
@@ -209,7 +209,7 @@ void BTL_ADAPTER_SetCmd( BTL_ADAPTER* wk, BtlAdapterCmd cmd, const void* sendDat
   wk->returnDataSize = 0;
   wk->returnDataPreparedFlag = FALSE;
 
-  BTL_N_Printf( PRINT_FLG, DBGSTR_ADAPTER_SEND_START, wk->myID, wk->processingCmd );
+  BTL_N_PrintfEx( PRINT_FLG, DBGSTR_ADAPTER_SEND_START, wk->myID, wk->processingCmd );
 }
 
 

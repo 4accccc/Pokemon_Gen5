@@ -73,7 +73,7 @@ BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
 {
   static const u16 table[] = {
     WAZANO_NULL, WAZANO_MIRAAKOOTO, WAZANO_KAUNTAA, WAZANO_METARUBAASUTO,
-    WAZANO_KIAIPANTI,
+    WAZANO_KIAIPANTI, WAZANO_SAKIDORI,
   };
 
   return checkTableElems( waza, table, NELEMS(table) );

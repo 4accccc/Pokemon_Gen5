@@ -106,7 +106,6 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_SelectAction_Fight:     return "「たたかう」を選んだ->選択画面へ\n";
   case DBGSTR_CLIENT_SelectChangePoke:       return " ポケモン選んだ ... idx=%d\n";
   case DBGSTR_CLIENT_SelectChangePokeCancel: return " ポケモン選ばなかった\n";
-
   case DBGSTR_CLIENT_ReturnSeqDone:       return "返信シーケンス終了\n";
   case DBGSTR_CLIENT_WazaLockInfo:        return "ワザロック：Client[%d] 前回使ったワザは %d, targetPos=%d\n";
   case DBGSTR_CLIENT_NoMorePuttablePoke:  return "myID=%d もう戦えるポケモンいない\n";
@@ -322,8 +321,6 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SVFL_HandExTokChangeEventCallEnd : return "とくせい書き換え後イベント終了\n";
   case DBGSTR_SVFL_MemberInEventBegin: return "メンバー入場イベント pokeID=%d 開始\n";
   case DBGSTR_SVFL_MemberInEventEnd :  return "メンバー入場イベント pokeID=%d 終了\n";
-
-
   case DBGSTR_SVFS_RegTargetDouble:     return "ダブルターゲット：対象範囲=%d, 攻撃ポケ=%d, 選択位置=%d\n";
   case DBGSTR_SVFS_Result_RestCnt:      return "残りポケ数  side0=%d, side1=%d\n";
   case DBGSTR_SVFS_LastPokeID:          return "最後まで生きてたポケID=%d\n";
@@ -332,6 +329,15 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_POSPOKE_Out:              return " poke[%d] out from pos[%d]\n";
   case DBGSTR_POSPOKE_In:               return " poke[%d] in to pos[%d]\n";
+
+  case DBGSTR_CALC_EscInfoAdd:       return "逃げ情報：ClientID=%d, 追加、トータル%d名\n";
+  case DBGSTR_CALC_EscCheckMyTeam:   return "ClientID=%d が逃げた ... 自分のチーム\n";
+  case DBGSTR_CALC_EscCheckEnemy:    return "ClientID=%d が逃げた ... 相手のチーム\n";
+  case DBGSTR_CALC_EscResultBoth1:   return "両チーム逃げ：野生か通常トレーナーなので自分が逃げたのと同じ\n";
+  case DBGSTR_CALC_EscResultBoth2:   return "両チーム逃げ：通信・サブウェイなら引き分け\n";
+  case DBGSTR_CALC_EscResultLose:    return "自分チームが逃げたから負け\n";
+  case DBGSTR_CALC_EscResultWin:     return "相手チームが逃げたから勝ち\n";
+
 
   case DBGSTR_SERVER_FlowResult:              return "サーバー処理結果=%d\n";
   case DBGSTR_SERVER_SendShooterChargeCmd:    return "シューターチャージコマンド発行\n";

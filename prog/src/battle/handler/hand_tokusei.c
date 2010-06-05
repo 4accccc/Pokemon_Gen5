@@ -2646,12 +2646,21 @@ static void handler_Rinpun_Shrink( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
+// ダメージ反応直前ハンドラ
+static void handler_Rinpun_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_RINPUNGUARD_FLG, TRUE );
+  }
+}
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Rinpun( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ADD_SICK,       handler_Rinpun_Sick  }, // 追加効果（状態異常）チェックハンドラ
-    { BTL_EVENT_ADD_RANK_TARGET,handler_Rinpun_Rank  }, // 追加効果（ランク効果）チェックハンドラ
-    { BTL_EVENT_SHRINK_CHECK,   handler_Rinpun_Shrink },  // ひるみチェックハンドラ
+    { BTL_EVENT_ADD_SICK,               handler_Rinpun_Sick   }, // 追加効果（状態異常）チェックハンドラ
+    { BTL_EVENT_ADD_RANK_TARGET,        handler_Rinpun_Rank   }, // 追加効果（ランク効果）チェックハンドラ
+    { BTL_EVENT_SHRINK_CHECK,           handler_Rinpun_Shrink }, // ひるみチェックハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION_PREV, handler_Rinpun_Guard  }, // ダメージ反応直前
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -6038,6 +6047,7 @@ static void handler_Dokusyu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
   // 自分が攻撃側で
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_RINPUNGUARD_FLG) == FALSE)
   ){
     // 接触ワザなら
     WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );

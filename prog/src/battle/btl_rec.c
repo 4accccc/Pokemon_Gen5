@@ -463,7 +463,6 @@ void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_
 
       recTool->buffer[ recTool->writePtr ] = MakeClientActionTag( clientID, numAction );
       GFL_STD_MemCopy( action, &recTool->buffer[recTool->writePtr+1], sizeof(BTL_ACTION_PARAM)*numAction );
-      TAYA_Printf(" MakeClientActionTag : clientID=%d, %02x\n", clientID, recTool->buffer[ recTool->writePtr ] );
       recTool->writePtr = endPtr;
     }
     else
