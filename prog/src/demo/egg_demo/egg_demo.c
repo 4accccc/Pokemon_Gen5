@@ -180,6 +180,7 @@ typedef enum
   TRUNK_STEP_FADE_IN,
   TRUNK_STEP_BELT_OPEN,
   TRUNK_STEP_SOUND_INTRO,
+  TRUNK_STEP_SOUND_HATCH_START_WAIT,
   TRUNK_STEP_DEMO_EGG,
   TRUNK_STEP_DEMO_HATCH,
   TRUNK_STEP_DEMO_READY,
@@ -205,6 +206,7 @@ typedef enum
   SOUND_STEP_WAIT,
   SOUND_STEP_FIELD_FADE_OUT,
   SOUND_STEP_INTRO,
+  SOUND_STEP_HATCH_LOAD,
   SOUND_STEP_HATCH,
   SOUND_STEP_CONGRATULATE_LOAD,
   SOUND_STEP_CONGRATULATE,
@@ -318,6 +320,7 @@ static BOOL Egg_Demo_SoundCheckFadeOutField( EGG_DEMO_PARAM* param, EGG_DEMO_WOR
 static void Egg_Demo_SoundPlayIntro( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static BOOL Egg_Demo_SoundCheckPlayIntro( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
+static BOOL Egg_Demo_SoundCheckPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundPushHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundPopHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
 static void Egg_Demo_SoundPlayCongratulate( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work );
@@ -564,6 +567,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
     {
       if( !Egg_Demo_SoundCheckPlayIntro( param, work ) )
       {
+#if 0
         // 次へ
         work->trunk_step = TRUNK_STEP_DEMO_EGG;
         
@@ -571,6 +575,24 @@ static GFL_PROC_RESULT Egg_Demo_ProcMain( GFL_PROC* proc, int* seq, void* pwk, v
         EGG_DEMO_VIEW_Start( work->view );
         
         Egg_Demo_SoundPlayHatch( param, work );
+#else
+        // 次へ
+        work->trunk_step = TRUNK_STEP_SOUND_HATCH_START_WAIT;
+
+        Egg_Demo_SoundPlayHatch( param, work );
+#endif
+      }
+    }
+    break;
+  case TRUNK_STEP_SOUND_HATCH_START_WAIT:
+    {
+      if( Egg_Demo_SoundCheckPlayHatch( param, work ) )
+      {
+        // 次へ
+        work->trunk_step = TRUNK_STEP_DEMO_EGG;
+
+        // タマゴ孵化デモの演出
+        EGG_DEMO_VIEW_Start( work->view );
       }
     }
     break;
@@ -1116,6 +1138,16 @@ static void Egg_Demo_SoundMain( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
       }
     }
     break;
+  case SOUND_STEP_HATCH_LOAD:
+    {
+      // BGMの分割ロードを利用してみる
+      BOOL play_start = PMSND_PlayBGMdiv( SEQ_BGM_KOUKAN, &(work->sound_div_seq), FALSE );
+      if( play_start )
+      {
+        work->sound_step = SOUND_STEP_HATCH;
+      }
+    }
+    break;
   case SOUND_STEP_HATCH:
     {
     }
@@ -1167,8 +1199,19 @@ static BOOL Egg_Demo_SoundCheckPlayIntro( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* 
 }
 static void Egg_Demo_SoundPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
+/*
+BGMの分割ロードを利用してみることにしたのでコメントアウト
   PMSND_PlayBGM(SEQ_BGM_KOUKAN);
   work->sound_step = SOUND_STEP_HATCH;
+*/
+  // BGMの分割ロードを利用してみる
+  work->sound_div_seq = 0;
+  PMSND_PlayBGMdiv( SEQ_BGM_KOUKAN, &(work->sound_div_seq), TRUE );
+  work->sound_step = SOUND_STEP_HATCH_LOAD;
+}
+static BOOL Egg_Demo_SoundCheckPlayHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
+{
+  return ( work->sound_step == SOUND_STEP_HATCH );
 }
 static void Egg_Demo_SoundPushHatch( EGG_DEMO_PARAM* param, EGG_DEMO_WORK* work )
 {
