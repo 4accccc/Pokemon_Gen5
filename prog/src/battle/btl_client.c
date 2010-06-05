@@ -314,7 +314,7 @@ static BOOL SubProc_UI_ConfirmIrekae( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq );
-static BtlResult checkResult( BTL_CLIENT* wk );
+static BtlResult expandServerResult( BTL_CLIENT* wk );
 static inline BOOL IsEnemyClientDouble( BTL_CLIENT* wk );
 static inline void TrainerGraphicIn( BTL_CLIENT* wk, int client_idx );
 static inline void MsgWinningTrainerStart( BTL_CLIENT* wk );
@@ -4577,8 +4577,11 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
       u8  fMulti;
       u8 clientID = BTL_MAIN_GetEnemyClientID( wk->mainModule, 0 );
 
-      result = checkResult( wk );
+      result = expandServerResult( wk );
       fMulti = BTL_MAIN_IsMultiMode( wk->mainModule );
+
+      // 自分が非サーバである場合のため、Mainにサーバ計算した勝敗結果を渡しておく
+      BTL_MAIN_NotifyBattleResult( wk->mainModule, result );
 
       switch( result ){
       case BTL_RESULT_WIN:
@@ -4634,7 +4637,10 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
-static BtlResult checkResult( BTL_CLIENT* wk )
+/**
+ *  サーバが送ってきた勝敗パラメータを解釈->自分が勝ったか負けたか判定
+ */
+static BtlResult expandServerResult( BTL_CLIENT* wk )
 {
   const BTL_RESULT_CONTEXT* resultContext;
 
@@ -4745,7 +4751,7 @@ static BOOL SubProc_UI_ExitForNPC( BTL_CLIENT* wk, int* seq )
   switch( *seq ){
   case SEQ_INIT:
     {
-      BtlResult resultCode = checkResult( wk );
+      BtlResult resultCode = expandServerResult( wk );
 
       if( resultCode == BTL_RESULT_WIN )
       {
@@ -4921,7 +4927,11 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   switch( *seq ){
   case SEQ_INIT:
     {
-      BtlResult result = checkResult( wk );
+      BtlResult result = expandServerResult( wk );
+
+      // サブウェイはAIマルチなどもあり得るので
+      // 自分が非サーバである場合のため、Mainにサーバ計算した勝敗結果を渡しておく
+      BTL_MAIN_NotifyBattleResult( wk->mainModule, result );
 
       if( result == BTL_RESULT_WIN )
       {
@@ -4961,7 +4971,7 @@ static BOOL SubProc_UI_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   case SEQ_WAIT_TRAINER_OUT:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-      BtlResult result = checkResult( wk );
+      BtlResult result = expandServerResult( wk );
 
       TrainerGraphicIn( wk, 1 );
       setupSubwayTrainerMsg( wk, result, 1 );

@@ -1145,7 +1145,12 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
         BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
         return TRUE;
       }
-      setMainProc( server, ServerMain_ExitBattle );
+
+      {
+        BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
+        BTL_MAIN_NotifyBattleResult( server->mainModule, result );
+        setMainProc( server, ServerMain_ExitBattle );
+      }
     }
     break;
   }

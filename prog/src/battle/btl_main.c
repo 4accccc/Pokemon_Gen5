@@ -299,7 +299,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fBGMFadeOutDisable = FALSE;
       wk->fMoneyDblUp = FALSE;
       wk->MultiAIClientNum = 0;
-      wk->serverResult = BTL_RESULT_DRAW;
+      wk->serverResult = BTL_RESULT_MAX;  // 無効コードとして
 
       Kentei_ClearField( wk->setupParam );
 
@@ -3582,7 +3582,9 @@ void BTL_MAIN_NotifyCapturedPokePos( BTL_MAIN_MODULE* wk, BtlPokePos pos )
 //=============================================================================================
 void BTL_MAIN_NotifyBattleResult( BTL_MAIN_MODULE* wk, BtlResult result )
 {
-  wk->serverResult = result;
+  if( wk->serverResult == BTL_RESULT_MAX ){
+    wk->serverResult = result;
+  }
 }
 
 //=============================================================================================
@@ -5317,6 +5319,12 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
   }
   else
   {
+    if( wk->serverResult == BTL_RESULT_MAX )
+    {
+      // サーバ計算無効のままここに来ることは本来は有り得ない
+      GF_ASSERT(0);
+      wk->serverResult = BTL_RESULT_WIN;
+    }
     result = wk->serverResult;
     BTL_N_Printf( DBGSTR_MAIN_Result_ServerCalc, result );
   }
