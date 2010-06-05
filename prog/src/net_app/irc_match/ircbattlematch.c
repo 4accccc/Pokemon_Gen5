@@ -1683,6 +1683,11 @@ static void _firstConnectMessage(IRC_BATTLE_MATCH* pWork)
       int aMsgBuff[]={IRCBTL_STR_39};
       _msgWindowCreate(aMsgBuff, pWork);
     }
+    else if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_SUBWAY)  //20100605 add Saito
+    {
+      int aMsgBuff[]={IRCBTL_STR_47};
+      _msgWindowCreate(aMsgBuff, pWork);
+    }
     else
     {
       int aMsgBuff[]={IRCBTL_STR_09};
