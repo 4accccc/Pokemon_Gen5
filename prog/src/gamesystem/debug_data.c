@@ -17,6 +17,7 @@
 
 
 #include "poke_tool/monsno_def.h"
+#include "poke_tool/poke_memo.h"
 #include "item/item.h"  //デバッグアイテム生成用
 #include "waza_tool/wazano_def.h"  //デバッグポケ生成用
 #include "savedata/zukan_savedata.h"		// 図鑑捕獲フラグ設定
@@ -39,7 +40,7 @@
 //=====================================================================
 // デバック用　手持ちポケモン　追加処理 用途別関数
 //=====================================================================
-static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
+static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus , HEAPID heapId );
 // ---その他自由に定義してください。
 static void DEBUG_MyPokeAdd_Tamada( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
 static void DEBUG_MyPokeAdd_Matsuda( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus );
@@ -80,7 +81,7 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
 
   // デフォルトの設定。
   // 手持ちが全部ばらばらで、フィールド技を持っている状態
-  DEBUG_MyPokeAdd_Field( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus );
+  DEBUG_MyPokeAdd_Field( party, pp, GAMEDATA_GetZukanSave(gamedata), myStatus , heapID );
 #endif
 
 	GFL_HEAP_FreeMemory(pp);
@@ -92,12 +93,11 @@ static void DEBUG_MyPokeAdd(GAMEDATA * gamedata, HEAPID heapID)
  * @brief   フィールド用（デフォ）
  */
 //--------------------------------------------------------------
-static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus )
+static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SAVEDATA * zukan, MYSTATUS* mystatus , HEAPID heapId )
 {
   u64 personal_rnd;
 	PP_Setup(pp, MONSNO_629, 99, MyStatus_GetID( mystatus ));
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
   PP_SetWazaPos( pp , WAZANO_DORAGONKUROO , 0 );
   PP_SetWazaPos( pp , WAZANO_IAIGIRI , 1 );
   PP_SetWazaPos( pp , WAZANO_KAIRIKI , 2 );
@@ -107,8 +107,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 
   personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_557, 0, PTL_SEX_FEMALE );
 	PP_SetupEx(pp, MONSNO_557, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
   PP_SetWazaPos( pp , WAZANO_ANAWOHORU , 0 );
   PP_SetWazaPos( pp , WAZANO_NAMINORI , 1 );
   PP_SetWazaPos( pp , WAZANO_DAIBINGU , 2 );
@@ -118,8 +117,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 
   personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_620, 0, PTL_SEX_MALE );
 	PP_SetupEx(pp, MONSNO_620, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
   PP_SetWazaPos( pp , WAZANO_SAIKOKINESISU , 0 );
   PP_SetWazaPos( pp , WAZANO_AMAGOI , 1 );
   PP_SetWazaPos( pp , WAZANO_HURASSYU, 2 );
@@ -129,8 +127,7 @@ static void DEBUG_MyPokeAdd_Field( POKEPARTY* party, POKEMON_PARAM* pp, ZUKAN_SA
 
   personal_rnd = POKETOOL_CalcPersonalRand( MONSNO_581, 0, PTL_SEX_FEMALE );
 	PP_SetupEx(pp, MONSNO_581, 99, MyStatus_GetID( mystatus ), PTL_SETUP_POW_AUTO, personal_rnd );
-  PP_Put( pp , ID_PARA_oyaname_raw , (u32)MyStatus_GetMyName( mystatus ) );
-  PP_Put( pp , ID_PARA_oyasex , MyStatus_GetMySex( mystatus ) );
+  POKE_MEMO_SetTrainerMemoPP( pp , POKE_MEMO_SET_CAPTURE , mystatus , MAPNAME_T1KANOKO , heapId );
   PP_SetWazaPos( pp , WAZANO_GIGADOREIN , 0 );
   PP_SetWazaPos( pp , WAZANO_IKARINOKONA , 1 );
   PP_SetWazaPos( pp , WAZANO_KINOKONOHOUSI , 2 );
