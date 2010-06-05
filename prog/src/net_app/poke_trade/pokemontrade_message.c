@@ -203,7 +203,7 @@ void POKETRADE_MESSAGE_WindowOpenXY(POKEMON_TRADE_WORK* pWork,BOOL bFast,int x,i
 
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_SUB_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
-  pWork->mesWin = GFL_BMPWIN_Create(GFL_BG_FRAME2_S , x , y, xm ,ym ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_B );
+  pWork->mesWin = GFL_BMPWIN_Create(GFL_BG_FRAME2_S , x , y, xm ,ym ,  _BUTTON_MSG_PAL , GFL_BMP_CHRAREA_GET_F );
   pwin = pWork->mesWin;
 
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);

@@ -3661,10 +3661,9 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
   }
   IRC_POKETRADE_CreatePokeIconResource(pWork);
 
-  IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
-
   IRC_POKETRADE_GraphicInitSubDisp(pWork);  //BGを
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
+  IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
 
   GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
