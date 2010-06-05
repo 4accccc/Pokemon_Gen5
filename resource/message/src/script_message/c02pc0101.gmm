@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-19T14:30:23"/>
+	<create user="matsumiya" host="W00224" date="2010-06-05T16:17:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="2012" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1307" top="109" right="2012" bottom="737" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -298,13 +298,15 @@
 少女２活発</attribute>
 		<language name="JPN" width="256">ねえねえ　トレーナーさん
 タブンネって　ポケモン　しってる？▼
-３ばんどうろの　ゆれた　くさむらから
+あるいているとき　ときどき　みつかる
+ゆれる　くさむら　から▽
 とびでてくる　ポケモン　なんだけどね▼
 たっくさん　けいけんちが　もらえるの
 なんだか　やさしい　ポケモンよね！</language>
 		<language name="JPN_KANJI" width="256">ねえねえ　トレーナーさん
 タブンネって　ポケモン　知ってる？▼
-３番道路の　揺れた　草むらから
+歩いているとき　ときどき　みつかる
+揺れる　草むら　から▽
 飛びでてくる　ポケモン　なんだけどね▼
 たっくさん　経験値が　もらえるの
 なんだか　優しい　ポケモンよね！</language>
