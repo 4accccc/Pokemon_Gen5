@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T12:44:49"/>
+	<create user="matsumiya" host="W00224" date="2010-06-05T15:33:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,14 +362,14 @@
 あなたのこと……▽
 ふつう　だと　おもってるのね▼
 あなたを　もっと　すきになれば
-いい　ものを　さしあげますわ▼</language>
+いい　ものを　さしあげますわ</language>
 		<language name="JPN_KANJI" width="256">あら……？▼
 おやまあ！▼
 あなたの　[1:01:ポケモン種族名:0]さん　たら
 あなたのこと……▽
 普通　だと　思ってるのね▼
 あなたを　もっと　好きになれば
-いい　ものを　差しあげますわ▼</language>
+いい　ものを　差しあげますわ</language>
 	</row>
 
 	<flowchart-group-list>
