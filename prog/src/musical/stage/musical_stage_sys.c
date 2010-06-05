@@ -68,13 +68,11 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 {
   int ePos;
   STAGE_LOCAL_WORK *work;
-/*
   ARI_TPrintf("FreeHeap:[%x][%x]\n", 
       GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
       GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
-*/
   //ストリーミング配信分削ってテスト
-  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0x90000 );
+  GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_MUSICAL_STAGE, 0xA0000 );
 
   work = GFL_PROC_AllocWork( proc, sizeof(STAGE_LOCAL_WORK), HEAPID_MUSICAL_STAGE );
   if( pwk == NULL )
@@ -226,6 +224,22 @@ void MUSICAL_STAGE_SetData_Player( STAGE_INIT_WORK *initWork , const u8 idx , MU
 
   initWork->musPoke[idx] = musPara;
   initWork->musPoke[idx]->charaType = MUS_CHARA_PLAYER;
+
+  initWork->musPoke[idx]->mcssParam.monsno = 545;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
 }
 
 //--------------------------------------------------------------
@@ -240,6 +254,22 @@ void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 p
   initWork->musPoke[idx] = MUSICAL_SYSTEM_InitMusPokeParam( pokeID , sex , 0 , 0 , perRand , heapId );
   initWork->musPoke[idx]->charaType = MUS_CHARA_NPC;
   initWork->musPoke[idx]->npcAppealTime = npcAppealTime;
+  
+  initWork->musPoke[idx]->mcssParam.monsno = 545;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
 }
 
 //--------------------------------------------------------------
@@ -252,6 +282,22 @@ void MUSICAL_STAGE_SetData_Comm( STAGE_INIT_WORK *initWork , const u8 idx , MUSI
 
   initWork->musPoke[idx] = musPara;
   initWork->musPoke[idx]->charaType = MUS_CHARA_COMM;
+  
+  initWork->musPoke[idx]->mcssParam.monsno = 545;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
+  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
 }
 
 //--------------------------------------------------------------
