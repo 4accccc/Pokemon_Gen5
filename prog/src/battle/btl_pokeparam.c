@@ -1149,6 +1149,7 @@ static void splitTypeCore( const BTL_POKEPARAM* bpp, PokeType* type1, PokeType* 
 {
   BOOL fHaneYasume = BPP_CheckSick( bpp, WAZASICK_HANEYASUME );
 
+  // はねやすめで飛行タイプを無効にする
   if( (bpp->baseParam.type1 == POKETYPE_HIKOU) && (fHaneYasume) ){
     *type1 = POKETYPE_NULL;
   }else{
@@ -1159,6 +1160,19 @@ static void splitTypeCore( const BTL_POKEPARAM* bpp, PokeType* type1, PokeType* 
     *type2 = POKETYPE_NULL;
   }else{
     *type2 = bpp->baseParam.type2;
+  }
+
+  // どちらか無効なら純粋タイプになる／元々純粋タイプならノーマルタイプになる
+  if( (*type1) == POKETYPE_NULL )
+  {
+    if( (*type2) == POKETYPE_NULL ){
+      *type2 = POKETYPE_NORMAL;
+    }
+    *type1 = *type2;
+  }
+  else if( (*type2) == POKETYPE_NULL )
+  {
+    *type2 = (*type1);
   }
 }
 

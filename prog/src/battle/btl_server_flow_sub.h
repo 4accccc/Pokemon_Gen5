@@ -39,3 +39,13 @@ extern TrItemResult  BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPA
  */
 extern BtlResult BTL_SVFSUB_CheckBattleResult( BTL_SVFLOW_WORK* wk );
 
+
+/*====================================================================================================*/
+/*                                                                                                    */
+/*  ëäê´ãLò^ÉèÅ[ÉN                                                                                    */
+/*                                                                                                    */
+/*====================================================================================================*/
+extern void BTL_DMGAFF_REC_Init( BTL_DMGAFF_REC* rec );
+extern void BTL_DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff );
+extern BtlTypeAff BTL_DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID );
+

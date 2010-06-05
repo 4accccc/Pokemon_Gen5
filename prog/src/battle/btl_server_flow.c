@@ -56,8 +56,8 @@ static BOOL CheckPlayerSideAlive( BTL_SVFLOW_WORK* wk );
 static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk );
 static BOOL reqChangePokeForServer( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec );
 static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk );
-static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility );
 static inline u8 ActPri_GetWazaPri( u32 priValue );
 static inline u8 ActPri_GetSpPri( u32 priValue );
@@ -150,9 +150,6 @@ static void scEvent_WazaExeEnd_Common( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID wa
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target );
 static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* targets, BTL_DMGAFF_REC* affRec );
-static void DMGAFF_REC_Init( BTL_DMGAFF_REC* rec );
-static void DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff );
-static BtlTypeAff DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID );
 static void flowsub_checkNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scproc_checkNoEffect_sub( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, BtlEventType eventID );
@@ -438,7 +435,6 @@ static void scproc_ViewEffect( BTL_SVFLOW_WORK* wk, u16 effectNo, BtlPokePos pos
 static void scEvent_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType waza_type, PokeType poke_type );
-static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeTypePair );
 static BOOL scEvent_DecrementPP_Reaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, u8 wazaIdx );
 static BOOL scEvent_HitCheckParam( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, HITCHECK_PARAM* param );
 static u16 scEvent_getWazaPower( BTL_SVFLOW_WORK* wk,
@@ -1270,65 +1266,6 @@ static void scproc_BeforeFirstFight( BTL_SVFLOW_WORK* wk )
 //  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
-//----------------------------------------------------------------------------------
-/**
- * ポケモン単体に飛行フラグのチェック
- *
- * @param   wk
- * @param   bpp
- */
-//----------------------------------------------------------------------------------
-static BOOL scproc_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  // じゅうりょくが効いていたら誰も浮けないのでチェックしない
-  if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
-  {
-    if( scEvent_CheckFlying(wk, bpp) ){
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-
-//----------------------------------------------------------------------------------
-/**
- * [Event] 飛行フラグ有効チェック
- *
- * @param   wk
- * @param   bpp
- *
- * @retval  BOOL    有効であればTRUE
- */
-//----------------------------------------------------------------------------------
-static BOOL scEvent_CheckFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  // じゅうりょくが効いていたら誰も浮けない
-  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) ){
-    return FALSE;
-  }
-  else
-  {
-    u8 flyFlag = BPP_IsMatchType( bpp, POKETYPE_HIKOU );
-    u8 failFlag = FALSE;
-
-    BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, flyFlag );
-      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_FLYING );
-      BTL_SICKEVENT_CheckFlying( wk, bpp );
-      flyFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
-      failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
-    BTL_EVENTVAR_Pop();
-
-    if( failFlag ){
-      return FALSE;
-    }
-    return flyFlag;
-  }
-}
-
 static inline u32 ActPri_Make( u8 actPri, u8 wazaPri, u8 spPri, u16 agility )
 {
   /*
@@ -3915,13 +3852,13 @@ static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
   BTL_POKEPARAM* bpp;
   BtlTypeAff aff;
 
-  DMGAFF_REC_Init( affRec );
+  BTL_DMGAFF_REC_Init( affRec );
 
   BTL_POKESET_SeekStart( targets );
   while( (bpp = BTL_POKESET_SeekNext(targets) ) != NULL )
   {
     aff = scProc_checkWazaDamageAffinity( wk, attacker, bpp, wazaParam, TRUE );
-    DMGAFF_REC_Add( affRec, BPP_GetID(bpp), aff );
+    BTL_DMGAFF_REC_Add( affRec, BPP_GetID(bpp), aff );
     if( aff == BTL_TYPEAFF_0 )
     {
       BTL_POKESET_Remove( targets, bpp );
@@ -3929,51 +3866,6 @@ static void flowsub_checkWazaAffineNoEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZ
     }
   }
 }
-
-//----------------------------------------------------------------------------------
-/**
- * 相性記録ワーク：初期化
- *
- * @param   rec
- */
-//----------------------------------------------------------------------------------
-static void DMGAFF_REC_Init( BTL_DMGAFF_REC* rec )
-{
-  u32 i;
-  for(i=0; i<NELEMS(rec->aff); ++i){
-    rec->aff[i] = BTL_TYPEAFF_MAX;
-  }
-}
-//----------------------------------------------------------------------------------
-/**
- * 相性記録ワーク：１体分追加
- *
- * @param   rec
- * @param   pokeID
- * @param   aff
- */
-//----------------------------------------------------------------------------------
-static void DMGAFF_REC_Add( BTL_DMGAFF_REC* rec, u8 pokeID, BtlTypeAff aff )
-{
-  GF_ASSERT(pokeID < BTL_POKEID_MAX);
-  rec->aff[ pokeID ] = aff;
-}
-//----------------------------------------------------------------------------------
-/**
- * 相性記録ワーク：１体分取得
- *
- * @param   rec
- * @param   pokeID
- */
-//----------------------------------------------------------------------------------
-static BtlTypeAff DMGAFF_REC_Get( const BTL_DMGAFF_REC* rec, u8 pokeID )
-{
-  GF_ASSERT(pokeID < BTL_POKEID_MAX);
-  GF_ASSERT(rec->aff[pokeID] != BTL_TYPEAFF_MAX);
-
-  return rec->aff[ pokeID ];
-}
-
 //--------------------------------------------------------------------------
 /**
  * ワザ発動前の、対象別無効化チェック
@@ -5179,7 +5071,7 @@ static void BTL_CALCDAMAGE_Set( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
   {
     dmgRec->record[c].pokeID = BPP_GetID( bpp );
     dmgRec->record[c].fCritical = scEvent_CheckCritical( wk, attacker, bpp, wazaParam->wazaID );
-    dmgRec->record[c].affine = DMGAFF_REC_Get( affRec, dmgRec->record[c].pokeID );
+    dmgRec->record[c].affine = BTL_DMGAFF_REC_Get( affRec, dmgRec->record[c].pokeID );
     dmgRec->record[c].fFixDamage = scEvent_CalcDamage( wk, attacker, bpp, wazaParam, dmgRec->record[c].affine,
         dmg_ratio, dmgRec->record[c].fCritical, FALSE, &damage );
     dmgRec->record[c].damage = damage;
@@ -7579,7 +7471,7 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
     }
 
     // ワザ相性による無効化
-    aff = DMGAFF_REC_Get( &wk->dmgAffRec, targetPokeID );
+    aff = BTL_DMGAFF_REC_Get( &wk->dmgAffRec, targetPokeID );
     if( aff == BTL_TYPEAFF_0 ){
       scput_WazaNoEffectIchigeki( wk, target );
       continue;
@@ -10894,6 +10786,9 @@ static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp,
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BOOL fNoEffectMsg )
 {
+  BOOL fFloating = FALSE;
+
+  // 無属性の攻撃（わるあがき）は、常に等倍でヒット
   if( wazaParam->wazaType == POKETYPE_NULL ){
     return BTL_TYPEAFF_100;
   }
@@ -10901,7 +10796,8 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   // ふゆう状態のポケモンに地面ダメージワザは効果がない
   if( wazaParam->wazaType == POKETYPE_JIMEN )
   {
-    if( scproc_CheckFlying(wk, defender) )
+    fFloating = scproc_CheckFloating(wk, defender);
+    if( fFloating )
     {
       if( fNoEffectMsg ){
         scproc_WazaNoEffectByFlying( wk, defender );
@@ -10923,12 +10819,77 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
       affinity = BTL_CALC_TypeAffMul( affinity, aff2 );
     }
 
-    if( fNoEffectMsg && (affinity == BTL_TYPEAFF_0) )
+    if( affinity == BTL_TYPEAFF_0 )
     {
-      scput_WazaNoEffect( wk, defender );
-    }
+      // 地面ワザで相性無効の場合 = 飛行タイプなので、ふゆう状態にないなら等倍ヒット
+      if( (wazaParam->wazaType == POKETYPE_JIMEN) && !(fFloating) )
+      {
+        TAYA_Printf("地面で相性無効だけど浮いてないから当たるよ\n");
+        return BTL_TYPEAFF_100;
+      }
 
+      if( fNoEffectMsg && (affinity == BTL_TYPEAFF_0) )
+      {
+        scput_WazaNoEffect( wk, defender );
+      }
+    }
     return affinity;
+  }
+}
+//----------------------------------------------------------------------------------
+/**
+ * ポケモン単体ふゆう状態のチェック
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  // じゅうりょくが効いていたら誰も浮けないのでチェックしない
+  if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
+  {
+    if( scEvent_CheckFloating(wk, bpp) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ふゆう状態チェック
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  BOOL    有効であればTRUE
+ */
+//----------------------------------------------------------------------------------
+static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  // じゅうりょくが効いていたら誰も浮けない
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) ){
+    return FALSE;
+  }
+  else
+  {
+    u8 floatFlag = BPP_IsMatchType( bpp, POKETYPE_HIKOU );
+    u8 failFlag = FALSE;
+
+    BTL_EVENTVAR_Push();
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, floatFlag );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
+      BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_FLYING );
+      BTL_SICKEVENT_CheckFlying( wk, bpp );
+      floatFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+      failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
+    BTL_EVENTVAR_Pop();
+
+    if( failFlag ){
+      return FALSE;
+    }
+    return floatFlag;
   }
 }
 //----------------------------------------------------------------------------------
@@ -10950,6 +10911,69 @@ static void scproc_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARA
 
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ふゆう状態による地面ワザ無効化反応
+ *
+ * @param   wk
+ * @param   bpp
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_NOEFF_BY_FLYING );
+  BTL_EVENTVAR_Pop();
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ワザ相性計算
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   defender
+ * @param   waza_type
+ * @param   poke_type
+ *
+ * @retval  BtlTypeAff
+ */
+//----------------------------------------------------------------------------------
+static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
+  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType waza_type, PokeType poke_type )
+{
+  BOOL  flatFlag, flatMasterFlag;
+  BtlTypeAff affinity;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKE_TYPE, poke_type );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, waza_type );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLAT_FLAG, FALSE );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLATMASTER_FLAG, FALSE );
+
+    BTL_SICKEVENT_CheckNotEffectByType( wk, defender );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_AFFINITY );
+
+    flatFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
+    flatMasterFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FLATMASTER_FLAG );
+  BTL_EVENTVAR_Pop();
+
+  if( flatMasterFlag ){
+    return BTL_TYPEAFF_100;
+  }
+
+  affinity = BTL_CALC_TypeAff( waza_type, poke_type );
+  if( (affinity == BTL_TYPEAFF_0) && (flatFlag) ){
+    return BTL_TYPEAFF_100;
+  }
+
+  return affinity;
+}
+
+
 //----------------------------------------------------------------------------------
 /**
  * エフェクト生成
@@ -11016,93 +11040,6 @@ static void scproc_ViewEffect( BTL_SVFLOW_WORK* wk, u16 effectNo, BtlPokePos pos
       break;
     }
   }
-}
-
-
-
-//----------------------------------------------------------------------------------
-/**
- * [Event] ふゆう状態による地面ワザ無効化
- *
- * @param   wk
- * @param   bpp
- */
-//----------------------------------------------------------------------------------
-static void scEvent_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_NOEFF_BY_FLYING );
-  BTL_EVENTVAR_Pop();
-}
-
-//----------------------------------------------------------------------------------
-/**
- * [Event] ワザ相性計算
- *
- * @param   wk
- * @param   attacker
- * @param   defender
- * @param   waza_type
- * @param   poke_type
- *
- * @retval  BtlTypeAff
- */
-//----------------------------------------------------------------------------------
-static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
-  const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, PokeType waza_type, PokeType poke_type )
-{
-  BOOL  flatFlag, flatMasterFlag;
-  BtlTypeAff affinity;
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKE_TYPE, poke_type );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, waza_type );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLAT_FLAG, FALSE );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FLATMASTER_FLAG, FALSE );
-
-    BTL_SICKEVENT_CheckNotEffectByType( wk, defender );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_CHECK_AFFINITY );
-
-    flatFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FLAT_FLAG );
-    flatMasterFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FLATMASTER_FLAG );
-  BTL_EVENTVAR_Pop();
-
-  if( flatMasterFlag ){
-    return BTL_TYPEAFF_100;
-  }
-
-  affinity = BTL_CALC_TypeAff( waza_type, poke_type );
-  if( (affinity == BTL_TYPEAFF_0) && (flatFlag) ){
-    return BTL_TYPEAFF_100;
-  }
-
-  return affinity;
-}
-//----------------------------------------------------------------------------------
-/**
- * ダメージ計算用の相性取得
- *
- * @param   wazaType
- * @param   pokeType
- *
- * @retval  BtlTypeAff
- */
-//----------------------------------------------------------------------------------
-static BtlTypeAff CalcTypeAffForDamage( PokeType wazaType, PokeTypePair pokeTypePair )
-{
-  // ダメージ計算まで来ているなら0ということは無く、１倍で当たる状態のはず
-  PokeType  type1 = PokeTypePair_GetType1( pokeTypePair );
-  BtlTypeAff aff = BTL_CALC_TypeAff( wazaType, type1 );
-  if( !PokeTypePair_IsPure(pokeTypePair) )
-  {
-    PokeType  type2 = PokeTypePair_GetType2( pokeTypePair );
-    BtlTypeAff aff2 = BTL_CALC_TypeAff( wazaType, type2 );
-    aff = BTL_CALC_TypeAffMul( aff, aff2 );
-  }
-  return aff;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -12579,7 +12516,7 @@ u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp_t
 BOOL BTL_SVFTOOL_IsFlyingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-  return scproc_CheckFlying( wk, bpp );
+  return scproc_CheckFloating( wk, bpp );
 }
 //--------------------------------------------------------------------------------------
 /**
