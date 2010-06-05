@@ -263,8 +263,8 @@ EVENT_START ev_r08r0101_oldman1_01
       //「技をもう一度おぼえる？」
       _BALLOONWIN_OBJMSG( msg_r08r0101_guide_12 , R08R0101_OLDMAN1_01 )
       _YES_NO_WIN( SCWK_ANSWER )
-      _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN
+        _BALLOONWIN_CLOSE()
         $last_msg_flg = FALSE
         //自機移動
         _CALL player_talk_move
