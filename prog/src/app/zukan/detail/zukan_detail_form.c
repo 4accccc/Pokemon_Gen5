@@ -1009,11 +1009,14 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
     {
       *seq = SEQ_FADE_CHANGE_BEFORE;
 
+/*
+ここで3Dに切り替えるのはまだ早い。ここより前の画面の3Dがワイヤーフレームとして表示されてしまうので。
       // 切り替え
       {
         // グラフィックスモード設定
         GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D );
       }
+*/
 
       // BG
       {
@@ -1042,6 +1045,12 @@ static ZKNDTL_PROC_RESULT Zukan_Detail_Form_ProcMain( ZKNDTL_PROC* proc, int* se
 
         // この画面ではタッチバーのプライオリティを3D面のプライオリティより下げておく
         ZUKAN_DETAIL_TOUCHBAR_SetBgPriority( touchbar, BG_FRAME_PRI_M_TOUCHBAR );
+      }
+
+      // 切り替え
+      {
+        // グラフィックスモード設定
+        GX_SetGraphicsMode( GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BG0_AS_3D );
       }
 
       // 3D
