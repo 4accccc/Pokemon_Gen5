@@ -911,9 +911,6 @@ BOOL ZONEDATA_IsWfbcCalcMoodSkip(u16 zone_id)
     ZONE_ID_WC10,
     ZONE_ID_WC10PCR0101,//ƒ|ƒPƒZƒ“
     ZONE_ID_WC10R0101,//‘º’·‚Ì‰Æ
-
-    ZONE_ID_PLC10,
-    ZONE_ID_PLCW10,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
 }
