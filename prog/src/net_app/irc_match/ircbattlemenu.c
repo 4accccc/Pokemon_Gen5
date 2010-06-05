@@ -2149,7 +2149,7 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
   GFL_PROC_RESULT retCode = GFL_PROC_RES_FINISH;
   StateFunc* state = pWork->state;
 
-  //呼んでますがつかってません LEVEL更新のため
+  //通信アイコンLEVEL更新のため
   WIH_DWC_GetAllBeaconTypeBit(GAMEDATA_GetWiFiList(pWork->pGameData));
 
   if(state != NULL){
