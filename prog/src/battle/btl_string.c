@@ -895,6 +895,7 @@ void BTL_STR_MakeStringSubway( STRBUF* dst, u16 subwayTRID, BtlResult playerResu
 //=============================================================================================
 void BTL_STR_GetUIString( STRBUF* dst, u16 strID )
 {
+  OS_TPrintf("Get UI String ID=%d\n", strID);
   GFL_MSG_GetString( SysWork.msg[MSGSRC_UI], strID, dst );
 }
 
