@@ -137,6 +137,8 @@ typedef int (*pCOMM_FUNC)(SRMAIN_WORK*,ITEMLIST_DATA*);
 
 #define	ITEMLIST_SCROLL_SPEED		( FX32_CONST(1) )			// リストスクロール速度
 
+#define	SKIP_MODE_BGM_FADE			( 64 )			// スキップ時のBGMフェードフレーム数
+
 
 //============================================================================================
 //	プロトタイプ宣言
@@ -446,6 +448,13 @@ static int MainSeq_Wipe( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_Release( SRMAIN_WORK * wk )
 {
+	if( PMSND_CheckFadeOnBGM() == TRUE ){
+		return MAINSEQ_RELEASE;
+	}
+	if( PMSND_CheckPlayBGM() == TRUE ){
+		PMSND_StopBGM();
+	}
+
 	ExitVBlank( wk );
 
 	DeleteListData( wk );
@@ -603,6 +612,9 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 		break;
 
 	case SUBSEQ_END:
+		if( PMSND_CheckPlayBGM() == TRUE ){
+		  PMSND_FadeOutBGM( SKIP_MODE_BGM_FADE );
+		}
 		return SetFadeOut( wk, MAINSEQ_RELEASE );
 	}
 
