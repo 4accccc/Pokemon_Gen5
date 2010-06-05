@@ -3831,6 +3831,7 @@ static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* targe
   if( BPP_CheckSick(attacker, WAZASICK_MUSTHIT_TARGET) )
   {
     u8 targetPokeID = BPP_GetSickParam( attacker, WAZASICK_MUSTHIT_TARGET );
+    TAYA_Printf("pokeID=%d は、%d をロックオンしてる\n", BPP_GetID(attacker), targetPokeID );
     if( targetPokeID == BPP_GetID(target) ){
       return TRUE;
     }
@@ -7498,10 +7499,13 @@ static void scproc_Fight_Ichigeki( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wa
 
     targetPokeID = BPP_GetID( target );
 
-    // そらをとぶなどによるハズレ
-    if( scEvent_CheckPokeHideAvoid(wk, attacker, target, wazaParam->wazaID) ){
-      scPut_WazaAvoid( wk, target, wazaParam->wazaID );
-      continue;
+    if( !IsMustHit(attacker, target) )
+    {
+      // そらをとぶなどによるハズレ
+      if( scEvent_CheckPokeHideAvoid(wk, attacker, target, wazaParam->wazaID) ){
+        scPut_WazaAvoid( wk, target, wazaParam->wazaID );
+        continue;
+      }
     }
 
     // トリプル遠隔地によるハズレ
