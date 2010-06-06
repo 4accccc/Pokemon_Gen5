@@ -188,7 +188,6 @@ static BOOL debugMenuCallProc_OpenStartComm( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenStartInvasion( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_MapZoneSelect( DEBUG_MENU_EVENT_WORK *wk );
-static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenClubMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_OpenGTSNegoMenu( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk );
@@ -385,7 +384,6 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
   { DEBUG_FIELD_STR19, debugMenuCallProc_OpenClubMenu },      //WIFIクラブ
   { DEBUG_FIELD_GPOWER, debugMenuCallProc_GPowerList},      //Gパワー
-  { DEBUG_FIELD_C_CHOICE00, debugMenuCallProc_OpenCommDebugMenu },  //通信開始
   { DEBUG_FIELD_STR49, debugMenuCallProc_BeaconFriendCode },  //ともだちコード配信
   { DEBUG_FIELD_STR57, debugMenuCallProc_DebugSake },             //サケ操作
 //  { DEBUG_FIELD_STR58, debugMenuCallProc_DebugAtlas },            //アトラス操作
@@ -879,33 +877,6 @@ static BOOL debugMenuCallProc_Sodateya( DEBUG_MENU_EVENT_WORK *wk )
 
   GMEVENT_ChangeEvent( wk->gmEvent, event );
   return TRUE;
-}
-
-//--------------------------------------------------------------
-/**
- * デバッグメニュー呼び出し　通信デバッグ子メニュー
- * @param wk  DEBUG_MENU_EVENT_WORK*
- * @retval  BOOL  TRUE=イベント継続
- */
-//--------------------------------------------------------------
-static BOOL debugMenuCallProc_OpenCommDebugMenu( DEBUG_MENU_EVENT_WORK *wk )
-{
-  GMEVENT *event = wk->gmEvent;
-  const HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
-  GAMESYS_WORK  *gameSys  = wk->gmSys;
-#if 0 //通信システム変更の為、Fix 2009.09.03(木)
-  FIELD_COMM_DEBUG_WORK *work;
-
-  GMEVENT_Change( event,
-    FIELD_COMM_DEBUG_CommDebugMenu, FIELD_COMM_DEBUG_GetWorkSize() );
-  work = GMEVENT_GetEventWork( event );
-  FIELD_COMM_DEBUG_InitWork( heapID , gameSys , fieldWork , event , work );
-#else
-  GF_ASSERT(0);
-#endif
-
-  return( TRUE );
 }
 
 //--------------------------------------------------------------
