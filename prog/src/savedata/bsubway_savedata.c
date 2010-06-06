@@ -15,6 +15,7 @@
 #include "savedata/bsubway_savedata.h"
 #include "bsubway_savedata_local.h"
 #include "../field/bsubway_scr_def.h"
+#include "net/dwc_tool.h"
 
 #if 0 //wb null
 #ifdef _NITRO
@@ -1115,6 +1116,16 @@ void BSUBWAY_WIFIDATA_SetPlayerData( BSUBWAY_WIFI_DATA *bsw_wifi, const BSUBWAY_
 {
   GFL_STD_MemCopy( dat, bsw_wifi->player,
     sizeof(BSUBWAY_WIFI_PLAYER)*BSUBWAY_STOCK_WIFI_PLAYER_MAX );
+
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
+  {
+    int i;
+
+    for( i=0; i<BSUBWAY_STOCK_WIFI_PLAYER_MAX; i++ ){
+      TOMOYA_Printf( "idx %d trtype %d\n", bsw_wifi->player[i].tr_type );
+    }
+  }
+#endif
   
   //roomnoとrankを保存
   bsw_wifi->player_rank = rank;
@@ -1163,7 +1174,7 @@ u8 BSUBWAY_WIFIDATA_GetPlayerRoomNo( const BSUBWAY_WIFI_DATA *bsw_wifi )
  *  @brief  プレイヤー情報　バトル用パラメータ取得
  */
 //-----------------------------------------------------------------------------
-void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBWAY_PARTNER_DATA *player, u8 round )
+void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBWAY_PARTNER_DATA *player, u8 round, HEAPID heapID )
 {
   BSUBWAY_TRAINER  *tr;      //トレーナーデータ
   BSUBWAY_POKEMON  *poke;    //持ちポケモンデータ
@@ -1175,19 +1186,12 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
   src = &(bsw_wifi->player[round]);
 
   //トレーナーパラメータ取得
-  //tr->player_id = BSUBWAY_TRAINER_ID;//src->id_no;  //サブウェイ用IDは固定値 @TODO 仮
-  tr->player_id = 0;//src->id_no;  //サブウェイ用IDは固定値 @TODO 仮
+  tr->player_id = 0;//サブウェイ用IDは固定値 @TODO
   tr->tr_type = src->tr_type;
   //NGネームフラグチェック
   if(src->ngname_f){
-    // @TODO NGネームの変更処理
-#if 0
-    pMan = MSGMAN_Create(MSGMAN_TYPE_NORMAL,ARC_MSG,
-        NARC_msg_btower_app_dat,HEAPID_WORLD);
-
-    MSGMAN_GetStr(pMan,msg_def_player_name01+src->gender,tr->name);
-    MSGMAN_Delete(pMan);
-#endif
+    // NGネームの変更処理
+    DWC_TOOL_SetBadNickName( tr->name, 8, heapID );
   }else{
     GFL_STD_MemCopy(src->name,tr->name,16);
   }

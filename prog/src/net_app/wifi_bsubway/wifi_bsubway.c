@@ -41,6 +41,8 @@
 
 #include "app/codein.h"
 
+#include "net_app/union/union_beacon_tool.h"
+
 
 #include "net_app/wifi_bsubway.h"
 #include "net_app/wifi_login.h"
@@ -1261,8 +1263,11 @@ static void PERSONAL_DATA_InitDpwPlayerData( Dpw_Bt_Player* p_player, GAMEDATA* 
   p_player->localCode = (u8)MyStatus_GetMyArea( p_mystatus );
   //gender
   p_player->gender = MyStatus_GetMySex( p_mystatus );
-  //tr_type
+  //tr_type BTS:4115への対処　トレーナー見た目からトレーナタイプへ
   p_player->trainerType = MyStatus_GetTrainerView( p_mystatus );
+  p_player->trainerType = UnionView_GetTrType( p_player->trainerType );
+  
+  TOMOYA_Printf( "trainer type %d\n", p_player->trainerType );
  
   //メッセージデータ取得
   for(i = 0;i < 3;i++){
