@@ -180,21 +180,6 @@ typedef struct {
   BOOL IsWhiteOut;
 }FLD3D_CI_EVENT_WORK;
 
-#ifdef PM_DEBUG
-typedef struct {
-  GAMESYS_WORK *gsys;
-  FLD3D_CI_PTR CiPtr;
-  FIELD_CAMERA * camera;
-  FIELD_PLAYER * player;
-  FLDNOGRID_MAPPER* mapper;
-  const VecFx32 *Watch;
-}FLYSKY_EFF_WORK;
-
-#define DEBUG_COUNT (15)
-int DbgCount = 0;
-BOOL DbgSlowMode = FALSE;
-#endif
-
 static void SetupResource(GMEVENT* event, FLD3D_CI_PTR ptr, RES_SETUP_DAT *outDat, const u8 inCutInNo);
 static void SetupResourceCore(FLD3D_CI_PTR ptr, const GFL_G3D_UTIL_SETUP *inSetup);
 static void DeleteResource(FLD3D_CI_PTR ptr, RES_SETUP_DAT *ioDat);
@@ -218,12 +203,6 @@ static void PopDisp(FLD3D_CI_PTR ptr);
 static void ReqCapture(FLD3D_CI_PTR ptr);
 
 static void Graphic_Tcb_Capture( GFL_TCB *p_tcb, void *p_work );
-
-#ifdef PM_DEBUG
-#if 0
-static GMEVENT_RESULT DebugFlySkyEffEvt( GMEVENT* event, int* seq, void* work );
-#endif
-#endif  //PM_DEBUG
 
 static GMEVENT_RESULT PokeGraTransEvt( GMEVENT* event, int* seq, void* work );
 static BOOL VoiceMain(GMEVENT* event, FLD3D_CI_PTR ptr);
@@ -787,30 +766,7 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       rc1 = FALSE;
       rc2 = FALSE;
       rc3 = FALSE;
-#ifdef PM_DEBUG
-      if ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) DbgSlowMode = TRUE;
-      else DbgSlowMode = FALSE;
 
-      if ( DbgSlowMode )
-      {
-        if (DbgCount) DbgCount--;
-      }
-      else DbgCount = 0;
-
-      if (DbgCount <= 0)
-      {
-        //フレームカウント
-        ptr->FrameCount++;
-        //パーティクル再生
-        rc1 = PlayParticle(ptr);
-        //3Ｄモデル1アニメ再生
-        rc2 = PlayMdlAnm1(ptr);
-        //3Ｄモデル2アニメ再生
-        rc3 = PlayMdlAnm2(ptr);
-        DbgCount = DEBUG_COUNT;
-        if ( DbgSlowMode ) OS_Printf("cutin_frame %d\n", ptr->FrameCount);
-      }
-#else
       //フレームカウント
       ptr->FrameCount++;
       //パーティクル再生
@@ -819,7 +775,6 @@ static GMEVENT_RESULT CutInEvt( GMEVENT* event, int* seq, void* work )
       rc2 = PlayMdlAnm1(ptr);
       //3Ｄモデル2アニメ再生
       rc3 = PlayMdlAnm2(ptr);
-#endif  //PM_DEBUG      
 
       ptr->PtclEnd = rc1;
       ptr->MdlAnm1End = rc2;
