@@ -3706,6 +3706,7 @@ static void scproc_MigawariExclude( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     ){
       if( (!fDamage) && (WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_MigawariThru)==FALSE) )
       {
+        // ワザパラメータとしてみがわり貫通フラグを持つため、不要になった
 //      if( scEvent_CheckMigawariExclude(wk, attacker, bpp, wazaParam->wazaID, fDamage) ){
         BTL_POKESET_Remove( target, bpp );
       }
@@ -5920,12 +5921,31 @@ static void scEvent_CheckItemReaction( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static void scproc_Fight_DamageProcStart( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-
   scEvent_DamageProcStart( wk, attacker, wazaParam );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] ダメージワザ処理開始
+ *
+ * @param   wk
+ * @param   attacker
+ * @param   targets
+ * @param   waza
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
+{
+  BTL_EVENTVAR_Push();
+
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_START );
+
+  BTL_EVENTVAR_Pop();
+}
+
 //------------------------------------------------------------------
 // サーバーフロー：ダメージワザシーケンス終了
 //------------------------------------------------------------------
@@ -6103,27 +6123,6 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
 //  }
   BTL_Hem_PopState( &wk->HEManager, hem_state );
   return result;
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] ダメージワザ処理開始
- *
- * @param   wk
- * @param   attacker
- * @param   targets
- * @param   waza
- */
-//----------------------------------------------------------------------------------
-static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam )
-{
-  BTL_EVENTVAR_Push();
-
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_START );
-
-  BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
 /**
