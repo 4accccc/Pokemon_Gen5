@@ -116,7 +116,7 @@ struct _NET_WL_WORK {
   u8 CrossRand;
   u8 PauseScan;
   u8 crossTimerPause;
-  u8 dummy1;
+  u8 ErrorEndTimer;
   u8 dummy2;
   u8 dummy3;
   //u8 = 16byte
@@ -701,10 +701,12 @@ static void _whEndErrResetFunc2(GFL_NETWL* pNetWL)
 {
 	if(WH_GetSystemState() == WH_SYSSTATE_IDLE){
     if(WH_Finalize()){
+      pNetWL->ErrorEndTimer = 0xff;
       _CHANGE_STATE(_whEndErrResetFunc);
     }
 	}
 	if(WH_GetSystemState() == WH_SYSSTATE_ERROR){
+      pNetWL->ErrorEndTimer = 0xff;
     _CHANGE_STATE(_whEndErrResetFunc);
   }
 }
@@ -721,12 +723,17 @@ static void _whEndErrResetFunc2(GFL_NETWL* pNetWL)
 
 static void _whEndErrResetFunc(GFL_NETWL* pNetWL)
 {
-	if(WH_GetSystemState() == WH_SYSSTATE_ERROR){
+  pNetWL->ErrorEndTimer--;  //通信システムがBUSYのまま処理変更が去れない場合があるので タイマー監視でWH_Resetを呼ぶように
+	if(WH_GetSystemState() == WH_SYSSTATE_STOP || WH_GetSystemState() == WH_SYSSTATE_IDLE){
+    _CHANGE_STATE(NULL);
+  }
+	else if(WH_GetSystemState() == WH_SYSSTATE_ERROR){
 		WH_Reset();
     _CHANGE_STATE(_whEndErrResetFunc2);
 	}
-	if(WH_GetSystemState() == WH_SYSSTATE_STOP || WH_GetSystemState() == WH_SYSSTATE_IDLE){
-    _CHANGE_STATE(NULL);
+  else if(pNetWL->ErrorEndTimer==0){
+    WH_Reset();
+    _CHANGE_STATE(_whEndErrResetFunc2);
   }
 }
 
@@ -749,6 +756,7 @@ BOOL GFL_NET_WLFinalize(void)
     
   if(pNetWL->disconnectType == _DISCONNECT_NONE){
     if(WH_Finalize()){
+      pNetWL->ErrorEndTimer = 0xff;
       _CHANGE_STATE(_whEndErrResetFunc);
       return TRUE;
     }
