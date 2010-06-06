@@ -229,11 +229,12 @@ static  void  screen_init( HEAPID heapID )
     GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, NULL );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_Z );
     G3X_AlphaBlend( TRUE );
-    G3X_EdgeMarking( TRUE );
+    G3X_EdgeMarking( FALSE );
     G3X_AntiAlias( FALSE );
     G3X_SetFog( FALSE, 0, 0, 0 );
     G2_SetBG0Priority( 1 );
   }
+#if 0
   //ウインドマスク設定（画面両端のエッジマーキングのゴミを消す）soga
   {
     G2_SetWnd0InsidePlane( GX_WND_PLANEMASK_BG0 |
@@ -250,6 +251,7 @@ static  void  screen_init( HEAPID heapID )
                       GX_BLEND_PLANEMASK_OBJ | GX_BLEND_PLANEMASK_BD,
                       31, 3 );
   }
+#endif
 
   {
     static  const GFL_CLSYS_INIT clsysinit = {
