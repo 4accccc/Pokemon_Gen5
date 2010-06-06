@@ -6344,7 +6344,7 @@ static BOOL _myVChatStatusToggleOrg(WIFIP2PMATCH_WORK *wk)
 
 //------------------------------------------------------------------
 /**
- * $brief   VCHATフラグをオリジナルにもどす
+ * $brief   VCHATフラグをオリジナルにもどす  ==.> VCHATステータスをオリジナルに戻す
  * @param   wk
  * @retval  none
  */
@@ -6354,12 +6354,10 @@ static BOOL _myVChatStatusOrgSet(WIFIP2PMATCH_WORK *wk)
 {
   _changeBGMVol( wk, _VOL_DEFAULT );
 
+  WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
+  _sendMatchStatus(wk);
 
-  //  @@oo
-  //  NET_PRINT( "change org %d\n", wk->pMatch->myMatchStatus.vchat_org );
-  //  wk->pMatch->myMatchStatus.vchat = wk->pMatch->myMatchStatus.vchat_org;
-  //  _sendMatchStatus(wk);
-  return WIFI_STATUS_GetVChatStatus( wk->pMatch );//wk->pMatch->myMatchStatus.vchat_org;
+  return WIFI_STATUS_GetVChatStatus( wk->pMatch );
 }
 
 
