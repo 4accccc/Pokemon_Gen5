@@ -18,7 +18,8 @@
 #include "field/field_msgbg.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 
 #include "fieldmap.h"
 #include "field/zonedata.h"
@@ -40,7 +41,7 @@
 
 #include  "field/weather_no.h"
 #include  "weather.h"
-#include  "msg/msg_d_tomoya.h"
+#include  "msg/debug/msg_d_tomoya.h"
 
 #include "field_debug.h" 
 #include "field_event_check.h"
@@ -476,7 +477,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
  */
 //--------------------------------------------------------------
 static const DEBUG_MENU_INITIALIZER DebugMenuData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_DebugMenuList),
   DATA_DebugMenuList,
   &DATA_DebugMenuListHeader,
@@ -530,10 +531,19 @@ GMEVENT * DEBUG_EVENT_DebugMenu(
 //======================================================================
 //======================================================================
 //--------------------------------------------------------------
+/**
+ * @brief
+ * @param fieldmap
+ * @param heapID
+ * @param init
+ * @param cb_work
+ * @param list_pos
+ * @param cursor_pos
+ */
 //--------------------------------------------------------------
 static FLDMENUFUNC * DebugMenuInitCore(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init, void* cb_work, u16 list_pos, u16 cursor_pos )
+    const DEBUG_MENU_INITIALIZER * init, void* cb_work, u16 list_pos, u16 cursor_pos, u32 msgarcid )
 {
   GAMESYS_WORK * gsys;
   FLDMENUFUNC * ret;
@@ -545,7 +555,8 @@ static FLDMENUFUNC * DebugMenuInitCore(
 
   gsys = FIELDMAP_GetGameSysWork( fieldmap );
   msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
-  msgData = FLDMSGBG_CreateMSGDATA( msgBG, init->msg_arc_id );
+  msgData = GFL_MSG_Create(
+    GFL_MSG_LOAD_NORMAL, msgarcid, init->msg_dat_id, FIELDMAP_GetHeapID( fieldmap ) );
 
   if (init->getMaxFunc) {
     max = init->getMaxFunc( gsys, cb_work );
@@ -575,7 +586,15 @@ FLDMENUFUNC * DEBUGFLDMENU_Init(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init )
 {
-  return DebugMenuInitCore( fieldmap, heapID, init, NULL, 0, 0 );
+  return DebugMenuInitCore( fieldmap, heapID, init, NULL, 0, 0, ARCID_DEBUG_MESSAGE );
+}
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static FLDMENUFUNC * DEBUGFLDMENU_InitArcID(
+    FIELDMAP_WORK * fieldmap, HEAPID heapID,
+    const DEBUG_MENU_INITIALIZER * init, u32 msg_arc_id )
+{
+  return DebugMenuInitCore( fieldmap, heapID, init, NULL, 0, 0, msg_arc_id );
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
@@ -583,14 +602,30 @@ FLDMENUFUNC * DEBUGFLDMENU_InitEx(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init, void* cb_work )
 {
-  return DebugMenuInitCore( fieldmap, heapID, init, cb_work, 0, 0 );
+  return DebugMenuInitCore( fieldmap, heapID, init, cb_work, 0, 0, ARCID_DEBUG_MESSAGE );
 }
 
+//--------------------------------------------------------------
+//--------------------------------------------------------------
 static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
     FIELDMAP_WORK * fieldmap, HEAPID heapID,
     const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos )
 {
-  return DebugMenuInitCore( fieldmap, heapID, init, NULL, list_pos, cursor_pos );
+  return DebugMenuInitCore( fieldmap, heapID, init, NULL, list_pos, cursor_pos, ARCID_DEBUG_MESSAGE );
+}
+
+//--------------------------------------------------------------
+/**
+ * @param arcDatIDMsg メッセージが含まれるアーカイブデータID
+ * @retval  GFL_MSGDATA*
+ */
+//--------------------------------------------------------------
+GFL_MSGDATA * DEBUGFLDMENU_CreateMSGDATA( FIELDMAP_WORK * fieldmap, u32 arcDatIDMsg )
+{
+  GFL_MSGDATA *msgData;
+  msgData = GFL_MSG_Create(
+    GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, arcDatIDMsg, FIELDMAP_GetHeapID( fieldmap ) );
+  return( msgData );
 }
 
 //--------------------------------------------------------------
@@ -1065,7 +1100,7 @@ static const FLDMENUFUNC_LIST DATA_SubcreenMenuList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubscreenSelectData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_SubcreenMenuList),
   DATA_SubcreenMenuList,
   &DATA_DebugMenuList_Default, //流用
@@ -1571,7 +1606,7 @@ static const FLDMENUFUNC_LIST DATA_WeatherMenuList[] =
 #define DEBUG_WEATHERLIST_LIST_MAX  ( NELEMS(DATA_WeatherMenuList) )
 
 static const DEBUG_MENU_INITIALIZER DebugWeatherMenuListData = {
-  NARC_message_d_tomoya_dat,
+  NARC_debug_message_d_tomoya_dat,
   NELEMS(DATA_WeatherMenuList),
   DATA_WeatherMenuList,
   &DATA_DebugMenuList_WeatherList,
@@ -1794,7 +1829,7 @@ static const FLDMENUFUNC_LIST DATA_ControlTimeMenuList[CONT_TIME_TYPE_NUM] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugControlTimeMenuListData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_ControlTimeMenuList),
   DATA_ControlTimeMenuList,
   &DATA_DebugMenuList_ContTimeList,
@@ -3680,7 +3715,7 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
   {
     // ワードセット作成
     p_work->p_debug_wordset = WORDSET_Create( heapID );
-    p_work->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_field_dat, heapID );
+    p_work->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_field_dat, heapID );
 
     p_work->p_debug_strbuff    = GFL_STR_CreateBuffer( 256, heapID );
     p_work->p_debug_strbuff_tmp  = GFL_STR_CreateBuffer( 256, heapID );
@@ -3907,7 +3942,7 @@ static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk )
   GFL_MSGDATA *msgdata;
   FLDMSGWIN *fldmsgwin;
 
-  msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_field_dat, heapID );
+  msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_field_dat, heapID );
 
   fldmsgwin = FLDMSGWIN_Add(msgBG, msgdata, 1, 19, 30, 4);
 
@@ -4016,7 +4051,7 @@ static const FLDMENUFUNC_LIST DATA_CaptureMenuList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugCaptureMenuListData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_CaptureMenuList),
   DATA_CaptureMenuList,
   &DATA_DebugMenuList_CaptureList,
@@ -4270,7 +4305,7 @@ static const FLDMENUFUNC_LIST DATA_EncEffMenuList[ENCEFFLISTMAX] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugEncEffMenuListData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_EncEffMenuList),
   DATA_EncEffMenuList,
   &DATA_DebugMenuList_EncEffList, //流用
@@ -4575,7 +4610,7 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
 
 static const DEBUG_MENU_INITIALIZER DebugBSubwayMenuData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   DEBUG_BSUBWAY_LIST_MAX,
   DATA_BSubwayMenuList,
   &DATA_DebugMenuList_BSubway,
@@ -4597,7 +4632,7 @@ static const FLDMENUFUNC_LIST DATA_BSubwayAnyStageMenuList[] =
 #define DEBUG_BSUBWAY_ANYSTAGE_LIST_MAX ( NELEMS(DATA_BSubwayAnyStageMenuList) )
 
 static const DEBUG_MENU_INITIALIZER DebugBSubwayAnyStageMenuData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   DEBUG_BSUBWAY_ANYSTAGE_LIST_MAX,
   DATA_BSubwayAnyStageMenuList,
   &DATA_DebugMenuList_BSubway,
@@ -4693,8 +4728,8 @@ static GMEVENT_RESULT debugMenuBSubwayAnyStageEvent(
         
       work->strBuf = GFL_STR_CreateBuffer( 128, work->heapID );
       work->strTempBuf = GFL_STR_CreateBuffer( 128, work->heapID );
-      work->msgData = FLDMSGBG_CreateMSGDATA(
-          msgbg, NARC_message_d_field_dat );
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
+          NARC_debug_message_d_field_dat );
       work->wordSet = WORDSET_Create( work->heapID );
       work->sysWin = FLDSYSWIN_AddTalkWin( msgbg, NULL );
       work->msgWin = FLDMSGWIN_Add( msgbg, NULL, 1, 1, 8, 2 );
@@ -5008,8 +5043,8 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
 
   switch( (*seq) ){
   case 0:
-    work->msgData = FLDMSGBG_CreateMSGDATA(
-        work->fldMsgBG, NARC_message_d_field_dat );
+    work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
+        NARC_debug_message_d_field_dat );
     work->sysWin = FLDSYSWIN_AddTalkWin( work->fldMsgBG, work->msgData );
     work->menuFunc = DEBUGFLDMENU_Init(
         work->fieldWork, work->heapID,  &DebugBSubwayMenuData );
@@ -5343,7 +5378,7 @@ static BOOL debugMenuCallProc_BSubway( DEBUG_MENU_EVENT_WORK *wk )
 //  デバッグメニュー　Gパワー
 //======================================================================
 #include "gamesystem/g_power.h"
-#include "msg/msg_d_matsu.h"
+#include "msg/debug/msg_d_matsu.h"
 //--------------------------------------------------------------
 /// DEBUG_GPOWER_EVENT_WORK
 //--------------------------------------------------------------
@@ -5443,7 +5478,8 @@ static GMEVENT_RESULT debugMenuGPowerListEvent(GMEVENT *event, int *seq, void *w
 
   switch( (*seq) ){
   case 0:
-    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugGPowerMenuListData );
+    work->menuFunc = DEBUGFLDMENU_InitArcID(
+        work->fieldWork, work->heapID,  &DebugGPowerMenuListData, ARCID_MESSAGE );
     work->powerdata = GPOWER_PowerData_LoadAlloc(work->heapID);
     (*seq)++;
     break;
@@ -5492,7 +5528,7 @@ static void DEBUG_SetMenuWorkGPower(GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *l
   STRBUF *strBuf = GFL_STR_CreateBuffer( 64, heapID );
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
-  GFL_MSGDATA * pMsgDataDMatsu = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_matsu_dat );
+  GFL_MSGDATA * pMsgDataDMatsu = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_d_matsu_dat );
 
   for( id = 0; id < GPOWER_ID_MAX; id++ ){
     GFL_MSG_GetString( msgData,  id, strBuf );
@@ -5855,7 +5891,7 @@ static const FLDMENUFUNC_LIST ZukanMenuList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMenuZukanImitializer = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(ZukanMenuList),
   ZukanMenuList,
   &ZukanMenuHeader,
@@ -6272,7 +6308,8 @@ static GMEVENT_RESULT ZukanManualSet( GMEVENT *event, int *seq, void *wk )
     {
       FLDMSGBG * msgBG;
       msgBG = FIELDMAP_GetFldMsgBG( work->fieldWork );
-      work->msgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA(
+          work->fieldWork, NARC_debug_message_d_field_dat );
       work->win = FLDSYSWIN_AddEx( msgBG, work->msgData, 1, 1, 22, 11 );
 
       FLDSYSWIN_Print( work->win, 0, 0, DEBUG_FIELD_ZUKAN_22 );
@@ -6371,7 +6408,7 @@ static const FLDMENUFUNC_LIST DATA_EventPokeCreate[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugEventPokeCreateMenu = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_EventPokeCreate),
   DATA_EventPokeCreate,
   &DATA_DebugMenuList_Default, //流用
@@ -6598,7 +6635,7 @@ static const FLDMENUFUNC_LIST DATA_Musical[] =
 
 static const DEBUG_MENU_INITIALIZER DebugMusicalMenu =
 {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_Musical),
   DATA_Musical,
   &DATA_DebugMenuList_Default, //流用

@@ -21,9 +21,9 @@
 
 //アーカイブ
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 #include "font/font.naix"
-#include "msg/msg_d_nagihashi.h"
+#include "msg/debug/msg_d_nagihashi.h"
 #include "debug_regulation_card.naix"
 
 //モジュール
@@ -162,7 +162,7 @@ static GFL_PROC_RESULT DEBUG_NAGI_IRC_REGULATION_PROC_Init( GFL_PROC *p_proc, in
   //共通モジュールの初期化
   p_wk->p_font		= GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NAGI_DEBUG_SUB );
 	p_wk->p_que			= PRINTSYS_QUE_Create( HEAPID_NAGI_DEBUG_SUB );
-  p_wk->p_msg     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nagihashi_dat, HEAPID_NAGI_DEBUG_SUB );
+  p_wk->p_msg     = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_nagihashi_dat, HEAPID_NAGI_DEBUG_SUB );
 
   //グラフィック
   p_wk->p_graphic = DEUBG_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, HEAPID_NAGI_DEBUG_SUB );

@@ -1,12 +1,11 @@
 #pragma once
 
-#include "message.naix"
+#include "debug_message.naix"
 #include "font/font.naix"
 #include "print/printsys.h"
 #include "print/str_tool.h"
 #include "test/camera_adjust_view.h"
 
-#include "msg/msg_d_tetsu.h"
 
 //------------------------------------------------------------------
 /**

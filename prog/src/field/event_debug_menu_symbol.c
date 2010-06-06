@@ -19,7 +19,8 @@
 #include "field/field_msgbg.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 
 #include "fieldmap.h"
 
@@ -90,7 +91,7 @@ static const FLDMENUFUNC_LIST DATA_SubSymbolPokeList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubSymbolPokeListSelectData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_SubSymbolPokeList),
   DATA_SubSymbolPokeList,
   &DATA_DebugMenuList_Default, //—¬—p
@@ -471,7 +472,7 @@ static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * wk )
   work->fieldWork = fieldWork;
   work->heapId = heapID;
   work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_d_field_dat , work->heapId );
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_DEBUG_MESSAGE , NARC_debug_message_d_field_dat , work->heapId );
 
   work->bmpWin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG , 1,19,30,4 ,11,GFL_BMP_CHRAREA_GET_B);
 

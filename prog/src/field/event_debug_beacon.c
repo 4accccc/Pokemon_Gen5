@@ -17,6 +17,7 @@
 #include "field/fieldmap.h"
 #include "gamesystem/gamesystem.h"
 #include "gamesystem/game_event.h"
+#include "event_debug_local.h"  //DEBUGFLDMENU_CreateMSGDATA
 
 //プリント
 #include "print/wordset.h"
@@ -27,8 +28,8 @@
 
 //アーカイブ
 #include "arc_def.h"
-#include "message.naix"
-#include "msg/msg_debug_beacon_friendcode.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_debug_beacon_friendcode.h"
 
 //外部公開
 #include "event_debug_beacon.h"
@@ -307,7 +308,7 @@ static GMEVENT_RESULT EVENT_DebugBeaconMain( GMEVENT *p_event, int *p_seq, void 
 	{	
 	case SEQ_START_CHECK:
 		//メッセージ面作成
-		p_wk->p_msg_data	= FLDMSGBG_CreateMSGDATA( p_wk->p_msg_bg, NARC_message_debug_beacon_friendcode_dat );
+		p_wk->p_msg_data	= DEBUGFLDMENU_CreateMSGDATA( p_wk->p_field, NARC_debug_message_debug_beacon_friendcode_dat );
 		p_wk->p_msg_win		= FLDMSGWIN_AddTalkWin( p_wk->p_msg_bg, p_wk->p_msg_data );
 		p_wk->p_strbuf		= GFL_STR_CreateBuffer( 255, p_wk->heapID );
 		p_wk->p_word			= WORDSET_Create( p_wk->heapID );

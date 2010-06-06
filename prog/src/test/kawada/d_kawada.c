@@ -24,10 +24,10 @@
 #include "../../battle/app/vs_multi_list.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
-#include "message.naix"
+#include "debug_message.naix"
 
 
-#include "msg/msg_d_kawada.h"
+#include "msg/debug/msg_d_kawada.h"
 
 // }ŠÓ“o˜^
 #include "app/zukan_toroku.h"
@@ -764,7 +764,7 @@ static void TopMenuInit( KAWADA_MAIN_WORK * wk )
 
 	GFL_BMPWIN_Init( wk->heapID );
 
-	wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_kawada_dat, wk->heapID );
+	wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_kawada_dat, wk->heapID );
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 	wk->que  = PRINTSYS_QUE_Create( wk->heapID );
 	wk->win  = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 1, 1, 16, 12, 0, GFL_BMP_CHRAREA_GET_B );

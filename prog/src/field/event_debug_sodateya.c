@@ -16,8 +16,8 @@
 #include "sodateya.h"
 #include "field/zonedata.h"
 
-#include "arc/message.naix"
-#include "msg/msg_debug_sodateya.h"
+#include "arc/debug_message.naix"
+#include "msg/debug/msg_debug_sodateya.h"
 
 #include "event_debug_sodateya.h"
 
@@ -69,7 +69,7 @@ static const FLDMENUFUNC_LIST menuList[] =
 //=============================================================================
 static const DEBUG_MENU_INITIALIZER menuInitializer = 
 {
-  NARC_message_debug_sodateya_dat,
+  NARC_debug_message_debug_sodateya_dat,
   NELEMS(menuList),
   menuList,
   &menuHeader,

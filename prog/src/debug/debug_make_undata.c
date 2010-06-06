@@ -17,7 +17,8 @@
 #include "font/font.naix"
 #include "arc_def.h"
 #include "message.naix"
-#include "msg/msg_debug_make_undata.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_debug_make_undata.h"
 
 #include "debug/debug_make_undata.h"
 
@@ -442,7 +443,7 @@ static void SetupDisp( MAKE_WORK* wk )
   wk->Win = GFL_BMPWIN_Create( PRINT_FRAME, 0, 0, 32, 24, PRINT_PALIDX, GFL_BMP_CHRAREA_GET_F );
   wk->Bmp = GFL_BMPWIN_GetBmp( wk->Win );
   wk->Font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->HeapID );
-  wk->MsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_make_undata_dat, wk->HeapID );
+  wk->MsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_make_undata_dat, wk->HeapID );
   wk->StrBuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->HeapID );
   wk->NameBuf = GFL_STR_CreateBuffer( PERSON_NAME_SIZE + EOM_SIZE, wk->HeapID );
   wk->PrintQue = PRINTSYS_QUE_Create( wk->HeapID );

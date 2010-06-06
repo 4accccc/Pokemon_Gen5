@@ -27,8 +27,8 @@
 #include "../../battle/app/vs_multi_list.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
-#include "message.naix"
-#include "msg/msg_d_nakahiro.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_nakahiro.h"
 
 #include "pokeicon_view.h"
 
@@ -606,7 +606,7 @@ static void TopMenuInit( NAKAHIRO_MAIN_WORK * wk )
 
   GFL_BMPWIN_Init( wk->heapID );
 
-  wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+  wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_nakahiro_dat, wk->heapID );
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
   wk->que  = PRINTSYS_QUE_Create( wk->heapID );
   wk->win  = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 1, 1, 16, 12, 0, GFL_BMP_CHRAREA_GET_B );
@@ -657,7 +657,7 @@ static void SetBoxPoke( NAKAHIRO_MAIN_WORK * wk )
   u32 i;
 
   man = GFL_MSG_Create(
-            GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+            GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_nakahiro_dat, wk->heapID );
   str = GFL_MSG_CreateString( man, pokename );
 
 //  for( i=MONSNO_HUSIGIDANE; i<=MONSNO_END; i++ ){
@@ -716,7 +716,7 @@ static void SetPartyPoke( NAKAHIRO_MAIN_WORK * wk )
   u32 i;
 
   man = GFL_MSG_Create(
-            GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+            GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_nakahiro_dat, wk->heapID );
   str = GFL_MSG_CreateString( man, pokename );
 
   for( i=0; i<3; i++ ){
@@ -744,7 +744,7 @@ static void SetPokeParty( NAKAHIRO_MAIN_WORK * wk, POKEPARTY * party, const u16 
   u32 i;
 
   man = GFL_MSG_Create(
-            GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_nakahiro_dat, wk->heapID );
+            GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_nakahiro_dat, wk->heapID );
   str = GFL_MSG_CreateString( man, pokename );
 
   PokeParty_InitWork( party );

@@ -31,10 +31,9 @@
 #include "net/net_whpipe.h"
 #include "app/townmap_util.h"
 
-#include "message.naix"
-#include "msg/msg_d_numinput.h"
-#include "msg/msg_d_field.h"
-#include "msg/msg_d_livecomm.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_numinput.h"
+#include "msg/debug/msg_d_livecomm.h"
 
 #include "arc/fieldmap/zone_id.h"
 #include "arc/fieldmap/debug_symbol.naix"  //DEBUG_SYM_
@@ -291,7 +290,7 @@ static const FLDMENUFUNC_LIST DATA_DebugLiveCommFromFieldMenuList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
-  NARC_message_d_livecomm_dat,
+  NARC_debug_message_d_livecomm_dat,
   NELEMS(DATA_DebugLiveCommMenuList),
   DATA_DebugLiveCommMenuList,
   &DATA_DebugMenuList_Default, //—¬—p
@@ -300,7 +299,7 @@ static const DEBUG_MENU_INITIALIZER DebugLiveCommMenuData = {
   NULL
 };
 static const DEBUG_MENU_INITIALIZER DebugLiveCommFromFieldMenuData = {
-  NARC_message_d_livecomm_dat,
+  NARC_debug_message_d_livecomm_dat,
   NELEMS(DATA_DebugLiveCommFromFieldMenuList),
   DATA_DebugLiveCommFromFieldMenuList,
   &DATA_DebugMenuList_Default, //—¬—p
@@ -573,7 +572,7 @@ static void dmenu_WorkInit( DMENU_LIVE_COMM* wk )
 
   wk->wset = WORDSET_CreateEx( 16,64,wk->heapID );
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-      ARCID_MESSAGE, NARC_message_d_livecomm_dat, wk->heapID );
+      ARCID_DEBUG_MESSAGE, NARC_debug_message_d_livecomm_dat, wk->heapID );
   
   wk->str_tmp = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );
   wk->str_expand = GFL_STR_CreateBuffer( BUFLEN_TMP_MSG, wk->heapID );

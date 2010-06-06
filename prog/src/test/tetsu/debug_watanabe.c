@@ -10,13 +10,13 @@
 #include "system/gfl_use.h"
 #include "system\main.h"
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 
 #include "font/font.naix"
 #include "print/printsys.h"
 #include "print/str_tool.h"
 
-#include "msg/msg_d_tetsu.h"
+#include "msg/debug/msg_d_tetsu.h"
 //============================================================================================
 /**
  *
@@ -355,7 +355,7 @@ static void systemSetup(DEBUG_WATANABE_WORK* dw)
   dw->printQue = PRINTSYS_QUE_Create(dw->heapID);
 
   dw->msgManager = GFL_MSG_Create
-    (GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tetsu_dat, dw->heapID);
+    (GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tetsu_dat, dw->heapID);
 
   //描画用ビットマップ作成（画面全体）
   dw->bmpwin = GFL_BMPWIN_Create( TEXT_FRAME,

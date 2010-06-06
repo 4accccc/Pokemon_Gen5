@@ -77,9 +77,6 @@
 //#include "sound/wb_sound_data.sadl"
 #include "net_app/union/union_main.h"
 
-#include "message.naix" //NARC_message_d_field_dat
-#include "msg/msg_d_field.h"  //DEBUG_FIELD_STR00 DEBUG_FIELD_C_STR10
-
 #include "debug/debugwin_sys.h" //デバッグメニュー
 
 #if USE_DEBUGWIN_SYSTEM

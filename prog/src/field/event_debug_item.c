@@ -21,7 +21,7 @@
 #include "system/bmp_winframe.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
+#include "msg/debug/msg_d_field.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "field/fieldmap.h"
@@ -39,8 +39,8 @@
 #include "savedata/intrude_save_field.h"
 #include "savedata/intrude_save.h"
 
-#include "message.naix" //NARC_message_debugname_dat
-#include "msg/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
+#include "debug_message.naix" //NARC_message_debugname_dat
+#include "msg/debug/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
 #include "system/gfl_use.h"   //GFUser_GetPublicRand
 //------------------------------------------------------------------
 //------------------------------------------------------------------
@@ -525,7 +525,7 @@ static void _addIntrudeSecretItem( GAMEDATA * gamedata, HEAPID heapID, u16 item_
   };
   STRBUF * namebuf;
 
-  msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, heapID );
+  msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, heapID );
   intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
 
   namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_RAND_M_000 + GFUser_GetPublicRand(8) );
@@ -572,8 +572,8 @@ static GFL_PROC_RESULT DebugItemMakeProc_Init( GFL_PROC * proc, int * seq, void 
 {
   EVENT_DEBUGITEM_WORK* wk = pwk;
   wk->curpos = 0;
-  wk->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-                                   NARC_message_d_field_dat, wk->heapID );
+  wk->MsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE,
+                                   NARC_debug_message_d_field_dat, wk->heapID );
   wk->CompMsgManager = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
                                        NARC_message_itemname_dat, wk->heapID );
   wk->pStrBuf = GFL_STR_CreateBuffer(100,wk->heapID);

@@ -17,8 +17,8 @@
 
 #include "fieldmap.h"
 
-#include "message.naix"  // NARC_xxxx
-#include "msg/msg_d_field.h"  // for DEBUG_FIELD_STR_xxxx
+#include "debug_message.naix"  // NARC_xxxx
+#include "msg/debug/msg_d_field.h"  // for DEBUG_FIELD_STR_xxxx
 #include "event_debug_local.h"  // for DEBUG_MENU_INITIALIZER
 
 #include "event_fieldmap_control.h"
@@ -137,7 +137,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_ZoneSel =
 
 // デバッグメニュー初期化
 static const DEBUG_MENU_INITIALIZER DebugDemo3DJumpMenuData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   0,
   NULL,
   &DATA_DebugMenuList_ZoneSel, //流用
@@ -306,7 +306,7 @@ static void DebugMenuList_Make( GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list,
   STRBUF *strBuf1 = GFL_STR_CreateBuffer( 64, heapID );
   FIELDMAP_WORK * fieldmap  = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMSGBG * msgBG          = FIELDMAP_GetFldMsgBG( fieldmap );
-  GFL_MSGDATA * pMsgData    = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_d_field_dat );
+  GFL_MSGDATA * pMsgData    = DEBUGFLDMENU_CreateMSGDATA( fieldmap, NARC_debug_message_d_field_dat );
   
   for( id = 0; id < DEMO_SCENE_MAX; id++ ){
     GFL_STR_ClearBuffer( strBuf1 );

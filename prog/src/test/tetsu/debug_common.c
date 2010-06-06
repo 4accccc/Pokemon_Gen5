@@ -10,14 +10,14 @@
 #include "system/gfl_use.h"
 #include "system\main.h"
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 
 #include "font/font.naix"
 #include "print/printsys.h"
 #include "print/str_tool.h"
 
 #include "test/camera_adjust_view.h"
-#include "msg/msg_d_tetsu.h"
+#include "msg/debug/msg_d_tetsu.h"
 
 #include "debug_common.h"
 //============================================================================================
@@ -253,7 +253,7 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
                                       dws->heapID);
   //メッセージマネージャー作成
   dws->msgManager = GFL_MSG_Create
-    (GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tetsu_dat, dws->heapID);
+    (GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tetsu_dat, dws->heapID);
 
   //カメラ作成
   dws->g3Dcamera = GFL_G3D_CAMERA_CreateDefault(&cameraPos, &cameraTarget, dws->heapID);

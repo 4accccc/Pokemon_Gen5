@@ -2,6 +2,7 @@
 SRC_ROOT_DIR	= src
 DST_ROOT_DIR	= dst
 DST_SCRIPT_DIR	= $(DST_ROOT_DIR)/script
+DST_DEBUG_DIR		= $(DST_ROOT_DIR)/debug
 RESOURCE_LIST	= resource.list
 DEPEND_LIST	= depend.list
 TARGET_LIST	= target.list
@@ -21,6 +22,13 @@ SCRIPT_ARCHIVE_DATA_NAME	= $(SCRIPT_ARCHIVE_NAME_BODY).narc
 SCRIPT_ARCHIVE_HEADER_NAME	= $(SCRIPT_ARCHIVE_NAME_BODY).naix
 SCRIPT_ARCHIVE_DATA_PATH	= $(PROJECT_ARCDIR)$(SCRIPT_ARCHIVE_DATA_NAME)
 SCRIPT_ARCHIVE_HEADER_PATH	= $(PROJECT_ARCDIR)$(SCRIPT_ARCHIVE_HEADER_NAME)
+
+#デバッグ用メッセージ
+ARCHIVE_NAME_BODY_DEBUG	= message_debug
+ARCHIVE_DATA_NAME_DEBUG	= $(ARCHIVE_NAME_BODY_DEBUG).narc
+ARCHIVE_HEADER_NAME_DEBUG	= $(ARCHIVE_NAME_BODY_DEBUG).naix
+ARCHIVE_DATA_PATH_DEBUG	= $(PROJECT_ARCDIR)$(ARCHIVE_DATA_NAME_DEBUG)
+ARCHIVE_HEADER_PATH_DEBUG	= $(PROJECT_ARCDIR)$(ARCHIVE_HEADER_NAME_DEBUG)
 
 #マルチブート子機(ポケシフター
 ARCHIVE_NAME_BODY_DL	= message_dl
@@ -51,12 +59,13 @@ CONVERT_TARGET_LANGS = JPN JPN_KANJI
 .SUFFIXES: .dat .gmm
 
 no-rule:
-	echo $(TARGETS)
+	@#echo $(TARGETS)
 	$(MAKE)	$(BTLSET)
 	$(MAKE)	depend
 	$(MAKE)	datfiles
 	$(MAKE)	$(ARCHIVE_DATA_PATH)
 	$(MAKE)	$(SCRIPT_ARCHIVE_DATA_PATH)
+	$(MAKE) $(ARCHIVE_DATA_PATH_DEBUG)
 	$(MAKE)	$(ARCHIVE_DATA_PATH_DL)
 	$(MAKE)	$(ARCHIVE_DATA_PATH_DL_MOVIE)
 
@@ -80,34 +89,42 @@ depend:
 #=========================================================
 HEADER_COPY_DIR	= $(PROJECT_PROGDIR)/include/msg/
 SCRIPT_HEADER_COPY_DIR	= $(HEADER_COPY_DIR)/script/
+DEBUG_HEADER_COPY_DIR	= $(HEADER_COPY_DIR)/debug/
 
 -include $(TARGET_LIST)
 -include $(DEPEND_LIST)
 
-datfiles: $(TARGETS)
+datfiles: $(TARGETS) $(DEBUG_TARGETS)
 	cp -u $(DST_ROOT_DIR)/*.h $(HEADER_COPY_DIR)
 	cp -u $(DST_SCRIPT_DIR)/*.h $(SCRIPT_HEADER_COPY_DIR)
+	cp -u $(DST_DEBUG_DIR)/*.h $(DEBUG_HEADER_COPY_DIR)
 
 #=========================================================
 #	全dat -> narc
 #=========================================================
 $(ARCHIVE_DATA_PATH) : $(wildcard $(DST_ROOT_DIR)/*.dat)
-	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME) $(DST_ROOT_DIR)/*.dat
+	nnsarc -c -n -i $(ARCHIVE_DATA_NAME) $(DST_ROOT_DIR)/*.dat
 	cp -u $(ARCHIVE_DATA_NAME) $(ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME) $(ARCHIVE_HEADER_PATH)
 
 $(SCRIPT_ARCHIVE_DATA_PATH) : $(wildcard $(DST_SCRIPT_DIR)/*.dat)
-	nnsarc -c -l -n -i $(SCRIPT_ARCHIVE_DATA_NAME) $(DST_SCRIPT_DIR)/*.dat
+	nnsarc -c -n -i $(SCRIPT_ARCHIVE_DATA_NAME) $(DST_SCRIPT_DIR)/*.dat
 	cp -u $(SCRIPT_ARCHIVE_DATA_NAME) $(SCRIPT_ARCHIVE_DATA_PATH)
 	perl naixcopy.pl $(SCRIPT_ARCHIVE_HEADER_NAME) $(SCRIPT_ARCHIVE_HEADER_PATH)
 
+#デバッグ用メッセージ
+$(ARCHIVE_DATA_PATH_DEBUG) : $(wildcard $(DST_DEBUG_DIR)/*.dat)
+	nnsarc -c -n -i $(ARCHIVE_DATA_NAME_DEBUG) $(DST_DEBUG_DIR)/*.dat
+	cp -u $(ARCHIVE_DATA_NAME_DEBUG) $(ARCHIVE_DATA_PATH_DEBUG)
+	perl naixcopy.pl $(ARCHIVE_HEADER_NAME_DEBUG) $(ARCHIVE_HEADER_PATH_DEBUG)
+
 $(ARCHIVE_DATA_PATH_DL) : $(wildcard $(DST_ROOT_DIR)/*.dat)
-	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME_DL) -S dlplay_list.dat
+	nnsarc -c -n -i $(ARCHIVE_DATA_NAME_DL) -S dlplay_list.dat
 	cp -u $(ARCHIVE_DATA_NAME_DL) $(ARCHIVE_DATA_PATH_DL)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME_DL) $(ARCHIVE_HEADER_PATH_DL)
 
 $(ARCHIVE_DATA_PATH_DL_MOVIE) : $(wildcard $(DST_ROOT_DIR)/*.dat)
-	nnsarc -c -l -n -i $(ARCHIVE_DATA_NAME_DL_MOVIE) -S dlplay_movie_list.dat
+	nnsarc -c -n -i $(ARCHIVE_DATA_NAME_DL_MOVIE) -S dlplay_movie_list.dat
 	cp -u $(ARCHIVE_DATA_NAME_DL_MOVIE) $(ARCHIVE_DATA_PATH_DL_MOVIE)
 	perl naixcopy.pl $(ARCHIVE_HEADER_NAME_DL_MOVIE) $(ARCHIVE_HEADER_PATH_DL_MOVIE)
 
@@ -120,8 +137,11 @@ clean:
 	-rm $(DST_ROOT_DIR)/*.h
 	-rm $(DST_SCRIPT_DIR)/*.dat
 	-rm $(DST_SCRIPT_DIR)/*.h
+	-rm $(DST_DEBUG_DIR)/*.dat
+	-rm $(DST_DEBUG_DIR)/*.h
 	-rm $(HEADER_COPY_DIR)/*.h
 	-rm $(SCRIPT_HEADER_COPY_DIR)/*.h
+	-rm $(DEBUG_HEADER_COPY_DIR)/*.h
 	-rm $(DEPEND_LIST)
 	-rm $(TARGET_LIST)
 

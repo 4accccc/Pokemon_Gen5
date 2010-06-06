@@ -21,7 +21,7 @@
 
 #include "message.naix"
 #include "font/font.naix"
-#include "msg/msg_d_field.h"
+#include "msg/debug/msg_d_field.h"
 
 #include "system/bmp_winframe.h"
 #include "field_bbd_color.h"

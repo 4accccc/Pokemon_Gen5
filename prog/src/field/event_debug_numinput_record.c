@@ -24,8 +24,8 @@
 #include "savedata/bsubway_savedata.h"
 
 #include "arc_def.h"
-#include "message.naix"
-#include "msg/msg_d_numinput_record.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_numinput_record.h"
 
 
 //======================================================================
@@ -137,7 +137,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
-  NARC_message_d_numinput_record_dat,  //メッセージアーカイブ
+  NARC_debug_message_d_numinput_record_dat,  //メッセージアーカイブ
   NELEMS(DATA_DNumInputMenu),  //項目数max
   DATA_DNumInputMenu, //メニュー項目リスト
   &DATA_DNumInput_MenuFuncHeader, //メニュヘッダ
@@ -147,7 +147,7 @@ static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_ListMenuInitializer = {
-  NARC_message_d_numinput_record_dat,  //メッセージアーカイブ
+  NARC_debug_message_d_numinput_record_dat,  //メッセージアーカイブ
   0,  //項目数max
   NULL, //メニュー項目リスト
   &DATA_DNumInput_MenuFuncHeader, //メニュヘッダ
@@ -289,7 +289,7 @@ static void createNumWin( DEBUG_NUMINPUT_WORK * wk )
   
   wk->wordset = WORDSET_Create( wk->heapID );
   wk->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
-      ARCID_MESSAGE, NARC_message_d_numinput_record_dat, wk->heapID);
+      ARCID_DEBUG_MESSAGE, NARC_debug_message_d_numinput_record_dat, wk->heapID);
 
 	bmpwin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG,
 		_DISP_INITX, _DISP_INITY, _DISP_SIZEX, _DISP_SIZEY,
@@ -511,7 +511,7 @@ static void DEBUG_SetMenuWork_DebugList(
   const DEBUG_NUMINPUT_INITIALIZER * init = df_work->init;
   int id,max = DEBUG_GetDebugListMax(gsys, cb_work);
   GFL_MSGDATA * msgman = GFL_MSG_Create(
-      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_numinput_record_dat, df_work->heapID);
+      GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_numinput_record_dat, df_work->heapID);
   STRBUF *str = GFL_STR_CreateBuffer( 64, heapID );
 
   for( id = 0; id < max; id++ ){

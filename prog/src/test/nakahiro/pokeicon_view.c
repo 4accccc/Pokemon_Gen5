@@ -1,13 +1,13 @@
 #include <gflib.h>
 
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 #include "system/main.h"
 #include "system/wipe.h"
 #include "system/gfl_use.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "msg/msg_d_nakahiro.h"
+#include "msg/debug/msg_d_nakahiro.h"
 #include "font/font.naix"
 #include "pokeicon/pokeicon.h"
 #include "test/performance.h"
@@ -436,7 +436,7 @@ static void InitMsg( PIVIEW_WORK * wk )
 {
 	wk->mman = GFL_MSG_Create(
 							GFL_MSG_LOAD_NORMAL,
-							ARCID_MESSAGE, NARC_message_d_nakahiro_dat, HEAPID_NAKAHIRO_DEBUG );
+							ARCID_DEBUG_MESSAGE, NARC_debug_message_d_nakahiro_dat, HEAPID_NAKAHIRO_DEBUG );
 	wk->font = GFL_FONT_Create(
 							ARCID_FONT, NARC_font_large_gftr,
 							GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_NAKAHIRO_DEBUG );

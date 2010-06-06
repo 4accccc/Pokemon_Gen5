@@ -13,8 +13,8 @@
 #include "event_debug_local.h"
 #include "pokemon_egg.h"
 
-#include "arc/message.naix"
-#include "msg/msg_debug_make_egg.h"
+#include "arc/debug_message.naix"
+#include "msg/debug/msg_debug_make_egg.h"
 
 #include "event_debug_menu_make_egg.h"
 
@@ -60,7 +60,7 @@ static const FLDMENUFUNC_LIST menuList[] =
 //--------------------------------------------------------------
 static const DEBUG_MENU_INITIALIZER menuInitializer = 
 {
-  NARC_message_debug_make_egg_dat,
+  NARC_debug_message_debug_make_egg_dat,
   NELEMS(menuList),
   menuList,
   &menuHeader,

@@ -21,7 +21,7 @@
 #include "event_mapchange.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
+#include "msg/debug/msg_d_field.h"
 
 #include "event_debug_menu_zone_jump.h"
 

@@ -471,8 +471,8 @@ BOOL MyStatus_Compare(const MYSTATUS * my, const MYSTATUS * target)
 //============================================================================================
 #ifdef PM_DEBUG
 #include "arc_def.h"
-#include "message.naix"
-#include "msg\msg_d_matsu.h"
+#include "debug_message.naix"
+#include "msg\debug\msg_d_matsu.h"
 //--------------------------------------------------------------
 /**
  * @brief   ダミーの名前をセットする
@@ -486,7 +486,7 @@ void DEBUG_MyStatus_DummyNameSet(MYSTATUS *mystatus, HEAPID heap_id)
   GFL_MSGDATA *mm;
   STRBUF *buf;
 
-  mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, heap_id );
+  mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_matsu_dat, heap_id );
 
   buf = GFL_MSG_CreateString( mm, DM_MSG_DUMMY_NAME );
   MyStatus_SetMyNameFromString(mystatus, buf);

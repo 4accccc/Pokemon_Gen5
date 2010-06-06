@@ -21,7 +21,8 @@
 #include "font/font.naix"
 #include "arc_def.h"
 #include "message.naix"
-#include "msg/msg_debug_makepoke.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_debug_makepoke.h"
 
 #include "debug/debug_makepoke.h"
 #include "debug_makepoke_def.h"
@@ -73,6 +74,7 @@ typedef struct {
   u16  pageNo;
   u32  arg;
   u32  arg2;
+  u32  arg3;
 
 }INPUT_BOX_PARAM;
 
@@ -192,7 +194,7 @@ static void numinput_draw( NUMINPUT_WORK* wk );
 static void numinput_sub_setary( NUMINPUT_WORK* wk, u32 value );
 static u32 numinput_sub_calcnum( NUMINPUT_WORK* wk );
 static u16 calc_keta( u32 value );
-static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID );
+static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgArcID, u32 msgDataID, HEAPID heapID );
 static void COMPSKB_Cleanup( COMP_SKB_WORK* wk );
 static BOOL COMPSKB_Main( COMP_SKB_WORK* wk );
 static int COMPSKB_GetWordIndex( const COMP_SKB_WORK* wk );
@@ -414,7 +416,7 @@ static void main_setup_view( DMP_MAINWORK* wk )
   wk->win = GFL_BMPWIN_Create( PRINT_FRAME, 0, 0, 32, 24, PRINT_PALIDX, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_small_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-  wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_makepoke_dat, wk->heapID );
+  wk->msgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_makepoke_dat, wk->heapID );
   wk->strbuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->heapID );
   wk->tmpbuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->heapID );
   wk->printQue = PRINTSYS_QUE_CreateEx( 4096, wk->heapID );
@@ -638,7 +640,7 @@ static int inputbox_type_str( DMP_MAINWORK* wk, const INPUT_BOX_PARAM* p )
     wk->skbSetup.mode = GFL_SKB_MODE_HIRAGANA;
   }
   wk->skb = GFL_SKB_Create( (void*)(wk->strbuf), &wk->skbSetup, wk->heapID );
-  COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg, wk->heapID );
+  COMPSKB_Setup( &wk->comp, wk->skb, wk->strbuf, p->arg3, p->arg, wk->heapID );
  
   return ((p->type == INPUTBOX_TYPE_STR)? SEQ_INPUT_STR : SEQ_INPUT_NICKNAME);
 }
@@ -1296,7 +1298,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
   switch( p->type ){
   case INPUTBOX_TYPE_STR:
     {
-      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
+      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, p->arg3, p->arg, GFL_HEAP_LOWID(wk->heapID) );
       GFL_MSG_GetString( msgdat, value+p->arg2, wk->strbuf );
       GFL_MSG_Delete( msgdat );
     }
@@ -1313,7 +1315,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
         }
         break;
       default:
-        msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
+        msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, p->arg3, p->arg, GFL_HEAP_LOWID(wk->heapID) );
         break;
       }
       GFL_MSG_GetString( msgdat, value+p->arg2, wk->strbuf );
@@ -1327,7 +1329,7 @@ static void  box_getstr( DMP_MAINWORK* wk, u32 boxID, STRBUF* buf )
 
   case INPUTBOX_TYPE_BTN:
     {
-      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->heapID) );
+      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, p->arg3, p->arg, GFL_HEAP_LOWID(wk->heapID) );
       GFL_MSG_GetString( msgdat, p->arg2, wk->strbuf );
       GFL_MSG_Delete( msgdat );
     }
@@ -1885,10 +1887,10 @@ static u16 calc_keta( u32 value )
 //==============================================================================================
 //  “ü—Í•âŠ®ˆ—
 //==============================================================================================
-static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgDataID, HEAPID heapID )
+static void COMPSKB_Setup( COMP_SKB_WORK* wk, GFL_SKB* skb, STRBUF* buf, u32 msgArcID, u32 msgDataID, HEAPID heapID )
 {
   wk->skb = skb;
-  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, msgDataID, heapID );
+  wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_FAST, msgArcID, msgDataID, heapID );
   wk->buf = buf;
   wk->subword  = GFL_STR_CreateBuffer( 32, heapID );
   wk->fullword = GFL_STR_CreateBuffer( 32, heapID );

@@ -43,12 +43,13 @@
 #include "system\net_err.h"
 
 // local includes ---------------------
-#include "msg\msg_debug_fight.h"
+#include "msg\debug\msg_debug_fight.h"
 #include "debug_fight_comm.h"
 
 // archive includes -------------------
 #include "arc_def.h"
 #include "message.naix"
+#include "debug_message.naix"
 #include "font/font.naix"
 
 
@@ -994,7 +995,7 @@ static void createTemporaryModules( DEBUG_BTL_WORK* wk, HEAPID heapID )
 {
   wk->win = GFL_BMPWIN_Create( GFL_BG_FRAME0_S, 0, 0, 32, 24, 0, GFL_BMP_CHRAREA_GET_F );
   wk->bmp = GFL_BMPWIN_GetBmp( wk->win );
-  wk->mm  = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_debug_fight_dat, heapID );
+  wk->mm  = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_fight_dat, heapID );
   wk->mmMonsName  = GFL_MSG_Create( GFL_MSG_LOAD_FAST, ARCID_MESSAGE, NARC_message_monsname_dat, heapID );
   wk->strbuf = GFL_STR_CreateBuffer( 1024, heapID );
 

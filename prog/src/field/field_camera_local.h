@@ -20,15 +20,13 @@ extern "C"{
 
 #ifdef PM_DEBUG
 // カメラパラメータ　デバック表示用
-#include "message.naix"
+#include "debug_message.naix"
 
 #include "print/wordset.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
 #include "fld_wipe_3dobj.h"
-
-#include "msg/msg_d_tomoya.h"
 
 #include "font/font.naix"
 

@@ -49,6 +49,9 @@ sub make_target_path {
 	if( $file =~ /^src\/script_message\//){
 		$dst_dir .= "/script";
 	}
+  if( $file =~ /^src\/debug\//){
+    $dst_dir .= "/debug";
+  }
 
 	if($file =~ /\//)
 	{

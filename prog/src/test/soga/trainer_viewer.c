@@ -25,9 +25,10 @@
 
 #include "print/printsys.h"
 #include "print/wordset.h"
-#include "msg/msg_d_soga.h"
+#include "msg/debug/msg_d_soga.h"
 #include "font/font.naix"
 #include "message.naix"
+#include "debug_message.naix"
 
 #if PM_DEBUG
 
@@ -402,7 +403,7 @@ static GFL_PROC_RESULT TrainerViewerProcInit( GFL_PROC * proc, int * seq, void *
 
     //メッセージ系初期化
     GFL_FONTSYS_Init();
-    tvw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, tvw->heapID );
+    tvw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_soga_dat, tvw->heapID );
 
     for( i = 0 ; i < BMPWIN_MAX ; i++ ){
       tvw->bmpwin[ i ] = GFL_BMPWIN_Create(

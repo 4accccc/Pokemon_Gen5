@@ -20,9 +20,9 @@
 #include "print\printsys.h"
 #include "print\gf_font.h"
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 #include "test_graphic\d_taya.naix"
-#include "msg\msg_d_matsu.h"
+#include "msg\debug\msg_d_matsu.h"
 #include "test/performance.h"
 #include "font/font.naix"
 #include "pokeicon/pokeicon.h"
@@ -332,7 +332,7 @@ static GFL_PROC_RESULT DebugMatsudaMainProcInit( GFL_PROC * proc, int * seq, voi
 //		PRINTSYS_Init( wk->heapID );
 		wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
-		wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_matsu_dat, wk->heapID );
+		wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_matsu_dat, wk->heapID );
 		wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
 		for(i = 0; i < ENTRY_MAX; i++){
 			wk->strbuf_entry[i] = GFL_STR_CreateBuffer( 64, wk->heapID );

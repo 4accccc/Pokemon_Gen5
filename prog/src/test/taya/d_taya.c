@@ -32,11 +32,12 @@
 #include "gamesystem\btl_setup.h"
 
 // local includes ---------------------
-#include "msg\msg_d_taya.h"
+#include "msg\debug\msg_d_taya.h"
 
 // archive includes -------------------
 #include "arc_def.h"
 #include "message.naix"
+#include "debug_message.naix"
 #include "test_graphic/d_taya.naix"
 #include "font/font.naix"
 
@@ -351,7 +352,7 @@ static void createTemporaryModules( MAIN_WORK* wk )
     wk->mm = GFL_MSG_Construct( mmdat, wk->heapID );
   }
   #else
-  wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_taya_dat, wk->heapID );
+  wk->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_taya_dat, wk->heapID );
   #endif
   wk->strbuf = GFL_STR_CreateBuffer( 1024, wk->heapID );
   wk->tcbl = GFL_TCBL_Init( wk->heapID, wk->heapID, 4, 32 );

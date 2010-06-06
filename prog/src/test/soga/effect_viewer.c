@@ -32,9 +32,10 @@
 
 #include "font/font.naix"
 #include "message.naix"
+#include "debug_message.naix"
 #include "effect_viewer.h"
 
-#include "msg/msg_ev_bgm_list.h"
+#include "msg/debug/msg_ev_bgm_list.h"
 #include "ev_bgm_list.cdat"
 
 #if PM_DEBUG
@@ -408,7 +409,7 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
 
   //メッセージ系初期化
   GFL_FONTSYS_Init();
-  evw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_soga_dat, evw->heapID );
+  evw->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_soga_dat, evw->heapID );
 
   EffectViewerInitMenuList( evw, MENULIST_TITLE );
 
@@ -1226,7 +1227,7 @@ static  void  EffectViewerDrawBgmNo( EFFECT_VIEWER_WORK *evw )
   STRBUF  *strbuf;
   int     pos_x;
 
-  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_ev_bgm_list_dat, evw->heapID );
+  msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_ev_bgm_list_dat, evw->heapID );
   strbuf = GFL_MSG_CreateString( msg, EV_BGM_000 + evw->bgm_no );
   GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
   pos_x = 24;

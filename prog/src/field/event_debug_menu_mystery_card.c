@@ -19,8 +19,8 @@
 #include "event_debug_local.h"
 #include "fieldmap.h"
 
-#include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 
 #include "item/itemsym.h"
 #include "debug/debug_mystery_card.h"
@@ -48,7 +48,7 @@ static const FLDMENUFUNC_LIST DATA_SubMysteryCardMakeList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubMysteryCardMakeData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_SubMysteryCardMakeList),
   DATA_SubMysteryCardMakeList,
   &DATA_DebugMenuList_Default, //—¬—p

@@ -13,13 +13,13 @@
 #include <gflib.h>
 
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 
 #include "print/wordset.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
-#include "msg/msg_d_tomoya.h"
+#include "msg/debug/msg_d_tomoya.h"
 
 #include "system/rtc_tool.h"
 
@@ -746,7 +746,7 @@ void FIELD_LIGHT_DEBUG_Init( FIELD_LIGHT* p_sys, HEAPID heapID )
 
   // ワードセット作成
   p_sys->p_debug_wordset = WORDSET_Create( heapID );
-  p_sys->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+  p_sys->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tomoya_dat, heapID );
 
   p_sys->p_debug_strbuff    = GFL_STR_CreateBuffer( 256, heapID );
   p_sys->p_debug_strbuff_tmp  = GFL_STR_CreateBuffer( 256, heapID );

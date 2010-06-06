@@ -14,13 +14,13 @@
 #include "field_fog.h"
 
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 
 #include "print/wordset.h"
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
-#include "msg/msg_d_tomoya.h"
+#include "msg/debug/msg_d_tomoya.h"
 
 #include "font/font.naix"
 
@@ -635,7 +635,7 @@ void FIELD_FOG_DEBUG_Init( FIELD_FOG_WORK* p_wk, HEAPID heapID )
 
   // ワードセット作成
   p_wk->p_debug_wordset = WORDSET_Create( heapID );
-  p_wk->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+  p_wk->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tomoya_dat, heapID );
 
   p_wk->p_debug_strbuff   = GFL_STR_CreateBuffer( 256, heapID );
   p_wk->p_debug_strbuff_tmp = GFL_STR_CreateBuffer( 256, heapID );

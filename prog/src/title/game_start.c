@@ -18,8 +18,8 @@
 #include "app/name_input.h"
 #include "test/testmode.h"
 #include "select_moji_mode.h"
-#include "message.naix"
-#include "msg/msg_debugname.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_debugname.h"
 #include "net_app/union/union_beacon_tool.h"
 #include "system/gfl_use.h"
 #include "demo/demo3d.h"
@@ -609,7 +609,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     u32 msg_id;
     
     msgman = GFL_MSG_Create( 
-      GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, GFL_HEAPID_APP );
+      GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, GFL_HEAPID_APP );
 #if 0
   #if PM_VERSION == VERSION_BLACK
     namebuf = GFL_MSG_CreateString( msgman, DEBUG_NAME_BLACK );

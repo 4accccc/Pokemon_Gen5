@@ -27,8 +27,8 @@
 #include "gamesystem/game_data.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
-#include "msg/msg_d_iwasawa.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_iwasawa.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "field/fieldmap.h"
@@ -191,8 +191,8 @@ static void sub_MenuInit( EVENT_DEB_MVPOKE* wk )
 {
   sub_GraphicInit(wk);
 
-  wk->msg_deb = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-                               NARC_message_d_iwasawa_dat, wk->heapID );
+  wk->msg_deb = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE,
+                               NARC_debug_message_d_iwasawa_dat, wk->heapID );
 
   //地名メッセージデータ
 	wk->msg_place = GFL_MSG_Create(

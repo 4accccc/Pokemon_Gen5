@@ -7,7 +7,7 @@
 #include <gflib.h>
 #if PM_DEBUG
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 #include "font/font.naix"
 
 #include "system/gfl_use.h"
@@ -15,7 +15,7 @@
 #include "system/bmp_menuwork.h"
 #include "system/bmp_menulist.h"
 #include "system/bmp_winframe.h"
-#include "msg/msg_debugname.h"
+#include "msg/debug/msg_debugname.h"
 
 #include "test/testmode.h"
 #include "title/title.h"
@@ -620,7 +620,7 @@ static GFL_PROC_RESULT TestModeProcInit(GFL_PROC * proc, int * seq, void * pwk, 
     case TESTMODE_NAMESELECT: //人名選択
       {
         u16 i;
-        GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, work->heapId_);
+        GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_debug_message_debugname_dat, work->heapId_);
 
         for( i=0;i<DEBUG_NAME_MAX;i++ )
         {
@@ -887,7 +887,7 @@ static BOOL TESTMODE_ITEM_SelectFuncChangeSelectName( TESTMODE_WORK *work , cons
 {
   /*
   u16 i;
-  GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, work->heapId_);
+  GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, work->heapId_);
 
   for( i=0;i<DEBUG_NAME_MAX;i++ )
   {
@@ -1181,7 +1181,7 @@ static BOOL TESTMODE_ITEM_ChangeRTC( TESTMODE_WORK *work , const int idx )
 //人名選択決定時
 static BOOL TESTMODE_ITEM_SelectFuncSelectName( TESTMODE_WORK *work , const int idx )
 {
-  GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, work->heapId_);
+  GFL_MSGDATA *msgMng = GFL_MSG_Create(GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debugname_dat, work->heapId_);
 
   STRBUF  *str = GFL_STR_CreateBuffer( ITEM_NAME_MAX , work->heapId_ );
   MYSTATUS    *myStatus;

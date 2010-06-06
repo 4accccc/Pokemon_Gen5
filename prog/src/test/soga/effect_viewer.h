@@ -7,7 +7,7 @@
  */
 //============================================================================================
 
-#include "msg/msg_d_soga.h"
+#include "msg/debug/msg_d_soga.h"
 
 #define	NO_MOVE	( 0xff )
 #define	NO_EDIT	( -1 )

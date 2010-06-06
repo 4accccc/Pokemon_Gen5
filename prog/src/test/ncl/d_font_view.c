@@ -26,9 +26,9 @@
 
 //アーカイブ
 #include "arc_def.h"
-#include "message.naix"
+#include "debug_message.naix"
 #include "font/font.naix"
-#include "msg/msg_d_ncl.h"
+#include "msg/debug/msg_d_ncl.h"
 
 // 文字セットをあらわす配列 UserInputCode、DefinedCode
 #include "d_font_view.cdat"
@@ -430,7 +430,7 @@ static GFL_PROC_RESULT FontViewerProcInit(GFL_PROC * proc, int * seq, void * pwk
   work->bmpWinHelp = CreateFullScreenBmpWin(work, BG_PLANE_HELP);
 
   // 文字列
-  work->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_ncl_dat, work->heapId );
+  work->msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_ncl_dat, work->heapId );
   work->wordset = WORDSET_CreateEx( WORDSET_BUFNUM, WORDSET_BUFLEN, work->heapId );
 
   work->viewHeadStr = GFL_MSG_CreateString(work->msgman, DEBUG_FONTVIEW_HEAD);

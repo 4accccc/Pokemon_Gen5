@@ -19,8 +19,8 @@
 #include "arc_def.h"
 #include "system/bmp_menu.h"
 #include "system/bmp_winframe.h"
-#include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 #include "font/font.naix" //NARC_font_large_gftr
 
 //======================================================================
@@ -537,8 +537,8 @@ void LayoutDebugMenu_Create( DEBUG_FLDMENU *d_menu )
 	
 	{	//msg
 		d_menu->msgdata = GFL_MSG_Create(
-			GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE,
-			NARC_message_d_field_dat, d_menu->heapID );
+			GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE,
+			NARC_debug_message_d_field_dat, d_menu->heapID );
 		
 		d_menu->strbuf = GFL_STR_CreateBuffer( 1024, d_menu->heapID );
 

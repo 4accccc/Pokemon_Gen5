@@ -18,8 +18,8 @@
 #include "debug/debug_str_conv.h"
 #include "event_debug_local.h"
 
-#include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 
 #include "field/fldmmdl.h"
 #include "event_debug_menu_mmdl_list.h"
@@ -80,7 +80,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuList_MMdlList =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   OBJCODETOTAL,
   NULL,
   &DATA_DebugMenuList_MMdlList,

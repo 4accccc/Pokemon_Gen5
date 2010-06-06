@@ -15,8 +15,8 @@
 
 #include "font/font.naix"
 #include "arc_def.h"
-#include "message.naix"
-#include "msg/msg_debug_zone_jump.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_debug_zone_jump.h"
 #include "debug/debug_zone_jump.h"
 #include "field/zonedata.h"
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
@@ -98,6 +98,7 @@ typedef struct {
 //  u16  paraID;
   u32  arg;
   u32  arg2;
+  u32  arg3;
 
 }STR_PARAM;
 
@@ -145,10 +146,10 @@ typedef struct {
 static const STR_PARAM StrParams[] = {
   {STR_TYPE_STR, ZONE_JUMP_STR_ID,  STR_POS_X, STR_NAME_POS_Y,
     TOUCH_X_NAME,STR_NAME_POS_Y,TOUCH_W_NAME,TOUCH_H,
-    0,0 },
+    0,0,0 },
   {STR_TYPE_BTN, ZONE_JUMP_STR_NULL,  TOUCH_X_JUMP, STR_JUMP_POS_Y,
     TOUCH_X_JUMP,STR_JUMP_POS_Y,TOUCH_W_JUMP,TOUCH_H,
-    NARC_message_debug_zone_jump_dat, ZONE_JUMP_STR_JUMP },
+    NARC_debug_message_debug_zone_jump_dat, ZONE_JUMP_STR_JUMP, ARCID_DEBUG_MESSAGE },
 };
 
 
@@ -330,7 +331,7 @@ static void SetupDisp( JUMP_WORK* wk )
   wk->Win = GFL_BMPWIN_Create( PRINT_FRAME, 0, 0, 32, 24, PRINT_PALIDX, GFL_BMP_CHRAREA_GET_F );
   wk->Bmp = GFL_BMPWIN_GetBmp( wk->Win );
   wk->Font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->HeapID );
-  wk->MsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debug_zone_jump_dat, wk->HeapID );
+  wk->MsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_debug_zone_jump_dat, wk->HeapID );
   wk->StrBuf = GFL_STR_CreateBuffer( STRBUF_LEN, wk->HeapID );
   wk->PrintQue = PRINTSYS_QUE_Create( wk->HeapID );
   PRINT_UTIL_Setup( &wk->PrintUtil, wk->Win );
@@ -546,7 +547,7 @@ static void GetBoxStr( JUMP_WORK* wk, u32 inBoxID, STRBUF* buf )
     break;
   case STR_TYPE_BTN:
     {
-      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, p->arg, GFL_HEAP_LOWID(wk->HeapID) );
+      GFL_MSGDATA* msgdat = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, p->arg3, p->arg, GFL_HEAP_LOWID(wk->HeapID) );
       GFL_MSG_GetString( msgdat, p->arg2, wk->StrBuf );
       GFL_MSG_Delete( msgdat );
     }

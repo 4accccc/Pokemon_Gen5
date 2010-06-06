@@ -22,8 +22,8 @@
 #include "field_event_check.h"
 #include "script.h"
 
-#include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 #include "../../../resource/fldmapdata/script/hiden_def.h"  //SCRID_HIDEN_DIVING
 
@@ -55,7 +55,7 @@ static const FLDMENUFUNC_LIST DATA_SubFieldSkillList[] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSubFieldSkillListSelectData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_SubFieldSkillList),
   DATA_SubFieldSkillList,
   &DATA_DebugMenuList_Default, //—¬—p

@@ -12,7 +12,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   //モンスターNo
   { INPUTBOX_TYPE_STR, DMPSTR_POKEMON, LX_POKETYPE_CAP, LY_POKETYPE_CAP,
     LX_POKETYPE_BOX, LY_POKETYPE_BOX, 56, LINE_HEIGHT,
-    ID_PARA_monsno, PAGE_0, NARC_message_monsname_dat, 0  },
+    ID_PARA_monsno, PAGE_0, NARC_message_monsname_dat, 0, ARCID_MESSAGE  },
 
   //レベル
   { INPUTBOX_TYPE_NUM, DMPSTR_LEVEL,   LX_LEVEL_CAP,  LY_LEVEL_CAP,
@@ -28,17 +28,17 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_SEX,   LX_SEX_FIX_CAP,  LY_SEX_FIX_CAP,
     LX_SEX_FIX_BOX,   LY_SEX_FIX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
 //    ID_PARA_sex, PAGE_0, DMPSTR_SEX_MALE, SWITCH_STRNUM_DEFAULT },
-    ID_PARA_sex, PAGE_0, NARC_message_debug_makepoke_dat, DMPSTR_SEX_MALE },
+    ID_PARA_sex, PAGE_0, NARC_debug_message_debug_makepoke_dat, DMPSTR_SEX_MALE, ARCID_DEBUG_MESSAGE },
   
   //性格
   { INPUTBOX_TYPE_STR,  DMPSTR_SEIKAKU,    LX_SEIKAKU_CAP,    LY_SEIKAKU_CAP,
     LX_SEIKAKU_BOX,    LY_SEIKAKU_BOX,    CALC_STRBOX_WIDTH(5),   LINE_HEIGHT,
-    ID_PARA_seikaku, PAGE_0,   NARC_message_chr_dat, 0 },
+    ID_PARA_seikaku, PAGE_0,   NARC_message_chr_dat, 0, ARCID_MESSAGE },
 
   //特性
   { INPUTBOX_TYPE_STR,  DMPSTR_TOKUSEI,    LX_TOKUSEI_CAP,    LY_TOKUSEI_CAP,
     LX_TOKUSEI_BOX,    LY_TOKUSEI_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_speabino, PAGE_0,  NARC_message_tokusei_dat, 0 },
+    ID_PARA_speabino, PAGE_0,  NARC_message_tokusei_dat, 0, ARCID_MESSAGE },
   
   // 特性スイッチ
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_NULL, 0, 0,
@@ -49,33 +49,33 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // 第3特性スイッチ
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_TOKUSEI_3RD, LX_TOKUSEI_3RD_CAP, LY_TOKUSEI_3RD_CAP,
     LX_TOKUSEI_3RD_BOX,    LY_TOKUSEI_3RD_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_tokusei_3_flag,  PAGE_0, NARC_message_debug_makepoke_dat, DMPSTR_TAMAGO_OFF,
+    ID_PARA_tokusei_3_flag,  PAGE_0, NARC_debug_message_debug_makepoke_dat, DMPSTR_TAMAGO_OFF, ARCID_DEBUG_MESSAGE
   },
 
   //アイテム
   { INPUTBOX_TYPE_STR,  DMPSTR_ITEM,    LX_ITEM_CAP,    LY_ITEM_CAP,
     LX_ITEM_BOX,    LY_ITEM_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_item, PAGE_0, NARC_message_itemname_dat, 0 },
+    ID_PARA_item, PAGE_0, NARC_message_itemname_dat, 0, ARCID_MESSAGE },
 
   //技1
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA1,   LX_WAZA1_CAP,   LY_WAZA1_CAP,
     LX_WAZA1_BOX,   LY_WAZA1_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza1, PAGE_0, NARC_message_wazaname_dat,  0 },
+    ID_PARA_waza1, PAGE_0, NARC_message_wazaname_dat,  0, ARCID_MESSAGE },
 
   //技2
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA2,   LX_WAZA2_CAP,   LY_WAZA2_CAP,
     LX_WAZA2_BOX,   LY_WAZA2_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza2, PAGE_0, NARC_message_wazaname_dat,    0 },
+    ID_PARA_waza2, PAGE_0, NARC_message_wazaname_dat,    0, ARCID_MESSAGE },
 
   //技3
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA3,   LX_WAZA3_CAP,   LY_WAZA3_CAP,
     LX_WAZA3_BOX,   LY_WAZA3_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza3, PAGE_0, NARC_message_wazaname_dat,    0 },
+    ID_PARA_waza3, PAGE_0, NARC_message_wazaname_dat,    0, ARCID_MESSAGE },
 
   //技4
   { INPUTBOX_TYPE_STR,  DMPSTR_WAZA4,   LX_WAZA4_CAP,   LY_WAZA4_CAP,
     LX_WAZA4_BOX,   LY_WAZA4_BOX,   CALC_STRBOX_WIDTH(7), LINE_HEIGHT,
-    ID_PARA_waza4, PAGE_0, NARC_message_wazaname_dat,    0 },
+    ID_PARA_waza4, PAGE_0, NARC_message_wazaname_dat,    0, ARCID_MESSAGE },
 
   //---------------------------------------------------
   // PP系
@@ -210,27 +210,27 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   //タイプ1
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_TYPE,   LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_TYPE_BOX,    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_type1, PAGE_0,  NARC_message_typename_dat,  0 },
+    ID_PARA_type1, PAGE_0,  NARC_message_typename_dat,  0, ARCID_MESSAGE },
 
   //タイプ2
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_TYPE_BOX+CALC_STRBOX_WIDTH(4),    LY_TYPE_BOX,    CALC_STRBOX_WIDTH(4), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,  NARC_message_typename_dat,  0 },
+    ID_PARA_type2, PAGE_0,  NARC_message_typename_dat,  0, ARCID_MESSAGE },
 
   //デフォルト技セットボタン
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_DEFAULT_BTN, LY_DEFAULT_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,  NARC_message_debug_makepoke_dat,  DMPSTR_DEFWAZA },
+    ID_PARA_type2, PAGE_0,  NARC_debug_message_debug_makepoke_dat,  DMPSTR_DEFWAZA, ARCID_DEBUG_MESSAGE },
 
   //技セットボタン「はたく」だけ
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_HATAKU_BTN,      LY_HATAKU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,      NARC_message_debug_makepoke_dat,  DMPSTR_HATAKUDAKE },
+    ID_PARA_type2, PAGE_0,      NARC_debug_message_debug_makepoke_dat,  DMPSTR_HATAKUDAKE, ARCID_DEBUG_MESSAGE },
 
   //技セットボタン「はねる」だけ
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_TYPE_CAP,   LY_TYPE_CAP,
     LX_HANERU_BTN,  LY_HANERU_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_type2, PAGE_0,  NARC_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE
+    ID_PARA_type2, PAGE_0,  NARC_debug_message_debug_makepoke_dat,  DMPSTR_HANERUDAKE, ARCID_DEBUG_MESSAGE
   },
   //フォルム
   { INPUTBOX_TYPE_NUM,  DMPSTR_FORM,  LX_FORM_CAP,  LY_FORM_CAP,
@@ -287,17 +287,17 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // レア
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_RARE, LX_RARE_CAP,  LY_RARE_CAP,
     LX_RARE_BOX,           LY_RARE_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_tamago_flag, PAGE_1, NARC_message_debug_makepoke_dat, DMPSTR_TAMAGO_OFF
+    ID_PARA_tamago_flag, PAGE_1, NARC_debug_message_debug_makepoke_dat, DMPSTR_TAMAGO_OFF, ARCID_DEBUG_MESSAGE
   },
   // レアセットボタン
   { INPUTBOX_TYPE_BTN,  DMPSTR_NULL,      LX_RARE_SET_CAP,   LY_RARE_SET_CAP,
     LX_RARE_SET_BTN, LY_RARE_SET_BTN,    CALC_STRBOX_WIDTH(5), LINE_HEIGHT,
-    ID_PARA_personal_rnd, PAGE_1,  NARC_message_debug_makepoke_dat,  DMPSTR_RARE_SET },
+    ID_PARA_personal_rnd, PAGE_1,  NARC_debug_message_debug_makepoke_dat,  DMPSTR_RARE_SET, ARCID_DEBUG_MESSAGE },
 
   //性別
   { INPUTBOX_TYPE_FIXSTR,  DMPSTR_SEX,   LX_SEX_CAP,  LY_SEX_CAP,
     LX_SEX_BOX,   LY_SEX_BOX,  CALC_NUMBOX_WIDTH(1), LINE_HEIGHT,
-    ID_PARA_sex, PAGE_1, NARC_message_debug_makepoke_dat, DMPSTR_SEX_MALE
+    ID_PARA_sex, PAGE_1, NARC_debug_message_debug_makepoke_dat, DMPSTR_SEX_MALE, ARCID_DEBUG_MESSAGE
   },
   //性別切替
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_NULL,   LX_SEX_SET_CAP,  LY_SEX_SET_CAP,
@@ -323,7 +323,7 @@ static const INPUT_BOX_PARAM InputBoxParams[] = {
   // 捕獲ボール
   { INPUTBOX_TYPE_STR,  DMPSTR_GET_BALL,    LX_GET_BALL_CAP,    LY_GET_BALL_CAP,
     LX_GET_BALL_BOX,    LY_GET_BALL_BOX,    CALC_STRBOX_WIDTH(8),   LINE_HEIGHT,
-    ID_PARA_get_ball,   PAGE_1, NARC_message_itemname_dat, 0 },
+    ID_PARA_get_ball,   PAGE_1, NARC_message_itemname_dat, 0, ARCID_MESSAGE },
   // 捕獲カセット
   { INPUTBOX_TYPE_SWITCH,  DMPSTR_GET_CASETTE, LX_GET_CASETTE_CAP,  LY_GET_CASETTE_CAP,
     LX_GET_CASETTE_BOX,    LY_GET_CASETTE_BOX,  CALC_STRBOX_WIDTH(6), LINE_HEIGHT,

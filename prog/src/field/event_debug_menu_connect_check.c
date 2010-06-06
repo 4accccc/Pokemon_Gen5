@@ -16,8 +16,8 @@
 
 #include "field/field_msgbg.h"
 
-#include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 
 #include "fieldmap.h"
 #include "font/font.naix"
@@ -38,8 +38,6 @@
 //======================================================================
 //  proto
 //======================================================================
-static FLDMENUFUNC * DEBUGFLDMENU_InitExPos( FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos );
 static void DebugMenu_IineCallBack(BMPMENULIST_WORK* lw,u32 param,u8 y); 
 static GMEVENT_RESULT DebugMenuEvent( GMEVENT *event, int *seq, void *wk );
 static BOOL debugMenuCallProc_AllConnectCheck( DEBUG_MENU_EVENT_WORK * p_wk );
@@ -92,7 +90,7 @@ static const FLDMENUFUNC_HEADER DATA_DebugMenuListHeader =
  */
 //--------------------------------------------------------------
 static const DEBUG_MENU_INITIALIZER DebugMenuData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_DebugMenuList),
   DATA_DebugMenuList,
   &DATA_DebugMenuListHeader,
@@ -142,62 +140,6 @@ GMEVENT * DEBUG_EVENT_DebugMenu_ConnectCheck( GAMESYS_WORK *gsys, void* wk )
 
 //======================================================================
 //======================================================================
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static FLDMENUFUNC * DebugMenuInitCore(
-    FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init, void* cb_work, u16 list_pos, u16 cursor_pos )
-{
-  GAMESYS_WORK * gsys;
-  FLDMENUFUNC * ret;
-  GFL_MSGDATA *msgData;
-  FLDMSGBG *msgBG;
-  FLDMENUFUNC_LISTDATA *listdata;
-  FLDMENUFUNC_HEADER menuH;
-  u16 max;
-
-  gsys = FIELDMAP_GetGameSysWork( fieldmap );
-  msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
-  msgData = FLDMSGBG_CreateMSGDATA( msgBG, init->msg_arc_id );
-
-  if (init->getMaxFunc) {
-    max = init->getMaxFunc( gsys, cb_work );
-  } else {
-    max = init->max;
-  }
-  if (init->makeListFunc) {
-    listdata = FLDMENUFUNC_CreateListData( max, heapID );
-    init->makeListFunc( gsys, listdata, heapID, msgData, cb_work );
-  } else {
-    listdata = FLDMENUFUNC_CreateMakeListData( init->menulist, max, msgData, heapID );
-  }
-
-  menuH = *(init->menuH);
-  {
-    u8 sy = (max * 2 < init->sy) ? max * 2 : init->sy;
-    FLDMENUFUNC_InputHeaderListSize( &menuH, max, init->px, init->py, init->sx, sy );
-  }
-  ret = FLDMENUFUNC_AddMenuList( msgBG, &menuH, listdata, list_pos, cursor_pos );
-  GFL_MSG_Delete( msgData );
-  return ret;
-}
-
-//--------------------------------------------------------------
-//--------------------------------------------------------------
-static FLDMENUFUNC * DEBUGFLDMENU_Init(
-    FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init )
-{
-  return DebugMenuInitCore( fieldmap, heapID, init, NULL, 0, 0 );
-}
-
-static FLDMENUFUNC * DEBUGFLDMENU_InitExPos(
-    FIELDMAP_WORK * fieldmap, HEAPID heapID,
-    const DEBUG_MENU_INITIALIZER * init, u16 list_pos, u16 cursor_pos )
-{
-  return DebugMenuInitCore( fieldmap, heapID, init, NULL, list_pos, cursor_pos );
-}
-
 //--------------------------------------------------------------
 /**
  * イベント：フィールドデバッグメニュー

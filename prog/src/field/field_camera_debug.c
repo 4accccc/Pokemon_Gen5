@@ -26,6 +26,8 @@
 // デバック機能を違うソースにするために、定義を別ヘッダーに移しました。
 #include "field_camera_local.h"
 
+#include "msg/debug/msg_d_tomoya.h"
+
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -230,7 +232,7 @@ void FIELD_CAMERA_DEBUG_InitControl( FIELD_CAMERA* camera, HEAPID heapID )
 
   // ワードセット作成
   camera->p_debug_wordset = WORDSET_Create( heapID );
-  camera->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+  camera->p_debug_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tomoya_dat, heapID );
 
   camera->p_debug_strbuff   = GFL_STR_CreateBuffer( 512, heapID );
   camera->p_debug_strbuff_tmp = GFL_STR_CreateBuffer( 512, heapID );

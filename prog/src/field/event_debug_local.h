@@ -1,9 +1,11 @@
+//======================================================================
 /*
  *  @file   event_debug_local.h
  *  @brief  フィールドデバッグメニュー　ローカル共有ヘッダ
  *  @author Miyuki Iwasawa
  *  @date   09.11.25
  */
+//======================================================================
 
 #pragma once
 
@@ -54,7 +56,7 @@ typedef u16 GET_MAX_FUNC( GAMESYS_WORK* gsys, void* c_work );
  */
 //--------------------------------------------------------------
 typedef struct {
-  u16 msg_arc_id;     ///<引用するメッセージアーカイブの指定
+  u16 msg_dat_id;     ///<引用するメッセージアーカイブの指定
   u16 max;            ///<項目最大数（固定リストでない場合、０）
   const FLDMENUFUNC_LIST * menulist;  ///<参照するメニューデータ（生成する場合はNULL)
   const FLDMENUFUNC_HEADER * menuH;   ///<メニュー表示指定データ
@@ -83,6 +85,10 @@ extern FLDMENUFUNC * DEBUGFLDMENU_Init(
 //--------------------------------------------------------------
 extern FLDMENUFUNC * DEBUGFLDMENU_InitEx(
     FIELDMAP_WORK * fieldmap, HEAPID heapID, const DEBUG_MENU_INITIALIZER * init, void* cb_work );
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+extern GFL_MSGDATA * DEBUGFLDMENU_CreateMSGDATA( FIELDMAP_WORK * fieldmap, u32 arcDatIDMsg );
 
 //======================================================================
 //

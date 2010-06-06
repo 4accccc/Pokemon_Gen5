@@ -16,7 +16,7 @@
 #include "arc_def.h"
 
 #include "system/main.h"  //HEAPID
-#include "message.naix"
+#include "debug_message.naix"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "print/global_font.h"
@@ -26,7 +26,7 @@
 #include "system/wipe.h"
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
-#include "msg\msg_d_ohno.h"
+#include "msg\debug\msg_d_ohno.h"
 #if 0
 
 #include "sound/snd_strm.h"
@@ -527,7 +527,7 @@ static GFL_PROC_RESULT VTRProc_Init( GFL_PROC * proc, int * seq, void * pwk, voi
 		pWork->fontHandle = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
 																			GFL_FONT_LOADTYPE_FILE, FALSE, pWork->heapID );
 
-		pWork->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_ohno_dat, pWork->heapID );
+		pWork->mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_ohno_dat, pWork->heapID );
 		pWork->strbuf = GFL_STR_CreateBuffer(64, pWork->heapID);
 		pWork->strbufEx = GFL_STR_CreateBuffer(64, pWork->heapID);
 		pWork->WordSet    = WORDSET_Create( pWork->heapID );

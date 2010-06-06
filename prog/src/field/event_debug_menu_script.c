@@ -31,7 +31,7 @@
 
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
 
-#include "message.naix" //NARC_message_d_field_dat
+#include "debug_message.naix" //NARC_debug_message_d_field_dat
 
 //======================================================================
 //======================================================================

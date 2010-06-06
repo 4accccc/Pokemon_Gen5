@@ -33,8 +33,8 @@
 // アーカイブ
 #include "arc_def.h"
 #include "font/font.naix"
-#include "message.naix"
-#include "msg/msg_d_kawada.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_kawada.h"
 
 // サウンド
 
@@ -622,8 +622,8 @@ static void D_Test_CmnTextInit( D_TEST_COMMON_WORK* work )
   // メッセージ
   work->msgdata = GFL_MSG_Create(
                       GFL_MSG_LOAD_NORMAL,
-                      ARCID_MESSAGE,
-                      NARC_message_d_kawada_dat,
+                      ARCID_DEBUG_MESSAGE,
+                      NARC_debug_message_d_kawada_dat,
                       work->heap_id );
 
   // ビットマップウィンドウ

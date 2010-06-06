@@ -23,7 +23,7 @@
 
 #include "message.naix"
 #include "font/font.naix"
-#include "msg/msg_d_field.h"
+#include "msg/debug/msg_d_field.h"
 
 #include "event_fieldmap_control.h"
 #include "event_debug_make_poke.h"

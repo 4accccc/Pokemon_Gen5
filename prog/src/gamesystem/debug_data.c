@@ -26,8 +26,8 @@
 #include "savedata/intrude_save.h"
 
 #include "arc_def.h"  //ARCID_MESSAGE
-#include "message.naix" //NARC_message_debugname_dat
-#include "msg/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
+#include "debug_message.naix" //NARC_message_debugname_dat
+#include "msg/debug/msg_debugname.h"  //DEBUG_NAME_RAND_M_000
 #include "system/gfl_use.h"   //GFUser_GetPublicRand
 
 #include "app/research_radar/question_id.h"
@@ -358,7 +358,7 @@ static void DEBUG_INTRUDE_MakeSecretItem( GAMEDATA * gamedata, HEAPID heapID )
   GFL_MSGDATA * msgman;
   INTRUDE_SAVE_WORK * intsave;
     
-  msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_debugname_dat, heapID );
+  msgman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_debug_message_debugname_dat, heapID );
 
   intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( gamedata ) );
   addIntrudeSecretItem( msgman, intsave, ITEM_OMAMORIKOBAN, 0 );

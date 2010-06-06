@@ -14,6 +14,7 @@
 #include "field_bbd_color.h"
 
 #include "arc/arc_def.h"
+#include "debug_message.naix"
 #include "arc/fieldmap/area_map_mmdl_color.naix"
 
 //-----------------------------------------------------------------------------
@@ -181,7 +182,7 @@ void FLD_BBD_COLOR_SetData( const FLD_BBD_COLOR* cp_wk, GFL_BBD_SYS* p_bbdsys )
 #include "print/gf_font.h"
 #include "print/printsys.h"
 
-#include "msg/msg_d_tomoya.h"
+#include "msg/debug/msg_d_tomoya.h"
 
 #include "font/font.naix"
 
@@ -257,7 +258,7 @@ void FLD_BBD_COLOR_DEBUG_Init( GFL_BBD_SYS* bbd_sys, const FLD_BBD_COLOR* cp_dat
 
   // ワードセット作成
   p_DEBUG_BBD_COLOR_CONTROL_WK->p_wordset = WORDSET_Create( heapID );
-  p_DEBUG_BBD_COLOR_CONTROL_WK->p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_d_tomoya_dat, heapID );
+  p_DEBUG_BBD_COLOR_CONTROL_WK->p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tomoya_dat, heapID );
 
   p_DEBUG_BBD_COLOR_CONTROL_WK->p_strbuff    = GFL_STR_CreateBuffer( 256, heapID );
   p_DEBUG_BBD_COLOR_CONTROL_WK->p_strbuff_tmp  = GFL_STR_CreateBuffer( 256, heapID );

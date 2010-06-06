@@ -15,7 +15,8 @@
 
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
+#include "debug_message.naix"
+#include "msg/debug/msg_d_field.h"
 
 #include "fieldmap.h"
 #include "field/zonedata.h"
@@ -77,7 +78,7 @@ static GMEVENT_RESULT debugMenuZoneSelectEvent(
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static const DEBUG_MENU_INITIALIZER DebugZoneSelectData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   0,
   NULL,
   &DATA_DebugMenuList_ZoneSel,
@@ -208,7 +209,7 @@ static void DEBUG_SetMenuWorkZoneID_SelectZone(
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static const DEBUG_MENU_INITIALIZER DebugMenuZoneJumpData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(JumpZoneID_ListTbl),
   NULL,
   &DATA_DebugMenuList_ZoneSel, //—¬—p
@@ -320,7 +321,7 @@ static const FLDMENUFUNC_LIST DATA_SeasonMenuList[PMSEASON_TOTAL] =
 };
 
 static const DEBUG_MENU_INITIALIZER DebugSeasonJumpMenuData = {
-  NARC_message_d_field_dat,
+  NARC_debug_message_d_field_dat,
   NELEMS(DATA_SeasonMenuList),
   DATA_SeasonMenuList,
   &DATA_DebugMenuList_ZoneSel, //—¬—p
@@ -452,7 +453,8 @@ static void DEBUG_SetMenuWorkZoneIDNameAll(
   STRBUF *strBuf2 = GFL_STR_CreateBuffer( 64, heapID );
   FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
   FLDMSGBG * msgBG = FIELDMAP_GetFldMsgBG( fieldmap );
-  GFL_MSGDATA * pMsgData = FLDMSGBG_CreateMSGDATA( msgBG, NARC_message_place_name_dat );
+  GFL_MSGDATA * pMsgData = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL,
+      ARCID_MESSAGE, NARC_message_place_name_dat, FIELDMAP_GetHeapID( fieldmap ) );
   
   for( id = 0; id < max; id++ ){
     u16 str_id = ZONEDATA_GetPlaceNameID( id );
