@@ -69,6 +69,7 @@ struct _CTVT_CAMERA_WORK
   BOOL isDispDouble;
   u8   waitAllConut;  //2‰ñ‘Ò‚½‚È‚¢‚Æ‚¢‚¯‚È‚¢
   u8   allClearCnt;   //ƒEƒBƒ“ƒhƒE‚ðŽg‚Á‚ÄÄ•`‰æ‚·‚é
+  BOOL isWaitWindow;  //ª‚ÌˆêŽž’âŽ~
   
   CTVT_CAMERA_MEMBER_WORK memWork[CTVT_MEMBER_NUM];
   
@@ -129,6 +130,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   camWork->allClearCnt = 192;
   camWork->isRefreshClear = FALSE;
   camWork->isDispDouble = FALSE;
+  camWork->isWaitWindow = FALSE;
   camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
   
   for( i=0;i<CTVT_MEMBER_NUM;i++ )
@@ -198,9 +200,16 @@ void CTVT_CAMERA_Main( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
   
   if( camWork->allClearCnt < 192 )
   {
-    camWork->allClearCnt += 8;
-    G2_SetWnd0Position( 0,0,255,camWork->allClearCnt );
-    G2_SetWnd1Position( 128,0,0,camWork->allClearCnt );
+    if( camWork->isWaitWindow == FALSE )
+    {
+      camWork->allClearCnt += 8;
+      G2_SetWnd0Position( 0,0,255,camWork->allClearCnt );
+      G2_SetWnd1Position( 128,0,0,camWork->allClearCnt );
+    }
+    else
+    {
+      OS_TPrintf("?");
+    }
   }
 
 /*
@@ -290,15 +299,16 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
       else
       {
         u8 i;
-        //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
-        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         if( camWork->isRefreshClear == TRUE )
         {
           camWork->isRefreshClear = FALSE;
           camWork->allClearCnt = 0;
+          camWork->isWaitWindow = TRUE;
           G2_SetWnd0Position( 0,0,255,0 );
           G2_SetWnd1Position( 128,0,0,0 );
         }
+        //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
+        GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
         camWork->isWaitAllRefresh = FALSE;
         if( camWork->isDispDouble != COMM_TVT_IsDoubleMode(work) )
         {
@@ -344,6 +354,7 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
             }
           }
         }
+        camWork->isWaitWindow = FALSE;
       }
     }
 
@@ -351,82 +362,84 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
     {
       if( camWork->isUpdateBit & (1<<i) )
       {
-        u16 scrPosX;
-        u16 scrPosY;
-        u16 scrSizeX;
-        u16 scrSizeY;
-        u32 bufferBase;
-        int iy;
-        u8 idx = i;
-        if( mode == CTDM_DOUBLE && idx != 0 )
+        if( CTVT_COMM_IsEnableMemberData( work , commWork , i ) == TRUE )
         {
-          idx = 1;
-        }
-        
-        if( isDouble == FALSE )
-        {
-          scrPosX = ( idx == 0 || idx == 2 ? 0 : 128 );
-          scrPosY = ( idx == 0 || idx == 1 ? 0 :  96 );
-          scrSizeX = ( mode == CTDM_DOUBLE ?128 :128 );
-          scrSizeY = ( mode == CTDM_DOUBLE ?192 : 96 );
-        }
-        else
-        {
-          scrPosX = ( idx == 0 || idx == 2 ? 0 : 64 );
-          scrPosY = ( idx == 0 || idx == 1 ? 0 : 48 );
-          scrSizeX = ( mode == CTDM_DOUBLE ?64 :64 );
-          scrSizeY = ( mode == CTDM_DOUBLE ?96 :48 );
-        }
-        
-        if( CTVT_COMM_CanUseCameraMember( work , commWork , i ) == TRUE &&
-            DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
-//        if( CTVT_COMM_CanUseCameraMember( work , commWork , i ) == TRUE )
-        {
-          bufferBase = (u32)camWork->scrBuf + scrSizeX*scrSizeY*2*idx;
-          DC_FlushRange( (void*)bufferBase , scrSizeX*scrSizeY*2 );
-        }
-        else
-        {
+          u16 scrPosX;
+          u16 scrPosY;
+          u16 scrSizeX;
+          u16 scrSizeY;
+          u32 bufferBase;
+          int iy;
+          u8 idx = i;
+          if( mode == CTDM_DOUBLE && idx != 0 )
+          {
+            idx = 1;
+          }
+          
           if( isDouble == FALSE )
           {
-            if( mode == CTDM_DOUBLE )
-            {
-              bufferBase = (u32)camWork->picBuf;
-              DC_FlushRange( (void*)bufferBase , 128*192*2 );
-            }
-            else
-            {
-              bufferBase = (u32)camWork->picBuf + 128*48*2;
-              DC_FlushRange( (void*)bufferBase , 128*96*2 );
-            }
+            scrPosX = ( idx == 0 || idx == 2 ? 0 : 128 );
+            scrPosY = ( idx == 0 || idx == 1 ? 0 :  96 );
+            scrSizeX = ( mode == CTDM_DOUBLE ?128 :128 );
+            scrSizeY = ( mode == CTDM_DOUBLE ?192 : 96 );
           }
           else
           {
-            if( mode == CTDM_DOUBLE )
+            scrPosX = ( idx == 0 || idx == 2 ? 0 : 64 );
+            scrPosY = ( idx == 0 || idx == 1 ? 0 : 48 );
+            scrSizeX = ( mode == CTDM_DOUBLE ?64 :64 );
+            scrSizeY = ( mode == CTDM_DOUBLE ?96 :48 );
+          }
+          
+          if( CTVT_COMM_CanUseCameraMember( work , commWork , i ) == TRUE &&
+              DS_SYSTEM_IsRestrictPhotoExchange() == FALSE )
+  //        if( CTVT_COMM_CanUseCameraMember( work , commWork , i ) == TRUE )
+          {
+            bufferBase = (u32)camWork->scrBuf + scrSizeX*scrSizeY*2*idx;
+            DC_FlushRange( (void*)bufferBase , scrSizeX*scrSizeY*2 );
+          }
+          else
+          {
+            if( isDouble == FALSE )
             {
-              bufferBase = (u32)camWork->picBufDouble;
-              DC_FlushRange( (void*)bufferBase , 64*96*2 );
+              if( mode == CTDM_DOUBLE )
+              {
+                bufferBase = (u32)camWork->picBuf;
+                DC_FlushRange( (void*)bufferBase , 128*192*2 );
+              }
+              else
+              {
+                bufferBase = (u32)camWork->picBuf + 128*48*2;
+                DC_FlushRange( (void*)bufferBase , 128*96*2 );
+              }
             }
             else
             {
-              bufferBase = (u32)camWork->picBufDouble + 64*24*2;
-              DC_FlushRange( (void*)bufferBase , 64*48*2 );
+              if( mode == CTDM_DOUBLE )
+              {
+                bufferBase = (u32)camWork->picBufDouble;
+                DC_FlushRange( (void*)bufferBase , 64*96*2 );
+              }
+              else
+              {
+                bufferBase = (u32)camWork->picBufDouble + 64*24*2;
+                DC_FlushRange( (void*)bufferBase , 64*48*2 );
+              }
             }
           }
-        }
-        
-        for( iy=0;iy<camWork->memWork[i].dispSizeY;iy++ )
-        {
-          const u32 bufX = scrSizeX-camWork->memWork[i].dispSizeX;
-          const u32 bufY = scrSizeY-camWork->memWork[i].dispSizeY+iy;
-          const u32 bufTopAdr = bufferBase + bufY*scrSizeX*2 + bufX*2;
           
-          const u32 scrTopAdr = (camWork->memWork[i].dispPosY+iy)*256*2 + camWork->memWork[i].dispPosX*2;
-          GX_LoadBG3Bmp( (void*)bufTopAdr ,
-                          scrTopAdr ,
-                          camWork->memWork[i].dispSizeX*2 );
+          for( iy=0;iy<camWork->memWork[i].dispSizeY;iy++ )
+          {
+            const u32 bufX = scrSizeX-camWork->memWork[i].dispSizeX;
+            const u32 bufY = scrSizeY-camWork->memWork[i].dispSizeY+iy;
+            const u32 bufTopAdr = bufferBase + bufY*scrSizeX*2 + bufX*2;
+            
+            const u32 scrTopAdr = (camWork->memWork[i].dispPosY+iy)*256*2 + camWork->memWork[i].dispPosX*2;
+            GX_LoadBG3Bmp( (void*)bufTopAdr ,
+                            scrTopAdr ,
+                            camWork->memWork[i].dispSizeX*2 );
+          }
         }
-        
         camWork->isUpdateBit -= 1<<i;
       }
     }

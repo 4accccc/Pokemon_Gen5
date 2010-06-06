@@ -1294,8 +1294,11 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
   case CCFT_CHANGE_DOUBLE:
     {
       CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(commWork->parentWork);
-      CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , TRUE );
-      COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
+      if( COMM_TVT_IsDoubleMode(commWork->parentWork) != pkt->value )
+      {
+        COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
+        CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , TRUE );
+      }
     }
     break;
   
