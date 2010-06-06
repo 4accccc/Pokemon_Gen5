@@ -379,7 +379,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   //{ DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeCreate },  //シンボルポケモン作成
   { DEBUG_FIELD_STR69, debugMenuCallProc_SymbolPokeList },  //シンボルポケモン作成
   { DEBUG_FIELD_STR71, debugMenuCallProc_Musical },  //ミュージカル
-  { DEBUG_FIELD_STR74, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
+//  { DEBUG_FIELD_STR74, debugMenu_CreateMusicalShotData },           //ミュージカルデータ作成
   { DEBUG_FIELD_STR75, debugMenu_CreateFeelingData },           //フィーリング作成
 
   { DEBUG_FIELD_TITLE_06, (void*)BMPMENULIST_LABEL },       //○つうしん
