@@ -717,3 +717,242 @@ const GFL_PROC_DATA DebugSaveAddrProcData = {
 };
 
 #endif
+
+
+#if 0  //デバッグ用使う事があるかもしれないのでここに置く
+
+
+//#if 0
+#if DEBUG_ONLY_FOR_ohno
+//--------------------------------------------------------------
+/**
+ * @brief   デバッグ ポケモンをセーブデータに入れる
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval  BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+#include "savedata/dreamworld_data.h"
+#include "savedata/mystatus.h"
+#include "savedata/mystatus_local.h"
+#include "savedata/record.h"
+#include "savedata/misc.h"
+#include "savedata/undata_update.h"
+#include "savedata/wifihistory.h"
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int i;
+  {
+    GAMEDATA *gamedata = GAMESYSTEM_GetGameData(wk->gmSys);
+
+    {//MISC
+      MISC* pMisc = SaveData_GetMisc(GAMEDATA_GetSaveControlWork(gamedata));
+      MISC_SetGold( pMisc, GFUser_GetPublicRand( 12345 ));
+      OS_TPrintf("pMisc gold=%d\n",MISC_GetGold(pMisc));
+    }
+
+    {//レコード
+      RECORD* pRec = GAMEDATA_GetRecordPtr(GAMESYSTEM_GetGameData(wk->gmSys));
+
+      RECORD_Set(pRec, RECID_FISHING_SUCCESS, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_WIFI_TRADE, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_COMM_TRADE, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_IRC_TRADE, GFUser_GetPublicRand( 12345 ));
+      RECORD_Set(pRec, RECID_CAPTURE_POKE, GFUser_GetPublicRand( 12345 ));
+      OS_TPrintf("RECID_FISHING_SUCCESS=%d\n",RECORD_Get(pRec,RECID_FISHING_SUCCESS));
+      OS_TPrintf("RECID_CAPTURE_POKE=%d\n",RECORD_Get(pRec,RECID_CAPTURE_POKE));
+      OS_TPrintf("RECID_WIFI_TRADE=%d\n",RECORD_Get(pRec,RECID_WIFI_TRADE));
+      OS_TPrintf("RECID_COMM_TRADE=%d\n",RECORD_Get(pRec,RECID_COMM_TRADE));
+      OS_TPrintf("RECID_IRC_TRADE=%d\n",RECORD_Get(pRec,RECID_IRC_TRADE));
+
+    }
+    {//国連
+      WIFI_HISTORY* pHis = SaveData_GetWifiHistory(GAMEDATA_GetSaveControlWork(gamedata));
+      for(i=0;i<20;i++){
+        UNITEDNATIONS_SAVE add_data;
+        MYSTATUS aMy;
+        aMy.profileID= GFUser_GetPublicRand(3333);
+        aMy.nation = i+1;
+        MyStatus_Copy( &aMy , &add_data.aMyStatus);
+        add_data.recvPokemon = 1;  //貰ったポケモン
+        add_data.sendPokemon = 100;  //あげたポケモン
+        add_data.favorite = 1;   //趣味
+        add_data.countryCount = 2;  //交換した国の回数
+        add_data.nature = 1;   //性格
+        UNDATAUP_Update(pHis, &add_data);
+      }
+      for(i=0;i<20;i++){
+        MYSTATUS* pMy = WIFIHISTORY_GetUnMyStatus(pHis, i);
+        OS_TPrintf("GTSID = %d\n",pMy->profileID);
+      }
+    }
+  }
+
+ // GMEVENT_ChangeEvent( wk->gmEvent, DEBUG_EVENT_FLDMENU_JumpEasy( wk->gmSys, wk->heapID ) );
+  return( FALSE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * @brief     CGearの絵をROMから読み出しセーブ領域に入れる
+ * @param wk  DEBUG_MENU_EVENT_WORK*
+ * @retval    BOOL  TRUE=イベント継続
+ */
+//--------------------------------------------------------------
+//#endif
+//#if 1
+#else
+
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  u16 crc=0;
+  ARCHANDLE* p_handle;
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+
+  NNSG2dCharacterData* charData;
+  NNSG2dPaletteData* palData;
+  NNSG2dScreenData* scrData;
+  void* pArc;
+  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_CGEAR_PICTURE);
+  CGEAR_PICTURE_SAVEDATA* pPic=(CGEAR_PICTURE_SAVEDATA*)pCGearWork;
+
+  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, HEAPID_FIELDMAP,
+                             pCGearWork,SAVESIZE_EXTRA_CGEAR_PICTURE);
+
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_decal_NCGR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedBGCharacterData( pArc, &charData ) ){
+    GFL_STD_MemCopy(charData->pRawData, pPic->picture, CGEAR_DECAL_SIZE_MAX);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_decal_NCLR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
+    GFL_STD_MemCopy(palData->pRawData, pPic->palette, CGEAR_PICTURTE_PAL_SIZE);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_c_gear00_NSCR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedScreenData( pArc, &scrData ) ){
+    TOMOYA_Printf( "scrData size %d == %d\n", scrData->szByte, CGEAR_PICTURTE_SCR_SIZE );
+    GFL_STD_MemCopy(scrData->rawData, pPic->scr, CGEAR_PICTURTE_SCR_SIZE);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+  crc = GFL_STD_CrcCalc( pPic, CGEAR_PICTURTE_ALL_SIZE );
+
+  GAMEDATA_ExtraSaveAsyncStart(GAMESYSTEM_GetGameData(gameSys),SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  while(1){
+    if(SAVE_RESULT_OK==GAMEDATA_ExtraSaveAsyncMain(GAMESYSTEM_GetGameData(gameSys),SAVE_EXTRA_ID_CGEAR_PICUTRE)){
+      break;
+    }
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE);
+  GFL_HEAP_FreeMemory(pCGearWork);
+  CGEAR_SV_SetCGearONOFF(CGEAR_SV_GetCGearSaveData(pSave), TRUE);  //CGEAR表示有効
+  CGEAR_SV_SetCGearPictureONOFF(CGEAR_SV_GetCGearSaveData(pSave),TRUE);  //CGEARデカール有効
+  CGEAR_SV_SetCGearPictureCRC(CGEAR_SV_GetCGearSaveData(pSave),crc);  //CGEARデカール有効
+
+  return( FALSE );
+}
+#endif
+//#endif
+
+#if 0    //図鑑テスト
+
+#include "include/savedata/zukan_wp_savedata.h"
+// セーブデータ
+typedef struct  {
+  // カスタムグラフィックキャラ
+  u8  customChar[ZUKANWP_SAVEDATA_CHAR_SIZE];
+  // カスタムグラフィックパレット
+  u16 customPalette[ZUKANWP_SAVEDATA_PAL_SIZE];
+  // データ有無フラグ
+  BOOL  flg;
+} TESTZUKAN_DATA;
+
+
+
+static BOOL debugMenuCallProc_CGEARPictureSave( DEBUG_MENU_EVENT_WORK *wk )
+{
+  int size,i;
+  u16 crc=0;
+  ARCHANDLE* p_handle;
+  GMEVENT *event = wk->gmEvent;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  GAMESYS_WORK  *gameSys  = wk->gmSys;
+  SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork(GAMESYSTEM_GetGameData(gameSys));
+  NNSG2dCharacterData* charData;
+  NNSG2dPaletteData* palData;
+  NNSG2dScreenData* pScrData;
+  void* pArc;
+  u8* pCGearWork = GFL_HEAP_AllocMemory(HEAPID_FIELDMAP,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+  TESTZUKAN_DATA* pPic=(TESTZUKAN_DATA*)pCGearWork;
+
+  SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, HEAPID_FIELDMAP,
+                             pCGearWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
+
+  pPic->flg=TRUE;
+
+  p_handle = GFL_ARC_OpenDataHandle( ARCID_C_GEAR, HEAPID_FIELDMAP );
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCGR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedBGCharacterData( pArc, &charData ) ){
+    GFL_STD_MemCopy(charData->pRawData, pPic->customChar, ZUKANWP_SAVEDATA_CHAR_SIZE);
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  pArc = GFL_ARCHDL_UTIL_Load( p_handle, NARC_c_gear_zukantest_NCLR, FALSE, HEAPID_FIELDMAP);
+  if( NNS_G2dGetUnpackedPaletteData( pArc, &palData ) ){
+    u16 * pal = (u16 *)palData->pRawData;
+    for(i=0;i<16;i++){
+      GFL_STD_MemCopy( &pal[16*i], &pPic->customPalette[16*i], 32);
+    }
+  }
+  GFL_HEAP_FreeMemory(pArc);
+
+  GFL_ARC_CloseDataHandle( p_handle );
+
+  size = ZUKANWP_SAVEDATA_CHAR_SIZE+ZUKANWP_SAVEDATA_PAL_SIZE*2;
+  crc = GFL_STD_CrcCalc( pPic, size );
+
+  {
+    int i;
+    u8* pU8 = (u8*)pPic;
+    for(i=0;i<size;i++){
+      OS_TPrintf("0x%x ",pU8[i]);
+      if((i%16)==15){
+        OS_TPrintf("\n");
+      }
+    }
+  }
+
+  OS_TPrintf("-----%x \n",crc);
+
+  SaveControl_Extra_SaveAsyncInit(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+  while(1){
+    if(SAVE_RESULT_OK==SaveControl_Extra_SaveAsyncMain(pSave,SAVE_EXTRA_ID_ZUKAN_WALLPAPER)){
+      break;
+    }
+    OS_WaitIrq(TRUE, OS_IE_V_BLANK);
+  }
+  SaveControl_Extra_UnloadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER);
+
+
+  GFL_HEAP_FreeMemory(pCGearWork);
+
+  return( FALSE );
+}
+#endif
+
+
+
+
+#endif
