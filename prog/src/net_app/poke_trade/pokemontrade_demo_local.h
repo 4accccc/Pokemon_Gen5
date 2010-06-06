@@ -56,12 +56,15 @@ struct _POKEMONTRADE_DEMO_WORK{
   BOOL bTarget;
   
   GFL_CLWK* pPokeCreateCLWK;   //ポケモン登場エフェクトCLACT
+  void* effectRes;
   
   HEAPID heapID;
 };
 
 
 extern void POKEMONTRADE_DEMO_PTC_Init( POKEMONTRADE_DEMO_WORK* pWork );
+extern void POKEMONTRADE_DEMO_PTC_Load1( POKEMONTRADE_DEMO_WORK* pWork );
+extern void POKEMONTRADE_DEMO_PTC_Load2( POKEMONTRADE_DEMO_WORK* pWork );
 extern void POKEMONTRADE_DEMO_PTC_End( POKEMONTRADE_DEMO_WORK* pWork,int num );
 extern void POKEMONTRADE_DEMO_ICA_Init(POKEMONTRADE_DEMO_WORK* pWork,int type);
 extern void POKEMONTRADE_DEMO_ICA_Delete(POKEMONTRADE_DEMO_WORK* pWork);

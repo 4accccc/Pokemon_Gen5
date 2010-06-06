@@ -877,6 +877,8 @@ extern BOOL POKE_GTS_CreateCancelButton(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_DeleteCancelButton(POKEMON_TRADE_WORK* pWork, BOOL bar,BOOL change);
 extern void POKEMON_TRADE_PaletteFade(POKEMON_TRADE_WORK* pWork, BOOL bFade, int type, int paletteBIT);
 
+extern void POKEMONTRADE2D_SetVisibleMainVBlank(POKEMON_TRADE_WORK* pWork, u32 frame );
+extern void POKEMONTRADE2D_SetVisibleSubVBlank(POKEMON_TRADE_WORK* pWork, u32 frame );
 
 #if _TRADE_DEBUG
 

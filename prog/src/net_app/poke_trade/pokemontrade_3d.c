@@ -499,6 +499,7 @@ void POKEMONTRADE_DEMO_PTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
 
   //パーティクルシステムワーク初期化
   GFL_PTC_Init(pWork->heapID);
+  pWork->effectRes = NULL;
 
   {
     int i;
@@ -522,14 +523,30 @@ void POKEMONTRADE_DEMO_PTC_Init( POKEMONTRADE_DEMO_WORK* pWork )
     }
 
   }
+}
+void POKEMONTRADE_DEMO_PTC_Load1( POKEMONTRADE_DEMO_WORK* pWork )
+{
   //リソース読み込み＆登録
   {
-    void *resource;
     int i;
-    resource = GFL_PTC_LoadArcResource(
-      ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, pWork->heapID);
-    for(i=0;i<PTC_KIND_NUM_MAX;i++){
-      GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+    pWork->effectRes = GFL_PTC_LoadArcResource(
+      ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, GetHeapLowID(pWork->heapID));
+    for(i=0;i<4;i++)
+    {
+      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
+      //GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
+    }
+  }
+}
+void POKEMONTRADE_DEMO_PTC_Load2( POKEMONTRADE_DEMO_WORK* pWork )
+{
+  //リソース登録
+  {
+    int i;
+    for(i=4;i<PTC_KIND_NUM_MAX;i++)
+    {
+      GFL_PTC_SetResourceEx(pWork->ptc[i], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
+      //GFL_PTC_SetResource(pWork->ptc[i], resource, TRUE, NULL);
     }
   }
 }
@@ -544,6 +561,11 @@ void POKEMONTRADE_DEMO_PTC_End( POKEMONTRADE_DEMO_WORK* pWork ,int num)
   int i;
 
   GFL_PTC_Exit();
+  if( pWork->effectRes != NULL )
+  {
+    GFL_HEAP_FreeMemory( pWork->effectRes );
+    pWork->effectRes = NULL;
+  }
   for(i=0;i<PTC_KIND_NUM_MAX;i++){
     if(pWork->ptcheap[i]){
       GFL_HEAP_FreeMemory(pWork->ptcheap[i]);

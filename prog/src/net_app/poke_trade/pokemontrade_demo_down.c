@@ -46,6 +46,8 @@ static void _changeDemo_ModelT2(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade2_2(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade2_3(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork);
@@ -135,8 +137,8 @@ void POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo(POKEMON_TRADE_WORK* pWork)
     MCSS_SetPosition( pWork->pokeMcss[0] ,&pos );
   }
 
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
-  GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+  POKEMONTRADE2D_SetVisibleMainVBlank( pWork , GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+  POKEMONTRADE2D_SetVisibleSubVBlank( pWork , 0 );
 
 //  _CHANGE_STATE(pWork,_changeDemo_ModelT1);
 
@@ -181,13 +183,23 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   MCSS_SetVanishFlag( pWork->pokeMcss[3] );
   POKEMONTRADE_DEMO_PTC_Init(pWork->pPokemonTradeDemo);
   POKEMONTRADE_DEMO_ICA_Init(pWork->pPokemonTradeDemo,_DEMO_TYPE_DOWN);  //ICAƒ_ƒEƒ“—p
-
+  POKEMONTRADE_DEMO_PTC_Load1(pWork->pPokemonTradeDemo);
 
   _setNextAnim(pWork, _POKECHANGE_WHITEIN_START);
-  _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_2);
 
   G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
 
+}
+
+static void _changeDemo_ModelTrade2_2(POKEMON_TRADE_WORK* pWork)
+{
+  POKEMONTRADE_DEMO_PTC_Load2(pWork->pPokemonTradeDemo);
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_3);
+}
+static void _changeDemo_ModelTrade2_3(POKEMON_TRADE_WORK* pWork)
+{
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 }
 
 #if 0
@@ -233,8 +245,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
   
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME)){
-    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
-    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+    POKEMONTRADE2D_SetVisibleMainVBlank( pWork , GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+    POKEMONTRADE2D_SetVisibleSubVBlank( pWork , GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   }
 
   if(pWork->anmCount == ANMCNTC(_POKEMON_DELETE_TIME)){

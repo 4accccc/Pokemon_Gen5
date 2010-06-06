@@ -286,8 +286,8 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
   }
 
   if(pWork->anmCount > ANMCNTC(_POKEMON_CENTER_TIME)){  //フェード完了
-    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
-    GFL_DISP_GXS_SetVisibleControlDirect( 0 );
+    POKEMONTRADE2D_SetVisibleMainVBlank( pWork , GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+    POKEMONTRADE2D_SetVisibleSubVBlank( pWork , 0 );
     POKETRADE_2D_GTSPokemonIconResetAll(pWork);
     IRC_POKETRADE_AllDeletePokeIconResource(pWork);
     POKETRADE_MESSAGE_SixStateDelete(pWork);
@@ -379,7 +379,7 @@ static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
   GFL_BG_FillScreen( GX_PLANEMASK_BG2, 0x0000, 0, 0, 32, 24, GFL_BG_SCRWRT_PALIN );
   POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
 
-  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
+  POKEMONTRADE2D_SetVisibleSubVBlank( pWork , GX_PLANEMASK_BG2|GX_PLANEMASK_OBJ );
   G2S_BlendNone();
 }
 

@@ -148,8 +148,8 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
   }
 
   if(pWork->anmCount == ANMCNTC(_IR_POKEMON_DELETE_TIME)){
-    GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
-    GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+    POKEMONTRADE2D_SetVisibleMainVBlank( pWork , GX_PLANEMASK_BG0|GX_PLANEMASK_OBJ );
+    POKEMONTRADE2D_SetVisibleSubVBlank( pWork , GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   }
 
   if(pWork->anmCount == ANMCNTC(_IR_POKEMON_DELETE_TIME)){
