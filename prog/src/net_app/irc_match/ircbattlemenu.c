@@ -239,6 +239,8 @@ struct _IRC_BATTLE_MENU {
   int anmCnt;  //決定時アニメカウント
   int bttnid;
   u16 anmCos;
+  u8 endStart;
+  u8 dummy;
 
 };
 
@@ -867,6 +869,7 @@ static void _modeFadeout(IRC_BATTLE_MENU* pWork)
 
 static void _modeFadeoutStart(IRC_BATTLE_MENU* pWork)
 {
+  pWork->endStart=TRUE;
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
@@ -2178,6 +2181,10 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
 
   GFL_CLACT_SYS_Main();
 
+  if(pWork->endStart==FALSE){
+    GAMESYSTEM_CommBootAlways( IrcBattle_GetGAMESYS_WORK(pWork->dbw) );
+  }
+  
   return retCode;
 }
 
