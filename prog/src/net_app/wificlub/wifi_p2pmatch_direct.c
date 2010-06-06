@@ -1935,7 +1935,6 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
 
-  wk->state = WIFIP2PMATCH_STATE_NONE;
   GFL_NET_SetAutoErrorCheck(FALSE);
   GFL_NET_SetNoChildErrorCheck(FALSE);
 
@@ -1955,12 +1954,13 @@ static int _playerDirectEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 {
   //˜b‚µ‚©‚¯‚½‚Ù‚¤
   if((WIFIP2PMATCH_STATE_TALK==wk->state) || (WIFIP2PMATCH_STATE_MACHINE_RECV==wk->state)){
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
-  }
-  else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
   }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
+  }
   GFL_NET_StateWifiMatchEnd(TRUE);
+  wk->state = WIFIP2PMATCH_STATE_NONE;
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
