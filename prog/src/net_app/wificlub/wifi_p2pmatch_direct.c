@@ -1869,10 +1869,8 @@ static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   //BTS2302の対処 naigihashi
   //メッセージを早送りするために読んでいます
-  if( wk->pStream )
-  {
-    WifiP2PMatchMessageEndCheck(wk);
-  }
+  //メッセージを描画していなくてもここに来る場合があります
+  WifiP2PMatchMessageEndCheck(wk);
 
   return seq;
 }

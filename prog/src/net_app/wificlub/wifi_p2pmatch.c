@@ -5363,12 +5363,10 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int status;
 
-  //BTS2302の対処 naigihshi
+  //BTS2302の対処 naigihashi
   //メッセージを早送りするために読んでいます
-  if( wk->pStream )
-  {
-    WifiP2PMatchMessageEndCheck(wk);
-  }
+  //メッセージを描画していなくてもここに来る場合があります
+  WifiP2PMatchMessageEndCheck(wk);
 
   wk->cancelEnableTimer--;
   if(wk->cancelEnableTimer < 0  ){
@@ -5556,10 +5554,8 @@ static int _parentModeCallMenuYesNo( WIFIP2PMATCH_WORK *wk, int seq )
 {
   //BTS2302の対処 naigihashi
   //メッセージを早送りするために読んでいます
-  if( wk->pStream )
-  {
-    WifiP2PMatchMessageEndCheck(wk);
-  }
+  ////メッセージを描画していなくてもここに来る場合があります
+  WifiP2PMatchMessageEndCheck(wk);
 
   if((GFL_NET_StateGetWifiStatus() >= GFL_NET_STATE_DISCONNECTING) || GFL_NET_StateIsWifiDisconnect() ){
 
