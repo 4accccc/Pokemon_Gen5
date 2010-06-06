@@ -12,7 +12,6 @@
 #include <dwc.h>
 #include "savedata/save_control.h"	//SAVE_CONTROL_WORK
 #include "savedata/mystatus.h"
-#include "system/pms_data.h"
 
 //----------------------------------------------------------
 /**
@@ -36,11 +35,8 @@ extern void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const M
 extern s32 WIFI_NEGOTIATION_SV_GetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index);
 extern MYSTATUS* WIFI_NEGOTIATION_SV_GetMyStatus(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 index);
 extern BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 playerID);
-//extern int WIFI_NEGOTIATION_SV_GetCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
 extern s32 WIFI_NEGOTIATION_SV_GetFriendNum(WIFI_NEGOTIATION_SAVEDATA* pSV);
-extern void WIFI_NEGOTIATION_SV_SetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,const PMS_DATA* src);
-extern void WIFI_NEGOTIATION_SV_GetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,PMS_DATA* dist);
-extern u16 WIFI_NEGOTIATION_SV_GetChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
+extern u32 WIFI_NEGOTIATION_SV_GetChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
 extern void WIFI_NEGOTIATION_SV_AddChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV);
 
 
