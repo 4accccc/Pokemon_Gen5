@@ -26,7 +26,6 @@
 
 #include "message.naix"
 #include "bag.naix"
-#include "msg/msg_d_field.h"
 #include "msg/msg_waza_oboe.h"
 #include "font/font.naix"
 #include "print/printsys.h"
