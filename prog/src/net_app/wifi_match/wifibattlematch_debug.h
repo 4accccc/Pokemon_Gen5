@@ -442,14 +442,6 @@ static inline void DEBUGWIN_REG_Exit( void )
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_REG );
 }
 
-
-
-
-#else
-
-#define DEBUGWIN_REG_Init( ... )  /*  */
-#define DEBUGWIN_REG_Exit( ... )  /*  */
-
 #endif  //DEBUGWIN_REG_USE
 
 //=============================================================================
@@ -832,10 +824,6 @@ static inline void DEBUGWIN_SAKERECORD_Exit( void )
 {
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_SAKE_RECORD );
 }
-
-#else
-#define DEBUGWIN_SAKERECORD_Init( ... )  /*  */
-#define DEBUGWIN_SAKERECORD_Exit( ... )  /*  */
 #endif //DEBUGWIN_SAKE_RECORD_DATA_USE
 
 
@@ -954,15 +942,11 @@ static inline void DEBUGWIN_WIFISCORE_Exit( void )
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_WIFISCORE );
 
 }
-#else
-
-#define DEBUGWIN_WIFISCORE_Init( ... )  /*  */
-#define DEBUGWIN_WIFISCORE_Exit( ... )  /*  */
 
 #endif // DEBUGWIN_WIFISCORE_USE
 
 
-#ifdef DEBUGWIN_WIFISCORE_USE
+#ifdef DEBUGWIN_LIVESCORE_USE
 #include "savedata/save_control.h"
 #include "savedata/battlematch_savedata.h"
 #include "savedata/livematch_savedata.h"
@@ -1130,12 +1114,8 @@ static inline void DEBUGWIN_LIVESCORE_Exit( void )
   DEBUGWIN_RemoveGroup( DEBUGWIN_GROUP_LIVESCORE );
 
 }
-#else
 
-#define DEBUGWIN_LIVESCORE_Init( ... )  /*  */
-#define DEBUGWIN_LIVESCORE_Exit( ... )  /*  */
-
-#endif // DEBUGWIN_WIFISCORE_USE
+#endif // DEBUGWIN_LIVESCORE_USE
 
 #ifdef DEBUGWIN_REPORT_USE
 //=============================================================================
@@ -1252,13 +1232,29 @@ static inline void DEBUGWIN_REPORT_SetData( BOOL is_my, int win, int lose, int d
   p_wk->param[ !is_my ][ DEBUGWIN_REPORT_DISCONNECT ]  = disconnect;
 }
 
-#else   //DEBUGWIN_REPORT_USE
+#endif  //DEBUGWIN_REPORT_USE
 
+#else   //PM_DEBUG
+
+//DEBUGWIN_SAKE_RECORD_DATA_USE
+#define DEBUGWIN_SAKERECORD_Init( ... )  /*  */
+#define DEBUGWIN_SAKERECORD_Exit( ... )  /*  */
+
+// DEBUGWIN_WIFISCORE_USE
+#define DEBUGWIN_WIFISCORE_Init( ... )  /*  */
+#define DEBUGWIN_WIFISCORE_Exit( ... )  /*  */
+
+//DEBUGWIN_REG_USE
+#define DEBUGWIN_REG_Init( ... )  /*  */
+#define DEBUGWIN_REG_Exit( ... )  /*  */
+
+//DEBUGWIN_LIVESCORE_USE
+#define DEBUGWIN_LIVESCORE_Init( ... )  /*  */
+#define DEBUGWIN_LIVESCORE_Exit( ... )  /*  */
+
+//DEBUGWIN_REPORT_USE
 #define DEBUGWIN_REPORT_Init( ... ) /* */
 #define DEBUGWIN_REPORT_Exit( ... ) /* */
 #define DEBUGWIN_REPORT_SetData( ... ) /* */
-
-#endif  //DEBUGWIN_REPORT_USE
-
 
 #endif  //PM_DEBUG
