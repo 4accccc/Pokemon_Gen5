@@ -23,7 +23,6 @@
 #include "system/wipe.h"
 #include "net/network_define.h"
 #include "savedata/wifilist.h"
-#include "msg/msg_d_ohno.h"
 
 
 //#include <nitroWiFi/soc.h>

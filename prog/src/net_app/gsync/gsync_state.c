@@ -36,7 +36,6 @@
 #include "savedata/zukan_wp_savedata.h"
 #include "savedata/musical_dist_save.h"
 
-#include "msg/msg_d_ohno.h"
 #include "gsync_local.h"
 #include "gsync_download.h"
 #include "net/nhttp_rap.h"

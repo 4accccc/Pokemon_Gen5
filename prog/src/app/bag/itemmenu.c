@@ -24,7 +24,6 @@
 
 #include "message.naix"
 #include "bag.naix"
-#include "msg/msg_d_field.h"
 #include "msg/msg_bag.h"
 #include "print/printsys.h"
 #include "print/wordset.h"

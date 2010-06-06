@@ -32,7 +32,6 @@
 #include "field/event_mission_secretitem_ex.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
 #include "msg/msg_invasion.h"
 #include "fieldmap/map_matrix.naix"  //MATRIX_ID
 

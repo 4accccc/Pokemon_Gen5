@@ -25,7 +25,6 @@
 #include "system/blink_palanm.h"
 
 #include "message.naix"
-#include "msg/msg_d_field.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "field/fieldmap.h"
