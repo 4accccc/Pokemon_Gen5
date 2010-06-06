@@ -3447,5 +3447,31 @@ void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray)
 
 }
 
+static void POKEMONTRADE2D_SetVisibleMainVBlank_Func( GFL_TCB *tcb , void *work );
+static void POKEMONTRADE2D_SetVisibleSubVBlank_Func( GFL_TCB *tcb , void *work );
+void POKEMONTRADE2D_SetVisibleMainVBlank( POKEMON_TRADE_WORK* pWork, u32 frame )
+{
+  GFL_TCBSYS *tcbSys = GFUser_VIntr_GetTCBSYS();
+  GFL_TCB_AddTask( tcbSys , POKEMONTRADE2D_SetVisibleMainVBlank_Func , (void*)frame , 10 );
+}
 
+void POKEMONTRADE2D_SetVisibleSubVBlank( POKEMON_TRADE_WORK* pWork, u32 frame )
+{
+  GFL_TCBSYS *tcbSys = GFUser_VIntr_GetTCBSYS();
+  GFL_TCB_AddTask( tcbSys , POKEMONTRADE2D_SetVisibleSubVBlank_Func , (void*)frame , 10 );
+}
+
+static void POKEMONTRADE2D_SetVisibleMainVBlank_Func( GFL_TCB *tcb , void *work )
+{
+  u32 frame = (u32)work;
+  GFL_DISP_GX_SetVisibleControlDirect( frame );
+  GFL_TCB_DeleteTask( tcb );
+}
+
+static void POKEMONTRADE2D_SetVisibleSubVBlank_Func( GFL_TCB *, void * )
+{
+  u32 frame = (u32)work;
+  GFL_DISP_GXS_SetVisibleControlDirect( frame );
+  GFL_TCB_DeleteTask( tcb );
+}
 
