@@ -367,18 +367,21 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
 
   if( wk->mainLoop( wk ) )
   {
-    BtlResult result = checkWinner( wk );
-    Bspstore_RecordData( wk );
-    Bspstore_KenteiData( wk );
-    reflectPartyData( wk );
+    if( !BTL_MAIN_IsRecordPlayMode(wk) )
+    {
+      BtlResult result = checkWinner( wk );
+      Bspstore_RecordData( wk );
+      Bspstore_KenteiData( wk );
+      reflectPartyData( wk );
 
-    switch( result ){
-    case BTL_RESULT_WIN:
-      wk->setupParam->getMoney = (wk->regularMoney + wk->bonusMoney);
-      break;
-    case BTL_RESULT_LOSE:
-      wk->setupParam->getMoney = (int)(wk->loseMoney) * -1;
-      break;
+      switch( result ){
+      case BTL_RESULT_WIN:
+        wk->setupParam->getMoney = (wk->regularMoney + wk->bonusMoney);
+        break;
+      case BTL_RESULT_LOSE:
+        wk->setupParam->getMoney = (int)(wk->loseMoney) * -1;
+        break;
+      }
     }
     return GFL_PROC_RES_FINISH;
   }
@@ -5140,6 +5143,7 @@ void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk )
 {
   if( BTL_MAIN_IsRecordPlayMode(wk) )
   {
+    TAYA_Printf("˜^‰æÄ¶ÅŒã‚Ü‚Åo—ˆ‚½\n");
     wk->setupParam->recPlayCompleteFlag = TRUE;
   }
 }

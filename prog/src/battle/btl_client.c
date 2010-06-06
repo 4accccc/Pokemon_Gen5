@@ -4563,7 +4563,13 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 static BOOL SubProc_REC_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
 {
   if( wk->viewCore ){
-    return SubProc_UI_ExitCommTrainer( wk, seq );
+
+    BOOL fDone = SubProc_UI_ExitCommTrainer( wk, seq );
+    if( fDone ){
+      BTL_MAIN_NotifyRecPlayComplete( wk->mainModule );
+    }
+
+    return fDone;
   }
   return TRUE;
 }
@@ -4581,7 +4587,6 @@ static BOOL SubProc_UI_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
       fMulti = BTL_MAIN_IsMultiMode( wk->mainModule );
 
       // 自分が非サーバである場合のため、Mainにサーバ計算した勝敗結果を渡しておく
-      TAYA_Printf("サーバ計算結果を解釈すると result=%d, 通知する\n");
       BTL_MAIN_NotifyBattleResult( wk->mainModule, result );
 
       switch( result ){

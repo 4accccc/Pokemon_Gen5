@@ -3137,9 +3137,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yuubaku( u32* numElems )
 // ダメージ直後ハンドラ
 static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
-  ){
+  if( HandCommon_CheckTargetPokeID(pokeID) )
+  {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( !BPP_IsDead(bpp) )
     {
@@ -3162,7 +3161,7 @@ static void handler_Hensyoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hensyoku( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,     handler_Hensyoku }, // ダメージ直後ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL,     handler_Hensyoku }, // ダメージ直後ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;

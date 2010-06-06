@@ -80,6 +80,18 @@ BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
 }
 
 /**
+ *  みちづれ失敗ワザ判定
+ */
+BOOL BTL_TABLES_IsMitidureFailWaza( WazaID waza )
+{
+  static const u16 table[] = {
+    WAZANO_NULL, WAZANO_MIRAIYOTI, WAZANO_HAMETUNONEGAI,
+  };
+
+  return checkTableElems( waza, table, NELEMS(table) );
+}
+
+/**
  *  プレッシャー対象ワザ判定
  */
 BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza )

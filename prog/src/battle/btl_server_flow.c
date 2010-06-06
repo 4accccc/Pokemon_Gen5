@@ -239,7 +239,8 @@ static void scproc_Fight_Damage_Drain( BTL_SVFLOW_WORK* wk, WazaID waza, BTL_POK
 static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, u32 damage );
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
 static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam );
-static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza, BOOL fDelayAttack );
+static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
+  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fSimurationMode, u16* dstDamage );
@@ -4535,12 +4536,15 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
         break;
       }
       // いちゃもんによる失敗チェック
+      // 2010.06.06  GSまでの挙動としては、いちゃもんを先制で受けてもワザは出せるらしいのでチェックをはずす
+      #if 0
       if( BPP_CheckSick(attacker, WAZASICK_ICHAMON)
       &&  (BPP_GetPrevOrgWazaID(attacker) == waza)
       ){
         cause = SV_WAZAFAIL_ICHAMON;
         break;
       }
+      #endif
       // ふういんによる失敗チェック
       if( BTL_FIELD_CheckEffect(BTL_FLDEFF_FUIN) )
       {
@@ -5233,9 +5237,11 @@ static u32 BTL_CALCDAMAGE_GetDamageSum( const BTL_CALC_DAMAGE_REC* rec )
 
 
 
+//------------------------------------------------------------------------------
 /**
 * １回ヒットワザ（対象は１体以上）
 */
+//------------------------------------------------------------------------------
 static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack )
 {
@@ -5276,9 +5282,11 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
 
   return dmg_sum;
 }
+//------------------------------------------------------------------------------
 /**
 * 複数回ヒットワザ（対象は１体のみ）
 */
+//------------------------------------------------------------------------------
 static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
   BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec )
 {
@@ -5926,7 +5934,7 @@ static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARA
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
 
-    scEvent_DamageProcEnd( wk, attacker, targets, wazaParam->wazaID, fDelayAttack );
+    scEvent_DamageProcEnd( wk, attacker, targets, wazaParam, fDelayAttack );
 //    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
 
     BTL_Hem_PopState( &wk->HEManager, hem_state );
@@ -6113,7 +6121,8 @@ static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets, WazaID waza, BOOL fDelayAttack )
+static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
+  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack )
 {
   u32 real_hit_cnt = 0;   // 実体にダメージを与えた数
   u32 hit_cnt = 0;        // みがわり含めダメージを与えた数
@@ -6126,6 +6135,8 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DELAY_ATTACK_FLAG, fDelayAttack );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+
     if( hit_cnt )
     {
       u32 damage;

@@ -32,6 +32,12 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );
 
 /**
+ *  みちづれ失敗ワザ判定
+ */
+extern BOOL BTL_TABLES_IsMitidureFailWaza( WazaID waza );
+
+
+/**
  *  トレースできないとくせい判定
  */
 extern BOOL BTL_TABLES_CheckTraceFailTokusei( u16 tokuseiID );
