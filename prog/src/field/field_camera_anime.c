@@ -31,6 +31,8 @@ struct _FCAM_ANIME_WORK {
   BOOL              recoveryValidFlag;     // 復帰データが有効かどうか
   FIELD_CAMERA_MODE initialCameraMode;     // カメラモード
   BOOL              initialCameraAreaFlag; // カメラエリアの動作フラグ
+  const VecFx32*    initialWatchTarget;
+  BOOL              recoveryWatchTargetFlag;
 
 };
 
@@ -127,7 +129,7 @@ void FCAM_ANIME_SetAnimeData( FCAM_ANIME_WORK* work, const FCAM_ANIME_DATA* data
  */
 //-----------------------------------------------------------------------------
 void FCAM_ANIME_SetupCamera( FCAM_ANIME_WORK* work )
-{
+{ 
   SetupCameraMode( work );
   AdjustCameraAngle( work->camera );
   SetCurrentCameraTargetPos( work->camera ); // ターゲット座標を初期化
@@ -268,6 +270,8 @@ static void InitWork( FCAM_ANIME_WORK* work, FIELDMAP_WORK* fieldmap )
   work->pAnimeData = NULL;
   work->recoveryValidFlag = FALSE;
   work->initialCameraAreaFlag = FALSE;
+  work->initialWatchTarget = NULL;
+  work->recoveryWatchTargetFlag = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -291,7 +295,11 @@ static void SetupCamera( FCAM_ANIME_WORK* work )
 
   // ターゲットのバインドをOFF
   if( anime->targetBindOffFlag ) {
-    FIELD_CAMERA_FreeTarget( camera );
+    if( FIELD_CAMERA_GetWatchTarget( work->camera ) != NULL ) {
+      work->recoveryWatchTargetFlag = TRUE;
+      work->initialWatchTarget = FIELD_CAMERA_GetWatchTarget( camera );
+      FIELD_CAMERA_FreeTarget( camera );
+    }
   }
 
   // カメラエリアを無効化
@@ -355,7 +363,10 @@ static void RecoverCamera( const FCAM_ANIME_WORK* work )
   }
 
   // ターゲットを元に戻す
-  FIELD_CAMERA_BindDefaultTarget( camera );
+  if( work->recoveryWatchTargetFlag ) {
+    FIELD_CAMERA_BindTarget( camera, work->initialWatchTarget );
+    //FIELD_CAMERA_BindDefaultTarget( camera );
+  }
 
   // カメラモードを復帰
   FIELD_CAMERA_ChangeMode( camera, work->initialCameraMode );
