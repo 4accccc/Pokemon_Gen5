@@ -2466,7 +2466,7 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
   if( !BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_BATONTOUCH) )
   {
     BPP_MIGAWARI_Delete( bpp );
-    clearWazaSickWork( bpp, TRUE );
+    clearWazaSickWork( bpp, FALSE );
     Effrank_Init( &bpp->varyParam );
     flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
   }
@@ -2538,7 +2538,7 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
 
   // Žó‚¯Œp‚ª‚¹‚½‚çƒNƒŠƒA
   BPP_MIGAWARI_Delete( user );
-  clearWazaSickWork( user, TRUE );
+  clearWazaSickWork( user, FALSE );
   Effrank_Init( &user->varyParam );
   flgbuf_clear( user->contFlag, sizeof(user->contFlag) );
 
