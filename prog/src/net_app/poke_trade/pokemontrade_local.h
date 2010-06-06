@@ -611,10 +611,12 @@ struct _POKEMON_TRADE_WORK{
   GFL_CLWK* markIcon2;
   GFL_CLWK* pokeIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLWK* markIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
-  GFL_CLWK* searchIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
-  u32 pokeIconNo[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
-  u32 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+//  GFL_CLWK* searchIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  u16 pokeIconNo[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  u16 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  GFL_CLACTPOS pokeIconMark[_LING_LINENO_MAX][BOX_VERTICAL_NUM];  //åüçıÇµÇƒÇ¢ÇÈï®
+  u8 pokeIconMarkFlg[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 
   NET_SAVE_WORK* pNetSave;
   GFL_CLWK* curIcon[CELL_DISP_NUM];
@@ -707,6 +709,8 @@ struct _POKEMON_TRADE_WORK{
   u16 palTrans[16];
   u16* scrTray;
   u16* scrTemoti;
+  u16* scrTrayMark;
+  u16* scrTemotiMark;
   u8* pCharMem;
   GFL_CLACTPOS AddPos;
   POKEMONTRADE_TYPE type;

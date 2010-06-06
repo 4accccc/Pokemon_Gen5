@@ -230,7 +230,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 {
 	ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
 
-	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_trade_wb_trade_bg_NCLR,
+	GFL_ARCHDL_UTIL_TransVramPalette( p_handle, NARC_trade_wb_trade_bg_down_NCLR,
 																		PALTYPE_SUB_BG, 0, 0x20*_TRADE_BG_PALLETE_NUM,  pWork->heapID);
 
 
@@ -369,7 +369,7 @@ void IRC_POKETRADE_SubStatusEnd(POKEMON_TRADE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork)
+static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork, BOOL bMark)
 {
   int x2=x;
 
@@ -377,11 +377,49 @@ static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork)
     x2 = x - pWork->_SRCMAX;
   }
   if(x2 < _TEMOTITRAY_SCR_MAX){
-    return pWork->scrTemoti[ 18+(y * 32) + x2 ];
+    if(bMark){
+      return pWork->scrTemotiMark[ 18+(y * 32) + x2 ];
+    }
+    else{
+      return pWork->scrTemoti[ 18+(y * 32) + x2 ];
+    }
   }
   x2 = x2 - _TEMOTITRAY_SCR_MAX;
   x2 = x2 % _BOXTRAY_SCR_MAX;
-  return pWork->scrTray[ 18+(y * 32) + x2 ];
+  
+  if(bMark){
+    return pWork->scrTrayMark[ 18+(y * 32) + x2 ];
+  }
+  else{
+    return pWork->scrTray[ 18+(y * 32) + x2 ];
+  }
+}
+
+
+
+static BOOL _checkMark(POKEMON_TRADE_WORK* pWork,int x,int y)
+{
+  int line,pos;
+  int sx,sy;
+  int ax,ay;
+
+  for(line = 0; line < _LING_LINENO_MAX; line++){
+    for(pos = 0; pos < BOX_VERTICAL_NUM; pos++){
+      if(pWork->pokeIconMarkFlg[line][pos]){
+        ax = pWork->pokeIconMark[line][pos].x-16;
+        ay = pWork->pokeIconMark[line][pos].y-16;
+        sx = ax / 8;
+        sy = ay / 8;
+        if((sx <= x) && ((sx + 3) > x)){
+          if((sy <= y) && ((sy + 3) > y)){
+//            OS_TPrintf("%d %d %d %d\n",x,y,ax,ay);
+            return TRUE;
+          }
+        }
+      }
+    }
+  }
+  return FALSE;
 }
 
 //------------------------------------------------------------------------------
@@ -393,14 +431,15 @@ static u16 _GetScr(int x , int y, POKEMON_TRADE_WORK* pWork)
 
 void IRC_POKETRADE_TrayDisp(POKEMON_TRADE_WORK* pWork)
 {
+  u16 scr;
   int bgscr = pWork->BoxScrollNum / 8;  //マスの単位は画面スクロールを使う
   int frame = GFL_BG_FRAME3_S;
   int x,y;
-
+  int line = POKETRADE_boxScrollNum2Line(pWork);  //ポケモンの単位はラインを使う
+  
   for(y = 0; y < 24 ; y++){
     for(x = 0; x < (_BOXTRAY_SCR_MAX*2+_TEMOTITRAY_SCR_MAX) ; x++){
-      u16 scr = _GetScr( bgscr + x , y ,pWork);
-//      GFL_BG_WriteScreen(frame, &scr, x, y, 1, 1 );
+      scr = _GetScr( bgscr + x , y ,pWork , _checkMark(pWork,x,y));
       GFL_BG_ScrSetDirect(frame, x, y, scr);
     }
   }
@@ -425,6 +464,8 @@ static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
   // スクリーンを読み込んでおく
   pWork->scrTray = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_bg02_NSCR, pWork->heapID);
   pWork->scrTemoti = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_bg03_NSCR, pWork->heapID);
+  pWork->scrTrayMark = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_search_NSCR, pWork->heapID);
+  pWork->scrTemotiMark = GFL_ARC_LoadDataAlloc( ARCID_POKETRADE, NARC_trade_wb_trade_search_t_NSCR, pWork->heapID);
 
 
   {
@@ -432,6 +473,8 @@ static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
     for(i=0;i<(32*24);i++){
       pWork->scrTray[18+i] += GFL_ARCUTIL_TRANSINFO_GetPos(subchar);
       pWork->scrTemoti[18+i] += GFL_ARCUTIL_TRANSINFO_GetPos(subchar);
+      pWork->scrTrayMark[18+i] += GFL_ARCUTIL_TRANSINFO_GetPos(subchar);
+      pWork->scrTemotiMark[18+i] += GFL_ARCUTIL_TRANSINFO_GetPos(subchar);
     }
   }
 
@@ -456,6 +499,10 @@ static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork)
     pWork->scrTray=NULL;
     GFL_HEAP_FreeMemory( pWork->scrTemoti);
     pWork->scrTemoti=NULL;
+    GFL_HEAP_FreeMemory( pWork->scrTrayMark);
+    pWork->scrTrayMark=NULL;
+    GFL_HEAP_FreeMemory( pWork->scrTemotiMark);
+    pWork->scrTemotiMark=NULL;
   }
 }
 
@@ -650,13 +697,13 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
                                                         pWork->cellRes[PAL_SCROLLBAR],
                                                         pWork->cellRes[ANM_SCROLLBAR],
                                                         &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
-        cellInitData.anmseq = 10;
-        cellInitData.softpri = _CLACT_SOFTPRI_MARK;
-        pWork->searchIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
-                                                        pWork->cellRes[CHAR_SCROLLBAR],
-                                                        pWork->cellRes[PAL_SCROLLBAR],
-                                                        pWork->cellRes[ANM_SCROLLBAR],
-                                                        &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
+//        cellInitData.anmseq = 10;
+//        cellInitData.softpri = _CLACT_SOFTPRI_MARK;
+//        pWork->searchIcon[line][i] = GFL_CLACT_WK_Create( pWork->cellUnit ,
+ //                                                       pWork->cellRes[CHAR_SCROLLBAR],
+  //                                                      pWork->cellRes[PAL_SCROLLBAR],
+   //                                                     pWork->cellRes[ANM_SCROLLBAR],
+    //                                                    &cellInitData ,CLSYS_DRAW_SUB , pWork->heapID );
 
 
         
@@ -665,8 +712,8 @@ void IRC_POKETRADE_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork)
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[line][i], FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[line][i], FALSE );
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->markIcon[line][i] , TRUE );
-        GFL_CLACT_WK_SetDrawEnable( pWork->searchIcon[line][i], FALSE );
-        GFL_CLACT_WK_SetAutoAnmFlag( pWork->searchIcon[line][i] , TRUE );
+//        GFL_CLACT_WK_SetDrawEnable( pWork->searchIcon[line][i], FALSE );
+//        GFL_CLACT_WK_SetAutoAnmFlag( pWork->searchIcon[line][i] , TRUE );
       }
     }
     GFL_ARC_CloseDataHandle(arcHandlePoke);
@@ -696,10 +743,10 @@ static void _deletePokeIconResource(POKEMON_TRADE_WORK* pWork, int line)
 			GFL_CLACT_WK_Remove(pWork->markIcon[line][i]);
 			pWork->markIcon[line][i]=NULL;
 		}
-		if(pWork->searchIcon[line][i]){
-			GFL_CLACT_WK_Remove(pWork->searchIcon[line][i]);
-			pWork->searchIcon[line][i]=NULL;
-		}
+//		if(pWork->searchIcon[line][i]){
+//			GFL_CLACT_WK_Remove(pWork->searchIcon[line][i]);
+//			pWork->searchIcon[line][i]=NULL;
+//		}
 		if(pWork->pokeIconNcgRes[line][i]){
 			GFL_CLGRP_CGR_Release(pWork->pokeIconNcgRes[line][i]);
 			pWork->pokeIconNcgRes[line][i] = NULL;
@@ -964,21 +1011,16 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
           }
           
         }
-//        GFL_STD_MemCopy(&pWork->pCharMem[4*8*4*4*monsno] , (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DSUB], 4*8*4*4);
-
         _pokeIconPaletteGray(pWork, line, i, ppp,bTemoti,k);
-
         GFL_CLACT_WK_SetPlttOffs( pWork->pokeIcon[k][i] , POKEICON_GetPalNumGetByPPP( ppp ) , CLWK_PLTTOFFS_MODE_PLTT_TOP );
-
         GFL_CLACT_WK_SetAutoAnmFlag( pWork->pokeIcon[k][i] , FALSE );
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
-
-     //   OS_TPrintf("create\n");
-
-        
       }
       if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL) && _IsPokeLanguageMark(pWork,monsno)){
-        GFL_CLACT_WK_SetDrawEnable( pWork->searchIcon[k][i], TRUE );
+        pWork->pokeIconMarkFlg[k][i]=TRUE;        //ポケモン検索
+      }
+      else{
+        pWork->pokeIconMarkFlg[k][i]=FALSE;
       }
     }
   }
@@ -1091,7 +1133,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
     for(j=0;j<_LING_LINENO_MAX;j++){
       for(i=0;i<BOX_VERTICAL_NUM;i++){
         GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
-        GFL_CLACT_WK_SetDrawEnable(pWork->searchIcon[j][i],FALSE);
+//        GFL_CLACT_WK_SetDrawEnable(pWork->searchIcon[j][i],FALSE);
       }
     }
 
@@ -1138,10 +1180,10 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
       GFL_CLACTPOS apos;
       y = 32+i*24;
       if(line == 0){
-        x = 16;
+        x = 16+8+4;
       }
       else if(line == 1){
-        x = 56;
+        x = 56+4;
       }
       else{
         x = ((line - 2) / 6) * _BOXTRAY_MAX;
@@ -1162,9 +1204,12 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
       }
       
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
+      if(pWork->pokeIconMarkFlg[no][i]){
+        GFL_CLACT_WK_GetPos(pWork->pokeIcon[no][i], &pWork->pokeIconMark[no][i], CLSYS_DRAW_SUB);
+      }
       apos.y = y + 3;
       GFL_CLACT_WK_SetPos(pWork->markIcon[no][i], &apos, CLSYS_DRAW_SUB);
-      GFL_CLACT_WK_SetPos(pWork->searchIcon[no][i], &apos, CLSYS_DRAW_SUB);
+//      GFL_CLACT_WK_SetPos(pWork->searchIcon[no][i], &apos, CLSYS_DRAW_SUB);
     }
   }
 }
