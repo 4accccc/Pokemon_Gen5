@@ -901,7 +901,7 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
     }
   }
   POKE_GTS_DeleteCancelButton(pWork,FALSE,FALSE);
-  TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
+  //TOUCHBAR_SetActive(pWork->pTouchWork, TOUCHBAR_ICON_RETURN, TRUE);
 
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_DECIDE) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_DECIDE)){
