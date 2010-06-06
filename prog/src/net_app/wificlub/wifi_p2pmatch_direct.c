@@ -1268,6 +1268,8 @@ static int _playerDirectBattleGO( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_BATTLE_GO_12);
   }
   else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
   }
   return seq;
