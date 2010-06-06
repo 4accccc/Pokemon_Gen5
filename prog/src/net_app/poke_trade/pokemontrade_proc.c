@@ -2996,9 +2996,9 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
     pWork->BoxScrollNum-=pWork->_DOTMAX;
   }
 
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , TRUE );
   IRC_POKETRADE_TrayDisp(pWork);
   IRC_POKETRADE_SendScreenBoxNameChar(pWork);
-  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , TRUE );
 
   if(!PMSND_CheckPlaySE() && bSE){
     PMSND_PlaySystemSE(POKETRADESE_RIBBON);
@@ -4268,7 +4268,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     GFL_FONTSYS_SetColor( defL, defS, defB );
     PRINTSYS_QUE_Main(pWork->SysMsgQue);
   }
-
+#if 0
   {
     static int backup;
 
@@ -4277,6 +4277,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     }
     backup = pWork->BoxScrollNum;
   }
+#endif
 
   POKEMONTRADE_NEGO_SlideMain(pWork);
 

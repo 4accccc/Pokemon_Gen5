@@ -406,13 +406,13 @@ static BOOL _checkMark(POKEMON_TRADE_WORK* pWork,int x,int y)
   for(line = 0; line < _LING_LINENO_MAX; line++){
     for(pos = 0; pos < BOX_VERTICAL_NUM; pos++){
       if(pWork->pokeIconMarkFlg[line][pos]){
-        ax = pWork->pokeIconMark[line][pos].x-16;
-        ay = pWork->pokeIconMark[line][pos].y-16;
+        ax = pWork->pokeIconMark[line][pos].x-5;
+        ay = pWork->pokeIconMark[line][pos].y-8;
         sx = ax / 8;
         sy = ay / 8;
         if((sx <= x) && ((sx + 3) > x)){
           if((sy <= y) && ((sy + 3) > y)){
-//            OS_TPrintf("%d %d %d %d\n",x,y,ax,ay);
+ //           OS_TPrintf("%d %d %d %d\n",x,y,ax,ay);
             return TRUE;
           }
         }
@@ -481,7 +481,6 @@ static void IRC_POKETRADE_TrayInit(POKEMON_TRADE_WORK* pWork,int subchar)
   pWork->BoxScrollNum = pWork->_DOTMAX + _STARTDOT_OFFSET;
 
   IRC_POKETRADE_TrayDisp(pWork);
-//  IRC_POKETRADE_TrayDisp(pWork);
 }
 
 
