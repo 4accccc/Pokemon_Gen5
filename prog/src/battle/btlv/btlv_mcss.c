@@ -92,7 +92,8 @@ struct  _BTLV_MCSS
   u32             sick_set_flag       :1;
   u32             mcss_proj_mode      :1;
   u32             stop_anime_count    :2;
-  u32                                 :27;
+  u32             effect_vanish_flag  :1;     //技エフェクトから呼ばれたvanishを保持
+  u32                                 :26;
 };
 
 struct _BTLV_MCSS_WORK
@@ -896,14 +897,35 @@ void  BTLV_MCSS_SetVanishFlag( BTLV_MCSS_WORK *bmw, int position, BTLV_MCSS_VANI
   GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
   if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
 
-  if( flag == BTLV_MCSS_VANISH_FLIP ){
+  switch( flag ){ 
+  case BTLV_MCSS_VANISH_FLIP:
     MCSS_FlipVanishFlag( bmw->btlv_mcss[ index ].mcss );
-  }
-  else if( flag == BTLV_MCSS_VANISH_ON ){
+    break;
+  case BTLV_MCSS_VANISH_ON:
     MCSS_SetVanishFlag( bmw->btlv_mcss[ index ].mcss );
-  }
-  else{
+    break;
+  case BTLV_MCSS_VANISH_OFF:
     MCSS_ResetVanishFlag( bmw->btlv_mcss[ index ].mcss );
+    break;
+  case BTLV_MCSS_EFFECT_VANISH_ON:
+    //すでに消えているなら、フラグを立てる
+    if( MCSS_GetVanishFlag( bmw->btlv_mcss[ index ].mcss ) )
+    { 
+      bmw->btlv_mcss[ index ].effect_vanish_flag = 1;
+    }
+    MCSS_SetVanishFlag( bmw->btlv_mcss[ index ].mcss );
+    break;
+  case BTLV_MCSS_EFFECT_VANISH_OFF:
+    //すでに消えていたフラグが立っていたら、フラグを落とすだけにする
+    if( bmw->btlv_mcss[ index ].effect_vanish_flag )
+    { 
+      bmw->btlv_mcss[ index ].effect_vanish_flag = 0;
+    }
+    else
+    { 
+      MCSS_ResetVanishFlag( bmw->btlv_mcss[ index ].mcss );
+    }
+    break;
   }
 }
 
