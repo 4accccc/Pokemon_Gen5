@@ -596,7 +596,6 @@ static void _timingCheck2( GTSNEGO_WORK *pWork )
       pEv->count = 0;
     }
   }
-
   GTSNEGO_MESSAGE_FindPlayer(pWork->pMessageWork, pMy, num);
   GTSNEGO_DISP_SearchEndPeopleDispSet(pWork->pDispWork, MyStatus_GetTrainerView(pMy));
   pWork->timer = _FRIEND_GREE_DOWN_TIME;
@@ -773,6 +772,7 @@ static void _friendGreeState( GTSNEGO_WORK *pWork )
     MYPMS_GetPms( p_wk, MYPMS_PMS_TYPE_INTRODUCTION, &pWork->myMatchData.pms );
 
     pWork->myMatchData.num = WIFI_NEGOTIATION_SV_GetChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+
     GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_NO2, WB_NET_GTSNEGO);
     _CHANGE_STATE(pWork,_timingCheck);
   }
@@ -1217,6 +1217,12 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
       for(kkk=0;kkk<EVENT_GTSNEGO_RECONNECT_NUM;kkk++){
         OS_TPrintf("ID %d = %d\n",kkk,pEv->profileID[kkk]);
       }
+    }
+    if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_SELECT){
+      for(kkk=0;kkk<99998;kkk++){
+        WIFI_NEGOTIATION_SV_AddChangeCount(GAMEDATA_GetWifiNegotiation(pWork->pGameData));
+      }
+      OS_TPrintf("ƒJƒ“ƒXƒg\n");
     }
     if(GFL_UI_KEY_GetTrg() == PAD_BUTTON_Y){
       _pAppWinDel(pWork);

@@ -179,26 +179,6 @@ s32 WIFI_NEGOTIATION_SV_GetFriendNum(WIFI_NEGOTIATION_SAVEDATA* pSV)
   return i;
 }
 
-//--------------------------------------------------------------
-/**
- *  @brief  簡易会話データをセット
- */
-//--------------------------------------------------------------
-void WIFI_NEGOTIATION_SV_SetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,const PMS_DATA* src)
-{
-  PMSDAT_Copy(&pSV->message, src);
-}
-
-//--------------------------------------------------------------
-/**
- *  @brief  簡易会話データを取得
- */
-//--------------------------------------------------------------
-void WIFI_NEGOTIATION_SV_GetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,PMS_DATA* dist)
-{
-  PMSDAT_Copy(dist, &pSV->message);
-}
-
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -207,7 +187,7 @@ void WIFI_NEGOTIATION_SV_GetMsg(WIFI_NEGOTIATION_SAVEDATA* pSV,PMS_DATA* dist)
  * @return	回数
  */
 //--------------------------------------------------------------------------------------------
-u16 WIFI_NEGOTIATION_SV_GetChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
+u32 WIFI_NEGOTIATION_SV_GetChangeCount(WIFI_NEGOTIATION_SAVEDATA* pSV)
 {
   return pSV->num;
 }
