@@ -42,7 +42,7 @@ enum{
   BTLEFF_SINGLE_TRAINER_ENCOUNT_1,
   BTLEFF_SINGLE_TRAINER_ENCOUNT_2,
   BTLEFF_SINGLE_TRAINER_ENCOUNT_3,
-  BTLEFF_BALL_THROW,                          //10
+  BTLEFF_BALL_THROW,                          //570
   BTLEFF_HINSHI,
   BTLEFF_SINGLE_ENCOUNT_2_ARARAGI,
   BTLEFF_BALL_THROW_TRAINER,
@@ -52,7 +52,7 @@ enum{
   BTLEFF_2vs2_POS_C_FOCUS,
   BTLEFF_3vs3_POS_A_FOCUS,
   BTLEFF_3vs3_POS_E_FOCUS,
-  BTLEFF_3vs3_CAMERA_ZOOMOUT,               //20
+  BTLEFF_3vs3_CAMERA_ZOOMOUT,                 //580
   BTLEFF_ROTATION_POS_A_FOCUS,
   BTLEFF_ROTATION_POS_A_TO_C,
   BTLEFF_ROTATION_POS_A_TO_E,
@@ -62,20 +62,20 @@ enum{
   BTLEFF_WCS_CAMERA_WORK_M_E,
   BTLEFF_CAMERA_WORK_ROTATE_R_L,
   BTLEFF_CAMERA_WORK_ROTATE_L_R,
-  BTLEFF_CAMERA_WORK_UPDOWN_E_M,            //30
+  BTLEFF_CAMERA_WORK_UPDOWN_E_M,              //590
   BTLEFF_CAMERA_WORK_UPDOWN_M_E,
   BTLEFF_CAMERA_WORK_TRIANGLE,
   BTLEFF_CAMERA_WORK_INIT,
 
   //ステータスエフェクト
   BTLEFF_STATUS_EFFECT_START,
-  BTLEFF_NEMURI = BTLEFF_STATUS_EFFECT_START, //ねむり
+  BTLEFF_NEMURI = BTLEFF_STATUS_EFFECT_START, //ねむり 
   BTLEFF_DOKU,                                //どく
   BTLEFF_YAKEDO,                              //やけど
   BTLEFF_KOORI,                               //こおり
   BTLEFF_MAHI,                                //まひ
   BTLEFF_KONRAN,                              //こんらん
-  BTLEFF_MEROMERO,                            //メロメロ
+  BTLEFF_MEROMERO,                            //メロメロ  600
   BTLEFF_LVUP,                                //レベルアップ
   BTLEFF_USE_ITEM,                            //ポケモンにアイテムを使用
   BTLEFF_SOUBI_ITEM,                          //装備道具発動 10
@@ -85,7 +85,7 @@ enum{
   BTLEFF_HP_RECOVER,                          //HP回復
   BTLEFF_MIGAWARI_WAZA_BEFORE,                //みがわり時に技を繰り出す前エフェクト
   BTLEFF_MIGAWARI_WAZA_AFTER,                 //みがわり時に技を繰り出した後エフェクト
-  BTLEFF_ITEM_ESCAPE,                         //エネコのしっぽorピッピ人形
+  BTLEFF_ITEM_ESCAPE,                         //エネコのしっぽorピッピ人形  610
   BTLEFF_WEATHER_KIRI,                        //きり（シャチではないかも？）
   BTLEFF_WEATHER_AME,                         //あめ
   BTLEFF_WEATHER_ARARE,                       //あられ  20
@@ -95,7 +95,7 @@ enum{
   BTLEFF_POKEMON_KURIDASU,                    //ポケモン繰り出しエフェクト
   BTLEFF_MIGAWARI_FALL,                       //みがわり落ちてくる
   BTLEFF_MIGAWARI_DEAD,                       //みがわり消滅
-  BTLEFF_TRAINER_IN,                          //トレーナーフレームイン
+  BTLEFF_TRAINER_IN,                          //トレーナーフレームイン  620
   BTLEFF_TRAINER_OUT,                         //トレーナーフレームアウト
   BTLEFF_KIAIPUNCH_TAME,                      //きあいパンチのタメエフェクト
   BTLEFF_NOROI,                               //のろい  30
@@ -105,11 +105,11 @@ enum{
   BTLEFF_MAKITUKU,                            //まきつく
   BTLEFF_HONOONOUZU,                          //ほのおのうず
   BTLEFF_MAGUMASUTOOMU,                       //マグマストーム
-  BTLEFF_KARADEHASAMU,                        //からではさむ
+  BTLEFF_KARADEHASAMU,                        //からではさむ  630
   BTLEFF_UZUSIO,                              //うずしお
   BTLEFF_SUNAZIGOKU,                          //すなじごく
   BTLEFF_NEWOHARU,                            //ねをはる  40
-  BTLEFF_ZOOM_IN,                             //カメラズームイン
+  BTLEFF_ZOOM_IN,                             //カメラズームイン  634
   BTLEFF_IYASINONEGAI_KAIHUKU,                //いやしのねがい回復エフェクト
   BTLEFF_MIKADUKINOMAI_KAIHUKU,               //みかづきのまい回復エフェクト
   BTLEFF_RESET_MOVE,                          //リセットムーブエフェクト
