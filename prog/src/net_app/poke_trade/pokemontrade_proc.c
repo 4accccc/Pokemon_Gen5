@@ -486,9 +486,9 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,
       pWork->aDifferencePos.x = pWork->aCatchOldPos.x - x;
       pWork->aDifferencePos.y = pWork->aCatchOldPos.y - y;
 
-      NET_PRINT("POSX %d %d %d\n",x,pWork->aDifferencePos.x,pWork->aCatchOldPos.x);
-      NET_PRINT("POSY %d %d %d\n",y,pWork->aDifferencePos.y,pWork->aCatchOldPos.y);
-      NET_PRINT("lineindex %d %d \n",Ringline , index);
+  //    NET_PRINT("POSX %d %d %d\n",x,pWork->aDifferencePos.x,pWork->aCatchOldPos.x);
+  //    NET_PRINT("POSY %d %d %d\n",y,pWork->aDifferencePos.y,pWork->aCatchOldPos.y);
+  //    NET_PRINT("lineindex %d %d \n",Ringline , index);
       pos.x = x + pWork->aDifferencePos.x;
       pos.y = y + pWork->aDifferencePos.y;
 
@@ -3496,6 +3496,9 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
     }
     else{
       _CatchPokemonPositionRewind(pWork);
+      _PokemonIconRenew(pWork);
+//      pWork->workPokeIndex = -1;
+//    pWork->workBoxno = -1;
     }
     pWork->touchON = FALSE;
     pWork->bUpVec = FALSE;
