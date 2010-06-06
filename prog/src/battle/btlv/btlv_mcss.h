@@ -175,6 +175,7 @@ extern  void            BTLV_MCSS_SetPaletteFade( BTLV_MCSS_WORK *bmw, int posit
 extern  void            BTLV_MCSS_SetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position, u8 evy, u32 rgb );
 extern  void            BTLV_MCSS_ResetPaletteFadeBaseColor( BTLV_MCSS_WORK *bmw, int position );
 extern  int             BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position );
+extern  void            BTLV_MCSS_SetMonsNo( BTLV_MCSS_WORK *bmw, int position, int mons_no );
 extern  int             BTLV_MCSS_GetFormNo( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetWeight( BTLV_MCSS_WORK *bmw, int position );
 extern  u16             BTLV_MCSS_GetHPColor( BTLV_MCSS_WORK *bmw, int position );

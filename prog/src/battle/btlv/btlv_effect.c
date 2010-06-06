@@ -697,6 +697,7 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
   beht->vpos = vpos;
 
   BTLV_MCSS_MakeMAW( pp, &beht->maw, vpos );
+  BTLV_MCSS_SetMonsNo( bew->bmw, vpos, PP_Get( pp, ID_PARA_monsno, NULL ) );
 
   bew->tcb_henge_flag |= BTLV_EFFTOOL_Pos2Bit( vpos );
 

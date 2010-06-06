@@ -1524,6 +1524,27 @@ int  BTLV_MCSS_GetMonsNo( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
+ * @brief 指定された立ち位置のMCSSにポケモンNoデータをセット
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  MCSSの立ち位置
+ * @param[in] mons_no   セットするポケモンNo
+ *
+ */
+//============================================================================================
+void  BTLV_MCSS_SetMonsNo( BTLV_MCSS_WORK *bmw, int position, int mons_no )
+{
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return; }
+
+  bmw->btlv_mcss[ index ].param.mons_no = mons_no;
+}
+
+//============================================================================================
+/**
  * @brief 指定された立ち位置のMCSSのフォルムNoデータを取得
  *
  * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
