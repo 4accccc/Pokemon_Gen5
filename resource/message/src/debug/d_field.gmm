@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-06-03T12:43:27"/>
+	<create user="tamada" host="W00139" date="2010-06-06T21:16:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1960,7 +1960,7 @@ LR→補完&quot;</language>
 
 	<row id="DEBUG_FIELD_SYMBOL_09">
 		<language name="JPN" width="240">かぞえあげ</language>
-		<language name="JPN_KANJI" width="240">かぞえあげ</language>
+		<language name="JPN_KANJI" width="240">数え上げ</language>
 	</row>
 
 	<row id="DEBUG_FIELD_SYMBOL_10">
