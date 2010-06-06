@@ -3550,6 +3550,9 @@ static int WifiP2PMatch_FriendListMain_MW( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_obj;
   u32 status,gamemode;
 
+  //BTS3567、BTS3795-bの対処 Saito
+  //メッセージがある場合、メッセージを早送りするために読んでいます
+  WifiP2PMatchMessageEndCheck(wk);
 
   wk->vchatrev = 0;  //マシンでの暫定VCTフラグリセット
 
@@ -4995,6 +4998,10 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
 
 static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
 {
+  //BTS3795-aの対処 Saito
+  //メッセージを早送りするために読んでいます
+  WifiP2PMatchMessageEndCheck(wk);
+
   if(GFL_NET_DWC_IsNewPlayer()!=-1){
     _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST);
   }
