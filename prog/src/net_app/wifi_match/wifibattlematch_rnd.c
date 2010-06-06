@@ -405,6 +405,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Init( GFL_PROC *p_proc, int *p_s
   DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->p_font );
   DEBUGWIN_ChangeLetterColor( 0,31,0 );
   DEBUGWIN_WIFISCORE_Init( HEAPID_WIFIBATTLEMATCH_CORE );
+  DEBUGWIN_REPORT_Init( HEAPID_WIFIBATTLEMATCH_CORE );
 #endif
 
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
@@ -432,6 +433,7 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_RND_PROC_Exit( GFL_PROC *p_proc, int *p_s
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, FALSE );
 
 #ifdef DEBUGWIN_USE
+  DEBUGWIN_REPORT_Exit( );
   DEBUGWIN_WIFISCORE_Exit();
   DEBUGWIN_ExitProc();
 #endif
@@ -1035,7 +1037,7 @@ static void WbmRndSeq_Rate_StartMatching( WBM_SEQ_WORK *p_seqwk, int *p_seq, voi
     }
     else
     {
-      *p_seq       = SEQ_START_CARDIN;
+      *p_seq       = SEQ_CHECK_CARD;
     }
     break;
 

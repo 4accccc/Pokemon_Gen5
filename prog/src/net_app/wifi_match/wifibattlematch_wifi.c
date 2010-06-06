@@ -4247,9 +4247,13 @@ static void Util_PlayerInfo_Create( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
           0);
 
     info_setup.trainerID  = MyStatus_GetTrainerView( p_my );
-
+#if 0
     info_setup.rate = p_wk->p_param->p_wifi_sake_data->rate;
     info_setup.btl_cnt = p_wk->p_param->p_wifi_sake_data->win + p_wk->p_param->p_wifi_sake_data->lose;
+#else
+    info_setup.rate = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_RATE );
+    info_setup.btl_cnt = RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_WIN ) + RNDMATCH_GetParam( p_wk->p_param->p_rndmatch, RNDMATCH_TYPE_WIFI_CUP, RNDMATCH_PARAM_IDX_LOSE );
+#endif
     info_setup.bgm_no = Regulation_GetCardParam( cp_reg_card, REGULATION_CARD_BGM );
 
 
@@ -4843,9 +4847,12 @@ static void DEBUGWIN_Init( WIFIBATTLEMATCH_WIFI_WORK *p_wk, HEAPID heapID )
   DEBUGWIN_REG_Init( p_wk->p_reg, heapID );
   DEBUGWIN_WIFISCORE_Init( heapID );
   DEBUGWIN_SAKERECORD_Init( p_wk->p_param->p_record_data, heapID );
+  DEBUGWIN_REPORT_Init( heapID );
 }
 static void DEBUGWIN_Exit( WIFIBATTLEMATCH_WIFI_WORK *p_wk )
 { 
+
+  DEBUGWIN_REPORT_Exit();
   DEBUGWIN_SAKERECORD_Exit();
   DEBUGWIN_WIFISCORE_Exit();
   DEBUGWIN_REG_Exit();
