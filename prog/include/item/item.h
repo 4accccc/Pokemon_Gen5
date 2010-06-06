@@ -152,7 +152,8 @@ typedef enum{
  BALLID_HURENDOBOORU, //22 フレンドボール
  BALLID_MUUNBOORU,    //23 ムーンボール
  BALLID_KONPEBOORU,   //24 コンペボール
- BALLID_MAX = BALLID_KONPEBOORU,  //パークボールは実体のないボールなのでIDに含めません
+ BALLID_DORIIMUBOORU, //25 ドリームボール
+ BALLID_MAX = BALLID_DORIIMUBOORU,  //パークボールは実体のないボールなのでIDに含めません
 }BALL_ID;
 
 
