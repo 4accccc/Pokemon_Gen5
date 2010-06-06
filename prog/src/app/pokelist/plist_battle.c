@@ -428,6 +428,7 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
   }
   //アイテムアイコン
   {
+    const u32 itemId = PP_Get( pp , ID_PARA_item , NULL );
     GFL_CLWK_DATA cellInitData;
     cellInitData.pos_x = posX+32;
     cellInitData.pos_y = posY+16;
@@ -439,9 +440,17 @@ static PLIST_BATTLE_POKE_ICON* PLIST_BATTLE_CreateBattleParamIcon( PLIST_WORK *w
               work->cellRes[PCR_PLT_ITEM_ICON_SUB],
               work->cellRes[PCR_ANM_ITEM_ICON_SUB],
               &cellInitData ,CLSYS_DEFREND_SUB , work->heapId );
-    if( PP_Get( pp , ID_PARA_item , NULL ) != 0 )
+    if( itemId != 0 )
     {
       GFL_CLACT_WK_SetDrawEnable( iconWork->itemIcon , TRUE );
+      if( ITEM_CheckMail( itemId ) == TRUE )
+      {
+        GFL_CLACT_WK_SetAnmSeq( iconWork->itemIcon , 1 );
+      }
+      else
+      {
+        GFL_CLACT_WK_SetAnmSeq( iconWork->itemIcon , 0 );
+      }
     }
     else
     {

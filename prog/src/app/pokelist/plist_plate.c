@@ -637,7 +637,6 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
   //アイテムアイコン
   {
     u32 itemId = PP_Get( plateWork->pp , ID_PARA_item , NULL );
-    //TODO メールチェック
     if( itemId != 0 )
     {
       GFL_CLACT_WK_SetDrawEnable( plateWork->itemIcon , TRUE );

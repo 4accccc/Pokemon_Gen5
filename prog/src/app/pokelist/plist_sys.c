@@ -4039,6 +4039,8 @@ static void PLIST_HPANMCB_SkillRecoverHpFirst( PLIST_WORK *work )
   }
 
   work->hpAnimeCallBack = PLIST_HPANMCB_SkillRecoverHpSecond;
+  work->mainSeq = PSMS_INIT_HPANIME;
+  work->reqPlaySe = TRUE;
 
 }
 //ミルク飲み・タマゴ産み第２段階
