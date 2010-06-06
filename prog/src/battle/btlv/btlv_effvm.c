@@ -3589,6 +3589,11 @@ static VMCMD_RESULT VMEC_BALLOBJ_SET( VMHANDLE *vmh, void *context_work )
     {
       ballID = BALLID_MONSUTAABOORU;
     }
+    //ドリームボールはスピードボールにする（間が抜けているので）
+    if( ballID == BALLID_DORIIMUBOORU )
+    { 
+      ballID = BALLID_SUPIIDOBOORU;
+    }
     ncgrID = NARC_waza_eff_gra_ball_01_anim_NCER + ballID * 2;
     nclrID = NARC_waza_eff_gra_ball_01_anim_NANR + ballID * 2;
     bevw->obj[ index ] = BTLV_CLACT_AddEx( BTLV_EFFECT_GetCLWK(), ARCID_WAZAEFF_GRA,
@@ -5727,7 +5732,14 @@ static  ARCDATID  EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID )
 
   switch( datID ){
   case NARC_spa_be_ball_001_1_spa:
+    datID += ofs;
+    break;
   case NARC_spa_be_capture_01_spa:
+    if( ( ofs + 1 ) == BALLID_DORIIMUBOORU )
+    { 
+      //捕獲用ボールは、プレシャスボールまでなのでドリームボールはスピードボールのIDに変換
+      ofs = BALLID_SUPIIDOBOORU - 1;
+    }
     datID += ofs;
     break;
   case NARC_spa_be_m_ball_01_close_spa:
