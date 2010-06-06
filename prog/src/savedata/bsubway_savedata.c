@@ -1188,7 +1188,7 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
   //トレーナーパラメータ取得
   tr->player_id = 0;//サブウェイ用IDは固定値 @TODO
   tr->tr_type = src->tr_type;
-  //NGネームフラグチェック
+  //NGネームフラグチェック @TODO ＳＥＲＶＥＲ側で置き換えてくれるのでは？
   if(src->ngname_f){
     // NGネームの変更処理
     DWC_TOOL_SetBadNickName( tr->name, 8, heapID );
