@@ -895,7 +895,8 @@ static void _UniSub_PrintChatUpdate(UNION_SUBDISP_PTR unisub, UNION_CHAT_LOG *lo
   }
   else{
     offset = log->chat_view_no - log->old_chat_view_no;
-    if(MATH_ABS(offset) >= UNION_CHAT_VIEW_LOG_NUM){
+    if(MATH_ABS(offset) >= UNION_CHAT_VIEW_LOG_NUM 
+        || log->old_chat_view_no < UNION_CHAT_VIEW_LOG_NUM-1){
       _UniSub_Chat_DispAllWrite(unisub, log); //‘S‘ÌÄ•`‰æ
       se_play = TRUE;
     }
