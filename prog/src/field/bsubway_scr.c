@@ -958,7 +958,7 @@ void BSUBWAY_SCRWORK_ChoiceBattlePartner( BSUBWAY_SCRWORK *bsw_scr )
   switch( bsw_scr->play_mode ){
   case BSWAY_MODE_WIFI:
     BSUBWAY_WIFIDATA_GetBtlPlayerData( bsw_scr->wifiData,
-        &bsw_scr->tr_data[0], round );
+        &bsw_scr->tr_data[0], round, bsw_scr->heapID );
     break;
   case BSWAY_MODE_MULTI:
   case BSWAY_MODE_S_MULTI:
