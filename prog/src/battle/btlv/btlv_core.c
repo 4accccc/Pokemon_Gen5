@@ -480,12 +480,12 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
       {
         //スキップモードのときは下画面再構成を呼ばない
         if( !BTL_CLIENT_IsChapterSkipMode(core->myClient) )
-        { 
+        {
           core->recPlayerUI.play_chapter  = 1;
           core->recPlayerUI.view_chapter  = 1;
           core->recPlayerUI.max_chapter   = BTL_CLIENT_GetRecPlayerMaxChapter( core->myClient );
           core->recPlayerUI.stop_flag     = BTLV_INPUT_BR_STOP_NONE;
-  
+
           BTLV_SCD_SetupRecPlayerMode( core->scrnD, &core->recPlayerUI );
         }
 #if 0
@@ -1736,9 +1736,12 @@ static void PlayWazaAffSE( BTLV_CORE* wk, BtlTypeAffAbout affAbout )
 //=============================================================================================
 void BTLV_ACT_TameWazaHide( BTLV_CORE* wk, BtlvMcssPos vpos, BTLV_MCSS_VANISH_FLAG  vanishFlag )
 {
-  if( vanishFlag != BTLV_EFFECT_GetMcssVanishFlag(vpos) )
+  if( BTLV_EFFECT_CheckExist(vpos) )
   {
-    BTLV_EFFECT_SetMcssVanishFlag( vpos, vanishFlag );
+    if( vanishFlag != BTLV_EFFECT_GetMcssVanishFlag(vpos) )
+    {
+      BTLV_EFFECT_SetMcssVanishFlag( vpos, vanishFlag );
+    }
   }
 }
 

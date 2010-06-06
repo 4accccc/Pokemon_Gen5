@@ -4380,6 +4380,19 @@ static BOOL scproc_FreeFall_Start( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   }
   return FALSE;
 }
+/**
+ *  フリーフォール（攻撃側）で空中に居る状態かどうか判定
+ */
+static inline BOOL checkFreeFallUsing( const BTL_POKEPARAM* bpp )
+{
+  u8 capturedPokeID = BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) );
+//  if( BPP_FreeFallCounterToPokeID( BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) != BTL_POKEID_NULL ) ){
+  TAYA_Printf("pokeID-%d, captureCheck ... %d\n", BPP_GetID(bpp), capturedPokeID);
+  if( capturedPokeID != BTL_POKEID_NULL ){
+    return TRUE;
+  }
+  return FALSE;
+}
 //----------------------------------------------------------------------------------
 /**
  * フリーフォールでポケモンをつかんだ状態ならリリースする処理
@@ -7694,6 +7707,10 @@ static BOOL scproc_PushOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BT
 
     // フリーフォールで捕まれてる場合は失敗
     if( BPP_CheckSick(target, WAZASICK_FREEFALL) ){
+      return FALSE;
+    }
+    // フリーフォールで捕んでいる場合も失敗
+    if( checkFreeFallUsing(target) ){
       return FALSE;
     }
 
@@ -14251,7 +14268,7 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
   if( (!scproc_CheckShowdown(wk))
-  &&  (BPP_FreeFallCounterToPokeID(BPP_COUNTER_Get(bpp, BPP_COUNTER_FREEFALL) == BTL_POKEID_NULL))
+  &&  (!checkFreeFallUsing(bpp))
   &&  (wk->flowResult == SVFLOW_RESULT_DEFAULT)
   ){
     handexSub_putString( wk, &param->preStr );
