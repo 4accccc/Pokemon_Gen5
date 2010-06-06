@@ -1570,7 +1570,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
 
           //Wifiの対戦相手が不正名だったら名前を置き換え
           if( ( i != 0 ) && ( sp->WifiBadNameFlag ) )
-          { 
+          {
             STRCODE name[ BUFLEN_PERSON_NAME ];
             DWC_TOOL_SetBadNickName( name, BUFLEN_PERSON_NAME, wk->heapID );
             MyStatus_SetMyName( wk->trainerParam[ i ].playerStatus, name );
@@ -2016,6 +2016,7 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
 
     quitFlag = BTL_SERVER_Main( wk->server );
     if( quitFlag ){
+      TAYA_Printf("サーバから逃げ情報を取得\n");
       BTL_SERVER_GetEscapeInfo( wk->server, &wk->escapeInfo );
     }
 
@@ -2028,6 +2029,8 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
     }
 
     if( CheckAllClientQuit(wk) ){
+      TAYA_Printf("クライアントから逃げ情報を取得\n");
+      BTL_CLIENT_GetEscapeInfo( wk->client[wk->myClientID], &wk->escapeInfo );
       quitFlag = TRUE;
     }
 

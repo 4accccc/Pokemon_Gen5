@@ -99,7 +99,6 @@ struct _BTL_SERVER {
   u32         exitTimer;
   u8          enemyPutPokeID;
   u8          quitStep;
-  u8          fCommError;
 
 
   BTL_SERVER_CMD_QUE  queBody;
@@ -183,7 +182,6 @@ BTL_SERVER* BTL_SERVER_Create( BTL_MAIN_MODULE* mainModule, const GFL_STD_RandCo
   sv->changePokeCnt = 0;
   sv->giveupClientCnt = 0;
   sv->bagMode = bagMode;
-  sv->fCommError = FALSE;
   sv->randContext = *randContext;
   sv->strbuf = GFL_STR_CreateBuffer( SERVER_STRBUF_SIZE, heapID );
 
@@ -369,17 +367,6 @@ BOOL BTL_SERVER_Main( BTL_SERVER* sv )
 }
 //----------------------------------------------------------------------------------
 /**
- * 通信エラー発生の通知を受ける
- *
- * @param   sv
- */
-//----------------------------------------------------------------------------------
-void BTL_SERVER_NotifyCommError( BTL_SERVER* sv )
-{
-  sv->fCommError = TRUE;
-}
-//----------------------------------------------------------------------------------
-/**
  * 終了時、逃げたクライアントのIDを取得
  *
  * @param   sv
@@ -452,11 +439,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
-
 
       // 入場演出処理後、捕獲デモ以外の処理
       if( BTL_MAIN_GetCompetitor(server->mainModule) != BTL_COMPETITOR_DEMO_CAPTURE )
@@ -483,10 +465,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
       (*seq)++;
     }
     break;
@@ -621,10 +599,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_Printf( DBGSTR_SERVER_ShooterChargeCmdDoneAll );
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
       ResetAdapterCmd( server );
       (*seq)++;
     }
@@ -641,10 +615,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SERVER_ActionSelectDoneAll );
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       // 試合制限時間切れのチェック
       if( BTL_MAIN_CheckGameLimitTimeOver(server->mainModule) )
@@ -668,10 +638,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SVFL_RecDataSendComped );
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
       (*seq)++;
     }
     break;
@@ -701,10 +667,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     {
       BTL_N_Printf( DBGSTR_SVFL_AllClientCmdPlayComplete, server->flowResult);
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_DEFAULT:
@@ -853,11 +815,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAllAdapterReply(server) )
     {
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
-
       if( Irekae_IsNeedConfirm(server) )
       {
         server->enemyPutPokeID = Irekae_GetEnemyPutPokeID( server );
@@ -873,10 +830,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInCover, FALSE) ){
@@ -891,10 +844,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
   case 3:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
       (*seq)++;
     }
     break;
@@ -918,10 +867,6 @@ static BOOL ServerMain_SelectPokemonCover( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_POKE_COVER:
@@ -1026,10 +971,6 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       storeClientAction( server );
       if( SendActionRecord(server, BTL_RECTIMING_PokeInChange, FALSE) ){
@@ -1043,10 +984,6 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
   case 2:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
       (*seq)++;
     }
     break;
@@ -1068,10 +1005,6 @@ static BOOL ServerMain_SelectPokemonChange( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       switch( server->flowResult ){
       case SVFLOW_RESULT_POKE_CHANGE:
@@ -1129,10 +1062,6 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
   case 1:
     if( WaitAllAdapterReply(server) ){
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
       SetAdapterCmd( server, BTL_ACMD_NOTIFY_TIMEUP );
       (*seq)++;
     }
@@ -1141,10 +1070,6 @@ static BOOL ServerMain_BattleTimeOver( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
-      if( server->fCommError ){
-        BTL_N_Printf( DBGSTR_SV_CommError, __LINE__ );
-        return TRUE;
-      }
 
       {
         BtlResult result = BTL_SVFLOW_ChecBattleResult( server->flowWork );
@@ -1760,10 +1685,6 @@ static BOOL WaitAllAdapterReply( BTL_SERVER* server )
 {
   int i;
   BOOL ret = TRUE;
-
-  if( server->fCommError ){
-    return TRUE;
-  }
 
   for(i=0; i<BTL_CLIENT_MAX; i++)
   {
