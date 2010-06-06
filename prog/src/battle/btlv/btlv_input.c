@@ -1907,7 +1907,6 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
       }
       *select = biw->hit;
       *dir    = rotate_result[ biw->rotate_scr ];
-      biw->decide_pos[ biw->active_index ][biw->scr_type ]= hit;
       biw->hit = GFL_UI_TP_HIT_NONE;
       return TRUE;
     }
@@ -1953,10 +1952,18 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
   {
     if( biw->waruagaki_flag == TRUE )
     {
+      if( ( get_cancel_flag( biw, &RotateTouchDataWaruagaki, hit ) == FALSE ) && ( biw->decide_pos_flag == 0 ) )
+      { 
+        biw->decide_pos[ biw->active_index ][ biw->scr_type ] = hit;
+      }
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchDataWaruagaki.button_pltt[ hit ] );
     }
     else
     {
+      if( ( get_cancel_flag( biw, &RotateTouchData, hit ) == FALSE ) && ( biw->decide_pos_flag == 0 ) )
+      { 
+        biw->decide_pos[ biw->active_index ][ biw->scr_type ] = hit;
+      }
       hit = BTLV_INPUT_SetButtonReaction( biw, hit, RotateTouchData.button_pltt[ hit ] );
     }
   }
@@ -5106,7 +5113,8 @@ static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw )
 //-----------------------------------------------------------------------------
 static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos )
 { 
-  if( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE )
+  if( ( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE ) ||
+      ( biw->scr_type != BTLV_INPUT_SCRTYPE_COMMAND ) )
   { 
     return tbl->cancel_flag[ pos ];
   }
