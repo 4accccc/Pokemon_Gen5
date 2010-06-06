@@ -22,7 +22,7 @@
 #include "system/bmp_winframe.h"
 
 #include "arc_def.h"
-#include "message_debug.naix"
+#include "debug_message.naix"
 
 #include "print/wordset.h"
 #include "print/gf_font.h"
@@ -429,7 +429,7 @@ static GMEVENT_RESULT ev_DEBUG_WFBC_View( GMEVENT* p_event, int* p_seq, void* p_
         
         // ワードセット作成
         p_wk->p_wordset = WORDSET_Create( p_wk->heapID );
-        p_wk->p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_message_debug_d_tomoya_dat, p_wk->heapID );
+        p_wk->p_msgdata = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_tomoya_dat, p_wk->heapID );
 
         p_wk->p_strbuff    = GFL_STR_CreateBuffer( 256, p_wk->heapID );
         p_wk->p_strbuff_tmp  = GFL_STR_CreateBuffer( 256, p_wk->heapID );
