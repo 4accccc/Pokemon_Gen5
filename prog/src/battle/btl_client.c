@@ -8163,6 +8163,7 @@ static void RecPlayerCtrl_Main( BTL_CLIENT* wk, RECPLAYER_CONTROL* ctrl )
           BTLV_RecPlayFadeOut_Start( wk->viewCore );
           ctrl->fFadeOutStart = TRUE;
           ctrl->seq = SEQ_FADEOUT;
+          BTLV_RecPlayer_StartQuit( wk->viewCore, ctrl->turnCount, BTLV_INPUT_BR_STOP_KEY );
           break;
 
         case BTLV_INPUT_BR_SEL_REW:

@@ -28,8 +28,6 @@
 
 #include "btlv_scu.h"
 #include "btlv_scd.h"
-#include "btlv_effect.h"
-#include "btlv_input.h"
 
 #include "btlv_core.h"
 
@@ -480,6 +478,17 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       if( BTL_CLIENT_IsRecPlayerMode(core->myClient) )
       {
+        //スキップモードのときは下画面再構成を呼ばない
+        if( !BTL_CLIENT_IsChapterSkipMode(core->myClient) )
+        { 
+          core->recPlayerUI.play_chapter  = 1;
+          core->recPlayerUI.view_chapter  = 1;
+          core->recPlayerUI.max_chapter   = BTL_CLIENT_GetRecPlayerMaxChapter( core->myClient );
+          core->recPlayerUI.stop_flag     = BTLV_INPUT_BR_STOP_NONE;
+  
+          BTLV_SCD_SetupRecPlayerMode( core->scrnD, &core->recPlayerUI );
+        }
+#if 0
         core->recPlayerUI.play_chapter = 1;
         core->recPlayerUI.view_chapter = 1;
         core->recPlayerUI.max_chapter = BTL_CLIENT_GetRecPlayerMaxChapter( core->myClient );
@@ -487,6 +496,7 @@ static BOOL CmdProc_Setup( BTLV_CORE* core, int* seq, void* workBuffer )
                               BTLV_INPUT_BR_STOP_KEY : BTLV_INPUT_BR_STOP_NONE;
 
         BTLV_SCD_SetupRecPlayerMode( core->scrnD, &core->recPlayerUI );
+#endif
       }
       return TRUE;
     }
@@ -2874,6 +2884,14 @@ void BTLV_RecPlayer_StartSkip( BTLV_CORE* wk, u16 nextChapter )
   wk->recPlayerUI.play_chapter = nextChapter;
   wk->recPlayerUI.view_chapter = nextChapter;
   wk->recPlayerUI.stop_flag = BTLV_INPUT_BR_STOP_SKIP;
+
+  BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
+}
+void BTLV_RecPlayer_StartQuit( BTLV_CORE* wk, u16 chapter, BTLV_INPUT_BR_STOP_FLAG stop_flag )
+{
+  wk->recPlayerUI.play_chapter = chapter;
+  wk->recPlayerUI.view_chapter = chapter;
+  wk->recPlayerUI.stop_flag = stop_flag;
 
   BTLV_SCD_SetupRecPlayerMode( wk->scrnD, &wk->recPlayerUI );
 }

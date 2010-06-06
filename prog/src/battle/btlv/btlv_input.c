@@ -622,6 +622,7 @@ typedef struct
   int               scr_x;
   int               scr_y;
   int               wait;
+  STRBUF*           msg_src;
 }TCB_TRANSFORM_WORK;
 
 typedef struct
@@ -1571,6 +1572,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
   case BTLV_INPUT_SCRTYPE_BATTLE_RECORDER:
     {
       BTLV_INPUT_BATTLE_RECORDER_PARAM* bibrp = ( BTLV_INPUT_BATTLE_RECORDER_PARAM * )param;
+      STRBUF* msg_src = NULL;
       int i;
 
       for( i = 0 ; i < 3 ; i++ )
@@ -1579,6 +1581,23 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       }
 
       BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
+
+      SOGABE_Printf("stop_flag:%d\n",bibrp->stop_flag);
+
+      switch( bibrp->stop_flag ){
+      case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
+      case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
+      case BTLV_INPUT_BR_STOP_OVER:   //録画時間オーバーによる中断
+      case BTLV_INPUT_BR_STOP_SKIP:   //チャプタースキップによる中断
+        GFL_FONTSYS_SetColor( PRINTSYS_LSB_GetL( MSGCOLOR_PP_WHITE ),
+                              PRINTSYS_LSB_GetS( MSGCOLOR_PP_WHITE ),
+                              PRINTSYS_LSB_GetB( MSGCOLOR_PP_WHITE ) );
+        msg_src = GFL_MSG_CreateString( biw->msg,  BI_BattleRecorderStopKey + bibrp->stop_flag - 1 );
+        /*fall thru*/
+      case BTLV_INPUT_BR_STOP_NONE:
+      default:
+        break;
+      }
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
       {
@@ -1595,10 +1614,26 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
           ttw->scr_x = TTS2BR_FRAME0_SCROLL_X;
           ttw->scr_y = 0;
         }
+        ttw->msg_src = msg_src;
         BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformStandby2BattleRecorder, ttw, 1 ), TCB_Transform_CB );
       }
       else
       {
+        if( bibrp->stop_flag == BTLV_INPUT_BR_STOP_NONE )
+        { 
+          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, 0 );
+          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, TTS2BR_FRAME0_SCROLL_Y );
+        }
+        else
+        { 
+          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_X_SET, TTS2BR_FRAME0_SCROLL_X );
+          GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, 0 );
+        }
+        if( msg_src )
+        { 
+          PRINTSYS_Print( biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, msg_src, biw->font );
+          GFL_STR_DeleteBuffer( msg_src );
+        }
         GFL_BMPWIN_MakeScreen( biw->bmp_win );
         GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
         GFL_BMPWIN_TransVramCharacter( biw->bmp_win );
@@ -2569,16 +2604,21 @@ static  void  TCB_TransformStandby2BattleRecorder( GFL_TCB* tcb, void* work )
     GFL_BG_SetScroll( GFL_BG_FRAME1_S, GFL_BG_SCROLL_Y_SET, TTS2C_FRAME1_SCROLL_Y );
     SetupScaleChange( ttw->biw, TTS2C_START_SCALE, TTS2C_END_SCALE, -TTS2C_SCALE_SPEED, STANBY_POS_Y );
     SetupScrollUp( ttw->biw, TTS2C_START_SCROLL_X, TTS2C_START_SCROLL_Y, TTS2C_SCROLL_SPEED, TTS2C_SCROLL_COUNT );
+    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
-    PaletteFadeReq( ttw->biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, STANDBY_FADE, 0, STANDBY_FADE_COLOR, ttw->biw->tcbsys );
     ttw->seq_no++;
     break;
   case 1:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
+      if( ttw->msg_src )
+      { 
+        PRINTSYS_Print( ttw->biw->bmp_data, BR_MESSAGE_X, BR_MESSAGE_Y, ttw->msg_src, ttw->biw->font );
+        GFL_STR_DeleteBuffer( ttw->msg_src );
+      }
       GFL_BMPWIN_MakeScreen( ttw->biw->bmp_win );
       GFL_BG_LoadScreenReq( GFL_BG_FRAME2_S );
       GFL_BMPWIN_TransVramCharacter( ttw->biw->bmp_win );
@@ -3929,6 +3969,7 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
     GFL_FONTSYS_SetColor( letter, shadow, back );
   }
 
+#if 0
   switch( bibrp->stop_flag ){
   case BTLV_INPUT_BR_STOP_KEY:    //キーによる中断
   case BTLV_INPUT_BR_STOP_BREAK:  //データ破壊による中断
@@ -3947,6 +3988,7 @@ static  void  BTLV_INPUT_CreateBattleRecorderScreen( BTLV_INPUT_WORK* biw, const
   default:
     break;
   }
+#endif
 
   WORDSET_Delete( wordset );
   GFL_STR_DeleteBuffer( chapter_src );
