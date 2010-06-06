@@ -1026,7 +1026,8 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
       }
       else
       {
-        bisp.bidp[ vpos ].sex = BPP_GetValue( bpp, BPP_SEX );
+        //見た目にかかわるパラメータはPOKEMON_PARAM依存なので、ppから取得
+        bisp.bidp[ vpos ].sex = PP_GetSex( BPP_GetViewSrcData( bpp ) );
       }
 
       if( BPP_GetPokeSick( bpp ) )
