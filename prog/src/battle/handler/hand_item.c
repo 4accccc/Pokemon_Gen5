@@ -1724,11 +1724,11 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_NazoNomi( u32* numElems )
 }
 static void handler_NazoNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+  ){
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_TYPEAFF) > BTL_TYPEAFF_100 )
     {
-//      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
       ItemPushRun( myHandle, flowWk, pokeID );
     }
   }
