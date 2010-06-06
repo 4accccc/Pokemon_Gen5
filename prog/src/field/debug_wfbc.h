@@ -45,6 +45,8 @@ FS_EXTERN_OVERLAY(debug_menu_wfbc_check);
 */
 //-----------------------------------------------------------------------------
 
+extern GMEVENT * DEBUG_WFBC_View( GAMESYS_WORK *gsys );
+
 extern GMEVENT * DEBUG_WFBC_PeopleCheck(
     GAMESYS_WORK *gsys );
 

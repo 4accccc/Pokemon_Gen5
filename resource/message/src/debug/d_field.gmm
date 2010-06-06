@@ -2082,8 +2082,8 @@ LR→補完&quot;</language>
 	</row>
 
 	<row id="DEBUG_FIELD_STR73">
-		<language name="JPN" width="240">WFBCオートチェック</language>
-		<language name="JPN_KANJI" width="240">WFBCオートチェック</language>
+		<language name="JPN" width="240">WFBCビューアー</language>
+		<language name="JPN_KANJI" width="240">WFBCビューアー</language>
 	</row>
 
 	<row id="DEBUG_FIELD_GEONET_CLEAR">

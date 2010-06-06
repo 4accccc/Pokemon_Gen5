@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tomoya_takahashi" host="W00148" date="2010-04-06T18:30:14"/>
+	<create user="tomoya_takahashi" host="W00148" date="2010-06-06T15:14:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -597,6 +597,36 @@ r([2:01:２桁:0]) g([2:01:２桁:1]) b([2:01:２桁:2])</language>
 r([2:01:２桁:0]) g([2:01:２桁:1]) b([2:01:２桁:2])</language>
 		<language name="JPN_KANJI" width="256">エミッション
 r([2:01:２桁:0]) g([2:01:２桁:1]) b([2:01:２桁:2])</language>
+	</row>
+
+	<row id="WFBC_PRINT00">
+		<language name="JPN" width="256">ホワイトフォレスト 表</language>
+		<language name="JPN_KANJI" width="256">ホワイトフォレスト 表</language>
+	</row>
+
+	<row id="WFBC_PRINT01">
+		<language name="JPN" width="256">ホワイトフォレスト　裏</language>
+		<language name="JPN_KANJI" width="256">ホワイトフォレスト　裏</language>
+	</row>
+
+	<row id="WFBC_PRINT02">
+		<language name="JPN" width="256">ブラックシティ　表</language>
+		<language name="JPN_KANJI" width="256">ブラックシティ　表</language>
+	</row>
+
+	<row id="WFBC_PRINT03">
+		<language name="JPN" width="256">ブラックシティ　裏</language>
+		<language name="JPN_KANJI" width="256">ブラックシティ　裏</language>
+	</row>
+
+	<row id="WFBC_PRINT04">
+		<language name="JPN" width="256">pos[2:01:２桁:0] npc[2:01:２桁:1] mood[2:02:３桁:2]</language>
+		<language name="JPN_KANJI" width="256">pos[2:01:２桁:0] npc[2:01:２桁:1] mood[2:02:３桁:2]</language>
+	</row>
+
+	<row id="WFBC_PRINT05">
+		<language name="JPN" width="256">pos[2:01:２桁:0] none</language>
+		<language name="JPN_KANJI" width="256">pos[2:01:２桁:0] none</language>
 	</row>
 
 	<flowchart-group-list>

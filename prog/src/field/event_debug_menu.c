@@ -6896,15 +6896,19 @@ static GMEVENT_RESULT EV_debugMenu_WfbcDebug( GMEVENT *event, int *seq, void *wk
   switch( *seq ){
   case 0:
     GFL_OVERLAY_Load( FS_OVERLAY_ID(debug_menu_wfbc_check) );
+#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_Y ){
-      GMEVENT_CallEvent( event, DEBUG_WFBC_100SetUp( work->p_gsys ) );
-    }else{
       GMEVENT_CallEvent( event, DEBUG_WFBC_PeopleCheck( work->p_gsys ) );
+    }
+    else
+#endif //DEBUG_ONLY_FOR_tomoya_takahashi
+    {
+      GMEVENT_CallEvent( event, DEBUG_WFBC_View( work->p_gsys ) );
     }
     (*seq)++;
     break;
 
-  case 2:
+  case 1:
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(debug_menu_wfbc_check) );
     return ( GMEVENT_RES_FINISH );
   }

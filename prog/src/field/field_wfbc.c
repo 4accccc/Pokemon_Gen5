@@ -1550,12 +1550,20 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
 #include "msg/msg_place_name.h"  // for MAPNAME_xxxx
 #include "system/main.h"  // 
 
+static HEAPID DEBUG_WFBC_USE_HEAP_ID;
+
 
 // 人物書き換えようパラメータ
 static u8 DEBUG_WFBCPeople_mode = 0;
 static s8 DEBUG_WFBCPeople_index = 0;
 static s8 DEBUG_WFBCPeople_npc_id = 0;
 static s8 DEBUG_WFBCPeople_mood = 0;
+//アイテム書き換えよう
+static u8 DEBUG_WFBC_ITEM_index = 0;
+static u8 DEBUG_WFBC_ITEM_npc_id = 0;
+// 村長ポケモン書き換えよう
+static u8 DEBUG_WFBC_GETPOKE_TARGET_npc_id = 0;
+static u8 DEBUG_WFBC_GETPOKE_TARGET_poke_idx = 0;
 
 
 static void DEBWIN_Update_CityLevel( void* userWork , DEBUGWIN_ITEM* item );
@@ -1570,17 +1578,31 @@ static void DEBWIN_Update_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item )
 static void DEBWIN_Draw_WFBCBlockCheck( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_BCWinTargetAdd10( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_BCWinTargetAdd10( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_WFItemSet( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_WFItemSet( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item );
 
 
 void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
 {
+  DEBUG_WFBC_USE_HEAP_ID = heapId;
+  
   DEBUGWIN_AddGroupToTop( 10 , "RandomMap" , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityLevel ,DEBWIN_Draw_CityLevel , 
                              p_gdata , 10 , heapId );
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_CityType ,DEBWIN_Draw_CityType , 
                              p_gdata , 10 , heapId );
 
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_BCWinTargetAdd10,DEBWIN_Draw_BCWinTargetAdd10, 
+                             p_gdata , 10 , heapId );
+
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_BCWinNumAdd10 ,DEBWIN_Draw_BCWinNumAdd10 , 
+                             p_gdata , 10 , heapId );
+  
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFPokeTargetSet,DEBWIN_Draw_WFPokeTargetSet, 
                              p_gdata , 10 , heapId );
 
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFPokeGet ,DEBWIN_Draw_WFPokeGet , 
@@ -1591,6 +1613,10 @@ void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
 
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFBCPeopleCheck,DEBWIN_Draw_WFBCPeopleCheck, 
                              p_gdata , 10 , heapId );
+
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFItemSet,DEBWIN_Draw_WFItemSet, 
+                             p_gdata , 10 , heapId );
+
 }
 
 void FIELD_FUNC_RANDOM_GENERATE_TermDebug( void )
@@ -1917,6 +1943,34 @@ static void DEBWIN_Update_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item 
 
     DEBUGWIN_RefreshScreen();
     
+  }else if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_X ){
+
+    // 破棄
+    FIELD_WFBC_CORE_PEOPLE* p_array;
+
+    if( DEBUG_WFBCPeople_mode == 0 ){
+      // 表
+      p_array = p_wk->people;
+    }else{
+      // 裏
+      p_array = p_wk->back_people;
+    }
+
+    FIELD_WFBC_CORE_PEOPLE_Clear( &p_array[DEBUG_WFBCPeople_index] );
+
+    
+    //つめる
+    if( DEBUG_WFBCPeople_mode == 0 ){
+      // 表
+      FIELD_WFBC_CORE_PackPeopleArray( p_wk, MAPMODE_NORMAL );
+    }else{
+      // 裏
+      FIELD_WFBC_CORE_PackPeopleArray( p_wk, MAPMODE_INTRUDE );
+    }
+  
+
+    DEBUGWIN_RefreshScreen();
+    
   }else{
 
     // 表裏設定
@@ -1995,7 +2049,198 @@ static void DEBWIN_Draw_WFBCPeopleCheck( void* userWork , DEBUGWIN_ITEM* item )
     DEBUGWIN_ITEM_SetNameV( item , "B idx %d npc %d mood %d", DEBUG_WFBCPeople_index, DEBUG_WFBCPeople_npc_id, DEBUG_WFBCPeople_mood );
   }
 }
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  市長クエストターゲットアップ
+ */
+//-----------------------------------------------------------------------------
+static void DEBWIN_Update_BCWinTargetAdd10( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  int i;
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT) )
+    {
+      p_wk->bc_npc_win_target += 10;
+      DEBUGWIN_RefreshScreen();
+    }
+    if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
+    {
+      p_wk->bc_npc_win_target -= 10;
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+}
+
+static void DEBWIN_Draw_BCWinTargetAdd10( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "BC WinTarget[%d]", p_wk->bc_npc_win_target );
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetName( item , "BC WinTarget??" );
+  }
+}
   
+//----------------------------------------------------------------------------
+/**
+ *	@brief  アイテム配置
+ */
+//-----------------------------------------------------------------------------
+static void DEBWIN_Update_WFItemSet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_CORE* p_wk = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  FIELD_WFBC_CORE_ITEM* p_item = GAMEDATA_GetWFBCItemData( p_gdata );
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
+
+    p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( DEBUG_WFBC_ITEM_npc_id, GFL_HEAP_LOWID( DEBUG_WFBC_USE_HEAP_ID ) );
+    cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+    //登録
+    FIELD_WFBC_CORE_ITEM_SetItemData( p_item, cp_people_data->goods_wf, DEBUG_WFBC_ITEM_index );
+
+    FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
+
+    DEBUGWIN_RefreshScreen();
+    
+  }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+
+      if( DEBUG_WFBC_ITEM_index>0 ){
+        DEBUG_WFBC_ITEM_index --;
+      }
+      
+      DEBUGWIN_RefreshScreen();
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+
+      if( DEBUG_WFBC_ITEM_index < (FIELD_WFBC_PEOPLE_MAX-1) ){
+        DEBUG_WFBC_ITEM_index ++;
+      }
+      DEBUGWIN_RefreshScreen();
+    }
+  }else{
+
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+
+      if( DEBUG_WFBC_ITEM_npc_id>0 ){
+        DEBUG_WFBC_ITEM_npc_id --;
+      }
+      DEBUGWIN_RefreshScreen();
+      
+    }else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+
+      if( DEBUG_WFBC_ITEM_npc_id < (FIELD_WFBC_NPCID_MAX-1) ){
+        DEBUG_WFBC_ITEM_npc_id ++;
+      }
+      DEBUGWIN_RefreshScreen();
+    }
+  }
+  
+}
+static void DEBWIN_Draw_WFItemSet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  DEBUGWIN_ITEM_SetNameV( item , "ITEM Npc %d pos %d", DEBUG_WFBC_ITEM_npc_id, DEBUG_WFBC_ITEM_index );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  村長ポケモン選択
+ */
+//-----------------------------------------------------------------------------
+static void DEBWIN_Update_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+  FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+  const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+  int i;
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
+  {
+    if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A ){
+
+      p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( DEBUG_WFBC_GETPOKE_TARGET_npc_id, GFL_HEAP_LOWID( DEBUG_WFBC_USE_HEAP_ID ) );
+      cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+      //登録
+      FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_wk, cp_people_data->enc_monsno[0] );
+      FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( p_wk, cp_people_data->goods_wf );
+
+      FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
+
+      DEBUGWIN_RefreshScreen();
+
+    }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+
+
+      if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT) )
+      {
+        if( DEBUG_WFBC_GETPOKE_TARGET_poke_idx < FIELD_WFBC_PEOPLE_ENC_POKE_MAX-1 ){
+          DEBUG_WFBC_GETPOKE_TARGET_poke_idx ++;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+      if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
+      {
+        if( DEBUG_WFBC_GETPOKE_TARGET_poke_idx > 0 ){
+          DEBUG_WFBC_GETPOKE_TARGET_poke_idx --;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+      
+    }else{
+    
+      
+      if( GFL_UI_KEY_GetTrg() & (PAD_KEY_RIGHT) )
+      {
+        if( DEBUG_WFBC_GETPOKE_TARGET_npc_id < FIELD_WFBC_NPCID_MAX-1 ){
+          DEBUG_WFBC_GETPOKE_TARGET_npc_id ++;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+      if( GFL_UI_KEY_GetTrg() & (PAD_KEY_LEFT) )
+      {
+        if( DEBUG_WFBC_GETPOKE_TARGET_npc_id > 0 ){
+          DEBUG_WFBC_GETPOKE_TARGET_npc_id --;
+        }
+        DEBUGWIN_RefreshScreen();
+      }
+    }
+  }
+}
+
+static void DEBWIN_Draw_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  GAMEDATA* p_gdata = userWork;
+  FIELD_WFBC_EVENT* p_wk = GAMEDATA_GetWFBCEventData( p_gdata );
+  FIELD_WFBC_CORE* p_core = GAMEDATA_GetMyWFBCCoreData( p_gdata );
+
+  if( p_core->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "WFPoke Npc[%d] Poke[%d]", DEBUG_WFBC_GETPOKE_TARGET_npc_id, DEBUG_WFBC_GETPOKE_TARGET_poke_idx );
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetName( item , "WFPoke??" );
+  }
+}
+
 
 
 #endif //PM_DEBUG
