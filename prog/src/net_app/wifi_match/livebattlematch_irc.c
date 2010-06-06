@@ -76,6 +76,12 @@ static void LiveBattleMatch_RecvCallback_RecvPokeParty( const int netID, const i
 static void LiveBattleMatch_RecvCallback_RecvRegulation( const int netID, const int size, const void* cp_data_adrs, void* p_wk_adrs, GFL_NETHANDLE *p_handle );
 static u8* LiveBattleMatch_RecvCallback_GetRecvBuffer( int netID, void* p_wk_adrs, int size );
 
+
+//-------------------------------------
+///	GSID比較コールバック
+//=====================================
+static BOOL LiveBattleMatch_IrcGSIDCallback( u8 mygsid,u8 friendgsid );
+
 //=============================================================================
 /**
  *					データ
@@ -98,6 +104,9 @@ static const NetRecvFuncTable LIVEBATTLEMATCH_IRC_RecvFuncTable[] =
   { LiveBattleMatch_RecvCallback_RecvPokeParty, LiveBattleMatch_RecvCallback_GetRecvBuffer },
   { LiveBattleMatch_RecvCallback_RecvRegulation, LiveBattleMatch_RecvCallback_GetRecvBuffer },
 };
+
+//LiveBattleMatch_IrcGSIDCallback関数から設定する値（ワークが渡せないのでstatic）
+static BOOL s_get_enable_gsid  = TRUE;
 
 //=============================================================================
 /**
@@ -223,6 +232,7 @@ enum
   SEQ_START_CONNECT,
   SEQ_WAIT_CONNECT,
   SEQ_END,
+  SEQ_DIRTY_END,
 };
 //----------------------------------------------------------------------------
 /**
@@ -230,10 +240,10 @@ enum
  *
  *	@param	LIVEBATTLEMATCH_IRC_WORK *p_wk  ワーク
  *
- *	@return TRUEで終了  FALSEで処理中
+ *	@return LIVEBATTLEMATCH_RESULT列挙を参照
  */
 //-----------------------------------------------------------------------------
-BOOL LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
+LIVEBATTLEMATCH_RESULT LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
 { 
   static const GFLNetInitializeStruct aGFLNetInit = 
   {
@@ -280,6 +290,7 @@ BOOL LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
   { 
   case SEQ_START_INIT:
     GFL_NET_Init( &aGFLNetInit, NULL, NULL );
+    s_get_enable_gsid  = TRUE;
     p_wk->seq = SEQ_WAIT_INIT;
     break;
 
@@ -292,6 +303,7 @@ BOOL LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
 
   case SEQ_ADD_CMD:
     GFL_NET_AddCommandTable( GFL_NET_CMD_IRC_BATTLE, LIVEBATTLEMATCH_IRC_RecvFuncTable, NELEMS(LIVEBATTLEMATCH_IRC_RecvFuncTable), p_wk );
+    GFL_NET_IRC_SetGSIDCallback( LiveBattleMatch_IrcGSIDCallback );
     p_wk->seq = SEQ_START_CONNECT;
     break;
 
@@ -305,14 +317,25 @@ BOOL LIVEBATTLEMATCH_IRC_WaitConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
     { 
       p_wk->seq = SEQ_END;
     }
+
+    if( s_get_enable_gsid == FALSE )
+    {
+      p_wk->seq = SEQ_DIRTY_END;
+    }
     break;
 
   case SEQ_END:
-    return TRUE;
+    GFL_NET_IRC_SetGSIDCallback( NULL );
+    return LIVEBATTLEMATCH_RESULT_SUCCESS;
+
+
+  case SEQ_DIRTY_END:
+    GFL_NET_IRC_SetGSIDCallback( NULL );
+    return LIVEBATTLEMATCH_RESULT_FAILIRE;
   }
 
 
-  return FALSE;
+  return LIVEBATTLEMATCH_RESULT_CONTINUE;
 }
 //----------------------------------------------------------------------------
 /**
@@ -328,6 +351,7 @@ void LIVEBATTLEMATCH_IRC_StartCancelConnect( LIVEBATTLEMATCH_IRC_WORK *p_wk )
     GFL_NET_DelCommandTable( GFL_NET_CMD_IRC_BATTLE );
   }
 
+  GFL_NET_IRC_SetGSIDCallback( NULL );
   p_wk->seq = 0;
 }
 //----------------------------------------------------------------------------
@@ -448,6 +472,8 @@ BOOL LIVEBATTLEMATCH_IRC_StartEnemyData( LIVEBATTLEMATCH_IRC_WORK *p_wk, const v
 {
   NetID netID;
 
+  p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_ENEMYDATA]  = FALSE;
+
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
   netID = netID == 0? 1: 0;
@@ -491,6 +517,8 @@ BOOL LIVEBATTLEMATCH_IRC_SendPokeParty( LIVEBATTLEMATCH_IRC_WORK *p_wk, const PO
 {
   NetID netID;
 
+  p_wk->is_recv[LIVEBATTLEMATCH_IRC_RECV_FLAG_POKEPARTY]  = FALSE;
+
   //相手にのみ送信
   netID = GFL_NET_GetNetID( GFL_NET_HANDLE_GetCurrentHandle() );
   netID = netID == 0? 1: 0;
@@ -533,7 +561,7 @@ void LIVEBATTLEMATCH_IRC_StartRecvRegulation( LIVEBATTLEMATCH_IRC_WORK *p_wk, RE
 { 
   DELIVERY_IRC_INIT init;
   GFL_STD_MemClear( &init, sizeof(DELIVERY_IRC_INIT) );
-  init.NetDevID = WB_NET_IRC_BATTLE;
+  init.NetDevID = WB_NET_IRC_REGULATION;
   init.data[0].datasize = sizeof(REGULATION_CARDDATA);
   init.data[0].pData  = (u8*)p_recv;
   init.ConfusionID  = 0;
@@ -768,3 +796,18 @@ static u8* LiveBattleMatch_RecvCallback_GetRecvBuffer( int netID, void* p_wk_adr
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  GSID比較コールバック
+ *
+ *	@param	u8 mygsid   自分のGSID
+ *	@param	friendgsid  相手のGSID
+ *
+ *	@return TRUEならば接続  FALSEならば接続しない
+ */
+//-----------------------------------------------------------------------------
+static BOOL LiveBattleMatch_IrcGSIDCallback( u8 mygsid,u8 friendgsid )
+{
+  s_get_enable_gsid  = (mygsid == friendgsid);
+  return s_get_enable_gsid;
+}

@@ -264,6 +264,7 @@ BOOL NET_DEV_IsIrcMode(void)
   case WB_NET_IRCMENU:
   case WB_NET_IRCBATTLE_MULTI:
   case WB_NET_IRCBATTLE_MULTI_IRC:
+  case WB_NET_IRC_REGULATION:
     return TRUE;
     break;
   }

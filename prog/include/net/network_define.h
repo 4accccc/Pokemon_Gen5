@@ -216,6 +216,7 @@ typedef enum  {
   WB_NET_POKELIST,         ///<ポケモンリスト(終了時同期コマンド用
   WB_NET_BATTLE_EXAMINATION,  ///<バトル検定配信
   WB_NET_WIFIP2P_SUB,  ///< WIFIバトルの中間
+  WB_NET_IRC_REGULATION,  ///<ライブ大会レギュレーション配信
   
   WB_NET_SERVICEID_MAX   // 終端
 } NetworkServiceID_e;
@@ -266,6 +267,7 @@ enum NetworkCommandHeaderNo_e {
   GFL_NET_CMD_POKELIST = (WB_NET_POKELIST << 8),///<ポケモンリスト(終了時同期コマンド用
   GFL_NET_CMD_BATTLE_EXAMINATION = (WB_NET_BATTLE_EXAMINATION<<8),  ///<バトル検定配信
   GFL_NET_CMD_WIFIP2P_SUB = (WB_NET_WIFIP2P_SUB<<8), ///< WIFIバトルの中間
+  GFL_NET_CMD_IRC_REGULATION  = (WB_NET_IRC_REGULATION<<8),  ///<ライブ大会レギュレーション配信
 };
 
 

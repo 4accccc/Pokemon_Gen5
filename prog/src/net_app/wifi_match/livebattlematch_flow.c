@@ -1483,7 +1483,12 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     SEQ_WAIT_CANCEL_MATCHING,
     SEQ_START_MSG_CANCEL_MATCHING, //マッチングやめる
     SEQ_START_LIST_CANCEL_MATCHING,
-    SEQ_START_LSIT_CANCEL_MATCHING,
+    SEQ_WAIT_LIST_CANCEL_MATCHING,
+
+    SEQ_START_FAIL_CANCEL_MATCHING,  //マッチングに失敗した
+    SEQ_WAIT_FAIL_CANCEL_MATCHING,
+    SEQ_START_MSG_FAIL,
+    SEQ_WAIT_MSG_FAIL,
 
     SEQ_SEND_ENEMYDATA,      //情報交換
     SEQ_RECV_ENEMYDATA,      //情報交換
@@ -1548,9 +1553,17 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     }
     break;
   case SEQ_WAIT_CONNECT:
-    if( LIVEBATTLEMATCH_IRC_WaitConnect( p_wk->p_irc ) )
     { 
-      *p_seq  = SEQ_SEND_ENEMYDATA;
+      LIVEBATTLEMATCH_RESULT result = LIVEBATTLEMATCH_IRC_WaitConnect( p_wk->p_irc );
+      switch( result )
+      { 
+      case LIVEBATTLEMATCH_RESULT_SUCCESS:
+        *p_seq  = SEQ_SEND_ENEMYDATA;
+        break;
+      case LIVEBATTLEMATCH_RESULT_FAILIRE:
+        *p_seq  = SEQ_START_FAIL_CANCEL_MATCHING;
+        break;
+      }
     }
 
     //キャンセル処理
@@ -1578,9 +1591,9 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
 		break;
   case SEQ_START_LIST_CANCEL_MATCHING:
     UTIL_LIST_Create( p_wk, LVM_MENU_TYPE_YESNO ); 
-    *p_seq       = SEQ_START_LSIT_CANCEL_MATCHING;
+    *p_seq       = SEQ_WAIT_LIST_CANCEL_MATCHING;
     break;
-  case SEQ_START_LSIT_CANCEL_MATCHING:
+  case SEQ_WAIT_LIST_CANCEL_MATCHING:
     { 
       const u32 select  = UTIL_LIST_Main( p_wk ); 
       if( select != WBM_LIST_SELECT_NULL )
@@ -1599,6 +1612,29 @@ static void SEQFUNC_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
         }
       }
     }
+    break;
+
+  case SEQ_START_FAIL_CANCEL_MATCHING:  //マッチングに失敗した
+    WBM_WAITICON_SetDrawEnable( p_wk->p_wait, FALSE );
+    LIVEBATTLEMATCH_IRC_StartCancelConnect( p_wk->p_irc );
+    *p_seq  = SEQ_WAIT_FAIL_CANCEL_MATCHING;
+    break;
+
+  case SEQ_WAIT_FAIL_CANCEL_MATCHING:
+    if( LIVEBATTLEMATCH_IRC_WaitCancelConnect( p_wk->p_irc ) )
+    {
+      *p_seq  = SEQ_START_MSG_FAIL;
+    }
+    break;
+
+  case SEQ_START_MSG_FAIL:
+    UTIL_TEXT_Print( p_wk, LIVE_STR_22_3, WBM_TEXT_TYPE_STREAM );
+    *p_seq       = SEQ_WAIT_MSG;
+    WBM_SEQ_SetReservSeq( p_seqwk, SEQ_WAIT_MSG_FAIL );
+    break;
+
+  case SEQ_WAIT_MSG_FAIL:
+    WBM_SEQ_SetNext( p_seqwk, SEQFUNC_StartCup );
     break;
 
   case SEQ_SEND_ENEMYDATA:      //情報交換
