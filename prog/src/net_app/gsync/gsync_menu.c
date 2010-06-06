@@ -1355,6 +1355,17 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     pWork->gsys = pParentWork->gsys;
 
     GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
+
+    //初期マスター輝度設定　WiFi設定から戻ってきたときのために仕込んでおきます    20100606 add Saito
+    {
+      int brightness;
+      if (pParentWork->white_in) brightness = 16;
+      else brightness = -16;
+      
+      GX_SetMasterBrightness(brightness);
+      GXS_SetMasterBrightness(brightness);
+    }
+
     GXS_DispOn();
     GX_DispOn();
 
@@ -1389,8 +1400,20 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
                                pWork->pFontHandle, pWork->SysMsgQue, pWork->heapID  );
 
     G2S_SetBlendAlpha( GX_BLEND_PLANEMASK_BG2, GX_BLEND_PLANEMASK_BG0 , 15, 4 );
+#if 0                                                                                     //20100606 del Saito
     WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+#else
+    {
+      int fade_col;
+      if (pParentWork->white_in) fade_col = WIPE_FADE_WHITE;
+      else fade_col = WIPE_FADE_BLACK;
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
+                    fade_col , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
+      //リクエストしたら、フェードカラーをデフォルトに戻しておく
+      pParentWork->white_in = FALSE;
+    }
+#endif
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;

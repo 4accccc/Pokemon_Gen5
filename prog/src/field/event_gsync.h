@@ -69,6 +69,7 @@ typedef struct {
   WIFILOGIN_PARAM aLoginWork;
   WIFILOGOUT_PARAM   logout;
   BOX2_GFL_PROC_PARAM boxParam;
+  BOOL white_in;    //20100606 add Saito
 } EVENT_GSYNC_WORK;
 
 extern void EVENT_GSYNC_SetEnd(EVENT_GSYNC_WORK* pWk);

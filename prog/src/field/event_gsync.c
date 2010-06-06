@@ -108,6 +108,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     break;
   case _FIELD_FADE_CLOSE:
     GMEVENT_CallEvent(event, EVENT_FieldClose(gsys, pFieldmap));
+    dbw->white_in = FALSE;  //フェードインはブラック　20100606 add Satio
     (*seq) = _CALL_GAMESYNC_MENU;
     break;
   case _CALL_GAMESYNC_MENU:
@@ -163,7 +164,8 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     (*seq) = _FADEIN_WIFIUTIL;
     break;
   case _FADEIN_WIFIUTIL:
-    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1);
+    dbw->white_in = TRUE;  //フェードインはホワイト　20100606 add Satio
+//    GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_WHITEOUT, 16, 0, 1); 20100606 del Saito
     (*seq) = _CALL_GAMESYNC_MENU;
     break;
   case _FIELD_OPEN:
@@ -235,6 +237,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
   case _WAIT_GAMESYNC_MAINPROC:
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       if(dbw->selectType == GSYNC_RETURNMODE_BOXNULL){
+        dbw->white_in = FALSE;  //フェードインはブラック　20100606 add Satio
         (*seq)=_CALL_GAMESYNC_MENU;
       }
       else if(dbw->selectType==GAMESYNC_RETURNMODE_BOXJUMP){
@@ -299,6 +302,7 @@ static GMEVENT_RESULT EVENT_GSyncMain(GMEVENT * event, int *  seq, void * work)
     if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
       GAMESYSTEM_CommBootAlways(gsys);
       GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
+      dbw->white_in = FALSE;  //フェードインはブラック　20100606 add Satio
       (*seq)=_CALL_GAMESYNC_MENU;
       if(dbw->push){
         PMSND_PopBGM();
