@@ -614,6 +614,10 @@ static int _playerDirectSub3( WIFIP2PMATCH_WORK *wk, int seq )
 {
   wk->timer--;
 
+  //BTS3550の対処 Saito
+  //メッセージを早送りするために読んでいます
+  WifiP2PMatchMessageEndCheck(wk);
+
   if( wk->timer < 0){
     wk->command = WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1;
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
