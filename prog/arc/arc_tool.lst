@@ -295,3 +295,4 @@
   ARCID_BMODEL_INDOOR_AREA   "fieldmap/buildmodel_indoor_area.narc" #配置モデルエリアデータ（屋内）
   ARCID_MANUAL_IMAGE "manual_image.narc" # ゲーム内マニュアルの説明画像データ
   $DEBUG_YES ARCID_DEBUG_HITCH_CHECK "debug/hitch_check.narc"  #当たり判定チェック（デバッグ用）
+  $DEBUG_YES ARCID_DEBUG_MESSAGE  "message_debug.narc"  #デバッグ用メッセージデータ
