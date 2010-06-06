@@ -2368,12 +2368,15 @@ static  void  TCB_TransformCommand2Standby( GFL_TCB* tcb, void* work )
   switch( ttw->seq_no ){
   case 0:
     SetupScaleChange( ttw->biw, TTC2S_START_SCALE, TTC2S_END_SCALE, TTC2S_SCALE_SPEED, COMMAND_POS_Y );
+    ttw->seq_no++;
+    break;
+  case 1:
     GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME1_S, VISIBLE_OFF );
     GFL_BG_SetVisible( GFL_BG_FRAME3_S, VISIBLE_ON );
     ttw->seq_no++;
     break;
-  case 1:
+  case 2:
   default:
     if( ttw->biw->tcb_execute_count == 0 )
     {
