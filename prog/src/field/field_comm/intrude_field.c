@@ -1458,7 +1458,8 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 {
   int use_num;
   
-  if(intcomm == NULL || fieldWork == NULL || FIELDMAP_IsReady(fieldWork) == FALSE || ZONEDATA_IsPalace(FIELDMAP_GetZoneID(fieldWork)) == FALSE){
+  if(intcomm == NULL || fieldWork == NULL || FIELDMAP_GetFieldG3Dmapper(fieldWork) == NULL || 
+      ZONEDATA_IsPalace(FIELDMAP_GetZoneID(fieldWork)) == FALSE){
     return;
   }
   
@@ -1494,7 +1495,7 @@ void IntrudeField_ConnectMap(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameSys, IN
 
     do{
       OS_TPrintf("--- Map˜AŒ‹ %d ----\n", intcomm->connect_map_count + 1);
-      FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper( fieldWork ), mmatrix );
+      FLDMAPPER_Connect( fieldWork, FIELDMAP_GetFieldG3Dmapper(fieldWork), mmatrix );
       intcomm->connect_map_count++;
     }while(intcomm->connect_map_count < use_num);
 

@@ -1005,6 +1005,7 @@ static MAINSEQ_RESULT mainSeqFunc_ready(GAMESYS_WORK *gsys, FIELDMAP_WORK *field
     }
   }
   FIELD_STATUS_SetContinueFlag( GAMEDATA_GetFieldStatus( fieldWork->gamedata ), FALSE );
+  FLDMAPPER_AllSetUp( fieldWork->g3Dmapper ); // 初期化スクリプトで追加されたマップブロックを読み込む
 
 
   //フィールドマップ用イベント起動チェックをセットする
