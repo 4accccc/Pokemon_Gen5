@@ -59,6 +59,7 @@ static void UnionComm_MinigameUpdate(UNION_SYSTEM_PTR unisys);
 static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys);
 static void UnionComm_BeaconSearch(UNION_SYSTEM_PTR unisys);
 static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address);
+static BOOL UnionBeacon_CheckSubMemberSameValid(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address);
 static void* UnionComm_GetBeaconData(void* pWork);
 static void UnionComm_SetBeaconParam(UNION_SYSTEM_PTR unisys, UNION_BEACON *beacon);
 static int UnionComm_GetBeaconSize(void *pWork);
@@ -677,7 +678,7 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
     return FALSE; //有効なビーコンではない
   }
   
-  //既に受信済みのビーコンデータか確認
+  //既に受信済みのビーコンデータか確認(主メンバー)
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
     if(dest[i].beacon.data_valid == UNION_BEACON_VALID
         && GFL_STD_MemComp(beacon_mac_address, dest[i].mac_address, 6) == 0){
@@ -691,7 +692,12 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
       return TRUE;
     }
   }
-
+  
+  //同じ人物が既に別グループに存在していないかチェック
+  if(UnionBeacon_CheckSubMemberSameValid(unisys, beacon, beacon_mac_address) == FALSE){
+    return FALSE;
+  }
+  
   //新規のビーコンデータなので空き領域にセットする
   for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
     if(dest[i].beacon.data_valid != UNION_BEACON_VALID){
@@ -705,6 +711,41 @@ static BOOL UnionBeacon_SetReceiveData(UNION_SYSTEM_PTR unisys, const UNION_BEAC
   }
   
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 受信ビーコンに対して既に同じビーコンの人物が存在していないか確認する
+ * 同じ人物が既にいる場合は、その人物がいるグループを強制退出(ライフ1に設定)させる
+ *
+ * @param   unisys		
+ * @param   beacon		新しく受信したビーコンへのポインタ
+ *
+ * @retval  BOOL		  TRUE:同じ人物はいなかった。　FALSE:同じ人物がいた
+ */
+//--------------------------------------------------------------
+static BOOL UnionBeacon_CheckSubMemberSameValid(UNION_SYSTEM_PTR unisys, const UNION_BEACON *beacon, const u8 *beacon_mac_address)
+{
+  UNION_BEACON_PC *bpc;
+  int i, member_no;
+  
+  bpc = unisys->receive_beacon;
+  for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
+    if(bpc->beacon.data_valid == UNION_BEACON_VALID){
+      for(member_no = 0; member_no < UNION_CONNECT_PLAYER_NUM; member_no++){  //サブのみチェック
+        if(bpc->beacon.party.member[member_no].occ == TRUE
+            && GFL_STD_MemComp(beacon_mac_address, bpc->beacon.party.member[member_no].mac_address, 6) == 0){
+          //同じ人物発見
+          if(bpc->life > 0){
+            bpc->life = 1;
+          }
+          return FALSE;
+        }
+      }
+    }
+    bpc++;
+  }
+  return TRUE;
 }
 
 //--------------------------------------------------------------
@@ -1107,8 +1148,6 @@ void UnionMyComm_PartyDelParam(UNION_MY_COMM *mycomm, const u8 *mac_address)
       return;
     }
   }
-  
-  GF_ASSERT(0); //パーティに存在していないPC
 }
 
 //==================================================================

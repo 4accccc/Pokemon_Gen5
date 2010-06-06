@@ -2875,6 +2875,10 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
 
   case _SEQ_SHUTDOWN_WAIT:
     if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE && GFL_NET_IsExit() == TRUE){
+      if(situ->mycomm.connect_pc != NULL){
+        UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
+        UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
+      }
       UnionComm_Req_Restarts(unisys);
       (*seq)++;
     }
@@ -2887,10 +2891,6 @@ static BOOL OneselfSeq_ShutdownUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_TALK_WAIT:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
-        if(situ->mycomm.connect_pc != NULL){
-          UnionMyComm_PartyDel(&situ->mycomm, situ->mycomm.connect_pc);
-          UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CONNECT_PC, NULL);
-        }
         return TRUE;
       }
     }

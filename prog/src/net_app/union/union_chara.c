@@ -60,6 +60,7 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
 static BOOL UnicharaSeq_EnterUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
 static BOOL UnicharaSeq_LeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
 static BOOL UnicharaSeq_TalkingUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *unichara, FIELDMAP_WORK *fieldmap, u8 *seq);
+static BOOL UNION_CHARA_CheckMemberSameValid(UNION_SYSTEM_PTR unisys, const UNION_BEACON_PC *target_pc, const u8 *entry_mac_address);
 
 
 //==============================================================================
@@ -447,11 +448,19 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, ETC_SAVE_WORK *e
   UNION_CHARACTER *unichara;
   UNION_BEACON *beacon;
   MMDL *mmdl;
+  u8 my_mac[6];
   
+  OS_GetMacAddress(my_mac);
   beacon = &pc->beacon;
   for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
     unichara = pc->chara_group.character[i];
     if(unichara == NULL && beacon->party.member[i].occ == TRUE){
+      if(GFL_STD_MemComp(my_mac, beacon->party.member[i].mac_address, 6) == 0){
+        continue; //自分は画面に出さない
+      }
+      if(UNION_CHARA_CheckMemberSameValid(unisys, pc, beacon->party.member[i].mac_address) == FALSE){
+        continue;
+      }
       pc->chara_group.character[i] = UNION_CHARA_AddChar(unisys, pc, &beacon->party.member[i], i, FALSE, &mmdl);
       pc->chara_group.character[i]->event_status = BPC_EVENT_STATUS_ENTER;
       UNION_CHAR_EventReq(pc->chara_group.character[i], BPC_EVENT_STATUS_NORMAL);
@@ -472,6 +481,44 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, ETC_SAVE_WORK *e
       }
     }
   }
+}
+
+//--------------------------------------------------------------
+/**
+ * 新たに追加しようとしている子メンバーが他のグループに存在していれば、そのグループを解散させる
+ *
+ * @param   unisys		
+ * @param   target_pc		        追加しようとしている子が在籍しているグループのポインタ
+ * @param   entry_mac_address		追加しようとしている子のMacAddress
+ *
+ * @retval  BOOL		TRUE:他グループには存在していない
+ *                  FALSE:他グループに存在している
+ */
+//--------------------------------------------------------------
+static BOOL UNION_CHARA_CheckMemberSameValid(UNION_SYSTEM_PTR unisys, const UNION_BEACON_PC *target_pc, const u8 *entry_mac_address)
+{
+  UNION_BEACON_PC *bpc;
+  int i, member_no;
+  
+  bpc = unisys->receive_beacon;
+  for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
+    if(bpc != target_pc){
+      if(bpc->beacon.data_valid == UNION_BEACON_VALID){
+        for(member_no = 0; member_no < UNION_CONNECT_PLAYER_NUM; member_no++){
+          if(bpc->beacon.party.member[member_no].occ == TRUE
+              && GFL_STD_MemComp(entry_mac_address, bpc->beacon.party.member[member_no].mac_address, 6) == 0){
+            //同じ人物発見
+            if(bpc->life > 0){
+              bpc->life = 1;
+            }
+            return FALSE;
+          }
+        }
+      }
+    }
+    bpc++;
+  }
+  return TRUE;
 }
 
 //==================================================================
@@ -556,7 +603,7 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *
     if(bpc->beacon.data_valid == UNION_BEACON_VALID){
       //寿命更新
       if(BeaconPC_UpdateLife(unisys, bpc) == FALSE){
-        OS_TPrintf("PC:寿命が尽きた group=%d\n", i);
+        //OS_TPrintf("PC:寿命が尽きた group=%d\n", i);
       }
       
       //新規キャラ登録チェック
@@ -705,7 +752,8 @@ static BOOL UnicharaSeq_NormalUpdate(UNION_SYSTEM_PTR unisys, UNION_CHARACTER *u
   }
   
   //自分の存在チェック
-  if(unichara->parent_pc->beacon.party.member[unichara->child_no].occ == FALSE){
+  if(unichara->parent_pc->beacon.party.member[unichara->child_no].occ == FALSE
+      || unichara->parent_pc->beacon.party.member[unichara->child_no].trainer_view != unichara->trainer_view){
     UNION_CHAR_EventReq(unichara, BPC_EVENT_STATUS_LEAVE);
     return TRUE;
   }
