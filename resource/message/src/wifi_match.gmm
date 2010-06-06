@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-03T15:48:52"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-06T20:17:21"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="114" top="428" right="819" bottom="1056" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="42" right="1024" bottom="440" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1052,13 +1052,13 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 		<language name="JPN_KANJI" width="256">やめる</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_38">
+	<row id="WIFIMATCH_WIFI_STR_38" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">エントリーした　たいかいは
+		<language name="JPN" width="256">さんか　とうろくした　たいかいは
 げんざい　かいさい　されていません[BE:01:ページ切り替え（クリア）]
 たいかいの　にっていを
 かくにんして　おまちください[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">エントリーした　大会は
+		<language name="JPN_KANJI" width="256">参加　登録した　大会は
 現在　開催　されていません[BE:01:ページ切り替え（クリア）]
 大会の　日程を
 確認して　お待ちください[BE:01:ページ切り替え（クリア）]</language>
@@ -1111,10 +1111,10 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_DPC_STR_00">
 		<comment>選手証チェック</comment>
-		<language name="JPN" width="256">この　たいかいに
-エントリーちゅう　です</language>
-		<language name="JPN_KANJI" width="256">この　大会に
-エントリー中です</language>
+		<language name="JPN" width="256">この　たいかいに　さんかして
+ポケモン　とうろく　ちゅう　です</language>
+		<language name="JPN_KANJI" width="256">この　大会に　参加して
+ポケモン　登録中です</language>
 	</row>
 
 	<row id="WIFIMATCH_DPC_STR_01">
@@ -1201,11 +1201,11 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">さんかを　かいじょすると
 おなじ　たいかいには[BE:00:ページ切り替え（行送り）]
-エントリー　できません[BE:01:ページ切り替え（クリア）]
+さんか　できません[BE:01:ページ切り替え（クリア）]
 かいじょしても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">参加を　解除すると
 同じ　大会には[BE:00:ページ切り替え（行送り）]
-エントリー　できません[BE:01:ページ切り替え（クリア）]
+参加できません[BE:01:ページ切り替え（クリア）]
 解除しても　よろしいですか？</language>
 	</row>
 
