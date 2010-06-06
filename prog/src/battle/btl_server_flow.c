@@ -478,6 +478,7 @@ static void PSetStack_Pop( BTL_SVFLOW_WORK* wk );
 static void psetstack_setup( BTL_SVFLOW_WORK* wk, u32 sp, BOOL fClear );
 static HandExResult scproc_HandEx_Result( BTL_SVFLOW_WORK* wk );
 static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_header );
+static u8 scproc_HandEx_UseItemAct( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_TokWinIn( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_TokWinOut( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
 static u8 scproc_HandEx_ItemEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header );
@@ -5335,12 +5336,12 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     ){
       break;
     }
-
     // 毎回ヒットチェックを行うワザは外れたらブレイク
-    if( wk->hitCheckParam->fCheckEveryTime
-    ){
+    if( wk->hitCheckParam->fCheckEveryTime ){
       if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam) ){ break; }
     }
+
+
   }
 
   if( hitCount>0 ){
@@ -13054,6 +13055,7 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
   }
 
   switch( handEx_header->equip ){
+  case BTL_HANDEX_USE_ITEM_EFFECT:    fPrevSucceed = scproc_HandEx_UseItemAct( wk, handEx_header ); break;
   case BTL_HANDEX_TOKWIN_IN:          fPrevSucceed = scproc_HandEx_TokWinIn( wk, handEx_header ); break;
   case BTL_HANDEX_TOKWIN_OUT:         fPrevSucceed = scproc_HandEx_TokWinOut( wk, handEx_header ); break;
   case BTL_HANDEX_ITEM_EFFECT:        fPrevSucceed = scproc_HandEx_ItemEffect( wk, handEx_header ); break;
@@ -13120,7 +13122,21 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
   BTL_Hem_SetResult( &wk->HEManager, fPrevSucceed );
 }
 
+/**
+ * アイテム使用エフェクトのみ発動
+ * @return 成功時 1 / 失敗時 0
+ */
+static u8 scproc_HandEx_UseItemAct( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
+{
+  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param_header->userPokeID) )
+  {
+    BTL_POKEPARAM* pp_user = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
+    scPut_UseItemAct( wk, pp_user );
+    return 1;
+  }
+  return 0;
 
+}
 /**
  * とくせいウィンドウ表示
  * @return 成功時 1 / 失敗時 0

@@ -1149,14 +1149,14 @@ static void handler_HimeriNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    handler_HimeriNomi_common( myHandle, flowWk, pokeID, work, TRUE );
+    handler_HimeriNomi_common( myHandle, flowWk, pokeID, work, FALSE );
   }
 }
 static void handler_HimeriNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( work[WORKIDX_TMP_FLAG] )
   {
-    handler_HimeriNomi_common( myHandle, flowWk, pokeID, work, FALSE );
+    handler_HimeriNomi_common( myHandle, flowWk, pokeID, work, TRUE );
   }
 }
 /**
@@ -1199,7 +1199,7 @@ static u8 common_Himeri_EnableWazaIdx( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
 /**
  *  いろんな使われ方をするヒメリのみの共通処理
  */
-static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BOOL fZeroOnly )
+static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BOOL fUseTmp )
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
   u8 wazaIdx = PTL_WAZA_MAX;
@@ -1219,8 +1219,8 @@ static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
         break;
       }
 
-      // 場合によりPPが１つでも減っていたら使う（0番から順サーチ）
-      if( !fZeroOnly )
+      // ついばむ・なげつける効果の時はPPが１つでも減っていたら使う（0番から順サーチ）
+      if( fUseTmp )
       {
         u32 waza_cnt = BPP_WAZA_GetCount( bpp );
         u32 i;
@@ -1238,7 +1238,15 @@ static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 
   if( wazaIdx != PTL_WAZA_MAX )
   {
-    BTL_HANDEX_PARAM_PP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
+    BTL_HANDEX_PARAM_PP* param;
+
+    if( fUseTmp )
+    {
+      // 一時利用の場合はココでエフェクト出さないといけない…
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM_EFFECT, pokeID );
+    }
+
+    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RECOVER_PP, pokeID );
       param->volume = 10;
       param->pokeID = pokeID;
       param->wazaIdx = wazaIdx;

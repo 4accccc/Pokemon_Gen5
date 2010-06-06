@@ -268,7 +268,8 @@ typedef enum {
  */
 typedef enum {
 
-  BTL_HANDEX_USE_ITEM,      ///< アイテム使用
+  BTL_HANDEX_USE_ITEM,            ///< アイテム使用
+  BTL_HANDEX_USE_ITEM_EFFECT,     ///< アイテム使用エフェクトのみ実行
   BTL_HANDEX_TOKWIN_IN,           ///< とくせいウィンドウイン
   BTL_HANDEX_TOKWIN_OUT,          ///< とくせいウィンドウアウト
   BTL_HANDEX_ITEM_EFFECT,         ///< アイテム発動エフェクト
