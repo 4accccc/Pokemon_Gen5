@@ -1262,12 +1262,20 @@ static BOOL _pokemonIllegalCheck(POKEMON_PARAM* pp)
 
 BOOL POKEMONTRADE_IsIllegalPokemon(POKEMON_TRADE_WORK* pWork)
 {
-  return _pokemonIllegalCheck(IRC_POKEMONTRADE_GetRecvPP(pWork, 0));
+  int no = 0;
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    no=1;
+  }
+  return _pokemonIllegalCheck(IRC_POKEMONTRADE_GetRecvPP(pWork, no));
 }
 
 BOOL POKEMONTRADE_IsIllegalPokemonFriend(POKEMON_TRADE_WORK* pWork)
 {
-  return _pokemonIllegalCheck(IRC_POKEMONTRADE_GetRecvPP(pWork, 1));
+  int no = 1;
+  if(POKEMONTRADEPROC_IsTriSelect(pWork)){
+    no=0;
+  }
+  return _pokemonIllegalCheck(IRC_POKEMONTRADE_GetRecvPP(pWork, no));
 }
 
 BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
