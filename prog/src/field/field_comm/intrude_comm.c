@@ -351,6 +351,11 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     else if(GFL_NET_IsParentMachine() == TRUE && MISSION_RecvCheck(&intcomm->mission) == FALSE){
       s32 start_time = intcomm->mission_start_timeout;
       s32 now_time = GFL_RTC_GetTimeBySecond();
+    #ifdef PM_DEBUG
+      if(intcomm->debug_time_unlimited == TRUE){
+        start_time = now_time;
+      }
+    #endif
       if(now_time < start_time){  //回り込みが発生
         now_time += GFL_RTC_TIME_SECOND_MAX;
       }
@@ -854,3 +859,19 @@ static void _SearchBconLifeDec(INTRUDE_COMM_SYS_PTR intcomm)
     }
   }
 }
+
+#ifdef PM_DEBUG
+//--------------------------------------------------------------
+/**
+ * デバッグ：時間による切断を無制限にする
+ */
+//--------------------------------------------------------------
+void DEBUG_IntrudeComm_SetTimeUnlimited(GAMESYS_WORK *gsys)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(GAMESYSTEM_GetGameCommSysPtr(gsys));
+  
+  if(intcomm != NULL){
+    intcomm->debug_time_unlimited = TRUE;
+  }
+}
+#endif  //PM_DEBUG

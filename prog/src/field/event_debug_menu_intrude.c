@@ -25,11 +25,14 @@
 
 #include "field/field_comm/intrude_field.h" //PALACE_MAP_LEN
 #include "field/field_comm/intrude_mission.h" //MISSION_LIST_Create
+#include "field/intrude_comm.h" //DEBUG_IntrudeComm_SetTimeUnlimited
+
 //======================================================================
 //======================================================================
 static void clearTutorial( FIELDMAP_WORK * fieldmap );
 static void dumpPlayerInfo( FIELDMAP_WORK * fieldmap );
 static void resetMissionList( FIELDMAP_WORK * fieldmap );
+static void timeUnlimited( FIELDMAP_WORK * fieldmap );
 
 //======================================================================
 //======================================================================
@@ -66,6 +69,7 @@ static const FLDMENUFUNC_LIST menuList[] =
   {STR_INTRUDE_TUTORIAL_CLEAR,     (void*)clearTutorial},      // チュートリアルクリア
   {STR_INTRUDE_DUMP_PLAYER,       (void*)dumpPlayerInfo},      // プレイヤー情報
   {STR_INTRUDE_MISSION_RESET,     (void*)resetMissionList},      // ミッションリスト再作成
+  {STR_INTRUDE_TIME_UNLIMITED,     (void*)timeUnlimited},      // ミッションリスト再作成
 };
 
 //--------------------------------------------------------------
@@ -223,6 +227,13 @@ static void resetMissionList( FIELDMAP_WORK * fieldmap )
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo( gamedata );
   MISSION_LIST_Create( occupy );
+}
+
+//--------------------------------------------------------------
+//--------------------------------------------------------------
+static void timeUnlimited( FIELDMAP_WORK * fieldmap )
+{
+  DEBUG_IntrudeComm_SetTimeUnlimited( FIELDMAP_GetGameSysWork( fieldmap ) );
 }
 
 #endif //PM_DEBUG

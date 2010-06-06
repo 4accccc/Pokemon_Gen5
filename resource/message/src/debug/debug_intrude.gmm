@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tamada" host="W00139" date="2010-06-01T18:05:09"/>
+	<create user="matsuda" host="W00142" date="2010-06-06T18:52:53"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -255,7 +255,7 @@
 		<band id="2" index="2" style="0000" width="638"/>
 		<band id="3" index="3" style="0000" width="638"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
-		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
+		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
 	</dialog>
@@ -288,6 +288,11 @@
 	<row id="STR_INTRUDE_MISSION_RESET">
 		<language name="JPN" font=" 1:font_system" width="240">ミッションリストさいさくせい</language>
 		<language name="JPN_KANJI">ミッションリスト再作成</language>
+	</row>
+
+	<row id="STR_INTRUDE_TIME_UNLIMITED">
+		<language name="JPN" font=" 1:font_system" width="240">じかんむせいげん</language>
+		<language name="JPN_KANJI">時間無制限</language>
 	</row>
 
 	<flowchart-group-list>

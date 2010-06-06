@@ -38,3 +38,9 @@ extern BOOL  IntrudeComm_TermCommSystemWait( int *seq, void *pwk, void *pWork );
 extern void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);
 extern void IntrudeComm_FieldDelete(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork);
 
+//--------------------------------------------------------------
+//  デバッグ用
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+extern void DEBUG_IntrudeComm_SetTimeUnlimited(GAMESYS_WORK *gsys);
+#endif  //PM_DEBUG
