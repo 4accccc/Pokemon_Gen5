@@ -2275,7 +2275,6 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   WIFI_STATUS_SetPMLang(wk->pMatch, PM_LANG);
   WIFI_STATUS_SetSex(wk->pMatch, MyStatus_GetMySex(pMyStatus));
   WIFI_STATUS_SetTrainerView(wk->pMatch,MyStatus_GetTrainerView(pMyStatus));
-
   _myStatusChange_not_send(wk, status, gamemode); // BGM状態などを調整
   WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
   WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
@@ -2356,8 +2355,6 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
     if((wk->matchStatusBackup[i]  != status) ||
        (wk->matchVchatBackup[i]  != WIFI_STATUS_GetVChatStatus(p_status)) ){
 
-      OS_TPrintf("%d ステータス変更 %d\n",i,status);
-      
       // オブジェクトワーク
       p_obj = MCRSYS_GetMoveObjWork( wk, i+1 );
 
@@ -3108,6 +3105,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
   // 最新版の友達数と、友達ナンバー配列を作成
   friend_num = _readFriendMatchStatus( wk );
   //  wk->friendMatchReadCount = friend_num;
+
 
   in_flag = FALSE;
   out_flag = FALSE;
@@ -7426,11 +7424,7 @@ static WIFI_STATUS* WifiFriendMatchStatusGet( u32 idx )
 {
   GF_ASSERT( idx < WIFIP2PMATCH_MEMBER_MAX );
 
-#ifdef WFP2PM_MANY_OBJ
-  idx = 0;
-#endif
   return (WIFI_STATUS*)GFL_NET_DWC_GetFriendInfo( idx );
-  //  return &wk->pMatch->friendMatchStatus[ idx ];
 }
 
 //----------------------------------------------------------------------------
@@ -7440,24 +7434,10 @@ static WIFI_STATUS* WifiFriendMatchStatusGet( u32 idx )
  *  @param  idx   インデックス
  */
 //-----------------------------------------------------------------------------
-#if PM_DEBUG
-static u8 friendstateNo[32]={0,0,0,0,0,0,0,0,0,0,0,0};
-#endif
 
 static u8 WifiDwc_getFriendStatus( int idx )
 {
-  int no = GFL_NET_DWC_getFriendStatus(idx);
-#ifdef WFP2PM_MANY_OBJ
-  idx = 0;
-#endif
-#if PM_DEBUG
-  if(friendstateNo[idx] != no){
-    friendstateNo[idx] = no;
-    OS_TPrintf("FRIEND CHANGE %d => %d\n",idx, no);
-    //  p_status = WifiFriendMatchStatusGet( i );
-  }
-#endif
-  return no;
+  return GFL_NET_DWC_getFriendStatus(idx);
 }
 
 //----------------------------------------------------------------------------

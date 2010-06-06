@@ -2249,7 +2249,19 @@ static void mydwc_updateFriendInfo( void )
     int size;
 
     if( DWC_IsBuddyFriendData( &(_dWork->pFriendData[index]) ) ){
-      _dWork->friend_status[index] = DWC_GetFriendStatusData(&_dWork->pFriendData[ index ],(char*)_dWork->friendinfo[index],&size);
+      u8 backup = _dWork->friend_status[index];
+      u8 nowstate = DWC_GetFriendStatusData(&_dWork->pFriendData[ index ],(char*)_dWork->friendinfo[index],&size);
+      if(size < 1){//0‚â-1‚ª‚ ‚è‚¦‚é
+        _dWork->friend_status[index] = DWC_STATUS_OFFLINE;
+        continue;
+      }
+#if PM_DEBUG
+      GF_ASSERT(size == MYDWC_STATUS_DATA_SIZE_MAX);
+      if(backup!=nowstate){
+        OS_TPrintf("FRIEND CHANGE %d => %d\n",backup, nowstate);
+      }        
+#endif
+      _dWork->friend_status[index] = nowstate;
     }
     _dWork->friendupdate_index = (_dWork->friendupdate_index + 1);
   }
