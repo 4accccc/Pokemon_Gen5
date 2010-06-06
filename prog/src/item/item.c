@@ -897,6 +897,7 @@ BALL_ID ITEM_GetBallID( u16 itemID )
     { ITEM_HURENDOBOORU,  BALLID_HURENDOBOORU   }, //22 フレンドボール
     { ITEM_MUUNBOORU,     BALLID_MUUNBOORU      }, //23 ムーンボール
     { ITEM_KONPEBOORU,    BALLID_KONPEBOORU     }, //24 コンペボール
+    { ITEM_DORIIMUBOORU,  BALLID_DORIIMUBOORU,  }, //25 ドリームボール
   };
 
   u32 i;
