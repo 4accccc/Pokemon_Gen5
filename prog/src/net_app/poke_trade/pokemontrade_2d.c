@@ -3468,7 +3468,7 @@ static void POKEMONTRADE2D_SetVisibleMainVBlank_Func( GFL_TCB *tcb , void *work 
   GFL_TCB_DeleteTask( tcb );
 }
 
-static void POKEMONTRADE2D_SetVisibleSubVBlank_Func( GFL_TCB *tcb , void *work );
+static void POKEMONTRADE2D_SetVisibleSubVBlank_Func( GFL_TCB *tcb , void *work )
 {
   u32 frame = (u32)work;
   GFL_DISP_GXS_SetVisibleControlDirect( frame );
