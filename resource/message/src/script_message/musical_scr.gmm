@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-04T12:57:45"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-07T12:44:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@
 		</language>
 	</columns>
 
-	<dialog left="17" top="226" right="722" bottom="854" maximized="no" rayout="Vertical2">
+	<dialog left="104" top="220" right="809" bottom="848" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="66" right="1280" bottom="464" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1202,9 +1202,9 @@ msg_musical_recept_06を
 さんかする　ときの　うけつけです▼
 おともだちと　いっしょに
 さんかする　ばあいは▼
-えんもくを　きめる　ひとと
-えらんだ　えんもくに▽
-おうぼする　ひとに　わかれてください▼
+えんもくを　きめる　リーダーと
+えらんだ　えんもくに　おうぼする▽
+グループに　わかれてください▼
 むかって　みぎがわは
 ドレスアップ　のみを▽
 おこなう　ことができる　うけつけです▼</language>
@@ -1220,9 +1220,9 @@ msg_musical_recept_06を
 参加する　ときの　受付です▼
 お友だちと　一緒に
 参加する　場合は▼
-演目を　決める人と
-選んだ　演目に▽
-応募する　人に　別れてください▼
+演目を　決める　リーダーと
+選んだ　演目に　応募する▽
+グループに　別れてください▼
 向かって　右側は
 ドレスアップ　のみを▽
 行う　ことができる　受付です▼</language>
