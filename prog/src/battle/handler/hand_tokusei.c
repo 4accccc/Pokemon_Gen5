@@ -5446,7 +5446,8 @@ static void handler_NorowareBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 
     if( !BPP_CheckSick(target, WAZASICK_KANASIBARI) )
     {
-      WazaID  prevWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+//      WazaID  prevWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      WazaID  prevWaza = BPP_GetPrevOrgWazaID( target );
       if( (prevWaza != WAZANO_NULL) && (prevWaza != WAZANO_WARUAGAKI) )
       {
         if( Tokusei_IsExePer(flowWk, 30) )
