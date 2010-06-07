@@ -14036,13 +14036,12 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   }
 
   // ‚±‚±‚Ü‚Å—ˆ‚½‚ç¬Œ÷
-  scproc_ItemChange( wk, bpp, param->itemID );
-
   if( param_header->tokwin_flag ){
     SCQUE_PUT_TOKWIN_IN( wk->que, param_header->userPokeID );
   }
-
   handexSub_putString( wk, &param->exStr );
+
+  scproc_ItemChange( wk, bpp, param->itemID );
 
   if( param_header->tokwin_flag ){
     SCQUE_PUT_TOKWIN_OUT( wk->que, param_header->userPokeID );
