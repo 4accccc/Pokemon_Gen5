@@ -6,6 +6,7 @@
  * @data    10/02/03
  */
 //======================================================================
+#ifdef PM_DEBUG
 
 #include <gflib.h>
 //#include <skb.h>
@@ -21,6 +22,7 @@
 #include "field/zonedata.h"
 #include "debug/debug_str_conv.h" // for DEB_STR_CONV_SjisToStrcode
 #include "../../arc/fieldmap/zone_id.h" // for ZONE_ID_MAX
+
 
 #define PROC_HEAP_SIZE  (0x20000)
 #define PRINT_FRAME (GFL_BG_FRAME1_M)
@@ -813,3 +815,4 @@ static void setDebugZoneIDStr( const u16 * allName, u32 zoneID, STRBUF * strBuf 
 */
   GFL_STR_SetStringCode( strBuf, &allName[ ZONEDATA_NAME_LENGTH * zoneID ]);
 }
+#endif

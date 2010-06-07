@@ -1,9 +1,9 @@
 //============================================================================================
 /**
- * @file	  d_kawada.c
- * @brief		川田デバッグ処理
+ * @file    d_kawada.c
+ * @brief   川田デバッグ処理
  * @author  Koji Kawada
- * @date	  2010.03.03
+ * @date    2010.03.03
  */
 //============================================================================================
 #include <gflib.h>
@@ -93,30 +93,31 @@ FS_EXTERN_OVERLAY(zukan_detail);
 FS_EXTERN_OVERLAY(manual);
 
 
+#ifdef PM_DEBUG
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
-#define	TOP_MENU_SIZ	( 20 )
+#define TOP_MENU_SIZ  ( 20 )
 
 #define POKE_LIST_NUM_G (24)
 #define POKE_LIST_NUM  (13)
 
 
 typedef struct {
-	u32	main_seq;
-	u32	next_seq;
-	HEAPID	heapID;
+  u32 main_seq;
+  u32 next_seq;
+  HEAPID  heapID;
 
-	GFL_FONT * font;					// 通常フォント
-	GFL_MSGDATA * mman;				// メッセージデータマネージャ
-	PRINT_QUE * que;					// プリントキュー
-	GFL_BMPWIN * win;					// BMPWIN
-	PRINT_UTIL	util;
+  GFL_FONT * font;          // 通常フォント
+  GFL_MSGDATA * mman;       // メッセージデータマネージャ
+  PRINT_QUE * que;          // プリントキュー
+  GFL_BMPWIN * win;         // BMPWIN
+  PRINT_UTIL  util;
 
-	BMP_MENULIST_DATA * ld;
-	BMPMENULIST_WORK * lw;
+  BMP_MENULIST_DATA * ld;
+  BMPMENULIST_WORK * lw;
 
-	GAMEDATA * gamedata;
+  GAMEDATA * gamedata;
 
   GFL_PROCSYS*  local_procsys;
 
@@ -174,61 +175,61 @@ typedef struct {
 }KAWADA_MAIN_WORK;
 
 enum {
-	MAIN_SEQ_INIT = 0,
-	MAIN_SEQ_MAIN,
-	MAIN_SEQ_FADE_MAIN,
+  MAIN_SEQ_INIT = 0,
+  MAIN_SEQ_MAIN,
+  MAIN_SEQ_FADE_MAIN,
   MAIN_SEQ_YOIN,
 
   // ここから
-	MAIN_SEQ_ZUKAN_DETAIL_G_CALL,  // top_menu00
-	MAIN_SEQ_ZUKAN_TOROKU_CALL,
-	MAIN_SEQ_TH_AWARD_CALL,
-	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL,
-	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL,
-	MAIN_SEQ_BTL_REC_SEL_CALL,
-	MAIN_SEQ_PMS_INPUT_DOUBLE_CALL,
-	MAIN_SEQ_PMS_INPUT_SINGLE_CALL,
-	MAIN_SEQ_PSEL_CALL,
-	MAIN_SEQ_SUBWAY_MAP_CALL,
-	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL,
-	MAIN_SEQ_EGG_DEMO_CALL,
-	MAIN_SEQ_SHINKA_DEMO_CALL,
-	MAIN_SEQ_ZUKAN_DETAIL_CALL,
-	MAIN_SEQ_MANUAL_CALL,
-	MAIN_SEQ_D_TEST_SHINKA_CALL,
-	MAIN_SEQ_D_TEST_EGG_CALL,
-	MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL,
-	MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL,
-	MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL,
+  MAIN_SEQ_ZUKAN_DETAIL_G_CALL,  // top_menu00
+  MAIN_SEQ_ZUKAN_TOROKU_CALL,
+  MAIN_SEQ_TH_AWARD_CALL,
+  MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL,
+  MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL,
+  MAIN_SEQ_BTL_REC_SEL_CALL,
+  MAIN_SEQ_PMS_INPUT_DOUBLE_CALL,
+  MAIN_SEQ_PMS_INPUT_SINGLE_CALL,
+  MAIN_SEQ_PSEL_CALL,
+  MAIN_SEQ_SUBWAY_MAP_CALL,
+  MAIN_SEQ_PMS_INPUT_SENTENCE_CALL,
+  MAIN_SEQ_EGG_DEMO_CALL,
+  MAIN_SEQ_SHINKA_DEMO_CALL,
+  MAIN_SEQ_ZUKAN_DETAIL_CALL,
+  MAIN_SEQ_MANUAL_CALL,
+  MAIN_SEQ_D_TEST_SHINKA_CALL,
+  MAIN_SEQ_D_TEST_EGG_CALL,
+  MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL,
+  MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL,
+  MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL,
   // ここまで
-	
+  
   MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN,
-	MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
-	MAIN_SEQ_TH_AWARD_CALL_RETURN,
-	MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN,
-	MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN,
-	MAIN_SEQ_BTL_REC_SEL_CALL_RETURN,
-	MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN,
-	MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN,
-	MAIN_SEQ_PSEL_CALL_RETURN,
-	MAIN_SEQ_SUBWAY_MAP_CALL_RETURN,
-	MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN,
-	MAIN_SEQ_EGG_DEMO_CALL_RETURN,
-	MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
-	MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN,
-	MAIN_SEQ_MANUAL_CALL_RETURN,
-	MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN,
-	MAIN_SEQ_D_TEST_EGG_CALL_RETURN,
-	MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN,
-	MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN,
-	MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN,
+  MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN,
+  MAIN_SEQ_TH_AWARD_CALL_RETURN,
+  MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN,
+  MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN,
+  MAIN_SEQ_BTL_REC_SEL_CALL_RETURN,
+  MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN,
+  MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN,
+  MAIN_SEQ_PSEL_CALL_RETURN,
+  MAIN_SEQ_SUBWAY_MAP_CALL_RETURN,
+  MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN,
+  MAIN_SEQ_EGG_DEMO_CALL_RETURN,
+  MAIN_SEQ_SHINKA_DEMO_CALL_RETURN,
+  MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN,
+  MAIN_SEQ_MANUAL_CALL_RETURN,
+  MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN,
+  MAIN_SEQ_D_TEST_EGG_CALL_RETURN,
+  MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN,
+  MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN,
+  MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN,
 
   MAIN_SEQ_END,
 };
 
 
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
@@ -316,7 +317,7 @@ static void D_TestZukanFormExit( KAWADA_MAIN_WORK* wk );
 
 
 //============================================================================================
-//	グローバル
+//  グローバル
 //============================================================================================
 const GFL_PROC_DATA DebugKawadaMainProcData = {
   MainProcInit,
@@ -325,50 +326,50 @@ const GFL_PROC_DATA DebugKawadaMainProcData = {
 };
 
 static const BMPMENULIST_HEADER TopMenuListH = {
-	NULL, NULL, NULL, NULL,
-	TOP_MENU_SIZ,		// リスト項目数
-	6,		// 表示最大項目数
-	0,		// ラベル表示Ｘ座標
-	12,		// 項目表示Ｘ座標
-	0,		// カーソル表示Ｘ座標
-	0,		// 表示Ｙ座標
-	1,		// 表示文字色
-	15,		// 表示背景色
-	2,		// 表示文字影色
-	0,		// 文字間隔Ｘ
-	16,		// 文字間隔Ｙ
-	BMPMENULIST_LRKEY_SKIP,		// ページスキップタイプ
-	0,		// 文字指定(本来はu8だけどそんなに作らないと思うので)
-	0,		// ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
+  NULL, NULL, NULL, NULL,
+  TOP_MENU_SIZ,   // リスト項目数
+  6,    // 表示最大項目数
+  0,    // ラベル表示Ｘ座標
+  12,   // 項目表示Ｘ座標
+  0,    // カーソル表示Ｘ座標
+  0,    // 表示Ｙ座標
+  1,    // 表示文字色
+  15,   // 表示背景色
+  2,    // 表示文字影色
+  0,    // 文字間隔Ｘ
+  16,   // 文字間隔Ｙ
+  BMPMENULIST_LRKEY_SKIP,   // ページスキップタイプ
+  0,    // 文字指定(本来はu8だけどそんなに作らないと思うので)
+  0,    // ＢＧカーソル(allow)表示フラグ(0:ON,1:OFF)
 
-	NULL,
-	
-	12,			// 文字サイズX(ドット
-	16,			// 文字サイズY(ドット
-	NULL,		// 表示に使用するメッセージバッファ
-	NULL,		// 表示に使用するプリントユーティリティ
-	NULL,		// 表示に使用するプリントキュー
-	NULL,		// 表示に使用するフォントハンドル
+  NULL,
+  
+  12,     // 文字サイズX(ドット
+  16,     // 文字サイズY(ドット
+  NULL,   // 表示に使用するメッセージバッファ
+  NULL,   // 表示に使用するプリントユーティリティ
+  NULL,   // 表示に使用するプリントキュー
+  NULL,   // 表示に使用するフォントハンドル
 };
 
 
 static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	KAWADA_MAIN_WORK * wk;
+  KAWADA_MAIN_WORK * wk;
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_KAWADA_DEBUG, 0x20000 );
 
   wk = GFL_PROC_AllocWork( proc, sizeof(KAWADA_MAIN_WORK), HEAPID_KAWADA_DEBUG );
 
-	wk->heapID    = HEAPID_KAWADA_DEBUG;
-	wk->gamedata	= GAMEDATA_Create( wk->heapID );
+  wk->heapID    = HEAPID_KAWADA_DEBUG;
+  wk->gamedata  = GAMEDATA_Create( wk->heapID );
 
   wk->local_procsys = GFL_PROC_LOCAL_boot( wk->heapID );
 
 #if 0
   // フェードインありでスタート
-	FadeInSet( wk, MAIN_SEQ_INIT );
-	wk->main_seq  = MAIN_SEQ_FADE_MAIN;
+  FadeInSet( wk, MAIN_SEQ_INIT );
+  wk->main_seq  = MAIN_SEQ_FADE_MAIN;
 #else
   // フェードインなしでスタート
   wk->main_seq  = MAIN_SEQ_INIT;
@@ -379,55 +380,55 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
 
 static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	KAWADA_MAIN_WORK * wk = mywk;
+  KAWADA_MAIN_WORK * wk = mywk;
 
   GFL_PROC_MAIN_STATUS  local_proc_status   =  GFL_PROC_LOCAL_Main( wk->local_procsys );
   if( local_proc_status == GFL_PROC_MAIN_VALID ) return GFL_PROC_RES_CONTINUE;
 
-	switch( wk->main_seq ){
-	case MAIN_SEQ_INIT:
-		BgInit( wk );
-		TopMenuInit( wk );
-		wk->main_seq = MAIN_SEQ_MAIN;
-		break;
+  switch( wk->main_seq ){
+  case MAIN_SEQ_INIT:
+    BgInit( wk );
+    TopMenuInit( wk );
+    wk->main_seq = MAIN_SEQ_MAIN;
+    break;
 
-	case MAIN_SEQ_MAIN:
-		{
-			u32 ret = BmpMenuList_Main( wk->lw );
+  case MAIN_SEQ_MAIN:
+    {
+      u32 ret = BmpMenuList_Main( wk->lw );
 
-			switch( ret ){
-			case BMPMENULIST_NULL:
-			case BMPMENULIST_LABEL:
-				break;
+      switch( ret ){
+      case BMPMENULIST_NULL:
+      case BMPMENULIST_LABEL:
+        break;
 
-			case BMPMENULIST_CANCEL:		// キャンセル
-				TopMenuExit( wk );
-				BgExit();
-				wk->main_seq = MAIN_SEQ_END;
-				break;
+      case BMPMENULIST_CANCEL:    // キャンセル
+        TopMenuExit( wk );
+        BgExit();
+        wk->main_seq = MAIN_SEQ_END;
+        break;
 
-			default:
-				TopMenuExit( wk );
-				BgExit();
-				FadeOutSet( wk, ret );
-				wk->main_seq = MAIN_SEQ_FADE_MAIN;
-			}
-		}
-		break;
+      default:
+        TopMenuExit( wk );
+        BgExit();
+        FadeOutSet( wk, ret );
+        wk->main_seq = MAIN_SEQ_FADE_MAIN;
+      }
+    }
+    break;
 
-	case MAIN_SEQ_FADE_MAIN:
-		if( WIPE_SYS_EndCheck() == TRUE ){
-			wk->main_seq = wk->next_seq;
-		}
-		break;
+  case MAIN_SEQ_FADE_MAIN:
+    if( WIPE_SYS_EndCheck() == TRUE ){
+      wk->main_seq = wk->next_seq;
+    }
+    break;
   
   case MAIN_SEQ_YOIN:
     if( wk->yoin_count == 0 )
     {
-			wk->main_seq = wk->yoin_next_seq;
+      wk->main_seq = wk->yoin_next_seq;
       if( wk->yoin_next_seq == MAIN_SEQ_FADE_MAIN )
       {
-		    FadeInSet( wk, MAIN_SEQ_INIT );
+        FadeInSet( wk, MAIN_SEQ_INIT );
       }
     }
     else
@@ -436,188 +437,188 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     }
     break;
 
-	case MAIN_SEQ_END:
-		OS_Printf( "kawadaデバッグ処理終了しました\n" );
-	  return GFL_PROC_RES_FINISH;
+  case MAIN_SEQ_END:
+    OS_Printf( "kawadaデバッグ処理終了しました\n" );
+    return GFL_PROC_RES_FINISH;
 
 
   // 図鑑詳細G
   case MAIN_SEQ_ZUKAN_DETAIL_G_CALL:
     ZukanDetailGInit(wk);
-		wk->main_seq = MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN;
     break;
   case MAIN_SEQ_ZUKAN_DETAIL_G_CALL_RETURN:
     ZukanDetailGExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 図鑑登録
-	case MAIN_SEQ_ZUKAN_TOROKU_CALL:
+  case MAIN_SEQ_ZUKAN_TOROKU_CALL:
     ZukanTorokuInit(wk);
-		wk->main_seq = MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN;
-		break;
+    wk->main_seq = MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN;
+    break;
   case MAIN_SEQ_ZUKAN_TOROKU_CALL_RETURN:
     ZukanTorokuExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // トライアルハウス結果
   case MAIN_SEQ_TH_AWARD_CALL:
     ThAwardInit(wk); 
-		wk->main_seq = MAIN_SEQ_TH_AWARD_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_TH_AWARD_CALL_RETURN;
     break;
   case MAIN_SEQ_TH_AWARD_CALL_RETURN:
     ThAwardExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 地方図鑑賞状
   case MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL:
     ChihouZukanAwardInit(wk);
-		wk->main_seq = MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN;
     break;
   case MAIN_SEQ_CHIHOU_ZUKAN_AWARD_CALL_RETURN:
     ChihouZukanAwardExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 全国図鑑賞状
   case MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL:
     ZenkokuZukanAwardInit(wk);
-		wk->main_seq = MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN;
     break;
   case MAIN_SEQ_ZENKOKU_ZUKAN_AWARD_CALL_RETURN:
     ZenkokuZukanAwardExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 通信対戦後の録画選択画面
   case MAIN_SEQ_BTL_REC_SEL_CALL:
     BtlRecSelInit(wk);
-		wk->main_seq = MAIN_SEQ_BTL_REC_SEL_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_BTL_REC_SEL_CALL_RETURN;
     break;
   case MAIN_SEQ_BTL_REC_SEL_CALL_RETURN:
     BtlRecSelExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 二択簡易会話
   case MAIN_SEQ_PMS_INPUT_DOUBLE_CALL:
     PmsInputDoubleInit(wk);
-		wk->main_seq = MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN;
     break;
   case MAIN_SEQ_PMS_INPUT_DOUBLE_CALL_RETURN:
     PmsInputDoubleExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 一択簡易会話
   case MAIN_SEQ_PMS_INPUT_SINGLE_CALL:
     PmsInputSingleInit(wk);
-		wk->main_seq = MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN;
     break;
   case MAIN_SEQ_PMS_INPUT_SINGLE_CALL_RETURN:
     PmsInputSingleExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 三匹選択
   case MAIN_SEQ_PSEL_CALL:
     PselInit(wk);
-		wk->main_seq = MAIN_SEQ_PSEL_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_PSEL_CALL_RETURN;
     break;
   case MAIN_SEQ_PSEL_CALL_RETURN:
     PselExit(wk); 
     YoinSet( wk, 120, MAIN_SEQ_FADE_MAIN );
-		wk->main_seq = MAIN_SEQ_YOIN;
+    wk->main_seq = MAIN_SEQ_YOIN;
     break;
   
     
   // 地下鉄路線図
   case MAIN_SEQ_SUBWAY_MAP_CALL:
     SubwayMapInit(wk);
-		wk->main_seq = MAIN_SEQ_SUBWAY_MAP_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_SUBWAY_MAP_CALL_RETURN;
     break;
   case MAIN_SEQ_SUBWAY_MAP_CALL_RETURN:
     SubwayMapExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 定型文簡易会話
   case MAIN_SEQ_PMS_INPUT_SENTENCE_CALL:
     PmsInputSentenceInit(wk);
-		wk->main_seq = MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN;
     break;
   case MAIN_SEQ_PMS_INPUT_SENTENCE_CALL_RETURN:
     PmsInputSentenceExit(wk); 
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // タマゴ孵化デモ
   case MAIN_SEQ_EGG_DEMO_CALL:
     EggDemoInit(wk);
-		wk->main_seq = MAIN_SEQ_EGG_DEMO_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_EGG_DEMO_CALL_RETURN;
     break;
   case MAIN_SEQ_EGG_DEMO_CALL_RETURN:
     EggDemoExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 進化デモ
   case MAIN_SEQ_SHINKA_DEMO_CALL:
     ShinkaDemoInit(wk);
-		wk->main_seq = MAIN_SEQ_SHINKA_DEMO_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_SHINKA_DEMO_CALL_RETURN;
     break;
   case MAIN_SEQ_SHINKA_DEMO_CALL_RETURN:
     ShinkaDemoExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // 図鑑詳細
   case MAIN_SEQ_ZUKAN_DETAIL_CALL:
     ZukanDetailInit(wk);
-		wk->main_seq = MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN;
     break;
   case MAIN_SEQ_ZUKAN_DETAIL_CALL_RETURN:
     ZukanDetailExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
   // ゲーム内マニュアル
   case MAIN_SEQ_MANUAL_CALL:
     ManualInit(wk);
-		wk->main_seq = MAIN_SEQ_MANUAL_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_MANUAL_CALL_RETURN;
     break;
   case MAIN_SEQ_MANUAL_CALL_RETURN:
     ManualExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
 
@@ -625,73 +626,73 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
   // 進化デモカメラ
   case MAIN_SEQ_D_TEST_SHINKA_CALL:
     D_TestShinkaInit(wk);
-		wk->main_seq = MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN;
     break;
   case MAIN_SEQ_D_TEST_SHINKA_CALL_RETURN:
     D_TestShinkaExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
   // タマゴ孵化デモカメラ
   case MAIN_SEQ_D_TEST_EGG_CALL:
     D_TestEggInit(wk);
-		wk->main_seq = MAIN_SEQ_D_TEST_EGG_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_D_TEST_EGG_CALL_RETURN;
     break;
   case MAIN_SEQ_D_TEST_EGG_CALL_RETURN:
     D_TestEggExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
 
   // 図鑑フォルム中カメラ
   case MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL:
     D_TestZukanFormInit(wk, 0);
-		wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN;
     break;
   case MAIN_SEQ_D_TEST_ZUKAN_FORM_CENTER_CALL_RETURN:
     D_TestZukanFormExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
   
   // 図鑑フォルム左カメラ
   case MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL:
     D_TestZukanFormInit(wk, 1);
-		wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN;
     break;
   case MAIN_SEQ_D_TEST_ZUKAN_FORM_LEFT_CALL_RETURN:
     D_TestZukanFormExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
     
     // 図鑑フォルム右カメラ
   case MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL:
     D_TestZukanFormInit(wk, 2);
-		wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN;
+    wk->main_seq = MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN;
     break;
   case MAIN_SEQ_D_TEST_ZUKAN_FORM_RIGHT_CALL_RETURN:
     D_TestZukanFormExit(wk);
-		FadeInSet( wk, MAIN_SEQ_INIT );
-		wk->main_seq = MAIN_SEQ_FADE_MAIN;
+    FadeInSet( wk, MAIN_SEQ_INIT );
+    wk->main_seq = MAIN_SEQ_FADE_MAIN;
     break;
  
   
-	}
+  }
 
   return GFL_PROC_RES_CONTINUE;
 }
 
 static GFL_PROC_RESULT MainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk )
 {
-	KAWADA_MAIN_WORK * wk = mywk;
+  KAWADA_MAIN_WORK * wk = mywk;
   
   GFL_PROC_LOCAL_Exit( wk->local_procsys ); 
 
-	GAMEDATA_Delete( wk->gamedata );
+  GAMEDATA_Delete( wk->gamedata );
 
-	GFL_PROC_FreeWork( proc );
+  GFL_PROC_FreeWork( proc );
   GFL_HEAP_DeleteHeap( HEAPID_KAWADA_DEBUG );
 
   return GFL_PROC_RES_FINISH;
@@ -699,55 +700,55 @@ static GFL_PROC_RESULT MainProcEnd( GFL_PROC * proc, int * seq, void * pwk, void
 
 static void BgInit( KAWADA_MAIN_WORK * wk )
 {
-	GFL_BG_Init( wk->heapID );
-	{	// BG SYSTEM
-		GFL_BG_SYS_HEADER sysh = {
-			GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
-		};
-		GFL_BG_SetBGMode( &sysh );
-	}
-	{	// メイン画面：文字
-		GFL_BG_BGCNT_HEADER cnth= {
-			0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-			GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
-			GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
-		};
-		GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
-		GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
-		GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0, wk->heapID );
-	}
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
+  GFL_BG_Init( wk->heapID );
+  { // BG SYSTEM
+    GFL_BG_SYS_HEADER sysh = {
+      GX_DISPMODE_GRAPHICS, GX_BGMODE_0, GX_BGMODE_0, GX_BG0_AS_2D,
+    };
+    GFL_BG_SetBGMode( &sysh );
+  }
+  { // メイン画面：文字
+    GFL_BG_BGCNT_HEADER cnth= {
+      0, 0, 0x800, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
+      GX_BG_SCRBASE_0xf800, GX_BG_CHARBASE_0x00000, 0x8000,
+      GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
+    };
+    GFL_BG_SetBGControl( GFL_BG_FRAME0_M, &cnth, GFL_BG_MODE_TEXT );
+    GFL_BG_ClearScreen( GFL_BG_FRAME0_M );
+    GFL_BG_SetClearCharacter( GFL_BG_FRAME0_M, 0x20, 0, wk->heapID );
+  }
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_ON );
 
-	// フォントパレット
-	GFL_ARC_UTIL_TransVramPalette(
-		ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0x20, wk->heapID );
+  // フォントパレット
+  GFL_ARC_UTIL_TransVramPalette(
+    ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG, 0, 0x20, wk->heapID );
 }
 
 static void BgExit(void)
 {
-	GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
-	GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
-	GFL_BG_Exit();
+  GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_BG0, VISIBLE_OFF );
+  GFL_BG_FreeBGControl( GFL_BG_FRAME0_M );
+  GFL_BG_Exit();
 }
 
 // フェードイン
 static void FadeInSet( KAWADA_MAIN_WORK * wk, u32 next )
 {
-	WIPE_SYS_Start(
-		WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
-		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+  WIPE_SYS_Start(
+    WIPE_PATTERN_WMS, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN,
+    WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
 
-	wk->next_seq = next;
+  wk->next_seq = next;
 }
 
 // フェードアウト
 static void FadeOutSet( KAWADA_MAIN_WORK * wk, u32 next )
 {
-	WIPE_SYS_Start(
-		WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
-		WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
+  WIPE_SYS_Start(
+    WIPE_PATTERN_WMS, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT,
+    WIPE_FADE_BLACK, WIPE_DEF_DIV, WIPE_DEF_SYNC, wk->heapID );
 
-	wk->next_seq = next;
+  wk->next_seq = next;
 }
 
 // 余韻
@@ -759,50 +760,50 @@ static void YoinSet( KAWADA_MAIN_WORK * wk, u32 count, u32 next )
 
 static void TopMenuInit( KAWADA_MAIN_WORK * wk )
 {
-	BMPMENULIST_HEADER	lh;
-	u32	i;
+  BMPMENULIST_HEADER  lh;
+  u32 i;
 
-	GFL_BMPWIN_Init( wk->heapID );
+  GFL_BMPWIN_Init( wk->heapID );
 
-	wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_kawada_dat, wk->heapID );
+  wk->mman = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_kawada_dat, wk->heapID );
   wk->font = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
-	wk->que  = PRINTSYS_QUE_Create( wk->heapID );
-	wk->win  = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 1, 1, 16, 12, 0, GFL_BMP_CHRAREA_GET_B );
+  wk->que  = PRINTSYS_QUE_Create( wk->heapID );
+  wk->win  = GFL_BMPWIN_Create( GFL_BG_FRAME0_M, 1, 1, 16, 12, 0, GFL_BMP_CHRAREA_GET_B );
 
-	wk->ld = BmpMenuWork_ListCreate( TOP_MENU_SIZ, wk->heapID );
-	for( i=0; i<TOP_MENU_SIZ; i++ ){
-		STRBUF * str = GFL_MSG_CreateString( wk->mman, top_menu00+i );
-		BmpMenuWork_ListAddString( &wk->ld[i], str, MAIN_SEQ_ZUKAN_DETAIL_G_CALL+i, wk->heapID );
-		GFL_STR_DeleteBuffer( str );
-	}
+  wk->ld = BmpMenuWork_ListCreate( TOP_MENU_SIZ, wk->heapID );
+  for( i=0; i<TOP_MENU_SIZ; i++ ){
+    STRBUF * str = GFL_MSG_CreateString( wk->mman, top_menu00+i );
+    BmpMenuWork_ListAddString( &wk->ld[i], str, MAIN_SEQ_ZUKAN_DETAIL_G_CALL+i, wk->heapID );
+    GFL_STR_DeleteBuffer( str );
+  }
 
-	lh = TopMenuListH;
-	lh.list = wk->ld;
-	lh.win  = wk->win;
-	lh.msgdata = wk->mman;			//表示に使用するメッセージバッファ
-	lh.print_util = &wk->util;	//表示に使用するプリントユーティリティ
-	lh.print_que  = wk->que;		//表示に使用するプリントキュー
-	lh.font_handle = wk->font;	//表示に使用するフォントハンドル
+  lh = TopMenuListH;
+  lh.list = wk->ld;
+  lh.win  = wk->win;
+  lh.msgdata = wk->mman;      //表示に使用するメッセージバッファ
+  lh.print_util = &wk->util;  //表示に使用するプリントユーティリティ
+  lh.print_que  = wk->que;    //表示に使用するプリントキュー
+  lh.font_handle = wk->font;  //表示に使用するフォントハンドル
 
-	wk->lw = BmpMenuList_Set( &lh, 0, 0, wk->heapID );
-	BmpMenuList_SetCursorBmp( wk->lw, wk->heapID );
+  wk->lw = BmpMenuList_Set( &lh, 0, 0, wk->heapID );
+  BmpMenuList_SetCursorBmp( wk->lw, wk->heapID );
 
-	GFL_BMPWIN_TransVramCharacter( wk->win );
-	GFL_BMPWIN_MakeScreen( wk->win );
-	GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->win) );
+  GFL_BMPWIN_TransVramCharacter( wk->win );
+  GFL_BMPWIN_MakeScreen( wk->win );
+  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(wk->win) );
 }
 
 static void TopMenuExit( KAWADA_MAIN_WORK * wk )
 {
-	BmpMenuList_Exit( wk->lw, NULL, NULL );
-	BmpMenuWork_ListDelete( wk->ld );
+  BmpMenuList_Exit( wk->lw, NULL, NULL );
+  BmpMenuWork_ListDelete( wk->ld );
 
-	GFL_BMPWIN_Delete( wk->win );
-	PRINTSYS_QUE_Delete( wk->que );
-	GFL_FONT_Delete( wk->font );
-	GFL_MSG_Delete( wk->mman );
+  GFL_BMPWIN_Delete( wk->win );
+  PRINTSYS_QUE_Delete( wk->que );
+  GFL_FONT_Delete( wk->font );
+  GFL_MSG_Delete( wk->mman );
 
-	GFL_BMPWIN_Exit();
+  GFL_BMPWIN_Exit();
 }
 
 // 図鑑登録
@@ -1405,7 +1406,7 @@ static void ZukanDetailInit( KAWADA_MAIN_WORK* wk )
     GFL_HEAP_FreeMemory( pp );
   }
 
-	wk->zukan_detail_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(ZUKAN_DETAIL_PARAM) );
+  wk->zukan_detail_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(ZUKAN_DETAIL_PARAM) );
   wk->zukan_detail_param->gamedata = wk->gamedata;
   wk->zukan_detail_param->type     = ZUKAN_DETAIL_TYPE_INFO;
   wk->zukan_detail_param->list     = wk->poke_list;
@@ -1480,7 +1481,7 @@ static void ZukanDetailGInit( KAWADA_MAIN_WORK* wk )
     GFL_HEAP_FreeMemory( pp );
   }
 
-	wk->zukan_detail_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(ZUKAN_DETAIL_PARAM) );
+  wk->zukan_detail_param = GFL_HEAP_AllocMemory( wk->heapID, sizeof(ZUKAN_DETAIL_PARAM) );
   wk->zukan_detail_param->gamedata = wk->gamedata;
   wk->zukan_detail_param->type     = ZUKAN_DETAIL_TYPE_INFO;
   wk->zukan_detail_param->list     = wk->poke_list;
@@ -1551,3 +1552,4 @@ static void D_TestZukanFormExit( KAWADA_MAIN_WORK* wk )
   GFL_HEAP_FreeMemory( wk->d_test_zukan_form_param );
 }
 
+#endif

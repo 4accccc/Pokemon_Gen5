@@ -122,6 +122,7 @@ typedef struct {
 
 }MAIN_WORK;
 
+#ifdef PM_DEBUG
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -1693,3 +1694,4 @@ static BOOL SUBPROC_NetPrintTest( GFL_PROC* proc, int* seq, void* pwk, void* myw
     return FALSE;
 }
 
+#endif

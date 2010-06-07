@@ -8455,10 +8455,11 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     wk->turnCheckStep = 0;
     wk->simulationCounter = 0;
 
+#ifdef PM_DEBUG
     OS_SetPrintOutput_Arm9( 1 );
 //    TAYA_Printf( " ============= turn END =============\n" );
     OS_SetPrintOutput_Arm9( 0 );
-
+#endif
     return FALSE;
   }
 

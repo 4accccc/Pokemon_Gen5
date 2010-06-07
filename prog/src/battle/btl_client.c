@@ -1749,10 +1749,12 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
   case 4:
 
     // デバッグ用Print制御
+    #ifdef PM_DEBUG
     if( OS_GetConsoleType() == OS_CONSOLE_TWLDEBUGGER ){
       BTL_DEBUGPRINT_Ctrl();
     }
-
+    #endif
+    
     // デバッグ用ゆびをふる制御
     #ifdef PM_DEBUG
     if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) && (GFL_UI_KEY_GetCont() & PAD_BUTTON_Y) )

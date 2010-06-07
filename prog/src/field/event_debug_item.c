@@ -1,11 +1,12 @@
 //============================================================================================
 /**
- * @file    event_debug_item.h
+ * @file    event_debug_item.c
  * @brief   デバッグアイテムイベント
  * @author  k.ohno
  * @date    2009.06.30
  */
 //============================================================================================
+#ifdef PM_DEBUG
 
 
 #include <gflib.h>
@@ -792,3 +793,4 @@ GMEVENT* EVENT_DebugPDWItemMake( GAMESYS_WORK * gsys, void * work )
 
 
 
+#endif

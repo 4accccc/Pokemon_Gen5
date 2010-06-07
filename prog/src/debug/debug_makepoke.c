@@ -6,6 +6,8 @@
  * @data    09/05/29
  */
 //======================================================================
+
+#ifdef PM_DEBUG
 #include <gflib.h>
 #include <skb.h>
 #include "system/main.h"
@@ -2247,3 +2249,4 @@ static void personalSpeabi_3rd_flag_set( POKEMON_PARAM* pp )
   IWASAWA_Printf(" Speabi 3rd = %d abi=%d, %d\n", (speabi == abi[2] ), speabi, abi[2]);
 }
 
+#endif

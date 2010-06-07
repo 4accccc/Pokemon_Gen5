@@ -58,6 +58,7 @@ struct _DWS_SYS {
   u16               padding;
 };
 
+#ifdef PM_DEBUG
 //------------------------------------------------------------------
 /**
  * @brief   プロトタイプ宣言
@@ -489,3 +490,4 @@ void DWS_DrawLocalOriginBumpPlane(DWS_SYS* dws, fx32 scale, GXRgb color1, GXRgb 
   G3_PopMtx(1);
 }
 
+#endif

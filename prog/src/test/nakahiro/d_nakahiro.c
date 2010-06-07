@@ -32,7 +32,7 @@
 
 #include "pokeicon_view.h"
 
-
+#ifdef PM_DEBUG
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -56,22 +56,22 @@ typedef struct {
 
   BOX2_GFL_PROC_PARAM box_data;
   void * bb_party;
-	u16	sleepTable[MONSNO_MAX+8];
+  u16 sleepTable[MONSNO_MAX+8];
 
   COMMANDDEMO_DATA  cdemo_data;
 
   ZUKAN_PARAM zkn_data;
 
   VS_MULTI_LIST_PARAM vsl_data;
-	POKEPARTY * ppL;
-	POKEPARTY * ppR;
+  POKEPARTY * ppL;
+  POKEPARTY * ppR;
 
   WIFINOTE_PROC_PARAM wifi_note_data;
 
-	DENDOUPC_PARAM	dpc_data;
-	DENDOUDEMO_PARAM	ddemo_data;
+  DENDOUPC_PARAM  dpc_data;
+  DENDOUDEMO_PARAM  ddemo_data;
 
-	STAFFROLL_DATA	sr_data;
+  STAFFROLL_DATA  sr_data;
 
 }NAKAHIRO_MAIN_WORK;
 
@@ -176,9 +176,9 @@ static const u16 VSMListMonsL[] = {
   MONSNO_KAMEKKUSU,
   MONSNO_ZYUKAIN,
 //  MONSNO_BASYAAMO,
-	MONSNO_SHEIMI,
+  MONSNO_SHEIMI,
 //  MONSNO_RAGURAAZI,
-	MONSNO_HOUOU,
+  MONSNO_HOUOU,
   0,
 };
 static const u16 VSMListMonsR[] = {
@@ -209,40 +209,40 @@ static const u16 VSMListItemR[] = {
 
 static const u16 DDemoMonsList[][7] =
 {
-	{
-		MONSNO_KORATTA,			// ノーマル
-		MONSNO_KAIRIKII,		// かくとう
-		MONSNO_648,         // ひこう カザカミ MONSNO_KAZAKAMI
-		MONSNO_DOGAASU,			// どく
-		MONSNO_GURAADON,		// じめん
-		MONSNO_IWAAKU,			// いわ
+  {
+    MONSNO_KORATTA,     // ノーマル
+    MONSNO_KAIRIKII,    // かくとう
+    MONSNO_648,         // ひこう カザカミ MONSNO_KAZAKAMI
+    MONSNO_DOGAASU,     // どく
+    MONSNO_GURAADON,    // じめん
+    MONSNO_IWAAKU,      // いわ
 /*
-		MONSNO_MIZUGOROU,		// みず
-		MONSNO_MIZUGOROU,		// みず
-		MONSNO_MIZUGOROU,		// みず
-		MONSNO_MIZUGOROU,		// みず
-		MONSNO_MIZUGOROU,		// みず
-		MONSNO_MIZUGOROU,		// みず
+    MONSNO_MIZUGOROU,   // みず
+    MONSNO_MIZUGOROU,   // みず
+    MONSNO_MIZUGOROU,   // みず
+    MONSNO_MIZUGOROU,   // みず
+    MONSNO_MIZUGOROU,   // みず
+    MONSNO_MIZUGOROU,   // みず
 */
-		0,
-	},
-	{
-		MONSNO_BATAHURII,		// むし
-		MONSNO_GENGAA,			// ゴースト
-		MONSNO_METAGUROSU,	// はがね
-		MONSNO_ATYAMO,			// ほのお
-		MONSNO_MIZUGOROU,		// みず
-		MONSNO_KIMORI,			// くさ
-		0,
-	},
-	{
-		MONSNO_PIKATYUU,		// でんき
-		MONSNO_KIRURIA,			// エスパー
-		MONSNO_RUUZYURA,		// こおり
-		MONSNO_REKKUUZA,		// ドラゴン
-		MONSNO_BURAKKII,		// あく
-		0,
-	}
+    0,
+  },
+  {
+    MONSNO_BATAHURII,   // むし
+    MONSNO_GENGAA,      // ゴースト
+    MONSNO_METAGUROSU,  // はがね
+    MONSNO_ATYAMO,      // ほのお
+    MONSNO_MIZUGOROU,   // みず
+    MONSNO_KIMORI,      // くさ
+    0,
+  },
+  {
+    MONSNO_PIKATYUU,    // でんき
+    MONSNO_KIRURIA,     // エスパー
+    MONSNO_RUUZYURA,    // こおり
+    MONSNO_REKKUUZA,    // ドラゴン
+    MONSNO_BURAKKII,    // あく
+    0,
+  }
 };
 
 
@@ -261,8 +261,8 @@ static GFL_PROC_RESULT MainProcInit( GFL_PROC * proc, int * seq, void * pwk, voi
   wk->gamedata  = GAMEDATA_Create( wk->heapID );
   wk->bb_party  = NULL;
 
-	wk->ppL = NULL;
-	wk->ppR = NULL;
+  wk->ppL = NULL;
+  wk->ppR = NULL;
 
   return GFL_PROC_RES_FINISH;
 }
@@ -409,8 +409,8 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     break;
 
   case MAIN_SEQ_BOX_CALL6:
-		GFL_STD_MemClear( wk->sleepTable, sizeof(u16)*(MONSNO_END+8) );
-		wk->sleepTable[1] = 1;
+    GFL_STD_MemClear( wk->sleepTable, sizeof(u16)*(MONSNO_END+8) );
+    wk->sleepTable[1] = 1;
     wk->box_data.gamedata  = wk->gamedata;
     wk->box_data.sv_box    = GAMEDATA_GetBoxManager( wk->gamedata );
     wk->box_data.pokeparty = GAMEDATA_GetMyPokemon( wk->gamedata );
@@ -434,7 +434,7 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     SetZukanData( wk, 0 );
     wk->zkn_data.gamedata = wk->gamedata;
     wk->zkn_data.savedata = GAMEDATA_GetZukanSave( wk->gamedata );
-		wk->zkn_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
+    wk->zkn_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
     wk->zkn_data.callMode = ZUKAN_MODE_TOP;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
     wk->main_seq = MAIN_SEQ_END;
@@ -442,10 +442,10 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
 
   case MAIN_SEQ_ZKNLIST_CALL:
     SetZukanData( wk, 1 );
-		SetZukanPacchiiru( wk );
+    SetZukanPacchiiru( wk );
     wk->zkn_data.gamedata = wk->gamedata;
     wk->zkn_data.savedata = GAMEDATA_GetZukanSave( wk->gamedata );
-		wk->zkn_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
+    wk->zkn_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
     wk->zkn_data.callMode = ZUKAN_MODE_LIST;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(zukan), &ZUKAN_ProcData, &wk->zkn_data );
     wk->main_seq = MAIN_SEQ_END;
@@ -458,8 +458,8 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     wk->ppR = PokeParty_AllocPartyWork( wk->heapID );
     SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
     SetPokeParty( wk, wk->ppR, VSMListMonsR, VSMListItemR );
-		wk->vsl_data.myPP = wk->ppL;
-		wk->vsl_data.ptPP = wk->ppR;
+    wk->vsl_data.myPP = wk->ppL;
+    wk->vsl_data.ptPP = wk->ppR;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
     wk->main_seq = MAIN_SEQ_END;
     break;
@@ -470,8 +470,8 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     wk->ppR = PokeParty_AllocPartyWork( wk->heapID );
     SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
     SetPokeParty( wk, wk->ppR, VSMListMonsR, VSMListItemR );
-		wk->vsl_data.myPP = wk->ppL;
-		wk->vsl_data.ptPP = wk->ppR;
+    wk->vsl_data.myPP = wk->ppL;
+    wk->vsl_data.ptPP = wk->ppR;
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &wk->vsl_data );
     wk->main_seq = MAIN_SEQ_END;
     break;
@@ -482,48 +482,48 @@ static GFL_PROC_RESULT MainProcMain( GFL_PROC * proc, int * seq, void * pwk, voi
     wk->main_seq = MAIN_SEQ_END;
     break;
 
-	case  MAIN_SEQ_DENDOU_PC:
+  case  MAIN_SEQ_DENDOU_PC:
     wk->dpc_data.gamedata = wk->gamedata;
     wk->dpc_data.callMode = 0;
-		{
-			SAVE_CONTROL_WORK * sv;
-			DENDOU_SAVEDATA * ex_rec;
-			RTCDate	date;
-			RTC_GetDate( &date );
-			wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
-			SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
-			DendouRecord_Add( GAMEDATA_GetDendouRecord(wk->gamedata), wk->ppL, &date, wk->heapID );
-		}
+    {
+      SAVE_CONTROL_WORK * sv;
+      DENDOU_SAVEDATA * ex_rec;
+      RTCDate date;
+      RTC_GetDate( &date );
+      wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
+      SetPokeParty( wk, wk->ppL, VSMListMonsL, VSMListItemL );
+      DendouRecord_Add( GAMEDATA_GetDendouRecord(wk->gamedata), wk->ppL, &date, wk->heapID );
+    }
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_pc), &DENDOUPC_ProcData, &wk->dpc_data );
     wk->main_seq = MAIN_SEQ_END;
-		break;
+    break;
 
-	case  MAIN_SEQ_DENDOU_DEMO:
-		wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
+  case  MAIN_SEQ_DENDOU_DEMO:
+    wk->ppL = PokeParty_AllocPartyWork( wk->heapID );
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-			SetPokeParty( wk, wk->ppL, &DDemoMonsList[2][0], VSMListItemL );
-		}else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
-			SetPokeParty( wk, wk->ppL, &DDemoMonsList[1][0], VSMListItemL );
-		}else{
-			SetPokeParty( wk, wk->ppL, &DDemoMonsList[0][0], VSMListItemL );
-		}
-		wk->ddemo_data.party    = wk->ppL;
-		wk->ddemo_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
-		wk->ddemo_data.ptime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(wk->gamedata) );
+      SetPokeParty( wk, wk->ppL, &DDemoMonsList[2][0], VSMListItemL );
+    }else if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ){
+      SetPokeParty( wk, wk->ppL, &DDemoMonsList[1][0], VSMListItemL );
+    }else{
+      SetPokeParty( wk, wk->ppL, &DDemoMonsList[0][0], VSMListItemL );
+    }
+    wk->ddemo_data.party    = wk->ppL;
+    wk->ddemo_data.mystatus = GAMEDATA_GetMyStatus( wk->gamedata );
+    wk->ddemo_data.ptime    = SaveData_GetPlayTime( GAMEDATA_GetSaveControlWork(wk->gamedata) );
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(dendou_demo), &DENDOUDEMO_ProcData, &wk->ddemo_data );
     wk->main_seq = MAIN_SEQ_END;
-		break;
+    break;
 
-	case MAIN_SEQ_STAFF_ROLL:
-		wk->sr_data.fastMode = STAFFROLL_MODE_DEBUG;
+  case MAIN_SEQ_STAFF_ROLL:
+    wk->sr_data.fastMode = STAFFROLL_MODE_DEBUG;
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-			wk->sr_data.mojiMode = MOJIMODE_KANJI;
-		}else{
-			wk->sr_data.mojiMode = MOJIMODE_HIRAGANA;
-		}
+      wk->sr_data.mojiMode = MOJIMODE_KANJI;
+    }else{
+      wk->sr_data.mojiMode = MOJIMODE_HIRAGANA;
+    }
     GFL_PROC_SysCallProc( FS_OVERLAY_ID(staff_roll), &STAFFROLL_ProcData, &wk->sr_data );
     wk->main_seq = MAIN_SEQ_END;
-		break;
+    break;
 
   case MAIN_SEQ_POKEICON:
     GFL_PROC_SysCallProc( NO_OVERLAY_ID, &POKEICONVIEW_ProcData, NULL );
@@ -804,34 +804,35 @@ static void SetZukanPacchiiru( NAKAHIRO_MAIN_WORK * wk )
 {
   ZUKAN_SAVEDATA * sv;
   POKEMON_PARAM * pp;
-	u32	sex;
+  u32 sex;
 
   sv = GAMEDATA_GetZukanSave( wk->gamedata );
   pp = PP_Create( MONSNO_PATTIIRU, 50, 0, wk->heapID );
-	ZUKANSAVE_SetPokeGet( sv, pp );
-	sex = PP_GetSex( pp );
+  ZUKANSAVE_SetPokeGet( sv, pp );
+  sex = PP_GetSex( pp );
   GFL_HEAP_FreeMemory( pp );
 
-	if( sex == PTL_SEX_MALE ){
-		sex = PTL_SEX_FEMALE;
-		OS_Printf( "パッチール♂\n" );
-	}else if( sex == PTL_SEX_FEMALE ){
-		sex = PTL_SEX_MALE;
-		OS_Printf( "パッチール♀\n" );
-	}else{
-		return;
-	}
+  if( sex == PTL_SEX_MALE ){
+    sex = PTL_SEX_FEMALE;
+    OS_Printf( "パッチール♂\n" );
+  }else if( sex == PTL_SEX_FEMALE ){
+    sex = PTL_SEX_MALE;
+    OS_Printf( "パッチール♀\n" );
+  }else{
+    return;
+  }
 
-	while( 1 ){
-	  pp = PP_Create( MONSNO_PATTIIRU, 50, 0, wk->heapID );
-		if( PP_GetSex( pp ) == sex ){
-			ZUKANSAVE_SetPokeGet( sv, pp );
-		  GFL_HEAP_FreeMemory( pp );
-			break;
-		}
-	  GFL_HEAP_FreeMemory( pp );
-	}
+  while( 1 ){
+    pp = PP_Create( MONSNO_PATTIIRU, 50, 0, wk->heapID );
+    if( PP_GetSex( pp ) == sex ){
+      ZUKANSAVE_SetPokeGet( sv, pp );
+      GFL_HEAP_FreeMemory( pp );
+      break;
+    }
+    GFL_HEAP_FreeMemory( pp );
+  }
 
-	ZUKANSAVE_SetZenkokuZukanFlag( sv );
-	ZUKANSAVE_SetGraphicVersionUpFlag( sv );
+  ZUKANSAVE_SetZenkokuZukanFlag( sv );
+  ZUKANSAVE_SetGraphicVersionUpFlag( sv );
 }
+#endif

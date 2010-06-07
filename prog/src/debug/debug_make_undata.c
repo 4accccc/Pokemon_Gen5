@@ -7,6 +7,8 @@
  */
 //======================================================================
 
+#ifdef PM_DEBUG
+
 #include <gflib.h>
 //#include <skb.h>
 #include "system/main.h"
@@ -42,6 +44,7 @@
 #define SKB_PALIDX2 (2)
 
 #define INPUT_VALUE_MAX (0xffffffff)
+
 
 //名前
 static const STRCODE default_name[] = {
@@ -1281,3 +1284,4 @@ static void DumpUNData(MAKE_WORK *wk)
   OS_Printf("有効データ数 %d\n",valid_num);
 }
 
+#endif

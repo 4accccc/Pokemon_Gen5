@@ -43,6 +43,7 @@ FS_EXTERN_OVERLAY(shinka_demo);
 FS_EXTERN_OVERLAY(egg_demo);
 FS_EXTERN_OVERLAY(zukan_detail);
 
+#ifdef PM_DEBUG
 
 //=============================================================================
 /**
@@ -2422,3 +2423,4 @@ static void D_Test_ZukanFormMcssSetOfsPositionFunc(void* d_test_cmn_wk)
 }
 
 
+#endif
