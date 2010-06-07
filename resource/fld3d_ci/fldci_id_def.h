@@ -60,4 +60,7 @@
 #define FLDCIID_GYM06F (47)
 #define FLDCIID_GYM07F (48)
 #define FLDCIID_GYM08F (49)
-#define FLDCIID_MAX (50)
+#define FLDCIID_ZUKAN_M (50)
+#define FLDCIID_ZUKAN_W (51)
+#define FLDCIID_GET2_08M (52)
+#define FLDCIID_MAX (53)
