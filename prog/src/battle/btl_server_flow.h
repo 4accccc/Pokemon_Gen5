@@ -263,6 +263,16 @@ typedef enum {
   BTL_ITEMREACTION_PP,      ///< PP減少による
   BTL_ITEMREACTION_SICK,    ///< 状態異常による
 }BtlItemReaction;
+
+/**
+ *  ワザ強制有効化モード
+ */
+typedef enum {
+  BTL_WAZAENABLE_NONE = 0,
+  BTL_WAZAENABLE_NORMAL,   ///< 通常
+  BTL_WAZAENABLE_QUIT,     ///< 強制有効化後、処理中断
+}BtlWazaForceEnableMode;
+
 /**
  *  ハンドラ挙動（効果が表出するもの）
  */

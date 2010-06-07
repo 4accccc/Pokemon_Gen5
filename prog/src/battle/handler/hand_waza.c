@@ -3282,8 +3282,8 @@ static void handler_Kiaidame( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Juden( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZASEQ_START,       handler_Juden_WazaStart }, // ワザ処理開始ハンドラ
     { BTL_EVENT_WAZA_EXE_START,      handler_Juden_Exe       }, // ワザ出し確定ハンドラ
+    { BTL_EVENT_WAZASEQ_START,       handler_Juden_WazaStart }, // ワザ処理開始ハンドラ
     { BTL_EVENT_WAZA_POWER,          handler_Juden_Pow       }, // ワザ威力計算ハンドラ
     { BTL_EVENT_WAZASEQ_END,         handler_Juden_WazaEnd   }, // ワザ処理終了ハンドラ
   };
@@ -3300,6 +3300,8 @@ static void handler_Juden_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Juuden );
         HANDEX_STR_AddArg( &param->str, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, param );
+
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ENABLE_MODE, BTL_WAZAENABLE_NORMAL );
 
       work[ WORKIDX_STICK ] = 1;
       work[0] = 1;  // じゅうでんシーケンスを１にする（貼り付き開始）
@@ -5587,7 +5589,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
           param->pokeID = pokeID;
         BTL_SVF_HANDEX_Pop( flowWk, param );
 
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ENABLE_MODE, BTL_WAZAENABLE_QUIT );
         work[WORKIDX_STICK] = 1;
         work[0] = GAMAN_STATE_2ND;
       }
@@ -5595,7 +5597,7 @@ static void handler_Gaman( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
     case GAMAN_STATE_2ND:
       // ２ターン目：何もせず処理を抜ける
       {
-        BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ENABLE_MODE, BTL_WAZAENABLE_QUIT );
         work[0] = GAMAN_STATE_3RD;
       }
       break;
