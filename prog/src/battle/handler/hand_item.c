@@ -821,8 +821,6 @@ static void handler_KuraboNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 {
   common_useForSick( myHandle, flowWk, pokeID, WAZASICK_MAHI );
 }
-//static +BTL_EVENT_FACTOR\* +.*\(.*\)
-
 
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KuraboNomi( u32* numElems )
 {
@@ -5488,13 +5486,16 @@ static void common_Juel_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     {
       if( !BTL_SVFTOOL_IsSimulationMode(flowWk) )
       {
-        BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
+        BTL_HANDEX_PARAM_CONSUME_ITEM* param;
+
+        BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
+
+        param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
           HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_STD, BTL_STRID_STD_Juel );
           HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
           HANDEX_STR_AddArg( &param->exStr, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
         BTL_SVF_HANDEX_Pop( flowWk, param );
 
-        BTL_EVENT_FACTOR_ConvertForIsolate( myHandle );
       }
       work[0] = 1;
     }
