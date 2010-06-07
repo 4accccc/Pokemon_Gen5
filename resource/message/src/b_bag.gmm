@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hiro_nakamura" host="W00144" date="2010-06-02T17:48:28"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-06-07T16:52:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,8 +305,8 @@
 		</language>
 	</columns>
 
-	<dialog left="248" top="176" right="953" bottom="796" maximized="no" rayout="Vertical2">
-		<comment-input left="677" top="589" right="1024" bottom="739" visible="yes"/>
+	<dialog left="521" top="31" right="1226" bottom="651" maximized="no" rayout="Vertical2">
+		<comment-input left="760" top="709" right="1107" bottom="859" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
@@ -740,12 +740,10 @@
 		<comment>野生ダブル
 先頭のポケモン動作ではないので
 ボールを投げられない</comment>
-		<language name="JPN" font=" 1:small" width="216">アララギの　ことば……
-こういう　ものには▽
-つかいどきが　あるのよ</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">アララギの　言葉……
-こういう　ものには▽
-使いどきが　あるのよ</language>
+		<language name="JPN" font=" 1:small" width="216">しゅうちゅう　しないと
+ボールは　じょうずに　なげられない！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">しゅうちゅう　しないと
+ボールは　じょうずに　なげられない！</language>
 	</row>
 
 	<flowchart-group-list>
