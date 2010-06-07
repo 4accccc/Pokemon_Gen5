@@ -167,6 +167,8 @@ static const BOOL MUSICAL_EVENT_ExitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
 static const void MUSICAL_EVENT_JumpWaitingRoom( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
 static const void MUSICAL_EVENT_JumpMusicalHall( GMEVENT *event, MUSICAL_EVENT_WORK *evWork );
 static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *evWork , u16 scriptId );
+static const u8 MUSICAL_EVENT_CalcNpcIdx( MUSICAL_EVENT_WORK *evWork , const u8 idx );
+
 //--------------------------------------------------------------
 //  イベント作成
 //--------------------------------------------------------------
@@ -704,14 +706,14 @@ static void MUSICAL_EVENT_InitActing( MUSICAL_EVENT_WORK *evWork )
     u8 npcIdx = 0;
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( evWork->commWork , i );
+      MUSICAL_POKE_PARAM *musPoke = MUS_COMM_GetMusPokeParam( evWork->commWork , evWork->musicalIndex[i] );
       if( musPoke != NULL )
       {
-        MUSICAL_STAGE_SetData_Comm( evWork->actInitWork , i , musPoke );
+        MUSICAL_STAGE_SetData_Comm( evWork->actInitWork , evWork->musicalIndex[i] , musPoke );
       }
       else
       {
-        MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , i , npcIdx , HEAPID_PROC_WRAPPER );
+        MUSICAL_PROGRAM_SetData_NPC( evWork->progWork , evWork->actInitWork , evWork->musicalIndex[i] , npcIdx , HEAPID_PROC_WRAPPER );
         npcIdx++;
       }
     }
@@ -843,7 +845,8 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
       else
       {
         u8 idx = MUSICAL_EVENT_GetPosIndex( evWork , i );
-        const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
+        const u8 npcIdx = MUSICAL_EVENT_CalcNpcIdx( evWork , idx );
+        const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , npcIdx );
         GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
         STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
 
@@ -1257,7 +1260,20 @@ static const void MUSICAL_EVENT_RunScript( GMEVENT *event, MUSICAL_EVENT_WORK *e
   }
 }
 
-
+static const u8 MUSICAL_EVENT_CalcNpcIdx( MUSICAL_EVENT_WORK *evWork , const u8 idx )
+{
+  u8 i;
+  u8 npcIdx = 0;
+  for( i=0;i<idx;i++ )
+  {
+    if( MUS_COMM_GetPlayerMyStatus( evWork->commWork , i ) == NULL )
+    {
+      npcIdx++;
+    }
+  }
+  OS_TPrintf("Pos[%d]->NPC[%d]\n",idx,npcIdx);
+  return npcIdx;
+}
 
 #pragma mark [>outer func
 //自分の参加番号取得
@@ -1397,7 +1413,10 @@ const u8 MUSICAL_EVENT_GetPosObjView( MUSICAL_EVENT_WORK *evWork , const u8 pos 
     }
   }
   
-  return MUSICAL_PROGRAM_GetNpcObjId( evWork->progWork , idx-1 );
+  {
+    const u8 npcIdx = MUSICAL_EVENT_CalcNpcIdx( evWork , idx );
+    return MUSICAL_PROGRAM_GetNpcObjId( evWork->progWork , npcIdx );
+  }
 }
 
 void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8 pos , WORDSET *wordSet , const u8 wordIdx )
@@ -1425,7 +1444,8 @@ void MUSICAL_EVENT_SetPosCharaName_Wordset( MUSICAL_EVENT_WORK *evWork , const u
   
   if( isSet == FALSE )
   {
-    const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
+    const u8 npcIdx = MUSICAL_EVENT_CalcNpcIdx( evWork , idx );
+    const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , npcIdx );
     GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extra_dat , HEAPID_PROC );
     STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
     
@@ -1462,7 +1482,8 @@ void MUSICAL_EVENT_SetPosPokeName_Wordset( MUSICAL_EVENT_WORK *evWork , const u8
   
   if( isSet == FALSE )
   {
-    const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , idx-1 );
+    const u8 npcIdx = MUSICAL_EVENT_CalcNpcIdx( evWork , idx );
+    const u8 nameIdx = MUSICAL_PROGRAM_GetNpcNameIdx( evWork->progWork , npcIdx );
     GFL_MSGDATA *msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_MESSAGE , NARC_message_musical_extrapoke_dat , HEAPID_PROC );
     STRBUF * tmpBuf = GFL_MSG_CreateString( msgHandle , nameIdx );
     

@@ -1484,7 +1484,7 @@ static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , cons
   ARI_TPrintf("MusComm Finish Post AllPokeData.\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
-    if( i < GFL_NET_GetConnectNum() )
+    if( MyStatus_CheckNameClear( work->userData[i].myStatus ) == FALSE )
     {
       u32 pokeParaAdr;
       MUSICAL_POKE_PARAM *musPoke;
@@ -1500,6 +1500,29 @@ static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , cons
       work->userData[i].isValidData = FALSE;
     }
   }
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  ARI_TPrintf("-----Post All Poke Data-----\n");
+  for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
+  {
+    MUSICAL_POKE_PARAM *musPoke = work->userData[i].pokeData;
+    ARI_TPrintf("[%d]",i);
+    if( work->userData[i].isValid == TRUE )
+    {
+      u8 j;
+      ARI_TPrintf(":[%3d]|",PP_Get(musPoke->pokePara,ID_PARA_monsno,NULL));
+      for( j=0 ; j<MUS_POKE_EQUIP_MAX ; j++ )
+      {
+        ARI_TPrintf("[%3d]",musPoke->equip[j].itemNo);
+      }
+      ARI_TPrintf("\n");
+    }
+    else
+    {
+      ARI_TPrintf("NPC\n");
+    }
+  }
+  ARI_TPrintf("-----Post All User Data-----\n");
+#endif
   work->isPostAllPokeData = TRUE;
 
 }
