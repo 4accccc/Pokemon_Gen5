@@ -246,6 +246,27 @@ void UnionEff_App_ReqFriendMark(UNION_EFF_SYSTEM *unieff, MMDL *mmdl, FRIENDMARK
   UnionEff_FriendMark_Setup(&unieff->mark_man, mmdl, mark_type);
 }
 
+//==================================================================
+/**
+ * 指定したMMDLを対象としている友達マークを削除
+ *
+ * @param   unieff		
+ * @param   mmdl		
+ */
+//==================================================================
+void UnionEff_App_SearchDeleteFriendMark( UNION_EFF_SYSTEM *unieff, const MMDL *mmdl )
+{
+  int i;
+  UNION_EFF_FRIENDMARK_MANAGER *mark_man = &unieff->mark_man;
+  
+  for(i = 0; i < FRIENDMARK_MAX; i++){
+    if(mark_man->mark[i].mmdl == mmdl){
+      UnionEff_FriendMark_Delete(&mark_man->mark[i]);
+      OS_TPrintf("aaa 削除した　%d\n", i);
+      return;
+    }
+  }
+}
 
 
 
@@ -721,3 +742,4 @@ static UNION_EFF_FRIENDMARK * _SearchFriendMarkWork(UNION_EFF_FRIENDMARK_MANAGER
   UnionEff_FriendMark_Delete(&mark_man->mark[old_no]);
   return &mark_man->mark[old_no];
 }
+

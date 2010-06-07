@@ -429,8 +429,17 @@ static UNION_CHARACTER * UNION_CHARA_AddChar(UNION_SYSTEM_PTR unisys, UNION_BEAC
 //==================================================================
 static void UNION_CHARA_DeleteOBJ(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *pc, UNION_CHARACTER *unichara)
 {
-  OS_TPrintf("ユニオンキャラ削除 chara_index = %x\n", UNION_CHARA_GetMmdl(unisys, pc, unichara));
-  MMDL_Delete(UNION_CHARA_GetMmdl(unisys, pc, unichara));
+  FIELDMAP_WORK *fieldWork = GAMESYSTEM_GetFieldMapWork(unisys->uniparent->gsys);
+  MMDL *mmdl = UNION_CHARA_GetMmdl(unisys, pc, unichara);
+  
+  OS_TPrintf("ユニオンキャラ削除 chara_index = %x\n", mmdl);
+  if(fieldWork != NULL && mmdl != NULL){
+    //unieffシステムで常時監視で削除しているが、同一フレーム内で削除＞登録、
+    //とされると削除出来ないタイミングがある為、退出時に自分で確実に削除
+    UNION_EFF_SYSTEM *unieff = FIELDMAP_GetUnionEffSystem(fieldWork);
+    UnionEff_App_SearchDeleteFriendMark( unieff, mmdl );
+  }
+  MMDL_Delete(mmdl);
   GFL_STD_MemClear(unichara, sizeof(UNION_CHARACTER));
 }
 
@@ -719,6 +728,43 @@ static BOOL BeaconPC_UpdateLife(UNION_SYSTEM_PTR unisys, UNION_BEACON_PC *bpc)
   }
  
   return TRUE;
+}
+
+//==================================================================
+/**
+ * ユニオンキャラクター：画面復帰時の友達マークの再設定
+ *
+ * @param   unisys		
+ */
+//==================================================================
+void UNION_CHAR_MarkRecover(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *fieldmap)
+{
+  int i;
+  UNION_BEACON_PC *bpc;
+  UNION_CHARACTER *unichara;
+  ETC_SAVE_WORK *etc_save = SaveData_GetEtc( GAMEDATA_GetSaveControlWork(gdata) );
+  WIFI_LIST* wifilist = GAMEDATA_GetWiFiList(gdata);
+  UNION_EFF_SYSTEM *unieff = FIELDMAP_GetUnionEffSystem(fieldmap);
+  MMDL *mmdl;
+  
+  bpc = unisys->receive_beacon;
+  for(i = 0; i < UNION_RECEIVE_BEACON_MAX; i++){
+    if(bpc->beacon.data_valid == UNION_BEACON_VALID){
+      unichara = bpc->chara_group.character[0]; //主キャラのみチェック
+      if(unichara != NULL){
+        mmdl = UNION_CHARA_GetMmdl(unisys, unichara->parent_pc, unichara);
+        if(mmdl != NULL){
+          if(UnionTool_CheckDwcFriend(wifilist, &bpc->beacon) == TRUE){
+            UnionEff_App_ReqFriendMark(unieff, mmdl, FRIENDMARK_TYPE_FRIEND);
+          }
+          else if(EtcSave_CheckAcquaintance(etc_save, bpc->beacon.trainer_id) == TRUE){
+            UnionEff_App_ReqFriendMark(unieff, mmdl, FRIENDMARK_TYPE_ACQUAINTANCE);
+          }
+        }
+      }
+    }
+    bpc++;
+  }
 }
 
 //==============================================================================

@@ -168,6 +168,10 @@ void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fi
     FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, TRUE );
   }
   
+  if(clsys == NULL){  //ユニオンルーム内でのみ実行
+    UNION_CHAR_MarkRecover(unisys, GAMESYSTEM_GetGameData(unisys->uniparent->gsys), fieldWork);
+  }
+  
   if(clsys != NULL && clsys->comm_ready == TRUE){
     CommPlayer_Pop(clsys->cps);
   }

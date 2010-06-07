@@ -37,4 +37,5 @@ extern u16 UNION_CHARA_GetCharaIndex_to_ParentNo(u16 chara_index);
 extern int UNION_CHARA_GetCharaIndex_to_Sex(UNION_SYSTEM_PTR unisys, u16 chara_index);
 extern BOOL UNION_CHARA_CheckCommPlayer(u16 chara_index);
 extern BOOL UNION_CHARA_TalkCheck(UNION_SYSTEM_PTR unisys, u16 chara_index);
+extern void UNION_CHAR_MarkRecover(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *fieldmap);
 
