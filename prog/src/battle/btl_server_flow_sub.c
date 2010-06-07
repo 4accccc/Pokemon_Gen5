@@ -1783,7 +1783,8 @@ static u8 ItemEff_Common_Rank( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
  */
 static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  if( !BTL_TABLES_CheckItemCallNoEffect(itemID) )
+  u16 equipItemID = BPP_GetItem( bpp );
+  if( !BTL_TABLES_CheckItemCallNoEffect(equipItemID) )
   {
     u8 pokeID = BPP_GetID( bpp );
 
