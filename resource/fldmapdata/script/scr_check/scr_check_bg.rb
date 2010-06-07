@@ -18,7 +18,7 @@ end
 ev_file = open(ARGV[0],"r")
 
 code_ary = Array.new
-code_ary << "_TALK_START_SE_PLAY()"
+code_ary << "_TALK_START_SE_PLAY"
 code_ary << "_EASY_BGWIN_"
 code_ary << "_LOOK_ELBOARD"
 label = Array.new

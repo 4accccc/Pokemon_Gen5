@@ -51,12 +51,12 @@ end
 ev_file = open(ARGV[0],"r")
 
 code_ary = Array.new
-code_ary << "_TALK_OBJ_START()"
-code_ary << "_TALK_START_TURN_NOT()"
+code_ary << "_TALK_OBJ_START"
+code_ary << "_TALK_START_TURN_NOT"
 code_ary << "_EASY_BALLOONWIN_TALKOBJ_MSG"
 code_ary << "_EASY_TALK_ITEM_EVENT"
 code_ary << "_EASY_TALK_POKEVOICE"
-code_ary << "_TALK_START_SE_PLAY()"
+code_ary << "_TALK_START_SE_PLAY"
 
 label = Array.new
 dump_ary = Array.new
