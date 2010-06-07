@@ -54,7 +54,8 @@
 // ■定数宣言
 //====================================================================
 
-#define SHOP_BUY_OBJ_RES_NUM   ( 3 )
+#define SHOP_BUY_OBJ_RES_NUM  ( 3 )
+#define SHOP_YEN_KETA_MAX     ( 7 ) 
 
 // BMPWIN
 enum{
@@ -1645,7 +1646,7 @@ static void print_mygold( SHOP_BUY_APP_WORK *wk )
     expand = GFL_STR_CreateBuffer( SHOP_MYGOLD_STR_MAX, wk->heapId );
   
     // 残金取得
-    WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), 7, 
+    WORDSET_RegisterNumber( wk->wordSet, 0, MISC_GetGold(wk->misc), SHOP_YEN_KETA_MAX, 
                             STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   }
 
@@ -1769,11 +1770,11 @@ static void print_multiitem_price( SHOP_BUY_APP_WORK *wk, u16 number, int one_pr
 
   // 「？？？円」
   WORDSET_RegisterNumber( wk->wordSet, 0, number*one_price, 
-                          6, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
+                          SHOP_YEN_KETA_MAX, STR_NUM_DISP_SPACE, STR_NUM_CODE_ZENKAKU );
   WORDSET_ExpandStr( wk->wordSet, expand, yen_str );
 
   if(wk->payment==SHOP_PAYMENT_MONEY){
-    PRINTSYS_PrintColor( bmp,  13*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
+    PRINTSYS_PrintColor( bmp,  12*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
   }else{
     PRINTSYS_PrintColor( bmp,  11*3+2, 0, expand, wk->font, BLACK_TEXT_W_COL );
   }
@@ -2127,7 +2128,7 @@ static void ShopDecideMsg( SHOP_BUY_APP_WORK *wk, int strId, u16 itemno, u32 pri
                             2, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
 
   WORDSET_RegisterNumber( wk->wordSet, 2, num*price,
-                          6, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
+                          SHOP_YEN_KETA_MAX, STR_NUM_DISP_LEFT, STR_NUM_CODE_ZENKAKU );  
 
   // ウインドウ描画
   _expand_and_print_msg( wk, strId );
