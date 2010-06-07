@@ -1046,7 +1046,6 @@ static void _modeSelectEntryNumInit(IRC_BATTLE_MENU* pWork)
 {
   int aMsgBuff[]={IRCBTL_STR_04,IRCBTL_STR_05};
 
-
   _CreateButtonObj2(pWork);
 
   _touchScreenChange( pWork, NARC_cg_comm_comm_vs1_btn_NSCR);
@@ -1227,22 +1226,15 @@ static void _modeTemotiOrBoxButtonCallback2(u32 param, fx32 currentFrame )
 {
   IRC_BATTLE_MENU* pWork = (IRC_BATTLE_MENU*)param;
 
-
-
-
-  
   if(pWork->bBattelBox == _SELECTPOKE_EXIT){
-#if 1
     if(pWork->selectType == EVENTIRCBTL_ENTRYMODE_MULTH){
+      pWork->selectType = EVENTIRCBTL_ENTRYMODE_SINGLE;  //BTS3492
       _CHANGE_STATE(pWork, _modeSelectEntryNumInit);  //バトルモード
     }
     else
     {
       _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);  //人数選択にもどる
     }
-#else
-    _CHANGE_STATE(pWork, _modeSelectBattleTypeInit);  //人数選択にもどる
-#endif
   }
   else{
     _CHANGE_STATE(pWork, _modeFadeoutStart);
