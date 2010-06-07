@@ -156,6 +156,10 @@ static u32 DebugGetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 
 static void DebugSetPlayTimeSecond(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -228,6 +232,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_PlayTime = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_PlaceName = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_PlaceNameList ), DNI_PlaceNameList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_WifiFriend = { 
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_WifiFriendList ), DNI_WifiFriendList, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -273,6 +280,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_player_00, (void*)&DATA_Player },
   { dni_playtime_00, (void*)&DATA_PlayTime },
   { dni_place_name_00, (void*)&DATA_PlaceName },
+  { dni_wifi_friend_00, (void*)&DATA_WifiFriend },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1229,6 +1237,46 @@ static u32 DebugGetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
 static void DebugSetPlaceNameEnable(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
 {
   PlaceNameEnable = value;
+}
+
+//--------------------------------------------------------------
+/**
+ * @brief ともだち手帳
+ */
+//--------------------------------------------------------------
+static int friend_no = 0; // 操作対象の友達番号
+
+/**
+ * @brief 操作対象の友達番号
+ */
+static u32 DebugGetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  return friend_no;
+}
+static void DebugSetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  friend_no = value;
+}
+
+/**
+ * @brief 勝ち負けの記録
+ */
+static u32 DebugGetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+  WIFI_LIST* wifi_list = GAMEDATA_GetWiFiList( gamedata );
+  u32 value = WifiList_GetFriendInfo( wifi_list, friend_no, param );
+  return value;
+}
+static void DebugSetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+  WIFI_LIST* wifi_list = GAMEDATA_GetWiFiList( gamedata );
+  int now_value = WifiList_GetFriendInfo( wifi_list, friend_no, param ); 
+  int add_value = value - now_value;
+  switch( param ) {
+  case WIFILIST_FRIEND_BATTLE_WIN:  WifiList_SetResult( wifi_list, friend_no, add_value, 0, 0 ); break;
+  case WIFILIST_FRIEND_BATTLE_LOSE: WifiList_SetResult( wifi_list, friend_no, 0, add_value, 0 ); break;
+  case WIFILIST_FRIEND_TRADE_NUM:   WifiList_SetResult( wifi_list, friend_no, 0, 0, add_value ); break;
+  }
 }
 
 

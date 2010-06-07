@@ -193,4 +193,20 @@ static const DEBUG_NUMINPUT_LIST DNI_PlaceNameList[] = {
   { dni_place_name_01, 0, &DNP_PlaceNameEnable },
 };
 
+//////////////////////////////////////////////////////
+///‚Æ‚à‚¾‚¿Žè’ 
+static const DEBUG_NUMINPUT_PARAM DNP_WifiFriendNo = {
+ 0, WIFILIST_FRIEND_MAX, DebugGetWifiFriendNo, DebugSetWifiFriendNo,
+};
+static const DEBUG_NUMINPUT_PARAM DNP_WifiFriendData = {
+ 0, WIFILIST_COUNT_RANGE_MAX, DebugGetWifiFriendData, DebugSetWifiFriendData,
+};
+static const DEBUG_NUMINPUT_LIST DNI_WifiFriendList[] = {
+  //gmm_id, param, dni_param
+  { dni_wifi_friend_01, 0, &DNP_WifiFriendNo },
+  { dni_wifi_friend_02, WIFILIST_FRIEND_BATTLE_WIN, &DNP_WifiFriendData },
+  { dni_wifi_friend_03, WIFILIST_FRIEND_BATTLE_LOSE, &DNP_WifiFriendData },
+  { dni_wifi_friend_04, WIFILIST_FRIEND_TRADE_NUM, &DNP_WifiFriendData },
+};
+
 #endif  //PM_DEBUG
