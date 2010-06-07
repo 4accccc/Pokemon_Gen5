@@ -780,7 +780,7 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 	}
 
 	// 逃げるアイテム使用チェック
-	if( dat->wild_flg == 1 && ITEM_GetParam(dat->ret_item,ITEM_PRM_BATTLE,dat->heap) == ITEMUSE_BTL_ESCAPE ){
+	if( dat->wild_flg == 0 && ITEM_GetParam(dat->ret_item,ITEM_PRM_BATTLE,dat->heap) == ITEMUSE_BTL_ESCAPE ){
 		GFL_MSG_GetString( wk->mman, mes_b_bag_m17, wk->msg_buf );
 		BattleBag_TalkMsgSet( wk );
 		wk->ret_seq = SEQ_BBAG_ERR;
