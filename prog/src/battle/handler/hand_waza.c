@@ -7781,8 +7781,10 @@ static void handler_DenjiFuyuu_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-    // ‚Ë‚ð‚Í‚éó‘Ô‚ÍŽ¸”s
-    if( BPP_CheckSick(bpp, WAZASICK_NEWOHARU) ){
+    // ‚Ë‚ð‚Í‚éó‘ÔE‚¤‚¿‚¨‚Æ‚·ó‘Ô‚ÍŽ¸”s
+    if( (BPP_CheckSick(bpp, WAZASICK_NEWOHARU))
+    ||  (BPP_CheckSick(bpp, WAZASICK_FLYING_CANCEL))
+    ){
       BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER);
     }
   }
@@ -9743,7 +9745,10 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
     if( BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID) )
     {
-      BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+      // ‚¤‚¿‚¨‚Æ‚·ó‘Ô‚É‚·‚é
+      BTL_HANDEX_PARAM_ADD_SICK* param;
+
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->pokeID = targetPokeID;
         param->sickID = WAZASICK_FLYING_CANCEL;
         param->sickCont = BPP_SICKCONT_MakePermanent();
@@ -9755,6 +9760,18 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 
     {
       const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
+
+      // ‚Å‚ñ‚¶‚Ó‚ä‚¤ó‘Ô‚ðÁ‚·
+      if( BPP_CheckSick(bppTarget, WAZASICK_FLYING) )
+      {
+        BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+          cure_param->poke_cnt = 1;
+          cure_param->pokeID[0] = targetPokeID;
+          cure_param->fStdMsgDisable = TRUE;
+        BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+      }
+
+      // ‚»‚ç‚ð”ò‚ñ‚Å‚½‚çƒLƒƒƒ“ƒZƒ‹‚³‚¹‚é
       if( BPP_CONTFLAG_Get(bppTarget, BPP_CONTFLG_SORAWOTOBU) )
       {
         BTL_HANDEX_PARAM_TAMEHIDE_CANCEL* cancel_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_TAMEHIDE_CANCEL, pokeID );

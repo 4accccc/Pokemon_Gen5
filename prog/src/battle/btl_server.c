@@ -119,7 +119,6 @@ struct _BTL_SERVER {
 static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc );
 static void setMainProc_Root( BTL_SERVER* server );
 static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq );
-static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq );
 static BOOL check_action_chapter( BTL_SERVER* server );
 static BOOL ServerMain_ConfirmChangeOrEscape( BTL_SERVER* server, int* seq );
@@ -135,12 +134,12 @@ static BOOL ServerMain_ExitBattle_LoseWild( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForCommPlayer( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForNPC( BTL_SERVER* server, int* seq );
 static BOOL ServerMain_ExitBattle_ForSubwayTrainer( BTL_SERVER* server, int* seq );
+static BOOL SendBtlInChapterRecord( BTL_SERVER* server );
 static void print_client_action( const BTL_SVCL_ACTION* clientAction );
 static void print_que_info( BTL_SERVER_CMD_QUE* que, const char* caption );
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter );
 static void* MakeSelectActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter, u32* dataSize );
 static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry );
-static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry );
 static void storeClientAction( BTL_SERVER* server );
 static void SetAdapterCmd( BTL_SERVER* server, BtlAdapterCmd cmd );
 static void SetAdapterCmdEx( BTL_SERVER* server, BtlAdapterCmd cmd, const void* sendData, u32 dataSize );
@@ -400,18 +399,7 @@ static void setMainProc( BTL_SERVER* sv, ServerMainProc mainProc )
 //----------------------------------------------------------------------------------
 static void setMainProc_Root( BTL_SERVER* server )
 {
-  #ifdef ROTATION_NEW_SYSTEM
   setMainProc( server, ServerMain_SelectAction );
-  #else
-  // ローテーションバトル＆初回ターン以外なら、アクションの前にローテーション選択する
-  if( (BTL_MAIN_GetRule(server->mainModule) == BTL_RULE_ROTATION)
-  &&  (BTL_SVFTOOL_GetTurnCount(server->flowWork) != 0 )
-  ){
-    setMainProc( server, ServerMain_SelectRotation );
-  }else{
-    setMainProc( server, ServerMain_SelectAction );
-  }
-  #endif
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -446,12 +434,14 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
         BTL_SVFLOW_StartBtlIn( server->flowWork );
         if( server->que->writePtr )
         {
-          SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
+          SendBtlInChapterRecord( server );
           (*seq)++;
+          break;
         }
         else
         {
-          (*seq)+=2;
+          setMainProc_Root( server );
+          break;
         }
       }
       // 捕獲デモなら
@@ -461,91 +451,27 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
       }
     }
     break;
+
   case 2:
     if( WaitAllAdapterReply(server) )
     {
       ResetAdapterCmd( server );
+      SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
       (*seq)++;
     }
     break;
   case 3:
-    setMainProc_Root( server );
+    if( WaitAllAdapterReply(server) )
+    {
+      ResetAdapterCmd( server );
+      setMainProc_Root( server );
+    }
     break;
   }
   return FALSE;
 }
 
 
-//----------------------------------------------------------------------------------
-/**
- * サーバメインループ：ローテーション選択（ローテーションバトルのみ）
- *
- * @param   server
- * @param   seq
- *
- * @retval  BOOL
- */
-//----------------------------------------------------------------------------------
-static BOOL ServerMain_SelectRotation( BTL_SERVER* server, int* seq )
-{
-  switch( *seq ){
-  case 0:
-    {
-      static const BtlRotateDir dirTbl[] = {
-//        BTL_ROTATEDIR_STAY,
-        BTL_ROTATEDIR_R,
-        BTL_ROTATEDIR_L,
-      };
-      BtlRotateDir  dirAry[ BTL_CLIENT_MAX ];
-      u32 i;
-
-      ResetAdapterCmd( server );
-      SCQUE_Init( server->que );
-      for(i=0; i<BTL_CLIENT_MAX; ++i)
-      {
-        if( Svcl_IsEnable(&server->client[i]) )
-        {
-          u8 rnd = BTL_CALC_GetRand( NELEMS(dirTbl) );
-          dirAry[ i ] = dirTbl [rnd ];
-          BTL_SVFLOW_MakeRotationCommand( server->flowWork, i, dirAry[ i ] );
-        }
-        else
-        {
-          dirAry[ i ] = BTL_ROTATEDIR_NONE;
-        }
-      }
-
-      if( SendRotateRecord(server, dirAry) ){
-        (*seq)++;
-      }else{
-        (*seq) += 2;
-      }
-    }
-    break;
-
-  case 1:
-    if( WaitAllAdapterReply(server) )
-    {
-      ResetAdapterCmd( server );
-      (*seq)++;
-    }
-    break;
-
-  case 2:
-    SetAdapterCmdEx( server, BTL_ACMD_SERVER_CMD, server->que->buffer, server->que->writePtr );
-    (*seq)++;
-    break;
-
-  case 3:
-    if( WaitAllAdapterReply(server) )
-    {
-      ResetAdapterCmd( server );
-      setMainProc( server, ServerMain_SelectAction );
-    }
-    break;
-  }
-  return FALSE;
-}
 void BTL_SERVER_IntrLevelup_Start( BTL_SERVER* server )
 {
   server->intrSeq = 0;
@@ -598,7 +524,6 @@ static BOOL ServerMain_SelectAction( BTL_SERVER* server, int* seq )
     if( WaitAllAdapterReply(server) )
     {
       BTL_Printf( DBGSTR_SERVER_ShooterChargeCmdDoneAll );
-      ResetAdapterCmd( server );
       ResetAdapterCmd( server );
       (*seq)++;
     }
@@ -1450,6 +1375,10 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, cons
   SCQUE_Init( server->que );
 
   switch( timingCode ){
+  case BTL_RECTIMING_BtlIn:
+    BTL_SVFLOW_StartBtlIn( server->flowWork );
+    break;
+
   case BTL_RECTIMING_StartTurn:
     BTL_SVFLOW_StartTurn_Boot( server->flowWork );
     BTL_SVFLOW_StartTurn( server->flowWork, &server->clientAction );
@@ -1501,6 +1430,21 @@ BOOL BTL_SERVER_CMDCHECK_Make( BTL_SERVER* server, BtlRecTiming timingCode, cons
 
 
 /**
+ *  バトル開始チャプタ記録データ送信開始
+ */
+static BOOL SendBtlInChapterRecord( BTL_SERVER* server )
+{
+  void* recData;
+  u32   recDataSize;
+
+  BTL_RECTOOL_Init( &server->recTool, TRUE );
+
+  recData = BTL_RECTOOL_PutBtlInChapter( &server->recTool, &recDataSize );
+  SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
+  TAYA_Printf("チャプタ記録データ送信\n");
+  return TRUE;
+}
+/**
  *  アクション記録データ送信開始
  */
 static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL fChapter )
@@ -1508,7 +1452,8 @@ static BOOL SendActionRecord( BTL_SERVER* server, BtlRecTiming timingCode, BOOL 
   void* recData;
   u32   recDataSize;
   recData = MakeSelectActionRecord( server, timingCode, fChapter, &recDataSize );
-  if( recData != NULL ){
+  if( recData != NULL )
+  {
     BTL_N_Printf( DBGSTR_SV_SendActRecord, recDataSize);
     SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
     return TRUE;
@@ -1544,46 +1489,6 @@ static void* MakeSelectActionRecord( BTL_SERVER* server, BtlRecTiming timingCode
 
   return BTL_RECTOOL_FixSelActionData( &server->recTool, timingCode, dataSize );
 }
-
-/**
- *  ローテーション記録データ送信開始
- */
-static BOOL SendRotateRecord( BTL_SERVER* server, const BtlRotateDir* dirAry )
-{
-  void* recData;
-  u32   recDataSize;
-  recData = MakeRotationRecord( server, &recDataSize, dirAry );
-  if( recData != NULL ){
-    SetAdapterCmdEx( server, BTL_ACMD_RECORD_DATA, recData, recDataSize );
-    return TRUE;
-  }
-  return FALSE;
-}
-/**
- * ローテーション記録データを生成
- *
- * @param   server
- * @param   dataSize   [out] 生成されたデータサイズ
- *
- * @retval  void*   正しく生成できたら送信データポインタ / できない場合NULL
- */
-static void* MakeRotationRecord( BTL_SERVER* server, u32* dataSize, const BtlRotateDir* dirAry )
-{
-  u32 ID;
-
-  BTL_RECTOOL_Init( &server->recTool, TRUE );
-
-  for(ID=0; ID<BTL_CLIENT_MAX; ++ID)
-  {
-    if( server->client[ID].myID != CLIENT_DISABLE_ID )
-    {
-      BTL_RECTOOL_PutRotationData( &server->recTool, ID, dirAry[ID] );
-    }
-  }
-
-  return BTL_RECTOOL_FixRotationData( &server->recTool, dataSize );
-}
-
 /**
  *  各クライアントから返信のあったアクション内容を構造体に格納
  */

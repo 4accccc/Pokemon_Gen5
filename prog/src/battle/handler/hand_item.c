@@ -993,12 +993,10 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MomonNomi( u32* numElems )
 //------------------------------------------------------------------------------
 static void handler_RamNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  TAYA_Printf("Poke-%dのラムのみチェックハンドラ\n", pokeID);
   common_sickReaction( myHandle, flowWk, pokeID, WAZASICK_EX_POKEFULL_PLUS );
 }
 static void handler_RamNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  TAYA_Printf("Poke-%dのラムのみ使用ハンドラ\n", pokeID);
   common_useForSick( myHandle, flowWk, pokeID, WAZASICK_EX_POKEFULL_PLUS );
 }
 static void handler_RamNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -1032,10 +1030,8 @@ static void common_sickReaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    TAYA_Printf("自分(%d)のことだ\n", pokeID);
     if( common_sickcode_match(flowWk, pokeID, sickCode) )
     {
-      TAYA_Printf("当てはまる状態だ\n", pokeID);
       ItemPushRun( myHandle, flowWk, pokeID );
     }
   }
@@ -1044,7 +1040,6 @@ static void common_useForSick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    TAYA_Printf("自分(%d)のことだよね\n", pokeID);
     if( common_sickcode_match(flowWk, pokeID, sickCode) )
     {
       BTL_HANDEX_PARAM_CURE_SICK* param;

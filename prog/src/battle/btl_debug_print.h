@@ -304,6 +304,7 @@ typedef enum {
   DBGSTR_SV_RestoreAction,
   DBGSTR_SV_CmdCheckOK,
   DBGSTR_SV_CmdCheckNG,
+  DBGSTR_SV_SendBtlInRecord,
   DBGSTR_SV_SendActRecord,
   DBGSTR_SV_SendActRecordFailed,
   DBGSTR_SV_ExitBattle,

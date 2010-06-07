@@ -2358,19 +2358,23 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
     return BTL_ESCAPE_MODE_WILD;
 
   case BTL_COMPETITOR_TRAINER:
+    /*
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R) ){
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif
+    */
     return BTL_ESCAPE_MODE_NG;
 
   case BTL_COMPETITOR_SUBWAY:
+    /*
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R)){
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif
+    */
     return BTL_ESCAPE_MODE_CONFIRM;
 
   case BTL_COMPETITOR_COMM:

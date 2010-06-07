@@ -14,10 +14,9 @@
 typedef enum {
   BTL_RECFIELD_NULL = 0,
   BTL_RECFIELD_ACTION,          ///< 通常行動選択
-  BTL_RECFIELD_ROTATION,        ///< ローテーション
+  BTL_RECFIELD_BTLSTART,        ///< バトル開始
   BTL_RECFIELD_TIMEOVER,        ///< 時間制限が来たので終了
   BTL_RECFIELD_SIZEOVER,        ///< これ以上コマンド記憶できないので終了
-//  BTL_RECFIELD_POKE_CHANGE,   ///< ターン途中のポケモン入れ替え
 }BtlRecFieldType;
 
 /**
@@ -28,7 +27,7 @@ typedef enum {
   BTL_RECTIMING_StartTurn,
   BTL_RECTIMING_PokeInCover,
   BTL_RECTIMING_PokeInChange,
-  BTL_RECTIMING_Rotation,
+  BTL_RECTIMING_BtlIn,
 }BtlRecTiming;
 
 /*===========================================================================================*/
@@ -61,6 +60,7 @@ typedef struct {
 
 extern void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter );
 extern void BTL_RECTOOL_PutSelActionData( BTL_RECTOOL* recTool, u8 clientID, const BTL_ACTION_PARAM* action, u8 numAction );
+extern void* BTL_RECTOOL_PutBtlInChapter( BTL_RECTOOL* recTool, u32* dataSize );
 extern void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCode, u32* dataSize );
 extern void* BTL_RECTOOL_PutTimeOverData( BTL_RECTOOL* recTool, u32* dataSize );
 extern void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir );
@@ -90,7 +90,8 @@ extern BtlRecTiming BTL_REC_GetTimingCode( const void* data );
 typedef struct {
 
   const u8*   recordData;
-  u32         dataSize;
+  u32         dataSize  : 31;
+  u32         fError    :  1;
 //  u32         readPtr;
   u32         readPtr[ BTL_CLIENT_MAX ];
   u8          readBuf[ BTL_CLIENT_MAX ][64];
@@ -100,8 +101,8 @@ typedef struct {
 
 extern void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize );
 extern void BTL_RECREADER_Reset( BTL_RECREADER* wk );
+extern BOOL BTL_RECREADER_CheckBtlInChapter( BTL_RECREADER* wk, u8 clientID );
 extern const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID, u8 *numAction, u8* fChapter );
-extern BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID );
 extern u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk );
 
 

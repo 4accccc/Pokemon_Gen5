@@ -1148,8 +1148,19 @@ static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq )
 {
   if( wk->viewCore )
   {
-    return SubProc_UI_Setup( wk, seq );
+    BOOL fDone = SubProc_UI_Setup( wk, seq );
+    if( fDone )
+    {
+      if( BTL_RECREADER_CheckBtlInChapter(wk->btlRecReader, wk->myID) )
+      {
+        TAYA_Printf("バトル開始チャプタあり\n");
+        RecPlayer_TurnIncReq( &wk->recPlayer );
+      }
+    }
+    return fDone;
   }
+
+  BTL_RECREADER_CheckBtlInChapter( wk->btlRecReader, wk->myID );
   return TRUE;
 }
 //------------------------------------------------------------------------------------------------------

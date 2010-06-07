@@ -204,13 +204,12 @@ void BTL_RECREADER_Init( BTL_RECREADER* wk, const void* recordData, u32 dataSize
 
   wk->recordData = recordData;
   wk->dataSize = dataSize;
+  wk->fError = FALSE;
 
   for(i=0; i<NELEMS(wk->readPtr); ++i){
     wk->readPtr[i] = 0;
   }
-
 }
-
 //=============================================================================================
 /**
  * 読み込み位置をリセット
@@ -225,7 +224,32 @@ void BTL_RECREADER_Reset( BTL_RECREADER* wk )
     wk->readPtr[i] = 0;
   }
 }
+//=============================================================================================
+/**
+ * バトル開始チャプターが打たれているかチェック（＆読み込みポインタをその分すすめる）
+ *
+ * @param   wk
+ *
+ * @retval  BOOL    打たれていたらTRUE
+ */
+//=============================================================================================
+BOOL BTL_RECREADER_CheckBtlInChapter( BTL_RECREADER* wk, u8 clientID )
+{
+  BtlRecFieldType type;
+  u8 numClient, fChapter;
 
+  u32* rp;
+
+  rp = &wk->readPtr[ clientID ];
+  ReadRecFieldTag( wk->recordData[ (*rp) ], &type, &numClient, &fChapter );
+
+  if( type == BTL_RECFIELD_BTLSTART )
+  {
+    (*rp)++;
+    return TRUE;
+  }
+  return FALSE;
+}
 //=============================================================================================
 /**
  * アクションデータ１件読み込み
@@ -256,7 +280,9 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
 //              type, BTL_RECFIELD_ACTION, numClient, (*fChapter) );
     (*rp)++;
 
-    if( (*rp) > wk->dataSize ){ break; }
+    if( (*rp) > wk->dataSize ){
+      break;
+    }
     if( type == BTL_RECFIELD_ACTION )
     {
       const BTL_ACTION_PARAM* returnPtr = NULL;
@@ -306,66 +332,13 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   }
 
 
+  wk->fError = TRUE;
+
   GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
     clientID, type, (*rp), wk->dataSize);
   return NULL;
 }
 
-//=============================================================================================
-/**
- * ローテーションデータ１件読み込み
- *
- * @param   wk
- * @param   clientID   対象クライアントID
- *
- * @result  BtlRotateDir  ローテーション方向
- *
- */
-//=============================================================================================
-BtlRotateDir BTL_RECREADER_ReadRotation( BTL_RECREADER* wk, u8 clientID )
-{
-  BtlRecFieldType type;
-  u8 numClient, readClientID, readNumAction, fChapter;
-  u32 i;
-
-  u32 *rp = &wk->readPtr[ clientID ];
-
-
-  while( (*rp) < wk->dataSize )
-  {
-    ReadRecFieldTag( wk->recordData[ (*rp)++ ], &type, &numClient, &fChapter );
-    if( ((*rp) >= wk->dataSize) ){ break; }
-    if( type != BTL_RECFIELD_ROTATION )
-    {
-      u8 readClientID, readNumAction;
-      // クライアント数分、アクションパラメータスキップ
-      for(i=0; i<numClient; ++i)
-      {
-        ReadClientActionTag( wk->recordData[ (*rp)++ ], &readClientID, &readNumAction );
-        (*rp) += (readNumAction * sizeof(BTL_ACTION_PARAM));
-        if( ((*rp) >= wk->dataSize) ){ break; }
-      }
-    }
-    else
-    {
-      u8 readClientID;
-      BtlRotateDir dir;
-      for(i=0; i<numClient; ++i)
-      {
-        ReadRotationTag( wk->recordData[(*rp)+i], &readClientID, &dir );
-        if( readClientID == clientID ){
-          break;
-        }
-      }
-      (*rp) += numClient;
-      if( i != numClient ){
-        return dir;
-      }
-    }
-  }
-  GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, dataType=%d\n", clientID, type);
-  return BTL_ROTATEDIR_STAY;
-}
 
 //=============================================================================================
 /**
@@ -431,6 +404,23 @@ void BTL_RECTOOL_Init( BTL_RECTOOL* recTool, BOOL fChapter )
 {
   GFL_STD_MemClear( recTool, sizeof(BTL_RECTOOL) );
   recTool->fChapter = fChapter;
+}
+//=============================================================================================
+/**
+ * RECTOOL バトル開始チャプタデータを生成
+ *
+ * @param   recTool
+ * @param   dataSize    送信データサイズ
+ *
+ * @retval  void*   送信データポインタ
+ */
+//=============================================================================================
+void* BTL_RECTOOL_PutBtlInChapter( BTL_RECTOOL* recTool, u32* dataSize )
+{
+  recTool->buffer[ HEADER_TIMING_CODE ] = BTL_RECTIMING_BtlIn;
+  recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( BTL_RECFIELD_BTLSTART, 0, 1 );
+  *dataSize = HEADER_SIZE;
+  return recTool->buffer;
 }
 
 //=============================================================================================
@@ -517,74 +507,6 @@ void* BTL_RECTOOL_PutTimeOverData( BTL_RECTOOL* recTool, u32* dataSize )
   *dataSize = HEADER_SIZE;
   return recTool->buffer;
 }
-
-
-//=============================================================================================
-/**
- * [RECTOOL] ローテーション選択データを１クライアント分、追加
- *
- * @param   recTool
- * @param   clientID
- * @param   dir
- */
-//=============================================================================================
-void BTL_RECTOOL_PutRotationData( BTL_RECTOOL* recTool, u8 clientID, BtlRotateDir dir )
-{
-  // ヘッダ記述用の領域を空けておく
-  if( recTool->writePtr == 0 ){
-    recTool->type = BTL_RECFIELD_ROTATION;
-    recTool->writePtr = HEADER_SIZE;
-  }
-
-  GF_ASSERT(recTool->type == BTL_RECFIELD_ROTATION);
-
-  if( (recTool->clientBit & (1 << clientID)) == 0 )
-  {
-    if( recTool->writePtr < sizeof(recTool->buffer) )
-    {
-      recTool->clientBit |= (1 << clientID);
-      recTool->numClients++;
-      recTool->buffer[ recTool->writePtr++ ] = MakeRotationTag( clientID, dir );
-    }
-    else
-    {
-      GF_ASSERT(0);   // データ容量が多すぎる
-      recTool->fError = 1;
-    }
-  }
-  else
-  {
-    GF_ASSERT_MSG(0, "client_%d のデータ書き込みが２度発生している", clientID);
-  }
-}
-
-//=============================================================================================
-/**
- * [RECTOOL] ローテーション選択データの書き込みを終了
- *
- * @param   recTool
- * @param   dataSize  [out] クライアントに送信するデータサイズが入る
- *
- * @retval  void*   正常終了ならクライアントに送信するデータポインタ／エラー時はNULL
- */
-//=============================================================================================
-void* BTL_RECTOOL_FixRotationData( BTL_RECTOOL* recTool, u32* dataSize )
-{
-  GF_ASSERT(recTool->type == BTL_RECFIELD_ROTATION);
-
-  if( recTool->fError == 0 )
-  {
-    //
-    recTool->buffer[HEADER_TIMING_CODE] = BTL_RECTIMING_Rotation;
-    recTool->buffer[HEADER_FIELD_TAG]   = MakeRecFieldTag( recTool->type, recTool->numClients, recTool->fChapter );
-    *dataSize = recTool->writePtr;
-    return recTool->buffer;
-  }
-  return NULL;
-}
-
-
-
 
 
 //=============================================================================================

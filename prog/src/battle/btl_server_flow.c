@@ -106,7 +106,7 @@ static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
 static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
 static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 next_poke_idx, BOOL fPutMsg );
-static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
+static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk );
 static void scPut_MemberOutMessage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MemberChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u8 nextPokeIdx );
 static BOOL scproc_MemberOutForChange( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, BOOL fIntrDisable );
@@ -1124,7 +1124,7 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
 {
   if( wk->bagMode == BBAG_MODE_SHOOTER )
   {
-    u32 i;
+    u32 i, count;
     for(i=0; i<BTL_CLIENT_MAX; ++i)
     {
       if( !BTL_SERVER_IsClientEnable(wk->server, i) ){
@@ -1132,15 +1132,22 @@ static void scproc_countup_shooter_energy( BTL_SVFLOW_WORK* wk )
       }
       // トリプルバトル以外は毎ターン１ずつ固定
       if( BTL_MAIN_GetRule(wk->mainModule) != BTL_RULE_TRIPLE ){
-        SCQUE_PUT_OP_ShooterCharge( wk->que, i, 1 );
+        count = 1;
       // トリプルバトルの場合は自分の空き位置＋１
       }else{
         u8 emptyCnt;
         u8 emptyPos[ BTL_POSIDX_MAX ];
 
         emptyCnt = BTL_POSPOKE_GetClientEmptyPos( &wk->pospokeWork, i, emptyPos );
-        SCQUE_PUT_OP_ShooterCharge( wk->que, i, emptyCnt+1 );
+        count = emptyCnt + 1;
       }
+
+      #ifdef PM_DEBUG
+      if( BTL_MAIN_GetDebugFlag(wk->mainModule, BTL_DEBUGFLAG_SHOOTER_MODE) ){
+        count = BTL_SHOOTER_ENERGY_MAX;
+      }
+      #endif
+      SCQUE_PUT_OP_ShooterCharge( wk->que, i, count );
     }
   }
 }
@@ -2600,15 +2607,16 @@ static void scproc_MemberInForChange( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posId
  *
  * @param   wk
  *
+ * @retval  BOOL    とくせい・アイテムなど、何らかの効果が発生したらTRUE
  */
 //----------------------------------------------------------------------------------
-static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
+static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 {
   FRONT_POKE_SEEK_WORK fps;
   BTL_POKESET* pokeSet;
   BTL_POKEPARAM* bpp;
   u32 hem_state;
-  u8  pokeID;
+  u8  pokeID, fMemberInEffect = FALSE;
 
   pokeSet = &wk->pokesetMemberInProc;
   BTL_POKESET_Clear( pokeSet );
@@ -2636,8 +2644,14 @@ static void scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
       scEvent_AfterMemberIn( wk, bpp );
 //      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
+      if( scproc_HandEx_Result(wk) != HandExResult_NULL ){
+        fMemberInEffect = TRUE;
+      }
     }
   }
+
+
+  return fMemberInEffect;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2742,16 +2756,15 @@ static void scproc_MemberOutCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* outPoke, u
 
   ActOrder_ForceDone( wk, pokeID );
 
-  scproc_ClearPokeDependEffect( wk, outPoke );
-  BPP_Clear_ForOut( outPoke );
-  SCQUE_PUT_OP_OutClear( wk->que, BPP_GetID(outPoke) );
-
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     scEvent_MemberOutFixed( wk, outPoke );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
+
+  scproc_ClearPokeDependEffect( wk, outPoke );
+  BPP_Clear_ForOut( outPoke );
+  SCQUE_PUT_OP_OutClear( wk->que, BPP_GetID(outPoke) );
 
   BTL_POSPOKE_PokeOut( &wk->pospokeWork, pokeID );
 }
@@ -7034,7 +7047,7 @@ static BOOL scEvent_WazaSick_CheckFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 {
   BOOL fFail = FALSE;
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, (attacker!=NULL)? BPP_GetID(attacker) : BTL_POKEID_NULL );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(target) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_SICKID, sick );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, fFail );
