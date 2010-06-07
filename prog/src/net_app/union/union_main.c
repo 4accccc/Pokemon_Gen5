@@ -21,6 +21,7 @@
 #include "field/fieldmap_call.h"  //FIELDMAP_IsReady
 #include "colosseum.h"
 #include "gamesystem/game_beacon.h"
+#include "field/zonedata.h"
 
 
 //--------------------------------------------------------------
@@ -168,7 +169,7 @@ void UnionMain_Callback_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fi
     FIELDMAP_CTRL_GRID_SetPlayerPause( fieldWork, TRUE );
   }
   
-  if(clsys == NULL){  //ユニオンルーム内でのみ実行
+  if(ZONEDATA_IsUnionRoom( FIELDMAP_GetZoneID( fieldWork ) ) == TRUE){//ユニオンルーム内でのみ実行
     UNION_CHAR_MarkRecover(unisys, GAMESYSTEM_GetGameData(unisys->uniparent->gsys), fieldWork);
   }
   

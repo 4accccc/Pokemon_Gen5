@@ -459,6 +459,10 @@ static void UNION_CHARA_CheckOBJ_Entry(UNION_SYSTEM_PTR unisys, ETC_SAVE_WORK *e
   MMDL *mmdl;
   u8 my_mac[6];
   
+  if(pc->life == 0){
+    return;
+  }
+  
   OS_GetMacAddress(my_mac);
   beacon = &pc->beacon;
   for(i = 0; i < UNION_CONNECT_PLAYER_NUM; i++){
