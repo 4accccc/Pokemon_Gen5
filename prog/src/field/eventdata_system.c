@@ -1477,7 +1477,7 @@ void EVENTDATA_MoveBGData( EVENTDATA_SYSTEM * evdata, u16 bg_id, u16 gx, u16 gy,
  *	@return オフセット
  */
 //-----------------------------------------------------------------------------
-static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 exit_dir, u16 exit_way, u16 size)
+static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 exit_dir, BOOL rail, u16 exit_way, u16 size)
 {
   if (exit_ofs == LOCATION_DEFAULT_EXIT_OFS) return 0;
   {
@@ -1501,10 +1501,41 @@ static u16 convertOfs(const LOC_EXIT_OFS exit_ofs, u16 exit_dir, u16 exit_way, u
     
 
     // レール方向のオフセット値の矛盾を解消
-    // ExitOfsは-ZがUPの空間の値なので、レールの空間のオフセット値に変換する
-    if( (exit_way == DIR_LEFT) || (exit_way == DIR_DOWN) )
-    {
-      enter_ofs = (enter_size-1)-enter_ofs;
+    // レール各キー方向での座標系と
+    // イベントの２Dグリッド座標系では
+    // 数値の扱い方が違うので、矛盾を解消
+    //
+    // グリッド座標系ー＞レール座標系
+    if( rail ){
+      
+      switch( exit_way ){
+      case DIR_UP:
+        // 前方方向の調整
+        if( (enter_dir == DIR_LEFT) || (enter_dir == DIR_RIGHT) ){
+          TOMOYA_Printf( "rail ofs return up before  %d", enter_ofs );
+          enter_ofs = (enter_size-1)-enter_ofs;
+          TOMOYA_Printf( " after_ofs %d\n", enter_ofs );
+        }
+        break;
+      case DIR_DOWN:
+        // サイド方向の調整
+        if( (enter_dir == DIR_UP) || (enter_dir == DIR_DOWN) ){
+          TOMOYA_Printf( "rail ofs return down before  %d", enter_ofs );
+          enter_ofs = (enter_size-1)-enter_ofs;
+          TOMOYA_Printf( " after_ofs %d\n", enter_ofs );
+        }
+        break;
+      case DIR_LEFT:
+        // 全方向の調整
+        TOMOYA_Printf( "rail ofs return left before  %d", enter_ofs );
+        enter_ofs = (enter_size-1)-enter_ofs;
+        TOMOYA_Printf( " after_ofs %d\n", enter_ofs );
+        break;
+
+        // 調整不必要
+      default:
+        break;
+      }
     }
 
     // 差、中心を求める
@@ -1621,7 +1652,8 @@ static LOC_EXIT_OFS ConnectData_GPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
 static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, const RAIL_LOCATION * cp_location )
 {
   const CONNECT_DATA_RPOS * cp_rpos;
-  BOOL ofs_return = FALSE;
+  BOOL ofs_return_front = FALSE;
+  BOOL ofs_return_side = FALSE;
   u16 dir;
   
   GF_ASSERT( cp_data );
@@ -1631,16 +1663,42 @@ static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
 
   dir = ConnectData_GetExitDirToDir( cp_data );
 
-  // レール方向がUP、RIGHT以外なら、方向を反転する必要がある。
-  if( (cp_rpos->rail_way == DIR_DOWN) || (cp_rpos->rail_way == DIR_LEFT) ){
-    TOMOYA_Printf( "rail ofs return \n" );
-    ofs_return = TRUE;
+  // レール方向によりfrotn sideを反転する必要がある。
+  // レール方向のオフセット値の矛盾を解消
+  // レール各キー方向での座標系と
+  // イベントの２Dグリッド座標系では
+  // 数値の扱い方が違うので、矛盾を解消
+  //
+  // レール座標系ー＞グリッド座標系
+  switch( cp_rpos->rail_way ){
+  // UP/DOWNは２D座標系において、Front方向に矛盾が生まれる。
+  case DIR_UP:
+    ofs_return_front = TRUE;
+    ofs_return_side = FALSE;
+    break;
+  case DIR_DOWN:
+    ofs_return_front = FALSE;
+    ofs_return_side = TRUE;
+    break;
+  // LEFT/RIGHTは左方向を完全に反転してあげればOK
+  case DIR_LEFT:
+    ofs_return_front = TRUE;
+    ofs_return_side = TRUE;
+    break;
+  case DIR_RIGHT:
+    ofs_return_front = FALSE;
+    ofs_return_side = FALSE;
+    break;
+
+  default:
+    break;
   }
+  TOMOYA_Printf( "rail ofs return  front=%d side=%d \n", ofs_return_front, ofs_return_side );
   
   if (cp_rpos->side_grid_size > 1 )
   {
     s32 ofs = cp_location->width_grid - cp_rpos->side_grid;
-    if( ofs_return )
+    if( ofs_return_side )
     {
       ofs = (cp_rpos->side_grid_size-1) - ofs;
     }
@@ -1652,7 +1710,7 @@ static LOC_EXIT_OFS ConnectData_RPOS_GetExitOfs( const CONNECT_DATA * cp_data, c
   else if (cp_rpos->front_grid_size > 1 )
   {
     s32 ofs = cp_location->line_grid - cp_rpos->front_grid;
-    if( ofs_return )
+    if( ofs_return_front )
     {
       ofs = (cp_rpos->front_grid_size-1) - ofs;
     }
@@ -1731,14 +1789,14 @@ static void ConnectData_GPOS_GetPos( const CONNECT_DATA* cp_data, LOC_EXIT_OFS e
   //exit_ofsを加えた座標を返す
   if (cp_pos->sizex > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, dir, DIR_UP, cp_pos->sizex );
+    u16 ret_ofs = convertOfs( exit_ofs, dir, FALSE, DIR_UP, cp_pos->sizex );
     TOMOYA_Printf("p_pos->x:%d cp_gpos->x:%d ofs:%d\n", FX_Whole(p_pos->x), cp_pos->x, ret_ofs);
     TOMOYA_Printf("add x ofs %d\n", ret_ofs );
     p_pos->x += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
   }
   else if (cp_pos->sizez > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, dir, DIR_UP, cp_pos->sizez );
+    u16 ret_ofs = convertOfs( exit_ofs, dir, FALSE, DIR_UP, cp_pos->sizez );
     TOMOYA_Printf("p_pos->z:%d cp_gpos->z:%d ofs:%d\n", FX_Whole(p_pos->z), cp_pos->z, ret_ofs);
     TOMOYA_Printf("add z ofs %d\n", ret_ofs );
     p_pos->z += ret_ofs * FIELD_CONST_GRID_FX32_SIZE;
@@ -1868,12 +1926,12 @@ static void ConnectData_RPOS_GetLocation( const CONNECT_DATA* cp_data, LOC_EXIT_
   //exit_ofsを加えた座標を返す
   if (cp_pos->side_grid_size > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, dir, exit_dir, cp_pos->side_grid_size );
+    u16 ret_ofs = convertOfs( exit_ofs, dir, TRUE, exit_dir, cp_pos->side_grid_size );
     p_location->width_grid += ret_ofs;
   }
   else if (cp_pos->front_grid_size > 1 )
   {
-    u16 ret_ofs = convertOfs( exit_ofs, dir, exit_dir, cp_pos->front_grid_size );
+    u16 ret_ofs = convertOfs( exit_ofs, dir, TRUE, exit_dir, cp_pos->front_grid_size );
     p_location->line_grid += ret_ofs;
   }
 }
