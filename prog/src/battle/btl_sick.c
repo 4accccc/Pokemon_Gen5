@@ -318,9 +318,10 @@ static void putHorobiCounter( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp,
 {
   u8 pokeID = BPP_GetID( bpp );
   BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-  HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HorobiCountDown );
-  HANDEX_STR_AddArg( &param->str, pokeID );
-  HANDEX_STR_AddArg( &param->str, count );
+    HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_HorobiCountDown );
+    HANDEX_STR_AddArg( &param->str, pokeID );
+    HANDEX_STR_AddArg( &param->str, count );
+  BTL_SVF_HANDEX_Pop( flowWk, param );
 
 }
 
