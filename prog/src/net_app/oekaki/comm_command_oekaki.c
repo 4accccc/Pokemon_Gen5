@@ -14,6 +14,7 @@
 
 #include "print/wordset.h"
 #include "system/bmp_menu.h"
+#include "system/net_err.h"
 #include "print/wordset.h"
 
 //#include "field/fieldobj.h"
@@ -336,6 +337,11 @@ static void CommOekakiBoardStop(
   OEKAKI_WORK *wk = (OEKAKI_WORK*)pWk;
   u8 id;
 
+  // 強制終了中だったら何もしない
+  if(wk->force_end){
+    return;
+  }
+
   id = *(u8*)pData;
   // メインシーケンス変更
   OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_NEWMEMBER, id );
@@ -353,6 +359,18 @@ static void CommOekakiBoardStop(
 
 }
 
+
+static int _shareBit_count( int shareBit )
+{
+  int i,count=0;
+  for(i=0;i<5;i++){
+    if(shareBit&1){
+      count++;
+    }
+    shareBit>>=1;
+  }
+  return count;
+}
 
 //==============================================================================
 /**
@@ -372,6 +390,11 @@ static void CommOekakiBoardEnd(
   OEKAKI_WORK *wk = (OEKAKI_WORK*)pWk;
   OS_Printf("親機からの終了通知がきたのでやめる\n");
 
+  // 乱入処理を無視する
+  wk->force_end = TRUE;
+  
+  OS_Printf("share人数=%d\n",_shareBit_count(wk->shareBit));
+  OS_Printf("union_app人数=%d\n",Union_App_GetMemberNum(wk->param->uniapp));
   // 親機以外はこのコマンドで強制しゅうりょうする
   if(GFL_NET_SystemGetCurrentID() != 0){
     OekakiBoard_MainSeqForceChange( wk, OEKAKI_MODE_FORCE_END, 0  );

@@ -1771,6 +1771,7 @@ static int Oekaki_EndSelectAnswerOK( OEKAKI_WORK *wk, int seq )
   if((wk->oya_share_num != _get_connect_num(wk))
       || (wk->oya_share_num != MyStatusGetNum(wk))){
     OS_TPrintf("share_nuM = %d, Comm = %d, My = %d, Bit = %d\n", wk->oya_share_num, _get_connect_num(wk), MyStatusGetNum(wk), _get_connect_bit(wk));
+    wk->status_end = TRUE;
     wk->ridatu_wait = 0;
     SetNextSequence( wk, OEKAKI_MODE_END_SELECT_ANSWER_NG );
     EndSequenceCommonFunc( wk );    //終了選択時の共通処理
@@ -2051,13 +2052,16 @@ static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq )
 {
   if( EndMessageWait( wk ) ){
     SetNextSequence( wk, OEKAKI_MODE_FORCE_END_SYNCHRONIZE );
-    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(),
-                                  OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE);
-    OS_Printf("同期開始\n");
+    // 画像共有済みのメンバーとだけ通信同期を行う
+    // （こうしないと、新規乱入メンバーとも同期を行ってハマってしまう）
+    GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
+                                    OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE, 
+                                    wk->shareBit);
+    OS_Printf("同期開始 =%d\n",Union_App_GetMemberNetBit(wk->param->uniapp));
   }
 
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
-  return seq;
+ return seq;
 
 }
 
@@ -3489,6 +3493,6 @@ void Oekaki_SendDataRequest( OEKAKI_WORK *wk, int command, int id )
     wk->send_req.command = command;
     wk->send_req.id = id;
   }else{
-    GF_ASSERT_MSG(0,"送信リクエストが重複した\n");
+    GF_ASSERT_MSG(0,"送信リクエストが重複した now=%d, new=%d\n", wk->send_req.command, command);
   }
 }

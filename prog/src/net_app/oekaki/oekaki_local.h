@@ -286,8 +286,9 @@ struct OEKAKI_WORK{
   u32           ridatu_bit;               // 離脱しようとしている子のBit
   u16           oya_share_num;            // 親が持っているshareNumをもらう
   s16           ridatu_wait;              // 離脱用のウェイト
-  u8            status_end;               // TRUE:終了シーケンスへ移行
-
+  u16           status_end;               // TRUE:終了シーケンスへ移行
+  u16           force_end;                // TRUE:強制終了モード中
+  
   // ----親だけが必要なワーク
 
   TOUCH_INFO        ParentTouchResult[5];
