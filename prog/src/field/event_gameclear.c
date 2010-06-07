@@ -32,6 +32,7 @@
 #include "move_pokemon.h" 
 #include "proc_gameclear_save.h"
 
+#include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
 //==============================================================================================
 //==============================================================================================
@@ -119,6 +120,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   switch( work->nowSeq ) {
   case GMCLEAR_SEQ_INIT:
     if( work->clear_mode == GAMECLEAR_MODE_DENDOU ) {
+      GF_ASSERT( EVENTWORK_CheckEventFlag( GAMEDATA_GetEventWork( gamedata ), SYS_FLAG_GAME_CLEAR ) ); // ゲームクリアなしで殿堂入り ( 通常はありえない )
       ElboardStartChampNews( wk ); // 電光掲示板にチャンピオンニュースを表示
     }
     PMSND_FadeOutBGM( 30 );
@@ -135,7 +137,7 @@ static GMEVENT_RESULT GMEVENT_GameClear(GMEVENT * event, int * seq, void *wk)
   // 通信終了リクエスト発行
   case GMCLEAR_SEQ_COMM_END_REQ:
     //通信が動いている場合は終了させる
-    if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
+  if(GameCommSys_BootCheck(gameComm) != GAME_COMM_NO_NULL){
       GameCommSys_ExitReq(gameComm);
     }
     NowSeqFinish( work, seq );
