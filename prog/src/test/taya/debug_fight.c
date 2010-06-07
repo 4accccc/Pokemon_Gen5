@@ -2318,6 +2318,10 @@ FS_EXTERN_OVERLAY(battle);
 
             wk->setupParam.tr_data[ BTL_CLIENT_ENEMY1 ]->ai_bit = wk->tr_ai_bit;
             wk->setupParam.tr_data[ BTL_CLIENT_ENEMY2 ]->ai_bit = wk->tr_ai_bit;
+
+            if( wk->saveData.fSubway ){
+              BTL_SETUP_SetSubwayMode( &wk->setupParam );
+            }
           }
           break;
         }
@@ -2414,6 +2418,10 @@ FS_EXTERN_OVERLAY(battle);
     }
 
     setDebugParams( &wk->saveData, &wk->setupParam );
+    if( wk->saveData.fShooterMode )
+    {
+      wk->setupParam.shooterBitWork.shooter_use = TRUE;
+    }
 
     (*seq) = SEQ_BTL_START;
     break;
