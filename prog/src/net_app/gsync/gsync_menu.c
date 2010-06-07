@@ -1417,8 +1417,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
     _CHANGE_STATE(pWork,_modeSelectMenuInit);
     pWork->dbw = pwk;
+    GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
   }
-  GFL_NET_ReloadIcon();
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
 
   return GFL_PROC_RES_FINISH;

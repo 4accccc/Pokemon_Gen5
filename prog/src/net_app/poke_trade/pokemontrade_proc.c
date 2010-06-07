@@ -2367,8 +2367,7 @@ static void _touchState_BeforeTimeing11Send(POKEMON_TRADE_WORK* pWork)
 
 static void _touchState_BeforeTimeing1(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
   GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_09, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
@@ -3681,8 +3680,7 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );  //ポケモンの表示
 

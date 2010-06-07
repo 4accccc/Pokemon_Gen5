@@ -359,8 +359,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
 
 static void _byebyeMessage(POKEMON_TRADE_WORK* pWork)
 {
-  GFL_NET_WirelessIconEasy_HoldLCD(FALSE,pWork->heapID);
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
   
   if(pWork->type == POKEMONTRADE_TYPE_GTSUP){
     GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_19, pWork->pMessageStrBufEx );

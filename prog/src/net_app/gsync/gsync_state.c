@@ -2395,9 +2395,7 @@ static GFL_PROC_RESULT GSYNCProc_Init( GFL_PROC * proc, int * seq, void * pwk, v
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
   //PMSND_PlayBGM(SEQ_BGM_GAME_SYNC);
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, pWork->heapID );
-  GFL_NET_ReloadIcon();
-
+  GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
   
   return GFL_PROC_RES_FINISH;
 }

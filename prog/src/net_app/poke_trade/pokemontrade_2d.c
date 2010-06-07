@@ -948,7 +948,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
       GFL_CLACT_WK_SetDrawEnable( pWork->markIcon[k][pWork->MainObjCursorIndex], TRUE );
     }
   }
-  
+
 
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
 	{
@@ -1017,9 +1017,6 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
       }
       if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL) && _IsPokeLanguageMark(pWork,monsno)){
         pWork->pokeIconMarkFlg[k][i]=TRUE;        //ƒ|ƒPƒ‚ƒ“ŒŸõ
-      }
-      else{
-        pWork->pokeIconMarkFlg[k][i]=FALSE;
       }
     }
   }
@@ -1133,6 +1130,7 @@ void IRC_POKETRADE_InitBoxIcon( BOX_MANAGER* boxData ,POKEMON_TRADE_WORK* pWork 
       for(i=0;i<BOX_VERTICAL_NUM;i++){
         GFL_CLACT_WK_SetDrawEnable(pWork->markIcon[j][i],FALSE);
 //        GFL_CLACT_WK_SetDrawEnable(pWork->searchIcon[j][i],FALSE);
+        pWork->pokeIconMarkFlg[j][i]=FALSE;
       }
     }
 

@@ -911,8 +911,7 @@ void POKMEONTRADE_EVOLUTION_TimingStart(POKEMON_TRADE_WORK* pWork)
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
@@ -940,8 +939,7 @@ void POKMEONTRADE_SAVE_TimingStart(POKEMON_TRADE_WORK* pWork)
   _setNextAnim(pWork, 0);
 
   GFL_BG_SetVisible( GFL_BG_FRAME2_S , TRUE );
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID); //通信アイコン
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
   GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
@@ -1043,8 +1041,7 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
   GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
   POKETRADE_TOUCHBAR_Init(pWork);
 
-  GFL_NET_WirelessIconEasy_HoldLCD(TRUE,pWork->heapID);
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
   _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);
 
 }

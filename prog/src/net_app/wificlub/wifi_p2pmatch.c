@@ -6199,7 +6199,11 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
 {
   int i;
   int ret,status;
+  int friendNo = WIFI_MCR_PlayerSelect( &wk->matchroom );
+  MCR_MOVEOBJ* p_npc;
 
+  p_npc = MCRSYS_GetMoveObjWork( wk, friendNo );
+  
   GFL_FONTSYS_SetDefaultColor();
   ret = _bmpMenu_YesNoSelectMain(wk);
   if(ret == BMPMENU_NULL){  // まだ選択中
@@ -6212,8 +6216,13 @@ static int _vchatNegoWait( WIFIP2PMATCH_WORK *wk, int seq )
     _CHANGESTATE(wk, WIFIP2PMATCH_MODE_CHILD_CONNECT);
   }
   else{
-    // ステータスをもどす
+    wk->state = WIFIP2PMATCH_STATE_NONE;
     _myStatusChange(wk, WIFI_STATUS_WAIT, WIFI_GAME_LOGIN_WAIT);
+    wk->preConnect = -1;
+    // NPCを元に戻す
+    if( p_npc != NULL ){
+      WIFI_MCR_NpcPauseOff( &wk->matchroom, p_npc );
+    }
     // VCHAT元に戻す
     _myVChatStatusOrgSet( wk );
     _userDataInfoDisp(wk);

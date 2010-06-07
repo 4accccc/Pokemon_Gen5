@@ -2338,8 +2338,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   PMSND_PlayBGM(SEQ_BGM_GTS);
 
-  GFL_NET_ReloadIcon();
-
+  GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
+  
   NetErr_SetPushPopMode( NET_ERR_PUSHPOP_MODE_BLACKOUT );
 
   _CHANGE_STATE(pWork, _modeSelectMenuInit);
