@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-04T20:59:20"/>
+	<create user="morimoto" host="W00220" date="2010-06-07T20:16:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4766,7 +4766,7 @@
 こうげきと　とくこうの▽
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
-攻撃と　とくこうの▽
+攻撃と　特攻の▽
 能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_PowerSwap_Y">
@@ -4774,7 +4774,7 @@
 こうげきと　とくこうの▽
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-攻撃と　とくこうの▽
+攻撃と　特攻の▽
 能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_PowerSwap_E">
@@ -4782,7 +4782,7 @@
 こうげきと　とくこうの▽
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-攻撃と　とくこうの▽
+攻撃と　特攻の▽
 能力変化を　入れ替えた！</language>
 	</row>
 
@@ -4792,7 +4792,7 @@
 ぼうぎょと　とくぼうの▽
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は　相手と自分の
-防御と　とくぼうの▽
+防御と　特防の▽
 能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_GuardSwap_Y">
@@ -4800,7 +4800,7 @@
 ぼうぎょと　とくぼうの▽
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-防御と　とくぼうの▽
+防御と　特防の▽
 能力変化を　入れ替えた！</language>
 	</row>
 	<row id="BTL_STRID_SET_GuardSwap_E">
@@ -4808,7 +4808,7 @@
 ぼうぎょと　とくぼうの▽
 のうりょくへんかを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は　相手と自分の
-防御と　とくぼうの▽
+防御と　特防の▽
 能力変化を　入れ替えた！</language>
 	</row>
 
@@ -6616,7 +6616,7 @@
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこうが　上がった！</language>
+特攻が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
@@ -6624,7 +6624,7 @@
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこうが　上がった！</language>
+特攻が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPATK_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
@@ -6632,7 +6632,7 @@
 とくこうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくこうが　上がった！</language>
+特攻が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF">
@@ -6641,7 +6641,7 @@
 とくぼうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼうが　上がった！</language>
+特防が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF_Y">
 		<language name="JPN" width="216">やせいの　[1:02:ポケモンニックネーム:0]は
@@ -6649,7 +6649,7 @@
 とくぼうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">野生の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼうが　上がった！</language>
+特防が　上がった！</language>
 	</row>
 	<row id="BTL_STRID_SET_UseItem_Rankup_SPDEF_E">
 		<language name="JPN" width="216">あいての　[1:02:ポケモンニックネーム:0]は
@@ -6657,7 +6657,7 @@
 とくぼうが　あがった！</language>
 		<language name="JPN_KANJI" width="216">相手の　[1:02:ポケモンニックネーム:0]は
 [1:09:どうぐ名:1]で[BE:00:ページ切り替え（行送り）]
-とくぼうが　上がった！</language>
+特防が　上がった！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_UseItem_Rankup_AGI">
