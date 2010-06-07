@@ -37,36 +37,11 @@ EVENT_START   ev_pos_r10_rival_01
 	_PLAINWIN_MSG_DOWN( msg_r10_black_00 )
 	_MSGWIN_CLOSE()
 	
-	//OBJ作成
-	_FLAG_RESET( FV_R10_RIVAL_01 )
-	_OBJ_ADD( R10_RIVAL_01 )
-	_OBJ_ADD( R10_SUPPORT_01 )
-	
-	//ライバルかけよって来る
-	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_come )
-	_OBJ_ANIME_WAIT()
-	
 	//自機座標取得変数定義
 	DEFINE_LOCAL  POSX
 	DEFINE_LOCAL  POSZ
 
 	_PLAYER_POS_GET( POSX,POSZ ) //自機座標取得
-	
-	//主人公座標に応じてライバルに隣接
-	SWITCH $POSZ
-	CASE 117 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z117 )
-		_OBJ_ANIME_WAIT()
-	CASE 118 THEN	  //目の前に立った時
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z118 )
-		_OBJ_ANIME_WAIT()
-	CASE 119 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z119 )
-		_OBJ_ANIME_WAIT()
-	DEFAULT  //目の前に立ったケースと同じ処理を行う
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z118 )
-		_OBJ_ANIME_WAIT()
-	ENDSWITCH
 	
 	//自転車チェック
 	_PLAYER_FORM_GET( SCWK_ANSWER )
@@ -74,11 +49,31 @@ EVENT_START   ev_pos_r10_rival_01
 		_PLAYER_REQUEST( FIELD_PLAYER_REQBIT_NORMAL )
 	ENDIF
 	
-	//118以外の場合左を向く
-	IF $POSZ != 118 THEN
-		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_02 )
+	//主人公振り向く
+	_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_01 )
+	_OBJ_ANIME_WAIT()
+	
+	//OBJ作成
+	_FLAG_RESET( FV_R10_RIVAL_01 )
+	_OBJ_ADD( R10_RIVAL_01 )
+	_OBJ_ADD( R10_SUPPORT_01 )
+	
+	_OBJ_ANIME( R10_RIVAL_01 , anm_r10_rival_come )
+	
+	//ライバルかけよって来る
+	//主人公座標に応じてライバルに隣接
+	SWITCH $POSZ
+	CASE 117 THEN
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z117_02 )
 		_OBJ_ANIME_WAIT()
-	ENDIF
+	CASE 119 THEN
+		_TIME_WAIT( 16 )
+		_OBJ_ANIME( MMDL_ID_PLAYER,anm_r10_player_turn_z119_02 )
+		_OBJ_ANIME_WAIT()
+	DEFAULT  //目の前に立ったケースと同じ処理を行う
+		_OBJ_ANIME_WAIT()
+	ENDSWITCH
 	
 	//サポートちょっと遅れてかけよってくる
 	_OBJ_ANIME( R10_SUPPORT_01 , anm_r10_support_come )
@@ -276,37 +271,28 @@ _ANIME_LABEL	anm_r10_support_come
 	_ANIME_DATA	ACMD_END,0
 
 //--------------------------------------------------------------
-//	R10ライバル心配イベント：プレイヤー振り向くz117
+//	R10ライバル心配イベント：プレイヤー振り向く01
 //--------------------------------------------------------------
-_ANIME_LABEL	anm_r10_player_turn_z117
+_ANIME_LABEL	anm_r10_player_turn_01
 	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_MARK_GYOE,1
+	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向くz117_02
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_turn_z117_02
 	_ANIME_DATA	AC_WALK_D_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R10ライバル心配イベント：プレイヤー振り向くz118
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r10_player_turn_z118
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R10ライバル心配イベント：プレイヤー振り向くz119
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r10_player_turn_z119
-	_ANIME_DATA	AC_DIR_L,1
-	_ANIME_DATA	AC_MARK_GYOE,1
-	_ANIME_DATA	AC_WALK_U_8F,1
-	_ANIME_DATA	ACMD_END,0
-
-//--------------------------------------------------------------
-//	R10ライバル心配イベント：プレイヤー振り向くz119
-//--------------------------------------------------------------
-_ANIME_LABEL	anm_r10_player_turn_02
 	_ANIME_DATA	AC_STAY_WALK_L_8F,0
 	_ANIME_DATA	ACMD_END,0
+
+//--------------------------------------------------------------
+//	R10ライバル心配イベント：プレイヤー振り向くz119_02
+//--------------------------------------------------------------
+_ANIME_LABEL	anm_r10_player_turn_z119_02
+	_ANIME_DATA	AC_WALK_U_8F,1
+	_ANIME_DATA	AC_STAY_WALK_L_8F,0
+	_ANIME_DATA	ACMD_END,0
+	
 
 //--------------------------------------------------------------
 //	R10ライバル心配イベント：ライバル隣接して回復してくれる
