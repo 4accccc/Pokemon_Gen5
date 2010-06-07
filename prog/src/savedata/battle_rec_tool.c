@@ -1,10 +1,10 @@
 //[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 /**
  *
- *	@file		  battle_rec_tool.c
- *	@brief    battle_rec_save系
- *	@author		Toru=Nagihashi
- *	@data		  2010.05.06
+ *  @file     battle_rec_tool.c
+ *  @brief    battle_rec_save系
+ *  @author   Toru=Nagihashi
+ *  @data     2010.05.06
  *
  *  battle_rec.cのオーバーレイが大きくなっていたので、
  * BattleRec_LoadToolModule～BattleRec_UnloadToolModuleを使うモジュールを独立
@@ -42,7 +42,7 @@
 
 //=============================================================================
 /**
- *					定数宣言
+ *          定数宣言
 */
 //=============================================================================
 
@@ -50,13 +50,13 @@ extern BATTLE_REC_SAVEDATA * brs;
 
 //=============================================================================
 /**
- *					構造体宣言
+ *          構造体宣言
 */
 //=============================================================================
 
 //=============================================================================
 /**
- *					プロトタイプ宣言
+ *          プロトタイプ宣言
 */
 //=============================================================================
 static void PokeParty_to_RecPokeParty( const POKEPARTY *party, REC_POKEPARTY *rec_party );
@@ -238,13 +238,15 @@ static void store_ClientStatus( const BATTLE_SETUP_PARAM* setup, BATTLE_REC_WORK
   u32 i;
   for(i=0; i<NELEMS(setup->playerStatus); ++i)
   {
-    if( setup->playerStatus[i] ){
-      MyStatus_Copy( setup->playerStatus[i], &rec->clientStatus[i].player );
-      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_PLAYER;
-    }
-    else if( setup->tr_data[i] ){
+    // ここのチェック順番は変えてはいけません
+    // （btl_setup.cでサブウェイトレーナーにplayerStatusを設定している）
+    if( setup->tr_data[i] ){
       store_TrainerData( setup->tr_data[i], &rec->clientStatus[i].trainer );
       rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_TRAINER;
+    }
+    else if( setup->playerStatus[i] ){
+      MyStatus_Copy( setup->playerStatus[i], &rec->clientStatus[i].player );
+      rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_PLAYER;
     }
     else{
       rec->clientStatus[i].type = BTLREC_CLIENTSTATUS_NONE;
