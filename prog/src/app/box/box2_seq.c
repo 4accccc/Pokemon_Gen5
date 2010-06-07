@@ -6358,6 +6358,9 @@ static int MainSeq_BoxThemaInit( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_TrayMoveArrowVanish( syswk->app, FALSE );
 		// ƒƒjƒ…[
 		if( BOX2BGWFRM_PokeMenuPutCheck(syswk->app->wfrm) == TRUE ){
+			if( BOX2OBJ_VanishCheck( syswk->app, BOX2OBJ_ID_ITEMICON ) == TRUE ){
+				BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
+			}
 			BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 			BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 			BOX2MAIN_ResetTouchBar( syswk );
@@ -8387,6 +8390,7 @@ static int TrayItemGet( BOX2_SYS_WORK * syswk, u32 pos )
 		BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_PASSIVE, BOX2OBJ_TB_ICON_OFF );
 	}else{
 		if( BOX2OBJ_VanishCheck( syswk->app, BOX2OBJ_ID_ITEMICON ) == TRUE ){
+			BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_ITEMICON, FALSE );
 			BOX2OBJ_PokeCursorVanish( syswk, FALSE );
 		}
 	}
