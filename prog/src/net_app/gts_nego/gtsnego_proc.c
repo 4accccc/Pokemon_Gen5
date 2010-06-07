@@ -433,34 +433,42 @@ static void _IncLevelChageType(int num,GTSNEGO_WORK* pWork)
 //------------------------------------------------------------------------------
 /**
  * @brief   モードセレクト画面タッチ処理
- * @retval  none
+ * @retval  押されたキー
  */
 //------------------------------------------------------------------------------
-static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
+static int _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 {
+  int key=0;
+  
   switch(bttnid){
   case _ARROW_LEVEL_U:
     _IncLevelChageType(-1,pWork);
+    key = _CROSSCUR_TYPE_ANY1;
     GTSNEGO_MESSAGE_DispLevelChange(pWork->pMessageWork,pWork->chageLevel);
     break;
   case _ARROW_LEVEL_D:
     _IncLevelChageType(1,pWork);
+    key = _CROSSCUR_TYPE_ANY1;
     GTSNEGO_MESSAGE_DispLevelChange(pWork->pMessageWork,pWork->chageLevel);
     break;
   case _ARROW_MY_U:
     _IncMyChageType(-1,pWork);
+    key = _CROSSCUR_TYPE_ANY2;
     GTSNEGO_MESSAGE_DispMyChange(pWork->pMessageWork,pWork->myChageType);
     break;
   case _ARROW_MY_D:
     _IncMyChageType(1,pWork);
+    key = _CROSSCUR_TYPE_ANY2;
     GTSNEGO_MESSAGE_DispMyChange(pWork->pMessageWork,pWork->myChageType);
     break;
   case _ARROW_FRIEND_U:
     _IncFriendChageType(-1,pWork);
+    key = _CROSSCUR_TYPE_ANY3;
     GTSNEGO_MESSAGE_DispFriendChange(pWork->pMessageWork,pWork->friendChageType);
     break;
   case _ARROW_FRIEND_D:
     _IncFriendChageType(1,pWork);
+    key = _CROSSCUR_TYPE_ANY3;
     GTSNEGO_MESSAGE_DispFriendChange(pWork->pMessageWork,pWork->friendChageType);
     break;
   }
@@ -468,7 +476,7 @@ static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
     PMSND_PlaySystemSE(_SE_CUR);
     GTSNEGO_DISP_ArrowAnim(pWork->pDispWork, bttnid);
   }
-  return TRUE;
+  return key;
 }
 
 //------------------------------------------------------------------------------
@@ -479,11 +487,16 @@ static BOOL _LevelButtonCallback(int bttnid,GTSNEGO_WORK* pWork)
 //------------------------------------------------------------------------------
 static BOOL _LevelButtonCallbackTouch(int bttnid,GTSNEGO_WORK* pWork)
 {
+  int no;
+  
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_SetActive( pWork->pAppWin, FALSE );
   }
-  return _LevelButtonCallback( bttnid, pWork);
-
+  no = _LevelButtonCallback( bttnid, pWork);
+  if(no != 0){
+    pWork->key2=no;
+  }
+  return TRUE;
 }
 
 
@@ -495,14 +508,6 @@ static BOOL _LevelButtonCallbackTouch(int bttnid,GTSNEGO_WORK* pWork)
 //------------------------------------------------------------------------------
 static void _LevelKeyCallback(BOOL bRight,GTSNEGO_WORK* pWork)
 {
-  int key[]={
-    _ARROW_LEVEL_U,
-    _ARROW_LEVEL_D,
-    _ARROW_MY_U,
-    _ARROW_MY_D,
-    _ARROW_FRIEND_U,
-    _ARROW_FRIEND_D,
-  };
   int no = pWork->key2 - _CROSSCUR_TYPE_ANY1;
 
   if((pWork->key2<_CROSSCUR_TYPE_ANY1) && (pWork->key2>_CROSSCUR_TYPE_ANY3)){
