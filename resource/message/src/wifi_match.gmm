@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-06T20:17:21"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-07T23:48:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -930,7 +930,7 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 大会を　終了します[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_26">
+	<row id="WIFIMATCH_WIFI_STR_26" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">バトルボックスの　ロックを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
@@ -1073,7 +1073,7 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 セットして　ください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルボックスに
 ポケモンが　１匹も　いません[BE:01:ページ切り替え（クリア）]
-たいかいの　ルールを　確認して
+大会の　ルールを　確認して
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
 セットして　ください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
@@ -1151,7 +1151,7 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 電源を　切らないでください</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_05">
+	<row id="WIFIMATCH_DPC_STR_05" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>選手証チェック</comment>
 		<language name="JPN" width="256">バトルボックスの　ロックを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
