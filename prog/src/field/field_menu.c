@@ -349,8 +349,7 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
     }
   }
   
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->tempHeapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE , work->tempHeapId );
 
   return work;
 }

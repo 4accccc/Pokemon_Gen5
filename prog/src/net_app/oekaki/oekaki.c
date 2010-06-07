@@ -309,7 +309,7 @@ GFL_PROC_RESULT OekakiProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *myw
     _comm_friend_add(wk);
 
     //無線アイコン表示
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_OEKAKI );
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_OEKAKI );
 
     // ハンドルクローズ
     GFL_ARC_CloseDataHandle( p_handle );

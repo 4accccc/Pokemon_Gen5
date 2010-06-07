@@ -623,9 +623,7 @@ GFL_PROC_RESULT WazaOshieProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR );
   wk->next_seq = SEQ_SELECT;
 
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WAZAOSHIE );
-  GFL_NET_ReloadIcon();
-  
+  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WAZAOSHIE );
 
   return GFL_PROC_RES_FINISH;
 }

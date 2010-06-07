@@ -290,7 +290,8 @@ GFL_PROC_RESULT BadgeViewProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   // 初期ページ表示
   SetupPage( wk, wk->page );
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_TR_CARD );
+  // 通信アイコン表示
+  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_TR_CARD );
 
 
   // フェードイン開始

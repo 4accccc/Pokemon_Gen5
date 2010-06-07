@@ -206,10 +206,6 @@ static GFL_PROC_RESULT TheEnd_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
   // フェードイン(黒か白→見える)
   StartBrightnessFade( 16, 0, FADE_IN_WAIT );
 
-  // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
-  GFL_NET_ReloadIcon();
-
   return GFL_PROC_RES_FINISH;
 }
 
@@ -219,9 +215,6 @@ static GFL_PROC_RESULT TheEnd_ProcInit( GFL_PROC* proc, int* seq, void* pwk, voi
 static GFL_PROC_RESULT TheEnd_ProcExit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   THE_END_WORK*     work     = (THE_END_WORK*)mywk;
-
-  // 通信アイコン
-  GFL_NET_WirelessIconEasy_DefaultLCD();
 
   // サブBG
   APP_NOGEAR_SUBSCREEN_Exit();

@@ -267,8 +267,7 @@ GFL_PROC_RESULT Guru2ReceiptProc_Init( GFL_PROC * proc, int *seq, void *pwk, voi
     
     
     // 通信アイコン表示
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE , HEAPID_GURU2 );
-    GFL_NET_ReloadIcon();
+    GFL_NET_ReloadIconTopOrBottom( TRUE , HEAPID_GURU2 );
   
     GFL_ARC_CloseDataHandle( p_handle );
 

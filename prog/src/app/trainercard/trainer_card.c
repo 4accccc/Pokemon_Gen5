@@ -434,9 +434,7 @@ GFL_PROC_RESULT TrCardProc_Init( GFL_PROC * proc, int * seq , void *pwk, void *m
   wk->vblankFunc = GFUser_VIntr_CreateTCB(VBlankFunc, wk , 1);  // VBlankセット
   wk->vblankTcblSys = GFL_TCBL_Init( wk->heapId , wk->heapId , 3 , 0 );
   //通信アイコンセット
-  // 受信強度アイコンを通信接続中なら表示するし、
-  // ユニオンのように通信回路は動作しているが接続はしていない状態なら出さない
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, wk->heapId );
+  GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapId );
 
   WIPE_SYS_Start( WIPE_PATTERN_FMAS, WIPE_TYPE_SHUTTERIN_DOWN,
           WIPE_TYPE_SHUTTERIN_DOWN, WIPE_FADE_BLACK,

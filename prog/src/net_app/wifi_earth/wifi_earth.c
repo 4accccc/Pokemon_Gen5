@@ -770,8 +770,7 @@ static GFL_PROC_RESULT Earth_Demo_Init(GFL_PROC * proc, int * seq, void * pwk, v
   wk->printQue = PRINTSYS_QUE_Create(wk->heapID);
 
   // 通信アイコン表示
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON ); 
   
   

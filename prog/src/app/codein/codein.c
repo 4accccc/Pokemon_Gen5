@@ -140,8 +140,9 @@ static GFL_PROC_RESULT CI_Proc_Init( GFL_PROC * proc, int * seq , void *pwk, voi
              GX_BLEND_PLANEMASK_BG3, 7, 8 );
              
   wk->sys.vBlankTcb = GFUser_VIntr_CreateTCB( CI_VBlank , wk , 16 );
-  
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_CODEIN );
+
+  //通信アイコンセット
+  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_CODEIN );
   
   return GFL_PROC_RES_FINISH;
 }

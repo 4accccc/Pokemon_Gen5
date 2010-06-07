@@ -200,7 +200,7 @@ GFL_PROC_RESULT LeaderBoardProc_Init( GFL_PROC * proc, int *seq, void *pwk, void
                   WIPE_FADE_BLACK, 16, 1, HEAPID_LEADERBOARD );
 
   // 通信アイコン表示
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_LEADERBOARD );
+  GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_LEADERBOARD );
 
   return GFL_PROC_RES_FINISH;
 }
