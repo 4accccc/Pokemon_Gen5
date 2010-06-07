@@ -1765,7 +1765,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       BTL_DEBUGPRINT_Ctrl();
     }
     #endif
-    
+
     // デバッグ用ゆびをふる制御
     #ifdef PM_DEBUG
     if( (GFL_UI_KEY_GetCont() & PAD_BUTTON_R) && (GFL_UI_KEY_GetCont() & PAD_BUTTON_Y) )
@@ -1806,8 +1806,7 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
       // シューター使えない設定チェック
       if( wk->bagMode == BBAG_MODE_SHOOTER )
       {
-        const SHOOTER_ITEM_BIT_WORK* shooterReg = BTL_MAIN_GetSetupShooterBit( wk->mainModule );
-        if( shooterReg->shooter_use == FALSE)
+        if( !BTL_MAIN_IsShooterEnable(wk->mainModule) )
         {
           BTLV_UI_Restart( wk->viewCore );
           (*seq) = 5;

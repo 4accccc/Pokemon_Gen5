@@ -3564,13 +3564,15 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   // ワザ出し処理開始イベント
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-    BOOL fQuit = scEvent_WazaExecuteStart( wk, attacker, waza, targetRec );
+    BtlWazaForceEnableMode enableMode = scEvent_WazaExecuteStart( wk, attacker, waza, targetRec );
 //    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
-    if( fQuit ){
-      // 現状、このfQuitは「がまん」でだけ利用。
+    if( enableMode != BTL_WAZAENABLE_NONE )
+    {
       wazaEffCtrl_SetEnable( wk->wazaEffCtrl );
-      return TRUE;
+      if( enableMode == BTL_WAZAENABLE_QUIT ){
+        return TRUE;
+      }
     }
   }
 
