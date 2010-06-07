@@ -113,6 +113,7 @@ typedef enum
 {
   FMS_WAIT_MOVEIN,      ///< 背景スクロールイン
   FMS_WAIT_INIT,        ///< 起動待ち
+  FMS_WAIT_WIPE,        ///< ワイプ終了待ち
   FMS_LOOP,             ///< 操作待ちループ
   FMS_EXIT_ANIME_WAIT,  ///< 「×」OBJ点滅
   FMS_EXIT_INIT,        ///< メニュー終了処理
@@ -441,6 +442,10 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
     if( PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
     {
       u8 i;
+      
+      // 上画面に「下画面をみてね」プレートを表示
+      FIELD_SUBSCREEN_SetMainLCDNavigationScreen( work->subScrWork, work->tempHeapId );
+
       for( i=0;i<FIELD_MENU_ITEM_NUM;i++ )
       {
         FIELD_MENU_Icon_TransBmp( work , &work->icon[i] );
@@ -452,7 +457,7 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       }
       else
       {
-        work->state = FMS_LOOP;
+        work->state = FMS_WAIT_WIPE;
         _all_bg_appear();     // 全てのBGM面をON
       }
     }
@@ -471,6 +476,15 @@ void FIELD_MENU_UpdateMenu( FIELD_MENU_WORK* work )
       ScrollObj( work );
     }
     work->isUpdateScroll = TRUE;
+    break;
+
+  case FMS_WAIT_WIPE:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      // 上画面に「下画面をみてね」プレートを表示
+      FIELD_SUBSCREEN_SetMainLCDNavigationScreen( work->subScrWork, work->tempHeapId );
+      work->state = FMS_LOOP;
+    }
     break;
 
   // 通常時
@@ -689,9 +703,6 @@ static void FIELD_MENU_InitGraphic(  FIELD_MENU_WORK* work , ARCHANDLE *arcHandl
                       FIELD_MENU_BG_BUTTON ,  0 , 0, FALSE , work->tempHeapId );
   GFL_ARCHDL_UTIL_TransVramScreen( arcHandle , NARC_field_menu_menu_back_NSCR, 
                       FIELD_MENU_BG_BACK ,  0 , 0, FALSE , work->tempHeapId );
-
-  // 上画面に「下画面をみてね」プレートを表示
-  FIELD_SUBSCREEN_SetMainLCDNavigationScreen( work->subScrWork, work->tempHeapId );
 
   // セルアクターリソース転送(カーソル）
   work->objRes[FMO_COM_PLT] = GFL_CLGRP_PLTT_RegisterEx( arcHandle, NARC_field_menu_menu_obj_common_NCLR, 
