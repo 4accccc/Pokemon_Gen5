@@ -713,7 +713,7 @@ static int _playerDirectSubStart( WIFIP2PMATCH_WORK *wk, int seq )
   case WIFIP2PMATCH_PLAYERDIRECT_VCT:
     {
       _vctcheckCommon(wk);
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
+      WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_1015, FALSE);
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCT’†‚É‚È‚é
       _changeBGMVol( wk,  0 );
       wk->VChatModeOff = FALSE;

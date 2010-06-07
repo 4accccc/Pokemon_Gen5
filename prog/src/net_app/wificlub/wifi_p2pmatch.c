@@ -3768,7 +3768,7 @@ static int WifiP2PMatch_VCTConnectInit2( WIFIP2PMATCH_WORK *wk, int seq )       
     //WifiList_SetLastPlayDate( wk->pList, wk->friendNo - 1); // ç≈å„Ç…óVÇÒÇæì˙ïtÇÕÅAVCTÇ™Ç¬Ç»Ç™Ç¡ÇΩÇ∆Ç´Ç…ê›íËÇ∑ÇÈ
     _changeBGMVol( wk, 0 );
 
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
+    WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_1015, FALSE);
   }
 
   return seq;
@@ -3837,7 +3837,7 @@ static int WifiP2PMatch_VCTConnectWait( WIFIP2PMATCH_WORK *wk, int seq )        
   if( WifiP2PMatchMessageEndCheck(wk) ){
     if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_CANCEL|PAD_BUTTON_DECIDE)){
       EndMessageWindowOff(wk);
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
+      WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_1015, FALSE);
 
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_VCT);  // VCTíÜÇ…Ç»ÇÈ
 
@@ -3975,7 +3975,7 @@ static int WifiP2PMatch_VCTConnectEndWait( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else
   {  // Ç¢Ç¢Ç¶ÇëIëÇµÇΩèÍçá
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
+    WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_1015, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
   }
   return seq;

@@ -28,7 +28,7 @@ static int _playerMachineInit1( WIFIP2PMATCH_WORK *wk, int seq )
 
       _changeBGMVol(wk, 0);
       
-      WifiP2PMatchMessagePrint(wk, msg_wifilobby_1015, FALSE);
+      WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_1015, FALSE);
       wk->VChatModeOff = FALSE;
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_VCT_CONNECT);
       return seq;
