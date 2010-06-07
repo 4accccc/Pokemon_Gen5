@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="kagaya" host="W00143" date="2010-06-04T21:43:30"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-07T15:01:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1360" top="132" right="2065" bottom="752" maximized="no" rayout="Vertical2">
+	<dialog left="146" top="497" right="646" bottom="1118" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="626" right="1280" bottom="1024" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -1077,9 +1077,9 @@ no.051
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
 		<language name="JPN" width="256">ダラダラと　うんてんしてる　より
-しょうぶで　ドキドキしたいねぇ</language>
+しょうぶで　ドキドキと　したいねぇ</language>
 		<language name="JPN_KANJI" width="256">ダラダラと　運転してる　より
-勝負で　ドキドキしたいねぇ</language>
+勝負で　ドキドキと　したいねぇ</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_3">
@@ -1100,18 +1100,22 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">てつどういんは　えきの　へいわと
-ちつじょを　まもるもので　あります▼
-ポイすてや　ホームでの　おおごえ
-がっきの　えんそうに▽
-ポケモンの　しょうぶなどは▽
+		<language name="JPN" width="256">われわれ　てつどういんは
+えきの　へいわと　ちつじょを▽
+まもるもので　あります▼
+ホームないでの　ゴミの　ポイすて
+おおごえや　がっきの　えんそう▽
+ちょうきてきな　おとまり▽
+などの　めいわくこういは▽
 かたーく　おことわりで　あります</language>
-		<language name="JPN_KANJI" width="256">鉄道員は　駅の　平和と
-秩序を　守るもので　あります▼
-ポイ捨てや　ホームでの　大声
-楽器の　演奏に▽
-ポケモンの　勝負などは▽
-固ーく　お断りで　あります</language>
+		<language name="JPN_KANJI" width="256">我々　鉄道員は
+駅の　平和と　秩序を▽
+守るもので　あります▼
+ホーム内での　ゴミの　ポイ捨て
+大声や　楽器の　演奏▽
+長期的な　お泊り▽
+といった　迷惑行為は▽
+かたーく　お断りで　あります</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_5">
@@ -1120,10 +1124,16 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">railman
 てつどういん</attribute>
-		<language name="JPN" width="256">あなたは　どこから　きたんだい？
-そして　どこまで　いくのかな？</language>
-		<language name="JPN_KANJI" width="256">あなたは　どこから　きたんだい？
-そして　どこまで　いくのかな？</language>
+		<language name="JPN" width="256">きかいに　せいびが　ひつようなように
+ポケモンたちにも　メンテナンスは▽
+かかせないものですよ▼
+ポケモンたちに　おぼえさせている
+わざを　みなおしたりとかね</language>
+		<language name="JPN_KANJI" width="256">機械に　整備が　必要なように
+ポケモンたちにも　メンテナンスは▽
+欠かせないものですよ▼
+ポケモンたちに　覚えさせている
+技を　見直したりとかね</language>
 	</row>
 
 	<row id="msg_c04r0111_railman_6">
@@ -1440,9 +1450,11 @@ no.207
 		<attribute name="キャラ指定">badman
 スキンヘッズ</attribute>
 		<language name="JPN" width="256">たかが　ポケモン　されど　ポケモン
-ポケモンは　マジで　おくが　ふかいぜ</language>
+ポケモンしょうぶの　せかいは▽
+マジで　とことん　ディープだよな</language>
 		<language name="JPN_KANJI" width="256">たかが　ポケモン　されど　ポケモン
-ポケモンは　マジで　奥が　深いぜ</language>
+ポケモン勝負の　世界は▽
+マジで　とことん　ディープだよな</language>
 	</row>
 
 	<row id="msg_c04r0111_cleaningm_1" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -1550,10 +1562,14 @@ no.051
 ♂</comment>
 		<attribute name="キャラ指定">veteranm
 ベテラントレーナー♂</attribute>
-		<language name="JPN" width="256">アンタ　つよいじゃねえか……
-ようチェック　しとくぜ……</language>
-		<language name="JPN_KANJI" width="256">アンタ　強いじゃねえか……
-要チェック　しとくぜ……</language>
+		<language name="JPN" width="256">ぶつぶつぶつ……▼
+しょうぶの　ツキを　よぶために
+たたかいの　まえには　かかさず▽
+かぞくに　いのりを　ささげているのだ</language>
+		<language name="JPN_KANJI" width="256">ぶつぶつぶつ……▼
+勝負の　ツキを　呼ぶために
+戦いの　前には　欠かさず▽
+家族に　祈りを　ささげているのだ</language>
 	</row>
 
 	<row id="msg_c04r0111_veteranm_4">
@@ -1620,7 +1636,7 @@ no.051
 ♀</comment>
 		<attribute name="キャラ指定">veteranw
 ベテラントレーナー♀</attribute>
-		<language name="JPN" width="256">ポケモンしょうぶが　すきすきで
+		<language name="JPN" width="256">ポケモンしょうぶが　すきですきで
 たまらない　って　かおね　キミ▼
 いまから　こんなに　しょうぶに
 どっぷり　はまってる　だなんて……▼
