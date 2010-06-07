@@ -263,6 +263,7 @@ static void Util_PlayerInfo_CreateStay( WIFIBATTLEMATCH_RND_WORK *p_wk, WIFIBATT
 static void Util_MatchInfo_Create( WIFIBATTLEMATCH_RND_WORK *p_wk, const WIFIBATTLEMATCH_ENEMYDATA *cp_enemy_data );
 static void Util_MatchInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk );
 static BOOL Util_MatchInfo_Main( WIFIBATTLEMATCH_RND_WORK *p_wk );
+static void Util_Matchinfo_Clear( WIFIBATTLEMATCH_RND_WORK *p_wk );
 //スコアセーブ
 static BOOL Util_SaveRateScore( RNDMATCH_DATA *p_save, WIFIBATTLEMATCH_BTLRULE btl_rule, const WIFIBATTLEMATCH_RND_WORK *cp_wk );
 static void Util_SaveFreeScore( RNDMATCH_DATA *p_rndmatch, WIFIBATTLEMATCH_BTLRULE btl_rule, BtlResult btl_result );
@@ -1173,6 +1174,8 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     SEQ_END_MATCHING_MSG,
     SEQ_END_MATCHING,
 
+    SEQ_ERROR_END,
+
     //キャンセル処理
     //今日の対戦をおわりにします
     SEQ_START_SELECT_END_MSG,
@@ -1451,8 +1454,10 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_RETURN:     //戻る
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
+          GFL_BG_SetVisible( BG_FRAME_M_TEXT, TRUE );
 
-          WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_CupContinue );
+          Util_Matchinfo_Clear( p_wk );
+          *p_seq  = SEQ_ERROR_END;
           break;
 
         case WIFIBATTLEMATCH_NET_ERROR_REPAIR_DISCONNECT:  //切断しログインからやり直し
@@ -1486,6 +1491,15 @@ static void WbmRndSeq_Rate_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
       p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
       WBM_SEQ_End( p_seqwk );
     }
+    break;
+
+
+    //エラー
+    //戦闘がエラーにしたことにして、戦闘終了にいく
+  case SEQ_ERROR_END:
+    WIFIBATTLEMATCH_NET_SetDisConnect( p_wk->p_net, TRUE );
+    p_param->mode = WIFIBATTLEMATCH_CORE_MODE_ENDBATTLE_ERR;
+    WBM_SEQ_SetNext( p_seqwk, WbmRndSeq_Rate_EndBattle );
     break;
 
     //-------------------------------------
@@ -3221,6 +3235,21 @@ static void Util_MatchInfo_Delete( WIFIBATTLEMATCH_RND_WORK *p_wk )
 static BOOL Util_MatchInfo_Main( WIFIBATTLEMATCH_RND_WORK *p_wk )
 {
   return MATCHINFO_MoveMain( p_wk->p_matchinfo );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  対戦者カードを破棄
+ *
+ *	@param	WIFIBATTLEMATCH_RND_WORK *p_wk ワーク
+ */
+//-----------------------------------------------------------------------------
+static void Util_Matchinfo_Clear( WIFIBATTLEMATCH_RND_WORK *p_wk )
+{
+  if( p_wk->p_matchinfo )
+  {
+    Util_MatchInfo_Delete( p_wk );
+  }
 }
 //----------------------------------------------------------------------------
 /**

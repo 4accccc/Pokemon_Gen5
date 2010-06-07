@@ -682,8 +682,7 @@ static void SEQFUNC_InitBeaconScan( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
   case SEQ_INIT_WAIT:
     if( GFL_NET_IsInit() )
 		{
-      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
-      GFL_NET_ReloadIcon();
+      GFL_NET_ReloadIconTopOrBottom( TRUE, p_wk->heapID );
       p_wk->p_wih = WIH_DWC_AllBeaconStart(sc_net_init.maxBeaconNum, p_wk->heapID );
       GFL_NET_Changeover(NULL);
       *p_seq = SEQ_END;
@@ -820,8 +819,7 @@ static void SEQFUNC_InitBeaconDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     if( GFL_NET_IsInit() )
 		{
       //通信アイコン
-      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
-      GFL_NET_ReloadIcon();
+      GFL_NET_ReloadIconTopOrBottom( TRUE, p_wk->heapID );
 
       GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
       *p_seq = SEQ_END;
@@ -947,8 +945,7 @@ static void SEQFUNC_InitIrcDownload( SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
     if( GFL_NET_IsInit() )
 		{
       //通信アイコン
-      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
-      GFL_NET_ReloadIcon();
+      GFL_NET_ReloadIconTopOrBottom( TRUE, p_wk->heapID );
       *p_seq = SEQ_END;
     }
     break;

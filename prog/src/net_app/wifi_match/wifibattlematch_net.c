@@ -1407,11 +1407,26 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
 
   { 
     const GFL_NETSTATE_DWCERROR* cp_error  =  GFL_NET_StateGetWifiError();
-    if( cp_error->errorUser == ERRORCODE_TIMEOUT )
+    //マッチング相手と切断した場合
+    if( cp_error->errorUser == ERRORCODE_TIMEOUT
+        || cp_error->errorUser == ERRORCODE_DISCONNECT )
     { 
       DEBUG_NET_Printf( "タイムアウト!!!!\n" );
       p_wk->is_sc_error = TRUE;
+    }
 
+    //DWCレベルで切断エラーだった場合
+    if( NetErr_App_CheckError() == NET_ERR_CHECK_HEAVY ) 
+    {
+      if( p_wk->seq >= WIFIBATTLEMATCH_SC_SEQ_INIT )
+      {
+        DwcRap_Sc_Finalize( p_wk );
+      }
+      return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
+    }
+
+    if( p_wk->is_sc_error )
+    {
       //もしエラーなのに自分がセッションを作成していなかった場合は
       //セッション作成に戻る
       if( p_wk->is_session == FALSE && 
@@ -1421,7 +1436,6 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
         p_wk->seq = WIFIBATTLEMATCH_SC_SEQ_SESSION_START;
       }
     }
-
 
     switch( p_wk->seq )
     { 
@@ -1858,6 +1872,13 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
 static void DwcRap_Sc_CreateSessionCallback( DWCScResult theResult, void* theUserData )
 {
   WIFIBATTLEMATCH_NET_WORK  *p_wk = theUserData;
+
+#ifdef PM_DEBUG
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
+  {
+    theResult = DWC_SC_RESULT_HTTP_ERROR;
+  }
+#endif 
 
   if (theResult == DWC_SC_RESULT_NO_ERROR)
   {
@@ -5429,8 +5450,7 @@ void WIFIBATTLEMATCH_NETICON_SetDraw( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_vi
 { 
   if( is_visible )
   { 
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, p_wk->heapID );
-    GFL_NET_ReloadIcon();
+    GFL_NET_ReloadIconTopOrBottom( TRUE, p_wk->heapID );
   }
   else
   { 

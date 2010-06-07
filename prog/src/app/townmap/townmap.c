@@ -960,9 +960,7 @@ static GFL_PROC_RESULT TOWNMAP_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_
 
   if( GFL_NET_IsInit() )
   { 
-    GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_TOWNMAP );
-    GFL_NET_ReloadIcon();
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_TOWNMAP );
   }
 
   p_wk->p_vblank_task	= GFUser_VIntr_CreateTCB(TownMap_VBlankTask, p_wk, 0 );

@@ -2451,6 +2451,9 @@ void MATCHINFO_Exit( MATCHINFO_WORK *p_wk )
 
 	PMS_DRAW_Exit( p_wk->p_pms );
 
+  GFL_BG_SetScroll( BG_FRAME_M_CARD, GFL_BG_SCROLL_X_SET, -WBM_CARD_INIT_POS_X );
+  GFL_BG_SetScroll( BG_FRAME_M_FONT, GFL_BG_SCROLL_X_SET, -WBM_CARD_INIT_POS_X );
+
 	GFL_HEAP_FreeMemory( p_wk );
 }
 //----------------------------------------------------------------------------

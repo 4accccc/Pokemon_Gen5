@@ -417,9 +417,7 @@ static GFL_PROC_RESULT NAMEIN_PROC_Init( GFL_PROC *p_proc, int *p_seq, void *p_p
 
   if( GFL_NET_IsInit() )
   { 
-    GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_NAME_INPUT );
-    GFL_NET_ReloadIcon();
+    GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_NAME_INPUT );
   }
 
   if( p_wk->p_param->p_intr_sv )

@@ -180,17 +180,14 @@ static GFL_PROC_RESULT WIFILOGOUT_PROC_Init
     }
   }
 
-  GFL_NET_ReloadIcon();
-
   if( p_param->display == WIFILOGIN_DISPLAY_DOWN )
   { 
-    GFL_NET_WirelessIconEasy_HoldLCD(FALSE, p_wk->heapID);
+    GFL_NET_ReloadIconTopOrBottom( FALSE, p_wk->heapID );
   }
   else
   { 
-    GFL_NET_WirelessIconEasy_HoldLCD(TRUE, p_wk->heapID);
+    GFL_NET_ReloadIconTopOrBottom( TRUE, p_wk->heapID );
   }
-  GFL_NET_ReloadIcon();
 
   return GFL_PROC_RES_FINISH;
 }
