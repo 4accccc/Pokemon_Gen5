@@ -9503,7 +9503,7 @@ static const ZONEDATA ZoneData[] = {
 		MAPNAME_PALACE,
 		1,
 		WEATHER_NO_SUNNY,
-    TRUE,
+    FALSE,
 		0,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		0,
