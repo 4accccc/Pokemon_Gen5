@@ -233,6 +233,13 @@ EVENT_START   ev_scene_t01r0401_zukanget_01
 	//ME鳴らす
 	_ME_PLAY( SEQ_ME_KEYITEM )
 
+	_GET_MY_SEX( SCWK_ANSWER )	//主人公の性別取得
+	IF $SCWK_ANSWER == PM_MALE THEN
+		_CALL_FLD3D_CUTIN( FLDCIID_ZUKAN_M )	//男の子
+	ELSE
+		_CALL_FLD3D_CUTIN( FLDCIID_ZUKAN_W )	//女の子
+	ENDIF
+
 	//ポケモンずかんを手に入れた！
 	_PLAYER_NAME( 0 ) //プレイヤー名を反映
 	_SYSWIN_MSG( msg_t01r0401_hakase2_13, POS_DEFAULT )
