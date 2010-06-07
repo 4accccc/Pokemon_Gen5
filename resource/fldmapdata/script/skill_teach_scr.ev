@@ -31,6 +31,8 @@ _EVENT_DATA_END
 
 DEFINE_LOCAL select_pos	// ëIëÉ|ÉPÉÇÉì
 DEFINE_LOCAL teach_waza_id
+DEFINE_LOCAL flag_cancel_abwait
+DEFINE_LOCAL flag_decide_abwait
 
 //------------------------------------------------------------------------------
 //Å¶íçà”
@@ -134,7 +136,8 @@ sub_waza_teacher_dragon:
 
     $teach_waza_id = WAZANO_RYUUSEIGUN
 
-    $SCWK_PARAM2 = 0      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_LAST_KEYWAIT
+    $flag_cancel_abwait = 0      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_LAST_KEYWAIT
+    $flag_decide_abwait = 1
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
@@ -250,7 +253,8 @@ sub_waza_teacher_powerful:
 
     _BALLOONWIN_CLOSE()
     //$teach_waza_id = WAZANO_RYUUSEIGUN
-    $SCWK_PARAM2 = 0      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_LAST_KEYWAIT
+    $flag_cancel_abwait = 0      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_LAST_KEYWAIT
+    $flag_decide_abwait = 0
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
@@ -371,7 +375,8 @@ sub_waza_teacher_coalescence:
 
     _BALLOONWIN_CLOSE()
     //$teach_waza_id = WAZANO_RYUUSEIGUN
-    $SCWK_PARAM2 = 0      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_LAST_KEYWAIT
+    $flag_cancel_abwait = 0      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_LAST_KEYWAIT
+    $flag_decide_abwait = 0
     _CALL sub_skillteacher_system
 
     IF $SCWK_ANSWER == TRUE THEN
@@ -422,7 +427,11 @@ sub_skillteacher_system:
     _ME_PLAY( SEQ_ME_LVUP )
     _SYSWIN_MSG( msg_skillteach_system_01 , POS_DEFAULT )
     _ME_WAIT()
-    _AB_KEYWAIT_MARK()
+    IF $flag_decide_abwait == 0 THEN
+      _LAST_KEYWAIT()
+    ELSE
+      _AB_KEYWAIT_MARK()
+    ENDIF
     _SYSWIN_CLOSE()
 
     _SET_TEMOTI_WAZA( select_pos , SCWK_ANSWER , teach_waza_id )
@@ -467,7 +476,7 @@ sub_skillteacher_wasure_ask_retire:
     _WAZA_NAME( 1, teach_waza_id )
     _SYSWIN_MSG( msg_skillteach_system_04 , POS_DEFAULT )
     //ç≈èIÉLÅ[ë“Çøï™äÚ
-    IF $SCWK_PARAM2 == 0 THEN
+    IF $flag_cancel_abwait == 0 THEN
       _LAST_KEYWAIT()
     ELSE
       _AB_KEYWAIT_MARK()
@@ -519,7 +528,11 @@ sub_skillteacher_wasure_core:
     _SYSWIN_MSG( msg_skillteach_system_07 , POS_DEFAULT )
     _ME_PLAY( SEQ_ME_LVUP )
     _ME_WAIT()
-    _AB_KEYWAIT_MARK()
+    IF $flag_decide_abwait == 0 THEN
+      _LAST_KEYWAIT()
+    ELSE
+      _AB_KEYWAIT_MARK()
+    ENDIF
     _SYSWIN_CLOSE()
     
     _SET_TEMOTI_WAZA( select_pos , waza_pos , teach_waza_id )
@@ -542,7 +555,8 @@ sub_skillteacher_wasure_core:
 ev_skill_learn:
   $select_pos = $SCWK_PARAM0
   $teach_waza_id = $SCWK_PARAM1
-  $SCWK_PARAM2 = 1      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_AB_KEYWAIT_MARK
+  $flag_cancel_abwait = 1      //ãZÇÇ†Ç´ÇÁÇﬂÇΩèÍçáÇÕ_AB_KEYWAIT_MARK
+  $flag_decide_abwait = 1
   _CALL sub_skillteacher_system
   _CHG_LOCAL_SCR
 _END
