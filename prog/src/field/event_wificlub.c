@@ -125,7 +125,7 @@ enum _EVENT_IRCBATTLE {
 
 };
 
-static void _pokmeonListWorkFree(EVENT_WIFICLUB_WORK* ep2p);
+static void _FreeMemory(EVENT_WIFICLUB_WORK * pClub);
 
 typedef struct {
   u8 bSingle;
@@ -156,9 +156,7 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
 {
   GAMEDATA* gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
   int no;
-  int shooter = pClub->pMatchParam->shooter; //Regulation_GetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER);
-
-//  OS_TPrintf("シューター%d\n",shooter);
+  int shooter = pClub->pMatchParam->shooter;
 
   if(shooter){
     Regulation_SetParam(pClub->pMatchParam->pRegulation, REGULATION_SHOOTER, REGULATION_SHOOTER_VALID);
@@ -248,12 +246,6 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
 
 }
 
-static void _pokmeonListWorkFree(EVENT_WIFICLUB_WORK* ep2p)
-{
-  GFL_HEAP_FreeMemory(ep2p->pMatchParam->pPokeParty[0]);
-  GFL_HEAP_FreeMemory(ep2p->pMatchParam->pPokeParty[1]);
-  GFL_HEAP_FreeMemory(ep2p->pMatchParam->pRegulation);
-}
 
 //==============================================================================
 //  WIFIクラブからポケモンリスト用ワーク作成
@@ -286,9 +278,7 @@ static void _pokeListWorkMake(EVENT_WIFICLUB_WORK * ep2p,GAMEDATA* pGameData,u32
 //==============================================================================
 static void _pokeListWorkOut(EVENT_WIFICLUB_WORK * ep2p,GAMEDATA* pGameData,u32 gamemode)
 {
-//  int my_net_id = GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle());
 
-//  PokeParty_Copy(ep2p->pPokeParty, ep2p->pMatchParam->pPokeParty[my_net_id]);
   BATTLE_PARAM_SetPokeParty( ep2p->para, ep2p->pPokeParty, BTL_CLIENT_PLAYER );
 }
 
@@ -330,12 +320,7 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   case _WAIT_NET_END:
     if(GFL_NET_IsExit()){
       (*seq) ++;
-
-
-      GFL_HEAP_FreeMemory(ep2p->pPokeParty);
-      GFL_HEAP_FreeMemory(ep2p->pMatchParam->pMatch);
-      GFL_HEAP_FreeMemory(ep2p->pMatchParam);
-
+      _FreeMemory(ep2p);
       PMV_ResetMasterVolume();
       PMSND_PlayBGM( ep2p->soundNo );
       PMSND_FadeInBGM(PMSND_FADE_NORMAL);
@@ -393,28 +378,18 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   case P2P_MATCH_BOARD:
     GFL_OVERLAY_Load(FS_OVERLAY_ID(wificlub));
     GFL_OVERLAY_Load( FS_OVERLAY_ID(ui_common));
-
     WIFI_STATUS_SetMyMac(ep2p->pMatchParam->pMatch);
-
-    ep2p->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
-    ep2p->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
-    ep2p->pMatchParam->pRegulation = Regulation_AllocWork(GFL_HEAPID_APP);
-
+    if(ep2p->para){
+      BATTLE_PARAM_Delete(ep2p->para);
+      ep2p->para = NULL;
+    }
     GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
-//    GFL_PROC_SysCallProc(FS_OVERLAY_ID(wifi2dmap), &WifiP2PMatchProcData, ep2p->pMatchParam);
     (*seq)  ++;
     break;
   case P2P_SELECT:
     (*seq) = aNextMatchKindTbl[ep2p->pMatchParam->seq].kind;
     if(ep2p->pMatchParam->seq == WIFI_GAME_ERROR){
        ep2p->login.mode = WIFILOGIN_MODE_ERROR;
-    }
-//    NET_PRINT("P2P_SELECT %d %d\n",(*seq) ,ep2p->pMatchParam->seq);
-    if(P2P_BATTLE != (*seq) ){  // バトル以外はいらない
-      _pokmeonListWorkFree(ep2p);      // ポケモンリストが終わったら要らない
-    }
-    else{
-      
     }
     ep2p->bSingle = aNextMatchKindTbl[ep2p->pMatchParam->seq].bSingle;
     GFL_OVERLAY_Unload(FS_OVERLAY_ID(ui_common));
@@ -427,8 +402,6 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       ep2p->para =BATTLE_PARAM_Create(HEAPID_PROC);
       _battleSetting(pClub, ep2p->pMatchParam->seq);
 
-      //GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
-      //GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(pokelist), &PokeList_ProcData, &ep2p->PokeList);
       GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(wificlub_subproc), &WifiClubBattle_Sub_ProcData, &ep2p->subProcParam);
       (*seq) ++;
     }
@@ -517,12 +490,8 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       WifiList_SetResult(GAMEDATA_GetWiFiList(GAMESYSTEM_GetGameData(pClub->gsys)),
                          pClub->pMatchParam->friendNo-1,0,1,0);
     }
-    _pokmeonListWorkFree(ep2p);      // 
-    BATTLE_PARAM_Delete(ep2p->para);
-
     GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
     (*seq)  = P2P_MATCH_BOARD;
-//    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     break;
   case P2P_TRADE:
     ep2p->aPokeTr.ret = POKEMONTRADE_MOVE_START;
@@ -533,7 +502,6 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     ep2p->aPokeTr.gamedata = GAMESYSTEM_GetGameData(pClub->gsys);
 
     GMEVENT_CallProc(pClub->event,FS_OVERLAY_ID(pokemon_trade), &PokemonTradeClubProcData, &ep2p->aPokeTr);
-   // GFL_PROC_SysCallProc(FS_OVERLAY_ID(pokemon_trade), &PokemonTradeClubProcData, &ep2p->aPokeTr);
     (*seq) ++;
     break;
   case P2P_TRADE_END:
@@ -555,11 +523,6 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     }
     break;
   case P2P_EVOLUTION:
-    //GFL_OVERLAY_Load( FS_OVERLAY_ID(shinka_demo) );
-    //ep2p->aPokeTr.shinka_param = SHINKADEMO_AllocParam( HEAPID_PROC, GAMESYSTEM_GetGameData(pClub->gsys),
-    //                                           ep2p->aPokeTr.pParty,
-    //                                           ep2p->aPokeTr.after_mons_no,
-    //                                           0, ep2p->aPokeTr.cond, TRUE );
     {
       SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
       sdp->gamedata          = GAMESYSTEM_GetGameData(pClub->gsys);
@@ -572,12 +535,9 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
       ep2p->aPokeTr.shinka_param = sdp;
     }
     GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(shinka_demo), &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
-//    GFL_PROC_SysCallProc( NO_OVERLAY_ID, &ShinkaDemoProcData, ep2p->aPokeTr.shinka_param );
     (*seq)  = P2P_EVOLUTION_END;
     break;
   case P2P_EVOLUTION_END:
-    //SHINKADEMO_FreeParam( ep2p->aPokeTr.shinka_param );
-    //GFL_OVERLAY_Unload( FS_OVERLAY_ID(shinka_demo) );
     {
       SHINKA_DEMO_PARAM* sdp = ep2p->aPokeTr.shinka_param;
       GFL_HEAP_FreeMemory( sdp );
@@ -589,7 +549,6 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
     ep2p->aTVT.gameData = GAMESYSTEM_GetGameData(ep2p->gsys);
     ep2p->aTVT.mode = CTM_WIFI;
     GMEVENT_CallProc(pClub->event, FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &ep2p->aTVT);
- //   GFL_PROC_SysCallProc(FS_OVERLAY_ID(comm_tvt), &COMM_TVT_ProcData, &ep2p->aTVT);
     (*seq) ++;
     break;
   case P2P_TVT_END:
@@ -615,6 +574,28 @@ static GMEVENT_RESULT EVENT_WiFiClubMain(GMEVENT * event, int *  seq, void * wor
   }
   return GMEVENT_RES_CONTINUE;
 }
+
+
+/*
+開放処理
+ */
+
+static void _FreeMemory(EVENT_WIFICLUB_WORK * pClub)
+{
+  if(pClub->para){
+    BATTLE_PARAM_Delete(pClub->para);
+    pClub->para = NULL;
+  }
+  
+  GFL_HEAP_FreeMemory(pClub->pMatchParam->pPokeParty[0]);
+  GFL_HEAP_FreeMemory(pClub->pMatchParam->pPokeParty[1]);
+  GFL_HEAP_FreeMemory(pClub->pMatchParam->pRegulation);
+
+  GFL_HEAP_FreeMemory(pClub->pPokeParty);
+  GFL_HEAP_FreeMemory(pClub->pMatchParam->pMatch);
+  GFL_HEAP_FreeMemory(pClub->pMatchParam);
+}
+
 
 /*
  *  @brief  WiFiクラブ呼び出しパラメータセット
@@ -651,6 +632,9 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   pClub->pWork = pClub;
   pClub->soundNo = PMSND_GetBGMsoundNo();
 
+  pClub->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
+  pClub->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //お互いのPartyを受信
+  pClub->pMatchParam->pRegulation = Regulation_AllocWork(GFL_HEAPID_APP);
 
 }
 
