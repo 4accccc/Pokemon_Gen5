@@ -58,7 +58,6 @@ FS_EXTERN_OVERLAY(fieldmap);
 FS_EXTERN_OVERLAY(ircbattlematch);
 FS_EXTERN_OVERLAY(pokemon_trade);
 FS_EXTERN_OVERLAY(shinka_demo);
-//FS_EXTERN_OVERLAY(app_mail);
 
 #define _LOCALMATCHNO (110)
 #define _IRC_BATTEL_LEVEL (50)
@@ -81,13 +80,10 @@ enum _EVENT_IRCBATTLE {
   _WAIT_TRADE,
   _CALL_EVOLUTION,
   _WAIT_EVOLUTION,
- // _CALL_MAIL,
- // _WAIT_MAIL,
   _CALL_NET_END,
   _WAIT_NET_END,
   _FIELD_OPEN,
   _FIELD_FADEIN,
-  _FIELD_POP_BGM,
   _FIELD_END,
 
   _FIELD_FADEOUT_IRCBATTLE,
@@ -95,6 +91,8 @@ enum _EVENT_IRCBATTLE {
   _CALL_IRCCOMMPATIBLE,
   _WAIT_IRCCOMMPATIBLE,
 };
+
+static void _bgmReturn(EVENT_IRCBATTLE_WORK *dbw);
 
 //----------------------------------------------------------------------------
 /**
@@ -352,14 +350,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
         *seq = _CALL_TRADE;
         break;
       case EVENTIRCBTL_ENTRYMODE_MULTH:
-/*        
-        OS_TPrintf("マルチ番号 %d %d %d %d\n",dbw->irc_match.MultiNo[0],dbw->irc_match.MultiNo[1],
-                   dbw->irc_match.MultiNo[2],dbw->irc_match.MultiNo[3]);
-        dbw->irc_match.pNetParty[0] = dbw->pNetParty[dbw->irc_match.MultiNo[0]];
-        dbw->irc_match.pNetParty[1] = dbw->pNetParty[dbw->irc_match.MultiNo[1]];
-        dbw->irc_match.pNetParty[2] = dbw->pNetParty[dbw->irc_match.MultiNo[2]];
-        dbw->irc_match.pNetParty[3] = dbw->pNetParty[dbw->irc_match.MultiNo[3]];
-   */
         //break; throw
       default:
         *seq = _BATTLE_MATCH_START;
@@ -507,11 +497,8 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     _wifilistPlayData(dbw,GAMESYSTEM_GetGameData(gsys));
     BATTLE_PARAM_Delete(dbw->para);
     dbw->para = NULL;
-    NET_PRINT("バトル完了\n");
-//    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NONE));
     PMSND_StopBGM();
-    PMSND_PlayBGM( dbw->soundNo );
-    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
+    _bgmReturn(dbw);
     
     (*seq) = _CALL_NET_END;
     break;
@@ -604,6 +591,7 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
     }
     break;
   case _FIELD_OPEN:
+    _bgmReturn(dbw);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
@@ -613,9 +601,6 @@ static GMEVENT_RESULT EVENT_IrcBattleMain(GMEVENT * event, int *  seq, void * wo
       fade_event = EVENT_FieldFadeIn_Black(gsys, pFieldmap, FIELD_FADE_WAIT);
         GMEVENT_CallEvent(event, fade_event);
     }
-    (*seq) ++;
-    break;
-  case _FIELD_POP_BGM:
     (*seq) ++;
     break;
   case _FIELD_END:
@@ -703,6 +688,14 @@ static void _battleParaFree(EVENT_IRCBATTLE_WORK *dbw)
 }
 
 
+static void _bgmReturn(EVENT_IRCBATTLE_WORK *dbw)
+{
+  if(dbw->soundNo){
+    PMSND_PlayBGM( dbw->soundNo );
+    PMSND_FadeInBGM(PMSND_FADE_NORMAL);
+    dbw->soundNo = 0;
+  }
+}
 
 //--------------------------------------------------------------
 /**
