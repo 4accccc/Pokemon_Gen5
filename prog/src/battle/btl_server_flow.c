@@ -8893,6 +8893,33 @@ static void scPut_WeatherDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BtlWea
   }
 }
 
+
+//----------------------------------------------------------------------------------
+/**
+ * 指定ポケモンを含むチームが全てひん死処理に入ったかチェック（BGM再生判断）
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//----------------------------------------------------------------------------------
+static BOOL checkPokeDeadFlagAllOn( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+  BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
+  u32 members = BTL_PARTY_GetMemberCount( party );
+  u32 i;
+  for(i=0; i<members; ++i)
+  {
+    pokeID = BPP_GetID( BTL_PARTY_GetMemberData(party, i) );
+    if( wk->pokeDeadFlag[ pokeID ] == 0 ){
+      return FALSE;
+    }
+  }
+  return TRUE;
+}
+
 //--------------------------------------------------------------------------
 /**
  * 対象ポケモンが死んでいたら死亡処理＆必要コマンド生成
@@ -8927,6 +8954,7 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
       if( (BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD)
       &&  (wk->fWinBGMPlayWild == FALSE)
       &&  scproc_CheckShowdown(wk)
+      &&  checkPokeDeadFlagAllOn(wk, pokeID)
       &&  CheckPlayerSideAlive(wk)
       ){
         u16 WinBGM = BTL_MAIN_GetWinBGMNo( wk->mainModule );
