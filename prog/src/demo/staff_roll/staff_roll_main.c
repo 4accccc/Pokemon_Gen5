@@ -100,6 +100,12 @@ enum {
 
 #define	EXP_BUFF_SIZE		( 128 )		// メッセージ展開用バッファサイズ
 
+#define	VBMP_SX									( 32 )			// 仮想ＢＭＰＸサイズ
+#define	VBMP_SY									( 2 )				// 仮想ＢＭＰＹサイズ
+#define	STR_PRINT_PY						( 192 )			// スクロール時の文字列描画Ｙ座標
+#define	STR_PRINT_SMALL_OFFSET	( 2 )				// スクロール時のスモールフォント文字列描画Ｙオフセット
+#define	STR_PRINT_SMALL_PY			( STR_PRINT_PY+STR_PRINT_SMALL_OFFSET )	// スクロール時のスモールフォント文字列描画Ｙ座標
+
 #define	ITEMLIST_MSG_NONE		( 0xffff )		// メッセージなし
 
 // コマンドラベル
@@ -174,6 +180,9 @@ static VecFx32 CameraMoveValMake( const VecFx32 * now, const VecFx32 * mvp, u32 
 static void CameraMoveMain( SRMAIN_WORK * wk );
 static void CameraMoveFlagSet( SR3DCAMERA_MOVE * mvwk, BOOL flg );
 
+static void WriteVirtualBmp( SRMAIN_WORK * wk );
+static void PrintVirtualBmp( SRMAIN_WORK * wk );
+static void PrintStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item, GFL_BMP_DATA * bmp, u32 py );
 
 static int SetFadeIn( SRMAIN_WORK * wk, int next );
 static int SetFadeOut( SRMAIN_WORK * wk, int next );
@@ -338,6 +347,13 @@ static const SR3DCAMERA_PARAM CameraMoveTable[] =
 #endif
 };
 
+static const GFL_G3D_OBJSTATUS ObjStatus =
+{
+	{ 0, 0, 0 },																				// trans
+	{ FX32_ONE, FX32_ONE, FX32_ONE },										// scale
+	{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	// rotate
+};
+
 #ifdef PM_DEBUG
 static VecFx32 test_pos = {0,0,0};
 static VecFx32 test_target = {0,0,0};
@@ -367,6 +383,8 @@ BOOL SRMAIN_Main( SRMAIN_WORK * wk )
 	if( wk->mainSeq == MAINSEQ_END ){
 		return FALSE;
 	}
+
+	WriteVirtualBmp( wk );
 
 	Main3D( wk );
 
@@ -416,6 +434,8 @@ static int MainSeq_Init( SRMAIN_WORK * wk )
 	InitVBlank( wk );
 
 	PMSND_PlayBGM_WideChannel( SEQ_BGM_ENDING );
+
+	OS_Printf( "heap size [0] = 0x%x\n", GFL_HEAP_GetHeapFreeSize(HEAPID_STAFF_ROLL) );
 
 	return MAINSEQ_START_WAIT;
 }
@@ -577,6 +597,14 @@ static int MainSeq_Main( SRMAIN_WORK * wk )
 	if( wk->subSeq == SUBSEQ_INIT ){
 		while( 1 ){
 			ITEMLIST_DATA * item = &wk->list[wk->listPos];
+			if( wk->vBmp[wk->vBmpPut].idx == wk->listPos ){
+				PrintVirtualBmp( wk );
+				wk->vBmpPut++;
+				wk->listWait = item->wait;
+				wk->subSeq = SUBSEQ_WAIT;
+				wk->listPos += 2;
+				break;
+			}
 			if( CommFunc[item->label]( wk, item ) == TRUE ){
 				wk->listPos++;
 				break;
@@ -905,6 +933,123 @@ static void ExitMsg( SRMAIN_WORK * wk )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		文字列先行展開用仮想ＢＭＰ作成
+ *
+ * @param		wk	ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void CreateVirtualBmp( SRMAIN_WORK * wk )
+{
+	u16	flg;
+	u16	i;
+
+	flg = 0;
+	i = 0;
+
+	while( 1 ){
+		ITEMLIST_DATA * item = &wk->list[i];
+		if( flg == 0 ){
+			if( item->label == ITEMLIST_LABEL_3D_PUT ){ flg = 1; }
+		}else{
+			if( item->label == ITEMLIST_LABEL_END ){
+				break;
+			}else if( item->label == ITEMLIST_LABEL_NONE && item->msgIdx != ITEMLIST_MSG_NONE ){
+				ITEMLIST_DATA * sub = &wk->list[i+1];
+				if( sub->wait == 0 && sub->label == ITEMLIST_LABEL_NONE && sub->msgIdx != ITEMLIST_MSG_NONE ){
+					wk->vBmp[wk->vBmpMax].bmp = GFL_BMP_Create( VBMP_SX, VBMP_SY, GFL_BMP_16_COLOR, HEAPID_STAFF_ROLL );
+					wk->vBmp[wk->vBmpMax].idx = i;
+					wk->vBmpMax++;
+					// 最大数を超えたら
+					if( wk->vBmpMax == SRMAIN_VBMP_MAX ){
+						break;
+					}
+					i++;
+				}
+			}
+		}
+		i++;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		文字列先行展開用仮想ＢＭＰ削除
+ *
+ * @param		wk	ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void ReleaseVirtualBmp( SRMAIN_WORK * wk )
+{
+	u32	i;
+
+	for( i=0; i<wk->vBmpMax; i++ ){
+		GFL_BMP_Delete( wk->vBmp[i].bmp );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		仮想ＢＭＰに文字列を描画
+ *
+ * @param		wk		ワーク
+ * @param		bmp		仮想ＢＭＰ
+ * @param		pos		リスト位置
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void WriteVirtualBmpCore( SRMAIN_WORK * wk, GFL_BMP_DATA * bmp, u32 pos )
+{
+	ITEMLIST_DATA * item = &wk->list[pos];
+
+	if( item->font == SRMAIN_FONT_NORMAL ){
+		PrintStr( wk, item, bmp, 0 );
+	}else{
+		PrintStr( wk, item, bmp, STR_PRINT_SMALL_OFFSET );
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		仮想ＢＭＰに文字列を描画
+ *
+ * @param		wk	ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void WriteVirtualBmp( SRMAIN_WORK * wk )
+{
+	if( wk->vBmpCnt < wk->vBmpMax ){
+		WriteVirtualBmpCore( wk, wk->vBmp[wk->vBmpCnt].bmp, wk->vBmp[wk->vBmpCnt].idx );
+		WriteVirtualBmpCore( wk, wk->vBmp[wk->vBmpCnt].bmp, wk->vBmp[wk->vBmpCnt].idx+1 );
+		wk->vBmpCnt++;
+	}
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		仮想ＢＭＰを画面に表示するＢＭＰに描画
+ *
+ * @param		wk	ワーク
+ *
+ * @return	none
+ */
+//--------------------------------------------------------------------------------------------
+static void PrintVirtualBmp( SRMAIN_WORK * wk )
+{
+	GFL_BMP_Print(
+		wk->vBmp[wk->vBmpPut].bmp,
+		GFL_BMPWIN_GetBmp(wk->util[1].win),
+		0, 0, 0, STR_PRINT_PY, VBMP_SX*8, VBMP_SY*8, 0 );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		スタッフリストデータ作成
  *
  * @param		wk	ワーク
@@ -921,6 +1066,7 @@ static void CreateListData( SRMAIN_WORK * wk )
 		wk->list = GFL_ARC_LoadDataAlloc(
 								ARCID_STAFF_ROLL, NARC_staff_roll_staff_list_eng_dat, HEAPID_STAFF_ROLL );
 	}
+	CreateVirtualBmp( wk );
 }
 
 //--------------------------------------------------------------------------------------------
@@ -934,6 +1080,7 @@ static void CreateListData( SRMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void DeleteListData( SRMAIN_WORK * wk )
 {
+	ReleaseVirtualBmp( wk );
 	GFL_HEAP_FreeMemory( wk->list );
 }
 
@@ -1043,15 +1190,13 @@ static void Init3D( SRMAIN_WORK * wk )
 	wk->g3d_unit = GFL_G3D_UTIL_AddUnit( wk->g3d_util, &G3DUtilSetup );
 
 	{
-		GFL_G3D_OBJ * obj;
-		int	anm;
 		u32	i;
 
-		obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
-		anm = GFL_G3D_OBJECT_GetAnimeCount( obj );
+		wk->g3d_obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
+		wk->g3d_anm = GFL_G3D_OBJECT_GetAnimeCount( wk->g3d_obj );
 
-		for( i=0; i<anm; i++ ){
-			GFL_G3D_OBJECT_EnableAnime( obj, i );
+		for( i=0; i<wk->g3d_anm; i++ ){
+			GFL_G3D_OBJECT_EnableAnime( wk->g3d_obj, i );
 		}
 	}
 
@@ -1148,34 +1293,16 @@ static void Main3D( SRMAIN_WORK * wk )
 #endif
 
 	{
-    GFL_G3D_OBJ * obj;
-		int	anm;
 		u32	i;
 
-		obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
-		anm = GFL_G3D_OBJECT_GetAnimeCount( obj );
-
-		for( i=0; i<anm; i++ ){
-			GFL_G3D_OBJECT_LoopAnimeFrame( obj, i, FX32_ONE );
+		for( i=0; i<wk->g3d_anm; i++ ){
+			GFL_G3D_OBJECT_LoopAnimeFrame( wk->g3d_obj, i, FX32_ONE );
 		}
 	}
 
 	GFL_G3D_DRAW_Start();
 	GFL_G3D_DRAW_SetLookAt();
-
-	{
-		GFL_G3D_OBJSTATUS	st =
-		{
-			{ 0, 0, 0 },																				// trans
-			{ FX32_ONE, FX32_ONE, FX32_ONE },										// scale
-			{ FX32_ONE, 0, 0, 0, FX32_ONE, 0, 0, 0, FX32_ONE },	// rotate
-		};
-		GFL_G3D_OBJ * obj;
-
-		obj = GFL_G3D_UTIL_GetObjHandle( wk->g3d_util, wk->g3d_unit );
-		GFL_G3D_DRAW_DrawObject( obj, &st );
-	}
-
+	GFL_G3D_DRAW_DrawObject( wk->g3d_obj, &ObjStatus );
 	GFL_G3D_DRAW_End();
 }
 
@@ -1632,9 +1759,9 @@ static void PrintStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item, GFL_BMP_DATA * bmp
 static void MakeScrollStr( SRMAIN_WORK * wk, ITEMLIST_DATA * item )
 {
 	if( item->font == SRMAIN_FONT_NORMAL ){
-		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192 );
+		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), STR_PRINT_PY );
 	}else{
-		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), 192+2 );
+		PrintStr( wk, item, GFL_BMPWIN_GetBmp(wk->util[1].win), STR_PRINT_SMALL_PY );
 	}
 }
 

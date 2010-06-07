@@ -19,7 +19,8 @@
 //	定数定義
 //============================================================================================
 
-#define	SRMAIN_CAMERA_REQ_MAX		( 16 )
+#define	SRMAIN_CAMERA_REQ_MAX		( 16 )		// ３Ｄカメラ動作リクエスト最大数
+#define	SRMAIN_VBMP_MAX					( 64 )		// 仮想ＢＭＰ最大数
 
 // フォントタイプ
 enum {
@@ -56,7 +57,6 @@ typedef struct {
 	u16	cnt;
 }SR3DCAMERA_REQ_PARAM;
 
-
 typedef struct {
 	const SR3DCAMERA_PARAM * tbl;		// 座標テーブル
 	SR3DCAMERA_PARAM	param;				// 移動先
@@ -74,6 +74,11 @@ typedef struct {
 }SR3DCAMERA_MOVE;
 
 typedef struct {
+	GFL_BMP_DATA * bmp;
+	u32	idx;
+}SRVBMP_DATA;
+
+typedef struct {
 	STAFFROLL_DATA * dat;			// 外部設定データ
 
 	GFL_TCB * vtask;		// TCB ( VBLANK )
@@ -85,11 +90,19 @@ typedef struct {
 	u16	g3d_unit;
 	fx32	g3d_briCount;
 
+	GFL_G3D_OBJ * g3d_obj;
+	int	g3d_anm;
+
 	SR3DCAMERA_MOVE	cameraMove;
 
 	GFL_FONT * font[SRMAIN_FONT_MAX];		// フォント
 	GFL_MSGDATA * mman;									// メッセージデータマネージャ
 	STRBUF * exp;												// メッセージ展開領域
+
+	SRVBMP_DATA	vBmp[SRMAIN_VBMP_MAX];
+	u16	vBmpMax;
+	u8	vBmpCnt;
+	u8	vBmpPut;
 
 	PRINT_UTIL	util[2];			// BMPWIN
 	u8	bmpTransFlag;
