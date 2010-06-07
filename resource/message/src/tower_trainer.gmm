@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-07T17:19:32"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-07T20:58:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="240" top="520" right="740" bottom="1148" maximized="no" rayout="Vertical2">
+	<dialog left="314" top="466" right="814" bottom="1094" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
@@ -3227,7 +3227,7 @@
 		<comment>ユイットル</comment>
 		<language name="JPN">もー　ほらー　しゅうちゅうしないから
 まけちゃうんだってー</language>
-		<language name="JPN_KANJI">あー　ほらー　集中しないから
+		<language name="JPN_KANJI">もー　ほらー　集中しないから
 負けちゃうんだってー</language>
 	</row>
 
@@ -5282,9 +5282,9 @@
 	<row id="mes_tower_tr_193_03" back-color=",,,#ff8080,,,,,,,,,,,,,,">
 		<comment>マキエ</comment>
 		<language name="JPN">ノォー！　マイファミリーがっ！！
-アンタ　なんてことをっ！！</language>
+アンタ　なんてことをッ！！</language>
 		<language name="JPN_KANJI">ノォー！　マイファミリーがっ！！
-アンタ　何てことをっ！！</language>
+アンタ　何てことをッ！！</language>
 	</row>
 
 	<row id="mes_tower_tr_194_01">
@@ -5308,9 +5308,9 @@
 	<row id="mes_tower_tr_194_03">
 		<comment>ウルシ</comment>
 		<language name="JPN">わたし　しょうぶより　ポケモンを
-そだててるほうが　たのしいんだ</language>
+そだててるほうが　すきだな</language>
 		<language name="JPN_KANJI">わたし　勝負より　ポケモンを
-育ててるほうが　楽しんだ</language>
+育ててるほうが　好きだな</language>
 	</row>
 
 	<row id="mes_tower_tr_195_01" back-color=",,,#ff8080,,,,,,,,,,,,,,">
@@ -6008,9 +6008,9 @@
 	<row id="mes_tower_tr_222_02">
 		<comment>マウス</comment>
 		<language name="JPN">ぼくが　かったか　でもだいしぜんに
-くらべたら　どうだっていいさ……</language>
+くらべたら　どうだっていいのさ……</language>
 		<language name="JPN_KANJI">ぼくが　勝ったか　でも大自然に
-比べたら　どうだっていいさ……</language>
+比べたら　どうだっていいのさ……</language>
 	</row>
 
 	<row id="mes_tower_tr_222_03">
@@ -6157,7 +6157,7 @@
 ツルマル</comment>
 		<language name="JPN">おいは　きばって　どりょくしとうけん
 つよか　わけじゃなかぜ</language>
-		<language name="JPN_KANJI">おいは　きばって努力しとうけん
+		<language name="JPN_KANJI">おいは　きばって　努力しとうけん
 強か　わけじゃなかぜ</language>
 	</row>
 
