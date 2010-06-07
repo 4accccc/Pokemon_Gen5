@@ -2047,7 +2047,9 @@ static int MainSeq_ArrangePokeGetDataChangeErr( BOX2_SYS_WORK * syswk )
 		return BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_DATA_CHANGE_ERR;
 	}
 
-	BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
+	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == TRUE ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
+	}
 
 	// ロックされている（バトルボックス専用）
 	if( syswk->app->mv_err_code == BOX2MAIN_ERR_CODE_ROCK ){

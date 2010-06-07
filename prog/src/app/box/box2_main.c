@@ -4266,12 +4266,14 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
       if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
         put_pos = BoxMovePutAreaCheck( syswk, syswk->app->tpx, syswk->app->tpy );
 				// 手持ちキャンセルのとき
-				if( put_pos == BOX2MAIN_GETPOS_NONE && syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
-          BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
-					BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
-          PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
-          vf->seq = SEIRI_SEQ_CANCEL_TRAYFRM_OUT;
-          break;
+				if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX ){
+					if( put_pos == BOX2MAIN_GETPOS_NONE || PokeIconMoveBoxPartyDataMake(syswk,syswk->get_pos,put_pos) == FALSE ){
+	          BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
+						BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+	          PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
+	          vf->seq = SEIRI_SEQ_CANCEL_TRAYFRM_OUT;
+	          break;
+					}
 				}
       }
       // 手持ちポケモンのフレームが表示中
