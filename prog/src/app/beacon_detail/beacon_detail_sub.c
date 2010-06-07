@@ -146,7 +146,7 @@ void BeaconDetail_InitialDraw( BEACON_DETAIL_WORK* wk )
 
   sub_UpDownButtonActiveControl( wk );
 
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, wk->tmpHeapID );
 }
 
 /*

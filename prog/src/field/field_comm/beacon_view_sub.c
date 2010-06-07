@@ -143,9 +143,7 @@ void BeaconView_InitialDraw( BEACON_VIEW_PTR wk )
   if( wk->my_data.power == GPOWER_ID_NULL ){
     act_AnmStart( wk->pAct[ACT_POWER], ACTANM_POWER_OFF );
   }
-  GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, wk->tmpHeapID );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, wk->tmpHeapID );
 }
 
 /*
