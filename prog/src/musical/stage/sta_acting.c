@@ -240,6 +240,8 @@ static void STA_ACT_TermTransEffect( ACTING_WORK *work );
 static void STA_ACT_InitItemUseEffect( ACTING_WORK *work );
 static void STA_ACT_TermItemUseEffect( ACTING_WORK *work );
 
+static void STA_ACT_DebugPolyDraw( ACTING_WORK *work );
+
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_128_D,       // メイン2DエンジンのBG
@@ -614,7 +616,8 @@ ACTING_RETURN STA_ACT_LoopActing( ACTING_WORK *work )
     STA_BG_DrawSystem( work->bgSys );
     GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
     STA_EFF_DrawSystem( work->effSys );
-
+    
+    STA_ACT_DebugPolyDraw( work );
   }
   GFL_G3D_DRAW_End();
   //OBJの更新
@@ -2114,3 +2117,87 @@ void  STA_ACT_EDITOR_StartScript( ACTING_WORK *work )
   }
 }
 
+static void STA_ACT_DebugPolyDraw( ACTING_WORK *work )
+{
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    VecFx32 pos;
+    G3_PushMtx();
+    //カメラ設定取得
+    {
+      MtxFx33       mtxBillboard;
+      VecFx16       vecN;
+      VecFx32   vecNtmp;
+      MtxFx43   mtxCamera, mtxCameraInv;
+      static const VecFx32 cam_pos = MUSICAL_CAMERA_POS;
+      static const VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+      static const VecFx32 cam_up = MUSICAL_CAMERA_UP;
+    
+      G3_LookAt( &cam_pos, &cam_up, &cam_target, &mtxCamera );  //mtxCameraには行列計算結果が返る
+      MTX_Inverse43( &mtxCamera, &mtxCameraInv );     //カメラ逆行列取得
+      MTX_Copy43To33( &mtxCameraInv, &mtxBillboard );   //カメラ逆行列から回転行列を取り出す
+
+      VEC_Subtract( &cam_pos, &cam_target, &vecNtmp );
+      VEC_Normalize( &vecNtmp, &vecNtmp );
+      VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
+    }
+    {
+      static u8 polyCol = 0;
+      static fx32 polyOfs = FX32_CONST(100.0f);
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+      {
+        polyOfs += FX32_ONE;
+        ARI_Printf( "PolyOfs[%.1f]\n",FX_FX32_TO_F32(polyOfs));
+      }
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+      {
+        polyOfs -= FX32_ONE;
+        ARI_Printf( "PolyOfs[%.1f]\n",FX_FX32_TO_F32(polyOfs));
+      }
+      //板ポリ
+      G3_PolygonAttr(GX_LIGHTMASK_NONE,       // no lights
+               GX_POLYGONMODE_MODULATE,     // modulation mode
+               GX_CULL_NONE,          // cull back
+               0,                // polygon ID(0 - 63)
+               31,     // alpha(0 - 31)
+               0                  // OR of GXPolygonAttrMisc's value
+               );
+      G3_TexImageParam( GX_TEXFMT_NONE ,
+                        GX_TEXGEN_NONE ,
+                        0 ,
+                        0 ,
+                        0 ,
+                        0 ,
+                        GX_TEXPLTTCOLOR0_USE ,
+                        0 );
+      pos.x = MUSICAL_POS_X(128.0f);
+      pos.y = MUSICAL_POS_Y(96.0f);
+      pos.z = polyOfs;
+
+      G3_Translate( pos.x, pos.y, pos.z );
+
+      {
+        const fx32 size = FX32_ONE;
+        G3_Begin(GX_BEGIN_QUADS);
+        G3_Color( GX_RGB( polyCol, polyCol, polyCol ) );
+        polyCol++;
+        if( polyCol > 31 )
+        {
+          polyCol = 0;
+        }
+
+        G3_Vtx( FX32_CONST(-7.8), FX32_CONST( 5.8), 0 );
+        G3_Vtx( FX32_CONST( 7.8), FX32_CONST( 5.8), 0 );
+        G3_Vtx( FX32_CONST( 7.8), FX32_CONST(-5.8), 0 );
+        G3_Vtx( FX32_CONST(-7.8), FX32_CONST(-5.8), 0 );
+
+        G3_End();
+      }
+    }
+    G3_PopMtx(1);
+    
+  }
+#endif //DEB_ARI
+  
+}

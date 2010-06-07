@@ -121,6 +121,9 @@ typedef struct
   u8   posStateRot[2];
   u8   posStateShadow[2];
   
+  fx32 polyOfs;
+  u8   polyCol;
+  
 }MUS_VIEW_LOCAL_WORK;
 
 //======================================================================
@@ -360,17 +363,33 @@ static void MUSICAL_VIEW_UnLoadItem( MUS_VIEW_LOCAL_WORK *work )
 
 static void MUSICAL_VIEW_UpdateUI( MUS_VIEW_LOCAL_WORK *work )
 {
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
   {
-    work->monsno--;
-    work->isRefresh = TRUE;
-    work->isRefreshName = TRUE;
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+    {
+      work->polyOfs += FX32_CONST(0.1f);
+      ARI_Printf( "PolyOfs[%.1f]\n",FX_FX32_TO_F32(work->polyOfs));
+    }
+    if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+    {
+      work->polyOfs -= FX32_CONST(0.1f);
+      ARI_Printf( "PolyOfs[%.1f]\n",FX_FX32_TO_F32(work->polyOfs));
+    }
   }
-  if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+  else
   {
-    work->monsno++;
-    work->isRefresh = TRUE;
-    work->isRefreshName = TRUE;
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+    {
+      work->monsno--;
+      work->isRefresh = TRUE;
+      work->isRefreshName = TRUE;
+    }
+    if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+    {
+      work->monsno++;
+      work->isRefresh = TRUE;
+      work->isRefreshName = TRUE;
+    }
   }
   if( GFL_UI_KEY_GetCont() & PAD_KEY_LEFT )
   {
@@ -989,63 +1008,107 @@ static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
     VEC_Normalize( &vecNtmp, &vecNtmp );
     VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
   }
-  G3_PolygonAttr(GX_LIGHTMASK_NONE,       // no lights
-           GX_POLYGONMODE_MODULATE,     // modulation mode
-           GX_CULL_NONE,          // cull back
-           63,                // polygon ID(0 - 63)
-           0,                 // alpha(0 - 31)
-           0                  // OR of GXPolygonAttrMisc's value
-           );
 
-
-  for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
+  if( work->isDispBit != 0 )
   {
-    if( work->isDispBit & (1<<ePos) )
+    G3_PolygonAttr(GX_LIGHTMASK_NONE,       // no lights
+             GX_POLYGONMODE_MODULATE,     // modulation mode
+             GX_CULL_NONE,          // cull back
+             63,                // polygon ID(0 - 63)
+             0,                 // alpha(0 - 31)
+             0                  // OR of GXPolygonAttrMisc's value
+             );
+    for( ePos=0;ePos<MUS_POKE_EQUIP_MAX;ePos++ )
     {
-      MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( musPokeWork , ePos );
-      if( equipData->isEnable == TRUE )
+      if( work->isDispBit & (1<<ePos) )
       {
-        const u16 itemRot = equipData->itemRot;
-        const u16 rotZ = 0x10000-equipData->rot;
-
-        MtxFx33 rotWork;
-        VecFx32 rotOfs;
-        VecFx32 ofs;
-
-        G3_PushMtx();
-
-
-        MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
-        MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
-
-        //pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
-        //pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
-        pos.x = MUSICAL_POS_X_FX(equipData->pos.x + ofs.x + FX32_CONST(128.0f));
-        pos.y = MUSICAL_POS_Y_FX(equipData->pos.y + ofs.y + FX32_CONST(96.0f));
-        pos.z = FX32_CONST(120.0f); //ポケの前に出す
-
-        G3_Translate( pos.x, pos.y, pos.z );
-        G3_RotZ( -FX_SinIdx( itemRot-rotZ ), FX_CosIdx( itemRot-rotZ ) );
-        G3_Scale( FX32_CONST(0.25f), FX32_CONST(0.25f), pos.z );
+        MUS_POKE_EQUIP_DATA *equipData = MUS_POKE_DRAW_GetEquipData( musPokeWork , ePos );
+        if( equipData->isEnable == TRUE )
         {
-          const fx32 size = FX32_ONE;
-          G3_Begin(GX_BEGIN_QUADS);
-          G3_Color( GX_RGB( 0, 0, 0 ) );
-          //十字
-          G3_Vtx( -size, 0, 0 );
-          G3_Vtx(  size, 0, 0 );
-          G3_Vtx(  size, 0, 0 );
-          G3_Vtx( -size, 0, 0 );
-          G3_Vtx( 0, size, 0 );
-          G3_Vtx( 0, size, 0 );
-          G3_Vtx( 0,-size, 0 );
-          G3_Vtx( 0,-size, 0 );
-          G3_End();
+          const u16 itemRot = equipData->itemRot;
+          const u16 rotZ = 0x10000-equipData->rot;
+
+          MtxFx33 rotWork;
+          VecFx32 rotOfs;
+          VecFx32 ofs;
+
+          G3_PushMtx();
+
+
+          MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
+          MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
+
+          //pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+          //pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+          pos.x = MUSICAL_POS_X_FX(equipData->pos.x + ofs.x + FX32_CONST(128.0f));
+          pos.y = MUSICAL_POS_Y_FX(equipData->pos.y + ofs.y + FX32_CONST(96.0f));
+          pos.z = FX32_CONST(120.0f); //ポケの前に出す
+
+          G3_Translate( pos.x, pos.y, pos.z );
+          G3_RotZ( -FX_SinIdx( itemRot-rotZ ), FX_CosIdx( itemRot-rotZ ) );
+          G3_Scale( FX32_CONST(0.25f), FX32_CONST(0.25f), pos.z );
+          {
+            const fx32 size = FX32_ONE;
+            G3_Begin(GX_BEGIN_QUADS);
+            G3_Color( GX_RGB( 0, 0, 0 ) );
+            //十字
+            G3_Vtx( -size, 0, 0 );
+            G3_Vtx(  size, 0, 0 );
+            G3_Vtx(  size, 0, 0 );
+            G3_Vtx( -size, 0, 0 );
+            G3_Vtx( 0, size, 0 );
+            G3_Vtx( 0, size, 0 );
+            G3_Vtx( 0,-size, 0 );
+            G3_Vtx( 0,-size, 0 );
+            G3_End();
+          }
+          G3_PopMtx(1);
         }
-        G3_PopMtx(1);
       }
+    } 
+  }
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    //板ポリ
+    G3_PolygonAttr(GX_LIGHTMASK_NONE,       // no lights
+             GX_POLYGONMODE_MODULATE,     // modulation mode
+             GX_CULL_NONE,          // cull back
+             0,                // polygon ID(0 - 63)
+             31,     // alpha(0 - 31)
+             0                  // OR of GXPolygonAttrMisc's value
+             );
+    G3_TexImageParam( GX_TEXFMT_NONE ,
+                      GX_TEXGEN_NONE ,
+                      0 ,
+                      0 ,
+                      0 ,
+                      0 ,
+                      GX_TEXPLTTCOLOR0_USE ,
+                      0 );
+    pos.x = MUSICAL_POS_X(128.0f);
+    pos.y = MUSICAL_POS_Y(96.0f);
+    pos.z = FX32_CONST(40.0f) + work->polyOfs;
+
+    G3_Translate( pos.x, pos.y, pos.z );
+
+    {
+      const fx32 size = FX32_ONE;
+      G3_Begin(GX_BEGIN_QUADS);
+      G3_Color( GX_RGB( work->polyCol, work->polyCol, work->polyCol ) );
+      work->polyCol++;
+      if( work->polyCol > 31 )
+      {
+        work->polyCol = 0;
+      }
+
+      G3_Vtx( FX32_CONST(-7.8), FX32_CONST( 5.8), 0 );
+      G3_Vtx( FX32_CONST( 7.8), FX32_CONST( 5.8), 0 );
+      G3_Vtx( FX32_CONST( 7.8), FX32_CONST(-5.8), 0 );
+      G3_Vtx( FX32_CONST(-7.8), FX32_CONST(-5.8), 0 );
+
+      G3_End();
     }
-  } 
+  }
   G3_PopMtx(1);
 }
 
@@ -1077,6 +1140,8 @@ static GFL_PROC_RESULT MusicalViewProc_Init( GFL_PROC * proc, int * seq , void *
   work->isDispBit = 0;
   work->bgColIdx = 0;
   work->isAnime = TRUE;
+  work->polyOfs = 0;
+  work->polyCol = 0;
   
   work->musPoke = MUSICAL_SYSTEM_InitMusPokeParam( work->monsno , work->sex , work->form , work->rare , 0 , work->heapId );
   work->pokeWork = NULL;
@@ -1147,10 +1212,7 @@ static GFL_PROC_RESULT MusicalViewProc_Main( GFL_PROC * proc, int * seq , void *
       STA_POKE_UpdateSystem_Item( work->pokeSys );  //ポケの描画後に入れること
       GFL_BBD_Draw( work->bbdSys , work->camera , NULL );
 
-      if( work->isDispBit != 0 )
-      {
-        MUSICAL_VIEW_DrawEquipPos( work );
-      }
+      MUSICAL_VIEW_DrawEquipPos( work );
     }
     GFL_G3D_DRAW_End();
   }

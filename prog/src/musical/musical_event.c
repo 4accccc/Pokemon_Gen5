@@ -1266,9 +1266,20 @@ static const u8 MUSICAL_EVENT_CalcNpcIdx( MUSICAL_EVENT_WORK *evWork , const u8 
   u8 npcIdx = 0;
   for( i=0;i<idx;i++ )
   {
-    if( MUS_COMM_GetPlayerMyStatus( evWork->commWork , i ) == NULL )
+    
+    if( evWork->commWork == NULL )
     {
-      npcIdx++;
+      if( i != 0 )
+      {
+        npcIdx++;
+      }
+    }
+    else
+    {
+      if( MUS_COMM_GetPlayerMyStatus( evWork->commWork , i ) == NULL )
+      {
+        npcIdx++;
+      }
     }
   }
   OS_TPrintf("Pos[%d]->NPC[%d]\n",idx,npcIdx);
