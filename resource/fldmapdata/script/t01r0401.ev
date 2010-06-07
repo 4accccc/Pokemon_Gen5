@@ -330,8 +330,8 @@ ev_name_input:
 
 	//ローカル変数を定義
 	{
-	DEFINE_LOCAL	lwk_name_ret
 	DEFINE_LOCAL	lwk_name_while
+	DEFINE_LOCAL	lwk_nick_name
 
 	WHILE $lwk_name_while != 555
 
@@ -341,7 +341,7 @@ ev_name_input:
 		
 		_CAMERA_END()		//カメラ操作終了
 		
-		_PARTY_POKE_NAME_INPUT( lwk_name_ret, 0, FALSE )
+		_PARTY_POKE_NAME_INPUT( SCWK_ANSWER, 0, FALSE )
 		
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラパージ
@@ -351,16 +351,22 @@ ev_name_input:
 		_MAP_FADE_BLACK_IN()
 		_DISP_FADE_END_CHECK()
 
-		//入力ありなら確認
-		IF $lwk_name_ret == TRUE THEN
-			//そのニックネームで良いですか？
+		//ニックネームフラグチェック
+		_GET_PARTY_POKE_PARAM( lwk_nick_name, 0, SCR_POKEPARA_NICKNAME_FLAG )
+
+		//ニックネームがついていないなら確認
+		IF $lwk_nick_name == TRUE THEN
+			//その[ニックネーム]で良いですか？
+			_TEMOTI_NICK_NAME( 0, 0 )
 			_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_04, T01R0401_HAKASE2_01, POS_UR )
 			_YES_NO_WIN( SCWK_ANSWER )
-			_MSGWIN_CLOSE()
 
 			IF $SCWK_ANSWER == SCR_YES THEN
 				//はいなら繰り返し処理から抜ける
 				$lwk_name_while = 555
+			ELSE
+				//いいえならウインドウを閉じて名前入力画面へ（ループ）
+				_MSGWIN_CLOSE()
 			ENDIF
 
 		ELSE
@@ -372,15 +378,15 @@ ev_name_input:
 	ENDWHILE
 
 	//名前入力の有無で分岐
-	IF $lwk_name_ret == TRUE THEN
-		//入力アリ
+	IF $lwk_nick_name == TRUE THEN
+		//ニックネームあり
 		
 		//～～と言うのか
 		_TEMOTI_NICK_NAME( 0, 0 )	//ニックネーム取得
 		_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_05 , T01R0401_HAKASE2_01, POS_UR )
 
 	ELSE
-		//入力無し（キャンセル操作で戻ってきた）
+		//ニックネーム無し（キャンセル操作で戻ってきたor種族名と同じ文字列を入力した）
 		
 		//ニックネームを　つけないんだね
 		_BALLOONWIN_OBJMSG_POS( msg_t01r0401_hakase2_06 , T01R0401_HAKASE2_01, POS_UR )
