@@ -633,4 +633,5 @@ const ITEMDATA_INDEX ItemDataIndex[] =
 	{ NARC_item_icon_item_665_NCGR, NARC_item_icon_item_665_NCLR },
 	{ NARC_item_icon_item_665_NCGR, NARC_item_icon_item_665_NCLR },
 	{ NARC_item_icon_item_665_NCGR, NARC_item_icon_item_665_NCLR },
+	{ NARC_item_icon_item_663_NCGR, NARC_item_icon_item_663_NCLR },
 };
