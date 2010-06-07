@@ -1733,7 +1733,7 @@ static void Br_Record_AddPokeIcon( BR_RECORD_WORK * p_wk, GFL_CLUNIT *p_clunit, 
 		cldata.pos_x		= pos_tbl[ type ][ i ][ 0 ] + 12 - 4;
 		cldata.pos_y		= pos_tbl[ type ][ i ][ 1 ] - 12;
 		cldata.anmseq 	= POKEICON_ANM_HPMAX;
-    cldata.softpri  = 6-i;//右に行くほど優先度が高くなる
+    cldata.softpri  = HEADER_MONSNO_MAX-no;//右に行くほど優先度が高くなる
 				
 		p_wk->p_icon[ no ] = GFL_CLACT_WK_Create( p_clunit,
           p_wk->res_icon_chr[i],p_wk->res_icon_plt,p_wk->res_icon_cel,
