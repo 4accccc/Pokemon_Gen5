@@ -332,9 +332,10 @@ ev_name_input:
 		_MAP_FADE_BLACK_OUT()
 		_DISP_FADE_END_CHECK()
 		
+		_CAMERA_END()		//カメラ操作終了
+		
 		_PARTY_POKE_NAME_INPUT( lwk_name_ret, 0, FALSE )
 		
-		_CAMERA_END()		//カメラ操作終了
 		_CAMERA_START()		//カメラ操作開始
 		_CAMERA_PURGE()		//カメラパージ
 		//カメラ初期化されてしまうので再度カメラ操作
