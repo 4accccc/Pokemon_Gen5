@@ -1384,6 +1384,8 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
 {
   //方向から描画オフセットをつける
 	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
+    outVec->z -= MMDL_POKE_OFS_UPDOWN;
+#if 0
 		switch(dir){
 		case DIR_UP:
 			outVec->z += MMDL_POKE_OFS_UPDOWN;
@@ -1391,15 +1393,14 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
 		case DIR_DOWN:
 			outVec->z -= MMDL_POKE_OFS_UPDOWN;
 			break;
-#if 0
 		case DIR_LEFT:
 			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT;
 			break;
 		case DIR_RIGHT:
 			outVec->x += MMDL_POKE_OFS_RIGHTLEFT;
 			break;
-#endif
     }
+#endif
 	}else{
 		switch(dir){
 		case DIR_LEFT:
