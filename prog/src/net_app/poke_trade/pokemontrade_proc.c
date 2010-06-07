@@ -3829,6 +3829,7 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
 
 void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
 {
+  int i;
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   POKETRADE_2D_GTSPokemonIconResetAll(pWork);
 
@@ -3872,13 +3873,11 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
     GFL_HEAP_FreeMemory(pWork->pD2Fade);
     pWork->pD2Fade=NULL;
   }
-  if(pWork->pMoveMcss[0]){
-    GFL_HEAP_FreeMemory(pWork->pMoveMcss[0]);
-    pWork->pMoveMcss[0]=NULL;
-  }
-  if(pWork->pMoveMcss[1]){
-    GFL_HEAP_FreeMemory(pWork->pMoveMcss[1]);
-    pWork->pMoveMcss[1]=NULL;
+  for(i=0;i<4;i++){
+    if(pWork->pMoveMcss[i]){
+      GFL_HEAP_FreeMemory(pWork->pMoveMcss[i]);
+      pWork->pMoveMcss[i]=NULL;
+    }
   }
 
   GFL_HEAP_DEBUG_PrintExistMemoryBlocks(pWork->heapID);

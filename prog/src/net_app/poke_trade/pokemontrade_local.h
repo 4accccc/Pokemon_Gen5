@@ -1078,6 +1078,7 @@ extern BOOL POKEMONTRADE_CheckMojiSelect(POKEMON_TRADE_WORK* pWork);
 extern void POKEMONTRADE2D_ChangePokemonPalette(POKEMON_TRADE_WORK* pWork, BOOL bGray);
 extern void POKEMONTRADE_McssAnmStop( u32 data, fx32 currentFrame );
 extern void POKEMONTRADE_CancelCall(void);
+extern void POKEMONTRADE_McssMoveDel(_POKEMCSS_MOVE_WORK* pPoke);
 
 
 

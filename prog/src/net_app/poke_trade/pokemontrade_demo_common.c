@@ -255,10 +255,12 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   // ポケモン中央に移動開始
   {
     VecFx32 pos={_POKEMON_PLAYER_CENTER_POSX,_POKEMON_PLAYER_CENTER_POSY, _POKEMON_PLAYER_CENTER_POSZ};
+    POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
     pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKEMON_CENTER_TIME), &pos, pWork->heapID);
   }
   {
     VecFx32 pos={_POKEMON_FRIEND_CENTER_POSX,_POKEMON_FRIEND_CENTER_POSY, _POKEMON_FRIEND_CENTER_POSZ};
+    POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[1]);
     pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKEMON_CENTER_TIME*2), &pos, pWork->heapID);
   }
 
@@ -323,6 +325,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
         POKEMON_PARAM* pp;
 
         MCSS_GetPosition(pWork->pokeMcss[0], &apos);
+        POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
         if(pWork->bByebyeNoJump){
           pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
         }
@@ -339,6 +342,7 @@ static void _changeDemo_ModelTrade1(POKEMON_TRADE_WORK* pWork)
       else{// 一致しているのでジャンプ
         VecFx32 apos;
         MCSS_GetPosition(pWork->pokeMcss[0], &apos);
+        POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
         if(pWork->bByebyeNoJump){
           pWork->pMoveMcss[0] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[0], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
         }
@@ -485,6 +489,7 @@ static void _pokemonApperLastCreate(POKEMON_TRADE_WORK* pWork, int num)
   
   if(!pWork->bEncountMessageEach){     // 不一致なのでジャンプ+回転
     MCSS_GetPosition(pWork->pokeMcss[num], &apos);
+    POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[3]);
     if(pWork->bEncountNoJump){
       pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pWork->pokeMcss[num], elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
     }
@@ -496,6 +501,7 @@ static void _pokemonApperLastCreate(POKEMON_TRADE_WORK* pWork, int num)
     int buff[]={2,3,0,1};
     MCSS_WORK* pMcss= pWork->pokeMcss[buff[num]];
     MCSS_GetPosition(pWork->pokeMcss[num], &apos);
+    POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[3]);
     if(pWork->bEncountNoJump){
       pWork->pMoveMcss[3] = POKEMONTRADE_pokeTblMoveCreate(pMcss, elementof(_noJumpTbl), &apos, _noJumpTbl,  pWork->heapID);
     }

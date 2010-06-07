@@ -318,6 +318,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_PLAYER_UP_POSX;
       apos.y = _POKEMON_PLAYER_UP_POSY;
       apos.z = _POKEMON_PLAYER_UP_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_POKE_APPEAR_TIME), &apos, pWork->heapID);
       MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
 
@@ -342,6 +343,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_FRIEND_DOWN_POSX;
       apos.y = _POKEMON_FRIEND_DOWN_POSY;
       apos.z = _POKEMON_FRIEND_DOWN_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[1]);
       pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_POKE_APPEAR_TIME), &apos , pWork->heapID);
       MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
       MCSS_GetScale( pWork->pokeMcss[3], &apos );
@@ -373,10 +375,12 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_PLAYER_SIDEOUT_POSX;
       apos.y = _POKEMON_PLAYER_SIDEOUT_POSY;
       apos.z = _POKEMON_PLAYER_SIDEOUT_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_POKE_SIDEOUT_TIME), &apos, pWork->heapID);
       apos.x = _POKEMON_FRIEND_SIDEOUT_POSX;
       apos.y = _POKEMON_FRIEND_SIDEOUT_POSY;
       apos.z = _POKEMON_FRIEND_SIDEOUT_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[1]);
       pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_POKE_SIDEOUT_TIME), &apos , pWork->heapID);
       pWork->pMoveMcss[0]->wave=1;
       pWork->pMoveMcss[1]->wave=1;
@@ -397,6 +401,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_PLAYER_SIDEIN_POSX;
       apos.y = _POKEMON_PLAYER_SIDEIN_POSY;
       apos.z = _POKEMON_PLAYER_SIDEIN_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_SIDEIN_TIME), &apos, pWork->heapID);
       MCSS_GetScale( pWork->pokeMcss[0], &apos );
       apos.x *= _BACK_POKMEON_SCALE_SIZE;
@@ -416,6 +421,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_FRIEND_SIDEIN_POSX;
       apos.y = _POKEMON_FRIEND_SIDEIN_POSY;
       apos.z = _POKEMON_FRIEND_SIDEIN_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[1]);
       pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKE_SIDEIN_TIME), &apos , pWork->heapID);
       MCSS_GetScale( pWork->pokeMcss[1], &apos );
       apos.x *= _FRONT_POKMEON_SCALE_SIZE;
@@ -442,10 +448,12 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _POKEMON_PLAYER_LEAVE_POSX;
       apos.y = _POKEMON_PLAYER_LEAVE_POSY;
       apos.z = _POKEMON_PLAYER_LEAVE_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[0], ANMCNTC(_POKE_LEAVE_TIME), &apos, pWork->heapID);
       apos.x = _POKEMON_FRIEND_LEAVE_POSX;
       apos.y = _POKEMON_FRIEND_LEAVE_POSY;
       apos.z = _POKEMON_FRIEND_LEAVE_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[1]);
       pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[1], ANMCNTC(_POKE_LEAVE_TIME), &apos , pWork->heapID);
     }
   }

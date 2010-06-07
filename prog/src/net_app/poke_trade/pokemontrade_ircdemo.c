@@ -201,6 +201,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _IR_POKEMON_PLAYER_UP_POSX;
       apos.y = _IR_POKEMON_PLAYER_UP_POSY;
       apos.z = _IR_POKEMON_PLAYER_UP_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[0]);
       pWork->pMoveMcss[0] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[2], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos, pWork->heapID);
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[2]);
 
@@ -226,6 +227,7 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
       apos.x = _IR_POKEMON_FRIEND_DOWN_POSX;
       apos.y = _IR_POKEMON_FRIEND_DOWN_POSY;
       apos.z = _IR_POKEMON_FRIEND_DOWN_POSZ;
+      POKEMONTRADE_McssMoveDel(pWork->pMoveMcss[1]);
       pWork->pMoveMcss[1] = POKEMONTRADE_pokeMoveCreate(pWork->pokeMcss[3], ANMCNTC(_IR_POKE_APPEAR_TIME), &apos , pWork->heapID);
       //MCSS_SetAnmStopFlag(pWork->pokeMcss[3]);
       MCSS_SetScale( pWork->pokeMcss[3], &pWork->pPokemonTradeDemo->ReturnPos );

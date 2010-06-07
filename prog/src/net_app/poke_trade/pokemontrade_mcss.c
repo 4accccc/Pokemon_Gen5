@@ -335,3 +335,12 @@ void POKEMONTRADE_McssAnmStop( u32 data, fx32 currentFrame )
   MCSS_SetAnmStopFlag( pWork->pokeMcss[0]);
   pWork->mcssStop[0] = TRUE;
 }
+
+
+void POKEMONTRADE_McssMoveDel(_POKEMCSS_MOVE_WORK* pPoke)
+{
+  if(pPoke){
+    GFL_HEAP_FreeMemory(pPoke);
+  }
+}
+
