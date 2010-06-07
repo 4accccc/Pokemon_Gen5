@@ -2279,7 +2279,9 @@ static void _makeMyMatchStatus(WIFIP2PMATCH_WORK* wk, u32 status, u32 gamemode)
   WIFI_STATUS_SetMyNation(wk->pMatch, MyStatus_GetMyNation(pMyStatus));
   WIFI_STATUS_SetMyArea(wk->pMatch, MyStatus_GetMyArea(pMyStatus));
   WIFI_STATUS_SetVChatStatus(wk->pMatch, wk->pParentWork->vchatMain);
-
+  WIFI_STATUS_SetPlayerID(wk->pMatch, MyStatus_GetID(pMyStatus));
+  WIFI_STATUS_SetGameSyncID(wk->pMatch, MyStatus_GetProfileID(pMyStatus));
+  
   _sendMatchStatus(wk);
 
 }
@@ -2374,12 +2376,12 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
           //NPCをジャンプ動作にする
           WIFI_MCR_NpcMoveSet( &wk->matchroom, p_obj,  MCR_NPC_MOVE_JUMP );
         }
-#if 1
-        {
+        {   //大事な情報セット
           WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_UNION_GRA, WIFI_STATUS_GetTrainerView(p_status));
           WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_SEX, WIFI_STATUS_GetSex(p_status));
+          WifiList_SetFriendInfo(wk->pList, i, WIFILIST_GAMESYNC_ID, WIFI_STATUS_GetGameSyncID(p_status));
+          WifiList_SetFriendInfo(wk->pList, i, WIFILIST_FRIEND_ID, WIFI_STATUS_GetPlayerID(p_status));
         }
-#endif
       }
       wk->matchStatusBackup[i] = status;
       wk->matchVchatBackup[i] = WIFI_STATUS_GetVChatStatus(p_status);
@@ -7651,8 +7653,7 @@ static GFL_PROC_RESULT WifiP2PMatchProc_Init( GFL_PROC * proc, int * seq, void *
   }
 
   if(GFL_NET_IsInit()){
-    GFL_NET_WirelessIconEasy_HoldLCD(TRUE,HEAPID_WIFIP2PMATCH);
-    GFL_NET_ReloadIcon();  // 接続中なのでアイコン表示
+    GFL_NET_ReloadIconTopOrBottom(TRUE, HEAPID_WIFIP2PMATCH);
   }
 
   return GFL_PROC_RES_FINISH;

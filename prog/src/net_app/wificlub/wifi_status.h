@@ -58,23 +58,24 @@ typedef enum{
 
 struct _WIFI_STATUS{
   u32 profileID;                                 //プロファイルID      4
-	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      10
-	u8 MyMac[6];       // 自分のMacアドレス      16
-  u8 trainer_view;	// ユニオンルーム内での見た目  17
-  u8 pm_version;	// バージョン                         18
-	u8 pm_lang;		  // 言語                                19
-	u8 GameMode;         // WIFIでのゲーム等の状態         WIFI_GAME_e       20
-  u8 status;    // 自分の状態                           WIFI_STATUS_e   21
-  u8 nation;           //  国                           22
-  u8 area;             //  地域                        23
-  u8 shooter:1;    //シューター有り無し             24
+  u32 playerID;                                 //プロファイルID      8
+	u8 VChatMac[6];       // ゲームを呼びかける人のMacアドレス 自分のMACだった場合開始      14
+	u8 MyMac[6];       // 自分のMacアドレス      20
+  u8 trainer_view;	// ユニオンルーム内での見た目  21
+  u8 pm_version;	// バージョン                         22
+	u8 pm_lang;		  // 言語                                23
+	u8 GameMode;         // WIFIでのゲーム等の状態         WIFI_GAME_e       24
+  u8 status;    // 自分の状態                           WIFI_STATUS_e   25
+  u8 nation;           //  国                           26
+  u8 area;             //  地域                        27
+  u8 shooter:1;    //シューター有り無し             28
   u8 VChatStatus:1;       // VChatの状態 
   u8 sex:2;      //性別
   u8 dummybit:4;
-  u8 callcounter;      //呼びかける際のインクリメント数 25
-  u8 dummy3;   //上位バージョン用              26
-  u8 dummy4;   //上位バージョン用              27
-  u8 dummy5;   //上位バージョン用              28
+  u8 callcounter;      //呼びかける際のインクリメント数 29
+  u8 dummy3;   //上位バージョン用              30
+  u8 dummy4;   //上位バージョン用              31
+  u8 dummy5;   //上位バージョン用              32
 };
 
 
@@ -110,6 +111,20 @@ static inline void WIFI_STATUS_SetPMLang(WIFI_STATUS* pStatus,u8 pm_lang){ pStat
 static inline void WIFI_STATUS_SetSex(WIFI_STATUS* pStatus,u8 sex){ pStatus->sex = sex; }
 static inline u8 WIFI_STATUS_GetSex(WIFI_STATUS* pStatus){ return pStatus->sex; }
 extern u8 WIFI_STATUS_GetCallCounter(WIFI_STATUS* pStatus);
+
+
+
+
+static inline void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no){ 	pStatus->nation = no; }
+static inline void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no){ 	pStatus->area = no; }
+static inline void WIFI_STATUS_SetPlayerID(WIFI_STATUS* pStatus,u32 no){ 	pStatus->playerID = no; }
+static inline u32 WIFI_STATUS_GetPlayerID(WIFI_STATUS* pStatus){ 	return pStatus->playerID; }
+static inline void WIFI_STATUS_SetGameSyncID(WIFI_STATUS* pStatus,u32 no){ 	pStatus->profileID = no; }
+static inline u32 WIFI_STATUS_GetGameSyncID(WIFI_STATUS* pStatus){ 	return pStatus->profileID; }
+
+
+
+
 
 
 //extern void WIFI_STATUS_SetTrainerView(WIFI_STATUS* pStatus,u8 trainer_view);

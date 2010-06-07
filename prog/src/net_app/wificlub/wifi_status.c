@@ -174,15 +174,6 @@ void WIFI_STATUS_SetMyMac(WIFI_STATUS* pStatus)
 
 
 
-void WIFI_STATUS_SetMyNation(WIFI_STATUS* pStatus,u8 no)
-{
-	pStatus->nation = no;
-}
-
-void WIFI_STATUS_SetMyArea(WIFI_STATUS* pStatus,u8 no)
-{
-	pStatus->area = no;
-}
 
 //----------------------------------------------------------
 /**
