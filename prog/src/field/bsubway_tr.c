@@ -635,7 +635,16 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
       PokeParty_Add( party, pp );
     }
 	}
-  
+
+#ifdef PM_DEBUG
+  if( wk->play_mode == BSWAY_MODE_MULTI ||
+      wk->play_mode == BSWAY_MODE_S_MULTI ){
+      KAGAYA_Printf(
+          "セットするAIパートナーのトレーナータイプ=%d\n",
+          wk->five_data[wk->partner].bt_trd.tr_type );
+  }
+#endif
+
   dst = FBI_TOOL_CreateBattleParam(
           gsys, party, wk->play_mode,
           wk->tr_data,

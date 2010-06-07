@@ -589,8 +589,12 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
     bsw_partner = &partner_data[0];
     bsw_trainer = &bsw_partner->bt_trd;
 
+#if 0 //トレーナーID0を設定すると戦闘録画側に異常
     if ( play_mode == BSWAY_MODE_WIFI ) tr_data->tr_id = 0;
     else tr_data->tr_id = bsw_trainer->player_id;
+#else //wifiデータ側で専用のトレーナーIDを設定する
+    tr_data->tr_id = bsw_trainer->player_id;
+#endif
 
     tr_data->tr_type = bsw_trainer->tr_type;
     tr_data->ai_bit = 0x00000087;  //最強
@@ -679,7 +683,11 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
       tr_data->tr_id = bsw_trainer->player_id;
       tr_data->tr_type = bsw_trainer->tr_type;
       tr_data->ai_bit = 0x00000087;  //最強
-    
+      
+      KAGAYA_Printf(
+          "セットされたAIパートナーのトレーナータイプ=%d\n",
+          tr_data->tr_type );
+
       //トレーナーデータ　name
       GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
     

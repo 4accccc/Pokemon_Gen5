@@ -581,9 +581,12 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       
       if( sex == PM_MALE ){
         sex = PM_FEMALE;
+        KAGAYA_Printf( "パートナーOBJコード取得 パートナー女\n" );
       }else{
         sex = PM_MALE;
+        KAGAYA_Printf( "パートナーOBJコード取得 パートナー男\n" );
       }
+
       
       *ret_wk = FIELD_PLAYER_GetMoveFormToOBJCode(
           sex, PLAYER_MOVE_FORM_NORMAL );
@@ -1101,8 +1104,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       
       if( sex == PM_MALE ){
         sex = PM_FEMALE;
+        KAGAYA_Printf( "パートナーデータロード パートナー女\n" );
       }else{
         sex = PM_MALE;
+        KAGAYA_Printf( "パートナーデータロード パートナー男\n" );
       }
       
       BSUBWAY_SCRWORK_ChoiceBtlSeven( bsw_scr, sex );

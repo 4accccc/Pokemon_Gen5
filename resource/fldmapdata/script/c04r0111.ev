@@ -344,6 +344,12 @@ sub_challenge_continue_comm_multi_ok:
   _CHG_COMMON_SCR SCRID_BSW_SELECT_BTL_BOX
   $result = $SCWK_ANSWER //FALSE=キャンセル
   
+  //sub_challenge_continue_comm_multiでメッセージウィンドウを閉じている為
+  //レギュレーション異常、バトルボックスが無い状況だと
+  //下記ウィンドウが即表示されてしまう為、点滅に近い印象を与えてしまう。
+  //ウェイトを入れて間を持たせ緩和している。
+  _TIME_WAIT( 30 )
+  
   //お友達の選択を待っています
   _SYSWIN_MSG( msg_c04r0111_19, POS_DOWN )
 

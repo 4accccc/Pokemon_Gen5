@@ -229,7 +229,6 @@ INIT_EVENT_END
 EVENT_START ev_bsw_posev_receipt_stopper
 {
   _CALL sub_receipt_demo_stopper
-  _TALK_START_SE_PLAY()
   _CALL sub_bsw_receipt_talk
 }
 EVENT_END
@@ -3038,7 +3037,6 @@ INIT_EVENT_END
 EVENT_START ev_bsw_ttown_receipt_stopper
 {
   _CALL sub_receipt_demo_stopper
-  _TALK_START_SE_PLAY()
   $SCWK_TEMP0 = TRUE
   _CALL sub_bsw_ttown_receipt_talk
 }
