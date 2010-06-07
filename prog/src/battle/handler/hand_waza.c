@@ -2163,7 +2163,7 @@ static void handler_TriAttack( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static const BtlEventHandlerTable*  ADD_HimituNoTikara( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION, handler_HimituNoTikara },    // ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END_HIT_REAL, handler_HimituNoTikara },    // ダメージ反応ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2191,7 +2191,7 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 
       BtlBgAttr  bg = BTL_SVFTOOL_GetLandForm( flowWk );
       const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-      u8   targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+      u8   targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
       u16        method, method_arg;
 
       switch( bg ){
