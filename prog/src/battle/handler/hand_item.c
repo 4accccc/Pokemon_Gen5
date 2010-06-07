@@ -4215,10 +4215,11 @@ static void handler_DokudokuDama_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
   {
     u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, atkPokeID );
-    param->pokeID = pokeID;
-    param->sickID = WAZASICK_DOKU;
-    param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
+      param->pokeID = pokeID;
+      param->sickID = WAZASICK_DOKU;
+      param->sickCont = BPP_SICKCONT_MakeMoudokuCont();
 //    param->fAlmost = TRUE;
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 //------------------------------------------------------------------------------

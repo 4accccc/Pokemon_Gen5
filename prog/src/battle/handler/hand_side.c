@@ -16,6 +16,7 @@
 #include "..\btl_field.h"
 #include "..\btl_client.h"
 #include "..\btl_event_factor.h"
+#include "..\btlv\btlv_effect.h"
 
 #include "hand_side.h"
 
@@ -718,24 +719,15 @@ static void handler_side_Burning( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     if( !BPP_IsMatchType(bpp, POKETYPE_HONOO) )
     {
       BTL_HANDEX_PARAM_DAMAGE* param;
-      u32 turnCount = BTL_SVFTOOL_GetTurnCount( flowWk );
 
-      // ターン初回のみエフェクト発動させる
-      if( work[0] == 1 ){
-        if( work[1] != turnCount ){ work[0] = 0; }
-      }
-      if( work[0] == 0 )
+      // エフェクト発動させる
       {
         BTL_HANDEX_PARAM_ADD_EFFECT*  viewEff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );
           viewEff_param->pos_from = BTL_SVFTOOL_PokeIDtoPokePos( flowWk, pokeID );
           viewEff_param->pos_to   = BTL_POS_NULL;
-          viewEff_param->effectNo = BTL_SIDEEFF_BURNING;
+          viewEff_param->effectNo = BTLEFF_BURNING;
         BTL_SVF_HANDEX_Pop( flowWk, viewEff_param );
-
-        work[0] = 1;
-        work[1] = BTL_SVFTOOL_GetTurnCount( flowWk );
       }
-
 
       param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, BTL_POKEID_NULL );
         param->pokeID = pokeID;
