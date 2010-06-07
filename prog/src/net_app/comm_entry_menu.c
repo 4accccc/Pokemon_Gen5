@@ -27,6 +27,9 @@
 #define NUM_EXPAND_STRBUF_SIZE      (32)
 ///ゲーム開始前の同期番号
 #define GAMESTART_SYNC_NO (1) 
+///メッセージ描画リクエスト：リクエスト無し
+#define _MSG_REQ_ID_NULL        (0xffff)
+
 ///ユーザーステータス
 enum{
   USER_STATUS_NULL,         ///<ユーザーがいない
@@ -217,7 +220,7 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   
   s8 draw_player_num;             ///<残り人数」の現在
   u8 game_start_num;              ///<開始時の人数
-  s8 padding[2];
+  u16 msg_req_id;                 ///<メッセージ描画リクエスト(メッセージID)
 }COMM_ENTRY_MENU_SYSTEM;
 
 
@@ -373,6 +376,7 @@ COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fie
   em->game_type = game_type;
   em->heap_id = heap_id;
   em->draw_player_num = -1;   //最初は必ず描画されるように-1を設定しておく
+  em->msg_req_id = _MSG_REQ_ID_NULL;
   MyStatus_Copy(myst, &em->mine_mystatus);
   if(parent_mac_address != NULL){
     GFL_STD_MemCopy(parent_mac_address, em->parent_mac_address, 6);
@@ -579,6 +583,10 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     CommEntryMenu_ExaminationUpdate(em);
     if(CommEntryMenu_InterruptCheck(em) == TRUE){
       int entry_num = CommEntryMenu_GetCompletionNum(em);
+      u16 msg_req_id = em->msg_req_id;
+      
+      em->msg_req_id = _MSG_REQ_ID_NULL;
+      
       if(entry_num >= em->max_num
           || (entry_num >= em->min_num && (GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE))){
         CommEntryMenu_SetFinalUser(em);
@@ -589,6 +597,11 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       }
       else if(em->game_type == COMM_ENTRY_GAMETYPE_COLOSSEUM && GFL_NET_GetConnectNum() <= 1){
         em->seq = _SEQ_COLOSSEUM_PARENT_ONLY;
+      }
+      else{
+        if(msg_req_id != _MSG_REQ_ID_NULL){
+          _StreamMsgSet(em, msg_req_id);
+        }
       }
     }
     break;
@@ -611,11 +624,11 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
           if( CommEntryMenu_GetCompletionNum(em) > 1 &&
               em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
           {
-            _StreamMsgSet(em, msg_connect_02_01_01);
+            em->msg_req_id = msg_connect_02_01_01;
           }
           else
           {
-            _StreamMsgSet(em, msg_connect_02_01);
+            em->msg_req_id = msg_connect_02_01;
           }
         }
       }
@@ -1489,11 +1502,11 @@ static void CommEntryMenu_ExaminationUpdate(COMM_ENTRY_MENU_PTR em)
     if( CommEntryMenu_GetCompletionNum(em) > 1 &&
         em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
     {
-      _StreamMsgSet(em, msg_connect_02_01_01);
+      em->msg_req_id = msg_connect_02_01_01;
     }
     else
     {
-      _StreamMsgSet(em, msg_connect_02_01);
+      em->msg_req_id = msg_connect_02_01;
     }
     em->examination_occ = FALSE;
     yesno->seq = 0;
@@ -1644,11 +1657,11 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em)
     if( CommEntryMenu_GetCompletionNum(em) > 1 &&
         em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
     {
-      _StreamMsgSet(em, msg_connect_02_01_01);
+      em->msg_req_id = msg_connect_02_01_01;
     }
     else
     {
-      _StreamMsgSet(em, msg_connect_02_01);
+      em->msg_req_id = msg_connect_02_01;
     }
     yesno->seq = 0xff;
     break;
