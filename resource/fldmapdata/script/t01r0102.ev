@@ -430,8 +430,9 @@ ev_first_pkeget:
 	//チェレンはポケモンを回復させた
 	_SE_PLAY( SEQ_SE_RECOVERY )
 	_SYSWIN_MSG( msg_t01r0102_black_10, POS_DEFAULT )
-	_MSGWIN_CLOSE()
 	_SE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
 	
 	//ライバル：主人公を見て
 	_OBJ_ANIME( T01R0102_RIVAL_01, anm_stay_walk_l )
@@ -460,8 +461,9 @@ ev_first_pkeget:
 	_SE_PLAY( SEQ_SE_RECOVERY )
 	_TEMOTI_MONS_NAME( 1, 0 )
 	_SYSWIN_MSG( msg_t01r0102_black_12, POS_DEFAULT )
-	_MSGWIN_CLOSE()
 	_SE_WAIT()
+	_AB_KEYWAIT_MARK()
+	_MSGWIN_CLOSE()
 
 	//回復処理
 	_TEMOTI_POKEMON_KAIFUKU()
