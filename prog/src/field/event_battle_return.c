@@ -86,6 +86,7 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
 
 static void check_lvup_poke( BTLRET_WORK* wk, BTLRET_PARAM* param );
 static void monohiroi_mitsuatsume_check( POKEPARTY* ppt );
+static void sizenkaihuku_check( POKEPARTY* ppt );  // 特性(とくせい)が自然回復(しぜんかいふく)ならバトル後に状態異常を回復する
 static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, BATT_BG_OBONID obonID );
 static BATT_BG_OBONID get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID );
 static void sheimi_zukan_touroku_check( BTLRET_PARAM* param, POKEPARTY* ppt );
@@ -221,6 +222,11 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
           //MISC_??Goldはunsignedの値しか受け取らない
           MISC_SubGold( GAMEDATA_GetMiscWork(param->gameData), -(param->btlResult->getMoney) );
         }
+      }
+
+      // 特性(とくせい)自然回復(しぜんかいふく)のチェック
+      {
+        sizenkaihuku_check( party );  // 特性(とくせい)が自然回復(しぜんかいふく)ならバトル後に状態異常を回復する
       }
 
       // 捕獲した
@@ -576,6 +582,42 @@ static  void  monohiroi_mitsuatsume_check( POKEPARTY* ppt )
         j = ITEM_AMAIMITU;
         PP_Put( pp, ID_PARA_item, j );
       }
+    }
+  }
+}
+
+//============================================================================================
+/**
+ *  特性(とくせい)自然回復(しぜんかいふく)のチェック
+ *
+ *  @param[in]  ppt POKEPARTY構造体
+ */
+//============================================================================================
+static void sizenkaihuku_check( POKEPARTY* ppt )  // 特性(とくせい)が自然回復(しぜんかいふく)ならバトル後に状態異常を回復する
+{
+  // include/poke_tool/tokusyu_def.h
+  // TOKUSYU_SIZENKAIHUKU
+  // include/poke_tool/poketype.h
+  // POKETOKUSEI_SIZENKAIFUKU
+
+  int i;
+  u16 monsno;
+  u8  speabi;
+  POKEMON_PARAM *pp;
+
+  for( i = 0 ; i < PokeParty_GetPokeCount( ppt ) ; i++ )
+  {
+    pp = PokeParty_GetMemberPointer( ppt, i );
+    monsno = PP_Get( pp, ID_PARA_monsno_egg, NULL );
+    speabi = PP_Get( pp, ID_PARA_speabino, NULL );
+    //自然回復(しぜんかいふく)チェック
+    if( ( speabi == TOKUSYU_SIZENKAIHUKU ) &&
+        ( monsno != 0 ) &&
+        ( monsno != MONSNO_TAMAGO ) )
+    {
+      // 死んでいるときは自然回復以外の特性のポケモンも状態異常が回復される(バトル終了時に回復してくれている)ので、
+      // ポケモンが生きているか死んでいるかの判定は不要。
+      PP_SetSick( pp, POKESICK_NULL );
     }
   }
 }
