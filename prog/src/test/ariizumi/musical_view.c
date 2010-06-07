@@ -1017,11 +1017,11 @@ static void MUSICAL_VIEW_DrawEquipPos( MUS_VIEW_LOCAL_WORK *work )
 
         MTX_RotZ33( &rotWork , -FX_SinIdx( rotZ ) , FX_CosIdx( rotZ ) );
         MTX_MultVec33( &equipData->ofs , &rotWork , &ofs );
-        MTX_MultVec33( &equipData->rotOfs , &rotWork , &rotOfs );
-        VEC_Subtract( &equipData->rotOfs , &rotOfs , &rotOfs );
 
-        pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
-        pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+        //pos.x = MUSICAL_POS_X_FX(equipData->pos.x+ofs.x+FX32_CONST(128.0f) + rotOfs.x);
+        //pos.y = MUSICAL_POS_Y_FX(equipData->pos.y+ofs.y+FX32_CONST(96.0f) + rotOfs.y);
+        pos.x = MUSICAL_POS_X_FX(equipData->pos.x + ofs.x + FX32_CONST(128.0f));
+        pos.y = MUSICAL_POS_Y_FX(equipData->pos.y + ofs.y + FX32_CONST(96.0f));
         pos.z = FX32_CONST(120.0f); //ポケの前に出す
 
         G3_Translate( pos.x, pos.y, pos.z );

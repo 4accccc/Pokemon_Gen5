@@ -526,8 +526,8 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
             //const fx32 itemOfsx = mcss->musInfo[clIdx].ofsX*FX_CosIdx(rotZ) - mcss->musInfo[clIdx].ofsY*FX_SinIdx(rotZ);
             //const fx32 itemOfsy = mcss->musInfo[clIdx].ofsX*FX_SinIdx(rotZ) + mcss->musInfo[clIdx].ofsY*FX_CosIdx(rotZ);
             {
-              const u32 ofsX2 = mcss->musInfo[clIdx].ofsX + anim_SRT.px;
-              const u32 ofsY2 = mcss->musInfo[clIdx].ofsY + anim_SRT.py;
+              const u32 ofsX2 = mcss->musInfo[clIdx].ofsX;// + anim_SRT.px;
+              const u32 ofsY2 = mcss->musInfo[clIdx].ofsY;// + anim_SRT.py;
               const fx32 ofsXR = ofsX2 * FX_CosIdx(rotZ) - ofsY2 * FX_SinIdx(rotZ);
               const fx32 ofsYR = ofsX2 * FX_SinIdx(rotZ) + ofsY2 * FX_CosIdx(rotZ);
               const fx32 scaleX = FX_Mul( anim_SRT_mc.sx , anim_SRT.sx );
@@ -548,6 +548,8 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
               ofsXF += ofsXS;
               ofsYF += ofsYS;
             }
+            ofsXF += FX32_CONST( anim_SRT.px );
+            ofsYF += FX32_CONST( anim_SRT.py );
 
             //ARI_Printf("[%.3f][%.3f][%.3f][%.3f]",F32_CONST(anim_SRT.sx),F32_CONST(anim_SRT_mc.sx),F32_CONST(anim_SRT.sy),F32_CONST(anim_SRT_mc.sy));
             //ARI_TPrintf("[%x][%x]",anim_SRT_mc.rotZ,anim_SRT.rotZ);
