@@ -1745,7 +1745,7 @@ static UN_SELECT_MAIN_WORK* app_init( GFL_PROC* proc, UN_SELECT_PARAM* prm )
 
   //通信アイコン
   GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heap_id );
-	GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE, wk->heap_id);
 
   return wk;
 }
