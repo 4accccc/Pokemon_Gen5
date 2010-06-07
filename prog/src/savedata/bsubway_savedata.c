@@ -1186,15 +1186,9 @@ void BSUBWAY_WIFIDATA_GetBtlPlayerData( const BSUBWAY_WIFI_DATA *bsw_wifi, BSUBW
   src = &(bsw_wifi->player[round]);
 
   //トレーナーパラメータ取得
-  tr->player_id = 0;//サブウェイ用IDは固定値 @TODO
+  tr->player_id = BSP_TRAINERID_SUBWAY;//サブウェイ用IDは固定値
   tr->tr_type = src->tr_type;
-  //NGネームフラグチェック @TODO ＳＥＲＶＥＲ側で置き換えてくれるのでは？
-  if(src->ngname_f){
-    // NGネームの変更処理
-    DWC_TOOL_SetBadNickName( tr->name, 8, heapID );
-  }else{
-    GFL_STD_MemCopy(src->name,tr->name,16);
-  }
+  GFL_STD_MemCopy(src->name,tr->name,16);
   GFL_STD_MemCopy(src->appear_word,tr->appear_word,8);
   GFL_STD_MemCopy(src->win_word,tr->win_word,8);
   GFL_STD_MemCopy(src->lose_word,tr->lose_word,8);
