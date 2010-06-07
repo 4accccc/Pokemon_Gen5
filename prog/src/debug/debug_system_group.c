@@ -198,6 +198,7 @@ static void DEBWIN_Draw_Kanji( void* userWork , DEBUGWIN_ITEM* item )
 }
 
 //BGM
+extern BOOL BGMPlayerVolumeFadeEnable;
 static void DEBWIN_Update_BGM( void* userWork , DEBUGWIN_ITEM* item )
 {
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
@@ -205,6 +206,7 @@ static void DEBWIN_Update_BGM( void* userWork , DEBUGWIN_ITEM* item )
 		DEBUG_SYS_GROUP_WORK* wk = (DEBUG_SYS_GROUP_WORK*)userWork;
 		wk->bgmFlag ^= 1;
 
+    BGMPlayerVolumeFadeEnable = wk->bgmFlag; // PLAYER_VOLUME_FADER ‚ÌBGM‘€ì‚ð–³Œø‰»(—LŒø‰»)
 		PMSND_AllPlayerVolumeEnable( wk->bgmFlag, PMSND_MASKPL_BGM );
     DEBUGWIN_RefreshScreen();
   }

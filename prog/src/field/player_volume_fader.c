@@ -12,12 +12,11 @@
 #include "sound/wb_sound_data.sadl" // PLAYER_
 
 
-//===================================================================================
-// ■定数
-//===================================================================================
-// #define DEBUG_PRINT_ON // デバッグ出力スイッチ
-#define PRINT_TARGET (1)    // デバッグ表示先
-#define MAX_VOLUME   (127)  // 最大ボリューム
+#ifdef PM_DEBUG
+BOOL BGMPlayerVolumeFadeEnable = TRUE; 
+#endif
+
+#define MAX_VOLUME (127)
 
 
 //===================================================================================
@@ -38,12 +37,12 @@ struct _PLAYER_VOLUME_FADER
 // ■非公開関数
 //===================================================================================
 // システム制御
-static void InitFader      ( PLAYER_VOLUME_FADER* fader );
-static void SetFadeParam   ( PLAYER_VOLUME_FADER* fader, u8 endVolume, u16 fadeFrame );
+static void InitFader( PLAYER_VOLUME_FADER* fader );
+static void SetFadeParam( PLAYER_VOLUME_FADER* fader, u8 endVolume, u16 fadeFrame );
 static void SetPlayerVolume( PLAYER_VOLUME_FADER* fader, u8 volume );
-static void FaderMain      ( PLAYER_VOLUME_FADER* fader ); 
+static void FaderMain( PLAYER_VOLUME_FADER* fader ); 
 // ボリューム制御
-static int  CalcNowVolume     ( const PLAYER_VOLUME_FADER* fader );
+static int  CalcNowVolume( const PLAYER_VOLUME_FADER* fader );
 static void UpdatePlayerVolume( const PLAYER_VOLUME_FADER* fader );
 
 
@@ -62,10 +61,6 @@ static void UpdatePlayerVolume( const PLAYER_VOLUME_FADER* fader );
 PLAYER_VOLUME_FADER* PLAYER_VOLUME_FADER_Create( HEAPID heapID, u8 playerNo )
 {
   PLAYER_VOLUME_FADER* fader;
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "PLAYER-VOLUME-FADER: create system\n" );
-#endif
 
   // 生成
   fader = GFL_HEAP_AllocMemory( heapID, sizeof(PLAYER_VOLUME_FADER) );
@@ -87,10 +82,6 @@ PLAYER_VOLUME_FADER* PLAYER_VOLUME_FADER_Create( HEAPID heapID, u8 playerNo )
 void PLAYER_VOLUME_FADER_Delete( PLAYER_VOLUME_FADER* fader )
 {
   GFL_HEAP_FreeMemory( fader );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "PLAYER-VOLUME-FADER: delete system\n" );
-#endif
 }
 
 //-----------------------------------------------------------------------------------
@@ -256,14 +247,15 @@ static void UpdatePlayerVolume( const PLAYER_VOLUME_FADER* fader )
 {
   int volume;
 
+#ifdef PM_DEBUG
+  if( (fader->playerNo == PLAYER_BGM) && (BGMPlayerVolumeFadeEnable == FALSE) ) {
+    return; // BGMボリュームの更新を無効化
+  }
+#endif
+
   volume = CalcNowVolume( fader );
-  if ( fader->muteFlag )
-  {
+  if ( fader->muteFlag ) {
     volume = 0;
   }
   NNS_SndPlayerSetPlayerVolume( fader->playerNo, volume );
-
-#ifdef DEBUG_PRINT_ON
-  OS_TFPrintf( PRINT_TARGET, "PLAYER-VOLUME-FADER: update player volume ==> %d\n", volume );
-#endif
 }
