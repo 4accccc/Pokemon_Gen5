@@ -1002,7 +1002,6 @@ static BOOL TESTMODE_ITEM_SelectUNSelect( D_HOSAKA_WORK* work, const int idx )
 #include "demo/comm_btl_demo.h"
 
 // デバッグ用のパラメータ設定
-// ALLOCしっぱなし
 // ワーク生成
 static void debug_param( COMM_BTL_DEMO_PARAM* prm )
 { 
@@ -1019,7 +1018,6 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
     prm->trainer_data[i].server_version = GFUser_GetPublicRand(2);
 
     {
-      // ALLOCしっぱなし
       MYSTATUS* st = GFL_HEAP_AllocMemoryLo( HEAPID_HOSAKA_DEBUG, MyStatus_GetWorkSize() );
 
       MyStatus_Copy( SaveData_GetMyStatus( SaveControl_GetPointer() ), st );
@@ -1056,21 +1054,6 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
       prm->trainer_data[i].mystatus = st;
     }
 
-#if 0
- // 廃止予定
-//    prm->trainer_data[i].trsex = PM_FEMALE;//(GFUser_GetPublicRand(2)==0) ? PM_MALE : PM_FEMALE;  
-    // トレーナー名
-    {
-      //終端コードを追加してからSTRBUFに変換
-      STRCODE debugname[32] = L"とうふ";
-      
-      debugname[3] = GFL_STR_GetEOMCode();
-
-      prm->trainer_data[i].str_trname = GFL_STR_CreateBuffer( sizeof(STRCODE)*10, HEAPID_HOSAKA_DEBUG );
-      GFL_STR_SetStringCode( prm->trainer_data[i].str_trname, debugname );
-    }
-#endif
-    
     // デバッグポケパーティー
     {
       POKEPARTY *party;
@@ -1123,6 +1106,13 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
           MyStatus_GetMySex( prm->trainer_data[i].mystatus ),
           poke_cnt );
     }
+  } // for
+  
+  // この時点で開放してしまう。
+  for( i=0; i<COMM_BTL_DEMO_TRDATA_MAX; i++ )
+  {
+    GFL_HEAP_FreeMemory( (void*)prm->trainer_data[i].mystatus );
+    GFL_HEAP_FreeMemory( (void*)prm->trainer_data[i].party );
   }
 }
 
