@@ -2423,22 +2423,51 @@ static DWCScResult DwcRap_Sc_CreateReportDebug( DWC_SC_PLAYERDATA *p_my, DWC_SC_
 static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect )
 { 
   const BtlResult result  = cp_data->btl_result;
-  BOOL is_win;
+  BOOL is_win = FALSE;
+  BOOL is_lose  = FALSE;
+  BOOL is_inverse = FALSE;
   DWCScResult ret;
 
-  //もし相手の情報を書き込むならば、結果を反対にする
-  is_win = (cp_data->btl_result == BTL_RESULT_WIN || cp_data->btl_result == BTL_RESULT_RUN_ENEMY);  
-  if( !is_my )
+  switch( cp_data->btl_result )
   {
-    is_win  ^= 1;
+  case BTL_RESULT_RUN:         ///< 逃げた
+  case BTL_RESULT_LOSE:        ///< 負けた
+    is_win  = FALSE;
+    is_lose = TRUE;
+    is_inverse  = TRUE;
+    break;
+  case BTL_RESULT_RUN_ENEMY:   ///< 相手が逃げた
+  case BTL_RESULT_WIN:         ///< 勝った
+    is_win  = TRUE;
+    is_lose = FALSE;
+    is_inverse  = TRUE;
+    break;
+  case BTL_RESULT_DRAW:        ///< ひきわけ
+    is_win  = FALSE;
+    is_lose = FALSE;
+    break;
+  case BTL_RESULT_CAPTURE:     ///< 捕まえた（野生のみ）
+  default:
+    GF_ASSERT( 0 );
+  case BTL_RESULT_COMM_ERROR:  ///< 通信エラーによる
+    is_win  = FALSE;
+    is_lose = FALSE;
+    break;
   }
 
-  DEBUGWIN_REPORT_SetData( is_my, is_win, !is_win, cp_data->is_dirty != 0, -1  );
+  //もし相手の情報を書き込むならば、結果を反対にする
+  if( !is_my && is_inverse )
+  {
+    is_win  ^= 1;
+    is_lose ^= 1;
+  }
+
+  DEBUGWIN_REPORT_SetData( is_my, is_win, is_lose, cp_data->is_dirty != 0, -1  );
 
   DEBUG_NET_Printf( "-----------Report_start-------------\n" );
   DEBUG_NET_Printf( "レポート先%d\n", is_my );
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
-  DEBUG_NET_Printf( "負け%d\n", !is_win );
+  DEBUG_NET_Printf( "負け%d\n", is_lose );
   DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
@@ -2456,7 +2485,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SINGLE_LOSE_COUNTER, is_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2474,7 +2503,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_DOUBLE_LOSE_COUNTER, is_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2492,7 +2521,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_TRIPLE_LOSE_COUNTER, is_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2510,7 +2539,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_ROTATE_LOSE_COUNTER, is_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2528,7 +2557,7 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
     { 
       return ret;
     }
-    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_LOSE_COUNTER, !is_win );
+    ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_SHOOTER_LOSE_COUNTER, is_lose );
     if( ret != DWC_SC_RESULT_NO_ERROR )
     { 
       return ret;
@@ -2568,23 +2597,52 @@ static DWCScResult DwcRap_Sc_CreateReportRndCore( DWC_SC_PLAYERDATA *p_my, const
 static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, const DWC_SC_WRITE_DATA *cp_data, BOOL is_my, BOOL is_disconnect )
 { 
   const BtlResult result  = cp_data->btl_result;
-  BOOL is_win;
+  BOOL is_win = FALSE;
+  BOOL is_lose  = FALSE;
+  BOOL is_inverse = FALSE;
   DWCScResult ret;
 
+  switch( cp_data->btl_result )
+  {
+  case BTL_RESULT_RUN:         ///< 逃げた
+  case BTL_RESULT_LOSE:        ///< 負けた
+    is_win  = FALSE;
+    is_lose = TRUE;
+    is_inverse = TRUE;
+    break;
+  case BTL_RESULT_RUN_ENEMY:   ///< 相手が逃げた
+  case BTL_RESULT_WIN:         ///< 勝った
+    is_win  = TRUE;
+    is_lose = FALSE;
+    is_inverse = TRUE;
+    break;
+  case BTL_RESULT_DRAW:        ///< ひきわけ
+    is_win  = FALSE;
+    is_lose = FALSE;
+    break;
+  case BTL_RESULT_CAPTURE:     ///< 捕まえた（野生のみ）
+  default:
+    GF_ASSERT( 0 );
+  case BTL_RESULT_COMM_ERROR:  ///< 通信エラーによる
+    is_win  = FALSE;
+    is_lose = FALSE;
+    break;
+  }
+
   //もし相手の勝利情報を書き込むならば、結果を反対にする
-  is_win = (cp_data->btl_result == BTL_RESULT_WIN || cp_data->btl_result == BTL_RESULT_RUN_ENEMY);  
-  if( !is_my )
+  if( !is_my && is_inverse )
   {
     is_win  ^= 1;
+    is_lose ^= 1;
   }
 
 
-  DEBUGWIN_REPORT_SetData( is_my, is_win, !is_win, cp_data->is_dirty != 0, -1  );
+  DEBUGWIN_REPORT_SetData( is_my, is_win, is_lose, cp_data->is_dirty != 0, -1  );
 
   DEBUG_NET_Printf( "-----------Report_start-------------\n" );
   DEBUG_NET_Printf( "レポート先%d\n", is_my );
   DEBUG_NET_Printf( "勝ち%d\n", is_win );
-  DEBUG_NET_Printf( "負け%d\n", !is_win );
+  DEBUG_NET_Printf( "負け%d\n", is_lose );
   DEBUG_NET_Printf( "不正%d\n", cp_data->is_dirty );
   DEBUG_NET_Printf( "-----------Report_end-------------\n" );
 
@@ -2598,16 +2656,12 @@ static DWCScResult DwcRap_Sc_CreateReportWifiCore( DWC_SC_PLAYERDATA *p_my, cons
   { 
     return ret;
   }
-  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_WIFICUP_LOSE_COUNTER, !is_win );
+  ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_NUM_WIFICUP_LOSE_COUNTER, is_lose );
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;
   }
   ret = DWC_ScReportAddIntValue( p_my->mReport, KEY_CHEATS_WIFICUP_COUNTER, cp_data->is_dirty != 0 );
-  if( ret != DWC_SC_RESULT_NO_ERROR )
-  { 
-    return ret;
-  }
   if( ret != DWC_SC_RESULT_NO_ERROR )
   { 
     return ret;

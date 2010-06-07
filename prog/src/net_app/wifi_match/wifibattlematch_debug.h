@@ -336,24 +336,28 @@ static inline void DebugWin_Reg_D_ChangeCamera( void* userWork , DEBUGWIN_ITEM* 
 //-------------------------------------
 ///	反映
 //=====================================
+static inline void DebugWin_Reg_Get( DEBUGWIN_REGULATION_DATA  *p_wk )
+{
+  REGULATION  *p_reg = RegulationData_GetRegulation(p_wk->p_regulation);
+  p_wk->cup_no  = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO );
+  p_wk->start_year = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_YEAR );
+  p_wk->start_month = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_MONTH );
+  p_wk->start_day = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_DAY );
+  p_wk->end_year = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_YEAR );
+  p_wk->end_month = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_MONTH );
+  p_wk->end_day = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_DAY );
+  p_wk->status = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS );
+  p_wk->bgm = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
+  p_wk->same_match = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH );
+  p_wk->camera = Regulation_GetParam( p_reg, REGULATION_STATE );
+}
+
 static inline void DebugWin_Reg_U_Get( void* userWork , DEBUGWIN_ITEM* item )
 { 
   DEBUGWIN_REGULATION_DATA  *p_wk = userWork;
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
   { 
-    REGULATION  *p_reg = RegulationData_GetRegulation(p_wk->p_regulation);
-
-    p_wk->cup_no  = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_CUPNO );
-    p_wk->start_year = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_YEAR );
-    p_wk->start_month = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_MONTH );
-    p_wk->start_day = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_START_DAY );
-    p_wk->end_year = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_YEAR );
-    p_wk->end_month = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_MONTH );
-    p_wk->end_day = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_END_DAY );
-    p_wk->status = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_STATUS );
-    p_wk->bgm = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_BGM );
-    p_wk->same_match = Regulation_GetCardParam( p_wk->p_regulation, REGULATION_CARD_SAMEMATCH );
-    p_wk->camera = Regulation_GetParam( p_reg, REGULATION_STATE );
+    DebugWin_Reg_Get( p_wk );
     DEBUGWIN_RefreshScreen();
   }
 }
@@ -402,6 +406,8 @@ static inline void DebugWin_Reg_U_Clear( void* userWork , DEBUGWIN_ITEM* item )
 static inline void DEBUGWIN_REG_Init( REGULATION_CARDDATA *p_regulation, HEAPID heapID )
 { 
   debug_data.p_regulation = p_regulation;
+
+  DebugWin_Reg_Get( &debug_data );
 
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_REG, "レギュレーション", heapID );
 
@@ -759,6 +765,7 @@ static inline void DebugWin_SakeRec_U_Set( void* userWork , DEBUGWIN_ITEM* item 
 static inline void DEBUGWIN_SAKERECORD_Init( WIFIBATTLEMATCH_RECORD_DATA *p_record, HEAPID heapID )
 { 
   s_debug_record_data.p_src = p_record;
+  s_debug_record_data.data = *p_record;
 
   DEBUGWIN_AddGroupToTop( DEBUGWIN_GROUP_SAKE_RECORD, "サケレコード", heapID );
   DEBUGWIN_AddItemToGroup( "しゅとく", DebugWin_SakeRec_U_Get, &s_debug_record_data, DEBUGWIN_GROUP_SAKE_RECORD, heapID ); 
@@ -1233,28 +1240,33 @@ static inline void DEBUGWIN_REPORT_SetData( BOOL is_my, int win, int lose, int d
 }
 
 #endif  //DEBUGWIN_REPORT_USE
+#endif  //PM_DEBUG
 
-#else   //PM_DEBUG
 
-//DEBUGWIN_SAKE_RECORD_DATA_USE
+
+#ifndef DEBUGWIN_SAKE_RECORD_DATA_USE
 #define DEBUGWIN_SAKERECORD_Init( ... )  /*  */
 #define DEBUGWIN_SAKERECORD_Exit( ... )  /*  */
+#endif
 
-// DEBUGWIN_WIFISCORE_USE
+#ifndef DEBUGWIN_WIFISCORE_USE
 #define DEBUGWIN_WIFISCORE_Init( ... )  /*  */
 #define DEBUGWIN_WIFISCORE_Exit( ... )  /*  */
+#endif
 
-//DEBUGWIN_REG_USE
+#ifndef DEBUGWIN_REG_USE
 #define DEBUGWIN_REG_Init( ... )  /*  */
 #define DEBUGWIN_REG_Exit( ... )  /*  */
+#endif
 
-//DEBUGWIN_LIVESCORE_USE
+#ifndef DEBUGWIN_LIVESCORE_USE
 #define DEBUGWIN_LIVESCORE_Init( ... )  /*  */
 #define DEBUGWIN_LIVESCORE_Exit( ... )  /*  */
+#endif
 
-//DEBUGWIN_REPORT_USE
+#ifndef DEBUGWIN_REPORT_USE
 #define DEBUGWIN_REPORT_Init( ... ) /* */
 #define DEBUGWIN_REPORT_Exit( ... ) /* */
 #define DEBUGWIN_REPORT_SetData( ... ) /* */
+#endif
 
-#endif  //PM_DEBUG

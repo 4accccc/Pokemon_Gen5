@@ -1159,37 +1159,59 @@ static void UTIL_FLOW_End( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, BATTLE_CHAMPIONS
  */
 //=============================================================================
 #ifdef DEBUGWIN_USE
-
+static BOOL s_wifi_init = FALSE;
 static void DEBUGWIN_WIFI_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heapID )
 { 
-  REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( SaveControl_GetPointer() );
-  REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI ); 
+  if( s_wifi_init == FALSE )
+  {
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( SaveControl_GetPointer() );
+    REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_WIFI ); 
 
-  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
-  DEBUGWIN_ChangeLetterColor( 0,31,0 );
-  DEBUGWIN_REG_Init( p_reg, heapID );
-  DEBUGWIN_WIFISCORE_Init( heapID );
+    DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
+    DEBUGWIN_ChangeLetterColor( 0,31,0 );
+    DEBUGWIN_REG_Init( p_reg, heapID );
+    DEBUGWIN_WIFISCORE_Init( heapID );
+    
+    s_wifi_init = TRUE;
+  }
 }
 static void DEBUGWIN_WIFI_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
 { 
-  DEBUGWIN_WIFISCORE_Exit();
-  DEBUGWIN_REG_Exit();
-  DEBUGWIN_ExitProc();
+  if( s_wifi_init == TRUE )
+  {
+    DEBUGWIN_WIFISCORE_Exit();
+    DEBUGWIN_REG_Exit();
+    DEBUGWIN_ExitProc();
+
+    s_wifi_init = FALSE;
+  }
 }
+
+static BOOL s_live_init = FALSE;
 static void DEBUGWIN_LIVE_Init( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk, HEAPID heapID )
 { 
-  REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( SaveControl_GetPointer() );
-  REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE ); 
+  if( s_live_init == FALSE )
+  {
+    REGULATION_SAVEDATA *p_reg_sv = SaveData_GetRegulationSaveData( SaveControl_GetPointer() );
+    REGULATION_CARDDATA *p_reg    = RegulationSaveData_GetRegulationCard( p_reg_sv, REGULATION_CARD_TYPE_LIVE ); 
 
-  DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
-  DEBUGWIN_ChangeLetterColor( 0,31,0 );
-  DEBUGWIN_REG_Init( p_reg, heapID );
-  DEBUGWIN_LIVESCORE_Init( heapID );
+    DEBUGWIN_InitProc( GFL_BG_FRAME0_M, p_wk->param.p_font );
+    DEBUGWIN_ChangeLetterColor( 0,31,0 );
+    DEBUGWIN_REG_Init( p_reg, heapID );
+    DEBUGWIN_LIVESCORE_Init( heapID );
+
+    s_live_init = TRUE;
+  }
 }
 static void DEBUGWIN_LIVE_Exit( BATTLE_CHAMPIONSHIP_FLOW_WORK *p_wk )
 { 
-  DEBUGWIN_LIVESCORE_Exit();
-  DEBUGWIN_REG_Exit();
-  DEBUGWIN_ExitProc();
+  if( s_live_init == TRUE )
+  {
+    DEBUGWIN_LIVESCORE_Exit();
+    DEBUGWIN_REG_Exit();
+    DEBUGWIN_ExitProc();
+
+    s_live_init = FALSE;
+  }
 }
 #endif //DEBUGWIN_USE
