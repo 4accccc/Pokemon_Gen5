@@ -59,11 +59,13 @@ BOOL Intrude_Check_AlwaysBoot(GAMESYS_WORK *gsys)
       return FALSE;
     }
     
+#if 0 //ハイリンクにいるもの同士が繋がる事は無くなったので不要になった 2010.06.07(月)
     //チュートリアルが完了していなくて、裏フィールドにいる場合は「子」にならないように
     //常時通信を起動してはいけない
     if(Intrude_CheckTutorialComplete(gamedata) == FALSE){
       return FALSE;
     }
+#endif
   }
   
 
