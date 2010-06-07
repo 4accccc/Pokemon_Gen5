@@ -400,9 +400,10 @@ typedef struct
   SHINKADEMO_EFFECT_WORK*     efwk;
 
   // SE
-  BOOL                        se_play;        // デモのメイン部分を再生中にSEを鳴らしていいかどうかのフラグ
-  BOOL                        se_to_white;    // 白く飛ばすときのSEを2度鳴らさないようにするためのフラグ
-  BOOL                        se_from_white;  // 白から戻るときのSEを2度鳴らさないようにするためのフラグ
+  BOOL                        se_play;         // デモのメイン部分を再生中にSEを鳴らしていいかどうかのフラグ
+  BOOL                        se_to_white;     // 白く飛ばすときのSEを2度鳴らさないようにするためのフラグ
+  BOOL                        se_from_white;   // 白から戻るときのSEを2度鳴らさないようにするためのフラグ
+  BOOL                        rotate_se_play;  // 回転SEを鳴らしていなかったらFALSE、鳴らしていたらTRUE(今鳴っている最中という訳ではない)
 
   // ローカルPROCシステム
   GFL_PROCSYS*  local_procsys;
@@ -582,9 +583,10 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   }
 
   // SE
-  work->se_play       = FALSE;
-  work->se_to_white   = FALSE;
-  work->se_from_white = FALSE;
+  work->se_play        = FALSE;
+  work->se_to_white    = FALSE;
+  work->se_from_white  = FALSE;
+  work->rotate_se_play = FALSE;
 
   // ローカルPROCシステムを作成
   work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_sys_id );
@@ -854,9 +856,14 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
         // SE
         if( work->se_play )
         {
-          if( work->wait_count == 90 )
+          if(    ( !(work->rotate_se_play) )
+              && ( work->wait_count >= 90 ) )
           {
-            PMSND_PlaySE( SEQ_SE_SHDEMO_02 );
+            if( ShinkaDemo_SoundCheckPlayShinka( param, work ) )
+            {
+              PMSND_PlaySE( SEQ_SE_SHDEMO_02 );
+              work->rotate_se_play = TRUE;
+            }
           }
           else if(    work->wait_count == 530
                    || work->wait_count == 585
