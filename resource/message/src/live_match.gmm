@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-05T19:20:26"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-07T21:19:02"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -346,7 +346,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1030" top="368" right="1735" bottom="996" maximized="no" rayout="Vertical2">
+	<dialog left="318" top="502" right="1023" bottom="1130" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="444" top="119" right="917" bottom="517" visible="yes"/>
 		<band id="0" index="0" style="0000" width="467"/>
@@ -387,7 +387,7 @@
 上書きしても　よろしい　ですか？</language>
 	</row>
 
-	<row id="LIVE_STR_02">
+	<row id="LIVE_STR_02" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<language name="JPN" width="256">デジタルせんしゅしょうを
 うわがき　します[BE:01:ページ切り替え（クリア）]
 いぜんに　とうろくした
@@ -455,7 +455,7 @@
 バトルボックスへ　ポケモンを[BE:00:ページ切り替え（行送り）]
 出し入れ　できなくなります[BE:01:ページ切り替え（クリア）]
 バトルボックスの　ポケモンを
-とうろく　しても　よろしいですか？</language>
+登録しても　よろしいですか？</language>
 	</row>
 
 	<row id="LIVE_SELECT_00">
@@ -480,12 +480,12 @@
 みたしていません[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールを　かくにんして
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
-おいてください[BE:01:ページ切り替え（クリア）]</language>
+セット　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会の　条件を
 満たしていません[BE:01:ページ切り替え（クリア）]
 大会の　ルールを　確認して
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
-おいてください[BE:01:ページ切り替え（クリア）]</language>
+セット　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_09">
@@ -555,7 +555,7 @@
 本当に　よろしいですか？</language>
 	</row>
 
-	<row id="LIVE_STR_15">
+	<row id="LIVE_STR_15" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<language name="JPN" width="256">バトルボックスの　ロックを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルボックスの　ロックを
@@ -609,7 +609,7 @@ Aボタンを　おしてください[BE:01:ページ切り替え（クリア）
 Aボタンを　押してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="LIVE_STR_21">
+	<row id="LIVE_STR_21" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<language name="JPN" width="256">たいせんが　おわりましたので
 バトルボックスの　ポケモンの[BE:00:ページ切り替え（行送り）]
 ロックを　かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
@@ -709,12 +709,12 @@ Aボタンを　押してください[BE:01:ページ切り替え（クリア）
 ポケモンが　１ひきも　いません[BE:01:ページ切り替え（クリア）]
 たいかいの　ルールを　かくにんして
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
-おいてください[BE:01:ページ切り替え（クリア）]</language>
+セット　してください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">バトルボックスに
 ポケモンが　１匹も　いません[BE:01:ページ切り替え（クリア）]
 大会の　ルールを　確認して
 バトルボックスに　ポケモンを[BE:00:ページ切り替え（行送り）]
-おいてください[BE:01:ページ切り替え（クリア）]</language>
+セット　してください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="LIVE_STR_31" back-color="#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,,#ff0000,,">
