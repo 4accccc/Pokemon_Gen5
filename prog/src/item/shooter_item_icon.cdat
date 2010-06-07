@@ -22,7 +22,7 @@ const ITEMDATA_INDEX ShooterItemDataIndex[] =
 	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_667_NCLR }, //スピーダー
 	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_672_NCLR }, //ヨクアタール
 	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_666_NCLR },	//クリティカット
-	{ NARC_item_icon_item_666_NCGR, NARC_item_icon_item_673_NCLR }, //エフェクトガード
+	{ NARC_item_icon_item_673_NCGR, NARC_item_icon_item_673_NCLR }, //エフェクトガード
 
 	{ NARC_item_icon_item_700_NCGR, NARC_item_icon_item_700_NCLR }, //いいキズぐすり
 

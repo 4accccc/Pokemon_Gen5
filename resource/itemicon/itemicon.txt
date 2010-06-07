@@ -1010,6 +1010,8 @@
 "item_773.NCLR"
 "item_774.NCLR"
 
+"item_673.NCGR"
+
 "item_dumy.NCGR"
 "item_dumy.NCLR"
 "item_yaji.NCGR"
