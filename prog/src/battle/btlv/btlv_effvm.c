@@ -90,6 +90,12 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #endif
 #endif
 
+#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_yoshida
+#define CAMERA_POS_PRINT
+#endif
+#endif
+
 //============================================================================================
 /**
  *  \‘¢‘ÌéŒ¾
@@ -148,6 +154,7 @@ typedef struct{
   ARCDATID                    dat_id[ PARTICLE_GLOBAL_MAX ];
   u32                         dat_id_cnt;
   void*                       unpack_info[ PARTICLE_GLOBAL_MAX ];
+  int                         camera_flag;
 #endif
 }BTLV_EFFVM_WORK;
 
@@ -1051,6 +1058,10 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     break;
   }
 
+#ifdef PM_DEBUG
+  bevw->camera_flag = 1;
+#endif
+
   return bevw->control_mode;
 }
 
@@ -1112,6 +1123,10 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_wor
     break;
   }
 
+#ifdef PM_DEBUG
+  bevw->camera_flag = 1;
+#endif
+
   return bevw->control_mode;
 }
 
@@ -1158,6 +1173,10 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work )
     }
     break;
   }
+
+#ifdef PM_DEBUG
+  bevw->camera_flag = 1;
+#endif
 
   return bevw->control_mode;
 }
@@ -4184,6 +4203,18 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
     }
   }
 
+#ifdef CAMERA_POS_PRINT
+  if( bevw->camera_flag )
+  { 
+    VecFx32 pos, tar;
+
+    bevw->camera_flag = 0;
+    BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &tar );
+    OS_Printf("cam_pos_x:%f cam_pos_y:%f cam_pos_z:%f\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
+    OS_Printf("cam_tar_x:%f cam_tar_y:%f cam_tar_z:%f\n",FX_FX32_TO_F32(tar.x),FX_FX32_TO_F32(tar.y),FX_FX32_TO_F32(tar.z));
+  }
+#endif
+
   return TRUE;
 }
 
@@ -5058,7 +5089,7 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     {
       spin_axis = SPL_FLD_SPIN_AXIS_TYPE_X;
     }
-    SOGABE_Printf("angle:%f axis:%d\n",FX_FX32_TO_F32(angle),spin_axis);
+    OS_Printf("angle:%f axis:%d\n",FX_FX32_TO_F32(angle),spin_axis);
     GFL_PTC_SetEmitterSpinAxisType( emit, &spin_axis );
 
     GFL_PTC_SetEmitterAxis( emit, &dir );
