@@ -571,7 +571,7 @@ INTRUDE_SUBDISP_PTR INTRUDE_SUBDISP_Init(GAMESYS_WORK *gsys)
   GFL_ARC_CloseDataHandle(handle);
 
   //通信アイコンリロード
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_FIELDMAP );
+  GFL_NET_ReloadIconTopOrBottom(FALSE, HEAPID_FIELDMAP);
   
   //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
   GFL_NET_WirelessIconOBJWinON();

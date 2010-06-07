@@ -304,7 +304,7 @@ UNION_SUBDISP_PTR UNION_SUBDISP_Init(GAMESYS_WORK *gsys)
   }
 
   //通信アイコンリロード
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_FIELDMAP );
+  GFL_NET_ReloadIconTopOrBottom(FALSE, HEAPID_FIELDMAP);
 
   //OBJWINDOW(通信アイコン) の中だけBlendで輝度が落ちないようにする
   GFL_NET_WirelessIconOBJWinON();

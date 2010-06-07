@@ -219,7 +219,7 @@ static GFL_PROC_RESULT MonolithProc_Init(GFL_PROC * proc, int * seq, void * pwk,
 	monosys->vintr_tcb = GFUser_VIntr_CreateTCB(_VblankFunc, monosys, MONOLITH_VINTR_TCB_PRI_MAIN);
   
   //通信アイコンリロード
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE, HEAPID_MONOLITH);
 
   monosys->app_parent.parent = parent;
   monosys->app_parent.setup = &monosys->setup;
