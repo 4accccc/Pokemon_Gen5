@@ -531,6 +531,7 @@ static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
   
   //’ÊMTVT‚©‚ç‚à‚ç‚¤
   {
+    MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
     ARCHANDLE *ctvtArcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA , work->heapId );
     
     work->cellRes[LTCR_PLT] = GFL_CLGRP_PLTT_RegisterComp( ctvtArcHandle , 
@@ -541,8 +542,16 @@ static void LOCAL_TVT_LoadResource( LOCAL_TVT_WORK *work )
     work->cellRes[LTCR_ANM] = GFL_CLGRP_CELLANIM_Register( ctvtArcHandle , 
           NARC_comm_tvt_tv_t_upper_obj_NCER , NARC_comm_tvt_tv_t_upper_obj_NANR, work->heapId  );
     
-    GFL_ARCHDL_UTIL_TransVramPalette( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
-                      PALTYPE_SUB_BG , 0*32 , 32*3 , work->heapId );
+    if( MyStatus_GetMySex( myStatus ) == PM_MALE )
+    {
+      GFL_ARCHDL_UTIL_TransVramPalette( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg2_NCLR , 
+                        PALTYPE_SUB_BG , 0*32 , 32*3 , work->heapId );
+    }
+    else
+    {
+      GFL_ARCHDL_UTIL_TransVramPalette( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
+                        PALTYPE_SUB_BG , 0*32 , 32*3 , work->heapId );
+    }
     GFL_ARCHDL_UTIL_TransVramBgCharacter( ctvtArcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
                       LTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
     GFL_ARCHDL_UTIL_TransVramScreen( ctvtArcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 

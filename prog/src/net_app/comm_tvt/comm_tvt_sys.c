@@ -569,10 +569,19 @@ static void COMM_TVT_SetupBgFunc( const GFL_BG_BGCNT_HEADER *bgCont , u8 bgPlane
 //--------------------------------------------------------------------------
 static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
 {
+  MYSTATUS *myStatus = GAMEDATA_GetMyStatus( work->initWork->gameData );
   work->arcHandle = GFL_ARC_OpenDataHandle( ARCID_COMM_TVT_GRA , work->heapId );
   //下画面
-  GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
-                    PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
+  if( MyStatus_GetMySex( myStatus ) == PM_MALE )
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg2_NCLR , 
+                      PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
+  }
+  else
+  {
+    GFL_ARCHDL_UTIL_TransVramPalette( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCLR , 
+                      PALTYPE_SUB_BG , CTVT_PAL_BG_SUB_BG*32 , 32*6 , work->heapId );
+  }
   GFL_ARCHDL_UTIL_TransVramBgCharacter( work->arcHandle , NARC_comm_tvt_tv_t_tuuwa_bg_NCGR ,
                     CTVT_FRAME_SUB_BG , 0 , 0, FALSE , work->heapId );
   GFL_ARCHDL_UTIL_TransVramScreen( work->arcHandle , NARC_comm_tvt_tv_t_common_bg_NSCR , 
@@ -675,7 +684,15 @@ static void COMM_TVT_LoadResource( COMM_TVT_WORK *work )
   //パレットアニメデータの取得
   {
     NNSG2dPaletteData* palData;
-    void *resData = GFL_ARCHDL_UTIL_LoadPalette(work->arcHandle,NARC_comm_tvt_tv_t_tuuwa_bg_NCLR, &palData, work->heapId );
+    void *resData;
+    if( MyStatus_GetMySex( myStatus ) == PM_MALE )
+    {
+      resData = GFL_ARCHDL_UTIL_LoadPalette(work->arcHandle,NARC_comm_tvt_tv_t_tuuwa_bg2_NCLR, &palData, work->heapId );
+    }
+    else
+    {
+      resData = GFL_ARCHDL_UTIL_LoadPalette(work->arcHandle,NARC_comm_tvt_tv_t_tuuwa_bg_NCLR, &palData, work->heapId );
+    }
     
     GFL_STD_MemCopy32( (void*)((u32)palData->pRawData+32*(16-COMM_TVT_PAL_ANM_NUM)) ,
                        work->palAnmData , 32*COMM_TVT_PAL_ANM_NUM );
