@@ -1330,9 +1330,9 @@ static void UITemplate_POKE_ICON_CreateCLWK( UI_TEMPLATE_MAIN_WORK* wk, u32 mons
     
     UI_EASY_CLWK_LoadResource( &wk->clres_poke_item, &prm, unit, heapID );
 
-    // アニメシーケンスで指定( 0=どうぐ, 1=メール, 2=ボール )
+    // アニメシーケンスで指定( 0=どうぐ, 1=メール )
     // ※位置調整はとりあえずの値です。
-    wk->clwk_poke_item = UI_EASY_CLWK_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 2, heapID );
+    wk->clwk_poke_item = UI_EASY_CLWK_CreateCLWK( &wk->clres_poke_item, unit, 48+1*8+4, 32+4, 0, heapID );
   }
 
 }
