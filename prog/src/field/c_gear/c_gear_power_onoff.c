@@ -418,7 +418,7 @@ static void PowerOnOff_InitGraphic( CGEAR_POWER_ONOFF* p_sys, HEAPID heapID )
   PowerOnOff_InitWin( p_sys, heapID );
 
   // NET ICON
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, heapID );
 
 
   // 上画面にパネルを出す。
