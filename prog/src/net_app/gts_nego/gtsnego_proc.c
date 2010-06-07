@@ -1105,7 +1105,8 @@ static void _levelSelectDecide( GTSNEGO_WORK *pWork )
 
   pWork->dbw->result = EVENT_GTSNEGO_LV;
 
-  
+  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
+
   _CHANGE_STATE(pWork, _matchKeyMake);
 }
 
@@ -1245,7 +1246,8 @@ static void _levelSelectWait( GTSNEGO_WORK *pWork )
 
   switch(GFL_UI_TP_HitTrg(_tp_data)){
   case 0:
-    PMSND_PlaySystemSE(_SE_DECIDE);
+     GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);
+        PMSND_PlaySystemSE(_SE_DECIDE);
     APP_TASKMENU_WIN_SetDecide(pWork->pAppWin,TRUE);
     _CHANGE_STATE(pWork, _levelSelectDecide);
     return;
