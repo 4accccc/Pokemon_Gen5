@@ -526,7 +526,7 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk, u32 delayCount )
 {
   int i,j;
   BOOL is_end = FALSE;
-  fx32  speed = 0;
+  fx32  now_frame = 0,speed = 0;
 
 //  OS_Printf("frame=%f \n", FX_FX32_TO_F32(ICA_ANIME_GetNowFrame( wk->ica_anime )) );
 
@@ -556,9 +556,11 @@ BOOL Demo3D_ENGINE_Main( DEMO3D_ENGINE_WORK* wk, u32 delayCount )
 #endif
 
   // コマンド実行
+  now_frame = ICA_ANIME_GetNowFrame( wk->ica_anime );
   for(i = 0;i < (delayCount+1);i++){
+    u32 frameOffset = (speed >> FX32_SHIFT); ///< 整数化
     if( wk->end_result == DEMO3D_RESULT_NULL){
-      Demo3D_CMD_Main( wk->cmd, ICA_ANIME_GetNowFrame( wk->ica_anime ), i );
+      Demo3D_CMD_Main( wk->cmd, now_frame+speed, i);
     }else{
       Demo3D_CMD_Main( wk->cmd, -FX32_ONE, i );
     }
