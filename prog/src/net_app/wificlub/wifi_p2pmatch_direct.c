@@ -1063,21 +1063,47 @@ static u32 _regtable[]={
     REG_FLAT_SINGLE,REG_FLAT_DOUBLE,REG_FLAT_TRIPLE,REG_FLAT_ROTATION
     };
 
-
-static u32 _createRegulation(WIFIP2PMATCH_WORK *wk)
+static u32 _createRegulationType(WIFIP2PMATCH_WORK *wk, REG_CREATE_TYPE type )
 {
   u32 regulation;
+  u16 battleMode;  //バトルのモード
+  u16 battleRule;  //バトルのルール
+  u8  shooter;
 
-//  NET_PRINT("regcr %d %d %d\n",wk->battleMode,wk->battleRule,wk->battleShooter);
-  regulation = _regtable[wk->battleMode + (wk->battleRule*4)];
+  switch( type )
+  {
+  default:
+    GF_ASSERT(0);
+  case REG_CREATE_TYPE_DECIDE: ///<決定しているルールから作る
+    battleMode  = wk->battleMode;
+    battleRule  = wk->battleRule;
+    shooter     = wk->pParentWork->shooter;
+    break;
+  case REG_CREATE_TYPE_SELECT: ///<選んでいるルールから作る
+    battleMode  = wk->battleModeSelect;
+    battleRule  = wk->battleRuleSelect;
+    shooter     = wk->pParentWork->shooterSelect;
+    break;
+  }
+
+//  NET_PRINT("regcr %d %d %d\n",battleMode,battleRule,shooter);
+  regulation = _regtable[battleMode + (battleRule*4)];
   if(wk->pRegulation){
     GFL_HEAP_FreeMemory((void*)wk->pRegulation);
   }
   wk->pRegulation = (REGULATION*)PokeRegulation_LoadDataAlloc(regulation, HEAPID_WIFIP2PMATCH);
-  if(wk->pParentWork->shooter){
+  if(shooter){
     regulation = regulation | 0x80000000;
   }
   return regulation;
+}
+
+
+static u32 _createRegulation(WIFIP2PMATCH_WORK *wk)
+{
+  //現在選んでいるルールからレギュレーションを作成しなければならなくなり、
+  //処理をわけるのはまずいため、以下のようにいたしました nagihashi
+  return _createRegulationType(wk, REG_CREATE_TYPE_DECIDE );
 }
 
 static void _convertRegulation(WIFIP2PMATCH_WORK *wk,u32 regulation)
@@ -1225,8 +1251,9 @@ static int _playerDirectNoregParent2( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectBattleWatch( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  u32 regulation = _createRegulation(wk);
-  _Menu_RegulationSetup(wk,0,wk->pParentWork->shooter ,REGWIN_TYPE_RULE);
+  //現在選んでいるルールを見るため、選んでいるものから作成
+  u32 regulation = _createRegulationType(wk,REG_CREATE_TYPE_SELECT);
+  _Menu_RegulationSetup(wk,0,wk->pParentWork->shooterSelect,REGWIN_TYPE_RULE);
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH2);
   return seq;
 }

@@ -348,6 +348,11 @@ typedef enum
   WIFIP2PMATCH_STATE_RECV,     //話しかけられた（子）
 } WIFIP2PMATCH_STATE;
 
+//レギュレーション作成タイプ
+typedef enum{
+  REG_CREATE_TYPE_DECIDE, ///<決定しているルールから作る
+  REG_CREATE_TYPE_SELECT, ///<選んでいるルールから作る
+}REG_CREATE_TYPE;
 
 //-------------------------------------
 ///	Iconグラフィック
