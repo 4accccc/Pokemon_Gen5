@@ -1319,6 +1319,22 @@ static void _DeleteScrollBarObj(GTSNEGO_DISP_WORK* pWork)
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief	スクロールのチップのアニメONOFF
+ *	@param	POKEMON_TRADE_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
+
+void GTSNEGO_DISP_SetAnmScrollBarObj(GTSNEGO_DISP_WORK* pWork, BOOL bFlg)
+{
+  if(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP]){
+    GFL_CLACT_WK_ResetAnm(pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP]);
+    GFL_CLACT_WK_SetAutoAnmFlag( pWork->scrollbarOAM[_SCROLLBAR_OAM_CHIP] , bFlg );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief	下に１つスクロールする処理開始
  *	@param	POKEMON_TRADE_WORK
  *	@return	none

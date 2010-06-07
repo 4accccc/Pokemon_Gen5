@@ -1545,6 +1545,7 @@ static void _friendSelectDecide3( GTSNEGO_WORK *pWork )
       else{
         GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, _CROSSCUR_TYPE_NONE);
       }
+      GTSNEGO_DISP_SetAnmScrollBarObj(pWork->pDispWork, TRUE);
       _CHANGE_STATE(pWork,_friendSelectWaitPre);
       break;
     }
@@ -1561,6 +1562,10 @@ static void _friendSelectDecide2( GTSNEGO_WORK *pWork )
   TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, FALSE);
   pWork->pAppTask = GTSNEGO_MESSAGE_MatchOrReturnStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
   GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN2);
+
+  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
+  GTSNEGO_DISP_SetAnmScrollBarObj(pWork->pDispWork, FALSE);
+
   _CHANGE_STATE(pWork,_friendSelectDecide3);
 }
 
@@ -2170,12 +2175,14 @@ static void _messageEndCheck2(GTSNEGO_WORK* pWork)
       _CHANGE_STATE(pWork,_messageEnd);
       break;
     case 1:
-
       if(!pWork->bSingle){
         GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
       }
       else{
         GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_048);
+      }
+      if(GFL_UI_CheckTouchOrKey()==GFL_APP_KTST_KEY){
+        GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL, pWork->key1);
       }
       TOUCHBAR_SetVisible(GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TOUCHBAR_ICON_RETURN, TRUE);
       GTSNEGO_DISP_PaletteFade(pWork->pDispWork, FALSE, _PALETTEFADE_PATTERN1);
@@ -2194,6 +2201,7 @@ static void _messageEndCheck(GTSNEGO_WORK* pWork)
   pWork->pAppTask = GTSNEGO_MESSAGE_YesNoStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
 
   GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN1);
+  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
 
   _CHANGE_STATE(pWork,_messageEndCheck2);
 }
