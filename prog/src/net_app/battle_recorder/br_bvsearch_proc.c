@@ -280,7 +280,6 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Init( GFL_PROC *p_proc, int *p_seq, void
 
   //初期画面構築
   Br_BvSearch_CreateMainDisplay( p_wk, p_param );
-  sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_INIT]( p_wk, p_param );
 
 	return GFL_PROC_RES_FINISH;
 }
@@ -301,7 +300,6 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void
 	BR_BVSEARCH_WORK				*p_wk	= p_wk_adrs;
 	BR_BVSEARCH_PROC_PARAM	*p_param	= p_param_adrs;
 
-  sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_EXIT]( p_wk, p_param );
   Br_BvSearch_DeleteMainDisplay( p_wk, p_param );
   BR_RES_UnLoadOBJ( p_param->p_res, BR_RES_OBJ_SHORT_BTN_S ); 
 
@@ -339,12 +337,15 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 {	
   enum
   { 
+    SEQ_INIT,
     SEQ_FADEIN_START,
     SEQ_FADEIN_WAIT,
     SEQ_MAIN,
 
     SEQ_CHANGEOUT_START,
     SEQ_CHANGEOUT_WAIT,
+    SEQ_CHANGE_EXIT,
+    SEQ_CHANGE_INIT,
     SEQ_CHANGEIN_START,
     SEQ_CHANGEIN_WAIT,
 
@@ -359,6 +360,13 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
 	//プロセス処理
   switch( *p_seq )
   { 
+  case SEQ_INIT:
+    if( sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_INIT]( p_wk, p_param ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+
   case SEQ_FADEIN_START:
     BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
     (*p_seq)++;
@@ -395,12 +403,21 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
       (*p_seq)++;
     }
     break;
-  case SEQ_CHANGEIN_START:
-    { 
-      sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_EXIT]( p_wk, p_param );
+
+  case SEQ_CHANGE_EXIT:
+    if( sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_EXIT]( p_wk, p_param ) )
+    {
       p_wk->sub_seq = p_wk->next_sub_seq;
-      sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_INIT]( p_wk, p_param );
+      (*p_seq)++;
     }
+    break;
+  case SEQ_CHANGE_INIT:
+    if( sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_INIT]( p_wk, p_param ) )
+    {
+      (*p_seq)++;
+    }
+    break;
+  case SEQ_CHANGEIN_START:
     BR_FADE_StartFade( p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_SUB, BR_FADE_DIR_IN );
     (*p_seq)++;
     break;
@@ -422,8 +439,11 @@ static GFL_PROC_RESULT BR_BVSEARCH_PROC_Main( GFL_PROC *p_proc, int *p_seq, void
     }
     break;
   case SEQ_EXIT:
-    NAGI_Printf( "BVSEARCH: Exit!\n" );
-    return GFL_PROC_RES_FINISH;
+    if( sc_subseq_tbl[ p_wk->sub_seq ][SUBSEQ_EXIT]( p_wk, p_param ) )
+    {
+      NAGI_Printf( "BVSEARCH: Exit!\n" );
+      return GFL_PROC_RES_FINISH;
+    }
   }
 
   //文字表示
@@ -978,7 +998,8 @@ static BOOL Br_BvSearch_Seq_Poke_Init( BR_BVSEARCH_WORK	*p_wk, BR_BVSEARCH_PROC_
   ZUKAN_SAVEDATA *p_zkn = GAMEDATA_GetZukanSave( p_param->p_gamedata );
   p_wk->p_search  = BR_POKESEARCH_Init( p_zkn, p_param->p_res, p_param->p_unit, p_wk->p_bmpoam, p_param->p_fade, p_wk->p_balleff[CLSYS_DRAW_MAIN], p_wk->p_balleff[CLSYS_DRAW_SUB],p_wk->heapID ); 
   BR_POKESEARCH_StartUp( p_wk->p_search );
-  return TRUE;
+
+  return BR_POKESEARCH_PrintMain( p_wk->p_search );
 }
 //----------------------------------------------------------------------------
 /**

@@ -48,6 +48,7 @@ typedef struct _BR_POKESEARCH_WORK BR_POKESEARCH_WORK;
 extern BR_POKESEARCH_WORK *BR_POKESEARCH_Init( const ZUKAN_SAVEDATA *cp_zkn, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit,  BMPOAM_SYS_PTR p_bmpoam, BR_FADE_WORK *p_fade, BR_BALLEFF_WORK *p_balleff_main, BR_BALLEFF_WORK *p_balleff_sub, HEAPID heapID );
 extern void BR_POKESEARCH_Exit( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk );
+extern BOOL BR_POKESEARCH_PrintMain( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_StartUp( BR_POKESEARCH_WORK *p_wk );
 extern void BR_POKESEARCH_CleanUp( BR_POKESEARCH_WORK *p_wk );
 extern BR_POKESEARCH_SELECT BR_POKESEARCH_GetSelect( const BR_POKESEARCH_WORK *cp_wk, u16 *p_mons_no );

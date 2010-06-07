@@ -187,6 +187,8 @@ void BR_NET_Exit( BR_NET_WORK *p_wk )
   GFL_HEAP_FreeMemory( p_wk );
 
   GFL_OVERLAY_Unload( FS_OVERLAY_ID(gds_comm) );
+
+  NAGI_Printf( "BR_NET解放\n" );
 }
 //----------------------------------------------------------------------------
 /**
@@ -595,7 +597,6 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
   }
 
   //DWCからのエラー
-  if( NetErr_App_CheckError() )
   { 
     GFL_NET_DWC_ERROR_RESULT  result;
     result  = GFL_NET_DWC_ERROR_ReqErrorDisp( TRUE, FALSE );
@@ -611,6 +612,7 @@ BR_NET_SYSERR_RETURN BR_NET_GetSysError( BR_NET_WORK *p_wk )
     case GFL_NET_DWC_ERROR_RESULT_FATAL:       //電源切断のため無限ループになる
       NetErr_App_FatalDispCall();
       GF_ASSERT( 0 );
+      while(1){}
       break;
     }
   }

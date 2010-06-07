@@ -447,6 +447,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
       p_wk->p_param->p_param->result  = BR_RESULT_NET_ERROR;
     }
     BR_NET_Exit( p_wk->p_net );
+    p_wk->p_net = NULL;
   }
   else
   { 

@@ -383,19 +383,35 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
       break;
     }
   }
+  
+  BR_POKESEARCH_PrintMain( p_wk );
+}
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  文字表示
+ *
+ *	@param	BR_POKESEARCH_WORK *p_wk ワーク
+ *	@retval TRUE文字表示完了  FALSE文字表示中
+ */
+//-----------------------------------------------------------------------------
+BOOL BR_POKESEARCH_PrintMain( BR_POKESEARCH_WORK *p_wk )
+{
+  BOOL  ret = TRUE;
   { 
     int i;
     for( i = 0; i < BR_POKESEARCH_ORDER_MAX; i++ )
     { 
       if( p_wk->p_msgwin[i] )
       { 
-        BR_MSGWIN_PrintMain( p_wk->p_msgwin[i] );
+        ret &= BR_MSGWIN_PrintMain( p_wk->p_msgwin[i] );
       }
     }
   }
 
-  PRINTSYS_QUE_Main( p_wk->p_que );
+  ret &= PRINTSYS_QUE_Main( p_wk->p_que );
+
+  return ret;
 }
 //----------------------------------------------------------------------------
 /**
@@ -552,6 +568,7 @@ static void BR_POKESEARCH_DISPLAY_CreateHead( BR_POKESEARCH_WORK *p_wk )
       //色変更
       color = p_wk->head_order[ i ] ? BR_PRINT_COL_NORMAL: BR_PRINT_COL_BLACK;
       //文字描画
+      BR_MSGWIN_SetPos( p_wk->p_msgwin[i], 0, 0, BR_MSGWIN_POS_WH_CENTER );
       BR_MSGWIN_PrintColor( p_wk->p_msgwin[i], p_msg, msg_idx_000 + i, p_font, color );
     }
   }
@@ -690,35 +707,35 @@ static BR_POKESEARCH_ORDER BR_POKESEARCH_HEAD_GetSelect( BR_POKESEARCH_WORK *p_w
   static const GFL_UI_TP_HITTBL sc_hit_tbl[BR_POKESEARCH_ORDER_MAX+1]  =
   { 
     { 
-      3*8, 6*8,   2*8,   5*8,
+      3*8, 7*8,   2*8,   6*8,
     },         
     {          
-      3*8, 6*8,   8*8,  11*8,
+      3*8, 7*8,   8*8,  12*8,
     },         
     {          
-      3*8, 6*8,   14*8, 17*8,
+      3*8, 7*8,   14*8, 18*8,
     },         
     {          
-      3*8, 6*8,   20*8, 23*8,
+      3*8, 7*8,   20*8, 24*8,
     },         
     {          
-      3*8 , 6*8,  26*8, 29*8,
+      3*8 , 7*8,  26*8, 30*8,
     },         
     //         
     {          
-      9*8,12*8,    2*8,  5*8,
+      9*8,13*8,    2*8,  6*8,
     },         
     {          
-      9*8,12*8,    8*8, 11*8,
+      9*8,13*8,    8*8, 12*8,
     },         
     {          
-      9*8,12*8,   14*8, 17*8,
+      9*8,13*8,   14*8, 18*8,
     },         
     {          
-      9*8,12*8,   20*8, 23*8,
+      9*8,13*8,   20*8, 24*8,
     },         
     {          
-      9*8,12*8,   26*8, 29*8,
+      9*8,13*8,   26*8, 30*8,
     },
     { 
       GFL_UI_TP_HIT_END,GFL_UI_TP_HIT_END,GFL_UI_TP_HIT_END,GFL_UI_TP_HIT_END,

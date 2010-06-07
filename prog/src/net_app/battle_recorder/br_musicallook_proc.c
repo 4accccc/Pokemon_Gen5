@@ -337,8 +337,11 @@ static void Br_MusicalLook_Seq_FadeIn( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p
   switch( *p_seq )
   { 
   case SEQ_FADEIN_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
-    *p_seq  = SEQ_FADEIN_WAIT;
+    if( BR_POKESEARCH_PrintMain( p_wk->p_search ) )
+    {
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+      *p_seq  = SEQ_FADEIN_WAIT;
+    }
     break;
   case SEQ_FADEIN_WAIT:
     if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
@@ -749,8 +752,11 @@ static void Br_MusicalLook_Seq_ReturnSearch( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
   case SEQ_CHANGE_FADEIN_START:
-    BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
-    *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
+    if( BR_POKESEARCH_PrintMain( p_wk->p_search ) )
+    {
+      BR_FADE_StartFade( p_wk->p_param->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_BOTH, BR_FADE_DIR_IN );
+      *p_seq  = SEQ_CHANGE_FADEIN_WAIT;
+    }
     break;
   case SEQ_CHANGE_FADEIN_WAIT:
     if( BR_FADE_IsEnd( p_wk->p_param->p_fade ) )
