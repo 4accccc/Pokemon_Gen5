@@ -2387,7 +2387,5 @@ static void ResetVBlankFunc( RRT_WORK* work )
 //------------------------------------------------------------------------------------
 static void SetupWirelessIcon( const RRT_WORK* work )
 {
-  GFL_NET_ChangeIconPosition( WIRELESS_ICON_X, WIRELESS_ICON_Y );
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( TRUE, work->heapID );
 }

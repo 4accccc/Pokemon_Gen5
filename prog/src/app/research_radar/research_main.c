@@ -287,10 +287,7 @@ static void BootGameComm( const RESEARCH_WORK* work )
   comm_recovery = GAMESYSTEM_CommBootAlways( work->gameSystem );
 
   if( comm_recovery ) {
-    // 通信アイコンの復帰
-    GFL_NET_ChangeIconPosition( 240, 0 );
-    GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heapID );
-    GFL_NET_ReloadIcon();
+    GFL_NET_ReloadIconTopOrBottom( TRUE, work->heapID ); // 通信アイコンの復帰
   } 
 }
 
