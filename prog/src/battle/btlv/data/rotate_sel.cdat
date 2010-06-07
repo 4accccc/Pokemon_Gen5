@@ -222,7 +222,7 @@ static const BTLV_INPUT_HITTBL RotateTouchDataWaruagaki = {
   RotateTouchDataPlttWaruagaki,
 };
 
-static const BTLV_INPUT_KEYTBL  RotateKey1Waruagaki[] = {  
+static const BTLV_INPUT_KEYTBL  RotateKey1Waruagaki_L[] = {  
   //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
   { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE, -5,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //ãZ1
 
@@ -240,6 +240,26 @@ static const BTLV_INPUT_KEYTBL  RotateKey1Waruagaki[] = {
 
   //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R   A   B
   { { 5,  5,  5,  5,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  5,  4 },  //ç∂É{É^Éì
+};
+
+static const BTLV_INPUT_KEYTBL  RotateKey1Waruagaki_R[] = {  
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE, -5,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //ãZ1
+
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE, -5,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //ãZ2
+
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE, -5,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //ãZ3
+
+  //  LU  RU  LD  RD  LD2 RD2   U                   D   L                   R                   A   B
+  { { 0,  0,  0,  0,  -1, -1 }, BTLV_INPUT_NOMOVE, -5,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  0,  4 },  //ãZ4
+
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L   R                   A   B
+  { { 4,  4,  4,  4,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  5,  BTLV_INPUT_NOMOVE,  4,  4 },  //ÉLÉÉÉìÉZÉã
+
+  //  LU  RU  LD  RD  LD2 RD2   U   D                   L                   R   A   B
+  { { 6,  6,  6,  6,  -1, -1 }, 0,  BTLV_INPUT_NOMOVE,  BTLV_INPUT_NOMOVE,  4,  6,  4 },  //âEÉ{É^Éì
 };
 
 static const BTLV_INPUT_KEYTBL  RotateKey2Waruagaki[] = {  
@@ -267,8 +287,8 @@ static const BTLV_INPUT_KEYTBL  RotateKey2Waruagaki[] = {
 
 static const BTLV_INPUT_KEYTBL  *RotateKeyDataWaruagaki[ 3 ] = { 
   RotateKey2Waruagaki,
-  RotateKey1Waruagaki,
-  RotateKey1Waruagaki,
+  RotateKey1Waruagaki_L,
+  RotateKey1Waruagaki_R,
 };
 
 #else
