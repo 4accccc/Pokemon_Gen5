@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-05-14T11:30:32"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-07T15:06:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="386" top="251" right="886" bottom="867" maximized="no" rayout="Vertical2">
+	<dialog left="677" top="455" right="1177" bottom="1071" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="786" top="163" right="1259" bottom="561" visible="no"/>
 		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="325"/>
 		<band id="3" index="3" style="0000" width="591"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -342,23 +342,25 @@
 
 	<row id="MUSICAL_SHOT_PHOTO_02">
 		<comment>写真の日付
-月/日/年</comment>
+月/日/年
+ローカライズ用</comment>
 		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:1]/[2:01:２桁:2]/[2:01:２桁:0]</language>
 		<language name="JPN_KANJI">[2:01:２桁:1]/[2:01:２桁:2]/[2:01:２桁:0]</language>
 	</row>
 
 	<row id="MUSICAL_SHOT_PHOTO_03">
 		<comment>写真の日付
-日/月/年</comment>
+日/月/年
+ローカライズ用</comment>
 		<language name="JPN" font=" 1:small" width="64">[2:01:２桁:2]/[2:01:２桁:1]/[2:01:２桁:0]</language>
 		<language name="JPN_KANJI">[2:01:２桁:2]/[2:01:２桁:1]/[2:01:２桁:0]</language>
 	</row>
 
 	<row id="MUSICAL_SHOT_INFO_01">
-		<language name="JPN" width="240">こんかいの　ミュージカルショットです
-しゃしんを　ロビーに　かざりますか？</language>
-		<language name="JPN_KANJI">今回の　ミュージカルショットです
-写真を　ロビーに　飾りますか？</language>
+		<language name="JPN" width="240">こんかいの　ミュージカルショットを
+ミュージカルホールに　かざりますか？</language>
+		<language name="JPN_KANJI">今回の　ミュージカルショットを
+ミュージカルホールに　飾りますか？</language>
 	</row>
 
 	<row id="MUSICAL_SHOT_INFO_02">
@@ -372,10 +374,10 @@
 	</row>
 
 	<row id="MUSICAL_SHOT_INFO_04">
-		<language name="JPN" width="240">あいての　せんたくを　まっています
-しばらく　おまちください……</language>
-		<language name="JPN_KANJI">相手の　選択を　待っています
-しばらく　お待ちください……</language>
+		<language name="JPN" width="240">ほかの　さんかしゃの
+せんたくを まっています</language>
+		<language name="JPN_KANJI">他の　参加者の
+選択を　待っています</language>
 	</row>
 
 	<flowchart-group-list>
