@@ -586,6 +586,8 @@ end
   fp_hash.printf("#! ruby -Ks\n\n" )
 
   fp_hash.printf("\t$trtype_hash = {\n" )
+  fp_hash.printf("\t\t\"男主人公\"=>0,\n")
+  fp_hash.printf("\t\t\"女主人公\"=>1,\n")
 
   #トレーナータイプ名
   #だぶりチェック
