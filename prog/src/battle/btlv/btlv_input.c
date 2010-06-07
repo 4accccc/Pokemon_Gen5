@@ -1027,9 +1027,7 @@ void  BTLV_INPUT_InitBG( BTLV_INPUT_WORK *biw )
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
   //受信強度アイコン表示
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, biw->heapID );
-  //GFL_NET_ChangeIconPosition( BTLV_INPUT_IR_ICON_X, BTLV_INPUT_IR_ICON_Y ); 
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, biw->heapID );
   PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ, BTLV_INPUT_WIRELESS_ICON_PAL, 0x20 );
 
   //OBJカーソル表示処理をする
