@@ -108,22 +108,22 @@ get_item:
   //アイテム1つ目
   $CheckNum = 5
   $CheckFlg = FE_POKEID_ITEM1
-  $ItemNo = ITEM_POINTOAPPU
+  $ItemNo = ITEM_KOUKAKURENZU
   _CALL get_item_common
   //アイテム2つ目
   $CheckNum = 10
   $CheckFlg = FE_POKEID_ITEM2
-  $ItemNo = ITEM_HUSIGINAAME
+  $ItemNo = ITEM_KAWARAZUNOISI
   _CALL get_item_common
   //アイテム3つ目
   $CheckNum = 20
   $CheckFlg = FE_POKEID_ITEM3
-  $ItemNo = ITEM_OUZYANOSIRUSI
+  $ItemNo = ITEM_FOOKASURENZU
   _CALL get_item_common
   //アイテム4つ目
   $CheckNum = 30
   $CheckFlg = FE_POKEID_ITEM4
-  $ItemNo = ITEM_WAZAMASIN01
+  $ItemNo = ITEM_KODAWARISUKAAHU
   _CALL get_item_common
   //アイテム5つ目
   $CheckNum = 40
