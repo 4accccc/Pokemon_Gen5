@@ -11,7 +11,6 @@
 
 	.include	"scr_seq_def.h"
 
-	.include	"msg_postman.h"
   .include  "msg_pdw_postman.h"
 
 
@@ -100,7 +99,7 @@ sub_postman_main:
   ENDIF
 
   //‚Ü‚½‚Ì‚²‚è‚æ‚¤‚ð‚¨‚Ü‚¿‚µ‚Ä‚¨‚è‚Ü‚·
-  _BALLOONWIN_OBJMSG_POS( msg_postman_03, SCWK_TARGET_OBJID, POS_DOWN )
+  _BALLOONWIN_OBJMSG_POS( msg_pdw_postman_03, SCWK_TARGET_OBJID, POS_DOWN )
   _LAST_KEYWAIT()
   _BALLOONWIN_CLOSE()
 
