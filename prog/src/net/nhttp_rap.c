@@ -374,7 +374,10 @@ NHTTP_RAP_WORK* NHTTP_RAP_Init(HEAPID heapID,u32 profileid, DWCSvlResult* pSvl)
 
 void NHTTP_RAP_End(NHTTP_RAP_WORK* pWork)
 {
-  GFL_HEAP_FreeMemory(pWork);
+  if(pWork){
+    NHTTP_RAP_PokemonEvilCheckDelete(pWork);
+    GFL_HEAP_FreeMemory(pWork);
+  }
 }
 
 
@@ -526,7 +529,9 @@ BOOL NHTTP_RAP_PokemonEvilCheckConectionCreate(NHTTP_RAP_WORK* pWork)
 
 void NHTTP_RAP_PokemonEvilCheckDelete(NHTTP_RAP_WORK* pWork)
 {
-  GFL_NET_Align32Free(pWork->pData);
+  if(pWork->pData){
+    GFL_NET_Align32Free(pWork->pData);
+  }
   pWork->pData = NULL;
   pWork->length = 0;
 }

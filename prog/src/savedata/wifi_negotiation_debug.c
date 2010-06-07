@@ -52,11 +52,12 @@ void WIFINEGOSV_DEBUG_DeleteFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,int index)
 void WIFINEGOSV_DEBUG_AddFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 addnum)
 {
   int i;
-  
+
+  WIFI_NEGOTIATION_SV_Init(pSV);
   for(i = 0; i < addnum;i++){
     MYSTATUS* pMyStatus = MyStatus_AllocWork(GFL_HEAPID_APP);
     MyStatus_SetProfileID(pMyStatus,1+i);
-    MyStatus_SetID(pMyStatus, GFUser_GetPublicRand(50000) );
+    MyStatus_SetID(pMyStatus, i+1 );
     MyStatus_SetTrainerView(pMyStatus, i%16);
     MyStatus_SetMyNationArea(pMyStatus, 1+i,1);
     WIFI_NEGOTIATION_SV_SetFriend(pSV,pMyStatus);
