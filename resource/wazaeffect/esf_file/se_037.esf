@@ -6,7 +6,9 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_128.spa
 指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
 パーティクルデータロード	w_128
 制御モード変更	継続
-SE再生	SEQ_SE_BE_SE_034	SE1	攻撃側	20:0:127	0:0:0
+SE再生	SEQ_SE_W002_01	SE1	攻撃側	10:-500:110	0:0:0
+SE再生	SEQ_SE_MSCL_06	SE2	攻撃側	30:0:110	0:0:0
+SE再生	SEQ_SE_FLD_44	SE1	攻撃側	30:0:120	0:0:0
 制御モード変更	逐次
 パーティクル再生（正射影）	w_128	W_128_128_HIT_KARA	攻撃側	方向無し	0:2:0	0.5:1:0.5	1
 パーティクル再生（正射影）	w_128	W_128_128_BALL_KARA	攻撃側	方向無し	0:2:0	0.5:1:0.5	1
