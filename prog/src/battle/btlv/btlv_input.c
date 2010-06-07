@@ -1901,7 +1901,7 @@ BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int*
     BTLV_INPUT_CheckWazaInfoModeMask( &hit );
     if( hit < 5 )
     { 
-      if( biw->waruagaki_flag == TRUE )
+      if( ( hit < 4 ) && ( biw->waruagaki_flag == TRUE ) )
       { 
         biw->hit = BTLV_INPUT_WARUAGAKI_BUTTON;
       }
@@ -3825,22 +3825,21 @@ static  void  BTLV_INPUT_CreateRotateScreen( BTLV_INPUT_WORK* biw )
     { 
       biw->button_exist[ i ] = FALSE;
     }
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 8, 8, 0, biw->tcbsys );
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
   }
   else if( biw->waruagaki_flag == TRUE )
   { 
     biw->button_exist[ 0 ] = TRUE;
     BTLV_INPUT_CreateWaruagakiButton( biw );
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 8, 8, 0, biw->tcbsys );
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 8, 8, 0, biw->tcbsys );
+    PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 8, 8, 0, biw->tcbsys );
   }
   else
   {
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
-    PaletteFadeReq( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
+    PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, 0x3e00, 0, 0, 0, 0, biw->tcbsys );
+    PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_OBJ, 0x0700, 0, 0, 0, 0, biw->tcbsys );
   }
-
 #else
   STRBUF *monsname_p;
   STRBUF *monsname_src;
