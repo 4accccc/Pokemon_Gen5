@@ -2470,6 +2470,10 @@ void BPP_Clear_ForOut( BTL_POKEPARAM* bpp )
     Effrank_Init( &bpp->varyParam );
     flgbuf_clear( bpp->contFlag, sizeof(bpp->contFlag) );
   }
+  else{
+    TAYA_Printf( "バトンタッチ使用者 pokeID=%d, atk=%d, def=%d\n",
+      bpp->coreParam.myID, bpp->varyParam.attack, bpp->varyParam.defence );
+  }
 
   bpp->formNo = bpp->coreParam.defaultFormNo;
   bpp->tokusei = bpp->coreParam.defaultTokusei;
@@ -2507,9 +2511,9 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
 
   target->varyParam = user->varyParam;
 
-  BTL_Printf("[%d]->[%d]へバトンタッチで引き継がれた:防御ランク=%d, 特防ランク=%d\n",
+  TAYA_Printf("[%d]->[%d]へバトンタッチで引き継がれた:攻撃ランク=%d, 防御ランク=%d\n",
     user->coreParam.myID, target->coreParam.myID,
-    target->varyParam.defence, target->varyParam.sp_defence);
+      target->varyParam.attack, target->varyParam.defence );
 
   target->migawariHP = user->migawariHP;
 
