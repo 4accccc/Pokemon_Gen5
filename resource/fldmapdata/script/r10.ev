@@ -34,6 +34,9 @@ EVENT_START   ev_pos_r10_rival_01
 	//プレイヤーネームを格納
 	_PLAYER_NAME(0)
 	
+	_PLAINWIN_MSG_DOWN( msg_r10_black_00 )
+	_MSGWIN_CLOSE()
+	
 	//OBJ作成
 	_FLAG_RESET( FV_R10_RIVAL_01 )
 	_OBJ_ADD( R10_RIVAL_01 )
