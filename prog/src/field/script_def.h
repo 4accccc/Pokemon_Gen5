@@ -194,15 +194,16 @@
 #define SCR_POKEPARA_SEX              (110) ///<RO 性別
 #define SCR_POKEPARA_FORMNO           (111) ///<RO フォルムナンバー
 #define SCR_POKEPARA_SEIKAKU          (112) ///<RO 性格
+#define SCR_POKEPARA_NICKNAME_FLAG    (117) ///<RO ニックネームフラグ
 #define SCR_POKEPARA_GET_ROM          (119) ///<RO 捕まえたロム
-#define SCR_POKEPARA_GET_YEAR         (143) ///<RO 捕獲した時の年
-#define SCR_POKEPARA_GET_MONTH        (144) ///<RO 捕獲した時の月
-#define SCR_POKEPARA_GET_DAY          (145) ///<RO 捕獲した時の日
-#define SCR_POKEPARA_BIRTH_YEAR       (146) ///<RO 生まれた年
-#define SCR_POKEPARA_BIRTH_MONTH      (147) ///<RO 生まれた月
-#define SCR_POKEPARA_BIRTH_DAY        (148) ///<RO 生まれた日
-#define SCR_POKEPARA_GET_PLACE        (149) ///<RO 捕獲した場所
-#define SCR_POKEPARA_BIRTH_PLACE      (150) ///<RO 生まれた場所
+//#define SCR_POKEPARA_GET_YEAR         (143) ///<RO タマゴを入手した時の年
+//#define SCR_POKEPARA_GET_MONTH        (144) ///<RO タマゴを入手した時の月
+//#define SCR_POKEPARA_GET_DAY          (145) ///<RO タマゴを入手した時の日
+//#define SCR_POKEPARA_BIRTH_YEAR       (146) ///<RO 生まれた or 捕まえた年
+//#define SCR_POKEPARA_BIRTH_MONTH      (147) ///<RO 生まれた or 捕まえた月
+//#define SCR_POKEPARA_BIRTH_DAY        (148) ///<RO 生まれた or 捕まえた日
+//#define SCR_POKEPARA_GET_PLACE        (149) ///<RO タマゴを入手した場所
+//#define SCR_POKEPARA_BIRTH_PLACE      (150) ///<RO 生まれた or 捕獲した場所
 #define SCR_POKEPARA_GET_LEVEL        (153) ///<RO 捕獲した時のレベル
 #define SCR_POKEPARA_OYA_SEX          (154) ///<RO 親の性別
 #define SCR_POKEPARA_LEVEL            (158) ///<RO 現在のレベル
