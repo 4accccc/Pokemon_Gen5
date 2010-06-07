@@ -1035,9 +1035,11 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
     {
       ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_POKETRADE, pWork->heapID );
-      pWork->subchar =
-        GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
-                                                     GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
+      GF_ASSERT(pWork->subchar);
+
+      //   pWork->subchar =
+     //   GFL_ARCHDL_UTIL_TransVramBgCharacterAreaMan( p_handle, NARC_trade_wb_trade_bg01_NCGR,
+       //                                              GFL_BG_FRAME2_M, 0, 0, pWork->heapID);
       GFL_ARCHDL_UTIL_TransVramScreenCharOfs(p_handle,
                                            NARC_trade_wb_trade_bg01_back_NSCR,
                                            GFL_BG_FRAME2_M, 0,
@@ -1078,7 +1080,10 @@ static void _pokemonStatusWaitN(POKEMON_TRADE_WORK* pWork)
   if(-1!=tpno){   //ƒ^ƒbƒ`ˆ—
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
     pWork->pokemonselectno = tpno;
+    POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
     _changePokemonStatusDispAuto(pWork,pWork->pokemonselectno);
+    PMSND_PlaySystemSE(SEQ_SE_SELECT1);
+    return;
   }
 
   if(GFL_UI_CheckTouchOrKey()!=GFL_APP_END_KEY){
@@ -1370,6 +1375,7 @@ void POKETRADE_NEGO_Select6keywait(POKEMON_TRADE_WORK* pWork)
   trgno = GFL_UI_TP_HitTrg(_tp_data);
   if(trgno != -1){
     GFL_UI_SetTouchOrKey(GFL_APP_END_TOUCH);
+    PMSND_PlaySystemSE(SEQ_SE_SELECT1);
     POKEMONTRADE_StartPokeSelectSixButton(pWork, -1);
     if(_NEGO_Select6PokemonSelect(pWork, trgno)){
       return;
