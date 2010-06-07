@@ -112,6 +112,7 @@ EVENT_END
 //	案内嬢イベント：呼び止める「！」
 //--------------------------------------------------------------
 _ANIME_LABEL	anm_c08r0601_informationw_gyoe_01
+	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	AC_MARK_GYOE,1
 	_ANIME_DATA	ACMD_END,0
 
