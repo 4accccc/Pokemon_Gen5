@@ -1495,6 +1495,7 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
 {
   ARCHANDLE* ah;
   int i;
+  int default_floor;
 
   static FRAMELIST_HEADER header = {
     BG_FRAME_LIST_M,
@@ -1529,22 +1530,19 @@ static void LIST_Make( UN_SELECT_MAIN_WORK* wk )
     &FRMListCallBack, // コールバック関数
     NULL,
   };
-/**
-  //受け渡されたフロア数が5Ｆより大きかった場合だった場合初期位置を書き換える
-  if ( wk->pwk->InFloor > 5 )
-  {
-    NOZOMU_Printf("国フロアからアプリがコールされたとみなす\n");
-    header.initScroll = (UN_LIST_MAX-1)-(wk->pwk->InFloor-2);
-  }
-*/
+
   header.cbWork = wk;
+
+  //指定が1以下（エントランスからのコール）の場合、2Ｆの位置にカーソルがくるようにする
+  default_floor = wk->pwk->InFloor;
+  if ( default_floor <= 1 ) default_floor = 2;
 
   //初期位置セット
   for (i=0; i<UN_LIST_MAX; i++)
   {
     int floor;
     floor = UN_LIST_MAX - i + 1;
-    if( floor == wk->pwk->InFloor )
+    if( floor == default_floor )
     {
       if( i > (UN_LIST_MAX-CUR_MOVE_RANGE) )
       {
