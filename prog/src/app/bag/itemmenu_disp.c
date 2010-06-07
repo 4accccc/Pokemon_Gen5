@@ -764,7 +764,7 @@ void ITEMDISP_upMessageRewrite(FIELD_ITEMMENU_WORK* pWork)
 				pWork->WordSet, 0, ITEM_GetWazaMashineNo(item->id)+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
 		}else{
 	    GFL_MSG_GetString( pWork->MsgManager, msg_bag_088, pWork->pStrBuf );
-	    WORDSET_RegisterNumber( pWork->WordSet, 0, hiden+1, 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+	    WORDSET_RegisterNumber( pWork->WordSet, 0, hiden+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT);
 		}
     WORDSET_RegisterWazaName(pWork->WordSet, 1, wazano);
     WORDSET_ExpandStr( pWork->WordSet, pWork->pExpStrBuf, pWork->pStrBuf  );
