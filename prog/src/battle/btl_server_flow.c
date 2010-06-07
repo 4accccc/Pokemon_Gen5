@@ -4273,7 +4273,6 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
       {
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
         scEvent_TameSkip( wk, attacker, waza );
-//        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
         BTL_Hem_PopState( &wk->HEManager, hem_state );
       }
     }
@@ -4285,6 +4284,7 @@ static BOOL scproc_Fight_TameWazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
 //      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
     }
+    BPP_TURNFLAG_Set( attacker, BPP_TURNFLG_TAMEHIDE_OFF );
     scproc_TameLockClear( wk, attacker );
   }
   return FALSE;
