@@ -4476,6 +4476,7 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
   case SEIRI_SEQ_TRAYFRM_IN:      // トレイフレームイン
     if( BOX2MAIN_VFuncBoxMoveFrmIn( syswk ) == 0 ){
+			// ↓ここでTRAYにしてしまうと、手持ちをトレイアイコンに入れたときに、他の手持ちが左に出てしまう BTS3967
 //      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_TRAY;
       vf->seq = SEIRI_SEQ_ICON_GET;
     }
@@ -4502,7 +4503,8 @@ int BOX2MAIN_VFuncGetPokeMoveBoxParty( BOX2_SYS_WORK * syswk )
 
   case SEIRI_SEQ_PARTYFRM_IN:     // パーティフレームイン
     if( BOX2BGWFRM_PartyPokeFrameMove( syswk ) == FALSE ){
-//      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
+			// ↓ここでALLにしないと、ボックスから手持ちにアイコンが移動しない BTS4351
+      syswk->move_mode = BOX2MAIN_POKEMOVE_MODE_ALL;
       vf->seq = SEIRI_SEQ_ICON_GET;
     }
     if( GFL_UI_TP_GetPointCont( &tpx, &tpy ) == TRUE ){
