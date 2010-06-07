@@ -327,8 +327,11 @@ void BR_POKESEARCH_Main( BR_POKESEARCH_WORK *p_wk )
       break;
 
     case SEQ_CHANGEOUT_START:
-      BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_SUB, BR_FADE_DIR_OUT );
-      p_wk->seq++;
+      if( BR_BALLEFF_IsMoveEnd(p_wk->p_balleff[ CLSYS_DRAW_SUB ]) )
+      {
+        BR_FADE_StartFade( p_wk->p_fade, BR_FADE_TYPE_ALPHA_BG012OBJ, BR_FADE_DISPLAY_SUB, BR_FADE_DIR_OUT );
+        p_wk->seq++;
+      }
       break;
 
     case SEQ_CHANGEOUT_WAIT:
