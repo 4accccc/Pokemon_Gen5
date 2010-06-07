@@ -4277,7 +4277,10 @@ static void handler_Namake_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    work[0] = 1;
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) ){
+      work[0] = 1;
+    }
   }
 }
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Namake( u32* numElems )
