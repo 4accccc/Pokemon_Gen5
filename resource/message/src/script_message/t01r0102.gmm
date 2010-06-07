@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-03T12:39:08"/>
+	<create user="matsumiya" host="W00224" date="2010-06-07T21:15:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 		<band id="2" index="3" style="0000" width="543"/>
 		<band id="3" index="4" style="0000" width="152"/>
 		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -911,9 +911,9 @@
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">チェレンは　ベルの　ポケモンを
-かいふく　させた！▼</language>
+かいふく　させた！</language>
 		<language name="JPN_KANJI" width="256">チェレンは　ベルの　ポケモンを
-回復させた！▼</language>
+回復させた！</language>
 	</row>
 
 	<row id="msg_t01r0102_black_11" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -933,10 +933,12 @@
 ・続けてwhite_13</comment>
 		<attribute name="キャラ指定">友達♂
 チェレン</attribute>
-		<language name="JPN" width="256">チェレンは　[1:01:ポケモン種族名:1]の
-かいふくを　してくれた▼</language>
-		<language name="JPN_KANJI" width="256">チェレンは　[1:01:ポケモン種族名:1]の
-回復を　してくれた▼</language>
+		<language name="JPN" width="256">チェレンは
+[1:00:トレーナー名:0]の　ポケモンを▽
+かいふく　してくれた！</language>
+		<language name="JPN_KANJI" width="256">チェレンは
+[1:00:トレーナー名:0]の　ポケモンを▽
+回復してくれた！</language>
 	</row>
 
 	<row id="msg_t01r0102_black_13" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">

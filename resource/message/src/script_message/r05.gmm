@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-25T16:45:14"/>
+	<create user="matsumiya" host="W00224" date="2010-06-07T21:14:35"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -554,10 +554,10 @@
 チェレン</attribute>
 		<language name="JPN" width="256">チェレンは
 [1:00:トレーナー名:0]の　ポケモンを▽
-かいふく　してくれた！▼</language>
+かいふく　してくれた！</language>
 		<language name="JPN_KANJI" width="256">チェレンは
 [1:00:トレーナー名:0]の　ポケモンを▽
-回復してくれた！▼</language>
+回復してくれた！</language>
 	</row>
 
 	<row id="msg_r05_black_07_02" back-color="#80ff80,,,,,,,,,,,,,,,,,,">
