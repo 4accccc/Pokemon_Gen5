@@ -5383,9 +5383,8 @@ static void Bspstore_Party( BTL_MAIN_MODULE* wk, u8 clientID, const POKEPARTY* p
 {
   u8 relation = CommClientRelation( wk->myClientID, clientID );
   POKEPARTY* dstParty = wk->setupParam->party[ relation ];
-  if( (dstParty != NULL)
-  &&  (PokeParty_GetPokeCount(dstParty) == 0)
-  ){
+  if( dstParty != NULL )
+  {
     PokeParty_Copy( party, dstParty );
   }
 }
