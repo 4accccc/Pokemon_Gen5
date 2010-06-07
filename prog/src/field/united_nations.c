@@ -312,6 +312,8 @@ static void SetWords(WORDSET *wordset, GAMEDATA *gdata, const u32 inDataIdx)
     int keta = 3;
     int number;
     number = WIFIHISTORY_GetUnInfo(wh, inDataIdx, UN_INFO_COUNTRY_NUM);
+    //「0カ国と交換」とメッセージ表示されないように、最低1ヶ国と交換したことにはして表示を騙す
+    if (number == 0 ) number = 1;
     WORDSET_RegisterNumber( wordset, 8, number, keta, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
   }
   //9番にNPCがプレーヤーにあげたポケモンをセット
