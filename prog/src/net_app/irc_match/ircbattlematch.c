@@ -115,7 +115,7 @@ typedef enum
 
 #define	FBMP_COL_WHITE		(15)
 
-#define _FULL_TIMER   (120)  //人数がいっぱいで交換できない場合のメッセージ表示時間
+#define _FULL_TIMER   (180)  //人数がいっぱいで交換できない場合のメッセージ表示時間
 
 
 //-------------------------------------------------------------------------
@@ -169,6 +169,7 @@ static void _buttonWindowDelete(IRC_BATTLE_MATCH* pWork);
 static void _ReturnButtonStart(IRC_BATTLE_MATCH* pWork ,BOOL bDecide);
 static void _modeCheckStart2(IRC_BATTLE_MATCH* pWork);
 static void _YesNoStart(IRC_BATTLE_MATCH* pWork);
+static void _waitFinish(IRC_BATTLE_MATCH* pWork);
 
 
 ///通信コマンド
@@ -1828,6 +1829,14 @@ static void _fadeInWait(IRC_BATTLE_MATCH* pWork)
 {
   // ワイプ終了待ち
   if( GFL_FADE_CheckFade() ){
+    if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
+      int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
+      if(num1==WIFILIST_FRIEND_MAX){
+        _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
+        pWork->timer = _FULL_TIMER;
+        return;
+      }
+    }
     _CHANGE_STATE(pWork,_ircMatchStart);
   }
 }
@@ -1965,8 +1974,6 @@ static void _ircInitWait(IRC_BATTLE_MATCH* pWork)
       break;
     }
     GFL_NET_ChangeoverConnect_IRCWIRELESS(_wirelessConnectCallback,_wirelessPreConnectCallback,_ircConnectEndCallback); // 専用の自動接続
-//    pWork->pButton = GFL_BMN_Create( btn_irmain, _BttnCallBack, pWork,  pWork->heapID );
-//    pWork->touch = &_cancelButtonCallback;
     _CHANGE_STATE(pWork,_ircMatchWait);
   }
 }
@@ -2611,17 +2618,6 @@ static int _ansmessagebuff[]={
 
 static void _ircMatchWait(IRC_BATTLE_MATCH* pWork)
 {
-  if(pWork->selectType==EVENTIRCBTL_ENTRYMODE_FRIEND){
-    int num1 = WifiList_GetFriendDataNum( GAMEDATA_GetWiFiList(pWork->pBattleWork->gamedata) ); //WIFILIST_FRIEND_MAX
-    if(num1==WIFILIST_FRIEND_MAX){
-//      pWork->pBattleWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-      _CHANGE_STATE(pWork,_waitFinish);        // 終わり()
-      pWork->timer = _FULL_TIMER;
-      return;
-    }
-  }
-
-  
   if(pWork->ircCenterAnim && (EVENTIRCBTL_ENTRYMODE_MULTH==pWork->selectType)){ //2vs2//4台の時2台を真ん中に
     _ircFourMatch2TwoMatch(pWork);
   }
