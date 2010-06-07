@@ -178,8 +178,7 @@ static int MainSeq_Init( DPCMAIN_WORK * wk )
 
 	DPCMAIN_SetBlendAlpha();
 
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_DENDOU_PC );
-	GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_DENDOU_PC );
 
 	DPCMAIN_InitVBlank( wk );
 

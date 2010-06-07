@@ -239,8 +239,7 @@ static int MainSeq_Init( ZKNSEARCHMAIN_WORK * wk )
 
 	ZKNSEARCHMAIN_InitBlinkAnm( wk );
 
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_ZUKAN_SEARCH );
-	GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_SEARCH );
 
 	ZKNSEARCHMAIN_InitBgWinFrame( wk );
 	ZKNSEARCHMAIN_InitFrameScroll( wk );

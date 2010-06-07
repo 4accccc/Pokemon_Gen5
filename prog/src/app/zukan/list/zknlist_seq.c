@@ -161,8 +161,7 @@ static int MainSeq_Init( ZKNLISTMAIN_WORK * wk )
 		ZKNLISTBMP_PutPokeSearchStr( wk );
 	}
 
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_ZUKAN_LIST );
-	GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_LIST );
 
 	ZKNLISTMAIN_SetBlendAlpha();
 	ZKNLISTMAIN_SetWindow();

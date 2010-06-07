@@ -723,8 +723,7 @@ static int MainSeq_Init( BOX2_SYS_WORK * syswk )
 
 	BOX2MAIN_SetBlendAlpha( TRUE );
 
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_BOX_APP );
-	GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_BOX_APP );
 
 	BOX2MAIN_InitVBlank( syswk );
 

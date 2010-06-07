@@ -530,8 +530,7 @@ static int MainSeq_Init( VSMLIST_WORK * wk )
 	InitBgWinFrame( wk );
 
 	// 通信アイコン設定
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_VS_MULTI_LIST );
-	GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_VS_MULTI_LIST );
 
 	GFL_DISP_GX_SetVisibleControl(
 		GX_PLANEMASK_BG0 | GX_PLANEMASK_BG1 | GX_PLANEMASK_BG2 | GX_PLANEMASK_OBJ, VISIBLE_ON );

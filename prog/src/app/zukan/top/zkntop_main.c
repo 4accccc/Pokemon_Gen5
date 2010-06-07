@@ -407,8 +407,8 @@ static int MainSeq_Init( ZKNTOPMAIN_WORK * wk )
 	LoadBgGraphic( wk );
 	LoadSaveGraphic( wk );
 
-	GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_ZUKAN_TOP );
-	GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_ZUKAN_TOP );
+
 	GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );		// SUB DISP OBJ ON
 
 	InitVBlank( wk );

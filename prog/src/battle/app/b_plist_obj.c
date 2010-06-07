@@ -561,7 +561,7 @@ static void BPL_ClactAddAll( BPLIST_WORK * wk )
   for( i=0; i<BPL_CA_MAX; i++ ){
     wk->clwk[i] = BPL_ClactAdd( wk, ObjParamEz[i] );
   }
-  GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
 
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 0, 0x1e0 );
   BPL_PokeIconPaletteChg( wk );

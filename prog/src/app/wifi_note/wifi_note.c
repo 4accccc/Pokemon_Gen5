@@ -2009,8 +2009,7 @@ GFL_PROC_RESULT WifiNoteProc_Init( GFL_PROC * proc, int * seq , void *pwk, void 
   Draw_Init( &p_wk->draw, &p_wk->data, HEAPID_WIFINOTE );
 
   // 通信アイコン設定
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_WIFINOTE );
-  GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_WIFINOTE );
 
   // 各画面のワーク初期化
 //  ModeSelect_Init( &p_wk->mode_select, &p_wk->data, &p_wk->draw, HEAPID_WIFINOTE );

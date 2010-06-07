@@ -300,7 +300,7 @@ static int BBAG_SeqInit( BBAG_WORK * wk )
 		BBAGUI_Init( wk, wk->page, 0 );
 	}
 
-  GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
 
   PaletteFadeReq(
@@ -361,7 +361,7 @@ static int BBAG_SeqShooterInit( BBAG_WORK * wk )
 
   BBAGUI_Init( wk, wk->page, 0 );
 
-  GFL_NET_ReloadIcon();
+	GFL_NET_ReloadIconTopOrBottom( FALSE, wk->dat->heap );
   PaletteWorkSet_VramCopy( wk->pfd, FADE_SUB_OBJ, 14*16, 0x20 );
 
   PaletteFadeReq(
