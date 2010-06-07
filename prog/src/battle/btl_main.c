@@ -2358,23 +2358,19 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
     return BTL_ESCAPE_MODE_WILD;
 
   case BTL_COMPETITOR_TRAINER:
-    /*
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R) ){
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif
-    */
     return BTL_ESCAPE_MODE_NG;
 
   case BTL_COMPETITOR_SUBWAY:
-    /*
     #ifdef PM_DEBUG
     if( GFL_UI_KEY_GetCont() & (PAD_BUTTON_L | PAD_BUTTON_R)){
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif
-    */
     return BTL_ESCAPE_MODE_CONFIRM;
 
   case BTL_COMPETITOR_COMM:
@@ -3880,6 +3876,7 @@ static void PokeCon_AddParty( BTL_POKE_CONTAINER* pokecon, BTL_MAIN_MODULE* wk, 
         {
           pp = PokeParty_GetMemberPointer( party_src, lastPokeIndex );
           BPP_SetViewSrcData( pokecon->pokeParam[ pokeID ], pp );
+          TAYA_Printf("%d番目のポケはイリュージョンね\n", i );
         }
       }
     }
@@ -4789,17 +4786,19 @@ void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party )
     // イリュージョン持ちなら対象を更新
     if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_IRYUUJON )
     {
-      BTL_POKEPARAM* bppRef = party->member[ lastPokeIdx ];
-      BPP_SetViewSrcData( bpp, BPP_GetSrcData(bppRef) );
-      BTL_N_Printf( DBGSTR_MAIN_Illusion1st, i, BPP_GetID(bpp));
-      BTL_N_PrintfSimple( DBGSTR_MAIN_Illusion2nd, lastPokeIdx, BPP_GetID(bppRef));
+      if( i < lastPokeIdx )
+      {
+        BTL_POKEPARAM* bppRef = party->member[ lastPokeIdx ];
+        BPP_SetViewSrcData( bpp, BPP_GetSrcData(bppRef) );
+        BTL_N_Printf( DBGSTR_MAIN_Illusion1st, i, BPP_GetID(bpp));
+        BTL_N_PrintfSimple( DBGSTR_MAIN_Illusion2nd, lastPokeIdx, BPP_GetID(bppRef));
+      }
+      // 自身が最後尾にいる場合、イリュージョンは無効（ただし野生ゾロアークの特殊処理は除外）
+      else if( BPP_GetViewSrcData(bpp) != wk->ppIllusionZoroArc )
+      {
+         BPP_ClearViewSrcData( bpp );
+      }
     }
-    // 自身が最後尾にいる場合、イリュージョンは無効（ただし野生ゾロアークの特殊処理は除外）
-    else if( BPP_GetViewSrcData(bpp) != wk->ppIllusionZoroArc )
-    {
-      BPP_ClearViewSrcData( bpp );
-    }
-
   }
 
 }

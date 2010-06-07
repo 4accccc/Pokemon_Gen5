@@ -2456,9 +2456,15 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
       // 何もなければ標準メッセージ
       if( !fSpMsgDisped )
       {
-        if( fEscapeEnemy ){
-          SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeWild, SEQ_SE_NIGERU, BPP_GetID(bpp) );
-        }else{
+        if( fEscapeEnemy )
+        {
+          // 本来なら野生戦以外はココにこないが、デバッグLR逃げだと来て見栄えが悪いので括る。
+          if( BTL_MAIN_GetCompetitor(wk->mainModule) == BTL_COMPETITOR_WILD ){
+            SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeWild, SEQ_SE_NIGERU, BPP_GetID(bpp) );
+          }
+        }
+        else
+        {
           SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
         }
       }
