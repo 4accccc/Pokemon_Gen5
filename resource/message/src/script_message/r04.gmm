@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-01T21:45:05"/>
+	<create user="matsumiya" host="W00224" date="2010-06-08T12:26:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1529" top="113" right="2234" bottom="741" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="790" top="142" right="1263" bottom="540" visible="yes"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -301,16 +301,14 @@
 ※福島の方言をチェック</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">おい！　トレーナー▼
+このさきで　ちょいと
+やっかいな　ことが　あってな▽
 わるいが　いまは　とおれないぞ▼
-なんでも　さばくで
-いせきの　いりぐちが　みつかってな▽
-なかまは　そっちに　いってるんだ▼
 まあ　ヒウンシティの　ジムに
 ちょうせんして　じかんを　つぶすぞい</language>
 		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
-悪いが　今は　通れないぞ▼
-なんでも　砂漠で
-遺跡の　入り口が　見つかってな▽
+この先で　ちょいと
+やっかいな　ことが　あってな▽
 仲間は　そっちに　行ってるんだ▼
 まあ　ヒウンシティの　ジムに
 挑戦して　時間を　つぶすぞい</language>
@@ -324,16 +322,14 @@
 ・posを踏んだとき</comment>
 		<attribute name="キャラ指定">WORKMAN</attribute>
 		<language name="JPN" width="256">おい！　トレーナー▼
+このさきで　ちょいと
+めんどうな　ことが　あってな▽
 わるいが　いまは　とおれないぞ▼
-なんでも　さばくで
-いせきの　いりぐちが　みつかってな▽
-なかまは　そっちに　いってるんだ▼
 まあ　ヒウンシティの　ジムに
 ちょうせんして　じかんを　つぶすぞい▼</language>
 		<language name="JPN_KANJI" width="256">おい！　トレーナー▼
-悪いが　今は　通れないぞ▼
-なんでも　砂漠で
-遺跡の　入り口が　見つかってな▽
+この先で　ちょいと
+やっかいな　ことが　あってな▽
 仲間は　そっちに　行ってるんだ▼
 まあ　ヒウンシティの　ジムに
 挑戦して　時間を　つぶすぞい▼</language>
