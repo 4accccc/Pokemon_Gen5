@@ -6876,7 +6876,8 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Illusion( u32* numElems )
 static void handler_Illusion_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   // ©•ª‚ª–hŒä‘¤‚È‚çƒCƒŠƒ…[ƒWƒ‡ƒ“‰ğœ
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
   {
     common_IllusionBreak( myHandle, flowWk, pokeID );
   }
