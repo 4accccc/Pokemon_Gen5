@@ -4328,13 +4328,21 @@ static  int   EFFVM_GetPokePosition( BTLV_EFFVM_WORK* bevw, int pos_flag, BtlvMc
         switch( bevw->param.waza_range ){
         case WAZA_TARGET_ALL:                 ///< 場に出ている全ポケ
         case WAZA_TARGET_FIELD:               ///< 場全体（天候など）
-          pos_cnt = 2;
+          pos_cnt = 1;
           pos[ 0 ] = bevw->attack_pos;
-          pos[ 1 ] = bevw->attack_pos ^ 1;
+          if( BTLV_EFFECT_CheckExist( bevw->attack_pos ^ 1 ) )
+          { 
+            pos[ 1 ] = bevw->attack_pos ^ 1;
+            pos_cnt++;
+          }
           break;
         default:
-          pos_cnt = 1;
-          pos[ 0 ] = bevw->attack_pos ^ 1;
+          pos_cnt = 0;
+          if( BTLV_EFFECT_CheckExist( bevw->attack_pos ^ 1 ) )
+          { 
+            pos[ 0 ] = bevw->attack_pos ^ 1;
+            pos_cnt++;
+          }
           break;
         }
         break;
@@ -5089,7 +5097,6 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     {
       spin_axis = SPL_FLD_SPIN_AXIS_TYPE_X;
     }
-    OS_Printf("angle:%f axis:%d\n",FX_FX32_TO_F32(angle),spin_axis);
     GFL_PTC_SetEmitterSpinAxisType( emit, &spin_axis );
 
     GFL_PTC_SetEmitterAxis( emit, &dir );
