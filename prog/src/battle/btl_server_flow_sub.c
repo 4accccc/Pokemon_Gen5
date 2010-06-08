@@ -1863,6 +1863,7 @@ static u8 ShooterEff_FlatCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
 
     msg_param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_MESSAGE, pokeID );
       HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_FlatCall );
+      HANDEX_STR_AddArg( &msg_param->str, pokeID );
     BTL_SVF_HANDEX_Pop( wk, msg_param );
   }
   BTL_Hem_PopState( &wk->HEManager, hem_state );
