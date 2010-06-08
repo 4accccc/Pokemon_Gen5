@@ -57,14 +57,13 @@
 #elif  defined( DEBUG_ONLY_FOR_shimoyamada )
 #define BATTLE_REC_Printf(...) OS_TPrintf(__VA_ARGS__)
 #elif defined( DEBUG_ONLY_FOR_toru_nagihashi )
-#define BATTLE_REC_Printf(...) OS_TFPrintf(1,__VA_ARGS__)
-#else  //defined
-#define BATTLE_REC_Printf(...)  /*  */
+//#define BATTLE_REC_Printf(...) OS_TFPrintf(1,__VA_ARGS__)
 #endif //defined
-
-#else //DEBUG_BATTLE_REC_PRINT_ON
-#define BATTLE_REC_Printf(...)  /*  */
 #endif //DEBUG_BATTLE_REC_PRINT_ON
+
+#ifndef BATTLE_REC_Printf
+#define BATTLE_REC_Printf(...)  /*  */
+#endif //BATTLE_REC_Printf
 
 /*--------------------------------------------------------------------------*/
 /* Globals                                                                  */

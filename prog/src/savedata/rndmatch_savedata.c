@@ -82,7 +82,7 @@ void RNDMATCH_Init( RNDMATCH_DATA *p_wk )
 //-----------------------------------------------------------------------------
 u16 RNDMATCH_GetParam( const RNDMATCH_DATA *cp_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx )
 { 
-  return cp_wk->data[ type ][ idx ];
+  return MATH_CLAMP( cp_wk->data[ type ][ idx ], 0, RNDMATCH_LIMIT_MAX );
 }
 //----------------------------------------------------------------------------
 /**
@@ -94,9 +94,9 @@ u16 RNDMATCH_GetParam( const RNDMATCH_DATA *cp_wk, RNDMATCH_TYPE type, RNDMATCH_
  *	@param  num                   Ý’è‚·‚éƒf[ƒ^            
  */
 //-----------------------------------------------------------------------------
-void RNDMATCH_SetParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx, u16 num )
+void RNDMATCH_SetParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx, s32 num )
 { 
-  p_wk->data[ type ][ idx ] = num;
+  p_wk->data[ type ][ idx ] = MATH_CLAMP( num, 0, RNDMATCH_LIMIT_MAX );
 }
 //----------------------------------------------------------------------------
 /**
@@ -108,6 +108,9 @@ void RNDMATCH_SetParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_
  */
 //-----------------------------------------------------------------------------
 void RNDMATCH_AddParam( RNDMATCH_DATA *p_wk, RNDMATCH_TYPE type, RNDMATCH_PARAM_IDX idx )
-{ 
-  p_wk->data[ type ][ idx ]++;
+{
+  if( p_wk->data[ type ][ idx ] < RNDMATCH_LIMIT_MAX )
+  {
+    p_wk->data[ type ][ idx ]++;
+  }
 }

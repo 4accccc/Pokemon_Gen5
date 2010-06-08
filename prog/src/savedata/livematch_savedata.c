@@ -103,7 +103,7 @@ void LIVEMATCH_DATA_GetMyMacAddr( const LIVEMATCH_DATA *cp_wk, u8* p_mac_addr )
 int LIVEMATCH_DATA_GetMyParam( const LIVEMATCH_DATA *cp_wk, LIVEMATCH_MYDATA_PARAM param )
 {
   GF_ASSERT( param < LIVEMATCH_MYDATA_PARAM_MAX );
-  return cp_wk->param[ param ];
+  return MATH_CLAMP( cp_wk->param[ param ], 0, LIVEMATCH_LIMIT_MAX);
 }
 
 //----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ int LIVEMATCH_DATA_GetMyParam( const LIVEMATCH_DATA *cp_wk, LIVEMATCH_MYDATA_PAR
 void LIVEMATCH_DATA_SetMyParam( LIVEMATCH_DATA *p_wk, LIVEMATCH_MYDATA_PARAM param, int data )
 {
   GF_ASSERT( param < LIVEMATCH_MYDATA_PARAM_MAX );
-  p_wk->param[ param ]  = data;
+  p_wk->param[ param ]  = MATH_CLAMP( data, 0, LIVEMATCH_LIMIT_MAX);
 }
 
 //----------------------------------------------------------------------------
@@ -133,7 +133,11 @@ void LIVEMATCH_DATA_SetMyParam( LIVEMATCH_DATA *p_wk, LIVEMATCH_MYDATA_PARAM par
 void LIVEMATCH_DATA_AddMyParam( LIVEMATCH_DATA *p_wk, LIVEMATCH_MYDATA_PARAM param, int data )
 {
   GF_ASSERT( param < LIVEMATCH_MYDATA_PARAM_MAX );
-  p_wk->param[ param ]  += data;
+
+  {
+    s32 temp  = (s32)p_wk->param[ param ] + data;
+    p_wk->param[ param ]  = MATH_CLAMP( temp, 0, LIVEMATCH_LIMIT_MAX );
+  }
 }
 
 

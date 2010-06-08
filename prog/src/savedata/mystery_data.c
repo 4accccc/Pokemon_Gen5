@@ -24,17 +24,14 @@ FS_EXTERN_OVERLAY(outside_save);
 
 //’S“–ŽÒ‚Ì‚Ý‚ÌƒvƒŠƒ“ƒgON
 #ifdef DEBUG_MYSTERY_DATA_PRINT_ON
-
 #if defined(DEBUG_ONLY_FOR_toru_nagihashi)
-#define MYSTERY_DATA_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
-#else //def
-#define MYSTERY_DATA_Printf(...)  /*    */
+//#define MYSTERY_DATA_Printf(...)  OS_TFPrintf(1,__VA_ARGS__)
 #endif  //def
-
-#else //DEBUG_MYSTERY_DATA_PRINT_ON
-#define MYSTERY_DATA_Printf(...)  /*    */
 #endif //DEBUG_MYSTERY_DATA_PRINT_ON
 
+#ifndef MYSTERY_DATA_Printf
+#define MYSTERY_DATA_Printf(...)  /*    */
+#endif
 
 #define MYSTERY_DATA_NO_USED		0x00000000
 #define MYSTERY_MENU_FLAG		(MYSTERY_DATA_MAX_EVENT - 1)
