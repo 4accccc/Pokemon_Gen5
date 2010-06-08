@@ -159,7 +159,8 @@ static void handler_HozuNomi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static BOOL common_WeakAff_Relieve( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType type, BOOL fIgnoreAffine );
 static void handler_common_WeakAff_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n );
+static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n );
+static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_IbanNomi( u32* numElems );
 static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_IbanNomi_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -2113,14 +2114,30 @@ static void handler_PinchReactCommon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 }
 //----------------------------------------------------------------------------------
 /**
- * HP 1/n 以下で反応するアイテムの共通処理
+ * HP 1/n 以下で反応するアイテムの共通処理 - 条件を満たしていたらアイテム使用ハンドラ呼び出し
  *
  * @param   flowWk
  * @param   pokeID
  * @param   n
  */
 //----------------------------------------------------------------------------------
-static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u8 n )
+static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    if( common_DamageReactCheck( myHandle, flowWk, pokeID, n) )
+    {
+      BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
+      ItemPushRun( myHandle, flowWk, pokeID );
+    }
+  }
+}
+//--------------------------------------------------------------
+/**
+ * HP 1/n 以下で反応するアイテムの共通処理 - 条件を満たしてるかチェック
+ */
+//--------------------------------------------------------------
+static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
@@ -2139,18 +2156,13 @@ static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     if( maxHP > 1 )
     {
       u32 hp = BPP_GetValue( bpp, BPP_HP );
-
-      BTL_N_Printf( DBGSTR_Item_PinchReactItem, pokeID, maxHP, hp, n);
-
-      if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) ){
-        BTL_N_PrintfSimple( DBGSTR_Item_PinchReactOn );
-//        BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
-        ItemPushRun( myHandle, flowWk, pokeID );
+      if( hp <= BTL_CALC_QuotMaxHP_Zero(bpp, n) )
+      {
+        return TRUE;
       }
-
-      BTL_N_PrintfSimple( DBGSTR_LF );
     }
   }
+  return FALSE;
 }
 //------------------------------------------------------------------------------
 /**
@@ -2161,8 +2173,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_IbanNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_SP_PRIORITY,    handler_IbanNomi_SpPriorityCheck  },  // 特殊行動プライオリティチェック
-    { BTL_EVENT_WORKED_SP_PRIORITY,   handler_IbanNomi_SpPriorityWorked },  // 特殊行動プライオリティ効果発生
-    { BTL_EVENT_ACTPROC_START,        handler_IbanNomi_ActStart         },  // アクション開始ハンドラ
+//    { BTL_EVENT_WORKED_SP_PRIORITY,   handler_IbanNomi_SpPriorityWorked },  // 特殊行動プライオリティ効果発生
+//    { BTL_EVENT_ACTPROC_START,        handler_IbanNomi_ActStart         },  // アクション開始ハンドラ
     { BTL_EVENT_USE_ITEM,             handler_IbanNomi_Use              },  // アイテム使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
@@ -2173,13 +2185,12 @@ static void handler_IbanNomi_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BTL_SV
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    u16 hp = BPP_GetValue( bpp, BPP_HP );
-    u16 hp_border = BTL_CALC_QuotMaxHP_Zero( bpp, quot );
-    if( hp <= hp_border )
+    if( common_DamageReactCheck(myHandle, flowWk, pokeID, 4) )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH) )
+      {
+        ItemPushRun( myHandle, flowWk, pokeID );
+      }
     }
   }
 }
@@ -2238,11 +2249,8 @@ static void handler_MikuruNomi_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u8 quot = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
-    u16 hp = BPP_GetValue( bpp, BPP_HP );
-    u16 hp_border = BTL_CALC_QuotMaxHP_Zero( bpp, quot );
-    if( hp <= hp_border )
+    if( common_DamageReactCheck(myHandle, flowWk, pokeID, quot) )
     {
-//      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_USE_ITEM, pokeID );
       ItemPushRun( myHandle, flowWk, pokeID );
     }
   }
@@ -2489,8 +2497,8 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SenseiNoTume( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_SP_PRIORITY,    handler_SenseiNoTume_SpPriorityCheck  },  // 特殊行動プライオリティチェック
-    { BTL_EVENT_WORKED_SP_PRIORITY,   handler_SenseiNoTume_SpPriorityWorked },  // 特殊行動プライオリティ効果発生
-    { BTL_EVENT_ACTPROC_START,        handler_SenseiNoTume_ActStart         },  // アクション開始ハンドラ
+//    { BTL_EVENT_WORKED_SP_PRIORITY,   handler_SenseiNoTume_SpPriorityWorked },  // 特殊行動プライオリティ効果発生
+//    { BTL_EVENT_ACTPROC_START,        handler_SenseiNoTume_ActStart         },  // アクション開始ハンドラ
     { BTL_EVENT_USE_ITEM,             handler_SenseiNoTume_Use              },  // アイテム使用ハンドラ
 
   };
@@ -2505,7 +2513,9 @@ static void handler_SenseiNoTume_SpPriorityCheck( BTL_EVENT_FACTOR* myHandle, BT
     u8 per = common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     if( Item_IsExePer(flowWk, per) )
     {
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH );
+      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_SP_PRIORITY, BTL_SPPRI_HIGH) ){
+        ItemPushRun( myHandle, flowWk, pokeID );
+      }
     }
   }
 }

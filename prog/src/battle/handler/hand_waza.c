@@ -10861,8 +10861,6 @@ static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
               viewEff_param->pos_from = viewEffectPos;
               viewEff_param->pos_to   = BTL_POS_NULL;
               viewEff_param->effectNo = viewEffectNo;
-              TAYA_Printf("ひのうみエフェクト開始: eff=%d, pos=%d, pokeID=%d\n",
-                viewEff_param->effectNo, viewEff_param->pos_from, viewEffectTargetPokeID);
             BTL_SVF_HANDEX_Pop( flowWk, viewEff_param );
           }
         }

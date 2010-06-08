@@ -74,6 +74,10 @@ extern BOOL BTL_TABLES_IsMatchAruseusPlate( u16 itemID );
 extern BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID );
 
 
+/**
+ *  ‚©‚½‚â‚Ô‚è‚ª–³Œø‰»‚·‚é‘ÎÛ‚Ì‚Æ‚­‚¹‚¢”»’è
+ */
+extern BOOL BTL_TABLES_IsMatchKatayaburiTarget( u16 tokuseiID );
 
 
 

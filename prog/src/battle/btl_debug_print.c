@@ -399,7 +399,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SCD_TargetHitPosFix:      return "   btlPos:%d  Selectable !\n";
 
   case DBGSTR_Item_PinchReactItem:      return "PokeID=%d, 最大HP=%d, 現HP=%d, n=%d ... ";
-  case DBGSTR_Item_PinchReactOn:        return "反応あり";
+  case DBGSTR_Item_PinchReactOn:        return "アイテム使います\n";
   case DBGSTR_HANDWAZA_CombiWazaExe:    return "ポケ(%d)がポケ(%d）のワザ(%d)に続けて合体ワザ発動->効果=%d\n";
   case DBGSTR_HANDWAZA_AlreadyRegistered: return "ポケ[%d]のワザハンドラ[%d]はすでに登録済み\n";
   case DBGSTR_HANDWAZA_YokorodiDecide:  return "ポケ(%d), よこどりします\n";

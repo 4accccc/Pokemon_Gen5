@@ -27,9 +27,9 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static u16 CalcTokHandlerSubPriority( const BTL_POKEPARAM* bpp );
 static u32 numHandlersWithHandlerPri( u16 numHandlers, u16 pri );
 static u16 devideNumHandersAndPri( u32* numHandlers );
+static u16 CalcTokHandlerSubPriority( const BTL_POKEPARAM* bpp );
 static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Ikaku( u32* numElems );
 static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -421,6 +421,7 @@ static void handler_LightMetal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static void handler_Amanojaku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Amanojaku( u32* numElems );
 static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static BOOL handler_Kinchoukan_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
 static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kinchoukan_MemberOutFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Kinchoukan_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4646,37 +4647,11 @@ static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 // スキップチェックハンドラ
 static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
 {
-  BTL_Printf("かたやぶりのスキップチェックハンドラが呼ばれた\n");
   if( factorType == BTL_EVENT_FACTOR_TOKUSEI )
   {
-    // ターン無効化するとくせい群
-    static const u16 disableTokTable[] = {
-      POKETOKUSEI_FUSIGINAMAMORI, POKETOKUSEI_BOUON,        POKETOKUSEI_FUYUU,
-      POKETOKUSEI_SUNAGAKURE,     POKETOKUSEI_YUKIGAKURE,   POKETOKUSEI_TYOSUI,
-      POKETOKUSEI_KABUTOAAMAA,    POKETOKUSEI_HIRAISIN,     POKETOKUSEI_YOBIMIZU,
-      POKETOKUSEI_SHERUAAMAA,     POKETOKUSEI_TENNEN,       POKETOKUSEI_HIRAISIN,
-      POKETOKUSEI_YOBIMIZU,       POKETOKUSEI_KYUUBAN,      POKETOKUSEI_TANJUN,
-      POKETOKUSEI_TIDORIASI,      POKETOKUSEI_HAADOROKKU,   POKETOKUSEI_FIRUTAA,
-      POKETOKUSEI_MORAIBI,        POKETOKUSEI_DENKIENJIN,   POKETOKUSEI_NENCHAKU,
-      POKETOKUSEI_FUSIGINAUROKO,  POKETOKUSEI_ATUISIBOU,    POKETOKUSEI_TAINETU,
-      POKETOKUSEI_SIROIKEMURI,    POKETOKUSEI_KURIABODY,    POKETOKUSEI_SURUDOIME,
-      POKETOKUSEI_KAIRIKIBASAMI,  POKETOKUSEI_SEISINRYOKU,  POKETOKUSEI_RINPUN,
-      POKETOKUSEI_GANJOU,         POKETOKUSEI_SIMERIKE,     POKETOKUSEI_DONKAN,
-      POKETOKUSEI_JUUNAN,         POKETOKUSEI_MAIPEESU,     POKETOKUSEI_MIZUNOBEERU,
-      POKETOKUSEI_RIIFUGAADO,     POKETOKUSEI_FUMIN,        POKETOKUSEI_HATOMUNE,
-      POKETOKUSEI_YARUKI,         POKETOKUSEI_MENEKI,       POKETOKUSEI_MAGUMANOYOROI,
-      POKETOKUSEI_AMANOJAKU,      POKETOKUSEI_FURENDOGAADO, POKETOKUSEI_MARUTISUKEIRU,
-      POKETOKUSEI_TEREPASII,      POKETOKUSEI_HATOMUNE,     POKETOKUSEI_MIRAKURUSUKIN,
-      POKETOKUSEI_MAJIKKUMIRAA,   POKETOKUSEI_SOUSYOKU,     POKETOKUSEI_TIKUDEN,
-      POKETOKUSEI_KANSOUHADA,     POKETOKUSEI_FURAWAAGIFUTO,
-    };
-    u32 i;
-    for(i=0; i<NELEMS(disableTokTable); ++i)
+    if( BTL_TABLES_IsMatchKatayaburiTarget(subID) )
     {
-      if( disableTokTable[i] == subID ){
-        BTL_Printf("これはスキップさせるとくせいだ\n");
-        return TRUE;
-      }
+      return TRUE;
     }
   }
   return FALSE;
@@ -6790,6 +6765,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Amanojaku( u32* numElems )
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
+
 //------------------------------------------------------------------------------
 /**
  *  とくせい「きんちょうかん」
@@ -6812,8 +6788,27 @@ static void handler_Kinchoukan_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       HANDEX_STR_AddArg( &param->str, side );
     BTL_SVF_HANDEX_Pop( flowWk, param );
     BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+
+    BTL_EVENT_FACTOR_AttachSkipCheckHandler( myHandle, handler_Kinchoukan_SkipCheck );
+
   }
 }
+// スキップチェックハンドラ
+static BOOL handler_Kinchoukan_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID )
+{
+  if( BTL_EVENT_FACTOR_GetWorkValue(myHandle, 0) == 0 )
+  {
+    if( factorType == BTL_EVENT_FACTOR_ITEM )
+    {
+      if( ITEM_CheckNuts(subID) )
+      {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
+}
+
 // 装備アイテム使用チェックハンドラ
 static void handler_Kinchoukan_CheckItemEquip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {

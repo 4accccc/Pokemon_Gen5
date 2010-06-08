@@ -404,7 +404,6 @@ static u32 scEvent_MemberChangeIntr( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* o
 static BOOL scEvent_GetReqWazaParam( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker,
   WazaID orgWazaid, BtlPokePos orgTargetPos, REQWAZA_WORK* reqWaza );
 static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
-static void scEvent_SpecialActPriorityWorked( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scEvent_BeforeFight( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, WazaID waza );
 static u32 scproc_CalcConfDamage( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker );
 static BOOL scEvent_CheckWazaMsgCustom( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
@@ -1450,32 +1449,15 @@ static u8 sortClientAction( BTL_SVFLOW_WORK* wk, const BTL_SVCL_ACTION* clientAc
     if( (order[i].action.gen.cmd == BTL_ACTION_FIGHT)
     ||  (order[i].action.gen.cmd == BTL_ACTION_MOVE)
     ){
+      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       u8 spPri = scEvent_CheckSpecialActPriority( wk, order[i].bpp );
       order[i].priority = ActPri_SetSpPri( order[i].priority, spPri );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
     }
   }
 
   // 再度、プライオリティ値によるソート
   sortActionSub( order, numAction );
-
-  for(i=0; i<numAction; ++i)
-  {
-    if( ActPri_GetSpPri(order[i].priority) == BTL_SPPRI_HIGH )
-    {
-      for(j=i+1; j<numAction; ++j)
-      {
-        // 自分より高優先度だったポケモンが自分の下にいたら、
-        // プライオリティ操作効果発生イベント呼び出し
-        if( order[i].defaultIdx > order[j].defaultIdx )
-        {
-          u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-          scEvent_SpecialActPriorityWorked( wk, order[i].bpp );
-          BTL_Hem_PopState( &wk->HEManager, hem_state );
-          break;
-        }
-      }
-    }
-  }
 
   return p;
 }
@@ -10184,21 +10166,6 @@ static u8 scEvent_CheckSpecialActPriority( BTL_SVFLOW_WORK* wk, const BTL_POKEPA
   BTL_EVENTVAR_Pop();
 
   return spPri;
-}
-//----------------------------------------------------------------------------------
-/**
- * [Event] 特殊優先度の効果が発生した
- *
- * @param   wk
- * @param   attacker
- */
-//----------------------------------------------------------------------------------
-static void scEvent_SpecialActPriorityWorked( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WORKED_SP_PRIORITY );
-  BTL_EVENTVAR_Pop();
 }
 
 //----------------------------------------------------------------------------------
