@@ -672,7 +672,7 @@ static void _setPokemonData(POKEMON_TRADE_WORK* pWork)
     RECORD* pRec = GAMEDATA_GetRecordPtr(pWork->pGameData);
 
     STATUS_RCV_PokeParam_RecoverAll(pp); //‰ñ•œ
-    {
+    if(!PP_Get(pp,ID_PARA_tamago_flag,NULL)){
       // ŒðŠ·‚³‚ê‚½ƒ|ƒPƒ‚ƒ“‚É“ü‚ê‚é‚È‚Â‚«“x
       u8 friend = FIRST_NATUKIDO;
       PP_Put(pp, ID_PARA_friend, friend);
