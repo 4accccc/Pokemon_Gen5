@@ -1066,7 +1066,7 @@ static void _itemDispInit(G_SYNC_WORK* pWork,DREAM_WORLD_SERVER_DOWNLOAD_DATA* p
 {
   int i;
   for(i=0;i<DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
-    if((pDream->itemID[i]!=0) && (pDream->itemNum[i]!=0)){
+    if((pDream->itemID[i]!=0) && (pDream->itemNum[i]!=0) && (pDream->itemID[i]<=ITEM_DATA_MAX)){
       GSYNC_DISP_MoveIconItemAdd(pWork->pDispWork,i,pDream->itemID[i] );
     }
   }
