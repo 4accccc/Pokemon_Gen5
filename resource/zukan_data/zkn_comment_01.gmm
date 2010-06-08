@@ -671,8 +671,7 @@
 めったに　ひとまえに　あらわれない。</language>
 		<language name="JPN_KANJI">１キロ先で　落ちた　針の音を
 聞きわける　耳と　用心深さで
-滅多に　人前に　現われない。
-</language>
+滅多に　人前に　現われない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_037_000">
@@ -843,8 +842,7 @@
 ゆうがに　およぐ　すがたをみかける。</language>
 		<language name="JPN_KANJI">手のひらの　発達した　水かきを
 使って　ダイナミックに　そして
-優雅に　泳ぐ　姿を見かける。
-</language>
+優雅に　泳ぐ　姿を見かける。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_056_000">
@@ -2869,8 +2867,7 @@
 ぜんしんが　ほのかに　あつくなる。</language>
 		<language name="JPN_KANJI">赤いツノで　人や　ポケモンの
 暖かな　気持ちを　キャッチすると
-全身が　ほのかに　熱くなる。
-</language>
+全身が　ほのかに　熱くなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_281_000">
@@ -4953,8 +4950,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_512_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きしょうが　はげしく　トゲの　ついた
+しっぽを　ふりまわして　たたかう。
+あたまの　はっぱは　とても　にがい。</language>
+		<language name="JPN_KANJI">気性が　激しく　トゲの　ついた
+しっぽを　振り回して　戦う。
+頭の　葉っぱは　とても　苦い。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_513_000">
@@ -4967,8 +4968,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_514_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">あまいものが　だいこうぶつ。
+たいないの　ほのおを　もやす
+エネルギーに　なるのだ。</language>
+		<language name="JPN_KANJI">甘いものが　大好物。
+体内の　炎を　燃やす
+エネルギーに　なるのだ。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_515_000">
@@ -4981,8 +4986,12 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_516_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">あたまの　ふさに　みずを　ためる。
+ちょすいりょうが　へると　しっぽで
+みずを　すいあげて　ほきゅうする。</language>
+		<language name="JPN_KANJI">頭の　ふさに　水を　ためる。
+貯水量が　減ると　しっぽで
+水を　吸い上げて　補給する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_517_000">
@@ -5121,18 +5130,30 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_532_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">かくざいを　ふりまわして　たたかう。
+おもい　かくざいを　くも　なく
+もつようになると　しんかは　ちかい。</language>
+		<language name="JPN_KANJI">角材を　振り回して　戦う。
+重い　角材を　苦も　なく
+持つようになると　進化は　近い。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_533_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">きたえあげた　きんにくの　からだは
+プロレスラーが　たばに　なって
+こうげきしても　びくとも　しない。</language>
+		<language name="JPN_KANJI">鍛え上げられた　筋肉の　体は
+プロレスラーが　束に　なって
+攻撃しても　びくとも　しない。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_534_000">
-		<language name="JPN"></language>
-		<language name="JPN_KANJI"></language>
+		<language name="JPN">コンクリートを　つくる　ぎじゅつは
+２０００ねんまえに　ローブシンから
+おそわったと　かんがえられている。</language>
+		<language name="JPN_KANJI">コンクリートを　作る　技術は
+２０００年前に　ローブシンから
+教わったと　考えられている。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_535_000">
