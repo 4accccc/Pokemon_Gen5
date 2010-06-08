@@ -45,27 +45,10 @@ _EVENT_DATA_END
 /************************************************************/
 INIT_EVENT_START	ev_zone_c04r0401
 
-	//C04側から入った時だけ、開催競技をチェックする
+	//C04側から入った時だけ、開催競技をチェックし、コート内の状態を変更する
 	IF $WK_OTHER_SPORTS_EVENT == SPORTS_EVENT_NONE THEN
 		//C04側から入った＝開催競技に何も入っていない
 		_CALL	ev_sports_event_chk
-	ENDIF
-
-	//一日一回だけトレーナーフラグをリセットして再戦できるようにする
-	IF FLAG_OFF( TMFLG_STADIUM_TR_BTL ) THEN
-		_REBATTLE_TRAINER_START()
-		_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG()	//トレーナーフラグを初期化
-		_REBATTLE_TRAINER_END()
-		
-		_FLAG_SET( TMFLG_STADIUM_TR_BTL )	//一日フラグをセット
-		//ランダム配置トレーナー用のセーブワークを初期化（競技場に入ったときに抽選処理が有効になるようにする）
-		$WK_OTHER_SPORTS_RND_TR0 = 0
-		$WK_OTHER_SPORTS_RND_TR1 = 0
-		$WK_OTHER_SPORTS_RND_TR2 = 0
-		$WK_OTHER_SPORTS_RND_TR3 = 0
-		$WK_OTHER_SPORTS_RND_TR4 = 0
-		$WK_OTHER_SPORTS_RND_TR5 = 0
-
 	ENDIF
 
 INIT_EVENT_END
@@ -124,8 +107,25 @@ ev_sports_event_chk:
 	
 	ENDIF
 
-_RET
 
+	//一日一回だけトレーナーフラグをリセットして再戦できるようにする
+	IF FLAG_OFF( TMFLG_STADIUM_TR_BTL ) THEN
+		_REBATTLE_TRAINER_START()
+		_REBATTLE_TRAINER_CLEAR_TR_EVENT_FLAG()	//トレーナーフラグを初期化
+		_REBATTLE_TRAINER_END()
+		
+		_FLAG_SET( TMFLG_STADIUM_TR_BTL )	//一日フラグをセット
+		//ランダム配置トレーナー用のセーブワークを初期化（競技場に入ったときに抽選処理が有効になるようにする）
+		$WK_OTHER_SPORTS_RND_TR0 = 0
+		$WK_OTHER_SPORTS_RND_TR1 = 0
+		$WK_OTHER_SPORTS_RND_TR2 = 0
+		$WK_OTHER_SPORTS_RND_TR3 = 0
+		$WK_OTHER_SPORTS_RND_TR4 = 0
+		$WK_OTHER_SPORTS_RND_TR5 = 0
+
+	ENDIF
+
+_RET
 
 
 /************************************************************/
