@@ -394,7 +394,7 @@ static void MB_PARENT_Init( MB_PARENT_WORK *work )
 static void MB_PARENT_Term( MB_PARENT_WORK *work )
 {
   
-  GFL_UI_SleepDisable( GFL_UI_SLEEP_MB );
+  GFL_UI_SleepEnable( GFL_UI_SLEEP_MB );
   GFL_TCB_DeleteTask( work->vBlankTcb );
   GFUser_ResetVIntrFunc();
   GFL_NET_WirelessIconEasyEnd();
