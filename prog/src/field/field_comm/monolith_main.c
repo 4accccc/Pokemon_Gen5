@@ -278,7 +278,7 @@ static GFL_PROC_RESULT MonolithProc_Main( GFL_PROC * proc, int * seq, void * pwk
     break;
   case SEQ_PROC_MAIN:
     //N“ü‚ª‹N“®‚µ‚Ä‚¢‚½ó‘Ô‚ÅØ’fó‘Ô‚É‚È‚Á‚½‚çƒ‚ƒmƒŠƒX‰æ–Ê‚ðI—¹‚³‚¹‚é
-    if(NetErr_App_CheckError() || (intcomm == NULL && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL)){
+    if(NetErr_App_CheckError() || (intcomm == NULL && GameCommSys_GetLastStatus(game_comm) != GAME_COMM_LAST_STATUS_NULL) || (intcomm == NULL && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION)){
       monosys->app_parent.force_finish = TRUE;
     }
     
