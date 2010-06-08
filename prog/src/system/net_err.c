@@ -774,6 +774,7 @@ static void Local_ErrDispExit(BOOL is_black_continue)
 	GX_VBlankIntr(nes->v_intr);
 	
 	//•\Ž¦ON
+  OS_WaitIrq(TRUE, OS_IE_V_BLANK);
   if( !is_black_continue )
   {
     GX_SetMasterBrightness(nes->master_brightness);
