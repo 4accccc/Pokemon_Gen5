@@ -198,7 +198,9 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
       break;
     }
     OS_TPrintf("ƒoƒgƒ‹Š®—¹\n");
-    GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+    if(GFL_NET_IsInit() == TRUE && NetErr_App_CheckError() == NET_ERR_STATUS_NULL){
+      GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
+    }
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
     
     BATTLE_PARAM_Release( &ibs->para );
