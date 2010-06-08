@@ -27,7 +27,9 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static u16 CalcTokHandlerPriority( const BTL_POKEPARAM* bpp );
+static u16 CalcTokHandlerSubPriority( const BTL_POKEPARAM* bpp );
+static u32 numHandlersWithHandlerPri( u16 numHandlers, u16 pri );
+static u16 devideNumHandersAndPri( u32* numHandlers );
 static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Ikaku( u32* numElems );
 static void handler_Ikaku_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -622,20 +624,46 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     {
       if( funcTbl[i].tokusei == tokusei )
       {
-        u16 agi = CalcTokHandlerPriority( pp );
+        u16 agi = CalcTokHandlerSubPriority( pp );
         u8 pokeID = BPP_GetID( pp );
         u32 numHandlers;
+        u16 mainPri;
         const BtlEventHandlerTable* handlerTable;
 
         handlerTable = funcTbl[i].func( &numHandlers );
+        mainPri = devideNumHandersAndPri( &numHandlers );
 
         return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei,
-                  BTL_EVPRI_TOKUSEI_DEFAULT, agi, pokeID, handlerTable, numHandlers );
+                  mainPri, agi, pokeID, handlerTable, numHandlers );
       }
     }
     BTL_Printf("とくせい(%d)はハンドラが用意されていない\n", tokusei);
   }
   return NULL;
+}
+
+//----------------------------------------------------------------------------------
+/**
+ * ハンドラ数にハンドラプライオリティの値を合わせてu32変換
+ */
+//----------------------------------------------------------------------------------
+static u32 numHandlersWithHandlerPri( u16 numHandlers, u16 pri )
+{
+  return (pri << 16) | (numHandlers);
+}
+//----------------------------------------------------------------------------------
+/**
+ * ハンドラ登録数＆ハンドラプライオリティの合成値を元の値にバラす
+ */
+//----------------------------------------------------------------------------------
+static u16 devideNumHandersAndPri( u32* numHandlers )
+{
+  u16 mainPri = ((*numHandlers) >> 16) & 0xffff;
+  if( mainPri == 0 ){
+    mainPri = BTL_EVPRI_TOKUSEI_DEFAULT;
+  }
+  (*numHandlers) &= 0xffff;
+  return mainPri;
 }
 
 //=============================================================================================
@@ -672,8 +700,8 @@ void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp
 
   ID_1 = BPP_GetID( pp1 );
   ID_2 = BPP_GetID( pp2 );
-  pri_1 = CalcTokHandlerPriority( pp1 );
-  pri_2 = CalcTokHandlerPriority( pp2 );
+  pri_1 = CalcTokHandlerSubPriority( pp1 );
+  pri_2 = CalcTokHandlerSubPriority( pp2 );
   factor1 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_1 );
   factor2 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_2 );
 
@@ -688,7 +716,7 @@ void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp
 
 }
 
-static u16 CalcTokHandlerPriority( const BTL_POKEPARAM* bpp )
+static u16 CalcTokHandlerSubPriority( const BTL_POKEPARAM* bpp )
 {
   return BPP_GetValue_Base( bpp, BPP_AGILITY );
 }
@@ -6085,7 +6113,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Dokusyu( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_DMG_REACTION,        handler_Dokusyu }, // ダメージ反応ハンドラ
   };
-  *numElems = NELEMS(HandlerTable);
+  *numElems = numHandlersWithHandlerPri( BTL_EVPRI_TOKUSEI_dokusyu, NELEMS(HandlerTable) );
   return HandlerTable;
 }
 //------------------------------------------------------------------------------
