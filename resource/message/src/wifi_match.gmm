@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-06-08T16:10:15"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-06-08T16:17:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1222,14 +1222,6 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">大会への　参加を
 解除しました[BE:01:ページ切り替え（クリア）]</language>
-	</row>
-
-	<row id="WIFIMATCH_DPC_STR_13">
-		<comment>選手証チェック　CRCエラー</comment>
-		<language name="JPN" width="256">デジタル　せんしゅしょうの
-データが　ありません[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">デジタル選手証の
-データが　ありません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_DPC_SELECT_00">

@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-06-04T16:05:02"/>
+	<create user="toru_nagihashi" host="W00160" date="2010-06-08T16:41:48"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-1274" top="112" right="-569" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="132" top="323" right="837" bottom="951" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
-		<tag-palette left="551" top="133" right="1024" bottom="531" visible="yes"/>
+		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1425,8 +1425,8 @@
 	</row>
 
 	<row id="msg_gtc_error_006_01">
-		<language name="JPN" font=" 1:small" width="216">ＧＴＳとの　つうしんが　せつだん　されました</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">ＧＴＳとの　通信が　切断されました</language>
+		<language name="JPN" font=" 1:small" width="216">つうしんが　せつだん　されました</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">通信が　切断されました</language>
 	</row>
 
 	<row id="msg_gtc_error_006_02">
