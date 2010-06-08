@@ -2012,7 +2012,18 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
   }
   else
   {
-    rnd = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
+    u32 rnd_tmp = GFUser_GetPublicRand(GFL_STD_RAND_MAX) & 0xffffff00;
+    u32 rnd_gender = POKETOOL_CalcPersonalRand( mons_no, form_no, sex );
+    //パッチールのブチにもランダムを持たすためにある程度の幅を出す
+    if( ( sex == PTL_SEX_MALE ) && ( PokePersonal_SexVecTypeGet( rnd_gender ) == POKEPER_SEXTYPE_RND ) )
+    { 
+      rnd_gender = rnd_gender + GFUser_GetPublicRand( ( 253 - rnd_gender ) + 1 );
+    }
+    else if( ( sex == PTL_SEX_FEMALE ) && ( PokePersonal_SexVecTypeGet( rnd_gender ) == POKEPER_SEXTYPE_RND ) )
+    { 
+      rnd_gender = GFUser_GetPublicRand( rnd_gender ) + 1;
+    }
+    rnd = rnd_tmp | rnd_gender;
   }
 
   switch( rare_flag ){
