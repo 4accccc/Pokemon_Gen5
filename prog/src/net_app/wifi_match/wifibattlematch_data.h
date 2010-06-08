@@ -211,7 +211,7 @@ static inline u32 WIFIBATTLEMATCH_DATA_ModifiEnemyData( WIFIBATTLEMATCH_ENEMYDAT
 
   //エリア
   { 
-    if( p_mystatus->nation != 0 && p_mystatus->area >= WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_mystatus->nation ) )
+    if( p_mystatus->nation != 0 && p_mystatus->area > WIFI_COUNTRY_CountryCodeToPlaceIndexMax( p_mystatus->nation ) )
     {
       OS_TPrintf( "地域が不正だったので、無理やり書き換えます %d %d\n", p_mystatus->nation, p_mystatus->area );
       p_mystatus->nation  = 0;
