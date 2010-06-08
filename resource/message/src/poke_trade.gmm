@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T16:25:25"/>
+	<create user="ohmori" host="W00223" date="2010-06-08T17:07:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,14 +305,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1470" top="149" right="2175" bottom="777" maximized="no" rayout="Vertical2">
+	<dialog left="978" top="433" right="1478" bottom="1061" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="311" right="1024" bottom="710" visible="no"/>
-		<band id="0" index="0" style="0000" width="530"/>
+		<band id="0" index="0" style="0000" width="492"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="697"/>
-		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="325"/>
+		<band id="3" index="3" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1283,6 +1283,12 @@
 おくられてきました</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]から　[1:02:ポケモンニックネーム:1]が
 送られてきました</language>
+	</row>
+
+	<row id="gtsnego_info_24" back-color="#ffff00,,,,,,,,,,,,,,,,,">
+		<comment>サーバーとの通信が遮断された</comment>
+		<language name="JPN" width="256">つうしんを　しっぱいしました</language>
+		<language name="JPN_KANJI" width="256">通信を　失敗しました</language>
 	</row>
 
 	<row id="POKEMON_TRADE_001" back-color="#ffff00,,,,,,,,,,,,,,,,,">
