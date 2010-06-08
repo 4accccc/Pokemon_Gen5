@@ -80,5 +80,7 @@ extern BOOL BSUBWAY_SCRWORK_CommSendData(
 extern void BSUBWAY_SCRWORK_CommRecieveDataStart(
     BSUBWAY_SCRWORK *bsw_scr, u8 comm_mode );
 extern BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf );
+#if 0
 extern BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
     BSUBWAY_SCRWORK *bsw_scr );
+#endif

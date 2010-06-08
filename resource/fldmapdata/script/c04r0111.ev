@@ -231,6 +231,10 @@ sub_challenge_continue:
   //電車発車デモ
   _CALL sub_demo_train_starting
   
+  //フラグセット
+  _FLAG_SET( FV_C04R0111_PARTNER )
+  _FLAG_SET( FV_C04R0111_NPC )
+
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
   
@@ -290,11 +294,31 @@ sub_challenge_continue_comm_multi:
     _RET
   ENDIF
   
-  //選択結果を送受信
+  //選択結果を送信
   $LOCALWORK0 = BSWAY_COMM_HOME_SEL_NEXT
    
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+
+  IF $comm_ret == FALSE THEN
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  //選択結果を受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
   
   IF $LOCALWORK0 == BSWAY_COMM_HOME_SEL_END THEN //相手終了
     _CALL sub_challenge_continue_comm_multi_cancel
@@ -325,8 +349,9 @@ _RET
 //  受付　続けてチャレンジ　commマルチ　相手も継続
 //--------------------------------------------------------------
 sub_challenge_continue_comm_multi_ok:
-{
+{ 
   DEFINE_LOCAL result
+  DEFINE_LOCAL recv_result
   
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -363,10 +388,32 @@ sub_challenge_continue_comm_multi_ok:
     _RET
   ENDIF
   
+  //ポケモン選択の結果を送信
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_HOME_SELECT_BOX_TEMOTI, result, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_HOME_SELECT_BOX_TEMOTI, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE || $result == FALSE THEN //キャンセル
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _SYSWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_HOME_SELECT_BOX_TEMOTI, BSW_NULL, recv_result )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  IF $recv_result == FALSE || $result == FALSE THEN //キャンセル
     _SYSWIN_CLOSE()
 
     //同期 2
@@ -424,9 +471,30 @@ sub_challenge_continue_comm_multi_ok:
   
   //ポケモン選択の結果を送信
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_HOME_SELECT_POKEMON, result, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_HOME_SELECT_POKEMON, BSW_NULL, comm_ret )
   
-  IF $comm_ret == 0 || $result == 0 THEN //選択キャンセル
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_HOME_SELECT_POKEMON, BSW_NULL, recv_result )
+   
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+ 
+  IF $recv_result == 0 || $result == 0 THEN //選択キャンセル
     _SYSWIN_CLOSE()
     
     //同期 5
@@ -466,9 +534,30 @@ sub_challenge_continue_comm_multi_ok:
   
   //お互いが選んだポケモンデータを交換
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
-  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, comm_ret )
   
-  IF $comm_ret != 0 THEN //ポケモン被りで終了
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, recv_result )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
+  IF $recv_result != 0 THEN //ポケモン被りで終了
     _SYSWIN_CLOSE()
     
     $SCWK_TEMP0 = $SCWK_TARGET_OBJID
@@ -545,6 +634,16 @@ sub_challenge_continue_comm_multi_ok:
       _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
   ENDIF
   
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == FALSE THEN
+    _MSGWIN_CLOSE()
+    _CALL sub_common_comm_error_end_reqfade
+    _CALL sub_challenge_continue_comm_error_retmap
+    _RET
+  ENDIF
+  
   //ポケモンメンバーロード
   _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
   
@@ -563,6 +662,10 @@ sub_challenge_continue_comm_multi_ok:
   
   //電車発車デモ
   _CALL sub_demo_train_starting
+  
+  //フラグセット
+  _FLAG_SET( FV_C04R0111_PARTNER )
+  _FLAG_SET( FV_C04R0111_NPC )
   
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
@@ -583,6 +686,10 @@ sub_challenge_continue_comm_error_retmap:
   //電車発車デモ
   _CALL sub_demo_train_starting
   
+  //フラグセット
+  _FLAG_SET( FV_C04R0111_PARTNER )
+  _FLAG_SET( FV_C04R0111_NPC )
+
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
     
@@ -629,6 +736,10 @@ sub_mapchg_receipt:
   //ワーク開放
 //_BSUBWAY_WORK_RELEASE()
     
+  //フラグセット
+  _FLAG_SET( FV_C04R0111_PARTNER )
+  _FLAG_SET( FV_C04R0111_NPC )
+
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
     
@@ -658,6 +769,7 @@ sub_mapchg_receipt_comm_multi:
     $LOCALWORK0 = BSWAY_COMM_HOME_SEL_END //戻る
     _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
+    //抜けるだけなので以下の同期待ちでエラーチェックも兼ねる
     _CALL sub_common_comm_timing_end_reqfade //同期後切断
     _MSGWIN_CLOSE()
   ENDIF

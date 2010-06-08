@@ -874,9 +874,28 @@ sub_receipt_challenge_multi_comm:
     _RET
   ENDIF
   
-  //互いのプレイモードを確認
+  //プレイモード送信
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAY_MODE, BSW_NULL, BSW_NULL )
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+  
+  //プレイモード受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAY_MODE, BSW_NULL, ret )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
   
   //プレイモードが違う
   IF $ret == FALSE THEN
@@ -892,9 +911,12 @@ sub_receipt_challenge_multi_comm:
     
     IF $comm_ret == FALSE THEN
       _CALL sub_bsw_common_comm_error_end
-      _CALL sub_bsw_common_exit
-      _RET
+    ELSE
+      _CALL sub_bsw_common_comm_end
     ENDIF
+    
+    _CALL sub_bsw_common_exit
+    _RET
   ENDIF
   
   //受信バッファクリア
@@ -909,9 +931,28 @@ sub_receipt_challenge_multi_comm:
     _RET
   ENDIF
   
-  //お互いが選んだポケモンデータを交換
+  //お互いが選んだポケモンデータを交換　送信
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, BSW_NULL )
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+  
+  //お互いが選んだポケモンデータを交換　受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_PLAYER_DATA, BSW_NULL, ret )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
   
   //ポケモン被りで終了
   IF $ret != 0 THEN
@@ -959,7 +1000,27 @@ sub_receipt_challenge_multi_comm:
   ENDIF
   
   _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_MYSTATUS_DATA, BSW_NULL, BSW_NULL )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+  
+  //MYSTATUS受信
   _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_MYSTATUS_DATA, BSW_NULL, BSW_NULL )
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
   
   //受信バッファクリア
   _BSUBWAY_TOOL( BSWSUB_RECV_BUF_CLEAR, BSW_NULL, BSW_NULL, BSW_NULL )
@@ -999,9 +1060,24 @@ sub_receipt_challenge_multi_comm:
     _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_TR_DATA, BSW_NULL, LOCALWORK0 ) 
   ENDIF
   
-  //トレーナーデータ送受信完了
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+  
+  //トレーナーデータ送受信完了待ち
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_RECEIPT_SEND_TRDATA_END, BSW_NULL, comm_ret )
   
+  IF $comm_ret == FALSE THEN
+    _CALL sub_bsw_common_comm_error_end
+    _CALL sub_bsw_common_exit
+    _RET
+  ENDIF
+ 
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
   

@@ -22,6 +22,8 @@
 #include "bsubway_scr.h"
 #include "bsubway_scrwork.h"
 
+#include "system/net_err.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -547,8 +549,15 @@ BOOL BSUBWAY_SCRWORK_CommSendData(
       bsw_scr->send_buf[0], bsw_scr->send_buf[1], bsw_scr->send_buf[2] );
 #endif
   
-//  BSUBWAY_COMM_AddCommandTable( bsw_scr );
+  //エラーチェック
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
+#ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "BSW 通信マルチデータ送信エラー\n" );
+#endif
+    return( TRUE );
+  }
   
+  //送信
   size = BSWAY_SIO_BUF_LEN;
   
   if( GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),
@@ -585,6 +594,14 @@ void BSUBWAY_SCRWORK_CommRecieveDataStart(
 BOOL BSUBWAY_SCRWORK_CommRecieveData( BSUBWAY_SCRWORK *bsw_scr, u16 *ret_buf )
 {
   u8 check_num;
+  
+  //エラーチェック
+  if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
+#ifdef DEBUG_BSW_PRINT
+    KAGAYA_Printf( "BSW 通信マルチデータ受信エラー\n" );
+#endif
+    return( TRUE );
+  }
   
   //データ受信待ち
   switch( bsw_scr->comm_mode ){
@@ -688,6 +705,7 @@ static BOOL EvWaitBattleTowerRecvBuf(VM_MACHINE * core)
  * @return BOOL TRUE = 送信完了
  */
 //--------------------------------------------------------------
+#if 0
 BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
     BSUBWAY_SCRWORK *bsw_scr )
 {
@@ -723,6 +741,7 @@ BOOL BSUBWAY_SCRWORK_CommFrWiFiCounterTowerSendBufTrainerData(
 
   return ret;
 }
+#endif
 
 //======================================================================
 //  通信コマンド

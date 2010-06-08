@@ -586,7 +586,6 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         sex = PM_MALE;
         KAGAYA_Printf( "パートナーOBJコード取得 パートナー男\n" );
       }
-
       
       *ret_wk = FIELD_PLAYER_GetMoveFormToOBJCode(
           sex, PLAYER_MOVE_FORM_NORMAL );

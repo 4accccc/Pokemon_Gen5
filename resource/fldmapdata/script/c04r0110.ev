@@ -937,11 +937,29 @@ sub_train_battle_win_next_menu_comm_multi:
       
       //選択結果送信
       _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
+
+      //通信エラーチェック
+      _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+      
+      IF $comm_ret == TRUE THEN
+        _SYSWIN_CLOSE()
+        _CALL sub_common_retmap_comm_error //受付へ
+        _RET
+      ENDIF
+      
       //選択結果受信
       _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
       
       _SYSWIN_CLOSE()
       
+      //通信エラーチェック
+      _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+      
+      IF $comm_ret == TRUE THEN
+        _CALL sub_common_retmap_comm_error //受付へ
+        _RET
+      ENDIF
+     
       IF $LOCALWORK0 == BSWAY_COMM_ROUND_SEL_RETIRE THEN //相手リタイア
         _SYSWIN_MSG( msg_c04r0110_12 , POS_DOWN )
         _TIME_WAIT( 30 )
@@ -1001,8 +1019,27 @@ sub_train_battle_win_next_menu_comm_multi:
         
         //選択結果送信
         _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
+        
+        //通信エラーチェック
+        _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+      
+        IF $comm_ret == TRUE THEN
+          _SYSWIN_CLOSE()
+          _CALL sub_common_retmap_comm_error //受付へ
+          _RET
+        ENDIF
+
         //選択結果受信
         _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
+        
+        //通信エラーチェック
+        _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+
+        IF $comm_ret == TRUE THEN
+          _SYSWIN_CLOSE()
+          _CALL sub_common_retmap_comm_error //受付へ
+          _RET
+        ENDIF
         
         //戻ります
         _SYSWIN_MSG( msg_c04r0110_12 , POS_DOWN )
