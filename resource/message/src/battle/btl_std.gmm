@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="morimoto" host="W00220" date="2010-06-05T20:56:54"/>
+	<create user="morimoto" host="W00220" date="2010-06-08T12:33:07"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,12 +339,12 @@
 
 	<dialog left="240" top="137" right="1079" bottom="748" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="618" right="1024" bottom="768" visible="no"/>
-		<tag-palette left="1127" top="529" right="1558" bottom="927" visible="yes"/>
+		<tag-palette left="849" top="529" right="1280" bottom="927" visible="no"/>
 		<band id="0" index="0" style="0001" width="445"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="217"/>
 		<band id="3" index="3" style="0000" width="831"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Source" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1613,34 +1613,34 @@
 
 	<row id="BTL_STRID_STD_WonderRoom_Start">
 		<comment>ワンダールーム発動</comment>
-		<language name="JPN" width="216">すべてのポケモンの
-ぼうぎょと　とくぼうが　いれかわった！</language>
-		<language name="JPN_KANJI" width="216">全てのポケモンの
-防御と　特防が　入れかわった！</language>
+		<language name="JPN" width="216">ぼうぎょと　とくぼうが　いれかわる
+くうかんを　つくり　だした！</language>
+		<language name="JPN_KANJI" width="216">防御と　特防が　入れかわる
+空間を　作り出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_WonderRoom_End">
 		<comment>ワンダールーム解除</comment>
-		<language name="JPN" width="216">すべてのポケモンの
+		<language name="JPN" width="216">ワンダールームが　かいじょされ
 ぼうぎょと　とくぼうが　もとにもどった！</language>
-		<language name="JPN_KANJI" width="216">全てのポケモンの
+		<language name="JPN_KANJI" width="216">ワンダールームが　解除され
 防御と　特防が　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MagicRoom_Start">
 		<comment>マジックルーム発動</comment>
-		<language name="JPN" width="216">おたがいの　もたせた　どうぐの
-こうかが　なくなった！</language>
-		<language name="JPN_KANJI" width="216">おたがいの　持たせた道具の
-効果が　無くなった！</language>
+		<language name="JPN" width="216">もたせた　どうぐの　こうかが
+なくなる　くうかんを　つくりだした！</language>
+		<language name="JPN_KANJI" width="216">持たせた　道具の　効果が
+なくなる　空間を　作り出した！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_MagicRoom_End">
 		<comment>マジックルーム解除</comment>
-		<language name="JPN" width="216">おたがいの　もたせた　どうぐの
-こうかが　もとに　もどった！</language>
-		<language name="JPN_KANJI" width="216">おたがいの　持たせた道具の
-効果が　元に戻った！</language>
+		<language name="JPN" width="216">マジックルームが　かいじょされ
+どうぐの　こうかが　もとにもどった！</language>
+		<language name="JPN_KANJI" width="216">マジックルームが　解除され
+道具の　効果が　元に戻った！</language>
 	</row>
 
 	<row id="BTL_STRID_STD_Juel">
