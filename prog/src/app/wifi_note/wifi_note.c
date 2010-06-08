@@ -5084,7 +5084,7 @@ static u32 FListInputMain_Touch( WFNOTE_FRIENDLIST* p_wk, WFNOTE_DATA* p_data, W
   if(ret <= 7){
     *touch_f = TRUE;
 
-    PMSND_PlaySE( WIFINOTE_MOVE_SE );
+//    PMSND_PlaySE( WIFINOTE_MOVE_SE );
     SetListPageButtonPassive( p_draw, p_wk->pos );
     p_wk->pos = ret;
 //    FListDrawArea_CursorWrite( &p_wk->drawdata[WFNOTE_DRAWAREA_MAIN], p_draw, p_wk->pos );
