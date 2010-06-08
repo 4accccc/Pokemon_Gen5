@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-17T13:09:22"/>
+	<create user="matsumiya" host="W00224" date="2010-06-08T11:28:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -431,12 +431,12 @@
 ・GRIDX=21、GRIDZ=15
 ・オフェンスライン</comment>
 		<attribute name="キャラ指定">FOOTBALLM</attribute>
-		<language name="JPN" width="256">アメフトは　クォーターバッグと
+		<language name="JPN" width="256">アメフトは　クォーターバックと
 よばれる　ポジションの　せんしゅが▽
 さくせんを　きめて　じっこうする▼
 いってみれば
 ポケモントレーナー　みたいな　もんだ</language>
-		<language name="JPN_KANJI" width="256">アメフトは　クォーターバッグと
+		<language name="JPN_KANJI" width="256">アメフトは　クォーターバックと
 呼ばれる　ポジションの　選手が▽
 作戦を　決めて　実行する▼
 いってみれば
