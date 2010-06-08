@@ -14,7 +14,10 @@
 #include "gamesystem/msgspeed.h"
 #include "print/printsys.h"
 
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
 #include "debug/debug_flg.h" //DEBUG_FLG_～
+#endif //MULTI_BOOT_MAKE
 
 //==============================================================
 // Consts
@@ -522,10 +525,13 @@ void PRINTSYS_QUE_Clear( PRINT_QUE* que )
 static inline BOOL IsNetConnecting( void )
 {
 #ifdef  PM_DEBUG
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
   if ( DEBUG_FLG_GetFlg( DEBUG_FLG_FakeNetConnect ) == TRUE )
   {
     return TRUE;
   }
+#endif //MULTI_BOOT_MAKE
 #endif
   return (GFL_NET_GetConnectNum() != 0);
 }
