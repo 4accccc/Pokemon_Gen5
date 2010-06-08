@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="lee_hyunjung" host="W00154A" date="2010-06-07T16:55:46" source="c03_l00_00c.mb"/>
+	<create user="lee_hyunjung" host="W00154A" date="2010-06-08T12:23:34" source="c03_l00_00c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="lee_hyunjung" host="W00154A" date="2010-06-07T16:55:46" source="c03_l00_00c.mb"/>
+<original_create user="lee_hyunjung" host="W00154A" date="2010-06-08T12:23:34" source="c03_l00_00c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -765,7 +765,7 @@
 		render_1_pixel="off"
 		far_clipping="off"
 		diffuse="25 25 25"
-		ambient="0 0 0"
+		ambient="25 25 25"
 		specular="0 0 0"
 		emission="0 0 0"
 		shininess_table_flag="off"
@@ -1972,8 +1972,8 @@
 		vertex_size="172" polygon_size="55"
 		triangle_size="48" quad_size="7"
 		volume_min="-7.000000 0.062500 -4.625000"
-		volume_max="-0.707764 0.500000 1.640137"
-		volume_r="8.404785"
+		volume_max="-0.707764 0.375000 1.640137"
+		volume_r="8.398193"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -1984,7 +1984,7 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 7.812500"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="-4.750000 0.500000 -2.294922"/>
+					<pos_xyz xyz="-4.750000 0.375000 -2.294922"/>
 					<tex st="8.000000 7.812500"/>
 					<pos_xz xz="-7.000000 -1.875000"/>
 					<tex st="8.000000 0.187500"/>
@@ -2037,7 +2037,7 @@
 					<pos_xz xz="-5.353027 1.604248"/>
 					<tex st="0.000000 7.812500"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_xyz xyz="-4.750000 0.500000 -4.544922"/>
+					<pos_xyz xyz="-4.750000 0.375000 -4.544922"/>
 					<tex st="8.000000 7.812500"/>
 					<pos_xz xz="-4.750000 -2.294922"/>
 					<tex st="8.000000 0.187500"/>
@@ -3501,11 +3501,11 @@
 					<pos_xz xz="-7.004883 -2.006592"/>
 					<tex st="0.062500 32.000000"/>
 					<pos_xy xy="-7.004883 1.500000"/>
-					<tex st="17.000000 -160.000000"/>
+					<tex st="16.000000 -160.000000"/>
 					<nrm xyz="0.867188 0.000000 0.498047"/>
 					<pos_xyz xyz="-4.789307 5.375000 -2.626953"/>
 					<pos_xz xz="-4.903809 -2.427246"/>
-					<tex st="17.000000 32.000000"/>
+					<tex st="16.000000 32.000000"/>
 					<pos_xy xy="-4.903809 1.500000"/>
 					<pos_xz xz="-4.789307 -2.626953"/>
 					<tex st="-21.000000 32.000000"/>
