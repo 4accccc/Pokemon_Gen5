@@ -210,8 +210,7 @@ static void COMM_TVT_Init( COMM_TVT_WORK *work )
     work->isReqDispWarn = TRUE;
   }
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
   
   switch( work->initWork->mode )
   {

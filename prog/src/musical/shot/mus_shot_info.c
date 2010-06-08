@@ -162,8 +162,7 @@ MUS_SHOT_INFO_WORK* MUS_SHOT_INFO_InitSystem( MUSICAL_SHOT_DATA *shotData , MUSI
 
 	infoWork->takmenures	= APP_TASKMENU_RES_Create( MUS_INFO_FRAME_MSG, MUS_INFO_PAL_YESNO, infoWork->fontHandle, infoWork->printQue, infoWork->heapId );
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , infoWork->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , heapId );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
 
   return infoWork;

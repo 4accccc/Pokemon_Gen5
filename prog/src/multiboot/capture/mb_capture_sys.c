@@ -250,8 +250,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
 
   GFL_NET_WirelessIconEasyXY( 256-16 , 0 , FALSE , work->heapId );
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
 
 #if MB_CAP_DEB
   work->isTimeFreeze = FALSE;

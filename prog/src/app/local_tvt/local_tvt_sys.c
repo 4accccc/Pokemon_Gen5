@@ -163,9 +163,7 @@ static void LOCAL_TVT_Init( LOCAL_TVT_WORK *work )
   work->isFirstCommand = TRUE;
   work->scriptIdx = 0;
   
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
-  
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
 }
 
 //--------------------------------------------------------------

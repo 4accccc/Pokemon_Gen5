@@ -557,13 +557,11 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 
       if( work->mode == MPM_POKE_SHIFTER )
       {
-        GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-        GFL_NET_ReloadIcon();
+        GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
       }
       else
       {
-        GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-        GFL_NET_ReloadIcon();
+        GFL_NET_ReloadIconTopOrBottom(TRUE , work->heapId );
       }
     }
     else

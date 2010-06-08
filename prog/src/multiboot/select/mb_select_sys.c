@@ -314,8 +314,7 @@ static void MB_SELECT_Init( MB_SELECT_WORK *work )
   
   GFL_ARC_CloseDataHandle( arcHandle );
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
 
 
   //РаЦЊХґХ\О¶

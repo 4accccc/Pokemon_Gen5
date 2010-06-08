@@ -1058,8 +1058,7 @@ static void MB_CHILD_InitGraphic( MB_CHILD_WORK *work )
   }
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
   work->isInitCellSys = TRUE;
   
 }

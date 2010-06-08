@@ -460,8 +460,7 @@ void CTVT_DRAW_InitMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
 
   CTVT_DRAW_DrawInfoMsg( work , drawWork , FALSE );
   
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE , heapId );
 
   //上画面の会話アイコンを消す
   COMM_TVT_EraseTalkIcon( work );
@@ -499,8 +498,7 @@ void CTVT_DRAW_TermMode( COMM_TVT_WORK *work , CTVT_DRAW_WORK *drawWork )
   }
 
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , heapId );
 
   BmpWinFrame_Clear( drawWork->infoWin , WINDOW_TRANS_ON );
   GFL_BMPWIN_ClearTransWindow( drawWork->infoWin );

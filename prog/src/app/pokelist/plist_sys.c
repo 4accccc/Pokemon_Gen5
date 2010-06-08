@@ -356,8 +356,7 @@ const BOOL PLIST_InitPokeList( PLIST_WORK *work )
   GFL_BG_LoadScreenV_Req(PLIST_BG_PLATE);
   GFL_BG_LoadScreenV_Req(PLIST_BG_SUB_BG);
 
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE , work->heapId );
 
   
 #if USE_DEBUGWIN_SYSTEM

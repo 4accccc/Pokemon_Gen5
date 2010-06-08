@@ -336,8 +336,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
   case MCS_WAIT_COMM_INIT:
     if( MB_COMM_IsInitComm(work->commWork) == TRUE )
     {
-      GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-      GFL_NET_ReloadIcon();
+      GFL_NET_ReloadIconTopOrBottom(TRUE , work->heapId );
       //e‹@î•ñ
       if( MB_IsMultiBootChild() == FALSE )
       {
@@ -856,8 +855,7 @@ static void MB_MOVIE_InitGraphic( MB_MOVIE_WORK *work )
   GFL_CLACT_SYS_Create( &GFL_CLSYSINIT_DEF_DIVSCREEN , &vramBank ,work->heapId );
   GFL_DISP_GX_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
   //GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ , TRUE );
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE , work->heapId );
   work->isInitCellSys = TRUE;
   
 }

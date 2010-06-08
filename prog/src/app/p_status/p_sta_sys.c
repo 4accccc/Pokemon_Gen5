@@ -221,8 +221,7 @@ const BOOL PSTATUS_InitPokeStatus( PSTATUS_WORK *work )
     }
   }
   
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(TRUE , work->heapId );
 
 #if USE_STATUS_DEBUG
   PSTATUS_InitDebug( work );
