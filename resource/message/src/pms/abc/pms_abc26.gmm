@@ -584,56 +584,61 @@
 	</row>
 
 	<row id="search_abc_38">
+		<language name="JPN" width="216">ひやつきー</language>
+		<language name="JPN_KANJI" width="216">ひやつきー</language>
+	</row>
+
+	<row id="search_abc_39">
 		<language name="JPN" width="216">ひやつふ</language>
 		<language name="JPN_KANJI" width="216">ひやつふ</language>
 	</row>
 
-	<row id="search_abc_39">
+	<row id="search_abc_40">
 		<language name="JPN" width="216">ひよひよはんち</language>
 		<language name="JPN_KANJI" width="216">ひよひよはんち</language>
 	</row>
 
-	<row id="search_abc_40">
+	<row id="search_abc_41">
 		<language name="JPN" width="216">ひらいしん</language>
 		<language name="JPN_KANJI" width="216">ひらいしん</language>
 	</row>
 
-	<row id="search_abc_41">
+	<row id="search_abc_42">
 		<language name="JPN" width="216">ひりしおん</language>
 		<language name="JPN_KANJI" width="216">ひりしおん</language>
 	</row>
 
-	<row id="search_abc_42">
+	<row id="search_abc_43">
 		<language name="JPN" width="216">ひりりたま</language>
 		<language name="JPN_KANJI" width="216">ひりりたま</language>
 	</row>
 
-	<row id="search_abc_43">
+	<row id="search_abc_44">
 		<language name="JPN" width="216">ひるとあつふ</language>
 		<language name="JPN_KANJI" width="216">ひるとあつふ</language>
 	</row>
 
-	<row id="search_abc_44">
+	<row id="search_abc_45">
 		<language name="JPN" width="216">ひるね</language>
 		<language name="JPN_KANJI" width="216">ひるね</language>
 	</row>
 
-	<row id="search_abc_45">
+	<row id="search_abc_46">
 		<language name="JPN" width="216">ひろいん</language>
 		<language name="JPN_KANJI" width="216">ひろいん</language>
 	</row>
 
-	<row id="search_abc_46">
+	<row id="search_abc_47">
 		<language name="JPN" width="216">ひんち</language>
 		<language name="JPN_KANJI" width="216">ひんち</language>
 	</row>
 
-	<row id="search_abc_47">
+	<row id="search_abc_48">
 		<language name="JPN" width="216">ひんはす</language>
 		<language name="JPN_KANJI" width="216">ひんはす</language>
 	</row>
 
-	<row id="search_abc_48">
+	<row id="search_abc_49">
 		<language name="JPN" width="216">ひんふく</language>
 		<language name="JPN_KANJI" width="216">ひんふく</language>
 	</row>
