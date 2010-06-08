@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-06-08T16:41:48"/>
+	<create user="ohmori" host="W00223" date="2010-06-08T17:26:33"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1430,8 +1430,8 @@
 	</row>
 
 	<row id="msg_gtc_error_006_02">
-		<language name="JPN" font=" 1:small" width="216">うけつけに　もどります</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216">受付に　もどります</language>
+		<language name="JPN" font=" 1:small" width="216">もういちど　せつぞくを　かいしします</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216">もう一度　接続を　開始します</language>
 	</row>
 
 	<row id="msg_gtc_search_001">
