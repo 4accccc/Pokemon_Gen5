@@ -78,6 +78,7 @@ struct _PLIST_MSG_WORK
   
   //Que用(瞬間メッセージ
   BOOL  isUpdateMsg;
+  PRINT_QUE *printQueMsg;
   
   WORDSET *wordSet;
   BOOL reqDispTimerIcon;
@@ -110,6 +111,7 @@ PLIST_MSG_WORK* PLIST_MSG_CreateSystem( PLIST_WORK *work )
   msgWork->timeIcon = NULL;
   msgWork->reqDispTimerIcon = FALSE;
   msgWork->cursorWork = APP_KEYCURSOR_Create( 0x0f , FALSE , TRUE , work->heapId );
+  msgWork->printQueMsg = PRINTSYS_QUE_Create( work->heapId );
   return msgWork;
 }
 
@@ -133,6 +135,7 @@ void PLIST_MSG_DeleteSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
     GFL_STR_DeleteBuffer( msgWork->streamStr );
   }
   
+  PRINTSYS_QUE_Delete( msgWork->printQueMsg );
   APP_KEYCURSOR_Delete( msgWork->cursorWork );
   GFL_TCBL_Exit( msgWork->tcblSys );
   GFL_HEAP_FreeMemory( msgWork );
@@ -211,7 +214,7 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
   //printQueの更新
   if( msgWork->isUpdateMsg == TRUE )
   {
-    if( PRINTSYS_QUE_IsExistTarget( work->printQue , GFL_BMPWIN_GetBmp( msgWork->bmpWin )) == FALSE )
+    if( PRINTSYS_QUE_IsExistTarget( msgWork->printQueMsg , GFL_BMPWIN_GetBmp( msgWork->bmpWin )) == FALSE )
     {
       msgWork->isUpdateMsg = FALSE;
       GFL_BMPWIN_MakeTransWindow_VBlank( msgWork->bmpWin );
@@ -222,6 +225,7 @@ void PLIST_MSG_UpdateSystem( PLIST_WORK *work , PLIST_MSG_WORK *msgWork )
       }
     }
   }
+  PRINTSYS_QUE_Main( msgWork->printQueMsg );
 
 }
 
@@ -320,10 +324,10 @@ void PLIST_MSG_DrawMessageNoWait( PLIST_WORK *work , PLIST_MSG_WORK *msgWork , c
     str = workStr;
   }
 
-  //Queは親のものを使う
   PLIST_MSG_ClearWindow( work , msgWork );
+  PRINTSYS_QUE_Clear( msgWork->printQueMsg );
 
-  PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 
+  PRINTSYS_PrintQueColor( msgWork->printQueMsg , GFL_BMPWIN_GetBmp( msgWork->bmpWin ) , 
           PLIST_MSG_STR_OFS_X , PLIST_MSG_STR_OFS_Y , str , work->fontHandle , PLIST_FONT_COLOR_BLACK );
 
   msgWork->isUpdateMsg = TRUE;
