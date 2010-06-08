@@ -2600,12 +2600,12 @@ static const u8 sign_brush[2][2][16]={
 #define LARGE_BOARD_H     ( 16 )
 
 static const GFL_UI_TP_HITTBL sign_tbl[]={
-  {OEKAKI_BOARD_POSY*8,(OEKAKI_BOARD_POSY+OEKAKI_BOARD_H)*8-1, OEKAKI_BOARD_POSX*8, (OEKAKI_BOARD_POSX+OEKAKI_BOARD_W)*8-1},
+  {OEKAKI_BOARD_POSY*8,(OEKAKI_BOARD_POSY+OEKAKI_BOARD_H)*8, OEKAKI_BOARD_POSX*8, (OEKAKI_BOARD_POSX+OEKAKI_BOARD_W)*8+1},
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
 static const GFL_UI_TP_HITTBL large_sign_tbl[]={
-  {LARGE_BOARD_POSY*8,(LARGE_BOARD_POSY+LARGE_BOARD_H)*8-1, LARGE_BOARD_POSX*8, (LARGE_BOARD_POSX+LARGE_BOARD_W)*8-1},
+  {LARGE_BOARD_POSY*8,(LARGE_BOARD_POSY+LARGE_BOARD_H)*8, LARGE_BOARD_POSX*8, (LARGE_BOARD_POSX+LARGE_BOARD_W)*8+3},
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
@@ -2649,7 +2649,7 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
     // 精密
     }else{
       if( GFL_UI_TP_HitSelf( large_sign_tbl, x, y )==0){
-        wk->MyTouchResult.x = OEKAKI_BOARD_POSX*8+(x-LARGE_BOARD_POSX*8+wk->ScaleSide*24*8)/2;
+        wk->MyTouchResult.x = OEKAKI_BOARD_POSX*8+(x-LARGE_BOARD_POSX*8+wk->ScaleSide*(24*8+6))/2;
         wk->MyTouchResult.y = OEKAKI_BOARD_POSY*8+(y-LARGE_BOARD_POSY*8)/2;
         wk->MyTouchResult.brush = wk->pen;
         wk->MyTouchResult.on    = 1;
@@ -2681,6 +2681,8 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh )
 {
   int bx,by,px,py,wx,wy;
   int i,offset,w,h,count=0;
+      
+  HOSAKA_Printf(" x=%d y=%d\n");
   
   // 書きこむのは4x4に限定
   for(h=0;h<4;h++){
@@ -2689,17 +2691,34 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh )
     py = wy % 8;
     for(w=0;w<4;w++){
       wx = x+w;
-      if(wx<0 || wx >=ww || wy <0 || wy >=hh){
+      if(wx<0 || wy<0){
+//        HOSAKA_Printf("count=%d wx=%d wy=%d \n",count,wx,wy);
+        count++;
         continue;
       }
+      if(wx >= ww || wy >= hh){
+        continue;
+      }
+
       bx = wx / 8;
       px = wx % 8;
       offset = (by*OEKAKI_BOARD_W+bx)*64 + py*8+px;
+//      HOSAKA_Printf("w=%d h=%d bx=%d by=%d px=%d py=%d wx=%d wy=%d offset=%d\n", w,h,bx,by,px,py,wx,wy,offset );
       if(brush[count]==1){
         sign[offset] = 1;
       }else if(brush[count]==2){
         sign[offset] = 0;
       }
+#if 0
+      else if( ( bx == 0 && px == 0 ) || ( by == 0 && py == 0 ) ){
+        // 端ならブラシの中央で塗る
+        if(brush[5]==1){
+          sign[offset] = 1;
+        }else if(brush[5]==2){
+          sign[offset] = 0;
+        }
+      }
+#endif
       count++;
     }
   }
@@ -2717,6 +2736,7 @@ static void _BmpWinPrint_Rap(
       int win_x, int win_y, int win_dx, int win_dy )
 {
 
+#if 0
   if(win_x < 0){
     int diff;
     diff = win_x*-1;
@@ -2741,6 +2761,7 @@ static void _BmpWinPrint_Rap(
     win_dy -= diff;
   }
 
+#endif
 
 //  GF_BGL_BmpWinPrint( win, src, src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
 /*
@@ -2868,9 +2889,8 @@ static int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int
   if(sign_mode==0){
     centerling = 4;
   }else{
-    centerling = 2;
+    centerling = 4;
   }
-
 
   if(all->on!=0){
     if(old->on){
@@ -2880,7 +2900,7 @@ static int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int
     px = all->x - OEKAKI_BOARD_POSX*8-centerling;
     py = all->y - OEKAKI_BOARD_POSY*8-2;
       
-    //OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
+//    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
 
     // BG1面用BMP（お絵かき画像）ウインドウ確保
     line = DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
