@@ -742,7 +742,10 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 
   // メイン画面を上に表示
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
-
+  
+  // 通信アイコン
+  GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
+  
   // フェードイン リクエスト
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, 1 );
 
