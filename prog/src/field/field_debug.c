@@ -635,6 +635,20 @@ void FIELD_DEBUG_SetPosUpdateFlag( FIELD_DEBUG_WORK *work, BOOL flag )
   work->flag_pos_update = flag;
 }
 
+//==============================================================================
+/**
+ * リンクドVRAMマネージャの内部情報を取得するためのコールバック
+ *
+ *
+ * @retval  none
+ */
+//==============================================================================
+static void cb_DumpLnkVramManager(u32 addr, u32 szByte, void* pUserData )
+{
+	// 合計サイズを計算
+    (*((u32*)pUserData)) += szByte;
+}
+
 //--------------------------------------------------------------
 /**
  * フィールド座標表示
@@ -649,7 +663,7 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
 	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
 	const VecFx32 *pos = PLAYERWORK_getPosition( player );
   
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_START ){
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
     resetBgCont( work );
   }
 	
@@ -787,6 +801,21 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
     DebugFont_ClearLine( work, 12 );
     sprintf( str, "LAND:%d",DbgRenderInfo.DrawLandNum);
 		DebugFont_Print( work, 0, 12, str );
+  }
+
+  {
+    u32 size = 0;
+
+    NNS_GfdDumpLnkTexVramManagerEx( cb_DumpLnkVramManager,NULL,&size );
+    DebugFont_ClearLine( work, 14 );
+    sprintf( str, "TEXV REM:%d USE:%d",size, (128*3*1024)-size);
+		DebugFont_Print( work, 0, 14, str );
+	
+    size = 0;
+    NNS_GfdDumpLnkPlttVramManagerEx( cb_DumpLnkVramManager,&size );
+    DebugFont_ClearLine( work, 15 );
+    sprintf( str, "PLTV REM:%d USE:%d",size, (16*1024)-size);
+		DebugFont_Print( work, 0, 15, str );
   }
 }
 
