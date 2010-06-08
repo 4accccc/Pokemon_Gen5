@@ -67,6 +67,12 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
 	u16	rnd = 0;
 	SHINKA_COND	dummy;
 
+  //タマゴは進化しない
+	if( PP_Get( pp, ID_PARA_tamago_flag, NULL ) )
+  { 
+    return 0;
+  }
+
 	mons_no       = PP_Get( pp, ID_PARA_monsno, NULL );
 	item_no       = PP_Get( pp, ID_PARA_item, NULL );
 	personal_rnd  = PP_Get( pp, ID_PARA_personal_rnd, NULL );
@@ -303,10 +309,10 @@ u16	SHINKA_Check( POKEPARTY *ppt, POKEMON_PARAM *pp, SHINKA_TYPE type, u32 param
 			      break;
 		      }
           //お互いのポケモンがカブリン、カッチュなら進化（名称変更の可能性があるので、注意！）
-          if( ( ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_571 ) && 
-                ( PP_Get( pp_e, ID_PARA_monsno, NULL ) == MONSNO_561 ) ) ||
-              ( ( PP_Get( pp_e, ID_PARA_monsno, NULL ) == MONSNO_571 ) && 
-                ( PP_Get( pp, ID_PARA_monsno, NULL ) == MONSNO_561 ) ) )
+          if( ( ( PP_Get( pp, ID_PARA_monsno_egg, NULL ) == MONSNO_571 ) && 
+                ( PP_Get( pp_e, ID_PARA_monsno_egg, NULL ) == MONSNO_561 ) ) ||
+              ( ( PP_Get( pp_e, ID_PARA_monsno_egg, NULL ) == MONSNO_571 ) && 
+                ( PP_Get( pp, ID_PARA_monsno_egg, NULL ) == MONSNO_561 ) ) )
           { 
 					  ret = pst->psd[ i ].ShinkaMons;
           }
