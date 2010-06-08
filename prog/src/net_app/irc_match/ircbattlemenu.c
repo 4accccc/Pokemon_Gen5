@@ -163,6 +163,7 @@ enum _IBMODE_SELECT {
   _SELECTMODE_MAX,
   _SELECTMODE_BATTLE2 = _SELECTMODE_MAX,
   _SELECTMODE_POKE_CHANGE2,
+  _SELECTMODE_FRIENDCODE2,
 };
 
 enum _IBMODE_ENTRY {
@@ -938,6 +939,9 @@ static void _modeButtonFlash(IRC_BATTLE_MENU* pWork)
   else if(_SELECTMODE_POKE_CHANGE2 == pWork->bttnid){
     objno = _SELECTMODE_POKE_CHANGE;
   }
+  else if(_SELECTMODE_FRIENDCODE2 == pWork->bttnid){
+    objno = _SELECTMODE_FRIENDCODE;
+  }
   GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[objno],TRUE);
   GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[objno], &cbwk );
   GFL_CLACT_WK_ResetAnm( pWork->buttonObj[objno] );
@@ -1001,6 +1005,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,IRC_BATTLE_MENU* pWork)
     ret = TRUE;
     break;
   case _SELECTMODE_FRIENDCODE:
+  case _SELECTMODE_FRIENDCODE2:  
 		PMSND_PlaySystemSE(_SE_DESIDE);
     pWork->selectType = EVENTIRCBTL_ENTRYMODE_FRIEND;
     _CHANGE_STATE(pWork,_modeButtonFlash);

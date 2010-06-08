@@ -149,6 +149,8 @@ enum _IBMODE_SELECT {
   _SELECTMODE_TV,
   _SELECTMODE_EXIT,
   _SELECTMODE_MAX,
+  _SELECTMODE_PALACE2 = _SELECTMODE_MAX,
+  _SELECTMODE_TV2,
 };
 
 
@@ -849,14 +851,21 @@ static void _modeAppWinFlash2(CG_WIRELESS_MENU* pWork)
 static void _modeAppWinFlash(CG_WIRELESS_MENU* pWork)
 {
   GFL_CLWK_ANM_CALLBACK cbwk;
+  int objno= pWork->bttnid;
 
   cbwk.callback_type = CLWK_ANM_CALLBACK_TYPE_LAST_FRM ;  // CLWK_ANM_CALLBACK_TYPE
   cbwk.param = (u32)pWork;          // コールバックワーク
   cbwk.p_func = _modeAppWinFlashCallback; // コールバック関数
 
-  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[pWork->bttnid],TRUE);
-  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[pWork->bttnid], &cbwk );
-  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[pWork->bttnid] );
+  if(_SELECTMODE_PALACE2 == pWork->bttnid){
+    objno = _SELECTMODE_PALACE;
+  }
+  else if(_SELECTMODE_TV2 == pWork->bttnid){
+    objno = _SELECTMODE_TV;
+  }
+  GFL_CLACT_WK_SetAutoAnmFlag(pWork->buttonObj[objno],TRUE);
+  GFL_CLACT_WK_StartAnmCallBack( pWork->buttonObj[objno], &cbwk );
+  GFL_CLACT_WK_ResetAnm( pWork->buttonObj[objno] );
 
   _CHANGE_STATE(pWork,_modeAppWinFlash2);
 
@@ -905,6 +914,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
 
   switch( bttnid ){
   case _SELECTMODE_PALACE:
+  case _SELECTMODE_PALACE2:  
     {
       pWork->dbw->hilinkStateNo = Intrude_GetIntrudeStatus(pComm);
       pWork->selectType = CG_WIRELESS_RETURNMODE_PALACE;
@@ -913,6 +923,7 @@ static BOOL _modeSelectMenuButtonCallback(int bttnid,CG_WIRELESS_MENU* pWork)
     }
     break;
   case _SELECTMODE_TV:
+  case _SELECTMODE_TV2:
     pWork->selectType = CG_WIRELESS_RETURNMODE_TV;
 
 
