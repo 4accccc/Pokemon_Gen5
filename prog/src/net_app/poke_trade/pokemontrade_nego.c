@@ -1626,26 +1626,31 @@ NHTTP_RAP_Processでレスポンスを受ける
 
 static void _PokeEvilChkEnd2(POKEMON_TRADE_WORK* pWork)
 {
+  int msgno;
   if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_EVIL, WB_NET_TRADE_SERVICEID)){
     return;
   }
   if((pWork->evilCheck[0] == 0 ) && (pWork->evilCheck[1] == 0 )){
     _CHANGE_STATE(pWork, POKE_GTS_Select6Init);
+    return;
+  }
+  else if(pWork->evilCheck[1]==0xff){
+    msgno = gtsnego_info_24;   //その他のエラー
+  }
+  else if(pWork->evilCheck[0]==0xff){
+    msgno = gtsnego_info_24;
   }
   else if(pWork->evilCheck[1]){
-    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_11, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    pWork->NegoWaitTime = _GTSINFO11_WAIT;
-    pWork->anmCount = 0;
-    _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+    msgno = gtsnego_info_11;   //不正検査
   }
   else{
-    GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_10, pWork->pMessageStrBuf );
-    POKETRADE_MESSAGE_WindowOpen(pWork);
-    pWork->NegoWaitTime = _GTSINFO10_WAIT;
-    pWork->anmCount = 0;
-    _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
+    msgno = gtsnego_info_10;
   }
+  GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpen(pWork);
+  pWork->NegoWaitTime = _GTSINFO11_WAIT;
+  pWork->anmCount = 0;
+  _CHANGE_STATE(pWork,_NEGO_Select6CancelWait3);
 }
 
 
@@ -1677,7 +1682,7 @@ static void _PokeEvilChk2(POKEMON_TRADE_WORK* pWork)
     }
     else if( NHTTP_ERROR_BUSY != error )
     {
-       pWork->evilCheck[0] = 1;  //検査に失敗した
+       pWork->evilCheck[0] = 0xff;  //主に通信エラー
       _CHANGE_STATE(pWork, _PokeEvilChkEnd);
     }
     else{
