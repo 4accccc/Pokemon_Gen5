@@ -67,6 +67,7 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcInit( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcMain( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
 static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * seq, void * pwk, void * mywk );
+static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex );
 
 
 //==============================================================================
@@ -360,18 +361,8 @@ static GFL_PROC_RESULT GameStart_FirstProcMain( GFL_PROC * proc, int * seq, void
     }
     break;
   case SEQ_INPUT_NAME_RETAKE_YESNO:
-    //名前のセット
-    {
-      MyStatus_SetMyNameFromString( work->mystatus , work->nameInParam->strbuf );
-      MyStatus_SetID(work->mystatus, GFL_STD_MtRand(GFL_STD_RAND_MAX));
-      
-      if(MyStatus_GetMySex(work->mystatus) == PM_MALE){
-        MyStatus_SetTrainerView(work->mystatus, UNION_VIEW_INDEX_MAN_START);
-      }
-      else{
-        MyStatus_SetTrainerView(work->mystatus, UNION_VIEW_INDEX_WOMAN_START);
-      }
-    }
+    //自分情報のセット
+    _mystatus_info_set( work->mystatus, work->nameInParam->strbuf, MyStatus_GetMySex(work->mystatus) );
 
     //イントロデモ 名前入力の判定
     work->introParam.scene_id = INTRO_SCENE_ID_05_RETAKE_YESNO;
@@ -533,8 +524,8 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   
   // 直前の選択肢で選んだ通信モードを取得する
   int search_mode_temp = CONFIG_GetNetworkSearchMode( work->selModeParam.configSave );
-	// タイトルメニューの項目情報取得
-	u8	title_menu_flag = MISC_GetStartMenuFlagAll( work->selModeParam.miscSave );
+  // タイトルメニューの項目情報取得
+  u8  title_menu_flag = MISC_GetStartMenuFlagAll( work->selModeParam.miscSave );
 
   SaveControl_Load(sv_ctrl);
   CONFIG_ApplyMojiMode( SaveData_GetConfig( sv_ctrl ) );  //ロードしたコンフィグに従って文字モード設定
@@ -550,7 +541,7 @@ static GFL_PROC_RESULT GameStart_ContinueProcEnd( GFL_PROC * proc, int * seq, vo
   // セーブデータで通信モードが上書きされてしまっているのでとっておいた通信モードを再度格納する
   CONFIG_SetNetworkSearchMode( work->selModeParam.configSave, search_mode_temp );
   // セーブデータでタイトルメニューの項目情報が上書きされてしまっているので再設定
-	MISC_SetStartMenuFlagAll( work->selModeParam.miscSave, title_menu_flag );
+  MISC_SetStartMenuFlagAll( work->selModeParam.miscSave, title_menu_flag );
 
   return GFL_PROC_RES_FINISH;
 
@@ -627,15 +618,8 @@ static GFL_PROC_RESULT GameStart_DebugProcEnd( GFL_PROC * proc, int * seq, void 
     }
 #endif
     myStatus = SaveData_GetMyStatus( sv_ctrl );
-    MyStatus_SetMyNameFromString( myStatus , namebuf );
-    MyStatus_SetMySex(myStatus, sex);
-    MyStatus_SetID(myStatus, GFUser_GetPublicRand0(0xFFFFFFFF));
-    if(MyStatus_GetMySex(myStatus) == PM_MALE){
-      MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_MAN_START);
-    }
-    else{
-      MyStatus_SetTrainerView(myStatus, UNION_VIEW_INDEX_WOMAN_START);
-    }
+    _mystatus_info_set(myStatus, namebuf, sex);
+
     
     GFL_STR_DeleteBuffer(namebuf);
     GFL_MSG_Delete(msgman);
@@ -756,4 +740,30 @@ static GFL_PROC_RESULT GameStart_DebugSelectNameProcEnd( GFL_PROC * proc, int * 
   GFL_PROC_FreeWork(proc);
 #endif
   return GFL_PROC_RES_FINISH;
+}
+
+
+//----------------------------------------------------------------------------------
+/**
+ * @brief MYSTATUSに情報を登録する
+ *
+ * @param   my    MYSTATUS
+ * @param   name  入力済の自分の名前の文字列
+ * @param   sex   性別(PM_MALE, PM_FEMALE)
+ */
+//----------------------------------------------------------------------------------
+static void _mystatus_info_set( MYSTATUS *my, STRBUF *name, int sex )
+{
+  // 名前
+  MyStatus_SetMyNameFromString( my , name );
+  // 性別
+  MyStatus_SetMySex(my, sex);
+  // トレーナーID
+  MyStatus_SetID(my, GFUser_GetPublicRand0(0xFFFFFFFF));
+  // ユニオン見た目設定
+  MyStatus_SetTrainerView( my, 
+                           GFL_STD_MtRand(MYSTATUS_UNIONVIEW_MAX)+
+                           MyStatus_GetMySex(my)*MYSTATUS_UNIONVIEW_MAX );
+  OS_Printf("TrainerView = %d\n", MyStatus_GetTrainerView( my ));
+  
 }
