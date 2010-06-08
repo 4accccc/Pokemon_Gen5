@@ -15,11 +15,9 @@ USERS	=	saitou unno
 #------------------------------------------------------------------------------
 targetname	= fld3d_ci
 NARCNAME	= $(targetname).narc
-NAIXNAME	= $(targetname).naix
 
 targetname2	= fld3d_ci_setup
 NARCNAME2	= $(targetname2).narc
-NAIXNAME2	= $(targetname2).naix
 
 HEADER_FILE	= fldci_id_def.h
 
@@ -89,12 +87,10 @@ endif
 $(TARGETDIR)/$(targetname).narc:  $(targetname).narc
 	@echo copying $(targetname).narc
 	@$(COPY) $(targetname).narc $(TARGETDIR)
-	@$(COPY) $(targetname).naix $(TARGETDIR)
 
 $(TARGETDIR)/$(targetname2).narc:  $(targetname2).narc 
 	@echo copying $(targetname2).narc
 	@$(COPY) $(targetname2).narc $(TARGETDIR)
-	@$(COPY) $(targetname2).naix $(TARGETDIR)
 
 #コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ動作させる
