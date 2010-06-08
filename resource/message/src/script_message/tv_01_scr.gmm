@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-08T12:11:06"/>
+	<create user="matsumiya" host="W00224" date="2010-06-08T12:39:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="359" top="133" right="1064" bottom="753" maximized="no" rayout="Vertical2">
+	<dialog left="1491" top="160" right="2196" bottom="780" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -1071,7 +1071,7 @@
 こちらの　独自の　調査によると
 カノコタウンの　[1:00:トレーナー名:0]は▼
 なんと　なんと！
-そだてやさんに　ポケモンを▼
+育て屋さんに　ポケモンを▼
 [2:08:９桁:1]匹も
 預けている　ようだぞ！▼
 どうした　[1:00:トレーナー名:0]！
@@ -1150,7 +1150,7 @@
 なかなか　かいもの　じょうずだな！</language>
 		<language name="JPN_KANJI" width="256">ザ・ナンバーワン
 「プレミアボール」トレーナー！▼
-こちらの　独自の　ちょうさによると
+こちらの　独自の　調査によると
 カノコタウンの　[1:00:トレーナー名:0]は▼
 なんと　なんと！
 プレミアボールを▽
