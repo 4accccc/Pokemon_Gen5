@@ -213,6 +213,14 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
   GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
+
+  if(pWork->noDispWin){
+    GFL_BMPWIN_Delete(pWork->noDispWin);
+  }
+  if(pWork->noTitleDispWin){
+    GFL_BMPWIN_Delete(pWork->noTitleDispWin);
+  }
+  
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
@@ -672,8 +680,13 @@ BOOL PDWACC_MESSAGE_NoMessageEndCheck(PDWACC_MESSAGE_WORK* pWork)
 void PDWACC_MESSAGE_NoMessageEnd(PDWACC_MESSAGE_WORK* pWork)
 {
   if(pWork->noDispWin){
+    BmpWinFrame_Clear(pWork->noDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->noDispWin);
+    BmpWinFrame_Clear(pWork->noTitleDispWin, WINDOW_TRANS_OFF);
+    GFL_BMPWIN_ClearScreen(pWork->noTitleDispWin);
     GFL_BMPWIN_Delete(pWork->noDispWin);
     GFL_BMPWIN_Delete(pWork->noTitleDispWin);
+    GFL_BG_LoadScreenV_Req(_MESSAGE_INFO_FRAME);
   }
 }
 

@@ -1491,6 +1491,9 @@ static void _accountCreateMessage3(G_SYNC_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg() || GFL_UI_TP_GetTrg()){
     GSYNC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    ///メッセージを見たのでフラグをON
+    DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
+    pWork->bAccount=TRUE;
     _CHANGE_STATE(_ghttpPokemonListDownload);
   }
 }
@@ -1533,7 +1536,6 @@ static void _createAccount2(G_SYNC_WORK* pWork)
            _CHANGE_STATE(_ghttpPokemonListDownload);
         }
         else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
-          DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
           GSYNC_MESSAGE_InfoMessageEnd(pWork->pMessageWork);
           _CHANGE_STATE( _accountCreateMessage);
         }
@@ -1693,8 +1695,12 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
       }
       break;
     case GSYNC_CALLTYPE_POKELIST:          //セーブデータ上では眠らせるポケモンを選ぶ
-      //
-      _CHANGE_STATE(_ghttpPokemonListDownload);
+      if(pWork->bAccount==FALSE){  //サーバにアカウントがあるけどメッセージみてない
+        _CHANGE_STATE(_accountCreateMessage);
+      }
+      else{
+        _CHANGE_STATE(_ghttpPokemonListDownload);
+      }
       break;
     }
     break;
@@ -1717,7 +1723,6 @@ static void _playStatusCheck(G_SYNC_WORK* pWork, int status , gs_response* pRep)
     case GSYNC_CALLTYPE_POKELIST:          //眠らせるポケモンを選ぶ
       //初回ならありうる
       _CHANGE_STATE(_createAccount);  //アカウントを作るに変更
-//      _CHANGE_STATE(_ghttpPokemonListDownload);
       break;
     }
     break;

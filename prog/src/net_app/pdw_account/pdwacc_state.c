@@ -116,6 +116,7 @@ struct _PDWACC_WORK {
   int countTimer;
   char tempbuffer[30];
   BOOL bEnd;
+  BOOL saveFlg;
   DREAM_WORLD_SERVER_ERROR_TYPE ErrorNo;   ///エラーがあった場合の番号
 };
 
@@ -203,14 +204,52 @@ static void _networkClose(PDWACC_WORK* pWork)
 
 
 
+static void _saveStart4(PDWACC_WORK* pWork)
+{
+  if( !PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
+    return;
+  }
+  if(GFL_UI_KEY_GetTrg()){
+    _CHANGE_STATE(_networkClose);
+  }
+}
+
+static void _saveStart3(PDWACC_WORK* pWork)
+{
+
+  int sr=0;
+
+  sr = GAMEDATA_SaveAsyncMain(pWork->pGameData);
+  if((sr==SAVE_RESULT_OK) || (sr==SAVE_RESULT_NG)){
+    PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_010);
+    _CHANGE_STATE(_saveStart4);
+  }
+}
+
+
+
+static void _saveStart2(PDWACC_WORK* pWork)
+{
+
+  if( PDWACC_MESSAGE_InfoMessageEndCheck(pWork->pMessageWork) ){
+    GAMEDATA_SaveAsyncStart(pWork->pGameData);
+    _CHANGE_STATE(_saveStart3);
+  }
+
+}
+
+static void _saveStart(PDWACC_WORK* pWork)
+{
+  PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_007);
+  _CHANGE_STATE(_saveStart2);
+}
 
 static void _createAccount9(PDWACC_WORK* pWork)
 {
   if(GFL_UI_KEY_GetTrg()){
-
-    PDWACC_MESSAGE_NoMessageEnd(pWork->pMessageWork);
-
-    _CHANGE_STATE(_networkClose);
+    PDWACC_MESSAGE_SystemMessageEnd(pWork->pMessageWork);
+    DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
+    _CHANGE_STATE(_saveStart);
   }
 }
 
@@ -377,10 +416,6 @@ static void _ghttpInfoWait1(PDWACC_WORK* pWork)
           _CHANGE_STATE(_createAccount7);
         }
         else if(pEvent->ret_cd==DREAM_WORLD_SERVER_ERROR_NONE){  //アカウント作成完了
-          DREAMWORLD_SV_SetAccount(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData),TRUE);
-          {
-            SAVE_RESULT ret = GAMEDATA_Save(pWork->pGameData);
-          }
           _CHANGE_STATE(_createAccount7);
         }
         else{
