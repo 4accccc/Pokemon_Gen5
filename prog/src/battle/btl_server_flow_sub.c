@@ -353,6 +353,13 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return area->numEnemys;
 
   case WAZA_TARGET_OTHER_ALL:           ///< 自分以外全部
+    // 遠隔ヒットフラグONなら中央位置を基準にする
+    if( WAZADATA_GetFlag(wazaParam->wazaID, WAZAFLAG_TripleFar) )
+    {
+      BtlPokePos basePos = BTL_MAINUTIL_GetFriendPokePos( BTL_RULE_TRIPLE, 1 );
+      area = BTL_MAINUTIL_GetTripleAttackArea( basePos );
+    }
+
     cnt = 0;
     for(i=0; i<area->numEnemys; ++i){
       BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->enemyPos[i]) );
@@ -366,16 +373,21 @@ static u8 registerTarget_triple( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, B
     return cnt;
 
   case WAZA_TARGET_ALL:                ///< 全部
-    cnt = 0;
-    for(i=0; i<area->numEnemys; ++i){
-      BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->enemyPos[i]) );
-      ++cnt;
+    BTL_POKESET_Add( rec, attacker );
+    for(i=0; i<BTL_POSIDX_MAX; ++i)
+    {
+      {
+        BtlPokePos  pos = BTL_MAINUTIL_GetFriendPokePos( atPos, i );
+        if( pos != atPos )
+        {
+          BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, pos) );
+        }
+      }
     }
-    for(i=0; i<area->numFriends; ++i){
-      BTL_POKESET_Add( rec, BTL_POKECON_GetFrontPokeData(wk->pokeCon, area->friendPos[i]) );
-      ++cnt;
-    }
-    return cnt;
+    BTL_POKESET_Add( rec, get_opponent_pokeparam( wk, atPos, 0 ) );
+    BTL_POKESET_Add( rec, get_opponent_pokeparam( wk, atPos, 1 ) );
+    BTL_POKESET_Add( rec, get_opponent_pokeparam( wk, atPos, 2 ) );
+    return 6;
 
   case WAZA_TARGET_USER:      ///< 自分１体のみ
     if( intrPokeID == BTL_POKEID_NULL ){
