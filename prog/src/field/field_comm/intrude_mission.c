@@ -1289,8 +1289,7 @@ void MISSION_ClearRecvEntryAnswer(MISSION_SYSTEM *mission)
 //==================================================================
 BOOL MISSION_CheckMissionTargetNetID(MISSION_SYSTEM *mission, int net_id)
 {
-  if(MISSION_CheckRecvResult(mission) == TRUE  //既に結果を受信しているのでターゲットにはなり得ない
-      || MISSION_RecvCheck(mission) == FALSE){ //ミッションが発動していない
+  if(MISSION_RecvCheck(mission) == FALSE){ //ミッションが発動していない
     return FALSE;
   }
   
