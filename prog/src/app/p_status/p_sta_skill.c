@@ -247,7 +247,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
 static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
 static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork );
-static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos );
+static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos , const BOOL isForceDraw );
 static void PSTATUS_SKILL_SwapSkill( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 pos1 , const u8 pos2 );
 static void PSTATUS_SKILL_ChangeForgetConfirmPlate( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const BOOL isDisp );
 static void PSTATUS_SKILL_DispForgetError( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const FIELD_SKILL_CHECK_RET skillRet );
@@ -415,7 +415,7 @@ void PSTATUS_SKILL_Main( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork )
 
       PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
       skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
 
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
       skillWork->isWaitSwapSkill = FALSE;
@@ -1178,7 +1178,7 @@ void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   {
     skillWork->cursorPos = 0;
     PSTATUS_SetActiveBarButton( work , FALSE );
-    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
   }
   else
 */
@@ -1192,7 +1192,7 @@ void PSTATUS_SKILL_DispPage_Trans_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       skillWork->cursorPos = 0;
     }
     PSTATUS_SetActiveBarButton( work , FALSE );
-    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
   }
 
 
@@ -1298,7 +1298,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       skillWork->cursorPos = 0;
       work->ktst = GFL_APP_END_KEY;
       PSTATUS_SetActiveBarButton( work , FALSE );
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
       PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
       PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
       return TRUE;
@@ -1327,7 +1327,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
     {
         work->ktst = GFL_APP_END_KEY;
         skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
         PMSND_PlaySystemSE(PSTATUS_SND_CURSOR);
         return TRUE;
     }
@@ -1363,7 +1363,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
       {
         GFL_CLACTPOS cellPos;
         skillWork->isChangeMode = FALSE;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
         GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
         PMSND_PlaySystemSE(PSTATUS_SND_WAZA_SELECT);
       }
@@ -1378,7 +1378,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey( PSTATUS_WORK *work , PSTATUS_SKILL_WO
   {
     //入れ替えの取り消し
     PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
-    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+    PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
     GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
     GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
     skillWork->isChangeMode = FALSE;
@@ -1450,7 +1450,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           if( work->isActiveBarButton == TRUE )
           {
             PSTATUS_SetActiveBarButton( work , FALSE );
-            PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
+            //PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
           }
 
           skillWork->isHoldTp = TRUE;
@@ -1482,7 +1482,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             }
           }
           work->ktst = GFL_APP_END_TOUCH;
-          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , TRUE );
           skillWork->holdTpx = work->tpx;
           skillWork->holdTpy = work->tpy;
           PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
@@ -1525,7 +1525,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             const POKEMON_PASO_PARAM *ppp = PSTATUS_UTIL_GetCurrentPPP( work );
             if( PPP_Get( ppp , ID_PARA_waza1+ret , NULL ) != 0 )
             {
-              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , FALSE );
             }
           }
           else
@@ -1535,7 +1535,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
             skillWork->isChangeMode = FALSE;
             skillWork->isHoldTp = FALSE;
-            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
             skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
           }
         }
@@ -1559,7 +1559,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           skillWork->isChangeMode = FALSE;
           PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
           //PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 0 );
-          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
           //カーソル位置が変わらないので手動で技表示更新
           PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
           skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
@@ -1573,7 +1573,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           else
           {
             skillWork->isChangeMode = FALSE;
-            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+            PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
           }
         }
       }
@@ -1595,7 +1595,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       if( skillWork->isForgetConfirm == FALSE )
       {
         skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
         //return TRUE;
       }
       //ここはカーソルが出っぱなしなので即反応がある
@@ -1621,12 +1621,12 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
       //入れ替えの取り消し
       work->ktst = GFL_APP_END_KEY;
       PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
       skillWork->isForgetConfirm = FALSE;
       skillWork->cursorPos = skillWork->changeTarget;
       skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
 
       GFL_CLACT_WK_SetAnmSeq( work->clwkBarIcon[SBT_RETURN] , APP_COMMON_BARICON_RETURN_ON );
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
@@ -1681,7 +1681,7 @@ static const BOOL PSTATUS_SKILL_UpdateKey_WazaAdd( PSTATUS_WORK *work , PSTATUS_
           skillWork->changeTarget = skillWork->cursorPos;
           PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->cursorPos] , 2 );
           skillWork->cursorPos = 4;
-          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+          PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
 
           PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
           GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
@@ -1742,20 +1742,20 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
       work->ktst = GFL_APP_END_TOUCH;
 
       PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
-      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+      PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
       GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
       skillWork->isForgetConfirm = FALSE;
       skillWork->changeTarget = PSTATUS_SKILL_PLATE_NUM;
       if( skillWork->wazaPlateNum == 5 )
       {
         //タッチ例外処理
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , 4 );
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , 4 , FALSE );
         PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
       }
       else
       {
         skillWork->cursorPos = 0xFF;
-        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , 0xFF );
+        PSTATUS_SKILL_UpdateCursorPos( work , skillWork , 0xFF , FALSE );
       }
 
       PSTATUS_SKILL_ChangeForgetConfirmPlate( work , skillWork , FALSE );
@@ -1803,7 +1803,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
                 work->mainSeq = SMS_FADEOUT;
                 work->clwkExitButton = NULL;
                 PMSND_PlaySystemSE(PSTATUS_SND_DECIDE);
-                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , FALSE );
                 PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
               }
               else
@@ -1813,12 +1813,12 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
                 work->ktst = GFL_APP_END_TOUCH;
                 skillWork->isForgetConfirm = TRUE;
                 //一回カーソル位置を変えてから
-                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , FALSE );
                 skillWork->changeTarget = ret;
                 PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
                 skillWork->cursorPos = 4;
                 //ここでもう一回変える
-                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos );
+                PSTATUS_SKILL_UpdateCursorPos( work , skillWork , skillWork->cursorPos , FALSE );
 
                 PSTATUS_SKILL_GetCursorPos( &skillWork->plateWork[skillWork->changeTarget] , &cellPos );
                 GFL_CLACT_WK_SetPos( skillWork->clwkTargetCur , &cellPos , CLSYS_DEFREND_MAIN );
@@ -1832,7 +1832,7 @@ static void PSTATUS_SKILL_UpdateTP_WazaAdd( PSTATUS_WORK *work , PSTATUS_SKILL_W
             else
             {
               //一回カーソル位置を変えてから
-              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret );
+              PSTATUS_SKILL_UpdateCursorPos( work , skillWork , ret , FALSE );
               skillWork->changeTarget = ret;
               PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[ret] , 2 );
               PSTATUS_SKILL_DispForgetError( work , skillWork , skillRet );
@@ -1915,13 +1915,13 @@ static void PSTATUS_SKILL_UpdateKey_CursorMove( PSTATUS_WORK *work , PSTATUS_SKI
     }
   }while( tempWazaNo == 0 );
 
-  PSTATUS_SKILL_UpdateCursorPos( work , skillWork , newCursorPos );
+  PSTATUS_SKILL_UpdateCursorPos( work , skillWork , newCursorPos , FALSE );
 }
 
 //--------------------------------------------------------------
 //  カーソルの位置が変わったとき呼ぶ
 //--------------------------------------------------------------
-static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos )
+static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *skillWork , const u8 newPos , const BOOL isForceDraw )
 {
   if(work->ktst == GFL_APP_END_KEY)
   {
@@ -1950,7 +1950,8 @@ static void PSTATUS_SKILL_UpdateCursorPos( PSTATUS_WORK *work , PSTATUS_SKILL_WO
 
   PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[newPos] , 1 );
 
-  if( skillWork->cursorPos != newPos )
+  if( skillWork->cursorPos != newPos ||
+      isForceDraw == TRUE )
   {
     skillWork->cursorPos = newPos;
     PSTATUS_SKILL_DispSkillInfoPage( work , skillWork );
