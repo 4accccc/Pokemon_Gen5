@@ -1147,7 +1147,18 @@ static void WbmWifiSeq_CheckDigCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_
         SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
         //éÊìæê¨å˜
         WIFIBATTLEMATCH_NET_GetDownloadDigCard( p_wk->p_net, &p_wk->recv_card );
-        *p_seq  =  SEQ_WAIT_DOWNLOAD_REG_SUCCESS;
+
+        if( Regulation_CheckCrc(&p_wk->recv_card ) )
+        {
+          //CRCàÍív
+          *p_seq  =  SEQ_WAIT_DOWNLOAD_REG_SUCCESS;
+        }
+        else
+        {
+          //CRCïsàÍív
+          DEBUG_WIFICUP_Printf( "CRCÇ™ïsàÍívÇæÇ¡ÇΩÅI\n" );
+          *p_seq  =  SEQ_WAIT_DOWNLOAD_REG_FAILURE;
+        }
       }
       else if( ret == WIFIBATTLEMATCH_NET_DOWNLOAD_DIGCARD_RET_EMPTY )
       { 

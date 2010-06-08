@@ -1033,6 +1033,8 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
 
     switch( p_wk->param.btl_rule )
     {
+    default:
+      GF_ASSERT(0);
     case WIFIBATTLEMATCH_BTLRULE_SINGLE:    ///< ƒVƒ“ƒOƒ‹
       reg_no  = REG_RND_SINGLE;
       BTL_SETUP_Single_Comm( p_param->p_btl_setup_param, p_wk->param.p_game_data, 
@@ -1237,7 +1239,7 @@ static void *BATTLE_AllocParam( WBM_SYS_SUBPROC_WORK *p_subproc,HEAPID heapID, v
   }
 
 #ifdef WBM_SYS_BATTLE_VSTIME_60
- // p_param->p_btl_setup_param->LimitTimeGame = 60;
+  p_param->p_btl_setup_param->LimitTimeGame = 60;
 #endif
 
   WBM_SYS_Printf( "vs %d\n", p_param->p_btl_setup_param->LimitTimeGame );

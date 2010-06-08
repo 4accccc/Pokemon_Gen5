@@ -913,7 +913,7 @@ static void DC_SEQFUNC_ChangeDS( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   { 
   case SEQ_START_DRAW_PLAYERINFO:
     Util_PlayerInfo_Create( p_wk );
-    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_LOCK );
+    Util_PlayerInfo_RenewalData( p_wk, PLAYERINFO_WIFI_UPDATE_TYPE_UNLOCK );
     *p_seq  = SEQ_WAIT_DRAW_PLAYERINFO;
     break;
 
