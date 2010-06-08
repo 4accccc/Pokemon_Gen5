@@ -9744,10 +9744,14 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u8 msgFlag = FALSE;
 
-    if( BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID) )
-    {
+    if( (BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID))
+    &&  (!BPP_CheckSick(bppTarget, WAZASICK_FREEFALL))
+    &&  (!BTL_SVFTOOL_IsFreeFallUserPoke(flowWk, targetPokeID))
+    ){
+
       // Ç§ÇøÇ®Ç∆Ç∑èÛë‘Ç…Ç∑ÇÈ
       BTL_HANDEX_PARAM_ADD_SICK* param;
 
@@ -9759,10 +9763,6 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         HANDEX_STR_AddArg( &param->exStr, targetPokeID );
       BTL_SVF_HANDEX_Pop( flowWk, param );
       msgFlag = TRUE;
-    }
-
-    {
-      const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
       // Ç≈ÇÒÇ∂Ç”Ç‰Ç§èÛë‘Çè¡Ç∑
       if( BPP_CheckSick(bppTarget, WAZASICK_FLYING) )

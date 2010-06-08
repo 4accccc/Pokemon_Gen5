@@ -6850,7 +6850,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kawarimono( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_MEMBER_IN,              handler_Hensin }, // 入場ハンドラ
-    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,   handler_Hensin }, // とくせい書き換えハンドラ
+//    { BTL_EVENT_CHANGE_TOKUSEI_AFTER,   handler_Hensin }, // とくせい書き換えハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
