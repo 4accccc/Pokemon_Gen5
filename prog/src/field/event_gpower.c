@@ -284,7 +284,7 @@ static GMEVENT_RESULT event_GPowerEnableListCheckMain(GMEVENT * event, int *  se
     (*seq)++;
     break;
   case 2:
-    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, 3, 1, 24, 22 );
+    wk->win = FLDSYSWIN_AddEx( wk->fmb, wk->msgData, 4, 1, 24, 22 );
     FLDSYSWIN_ClearWindow( wk->win );
     sub_GPowerEnableListDraw( wk );
     (*seq)++;
@@ -343,7 +343,7 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
   }
   //”­“®‚µ‚Ä‚¢‚éƒfƒ‹ƒpƒ[
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_label02, wk->s_buf );
-  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*2, wk->s_buf );
+  FLDSYSWIN_PrintStrBuf( wk->win, CWIN_STR_OX01, CWIN_STR_OY*3, wk->s_buf );
 
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_list02, wk->s_buf );
   for( i = 0, line = 0 ;i < GPOWER_TYPE_MAX;i++){
@@ -367,6 +367,6 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
     }
   }
   for(i = 0;i < line;i++){
-    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power[no[i]], time[no[i]], 3+i );
+    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power[no[i]], time[no[i]], 4+i );
   }
 }
