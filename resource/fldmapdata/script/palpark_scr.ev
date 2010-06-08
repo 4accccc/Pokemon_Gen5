@@ -82,6 +82,7 @@ palpark_main:
           _CALL save        //output:SCWK_ANSWER
           IF $SCWK_ANSWER == TRUE THEN
             _CALL play_palpark
+            _CALL see_you
           ELSE
             _CALL see_you
           ENDIF
@@ -197,8 +198,6 @@ play_palpark:
     _BALLOONWIN_OBJMSG( result_msg, R15R0301_PARK )   //ÉNÉçÅ[ÉYÇ¢ÇÁÇ∏
   }  
   ENDIF
-
-  _CALL see_you
 _RET
 
 connect_error:
