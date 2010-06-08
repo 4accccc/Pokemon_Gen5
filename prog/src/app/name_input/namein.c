@@ -903,7 +903,8 @@ static void KEYANM_Start( KEYANM_WORK *p_wk, KEYANM_TYPE type, const GFL_RECT *c
     }
   }
 
-  if( type == KEYANM_TYPE_NONE )
+  if( type == KEYANM_TYPE_NONE
+      || GFL_UI_CheckTouchOrKey() == GFL_APP_KTST_TOUCH )
   { 
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor[OBJ_CURSOR_L], FALSE );
     GFL_CLACT_WK_SetDrawEnable( p_wk->p_cursor[OBJ_CURSOR_R], FALSE );
