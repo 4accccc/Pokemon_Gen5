@@ -647,7 +647,7 @@ void UNION_CHAR_Update(UNION_SYSTEM_PTR unisys, GAMEDATA *gdata, FIELDMAP_WORK *
       }
       
       //全てのキャラが存在しなくなったならDelete
-      if(del_count >= UNION_CONNECT_PLAYER_NUM){
+      if(del_count >= UNION_CONNECT_PLAYER_NUM && bpc->life == 0){
         GFL_STD_MemClear(bpc, sizeof(UNION_BEACON_PC));
         OS_TPrintf("group %d のキャラが全て居なくなったので初期化\n", i);
       }
