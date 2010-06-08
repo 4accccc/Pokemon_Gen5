@@ -1770,7 +1770,20 @@ static void Br_Record_CreateMainDisplayProfile( BR_RECORD_WORK * p_wk, BR_RECORD
     }
     p_wk->is_create[BR_RECORD_CREATE_ID_PROFILE]  = TRUE;
 
-    p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_wk->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, p_wk->heapID );
+    {
+      BR_PROFILE_TYPE type;
+
+      if( p_wk->p_param->mode == BR_RECODE_PROC_MY )
+      {
+        type  = BR_PROFILE_TYPE_MY;
+      }
+      else
+      {
+        type  = BR_PROFILE_TYPE_OTHER;
+      }
+
+      p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( p_wk->p_profile, p_param->p_res, p_param->p_unit, p_wk->p_que, type, p_wk->heapID );
+    }
   }
 }
 //----------------------------------------------------------------------------

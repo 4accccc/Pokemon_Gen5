@@ -1161,7 +1161,7 @@ static void Br_MusicalLook_Photo_CreateProfile( BR_MUSICALLOOK_WORK	*p_wk, BR_MU
 
     { 
       MUSICAL_SHOT_RECV   *p_musical_shot = p_wk->p_musical_shot_tbl[ p_wk->photo_idx ];
-      p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( &p_musical_shot->profile, p_param->p_res, p_unit, p_wk->p_que, p_wk->heapID );
+      p_wk->p_profile_disp  = BR_PROFILE_CreateMainDisplay( &p_musical_shot->profile, p_param->p_res, p_unit, p_wk->p_que, BR_PROFILE_TYPE_OTHER, p_wk->heapID );
     }
 
     BR_MSGWIN_PrintColor( p_wk->p_msgwin, p_msg, msg_719, p_font, BR_PRINT_COL_NORMAL );

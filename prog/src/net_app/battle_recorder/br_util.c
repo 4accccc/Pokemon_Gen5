@@ -25,6 +25,7 @@
 #include "msg/msg_battle_rec.h"
 #include "wifi_unionobj_plt.cdat" //ユニオンOBJのパレット位置
 #include "wifi_unionobj.naix"
+#include "wifileadingchar.naix"
 
 //外部公開
 #include "br_util.h"
@@ -1251,12 +1252,13 @@ struct _BR_PROFILE_WORK
  *	@param	*p_res                      リソース
  *	@param	*p_unit                     ユニット
  *	@param	*p_que                      キュー
+ *	@param  type                        種類
  *	@param	heapID                      ヒープID
  *
  *	@return ワーク
  */
 //-----------------------------------------------------------------------------
-BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, PRINT_QUE *p_que, HEAPID heapID )
+BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, PRINT_QUE *p_que, BR_PROFILE_TYPE type, HEAPID heapID )
 { 
   static const struct 
   { 
@@ -1478,22 +1480,63 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
 
   //自分のみため
   { 
-    const int self  = GDS_Profile_GetTrainerView(cp_profile);
-    { 
-      ARCHANDLE *p_handle;
-      p_handle  = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, GFL_HEAP_LOWID(heapID) );
-      p_wk->res_self_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
-                          NARC_wifi_unionobj_wifi_union_obj_NCLR,
-                          CLSYS_DRAW_MAIN, PLT_OBJ_M_TRAINER*0x20, 
-                          sc_wifi_unionobj_plt[self], 1, heapID );
-      p_wk->res_self_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
-          NARC_wifi_unionobj_front00_NCER, 
-          NARC_wifi_unionobj_front00_NANR, heapID );
-      p_wk->res_self_chr  = GFL_CLGRP_CGR_Register( p_handle,
-          NARC_wifi_unionobj_front00_NCGR + self,
-          FALSE, CLSYS_DRAW_MAIN, heapID );
-      GFL_ARC_CloseDataHandle( p_handle );
+    switch( type )
+    {
+    case BR_PROFILE_TYPE_MY:   //自分
+      { 
+        ARCHANDLE *p_handle;
+        u32 plt, cel, chr, anm;
+
+        if( GDS_Profile_GetSex(cp_profile) == PM_MALE )
+        {
+          plt = NARC_wifileadingchar_hero_NCLR;
+          chr = NARC_wifileadingchar_hero_simple_NCGR;
+          cel = NARC_wifileadingchar_hero_simple_NCER;
+          anm = NARC_wifileadingchar_hero_simple_NANR;
+        }
+        else
+        {
+          plt = NARC_wifileadingchar_heroine_NCLR;
+          chr = NARC_wifileadingchar_heroine_simple_NCGR;
+          cel = NARC_wifileadingchar_heroine_simple_NCER;
+          anm = NARC_wifileadingchar_heroine_simple_NANR;
+        }
+
+        p_handle  = GFL_ARC_OpenDataHandle( ARCID_WIFILEADING, GFL_HEAP_LOWID(heapID) );
+        p_wk->res_self_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+            plt,
+            CLSYS_DRAW_MAIN, PLT_OBJ_M_TRAINER*0x20, 
+            0, 1, heapID );
+        p_wk->res_self_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
+            cel, 
+            anm, heapID );
+        p_wk->res_self_chr  = GFL_CLGRP_CGR_Register( p_handle,
+            chr,
+            FALSE, CLSYS_DRAW_MAIN, heapID );
+        GFL_ARC_CloseDataHandle( p_handle );
+      }
+      break;
+
+    case BR_PROFILE_TYPE_OTHER:   //他人
+      { 
+        const int self  = GDS_Profile_GetTrainerView(cp_profile);
+        ARCHANDLE *p_handle;
+        p_handle  = GFL_ARC_OpenDataHandle( ARCID_WIFIUNIONCHAR, GFL_HEAP_LOWID(heapID) );
+        p_wk->res_self_plt  = GFL_CLGRP_PLTT_RegisterEx( p_handle, 
+            NARC_wifi_unionobj_wifi_union_obj_NCLR,
+            CLSYS_DRAW_MAIN, PLT_OBJ_M_TRAINER*0x20, 
+            sc_wifi_unionobj_plt[self], 1, heapID );
+        p_wk->res_self_cel = GFL_CLGRP_CELLANIM_Register( p_handle,
+            NARC_wifi_unionobj_front00_NCER, 
+            NARC_wifi_unionobj_front00_NANR, heapID );
+        p_wk->res_self_chr  = GFL_CLGRP_CGR_Register( p_handle,
+            NARC_wifi_unionobj_front00_NCGR + self,
+            FALSE, CLSYS_DRAW_MAIN, heapID );
+        GFL_ARC_CloseDataHandle( p_handle );
+      }
+      break;
     }
+
     { 
       GFL_CLWK_DATA data;
       GFL_STD_MemClear( &data, sizeof(GFL_CLWK_DATA) );

@@ -185,6 +185,15 @@ extern BOOL BR_TEXT_PrintMain( BR_TEXT_WORK* p_wk );
  */
 //_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 //-------------------------------------
+///	プロフィールの種類
+//=====================================
+typedef enum
+{
+  BR_PROFILE_TYPE_MY,   //自分
+  BR_PROFILE_TYPE_OTHER,   //他人
+} BR_PROFILE_TYPE;
+
+//-------------------------------------
 ///	プロフィールワーク
 //=====================================
 typedef struct _BR_PROFILE_WORK BR_PROFILE_WORK;
@@ -192,7 +201,7 @@ typedef struct _BR_PROFILE_WORK BR_PROFILE_WORK;
 //-------------------------------------
 ///	パブリック
 //=====================================
-extern BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, PRINT_QUE *p_que, HEAPID heapID );
+extern BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile, BR_RES_WORK *p_res, GFL_CLUNIT *p_unit, PRINT_QUE *p_que, BR_PROFILE_TYPE type, HEAPID heapID );
 extern void BR_PROFILE_DeleteMainDisplay( BR_PROFILE_WORK *p_wk );
 extern BOOL BR_PROFILE_PrintMain( BR_PROFILE_WORK *p_wk );
 

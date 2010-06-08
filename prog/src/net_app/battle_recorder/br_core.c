@@ -448,6 +448,7 @@ static GFL_PROC_RESULT BR_CORE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *p_
     }
     BR_NET_Exit( p_wk->p_net );
     p_wk->p_net = NULL;
+    NAGI_Printf( "ƒlƒbƒgØ’f\n" );
   }
   else
   { 
