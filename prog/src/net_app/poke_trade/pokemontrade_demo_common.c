@@ -178,6 +178,7 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 static void _demoBGMChangeStart(POKEMON_TRADE_WORK* pWork)
 {
   pWork->demoBGM = 1;
+  NET_PRINT("demoBGM1\n");
 }
 
 

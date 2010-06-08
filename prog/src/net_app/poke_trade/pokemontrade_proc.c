@@ -243,6 +243,7 @@ void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork)
       PMSND_PauseBGM( TRUE );
       PMSND_PushBGM();
       pWork->pushSound++;
+      NET_PRINT("pWork->pushSound%d\n",pWork->pushSound);
       PMSND_PlayBGM(  SEQ_BGM_KOUKAN );
       PMSND_FadeInBGM( 1 );
       pWork->demoBGM=0;
@@ -3899,7 +3900,7 @@ static void _soundErrRecover(POKEMON_TRADE_WORK* pWork)
   case 0:
     break;
   default:
-    GF_ASSERT(0);
+    GF_ASSERT(!pWork->pushSound);
   }
   pWork->pushSound = 0;
 }
