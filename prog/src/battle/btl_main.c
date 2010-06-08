@@ -446,8 +446,13 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
   case 1:
     if( wk->subSeq > -16 ){
       wk->subSeq--;
-      GX_SetMasterBrightness( wk->subSeq );
-      GXS_SetMasterBrightness( wk->subSeq );
+      //BTS2631‘Îˆ by iwasawa 10.06.08
+      if( GX_GetMasterBrightness() > wk->subSeq ){
+        GX_SetMasterBrightness( wk->subSeq );
+      }
+      if( GXS_GetMasterBrightness() > wk->subSeq ){
+        GXS_SetMasterBrightness( wk->subSeq );
+      }
     }else{
       (*seq)++;
     }
