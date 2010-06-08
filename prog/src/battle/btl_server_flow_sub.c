@@ -1045,7 +1045,6 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
   // その場に効く道具か判定
   {
     BOOL fEffective = (targetArea == AREA_FRONT);
-    TAYA_Printf("対象Index=%d, デフォルトでは効果=%d\n", targetIdx, fEffective);
 
     if( fEffective == FALSE )
     {
@@ -1055,7 +1054,6 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
         ||  ((!ItemEffectTable[i].fShooterOnly) && (BTL_CALC_ITEM_GetParam(itemID, ItemEffectTable[i].effect)))
         ){
           u8 range = ItemEffectTable[i].range;
-          TAYA_Printf("その道具のrange=%d ... \n");
 
           if( range == RANGE_FULL ){
             fEffective = TRUE;
@@ -1074,7 +1072,6 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
       SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_ItemNoEffPos );
       return TRITEM_RESULT_NORMAL;
     }
-          TAYA_Printf("効果あり\n");
   }
 
   if( wk->bagMode == BBAG_MODE_SHOOTER )
@@ -1089,15 +1086,18 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     {
       if( ItemEffectTable[i].fShooterOnly && (itemID == ItemEffectTable[i].effect) )
       {
-        u16 que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_EFFECT_BYPOS );
-        if( ItemEffectTable[i].func(wk, target, itemID, 0, actParam) )
+        u16 que_reserve_pos;
+
+        if( !BTL_SVFTOOL_IsTameHidePoke(wk, targetPokeID) )
         {
-          SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
+          que_reserve_pos = SCQUE_RESERVE_Pos( wk->que, SC_ACT_EFFECT_BYPOS );
+          if( ItemEffectTable[i].func(wk, target, itemID, 0, actParam) )
+          {
+            SCQUE_PUT_ReservedPos( wk->que, que_reserve_pos, SC_ACT_EFFECT_BYPOS, targetPos, BTLEFF_USE_ITEM );
+            return TRITEM_RESULT_NORMAL;
+          }
         }
-        else
-        {
-          SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
-        }
+        SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_UseItem_NoEffect );
         return TRITEM_RESULT_NORMAL;
       }
     }
@@ -1799,16 +1799,20 @@ static u8 ShooterEff_ItemCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 item
  */
 static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-  HandExResult  result;
+  if( BPP_GetValue(bpp, BPP_TOKUSEI) != POKETOKUSEI_KAWARIMONO )
+  {
+    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    HandExResult  result;
 
-  BTL_SVFRET_Event_AfterMemberIn( wk, bpp );
-  result = BTL_SVF_HandEx_Result( wk );
-  BTL_Hem_PopState( &wk->HEManager, hem_state );
+    BTL_SVFRET_Event_AfterMemberIn( wk, bpp );
+    result = BTL_SVF_HandEx_Result( wk );
+    BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-  TAYA_Printf("スキルコールresult=%d\n");
+    TAYA_Printf("スキルコールresult=%d\n");
 
-  return (result == HandExResult_Enable);
+    return (result == HandExResult_Enable);
+  }
+  return FALSE;
 }
 /**
  *  シューター専用：アイテムドロップ

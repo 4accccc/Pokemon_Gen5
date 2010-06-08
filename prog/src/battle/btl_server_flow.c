@@ -12748,6 +12748,20 @@ void BTL_SVFTOOL_AddMemberOutIntr( BTL_SVFLOW_WORK* wk, u8 pokeID )
     wk->MemberOutIntrPokeID[ wk->MemberOutIntrPokeCount++ ] = pokeID;
   }
 }
+//--------------------------------------------------------------------------------------
+/**
+ * そらをとぶ・ダイビング・フリーフォール等で画面から消えている状態のポケモンかどうか判定
+ *
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsTameHidePoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+  return CheckPokeHideState( bpp ) != BPP_CONTFLG_NULL;
+}
 
 //=============================================================================================
 /**

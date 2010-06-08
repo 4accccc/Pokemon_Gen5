@@ -5187,7 +5187,27 @@ BOOL BTL_MAIN_IsShooterEnable( const BTL_MAIN_MODULE* wk )
   }
   return ret;
 }
-
+//=============================================================================================
+/**
+ * アイテム使用できるかどうか判定（使用できないモードならUI表示が暗くなり反応しない）
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsItemEnable( const BTL_MAIN_MODULE* wk )
+{
+  if( checkBagMode(wk->setupParam) == BBAG_MODE_SHOOTER )
+  {
+    return BTL_MAIN_IsShooterEnable( wk );
+  }
+  else
+  {
+    BtlCompetitor cometitor = BTL_MAIN_GetCompetitor( wk );
+    return (cometitor==BTL_COMPETITOR_WILD) || (cometitor==BTL_COMPETITOR_TRAINER);
+  }
+}
 
 //----------------------------------------------------------------------------------------------
 //

@@ -41,6 +41,7 @@ extern BOOL BTL_MAIN_IsRecordPlayMode( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_GetSetupStatusFlag( const BTL_MAIN_MODULE* wk, BTL_STATUS_FLAG flag );
 extern const SHOOTER_ITEM_BIT_WORK* BTL_MAIN_GetSetupShooterBit( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_IsShooterEnable( const BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAIN_IsItemEnable( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAIN_GetDebugFlag( const BTL_MAIN_MODULE* wk, BtlDebugFlag flag );
 extern u16 BTL_MAIN_GetWinBGMNo( const BTL_MAIN_MODULE* wk );
 extern u16 BTL_MAIN_GetClientUseItem( const BTL_MAIN_MODULE* wk, u8 clientID, u8 itemIdx );
