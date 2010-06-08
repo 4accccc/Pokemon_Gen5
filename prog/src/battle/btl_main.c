@@ -5140,11 +5140,13 @@ const SHOOTER_ITEM_BIT_WORK* BTL_MAIN_GetSetupShooterBit( const BTL_MAIN_MODULE*
 //=============================================================================================
 BOOL BTL_MAIN_IsShooterEnable( const BTL_MAIN_MODULE* wk )
 {
+  BOOL ret = FALSE;
   if( checkBagMode(wk->setupParam) == BBAG_MODE_SHOOTER )
   {
     const SHOOTER_ITEM_BIT_WORK* shooterBitWork = &(wk->setupParam->shooterBitWork);
-    return (shooterBitWork->shooter_use != 0);
+    ret = (shooterBitWork->shooter_use != 0);
   }
+  return ret;
 }
 
 
