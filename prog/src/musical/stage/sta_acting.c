@@ -1853,7 +1853,7 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
         usePos = MUS_POKE_EQU_HAND_R;
       }
       else
-      if( isHaveItem[0] == TRUE && isHaveItem[1] == FALSE )
+      if( isHaveItem[1] == TRUE && isHaveItem[0] == FALSE )
       {
         usePos = MUS_POKE_EQU_HAND_L;
       }
