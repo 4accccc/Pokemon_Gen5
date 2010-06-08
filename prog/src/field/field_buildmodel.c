@@ -759,7 +759,7 @@ FLD_G3D_MAP_GLOBALOBJ * FIELD_BMODEL_MAN_GetGlobalObjects(FIELD_BMODEL_MAN * man
 //-----------------------------------------------------------------------------
 static void loadAreaBMData( FIELD_BMODEL_MAN * man, u16 arc_id, u16 file_id )
 {
-  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(arc_id, man->heapID);
+  ARCHANDLE * handle = GFL_ARC_OpenDataHandle(arc_id, GFL_HEAP_LOWID(man->heapID) );
 
   {
     u16 data_max = GFL_ARC_GetDataFileCntByHandle(handle);
