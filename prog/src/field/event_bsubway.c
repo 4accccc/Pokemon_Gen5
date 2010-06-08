@@ -48,6 +48,8 @@
 #include "../../../resource/message/dst/script/msg_bsubway_scr.h"
 #include "../../../resource/message/dst/msg_tower_trainer.h"
 
+#include "system/net_err.h"
+
 FS_EXTERN_OVERLAY(pokelist);
 
 //======================================================================
@@ -605,7 +607,8 @@ static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* 
  *	@retval
  */
 //------------------------------------------------
-static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
+static GFL_PROC_RESULT CommBattleCallProc_Main(
+    GFL_PROC *proc, int *seq, void* pwk, void* mywk )
 {
   enum
   {
@@ -629,45 +632,61 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   switch (*seq) {
   case SEQ_BATTLE_TIMING_INIT:
     {
-      GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+      GFL_OVERLAY_Load( FS_OVERLAY_ID(battle) );
+      
       GFL_NET_AddCommandTable(
           GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL );
       GFL_NET_TimingSyncStart(
-          GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING);
-#ifdef DEBUG_BSW_PRINT
+          GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING );
+      
+      #ifdef DEBUG_BSW_PRINT
       KAGAYA_Printf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
-#endif
+      #endif
+      
       (*seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
-    if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), BATTLE_ADD_CMD_TBL_TIMING)){
-#ifdef DEBUG_BSW_PRINT
-      KAGAYA_Printf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
-#endif
+    if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE ){
+      #ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf("戦闘用通信開始同期待ちでエラーが発生\n" );
+      #endif
+      (*seq) = SEQ_BATTLE_END;
+      break;
+    }
+    
+    if( GFL_NET_IsTimingSync(
+          GFL_NET_HANDLE_GetCurrentHandle(),BATTLE_ADD_CMD_TBL_TIMING) ){
       (*seq) = SEQ_BATTLE_INIT;
+      #ifdef DEBUG_BSW_PRINT
+      KAGAYA_Printf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
+      #endif
     }
     break;
   case SEQ_BATTLE_INIT:
-    GFL_PROC_LOCAL_CallProc( work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
+    GFL_PROC_LOCAL_CallProc(
+        work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
     (*seq) = SEQ_BATTLE_WAIT;
     break;
   case SEQ_BATTLE_WAIT:
-    if ( up_status != GFL_PROC_MAIN_VALID ){
+    if( up_status != GFL_PROC_MAIN_VALID ){
       (*seq) = SEQ_BATTLE_END;
     }
     break;
   case SEQ_BATTLE_END:
-#ifdef DEBUG_BSW_PRINT    
-    KAGAYA_Printf("バトル完了\n");
-#endif
     GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
-#if 0    
+    
+    #if 0 //必要なくなった
     BattleRec_LoadToolModule();                       // 録画
     BattleRec_StoreSetupParam( bcw->btl_setup_prm );  // 録画
     BattleRec_UnloadToolModule();                     // 録画
-#endif
+    #endif
+    
     (*seq) = SEQ_END;
+    
+    #ifdef DEBUG_BSW_PRINT    
+    KAGAYA_Printf("バトル完了\n");
+    #endif
     break;
   case SEQ_END:
     return GFL_PROC_RES_FINISH;
@@ -675,7 +694,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     GF_ASSERT(0);
     break;
   }
-
+  
   return GFL_PROC_RES_CONTINUE;
 }
 

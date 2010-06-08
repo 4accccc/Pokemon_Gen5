@@ -1203,7 +1203,15 @@ sub_battle_comm_multi:
 
   //バトル呼び出し
   _BSUBWAY_TOOL( BSWSUB_LOCAL_BTL_CALL, BSW_NULL, BSW_NULL, BSW_NULL )
-    
+  
+  //通信エラーチェック
+  _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+  
+  IF $comm_ret == TRUE THEN
+    $SCWK_ANSWER = BSW_BTL_RESULT_COMM_ERROR
+    _RET
+  ENDIF
+  
   //戦闘録画データを格納
   _BSUBWAY_TOOL( BSWSUB_STORE_BTLREC, BSW_NULL, BSW_NULL, BSW_NULL )
     
