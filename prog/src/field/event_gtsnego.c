@@ -58,8 +58,6 @@ enum _EVENT_GTSNEGO {
   _DISCONNECT_TRADE2,
   _SEQ_EVOLUTION,
   _SEQ_EVOLUTIONEND,
-  _CALL_MAIL,
-  _WAIT_MAIL,
   _WAIT_NET_END,
   _WAIT_NET_END2,
   _FIELD_OPEN,
@@ -81,6 +79,7 @@ typedef struct
   POKEMONTRADE_PARAM aPokeTr;
   WIFILOGIN_PARAM     login;
   WIFILOGOUT_PARAM   logout;
+  POKEPARTY* pParty;
   
   BOOL bFieldEnd;
 #if PM_DEBUG
@@ -168,6 +167,10 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_ERROR){
         (*seq) = _CALL_WIFINEGO;
       }
+      else if(!GFL_NET_IsInit()){
+        dbw->login.mode = WIFILOGIN_MODE_ERROR;
+        (*seq)  = _CALL_WIFILOGIN;
+      }
       else{
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE);
         GFL_NET_SetAutoErrorCheck(FALSE);
@@ -199,7 +202,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
     {
       SHINKA_DEMO_PARAM* sdp = GFL_HEAP_AllocMemory( HEAPID_PROC, sizeof( SHINKA_DEMO_PARAM ) );
       sdp->gamedata          = dbw->aPokeTr.gamedata;
-      sdp->ppt               = dbw->aPokeTr.pParty;
+      sdp->ppt               = dbw->pParty;
       sdp->after_mons_no     = dbw->aPokeTr.after_mons_no;
       sdp->shinka_pos        = 0;
       sdp->shinka_cond       = dbw->aPokeTr.cond;
@@ -222,16 +225,6 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       (*seq) = _CALL_TRADE;
     }
     break;
-  case _CALL_MAIL:
-    dbw->aPokeTr.aMailBox.gamedata = gamedata;
-    GAMESYSTEM_CallProc( gsys, FS_OVERLAY_ID(app_mail), &MailBoxProcData, &dbw->aPokeTr.aMailBox );
-    (*seq)++;
-    break;
-  case _WAIT_MAIL:
-    if (GAMESYSTEM_IsProcExists(gsys) == GFL_PROC_MAIN_NULL){
-      (*seq)=_CALL_TRADE;
-    }
-    break;
   case _WAIT_NET_END:
     GAMESYSTEM_CallProc(gsys, FS_OVERLAY_ID(wifi_login), &WiFiLogout_ProcData, &dbw->logout);
     (*seq)++;
@@ -244,7 +237,7 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
   case _FIELD_OPEN:
     GFL_HEAP_FreeMemory(dbw->gts.pStatus[0]);
     GFL_HEAP_FreeMemory(dbw->gts.pStatus[1]);
-    GFL_HEAP_FreeMemory(dbw->aPokeTr.pParty);
+    GFL_HEAP_FreeMemory(dbw->pParty);
     PMSND_PlayBGM(dbw->soundNo);
     PMSND_FadeInBGM(PMSND_FADE_NORMAL);
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
@@ -283,7 +276,8 @@ static EVENT_GTSNEGO_LINK_WORK* wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK
   dbw->gsys = gsys;
 //  dbw->fieldmap = fieldmap;
   dbw->bFieldEnd = bFieldEnd;
-  dbw->aPokeTr.pParty = PokeParty_AllocPartyWork( HEAPID_PROC );
+  dbw->pParty = PokeParty_AllocPartyWork( HEAPID_PROC );
+  dbw->aPokeTr.pParty = dbw->pParty;  //“¯‚¶•¨
 
   //GTSNEGOˆø”‚ÌÝ’è
   {
