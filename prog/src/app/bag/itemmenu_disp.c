@@ -232,11 +232,10 @@ void _createSubBg(void)
 
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
-
     GFL_BG_SetVisible( frame, VISIBLE_OFF );
-    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
-    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
-    GFL_BG_LoadScreenReq( frame );
+//    GFL_BG_FillCharacter( frame, 0x00, 1, 0 );
+//    GFL_BG_FillScreen( frame, 0x0000, 0, 0, 32, 32, GFL_BG_SCRWRT_PALIN );
+//    GFL_BG_LoadScreenReq( frame );
   }
   {
     int frame = GFL_BG_FRAME2_S; // ITEMREPORT_FRAME
@@ -248,7 +247,9 @@ void _createSubBg(void)
     GFL_BG_SetBGControl(
       frame, &TextBgCntDat, GFL_BG_MODE_TEXT );
     GFL_BG_SetVisible( frame, VISIBLE_OFF );
-    GFL_BG_LoadScreenReq( frame );
+		GFL_BG_FillCharacter( frame, 0, 1, 0 );
+		GFL_BG_ClearScreen( frame );
+//    GFL_BG_LoadScreenReq( frame );
   }
 }
 
