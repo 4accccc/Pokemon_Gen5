@@ -166,8 +166,14 @@ EVENT_START	ev_c09r0401_bigfour4_01
 			
 			//戦闘後---------------------------------------------------
 			
-			//戦闘後メッセージ
-			_BALLOONWIN_OBJMSG_POS( msg_c09r0401_bigfour4_03, C09R0401_BIGFOUR4_01, POS_UP )
+			//戦闘後メッセージ 四天王討伐状況で修正
+			IF FLAG_ON( SYS_FLAG_BIGFOUR_GHOSTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_EVILWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_FIGHTWIN ) && FLAG_ON( SYS_FLAG_BIGFOUR_ESPWIN ) THEN
+				//戦闘後メッセージ
+				_BALLOONWIN_OBJMSG_POS( msg_c09r0401_bigfour4_04, C09R0401_BIGFOUR4_01, POS_UP )
+			ELSE
+				//戦闘後メッセージ
+				_BALLOONWIN_OBJMSG_POS( msg_c09r0401_bigfour4_03, C09R0401_BIGFOUR4_01, POS_UP )
+			ENDIF
 			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
