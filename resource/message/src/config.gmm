@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-10T16:10:27"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-08T13:29:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -547,9 +547,9 @@
 	<row id="mes_config_comment07" text-color=",,,#000000,,,#000000,#000000,,#000000,#000000,,,,,,,">
 		<comment>「レポート」の解説文
 ※WBで追加</comment>
-		<language name="JPN" width="216" line="2">せきがいせんつうしんを　するまえに
+		<language name="JPN" width="216" line="2">Ｃギアの　せきがいせんつうしん　まえに
 レポートを　かくかどうか　えらべます</language>
-		<language name="JPN_KANJI" width="216" line="2">赤外線通信を　するまえに
+		<language name="JPN_KANJI" width="216" line="2">Ｃ－ＧＥＡＲの　赤外線通信　前に
 レポートを　書くかどうか　選べます</language>
 	</row>
 
