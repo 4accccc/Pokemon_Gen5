@@ -176,7 +176,6 @@ static  void  TCB_BTLV_EFFECT_Start_CB( GFL_TCB *tcb );
 static  int   BTLV_EFFECT_GetTCBIndex( void );
 static  void  BTLV_EFFECT_FreeTCBAll( void );
 static  void  camera_work_check( void );
-static  BOOL  check_shooter_use( void );
 
 #ifdef PM_DEBUG
 void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
@@ -832,7 +831,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
     switch( trtype ){
     case TRTYPE_HERO:
     case TRTYPE_HEROINE:
-      if( ( bew->bagMode == BBAG_MODE_SHOOTER ) && check_shooter_use() )
+      if( BTLV_EFFECT_CheckShooterEnable() )
       { 
         trtype += 4;
       }
@@ -861,7 +860,7 @@ void  BTLV_EFFECT_SetTrainer( int trtype, int position, int pos_x, int pos_y, in
     case TRTYPE_HERO:
     case TRTYPE_HEROINE:
       //シューターモードでは専用の絵に差し替え
-      if( ( bew->bagMode == BBAG_MODE_SHOOTER ) && check_shooter_use() )
+      if( BTLV_EFFECT_CheckShooterEnable() )
       { 
         trtype += TRTYPE_HERO_S;
       }
@@ -1691,6 +1690,26 @@ BtlBagMode  BTLV_EFFECT_GetBagMode( void )
   return bew->bagMode;
 }
 
+//============================================================================================
+/**
+ * @brief  シューターが使用できるかチェック
+ *
+ * @retval  TRUE:使用可
+ */
+//============================================================================================
+BOOL  BTLV_EFFECT_CheckShooterEnable( void )
+{ 
+  BOOL  ret = FALSE;
+
+  if( bew->besp.mainModule )
+  { 
+    ret = BTL_MAIN_IsShooterEnable( bew->besp.mainModule );
+  }
+
+  return ret;
+}
+
+
 //----------------------------------------------------------------------------
 /**
  *  @brief  空いているTCBIndexを取得してGFL_TCBをセット
@@ -2142,26 +2161,6 @@ static  void  camera_work_check( void )
     }
     break;
   }
-}
-
-//============================================================================================
-/**
- * @brief  シューターが使用できるかチェック
- *
- * @retval  TRUE:使用可
- */
-//============================================================================================
-static  BOOL  check_shooter_use( void )
-{ 
-  BOOL  ret = FALSE;
-
-  if( bew->besp.mainModule )
-  { 
-    const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( bew->besp.mainModule );
-    ret = ( shooter->shooter_use != 0 );
-  }
-
-  return ret;
 }
 
 #ifdef PM_DEBUG

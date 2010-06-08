@@ -1356,9 +1356,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
       { 
-        const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( BTLV_EFFECT_GetMainModule() );
         //バッグがシューターモードではないか、使用できない場合はエネルギー表示なし
-        if( ( ( bicp->bagMode == BBAG_MODE_SHOOTER ) && ( shooter->shooter_use == FALSE ) ) ||
+        if( ( ( bicp->bagMode == BBAG_MODE_SHOOTER ) && ( BTLV_EFFECT_CheckShooterEnable() == FALSE ) ) ||
               ( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_SUBWAY ) )
         { 
           biw->button_exist[ 1 ] = FALSE;  //押せるボタンかどうかチェック
@@ -4926,9 +4925,8 @@ static  void  TCB_ButtonReaction_CB( GFL_TCB* tcb )
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp )
 { 
-  const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( BTLV_EFFECT_GetMainModule() );
   //バッグがシューターモードではないか、使用できない場合はエネルギー表示なし
-  if( ( bicp->bagMode != BBAG_MODE_SHOOTER ) || ( shooter->shooter_use == FALSE ) )
+  if( ( bicp->bagMode == BBAG_MODE_SHOOTER ) && ( BTLV_EFFECT_CheckShooterEnable() == FALSE ) )
   { 
     return;
   }
@@ -5170,8 +5168,7 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
 { 
-  const SHOOTER_ITEM_BIT_WORK* shooter = BTL_MAIN_GetSetupShooterBit( BTLV_EFFECT_GetMainModule() );
-  if( ( ( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER ) && ( shooter->shooter_use == FALSE ) ) ||
+  if( ( ( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER ) && ( BTLV_EFFECT_CheckShooterEnable() == FALSE ) ) ||
         ( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_SUBWAY ) )
   { 
     u16 pal[ 0x10 ];
