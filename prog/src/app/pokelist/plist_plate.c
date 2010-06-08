@@ -128,8 +128,9 @@ static const u8 PLATE_SCR_POS_ARR[2][2] ={{0,1},{16,2}};
 
 static void PLIST_PLATE_CreateCell( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
-static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
-static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_ReDrawParamDirect( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
+static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const BOOL isHpAnime );
+static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const BOOL isHpAnime );
 static void PLIST_PLATE_DrawHPBar( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static void PLIST_PLATE_DrawParamEgg( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork );
 static const u8 PLIST_PLATE_GetHPRate( PLIST_PLATE_WORK *plateWork );
@@ -210,7 +211,7 @@ PLIST_PLATE_WORK* PLIST_PLATE_CreatePlate( PLIST_WORK *work , const u8 idx , POK
   
   PLIST_PLATE_SetActivePlate( work , plateWork , FALSE );
   //PLIST_PLATE_ChangeColor( work , plateWork , PPC_NORMAL );
-  PLIST_PLATE_DrawParamMain( work , plateWork );
+  PLIST_PLATE_DrawParamMain( work , plateWork , FALSE );
   return plateWork;
 }
 
@@ -400,11 +401,11 @@ static void PLIST_PLATE_CreatePokeIcon( PLIST_WORK *work , PLIST_PLATE_WORK *pla
 //--------------------------------------------------------------
 //	パラメータ描画メイン
 //--------------------------------------------------------------
-static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const BOOL isHpAnime )
 {
   if( plateWork->isEgg == FALSE )
   {
-    PLIST_PLATE_DrawParam( work , plateWork );
+    PLIST_PLATE_DrawParam( work , plateWork , isHpAnime );
     PLIST_PLATE_DrawHPBar( work , plateWork );
   }
   else
@@ -416,7 +417,7 @@ static void PLIST_PLATE_DrawParamMain( PLIST_WORK *work , PLIST_PLATE_WORK *plat
 //--------------------------------------------------------------
 //	文字列描画
 //--------------------------------------------------------------
-static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , const BOOL isHpAnime )
 {
   const PRINTSYS_LSB fontCol = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER , PLIST_FONT_PARAM_SHADOW , 0 );
   BOOL isWazaLearn = FALSE;
@@ -427,6 +428,7 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     isWazaLearn = TRUE;
   }
   //名前
+  if( isHpAnime == FALSE )
   {
     WORDSET *wordSet = WORDSET_Create( work->heapId );
     WORDSET_RegisterPokeNickName( wordSet , 0 , plateWork->pp );
@@ -438,21 +440,23 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
     WORDSET_Delete( wordSet );
   }
   //性別
-
-  if( PP_Get( plateWork->pp , ID_PARA_nidoran_nickname , NULL ) == TRUE )
+  if( isHpAnime == FALSE )
   {
-    u32 sex = PP_Get( plateWork->pp , ID_PARA_sex , NULL );
-    if( sex == PTL_SEX_MALE )
+    if( PP_Get( plateWork->pp , ID_PARA_nidoran_nickname , NULL ) == TRUE )
     {
-      const PRINTSYS_LSB fontColBlue = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_BLUE , PLIST_FONT_PARAM_SHADOW_BLUE , 0 );
-      PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_28 ,
-                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontColBlue );
-    }
-    else if( sex == PTL_SEX_FEMALE )
-    {
-      const PRINTSYS_LSB fontColRed = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_RED , PLIST_FONT_PARAM_SHADOW_RED , 0 );
-      PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_29 ,
-                      PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontColRed );
+      u32 sex = PP_Get( plateWork->pp , ID_PARA_sex , NULL );
+      if( sex == PTL_SEX_MALE )
+      {
+        const PRINTSYS_LSB fontColBlue = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_BLUE , PLIST_FONT_PARAM_SHADOW_BLUE , 0 );
+        PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_28 ,
+                        PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontColBlue );
+      }
+      else if( sex == PTL_SEX_FEMALE )
+      {
+        const PRINTSYS_LSB fontColRed = PRINTSYS_LSB_Make( PLIST_FONT_PARAM_LETTER_RED , PLIST_FONT_PARAM_SHADOW_RED , 0 );
+        PLIST_UTIL_DrawStrFunc( work , plateWork->bmpWin , mes_pokelist_01_29 ,
+                        PLIST_PLATE_STR_SEX_X , PLIST_PLATE_STR_SEX_Y , fontColRed );
+      }
     }
   }
 
@@ -466,10 +470,18 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
 
         u32 lv = PP_CalcLevel( plateWork->pp );
         WORDSET_RegisterNumber( wordSet , 0 , lv , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
-
-        PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
-                          wordSet , mes_pokelist_01_03 , 
-                          PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
+        if( isHpAnime == FALSE )
+        {
+          PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                            wordSet , mes_pokelist_01_03 , 
+                            PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
+        }
+        else
+        {
+          PLIST_UTIL_DrawValueStrFuncDirect( work , plateWork->bmpWin , 
+                            wordSet , mes_pokelist_01_03 , 
+                            PLIST_PLATE_STR_LEVEL_X , PLIST_PLATE_STR_LEVEL_Y , fontCol );
+        }
 
         WORDSET_Delete( wordSet );
 
@@ -609,9 +621,18 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
       u32 hpMax = PP_Get( plateWork->pp , ID_PARA_hpmax , NULL );
       WORDSET_RegisterNumber( wordSet , 0 , hpMax , 3 , STR_NUM_DISP_LEFT , STR_NUM_CODE_DEFAULT );
 
-      PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
-                        wordSet , mes_pokelist_01_15 , 
-                        PLIST_PLATE_STR_HPMAX_X , PLIST_PLATE_STR_HPMAX_Y , fontCol );
+      if( isHpAnime == FALSE )
+      {
+        PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                          wordSet , mes_pokelist_01_15 , 
+                          PLIST_PLATE_STR_HPMAX_X , PLIST_PLATE_STR_HPMAX_Y , fontCol );
+      }
+      else
+      {
+        PLIST_UTIL_DrawValueStrFuncDirect( work , plateWork->bmpWin , 
+                          wordSet , mes_pokelist_01_15 , 
+                          PLIST_PLATE_STR_HPMAX_X , PLIST_PLATE_STR_HPMAX_Y , fontCol );
+      }
 
       WORDSET_Delete( wordSet );
     }
@@ -620,17 +641,33 @@ static void PLIST_PLATE_DrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWor
       WORDSET *wordSet = WORDSET_Create( work->heapId );
       u32 hp = plateWork->dispHp;
       WORDSET_RegisterNumber( wordSet , 0 , hp , 3 , STR_NUM_DISP_SPACE , STR_NUM_CODE_DEFAULT );
-
-      PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
-                        wordSet , mes_pokelist_01_21 , 
-                        PLIST_PLATE_STR_HP_X , PLIST_PLATE_STR_HP_Y , fontCol );
+      if( isHpAnime == FALSE )
+      {
+        PLIST_UTIL_DrawValueStrFuncSys( work , plateWork->bmpWin , 
+                          wordSet , mes_pokelist_01_21 , 
+                          PLIST_PLATE_STR_HP_X , PLIST_PLATE_STR_HP_Y , fontCol );
+      }
+      else
+      {
+        PLIST_UTIL_DrawValueStrFuncDirect( work , plateWork->bmpWin , 
+                          wordSet , mes_pokelist_01_21 , 
+                          PLIST_PLATE_STR_HP_X , PLIST_PLATE_STR_HP_Y , fontCol );
+      }
 
       WORDSET_Delete( wordSet );
     }
     //HPのスラッシュ
     {
-      PLIST_UTIL_DrawStrFuncSys( work , plateWork->bmpWin , mes_pokelist_01_27 ,
-                      PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , fontCol );
+      if( isHpAnime == FALSE )
+      {
+        PLIST_UTIL_DrawStrFuncSys( work , plateWork->bmpWin , mes_pokelist_01_27 ,
+                        PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , fontCol );
+      }
+      else
+      {
+        PLIST_UTIL_DrawStrFuncDirect( work , plateWork->bmpWin , mes_pokelist_01_27 ,
+                        PLIST_PLATE_STR_SLASH_X , PLIST_PLATE_STR_SLASH_Y , fontCol );
+      }
     }
   }
   
@@ -1046,7 +1083,7 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
     GFL_CLACT_USERREND_SetSurfacePos( plateWork->cellRender , PLIST_RENDER_MAIN , &surfacePos );
   }
   
-  PLIST_PLATE_DrawParamMain( work , plateWork );
+  PLIST_PLATE_DrawParamMain( work , plateWork , FALSE );
   
 }
 //--------------------------------------------------------------
@@ -1055,7 +1092,16 @@ void PLIST_PLATE_ResetParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork , PO
 void PLIST_PLATE_ReDrawParam( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 0 );
-  PLIST_PLATE_DrawParamMain( work , plateWork );
+  PLIST_PLATE_DrawParamMain( work , plateWork , FALSE );
+}
+static void PLIST_PLATE_ReDrawParamDirect( PLIST_WORK *work , PLIST_PLATE_WORK *plateWork )
+{
+  GFL_BMP_Fill( GFL_BMPWIN_GetBmp( plateWork->bmpWin ) , 
+                0 , PLIST_PLATE_HPBAR_TOP , 
+                PLIST_PLATE_WIDTH * 8 , 
+                (PLIST_PLATE_HEIGHT*8)-PLIST_PLATE_HPBAR_TOP , 
+                0 );
+  PLIST_PLATE_DrawParamMain( work , plateWork , TRUE );
 }
 
 #pragma mark [>HPbar anime
@@ -1097,7 +1143,7 @@ const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plate
     {
       plateWork->dispHp += work->anmSpd;
     }
-    PLIST_PLATE_ReDrawParam( work , plateWork );
+    PLIST_PLATE_ReDrawParamDirect( work , plateWork );
     return FALSE;
   }
   else
@@ -1112,7 +1158,7 @@ const BOOL PLIST_PALTE_UpdateHpAnime( PLIST_WORK *work , PLIST_PLATE_WORK *plate
       plateWork->dispHp += work->anmSpd;
     }
     //瀕死は考慮しない
-    PLIST_PLATE_ReDrawParam( work , plateWork );
+    PLIST_PLATE_ReDrawParamDirect( work , plateWork );
     return FALSE;
   }
   else

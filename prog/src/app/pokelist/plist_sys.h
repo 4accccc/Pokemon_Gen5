@@ -48,9 +48,13 @@ extern void PLIST_UTIL_DrawStrFunc( PLIST_WORK *work , GFL_BMPWIN *bmpWin ,
                                       const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PLIST_UTIL_DrawStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
                                       const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PLIST_UTIL_DrawStrFuncDirect( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PLIST_UTIL_DrawValueStrFunc( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
 extern void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
+extern void PLIST_UTIL_DrawValueStrFuncDirect( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
                                       WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col );
 
 //アイテム・Demoに渡す用

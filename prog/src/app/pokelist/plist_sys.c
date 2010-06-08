@@ -3721,7 +3721,15 @@ void PLIST_UTIL_DrawStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWin ,
           posX , posY , srcStr , work->sysFontHandle , col );
   GFL_STR_DeleteBuffer( srcStr );
 }
-
+void PLIST_UTIL_DrawStrFuncDirect( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      const u16 strId , const u16 posX , const u16 posY , const u16 col )
+{
+  STRBUF *srcStr;
+  srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( bmpWin ) , 
+          posX , posY , srcStr , work->sysFontHandle , col );
+  GFL_STR_DeleteBuffer( srcStr );
+}
 //--------------------------------------------------------------
 //	•¶Žš‚Ì•`‰æ(’l—p
 //--------------------------------------------------------------
@@ -3753,7 +3761,21 @@ void PLIST_UTIL_DrawValueStrFuncSys( PLIST_WORK *work , GFL_BMPWIN *bmpWin ,
   GFL_STR_DeleteBuffer( srcStr );
   GFL_STR_DeleteBuffer( dstStr );
 }
+void PLIST_UTIL_DrawValueStrFuncDirect( PLIST_WORK *work , GFL_BMPWIN *bmpWin , 
+                                      WORDSET *wordSet, const u16 strId , const u16 posX , const u16 posY , const u16 col )
+{
+  STRBUF *srcStr;
+  STRBUF *dstStr = GFL_STR_CreateBuffer( 16, work->heapId );
 
+  srcStr = GFL_MSG_CreateString( work->msgHandle , strId ); 
+  WORDSET_ExpandStr( wordSet , dstStr , srcStr );
+
+  PRINTSYS_PrintColor( GFL_BMPWIN_GetBmp( bmpWin ) ,
+          posX , posY , dstStr , work->sysFontHandle , col );
+
+  GFL_STR_DeleteBuffer( srcStr );
+  GFL_STR_DeleteBuffer( dstStr );
+}
 #pragma mark [>message callback
 void PLIST_MSGCB_ReturnSelectCommon( PLIST_WORK *work )
 {
