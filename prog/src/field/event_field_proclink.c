@@ -980,6 +980,13 @@ static void * FMenuCallProc_PokeList(PROCLINK_WORK* wk, u32 param, EVENT_PROCLIN
       //“Á‚É–³‚µB
     }
   }
+  else
+  if( pre == EVENT_PROCLINK_CALL_EVOLUTION )
+  {
+    plistData->mode = PL_MODE_ITEMUSE;
+    plistData->item = wk->item_no;
+    
+  }
 
   return plistData;
 }
@@ -1069,6 +1076,8 @@ static RETURNFUNC_RESULT FMenuReturnProc_PokeList(PROCLINK_WORK* wk,void* param_
   case PL_RET_ITEMSHINKA:
   case PL_RET_LVUPSHINKA:
     wk->next_type = EVENT_PROCLINK_CALL_EVOLUTION;
+    wk->item_no = plData->item;
+
     return RETURNFUNC_RESULT_NEXT;
     break;
 
@@ -2162,7 +2171,13 @@ static RETURNFUNC_RESULT FMenuReturnProc_Evolution(PROCLINK_WORK* wk,void* param
     return RETURNFUNC_RESULT_NEXT;
   }
   else
+  if( wk->mode == PROCLINK_MODE_EVOLUTION_LEVEL )
   { 
+    wk->next_type = EVENT_PROCLINK_CALL_POKELIST;
+    return RETURNFUNC_RESULT_NEXT;
+  }
+  else
+  {
     return RETURNFUNC_RESULT_RETURN;
   }
 }

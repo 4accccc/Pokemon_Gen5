@@ -1370,9 +1370,23 @@ static void PLIST_InitMode( PLIST_WORK *work )
     }
     else
     {
-      //‘I‘ð‰æ–Ê‚Ö
-      PLIST_InitMode_Select( work );
-      work->nextMainSeq = PSMS_SELECT_POKE;
+      if( PLIST_CheckBagItemNum( work , work->plData->item ) > 0 )
+      {
+        //‘I‘ð‰æ–Ê‚Ö
+        PLIST_InitMode_Select( work );
+        work->nextMainSeq = PSMS_SELECT_POKE;
+      }
+      else
+      {
+        work->plData->ret_mode = PL_RET_BAG;
+        PLIST_MSG_CloseWindow( work , work->msgWork );
+        PLIST_MSG_CreateWordSet( work , work->msgWork );
+        PLIST_MSG_AddWordSet_ItemName( work , work->msgWork , 0 , work->plData->item );
+        PLIST_MessageWaitInit( work , mes_pokelist_13_08 , TRUE , PLIST_MSGCB_ExitCommon );
+        PLIST_MSG_DeleteWordSet( work , work->msgWork );
+        work->nextMainSeq = work->mainSeq;
+        work->mainSeq = PSMS_FADEIN;
+      }
     }
     break;
 
