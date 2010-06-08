@@ -127,6 +127,7 @@ typedef enum
 //=====================================
 #define OBJNUMBER_MAX				(4)
 
+#define BSUBWAY_SCORE_DRAW_MAX  (9999)
 //=============================================================================
 /**
  *					\‘¢‘ÌéŒ¾
@@ -657,7 +658,8 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_PRE_NUM:  //‚º‚ñ‚©‚¢‚Ì”’l
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, mode ); 
+          int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, mode ); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -668,7 +670,8 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_MOST_NUM: //‚³‚¢‚±‚¤‚Ì”’l
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, mode); 
+          int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, mode); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -839,7 +842,8 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_PRE_NUM:  //‚º‚ñ‚©‚¢‚Ì”’l
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, mode ); 
+          int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, mode ); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -850,7 +854,8 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
 
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_MOST_NUM: //‚³‚¢‚±‚¤‚Ì”’l
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, mode );
+          int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, mode );
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1078,7 +1083,8 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_PRE_NUM:   //‚º‚ñ‚©‚¢
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, multi_mode ); 
+          int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, multi_mode ); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1088,7 +1094,8 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
         break;
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_TR_MOST_NUM:       //‚X‚X‚X‚X
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, multi_mode ); 
+          int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, multi_mode ); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1113,7 +1120,8 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_PRE_NUM:  //‚º‚ñ‚©‚¢‚Ì”’l
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
+          int number  = BSUBWAY_SCOREDATA_GetRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
@@ -1124,7 +1132,8 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_FR_MOST_NUM: //‚³‚¢‚±‚¤‚Ì”’l
         { 
-         const int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
+          int number  = BSUBWAY_SCOREDATA_GetMaxRenshouCount( p_param->p_subway, BSWAY_PLAYMODE_COMM_MULTI ); 
+          number  = MATH_IMin( number, BSUBWAY_SCORE_DRAW_MAX );
           p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           p_strbuf  = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
           WORDSET_RegisterNumber( p_word, 0, number, 4, STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT );
