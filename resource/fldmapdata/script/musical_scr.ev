@@ -502,11 +502,13 @@ _RET
 ev_musical_exit_common:
   _MUSICAL_TOOLS( MUSICAL_TOOL_EXIT, 0,0,0 )
   _REBOOT_BEACON_SEARCH()
- 
-  _BALLOONWIN_OBJMSG_POS( msg_musical_test_03, SCWK_TARGET_OBJID, POS_DOWN )
-  _LAST_KEYWAIT()
-  _BALLOONWIN_CLOSE()
-  
+
+  _MUSICAL_TOOLS( MUSICAL_TOOL_COMM_CALL_ERROR, 0, 0, SCWK_ANSWER )
+  IF $SCWK_ANSWER == FALSE THEN //í êMÉGÉâÅ[î≠ê∂ÇµÇƒÇ»Ç¢
+    _BALLOONWIN_OBJMSG_POS( msg_musical_test_03, SCWK_TARGET_OBJID, POS_DOWN )
+    _LAST_KEYWAIT()
+    _BALLOONWIN_CLOSE()
+  ENDIF
 _RET
 
 /*************************************************************/

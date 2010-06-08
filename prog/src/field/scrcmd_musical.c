@@ -847,7 +847,8 @@ VMCMD_RESULT EvCmdMusicalTools( VMHANDLE *core, void *wk )
   BOOL isNetErr = FALSE;
 
   MUSICAL_SCRIPT_WORK *musScriptWork = NULL;
-  if( type != MUSICAL_TOOL_INIT )
+  if( type != MUSICAL_TOOL_INIT &&
+      type != MUSICAL_TOOL_COMM_CALL_ERROR )
   {
     musScriptWork = GAMEDATA_GetMusicalScrWork( gdata );
     if( musScriptWork->eventWork != NULL )
