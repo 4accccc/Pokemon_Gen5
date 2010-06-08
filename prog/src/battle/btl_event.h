@@ -462,6 +462,24 @@ typedef enum {
 
 }BtlEventFactorType;
 
+typedef enum {
+
+  BTL_EVPRI_WAZA_DEFAULT,
+
+  BTL_EVPRI_POS_DEFAULT,
+
+  BTL_EVPRI_SIDE_DEFAULT,
+
+  BTL_EVPRI_FIELD_DEFAULT,
+
+  BTL_EVPRI_TOKUSEI_DEFAULT,
+
+  BTL_EVPRI_ITEM_DEFAULT,
+
+  BTL_EVPRI_MAX,
+
+}BtlEventPriority;
+
 
 extern void BTL_EVENT_InitSystem( void );
 extern void BTL_EVENT_StartTurn( void );

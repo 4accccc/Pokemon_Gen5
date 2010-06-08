@@ -148,7 +148,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_SIDE_Add( BtlSide side, BtlSideEffect sideEffect,
           u32 numHandlers;
           BTL_EVENT_FACTOR* factor;
           handlerTable = funcTbl[i].func( &numHandlers );
-          factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, sideEffect, 0, side, handlerTable, numHandlers );
+          factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_SIDE, sideEffect,
+                BTL_EVPRI_SIDE_DEFAULT, 0, side, handlerTable, numHandlers );
 
           BTL_EVENT_FACTOR_SetWorkValue( factor, WORKIDX_CONT, contParam.raw );
           effParam->add_counter = 1;

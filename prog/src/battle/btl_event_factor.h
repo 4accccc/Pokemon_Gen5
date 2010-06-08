@@ -73,7 +73,8 @@ typedef struct {
 
 
 
-extern BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 pokeID,
+BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
+  BtlEventPriority mainPri, u16 subPri, u8 dependID,
   const BtlEventHandlerTable* handlerTable, u16 numHandlers );
 extern BTL_EVENT_FACTOR* BTL_EVENT_SeekFactor( BtlEventFactorType factorType, u8 pokeID );
 extern BTL_EVENT_FACTOR* BTL_EVENT_GetNextFactor( BTL_EVENT_FACTOR* factor );

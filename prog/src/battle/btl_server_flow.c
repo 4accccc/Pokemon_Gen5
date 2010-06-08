@@ -895,7 +895,7 @@ static u32 ActOrderProc_Main( BTL_SVFLOW_WORK* wk, u32 startOrderIdx )
     // レベルアップコマンド発生
     fExpGet = scproc_CheckExpGet( wk );
 
-    // 決着（大爆発など同時全滅のケースは、死亡レコードを見れば解決するんじゃんと思ってる）
+    // 決着（大爆発など同時全滅のケースは、死亡レコードを見れば解決する）
     fShowDown = scproc_CheckShowdown( wk );
 
     if( fShowDown ){

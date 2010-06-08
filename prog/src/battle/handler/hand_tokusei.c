@@ -629,7 +629,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
 
         handlerTable = funcTbl[i].func( &numHandlers );
 
-        return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei, agi, pokeID, handlerTable, numHandlers );
+        return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei,
+                  BTL_EVPRI_TOKUSEI_DEFAULT, agi, pokeID, handlerTable, numHandlers );
       }
     }
     BTL_Printf("‚Æ‚­‚¹‚¢(%d)‚Íƒnƒ“ƒhƒ‰‚ª—pˆÓ‚³‚ê‚Ä‚¢‚È‚¢\n", tokusei);

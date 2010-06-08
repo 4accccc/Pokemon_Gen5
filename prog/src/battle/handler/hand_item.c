@@ -658,7 +658,8 @@ static BTL_EVENT_FACTOR* AddItemEventCore( const BTL_POKEPARAM* bpp, u16 itemID 
       const BtlEventHandlerTable* handlerTable;
 
       handlerTable = EventAddFuncTbl[i].func( &numHandlers );
-      return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID, priority, pokeID, handlerTable, numHandlers );
+      return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_ITEM, itemID,
+              BTL_EVPRI_ITEM_DEFAULT, priority, pokeID, handlerTable, numHandlers );
     }
   }
   return NULL;

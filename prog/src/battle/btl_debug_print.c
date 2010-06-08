@@ -372,7 +372,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_SC_ReserveCmd:            return " -> reserved cmd=%d\n";
 
 
-  case DBGSTR_EVENT_AddFactorInfo:      return "FactorType=%x, subPri=%x, TotalPriority=%x, adrs=%p\n";
+  case DBGSTR_EVENT_AddFactorInfo:      return "AddNewFactor type=%x, dependID=%d, pri=%d, adrs=%p\n";
   case DBGSTR_EVENT_RmvFactorCalling:   return " 呼び出し中に削除されたFactor pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_SkipByNewComerFlg:  return "  新入りにつきスキップ Factor pokeID=%d, adrs=%p\n";
   case DBGSTR_EVENT_SkipByCallingFlg:   return "  自己呼び出し中につきスキップ pokeID=%d, adrs=%p\n";

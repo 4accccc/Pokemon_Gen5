@@ -1023,7 +1023,8 @@ BOOL  BTL_HANDLER_Waza_Add( const BTL_POKEPARAM* pp, WazaID waza )
         const BtlEventHandlerTable* handlerTable = funcTbl[i].func( &numHandlers );
         if( handlerTable )
         {
-          BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza, agi, pokeID, handlerTable, numHandlers );
+          BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_WAZA, waza,
+                BTL_EVPRI_WAZA_DEFAULT, agi, pokeID, handlerTable, numHandlers );
           return TRUE;
         }
       }
@@ -10092,11 +10093,12 @@ static void handler_HajikeruHonoo( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
 
           bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
           param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-          param->pokeID = targetPokeID[ i ];
-          param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
-          param->fAvoidHidePoke = TRUE;
-          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HajikeruHonoo_Side );
-          HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+            param->pokeID = targetPokeID[ i ];
+            param->damage = BTL_CALC_QuotMaxHP( bpp, 16 );
+            param->fAvoidHidePoke = TRUE;
+            HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_HajikeruHonoo_Side );
+            HANDEX_STR_AddArg( &param->exStr, param->pokeID );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
         }
       }
     }

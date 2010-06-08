@@ -89,7 +89,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_FLD_Add( BtlFieldEffect effect, u8 sub_param )
         u32 numHandlers;
 
         handlerTable = funcTbl[i].func( &numHandlers );
-        return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect, 0, sub_param, handlerTable, numHandlers );
+        return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_FIELD, effect,
+                BTL_EVPRI_FIELD_DEFAULT, 0, sub_param, handlerTable, numHandlers );
       }
     }
   }

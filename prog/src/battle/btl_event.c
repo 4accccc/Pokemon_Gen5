@@ -111,12 +111,15 @@ static VAR_STACK VarStack = {0};
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
+static inline BOOL isDependPokeFactorType( BtlEventFactorType factorType );
+static void printLinkDebug( void );
 static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, BOOL fSkipCheck );
 static BOOL check_handler_skip( BTL_SVFLOW_WORK* flowWork, BTL_EVENT_FACTOR* factor, BtlEventType eventID );
 static BTL_EVENT_FACTOR* pushFactor( void );
 static void popFactor( BTL_EVENT_FACTOR* factor );
 static void clearFactorWork( BTL_EVENT_FACTOR* factor );
-static inline u32 calcFactorPriority( BtlEventFactorType factorType, u16 subPri );
+static inline u32 calcFactorPriority( BtlEventPriority mainPri, u16 subPri );
+static inline u16 getFactorMainPriority( u32 pri );
 static void varStack_Init( void );
 static int evar_getNewPoint( const VAR_STACK* stack, BtlEvVarLabel label );
 static int evar_getExistPoint( const VAR_STACK* stack, BtlEvVarLabel label );
@@ -217,7 +220,8 @@ static void printLinkDebug( void )
  * @retval  BTL_EVENT_FACTOR*
  */
 //=============================================================================================
-BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID, u16 priority, u8 dependID,
+BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
+  BtlEventPriority mainPri, u16 subPri, u8 dependID,
   const BtlEventHandlerTable* handlerTable, u16 numHandlers )
 {
   BTL_EVENT_FACTOR* newFactor;
@@ -225,10 +229,9 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
   newFactor = pushFactor();
   if( newFactor )
   {
-    newFactor->priority = calcFactorPriority( factorType, priority );
+    newFactor->priority = calcFactorPriority( mainPri, subPri );
 
-    BTL_N_Printf( DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority, newFactor );
-    BTL_N_PrintfEx( 3, DBGSTR_EVENT_AddFactorInfo, factorType, priority, newFactor->priority, newFactor );
+    BTL_N_PrintfEx( 3, DBGSTR_EVENT_AddFactorInfo, factorType, dependID, newFactor->priority, newFactor );
 
     newFactor->factorType = factorType;
     newFactor->prev = NULL;
@@ -375,7 +378,7 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
  *
  */
 //=============================================================================================
-void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 pri )
+void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 subPri )
 {
   if( factor->pokeID != BTL_POKEID_NULL )
   {
@@ -383,9 +386,10 @@ void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 
     BtlEventFactorType type = factor->factorType;
     u16 numHandlers = factor->numHandlers;
     u16 subID = factor->subID;
+    u16 mainPri = getFactorMainPriority( factor->priority );
 
     BTL_EVENT_FACTOR_Remove( factor );
-    BTL_EVENT_AddFactor( type, subID, pri, pokeID, handlerTable, numHandlers );
+    BTL_EVENT_AddFactor( type, subID, mainPri, subPri, pokeID, handlerTable, numHandlers );
   }
   else
   {
@@ -751,10 +755,14 @@ static void clearFactorWork( BTL_EVENT_FACTOR* factor )
   GFL_STD_MemClear( factor, sizeof(factor) );
 }
 
-static inline u32 calcFactorPriority( BtlEventFactorType factorType, u16 subPri )
+static inline u32 calcFactorPriority( BtlEventPriority mainPri, u16 subPri )
 {
-  factorType = BTL_EVENT_FACTOR_MAX - factorType - 1;
-  return (factorType << 16) | subPri;
+  mainPri = BTL_EVPRI_MAX - mainPri - 1;
+  return (mainPri << 16) | subPri;
+}
+static inline u16 getFactorMainPriority( u32 pri )
+{
+  return (pri >> 16) & 0xffff;
 }
 
 

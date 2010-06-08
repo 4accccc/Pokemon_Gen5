@@ -89,7 +89,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_POS_Add( BtlPosEffect effect, BtlPokePos pos, u8 
           u32 numHandlers;
 
           handlerTable = funcTbl[i].func( &numHandlers );
-          factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, effect, 0, pos, handlerTable, numHandlers );
+          factor = BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_POS, effect,
+                  BTL_EVPRI_POS_DEFAULT, 0, pos, handlerTable, numHandlers );
           if( factor )
           {
             u32 j;
