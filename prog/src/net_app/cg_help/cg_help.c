@@ -181,8 +181,7 @@ static void CG_HELP_Init( CG_HELP_WORK *work )
   work->page = 0;
   work->isFirst = TRUE;
   CG_HELP_DispPage( work , work->page );
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
 
 }
 
