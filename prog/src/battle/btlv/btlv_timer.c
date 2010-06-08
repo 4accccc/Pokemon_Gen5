@@ -92,6 +92,12 @@ struct  _BTLV_TIMER_WORK
   GFL_TCB*        count_down;
 
   HEAPID          heapID;
+#ifdef PM_DEBUG
+  BOOL            timer_stop_flag;
+  BOOL            timer_edit_flag;
+  BOOL            timer_edit_wait;
+  BTLV_TIMER_TYPE timer_edit_pos;
+#endif
 };
 
 //============================================================================================
@@ -101,6 +107,10 @@ struct  _BTLV_TIMER_WORK
 //============================================================================================
 static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type );
 static  void  TCB_BTLV_TIMER_Draw( GFL_TCB *tcb, void *work );
+
+#ifdef PM_DEBUG
+static  void  edit_timer( BTLV_TIMER_WORK* btw );
+#endif
 
 //============================================================================================
 /**
@@ -289,6 +299,15 @@ BOOL  BTLV_TIMER_IsZero( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
 { 
   int timer = btw->second[ type ] - OS_TicksToSeconds( OS_GetTick() - btw->tick[ type ] );
 
+#ifdef PM_DEBUG
+  //タイマー編集中は0になるタイミングが存在してしまうので、
+  //編集中は0であることを返さないようにする
+  if( btw->timer_edit_flag )
+  { 
+    return FALSE;
+  }
+#endif
+
   return ( timer <= 0 );
 }
 
@@ -324,7 +343,11 @@ static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
   second_10 = second / 10;
   second_01 = second % 10;
 
+#ifdef PM_DEBUG
+  if( ( timer <= alert[ type ] ) && ( btw->timer_edit_flag == FALSE ) )
+#else
   if( timer == alert[ type ] )
+#endif
   { 
     btw->alert[ type ] = BTLV_TIMER_ALERT;
   }
@@ -375,7 +398,150 @@ static  void  TCB_BTLV_TIMER_Draw( GFL_TCB *tcb, void *work )
 { 
   BTLV_TIMER_WORK *btw = ( BTLV_TIMER_WORK* )work;
 
+#ifdef PM_DEBUG
+  if( ( btw->timer_stop_flag ) || ( btw->timer_edit_flag ) )
+  { 
+    btw->tick[ BTLV_TIMER_TYPE_GAME_TIME ]    = OS_GetTick();
+    btw->tick[ BTLV_TIMER_TYPE_COMMAND_TIME ] = OS_GetTick();
+  }
+  edit_timer( btw );
+#endif
+
   BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_GAME_TIME );
   BTLV_TIMER_Draw( btw, BTLV_TIMER_TYPE_COMMAND_TIME );
 }
 
+#ifdef PM_DEBUG
+//============================================================================================
+/**
+ *  @brief  タイマーストップオン／オフ
+ */
+//============================================================================================
+BOOL  BTLV_TIMER_SwitchTimerStopFlag( BTLV_TIMER_WORK* btw )
+{ 
+  BOOL  ret = ( btw->draw != NULL );
+  if( ret )
+  { 
+    btw->timer_stop_flag ^= 1;
+    if( btw->timer_stop_flag )
+    { 
+      btw->second[ BTLV_TIMER_TYPE_GAME_TIME ] -=
+        OS_TicksToSeconds( OS_GetTick() - btw->tick[ BTLV_TIMER_TYPE_GAME_TIME ] );
+      btw->second[ BTLV_TIMER_TYPE_COMMAND_TIME ] -=
+        OS_TicksToSeconds( OS_GetTick() - btw->tick[ BTLV_TIMER_TYPE_COMMAND_TIME ] );
+    }
+  }
+  return ret;
+}
+
+//============================================================================================
+/**
+ *  @brief  タイマーエディットオン／オフ
+ */
+//============================================================================================
+BOOL  BTLV_TIMER_SwitchTimerEditFlag( BTLV_TIMER_WORK* btw )
+{ 
+  BOOL  ret = ( btw->draw != NULL );
+  if( ret )
+  { 
+    btw->timer_edit_flag ^= 1;
+    if( btw->timer_edit_flag )
+    { 
+      btw->timer_edit_pos   = 0;
+      btw->timer_edit_wait  = TRUE;
+      btw->alert[ BTLV_TIMER_TYPE_GAME_TIME ]    = BTLV_TIMER_ALERT;
+      btw->alert[ BTLV_TIMER_TYPE_COMMAND_TIME ] = 0;
+      btw->second[ BTLV_TIMER_TYPE_GAME_TIME ] -=
+        OS_TicksToSeconds( OS_GetTick() - btw->tick[ BTLV_TIMER_TYPE_GAME_TIME ] );
+      btw->second[ BTLV_TIMER_TYPE_COMMAND_TIME ] -=
+        OS_TicksToSeconds( OS_GetTick() - btw->tick[ BTLV_TIMER_TYPE_COMMAND_TIME ] );
+    }
+    else
+    { 
+      btw->alert[ BTLV_TIMER_TYPE_GAME_TIME ]    = 0;
+      btw->alert[ BTLV_TIMER_TYPE_COMMAND_TIME ] = 0;
+    }
+  }
+  return ret;
+}
+
+//============================================================================================
+/**
+ *  @brief  タイマーエディット
+ */
+//============================================================================================
+static  void  edit_timer( BTLV_TIMER_WORK* btw )
+{ 
+  if( btw->timer_edit_flag == FALSE ) return;
+
+  { 
+    int cont  = GFL_UI_KEY_GetCont();
+    int trg   = GFL_UI_KEY_GetTrg();
+    int rep   = GFL_UI_KEY_GetRepeat();
+
+    if( ( btw->timer_edit_wait ) && ( cont & PAD_BUTTON_L ) ) return;
+
+    btw->timer_edit_wait = FALSE;
+
+    if( ( trg & PAD_KEY_UP ) || ( trg & PAD_KEY_DOWN ) )
+    { 
+      btw->alert[ btw->timer_edit_pos ] = 0;
+      btw->timer_edit_pos ^= 1;
+      btw->alert[ btw->timer_edit_pos ] = BTLV_TIMER_ALERT;
+    }
+    if( ( rep & PAD_BUTTON_A ) && ( btw->second[ btw->timer_edit_pos ] < BTLV_TIMER_MAX ) )
+    { 
+      btw->second[ btw->timer_edit_pos ]++;
+    }
+    if( ( rep & PAD_BUTTON_B ) && ( btw->second[ btw->timer_edit_pos ] ) )
+    { 
+      btw->second[ btw->timer_edit_pos ]--;
+    }
+    if( rep & PAD_BUTTON_X )
+    { 
+      if( ( btw->second[ btw->timer_edit_pos ] + 10 ) < BTLV_TIMER_MAX )
+      { 
+        btw->second[ btw->timer_edit_pos ] += 10;
+      }
+      else
+      { 
+        btw->second[ btw->timer_edit_pos ] = BTLV_TIMER_MAX;
+      }
+    }
+    if( rep & PAD_BUTTON_Y )
+    { 
+      if( ( btw->second[ btw->timer_edit_pos ] - 10 ) > 0 )
+      { 
+        btw->second[ btw->timer_edit_pos ] -= 10;
+      }
+      else
+      { 
+        btw->second[ btw->timer_edit_pos ] = 0;
+      }
+    }
+    if( rep & PAD_BUTTON_R )
+    { 
+      if( ( btw->second[ btw->timer_edit_pos ] + 60 ) < BTLV_TIMER_MAX )
+      { 
+        btw->second[ btw->timer_edit_pos ] += 60;
+      }
+      else
+      { 
+        btw->second[ btw->timer_edit_pos ] = BTLV_TIMER_MAX;
+      }
+    }
+    if( rep & PAD_BUTTON_L )
+    { 
+      if( ( btw->second[ btw->timer_edit_pos ] - 60 ) > 0 )
+      { 
+        btw->second[ btw->timer_edit_pos ] -= 60;
+      }
+      else
+      { 
+        btw->second[ btw->timer_edit_pos ] = 0;
+      }
+    }
+  }
+}
+
+#endif

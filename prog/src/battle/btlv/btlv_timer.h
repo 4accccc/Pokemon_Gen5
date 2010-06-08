@@ -27,3 +27,8 @@ extern  void              BTLV_TIMER_Delete( BTLV_TIMER_WORK* btw );
 extern  void              BTLV_TIMER_SetDrawEnable( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type, BOOL enable, BOOL init );
 extern  BOOL              BTLV_TIMER_IsZero( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type );
 
+//タイマー操作デバッグ用関数
+#ifdef PM_DEBUG
+extern  BOOL              BTLV_TIMER_SwitchTimerStopFlag( BTLV_TIMER_WORK* btw );
+extern  BOOL              BTLV_TIMER_SwitchTimerEditFlag( BTLV_TIMER_WORK* btw );
+#endif

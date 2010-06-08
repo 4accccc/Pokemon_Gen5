@@ -611,6 +611,10 @@ struct _BTLV_INPUT_WORK
 #else
   const POKEMON_PARAM*  rotate_pp[ BTLV_INPUT_POKEICON_MAX ];
 #endif
+
+#ifdef PM_DEBUG
+  BOOL                  timer_edit_flag;
+#endif
 };
 
 typedef struct
@@ -803,6 +807,10 @@ static  inline  void  SePlayRotateDecide( BTLV_INPUT_WORK* biw );
 static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw );
 
 static  void  BTLV_INPUT_VBlank( GFL_TCB *tcb, void *work );
+
+#ifdef PM_DEBUG
+static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw );
+#endif
 
 //============================================================================================
 /**
@@ -1355,14 +1363,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
-      { 
-        //バッグがシューターモードではないか、使用できない場合はエネルギー表示なし
-        if( ( ( bicp->bagMode == BBAG_MODE_SHOOTER ) && ( BTLV_EFFECT_CheckShooterEnable() == FALSE ) ) ||
-              ( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_SUBWAY ) )
-        { 
-          biw->button_exist[ 1 ] = FALSE;  //押せるボタンかどうかチェック
-        }
-      }
+      biw->button_exist[ 1 ] = BTLV_EFFECT_CheckShooterEnable();  //押せるボタンかどうかチェック
 
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
@@ -1667,6 +1668,16 @@ int BTLV_INPUT_CheckInput( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tp_tbl
 {
   int hit, hit_tp;
 
+#ifdef PM_DEBUG
+  debug_timer_edit_check( biw );
+
+  //タイマー編集中は入力を無視
+  if( biw->timer_edit_flag )
+  {
+    return  GFL_UI_TP_HIT_NONE;
+  }
+#endif
+
   //下画面変形中は入力を無視
   if( ( biw->tcb_execute_flag ) || ( PaletteFadeCheck( biw->pfd ) ) || ( biw->button_reaction ) )
   {
@@ -1883,6 +1894,15 @@ BOOL  BTLV_INPUT_CheckInputDemo( BTLV_INPUT_WORK* biw )
 BOOL  BTLV_INPUT_CheckInputRotate( BTLV_INPUT_WORK* biw, BtlRotateDir* dir, int* select )
 {
   int hit, hit_tp;
+
+#ifdef PM_DEBUG
+  debug_timer_edit_check( biw );
+  //タイマー編集中は入力を無視
+  if( biw->timer_edit_flag )
+  {
+    return  GFL_UI_TP_HIT_NONE;
+  }
+#endif
 
   //下画面変形中は入力を無視
   if( ( biw->tcb_execute_flag ) ||
@@ -4925,8 +4945,8 @@ static  void  TCB_ButtonReaction_CB( GFL_TCB* tcb )
 //--------------------------------------------------------------
 static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAND_PARAM* bicp )
 { 
-  //バッグがシューターモードではないか、使用できない場合はエネルギー表示なし
-  if( ( bicp->bagMode == BBAG_MODE_SHOOTER ) && ( BTLV_EFFECT_CheckShooterEnable() == FALSE ) )
+  //使用できない場合はエネルギー表示なし
+  if( BTLV_EFFECT_CheckShooterEnable() == FALSE )
   { 
     return;
   }
@@ -5168,8 +5188,7 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
 { 
-  if( ( ( BTLV_EFFECT_GetBagMode() == BBAG_MODE_SHOOTER ) && ( BTLV_EFFECT_CheckShooterEnable() == FALSE ) ) ||
-        ( BTL_MAIN_GetCompetitor( BTLV_EFFECT_GetMainModule() ) == BTL_COMPETITOR_SUBWAY ) )
+  if( BTLV_EFFECT_CheckShooterEnable() == FALSE )
   { 
     u16 pal[ 0x10 ];
     SoftFade( biw->bag_pal, pal, 0x10, 8, 0 );
@@ -5260,3 +5279,27 @@ static  inline  void  SePlayRotation( BTLV_INPUT_WORK* biw )
   PMSND_PlaySE( SEQ_SE_ROTATION_B );
 }
 
+#ifdef PM_DEBUG
+static  void  debug_timer_edit_check( BTLV_INPUT_WORK* biw )
+{ 
+  int cont  = GFL_UI_KEY_GetCont();
+  int trg   = GFL_UI_KEY_GetTrg();
+
+  //タイマー一時停止
+  if( ( cont & PAD_BUTTON_L ) && ( trg & PAD_BUTTON_X ) )
+  { 
+    BTLV_TIMER_SwitchTimerStopFlag( BTLV_EFFECT_GetTimerWork() );
+  }
+  //タイマーエディット開始
+  if( ( cont & PAD_BUTTON_L ) && ( trg & PAD_BUTTON_Y ) && ( biw->timer_edit_flag == 0 ) )
+  { 
+    biw->timer_edit_flag = BTLV_TIMER_SwitchTimerEditFlag( BTLV_EFFECT_GetTimerWork() );
+  }
+  //タイマーエディット終了
+  if( ( cont & PAD_BUTTON_START ) && ( biw->timer_edit_flag ) )
+  { 
+    BTLV_TIMER_SwitchTimerEditFlag( BTLV_EFFECT_GetTimerWork() );
+    biw->timer_edit_flag = 0;
+  }
+}
+#endif
