@@ -69,6 +69,7 @@ static GFL_PROC_RESULT PokeStatusProc_Init( GFL_PROC * proc, int * seq , void *p
     GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_POKE_STATUS, 0x50000 );
 
     psWork = GFL_PROC_AllocWork( proc, sizeof(PSTATUS_WORK), HEAPID_POKE_STATUS );
+    GFL_STD_MemClear( psWork , sizeof(PSTATUS_WORK) );
     psWork->heapId = HEAPID_POKE_STATUS;
     //ƒfƒoƒO
     if( pwk == NULL )
