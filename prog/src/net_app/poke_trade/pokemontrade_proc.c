@@ -3015,7 +3015,7 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
     GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
                        _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
   }
-  else{
+  else if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     pWork->FriendBoxScrollNum = pWork->BoxScrollNum;
   }
 }
