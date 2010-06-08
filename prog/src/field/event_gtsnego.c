@@ -148,11 +148,11 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       (*seq) = _CALL_WIFILOGIN;
     }
     else{
+      dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
       (*seq)++;
     }
     break;
   case _CALL_TRADE:
-    dbw->aPokeTr.ret = POKEMONTRADE_MOVE_START;
     dbw->aPokeTr.gamedata = gamedata;
     dbw->aPokeTr.pNego = &dbw->gts;
     dbw->aPokeTr.pSvl = &dbw->aSVL;
