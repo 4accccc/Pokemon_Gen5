@@ -43,6 +43,10 @@
 
 
 #include "fieldmap.h"
+
+#include "savedata/mail.h"
+#include "savedata/mail_util.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -1222,6 +1226,39 @@ static void getLegendFromBox( SCRCMD_WORK * work, u16 select_pos )
     //上書きする手持ちデータをとっておく
     GFL_STD_MemCopy(
         PokeParty_GetMemberPointer( party, select_pos ), temp_pp, POKETOOL_GetWorkSize() );
+
+    //メールを持っていた場合の処理
+    if ( ITEM_CheckMail( PP_Get( temp_pp, ID_PARA_item, NULL ) ) == TRUE )
+    {
+      MAIL_BLOCK * mailBlock = GAMEDATA_GetMailBlock( gamedata );
+      MAIL_DATA * mailBuffer = MailData_CreateWork( SCRCMD_WORK_GetHeapID( work ) );
+      int empty_pos = MAIL_SearchNullID( mailBlock, 0 );
+
+      PP_Get( temp_pp, ID_PARA_mail_data, mailBuffer );
+      {
+        MYSTATUS * status = GAMEDATA_GetMyStatus( gamedata );
+        GF_ASSERT( MailData_IsEnable( mailBuffer ) == TRUE );
+        GF_ASSERT( MailData_GetWriterID( mailBuffer ) == MyStatus_GetID( status ) );
+        GF_ASSERT( MailData_GetWriterSex( mailBuffer ) == MyStatus_GetMySex( status ) );
+      }
+      if ( empty_pos >= 0 )
+      { //メールボックスに空きがある場合、メールを保存する
+        MAIL_AddMailFormWork( mailBlock, 0, empty_pos, mailBuffer );
+      }
+      //手持ちのメール、アイテムをクリア
+      MailData_Clear( mailBuffer );
+      PP_Put( temp_pp, ID_PARA_mail_data, (u32)mailBuffer );
+      PP_Put( temp_pp, ID_PARA_item, 0 );
+      GFL_HEAP_FreeMemory( mailBuffer );
+    }
+
+    //手持ちがシェイミだったときの処理
+    if ( PP_Get( temp_pp, ID_PARA_monsno_egg, NULL ) == MONSNO_SHEIMI )
+    {
+      PP_ChangeFormNo( temp_pp, FORMNO_SHEIMI_LAND ); // フォルムチェンジ
+      PP_Renew( temp_pp );                            // POKEMON_PARAM再計算
+      //※ランドフォルムは入手時に図鑑登録済み
+    }
 
     //伝説ポケモンで手持ちを上書き
     legend_pp = PP_CreateByPPP(
