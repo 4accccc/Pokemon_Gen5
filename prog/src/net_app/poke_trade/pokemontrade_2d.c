@@ -2494,7 +2494,7 @@ void POKETRADE_2D_GTSPokemonIconReset(POKEMON_TRADE_WORK* pWork,int side, int no
 
 //------------------------------------------------------------------------------
 /**
- * @brief   ＧＴＳ用ポケモンアイコンを消す
+ * @brief   ＧＴＳ用ポケモンアイコン表示切替
  * @param   POKEMON_TRADE_WORK
  * @param   palno      パレットを送る番号
  * @param   palType   パレット転送タイプ MAINかSUB
@@ -2522,14 +2522,16 @@ void POKETRADE_2D_GTSPokemonIconVisible(POKEMON_TRADE_WORK* pWork,int side, BOOL
  */
 //------------------------------------------------------------------------------
 
+const static GFL_POINT pokemonpos[]={{30,96},{64,96},{96,96} , {36+128+4,96},{68+128+4,96},{100+128+4,96}};
+const static GFL_POINT pokemonposl[]={{24,46},{24,94},{24,142}, {20+128,46},{20+128,94},{20+128,142} };
+
+
 void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, POKEMON_PARAM* pp, int hilow, BOOL bDisp)
 {
   POKEMON_PASO_PARAM* ppp = PP_GetPPPPointer(pp);
   ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
   GFL_CLWK_DATA cellInitData;
   int drawn;
-  GFL_POINT pokemonpos[]={{30,96},{64,96},{96,96} , {36+128+4,96},{68+128+4,96},{100+128+4,96}};
-  GFL_POINT pokemonposl[]={{24,46},{24,94},{24,142}, {20+128,46},{20+128,94},{20+128,142} };
 
   POKETRADE_2D_GTSPokemonIconReset(pWork, side, no);
   
@@ -2562,6 +2564,36 @@ void POKETRADE_2D_GTSPokemonIconSet(POKEMON_TRADE_WORK* pWork, int side,int no, 
   GFL_ARC_CloseDataHandle(arcHandlePoke);
 
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ＧＴＳ用ポケモンアイコンを一体だけ上に上げる
+ * @param   POKEMON_TRADE_WORK
+ * @param   side_up 上に上げる side
+ * @param   no_up  上に上げる no
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+void POKETRADE_2D_GTSPokemonIconChangePosUp(POKEMON_TRADE_WORK* pWork,int side_up, int no_up)
+{
+  int i,side;
+  for(side = 0;side < GTS_PLAYER_WORK_NUM;side++){
+    for(i=0;i<GTS_NEGO_POKESLT_MAX;i++){
+      if(pWork->pokeIconGTS[side][i]){
+        GFL_CLACTPOS pos;
+        pos.x = pokemonposl[i+side*GTS_NEGO_POKESLT_MAX].x;
+        pos.y = pokemonposl[i+side*GTS_NEGO_POKESLT_MAX].y;
+        if((side == side_up) && (i==no_up)){
+          pos.y-=4;
+        }
+        GFL_CLACT_WK_SetPos(pWork->pokeIconGTS[side][i], &pos, CLSYS_DRAW_SUB);
+      }
+    }
+  }
+}
+
 
 
 //------------------------------------------------------------------------------

@@ -844,6 +844,7 @@ extern void IRC_POKETRADE_PosChangeSubStatusIcon(POKEMON_TRADE_WORK* pWork,int s
 extern void POKEMONTRADE_VisibleFaceButtonGTS(POKEMON_TRADE_WORK* pWork, int faceNo, BOOL bVisible);
 extern void POKE_GTS_VisibleFaceIcon(POKEMON_TRADE_WORK* pWork,BOOL bVisible);
 extern BOOL POKE_GTS_BanPokeCheck(POKEMON_TRADE_WORK* pWork, POKEMON_PASO_PARAM* ppp);
+extern void POKETRADE_2D_GTSPokemonIconChangePosUp(POKEMON_TRADE_WORK* pWork,int side_up, int no_up);
 
 extern void POKEMON_TRADE_MaskCommon(POKEMON_TRADE_WORK* pWork);
 extern BOOL POKE_GTS_IsMyIn(POKEMON_TRADE_WORK* pWork);

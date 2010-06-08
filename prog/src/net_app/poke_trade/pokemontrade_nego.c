@@ -988,6 +988,8 @@ static void _changePokemonStatusDispAuto(POKEMON_TRADE_WORK* pWork,int sel)
 //    pWork->pokemonselectno
     int mcssno = 1-(sel/GTS_NEGO_POKESLT_MAX);
     POKETRADE_MESSAGE_ChangePokemonStatusDisp(pWork, pp, mcssno, TRUE);
+    POKETRADE_2D_GTSPokemonIconChangePosUp( pWork,(sel/GTS_NEGO_POKESLT_MAX), sel%GTS_NEGO_POKESLT_MAX);
+
   }
 }
 
@@ -1031,6 +1033,7 @@ static void _pokemonStatusWaitNw(POKEMON_TRADE_WORK* pWork)
   if(WIPE_SYS_EndCheck()){
     // Á‚·
     GFL_BG_SetVisible( GFL_BG_FRAME3_M , FALSE );
+    POKETRADE_2D_GTSPokemonIconChangePosUp( pWork,-1,-1);
 
     POKETRADE_MESSAGE_ResetPokemonStatusMessage(pWork);
     {
@@ -1129,6 +1132,7 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork)
     pWork->statusModeOn=TRUE;
     if(pp && PP_Get(pp,ID_PARA_poke_exist,NULL) ){
       POKETRADE_MESSAGE_CreatePokemonParamDisp(pWork,pp);
+      POKETRADE_2D_GTSPokemonIconChangePosUp( pWork,(trgno/GTS_NEGO_POKESLT_MAX), trgno%GTS_NEGO_POKESLT_MAX);
     }
     _select6PokeSubMask(pWork);
     OS_TPrintf("pokemonselectno %d\n",pWork->pokemonselectno);
