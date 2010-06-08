@@ -713,6 +713,8 @@ static void InitBmp( REPORT_WORK * wk )
 		WORDSET_ExpandStr( wset, exp, str );
 		PRINT_UTIL_PrintColor( &wk->win[BMPWIN_REPORT], wk->que, 0, 4, exp, wk->font, FCOL_P02WN );
 		GFL_STR_DeleteBuffer( str );
+	}else{
+		GFL_BMPWIN_TransVramCharacter( wk->win[BMPWIN_REPORT].win );
 	}
 
 	GFL_STR_DeleteBuffer( exp );
