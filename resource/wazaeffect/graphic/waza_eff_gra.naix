@@ -173,7 +173,9 @@ enum {
 	NARC_waza_eff_gra_ball_15_anim_NCGR = 159,
 	NARC_waza_eff_gra_ball_15_anim_NCLR = 160,
 	NARC_waza_eff_gra_ball_16_anim_NCGR = 161,
-	NARC_waza_eff_gra_ball_16_anim_NCLR = 162
+	NARC_waza_eff_gra_ball_16_anim_NCLR = 162,
+	NARC_waza_eff_gra_ball_26_anim_NCGR = 163,
+	NARC_waza_eff_gra_ball_26_anim_NCLR = 164
 };
 
 /* NARC_WAZA_EFF_GRA_NAIX_ */

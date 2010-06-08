@@ -164,5 +164,7 @@
 #define	BALL_15_ANIM_NCLR			(160)
 #define	BALL_16_ANIM_NCGR			(161)
 #define	BALL_16_ANIM_NCLR			(162)
+#define	BALL_26_ANIM_NCGR			(163)
+#define	BALL_26_ANIM_NCLR			(164)
 
 #endif

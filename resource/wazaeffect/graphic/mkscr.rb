@@ -61,5 +61,7 @@
   fp_w.print( "\"ball_15_anim.NCLR\"\n" )
   fp_w.print( "\"ball_16_anim.NCGR\"\n" )
   fp_w.print( "\"ball_16_anim.NCLR\"\n" )
+  fp_w.print( "\"ball_26_anim.NCGR\"\n" )
+  fp_w.print( "\"ball_26_anim.NCLR\"\n" )
 
   fp_w.close
