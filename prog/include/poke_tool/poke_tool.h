@@ -304,7 +304,7 @@ enum{
   ID_PARA_sinou_festival_ribbon,		//メモリアルリボン（旧フェスティバルリボン）
   ID_PARA_sinou_carnival_ribbon,		//ウィッシュルリボン（旧カーニバルリボン）
   ID_PARA_sinou_classic_ribbon,			//クラシックリボン
-  ID_PARA_sinou_premiere_ribbon,		//シンオウプレミアリボン
+  ID_PARA_sinou_premiere_ribbon,		//プレミアリボン
   ID_PARA_sinou_amari_ribbon,			//あまり
 
   ID_PARA_waza1,                //所持技1
