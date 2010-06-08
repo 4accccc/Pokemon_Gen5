@@ -749,8 +749,10 @@ static GMEVENT_RESULT PushPlayEventBGM( GMEVENT* event, int* seq, void* wk )
     FIELD_SOUND_RegisterRequest_FORCE_PLAY( fieldSound, work->soundIdx );
     (*seq)++;
     break;
-  case 1:
-    return GMEVENT_RES_FINISH;
+  case 1: // リクエスト処理待ち
+    if( FIELD_SOUND_HaveRequest( fieldSound ) == FALSE ) {
+      return GMEVENT_RES_FINISH;
+    }
   } 
   return GMEVENT_RES_CONTINUE;
 } 
