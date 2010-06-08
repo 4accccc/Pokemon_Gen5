@@ -2171,7 +2171,7 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
 
   // ‹Z
   if( wk->dat->chg_waza != 0 ){
-    dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->init_poke) ];
+    dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_pos_index) ];
     str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m03 );
     WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
     WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
