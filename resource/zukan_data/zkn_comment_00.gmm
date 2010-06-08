@@ -4954,12 +4954,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_512_000">
-		<language name="JPN">トゲの　たくさん　ついた　しっぽを
-あいてに　たたきつけて　こうげき。
-きしょうの　はげしい　ポケモン。</language>
-		<language name="JPN_KANJI">トゲの　たくさん　ついた　しっぽを
-相手に　たたきつけて　攻撃。
-気性の　激しい　ポケモン。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_513_000">
@@ -4972,12 +4968,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_514_000">
-		<language name="JPN">からだの　なかの　ほのおを　もやして
-あたまや　しっぽから　ひのこを
-まきちらせて　てきを　こがす。</language>
-		<language name="JPN_KANJI">体の　中の　炎を　燃やして
-頭や　しっぽから　火の粉を　
-まき散らせて　敵を　焦がす。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_515_000">
@@ -4990,12 +4982,8 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_516_000">
-		<language name="JPN">しっぽから　こうあつの　みずを
-はっしゃすると　コンクリートの
-かべも　はかいする　いりょく。</language>
-		<language name="JPN_KANJI">しっぽから　高圧の　水を　発射すると
-コンクリートの　壁も
-破壊する　威力。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_517_000">
@@ -5134,30 +5122,18 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_532_000">
-		<language name="JPN">いつも　かくざいを　かかえている。
-けんちく　げんばに　あらわれて
-こうじを　てつだう　ポケモン。</language>
-		<language name="JPN_KANJI">いつも　角材を　抱えている。
-建築　現場に　現れて
-工事を　手伝う　ポケモン。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_533_000">
-		<language name="JPN">てっこつを　かついで　からだを
-きたえている。きたえた　きんにくを
-なかまと　みせあい　じまんする。</language>
-		<language name="JPN_KANJI">鉄骨を　担いで　体を　鍛えている。
-鍛えた　筋肉を
-仲間と　見せ合い　自慢する。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_534_000">
-		<language name="JPN">つえ　がわりの　コンクリートの
-はしらを　きんりょくを　つかわず
-じざいに　ふりまわす　わざを　もつ。</language>
-		<language name="JPN_KANJI">つえ　代わりの　コンクリートの　柱を
-筋力を　使わず
-自在に　振り回す　技を　持つ。</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_535_000">

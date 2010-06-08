@@ -520,11 +520,11 @@
 #define		MONSNO_546		( 509 )		//チョロネコ
 #define		MONSNO_547		( 510 )		//レパルダス
 #define		MONSNO_593		( 511 )		//ヤナップ
-#define		MONSNO_594		( 512 )		//ブロッコル
+#define		MONSNO_594		( 512 )		//ヤナッキー
 #define		MONSNO_595		( 513 )		//バオップ
-#define		MONSNO_596		( 514 )		//スチームル
+#define		MONSNO_596		( 514 )		//バオッキー
 #define		MONSNO_597		( 515 )		//ヒヤップ
-#define		MONSNO_598		( 516 )		//ファウント
+#define		MONSNO_598		( 516 )		//ヒヤッキー
 #define		MONSNO_540		( 517 )		//ムンナ
 #define		MONSNO_516		( 518 )		//ムシャーナ
 #define		MONSNO_514		( 519 )		//マメパト
@@ -540,9 +540,9 @@
 #define		MONSNO_502		( 529 )		//モグリュー
 #define		MONSNO_543		( 530 )		//ドリュウズ
 #define		MONSNO_599		( 531 )		//タブンネ
-#define		MONSNO_626		( 532 )		//ニューモン
-#define		MONSNO_627		( 533 )		//ユーダーン
-#define		MONSNO_628		( 534 )		//シハンドン
+#define		MONSNO_626		( 532 )		//ドッコラー
+#define		MONSNO_627		( 533 )		//ドテッコツ
+#define		MONSNO_628		( 534 )		//ローブシン
 #define		MONSNO_586		( 535 )		//オタマロ
 #define		MONSNO_587		( 536 )		//ガマガル
 #define		MONSNO_588		( 537 )		//ガマゲロゲ
