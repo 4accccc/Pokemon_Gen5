@@ -981,13 +981,10 @@ static void stwdraw_button( const u8* pos, u8 count, u8 format, BTLV_SCD* wk )
                                              );
 
 
-  if( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) )
+  bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
+  if( ( bisp.waza_target == WAZA_TARGET_OTHER_SELECT ) && ( WAZADATA_GetFlag( waza, WAZAFLAG_TripleFar ) ) )
   {
     bisp.waza_target = WAZA_TARGET_MAX;
-  }
-  else
-  {
-    bisp.waza_target = WAZADATA_GetParam( waza, WAZAPARAM_TARGET );
   }
 
   BTL_Printf(" **** triple select **** \n");
@@ -1137,7 +1134,8 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
       }else{
         GF_ASSERT_MSG( ( ( pos > -1 ) && ( pos < 3 ) ), "pos:%d\n", pos );
         //‰“Šu‹Z‚ÌRANGE‚ÍWAZA_TARGET_MAX‚Æ“¯’l‚É‚µ‚Ä‚¢‚é
-        if( WAZADATA_GetFlag( wk->destActionParam->fight.waza, WAZAFLAG_TripleFar ) )
+        if( ( target == WAZA_TARGET_OTHER_SELECT ) &&
+            ( WAZADATA_GetFlag( wk->destActionParam->fight.waza, WAZAFLAG_TripleFar ) ) )
         {
           target = WAZA_TARGET_MAX;
         }
