@@ -262,7 +262,6 @@ void UnionEff_App_SearchDeleteFriendMark( UNION_EFF_SYSTEM *unieff, const MMDL *
   for(i = 0; i < FRIENDMARK_MAX; i++){
     if(mark_man->mark[i].mmdl == mmdl){
       UnionEff_FriendMark_Delete(&mark_man->mark[i]);
-      OS_TPrintf("aaa íœ‚µ‚½@%d\n", i);
       return;
     }
   }
