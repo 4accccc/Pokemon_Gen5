@@ -610,7 +610,7 @@ void DDEMOMAIN_Init3D( DDEMOMAIN_WORK * wk )
 		GFL_G3D_VMANLNK,		// テクスチャマネージャ使用モード（フレームモード（とりっぱなし））
 		GFL_G3D_TEX128K,		// テクスチャマネージャサイズ 128KB(1ブロック)
 		GFL_G3D_VMANLNK,		// パレットマネージャ使用モード（フレームモード（とりっぱなし））
-		GFL_G3D_PLT32K,			// パレットマネージャサイズ
+		GFL_G3D_PLT16K,			// パレットマネージャサイズ
 		DTCM_SIZE,					// ジオメトリバッファの使用サイズ
 		HEAPID_DENDOU_DEMO,	// ヒープID
 		SetUp3D );					// セットアップ関数(NULLの時はDefaultSetUp)

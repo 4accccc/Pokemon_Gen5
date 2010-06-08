@@ -272,7 +272,7 @@ static void SetAveTestPalace(void);
 void DEBUG_PerformanceInit(void)
 {
 	GFL_STD_MemClear(&pfm_sys, sizeof(PERFORMANCE_SYSTEM));
-#if DEBUG_ONLY_FOR_none
+#if DEBUG_ONLY_FOR_iwasawa
   return;
 #endif
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
@@ -291,7 +291,7 @@ void DEBUG_PerformanceMain(void)
 {
 	int debugButtonTrg = GFL_UI_KEY_GetTrg() & (PAD_BUTTON_START | PAD_BUTTON_SELECT);
 	
-#if DEBUG_ONLY_FOR_none
+#if DEBUG_ONLY_FOR_iwasawa
   return;
 #endif
 
@@ -373,7 +373,7 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 //--------------------------------------------------------------
 void DEBUG_PerformanceSetActive(BOOL isActive)
 {
-#if DEBUG_ONLY_FOR_none
+#if DEBUG_ONLY_FOR_iwasawa
   return;
 #endif
   if( (OS_GetConsoleType() & OS_CONSOLE_NITRO) && isActive == TRUE ){

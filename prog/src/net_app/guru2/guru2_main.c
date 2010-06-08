@@ -3256,7 +3256,7 @@ static void guru2_3DDrawInit( GURU2MAIN_WORK *g2m )
 //  GF_G3D_InitFrmPlttVramManager(0x4000, TRUE);
 
   GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, 
-                GFL_G3D_PLT64K,  0, HEAPID_GURU2, _g3d_setup );
+                GFL_G3D_PLT16K,  0, HEAPID_GURU2, _g3d_setup );
   
   //GF_G3_RequestSwapBuffers(GX_SORTMODE_AUTO, GX_BUFFERMODE_Z);  
   GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_Z );

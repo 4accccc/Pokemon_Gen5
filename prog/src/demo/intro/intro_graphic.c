@@ -198,7 +198,7 @@ static const GFL_CLSYS_INIT sc_clsys_init	=
 ///	テクスチャ、ﾊﾟﾚｯﾄのVRAMｻｲｽﾞ
 //=====================================
 #define GRAPHIC_G3D_TEXSIZE	(GFL_G3D_TEX512K)	//バンクのテクスチャイメージスロットｻｲｽﾞとあわせてください
-#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT64K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
+#define GRAPHIC_G3D_PLTSIZE	(GFL_G3D_PLT32K)	//バンクのﾊﾟﾚｯﾄイメージスロットｻｲｽﾞとあわせてください
 
 //-------------------------------------
 ///	カメラ位置

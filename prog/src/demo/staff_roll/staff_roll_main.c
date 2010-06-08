@@ -1180,7 +1180,7 @@ static void Init3D( SRMAIN_WORK * wk )
 		GFL_G3D_VMANLNK,		// テクスチャマネージャ使用モード（フレームモード（とりっぱなし））
 		GFL_G3D_TEX256K,		// テクスチャマネージャサイズ 128KB(1ブロック)
 		GFL_G3D_VMANLNK,		// パレットマネージャ使用モード（フレームモード（とりっぱなし））
-		GFL_G3D_PLT64K,			// パレットマネージャサイズ
+		GFL_G3D_PLT32K,			// パレットマネージャサイズ
 		0x1000,							// ジオメトリバッファの使用サイズ
 		HEAPID_STAFF_ROLL,	// ヒープID
 		NULL );							// セットアップ関数(NULLの時はDefaultSetUp)

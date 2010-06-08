@@ -1645,7 +1645,7 @@ static void GRAPHIC_3D_Init( GRAPHIC_3D_WORK *p_wk, HEAPID heapID )
   };
 
   GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K,
-      GFL_G3D_VMANLNK, GFL_G3D_PLT32K, 0, heapID, Graphic_3d_SetUp );
+      GFL_G3D_VMANLNK, GFL_G3D_PLT16K, 0, heapID, Graphic_3d_SetUp );
 
 #if 0
   //ŽË‰e

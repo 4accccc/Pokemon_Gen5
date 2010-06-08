@@ -978,7 +978,7 @@ static void DUP_FIT_SetupGraphic( FITTING_WORK *work )
     //エッジマーキングカラー
     static  const GXRgb stage_edge_color_table[8]=
       { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT80K,
+    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
             0, work->heapId, NULL );
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );
 #if 0 //透視射影カメラ

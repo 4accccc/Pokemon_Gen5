@@ -220,7 +220,7 @@ DWS_SYS* DWS_SYS_Setup(HEAPID heapID)
   GFL_G3D_Init( GFL_G3D_VMANLNK,
                 GFL_G3D_TEX384K,
                 GFL_G3D_VMANLNK,
-                GFL_G3D_PLT64K,
+                GFL_G3D_PLT16K,
                 0,
                 heapID,
                 g3Dsys_setup );

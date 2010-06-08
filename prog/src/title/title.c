@@ -759,7 +759,7 @@ static void setupSystem(SYS_CONTROL* CSys, HEAPID heapID)
   GFL_BG_Init( heapID );
   GFL_BMPWIN_Init( heapID );
   GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K,
-                GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+                GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
                 DTCM_SIZE, heapID, NULL );
   GFL_FONTSYS_Init();   // èâä˙âªÇÃÇ›ÉäÉäÅ[ÉXÇ»Çµ
 

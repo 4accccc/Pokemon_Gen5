@@ -1420,7 +1420,7 @@ static void Earth_BGsysSet( HEAPID heapID )
   GFL_G3D_Init( GFL_G3D_VMANLNK,
                 GFL_G3D_TEX384K,
                 GFL_G3D_VMANLNK,
-                GFL_G3D_PLT64K,
+                GFL_G3D_PLT32K,
                 0,
                 heapID,
                 NULL );

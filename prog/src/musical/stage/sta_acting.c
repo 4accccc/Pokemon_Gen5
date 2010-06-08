@@ -754,7 +754,7 @@ static void STA_ACT_SetupGraphic( ACTING_WORK *work )
     //エッジマーキングカラー
     static  const GXRgb stage_edge_color_table[8]=
       { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT80K,
+    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
             0, work->heapId, NULL );
     GFL_BG_SetBGControl3D( 3 ); //NNS_g3dInitの中で表示優先順位変わる・・・
     GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_AUTO, GX_BUFFERMODE_W );

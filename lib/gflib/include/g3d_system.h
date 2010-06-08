@@ -44,11 +44,9 @@ typedef enum {
 
 //	パレットマネージャサイズ定義	
 typedef enum {
-	GFL_G3D_PLT16K = 1,		///<16KB
-	GFL_G3D_PLT32K = 2,		///<32KB
-	GFL_G3D_PLT64K = 4,		///<64KB
-	GFL_G3D_PLT80K = 5,		///<80KB
-	GFL_G3D_PLT96K = 6,		///<96KB
+	GFL_G3D_PLT16K = 1,		///<16KB(1スロット)
+	GFL_G3D_PLT32K = 2,		///<32KB(2スロット)
+	GFL_G3D_PLT64K = 4,		///<64KB(4スロット)
 }GFL_G3D_VMAN_PLTSIZE;
 
 //	グローバルステート定義（射影行列タイプ）

@@ -191,8 +191,8 @@ enum {
   FIELD_3D_VRAM_SIZE    =   GFL_G3D_TEX384K,  // 256Kから384Kに変更 tomoya
 
   ///パレット使用サイズ指定
-  FIELD_3D_PLTT_SIZE    =   GFL_G3D_PLT64K,
-
+  FIELD_3D_PLTT_SIZE    =   GFL_G3D_PLT16K,
+  
   ///DTCMエリアのサイズ
   FIELD_3D_DTCM_SIZE    =   0x1000, 
   

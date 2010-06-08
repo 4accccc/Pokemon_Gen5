@@ -231,7 +231,7 @@ static void MUSICAL_VIEW_InitGraphic( MUS_VIEW_LOCAL_WORK *work )
     //エッジマーキングカラー
     static  const GXRgb stage_edge_color_table[8]=
       { GX_RGB( 0, 0, 0 ), GX_RGB( 0, 0, 0 ), 0, 0, 0, 0, 0, 0 };
-    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT64K,
+    GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX256K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
             0, work->heapId, NULL );
     //正射影カメラ
     work->camera =  GFL_G3D_CAMERA_Create( GFL_G3D_PRJORTH, 

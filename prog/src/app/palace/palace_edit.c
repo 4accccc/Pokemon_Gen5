@@ -418,7 +418,7 @@ static void Local_BGFrameSetting(TITLE_WORK *tw)
 //--------------------------------------------------------------
 static void Local_3DSetting(TITLE_WORK *tw)
 {
-	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT32K,
+	GFL_G3D_Init( GFL_G3D_VMANLNK, GFL_G3D_TEX128K, GFL_G3D_VMANLNK, GFL_G3D_PLT16K,
 						DTCM_SIZE, HEAPID_PALACE, NULL );
 	GFL_BG_SetBGControl3D(0);
 }
