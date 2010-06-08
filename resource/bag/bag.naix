@@ -50,8 +50,7 @@ enum {
 	NARC_bag_bag_win06_d_NANR = 36,
 	NARC_bag_bag_win06_d_NCER = 37,
 	NARC_bag_bag_win06_d_NCGR = 38,
-	NARC_bag_bag_win06_d_NCLR = 39,
-	NARC_bag_pmwb_560_r_2072_NCLR = 40
+	NARC_bag_bag_win06_d_NCLR = 39
 };
 
 /* NARC_BAG_NAIX_ */
