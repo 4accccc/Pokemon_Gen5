@@ -184,8 +184,9 @@ POKEMON_PARAM * SYMBOLPOKE_PP_Create(
   GFL_HEAP_FreeMemory(level_tbl);
 
   oya_id = MyStatus_GetID( GAMEDATA_GetMyStatus( gamedata ) );
-  personal_rnd = POKETOOL_CalcPersonalRandEx(
+  personal_rnd = POKETOOL_CalcPersonalRandSpec(
       oya_id, sympoke->monsno, sympoke->form_no, sympoke->sex, 0, FALSE );
+  TAMADA_Printf("symbol rand = %ld\n", personal_rnd );
 
   pp = PP_Create( sympoke->monsno, level, PTL_SETUP_ID_AUTO, heapID );
   PP_SetupEx( pp, sympoke->monsno, level, oya_id, PTL_SETUP_ID_AUTO, personal_rnd );
