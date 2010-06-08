@@ -164,12 +164,12 @@ static GMEVENT_RESULT EVENT_GTSNegoMain(GMEVENT * event, int *  seq, void * work
       if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_EVOLUTION){
         (*seq) = _SEQ_EVOLUTION;
       }
-      else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_ERROR){
-        (*seq) = _CALL_WIFINEGO;
-      }
       else if(!GFL_NET_IsInit()){
         dbw->login.mode = WIFILOGIN_MODE_ERROR;
         (*seq)  = _CALL_WIFILOGIN;
+      }
+      else if(dbw->aPokeTr.ret == POKEMONTRADE_MOVE_ERROR){
+        (*seq) = _CALL_WIFINEGO;
       }
       else{
         GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMINGDISCONNECT, WB_NET_IRCBATTLE);
