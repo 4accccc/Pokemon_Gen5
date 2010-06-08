@@ -107,7 +107,7 @@ EVENT_START	ev_c03r0401_boy1_01
       _CALL ball_in
     ELSE                          //セレビィいない
       //「・・・」
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_01 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_boy1_01 )
     ENDIF
   ENDIF
 EVENT_END
@@ -394,7 +394,7 @@ EVENT_START	ev_c03r0401_girl1_01
   //イベントが進行中か？（男の子がゾロアになっている）
   IF $WK_SCENE_C03R0401_ZOROA == 1 THEN                     //進行中
     //「ゾロアがまってる」
-    _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_12 )
+    _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_12 )
   ELSE                                                      //進行前
     //手持ちにイベントセレビィがいるか？
     _GET_EVT_POKE_POS( MONSNO_SEREBHI, FALSE, poke_pos, SCWK_ANSWER )
@@ -406,10 +406,10 @@ EVENT_START	ev_c03r0401_girl1_01
       //自分の性別で分岐
       IF $sex == PM_MALE THEN   //男
         //「おにいちゃん　はなして」
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_06_1 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_06_1 )
       ELSE                      //女
         //「おねえちゃん　はなして」
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_06_2 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_06_2 )
       ENDIF
     }  
     ELSE                        //セレビィいない
@@ -475,7 +475,7 @@ EVENT_START	ev_c03r0401_girl1_01
         _BALLOONWIN_CLOSE()
       ELSE                                        //２回目以降
         //「まいごになるわ」
-        _EASY_BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_05 )
+        _BALLOONWIN_TALKOBJ_MSG( msg_c03r0401_girl1_05 )
       ENDIF
     ENDIF
   ENDIF
