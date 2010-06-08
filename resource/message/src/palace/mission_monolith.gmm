@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-03T23:39:17"/>
+	<create user="ohmori" host="W00223" date="2010-06-08T18:43:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -970,7 +970,7 @@
 		<comment>ミッション２：
 「●●●●●に　話しかけ　～～～～～パワーをあたえろ！」</comment>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]に　じぶんから　はなしかけ
-「たまごふかパワー　Ｓ」を　あたえよ！
+「タマゴふかパワー　Ｓ」を　あたえよ！
 （３０ふん　タマゴが　かえりやすくなる）
 
 
@@ -978,7 +978,7 @@
 
 ごほうび　：　デルダマ　[2:01:２桁:3]こ</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]に　自分から　話しかけ
-「たまごふかパワー　Ｓ」を　与えよ！
+「タマゴふかパワー　Ｓ」を　与えよ！
 （３０分　タマゴが　かえりやすくなる）
 
 
