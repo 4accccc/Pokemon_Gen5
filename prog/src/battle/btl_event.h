@@ -145,6 +145,7 @@ typedef enum {
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
   BTL_EVENT_WEATHER_CHECK,          ///< 天候のチェック
+  BTL_EVENT_WEIGHT_RATIO,           ///< 体重変化率チェック
   BTL_EVENT_WAZA_WEATHER_TURNCNT,   ///< ワザによる天候変化時のターン数チェック
   BTL_EVENT_WEATHER_CHANGE,         ///< 天候の変化（直前）
   BTL_EVENT_WEATHER_CHANGE_AFTER,   ///< 天候の変化（直後）

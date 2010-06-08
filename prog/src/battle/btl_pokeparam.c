@@ -202,7 +202,6 @@ static inline void flgbuf_reset( u8* buf, u32 flagID );
 static inline BOOL flgbuf_get( const u8* buf, u32 flagID );
 static void ConfrontRec_Clear( BTL_POKEPARAM* bpp );
 static inline BOOL IsMatchTokusei( const BTL_POKEPARAM* bpp, PokeTokusei tokusei );
-static inline BOOL IsMatchItem( const BTL_POKEPARAM* bpp, u16 itemID );
 
 
 
@@ -2789,27 +2788,7 @@ void BPP_SetWeight( BTL_POKEPARAM* bpp, u16 weight )
 //=============================================================================================
 u16 BPP_GetWeight( const BTL_POKEPARAM* bpp )
 {
-  u16 weight = bpp->weight;
-
-  TAYA_Printf("体重チェック：pokeID=%d, weight=%d\n", bpp->coreParam.myID, bpp->weight);
-
-  if( IsMatchTokusei(bpp, POKETOKUSEI_HEVIMETARU) ){
-    TAYA_Printf("ヘビーメタルで２倍\n");
-    weight *= 2;
-  }else if( IsMatchTokusei(bpp, POKETOKUSEI_RAITOMETARU) ){
-    TAYA_Printf("ライトメタルで1/2\n");
-    weight /= 2;
-  }
-
-  if( IsMatchItem(bpp, ITEM_KARUISI) ){
-    weight /= 2;
-  }
-
-  if( weight < BTL_POKE_WEIGHT_MIN ){
-    weight = BTL_POKE_WEIGHT_MIN;
-  }
-
-  return weight;
+  return bpp->weight;
 }
 //----------------------------------------------------------------------------------
 /**
@@ -3450,9 +3429,5 @@ static inline BOOL IsMatchTokusei( const BTL_POKEPARAM* bpp, PokeTokusei tokusei
     return FALSE;
   }
   return (bpp->tokusei == tokusei);
-}
-static inline BOOL IsMatchItem( const BTL_POKEPARAM* bpp, u16 itemID )
-{
-  return (bpp->coreParam.item == itemID);
 }
 

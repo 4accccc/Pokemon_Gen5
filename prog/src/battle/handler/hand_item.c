@@ -77,7 +77,7 @@ static void handler_HimeriNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static void handler_HimeriNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static u8 common_Himeri_LastWazaIdx( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
 static u8 common_Himeri_EnableWazaIdx( BTL_SVFLOW_WORK* flowWk, u8 pokeID );
-static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BOOL fZeroOnly );
+static BOOL handler_HimeriNomi_common( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, BOOL fUseTmp );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_OrenNomi( u32* numElems );
 static void handler_OrenNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_OrenNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -369,6 +369,8 @@ static void handler_Kongoudama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static const BtlEventHandlerTable* HAND_ADD_ITEM_KuroiTekkyuu( u32* numElems );
 static void handler_KuroiTekkyuu_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_KuroiTekkyuu_CheckFly( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable* HAND_ADD_ITEM_Karuisi( u32* numElems );
+static void handler_Karuisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SinkanoKiseki( u32* numElems );
 static void handler_SinkanoKiseki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_GotugotuMet( u32* numElems );
@@ -527,80 +529,81 @@ static const struct {
   { ITEM_HUTOIHONE,         HAND_ADD_ITEM_FutoiHone         },
   { ITEM_KODAWARIHATIMAKI,  HAND_ADD_ITEM_KodawariHachimaki },
   { ITEM_KUROIHEDORO,       HAND_ADD_ITEM_KuroiHedoro       },
-  { ITEM_KODAWARIMEGANE,    HAND_ADD_ITEM_KodawariMegane },
-  { ITEM_KODAWARISUKAAHU,   HAND_ADD_ITEM_KodawariScarf },
-  { ITEM_GINNOKONA,         HAND_ADD_ITEM_GinNoKona       },
-  { ITEM_YAWARAKAISUNA,     HAND_ADD_ITEM_YawarakaiSuna   },
-  { ITEM_KATAIISI,          HAND_ADD_ITEM_KataiIsi        },
-  { ITEM_KISEKINOTANE,      HAND_ADD_ITEM_KisekiNoTane    },
-  { ITEM_KUROIMEGANE,       HAND_ADD_ITEM_KuroiMegane     },
-  { ITEM_KUROOBI,           HAND_ADD_ITEM_Kuroobi         },
-  { ITEM_ZISYAKU,           HAND_ADD_ITEM_Zisyaku         },
-  { ITEM_METARUKOOTO,       HAND_ADD_ITEM_MetalCoat       },
-  { ITEM_SINPINOSIZUKU,     HAND_ADD_ITEM_SinpiNoSizuku   },
-  { ITEM_SURUDOIKUTIBASI,   HAND_ADD_ITEM_SurudoiKutibasi },
-  { ITEM_SURUDOIKIBA,       HAND_ADD_ITEM_SurudoiKiba     },
-  { ITEM_DOKUBARI,          HAND_ADD_ITEM_Dokubari        },
-  { ITEM_TOKENAIKOORI,      HAND_ADD_ITEM_TokenaiKoori    },
-  { ITEM_NOROINOOHUDA,      HAND_ADD_ITEM_NoroiNoOfuda    },
-  { ITEM_MAGATTASUPUUN,     HAND_ADD_ITEM_MagattaSupuun   },
-  { ITEM_MOKUTAN,           HAND_ADD_ITEM_Mokutan         },
-  { ITEM_RYUUNOKIBA,        HAND_ADD_ITEM_RyuunoKiba      },
-  { ITEM_SIRUKUNOSUKAAHU,   HAND_ADD_ITEM_SirukuNoSukaafu },
-  { ITEM_AYASIIOKOU,        HAND_ADD_ITEM_AyasiiOkou      },
-  { ITEM_GANSEKIOKOU,       HAND_ADD_ITEM_GansekiOkou     },
-  { ITEM_SAZANAMINOOKOU,    HAND_ADD_ITEM_SazanamiNoOkou  },
-  { ITEM_USIONOOKOU,        HAND_ADD_ITEM_UsioNoOkou      },
-  { ITEM_OHANANOOKOU,       HAND_ADD_ITEM_OhanaNoOkou     },
-  { ITEM_KIAINOTASUKI,      HAND_ADD_ITEM_KiaiNoTasuki    },
-  { ITEM_KIAINOHATIMAKI,    HAND_ADD_ITEM_KiaiNoHachimaki },
-  { ITEM_TATUZINNOOBI,      HAND_ADD_ITEM_TatsujinNoObi   },
-  { ITEM_INOTINOTAMA,       HAND_ADD_ITEM_InochiNoTama    },
-  { ITEM_METORONOOMU,       HAND_ADD_ITEM_MetroNome       },
-  { ITEM_NEBARINOKAGIDUME,  HAND_ADD_ITEM_NebariNoKagidume},
-  { ITEM_KAIGARANOSUZU,     HAND_ADD_ITEM_KaigaraNoSuzu   },
-  { ITEM_HIKARINONENDO,     HAND_ADD_ITEM_HikariNoNendo   },
-  { ITEM_PAWAHURUHAABU,     HAND_ADD_ITEM_PowefulHarb     },
-  { ITEM_TABENOKOSI,        HAND_ADD_ITEM_Tabenokosi      },
-  { ITEM_DOKUDOKUDAMA,      HAND_ADD_ITEM_DokudokuDama    },
-  { ITEM_KAENDAMA,          HAND_ADD_ITEM_KaenDama        },
-  { ITEM_SIRATAMA,          HAND_ADD_ITEM_Siratama        },
-  { ITEM_KONGOUDAMA,        HAND_ADD_ITEM_Kongoudama      },
-  { ITEM_KUROITEKKYUU,      HAND_ADD_ITEM_KuroiTekkyuu    },
-  { ITEM_AKAIITO,           HAND_ADD_ITEM_AkaiIto         },
-  { ITEM_TUMETAIIWA,        HAND_ADD_ITEM_TumetaiIwa      },
-  { ITEM_SARASARAIWA,       HAND_ADD_ITEM_SarasaraIwa     },
-  { ITEM_ATUIIWA,           HAND_ADD_ITEM_AtuiIwa         },
-  { ITEM_SIMETTAIWA,        HAND_ADD_ITEM_SimettaIwa      },
-  { ITEM_KUTTUKIBARI,       HAND_ADD_ITEM_KuttukiBari     },
-  { ITEM_PAWAARISUTO,       HAND_ADD_ITEM_PowerWrist      },
-  { ITEM_PAWAABERUTO,       HAND_ADD_ITEM_PowerBelt       },
-  { ITEM_PAWAARENZU,        HAND_ADD_ITEM_PowerLens       },
-  { ITEM_PAWAABANDO,        HAND_ADD_ITEM_PowerBand       },
-  { ITEM_PAWAAANKURU,       HAND_ADD_ITEM_PowerAnkle      },
-  { ITEM_PAWAAUEITO,        HAND_ADD_ITEM_PowerWeight     },
-  { ITEM_HINOTAMAPUREETO,   HAND_ADD_ITEM_HinotamaPlate   },
-  { ITEM_SIZUKUPUREETO,     HAND_ADD_ITEM_SizukuPlate     },
-  { ITEM_IKAZUTIPUREETO,    HAND_ADD_ITEM_IkazutiPlate    },
-  { ITEM_MIDORINOPUREETO,   HAND_ADD_ITEM_MirodinoPlate   },
-  { ITEM_TURARANOPUREETO,   HAND_ADD_ITEM_TuraranoPlate   },
-  { ITEM_KOBUSINOPUREETO,   HAND_ADD_ITEM_KobusinoPlate   },
-  { ITEM_MOUDOKUPUREETO,    HAND_ADD_ITEM_MoudokuPlate    },
-  { ITEM_DAITINOPUREETO,    HAND_ADD_ITEM_DaitinoPlate    },
-  { ITEM_AOZORAPUREETO,     HAND_ADD_ITEM_AozoraPlate     },
-  { ITEM_HUSIGINOPUREETO,   HAND_ADD_ITEM_HusiginoPlate   },
-  { ITEM_TAMAMUSIPUREETO,   HAND_ADD_ITEM_TamamusiPlate   },
-  { ITEM_GANSEKIPUREETO,    HAND_ADD_ITEM_GansekiPlate    },
-  { ITEM_MONONOKEPUREETO,   HAND_ADD_ITEM_MononokePlate   },
-  { ITEM_RYUUNOPUREETO,     HAND_ADD_ITEM_RyuunoPlate     },
-  { ITEM_KOWAMOTEPUREETO,   HAND_ADD_ITEM_KowamotePlate   },
-  { ITEM_KOUTETUPUREETO,    HAND_ADD_ITEM_KoutetsuPlate   },
-  { ITEM_OOKINANEKKO,       HAND_ADD_ITEM_OokinaNekko     },
-  { ITEM_KEMURIDAMA,        HAND_ADD_ITEM_Kemuridama      },
-  { ITEM_OMAMORIKOBAN,      HAND_ADD_ITEM_OmamoriKoban    },
-  { ITEM_KOUUNNOOKOU,       HAND_ADD_ITEM_OmamoriKoban    },
+  { ITEM_KODAWARIMEGANE,    HAND_ADD_ITEM_KodawariMegane    },
+  { ITEM_KODAWARISUKAAHU,   HAND_ADD_ITEM_KodawariScarf     },
+  { ITEM_GINNOKONA,         HAND_ADD_ITEM_GinNoKona         },
+  { ITEM_YAWARAKAISUNA,     HAND_ADD_ITEM_YawarakaiSuna     },
+  { ITEM_KATAIISI,          HAND_ADD_ITEM_KataiIsi          },
+  { ITEM_KISEKINOTANE,      HAND_ADD_ITEM_KisekiNoTane      },
+  { ITEM_KUROIMEGANE,       HAND_ADD_ITEM_KuroiMegane       },
+  { ITEM_KUROOBI,           HAND_ADD_ITEM_Kuroobi           },
+  { ITEM_ZISYAKU,           HAND_ADD_ITEM_Zisyaku           },
+  { ITEM_METARUKOOTO,       HAND_ADD_ITEM_MetalCoat         },
+  { ITEM_SINPINOSIZUKU,     HAND_ADD_ITEM_SinpiNoSizuku     },
+  { ITEM_SURUDOIKUTIBASI,   HAND_ADD_ITEM_SurudoiKutibasi   },
+  { ITEM_SURUDOIKIBA,       HAND_ADD_ITEM_SurudoiKiba       },
+  { ITEM_DOKUBARI,          HAND_ADD_ITEM_Dokubari          },
+  { ITEM_TOKENAIKOORI,      HAND_ADD_ITEM_TokenaiKoori      },
+  { ITEM_NOROINOOHUDA,      HAND_ADD_ITEM_NoroiNoOfuda      },
+  { ITEM_MAGATTASUPUUN,     HAND_ADD_ITEM_MagattaSupuun     },
+  { ITEM_MOKUTAN,           HAND_ADD_ITEM_Mokutan           },
+  { ITEM_RYUUNOKIBA,        HAND_ADD_ITEM_RyuunoKiba        },
+  { ITEM_SIRUKUNOSUKAAHU,   HAND_ADD_ITEM_SirukuNoSukaafu   },
+  { ITEM_AYASIIOKOU,        HAND_ADD_ITEM_AyasiiOkou        },
+  { ITEM_GANSEKIOKOU,       HAND_ADD_ITEM_GansekiOkou       },
+  { ITEM_SAZANAMINOOKOU,    HAND_ADD_ITEM_SazanamiNoOkou    },
+  { ITEM_USIONOOKOU,        HAND_ADD_ITEM_UsioNoOkou        },
+  { ITEM_OHANANOOKOU,       HAND_ADD_ITEM_OhanaNoOkou       },
+  { ITEM_KIAINOTASUKI,      HAND_ADD_ITEM_KiaiNoTasuki      },
+  { ITEM_KIAINOHATIMAKI,    HAND_ADD_ITEM_KiaiNoHachimaki   },
+  { ITEM_TATUZINNOOBI,      HAND_ADD_ITEM_TatsujinNoObi     },
+  { ITEM_INOTINOTAMA,       HAND_ADD_ITEM_InochiNoTama      },
+  { ITEM_METORONOOMU,       HAND_ADD_ITEM_MetroNome         },
+  { ITEM_NEBARINOKAGIDUME,  HAND_ADD_ITEM_NebariNoKagidume  },
+  { ITEM_KAIGARANOSUZU,     HAND_ADD_ITEM_KaigaraNoSuzu     },
+  { ITEM_HIKARINONENDO,     HAND_ADD_ITEM_HikariNoNendo     },
+  { ITEM_PAWAHURUHAABU,     HAND_ADD_ITEM_PowefulHarb       },
+  { ITEM_TABENOKOSI,        HAND_ADD_ITEM_Tabenokosi        },
+  { ITEM_DOKUDOKUDAMA,      HAND_ADD_ITEM_DokudokuDama      },
+  { ITEM_KAENDAMA,          HAND_ADD_ITEM_KaenDama          },
+  { ITEM_SIRATAMA,          HAND_ADD_ITEM_Siratama          },
+  { ITEM_KONGOUDAMA,        HAND_ADD_ITEM_Kongoudama        },
+  { ITEM_KUROITEKKYUU,      HAND_ADD_ITEM_KuroiTekkyuu      },
+  { ITEM_AKAIITO,           HAND_ADD_ITEM_AkaiIto           },
+  { ITEM_TUMETAIIWA,        HAND_ADD_ITEM_TumetaiIwa        },
+  { ITEM_SARASARAIWA,       HAND_ADD_ITEM_SarasaraIwa       },
+  { ITEM_ATUIIWA,           HAND_ADD_ITEM_AtuiIwa           },
+  { ITEM_SIMETTAIWA,        HAND_ADD_ITEM_SimettaIwa        },
+  { ITEM_KUTTUKIBARI,       HAND_ADD_ITEM_KuttukiBari       },
+  { ITEM_PAWAARISUTO,       HAND_ADD_ITEM_PowerWrist        },
+  { ITEM_PAWAABERUTO,       HAND_ADD_ITEM_PowerBelt         },
+  { ITEM_PAWAARENZU,        HAND_ADD_ITEM_PowerLens         },
+  { ITEM_PAWAABANDO,        HAND_ADD_ITEM_PowerBand         },
+  { ITEM_PAWAAANKURU,       HAND_ADD_ITEM_PowerAnkle        },
+  { ITEM_PAWAAUEITO,        HAND_ADD_ITEM_PowerWeight       },
+  { ITEM_HINOTAMAPUREETO,   HAND_ADD_ITEM_HinotamaPlate     },
+  { ITEM_SIZUKUPUREETO,     HAND_ADD_ITEM_SizukuPlate       },
+  { ITEM_IKAZUTIPUREETO,    HAND_ADD_ITEM_IkazutiPlate      },
+  { ITEM_MIDORINOPUREETO,   HAND_ADD_ITEM_MirodinoPlate     },
+  { ITEM_TURARANOPUREETO,   HAND_ADD_ITEM_TuraranoPlate     },
+  { ITEM_KOBUSINOPUREETO,   HAND_ADD_ITEM_KobusinoPlate     },
+  { ITEM_MOUDOKUPUREETO,    HAND_ADD_ITEM_MoudokuPlate      },
+  { ITEM_DAITINOPUREETO,    HAND_ADD_ITEM_DaitinoPlate      },
+  { ITEM_AOZORAPUREETO,     HAND_ADD_ITEM_AozoraPlate       },
+  { ITEM_HUSIGINOPUREETO,   HAND_ADD_ITEM_HusiginoPlate     },
+  { ITEM_TAMAMUSIPUREETO,   HAND_ADD_ITEM_TamamusiPlate     },
+  { ITEM_GANSEKIPUREETO,    HAND_ADD_ITEM_GansekiPlate      },
+  { ITEM_MONONOKEPUREETO,   HAND_ADD_ITEM_MononokePlate     },
+  { ITEM_RYUUNOPUREETO,     HAND_ADD_ITEM_RyuunoPlate       },
+  { ITEM_KOWAMOTEPUREETO,   HAND_ADD_ITEM_KowamotePlate     },
+  { ITEM_KOUTETUPUREETO,    HAND_ADD_ITEM_KoutetsuPlate     },
+  { ITEM_OOKINANEKKO,       HAND_ADD_ITEM_OokinaNekko       },
+  { ITEM_KEMURIDAMA,        HAND_ADD_ITEM_Kemuridama        },
+  { ITEM_OMAMORIKOBAN,      HAND_ADD_ITEM_OmamoriKoban      },
+  { ITEM_KOUUNNOOKOU,       HAND_ADD_ITEM_OmamoriKoban      },
 
 
+  { ITEM_KARUISI,           HAND_ADD_ITEM_Karuisi         },  // かるいし
   { ITEM_SINKANOKISEKI,     HAND_ADD_ITEM_SinkanoKiseki   },  // しんかのきせき
   { ITEM_GOTUGOTUMETTO,     HAND_ADD_ITEM_GotugotuMet     },  // ゴツゴツメット
   { ITEM_HUUSEN,            HAND_ADD_ITEM_Huusen          },  // ふうせん
@@ -4763,6 +4766,26 @@ static void handler_KuroiTekkyuu_CheckFly( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ *  かるいし
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable* HAND_ADD_ITEM_Karuisi( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WEIGHT_RATIO,     handler_Karuisi },   // 防御側ガード力チェックハンドラ
+  };
+  *numElems = NELEMS( HandlerTable );
+  return HandlerTable;
+}
+static void handler_Karuisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
   }
 }
 

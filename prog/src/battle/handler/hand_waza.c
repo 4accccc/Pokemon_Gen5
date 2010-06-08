@@ -719,7 +719,6 @@ static CombiEffectType GetCombiWazaType( WazaID waza1, WazaID waza2 );
 static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems );
 static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_CombiWaza_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_TypeMatch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_CombiWaza_AfterDmg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -9357,8 +9356,8 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
 
-    int atk_weight = BPP_GetWeight( bpp );
-    int tgt_weight = BPP_GetWeight( target );
+    int atk_weight = BTL_SVFTOOL_GetWeight( flowWk, pokeID );
+    int tgt_weight = BTL_SVFTOOL_GetWeight( flowWk, BPP_GetID(target) );
 
     int weight_ratio = atk_weight / tgt_weight;
     u32 pow;
@@ -9376,7 +9375,7 @@ static void handler_HeavyBomber( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
       pow = 40;
     }
 
-//    TAYA_Printf("AtkWeight=%d, DefWeight=%d, ratio=%d .. pow=%d\n", atk_weight, tgt_weight, weight_ratio, pow);
+    TAYA_Printf("AtkWeight=%d, DefWeight=%d, ratio=%d .. pow=%d\n", atk_weight, tgt_weight, weight_ratio, pow);
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
@@ -10728,7 +10727,7 @@ static const BtlEventHandlerTable*  ADD_CombiWazaCommon( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_COMBIWAZA_CHECK,     handler_CombiWaza_CheckExe  }, // 合体ワザ発動チェック
     { BTL_EVENT_WAZA_EXE_DECIDE,     handler_CombiWaza_Decide    }, // ワザ出し確定
-    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
+//    { BTL_EVENT_WAZA_PARAM,          handler_CombiWaza_WazaParam }, // ワザパラメータチェック
     { BTL_EVENT_TYPEMATCH_CHECK,     handler_CombiWaza_TypeMatch }, // タイプマッチチェック
     { BTL_EVENT_WAZA_POWER_BASE,     handler_CombiWaza_Pow       }, // 威力計算
     { BTL_EVENT_DAMAGEPROC_END_HIT,  handler_CombiWaza_AfterDmg  }, // ダメージ処理終了後
@@ -10749,12 +10748,21 @@ static void handler_CombiWaza_CheckExe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     if( BPP_CombiWaza_GetParam(bpp, &combiPokeID, &combiWazaID) )
     {
       CombiEffectType  effectType = GetCombiWazaType( BTL_EVENT_FACTOR_GetSubID(myHandle), combiWazaID );
+      u8 wazaType = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
       BTL_N_Printf( DBGSTR_HANDWAZA_CombiWazaExe, pokeID, combiPokeID, combiWazaID, effectType );
       if( effectType != COMBI_EFFECT_NULL )
       {
         work[ 0 ] = 1;  // 合体発動フラグ
         work[ 1 ] = effectType;
         work[ 2 ] = combiPokeID;
+
+        switch( effectType ){
+        case COMBI_EFFECT_RAINBOW:   wazaType = POKETYPE_MIZU;  break;
+        case COMBI_EFFECT_BURNING:   wazaType = POKETYPE_HONOO; break;
+        case COMBI_EFFECT_MOOR:      wazaType = POKETYPE_KUSA;  break;
+        }
+
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, wazaType );
       }
     }
   }
@@ -10770,23 +10778,6 @@ static void handler_CombiWaza_Decide( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_CombiWazaExe );
 //      HANDEX_STR_AddArg( &param->str, work[2] );
       BTL_SVF_HANDEX_Pop( flowWk, param );
-    }
-  }
-}
-// ワザパラメータチェックハンドラ
-static void handler_CombiWaza_WazaParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
-  {
-    if( work[0] )
-    {
-      PokeType  type = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
-      switch( work[1] ){
-      case COMBI_EFFECT_RAINBOW:   type = POKETYPE_MIZU; break;
-      case COMBI_EFFECT_BURNING:   type = POKETYPE_HONOO; break;
-      case COMBI_EFFECT_MOOR:      type = POKETYPE_KUSA; break;
-      }
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_TYPE, type );
     }
   }
 }

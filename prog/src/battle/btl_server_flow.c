@@ -115,7 +115,7 @@ static void scproc_MagicCoat_Root( BTL_SVFLOW_WORK* wk, WazaID actWaza );
 static void wazaRobParam_Init( WAZA_ROB_PARAM* param );
 static void wazaRobParam_Add( WAZA_ROB_PARAM* param, u8 robberPokeID, u8 targetPokeID, BtlPokePos targetPos );
 static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID actWaza, BTL_POKESET* defaultTarget );
-static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
+static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* wazaParam );
 static void scproc_WazaExe_Decide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, BtlEventType evType );
 static void scEvent_WazaExeDecide( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const SVFL_WAZAPARAM* wazaParam, BtlEventType evType  );
 static BOOL scproc_Fight_CheckCombiWazaReady( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, WazaID waza, BtlPokePos targetPos );
@@ -2893,7 +2893,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     scproc_WazaExe_Decide( wk, attacker, wk->wazaParamOrg, BTL_EVENT_WAZA_CALL_DECIDE );
 
     // 合体ワザ（後発）の発動チェック
-    scEvent_CheckCombiWazaExe( wk, attacker, actWaza );
+    scEvent_CheckCombiWazaExe( wk, attacker, wk->wazaParam );
 
     // ワザメッセージ出力
     if( scEvent_CheckWazaMsgCustom(wk, attacker, orgWaza, actWaza, &wk->strParam) ){
@@ -3080,12 +3080,14 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+static void scEvent_CheckCombiWazaExe( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, SVFL_WAZAPARAM* wazaParam )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_COMBIWAZA_CHECK );
+    wazaParam->wazaType = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
   BTL_EVENTVAR_Pop();
 }
 //----------------------------------------------------------------------------------
@@ -7049,6 +7051,30 @@ static BtlWeather scEvent_GetWeather( BTL_SVFLOW_WORK* wk )
 }
 //----------------------------------------------------------------------------------
 /**
+ * [Event] 体重変化倍率取得（ライトメタル・ヘヴィメタルなど）
+ *
+ * @param   wk
+ * @param   bpp
+ *
+ * @retval  u32
+ */
+//----------------------------------------------------------------------------------
+static fx32 svEvent_GetWaitRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+{
+  fx32 ratio;
+
+  BTL_EVENTVAR_Push();
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_CONST(1), FX32_CONST(0.1), FX32_CONST(32) );
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WEIGHT_RATIO );
+    ratio = BTL_EVENTVAR_GetValue( BTL_EVAR_RATIO );
+  BTL_EVENTVAR_Pop();
+
+  return ratio;
+}
+
+//----------------------------------------------------------------------------------
+/**
  * [Event] 状態異常を失敗するケースのチェック
  *
  * @param   wk
@@ -10274,7 +10300,7 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_WAZA_TYPE, WAZADATA_GetType(waza) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_USER_TYPE, BPP_GetPokeType(attacker) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_DAMAGE_TYPE, WAZADATA_GetDamageType(waza) );
     BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_TYPE, WAZADATA_GetParam(waza, WAZAPARAM_TARGET) );
@@ -12651,6 +12677,7 @@ BtlWeather BTL_SVFTOOL_GetWeather( BTL_SVFLOW_WORK* wk )
 {
   return scEvent_GetWeather( wk );
 }
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] デバッグフラグ取得
@@ -12727,7 +12754,7 @@ u8 BTL_SVFTOOL_GetFriendClientID( BTL_SVFLOW_WORK* wk, u8 clientID )
 }
 //--------------------------------------------------------------------------------------
 /**
- * メンバー入れ替え時の割り込みアクション解決中であるかチェック
+ * [ハンドラ用ツール] メンバー入れ替え時の割り込みアクション解決中であるかチェック
  *
  * @param   wk
  *
@@ -12740,7 +12767,7 @@ BOOL BTL_SVFTOOL_IsMemberOutIntr( BTL_SVFLOW_WORK* wk )
 }
 //--------------------------------------------------------------------------------------
 /**
- * メンバー入れ替え時の割り込みリクエスト
+ * [ハンドラ用ツール] メンバー入れ替え時の割り込みリクエスト
  *
  * @param   wk
  * @param   pokeID    割り込みたいポケID
@@ -12755,7 +12782,7 @@ void BTL_SVFTOOL_AddMemberOutIntr( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
- * そらをとぶ・ダイビング・フリーフォール等で画面から消えている状態のポケモンかどうか判定
+ * [ハンドラ用ツール] そらをとぶ・ダイビング・フリーフォール等で画面から消えている状態のポケモンかどうか判定
  *
  * @param   pokeID
  *
@@ -12769,7 +12796,7 @@ BOOL BTL_SVFTOOL_IsTameHidePoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
- * フリーフォール実行側のポケモンかどうか判定
+ * [ハンドラ用ツール] フリーフォール実行側のポケモンかどうか判定
  *
  * @param   pokeID
  *
@@ -12781,6 +12808,30 @@ BOOL BTL_SVFTOOL_IsFreeFallUserPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
   return checkFreeFallUsing( bpp );
 }
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] 体重取得
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  u32
+ */
+//--------------------------------------------------------------------------------------
+u32 BTL_SVFTOOL_GetWeight( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+
+  fx32 ratio = svEvent_GetWaitRatio( wk, bpp );
+  u32  weight = BPP_GetWeight( bpp );
+
+  weight = BTL_CALC_MulRatio( weight, ratio );
+  if( weight < BTL_POKE_WEIGHT_MIN ){
+    weight = BTL_POKE_WEIGHT_MIN;
+  }
+  return weight;
+}
+
 
 //=============================================================================================
 /**
