@@ -649,6 +649,7 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
   GAMEDATA *gamedata;
   int net_id, my_net_id;
   BOOL force_vanish;
+  COMM_PLAYER_PACKAGE pack;
   
   if(intcomm == NULL){
     return;
@@ -665,7 +666,9 @@ void IntrudeComm_FieldCreate(void *pwk, void *app_work, FIELDMAP_WORK *fieldWork
     if(CommPlayer_CheckOcc(intcomm->cps, net_id) == TRUE){
       intcomm->intrude_status[net_id].player_pack.vanish 
         = intcomm->intrude_status[net_id].force_vanish;
-      CommPlayer_SetParam(intcomm->cps, net_id, &intcomm->intrude_status[net_id].player_pack);
+      pack = intcomm->intrude_status[net_id].player_pack;
+      pack.vanish = TRUE;
+      CommPlayer_SetParam(intcomm->cps, net_id, &pack);
     }
   }
   
