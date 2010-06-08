@@ -1508,6 +1508,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
             //範囲外キャンセル
             skillWork->isHoldTp = FALSE;
             GFL_CLACT_WK_SetDrawEnable( skillWork->clwkArrow , FALSE );
+            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
           }
           else
           if( MATH_ABS( (int)skillWork->holdTpy - (int)work->tpy ) > PSTATUS_SKILL_TP_SLIDE_CHECK_Y )
@@ -1532,6 +1533,7 @@ static void PSTATUS_SKILL_UpdateTP( PSTATUS_WORK *work , PSTATUS_SKILL_WORK *ski
           {
             //範囲外キャンセル
             PSTATUS_SKILL_ChangeColor( &skillWork->plateWork[skillWork->changeTarget] , 0 );
+            GFL_CLACT_WK_SetDrawEnable( skillWork->clwkArrow , FALSE );
             GFL_CLACT_WK_SetDrawEnable( skillWork->clwkTargetCur , FALSE );
             skillWork->isChangeMode = FALSE;
             skillWork->isHoldTp = FALSE;
