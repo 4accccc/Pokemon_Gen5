@@ -4664,15 +4664,18 @@ static  int   BTLV_INPUT_CheckKey( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL
       if( trg == PAD_BUTTON_A )
       {
         hit = tbl->a_button;
-        if( get_cancel_flag( biw, tp_tbl, hit ) == FALSE )
-        {
-          SePlayDecide( biw );
+        if( biw->button_exist[ hit ] == TRUE )
+        { 
+          if( get_cancel_flag( biw, tp_tbl, hit ) == FALSE )
+          {
+            SePlayDecide( biw );
+          }
+          else
+          {
+            SePlayCancel( biw );
+          }
+          decide_flag = TRUE;
         }
-        else
-        {
-          SePlayCancel( biw );
-        }
-        decide_flag = TRUE;
       }
       else
       {
