@@ -534,7 +534,7 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_MAGUMANOYOROI,    HAND_TOK_ADD_MagumaNoYoroi },
     { POKETOKUSEI_MIZUNOBEERU,      HAND_TOK_ADD_MizuNoBale    },
     { POKETOKUSEI_MENEKI,           HAND_TOK_ADD_Meneki        },
-    { POKETOKUSEI_NOOGAADO,         HAND_TOK_ADD_NoGuard       },
+//    { POKETOKUSEI_NOOGAADO,         HAND_TOK_ADD_NoGuard       }, svflowë§Ç≈ëŒèà
     { POKETOKUSEI_KIMOTTAMA,        HAND_TOK_ADD_Kimottama     },
     { POKETOKUSEI_BOUON,            HAND_TOK_ADD_Bouon         },
     { POKETOKUSEI_FUYUU,            HAND_TOK_ADD_Fuyuu         },

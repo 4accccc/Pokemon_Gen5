@@ -3851,6 +3851,11 @@ static void scEvent_WazaExeEnd_Common( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID wa
 //----------------------------------------------------------------------------------
 static BOOL IsMustHit( const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target )
 {
+  if( (BPP_GetValue(attacker, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
+  ||  (BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NOOGAADO)
+  ){
+    return TRUE;
+  }
   if( BPP_CheckSick(attacker, WAZASICK_MUSTHIT) ){
     return TRUE;
   }
