@@ -81,6 +81,7 @@ static const struct{
   u16 target_talked[TALK_TYPE_MAX];         ///<自分がターゲットで話しかけられた
 
   u16 target_battle_ok[TALK_TYPE_MAX];     ///<自分がターゲットで戦闘OK
+  u16 target_battle_after[TALK_TYPE_MAX];  ///<自分がターゲットで戦闘後
 
   u16 target_battle_ng[TALK_TYPE_MAX];      ///<自分がターゲットで戦闘を断った
 
@@ -88,6 +89,7 @@ static const struct{
   u16 mission_talked[TALK_TYPE_MAX];        ///<自分がミッション実行者で話しかけられた
   
   u16 mission_battle_ok[TALK_TYPE_MAX];     ///<自分がミッション実行者で戦闘OK
+  u16 mission_battle_after[TALK_TYPE_MAX];  ///<自分がミッション実行者で戦闘後
 
   u16 mission_battle_ng[TALK_TYPE_MAX];     ///<自分がミッション実行者で戦闘を断られた
 }MissionBattleMsgID = {
@@ -111,6 +113,13 @@ static const struct{
     mis_m03_03_t3,
     mis_m03_03_t4,
     mis_m03_03_t5,
+  },
+  { //自分がターゲットで戦闘後
+    mis_m03_04_t1,
+    mis_m03_04_t2,
+    mis_m03_04_t3,
+    mis_m03_04_t4,
+    mis_m03_04_t5,
   },
   { //自分がターゲットで戦闘を断った
     mis_m03_05_t1,
@@ -140,6 +149,13 @@ static const struct{
     mis_m03_03_m3,
     mis_m03_03_m4,
     mis_m03_03_m5,
+  },
+  { //自分がミッション実行者で戦闘後
+    mis_m03_04_m1,
+    mis_m03_04_m2,
+    mis_m03_04_m3,
+    mis_m03_04_m4,
+    mis_m03_04_m5,
   },
   { //自分がミッション実行者で戦闘を断られた
     mis_m03_05_m1,
@@ -331,7 +347,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_AFTER_NEXT:
-    (*seq) = SEQ_END;
+    IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
+    IntrudeEventPrint_StartStream(&talk->ccew.iem, 
+      MissionBattleMsgID.mission_battle_after[talk->ccew.disguise_talk_type]);
+    (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_BATTLE_NG:
@@ -558,7 +577,10 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_AFTER_NEXT:
-    (*seq) = SEQ_END;
+    IntrudeEventPrint_SetupFieldMsg(&talk->ccew.iem, gsys);
+    IntrudeEventPrint_StartStream(&talk->ccew.iem, 
+      MissionBattleMsgID.target_battle_after[talk->ccew.disguise_talk_type]);
+    (*seq) = SEQ_LAST_MSG_WAIT;
     break;
 
   case SEQ_BATTLE_NG:
