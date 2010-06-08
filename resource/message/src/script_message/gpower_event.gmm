@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-22T18:44:12"/>
+	<create user="iwasawa" host="W00157" date="2010-06-08T17:05:59"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,9 +260,9 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="785" top="91" right="1258" bottom="715" visible="no"/>
+		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -333,13 +333,13 @@
 
 	<row id="msg_gpower_check_label01" back-color="#80ff80,,,#80ff80,,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>Gパワーの状態確認ウィンドウメッセージ</comment>
-		<language name="JPN" width="256">せっていしているデルパワー</language>
-		<language name="JPN_KANJI" width="256">設定しているデルパワー</language>
+		<language name="JPN" width="256">[FF:00:色:2]せっていしているデルパワー</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2]設定しているデルパワー</language>
 	</row>
 
 	<row id="msg_gpower_check_label02" back-color="#80ff80,,,,,#80ff80,,,,,,#80ff80,,,,,,">
-		<language name="JPN" width="256">はつどうちゅうのデルパワー</language>
-		<language name="JPN_KANJI" width="256">発動中のデルパワー</language>
+		<language name="JPN" width="256">[FF:00:色:2]はつどうちゅうのデルパワー</language>
+		<language name="JPN_KANJI" width="256">[FF:00:色:2]発動中のデルパワー</language>
 	</row>
 
 	<row id="msg_gpower_check_list01" back-color="#80ff80,,,,,,,,,,,,,,,,,">
