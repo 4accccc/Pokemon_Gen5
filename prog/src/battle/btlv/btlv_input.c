@@ -1363,7 +1363,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         biw->button_exist[ i ] = TRUE;  //押せるボタンかどうかチェック
       }
-      biw->button_exist[ 1 ] = BTLV_EFFECT_CheckShooterEnable();  //押せるボタンかどうかチェック
+      biw->button_exist[ 1 ] = BTLV_EFFECT_CheckItemEnable();  //押せるボタンかどうかチェック
 
       BTLV_INPUT_DeletePokeIcon( biw );
       BTLV_INPUT_CreatePokeIcon( biw, bicp );
@@ -5188,7 +5188,7 @@ static  void  set_cursor_pos( BTLV_INPUT_WORK* biw )
 //=============================================================================================
 static  void  change_bag_button_pal( BTLV_INPUT_WORK* biw )
 { 
-  if( BTLV_EFFECT_CheckShooterEnable() == FALSE )
+  if( BTLV_EFFECT_CheckItemEnable() == FALSE )
   { 
     u16 pal[ 0x10 ];
     SoftFade( biw->bag_pal, pal, 0x10, 8, 0 );

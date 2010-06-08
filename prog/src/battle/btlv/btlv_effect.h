@@ -321,6 +321,7 @@ extern  void              BTLV_EFFECT_SetBGMNoCheckPush( int bgm_no );
 extern  void              BTLV_EFFECT_SetBagMode( BtlBagMode bagMode );
 extern  BtlBagMode        BTLV_EFFECT_GetBagMode( void );
 extern  BOOL              BTLV_EFFECT_CheckShooterEnable( void );
+extern  BOOL              BTLV_EFFECT_CheckItemEnable( void );
 extern  void              BTLV_EFFECT_SetTCB( GFL_TCB* tcb, BTLV_EFFECT_TCB_CALLBACK_FUNC* callback_func,
                                               BTLV_EFFECT_TCB_GROUP group );
 extern  int               BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb );
