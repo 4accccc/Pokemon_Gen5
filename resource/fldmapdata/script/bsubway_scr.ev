@@ -781,6 +781,9 @@ sub_receipt_challenge_multi_comm:
   
   //通信前レポート
   $save_on = TRUE
+
+/*
+  コンフィグのIRレポート設定は無視するように変更となった。
   
   IF $irc == TRUE THEN
     _GET_WIRELESS_SAVEMODE( ret ) //IRCレポート設定
@@ -789,6 +792,7 @@ sub_receipt_challenge_multi_comm:
       $save_on = FALSE  //IRC通信前レポート無し
     ENDIF
   ENDIF
+*/
   
   IF $save_on == TRUE THEN
     _REPORT_EVENT_CALL( ret )
@@ -855,7 +859,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -870,7 +874,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -881,7 +885,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -893,7 +897,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -911,11 +915,12 @@ sub_receipt_challenge_multi_comm:
     
     IF $comm_ret == FALSE THEN
       _CALL sub_bsw_common_comm_error_end
+      _CALL sub_bsw_common_exit_none_msg
     ELSE
       _CALL sub_bsw_common_comm_end
+      _CALL sub_bsw_common_exit
     ENDIF
     
-    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -927,7 +932,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -938,7 +943,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -950,7 +955,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -979,11 +984,12 @@ sub_receipt_challenge_multi_comm:
     
     IF $comm_ret == FALSE THEN
       _CALL sub_bsw_common_comm_error_end
+      _CALL sub_bsw_common_exit_none_msg
     ELSE
       _CALL sub_bsw_common_comm_timing_end
+      _CALL sub_bsw_common_exit
     ENDIF
     
-    _CALL sub_bsw_common_exit
     _RET
   ENDIF
   
@@ -995,7 +1001,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -1006,7 +1012,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -1018,7 +1024,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -1030,7 +1036,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -1049,7 +1055,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -1065,7 +1071,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == TRUE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
   
@@ -1074,7 +1080,7 @@ sub_receipt_challenge_multi_comm:
   
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
  
@@ -1092,7 +1098,7 @@ sub_receipt_challenge_multi_comm:
    
   IF $comm_ret == FALSE THEN
     _CALL sub_bsw_common_comm_error_end
-    _CALL sub_bsw_common_exit
+    _CALL sub_bsw_common_exit_none_msg
     _RET
   ENDIF
  
@@ -2396,6 +2402,18 @@ sub_bsw_common_exit:
   
   _BSUBWAY_WORK_RELEASE() //ワーク開放
   
+  _CALL sub_receipt_demo_leave_stopper
+}
+_RET 
+
+//--------------------------------------------------------------
+//  受付　通信エラー時の共通終了処理。メッセージを出さない
+//--------------------------------------------------------------
+sub_bsw_common_exit_none_msg:
+{
+  //ステートクリア
+  _CALL sub_receipt_flag_clear
+  _BSUBWAY_WORK_RELEASE() //ワーク開放
   _CALL sub_receipt_demo_leave_stopper
 }
 _RET 
