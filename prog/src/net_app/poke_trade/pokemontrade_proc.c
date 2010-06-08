@@ -4312,9 +4312,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
       if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
         NetErr_DispCall( TRUE );
       }
-      if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
-      }
-      else if(GFL_NET_IsWifiConnect()){
+      if(GFL_NET_IsWifiConnect()){
         GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE);
       }
       else if(pWork->type != POKEMONTRADE_TYPE_UNION){  //ユニオンルームでのエラーはユニオンルーム側で管理するため画面を終了させる事だけを行う
