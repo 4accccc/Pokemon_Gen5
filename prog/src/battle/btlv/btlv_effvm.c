@@ -147,6 +147,9 @@ typedef struct{
   int               temp_scr_x;
   int               temp_scr_y;
   u32               voiceplayerIndex[ TEMOTI_POKEMAX ];  //鳴き声プレイヤーインデックス（念のため6体分）
+  BOOL              push_camera_flag;
+  VecFx32           push_camera_pos;
+  VecFx32           push_camera_target;
 #ifdef PM_DEBUG
   const DEBUG_PARTICLE_DATA*  dpd;
   BOOL                        debug_flag;
@@ -312,6 +315,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE_COODINATE( VMHANDLE *vmh, void *context_wor
 static VMCMD_RESULT VMEC_CAMERA_MOVE_ANGLE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CAMERA_SHAKE( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_CAMERA_POS_PUSH( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_LOAD( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PARTICLE_PLAY_COORDINATE( VMHANDLE *vmh, void *context_work );
@@ -377,6 +381,7 @@ static VMCMD_RESULT VMEC_CALL( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_RETURN( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_JUMP( VMHANDLE *vmh, void *context_work );
 static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work );
+static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work );
 
 static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work );
 
@@ -480,6 +485,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_CAMERA_MOVE_ANGLE,
   VMEC_CAMERA_SHAKE,
   VMEC_CAMERA_PROJECTION,
+  VMEC_CAMERA_POS_PUSH,
   VMEC_PARTICLE_LOAD,
   VMEC_PARTICLE_PLAY,
   VMEC_PARTICLE_PLAY_COORDINATE,
@@ -545,6 +551,7 @@ static const VMCMD_FUNC btlv_effect_command_table[]={
   VMEC_RETURN,
   VMEC_JUMP,
   VMEC_PAUSE,
+  VMEC_SEQ_JUMP,
 
   VMEC_SEQ_END,
 };
@@ -771,6 +778,9 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 
   //ボールモードを初期化
   bevw->ball_mode = BTLEFF_USE_BALL;
+
+  //カメラ位置プッシュフラグを初期化
+  bevw->push_camera_flag = FALSE;
 
   VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
 
@@ -1001,6 +1011,12 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   //ブレーキフレーム数を読み込み
   brake = ( int )VMGetU32( vmh );
 
+  //カメラ位置を退避していないのに、指定されていたら、初期位置にする
+  if( ( cam_move_pos == BTLEFF_CAMERA_POS_PUSH ) && ( bevw->push_camera_flag == FALSE ) )
+  { 
+    cam_move_pos = BTLEFF_CAMERA_POS_INIT;
+  }
+
   //デフォルト位置に動かないなら、投視射影モードにする
   if( cam_move_pos != BTLEFF_CAMERA_POS_INIT )
   {
@@ -1041,6 +1057,14 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     cam_target.x = cam_target_table[ cam_move_pos ].x;
     cam_target.y = cam_target_table[ cam_move_pos ].y;
     cam_target.z = cam_target_table[ cam_move_pos ].z;
+    break;
+  case BTLEFF_CAMERA_POS_PUSH:
+    cam_pos.x     = bevw->push_camera_pos.x;
+    cam_pos.y     = bevw->push_camera_pos.y;
+    cam_pos.z     = bevw->push_camera_pos.z;
+    cam_target.x  = bevw->push_camera_target.x;
+    cam_target.y  = bevw->push_camera_target.y;
+    cam_target.z  = bevw->push_camera_target.z;
     break;
   case BTLEFF_CAMERA_POS_INIT:
   default:
@@ -1255,6 +1279,28 @@ static VMCMD_RESULT VMEC_CAMERA_PROJECTION( VMHANDLE *vmh, void *context_work )
       }
     }
   }
+
+  return bevw->control_mode;
+}
+
+//============================================================================================
+/**
+ * @brief		カメラ現在位置をプッシュ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_CAMERA_POS_PUSH( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)context_work;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_CAMERA_POS_PUSH\n");
+#endif DEBUG_OS_PRINT
+
+  bevw->push_camera_flag = TRUE;
+  BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &bevw->push_camera_pos, &bevw->push_camera_target );
 
   return bevw->control_mode;
 }
@@ -3795,6 +3841,43 @@ static VMCMD_RESULT VMEC_PAUSE( VMHANDLE *vmh, void *context_work )
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
 
   return VMCMD_RESULT_SUSPEND;
+}
+
+//============================================================================================
+/**
+ * @brief	シーケンスジャンプ
+ *
+ * @param[in] vmh       仮想マシン制御構造体へのポインタ
+ * @param[in] context_work  コンテキストワークへのポインタ
+ */
+//============================================================================================
+static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work )
+{
+  BTLV_EFFVM_WORK *bevw = ( BTLV_EFFVM_WORK* )context_work;
+  int seq_no = ( int )VMGetU32( vmh );
+  int *start_ofs;
+
+#ifdef DEBUG_OS_PRINT
+  OS_TPrintf("VMEC_SEQ_JUMP\n");
+#endif DEBUG_OS_PRINT
+
+  GFL_HEAP_FreeMemory( bevw->sequence );
+
+  if( seq_no < BTLEFF_SINGLE_ENCOUNT_1 )
+  { 
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_WAZAEFF_SEQ, seq_no, GFL_HEAP_LOWID( bevw->heapID ) );
+  }
+  else
+  { 
+    seq_no -= BTLEFF_SINGLE_ENCOUNT_1;
+    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, seq_no, GFL_HEAP_LOWID( bevw->heapID ) );
+  }
+  start_ofs = (int *)&bevw->sequence[ TBL_AA2BB ];
+  bevw->sequence_work = 0;
+
+  VMCMD_Jump( vmh, &bevw->sequence[ (*start_ofs) ] );
+
+  return bevw->control_mode;
 }
 
 //============================================================================================

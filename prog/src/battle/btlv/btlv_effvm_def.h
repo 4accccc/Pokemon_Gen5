@@ -51,6 +51,7 @@
 #define	BTLEFF_CAMERA_POS_ATTACK_PAIR		( 10 )
 #define	BTLEFF_CAMERA_POS_DEFENCE				( 11 )
 #define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 12 )
+#define	BTLEFF_CAMERA_POS_PUSH					( 13 )
 
 #define	BTLEFF_CAMERA_POS_NONE					( 0xffffffff )
 
@@ -461,74 +462,76 @@ ex)
 #define	EC_CAMERA_MOVE_ANGLE				      ( 2 )
 #define	EC_CAMERA_SHAKE				            ( 3 )
 #define	EC_CAMERA_PROJECTION				      ( 4 )
-#define	EC_PARTICLE_LOAD						      ( 5 )
-#define	EC_PARTICLE_PLAY						      ( 6 )
-#define	EC_PARTICLE_PLAY_COORDINATE	      ( 7 )
-#define	EC_PARTICLE_PLAY_ORTHO			      ( 8 )
-#define	EC_PARTICLE_PLAY_ALL				      ( 9 )
-#define	EC_PARTICLE_DELETE					      ( 10 )
-#define	EC_EMITTER_MOVE							      ( 11 )
-#define	EC_EMITTER_MOVE_COORDINATE	      ( 12 )
-#define	EC_EMITTER_MOVE_ORTHO_COORDINATE	( 13 )
-#define	EC_EMITTER_CIRCLE_MOVE            ( 14 )
-#define	EC_EMITTER_CIRCLE_MOVE_ORTHO      ( 15 )
-#define	EC_POKEMON_MOVE							      ( 16 )
-#define	EC_POKEMON_CIRCLE_MOVE			      ( 17 )
-#define	EC_POKEMON_SIN_MOVE			          ( 18 )
-#define	EC_POKEMON_SCALE						      ( 19 )
-#define	EC_POKEMON_ROTATE						      ( 20 )
-#define	EC_POKEMON_ALPHA						      ( 21 )
-#define	EC_POKEMON_MOSAIC						      ( 22 )
-#define	EC_POKEMON_SET_MEPACHI_FLAG	      ( 23 )
-#define	EC_POKEMON_SET_ANM_FLAG			      ( 24 )
-#define	EC_POKEMON_PAL_FADE					      ( 25 )
-#define	EC_POKEMON_VANISH					        ( 26 )
-#define	EC_POKEMON_SHADOW_VANISH	        ( 27 )
-#define	EC_POKEMON_DEL	                  ( 28 )
-#define	EC_TRAINER_SET							      ( 29 )
-#define	EC_TRAINER_MOVE							      ( 30 )
-#define	EC_TRAINER_ANIME_SET				      ( 31 )
-#define	EC_TRAINER_DEL							  		( 32 )
-#define	EC_BG_LOAD	   				        		( 33 )
-#define	EC_BG_SCROLL		   				    		( 34 )
-#define	EC_BG_RASTER_SCROLL		   	    		( 35 )
-#define	EC_BG_PAL_ANM		   				    		( 36 )
-#define	EC_BG_PRIORITY		   				  		( 37 )
-#define	EC_BG_ALPHA		   				      		( 38 )
-#define	EC_BG_PAL_FADE		   				  		( 39 )
-#define	EC_BG_VISIBLE								  		( 40 )
-#define	EC_WINDOW_MOVE										( 41 )
-#define	EC_OBJ_SET	   				        		( 42 )
-#define	EC_OBJ_MOVE	   				        		( 43 )
-#define	EC_OBJ_SCALE	   				      		( 44 )
-#define	EC_OBJ_ANIME_SET	   				  		( 45 )
-#define	EC_OBJ_PAL_FADE		   				  		( 46 )
-#define	EC_OBJ_DEL	   				        		( 47 )
-#define	EC_GAUGE_VANISH	   				    		( 48 )
-#define	EC_SE_PLAY									  		( 49 )
-#define	EC_SE_STOP									  		( 50 )
-#define	EC_SE_PAN								      		( 51 )
-#define	EC_SE_EFFECT								  		( 52 )
-#define	EC_EFFECT_END_WAIT					  		( 53 )
-#define	EC_WAIT											  		( 54 )
-#define	EC_CONTROL_MODE							  		( 55 )
-#define	EC_IF						              		( 56 )
-#define	EC_MCSS_POS_CHECK						  		( 57 )
-#define	EC_SET_WORK						        		( 58 )
-#define	EC_GET_WORK						        		( 59 )
-#define	EC_SET_PARAM						      		( 60 )
-#define	EC_MIGAWARI						        		( 61 )
-#define	EC_HENSHIN						        		( 62 )
-#define	EC_NAKIGOE						        		( 63 )
-#define	EC_BALL_MODE						      		( 64 )
-#define	EC_BALLOBJ_SET						    		( 65 )
-#define	EC_CALL						            		( 66 )
-#define	EC_RETURN						          		( 67 )
-#define	EC_JUMP						            		( 68 )
-#define	EC_PAUSE						          		( 69 )
+#define	EC_CAMERA_POS_PUSH				        ( 5 )
+#define	EC_PARTICLE_LOAD						      ( 6 )
+#define	EC_PARTICLE_PLAY						      ( 7 )
+#define	EC_PARTICLE_PLAY_COORDINATE	      ( 8 )
+#define	EC_PARTICLE_PLAY_ORTHO			      ( 9 )
+#define	EC_PARTICLE_PLAY_ALL				      ( 10 )
+#define	EC_PARTICLE_DELETE					      ( 11 )
+#define	EC_EMITTER_MOVE							      ( 12 )
+#define	EC_EMITTER_MOVE_COORDINATE	      ( 13 )
+#define	EC_EMITTER_MOVE_ORTHO_COORDINATE	( 14 )
+#define	EC_EMITTER_CIRCLE_MOVE            ( 15 )
+#define	EC_EMITTER_CIRCLE_MOVE_ORTHO      ( 16 )
+#define	EC_POKEMON_MOVE							      ( 17 )
+#define	EC_POKEMON_CIRCLE_MOVE			      ( 18 )
+#define	EC_POKEMON_SIN_MOVE			          ( 19 )
+#define	EC_POKEMON_SCALE						      ( 20 )
+#define	EC_POKEMON_ROTATE						      ( 21 )
+#define	EC_POKEMON_ALPHA						      ( 22 )
+#define	EC_POKEMON_MOSAIC						      ( 23 )
+#define	EC_POKEMON_SET_MEPACHI_FLAG	      ( 24 )
+#define	EC_POKEMON_SET_ANM_FLAG			      ( 25 )
+#define	EC_POKEMON_PAL_FADE					      ( 26 )
+#define	EC_POKEMON_VANISH					        ( 27 )
+#define	EC_POKEMON_SHADOW_VANISH	        ( 28 )
+#define	EC_POKEMON_DEL	                  ( 29 )
+#define	EC_TRAINER_SET							      ( 30 )
+#define	EC_TRAINER_MOVE							      ( 31 )
+#define	EC_TRAINER_ANIME_SET				      ( 32 )
+#define	EC_TRAINER_DEL							  		( 33 )
+#define	EC_BG_LOAD	   				        		( 34 )
+#define	EC_BG_SCROLL		   				    		( 35 )
+#define	EC_BG_RASTER_SCROLL		   	    		( 36 )
+#define	EC_BG_PAL_ANM		   				    		( 37 )
+#define	EC_BG_PRIORITY		   				  		( 38 )
+#define	EC_BG_ALPHA		   				      		( 39 )
+#define	EC_BG_PAL_FADE		   				  		( 40 )
+#define	EC_BG_VISIBLE								  		( 41 )
+#define	EC_WINDOW_MOVE										( 42 )
+#define	EC_OBJ_SET	   				        		( 43 )
+#define	EC_OBJ_MOVE	   				        		( 44 )
+#define	EC_OBJ_SCALE	   				      		( 45 )
+#define	EC_OBJ_ANIME_SET	   				  		( 46 )
+#define	EC_OBJ_PAL_FADE		   				  		( 47 )
+#define	EC_OBJ_DEL	   				        		( 48 )
+#define	EC_GAUGE_VANISH	   				    		( 49 )
+#define	EC_SE_PLAY									  		( 50 )
+#define	EC_SE_STOP									  		( 51 )
+#define	EC_SE_PAN								      		( 52 )
+#define	EC_SE_EFFECT								  		( 53 )
+#define	EC_EFFECT_END_WAIT					  		( 54 )
+#define	EC_WAIT											  		( 55 )
+#define	EC_CONTROL_MODE							  		( 56 )
+#define	EC_IF						              		( 57 )
+#define	EC_MCSS_POS_CHECK						  		( 58 )
+#define	EC_SET_WORK						        		( 59 )
+#define	EC_GET_WORK						        		( 60 )
+#define	EC_SET_PARAM						      		( 61 )
+#define	EC_MIGAWARI						        		( 62 )
+#define	EC_HENSHIN						        		( 63 )
+#define	EC_NAKIGOE						        		( 64 )
+#define	EC_BALL_MODE						      		( 65 )
+#define	EC_BALLOBJ_SET						    		( 66 )
+#define	EC_CALL						            		( 67 )
+#define	EC_RETURN						          		( 68 )
+#define	EC_JUMP						            		( 69 )
+#define	EC_PAUSE						          		( 70 )
+#define	EC_SEQ_JUMP						          	( 71 )
 
 //終了コマンドは必ず一番下になるようにする
-#define	EC_SEQ_END									  		( 70 )
+#define	EC_SEQ_END									  		( 72 )
 
 #ifndef __C_NO_DEF_
 
@@ -549,8 +552,8 @@ ex)
  *
  * #param	COMBOBOX_TEXT	追従	ダイレクト
  * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_MOVE_INTERPOLATION	BTLEFF_CAMERA_MOVE_DIRECT
- * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	初期位置	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D
- * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR	BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR	BTLEFF_CAMERA_POS_INIT	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D
+ * #param	COMBOBOX_TEXT	攻撃側	攻撃側ペア	防御側	防御側ペア	初期位置	POS_AA	POS_BB	POS_A	POS_B	POS_C	POS_D 退避先
+ * #param	COMBOBOX_VALUE	BTLEFF_CAMERA_POS_ATTACK BTLEFF_CAMERA_POS_ATTACK_PAIR	BTLEFF_CAMERA_POS_DEFENCE BTLEFF_CAMERA_POS_DEFENCE_PAIR	BTLEFF_CAMERA_POS_INIT	BTLEFF_CAMERA_POS_AA	BTLEFF_CAMERA_POS_BB	BTLEFF_CAMERA_POS_A	BTLEFF_CAMERA_POS_B	BTLEFF_CAMERA_POS_C	BTLEFF_CAMERA_POS_D BTLEFF_CAMERA_POS_PUSH
  * #param	VALUE_INT	移動フレーム数
  * #param	VALUE_INT	移動ウエイト
  * #param	VALUE_INT	ブレーキ開始フレーム
@@ -680,6 +683,17 @@ ex)
 	.short	EC_CAMERA_PROJECTION
 	.long		\type
 	.long		\pos
+	.endm
+
+//======================================================================
+/**
+ * @brief		カメラ現在位置をプッシュ
+ *
+ * #param_num	0
+ */
+//======================================================================
+	.macro	CAMERA_POS_PUSH
+	.short	EC_CAMERA_POS_PUSH
 	.endm
 
 //======================================================================
@@ -2400,6 +2414,21 @@ ex)
 //======================================================================
   .macro  PAUSE
   .short  EC_PAUSE
+  .endm
+
+//======================================================================
+/**
+ * @brief	シーケンスジャンプ
+ *
+ * #param_num	1
+ * @param	seq_no  飛び先シーケンスナンバー
+ *
+ * #param	VALUE_INT シーケンスナンバー
+ */
+//======================================================================
+  .macro  SEQ_JUMP  seq_no
+  .short  EC_SEQ_JUMP
+  .long   \seq_no
   .endm
 
 //======================================================================
