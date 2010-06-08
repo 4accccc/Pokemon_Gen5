@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-09T17:28:43"/>
+	<create user="matsumiya" host="W00224" date="2010-06-08T21:43:27"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -580,8 +580,18 @@ msg_c03r0401_girl1_04</comment>
 ちょっと　心配に　なっちゃった</language>
 	</row>
 
-	<row id="msg_c03r0401_girl1_11" text-color="#000000,,,#000000,,#000000,#000000,#000000,,,#000000,,#000000,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
+	<row id="msg_c03r0401_girl1_11" text-color="#000000,,,#000000,,#000000,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>●「いいえ」の場合のセリフ</comment>
+		<attribute name="キャラ指定">GIRL2</attribute>
+		<language name="JPN" width="256">つれていって　あげないんだ…
+このコ　さみしそうだよ…▼</language>
+		<language name="JPN_KANJI" width="256">つれていって　あげないんだ…
+このコ　さみしそうだよ…▼</language>
+	</row>
+
+	<row id="msg_c03r0401_girl1_11a" text-color="#000000,,,,,,,#000000,,,#000000,,,#000000,,,#000000,," back-color="#ffff80,,,,,,,,,,,,,,,,,,">
+		<comment>●「いいえ」の場合のセリフ
+・2回目以降</comment>
 		<attribute name="キャラ指定">GIRL2</attribute>
 		<language name="JPN" width="256">つれていって　あげないんだ…
 このコ　さみしそうだよ…</language>
