@@ -291,8 +291,8 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
   }
 
   // 通信アイコン
-  //GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );  // この位置ではうまく表示されなかったので、ZUKAN_NICKNAME_Initで
-  //GFL_NET_ReloadIcon();                                      // 下画面を生成した後に行うようにした。
+  // この位置ではうまく表示されなかったので、ZUKAN_NICKNAME_Initで
+  // 下画面を生成した後に行うようにした。
 
   // 上画面
   work->zukan_info_work = ZUKAN_INFO_Init( work->heap_id, param->pp, param->b_zenkoku_flag, TRUE,
@@ -314,8 +314,7 @@ static GFL_PROC_RESULT Zukan_Toroku_ProcInit( GFL_PROC* proc, int* seq, void* pw
                                                    param->gamedata );
   
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, work->heap_id );
   
   // 上画面
   if( work->state == ZUKAN_TOROKU_STATE_NICKNAME )

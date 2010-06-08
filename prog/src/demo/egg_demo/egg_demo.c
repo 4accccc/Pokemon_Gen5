@@ -473,8 +473,7 @@ static GFL_PROC_RESULT Egg_Demo_ProcInit( GFL_PROC* proc, int* seq, void* pwk, v
   work->local_procsys = GFL_PROC_LOCAL_boot( work->heap_id );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, work->heap_id );
 
   return GFL_PROC_RES_FINISH;
 }

@@ -594,8 +594,7 @@ static GFL_PROC_RESULT ShinkaDemoProcInit( GFL_PROC * proc, int * seq, void * pw
   // 初期化処理
   ShinkaDemo_Init( param, work );
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_sys_id );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, work->heap_sys_id );
 
 
 #ifdef NOT_USE_STATUS_BATTLE
@@ -1282,8 +1281,7 @@ static GFL_PROC_RESULT ShinkaDemoProcMain( GFL_PROC * proc, int * seq, void * pw
       // 初期化処理
       ShinkaDemo_Init( param, work );
       // 通信アイコン
-      GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_sys_id );
-      GFL_NET_ReloadIcon();
+      GFL_NET_ReloadIconTopOrBottom( FALSE, work->heap_sys_id );
 
       // フェードイン(黒→見える)
       GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, STATUS_FADE_IN_WAIT );

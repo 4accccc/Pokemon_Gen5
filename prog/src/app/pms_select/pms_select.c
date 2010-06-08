@@ -912,8 +912,7 @@ static void PMSSelect_GRAPHIC_Load( PMS_SELECT_MAIN_WORK* wk )
 #endif //PMS_SELECT_PMSDRAW
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, wk->heapID );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( TRUE, wk->heapID );
 }
 
 //-----------------------------------------------------------------------------

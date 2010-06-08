@@ -408,8 +408,7 @@ GFL_PROC_RESULT PMSInput_Init( GFL_PROC * proc, int * seq , void *pwk, void *myw
 	    ChangeMainProc(wk, MainProc_EditArea);  // ここでチェンジする
 		
       // 通信アイコン
-      GFL_NET_WirelessIconEasy_HoldLCD( TRUE, HEAPID_PMS_INPUT_VIEW );
-      GFL_NET_ReloadIcon();
+      GFL_NET_ReloadIconTopOrBottom( TRUE, HEAPID_PMS_INPUT_VIEW );
       
       return GFL_PROC_RES_FINISH;
 		}

@@ -729,8 +729,7 @@ DOWSING_WORK*    DOWSING_Init(
   }
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, work->heap_id );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, work->heap_id );
 
   return work;
 }

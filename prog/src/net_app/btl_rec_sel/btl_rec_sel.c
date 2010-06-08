@@ -712,8 +712,7 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcInit( GFL_PROC* proc, int* seq, void* pwk
   Btl_Rec_Sel_PfDeleteDummyPokeicon( param, work );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heap_id );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
 
   return GFL_PROC_RES_FINISH;
 }

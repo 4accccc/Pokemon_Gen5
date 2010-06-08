@@ -270,8 +270,7 @@ static GFL_PROC_RESULT Zukan_Detail_ProcInit( GFL_PROC* proc, int* seq, void* pw
   GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT, 0, 0, 0 );
 
   // 通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( TRUE, work->heap_id );
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( TRUE, work->heap_id );
 
   return GFL_PROC_RES_FINISH;
 }
