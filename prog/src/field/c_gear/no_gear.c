@@ -244,8 +244,7 @@ static void _gearArcCreate(NO_GEAR_WORK* pWork)
 
 	GFL_ARC_CloseDataHandle( p_handle );
 
-//	GFL_NET_ChangeIconPosition(240-22,10);
-	GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
 
 }
 
@@ -425,9 +424,6 @@ void NOGEAR_ActionCallback( NO_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionn
 //------------------------------------------------------------------------------
 void NOGEAR_Exit( NO_GEAR_WORK* pWork )
 {
-//	GFL_NET_ChangeIconPosition(GFL_WICON_POSX,GFL_WICON_POSY);
-//	GFL_NET_ReloadIcon();
-
   _workEnd(pWork);
 	G2S_BlendNone();
 	GFL_HEAP_FreeMemory(pWork);
