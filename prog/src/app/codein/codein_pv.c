@@ -1025,7 +1025,7 @@ void CI_pv_ButtonManagerCallBack( u32 button, u32 event, void* work )
         }
       }
       else {
-        ///< 決定
+        ///< その他（カーソルターゲットを移動するだけ）
         wk->cur[ 1 ].move_wk.pos.x = ( button - eHRT_NUM_0 ) % 5;
         wk->cur[ 1 ].move_wk.pos.y = ( button - eHRT_NUM_0 ) / 5;
       }
