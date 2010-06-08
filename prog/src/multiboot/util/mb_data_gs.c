@@ -694,19 +694,6 @@ static  BOOL MB_DATA_GS_CheckDataCorrect( GS_SAVE_FOOTER **pFooterArr , MB_DATA_
   boxDataNum = MB_DATA_GS_CompareFooterData(  pFooterArr[ GS_BOX_FIRST ] ,isCorrect[ GS_BOX_FIRST ],
                            pFooterArr[ GS_BOX_SECOND ] ,isCorrect[ GS_BOX_SECOND ] ,
                            &dataWork->boxLoadPos );
-#if PM_DEBUG
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
-  {
-    for( i=0;i<4;i++ )
-    {
-      isCorrect[i] = TRUE;
-    }
-    dataWork->mainLoadPos = DDS_SECOND;
-    dataWork->boxLoadPos = DDS_SECOND;
-    MB_DATA_TPrintf("forceLoad!!\n");
-    return TRUE;
-  }
-#endif //PM_DEBUG
 
   if( mainDataNum == 0 || boxDataNum == 0 )
   {

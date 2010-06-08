@@ -566,13 +566,6 @@ static const BOOL MB_SELECT_Main( MB_SELECT_WORK *work )
       GFL_BMPWIN_TransVramCharacter( work->msgPokeInfo );
     }
   }
-
-
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_START &&
-      GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT )
-  {
-    return TRUE;
-  }
   return FALSE;
 }
 
