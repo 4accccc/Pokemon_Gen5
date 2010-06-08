@@ -162,6 +162,7 @@ static BOOL TESTMODE_ITEM_SelectFuncSample1( TESTMODE_WORK *work , const int idx
 static BOOL TESTMODE_ITEM_SelectFuncMatsuda( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSave( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx );
+static BOOL TESTMODE_ITEM_BattleVideoSaveClear( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncSound( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncKagaya( TESTMODE_WORK *work , const int idx );
 static BOOL TESTMODE_ITEM_SelectFuncAri( TESTMODE_WORK *work , const int idx );
@@ -242,6 +243,7 @@ static TESTMODE_MENU_LIST topMenu[] =
   {L"RTC調整"             ,TESTMODE_ITEM_SelectFuncRTCEdit },
   {L"セーブ破かい"        ,TESTMODE_ITEM_SelectFuncSave },
   {L"セーブを工場出荷状態にする"        ,TESTMODE_ITEM_SaveClear },
+  {L"バトルビデオをクリア"        ,TESTMODE_ITEM_BattleVideoSaveClear },
   {L"SOUND"               ,TESTMODE_ITEM_SelectFuncSound },
   {L"ミュージカル"        ,TESTMODE_ITEM_ChangeMusicalMenu },
   {L"MCS常駐接続"         ,TESTMODE_ITEM_ConnectMCS },
@@ -997,6 +999,23 @@ static BOOL TESTMODE_ITEM_SaveClear( TESTMODE_WORK *work , const int idx )
 	GFL_STD_MemFill(temp_save, SAVEFLASH_INIT_PARAM, SAVEFLASH_SIZE);
 	DEBUG_BACKUP_FlashSave(0, temp_save, SAVEFLASH_SIZE);
 	GFL_HEAP_FreeMemory(temp_save);
+
+	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
+  
+  return TRUE;
+}
+
+//バトルビデオセーブをクリアする
+static BOOL TESTMODE_ITEM_BattleVideoSaveClear( TESTMODE_WORK *work , const int idx )
+{
+  int i;
+  
+	for( i=0; i<SAVE_EXTRA_ID_MAX; i++ ){
+		if( SaveControl_Extra_Load( work->saveControl_, i, GFL_HEAPID_APP ) == LOAD_RESULT_OK ){
+			SaveControl_Extra_Erase( work->saveControl_, i, GFL_HEAPID_APP );
+		}
+		SaveControl_Extra_Unload( work->saveControl_, i );
+	}
 
 	OS_ResetSystem(0);	//セーブ読み込み状況を更新する為、ソフトリセットする
   
