@@ -2284,19 +2284,19 @@ static GFL_PROC_RESULT D_Test_ZukanFormProcInit( GFL_PROC* proc, int* seq, void*
     {
     case 0:
       {
-        mcss_pos.x   = FX_F32_TO_FX32(0.0f);   mcss_pos.y   = FX_F32_TO_FX32(-24.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
+        mcss_pos.x   = FX_F32_TO_FX32(0.0f);   mcss_pos.y   = FX_F32_TO_FX32(-14.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
         mcss_scale.x = FX_F32_TO_FX32(16.0f);  mcss_scale.y = FX_F32_TO_FX32(16.0f);   mcss_scale.z = FX32_ONE;
       }
       break;
     case 1:
       {
-        mcss_pos.x   = FX_F32_TO_FX32(-64.0f);  mcss_pos.y   = FX_F32_TO_FX32(-24.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
+        mcss_pos.x   = FX_F32_TO_FX32(-16.0f);  mcss_pos.y   = FX_F32_TO_FX32(-14.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
         mcss_scale.x = FX_F32_TO_FX32(16.0f);   mcss_scale.y = FX_F32_TO_FX32(16.0f);   mcss_scale.z = FX32_ONE;
       }
       break;
     case 2:
       {
-        mcss_pos.x   = FX_F32_TO_FX32(64.0f);  mcss_pos.y   = FX_F32_TO_FX32(-24.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
+        mcss_pos.x   = FX_F32_TO_FX32(16.0f);  mcss_pos.y   = FX_F32_TO_FX32(-14.0f);  mcss_pos.z   = FX_F32_TO_FX32(0.0f);
         mcss_scale.x = FX_F32_TO_FX32(16.0f);  mcss_scale.y = FX_F32_TO_FX32(16.0f);   mcss_scale.z = FX32_ONE;
       }
       break;
@@ -2415,8 +2415,8 @@ static void D_Test_ZukanFormMcssSetOfsPositionFunc(void* d_test_cmn_wk)
     f32      ofs_position_x;
     VecFx32  ofs_position;
 
-    ofs_position_x = - offset_x;
-    
+    ofs_position_x = - offset_x * (0.25f);
+
     ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = 0;  ofs_position.z = 0;
     MCSS_SetOfsPosition( cmn_wk->mcss_wk, &ofs_position );
   }

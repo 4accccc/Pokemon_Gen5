@@ -257,10 +257,39 @@ POKE_POS_INDEX;
 
 static VecFx32 poke_pos[POKE_POS_MAX] =
 {
-  { FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(-24.0f), FX_F32_TO_FX32(0.0f) },
-  { FX_F32_TO_FX32(-64.0f), FX_F32_TO_FX32(-24.0f), FX_F32_TO_FX32(0.0f) },
-  { FX_F32_TO_FX32(128.0f), FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(0.0f) },
+  { FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(-14.0f), FX_F32_TO_FX32(0.0f) },
+  { FX_F32_TO_FX32(-16.0f), FX_F32_TO_FX32(-14.0f), FX_F32_TO_FX32(0.0f) },
+  { FX_F32_TO_FX32( 32.0f), FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(0.0f) },
 };
+
+// ポケモンのX座標調整
+#define POKE_X_ADJUST (0.25f)  // この値を掛ける
+
+
+// 入れ替えの位置
+#define POKE_IREKAE_POS_LEFT_X  (-16.0f)
+#define POKE_IREKAE_POS_RIGHT_X ( 16.0f)
+#define POKE_IREKAE_POS_BASE_Y  (-14.0f)
+#define POKE_IREKAE_HEIGHT      ( 16.0f)  // 透視射影だとなるべく被らないようにしておかないとみっともないので、そこそこ高さのあるきれいな円を描くような高さにした。
+#define POKE_IREKAE_POS_CURR_Z  (  0.0f)  // 後ろに描画されるように奥のほうへ配置
+#define POKE_IREKAE_POS_COMP_Z  (  0.0f)  // 前に描画されるように手前のほうへ配置
+                                          // としたかったが、透視射影だと奥に描画するとその分画面中心によった位置にポケモンが出てしまうのでダメ。
+
+// 押し出しの位置
+#define POKE_OSHIDASHI_POS_LEFT_X   (-64.0f)
+#define POKE_OSHIDASHI_POS_CENTER_X (  0.0f)
+#define POKE_OSHIDASHI_POS_RIGHT_X  ( 64.0f)
+#define POKE_OSHIDASHI_POS_BASE_Y   (-14.0f)
+#define POKE_OSHIDASHI_POS_BASE_Z   (  0.0f)
+
+// 階層変更の位置
+#define POKE_KAISOU_EXCHANGE_POS_LEFT_X  (-16.0f)
+#define POKE_KAISOU_EXCHANGE_POS_RIGHT_X ( 16.0f)
+#define POKE_KAISOU_TOP_POS_CENTER_X     (  0.0f)
+#define POKE_KAISOU_TOP_POS_RIGHT_X      ( 64.0f)
+#define POKE_KAISOU_POS_BASE_Y           (-14.0f)
+#define POKE_KAISOU_POS_BASE_Z           (  0.0f)
+
 
 // ポケモンのアニメーションのループの最大数
 #define POKE_MCSS_ANIME_LOOP_MAX  (2)
@@ -440,12 +469,12 @@ typedef enum
 }
 OSHIDASHI_DIRECT;
 
-#define OSHIDASHI_SPEED  (8.0f)  // 押し出し速度(1フレームでこれだけ移動する)
+#define OSHIDASHI_SPEED  (2.0f)  // 押し出し速度(1フレームでこれだけ移動する)
 
 
 // 階層変更  // TOP_TO_EXCHANGE or EXCHANGE_TO_TOP
-#define KAISOU_CURR_SPEED  (2.0f)  // 階層変更の際のcurrの速度(1フレームでこれだけ移動する)
-#define KAISOU_COMP_SPEED  (8.0f)  // 階層変更の際のcompの速度(1フレームでこれだけ移動する)
+#define KAISOU_CURR_SPEED  (0.5f)  // 階層変更の際のcurrの速度(1フレームでこれだけ移動する)
+#define KAISOU_COMP_SPEED  (2.0f)  // 階層変更の際のcompの速度(1フレームでこれだけ移動する)
 
 
 // OBJを差し替える際に乱れないように、2つを交互に表示する
@@ -2557,7 +2586,7 @@ static void PokeAdjustOfsPosX( MCSS_WORK* poke_wk )
   f32      ofs_position_x;
   VecFx32  ofs_position;
 
-  ofs_position_x = - offset_x;
+  ofs_position_x = - offset_x * POKE_X_ADJUST;
     
   ofs_position.x = FX_F32_TO_FX32(ofs_position_x);  ofs_position.y = 0;  ofs_position.z = 0;
   MCSS_SetOfsPosition( poke_wk, &ofs_position );
@@ -4990,12 +5019,12 @@ static void Zukan_Detail_Form_IrekaeMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_
 {
   if( work->irekae_state == IREKAE_STATE_MOVE )
   {
-    const f32  left_x  =  -64.0f;
-    const f32  right_x =   64.0f;
-    const f32  base_y  =  -24.0f;
-    const f32  height  =   24.0f;
-    const f32  curr_z  = -12800.0f;  // 後ろに描画されるように奥のほうへ配置
-    const f32  comp_z  =  128.0f;    // 前に描画されるように手前のほうへ配置
+    const f32  left_x  = POKE_IREKAE_POS_LEFT_X;
+    const f32  right_x = POKE_IREKAE_POS_RIGHT_X;
+    const f32  base_y  = POKE_IREKAE_POS_BASE_Y;
+    const f32  height  = POKE_IREKAE_HEIGHT;
+    const f32  curr_z  = POKE_IREKAE_POS_CURR_Z;  //-10.0f;  //-12800.0f;  // 後ろに描画されるように奥のほうへ配置
+    const f32  comp_z  = POKE_IREKAE_POS_COMP_Z;             // 128.0f;    // 前に描画されるように手前のほうへ配置
     fx16 s_fx16;
     f32  s;
 
@@ -5283,11 +5312,11 @@ static void Zukan_Detail_Form_OshidashiChangeCompareForm( ZUKAN_DETAIL_FORM_PARA
 }
 static void Zukan_Detail_Form_OshidashiSetPosCompareForm( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  const f32  left_x    =  -256.0f;
-  const f32  center_x  =     0.0f;
-  const f32  right_x   =   256.0f;
-  const f32  base_y    =   -24.0f;
-  const f32  base_z    =     0.0f;
+  const f32  left_x    = POKE_OSHIDASHI_POS_LEFT_X;
+  const f32  center_x  = POKE_OSHIDASHI_POS_CENTER_X;
+  const f32  right_x   = POKE_OSHIDASHI_POS_RIGHT_X;
+  const f32  base_y    = POKE_OSHIDASHI_POS_BASE_Y;
+  const f32  base_z    = POKE_OSHIDASHI_POS_BASE_Z;
 
   VecFx32 pos_fx32;
 
@@ -5336,11 +5365,11 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 {
   if( work->oshidashi_state == OSHIDASHI_STATE_MOVE )
   {
-    const f32  left_x    =  -256.0f;
-    const f32  center_x  =     0.0f;
-    const f32  right_x   =   256.0f;
-    const f32  base_y    =   -24.0f;
-    const f32  base_z    =     0.0f;
+    const f32  left_x    = POKE_OSHIDASHI_POS_LEFT_X;
+    const f32  center_x  = POKE_OSHIDASHI_POS_CENTER_X;
+    const f32  right_x   = POKE_OSHIDASHI_POS_RIGHT_X;
+    const f32  base_y    = POKE_OSHIDASHI_POS_BASE_Y;
+    const f32  base_z    = POKE_OSHIDASHI_POS_BASE_Z;
 
     VecFx32 pos_fx32;
     f32     pos_x;
@@ -5551,12 +5580,12 @@ static void Zukan_Detail_Form_OshidashiMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUK
 //=====================================
 static void Zukan_Detail_Form_KaisouMain( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )
 {
-  const f32  exchange_left_x  =   -64.0f;
-  const f32  exchange_right_x =    64.0f;
-  const f32  top_center_x     =     0.0f;
-  const f32  top_right_x      =   256.0f;
-  const f32  base_y           =   -24.0f;
-  const f32  base_z           =     0.0f;
+  const f32  exchange_left_x  = POKE_KAISOU_EXCHANGE_POS_LEFT_X;
+  const f32  exchange_right_x = POKE_KAISOU_EXCHANGE_POS_RIGHT_X;
+  const f32  top_center_x     = POKE_KAISOU_TOP_POS_CENTER_X;
+  const f32  top_right_x      = POKE_KAISOU_TOP_POS_RIGHT_X;
+  const f32  base_y           = POKE_KAISOU_POS_BASE_Y;
+  const f32  base_z           = POKE_KAISOU_POS_BASE_Z;
 
   if( work->diff_num < 2 )  // このif文は真になることはない気がする
   {
