@@ -113,7 +113,7 @@ typedef struct TR_SCRUCH_SND_tag
 typedef struct{
   u8  x;      // 最大8回分のタッチ座標
   u8  y;      // 
-  u8  brush;  // サンプリング成功個数
+  u8  brush;  // 0=ペン, 1=消しゴム
   u8  on;     // 入力ありかどうか
 }TOUCH_INFO;
 

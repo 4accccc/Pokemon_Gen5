@@ -214,6 +214,8 @@ enum{
 #define TRCARD_RIGHT_SCALE_CENTER_POSX  ( 224 ) // 右側拡大時
 #define TRCARD_SCALE_CENTER_POSY        ( 152 ) // 拡大時Y座標共通
 
+#define SCALE_SIDE_LEFT_MAX_X (96)  // 拡大、左側時で書ける上限
+#define SCALE_SIDE_RIGHT_MIN_X (95) // 拡大、右側時で書ける上限
 
 //ユニオンルームトレーナー表示テーブル
 static const int UniTrTable[UNION_TR_MAX][2] =
@@ -304,9 +306,9 @@ static void _BmpWinPrint_Rap(     GFL_BMPWIN * win, void * src,
 static int DrawPoint_to_Line(  GFL_BMPWIN *win, 
   const u8 *brush, 
   int px, int py, int *sx, int *sy, 
-  int count, int flag );
+  int count, int flag, int scale_mode, int scale_side );
 static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock );
-static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode );
+static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode, u8 scale_side );
 static void SetBookMark( TR_CARD_WORK *wk);
 
 
@@ -548,8 +550,6 @@ static void _sign_se( TR_CARD_WORK *wk, int lines )
   }
 }
 
-
-
 //--------------------------------------------------------------------------------------------
 /**
  * プロセス関数：メイン
@@ -563,7 +563,7 @@ static void _sign_se( TR_CARD_WORK *wk, int lines )
 GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *mywk )
 {
   TR_CARD_WORK * wk  = mywk;
-
+  
   switch( *seq ){
   case SEQ_IN:
     if( WIPE_SYS_EndCheck() ){
@@ -582,7 +582,7 @@ GFL_PROC_RESULT TrCardProc_Main( GFL_PROC * proc, int * seq , void *pwk, void *m
 
       if(wk->tcp->TrCardData->EditPossible){    // 編集可能なら
         int line = DrawBrushLine( (GFL_BMPWIN*)wk->TrSignData, &wk->AllTouchResult, 
-                                   &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode );
+                                   &wk->OldTouch, 1, wk->TrSignData, wk->ScaleMode, wk->ScaleSide );
         _sign_se(wk, line);
       }
     }
@@ -2605,7 +2605,7 @@ static const GFL_UI_TP_HITTBL sign_tbl[]={
 };
 
 static const GFL_UI_TP_HITTBL large_sign_tbl[]={
-  {LARGE_BOARD_POSY*8,(LARGE_BOARD_POSY+LARGE_BOARD_H)*8, LARGE_BOARD_POSX*8, (LARGE_BOARD_POSX+LARGE_BOARD_W)*8+3},
+  {LARGE_BOARD_POSY*8,(LARGE_BOARD_POSY+LARGE_BOARD_H)*8, LARGE_BOARD_POSX*8, (LARGE_BOARD_POSX+LARGE_BOARD_W)*8},
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
@@ -2649,7 +2649,7 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
     // 精密
     }else{
       if( GFL_UI_TP_HitSelf( large_sign_tbl, x, y )==0){
-        wk->MyTouchResult.x = OEKAKI_BOARD_POSX*8+(x-LARGE_BOARD_POSX*8+wk->ScaleSide*(24*8+6))/2;
+        wk->MyTouchResult.x = OEKAKI_BOARD_POSX*8+(x-LARGE_BOARD_POSX*8+wk->ScaleSide*(24*8))/2;
         wk->MyTouchResult.y = OEKAKI_BOARD_POSY*8+(y-LARGE_BOARD_POSY*8)/2;
         wk->MyTouchResult.brush = wk->pen;
         wk->MyTouchResult.on    = 1;
@@ -2677,7 +2677,7 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
  * @param   hh  サイン面の縦幅
  */
 //----------------------------------------------------------------------------------
-static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh )
+static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh, int scale_mode, int scale_side )
 {
   int bx,by,px,py,wx,wy;
   int i,offset,w,h,count=0;
@@ -2698,6 +2698,15 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh )
       }
       if(wx >= ww || wy >= hh){
         continue;
+      }
+      // 拡大時、中央への書き込みが境界を越えて反対側に書いてしまうので規定値で絞込み。
+      if( scale_mode == 1 )
+      {
+        if( ( scale_side == 0 && wx >= SCALE_SIDE_LEFT_MAX_X ) ||
+            ( scale_side == 1 && wx <= SCALE_SIDE_RIGHT_MIN_X ) )
+        {
+          continue;
+        }
       }
 
       bx = wx / 8;
@@ -2730,13 +2739,13 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh )
  * @retval  none    
  */
 //==============================================================================
+#if 0
 static void _BmpWinPrint_Rap(
       GFL_BMPWIN * win, void * src,
       int src_x, int src_y, int src_dx, int src_dy,
       int win_x, int win_y, int win_dx, int win_dy )
 {
 
-#if 0
   if(win_x < 0){
     int diff;
     diff = win_x*-1;
@@ -2761,8 +2770,6 @@ static void _BmpWinPrint_Rap(
     win_dy -= diff;
   }
 
-#endif
-
 //  GF_BGL_BmpWinPrint( win, src, src_x, src_y, src_dx, src_dy, win_x, win_y, win_dx, win_dy );
 /*
   GFL_BMP_Print( src, win, src_x, src_y, src_dx, src_dy, win_x, win_y, 0 );
@@ -2772,6 +2779,7 @@ static void _BmpWinPrint_Rap(
     draw_pen( sign, src, win_x, win_y, OEKAKI_BOARD_W*8, OEKAKI_BOARD_H*8 );
   }
 }
+#endif
 
 
 //------------------------------------------------------------------
@@ -2794,7 +2802,7 @@ static int DrawPoint_to_Line(
   GFL_BMPWIN *win, 
   const u8 *brush, 
   int px, int py, int *sx, int *sy, 
-  int count, int flag )
+  int count, int flag, int scale_mode, int scale_side )
 {
   int dx, dy, s, step;
   int x1 = *sx;
@@ -2817,14 +2825,16 @@ static int DrawPoint_to_Line(
       s = x1;  x1 = x2;  x2 = s;  y1 = y2;
     } else step = (y1 < y2) ? 1: -1;
 
-    _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    draw_pen( (u8*)win, (void*)brush, x1, y1, OEKAKI_BOARD_W*8, OEKAKI_BOARD_H*8, scale_mode, scale_side );
+    //_BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
     lines++;
     s = dx >> 1;
     while (++x1 <= x2) {
       if ((s -= dy) < 0) {
         s += dx;  y1 += step;
       };
-      _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+      draw_pen( (u8*)win, (void*)brush, x1, y1, OEKAKI_BOARD_W*8, OEKAKI_BOARD_H*8, scale_mode, scale_side );
+      //_BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
       lines++;
     }
   } else {
@@ -2832,14 +2842,16 @@ static int DrawPoint_to_Line(
       step = (x1 > x2) ? 1 : -1;
       s = y1;  y1 = y2;  y2 = s;  x1 = x2;
     } else step = (x1 < x2) ? 1 : -1;
-    _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+    draw_pen( (u8*)win, (void*)brush, x1, y1, OEKAKI_BOARD_W*8, OEKAKI_BOARD_H*8, scale_mode, scale_side );
+    //_BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
     lines++;
     s = dy >> 1;
     while (++y1 <= y2) {
       if ((s -= dx) < 0) {
         s += dy;  x1 += step;
       }
-      _BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
+      draw_pen( (u8*)win, (void*)brush, x1, y1, OEKAKI_BOARD_W*8, OEKAKI_BOARD_H*8, scale_mode, scale_side );
+      //_BmpWinPrint_Rap( win, (void*)brush,  0, 0, 4, 4, x1, y1, 4, 4 );
       lines++;
     }
   }
@@ -2876,11 +2888,12 @@ static void Stock_OldTouch( TOUCH_INFO *all, TOUCH_INFO *stock )
  * @param   draw    メモリ上で行ったCGX変更を転送するか？(0:しない  1:する）
  * @param   SignData    メモリ上のサインデータ
  * @param   sign_mode   拡大モードかどうか（0:通常  1:拡大モード）
+ * @param   scale_side  拡大モード時の左右モード（0:左　1:右）
  *
  * @retval  line        ドットをうった回数
  */
 //----------------------------------------------------------------------------------
-static int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode )
+static  int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int draw, u8 *SignData, u8 sign_mode, u8 scale_side )
 {
   int px,py,i,r,flag=0, sx, sy, centerling;
   int line = 0;
@@ -2889,7 +2902,7 @@ static int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int
   if(sign_mode==0){
     centerling = 4;
   }else{
-    centerling = 4;
+    centerling = 2;
   }
 
   if(all->on!=0){
@@ -2903,7 +2916,7 @@ static int DrawBrushLine( GFL_BMPWIN *win, TOUCH_INFO *all, TOUCH_INFO *old, int
 //    OS_Printf("sx=%d, sy=%d, px=%d, py=%d\n", sx,sy,px,py);
 
     // BG1面用BMP（お絵かき画像）ウインドウ確保
-    line = DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on);
+    line = DrawPoint_to_Line(win, sign_brush[sign_mode][all->brush], px, py, &sx, &sy, 0, old->on, sign_mode, scale_side );
     
     flag = 1;
     
