@@ -257,8 +257,8 @@ POKE_POS_INDEX;
 
 static VecFx32 poke_pos[POKE_POS_MAX] =
 {
-  { FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(-14.0f), FX_F32_TO_FX32(0.0f) },
-  { FX_F32_TO_FX32(-16.0f), FX_F32_TO_FX32(-14.0f), FX_F32_TO_FX32(0.0f) },
+  { FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(-13.9f), FX_F32_TO_FX32(0.0f) },  // (-14.0f)だと絵が汚くなるものがいたので(-13.9f)にした。
+  { FX_F32_TO_FX32(-16.0f), FX_F32_TO_FX32(-13.9f), FX_F32_TO_FX32(0.0f) },
   { FX_F32_TO_FX32( 32.0f), FX_F32_TO_FX32(  0.0f), FX_F32_TO_FX32(0.0f) },
 };
 
@@ -269,7 +269,7 @@ static VecFx32 poke_pos[POKE_POS_MAX] =
 // 入れ替えの位置
 #define POKE_IREKAE_POS_LEFT_X  (-16.0f)
 #define POKE_IREKAE_POS_RIGHT_X ( 16.0f)
-#define POKE_IREKAE_POS_BASE_Y  (-14.0f)
+#define POKE_IREKAE_POS_BASE_Y  (-13.9f)
 #define POKE_IREKAE_HEIGHT      ( 16.0f)  // 透視射影だとなるべく被らないようにしておかないとみっともないので、そこそこ高さのあるきれいな円を描くような高さにした。
 #define POKE_IREKAE_POS_CURR_Z  (  0.0f)  // 後ろに描画されるように奥のほうへ配置
 #define POKE_IREKAE_POS_COMP_Z  (  0.0f)  // 前に描画されるように手前のほうへ配置
@@ -279,7 +279,7 @@ static VecFx32 poke_pos[POKE_POS_MAX] =
 #define POKE_OSHIDASHI_POS_LEFT_X   (-64.0f)
 #define POKE_OSHIDASHI_POS_CENTER_X (  0.0f)
 #define POKE_OSHIDASHI_POS_RIGHT_X  ( 64.0f)
-#define POKE_OSHIDASHI_POS_BASE_Y   (-14.0f)
+#define POKE_OSHIDASHI_POS_BASE_Y   (-13.9f)
 #define POKE_OSHIDASHI_POS_BASE_Z   (  0.0f)
 
 // 階層変更の位置
@@ -287,7 +287,7 @@ static VecFx32 poke_pos[POKE_POS_MAX] =
 #define POKE_KAISOU_EXCHANGE_POS_RIGHT_X ( 16.0f)
 #define POKE_KAISOU_TOP_POS_CENTER_X     (  0.0f)
 #define POKE_KAISOU_TOP_POS_RIGHT_X      ( 64.0f)
-#define POKE_KAISOU_POS_BASE_Y           (-14.0f)
+#define POKE_KAISOU_POS_BASE_Y           (-13.9f)
 #define POKE_KAISOU_POS_BASE_Z           (  0.0f)
 
 
