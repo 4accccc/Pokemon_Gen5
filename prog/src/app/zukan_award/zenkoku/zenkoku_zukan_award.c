@@ -245,6 +245,7 @@ static void Zenkoku_Zukan_Award_BgExit( ZENKOKU_ZUKAN_AWARD_WORK* work );
 static void Zenkoku_Zukan_Award_TextInit( ZENKOKU_ZUKAN_AWARD_WORK* work );
 static void Zenkoku_Zukan_Award_TextExit( ZENKOKU_ZUKAN_AWARD_WORK* work );
 static void Zenkoku_Zukan_Award_TextMain( ZENKOKU_ZUKAN_AWARD_WORK* work );
+static BOOL Zenkoku_Zukan_Award_TextFinish( ZENKOKU_ZUKAN_AWARD_WORK* work );  // 全テキストの描画が終わっていたらTRUEを返す
 
 // 何もないところは黒にしておく
 static void Zenkoku_Zukan_Award_BlackInit( ZENKOKU_ZUKAN_AWARD_WORK* work );
@@ -465,8 +466,13 @@ static GFL_PROC_RESULT Zenkoku_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, v
   case SEQ_START:
     {
       BOOL  b_next  = TRUE;
+      // テキスト
+      if( !Zenkoku_Zukan_Award_TextFinish( work ) )
+      {
+        b_next = FALSE;
+      }
       // サウンド
-      if( !(work->param->b_fix) )
+      if( b_next && ( !(work->param->b_fix) ) )
       {
         if( PMSND_CheckFadeOnBGM() )
         {
@@ -955,6 +961,18 @@ static void Zenkoku_Zukan_Award_TextMain( ZENKOKU_ZUKAN_AWARD_WORK* work )
       }
     }
   }
+}
+static BOOL Zenkoku_Zukan_Award_TextFinish( ZENKOKU_ZUKAN_AWARD_WORK* work )  // 全テキストの描画が終わっていたらTRUEを返す
+{
+  u8 i;
+  for( i=0; i<TEXT_MAX; i++ )
+  {
+    if( !(work->text_finish[i]) )
+    {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 //-------------------------------------

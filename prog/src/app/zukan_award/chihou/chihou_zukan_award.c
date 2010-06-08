@@ -235,6 +235,7 @@ static void Chihou_Zukan_Award_BgExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextInit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextExit( CHIHOU_ZUKAN_AWARD_WORK* work );
 static void Chihou_Zukan_Award_TextMain( CHIHOU_ZUKAN_AWARD_WORK* work );
+static BOOL Chihou_Zukan_Award_TextFinish( CHIHOU_ZUKAN_AWARD_WORK* work );  // 全テキストの描画が終わっていたらTRUEを返す
 
 // 何もないところは黒にしておく
 static void Chihou_Zukan_Award_BlackInit( CHIHOU_ZUKAN_AWARD_WORK* work );
@@ -455,8 +456,13 @@ static GFL_PROC_RESULT Chihou_Zukan_Award_ProcMain( GFL_PROC* proc, int* seq, vo
   case SEQ_START:
     {
       BOOL  b_next  = TRUE;
+      // テキスト
+      if( !Chihou_Zukan_Award_TextFinish( work ) )
+      {
+        b_next = FALSE;
+      }
       // サウンド
-      if( !(work->param->b_fix) )
+      if( b_next && ( !(work->param->b_fix) ) )
       {
         if( PMSND_CheckFadeOnBGM() )
         {
@@ -881,6 +887,18 @@ static void Chihou_Zukan_Award_TextMain( CHIHOU_ZUKAN_AWARD_WORK* work )
       }
     }
   }
+}
+static BOOL Chihou_Zukan_Award_TextFinish( CHIHOU_ZUKAN_AWARD_WORK* work )  // 全テキストの描画が終わっていたらTRUEを返す
+{
+  u8 i;
+  for( i=0; i<TEXT_MAX; i++ )
+  {
+    if( !(work->text_finish[i]) )
+    {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
 
 //-------------------------------------
