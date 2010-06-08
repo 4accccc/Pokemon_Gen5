@@ -6878,7 +6878,7 @@ static void handler_Illusion_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
   // ©•ª‚ª–hŒä‘¤‚È‚çƒCƒŠƒ…[ƒWƒ‡ƒ“‰ğœ
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
-  {
+  ){
     common_IllusionBreak( myHandle, flowWk, pokeID );
   }
 }
