@@ -424,7 +424,9 @@ static void Btl_Rec_Sel_TextInit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* wo
 static void Btl_Rec_Sel_TextExit( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_TextMain( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+static void Btl_Rec_Sel_TextShowOffWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
+static void Btl_Rec_Sel_TextShowOffWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work );
 
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
                                      u32 str_id, BOOL text_stream_need_input );
@@ -1066,7 +1068,17 @@ static GFL_PROC_RESULT Btl_Rec_Sel_ProcMain( GFL_PROC* proc, int* seq, void* pwk
           FADE_TYPE_INSIDE );
       
       Btl_Rec_Sel_TextClearWinIn( param, work );
-     
+    
+      // ウィンドウがもう不要の場合は消しておく
+      if(    work->next_seq == SEQ_WAIT_INIT
+          && work->b_battle_recorder
+          && param->b_rec
+          && (!(param->b_sync)) )
+      {
+        Btl_Rec_Sel_TextShowOffWinIn( param, work );
+        Btl_Rec_Sel_TextShowOffWinFrm( param, work );
+      }
+
       // フェードインする前に時間表示も消しておく(タイムアップしたときの0表示が長く残っているので、ここで消しておく必要がある)
       Btl_Rec_Sel_FixEndTime( param, work );
     }
@@ -1447,9 +1459,18 @@ static void Btl_Rec_Sel_TextShowWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WO
       BG_PAL_POS_M_TEXT_FRAME );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
 }
+static void Btl_Rec_Sel_TextShowOffWinFrm( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  BmpWinFrame_Clear( work->text_winin_bmpwin, WINDOW_TRANS_ON_V );
+}
 static void Btl_Rec_Sel_TextClearWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
 {
   GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_winin_bmpwin), TEXT_WININ_BACK_COLOR );
+  GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
+}
+static void Btl_Rec_Sel_TextShowOffWinIn( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work )
+{
+  GFL_BMP_Clear( GFL_BMPWIN_GetBmp(work->text_winin_bmpwin), 0 );
   GFL_BMPWIN_MakeTransWindow_VBlank( work->text_winin_bmpwin );
 }
 static void Btl_Rec_Sel_TextStartStream( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WORK* work,
