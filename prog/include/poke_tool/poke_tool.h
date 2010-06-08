@@ -278,34 +278,34 @@ enum{
   ID_PARA_strong,                   //たくましさ
   ID_PARA_fur,                      //毛艶
   ID_PARA_sinou_champ_ribbon,       //シンオウチャンプリボン
-  ID_PARA_sinou_battle_tower_ttwin_first,     //シンオウバトルタワータワータイクーン勝利1回目
-  ID_PARA_sinou_battle_tower_ttwin_second,    //シンオウバトルタワータワータイクーン勝利2回目
-  ID_PARA_sinou_battle_tower_2vs2_win50,      //シンオウバトルタワータワーダブル50連勝
-  ID_PARA_sinou_battle_tower_aimulti_win50,   //シンオウバトルタワータワーAIマルチ50連勝
-  ID_PARA_sinou_battle_tower_siomulti_win50,  //シンオウバトルタワータワー通信マルチ50連勝
-  ID_PARA_sinou_battle_tower_wifi_rank5,      //シンオウバトルタワーWifiランク５入り
-  ID_PARA_sinou_syakki_ribbon,        //シンオウしゃっきリボン
-  ID_PARA_sinou_dokki_ribbon,         //シンオウどっきリボン
-  ID_PARA_sinou_syonbo_ribbon,        //シンオウしょんぼリボン
-  ID_PARA_sinou_ukka_ribbon,          //シンオウうっかリボン
-  ID_PARA_sinou_sukki_ribbon,         //シンオウすっきリボン
-  ID_PARA_sinou_gussu_ribbon,         //シンオウぐっすリボン
-  ID_PARA_sinou_nikko_ribbon,         //シンオウにっこリボン
-  ID_PARA_sinou_gorgeous_ribbon,      //シンオウゴージャスリボン
-  ID_PARA_sinou_royal_ribbon,         //シンオウロイヤルリボン
-  ID_PARA_sinou_gorgeousroyal_ribbon, //シンオウゴージャスロイヤルリボン
-  ID_PARA_sinou_ashiato_ribbon,       //シンオウあしあとリボン
-  ID_PARA_sinou_record_ribbon,        //シンオウレコードリボン
-  ID_PARA_sinou_history_ribbon,       //シンオウヒストリーリボン
-  ID_PARA_sinou_legend_ribbon,        //シンオウレジェンドリボン
-  ID_PARA_sinou_red_ribbon,           //シンオウレッドリボン
-  ID_PARA_sinou_green_ribbon,         //シンオウグリーンリボン
-  ID_PARA_sinou_blue_ribbon,          //シンオウブルーリボン
-  ID_PARA_sinou_festival_ribbon,      //シンオウフェスティバルリボン
-  ID_PARA_sinou_carnival_ribbon,      //シンオウカーニバルリボン
-  ID_PARA_sinou_classic_ribbon,       //シンオウクラシックリボン
-  ID_PARA_sinou_premiere_ribbon,      //シンオウプレミアリボン
-  ID_PARA_sinou_amari_ribbon,         //あまり
+  ID_PARA_sinou_battle_tower_ttwin_first,     //シンオウバトルタワーリボン（タイクーン勝利1回目）
+  ID_PARA_sinou_battle_tower_ttwin_second,    //シンオウバトルタワーリボン（タイクーン勝利2回目）
+  ID_PARA_sinou_battle_tower_2vs2_win50,      //シンオウバトルタワーリボン（ダブル50連勝）
+  ID_PARA_sinou_battle_tower_aimulti_win50,   //シンオウバトルタワーリボン（AIマルチ50連勝）
+  ID_PARA_sinou_battle_tower_siomulti_win50,  //シンオウバトルタワーリボン（通信マルチ50連勝）
+  ID_PARA_sinou_battle_tower_wifi_rank5,      //シンオウバトルタワーリボン（Wifiランク５入り）
+  ID_PARA_sinou_syakki_ribbon,			//しゃっきリボン
+  ID_PARA_sinou_dokki_ribbon,			//どっきリボン
+  ID_PARA_sinou_syonbo_ribbon,			//しょんぼリボン
+  ID_PARA_sinou_ukka_ribbon,			//うっかリボン
+  ID_PARA_sinou_sukki_ribbon,			//すっきリボン
+  ID_PARA_sinou_gussu_ribbon,			//ぐっすリボン
+  ID_PARA_sinou_nikko_ribbon,			//にっこリボン
+  ID_PARA_sinou_gorgeous_ribbon,		//ゴージャスリボン
+  ID_PARA_sinou_royal_ribbon,			//ロイヤルリボン
+  ID_PARA_sinou_gorgeousroyal_ribbon,	//ゴージャスロイヤルリボン
+  ID_PARA_sinou_ashiato_ribbon,			//あしあとリボン
+  ID_PARA_sinou_record_ribbon,			//レコードリボン
+  ID_PARA_sinou_history_ribbon,			//イベントリボン（旧ヒストリーリボン）
+  ID_PARA_sinou_legend_ribbon,			//レジェンドリボン
+  ID_PARA_sinou_red_ribbon,				//ワールドチャンプ（旧レッドリボン）
+  ID_PARA_sinou_green_ribbon,			//バースディリボン（旧グリーンリボン）
+  ID_PARA_sinou_blue_ribbon,			//スペシャルリボン（旧ブルーリボン）
+  ID_PARA_sinou_festival_ribbon,		//メモリアルリボン（旧フェスティバルリボン）
+  ID_PARA_sinou_carnival_ribbon,		//ウィッシュルリボン（旧カーニバルリボン）
+  ID_PARA_sinou_classic_ribbon,			//クラシックリボン
+  ID_PARA_sinou_premiere_ribbon,		//シンオウプレミアリボン
+  ID_PARA_sinou_amari_ribbon,			//あまり
 
   ID_PARA_waza1,                //所持技1
   ID_PARA_waza2,                //所持技2
@@ -331,38 +331,38 @@ enum{
   ID_PARA_spedef_rnd,             //特防乱数
   ID_PARA_tamago_flag,            //タマゴフラグ
 
-  ID_PARA_stylemedal_normal,          //かっこよさ勲章(ノーマル)AGBコンテスト
-  ID_PARA_stylemedal_super,         //かっこよさ勲章(スーパー)AGBコンテスト
-  ID_PARA_stylemedal_hyper,         //かっこよさ勲章(ハイパー)AGBコンテスト
-  ID_PARA_stylemedal_master,          //かっこよさ勲章(マスター)AGBコンテスト
-  ID_PARA_beautifulmedal_normal,        //うつくしさ勲章(ノーマル)AGBコンテスト
-  ID_PARA_beautifulmedal_super,       //うつくしさ勲章(スーパー)AGBコンテスト
-  ID_PARA_beautifulmedal_hyper,       //うつくしさ勲章(ハイパー)AGBコンテスト
-  ID_PARA_beautifulmedal_master,        //うつくしさ勲章(マスター)AGBコンテスト
-  ID_PARA_cutemedal_normal,         //かわいさ勲章(ノーマル)AGBコンテスト
-  ID_PARA_cutemedal_super,          //かわいさ勲章(スーパー)AGBコンテスト
-  ID_PARA_cutemedal_hyper,          //かわいさ勲章(ハイパー)AGBコンテスト
-  ID_PARA_cutemedal_master,         //かわいさ勲章(マスター)AGBコンテスト
-  ID_PARA_clevermedal_normal,         //かしこさ勲章(ノーマル)AGBコンテスト
-  ID_PARA_clevermedal_super,          //かしこさ勲章(スーパー)AGBコンテスト
-  ID_PARA_clevermedal_hyper,          //かしこさ勲章(ハイパー)AGBコンテスト
-  ID_PARA_clevermedal_master,         //かしこさ勲章(マスター)AGBコンテスト
-  ID_PARA_strongmedal_normal,         //たくましさ勲章(ノーマル)AGBコンテスト
-  ID_PARA_strongmedal_super,          //たくましさ勲章(スーパー)AGBコンテスト
-  ID_PARA_strongmedal_hyper,          //たくましさ勲章(ハイパー)AGBコンテスト
-  ID_PARA_strongmedal_master,         //たくましさ勲章(マスター)AGBコンテスト
-  ID_PARA_champ_ribbon,           //チャンプリボン
-  ID_PARA_winning_ribbon,           //ウィニングリボン
-  ID_PARA_victory_ribbon,           //ビクトリーリボン
-  ID_PARA_bromide_ribbon,           //ブロマイドリボン
-  ID_PARA_ganba_ribbon,           //がんばリボン
-  ID_PARA_marine_ribbon,            //マリンリボン
-  ID_PARA_land_ribbon,            //ランドリボン
-  ID_PARA_sky_ribbon,             //スカイリボン
-  ID_PARA_country_ribbon,           //カントリーリボン
-  ID_PARA_national_ribbon,          //ナショナルリボン
-  ID_PARA_earth_ribbon,           //アースリボン
-  ID_PARA_world_ribbon,           //ワールドリボン
+  ID_PARA_stylemedal_normal,			//かっこよさリボン(ノーマル)AGBコンテスト
+  ID_PARA_stylemedal_super,				//かっこよさリボン(スーパー)AGBコンテスト
+  ID_PARA_stylemedal_hyper,				//かっこよさリボン(ハイパー)AGBコンテスト
+  ID_PARA_stylemedal_master,			//かっこよさリボン(マスター)AGBコンテスト
+  ID_PARA_beautifulmedal_normal,        //うつくしさリボン(ノーマル)AGBコンテスト
+  ID_PARA_beautifulmedal_super,			//うつくしさリボン(スーパー)AGBコンテスト
+  ID_PARA_beautifulmedal_hyper,			//うつくしさリボン(ハイパー)AGBコンテスト
+  ID_PARA_beautifulmedal_master,        //うつくしさリボン(マスター)AGBコンテスト
+  ID_PARA_cutemedal_normal,				//かわいさリボン(ノーマル)AGBコンテスト
+  ID_PARA_cutemedal_super,				//かわいさリボン(スーパー)AGBコンテスト
+  ID_PARA_cutemedal_hyper,				//かわいさリボン(ハイパー)AGBコンテスト
+  ID_PARA_cutemedal_master,				//かわいさリボン(マスター)AGBコンテスト
+  ID_PARA_clevermedal_normal,			//かしこさリボン(ノーマル)AGBコンテスト
+  ID_PARA_clevermedal_super,			//かしこさリボン(スーパー)AGBコンテスト
+  ID_PARA_clevermedal_hyper,			//かしこさリボン(ハイパー)AGBコンテスト
+  ID_PARA_clevermedal_master,			//かしこさリボン(マスター)AGBコンテスト
+  ID_PARA_strongmedal_normal,			//たくましさリボン(ノーマル)AGBコンテスト
+  ID_PARA_strongmedal_super,			//たくましさリボン(スーパー)AGBコンテスト
+  ID_PARA_strongmedal_hyper,			//たくましさリボン(ハイパー)AGBコンテスト
+  ID_PARA_strongmedal_master,			//たくましさリボン(マスター)AGBコンテスト
+  ID_PARA_champ_ribbon,					//チャンプリボン
+  ID_PARA_winning_ribbon,				//ウィニングリボン
+  ID_PARA_victory_ribbon,				//ビクトリーリボン
+  ID_PARA_bromide_ribbon,				//ブロマイドリボン
+  ID_PARA_ganba_ribbon,					//がんばリボン
+  ID_PARA_marine_ribbon,				//バトルチャンプリボン（旧マリンリボン）
+  ID_PARA_land_ribbon,					//エリアチャンプリボン（旧ランドリボン）
+  ID_PARA_sky_ribbon,					//ナショナルリボン（旧スカイリボン）
+  ID_PARA_country_ribbon,				//カントリーリボン
+  ID_PARA_national_ribbon,				//ナショナルリボン
+  ID_PARA_earth_ribbon,					//アースリボン
+  ID_PARA_world_ribbon,					//ワールドリボン
   ID_PARA_event_get_flag,           //イベントで配布されたことを示すフラグ
   ID_PARA_sex,                //性別
   ID_PARA_form_no,              //形状ナンバー（アンノーン、デオキシス、ミノメスなど用）
@@ -376,26 +376,26 @@ enum{
 
   ID_PARA_pref_code,              //都道府県コード
   ID_PARA_get_cassette,           //捕まえたカセット（カラーバージョン）
-  ID_PARA_trial_stylemedal_normal,      //かっこよさ勲章(ノーマル)トライアル
-  ID_PARA_trial_stylemedal_super,       //かっこよさ勲章(スーパー)トライアル
-  ID_PARA_trial_stylemedal_hyper,       //かっこよさ勲章(ハイパー)トライアル
-  ID_PARA_trial_stylemedal_master,      //かっこよさ勲章(マスター)トライアル
-  ID_PARA_trial_beautifulmedal_normal,    //うつくしさ勲章(ノーマル)トライアル
-  ID_PARA_trial_beautifulmedal_super,     //うつくしさ勲章(スーパー)トライアル
-  ID_PARA_trial_beautifulmedal_hyper,     //うつくしさ勲章(ハイパー)トライアル
-  ID_PARA_trial_beautifulmedal_master,    //うつくしさ勲章(マスター)トライアル
-  ID_PARA_trial_cutemedal_normal,       //かわいさ勲章(ノーマル)トライアル
-  ID_PARA_trial_cutemedal_super,        //かわいさ勲章(スーパー)トライアル
-  ID_PARA_trial_cutemedal_hyper,        //かわいさ勲章(ハイパー)トライアル
-  ID_PARA_trial_cutemedal_master,       //かわいさ勲章(マスター)トライアル
-  ID_PARA_trial_clevermedal_normal,     //かしこさ勲章(ノーマル)トライアル
-  ID_PARA_trial_clevermedal_super,      //かしこさ勲章(スーパー)トライアル
-  ID_PARA_trial_clevermedal_hyper,      //かしこさ勲章(ハイパー)トライアル
-  ID_PARA_trial_clevermedal_master,     //かしこさ勲章(マスター)トライアル
-  ID_PARA_trial_strongmedal_normal,     //たくましさ勲章(ノーマル)トライアル
-  ID_PARA_trial_strongmedal_super,      //たくましさ勲章(スーパー)トライアル
-  ID_PARA_trial_strongmedal_hyper,      //たくましさ勲章(ハイパー)トライアル
-  ID_PARA_trial_strongmedal_master,     //たくましさ勲章(マスター)トライアル
+  ID_PARA_trial_stylemedal_normal,      //かっこよさリボン(ノーマル)DSコンテスト
+  ID_PARA_trial_stylemedal_super,       //かっこよさリボン(グレート)DSコンテスト
+  ID_PARA_trial_stylemedal_hyper,       //かっこよさリボン(ウルトラ)DSコンテスト
+  ID_PARA_trial_stylemedal_master,      //かっこよさリボン(マスター)DSコンテスト
+  ID_PARA_trial_beautifulmedal_normal,  //うつくしさリボン(ノーマル)DSコンテスト
+  ID_PARA_trial_beautifulmedal_super,   //うつくしさリボン(グレート)DSコンテスト
+  ID_PARA_trial_beautifulmedal_hyper,   //うつくしさリボン(ウルトラ)DSコンテスト
+  ID_PARA_trial_beautifulmedal_master,  //うつくしさリボン(マスター)DSコンテスト
+  ID_PARA_trial_cutemedal_normal,       //かわいさリボン(ノーマル)DSコンテスト
+  ID_PARA_trial_cutemedal_super,        //かわいさリボン(グレート)DSコンテスト
+  ID_PARA_trial_cutemedal_hyper,        //かわいさリボン(ウルトラ)DSコンテスト
+  ID_PARA_trial_cutemedal_master,       //かわいさリボン(マスター)DSコンテスト
+  ID_PARA_trial_clevermedal_normal,     //かしこさリボン(ノーマル)DSコンテスト
+  ID_PARA_trial_clevermedal_super,      //かしこさリボン(グレート)DSコンテスト
+  ID_PARA_trial_clevermedal_hyper,      //かしこさリボン(ウルトラ)DSコンテスト
+  ID_PARA_trial_clevermedal_master,     //かしこさリボン(マスター)DSコンテスト
+  ID_PARA_trial_strongmedal_normal,     //たくましさリボン(ノーマル)DSコンテスト
+  ID_PARA_trial_strongmedal_super,      //たくましさリボン(グレート)DSコンテスト
+  ID_PARA_trial_strongmedal_hyper,      //たくましさリボン(ウルトラ)DSコンテスト
+  ID_PARA_trial_strongmedal_master,     //たくましさリボン(マスター)DSコンテスト
   ID_PARA_amari_ribbon,           //余りリボン
 
   ID_PARA_oyaname,              //親の名前（STRBUF使用）
