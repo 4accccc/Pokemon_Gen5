@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T16:47:55"/>
+	<create user="matsumiya" host="W00224" date="2010-06-08T15:25:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -315,7 +315,7 @@
 ただし！　ただしである
 いちど　ちょうせんを　はじめたなら[BE:00:ページ切り替え（行送り）]
 かちぬくか[BE:00:ページ切り替え（行送り）]
-まけるまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+まけるまで　でられないぞ！</language>
 		<language name="JPN_KANJI" width="256">ポケモンリーグは
 純粋に　強さのみを▽
 追い求め　示す　場所！▼
@@ -330,7 +330,7 @@
 ただし！　ただしである
 一度　挑戦を　はじめたなら[BE:00:ページ切り替え（行送り）]
 勝ち抜くか[BE:00:ページ切り替え（行送り）]
-敗北するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+敗北するまで　でられないぞ！</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_02">
@@ -344,10 +344,10 @@
 		<attribute name="キャラ指定">VETERANM</attribute>
 		<language name="JPN" width="256">いちど　ちょうせんを　はじめたなら
 かちぬくか[BE:00:ページ切り替え（行送り）]
-まけるまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+まけるまで　でられないぞ！</language>
 		<language name="JPN_KANJI" width="256">一度　挑戦を　はじめたなら
 勝ち抜くか[BE:00:ページ切り替え（行送り）]
-敗北するまで　でられないぞ！[BE:01:ページ切り替え（クリア）]</language>
+敗北するまで　でられないぞ！</language>
 	</row>
 
 	<row id="msg_c09_veteranm1_03">
