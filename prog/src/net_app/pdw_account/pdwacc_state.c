@@ -241,6 +241,7 @@ static void _saveStart2(PDWACC_WORK* pWork)
 static void _saveStart(PDWACC_WORK* pWork)
 {
   PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_007);
+  PDWACC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
   _CHANGE_STATE(_saveStart2);
 }
 
@@ -329,7 +330,7 @@ static void _createAccount4_2(PDWACC_WORK* pWork)
 static void _createAccount4(PDWACC_WORK* pWork)
 {
   PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_004);
-  //PMSND_PlaySE(SEQ_SE_SYS_24);
+  PDWACC_MESSAGE_WindowTimeIconStart(pWork->pMessageWork);
 
   _CHANGE_STATE(_createAccount4_2);
 
@@ -391,7 +392,6 @@ static void _createAccount1(PDWACC_WORK* pWork)
 
   
   PDWACC_MESSAGE_InfoMessageDisp(pWork->pMessageWork,PDWACC_003);
-
   _CHANGE_STATE(_createAccount2);
 }
 

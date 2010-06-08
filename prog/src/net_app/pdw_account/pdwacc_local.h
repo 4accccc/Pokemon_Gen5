@@ -30,6 +30,7 @@ extern APP_TASKMENU_WORK* PDWACC_MESSAGE_YesNoStart(PDWACC_MESSAGE_WORK* pWork,i
 extern void PDWACC_MESSAGE_ButtonWindowCreate(int num,int* pMsgBuff,PDWACC_MESSAGE_WORK* pWork,pBmnCallBackFunc callback,void* pParentWork);
 extern void PDWACC_MESSAGE_ButtonWindowDelete(PDWACC_MESSAGE_WORK* pWork);
 extern void PDWACC_MESSAGE_ButtonWindowMain(PDWACC_MESSAGE_WORK* pWork);
+extern void PDWACC_MESSAGE_WindowTimeIconStart(PDWACC_MESSAGE_WORK* pWork);
 
 extern void PDWACC_MESSAGE_SystemMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid);
 extern void PDWACC_MESSAGE_SystemMessageEnd(PDWACC_MESSAGE_WORK* pWork);

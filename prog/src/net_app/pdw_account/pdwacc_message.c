@@ -33,6 +33,7 @@
 #include "sound/pm_sndsys.h"
 #include "../../field/event_ircbattle.h"
 #include "app/app_taskmenu.h"  //APP_TASKMENU_INITWORK
+#include "system/time_icon.h"
 
 #include "pdwacc_local.h"
 #include "gtsnego.naix"
@@ -128,6 +129,7 @@ struct _PDWACC_MESSAGE_WORK {
   PRINT_STREAM* pStreamNo;
   GFL_TCBLSYS *pMsgTcblSys;
   PRINT_QUE*            SysMsgQue;
+  TIMEICON_WORK* pTimeIcon;
 
   APP_TASKMENU_ITEMWORK appitem[_SUBMENU_LISTMAX];
   APP_TASKMENU_RES* pAppTaskRes;
@@ -153,7 +155,7 @@ PDWACC_MESSAGE_WORK* PDWACC_MESSAGE_Init(HEAPID id,int msg_dat)
 
   GFL_BMPWIN_Init(pWork->heapID);
   GFL_FONTSYS_Init();
-  pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 1 , 0 );
+  pWork->pMsgTcblSys = GFL_TCBL_Init( pWork->heapID , pWork->heapID , 2 , 0 );
   pWork->SysMsgQue = PRINTSYS_QUE_Create( pWork->heapID );
   pWork->pStrBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
   pWork->pStrExBuf = GFL_STR_CreateBuffer( _MESSAGE_BUF_NUM, pWork->heapID );
@@ -214,6 +216,11 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
+  if(pWork->pTimeIcon){
+    TIMEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
+  
   if(pWork->noDispWin){
     GFL_BMPWIN_Delete(pWork->noDispWin);
   }
@@ -276,6 +283,25 @@ void PDWACC_MESSAGE_InfoMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
 
 //------------------------------------------------------------------------------
 /**
+ * @brief   タイムアイコンを出す
+ * @param   POKEMON_TRADE_WORK
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+
+void PDWACC_MESSAGE_WindowTimeIconStart(PDWACC_MESSAGE_WORK* pWork)
+{
+  if(pWork->pTimeIcon){
+    TIMEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
+  pWork->pTimeIcon =
+    TIMEICON_CreateTcbl(pWork->pMsgTcblSys,pWork->infoDispWin, 15, TIMEICON_DEFAULT_WAIT, pWork->heapID);
+}
+
+//------------------------------------------------------------------------------
+/**
  * @brief   メッセージの終了待ち
  * @retval  none
  */
@@ -312,6 +338,10 @@ BOOL PDWACC_MESSAGE_InfoMessageEndCheck(PDWACC_MESSAGE_WORK* pWork)
 
 void PDWACC_MESSAGE_InfoMessageEnd(PDWACC_MESSAGE_WORK* pWork)
 {
+  if(pWork->pTimeIcon){
+    TIMEICON_Exit(pWork->pTimeIcon);
+    pWork->pTimeIcon=NULL;
+  }
   if(pWork->infoDispWin){
     BmpWinFrame_Clear(pWork->infoDispWin, WINDOW_TRANS_OFF);
     GFL_BMPWIN_ClearScreen(pWork->infoDispWin);
