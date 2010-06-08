@@ -74,6 +74,7 @@ extern const GFL_PROC_DATA IrcBattleMatchProcData;
 //  define
 //======================================================================
 #define HOME_NPC_WIFI_MAX (5) ///<WiFiホーム NPC最大数
+#define HOME_NO_MAX (22)
 
 //======================================================================
 //  struct
@@ -84,7 +85,7 @@ extern const GFL_PROC_DATA IrcBattleMatchProcData;
 typedef struct
 {
   u16 code;
-  u16 stage;
+  u16 npc_home_no;
   s16 gx;
   s16 gy;
   s16 gz;
@@ -127,10 +128,15 @@ static const u32 data_PlayModeZoneID[BSWAY_MODE_MAX];
 static const VecFx32 data_PlayModeRecoverPos[BSWAY_MODE_MAX];
 static const u16 data_ModeBossClearFlag[BSWAY_MODE_MAX];
 static const u16 data_ModeBattleMode[BSWAY_MODE_MAX];
+static const u32 data_NpcHomeNoToStageNo[HOME_NO_MAX];
 const HOME_NPC_DATA data_HomeNpcTbl[];
 static const u16 data_HomeNpcTbl_WifiMan[10];
 static const u16 data_HomeNpcTbl_WifiWoman[10];
 static const MMDL_GRIDPOS data_HomeNpcWiFiPosTbl[HOME_NPC_WIFI_MAX];
+
+#ifdef DEBUG_ONLY_FOR_kagaya
+const u32 d_data_NpcHomeNoTbl[];
+#endif
 
 //======================================================================
 //  バトルサブウェイ　スクリプト関連
@@ -228,7 +234,22 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   u16 param1 = SCRCMD_GetVMWorkValue( core, work );
   u16 retwk_id = VMGetU16( core );
   u16 *ret_wk = SCRIPT_GetEventWork( sc, gdata, retwk_id );
-   
+
+#ifdef DEBUG_ONLY_FOR_kagaya
+  {
+    int i;
+    const HOME_NPC_DATA *data = data_HomeNpcTbl;
+    
+    for( i = 0; data->code != OBJCODEMAX; i++, data++ ){
+      if( data->npc_home_no != d_data_NpcHomeNoTbl[i] ){
+        OS_Printf(
+            "BSW データ異常 NPC_No.%dのホーム番号(%d)は正しくは%dです\n",
+            i, data->npc_home_no, d_data_NpcHomeNoTbl[i] );
+      }
+    }
+  }
+#endif
+
 #ifdef DEBUG_ONLY_FOR_kagaya  
   if( cmd_id >= BSWTOOL_START_NO && cmd_id < BSWTOOL_END_NO )
   {
@@ -1906,7 +1927,9 @@ static void bsway_SetHomeNPC(
     const HOME_NPC_DATA *data = data_HomeNpcTbl;
     BSUBWAY_SCOREDATA *bsw_score = bsw_scr->scoreData;
     u16 stage = BSUBWAY_SCOREDATA_GetStageNo_Org0( bsw_score, mode );
-
+    
+    KAGAYA_Printf( "BSW ホームNo.%d\n", stage );
+    
     switch( mode ){
     case BSWAY_MODE_S_SINGLE:
     case BSWAY_MODE_S_DOUBLE:
@@ -1916,7 +1939,10 @@ static void bsway_SetHomeNPC(
     }
   
     while( data->code != OBJCODEMAX ){
-      if( data->stage == stage ){
+      GF_ASSERT( data->npc_home_no );
+      GF_ASSERT( data->npc_home_no <= HOME_NO_MAX );
+      
+      if( stage == data_NpcHomeNoToStageNo[data->npc_home_no-1] ){
         mmdl = MMDLSYS_AddMMdlParam( mmdlsys,
             data->gx, data->gz, (DIR_UP+i) % DIR_MAX4,
             obj_id, data->code, MV_DIR_RND, zone_id );
@@ -1931,7 +1957,7 @@ static void bsway_SetHomeNPC(
           GF_ASSERT( 0 );
         }
       }
-    
+      
       data++;
       i++;
     }
@@ -2255,9 +2281,121 @@ static const u16 data_ModeBattleMode[BSWAY_MODE_MAX] =
 //--------------------------------------------------------------
 /// バトルサブウェイ　途中駅NPCデータ
 //--------------------------------------------------------------
+static const u32 data_NpcHomeNoToStageNo[HOME_NO_MAX] =
+{
+  1,  //home 1
+  2,
+  3,
+  1+3,  //s1 4
+  2+3,  //5
+  3+3,
+  4+3,
+  5+3,
+  6+3,
+  7+3,  //10
+  8+3,
+  9+3,
+  10+3,
+  11+3,
+  12+3, //15
+  13+3,
+  14+3,
+  15+3,
+  21+3,
+  29+3, //20
+  43+3,
+  143+3, //22
+};
+
+#ifdef DEBUG_ONLY_FOR_kagaya
+const u32 d_data_NpcHomeNoTbl[] =
+{
+1,
+4,
+1,
+4,
+1,
+4,
+1,
+4,
+1,
+2,
+4,
+9,
+15,
+2,
+4,
+8,
+12,
+2,
+3,
+5,
+11,
+1,
+2,
+3,
+5,
+6,
+8,
+12,
+3,
+4,
+6,
+11,
+3,
+5,
+6,
+7,
+8,
+15,
+18,
+4,
+1,
+17,
+9,
+10,
+12,
+14,
+21,
+7,
+9,
+11,
+16,
+20,
+1,
+2,
+5,
+3,
+5,
+7,
+22,
+7,
+9,
+11,
+13,
+15,
+8,
+10,
+13,
+16,
+19,
+3,
+5,
+8,
+3,
+6,
+7,
+10,
+6,
+7,
+10,
+18,
+};
+#endif
+
 static const HOME_NPC_DATA data_HomeNpcTbl[] =
 {
-  {BOY1,1,71,0,17,msg_c04r0111_boy2_1,0,ITEM_DUMMY_DATA},
+  {BOY1,1,71,0,17,msg_c04r0111_boy2_1,0,ITEM_DUMMY_DATA}, //0
   {BOY1,4,62,0,14,msg_c04r0111_boy2_2,0,ITEM_DUMMY_DATA},
   {GIRL2,1,66,0,14,msg_c04r0111_girl2_1,0,ITEM_DUMMY_DATA},
   {GIRL2,4,50,0,16,msg_c04r0111_girl2_2,0,ITEM_DUMMY_DATA},
@@ -2267,7 +2405,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {GIRL3,4,42,0,14,msg_c04r0111_girl3_2,0,ITEM_DUMMY_DATA},
   {BACKPACKERM,1,61,0,13,msg_c04r0111_backpackerm_1,0,ITEM_DUMMY_DATA},
   {BACKPACKERM,2,31,0,14,msg_c04r0111_backpackerm_2,0,ITEM_DUMMY_DATA},
-  {BACKPACKERM,4,58,0,15,msg_c04r0111_backpackerm_3,0,ITEM_DUMMY_DATA},
+  {BACKPACKERM,4,58,0,15,msg_c04r0111_backpackerm_3,0,ITEM_DUMMY_DATA}, //10
   {BACKPACKERM,9,22,0,13,msg_c04r0111_backpackerm_4,0,ITEM_DUMMY_DATA},
   {BACKPACKERM,15,42,0,17,msg_c04r0111_backpackerm_5,0,ITEM_DUMMY_DATA},
   {BACKPACKERW,2,67,0,17,msg_c04r0111_backpackerw_1,0,ITEM_DUMMY_DATA},
@@ -2277,7 +2415,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {POLICEMAN,2,43,0,15,msg_c04r0111_policeman_1,0,ITEM_DUMMY_DATA},
   {POLICEMAN,3,19,0,16,msg_c04r0111_policeman_2,0,ITEM_DUMMY_DATA},
   {POLICEMAN,5,50,0,16,msg_c04r0111_policeman_3,0,ITEM_DUMMY_DATA},
-  {POLICEMAN,11,68,0,14,msg_c04r0111_policeman_4,0,ITEM_DUMMY_DATA},
+  {POLICEMAN,11,68,0,14,msg_c04r0111_policeman_4,0,ITEM_DUMMY_DATA}, //20
   {OLDMAN1,1,42,0,14,msg_c04r0111_oldman1_1,0,ITEM_DUMMY_DATA},
   {OLDMAN1,2,22,0,14,msg_c04r0111_oldman1_2,0,ITEM_DUMMY_DATA},
   {OLDMAN1,3,58,0,15,msg_c04r0111_oldman1_3,0,ITEM_DUMMY_DATA},
@@ -2287,7 +2425,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {OLDMAN1,12,67,0,14,msg_c04r0111_oldman1_7,0,ITEM_DUMMY_DATA},
   {OL,3,67,0,15,msg_c04r0111_ol_1,0,ITEM_DUMMY_DATA},
   {OL,4,82,0,17,msg_c04r0111_ol_2,0,ITEM_DUMMY_DATA},
-  {OL,6,60,0,16,msg_c04r0111_ol_3,0,ITEM_DUMMY_DATA},
+  {OL,6,60,0,16,msg_c04r0111_ol_3,0,ITEM_DUMMY_DATA}, //30
   {OL,11,34,0,15,msg_c04r0111_ol_4,0,ITEM_DUMMY_DATA},
   {RAILMAN,3,46,0,14,msg_c04r0111_railman_1,0,ITEM_DUMMY_DATA},
   {RAILMAN,5,12,0,15,msg_c04r0111_railman_2,0,ITEM_DUMMY_DATA},
@@ -2297,27 +2435,27 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {RAILMAN,15,61,0,17,msg_c04r0111_railman_6,0,ITEM_DUMMY_DATA},
   {RAILMAN,18,67,0,15,msg_c04r0111_railman_7,0,ITEM_DUMMY_DATA},
   {BOY4,4,32,0,15,msg_c04r0111_boy4_1,0,ITEM_DUMMY_DATA},
-  {GIRL4,1,55,0,17,msg_c04r0111_girl4_1,0,ITEM_DUMMY_DATA},
+  {GIRL4,1,55,0,17,msg_c04r0111_girl4_1,0,ITEM_DUMMY_DATA}, //40
   {PILOT,17,59,0,15,msg_c04r0111_pilot_1,0,ITEM_DUMMY_DATA},
   {TRAINERM,9,69,0,17,msg_c04r0111_trainerm_1,0,ITEM_DUMMY_DATA},
   {TRAINERM,10,81,0,14,msg_c04r0111_trainerm_2,0,ITEM_DUMMY_DATA},
   {TRAINERM,12,48,0,14,msg_c04r0111_trainerm_3,0,ITEM_DUMMY_DATA},
   {TRAINERM,14,63,0,16,msg_c04r0111_trainerm_4,0,ITEM_DUMMY_DATA},
-  {TRAINERM,46,70,0,17,msg_c04r0111_trainerm_5,0,ITEM_DUMMY_DATA},
+  {TRAINERM,21,70,0,17,msg_c04r0111_trainerm_5,0,ITEM_DUMMY_DATA},
   {TRAINERW,7,67,0,17,msg_c04r0111_trainerw_1,msg_c04r0111_trainerw_1_01,ITEM_HUSIGINAAME},
   {TRAINERW,9,47,0,14,msg_c04r0111_trainerw_2,0,ITEM_DUMMY_DATA},
   {TRAINERW,11,23,0,16,msg_c04r0111_trainerw_3,0,ITEM_DUMMY_DATA},
-  {TRAINERW,16,17,0,16,msg_c04r0111_trainerw_4,0,ITEM_DUMMY_DATA},
-  {TRAINERW,32,45,0,15,msg_c04r0111_trainerw_5,msg_c04r0111_trainerw_5_01,ITEM_SUTAANOMI},
+  {TRAINERW,16,17,0,16,msg_c04r0111_trainerw_4,0,ITEM_DUMMY_DATA}, //50
+  {TRAINERW,20,45,0,15,msg_c04r0111_trainerw_5,msg_c04r0111_trainerw_5_01,ITEM_SUTAANOMI},
   {BADMAN,1,83,0,17,msg_c04r0111_badman_1,0,ITEM_DUMMY_DATA},
   {BADMAN,2,50,0,16,msg_c04r0111_badman_2,0,ITEM_DUMMY_DATA},
   {BADMAN,5,43,0,13,msg_c04r0111_badman_3,0,ITEM_DUMMY_DATA},
   {CLEANINGM,3,39,0,16,msg_c04r0111_cleaningm_1,msg_c04r0111_cleaningm_1_01,ITEM_POINTOAPPU},
   {CLEANINGM,5,35,0,16,msg_c04r0111_cleaningm_2,0,ITEM_DUMMY_DATA},
   {CLEANINGM,7,58,0,15,msg_c04r0111_cleaningm_3,0,ITEM_DUMMY_DATA},
-  {CLEANINGM,146,50,0,14,msg_c04r0111_cleaningm_4,0,ITEM_DUMMY_DATA},
+  {CLEANINGM,22,50,0,14,msg_c04r0111_cleaningm_4,0,ITEM_DUMMY_DATA},
   {VETERANM,7,39,0,14,msg_c04r0111_veteranm_1,0,ITEM_DUMMY_DATA},
-  {VETERANM,9,62,0,16,msg_c04r0111_veteranm_2,0,ITEM_DUMMY_DATA},
+  {VETERANM,9,62,0,16,msg_c04r0111_veteranm_2,0,ITEM_DUMMY_DATA}, //60
   {VETERANM,11,53,0,14,msg_c04r0111_veteranm_3,0,ITEM_DUMMY_DATA},
   {VETERANM,13,59,0,15,msg_c04r0111_veteranm_4,0,ITEM_DUMMY_DATA},
   {VETERANM,15,55,0,14,msg_c04r0111_veteranm_5,0,ITEM_DUMMY_DATA},
@@ -2325,9 +2463,9 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {VETERANW,10,39,0,13,msg_c04r0111_veteranw_2,0,ITEM_DUMMY_DATA},
   {VETERANW,13,60,0,15,msg_c04r0111_veteranw_3,0,ITEM_DUMMY_DATA},
   {VETERANW,16,68,0,15,msg_c04r0111_veteranw_4,0,ITEM_DUMMY_DATA},
-  {VETERANW,24,64,0,14,msg_c04r0111_veteranw_5,0,ITEM_DUMMY_DATA},
+  {VETERANW,19,64,0,14,msg_c04r0111_veteranw_5,0,ITEM_DUMMY_DATA},
   {LADY,3,25,0,14,msg_c04r0111_lady_1,0,ITEM_DUMMY_DATA},
-  {LADY,5,82,0,15,msg_c04r0111_lady_2,0,ITEM_DUMMY_DATA},
+  {LADY,5,82,0,15,msg_c04r0111_lady_2,0,ITEM_DUMMY_DATA}, //70
   {LADY,8,50,0,15,msg_c04r0111_lady_3,0,ITEM_DUMMY_DATA},
   {GENTLEMAN,3,26,0,14,msg_c04r0111_gentleman_1,0,ITEM_DUMMY_DATA},
   {GENTLEMAN,6,44,0,14,msg_c04r0111_gentleman_2,0,ITEM_DUMMY_DATA},
@@ -2337,7 +2475,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {BUSINESSMAN,7,55,0,13,msg_c04r0111_businessman_2,0,ITEM_DUMMY_DATA},
   {BUSINESSMAN,10,20,0,16,msg_c04r0111_businessman_3,0,ITEM_DUMMY_DATA},
   {BUSINESSMAN,18,28,0,14,msg_c04r0111_businessman_4,msg_c04r0111_businessman_4_01,ITEM_SANNOMI},
-  {OBJCODEMAX,0,0,0,0,0,0,ITEM_DUMMY_DATA},
+  {OBJCODEMAX,0,0,0,0,0,0,ITEM_DUMMY_DATA}, //80
 };
 
 //--------------------------------------------------------------

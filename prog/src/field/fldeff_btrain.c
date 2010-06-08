@@ -377,7 +377,7 @@ static void btrainTask_Update( FLDEFF_TASK *task, void *wk )
         work->anm_type = 0;
       }
       
-      OS_Printf( "トレインアニメ %d\n", work->anm_type );
+//      KAGAYA_Printf( "トレインアニメ %d\n", work->anm_type );
       FLDEFF_BTRAIN_SetAnime( task, work->anm_type );
     }
   }
@@ -394,8 +394,8 @@ static void btrainTask_Update( FLDEFF_TASK *task, void *wk )
 #ifdef DEBUG_ONLY_FOR_kagaya    
     if( work->anm_end == FALSE ){
       work->debugAnimeFrame++;
-      KAGAYA_Printf( "バトルトレイン　アニメ %d, フレーム %d\n",
-          work->anm_type, work->debugAnimeFrame );
+//      KAGAYA_Printf( "バトルトレイン　アニメ %d, フレーム %d\n",
+//          work->anm_type, work->debugAnimeFrame );
     }
 #endif
   }
