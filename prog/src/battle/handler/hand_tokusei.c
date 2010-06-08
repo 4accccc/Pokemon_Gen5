@@ -2830,7 +2830,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_KabutoArmor( u32* numElems )
 // クリティカルチェックダメージハンドラ
 static void handler_Kyouun( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) )
+  if( pokeID == BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) )
   {
     u8 rank = BTL_EVENTVAR_GetValue( BTL_EVAR_CRITICAL_RANK ) + 1;
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_CRITICAL_RANK, rank );
