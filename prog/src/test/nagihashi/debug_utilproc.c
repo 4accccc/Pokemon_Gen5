@@ -385,7 +385,7 @@ static void SEQFUNC_Derivery( DEBUG_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_ad
     { 
       DELIVERY_IRC_INIT init;
       GFL_STD_MemClear( &init, sizeof(DELIVERY_IRC_INIT) );
-      init.NetDevID = WB_NET_IRC_BATTLE;
+      init.NetDevID = WB_NET_IRC_REGULATION;
       init.ConfusionID  = 0;
       init.heapID = HEAPID_NAGI_DEBUG_SUB;
       init.dataNum  = 1;
