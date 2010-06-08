@@ -4139,7 +4139,7 @@ static  void  BTLV_INPUT_CreatePokeIcon( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMMAN
     biw->pokeicon_cellID = GFL_CLGRP_CELLANIM_Register( hdl, POKEICON_GetCellSubArcIndex(), POKEICON_GetAnmSubArcIndex(),
                                                         biw->heapID );
     biw->pokeicon_plttID = GFL_CLGRP_PLTT_RegisterComp( hdl, POKEICON_GetPalArcIndex(), CLSYS_DRAW_SUB,
-                                                        0x20 * 12, biw->heapID );
+                                                        0x20 * 11, biw->heapID );
     PaletteWorkSet_VramCopy( biw->pfd, FADE_SUB_OBJ,
                              GFL_CLGRP_PLTT_GetAddr( biw->pokeicon_plttID, CLSYS_DRAW_SUB ) / 2, 0x20 * 3 );
 
