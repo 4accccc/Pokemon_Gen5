@@ -32,6 +32,7 @@ typedef enum {
   BTL_ACTION_SKIP,      ///< 反動などで動けない
 
   BTL_ACTION_RECPLAY_TIMEOVER,   ///< 録画データの時間制限による終了
+  BTL_ACTION_RECPLAY_ERROR,
 
 }BtlAction;
 
@@ -132,6 +133,8 @@ extern WazaID BTL_ACTION_GetWazaID( const BTL_ACTION_PARAM* act );
 // 録画バッファあふれ通知コマンド通知
 extern void BTL_ACTION_SetRecPlayOver( BTL_ACTION_PARAM* act );
 
+// 録画読み込み失敗（不正データ）通知
+extern void BTL_ACTION_SetRecPlayError( BTL_ACTION_PARAM* act );
 
 #endif
 

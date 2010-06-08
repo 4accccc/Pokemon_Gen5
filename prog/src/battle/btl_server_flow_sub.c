@@ -1806,7 +1806,9 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
   result = BTL_SVF_HandEx_Result( wk );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
-  return (result != HandExResult_NULL);
+  TAYA_Printf("スキルコールresult=%d\n");
+
+  return (result == HandExResult_Enable);
 }
 /**
  *  シューター専用：アイテムドロップ

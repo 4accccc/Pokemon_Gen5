@@ -246,10 +246,12 @@ static void CmdLimit_Start( BTL_CLIENT* wk );
 static BOOL CmdLimit_CheckOver( BTL_CLIENT* wk );
 static BOOL CheckSelactForceQuit( BTL_CLIENT* wk, ClientSubProc nextProc );
 static void CmdLimit_End( BTL_CLIENT* wk );
+static void SetupSelectStartStr( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, BTLV_STRPARAM* strParam );
 static void ClientSubProc_Set( BTL_CLIENT* wk, ClientSubProc proc );
 static BOOL ClientSubProc_Call( BTL_CLIENT* wk );
 static BOOL SubProc_UI_SelectAction( BTL_CLIENT* wk, int* seq );
 static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq );
+static void setNullActionRecplay( BTL_CLIENT* wk );
 static BOOL selact_Start( BTL_CLIENT* wk, int* seq );
 static void selact_startMsg( BTL_CLIENT* wk, const BTLV_STRPARAM* strParam );
 static BOOL selact_ForceQuit( BTL_CLIENT* wk, int* seq );
@@ -1458,19 +1460,27 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
       // 再生時タイムオーバー検出処理
       if( act->gen.cmd == BTL_ACTION_RECPLAY_TIMEOVER )
       {
+        BTL_N_Printf( DBGSTR_CLIENT_ReadRecTimerOver, wk->myID );
+
         // 描画クライアントなのでメッセージ表示へ
-        if( wk->viewCore ){
+        if( wk->viewCore )
+        {
           BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_BattleTimeOver );
           BTLV_StartMsg( wk->viewCore, &wk->strParam );
+
           (*seq)++;
         // 描画クライアントではないので終了
         }else{
-          wk->procAction = &wk->actionParam[ 0 ];
-          BTL_ACTION_SetNULL( wk->procAction );
-          wk->returnDataPtr = wk->procAction;
-          wk->returnDataSize = sizeof(BTL_ACTION_PARAM);
+          setNullActionRecplay( wk );
           return TRUE;
         }
+      }
+      // 読み込みエラーなら何も言わず終了
+      else if( act->gen.cmd == BTL_ACTION_RECPLAY_ERROR )
+      {
+        BTL_N_Printf( DBGSTR_CLIENT_ReadRecError, wk->myID );
+        setNullActionRecplay( wk );
+        return TRUE;
       }
       else
       {
@@ -1491,11 +1501,22 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
 
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) ){
+      setNullActionRecplay( wk );
       return TRUE;
     }
     break;
   }
   return FALSE;
+}
+/**
+ *  タイムオーバー検出時などの無効アクションパラメータ返信設定
+ */
+static void setNullActionRecplay( BTL_CLIENT* wk )
+{
+  wk->procAction = &wk->actionParam[ 0 ];
+  BTL_ACTION_SetNULL( wk->procAction );
+  wk->returnDataPtr = wk->procAction;
+  wk->returnDataSize = sizeof(BTL_ACTION_PARAM);
 }
 
 
@@ -4574,12 +4595,17 @@ static BOOL SubProc_UI_RecordData( BTL_CLIENT* wk, int* seq )
 //---------------------------------------------------
 static BOOL SubProc_REC_ExitCommTrainer( BTL_CLIENT* wk, int* seq )
 {
-  if( wk->viewCore ){
-
+  if( wk->viewCore )
+  {
     BOOL fDone = SubProc_UI_ExitCommTrainer( wk, seq );
+
+    //  録画コマンドを最後まで読み取ったかどうかで完遂チェックすることにしたので
+    //  クライアントから通知が不要になった
+    #if 0
     if( fDone ){
       BTL_MAIN_NotifyRecPlayComplete( wk->mainModule );
     }
+    #endif
 
     return fDone;
   }
@@ -4737,9 +4763,13 @@ static BOOL SubProc_REC_ExitForNPC( BTL_CLIENT* wk, int* seq )
   {
     BOOL result = SubProc_UI_ExitForNPC( wk, seq );
 
+    // 録画コマンドを最後まで読み取ったかどうかで完遂チェックすることにしたので
+    // クライアントから通知が不要になった
+    #if 0
     if( result ){
       BTL_MAIN_NotifyRecPlayComplete( wk->mainModule );
     }
+    #endif
 
     return result;
 
@@ -4924,9 +4954,15 @@ static BOOL SubProc_REC_ExitForSubwayTrainer( BTL_CLIENT* wk, int* seq )
   if( wk->viewCore )
   {
     BOOL result = SubProc_UI_ExitForSubwayTrainer( wk, seq );
+
+    // 録画コマンドを最後まで読み取ったかどうかで完遂チェックすることにしたので
+    // クライアントから通知が不要になった
+    #if 0
     if( result ){
       BTL_MAIN_NotifyRecPlayComplete( wk->mainModule );
     }
+    #endif
+
     return result;
   }
   return TRUE;

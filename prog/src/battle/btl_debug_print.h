@@ -79,6 +79,8 @@ typedef enum {
   DBGSTR_CLIENT_StartRotAct,
   DBGSTR_CLIENT_EndRotAct,
   DBGSTR_CLIENT_ReadRecAct,
+  DBGSTR_CLIENT_ReadRecTimerOver,
+  DBGSTR_CLIENT_ReadRecError,
   DBGSTR_CLIENT_ReadRecAct_Fight,
   DBGSTR_CLIENT_ReadRecAct_Change,
   DBGSTR_CLIENT_ReadRecAct_Move,
@@ -368,6 +370,8 @@ typedef enum {
   DBGSTR_REC_ReadActParam,
   DBGSTR_REC_CheckMatchClient,
   DBGSTR_REC_ReadTimeOverCmd,
+  DBGSTR_REC_TimeOverCmdWrite,
+  DBGSTR_REC_CheckReadComp,
 
   DBGSTR_csv,
   DBGSTR_done,

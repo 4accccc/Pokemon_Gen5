@@ -136,3 +136,12 @@ void BTL_ACTION_SetRecPlayOver( BTL_ACTION_PARAM* act )
   act->gen.param = 0;
 }
 
+/**
+ *  読み込み失敗通知コマンド
+ */
+void BTL_ACTION_SetRecPlayError( BTL_ACTION_PARAM* act )
+{
+  act->gen.cmd = BTL_ACTION_RECPLAY_ERROR;
+  act->gen.param = 0;
+}
+

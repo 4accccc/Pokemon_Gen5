@@ -269,15 +269,21 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
   u32* rp;
   u32 i;
 
+  if( wk->fError )
+  {
+    BTL_ACTION_PARAM* actionParam = (BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
+    BTL_ACTION_SetRecPlayError( actionParam );
+    *numAction = 1;
+    *fChapter = FALSE;
+    return actionParam;
+  }
+
   rp = &wk->readPtr[ clientID ];
 
-  BTL_N_Printf( DBGSTR_REC_ReadActStart, *rp );
+  BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_ReadActStart, *rp );
   while( (*rp) < wk->dataSize )
   {
     ReadRecFieldTag( wk->recordData[ (*rp) ], &type, &numClient, fChapter );
-
-//    TAYA_Printf( "rpCode = %02x, type=%d(action=%d), numClient=%d, fChapter=%d\n", wk->recordData[ (*rp) ],
-//              type, BTL_RECFIELD_ACTION, numClient, (*fChapter) );
     (*rp)++;
 
     if( (*rp) > wk->dataSize ){
@@ -286,12 +292,15 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
     if( type == BTL_RECFIELD_ACTION )
     {
       const BTL_ACTION_PARAM* returnPtr = NULL;
-      BTL_N_Printf( DBGSTR_REC_SeekClient, numClient);
+      BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_SeekClient, numClient);
+      if( numClient==0 || (numClient>BTL_CLIENT_MAX) ){
+        break;
+      }
       for(i=0; i<numClient; ++i)
       {
         ReadClientActionTag( wk->recordData[ (*rp)++ ], &readClientID, &readNumAction );
 
-        BTL_N_Printf( DBGSTR_REC_CheckMatchClient, readClientID, clientID, readNumAction );
+        BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_CheckMatchClient, readClientID, clientID, readNumAction );
 
         if( ((*rp) >= wk->dataSize) ){ break; }
         if( readClientID != clientID )
@@ -303,7 +312,7 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
           returnPtr = (const BTL_ACTION_PARAM*)(&wk->recordData[(*rp)]);
           GFL_STD_MemCopy( returnPtr, wk->readBuf[clientID], readNumAction * sizeof(BTL_ACTION_PARAM) );
           returnPtr = (const BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
-          BTL_N_Printf( DBGSTR_REC_ReadActParam, (*rp), returnPtr->gen.cmd, returnPtr->fight.waza);
+          BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_ReadActParam, (*rp), returnPtr->gen.cmd, returnPtr->fight.waza);
           (*rp) += (sizeof(BTL_ACTION_PARAM) * readNumAction);
           *numAction = readNumAction;
         }
@@ -316,29 +325,35 @@ const BTL_ACTION_PARAM* BTL_RECREADER_ReadAction( BTL_RECREADER* wk, u8 clientID
     {
       BTL_ACTION_PARAM* actionParam = (BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
 
-      BTL_N_Printf( DBGSTR_REC_ReadTimeOverCmd );
-
+      BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_ReadTimeOverCmd, (*rp) );
       BTL_ACTION_SetRecPlayOver( actionParam );
       *numAction = 1;
       *fChapter = FALSE;
       return actionParam;
     }
-    else
+    else if( type == BTL_RECFIELD_BTLSTART )
     {
-      BTL_N_Printf( DBGSTR_REC_ReadActSkip, numClient);
-      (*rp) += numClient;
+      BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_ReadActSkip, numClient, (*rp) );
+    }
+    else{
+      break;
     }
     if( ((*rp) >= wk->dataSize) ){ break; }
   }
 
 
-  wk->fError = TRUE;
-
   GF_ASSERT_MSG(0, "不正なデータ読み取り clientID=%d, type=%d, readPtr=%d, datSize=%d",
-    clientID, type, (*rp), wk->dataSize);
-  return NULL;
-}
+            clientID, type, (*rp), wk->dataSize);
 
+  wk->fError = TRUE;
+  {
+    BTL_ACTION_PARAM* actionParam = (BTL_ACTION_PARAM*)(wk->readBuf[ clientID ]);
+    BTL_ACTION_SetRecPlayError( actionParam );
+    *numAction = 1;
+    *fChapter = FALSE;
+    return actionParam;
+  }
+}
 
 //=============================================================================================
 /**
@@ -381,7 +396,25 @@ u32 BTL_RECREADER_GetTurnCount( const BTL_RECREADER* wk )
   }
   return turnCount;
 }
-
+//=============================================================================================
+/**
+ * 最後まで読み込まれたか判定
+ *
+ * @param   wk
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_RECREADER_IsReadComplete( const BTL_RECREADER* wk, u8 clientID )
+{
+  if( wk->fError == FALSE )
+  {
+    const u32* rp = &wk->readPtr[ clientID ];
+    BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_CheckReadComp, clientID, (*rp), wk->dataSize );
+    return ( (*rp) == wk->dataSize );
+  }
+  return FALSE;
+}
 
 
 /*===========================================================================================*/
@@ -503,8 +536,10 @@ void* BTL_RECTOOL_FixSelActionData( BTL_RECTOOL* recTool, BtlRecTiming timingCod
 void* BTL_RECTOOL_PutTimeOverData( BTL_RECTOOL* recTool, u32* dataSize )
 {
   recTool->buffer[ HEADER_TIMING_CODE ] = BTL_RECTIMING_None;
-  recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( BTL_RECFIELD_TIMEOVER, 1, FALSE );
+  recTool->buffer[ HEADER_FIELD_TAG ]   = MakeRecFieldTag( BTL_RECFIELD_TIMEOVER, 0, FALSE );
   *dataSize = HEADER_SIZE;
+
+  BTL_N_PrintfEx( PRINT_CHANNEL_RECTOOL, DBGSTR_REC_TimeOverCmdWrite );
   return recTool->buffer;
 }
 

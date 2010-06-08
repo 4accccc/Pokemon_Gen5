@@ -174,6 +174,7 @@ struct _BTL_MAIN_MODULE {
 /*--------------------------------------------------------------------------*/
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
+static BOOL checkRecReadComplete( BTL_MAIN_MODULE* wk );
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk );
 static void setSubProcForSetup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
 static void setSubProcForClanup( BTL_PROC* bp, BTL_MAIN_MODULE* wk, const BATTLE_SETUP_PARAM* setup_param );
@@ -268,6 +269,11 @@ const GFL_PROC_DATA BtlProcData = {
 
 
 
+//----------------------------------------------------------------------------------------------
+/**
+ *  Proc Init
+ */
+//----------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   switch( *seq ){
@@ -360,7 +366,11 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
   return GFL_PROC_RES_CONTINUE;
 }
-
+//----------------------------------------------------------------------------------------------
+/**
+ *  Proc Main
+ */
+//----------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   BTL_MAIN_MODULE* wk = mywk;
@@ -383,14 +393,43 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
         break;
       }
     }
+    // 録画再生時なら最後までデータを読み込んだか判定
+    else
+    {
+      wk->setupParam->recPlayCompleteFlag = checkRecReadComplete( wk );
+    }
+
     return GFL_PROC_RES_FINISH;
   }
 
-
   return GFL_PROC_RES_CONTINUE;
-
 }
 
+//----------------------------------------------------------------------------------
+/**
+ * 録画再生データを全クライアントが最後まで読んだか判定
+ */
+//----------------------------------------------------------------------------------
+static BOOL checkRecReadComplete( BTL_MAIN_MODULE* wk )
+{
+  u32 i;
+  for(i=0; i<BTL_CLIENT_MAX; ++i)
+  {
+    if( BTL_MAIN_IsExistClient(wk, i) )
+    {
+      if( !BTL_RECREADER_IsReadComplete( &wk->recReader, i ) ){
+        return FALSE;
+      }
+    }
+  }
+  return TRUE;
+}
+
+//----------------------------------------------------------------------------------------------
+/**
+ *  Proc Quit
+ */
+//----------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   BTL_MAIN_MODULE* wk = mywk;
@@ -5154,22 +5193,6 @@ BOOL BTL_MAIN_IsShooterEnable( const BTL_MAIN_MODULE* wk )
 //
 //----------------------------------------------------------------------------------------------
 
-
-//=============================================================================================
-/**
- * 録画再生処理が最後まで正常に行われたことをパラメータに書き戻す
- *
- * @param   wk
- */
-//=============================================================================================
-void BTL_MAIN_NotifyRecPlayComplete( BTL_MAIN_MODULE* wk )
-{
-  if( BTL_MAIN_IsRecordPlayMode(wk) )
-  {
-    TAYA_Printf("録画再生最後まで出来た\n");
-    wk->setupParam->recPlayCompleteFlag = TRUE;
-  }
-}
 
 //=============================================================================================
 /**

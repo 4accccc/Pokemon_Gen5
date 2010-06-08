@@ -14515,6 +14515,7 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
 
   if( (!BPP_IsFakeEnable(user))
   &&  (!BPP_IsFakeEnable(target))
+  &&  (CheckPokeHideState(user) == BPP_CONTFLG_NULL)
   ){
 //    TAYA_Printf("PokeSick=%d, line=%d\n", BPP_GetPokeSick(user), __LINE__);
     if( BPP_HENSIN_Set(user, target) )

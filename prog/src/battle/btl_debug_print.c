@@ -134,6 +134,8 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_StartRotAct:          return "ローテーション動作開始 clientID=%d, dir=%d\n";
   case DBGSTR_CLIENT_EndRotAct:            return "ローテーション動作終了 clientID=%d, dir=%d\n";
   case DBGSTR_CLIENT_ReadRecAct:           return "録画データ読み込み clientID=%d, Action count=%d\n";
+  case DBGSTR_CLIENT_ReadRecTimerOver:     return "録画再生タイムオーバー検出 myClientID=%d\n";
+  case DBGSTR_CLIENT_ReadRecError:         return "録画再生エラー検出 myClientID=%d\n";
   case DBGSTR_CLIENT_ReadRecAct_Fight:     return "   action=Fight, waza=%d\n";
   case DBGSTR_CLIENT_ReadRecAct_Change:    return "   action=Change, nextPokeIdx=%d\n";
   case DBGSTR_CLIENT_ReadRecAct_Move:      return "   action=Move!\n";
@@ -408,11 +410,14 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
 
   case DBGSTR_REC_ReadActStart:         return "rec seek start RP= %d\n";
-  case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte\n";
+  case DBGSTR_REC_ReadActSkip:          return "rec seek RotateData skip %d byte .. RP=%d \n";
   case DBGSTR_REC_SeekClient:           return "rec seek numClient=%d\n";
   case DBGSTR_REC_ReadActParam:         return "rec ReadPtr=%d, act=%d, waza=%d\n";
   case DBGSTR_REC_CheckMatchClient:     return "rec Read-ClientID=%d, seeking-clientID=%d,  numAction=%d\n";
-  case DBGSTR_REC_ReadTimeOverCmd:      return "時間制限による終了コマンドを読み取った\n";
+  case DBGSTR_REC_ReadTimeOverCmd:      return "時間制限による終了コマンドを読み取った  RP=%d\n";
+  case DBGSTR_REC_TimeOverCmdWrite:     return "時間制限終了コマンドを書き込んだ\n";
+  case DBGSTR_REC_CheckReadComp:        return "録画読み込み完了チェック：clientID=%d, RP=%d, dataSize=%d\n";;
+
 
   case DBGSTR_csv:  return "%d,";
   case DBGSTR_done: return "done!";
