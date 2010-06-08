@@ -153,13 +153,18 @@ enum{
 ///ミッションが発動していない時のミッション番号
 #define MISSION_NO_NULL     (0xff)
 
-///巨大データ受信バッファサイズ
-#define INTRUDE_HUGE_RECEIVE_BUF_SIZE   (644)
-
 ///近くにいるビーコンの人物を表示する最大数
 #define INTRUDE_BCON_PLAYER_PRINT_SEARCH_MAX   (2)
 ///近くにいるビーコンの人物情報をリセットする時間
 #define INTRUDE_BCON_PLAYER_PRINT_LIFE        (30 * 5)
+
+///ダブルバッファ用のバッファNo定義
+typedef enum{
+  INTSEND_BUFF_SIDE_A,
+  INTSEND_BUFF_SIDE_B,
+  
+  INTSEND_BUFF_SIDE_MAX,
+}INTSEND_BUFF_SIDE;
 
 //==============================================================================
 //  型定義
@@ -236,21 +241,32 @@ typedef struct _INTRUDE_COMM_SYS{
   GAME_COMM_SYS_PTR game_comm;
   COMM_PLAYER_SYS_PTR cps;                          ///<通信プレイヤー制御ワークへのポインタ
   
-  u8 huge_receive_buf[INTRUDE_HUGE_RECEIVE_BUF_SIZE];  ///<巨大データ受信バッファ
-
   GBS_BEACON send_beacon;
   INTRUDE_STATUS intrude_status_mine;               ///<自分の現在情報
   INTRUDE_STATUS intrude_status[FIELD_COMM_MEMBER_MAX]; ///<全員の現在情報
   COMM_PLAYER_PACKAGE backup_player_pack[FIELD_COMM_MEMBER_MAX];  ///<Backup座標データ(座標変換をしていない)
   INTRUDE_TALK_FIRST_ATTACK recv_talk_first_attack;
   INTRUDE_TALK   talk;
-  INTRUDE_PROFILE send_profile;   ///<自分プロフィール送信バッファ(受信はgamedata内なので不要)
+  INTRUDE_PROFILE my_profile;   ///<自分プロフィール(受信はgamedata内なので不要)
   
   MISSION_SYSTEM mission;     ///<ミッションシステム
   INTRUDE_OCCUPY_RESULT send_occupy_result;     ///<ミッション後の占拠結果
   INTRUDE_OCCUPY_RESULT recv_occupy_result;     ///<ミッション後の占拠結果受信バッファ
   
   WFBC_COMM_DATA wfbc_comm_data;  ///<WFBC通信ワーク
+  
+  //大き目のデータの送信バッファ
+  INTRUDE_PROFILE huge_send_profile;       ///<送信バッファ：プロフィール
+  MISSION_DATA huge_send_mission_data;     ///<送信バッファ：ミッションデータ
+  MISSION_RESULT huge_send_mission_result; ///<送信バッファ：ミッション結果
+  
+  //巨大データ受信バッファ(一つ一つはそれほど大きくはないが、これらが同時に受信されると
+  //GFLIBの受信バッファがオーバーしてしまうので)
+  MISSION_CHOICE_LIST huge_recv_choicelist;  ///<巨大データ受信バッファ：ミッション選択リスト
+  INTRUDE_PROFILE huge_recv_profile[FIELD_COMM_MEMBER_MAX];   ///<巨大データ受信バッファ：プロフィール
+  MISSION_DATA huge_recv_mission_data[FIELD_COMM_MEMBER_MAX]; ///<巨大データ受信バッファ：ミッションデータ
+  MISSION_RESULT huge_recv_mission_result; ///<巨大データ受信バッファ：ミッション結果
+  
   
   INTRUDE_SYMBOL_WORK intrude_symbol;        ///<侵入先のシンボルワーク
   INTRUDE_SYMBOL_WORK intrude_send_symbol;   ///<送信バッファ：シンボルワーク
@@ -260,7 +276,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 recv_secret_item_flag:1;                 ///<TRUE:隠しアイテムを受信した
   u8 recv_symbol_flag:1;            ///<TRUE:シンボルデータを受信した
   u8 recv_symbol_change_flag:1;     ///<TRUE:シンボルデータの変更通知を受け取った
-  u8        :5;
+  u8 huge_send_bufside_profile:1;   ///<INTSEND_BUFF_SIDE
+  u8        :4;
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id

@@ -166,7 +166,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
     MyStatus_Copy(myst, dest_myst);
   }
   
-  //OS_TPrintf("aaa 空きヒープ %d  size intcom=%d\n", GFL_HEAP_GetHeapFreeSize(HEAPID_APP_CONTROL), sizeof(INTRUDE_COMM_SYS));
+//  OS_TPrintf("aaa 空きヒープ %d  size intcom=%d\n", GFL_HEAP_GetHeapFreeSize(HEAPID_APP_CONTROL), sizeof(INTRUDE_COMM_SYS));
   return intcomm;
 }
 
@@ -320,7 +320,7 @@ void  IntrudeComm_UpdateSystem( int *seq, void *pwk, void *pWork )
     FIELD_WFBC_COMM_DATA_Init(&intcomm->wfbc_comm_data);
     //自分プロフィールを自分の受信バッファにセット
     Intrude_SetSendProfileBuffer(intcomm);  //送信バッファに現在のデータをセット
-    Intrude_SetProfile(intcomm, GFL_NET_SystemGetCurrentID(), &intcomm->send_profile);
+    Intrude_SetProfile(intcomm, GFL_NET_SystemGetCurrentID(), &intcomm->my_profile);
     (*seq)++;
     break;
   case 3:

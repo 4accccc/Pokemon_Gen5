@@ -447,10 +447,10 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
   OCCUPY_INFO *occupy;
   
   myst = GAMEDATA_GetMyStatus(gamedata);
-  GFL_STD_MemCopy(myst, &intcomm->send_profile.mystatus, MyStatus_GetWorkSize());
+  GFL_STD_MemCopy(myst, &intcomm->my_profile.mystatus, MyStatus_GetWorkSize());
   
   occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
-  GFL_STD_MemCopy(occupy, &intcomm->send_profile.occupy, sizeof(OCCUPY_INFO));
+  GFL_STD_MemCopy(occupy, &intcomm->my_profile.occupy, sizeof(OCCUPY_INFO));
   
   //侵入ステータスをセット
   Intrude_SetSendStatus(intcomm);
@@ -459,7 +459,7 @@ void Intrude_SetSendProfileBuffer(INTRUDE_COMM_SYS_PTR intcomm)
     intcomm->intrude_status_mine.palace_area = GFL_NET_SystemGetCurrentID();
     GAMEDATA_SetIntrudePalaceArea(gamedata, intcomm->intrude_status_mine.palace_area);
   }
-  intcomm->send_profile.status = intcomm->intrude_status_mine;
+  intcomm->my_profile.status = intcomm->intrude_status_mine;
 }
 
 //==================================================================

@@ -21,7 +21,10 @@
 //==============================================================================
 //  プロトタイプ宣言
 //==============================================================================
-static u8 * _RecvHugeBuffer(int netID, void* pWork, int size);
+static u8 * _RecvHugeBuffer_ChoiceList(int netID, void* pWork, int size);
+static u8 * _RecvHugeBuffer_MissionData(int netID, void* pWork, int size);
+static u8 * _RecvHugeBuffer_Profile(int netID, void* pWork, int size);
+static u8 * _RecvHugeBuffer_MissionResult(int netID, void* pWork, int size);
 static void _IntrudeRecv_Shutdown(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MemberNum(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_ProfileReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -73,7 +76,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_Shutdown, NULL},               //INTRUDE_CMD_SHUTDOWN
   {_IntrudeRecv_MemberNum, NULL},              //INTRUDE_CMD_MEMBER_NUM
   {_IntrudeRecv_ProfileReq, NULL},             //INTRUDE_CMD_PROFILE_REQ
-  {_IntrudeRecv_Profile, NULL},                //INTRUDE_CMD_PROFILE
+  {_IntrudeRecv_Profile, _RecvHugeBuffer_Profile},                //INTRUDE_CMD_PROFILE
   {_IntrudeRecv_DeleteProfile, NULL},          //INTRUDE_CMD_DELETE_PROFILE
   {_IntrudeRecv_PlayerStatus, NULL},           //INTRUDE_CMD_PLAYER_STATUS
   {_IntrudeRecv_TimeoutWarning, NULL},         //INTRUDE_CMD_TIMEOUT_WARNING
@@ -83,16 +86,16 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_MonolithStatusReq, NULL},      //INTRUDE_CMD_MONOLITH_STATUS_REQ
   {_IntrudeRecv_MonolithStatus, NULL},         //INTRUDE_CMD_MONOLITH_STATUS
   {_IntrudeRecv_MissionListReq, NULL},         //INTRUDE_CMD_MISSION_LIST_REQ
-  {_IntrudeRecv_MissionList, _RecvHugeBuffer}, //INTRUDE_CMD_MISSION_LIST
+  {_IntrudeRecv_MissionList, _RecvHugeBuffer_ChoiceList}, //INTRUDE_CMD_MISSION_LIST
   {_MissionOrderConfirm, NULL},                //INTRUDE_CMD_MISSION_ORDER_CONFIRM
   {_IntrudeRecv_MissionEntryAnswer, NULL},     //INTRUDE_CMD_MISSION_ENTRY_ANSWER
-  {_IntrudeRecv_MissionData, NULL},            //INTRUDE_CMD_MISSION_DATA
+  {_IntrudeRecv_MissionData, _RecvHugeBuffer_MissionData},            //INTRUDE_CMD_MISSION_DATA
   {_IntrudeRecv_MissionStart, NULL},           //INTRUDE_CMD_MISSION_START
   {_IntrudeRecv_MissionClientStart, NULL},     //INTRUDE_CMD_MISSION_CLIENT_START
   {_IntrudeRecv_MissionClientStartAnswer, NULL}, //INTRUDE_CMD_MISSION_CLIENT_START_ANSWER
   {_IntrudeRecv_MissionAchieve, NULL},         //INTRUDE_CMD_MISSION_ACHIEVE
   {_IntrudeRecv_MissionAchieveAnswer, NULL},   //INTRUDE_CMD_MISSION_ACHIEVE_ANSWER
-  {_IntrudeRecv_MissionResult, NULL},          //INTRUDE_CMD_MISSION_RESULT
+  {_IntrudeRecv_MissionResult, _RecvHugeBuffer_MissionResult},  //INTRUDE_CMD_MISSION_RESULT
   {_IntrudeRecv_MissionCheckAchieveUser, NULL},//INTRUDE_CMD_MISSION_CHECK_ACHIEVE_USER
   {_IntrudeRecv_MissionAnswerAchieveUserUse, NULL},//INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_USE
   {_IntrudeRecv_MissionAnswerAchieveUserNone, NULL},//INTRUDE_CMD_MISSION_ANSWER_ACHIEVE_USER_NONE
@@ -123,7 +126,7 @@ SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
 //==============================================================================
 //--------------------------------------------------------------
 /**
- * 巨大データ用受信バッファ取得
+ * 巨大データ用受信バッファ取得：ミッションリスト
  *
  * @param   netID		
  * @param   pWork		
@@ -132,13 +135,62 @@ SDK_COMPILER_ASSERT(NELEMS(Intrude_CommPacketTbl) == INTRUDE_CMD_NUM);
  * @retval  u8 *		
  */
 //--------------------------------------------------------------
-static u8 * _RecvHugeBuffer(int netID, void* pWork, int size)
+static u8 * _RecvHugeBuffer_ChoiceList(int netID, void* pWork, int size)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  GF_ASSERT(netID == 0);  //親分のHugeBufferしか用意していないため、巨大データ送信は親限定
-  GF_ASSERT_MSG(size <= INTRUDE_HUGE_RECEIVE_BUF_SIZE, "size=%x, recv_size=%x\n", 
-    size, INTRUDE_HUGE_RECEIVE_BUF_SIZE);
-	return intcomm->huge_receive_buf;
+  return (u8*)(&intcomm->huge_recv_choicelist);
+}
+
+//--------------------------------------------------------------
+/**
+ * 巨大データ用受信バッファ取得：ミッションデータ
+ *
+ * @param   netID		
+ * @param   pWork		
+ * @param   size		
+ *
+ * @retval  u8 *		
+ */
+//--------------------------------------------------------------
+static u8 * _RecvHugeBuffer_MissionData(int netID, void* pWork, int size)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  return (u8*)(&intcomm->huge_recv_mission_data[netID]);
+}
+
+//--------------------------------------------------------------
+/**
+ * 巨大データ用受信バッファ取得：プロフィール
+ *
+ * @param   netID		
+ * @param   pWork		
+ * @param   size		
+ *
+ * @retval  u8 *		
+ */
+//--------------------------------------------------------------
+static u8 * _RecvHugeBuffer_Profile(int netID, void* pWork, int size)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  return (u8*)(&intcomm->huge_recv_profile[netID]);
+}
+
+//--------------------------------------------------------------
+/**
+ * 巨大データ用受信バッファ取得：ミッション結果
+ *
+ * @param   netID		
+ * @param   pWork		
+ * @param   size		
+ *
+ * @retval  u8 *		
+ */
+//--------------------------------------------------------------
+static u8 * _RecvHugeBuffer_MissionResult(int netID, void* pWork, int size)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  GF_ASSERT(netID == 0);  //親からしか送られてこないはず
+  return (u8*)(&intcomm->huge_recv_mission_result);
 }
 
 //--------------------------------------------------------------
@@ -344,8 +396,15 @@ BOOL IntrudeSend_Profile(INTRUDE_COMM_SYS_PTR intcomm)
     return FALSE;
   }
 
-  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_PROFILE, sizeof(INTRUDE_PROFILE), &intcomm->send_profile);
+  if(GFL_NET_IsInSendCommandQueue(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_PROFILE) == TRUE){
+    return FALSE;
+  }
+  
+  GFL_STD_MemCopy(&intcomm->my_profile, &intcomm->huge_send_profile, sizeof(INTRUDE_PROFILE));
+
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+    INTRUDE_CMD_PROFILE, sizeof(INTRUDE_PROFILE), &intcomm->huge_send_profile,
+    FALSE, FALSE, TRUE);
   if(ret == TRUE){
     intcomm->profile_req = FALSE;
     OS_TPrintf("自分プロフィール送信\n");
@@ -459,9 +518,9 @@ BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
-
-  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_PLAYER_STATUS, sizeof(INTRUDE_STATUS), send_status);
+  
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+    INTRUDE_CMD_PLAYER_STATUS, sizeof(INTRUDE_STATUS), send_status, FALSE, TRUE, FALSE);
   if(ret == TRUE){
     intcomm->send_status = FALSE;
   }
@@ -1004,8 +1063,15 @@ BOOL IntrudeSend_MissionData(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM 
     return FALSE;
   }
   
-  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), &mission->data);
+  if(GFL_NET_IsInSendCommandQueue(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_MISSION_DATA) == TRUE){
+    return FALSE;
+  }
+  
+  GFL_STD_MemCopy(&mission->data, &intcomm->huge_send_mission_data, sizeof(MISSION_DATA));
+  
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+    INTRUDE_CMD_MISSION_DATA, sizeof(MISSION_DATA), &intcomm->huge_send_mission_data,
+    FALSE, FALSE, TRUE);
   if(ret == TRUE){
     OS_TPrintf("送信：ミッションデータ \n");
   }
@@ -1404,9 +1470,16 @@ BOOL IntrudeSend_MissionResult(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTE
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
-
-  ret = GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
-    INTRUDE_CMD_MISSION_RESULT, sizeof(MISSION_RESULT), &mission->result);
+  
+  if(GFL_NET_IsInSendCommandQueue(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_MISSION_RESULT) == TRUE){
+    return FALSE;
+  }
+  
+  GFL_STD_MemCopy(&mission->result, &intcomm->huge_send_mission_result, sizeof(MISSION_RESULT));
+  
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER,
+    INTRUDE_CMD_MISSION_RESULT, sizeof(MISSION_RESULT), &intcomm->huge_send_mission_result,
+    FALSE, FALSE, TRUE);
   if(ret == TRUE){
     OS_TPrintf("送信：ミッション結果\n");
   }
