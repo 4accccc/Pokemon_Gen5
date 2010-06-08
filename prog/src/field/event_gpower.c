@@ -327,8 +327,9 @@ static void sub_GPowerEnableListLineDraw( POWER_CHECK_WORK* wk, STRBUF* str, GPO
 static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
 {
   INTRUDE_SAVE_WORK* int_sv = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork( wk->gdata ));
-  u8 power,i,line;
-  u16 time;
+  u8  tmp,power[GPOWER_TYPE_MAX],i,j,line;
+  u8  no[GPOWER_TYPE_MAX];
+  u16 time[GPOWER_TYPE_MAX];
 
   //設定しているデルパワーラベル
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_label01, wk->s_buf );
@@ -336,9 +337,9 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
   
   //設定しているデルパワー
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_list01, wk->s_buf );
-  power = ISC_SAVE_GetGPowerID(int_sv);
-  if( power != GPOWER_ID_NULL ){
-    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power, 0, 1 );
+  tmp = ISC_SAVE_GetGPowerID(int_sv);
+  if( tmp != GPOWER_ID_NULL ){
+    sub_GPowerEnableListLineDraw( wk, wk->s_buf, tmp, 0, 1 );
   }
   //発動しているデルパワー
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_label02, wk->s_buf );
@@ -346,13 +347,26 @@ static void sub_GPowerEnableListDraw( POWER_CHECK_WORK* wk )
 
   GFL_MSG_GetString( wk->msgData, msg_gpower_check_list02, wk->s_buf );
   for( i = 0, line = 0 ;i < GPOWER_TYPE_MAX;i++){
-    power = GPOWER_Check_OccurType( i );
-    if( power == GPOWER_ID_NULL ){
+    no[i] = i;
+    tmp = GPOWER_Check_OccurType( i );
+    if( tmp == GPOWER_ID_NULL ){
       continue;
     }
-    time = GPOWER_Check_OccurTypeLife( i );
-    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power, time, 3+line++ );
+    time[line] = GPOWER_Check_OccurTypeLife( i );
+    power[line] = tmp;
+    line++;
+//    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power, time, 3+line++ );
+  }
+  for(i = 0;i < (line-1);i++){
+    for(j = (line-1);j>i;j--){
+      if(time[no[j-1]] > time[no[j]]){
+        tmp = no[j];
+        no[j] = no[j-1];
+        no[j-1] = tmp;
+      }
+    }
+  }
+  for(i = 0;i < line;i++){
+    sub_GPowerEnableListLineDraw( wk, wk->s_buf, power[no[i]], time[no[i]], 3+i );
   }
 }
-
-
