@@ -120,7 +120,7 @@ BOOL UnionAppSystem_SetEntryUser(UNION_APP_PTR uniapp, NetID net_id, const MYSTA
   }
   
   member_num = MATH_CountPopulation((u32)(uniapp->basic_status.member_bit));
-  entry_num = MATH_CountPopulation((u32)(uniapp->entry_reserve_bit));
+  entry_num = 1;
 
   if(uniapp->entry_block == _ENTRY_TYPE_NUM){
     if(uniapp->intrude_capacity_count + entry_num > uniapp->intrude_capacity_max){
