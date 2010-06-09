@@ -2334,14 +2334,14 @@
 	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_241.ncg ./mmdl_res ./mmdl_dmy/ncg4x4pokenflip.imd 4 4 8
 
 #tsure_242.imd
-./mmdl_res/tsure_242.imd: ./mmdl_nchara/pokemon//tsure_242.ncg ./mmdl_nchara/pokemon//tsure_242.ncl ./mmdl_dmy/ncg4x4pokeflip.imd fldmmdl_list.csv
+./mmdl_res/tsure_242.imd: ./mmdl_nchara/pokemon//tsure_242.ncg ./mmdl_nchara/pokemon//tsure_242.ncl ./mmdl_dmy/ncg4x4pokenflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_242
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_242.ncg ./mmdl_res ./mmdl_dmy/ncg4x4pokeflip.imd 4 4 6
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_242.ncg ./mmdl_res ./mmdl_dmy/ncg4x4pokenflip.imd 4 4 8
 
 #tsure_243.imd
-./mmdl_res/tsure_243.imd: ./mmdl_nchara/pokemon//tsure_243.ncg ./mmdl_nchara/pokemon//tsure_243.ncl ./mmdl_dmy/ncg4x4pokenflip.imd fldmmdl_list.csv
+./mmdl_res/tsure_243.imd: ./mmdl_nchara/pokemon//tsure_243.ncg ./mmdl_nchara/pokemon//tsure_243.ncl ./mmdl_dmy/ncg4x4pokeflip.imd fldmmdl_list.csv
 	@echo convert ncg_imd tsure_243
-	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_243.ncg ./mmdl_res ./mmdl_dmy/ncg4x4pokenflip.imd 4 4 8
+	@ruby C:/home/pokemon_wb//tools/fld_char2imd/ncg2imd.rb ./mmdl_nchara/pokemon//tsure_243.ncg ./mmdl_res ./mmdl_dmy/ncg4x4pokeflip.imd 4 4 6
 
 #tsure_244.imd
 ./mmdl_res/tsure_244.imd: ./mmdl_nchara/pokemon//tsure_244.ncg ./mmdl_nchara/pokemon//tsure_244.ncl ./mmdl_dmy/ncg4x4pokeflip.imd fldmmdl_list.csv
