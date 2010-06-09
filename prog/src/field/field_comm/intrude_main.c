@@ -192,6 +192,9 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
   if(GAMEDATA_GetIsSave(gamedata) == FALSE){
     if(intcomm->recv_secret_item_flag == TRUE){
       INTRUDE_SAVE_WORK *intsave = SaveData_GetIntrude( GAMEDATA_GetSaveControlWork(gamedata) );
+      if(Intrude_CheckNG_Item(intcomm->recv_secret_item.item) == FALSE){
+        intcomm->recv_secret_item.item = ITEM_KIZUGUSURI;
+      }
       ISC_SAVE_SetItem(intsave, &intcomm->recv_secret_item);
       intcomm->recv_secret_item_flag = FALSE;
     }
@@ -1034,8 +1037,13 @@ u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst)
   }
   else{
     obj_code = sta->disguise_no;
+    if(Intrude_CheckNG_OBJID(obj_code) == FALSE){
+      GF_ASSERT_MSG(0, "obj_code = %d", obj_code);
+      obj_code = (MyStatus_GetMySex(myst) == PM_MALE) ? BOY1 : GIRL1;
+    }
   }
   
+  //”O‚Ì‚½‚ß
   if((obj_code >= OBJCODEEND_BBD && obj_code < OBJCODESTART_TPOKE) 
       || obj_code >= OBJCODEEND_TPOKE){
     obj_code = BOY1;

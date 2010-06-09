@@ -13,6 +13,7 @@
 #include "intrude_save_local.h"
 #include "field/field_comm/mission_types.h"
 #include "field/field_comm/intrude_mission.h"
+#include "field/intrude_secret_item_def.h"
 
 
 
@@ -203,6 +204,23 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
 {
   int i;
   INTRUDE_SECRET_ITEM_SAVE *isis = intsave->secret_item;
+  
+  //不正チェック
+  {
+    STRCODE EOMCODE = GFL_STR_GetEOMCode();
+    int pos;
+    for(pos = 0; pos < PERSON_NAME_SIZE; pos++){
+      if(src->name[pos] == EOMCODE){
+        break;
+      }
+    }
+    if(pos == PERSON_NAME_SIZE){
+      return;
+    }
+    if(src->tbl_no >= SECRET_ITEM_DATA_TBL_MAX){
+      return;
+    }
+  }
   
   for(i = 0; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
     if(isis->item == 0){
