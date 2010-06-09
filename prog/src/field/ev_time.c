@@ -33,6 +33,7 @@
 
 #include "savedata/gametime.h"
 #include "savedata/encount_sv.h"
+#include "savedata/wifihistory.h"
 
 #include "poke_tool/pokerus.h"
 #include "field/eventwork.h"
@@ -180,6 +181,8 @@ static void UpdateDayEvent(GAMEDATA * gdata, s32 diff_days)
   // レコードデータ1日1回更新処理
   RECORD_1day_Update( GAMEDATA_GetRecordPtr(gdata) );
 
+  // ジオネット1日1回更新処理
+  WIFIHISTORY_Update(SaveData_GetWifiHistory(save));
 
   //ポケモンクジ
   {
