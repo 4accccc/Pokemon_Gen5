@@ -1035,6 +1035,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     // 逃げアイテムなら逃げシーケンスへ
     if( BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_BATTLE) == ITEMUSE_BTL_ESCAPE )
     {
+      BTL_MAIN_DecrementPlayerItem( wk->mainModule, clientID, itemID );
       return TRITEM_RESULT_ESCAPE;
     }
   }
