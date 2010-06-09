@@ -38,6 +38,7 @@
 #include "handler\hand_waza.h"
 #include "handler\hand_side.h"
 #include "handler\hand_pos.h"
+#include "handler\hand_common.h"
 #include "btl_server_local.h"
 #include "btl_server.h"
 #include "btl_hem.h"
@@ -1824,24 +1825,27 @@ static u8 ShooterEff_SkillCall( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 ite
  */
 static u8 ShooterEff_ItemDrop( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u16 itemID, int itemParam, u8 actParam )
 {
-  u16 equipItemID = BPP_GetItem( bpp );
-  if( equipItemID != ITEM_DUMMY_DATA )
+  if( !HandCommon_CheckCantChangeItemPoke(wk, BPP_GetID(bpp)) )
   {
-    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+    u16 equipItemID = BPP_GetItem( bpp );
+    if( equipItemID != ITEM_DUMMY_DATA )
     {
-      BTL_HANDEX_PARAM_SET_ITEM* param;
-      u8 pokeID = BPP_GetID( bpp );
+      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+      {
+        BTL_HANDEX_PARAM_SET_ITEM* param;
+        u8 pokeID = BPP_GetID( bpp );
 
-      param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_SET_ITEM, pokeID );
-        param->pokeID = pokeID;
-        param->itemID = ITEM_DUMMY_DATA;
-        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_ItemDrop );
-        HANDEX_STR_AddArg( &param->exStr, pokeID );
-        HANDEX_STR_AddArg( &param->exStr, equipItemID );
-      BTL_SVF_HANDEX_Pop( wk, param );
+        param = BTL_SVF_HANDEX_Push( wk, BTL_HANDEX_SET_ITEM, pokeID );
+          param->pokeID = pokeID;
+          param->itemID = ITEM_DUMMY_DATA;
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Shooter_ItemDrop );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+          HANDEX_STR_AddArg( &param->exStr, equipItemID );
+        BTL_SVF_HANDEX_Pop( wk, param );
+      }
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
+      return TRUE;
     }
-    BTL_Hem_PopState( &wk->HEManager, hem_state );
-    return TRUE;
   }
   return FALSE;
 }

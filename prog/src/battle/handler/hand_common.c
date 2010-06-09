@@ -46,6 +46,38 @@ BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
 }
 
 /**
+ *  絶対にアイテムを書き換えてはいけないポケモン判定
+ */
+BOOL HandCommon_CheckCantChangeItemPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+  u16 monsno = BPP_GetMonsNo( bpp );
+  u16 itemID = BPP_GetItem( bpp );
+
+  switch( monsno ){
+  case MONSNO_GIRATHINA:
+    if( itemID == ITEM_HAKKINDAMA ){  // ギラティナのはっきんだまはNG
+      return TRUE;
+    }
+    break;
+
+  case MONSNO_ARUSEUSU:
+    if( BTL_TABLES_IsMatchAruseusPlate(itemID) ){  // アルセウスのプレートはNG
+      return TRUE;
+    }
+    break;
+
+  case MONSNO_INSEKUTA:
+    if( BTL_TABLES_IsMatchInsectaCasette(itemID) ){  // インセクタのカセットはNG
+      return TRUE;
+    }
+    break;
+  }
+
+  return FALSE;
+}
+
+/**
  *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック
  */
 BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8 targetPokeID )
@@ -59,32 +91,11 @@ BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8
     }
   }
   // ギラティナ・アルセウス・インセクタのチェック
+  if( HandCommon_CheckCantChangeItemPoke(flowWk, targetPokeID) )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-    u16 monsno = BPP_GetMonsNo( bpp );
-    u16 itemID = BPP_GetItem( bpp );
-
-    switch( monsno ){
-    case MONSNO_GIRATHINA:
-      if( itemID == ITEM_HAKKINDAMA ){  // ギラティナのはっきんだまはNG
-        return TRUE;
-      }
-      break;
-
-    case MONSNO_ARUSEUSU:
-      if( BTL_TABLES_IsMatchAruseusPlate(itemID) ){  // アルセウスのプレートはNG
-        return TRUE;
-      }
-      break;
-
-    case MONSNO_INSEKUTA:
-      if( BTL_TABLES_IsMatchInsectaCasette(itemID) ){  // インセクタのカセットはNG
-        return TRUE;
-      }
-      break;
-
-    }
+    return TRUE;
   }
+
   return FALSE;
 }
 
