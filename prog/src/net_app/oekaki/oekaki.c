@@ -54,7 +54,8 @@
 #define OEKAKI_DECIDE_SE     ( SEQ_SE_SELECT1 )
 #define OEKAKI_BS_SE         ( SEQ_SE_SELECT4 )
 #define OEKAKI_NEWMEMBER_SE  ( SEQ_SE_DECIDE1 )
-#define OEKAKI_PEN_CHANGE_SE ( SEQ_SE_DECIDE2 )
+#define OEKAKI_PEN_CHANGE_SE ( SEQ_SE_SELECT1 )
+#define OEKAKI_CANCEL_SE     ( SEQ_SE_CANCEL1 )
 
 // はい・いいえ
 #define YESNO_RET_YES   ( 0 )
@@ -1355,7 +1356,7 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
           SetNextSequence( wk, OEKAKI_MODE_END_SELECT );
           EndButtonAppearChange( wk->EndIconActWork, TRUE );
           decide = TRUE;
-          PMSND_PlaySE(OEKAKI_DECIDE_SE);
+          PMSND_PlaySE(OEKAKI_CANCEL_SE);
         }else{
           if(wk->AllTouchResult[0].banFlag == OEKAKI_BAN_ON ){
             // 親機に禁止されているときはＳＥのみ
@@ -1366,7 +1367,7 @@ static void NormalTouchFunc(OEKAKI_WORK *wk)
             SetNextSequence( wk, OEKAKI_MODE_END_SELECT );
             EndButtonAppearChange( wk->EndIconActWork, TRUE );
             decide = TRUE;
-            PMSND_PlaySE(OEKAKI_DECIDE_SE);
+            PMSND_PlaySE(OEKAKI_CANCEL_SE);
           }
         }
 
@@ -3493,6 +3494,7 @@ void Oekaki_SendDataRequest( OEKAKI_WORK *wk, int command, int id )
     wk->send_req.command = command;
     wk->send_req.id = id;
   }else{
-    GF_ASSERT_MSG(0,"送信リクエストが重複した now=%d, new=%d\n", wk->send_req.command, command);
+//    GF_ASSERT_MSG(0,"送信リクエストが重複した now=%d, new=%d\n", wk->send_req.command, command);
+    OS_Printf("送信リクエストが重複した now=%d, new=%d\n", wk->send_req.command, command);
   }
 }
