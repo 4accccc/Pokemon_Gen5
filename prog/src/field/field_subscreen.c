@@ -736,8 +736,12 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 
   CGEAR_SV_SetPowerFlag( pCGSV, net_flag );
 
-  // ここまできたので、バッテリ１０％　OFF処理は解消
-  GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
+  // 10% 以下　スリープフラグOFF
+  if( GAMESYSTEM_IsBatt10Sleep( p_gsys ) ){
+    GF_ASSERT_MSG( GAMESYSTEM_GetAlwaysNetFlag( p_gsys ) == FALSE, "10\% SleepAlwaysNetFlag　Error\n" );
+    // ここまできたので、バッテリ１０％　OFF処理は解消
+    GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
+  }
 }
 
 
@@ -770,9 +774,13 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
 
   CGEAR_SV_SetPowerFlag( pCGSV, effect );
 
-  // ここまできたので、バッテリ１０％　OFF処理は解消
-  GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
 
+  // 10% 以下　スリープフラグOFF
+  if( GAMESYSTEM_IsBatt10Sleep( p_gsys ) ){
+    GF_ASSERT_MSG( GAMESYSTEM_GetAlwaysNetFlag( p_gsys ) == FALSE, "10\% SleepAlwaysNetFlag　Error\n" );
+    // ここまできたので、バッテリ１０％　OFF処理は解消
+    GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
+  }
 
   // 通常のギアモードに変更
   pWork->mode     = FIELD_SUBSCREEN_NORMAL;
@@ -825,6 +833,7 @@ static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
     pCGSV = CGEAR_SV_GetCGearSaveData( pSave );
     if( GAMESYSTEM_IsBatt10Sleep( p_gsys ) ){
 
+      GF_ASSERT_MSG( GAMESYSTEM_GetAlwaysNetFlag( p_gsys ) == FALSE, "10\% SleepAlwaysNetFlag　Error\n" );
       if( GAMESYSTEM_GetAlwaysNetFlag( p_gsys ) ){
         GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
       }else{
