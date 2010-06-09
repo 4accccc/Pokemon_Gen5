@@ -936,7 +936,9 @@ static void MB_PARENT_InitGraphic( MB_PARENT_WORK *work )
   WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
   WIPE_ResetWndMask(WIPE_DISP_MAIN);
   WIPE_ResetWndMask(WIPE_DISP_SUB);
-  
+  G2_BlendNone();
+  G2S_BlendNone();
+
   GX_SetDispSelect(GX_DISP_SELECT_MAIN_SUB);
   GFL_DISP_SetBank( &vramBank );
 
@@ -1372,6 +1374,7 @@ static const BOOL MP_PARENT_SendImage_Main( MB_PARENT_WORK *work )
     WH_Initialize(work->heapId , &MP_PARENT_WhCallBack , FALSE );
     
     GFL_NET_WirelessIconEasyXY( 256-16,0,FALSE,work->heapId );
+    //アイコン強制出し
     if( work->mode == MPM_POKE_SHIFTER )
     {
       GFL_NET_WirelessIconEasy_HoldLCD( FALSE,work->heapId );
