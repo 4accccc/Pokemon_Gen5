@@ -1183,10 +1183,6 @@ GFL_PROC_RESULT Guru2MainProc_Init( GFL_PROC * proc, int *seq, void *pwk, void *
   //切断禁止
   GFL_NET_SetAutoErrorCheck( TRUE );      
 
-  
-  //ソフトリセット禁止
-  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
-  
   //ヒープ作成
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_GURU2, GURU2_HEAPSIZE );
   
@@ -1333,7 +1329,7 @@ GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
   GFL_HEAP_DeleteHeap( HEAPID_GURU2 );
   
   //ソフトリセット有効に戻す
-  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
+  GFL_UI_SoftResetEnable(GFL_UI_SOFTRESET_USER);
   
   return( GFL_PROC_RES_FINISH );
 }
@@ -2682,6 +2678,9 @@ static RET Guru2Subproc_SaveBeforeTimingInit( GURU2MAIN_WORK *g2m )
   GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   
   g2m->seq_no = SEQNO_MAIN_SAVE_BEFORE_TIMING_WAIT;
+
+  //ソフトリセット禁止
+  GFL_UI_SoftResetDisable(GFL_UI_SOFTRESET_USER);
   
   #ifdef DEBUG_GURU2_PRINTF
   OS_Printf( "ぐるぐる交換　セーブ開始\n" );
