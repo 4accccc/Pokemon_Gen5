@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-09T16:49:24"/>
+	<create user="matsumiya" host="W00224" date="2010-06-09T16:52:14"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -302,13 +302,13 @@
 ・1＝もらうポケモン</comment>
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">おぬし！　ポケモンの
-[1:01:ポケモン種族名:0]　は　つかまえたか？▼
+[1:01:ポケモン種族名:0]は　つかまえたか？▼
 もし　つかまえているなら
 わしの　[1:01:ポケモン種族名:1]と
 おぬしの　[1:01:ポケモン種族名:0]を▽
 こうかん　しないか？</language>
 		<language name="JPN_KANJI" width="256">おぬし！　ポケモンの
-[1:01:ポケモン種族名:0]　は　捕まえたか？▼
+[1:01:ポケモン種族名:0]は　捕まえたか？▼
 もし　捕まえているなら
 わしの　[1:01:ポケモン種族名:1]と
 おぬしの　[1:01:ポケモン種族名:0]を▽
@@ -350,10 +350,10 @@
 		<attribute name="キャラ指定">MOUNTAIN</attribute>
 		<language name="JPN" width="256">おいおい！▼
 わしが　こうかん　してほしいのは
-[1:01:ポケモン種族名:0]　だぞ……？</language>
+[1:01:ポケモン種族名:0]だぞ……？</language>
 		<language name="JPN_KANJI" width="256">おいおい！▼
 わしが　交換してほしいのは
-[1:01:ポケモン種族名:0]　だぞ……？</language>
+[1:01:ポケモン種族名:0]だぞ……？</language>
 	</row>
 
 	<row id="msg_r07r0201_mountain_04" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
