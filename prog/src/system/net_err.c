@@ -21,6 +21,7 @@
 #include "font/font.naix"
 #include "msg\msg_net_err.h"
 #include "sound\pm_sndsys.h"
+#include "system/machine_use.h"
 
 #ifndef MULTI_BOOT_MAKE  //通常時処理
 #include <dwc.h>
@@ -368,9 +369,7 @@ void NetErr_DispCallFatal(void)
 	
 //		OS_SpinWait(10000);
 	
-	while(1){
-		;	//電源切断をまつ
-	}
+	OS_Terminate();	//電源切断をまつ
 	
 	//エラー画面終了
 	Local_ErrDispExit(FALSE);
@@ -571,6 +570,7 @@ void NetErr_ExitNetSystem( void )
     GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
     do{
       GFL_NET_Main();
+      Local_ErrUpdate();
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 //      OS_TPrintf("GFL_NET_IsExitの完了を待っています\n");
     }while(GFL_NET_IsExit() == FALSE);
@@ -594,11 +594,11 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 	if(Local_SystemOccCheck() == FALSE){
 		return FALSE;
 	}
-
+  
   if(fatal_error == TRUE){
 		//エラー画面描画
   	Local_ErrDispInit(fatal_error);
-		while(1){}
+		OS_Terminate();
 	}
   
 	if(nes->status == NET_ERR_STATUS_REQ){
@@ -610,10 +610,6 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
 		
 //		OS_SpinWait(10000);
 		
-		while( fatal_error == TRUE )
-		{
-      Local_ErrUpdate(); //fatalは抜けれない
-    }
 #ifdef MULTI_BOOT_MAKE  //マルチブート処理
 		while( TRUE )
 		{
@@ -996,6 +992,8 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
 //--------------------------------------------------------------
 static void Local_ErrUpdate(void)
 {
+  MachineSystem_Main(); //ハードリセット用
+
   //LCDOFF対応
   GFL_UI_Main();
   //BGMが間延びする問題対応
