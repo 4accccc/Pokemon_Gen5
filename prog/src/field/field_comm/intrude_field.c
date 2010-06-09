@@ -1209,6 +1209,9 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
   if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
     return;
   }
+  if(GAMESYSTEM_IsBatt10Sleep(gameSys) == TRUE){
+    return;
+  }
 
   if(GAMESYSTEM_IsEventExists(gameSys) == TRUE){
     //橋の上で切断イベントが起動しているとイベント中にも関わらず通信が起動して
@@ -1281,7 +1284,7 @@ static void _InvasionCommBoot(GAMESYS_WORK *gsys)
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   FIELD_INVALID_PARENT_WORK *invalid_parent;
   
-  if(NetErr_App_CheckError()){
+  if(NetErr_App_CheckError() || GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE){
     return;
   }
   
@@ -1825,6 +1828,11 @@ BOOL IntrudeField_CheckIntrudeShutdown(GAMESYS_WORK *gsys, u16 zone_id)
   }
   
   //裏フィールドにいてintcommがない
+  
+  if(GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE){ //スリープによる切断
+    return TRUE;
+  }
+  
   // 1.自分のパレス or シンボルマップに来ただけ
   // 2.通信エラーによりintcommが既に解放済み
   if(ZONEDATA_IsPalace(zone_id) == TRUE){

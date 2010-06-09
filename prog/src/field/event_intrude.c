@@ -92,6 +92,7 @@ typedef struct
   INTRUDE_EVENT_DISGUISE_WORK iedw;
   
   MISSION_FORCEWARP_MSGID warp_talk;   ///<強制ワープ後に表示する会話タイプ
+  BOOL search_sleep_warp;
 }EVENT_FORCEWARP;
 
 
@@ -716,10 +717,15 @@ GMEVENT * EVENT_IntrudeForceWarpMyPalace(GAMESYS_WORK *gsys, MISSION_FORCEWARP_M
 {
   GMEVENT * event;
   EVENT_FORCEWARP *evf;
+  GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   
   event = GMEVENT_Create( gsys, NULL, EventForceWarpMyPalace, sizeof(EVENT_FORCEWARP) );
   evf = GMEVENT_GetEventWork(event);
   evf->warp_talk = warp_talk;
+  
+  if(GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE && GameCommSys_GetLastCommNo(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH){
+    evf->search_sleep_warp = TRUE;
+  }
 
   PMSND_PlaySE( INTSE_WARP );
 
@@ -772,7 +778,8 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     if(NetErr_App_CheckError() || GameCommSys_CheckSystemWaiting(game_comm) == FALSE){
       //通信が接続されている場合は切断もする
       if(NetErr_App_CheckError() == NET_ERR_CHECK_NONE 
-          && GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION){
+          && (GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_INVASION
+              || GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_FIELD_BEACON_SEARCH)){
         GameCommSys_ExitReq(game_comm);
       }
       (*seq)++;
@@ -780,7 +787,12 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     break;
   case SEQ_COMM_WAIT:
     if(NetErr_App_CheckError() || GameCommSys_BootCheck(game_comm) == GAME_COMM_NO_NULL){
-      (*seq)++;
+      if(evf->search_sleep_warp == TRUE){
+        *seq = SEQ_DISGUISE_INIT;
+      }
+      else{
+        (*seq)++;
+      }
     }
     break;
   
@@ -884,7 +896,12 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
     break;
   case SEQ_DISGUISE_MAIN:
     if(IntrudeEvent_Sub_DisguiseEffectMain(&evf->iedw, NULL) == TRUE){
-      (*seq)++;
+      if(evf->search_sleep_warp == TRUE){
+        *seq = SEQ_FINISH_BEFORE;
+      }
+      else{
+        (*seq)++;
+      }
     }
     break;
 
