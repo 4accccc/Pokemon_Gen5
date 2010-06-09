@@ -219,6 +219,8 @@ static BOOL _infoMessageEndCheck(GAMESYNC_MENU* pWork);
 static void _infoMessageDisp(GAMESYNC_MENU* pWork);
 static void _infoMessageDispHeight(GAMESYNC_MENU* pWork,int height,BOOL bStream);
 static void _hitAnyKey(GAMESYNC_MENU* pWork);
+static void _PaletteFade(GAMESYNC_MENU* pWork,BOOL bFade);
+static void _YesNoStart(GAMESYNC_MENU* pWork);
 
 
 
@@ -422,6 +424,36 @@ static void _modeFadeoutStart(GAMESYNC_MENU* pWork)
 
 
 
+
+
+static void _wifiConnectYesNoWait(GAMESYNC_MENU* pWork)
+{
+  if(APP_TASKMENU_IsFinish(pWork->pAppTask)){
+    int selectno = APP_TASKMENU_GetCursorPos(pWork->pAppTask);
+    if(selectno==0){
+      _CHANGE_STATE(pWork, _modeReportInit);
+    }
+    else{
+      GFL_BG_ClearScreen(GFL_BG_FRAME1_S);
+      pWork->selectType = GAMESYNC_RETURNMODE_NONE;
+      _CHANGE_STATE(pWork, _modeSelectMenuInit); //戻る
+    }
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+    _PaletteFade(pWork, FALSE);
+  }
+}
+
+static void _wifiConnectYesNoCheck(GAMESYNC_MENU* pWork)
+{
+  if(!_infoMessageEndCheck(pWork)){
+    return;
+  }
+  _YesNoStart(pWork);
+  _CHANGE_STATE(pWork,_wifiConnectYesNoWait);
+}
+
+
 static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
 {
   GAMESYNC_MENU* pWork = (GAMESYNC_MENU*)param;
@@ -431,14 +463,21 @@ static void _modeAppWinFlashCallback(u32 param, fx32 currentFrame )
     GFL_CLACT_WK_SetAutoAnmFlag( pWork->buttonObj[pWork->bttnid] , FALSE );
 
     if(pWork->selectType == GAMESYNC_RETURNMODE_UTIL){
+      if(pWork->infoDispWin){
+        GFL_BMPWIN_Delete(pWork->infoDispWin);
+        pWork->infoDispWin=NULL;
+      }
+
       if( OS_IsRunOnTwl() ){//DSIは呼ぶことが出来ない
-        if(pWork->infoDispWin){
-          GFL_BMPWIN_Delete(pWork->infoDispWin);
-          pWork->infoDispWin=NULL;
-        }
         GFL_MSG_GetString( pWork->pMsgWiFiData, dwc_message_0017, pWork->pStrBuf );
         _infoMessageDispHeight(pWork,10, FALSE);
         _CHANGE_STATE(pWork,_hitAnyKey);
+        return;
+      }
+      else{  //DSには確認メッセージが必要
+        GFL_MSG_GetString( pWork->pMsgData, GAMESYNC_008, pWork->pStrBuf );
+        _infoMessageDisp(pWork);
+        _CHANGE_STATE(pWork,_wifiConnectYesNoCheck);
         return;
       }
     }
