@@ -111,7 +111,8 @@
 #define TRTYPE_GRP_IDX_HAKAIW1		(23)
 #define TRTYPE_GRP_IDX_DPCHAMP		(25)
 #define TRTYPE_GRP_IDX_BCHAMP			(26)
-#define TRTYPE_GRP_IDX_MAX        (27)
+#define TRTYPE_GRP_IDX_BCHAMP2		(27)
+#define TRTYPE_GRP_IDX_MAX        (28)
 
 //アセンブラでincludeされている場合は、下の宣言を無視できるようにifndefで囲んである
 #ifndef	__ASM_NO_DEF_
