@@ -9135,6 +9135,7 @@ static void handler_Sakidori_CheckParam( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 
         // 相手がダメージワザを選択していない場合も失敗
         waza = BTL_ACTION_GetWazaID( &action );
+        if( waza == WAZANO_NULL ){ break; }
         if( !WAZADATA_IsDamage(waza) ){ break; }
 
         // さきどり禁止ワザなら失敗
