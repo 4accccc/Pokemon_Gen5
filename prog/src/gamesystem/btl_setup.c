@@ -172,7 +172,7 @@ void BATTLE_PARAM_SetRegulation( BATTLE_SETUP_PARAM* bp, const REGULATION *reg, 
     case REGULATION_STATE_NORMAL_15:
       /* none */
       break;
-    
+
     case REGULATION_STATE_NORMAL_02:
       bp->btl_status_flag |= BTL_STATUS_FLAG_CAMERA_OFF;
       break;

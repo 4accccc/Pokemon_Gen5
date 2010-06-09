@@ -1109,6 +1109,11 @@ static void setupBagItem( GAMEDATA* gameData, HEAPID heapID )
   MYITEM_AddItem( myItem, ITEM_ENEKONOSIPPO, 99, heapID );
   MYITEM_AddItem( myItem, ITEM_MENTARUHAABU, 99, heapID );
 
+  {
+    u16 num = MYITEM_GetItemNum( myItem, ITEM_MIKKUSUORE, heapID );
+    MYITEM_SubItem( myItem, ITEM_MIKKUSUORE, num, heapID );
+    MYITEM_AddItem( myItem, ITEM_MIKKUSUORE, 1, heapID );
+  }
 }
 
 static u16 PosToDeafultMonsNo( u16 pos )

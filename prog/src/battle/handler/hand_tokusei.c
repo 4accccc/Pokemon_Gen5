@@ -6712,7 +6712,6 @@ static void handler_HeavyMetal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    TAYA_Printf("ヘヴィメタルだから２倍にします\n");
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
   }
 }
@@ -6735,7 +6734,6 @@ static void handler_LightMetal( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    TAYA_Printf("ライトメタルだから1/２にします\n");
     BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(0.5) );
   }
 }

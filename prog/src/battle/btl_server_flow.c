@@ -14341,31 +14341,31 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
 
   // ワザ対象をワークに取得
   BTL_POKESET_Clear( wk->psetDamaged );
-  BTL_POKESET_Clear( wk->psetTarget );
-  BTL_POKESET_Add( wk->psetTarget, target );
+  BTL_POKESET_Clear( wk->psetTmp );
+  BTL_POKESET_Add( wk->psetTmp, target );
 
   // 場にいないポケモンには当たらない（補正なし）
-  BTL_POKESET_RemoveDeadPoke( wk->psetTarget );
-  if( BTL_POKESET_IsRemovedAll(wk->psetTarget) ){
+  BTL_POKESET_RemoveDeadPoke( wk->psetTmp );
+  if( BTL_POKESET_IsRemovedAll(wk->psetTmp) ){
     scPut_WazaFail( wk, attacker, wazaParam.wazaID );
     return 0;
   }
 
   // 対象ごとの無効チェック＆回避チェック
-  flowsub_checkWazaAffineNoEffect( wk, &wazaParam, attacker, wk->psetTarget, &wk->dmgAffRec );
-  flowsub_checkNotEffect( wk, &wazaParam, attacker, wk->psetTarget );
-  flowsub_checkWazaAvoid( wk, &wazaParam, attacker, wk->psetTarget );
+  flowsub_checkWazaAffineNoEffect( wk, &wazaParam, attacker, wk->psetTmp, &wk->dmgAffRec );
+  flowsub_checkNotEffect( wk, &wazaParam, attacker, wk->psetTmp );
+  flowsub_checkWazaAvoid( wk, &wazaParam, attacker, wk->psetTmp );
   // 最初は居たターゲットが残っていない -> 何もせず終了
-  if( BTL_POKESET_IsRemovedAll(wk->psetTarget) ){
+  if( BTL_POKESET_IsRemovedAll(wk->psetTmp) ){
     return 0;
   }
 
   // ワザエフェクト管理のバックアップを取り、システム初期化
   ctrlBackup = *(wk->wazaEffCtrl);
   wazaEffCtrl_Init( wk->wazaEffCtrl );
-  wazaEffCtrl_Setup( wk->wazaEffCtrl, wk, attacker, wk->psetTarget );
+  wazaEffCtrl_Setup( wk->wazaEffCtrl, wk, attacker, wk->psetTmp );
 
-  scproc_Fight_Damage_Root( wk, &wazaParam, attacker, wk->psetTarget, &wk->dmgAffRec, TRUE );
+  scproc_Fight_Damage_Root( wk, &wazaParam, attacker, wk->psetTmp, &wk->dmgAffRec, TRUE );
 
   // ワザ効果あり確定→演出表示コマンド生成などへ
   result = wazaEffCtrl_IsEnable( wk->wazaEffCtrl );
