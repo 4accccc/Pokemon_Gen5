@@ -270,6 +270,26 @@ extern BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys);
 //==================================================================
 extern BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys );
 
+//==================================================================
+/**
+ * バッテリー１０％以下でスリープに入った場合でCGEARONの場合には TRUE
+ * @param   gsys		
+ * @retval  BOOL    TRUE:バッテリー１０％以下でスリープに入った場合でCGEARONの場合
+ */
+//==================================================================
+extern BOOL GAMESYSTEM_IsBatt10Sleep( GAMESYS_WORK *gsys );
+
+//==================================================================
+/**
+ * バッテリー１０％以下でスリープに入った場合でのフラグリセット
+ * @param   gsys		
+ * @retval  void
+ */
+//==================================================================
+extern void GAMESYSTEM_ResetBatt10Sleep( GAMESYS_WORK *gsys );
+
+
+
 #ifdef PM_DEBUG
 //extern GAMESYS_WORK * DEBUG_GameSysWorkPtrGet(void);
 #endif

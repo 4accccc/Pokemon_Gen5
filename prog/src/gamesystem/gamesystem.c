@@ -97,6 +97,8 @@ static void GameSystem_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK *
 static BOOL GameSystem_Main(GAMESYS_WORK * gsys);
 static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
+static void GameSystem_SetBatt10SleepCallback( GAMESYS_WORK *gsys );
+static void GameSystem_ResetBatt10SleepCallback( GAMESYS_WORK *gsys );
 
 static void GameSystem_UpdateDoEvent( GAMESYS_WORK * gsys );
 static void GameSysmte_FieldAlwaysBootWatch(GAMESYS_WORK *gsys);
@@ -274,7 +276,8 @@ struct _GAMESYS_WORK {
 	u8 field_comm_error_req;      ///<TRUE:フィールドでの通信エラー画面表示リクエスト
   u8 do_event;    ///< イベント動作チェック
   u8 comm_off_event_flag;     ///<通信不許可イベントフラグ
-	u8 padding[1];
+  u8 batt10sleep:1;      ///<  １０％以下のバッテリーでスリープに入った場合の通信モード解除フラグ
+  u8 dummy:7;
 };
 
 //------------------------------------------------------------------
@@ -303,6 +306,8 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 
   //通信不許可イベントフラグOFFで初期化
   gsys->comm_off_event_flag = FALSE;
+  gsys->batt10sleep = FALSE;
+  GameSystem_SetBatt10SleepCallback( gsys );
 
   ZONEDATA_Open( heapID );
 }
@@ -310,6 +315,7 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
+  GameSystem_ResetBatt10SleepCallback( gsys );
 	ISS_SYS_Delete(gsys->iss_sys);
 	GAMEDATA_Delete(gsys->gamedata);
 	GameCommSys_Free(gsys->game_comm);
@@ -729,6 +735,78 @@ BOOL GAMESYSTEM_CommBootAlways( GAMESYS_WORK *gsys )
   }
   return FALSE;
 }
+
+//==================================================================
+/**
+ * @brief   バッテリー１０％以下でスリープに入った場合でCGEARONの場合には TRUE
+ * @param   gsys		
+ * @retval  BOOL    TRUE:バッテリー１０％以下でスリープに入った場合でCGEARONの場合
+ */
+//==================================================================
+
+BOOL GAMESYSTEM_IsBatt10Sleep( GAMESYS_WORK *gsys )
+{
+  return gsys->batt10sleep;
+}
+
+//==================================================================
+/**
+ * @brief  バッテリー１０％以下でスリープに入った場合でのフラグリセット
+ * @param   gsys		
+ * @retval  void
+ */
+//==================================================================
+
+void GAMESYSTEM_ResetBatt10Sleep( GAMESYS_WORK *gsys )
+{
+  gsys->batt10sleep=FALSE;
+}
+
+
+//==================================================================
+/**
+ * バッテリー１０％以下でスリープに入った場合でのコールバック
+ * @param   gsys		
+ * @retval  void
+ */
+//==================================================================
+
+static void GameSystem_CallbackBatt10Sleep( void *gsys_void )
+{
+  //１．１０以下でCGEARONでスリープになっていたならば、
+  //    通信アプリ解除モードフラグをON  =>  gsys->batt10sleep == TRUE
+  //    同時に常時通信フラグをOFF 
+  //２．常時通信は再開しない
+  //３．gsys->batt10sleepを見ながら各アプリは動く
+  //４．CGEAR自体は常時通信OFF動作をはじめる
+  //５．CGEARに行き着いた段階でフラグをリセット 完了
+  GAMESYS_WORK *gsys = gsys_void;
+  CGEAR_SAVEDATA* pCSV = GAMEDATA_GetCGearSaveData(gsys->gamedata);
+  if( CGEAR_SV_GetCGearONOFF(pCSV) && GAMESYSTEM_GetAlwaysNetFlag(gsys) )
+  {
+    GAMESYSTEM_SetAlwaysNetFlag(gsys, FALSE);
+    gsys->batt10sleep = TRUE;
+  }
+}
+
+//==================================================================
+/**
+ * @brief  バッテリー１０％以下でスリープに入った場合でのコールバックセット
+ * @param   gsys		
+ * @retval  void
+ */
+//==================================================================
+
+static void GameSystem_SetBatt10SleepCallback( GAMESYS_WORK *gsys )
+{
+  GFL_UI_Batt10SleepReleaseSetFunc( GameSystem_CallbackBatt10Sleep, gsys );
+}
+static void GameSystem_ResetBatt10SleepCallback( GAMESYS_WORK *gsys )
+{
+  GFL_UI_Batt10SleepReleaseSetFunc( NULL, NULL );
+}
+
+
 
 #ifdef PM_DEBUG
 
