@@ -27,6 +27,7 @@ _EVENT_DATA    ev_zone_c03r0401
 _EVENT_DATA_END
 
 DEFINE_LOCAL poke_pos   //手持ちセレビィの位置
+DEFINE_LOCAL is_first   //少年に話しかけたときTRUE ゾロアに話しかけたときFALSE add_zoroaをコールする前にセットする
 
 /************************************************************/
 /*     BGMフラグのリセット（GFサウンドデザイナー用）        */
@@ -101,6 +102,7 @@ EVENT_START	ev_c03r0401_boy1_01
       $WK_SCENE_C03R0401_ZOROA = 1
 
       //仲間にする処理
+      $is_first = TRUE
       _CALL add_zoroa
 
       //セレビィ戻す
@@ -337,9 +339,14 @@ add_zoroa:
     ELSE                          //仲間にしない
       //ループ抜ける
       $loop = FALSE
-      //「寂しそう」 >>ループ抜けるのでラストメッセージになる
-      _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_11, C03R0401_GIRL1_01  )
-      _LAST_KEYWAIT()
+      IF $is_first == TRUE THEN
+        //「寂しそう」 >>セレビィ格納アニメが入るので、▼ありメッセージ
+        _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_11, C03R0401_GIRL1_01 )
+      ELSE 
+        //「寂しそう」 >>ループ抜けるのでラストメッセージになる
+        _BALLOONWIN_OBJMSG( msg_c03r0401_girl1_11a, C03R0401_GIRL1_01 )
+        _LAST_KEYWAIT()
+      ENDIF  
       _BALLOONWIN_CLOSE()
     ENDIF
   }
@@ -521,6 +528,7 @@ EVENT_START	ev_c03r0401_poke22_01
     _OBJ_ANIME_WAIT()
 
     //仲間にする処理
+    $is_first = FALSE
     _CALL add_zoroa
   ELSE                                //セレビィいない
     //「・・・・・・・・」
