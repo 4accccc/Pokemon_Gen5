@@ -676,7 +676,6 @@ BOOL BTL_CLIENT_Main( BTL_CLIENT* wk )
 //=============================================================================================
 void BTL_CLIENT_SetChapterSkip( BTL_CLIENT* wk, u32 nextTurnNum )
 {
-  // @todo ‚±‚ê‚Ímain‚É‚¢‚Á‚½‚ñ”C‚¹‚é‚×‚«‚©H
   BTL_RECREADER_Reset( wk->btlRecReader );
 
   RecPlayer_ChapterSkipOn( &wk->recPlayer, nextTurnNum );
@@ -1304,7 +1303,6 @@ static BtlRotateDir decideNextDirRandom( BtlRotateDir prevDir )
 
 static BOOL SubProc_REC_SelectRotation( BTL_CLIENT* wk, int* seq )
 {
-  // @todo –¢ŽÀ‘•
   return TRUE;
 }
 
@@ -2599,10 +2597,11 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
 {
   switch( *seq ){
   case 0:
+    selItemWork_Quit( wk );
+
     if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
     {
       wk->commWaitInfoOn = TRUE;
-      selItemWork_Quit( wk );
       BTLV_StartCommWait( wk->viewCore );
       (*seq)++;
     }
@@ -2651,6 +2650,7 @@ static void selItemWork_Reserve( BTL_CLIENT* wk, u8 pokeIdx, u16 itemID )
   {
     if( wk->myID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
     {
+      TAYA_Printf("ItemID=%d‚ðŽg‚¤—\’è\n", itemID);
       wk->selItemWork[ pokeIdx ] = itemID;
       BTL_MAIN_DecrementPlayerItem( wk->mainModule, wk->myID, itemID );
     }
@@ -2666,6 +2666,7 @@ static void selItemWork_Restore( BTL_CLIENT* wk, u8 pokeIdx )
       u16 itemID = wk->selItemWork[ pokeIdx ];
       if( itemID != ITEM_DUMMY_DATA )
       {
+        TAYA_Printf("ItemID=%d‚ð–ß‚·\n", itemID);
         wk->selItemWork[ pokeIdx ] = ITEM_DUMMY_DATA;
         BTL_MAIN_AddItem( wk->mainModule, wk->myID, itemID );
       }

@@ -3548,6 +3548,8 @@ void BTL_MAIN_AddItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 itemID )
     if( clientID == wk->myClientID )
     {
       MYITEM_AddItem( (MYITEM_PTR)(wk->setupParam->itemData), itemID, 1, wk->heapID );
+      TAYA_Printf("–ß‚µ‚½ƒAƒCƒeƒ€=%d, ‚»‚ÌŒÂ”=%d\n", itemID,
+                MYITEM_GetItemNum( (MYITEM_PTR)(wk->setupParam->itemData), itemID, wk->heapID) );
     }
   }
 }
