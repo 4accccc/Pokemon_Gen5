@@ -275,6 +275,16 @@ extern void GFL_UI_SoftResetEnable( const u8 softResetBit);
 //------------------------------------------------------------------
 extern void GFL_UI_SoftResetSetFunc(GFL_UI_SOFTRESET_CALLBACK* pFunc, void* pWork);
 
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ解除時に呼ばれるバッテリー切れ専用関数をセットする
+ * @param   pFunc   スリープ解除時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+extern void GFL_UI_Batt10SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
+
 //----------------------------------------------------------------------------
 /**
  * @brief	  ふたが開いたかどうか
