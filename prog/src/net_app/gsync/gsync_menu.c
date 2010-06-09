@@ -1458,6 +1458,13 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   pWork->yoffset--;
   GFL_CLACT_SYS_Main();
 
+  if(GAMESYSTEM_IsBatt10Sleep(pWork->gsys)){
+    retCode= GFL_PROC_RES_FINISH;
+    pWork->selectType = GAMESYNC_RETURNMODE_NONE;
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  }
+  
   return retCode;
 }
 

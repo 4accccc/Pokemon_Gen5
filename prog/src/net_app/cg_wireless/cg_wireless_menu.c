@@ -1660,6 +1660,14 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   if((pWork->selectType != CG_WIRELESS_RETURNMODE_TV) && (pWork->selectType != CG_WIRELESS_RETURNMODE_PALACE)){
     GAMESYSTEM_CommBootAlways( pWork->gsys );
   }
+
+  if(GAMESYSTEM_IsBatt10Sleep(pWork->gsys)){
+    retCode= GFL_PROC_RES_FINISH;
+    pWork->selectType = CG_WIRELESS_RETURNMODE_NONE;
+    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  }
+
   return retCode;
 }
 
