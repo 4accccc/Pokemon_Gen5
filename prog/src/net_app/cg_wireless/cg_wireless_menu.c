@@ -211,6 +211,7 @@ struct _CG_WIRELESS_MENU {
   int cross_change;
   u32 cellRes[CEL_RESOURCE_MAX];
   int TelTimer;
+  BOOL bFadeStart;
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
   GFL_CLWK* TVTCall;
   GFL_CLWK* TVTCallName;
@@ -809,6 +810,7 @@ static void _modeFadeout(CG_WIRELESS_MENU* pWork)
 
 static void _modeFadeoutStart(CG_WIRELESS_MENU* pWork)
 {
+  pWork->bFadeStart=TRUE;
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
@@ -1657,8 +1659,11 @@ static GFL_PROC_RESULT CG_WirelessMenuProcMain( GFL_PROC * proc, int * seq, void
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
 
-  if((pWork->selectType != CG_WIRELESS_RETURNMODE_TV) || (pWork->selectType != CG_WIRELESS_RETURNMODE_PALACE)){
-    GAMESYSTEM_CommBootAlways( pWork->gsys );
+
+  if(WIPE_SYS_EndCheck()){
+    if(!pWork->bFadeStart){
+      GAMESYSTEM_CommBootAlways( pWork->gsys );
+    }
   }
 
   if(WIPE_SYS_EndCheck()){
@@ -1717,6 +1722,10 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
 
   WORDSET_Delete(pWork->pWordSet);
 
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }

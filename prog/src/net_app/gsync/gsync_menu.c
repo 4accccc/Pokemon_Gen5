@@ -1545,6 +1545,10 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
     pWork->pTimeIcon=NULL;
   }
 
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
   _workEnd(pWork);
   pParentWork->selectType = pWork->selectType;
 

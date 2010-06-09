@@ -2231,6 +2231,12 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   if(pWork->infoDispWin){
     GFL_BMPWIN_Delete(pWork->infoDispWin);
   }
+
+  if(pWork->pAppTask){
+    APP_TASKMENU_CloseMenu(pWork->pAppTask);
+    pWork->pAppTask=NULL;
+  }
+
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
   }
