@@ -131,6 +131,7 @@ CAMERA_SYSTEM_WORK* CAMERA_SYS_InitSystem( HEAPID heapId )
   work->captureCallBack = NULL;
   work->userWork = NULL;
   
+  GFL_UI_SleepDisable( GFL_UI_SLEEP_DSP );
   // ÉJÉÅÉâèâä˙âª
   {
     CAMERAResult result;
@@ -240,6 +241,7 @@ void CAMERA_SYS_ExitSystem( CAMERA_SYSTEM_WORK* work )
   
   CAMERA_SYS_DeleteReadBuffer( work );
   
+  GFL_UI_SleepEnable( GFL_UI_SLEEP_DSP );
   GFL_HEAP_FreeMemory( work );
   cameraWork = NULL;
 }
