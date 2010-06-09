@@ -1246,6 +1246,37 @@ u32 FSND_GetFieldBGM( GAMEDATA* gameData, u32 zoneID, u8 seasonID )
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief 最後のBGMリクエスト処理が完了した時点での BGM No.
+ *
+ * @param gameData
+ */
+//---------------------------------------------------------------------------------
+u32 FSND_GetLastBGM( GAMEDATA* gameData )
+{
+  FIELD_SOUND* fieldSound = GAMEDATA_GetFieldSound( gameData );
+  return FIELD_SOUND_GetPlayingBGM_atAllRequestFinished( fieldSound );
+}
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief 特殊 BGM があるかどうか
+ *
+ * @param gameData
+ * @param zoneID   ゾーンID
+ *
+ * @return 指定したゾーンに, 有効な特殊BGMがある場合 TRUE
+ */
+//---------------------------------------------------------------------------------
+BOOL FSND_CheckValidSpecialBGM( GAMEDATA* gameData, u16 zoneID )
+{
+  if( GetSpecialBGM( gameData, zoneID ) == SPECIAL_BGM_NONE ) {
+    return FALSE;
+  }
+  return TRUE;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief トレーナー視線曲 取得
  *
  * @param trType トレーナータイプ

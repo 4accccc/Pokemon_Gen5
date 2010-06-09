@@ -418,6 +418,64 @@ FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( const FIELD_SOU
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief 現在登録されているリクエストが完了した時点での, 再生中のBGMを取得する
+ *
+ * @param fieldSound
+ *
+ * @return 全てのリクエストを完了した時点で再生中となるBGM
+ */
+//---------------------------------------------------------------------------------
+u32 FIELD_SOUND_GetPlayingBGM_atAllRequestFinished( const FIELD_SOUND* fieldSound )
+{
+  u32 lastBGM = fieldSound->currentBGM;
+
+  // 処理中のリクエストを考慮
+  if( fieldSound->requestBGM != BGM_NONE ) {
+    lastBGM = fieldSound->requestBGM; // 再生リクエスト処理中
+  }
+  if( fieldSound->loadBGM != BGM_NONE ) {
+    lastBGM = fieldSound->loadBGM; // BGM ロード中
+  }
+
+  // キューにあるリクエストを考慮
+  {
+    int i;
+    int pos = fieldSound->requestHeadPos;
+    FSND_PUSHCOUNT pushCount = fieldSound->pushCount;
+    u32 pushBGM[ FSND_PUSHCOUNT_MAX ];
+
+    // BGM 退避状態をコピー
+    pushCount = fieldSound->pushCount;
+    for( i=0; i<pushCount; i++ ) {
+      pushBGM[i] = fieldSound->pushBGM[i];
+    }
+
+    // 全リクエストの動作をシミュレート
+    while( pos != fieldSound->requestTailPos )
+    {
+      const FSND_REQUEST_DATA* reqData = &( fieldSound->requestData[ pos ] );
+
+      if( reqData->request == FSND_BGM_REQUEST_PUSH ) {
+        pushBGM[ pushCount++ ] = lastBGM;
+      }
+      else if( reqData->request == FSND_BGM_REQUEST_POP ) {
+        lastBGM = pushBGM[ --pushCount ];
+      }
+      else if( (reqData->request == FSND_BGM_REQUEST_CHANGE) ||
+               (reqData->request == FSND_BGM_REQUEST_STAND_BY) ||
+               (reqData->request == FSND_BGM_REQUEST_FORCE_PLAY) ) {
+        lastBGM = reqData->soundIdx;
+      }
+
+      pos = ( pos + 1 ) % REQUEST_QUEUE_SIZE;
+    }
+  }
+
+  return lastBGM;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief BGMフェード検出
  *
  * @param fieldSound

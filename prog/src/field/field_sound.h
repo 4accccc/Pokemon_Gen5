@@ -104,6 +104,12 @@ inline void FSND_ReleaseBGMVolume_inApp( FIELD_SOUND* fieldSound )
 // 指定したフィールド上で再生すべき BGM No.
 extern u32 FSND_GetFieldBGM( GAMEDATA* gdata, u32 zoneID, u8 seasonID ); 
 
+// 最後のBGMリクエスト処理が完了した時点での BGM No.
+extern u32 FSND_GetLastBGM( GAMEDATA* gdata );
+
+// 特殊 BGM があるかどうか
+extern BOOL FSND_CheckValidSpecialBGM( GAMEDATA* gdata, u16 zoneID );
+
 // トレーナー視線 BGM No.
 extern u32 FSND_GetTrainerEyeBGM( u32 trType ); 
 

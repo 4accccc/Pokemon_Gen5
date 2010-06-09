@@ -46,6 +46,9 @@ extern FSND_PUSHCOUNT FIELD_SOUND_GetBGMPushCount( const FIELD_SOUND* fieldSound
 extern FSND_PUSHCOUNT 
 FIELD_SOUND_GetBGMPushCount_atAllRequestFinished( const FIELD_SOUND* fieldSound );
 
+// 現在登録されているリクエストが完了した時点での, 再生中のBGMを取得する
+extern u32 FIELD_SOUND_GetPlayingBGM_atAllRequestFinished( const FIELD_SOUND* fieldSound );
+
 // フェード中かどうか (TRUE: フェード中)
 extern BOOL FIELD_SOUND_IsBGMFade( const FIELD_SOUND* fieldSound );
 

@@ -69,7 +69,9 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeWarp( GMEVENT* event, int* s
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* seq, void* wk );
 static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, int *seq, void * wk );
 // BGM
-static BOOL CheckBGMFadeOut_at_Dungeon( EVENT_WORK* work );
+static BOOL CheckBGMFadeByMapChangeAtStep( const EVENT_WORK* work );
+static BOOL CheckDungeonISSValidityForMapChange( const EVENT_WORK* work );
+static PLAYER_MOVE_FORM GetPlayerMoveForm( const EVENT_WORK* work );
 static void StandByNextBGM( EVENT_WORK* work );
 static void CallBGMFadeOutEvent( EVENT_WORK* work, GMEVENT* parentEvent );
 // 画面のフェードアウト
@@ -202,12 +204,10 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
   switch ( *seq ) {
   case 0:  
     // BGM 操作
-    if( CheckBGMFadeOut_at_Dungeon(work) ) {
-      // BGM フェードアウト
+    if( CheckBGMFadeByMapChangeAtStep(work) ) {
       CallBGMFadeOutEvent( work, event );
     }
     else {
-      // BGM 再生準備
       StandByNextBGM( work );
     }
 
@@ -345,18 +345,39 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeIntrude( GMEVENT * event, in
   return GMEVENT_RES_CONTINUE;
 }
 
+
 //---------------------------------------------------------------------------------------
 /**
- * @brief ダンジョン内の BGM 操作方法を決定する
- *
- * @param work
- *
- * @return BGM をフェードアウトさせる場合 TRUE
+ * @brief 階段によるマップチェンジで BGM をフェードアウトさせるかどうかを判定する
  */
 //---------------------------------------------------------------------------------------
-static BOOL CheckBGMFadeOut_at_Dungeon( EVENT_WORK* work )
+static BOOL CheckBGMFadeByMapChangeAtStep( const EVENT_WORK* work )
+{ 
+  const ENTRANCE_EVDATA* evdata = work->evdata;
+  GAMEDATA* gameData = evdata->gameData;
+
+  if( CheckDungeonISSValidityForMapChange( work ) == FALSE ) {
+    return FALSE; // ダンジョンISSが無関係
+  }
+
+  if( FSND_CheckValidSpecialBGM( gameData, evdata->nextLocation.zone_id ) ) {
+    return FALSE; // 特殊BGMあり
+  }
+
+  if( (GetPlayerMoveForm( work ) == PLAYER_MOVE_FORM_CYCLE) &&
+      (FSND_GetLastBGM( gameData ) == SEQ_BGM_BICYCLE) ) {
+    return FALSE; // 自転車に乗っていて, 自転車曲が再生中or再生予定
+  }
+
+  return TRUE;
+}
+
+/**
+ * @brief マップチェンジ中のダンジョンISSの有効性をチェックする
+ */
+static BOOL CheckDungeonISSValidityForMapChange( const EVENT_WORK* work )
 {
-  ENTRANCE_EVDATA* evdata     = work->evdata;
+  const ENTRANCE_EVDATA* evdata = work->evdata;
 	GAMESYS_WORK*    gameSystem = evdata->gameSystem;
   ISS_SYS*         iss        = GAMESYSTEM_GetIssSystem( gameSystem );
   ISS_DUNGEON_SYS* issD       = ISS_SYS_GetIssDungeonSystem( iss );
@@ -370,6 +391,16 @@ static BOOL CheckBGMFadeOut_at_Dungeon( EVENT_WORK* work )
 
   return FALSE;
 }
+
+/**
+ * @brief 自機の移動フォームを取得する
+ */
+static PLAYER_MOVE_FORM GetPlayerMoveForm( const EVENT_WORK* work )
+{
+  const FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( work->evdata->fieldmap );
+  return FIELD_PLAYER_GetMoveForm( player );
+}
+
 
 //---------------------------------------------------------------------------------------
 /**
