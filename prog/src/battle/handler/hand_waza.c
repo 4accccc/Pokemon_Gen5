@@ -698,6 +698,7 @@ static const BtlEventHandlerTable*  ADD_Telekinesis( u32* numElems );
 static void handler_Telekinesis_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems );
+static void handler_FreeFall_TameFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_FailCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -10434,6 +10435,7 @@ static void handler_Telekinesis( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_CHECK_TAMETURN_FAIL,    handler_FreeFall_TameFail    },   // —­‚ßŽ¸”s”»’è
     { BTL_EVENT_TAME_START,             handler_FreeFall_TameStart   },   // —­‚ßŠJŽn
     { BTL_EVENT_TAME_RELEASE,           handler_FreeFall_TameRelease },   // —­‚ß‰ð•ú
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_FreeFall_FailCheck   },
@@ -10441,6 +10443,18 @@ static const BtlEventHandlerTable*  ADD_FreeFall( u32* numElems )
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
+}
+// —­‚ßŽ¸”s”»’è
+static void handler_FreeFall_TameFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_DEF );
+    if( BTL_MAINUTIL_IsFriendPokeID(pokeID, targetPokeID) )
+    {
+      BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+    }
+  }
 }
 // —­‚ßŠJŽn
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )

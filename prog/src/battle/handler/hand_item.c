@@ -2356,10 +2356,10 @@ static void handler_RenbuNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SiroiHerb( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_ACTPROC_END,   handler_SiroiHerb_ActCheck  },
-    { BTL_EVENT_TURNCHECK_END, handler_SiroiHerb_TurnCheck },
-    { BTL_EVENT_USE_ITEM,      handler_SiroiHerb_Use   },
-    { BTL_EVENT_USE_ITEM_TMP,  handler_SiroiHerb_Use   },
+    { BTL_EVENT_CHECK_ITEM_REACTION, handler_SiroiHerb_TurnCheck },
+    { BTL_EVENT_RANKEFF_FIXED,       handler_SiroiHerb_TurnCheck },
+    { BTL_EVENT_USE_ITEM,            handler_SiroiHerb_Use   },
+    { BTL_EVENT_USE_ITEM_TMP,        handler_SiroiHerb_Use   },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

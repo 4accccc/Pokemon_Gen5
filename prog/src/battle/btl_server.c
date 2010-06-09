@@ -281,8 +281,6 @@ void BTL_SERVER_CmdCheckMode( BTL_SERVER* server, u8 clientID, u8 numCoverPos )
     BTL_PARTY* party;
     BTL_ADAPTER* adapter;
 
-    BTL_EVENT_InitSystem();
-
     party = BTL_POKECON_GetPartyData( server->pokeCon, clientID );
 
     client = &server->client[ clientID ];
@@ -419,7 +417,6 @@ static BOOL ServerMain_WaitReady( BTL_SERVER* server, int* seq )
 {
   switch( *seq ){
   case 0:
-    BTL_EVENT_InitSystem();
     SetAdapterCmd( server, BTL_ACMD_WAIT_SETUP );
     (*seq)++;
     /* fallthru */

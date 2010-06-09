@@ -77,7 +77,8 @@ struct _BTL_EVENT_FACTOR {
   u32       rmReserveFlag    :  1;  ///< 削除予約フラグ
   u32       callingEventID   : 16;  ///< 反応中イベントID
   u32       recallEnableFlag : 1;   ///< 再帰呼び出し許可
-  u32       _padd            : 15;
+  u32       addedCurrentFlag : 1;   ///< 現在処理中イベントによりAddされた
+  u32       _padd            : 14;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -92,6 +93,7 @@ static BTL_EVENT_FACTOR  Factors[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FactorStack[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FirstFactorPtr;
 static u16 StackPtr;
+static u16 EventStackPtr;
 
 /**
 * イベント変数スタック
@@ -143,6 +145,7 @@ void BTL_EVENT_InitSystem( void )
 
   FirstFactorPtr = NULL;
   StackPtr = 0;
+  EventStackPtr = 0;
 
   varStack_Init();
 }
@@ -247,6 +250,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->dependID = dependID;
     newFactor->rmReserveFlag = FALSE;
     newFactor->recallEnableFlag = FALSE;
+    newFactor->addedCurrentFlag = (EventStackPtr != 0);
     if( isDependPokeFactorType(factorType) ){
       newFactor->pokeID = dependID;
     }else{
@@ -367,34 +371,6 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   printLinkDebug();
 
   popFactor( factor );
-}
-//=============================================================================================
-/**
- * ファクターの対応するポケモンを差し替え
- *
- * @param   factor
- * @param   pokeID
- * @param   pri
- *
- */
-//=============================================================================================
-void BTL_EVENT_FACTOR_ChangePokeParam( BTL_EVENT_FACTOR* factor, u8 pokeID, u16 subPri )
-{
-  if( factor->pokeID != BTL_POKEID_NULL )
-  {
-    const BtlEventHandlerTable* handlerTable = factor->handlerTable;
-    BtlEventFactorType type = factor->factorType;
-    u16 numHandlers = factor->numHandlers;
-    u16 subID = factor->subID;
-    u16 mainPri = getFactorMainPriority( factor->priority );
-
-    BTL_EVENT_FACTOR_Remove( factor );
-    BTL_EVENT_AddFactor( type, subID, mainPri, subPri, pokeID, handlerTable, numHandlers );
-  }
-  else
-  {
-    GF_ASSERT(0); // ポケ依存しない要素を操作しようとした
-  }
 }
 //=============================================================================================
 /**
@@ -523,7 +499,19 @@ void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventI
 //=============================================================================================
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
+  ++EventStackPtr;
+
   CallHandlersCore( flowWork, eventID, TRUE );
+
+  --EventStackPtr;
+  if( EventStackPtr == 0 )
+  {
+    BTL_EVENT_FACTOR* factor;
+    for( factor=FirstFactorPtr; factor!=NULL; factor = factor->next )
+    {
+      factor->addedCurrentFlag = FALSE;
+    }
+  }
 }
 
 //----------------------------------------------------------------------------------
@@ -547,6 +535,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
 
     if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
     &&  ( factor->sleepFlag == FALSE )
+    &&  ( factor->addedCurrentFlag == FALSE )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
     ){
       const BtlEventHandlerTable* tbl = factor->handlerTable;

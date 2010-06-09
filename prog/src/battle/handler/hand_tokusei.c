@@ -696,24 +696,24 @@ void BTL_HANDLER_TOKUSEI_Pause( const BTL_POKEPARAM* pp )
 void BTL_HANDLER_TOKUSEI_Swap( const BTL_POKEPARAM* pp1, const BTL_POKEPARAM* pp2 )
 {
   BTL_EVENT_FACTOR *factor1, *factor2;
-  u16 pri_1, pri_2;
   u8  ID_1, ID_2;
 
   ID_1 = BPP_GetID( pp1 );
   ID_2 = BPP_GetID( pp2 );
-  pri_1 = CalcTokHandlerSubPriority( pp1 );
-  pri_2 = CalcTokHandlerSubPriority( pp2 );
   factor1 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_1 );
   factor2 = BTL_EVENT_SeekFactor( BTL_EVENT_FACTOR_TOKUSEI, ID_2 );
 
   if( factor1 )
   {
-    BTL_EVENT_FACTOR_ChangePokeParam( factor1, ID_2, pri_2 );
+    BTL_EVENT_FACTOR_Remove( factor1 );
   }
   if( factor2 )
   {
-    BTL_EVENT_FACTOR_ChangePokeParam( factor2, ID_1, pri_1 );
+    BTL_EVENT_FACTOR_Remove( factor2 );
   }
+
+  BTL_HANDLER_TOKUSEI_Add( pp1 );
+  BTL_HANDLER_TOKUSEI_Add( pp2 );
 
 }
 
