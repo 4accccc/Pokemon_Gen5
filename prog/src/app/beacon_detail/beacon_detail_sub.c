@@ -157,8 +157,14 @@ int BeaconDetail_InputCheck( BEACON_DETAIL_WORK* wk )
   TOUCHBAR_ICON icon = TOUCHBAR_GetTouch( wk->touchbar );
   int trg = GFL_UI_KEY_GetTrg();
   
+  //スリープ中に通信がOffになったチェック
+  if( GAMESYSTEM_IsBatt10Sleep( wk->param->gsys )){
+    wk->param->ret_mode = 1;  //1にするとCギアトップに直接戻れる
+    return SEQ_FADEOUT;
+  }
+ 
   if( TOUCHBAR_GetTrg( wk->touchbar ) == TOUCHBAR_ICON_RETURN ){
-    wk->param->ret_mode = 0;  //1にするとCギアトップに直接戻れる。が、×がなくなったのでこのモードでは戻らないことになった10.03.20
+    wk->param->ret_mode = 0;  //1にするとCギアトップに直接戻れる
     return SEQ_FADEOUT;
   }
   if( icon == TOUCHBAR_ICON_CUR_U && wk->list_top > 0 ){
