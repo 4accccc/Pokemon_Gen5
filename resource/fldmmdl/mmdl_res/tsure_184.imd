@@ -1,22 +1,22 @@
 <?xml version='1.0' encoding='SHIFT_JIS'?><imd version='1.6.0'>
 
 <head>
-	<create date='2006-07-03T13:36:54' host='W00107' user='kanako_eo' source='ncg4x4pokeflip.mb'/>
+	<create date='2006-07-03T13:36:54' host='W00107' user='kanako_eo' source='ncg4x4pokenflip.mb'/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 </head>
 
 <body>
 
-<original_create date='2006-07-03T13:36:54' host='W00107' user='kanako_eo' source='ncg4x4pokeflip.mb'/>
+<original_create date='2006-07-03T13:36:54' host='W00107' user='kanako_eo' source='ncg4x4pokenflip.mb'/>
 <original_generator name='Maya 6.5 NNS_Export' version='1.6.0.20060417'/>
 
 <model_info tool_start_frame='0' force_full_weight='off' magnify='1.000000' scaling_rule='standard' compress_node='none' material_size='1 1' vertex_style='direct' compress_material='off' output_texture='used' node_size='1 1' pos_scale='3' tex_matrix_mode='maya' use_primitive_strip='on'/>
 
 <box_test xyz='-2.000000 0.000000 0.000000' whd='4.000000 4.000000 0.000000' pos_scale='3'/>
 
-<tex_image_array size='6'>
-	<tex_image name='t4x4pokeflip.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4pokeflip.tga' palette_name='t4x4pokeflip0' width='32' color0_mode='transparency'>
+<tex_image_array size='8'>
+	<tex_image name='t4x4pokenflip.1' format='palette16' original_width='32' original_height='32' index='0' height='32' path='t4x4pokenflip.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -52,7 +52,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4pokeflip.2' format='palette16' original_width='32' original_height='32' index='1' height='32' path='auto_make2.tga' palette_name='t4x4pokeflip0' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4pokenflip.10' format='palette16' original_width='32' original_height='32' index='1' height='32' path='auto_make2.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -88,7 +88,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4pokeflip.3' format='palette16' original_width='32' original_height='32' index='2' height='32' path='auto_make3.tga' palette_name='t4x4pokeflip0' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4pokenflip.11' format='palette16' original_width='32' original_height='32' index='2' height='32' path='auto_make3.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -124,7 +124,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4pokeflip.4' format='palette16' original_width='32' original_height='32' index='3' height='32' path='auto_make4.tga' palette_name='t4x4pokeflip0' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4pokenflip.12' format='palette16' original_width='32' original_height='32' index='3' height='32' path='auto_make4.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -160,7 +160,7 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4pokeflip.5' format='palette16' original_width='32' original_height='32' index='4' height='32' path='auto_make5.tga' palette_name='t4x4pokeflip0' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4pokenflip.13' format='palette16' original_width='32' original_height='32' index='4' height='32' path='auto_make5.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -173,30 +173,66 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
-			0000 0000 0000 9000 0009 0000 0000 0000 
-			0000 0000 9000 cd99 009c 0000 0000 0000 
-			0000 0000 c900 cdcc 009c 0000 0000 0000 
-			0000 0000 c900 4dbc 09cc 0000 0000 0000 
-			0000 0000 9000 4db9 09cb 0000 0000 0000 
-			0000 0000 0000 4d90 09c4 0000 0000 0000 
-			0000 0000 0000 4bd9 0a9b 0000 0000 0000 
-			0000 0000 9000 449c 099b 0000 0000 0000 
-			0000 0000 c900 b4cc 9cc9 0000 0000 0000 
-			0000 0000 c900 cccc 9ccc 0000 0000 0000 
-			0000 0000 cc90 cccc cccc 0009 0000 0000 
-			0000 0000 cb90 cccf cccc 0009 0990 0000 
-			0000 0000 ca90 cccd cccc 0009 9bb9 0000 
-			0000 0000 cc90 cccc 3ccc 9009 cbfb 0009 
-			0000 0000 ca90 b933 a3ca 2200 cbbb 0009 
-			0000 0000 ed00 c933 d339 0202 dccd 0000 
-			0000 0000 d000 a8ea 098e 0220 0dd0 0000 
-			0000 0000 0000 daad 009d 0000 0000 0000 
-			0000 0000 0000 0dd0 0000 0000 0000 0000 
+			0000 0000 0000 0000 0990 0000 0000 0000 
+			0000 0000 0000 9990 9ccd 0000 0000 0000 
+			0000 0000 0000 ccc9 9ccd 0000 0000 0000 
+			0000 0000 0000 bcc9 cc4d 0009 0000 0000 
+			0000 0000 0000 b990 cb4d 0009 0000 0000 
+			0000 0000 0000 9000 c44d 0009 0000 0000 
+			0000 0000 0000 d900 9b4b 000a 0000 0000 
+			0000 0000 0000 9c90 9b44 0009 0000 0000 
+			0000 0000 0000 ccc9 c9b4 009c 0000 0000 
+			0000 0000 0000 ccc9 cccc 009c 0000 0000 
+			0000 0000 9000 cccc cccc 09cc 0000 0000 
+			0000 0000 9000 cfcb cccc 09cc 9000 0009 
+			0000 0000 9000 cdca cccc 09cc b900 009b 
+			0000 0000 9000 cccc cccc 093c fb90 09cb 
+			0000 0000 9000 33ca cab9 00a3 bb22 09cb 
+			0000 0000 0000 33ed 39c9 02d3 cd02 00dc 
+			0000 0000 0000 ead0 8ea8 2009 d002 000d 
+			0000 0000 0000 ad00 9dda 0000 0000 0000 
+			0000 0000 0000 d000 000d 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
 	</tex_image>
-	<tex_image name='t4x4pokeflip.6' format='palette16' original_width='32' original_height='32' index='5' height='32' path='auto_make6.tga' palette_name='t4x4pokeflip0' width='32' color0_mode='transparency'>
+	<tex_image name='t4x4pokenflip.14' format='palette16' original_width='32' original_height='32' index='5' height='32' path='auto_make6.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0099 0000 0000 0000 
+			0000 0000 0000 d000 09cc 0000 0000 0000 
+			0000 0000 0000 d990 9ccb 0000 0000 0000 
+			0000 0000 0000 ccc9 9c4d 0000 0000 0000 
+			0000 0000 0000 bcc9 cb4d 0009 0000 0000 
+			0000 0000 0000 b990 c44d 0009 0000 0000 
+			0000 0000 0000 d900 b44b 0009 0000 0000 
+			0000 0000 0000 9c90 9b44 000a 0000 0000 
+			0000 0000 0000 ccc9 c9b4 009c 0000 0000 
+			0000 0000 0000 ccc9 cccc 009c 0000 0000 
+			0000 0000 9000 cccc cccc 09cc 9900 0000 
+			0000 0000 9000 cfcb cccc 09cc bb90 0009 
+			0000 0000 9000 cdca cccc 09cc bfb9 009c 
+			0000 0000 9000 cccc cccc 093c bbb9 009c 
+			0000 0000 9000 93cb c3ab 20a3 ccd2 000d 
+			0000 0000 0000 93ed 339c 20d3 dd00 0000 
+			0000 0000 0000 ead0 eeea 2209 0000 0000 
+			0000 0000 0000 d000 daad 0000 0000 0000 
+			0000 0000 0000 0000 0dd0 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4pokenflip.15' format='palette16' original_width='32' original_height='32' index='6' height='32' path='auto_make7.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
 		<bitmap size='256'>
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
@@ -210,36 +246,72 @@
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 9900 0000 0000 0000 0000 
-			0000 0000 0000 ccd0 0009 0000 0000 0000 
-			0000 0000 9000 cbd9 009c 0000 0000 0000 
-			0000 0000 c900 4dcc 009c 0000 0000 0000 
-			0000 0000 c900 4dbc 09cb 0000 0000 0000 
-			0000 0000 9000 4db9 09c4 0000 0000 0000 
-			0000 0000 0000 4bd9 09b4 0000 0000 0000 
-			0000 0000 9000 449c 0a9b 0000 0000 0000 
-			0000 0000 c900 b4cc 9cc9 0000 0000 0000 
+			0000 0000 0000 cc90 000d 0000 0000 0000 
+			0000 0000 0000 bcc9 099d 0000 0000 0000 
+			0000 0000 0000 d4c9 9ccc 0000 0000 0000 
+			0000 0000 9000 d4bc 9ccb 0000 0000 0000 
+			0000 0000 9000 d44c 099b 0000 0000 0000 
+			0000 0000 9000 b44b 009d 0000 0000 0000 
+			0000 0000 a000 44b9 09c9 0000 0000 0000 
+			0000 0000 c900 4b9c 9ccc 0000 0000 0000 
 			0000 0000 c900 cccc 9ccc 0000 0000 0000 
-			0000 0000 cc90 cccc cccc 0009 0099 0000 
-			0000 0000 cb90 cccf cccc 9009 09bb 0000 
-			0000 0000 ca90 cccd cccc b909 9cbf 0000 
-			0000 0000 cc90 cccc 3ccc b909 9cbb 0000 
-			0000 0000 cb90 ab93 a3c3 d220 0dcc 0000 
-			0000 0000 ed00 9c93 d333 0020 00dd 0000 
-			0000 0000 d000 eaea 09ee 0022 0000 0000 
-			0000 0000 0000 add0 00da 0000 0000 0000 
+			0000 0099 cc90 cccc cccc 0009 0000 0000 
+			9000 09bb cc90 cccc bcfc 0009 0000 0000 
+			c900 9bfb cc90 cccc acdc 0009 0000 0000 
+			c900 9bbb c390 cccc cccc 0009 0000 0000 
+			d000 2dcc 3a02 ba3c bc39 0009 0000 0000 
+			0000 00dd 3d02 c933 de39 0000 0000 0000 
+			0000 0000 9022 aeee 0dae 0000 0000 0000 
+			0000 0000 0000 daad 000d 0000 0000 0000 
+			0000 0000 0000 0dd0 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+		</bitmap>
+	</tex_image>
+	<tex_image name='t4x4pokenflip.16' format='palette16' original_width='32' original_height='32' index='7' height='32' path='auto_make8.tga' palette_name='t4x4pokenflip0' width='32' color0_mode='transparency'>
+		<bitmap size='256'>
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0000 0000 0000 0000 0000 
+			0000 0000 0000 0990 0000 0000 0000 0000 
+			0000 0000 0000 dcc9 0999 0000 0000 0000 
+			0000 0000 0000 dcc9 9ccc 0000 0000 0000 
+			0000 0000 9000 d4cc 9ccb 0000 0000 0000 
+			0000 0000 9000 d4bc 099b 0000 0000 0000 
+			0000 0000 9000 d44c 0009 0000 0000 0000 
+			0000 0000 a000 b4b9 009d 0000 0000 0000 
+			0000 0000 9000 44b9 09c9 0000 0000 0000 
+			0000 0000 c900 4b9c 9ccc 0000 0000 0000 
+			0000 0000 c900 cccc 9ccc 0000 0000 0000 
+			0000 0000 cc90 cccc cccc 0009 0000 0000 
+			9000 0009 cc90 cccc bcfc 0009 0000 0000 
+			b900 009b cc90 cccc acdc 0009 0000 0000 
+			bc90 09bf c390 cccc cccc 0009 0000 0000 
+			bc90 22bb 3a00 9bac ac33 0009 0000 0000 
+			cd00 20dc 3d20 9c93 de33 0000 0000 0000 
+			d000 200d 9002 8ae8 0dae 0000 0000 0000 
+			0000 0000 0000 add9 00da 0000 0000 0000 
 			0000 0000 0000 d000 000d 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 			0000 0000 0000 0000 0000 0000 0000 0000 
 		</bitmap>
-  </tex_image>
+	</tex_image>
 </tex_image_array>
 
 <tex_palette_array size='2'>
-	<tex_palette name='t4x4pokeflip0' color_size='16' index='0'>
+	<tex_palette name='t4x4pokenflip0' color_size='16' index='0'>
 		4691 7c1f 20e6 735a 14d7 7c1f 7c1f 7c1f 
 		6690 34c4 51c7 6649 7ace 0000 7337 7fbd 
 	</tex_palette>
-	<tex_palette name='t4x4pokeflip1' color_size='16' index='1'/>
+	<tex_palette name='t4x4pokenflip1' color_size='16' index='1'/>
 </tex_palette_array>
 
 <material_array size='1'>
