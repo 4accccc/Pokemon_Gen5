@@ -238,8 +238,6 @@ const BOOL PSTATUS_TermPokeStatus( PSTATUS_WORK *work )
   u8 i;
   GFL_TCB_DeleteTask( work->vBlankTcb );
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE , work->heapId );
-  
   work->psData->pos = work->dataPos;
 
 #if USE_STATUS_DEBUG

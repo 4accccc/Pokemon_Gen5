@@ -876,11 +876,11 @@ static void PSTATUS_INFO_DrawStateUp( PSTATUS_WORK *work , PSTATUS_INFO_WORK *in
       if( maxRand < rand )
       {
         maxRand = rand;
-        maxIdx = i;
+        maxIdx = paraPriorityArr[priArrIdx][i];
       }
     }
     
-    msgId = trmemo_03_01_00 + maxIdx*5 + perRand%5;
+    msgId = trmemo_03_01_00 + maxIdx*5 + maxRand%5;
     
     srcStr = GFL_MSG_CreateString( infoWork->msgMemo , msgId );
     PRINTSYS_PrintQueColor( work->printQue , GFL_BMPWIN_GetBmp( infoWork->bmpWinUp ) , 

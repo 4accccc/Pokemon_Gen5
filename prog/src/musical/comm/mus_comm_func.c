@@ -596,6 +596,10 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
   {
     ARI_TPrintf("mus_com_func ERROR!!!\n");
     work->isErr = TRUE;
+    if( GFL_NET_IsExit() == FALSE )
+    {
+      GFL_NET_Exit( NULL );
+    }
   }
   if( work->isErr == TRUE )
   {
