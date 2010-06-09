@@ -4787,7 +4787,7 @@ static void handler_KuroiTekkyuu_CheckFly( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
 static const BtlEventHandlerTable* HAND_ADD_ITEM_Karuisi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WEIGHT_RATIO,     handler_Karuisi },   // 防御側ガード力チェックハンドラ
+    { BTL_EVENT_WEIGHT_RATIO,     handler_Karuisi },   // 体重倍率チェックハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

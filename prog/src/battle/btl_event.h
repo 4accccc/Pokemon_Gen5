@@ -462,6 +462,9 @@ typedef enum {
 
 }BtlEventFactorType;
 
+/**
+ *  ƒCƒxƒ“ƒgˆ—‡˜
+ */
 typedef enum {
 
   BTL_EVPRI_WAZA_DEFAULT,
@@ -476,6 +479,7 @@ typedef enum {
   BTL_EVPRI_TOKUSEI_DEFAULT,
 
   BTL_EVPRI_ITEM_DEFAULT,
+    BTL_EVPRI_TOKUSEI_atodasi,
 
   BTL_EVPRI_MAX,
 

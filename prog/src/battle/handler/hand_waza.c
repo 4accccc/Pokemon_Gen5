@@ -4476,7 +4476,7 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    u32 heavy = BPP_GetWeight( bpp );
+    u32 heavy = BTL_SVFTOOL_GetWeight( flowWk, BPP_GetID(bpp) );
     u32 pow;
 
     if( heavy >= 200 ){
@@ -9906,7 +9906,7 @@ static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 weight;
 
-    weight = BPP_GetWeight( bpp );
+    weight = BTL_SVFTOOL_GetWeight( flowWk, pokeID );
 
     if( weight > BTL_POKE_WEIGHT_MIN )
     {

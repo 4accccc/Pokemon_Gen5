@@ -1059,7 +1059,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Atodasi( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_SP_PRIORITY,   handler_Atodasi },  // 特殊優先度チェックハンドラ
   };
-  *numElems = NELEMS(HandlerTable);
+  *numElems = numHandlersWithHandlerPri( BTL_EVPRI_TOKUSEI_atodasi, NELEMS(HandlerTable) );
   return HandlerTable;
 }
 
