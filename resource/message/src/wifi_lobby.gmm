@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-08T21:32:51"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-09T16:25:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -337,14 +337,14 @@
 		</language>
 	</columns>
 
-	<dialog left="16" top="159" right="721" bottom="787" maximized="no" rayout="Vertical2">
+	<dialog left="485" top="318" right="1190" bottom="946" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="127" right="1280" bottom="525" visible="yes"/>
+		<tag-palette left="807" top="127" right="1280" bottom="525" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1381,10 +1381,12 @@
 
 	<row id="msg_wifilobby_1046" back-color=",,,,,,,#808080,,,#808080,,,,,,,">
 		<comment>写真データ送受信の確認メッセージ</comment>
-		<language name="JPN" width="216">しゃしんデータの　そうじゅしんを
-おこないますが　よろしいですか？</language>
-		<language name="JPN_KANJI" width="216">写真データの　送受信を
-行いますが　よろしいですか？</language>
+		<language name="JPN" width="216">カメラきのうを　つかって　ともだちに
+がぞうデータを　おくります[BE:00:ページ切り替え（行送り）]
+よろしいですか？</language>
+		<language name="JPN_KANJI" width="216">カメラ機能を　つかって　友達に
+画像データを　送ります[BE:00:ページ切り替え（行送り）]
+よろしいですか？</language>
 	</row>
 
 	<flowchart-group-list>
