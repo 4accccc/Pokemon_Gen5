@@ -298,6 +298,10 @@ BOOL MISSION_SetMissionData(INTRUDE_COMM_SYS_PTR intcomm, MISSION_SYSTEM *missio
   MISSION_DATA *mdata = &mission->data;
   BOOL new_mission = FALSE;
   
+  if(src->cdata.reward > MISSION_REWARD_MAX || src->cdata.time > MISSION_TIME_MAX){
+    return FALSE; //不正データ
+  }
+
   if(mission->parent_data_recv == FALSE && src->accept_netid != INTRUDE_NETID_NULL){
     new_mission = TRUE;
     mission->parent_data_recv = TRUE;
@@ -889,6 +893,9 @@ s32 MISSION_GetResultPoint(INTRUDE_COMM_SYS_PTR intcomm, const MISSION_SYSTEM *m
   
   for(i = 0; i < FIELD_COMM_MEMBER_MAX; i++){
     if(result->achieve_netid[i] == GAMEDATA_GetIntrudeMyID(gamedata)){
+      if(result->mission_data.cdata.reward > MISSION_REWARD_MAX){
+        return 1; //不正データ
+      }
       return result->mission_data.cdata.reward;
     }
   }
@@ -1444,8 +1451,13 @@ void MISSIONDATA_Wordset(const MISSION_CONV_DATA *cdata, const MISSION_TARGET_IN
   //制限時間
   WORDSET_RegisterNumber(wordset, 2, cdata->time, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
   //報酬
-  WORDSET_RegisterNumber(
-    wordset, 3, cdata->reward, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  {
+    int reward = cdata->reward;
+    if(reward > MISSION_REWARD_MAX){
+      reward = 1;
+    }
+    WORDSET_RegisterNumber(wordset, 3, reward, 4, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT);
+  }
 }
 
 //==================================================================

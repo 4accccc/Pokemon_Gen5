@@ -180,6 +180,12 @@ void EVENTCHANGE_CommMissionShop_MtoT_Talk(GMEVENT *event, const COMMTALK_COMMON
   GMEVENT_Change(event, CommMissionShop_MtoT_Talk, sizeof(EVENT_MISSION_SHOP));
 	shop = GMEVENT_GetEventWork( event );
   GFL_STD_MemCopy(ccew, &shop->ccew, sizeof(COMMTALK_COMMON_EVENT_WORK));
+  {
+    MISSION_TYPEDATA_ATTRIBUTE *d_attr = (void*)shop->ccew.mdata.cdata.data;
+    if(Intrude_CheckNG_Item(d_attr->item_no) == FALSE){
+      d_attr->item_no = ITEM_KIZUGUSURI;
+    }
+  }
 }
 
 //--------------------------------------------------------------
