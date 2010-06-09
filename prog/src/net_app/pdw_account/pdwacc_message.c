@@ -212,10 +212,13 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
   WORDSET_Delete(pWork->pWordSet);
 
   APP_TASKMENU_RES_Delete( pWork->pAppTaskRes );
-  GFL_TCBL_Exit(pWork->pMsgTcblSys);
   PRINTSYS_QUE_Clear(pWork->SysMsgQue);
   PRINTSYS_QUE_Delete(pWork->SysMsgQue);
 
+  if(pWork->pStream ){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+  }
+  
   if(pWork->pTimeIcon){
     TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
@@ -240,6 +243,7 @@ void PDWACC_MESSAGE_End(PDWACC_MESSAGE_WORK* pWork)
     }
   }
 
+  GFL_TCBL_Exit(pWork->pMsgTcblSys);
   GFL_BMPWIN_Exit();
   GFL_HEAP_FreeMemory(pWork);
 }
@@ -270,6 +274,7 @@ void PDWACC_MESSAGE_InfoMessageDisp(PDWACC_MESSAGE_WORK* pWork,int msgid)
   GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pwin), 15);
   GFL_FONTSYS_SetColor(1, 2, 15);
 
+  GF_ASSERT(pWork->pStream==NULL);
   pWork->pStream = PRINTSYS_PrintStream(pwin ,0,0, pWork->pStrBuf, pWork->pFontHandle,
                                         MSGSPEED_GetWait(), pWork->pMsgTcblSys, 2, pWork->heapID, 15);
 
@@ -717,6 +722,8 @@ void PDWACC_MESSAGE_NoMessageEnd(PDWACC_MESSAGE_WORK* pWork)
     GFL_BMPWIN_Delete(pWork->noDispWin);
     GFL_BMPWIN_Delete(pWork->noTitleDispWin);
     GFL_BG_LoadScreenV_Req(_MESSAGE_INFO_FRAME);
+    pWork->noDispWin=NULL;
+    pWork->noTitleDispWin=NULL;
   }
 }
 
