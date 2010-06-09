@@ -1768,7 +1768,8 @@ static void MailView_ClactInit(MAIL_VIEW_DAT* wk)
   }
 
   //通信アイコン
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, wk->heapID );
+  GFL_NET_ReloadIconTopOrBottom( FALSE, wk->heapID );
+
 
   //----------リソース追加-------------
 

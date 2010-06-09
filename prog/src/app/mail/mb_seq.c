@@ -277,7 +277,8 @@ static int MainSeq_Init( MAILBOX_SYS_WORK * syswk )
 //  sys_VBlankFuncChange( MBMAIN_VBlank, syswk );
   syswk->vintr_tcb = GFUser_VIntr_CreateTCB( MBMAIN_VBlank, syswk, 1 );
 
-  GFL_NET_WirelessIconEasy_HoldLCD( FALSE, HEAPID_MAILBOX_APP );
+  // 通信アイコン表示
+  GFL_NET_ReloadIconTopOrBottom( FALSE, HEAPID_MAILBOX_APP );
 
 
   return syswk->next_seq;
