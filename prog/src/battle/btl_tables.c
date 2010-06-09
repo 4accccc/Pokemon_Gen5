@@ -126,7 +126,7 @@ BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID )
 BOOL BTL_TABLES_IsNoTargetItem( u16 itemID )
 {
   static const u16 table[] = {
-    ITEM_ENEKONOSIPPO,  ITEM_PIPPININGYOU,
+    ITEM_ENEKONOSIPPO,  ITEM_PIPPININGYOU, ITEM_POKEZYARASI,
   };
 
   return checkTableElems( itemID, table, NELEMS(table) );
