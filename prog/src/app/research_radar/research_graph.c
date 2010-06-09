@@ -286,6 +286,7 @@ static HEAPID GetHeapID( const RRG_WORK* work ); // ヒープIDを取得する
 static void SetHeapID( RRG_WORK* work, HEAPID heapID );// ヒープIDを設定する
 static RRC_WORK* GetCommonWork( const RRG_WORK* work ); // 全画面共通ワークを取得する
 static void SetCommonWork( RRG_WORK* work, RRC_WORK* commonWork ); // 全画面共通ワークを設定する
+static BOOL CheckForceReturnFlag( const RRG_WORK* work ); // 強制終了フラグ
 // 調査データ表示タイプ
 static void SetDataDisplayType( RRG_WORK* work, GRAPH_DISP_MODE graphMode ); // 調査データの表示タイプを設定する
 // 円グラフ
@@ -693,9 +694,9 @@ static void MainSeq_STANDBY( RRG_WORK* work )
     return;
   }
 
-  //-----------------------
-  //『戻る』ボタンをタッチ
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //------------------------------------
+  // 強制終了 or 『戻る』ボタンをタッチ
+  if( CheckForceReturnFlag( work ) || (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) ) {
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
     BlinkReturnButton( work );                    //『戻る』ボタンを明滅させる
     PMSND_PlaySE( SEQ_SE_CANCEL1 );               // キャンセル音
@@ -894,9 +895,9 @@ static void MainSeq_KEYWAIT( RRG_WORK* work )
     return;
   } 
 
-  //-----------------------
-  //『戻る』ボタンをタッチ
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //------------------------------------
+  // 強制終了 or 『戻る』ボタンをタッチ
+  if( CheckForceReturnFlag( work ) || (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) ) {
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );  // 画面遷移のトリガを登録
     BlinkReturnButton( work );                     //『戻る』ボタンを明滅させる
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                // キャンセル音
@@ -3612,6 +3613,17 @@ static RRC_WORK* GetCommonWork( const RRG_WORK* work )
 static void SetCommonWork( RRG_WORK* work, RRC_WORK* commonWork )
 {
   work->commonWork = commonWork;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 強制終了フラグを取得する
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL CheckForceReturnFlag( const RRG_WORK* work )
+{
+  const RRC_WORK* commonWork = GetCommonWork( work );
+  return RRC_GetForceReturnFlag( commonWork );
 }
 
 //-----------------------------------------------------------------------------------------

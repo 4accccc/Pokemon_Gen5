@@ -254,6 +254,10 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
 
   BootGameComm( work );
 
+  if( GAMESYSTEM_IsBatt10Sleep( work->gameSystem ) ) { // スリープ状態を検出
+    RRC_SetForceReturnFlag( work->commonWork );
+  }
+
   switch( *seq ) {
   case PROC_MAIN_SEQ_SETUP:   next_seq = ProcMain_SETUP ( work );  break;
   case PROC_MAIN_SEQ_MENU:    next_seq = ProcMain_MENU  ( work );  break;
@@ -268,7 +272,7 @@ static GFL_PROC_RESULT ResearchRadarProcMain( GFL_PROC* proc, int* seq, void* pr
 
   if( *seq != next_seq ) {
     ChangeMainProcSeq( work, seq, next_seq );
-  }
+  } 
 
   return GFL_PROC_RES_CONTINUE;
 }

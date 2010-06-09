@@ -277,9 +277,11 @@ static GAMESYS_WORK* GetGameSystem( const RRL_WORK* work );
 static GAMEDATA* GetGameData( const RRL_WORK* work );
 static void SetHeapID( RRL_WORK* work, HEAPID heapID );
 static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork );
+static const RRC_WORK* GetCommonWork( const RRL_WORK* work );
 static void SetRecoveryData( RRL_WORK* work, RRL_RECOVERY_DATA* recoveryData );
 static void LoadRecoveryData( RRL_WORK* work );
 static void SaveRecoveryData( RRL_WORK* work );
+static BOOL CheckForceReturnFlag( const RRL_WORK* work );
 // 調査項目
 static int GetNextTopicID( const RRL_WORK* work, int topicID ); // 次の調査項目IDを取得する
 static int GetPrevTopicID( const RRL_WORK* work, int topicID ); // 前の調査項目IDを取得する
@@ -599,9 +601,9 @@ static void MainState_STANDBY( RRL_WORK* work )
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) ); 
   GFL_UI_TP_GetPointCont( &touch_x, &touch_y );
 
-  //-------------------------
-  //「もどる」ボタンをタッチ
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //--------------------------------------
+  // 強制終了 or 「もどる」ボタンをタッチ
+  if( CheckForceReturnFlag( work ) || (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) ) {
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                           // キャンセル音
     BlinkReturnButton( work );                                //『戻る』ボタンを明滅させる
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );             // タッチで終了
@@ -694,9 +696,9 @@ static void MainState_KEY_WAIT( RRL_WORK* work )
     ResetKeyContCount( work );
   }
 
-  //-------------------------
-  //「もどる」ボタンをタッチ
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //--------------------------------------
+  // 強制終了 or 「もどる」ボタンをタッチ
+  if( CheckForceReturnFlag( work ) || (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) ) {
     PMSND_PlaySE( SEQ_SE_CANCEL1 );                           // キャンセル音
     BlinkReturnButton( work );                                //『戻る』ボタンを明滅させる
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );             // タッチで終了
@@ -921,9 +923,10 @@ static void MainState_CONFIRM_STANDBY( RRL_WORK* work )
     return;
   } 
 
-  //-----------------------------
-  // B ボタン or 「やめる」ボタン
-  if( (trg & PAD_BUTTON_B) || (touchTrg == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
+  //-----------------------------------------
+  // 強制終了 or B ボタン or 「やめる」ボタン
+  if( CheckForceReturnFlag( work ) || 
+      (trg & PAD_BUTTON_B) || (touchTrg == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_CANCEL ); // カーソル移動
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );       // カーソルが乗っている時のパレットアニメを停止
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );         // 選択時のパレットアニメを開始
@@ -997,9 +1000,10 @@ static void MainState_CONFIRM_KEY_WAIT( RRL_WORK* work )
     return;
   } 
 
-  //-----------------------------
-  // B ボタン or 「やめる」ボタン
-  if( (trg & PAD_BUTTON_B) || (touchTrg == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
+  //-----------------------------------------
+  // 強制終了 or B ボタン or 「やめる」ボタン
+  if( CheckForceReturnFlag( work ) || 
+      (trg & PAD_BUTTON_B) || (touchTrg == MENU_TOUCH_AREA_CANCEL_BUTTON) ) {
     MoveMenuCursorDirect( work, MENU_ITEM_DETERMINATION_CANCEL ); // カーソル移動
     StopPaletteAnime( work, PALETTE_ANIME_MENU_CURSOR_ON );       // カーソルが乗っている際のパレットアニメを停止
     StartPaletteAnime( work, PALETTE_ANIME_MENU_SELECT );         // 項目選択時のパレットアニメを開始
@@ -3370,6 +3374,16 @@ static void SetCommonWork( RRL_WORK* work, RRC_WORK* commonWork )
 
 //-----------------------------------------------------------------------------------------
 /**
+ * @brief 全画面共通ワークを取得する
+ */
+//-----------------------------------------------------------------------------------------
+static const RRC_WORK* GetCommonWork( const RRL_WORK* work )
+{
+  return work->commonWork;
+}
+
+//-----------------------------------------------------------------------------------------
+/**
  * @brief リスト画面の復帰データを設定する
  *
  * @param work
@@ -3438,6 +3452,18 @@ static void SaveRecoveryData( RRL_WORK* work )
     RRL_RECOVERY_SetTopicCursorPos( work->recoveryData, work->topicCursorPos );
   }
 }
+
+//-----------------------------------------------------------------------------------------
+/**
+ * @brief 強制終了フラグを取得する
+ */
+//-----------------------------------------------------------------------------------------
+static BOOL CheckForceReturnFlag( const RRL_WORK* work )
+{
+  const RRC_WORK* commonWork = GetCommonWork( work );
+  return RRC_GetForceReturnFlag( commonWork );
+}
+
 
 //-----------------------------------------------------------------------------------------
 /**

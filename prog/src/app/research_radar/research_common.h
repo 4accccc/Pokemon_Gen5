@@ -79,6 +79,8 @@ extern RADAR_SEQ RRC_GetNowSeq( const RRC_WORK* work );
 extern RADAR_SEQ RRC_GetPrevSeq( const RRC_WORK* work );
 // 画面遷移のトリガを取得する
 extern SEQ_CHANGE_TRIG RRC_GetSeqChangeTrig( const RRC_WORK* work );
+// 強制終了フラグを取得する
+extern BOOL RRC_GetForceReturnFlag( const RRC_WORK* work );
 
 //===============================================================================
 // ■設定
@@ -87,3 +89,5 @@ extern SEQ_CHANGE_TRIG RRC_GetSeqChangeTrig( const RRC_WORK* work );
 extern void RRC_SetNowSeq( RRC_WORK* work, RADAR_SEQ seq );
 // 画面遷移のトリガを登録する
 extern void RRC_SetSeqChangeTrig( RRC_WORK* work, SEQ_CHANGE_TRIG trig );
+// 強制終了フラグを立てる
+extern void RRC_SetForceReturnFlag( RRC_WORK* work );

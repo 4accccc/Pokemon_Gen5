@@ -47,7 +47,8 @@ struct _RESEARCH_RADAR_COMMON_WORK {
   RADAR_SEQ nowSeq;  // 現在の画面
   SEQ_CHANGE_TRIG seqTrig; // 画面遷移の引き金となったトリガ
 
-  // 画面の復帰データ
+  // 強制終了フラグ
+  BOOL forceReturnFlag;
 };
 
 //-------------------------------------------------------------------------------
@@ -416,6 +417,25 @@ void RRC_ResetAllPalette( RRC_WORK* work )
   }
 }
 
+//-------------------------------------------------------------------------------
+/**
+ * @brief 強制終了フラグを取得する
+ */
+//-------------------------------------------------------------------------------
+BOOL RRC_GetForceReturnFlag( const RRC_WORK* work )
+{
+  return work->forceReturnFlag;
+}
+
+//-------------------------------------------------------------------------------
+/**
+ * @brief 強制終了フラグを立てる
+ */
+//-------------------------------------------------------------------------------
+void RRC_SetForceReturnFlag( RRC_WORK* work )
+{
+  work->forceReturnFlag = TRUE;
+}
 
 
 

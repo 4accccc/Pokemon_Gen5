@@ -144,6 +144,8 @@ static void SetCommonWork( RRT_WORK* work, RRC_WORK* commonWork ); // 全画面共通
 // ヒープID
 static HEAPID GetHeapID( const RRT_WORK* work ); // ヒープIDを取得する
 static void SetHeapID( RRT_WORK* work, HEAPID heapID ); // ヒープIDを設定する
+// 強制終了フラグ
+static BOOL CheckForceReturnFlag( const RRT_WORK* work );
 //------------------------------------------------------------------------------------
 // ◆LAYER 1 生成・初期化・破棄
 //------------------------------------------------------------------------------------
@@ -413,9 +415,9 @@ static void Main_STANDBY( RRT_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
-  //-----------------
-  //「もどる」ボタン 
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //-----------------------------
+  // 強制終了 or 「もどる」ボタン 
+  if( CheckForceReturnFlag( work ) || (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) ) {
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH );  // 画面遷移のトリガを登録
     SetFinishResult( work, RRT_RESULT_EXIT );      // 画面終了結果を決定
     BlinkReturnButton( work );                     //『戻る』ボタンを光らせる
@@ -523,9 +525,9 @@ static void Main_KEYWAIT( RRT_WORK* work )
   touch = GFL_UI_TP_HitTrg( work->touchHitTable );
   commonTouch = GFL_UI_TP_HitTrg( RRC_GetHitTable(work->commonWork) );
 
-  //-----------------
-  //「もどる」ボタン
-  if( commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON ) {
+  //-----------------------------
+  // 強制終了 or 「もどる」ボタン 
+  if( CheckForceReturnFlag( work ) || (commonTouch == COMMON_TOUCH_AREA_RETURN_BUTTON) ) {
     SetFinishReason( work, SEQ_CHANGE_BY_TOUCH ); // 画面遷移のトリガを登録
     SetFinishResult( work, RRT_RESULT_EXIT );     // 画面終了結果を決定
     BlinkReturnButton( work );                    //『戻る』ボタンを光らせる
@@ -1448,6 +1450,17 @@ static HEAPID GetHeapID( const RRT_WORK* work )
 static void SetHeapID( RRT_WORK* work, HEAPID heapID )
 {
   work->heapID = heapID;
+}
+
+//------------------------------------------------------------------------------------
+/**
+ * @brief 強制終了フラグをチェックする
+ */
+//------------------------------------------------------------------------------------
+static BOOL CheckForceReturnFlag( const RRT_WORK* work )
+{
+  const RRC_WORK* commonWork = GetCommonWork( work );
+  return RRC_GetForceReturnFlag( commonWork );
 }
 
 
