@@ -124,6 +124,7 @@ static void _recvThreePokemon2Box(const int netID, const int size, const void* p
 static void _recvThreePokemon3Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvSelectPokemonBox(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
+static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork);
 
 ///通信コマンドテーブル
 static const NetRecvFuncTable _PacketTbl[] = {
@@ -571,6 +572,32 @@ POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , in
   return NULL;
 }
 
+POKE_EASY_INFO* IRCPOKEMONTRADE_GetPokeInfo(int trayNo, int index, POKEMON_TRADE_WORK* pWork)
+{
+  POKE_EASY_INFO *info;
+  int one_tray_pokenum = BOX_MAX_COLUMN*BOX_MAX_RAW;
+
+  if(trayNo!=-1){
+    if(trayNo > pWork->BOX_TRAY_MAX){
+      NOZOMU_Printf("NULL trayno = %d\n",trayNo);
+      return NULL;
+    }
+    if(trayNo != pWork->BOX_TRAY_MAX && (index != -1)){
+      //ボックス
+      return &pWork->pokeInfo[6+trayNo*one_tray_pokenum+index];
+    }
+    else{
+      //手持ち
+      if ( (0 <= index) && (index < 6) ) return &pWork->pokeInfo[index];
+      else{
+        NOZOMU_Printf("ERROR index %d\n",index);
+        return NULL;
+      }
+    }
+  }
+  NOZOMU_Printf("_NULL trayno = -1\n");
+  return NULL;
+}
 
 #endif
 
@@ -2262,7 +2289,9 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     {
       POKE_GTS_VisibleFaceIcon(pWork,TRUE);
       GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
-
+      GFL_STD_MemClear(pWork->pokeIconForm,sizeof(pWork->pokeIconForm));
+      GFL_STD_MemClear(pWork->pokeIconSex,sizeof(pWork->pokeIconSex));
+      
       _CatchPokemonPositionRewind(pWork);
 
       if(pWork->pAppTask!=NULL){
@@ -2323,6 +2352,7 @@ static void _touchState_BeforeTimeing12(POKEMON_TRADE_WORK* pWork)
   }
 
   PokemonTrade_SetMyPokeColor(pWork);
+  _createEasyPokeInfo(pWork);   //@todo
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
                           _NETCMD_POKEMONCOLOR,
@@ -3124,6 +3154,8 @@ static void _touchState(POKEMON_TRADE_WORK* pWork)
 {
 
   GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
+  GFL_STD_MemClear(pWork->pokeIconForm,sizeof(pWork->pokeIconForm));
+  GFL_STD_MemClear(pWork->pokeIconSex,sizeof(pWork->pokeIconSex));
 
   _CatchPokemonPositionRewind(pWork);
   POKE_GTS_VisibleFaceIcon(pWork, TRUE);
@@ -3218,6 +3250,8 @@ void POKETRADE_TouchStateGTS(POKEMON_TRADE_WORK* pWork)
 
   POKE_GTS_VisibleFaceIcon(pWork,TRUE);
   GFL_STD_MemClear(pWork->pokeIconNo,sizeof(pWork->pokeIconNo));
+  GFL_STD_MemClear(pWork->pokeIconForm,sizeof(pWork->pokeIconForm));
+  GFL_STD_MemClear(pWork->pokeIconSex,sizeof(pWork->pokeIconSex));
 
   _CatchPokemonPositionRewind(pWork);
 
@@ -3817,6 +3851,55 @@ static void _maxTrayNumInit(POKEMON_TRADE_WORK *pWork)
   //  pWork->_DOT_START_POS = (pWork->_DOTMAX - 80);
 }
 
+//------------------------------------------------------------------------------
+/**
+ * @brief        簡易ポケモン情報作成
+ * @param pWork
+ * @retval       none
+ */
+//------------------------------------------------------------------------------
+static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork)
+{
+  int i,j;
+  int monsno;
+  POKEMON_PASO_PARAM *ppp;
+  POKE_EASY_INFO *info;
+
+  NOZOMU_Printf("===CreateInfo====\n");
+  GFL_STD_MemClear(pWork->pokeInfo,sizeof(pWork->pokeInfo));
+  info = pWork->pokeInfo;
+  // 全ボックスの簡易ポケモン情報を作成する　add Saito
+  //手持ち
+  for (i=0;i<6;i++)
+  {
+    ppp = IRCPOKEMONTRADE_GetPokeDataAddress( pWork->pBox, pWork->BOX_TRAY_MAX, i, pWork);
+    if(!ppp) continue;
+    if(PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) == 0 ) continue;
+    monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
+    if( monsno == 0 ) continue;
+    info[i].monsno = monsno;
+    info[i].formno = PPP_Get(ppp,ID_PARA_form_no,NULL);
+    info[i].sex = PPP_Get(ppp,ID_PARA_sex,NULL);
+  }
+
+  //ボックス
+  for (i=0;i<BOX_MAX_TRAY;i++)
+  {
+    for (j=0;j<BOX_MAX_COLUMN*BOX_MAX_RAW;j++)
+    {
+      int idx;
+      idx = 6+i*BOX_MAX_COLUMN*BOX_MAX_RAW+j;
+      ppp = IRCPOKEMONTRADE_GetPokeDataAddress( pWork->pBox, i, j, pWork);
+      if(!ppp) continue;
+      if(PPP_Get( ppp, ID_PARA_poke_exist, NULL  ) == 0 ) continue;
+      monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
+      if( monsno == 0 ) continue;
+      info[idx].monsno = monsno;
+      info[idx].formno = PPP_Get(ppp,ID_PARA_form_no,NULL);
+      info[idx].sex = PPP_Get(ppp,ID_PARA_sex,NULL);
+    }
+  }
+}
 
 //------------------------------------------------------------------------------
 /**

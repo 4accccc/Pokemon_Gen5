@@ -847,6 +847,22 @@ static POKEMON_PASO_PARAM* _getPokeDataAddress(BOX_MANAGER* boxData , int lineno
 	return NULL;
 }
 
+static POKE_EASY_INFO* _getPokeInfo(int lineno, int verticalindex , POKEMON_TRADE_WORK* pWork)
+{
+  if(lineno >= HAND_HORIZONTAL_NUM){
+    int tray = IRC_TRADE_LINE2TRAY(lineno,pWork);
+    int index = IRC_TRADE_LINE2POKEINDEX(lineno, verticalindex);
+    return IRCPOKEMONTRADE_GetPokeInfo(tray, index, pWork);
+  }
+	else{
+    if(verticalindex <3){
+      int index = lineno + verticalindex * 2;
+      return IRCPOKEMONTRADE_GetPokeInfo(pWork->BOX_TRAY_MAX, index, pWork);
+		}
+	}
+	return NULL;
+}
+
 
 //カーソルの位置をセットする
 void IRC_POKETRADE_SetCursorXY(POKEMON_TRADE_WORK* pWork)
@@ -940,6 +956,7 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
   int i,j;
   
   POKEMON_PASO_PARAM* ppp;
+  POKE_EASY_INFO* info;
 	void *obj_vram = G2S_GetOBJCharPtr();
 
 
@@ -953,8 +970,9 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
 	for( i = 0 ; i < BOX_VERTICAL_NUM ; i++ )
 	{
     {
-      int	fileNo,monsno,formno,bEgg,bTemoti;
+      int	fileNo,monsno,formno,bEgg,bTemoti,sex;
       ppp = _getPokeDataAddress(boxData, line, i, pWork, &bTemoti);
+#if 0      
       if(!ppp){
         pWork->pokeIconLine[k][i] = 0xff;
         continue;
@@ -968,17 +986,41 @@ static void _createPokeIconResource(POKEMON_TRADE_WORK* pWork,BOX_MANAGER* boxDa
       if( monsno == 0 ){	//ポケモンがいるかのチェック
         continue;
       }
-      else if(pWork->pokeIconNo[k][i] == monsno){
+
+      formno = PPP_Get(ppp,ID_PARA_form_no,NULL);
+      sex = PPP_Get(ppp,ID_PARA_sex,NULL);
+#else
+      info = _getPokeInfo(line, i, pWork);
+      if (!info){
+        pWork->pokeIconLine[k][i] = 0xff;
+        continue;
+      }
+      if (info->monsno == 0){
+        pWork->pokeIconLine[k][i] = 0xff;
+        continue;
+      }
+      pWork->pokeIconLine[k][i] = line;
+
+      monsno = info->monsno;
+      formno = info->formno;
+      sex = info->sex;
+#endif      
+      if( (pWork->pokeIconNo[k][i] == monsno) &&
+          (pWork->pokeIconForm[k][i] == formno) && 
+          (pWork->pokeIconSex[k][i] == sex) ){
         GFL_CLACT_WK_SetDrawEnable( pWork->pokeIcon[k][i], TRUE );
         _pokeIconPaletteGray(pWork, line, i, ppp,bTemoti,k);
-
-      }
-      else if(pWork->pokeIconNo[k][i] != monsno){
+      }      
+      else if((pWork->pokeIconNo[k][i] != monsno) ||
+              ( (pWork->pokeIconNo[k][i] == monsno)&&(pWork->pokeIconForm[k][i] != formno) ) ||
+              ( (pWork->pokeIconNo[k][i] == monsno)&&(pWork->pokeIconSex[k][i] != sex) ) ){
         u8 pltNum;
         GFL_CLACTPOS pos;
         NNSG2dImageProxy aproxy;
-          
+
         pWork->pokeIconNo[k][i] = monsno;
+        pWork->pokeIconForm[k][i] = formno;
+        pWork->pokeIconSex[k][i] = sex;
         
 //        pltNum = POKEICON_GetPalNumGetByPPP( ppp );
         _calcPokeIconPos(line, i, &pos);

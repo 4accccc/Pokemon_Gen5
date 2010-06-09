@@ -500,8 +500,12 @@ typedef struct
   BOOL bVoice;
 } SAVEREV_BACKUP;
 
-
-
+typedef struct
+{
+  u16 monsno;
+  u8 formno;
+  u8 sex;
+} POKE_EASY_INFO;
 
 
 struct _POKEMON_TRADE_WORK{
@@ -613,7 +617,8 @@ struct _POKEMON_TRADE_WORK{
   GFL_CLWK* markIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
 //  GFL_CLWK* searchIcon[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u16 pokeIconNo[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
-  u16 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  u8 pokeIconForm[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
+  u8 pokeIconSex[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   u8 pokeIconLine[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
   GFL_CLACTPOS pokeIconMark[_LING_LINENO_MAX][BOX_VERTICAL_NUM];  //åüçıÇµÇƒÇ¢ÇÈï®
   u8 pokeIconMarkFlg[_LING_LINENO_MAX][BOX_VERTICAL_NUM];
@@ -741,6 +746,7 @@ struct _POKEMON_TRADE_WORK{
   u8 vtask;   //20100603 add saito  dummyÇ™Ç†Ç¡ÇΩÇÃÇ≈ç∑Çµë÷Ç¶Ç‹ÇµÇΩÅB
   u8 dummy1;
   u8 dummy2;
+  POKE_EASY_INFO pokeInfo[6+BOX_MAX_TRAY*BOX_MAX_COLUMN*BOX_MAX_RAW];
 } ;
 
 
@@ -809,6 +815,7 @@ extern void IRCPOKETRADE_PokeDeleteMcss( POKEMON_TRADE_WORK *pWork,int no  );
 extern void IRCPOKETRADE_PokeCreateMcss( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev );
 extern void IRCPOKETRADE_PokeCreateMcssGTS( POKEMON_TRADE_WORK *pWork ,int no, int bFront, const POKEMON_PARAM *pp, BOOL bRev,BOOL bGTS );
 extern POKEMON_PASO_PARAM* IRCPOKEMONTRADE_GetPokeDataAddress(BOX_MANAGER* boxData , int trayNo, int index,POKEMON_TRADE_WORK* pWork);
+extern POKE_EASY_INFO* IRCPOKEMONTRADE_GetPokeInfo(int trayNo, int index, POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_SetSubStatusIcon(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SetMainStatusBG(POKEMON_TRADE_WORK* pWork);
