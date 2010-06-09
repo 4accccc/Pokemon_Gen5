@@ -1950,15 +1950,57 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 
 	PokeMoveWorkFree( syswk );
 
+	// トレイ移動表示時
 	if( BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
-		if( pos < BOX2OBJ_POKEICON_TRAY_MAX &&
-				BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+		// 手持ちモードに戻る場合
+		if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN ){
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MOVE, pos );
 			BOX2MAIN_PokeInfoPut( syswk, pos );
-			tb_status = BOX2OBJ_TB_ICON_ON;
+			syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
+
+			if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+				tb_status = BOX2OBJ_TB_ICON_ON;
+			}else{
+				tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+			}
 		}else{
-			BOX2MAIN_PokeInfoOff( syswk );
-			tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+			if( pos < BOX2OBJ_POKEICON_TRAY_MAX &&
+					BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+				BOX2MAIN_PokeInfoPut( syswk, pos );
+				tb_status = BOX2OBJ_TB_ICON_ON;
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
+				tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+			}
 		}
+	// 手持ち表示時
+	}else if( BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == TRUE ){
+		// トレイモードに戻る場合
+		if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN ){
+			pos = CURSORMOVE_PosGet( syswk->app->cmwk );
+			if( pos > BOX2UI_ARRANGE_PGT_RIGHT ){
+				pos = syswk->get_pos;
+			}
+			BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, pos );
+			BOX2MAIN_PokeInfoPut( syswk, pos );
+			syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
+
+			if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+				tb_status = BOX2OBJ_TB_ICON_ON;
+			}else{
+				tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+			}
+		}else{
+			if( pos < BOX2OBJ_POKEICON_PUT_MAX &&
+					BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+				BOX2MAIN_PokeInfoPut( syswk, pos );
+				tb_status = BOX2OBJ_TB_ICON_ON;
+			}else{
+				BOX2MAIN_PokeInfoOff( syswk );
+				tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+			}
+		}
+	// その他
 	}else{
 		if( pos < BOX2OBJ_POKEICON_PUT_MAX &&
 				BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
@@ -1966,37 +2008,6 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 			tb_status = BOX2OBJ_TB_ICON_ON;
 		}else{
 			BOX2MAIN_PokeInfoOff( syswk );
-			tb_status = BOX2OBJ_TB_ICON_PASSIVE;
-		}
-	}
-
-	// 手持ち表示時、トレイモードに戻る場合
-	if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN &&
-			BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == TRUE ){
-		pos = CURSORMOVE_PosGet( syswk->app->cmwk );
-		if( pos > BOX2UI_ARRANGE_PGT_RIGHT ){
-			pos = syswk->get_pos;
-		}
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, pos );
-		BOX2MAIN_PokeInfoPut( syswk, pos );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
-
-		if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
-			tb_status = BOX2OBJ_TB_ICON_ON;
-		}else{
-			tb_status = BOX2OBJ_TB_ICON_PASSIVE;
-		}
-	}
-	// トレイ表示時、手持ちモードに戻る場合
-	if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN &&
-			BOX2BGWFRM_CheckBoxMoveFrm( syswk->app->wfrm ) == TRUE ){
-		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MOVE, pos );
-		BOX2MAIN_PokeInfoPut( syswk, pos );
-		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
-
-		if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
-			tb_status = BOX2OBJ_TB_ICON_ON;
-		}else{
 			tb_status = BOX2OBJ_TB_ICON_PASSIVE;
 		}
 	}
