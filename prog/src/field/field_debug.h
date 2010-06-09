@@ -22,6 +22,11 @@
 //	define
 //======================================================================
 
+typedef enum {
+  FIELD_DEBUG_PRINT_TYPE_POSITION = 0,
+  FIELD_DEBUG_PRINT_TYPE_MEMORY,
+}FIELD_DEBUG_PRINT_TYPE;
+
 //======================================================================
 //	struct
 //======================================================================
@@ -36,7 +41,7 @@ extern void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_Draw( FIELD_DEBUG_WORK *work );
 
-extern void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work );
+extern void FIELD_DEBUG_SetPrint( FIELD_DEBUG_WORK *work, FIELD_DEBUG_PRINT_TYPE type );
 extern void FIELD_DEBUG_SetHitchCheckPrint( FIELD_DEBUG_WORK *work );
 extern void FIELD_DEBUG_SetPosUpdateFlag( FIELD_DEBUG_WORK *work, BOOL flag );
 extern void FIELD_DEBUG_RecoverBgCont( FIELD_DEBUG_WORK *work );

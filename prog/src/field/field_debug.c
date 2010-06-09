@@ -18,6 +18,7 @@
 #include "arc/others.naix"
 #include "arc/debug/hitch_check.naix"
 
+#include "system/main.h"  //HEAPID_FIELDMAP
 //======================================================================
 //	define
 //======================================================================
@@ -65,11 +66,14 @@ struct _TAG_FIELD_DEBUG_WORK
   FLDMAPPER * g3dMapper;
 	
 	u8 bgFrame;	//デバッグで使用するBG FRAME
+
 	u8 flag_bgscr_load:1;	//デバッグBG面のスクリーンロード
 	u8 flag_pos_print:1;	//座標表示切り替え
 	u8 flag_pos_update:1;	//座標表示更新可能フラグ
 	u8 flag_hitch_check:1;	//HitchチェックOn/Offフラグ
 	u8 flag_hitch_y_org:1;	//Hitchポリゴンの高さをプレイヤーの高さにあわせる
+
+  u8 print_type;
 
   GFL_G3D_UTIL*     g3d_util;
   GFL_G3D_OBJSTATUS obj_status;
@@ -122,6 +126,7 @@ static void DebugFont_Print(
 static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y );
 
 static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work );
+static void DebugFieldMemPrint_Proc( FIELD_DEBUG_WORK *work );
 
 static void DbgDrawCallBackFunc( NNSG3dRenderObj *renderobj, void *work );
 
@@ -183,7 +188,15 @@ void FIELD_DEBUG_Delete( FIELD_DEBUG_WORK *work )
 void FIELD_DEBUG_UpdateProc( FIELD_DEBUG_WORK *work )
 {
 	if( (work->flag_pos_print == TRUE) && (work->flag_pos_update == TRUE) ){ //座標表示
-    DebugFieldPosPrint_Proc( work );
+    switch ( work->print_type )
+    {
+    case FIELD_DEBUG_PRINT_TYPE_POSITION:
+      DebugFieldPosPrint_Proc( work );
+      break;
+    case FIELD_DEBUG_PRINT_TYPE_MEMORY:
+      DebugFieldMemPrint_Proc( work );
+      break;
+    }
 	}
   if( work->flag_hitch_check ){
     g3d_unit_Main( work );
@@ -581,8 +594,9 @@ static void DebugFont_ClearLine( FIELD_DEBUG_WORK *work, u16 y )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void FIELD_DEBUG_SetPosPrint( FIELD_DEBUG_WORK *work )
+void FIELD_DEBUG_SetPrint( FIELD_DEBUG_WORK *work, FIELD_DEBUG_PRINT_TYPE type )
 {
+  work->print_type = type;
 	if( work->flag_pos_print == FALSE ){
 		GFL_BG_SetVisible( work->bgFrame, VISIBLE_OFF );
 		work->flag_pos_print = TRUE;
@@ -819,6 +833,65 @@ static void DebugFieldPosPrint_Proc( FIELD_DEBUG_WORK *work )
   }
 }
 
+//--------------------------------------------------------------
+/**
+ * フィールドメモリ状況表示
+ * @param	work	FIELD_DEBUG_WORK
+ * @retval	nothing
+ */
+//--------------------------------------------------------------
+static void DebugFieldMemPrint_Proc( FIELD_DEBUG_WORK *work )
+{
+	char str[256];
+	GAMESYS_WORK *gsys = FIELDMAP_GetGameSysWork( work->pFieldMainWork );
+	PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
+	const VecFx32 *pos = PLAYERWORK_getPosition( player );
+  
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+    resetBgCont( work );
+  }
+
+  {
+    DebugFont_ClearLine( work, 1 );
+    sprintf( str, " FREE  ALLOCATABLE" );
+    DebugFont_Print( work, 12, 0, str );
+
+    DebugFont_ClearLine( work, 1 );
+    sprintf( str, "HEAP_FIELD  %6x(%6x)", GFI_HEAP_GetHeapAllocatableSize( HEAPID_FIELDMAP ),
+        GFL_HEAP_GetHeapFreeSize( HEAPID_FIELDMAP ) );
+		DebugFont_Print( work, 0,  1, str );
+
+    DebugFont_ClearLine( work, 2 );
+    sprintf( str, "HEAP_SUBSCRN%6x(%6x)", GFI_HEAP_GetHeapAllocatableSize( HEAPID_FIELD_SUBSCREEN ),
+        GFL_HEAP_GetHeapFreeSize( HEAPID_FIELD_SUBSCREEN ) );
+		DebugFont_Print( work, 0,  2, str );
+
+    DebugFont_ClearLine( work, 4 );
+    sprintf( str, "BUILDMODEL USE=%6x", FIELD_BMODEL_MAN_GetUseResourceMemorySize() );
+		DebugFont_Print( work, 0,  4, str );
+#if 0
+    DebugFont_ClearLine( work, 5 );
+    sprintf( str, "MOVEMODEL USE=%6x", DEBUG_MMDL_GetUseResourceMemorySize() );
+		DebugFont_Print( work, 0,  5, str );
+#endif
+  }
+
+  {
+    u32 size = 0;
+
+    NNS_GfdDumpLnkTexVramManagerEx( cb_DumpLnkVramManager,NULL,&size );
+    DebugFont_ClearLine( work, 6 );
+    sprintf( str, "TEXV REM:%d USE:%d",size, (128*3*1024)-size);
+		DebugFont_Print( work, 0,  6, str );
+	
+    size = 0;
+    NNS_GfdDumpLnkPlttVramManagerEx( cb_DumpLnkVramManager,&size );
+    DebugFont_ClearLine( work, 7 );
+    sprintf( str, "PLTV REM:%d USE:%d",size, (16*1024)-size);
+		DebugFont_Print( work, 0,  7, str );
+  }
+}
+	
 //--------------------------------------------------------------
 /**
  * 描画コールバック関数セット
