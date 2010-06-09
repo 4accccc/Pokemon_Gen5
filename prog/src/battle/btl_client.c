@@ -194,6 +194,7 @@ struct _BTL_CLIENT {
   HEAPID heapID;
   u16  EnemyPokeHPBase;
   u16  AITrainerMsgID;
+  u16  selItemWork[ BTL_POSIDX_MAX ];
   u8   myID;
   u8   myType;
   u8   myState;
@@ -267,6 +268,10 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Escape( BTL_CLIENT* wk, int* seq );
 static BOOL selact_CheckFinish( BTL_CLIENT* wk, int* seq );
 static BOOL selact_Finish( BTL_CLIENT* wk, int* seq );
+static void selItemWork_Init( BTL_CLIENT* wk );
+static void selItemWork_Reserve( BTL_CLIENT* wk, u8 pokeIdx, u16 itemID );
+static void selItemWork_Restore( BTL_CLIENT* wk, u8 pokeIdx );
+static void selItemWork_Quit( BTL_CLIENT* wk );
 static void shooterCost_Init( BTL_CLIENT* wk );
 static void shooterCost_Save( BTL_CLIENT* wk, u8 procPokeIdx, u8 cost );
 static u8 shooterCost_Get( BTL_CLIENT* wk, u8 procPokeIdx );
@@ -1537,6 +1542,7 @@ static BOOL selact_Start( BTL_CLIENT* wk, int* seq )
   setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
 
   shooterCost_Init( wk );
+  selItemWork_Init( wk );
 
   {
     const BTL_POKEPARAM* bpp;
@@ -1854,9 +1860,14 @@ static BOOL selact_Root( BTL_CLIENT* wk, int* seq )
           if( !checkActionForceSet(wk, bpp, NULL) )
           {
             wk->shooterEnergy += shooterCost_Get( wk, wk->procPokeIdx );
+
             // 「もどる」先のポケモンが、既に「ポケモン」で交換対象を選んでいた場合はその情報をPopする
             if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_CHANGE ){
               BTL_POKESELECT_RESULT_Pop( &wk->pokeSelResult );
+            }
+            // 「もどる」先のポケモンが、既に「どうぐ」で道具を選んでいた場合は以下同文
+            if( BTL_ACTION_GetAction( &wk->actionParam[wk->procPokeIdx] ) == BTL_ACTION_ITEM ){
+              selItemWork_Restore( wk, wk->procPokeIdx );
             }
             ClientSubProc_Set( wk, selact_Root );
             return FALSE;
@@ -2386,6 +2397,7 @@ static BOOL selact_Item( BTL_CLIENT* wk, int* seq )
         {
           wk->fBallSelected = TRUE;
         }
+        selItemWork_Reserve( wk, wk->procPokeIdx, itemID );
         ClientSubProc_Set( wk, selact_CheckFinish );
       }else{
 //      (*seq)=SEQ_SELECT_ACTION;
@@ -2590,6 +2602,7 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
     if( BTL_MAIN_GetCommMode(wk->mainModule) != BTL_COMM_NONE )
     {
       wk->commWaitInfoOn = TRUE;
+      selItemWork_Quit( wk );
       BTLV_StartCommWait( wk->viewCore );
       (*seq)++;
     }
@@ -2620,6 +2633,57 @@ static BOOL selact_Finish( BTL_CLIENT* wk, int* seq )
   return FALSE;
 }
 
+/*============================================================================================*/
+/* 選択済みアイテム保持用ワーク                                                               */
+/*============================================================================================*/
+// 初期化
+static void selItemWork_Init( BTL_CLIENT* wk )
+{
+  u32 i;
+  for(i=0; i<NELEMS(wk->selItemWork); ++i){
+    wk->selItemWork[ i ] = ITEM_DUMMY_DATA;
+  }
+}
+// アイテム１つ使う予約
+static void selItemWork_Reserve( BTL_CLIENT* wk, u8 pokeIdx, u16 itemID )
+{
+  if( wk->bagMode == BBAG_MODE_NORMAL )
+  {
+    if( wk->myID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+    {
+      wk->selItemWork[ pokeIdx ] = itemID;
+      BTL_MAIN_DecrementPlayerItem( wk->mainModule, wk->myID, itemID );
+    }
+  }
+}
+// 使う予約していたアイテム情報をキャンセル
+static void selItemWork_Restore( BTL_CLIENT* wk, u8 pokeIdx )
+{
+  if( wk->bagMode == BBAG_MODE_NORMAL )
+  {
+    if( wk->myID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+    {
+      u16 itemID = wk->selItemWork[ pokeIdx ];
+      if( itemID != ITEM_DUMMY_DATA )
+      {
+        wk->selItemWork[ pokeIdx ] = ITEM_DUMMY_DATA;
+        BTL_MAIN_AddItem( wk->mainModule, wk->myID, itemID );
+      }
+    }
+  }
+}
+// 予約情報を全クリア
+static void selItemWork_Quit( BTL_CLIENT* wk )
+{
+  if( wk->bagMode == BBAG_MODE_NORMAL )
+  {
+    u32 i;
+    for(i=0; i<NELEMS(wk->selItemWork); ++i)
+    {
+      selItemWork_Restore( wk, i );
+    }
+  }
+}
 
 /*============================================================================================*/
 /* シューターコスト計算用ワーク                                                               */

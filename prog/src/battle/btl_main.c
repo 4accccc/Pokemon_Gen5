@@ -3531,6 +3531,25 @@ void  BTL_MAIN_DecrementPlayerItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 
 }
 //=============================================================================================
 /**
+ * プレイヤー使用アイテムを追加（書き戻し）
+ *
+ * @param   wk
+ * @param   clientID
+ * @param   itemID
+ */
+//=============================================================================================
+void BTL_MAIN_AddItem( const BTL_MAIN_MODULE* wk, u8 clientID, u16 itemID )
+{
+  if( wk->setupParam->fRecordPlay == FALSE )
+  {
+    if( clientID == wk->myClientID )
+    {
+      MYITEM_AddItem( (MYITEM_PTR)(wk->setupParam->itemData), itemID, 1, wk->heapID );
+    }
+  }
+}
+//=============================================================================================
+/**
  * アイテムデータポインタ取得
  *
  * @param   wk
