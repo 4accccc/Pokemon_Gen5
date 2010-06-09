@@ -4917,26 +4917,23 @@ static const BtlEventHandlerTable*  ADD_Hatakiotosu( u32* numElems )
 // ダメージプロセス終了ハンドラ
 static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( !HandCommon_CheckCantStealPoke(flowWk, pokeID) )
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+    u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
+    if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, target_pokeID) )
     {
-      u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-      if( target_pokeID != BTL_POKEID_NULL )
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
+      u16 itemID = BPP_GetItem( bpp );
+      if( itemID != ITEM_DUMMY_DATA )
       {
-        const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
-        u16 itemID = BPP_GetItem( bpp );
-        if( itemID != ITEM_DUMMY_DATA )
-        {
-          BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
-            param->pokeID = target_pokeID;
-            param->itemID = ITEM_DUMMY_DATA;
-            HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hatakiotosu );
-            HANDEX_STR_AddArg( &param->exStr, pokeID );
-            HANDEX_STR_AddArg( &param->exStr, target_pokeID );
-            HANDEX_STR_AddArg( &param->exStr, itemID );
-          BTL_SVF_HANDEX_Pop( flowWk, param );
-        }
+        BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+          param->pokeID = target_pokeID;
+          param->itemID = ITEM_DUMMY_DATA;
+          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Hatakiotosu );
+          HANDEX_STR_AddArg( &param->exStr, pokeID );
+          HANDEX_STR_AddArg( &param->exStr, target_pokeID );
+          HANDEX_STR_AddArg( &param->exStr, itemID );
+        BTL_SVF_HANDEX_Pop( flowWk, param );
       }
     }
   }
@@ -5101,7 +5098,7 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
         if( BPP_GetItem(target) != ITEM_DUMMY_DATA )
         {
-          if( !HandCommon_CheckCantStealPoke(flowWk, pokeID) )
+          if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, target_pokeID) )
           {
             BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
             BTL_HANDEX_PARAM_SET_EFFECT_IDX* effParam;
@@ -5142,8 +5139,8 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
   {
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
 
-    if( (!HandCommon_CheckCantStealPoke(flowWk, pokeID))
-    &&  (!HandCommon_CheckCantStealPoke(flowWk, target_pokeID))
+    if( (!HandCommon_CheckCantStealPoke(flowWk, pokeID, target_pokeID))
+    &&  (!HandCommon_CheckCantStealPoke(flowWk, target_pokeID, target_pokeID))
     ){
       const BTL_POKEPARAM* self = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
       const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );

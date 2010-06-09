@@ -48,19 +48,19 @@ BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
 /**
  *  ルール上、相手のどうぐを失わせる行為が禁止されているポケのチェック
  */
-BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8 targetPokeID )
 {
   // 野生戦で相手の場合をチェック
   if( BTL_SVFTOOL_GetCompetitor(flowWk) == BTL_COMPETITOR_WILD )
   {
-    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+    u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( attackPokeID );
     if( (clientID == BTL_CLIENT_ENEMY1) || (clientID == BTL_CLIENT_ENEMY1) ){
       return TRUE;
     }
   }
   // ギラティナ・アルセウス・インセクタのチェック
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u16 monsno = BPP_GetMonsNo( bpp );
     u16 itemID = BPP_GetItem( bpp );
 

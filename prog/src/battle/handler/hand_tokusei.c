@@ -4471,8 +4471,7 @@ static void handler_Moraibi_AtkPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
     if( BPP_CONTFLAG_Get(bpp, BPP_CONTFLG_MORAIBI) )
     {
       // âäÉèÉUÇÃà–óÕ1.5î{
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetType(waza) == POKETYPE_HONOO )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == POKETYPE_HONOO )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_MORAIBI_POWRATIO );
       }
@@ -5413,7 +5412,7 @@ static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 
-  if( !HandCommon_CheckCantStealPoke(flowWk, targetPokeID) )
+  if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, targetPokeID) )
   {
     if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
