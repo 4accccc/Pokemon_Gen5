@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-01T16:33:02"/>
+	<create user="matsumiya" host="W00224" date="2010-06-09T11:35:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -763,7 +763,7 @@
 		<language name="JPN_KANJI" width="256">もっともっと　魅力的に
 ポケモンを　着飾りたいから▼
 他の　人の　ドレスアップも
-研究　してるのさ！</language>
+研究してるのさ！</language>
 	</row>
 
 	<row id="msg_c04r0201_man2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -881,11 +881,11 @@
 ＝お金持ちその２</attribute>
 		<language name="JPN" width="256">きみの　ポケモンは　すばらしいね
 いつも　みているんだよ▼
-これからも　われわれを
+これからも　わたしたちを
 たのしませてくれると　うれしいな</language>
 		<language name="JPN_KANJI" width="256">きみの　ポケモンは　すばらしいね
 いつも　拝見しているんだよ▼
-これからも　われわれを
+これからも　わたしたちを
 楽しませてくれると　うれしいな</language>
 	</row>
 
