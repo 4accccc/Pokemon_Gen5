@@ -5380,21 +5380,30 @@ static BtlResult checkWinner( BTL_MAIN_MODULE* wk )
 
   BTL_N_Printf( DBGSTR_MAIN_CheckResultStart );
 
-  if( wk->fCommError )
+  // 捕獲デモ
+  if( BTL_MAIN_GetCompetitor(wk) == BTL_COMPETITOR_DEMO_CAPTURE )
+  {
+    result = BTL_RESULT_WIN;
+  }
+  // 通信エラー
+  else if( wk->fCommError )
   {
     BTL_N_Printf( DBGSTR_MAIN_Result_CommError );
     result = BTL_RESULT_COMM_ERROR;
   }
+  // 野生ポケモン捕獲
   else if( wk->setupParam->capturedPokeIdx != TEMOTI_POKEMAX )
   {
     BTL_N_Printf( DBGSTR_MAIN_Result_Capture );
     result = BTL_RESULT_CAPTURE;
   }
+  // 逃げて終了
   else if( BTL_ESCAPEINFO_GetCount(&wk->escapeInfo) )
   {
     result = BTL_ESCAPEINFO_CheckWinner( &wk->escapeInfo, wk->myClientID, BTL_MAIN_GetCompetitor(wk) );
     BTL_N_Printf( DBGSTR_MAIN_Result_Escape, result );
   }
+  // 通常決着
   else
   {
     if( wk->serverResult == BTL_RESULT_MAX )

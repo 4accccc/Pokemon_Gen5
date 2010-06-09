@@ -4194,7 +4194,10 @@ static void handler_Fuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) == FALSE )
+    {
+      work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+    }
   }
 }
 // 飛行フラグによる地面ワザ無効化ハンドラ

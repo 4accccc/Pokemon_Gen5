@@ -421,7 +421,7 @@ static void scEvent_TameRelease( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attac
 static BppContFlag CheckPokeHideState( const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
+static u32 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL scEvent_IchigekiCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
 static BOOL scEvent_CheckDmgToRecover( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam );
@@ -4160,9 +4160,9 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
   }
 
   {
-    u8 wazaHitPer, fAvoidFlat;
+    u8 fAvoidFlat;
     s8 hitRank, avoidRank, totalRank;
-    u32 totalPer;
+    u32 totalPer, wazaHitPer;
     fx32 ratio;
 
     wazaHitPer = scEvent_getHitPer(wk, attacker, defender, wazaParam);
@@ -6403,7 +6403,7 @@ static BOOL scproc_SimpleDamage_Core( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, u
 
     scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
 
-    TAYA_Printf("BPP ID=%d, HP=%d, ADRS=%p\n", BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP), bpp);
+//    TAYA_Printf("BPP ID=%d, HP=%d, ADRS=%p\n", BPP_GetID(bpp), BPP_GetValue(bpp,BPP_HP), bpp);
 
     if( scproc_CheckDeadCmd(wk, bpp) ){
       if( scproc_CheckShowdown(wk) ){
@@ -10606,10 +10606,10 @@ static BOOL scEvent_IsCalcHitCancel( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
  * @param   defender
  * @param   waza
  *
- * @retval  u8    “I’†—¦ (0-100)
+ * @retval  u32    –½’†—¦ (‚¶‚ã‚¤‚è‚å‚­“™A–½’†—¦ã¸‚ÌŒø‰Ê‚ğó‚¯‚Ä100’´‰ß‚·‚éê‡‚à‚ ‚è“¾‚éj
  */
 //--------------------------------------------------------------------------
-static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam )
+static u32 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam )
 {
   u32 per = WAZADATA_GetParam( wazaParam->wazaID, WAZAPARAM_HITPER );
   fx32 ratio = FX32_CONST(1);
@@ -10627,9 +10627,6 @@ static u8 scEvent_getHitPer( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker,
   BTL_EVENTVAR_Pop();
 
   per = BTL_CALC_MulRatio( per, ratio );
-  if( per > 100 ){
-    per = 100;
-  }
 
   return per;
 }
