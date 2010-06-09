@@ -233,8 +233,8 @@ extern void	GFL_BBD_GetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
 extern void	GFL_BBD_SetPolID( GFL_BBD_SYS* billboardSys, u8* polID );
 extern void	GFL_BBD_GetOrigin( GFL_BBD_SYS* billboardSys, u8* origin );
 extern void	GFL_BBD_SetOrigin( GFL_BBD_SYS* billboardSys, u8 origin  );
-extern void GFL_BBD_GetFlipTexOffs( GFL_BBD_SYS* billboardSys, fx16* flip_tex_offs );
-extern void GFL_BBD_SetFlipTexOffs( GFL_BBD_SYS* billboardSys, fx16 flip_tex_offs );
+extern void GFL_BBD_GetFlipTexOffs( GFL_BBD_SYS* billboardSys, fx16* flip_tex_offs_s, fx16* flip_tex_offs_t );
+extern void GFL_BBD_SetFlipTexOffs( GFL_BBD_SYS* billboardSys, fx16 flip_tex_offs_s, fx16 flip_tex_offs_t );
 
 //GFL_BBD_TEXSIZÇ©ÇÁSÇ∆TÇÃé¿êîílÇéÊìæ
 extern void GFL_BBD_GetTexSize( GFL_BBD_TEXSIZ texSiz, u16 * s, u16 * t );
