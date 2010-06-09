@@ -290,6 +290,7 @@ extern  void              BTLV_EFFECT_SetPaletteFade( int model, u8 start_evy, u
 extern  BOOL              BTLV_EFFECT_CheckExecutePaletteFade( int model );
 extern  void              BTLV_EFFECT_SetVanishFlag( int model, int flag );
 extern  void              BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side );
+extern  void              BTLV_EFFECT_SetSideChange( BtlvMcssPos pos1, BtlvMcssPos pos2 );
 extern  int               BTLV_EFFECT_GetTrainerIndex( int position );
 extern  void              BTLV_EFFECT_CreateTimer( int game_time, int command_time );
 extern  void              BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE type, BOOL enable, BOOL init );

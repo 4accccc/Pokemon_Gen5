@@ -1177,6 +1177,44 @@ void  BTLV_MCSS_MoveRotate( BTLV_MCSS_WORK *bmw, int position, int type, VecFx32
 
 //============================================================================================
 /**
+ * @brief 指定された立ち位置のポケモンを入れ替え
+ *
+ * @param[in] bmw   BTLV_MCSS管理ワークへのポインタ
+ * @param[in] pos1  入れ替えるBtlvMcssPos
+ * @param[in] pos2  入れ替えるBtlvMcssPos
+ */
+//============================================================================================
+void  BTLV_MCSS_SetSideChange( BTLV_MCSS_WORK* bmw, BtlvMcssPos pos1, BtlvMcssPos pos2 )
+{ 
+  int position[ 2 ];
+
+  position[ 0 ] = pos1;
+  position[ 1 ] = pos2;
+
+  { 
+    int i;
+    int index[ 2 ];
+
+    for( i = 0 ; i < 2 ; i++ )
+    { 
+      index[ i ] = BTLV_MCSS_GetIndex( bmw, position[ i ] );
+      if( BTLV_MCSS_CheckExist( bmw, position[ i ] ) )
+      {
+        VecFx32 pos;
+        BTLV_MCSS_GetDefaultPos( bmw, &pos, position[ i ^ 1 ] );
+        BTLV_MCSS_MovePosition( bmw, position[ i ], EFFTOOL_CALCTYPE_DIRECT, &pos, 0, 0, 0 );
+      }
+    }
+    for( i = 0 ; i < 2 ; i++ )
+    { 
+    bmw->btlv_mcss[ index[ 0 ] ].position = pos2;
+    bmw->btlv_mcss[ index[ 1 ] ].position = pos1;
+    }
+  }
+}
+
+//============================================================================================
+/**
  * @brief ポケモンまばたき
  *
  * @param[in] bmw     BTLV_MCSS管理ワークへのポインタ

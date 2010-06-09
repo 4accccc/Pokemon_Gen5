@@ -1243,6 +1243,19 @@ void  BTLV_EFFECT_SetRotateEffect( BtlRotateDir dir, int side )
 
 //============================================================================================
 /**
+ * @brief  サイドチェンジセット（3vs3のMoveもこれで）
+ *
+ * @param[in] pos1  入れ替えるBtlvMcssPos
+ * @param[in] pos2  入れ替えるBtlvMcssPos
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetSideChange( BtlvMcssPos pos1, BtlvMcssPos pos2 )
+{ 
+  BTLV_MCSS_SetSideChange( bew->bmw, pos1, pos2 );
+}
+
+//============================================================================================
+/**
  * @brief  指定された立ち位置のトレーナーインデックスを取得
  *
  * @param[in] position  取得するトレーナーの立ち位置

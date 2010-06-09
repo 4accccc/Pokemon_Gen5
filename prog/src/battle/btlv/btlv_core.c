@@ -2451,12 +2451,15 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
   // 演出的な動作がまったく入っていない。いずれちゃんと作る。
   switch( *seq ){
   case 0:
+#if 0
     if( BTLV_EFFECT_CheckExist(subwk->vpos1) ){
       BTLV_EFFECT_DelPokemon( subwk->vpos1 );
     }
     if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
       BTLV_EFFECT_DelPokemon( subwk->vpos2 );
     }
+#endif
+    BTLV_EFFECT_SetSideChange( subwk->vpos1, subwk->vpos2 );
     PlaySELocal( wk, SEQ_SE_CANCEL3 );  //@todo 超仮
     (*seq)++;
     break;
@@ -2464,6 +2467,7 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
+#if 0
       const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, subwk->clientID );
       const BTL_POKEPARAM* bpp;
       bpp = BTL_PARTY_GetMemberDataConst( party, subwk->posIdx1 );
@@ -2474,6 +2478,7 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
       if( !BPP_IsDead(bpp) ){
         BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos2 );
       }
+#endif
       (*seq)++;
     }
     break;
