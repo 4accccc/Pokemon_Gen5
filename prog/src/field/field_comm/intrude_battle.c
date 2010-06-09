@@ -44,6 +44,7 @@ typedef struct{
   u32 work;
   GFL_PROCSYS *procsys;
   POKEPARTY *pokeparty;
+  BOOL overlay_load_battle;
 }INTRUDE_BATTLE_SYS;
 
 typedef struct{
@@ -135,15 +136,28 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
   INTRUDE_BATTLE_PARENT *ibp = pwk;
   GAMEDATA * gamedata = GAMESYSTEM_GetGameData(ibp->gsys);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(ibp->gsys);
-	INTRUDE_COMM_SYS_PTR intcomm;
   GFL_PROC_MAIN_STATUS proc_status;
-
-  intcomm = Intrude_Check_CommConnect(game_comm);
+  enum{
+    SEQ_INIT,
+    SEQ_COMMAND_ADD_BEFORE_TIMING,
+    SEQ_COMMAND_ADD_BEFORE_TIMING_WAIT,
+    SEQ_COMMAND_ADD_AFTER_TIMING,
+    SEQ_COMMAND_ADD_AFTER_TIMING_WAIT,
+    SEQ_BATTLE,
+    SEQ_BATTLE_WAIT,
+    SEQ_FINISH,
+  };
 
   proc_status = GFL_PROC_LOCAL_Main( ibs->procsys );
- 
+  
+  if(NetErr_App_CheckError()){
+    if((*seq) > SEQ_INIT && (*seq) < SEQ_BATTLE_WAIT){
+      *seq = SEQ_FINISH;
+    }
+  }
+  
   switch(*seq){
-  case 0:
+  case SEQ_INIT:
     BTL_SETUP_Single_Comm(&ibs->para, gamedata, GFL_NET_HANDLE_GetCurrentHandle(), BTL_COMM_DS, HEAPID_PROC );
     BATTLE_PARAM_SetPokeParty( &ibs->para, ibs->pokeparty, BTL_CLIENT_PLAYER );
     if(GFL_NET_SystemGetCurrentID() < ibp->target_netid){
@@ -158,50 +172,56 @@ static GFL_PROC_RESULT IntrudeBattleProc_Main( GFL_PROC * proc, int * seq, void 
     ibs->para.LimitTimeCommand = INTRUDE_BATTLE_LIMIT_COMMAND_TIME;
     (*seq)++;
     break;
-  case 1:
+  case SEQ_COMMAND_ADD_BEFORE_TIMING:
     GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
       INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE, WB_NET_PALACE_SERVICEID, 
       (1<<ibp->target_netid) | (1<<GFL_NET_SystemGetCurrentID()));
     OS_TPrintf("戦闘用通信コマンドAdd前の同期取り\n");
     (*seq)++;
     break;
-  case 2:
+  case SEQ_COMMAND_ADD_BEFORE_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
         INTRUDE_TIMING_BATTLE_COMMAND_ADD_BEFORE, WB_NET_PALACE_SERVICEID) == TRUE){
       OS_TPrintf("戦闘用通信コマンドAdd前の同期取り完了\n");
       GFL_OVERLAY_Load( FS_OVERLAY_ID( battle ) );
+      ibs->overlay_load_battle = TRUE;
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
       (*seq)++;
     }
     break;
-  case 3:
+  case SEQ_COMMAND_ADD_AFTER_TIMING:
     GFL_NET_HANDLE_TimeSyncBitStart(GFL_NET_HANDLE_GetCurrentHandle(), 
       INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER, WB_NET_PALACE_SERVICEID, 
       (1<<ibp->target_netid) | (1<<GFL_NET_SystemGetCurrentID()));
     OS_TPrintf("戦闘用通信コマンドテーブルをAddしたので同期取り\n");
     (*seq) ++;
     break;
-  case 4:
+  case SEQ_COMMAND_ADD_AFTER_TIMING_WAIT:
     if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), 
         INTRUDE_TIMING_BATTLE_COMMAND_ADD_AFTER, WB_NET_PALACE_SERVICEID) == TRUE){
       OS_TPrintf("戦闘用通信コマンドテーブルをAdd後の同期取り完了\n");
       (*seq) ++;
     }
     break;
-  case 5:
+  case SEQ_BATTLE:
     OS_TPrintf("バトルPROC呼び出し\n");
     GFL_PROC_LOCAL_CallProc( ibs->procsys, NO_OVERLAY_ID, &BtlProcData, &ibs->para );
     (*seq)++;
     break;
-  case 6:
+  case SEQ_BATTLE_WAIT:
     if(proc_status != GFL_PROC_MAIN_NULL){
       break;
     }
     OS_TPrintf("バトル完了\n");
+    (*seq)++;
+    break;
+  case SEQ_FINISH:
     if(GFL_NET_IsInit() == TRUE && NetErr_App_CheckError() == NET_ERR_STATUS_NULL){
       GFL_NET_DelCommandTable(GFL_NET_CMD_BATTLE);
     }
-    GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    if(ibs->overlay_load_battle == TRUE){
+      GFL_OVERLAY_Unload( FS_OVERLAY_ID( battle ) );
+    }
     
     BATTLE_PARAM_Release( &ibs->para );
     return GFL_PROC_RES_FINISH;
