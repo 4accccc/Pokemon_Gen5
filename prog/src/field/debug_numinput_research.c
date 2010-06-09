@@ -322,4 +322,5 @@ void DEBUG_SetResearchTeamRank(
 
   // ‘àˆõƒ‰ƒ“ƒN‚ğİ’è
   MISC_CrossComm_SetResearchTeamRank( misc, rank );
+  GAMEBEACON_SendDataUpdate_ResearchTeamRank( rank );
 }
