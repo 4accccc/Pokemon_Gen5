@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-06-04T11:23:06"/>
+	<create user="matsumiya" host="W00224" date="2010-06-09T12:25:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1241" top="357" right="1946" bottom="985" maximized="no" rayout="Vertical2">
+	<dialog left="1523" top="198" right="2023" bottom="826" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="133" right="1024" bottom="531" visible="no"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="492"/>
 		<band id="1" index="2" style="0000" width="165"/>
 		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
+		<band id="3" index="4" style="0000" width="492"/>
+		<band id="4" index="0" style="0000" width="591"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -431,7 +431,7 @@ Wi-Fi P2P接続画面へ</comment>
 ごりよう　ですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉクラブ　では
 ともだちてちょうに　登録した▽
-人　同士で　ポケモン交換や▽
+人同士で　ポケモン交換や▽
 通信対戦を　たのしめます▼
 中にある　モニターを　操作すれば
 自分が　遊びたい　内容で▽
