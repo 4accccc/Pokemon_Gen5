@@ -5248,17 +5248,19 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
 
   switch( vf->seq ){
   case 0:
-    // 手持ちをトレイに配置するかキャンセルのときに右にトレイ選択がある場合
-    if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX &&
-        ( syswk->app->poke_put_key == BOX2MAIN_GETPOS_NONE ||
-        syswk->app->poke_put_key < BOX2OBJ_POKEICON_TRAY_MAX ) &&
-        BOX2BGWFRM_CheckBoxMoveFrm(syswk->app->wfrm) == TRUE ){
-      BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
-      BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
-      PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
-      vf->seq = 5;
-      break;
-    }
+		// 手持ちで右にトレイ選択がある場合
+		if( syswk->get_pos >= BOX2OBJ_POKEICON_TRAY_MAX && BOX2BGWFRM_CheckBoxMoveFrm(syswk->app->wfrm) == TRUE ){
+			// トレイに配置するかキャンセルのときかエラーのとき
+			if( syswk->app->poke_put_key < BOX2OBJ_POKEICON_TRAY_MAX ||
+					syswk->app->poke_put_key == BOX2MAIN_GETPOS_NONE ||
+					PokeIconMoveBoxPartyDataMake(syswk,syswk->get_pos,syswk->app->poke_put_key) == FALSE ){
+				BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
+				BOX2BGWFRM_BoxMoveFrmOutSet( syswk->app->wfrm );
+				PMSND_PlaySE( SE_BOX2_OPEN_PARTY_TRAY );
+				vf->seq = 5;
+				break;
+			}
+		}
 
     if( syswk->app->poke_put_key == BOX2MAIN_GETPOS_NONE &&
         syswk->tray != syswk->get_tray &&
