@@ -209,7 +209,6 @@ void GFL_NET_IRC_Exit(void)
   IRC_PRINT("IRC Exit éÛêM\n");
   if(NetIrcSys.initialize == TRUE){
     IRC_Shutdown();
-    IRCi_End();  //@todoâº
   }
   NetIrcSys.initialize = FALSE;
 }
