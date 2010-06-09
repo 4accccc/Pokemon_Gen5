@@ -35,5 +35,7 @@
 #define BG_ROTOM_CHANGE_16               15
 #define BG_ROTOM_CHANGE_17               16
 #define BG_ROTOM_CHANGE_18               17
+#define BG_ROTOM_CHANGE_19               18
+#define BG_ROTOM_CHANGE_20               19
 
 #endif //ZONE_R09R0202_EVB_H
