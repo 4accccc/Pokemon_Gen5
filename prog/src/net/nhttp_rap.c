@@ -9,7 +9,7 @@
 
 #include <dwc.h>
 #include "net/nhttp_rap.h"
-#include "net_app/gsync.h"
+//#include "net_app/gsync.h"
 #include "net/dwc_rapcommon.h"
 
 #include "system/main.h"  //HEAPID
@@ -35,9 +35,9 @@ static SOCCaInfo* nintendoCA[] = {
 #define _EVILSERVER_PROTO (0)  //トークン検査が出来てない時に１
 
 
-static G_SYNC_WORK* _pWork;
+//static G_SYNC_WORK* _pWork;
 
-typedef void (StateFunc)(G_SYNC_WORK* pState);
+//typedef void (StateFunc)(G_SYNC_WORK* pState);
 
 /*
 #define POSTURL "https://wbext.gamefreak.co.jp:10610/cgi-bin/cgeartest/gsync.cgi"

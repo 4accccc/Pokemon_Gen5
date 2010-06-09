@@ -710,20 +710,6 @@ static void _MainLoopScanBeaconData(void);
 
 
 #if defined(WMHIGH_DEBUG)
-static const char *sStateNames[] = {
-	"WM_STATE_READY",
-	"WM_STATE_STOP",
-	"WM_STATE_IDLE",
-	"WM_STATE_CLASS1",
-	"WM_STATE_TESTMODE",
-	"WM_STATE_SCAN",
-	"WM_STATE_CONNECT",
-	"WM_STATE_PARENT",
-	"WM_STATE_CHILD",
-	"WM_STATE_MP_PARENT",
-	"WM_STATE_MP_CHILD",
-	"WM_STATE_DCF_CHILD",
-};
 
 static const char *WH_GetWMErrCodeName(int result)
 {
