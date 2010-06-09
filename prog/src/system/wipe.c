@@ -969,7 +969,10 @@ void WIPE_HBlankDelete(WIPE_HBLANK* p_wipehb, int disp)
 
 	if((p_wipehb->flg[0] == 0) &&
 		(p_wipehb->flg[1] == 0)){
-		GFL_TCB_DeleteTask(WipeSysWork.HBtcb);
+    if(WipeSysWork.HBtcb){
+      GFL_TCB_DeleteTask(WipeSysWork.HBtcb);
+      WipeSysWork.HBtcb = NULL;
+    }
 		//sys_HBlankIntrStop();		//HBlankäÑÇËçûÇ›í‚é~
 	}
 	

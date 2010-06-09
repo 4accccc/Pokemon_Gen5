@@ -4100,6 +4100,7 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
     _PanelPaletteAnimeColClear( pWork );
 
   }else if(pWork->startCounter==1){
+
     WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
                     WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   }
@@ -4170,6 +4171,10 @@ static void _SLEEPGO_FUNC(void* pWk)
 {
   C_GEAR_WORK* pWork = pWk;
 
+  // もし、以前も演出中だったなら、WIPEをOFFにする。
+  if( WIPE_SYS_EndCheck() == FALSE ){
+    WIPE_SYS_ExeEnd();
+  }
   WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
 }
 
