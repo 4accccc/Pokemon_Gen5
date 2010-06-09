@@ -220,6 +220,8 @@ typedef struct TR_CARD_WORK_tag
 
   u8  score_list[SCORE_LINE_MAX]; ///< 表示する項目を並べた配列
   u8  score_max;                  ///< 現在表示できる項目の最大数
+  u8  b_touch_scroll; ///< 裏面スクロール開始フラグ
+  u8  b_touch_sign;   ///< 裏面サイン開始フラグ
 
 }TR_CARD_WORK;
 
