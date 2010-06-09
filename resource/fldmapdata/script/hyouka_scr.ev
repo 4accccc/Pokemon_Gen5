@@ -181,7 +181,7 @@ sub_zukan_global_me_play:
 //どうぐもらえるか？チェック
 //--------------------------------------------------------------------
 sub_zukan_present_check:
-  _GET_ZUKAN_COUNT( ZUKANCTRL_MODE_SEE, SCWK_ANSWER )
+  _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, SCWK_ANSWER )
 
   $ITEM_RESULT_COUNT = 0
   IF FLAG_OFF( FE_HYOUKA_ITEMGET_01 ) && $SCWK_ANSWER >= 25 THEN
