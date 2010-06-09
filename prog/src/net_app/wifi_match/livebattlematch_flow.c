@@ -835,11 +835,15 @@ static void SEQFUNC_RecvCard( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs
     { 
       SAVE_CONTROL_WORK   *p_sv_ctrl  = GAMEDATA_GetSaveControlWork( p_wk->param.p_gamedata );
       REGULATION_SAVEDATA *p_reg_sv   = SaveData_GetRegulationSaveData( p_sv_ctrl );
+      REGULATION_VIEWDATA *p_view_sv  = RegulationSaveData_GetRegulationView( p_reg_sv, REGULATION_CARD_TYPE_LIVE );
       
       //開催状態をサインアップにしてからセーブ
       Regulation_SetCardParam( &p_wk->regulation_temp, REGULATION_CARD_STATUS, DREAM_WORLD_MATCHUP_SIGNUP );
       //新規大会なのでスコアもクリアする
       LIVEMATCH_Init( p_wk->p_livematch );
+      //新規大会なので登録ポケもクリアする
+      RegulationView_Init( p_view_sv );
+
 #ifdef PM_DEBUG
       OS_TPrintf( "セット前\n" );
       OS_TPrintf( "テンポラリ\n" );

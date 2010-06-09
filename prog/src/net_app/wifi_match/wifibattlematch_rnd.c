@@ -1800,7 +1800,8 @@ static void WbmRndSeq_Rate_EndBattle( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq = SEQ_START_RESULT_MSG;
       }
-      else if( res == WIFIBATTLEMATCH_GDB_RESULT_ERROR )
+      
+      if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       { 
         switch( WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, FALSE, FALSE  ) )
         { 
