@@ -4491,7 +4491,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       return seq;
     }
     else{
-      if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange()){  //‹–‰Â
+      if((FALSE == DS_SYSTEM_IsRestrictPhotoExchange()) && DS_SYSTEM_IsRunOnTwl()){  //‹–‰Â
         _windelandSEcall(wk);
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE1_YESNO);
@@ -5243,7 +5243,7 @@ static int _childModeMatchMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
     gamemode = _WifiMyGameModeGet( wk, p_status );
     if(gamemode == WIFI_GAME_TVT){
-      if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange()){  //‹–‰Â
+      if((FALSE == DS_SYSTEM_IsRestrictPhotoExchange()) && DS_SYSTEM_IsRunOnTwl()){  //‹–‰Â
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE2_YESNO);
         return seq;

@@ -244,7 +244,7 @@ static int _playerDirectInit7( WIFIP2PMATCH_WORK *wk, int seq )
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_RETURN);
     }
     else{
-      if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange()){  //‹–‰Â
+      if((FALSE == DS_SYSTEM_IsRestrictPhotoExchange()) && DS_SYSTEM_IsRunOnTwl()){  //‹–‰Â
         WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE3_YESNO);
       }
@@ -534,7 +534,7 @@ static int _playerDirectSub2( WIFIP2PMATCH_WORK *wk, int seq )
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_SUB23);
     }
-    else if(FALSE == DS_SYSTEM_IsRestrictPhotoExchange() && (wk->directmode == WIFIP2PMATCH_PLAYERDIRECT_TVT) ){  //‹–‰Â
+    else if(((FALSE == DS_SYSTEM_IsRestrictPhotoExchange()) && DS_SYSTEM_IsRunOnTwl()) && (wk->directmode == WIFIP2PMATCH_PLAYERDIRECT_TVT) ){  //‹–‰Â
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1046, FALSE);
       _CHANGESTATE(wk,WIFIP2PMATCH_MODE_TVTMESSAGE4_YESNO);
     }
