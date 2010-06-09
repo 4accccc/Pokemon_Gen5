@@ -223,6 +223,12 @@ BOOL BeaconView_CheckCommEvent( BEACON_VIEW_PTR wk )
   u32 bit;
   LIVE_COMM comm_st = Intrude_CheckLiveCommStatus( wk->game_comm );
 
+  //スリープ中に通信がOffになったチェック
+  if( GAMESYSTEM_IsBatt10Sleep( wk->gsys )){
+    BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR );
+    return TRUE;
+  }
+
   //侵入チェック
   if( comm_st == LIVE_COMM_INTRUDE_PARTNER ){ //3人目の侵入者として選ばれた
     BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR_INTRUDE );
