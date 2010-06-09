@@ -250,7 +250,7 @@ sub_report_event_call:
       //ÅuÇµÇ¡Ç©ÇË Ç©Ç´ÇÃÇ±ÇµÇΩÅIÅv
       _PLAYER_NAME(0)
       _SYSWIN_MSG( msg_common_report_04 , POS_DOWN )
-      _AB_KEYWAIT()
+      _AB_KEYWAIT_MARK()
       _SYSWIN_CLOSE()
       $SCWK_PARAM0 = SCR_REPORT_OK
     // èëÇ´çûÇ›Ç…é∏îs
