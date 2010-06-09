@@ -10,6 +10,7 @@
 //======================================================================
 
 #include "savedata/mystatus.h"
+#include "gamesystem/gamesystem.h"
 
 #pragma once
 
@@ -27,6 +28,7 @@ FS_EXTERN_OVERLAY(cg_help);
 typedef struct
 {
   MYSTATUS *myStatus;
+  GAMESYS_WORK *gameSys;
 }CG_HELP_INIT_WORK;
 
 //======================================================================

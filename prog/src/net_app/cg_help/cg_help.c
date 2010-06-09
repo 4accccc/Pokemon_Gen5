@@ -623,6 +623,12 @@ static void CG_HELP_UpdateUI( CG_HELP_WORK *work )
     PMSND_PlaySystemSE( SEQ_SE_CANCEL1 );
     break;
   }
+  
+  if( GAMESYSTEM_IsBatt10Sleep( work->initWork->gameSys ) == TRUE )
+  {
+    APP_TASKMENU_WIN_SetDecide( work->endButton , TRUE );
+    work->state = CHS_FADEOUT;
+  }
 }
 
 
