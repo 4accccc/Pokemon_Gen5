@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-01T17:58:35"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-09T11:40:01"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,7 +362,7 @@
 		</language>
 	</columns>
 
-	<dialog left="109" top="149" right="814" bottom="777" maximized="no" rayout="Vertical2">
+	<dialog left="-23" top="149" right="682" bottom="777" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -455,8 +455,8 @@
 	</row>
 
 	<row id="MSG_MB_PAERNT_09">
-		<language name="JPN" width="208">ポケシフターを　しゅうりょうします▼</language>
-		<language name="JPN_KANJI" width="208">ポケシフターを　終了します▼</language>
+		<language name="JPN" width="208">ポケシフターを　しゅうりょうします</language>
+		<language name="JPN_KANJI" width="208">ポケシフターを　終了します</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_10">
