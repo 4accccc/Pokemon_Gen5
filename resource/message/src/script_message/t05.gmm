@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-04T17:13:47"/>
+	<create user="matsumiya" host="W00224" date="2010-06-09T16:36:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -934,13 +934,12 @@ Wi-Fi</comment>
 	<row id="msg_t05_exchange_sys_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<comment>ボロ市
 アイテム入手ME再生
-
 ※共通</comment>
 		<attribute name="キャラ指定">システム</attribute>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ゆずって
 かわりに　[1:09:どうぐ名:2]を　もらった！</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ゆずって
-かわりに　[1:09:どうぐ名:2]を　もらった！</language>
+		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　譲って
+代わりに　[1:09:どうぐ名:2]を　もらった！</language>
 	</row>
 
 	<row id="msg_t05_backpackerm_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
