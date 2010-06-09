@@ -202,13 +202,28 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
       OS_Printf("レコード1 %d\n",rec1);
       OS_Printf("レコード2 %d\n",rec2);
 
-      //男女別メッセージの場合、２つのレコードいずれかが０のときは、デフォルトメッセージに変える
+      //男女別メッセージの場合
       if (rnd < RECORD_TV_SEX_MAX)
       {
-        if ( (rec1==0) || (rec2 == 0))
+        //2つのレコードが必要な場合
+        if ( (RecordTbl[rnd][0] != NO_REC_ID)&&(RecordTbl[rnd][1] != NO_REC_ID) )
         {
-          OS_Printf("レコードが0なので、デフォルト番組に変更\n");
-          rnd = 0;
+          //２つのレコードいずれかが０のときは、デフォルトメッセージに変える
+          if ( (rec1==0) || (rec2 == 0))
+          {
+            OS_Printf("両レコードが0なので、デフォルト番組に変更\n");
+            rnd = 0;
+          }
+        }
+        //1つ目のレコードだけ必要な場合(2つ目がNO_REC_IDの場合)
+        else if( RecordTbl[rnd][1] == NO_REC_ID )
+        {
+          //1つ目のレコードが０のときは、デフォルトメッセージに変える
+          if ( rec1==0 )
+          {
+            OS_Printf("レコードが0なので、デフォルト番組に変更\n");
+            rnd = 0;
+          }
         }
       }
     }
