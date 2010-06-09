@@ -299,6 +299,7 @@ static void Start_SignAnimeButton( TR_CARD_WORK *wk, int flag );
 static void UpdateTextBlink( TR_CARD_WORK *wk );
 
 
+static void tp_sign_end_check( TR_CARD_WORK *wk );
 static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode );
 static void _BmpWinPrint_Rap(     GFL_BMPWIN * win, void * src,
       int src_x, int src_y, int src_dx, int src_dy,
@@ -2018,24 +2019,53 @@ static int large_touch_func( TR_CARD_WORK *wk, int hitNo )
 }
 
 
-//----------------------------------------------------------------------------------
+// スクロール
+static const GFL_UI_TP_HITTBL sc_Scrol_TpRect[] = {
+  { TP_SCORE_SCROL_Y, TP_SCORE_SCROL_Y+TP_SCORE_SCROL_H, TP_SCORE_SCROL_X, TP_SCORE_SCROL_X+TP_SCORE_SCROL_W }, // スクロール
+  {GFL_UI_TP_HIT_END,0,0,0}
+};
+
+//-----------------------------------------------------------------------------
 /**
- * @brief サイン面にタッチしている場合は線を描く
+ *	@brief  カード裏面：タッチスクロール終了判定＆処理
  *
- * @param   wk    
+ *	@param	TR_CARD_WORK *wk 
+ *
+ *	@retval none
  */
-//----------------------------------------------------------------------------------
-static void normal_sign_func( TR_CARD_WORK *wk )
+//-----------------------------------------------------------------------------
+static void tp_scroll_end_check( TR_CARD_WORK *wk )
 {
-  // スクロールとサイン簡易版
-  static const GFL_UI_TP_HITTBL Scrol_TpRect[] = {
-    { TP_SCORE_SCROL_Y, TP_SCORE_SCROL_Y+TP_SCORE_SCROL_H, TP_SCORE_SCROL_X, TP_SCORE_SCROL_X+TP_SCORE_SCROL_W }, // スクロール
-    { TP_PAINTS_Y, TP_PAINTS_Y+TP_PAINTS_H, TP_PAINTS_X, TP_PAINTS_X+TP_PAINTS_W }, // サイン面
-    {GFL_UI_TP_HIT_END,0,0,0}
-  };
+  if( wk->is_back && GFL_UI_TP_HitCont( sc_Scrol_TpRect ) != 0 )
+  {
+    if(wk->card_list_col==1)
+    {
+      TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 0 );
+      wk->card_list_col = 0;
+      wk->scroll_se_wait = 0;
+      wk->b_touch_scroll = FALSE;
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  カード裏面：タッチスクロール処理
+ *
+ *	@param	TR_CARD_WORK *wk 
+ *
+ *	@retval none
+ */
+//-----------------------------------------------------------------------------
+static void tp_scroll( TR_CARD_WORK *wk )
+{
   u32 x,y;
   
-  if(GFL_UI_TP_HitCont( Scrol_TpRect )==0){
+  if(GFL_UI_TP_HitTrg( sc_Scrol_TpRect )==0){
+    wk->b_touch_scroll = TRUE;
+  }
+  
+  if( wk->b_touch_scroll && GFL_UI_TP_HitCont( sc_Scrol_TpRect )==0){
     if(GFL_UI_TP_GetTrg()){
       GFL_UI_TP_GetPointTrg( &x, &y );
       wk->touch_sy    = y;
@@ -2060,12 +2090,6 @@ static void normal_sign_func( TR_CARD_WORK *wk )
       PMSND_PlaySE(SND_TRCARD_SLIDE);
     }
     wk->old_scrol_point=wk->scrol_point;
-  }else{
-    if(wk->card_list_col==1){
-      TRCBmp_WriteScoreListWin( wk, wk->scrol_point, 1, 0 );
-      wk->card_list_col = 0;
-      wk->scroll_se_wait = 0;
-    }
   }
 }
 
@@ -2129,7 +2153,7 @@ static int CheckTouch(TR_CARD_WORK* wk)
     // 拡大してなくてアニメしてない
     if(wk->ScaleMode==0){
       // スクロール・サイン処理
-      normal_sign_func(wk);
+      tp_scroll(wk);
       Stock_TouchPoint( wk, 0 );
     }else{
       // サイン面情報取得処理
@@ -2162,6 +2186,11 @@ static int CheckInput(TR_CARD_WORK *wk)
 
   //キーとタッチの切替監視
   CheckKTStatus(wk);
+
+  //タッチスクロール終了判定
+  tp_scroll_end_check(wk);
+  //サイン終了判定
+  tp_sign_end_check(wk);
 
   if(wk->key_mode == GFL_APP_KTST_TOUCH){
     return CheckTouch(wk);
@@ -2609,6 +2638,36 @@ static const GFL_UI_TP_HITTBL large_sign_tbl[]={
   {GFL_UI_TP_HIT_END,0,0,0},
 };
 
+// ↓サイン終了判定用 端を塗りつぶす時の為に一回り大きい
+static const GFL_UI_TP_HITTBL sign_release_tbl[]={
+  {OEKAKI_BOARD_POSY*8-16,(OEKAKI_BOARD_POSY+OEKAKI_BOARD_H)*8+16, OEKAKI_BOARD_POSX*8-16, (OEKAKI_BOARD_POSX+OEKAKI_BOARD_W)*8+16},
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+static const GFL_UI_TP_HITTBL large_sign_release_tbl[]={
+  {LARGE_BOARD_POSY*8-16,(LARGE_BOARD_POSY+LARGE_BOARD_H)*8+16, LARGE_BOARD_POSX*8-16, (LARGE_BOARD_POSX+LARGE_BOARD_W)*8+16},
+  {GFL_UI_TP_HIT_END,0,0,0},
+};
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  サイン終了判定 範囲外に出たらまた新たにタッチしなおさないと書けない
+ *
+ *	@param	TR_CARD_WORK *wk 
+ *
+ *	@retval
+ */
+//-----------------------------------------------------------------------------
+static void tp_sign_end_check( TR_CARD_WORK *wk )
+{
+  if( ( wk->is_back ) &&
+      ( wk->ScaleMode == 0 && GFL_UI_TP_HitCont( sign_release_tbl ) != 0 ) ||
+      ( wk->ScaleMode == 1 && GFL_UI_TP_HitCont( large_sign_release_tbl ) != 0 ) )
+  {
+      wk->b_touch_sign = FALSE;
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * @brief サイン面のタッチパネル情報取得
@@ -2630,7 +2689,11 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
 
     // 通常
     if(scale_mode==0){
-      if( GFL_UI_TP_HitSelf( sign_tbl, x, y )==0){
+      if( GFL_UI_TP_HitTrg( sign_tbl ) == 0 ){
+        wk->b_touch_sign = TRUE;
+      }
+      
+      if( wk->b_touch_sign && GFL_UI_TP_HitSelf( sign_tbl, x, y )==0){
         wk->MyTouchResult.x = x;
         wk->MyTouchResult.y = y;
         wk->MyTouchResult.brush = wk->pen;
@@ -2648,7 +2711,11 @@ static void Stock_TouchPoint( TR_CARD_WORK *wk, int scale_mode )
 
     // 精密
     }else{
-      if( GFL_UI_TP_HitSelf( large_sign_tbl, x, y )==0){
+      if( GFL_UI_TP_HitTrg( large_sign_tbl ) == 0 ){
+        wk->b_touch_sign = TRUE;
+      }
+
+      if( wk->b_touch_sign && GFL_UI_TP_HitSelf( large_sign_tbl, x, y )==0){
         wk->MyTouchResult.x = OEKAKI_BOARD_POSX*8+(x-LARGE_BOARD_POSX*8+wk->ScaleSide*(24*8))/2;
         wk->MyTouchResult.y = OEKAKI_BOARD_POSY*8+(y-LARGE_BOARD_POSY*8)/2;
         wk->MyTouchResult.brush = wk->pen;
@@ -2681,8 +2748,6 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh, int sca
 {
   int bx,by,px,py,wx,wy;
   int i,offset,w,h,count=0;
-      
-  HOSAKA_Printf(" x=%d y=%d\n");
   
   // 書きこむのは4x4に限定
   for(h=0;h<4;h++){
@@ -2705,6 +2770,7 @@ static void draw_pen( u8 *sign, u8* brush, int x, int y, int ww, int hh, int sca
         if( ( scale_side == 0 && wx >= SCALE_SIDE_LEFT_MAX_X ) ||
             ( scale_side == 1 && wx <= SCALE_SIDE_RIGHT_MIN_X ) )
         {
+          count++;
           continue;
         }
       }
