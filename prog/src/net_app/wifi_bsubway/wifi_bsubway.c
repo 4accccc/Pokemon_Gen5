@@ -2751,7 +2751,7 @@ static void VIEW_Init( WIFI_BSUBWAY_VIEW* p_wk, HEAPID heapID )
   GFL_DISP_GXS_SetVisibleControl( GX_PLANEMASK_OBJ, VISIBLE_ON );
 
   // 通信アイコンON
-  GFL_NET_ReloadIcon();
+  GFL_NET_ReloadIconTopOrBottom( TRUE, heapID );
 
 }
 
