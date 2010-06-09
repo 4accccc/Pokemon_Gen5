@@ -52,6 +52,7 @@
 #define	BTLEFF_CAMERA_POS_DEFENCE				( 11 )
 #define	BTLEFF_CAMERA_POS_DEFENCE_PAIR	( 12 )
 #define	BTLEFF_CAMERA_POS_PUSH					( 13 )
+#define	BTLEFF_CAMERA_POS_ZOOM_OUT			( 14 )
 
 #define	BTLEFF_CAMERA_POS_NONE					( 0xffffffff )
 

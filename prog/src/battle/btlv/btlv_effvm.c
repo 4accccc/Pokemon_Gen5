@@ -91,8 +91,12 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #endif
 
 #ifdef PM_DEBUG
-#ifdef DEBUG_ONLY_FOR_yoshida
+#if defined(DEBUG_ONLY_FOR_yoshida)|\
+    defined(DEBUG_ONLY_FOR_sogabe)
 #define CAMERA_POS_PRINT
+#endif
+#ifdef DEBUG_ONLY_FOR_sogabe
+#define CAMERA_POS_PRINT_FX32
 #endif
 #endif
 
@@ -403,6 +407,7 @@ static  void          EFFVM_InitEmitterPos( GFL_EMIT_PTR emit );
 static  void          EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
 static  void          EFFVM_InitEmitterCircleMove( GFL_EMIT_PTR emit );
 static  void          EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag );
+//static  void          EFFVM_CheckLinesOver( GFL_EMIT_PTR emit, unsigned int flag );
 static  void          EFFVM_DeleteEmitter( GFL_PTC_PTR ptc );
 static  void          EFFVM_ChangeCameraProjection( BTLV_EFFVM_WORK *bevw );
 static  void          EFFVM_SePlay( int se_no, int player, int pan, int pitch, int vol, int mod_depth, int mod_speed );
@@ -415,6 +420,8 @@ static  ARCDATID      EFFVM_ConvDatID( BTLV_EFFVM_WORK* bevw, ARCDATID datID );
 static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol, fx32 end_vol, int frame );
 static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw );
+
+//static  void          check_linesover( GFL_EMIT_PTR emit, u32 flag );
 
 //TCB関数
 static  void  TCB_EFFVM_SEPLAY( GFL_TCB* tcb, void* work );
@@ -979,26 +986,51 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   //カメラ移動先位置を読み込み
   int     cam_move_pos = ( int )VMGetU32( vmh );
   int     frame, wait, brake;
-  static  VecFx32 cam_pos_table[]={
+  static  VecFx32 cam_pos_table_1vs1[]={
     { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_AA
     { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_BB
-    { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_A
-    { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_B
+  };
+
+  
+  static  VecFx32 cam_pos_table_2vs2[]={
+    { 0x00002b33, 0x00005333, 0x000114cd },       //BTLEFF_CAMERA_POS_A
+    { 0x00008994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_B
+    { 0x00006b33, 0x00005333, 0x000114cd },       //BTLEFF_CAMERA_POS_C
+    { 0x00004994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_D
+  };
+
+  static  VecFx32 cam_pos_table_3vs3[]={
+    { 0x00000b33, 0x00005333, 0x000114cd },       //BTLEFF_CAMERA_POS_A
+    { 0x0000b994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_B
     { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_C
     { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_D
-    { 0x00005ca6, 0x00005f33, 0x00013cc3 },       //BTLEFF_CAMERA_POS_E
-    { 0x00006994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_F
+    { 0x00009b33, 0x00005333, 0x000114cd },       //BTLEFF_CAMERA_POS_E
+    { 0x00002994, 0x00006f33, 0x00006e79 },       //BTLEFF_CAMERA_POS_F
   };
-  static  VecFx32 cam_target_table[]={
+
+  static  VecFx32 cam_target_table_1vs1[]={
     { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_AA
     { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_BB
-    { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_A
-    { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_B
+  };
+
+  static  VecFx32 cam_target_table_2vs2[]={
+    { 0xffffc000, 0x0000119a, 0x00000000 },       //BTLEFF_CAMERA_POS_A
+    { 0x0000219f, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_B
+    { 0x00000000, 0x0000119a, 0x00000000 },       //BTLEFF_CAMERA_POS_C
+    { 0xffffde61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_D
+  };
+
+  static  VecFx32 cam_target_table_3vs3[]={
+    { 0xffffa000, 0x0000119a, 0x00000000 },       //BTLEFF_CAMERA_POS_A
+    { 0x0000519f, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_B
     { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_C
     { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_D
-    { 0xfffff173, 0x00001d9a, 0x000027f6 },       //BTLEFF_CAMERA_POS_E
-    { 0xfffffe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_F
+    { 0x00003000, 0x0000119a, 0x00000000 },       //BTLEFF_CAMERA_POS_E
+    { 0xffffbe61, 0x00002d9a, 0xffff59ac },       //BTLEFF_CAMERA_POS_F
   };
+
+  static  VecFx32 cam_pos_zoom_out    = { 0x00008b33, 0x00007b33, 0x00017ccd };
+  static  VecFx32 cam_target_zoom_out = { 0x00002000, 0x0000399a, 0x00006800 };
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_CAMERA_MOVE\n");
@@ -1028,35 +1060,107 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   }
 
   switch( cam_move_pos ){
+  case BTLEFF_CAMERA_POS_ATTACK:
+  case BTLEFF_CAMERA_POS_ATTACK_PAIR:
+    cam_move_pos = bevw->attack_pos;
+    break;
+  case BTLEFF_CAMERA_POS_DEFENCE:
+  case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
+    switch( bevw->param.waza_range ){
+    case WAZA_TARGET_OTHER_SELECT:        ///< 通常ポケ（１体選択）
+    case WAZA_TARGET_FRIEND_USER_SELECT:  ///< 自分を含む味方ポケ（１体選択）
+    case WAZA_TARGET_FRIEND_SELECT:       ///< 自分以外の味方ポケ（１体選択）
+    case WAZA_TARGET_ENEMY_SELECT:        ///< 相手側ポケ（１体選択）
+      if( bevw->defence_pos != BTLV_MCSS_POS_ERROR )
+      { 
+        cam_move_pos = bevw->defence_pos;
+      }
+      else
+      { 
+        cam_move_pos = BTLV_MCSS_POS_AA + ( bevw->attack_pos & 1 ) ^ 1;
+      }
+      break;
+    case WAZA_TARGET_ENEMY_RANDOM:        ///< 相手ポケ１体ランダム
+    case WAZA_TARGET_UNKNOWN:             ///< ゆびをふるなど特殊型
+    case WAZA_TARGET_USER:                ///< 自分のみ
+    case WAZA_TARGET_ENEMY_ALL:           ///< 相手側全ポケ
+      if( bevw->defence_pos != BTLV_MCSS_POS_ERROR )
+      { 
+        cam_move_pos = bevw->defence_pos;
+        break;
+      }
+      /*fallthru*/
+    case WAZA_TARGET_SIDE_ENEMY:          ///< 敵側陣営
+      cam_move_pos = BTLEFF_CAMERA_POS_AA + ( bevw->attack_pos & 1 ) ^ 1;
+      break;
+    case WAZA_TARGET_FRIEND_ALL:          ///< 味方側全ポケ
+    case WAZA_TARGET_SIDE_FRIEND:         ///< 自分側陣営
+      cam_move_pos = BTLEFF_CAMERA_POS_AA + ( bevw->attack_pos & 1 );
+      break;
+    case WAZA_TARGET_OTHER_ALL:           ///< 自分以外の全ポケ
+    case WAZA_TARGET_ALL:                 ///< 場に出ている全ポケ
+    case WAZA_TARGET_FIELD:               ///< 場全体（天候など）
+      { 
+        BtlRule rule = BTLV_EFFECT_GetBtlRule();
+        if( ( rule == BTL_RULE_SINGLE ) || ( rule == BTL_RULE_ROTATION ) )
+        { 
+          cam_move_pos = BTLEFF_CAMERA_POS_AA + ( bevw->attack_pos & 1 ) ^ 1;
+        }
+        else
+        { 
+          cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
+        }
+      }
+      break;
+    }
+  }
+
+  switch( cam_move_pos ){
   case BTLEFF_CAMERA_POS_AA:
   case BTLEFF_CAMERA_POS_BB:
+    cam_pos.x = cam_pos_table_1vs1[ cam_move_pos ].x;
+    cam_pos.y = cam_pos_table_1vs1[ cam_move_pos ].y;
+    cam_pos.z = cam_pos_table_1vs1[ cam_move_pos ].z;
+    cam_target.x = cam_target_table_1vs1[ cam_move_pos ].x;
+    cam_target.y = cam_target_table_1vs1[ cam_move_pos ].y;
+    cam_target.z = cam_target_table_1vs1[ cam_move_pos ].z;
+    break;
   case BTLEFF_CAMERA_POS_A:
   case BTLEFF_CAMERA_POS_B:
   case BTLEFF_CAMERA_POS_C:
   case BTLEFF_CAMERA_POS_D:
-    cam_move_pos = EFFVM_ConvPosition( vmh, cam_move_pos );
-    cam_pos.x = cam_pos_table[ cam_move_pos ].x;
-    cam_pos.y = cam_pos_table[ cam_move_pos ].y;
-    cam_pos.z = cam_pos_table[ cam_move_pos ].z;
-    cam_target.x = cam_target_table[ cam_move_pos ].x;
-    cam_target.y = cam_target_table[ cam_move_pos ].y;
-    cam_target.z = cam_target_table[ cam_move_pos ].z;
-    break;
-  case BTLEFF_CAMERA_POS_ATTACK:
-  case BTLEFF_CAMERA_POS_ATTACK_PAIR:
-  case BTLEFF_CAMERA_POS_DEFENCE:
-  case BTLEFF_CAMERA_POS_DEFENCE_PAIR:
-    cam_move_pos = EFFVM_GetPosition( vmh, cam_move_pos - BTLEFF_CAMERA_POS_ATTACK + BTLEFF_POKEMON_SIDE_ATTACK );
-    if( cam_move_pos == BTLV_MCSS_POS_ERROR )
-    {
-      return bevw->control_mode;
+    { 
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      cam_move_pos -= BTLEFF_CAMERA_POS_A;
+      if( rule == BTL_RULE_DOUBLE )
+      { 
+        cam_pos.x = cam_pos_table_2vs2[ cam_move_pos ].x;
+        cam_pos.y = cam_pos_table_2vs2[ cam_move_pos ].y;
+        cam_pos.z = cam_pos_table_2vs2[ cam_move_pos ].z;
+        cam_target.x = cam_target_table_2vs2[ cam_move_pos ].x;
+        cam_target.y = cam_target_table_2vs2[ cam_move_pos ].y;
+        cam_target.z = cam_target_table_2vs2[ cam_move_pos ].z;
+      }
+      else
+      { 
+        cam_pos.x = cam_pos_table_3vs3[ cam_move_pos ].x;
+        cam_pos.y = cam_pos_table_3vs3[ cam_move_pos ].y;
+        cam_pos.z = cam_pos_table_3vs3[ cam_move_pos ].z;
+        cam_target.x = cam_target_table_3vs3[ cam_move_pos ].x;
+        cam_target.y = cam_target_table_3vs3[ cam_move_pos ].y;
+        cam_target.z = cam_target_table_3vs3[ cam_move_pos ].z;
+      }
     }
-    cam_pos.x = cam_pos_table[ cam_move_pos ].x;
-    cam_pos.y = cam_pos_table[ cam_move_pos ].y;
-    cam_pos.z = cam_pos_table[ cam_move_pos ].z;
-    cam_target.x = cam_target_table[ cam_move_pos ].x;
-    cam_target.y = cam_target_table[ cam_move_pos ].y;
-    cam_target.z = cam_target_table[ cam_move_pos ].z;
+    break;
+  case BTLEFF_CAMERA_POS_E:
+  case BTLEFF_CAMERA_POS_F:
+    cam_move_pos -= BTLEFF_CAMERA_POS_A;
+    cam_pos.x = cam_pos_table_3vs3[ cam_move_pos ].x;
+    cam_pos.y = cam_pos_table_3vs3[ cam_move_pos ].y;
+    cam_pos.z = cam_pos_table_3vs3[ cam_move_pos ].z;
+    cam_target.x = cam_target_table_3vs3[ cam_move_pos ].x;
+    cam_target.y = cam_target_table_3vs3[ cam_move_pos ].y;
+    cam_target.z = cam_target_table_3vs3[ cam_move_pos ].z;
     break;
   case BTLEFF_CAMERA_POS_PUSH:
     cam_pos.x     = bevw->push_camera_pos.x;
@@ -1065,6 +1169,14 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     cam_target.x  = bevw->push_camera_target.x;
     cam_target.y  = bevw->push_camera_target.y;
     cam_target.z  = bevw->push_camera_target.z;
+    break;
+  case BTLEFF_CAMERA_POS_ZOOM_OUT:
+    cam_pos.x     = cam_pos_zoom_out.x;
+    cam_pos.y     = cam_pos_zoom_out.y;
+    cam_pos.z     = cam_pos_zoom_out.z;
+    cam_target.x  = cam_target_zoom_out.x;
+    cam_target.y  = cam_target_zoom_out.y;
+    cam_target.z  = cam_target_zoom_out.z;
     break;
   case BTLEFF_CAMERA_POS_INIT:
   default:
@@ -4293,6 +4405,10 @@ static  BOOL  VWF_EFFECT_END_CHECK( VMHANDLE *vmh, void *context_work )
 
     bevw->camera_flag = 0;
     BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &tar );
+#ifdef CAMERA_POS_PRINT_FX32
+    OS_Printf("cam_pos_x:0x%08x cam_pos_y:0x%08x cam_pos_z:0x%08x\n",pos.x,pos.y,pos.z);
+    OS_Printf("cam_tar_x:0x%08x cam_tar_y:0x%08x cam_tar_z:0x%08x\n",tar.x,tar.y,tar.z);
+#endif
     OS_Printf("cam_pos_x:%f cam_pos_y:%f cam_pos_z:%f\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
     OS_Printf("cam_tar_x:%f cam_tar_y:%f cam_tar_z:%f\n",FX_FX32_TO_F32(tar.x),FX_FX32_TO_F32(tar.y),FX_FX32_TO_F32(tar.z));
   }
@@ -5127,6 +5243,13 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     beemw->mtx43._31 = src.y;
     beemw->mtx43._32 = src.z;
   }
+#if 0
+  else
+  { 
+    //エミッタにラインズオーバー監視コールバックをセット
+    GFL_PTC_SetCallbackFunc( emit, &EFFVM_CheckLinesOver );
+  }
+#endif
 
   //srcとdstが一緒のときは、方向なし
   if( ( ( beeiw->src != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) && ( beeiw->dst != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) ) &&
@@ -5247,6 +5370,8 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
   VecFx32 emit_pos;
   int     angle;
 
+  //check_linesover( emit, flag );
+
   if( ( beemw->move_frame == 0 ) || ( flag == SPL_EMITTER_CALLBACK_FRONT ) )
   {
     return;
@@ -5330,6 +5455,8 @@ static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
   BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *beecmw = ( BTLV_EFFVM_EMITTER_CIRCLE_MOVE_WORK *)GFL_PTC_GetUserData( emit );
   VecFx32 emit_pos;
 
+  //check_linesover( emit, flag );
+
   if( flag == SPL_EMITTER_CALLBACK_FRONT )
   {
     return;
@@ -5388,6 +5515,68 @@ static  void  EFFVM_CircleMoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
     beecmw->after_wait--;
   }
 }
+
+#if 0
+//============================================================================================
+/**
+ * @brief エミッタ円移動用コールバック関数
+ *
+ * @param[in] emit  エミッタワーク構造体へのポインタ
+ * @param[in] flag  コールバックが呼ばれたタイミングを示すフラグ
+ *                  SPL_EMITTER_CALLBACK_FRONT:エミッタ計算を行う直前
+ *                  SPL_EMITTER_CALLBACK_BACK:エミッタ計算を行ったあと
+ */
+//============================================================================================
+static  void  EFFVM_CheckLinesOver( GFL_EMIT_PTR emit, unsigned int flag )
+{ 
+  check_linesover( emit, flag );
+}
+vu32  lines_over_count = 10;
+static  void  check_linesover( GFL_EMIT_PTR emit, u32 flag )
+{ 
+  if( flag != SPL_EMITTER_CALLBACK_FRONT ) return;
+
+#if 0
+  if( G3X_IsLineBufferUnderflow() != 0 )
+  { 
+    SOGABE_Printf("lines over!\n");
+    //SPL_StopEmission( emit );
+    { 
+      SPLParticle* ptcl = SPL_GetHeadParticle( emit );
+      if( ptcl )
+      { 
+        do
+        { 
+          SPL_TerminateParticleLife( ptcl );
+        }while( ( ptcl = SPL_GetNextParticle( ptcl ) ) != NULL );
+      }
+    }
+    G3X_ResetLineBufferUnderflow();
+  }
+#else
+  if( G3X_GetRenderedLineCount() < lines_over_count )
+  { 
+    SOGABE_Printf("lines over?\n");
+    //SPL_StopEmission( emit );
+    { 
+      SPLParticle* ptcl = SPL_GetHeadParticle( emit );
+      if( ptcl )
+      { 
+        ptcl = SPL_GetNextParticle( ptcl );
+        if( ptcl )
+        { 
+          SPL_TerminateParticleLife( ptcl );
+        }
+      }
+    }
+  }
+#endif
+  else
+  { 
+    SPL_RestartEmission( emit );
+  }
+}
+#endif
 
 //============================================================================================
 /**
