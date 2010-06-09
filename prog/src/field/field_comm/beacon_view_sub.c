@@ -571,6 +571,12 @@ static int sseq_thanks_CheckInput( BEACON_VIEW_PTR wk )
 {
   int ret;
   POINT tp;
+ 
+  //スリープ中に通信がOffになったチェック
+  if( GAMESYSTEM_IsBatt10Sleep( wk->gsys )){
+    BEACON_VIEW_SUB_EventReserve( wk, EV_RETURN_CGEAR );
+    return SSEQ_THANKS_END;  //キャンセル扱い
+  }
 
   if( !GFL_UI_TP_GetPointTrg( (u32*)&tp.x, (u32*)&tp.y )){
     return SSEQ_THANKS_MAIN;
