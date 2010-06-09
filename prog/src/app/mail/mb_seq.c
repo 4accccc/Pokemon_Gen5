@@ -409,17 +409,6 @@ static int MainSeq_YesNo( MAILBOX_SYS_WORK * syswk )
     break;
   }
 
-/*
-  switch( TOUCH_SW_Main( syswk->app->tsw ) ){
-  case TOUCH_SW_RET_YES:
-    TOUCH_SW_Reset( syswk->app->tsw );
-    return YesNoFunc[syswk->app->ynID].yes( syswk );
-
-  case TOUCH_SW_RET_NO:
-    TOUCH_SW_Reset( syswk->app->tsw );
-    return YesNoFunc[syswk->app->ynID].no( syswk );
-  }
-*/
 
   return MBSEQ_MAINSEQ_YESNO;
 }
@@ -701,8 +690,9 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     MBMAIN_SelBoxDel( syswk );
     {
       MAIL_DATA * md = syswk->app->mail[ syswk->lst_pos ];
+      OS_Printf("listpos = %d\n", syswk->lst_pos);
       PokeListWorkCreate( syswk, PL_MODE_MAILBOX, ITEM_MailNumGet(MailData_GetDesignNo(md)), 
-                          syswk->sel_page*MBMAIN_MAILLIST_MAX+CURSORMOVE_PosGet(syswk->app->cmwk));
+                          syswk->lst_pos);
     }
     syswk->subProcType = SUBPROC_TYPE_PL_PUT;
     syswk->next_seq = MBSEQ_MAINSEQ_SUBPROC_CALL;
@@ -736,7 +726,7 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
 static int MainSeq_MailReadMain( MAILBOX_SYS_WORK * syswk )
 {
   if( MBUI_MailReadCheck() == TRUE ){
-    PMSND_PlaySE( SND_MB_DECIDE );
+    PMSND_PlaySE( SND_MB_CANCEL );
     MBOBJ_AnmSet( syswk->app, MBMAIN_OBJ_RET_BTN, 9 );
     syswk->next_seq = MBSEQ_MAINSEQ_MAIL_READ_END;
     return MBSEQ_MAINSEQ_MAILBOX_END_ANIME_WAIT;
@@ -1197,8 +1187,6 @@ static void PokeListWorkCreate( MAILBOX_SYS_WORK * syswk, u32 mode, u16 item, u1
   pld->type      = PL_TYPE_SINGLE;
   pld->mode      = mode;
   pld->item      = item;
-//  pld->fsys      = syswk->dat->fsys;
-//  pld->kt_status = syswk->dat->kt_status;
   pld->mail_pos  = pos;
 
   syswk->subProcWork = pld;
