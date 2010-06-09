@@ -1970,14 +1970,6 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		}
 	}
 
-	// 通常時は即終了する
-	if( syswk->mv_cnv_mode == 0 ){
-		syswk->mv_cnv_end = 1;
-		tb_status = syswk->tb_status_btn;
-	}
-
-	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, tb_status );
-
 	// 手持ち表示時、トレイモードに戻る場合
 	if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN &&
 			BOX2BGWFRM_CheckPartyPokeFrameRight(syswk->app->wfrm) == TRUE ){
@@ -1988,6 +1980,12 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_PARTY_MOVE, pos );
 		BOX2MAIN_PokeInfoPut( syswk, pos );
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN;
+
+		if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+			tb_status = BOX2OBJ_TB_ICON_ON;
+		}else{
+			tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+		}
 	}
 	// トレイ表示時、手持ちモードに戻る場合
 	if( syswk->next_seq == BOX2SEQ_MAINSEQ_ARRANGE_PARTY_POKEGET_MAIN &&
@@ -1995,7 +1993,21 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		BOX2UI_CursorMoveChange( syswk, BOX2UI_INIT_ID_ARRANGE_MOVE, pos );
 		BOX2MAIN_PokeInfoPut( syswk, pos );
 		syswk->next_seq = BOX2SEQ_MAINSEQ_ARRANGE_POKEGET_MAIN;
+
+		if( BOX2MAIN_PokeParaGet(syswk,pos,syswk->tray,ID_PARA_poke_exist,NULL) != 0 ){
+			tb_status = BOX2OBJ_TB_ICON_ON;
+		}else{
+			tb_status = BOX2OBJ_TB_ICON_PASSIVE;
+		}
 	}
+
+	// 通常時は即終了する
+	if( syswk->mv_cnv_mode == 0 ){
+		syswk->mv_cnv_end = 1;
+		tb_status = syswk->tb_status_btn;
+	}
+
+	BOX2OBJ_SetTouchBarButton( syswk, BOX2OBJ_TB_ICON_ON, BOX2OBJ_TB_ICON_OFF, tb_status );
 
 	switch( syswk->app->mv_err_code ){
 	case BOX2MAIN_ERR_CODE_MAIL:			// メールを持っている
