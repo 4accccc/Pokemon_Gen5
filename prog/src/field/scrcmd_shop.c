@@ -893,7 +893,7 @@ static BOOL ShopCallFunc( GAMESYS_WORK *gsys, SHOP_BUY_APP_WORK *wk, int type, i
       MYITEM_AddItem( wk->myitem, ITEM_PUREMIABOORU, 1, wk->heapId);
 
       // レコード：プレミアムボールを貰った回数
-      RECORD_Inc( wk->record, RECID_SHOPPING_CNT );
+      RECORD_Inc( wk->record, RECID_PREMIUM_BALL );
       wk->seq  = SHOPBUY_SEQ_MSG_WAIT;
       wk->next = SHOPBUY_SEQ_BACK;
     }else{
