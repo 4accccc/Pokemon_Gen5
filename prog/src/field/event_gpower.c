@@ -99,7 +99,12 @@ GMEVENT* EVENT_GPowerEffectStart(GAMESYS_WORK * gsys, void* work )
     GPOWER_TYPE type = GPOWER_ID_to_Type( p_data, prm->g_power );
     GPOWER_Set_OccurID( prm->g_power, p_data, prm->mine_f );
 
-    SCRIPT_SetScriptWorkParam( sc, prm->g_power, type, prm->mine_f, 0 );
+    //HP全快パワーは固定メッセージ
+    if( prm->g_power == GPOWER_ID_HP_RESTORE_MAX){
+      SCRIPT_SetScriptWorkParam( sc, prm->g_power, msg_gpower_effect_12-msg_gpower_effect_01, prm->mine_f, 0 );
+    }else{
+      SCRIPT_SetScriptWorkParam( sc, prm->g_power, type, prm->mine_f, 0 );
+    }
     sub_InstantPowerUse( gsys, SCRIPT_GetWordSet( sc ), type );
   }
   if( prm->mine_f ){ //自分のを使った時
