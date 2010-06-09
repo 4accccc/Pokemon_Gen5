@@ -425,21 +425,27 @@ static void PSTATUS_INFO_DrawState( PSTATUS_WORK *work , PSTATUS_INFO_WORK *info
     {
       WORDSET *wordSet = WORDSET_Create( work->heapId );
       u32 no = PPP_Get( ppp , ID_PARA_monsno , NULL );
+      u16 col = PSTATUS_STR_COL_VALUE;
       if( work->psData->zukan_mode == FALSE )
       {
         no = infoWork->localZukanNoList[no];
       }
       
+      if( PPP_CheckRare( ppp ) == TRUE )
+      {
+        col = PSTATUS_STR_COL_RED;
+      }
+
       if( no == POKEPER_CHIHOU_NO_NONE )
       {
         PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_16 , 
-                                       PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
+                                       PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , col );
       }
       else
       {
         WORDSET_RegisterNumber( wordSet , 0 , no , 3 , STR_NUM_DISP_ZERO , STR_NUM_CODE_DEFAULT );
         PSTATUS_UTIL_DrawValueStrFunc( work , infoWork->bmpWin[SIB_ZUKAN] , wordSet , mes_status_02_03 , 
-                                       PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , PSTATUS_STR_COL_VALUE );
+                                       PSTATUS_INFO_STR_ZUKAN_VAL_X , PSTATUS_INFO_STR_ZUKAN_VAL_Y , col );
       }
       WORDSET_Delete( wordSet );
     }
