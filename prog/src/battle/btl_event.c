@@ -76,8 +76,8 @@ struct _BTL_EVENT_FACTOR {
   u32       tmpItemFlag      :  1;  ///< アイテム用一時利用フラグ
   u32       rmReserveFlag    :  1;  ///< 削除予約フラグ
 
+  u32       currentStackPtr  :16;   ///< 登録時イベントスタックポインタ
   u32       recallEnableFlag : 1;   ///< 再帰呼び出し許可
-  u32       addedCurrentFlag : 1;   ///< 現在処理中イベントによりAddされた
   u32       existFlag        : 1;   ///< 現在処理中イベントによりAddされた
   u32       _padd            : 29;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
@@ -231,7 +231,6 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
   BTL_EVENT_FACTOR* newFactor;
 
   newFactor = pushFactor();
-  TAYA_Printf("NewFactorPtr=%p\n", newFactor);
   if( newFactor )
   {
     newFactor->priority = calcFactorPriority( mainPri, subPri );
@@ -252,7 +251,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->dependID = dependID;
     newFactor->rmReserveFlag = FALSE;
     newFactor->recallEnableFlag = FALSE;
-    newFactor->addedCurrentFlag = (EventStackPtr != 0);
+    newFactor->currentStackPtr = EventStackPtr;
     newFactor->existFlag = TRUE;
     if( isDependPokeFactorType(factorType) ){
       newFactor->pokeID = dependID;
@@ -495,12 +494,13 @@ void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
   CallHandlersCore( flowWork, eventID, TRUE );
 
   --EventStackPtr;
+
   if( EventStackPtr == 0 )
   {
     BTL_EVENT_FACTOR* factor;
     for( factor=FirstFactorPtr; factor!=NULL; factor = factor->next )
     {
-      factor->addedCurrentFlag = FALSE;
+      factor->currentStackPtr = 0;
     }
   }
 }
@@ -526,7 +526,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
 
     if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
     &&  ( factor->sleepFlag == FALSE )
-    &&  ( factor->addedCurrentFlag == FALSE )
+    &&  ( (factor->currentStackPtr == 0) || (factor->currentStackPtr < EventStackPtr) )
     &&  ( factor->existFlag )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
     ){
@@ -722,7 +722,6 @@ void BTL_EVENT_SleepFactor( BtlEventFactorType type, u16 subID )
 
 static BTL_EVENT_FACTOR* pushFactor( void )
 {
-  TAYA_Printf("EVENET StackPtr=%d\n", StackPtr);
   if( StackPtr == FACTOR_REGISTER_MAX )
   {
     return NULL;
