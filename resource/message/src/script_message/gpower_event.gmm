@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakamura_akira" host="W00161" date="2010-06-09T19:30:35"/>
+	<create user="nakamura_akira" host="W00161" date="2010-06-09T20:38:13"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -260,7 +260,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1424" top="195" right="2129" bottom="823" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="785" top="91" right="1258" bottom="715" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -435,9 +435,9 @@
 	</row>
 
 	<row id="msg_gpower_effect_12" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
-		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンが
+		<language name="JPN" width="256">[1:00:トレーナー名:0]の　ポケモンは
 みんな　げんきに　なった！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンが
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]の　ポケモンは
 みんな　元気に　なった！</language>
 	</row>
 
