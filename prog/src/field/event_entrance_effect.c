@@ -84,6 +84,7 @@ typedef struct {
   FIELD_BMODEL *   doorBM;          //<<<ドアの配置モデル
   u8               seq[ MAX_SEQ_LENGTH ]; //<<<シーケンス
   u8               seqPos;                //<<<現在のシーケンス位置
+  BOOL             fastMode;        //<<<一歩移動の開始を急ぐかどうか
 
 } FIELD_DOOR_ANIME_WORK;
 
@@ -127,6 +128,19 @@ static BOOL CheckMapChangeSE( const FIELD_DOOR_ANIME_WORK* work ); // マップチェ
 void EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest ) 
 {
   GetPlayerFrontPos( fieldmap, dest );
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief 自機のアニメーションをキャンセルする
+ */
+//--------------------------------------------------------------------------------------------
+void EVENT_ENTRANCE_EFFECT_CancelPlayerAnime( FIELDMAP_WORK* fieldmap )
+{
+  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
+  MMDL*         mmdl   = FIELD_PLAYER_GetMMdl( player );
+
+  MMDL_FreeAcmd( mmdl );
 }
 
 
@@ -419,6 +433,14 @@ GMEVENT* EVENT_FieldDoorInAnime( ENTRANCE_EVDATA* evdata )
   // シーケンスの流れを決定
   SetupDoorInEventSeq( work ); 
 
+  // FASTモード設定
+  if( EXIT_TYPE_IsSpExit( evdata->exit_type_in ) ) {
+    work->fastMode = TRUE;
+  }
+  else {
+    work->fastMode = FALSE;
+  }
+
   return event;
 }
 
@@ -478,6 +500,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
     ENTRANCE_CAMERA_Setup( work->ECamWork, &work->ECamParam ); // カメラ演出をセットアップ
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
+    if( work->fastMode ) {
+      return GMEVENT_RES_CONTINUE_DIRECT;
+    }
     break;
 
     // カメラ演出開始
@@ -485,6 +510,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
     ENTRANCE_CAMERA_Start( work->ECamWork );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
+    if( work->fastMode ) {
+      return GMEVENT_RES_CONTINUE_DIRECT;
+    }
     break;
 
     // ドアオープン開始
@@ -492,6 +520,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
     StartDoorOpen( work );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
+    if( work->fastMode ) {
+      return GMEVENT_RES_CONTINUE_DIRECT;
+    }
     break;
 
     // カメラ演出待ち
@@ -505,6 +536,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
       else {
         *seq = GetNextSeq( work );
         FinishCurrentSeq( work );
+      } 
+      if( work->fastMode ) {
+        return GMEVENT_RES_CONTINUE_DIRECT;
       }
     }
     break;
@@ -514,6 +548,9 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
     if( CheckDoorAnimeFinish(work) == TRUE ) {
       *seq = GetNextSeq( work );
       FinishCurrentSeq( work );
+      if( work->fastMode ) {
+        return GMEVENT_RES_CONTINUE_DIRECT;
+      }
     }
     break;
 
@@ -522,14 +559,21 @@ static GMEVENT_RESULT ExitEvent_DoorIn( GMEVENT * event, int *seq, void * wk )
     if( ZERO_CAMERA_WAIT_IN < work->count++ ) {
       *seq = GetNextSeq( work );
       FinishCurrentSeq( work );
+      if( work->fastMode ) {
+        return GMEVENT_RES_CONTINUE_DIRECT;
+      }
     }
     break;
 
     // 自機の一歩移動アニメ開始
   case SEQ_DOORIN_PLAYER_STEP:
+    EVENT_ENTRANCE_EFFECT_CancelPlayerAnime( fieldmap );
     GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime( gameSystem, fieldmap ) );
     *seq = GetNextSeq( work );
     FinishCurrentSeq( work );
+    if( work->fastMode ) {
+      return GMEVENT_RES_CONTINUE_DIRECT;
+    }
     break;
 
     // BGM再生準備

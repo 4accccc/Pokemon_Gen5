@@ -49,11 +49,8 @@ typedef enum {
 //=======================================================================================
 typedef struct {
 
-  FIELD_CAMERA_MODE initCameraMode;  // イベント開始時のカメラモード
-  GFL_TCB*          oneStepTCB;      // 自機の一歩移動TCB
-
-  // 出入り口イベントの共通ワーク
-  ENTRANCE_EVDATA* evdata; 
+  FIELD_CAMERA_MODE initCameraMode; // イベント開始時のカメラモード
+  ENTRANCE_EVDATA*  evdata;         // 出入り口イベントの共通ワーク
 
 } EVENT_WORK;
 
@@ -125,8 +122,7 @@ GMEVENT* EVENT_EntranceIn( ENTRANCE_EVDATA* evdata )
 
   // イベントワーク初期化
   work = (EVENT_WORK*)GMEVENT_GetEventWork( event );
-  work->oneStepTCB = NULL; 
-  work->evdata     = evdata;
+  work->evdata = evdata;
 
   return event;
 }
@@ -182,7 +178,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeDoor( GMEVENT* event, int* s
     // ドア進入イベント
     GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( evdata ) );
     (*seq)++;
-    break;
+    return GMEVENT_RES_CONTINUE_DIRECT;
 
   case 1:
     return GMEVENT_RES_FINISH;
@@ -212,20 +208,17 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeStep( GMEVENT* event, int* s
     }
 
     // 自機の一歩移動アニメ開始
-    work->oneStepTCB = PlayerOneStepAnimeStart( fieldmap );
-
+    EVENT_ENTRANCE_EFFECT_CancelPlayerAnime( evdata->fieldmap );
+    GMEVENT_CallEvent( event, EVENT_PlayerOneStepAnime( evdata->gameSystem, evdata->fieldmap ) );
     (*seq)++;
-    break;
+    return GMEVENT_RES_CONTINUE_DIRECT;
 
   case 1:
-    // 自機の一歩移動アニメが終了
-    if( CheckPlayerOneStepAnimeEnd( work->oneStepTCB ) ) {
-      // クロスフェードでなければ, SEを再生
-      if( evdata->fadeout_type != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
-      // 画面フェードアウト開始
-      CallFadeOutEvent( work, event ); 
-      (*seq)++; 
-    }
+    // クロスフェードでなければ, SEを再生
+    if( evdata->fadeout_type != FIELD_FADE_CROSS ) { PMSND_PlaySE( SEQ_SE_KAIDAN ); }
+    // 画面フェードアウト開始
+    CallFadeOutEvent( work, event ); 
+    (*seq)++; 
     break;
 
   case 2:
@@ -291,16 +284,18 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
     else {
       *seq = SEQ_DOOR_IN_ANIME;
     }
-    break;
+    return GMEVENT_RES_CONTINUE_DIRECT;
 
   // カメラのトレース処理終了待ち
   case SEQ_WAIT_CAMERA_TRACE: 
     if( FIELD_CAMERA_CheckTraceSys( camera ) == FALSE ) { 
       *seq = SEQ_DOOR_IN_ANIME; 
+      return GMEVENT_RES_CONTINUE_DIRECT;
     }
     else if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) {
       FIELD_CAMERA_FreeTarget( camera );
       *seq = SEQ_DOOR_IN_ANIME;
+      return GMEVENT_RES_CONTINUE_DIRECT;
     }
     break;
 
@@ -308,7 +303,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   case SEQ_DOOR_IN_ANIME:
     GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( evdata ) );
     *seq = SEQ_EXIT;
-    break;
+    return GMEVENT_RES_CONTINUE_DIRECT;
 
   // イベント終了
   case SEQ_EXIT:

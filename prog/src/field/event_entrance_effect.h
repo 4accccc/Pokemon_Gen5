@@ -15,3 +15,6 @@ extern GMEVENT* EVENT_FieldDoorOutAnime( ENTRANCE_EVDATA* evdata );
 
 // 自機の一歩先の座標を取得する
 extern void EVENT_ENTRANCE_EFFECT_GetPlayerFrontPos( FIELDMAP_WORK* fieldmap, VecFx32* dest );
+
+// 自機のアニメーションをキャンセルする
+extern void EVENT_ENTRANCE_EFFECT_CancelPlayerAnime( FIELDMAP_WORK* fieldmap );

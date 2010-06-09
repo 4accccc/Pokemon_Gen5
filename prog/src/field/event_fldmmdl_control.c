@@ -530,63 +530,6 @@ GMEVENT * EVENT_HighJump( GAMESYS_WORK * gsys, MMDL* mmdl, const VecFx32* cp_sta
 }
 
 
-//------------------------------------------------------------------
-/**
- * @brief 自機の一歩移動アニメを即開始する
- *
- * @param fieldmap
- *
- * @return 一歩移動アニメのTCB
- *
- * ※2010.04.22 階段をスムーズに上るために作成
- */
-//------------------------------------------------------------------
-GFL_TCB* PlayerOneStepAnimeStart( FIELDMAP_WORK* fieldmap )
-{
-  GFL_TCB* tcb;
-  const MMDL_ACMD_LIST * anm_table;
-
-  FIELD_PLAYER* player = FIELDMAP_GetFieldPlayer( fieldmap );
-  MMDL*         mmdl   = FIELD_PLAYER_GetMMdl( player );
-  u16           dir    = MMDL_GetDirDisp( mmdl ); 
-  
-  switch( dir ) {
-  case DIR_UP:    anm_table = anime_up_table;    break;
-  case DIR_DOWN:  anm_table = anime_down_table;  break;
-  case DIR_LEFT:  anm_table = anime_left_table;  break;
-  case DIR_RIGHT: anm_table = anime_right_table; break;
-  }
-
-  // アニメーションコマンドリストセット
-  MMDL_FreeAcmd( mmdl );
-  tcb = MMDL_SetAcmdList( mmdl, anm_table );
-
-  return tcb;
-}
-
-//------------------------------------------------------------------
-/**
- * @brief 自機の一歩移動アニメの終了を待つ
- *
- * @param tcb 終了を待つTCB
- *
- * @return 終了した場合 TRUE
- *         そうでなければ FALSE
- */
-//------------------------------------------------------------------
-BOOL CheckPlayerOneStepAnimeEnd( GFL_TCB* tcb )
-{
-  // アニメーションコマンドリスト終了
-  if( MMDL_CheckEndAcmdList(tcb) == TRUE )
-  {
-    MMDL_EndAcmdList( tcb );
-    return TRUE;
-  }
-
-  return FALSE;
-}
-
-
 #if 0
 //======================================================================
 //	動作モデル	
