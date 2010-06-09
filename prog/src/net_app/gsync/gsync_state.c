@@ -697,18 +697,16 @@ static void _cgearsave(G_SYNC_WORK* pWork)
   int sizeh = size/2;
   u16 crc;
 
-  pWork->pCGearWork = GFL_HEAP_AllocMemory(pWork->heapID,SAVESIZE_EXTRA_CGEAR_PICTURE);
-  pPic = (CGEAR_PICTURE_SAVEDATA*)pWork->pCGearWork;
-  
-  
   //crc検査 pCRC
   crc = GFL_STD_CrcCalc( pCRC, size );
- // OS_TPrintf("crc%x crc%x",crc,pCRC[sizeh]);
-  GF_ASSERT(crc == pCRC[sizeh]);
-  if(crc != pCRC[sizeh]){
-    _CHANGE_STATE(_cgearsave3);
+  if(crc != pCRC[sizeh]){   //CRCが一致しないとエラー
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
   }
   else{
+    pWork->pCGearWork = GFL_HEAP_AllocMemory(pWork->heapID,SAVESIZE_EXTRA_CGEAR_PICTURE);
+    pPic = (CGEAR_PICTURE_SAVEDATA*)pWork->pCGearWork;
+
     OS_TPrintf("CGEARサイズ %x %x",size, SAVESIZE_EXTRA_CGEAR_PICTURE);
 
 
@@ -748,16 +746,13 @@ static void _zukansave(G_SYNC_WORK* pWork)
   int sizeh = size/2;
   u16 crc;
 
-  pWork->pZknWork = GFL_HEAP_AllocMemory(pWork->heapID, SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
-
-  //crc検査 pCRC
   crc = GFL_STD_CrcCalc( pCRC, size );
- // OS_TPrintf("crc%x crc%x",crc,pCRC[sizeh]);
-  GF_ASSERT(crc == pCRC[sizeh]);
   if(crc != pCRC[sizeh]){
-    _CHANGE_STATE(_zukansave3);
+    pWork->ErrorNo = _DOWNLOAD_ERROR;
+    _CHANGE_STATE(_ErrorDisp);
   }
   else{
+    pWork->pZknWork = GFL_HEAP_AllocMemory(pWork->heapID, SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
     SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_ZUKAN_WALLPAPER, pWork->heapID,
                                pWork->pZknWork,SAVESIZE_EXTRA_ZUKAN_WALLPAPER);
     GFL_STD_MemCopy(pCRC, pWork->pZknWork, size);
@@ -786,17 +781,16 @@ static void _musicalsave(G_SYNC_WORK* pWork,int size)
     int sizeh = size/2;
     u16 crc;
     
-    //crc検査 pCRC
     crc = GFL_STD_CrcCalc( pCRC, size );
-   // OS_TPrintf("crc%x crc%x",crc,pCRC[sizeh]);
-    GF_ASSERT(crc == pCRC[sizeh]);
     if(crc != pCRC[sizeh]){
-      _CHANGE_STATE(_exsaveEnd);
+      pWork->ErrorNo = _DOWNLOAD_ERROR;
+      _CHANGE_STATE(_ErrorDisp);
     }
-
-    //ミュージカルセーブ
-    pWork->pMusical = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( pWork->pGameData , pCRC, size, pWork->heapID);
-    _CHANGE_STATE(_musicalsaveMain);
+    else{
+      //ミュージカルセーブ
+      pWork->pMusical = MUSICAL_DIST_SAVE_SaveMusicalArchive_Init( pWork->pGameData , pCRC, size, pWork->heapID);
+      _CHANGE_STATE(_musicalsaveMain);
+    }
   }
 }
 
