@@ -2231,6 +2231,10 @@ static int  Oekaki_LogoutChildClose( OEKAKI_WORK *wk, int seq )
       wk->banFlag = OEKAKI_BAN_OFF;
       ChangeConnectMax(wk, 1);
     }
+    // 絵を共有した接続人数を更新
+    wk->shareNum = Union_App_GetMemberNum( wk->param->uniapp );
+    wk->shareBit = Union_App_GetMemberNetBit(wk->param->uniapp);
+
   }
 
   EndSequenceCommonFunc( wk );      //終了選択時の共通処理
