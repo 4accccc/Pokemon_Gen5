@@ -2633,10 +2633,9 @@ static RET Guru2Subproc_OmakeAreaErrorMsgStartWait( GURU2MAIN_WORK *g2m )
 {
   if( g2m->frame < GURU2_MSG_WAIT_FRAME ){
     g2m->frame++;
-//  }else if( _me_end_check() == FALSE ){
-  }else{
+  }else if( _me_end_check() == FALSE ){
     g2m->frame = 0;
-    g2m->seq_no = SEQNO_MAIN_OMAKE_MSG_WAIT;
+    g2m->seq_no = SEQNO_MAIN_OMAKE_ERROR_MSG_WAIT;
     Guru2TalkWin_Write( g2m, MSG_ZANNEN );
   } 
   
