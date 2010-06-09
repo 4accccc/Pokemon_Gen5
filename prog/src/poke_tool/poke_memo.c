@@ -278,7 +278,7 @@ static void POKE_MEMO_CopyPlaceTime( POKEMON_PASO_PARAM *ppp , const POKE_MEMO_D
   month = PPP_Get( ppp , ID_PARA_get_month+time_ofs , NULL );
   day   = PPP_Get( ppp , ID_PARA_get_day+time_ofs   , NULL );
 
-  POKE_MEMO_SetPlaceTimeEx( ppp , place, year, month, day, srcSetType );
+  POKE_MEMO_SetPlaceTimeEx( ppp , place, year, month, day, (srcSetType == PMDT_1?PMDT_2:PMDT_1) );
 
 #if 0
 if( srcSetType == PMDT_1 )
