@@ -69,6 +69,7 @@ enum {
 
 
   SEQ_ON_END,
+  SEQ_ON_END_COMM_EXIT_WAIT,
 } ;
 
 enum {
@@ -894,12 +895,28 @@ static BOOL PowerOnOff_UpdateOn( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_ON_MSG_PRINT01_TOUCHWAIT:
-    if( GFL_UI_TP_GetTrg() ){
+    if( GFL_UI_TP_GetTrg() || (GAMESYSTEM_IsBatt10Sleep( p_sys->p_gamesys )) ){
       p_sys->seq ++;
     }
     break;
 
   case SEQ_ON_END:
+    if( (GAMESYSTEM_IsBatt10Sleep( p_sys->p_gamesys )) ){
+      // オフ
+      if( GameCommSys_BootCheck( p_sys->p_gamecomm ) != GAME_COMM_NO_NULL ){
+        GameCommSys_ExitReq( p_sys->p_gamecomm );
+      }
+      p_sys->seq = SEQ_ON_END_COMM_EXIT_WAIT;
+      break;
+    }
+    return TRUE;
+
+
+  // スリープ復帰で電源ONにしたはずなのに、電源１０以下スリープ復帰していたら
+  case SEQ_ON_END_COMM_EXIT_WAIT:
+    if( GameCommSys_BootCheck( p_sys->p_gamecomm ) != GAME_COMM_NO_NULL ){
+      break;
+    }
     return TRUE;
 
   }
