@@ -196,7 +196,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
       {
         rec2 = RECORD_Get(rec, RecordTbl[rnd][1]);
         //タグ展開
-        WORDSET_RegisterNumber( wordset, 2, rec1, RecordTbl[rnd][3], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wordset, 2, rec2, RecordTbl[rnd][3], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       }
 
       OS_Printf("レコード1 %d\n",rec1);
@@ -274,7 +274,7 @@ VMCMD_RESULT EvCmdTV_GetMsg( VMHANDLE *core, void *wk )
       {
         rec2 = RECORD_Get(rec, RecordTbl[idx][1]);
         //タグ展開
-        WORDSET_RegisterNumber( wordset, 2, rec1, RecordTbl[idx][3], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+        WORDSET_RegisterNumber( wordset, 2, rec2, RecordTbl[idx][3], STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       }
 
       OS_Printf("レコード1 %d\n",rec1);
