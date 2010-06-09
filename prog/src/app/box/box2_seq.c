@@ -1674,6 +1674,8 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
 		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PGT_NAME );
 		BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PGT_NAME );
+		BOX2UI_SetTouchBarIconPokeGet( syswk, BOX2UI_ARRANGE_PGT_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_PGT_NAME;
 		// –¢Žæ“¾
 		if( syswk->poke_get_key == 0 ){
 			BOX2MAIN_PokeSelectOff( syswk );
@@ -1688,6 +1690,8 @@ static int MainSeq_ArrangePokeGetMain( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_ChangeTrayName( syswk, 0, FALSE );
 		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PGT_NAME );
 		BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PGT_NAME );
+		BOX2UI_SetTouchBarIconPokeGet( syswk, BOX2UI_ARRANGE_PGT_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_PGT_NAME;
 		// –¢Žæ“¾
 		if( syswk->poke_get_key == 0 ){
 			BOX2MAIN_PokeSelectOff( syswk );
@@ -2600,6 +2604,8 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
 		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_NAME );
 		BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PTGT_NAME );
+		BOX2UI_SetTouchBarIconPokeGet( syswk, BOX2UI_ARRANGE_PTGT_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_PTGT_NAME;
 		// –¢Žæ“¾
 		if( syswk->poke_get_key == 0 ){
 			BOX2MAIN_PokeSelectOff( syswk );
@@ -2613,6 +2619,8 @@ static int MainSeq_ArrangePartyPokeGetMain( BOX2_SYS_WORK * syswk )
 		PMSND_PlaySE( SE_BOX2_CHANGE_TRAY );
 		CURSORMOVE_PosSet( syswk->app->cmwk, BOX2UI_ARRANGE_PTGT_NAME );
 		BOX2UI_PutHandCursor( syswk, BOX2UI_ARRANGE_PTGT_NAME );
+		BOX2UI_SetTouchBarIconPokeGet( syswk, BOX2UI_ARRANGE_PTGT_NAME );
+		syswk->app->old_cur_pos = BOX2UI_ARRANGE_PTGT_NAME;
 		// –¢Žæ“¾
 		if( syswk->poke_get_key == 0 ){
 			BOX2MAIN_PokeSelectOff( syswk );
