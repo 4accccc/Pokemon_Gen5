@@ -977,6 +977,8 @@ static void update_dst( DMP_MAINWORK* wk )
   PP_Put( wk->dst, ID_PARA_country_code, countryCode_local_to_formal(box_getvalue(wk, INPUTBOX_ID_COUNTRY)) );
   // イベント配布フラグ
   PP_Put( wk->dst, ID_PARA_event_get_flag, box_getvalue(wk, INPUTBOX_ID_EVENTGET_FLAG) );
+
+  PP_Renew( wk->dst );
 }
 
 //----------------------------------------------------------------------------------
