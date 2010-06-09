@@ -914,7 +914,9 @@ static GMEVENT_RESULT EventForceWarpMyPalace( GMEVENT* event, int* seq, void* wk
   case SEQ_FINISH_BEFORE: //終了前の最終処理
     GameCommSys_ClearLastStatus(game_comm);
     GameCommStatus_InitPlayerStatus(game_comm);
-    if(GAMEDATA_GetIntrudeMyID(gamedata) != 0){ //協力者なので表フィールドへ戻す
+    
+    //協力者orスリープ切断は表フィールドへ戻す
+    if(GAMEDATA_GetIntrudeMyID(gamedata) != 0 || GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE){
     	GMEVENT_CallEvent( event, EVENT_ChangeMapFromPalace(gsys) );
     }
     (*seq)++;
