@@ -375,6 +375,10 @@ ev_kaifuku:
 
 	//回復済みチェック用にローカルワークに値を代入
 	$LOCALWORK15 = 999
+
+	//レコードをカウント（自宅休憩回数）
+	_ADD_RECORD( RECID_RECOVERY_HOME, 1 )
+
 _RET
 
 
