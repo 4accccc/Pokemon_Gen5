@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="ohnishi_shinichi" host="W00207" date="2010-04-26T21:21:13" source="m_dun0301_00_00c.mb"/>
+	<create user="fuchino" host="W00152" date="2010-06-09T12:23:47" source="m_dun0301_00_01c.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="ohnishi_shinichi" host="W00207" date="2010-04-26T21:21:13" source="m_dun0301_00_00c.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-06-09T12:23:47" source="m_dun0301_00_01c.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -18,16 +18,16 @@
 	scaling_rule="standard"
 	vertex_style="direct"
 	magnify="1.000000"
-	tool_start_frame="0"
+	tool_start_frame="1"
 	tex_matrix_mode="maya"
-	compress_node="unite_combine" node_size="2 1"
+	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="10 10"
 	output_texture="used"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 0.000000 -2.000000" whd="4.000000 0.375000 4.000000"/>
+<box_test pos_scale="7" xyz="-2.000000 0.000000 -2.125000" whd="4.000000 0.375000 4.125000"/>
 
 <tex_image_array size="10">
 	<tex_image index="0" name="ga_s01a"
@@ -71,16 +71,20 @@
 	</tex_image>
 	<tex_image index="2" name="ga_s_futa"
 		width="16" height="16" original_width="16" original_height="16"
-		format="palette4"
+		format="palette16"
 		color0_mode="color"
 		palette_name="ga_s_futa_pl"
 		path="C:/home/wb_data3d/field/out06/chip/tex/ga_s_futa.tga"
 	>
-		<bitmap size="32">
-			d415 507f e01a 69af c05a a9ab 815a aa7f
-			956b aaaf 55af faee e6aa eaeb f56a aac2
-			5555 abd0 55aa ab84 95aa ab45 a56a be55
-			a915 0555 e900 4155 fd01 5056 fd05 541b
+		<bitmap size="64">
+			0111 5110 1455 1100 0123 5300 3345 2321
+			1133 4000 2334 3331 1233 3001 1455 3332
+			2334 3111 2454 3333 3345 1112 4353 5433
+			3333 4313 5345 4333 1233 4431 5003 3334
+			1111 1111 4100 3335 2333 1111 3010 3335
+			2333 2111 1011 3344 1233 3211 1111 2453
+			0111 3321 1111 0011 0000 4331 1111 1001
+			0001 5541 1113 1100 0011 5551 0135 1110
 		</bitmap>
 	</tex_image>
 	<tex_image index="3" name="gake01a"
@@ -249,8 +253,8 @@
 	<tex_palette index="1" name="ga_s1_0_pl" color_size="8">
 		21f1 2611 2655 29cf 2a32 2a97 2e54 2eb8
 	</tex_palette>
-	<tex_palette index="2" name="ga_s_futa_pl" color_size="4">
-		1dae 21f0 2653 2eb7
+	<tex_palette index="2" name="ga_s_futa_pl" color_size="8">
+		1dae 21f0 2211 2653 2a95 2eb7 7fff 7fff
 	</tex_palette>
 	<tex_palette index="3" name="gake01a_pl" color_size="8">
 		1d70 214d 2190 2191 25b2 25d5 29f7 2e18
@@ -525,22 +529,30 @@
 
 <polygon_array size="10">
 	<polygon index="0" name="polygon0"
-		vertex_size="25" polygon_size="7"
-		triangle_size="3" quad_size="4"
-		volume_min="-4.000000 0.750000 -4.000000"
+		vertex_size="29" polygon_size="8"
+		triangle_size="3" quad_size="5"
+		volume_min="-4.000000 0.703125 -4.250000"
 		volume_max="1.250000 0.750000 4.000000"
-		volume_r="5.706299"
+		volume_r="5.878418"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
 		<mtx_prim index="0">
 			<mtx_list size="1">0</mtx_list>
 			<primitive_array size="2">
-				<primitive index="0" type="quads" vertex_size="16">
+				<primitive index="0" type="quads" vertex_size="20">
 					<mtx idx="0"/>
-					<tex st="0.000000 -128.000000"/>
+					<tex st="-256.000000 -256.000000"/>
 					<nrm xyz="0.000000 0.998047 0.000000"/>
-					<pos_s xyz="0.000000 0.750000 -2.250000"/>
+					<pos_s xyz="-4.000000 0.703125 -4.250000"/>
+					<tex st="-256.000000 0.000000"/>
+					<pos_xz xz="-4.000000 -0.250000"/>
+					<tex st="0.000000 0.000000"/>
+					<pos_xy xy="0.000000 0.703125"/>
+					<tex st="0.000000 -256.000000"/>
+					<pos_xz xz="0.000000 -4.250000"/>
+					<tex st="0.000000 -128.000000"/>
+					<pos_yz yz="0.750000 -2.250000"/>
 					<tex st="32.000000 0.000000"/>
 					<pos_xz xz="0.500000 -0.250000"/>
 					<tex st="80.000000 0.000000"/>
@@ -2014,7 +2026,7 @@
 </polygon_array>
 
 <node_array size="1">
-	<node index="0" name="world_root" kind="mesh"
+	<node index="0" name="polySurface1" kind="mesh"
 		parent="-1"
 		child="-1"
 		brother_next="-1"
@@ -2026,11 +2038,11 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="10"
-		vertex_size="555" polygon_size="171"
-		triangle_size="63" quad_size="108"
-		volume_min="-4.000000 0.000000 -4.000000"
+		vertex_size="559" polygon_size="172"
+		triangle_size="63" quad_size="109"
+		volume_min="-4.000000 0.000000 -4.250000"
 		volume_max="4.000000 0.750000 4.000000"
-		volume_r="5.706299"
+		volume_r="5.878418"
 	>
 		<display index="0" material="0" polygon="4" priority="0"/>
 		<display index="1" material="1" polygon="6" priority="0"/>
@@ -2045,8 +2057,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="555" polygon_size="171"
-	triangle_size="63" quad_size="108"/>
+<output_info vertex_size="559" polygon_size="172"
+	triangle_size="63" quad_size="109"/>
 
 </body>
 
