@@ -2222,6 +2222,9 @@ static GFL_PROC_RESULT IrcBattleMenuProcEnd( GFL_PROC * proc, int * seq, void * 
   _CLACT_Release(pWork);
 
   GFL_PROC_FreeWork(proc);
+  if(pWork->pStream){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+  }
 
   APP_KEYCURSOR_Delete( pWork->pKeyCursor );
   GFL_TCBL_Exit(pWork->pMsgTcblSys);

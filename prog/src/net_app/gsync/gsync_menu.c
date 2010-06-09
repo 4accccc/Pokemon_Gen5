@@ -1544,7 +1544,9 @@ static GFL_PROC_RESULT GameSyncMenuProcEnd( GFL_PROC * proc, int * seq, void * p
     TIMEICON_Exit(pWork->pTimeIcon);
     pWork->pTimeIcon=NULL;
   }
-
+  if(pWork->pStream){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+  }
   if(pWork->pAppTask){
     APP_TASKMENU_CloseMenu(pWork->pAppTask);
     pWork->pAppTask=NULL;

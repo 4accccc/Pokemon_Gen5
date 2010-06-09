@@ -1720,6 +1720,9 @@ static GFL_PROC_RESULT CG_WirelessMenuProcEnd( GFL_PROC * proc, int * seq, void 
   GFL_CLACT_UNIT_Delete(pWork->cellUnit);
   GFL_CLACT_SYS_Delete();
 
+  if(pWork->pStream){
+    PRINTSYS_PrintStreamDelete( pWork->pStream );
+  }
   WORDSET_Delete(pWork->pWordSet);
 
   if(pWork->pAppTask){
