@@ -5262,20 +5262,23 @@ int BOX2MAIN_VFuncPokeMovePutKey( BOX2_SYS_WORK * syswk )
 			}
 		}
 
-    if( syswk->app->poke_put_key == BOX2MAIN_GETPOS_NONE &&
-        syswk->tray != syswk->get_tray &&
-        syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX ){
-      u32 dir = BOX2MAIN_GetTrayScrollDir( syswk, syswk->tray, syswk->get_tray );
-      syswk->tray = syswk->get_tray;
-      BOX2OBJ_PokeIconBufLoad( syswk, syswk->tray );
-      BOX2MAIN_WallPaperSet( syswk, BOX2MAIN_GetWallPaperNumber(syswk,syswk->tray), dir );
-      if( dir == BOX2MAIN_TRAY_SCROLL_L ){
-        vf->seq = 2;
-        break;
-      }else{
-        vf->seq = 3;
-        break;
-      }
+		// トレイでトレイが切り替わっている場合
+		if( syswk->get_pos < BOX2OBJ_POKEICON_TRAY_MAX && syswk->tray != syswk->get_tray ){
+			// キャンセルかエラーのとき
+	    if( syswk->app->poke_put_key == BOX2MAIN_GETPOS_NONE ||
+					PokeIconMoveBoxPartyDataMake(syswk,syswk->get_pos,syswk->app->poke_put_key) == FALSE ){
+	      u32 dir = BOX2MAIN_GetTrayScrollDir( syswk, syswk->tray, syswk->get_tray );
+	      syswk->tray = syswk->get_tray;
+	      BOX2OBJ_PokeIconBufLoad( syswk, syswk->tray );
+	      BOX2MAIN_WallPaperSet( syswk, BOX2MAIN_GetWallPaperNumber(syswk,syswk->tray), dir );
+	      if( dir == BOX2MAIN_TRAY_SCROLL_L ){
+	        vf->seq = 2;
+	        break;
+	      }else{
+	        vf->seq = 3;
+	        break;
+	      }
+			}
     }
   case 1:
     BOX2OBJ_SetHandCursorAnm( syswk, BOX2OBJ_ANM_HAND_OPEN );
