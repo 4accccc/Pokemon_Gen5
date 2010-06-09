@@ -34,6 +34,8 @@ extern void CGEAR_Exit(C_GEAR_WORK* pWork);
 
 extern GMEVENT* CGEAR_EventCheck(C_GEAR_WORK* pWork, BOOL bEvReqOK, FIELD_SUBSCREEN_WORK* pSub );
 
+extern BOOL CGEAR_ChangePowerOff( C_GEAR_WORK* pWork );
+
 extern BOOL CGEAR_IsDoEventWireless( const C_GEAR_WORK* cpWork );
 extern void CGEAR_SetStopTVTRingTone( C_GEAR_WORK* pWork ); // äOïîÇ≈TVTRingToneÇÇ∆ÇﬂÇΩÇ∆Ç´Ç…ê›íËÇµÇƒÇ‡ÇÁÇ§ÅB
 

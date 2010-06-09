@@ -933,8 +933,13 @@ static BOOL PowerOnOff_UpdateOff( CGEAR_POWER_ONOFF* p_sys )
     break;
 
   case SEQ_OFF_YESNO_WAIT:
-    if( PowerOnOff_IsYesNoEnd( p_sys ) ){
-      if( PowerOnOff_GetYesNo( p_sys ) == YESNO_LIST_YES ){
+    // ON→OFF　１０％スリープ時は、確実にOFFへ遷移
+    if( PowerOnOff_IsYesNoEnd( p_sys ) || 
+        (GAMESYSTEM_IsBatt10Sleep( p_sys->p_gamesys ) == TRUE) ){
+
+      if( (PowerOnOff_GetYesNo( p_sys ) == YESNO_LIST_YES) || 
+          (GAMESYSTEM_IsBatt10Sleep( p_sys->p_gamesys ) == TRUE) ){
+
         // オフ
         if( GameCommSys_BootCheck( p_sys->p_gamecomm ) != GAME_COMM_NO_NULL ){
           GameCommSys_ExitReq( p_sys->p_gamecomm );

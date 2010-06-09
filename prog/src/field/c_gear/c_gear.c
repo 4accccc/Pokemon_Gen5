@@ -833,6 +833,11 @@ static BOOL _modeSelectWaitSubFadeEnd( const C_GEAR_WORK* cpWork );
 
 static void _modeSetSavePanelType( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pSV,int x, int y, CGEAR_PANELTYPE_ENUM type );
 
+// CGEARワーク初期化処理
+// CGEARワーク破棄処理
+static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect );
+static void cgear_ExitWork( C_GEAR_WORK* pWork );
+
 // CGEARセーブ情報の取得
 static CGEAR_PANELTYPE_ENUM _cgearSave_GetPanelType(const C_GEAR_WORK* cpWork,int x, int y);
 static BOOL _cgearSave_IsPanelTypeIcon(const C_GEAR_WORK* cpWork,int x, int y);
@@ -4187,18 +4192,15 @@ static void _VBlankFunc( GFL_TCB* tcb, void* wk )
   if( pWork->pfade_ptr ) PaletteFadeTrans( pWork->pfade_ptr );
 }
 
-//------------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /**
- * @brief   スタート
- * @retval  none
+ *	@brief  初期化処理
  */
-//------------------------------------------------------------------------------
-C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect )
+//-----------------------------------------------------------------------------
+static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect )
 {
-  C_GEAR_WORK *pWork = NULL;
   BOOL ret = FALSE;
 
-  pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, sizeof( C_GEAR_WORK ) );
   pWork->heapID = HEAPID_FIELD_SUBSCREEN;
   pWork->pCGSV = pCGSV;
   pWork->subscreen = pSub;
@@ -4280,6 +4282,60 @@ C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESY
 
   //SleepMode_ColorUpdateExの結果を実行
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  破棄処理
+ */
+//-----------------------------------------------------------------------------
+static void cgear_ExitWork( C_GEAR_WORK* pWork )
+{
+  _BUTTONPAL_Exit( &pWork->button_palfade );
+  
+  GFL_UI_SleepGoSetFunc(NULL,  NULL);
+  GFL_UI_SleepReleaseSetFunc(NULL,  NULL);
+
+  GFL_NET_ResetIconForcePosition();
+  GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
+
+  // パレットフェード
+  PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_OBJ );
+  PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_BG );
+  PaletteFadeFree( pWork->pfade_ptr );
+  // タスク
+  GFL_TCB_Exit( pWork->pfade_tcbsys );
+  GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
+  GFL_TCB_DeleteTask( pWork->vblank_tcb );
+
+  // Wireless以外の画面にいくならライブキャスターのSEをとめる
+  if( pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS ){
+    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
+    FSND_StopTVTRingTone( fsnd );
+  }
+
+  GFL_ARC_CloseDataHandle( pWork->handle );
+
+  _workEnd(pWork);
+  G2S_BlendNone();
+
+  GFL_STD_MemClear( pWork, sizeof(C_GEAR_WORK) );
+}
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   スタート
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+C_GEAR_WORK* CGEAR_Init( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,GAMESYS_WORK* pGameSys, BOOL power_effect )
+{
+  C_GEAR_WORK *pWork = NULL;
+
+  pWork = GFL_HEAP_AllocClearMemory( HEAPID_FIELD_SUBSCREEN, sizeof( C_GEAR_WORK ) );
+
+  cgear_InitWork( pWork, pCGSV, pSub, pGameSys, power_effect );
   
   return pWork;
 }
@@ -4435,34 +4491,41 @@ void CGEAR_ActionCallback( C_GEAR_WORK* pWork , FIELD_SUBSCREEN_ACTION actionno)
 //------------------------------------------------------------------------------
 void CGEAR_Exit( C_GEAR_WORK* pWork )
 {
-  _BUTTONPAL_Exit( &pWork->button_palfade );
-  
-  GFL_UI_SleepGoSetFunc(NULL,  NULL);
-  GFL_UI_SleepReleaseSetFunc(NULL,  NULL);
-
-  GFL_NET_ResetIconForcePosition();
-  GFL_NET_ReloadIconTopOrBottom( FALSE, pWork->heapID );
-
-  // パレットフェード
-  PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_OBJ );
-  PaletteFadeWorkAllocFree( pWork->pfade_ptr, FADE_SUB_BG );
-  PaletteFadeFree( pWork->pfade_ptr );
-  // タスク
-  GFL_TCB_Exit( pWork->pfade_tcbsys );
-  GFL_HEAP_FreeMemory( pWork->pfade_tcbsys_wk );
-  GFL_TCB_DeleteTask( pWork->vblank_tcb );
-
-  // Wireless以外の画面にいくならライブキャスターのSEをとめる
-  if( pWork->doEvent != FIELD_SUBSCREEN_ACTION_WIRELESS ){
-    FIELD_SOUND* fsnd = GAMEDATA_GetFieldSound( GAMESYSTEM_GetGameData(pWork->pGameSys) );
-    FSND_StopTVTRingTone( fsnd );
-  }
-
-  GFL_ARC_CloseDataHandle( pWork->handle );
-
-  _workEnd(pWork);
-  G2S_BlendNone();
+  cgear_ExitWork( pWork );
   GFL_HEAP_FreeMemory(pWork);
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  パワーOFF状態に遷移
+ *
+ *	@param	pWork 
+ *
+ *	@retval TRUE  OFFになった。
+ *	@retval FALSE いまは出来ない。
+ */
+//-----------------------------------------------------------------------------
+BOOL CGEAR_ChangePowerOff( C_GEAR_WORK* pWork )
+{
+  CGEAR_SAVEDATA* pCGSV = pWork->pCGSV;
+  FIELD_SUBSCREEN_WORK* pSub = pWork->subscreen;
+  GAMESYS_WORK* pGameSys = pWork->pGameSys;
+  
+  if( (u32)pWork->state == (u32)_modeSelectMenuWait ){
+    // マスター輝度ON
+    WIPE_SetBrightness( WIPE_DISP_SUB, WIPE_FADE_BLACK );
+
+    // 破棄ー＞初期化
+    cgear_ExitWork( pWork );
+    cgear_InitWork( pWork, pCGSV, pSub, pGameSys, FALSE );
+  
+    // マスター輝度OFF
+    WIPE_ResetBrightness( WIPE_DISP_SUB );
+
+    return TRUE;
+  }
+  return FALSE;
 }
 
 

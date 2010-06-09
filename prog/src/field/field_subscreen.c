@@ -736,6 +736,8 @@ static void init_normal_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREEN_
 
   CGEAR_SV_SetPowerFlag( pCGSV, net_flag );
 
+  // ここまできたので、バッテリ１０％　OFF処理は解消
+  GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
 }
 
 
@@ -767,6 +769,9 @@ static void init_firstget_subscreen(FIELD_SUBSCREEN_WORK * pWork, FIELD_SUBSCREE
 
 
   CGEAR_SV_SetPowerFlag( pCGSV, effect );
+
+  // ここまできたので、バッテリ１０％　OFF処理は解消
+  GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
 
 
   // 通常のギアモードに変更
@@ -806,6 +811,33 @@ static void actioncallback_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork , FIELD
 //-----------------------------------------------------------------------------
 static void update_normal_subscreen( FIELD_SUBSCREEN_WORK* pWork,BOOL bActive )
 {
+  // イベントでなくなったら、バッテリー１０％以下でのOFFチェック
+  // Batt10Sleep ON  AlwaysNetFlag OFF ならCGEAR　OFF
+  // Batt10Sleep ON AlwaysNetFlag ON なら　Batt10Sleep リセットのみ。
+  //
+  // Batt10Sleep ON AlwaysNetFlag ONの状態は、Sleep復帰後
+  // AlwaysNetFlagをONにしたときにのみおきる。
+  if( bActive ){
+    GAMESYS_WORK* p_gsys = FIELDMAP_GetGameSysWork( pWork->fieldmap );
+    GAMEDATA* p_gdata = GAMESYSTEM_GetGameData(p_gsys);
+    SAVE_CONTROL_WORK* pSave = GAMEDATA_GetSaveControlWork( p_gdata );
+    CGEAR_SAVEDATA* pCGSV;
+    pCGSV = CGEAR_SV_GetCGearSaveData( pSave );
+    if( GAMESYSTEM_IsBatt10Sleep( p_gsys ) ){
+
+      if( GAMESYSTEM_GetAlwaysNetFlag( p_gsys ) ){
+        GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
+      }else{
+
+        // CGEARをOFFにする。
+        if( CGEAR_ChangePowerOff( pWork->cgearWork ) ){
+          CGEAR_SV_SetPowerFlag( pCGSV, FALSE );
+          GAMESYSTEM_ResetBatt10Sleep( p_gsys );  // 対処完了！！
+        }
+      }
+    }
+  }
+  
   CGEAR_Main(pWork->cgearWork,bActive);
 }
 
