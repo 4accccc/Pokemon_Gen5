@@ -356,7 +356,10 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
         BTL_N_Printf( DBGSTR_SETUP_DONE );
-        BTL_MAIN_RECORDDATA_Inc( wk, RECID_BATTLE_COUNT );
+        //BTS4815 捕獲デモはレコードカウントしない
+        if( wk->setupParam->competitor != BTL_COMPETITOR_DEMO_CAPTURE ){
+          BTL_MAIN_RECORDDATA_Inc( wk, RECID_BATTLE_COUNT );
+        }
         return GFL_PROC_RES_FINISH;
       }
    }
