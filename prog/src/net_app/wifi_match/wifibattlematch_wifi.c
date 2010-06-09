@@ -2824,6 +2824,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
 
   case SEQ_START_OK_TIMING:
     WIFIBATTLEMATCH_NET_StartTiming( p_wk->p_net, WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK );
+    WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, TRUE );
     *p_seq  = SEQ_WAIT_OK_TIMING;
     break;
 
@@ -2894,6 +2895,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
+          WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_CupContinue );
           break;
 
@@ -2901,6 +2903,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
           DWC_RAPCOMMON_ResetSubHeapID();
           GFL_HEAP_DeleteHeap( HEAPID_WIFIBATTLEMATCH_SC );
 
+          WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
           WBM_SEQ_SetNext( p_seqwk, WbmWifiSeq_Err_ReturnLogin );
           break;
         }
@@ -2923,6 +2926,8 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
   case SEQ_END_MATCHING:
     if( p_wk->cnt++ > SELECTPOKE_MSG_WAIT_SYNC )
     { 
+      WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( p_wk->p_net, FALSE );
+
       p_wk->cnt = 0;
       p_param->result = WIFIBATTLEMATCH_CORE_RESULT_NEXT_BATTLE;
       WBM_SEQ_End( p_seqwk );

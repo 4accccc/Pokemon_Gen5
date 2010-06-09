@@ -265,6 +265,9 @@ extern void WIFIBATTLEMATCH_NET_StartMatchMakeDebug( WIFIBATTLEMATCH_NET_WORK *p
 //切断
 extern BOOL WIFIBATTLEMATCH_NET_SetDisConnect( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_force );
 
+//子機エラーチェック
+extern void WIFIBATTLEMATCH_NET_SetNoChildErrorCheck( WIFIBATTLEMATCH_NET_WORK *p_wk, BOOL is_on );
+
 //自分がキャンセル状態なことを相手へ通知
 extern BOOL WIFIBATTLEMATCH_NET_SendMatchCancel( WIFIBATTLEMATCH_NET_WORK *p_wk );
 extern BOOL WIFIBATTLEMATCH_NET_RecvMatchCancel( const WIFIBATTLEMATCH_NET_WORK *cp_wk );
