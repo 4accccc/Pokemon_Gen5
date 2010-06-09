@@ -17,7 +17,7 @@
 #define WIFIEARTH_SND_ZOMEIN      ( SEQ_SE_SYS_09 )    // ズームイン
 #define WIFIEARTH_SND_ZOMEOUT     ( SEQ_SE_SYS_10 )    // ズームアウト
 
-#define WIFIEARTH_SND_SELECT      ( SEQ_SE_SELECT1 )    // セレクト
+#define WIFIEARTH_SND_SELECT      ( SEQ_SE_DECIDE1 )    // セレクト
 #define WIFIEARTH_SND_XSELECT     ( SEQ_SE_DECIDE1 )    // xセレクト
 
 #define WIFIEARTH_SND_YAMERU      ( SEQ_SE_CANCEL1 )    // やめるをタッチ、Bキャンセル

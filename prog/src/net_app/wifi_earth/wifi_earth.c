@@ -961,19 +961,21 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       }
       Earth_BmpListDel(wk);//選択リスト削除処理
 
-      PMSND_PlaySE( WIFIEARTH_SND_SELECT );
 
       switch(list_result){
       default:
       case MENU_WORLD:  //「いちらん」
         *seq = EARTHDEMO_SEQ_EARTH_DISPON;  //３Ｄ地球儀モードＯＮへ
+        PMSND_PlaySE( WIFIEARTH_SND_SELECT );
         break;
       case MENU_REGISTRATION: //「とうろく」
         *seq = EARTHDEMO_SEQ_REGISTRATIONMENU;  //登録メニュー設定へ
+        PMSND_PlaySE( WIFIEARTH_SND_SELECT );
         break;
       case BMPMENULIST_CANCEL:
       case MENU_END:  //「やめる」
         *seq = EARTHDEMO_SEQ_END; //終了処理へ
+        PMSND_PlaySE( WIFIEARTH_SND_YAMERU );
         break;
       }
     }
@@ -1042,8 +1044,6 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       }
       Earth_BmpListDel(wk);//選択リスト削除処理
 
-      PMSND_PlaySE( WIFIEARTH_SND_SELECT );
-
       switch(list_result){
       default:
         {
@@ -1058,10 +1058,12 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
             *seq = EARTHDEMO_SEQ_FINAL_REGISTRATION;  //国地域登録最終確認へ
           }
         }
+        PMSND_PlaySE( WIFIEARTH_SND_SELECT );
         break;
       case BMPMENULIST_CANCEL:  //「いいえ」キャンセル
         //*seq = EARTHDEMO_SEQ_REGISTRATIONMENU;  //登録メニューへ
         *seq = EARTHDEMO_SEQ_MAINMENU;
+        PMSND_PlaySE( WIFIEARTH_SND_YAMERU );
         break;
       }
     }
@@ -1095,14 +1097,15 @@ static GFL_PROC_RESULT SubSeq_Main( EARTH_DEMO_WORK *wk, int *seq )
       }
       Earth_BmpListDel(wk);//選択リスト削除処理
 
-      PMSND_PlaySE( WIFIEARTH_SND_SELECT );
 
       switch(list_result){
       default:
         wk->my_area_tmp = list_result;      //地域登録
         *seq = EARTHDEMO_SEQ_FINAL_REGISTRATION;  //国地域登録最終確認へ
+        PMSND_PlaySE( WIFIEARTH_SND_SELECT );
         break;
       case BMPMENULIST_CANCEL://キャンセル
+        PMSND_PlaySE( WIFIEARTH_SND_YAMERU );
         if(wk->Japan_ROM_mode == TRUE){
           //*seq = EARTHDEMO_SEQ_REGISTRATIONMENU;  //登録メニューへ(日本版の場合)
           *seq = EARTHDEMO_SEQ_MAINMENU;
