@@ -183,7 +183,7 @@ struct _GAMESYNC_MENU {
   void* pVramOBJ;
   void* pVramBG;
   TIMEICON_WORK* pTimeIcon;
-
+  BOOL endStart;
   u32 cellRes[CEL_RESOURCE_MAX];
   GFL_CLWK* buttonObj[_SELECTMODE_MAX];
   GFL_CLUNIT	*cellUnit;
@@ -404,6 +404,7 @@ static void _lightPaletteMake(u16* pal, u16* PaletteTable, int num)
 
 static void _modeFadeoutStart(GAMESYNC_MENU* pWork)
 {
+  pWork->endStart=TRUE;
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
@@ -1496,6 +1497,11 @@ static GFL_PROC_RESULT GameSyncMenuProcMain( GFL_PROC * proc, int * seq, void * 
   GFL_BG_SetScroll( GFL_BG_FRAME0_S, GFL_BG_SCROLL_Y_SET, pWork->yoffset );
   pWork->yoffset--;
   GFL_CLACT_SYS_Main();
+
+  if(pWork->endStart==FALSE){
+    GAMESYSTEM_CommBootAlways(pWork->gsys);
+  }
+  
 
   if(GAMESYSTEM_IsBatt10Sleep(pWork->gsys)){
     retCode= GFL_PROC_RES_FINISH;
