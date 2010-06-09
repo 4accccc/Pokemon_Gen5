@@ -4432,13 +4432,6 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
     return GFL_PROC_RES_CONTINUE;
   }
 
-
-  
-
-
-
-
-  
   GFL_HEAP_FreeMemory(pWork->pVramOBJ);
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
@@ -4464,6 +4457,8 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   _mcssSystemHeapEnd(pWork);
   _dispSystemHeapEnd(pWork);
 
+  GF_ASSERT(pWork->pushSound == 0);
+  
   GFL_PROC_FreeWork(proc);
 #if PM_DEBUG
   GFL_HEAP_DEBUG_PrintExistMemoryBlocks(HEAPID_IRCBATTLE);

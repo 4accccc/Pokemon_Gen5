@@ -5396,6 +5396,8 @@ static int _childModeMatchMenuLoop( WIFIP2PMATCH_WORK *wk, int seq )
   }
   else if(GFL_NET_StateGetWifiStatus()==GFL_NET_STATE_MATCHED){  // ‘ŠŽè‚ÉÚ‘±‚µ‚½
 
+    WIFI_STATUS_ResetVChatMac(wk->pMatch);
+    _sendMatchStatus(wk);
     // ‚Q`‚Sl•åW‚Å‚È‚¢‚Æ‚«
     status = _WifiMyStatusGet( wk, wk->pMatch );
     {

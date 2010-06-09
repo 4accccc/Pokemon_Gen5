@@ -105,12 +105,27 @@ static void _setNextAnim(POKEMON_TRADE_WORK* pWork, int timer)
 
 static void _endBGM(POKEMON_TRADE_WORK* pWork)
 {
+  if(pWork->pushSound != 0){
+    PMSND_PopBGM();
+    pWork->pushSound--;
+    NET_PRINT("pWork->pushSound%d\n",pWork->pushSound);
+    PMSND_PauseBGM( FALSE );
+    PMSND_FadeInBGM( 60 );
+  }
+}
+
+static void _endBGM_NoStart(POKEMON_TRADE_WORK* pWork)
+{
   PMSND_PopBGM();
   pWork->pushSound--;
   NET_PRINT("pWork->pushSound%d\n",pWork->pushSound);
-  PMSND_PauseBGM( FALSE );
-  PMSND_FadeInBGM( 60 );
+//  PMSND_PauseBGM( FALSE );
+//  PMSND_FadeInBGM( 60 );
 }
+
+
+
+
 
 static void _endME(POKEMON_TRADE_WORK* pWork)
 {
@@ -759,8 +774,6 @@ static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork)
   IRCPOKETRADE_PokeDeleteMcss(pWork, 2);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 3);
 
-
-
   if(
     (pWork->type == POKEMONTRADE_TYPE_EVENT)||
     (pWork->type == POKEMONTRADE_TYPE_GTSMID) ||
@@ -857,7 +870,6 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
 {
   if(!pWork->pGameData){
     _CHANGE_STATE(pWork,_changeDemo_ModelTrade30); //ゲームデータの引渡しが無い場合セーブに行かない
-    return;
   }
   else{
     if(pWork->pParentWork){
@@ -884,14 +896,17 @@ static void _saveStart(POKEMON_TRADE_WORK* pWork)
         pWork->pParentWork->after_mons_no = after_mons_no;
         pWork->pParentWork->cond = cond;
         _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);   //進化しに行く
+        _endBGM_NoStart(pWork);
         return ;
       }
     }
+
     GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR_51, pWork->pMessageStrBuf );
     POKETRADE_MESSAGE_WindowOpen(pWork);
     POKETRADE_MESSAGE_WindowTimeIconStart(pWork);
     _CHANGE_STATE(pWork, _changeTimingSaveStart);
   }
+  _endBGM(pWork);
 }
 
 
@@ -997,7 +1012,7 @@ static void _changeDemo_ModelTrade30(POKEMON_TRADE_WORK* pWork)
   WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT ,
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
 
-  PMSND_FadeOutBGM( PMSND_FADE_FAST );
+//  PMSND_FadeOutBGM( PMSND_FADE_FAST );
   pWork->anmCount=0;
   pWork->bBackupStart = FALSE;
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade31);
@@ -1013,7 +1028,6 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
     return;
   }
 
-  _endBGM(pWork);
 
   GFL_DISP_GX_SetVisibleControlDirect( 0 );
   GFL_DISP_GXS_SetVisibleControlDirect( 0 );

@@ -33,7 +33,7 @@ static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_npc;
   u32 way;
 
-  OS_TPrintf("_playerDirectInit1Next %d\n",wk->friendNo);
+ // OS_TPrintf("_playerDirectInit1Next %d\n",wk->friendNo);
   
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //Ú‘±‹ÖŽ~
   if(!GFL_NET_IsParentMachine()){
@@ -70,11 +70,13 @@ static int _playerDirectInit1( WIFIP2PMATCH_WORK *wk, int seq )
 
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //Ú‘±‹ÖŽ~
   if(!GFL_NET_IsParentMachine()){
+    wk->state = WIFIP2PMATCH_STATE_TALK;
     _friendNameExpand(wk,  wk->friendNo - 1);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_083, FALSE);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT2);
   }
   else{
+    wk->state = WIFIP2PMATCH_STATE_RECV;
     _friendNameExpand(wk,  wk->friendNo - 1);
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1018, FALSE);
     WifiP2PMatchMessage_TimeIconStart(wk);
@@ -1988,7 +1990,7 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 {
-  //˜b‚µ‚©‚¯‚½‚Ù‚¤
+  
   if((WIFIP2PMATCH_STATE_TALK==wk->state) || (WIFIP2PMATCH_STATE_MACHINE_RECV==wk->state)){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
   }
