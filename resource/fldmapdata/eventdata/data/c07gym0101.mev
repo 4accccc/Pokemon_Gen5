@@ -1,5 +1,5 @@
 #event data
-#save date:2010/02/24 12:19:50
+#save date:2010/06/08 21:34:31
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\c07gym0101.wms
 #SECTION START:OBJ_EVENT
@@ -421,7 +421,7 @@ TR_KARATE_05
 #OBJ CODE Number
 FIGHTERM
 #MOVE CODE Number
-MV_UP
+MV_DOWN
 #EVENT TYPE Number
 EV_TYPE_TRAINER
 #Flag Name
@@ -429,7 +429,7 @@ EV_TYPE_TRAINER
 #Event Script Name
 SCRID_TRID_KARATE_05
 #Direction Type Number
-DIR_UP
+DIR_DOWN
 #Parameter 0 Number
 2
 #Parameter 1 Number
@@ -443,7 +443,7 @@ DIR_UP
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-488 48 -536
+504 48 -504
 #event number: 14
 #type
 1
