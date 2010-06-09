@@ -295,6 +295,7 @@ static void IRCi_Shutdown(BOOL isError)
 void IRC_Shutdown(void)
 {
     IRCi_Shutdown(FALSE); // エラーによるシャットダウンではない
+    IRCi_End();
 }
 
 /*---------------------------------------------------------------------------*
