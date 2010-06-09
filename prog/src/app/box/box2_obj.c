@@ -1461,7 +1461,8 @@ void BOX2OBJ_TrayPokeIconScroll( BOX2_SYS_WORK * syswk, s8 mv )
 			PokeIconChangeCore(
 				syswk->app, syswk->app->pokeicon_cgx[i], id, syswk->app->pokeicon_pal[i] );
 			BOX2OBJ_Vanish( syswk->app, id, syswk->app->pokeicon_exist[i] );
-			if( syswk->dat->callMode == BOX_MODE_ITEM || syswk->dat->callMode == BOX_MODE_SLEEP ){
+			if( syswk->app->jump_tray == 0 &&
+					( syswk->dat->callMode == BOX_MODE_ITEM || syswk->dat->callMode == BOX_MODE_SLEEP ) ){
 				BOX2OBJ_PokeIconBlendSetItem( syswk, i );
 			}
 		}

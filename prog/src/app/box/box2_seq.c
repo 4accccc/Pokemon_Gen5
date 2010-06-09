@@ -6511,6 +6511,7 @@ static int MainSeq_BoxThemaJumpInit( BOX2_SYS_WORK * syswk )
 {
 	switch( syswk->app->sub_seq ){
 	case 0:
+		syswk->app->jump_tray = 1;
 		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
 		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG1 );
 		BOX2MAIN_ResetTouchBar( syswk );
@@ -6636,6 +6637,7 @@ static int MainSeq_BoxThemaJumpExit( BOX2_SYS_WORK * syswk )
 {
 	switch( syswk->app->sub_seq ){
 	case 0:
+		syswk->app->jump_tray = 0;
 		BOX2OBJ_SetHandCursorOnOff( syswk, FALSE );
 		BOX2BMP_SysWinVanish( syswk->app, BOX2BMPWIN_ID_MSG2 );
 		BOX2MAIN_ResetTouchBar( syswk );

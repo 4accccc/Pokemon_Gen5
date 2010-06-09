@@ -373,6 +373,8 @@ typedef struct {
 	s8	wall_px;
 	u8	wall_area;
 
+	u8	jump_tray;			//「ジャンプする」でトレイを切り替える場合 = 1
+
 	u8	wallpaper_pos;	// 壁紙選択位置
 	u8	wp_menu;				// 壁紙メニュー番号
 	u8	wp_special;			// 追加壁紙フラグ
