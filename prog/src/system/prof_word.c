@@ -235,10 +235,6 @@ const BOOL PROF_WORD_CheckProfanityNumberCode( const STRCODE *strCode , const u1
     {
       cnt++;
     }
-    else
-    { 
-      cnt = 0;
-    }
 
     if( cnt > PROFANITY_NUMBER )
     { 
