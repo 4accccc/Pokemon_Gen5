@@ -305,6 +305,11 @@ static void SEATEMPLE_Update(FLDMAPFUNC_WORK* p_funcwk, FIELDMAP_WORK* p_fieldma
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_B ], MODEL_ANIME_OBON_B, FX32_ONE );
   GFL_G3D_OBJECT_LoopAnimeFrame( p_wk->p_obj[ MODEL_MODEL_OBON_C ], MODEL_ANIME_OBON_C, FX32_ONE );
 
+  // BTS:4679に対応　DoorOutイベント内でデフォルトカメラ設定にかえられてしまうため。
+  // マニュアルソートに変更
+  // field_camera内でも操作しているのでタイミングに注意！
+  GFL_G3D_SetSystemSwapBufferMode( GX_SORTMODE_MANUAL, GX_BUFFERMODE_W );
+
 #ifdef DEBUG_SEATEMPLE_DRAW_HAICHI
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_L )
   {
