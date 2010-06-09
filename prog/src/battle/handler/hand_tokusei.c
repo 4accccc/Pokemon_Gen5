@@ -4316,7 +4316,7 @@ static void handler_Namake_Get( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) ){
+    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_START) ){
       work[0] = 1;
     }
   }

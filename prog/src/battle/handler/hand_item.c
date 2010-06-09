@@ -2236,8 +2236,9 @@ static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TURNCHECK_END,     handler_MikuruNomi_TurnCheck  }, // ターンチェック
-    { BTL_EVENT_USE_ITEM,          handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
+//    { BTL_EVENT_TURNCHECK_END,         handler_MikuruNomi_TurnCheck  }, // ターンチェック
+    { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_TurnCheck  },
+    { BTL_EVENT_USE_ITEM,              handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2260,10 +2261,13 @@ static void handler_MikuruNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    u8 turns = (BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_START))? 2 : 1;
+
     BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
       param->pokeID = pokeID;
       param->sickID = WAZASICK_HITRATIO_UP;
-      param->sickCont = BPP_SICKCONT_MakeTurnParam( 1, 120 );
+      param->sickCont = BPP_SICKCONT_MakeTurnParam( turns, 120 );
       HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_HitRatioUpOnce );
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );

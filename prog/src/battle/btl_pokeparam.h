@@ -83,7 +83,8 @@ enum {
 //--------------------------------------------------------------
 typedef enum {
 
-  BPP_TURNFLG_ACTION_DONE,      ///< 行動した
+  BPP_TURNFLG_ACTION_START,     ///< 行動処理開始
+  BPP_TURNFLG_ACTION_DONE,      ///< 行動処理終了
   BPP_TURNFLG_DAMAGED,          ///< ダメージ喰らった
   BPP_TURNFLG_WAZAPROC_DONE,    ///< ワザ処理を修了した
   BPP_TURNFLG_SHRINK,           ///< ひるまされた

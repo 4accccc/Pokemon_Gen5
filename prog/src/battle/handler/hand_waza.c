@@ -5098,7 +5098,7 @@ static void handler_Dorobou( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
         if( BPP_GetItem(target) != ITEM_DUMMY_DATA )
         {
-          if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, target_pokeID) )
+          if( (!HandCommon_CheckCantStealPoke(flowWk, pokeID, target_pokeID)) )
           {
             BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
             BTL_HANDEX_PARAM_SET_EFFECT_IDX* effParam;
@@ -7701,6 +7701,7 @@ static void handler_Nagetukeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     if( (itemID == ITEM_DUMMY_DATA)
     ||  (BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_NAGETUKERU_ATC) == 0 )
     ||  (BPP_CheckSick(bpp, WAZASICK_SASIOSAE))
+    ||  (HandCommon_CheckCantChangeItemPoke(flowWk, pokeID))
     ){
       BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER);
     }
@@ -8502,16 +8503,12 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
         if( !BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
         {
           BTL_HANDEX_PARAM_KILL* kill_param;
-          BTL_HANDEX_PARAM_MESSAGE* msg_param;
 
           kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
             kill_param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+            HANDEX_STR_Setup( &kill_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MichidureDone );
+            HANDEX_STR_AddArg( &kill_param->exStr, pokeID );
           BTL_SVF_HANDEX_Pop( flowWk, kill_param );
-
-          msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-            HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MichidureDone );
-            HANDEX_STR_AddArg( &msg_param->str, pokeID );
-          BTL_SVF_HANDEX_Pop( flowWk, msg_param );
         }
       }
 
@@ -10159,6 +10156,8 @@ static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     if( (myItemID != ITEM_DUMMY_DATA)
     &&  (!ITEM_CheckMail(myItemID))
     &&  (BPP_GetItem(target) == ITEM_DUMMY_DATA)
+    &&  (!HandCommon_CheckCantChangeItemPoke(flowWk, pokeID))
+    &&  (!HandCommon_CheckCantChangeItemPoke(flowWk, targetPokeID))
     ){
       BTL_HANDEX_PARAM_SET_ITEM* param;
 

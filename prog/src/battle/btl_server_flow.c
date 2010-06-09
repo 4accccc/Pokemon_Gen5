@@ -1784,6 +1784,7 @@ static void ActOrder_Proc( BTL_SVFLOW_WORK* wk, ACTION_ORDER_WORK* actOrder )
       }
 
       scproc_ActStart( wk, bpp, actOrder->action.gen.cmd );
+      BPP_TURNFLAG_Set( bpp, BPP_TURNFLG_ACTION_START );
 
       switch( action.gen.cmd ){
       #ifdef ROTATION_NEW_SYSTEM
@@ -6008,7 +6009,6 @@ static void scproc_CheckShrink( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaP
 {
   u32 waza_per = scEvent_GetWazaShrinkPer( wk, wazaParam->wazaID, attacker );
 
-//  if( !BPP_TURNFLAG_Get(defender, BPP_TURNFLG_ACTION_DONE) )
   {
     scproc_AddShrinkCore( wk, defender, waza_per );
   }
