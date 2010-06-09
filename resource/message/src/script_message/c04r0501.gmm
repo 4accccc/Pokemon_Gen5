@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-24T18:53:11"/>
+	<create user="matsumiya" host="W00224" date="2010-06-09T15:31:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -309,11 +309,15 @@
 		<attribute name="キャラ指定">TRAINERM</attribute>
 		<language name="JPN" width="256">かいりきを　つかえる　ポケモンは
 たたかっていない　ときでも▽
-おおきな　いわを　おせるんだ！▽
+おおきな　いわを　おせるんだ！▼
+いわを　おしたければ
+１６ばんどうろに　いってみな！▽
 ドッスン！　ドッスン！</language>
 		<language name="JPN_KANJI" width="256">かいりきを　使える　ポケモンは
 戦っていない　ときでも▽
-大きな　岩を　押せるんだ！▽
+大きな　岩を　押せるんだ！▼
+岩を　押したければ
+１６番道路に　行ってみな！▽
 ドッスン！　ドッスン！</language>
 	</row>
 
