@@ -232,12 +232,12 @@ static void CommOekakiBoardReStart(
   
   MI_CpuClearFast( wk->canvas_buf, OEKAKI_GRAPHI_SIZE );
   
-  if(GFL_NET_SystemGetCurrentID()==0){
-    // 絵を共有した接続人数を更新
-    wk->shareNum = Union_App_GetMemberNum( wk->param->uniapp );
-    wk->shareBit = Union_App_GetMemberNetBit(wk->param->uniapp);
-    wk->banFlag  = OEKAKI_BAN_OFF;
-  }
+  // 絵を共有した接続人数を更新
+  wk->shareNum = Union_App_GetMemberNum( wk->param->uniapp );
+  wk->shareBit = Union_App_GetMemberNetBit(wk->param->uniapp);
+  wk->banFlag  = OEKAKI_BAN_OFF;
+  OS_Printf("shareBit更新=%d\n", wk->shareBit);
+
 }
 //==============================================================================
 /**

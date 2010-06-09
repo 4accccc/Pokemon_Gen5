@@ -1542,6 +1542,8 @@ static int Oekaki_NewMember( OEKAKI_WORK *wk, int seq )
     EndMessagePrint(wk, msg_oekaki_01, 0);
   }
   SetNextSequence( wk, OEKAKI_MODE_NEWMEMBER_WAIT );
+  // 選択肢表示中の場合は強制的に非表示に
+  OekakiResetYesNoWin(wk);
 
   PMSND_PlaySE(OEKAKI_NEWMEMBER_SE);
 
@@ -2160,13 +2162,10 @@ static int Oekaki_EndParentOnlyWait( OEKAKI_WORK *wk, int seq )
 static int Oekaki_LogoutChildMes( OEKAKI_WORK *wk, int seq )
 {
   // ●●●さんがかえりました
-//  if( EndMessageWait( wk ) ){
-//    //表示中のメッセージがある場合は強制停止
-//    //GF_STR_PrintForceStop(wk->MsgIndex);
-//    PRINTSYS_PrintStreamDelete( wk->printStream );
-//  }
-
   EndMessagePrint( wk, msg_oekaki_03, 1 );  
+  // 選択肢表示中の場合は強制的に非表示に
+  OekakiResetYesNoWin(wk);
+  
   SetNextSequence( wk, OEKAKI_MODE_LOGOUT_CHILD_WAIT );
   PMSND_PlaySE(OEKAKI_NEWMEMBER_SE);
 
@@ -3072,7 +3071,7 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
   if(num<wk->connectBackup){
     wk->shareNum = _get_connect_num(wk);
     wk->shareBit = _get_connect_bit(wk);
-    OS_TPrintf("接続人数が減ったのでshareNumを%d人に変更\n", _get_connect_num(wk));
+    OS_TPrintf("接続人数が減ったのでshareNumを%d人に変更 bit=%x\n", _get_connect_num(wk), wk->shareBit);
     /*乱入中フラグ成立している状態で、人数が減った*/
     if(wk->bookJoin){/*乱入予定ビットと比較し、それが落ちていた場合は、乱入者が電源を切ったとみなす*/
       if (!(wk->shareBit&wk->joinBit)){
@@ -3168,7 +3167,7 @@ static void OekakiResetYesNoWin(OEKAKI_WORK *wk)
 {
   if(wk->yesno_flag){
     if(wk->app_menuwork!=NULL){
-      APP_TASKMENU_CloseMenu( wk->app_menuwork );
+      YesNoMenuDelete( wk );
     }
     wk->yesno_flag = 0;
   }
@@ -3339,6 +3338,7 @@ static APP_TASKMENU_WORK  *YesNoMenuInit( OEKAKI_WORK *wk )
   
   OS_Printf("はい・いいえ開始\n");
   
+  wk->yesno_flag = TRUE;
   return menuwork;
 }
 
