@@ -151,6 +151,9 @@ void CTVT_MIC_Term( CTVT_MIC_WORK *micWork )
   CTVT_MIC_StopRecord( micWork );
 
   CTVT_MIC_PlayWaveTerm( micWork );
+  {
+    const u32 ret = PM_SetAmp(PM_AMP_OFF);
+  }
 
   GFL_NET_Align32Free( micWork->recBuffer );
   GFL_HEAP_FreeMemory( micWork );

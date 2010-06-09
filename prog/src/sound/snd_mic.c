@@ -145,7 +145,10 @@ void SND_MIC_Init( HEAPID heap_id )
 //-----------------------------------------------------------------------------
 void SND_MIC_Exit( void )
 {
+  u32 result;
   GF_ASSERT( sp_SndMic );
+
+  result = PM_SetAmp( PM_AMP_OFF );     //プログラマブルゲインアンプのスイッチOFF
 
   GFL_HEAP_FreeMemory( sp_SndMic->p_PerapBuff );
   GFL_HEAP_FreeMemory( sp_SndMic );

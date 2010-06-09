@@ -748,6 +748,10 @@ void myvct_free(void){
 
 		// VCTƒ‰ƒCƒuƒ‰ƒŠI—¹ˆ—
 		VCT_Cleanup();
+    {
+  		u32 ret;
+  		ret = PM_SetAmp(PM_AMP_ON);
+  	}
 
 		// ƒƒ‚ƒŠ‚ð‰ð•ú
 		DWC_RAPCOMMON_Free( 0, _vWork->pAudioBuffer,0 );
