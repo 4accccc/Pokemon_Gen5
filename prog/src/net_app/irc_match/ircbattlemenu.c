@@ -2181,11 +2181,13 @@ static GFL_PROC_RESULT IrcBattleMenuProcMain( GFL_PROC * proc, int * seq, void *
     GAMESYSTEM_CommBootAlways( IrcBattle_GetGAMESYS_WORK(pWork->dbw) );
   }
 
-  if(GAMESYSTEM_IsBatt10Sleep(IrcBattle_GetGAMESYS_WORK(pWork->dbw))){
-    retCode= GFL_PROC_RES_FINISH;
-    pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
-    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  if(WIPE_SYS_EndCheck()){
+    if(GAMESYSTEM_IsBatt10Sleep(IrcBattle_GetGAMESYS_WORK(pWork->dbw))){
+      retCode= GFL_PROC_RES_FINISH;
+      pWork->selectType = EVENTIRCBTL_ENTRYMODE_EXIT;
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+    }
   }
   
   return retCode;
