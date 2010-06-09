@@ -219,6 +219,9 @@ enum {
   FIELD_G3DOBJ_RES_MAX = 64,
   ///FLD_G3DOBJ オブジェクト最大
   FIELD_G3DOBJ_OBJ_MAX = 64,
+
+  ///メインビルボード　移りこみTフリップ　テクスチャT座標　補正値
+  FIELD_G3D_BBD_FLIP_TEX_OFFS_T = -(FX16_HALF+0x200),
 };
 
 ///g3Dutilで使用するリソースの最大設定可能数
@@ -2353,6 +2356,7 @@ static void fldmap_G3D_Load( FIELDMAP_WORK *fieldWork )
   {
     GFL_BBD_SYS * bbdsys = GFL_BBDACT_GetBBDSystem(fieldWork->mainBbdActSys);
     GFL_BBD_SetOrigin(bbdsys, GFL_BBD_ORIGIN_BOTTOM);
+    GFL_BBD_SetFlipTexOffs( bbdsys, 0, FIELD_G3D_BBD_FLIP_TEX_OFFS_T );
   }
   
   fieldWork->subBbdActSys = GFL_BBDACT_CreateSys(
