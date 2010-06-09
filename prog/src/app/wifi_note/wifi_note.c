@@ -468,7 +468,7 @@ enum{
 
 // プレイヤー表示位置（DATA_FListCursorDataないの位置データからのオフセット）
 #define FLIST_PLAYER_X    ( 8 )
-#define FLIST_PLAYER_Y    ( 6+CLACT_MAIN2_REND_Y_S32 )
+#define FLIST_PLAYER_Y    ( 10+CLACT_MAIN2_REND_Y_S32 )
 #define FLIST_PLAYER_PRI      ( 8 )
 #define FLIST_PLAYER_BGPRI      ( 1 )
 // ？表示位置（DATA_FListCursorDataないの位置データからのオフセット）
