@@ -564,7 +564,6 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
   wk->sinkaArcHandle = SHINKA_GetArcHandle( heapID );
 
   clearWorks( wk );
-  BTL_FIELD_Init( BTL_WEATHER_NONE );
 
   return wk;
 }
@@ -572,14 +571,14 @@ BTL_SVFLOW_WORK* BTL_SVFLOW_InitSystem(
 
 void BTL_SVFLOW_ResetSystem( BTL_SVFLOW_WORK* wk )
 {
-  BTL_EVENT_InitSystem();
-  BTL_FIELD_Init( BTL_WEATHER_NONE );
-
   clearWorks( wk );
 }
 
 static void clearWorks( BTL_SVFLOW_WORK* wk )
 {
+  BTL_EVENT_InitSystem();
+  BTL_FIELD_Init( BTL_WEATHER_NONE );
+
   BTL_WAZAREC_Init( &wk->wazaRec );
   BTL_DEADREC_Init( &wk->deadRec );
   {
@@ -13198,13 +13197,13 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
   }
 
   if( handEx_header->failSkipFlag && (fPrevSucceed == FALSE) ){
-    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_SVFL_HandExContFail );
+    BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_SVFL_HandExContFail );
     return;
   }
   if( handEx_header->autoRemoveFlag ){
     const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParamConst( wk->pokeCon, handEx_header->userPokeID );
     if( BPP_IsDead(bpp) ){
-      BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_SVFL_HandExContDead );
+      BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_SVFL_HandExContDead );
       return;
     }
   }
@@ -13273,7 +13272,7 @@ static void HandEx_Exe( BTL_SVFLOW_WORK* wk, BTL_HANDEX_PARAM_HEADER* handEx_hea
     GF_ASSERT_MSG(0, "illegal handEx type = %d, userPokeID=%d", handEx_header->equip, handEx_header->userPokeID);
   }
 
-  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_SVFL_HandExSetResult, fPrevSucceed );
+  BTL_N_PrintfEx( PRINT_CHANNEL_HEMSYS, DBGSTR_SVFL_HandExSetResult, fPrevSucceed );
   BTL_Hem_SetResult( &wk->HEManager, fPrevSucceed );
 }
 

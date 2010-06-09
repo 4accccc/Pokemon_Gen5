@@ -123,7 +123,7 @@ BTL_ADAPTER*  BTL_ADAPTER_Create( GFL_NETHANDLE* netHandle, u8 adapterID, BOOL f
   if( AdappterTable[adapterID] == NULL )
   {
     wk = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_ADAPTER) );
-    BTL_N_PrintfEx( DBGSTR_ADAPTER_Create, adapterID, fCommType);
+    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_ADAPTER_Create, adapterID, fCommType);
 
     wk->netHandle = netHandle;
     wk->myID = adapterID;

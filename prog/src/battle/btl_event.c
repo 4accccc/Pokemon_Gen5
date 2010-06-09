@@ -75,10 +75,11 @@ struct _BTL_EVENT_FACTOR {
   u32       sleepFlag        :  1;  ///< 休眠フラグ
   u32       tmpItemFlag      :  1;  ///< アイテム用一時利用フラグ
   u32       rmReserveFlag    :  1;  ///< 削除予約フラグ
-  u32       callingEventID   : 16;  ///< 反応中イベントID
+
   u32       recallEnableFlag : 1;   ///< 再帰呼び出し許可
   u32       addedCurrentFlag : 1;   ///< 現在処理中イベントによりAddされた
-  u32       _padd            : 14;
+  u32       existFlag        : 1;   ///< 現在処理中イベントによりAddされた
+  u32       _padd            : 29;
   int       work[ EVENT_HANDLER_WORK_ELEMS ];
   u16       subID;      ///< イベント実体ID。ワザならワザID, とくせいならとくせいIDなど
   u8        dependID;   ///< 依存対象物ID。ワザ・とくせい・アイテムならポケID、場所依存なら場所idなど。
@@ -92,8 +93,8 @@ struct _BTL_EVENT_FACTOR {
 static BTL_EVENT_FACTOR  Factors[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FactorStack[ FACTOR_REGISTER_MAX ];
 static BTL_EVENT_FACTOR* FirstFactorPtr;
-static u16 StackPtr;
-static u16 EventStackPtr;
+static u32 StackPtr;
+static u32 EventStackPtr;
 
 /**
 * イベント変数スタック
@@ -230,11 +231,12 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
   BTL_EVENT_FACTOR* newFactor;
 
   newFactor = pushFactor();
+  TAYA_Printf("NewFactorPtr=%p\n", newFactor);
   if( newFactor )
   {
     newFactor->priority = calcFactorPriority( mainPri, subPri );
 
-    BTL_N_PrintfEx( 3, DBGSTR_EVENT_AddFactorInfo, factorType, dependID, newFactor->priority, newFactor );
+    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_AddFactorInfo, factorType, dependID, newFactor->priority, newFactor );
 
     newFactor->factorType = factorType;
     newFactor->prev = NULL;
@@ -251,6 +253,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
     newFactor->rmReserveFlag = FALSE;
     newFactor->recallEnableFlag = FALSE;
     newFactor->addedCurrentFlag = (EventStackPtr != 0);
+    newFactor->existFlag = TRUE;
     if( isDependPokeFactorType(factorType) ){
       newFactor->pokeID = dependID;
     }else{
@@ -298,7 +301,7 @@ BTL_EVENT_FACTOR* BTL_EVENT_AddFactor( BtlEventFactorType factorType, u16 subID,
         newFactor->prev = last;
       }
     }
-    BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_AddFactor,
+    BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_AddFactor,
         newFactor, newFactor->dependID, newFactor->factorType, newFactor->priority );
     printLinkDebug();
     return newFactor;
@@ -367,10 +370,11 @@ void BTL_EVENT_FACTOR_Remove( BTL_EVENT_FACTOR* factor )
   }
 
 
-  BTL_N_PrintfEx( PRINT_LINK_FLAG, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType );
+  BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EV_DelFactor, factor, factor->dependID, factor->factorType,
+          factor->prev, factor->next );
   printLinkDebug();
-
   popFactor( factor );
+  TAYA_Printf("Factor[%p]'s existFlag=%d\n", factor, factor->existFlag );
 }
 //=============================================================================================
 /**
@@ -408,19 +412,6 @@ u16 BTL_EVENT_FACTOR_GetSubID( const BTL_EVENT_FACTOR* factor )
 u8 BTL_EVENT_FACTOR_GetPokeID( const BTL_EVENT_FACTOR* factor )
 {
   return factor->pokeID;
-}
-//=============================================================================================
-/**
- * 自分を呼び出しているイベントIDを取得
- *
- * @param   factor
- *
- * @retval  BtlEventType
- */
-//=============================================================================================
-BtlEventType BTL_EVENT_FACTOR_GetCallingEventID( const BTL_EVENT_FACTOR* factor )
-{
-  return factor->callingEventID;
 }
 //=============================================================================================
 /**
@@ -536,6 +527,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
     if( ( (factor->callingFlag == FALSE) || (factor->recallEnableFlag) )
     &&  ( factor->sleepFlag == FALSE )
     &&  ( factor->addedCurrentFlag == FALSE )
+    &&  ( factor->existFlag )
     &&  ( (eventID != BTL_EVENT_USE_ITEM_TMP) || (factor->tmpItemFlag == TRUE) )
     ){
       const BtlEventHandlerTable* tbl = factor->handlerTable;
@@ -547,7 +539,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
           if( !fSkipCheck || !check_handler_skip(flowWork, factor, eventID) )
           {
             factor->callingFlag = TRUE;
-            factor->callingEventID = eventID;
+            BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_CallFactorStart, factor, factor->dependID, factor->factorType );
             tbl[i].handler( factor, flowWork, factor->dependID, factor->work );
 
             if( factor->recallEnableFlag ){
@@ -558,7 +550,7 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
             // 呼び出し中に削除された
             if( factor->rmReserveFlag )
             {
-              BTL_N_PrintfEx( 3, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor );
+              BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_RmvFactorCalling, factor->dependID, factor );
               BTL_EVENT_FACTOR_Remove( factor );
             }
           }
@@ -569,11 +561,22 @@ static void CallHandlersCore( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID, B
     else
     {
       if( factor->callingFlag ){
-        BTL_N_PrintfEx( 3, DBGSTR_EVENT_SkipByCallingFlg, factor->dependID, factor );
+        BTL_N_PrintfEx( PRINT_CHANNEL_EVENTSYS, DBGSTR_EVENT_SkipByCallingFlg, factor->dependID, factor );
       }
     }
 
-    factor = next_factor;
+    if( next_factor != NULL )
+    {
+      if( next_factor->existFlag )
+      {
+        factor = next_factor;
+      }else{
+        factor = factor->next;
+      }
+    }
+    else{
+      break;
+    }
   }
 }
 /**
@@ -719,6 +722,7 @@ void BTL_EVENT_SleepFactor( BtlEventFactorType type, u16 subID )
 
 static BTL_EVENT_FACTOR* pushFactor( void )
 {
+  TAYA_Printf("EVENET StackPtr=%d\n", StackPtr);
   if( StackPtr == FACTOR_REGISTER_MAX )
   {
     return NULL;
@@ -741,7 +745,7 @@ static void popFactor( BTL_EVENT_FACTOR* factor )
 
 static void clearFactorWork( BTL_EVENT_FACTOR* factor )
 {
-  GFL_STD_MemClear( factor, sizeof(factor) );
+  GFL_STD_MemClear( factor, sizeof(*factor) );
 }
 
 static inline u32 calcFactorPriority( BtlEventPriority mainPri, u16 subPri )
