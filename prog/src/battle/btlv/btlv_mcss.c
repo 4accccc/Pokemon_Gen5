@@ -546,6 +546,9 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   GF_ASSERT_MSG( BTLV_MCSS_GetIndex( bmw, position ) == BTLV_MCSS_NO_INDEX, "pos=%d", position );
 
   bmw->btlv_mcss[ index ].status_flag = 0;
+  bmw->btlv_mcss[ index ].mepachi_always_flag = 0;
+  bmw->btlv_mcss[ index ].sick_set_flag       = 0;
+  bmw->btlv_mcss[ index ].effect_vanish_flag  = 0;
   bmw->btlv_mcss[ index ].mcss_proj_mode = bmw->proj;
 
   //—§‚¿ˆÊ’u‚ð•Û‘¶
