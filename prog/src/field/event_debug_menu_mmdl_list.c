@@ -24,6 +24,8 @@
 #include "field/fldmmdl.h"
 #include "event_debug_menu_mmdl_list.h"
 
+#include "fieldmap.h"
+#include "field_player.h"
 
 //======================================================================
 //  デバッグメニュー　動作モデル一覧
@@ -90,6 +92,8 @@ static const DEBUG_MENU_INITIALIZER DebugMMdlListData = {
 };
 
 
+//======================================================================
+//======================================================================
 //--------------------------------------------------------------
 /**
  * イベント：MMDL LIST
@@ -395,5 +399,155 @@ static void DEBUG_SetMenuWorkMMdlList(
 
   GFL_HEAP_FreeMemory( strBuf );
 }
+
+//======================================================================
+//======================================================================
+#include "item/itemsym.h" 
+#include "field_comm/mission_ng_check.cdat"
+
+static GMEVENT_RESULT debugMenuDisguiseListEvent(
+    GMEVENT *event, int *seq, void *wk );
+
+static void DEBUG_SetMenuWorkDisguiseList(
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work );
+
+static const DEBUG_MENU_INITIALIZER DebugDisguiseListData = {
+  NARC_debug_message_d_field_dat,
+  NELEMS(IntrudeOBJID_List),
+  NULL,
+  &DATA_DebugMenuList_MMdlList,
+  1, 1, 11, 16,
+  DEBUG_SetMenuWorkDisguiseList,
+  NULL,
+};
+
+//--------------------------------------------------------------
+/**
+ * イベント：MMDL LIST
+ * @param gsys
+ * @param wk DEBUG_MENU_EVENT_WORK*
+ * @return GMEVENT*
+ */
+//--------------------------------------------------------------
+GMEVENT * DEBUG_EVENT_DebugMenu_DisguiseList( GAMESYS_WORK *gsys, void* wk )
+{
+  DEBUG_MENU_EVENT_WORK* debug_work = wk;
+  GMEVENT*               event      = debug_work->gmEvent;
+  HEAPID                 heapID     = debug_work->heapID;
+  FIELDMAP_WORK*         fieldWork  = debug_work->fieldWork;
+  DEBUG_MMDLLIST_EVENT_WORK *work;
+
+  event = GMEVENT_Create( gsys, NULL,
+    debugMenuDisguiseListEvent, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
+
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_MMDLLIST_EVENT_WORK) );
+
+  work->gmSys     = gsys;
+  work->gmEvent   = event;
+  work->heapID    = heapID;
+  work->fieldWork = fieldWork;
+
+  {
+    GAMEDATA *gdata = GAMESYSTEM_GetGameData( gsys );
+    work->fldmmdlsys = GAMEDATA_GetMMdlSys( gdata );
+  }
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * イベント：動作モデル一覧
+ * @param event GMEVENT
+ * @param seq   シーケンス
+ * @param wk    event work
+ * @retval  GMEVENT_RESULT
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT debugMenuDisguiseListEvent(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_MMDLLIST_EVENT_WORK *work = wk;
+
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init( work->fieldWork, work->heapID,  &DebugDisguiseListData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+
+      if( ret != FLDMENUFUNC_CANCEL ){
+        //選択した
+        work->obj_code = ret;
+      } else {
+        //キャンセル
+        MYSTATUS * myst = GAMEDATA_GetMyStatus(GAMESYSTEM_GetGameData(work->gmSys));
+        if ( MyStatus_GetMySex(myst) == PM_MALE ) {
+          work->obj_code = HERO;
+        } else {
+          work->obj_code = HEROINE;
+        }
+      }
+
+      {
+        const VecFx32 offset_pos = {0,0,0};
+        FIELD_PLAYER *fld_player = FIELDMAP_GetFieldPlayer( work->fieldWork );
+
+        FIELD_PLAYER_ChangeOBJCode( fld_player, work->obj_code );
+        //連れ歩きポケモンはdraw_offsetをずらしているので変身後は初期化する
+        MMDL_SetVectorDrawOffsetPos( FIELD_PLAYER_GetMMdl(fld_player), &offset_pos );
+        if( work->obj_code == HERO || work->obj_code == HEROINE ) {
+          FIELD_PLAYER_ClearOBJCodeFix( fld_player );
+        }
+      }
+      (*seq) ++;
+      break;
+
+    case 2:
+        FLDMENUFUNC_DeleteMenu( work->menuFunc );
+        return( GMEVENT_RES_FINISH );
+      break;
+    }
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+
+//--------------------------------------------------------------
+/**
+ * 動作モデルリスト用BMP_MENULIST_DATAセット
+ * @param list  セット先BMP_MENULIST_DATA
+ * @param heapID  文字列バッファ確保用HEAPID
+ * @retval  nothing
+ */
+//--------------------------------------------------------------
+static void DEBUG_SetMenuWorkDisguiseList(
+    GAMESYS_WORK * gsys, FLDMENUFUNC_LISTDATA *list, HEAPID heapID, GFL_MSGDATA* msgData, void* cb_work )
+{
+  u16 *str;
+  int i, id,max;
+  STRBUF *strBuf = GFL_STR_CreateBuffer( DEBUG_OBJCODE_STR_LENGTH, heapID );
+
+  for( i = 0; i < NELEMS(IntrudeOBJID_List); i++ ){
+    id = IntrudeOBJID_List[i];
+    GFL_STR_ClearBuffer( strBuf );
+    str = DEBUG_GetOBJCodeStrBuf( heapID, id );
+    GFL_STR_SetStringCode( strBuf, str );
+    GFL_HEAP_FreeMemory( str );
+    FLDMENUFUNC_AddStringListData( list, strBuf, id, heapID );
+  }
+
+  GFL_HEAP_FreeMemory( strBuf );
+}
+
 
 #endif // PM_DEBUG 

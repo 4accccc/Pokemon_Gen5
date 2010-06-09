@@ -24,4 +24,5 @@ FS_EXTERN_OVERLAY( debug_menu_mmdl_list );
 //--------------------------------------------------------------
 extern GMEVENT * DEBUG_EVENT_DebugMenu_MmdlList( GAMESYS_WORK *gsys, void* wk );
 
+extern GMEVENT * DEBUG_EVENT_DebugMenu_DisguiseList( GAMESYS_WORK *gsys, void* wk );
 #endif // PM_DEBUG 

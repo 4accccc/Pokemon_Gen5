@@ -207,6 +207,7 @@ static BOOL debugMenuCallProc_ControlCamera( DEBUG_MENU_EVENT_WORK *wk );
 
 
 static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk );
+static BOOL debugMenuCallProc_DisguiseList( DEBUG_MENU_EVENT_WORK *wk );
 
 static BOOL debugMenuCallProc_ForceSave( DEBUG_MENU_EVENT_WORK *wk );
 
@@ -338,6 +339,7 @@ static const FLDMENUFUNC_LIST DATA_DebugMenuList[] =
   { DEBUG_FIELD_EVENT_CONTROL, debugMenuCallProc_EventFlagScript }, //イベント操作
   { DEBUG_FIELD_STR03, debugMenuCallProc_ScriptSelect },    //スクリプト実行
   { DEBUG_FIELD_STR13, debugMenuCallProc_MMdlList },        //モデルリスト
+  { DEBUG_FIELD_DISGUISE, debugMenuCallProc_DisguiseList },  //変装
   { DEBUG_FIELD_STR15, debugMenuCallProc_ControlLight },      //ライト
   { DEBUG_FIELD_STR16, debugMenuCallProc_WeatherList },       //てんき
   { DEBUG_FIELD_STR36, debugMenuCallProc_ControlFog },        //フォグ操作
@@ -1257,6 +1259,17 @@ static BOOL debugMenuCallProc_MMdlList( DEBUG_MENU_EVENT_WORK *wk )
   return( TRUE ); 
 }
 
+static BOOL debugMenuCallProc_DisguiseList( DEBUG_MENU_EVENT_WORK *wk )
+{
+  GMEVENT *event;
+
+  event = GMEVENT_CreateOverlayEventCall( wk->gmSys,
+    FS_OVERLAY_ID( debug_menu_mmdl_list ), DEBUG_EVENT_DebugMenu_DisguiseList, wk );
+
+  GMEVENT_ChangeEvent( wk->gmEvent, event );
+
+  return( TRUE ); 
+}
 
 //======================================================================
 //  デバッグメニュー　ライト操作
@@ -1731,7 +1744,7 @@ static BOOL debugMenuCallProc_FieldAveStressPalace( DEBUG_MENU_EVENT_WORK *wk )
 static BOOL debugMenuCallProc_FieldPosData( DEBUG_MENU_EVENT_WORK *wk )
 {
   FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( wk->fieldWork );
-  FIELD_DEBUG_SetPosPrint( debug );
+  FIELD_DEBUG_SetPrint( debug, FIELD_DEBUG_PRINT_TYPE_POSITION );
 
   return( FALSE );
 }
@@ -3704,6 +3717,12 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
   FIELDMAP_WORK* p_fieldWork = p_wk->fieldWork;
   HEAPID heapID = p_wk->heapID;
 
+  FIELD_DEBUG_WORK *debug = FIELDMAP_GetDebugWork( p_wk->fieldWork );
+  FIELD_DEBUG_SetPrint( debug, FIELD_DEBUG_PRINT_TYPE_MEMORY );
+
+  return( FALSE );
+
+#if 0
   GMEVENT_Change( p_event, debugMenuUseMemoryDump, sizeof(DEBUG_USEMEMORY_EVENT_WORK) );
   p_work = GMEVENT_GetEventWork( p_event );
   GFL_STD_MemClear( p_work, sizeof(DEBUG_USEMEMORY_EVENT_WORK) );
@@ -3770,6 +3789,7 @@ static BOOL debugMenuCallProc_UseMemoryDump( DEBUG_MENU_EVENT_WORK *p_wk )
       debugMenuWriteUseMemoryDump( p_work );
     }
   }
+#endif
 
   return( TRUE );
 }
