@@ -297,6 +297,12 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
         return;
       }
       else
+      if( camWork->allClearCnt < 192 )
+      {
+        //アニメ終わるまで待ち(基本全部NITROのみ
+        return;
+      }
+      else
       {
         u8 i;
         if( camWork->isRefreshClear == TRUE )
