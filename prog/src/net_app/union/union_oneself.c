@@ -3004,8 +3004,8 @@ static BOOL OneselfSeq_MinigameUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATIO
   case _SEQ_INTRUDE_INIT: //—“üŽž
     if(UnionSend_MinigameEntryReq(unisys) == TRUE){
       OS_TPrintf("ƒ~ƒjƒQ[ƒ€—“üŠó–]‘—M\n");
+      (*seq)++;
     }
-    (*seq)++;
     break;
   case _SEQ_INTRUDE_ANSWER_WAIT:
     switch(unisys->minigame_entry_answer){
