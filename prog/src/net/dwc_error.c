@@ -91,6 +91,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
     }
+    //マッチング系
     if( (cp_error->errorUser == ERRORCODE_TIMEOUT 
         || cp_error->errorUser == ERRORCODE_DISCONNECT )
         && is_timeout )
@@ -104,6 +105,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
                                         //解消する
       return GFL_NET_DWC_ERROR_RESULT_TIMEOUT;
     }
+    //システムエラー（ライト）系
     else if( cp_error->errorUser == ERRORCODE_CRC
         || cp_error->errorUser == ERRORCODE_SYSTEM 
         || cp_error->errorUser == ERRORCODE_SENDQUEUE)
@@ -121,6 +123,12 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
         NetErr_App_ReqErrorDisp();
         return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
       }
+    }
+    //システムエラー（ヘビー）系
+    else if( cp_error->errorUser == ERRORCODE_NHTTP )
+    {
+      NetErr_App_ReqErrorDisp();
+      return GFL_NET_DWC_ERROR_RESULT_RETURN_PROC;
     }
   }
 

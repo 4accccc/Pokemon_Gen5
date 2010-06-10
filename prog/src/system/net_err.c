@@ -223,7 +223,8 @@ void NetErr_Main(void)
           else if( cp_dwc_error->errorUser == ERRORCODE_CRC
               || cp_dwc_error->errorUser == ERRORCODE_SYSTEM 
               || cp_dwc_error->errorUser == ERRORCODE_SENDQUEUE
-              || cp_dwc_error->errorUser == ERRORCODE_USER_TIMEOUT )
+              || cp_dwc_error->errorUser == ERRORCODE_USER_TIMEOUT
+              || cp_dwc_error->errorUser == ERRORCODE_NHTTP)
           {
             //システムエラーならば
             //つうしんえらーがはっせい」
@@ -416,10 +417,6 @@ void NetErr_ErrorSet(void)
         nes->err_important_type  = NET_ERR_CHECK_LIGHT;
       }
       else
-      { 
-        nes->err_important_type  = NET_ERR_CHECK_HEAVY;
-      }
-      if( nes->wifi_error.errorUser == ERRORCODE_HEAP )
       { 
         nes->err_important_type  = NET_ERR_CHECK_HEAVY;
       }
