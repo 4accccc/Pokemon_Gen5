@@ -535,7 +535,7 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
     // MonsNo Waza引継ぎ
     monsno = PP_Get( pp, ID_PARA_monsno, NULL );
 
-    PP_SetupEx( pp, monsno, 
+    PP_SetupEx( pp, TRPOKE_AFTER_SV_GetTradeMonsNo( trpoke_sv, trade_type, GET_VERSION() ), 
         TRPOKE_AFTER_SV_GetLevel( trpoke_sv, trade_type ),
         TRPOKE_AFTER_SV_GetID( trpoke_sv, trade_type ),
         PTL_SETUP_POW_AUTO,
@@ -546,6 +546,11 @@ GMEVENT * EVENT_TradeAfterTrainerBattle(
       PP_Put( pp, ID_PARA_speabino, TRPOKE_AFTER_SV_GetSpeabino3( trpoke_sv, trade_type ) );
     }
     PP_Put( pp, ID_PARA_nickname_raw, (u32)TRPOKE_AFTER_SV_GetNickName( trpoke_sv, trade_type ) );
+    // 進化させる。
+    PP_ChangeMonsNo( pp, monsno );
+
+    // デフォルト技を設定
+    PP_SetWazaDefault( pp );
 
   }else{
 

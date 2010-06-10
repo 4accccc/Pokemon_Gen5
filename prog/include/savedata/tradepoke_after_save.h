@@ -81,9 +81,11 @@ extern const STRCODE* TRPOKE_AFTER_SV_GetNickName( const TRPOKE_AFTER_SAVE* sv, 
 extern u32 TRPOKE_AFTER_SV_GetID( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  ); // ID
 extern BOOL TRPOKE_AFTER_SV_IsSpeabino3( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  ); // 第３とくせい
 extern u8 TRPOKE_AFTER_SV_GetSpeabino3( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type  ); // 第３とくせい
+extern u32 TRPOKE_AFTER_SV_GetTradeMonsNo( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, u32 rom_version );// トレードポケモンナンバー
 
 //　設定
 extern void TRPOKE_AFTER_SV_SetData( TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, const POKEMON_PARAM * pp );
+
 
 
 

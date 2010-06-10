@@ -170,6 +170,38 @@ u8 TRPOKE_AFTER_SV_GetSpeabino3( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_
 
 //----------------------------------------------------------------------------
 /**
+ *	@brief  交換　モンスターナンバーを取得
+ *
+ *	@param	sv          ワーク
+ *	@param	type        トレードタイプ
+ *	@param	rom_version ROMバージョン
+ *
+ *	@return モンスターナンバー
+ */
+//-----------------------------------------------------------------------------
+u32 TRPOKE_AFTER_SV_GetTradeMonsNo( const TRPOKE_AFTER_SAVE* sv, TRPOKE_AFTER_SAVE_TYPE type, u32 rom_version )
+{
+  u32 monsno = MONSNO_533;
+  GF_ASSERT( type < TRPOKE_AFTER_SAVE_TYPE_MAX );
+  GF_ASSERT( (rom_version == VERSION_WHITE) || (rom_version == VERSION_BLACK) );
+
+  if( type == TRPOKE_AFTER_SAVE_C05 )
+  {
+    monsno = MONSNO_533;
+  }
+  else
+  {
+    if( rom_version == VERSION_BLACK ){
+      monsno = MONSNO_521;
+    }else{
+      monsno = MONSNO_517;
+    }
+  }
+  return monsno;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  固体乱数を取得
  *
  *	@param	sv      ワーク
