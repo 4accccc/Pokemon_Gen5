@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-10T12:22:43"/>
+	<create user="matsumiya" host="W00224" date="2010-06-10T13:55:55"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,7 +357,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1388" top="158" right="2093" bottom="786" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -4503,7 +4503,7 @@
 読み取るのが　うまい　人ね！▼
 あなたの　判断は　まわりも
 納得の　性格さ　だわ！▼
-さらに　寛大を　持てば
+さらに　寛大さを　持てば
 パーフェクトよ！▼
 司会『そんな　ゴチミル座の
 ラッキーアイテムは？▼
@@ -5781,7 +5781,7 @@ OHHHH！　バッチリ　おめかしした
 みんな　SEE YOU AGAIN！</language>
 		<language name="JPN_KANJI" width="256">ボブ『HI EVERYONE！▼
 今日の　『TRADE&apos;N TALK』では
-ボクが　よく　言われる　この▽
+ボクが　よく　いわれる　この▽
 一言を　紹介しよう！▼
 『冗談だろ！？』▼
 ボクの　周りには　ショッキングな
