@@ -18,6 +18,10 @@
 //==============================================================================
 //	定数定義
 //==============================================================================
+///パフォーマンスメーターの機能そのものの有効・無効
+#define PERFORMANCE_ENABLE      (FALSE)   //TRUE有効：FALSE無効
+
+
 ///メータータイプ
 enum{
 	METER_TYPE_START,	///<処理負荷開始メーター
@@ -126,24 +130,30 @@ typedef struct{
 #define  AVE_COUNT  (60)
 #define  AVE_PER_POS (128)
 
-//==============================================================================
-//	変数定義
-//==============================================================================
-///パフォーマンスシステムワーク
-static PERFORMANCE_SYSTEM pfm_sys;
-
 ///常時フィールドに負荷をかけるための擬似スキャンフラグ
 ///　※パフォーマンスと全然関係ないけど、このソースは常に常駐にあるので
 BOOL DebugScanOnly = FALSE;
+
+//==============================================================================
+//	変数定義
+//==============================================================================
+#if PERFORMANCE_ENABLE
+
+///パフォーマンスシステムワーク
+static PERFORMANCE_SYSTEM pfm_sys;
 
 //負荷を一時的にかけなくするフラグ
 BOOL DebugStressON[STRESS_ID_MAX] = {TRUE,TRUE};
 //パレスモード判定用
 BOOL DebugStressPalace = FALSE;
 
+#endif  //PERFORMANCE_ENABLE
+
 //==============================================================================
 //	データ
 //==============================================================================
+#if PERFORMANCE_ENABLE
+
 ///メーター表示座標Y
 static const s32 MeterPosY[] = {
 	192-16,			//PERFORMANCE_ID_MAIN
@@ -243,6 +253,8 @@ static const u8 performance_num[] = {
 	0xe0,0xc,0x0,0xc,0xc0,0x0,0x0,0x0,
 };
 
+#endif  //PERFORMANCE_ENABLE
+
 
 //==============================================================================
 //	プロトタイプ宣言
@@ -271,6 +283,7 @@ static void SetAveTestPalace(void);
 //--------------------------------------------------------------
 void DEBUG_PerformanceInit(void)
 {
+#if PERFORMANCE_ENABLE
 	GFL_STD_MemClear(&pfm_sys, sizeof(PERFORMANCE_SYSTEM));
 #if DEBUG_ONLY_FOR_none
   return;
@@ -278,6 +291,7 @@ void DEBUG_PerformanceInit(void)
   if( OS_GetConsoleType() & OS_CONSOLE_ISDEBUGGER ){
     pfm_sys.on_off = TRUE;	//デフォルトで表示ON
   }
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -289,6 +303,7 @@ void DEBUG_PerformanceInit(void)
 //--------------------------------------------------------------
 void DEBUG_PerformanceMain(void)
 {
+#if PERFORMANCE_ENABLE
 	int debugButtonTrg = GFL_UI_KEY_GetTrg() & (PAD_BUTTON_START | PAD_BUTTON_SELECT);
 	
 #if DEBUG_ONLY_FOR_none
@@ -307,6 +322,7 @@ void DEBUG_PerformanceMain(void)
 		}
 		DEBUG_PerformanceSetActive(TRUE);
 	}
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -318,6 +334,7 @@ void DEBUG_PerformanceMain(void)
 //--------------------------------------------------------------
 void DEBUG_PerformanceStartLine(PERFORMANCE_ID id)
 {
+#if PERFORMANCE_ENABLE
 	PFM_APP_WORK *app;
 	
 	GF_ASSERT(id < PERFORMANCE_ID_MAX);
@@ -333,6 +350,7 @@ void DEBUG_PerformanceStartLine(PERFORMANCE_ID id)
 	app->start_vcount = GX_GetVCount();
 	
 	Performance_Draw(METER_TYPE_START, id, app->start_vcount, app->start_vblank_count);
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -344,6 +362,7 @@ void DEBUG_PerformanceStartLine(PERFORMANCE_ID id)
 //--------------------------------------------------------------
 void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 {
+#if PERFORMANCE_ENABLE
 	PFM_APP_WORK *app;
 	u32 end_vblank_count;
 	BOOL peek_update;
@@ -362,6 +381,7 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 	if(id == PERFORMANCE_NUM_PRINT_ID && peek_update == TRUE){
 		Performance_Num(METER_TYPE_END, id, GX_GetVCount(), app->start_vblank_count, end_vblank_count);
 	}
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -373,6 +393,7 @@ void DEBUG_PerformanceEndLine(PERFORMANCE_ID id)
 //--------------------------------------------------------------
 void DEBUG_PerformanceSetActive(BOOL isActive)
 {
+#if PERFORMANCE_ENABLE
 #if DEBUG_ONLY_FOR_none
   return;
 #endif
@@ -384,6 +405,7 @@ void DEBUG_PerformanceSetActive(BOOL isActive)
 	if(isActive == FALSE){
 		Performance_AllOffOam();
 	}
+#endif  //PERFORMANCE_ENABLE
 }
 
 
@@ -406,6 +428,7 @@ void DEBUG_PerformanceSetActive(BOOL isActive)
 //--------------------------------------------------------------
 static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 start_v_blank_count, s32 end_v_blank_count)
 {
+#if PERFORMANCE_ENABLE
 	PFM_APP_WORK *app = &pfm_sys.app[id];
 	s32 num, calc_vcount, v_blank_count_offset, end_vcount;
 	u32 offset, anm_offset;
@@ -448,6 +471,7 @@ static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 
 		app->peek_num = num;
 		Performance_NumTrans(num, TRUE);
 	}
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -460,6 +484,7 @@ static void Performance_Num(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 
 //--------------------------------------------------------------
 static void Performance_NumTrans(s32 num, int peek_oam)
 {
+#if PERFORMANCE_ENABLE
 	u32 offset, anm_offset, first_touch = 0;
 	u32 vram_adrs;
 	s32 k;
@@ -533,6 +558,7 @@ static void Performance_NumTrans(s32 num, int peek_oam)
 			}
 		}
 	}
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -549,6 +575,7 @@ static void Performance_NumTrans(s32 num, int peek_oam)
 //--------------------------------------------------------------
 static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32 end_vblank_count)
 {
+#if PERFORMANCE_ENABLE
 	GXOamAttr *meter_oam;
 	GXOamEffect effect_type;
 	s32 x, char_no;
@@ -665,6 +692,9 @@ static BOOL Performance_Draw(int meter_type, PERFORMANCE_ID id, s32 v_count, u32
 #endif
 
 	return peek_update;
+#else
+  return FALSE;
+#endif  //PERFORMANCE_ENABLE
 }
 #if 0
 //--------------------------------------------------------------
@@ -800,6 +830,7 @@ static BOOL Performance_DrawAve(int meter_type, PERFORMANCE_ID id, s32 v_count, 
 //--------------------------------------------------------------
 static void Performance_CGXTrans(void)
 {
+#if PERFORMANCE_ENABLE
 	u32 offset, anm_offset;
 	
 	MeterCGX_OffsetGet(&offset, &anm_offset);
@@ -807,6 +838,7 @@ static void Performance_CGXTrans(void)
 	GFL_STD_MemCopy32(&performance_meter[0x20], (void*)(HW_OBJ_VRAM + offset + anm_offset), 0x20);
 	//パレット
 	GFL_STD_MemCopy16(&performance_meter_ncl, (void*)(HW_OBJ_PLTT + 0x20*METER_PALNO), 0x20);
+#endif
 }
 
 //--------------------------------------------------------------
@@ -819,6 +851,7 @@ static void Performance_CGXTrans(void)
 //--------------------------------------------------------------
 static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset)
 {
+#if PERFORMANCE_ENABLE
 	int objBank, obj_vram_mode;
 	
 	objBank = GX_GetBankForOBJ();
@@ -876,6 +909,7 @@ static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset)
 		break;
 	}
 	*offset -= (*anm_offset) * METER_ANM_PATERN;
+#endif  //PERFORMANCE_ENABLE
 }
 
 //--------------------------------------------------------------
@@ -885,6 +919,7 @@ static void MeterCGX_OffsetGet(u32 *offset, u32 *anm_offset)
 //--------------------------------------------------------------
 static void Performance_AllOffOam(void)
 {
+#if PERFORMANCE_ENABLE
 	int i;
 	GXOamAttr *meter_oam = &(((GXOamAttr *)HW_OAM)[127 - PERFORMANCE_ID_MAX*2 - 1 - NUM_HISTORY]);
 	
@@ -905,10 +940,12 @@ static void Performance_AllOffOam(void)
 		);
 		meter_oam++;
 	}
+#endif
 }
 
 void DEBUG_PerformanceSetStress(void)
 {
+#if PERFORMANCE_ENABLE
   OSTick start_tick;
   if ( !pfm_sys.AveTest ) return;
   start_tick = OS_GetTick();
@@ -936,20 +973,24 @@ void DEBUG_PerformanceSetStress(void)
     if ( !DebugStressON[STRESS_ID_MAP] ) NOZOMU_Printf("マップロード　ストレスオフ中\n");
     if ( !DebugStressON[STRESS_ID_SND] ) NOZOMU_Printf("サウンドロード　ストレスオフ中\n");
   }
+#endif  //PERFORMANCE_ENABLE
 }
 
 void DEBUG_PerformanceStartTick(int id)
 {
+#if PERFORMANCE_ENABLE
   AVERAGE_PRM *prm;
   prm = &pfm_sys.AvePrm[id];
 
   if ( !pfm_sys.AveTest ) return;
 
   prm->TickStart = OS_GetTick();
+#endif  //PERFORMANCE_ENABLE
 }
 
 void DEBUG_PerformanceEndTick(int id)
 {
+#if PERFORMANCE_ENABLE
   OSTick sub;
   AVERAGE_PRM *prm;
   prm = &pfm_sys.AvePrm[id];
@@ -1003,10 +1044,12 @@ void DEBUG_PerformanceEndTick(int id)
   DrawStress(METER_TYPE_END, PERFORMANCE_ID_MAIN, prm->AvePer );
   DrawStress(METER_TYPE_END, PERFORMANCE_ID_USER_A, prm->TopAvePer );
   DrawStress(METER_TYPE_END, PERFORMANCE_ID_USER_B, prm->TailAvePer );
+#endif  //PERFORMANCE_ENABLE
 }
 
 static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
 {
+#if PERFORMANCE_ENABLE
 	GXOamAttr *meter_oam;
 	GXOamEffect effect_type;
 	s32 x, char_no;
@@ -1087,17 +1130,21 @@ static void DrawStress(int meter_type, PERFORMANCE_ID id, int per )
     //グラフィック転送
 	  Performance_NumTrans(per, FALSE);
   }
+#endif  //PERFORMANCE_ENABLE
 }
 
 void DEBUG_PerformanceSetAveTest(BOOL palace)
 {
+#if PERFORMANCE_ENABLE
   if (palace) SetAveTestPalace();
   else SetAveTestNormal();
+#endif  //PERFORMANCE_ENABLE
 }
 
 //通常フィールド平均負荷
 static void SetAveTestNormal(void)
 {
+#if PERFORMANCE_ENABLE
   //パレスモード起動中なら・・
   if (DebugStressPalace)
   {
@@ -1123,11 +1170,13 @@ static void SetAveTestNormal(void)
 
   //パレスモードオフ
   DebugStressPalace = FALSE;
+#endif  //PERFORMANCE_ENABLE
 }
 
 //パレス平均負荷
 static void SetAveTestPalace(void)
 {
+#if PERFORMANCE_ENABLE
   //パレスモード起動中なら・・
   if (DebugStressPalace)
   {
@@ -1152,25 +1201,30 @@ static void SetAveTestPalace(void)
   }
   //パレスモードオン
   DebugStressPalace = TRUE;
+#endif  //PERFORMANCE_ENABLE
 }
 
 
 void DEBUG_PerformanceSetTopFlg(const u8 inTop)
 {
+#if PERFORMANCE_ENABLE
   AVERAGE_PRM *prm;
   prm = &pfm_sys.AvePrm[PERFORMANCE_ID_MAIN];
 
   prm->Top = inTop;
+#endif  //PERFORMANCE_ENABLE
 }
 
 void DEBUG_PerformanceStressON(BOOL flg, STRESS_ID id)
 {
+#if PERFORMANCE_ENABLE
   DebugStressON[id] = flg;
   if (!flg)
   {
     //パレスなら常に負荷がかかるのでON
     if (DebugStressPalace) DebugStressON[id] = TRUE;
   }
+#endif  //PERFORMANCE_ENABLE
 }
 
 #endif //PM_DEBUG
