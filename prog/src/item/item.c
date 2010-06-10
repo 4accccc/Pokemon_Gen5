@@ -857,21 +857,17 @@ BOOL ITEM_CheckEnable( u16 item )
   return (ItemDataIndex[item].arc_cgx != NARC_item_icon_item_dumy_NCGR);
 }
 
-
 //--------------------------------------------------------------------------------------------
 /**
- * アイテムID -> ボールID 変換
+ * アイテムID ⇔ ボールID 変換
  *
- * @param   itemID    アイテムID
- *
- * @retval  BALL_ID   ボールID（指定されたアイテムIDがボール以外の場合、BALLID_NULL）
+ * @param   value    アイテムNo or BallID
  */
 //--------------------------------------------------------------------------------------------
-BALL_ID ITEM_GetBallID( u16 itemID )
+static u16 item_ConvBallItemID( u16 value, BOOL mode )
 {
-  static const struct {
-    u16 itemID;
-    u16 ballID;
+   static const struct {
+    u16 id[2];
   }convertTbl[] = {
     { ITEM_MASUTAABOORU,  BALLID_MASUTAABOORU   }, //01 マスターボール
     { ITEM_HAIPAABOORU,   BALLID_HAIPAABOORU    }, //02 ハイパーボール
@@ -903,10 +899,38 @@ BALL_ID ITEM_GetBallID( u16 itemID )
   u32 i;
   for(i=0; i<NELEMS(convertTbl); ++i)
   {
-    if( convertTbl[i].itemID == itemID ){
-      return convertTbl[i].ballID;
+    if( convertTbl[i].id[mode] == value ){
+      return convertTbl[i].id[mode^1];
     }
   }
-  return BALLID_NULL;
+  return 0; 
 }
+
+//--------------------------------------------------------------------------------------------
+/**
+ * アイテムID -> ボールID 変換
+ *
+ * @param   item    アイテムNo
+ *
+ * @retval  BALL_ID   ボールID（指定されたアイテムIDがボール以外の場合、BALLID_NULL）
+ */
+//--------------------------------------------------------------------------------------------
+BALL_ID ITEM_GetBallID( u16 item )
+{
+  return item_ConvBallItemID( item, 0);
+}
+
+//--------------------------------------------------------------------------------------------
+/**
+ * ボールID -> アイテムNo 変換
+ *
+ * @param   BALL_ID   ボールID
+ * @retval  itemID    アイテムNo（指定されたアイテムIDがボール以外の場合、ITEM_DUMMY_DATA
+ */
+//--------------------------------------------------------------------------------------------
+u16 ITEM_BallID2ItemID( BALL_ID ballID )
+{
+  return item_ConvBallItemID( ballID, 1);
+}
+
 
