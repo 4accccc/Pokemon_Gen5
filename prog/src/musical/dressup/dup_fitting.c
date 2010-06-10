@@ -1276,7 +1276,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
       work->itemStateBase[work->totalItemNum].isOutList = FALSE;
       work->itemStateBase[work->totalItemNum].isNew = FALSE;
 #ifdef PM_DEBUG
-      if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+      if( GFUser_GetPublicRand0(2) == 0 )
       {
         work->itemStateBase[work->totalItemNum].isNew = TRUE;
       }
@@ -3075,10 +3075,43 @@ static const u16 DUP_FIT_CalcSortPriority( FITTING_WORK *work , ITEM_STATE *item
 {
   const BOOL isMainPos = MUS_ITEM_DRAW_CheckMainPosUserDataItemNo(work->itemDrawSys , itemState->itemId , uPos );
   const BOOL isTrgPos = MUS_ITEM_DRAW_CanEquipPosUserDataItemNo(work->itemDrawSys , itemState->itemId , uPos );
-  return ( isTrgPos == TRUE  ? 3000 : 0 ) +
-         ( itemState->isNew  ? 2000 : 0 ) +
-         ( (isMainPos==TRUE && itemState->isNew==FALSE) ? 1000 : 0 ) +
-         ( 999 - itemState->itemId );
+  
+  u16 baseNo;
+  if( isMainPos==TRUE )
+  {
+    if( itemState->isNew == TRUE )
+    {
+      baseNo = 6000;
+    }
+    else
+    {
+      baseNo = 5000;
+    }
+  }
+  else
+  if( isTrgPos == TRUE )
+  {
+    if( itemState->isNew == TRUE )
+    {
+      baseNo = 4000;
+    }
+    else
+    {
+      baseNo = 3000;
+    }
+  }
+  else
+  {
+    if( itemState->isNew == TRUE )
+    {
+      baseNo = 2000;
+    }
+    else
+    {
+      baseNo = 1000;
+    }
+  }
+  return baseNo + ( 999 - itemState->itemId );
 
   //•\¦‡
   // New + Trg(+Main)
