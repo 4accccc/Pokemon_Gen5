@@ -254,9 +254,11 @@ static void StartBeaconScan( void ); // 一時停止を解除する
 static BOOL CheckSaveNow( const FIELD_SOUND* fieldSound );
 
 // デバッグ
+#ifdef DEBUG_PRINT_ON
 static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound );
 static void DebugPrint_pushedBGM( const FIELD_SOUND* fieldSound );
 static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound );
+#endif
 
 //常駐SE判定のためのコールバック関数
 static BOOL checkEnableSE( u32 sndIndex );
@@ -1194,13 +1196,10 @@ void RegisterNewRequest( FIELD_SOUND* fieldSound, const FSND_REQUEST_DATA* reque
   fieldSound->requestData[ addPos ] = *requestData;
   fieldSound->requestTailPos = (addPos + 1) % REQUEST_QUEUE_SIZE;
 
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: Regist new request\n" );
-#endif
-
-  // DEBUG: キューの状態を出力
   DebugPrint_RequestQueue( fieldSound );
+#endif
 }
 
 //---------------------------------------------------------------------------------
@@ -1261,13 +1260,10 @@ void RemoveHeadRequest( FIELD_SOUND* fieldSound )
   fieldSound->requestData[ delPos ].request = FSND_BGM_REQUEST_NONE;
   fieldSound->requestHeadPos = (delPos + 1) % REQUEST_QUEUE_SIZE;
 
-  // DEBUG:
 #ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: Remove head request\n" );
-#endif
-
-  // DEBUG: キューの状態を出力
   DebugPrint_RequestQueue( fieldSound );
+#endif
 } 
 
 //---------------------------------------------------------------------------------
@@ -2588,6 +2584,7 @@ static BOOL CheckSaveNow( const FIELD_SOUND* fieldSound )
   return GAMEDATA_GetIsSave( fieldSound->gameData );
 }
 
+#ifdef DEBUG_PRINT_ON
 //---------------------------------------------------------------------------------
 /**
  * @brief リクエストキューを表示する
@@ -2600,9 +2597,7 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
   int pos;
   const FSND_REQUEST_DATA* requestData;
 
-#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "FIELD-SOUND-QUEUE: " );
-#endif
 
   // 先頭リクエスト取得
   pos = fieldSound->requestHeadPos;
@@ -2610,7 +2605,6 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
 
   while( requestData->request != FSND_BGM_REQUEST_NONE )
   {
-#ifdef DEBUG_PRINT_ON
     switch( requestData->request ) {
     case FSND_BGM_REQUEST_FADE_IN:     OS_TFPrintf( PRINT_NO, "FADE IN" );  break;
     case FSND_BGM_REQUEST_FADE_OUT:    OS_TFPrintf( PRINT_NO, "FADE OUT" );  break;
@@ -2621,7 +2615,6 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
     case FSND_BGM_REQUEST_FORCE_PLAY:  OS_TFPrintf( PRINT_NO, "FORCE_PLAY" );  break;
     }
     OS_TFPrintf( PRINT_NO, " | " );
-#endif
 
     // 次のリクエストへ
     pos = (pos + 1) % REQUEST_QUEUE_SIZE;
@@ -2630,10 +2623,7 @@ static void DebugPrint_RequestQueue( const FIELD_SOUND* fieldSound )
     // 一周した
     if( pos == fieldSound->requestHeadPos ){ break; }
   }
-
-#ifdef DEBUG_PRINT_ON
   OS_TFPrintf( PRINT_NO, "\n" );
-#endif
 }
 
 //---------------------------------------------------------------------------------
@@ -2682,3 +2672,4 @@ static void DebugPrint_AllInfo( const FIELD_SOUND* fieldSound )
   DebugPrint_pushedBGM( fieldSound );
   DebugPrint_RequestQueue( fieldSound );
 }
+#endif

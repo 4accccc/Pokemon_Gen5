@@ -542,9 +542,6 @@ static GMEVENT_RESULT EVENT_FUNC_PokeSelect(GMEVENT * event, int * seq, void * w
     }
     else  // 未対応な項目を選択
     {
-      OBATA_Printf( "----------------------------------------------------\n" );
-      OBATA_Printf( "ポケモン選択イベント: 未対応な項目が選択されました。\n" );
-      OBATA_Printf( "----------------------------------------------------\n" );
       *seq = SEQ_END;
     }
     break;
