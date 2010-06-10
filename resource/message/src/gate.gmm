@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-06-10T17:09:31"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-10T17:39:18"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="6" top="112" right="711" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -583,7 +583,7 @@
 
 	<row id="msg_gate_c3_01" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報1</comment>
-		<language name="JPN" width="256">◇かくれためいぶつ　ヒウンアイスが　ブームになっています</language>
+		<language name="JPN" width="256">◇かくれためいぶつ　ヒウンアイスが　いま　ブームになっています</language>
 		<language name="JPN_KANJI" width="256">◇隠れた名物　ヒウンアイスが　今　ブームになっています</language>
 	</row>
 
@@ -620,7 +620,7 @@
 	<row id="msg_gate_c3_07" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報7</comment>
 		<language name="JPN" width="256">◇ヒウンシティの　まちなみは　ひるとよるとで　まるでちがってみえます</language>
-		<language name="JPN_KANJI" width="256">◇ヒウンシティの　街並みは　昼と夜で　まるで違って見えます</language>
+		<language name="JPN_KANJI" width="256">◇ヒウンシティの　街並みは　昼と夜とで　まるで違って見えます</language>
 	</row>
 
 	<row id="msg_gate_c3_08" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
