@@ -1568,6 +1568,9 @@ static void _Print_DrawPokeStatusBmpWin(WIFIP2PMATCH_WORK *wk, const POKEPARTY *
   party_max = PokeParty_GetPokeCount(party);
   for(i = 0; i < party_max; i++){
     pp = PokeParty_GetMemberPointer(party, i);
+    //タマゴチェック  20100610 add Saito
+    if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) ) continue;
+
     monsno = PP_Get( pp, ID_PARA_monsno, NULL);
     nidoran_nickname = PP_Get(pp, ID_PARA_nidoran_nickname, NULL);
     level = PP_Get( pp, ID_PARA_level, NULL);

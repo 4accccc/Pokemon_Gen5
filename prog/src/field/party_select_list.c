@@ -290,7 +290,7 @@ BOOL PARTY_SELECT_LIST_Main(PARTY_SELECT_LIST_PTR psl)
       if(menu_ret != FLDMENUFUNC_NULL){
         _Print_DelMenuList(psl);
 //        _Print_DelPokeStatusBmpWin(psl); 20100527 del saito
-        _PokeStatusErase(psl);              //20100527 add satio
+        _PokeStatusErase(psl);              //20100527 add saito
         _Print_DelTalkWin(psl);
         switch(menu_ret){
         case FLDMENUFUNC_NULL:
@@ -948,6 +948,9 @@ static void _Print_DrawPokeStatusBmpWin(PARTY_SELECT_LIST_PTR psl, const POKEPAR
   party_max = PokeParty_GetPokeCount(party);
   for(i = 0; i < party_max; i++){
     pp = PokeParty_GetMemberPointer(party, i);
+    //タマゴチェック  20100610 add Saito
+    if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) ) continue;
+
     monsno = PP_Get( pp, ID_PARA_monsno, NULL);
     nidoran_nickname = PP_Get(pp, ID_PARA_nidoran_nickname, NULL);
     level = PP_Get( pp, ID_PARA_level, NULL);
