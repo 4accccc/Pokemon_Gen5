@@ -4907,7 +4907,7 @@ static void handler_SizenNoMegumi_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+    BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
       param->fNoAction = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
@@ -7755,7 +7755,7 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     if( itemID != ITEM_DUMMY_DATA )
     {
       BTL_HANDEX_PARAM_CONSUME_ITEM* item_param;
-        item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+        item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
 //        item_param->pokeID = pokeID;
 //        item_param->itemID = ITEM_DUMMY_DATA;
         item_param->fNoAction = TRUE;
