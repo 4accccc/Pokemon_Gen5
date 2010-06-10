@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nakatsui" host="DB5YGPBX" date="2010-06-09T23:17:35"/>
+	<create user="matsumiya" host="W00224" date="2010-06-10T22:16:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="162" top="311" right="755" bottom="703" maximized="no" rayout="Vertical2">
+	<dialog left="162" top="40" right="755" bottom="703" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="585"/>
@@ -8661,10 +8661,8 @@
 あなたがたと　ポケモンの
 たぐいまれなる　コンビネーション▽
 ひじょうに　すばらしいです▼
-そう！　ポケモンと　ポケモン
-ポケモンと　ひと▽
-そして……▽
-ひとと　ひとの　くみあわせは▼
+そう！　じぶんと
+じぶんいがいの　くみあわせは▼
 じぶんが　そなえている　いじょうの
 エネルギーを　うみだす▽
 さいこうの　エンジン！▼
@@ -8677,10 +8675,8 @@
 あなたがたと　ポケモンの
 類まれなる　コンビネーション▽
 非常に　すばらしいです▼
-そう！　ポケモンと　ポケモン
-ポケモンと　人▽
-そして……▽
-人と　人の　組み合わせは▼
+そう！　自分と
+自分以外の　組み合わせは▼
 自分が　備えている　以上の
 エネルギーを　生みだす▽
 最高の　エンジン！▼
