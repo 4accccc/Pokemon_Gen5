@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-06-09T22:12:05"/>
+	<create user="ohmori" host="W00223" date="2010-06-10T23:03:32"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1368,11 +1368,11 @@ w=トレーナー女子（相手が）
 １=相手がカワイイポケモンのメッセージ（自分が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
 		<language name="JPN" width="256">キュン！
-キューン！！▽
-なんだか　がんばってるみたい！</language>
+キューン！▽
+あいては　やるきいっぱいだ！</language>
 		<language name="JPN_KANJI" width="256">キュン！
-キューン！！▽
-なんだか　がんばってるみたい！</language>
+キューン！▽
+相手は　やる気いっぱいだ！</language>
 	</row>
 
 	<row id="mis_nom_01_t2" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1380,11 +1380,11 @@ w=トレーナー女子（相手が）
 ２＝怖いポケモンのメッセージ（自分が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
 		<language name="JPN" width="256">ギャオ！
-ギャオギャオ！！▽
-なんだか　がんばってるみたい！</language>
+ギャオギャオ！▽
+あいては　やるきいっぱいだ！</language>
 		<language name="JPN_KANJI" width="256">ギャオ！
-ギャオギャオ！！▽
-なんだか　がんばってるみたい！</language>
+ギャオギャオ！▽
+相手は　やる気いっぱいだ！</language>
 	</row>
 
 	<row id="mis_nom_01_t3" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1392,11 +1392,11 @@ w=トレーナー女子（相手が）
 ３=無口なポケモンのメッセージ（自分が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ</comment>
 		<language name="JPN" width="256">……！
-……　……！！▽
-なんだか　がんばってるみたい！</language>
+……　……！▽
+あいては　やるきいっぱいだ！</language>
 		<language name="JPN_KANJI" width="256">……！
-……　……！！▽
-なんだか　がんばってるみたい！</language>
+……　……！▽
+相手は　やる気いっぱいだ！</language>
 	</row>
 
 	<row id="mis_nom_01_t4" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1405,10 +1405,10 @@ w=トレーナー女子（相手が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『よう！
-きみも　いっしょに　ミッションしない？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『よう！
-君も　いっしょに　ミッションしない？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
+がんばってるかい？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
+がんばってるかい？</language>
 	</row>
 
 	<row id="mis_nom_01_t5" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1417,36 +1417,48 @@ w=トレーナー女子（相手が）
 ミッションをしていない相手と話したとき、ミッションしてない側のセリフ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『あ！
-きみも　いっしょに　ミッションしようよ！</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『あ！
-君も　いっしょに　ミッションしようよ！</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
+がんばってる？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
+がんばってる？</language>
 	</row>
 
-	<row id="mis_nom_01_m1" back-color="#008000,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_nom_01_m1" back-color="#008000,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>
 １=カワイイポケモンのメッセージ（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
 ※ミッションしていない人は、ポケモンにならない。</comment>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
+		<language name="JPN" width="256">キュン！
+キューン！▽
+あいては　やるきいっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">キュン！
+キューン！▽
+相手は　やる気いっぱいだ！</language>
 	</row>
 
-	<row id="mis_nom_01_m2" back-color="#008000,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_nom_01_m2" back-color="#008000,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>
 ２＝怖いポケモンのメッセージ（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
 ※ミッションしていない人は、ポケモンにならない。</comment>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
+		<language name="JPN" width="256">ギャオ！
+ギャオギャオ！▽
+あいては　やるきいっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">ギャオ！
+ギャオギャオ！▽
+相手は　やる気いっぱいだ！</language>
 	</row>
 
-	<row id="mis_nom_01_m3" back-color="#008000,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
+	<row id="mis_nom_01_m3" back-color="#008000,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>３=無口なポケモンのメッセージ（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
 ※ミッションしていない人は、ポケモンにならない。</comment>
-		<language name="JPN" width="256">ー</language>
-		<language name="JPN_KANJI" width="256">ー</language>
+		<language name="JPN" width="256">……！
+……　……！▽
+あいては　やるきいっぱいだ！</language>
+		<language name="JPN_KANJI" width="256">……！
+……　……！▽
+相手は　やる気いっぱいだ！</language>
 	</row>
 
 	<row id="mis_nom_01_m4" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1454,12 +1466,10 @@ w=トレーナー女子（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『おー！
-がんばってるね！▽
-ぼくも　ミッション　やってみようかな？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『おー！
-がんばってるね！▽
-ぼくも　ミッション　やってみようかな？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『やあ！
+がんばってるかい？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『やあ！
+がんばってるかい？</language>
 	</row>
 
 	<row id="mis_nom_01_m5" back-color="#008000,,,#ffff80,,,,,,,,,,,,,,">
@@ -1467,12 +1477,10 @@ w=トレーナー女子（相手が）
 ミッションをしていない相手と話したとき、ミッション側のセリフ
 
 [1:00:トレーナー名:0]＝相手の名前</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]『おー！
-がんばってるね！▽
-わたしも　ミッション　やってみようかな？</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『おー！
-がんばってるね！▽
-わたしも　ミッション　やってみようかな？</language>
+		<language name="JPN" width="256">[1:00:トレーナー名:0]『えへへ！
+がんばってる？</language>
+		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]『えへへ！
+がんばってる？</language>
 	</row>
 
 	<row id="mis_sleep_01_t1" back-color="#c0c0c0,,,#c0c0c0,,#c0c0c0,,,,,,#c0c0c0,,,,,,">
