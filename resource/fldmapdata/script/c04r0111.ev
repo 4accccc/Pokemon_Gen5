@@ -302,7 +302,7 @@ sub_challenge_continue_comm_multi:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
 
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
     _RET
@@ -314,7 +314,7 @@ sub_challenge_continue_comm_multi:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
     _RET
@@ -394,7 +394,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _SYSWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -406,7 +406,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -475,7 +475,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -487,7 +487,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -538,7 +538,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -550,7 +550,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -637,7 +637,7 @@ sub_challenge_continue_comm_multi_ok:
   //通信エラーチェック
   _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
   
-  IF $comm_ret == FALSE THEN
+  IF $comm_ret == TRUE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade
     _CALL sub_challenge_continue_comm_error_retmap
@@ -734,15 +734,15 @@ sub_mapchg_receipt:
   _CALL sub_demo_train_starting
     
   //ワーク開放
-//_BSUBWAY_WORK_RELEASE()
-    
+  _BSUBWAY_WORK_RELEASE()
+  
   //フラグセット
   _FLAG_SET( FV_C04R0111_PARTNER )
   _FLAG_SET( FV_C04R0111_NPC )
-
+  
   //ホーム制御　無しに
   $WK_OTHER_BSUBWAY_HOME = BSWAY_SCENE_HOME_NON
-    
+  
   //受付へと戻る
   _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
 }
@@ -762,6 +762,7 @@ sub_mapchg_receipt_comm_multi:
   //送信前同期
   _BSUBWAY_TOOL( BSWSUB_COMM_TIMSYNC, BSW_COMM_MULTI_HOME_MENU_SELECT, BSW_NULL, comm_ret )
   
+  
   IF $comm_ret == FALSE THEN
     _MSGWIN_CLOSE()
     _CALL sub_common_comm_error_end_reqfade //エラー切断
@@ -769,6 +770,7 @@ sub_mapchg_receipt_comm_multi:
     $LOCALWORK0 = BSWAY_COMM_HOME_SEL_END //戻る
     _BSUBWAY_TOOL( BSWSUB_COMM_SEND_BUF, BSWAY_COMM_RETIRE_SELECT, LOCALWORK0, BSW_NULL )
     _BSUBWAY_TOOL( BSWSUB_COMM_RECV_BUF, BSWAY_COMM_RETIRE_SELECT, BSW_NULL, LOCALWORK0 )
+    
     //抜けるだけなので以下の同期待ちでエラーチェックも兼ねる
     _CALL sub_common_comm_timing_end_reqfade //同期後切断
     _MSGWIN_CLOSE()

@@ -1087,6 +1087,8 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       BtlResult res = bsw_scr->btl_setup_param->result;
       BtlCompetitor cp = BTL_COMPETITOR_SUBWAY;
       
+      KAGAYA_Printf( "BSW êÌì¨åãâ  %d\n", res );
+      
       if( res == BTL_RESULT_WIN ){
         *ret_wk = BSW_BTL_RESULT_WIN;
       }else{

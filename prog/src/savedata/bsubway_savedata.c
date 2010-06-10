@@ -436,11 +436,13 @@ u16 BSUBWAY_SCOREDATA_GetBattlePoint( const BSUBWAY_SCOREDATA *bsw_score )
 //--------------------------------------------------------------
 static BSWAY_PLAYMODE scoreData_ChgMultiMode( BSWAY_PLAYMODE mode )
 {
+#if 0 //å≥Ç…ñﬂÇËÇ‹ÇµÇΩÅBBTS4549 100609
   if( mode == BSWAY_PLAYMODE_COMM_MULTI ){
     mode = BSWAY_PLAYMODE_MULTI;
   }else if( mode == BSWAY_PLAYMODE_S_COMM_MULTI ){
     mode = BSWAY_PLAYMODE_S_MULTI;
   }
+#endif
   return( mode );
 }
 

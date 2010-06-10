@@ -249,11 +249,17 @@ void BSUBWAY_SCRWORK_ChangeCommMultiMode( BSUBWAY_SCRWORK *bsw_scr )
   
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
-  
-  //変更のみ。ステージ数のリセットは行わない
-//BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+
+  //ステージが無い場合はステージ数、連勝数初期化
+  if( BSUBWAY_SCOREDATA_CheckExistStageNo(
+        bsw_scr->scoreData,bsw_scr->play_mode) == FALSE ){
+    BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+    BSUBWAY_SCOREDATA_ResetRenshou( //連勝数リセット
+          bsw_scr->scoreData, bsw_scr->play_mode );
+  }
 }
 
+#if 0 //未使用となった。
 //--------------------------------------------------------------
 /**
  * BSUBWAY_SCRWORK　通信マルチモードからAIマルチモードへ変更。
@@ -276,9 +282,15 @@ void BSUBWAY_SCRWORK_ChangeMultiMode( BSUBWAY_SCRWORK *bsw_scr )
   BSUBWAY_PLAYDATA_SetData( bsw_scr->playData,
       BSWAY_PLAYDATA_ID_playmode, buf );
   
-  //変更のみ。ステージ数のリセットは行わない
-//BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+  //ステージが無い場合はステージ数、連勝数初期化
+  if( BSUBWAY_SCOREDATA_CheckExistStageNo(
+        bsw_scr->scoreData,bsw_scr->play_mode) == FALSE ){
+    BSUBWAY_SCOREDATA_InitStageNo( bsw_scr->scoreData, bsw_scr->play_mode );
+    BSUBWAY_SCOREDATA_ResetRenshou( //連勝数リセット
+          bsw_scr->scoreData, bsw_scr->play_mode );
+  }
 }
+#endif
 
 //--------------------------------------------------------------
 /**

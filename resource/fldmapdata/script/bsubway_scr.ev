@@ -115,8 +115,6 @@ INIT_EVENT_START ev_init_bsw_receipt
         ENDSWITCH
         
         _OBJ_POS_CHANGE( objid, SCWK_TEMP0, 0, SCWK_TEMP1, SCWK_TEMP2 )
-        
-        
       ELSE //エラー
         $WK_OTHER_BSUBWAY_RECEIPT = BSWAY_SCENE_RECEIPT_ERROR
         _CALL sub_bsw_common_del_partner //パートナーOBJ削除
@@ -623,7 +621,7 @@ sub_receipt_challenge_multi:
     ELSE
       $play_mode = BSWAY_MODE_COMM_MULTI //ワーク切り替え
     ENDIF
-
+    
     _BSUBWAY_TOOL( BSWSUB_CHG_WORK_COMM_MULTI_MODE, BSW_NULL, BSW_NULL, BSW_NULL )
   ENDIF
  
@@ -2556,24 +2554,93 @@ _RET
 sub_bsw_common_renshou_msg:
 {
   DEFINE_LOCAL count
+  DEFINE_LOCAL comm_count
+  DEFINE_LOCAL comm_mode
   
   _BSUBWAY_TOOL( BSWTOOL_GET_ZONE_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
-  _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, ret )
   
-  //ステージ数が有効で連勝数あれば連勝中メッセージ表示
-  IF $ret == TRUE THEN
+  IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
+    //マルチトレイン
+    IF $play_mode == BSWAY_MODE_MULTI THEN
+      $comm_mode = BSWAY_MODE_COMM_MULTI
+    ELSE
+      $comm_mode = BSWAY_MODE_S_COMM_MULTI
+    ENDIF
+    
+    //ステージ存在チェック
+    _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, ret )
+    _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, comm_mode, BSW_NULL, comm_ret )
+    
+    //連勝数取得
     _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
+    _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, comm_mode, BSW_NULL, comm_count )
 
-    IF $count != 0 THEN
-      _PLAYER_NAME( 0 )
+    IF $count > 9999 THEN
+      $count = 9999
+    ENDIF
       
-      IF $count > 9999 THEN
-        $count = 9999
+    IF $comm_count > 9999 THEN
+      $comm_count = 9999
+    ENDIF
+    
+    //ステージ数が存在しているのであれば連勝中メッセージ
+    IF $ret == TRUE && $comm_ret == TRUE THEN //AI,通信マルチ共にあり
+      IF $count != 0 && $comm_count != 0 THEN //どちらにも連勝数あり
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, count, 4 )
+        _NUMBER( 2, comm_count, 4 )
+        
+        $SCWK_TEMP0 = msg_bsw_scr_106
+        _CALL sub_bsw_common_bwin_receipt
+      ELSIF $count != 0 THEN //AIマルチのみ連勝数あり
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, count, 4 )
+        
+        $SCWK_TEMP0 = msg_bsw_scr_104
+        _CALL sub_bsw_common_bwin_receipt
+      ELSE //通信マルチのみ連勝数あり
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, comm_count, 4 )
+        
+        $SCWK_TEMP0 = msg_bsw_scr_105
+        _CALL sub_bsw_common_bwin_receipt
       ENDIF
+    ELSIF $ret == TRUE THEN //AIマルチのみ
+      IF $count != 0 THEN
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, count, 4 )
+        
+        $SCWK_TEMP0 = msg_bsw_scr_104
+        _CALL sub_bsw_common_bwin_receipt
+      ENDIF
+    ELSE //通信マルチのみ
+      IF $comm_count != 0 THEN
+        _PLAYER_NAME( 0 )
+        _NUMBER( 1, comm_count, 4 )
+        
+        $SCWK_TEMP0 = msg_bsw_scr_105
+        _CALL sub_bsw_common_bwin_receipt
+      ENDIF
+    ENDIF
+  ELSE //その他トレイン
+    //ステージ数が存在しているのであれば連勝中メッセージ
+    _BSUBWAY_TOOL( BSWTOOL_CHK_EXIST_STAGE, play_mode, BSW_NULL, ret )
+    
+    IF $ret == TRUE THEN
+      _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
       
-      _NUMBER( 1, count, 4 )
-      $SCWK_TEMP0 = msg_bsw_scr_08
-      _CALL sub_bsw_common_bwin_receipt
+      IF $count != 0 THEN
+        _PLAYER_NAME( 0 )
+      
+        IF $count > 9999 THEN
+          $count = 9999
+        ENDIF
+        
+        _NUMBER( 1, count, 4 )
+        
+        $SCWK_TEMP0 = msg_bsw_scr_08
+        _CALL sub_bsw_common_bwin_receipt
+      ENDIF
     ENDIF
   ENDIF
 }
