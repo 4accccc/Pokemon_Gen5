@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-05-29T14:48:27"/>
+	<create user="ohmori" host="W00223" date="2010-06-10T14:50:54"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,33 +438,33 @@
 	<row id="plc_mis_04_01" back-color="#80ff80,,,#80ff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかってる　[1:00:トレーナー名:0]に　はなしかけ
-「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
+「せんとうＨＰかいふくパワー」をあたえよ</language>
 		<language name="JPN_KANJI" width="256">戦ってる　[1:00:トレーナー名:0]に　話しかけ
-「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
+「せんとうＨＰかいふくパワー」を与えよ</language>
 	</row>
 
 	<row id="plc_mis_04_02" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかってる　[1:00:トレーナー名:0]に　はなしかけ
-「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
+「せんとうＨＰかいふくパワー」をあたえよ</language>
 		<language name="JPN_KANJI" width="256">戦ってる　[1:00:トレーナー名:0]に　話しかけ
-「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
+「せんとうＨＰかいふくパワー」を与えよ</language>
 	</row>
 
 	<row id="plc_mis_04_03" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかってる　[1:00:トレーナー名:0]に　はなしかけ
-「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
+「せんとうＨＰかいふくパワー」をあたえよ</language>
 		<language name="JPN_KANJI" width="256">戦ってる　[1:00:トレーナー名:0]に　話しかけ
-「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
+「せんとうＨＰかいふくパワー」を与えよ</language>
 	</row>
 
 	<row id="plc_mis_04_04" back-color="#80ff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション４：「せんとうちゅうの　●●●●●を　たすけろ！」</comment>
 		<language name="JPN" width="256">たたかってる　[1:00:トレーナー名:0]に　はなしかけ
-「せんとう　ＨＰかいふくパワー」を　あたえよ！</language>
+「せんとうＨＰかいふくパワー」をあたえよ</language>
 		<language name="JPN_KANJI" width="256">戦ってる　[1:00:トレーナー名:0]に　話しかけ
-「せんとう　ＨＰかいふくパワー」を　与えよ！</language>
+「せんとうＨＰかいふくパワー」を与えよ</language>
 	</row>
 
 	<row id="plc_mis_05_01" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
