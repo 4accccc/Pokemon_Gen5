@@ -96,7 +96,20 @@ static void Local_WarningDispMain(u32 msg_id)
 {
   SaveControl_SystemExit(); //画面描画用のヒープ確保の為、セーブシステムを破棄する
   Local_WarningDispInit(msg_id);
-  while(1){}  //無限ループ
+
+  //このプレイヤーに侵入されないよう通信を終了させる
+  if(GFL_NET_IsInit())
+  {
+    GFL_NET_ResetDisconnect();  ///切断処理中でも一旦リセット
+    GFL_NET_Exit(NULL);
+    GFL_NET_IRCWIRELESS_ResetSystemError();  //赤外線WIRLESS切断
+    do{
+      GFL_NET_Main();
+    }while(GFL_NET_IsExit() == FALSE);
+  }
+
+  //無限ループ
+  OS_Terminate();
 }
 
 //--------------------------------------------------------------
