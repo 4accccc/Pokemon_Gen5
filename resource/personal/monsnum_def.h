@@ -654,9 +654,9 @@
 #define		MONSNO_650		( 643 )		//レシラム
 #define		MONSNO_651		( 644 )		//ゼクロム
 #define		MONSNO_652		( 645 )		//ランドロス
-#define		MONSNO_653		( 646 )		//ライ
-#define		MONSNO_654		( 647 )		//ダルタニス
-#define		MONSNO_655		( 648 )		//メロディア
+#define		MONSNO_653		( 646 )		//キュレム
+#define		MONSNO_654		( 647 )		//ケルディオ
+#define		MONSNO_655		( 648 )		//メロイア
 #define		MONSNO_656		( 649 )		//インセクタ
 //別フォルム定義
 //アンノーン
@@ -794,11 +794,11 @@
 #define		FORMNO_527_WINTER				( 3 )
 #define		FORMNO_527_MAX				( 4 )
 
-//ライ
+//キュレム
 #define		FORMNO_653_A				( 0 )
 #define		FORMNO_653_MAX				( 1 )
 
-//メロディア
+//メロイア
 #define		FORMNO_655_VOICE				( 0 )
 #define		FORMNO_655_STEP				( 1 )
 #define		FORMNO_655_MAX				( 2 )

@@ -3586,8 +3586,8 @@
 	</row>
 
 	<row id="ZKN_FORM_648_000">
-		<language name="JPN">ボイスフォルム</language>
-		<language name="JPN_KANJI">ボイスフォルム</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_000">
@@ -3956,8 +3956,8 @@
 	</row>
 
 	<row id="ZKN_FORM_648_001">
-		<language name="JPN">ステップフォルム</language>
-		<language name="JPN_KANJI">ステップフォルム</language>
+		<language name="JPN"></language>
+		<language name="JPN_KANJI"></language>
 	</row>
 
 	<row id="ZKN_FORM_649_001">

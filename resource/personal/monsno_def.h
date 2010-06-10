@@ -657,9 +657,9 @@
 #define		MONSNO_RESIRAMU			( 643 )
 #define		MONSNO_ZEKUROMU			( 644 )
 #define		MONSNO_RANDOROSU		( 645 )
-#define		MONSNO_RAI					( 646 )
-#define		MONSNO_DARUTANISU		( 647 )
-#define		MONSNO_MERODHIA			( 648 )
+#define		MONSNO_KYUREMU			( 646 )
+#define		MONSNO_KERUDHIO			( 647 )
+#define		MONSNO_MEROIA				( 648 )
 #define		MONSNO_INSEKUTA			( 649 )
 #define		MONSNO_TAMAGO				( 650 )
 #define		MONSNO_DAMETAMAGO		( 651 )
@@ -802,14 +802,14 @@
 #define		FORMNO_MEBUKIZIKA_WINTER				( 3 )
 #define		FORMNO_MEBUKIZIKA_MAX				( 4 )
 
-//ライ
-#define		FORMNO_RAI_A				( 0 )
-#define		FORMNO_RAI_MAX				( 1 )
+//キュレム
+#define		FORMNO_KYUREMU_A				( 0 )
+#define		FORMNO_KYUREMU_MAX				( 1 )
 
-//メロディア
-#define		FORMNO_MERODHIA_VOICE				( 0 )
-#define		FORMNO_MERODHIA_STEP				( 1 )
-#define		FORMNO_MERODHIA_MAX				( 2 )
+//メロイア
+#define		FORMNO_MEROIA_VOICE				( 0 )
+#define		FORMNO_MEROIA_STEP				( 1 )
+#define		FORMNO_MEROIA_MAX				( 2 )
 
 //インセクタ
 #define		FORMNO_INSEKUTA_NORMAL				( 0 )
