@@ -376,7 +376,7 @@ static const BtlEventHandlerTable*  ADD_SizenNoMegumi( u32* numElems );
 static void handler_SizenNoMegumi_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SizenNoMegumi_Type( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_SizenNoMegumi_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_SizenNoMegumi_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_Hatakiotosu( u32* numElems );
 static void handler_Hatakiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MagicCoat( u32* numElems );
@@ -4843,10 +4843,10 @@ static void handler_MezameruPower_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static const BtlEventHandlerTable*  ADD_SizenNoMegumi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_SizenNoMegumi_ExeCheck    }, // わざ出し成否チェック
-    { BTL_EVENT_WAZA_PARAM,             handler_SizenNoMegumi_Type        }, // わざパラメータチェック
-    { BTL_EVENT_WAZA_POWER_BASE,        handler_SizenNoMegumi_Pow         }, // わざ威力チェック
-    { BTL_EVENT_DAMAGEPROC_END_HIT,     handler_SizenNoMegumi_AfterDamage }, // ワザダメージシーケンス終了
+    { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_SizenNoMegumi_ExeCheck   }, // わざ出し成否チェック
+    { BTL_EVENT_WAZA_PARAM,             handler_SizenNoMegumi_Type       }, // わざパラメータチェック
+    { BTL_EVENT_WAZA_POWER_BASE,        handler_SizenNoMegumi_Pow        }, // わざ威力チェック
+    { BTL_EVENT_WAZA_EXECUTE_EFFECTIVE, handler_SizenNoMegumi_Done       }, // わざ出し終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -4889,8 +4889,8 @@ static void handler_SizenNoMegumi_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
-// ワザダメージシーケンス終了
-static void handler_SizenNoMegumi_AfterDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ワザ出し終了
+static void handler_SizenNoMegumi_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
