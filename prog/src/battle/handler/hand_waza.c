@@ -7747,9 +7747,8 @@ static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 }
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
-  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
-  ){
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 itemID = BPP_GetItem( bpp );
     if( itemID != ITEM_DUMMY_DATA )
@@ -7761,6 +7760,7 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
         item_param->fNoAction = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, item_param );
 
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE )
       {
         int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
         if( equip )
