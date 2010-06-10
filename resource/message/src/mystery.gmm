@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T18:22:20"/>
+	<create user="matsumiya" host="W00224" date="2010-06-10T11:06:47"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -462,14 +462,14 @@
 		</language>
 	</columns>
 
-	<dialog left="230" top="300" right="931" bottom="929" maximized="no" rayout="Vertical2">
+	<dialog left="1477" top="241" right="2171" bottom="868" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="637" right="1024" bottom="789" visible="no"/>
 		<tag-palette left="532" top="179" right="1024" bottom="591" visible="no"/>
-		<band id="0" index="0" style="0000" width="526"/>
+		<band id="0" index="0" style="0000" width="519"/>
 		<band id="1" index="1" style="0000" width="165"/>
-		<band id="2" index="2" style="0000" width="693"/>
-		<band id="3" index="3" style="0000" width="693"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<band id="2" index="2" style="0000" width="686"/>
+		<band id="3" index="3" style="0000" width="686"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1118,10 +1118,10 @@
 
 	<row id="syachi_mystery_01_002" back-color="#8080ff,,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>通信開始確認</comment>
-		<language name="JPN" width="216">ふしぎなおくりものを　うけとるため
+		<language name="JPN" width="216">ふしぎな　おくりものを　うけとるため
 つうしんを　かいしします[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
-		<language name="JPN_KANJI">ふしぎなおくりものを　受け取るため
+		<language name="JPN_KANJI">ふしぎな　おくりものを　受け取るため
 通信を　開始します[BE:00:ページ切り替え（行送り）]
 よろしいですか？</language>
 	</row>
@@ -1432,8 +1432,8 @@
 
 	<row id="syachi_mystery_menu_011" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
 		<comment>ガイド選択肢</comment>
-		<language name="JPN" width="216">ふしぎなおくりもの　について</language>
-		<language name="JPN_KANJI">ふしぎなおくりもの　について</language>
+		<language name="JPN" width="216">ふしぎな　おくりもの　について</language>
+		<language name="JPN_KANJI">ふしぎな　おくりもの　について</language>
 	</row>
 
 	<row id="syachi_mystery_menu_012" back-color="#8080ff,,,,,#00ff00,,,,,,#00ff00,,,,,,">
