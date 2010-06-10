@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-05-31T17:32:47"/>
+	<create user="matsumiya" host="W00224" date="2010-06-09T19:38:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -438,9 +438,9 @@
 		<attribute name="キャラクター">友達♂
 チェレン</attribute>
 		<language name="JPN" width="256">[1:00:トレーナー名:0]！
-さきに　いくよ[BE:01:ページ切り替え（クリア）]</language>
+ぼくは　さきに　いく[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]！
-先に　行くよ[BE:01:ページ切り替え（クリア）]</language>
+ぼくは　先に　行く[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="msg_c05_sage1_01" text-color=",,,#000000,,,,,,,,,,,,,,," back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
