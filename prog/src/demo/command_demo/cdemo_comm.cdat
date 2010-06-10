@@ -279,10 +279,10 @@ static const int CommandData_GFLogo[] = {
 // コマンドデータ：ムービー１
 static const int CommandData_OPMovie1[] = {
 
-    COMM_BGM_PLAY, SEQ_BGM_TITLE,
-
 	COMM_BLACK_IN,		1, 1,
 	COMM_FADE_MAIN,
+
+    COMM_BGM_PLAY, SEQ_BGM_TITLE,
 
 	COMM_DEBUG_PRINT,   0,
 
@@ -301,10 +301,10 @@ static const int CommandData_OPMovie1[] = {
 // コマンドデータ：ムービー２
 static const int CommandData_OPMovie2[] = {
 
-    COMM_BGM_PLAY, SEQ_BGM_TITLE01,
-
 	COMM_BLACK_IN,		1, 1,
-//	COMM_FADE_MAIN,
+	COMM_FADE_MAIN,
+
+    COMM_BGM_PLAY, SEQ_BGM_TITLE01,
 
 	COMM_DEBUG_PRINT,   0,
 
