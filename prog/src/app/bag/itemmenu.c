@@ -1053,7 +1053,7 @@ static void _itemInnerUseWait( FIELD_ITEMMENU_WORK* pWork )
   }
 
   // ì¸óÕë“Çø
-  if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
+  if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() )
   {
     // çƒï`âÊ
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
