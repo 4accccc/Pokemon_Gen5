@@ -3990,6 +3990,8 @@ static void _soundErrRecover(POKEMON_TRADE_WORK* pWork)
 
 FS_EXTERN_OVERLAY(ui_common);
 FS_EXTERN_OVERLAY(dpw_common);
+FS_EXTERN_OVERLAY(pokemon_trade_ir);
+FS_EXTERN_OVERLAY(pokemon_trade_co);
 
 
 // ÉqÅ[Évó çÌå∏ÇÃà◊staticÇ≈ämï€
@@ -4032,7 +4034,12 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
     GFL_OVERLAY_Load( FS_OVERLAY_ID(dpw_common));
   }
 
-
+  if(type == POKEMONTRADE_TYPE_IRC || type == POKEMONTRADE_TYPE_EVENT){
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(pokemon_trade_ir));
+  }
+  else{
+    GFL_OVERLAY_Load( FS_OVERLAY_ID(pokemon_trade_co));
+  }
 
 
   GFL_DISP_SetDispSelect(GFL_DISP_3D_TO_MAIN);
@@ -4473,6 +4480,15 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(dpw_common));
     GFL_OVERLAY_Unload( FS_OVERLAY_ID(ui_common));
   }
+
+  if(type == POKEMONTRADE_TYPE_IRC || type == POKEMONTRADE_TYPE_EVENT){
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(pokemon_trade_ir));
+  }
+  else{
+    GFL_OVERLAY_Unload( FS_OVERLAY_ID(pokemon_trade_co));
+  }
+
+  
   return GFL_PROC_RES_FINISH;
 }
 

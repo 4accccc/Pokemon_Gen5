@@ -1443,15 +1443,23 @@ SRCS_OVERLAY_WIFI_BSUBWAY =  net_app/wifi_bsubway/wifi_bsubway.c \
 
 ###								net_app/poke_trade/pokemontrade_demo.c \
 ##								net_app/poke_trade/pokemontrade_demo_gts.c \
-# ポケモン交換
+# ポケモン交換IR
 #===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_POKEMON_TRADE_IR = net_app/poke_trade/pokemontrade_ircdemo.c
+
+# ポケモン交換WIFI WIRLESS
+#===> SRCS_OVERLAY_DPW_COMMON
+SRCS_OVERLAY_POKEMON_TRADE_CO = net_app/poke_trade/pokemontrade_demo_up.c \
+								net_app/poke_trade/pokemontrade_demo_down.c \
+								net_app/poke_trade/pokemontrade_demo_middle.c
+
+
+# ポケモン交換WIFI WIRLESS
+#===> SRCS_OVERLAY_POKEMON_TRADE_IR
+#===> SRCS_OVERLAY_POKEMON_TRADE_CO
 SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
 								net_app/poke_trade/pokemontrade_nego.c \
 								net_app/poke_trade/pokemontrade_mcss.c	\
-								net_app/poke_trade/pokemontrade_ircdemo.c \
-								net_app/poke_trade/pokemontrade_demo_up.c \
-								net_app/poke_trade/pokemontrade_demo_down.c \
-								net_app/poke_trade/pokemontrade_demo_middle.c \
 								net_app/poke_trade/pokemontrade_save.c \
 								net_app/poke_trade/pokemontrade_message.c \
 								net_app/poke_trade/pokemontrade_3d.c \
@@ -1459,6 +1467,7 @@ SRCS_OVERLAY_POKEMON_TRADE = net_app/poke_trade/pokemontrade_proc.c \
 								net_app/poke_trade/pokemontrade_color.c \
 								net_app/poke_trade/pokemontrade_2d.c \
 								net_app/poke_trade/progval.c
+
 
 # GTSネゴシエーション交換
 #===> SRCS_OVERLAY_DPW_COMMON
