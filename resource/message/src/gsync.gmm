@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-09T11:43:08"/>
+	<create user="mizuguchi_mai" host="W00226" date="2010-06-10T17:21:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -590,10 +590,10 @@
 
 	<row id="GSYNC_ERR010" back-color=",,,#ffff00,,,,,,,,,,,,,,">
 		<comment>追加</comment>
-		<language name="JPN" width="256">ダウンロードした
-データが　こわれています</language>
-		<language name="JPN_KANJI" width="256">ダウンロードした
-データが　壊れています</language>
+		<language name="JPN" width="256">サーバに　していされた
+ダウンロードデータ　が　ありません</language>
+		<language name="JPN_KANJI" width="256">サーバに　指定された
+ダウンロードデータ　が　ありません</language>
 	</row>
 
 	<row id="GSYNC_023">
