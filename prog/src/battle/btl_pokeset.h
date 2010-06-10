@@ -26,6 +26,7 @@ typedef struct {
   u8              count;
   u8              countMax;
   u8              getIdx;
+  u8              targetPosCount;
 }BTL_POKESET;
 
 
@@ -111,6 +112,11 @@ extern u32 BTL_POKESET_GetCount( const BTL_POKESET* rec );
  *  初期化後、記録されたポケモン総数を取得
  */
 extern u32 BTL_POKESET_GetCountMax( const BTL_POKESET* rec );
+
+/**
+ *
+ */
+ extern void BTL_POKESET_SetDefaultTargetCount( BTL_POKESET* rec, u8 posCnt );
 
 /**
  *  本来は１体以上いたハズのターゲットが現在は0になってしまったケースをチェック

@@ -2863,9 +2863,13 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     BTL_POKESET_Clear( wk->psetTargetOrg );
     BTL_POKESET_Clear( wk->psetTarget );
     BTL_SVFSUB_RegisterTargets( wk, attacker, actTargetPos, wk->wazaParam, wk->psetTargetOrg );
-    BTL_POKESET_RemoveDeadPoke( wk->psetTargetOrg );
-    BTL_POKESET_CopyAlive( wk->psetTargetOrg, wk->psetTarget );
-    TAYA_Printf("TargetCntMax=%d\n", BTL_POKESET_GetCount(wk->psetTarget) );
+    {
+      u8 defTargetCnt = BTL_POKESET_GetCountMax( wk->psetTargetOrg );
+      BTL_POKESET_RemoveDeadPoke( wk->psetTargetOrg );
+      BTL_POKESET_CopyAlive( wk->psetTargetOrg, wk->psetTarget );
+      BTL_POKESET_SetDefaultTargetCount( wk->psetTarget, defTargetCnt );
+      TAYA_Printf("TargetCntMax=%d\n", BTL_POKESET_GetCount(wk->psetTarget) );
+    }
 
     // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
     if( (!fWazaLock) )
@@ -14410,6 +14414,7 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   BTL_POKESET_Clear( wk->psetDamaged );
   BTL_POKESET_Clear( wk->psetTmp );
   BTL_POKESET_Add( wk->psetTmp, target );
+  BTL_POKESET_SetDefaultTargetCount( wk->psetTmp, 1 );
 
   // 場にいないポケモンには当たらない（補正なし）
   BTL_POKESET_RemoveDeadPoke( wk->psetTmp );

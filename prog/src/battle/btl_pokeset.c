@@ -144,12 +144,21 @@ u32 BTL_POKESET_GetCountMax( const BTL_POKESET* rec )
   return rec->countMax;
 }
 
+void BTL_POKESET_SetDefaultTargetCount( BTL_POKESET* rec, u8 cnt )
+{
+  rec->targetPosCount = cnt;
+}
+
 /**
  *  本来は１体以上いたハズのターゲットが現在は0になってしまったケースをチェック
  */
 BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec )
 {
-  return (rec->countMax > 0) && (rec->count == 0);
+  if( (rec->countMax > 0) || ( rec->targetPosCount > 0) )
+  {
+    return (rec->count == 0);
+  }
+  return FALSE;
 }
 
 /**

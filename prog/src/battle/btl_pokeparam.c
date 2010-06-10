@@ -322,7 +322,6 @@ static u32 WazaWorkSys_SetupBySrcPP( BTL_POKEPARAM* bpp, const POKEMON_PARAM* pp
 
   if( fLinkSurface )
   {
-   TAYA_Printf("ワザ使用フラグ初期化 pokeID=%d\n", bpp->coreParam.myID );
     for(i=0; i<PTL_WAZA_MAX; i++)
     {
       bpp->waza[i].truth.usedFlag = FALSE;
@@ -557,7 +556,6 @@ static void clearUsedWazaFlag( BTL_POKEPARAM* bpp )
 {
   u32 i;
 
- TAYA_Printf("ワザ使用フラグクリアー pokeID=%d\n", bpp->coreParam.myID );
   for(i=0; i<NELEMS(bpp->waza); ++i){
     WazaWork_ClearUsedFlag( &bpp->waza[i] );
   }
