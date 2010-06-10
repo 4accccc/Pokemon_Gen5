@@ -1732,9 +1732,10 @@ static int Record_StartRecordCommand( GURU2RC_WORK *wk, int seq )
 {
   if(wk->record_send == 0){
     if(Guru2Comm_SendData(wk->g2c, G2COMM_RC_START, NULL, 0 ) == TRUE){
-//      wk->record_send = TRUE;
       OS_Printf("ぐるぐる開始を送信\n");
       wk->seq = RECORD_MODE_GURU2_POKESEL_START;
+      // 子機がいない場合はエラーになる。(ここでメンバー確定）
+      GFL_NET_SetNoChildErrorCheck(TRUE);
     }
   }
   
