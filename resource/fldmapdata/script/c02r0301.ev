@@ -190,8 +190,17 @@ EVENT_START   ev_c02r0301_woman2_01
 					_BALLOONWIN_TALKOBJ_MSG(msg_c02r0301_woman2_07)
 					_BALLOONWIN_CLOSE()
 					
-					//対戦
-					_TRADE_AFTER_TRAINER_BTL_SET( TRID_MINI_11, SCR_TRPOKE_AFTER_SAVE_C02 )
+					//バージョンを取得
+					_GET_ROM_VERSION( SCWK_ANSWER )
+					
+					//バージョンによって、相手の手持ちをエルフーンかエルディアに
+					IF $SCWK_ANSWER ==  VERSION_BLACK THEN
+						//対戦
+						_TRADE_AFTER_TRAINER_BTL_SET( TRID_MINI_11, SCR_TRPOKE_AFTER_SAVE_C02 )
+					ELSE
+						//対戦
+						_TRADE_AFTER_TRAINER_BTL_SET( TRID_MINI_10, SCR_TRPOKE_AFTER_SAVE_C02 )
+					ENDIF
 					
 					//敗戦チェック
 					_TRAINER_LOSE_CHECK( SCWK_ANSWER )
