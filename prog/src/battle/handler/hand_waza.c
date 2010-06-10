@@ -6881,8 +6881,9 @@ static void handler_PowerShare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     BTL_HANDEX_PARAM_SET_STATUS* param;
     const BTL_POKEPARAM *user, *target;
+    u32 avrg, sp_avrg;
     u8 target_pokeID;
-    u8 avrg, sp_avrg;
+
 
     target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     user = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
@@ -6929,8 +6930,8 @@ static void handler_GuardShare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
   {
     BTL_HANDEX_PARAM_SET_STATUS* param;
     const BTL_POKEPARAM *user, *target;
+    u32 avrg, sp_avrg;
     u8 target_pokeID;
-    u8 avrg, sp_avrg;
 
     target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
     user = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );

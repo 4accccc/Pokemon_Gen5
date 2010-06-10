@@ -2275,6 +2275,8 @@ static void handler_MikuruNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
       HANDEX_STR_AddArg( &param->exStr, pokeID );
       HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
     BTL_SVF_HANDEX_Pop( flowWk, param );
+
+    TAYA_Printf("ミクルターン=%d\n", turns);
   }
 }
 
