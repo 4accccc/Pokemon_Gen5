@@ -281,8 +281,6 @@ static const int CommandData_OPMovie1[] = {
 
     COMM_BGM_PLAY, SEQ_BGM_TITLE,
 
-	COMM_WAIT,			80,
-
 	COMM_BLACK_IN,		1, 1,
 	COMM_FADE_MAIN,
 
