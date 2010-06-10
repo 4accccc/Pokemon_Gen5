@@ -129,8 +129,10 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
     SEQ_POINT_GET_CHECK,   //•ñVƒQƒbƒg‚µ‚½‚©
     SEQ_POINT_GET,         //•ñVƒQƒbƒg
     SEQ_POINT_GET_MSG_WAIT,
-    SEQ_LEVELUP_MSG,
-    SEQ_LEVELUP_MSG_WAIT,
+    SEQ_LEVELUP_BLACK_MSG,
+    SEQ_LEVELUP_BLACK_MSG_WAIT,
+    SEQ_LEVELUP_WHITE_MSG,
+    SEQ_LEVELUP_WHITE_MSG_WAIT,
     SEQ_POINT_GET_MSG_END_BUTTON_WAIT,
     SEQ_MISSION_FAIL,    //ƒ~ƒbƒVƒ‡ƒ“Ž¸”s
     SEQ_END,
@@ -240,20 +242,35 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
       (*seq)++;
     }
     break;
-  case SEQ_LEVELUP_MSG:
-    if(talk->mresult.mission_data.monolith_type == MONOLITH_TYPE_BLACK){
+  case SEQ_LEVELUP_BLACK_MSG:
+    if(talk->add_black > 0){
       WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->add_black, 
         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_02);
+      (*seq)++;
     }
     else{
+      *seq = SEQ_LEVELUP_WHITE_MSG;
+    }
+    break;
+  case SEQ_LEVELUP_BLACK_MSG_WAIT:
+    if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
+      (*seq)++;
+    }
+    break;
+
+  case SEQ_LEVELUP_WHITE_MSG:
+    if(talk->add_white > 0){
       WORDSET_RegisterNumber( talk->iem.wordset, 0, talk->add_white, 
         3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
       IntrudeEventPrint_StartStream(&talk->iem, msg_invasion_mission_clear_03);
+      (*seq)++;
     }
-    (*seq)++;
+    else{
+      *seq = SEQ_POINT_GET_MSG_END_BUTTON_WAIT;
+    }
     break;
-  case SEQ_LEVELUP_MSG_WAIT:
+  case SEQ_LEVELUP_WHITE_MSG_WAIT:
     if(IntrudeEventPrint_WaitStream(&talk->iem) == TRUE){
       *seq = SEQ_POINT_GET_MSG_END_BUTTON_WAIT;
     }
