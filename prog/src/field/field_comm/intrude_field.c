@@ -755,6 +755,9 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   }
   
   if(event_dir != DIR_NOT){
+    if(intcomm == NULL && NetErr_App_CheckError()){
+      return NULL;  //強制ワープイベントが発動するようにここではNULLを返す
+    }
     if(intcomm == NULL || GFL_NET_GetConnectNum() <= 1 || intcomm->member_num < 2){
       return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, player_dir, event_dir, PALACE_NG_TYPE_NOT_CONNECT);
     }
@@ -1209,6 +1212,9 @@ static void _PalaceMapCommBootCheck(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *game
   if(NetErr_App_CheckError() != NET_ERR_CHECK_NONE){
     return;
   }
+  if((GFL_UI_CheckCoverOff() == TRUE && GFL_UI_CheckLowBatt() == TRUE)){
+    return;
+  }
   if(GAMESYSTEM_IsBatt10Sleep(gameSys) == TRUE){
     return;
   }
@@ -1284,7 +1290,8 @@ static void _InvasionCommBoot(GAMESYS_WORK *gsys)
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
   FIELD_INVALID_PARENT_WORK *invalid_parent;
   
-  if(NetErr_App_CheckError() || GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE){
+  if(NetErr_App_CheckError() || GAMESYSTEM_IsBatt10Sleep(gsys) == TRUE
+      || (GFL_UI_CheckCoverOff() == TRUE && GFL_UI_CheckLowBatt() == TRUE)){
     return;
   }
   
