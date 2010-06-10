@@ -73,7 +73,7 @@ static void DEBUG_UI_AutoKey(void);
 //------------------------------------------------------------------
 //  処理時間AVERAGE
 //------------------------------------------------------------------
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 u8 DEBUG_MAIN_UPDATE_TYPE = 0;  ///<FIELDMAP TOP TAIL フレームチェック用
 
@@ -156,9 +156,9 @@ void NitroMain(void)
 
 #endif //PM_DEBUG
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     DEBUG_MAIN_TIME_AVERAGE_StartFunc();
-#endif // PM_DEBUG
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 #ifdef PM_DEBUG
     DEBUG_StackOverCheck();
@@ -190,9 +190,9 @@ void NitroMain(void)
     DEB_SD_PRINT_UpdateSystem();
 #endif //PM_DEBUG
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
     DEBUG_MAIN_TIME_AVERAGE_EndFunc();
-#endif // PM_DEBUG
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
     // VBLANK待ち
     GFL_G3D_SwapBuffers();
@@ -497,7 +497,7 @@ static void DEBUG_UI_AutoKey( void  )
 
 
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 
 static void DEBUG_MAIN_TIME_AVERAGE_StartFunc( void )
 {
@@ -551,4 +551,4 @@ static void DEBUG_MAIN_TIME_AVERAGE_EndFunc( void )
 
 }
 
-#endif // PM_DEBUG
+#endif // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON

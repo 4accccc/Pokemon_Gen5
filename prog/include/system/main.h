@@ -43,3 +43,12 @@ enum{
 //«—ˆ“I‚ÉTWL‚Å‘‚¦‚½ƒƒ‚ƒŠ‚Í•ÊHEAPID‚©‚çŽB‚é‚½‚ß‚Ì’è‹`
 #define GFL_HEAPID_TWL (GFL_HEAPID_APP)
 
+
+//------------------------------------------------------------------
+//  ˆ—ŽžŠÔAVERAGE ONEOFF
+//------------------------------------------------------------------
+#ifdef PM_DEBUG
+
+//#define DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+
+#endif

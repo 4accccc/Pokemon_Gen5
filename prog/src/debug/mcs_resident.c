@@ -48,9 +48,16 @@ static u16	tickStack[TIMER_LEN];
 static u16	tickStackP = 0;
 static u16	tickMax = 0;
 static u16	tickCount = 0;
-extern OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
 #define GET_TICKSTACKPOS(point, start, count)	\
 	{ point = start + count; if(point >= TIMER_LEN){ point -= TIMER_LEN; } }
+
+  
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON // include/system/main.h
+extern OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now;    // 現在のチック
+#else
+static OSTick DEBUG_DEBUG_MAIN_TIME_AVERAGE_Now = 0;    // 現在のチック
+#endif  // DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
+  
 //============================================================================================
 /**
  *

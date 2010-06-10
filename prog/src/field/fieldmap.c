@@ -147,8 +147,11 @@
 #define DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK_DRAW_KEY ( PAD_BUTTON_L )
 #endif //DEBUG_FIELDMAP_DRAW_MICRO_SECOND_CHECK
 
-
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
 extern u8 DEBUG_MAIN_UPDATE_TYPE;  ///<FIELDMAP TOP TAIL フレームチェック用 実態は、main.c
+#endif
+
+
 static void DbgVramDumpCallBack(u32 addr, u32 szByte, void* pUserData);
 #endif  //PM_DEBUG
 
@@ -1043,17 +1046,8 @@ static MAINSEQ_RESULT mainSeqFunc_update_top(GAMESYS_WORK *gsys, FIELDMAP_WORK *
   INIT_CHECK();
 
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
   DEBUG_MAIN_UPDATE_TYPE = 0;
-
-#endif
-
-#ifdef DEBUG_ONLY_FOR_tomoya_takahashi
-  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
-    TOMOYA_Printf( "prog nokori 0x%x\n", GFL_HEAP_GetHeapFreeSize( HEAPID_FIELD_PRBUF ) );
-    TOMOYA_Printf( "placename nokori 0x%x\n", GFL_HEAP_GetHeapFreeSize( HEAPID_PLACE_NAME ) );
-    TOMOYA_Printf( "weather nokori 0x%x\n", GFL_HEAP_GetHeapFreeSize( HEAPID_WEATHER ) );
-  }
 #endif
 
   if ( GAMESYSTEM_GetEvent( fieldWork->gsys ) == NULL )
@@ -1218,7 +1212,7 @@ static MAINSEQ_RESULT mainSeqFunc_update_tail(GAMESYS_WORK *gsys, FIELDMAP_WORK 
 #endif
   INIT_CHECK();
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
   DEBUG_MAIN_UPDATE_TYPE = 1;
 #endif
   
@@ -1429,7 +1423,7 @@ static MAINSEQ_RESULT mainSeqFunc_free(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldW
 #endif  
 
 
-#ifdef PM_DEBUG
+#ifdef DEBUG_MAIN_TIME_AVERAGE_MASTER_ON
   DEBUG_MAIN_UPDATE_TYPE = 0;
 #endif
 
@@ -2449,7 +2443,6 @@ static void fldmap_G3D_Control( FIELDMAP_WORK * fieldWork )
     DEBUG_PerformanceStressON(TRUE, STRESS_ID_MAP);
   }
 #endif
-
 }
 
 //--------------------------------------------------------------
