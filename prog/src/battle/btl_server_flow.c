@@ -1937,6 +1937,7 @@ static SabotageType CheckSabotageType( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
     if( !PP_IsMatchOya(pp, status) )
     {
       u8 badgeCnt = BTL_MAIN_GetPlayerBadgeCount( wk->mainModule );
+
       if( badgeCnt < 8 )
       {
         u16 lv_poke = BPP_GetValue( bpp, BPP_LEVEL );
@@ -4823,6 +4824,8 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
     // 失敗メッセージ
     scPut_WazaExecuteFailMsg( wk, attacker, waza, fail_cause );
 
+
+
     // 演出
     switch( fail_cause ){
     case SV_WAZAFAIL_NEMURI:     scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI ); break;
@@ -4833,6 +4836,8 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
     case SV_WAZAFAIL_SABOTAGE_GO_SLEEP:
       {
         BPP_SICK_CONT cont = BTL_CALC_MakeDefaultPokeSickCont( POKESICK_NEMURI );
+
+        SCQUE_PUT_ACT_TameWazaHide( wk->que, BPP_GetID(attacker), FALSE );
         scPut_AddSick( wk, attacker, POKESICK_NEMURI, cont );
         scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI );
       }
