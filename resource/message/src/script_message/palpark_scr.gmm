@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-05-19T14:14:43"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-10T11:23:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,7 +312,7 @@
 		</language>
 	</columns>
 
-	<dialog left="380" top="110" right="1085" bottom="738" maximized="no" rayout="Vertical2">
+	<dialog left="394" top="267" right="1099" bottom="895" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="682" top="69" right="1155" bottom="467" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -386,16 +386,12 @@ BOXに6匹以上の空きがある</comment>
 それでも　いいね？</language>
 	</row>
 
-	<row id="msg_palpark_06" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
-		<comment>はい/いいえの選択肢表示</comment>
-		<language name="JPN" width="256">あそぶには　レポートへ
-かきこむ　ひつようが　ある▼
-あそぶため　レポートに
-かきこんでも　いいかい？▼</language>
-		<language name="JPN_KANJI" width="256">遊ぶには　レポートへ
-書きこむ　必要が　ある▼
-遊ぶため　レポートに
-書きこんでも　いいかい？▼</language>
+	<row id="msg_palpark_06">
+		<comment>ワイヤレス通信分岐</comment>
+		<language name="JPN" width="256">DSワイヤレスつうしんを
+かいし　します</language>
+		<language name="JPN_KANJI" width="256">DSワイヤレス通信を
+開始します</language>
 	</row>
 
 	<row id="msg_palpark_07" back-color="#404040,,,#404040,,#404040,#404040,,,#404040,,#404040,#404040,,,#404040,,">
@@ -446,7 +442,7 @@ BOXに6匹以上の空きがある</comment>
 [1:00:トレーナー名:0]くんは▽
 まだまだ　力を▽
 隠し持って　いるだろう！▼
-きみほどの　トレーナーなら
+君ほどの　トレーナーなら
 もっともっと　ポケシフターを▽
 使いこなせる　はずだ！▼</language>
 	</row>
@@ -470,7 +466,7 @@ BOXに6匹以上の空きがある</comment>
 ぼくたちに　みせてくれ！▼</language>
 		<language name="JPN_KANJI" width="256">ンー　素晴らしいッ！▼
 いやはや　ファンタスティックッ！▼
-きみの　腕は　大したものだ！▼
+君の　腕は　大したものだ！▼
 これでこそ　我々サインティストも
 研究の　しがいが▽
 あるって　ものだ！▼
