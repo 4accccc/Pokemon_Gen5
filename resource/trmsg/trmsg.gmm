@@ -1015,10 +1015,10 @@
 	</row>
 
 	<row id="TRID_WORKER2_04_TRMSG_FIGHT_AFTER">
-		<language name="JPN" width="216">おっさん！　すきな　ポケモンと
+		<language name="JPN" width="216">この　イワオ！　すきな　ポケモンと
 いつも　いっしょに　いられる▽
 しごとができて　しあわせ　なんだな！</language>
-		<language name="JPN_KANJI" width="216">おっさん！　好きな　ポケモンと
+		<language name="JPN_KANJI" width="216">この　イワオ！　好きな　ポケモンと
 いつも　一緒に　いられる▽
 仕事ができて　しあわせ　なんだな！</language>
 	</row>
@@ -1089,11 +1089,13 @@
 
 	<row id="TRID_BACKPACKERW_02_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">バッグの　なかに　あふれるほど
-つめこんだのは　たびのメモリー！▽
-あたしの　たからもの　なの！！</language>
+つめこんだのは　たびのメモリー！▼
+めに　みえないもの　って
+ずっしりと　おもみが　あるのよ！</language>
 		<language name="JPN_KANJI" width="216">バッグの　中に　あふれるほど
-つめこんだのは　旅のメモリー！▽
-あたしの　宝物なの！！</language>
+つめこんだのは　旅のメモリー！▼
+めに　みえないもの　って
+ずっしりと　重みが　あるのよ！</language>
 	</row>
 
 	<row id="TRID_BAKER_01_TRMSG_FIGHT_START">
@@ -12812,9 +12814,13 @@ puo accadere ancora di tutto!</language>
 
 	<row id="TRID_BACKPACKERM_11_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">あたらしい　はっけんを　する　たび！
-それが　ぼくの　テーマなのです</language>
+それが　ぼくの　テーマなのです▼
+たとえば　あの　おおきな　いわ！
+かいりきの　わざで　おせるんです！</language>
 		<language name="JPN_KANJI" width="216">新しい　発見をする　旅！
-それが　ぼくの　テーマなのです</language>
+それが　ぼくの　テーマなのです▼
+たとえば　あの　大きな　岩！
+かいりきの　技で　押せるんです！</language>
 	</row>
 
 	<row id="TRID_BACKPACKERM_12_TRMSG_FIGHT_START">
@@ -13361,9 +13367,9 @@ puo accadere ancora di tutto!</language>
 
 	<row id="TRID_BOSS_1_03_TRMSG_FIGHT_LOSE">
 		<language name="JPN" width="216">けっかは　いっしょ　だった……
-だが　キミは　なにものだ？</language>
+だが　キミは……　なにものだ？</language>
 		<language name="JPN_KANJI" width="216">結果は　一緒だった……
-だが　キミは　何者だ？</language>
+だが　キミは……　何者だ？</language>
 	</row>
 
 	<row id="TRID_DPCHAMPION_01_TRMSG_FIGHT_POKE_LAST">
@@ -13736,11 +13742,11 @@ puo accadere ancora di tutto!</language>
 	<row id="TRID_SWIMMERW_04_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">……シロナさんは　だれもいないときに
 こっそり　およいでいるって　ウワサよ▼
-あと　すごいって　ウワサ
+あと　すごいって　ウワサ！
 とにかく　すごかったらしいわ！</language>
 		<language name="JPN_KANJI" width="216">……シロナさんは　だれもいないときに
 こっそり　泳いでいるって　ウワサよ▼
-あと　すごいって　ウワサ
+あと　すごいって　ウワサ！
 とにかく　すごかったらしいわ！</language>
 	</row>
 
