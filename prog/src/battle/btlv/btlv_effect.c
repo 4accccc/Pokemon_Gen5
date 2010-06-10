@@ -366,7 +366,7 @@ void  BTLV_EFFECT_Init( BTLV_EFFECT_SETUP_PARAM* besp, GFL_FONT* fontHandle, HEA
 //============================================================================================
 void  BTLV_EFFECT_Exit( void )
 {
-  GF_ASSERT( bew != NULL );
+  if( bew == NULL ) return;
 
   PMVOICE_PlayerHeapRelease();
   BTLV_EFFECT_FreeTCBAll();
@@ -2208,4 +2208,17 @@ void  BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position
 {
   BTLV_MCSS_AddDebug( bew->bmw, madw, position );
 }
+
+//============================================================================================
+/**
+ * @brief  バトルルールをセット（デバッグ用）
+ *
+ * @param[in] rule  セットBtlRule
+ */
+//============================================================================================
+void  BTLV_EFFECT_SetBtlRule( BtlRule rule )
+{ 
+  bew->besp.rule = rule;
+}
+
 #endif

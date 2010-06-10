@@ -332,5 +332,6 @@ extern  void              BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe 
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
+extern  void        BTLV_EFFECT_SetBtlRule( BtlRule rule );
 #endif
 
