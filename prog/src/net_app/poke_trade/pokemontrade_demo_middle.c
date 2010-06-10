@@ -504,6 +504,15 @@ static void _changeDemo_ModelTrade3(POKEMON_TRADE_WORK* pWork)
     }
   }
 
+
+  if(pWork->anmCount == ANMCNTC(_POKECHANGE_WHITEIN_START)){
+    MCSS_SetVanishFlag(pWork->pokeMcss[0]);
+    MCSS_SetVanishFlag(pWork->pokeMcss[1]);
+    MCSS_SetVanishFlag(pWork->pokeMcss[2]);
+    MCSS_SetVanishFlag(pWork->pokeMcss[3]);
+  }
+
+  
 #if 0
   {
     int mcssno = 3;

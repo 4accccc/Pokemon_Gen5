@@ -273,6 +273,7 @@ static void _changeDemo_ModelTrade0(POKEMON_TRADE_WORK* pWork)
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_M ,0);
   GFL_BG_SetBackGroundColor(GFL_BG_FRAME1_S ,0);
 
+  
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade1);
 

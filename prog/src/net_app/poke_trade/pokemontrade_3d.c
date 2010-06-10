@@ -940,15 +940,11 @@ void IRCPOKETRADE_PokeCreateMcssNormal( POKEMON_TRADE_WORK *pWork ,int no, int b
   }
   if(bFront){
     pWork->pokeMcss[no] = MCSS_TOOL_AddPokeMcss( pWork->mcssSys,pp,MCSS_DIR_FRONT, xpos[no] , PSTATUS_MCSS_POS_Y , PSTATUS_MCSS_POS_MYZ  );
-//    MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_FRONT );
-//    z=PSTATUS_MCSS_POS_MYZ;
   }
   else{
     pWork->pokeMcss[no] = MCSS_TOOL_AddPokeMcss( pWork->mcssSys,pp,MCSS_DIR_BACK, xpos[no] , PSTATUS_MCSS_POS_Y , PSTATUS_MCSS_POS_YOUZ  );
-//    MCSS_TOOL_MakeMAWPP( pp , &addWork , MCSS_DIR_BACK );
-//    z=PSTATUS_MCSS_POS_YOUZ;
   }
- // pWork->pokeMcss[no] = MCSS_Add( pWork->mcssSys , xpos[no] , PSTATUS_MCSS_POS_Y , z , &addWork );
+
   MCSS_SetScale( pWork->pokeMcss[no] , &scale );
   MCSS_SetShadowVanishFlag(pWork->pokeMcss[no] ,TRUE);
   _McssSizeCheck(pWork->pokeMcss[no], &scale);

@@ -1591,7 +1591,7 @@ void IRC_POKETRADE_SetMainVram(POKEMON_TRADE_WORK* pWork)
 
   GFL_BG_SetBGControl3D( 0 );
   GFL_BG_SetVisible( GFL_BG_FRAME0_M , TRUE );
-  GFL_BG_SetPriority( GFL_BG_FRAME0_M , 2 );
+  GFL_BG_SetPriority( GFL_BG_FRAME0_M , 0 );
 }
 
 
@@ -3231,11 +3231,11 @@ void POKEMONTRADE_NEGOBG_Select6Create(POKEMON_TRADE_WORK* pWork)
 																				 GFL_ARCUTIL_TRANSINFO_GetPos(pWork->subchar1), 0, 0,
 																				 pWork->heapID);
 
-  {
+  {//1714çsñ⁄Ç∆çáÇÌÇπÇÈ
     int frame = GFL_BG_FRAME3_S;
     GFL_BG_BGCNT_HEADER TextBgCntDat = {
       0, 0, 0x1000, 0, GFL_BG_SCRSIZ_256x256, GX_BG_COLORMODE_16,
-      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x00000, 0x8000,GX_BG_EXTPLTT_01,
+      GX_BG_SCRBASE_0xf000, GX_BG_CHARBASE_0x10000, 0x10000,GX_BG_EXTPLTT_01,
       3, 0, 0, FALSE
       };
     GFL_BG_FreeBGControl(frame);

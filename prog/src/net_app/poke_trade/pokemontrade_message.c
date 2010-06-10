@@ -770,6 +770,8 @@ void POKETRADE_MESSAGE_SetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork, int si
     _pokePocketItemMsgDisp(pp, pWork->StatusWin[side], 16, 16*8, pWork);
     _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[side+UI_BALL_MYSTATUS], pp, pWork->cellUnit,
                                     xdotpos[side]+16, 16, CLSYS_DRAW_MAIN, pWork->heapID,ballpal[side] );
+
+    GFL_CLACT_WK_SetBgPri(pWork->aBallIcon[side+UI_BALL_MYSTATUS].clwk_ball,1);
   }
   GFL_BMPWIN_TransVramCharacter(pWork->StatusWin[side]);
   GFL_BMPWIN_MakeScreen(pWork->StatusWin[side]);
