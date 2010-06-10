@@ -9809,6 +9809,17 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
         BTL_SVF_HANDEX_Pop( flowWk, cure_param );
       }
 
+      // テレキネシス状態を消す
+      if( BPP_CheckSick(bppTarget, WAZASICK_TELEKINESIS) )
+      {
+        BTL_HANDEX_PARAM_CURE_SICK* cure_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CURE_SICK, pokeID );
+          cure_param->poke_cnt = 1;
+          cure_param->pokeID[0] = targetPokeID;
+          cure_param->fStdMsgDisable = TRUE;
+          cure_param->sickCode = WAZASICK_TELEKINESIS;
+        BTL_SVF_HANDEX_Pop( flowWk, cure_param );
+      }
+
       // そらを飛んでたらキャンセルさせる
       if( BPP_CONTFLAG_Get(bppTarget, BPP_CONTFLG_SORAWOTOBU) )
       {
@@ -10447,6 +10458,7 @@ static void handler_Telekinesis_NoEffCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 
     if( (defMonsNo == MONSNO_DHIGUDA)
     ||  (defMonsNo == MONSNO_DAGUTORIO)
+    ||  (BPP_CheckSick(bppDef, WAZASICK_FLYING_CANCEL))
     ){
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_NOEFFECT_FLAG, TRUE );
     }
