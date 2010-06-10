@@ -5320,7 +5320,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Monohiroi( u32* numElems )
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
-// ターンチェック開始ハンドラ
+// ターンチェック終了ハンドラ
 static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
@@ -5330,7 +5330,7 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     {
       typedef struct {
         u8 pokeID[ BTL_POS_MAX ];
-        u8 fItemConsumed[ BTL_POS_MAX ];
+        u8 consumedPokeID[ BTL_POS_MAX ];
         u8 pokeCnt;
         u8 consumedPokeCnt;
       }MONOHIROI_WORK;
@@ -5340,38 +5340,31 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
       MONOHIROI_WORK* mwk = BTL_SVFTOOL_GetTmpWork( flowWk, sizeof(MONOHIROI_WORK) );
       const BTL_POKEPARAM* bpp;
-      u8 i;
+      u8 i, cnt;
 
       mwk->pokeCnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, mwk->pokeID );
       mwk->consumedPokeCnt = 0;
 
+      // 今ターン、アイテムを消費したポケモンを記録
+      cnt = 0;
       for(i=0; i<mwk->pokeCnt; ++i)
       {
         bpp = BTL_SVFTOOL_GetPokeParam( flowWk, mwk->pokeID[i] );
-        mwk->fItemConsumed[i] = BPP_TURNFLAG_Get( bpp, BPP_TURNFLG_ITEM_CONSUMED );
-        if( mwk->fItemConsumed[i] ){
-          mwk->consumedPokeCnt++;
+        if( (BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ITEM_CONSUMED))
+        &&  (BPP_GetConsumedItem(bpp) != ITEM_DUMMY_DATA)
+        ){
+          mwk->consumedPokeID[cnt++] = BPP_GetID( bpp );
         }
       }
 
-      // 今ターン、アイテムを消費したポケモンが１体以上いれば
-      if( mwk->consumedPokeCnt )
+      if( cnt )
       {
-        // その中から対象を１体、選ぶ
+        u8 rndIdx = BTL_CALC_GetRand( cnt );
+        u8 targetPokeID = mwk->consumedPokeID[rndIdx];
         u16 itemID;
-        u8 rndIdx = BTL_CALC_GetRand( mwk->consumedPokeCnt );
-        for(i=0; i<mwk->pokeCnt; ++i)
-        {
-          if( mwk->fItemConsumed[i] )
-          {
-            if( !rndIdx ){ break; }
-            --rndIdx;
-          }
-        }
 
-        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, mwk->pokeID[i] );
+        bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
         itemID = BPP_GetConsumedItem( bpp );
-        TAYA_Printf("消費したアイテム=%d\n", itemID);
 
         if( itemID != ITEM_DUMMY_DATA )
         {
@@ -5381,7 +5374,8 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
             setParam->header.tokwin_flag = TRUE;
             setParam->pokeID = pokeID;
             setParam->itemID = itemID;
-            setParam->fClearConsume = TRUE;
+            setParam->fClearConsumeOtherPoke = TRUE;
+            setParam->clearConsumePokeID = targetPokeID;
             HANDEX_STR_Setup( &setParam->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Monohiroi );
             HANDEX_STR_AddArg( &setParam->exStr, pokeID );
             HANDEX_STR_AddArg( &setParam->exStr, itemID );

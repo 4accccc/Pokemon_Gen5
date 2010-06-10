@@ -695,7 +695,9 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u16             itemID;           ///< 書き換え後のアイテム（ITEM_DUMMY_DATA ならアイテムを消す）
   u8              pokeID;           ///< 対象ポケモンID
-  u8              fClearConsume;    ///< 消費情報をクリア
+  u8              fClearConsume;    ///< 対象ポケモンの消費情報をクリア
+  u8              fClearConsumeOtherPoke; ///< 対象ポケモン以外の消費情報クリア
+  u8              clearConsumePokeID;     ///< 消費情報クリアするポケモンID
   BTL_HANDEX_STR_PARAMS  exStr;     ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_SET_ITEM;
 

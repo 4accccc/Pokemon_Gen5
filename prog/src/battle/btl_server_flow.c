@@ -14221,9 +14221,16 @@ static u8 scproc_HandEx_setItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
   }
 
   // Á”ïî•ñ‚ðƒNƒŠƒA
-  if( param->fClearConsume ){
+  if( param->fClearConsume )
+  {
     BPP_ClearConsumedItem( bpp );
     SCQUE_PUT_OP_ClearConsumedItem( wk->que, param->pokeID );
+  }
+  if( param->fClearConsumeOtherPoke )
+  {
+    BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->clearConsumePokeID );
+    BPP_ClearConsumedItem( target );
+    SCQUE_PUT_OP_ClearConsumedItem( wk->que, param->clearConsumePokeID );
   }
 
   scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
