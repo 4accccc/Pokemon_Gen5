@@ -29,6 +29,11 @@
 
 #include "btlv_input.h"
 
+#ifdef DEBUG_ONLY_FOR_hudson
+
+#include "debug/debug_hudson.h"
+
+#endif // DEBUG_ONLY_FOR_hudson
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -212,7 +217,10 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   spstack_init( wk );
   
 #ifdef DEBUG_ONLY_FOR_hudson 
-  GFL_UI_DEBUG_OVERWRITE_SetCallBack( UIFuncButtonA );
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  {
+    GFL_UI_DEBUG_OVERWRITE_SetCallBack( UIFuncButtonA );
+  }
 #endif // DEBUG_ONLY_FOR_hudson
 
   return wk;
@@ -314,7 +322,10 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
   //GFL_BMPWIN_Delete( wk->win );
       
 #ifdef DEBUG_ONLY_FOR_hudson
-  GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  {
+    GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
+  }
 #endif // DEBUG_ONLY_FOR_hudson
 
   PRINTSYS_QUE_Delete( wk->printQue );
@@ -709,6 +720,7 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
         
 #ifdef DEBUG_ONLY_FOR_hudson
   // 2回目の技をテレポートにする
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
   {
     static int d_cnt = 0;
     
