@@ -342,10 +342,10 @@ static BOOL check_ZenkokuCompMonsno( u16 monsno )
     MONSNO_SHEIMI,			// シェイミ
     MONSNO_ARUSEUSU,		// アルセウス
 		MONSNO_652,					// ツチノカミ
-		MONSNO_RAI,					// ライ
-		MONSNO_DARUTANISU,	// ダルタニス
-		MONSNO_MERODHIA,		// メロディア
-		MONSNO_INSEKUTA,		// インセクタ
+		MONSNO_653,					// ライ
+		MONSNO_654,					// ダルタニス
+		MONSNO_655,					// メロディア
+		MONSNO_656,					// インセクタ
 		MONSNO_657,					// ビクティ
   };
 
@@ -372,12 +372,12 @@ static BOOL check_LocalCompMonsno( u16 monsno )
 {
   int i;
   static const u16 cut_check_monsno[] = {
-		MONSNO_652,					// ツチノカミ
-		MONSNO_RAI,					// ライ
-		MONSNO_DARUTANISU,	// ダルタニス
-		MONSNO_MERODHIA,		// メロディア
-		MONSNO_INSEKUTA,		// インセクタ
-		MONSNO_657,					// ビクティ
+		MONSNO_652,			// ツチノカミ
+		MONSNO_653,			// ライ
+		MONSNO_654,			// ダルタニス
+		MONSNO_655,			// メロディア
+		MONSNO_656,			// インセクタ
+		MONSNO_657,			// ビクティ
   };
 
   // チェック除外ポケモンチェック
