@@ -807,7 +807,6 @@ BOOL ZONEDATA_IsFieldBeaconNG(u16 zone_id)
   return ( ZONEDATA_IsUnionRoom(zone_id)
       || ZONEDATA_IsColosseum(zone_id)
       || ZONEDATA_IsPlBoat(zone_id)
-      || ( zone_id == ZONE_ID_C04R0901 )          //トライアルハウス
       );
 }
 
