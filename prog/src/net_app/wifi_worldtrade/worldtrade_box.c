@@ -1403,12 +1403,6 @@ static int SubSeq_SelectWait( WORLDTRADE_WORK *wk )
 			if(flag==0){
         wk->deposit_ppp     = WorldTrade_GetPokePtr( wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos );
 
-        //もしシェイミならばランドフォルムへ戻す
-        if( MONSNO_SHEIMI == PPP_Get(wk->deposit_ppp, ID_PARA_monsno, NULL) )
-        {
-          PPP_Put( wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND );
-        }
-
 				wk->subprocess_seq  = SUBSEQ_END;
 				WorldTrade_SubProcessChange( wk, WORLDTRADE_DEPOSIT, 0 );
 				OS_Printf("deposit_ppp1 = %08x\n",WorldTrade_GetPokePtr(wk->param->myparty, wk->param->mybox, wk->BoxTrayNo, wk->BoxCursorPos));
@@ -2409,13 +2403,14 @@ static int PokeNewFormCheck( POKEMON_PASO_PARAM *ppp )
    * ・ギラティナも白金玉付きでの交換を許可
    *
    */
-
+#if 0
 	if(form_no > 0){
 		switch(monsno){
     case MONSNO_653:
       return 1;
 		}
 	}
+#endif 
 	return 0;
 }
 
@@ -2440,10 +2435,13 @@ static int PokeNewItemCheck( POKEMON_PASO_PARAM *ppp )
 	}
 	PPP_FastModeOff(ppp, flag);
 
+  //WBにてはっきんだまチェックはなくなりました
+#if 0
 	switch(item){
 	case ITEM_HAKKINDAMA:
 		return TRUE;
 	}
+#endif
 	return FALSE;
 }
 

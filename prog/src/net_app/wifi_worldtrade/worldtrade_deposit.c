@@ -1923,13 +1923,24 @@ void WorldTrade_PostPokemonBaseDataMake( Dpw_Tr_Data *dtd, WORLDTRADE_WORK *wk )
   // ポケモン構造体を代入
   
   if(WorldTrade_GetPPorPPP( wk->BoxTrayNo )){
-    //シェイミの場合はフォルムNoをノーマルにする
-    PP_Put((POKEMON_PARAM*)(wk->deposit_ppp), ID_PARA_form_no, FORMNO_SHEIMI_LAND);
+    //特定のポケモンフォルムNoをノーマルにする
+    switch( PPP_Get(wk->deposit_ppp, ID_PARA_monsno, NULL) )
+    {
+    case MONSNO_653:  //ライ
+    case MONSNO_SHEIMI://シェイミ
+      PP_Put((POKEMON_PARAM*)(wk->deposit_ppp), ID_PARA_form_no, 0 );
+      break;
+    }
     // POKEMON_PARAMとしてコピー
     MI_CpuCopyFast( wk->deposit_ppp, dtd->postData.data,  POKETOOL_GetWorkSize() );
   }else{
-    //シェイミの場合はフォルムNoをノーマルにする
-    PPP_Put(wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND);
+    //特定のポケモンはフォルムNoをノーマルにする
+    switch( PPP_Get(wk->deposit_ppp, ID_PARA_monsno, NULL) )
+    {
+    case MONSNO_653:  //ライ
+    case MONSNO_SHEIMI://シェイミ
+      PPP_Put(wk->deposit_ppp, ID_PARA_form_no, FORMNO_SHEIMI_LAND);
+    }
     // POKEMON_PASO_PARAMなのでReplace関数でPOKEMON_PARAMに肉付けする
     PokeReplace(wk->deposit_ppp,(POKEMON_PARAM *)dtd->postData.data);
   }

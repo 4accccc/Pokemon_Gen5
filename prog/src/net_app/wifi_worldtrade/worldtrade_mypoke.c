@@ -1127,6 +1127,8 @@ void WorldTrade_TransPokeGraphic( POKEMON_PARAM *pp )
 
     GFL_ARC_UTIL_TransVramPalette( POKEGRA_GetArcID(), pal, PALTYPE_MAIN_OBJ, 0x20*13, POKEGRA_POKEMON_PLT_SIZE, HEAPID_WORLDTRADE );
   }
+
+  POKEGRA_
 	
 }
 
