@@ -57,7 +57,7 @@ static const u16 FormTable[][2] =
 
 	{ MONSNO_511, FORMNO_511_MAX },				        // シキジカ ※新規
 	{ MONSNO_527, FORMNO_527_MAX },				        // アントレス ※新規
-	{ MONSNO_MERODHIA, FORM_MAX_MERODHIA },				// メロディア ※新規
+	{ MONSNO_655, FORMNO_655_MAX },								// メロディア ※新規
 	{ MONSNO_HIHIDARUMA, FORM_MAX_HIHIDARUMA },		// ヒヒダルマ ※新規
 	{ MONSNO_BASURAO, FORM_MAX_BASURAO },					// バスラオ ※新規
 
