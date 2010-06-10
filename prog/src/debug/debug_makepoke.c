@@ -1133,6 +1133,10 @@ static void box_setup( DMP_MAINWORK* wk, u32 boxID, const POKEMON_PARAM* pp )
     }
     break;
 
+  case ID_PARA_get_ball:
+    value = ITEM_BallID2ItemID( PP_Get(pp, p->paraID, NULL)); 
+    break;
+
   default:
     if( boxID == INPUTBOX_ID_RARE ){
       value = PP_CheckRare( pp );
@@ -1558,7 +1562,7 @@ static void box_relation( DMP_MAINWORK* wk, u32 updateBoxID )
 
   case INPUTBOX_ID_GET_BALL:
     {
-      u8 value = box_getvalue( wk, INPUTBOX_ID_GET_BALL );
+      u16 value = box_getvalue( wk, INPUTBOX_ID_GET_BALL );
       u8 ballID = ITEM_GetBallID( value );
       if( ballID == BALLID_NULL ){
         ballID = BALLID_MONSUTAABOORU;
