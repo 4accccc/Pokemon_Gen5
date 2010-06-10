@@ -34,6 +34,8 @@
 /*--------------------------------------------------------------------------*/
 enum {
   WORKIDX_STICK = EVENT_HANDLER_WORK_ELEMS - 1,
+
+  MONSNO_CODENAME_MERODHIA = 648,
 };
 
 /**
@@ -10543,7 +10545,7 @@ static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 
-  if( BPP_GetMonsNo(bpp) == MONSNO_MERODHIA )
+  if( BPP_GetMonsNo(bpp) == MONSNO_CODENAME_MERODHIA )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK)==pokeID )
     {
