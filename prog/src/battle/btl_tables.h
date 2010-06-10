@@ -80,6 +80,11 @@ extern BOOL BTL_TABLES_IsMatchInsectaCasette( u16 itemID );
 extern BOOL BTL_TABLES_IsMatchKatayaburiTarget( u16 tokuseiID );
 
 
+/**
+ *  タイプ書き換え失敗するモンスターナンバー判定
+ */
+extern BOOL BTL_TABLES_IsTypeChangeForbidPoke( u16 monsno );
+
 
 /**
  *  BGタイプから屋外かどうか判定（ダークボール用）

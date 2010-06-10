@@ -293,6 +293,15 @@ BOOL BTL_TABLES_IsMatchKatayaburiTarget( u16 tokuseiID )
 
 }
 
+/**
+ *  タイプ書き換え失敗するモンスターナンバー判定
+ */
+BOOL BTL_TABLES_IsTypeChangeForbidPoke( u16 monsno )
+{
+  return monsno == MONSNO_ARUSEUSU;
+}
+
+
 //=============================================================================================
 /**
  * メンタルハーブで治す状態異常テーブル順番アクセス

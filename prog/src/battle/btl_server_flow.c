@@ -13866,8 +13866,9 @@ static u8 scproc_HandEx_changeType( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-    if( !BPP_IsDead(bpp) )
-    {
+    if( (!BPP_IsDead(bpp) )
+    &&  (!BTL_TABLES_IsTypeChangeForbidPoke(BPP_GetMonsNo(bpp)))
+    ){
       SCQUE_PUT_OP_ChangePokeType( wk->que, param->pokeID, param->next_type );
       BPP_ChangePokeType( bpp, param->next_type );
 
