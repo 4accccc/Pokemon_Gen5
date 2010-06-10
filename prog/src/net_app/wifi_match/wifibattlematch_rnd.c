@@ -103,7 +103,7 @@ FS_EXTERN_OVERLAY(dpw_common);
 #define MATCHING_MSG_WAIT_SYNC (120)
 #define SELECTPOKE_MSG_WAIT_SYNC (60)
 
-#define MATCHING_TIMEOUT_SYNC   (60*20)
+#define MATCHING_TIMEOUT_SYNC   (60*40)
 
 //-------------------------------------
 ///	ヒープサイズ

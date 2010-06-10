@@ -117,7 +117,7 @@ typedef enum
 #define MATCHING_MSG_WAIT_SYNC (120)
 #define SELECTPOKE_MSG_WAIT_SYNC (60)
 
-#define MATCHING_TIMEOUT_SYNC   (60*20)
+#define MATCHING_TIMEOUT_SYNC   (60*40)
 
 //=============================================================================
 /**
@@ -2759,7 +2759,10 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
       DEBUG_WIFICUP_Printf( "不正カウンタ　自分%d相手%d\n", p_wk->my_dirty_cnt, p_wk->other_dirty_cnt );
       *p_seq  = SEQ_CHECK_DIRTY;
     }
-    is_timeout_enable = TRUE;
+    else
+    {
+      is_timeout_enable = TRUE;
+    }
     break;
 
   case SEQ_CHECK_DIRTY:
@@ -2826,6 +2829,7 @@ static void WbmWifiSeq_Matching( WBM_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_a
         *p_seq  = SEQ_START_OK_TIMING;
       }
     }
+
     is_timeout_enable = TRUE;
     break;
 
