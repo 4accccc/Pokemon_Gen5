@@ -8,6 +8,12 @@ extern void drawConsole( void );
 
 extern KeyControl		g_KeyCtrl;
 
+// バトルデータビデオをアップロードするかどうか
+// 現在は署名チェックが行われるため、サンプルからではアップロードできません
+// アップロードメニューを有効にする場合、以下の定義を有効にします
+//#define BATTLEVIDEO_UPLOAD_ENABLE
+
+
 // メニュータイプ
 enum {
     TYPE_NORMAL,        // 通常処理
@@ -29,11 +35,11 @@ typedef struct tagInputElement
     const char* head; // 入力メッセージ
     char buf[20];     // 入力バッファ
     u8   inputKeta;   // 何文字目を入力しているか？
-    u32  inputValue;  // 入力された値
+    u64  inputValue;  // 入力された値
 }InputElement;
 
 // 入力シーケンス
-#define MAX_INPUT_ELEMENTS      10
+#define MAX_INPUT_ELEMENTS      12
 typedef struct tagInputSequence
 {
     const int type;                                     // 入力タイプ
@@ -43,7 +49,7 @@ typedef struct tagInputSequence
     // 入力要素は複数ではない
     InputElement elements[MAX_INPUT_ELEMENTS];          // 要素(MAX_INPUT_ELEMENTS 以内)
     int currentElement;                                 // メニューで現在選択されている番号(入力では使用しない)
-    int result;                                         // 結果(メニューなら選択番号, 入力なら値)
+    u64 result;                                         // 結果(メニューなら選択番号, 入力なら値)
 }InputSequence;
 
 // ゲームシーケンス制御リスト構造体
@@ -54,7 +60,7 @@ typedef struct tagGameSequence
     const int   numElements;                            // 要素数(MAX_SCENE_ELEMENTS 以内)
     int (*fpResult)(struct tagGameSequence*);           // 結果を処理する関数
     InputSequence   inputList[MAX_SCENE_ELEMENTS];      // 入力リスト
-    int result;                                         // 操作結果
+    u64 result;                                         // 操作結果
     int currentElement;                                 // 現在実行中の処理番号
 } GameSequence;
 
@@ -71,7 +77,9 @@ enum
     state_debug_message,
     state_musical_update,
     state_musical_download,
+#ifdef BATTLEVIDEO_UPLOAD_ENABLE
     state_battle_upload,
+#endif
     state_battle_search,
     state_battle_rank_search,
     state_battle_download,

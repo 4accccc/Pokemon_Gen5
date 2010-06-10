@@ -104,6 +104,7 @@ typedef struct bf_key_st
 	BF_LONG S[4*256];
 	} BF_KEY;
 
+
 #ifdef OPENSSL_FIPS
 void private_BF_set_key(BF_KEY *key, int len, const unsigned char *data);
 #endif
@@ -127,3 +128,4 @@ const char *BF_options(void);
 #endif
 
 #endif
+

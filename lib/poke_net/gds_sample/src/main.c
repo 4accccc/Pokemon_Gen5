@@ -2,6 +2,9 @@
   Pokemon Network Library Test Client
 
   --履歴--
+  [2010/04/15] Siota
+   ・バトルデータのアップロード機能をメニューから削除
+
   [2010/03/29] Shinichiro Yamashita
 ・poke_net機能(バトルビデオアップデート)のインタフェース変更に伴い修正
   
@@ -45,7 +48,7 @@
 #define	AUTH_PID				(2345678)	// PID
 #define AUTH_ROMCODE			(20)		// ROM コード
 #define AUTH_LANGCODE			(1)			// 言語コード
-#define BATTLEID_AUTO_ENCODE
+//#define BATTLEID_AUTO_ENCODE
 
 // この値をPIDとして送信すると、色々なチェックが無視されるので注意！
 #define TRAFFIC_CHECK_PID		(9999999)
@@ -54,7 +57,8 @@
 #define	BATTLEVIDEO_SERVER_VER		(100)
 
 // イベントバトルビデオのIDへ変換する。
-#define TO_EVENT_BATTLEVIDEO_ID(x)	(x + 900000000000ULL)
+//#define TO_EVENT_BATTLEVIDEO_ID(x)	(x + 900000000000ULL)
+#define TO_EVENT_BATTLEVIDEO_ID(x)	(x)
 
 // *
 // * エラーコード⇔メッセージ定義
@@ -92,9 +96,9 @@ static POKE_NET_REQUESTCOMMON_AUTH sReqAuth;
 static u8 sReqBuff[BUFF_SIZE] = "";
 static u8 sResBuff[BUFF_SIZE] = "";
 static DWCApInfoType sApInfoType;
-const wchar_t g_TrainerName[]	= L"やまぴなす";				// プロフィールとミュージカルデータに使用
+const wchar_t g_TrainerName[]	= L"でぃーえす";				// プロフィールとミュージカルデータに使用
 const wchar_t g_TrainerName2[]  = L"ミニスカートが愛を叫ぶ";	// バトル本体のトレーナー情報に使用(現ソースでは未使用)
-const wchar_t g_MusicalTitle[]	= L"abcマーチ遠吠えなソナタ";	// ミュージカルタイトル
+const wchar_t g_MusicalTitle[]	= L"クール曲";	// ミュージカルタイトル
 
 /** --------------------------------------------------------------------
   static functions
@@ -123,12 +127,12 @@ static int update_error(GameSequence*);
 static int update_query_disconnect(GameSequence*);
 static int update_disconnect(GameSequence*);
 // 入力
-static void initInput(InputElement* input, u32 min, u32 max, u32 first);
+static void initInput(InputElement* input, u64 min, u64 max, u64 first);
 static int  processInput(GameSequence* seq, s16 x, s16 y);
 static void initInputSequence(InputSequence* input);
 static int processSceneSequence(GameSequence* input);
 static s16 dispInput(InputElement* input, s16 x, s16 y);
-static int getResultValue(GameSequence* seq, int no);
+static u64 getResultValue(GameSequence* seq, int no);
 // ユーティリティ
 static void nextGameSequence(int seqNo);
 static BOOL processMenuSequence(GameSequence* seq, s16 x, s16 y);
@@ -230,12 +234,19 @@ GameSequence sGameSeqs[] = {
         1,
         update_menu,
         {
-            {   TYPE_SELECT, 9,
+            {   TYPE_SELECT, 
+#ifdef BATTLEVIDEO_UPLOAD_ENABLE
+                9,
+#else
+                8,
+#endif
                 {
                     {"test request",},
                     {"musical update",},
                     {"musical download",},
+#ifdef BATTLEVIDEO_UPLOAD_ENABLE
                     {"battle upload",},
+#endif
                     {"battle search",},
                     {"battle rank search",},
                     {"battle download",},
@@ -281,6 +292,7 @@ GameSequence sGameSeqs[] = {
             },
         },
     },
+#ifdef BATTLEVIDEO_UPLOAD_ENABLE
     // battle_upload
     {
         "BATTLE UPLOAD",
@@ -300,6 +312,7 @@ GameSequence sGameSeqs[] = {
             },
         },
     },
+#endif
     // battle_search
     {
         "BATTLE SEARCH",
@@ -431,7 +444,7 @@ static void VBlankIntr(void)
 static int update_select_connect(GameSequence* seq)
 {
     if (seq->result == INPUT_CONFIRM) {
-        int ret = getResultValue(seq, 0);
+        int ret = (int)getResultValue(seq, 0);
 
         switch (ret) {
             case 0:  sApInfoType = DWC_APINFO_TYPE_USER0; break;    
@@ -530,7 +543,7 @@ static int update_connect(GameSequence* seq)
 static int update_select_pid(GameSequence* seq)
 {
     if (seq->result == INPUT_CONFIRM) {
-        int no = getResultValue(seq, 0);
+        int no = (int)getResultValue(seq, 0);
         int next = state_gds_init;
         if (no == 0) sReqAuth.PID = AUTH_PID;
         else if( no == 2) sReqAuth.PID = TRAFFIC_CHECK_PID;
@@ -549,7 +562,7 @@ static int update_select_pid(GameSequence* seq)
 static int update_input_pid(GameSequence* seq)
 {
     if (seq->result == INPUT_CONFIRM) {
-        sReqAuth.PID = getResultValue(seq, 0);
+        sReqAuth.PID = (int)getResultValue(seq, 0);
         return state_gds_init;
     }
     return state_select_pid;
@@ -583,7 +596,7 @@ static int update_menu(GameSequence* seq)
 {
     if (seq->result == INPUT_CANCEL) return state_query_disconnect;
 
-    return (getResultValue(seq, 0) + state_menu + 1); 
+    return (int)((getResultValue(seq, 0) + state_menu + 1));
 }
 
 /** --------------------------------------------------------------------
@@ -662,7 +675,7 @@ static int update_musical_update(GameSequence* seq)
 {
     if (seq->result == INPUT_CONFIRM) {
         GDS_PROFILE profile = {0};
-        int no = getResultValue(seq, 0);
+        int no = (int)getResultValue(seq, 0);
         MakeProfileData(&profile);
 
         MI_CpuClear8(sReqBuff, sizeof(sReqBuff));
@@ -690,7 +703,7 @@ static int update_musical_download(GameSequence* seq)
 {
     // 入力処理
     if (seq->result == INPUT_CONFIRM) {
-        int no = getResultValue(seq, 0);
+        int no = (int)getResultValue(seq, 0);
         GDS_PROFILE profile = {0};
         MakeProfileData(&profile);
         
@@ -713,8 +726,8 @@ static int update_battle_upload(GameSequence* seq)
 	unsigned char pModule[SIGNATURE_SIZE] = {0};	// 署名データ
 
     if (seq->result == INPUT_CONFIRM) {
-        int no   = getResultValue(seq, 0),
-            type = getResultValue(seq, 1);
+        int no   = (int)getResultValue(seq, 0),
+            type = (int)getResultValue(seq, 1);
         GDS_PROFILE profile = {0};
         MakeProfileData(&profile);
 
@@ -769,7 +782,7 @@ static int update_battle_search(GameSequence* seq)
 
 	    // 戦闘モード検索
         // 以下を変えると結果が変わります
-        battleMode = getResultValue(seq, 1); 
+        battleMode = (int)getResultValue(seq, 1); 
 	    if(battleMode == 0)
 	    {
 		    Serch.battle_mode = 0;
@@ -1014,6 +1027,9 @@ static int update_gds_response(int seqNo)
         
         GameWaitVBlankIntr();
     }
+
+    sCurSeq->currentElement = 0;
+
     return seqNo;
 }
 
@@ -1250,23 +1266,24 @@ void MakeMusicalshotData(MUSICAL_SHOT_DATA *_pMusicalData, int _MonsNoInc)
 	memcpy(&_pMusicalData->title, g_MusicalTitle, sizeof(g_MusicalTitle));
 	SetGDS_EOM(_pMusicalData->title, MUSICAL_PROGRAM_NAME_MAX);
 	
-	_pMusicalData->bgNo		= 1;			// 背景番号					[拒否] 0 - 4
-	_pMusicalData->spotBit	= 0x2;			// スポットライト対象(bit)(トップだったポケモン)
-											//							[拒否] 0 - 15
-	_pMusicalData->year		= 2010 - 2000;	// 年						[拒否] 0 - 99
-	_pMusicalData->month	= 4;			// 月						[拒否] 1 - 12
-	_pMusicalData->day		= 19;			// 日						[拒否] 1 - 31
-	_pMusicalData->player	= 1;			// 自分の番号				[拒否] 0 - 3
-	_pMusicalData->musVer	= 0;			// ミュージカルバージョン	[拒否] 0 - 0
-	_pMusicalData->pmVersion= 0;			// PM_VERSION				[拒否] 20, 21	(WHITE=20, BLACK=21)
-	_pMusicalData->pmLang	= 0;			// PM_LANG					[拒否] 1 - 8
+	_pMusicalData->bgNo		= 1;			    // 背景番号					[拒否] 0 - 4
+	_pMusicalData->spotBit	= 0x2;			    // スポットライト対象(bit)(トップだったポケモン)
+											    //							[拒否] 0 - 15
+	_pMusicalData->year		= 2010 - 2000;	    // 年						[拒否] 0 - 99
+	_pMusicalData->month	= 4;			    // 月						[拒否] 1 - 12
+	_pMusicalData->day		= 19;			    // 日						[拒否] 1 - 31
+	_pMusicalData->player	= 1;			    // 自分の番号				[拒否] 0 - 3
+	_pMusicalData->musVer	= 0;			    // ミュージカルバージョン	[拒否] 0 - 0
+	_pMusicalData->pmVersion= AUTH_ROMCODE;	    // PM_VERSION				[拒否] 20, 21	(WHITE=20, BLACK=21)
+	_pMusicalData->pmLang	= AUTH_LANGCODE;    // PM_LANG					[拒否] 1 - 8
 
 	for(i = 0;i < MUSICAL_POKE_MAX; i++)
 	{
-		_pMusicalData->shotPoke[i].monsno	= (u16)(_MonsNoInc + i);// ポケモン番号	[ － ] 別サーバにてチェック	// ポケモン番号
+		_pMusicalData->shotPoke[i].monsno	= (u16)(_MonsNoInc);    // ポケモン番号	[ － ] 別サーバにてチェック	// ポケモン番号
 		_pMusicalData->shotPoke[i].sex		= 0;					// 性別			[ － ]
 		_pMusicalData->shotPoke[i].rare		= 0;					// レアフラグ	[ － ]
 		_pMusicalData->shotPoke[i].form		= 0;					// フォルム番号	[ － ]
+		_pMusicalData->shotPoke[i].perRand	= 0;					//				[ － ]
 
 		// トレーナー名
 		// 7文字まで(8文字目はNULL)
@@ -1376,7 +1393,8 @@ void MakeBattleVideoData(BATTLE_REC_WORK* _pData, int _MonsNoInc)
 	_pData->setupSubset.competitor	= 0;	// 対戦者タイプ（ゲーム内トレーナー、通信対戦）-> enum BtlCompetitor @ battle/battle.h		[拒否] 2 - 3
 	_pData->setupSubset.myCommPos	= 0;	// 通信対戦時の自分の立ち位置（マルチの時、0,2 vs 1,3 になり、0,1が左側／2,3が右側になる）	[拒否] 0 - 3
 	_pData->setupSubset.rule		= 0;	// ルール（シングル・ダブル・トリプル・ローテ）-> enum BtlRule @ battle/battle.h			[拒否] 0 - 3
-	_pData->setupSubset.fMultiMode	= 0;	// マルチバトルフラグ（ルールは必ずダブル）		[拒否] 0 - 1
+	_pData->setupSubset.MultiMode	= 0;	// マルチバトルフラグ（ルールは必ずダブル）		[拒否] 0 - 1
+	_pData->setupSubset.shooterBit	= 0;
 
 	// クライアント操作内容の保存バッファ
 	// BTLREC_OPERATION_BUFFER 構造体
@@ -1501,19 +1519,19 @@ static int processSceneElement(GameSequence* seq, s16 x, s16 y)
 /** --------------------------------------------------------------------
   入力関連
   ----------------------------------------------------------------------*/
-const int MAX_KETA = 8;
+const int MAX_KETA = 12;
 
 /** --------------------------------------------------------------------
   入力処理初期化
   ----------------------------------------------------------------------*/
-static void initInput(InputElement* input, u32 min, u32 max, u32 first)
+static void initInput(InputElement* input, u64 min, u64 max, u64 first)
 {
 #pragma unused(min)
 #pragma unused(max)
     MI_CpuClear8(input->buf, sizeof(input->buf));
     input->inputKeta = 0;
     input->inputValue = first;
-    snprintf(input->buf, 20, "%08d", first);
+    snprintf(input->buf, 20, "%012d", first);
 }
 
 /** --------------------------------------------------------------------
@@ -1557,8 +1575,8 @@ static int processInput(GameSequence* seq, s16 x, s16 y)
         }
     }
     if (g_KeyCtrl.trg & PAD_BUTTON_A) {
-        input->inputValue = (u32)atoi(input->buf);
-        inputSeq->result = (int)input->inputValue;
+        input->inputValue = (u64)atoll(input->buf);
+        inputSeq->result = input->inputValue;
         return INPUT_CONFIRM;
     }
     else if (g_KeyCtrl.trg & PAD_BUTTON_B) {
@@ -1667,11 +1685,11 @@ static s16 dispInput(InputElement* input, s16 x, s16 y)
 /** --------------------------------------------------------------------
   入力結果取得
   ----------------------------------------------------------------------*/
-static int getResultValue(GameSequence* seq, int no)
+static u64 getResultValue(GameSequence* seq, int no)
 {
     if (no < 0 || no >= seq->numElements) return -1;
 
-    return (seq->inputList[no].result);
+    return (u64)(seq->inputList[no].result);
 }
 
 
