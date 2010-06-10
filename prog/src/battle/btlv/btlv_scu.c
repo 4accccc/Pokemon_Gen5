@@ -52,6 +52,10 @@ enum {
   COLIDX_LVUPWIN_LETTER = 0x01,
   COLIDX_LVUPWIN_SHADOW = 0x09,
 
+  COLIDX_TOKWIN_CLEAR  = 0x00,  // とくせいウィンドウのフォント色
+  COLIDX_TOKWIN_LETTER = 0x01,  // 自分側、敵側どちらのフォントパレットの
+  COLIDX_TOKWIN_SHADOW = 0x02,  // 使用場所も同じになっている
+
   MSGWIN_WIDTH = 30,
   MSGWIN_HEIGHT = 4,
   MSGWIN_ORG_X = 1,
@@ -3963,6 +3967,9 @@ static void tokwin_update_cgr( TOK_WIN* tokwin )
   {
     u32 width[ 2 ];
     u8  lines;
+
+    // フォント色設定
+    GFL_FONTSYS_SetColor( COLIDX_TOKWIN_LETTER, COLIDX_TOKWIN_SHADOW, COLIDX_TOKWIN_CLEAR );
 
     // ２行ある場合、文字列をイイ感じに配置する
     BTL_STR_MakeStringStd( wk->strBufSubA, BTL_STRID_STD_TokWin, 2, tokwin->pokeID, tokwin->tokusei );
