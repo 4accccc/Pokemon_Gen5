@@ -131,7 +131,7 @@ ALIGN4 static const u16 Talk_MissionMission[MISSION_TYPE_MAX][TALK_TYPE_MAX] = {
   },
 };
 
-///ミッション参加者同士の話しかけ(話しかけた側)
+///ミッション参加者同士の話しかけ(話しかけられた側)
 ALIGN4 static const u16 Talked_MissionMission[MISSION_TYPE_MAX][TALK_TYPE_MAX] = {
   {//MISSION_TYPE_VICTORY
     mis_m03_06_t1,
