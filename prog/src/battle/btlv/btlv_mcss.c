@@ -93,7 +93,8 @@ struct  _BTLV_MCSS
   u32             mcss_proj_mode      :1;
   u32             stop_anime_count    :2;
   u32             effect_vanish_flag  :1;     //技エフェクトから呼ばれたvanishを保持
-  u32                                 :26;
+  u32             set_init_pos        :1;     //技エフェクト後、初期位置からはずれていたチェックに引っかかった
+  u32                                 :25;
 };
 
 struct _BTLV_MCSS_WORK
@@ -1203,6 +1204,11 @@ void  BTLV_MCSS_SetSideChange( BTLV_MCSS_WORK* bmw, BtlvMcssPos pos1, BtlvMcssPo
         VecFx32 pos;
         BTLV_MCSS_GetDefaultPos( bmw, &pos, position[ i ^ 1 ] );
         BTLV_MCSS_MovePosition( bmw, position[ i ], EFFTOOL_CALCTYPE_DIRECT, &pos, 0, 0, 0 );
+        if( bmw->btlv_mcss[ index[ i ] ].set_init_pos )
+        { 
+          bmw->btlv_mcss[ index[ i ] ].set_init_pos = 0;
+          BTLV_MCSS_SetVanishFlag( bmw, position[ i ], BTLV_MCSS_VANISH_OFF );
+        }
       }
     }
     for( i = 0 ; i < 2 ; i++ )
@@ -2092,6 +2098,7 @@ void  BTLV_MCSS_CheckPositionSetInitPos( BTLV_MCSS_WORK* bmw, int position )
     BTLV_MCSS_GetDefaultPos( bmw, &def_pos, position );
     MCSS_GetPosition( bmw->btlv_mcss[ index ].mcss, &pos );
     MCSS_GetOfsPosition( bmw->btlv_mcss[ index ].mcss, &ofs_pos );
+    bmw->btlv_mcss[ index ].set_init_pos = 0;
     if( ( def_pos.x != pos.x ) ||
         ( def_pos.y != pos.y ) ||
         ( def_pos.z != pos.z ) ||
@@ -2099,6 +2106,7 @@ void  BTLV_MCSS_CheckPositionSetInitPos( BTLV_MCSS_WORK* bmw, int position )
         ( ofs_pos.y ) ||
         ( ofs_pos.z ) )
     { 
+      bmw->btlv_mcss[ index ].set_init_pos = 1;
       ofs_pos.x = 0;
       ofs_pos.y = 0;
       ofs_pos.z = 0;

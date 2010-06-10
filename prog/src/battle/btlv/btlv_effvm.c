@@ -4100,6 +4100,11 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
 
     start_ofs = (int *)&bevw->sequence[ bevw->migawari_table_ofs ];
 
+    //BG非表示
+    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+
     //汎用ワークを初期化
     bevw->sequence_work = 0;
 
@@ -4113,6 +4118,11 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   {
     int* start_ofs;
 
+    //サイドチェンジだとバニッシュされているので、バニッシュをオフる
+    if( bevw->waza == WAZANO_SAIDOTHENZI )
+    { 
+      BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos, BTLV_MCSS_VANISH_OFF );
+    }
     GFL_HEAP_FreeMemory( bevw->sequence );
     bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1,
                                             GFL_HEAP_LOWID( bevw->heapID ) );
