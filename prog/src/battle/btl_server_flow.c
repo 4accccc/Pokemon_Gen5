@@ -3681,7 +3681,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       fEnable = FALSE;
     }
 
-
   }
   else{
     // 無効でもエフェクトのみ発動する（じばく・だいばくはつ対応）
@@ -3769,7 +3768,6 @@ static void scproc_WazaExe_Effective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waz
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_WazaExeEnd_Common( wk, pokeID, waza, BTL_EVENT_WAZA_EXECUTE_EFFECTIVE );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
@@ -3785,7 +3783,6 @@ static void scproc_WazaExe_NotEffective( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID 
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_WazaExeEnd_Common( wk, pokeID, waza, BTL_EVENT_WAZA_EXECUTE_NO_EFFECT );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
   BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_WAZA_MUKOU );
@@ -3807,7 +3804,6 @@ static void scproc_WazaExe_Done( BTL_SVFLOW_WORK* wk, u8 pokeID, WazaID waza )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_WazaExeEnd_Common( wk, pokeID, waza, BTL_EVENT_WAZA_EXECUTE_DONE );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
@@ -12650,7 +12646,6 @@ u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp_t
 
   return rank;
 }
-
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] “浮いている”状態チェック
@@ -12666,6 +12661,34 @@ BOOL BTL_SVFTOOL_IsFlyingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
   return scproc_CheckFloating( wk, bpp );
 }
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] アイテム利用可否チェック
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_CheckItemUsable( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+
+  if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_BUKIYOU ){
+    return FALSE;
+  }
+  if( BPP_CheckSick(bpp, WAZASICK_SASIOSAE) ){
+    return FALSE;
+  }
+  if( BTL_FIELD_CheckEffect(BTL_FLDEFF_MAGICROOM) )
+  {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 天候取得

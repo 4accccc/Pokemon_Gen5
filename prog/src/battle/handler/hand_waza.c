@@ -4725,8 +4725,9 @@ static const BtlEventHandlerTable*  ADD_SabakiNoTubute( u32* numElems )
 }
 static void handler_SabakiNoTubute( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_SVFTOOL_CheckItemUsable(flowWk, pokeID) )
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 item = BPP_GetItem( bpp );
     u8 type = POKETYPE_NORMAL;
@@ -4768,8 +4769,9 @@ static const BtlEventHandlerTable*  ADD_TechnoBaster( u32* numElems )
 }
 static void handler_TechnoBaster( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_SVFTOOL_CheckItemUsable(flowWk, pokeID) )
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 item = BPP_GetItem( bpp );
     u8 type = POKETYPE_NORMAL;
@@ -4856,14 +4858,21 @@ static void handler_SizenNoMegumi_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u16 item = BPP_GetItem( bpp );
-    int prm = BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC);
-    // 所持アイテムのしぜんのめぐみパラメータが無効値（0）なら失敗する
-    if( (item == ITEM_DUMMY_DATA)
-    ||  (BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC) == 0)
-    ){
+    if( !BTL_SVFTOOL_CheckItemUsable(flowWk, pokeID) )
+    {
       BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+    }
+    else
+    {
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      u16 item = BPP_GetItem( bpp );
+      int prm = BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC);
+      // 所持アイテムのしぜんのめぐみパラメータが無効値（0）なら失敗する
+      if( (item == ITEM_DUMMY_DATA)
+      ||  (BTL_CALC_ITEM_GetParam(item, ITEM_PRM_SIZENNOMEGUMI_ATC) == 0)
+      ){
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER );
+      }
     }
   }
 }
