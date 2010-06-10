@@ -32,6 +32,19 @@ BOOL HUDSON_IsSkipTitle( void )
   return TRUE;
 }
 
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  テストコードをチェック
+ *
+ *	@param	const char* str 
+ *
+ *	@retval TRUE:指定したテストコードと一致
+ */
+//-----------------------------------------------------------------------------
+BOOL HUDSON_IsTestCode( const char* str )
+{ 
+  return ( OS_GetArgc() >= 2 && STD_StrCmp( OS_GetArgv(1), str ) == 0 );
+}
 
 #endif // DEBUG_ONLY_FOR_hudson
 

@@ -169,6 +169,23 @@ static BOOL selectTarget_init( int* seq, void* wk_adrs );
 static BOOL selectTarget_loop( int* seq, void* wk_adrs );
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 
+#ifdef DEBUG_ONLY_FOR_hudson
+// A連打
+static BOOL UIFuncButtonA( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DEBUG_OVERWRITE* p_data30 )
+{
+  static const GFL_UI_DEBUG_OVERWRITE w = { 
+    PAD_BUTTON_A,
+    PAD_BUTTON_A,
+  };
+
+  *p_data = w;
+  *p_data30 = w;
+
+  return TRUE;
+}
+#endif // DEBUG_ONLY_FOR_hudson
+
+
 BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainModule,
         const BTL_POKE_CONTAINER* pokeCon, GFL_TCBLSYS* tcbl, GFL_FONT* font, const BTL_CLIENT* client, BtlBagMode bagMode, HEAPID heapID )
 {
@@ -193,6 +210,10 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   wk->printQue = PRINTSYS_QUE_Create( wk->heapID );
 
   spstack_init( wk );
+  
+#ifdef DEBUG_ONLY_FOR_hudson 
+  GFL_UI_DEBUG_OVERWRITE_SetCallBack( UIFuncButtonA );
+#endif // DEBUG_ONLY_FOR_hudson
 
   return wk;
 }
@@ -291,6 +312,10 @@ BOOL BTLV_SCD_WaitRestartUI( BTLV_SCD* wk )
 void BTLV_SCD_Delete( BTLV_SCD* wk )
 {
   //GFL_BMPWIN_Delete( wk->win );
+      
+#ifdef DEBUG_ONLY_FOR_hudson
+  GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
+#endif // DEBUG_ONLY_FOR_hudson
 
   PRINTSYS_QUE_Delete( wk->printQue );
   GFL_STR_DeleteBuffer( wk->strbuf );
@@ -509,7 +534,6 @@ void BTLV_SCD_ForceQuitSelect( BTLV_SCD* wk )
 }
 
 
-
 #include "data\command_sel.cdat"
 
 static BOOL selectAction_init( int* seq, void* wk_adrs )
@@ -682,6 +706,30 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
   BTLV_INPUT_WAZA_PARAM biwp;
   u16 wazaCnt, wazaID, i;
   u8 PP, PPMax;
+        
+#ifdef DEBUG_ONLY_FOR_hudson
+  // 2回目の技をテレポートにする
+  {
+    static int d_cnt = 0;
+    
+//    if( ++d_cnt >= WAZANO_MAX )
+    if( ++d_cnt >= 2 )
+    {
+      const BTL_POKEPARAM* bpp;
+
+      bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
+
+//    BPP_WAZA_UpdateID( (BTL_POKEPARAM*)bpp, 0, d_cnt, 0, TRUE );
+
+      {
+        POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
+        PP_SetWazaPos( pp, WAZANO_TEREPOOTO, 0 );
+//        BPP_CurePokeSick( (BTL_POKEPARAM*)bpp ); // 状態異常回復
+        BPP_ReflectByPP( (BTL_POKEPARAM*)bpp );
+      }
+    }
+  }
+#endif // DEBUG_ONLY_FOR_hudson
 
   wazaCnt = BPP_WAZA_GetCount( wk->bpp );
   biwp.henshin_flag = BPP_HENSIN_Check( wk->bpp );
@@ -707,7 +755,6 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
 
   return TRUE;
 }
-
 static BOOL selectWaza_loop( int* seq, void* wk_adrs )
 {
   BTLV_SCD* wk = wk_adrs;

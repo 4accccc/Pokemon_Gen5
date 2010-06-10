@@ -32,8 +32,10 @@
 
 #define HUDSON_TESTCODE_MAP_JUMP ("1")
 #define HUDSON_TESTCODE_ALL_CONNECT ("2")
+#define HUDSON_TESTCODE_ALL_WAZA ("3")
 
 extern BOOL HUDSON_IsSkipTitle( void );
+extern BOOL HUDSON_IsTestCode( const char* str );
 
 //---------------------------------
 // HUDSON‚Ì‚ÝŽÀ‘Ì‚ð’è‹`

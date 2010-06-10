@@ -1765,7 +1765,6 @@ SRCS_OVERLAY_DEBUG_SODATEYA = field/event_debug_sodateya.c
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_CONNECT_CHECK = field/event_debug_all_connect_check.c \
                                    field/event_debug_menu_connect_check.c
-
 #DEBUG_FSKILL
 #===> GROUP_OVERLAY_GIMMICK
 SRCS_OVERLAY_DEBUG_FSKILL = field/event_debug_menu_fskill.c
@@ -2291,4 +2290,20 @@ SRCS_OVERLAY_OUTSIDE_SAVE = savedata/save_outside.c
 # 任天堂デバッグ
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
+
+# DEBUG_ALL_WAZA_CHECK
+#===> SRCS_OVERLAY_UNION_APP
+#===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_ZUKAN_TOROKU
+#===> SRCS_OVERLAY_TH_AWARD
+#===> SRCS_OVERLAY_CHIHOU_ZUKAN_AWARD
+#===> SRCS_OVERLAY_ZENKOKU_ZUKAN_AWARD
+#===> SRCS_OVERLAY_BTL_REC_SEL
+#===> SRCS_OVERLAY_PMSINPUT
+#===> SRCS_OVERLAY_PSEL
+#===> SRCS_OVERLAY_SUBWAY_MAP
+#===> SRCS_OVERLAY_ZUKAN_DETAIL
+#===> SRCS_OVERLAY_BATTLE_VIEW
+#===> SRCS_OVERLAY_MANUAL
+SRCS_OVERLAY_DEBUG_ALL_WAZA_CHECK = field/event_debug_btl_all_waza_check.c
 

@@ -149,12 +149,18 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 #ifdef DEBUG_ONLY_FOR_hudson
 
 #include "debug/debug_hudson.h"
+#include "field/event_debug_btl_all_waza_check.h" // for EVENT_DEBUG_BtlAllWazaCheck
 #include "field/event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
 #include "field/event_debug_menu.h" // for EVENT_DEBUG_AllMapCheck
 
 static void HudsonMain( GAMESYS_WORK* gsys )
 {
   static int debugcnt = 0;
+  
+  if( OS_GetArgc() < 2 )
+  {
+    return;
+  }
 
   if( debugcnt < 180 )
   {
@@ -165,14 +171,9 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     debugcnt++;
 
     //>>引数からテストモード切り替え
-  
-    if( OS_GetArgc() < 2 )
-    {
-      return;
-    }
-
+    
     // 全マップチェック
-    if ( STD_StrCmp( OS_GetArgv(1), HUDSON_TESTCODE_MAP_JUMP ) == 0 )
+    if ( HUDSON_IsTestCode( HUDSON_TESTCODE_MAP_JUMP ) )
     {
       GMEVENT * new_event;
 
@@ -180,7 +181,7 @@ static void HudsonMain( GAMESYS_WORK* gsys )
       GAMESYSTEM_SetEvent( gsys, new_event );
     }
     // 全接続チェック
-    else if( STD_StrCmp( OS_GetArgv(1), HUDSON_TESTCODE_ALL_CONNECT ) == 0 )
+    else if ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_CONNECT ) )
     {
       GMEVENT * new_event;
 
@@ -188,7 +189,17 @@ static void HudsonMain( GAMESYS_WORK* gsys )
           FS_OVERLAY_ID( debug_connect_check ), EVENT_DEBUG_AllConnectCheck, NULL );
       GAMESYSTEM_SetEvent( gsys, new_event );
     }
+    // 全技チェック
+    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+      GMEVENT * new_event;
+
+      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+          FS_OVERLAY_ID( debug_all_waza_check ), EVENT_DEBUG_BtlAllWazaCheck, NULL );
+      GAMESYSTEM_SetEvent( gsys, new_event );
+    }
+
   }
+
 }
 #endif // DEBUG_ONLY_FOR_hudson
 
