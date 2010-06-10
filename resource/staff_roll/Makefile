@@ -112,8 +112,8 @@ $(TARGETDIR)/$(targetname).narc: $(targetname).narc
 ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、元ファイルからコンバートするルールを有効にする
 # コピー先のnarcが古い場合実行する
 $(targetname).narc: WBStaffList.xls arclist.txt $(lobjects) $(gobjects) $(sobjects) $(obj_imd) $(obj_ica) $(obj_ita) $(obj_ima) $(obj_itp) $(obj_iva)
-	$(CSVCVTR) -o staff_list_jp.csv -p 3 -s csv WBStaffList.xls
-	$(CSVCVTR) -o staff_list_eng.csv -p 4 -s csv WBStaffList.xls
+	$(CSVCVTR) -o staff_list_jp.csv -p 2 -s csv WBStaffList.xls
+	$(CSVCVTR) -o staff_list_eng.csv -p 3 -s csv WBStaffList.xls
 	perl staff_roll_gmm.pl staff_list_jp.csv ../message/template.gmm
 	perl staff_roll_gmm.pl staff_list_eng.csv ../message/template.gmm
 	perl staff_roll_cnv.pl staff_list_jp.csv

@@ -654,8 +654,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_052">
-		<language name="JPN" width="256">POKE'MON  CHARACTER  DESIGN</language>
-		<language name="JPN_KANJI" width="256">POKE'MON  CHARACTER  DESIGN</language>
+		<language name="JPN" width="256">POKE'MON  CHARACTERS  DESIGN</language>
+		<language name="JPN_KANJI" width="256">POKE'MON  CHARACTERS  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_053">
@@ -1089,8 +1089,8 @@
 	</row>
 
 	<row id="STAFF_ROLL_STR_139">
-		<language name="JPN" width="256">GAME  DIALOG  DESIGN</language>
-		<language name="JPN_KANJI" width="256">GAME  DIALOG  DESIGN</language>
+		<language name="JPN" width="256">GAME  DIALOGUE  DESIGN</language>
+		<language name="JPN_KANJI" width="256">GAME  DIALOGUE  DESIGN</language>
 	</row>
 
 	<row id="STAFF_ROLL_STR_140">
