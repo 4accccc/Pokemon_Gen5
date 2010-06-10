@@ -139,6 +139,9 @@ void GFLUser_Init(void)
 #ifndef MULTI_BOOT_MAKE
   if ( OS_IsRunOnTwl() == FALSE )
   {
+    OS_InitAlloc( OS_ARENA_MAIN, OS_GetMainArenaLo(), OS_GetMainArenaHi(), HEAPID_CHILD_MAX );
+    extraHeapHandle = OS_CreateExtraHeap( OS_ARENA_MAIN );
+    extraHeapBuffer = OS_AllocFromHeap( OS_ARENA_MAIN, extraHeapHandle, 0x3F00 );
   }
   else
   {
@@ -165,9 +168,6 @@ void GFLUser_Init(void)
   
   if ( OS_IsRunOnTwl() == FALSE )
   {
-    OS_InitAlloc( OS_ARENA_MAIN, OS_GetMainArenaLo(), OS_GetMainArenaHi(), HEAPID_CHILD_MAX );
-    extraHeapHandle = OS_CreateExtraHeap( OS_ARENA_MAIN );
-    extraHeapBuffer = OS_AllocFromHeap( OS_ARENA_MAIN, extraHeapHandle, 0x3F00 );
     GFL_HEAP_CreateHeapInBuffer( extraHeapBuffer , 0x3F00 , HEAPID_EXTRA );
   }
   else
