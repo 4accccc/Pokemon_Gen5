@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-02-09T18:44:05"/>
+	<create user="kawada_koji" host="W00215" date="2010-06-10T16:04:10"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -4795,17 +4795,6 @@ X선을 쬐어 태어났다.
 		<language name="JPN_KANJI">아무것도 없는 곳에 있던
 알에서 깨어나 세계를
 만들었다고 여겨진다.</language>
-	</row>
-
-	<row id="ZKN_COMMENT_KOR_00_487_GIRA" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>ギラティナ
-・シンオウ図鑑プラチナ版</comment>
-		<language name="JPN">난폭하다는 이유로 쫓겨났지만
-깨어진 세계라고 전해지는 장소에서
-조용히 원래 세계를 보고 있었다.</language>
-		<language name="JPN_KANJI">난폭하다는 이유로 쫓겨났지만
-깨어진 세계라고 전해지는 장소에서
-조용히 원래 세계를 보고 있었다.</language>
 	</row>
 
 	<flowchart-group-list>

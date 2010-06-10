@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-14T13:16:12"/>
+	<create user="kawada_koji" host="W00215" date="2010-06-10T16:04:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5508,17 +5508,6 @@ Y luego dio forma al mundo.</language>
 		<language name="JPN_KANJI">Se dice que surgió de un huevo en
 un lugar en el que no había nada.
 Y luego dio forma al mundo.</language>
-	</row>
-
-	<row id="ZKN_COMMENT_SPA_00_487_GIRA" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>ギラティナ
-・シンオウ図鑑プラチナ版</comment>
-		<language name="JPN">Fue desterrado por su violencia.
-Observa el mundo en silencio desde
-el Mundo Distorsión.</language>
-		<language name="JPN_KANJI">Fue desterrado por su violencia.
-Observa el mundo en silencio desde
-el Mundo Distorsión.</language>
 	</row>
 
 	<flowchart-group-list>

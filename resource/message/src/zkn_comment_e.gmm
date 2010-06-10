@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="shimoyamada" host="W00184" date="2010-05-14T13:12:32"/>
+	<create user="kawada_koji" host="W00215" date="2010-06-10T16:03:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -5516,17 +5516,6 @@ nothing, then shaped the world.</language>
 		<language name="JPN_KANJI">It is said to have emerged from an
 egg in a place where there was
 nothing, then shaped the world.</language>
-	</row>
-
-	<row id="ZKN_COMMENT_E_00_487_gira" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,#ffff80,#ffff80,,,#ffff80,,">
-		<comment>ギラティナ
-・シンオウ図鑑プラチナ版</comment>
-		<language name="JPN">It was banished for its violence.
-It silently gazed upon the old
-world from the Distortion World.</language>
-		<language name="JPN_KANJI">It was banished for its violence.
-It silently gazed upon the old
-world from the Distortion World.</language>
 	</row>
 
 	<flowchart-group-list>
