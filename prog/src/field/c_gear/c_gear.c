@@ -1268,7 +1268,7 @@ static void _modeSelectAnimInit(C_GEAR_WORK* pWork)
   int x,y;
   CGEAR_PANELTYPE_ENUM type;
 
-  type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
+  type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy); // 2
   pWork->select_type = type;
   pWork->select_count = 0;
 
@@ -3017,6 +3017,11 @@ static void _touchFunction(C_GEAR_WORK *pWork, int bttnid)
         (bttnid != TOUCH_LABEL_ALL) ){
       return ;
     }
+  }
+
+  // すでに選択後であれば、何もしない。
+  if( pWork->createEvent != FIELD_SUBSCREEN_ACTION_NONE ){
+    return ;
   }
 
   GFL_UI_SetTouchOrKey(GFL_APP_KTST_TOUCH);  //タッチした事になる
@@ -5227,7 +5232,7 @@ static void _modeSelectNgAnimInit(C_GEAR_WORK* pWork)
   int x,y;
   CGEAR_PANELTYPE_ENUM type;
 
-  type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy);
+  type = _cgearSave_GetPanelType(pWork,pWork->touchx,pWork->touchy); // 1
   pWork->select_type = type;
   pWork->select_count = 0;
 
