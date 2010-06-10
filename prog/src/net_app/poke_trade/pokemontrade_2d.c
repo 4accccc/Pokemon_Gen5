@@ -34,6 +34,8 @@
 #include "tradeirdemo.naix"
 #include "app_menu_common.naix"
 
+#include "poke_tool/pokerus.h"    //for POKERUS_～    20100610 add Satio
+
 
 
 #define _SUCKEDCOUNT_NUM (21)  //吸い込みまでにかかる回数
@@ -2344,11 +2346,11 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
   {
     _ITEMMARK_ICON_WORK* pIM = &pWork->aPokerusMark;
     UI_EASY_CLWK_RES_PARAM prm;
-    int rus = PP_Get( pp , ID_PARA_pokerus ,NULL);
+    BOOL rus = POKERUS_CheckInfectPP(pp);   //20100610 mod Saito
     int type = 0;
 
     if(pIM->clwk_poke_item){  //確保済み
-      if(rus == 0){
+      if(!rus){
         GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
       }
       else{
@@ -2356,7 +2358,7 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
       }
       return;
     }
-    if(rus == 0){
+    if(!rus){
       return;
     }
     
@@ -2437,8 +2439,26 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
   prm.pltt_src_ofs = 0;
   prm.pltt_src_num = 1;
 
+  //レアマスクを作成          20100610 add Saito
+  if (!bEgg)
+  {
+    BOOL rare = PP_CheckRare( pp );
+    if (rare) mark |= (1<<6);
+  }
+  //ポケルス完治マスクを作成    20100610 add Saito
+  {
+    BOOL infected = POKERUS_CheckInfectedPP(pp);
+    if (infected) mark |= (1<<7);
+  }
+
+  if ( !(pWork->aPokeMark.load) )
+  {
+    UI_EASY_CLWK_LoadResource( &pWork->aPokeMark.res, &prm, pWork->cellUnit, pWork->heapID );
+    pWork->aPokeMark.load = TRUE;
+  }
+
   for(i = 0;i < _POKEMARK_MAX ; i++){
-    _ITEMMARK_ICON_WORK* pIM = &pWork->aPokeMark[i];
+    GFL_CLWK  *clwk = pWork->aPokeMark.clwk[i];
 
     if(mark & (1 << i)){
       type = marktbl[i*2];
@@ -2446,30 +2466,42 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
     else{
       type = marktbl[i*2+1];
     }
-
-    if(pIM->clwk_poke_item){
+    NOZOMU_Printf("%d valid\n",i);
+    if(clwk){
+      NOZOMU_Printf("%d valid2\n",i);
       if(type==-1){
-        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+        GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
       }
-      else if(bEgg && i==12){
-        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+      else if(bEgg && i==6){
+        GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
       }
       else{
-        GFL_CLACT_WK_SetAnmSeq( pIM->clwk_poke_item, type );
-        GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, TRUE );
+        GFL_CLACT_WK_SetAnmSeq( clwk, type );
+        GFL_CLACT_WK_SetDrawEnable( clwk, TRUE );
       }
     }
     else{
-      if(type==-1){
-        continue;
-      }
-      if(bEgg && i==12){
-        continue;
-      }
-
+#if 0      // 20100610 del Saito
       UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
       pIM->clwk_poke_item =
         UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit, markpos[i]*8 , (12 * 8)+5, type, pWork->heapID );
+#else
+      int make_type;
+      if (type==-1) make_type = marktbl[i*2];
+      else make_type = type;
+      pWork->aPokeMark.clwk[i] =
+        UI_EASY_CLWK_CreateCLWK( &pWork->aPokeMark.res, pWork->cellUnit, markpos[i]*8 , (12 * 8)+5, make_type, pWork->heapID );
+      clwk = pWork->aPokeMark.clwk[i];
+      NOZOMU_Printf("%d create\n",i);
+#endif
+      if(type==-1){
+        GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+        continue;
+      }
+      if(bEgg && i==6){
+        GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
+        continue;
+      }
     }
   }
 }
@@ -2486,9 +2518,17 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
 void IRC_POKETRADE_PokeStatusIconReset(POKEMON_TRADE_WORK* pWork)
 {
   int i;
+  _STATE_ICON_WORK* pSIW = &pWork->aPokeMark;
   for(i = 0;i < _POKEMARK_MAX ; i++){
-    _ITEMMARK_ICON_WORK* pIM = &pWork->aPokeMark[i];
-    IRC_POKETRADE_ItemIconReset(pIM);
+    if(pSIW->clwk[i]){
+      GFL_CLACT_WK_Remove( pSIW->clwk[i] );
+      pSIW->clwk[i] = NULL;
+    }
+  }
+  if (pSIW->load)
+  {
+    UI_EASY_CLWK_UnLoadResource( &pSIW->res );
+    pSIW->load = FALSE;
   }
 }
 

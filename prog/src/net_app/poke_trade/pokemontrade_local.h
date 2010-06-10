@@ -399,6 +399,8 @@ typedef enum{
 #define GTSFACEICON_HEIGHT (24)
 #define GTSFACEICON_WIDTH (24)
 
+#define _POKEMARK_MAX  (8)
+
 /// @brief 3Dモデルカラーフェード
 typedef struct
 {
@@ -450,7 +452,13 @@ typedef enum
   UI_BALL_NUM
 } _UI_BALLICON_TYPE;
 
-
+typedef struct
+{
+  //ポケモンボックスマーク・ステート（レア、ポケルス顔）アイコン
+  UI_EASY_CLWK_RES      res;
+  BOOL load;
+  GFL_CLWK                  *clwk[_POKEMARK_MAX];
+} _STATE_ICON_WORK;
 
 typedef struct
 {
@@ -475,7 +483,6 @@ typedef struct
   GFL_CLWK                  *clwk_type_icon;
 } _TYPE_ICON_WORK;
 
-#define _POKEMARK_MAX  (8)
 
 #include "pokemontrade_demo_local.h"
 
@@ -602,7 +609,7 @@ struct _POKEMON_TRADE_WORK{
   _TYPE_ICON_WORK aTypeIcon[4];  //ダブルバッファ
   _ITEMMARK_ICON_WORK aItemMark;
   _ITEMMARK_ICON_WORK aPokerusMark;
-  _ITEMMARK_ICON_WORK aPokeMark[_POKEMARK_MAX];
+  _STATE_ICON_WORK aPokeMark;
 
   TOUCHBAR_WORK* pTouchWork;
 
