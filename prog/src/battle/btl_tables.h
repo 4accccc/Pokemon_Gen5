@@ -93,6 +93,11 @@ extern BOOL BTL_TABLES_CheckItemCallNoEffect( u16 itemID );
 
 
 /**
+ *  ターンチェック処理順アクセス
+ */
+extern WazaSick  BTL_TABLES_GetTurnCheckWazaSickByOrder( u32 idx );
+
+/**
  *  メンタルハーブ対応の状態異常チェック
  */
 extern WazaSick  BTL_TABLES_GetMentalSickID( u32 idx );

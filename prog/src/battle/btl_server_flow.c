@@ -14303,8 +14303,10 @@ static u8 scproc_HandEx_consumeItem( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
   const BTL_HANDEX_PARAM_CONSUME_ITEM* param = (const BTL_HANDEX_PARAM_CONSUME_ITEM*)param_header;
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
-  scPut_UseItemAct( wk, bpp );
-  handexSub_putString( wk, &param->exStr );
+  if( param->fNoAction == FALSE ){
+    scPut_UseItemAct( wk, bpp );
+    handexSub_putString( wk, &param->exStr );
+  }
 
   scproc_ConsumeItem( wk, bpp );
   scproc_ItemChange( wk, bpp, ITEM_DUMMY_DATA );

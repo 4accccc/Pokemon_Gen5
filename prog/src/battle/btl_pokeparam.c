@@ -15,6 +15,7 @@
 #include "btl_common.h"
 #include "btl_calc.h"
 #include "btl_sick.h"
+#include "btl_tables.h"
 
 #include "btl_pokeparam.h"
 
@@ -1991,10 +1992,14 @@ void BPP_SetWazaSick( BTL_POKEPARAM* bpp, WazaSick sick, BPP_SICK_CONT contParam
 void BPP_WazaSick_TurnCheck( BTL_POKEPARAM* bpp, BtlSickTurnCheckFunc callbackFunc, void* callbackWork )
 {
   WazaSick  sick;
+  u32 i = 0;
 
-
-  for(sick=0; sick<NELEMS(bpp->coreParam.sickCont); ++sick)
+  while( 1 )
   {
+    sick = BTL_TABLES_GetTurnCheckWazaSickByOrder(i++);
+    if( sick == WAZASICK_NULL ){
+      break;
+    }
     // ねむり・こんらんはアクション開始のタイミングで独自のカウンタデクリメント処理
     if( (sick == WAZASICK_NEMURI) || (sick == WAZASICK_KONRAN) ){
       continue;

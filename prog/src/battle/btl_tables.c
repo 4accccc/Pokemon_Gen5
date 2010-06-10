@@ -315,6 +315,77 @@ WazaSick  BTL_TABLES_GetMentalSickID( u32 idx )
   return WAZASICK_NULL;
 }
 
+//=============================================================================================
+/**
+ * ターンチェック処理順に状態異常コード取得
+ *
+ * @param   idx   処理順（0～）
+ *
+ * @retval  WazaSick    有効idxの時、状態異常コード／それ以外 WAZASICK_NULL;
+ */
+//=============================================================================================
+WazaSick  BTL_TABLES_GetTurnCheckWazaSickByOrder( u32 idx )
+{
+  static const WazaSick table[] = {
+
+    // 回復系
+    WAZASICK_AQUARING,        ///< アクアリング
+    WAZASICK_NEWOHARU,        ///< ねをはる
+
+    // ドレイン系
+    WAZASICK_YADORIGI,        ///< やどりぎのたね
+
+    // ダメージ系
+    WAZASICK_DOKU,
+    WAZASICK_YAKEDO,
+    WAZASICK_AKUMU,
+    WAZASICK_NOROI,
+    WAZASICK_BIND,
+
+    // 効果切れチェック系
+    WAZASICK_TYOUHATSU,
+    WAZASICK_ICHAMON,
+    WAZASICK_ENCORE,          ///< 直前に使ったワザしか出せない
+    WAZASICK_KANASIBARI,
+    WAZASICK_FLYING,          ///< でんじふゆう
+    WAZASICK_TELEKINESIS,     ///< テレキネシス
+    WAZASICK_KAIHUKUHUUJI,    ///< かいふくふうじ
+    WAZASICK_SASIOSAE,        ///< さしおさえ（回復封じが切れてから差し押さえが切れると、木の実とかで回復できるかも）
+    WAZASICK_MUSTHIT,         ///< ワザ必中状態
+    WAZASICK_MUSTHIT_TARGET,  ///< 特定相手に対してのみ必中状態
+
+    // 特殊効果系
+    WAZASICK_AKUBI,
+
+    // ほろびのうた
+    WAZASICK_HOROBINOUTA,     ///< ほろびのうた
+
+    // ターンチェック処理が無いはず系
+    WAZASICK_MAHI,
+    WAZASICK_NEMURI,
+    WAZASICK_KOORI,
+    WAZASICK_MEROMERO,
+    WAZASICK_KONRAN,
+    WAZASICK_IEKI,            ///< とくせい無効化
+    WAZASICK_MIYABURU,        ///< みやぶられて相性ゼロでも等倍で殴られる＆回避率上昇が無効
+    WAZASICK_TOOSENBOU,       ///< にげる・いれかえが出来ない
+    WAZASICK_HANEYASUME,      ///< はねやすめ（飛行タイプ->無属性化）
+    WAZASICK_WAZALOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない
+    WAZASICK_TAMELOCK,        ///< 直前に使ったワザしか出せない上、行動も選択できない（溜めワザ専用）
+    WAZASICK_KODAWARI,        ///< 最初に使ったワザしか選択できない
+    WAZASICK_FLYING_CANCEL,   ///< ふゆう状態になれない
+    WAZASICK_FREEFALL,        ///< フリーフォール
+    WAZASICK_HITRATIO_UP,     ///< 命中率上昇
+
+  };
+
+  if( idx < NELEMS(table) ){
+    return table[idx];
+  }
+  return WAZASICK_NULL;
+}
+
+
 
 
 //--------------------------------------------------------------------------

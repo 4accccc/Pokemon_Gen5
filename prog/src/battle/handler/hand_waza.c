@@ -4903,9 +4903,8 @@ static void handler_SizenNoMegumi_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_SET_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
-      param->pokeID = pokeID;
-      param->itemID = ITEM_DUMMY_DATA;
+    BTL_HANDEX_PARAM_CONSUME_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      param->fNoAction = TRUE;
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
@@ -7709,7 +7708,7 @@ static void handler_Nagetukeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u16 itemID = BPP_GetItem( bpp );
     if( (itemID == ITEM_DUMMY_DATA)
     ||  (BTL_CALC_ITEM_GetParam(itemID, ITEM_PRM_NAGETUKERU_ATC) == 0 )
-    ||  (BPP_CheckSick(bpp, WAZASICK_SASIOSAE))
+    ||  (!BTL_SVFTOOL_CheckItemUsable(flowWk, pokeID))
     ||  (HandCommon_CheckCantChangeItemPoke(flowWk, pokeID))
     ){
       BTL_EVENTVAR_RewriteValue(BTL_EVAR_FAIL_CAUSE, SV_WAZAFAIL_OTHER);
@@ -7751,10 +7750,11 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     u16 itemID = BPP_GetItem( bpp );
     if( itemID != ITEM_DUMMY_DATA )
     {
-      BTL_HANDEX_PARAM_SET_ITEM* item_param;
+      BTL_HANDEX_PARAM_CONSUME_ITEM* item_param;
         item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
-        item_param->pokeID = pokeID;
-        item_param->itemID = ITEM_DUMMY_DATA;
+//        item_param->pokeID = pokeID;
+//        item_param->itemID = ITEM_DUMMY_DATA;
+        item_param->fNoAction = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, item_param );
 
       {
@@ -8382,14 +8382,13 @@ static void handler_Tuibamu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
       BTL_HANDEX_PARAM_SET_ITEM* item_param;
       BTL_HANDEX_PARAM_ITEM_SP* eq_param;
 
-     item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
+      item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_ITEM, pokeID );
         item_param->pokeID = targetPokeID;
         item_param->itemID = ITEM_DUMMY_DATA;
         HANDEX_STR_Setup( &item_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Tuibamu );
         HANDEX_STR_AddArg( &item_param->exStr, pokeID );
         HANDEX_STR_AddArg( &item_param->exStr, itemID );
       BTL_SVF_HANDEX_Pop( flowWk, item_param );
-
 
       eq_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_SP, pokeID );
         eq_param->header.failSkipFlag = TRUE;

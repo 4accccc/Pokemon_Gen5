@@ -731,6 +731,7 @@ typedef struct {
  */
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
+  u32                      fNoAction;
   BTL_HANDEX_STR_PARAMS    exStr;   ///< 成功時メッセージ
 }BTL_HANDEX_PARAM_CONSUME_ITEM;
 
