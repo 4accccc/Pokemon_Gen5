@@ -590,9 +590,9 @@
 #define		MONSNO_585		( 579 )		//ランクルス
 #define		MONSNO_609		( 580 )		//コアルヒー
 #define		MONSNO_610		( 581 )		//スワンナ
-#define		MONSNO_611		( 582 )		//ツルリ
-#define		MONSNO_612		( 583 )		//ツルット
-#define		MONSNO_613		( 584 )		//ツルツルダ
+#define		MONSNO_611		( 582 )		//バニプッチ
+#define		MONSNO_612		( 583 )		//バニリッチ
+#define		MONSNO_613		( 584 )		//バイバニラ
 #define		MONSNO_511		( 585 )		//シキジカ
 #define		MONSNO_527		( 586 )		//メブキジカ
 #define		MONSNO_560		( 587 )		//エモンガ
