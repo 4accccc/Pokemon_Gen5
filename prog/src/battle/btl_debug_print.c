@@ -214,7 +214,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
 
   case DBGSTR_CALCDMG_WazaParam:        return "ワザ情報：ID=%d, Type=%d\n";
   case DBGSTR_CALCDMG_BaseDamage:       return "基礎ダメージ値 (%d)\n";
-  case DBGSTR_CALCDMG_RangeHosei:       return "対象数によるダメージ補正:%d\n";
+  case DBGSTR_CALCDMG_RangeHosei:       return "対象数によるダメージ補正:%d  (ratio=%08x)\n";
   case DBGSTR_CALCDMG_WeatherHosei:     return "天候による補正が発生, 補正率=%08x, dmg=%d->%d\n";
   case DBGSTR_CALCDMG_RAW_DAMAGE:       return "威力:%d, Lv:%d, こうげき:%d, ぼうぎょ:%d,  ... 素ダメ:%d\n";
   case DBGSTR_CALCDMG_Critical:         return "クリティカルだから素ダメ->%d\n";

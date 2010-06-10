@@ -153,11 +153,26 @@ BOOL BTL_POKESET_IsRemovedAll( const BTL_POKESET* rec )
 }
 
 /**
- *  単純コピー
+ *  生きてるポケモンのみコピー
  */
-void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst )
+u32 BTL_POKESET_CopyAlive( const BTL_POKESET* src, BTL_POKESET* dst )
 {
-  GFL_STD_MemCopy( src, dst, sizeof(BTL_POKESET) );
+  BTL_POKEPARAM* member;
+  u32 max, i;
+
+  BTL_POKESET_Clear( dst );
+
+  max = BTL_POKESET_GetCount( src );
+  for(i=0; i<max; ++i)
+  {
+    member = BTL_POKESET_Get( src, i );
+    if( !BPP_IsDead(member) )
+    {
+      BTL_POKESET_Add( dst, member );
+    }
+  }
+  return BTL_POKESET_GetCount( dst );
+
 }
 /**
  *  指定ポケモンと同陣営のデータのみをコピー

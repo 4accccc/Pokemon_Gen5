@@ -63,9 +63,9 @@ extern void BTL_POKESET_Remove( BTL_POKESET* rec, BTL_POKEPARAM* bpp );
 extern BTL_POKEPARAM* BTL_POKESET_Get( const BTL_POKESET* rec, u32 idx );
 
 /**
- *  コピー
+ *  生きてるポケモンだけ
  */
-extern void BTL_POKESET_Copy( const BTL_POKESET* src, BTL_POKESET* dst );
+extern u32 BTL_POKESET_CopyAlive( const BTL_POKESET* src, BTL_POKESET* dst );
 
 /**
  *  味方だけコピー

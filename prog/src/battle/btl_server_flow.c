@@ -2861,9 +2861,11 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
 
     // ワザ対象をワークに取得
     BTL_POKESET_Clear( wk->psetTargetOrg );
+    BTL_POKESET_Clear( wk->psetTarget );
     BTL_SVFSUB_RegisterTargets( wk, attacker, actTargetPos, wk->wazaParam, wk->psetTargetOrg );
     BTL_POKESET_RemoveDeadPoke( wk->psetTargetOrg );
-    BTL_POKESET_Copy( wk->psetTargetOrg, wk->psetTarget );
+    BTL_POKESET_CopyAlive( wk->psetTargetOrg, wk->psetTarget );
+    TAYA_Printf("TargetCntMax=%d\n", BTL_POKESET_GetCount(wk->psetTarget) );
 
     // 使ったワザのPP減らす（前ターンからロックされている場合は減らさない）
     if( (!fWazaLock) )
@@ -4824,8 +4826,6 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
     // 失敗メッセージ
     scPut_WazaExecuteFailMsg( wk, attacker, waza, fail_cause );
 
-
-
     // 演出
     switch( fail_cause ){
     case SV_WAZAFAIL_NEMURI:     scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI ); break;
@@ -5290,8 +5290,10 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack )
 {
   FLAG_SET flagSet;
-  fx32 dmg_ratio = (BTL_POKESET_GetCount(wk->psetTargetOrg) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
+  fx32 dmg_ratio = (BTL_POKESET_GetCountMax(targets) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
   u32 dmg_sum = 0;
+
+//  TAYA_Printf("TargetCntMax=%d, ratio=%08x\n", BTL_POKESET_GetCountMax(targets), dmg_ratio );
 
 
   // 複数対象のワザか判定
@@ -6286,8 +6288,11 @@ static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
       BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_WazaParam, wazaParam->wazaID, wazaParam->wazaType);
       BTL_N_PrintfEx(PRINT_FLG, DBGSTR_CALCDMG_BaseDamage, fxDamage);
     }
-    fxDamage  = BTL_CALC_MulRatio( fxDamage, targetDmgRatio );
-    BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RangeHosei, fxDamage);
+    // ワザ対象数による補正
+    if( targetDmgRatio != BTL_CALC_DMG_TARGET_RATIO_NONE ){
+      fxDamage  = BTL_CALC_MulRatio( fxDamage, targetDmgRatio );
+      BTL_N_PrintfEx( PRINT_FLG, DBGSTR_CALCDMG_RangeHosei, fxDamage, targetDmgRatio);
+    }
     // 天候補正
     {
       BtlWeather weather = scEvent_GetWeather( wk );
@@ -12840,6 +12845,30 @@ BOOL BTL_SVFTOOL_IsFreeFallUserPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 }
 //--------------------------------------------------------------------------------------
 /**
+ * [ハンドラ用ツール] フリーフォール実行側・または捕まれている側のポケモンかどうか判定
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  BOOL
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_IsFreeFallPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  if( BTL_SVFTOOL_IsFreeFallUserPoke(wk, pokeID) ){
+    return TRUE;
+  }
+  else{
+    const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+    if( BPP_CheckSick(bpp, WAZASICK_FREEFALL) ){
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+//--------------------------------------------------------------------------------------
+/**
  * [ハンドラ用ツール] 体重取得
  *
  * @param   wk
@@ -14432,7 +14461,7 @@ static u8 scproc_HandEx_changeMember( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
 
   if( (!scproc_CheckShowdown(wk))
-  &&  (!checkFreeFallUsing(bpp))
+  &&  (!BTL_SVFTOOL_IsFreeFallPoke(wk, param->pokeID))
   &&  (wk->flowResult == SVFLOW_RESULT_DEFAULT)
   ){
     handexSub_putString( wk, &param->preStr );
