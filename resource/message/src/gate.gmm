@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-06-09T20:26:22"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-10T17:09:31"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="-48" top="256" right="657" bottom="884" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -470,7 +470,7 @@
 		<comment>各ゲート共通メッセージ
 ・一言cM/日曜</comment>
 		<language name="JPN" width="256">◇「イッシュさいだいの　ショッピングエリア　なんでもそろう！」ショッピングモール　アールナイン</language>
-		<language name="JPN_KANJI" width="256">◇「イッシュ最大の　ショッピングエリア　なんでもそろう！」ショッピングモール　アールナイン</language>
+		<language name="JPN_KANJI" width="256">◇「イッシュ最大の　ショッピングエリア　なんでもそろう！」ショッピングモール　R9</language>
 	</row>
 
 	<row id="msg_gate_c1_01" back-color="#ffff80,,,#ffff80,,#ffff80,#ffffff,,,#ffffff,,#ffff80,#ffffff,,,#ffffff,,">
@@ -589,7 +589,7 @@
 
 	<row id="msg_gate_c3_02" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>c3についての地域情報2</comment>
-		<language name="JPN" width="256">◇ヒウンシティ　ピアからでるふねは　それぞれいきさきが　ちがいます</language>
+		<language name="JPN" width="256">◇ヒウンシティの　ピアからでるふねは　それぞれいきさきが　ちがいます</language>
 		<language name="JPN_KANJI" width="256">◇ヒウンシティの　ピアからでる船は　それぞれ行き先が　違います</language>
 	</row>
 
@@ -1488,8 +1488,8 @@
 
 	<row id="msg_gate_diamond_dust">
 		<comment>レア天気</comment>
-		<language name="JPN" width="256">ひじょうにめずらしい　ダイアモンドダストが　はっせい！！</language>
-		<language name="JPN_KANJI" width="256">非常に珍しい　ダイアモンドダストが　発生！！</language>
+		<language name="JPN" width="256">ひじょうにめずらしい　ダイヤモンドダストが　はっせい！！</language>
+		<language name="JPN_KANJI" width="256">非常に珍しい　ダイヤモンドダストが　発生！！</language>
 	</row>
 
 	<row id="msg_gate_raikami">
