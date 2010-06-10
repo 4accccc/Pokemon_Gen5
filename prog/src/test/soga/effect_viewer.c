@@ -551,6 +551,7 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
           BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
           BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
         }
+        BTLV_EFFECT_SetBtlRule( evw->rule );
         del_pokemon( evw );
         set_pokemon( evw );
       }
@@ -750,10 +751,6 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
   case SEQ_EFFECT_WAIT:
     if( BTLV_EFFECT_CheckExecute() == FALSE )
     {
-      VecFx32 pos, tar;
-      BTLV_CAMERA_GetCameraPosition( BTLV_EFFECT_GetCameraWork(), &pos, &tar );
-      OS_Printf("cam_pos_x:%f cam_pos_y:%f cam_pos_z:%f\n",FX_FX32_TO_F32(pos.x),FX_FX32_TO_F32(pos.y),FX_FX32_TO_F32(pos.z));
-      OS_Printf("cam_tar_x:%f cam_tar_y:%f cam_tar_z:%f\n",FX_FX32_TO_F32(tar.x),FX_FX32_TO_F32(tar.y),FX_FX32_TO_F32(tar.z));
       evw->seq_no = evw->ret_seq_no;
     }
     break;
