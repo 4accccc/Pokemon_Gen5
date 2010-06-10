@@ -273,7 +273,7 @@ static const int CommandData_GFLogo[] = {
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
 
-	COMM_WAIT,			60,
+	COMM_WAIT,			30,
 
 	COMM_END,
 };
