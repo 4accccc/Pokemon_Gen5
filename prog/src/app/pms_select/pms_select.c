@@ -123,6 +123,7 @@ enum
   PLATE_BG_SY = 6,   
   PLATE_BG_START_PY = 1,
   PLATE_BG_PLTT_OFS_BASE = 0x2,
+  PLATE_BG_PLTT_OFS_NO_OF_NEW_MES  = 6,  // PLATE_BG_PLTT_OFS_BASEから6個目が「あたらしく　メッセージを　ついかする」のパレット
 };
 
 //--------------------------------------------------------------
@@ -219,7 +220,7 @@ enum
 {	
 	//メインBG
 	PLTID_BG_COMMON_M			= 0,
-  PLTID_BG_MSG_M        = 8,
+  PLTID_BG_MSG_M        = 9,
 	PLTID_BG_TASKMENU_M		= 12,
 	PLTID_BG_TOUCHBAR_M		= 14,
 
@@ -238,8 +239,8 @@ enum
 enum
 {
 	//メインBG
-	PLTNUM_BG_COMMON_M			= 8,
-  PLTNUM_BG_MSG_M        = 1,
+	PLTNUM_BG_COMMON_M			= 9,
+  PLTNUM_BG_MSG_M         = 1,
 	PLTNUM_BG_TASKMENU_M		= 0,  // ?本
 	PLTNUM_BG_TOUCHBAR_M		= 0,  // ?本
 
@@ -2136,8 +2137,8 @@ static void PLATE_UNIT_DrawLastMessage( PMS_SELECT_MAIN_WORK* wk, u8 view_pos_id
   buf = GFL_MSG_CreateString( wk->msg, pms_input01_01 );
   
   // プレート描画
-  PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, 0, is_select );
-  
+  PMSSelect_BG_PlateTrans( &wk->wk_bg, view_pos_id, PLATE_BG_PLTT_OFS_NO_OF_NEW_MES, is_select );
+
   // 選択状態によって文字描画エリアのカラーを指定
   if( is_select )
   {
