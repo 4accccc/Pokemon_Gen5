@@ -33,11 +33,9 @@ _EVENT_DATA		ev_d03r0101_rival_01
 _EVENT_DATA		ev_pos_d03r0101_hakase2_01
 _EVENT_DATA_END
 
-/**************************************************************/
-/*            FLAG_CHANGE_LABEL                               */
-/**************************************************************/
-//ev_d03r0101_flag_change:
-//  _END
+
+//ヒヒダルマの戦闘フラグ指定用ユーザーワークを定義（共通化のためここで定義します）
+DEFINE_LOCAL	LWK_BTL_FLAG
 
 /**************************************************************/
 /*			サングラス	D03R0101イベントスクリプト			  */
@@ -307,7 +305,8 @@ _TALK_START_TURN_NOT()
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE
-				_WILD_BTL_SET_EX( MONSNO_503, 35, SCR_WILD_BTL_FLAG_SPEABI3 )	//ヒヒダルマ
+				_CALL	sub_btl_flag_set	//野生ポケモン戦闘フラグの指定処理
+				_WILD_BTL_SET_EX( MONSNO_503, 35, LWK_BTL_FLAG )	//ヒヒダルマ
     			_WILD_LOSE_CHECK( LWK_LOSE )
 
 				IF $LWK_LOSE == SCR_BATTLE_RESULT_WIN THEN
@@ -361,7 +360,8 @@ _TALK_START_TURN_NOT()
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE2
-				_WILD_BTL_SET_EX( MONSNO_503, 35, SCR_WILD_BTL_FLAG_SPEABI3 )	//ヒヒダルマ
+				_CALL	sub_btl_flag_set	//野生ポケモン戦闘フラグの指定処理
+				_WILD_BTL_SET_EX( MONSNO_503, 35, LWK_BTL_FLAG )	//ヒヒダルマ
     			_WILD_LOSE_CHECK( LWK_LOSE2 )
 
 				IF $LWK_LOSE2 == SCR_BATTLE_RESULT_WIN THEN
@@ -414,7 +414,8 @@ _TALK_START_TURN_NOT()
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE3
-				_WILD_BTL_SET_EX( MONSNO_503, 35, SCR_WILD_BTL_FLAG_SPEABI3 )	//ヒヒダルマ
+				_CALL	sub_btl_flag_set	//野生ポケモン戦闘フラグの指定処理
+				_WILD_BTL_SET_EX( MONSNO_503, 35, LWK_BTL_FLAG )	//ヒヒダルマ
     			_WILD_LOSE_CHECK( LWK_LOSE3 )
 
 				IF $LWK_LOSE3 == SCR_BATTLE_RESULT_WIN THEN
@@ -467,7 +468,8 @@ _TALK_START_TURN_NOT()
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE4
-				_WILD_BTL_SET_EX( MONSNO_503, 35, SCR_WILD_BTL_FLAG_SPEABI3 )	//ヒヒダルマ
+				_CALL	sub_btl_flag_set	//野生ポケモン戦闘フラグの指定処理
+				_WILD_BTL_SET_EX( MONSNO_503, 35, LWK_BTL_FLAG )	//ヒヒダルマ
     			_WILD_LOSE_CHECK( LWK_LOSE4 )
 
 				IF $LWK_LOSE4 == SCR_BATTLE_RESULT_WIN THEN
@@ -520,7 +522,8 @@ _TALK_START_TURN_NOT()
 				_SYSWIN_CLOSE()
 				
 				DEFINE_LOCAL	LWK_LOSE5
-				_WILD_BTL_SET_EX( MONSNO_503, 35, SCR_WILD_BTL_FLAG_SPEABI3 )	//ヒヒダルマ
+				_CALL	sub_btl_flag_set	//野生ポケモン戦闘フラグの指定処理
+				_WILD_BTL_SET_EX( MONSNO_503, 35, LWK_BTL_FLAG )	//ヒヒダルマ
     			_WILD_LOSE_CHECK( LWK_LOSE5 )
 
 				IF $LWK_LOSE5 == SCR_BATTLE_RESULT_WIN THEN
@@ -555,6 +558,14 @@ ev_daruma_wk:
 	ENDIF
 
 _RET
+
+//野生ポケモン戦闘
+sub_btl_flag_set:
+	//野生話しかけ戦闘MSG、第３特性指定
+	$LWK_BTL_FLAG = SCR_WILD_BTL_FLAG_WILD_TALK
+	$LWK_BTL_FLAG |= SCR_WILD_BTL_FLAG_SPEABI3
+_RET
+
 
 /**************************************************************/
 /*			バックパッカー♂	D03R0101イベントスクリプト	  */
