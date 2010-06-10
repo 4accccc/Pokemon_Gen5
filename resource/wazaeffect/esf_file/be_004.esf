@@ -366,6 +366,18 @@ SE再生	SEQ_SE_TOUJOU_SMALL	デフォルト	真ん中	0:0:127	0:0:0
 ポケモン拡縮	POS_F	追従	1	1	10	0	0
 ポケモン移動	POS_F	初期位置	0	0	0	0	0
 ラベル	NO_EXIST_F
+立ち位置チェック	POS_TR_BB	いない	NO_EXIST_TR_BB
+ポケモン拡縮	POS_TR_BB	追従	1	1	10	0	0
+ポケモン移動	POS_TR_BB	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_TR_BB
+立ち位置チェック	POS_TR_B	いない	NO_EXIST_TR_B
+ポケモン拡縮	POS_TR_B	追従	1	1	10	0	0
+ポケモン移動	POS_TR_B	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_TR_B
+立ち位置チェック	POS_TR_D	いない	NO_EXIST_TR_D
+ポケモン拡縮	POS_TR_D	追従	1	1	10	0	0
+ポケモン移動	POS_TR_D	初期位置	0	0	0	0	0
+ラベル	NO_EXIST_TR_D
 エフェクト終了待ち	すべて
 エフェクト終了
 &

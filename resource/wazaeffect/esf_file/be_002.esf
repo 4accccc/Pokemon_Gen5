@@ -20,6 +20,15 @@ c:\home\pokemon_wb\resource\particle\wazaeffect\w_002.spa
 立ち位置チェック	POS_F	いない	NO_EXIST_F
 ポケモン拡縮	POS_F	追従	0.5	0.5	12	2	0
 ラベル	NO_EXIST_F
+立ち位置チェック	POS_TR_BB	いない	NO_EXIST_TR_BB
+ポケモン拡縮	POS_TR_BB	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_TR_BB
+立ち位置チェック	POS_TR_B	いない	NO_EXIST_TR_B
+ポケモン拡縮	POS_TR_B	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_TR_B
+立ち位置チェック	POS_TR_D	いない	NO_EXIST_TR_D
+ポケモン拡縮	POS_TR_D	追従	0.5	0.5	12	2	0
+ラベル	NO_EXIST_TR_D
 エフェクト終了待ち	すべて
 エフェクト終了
 &
