@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-04-10T18:11:39"/>
+	<create user="matsumiya" host="W00224" date="2010-06-10T17:08:17"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -293,7 +293,7 @@
 
 
 	<row id="msg_d10r0201_poke10_01">
-		<comment>ライの鳴き声</comment>
+		<comment>キュレムの鳴き声</comment>
 		<attribute name="キャラ指定">POKE10</attribute>
 		<language name="JPN" width="256">ヒュラララ！</language>
 		<language name="JPN_KANJI" width="256">ヒュラララ！</language>
