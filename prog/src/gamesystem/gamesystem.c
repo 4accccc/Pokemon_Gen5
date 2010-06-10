@@ -191,6 +191,7 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     }
     // 全技チェック
     else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+    {
       GMEVENT * new_event;
 
       new_event = GMEVENT_CreateOverlayEventCall( gsys, 
