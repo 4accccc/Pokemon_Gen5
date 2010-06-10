@@ -970,7 +970,8 @@ static void FIELD_CROWD_PEOPLE_BOOT_CONTROL_Init( FIELD_CROWD_PEOPLE_BOOL_CONTRO
 
   for( i=0; i<FIELD_CROWD_PEOPLE_BOOT_POINT_MAX; i++ )
   {
-    p_wk->wait[i] = GFUser_GetPublicRand(p_wk->boot_data.wait[timezone]); // 初期ウエイト値
+    //p_wk->wait[i] = GFUser_GetPublicRand(p_wk->boot_data.wait[timezone]); // 初期ウエイト値
+    p_wk->wait[i] = 0; // 初期ウエイト値  確実にあける。
   }
 
 }
