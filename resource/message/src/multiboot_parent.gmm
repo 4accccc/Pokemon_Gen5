@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-09T13:05:41"/>
+	<create user="matsushima" host="W00181" date="2010-06-10T15:18:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -369,7 +369,7 @@
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="674"/>
 		<band id="3" index="3" style="0000" width="674"/>
-		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -665,9 +665,13 @@ multiboot_childと一緒</comment>
 
 	<row id="MSG_MB_PAERNT_MOVIE_10">
 		<language name="JPN" width="208">えいがの　ポケモンを　[2:02:３桁:0]ひき
-ぶじに　てんそうできました！▼</language>
+ぶじに　てんそうできました！▼
+てんそうした　ポケモンは
+ボックスに　はいりました！▼</language>
 		<language name="JPN_KANJI" width="208">映画の　ポケモンを　[2:02:３桁:0]匹
-無事に　転送できました！▼</language>
+無事に　転送できました！▼
+転送した　ポケモンは
+ボックスに　入りました！▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_11">
@@ -688,9 +692,15 @@ multiboot_childと一緒</comment>
 
 	<row id="MSG_MB_PAERNT_MOVIE_13">
 		<language name="JPN" width="208">ロックカプセルを
-ぶじに　てんそうできました！▼</language>
+ぶじに　てんそうできました！▼
+てんそうした　ロックカプセルは
+バッグの　たいせつなものポケットに
+はいりました！▼</language>
 		<language name="JPN_KANJI" width="208">ロックカプセルを
-無事に　転送できました！▼</language>
+無事に　転送できました！▼
+転送した　ロックカプセルは
+バッグの　たいせつなものポケットに
+入りました！▼</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_MOVIE_14">
