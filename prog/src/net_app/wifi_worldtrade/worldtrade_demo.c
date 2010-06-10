@@ -390,6 +390,8 @@ int WorldTrade_Demo_End(WORLDTRADE_WORK *wk, int seq)
 	// ボックス画面に戻る
 	WorldTrade_SubProcessUpdate( wk );
 
+  G2_BlendNone();
+
 	return SEQ_INIT;
 }
 

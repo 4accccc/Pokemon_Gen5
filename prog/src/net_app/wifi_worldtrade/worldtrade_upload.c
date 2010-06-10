@@ -319,7 +319,7 @@ int WorldTrade_Upload_Init(WORLDTRADE_WORK *wk, int seq)
 	// BMPWIN確保
 	BmpWinInit( wk );
 
-    WorldTrade_SetPartnerExchangePos( wk );
+  WorldTrade_SetPartnerExchangePos( wk );
 
 	// ワイプフェード開始
 	WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEIN, WIPE_TYPE_FADEIN, WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );
@@ -657,10 +657,11 @@ static int Subseq_Start( WORLDTRADE_WORK *wk)
 		break;
 		
 	case MODE_SERVER_CHECK:	
-		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, MSG_ALLPUT, 0x0f0f );
+		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_01_025, 1, 0x0f0f );
 		// 「ようすをみる」に行く前にサーバーチェックを行う
     WorldTrade_SetNextSeq( wk, SUBSEQ_MES_WAIT, SUBSEQ_SERVER_TRADE_CHECK );
 		break;
+    
 	case MODE_POKEMON_EVO_SAVE:
 		// 「ポケモンレポートをかいています。でんげんをきらないでください」
 		Enter_MessagePrint( wk, wk->MsgManager, msg_gtc_15_004, 1, 0x0f0f );
