@@ -16,6 +16,7 @@
 #include "system/wipe.h"
 #include "net/dwc_error.h"
 #include "sound/pm_sndsys.h"
+#include "system/net_err.h"
 
 //アーカイブ
 #include "message.naix"
@@ -430,9 +431,14 @@ static void SEQFUNCTION_WaitDisConnectMessage( WIFILOGOUT_WORK *p_wk )
 //-----------------------------------------------------------------------------
 static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk )
 { 
+  //ネットが解放されてもPUSHPOPエラーをだした場合
+  //エラーシステムの内部にエラーが残りことがありえるので、
+  //念のためここでエラーをクリアする。
+  //もしクリアしないで残ってしまう場合Cギアが稼働しないため
   if( GFL_NET_IsExit() )
   { 
     //解放されていたら何もしない
+    NetErr_ErrWorkInit();
     SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_StartEndMessage );
     OS_TPrintf( "WIFILOGOUT 既にネットは解放されていた\n" );
   }
@@ -441,6 +447,7 @@ static void SEQFUNCTION_StartDisConnect( WIFILOGOUT_WORK *p_wk )
     //初期化されていたら解放
     if( GFL_NET_Exit( NETCALLBACK_End ) )
     { 
+      NetErr_ErrWorkInit();
       SEQ_CHANGE_STATE( p_wk, SEQFUNCTION_WaitDisConnect );
       OS_TPrintf( "WIFILOGOUT ネット解放開始\n" );
     }
