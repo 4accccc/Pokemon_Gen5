@@ -123,6 +123,7 @@
 "ball21.NCLR"
 "ball22.NCLR"
 "ball23.NCLR"
+"ball24.NCLR"
 
 "ball00.NCGR"
 "ball01.NCGR"
@@ -148,6 +149,7 @@
 "ball21.NCGR"
 "ball22.NCGR"
 "ball23.NCGR"
+"ball24.NCGR"
 
 "ball_32k.NCER"
 "ball_64k.NCER"
