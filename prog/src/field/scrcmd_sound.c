@@ -698,11 +698,14 @@ VMCMD_RESULT EvCmdMePlay(VMHANDLE *core, void *wk )
 //--------------------------------------------------------------
 static BOOL EvWaitMe( VMHANDLE *core, void *wk )
 {
-  SCRCMD_WORK*  work = wk;
-  GAMESYS_WORK* gsys = SCRCMD_WORK_GetGameSysWork( work );
-  SCRIPT_WORK*    sc = SCRCMD_WORK_GetScriptWork( work );
+  SCRCMD_WORK*  work  = wk;
+  GAMESYS_WORK* gsys  = SCRCMD_WORK_GetGameSysWork( work );
+  SCRIPT_WORK*  sc    = SCRCMD_WORK_GetScriptWork( work );
+  GAMEDATA*     gdata = GAMESYSTEM_GetGameData( gsys );
+  FIELD_SOUND*  fsnd  = GAMEDATA_GetFieldSound( gdata );
 
-  if( PMSND_CheckPlayBGM() == FALSE )
+  if( (PMSND_CheckPlayBGM() == FALSE) && 
+      (FIELD_SOUND_HaveRequest(fsnd) == FALSE) )
   {
     GMEVENT* event;
     event = EVENT_FSND_PopBGM( gsys, FSND_FADE_NONE, FSND_FADE_FAST );
