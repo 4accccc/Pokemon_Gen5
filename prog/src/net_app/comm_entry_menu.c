@@ -657,7 +657,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     break;
 
   case _SEQ_SEND_GAMESTART_SYNC:
-    if( em->game_start_num != GFL_NET_SystemGetConnectNum() )
+    if( em->game_start_num != GFL_NET_SystemGetConnectNum() || em->min_num > GFL_NET_SystemGetConnectNum() )
     {
       //誰かが抜けた・・・
       if(CemSend_GameCancel(em->mp_mode) == TRUE){
@@ -665,8 +665,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
         em->seq = _SEQ_CANCEL_MSG;
       }
     }
-    else
-    if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
+    else if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
     {
       GFL_NET_SetNoChildErrorCheck(TRUE);
       em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
