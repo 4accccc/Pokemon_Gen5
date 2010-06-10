@@ -586,6 +586,9 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
   case SEQ_BATTLE_NG:
     if(IntrudeSend_TalkAnswer(
         intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_NG) == TRUE){
+      //¸”s‚È‚Ì‚Åƒ~ƒbƒVƒ‡ƒ“‚ğì‚è’¼‚·
+      MISSION_LIST_Create_Type(
+        GAMEDATA_GetMyOccupyInfo(GAMESYSTEM_GetGameData(gsys)), MISSION_TYPE_VICTORY);
       *seq = SEQ_BATTLE_NG_MSG;
     }
     break;

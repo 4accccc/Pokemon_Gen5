@@ -432,18 +432,22 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
   case SEQ_BATTLE_YESNO_SELECT:
     {
       FLDMENUFUNC_YESNO yesno = IntrudeEventPrint_SelectYesNo(&shop->ccew.iem);
+      BOOL ng_end = FALSE;
+      
       switch(yesno){
       case FLDMENUFUNC_YESNO_YES:
         IntrudeEventPrint_ExitMenu(&shop->ccew.iem);
 
         //‚¨‹à‚Í‘«‚è‚Ä‚¢‚é‚©
         if(d_attr->price > MISC_GetGold( GAMEDATA_GetMiscWork(gamedata) )){
+          ng_end = TRUE;
           *seq = SEQ_NG_SHORT_OF_MONEY;
           break;
         }
         //“¹‹ï‚É‹ó‚«‚Í‚ ‚é‚©
         if(MYITEM_AddCheck( 
             GAMEDATA_GetMyItem(gamedata), d_attr->item_no, 1, HEAPID_FIELDMAP ) == FALSE){
+          ng_end = TRUE;
           *seq = SEQ_NG_ITEM_FULL;
           break;
         }
@@ -451,8 +455,14 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
         break;
       case FLDMENUFUNC_YESNO_NO:
         IntrudeEventPrint_ExitMenu(&shop->ccew.iem);
+        ng_end = TRUE;
         *seq = SEQ_NG;
         break;
+      }
+      
+      if(ng_end == TRUE){
+        //¸”s‚È‚Ì‚Åƒ~ƒbƒVƒ‡ƒ“‚ğì‚è’¼‚·
+        MISSION_LIST_Create_Type(GAMEDATA_GetMyOccupyInfo(gamedata), MISSION_TYPE_ATTR);
       }
     }
     break;
