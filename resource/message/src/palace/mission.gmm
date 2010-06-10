@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-10T14:50:54"/>
+	<create user="ohmori" host="W00223" date="2010-06-10T23:20:19"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -534,9 +534,9 @@
 	<row id="plc_mis_05_09" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　６ばんどうろ　の
-たてにのびる　はしのちゅうしんに　かくせ！</language>
+たてにながい　はしのまんなかに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　６番道路　の
-縦に延びる　橋の中心に　隠せ！</language>
+縦に長い　橋の真ん中に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_10" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -678,9 +678,9 @@
 	<row id="plc_mis_05_27" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　６ばんどうろ　の
-たてにのびる　はしのちゅうしんに　かくせ！</language>
+たてにながい　はしのまんなかに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　６番道路　の
-縦に延びる　橋の中心に　隠せ！</language>
+縦に長い　橋の真ん中に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_28" back-color="#ffff80,,,,,,,,,,,,,,,,,">
