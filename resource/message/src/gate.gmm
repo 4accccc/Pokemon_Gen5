@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="murakami_naoto" host="W00228" date="2010-06-07T18:38:03"/>
+	<create user="murakami_naoto" host="W00228" date="2010-06-09T20:26:22"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -312,14 +312,14 @@
 		</language>
 	</columns>
 
-	<dialog left="35" top="129" right="740" bottom="757" maximized="no" rayout="Vertical2">
+	<dialog left="-48" top="256" right="657" bottom="884" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -1027,7 +1027,7 @@
 
 	<row id="msg_gate_st_03" back-color="#ffff80,,,#ffff80,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>stについての地域情報3</comment>
-		<language name="JPN" width="256">◇サザナミタウンの なみおとの うつくしさは たからものであると いわれています</language>
+		<language name="JPN" width="256">◇サザナミタウンの なみのおとの うつくしさは たからものであると いわれています</language>
 		<language name="JPN_KANJI" width="256">◇サザナミタウンの　波の音の美しさは　宝物であると　いわれています</language>
 	</row>
 
@@ -1578,31 +1578,31 @@
 	<row id="msg_gate_champ_2">
 		<comment>チャンピオン情報（ポケモン数2)</comment>
 		<language name="JPN" width="256">◆でんどういり　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]とともに　しょうりをおさめた！</language>
-		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]と共に　勝利を収めた！</language>
+		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]と共に　勝利を収めた！</language>
 	</row>
 
 	<row id="msg_gate_champ_3">
 		<comment>チャンピオン情報（ポケモン数3)</comment>
 		<language name="JPN" width="256">◆でんどういり　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]とともに　しょうりをおさめた！</language>
-		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]と共に　勝利を収めた！</language>
+		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]と共に　勝利を収めた！</language>
 	</row>
 
 	<row id="msg_gate_champ_4">
 		<comment>チャンピオン情報（ポケモン数4)</comment>
 		<language name="JPN" width="256">◆でんどういり　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]とともに　しょうりをおさめた！</language>
-		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]と共に　勝利を収めた！</language>
+		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]と共に　勝利を収めた！</language>
 	</row>
 
 	<row id="msg_gate_champ_5">
 		<comment>チャンピオン情報（ポケモン数5)</comment>
 		<language name="JPN" width="256">◆でんどういり　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]とともに　しょうりをおさめた！</language>
-		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]と共に　勝利を収めた！</language>
+		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]と共に　勝利を収めた！</language>
 	</row>
 
 	<row id="msg_gate_champ_6">
 		<comment>チャンピオン情報（ポケモン数6)</comment>
 		<language name="JPN" width="256">◆でんどういり　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]とともに　しょうりをおさめた！</language>
-		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]と共に　勝利を収めた！</language>
+		<language name="JPN_KANJI" width="256">◆殿堂入り　おめでとう！　トレーナー　[1:00:トレーナー名:6]は　[1:01:ポケモン種族名:0]　[1:01:ポケモン種族名:1]　[1:01:ポケモン種族名:2]　[1:01:ポケモン種族名:3]　[1:01:ポケモン種族名:4]　[1:01:ポケモン種族名:5]と共に　勝利を収めた！</language>
 	</row>
 
 	<flowchart-group-list>
