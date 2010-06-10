@@ -492,6 +492,9 @@ static  PDC_RESULT  PDC_SEQ_Capture( PDC_MAIN_WORK* pmw )
   case 11:
     if( !GFL_FADE_CheckFade() )
     { 
+      //捕獲ボールをPOKEMON_PARAMにセット
+      BALL_ID ballID = ITEM_GetBallID( pmw->bagData.ret_item );
+      PP_Put( PDC_GetPP( pmw->psp ), ID_PARA_get_ball, ballID );
       return PDC_RESULT_CAPTURE;
     }
     break;
