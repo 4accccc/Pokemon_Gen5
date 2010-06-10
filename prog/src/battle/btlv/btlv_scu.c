@@ -1198,7 +1198,13 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
     }
     break;
   case 8:
+#if 0 //BTS2559
     if( !BTLV_EFFECT_CheckExecute() ){
+#else
+    if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
+        ( !BTLV_EFFECT_CheckExecute() ) )
+    {
+#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
       (*seq)++;
