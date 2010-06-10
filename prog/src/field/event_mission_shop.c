@@ -462,7 +462,7 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
       
       if(ng_end == TRUE){
         //é∏îsÇ»ÇÃÇ≈É~ÉbÉVÉáÉìÇçÏÇËíºÇ∑
-        MISSION_LIST_Create_Type(GAMEDATA_GetMyOccupyInfo(gamedata), MISSION_TYPE_ATTR);
+        MISSION_LIST_Create_Type(GAMEDATA_GetMyOccupyInfo(gamedata), MISSION_TYPE_ATTRIBUTE);
       }
     }
     break;
