@@ -79,13 +79,22 @@ palpark_main:
           _CHG_COMMON_SCR SCRID_WIRELESS_OFF_MESSAGE
           _CALL see_you
         ELSE
-          _CALL save        //output:SCWK_ANSWER
-          IF $SCWK_ANSWER == TRUE THEN
-            _CALL play_palpark
+          //ワイヤレス通信しますよ？
+          _SYSWIN_MSG( msg_palpark_06, POS_DEFAULT )
+          _YES_NO_WIN( SCWK_ANSWER )
+          _SYSWIN_CLOSE()   //クローズ
+          IF $SCWK_ANSWER == 0 THEN           //ワイヤレス通信ＯＫ
+            //セーブシーケンスへ
+            _CALL save        //output:SCWK_ANSWER
+            IF $SCWK_ANSWER == TRUE THEN
+              _CALL play_palpark
+              _CALL see_you
+            ELSE
+              _CALL see_you
+            ENDIF
+          ELSE                                //ワイヤレス通信ＮＧ
             _CALL see_you
-          ELSE
-            _CALL see_you
-          ENDIF
+          ENDIF  
         ENDIF  
       ELSE                              //ＤＳない
         _CALL see_you
