@@ -3101,16 +3101,19 @@ static void handler_Samehada( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       u8 attackerPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, attackerPokeID );
 
-      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      if( !BPP_IsDead(bpp) )
       {
-        BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
-          param->pokeID = attackerPokeID;
-          param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
-          HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Samehada );
-          HANDEX_STR_AddArg( &param->exStr, attackerPokeID );
-        BTL_SVF_HANDEX_Pop( flowWk, param );
+        BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+        {
+          BTL_HANDEX_PARAM_DAMAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_DAMAGE, pokeID );
+            param->pokeID = attackerPokeID;
+            param->damage = BTL_CALC_QuotMaxHP( bpp, 8 );
+            HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Samehada );
+            HANDEX_STR_AddArg( &param->exStr, attackerPokeID );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+        }
+        BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
       }
-      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
     }
   }
 }
