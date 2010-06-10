@@ -368,6 +368,8 @@ static void tcb_BgmChangeReq( GFL_TCBL *tcb , void* work);
  *  @param  param[3]  type("play"=0,"stop"=1,"change"=2,"push"=3,"pop" =4)
  *
  *  typeはDEMO3D_BGM_CHG_TYPE型(demo3d_cmd_def.h)
+ *
+ *  @note 連続スリープにより予測不能な大規模遅延が発生した場合の挙動について問題あり
  */
 //-----------------------------------------------------------------------------
 static void DEMOCMD_BgmChangeReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* param)
@@ -456,6 +458,27 @@ static void tcb_BgmChangeReq( GFL_TCBL *tcb , void* tcb_wk)
   GFL_TCBL_Delete(tcb);
 }
 
+
+//===================================================================================
+///輝度変化エフェクトを用いたブライトネスリクエスト
+//===================================================================================
+typedef struct _TASKWK_BRIGHTNESS_REQ{
+  DEMO3D_CMD_WORK* cmd;
+
+  u8  seq;
+  BRIGHT_DISPMASK disp_mask;
+  BRIGHT_PLANEMASK plane_mask;
+  int frame;
+  int start,end;
+  fx32  now,diff;
+  
+  int* task_ct;
+}TASKWK_BRIGHTNESS_REQ;
+
+static void taskAdd_BrightnessReq( DEMO3D_CMD_WORK* wk,
+    BRIGHT_DISPMASK disp_mask, BRIGHT_PLANEMASK plane_mask,int start, int end, int frame, int* task_ct );
+static void tcb_BrightnessReq( GFL_TCBL *tcb , void* tcb_wk);
+
 //-----------------------------------------------------------------------------
 /**
  *	@brief  輝度変化エフェクトを用いたブライトネス 
@@ -471,9 +494,74 @@ static void DEMOCMD_BrightnessReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, 
   if(param[1] == 0){
     SetBrightness( param[2], PLANEMASK_ALL, param[0]);
   }else{
-    ChangeBrightnessRequest( sub_ConvFrame( wk, param[1] ), param[3], param[2],PLANEMASK_ALL, param[0] );
+    taskAdd_BrightnessReq( wk, param[0], PLANEMASK_ALL, param[2], param[3], sub_ConvFrame( wk, param[1]), NULL );
   }
 }
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  輝度変化タスク追加
+ *
+ *  @param  disp_mask  適用する画面(1:main,2:sub,3:double) 
+ *  @param  start   スタート輝度
+ *  @param  end     エンド輝度
+ *  @param  frame   スタート～エンドまでのフレーム数(1～)
+ *  @param  task_ct タスクの監視(NULL可)
+ */
+//-----------------------------------------------------------------------------
+static void taskAdd_BrightnessReq( DEMO3D_CMD_WORK* wk,
+    BRIGHT_DISPMASK disp_mask, BRIGHT_PLANEMASK plane_mask,int start, int end, int frame, int* task_ct )
+{
+  GFL_TCBL* tcb;
+  TASKWK_BRIGHTNESS_REQ* twk;
+
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_BrightnessReq, sizeof(TASKWK_BRIGHTNESS_REQ), 0 );
+
+  twk = GFL_TCBL_GetWork(tcb);
+  MI_CpuClear8( twk, sizeof( TASKWK_BRIGHTNESS_REQ ));
+
+  twk->cmd = wk;
+  twk->disp_mask = disp_mask;
+  twk->plane_mask = plane_mask;
+  twk->start = start;
+  twk->end = end;
+  twk->frame =  frame;
+  twk->task_ct = task_ct;
+
+  twk->now = FX32_CONST(start);
+  twk->diff = FX_Div((FX32_CONST(end)-twk->now),FX32_CONST(frame));
+  
+  if(task_ct != NULL){
+    (*task_ct)++;
+  }
+  SetBrightness( twk->start, twk->plane_mask, twk->disp_mask );
+}
+
+static void tcb_BrightnessReq( GFL_TCBL *tcb , void* tcb_wk)
+{
+  TASKWK_BRIGHTNESS_REQ* twk = (TASKWK_BRIGHTNESS_REQ*)tcb_wk;
+  
+  //システム終了で自殺
+  if( twk->cmd->cmdsys_end_f) {
+    SetBrightness( twk->end, twk->plane_mask, twk->disp_mask );
+    if(twk->task_ct != NULL){
+      (*twk->task_ct)--;
+    }
+    GFL_TCBL_Delete(tcb);
+    return;
+  }
+
+  if( twk->frame-- > 0 ){
+    SetBrightness( FX_Whole(twk->now), twk->plane_mask, twk->disp_mask );
+    twk->now += twk->diff;
+    return;
+  }
+  SetBrightness( twk->end, twk->plane_mask, twk->disp_mask );
+  if(twk->task_ct != NULL){
+    (*twk->task_ct)--;
+  }
+  GFL_TCBL_Delete(tcb);
+}
+
 
 //===================================================================================
 ///輝度変化エフェクトを用いたフラッシュリクエスト
@@ -485,10 +573,12 @@ typedef struct _TASKWK_FLASH_REQ{
   s8  seq;
   s8  start,max,end;
   int frame_s,frame_e;
-  u8  lcd_mask;
+  int task_ct;
+  BRIGHT_DISPMASK   disp_mask;
+  BRIGHT_PLANEMASK  plane_mask;
 }TASKWK_FLASH_REQ;
 
-static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 lcd_mask, s8 start, s8 max, s8 end, int frame_s, int frame_e );
+static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 disp_mask, s8 start, s8 max, s8 end, int frame_s, int frame_e );
 static void tcb_FlashReq( GFL_TCBL *tcb , void* work);
 
 //-----------------------------------------------------------------------------
@@ -508,12 +598,12 @@ static void DEMOCMD_FlashReq(DEMO3D_CMD_WORK* wk,DEMO3D_ENGINE_WORK* core, int* 
   taskAdd_FlashReq( wk, param[0], param[1], param[2], param[3], sub_ConvFrame( wk, param[4] ), sub_ConvFrame( wk, param[5] ) );
 }
 
-static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 lcd_mask, s8 start, s8 max, s8 end, int frame_s, int frame_e )
+static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 disp_mask, s8 start, s8 max, s8 end, int frame_s, int frame_e )
 {
   GFL_TCBL* tcb;
   TASKWK_FLASH_REQ* twk;
 
-  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_FlashReq, sizeof(TASKWK_FLASH_REQ), 0 );
+  tcb = GFL_TCBL_Create( wk->tcbsys, tcb_FlashReq, sizeof(TASKWK_FLASH_REQ), 1 );
 
   twk = GFL_TCBL_GetWork(tcb);
   MI_CpuClear8( twk, sizeof( TASKWK_FLASH_REQ ));
@@ -522,30 +612,39 @@ static void taskAdd_FlashReq( DEMO3D_CMD_WORK* wk, u8 lcd_mask, s8 start, s8 max
   twk->start = start;
   twk->max = max;
   twk->end = end;
-  twk->lcd_mask = lcd_mask;
+  twk->disp_mask = disp_mask;
+  twk->plane_mask = PLANEMASK_ALL;
   twk->frame_s = frame_s;
   twk->frame_e = frame_e;
    
-  ChangeBrightnessRequest( twk->frame_s, twk->max, twk->start, PLANEMASK_ALL, twk->lcd_mask );
+  taskAdd_BrightnessReq( wk, twk->disp_mask, twk->plane_mask, start, max, frame_s, &twk->task_ct );
 }
 
 static void tcb_FlashReq( GFL_TCBL *tcb , void* tcb_wk)
 {
   TASKWK_FLASH_REQ* twk = (TASKWK_FLASH_REQ*)tcb_wk;
 
-  switch(twk->seq){
-  case 0:
-    if( IsFinishedBrightnessChg( twk->lcd_mask )){
-      ChangeBrightnessRequest( twk->frame_e, twk->end, twk->max, PLANEMASK_ALL, twk->lcd_mask );
-      twk->seq++;
-    }
-    return;
-  case 1:
-    if( IsFinishedBrightnessChg( twk->lcd_mask )){
-      break;
-    }
+  //システム終了で自殺
+  if( twk->cmd->cmdsys_end_f) {
+    SetBrightness( twk->end, twk->plane_mask, twk->disp_mask );
+    GFL_TCBL_Delete(tcb);
     return;
   }
+
+  switch(twk->seq){
+  case 0:
+    if(twk->task_ct == 0){
+      taskAdd_BrightnessReq( twk->cmd, twk->disp_mask, twk->plane_mask,twk->max, twk->end, twk->frame_e, &twk->task_ct );
+      twk->seq++;
+    }
+    break;
+  case 1:
+    if(twk->task_ct){
+      return;
+    }
+    break;
+  }
+  SetBrightness( twk->end, twk->plane_mask, twk->disp_mask );
   GFL_TCBL_Delete(tcb);
 }
 
@@ -823,18 +922,12 @@ static void tcb_ScrDrawReq( GFL_TCBL *tcb , void* tcb_wk )
   }
   switch( twk->seq ){
   case 0:
-    if( cmd->delay_f ){
-      break;  //処理負荷分散のため、遅延フレームなら処理しない
-    }
     GFL_ARCHDL_UTIL_TransVramPalette( cmd->h_2dgra, twk->pltt_id, PALTYPE_MAIN_BG, 0, 0, cmd->tmpHeapID );
- 	  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(	cmd->h_2dgra, twk->scr_id,
+ 	  GFL_ARCHDL_UTIL_TransVramScreenCharOfs(	cmd->h_2dgra, twk->scr_id,
 						DEMO3D_CMD_FREE_BG_M1, 0, 0, 0, TRUE, cmd->tmpHeapID );	
     twk->seq++;
     break;
   case 1:
-    if( cmd->delay_f ){
-      break;  //必ず転送を待つため、遅延フレームなら処理しない
-    }
     twk->ct = 0;
     twk->alpha_n = 0;
     twk->alpha_d = FX_Div( FX32_CONST(16),FX32_CONST(twk->s_frm));
