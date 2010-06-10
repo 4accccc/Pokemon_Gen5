@@ -5371,6 +5371,7 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
         bpp = BTL_SVFTOOL_GetPokeParam( flowWk, mwk->pokeID[i] );
         itemID = BPP_GetConsumedItem( bpp );
+        TAYA_Printf("è¡îÔÇµÇΩÉAÉCÉeÉÄ=%d\n", itemID);
 
         if( itemID != ITEM_DUMMY_DATA )
         {

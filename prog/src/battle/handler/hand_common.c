@@ -49,7 +49,7 @@ BOOL HandCommon_IsPokeOrderLast( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
 /**
  *
  */
-static BOOL checkCantChangeItemPoke( u16 monsno, u16 itemID )
+BOOL HandCommon_CheckForbitItemPokeCombination( u16 monsno, u16 itemID )
 {
   switch( monsno ){
   case MONSNO_GIRATHINA:
@@ -81,7 +81,7 @@ BOOL HandCommon_CheckCantChangeItemPoke( BTL_SVFLOW_WORK* flowWk, u8 pokeID )
   u16 monsno = BPP_GetMonsNo( bpp );
   u16 itemID = BPP_GetItem( bpp );
 
-  if( checkCantChangeItemPoke(monsno, itemID) ){
+  if( HandCommon_CheckForbitItemPokeCombination(monsno, itemID) ){
     return TRUE;
   }
 
@@ -113,7 +113,7 @@ BOOL HandCommon_CheckCantStealPoke( BTL_SVFLOW_WORK* flowWk, u8 attackPokeID, u8
 
     u16 atkMonsNo = BPP_GetMonsNo( attacker );
     u16 tgtItemID = BPP_GetItem( target );
-    if( checkCantChangeItemPoke(atkMonsNo, tgtItemID) ){
+    if( HandCommon_CheckForbitItemPokeCombination(atkMonsNo, tgtItemID) ){
       return TRUE;
     }
   }
