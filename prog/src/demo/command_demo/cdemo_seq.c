@@ -64,7 +64,7 @@ static const pCommDemoFunc MainSeq[] = {
 // モード別データ
 static const BGFRM_ANM_DATA ModeData[] =
 {
-	{	ARCID_GF_LOGO_MOVIE, 105, 256*192*2, 0 },					// ゲームフリークロゴ
+	{	ARCID_GF_LOGO_MOVIE, 151, 256*192*2, 0 },					// ゲームフリークロゴ
 	{	ARCID_CDEMO_DATA, 670, 256*170*2, 256*11*2 },			// オープニングムービー１
 	{	ARCID_OP_DEMO2_MOVIE, 174, 256*192*2, 0 },				// オープニングムービー２
 };
@@ -310,6 +310,12 @@ static int MainSeq_BgScrnAnm( CDEMO_WORK * wk )
 		break;
 
 	case 2:
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M+wk->bgsa_load, 0 );
+		GFL_BG_SetPriority( GFL_BG_FRAME2_M+(wk->bgsa_load^1), 1 );
+		wk->bgsa_seq = 3;
+		break;
+
+	case 3:
 		return CDEMOSEQ_MAIN_MAIN;
 	}
 
