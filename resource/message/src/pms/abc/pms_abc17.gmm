@@ -494,26 +494,11 @@
 	</row>
 
 	<row id="search_abc_20">
-		<language name="JPN" width="216">つるつと</language>
-		<language name="JPN_KANJI" width="216">つるつと</language>
-	</row>
-
-	<row id="search_abc_21">
-		<language name="JPN" width="216">つるつるた</language>
-		<language name="JPN_KANJI" width="216">つるつるた</language>
-	</row>
-
-	<row id="search_abc_22">
 		<language name="JPN" width="216">つるのむち</language>
 		<language name="JPN_KANJI" width="216">つるのむち</language>
 	</row>
 
-	<row id="search_abc_23">
-		<language name="JPN" width="216">つるり</language>
-		<language name="JPN_KANJI" width="216">つるり</language>
-	</row>
-
-	<row id="search_abc_24">
+	<row id="search_abc_21">
 		<language name="JPN" width="216">つんへあー</language>
 		<language name="JPN_KANJI" width="216">つんへあー</language>
 	</row>
