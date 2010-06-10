@@ -46,6 +46,7 @@
 #include "gsync.naix"
 #include "savedata/c_gear_picture.h"
 #include "field/tpoke_data.h"
+#include "poke_tool/poke_personal.h"
 
 #include "net/dwc_error.h"
 
@@ -1035,9 +1036,23 @@ static void _symbolPokemonSave(G_SYNC_WORK* pWork,DREAMWORLD_SAVEDATA* pDreamSav
     TPOKE_DATA* pTP =TPOKE_DATA_Create( pWork->heapID );
     int size = SYMBOL_ZONE_TYPE_FREE_SMALL;
     u8 form_no =  POKETOOL_CheckPokeFormNo(  monsno,  form );
+    int sextype = POKETOOL_GetPersonalParam( monsno, form_no,POKEPER_ID_sex );
 
-    if(sex > 1){
-      sex = GFUser_GetPublicRand( 2 );
+    switch(sextype){
+    case POKEPER_SEX_MALE:
+      sex = 0;
+      break;
+    case POKEPER_SEX_FEMALE:
+      sex = 1;
+      break;
+    case POKEPER_SEX_UNKNOWN:
+      sex = 2;
+      break;
+    default:
+      if(sex > 1){
+        sex = GFUser_GetPublicRand( 2 );
+      }
+      break;
     }
 #if 1
     OS_TPrintf("ƒ‚ƒ“ƒXƒ^[”Ô†%d %d\n",monsno,sex);
