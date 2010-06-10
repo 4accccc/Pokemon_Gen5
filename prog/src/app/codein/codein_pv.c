@@ -643,7 +643,7 @@ void CI_KEY_Main( CODEIN_WORK* wk )
     ///< –ß‚é‚Æˆê
     CI_pv_Input_back( wk );
 
-    PMSND_PlaySystemSE( CI_SE_TOUCH );
+    PMSND_PlaySystemSE( CI_SE_BACK );
   }
   else if ( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_L ){
     
