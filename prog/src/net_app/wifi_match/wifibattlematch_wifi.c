@@ -3622,11 +3622,13 @@ static void WbmWifiSeq_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq, vo
   case SEQ_WAIT_SAKE_LOGINTIME:
     {
       WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
-    //エラーがあろうとなかろうと終了へいく
       if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_END;
+
+        //エラー
+        WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE );
       }
     }
     break;

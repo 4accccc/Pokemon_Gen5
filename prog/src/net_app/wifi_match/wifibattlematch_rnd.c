@@ -2097,11 +2097,12 @@ static void WbmRndSeq_Rate_DisConnextSendTime( WBM_SEQ_WORK *p_seqwk, int *p_seq
   case SEQ_WAIT_SEND_SAKE_TIME:
     {
       WIFIBATTLEMATCH_GDB_RESULT res  = WIFIBATTLEMATCH_GDB_ProcessWrite( p_wk->p_net );
-      //ƒGƒ‰[‚ª‚ ‚ë‚¤‚Æ‚È‚©‚ë‚¤‚ÆI—¹‚Ö‚¢‚­
       if( res != WIFIBATTLEMATCH_GDB_RESULT_UPDATE )
       { 
         *p_wk->p_param->p_server_time  = WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC;
         *p_seq  = SEQ_END;
+
+        WIFIBATTLEMATCH_NET_CheckErrorRepairType( p_wk->p_net, TRUE, FALSE );
       }
     }
     break;
