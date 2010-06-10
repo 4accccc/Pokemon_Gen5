@@ -99,6 +99,8 @@ static void GameSystem_End(GAMESYS_WORK * gsys);
 static u32 GAMESYS_WORK_GetSize(void);
 static void GameSystem_SetBatt10SleepCallback( GAMESYS_WORK *gsys );
 static void GameSystem_ResetBatt10SleepCallback( GAMESYS_WORK *gsys );
+static void GameSystem_SetNotSleepCallback( GAMESYS_WORK *gsys );
+static void GameSystem_ResetNotSleepCallback( GAMESYS_WORK *gsys );
 
 static void GameSystem_UpdateDoEvent( GAMESYS_WORK * gsys );
 static void GameSysmte_FieldAlwaysBootWatch(GAMESYS_WORK *gsys);
@@ -308,13 +310,15 @@ static void GAMESYS_WORK_Init(GAMESYS_WORK * gsys, HEAPID heapID, GAME_INIT_WORK
   gsys->comm_off_event_flag = FALSE;
   gsys->batt10sleep = FALSE;
   GameSystem_SetBatt10SleepCallback( gsys );
-
+  GameSystem_SetNotSleepCallback( gsys );
+  
   ZONEDATA_Open( heapID );
 }
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 static void GAMESYS_WORK_Delete(GAMESYS_WORK * gsys)
 {
+  GameSystem_ResetNotSleepCallback( gsys );
   GameSystem_ResetBatt10SleepCallback( gsys );
 	ISS_SYS_Delete(gsys->iss_sys);
 	GAMEDATA_Delete(gsys->gamedata);
@@ -706,7 +710,7 @@ BOOL GAMESYSTEM_CommBootAlways_Check(GAMESYS_WORK *gsys)
       && NetErr_App_CheckError() == NET_ERR_CHECK_NONE
       && GAMESYSTEM_GetAlwaysNetFlag( gsys ) == TRUE
       && Intrude_Check_AlwaysBoot( gsys ) == TRUE
-      && GFL_UI_CheckCoverAndBatt() == FALSE
+      && (!(GFL_UI_CheckCoverOff() == TRUE && GFL_UI_CheckLowBatt() == TRUE))
       && CGEAR_SV_GetCGearONOFF(GAMEDATA_GetCGearSaveData(gsys->gamedata)) )
   {
     return TRUE;
@@ -781,8 +785,7 @@ static void GameSystem_CallbackBatt10Sleep( void *gsys_void )
   //４．CGEAR自体は常時通信OFF動作をはじめる
   //５．CGEARに行き着いた段階でフラグをリセット 完了
   GAMESYS_WORK *gsys = gsys_void;
-  CGEAR_SAVEDATA* pCSV = GAMEDATA_GetCGearSaveData(gsys->gamedata);
-  if( CGEAR_SV_GetCGearONOFF(pCSV) && GAMESYSTEM_GetAlwaysNetFlag(gsys) )
+  if(GAMESYSTEM_GetAlwaysNetFlag(gsys))
   {
     GAMESYSTEM_SetAlwaysNetFlag(gsys, FALSE);
     gsys->batt10sleep = TRUE;
@@ -804,6 +807,51 @@ static void GameSystem_SetBatt10SleepCallback( GAMESYS_WORK *gsys )
 static void GameSystem_ResetBatt10SleepCallback( GAMESYS_WORK *gsys )
 {
   GFL_UI_Batt10SleepReleaseSetFunc( NULL, NULL );
+}
+
+//==================================================================
+/**
+ * @brief   スリープに入らない条件をゲーム上で指定できるコールバック
+ * @param   gsys		
+ * @retval  void
+ */
+//==================================================================
+
+static BOOL GameSystem_CallbackNotSleep( void *gsys_void )
+{
+  GAMESYS_WORK *gsys = gsys_void;
+  GAME_COMM_SYS_PTR gcsp = GAMESYSTEM_GetGameCommSysPtr(gsys);
+
+  if(GameCommSys_BootCheck(gcsp) != GAME_COMM_NO_NULL){  //ユニオン中
+    return TRUE;  //はいってほしくない
+  }
+  if(GFL_NET_IW_SystemCheck()){  //IRC WIRLESS
+    return TRUE;  //はいってほしくない
+  }
+  if(GFL_UI_CheckLowBatt()){  //バッテリーがLOW
+    return FALSE;  //はいってほしい
+  }
+  if(GAMESYSTEM_GetAlwaysNetFlag(gsys)){  //常時通信
+    return TRUE;  //はいってほしくない
+  }
+  return FALSE;  //入ってよい
+}
+
+//==================================================================
+/**
+ * @brief   スリープに入らない条件をゲーム上で指定できるコールバックの登録解除
+ * @param   gsys		
+ * @retval  void
+ */
+//==================================================================
+
+static void GameSystem_SetNotSleepCallback( GAMESYS_WORK *gsys )
+{
+  GFL_UI_NotSleepSetFunc( GameSystem_CallbackNotSleep, gsys );
+}
+static void GameSystem_ResetNotSleepCallback( GAMESYS_WORK *gsys )
+{
+  GFL_UI_NotSleepSetFunc( NULL, NULL );
 }
 
 
