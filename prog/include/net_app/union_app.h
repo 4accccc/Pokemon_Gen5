@@ -73,6 +73,9 @@ extern UNION_APP_PTR UnionAppSystem_AllocAppWork(
 extern void UnionAppSystem_FreeAppWork(UNION_APP_PTR uniapp);
 extern BOOL UnionAppSystem_SetEntryUser(UNION_APP_PTR uniapp, NetID net_id, const MYSTATUS *myst);
 extern void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
+extern void UnionAppSystem_ReqIntrude(UNION_APP_PTR uniapp, NetID net_id);
+extern void UnionAppSystem_RecvIntrudeOK(UNION_APP_PTR uniapp);
+extern BOOL UnionAppSystem_CheckIntrudeOK(UNION_APP_PTR uniapp);
 extern void UnionAppSystem_ReqBasicStatus(UNION_APP_PTR uniapp, NetID net_id);
 extern void UnionAppSystem_SetBasicStatus(
   UNION_APP_PTR uniapp, const UNION_APP_BASIC *basic_status);

@@ -535,6 +535,8 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
     _SEQ_INIT,
     _SEQ_TIMING,
     _SEQ_TIMING_WAIT,
+    _SEQ_INTRUDE_REQ,
+    _SEQ_INTRUDE_OK_WAIT,
     _SEQ_BASIC_STATUS_REQ,
     _SEQ_BASIC_STATUS_WAIT,
     _SEQ_MYSTATUS_SEND,
@@ -593,7 +595,7 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
         unisys, HEAPID_WORLD, member_max,
         GAMEDATA_GetMyStatus(unisys->uniparent->game_data));
       if(situ->mycomm.intrude == TRUE){  //乱入時ならば親はすでにuniappを確保しているので同期の必要無し
-        *seq = _SEQ_BASIC_STATUS_REQ;
+        *seq = _SEQ_INTRUDE_REQ;
       }
       else{
         (*seq)++;
@@ -610,7 +612,18 @@ static BOOL SubEvent_Minigame(GAMESYS_WORK *gsys, UNION_SYSTEM_PTR unisys, FIELD
   case _SEQ_TIMING_WAIT:
 		if(GFL_NET_HANDLE_IsTimeSync(
 		    GFL_NET_HANDLE_GetCurrentHandle(), UNION_TIMING_MINIGAME_SETUP_AFTER, WB_NET_UNION) == TRUE){
+      (*seq) = _SEQ_BASIC_STATUS_REQ;
+    }
+    break;
+  
+  case _SEQ_INTRUDE_REQ:
+    if(UnionSend_MinigameIntrudeReq() == TRUE){
       (*seq)++;
+    }
+    break;
+  case _SEQ_INTRUDE_OK_WAIT:
+    if(UnionAppSystem_CheckIntrudeOK(unisys->alloc.uniapp) == TRUE){
+      (*seq) = _SEQ_BASIC_STATUS_REQ;
     }
     break;
   

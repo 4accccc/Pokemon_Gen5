@@ -37,7 +37,16 @@ struct _UNION_APP_WORK{
   u8 entry_block;               ///<TRUE:乱入禁止
   u8 intrude_capacity_count;    ///<乱入してきた人数
   u8 intrude_capacity_max;      ///<乱入受け入れ人数
-  u8 padding;
+
+  u8 recv_basic_status_req_bit;   ///<基本情報要求リクエスト発生(bit管理)
+  u8 recv_mystatus_req_bit;       ///<MYSTATUS要求リクエスト発生(bit管理)
+  u8 recv_mystatus_bit;           ///<MYSTATUS受信済み(bit管理)
+
+  u8 recv_intrude_reserve_bit;    ///<乱入希望ユーザー(bit管理)
+  u8 now_intrude_netid;           ///<乱入処理実行中のNetID
+  u8 answer_intrude_netid;        ///<乱入許可を出す相手のNetID
+  u8 recv_intrude_ok;             ///<TRUE:乱入許可をもらった(CLIENT)
+  
   BOOL leave_block;             ///<TRUE:退出禁止
   BOOL send_leave_req;          ///<TRUE:退出許可リクエストが発生している
   UNION_APP_LEAVE recv_leave_req_result;   ///<退出許可リクエストの返事
@@ -46,10 +55,6 @@ struct _UNION_APP_WORK{
   BOOL shutdown;                ///<TRUE:切断した
   
   UNION_APP_MY_PARAM appmy[UNION_APP_MEMBER_MAX];     ///<メンバー基本情報
-  
-  u8 recv_basic_status_req_bit;   ///<基本情報要求リクエスト発生(bit管理)
-  u8 recv_mystatus_req_bit;       ///<MYSTATUS要求リクエスト発生(bit管理)
-  u8 recv_mystatus_bit;           ///<MYSTATUS受信済み(bit管理)
   
   //アプリ側からセットしてもらうパラメータ
   UNION_APP_CALLBACK_ENTRY_FUNC entry_callback;   ///<乱入者発生時のコールバック

@@ -34,6 +34,8 @@ enum UNION_CMD{
   UNION_CMD_MINIGAME_ENTRY_REQ,             ///<ミニゲーム乱入希望
   UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_NG,   ///<ミニゲーム乱入希望の返事(NG)
   UNION_CMD_MINIGAME_ENTRY_REQ_ANSWER_OK,   ///<ミニゲーム乱入希望の返事(OK)
+  UNION_CMD_MINIGAME_INTRUDE_REQ,           ///<乱入希望
+  UNION_CMD_MINIGAME_INTRUDE_OK,            ///<乱入許可
   UNION_CMD_MINIGAME_BASIC_STATUS_REQ,      ///<ミニゲーム基本情報要求
   UNION_CMD_MINIGAME_BASIC_STATUS,          ///<ミニゲーム基本情報
   UNION_CMD_MINIGAME_MYSTATUS_REQ,          ///<ミニゲーム用MYSTATUS要求
@@ -68,6 +70,8 @@ extern BOOL UnionSend_ColosseumEntryAllReady(void);
 extern BOOL UnionSend_MinigameEntryReq(UNION_SYSTEM_PTR unisys);
 extern BOOL UnionSend_MinigameEntryReqAnswerNG(u8 send_bit);
 extern BOOL UnionSend_MinigameEntryReqAnswerOK(u8 send_bit);
+extern BOOL UnionSend_MinigameIntrudeReq(void);
+extern BOOL UnionSend_MinigameIntrudeOK(NetID send_netid);
 extern BOOL UnionSend_MinigameBasicStatusReq(void);
 extern BOOL UnionSend_MinigameBasicStatus(const UNION_APP_BASIC *app_basic, u8 send_bit);
 extern BOOL UnionSend_MinigameMystatusReq(u8 send_bit, const MYSTATUS *myst);

@@ -33,6 +33,9 @@ typedef enum{
   _ENTRY_TYPE_NUM,    ///<乱入を人数指定で受け入れる
 }_ENTRY_TYPE;
 
+///ユーザーがいない事を示すNetID
+#define UNIAPP_NETID_NULL     (0xff)
+
 
 //==============================================================================
 //  プロトタイプ宣言
@@ -42,6 +45,8 @@ static void _SendUpdate_BasicStatus(UNION_APP_PTR uniapp);
 static void _SendUpdate_Mystatus(UNION_APP_PTR uniapp);
 static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp);
 static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
+static void _Update_IntrudeUser(UNION_APP_PTR uniapp);
+static void _SendUpdate_AnswerIntrudeUser(UNION_APP_PTR uniapp);
 
 
 
@@ -74,6 +79,9 @@ UNION_APP_PTR UnionAppSystem_AllocAppWork(UNION_SYSTEM_PTR unisys, HEAPID heap_i
     uniapp->basic_status.member_bit = 3;  //最初は二人通信から始まる (NetID 0と1)
   }
   uniapp->basic_status.member_max = member_max;
+
+  uniapp->now_intrude_netid = UNIAPP_NETID_NULL;
+  uniapp->answer_intrude_netid = UNIAPP_NETID_NULL;
   
   //自分のMYSTATUSセット
   GFL_STD_MemClear(&appmy, sizeof(UNION_APP_MY_PARAM));
@@ -174,6 +182,8 @@ void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
   if(GFL_NET_IsParentMachine() == TRUE){
     _SendUpdate_BasicStatus(uniapp);
     _SendUpdate_LeavePlayer(uniapp);
+    _Update_IntrudeUser(uniapp);
+    _SendUpdate_AnswerIntrudeUser(uniapp);
   }
   _SendUpdate_Mystatus(uniapp);
   _Update_IntrudeReadyCallback(uniapp);
@@ -235,6 +245,56 @@ static void _SendUpdate_BasicStatus(UNION_APP_PTR uniapp)
 
 //--------------------------------------------------------------
 /**
+ * 乱入希望リクエストへの更新
+ *
+ * @param   uniapp		
+ */
+//--------------------------------------------------------------
+static void _Update_IntrudeUser(UNION_APP_PTR uniapp)
+{
+  int net_id;
+  
+  if(uniapp->now_intrude_netid != UNIAPP_NETID_NULL){
+    if(GFL_NET_IsConnectMember(uniapp->now_intrude_netid) == FALSE){  //接続チェック
+      uniapp->now_intrude_netid = UNIAPP_NETID_NULL;  //いなくなっているのでクリア
+      uniapp->answer_intrude_netid = UNIAPP_NETID_NULL;
+    }
+    else{
+      return; //乱入実行中のユーザーがいるのでここまで。
+    }
+  }
+  
+  //現在乱入している者がいなくて、他に乱入希望者がいる場合は次の返事として登録
+  if(uniapp->recv_intrude_reserve_bit > 0){
+    for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
+      if(uniapp->recv_intrude_reserve_bit & (1 << net_id)){
+        uniapp->now_intrude_netid = net_id;     //現在の乱入実行者
+        uniapp->answer_intrude_netid = net_id;  //乱入許可を返す
+        uniapp->recv_intrude_reserve_bit ^= 1 << net_id;
+        break;
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 乱入希望リクエストが発生していれば許可を送信
+ *
+ * @param   uniapp		
+ */
+//--------------------------------------------------------------
+static void _SendUpdate_AnswerIntrudeUser(UNION_APP_PTR uniapp)
+{
+  if(uniapp->answer_intrude_netid != UNIAPP_NETID_NULL){
+    if(UnionSend_MinigameIntrudeOK(uniapp->answer_intrude_netid) == TRUE){
+      uniapp->answer_intrude_netid = UNIAPP_NETID_NULL;
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
  * MYSTATUS要求リクエストが発生していれば送信
  *
  * @param   uniapp		
@@ -276,6 +336,7 @@ static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp)
             OS_TPrintf("乱入CallBack NetID=%d\n", net_id);
             uniapp->entry_callback(net_id, &uniapp->appmy[net_id].myst, uniapp->userwork);
           }
+          uniapp->now_intrude_netid = UNIAPP_NETID_NULL;
         }
         uniapp->recv_intrude_ready_bit ^= 1 << net_id;
       }
@@ -313,6 +374,46 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
       }
     }
   }
+}
+
+//==================================================================
+/**
+ * 乱入希望リクエストを登録
+ *
+ * @param   uniapp		
+ * @param   net_id		要求相手のNetID
+ */
+//==================================================================
+void UnionAppSystem_ReqIntrude(UNION_APP_PTR uniapp, NetID net_id)
+{
+  uniapp->recv_intrude_reserve_bit |= 1 << net_id;
+}
+
+//==================================================================
+/**
+ * 乱入許可をセット
+ *
+ * @param   uniapp		
+ * @param   net_id		要求相手のNetID
+ */
+//==================================================================
+void UnionAppSystem_RecvIntrudeOK(UNION_APP_PTR uniapp)
+{
+  uniapp->recv_intrude_ok = TRUE;
+}
+
+//==================================================================
+/**
+ * 乱入許可が出ているか調べる
+ *
+ * @param   uniapp		
+ *
+ * @retval  BOOL		TRUE:乱入許可　　FALSE:許可が出ていない
+ */
+//==================================================================
+BOOL UnionAppSystem_CheckIntrudeOK(UNION_APP_PTR uniapp)
+{
+  return uniapp->recv_intrude_ok;
 }
 
 //==================================================================
@@ -369,6 +470,7 @@ void UnionAppSystem_SetMystatus(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys, N
   
   uniapp->appmy[net_id] = *pAppmy;
   uniapp->recv_mystatus_bit |= 1 << net_id;
+  OS_TPrintf("ccc MyStatus Recv netID=%d\n");
 
   if(net_id != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     UnionMyComm_PartyAddParam(&situ->mycomm, pAppmy->mac_address, 
