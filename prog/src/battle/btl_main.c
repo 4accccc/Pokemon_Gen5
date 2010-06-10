@@ -160,8 +160,9 @@ struct _BTL_MAIN_MODULE {
   u8        MultiAIClientNum;
   u8        MultiAIClientID;
   u8        fCommError           : 1;
+  u8        fCommErrorMainQuit   : 1;
   u8        fWazaEffectEnable    : 1;
-  u8        fGetMoneyFixed     : 1;
+  u8        fGetMoneyFixed       : 1;
   u8        fLoseMoneyFixed      : 1;
   u8        fBGMFadeOutDisable   : 1;
   u8        fMoneyDblUp          : 1;
@@ -276,10 +277,11 @@ const GFL_PROC_DATA BtlProcData = {
 //----------------------------------------------------------------------------------------------
 static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
+  BTL_MAIN_MODULE* wk = mywk;
+
   switch( *seq ){
   case 0:
     {
-      BTL_MAIN_MODULE* wk;
       BATTLE_SETUP_PARAM* setup_param = pwk;
 
       GFL_HEAP_CreateHeap( PARENT_HEAP_ID, HEAPID_BTL_SYSTEM, 0x2b000 );
@@ -302,10 +304,17 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->fGetMoneyFixed = FALSE;
       wk->fLoseMoneyFixed = FALSE;
       wk->fCommError = FALSE;
+      wk->fCommErrorMainQuit = FALSE;
       wk->fBGMFadeOutDisable = FALSE;
       wk->fMoneyDblUp = FALSE;
       wk->MultiAIClientNum = 0;
+      wk->mainLoop = NULL;
+      wk->viewCore = NULL;
       wk->serverResult = BTL_RESULT_MAX;  // 無効コードとして
+
+      PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
+      PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
+
 
       Kentei_ClearField( wk->setupParam );
 
@@ -338,9 +347,18 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
     break;
 
   case 1:
+    if( wk->setupParam->netHandle != NULL )
+    {
+      if( BTL_NET_CheckError() )
+      {
+        wk->fCommError = TRUE;
+        wk->fCommErrorMainQuit = TRUE;
+        return GFL_PROC_RES_FINISH;
+      }
+    }
+
     if( BTL_NET_IsInitialized() )
     {
-      BTL_MAIN_MODULE* wk = mywk;
       BTL_ADAPTERSYS_Init( wk->setupParam->commMode );
       setSubProcForSetup( &wk->subProc, wk, wk->setupParam );
       wk->subSeq = 0;
@@ -352,12 +370,19 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
    case 2:
    {
-      BTL_MAIN_MODULE* wk = mywk;
       if( BTL_UTIL_CallProc(&wk->subProc) )
       {
         BTL_N_Printf( DBGSTR_SETUP_DONE );
+
+        if( wk->fCommError )
+        {
+          wk->fCommErrorMainQuit = TRUE;
+          return GFL_PROC_RES_FINISH;
+        }
+
         //BTS4815 捕獲デモはレコードカウントしない
-        if( wk->setupParam->competitor != BTL_COMPETITOR_DEMO_CAPTURE ){
+        if( wk->setupParam->competitor != BTL_COMPETITOR_DEMO_CAPTURE )
+        {
           BTL_MAIN_RECORDDATA_Inc( wk, RECID_BATTLE_COUNT );
         }
         return GFL_PROC_RES_FINISH;
@@ -377,6 +402,10 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void* mywk )
 {
   BTL_MAIN_MODULE* wk = mywk;
+
+  if( wk->mainLoop == NULL ){
+    return GFL_PROC_RES_FINISH;
+  }
 
   if( wk->mainLoop( wk ) )
   {
@@ -830,7 +859,10 @@ static BOOL cleanup_common( int* seq, void* work )
 
   BTL_Printf("クリーンアップ 1-1\n");
 
-  BTLV_Delete( wk->viewCore );
+  if( wk->viewCore ){
+    BTLV_Delete( wk->viewCore );
+    wk->viewCore = NULL;
+  }
 
   BTL_Printf("クリーンアップ 1-2\n");
 
@@ -1366,6 +1398,11 @@ static BOOL setup_comm_triple( int* seq, void* work )
 //----------------------------------------------------------------------------------
 static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
 {
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   switch( *seq ){
   case 0:
     if( BTL_NET_DetermineServer(wk->myClientID) ){
@@ -1439,6 +1476,11 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
 static BOOL setupseq_comm_notify_party_data( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
+
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
 
   switch( *seq ){
   case 0:
@@ -1591,6 +1633,11 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   switch( *seq ){
   case 0:
     BTL_NET_TimingSyncStart( BTL_NET_TIMING_NOTIFY_PLAYER_DATA );
@@ -1708,6 +1755,11 @@ static BOOL setupseq_comm_notify_perap_voice( BTL_MAIN_MODULE* wk, int* seq )
 {
   const BATTLE_SETUP_PARAM* sp = wk->setupParam;
 
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   switch( *seq ){
   case 0:
     BTL_NET_SetupPerappVoice();
@@ -1773,6 +1825,12 @@ static BOOL setupseq_comm_create_server_client_single( BTL_MAIN_MODULE* wk, int*
   u8 clientID = wk->myClientID;
   u8 bagMode = checkBagMode( sp );
 
+  // 通信エラーが起きていたら終了
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   // 自分がサーバ
   if( wk->ImServer )
   {
@@ -1822,6 +1880,13 @@ static BOOL setupseq_comm_create_server_client_double( BTL_MAIN_MODULE* wk, int*
   u8 bagMode = checkBagMode( sp );
   u8 numCoverPos = (sp->multiMode==0)? 2 : 1;
   u32 i;
+
+
+  // 通信エラーが起きていたら終了
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
 
   // 自分がサーバ
   if( wk->ImServer )
@@ -1897,6 +1962,12 @@ static BOOL setupseq_comm_create_server_client_triple( BTL_MAIN_MODULE* wk, int*
   u8 bagMode = checkBagMode( sp );
   u32 i;
 
+  // 通信エラーが起きていたら終了
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   // 自分がサーバ
   if( wk->ImServer )
   {
@@ -1946,6 +2017,12 @@ static BOOL setupseq_comm_create_server_client_rotation( BTL_MAIN_MODULE* wk, in
   u8 numCoverPos = ROTATION_NUM_COVER_POS;
   u32 i;
 
+  // 通信エラーが起きていたら終了
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   // 自分がサーバ
   if( wk->ImServer )
   {
@@ -1994,6 +2071,12 @@ static BOOL setupseq_comm_create_server_client_rotation( BTL_MAIN_MODULE* wk, in
 //----------------------------------------------------------------------------------
 static BOOL setupseq_comm_start_server( BTL_MAIN_MODULE* wk, int* seq )
 {
+  // 通信エラーが起きていたら終了
+  if( BTL_NET_CheckError() ){
+    wk->fCommError = TRUE;
+    return TRUE;
+  }
+
   switch( *seq ){
   case 0:
     {
@@ -2059,6 +2142,10 @@ static BOOL MainLoop_Comm_Server( BTL_MAIN_MODULE* wk )
       NotifyCommErrorToLocalClient( wk );
     }
   }
+  else if( wk->fCommErrorMainQuit )
+  {
+    return TRUE;
+  }
 
   {
     BOOL quitFlag = FALSE;
@@ -2101,6 +2188,10 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
       NotifyCommErrorToLocalClient( wk );
     }
   }
+  else if( wk->fCommErrorMainQuit )
+  {
+    return TRUE;
+  }
 
   {
     BOOL quitFlag = FALSE;
@@ -2123,6 +2214,12 @@ static BOOL MainLoop_Comm_NotServer( BTL_MAIN_MODULE* wk )
     return quitFlag;
   }
 }
+
+static BOOL MainLoop_Comm_Error( BTL_MAIN_MODULE* wk )
+{
+  return TRUE;
+}
+
 
 /**
  *  同一マシンに存在する全クライアントに通信エラー通知

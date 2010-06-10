@@ -268,6 +268,7 @@ void BTL_NET_QuitSystem( void )
 {
   if( Sys )
   {
+    clearAllTmpBuffer();
     GFL_HEAP_FreeMemory( Sys );
   }
 }
@@ -775,8 +776,8 @@ BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data )
 
   // 送信用情報を生成
   send_buf = create_SendTrainerData( tr_data, GFL_HEAP_LOWID(Sys->heapID) );
-  
-  
+
+
   result = GFL_NET_SendDataEx( Sys->netHandle, GFL_NET_SENDID_ALLUSER, CMD_NOTIFY_AI_TRAINER_DATA,
         sizeof(BTL_TRAINER_SEND_DATA),
         send_buf,
@@ -789,7 +790,7 @@ BOOL BTL_NET_StartNotify_AI_TrainerData( const BSP_TRAINER_DATA* tr_data )
   }
 
   delete_SendTrainerData( send_buf );
-  
+
   return result;
 }
 static u8* getbuf_AI_trainerData( int netID, void* pWork, int size )
@@ -836,7 +837,7 @@ void BTL_NET_EndNotifyPlayerData( void )
 static BTL_TRAINER_SEND_DATA* create_SendTrainerData( const BSP_TRAINER_DATA* tr_data, HEAPID heapID )
 {
   BTL_TRAINER_SEND_DATA* send_tr_data;
-  
+
   send_tr_data = GFL_HEAP_AllocClearMemory( heapID, sizeof(BTL_TRAINER_SEND_DATA) );
 
   // ベース情報を保存
@@ -851,7 +852,7 @@ static BTL_TRAINER_SEND_DATA* create_SendTrainerData( const BSP_TRAINER_DATA* tr
     GF_ASSERT( send_tr_data->trainer_name_length < BTL_COMM_TRAINERNAME_MAX );
     STRTOOL_Copy( GFL_STR_GetStringCodePointer( tr_data->name ), send_tr_data->trainer_name, send_tr_data->trainer_name_length );
   }
-  
+
   return send_tr_data;
 }
 static void delete_SendTrainerData( BTL_TRAINER_SEND_DATA* send_tr_data )
