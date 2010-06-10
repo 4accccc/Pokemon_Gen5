@@ -1114,6 +1114,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     LOCALSEQ_FIRST_CHECK,
     LOCALSEQ_END,
     LOCALSEQ_LASTKEY_END,
+    LOCALSEQ_RESTART_END,
     LOCALSEQ_RETRY,
     LOCALSEQ_RETRY_WAIT,
   };
@@ -1158,7 +1159,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
     else{
       situ->wait++;
       if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
-        GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
+        UnionComm_Req_ShutdownRestarts(unisys);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_CALLING_PC, NULL);
         if(situ->wait > ONESELF_SERVER_TIMEOUT){
@@ -1168,7 +1169,7 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
           UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_connect_00_05);
         }
         OS_TPrintf("Žq‚ª—ˆ‚È‚©‚Á‚½ˆ×ƒLƒƒƒ“ƒZƒ‹‚µ‚Ü‚µ‚½\n");
-        (*seq) = LOCALSEQ_END;
+        (*seq) = LOCALSEQ_RESTART_END;
       }
     }
     break;
@@ -1206,6 +1207,11 @@ static BOOL OneselfSeq_ConnectReqUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUAT
       if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
         return TRUE;
       }
+    }
+    break;
+  case LOCALSEQ_RESTART_END:
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE){
+      *seq = LOCALSEQ_LASTKEY_END;
     }
     break;
   
@@ -1311,7 +1317,7 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
     else{
       situ->wait++;
       if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
-        GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
+        UnionComm_Req_ShutdownRestarts(unisys);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         UnionMySituation_SetParam(unisys, UNION_MYSITU_PARAM_IDX_ANSWER_PC, NULL);
         if(situ->wait > ONESELF_SERVER_TIMEOUT){
@@ -1326,7 +1332,8 @@ static BOOL OneselfSeq_ConnectAnswerUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SIT
     }
     break;
   case _LOCALSEQ_CANCEL_END:
-    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+    if(UnionComm_Check_ShutdownRestarts(unisys) == FALSE
+          && UnionMsg_TalkStream_Check(unisys) == TRUE){
       if(GFL_UI_KEY_GetTrg() & EVENT_WAIT_LAST_KEY){
         return TRUE;
       }
