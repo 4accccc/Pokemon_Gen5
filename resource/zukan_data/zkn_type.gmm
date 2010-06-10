@@ -3256,18 +3256,18 @@
 	</row>
 
 	<row id="ZKN_TYPE_582">
-		<language name="JPN">ポケモン</language>
-		<language name="JPN_KANJI">ポケモン</language>
+		<language name="JPN">しんせつポケモン</language>
+		<language name="JPN_KANJI">しんせつポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_583">
-		<language name="JPN">ポケモン</language>
-		<language name="JPN_KANJI">ポケモン</language>
+		<language name="JPN">ひょうせつポケモン</language>
+		<language name="JPN_KANJI">ひょうせつポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_584">
-		<language name="JPN">ポケモン</language>
-		<language name="JPN_KANJI">ポケモン</language>
+		<language name="JPN">ブリザードポケモン</language>
+		<language name="JPN_KANJI">ブリザードポケモン</language>
 	</row>
 
 	<row id="ZKN_TYPE_585">

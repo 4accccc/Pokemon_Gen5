@@ -634,11 +634,15 @@ sub WriteCommentFile
 {
   if( $version eq "w" || $version eq "wb" )
   {
-    &WriteGmmFileMonsnoFormno( $comment_w_file_name, $comment_w_row_id, $form_col_offset_w_jpn, $form_col_offset_w_jpn_kanji, $comment_no_value );
+#    &WriteGmmFileMonsnoFormno( $comment_w_file_name, $comment_w_row_id, $form_col_offset_w_jpn, $form_col_offset_w_jpn_kanji, $comment_no_value );
+    # 上だとフォルム違いでテキスト違いもできる、下だとフォルム違いはでない
+    &WriteGmmFileMonsno( $comment_w_file_name, $comment_w_row_id, $form_col_offset_w_jpn, $form_col_offset_w_jpn_kanji, $comment_no_value );
   }
   if( $version eq "b" || $version eq "wb" )
   {
-    &WriteGmmFileMonsnoFormno( $comment_b_file_name, $comment_b_row_id, $form_col_offset_b_jpn, $form_col_offset_b_jpn_kanji, $comment_no_value );
+#    &WriteGmmFileMonsnoFormno( $comment_b_file_name, $comment_b_row_id, $form_col_offset_b_jpn, $form_col_offset_b_jpn_kanji, $comment_no_value );
+    # 上だとフォルム違いでテキスト違いもできる、下だとフォルム違いはでない
+    &WriteGmmFileMonsno( $comment_b_file_name, $comment_b_row_id, $form_col_offset_b_jpn, $form_col_offset_b_jpn_kanji, $comment_no_value );
   }
 }
 
