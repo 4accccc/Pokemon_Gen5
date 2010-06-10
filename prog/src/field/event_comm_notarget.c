@@ -179,11 +179,11 @@ ALIGN4 static const u16 Talked_MissionMission[MISSION_TYPE_MAX][TALK_TYPE_MAX] =
 
 ///傍観者とミッション参加者の会話(ミッション参加者側)
 ALIGN4 static const u16 Talk_M_Boukansya[TALK_TYPE_MAX] = {
-  mimis_nom_01_t1,  //s_nom_01_m1,
-  mimis_nom_01_t2,  //s_nom_01_m2,
-  mimis_nom_01_t3,  //s_nom_01_m3,
-  mimis_nom_01_t4,  //s_nom_01_m4,
-  mimis_nom_01_t5,  //s_nom_01_m5,
+  mis_nom_01_t1,  //s_nom_01_m1,
+  mis_nom_01_t2,  //s_nom_01_m2,
+  mis_nom_01_t3,  //s_nom_01_m3,
+  mis_nom_01_t4,  //s_nom_01_m4,
+  mis_nom_01_t5,  //s_nom_01_m5,
 };
 
 ///傍観者とミッション参加者の会話(傍観者側)
