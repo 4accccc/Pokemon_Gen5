@@ -2144,8 +2144,11 @@ static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 maxHP;
 
-    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU ){
-      n /= 2;
+    if( BPP_GetValue(bpp, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KUISINBOU )
+    {
+      if( n > 2 ){
+        n /= 2;
+      }
     }
     if( n == 0 ){
       GF_ASSERT(0);

@@ -511,7 +511,6 @@ static void common_SideEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   BtlSide side, BtlSideEffect effect, BPP_SICK_CONT cont, u16 strID );
 static const BtlEventHandlerTable*  ADD_Hensin( u32* numElems );
 static void handler_Hensin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Hensin_PP( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_MikadukiNoMai( u32* numElems );
 static void handler_MikadukiNoMai( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_IyasiNoNegai( u32* numElems );
@@ -544,6 +543,7 @@ static void handler_Nagetukeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static void handler_Nagetukeru_WazaPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nagetukeru_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_DenjiFuyuu( u32* numElems );
 static void handler_DenjiFuyuu_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_DenjiFuyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -706,7 +706,6 @@ static void handler_FreeFall_TameFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 static void handler_FreeFall_TameStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TameRelease( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_FailCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_FreeFall_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FreeFall_TypeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_InisieNoUta( u32* numElems );
 static void handler_InisieNoUta( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4852,7 +4851,7 @@ static const BtlEventHandlerTable*  ADD_SizenNoMegumi( u32* numElems )
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_SizenNoMegumi_ExeCheck   }, // わざ出し成否チェック
     { BTL_EVENT_WAZA_PARAM,             handler_SizenNoMegumi_Type       }, // わざパラメータチェック
     { BTL_EVENT_WAZA_POWER_BASE,        handler_SizenNoMegumi_Pow        }, // わざ威力チェック
-    { BTL_EVENT_WAZA_EXECUTE_EFFECTIVE, handler_SizenNoMegumi_Done       }, // わざ出し終了
+    { BTL_EVENT_WAZA_EXECUTE_DONE,      handler_SizenNoMegumi_Done       }, // わざ出し終了
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7699,6 +7698,8 @@ static const BtlEventHandlerTable*  ADD_Nagetukeru( u32* numElems )
     { BTL_EVENT_WAZA_POWER_BASE,        handler_Nagetukeru_WazaPower},
     { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_Nagetukeru_DmgDetermine },
     { BTL_EVENT_WAZA_DMG_REACTION,      handler_Nagetukeru_DmgAfter },
+    { BTL_EVENT_WAZA_EXECUTE_DONE,      handler_Nagetukeru_Done     },
+
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -7747,8 +7748,8 @@ static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVF
 }
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u16 itemID = BPP_GetItem( bpp );
     if( itemID != ITEM_DUMMY_DATA )
@@ -7759,7 +7760,9 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 //        item_param->itemID = ITEM_DUMMY_DATA;
         item_param->fNoAction = TRUE;
       BTL_SVF_HANDEX_Pop( flowWk, item_param );
+      work[0] = 1;    // ダメージ与えて消費したフラグ
 
+      // みがわりじゃなければ追加効果発動
       if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE )
       {
         int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
@@ -7775,6 +7778,28 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
     }
   }
 }
+static void handler_Nagetukeru_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    if( work[0] == 0 )
+    {
+      // 自分のアイテムを失わせる
+      const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+      u16 itemID = BPP_GetItem( bpp );
+      if( itemID != ITEM_DUMMY_DATA )
+      {
+        BTL_HANDEX_PARAM_CONSUME_ITEM* item_param;
+          item_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CONSUME_ITEM, pokeID );
+          item_param->fNoAction = TRUE;
+        BTL_SVF_HANDEX_Pop( flowWk, item_param );
+      }
+    }
+  }
+}
+
+
+
 //----------------------------------------------------------------------------------
 /**
  * でんじふゆう
