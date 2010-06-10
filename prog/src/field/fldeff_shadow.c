@@ -319,9 +319,11 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
   
   if( work->vanish_flag == FALSE ){
     int flag = TRUE;
-    VecFx32 pos;
+    VecFx32 pos,offs;
     MMDL_GetVectorPos( work->fmmdl, &pos );
-
+    MMDL_GetControlOffsetPos( work->fmmdl, &offs );
+    VEC_Add( &pos, &offs, &pos );
+    
     GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, bbdIdx, &flag );
     pos.y += FX32_CONST(+1);
     GFL_BBD_SetObjectTrans( work->eff_shadow->bbdsys, bbdIdx, &pos );
