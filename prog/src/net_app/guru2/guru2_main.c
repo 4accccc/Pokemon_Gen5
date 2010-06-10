@@ -13,7 +13,7 @@
 #include <gflib.h>
 #include <calctool.h>
 
-//#defein WINDOW_SAVE_ICON  
+#define WINDOW_SAVE_ICON  
 
 #include "system/main.h"
 #include "arc/arc_def.h"
@@ -25,6 +25,7 @@
 #include "savedata/etc_save.h"
 #include "net/net_save.h"     // NET_SAVE_Init,
 #include "system/net_err.h"
+#include "system/time_icon.h"
 
 #include "print/printsys.h"
 #include "print/wordset.h"
@@ -978,15 +979,14 @@ struct GURU2MAIN_WORK
   GFL_TCB* tcb_btn_anm;
   GFL_TCB* tcb_omake_jump;
   
-  void *time_wait_icon_p;
-
   void        *tcbSysWork;  // タスクシステム用ワーク
   GFL_TCBSYS  *tcbSys;      // タスクシステム
   GFL_TCB     *vintr_tcb;   // Vblank割り込みTCB
 
   NET_SAVE_WORK *NetSaveWork;   // 通信同期セーブ用ワーク
 
-  u32         unitIndex_bg; // 背景３Dデータリソースインデックス
+  u32         unitIndex_bg;     // 背景３Dデータリソースインデックス
+  TIMEICON_WORK *TimeIconWork;  // 時間アイコン
 
 #ifdef GURU2_DEBUG_ON
   DEBUGWORK debug;
@@ -1291,8 +1291,11 @@ GFL_PROC_RESULT Guru2MainProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
   // プリントキュー削除
   PRINTSYS_QUE_Clear( g2m->msgwork.printQue );
   PRINTSYS_QUE_Delete( g2m->msgwork.printQue );
-
-   //ワーク反映
+  
+  // 時間アイコンが残っている場合は削除
+  if(g2m->TimeIconWork){
+    TIMEICON_Exit( g2m->TimeIconWork );
+  }
   
   //タスク削除
   EggJumpTcb_Delete( g2m );
@@ -1428,6 +1431,10 @@ static RET Guru2Subproc_FadeInWait( GURU2MAIN_WORK *g2m )
       OS_Printf("子として動作\n");
       g2m->seq_no = SEQNO_MAIN_KO_SEND_SIGNAL_JOIN;
     }
+
+    // 時間アイコン表示
+    g2m->TimeIconWork = TIMEICON_Create( g2m->tcbSys, g2m->msgwork.bmpwin_talk, 15, 
+                                            TIMEICON_DEFAULT_WAIT, HEAPID_GURU2 );
     
     return( RET_CONT );
   }
@@ -1683,6 +1690,9 @@ static RET Guru2Subproc_EggDataSendInit( GURU2MAIN_WORK *g2m )
   #ifdef DEBUG_GURU2_PRINTF
   OS_Printf( "ぐるぐる　たまごデータ転送開始\n" );
   #endif
+
+  TIMEICON_Exit( g2m->TimeIconWork );
+  g2m->TimeIconWork=NULL;
   
   GFL_NET_HANDLE_TimeSyncStart( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU );
   g2m->seq_no = SEQNO_MAIN_EGG_DATA_SEND_TIMING_WAIT;
@@ -2703,8 +2713,10 @@ static RET Guru2Subproc_SaveBeforeTimingWait( GURU2MAIN_WORK *g2m )
     // 通信同期セーブ開始
     g2m->NetSaveWork = NET_SAVE_Init( HEAPID_GURU2, g2m->g2p->param->gamedata);
 #ifdef WINDOW_SAVE_ICON
-    g2m->time_wait_icon_p = TimeWaitIconAdd(
-      g2m->msgwork.bmpwin_talk, BGF_CHARNO_TALK );
+    // 時間アイコン表示
+    g2m->TimeIconWork = TIMEICON_Create( g2m->tcbSys, g2m->msgwork.bmpwin_talk, 15, 
+                                            TIMEICON_DEFAULT_WAIT, HEAPID_GURU2 );
+
 #endif
     g2m->seq_no = SEQNO_MAIN_SAVE;
   }
@@ -2733,7 +2745,8 @@ static RET Guru2Subproc_Save( GURU2MAIN_WORK *g2m )
   
   if( ret ){
 #ifdef WINDOW_SAVE_ICON
-    TimeWaitIconDel( g2m->time_wait_icon_p );
+  TIMEICON_Exit( g2m->TimeIconWork );
+  g2m->TimeIconWork=NULL;
 #endif
     NET_SAVE_Exit( g2m->NetSaveWork );          // 通信同期セーブ終了
     g2m->seq_no = SEQNO_MAIN_END_TIMING_SYNC_INIT;
@@ -2793,6 +2806,9 @@ static RET Guru2Subproc_EndTimingSyncInit( GURU2MAIN_WORK *g2m )
   }
   
   Guru2TalkWin_Write( g2m, MSG_COMM_WAIT );
+  OS_Printf("通信同期メッセージ表示\n");
+
+  OS_Printf("時間アイコン３回目\n");
   g2m->seq_no = SEQNO_MAIN_END_TIMING_SYNC;
   return( RET_NON );
 }
@@ -2810,15 +2826,16 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
   if( g2m->force_end_flag == FALSE ){
     OS_Printf("通信同期中\n");
     if( GFL_NET_HANDLE_IsTimeSync( pNet, COMM_GURU2_TIMINGSYNC_NO, WB_NET_GURUGURU) ){
-//      GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
-//      CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
-//      CommStateUnionBconCollectionRestart();
+      // 時間アイコン表示
+      g2m->TimeIconWork = TIMEICON_Create( g2m->tcbSys, g2m->msgwork.bmpwin_talk, 15, 
+                                       TIMEICON_DEFAULT_WAIT, HEAPID_GURU2 );
       OS_Printf("通信切断開始\n");
       // 通信コマンドテーブル解放
       GFL_NET_SetNoChildErrorCheck(FALSE);
       GFL_NET_DelCommandTable( GFL_NET_CMD_GURUGURU );
       Union_App_Shutdown( _get_unionwork(g2m) );  // 通信切断開始
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
+     
     }
   }else{
     g2m->frame++;
@@ -2828,8 +2845,6 @@ static RET Guru2Subproc_EndTimingSync( GURU2MAIN_WORK *g2m )
       
       if( g2m->g2c->comm_psel_oya_end_flag == G2C_OYA_END_FLAG_NON ){
         GFL_NET_SetAutoErrorCheck( FALSE );     //切断可能に  
-//        CommStateSetLimitNum( 1 );            // 接続最大人数を1人（ユニオンに戻るため）
-//        CommStateUnionBconCollectionRestart();
       }
       
       g2m->seq_no = SEQNO_MAIN_END_CONNECT_CHECK;
@@ -2851,6 +2866,10 @@ static RET Guru2Subproc_EndConnectCheck( GURU2MAIN_WORK *g2m )
   // 通信切断待ち
   OS_Printf("通信切断待ち\n");
   if( Union_App_WaitShutdown(_get_unionwork(g2m)) ){
+    TIMEICON_Exit( g2m->TimeIconWork );
+    g2m->TimeIconWork=NULL;
+    OS_Printf("時間アイコン削除\n");
+
     OS_Printf("通信切断終了\n");
     g2m->seq_no = SEQNO_MAIN_END_FADEOUT_START;
     return( RET_CONT );
@@ -3100,6 +3119,11 @@ static void guru2_DrawProc( GURU2MAIN_WORK *g2m )
   PRINT_UTIL_Trans( &g2m->msgwork.printUtilTalk, g2m->msgwork.printQue );
   for(i=0;i<GURU2NAME_WIN_MAX;i++){
     PRINT_UTIL_Trans( &g2m->msgwork.printUtilName[i], g2m->msgwork.printQue );
+  }
+  
+  // 時間アイコンメイン
+  if(g2m->TimeIconWork!=NULL){
+    TIMEICON_Main( g2m->TimeIconWork );
   }
 }
 
