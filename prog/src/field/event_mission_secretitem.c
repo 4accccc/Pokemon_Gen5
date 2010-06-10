@@ -462,6 +462,8 @@ typedef struct{
   u16 target_netid;
   u16 padding;
   BOOL error;
+  BOOL success;
+  MISSION_ACHIEVE achieve_result;
 }EVENT_ARRIVAL_WORK;
 
 ///目的場所に到達した時のイベント管理
@@ -574,9 +576,9 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
 	INTRUDE_COMM_SYS_PTR intcomm;
 	FIELDMAP_WORK * fieldWork = GAMESYSTEM_GetFieldMapWork(gsys);
 	enum{
-    SEQ_INIT,
     SEQ_SEND_ACHIEVE,
     SEQ_RECV_WAIT,
+    SEQ_MSG_PRINT,
     SEQ_ITEMDATA_SEND,
     SEQ_LAST_MSG_WAIT,
     SEQ_MSG_END_BUTTON_WAIT,
@@ -597,22 +599,33 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
   }
 	
 	switch( *seq ){
-  case SEQ_INIT:
-    WORDSET_RegisterPlayerName( work->iem.wordset, 0, GAMEDATA_GetMyStatus(gamedata) );
-    WORDSET_RegisterItemName( work->iem.wordset, 1, work->itemdata.item );
-    IntrudeEventPrint_StartStream(&work->iem, MissionSecretItemMsgID.arrival[MISSION_FIELD_GetTalkType(intcomm, GAMEDATA_GetIntrudeMyID(gamedata))]);
-    (*seq)++;
-    break;
-
 	case SEQ_SEND_ACHIEVE:
     if(IntrudeSend_MissionAchieve(intcomm, &intcomm->mission) == TRUE){//ミッション達成を親に伝える
       (*seq)++;
     }
     break;
   case SEQ_RECV_WAIT:
-		if(MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) != MISSION_ACHIEVE_NULL){
+    work->achieve_result = MISSION_GetAchieveAnswer(intcomm, &intcomm->mission);
+    if(work->achieve_result != MISSION_ACHIEVE_NULL){
       (*seq)++;
     }
+    break;
+  case SEQ_MSG_PRINT:
+    WORDSET_RegisterPlayerName( work->iem.wordset, 0, GAMEDATA_GetMyStatus(gamedata) );
+    WORDSET_RegisterItemName( work->iem.wordset, 1, work->itemdata.item );
+    {
+      u32 msg_id;
+      
+      if(work->achieve_result == MISSION_ACHIEVE_OK){
+        msg_id = MissionSecretItemMsgID.arrival[MISSION_FIELD_GetTalkType(intcomm, GAMEDATA_GetIntrudeMyID(gamedata))];
+        work->success = TRUE;
+      }
+      else{
+        msg_id = msg_intrude_005;
+      }
+      IntrudeEventPrint_StartStream(&work->iem, msg_id);
+    }
+    (*seq)++;
     break;
   case SEQ_ITEMDATA_SEND:
     if(IntrudeSend_SecretItem(work->target_netid, &work->itemdata) == TRUE){
@@ -634,8 +647,14 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
   case SEQ_END:
     IntrudeEventPrint_ExitFieldMsg(&work->iem);
 
-    GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
-    return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
+    if(work->success == TRUE){
+      GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
+      return GMEVENT_RES_CONTINUE;  //ChangeEventで終了するためFINISHしない
+    }
+    else{
+      return GMEVENT_RES_FINISH;
+    }
+    break;
   }
 	return GMEVENT_RES_CONTINUE;
 }

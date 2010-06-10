@@ -1616,7 +1616,8 @@ GMEVENT * IntrudeField_CheckSecretItemEvent(GAMESYS_WORK *gsys, INTRUDE_COMM_SYS
       && MISSION_GetMissionComplete(&intcomm->mission) == FALSE){
     const MISSION_DATA *mdata = MISSION_GetRecvData(&intcomm->mission);
     if(mdata != NULL && mdata->cdata.type == MISSION_TYPE_ITEM 
-        && intcomm->intrude_status_mine.palace_area == mdata->target_info.net_id){
+        && intcomm->intrude_status_mine.palace_area == mdata->target_info.net_id
+		    && MISSION_GetAchieveAnswer(intcomm, &intcomm->mission) == MISSION_ACHIEVE_NULL){
       const MISSION_TYPEDATA_ITEM *d_item = (void*)mdata->cdata.data;
       PLAYER_WORK *plWork = GAMESYSTEM_GetMyPlayerWork( gsys );
       ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
