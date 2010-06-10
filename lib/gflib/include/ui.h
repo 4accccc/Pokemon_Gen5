@@ -149,6 +149,7 @@ typedef struct _UI_SYS UISYS;  ///< UISYS 型宣言
 typedef struct _UI_TPSYS UI_TPSYS; ///< UIタッチパネルSYS型宣言
 typedef void (GFL_UI_SLEEPRELEASE_FUNC)(void* pWork);  ///< リセット復帰時に呼ばれる関数
 typedef void (GFL_UI_SOFTRESET_CALLBACK)( void *work ); ///<ソフトリセットコールバック関数
+typedef BOOL (GFL_UI_NOTSLEEPCHK_FUNC)(void* pWork);  ///< スリープ直前に呼ばれる関数
 
 
 //==============================================================================
@@ -285,6 +286,17 @@ extern void GFL_UI_SoftResetSetFunc(GFL_UI_SOFTRESET_CALLBACK* pFunc, void* pWor
 //------------------------------------------------------------------
 extern void GFL_UI_Batt10SleepReleaseSetFunc(GFL_UI_SLEEPRELEASE_FUNC* pFunc, void* pWork);
 
+//------------------------------------------------------------------
+/**
+ * @brief   スリープ禁止にする専用関数をセットする
+ * @param   pFunc   スリープ解除時に呼ばれる関数
+ * @param   pWork   呼ばれる際に渡すワーク
+ * @return  none
+ */
+//------------------------------------------------------------------
+extern void GFL_UI_NotSleepSetFunc(GFL_UI_NOTSLEEPCHK_FUNC* pFunc, void* pWork);
+
+
 //----------------------------------------------------------------------------
 /**
  * @brief	  ふたが開いたかどうか
@@ -296,11 +308,19 @@ extern BOOL GFL_UI_GetOpenTrg(void);
 
 //---------------------------------------------------------------------------
 /**
- * @brief	バッテリーの検査+ふたが閉じているかどうかを返す
- * @param	10%以下で蓋とじの場合TRUE
+ * @brief	ふたが閉じているかどうかを返す
+ * @param	ふたが閉じている=TRUE
  */
 //---------------------------------------------------------------------------
-extern BOOL GFL_UI_CheckCoverAndBatt(void);
+extern BOOL GFL_UI_CheckCoverOff(void);
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	バッテリーが低レベルかどうかを返す
+ * @param	DSでもDSIでもバッテリーが低レベルの場合TRUE
+ */
+//---------------------------------------------------------------------------
+extern BOOL GFL_UI_CheckLowBatt(void);
 
 //----------------------------------------------------------------------------
 //プロトタイプ宣言 touchpanel.c

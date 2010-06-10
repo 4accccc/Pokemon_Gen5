@@ -1323,6 +1323,16 @@ extern void GFL_NET_SetIconForcePosition(int x,int y);
 extern void GFL_NET_ResetIconForcePosition(void);
 
 
+//--------------------------------------------------------------
+/**
+ * @brief   赤外線ワイヤレス移行システムが作成されているか確認
+ * @retval  TRUE:作成されている
+ */
+//--------------------------------------------------------------
+extern BOOL GFL_NET_IW_SystemCheck(void);
+
+
+
 #ifdef PM_DEBUG
 //----------------------------------------------------------------
 /**
