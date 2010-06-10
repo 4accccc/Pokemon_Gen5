@@ -2598,7 +2598,7 @@ sub_bsw_common_renshou_msg:
         
         $SCWK_TEMP0 = msg_bsw_scr_104
         _CALL sub_bsw_common_bwin_receipt
-      ELSE //通信マルチのみ連勝数あり
+      ELSIF $comm_count != 0 THEN //通信マルチのみ連勝数あり
         _PLAYER_NAME( 0 )
         _NUMBER( 1, comm_count, 4 )
         
