@@ -466,36 +466,6 @@ BOOL MyStatus_Compare(const MYSTATUS * my, const MYSTATUS * target)
 
 
 
-//============================================================================================
-//  デバッグ用
-//============================================================================================
-#ifdef PM_DEBUG
-#include "arc_def.h"
-#include "debug_message.naix"
-#include "msg\debug\msg_d_matsu.h"
-//--------------------------------------------------------------
-/**
- * @brief   ダミーの名前をセットする
- *
- * @param   mystatus    代入先
- * @param   heap_id     テンポラリヒープ
- */
-//--------------------------------------------------------------
-void DEBUG_MyStatus_DummyNameSet(MYSTATUS *mystatus, HEAPID heap_id)
-{
-  GFL_MSGDATA *mm;
-  STRBUF *buf;
-
-  mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_DEBUG_MESSAGE, NARC_debug_message_d_matsu_dat, heap_id );
-
-  buf = GFL_MSG_CreateString( mm, DM_MSG_DUMMY_NAME );
-  MyStatus_SetMyNameFromString(mystatus, buf);
-  GFL_STR_DeleteBuffer(buf);
-
-  GFL_MSG_Delete( mm );
-}
-#endif  //PM_DEBUG
-
 // 外部参照インデックスを作る時のみ有効(ゲーム中は無効)
 #ifdef CREATE_INDEX
 void *Index_Get_Mystatus_Name_Offset(MYSTATUS *my){ return &my->name; }

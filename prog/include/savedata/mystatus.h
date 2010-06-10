@@ -121,12 +121,6 @@ extern MYSTATUS * SaveData_GetMyStatus(SAVE_CONTROL_WORK * sv);
 //  myStatus同士が同じものかどうかを調べる
 BOOL MyStatus_Compare(const MYSTATUS * my, const MYSTATUS * target);
 
-//----------------------------------------------------------
-//  デバッグ用データ生成のための関数
-//----------------------------------------------------------
-#ifdef PM_DEBUG
-extern void DEBUG_MyStatus_DummyNameSet(MYSTATUS *mystatus, HEAPID heap_id);
-#endif  //PM_DEBUG
 
 #ifdef CREATE_INDEX
 extern void *Index_Get_Mystatus_Name_Offset(MYSTATUS *my);
