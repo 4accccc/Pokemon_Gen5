@@ -201,6 +201,11 @@ static void _SendUpdate_LeavePlayer(UNION_APP_PTR uniapp)
 {
   u32 now_member_bit = uniapp->basic_status.member_bit;
   int net_id;
+
+  //—“üÒ‚ª‚¢‚éê‡‚Í—“ü‚ªŠ®—¹‚µ‚Ä‚©‚ç
+  if(uniapp->now_intrude_netid != UNIAPP_NETID_NULL){
+    return;
+  }
   
   //‘ŞoÒ‚ÌNetID‚ğ’²¸
   for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
