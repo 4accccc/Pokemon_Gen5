@@ -1050,6 +1050,7 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
 
   IRC_POKETRADE_SendVramBoxNameChar(pWork);
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
+  IRC_POKETRADE_GraphicInitSubDispSys(pWork);
   IRC_POKETRADE_GraphicInitSubDisp(pWork);
 
   IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);

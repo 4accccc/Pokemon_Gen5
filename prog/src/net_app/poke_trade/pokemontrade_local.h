@@ -764,6 +764,7 @@ extern void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork);
 
 extern void IRC_POKETRADE_GraphicInitMainDisp(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork);
+extern void IRC_POKETRADE_GraphicInitSubDispSys(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_MainGraphicExit(POKEMON_TRADE_WORK* pWork);
 extern void IRC_POKETRADE_SubGraphicExit(POKEMON_TRADE_WORK* pWork);
 

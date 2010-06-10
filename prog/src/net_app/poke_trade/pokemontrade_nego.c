@@ -1273,6 +1273,7 @@ static void _NEGO_Select6CancelWait5(POKEMON_TRADE_WORK* pWork)
     IRC_POKETRADE_InitBoxCursor(pWork);  // タスクバー
     IRC_POKETRADE_CreatePokeIconResource(pWork);  // ポケモンアイコンCLACT+リソース常駐化
     IRC_POKETRADE_GraphicInitMainDisp(pWork);
+    IRC_POKETRADE_GraphicInitSubDispSys(pWork);
     IRC_POKETRADE_GraphicInitSubDisp(pWork);
     IRC_POKETRADEDEMO_SetModel( pWork, REEL_PANEL_OBJECT);
     GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );

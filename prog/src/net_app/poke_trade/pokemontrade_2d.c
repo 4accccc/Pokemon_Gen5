@@ -246,7 +246,7 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 	GFL_ARC_CloseDataHandle( p_handle );
 
 
-  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+//  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
   
   IRC_POKETRADE_TrayInit(pWork,pWork->subchar2);
 
@@ -258,6 +258,11 @@ void IRC_POKETRADE_GraphicInitSubDisp(POKEMON_TRADE_WORK* pWork)
 
 }
 
+
+void IRC_POKETRADE_GraphicInitSubDispSys(POKEMON_TRADE_WORK* pWork)
+{
+  pWork->bgchar = BmpWinFrame_GraphicSetAreaMan(GFL_BG_FRAME2_S, _BUTTON_WIN_PAL, MENU_TYPE_SYSTEM, pWork->heapID);
+}
 
 
 //------------------------------------------------------------------

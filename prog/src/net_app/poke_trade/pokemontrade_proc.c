@@ -3710,12 +3710,12 @@ static void _dispInit(POKEMON_TRADE_WORK* pWork)
   IRC_POKETRADE_GraphicInitMainDisp(pWork);
   IRC_POKETRADE_SendVramBoxNameChar(pWork); // ボックス名初期化
 
-  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
-  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+//  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+//  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
 
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+//  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
-  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
+//  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
 
   IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );  //ポケモンの表示
 
@@ -4094,11 +4094,17 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
   //  }
 
   POKETRADE_MESSAGE_HeapInit(pWork);
-  _dispInit(pWork);
+  IRC_POKETRADE_GraphicInitSubDispSys(pWork);
   if(pWork->type < POKEMONTRADE_TYPE_VISUAL){
+    _dispInit(pWork);
     POKETRADE_TOUCHBAR_Init(pWork);
+    GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
   }
+  GFL_DISP_GX_SetVisibleControlDirect( GX_PLANEMASK_BG0|GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_DISP_GXS_SetVisibleControlDirect( GX_PLANEMASK_BG1|GX_PLANEMASK_BG2|GX_PLANEMASK_BG3|GX_PLANEMASK_OBJ );
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 
+  
 #if DEBUG_ONLY_FOR_ohno | DEBUG_ONLY_FOR_ibe_mana
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
   DEBUG_PAUSE_SetEnable( TRUE );
