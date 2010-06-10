@@ -734,7 +734,7 @@ sub_mapchg_receipt:
   _CALL sub_demo_train_starting
     
   //ワーク開放
-  _BSUBWAY_WORK_RELEASE()
+//_BSUBWAY_WORK_RELEASE()
   
   //フラグセット
   _FLAG_SET( FV_C04R0111_PARTNER )
