@@ -324,6 +324,9 @@ add_zoroa:
         _OBJ_ANIME_WAIT()
         _FLAG_SET( FV_C03R0401_GIRL1_01 )
         _OBJ_DEL(C03R0401_GIRL1_01)
+        //退場ＳＥ
+        _SE_PLAY( SEQ_SE_KAIDAN )
+        _SE_WAIT()
         //イベント終了
         $WK_SCENE_C03R0401_ZOROA = 3
         //ループ抜ける
