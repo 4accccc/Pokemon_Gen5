@@ -89,6 +89,8 @@
 #define	BTLEFF_EMITTER_MOVE_CURVE							( 2 )
 #define	BTLEFF_EMITTER_MOVE_CURVE_HALF				( 3 )
 #define	BTLEFF_EMITTER_MOVE_OFFSET					  ( 4 )
+#define	BTLEFF_EMITTER_MOVE_WAVE_V					  ( 5 )
+#define	BTLEFF_EMITTER_MOVE_WAVE_H					  ( 6 )
 
 //エミッタ円移動
 #define BTLEFF_EMITTER_CIRCLE_MOVE_ATTACK_L   ( 0 )
@@ -901,22 +903,22 @@ ex)
  * @param	start_pos		移動開始立ち位置
  * @param	end_pos			移動終了立ち位置
  * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
- * @param	param		    再生するときの補正値  life speed
+ * @param	param		    再生するときの補正値  life speed  波の回数（波時のみ）
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
- * #param	COMBOBOX_TEXT	直線	放物線  放物線（半分）
- * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE BTLEFF_EMITTER_MOVE_CURVE_HALF
+ * #param	COMBOBOX_TEXT	直線	放物線  放物線（半分）  縦波  横波
+ * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE BTLEFF_EMITTER_MOVE_CURVE_HALF	BTLEFF_EMITTER_MOVE_WAVE_V  BTLEFF_EMITTER_MOVE_WAVE_H
  * #param	COMBOBOX_TEXT	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	COMBOBOX_TEXT	攻撃側	防御側
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE
  * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
- * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  未使用
+ * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  波の回数（波時のみ）
  * #param VALUE_INIT  1:1:0
  */
 //======================================================================
-	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top, life, speed, dummy
+	.macro	EMITTER_MOVE	num, index, move_type, start_pos, end_pos, ofs_y, move_frame, top, life, speed, wave
 	.short	EC_EMITTER_MOVE
 	.long		\num
 	.long		\index
@@ -928,7 +930,7 @@ ex)
 	.long		\top
 	.long		\life
 	.long		\speed
-	.long		\dummy
+	.long		\wave
 	.endm
 
 //======================================================================
@@ -942,21 +944,21 @@ ex)
  * @param	start_pos		移動開始座標
  * @param	end_pos			移動終了立ち位置
  * @param	move_param	立ち位置Y方向オフセット(ofs_y)	移動フレーム(move_frame)	放物線頂点（放物線時のみ）(top)
- * @param	param		    再生するときの補正値  life speed
+ * @param	param		    再生するときの補正値  life speed  波の回数（波時のみ）
  *
  * #param	FILE_DIALOG_COMBOBOX .spa
  * #param	COMBOBOX_HEADER
- * #param	COMBOBOX_TEXT	直線	放物線  放物線（半分）  相対
- * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE BTLEFF_EMITTER_MOVE_CURVE_HALF  BTLEFF_EMITTER_MOVE_OFFSET
+ * #param	COMBOBOX_TEXT	直線	放物線  放物線（半分）  相対  縦波  横波
+ * #param	COMBOBOX_VALUE	BTLEFF_EMITTER_MOVE_STRAIGHT	BTLEFF_EMITTER_MOVE_CURVE BTLEFF_EMITTER_MOVE_CURVE_HALF  BTLEFF_EMITTER_MOVE_OFFSET  BTLEFF_EMITTER_MOVE_WAVE_V  BTLEFF_EMITTER_MOVE_WAVE_H
  * #param	VALUE_VECFX32	X座標	Y座標	Z座標
  * #param	COMBOBOX_TEXT	攻撃側	防御側 POS_AA POS_BB POS_A POS_B POS_C POS_D  POS_E POS_F
  * #param	COMBOBOX_VALUE	BTLEFF_PARTICLE_PLAY_SIDE_ATTACK	BTLEFF_PARTICLE_PLAY_SIDE_DEFENCE	BTLEFF_PARTICLE_PLAY_POS_AA	BTLEFF_PARTICLE_PLAY_POS_BB	BTLEFF_PARTICLE_PLAY_POS_A	BTLEFF_PARTICLE_PLAY_POS_B	BTLEFF_PARTICLE_PLAY_POS_C	BTLEFF_PARTICLE_PLAY_POS_D BTLEFF_PARTICLE_PLAY_POS_E BTLEFF_PARTICLE_PLAY_POS_F
  * #param	VALUE_VECFX32	立ち位置Y方向オフセット	移動フレーム	放物線頂点（放物線時のみ）
- * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  未使用
+ * #param VALUE_VECFX32 エミッタ寿命　エミッタスピード  波の回数（波時のみ）
  * #param VALUE_INIT  1:1:0
  */
 //======================================================================
-	.macro	EMITTER_MOVE_COORDINATE	num, index, move_type, start_pos_x, start_pos_y, start_pos_z, end_pos, ofs_y, move_frame, top, life, speed, dummy
+	.macro	EMITTER_MOVE_COORDINATE	num, index, move_type, start_pos_x, start_pos_y, start_pos_z, end_pos, ofs_y, move_frame, top, life, speed, wave
 	.short	EC_EMITTER_MOVE_COORDINATE
 	.long		\num
 	.long		\index
@@ -970,7 +972,7 @@ ex)
 	.long		\top
 	.long		\life
 	.long		\speed
-	.long		\dummy
+	.long		\wave
 	.endm
 
 //======================================================================

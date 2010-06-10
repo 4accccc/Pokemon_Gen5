@@ -181,6 +181,7 @@ typedef struct{
   fx32      life;
   fx32      scale;
   fx32      speed;
+  fx32      wave;
   BOOL      minus_flag;
 }BTLV_EFFVM_EMIT_INIT_WORK;
 
@@ -190,7 +191,9 @@ typedef struct{
   fx32    radius_x;   //放物線移動時のX方向半径
   fx32    radius_y;   //放物線移動時のY方向半径（０だと直線になるはず）
   fx32    angle;      //放物線現在角度
+  fx32    wave_angle;
   fx32    speed;      //スピード
+  fx32    wave_speed;
   int     move_frame; //移動するフレーム数
   int     move_type;  //移動タイプ
   int     wait;
@@ -1767,7 +1770,6 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
   ARCDATID  datID   = EFFVM_ConvDatID( bevw, ( ARCDATID )VMGetU32( vmh ) );
   int       ptc_no  = EFFVM_GetPtcNo( bevw, datID );
   int       index   = ( int )VMGetU32( vmh );
-  int       dummy;
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_EMITTER_MOVE\n");
@@ -1788,8 +1790,11 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE( VMHANDLE *vmh, void *context_work )
     beeiw->life       = ( fx32 )VMGetU32( vmh );
     beeiw->scale      = FX32_ONE;
     beeiw->speed      = ( fx32 )VMGetU32( vmh );
-    //ダミーデータがあるので空読み；
-    dummy = VMGetU32( vmh );
+    beeiw->wave       = ( fx32 )VMGetU32( vmh );
+    if( beeiw->wave == 0 )
+    { 
+      beeiw->wave = 1;
+    }
 
     //移動元と移動先が同一のときは、アサートで止める
     GF_ASSERT( beeiw->dst != beeiw->src );
@@ -1843,8 +1848,11 @@ static VMCMD_RESULT VMEC_EMITTER_MOVE_COORDINATE( VMHANDLE *vmh, void *context_w
     beeiw->life       = ( fx32 )VMGetU32( vmh );
     beeiw->scale      = FX32_ONE;
     beeiw->speed      = ( fx32 )VMGetU32( vmh );
-    //ダミーデータがあるので空読み；
-    dummy = VMGetU32( vmh );
+    beeiw->wave       = ( fx32 )VMGetU32( vmh );
+    if( beeiw->wave == 0 )
+    { 
+      beeiw->wave = 1;
+    }
 
     //移動元と移動先が同一のときは、アサートで止める
     GF_ASSERT( beeiw->dst != beeiw->src );
@@ -5175,9 +5183,20 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     {
       beemw->speed = FX_Div( ( 0x6000 << FX32_SHIFT ), beeiw->move_frame );
     }
+    else if( ( beeiw->move_type == BTLEFF_EMITTER_MOVE_WAVE_H ) ||
+             ( beeiw->move_type == BTLEFF_EMITTER_MOVE_WAVE_V ) )
+    { 
+      beemw->speed = FX_Div( ( 0x8000 << FX32_SHIFT ), beeiw->move_frame );
+      beemw->wave_speed = FX_Div( ( 0x10000 << FX32_SHIFT ), beeiw->move_frame );
+      beemw->wave_speed = FX_Mul( beemw->wave_speed, beeiw->wave );
+    }
     else
     {
       beemw->speed = FX_Div( ( 0x8000 << FX32_SHIFT ), beeiw->move_frame );
+    }
+    if( beemw->speed == 0 )
+    { 
+      beemw->speed = 1;
     }
     beemw->radius_x = VEC_Distance( &src, &dst ) / 2;
     if( ( beeiw->move_type == BTLEFF_EMITTER_MOVE_STRAIGHT ) ||
@@ -5379,6 +5398,7 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
   BTLV_EFFVM_EMITTER_MOVE_WORK *beemw = ( BTLV_EFFVM_EMITTER_MOVE_WORK *)GFL_PTC_GetUserData( emit );
   VecFx32 emit_pos;
   int     angle;
+  int     wave_angle;
 
   //check_linesover( emit, flag );
 
@@ -5404,17 +5424,36 @@ static  void  EFFVM_MoveEmitter( GFL_EMIT_PTR emit, unsigned int flag )
 
   beemw->move_frame--;
   beemw->angle += beemw->speed;
+  beemw->wave_angle += beemw->wave_speed;
 
   angle = ( ( beemw->angle >> FX32_SHIFT ) + 0xc000 ) & 0xffff;
+  wave_angle = ( ( beemw->wave_angle >> FX32_SHIFT ) + 0xc000 ) & 0xffff;
 
   emit_pos.x = FX_SinIdx( angle );
   emit_pos.x = FX_Mul( emit_pos.x, beemw->radius_x );
   emit_pos.x += beemw->radius_x;
 
-  emit_pos.y = FX_CosIdx( angle );
-  emit_pos.y = FX_Mul( emit_pos.y, beemw->radius_y );
+  if( beemw->move_type == BTLEFF_EMITTER_MOVE_WAVE_H )
+  { 
+    emit_pos.z = FX_CosIdx( wave_angle );
+    emit_pos.z = FX_Mul( emit_pos.z, beemw->radius_y );
 
-  emit_pos.z = 0;
+    emit_pos.y = 0;
+  }
+  else if( beemw->move_type == BTLEFF_EMITTER_MOVE_WAVE_V )
+  { 
+    emit_pos.y = FX_CosIdx( wave_angle );
+    emit_pos.y = FX_Mul( emit_pos.y, beemw->radius_y );
+
+    emit_pos.z = 0;
+  }
+  else
+  { 
+    emit_pos.y = FX_CosIdx( angle );
+    emit_pos.y = FX_Mul( emit_pos.y, beemw->radius_y );
+
+    emit_pos.z = 0;
+  }
 
   MTX_MultVec43( &emit_pos, &beemw->mtx43, &emit_pos );
 
