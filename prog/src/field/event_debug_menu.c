@@ -2157,6 +2157,37 @@ static BOOL debugMenuCallProc_1BoxMax( DEBUG_MENU_EVENT_WORK *wk )
         PPP_Put( ppp , ID_PARA_oyaname_raw , (u32)name );
         PPP_Put( ppp , ID_PARA_oyasex , MyStatus_GetMySex( myStatus ) );
 
+        //ランダムでリボンをつける処理
+        {
+          int ribbon_id;
+          switch( GFUser_GetPublicRand( 2 ) )
+          {
+          default:
+          case 0:
+            {
+              //旧リボン
+              const int ribbon_max = ID_PARA_sinou_premiere_ribbon - ID_PARA_sinou_champ_ribbon;
+              ribbon_id  = ID_PARA_sinou_champ_ribbon + GFUser_GetPublicRand( ribbon_max );
+            }
+            break;
+          case 1:
+            {
+              //新リボン
+              const int ribbon_max = ID_PARA_world_ribbon - ID_PARA_stylemedal_normal;
+              ribbon_id  = ID_PARA_stylemedal_normal + GFUser_GetPublicRand( ribbon_max );
+            }
+            break;
+          case 2:
+            {
+              //トライアルリボン
+              const int ribbon_max = ID_PARA_trial_strongmedal_master - ID_PARA_trial_stylemedal_normal;
+              ribbon_id  = ID_PARA_trial_stylemedal_normal + GFUser_GetPublicRand( ribbon_max );
+            }
+            break;
+          }
+          PPP_Put( ppp , ribbon_id, MyStatus_GetMySex( myStatus ) );
+        }
+
         BOXDAT_PutPokemonBox(pBox, i, ppp);
 
         monsno++;
