@@ -224,7 +224,7 @@ void ISC_SAVE_SetItem(INTRUDE_SAVE_WORK *intsave, const INTRUDE_SECRET_ITEM_SAVE
   
   for(i = 0; i < INTRUDE_SECRET_ITEM_SAVE_MAX; i++){
     if(isis->item == 0){
-      OS_TPrintf("save secretitem No.%d\n", i);
+      MATSUDA_Printf("save secretitem No.%d\n", i);
       *isis = *src;
       return;
     }
@@ -429,7 +429,7 @@ s64 ISC_SAVE_PalaceSojournParam(INTRUDE_SAVE_WORK *intsave, PLAYTIME *playtime, 
     in_time_sec = now_sec;
     break;
   case SOJOURN_TIME_CALC_SET: //入室時間と現在時間の差分を見て滞在時間へ加算
-    OS_TPrintf("パレス滞在時間 + %d秒\n", now_sec - in_time_sec);
+    MATSUDA_Printf("パレス滞在時間 + %d秒\n", now_sec - in_time_sec);
     intsave->palace_sojourn_time += now_sec - in_time_sec;
     break;
   case SOJOURN_TIME_CALC_GET: //入室時間と現在時間の差分を見て加算した滞在時間を取得
