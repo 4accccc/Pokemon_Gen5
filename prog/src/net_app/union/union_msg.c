@@ -66,6 +66,8 @@ enum{
   _WORDSET_BUFID_TARGET_AISATSU,  ///<Œ¾Œê‚É‡‚í‚¹‚½ˆ¥ŽA
   _WORDSET_BUFID_NATION,          ///<‘
   _WORDSET_BUFID_AREA,            ///<’nˆæ
+  
+  _WORDSET_BUFID_MAX,
 };
 
 
@@ -1240,7 +1242,7 @@ static void _WordsetCreate( UNION_SYSTEM_PTR unisys )
   if(unisys->wordset != NULL){
     return;
   }
-  unisys->wordset = WORDSET_Create( HEAPID_UNION );
+  unisys->wordset = WORDSET_CreateEx( _WORDSET_BUFID_MAX, WORDSET_COUNTRY_BUFLEN, HEAPID_UNION );
   _WordsetSetDefaultData(unisys);
 }
 
