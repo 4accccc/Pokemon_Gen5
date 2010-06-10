@@ -153,9 +153,49 @@ _TALK_OBJ_START()
 					
 						//ループ終了
 						$LWK_MENU_WHILE = 1
+
+						//所持金をチェック
+						_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
+						//お金が足りている場合
+						IF $LWK_GOLD_CHK == TRUE THEN
+							
+							DEFINE_LOCAL	LWK_CGEAR
+							_GET_CGEAR_STATUS( LWK_CGEAR )
+							//CギアがONの場合
+							IF $LWK_CGEAR == TRUE THEN
+								
+								//Cギアの電源をオフにしますが　よろしいでしょうか？
+								_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_04 , C03P16_CABINGUIDE_01, POS_DOWN )
+								_YES_NO_WIN( SCWK_ANSWER )
+								//はい
+								IF $SCWK_ANSWER == SCR_YES THEN
+									_CALL ev_cabin
+								//いいえ
+								ELSE
+									_GOLD_WIN_CLOSE()
+									//かしこまりました
+									_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_06 , C03P16_CABINGUIDE_01, POS_DOWN )
+									_LAST_KEYWAIT()
+									_MSGWIN_CLOSE()
+								
+								ENDIF
+							
+							//CギアがOFFの場合
+							ELSE
+								_CALL ev_cabin
+							ENDIF
+							
+						//お金が足りない場合
+						ELSE
+							_GOLD_WIN_CLOSE()
+	
+							//お金が　足りません
+							_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DOWN )
+							_LAST_KEYWAIT()
+							_MSGWIN_CLOSE()
+
+						ENDIF
 						
-						_CALL ev_cabin
-			
 					CASE 1 THEN		//せつめいを受ける場合
 
 						_CALL ev_explanation
@@ -235,18 +275,15 @@ _ANIME_LABEL	anm_player_in
 //--------------------------------------------------------------------
 
 ev_cabin:
-
-//所持金をチェック
-_CHECK_GOLD( LWK_GOLD_CHK, 1000  )
-//お金が足りている場合
-IF $LWK_GOLD_CHK == TRUE THEN
 					
 	_SUBTRACT_GOLD( 1000 )
 	_GOLD_WIN_UPDATE( )
 	// 支払いSE
 	_SE_PLAY( SEQ_SE_SYS_22 )
 	_SE_WAIT()
-					
+
+	_SET_CGEAR_OFF()
+
 	//まもなく　しゅっこうに　なります
 	_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_05 , C03P16_CABINGUIDE_01, POS_DOWN )
 	_MSGWIN_CLOSE()
@@ -278,17 +315,6 @@ IF $LWK_GOLD_CHK == TRUE THEN
 	
 	//マップチェンジ
 	_MAP_CHANGE( ZONE_ID_C03R0801, 29, 29, DIR_UP )
-
-//お金が足りない場合
-ELSE
-	_GOLD_WIN_CLOSE()
-	
-	//お金が　足りません
-	_BALLOONWIN_OBJMSG_POS( msg_c03p16_cabinguide_01c , C03P16_CABINGUIDE_01, POS_DOWN )
-	_LAST_KEYWAIT()
-	_MSGWIN_CLOSE()
-
-ENDIF
 
 _RET
 
