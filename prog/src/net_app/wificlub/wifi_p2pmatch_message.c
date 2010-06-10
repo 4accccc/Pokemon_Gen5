@@ -70,6 +70,8 @@ static const BMPWIN_YESNO_DAT _yesNoBmpDatSys2 = {
 static void _TouchResExit( WIFIP2PMATCH_WORK *wk );
 static void _TrainerOAMFree( WIFIP2PMATCH_WORK *wk );
 
+static void VanishAllPokeIcon(WIFIP2PMATCH_WORK *wk);   //20100610 add Saito
+
 
 //------------------------------------------------------------------
 /**
@@ -1670,6 +1672,9 @@ static void _pokeIconResourceCreate(WIFIP2PMATCH_WORK *wk, const POKEPARTY *part
   _pokemonIconCreate(wk, party, 0,arcHandlePoke);
   _pokemonIconCreate(wk, battle, 6,arcHandlePoke);
 
+  //始めはアイコンを非表示にしておく 20100610 add Saito
+  VanishAllPokeIcon(wk);
+
   GFL_ARC_CloseDataHandle(arcHandlePoke);
 }
 
@@ -1722,6 +1727,25 @@ static void _pokeIconDispSwitch(WIFIP2PMATCH_WORK *wk,BOOL bTemochi)
     }
   }
   
+}
+
+//----------------------------------------------------------------------------
+/**
+ *  @brief  手持ち、バトルボックスポケモンアイコン全部非表示
+ *  @param  wk
+ *  @return none
+ */
+//-----------------------------------------------------------------------------
+
+static void VanishAllPokeIcon(WIFIP2PMATCH_WORK *wk)
+{
+  int i;
+  for(i=0;i<12;i++){
+    if(wk->pokemonIcon[i]){
+      GFL_CLACT_WK_SetAutoAnmFlag( wk->pokemonIcon[i] , FALSE );
+      GFL_CLACT_WK_SetDrawEnable( wk->pokemonIcon[i], FALSE );
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
