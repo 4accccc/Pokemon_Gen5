@@ -88,7 +88,7 @@ typedef struct
   DEMO3D_GRAPHIC_WORK *graphic;
 
   //フォント
-  GFL_FONT                  *font;
+//  GFL_FONT                  *font;
 
   //プリントキュー
   PRINT_QUE                 *print_que;
@@ -193,8 +193,8 @@ static GFL_PROC_RESULT Demo3DProc_Init( GFL_PROC *proc, int *seq, void *pwk, voi
   wk->graphic = DEMO3D_GRAPHIC_Init( GX_DISP_SELECT_MAIN_SUB, param->demo_id, wk->heapID );
 
   //フォント作成
-  wk->font      = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
-                        GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
+//  wk->font      = GFL_FONT_Create( ARCID_FONT, NARC_font_large_gftr,
+//                       GFL_FONT_LOADTYPE_FILE, FALSE, wk->heapID );
 
   //メッセージ
   wk->msg = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, 
@@ -278,7 +278,7 @@ static GFL_PROC_RESULT Demo3DProc_Exit( GFL_PROC *proc, int *seq, void *pwk, voi
   PRINTSYS_QUE_Delete( wk->print_que );
 
   //FONT
-  GFL_FONT_Delete( wk->font );
+//  GFL_FONT_Delete( wk->font );
   
   //3D 破棄
   Demo3D_ENGINE_Exit( wk->engine );
