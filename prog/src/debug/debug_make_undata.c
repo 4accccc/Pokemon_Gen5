@@ -308,6 +308,9 @@ static BOOL is_hiragana( const STRBUF* buf );
 
 static void MakeData(MAKE_WORK *wk);
 static void DumpUNData(MAKE_WORK *wk);
+
+
+extern DAT_ADD_ST UNDATAUP_UpdateD(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
 //--------------------------------------------------------------
 /**
  *  Proc Data
@@ -1245,7 +1248,7 @@ static void MakeData(MAKE_WORK *wk)
 
   //’Ç‰Á
   {
-    DAT_ADD_ST st = UNDATAUP_Update(wk->wh, &wk->UNData);
+    DAT_ADD_ST st = UNDATAUP_UpdateD(wk->wh, &wk->UNData);
     if (st == DAT_ADD_ST_ADD) OS_Printf("UN DATA ADD\n");
     else if( st == DAT_ADD_ST_CHG ) OS_Printf("UN DATA CHG\n");
   }

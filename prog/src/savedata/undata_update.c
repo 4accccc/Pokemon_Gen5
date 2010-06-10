@@ -19,6 +19,38 @@ static void  DelData(UNITEDNATIONS_SAVE *un_data, const u32 inDelIdx);
 static void  AddData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg);
 static void  AddDataCore(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_data, const BOOL inTalkFlg);
 
+static DAT_ADD_ST UpdateData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data);
+
+#ifdef PM_DEBUG
+//----------------------------------------------------------
+/**
+ * @brief	データ更新　デバッグ用
+ * @param	  wh        wifi履歴データポインタ
+ * @param   add_data  追加するデータ
+ *
+ * @return	DAT_ADD_ST      追加結果
+ */
+//----------------------------------------------------------
+DAT_ADD_ST UNDATAUP_UpdateD(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
+{
+  UNITEDNATIONS_SAVE *un_data;
+  u32 same_idx;
+
+  {
+    //自分の国コードを取得
+    int my_country_code = MyStatus_GetMyNation(&add_data->aMyStatus);
+    if ( my_country_code == 0 )
+    {
+      //登録指定無い場合は処理を行わない
+      NOZOMU_Printf("自分の国コードが設定されていないので、処理しない\n");
+      return DAT_ADD_ST_FAIL;
+    }
+  }
+
+  return UpdateData(wh, add_data);
+}
+#endif
+
 //----------------------------------------------------------
 /**
  * @brief	データ更新
@@ -29,6 +61,49 @@ static void  AddDataCore(UNITEDNATIONS_SAVE *un_data, UNITEDNATIONS_SAVE *add_da
  */
 //----------------------------------------------------------
 DAT_ADD_ST UNDATAUP_Update(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
+{
+  UNITEDNATIONS_SAVE *un_data;
+  u32 same_idx;
+
+  {
+    //自分の国コードを取得
+    int my_country_code = MyStatus_GetMyNation(&add_data->aMyStatus);
+    if ( my_country_code == 0 )
+    {
+      //登録指定無い場合は処理を行わない
+      NOZOMU_Printf("自分の国コードが設定されていないので、処理しない\n");
+      return DAT_ADD_ST_FAIL;
+    }
+  }
+
+  //追加しようとしているデータの日本バージョンチェック
+#if (PM_LANG == LANG_JAPAN)
+  {
+    int lang = MyStatus_GetRegionCode(&add_data->aMyStatus);
+    // 相手のカートリッジが日本なのに
+    if(lang == LANG_JAPAN){
+      int nation = MyStatus_GetMyNation(&add_data->aMyStatus);
+      // 違う国のコードを入れてきたら登録しない
+      if(nation != WIFI_NATION_JAPAN){
+        return DAT_ADD_ST_FAIL;
+      }
+    }
+  }
+#endif
+
+  return UpdateData(wh, add_data);
+}
+
+//----------------------------------------------------------
+/**
+ * @brief	データ更新
+ * @param	  wh        wifi履歴データポインタ
+ * @param   add_data  追加するデータ
+ *
+ * @return	DAT_ADD_ST      追加結果
+ */
+//----------------------------------------------------------
+static DAT_ADD_ST UpdateData(WIFI_HISTORY * wh, UNITEDNATIONS_SAVE *add_data)
 {
   UNITEDNATIONS_SAVE *un_data;
   u32 same_idx;
