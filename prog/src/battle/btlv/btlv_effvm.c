@@ -1035,6 +1035,9 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   static  VecFx32 cam_pos_zoom_out    = { 0x00008b33, 0x00007b33, 0x00017ccd };
   static  VecFx32 cam_target_zoom_out = { 0x00002000, 0x0000399a, 0x00006800 };
 
+  static  VecFx32 cam_pos_b_ortho     = { 0x00009b33, 0x00006b33, 0x000114cd };
+  static  VecFx32 cam_target_b_ortho  = { 0x00003000, 0x0000299a, 0x00000000 };
+
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_CAMERA_MOVE\n");
 #endif DEBUG_OS_PRINT
@@ -1053,7 +1056,9 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   }
 
   //デフォルト位置に動かないなら、投視射影モードにする
-  if( cam_move_pos != BTLEFF_CAMERA_POS_INIT )
+  if( ( cam_move_pos != BTLEFF_CAMERA_POS_INIT ) &&
+      ( cam_move_pos != BTLEFF_CAMERA_POS_PLURAL ) &&
+      ( cam_move_pos != BTLEFF_CAMERA_POS_INIT_ORTHO ) )
   {
     EFFVM_ChangeCameraProjection( bevw );
   }
@@ -1063,6 +1068,51 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   }
 
   switch( cam_move_pos ){
+  case BTLEFF_CAMERA_POS_PLURAL:
+    { 
+      BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      switch( rule ){ 
+      case BTL_RULE_SINGLE:
+        //1vs1ならカメラ移動なし
+        return bevw->control_mode;
+        break;
+      case BTL_RULE_DOUBLE:
+      case BTL_RULE_TRIPLE:
+        switch( bevw->attack_pos ){ 
+        case BTLV_MCSS_POS_A:
+          cam_move_pos = BTLEFF_CAMERA_POS_A;
+          break;
+        case BTLV_MCSS_POS_B:
+          cam_move_pos = ( rule == BTL_RULE_DOUBLE ) ? BTLEFF_CAMERA_POS_INIT : BTLEFF_CAMERA_POS_B_ORTHO;
+          break;
+        case BTLV_MCSS_POS_C:
+          cam_move_pos = ( rule == BTL_RULE_DOUBLE ) ? BTLEFF_CAMERA_POS_C : BTLEFF_CAMERA_POS_INIT;
+          break;
+        case BTLV_MCSS_POS_D:
+          cam_move_pos = ( rule == BTL_RULE_DOUBLE ) ? BTLEFF_CAMERA_POS_INIT : BTLEFF_CAMERA_POS_INIT;
+          break;
+        case BTLV_MCSS_POS_E:
+          cam_move_pos = ( rule == BTL_RULE_DOUBLE ) ? BTLEFF_CAMERA_POS_INIT : BTLEFF_CAMERA_POS_E;
+          break;
+        case BTLV_MCSS_POS_F:
+        default:
+          return bevw->control_mode;
+          break;
+        }
+        break;
+      case BTL_RULE_ROTATION:
+        if( ( bevw->attack_pos == BTLV_MCSS_POS_C ) ||
+            ( bevw->attack_pos == BTLV_MCSS_POS_E ) )
+        { 
+          cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
+        }
+        break;
+      }
+    }
+    break;
+  case BTLEFF_CAMERA_POS_INIT_ORTHO:
+    cam_move_pos = BTLEFF_CAMERA_POS_INIT;
+    break;
   case BTLEFF_CAMERA_POS_ATTACK:
   case BTLEFF_CAMERA_POS_ATTACK_PAIR:
     cam_move_pos = bevw->attack_pos;
@@ -1135,7 +1185,16 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     { 
       BtlRule rule = BTLV_EFFECT_GetBtlRule();
       cam_move_pos -= BTLEFF_CAMERA_POS_A;
-      if( rule == BTL_RULE_DOUBLE )
+      if( rule == BTL_RULE_ROTATION )
+      { 
+        cam_pos.x = cam_pos_table_1vs1[ cam_move_pos ].x;
+        cam_pos.y = cam_pos_table_1vs1[ cam_move_pos ].y;
+        cam_pos.z = cam_pos_table_1vs1[ cam_move_pos ].z;
+        cam_target.x = cam_target_table_1vs1[ cam_move_pos ].x;
+        cam_target.y = cam_target_table_1vs1[ cam_move_pos ].y;
+        cam_target.z = cam_target_table_1vs1[ cam_move_pos ].z;
+      }
+      else if( rule == BTL_RULE_DOUBLE )
       { 
         cam_pos.x = cam_pos_table_2vs2[ cam_move_pos ].x;
         cam_pos.y = cam_pos_table_2vs2[ cam_move_pos ].y;
@@ -1180,6 +1239,14 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     cam_target.x  = cam_target_zoom_out.x;
     cam_target.y  = cam_target_zoom_out.y;
     cam_target.z  = cam_target_zoom_out.z;
+    break;
+  case BTLEFF_CAMERA_POS_B_ORTHO:
+    cam_pos.x     = cam_pos_b_ortho.x;
+    cam_pos.y     = cam_pos_b_ortho.y;
+    cam_pos.z     = cam_pos_b_ortho.z;
+    cam_target.x  = cam_target_b_ortho.x;
+    cam_target.y  = cam_target_b_ortho.y;
+    cam_target.z  = cam_target_b_ortho.z;
     break;
   case BTLEFF_CAMERA_POS_INIT:
   default:
