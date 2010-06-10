@@ -30,6 +30,8 @@
 #define BSWAY_NULL_TRAINER  (0xFFFF)
 #define BSWAY_NULL_PARAM  (0)
 
+#define BSW_RENSHOU_MAX (9999)
+
 ///バトルサブウェイ初期化モード
 #define BSWAY_PLAY_NEW (0)
 #define BSWAY_PLAY_CONTINUE (1)

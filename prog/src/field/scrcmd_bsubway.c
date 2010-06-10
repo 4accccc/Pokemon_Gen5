@@ -393,8 +393,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //連勝数取得
   case BSWTOOL_GET_RENSHOU_CNT:
     *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, param0 );
-    if( (s16)(*ret_wk) < 0 ){ 
-      *ret_wk = 0;
+    
+    if( *ret_wk > BSW_RENSHOU_MAX ){
+      *ret_wk = BSW_RENSHOU_MAX;
     }
     break;
   //自機OBJコード取得
@@ -429,6 +430,9 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
     BSUBWAY_PLAYDATA_IncRoundNo( playData );
     BSUBWAY_SCOREDATA_IncRenshou( scoreData, play_mode );
     *ret_wk = BSUBWAY_SCOREDATA_GetRenshou( scoreData, play_mode );
+    if( (*ret_wk) > BSW_RENSHOU_MAX ){
+      *ret_wk = BSW_RENSHOU_MAX;
+    }
     break;
   //次のラウンド数取得
   case BSWTOOL_GET_NEXT_ROUND:
@@ -1268,6 +1272,10 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       bsw_scr->btl_rec_sel_param.fight_count = BSUBWAY_SCOREDATA_GetRenshou(
           scoreData, play_mode );
       
+      if( bsw_scr->btl_rec_sel_param.fight_count > BSW_RENSHOU_MAX ){
+        bsw_scr->btl_rec_sel_param.fight_count = BSW_RENSHOU_MAX;
+      }
+      
       event = EVENT_FieldSubProc_Callback(
           gsys, fieldmap, FS_OVERLAY_ID(btl_rec_sel), 
           &BTL_REC_SEL_ProcData, &bsw_scr->btl_rec_sel_param,
@@ -2068,6 +2076,10 @@ static BOOL evBtlRecSave( VMHANDLE *core, void *wk )
   case BSWAY_MODE_S_COMM_MULTI:
     mode = BATTLE_MODE_SUBWAY_MULTI;
     break;
+  }
+  
+  if( renshou > BSW_RENSHOU_MAX ){
+    renshou = BSW_RENSHOU_MAX;
   }
   
   res = BattleRec_Save(
