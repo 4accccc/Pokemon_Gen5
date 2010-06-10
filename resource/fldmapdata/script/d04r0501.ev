@@ -33,7 +33,7 @@ _EVENT_DATA_END
 /**************************************************************/
 /*			D04R0601に落ちる流砂                              */
 /**************************************************************/
-ev_d04r0501_sandstream_1:
+EVENT_START		ev_d04r0501_sandstream_1
 
 //ゲーチスイベント終了していない場合
 IF $WK_SCENE_D04R0601 == 0 THEN
@@ -41,7 +41,17 @@ IF $WK_SCENE_D04R0601 == 0 THEN
 	_RESERVE_SCRIPT( SCRID_RESERVE_D04R0601_EVENT_01 )
 ENDIF
 
+//D04R0601の状態で流砂の飛び先を変える
+_GET_MAPREPLACE_FLAG( MAPREPLACE_ID_06, SCWK_ANSWER )
+
+IF $SCWK_ANSWER == TRUE THEN
+	//クリア後である
+	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0601, 14, 26 )
+
+ELSE
+	//クリア前である
 	_MAP_CHANGE_SAND_STREAM( ZONE_ID_D04R0601, 14, 24 )
 
-_END
+ENDIF
 
+EVENT_END
