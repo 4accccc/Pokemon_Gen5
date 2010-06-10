@@ -6590,11 +6590,15 @@
 
 	<row id="TRID_ELITEW_13_TRMSG_FIGHT_AFTER">
 		<language name="JPN" width="216">チャレンジが　すきな　わけ……？▼
-だって　なにも　しないと
-なにも　できないもん！</language>
+チャレンジして　やったことなら
+いいこと　さがしも　できるけれど▼
+やってないことは　やらなかった
+いいわけ　しか　できないじゃん</language>
 		<language name="JPN_KANJI" width="216">チャレンジが　好きな　わけ……？▼
-だって　なにも　しないと
-なにも　できないもん！</language>
+チャレンジして　やったことなら
+いいこと探しも　できるけれど▼
+やってないことは　やらなかった
+言い訳しか　できないじゃん</language>
 	</row>
 
 	<row id="TRID_VETERANM_04_TRMSG_FIGHT_LOSE">
