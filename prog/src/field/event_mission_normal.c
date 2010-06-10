@@ -63,6 +63,25 @@ static GMEVENT_RESULT CommMissionNormal_Talk( GMEVENT *event, int *seq, void *wk
 
 
 //==============================================================================
+//  データ
+//==============================================================================
+//==============================================================================
+//  データ
+//==============================================================================
+static const struct{
+  u16 talk_n_to_n[TALK_TYPE_MAX];       ///<通常会話
+}MissionNormalMsgID = {
+  { //通常会話
+    mis_nom_01_t1,
+    mis_nom_01_t2,
+    mis_nom_01_t3,
+    mis_nom_01_t4,
+    mis_nom_01_t5,
+  },
+};
+
+
+//==============================================================================
 //  
 //==============================================================================
 //==================================================================
@@ -117,12 +136,7 @@ static GMEVENT_RESULT CommMissionNormal_Talk( GMEVENT *event, int *seq, void *wk
       u32 msg_id;
       
       WORDSET_RegisterPlayerName( talk->ccew.iem.wordset, 0, target_myst );
-      if(MyStatus_GetMySex(target_myst) == PM_MALE){
-        msg_id = msg_intrude_normal_talk_m;
-      }
-      else{
-        msg_id = msg_intrude_normal_talk_w;
-      }
+      msg_id = MissionNormalMsgID.talk_n_to_n[talk->ccew.disguise_talk_type];
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_id);
     }
 		(*seq)++;
