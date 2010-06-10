@@ -9,7 +9,9 @@
 //======================================================================
 #include <gflib.h>
 #include <string.h>
+#include <backup_system.h>
 #include "system/gfl_use.h"
+#include "system/save_error_warning.h"
 #include "./pt_save.h"
 #include "arc_def.h"
 
@@ -88,7 +90,11 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
     //読み込みの完了を待つ
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        SaveErrorCall_Load();
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       CARD_ReadFlashAsync( 0x40000 , dataWork->pDataMirror , saveSize , NULL , NULL );
       dataWork->subSeq++;
       
@@ -99,7 +105,11 @@ BOOL  MB_DATA_PT_LoadData( MB_DATA_WORK *dataWork )
   case 2: //読み込みの完了を待つ
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        SaveErrorCall_Load();
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
       OS_ReleaseLockID( (u16)dataWork->lockID_ );
       dataWork->subSeq++;
@@ -331,7 +341,11 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
         }
 
         boxFooter->crc = MATH_CalcCRC16CCITT( &dataWork->crcTable_, dataWork->pBoxData, boxFooter->size - sizeof(PT_SAVE_FOOTER) );
-        GF_ASSERT( boxFooter->g_count == mainFooter->g_count );
+        if( boxFooter->g_count != mainFooter->g_count )
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
+        }
+        //GF_ASSERT( boxFooter->g_count == mainFooter->g_count );
         boxFooter->g_count++;
         mainFooter->g_count++;
         boxFooter->b_count++;
@@ -340,7 +354,11 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
       
       //カードのロック
       dataWork->lockID_ = OS_GetLockID();
-      GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
+      if( dataWork->lockID_ == OS_LOCK_ID_ERROR )
+      {
+        SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
+      }
+      //GF_ASSERT( dataWork->lockID_ != OS_LOCK_ID_ERROR );
       CARD_LockBackup( (u16)dataWork->lockID_ );
       dataWork->subSeq++;
       
@@ -377,7 +395,18 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
     {
       u32 saveAddress;
       const u32 saveSize = MB_DATA_GetBoxDataSize( dataWork->cardType )+sizeof( PT_SAVE_FOOTER );
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        if( CARD_GetResultCode() == CARD_RESULT_NO_RESPONSE )
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_WRITE);
+        }
+        else
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
+        }
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
       saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
@@ -400,7 +429,18 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
   case 3: //書き込みの完了を待つ
     if( CARD_TryWaitBackupAsync() == TRUE )
     {
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        if( CARD_GetResultCode() == CARD_RESULT_NO_RESPONSE )
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_WRITE);
+        }
+        else
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
+        }
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       //DLPlayFunc_PutString("Save complete.",dataWork->msgSys );
       //ここでLockは保持したまま
 //      CARD_UnlockBackup( (u16)dataWork->lockID_ );
@@ -425,7 +465,18 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
     {
       u32 saveAddress;
       const u32 saveSize = MB_DATA_GetBoxDataSize( dataWork->cardType )+sizeof( PT_SAVE_FOOTER );
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        if( CARD_GetResultCode() == CARD_RESULT_NO_RESPONSE )
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_WRITE);
+        }
+        else
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
+        }
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
 
       //セーブ開始！
       saveAddress = ( dataWork->boxSavePos == DDS_FIRST ? 0x00000 : 0x40000 );
@@ -450,7 +501,18 @@ BOOL  MB_DATA_PT_SaveData( MB_DATA_WORK *dataWork )
     {
       PT_SAVE_FOOTER *boxFooter,*mainFooter;
 
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        if( CARD_GetResultCode() == CARD_RESULT_NO_RESPONSE )
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_WRITE);
+        }
+        else
+        {
+          SaveErrorCall_Save(GFL_SAVEERROR_DISABLE_READ);
+        }
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       //DLPlayFunc_PutString("Save complete!!.",dataWork->msgSys );
       //ここでLockは保持したまま
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
@@ -569,7 +631,11 @@ BOOL MB_DATA_PT_LoadRomCRC( MB_DATA_WORK *dataWork )
       PT_SAVE_FOOTER *footer = dataWork->pDataCrcCheck;
       dataWork->loadCrcTable[PT_BOX_SECOND] = footer->crc;
 
-      GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
+      if( CARD_GetResultCode() != CARD_RESULT_SUCCESS )
+      {
+        SaveErrorCall_Load();
+      }
+      //GF_ASSERT( CARD_GetResultCode() == CARD_RESULT_SUCCESS );
       CARD_UnlockBackup( (u16)dataWork->lockID_ );
       OS_ReleaseLockID( (u16)dataWork->lockID_ );
 

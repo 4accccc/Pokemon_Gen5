@@ -43,6 +43,13 @@
 ///メッセージ描画開始キャラクタNo
 #define MESSAGE_START_CHARNO	(BG_DATA_SIZE / 0x20)
 
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
+#define SAVE_ERR_HEAPID (HEAPID_SAVE)
+#else                    //DL子機時処理
+#define SAVE_ERR_HEAPID (HEAPID_MULTIBOOT)
+#endif //MULTI_BOOT_MAKE
+
 //背景BG＋メッセージデータでキャラクタ領域NETERR_PUSH_CHARVRAM_SIZEをオーバーしていないかチェック
 SDK_COMPILER_ASSERT(MESSAGE_X_LEN*0x20*MESSAGE_Y_LEN + BG_DATA_SIZE <= NETERR_PUSH_CHARVRAM_SIZE);
 
@@ -94,7 +101,10 @@ void SaveErrorCall_Save(GFL_SAVEERROR_DISABLE err_disable)
 //--------------------------------------------------------------
 static void Local_WarningDispMain(u32 msg_id)
 {
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
   SaveControl_SystemExit(); //画面描画用のヒープ確保の為、セーブシステムを破棄する
+#endif //MULTI_BOOT_MAKE
   Local_WarningDispInit(msg_id);
 
   //このプレイヤーに侵入されないよう通信を終了させる
@@ -172,7 +182,7 @@ static void Local_WarningDispDraw(void)
 	GFL_STD_MemClear32(G2_GetBG1CharPtr(), NETERR_PUSH_CHARVRAM_SIZE);
 
 	//キャラクタ
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, HEAPID_SAVE);
+	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCGR, 0, SAVE_ERR_HEAPID);
 	if(NNS_G2dGetUnpackedBGCharacterData(arcData, &charData)){
 		DC_FlushRange(charData->pRawData, charData->szByte);
 		//念のためDMAを使用するのは避ける
@@ -182,7 +192,7 @@ static void Local_WarningDispDraw(void)
 	GFL_HEAP_FreeMemory(arcData);
 	
 	//スクリーン
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NSCR, 0, HEAPID_SAVE);
+	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NSCR, 0, SAVE_ERR_HEAPID);
 	if( NNS_G2dGetUnpackedScreenData( arcData, &scrnData ) ){
 		DC_FlushRange(scrnData->rawData, scrnData->szByte);
 		GFL_STD_MemCopy16(scrnData->rawData, G2_GetBG1ScrPtr(), scrnData->szByte);
@@ -190,7 +200,7 @@ static void Local_WarningDispDraw(void)
 	GFL_HEAP_FreeMemory( arcData );
 	
 	//パレット
-	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, HEAPID_SAVE);
+	arcData = GFL_ARC_UTIL_Load(ARCID_NET_ERR, NARC_net_err_net_err_NCLR, 0, SAVE_ERR_HEAPID);
 	cmpFlag = NNS_G2dGetUnpackedPaletteCompressInfo( arcData, &cmpInfo );
 	if( NNS_G2dGetUnpackedPaletteData( arcData, &palData ) ){
 		DC_FlushRange( palData->pRawData, NETERR_PUSH_PLTTVRAM_SIZE );
@@ -228,7 +238,7 @@ static void Local_WarningMessagePrint(u32 msg_id)
 	
 	//BMP作成
 	bmpdata = GFL_BMP_CreateInVRAM((void*)((u32)G2_GetBG1CharPtr() + MESSAGE_START_CHARNO*0x20), 
-		MESSAGE_X_LEN, MESSAGE_Y_LEN, GFL_BMP_16_COLOR, HEAPID_SAVE);
+		MESSAGE_X_LEN, MESSAGE_Y_LEN, GFL_BMP_16_COLOR, SAVE_ERR_HEAPID);
 	
 	//メッセージOPEN
 	{
@@ -237,10 +247,17 @@ static void Local_WarningMessagePrint(u32 msg_id)
     STRBUF  *src;
 
 		fontHandle = GFL_FONT_Create(ARCID_FONT, NARC_font_large_gftr,
-			GFL_FONT_LOADTYPE_FILE, FALSE, HEAPID_SAVE );
+			GFL_FONT_LOADTYPE_FILE, FALSE, SAVE_ERR_HEAPID );
 		
+//マルチブート用きり分け
+#ifndef MULTI_BOOT_MAKE  //通常時処理
     mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
-        ARCID_MESSAGE, NARC_message_backup_err_dat, HEAPID_SAVE);
+        ARCID_MESSAGE, NARC_message_backup_err_dat, SAVE_ERR_HEAPID);
+#else                    //DL子機時処理
+      //MB_BACKUP_ERROR_MSG_FILEはArc名がポケシフターと映画転送で違うのでmustiboot/src/net_err_dl.cで定義
+    mm = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, 
+        ARCID_MESSAGE, MB_BACKUP_ERROR_MSG_FILE, SAVE_ERR_HEAPID);
+#endif //MULTI_BOOT_MAKE
 
     src     = GFL_MSG_CreateString(mm, msg_id);
 		PRINTSYS_PrintColor(bmpdata, 0, 0, src, fontHandle, PRINTSYS_LSB_Make(4, 0xb, 7));
