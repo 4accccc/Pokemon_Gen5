@@ -311,7 +311,7 @@ const BOOL MC_CAP_DEMO_StartDemoMain( MB_CAPTURE_WORK *capWork , MB_CAP_DEMO *de
         const BOOL isDisp = FALSE;
         demoWork->tpTouch = FALSE;
         GFL_BBD_SetObjectDrawEnable( bbdSys , demoWork->objIdx[CDOI_READY] , &isDisp );
-        PMSND_PlaySE_byPlayerID( MB_SND_POKE_START , SEPLAYER_SE2 );
+        PMSND_PlaySE( MB_SND_POKE_START );
 
         demoWork->state = CDS_START_DISP_INIT;
         demoWork->cnt = 0;

@@ -115,6 +115,7 @@ struct _MB_CAPTURE_WORK
   u16 gameTime;
   u16 bonusTime;
   
+  BOOL isPlayDownSE;
   BOOL isCreateStar;
   BOOL isUpdateStar;
   
@@ -230,6 +231,7 @@ static void MB_CAPTURE_Init( MB_CAPTURE_WORK *work )
   work->targetAnmFrame = 0;
   work->fogAlpha = 0;
   work->score = 0;
+  work->isPlayDownSE = FALSE;
   for( i=0;i<MB_CAP_POKE_NUM;i++ )
   {
     work->initWork->isCapture[i] = FALSE;
@@ -1201,7 +1203,11 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
               MB_CAP_POKE_SetBefHitPoke( work->pokeWork[j] , i );
               MB_CAP_POKE_SetDown( work , work->pokeWork[i] );
               MB_CAP_POKE_SetDown( work , work->pokeWork[j] );
-              PMSND_PlaySE( MB_SND_POKE_DOWN );
+              if( work->isPlayDownSE == FALSE )
+              {
+                work->isPlayDownSE = TRUE;
+                PMSND_PlaySE( MB_SND_POKE_DOWN );
+              }
             }
             else
             {
@@ -1228,6 +1234,27 @@ static void MB_CAPTURE_UpdateUpper( MB_CAPTURE_WORK *work )
     MB_CAP_DOWN_ReloadBall( work->downWork , FALSE );
     work->isShotBall = FALSE;
     work->randLen = MB_CAP_TARGET_RAND_MAX;
+  }
+  
+  //ダウンSEの停止チェック
+  if( work->isPlayDownSE == TRUE )
+  {
+    u8 downNum = 0;
+    for( i=0;i<MB_CAP_POKE_NUM;i++ )
+    {
+      const MB_CAP_POKE_STATE pokeState = MB_CAP_POKE_GetState( work->pokeWork[i] );
+      if( pokeState == MCPS_DOWN_MOVE ||
+          pokeState == MCPS_DOWN_WAIT )
+      {
+        downNum++;
+      }
+    }
+    if( downNum == 0 )
+    {
+      work->isPlayDownSE = FALSE;
+      
+      PMSND_StopSE_byPlayerID( SEPLAYER_SE3 );
+    }
   }
 }
 

@@ -862,7 +862,7 @@ void MB_CAP_DOWN_ReloadBall( MB_CAP_DOWN *downWork , const BOOL isBonus )
     GFL_CLACT_WK_SetAnmSeq( downWork->clwkBall , MCDA_BALL );
   }
   GFL_CLACT_WK_SetDrawEnable( downWork->clwkBall , TRUE );
-  PMSND_PlaySE_byPlayerID( MB_SND_POKE_READY , SEPLAYER_SE3 );
+  PMSND_PlaySE( MB_SND_POKE_READY );
 }
 
 void MB_CAP_DOWN_GetPoke( MB_CAPTURE_WORK *capWork , MB_CAP_DOWN *downWork , const u8 idx )

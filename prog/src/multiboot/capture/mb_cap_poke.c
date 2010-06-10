@@ -922,7 +922,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     pokeWork->befHitNo = 0xFF;
     MB_CAP_POKE_CheckActSpeed( capWork , pokeWork );
 
-    PMSND_PlaySE_byPlayerID( MB_SND_GRASS_SHAKE , SEPLAYER_SE2 );
+    PMSND_PlaySE( MB_SND_GRASS_SHAKE );
   }
   else
   if( pokeWork->cnt >= (MB_CAP_POKE_RUN_LOOK_TIME+MB_CAP_POKE_RUN_HIDE_TIME)*MB_CAP_POKE_ACT_RATE )
