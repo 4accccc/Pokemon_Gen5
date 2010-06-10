@@ -507,9 +507,9 @@ static void SetFormSeeFlag( ZUKAN_SAVEDATA * zw, u32 mons, u32 sex, BOOL rare, u
 			form = 0;
 			max  = FORM_MAX_HIHIDARUMA;
 		// ÉÅÉçÉfÉBÉA
-		}else if( mons == MONSNO_MERODHIA ){
+		}else if( mons == MONSNO_655 ){
 			form = 0;
-			max  = FORM_MAX_MERODHIA;
+			max  = FORMNO_655_MAX;
 		}else{
 			max  = 1;
 		}
