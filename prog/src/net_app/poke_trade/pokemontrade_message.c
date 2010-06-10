@@ -1076,6 +1076,17 @@ void POKETRADE_MESSAGE_ChangePokemonStatusDisp(POKEMON_TRADE_WORK* pWork,POKEMON
     IRC_POKETRADE_ItemIconDisp(pWork, 2, pp);
 
   }
+  else //100609 add saito
+  {
+    //アイテム非表示
+    _ITEMMARK_ICON_WORK* pIM = &pWork->aItemMark;
+    if(pIM->clwk_poke_item){
+      GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+    }
+    //タイプ表示リセット
+    POKETRADE_MESSAGE_ResetTypeIcon(pWork);
+  }
+
   _UITemplate_BALLICON_CreateCLWK( &pWork->aBallIcon[UI_BALL_SUBSTATUS], pp, pWork->cellUnit,
                                   12, 7, CLSYS_DRAW_MAIN, pWork->heapID,PLTID_OBJ_BALLICON_M );
 
