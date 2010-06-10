@@ -206,3 +206,33 @@ BOOL SCREND_CheckEndNetOffEvent( SCREND_CHECK *end_check, int *seq )
   return TRUE;  //この関数が呼ばれたら、無条件「起動のままだった」として返す
 }
 
+//====================================================================
+//====================================================================
+//--------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：CギアのON/OFFチェック
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdGetCGearStatus( VMHANDLE * core, void * wk )
+{
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  u16 * ret_wk = SCRCMD_GetVMWork( core, wk );
+
+  *ret_wk = GAMESYSTEM_GetAlwaysNetFlag( gsys );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+//--------------------------------------------------------------------
+/**
+ * @brief スクリプトコマンド：Cギアの強制OFF
+ */
+//--------------------------------------------------------------------
+VMCMD_RESULT EvCmdSetCGearOff( VMHANDLE * core, void * wk )
+{
+  GAMESYS_WORK * gsys = SCRCMD_WORK_GetGameSysWork( wk );
+  GAMESYSTEM_SetAlwaysNetFlag( gsys, FALSE );
+  return VMCMD_RESULT_CONTINUE;
+}
+
+
+

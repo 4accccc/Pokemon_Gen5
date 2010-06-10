@@ -904,6 +904,9 @@
   // 再戦トレーナー　ランダムNPCの抽選
   DEF_CMD( EvCmdReBattleTrainerGetRndTrIndex, EV_SEQ_REBATTLE_TRAINER_GET_RNDTR_INDEX )
 
+  //遊覧船受付でのCギア制御用
+  DEF_CMD( EvCmdGetCGearStatus, EV_SEQ_GET_CGEAR_STATUS )
+  DEF_CMD( EvCmdSetCGearOff,    EV_SEQ_SET_CGEAR_OFF )
   END_CMD
   //スクリプトコマンドテーブル終了
   

@@ -4546,6 +4546,36 @@
     .short  EV_SEQ_ENABLE_FIELD_COMM
     .endm
 
+//--------------------------------------------------------------
+/**
+ * @def _GET_CGEAR_STATUS
+ * @brief Cギアの起動状態を取得
+ * @param ret_wk  TRUEのときON,FALSEのときOFF
+ *
+ * CギアのON/OFF状態(==常時ビーコン通信のON/OFF）を取得する
+ */
+//--------------------------------------------------------------
+#define _GET_CGEAR_STATUS( ret_wk ) \
+    _ASM_GET_CGEAR_STATUS ret_wk
+    .macro  _ASM_GET_CGEAR_STATUS ret_wk
+    .short  EV_SEQ_GET_CGEAR_STATUS
+    .short  \ret_wk
+    .endm
+
+//--------------------------------------------------------------
+/**
+ * @def _SET_CGEAR_OFF
+ * @brief CギアをOFFにする
+ *
+ * CギアをOFF(==常時ビーコン通信をOFF)にする。このコマンドを呼んでも
+ * すぐに下画面に反映するわけではないことに留意すること。
+ */
+//--------------------------------------------------------------
+#define _SET_CGEAR_OFF()  \
+    _ASM_SET_CGEAR_OFF
+    .macro  _ASM_SET_CGEAR_OFF
+    .short  EV_SEQ_SET_CGEAR_OFF
+    .endm
 
 //======================================================================
 //  プログラム管理データの取得・セット

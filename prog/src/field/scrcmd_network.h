@@ -17,4 +17,7 @@ extern VMCMD_RESULT EvCmdRebootBeaconSearch( VMHANDLE * core, void * wk );
 extern VMCMD_RESULT EvCmdDisableFieldComm( VMHANDLE * core, void *wk );
 extern VMCMD_RESULT EvCmdEnableFieldComm( VMHANDLE * core, void *wk );
 
+extern VMCMD_RESULT EvCmdGetCGearStatus( VMHANDLE * core, void * wk );
+extern VMCMD_RESULT EvCmdSetCGearOff( VMHANDLE * core, void * wk );
+
 extern BOOL SCREND_CheckEndNetOffEvent( SCREND_CHECK *end_check, int *seq );
