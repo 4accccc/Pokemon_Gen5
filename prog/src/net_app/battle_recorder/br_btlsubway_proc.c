@@ -19,6 +19,7 @@
 #include "msg/msg_battle_rec.h"
 #include "arc_def.h"
 #include "battle_recorder_gra.naix"
+#include "..\resource\fldmapdata\flagwork\flag_define.h"
 
 //自分のモジュール
 #include "br_btn.h"
@@ -192,12 +193,12 @@ static void Br_BtlSubway_DeleteSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
 
 //-------------------------------------
 ///	private
-//=====================================
+//=====================================:
 static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 x, u32 y );
 
-static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv );
-static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv );
-static BOOL Br_BtlSubway_IsAppearMulti( BSUBWAY_SCOREDATA *p_sv );
+static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv, GAMEDATA *p_gamedata );
+static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv, GAMEDATA *p_gamedata );
+static BOOL Br_BtlSubway_IsAppearMulti( BSUBWAY_SCOREDATA *p_sv, GAMEDATA *p_gamedata );
 
 //-------------------------------------
 ///	OBJNUMBER
@@ -608,7 +609,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_SINGLE, p_wk->heapID );
 
   //スーパーかどうか
-  if( Br_BtlSubway_IsAppearSingle( p_param->p_subway ) )
+  if( Br_BtlSubway_IsAppearSingle( p_param->p_subway, p_param->p_gamedata ) )
   {
     mode  = BSWAY_PLAYMODE_S_SINGLE;
   }
@@ -629,7 +630,7 @@ static void Br_BtlSubway_CreateMainDisplaySingle( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
       case BR_BTLSUBWAY_MSGWINID_M_SINGLE_RULE:
         {
           u16 msgID;
-          if( Br_BtlSubway_IsAppearSingle( p_param->p_subway ) )
+          if( Br_BtlSubway_IsAppearSingle( p_param->p_subway, p_param->p_gamedata ) )
           {
             msgID = msg_800_01;
           }
@@ -792,7 +793,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
   BR_RES_LoadBG( p_param->p_res, BR_RES_BG_SUBWAY_M_DOUBLE, p_wk->heapID );
 
   //スーパーかどうか
-  if( Br_BtlSubway_IsAppearDouble( p_param->p_subway ) )
+  if( Br_BtlSubway_IsAppearDouble( p_param->p_subway, p_param->p_gamedata ) )
   {
     mode  = BSWAY_PLAYMODE_S_DOUBLE;
   }
@@ -813,7 +814,7 @@ static void Br_BtlSubway_CreateMainDisplayDouble( BR_BTLSUBWAY_WORK	*p_wk, BR_BT
       case BR_BTLSUBWAY_MSGWINID_M_DOUBLE_RULE:
         {
           u16 msgID;
-          if( Br_BtlSubway_IsAppearDouble( p_param->p_subway ) )
+          if( Br_BtlSubway_IsAppearDouble( p_param->p_subway, p_param->p_gamedata ) )
           {
             msgID = msg_801_01;
           }
@@ -1032,7 +1033,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
 
 
   //マルチモード
-  if( Br_BtlSubway_IsAppearMulti( p_param->p_subway ) )
+  if( Br_BtlSubway_IsAppearMulti( p_param->p_subway, p_param->p_gamedata ) )
   {
     multi_mode  = BSWAY_PLAYMODE_S_MULTI;
   }
@@ -1054,7 +1055,7 @@ static void Br_BtlSubway_CreateMainDisplayMulti( BR_BTLSUBWAY_WORK	*p_wk, BR_BTL
       case BR_BTLSUBWAY_MSGWINID_M_MULTI_RULE:
         {
           u16 msgID;
-          if( Br_BtlSubway_IsAppearMulti( p_param->p_subway ) )
+          if( Br_BtlSubway_IsAppearMulti( p_param->p_subway, p_param->p_gamedata ) )
           {
             msgID = msg_802_01;
           }
@@ -1385,7 +1386,7 @@ static void Br_BtlSubway_CreateSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
       switch( i )
       { 
       case BR_BTLSUBWAY_MSGWINID_S_SINGLE:  //シングルバトル
-        if( Br_BtlSubway_IsAppearSingle( p_param->p_subway ) )
+        if( Br_BtlSubway_IsAppearSingle( p_param->p_subway, p_param->p_gamedata ) )
         {
           //スーパーシングル
           msgID = msg_800_01;
@@ -1397,7 +1398,7 @@ static void Br_BtlSubway_CreateSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
         }
         break;
       case BR_BTLSUBWAY_MSGWINID_S_DOUBLE:  //ダブルバトル
-        if( Br_BtlSubway_IsAppearDouble( p_param->p_subway ) )
+        if( Br_BtlSubway_IsAppearDouble( p_param->p_subway, p_param->p_gamedata ) )
         {
           //スーパーダブル
           msgID = msg_801_01;
@@ -1409,7 +1410,7 @@ static void Br_BtlSubway_CreateSubDisplay( BR_BTLSUBWAY_WORK *p_wk, BR_BTLSUBWAY
         }
         break;
       case BR_BTLSUBWAY_MSGWINID_S_MULTI:  //マルチバトル
-        if( Br_BtlSubway_IsAppearMulti( p_param->p_subway ) )
+        if( Br_BtlSubway_IsAppearMulti( p_param->p_subway, p_param->p_gamedata ) )
         {
           //スーパーマルチ
           msgID = msg_802_01;
@@ -1533,14 +1534,14 @@ static BR_BTLSUBWAY_SELECT Br_BtlSubway_GetSelect( BR_BTLSUBWAY_WORK *p_wk, u32 
  *	@return TRUEで登場  FALSEでまだ
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv )
+static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv, GAMEDATA *p_gamedata )
 {
   BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
                           BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_SINGLE, BSWAY_SETMODE_get );
+  EVENTWORK *p_ev  = GAMEDATA_GetEventWork( p_gamedata );
+  BOOL  is_gameclear  = EVENTWORK_CheckEventFlag( p_ev, SYS_FLAG_GAME_CLEAR );
 
- // u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_S_SINGLE ); 
-
-  return is_clear;
+  return is_clear && is_gameclear;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1551,14 +1552,14 @@ static BOOL Br_BtlSubway_IsAppearSingle( BSUBWAY_SCOREDATA *p_sv )
  *	@return TRUEで登場  FALSEでまだ
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv )
+static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv, GAMEDATA *p_gamedata )
 {
   BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
                           BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_DOUBLE, BSWAY_SETMODE_get );
+  EVENTWORK *p_ev  = GAMEDATA_GetEventWork( p_gamedata );
+  BOOL  is_gameclear  = EVENTWORK_CheckEventFlag( p_ev, SYS_FLAG_GAME_CLEAR );
 
-  //u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_S_DOUBLE ); 
-
-  return is_clear;
+  return is_clear && is_gameclear;
 }
 //----------------------------------------------------------------------------
 /**
@@ -1569,14 +1570,14 @@ static BOOL Br_BtlSubway_IsAppearDouble( BSUBWAY_SCOREDATA *p_sv )
  *	@return TRUEで登場  FALSEでまだ
  */
 //-----------------------------------------------------------------------------
-static BOOL Br_BtlSubway_IsAppearMulti(  BSUBWAY_SCOREDATA *p_sv )
+static BOOL Br_BtlSubway_IsAppearMulti(  BSUBWAY_SCOREDATA *p_sv, GAMEDATA *p_gamedata )
 {
   BOOL  is_clear  =  BSUBWAY_SCOREDATA_SetFlag( p_sv,
                           BSWAY_SCOREDATA_FLAG_BOSS_CLEAR_MULTI, BSWAY_SETMODE_get );
+  EVENTWORK *p_ev  = GAMEDATA_GetEventWork( p_gamedata );
+  BOOL  is_gameclear  = EVENTWORK_CheckEventFlag( p_ev, SYS_FLAG_GAME_CLEAR );
 
-//  u16   win       = BSUBWAY_SCOREDATA_GetRenshouCount( p_sv, BSWAY_PLAYMODE_S_MULTI ); 
-
-  return is_clear;
+  return is_clear && is_gameclear;
 }
 //=============================================================================
 /**

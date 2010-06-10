@@ -13,6 +13,7 @@
 #include "br_res.h"
 #include "br_fade.h"
 #include "savedata/bsubway_savedata.h"
+#include "gamesystem/game_data.h"
 //=============================================================================
 /**
  *					定数宣言
@@ -34,6 +35,7 @@ typedef struct
 	BR_RES_WORK			  *p_res;				//[in]リソース管理
 	BR_PROC_SYS			  *p_procsys;		//[in]プロセス管理
   BSUBWAY_SCOREDATA *p_subway;    //[in]バトルサブウェイセーブデータ
+  GAMEDATA          *p_gamedata;  //[in]ゲームデータ
 } BR_BTLSUBWAY_PROC_PARAM;
 
 

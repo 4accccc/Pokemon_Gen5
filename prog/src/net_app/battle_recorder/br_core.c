@@ -929,6 +929,7 @@ static void BR_BTLSUBWAY_PROC_BeforeFunc( void *p_param_adrs, void *p_wk_adrs, c
 	p_param->p_procsys	= p_wk->p_procsys;
 	p_param->p_unit			= BR_GRAPHIC_GetClunit( p_wk->p_graphic );
   p_param->p_subway   = SaveControl_DataPtrGet( p_sv_ctrl, GMDATA_ID_BSUBWAY_SCOREDATA );
+  p_param->p_gamedata = p_wk->p_param->p_param->p_gamedata;
 }
 //----------------------------------------------------------------------------
 /**
