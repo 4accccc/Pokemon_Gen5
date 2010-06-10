@@ -2007,7 +2007,11 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
       u32 disp_id = 0;  // テキスト不明    // ZKN_COMMENT_00_000_000  // ZKN_COMMENT_01_000_000
       if( work->get_flag )
       {
+#if 0  // 今作では、フォルム違いでテキストを変更しないので、
         disp_id = 0 + monsno_formno_pos;  // テキスト判明
+#else  // 必ず0番フォルムのテキストを表示することにした。
+        disp_id = 0 + work->monsno;
+#endif
       }
       Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_EXPLAIN], msgdata_explain, work->print_que, work->font,
                             disp_id, 4, 5, PRINTSYS_LSB_Make(0xF,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );      
