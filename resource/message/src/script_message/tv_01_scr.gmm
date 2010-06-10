@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-10T19:39:48"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-10T22:19:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="24" right="2076" bottom="652" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -5531,7 +5531,7 @@ HEYHAAAAY！　これで　お互いの
 ・担当：穂積
 
 ・3＝先頭のポケモン（タマゴを除く）</comment>
-		<language name="JPN" width="256">ボブ　『ハッハァ　みんな　きょうも
+		<language name="JPN" width="256">ボブ『ハッハァ　みんな　きょうも
 ばくはつてきに　げんきかーい？▼
 『TRADE&apos;N　TALK』が　きょうも
 かってに　はじけちゃうよー！▼
@@ -5549,7 +5549,7 @@ HEYHAAAAY！　これで　お互いの
 できるぜ！　うらやましいゼ！▼
 それじゃ　またねー　みんな！
 HAVE A TERRIFIC DAY!</language>
-		<language name="JPN_KANJI" width="256">ボブ　『ハッハァ　みんな　今日も
+		<language name="JPN_KANJI" width="256">ボブ『ハッハァ　みんな　今日も
 爆発的に　元気かーい？▼
 『TRADE&apos;N　TALK』が　今日も
 勝手に　はじけちゃうよー！▼
