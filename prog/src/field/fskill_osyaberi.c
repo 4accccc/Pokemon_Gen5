@@ -18,6 +18,7 @@
 #include "sound/snd_mic.h"
 
 #include "fieldmap.h"
+#include "field_oam_pal.h"
 
 #include "fskill_osyaberi.h"
 
@@ -395,7 +396,7 @@ static void InitPerapObj( OSYABERI_WORK * wk )
 
   fast = PPP_FastModeOn( ppp );
   wk->chrRes = POKE2DGRA_OBJ_CGR_RegisterPPP( ah, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, HEAPID_FIELDMAP );
-  wk->palRes = POKE2DGRA_OBJ_PLTT_RegisterPPP( ah, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, 0, HEAPID_FIELDMAP );
+  wk->palRes = POKE2DGRA_OBJ_PLTT_RegisterPPP( ah, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, FLDOAM_PALNO_FREE_OSYABERI_POKE*0x20, HEAPID_FIELDMAP );
   wk->celRes = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_64K, CLSYS_DRAW_MAIN, HEAPID_FIELDMAP );
   PPP_FastModeOff( ppp, fast );
 

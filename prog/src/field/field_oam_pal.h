@@ -34,5 +34,8 @@ typedef enum{
   //地下鉄ステータス イベント中(仮)　※フリーエリアのイメージを掴んでもらうだけのダミー
   FLDOAM_PALNO_FREE_SUBWAY_SHADOW = FLDOAM_PALNO_FREE_START,
   FLDOAM_PALNO_FREE_SUBWAY_ICON,
+
+	//おしゃべり
+	FLDOAM_PALNO_FREE_OSYABERI_POKE = FLDOAM_PALNO_FREE_START,		///<ポケモンＯＢＪ
 }FLDOAM_PALNO;
 
