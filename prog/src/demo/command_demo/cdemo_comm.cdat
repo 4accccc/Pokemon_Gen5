@@ -277,6 +277,8 @@ static const int CommandData_GFLogo[] = {
 
 	COMM_WAIT,			30,
 
+    COMM_BGM_STOP,
+
 	COMM_END,
 };
 
@@ -300,6 +302,8 @@ static const int CommandData_OPMovie1[] = {
 
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
+
+    COMM_BGM_STOP,
 
 	COMM_END,
 };
