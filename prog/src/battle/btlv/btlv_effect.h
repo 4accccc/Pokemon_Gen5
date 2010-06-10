@@ -273,6 +273,7 @@ extern  void              BTLV_EFFECT_CalcGaugeEXPLevelUp( int position, const B
 extern  void              BTLV_EFFECT_BallThrow( int position, u16 item_no, u8 yure_cnt, BOOL f_success, BOOL f_critical );
 extern  void              BTLV_EFFECT_BallThrowTrainer( int vpos, u16 item_no );
 extern  void              BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos );
+extern  void              BTLV_EFFECT_HengeShortCut( const POKEMON_PARAM* pp, BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_PokemonVanishOn( BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_PokemonVanishOff( BtlvMcssPos vpos );
 extern  void              BTLV_EFFECT_CreateMigawari( BtlvMcssPos vpos );

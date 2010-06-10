@@ -706,6 +706,22 @@ void BTLV_EFFECT_Henge( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
 
 //=============================================================================================
 /**
+ * @brief 変化エフェクト起動（録画再生用のショートカット版）
+ *
+ * @param[in] pp    対象ポケモンのPOKEMON_PARAM
+ * @param[in] vpos  対象ポケモンの描画位置
+ */
+//=============================================================================================
+void BTLV_EFFECT_HengeShortCut( const POKEMON_PARAM* pp, BtlvMcssPos vpos )
+{ 
+  MCSS_ADD_WORK maw;
+  BTLV_MCSS_MakeMAW( pp, &maw, vpos );
+  BTLV_MCSS_SetMonsNo( bew->bmw, vpos, PP_Get( pp, ID_PARA_monsno, NULL ) );
+  BTLV_MCSS_OverwriteMAW( bew->bmw, vpos, &maw );
+}
+
+//=============================================================================================
+/**
  * @brief ポケモンバニッシュフラグON
  *
  * @param[in] vpos  対象ポケモンの描画位置
