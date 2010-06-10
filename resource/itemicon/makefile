@@ -42,7 +42,8 @@ ifeq	($(CONVERTUSER),true)	#コンバート対象者のみ、コンバートのルールを有効にする
 
 
 .nce.NCER:
-	ruby exec.rb g2dcvtr $< -br
+	g2dcvtr $< -br
+#	ruby exec.rb g2dcvtr $< -br
 
 
 .ncl.NCLR:
