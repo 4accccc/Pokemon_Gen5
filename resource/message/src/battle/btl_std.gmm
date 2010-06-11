@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="nishino" host="W00221" date="2010-06-11T17:33:00"/>
+	<create user="taya" host="W00146" date="2010-06-11T18:41:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -1050,6 +1050,12 @@
 		<language name="JPN_KANJI" width="216">霧が晴れた！</language>
 	</row>
 
+	<row id="BTL_STRID_STD_AirLock">
+		<comment>天候による影響が無効化された時</comment>
+		<language name="JPN" width="216">てんこうの　えいきょうが　なくなった！</language>
+		<language name="JPN_KANJI" width="216">天候の影響が　無くなった！</language>
+	</row>
+
 	<row id="BTL_STRID_STD_SandAttack">
 		<comment>天候による一斉ダメージ時のメッセージ群</comment>
 		<language name="JPN" width="216">すなあらしが　ふきあれる！</language>
@@ -1062,6 +1068,7 @@
 	</row>
 
 	<row id="BTL_STRID_STD_Ichigeki">
+		<comment>一撃で相手を倒す</comment>
 		<language name="JPN" width="216">いちげきひっさつ！</language>
 		<language name="JPN_KANJI" width="216">一撃必殺！</language>
 	</row>
