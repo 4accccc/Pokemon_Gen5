@@ -141,8 +141,9 @@ static GMEVENT_RESULT BtlAllWazaCheck( GMEVENT* event, int* seq, void* wk_adrs )
       mp = GAMEDATA_GetMyPokemon(gdata);
       pp = PokeParty_GetMemberPointer( mp, 0 );
 
-      // HP‰ñ•œ
+      // HP‰ñ•œ^ó‘ÔˆÙí‰ñ•œ
       PP_Put( pp, ID_PARA_hp, PP_Get( pp, ID_PARA_hpmax, NULL ) );
+      PP_SetSick( pp, POKESICK_NULL ); 
       PP_ChangeMonsNo( pp, 1 );
       PP_SetWazaPos( pp, wk->count, 0 );
       OS_TPrintf("ƒZƒbƒg‚µ‚½‹ZID=%d\n",wk->count);

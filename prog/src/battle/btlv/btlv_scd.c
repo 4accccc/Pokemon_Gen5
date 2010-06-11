@@ -565,11 +565,11 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   MI_CpuClear16( &bicp, sizeof( BTLV_INPUT_COMMAND_PARAM ) );
 
 #ifdef DEBUG_ONLY_FOR_hudson
-    // ターン数をカウント
-    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
-    {
-      wkHudson.TrunCnt++;
-    }
+  // ターン数をカウント
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  {
+    wkHudson.TrunCnt++;
+  }
 #endif // DEBUG_ONLY_FOR_hudson
 
   bicp.bagMode = wk->bagMode;
