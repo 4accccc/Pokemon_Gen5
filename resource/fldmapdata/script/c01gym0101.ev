@@ -51,7 +51,7 @@ INIT_EVENT_END
 /*					FIELD_RECOVER_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_c01gym0101
-	_CALL ev_posi
+	//_CALL ev_posi
 INIT_EVENT_END
 
 ev_posi:
