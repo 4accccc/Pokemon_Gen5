@@ -4309,6 +4309,18 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
 
   //SleepMode_ColorUpdateExの結果を実行
   if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+
+
+  // もしお誘いフラグが足っていたら切る
+  {
+    GAME_COMM_SYS_PTR p_gcommsys = GAMESYSTEM_GetGameCommSysPtr( pGameSys );
+    if(p_gcommsys){
+
+      if( Intrude_CheckLiveCommStatus( p_gcommsys ) == LIVE_COMM_INTRUDE ){
+        Intrude_SetLiveCommStatus_IntrudeOut( p_gcommsys );
+      }
+    }
+  }
 }
 
 //----------------------------------------------------------------------------
@@ -4318,6 +4330,17 @@ static void cgear_InitWork( C_GEAR_WORK* pWork, CGEAR_SAVEDATA* pCGSV,FIELD_SUBS
 //-----------------------------------------------------------------------------
 static void cgear_ExitWork( C_GEAR_WORK* pWork )
 {
+  // もしお誘いフラグが足っていたら切る
+  {
+    GAME_COMM_SYS_PTR p_gcommsys = GAMESYSTEM_GetGameCommSysPtr( pWork->pGameSys );
+    if(p_gcommsys){
+
+      if( Intrude_CheckLiveCommStatus( p_gcommsys ) == LIVE_COMM_INTRUDE ){
+        Intrude_SetLiveCommStatus_IntrudeOut( p_gcommsys );
+      }
+    }
+  }
+  
   _BUTTONPAL_Exit( &pWork->button_palfade );
   
   GFL_UI_SleepGoSetFunc(NULL,  NULL);
@@ -4403,7 +4426,8 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
 
   // タイプの表示をリセット
   _typeAnimation(pWork);
-    
+
+
   return pWork;
 }
 
