@@ -383,7 +383,7 @@ _ANIME_LABEL	anm_move_82
 /**************************************************************/
 EVENT_START		ev_reserve_d20r0501_event_01
 	
-	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
 	_MAP_FADE_BLACK_IN()

@@ -210,7 +210,7 @@ _ANIME_LABEL	anm_right_back
 /**************************************************************/
 EVENT_START		ev_reserve_d20r0701_event_01
 	
-	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_comeback )
@@ -233,7 +233,7 @@ EVENT_END
 /**************************************************************/
 EVENT_START		ev_reserve_d20r0701_event_02
 	
-	_SE_PLAY( SEQ_SE_FLD_126 )
+	_SE_PLAY( SEQ_SE_KAIDAN )
 	_SE_WAIT()
 	
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_comeback1 )
