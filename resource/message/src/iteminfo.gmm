@@ -3242,11 +3242,11 @@
 
 	<row id="ITEMINFO_346">
 		<language name="JPN" width="256">あいてを　うかせて　３ターンの
-あいだ　こうげきが　かならず
-あいてに　あたるように　する。</language>
+あいだ　こうげきが　あいてに
+あたりやすくなる。</language>
 		<language name="JPN_KANJI" width="256">超能力で　相手を　浮かせる。
-３ターンの　あいだ　攻撃が　必ず
-相手に　当たるように　する。</language>
+３ターンの　あいだ　攻撃が
+相手に　当たりやすく　なる。</language>
 	</row>
 
 	<row id="ITEMINFO_347">
@@ -5311,12 +5311,12 @@
 	</row>
 
 	<row id="ITEMINFO_576">
-		<language name="JPN" width="256">ハイリンクで　いつのまにか　バッグの
-なかに　あらわれ　どんな　ポケモンも
-つかまえられる　ゆめの　ボール。</language>
-		<language name="JPN_KANJI" width="256">ハイリンクで　いつのまにか　バッグの
-中に　出現し　どんな　ポケモンも
-捕まえられる　夢の　ボール。</language>
+		<language name="JPN" width="256">ハイリンクのもりで　いつのまにか
+バッグに　あらわれる　ゆめのボール。
+どんな　ポケモンも　つかまえられる。</language>
+		<language name="JPN_KANJI" width="256">ハイリンクの森で　いつのまにか
+バッグに　現れる　夢のボール。
+どんな　ポケモンも　捕まえられる。</language>
 	</row>
 
 	<row id="ITEMINFO_577">
