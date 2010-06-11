@@ -4385,8 +4385,7 @@ u32 BTL_MAIN_GetPerappVoicePower( const BTL_MAIN_MODULE* wk, u8 clientID )
   {
     if( PERAPVOICE_GetExistFlag(wk->perappVoice[clientID]) )
     {
-      // @todo ペラップボイスランク取得関数ができるの待ち
-      return 1;
+      return PERAPVOICE_GetWazaParam( wk->perappVoice[clientID] );
     }
   }
   return 0;
