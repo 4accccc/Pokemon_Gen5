@@ -1738,7 +1738,8 @@ static int CheckKey(TR_CARD_WORK* wk)
   }
   else if(keyTrg & PAD_BUTTON_DECIDE)
   {
-    if(wk->TrCardData->OtherTrCard==FALSE && wk->ScaleMode==0){ // 自分のカードであればバッジ画面へ
+    // 自分のカードで表で拡大モードでなければあればバッジ画面へ
+    if(wk->TrCardData->OtherTrCard==FALSE && wk->is_back==0){ 
       PMSND_PlaySE( SND_TRCARD_DECIDE );
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_CHANGE, ANMS_BADGE_G, TRUE);
       return TRC_KEY_REQ_BADGE_CALL;
@@ -2027,11 +2028,11 @@ static const GFL_UI_TP_HITTBL sc_Scrol_TpRect[] = {
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  カード裏面：タッチスクロール終了判定＆処理
+ *  @brief  カード裏面：タッチスクロール終了判定＆処理
  *
- *	@param	TR_CARD_WORK *wk 
+ *  @param  TR_CARD_WORK *wk 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void tp_scroll_end_check( TR_CARD_WORK *wk )
@@ -2050,11 +2051,11 @@ static void tp_scroll_end_check( TR_CARD_WORK *wk )
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  カード裏面：タッチスクロール処理
+ *  @brief  カード裏面：タッチスクロール処理
  *
- *	@param	TR_CARD_WORK *wk 
+ *  @param  TR_CARD_WORK *wk 
  *
- *	@retval none
+ *  @retval none
  */
 //-----------------------------------------------------------------------------
 static void tp_scroll( TR_CARD_WORK *wk )
@@ -2651,11 +2652,11 @@ static const GFL_UI_TP_HITTBL large_sign_release_tbl[]={
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  サイン終了判定 範囲外に出たらまた新たにタッチしなおさないと書けない
+ *  @brief  サイン終了判定 範囲外に出たらまた新たにタッチしなおさないと書けない
  *
- *	@param	TR_CARD_WORK *wk 
+ *  @param  TR_CARD_WORK *wk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static void tp_sign_end_check( TR_CARD_WORK *wk )
