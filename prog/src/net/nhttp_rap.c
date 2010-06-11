@@ -329,6 +329,17 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
       BOOL ret = NHTTP_GetHeaderAll( pWork->handle, &res );
       OS_TPrintf( "%s\nok? %d\n", res, ret);
     }
+    else{
+//      int errorCode;
+//      DWCErrorType ErrorType;
+//      int ret;
+  //    ret = DWC_GetLastErrorEx( &errorCode, &ErrorType );  //‹A‚Á‚Ä‚±‚È‚©‚Á‚½
+      GFL_NET_StateSetWifiError( 
+                error, 
+                error, 
+                error,             ERRORCODE_NHTTP );
+      GFL_NET_StateSetError(error);
+    }
 
     NHTTPDeleteConnection(pWork->handle);
     pWork->handle=NULL;

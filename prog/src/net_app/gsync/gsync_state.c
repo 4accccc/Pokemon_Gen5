@@ -2447,8 +2447,10 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
     if(pWork->errEnd){
       NetErr_DispCall( TRUE );
     }
-    WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
-    WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+    if(WIPE_SYS_EndCheck()){  //‘¼‚ÌƒƒCƒv‚ª‚©‚©‚Á‚Ä‚È‚¯‚ê‚ÎWIPE
+      WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
+      WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+    }
     GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
     pWork->pParent->selectType = GAMESYNC_RETURNMODE_ERROR;
     ret = GFL_PROC_RES_FINISH;
