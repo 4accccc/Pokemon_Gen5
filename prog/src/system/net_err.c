@@ -370,7 +370,10 @@ void NetErr_DispCallFatal(void)
 	
 //		OS_SpinWait(10000);
 	
-	OS_Terminate();	//電源切断をまつ
+  //無限ループ
+  do{
+    OS_Halt();
+  }while(1);  //一応
 	
 	//エラー画面終了
 	Local_ErrDispExit(FALSE);
@@ -595,7 +598,10 @@ static BOOL NetErr_DispMain(BOOL fatal_error)
   if(fatal_error == TRUE){
 		//エラー画面描画
   	Local_ErrDispInit(fatal_error);
-		OS_Terminate();
+    //無限ループ
+    do{
+      OS_Halt();
+    }while(1);  //一応
 	}
   
 	if(nes->status == NET_ERR_STATUS_REQ){

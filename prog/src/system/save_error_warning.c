@@ -117,9 +117,11 @@ static void Local_WarningDispMain(u32 msg_id)
       GFL_NET_Main();
     }while(GFL_NET_IsExit() == FALSE);
   }
-
+  
   //ñ≥å¿ÉãÅ[Év
-  OS_Terminate();
+  do{
+    OS_Halt();
+  }while(1);  //àÍâû
 }
 
 //--------------------------------------------------------------
