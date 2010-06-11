@@ -1163,6 +1163,12 @@ static GMEVENT * eventCheckNoGrid( GAMESYS_WORK *gsys, void *work )
       return event;
     }
   }
+  
+  //Gパワー効果終了チェック
+  event = CheckGPowerEffectEnd( gsys );
+  if( event != NULL ){
+    return event;
+  }
 
 #ifdef  DEBUG_SPEED_CHECK_ENABLE
   if ( (req.key_trg & PAD_BUTTON_R) || (req.key_cont & PAD_BUTTON_L) )
