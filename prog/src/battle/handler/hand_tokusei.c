@@ -27,7 +27,7 @@
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
 /*--------------------------------------------------------------------------*/
-static u32 numHandlersWithHandlerPri( u16 numHandlers, u16 pri );
+static u32 numHandlersWithHandlerPri( u16 pri, u16 numHandlers );
 static u16 devideNumHandersAndPri( u32* numHandlers );
 static u16 CalcTokHandlerSubPriority( const BTL_POKEPARAM* bpp );
 static BOOL Tokusei_IsExePer( BTL_SVFLOW_WORK* flowWk, u8 per );
@@ -634,6 +634,8 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
         handlerTable = funcTbl[i].func( &numHandlers );
         mainPri = devideNumHandersAndPri( &numHandlers );
 
+        TAYA_Printf("MainPri=%d, numHandlers=%d\n", mainPri, numHandlers );
+
         return BTL_EVENT_AddFactor( BTL_EVENT_FACTOR_TOKUSEI, tokusei,
                   mainPri, agi, pokeID, handlerTable, numHandlers );
       }
@@ -648,9 +650,10 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
  * ハンドラ数にハンドラプライオリティの値を合わせてu32変換
  */
 //----------------------------------------------------------------------------------
-static u32 numHandlersWithHandlerPri( u16 numHandlers, u16 pri )
+static u32 numHandlersWithHandlerPri( u16 pri, u16 numHandlers )
 {
-  return (pri << 16) | (numHandlers);
+  u32 result = (pri << 16) | (numHandlers);
+  return result;
 }
 //----------------------------------------------------------------------------------
 /**
