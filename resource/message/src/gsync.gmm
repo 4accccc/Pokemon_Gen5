@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="mizuguchi_mai" host="W00226" date="2010-06-10T17:21:09"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-11T12:31:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -367,9 +367,9 @@
 
 	<row id="GAMESYNC_007">
 		<language name="JPN" width="256">ポケモンレポートに　かきこんでいます
-しばらく　おまちください</language>
+でんげんを　きらないでください</language>
 		<language name="JPN_KANJI" width="256">ポケモンレポートに　書き込んでいます
-しばらく　お待ちください</language>
+電源を　切らないでください</language>
 	</row>
 
 	<row id="GAMESYNC_008">

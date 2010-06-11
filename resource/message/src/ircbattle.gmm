@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-06-07T18:57:20"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-11T12:32:45"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -525,10 +525,10 @@
 	</row>
 
 	<row id="IRCBTL_STR_29">
-		<language name="JPN" width="256">レポートを　かいています
-しばらく　おまちください</language>
-		<language name="JPN_KANJI" width="256">レポートを　書いています
-しばらく　お待ちください</language>
+		<language name="JPN" width="256">ポケモンレポートに　かきこんでいます
+でんげんを　きらないでください</language>
+		<language name="JPN_KANJI" width="256">ポケモンレポートに　書き込んでいます
+電源を　切らないでください</language>
 	</row>
 
 	<row id="IRCBTL_STR_30">
