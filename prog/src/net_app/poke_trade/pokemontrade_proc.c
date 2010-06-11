@@ -4054,7 +4054,7 @@ static GFL_PROC_RESULT PokemonTradeProcInit( GFL_PROC * proc, int * seq, void * 
 
   {
     ZUKAN_SAVEDATA* zkn_sv = GAMEDATA_GetZukanSave( pParentWork->gamedata );
-    pWork->zenkoku_flag = ZUKANSAVE_GetZukanMode( zkn_sv );  // TRUE‚Ì‚Æ‚«‘S‘}ŠÓ
+    pWork->zenkoku_flag = ZUKANSAVE_GetZenkokuZukanFlag( zkn_sv );  // TRUE‚Ì‚Æ‚«‘S‘}ŠÓ
   }
 
   if(pParentWork){
