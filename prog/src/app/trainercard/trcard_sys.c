@@ -331,11 +331,14 @@ static int _branch_card_app( TR_CARD_SYS* wk, TRCARD_CALL_PARAM *pp )
     break;
   }
 
-  // 指定なし（TRDARD_SHORTCUT_NONE）の場合はゲーム進行で変える
-  if(wk->tcp->TrCardData->Clear_m==0 && wk->tcp->edit_possible==1){
-    return BADGE_INIT;
+  // クリアするまでは、トレーナカードの最初をバッジ画面にする
+  if(wk->tcp->TrCardData->Clear_m==0 ){
+    // 自分のデータを参照しているモード
+    if(wk->tcp->TrCardData->PlayTime!=NULL){
+      return BADGE_INIT;
+    }
   }
-
+  
   return CARD_INIT;
 
 }
@@ -546,12 +549,12 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   //通信用かで分岐
   if( isSendData == TRUE )
   {
-    PLAYTIME *playTime  = GAMEDATA_GetPlayTimeWork( gameData );
-    cardData->UnionTrNo = MyStatus_GetTrainerView( mystatus );
-    cardData->TimeUpdate = FALSE;
-    cardData->PlayTime = NULL;
-    cardData->PlayTime_h = PLAYTIME_GetHour( playTime );
-    cardData->PlayTime_m = PLAYTIME_GetMinute( playTime );
+    PLAYTIME *playTime    = GAMEDATA_GetPlayTimeWork( gameData );
+    cardData->UnionTrNo   = MyStatus_GetTrainerView( mystatus );
+    cardData->TimeUpdate  = FALSE;
+    cardData->PlayTime    = NULL;
+    cardData->PlayTime_h  = PLAYTIME_GetHour( playTime );
+    cardData->PlayTime_m  = PLAYTIME_GetMinute( playTime );
     cardData->Personality = TRCSave_GetPersonarity(  trc_ptr );
     cardData->SignAnimeOn = TRCSave_GetSignAnime(  trc_ptr );
   }
