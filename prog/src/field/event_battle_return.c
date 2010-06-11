@@ -90,6 +90,7 @@ static void sizenkaihuku_check( POKEPARTY* ppt );  // ì¡ê´(Ç∆Ç≠ÇπÇ¢)Ç™é©ëRâÒïú(Ç
 static void minomucchi_form_change_check( BTLRET_PARAM* param, POKEPARTY* ppt, BATT_BG_OBONID obonID );
 static BATT_BG_OBONID get_obonID( BTL_FIELD_SITUATION* bfs, HEAPID heapID );
 static void sheimi_zukan_touroku_check( BTLRET_PARAM* param, POKEPARTY* ppt );
+static void healball_check( POKEMON_PARAM * pp );
 
 /*--------------------------------------------------------------------------*/
 /* Proc Table                                                               */
@@ -378,6 +379,8 @@ static GFL_PROC_RESULT BtlRet_ProcMain( GFL_PROC * proc, int * seq, void * pwk, 
   case 3:
     {
       POKEPARTY* party    = GAMEDATA_GetMyPokemon( param->gameData );
+
+			healball_check( wk->pp );
 
       if( wk->box_strbuf == NULL ){
         PokeParty_Add( party, wk->pp );
@@ -701,3 +704,19 @@ static void sheimi_zukan_touroku_check( BTLRET_PARAM* param, POKEPARTY* ppt )
   }
 }
 
+//============================================================================================
+/**
+ * ÉqÅ[ÉãÉ{Å[ÉãÇ≈ïﬂälÇµÇΩÇ∆Ç´ÇÃâÒïúèàóù
+ */
+//============================================================================================
+static void healball_check( POKEMON_PARAM * pp )
+{
+	BOOL	fast = PP_FastModeOn( pp );
+
+	if( PP_Get( pp, ID_PARA_get_ball, NULL ) == ITEM_HIIRUBOORU ){
+		PP_Put( pp, ID_PARA_hp, PP_Get(pp,ID_PARA_hpmax,NULL) );
+		PP_SetSick( pp, POKESICK_NULL );
+	}
+
+	PP_FastModeOff( pp, fast );
+}
