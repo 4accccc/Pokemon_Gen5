@@ -4877,7 +4877,7 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
     case SV_WAZAFAIL_NEMURI:     scPut_EffectByPokePos( wk, attacker, BTLEFF_NEMURI ); break;
     case SV_WAZAFAIL_MAHI:       scPut_EffectByPokePos( wk, attacker, BTLEFF_MAHI ); break;
     case SV_WAZAFAIL_KOORI:      scPut_EffectByPokePos( wk, attacker, BTLEFF_KOORI ); break;
-    case SV_WAZAFAIL_MEROMERO:   scPut_EffectByPokePos( wk, attacker, BTLEFF_MEROMERO ); break;
+//    case SV_WAZAFAIL_MEROMERO:   scPut_EffectByPokePos( wk, attacker, BTLEFF_MEROMERO ); break;
 
     case SV_WAZAFAIL_SABOTAGE_GO_SLEEP:
       {
@@ -13021,8 +13021,7 @@ BOOL BTL_SVFRET_AddBonusMoney( BTL_SVFLOW_WORK* wk, u32 volume, u8 pokeID )
 {
   BtlCompetitor competitor = BTL_MAIN_GetCompetitor( wk->mainModule );
 
-  if( (competitor == BTL_COMPETITOR_WILD)
-  ||  (competitor == BTL_COMPETITOR_TRAINER)
+  if( ((competitor == BTL_COMPETITOR_WILD) || (competitor == BTL_COMPETITOR_TRAINER))
   ){
     BTL_SERVER_AddBonusMoney( wk->server, volume );
     return TRUE;
