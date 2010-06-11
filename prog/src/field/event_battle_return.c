@@ -31,6 +31,7 @@
 
 #include "../../../resource/fldmapdata/flagwork/flag_define.h"
 
+#include "item/item.h"
 #include "item/itemsym.h"
 #include "poke_tool/tokusyu_def.h"
 #include "system/gfl_use.h"
@@ -713,7 +714,7 @@ static void healball_check( POKEMON_PARAM * pp )
 {
 	BOOL	fast = PP_FastModeOn( pp );
 
-	if( PP_Get( pp, ID_PARA_get_ball, NULL ) == ITEM_HIIRUBOORU ){
+	if( PP_Get( pp, ID_PARA_get_ball, NULL ) == BALLID_HIIRUBOORU ){
 		PP_Put( pp, ID_PARA_hp, PP_Get(pp,ID_PARA_hpmax,NULL) );
 		PP_SetSick( pp, POKESICK_NULL );
 	}
