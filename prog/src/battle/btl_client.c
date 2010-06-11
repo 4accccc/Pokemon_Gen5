@@ -45,6 +45,7 @@
 #include "btl_tables.h"
 #include "btl_client.h"
 
+#include "debug/debug_hudson.h"
 
 enum {
   PRINT_FLG = FALSE,
@@ -3078,6 +3079,13 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
 
   #ifdef PM_DEBUG
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+    return BTL_CANTESC_NULL;
+  }
+  #endif
+  
+  #ifdef DEBUG_ONLY_FOR_hudson
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  {
     return BTL_CANTESC_NULL;
   }
   #endif

@@ -29,11 +29,7 @@
 
 #include "btlv_input.h"
 
-#ifdef DEBUG_ONLY_FOR_hudson
-
 #include "debug/debug_hudson.h"
-
-#endif // DEBUG_ONLY_FOR_hudson
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
