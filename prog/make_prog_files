@@ -1210,27 +1210,6 @@ SRCS_OVERLAY_BATTLE_VIEW = battle/btlv/btlv_stage.c \
 			battle/btlv/btlv_finger_cursor.c
 
 
-# バトル用バッグ&ポケモンリスト共通ツール
-#===> SRCS_OVERLAY_BATTLE_VIEW
-SRCS_OVERLAY_BATTLE_B_APP = battle/app/b_app_tool.c
-
-# バトル用バッグ
-#===> SRCS_OVERLAY_BATTLE_B_APP
-SRCS_OVERLAY_BATTLE_BAG = battle/app/b_bag_bmp.c \
-			battle/app/b_bag_item.c \
-			battle/app/b_bag_anm.c \
-			battle/app/b_bag_obj.c \
-			battle/app/b_bag_main.c \
-			battle/app/b_bag_ui.c
-
-# バトル用ポケモンリスト
-#===> SRCS_OVERLAY_BATTLE_B_APP
-SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
-			battle/app/b_plist_bmp.c \
-			battle/app/b_plist_obj.c \
-			battle/app/b_plist_main.c \
-			battle/app/b_plist_ui.c
-
 # 戦闘はVRAM_Hが空いているのでLCDCのメモリに割り当てて配置
 # 戦闘で使う以外のソースは配置しないでください
 #===> LCDC_VRAM_H
@@ -1860,14 +1839,6 @@ SRCS_OVERLAY_WAZA_OSHIE = app/waza_oshie/wo_main.c
 SRCS_OVERLAY_LOCAL_TVT = app/local_tvt/local_tvt_sys.c \
 		app/local_tvt/local_tvt_chara.c 
 
-# WIFIバトルマッチングシステム
-#===> SRCS_OVERLAY_BATTLE
-#===> SRCS_OVERLAY_BATTLE_BAG
-#===> SRCS_OVERLAY_BATTLE_PLIST
-#===> SRCS_OVERLAY_VS_MULTI_LIST
-SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
-                                    net_app/wifi_match/wifibattlematch_battle.c
-
 # WIFIバトルマッチングフロー周り＋WIFネット部分
 #===> SRCS_OVERLAY_DPW_COMMON
 #===> SRCS_OVERLAY_UI_COMMON
@@ -2053,12 +2024,43 @@ SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 #===> SRCS_OVERLAY_UI_COMMON
 #===> SRCS_OVERLAY_POKE_STATUS
 #===> SRCS_OVERLAY_WORLDTRADE
-#===> SRCS_OVERLAY_BATTLE_B_APP
-#===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_SHINKA_DEMO	= demo/shinka_demo/shinka_demo.c \
 													  demo/shinka_demo/shinka_demo_graphic.c \
 													  demo/shinka_demo/shinka_demo_view.c \
 													  demo/shinka_demo/shinka_demo_effect.c
+
+
+# バトル用バッグ&ポケモンリスト共通ツール
+#===> SRCS_OVERLAY_BATTLE_VIEW
+#===> SRCS_OVERLAY_SHINKA_DEMO
+SRCS_OVERLAY_BATTLE_B_APP = battle/app/b_app_tool.c
+
+# バトル用バッグ
+#===> SRCS_OVERLAY_BATTLE_B_APP
+SRCS_OVERLAY_BATTLE_BAG = battle/app/b_bag_bmp.c \
+			battle/app/b_bag_item.c \
+			battle/app/b_bag_anm.c \
+			battle/app/b_bag_obj.c \
+			battle/app/b_bag_main.c \
+			battle/app/b_bag_ui.c
+
+# バトル用ポケモンリスト
+#===> SRCS_OVERLAY_BATTLE_B_APP
+#===> SRCS_OVERLAY_SHINKA_DEMO
+SRCS_OVERLAY_BATTLE_PLIST = battle/app/b_plist_anm.c \
+			battle/app/b_plist_bmp.c \
+			battle/app/b_plist_obj.c \
+			battle/app/b_plist_main.c \
+			battle/app/b_plist_ui.c
+
+# WIFIバトルマッチングシステム
+#===> SRCS_OVERLAY_BATTLE
+#===> SRCS_OVERLAY_BATTLE_BAG
+#===> SRCS_OVERLAY_BATTLE_PLIST
+#===> SRCS_OVERLAY_VS_MULTI_LIST
+SRCS_OVERLAY_WIFIBATTLEMATCH_SYS  = net_app/wifi_match/wifibattlematch_sys.c \
+                                    net_app/wifi_match/wifibattlematch_battle.c
+
 
 #中村デバッグ
 #===> SRCS_OVERLAY_NAMEIN
