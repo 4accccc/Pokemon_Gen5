@@ -44,16 +44,16 @@ INIT_EVENT_START	ev_init_c09r0501
 INIT_EVENT_END
 
 /**************************************************************/
-/*			フィールドイニットスクリプト					  */
+/*			フィールドリカバースクリプト					  */
 /**************************************************************/
 INIT_EVENT_START	ev_recover_c09r0501
-
+/*
 	SWITCH $WK_SCENE_C09R0501
 	CASE 1 THEN
 		_OBJ_POS_CHANGE( C09R0501_RIVAL_01, 17, 3, 9, DIR_UP )
 		_OBJ_POS_CHANGE( C09R0501_CHAMPION_01, 17, 3, 8, DIR_DOWN )
 	ENDSWITCH
-
+*/
 INIT_EVENT_END
 
 /************************************************************/
