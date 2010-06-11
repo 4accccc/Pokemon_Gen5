@@ -11,6 +11,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_fix.spa
 制御モード変更	継続
 ポケモンパレットフェード	攻撃側	0	16	0	31:31:31
 ボールモード	捕獲ボール攻撃側
+カメラ移動	追従	3vs3攻撃	CM	0	CB
+エフェクト終了待ち	すべて
 パーティクルデータロード	be_capture_01
 パーティクル再生すべて	be_capture_01	攻撃側	方向無し	0:0:0	1:1:1	1
 パーティクルデータロード	be_m_ball_01_open1
@@ -30,5 +32,6 @@ SE再生	SEQ_SE_BOWA2	デフォルト	攻撃側	0:0:127	0:0:0
 パーティクルデータ削除	be_m_ball_01_close
 タイマーによるウエイト	40
 パーティクルデータ削除	be_m_ball_01_fix
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了
 &

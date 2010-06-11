@@ -4,6 +4,7 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_424.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT	CM	0	0
 制御モード変更	継続
 SE再生	SEQ_SE_W379_POWER	SE2	真ん中	0:0:40	0:0:0
 SE再生	SEQ_SE_DUMMY5	SE2	真ん中	150:0:0	0:0:0
@@ -32,6 +33,7 @@ BGのパレットフェード	すべて	12	0	1	0:0:0
 エフェクト終了待ち	すべて
 ポケモンアニメ	防御側	アニメスタート
 ポケモンアニメ	攻撃側	アニメスタート
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 エフェクト終了
 &

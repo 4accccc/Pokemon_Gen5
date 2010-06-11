@@ -4,6 +4,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_213.spa
 #001
 %00
+カメラ移動	追従	ZOOM_OUT	CM	0	0
+エフェクト終了待ち	すべて
 制御モード変更	継続
 SE再生	SEQ_SE_W213_01	SE1	防御側	0:0:127	0:0:0
 SE動的変化	SE1	追従	ピッチ	0	250	5	20:0:0
@@ -22,6 +24,7 @@ SE動的変化	SE2	追従	ボリューム	40	0	5	40:0:0
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
 ポケモンパレットフェード	防御側	10	0	2	25:0:16
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 エフェクト終了
 &
