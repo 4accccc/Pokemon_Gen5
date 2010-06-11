@@ -777,6 +777,13 @@ static int BBAG_ItemUse( BBAG_WORK * wk )
 			wk->ret_seq = SEQ_BBAG_ERR;
 			return SEQ_BBAG_MSG_WAIT;
 		}
+		//「そらをとぶ」などで場に相手がいないので使用不可
+		if( dat->ball_use == BBAG_BALLUSE_POKE_NONE ){
+			GFL_MSG_GetString( wk->mman, mes_b_bag_m14, wk->msg_buf );
+			BattleBag_TalkMsgSet( wk );
+			wk->ret_seq = SEQ_BBAG_ERR;
+			return SEQ_BBAG_MSG_WAIT;
+		}
 	}
 
 	// 逃げるアイテム使用チェック

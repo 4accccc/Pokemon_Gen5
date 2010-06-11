@@ -39,6 +39,7 @@ enum BBagBallUse_tag {
   BBAG_BALLUSE_POKEMAX,     // 手持ち・ボックスに空きがないため使用不可
   BBAG_BALLUSE_DOUBLE,      // 野生ダブル・敵が２匹のため使用不可
   BBAG_BALLUSE_NOT_FIRST,   // 野生ダブル・先頭のポケモン動作でないので使用不可
+	BBAG_BALLUSE_POKE_NONE,		//「そらをとぶ」などで場に相手がいないので使用不可
 };
 typedef u8 BBagBallUse;
 
