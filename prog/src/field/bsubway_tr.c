@@ -93,6 +93,9 @@ BATTLE_SETUP_PARAM * BSUBWAY_SCRWORK_CreateBattleParam(
     for( i=0; i<wk->member_num; i++ ){
       pp = PokeParty_GetMemberPointer( myparty, wk->member[i] );
       PokeParty_Add( party, pp );
+      
+      KAGAYA_Printf( "BSW BTL POKE MENBER No.%d Pos %d\n",
+          i, wk->member[i] );
     }
 	}
 

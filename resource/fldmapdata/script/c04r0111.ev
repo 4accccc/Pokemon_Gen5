@@ -221,7 +221,8 @@ sub_challenge_continue:
   _BSUBWAY_TOOL( BSWSUB_BTL_TRAINER_SET, BSW_NULL, BSW_NULL, BSW_NULL )
   
   //ポケモンメンバーロード
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
+  //ポケモン選択が追加された事により不要
+  //_BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
   
   //レポート
   _SYSWIN_MSG( msg_c04r0111_02, POS_DOWN ) //ご案内する前にレポート
@@ -645,7 +646,8 @@ sub_challenge_continue_comm_multi_ok:
   ENDIF
   
   //ポケモンメンバーロード
-  _BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
+  //ポケモン選択が追加された事により不要
+  //_BSUBWAY_TOOL( BSWSUB_LOAD_POKEMON_MEMBER, BSW_NULL, BSW_NULL, BSW_NULL)
   
   //レポート
   _REPORT_CALL( SCWK_ANSWER )

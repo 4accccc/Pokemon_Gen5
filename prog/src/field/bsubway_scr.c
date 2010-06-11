@@ -850,10 +850,14 @@ BOOL BSUBWAY_SCRWORK_GetEntryPoke( BSUBWAY_SCRWORK *bsw_scr, GAMESYS_WORK *gsys 
       }
       
       bsw_scr->member[i] = bsw_scr->pokelist_select_num[i] - 1;
+
       pp = PokeParty_GetMemberPointer(
           (POKEPARTY*)party, bsw_scr->member[i] );
       bsw_scr->mem_poke[i] = PP_Get( pp, ID_PARA_monsno, NULL );  
       bsw_scr->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
+
+      KAGAYA_Printf( "BSW ENTRY POKE MENBER No.%d Pos %d\n",
+          i, bsw_scr->member[i] );
     }
     
     return TRUE;

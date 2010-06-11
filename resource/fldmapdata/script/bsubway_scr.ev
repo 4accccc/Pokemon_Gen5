@@ -2530,7 +2530,7 @@ sub_bsw_common_pokemon_select_core:
   
   //ポケモン選択
   _BSUBWAY_TOOL( BSWSUB_SELECT_POKE, BSW_NULL, BSW_NULL, BSW_NULL )
-  //ポケモン選択結果
+  //ポケモン選択結果を反映、結果を取得
   _BSUBWAY_TOOL( BSWSUB_GET_ENTRY_POKE, BSW_NULL, BSW_NULL, SCWK_ANSWER )
 }
 _RET
