@@ -1947,6 +1947,7 @@ static int MainSeq_ArrangePokeGetDataChange( BOX2_SYS_WORK * syswk )
 		BOX2OBJ_SetHandCursorOnOff( syswk, TRUE );
 		pos = syswk->get_pos;
 	}
+	syswk->app->old_cur_pos = pos;
 
 	PokeMoveWorkFree( syswk );
 
