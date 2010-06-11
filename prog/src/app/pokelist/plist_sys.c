@@ -42,6 +42,7 @@
 #include "plist_comm.h"
 #include "plist_snd_def.h"
 #include "poke_tool/status_rcv.h"
+#include "poke_tool/item_rcv.h"
 
 #include "app/p_status.h" //ProcØ‚è‘Ö‚¦—p
 #include "app/app_menu_common.h"

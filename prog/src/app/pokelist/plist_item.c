@@ -24,6 +24,7 @@
 #include "plist_message.h"
 #include "plist_item.h"
 #include "plist_snd_def.h"
+#include "poke_tool/item_rcv.h"
 #include "poke_tool/status_rcv.h"
 
 //======================================================================
@@ -931,4 +932,6 @@ static void PLIST_ITEM_UTIL_ItemUseMessageParamExp( PLIST_WORK *work , u16 msgId
   PLIST_MSG_DeleteWordSet( work , work->msgWork );
   
 }
+
+
 
