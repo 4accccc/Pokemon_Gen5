@@ -599,9 +599,16 @@ static void UnionComm_Colosseum_Update(UNION_SYSTEM_PTR unisys)
     if(UnionSubProc_IsExits(unisys) == FALSE){  //サブPROC実行中でない時に実行する処理
       //通信プレイヤーアクター管理システムが生成されているなら自分座標の転送を行う
       CommPlayer_Update(unisys->uniparent->gsys, unisys->colosseum_sys->cps);
-      if(CommPlayer_Mine_DataUpdate(
-          unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
-        ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package);
+      if(unisys->colosseum_sys->send_mine_pack_req == FALSE){
+        if(CommPlayer_Mine_DataUpdate(
+            unisys->colosseum_sys->cps, &unisys->colosseum_sys->send_mine_package) == TRUE){
+          unisys->colosseum_sys->send_mine_pack_req = TRUE;
+        }
+      }
+      if(unisys->colosseum_sys->send_mine_pack_req == TRUE){
+        if(ColosseumSend_PosPackage(&unisys->colosseum_sys->send_mine_package) == TRUE){
+          unisys->colosseum_sys->send_mine_pack_req = FALSE;
+        }
       }
     }
     

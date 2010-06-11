@@ -100,7 +100,7 @@ typedef struct _COLOSSEUM_SYSTEM{
   u8 talk_obj_id;                           ///<話しかけ相手のOBJ_ID
   u8 select_pokeparty;                      ///<選択したPOKEPARTY(COLOSSEUM_SELECT_PARTY_???)
   u8 entry_bit;                             ///<最終的にエントリーが完了した人のNetID(bit管理)
-  u8 padding;
+  u8 send_mine_pack_req;                    ///<TRUE:自分の座標送信リクエスト
 }COLOSSEUM_SYSTEM;
 
 
