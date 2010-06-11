@@ -208,6 +208,7 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   u8 update_member_info;          ///<メンバー情報送信リクエスト
   u8 update_member_info_reserve;  ///<メンバー情報送信予約
   u8 member_info_sending;         ///<TRUE:メンバー情報送信中
+  u8 wait_user_bit;       ///<終了前に接続されているユーザー(bit管理)
   HEAPID heap_id;
   
   ENTRY_PARENT_ANSWER entry_parent_answer;
@@ -266,6 +267,8 @@ static void _ParentSearchList_DeleteParent(COMM_ENTRY_MENU_PTR em, int parent_no
 static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em);
 static PARENT_WAIT_CANCEL_STATE _ParentWait_UpdateCnacel( COMM_ENTRY_MENU_PTR em );
 static void _ParentWait_ExitCnacel( COMM_ENTRY_MENU_PTR em );
+static u8 _GetConnectMemberBit(void);
+static BOOL _CheckConnectMemberBit(u8 member_bit);
 
 
 //==============================================================================
@@ -661,6 +664,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     {
       //誰かが抜けた・・・
       if(CemSend_GameCancel(em->mp_mode) == TRUE){
+        em->wait_user_bit = em->member_info.member_bit; //_GetConnectMemberBit();
         em->entry_result = COMM_ENTRY_RESULT_CANCEL;
         em->seq = _SEQ_CANCEL_MSG;
       }
@@ -681,6 +685,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_SEND_GAMECANCEL:
     if(CemSend_GameCancel(em->mp_mode) == TRUE){
+      em->wait_user_bit = em->member_info.member_bit; //_GetConnectMemberBit();
       em->entry_result = COMM_ENTRY_RESULT_CANCEL;
       em->seq = _SEQ_CANCEL_WAIT;
     }
@@ -698,8 +703,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     break;
   case _SEQ_CANCEL_WAIT:
     //子機抜けるまで待ち
-    if( GFL_NET_GetConnectNum() <= 1 )
-    {
+    if(_CheckConnectMemberBit(em->wait_user_bit) == FALSE){
       em->seq = _SEQ_FINISH;
     }
     break;
@@ -2630,4 +2634,52 @@ void CommEntryMenu_SetEntryAnswer(COMM_ENTRY_MENU_PTR em, ENTRY_PARENT_ANSWER an
 u32 CommEntryMenu_GetMemberInfoSize(void)
 {
   return sizeof(ENTRYMENU_MEMBER_INFO);
+}
+
+//--------------------------------------------------------------
+/**
+ * 現在接続されているユーザーをビットで取得する
+ *
+ * @param   none		
+ *
+ * @retval  u8		
+ */
+//--------------------------------------------------------------
+static u8 _GetConnectMemberBit(void)
+{
+  NetID net_id;
+  u8 connect_member_bit = 0;
+  
+  for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
+    if(GFL_NET_IsConnectMember(net_id) == TRUE){
+      connect_member_bit |= 1 << net_id;
+    }
+  }
+  
+  return connect_member_bit;
+}
+
+//--------------------------------------------------------------
+/**
+ * 指定メンバー(bit)が一人以上接続状態であるかを調べる
+ *
+ * @param   member_bit		
+ *
+ * @retval  BOOL		一人でも接続が生きていればTRUE
+ *                  全員切断している場合はFALSE
+ */
+//--------------------------------------------------------------
+static BOOL _CheckConnectMemberBit(u8 member_bit)
+{
+  NetID net_id;
+  
+  for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
+    if(GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) != net_id){  //自分は無視
+      if((member_bit & (1<<net_id)) && GFL_NET_IsConnectMember(net_id) == TRUE){
+        return TRUE;
+      }
+    }
+  }
+  
+  return FALSE;
 }
