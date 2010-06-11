@@ -90,7 +90,7 @@ INIT_EVENT_END
 /*			フィールドリカバースクリプト					  */
 /**************************************************************/
 INIT_EVENT_START	ev_recover_n01r0502
-  _CALL sub_setup_objpos
+  //_CALL sub_setup_objpos
 INIT_EVENT_END
 
 
@@ -968,6 +968,8 @@ sub_legend_battle:
     
     IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
         //勝利
+        _OBJ_POS_CHANGE( N01R0502_BOSS_01, 16, 0, 36, DIR_DOWN )
+        
         _WILD_RETRY_CHECK( SCWK_ANSWER )
         IF $SCWK_ANSWER == SCR_WILD_BTL_RET_CAPTURE THEN
           //========================================/
