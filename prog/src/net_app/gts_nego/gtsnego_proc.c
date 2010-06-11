@@ -2104,6 +2104,7 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
   }
   GFL_BG_SetVisible( GFL_BG_FRAME0_S, VISIBLE_ON );
   GFL_BG_SetVisible( GFL_BG_FRAME2_S, VISIBLE_ON );
+//  GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
   _CHANGE_STATE(pWork,_modeSelectMenuWait);
   
 }
@@ -2343,7 +2344,7 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
                   WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   PMSND_PlayBGM(SEQ_BGM_GTS);
 
-  GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
+  GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
   
   NetErr_SetPushPopMode( NET_ERR_PUSHPOP_MODE_BLACKOUT );
 
