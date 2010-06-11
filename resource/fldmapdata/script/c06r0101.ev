@@ -41,7 +41,6 @@ EVENT_START   ev_c06r0101_babygirl1_01
 	
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
 	
-	_TALK_OBJ_START()
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_babygirl_00)
@@ -66,7 +65,6 @@ EVENT_START   ev_c06r0101_boy2_01
 	
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_06 )
 	
-	_TALK_OBJ_START()
 	//ジムバッジを取得していない場合
 	IF $SCWK_TEMP0 == 0 THEN
 		_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_00)
@@ -76,7 +74,10 @@ EVENT_START   ev_c06r0101_boy2_01
 		//技マシン「そらをとぶ」を入手していない
 		IF FLAG_OFF(FE_C06_ITEMGET_1) THEN
 			_EASY_BALLOONWIN_TALKOBJ_MSG(msg_c06r0101_boy2_01)
+			
+			//------------------------------//
 			_FLAG_RESET(FV_C06_MONSTERBALL)
+			//------------------------------//
 			
 		//技マシン「そらをとぶ」を入手している
 		ELSE
