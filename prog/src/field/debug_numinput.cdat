@@ -209,4 +209,14 @@ static const DEBUG_NUMINPUT_LIST DNI_WifiFriendList[] = {
   { dni_wifi_friend_04, WIFILIST_FRIEND_TRADE_NUM, &DNP_WifiFriendData },
 };
 
+//////////////////////////////////////////////////////
+///å©ÇΩñ⁄í≤êÆ
+static const DEBUG_NUMINPUT_PARAM DNP_ViewOffset_DeepSand = {
+  0, FX32_MAX, DebugGetDeepSandOffs, DebugSetDeepSandOffs,
+};
+static const DEBUG_NUMINPUT_LIST DNI_ViewOffsets[] = {
+  //gmm_id, param, dni_param
+  { dni_view_offset_01, 0, &DNP_ViewOffset_DeepSand },
+};
+
 #endif  //PM_DEBUG

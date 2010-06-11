@@ -100,6 +100,8 @@ struct _TAG_FLDEFF_FOOTMARK
   FLDEFF_CTRL *fectrl;
   GFL_BBDACT_SYS *bbdact_sys;
   u16 res_idx_tbl[FOOTMARK_ALL_MAX];
+
+  fx32 deepsand_y_offs;
 };
 
 //--------------------------------------------------------------
@@ -159,6 +161,8 @@ void * FLDEFF_FOOTMARK_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
   fmark->bbdact_sys = FIELDMAP_GetSubBbdActSys( fieldmap );
   
   fmark_InitResource( fmark );
+
+  fmark->deepsand_y_offs = FX32_CONST(2);
   return( fmark );
 }
 
@@ -309,6 +313,9 @@ void FLDEFF_FOOTMARK_SetMMdl(
   }else if( type == FOOTMARK_TYPE_DEEPSNOW &&
       (no == FOOTMARK_WALK_LEFT || no == FOOTMARK_WALK_RIGHT) ){
     pos.z += FOOTMARK_OFFSPOS_Z_WALK_LR;
+  }
+  if( type == FOOTMARK_TYPE_DEEPSNOW ) {
+    pos.y -= fmark->deepsand_y_offs;
   }
   
   head.fmark_no = no;

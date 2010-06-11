@@ -160,6 +160,8 @@ static u32 DebugGetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 pa
 static void DebugSetWifiFriendNo(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 static u32 DebugGetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
 static void DebugSetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
+static u32 DebugGetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param);
+static void DebugSetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value);
 
 #include "debug_numinput.cdat"
 
@@ -235,6 +237,9 @@ static  const DEBUG_NUMINPUT_INITIALIZER DATA_PlaceName = {
 static  const DEBUG_NUMINPUT_INITIALIZER DATA_WifiFriend = { 
   D_NINPUT_DATA_LIST,   NELEMS( DNI_WifiFriendList ), DNI_WifiFriendList, };
 
+static  const DEBUG_NUMINPUT_INITIALIZER DATA_ViewOffsets = {
+  D_NINPUT_DATA_LIST,   NELEMS( DNI_ViewOffsets ), DNI_ViewOffsets, };
+
 /// 数値入力　メニューヘッダー
 static const FLDMENUFUNC_HEADER DATA_DNumInput_MenuFuncHeader =
 {
@@ -281,6 +286,7 @@ static const FLDMENUFUNC_LIST DATA_DNumInputMenu[] =
   { dni_playtime_00, (void*)&DATA_PlayTime },
   { dni_place_name_00, (void*)&DATA_PlaceName },
   { dni_wifi_friend_00, (void*)&DATA_WifiFriend },
+  { dni_view_offset_00, (void*)&DATA_ViewOffsets },
 };
 
 static const DEBUG_MENU_INITIALIZER DATA_DNumInput_MenuInitializer = {
@@ -1279,6 +1285,30 @@ static void DebugSetWifiFriendData(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32
   }
 }
 
+//--------------------------------------------------------------
+//
+//    表示調整　関連
+//
+//--------------------------------------------------------------
+#include "fldeff_footmark.h"
+static u32 DebugGetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
+{
+#if 0
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDEFF_CTRL * fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+  return DEBUG_GetDeepsandYoffs( fectrl );
+#endif
+  return 0;
+}
+
+static void DebugSetDeepSandOffs(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 value)
+{
+#if 0
+  FIELDMAP_WORK * fieldmap = GAMESYSTEM_GetFieldMapWork( gsys );
+  FLDEFF_CTRL * fectrl = FIELDMAP_GetFldEffCtrl( fieldmap );
+  DEBUG_SetDeepsandYoffs( fectrl, value );
+#endif
+}
 
 #endif  //PM_DEBUG
 
