@@ -47,7 +47,8 @@ int ISC_SAVE_CheckItem(INTRUDE_SAVE_WORK *intsave, u16 zone_id, s16 grid_x, s16 
     }
     posdata = &IntrudeSecretItemPosDataTbl[isis->tbl_no];
     if(posdata->zone_id == zone_id && posdata->grid_x == grid_x 
-        && posdata->grid_y == grid_y && posdata->grid_z == grid_z){
+        && posdata->grid_z == grid_z
+        && posdata->grid_y - 1 <= grid_y && grid_y <= posdata->grid_y + 1 ) {
       return i;
     }
     isis++;
