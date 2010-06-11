@@ -7828,7 +7828,7 @@ static BOOL scProc_OP_SetFakeSrc( BTL_CLIENT* wk, int* seq, const int* args )
 
   BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
 //  BTL_MAIN_SetFakeSrcMember( wk->mainModule, party, memberIdx );
-  BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
+  BTL_MAIN_SetIllusionForParty(  wk->mainModule, party, clientID );
   return TRUE;
 }
 static BOOL scProc_OP_ClearConsumedItem( BTL_CLIENT* wk, int* seq, const int* args )

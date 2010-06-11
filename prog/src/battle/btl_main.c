@@ -234,6 +234,7 @@ static void PokeCon_RefrectBtlPartyStartOrder( BTL_POKE_CONTAINER* pokecon, BTL_
 static POKEPARTY* PokeCon_GetSrcParty( BTL_POKE_CONTAINER* pokecon, u8 clientID );
 static int PokeCon_FindPokemon( const BTL_POKE_CONTAINER* pokecon, u8 clientID, u8 pokeID );
 static void BTL_PARTY_Initialize( BTL_PARTY* party );
+static void BTL_PARTY_SetNumCoverPos( BTL_PARTY* party, u8 numCoverPos );
 static void BTL_PARTY_AddMember( BTL_PARTY* party, BTL_POKEPARAM* member );
 static void   BTL_PARTY_MoveAlivePokeToFirst( BTL_PARTY* party );
 static void trainerParam_Init( BTL_MAIN_MODULE* wk );
@@ -1159,7 +1160,6 @@ static BOOL setup_alone_rotation( int* seq, void* work )
   wk->posCoverClientID[BTL_POS_2ND_2] = 1;
 
   setup_alone_common_ClientID_and_srcParty( wk, sp );
-
 
   PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
   PokeCon_AddParty( &wk->pokeconForClient, wk, 0 );
@@ -4687,7 +4687,6 @@ static void BTL_PARTY_Initialize( BTL_PARTY* party )
 {
   int i;
   party->memberCount = 0;
-  party->numCoverPos = 0;
   for(i=0; i<TEMOTI_POKEMAX; i++)
   {
     party->member[i] = NULL;
@@ -4965,9 +4964,9 @@ BTL_POKEPARAM* BTL_PARTY_GetAliveTopMember( BTL_PARTY* party )
  * @param   party
  */
 //----------------------------------------------------------------------
-void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party )
+void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, u8 clientID )
 {
-  int lastPokeIdx, i;
+  int lastPokeIdx, visiblePosCnt, i;
 
   // 最後尾にいて生きてるポケがイリュージョン対象
   for(lastPokeIdx=(party->memberCount-1); lastPokeIdx>0; --lastPokeIdx)
@@ -4977,7 +4976,12 @@ void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party )
     }
   }
 
-  for(i=0; i<party->memberCount; ++i)
+  visiblePosCnt = (BTL_MAIN_GetRule(wk) != BTL_RULE_ROTATION)?
+        GetClientCoverPosNum(wk,clientID) : BTL_ROTATION_VISIBLE_POS_NUM;
+
+  TAYA_Printf("見えている開始位置(%d)まではイリュージョンにしません\n", visiblePosCnt);
+
+  for(i=visiblePosCnt; i<party->memberCount; ++i)
   {
     BTL_POKEPARAM* bpp = party->member[ i ];
     // イリュージョン持ちなら対象を更新
@@ -4997,7 +5001,6 @@ void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party )
       }
     }
   }
-
 }
 
 

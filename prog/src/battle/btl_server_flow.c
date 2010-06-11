@@ -2578,7 +2578,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
 
   {
     SCQUE_PUT_OP_SetIllusionForParty( wk->que, clientID );
-    BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
+    BTL_MAIN_SetIllusionForParty(  wk->mainModule, party, clientID );
   }
 
   if( posIdx != nextPokeIdx ){
@@ -10160,7 +10160,7 @@ static void scPut_IllusionSet( BTL_SVFLOW_WORK* wk, CLIENTID_REC* rec )
   {
     party = BTL_POKECON_GetPartyData( wk->pokeCon, rec->clientID[i] );
     SCQUE_PUT_OP_SetIllusionForParty( wk->que, rec->clientID[i] );
-    BTL_MAIN_SetIllusionForParty(  wk->mainModule, party );
+    BTL_MAIN_SetIllusionForParty(  wk->mainModule, party, rec->clientID[i] );
   }
 }
 
@@ -14813,7 +14813,7 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
  */
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
-  BTL_HANDEX_PARAM_FAKE_BREAK* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
+  BTL_HANDEX_PARAM_FAKE_BREAK* param = (BTL_HANDEX_PARAM_FAKE_BREAK*)param_header;
 
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {

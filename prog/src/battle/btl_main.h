@@ -80,7 +80,7 @@ extern u8 BTL_MAIN_GetFriendCleintID( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern u8 BTL_MAIN_GetEnemyClientID( const BTL_MAIN_MODULE* wk, u8 idx );
 extern BtlSide BTL_MAIN_GetPlayerSide( const BTL_MAIN_MODULE* wk );
 extern BOOL BTL_MAINUTIL_IsFriendClientID( u8 clientID_1, u8 clientID_2 );
-extern void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party );
+extern void BTL_MAIN_SetIllusionForParty( const BTL_MAIN_MODULE* wk, BTL_PARTY* party, u8 clientID );
 
 
 extern BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* pRef );
