@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-09T22:33:49"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-11T22:55:20"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -349,7 +349,7 @@ msg_c03r0801_hint_02</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
 		<language name="JPN" width="256">でっかい　ふねに　たくさんの　へや！
 トレーナーさがしに　こまっている[BE:01:ページ切り替え（クリア）]
-そんな　きみに　ヒントを　あげたい！
+そんな　キミに　ヒントを　あげたい！
 おじさんの　ヒントを　きくかい？</language>
 		<language name="JPN_KANJI" width="256">でっかい　船に　たくさんの　部屋！
 トレーナー探しに　困っている[BE:01:ページ切り替え（クリア）]
@@ -437,7 +437,7 @@ msg_c03r0801_hint_02</comment>
 なかなか　むずかしいね！</language>
 		<language name="JPN_KANJI" width="256">波の　動きに　合わせて
 走ってるんだけどさ[BE:00:ページ切り替え（行送り）]
-なかなか　難しいね</language>
+なかなか　難しいね！</language>
 	</row>
 
 	<row id="msg_c03r0801_vistor_04" text-color=",,,#ff0000,,,,,,,,,,,,,,,">
@@ -490,7 +490,7 @@ msg_c03r0801_hint_02</comment>
 ……　……　……　なんだよなぁ！▼</language>
 		<language name="JPN_KANJI" width="256">きみは　イッシュ出身　かい？▼
 オレは　ジョウトから　仕事で
-ここに　来たのだけど……▼
+ここに　来たんだけど……▼
 やっぱり　海外って　ちがうね！
 何が　ちがうかってさ！▽
 ……　……　……　……　……▽
@@ -1125,7 +1125,7 @@ msg_c03r0801_hint_02</comment>
 いいえの場合</comment>
 		<attribute name="キャラ指定">MIDDLEMAN</attribute>
 		<language name="JPN" width="256">また　きが　むいたら　はなしかけてよ
-おじさんは　いつでも　ヒント　だすよ</language>
+おじさんが　いつでも　ヒント　だすよ</language>
 		<language name="JPN_KANJI" width="256">また　気が　向いたら　話しかけてよ
 おじさんが　いつでも　ヒント　出すよ</language>
 	</row>
