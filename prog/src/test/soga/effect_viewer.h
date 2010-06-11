@@ -285,3 +285,214 @@ static const MENU_SCREEN_PARAM	*msp[] = {
 	&msp_ppe,
 };
 
+//============================================================================================
+/**
+ *		タッチパネルテーブル
+ */
+//============================================================================================
+static const GFL_UI_TP_HITTBL DirTouchSingleHitTbl[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x00*8, 0x03*8, 0x02*8, 0x08*8 },   
+  { 0x00*8, 0x03*8, 0x08*8, 0x0e*8 },
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
+};
+
+static const GFL_UI_TP_HITTBL DirTouchDoubleHitTbl[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x00*8, 0x03*8, 0x02*8, 0x08*8 },   
+  { 0x00*8, 0x03*8, 0x08*8, 0x0e*8 },
+  { 0x00*8, 0x03*8, 0x0e*8, 0x14*8 },
+
+  { 0x03*8, 0x06*8, 0x02*8, 0x08*8 },   
+  { 0x03*8, 0x06*8, 0x08*8, 0x0e*8 },
+  { 0x03*8, 0x06*8, 0x0e*8, 0x14*8 },
+
+  { 0x06*8, 0x09*8, 0x02*8, 0x08*8 },   
+  { 0x06*8, 0x09*8, 0x08*8, 0x0e*8 },
+  { 0x06*8, 0x09*8, 0x0e*8, 0x14*8 },
+
+  { 0x09*8, 0x0c*8, 0x02*8, 0x08*8 },   
+  { 0x09*8, 0x0c*8, 0x08*8, 0x0e*8 },
+  { 0x09*8, 0x0c*8, 0x0e*8, 0x14*8 },
+
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
+};
+
+static const GFL_UI_TP_HITTBL DirTouchTripleHitTbl[] = {
+  //UP      DOWN    LEFT    RIGHT
+  { 0x00*8, 0x03*8, 0x02*8, 0x08*8 },   
+  { 0x00*8, 0x03*8, 0x08*8, 0x0e*8 },
+  { 0x00*8, 0x03*8, 0x0e*8, 0x14*8 },
+  { 0x00*8, 0x03*8, 0x14*8, 0x1a*8 },
+  { 0x00*8, 0x03*8, 0x1a*8, 0x20*8 },
+
+  { 0x03*8, 0x06*8, 0x02*8, 0x08*8 },   
+  { 0x03*8, 0x06*8, 0x08*8, 0x0e*8 },
+  { 0x03*8, 0x06*8, 0x0e*8, 0x14*8 },
+  { 0x03*8, 0x06*8, 0x14*8, 0x1a*8 },
+  { 0x03*8, 0x06*8, 0x1a*8, 0x20*8 },
+
+  { 0x06*8, 0x09*8, 0x02*8, 0x08*8 },   
+  { 0x06*8, 0x09*8, 0x08*8, 0x0e*8 },
+  { 0x06*8, 0x09*8, 0x0e*8, 0x14*8 },
+  { 0x06*8, 0x09*8, 0x14*8, 0x1a*8 },
+  { 0x06*8, 0x09*8, 0x1a*8, 0x20*8 },
+
+  { 0x09*8, 0x0c*8, 0x02*8, 0x08*8 },   
+  { 0x09*8, 0x0c*8, 0x08*8, 0x0e*8 },
+  { 0x09*8, 0x0c*8, 0x0e*8, 0x14*8 },
+  { 0x09*8, 0x0c*8, 0x14*8, 0x1a*8 },
+  { 0x09*8, 0x0c*8, 0x1a*8, 0x20*8 },
+
+  { 0x0c*8, 0x0f*8, 0x02*8, 0x08*8 },   
+  { 0x0c*8, 0x0f*8, 0x08*8, 0x0e*8 },
+  { 0x0c*8, 0x0f*8, 0x0e*8, 0x14*8 },
+  { 0x0c*8, 0x0f*8, 0x14*8, 0x1a*8 },
+  { 0x0c*8, 0x0f*8, 0x1a*8, 0x20*8 },
+
+  { 0x0f*8, 0x12*8, 0x02*8, 0x08*8 },   
+  { 0x0f*8, 0x12*8, 0x08*8, 0x0e*8 },
+  { 0x0f*8, 0x12*8, 0x0e*8, 0x14*8 },
+  { 0x0f*8, 0x12*8, 0x14*8, 0x1a*8 },
+  { 0x0f*8, 0x12*8, 0x1a*8, 0x20*8 },
+
+  { GFL_UI_TP_HIT_END, 0, 0, 0 },   
+};
+
+static  const GFL_UI_TP_HITTBL* DirTouchHitTbl[] = {  
+  DirTouchSingleHitTbl,
+  DirTouchDoubleHitTbl,
+  DirTouchTripleHitTbl,
+  DirTouchSingleHitTbl,
+};
+
+static  const BtlvMcssPos DirAttackSingle[] = { 
+  BTLV_MCSS_POS_AA,
+  BTLV_MCSS_POS_BB,
+};
+
+static  const BtlvMcssPos DirDefenceSingle[] = { 
+  BTLV_MCSS_POS_BB,
+  BTLV_MCSS_POS_AA,
+};
+
+static  const BtlvMcssPos DirAttackDouble[] = { 
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_D,
+};
+
+static  const BtlvMcssPos DirDefenceDouble[] = { 
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+};
+
+static  const BtlvMcssPos DirAttackTriple[] = { 
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_F,
+};
+
+static  const BtlvMcssPos DirDefenceTriple[] = { 
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_E,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_F,
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_C,
+  BTLV_MCSS_POS_D,
+  BTLV_MCSS_POS_E,
+};
+
+static  const BtlvMcssPos DirAttackRotate[] = { 
+  BTLV_MCSS_POS_A,
+  BTLV_MCSS_POS_B,
+};
+
+static  const BtlvMcssPos DirDefenceRotate[] = { 
+  BTLV_MCSS_POS_B,
+  BTLV_MCSS_POS_A,
+};
+
+static  const BtlvMcssPos* DirAttack[] = {  
+  DirAttackSingle,
+  DirAttackDouble,
+  DirAttackTriple,
+  DirAttackRotate,
+};
+
+static  const BtlvMcssPos* DirDefence[] = {  
+  DirDefenceSingle,
+  DirDefenceDouble,
+  DirDefenceTriple,
+  DirDefenceRotate,
+};
+

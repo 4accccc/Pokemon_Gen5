@@ -40,6 +40,10 @@
 
 #if PM_DEBUG
 
+#if defined( DEBUG_ONLY_FOR_fujiwara ) | defined( DEBUG_ONLY_FOR_toyama ) | defined( DEBUG_ONLY_FOR_sogabe )
+#define DIR_SELECT_MODE
+#endif
+
 #define PAD_BUTTON_EXIT ( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
 #define CAMERA_SPEED    ( FX32_ONE * 2 )
@@ -166,6 +170,7 @@ typedef struct
 
   BOOL          viewer_mode;
   BOOL          gauge_mode;
+  BOOL          touch_mode;
 
   int           bgm_flag;
   int           bgm_fade_flag;
@@ -420,6 +425,19 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     PMSND_PushBGM();
   }
 
+  { 
+#if 0
+    int cont = GFL_UI_KEY_GetCont();
+    if( cont & PAD_BUTTON_L )
+    { 
+      evw->touch_mode = TRUE;
+    }
+#endif
+#ifdef DIR_SELECT_MODE
+    evw->touch_mode = TRUE;
+#endif
+  }
+
   return GFL_PROC_RES_FINISH;
 }
 
@@ -554,6 +572,10 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         BTLV_EFFECT_SetBtlRule( evw->rule );
         del_pokemon( evw );
         set_pokemon( evw );
+        if( evw->touch_mode )
+        { 
+          evw->draw_req = DRAW_REQ_MENU_LIST;
+        }
       }
     }
   }
@@ -676,10 +698,26 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     else if( tp )
     {
-      evw->waza_no = WAZANO_HATAKU;
-      evw->cursor_keta = 0;
-      evw->draw_req = DRAW_REQ_WAZA_NO;
-      evw->seq_no = SEQ_EFFECT_VIEW;
+      if( evw->touch_mode )
+      { 
+        int hit = GFL_UI_TP_HitTrg( DirTouchHitTbl[ evw->rule ] );
+
+        SOGABE_Printf( "hit:%d\n", hit );
+        if( ( hit != GFL_UI_TP_HIT_NONE ) && ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
+        {
+          BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), DirAttack[ evw->rule ][ hit ], DirDefence[ evw->rule ][ hit ],
+                                 evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
+          evw->seq_no = SEQ_EFFECT_WAIT;
+          evw->ret_seq_no = SEQ_IDLE;
+        }
+      }
+      else
+      {  
+        evw->waza_no = WAZANO_HATAKU;
+        evw->cursor_keta = 0;
+        evw->draw_req = DRAW_REQ_WAZA_NO;
+        evw->seq_no = SEQ_EFFECT_VIEW;
+      }
     }
     EffectViewerRead( evw );
     break;
@@ -1317,13 +1355,14 @@ static  void  EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
   STRBUF  *strbuf;
   const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
   const MENU_SCREEN_DATA *msd_p;
+  int ofs_y = ( evw->touch_mode ) ? 56 : 0;
 
   GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
 
   for( i = 0 ; i < msp_p->count ; i++ ){
     msd_p = msp_p->msd[ i ];
     strbuf = GFL_MSG_CreateString( evw->msg,  msd_p->strID );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->label_x, msd_p->label_y, strbuf, evw->font );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), msd_p->label_x, msd_p->label_y + ofs_y, strbuf, evw->font );
     GFL_STR_DeleteBuffer( strbuf );
   }
   if( evw->menu_list == MENULIST_TITLE )
@@ -1339,11 +1378,57 @@ static  void  EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
     }
     str_src = GFL_MSG_CreateString( evw->msg,  PVMSG_MONSNAME );
     WORDSET_ExpandStr( mons_info, str_dst, str_src );
-    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), TITLE_LABEL_X, TITLE_LABEL_Y + 24, str_dst, evw->font );
+    PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), TITLE_LABEL_X, TITLE_LABEL_Y + 24 + ofs_y, str_dst, evw->font );
 
     GFL_HEAP_FreeMemory( str_src );
     GFL_HEAP_FreeMemory( str_dst );
     WORDSET_Delete( mons_info );
+    if( evw->touch_mode )
+    { 
+      int pos_x = 24;
+      int pos_y = 8;
+      switch( evw->rule ){ 
+      case BTL_RULE_SINGLE:
+        { 
+          int x;
+          for( x = 0 ; x < 2 ; x++ )
+          { 
+            STRBUF* str_src = GFL_MSG_CreateString( evw->msg, EVMSG_AA2BB + x );
+            PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y, str_src, evw->font );
+            GFL_HEAP_FreeMemory( str_src );
+          }
+        }
+        break;
+      case BTL_RULE_DOUBLE:
+      case BTL_RULE_TRIPLE:
+        { 
+          int x, y;
+          int x_max = ( evw->rule == BTL_RULE_DOUBLE ) ? 3 : 5;
+          int y_max = ( evw->rule == BTL_RULE_DOUBLE ) ? 4 : 6;
+          for( y = 0 ; y < y_max ; y++ )
+          { 
+            for( x = 0 ; x < x_max ; x++ )
+            { 
+              STRBUF* str_src = GFL_MSG_CreateString( evw->msg, ( EVMSG_A2B + 5 * y ) + x );
+              PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y + 24 * y, str_src, evw->font );
+              GFL_HEAP_FreeMemory( str_src );
+            }
+          }
+        }
+        break;
+      case BTL_RULE_ROTATION:
+        { 
+          int x;
+          for( x = 0 ; x < 2 ; x++ )
+          { 
+            STRBUF* str_src = GFL_MSG_CreateString( evw->msg, EVMSG_A2B + 5 * x );
+            PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y, str_src, evw->font );
+            GFL_HEAP_FreeMemory( str_src );
+          }
+        }
+        break;
+      }
+    }
   }
 }
 
