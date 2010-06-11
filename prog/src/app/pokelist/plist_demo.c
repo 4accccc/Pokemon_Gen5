@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 #include "system/rtc_tool.h"
 #include "item/item.h"
+#include "sound/pm_wb_voice.h"
 
 #include "pokelist_gra.naix"
 #include "msg/msg_pokelist.h"
@@ -64,6 +65,7 @@ void PLIST_DEMO_DemoInit( PLIST_WORK *work )
   
   work->demoCnt = 0;
   work->demoIsChange = FALSE;
+  work->demoIsPlayVoice = FALSE;
   
   //チラツキを消すため一回非表示
   GFL_BG_SetVisible( PLIST_BG_3D , FALSE ); 
@@ -168,9 +170,23 @@ void PLIST_DEMO_DemoMain( PLIST_WORK *work )
       work->demoIsChange = TRUE;
     }
   }
-  if( GFL_PTC_GetEmitterNum( work->ptcWork ) <= 0 )
+  if( GFL_PTC_GetEmitterNum( work->ptcWork ) <= 0 &&
+      PMSND_CheckPlaySE() == FALSE )
   {
-    work->mainSeq = PSMS_FORM_CHANGE_TERM;
+    if( work->demoIsPlayVoice == FALSE )
+    {
+      const u32 monsNo = PP_Get( work->selectPokePara , ID_PARA_monsno , NULL );
+      const u32 formNo = PP_Get( work->selectPokePara , ID_PARA_form_no , NULL );
+      work->demoVoicePlayer = PMVOICE_Play( monsNo , formNo , 64 , FALSE , 0 , 0 , FALSE , 0 );
+      work->demoIsPlayVoice = TRUE;
+    }
+    else
+    {
+      if( PMVOICE_CheckPlay( work->demoVoicePlayer ) == FALSE )
+      {
+        work->mainSeq = PSMS_FORM_CHANGE_TERM;
+      }
+    }
   }
   
   GFL_PTC_CalcAll();

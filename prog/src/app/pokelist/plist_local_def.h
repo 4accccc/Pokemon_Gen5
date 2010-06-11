@@ -332,6 +332,8 @@ struct _PLIST_WORK
 	u8   demoCnt;
 	u8   demoChangeTimming;
 	BOOL demoIsChange;
+	BOOL demoIsPlayVoice;
+	u32  demoVoicePlayer;
 
   //í êMóp
   BOOL isComm;
