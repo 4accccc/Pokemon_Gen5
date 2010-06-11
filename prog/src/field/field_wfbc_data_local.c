@@ -96,8 +96,6 @@ static BOOL WFBC_CORE_IsUseNpc( const FIELD_WFBC_CORE* cp_wk, int npc_id );
 
 // 人データをソート
 static void WFBC_CORE_SortPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, HEAPID heapID );
-// 人データをつめる
-static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array );
 // 人データを押し出し設定
 static void WFBC_CORE_PushPeople( FIELD_WFBC_CORE* p_wk, const MYSTATUS* cp_mystatus, const FIELD_WFBC_CORE_PEOPLE* cp_people, BOOL parent_set );
 // 配列がいっぱいかチェック
@@ -421,23 +419,6 @@ void FIELD_WFBC_CORE_SortData( FIELD_WFBC_CORE* p_wk, HEAPID heapID )
   WFBC_CORE_SortPeopleArray( p_wk->back_people, heapID );
 }
 
-//----------------------------------------------------------------------------
-/**
- *	@brief  空いているワークをつめる処理
- *
- *	@param	p_wk      ワーク
- *	@param	mapmode   マップモード
- */
-//-----------------------------------------------------------------------------
-void FIELD_WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE* p_wk, MAPMODE mapmode )
-{
-  if(mapmode == MAPMODE_NORMAL){
-    WFBC_CORE_PackPeopleArray( p_wk->people );
-  }else{
-    WFBC_CORE_PackPeopleArray( p_wk->back_people );
-  }
-}
-
 
 //----------------------------------------------------------------------------
 /**
@@ -523,7 +504,7 @@ void FIELD_WFBC_CORE_CalcOneDataStart( GAMEDATA * gamedata, s32 diff_day, HEAPID
   }
 
   // 空いているワークをつめる
-  WFBC_CORE_PackPeopleArray( p_wk->people );
+  FIELD_WFBC_CORE_PackPeopleArray( p_wk, MAPMODE_NORMAL );
 
   // 今いる人の情報を使用して、アイテムを追加
   WFBC_CORE_ITEM_ClaerAll( p_item );
@@ -640,7 +621,7 @@ void FIELD_WFBC_CORE_CalcZoneChange( GAMEDATA * gamedata )
     }
   }
   // 空いているワークをつめる
-  WFBC_CORE_PackPeopleArray( p_wk->people );
+  FIELD_WFBC_CORE_PackPeopleArray( p_wk, MAPMODE_NORMAL );
 }
 
 
@@ -1739,31 +1720,6 @@ static void WFBC_CORE_SortPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array, HEAPID h
   GFL_HEAP_FreeMemory( p_tmp );
 }
 
-
-//----------------------------------------------------------------------------
-/**
- *	@brief  人物ワークの内容をつめる
- *
- *	@param	p_array   配列
- */
-//-----------------------------------------------------------------------------
-static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array )
-{
-  int  i, j;
-
-  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
-  {
-    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_array[i] ) == FALSE )
-    {
-      for( j=i+1; j<FIELD_WFBC_PEOPLE_MAX; j++ )
-      {
-        GFL_STD_MemCopy( &p_array[j], &p_array[j-1], sizeof(FIELD_WFBC_CORE_PEOPLE) );
-      }
-      // 最後のワークをクリア
-      FIELD_WFBC_CORE_PEOPLE_Clear( &p_array[FIELD_WFBC_PEOPLE_MAX-1] );
-    }
-  }
-}
 
 
 //----------------------------------------------------------------------------

@@ -65,6 +65,10 @@ typedef enum {
 */
 //-----------------------------------------------------------------------------
 
+// 人データをつめる
+static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array );
+
+
 //-------------------------------------
 ///	WFBC_COMM_DATA
 //=====================================
@@ -222,6 +226,27 @@ BOOL FIELD_WFBC_CORE_IsOnNpcIDPeople( const FIELD_WFBC_CORE* cp_wk, u32 npc_id, 
   }
   return TRUE;
 }
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  空いているワークをつめる処理
+ *
+ *	@param	p_wk      ワーク
+ *	@param	mapmode   マップモード
+ */
+//-----------------------------------------------------------------------------
+void FIELD_WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE* p_wk, MAPMODE mapmode )
+{
+  if(mapmode == MAPMODE_NORMAL){
+    WFBC_CORE_PackPeopleArray( p_wk->people );
+  }else{
+    WFBC_CORE_PackPeopleArray( p_wk->back_people );
+  }
+}
+
+
+
 
 //-------------------------------------
 ///	FIELD_WFBC_CORE_PEOPLE用関数
@@ -421,7 +446,7 @@ void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p
   GF_ASSERT( p_people );
 
   // 登録
-  FIELD_WFBC_CORE_AddPeople( p_mywfbc, cp_mystatus, p_people );
+  FIELD_WFBC_CORE_AddPeople( p_mywfbc, cp_mystatus, p_people ); //OVERLAY_FIELDMAP
 
   // 親の情報からは破棄
   FIELD_WFBC_CORE_PEOPLE_Clear( p_people );
@@ -642,6 +667,33 @@ void FIELD_WFBC_COMM_DATA_ClearReqAnsData( WFBC_COMM_DATA* p_wk )
  *    private関数
  */
 //-----------------------------------------------------------------------------
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  人物ワークの内容をつめる
+ *
+ *	@param	p_array   配列
+ */
+//-----------------------------------------------------------------------------
+static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array )
+{
+  int  i, j;
+
+  for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ )
+  {
+    if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_array[i] ) == FALSE )
+    {
+      for( j=i+1; j<FIELD_WFBC_PEOPLE_MAX; j++ )
+      {
+        GFL_STD_MemCopy( &p_array[j], &p_array[j-1], sizeof(FIELD_WFBC_CORE_PEOPLE) );
+      }
+      // 最後のワークをクリア
+      FIELD_WFBC_CORE_PEOPLE_Clear( &p_array[FIELD_WFBC_PEOPLE_MAX-1] );
+    }
+  }
+}
 
 //-----------------------------------------------------------------------------
 /**
@@ -1047,6 +1099,5 @@ static void WFBC_COMM_DATA_ClearSendCommReqData( WFBC_COMM_DATA* p_wk )
   GFL_STD_MemClear( &p_wk->send_req, sizeof(FIELD_WFBC_COMM_NPC_REQ) );
   p_wk->buff_msk  = FIELD_WFBC_COMM_BUFF_MSK_OFF( p_wk->buff_msk, FIELD_WFBC_COMM_BUFF_MSK_SEND_REQ );
 }
-
 
 
