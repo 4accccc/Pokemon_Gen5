@@ -1010,7 +1010,7 @@ TrItemResult BTL_SVFSUB_TrainerItemProc( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp
     targetArea = (targetIdx < frontPosCount)? AREA_FRONT : AREA_RESERVE;
     if( (BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION) && (targetArea == AREA_RESERVE) )
     {
-      if( targetIdx < BTL_ROTATION_VISIBLE_POS )
+      if( targetIdx < BTL_ROTATION_VISIBLE_POS_NUM )
       {
         targetArea = AREA_BACK;
       }

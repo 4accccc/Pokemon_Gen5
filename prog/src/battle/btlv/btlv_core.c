@@ -2325,7 +2325,8 @@ BOOL BTLV_FakeDisable_Wait( BTLV_CORE* wk )
 //=============================================================================================
 void  BTLV_ChangeForm_Start( BTLV_CORE* wk, BtlvMcssPos vpos )
 {
-  BTLV_SCU_ChangeForm_Start( wk->scrnU, vpos );
+  BOOL fSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
+  BTLV_SCU_ChangeForm_Start( wk->scrnU, vpos, fSkipMode );
 }
 //=============================================================================================
 /**
@@ -2351,7 +2352,8 @@ BOOL BTLV_ChangeForm_Wait( BTLV_CORE* wk )
 //=============================================================================================
 void  BTLV_Hensin_Start( BTLV_CORE* wk, BtlvMcssPos atkVpos, BtlvMcssPos tgtVpos )
 {
-  BTLV_SCU_Hensin_Start( wk->scrnU, atkVpos, tgtVpos );
+  BOOL fSkipMode = BTL_CLIENT_IsChapterSkipMode( wk->myClient );
+  BTLV_SCU_Hensin_Start( wk->scrnU, atkVpos, tgtVpos, fSkipMode );
 }
 //=============================================================================================
 /**

@@ -76,9 +76,9 @@ extern void BTLV_SCU_UpdateGauge_Start( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_UpdateGauge_Wait( BTLV_SCU* wk, BtlPokePos pos );
 extern void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos );
 extern BOOL BTLV_SCU_FakeDisable_Wait( BTLV_SCU* wk );
-extern void BTLV_SCU_Hensin_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos vpos_target );
+extern void BTLV_SCU_Hensin_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos vpos_target, BOOL fSkipMode );
 extern BOOL BTLV_SCU_Hensin_Wait( BTLV_SCU* wk );
-extern void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos );
+extern void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BOOL fSkipMode );
 extern BOOL BTLV_SCU_ChangeForm_Wait( BTLV_SCU* wk );
 
 

@@ -3324,6 +3324,7 @@ typedef struct {
   const POKEMON_PARAM* pp;
   u32          seq;
   u8           taskCounterDefault;
+  u8           fSkipMode;
   u8*          pTaskCounter;
 
 }TRANSFORM_ACT_WORK;
@@ -3331,7 +3332,7 @@ typedef struct {
 /**
  *  へんしん 動作開始
  */
-void BTLV_SCU_Hensin_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos vpos_target )
+void BTLV_SCU_Hensin_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos vpos_target, BOOL fSkipMode )
 {
   GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskTransform, sizeof(TRANSFORM_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
   TRANSFORM_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
@@ -3343,6 +3344,7 @@ void BTLV_SCU_Hensin_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BtlvMcssPos vpos_tar
   twk->parentWork = wk;
   twk->vpos = vpos;
   twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->fSkipMode = fSkipMode;
   twk->seq = 0;
 
   (*(twk->pTaskCounter))++;
@@ -3358,7 +3360,7 @@ BOOL BTLV_SCU_Hensin_Wait( BTLV_SCU* wk )
 /**
  *  フォルムチェンジ動作開始
  */
-void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos )
+void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos, BOOL fSkipMode )
 {
   GFL_TCBL* tcbl = GFL_TCBL_Create( wk->tcbl, taskTransform, sizeof(TRANSFORM_ACT_WORK), BTLV_TASKPRI_DAMAGE_EFFECT );
   TRANSFORM_ACT_WORK* twk = GFL_TCBL_GetWork( tcbl );
@@ -3370,6 +3372,7 @@ void BTLV_SCU_ChangeForm_Start( BTLV_SCU* wk, BtlvMcssPos vpos )
   twk->parentWork = wk;
   twk->vpos = vpos;
   twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
+  twk->fSkipMode = fSkipMode;
   twk->seq = 0;
 
   (*(twk->pTaskCounter))++;
@@ -3392,7 +3395,11 @@ static void taskTransform( GFL_TCBL* tcbl, void* wk_adrs )
   switch( wk->seq ){
   case 0:
     {
-      BTLV_EFFECT_Henge( wk->pp, wk->vpos );
+      if( !(wk->fSkipMode) ){
+        BTLV_EFFECT_Henge( wk->pp, wk->vpos );
+      }else{
+        BTLV_EFFECT_HengeShortCut( wk->pp, wk->vpos );
+      }
       wk->seq++;
     }
     break;
