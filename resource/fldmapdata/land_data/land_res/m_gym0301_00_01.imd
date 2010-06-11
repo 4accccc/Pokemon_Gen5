@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-06-04T12:51:34" source="m_gym0301_00_00.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-06-10T22:13:28" source="m_gym0301_00_00.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-06-04T12:51:34" source="m_gym0301_00_00.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-06-10T22:13:28" source="m_gym0301_00_00.mb"/>
 <original_generator name="Maya 2009 NNS_Export" version="1.6.0.20090304"/>
 
 <model_info
@@ -331,13 +331,13 @@
 		path="C:/home/wb_data3d/field/in21/chip/tex/c03_13.tga"
 	>
 		<bitmap size="64">
-			1111 1111 1111 1111 2222 4443 4444 2234
+			1111 1111 1111 1111 2222 4453 4444 2235
 			1111 1111 1111 1111 2222 1222 2211 2222
-			5522 0125 2100 5555 1111 0011 1000 1111
+			2222 0122 2100 2222 1111 0011 1000 1111
 			0000 0000 0000 0000 0000 0000 0000 0000
 			1111 0011 1000 1111 2222 0122 2100 2222
-			5522 1225 2211 5555 2222 2222 2222 2222
-			1111 1111 1111 1111 2222 4443 4444 2234
+			2222 1222 2211 2222 2222 2222 2222 2222
+			1111 1111 1111 1111 2222 4453 4444 2235
 			2222 2222 2222 2222 1111 1111 1111 1111
 		</bitmap>
 	</tex_image>
@@ -2971,9 +2971,9 @@
 	<polygon index="11" name="polygon11"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="3.625000 0.031250 -3.625000"
-		volume_max="4.625000 0.031250 -3.375000"
-		volume_r="5.876465"
+		volume_min="3.625000 0.031250 -3.687500"
+		volume_max="4.625000 0.031250 -3.437500"
+		volume_r="5.915283"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="off" tex_flag="on"
 	>
@@ -2983,11 +2983,11 @@
 				<primitive index="0" type="quads" vertex_size="4">
 					<mtx idx="0"/>
 					<tex st="-16.000000 32.000000"/>
-					<pos_s xyz="3.625000 0.031250 -3.375000"/>
+					<pos_s xyz="3.625000 0.031250 -3.437500"/>
 					<tex st="48.000000 32.000000"/>
 					<pos_xy xy="4.625000 0.031250"/>
 					<tex st="48.000000 16.000000"/>
-					<pos_xz xz="4.625000 -3.625000"/>
+					<pos_xz xz="4.625000 -3.687500"/>
 					<tex st="-16.000000 16.000000"/>
 					<pos_xy xy="3.625000 0.031250"/>
 				</primitive>
