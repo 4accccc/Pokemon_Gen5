@@ -1552,7 +1552,7 @@ static void MB_SELECT_SetPokeInfo( MB_SELECT_WORK *work , const POKEMON_PASO_PAR
       {
         GFL_CLACT_WK_SetAnmSeq( work->clwkMark[i] , i*2 );
       }
-      bitMask = bitMask<1;
+      bitMask = bitMask<<1;
       GFL_CLACT_WK_SetDrawEnable( work->clwkMark[i] , TRUE );
     }
   }
