@@ -93,10 +93,10 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_yoshida)|\
     defined(DEBUG_ONLY_FOR_sogabe)
-#define CAMERA_POS_PRINT
+//#define CAMERA_POS_PRINT
 #endif
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define CAMERA_POS_PRINT_FX32
+//#define CAMERA_POS_PRINT_FX32
 #endif
 #endif
 
@@ -771,18 +771,37 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
     table_ofs += ( TBL_MAX * param->turn_count );
   }
 
-  //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
-  if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
-      //へんしんは技エフェクトではなくなったので除外
-      ( bevw->waza != WAZANO_HENSIN ) &&
-      ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) )
-  {
-    bevw->migawari_sequence = bevw->sequence;
-    bevw->migawari_table_ofs = table_ofs;
-    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_BEFORE - BTLEFF_SINGLE_ENCOUNT_1,
-                                            GFL_HEAP_LOWID( bevw->heapID ) );
-    bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
-    table_ofs = TBL_AA2BB;
+  { 
+    BOOL  migawari_flag = FALSE;
+
+    if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) )
+    { 
+      //みらいよちorはめつのねがいの発動ターンではみがわりチェックをしない
+      if( ( ( bevw->waza == WAZANO_MIRAIYOTI ) || ( bevw->waza == WAZANO_HAMETUNONEGAI ) ) && 
+            ( param->turn_count == 1 ) )
+      { 
+        ;
+      }
+      else
+      { 
+        migawari_flag = ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) &
+                          BTLV_MCSS_STATUS_FLAG_MIGAWARI );
+      }
+    }
+
+    //みがわりが出ているときに技エフェクトを起動するなら、みがわりを引っ込めるエフェクトを差し込む
+    if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+        //へんしんは技エフェクトではなくなったので除外
+        ( bevw->waza != WAZANO_HENSIN ) &&
+        ( migawari_flag ) )
+    {
+      bevw->migawari_sequence = bevw->sequence;
+      bevw->migawari_table_ofs = table_ofs;
+      bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_BEFORE - BTLEFF_SINGLE_ENCOUNT_1,
+                                              GFL_HEAP_LOWID( bevw->heapID ) );
+      bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+      table_ofs = TBL_AA2BB;
+    }
   }
 
   start_ofs = (int *)&bevw->sequence[ table_ofs ];
@@ -4191,52 +4210,71 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   //SUSPENDモードに切り替えておく
   bevw->control_mode = VMCMD_RESULT_SUSPEND;
 
-  //みがわり引っ込むエフェクト起動していたなら、退避していた技エフェクトを起動
-  if( bevw->migawari_sequence )
-  {
-    int* start_ofs;
+  { 
+    BOOL  migawari_flag = FALSE;
 
-    GFL_HEAP_FreeMemory( bevw->sequence );
-    bevw->sequence = bevw->migawari_sequence;
-    bevw->migawari_sequence = NULL;
-    bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
-
-    start_ofs = (int *)&bevw->sequence[ bevw->migawari_table_ofs ];
-
-    //BG非表示
-    GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
-    GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
-
-    //汎用ワークを初期化
-    bevw->sequence_work = 0;
-
-    VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
-  }
-  //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
-  else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
-           //へんしんは技エフェクトではなくなったので除外
-           ( bevw->waza != WAZANO_HENSIN ) &&
-           ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) )
-  {
-    int* start_ofs;
-
-    //サイドチェンジだとバニッシュされているので、バニッシュをオフる
-    if( bevw->waza == WAZANO_SAIDOTHENZI )
+    if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) )
     { 
-      BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos, BTLV_MCSS_VANISH_OFF );
+      //みらいよちorはめつのねがいの発動ターンではみがわりチェックをしない
+      if( ( ( bevw->waza == WAZANO_MIRAIYOTI ) || ( bevw->waza == WAZANO_HAMETUNONEGAI ) ) && 
+            ( bevw->param.turn_count == 1 ) )
+      { 
+        ;
+      }
+      else
+      { 
+        migawari_flag = ( BTLV_MCSS_GetStatusFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos ) &
+                          BTLV_MCSS_STATUS_FLAG_MIGAWARI );
+      }
     }
-    GFL_HEAP_FreeMemory( bevw->sequence );
-    bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1,
-                                            GFL_HEAP_LOWID( bevw->heapID ) );
-    bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
 
-    start_ofs = (int *)&bevw->sequence[ TBL_AA2BB ];
-
-    //汎用ワークを初期化
-    bevw->sequence_work = 0;
-
-    VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+    //みがわり引っ込むエフェクト起動していたなら、退避していた技エフェクトを起動
+    if( bevw->migawari_sequence )
+    {
+      int* start_ofs;
+  
+      GFL_HEAP_FreeMemory( bevw->sequence );
+      bevw->sequence = bevw->migawari_sequence;
+      bevw->migawari_sequence = NULL;
+      bevw->execute_effect_type = EXECUTE_EFF_TYPE_WAZA;
+  
+      start_ofs = (int *)&bevw->sequence[ bevw->migawari_table_ofs ];
+  
+      //BG非表示
+      GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+      GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+      GFL_BG_SetVisible( GFL_BG_FRAME3_M, VISIBLE_OFF );
+  
+      //汎用ワークを初期化
+      bevw->sequence_work = 0;
+  
+      VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+    }
+    //みがわりが出ているときに技エフェクトを起動していたなら、みがわりを戻すエフェクトを差し込む
+    else if( ( bevw->execute_effect_type == EXECUTE_EFF_TYPE_WAZA ) &&
+            //へんしんは技エフェクトではなくなったので除外
+            ( bevw->waza != WAZANO_HENSIN ) &&
+            ( migawari_flag ) )
+    {
+      int* start_ofs;
+  
+      //サイドチェンジだとバニッシュされているので、バニッシュをオフる
+      if( bevw->waza == WAZANO_SAIDOTHENZI )
+      { 
+        BTLV_MCSS_SetVanishFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos, BTLV_MCSS_VANISH_OFF );
+      }
+      GFL_HEAP_FreeMemory( bevw->sequence );
+      bevw->sequence = GFL_ARC_LoadDataAlloc( ARCID_BATTLEEFF_SEQ, BTLEFF_MIGAWARI_WAZA_AFTER - BTLEFF_SINGLE_ENCOUNT_1,
+                                              GFL_HEAP_LOWID( bevw->heapID ) );
+      bevw->execute_effect_type = EXECUTE_EFF_TYPE_BATTLE;
+  
+      start_ofs = (int *)&bevw->sequence[ TBL_AA2BB ];
+  
+      //汎用ワークを初期化
+      bevw->sequence_work = 0;
+  
+      VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
+    }
   }
 
   //サブルーチンコールが残っていてはいけない
