@@ -2010,7 +2010,7 @@ static void _itemTecniqueUseInit(FIELD_ITEMMENU_WORK* pWork)
 
 static void _itemTrashEndWait(FIELD_ITEMMENU_WORK* pWork)
 {
-  if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ) || GFL_UI_TP_GetTrg() )
+  if( ( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ) || GFL_UI_TP_GetTrg() )
   {
     // çƒï`âÊ
     GFL_BG_ClearScreen(GFL_BG_FRAME3_M);
@@ -2428,7 +2428,7 @@ static void _itemSellEndMsgWait( FIELD_ITEMMENU_WORK* pWork )
   }
 
   // ì¸óÕë“Çø
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+  if( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ){
     KTST_SetDraw( pWork, TRUE );
     _CHANGE_STATE( pWork, _itemSellExit );
   }else if( GFL_UI_TP_GetTrg() ){
@@ -4275,7 +4275,7 @@ static void _sortMessageSet( FIELD_ITEMMENU_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static void _sortMessageWait( FIELD_ITEMMENU_WORK * wk )
 {
-  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_DECIDE ){
+  if( GFL_UI_KEY_GetTrg() & MSG_SKIP_BTN ){
     KTST_SetDraw( wk, TRUE );
   }else if( GFL_UI_TP_GetTrg() ){
     KTST_SetDraw( wk, FALSE );
