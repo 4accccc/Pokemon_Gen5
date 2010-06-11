@@ -203,6 +203,9 @@ EVENT_START	ev_reserve_d12
 	//マップ遷移ブラックイン
 	_MAP_FADE_BLACK_IN()
 	_MAP_FADE_END_CHECK()
+
+  _PLACE_NAME_DISPLAY()	//地名表示演出
+
   //自機一歩移動
   _OBJ_ANIME( MMDL_ID_PLAYER, anm_move_right )
   _OBJ_ANIME_WAIT()
