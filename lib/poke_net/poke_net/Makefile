@@ -4,8 +4,8 @@
 # File:     Makefile
 #
 #----------------------------------------------------------------------------
-#NITRO_FINALROM = yes
-#TWL_FINALROM = yes
+NITRO_FINALROM = yes
+TWL_FINALROM = yes
 
 include ../depend.mk
 

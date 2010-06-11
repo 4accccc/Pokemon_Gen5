@@ -13,6 +13,7 @@ POKE_NET_CONTROL POKE_NET_Control;
 
 #define POKE_NET_DS_THREADSTACKSIZE	2048
 static char POKE_NET_DS_ThreadStack[POKE_NET_DS_THREADSTACKSIZE];
+static char POKE_NET_DS_ThreadStackRecv[POKE_NET_DS_THREADSTACKSIZE];
 
 //====================================
 //         プロトタイプ宣言
@@ -465,6 +466,28 @@ BOOL POKE_NET_Sending()
 	return(TRUE);
 }
 
+#ifdef RECEIVE_THREAD
+//====================================
+//          受信スレッド
+//====================================
+static void POKE_NET_ThreadRecv(void* _arg)
+{
+#pragma unused(_arg)
+    for(;;) {
+        int offset = POKE_NET_Control.RecvOffset;
+
+		POKE_NET_LockMutex();
+        if (POKE_NET_Control.RecvFlag == FALSE) {
+	        POKE_NET_Control.RecvResult = SOC_Recv(POKE_NET_Control.Socket ,(char *)&POKE_NET_Control.RecvBuffer[offset] ,POKE_NET_Control.RecvSize-offset ,0 );
+            POKE_NET_Control.RecvFlag = TRUE;
+        }
+		POKE_NET_UnlockMutex();
+        POKE_NET_Sleep(1);
+    }
+	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET recved thread terminate\n");
+}
+#endif
+
 //====================================
 //          受信中
 //====================================
@@ -481,15 +504,63 @@ BOOL POKE_NET_Receiving()
 	offset = 0;
 	size = -1;
 	starttime = OS_GetTick();
+    
+#ifdef RECEIVE_THREAD
+    // 受信用スレッド作成
+    {
+       	// スレッド作成
+	    OS_CreateThread(&POKE_NET_Control.RecvThread ,
+		    POKE_NET_ThreadRecv ,
+		    NULL ,
+		    POKE_NET_DS_ThreadStackRecv+POKE_NET_DS_THREADSTACKSIZE ,
+		    POKE_NET_DS_THREADSTACKSIZE ,
+		    POKE_NET_Control.ThreadLevel
+	    );
+        POKE_NET_Control.RecvResult = SOC_EWOULDBLOCK;
+        POKE_NET_Control.RecvOffset = 0;
+        POKE_NET_Control.RecvFlag = FALSE;
+
+	    POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET create recv thread\n");
+	    OS_WakeupThreadDirect(&POKE_NET_Control.RecvThread);
+    }
+#endif
+
 	for(;;){
 		// 受信
+#ifndef RECEIVE_THREAD
 		ret = SOC_Recv(POKE_NET_Control.Socket ,(char *)&POKE_NET_Control.RecvBuffer[offset] ,POKE_NET_Control.RecvSize-offset ,0 );
+#else
+   		if( POKE_NET_Control.RecvTimeOut != 0 ){
+			// タイムアウト設定あり
+			timetmp = OS_GetTick();
+			timtmps = (long)(timetmp/(OS_SYSTEM_CLOCK / 64) - starttime/(OS_SYSTEM_CLOCK / 64));
+			if( timtmps >= POKE_NET_Control.RecvTimeOut ){
+				// タイムアウト
+				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET recv timeout socket:%08X\n" ,POKE_NET_Control.Socket);
+				POKE_NET_Control.LastErrorCode = POKE_NET_LASTERROR_RECVTIMEOUT;
+#ifdef RECEIVE_THREAD
+                OS_DestroyThread(&POKE_NET_Control.RecvThread);
+#endif
+				return(FALSE);
+			}
+		}
+
+        if (POKE_NET_Control.RecvFlag == FALSE) {
+            continue;//goto TIMEOUT;
+        }
+
+        ret = POKE_NET_Control.RecvResult;
+        //POKE_NET_Control.RecvResult = SOC_EWOULDBLOCK;
+#endif
 		if( ret == SOC_EWOULDBLOCK ){
 			// 非ブロッキング
 		}else if( ret <= 0 ){
 			// エラー：受信エラー
 			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET recv error socket:%08X\n" ,POKE_NET_Control.Socket);
 			POKE_NET_Control.LastErrorCode = POKE_NET_LASTERROR_RECVRESPONSE;
+#ifdef RECEIVE_THREAD
+            OS_DestroyThread(&POKE_NET_Control.RecvThread);
+#endif
 			return(FALSE);
 		}else{
 			// 何バイトか受け取った
@@ -517,38 +588,38 @@ BOOL POKE_NET_Receiving()
 
 				// サイズセット
 				POKE_NET_Control.RecvSize = (long)(size - sizeof(long));
-				break;
+    			break;
 			}
+#ifdef RECEIVE_THREAD
+            POKE_NET_Control.RecvOffset = offset;
+#endif
 		}
-
-		if( POKE_NET_Control.RecvTimeOut != 0 ){
-			// タイムアウト設定あり
-			timetmp = OS_GetTick();
-			timtmps = (long)(timetmp/(OS_SYSTEM_CLOCK / 64) - starttime/(OS_SYSTEM_CLOCK / 64));
-			if( timtmps >= POKE_NET_Control.RecvTimeOut ){
-				// タイムアウト
-				POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET recv timeout socket:%08X\n" ,POKE_NET_Control.Socket);
-				POKE_NET_Control.LastErrorCode = POKE_NET_LASTERROR_RECVTIMEOUT;
-				return(FALSE);
-			}
-		}
-
 		POKE_NET_LockMutex();
 		if( POKE_NET_Control.AbortFlag == TRUE ){
 			POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET recv abort socket:%08X\n" ,POKE_NET_Control.Socket);
 			POKE_NET_Control.LastErrorCode = POKE_NET_LASTERROR_ABORTED;
 			POKE_NET_UnlockMutex();
+#ifdef RECEIVE_THREAD
+            OS_DestroyThread(&POKE_NET_Control.RecvThread);
+#endif
 			return(FALSE);
 		}
 		POKE_NET_UnlockMutex();
 
+#ifdef RECEIVE_THREAD
+        POKE_NET_Control.RecvFlag = FALSE;
+#endif
+
 		POKE_NET_Sleep(1);
 	}
+
+#ifdef RECEIVE_THREAD
+    OS_DestroyThread(&POKE_NET_Control.RecvThread);
+#endif
 
 	POKE_NET_DebugPrintf(POKE_NET_DEBUGLEVEL_LEVEL1 ,"#POKE_NET recved socket:%08X size:%d\n" ,POKE_NET_Control.Socket ,POKE_NET_Control.RecvSize);
 	return(TRUE);
 }
-
 
 //====================================
 //          受信中

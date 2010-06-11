@@ -67,6 +67,8 @@ typedef int SOCKET;
 #ifndef INVALID_SOCKET 
 	#define INVALID_SOCKET (-1)
 #endif
+// 有効にすると受信部分をスレッドで分離して処理します
+#define RECEIVE_THREAD
 #endif
 
 //------------------------------------
@@ -205,14 +207,17 @@ typedef struct poke_net_control {
 	// 確立した接続毎にサーバかクライアントによって作られる主な SSL/TLS 構成です。
 	// これは実際には SSL API では中核となる構成です。
 	SSL* m_pSSL;
-	// プログラムの life-time 毎に一度、サーバとクライアントによって作られ、
-	// 接続のために後で作られる SSL 構成のためのデフォルト値を主に持つ全体的なコンテクスト構成です。
-	SSL_CTX* m_pSSL_CTX;
 #endif	// ___COMMUNICATES_BY_USING_SSL___
 #endif  // ___POKE_NET_BUILD_WINDOWS___
 #ifdef ___POKE_NET_BUILD_DS___				// == DS特有 ==
 	OSThread ThreadID;						// スレッドＩＤ
 	OSMutex MutexHandle;					// ミューテクスハンドル
+#ifdef RECEIVE_THREAD
+    OSThread RecvThread;                    // 受信処理用スレッド
+    int      RecvResult;                    // 受信処理用戻り値
+    int      RecvOffset;                    // 受信処理用オフセット値
+    BOOL     RecvFlag;                      // 受信フラグ
+#endif  // RECEIVE_THREAD
 #ifdef ___COMMUNICATES_BY_USING_SSL___
     SOCSslConnection sslConnection;         // SSL コネクション
 #endif // ___COMMUNICATES_BY_USING_SSL___
