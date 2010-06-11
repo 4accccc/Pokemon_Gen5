@@ -1057,7 +1057,8 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 
   //デフォルト位置に動かないなら、投視射影モードにする
   if( ( cam_move_pos != BTLEFF_CAMERA_POS_INIT ) &&
-      ( cam_move_pos != BTLEFF_CAMERA_POS_PLURAL ) &&
+      ( cam_move_pos != BTLEFF_CAMERA_POS_PLURAL_A ) &&
+      ( cam_move_pos != BTLEFF_CAMERA_POS_PLURAL_D ) &&
       ( cam_move_pos != BTLEFF_CAMERA_POS_INIT_ORTHO ) )
   {
     EFFVM_ChangeCameraProjection( bevw );
@@ -1068,9 +1069,11 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   }
 
   switch( cam_move_pos ){
-  case BTLEFF_CAMERA_POS_PLURAL:
+  case BTLEFF_CAMERA_POS_PLURAL_A:
+  case BTLEFF_CAMERA_POS_PLURAL_D:
     { 
       BtlRule rule = BTLV_EFFECT_GetBtlRule();
+      BtlvMcssPos pos = ( cam_move_pos == BTLEFF_CAMERA_POS_PLURAL_A ) ? bevw->attack_pos : bevw->defence_pos;
       switch( rule ){ 
       case BTL_RULE_SINGLE:
         //1vs1ならカメラ移動なし
@@ -1078,7 +1081,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
         break;
       case BTL_RULE_DOUBLE:
       case BTL_RULE_TRIPLE:
-        switch( bevw->attack_pos ){ 
+        switch( pos ){ 
         case BTLV_MCSS_POS_A:
           cam_move_pos = BTLEFF_CAMERA_POS_A;
           break;
@@ -1101,8 +1104,8 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
         }
         break;
       case BTL_RULE_ROTATION:
-        if( ( bevw->attack_pos == BTLV_MCSS_POS_C ) ||
-            ( bevw->attack_pos == BTLV_MCSS_POS_E ) )
+        if( ( pos == BTLV_MCSS_POS_C ) ||
+            ( pos == BTLV_MCSS_POS_E ) )
         { 
           cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
         }
