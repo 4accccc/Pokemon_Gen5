@@ -20,6 +20,8 @@
 //======================================================================
 //#define DEBUG_PARAM_KEY_CHANGE
 
+#define NAMIPOKE_OBJ_ONLY_ONE //波乗りポケモンオブジェ１つのみ
+
 #define NAMIPOKE_SHAKE_VALUE (0x0400) ///<初期揺れ幅
 #define NAMIPOKE_SHAKE_MAX (FX32_ONE*4) ///<揺れ幅最大
 
@@ -46,7 +48,7 @@ typedef struct
   VecFx32 save_pos;
   
   FLD_G3DOBJ_OBJIDX obj_idx;
-
+  
   u16 rot_y;
   VecFx32 scale;
   VecFx32 offs;
@@ -58,8 +60,12 @@ typedef struct
 struct _TAG_FLDEFF_NAMIPOKE
 {
 	FLDEFF_CTRL *fectrl;
+  
   FLD_G3DOBJ_RESIDX res_idx_poke;
   FLD_G3DOBJ_RESIDX res_idx_ripple;
+  
+  FLD_G3DOBJ_OBJIDX obj_idx_poke;
+  FLD_G3DOBJ_OBJIDX obj_idx_ripple;
 };
 
 //--------------------------------------------------------------
@@ -83,20 +89,19 @@ typedef struct
 {
   GFL_G3D_OBJ *obj;
   GFL_G3D_RND *obj_rnd;
-
+  
   u8 seq_no;
   u8 joint;
   u8 ripple_off;
   u8 padding;
-
+  
   u16 dir;
   fx32 shake_offs;
   fx32 shake_value;
   
-  TASKHEADER_NAMIPOKE head;
-  
   FLD_G3DOBJ_OBJIDX obj_idx;
   
+  TASKHEADER_NAMIPOKE head;
   RIPPLE_WORK ripple_work;
 }TASKWORK_NAMIPOKE;
 
@@ -212,6 +217,11 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
   namipoke->res_idx_poke =
     FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
   
+  namipoke->obj_idx_poke = FLD_G3DOBJ_CTRL_AddObject(
+      obj_ctrl, namipoke->res_idx_poke, 0, NULL );
+  FLD_G3DOBJ_CTRL_SetOuterDrawFlag(
+      obj_ctrl, namipoke->obj_idx_poke, TRUE );
+
   FLD_G3DOBJ_RES_HEADER_Init( &head ); //ripple
 
   FLD_G3DOBJ_RES_HEADER_SetMdl(
@@ -223,6 +233,11 @@ static void namipoke_InitResource( FLDEFF_NAMIPOKE *namipoke )
       &head, NARC_fldeff_shibuki01_nsbta );
   namipoke->res_idx_ripple =
     FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+
+  namipoke->obj_idx_ripple = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, namipoke->res_idx_ripple, 0, NULL );
+  FLD_G3DOBJ_CTRL_SetOuterDrawFlag(
+      obj_ctrl, namipoke->obj_idx_ripple, TRUE );
 }
 
 //--------------------------------------------------------------
@@ -237,6 +252,8 @@ static void namipoke_DeleteResource( FLDEFF_NAMIPOKE *namipoke )
   FLD_G3DOBJ_CTRL *obj_ctrl;
   
   obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( namipoke->fectrl );
+  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, namipoke->obj_idx_poke );
+  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, namipoke->obj_idx_ripple );
   FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, namipoke->res_idx_poke );
   FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, namipoke->res_idx_ripple );
 }
@@ -271,7 +288,6 @@ FLDEFF_TASK * FLDEFF_NAMIPOKE_SetMMdl( FLDEFF_CTRL *fectrl,
   head.pos = *pos;
   
   if( !MMDL_CheckStatusBit( mmdl, MMDL_STABIT_RAIL_MOVE ) ){
-    
     // GRID用
     task = FLDEFF_CTRL_AddTask(
         fectrl, &DATA_namipokeTaskHeader, &head.pos, joint, &head, 0 );
@@ -385,19 +401,27 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
   
   obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
       work->head.eff_namipoke->fectrl );
-  
+
+#ifndef NAMIPOKE_OBJ_ONLY_ONE
   work->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
       obj_ctrl, work->head.eff_namipoke->res_idx_poke, 0, NULL );
-  
+#else
+  work->obj_idx = work->head.eff_namipoke->obj_idx_poke;
+#endif
+
   work->joint = FLDEFF_TASK_GetAddParam( task );
   work->shake_offs = FX32_ONE;
   work->shake_value = NAMIPOKE_SHAKE_VALUE;
   
   {
     RIPPLE_WORK *rip = &work->ripple_work;
-    
+
+#ifndef NAMIPOKE_OBJ_ONLY_ONE
     rip->obj_idx = FLD_G3DOBJ_CTRL_AddObject(
         obj_ctrl, work->head.eff_namipoke->res_idx_ripple, 0, NULL );
+#else
+    rip->obj_idx = work->head.eff_namipoke->obj_idx_ripple;
+#endif
     
     rip->vanish_flag = TRUE;
     rip->dir = DIR_NOT;
@@ -420,16 +444,19 @@ static void namipokeTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void namipokeTask_Delete( FLDEFF_TASK *task, void *wk )
 {
+#ifndef NAMIPOKE_OBJ_ONLY_ONE
   TASKWORK_NAMIPOKE *work = wk;
+  
   FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl(
       work->head.eff_namipoke->fectrl );
-  
+
   FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, work->obj_idx );
-  
+
   {
     RIPPLE_WORK *rip = &work->ripple_work;
     FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, rip->obj_idx );
   }
+#endif
 }
 
 #define RIPPLE_OFFS_Y (-0x4000)
@@ -642,10 +669,11 @@ static void namipokeTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
 {
+#if 0
   //ここで表示座標を設定していたが
   //動作モデルとの処理タイミングが変わり、ズレが発生する様になった
   //更新処理内で表示設定を行う。
-#if 0
+ 
   VecFx32 pos;
   GFL_G3D_OBJSTATUS *st;
   FLD_G3DOBJ_CTRL *obj_ctrl;
@@ -689,6 +717,18 @@ static void namipokeTask_Draw( FLDEFF_TASK *task, void *wk )
   }else{
     RIPPLE_WORK *rip = &work->ripple_work;
     FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, TRUE );
+  }
+#endif
+
+#ifdef NAMIPOKE_OBJ_ONLY_ONE
+  {
+    TASKWORK_NAMIPOKE *work = wk;
+    FLD_G3DOBJ_CTRL *obj_ctrl =
+      FLDEFF_CTRL_GetFldG3dOBJCtrl( work->head.eff_namipoke->fectrl );
+    RIPPLE_WORK *rip = &work->ripple_work;
+
+    FLD_G3DOBJ_CTRL_DrawObject( obj_ctrl, work->obj_idx );
+    FLD_G3DOBJ_CTRL_DrawObject( obj_ctrl, rip->obj_idx );
   }
 #endif
 }

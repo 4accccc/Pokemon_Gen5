@@ -91,12 +91,16 @@ extern BOOL FLD_G3DOBJ_CTRL_LoopAnimeObject(
     FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, fx32 frame );
 extern void FLD_G3DOBJ_CTRL_SetAnimeFrame(
     FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, int anm_no, fx32 frame );
+extern fx32 FLD_G3DOBJ_CTRL_GetAnimeFrame(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, int anm_no );
 extern void FLD_G3DOBJ_CTRL_SetOuterDrawFlag(
     FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag );
 extern void FLD_G3DOBJ_CTRL_DrawObject( 
     FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx );
 extern void FLD_G3DOBJ_CTRL_SetFrameFlag(  
     FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, BOOL flag );
+extern BOOL FLD_G3DOBJ_CTRL_GetFrameFlag(  
+    const FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx );
 
 extern void FLD_G3DOBJ_RES_HEADER_Init( FLD_G3DOBJ_RES_HEADER *head );
 extern void FLD_G3DOBJ_RES_HEADER_SetMdl(

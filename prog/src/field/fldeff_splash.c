@@ -23,6 +23,8 @@
 
 #define SHOAL_DRAW_Z_OFFSET (FX32_ONE*8)
 
+#define SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ一つのみ
+
 //======================================================================
 //	struct
 //======================================================================
@@ -67,6 +69,9 @@ struct _TAG_FLDEFF_SHOAL
 {
 	FLDEFF_CTRL *fectrl;
   FLD_G3DOBJ_RESIDX res_idx_shoal;
+#ifdef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ一つのみ
+  FLD_G3DOBJ_OBJIDX obj_idx_shoal;
+#endif
 };
 
 //--------------------------------------------------------------
@@ -397,6 +402,14 @@ static void shoal_InitResource( FLDEFF_SHOAL *shoal )
   
   shoal->res_idx_shoal = 
       FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+  
+#ifdef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ一つのみ
+  shoal->obj_idx_shoal = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, shoal->res_idx_shoal, 0, NULL );
+  FLD_G3DOBJ_CTRL_SetOuterDrawFlag(
+      obj_ctrl, shoal->obj_idx_shoal, TRUE );
+#endif
+
 }
 
 //--------------------------------------------------------------
@@ -411,6 +424,11 @@ static void shoal_DeleteResource( FLDEFF_SHOAL *shoal )
   FLD_G3DOBJ_CTRL *obj_ctrl;
   
   obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( shoal->fectrl );
+  
+#ifdef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ一つのみ
+  FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, shoal->obj_idx_shoal );
+#endif
+  
   FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, shoal->res_idx_shoal );
 }
 
@@ -459,13 +477,20 @@ static void shoalTask_Init( FLDEFF_TASK *task, void *wk )
   MMDL_GetVectorPos( work->head.mmdl, &pos );
   pos.z += SHOAL_DRAW_Z_OFFSET;
   FLDEFF_TASK_SetPos( task, &pos );
-  
+
+#ifndef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ複数
   {
     FLDEFF_SHOAL *shoal = work->head.eff_shoal;
     u16 idx = shoal->res_idx_shoal;
     FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( shoal->fectrl );
     work->obj_idx = FLD_G3DOBJ_CTRL_AddObject( obj_ctrl, idx, 0, &pos );
   }
+#else //浅瀬エフェクトOBJ一つのみ
+  {
+    FLDEFF_SHOAL *shoal = work->head.eff_shoal;
+    work->obj_idx = shoal->obj_idx_shoal;
+  }
+#endif
   
   //即反映すると親がjointフラグがセットされていない状態。
   //FLDEFF_TASK_CallUpdate( task );
@@ -481,10 +506,12 @@ static void shoalTask_Init( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void shoalTask_Delete( FLDEFF_TASK *task, void *wk )
 {
+#ifndef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ複数
   TASKWORK_SHOAL *work = wk;
   FLDEFF_SHOAL *shoal = work->head.eff_shoal;
   FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( shoal->fectrl );
   FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, work->obj_idx );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -509,6 +536,7 @@ static void shoalTask_Update( FLDEFF_TASK *task, void *wk )
     return;
   }
   
+#ifndef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ複数
   {
     VecFx32 pos;
     u16 idx = work->obj_idx;
@@ -523,6 +551,24 @@ static void shoalTask_Update( FLDEFF_TASK *task, void *wk )
     FLDEFF_TASK_SetPos( task, &pos );
     st->trans = pos;
   }
+#else //浅瀬エフェクトOBJ一つのみ
+  {
+    VecFx32 pos;
+    u16 idx = work->obj_idx;
+    FLDEFF_SHOAL *shoal = work->head.eff_shoal;
+    FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( shoal->fectrl );
+    GFL_G3D_OBJSTATUS *st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, idx );
+    
+    if( FLD_G3DOBJ_CTRL_GetFrameFlag(obj_ctrl,idx) == FALSE ){
+      FLD_G3DOBJ_CTRL_LoopAnimeObject( obj_ctrl, idx, FX32_ONE );
+      FLD_G3DOBJ_CTRL_SetFrameFlag( obj_ctrl, idx, TRUE );
+    }
+    
+    MMDL_GetVectorPos( work->head.mmdl, &pos );
+    pos.z += SHOAL_DRAW_Z_OFFSET;
+    FLDEFF_TASK_SetPos( task, &pos );
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -535,7 +581,9 @@ static void shoalTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void shoalTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-#if 0 //FLD_G3DOBJに任せる
+#ifndef SHOAL_OBJ_ONLY_ONE //浅瀬エフェクトOBJ複数
+  //FLD_G3DOBJに任せる
+  /*
   VecFx32 pos;
   TASKWORK_SHOAL *work = wk;
   GFL_G3D_OBJSTATUS status = {{0},{FX32_ONE,FX32_ONE,FX32_ONE},{0}};
@@ -543,6 +591,18 @@ static void shoalTask_Draw( FLDEFF_TASK *task, void *wk )
   MTX_Identity33( &status.rotate );
   FLDEFF_TASK_GetPos( task, &status.trans );
   GFL_G3D_DRAW_DrawObjectCullingON( work->obj, &status );
+  */
+#else //浅瀬エフェクトOBJ一つのみ
+  VecFx32 pos;
+  TASKWORK_SHOAL *work = wk;
+  u16 idx = work->obj_idx;
+  FLDEFF_SHOAL *shoal = work->head.eff_shoal;
+  FLD_G3DOBJ_CTRL *obj_ctrl = FLDEFF_CTRL_GetFldG3dOBJCtrl( shoal->fectrl );
+  GFL_G3D_OBJSTATUS *st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, idx );
+  
+  FLDEFF_TASK_GetPos( task, &pos );
+  st->trans = pos;
+  FLD_G3DOBJ_CTRL_DrawObject( obj_ctrl, idx );
 #endif
 }
 

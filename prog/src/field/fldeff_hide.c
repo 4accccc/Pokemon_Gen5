@@ -19,6 +19,7 @@
 //======================================================================
 //	define
 //======================================================================
+#define HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
 
 //======================================================================
 //	struct
@@ -35,6 +36,9 @@ struct _TAG_FLDEFF_HIDE
 {
   FLD_G3DOBJ_RESIDX res_idx[HIDE_MAX];
   FLDEFF_CTRL *fectrl;
+#ifdef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
+  FLD_G3DOBJ_OBJIDX obj_idx[HIDE_MAX];
+#endif
 };
 
 //--------------------------------------------------------------
@@ -59,6 +63,10 @@ typedef struct
   
   u16 anm_flag;
   u16 anm_end_flag;
+  
+#ifdef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
+  fx32 anm_frame;
+#endif
 }TASKWORK_HIDE;
 
 //--------------------------------------------------------------
@@ -143,6 +151,13 @@ static void hide_InitResource( FLDEFF_HIDE *hide )
     FLD_G3DOBJ_RES_HEADER_SetAnmArcIdx( &head, tbl->anm_idx );
     hide->res_idx[i] =
       FLD_G3DOBJ_CTRL_CreateResource( obj_ctrl, &head, FALSE );
+    
+#ifdef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
+    hide->obj_idx[i] = FLD_G3DOBJ_CTRL_AddObject(
+        obj_ctrl, hide->res_idx[i], 0, NULL );
+    FLD_G3DOBJ_CTRL_SetOuterDrawFlag(
+        obj_ctrl, hide->obj_idx[i], TRUE );
+#endif
   }
 }
 
@@ -160,6 +175,9 @@ static void hide_DeleteResource( FLDEFF_HIDE *hide )
     FLDEFF_CTRL_GetFldG3dOBJCtrl( hide->fectrl );
   
   for( ; i < HIDE_MAX; i++ ){
+#ifdef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
+    FLD_G3DOBJ_CTRL_DeleteObject( obj_ctrl, hide->obj_idx[i] );
+#endif
     FLD_G3DOBJ_CTRL_DeleteResource( obj_ctrl, hide->res_idx[i] );
   }
 }
@@ -246,8 +264,12 @@ static void hideTask_Init( FLDEFF_TASK *task, void *wk )
   work->head = *head;
   MMDL_InitCheckSameData( work->head.mmdl, &work->samedata );
   
+#ifdef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
+  work->obj_idx = work->head.eff_hide->obj_idx[work->head.hide_type];
+#else
   work->obj_idx = FLD_G3DOBJ_CTRL_AddObject( work->head.obj_ctrl,
       work->head.eff_hide->res_idx[work->head.hide_type], 0, NULL );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -266,7 +288,9 @@ static void hideTask_Delete( FLDEFF_TASK *task, void *wk )
     MMDL_SetMoveHideEffectTask( work->head.mmdl, NULL );
   }
   
+#ifndef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
   FLD_G3DOBJ_CTRL_DeleteObject( work->head.obj_ctrl, work->obj_idx );
+#endif
 }
 
 //--------------------------------------------------------------
@@ -292,6 +316,7 @@ static void hideTask_Update( FLDEFF_TASK *task, void *wk )
       pos.y = height;
     }
     
+#ifndef HIDE_OBJ_ONLY_ONE //‰B‚ê–ªOBJˆê‚Â‚Ì‚Ý
     if( work->anm_flag == TRUE ){
       if( work->anm_end_flag == FALSE ){
         if( FLD_G3DOBJ_CTRL_AnimeObject(
@@ -303,6 +328,9 @@ static void hideTask_Update( FLDEFF_TASK *task, void *wk )
     
     FLDEFF_TASK_SetPos( task, &pos );
     FLD_G3DOBJ_CTRL_SetObjPos( work->head.obj_ctrl, work->obj_idx, &pos );
+#else
+    FLDEFF_TASK_SetPos( task, &pos );
+#endif
   }
 }
 
@@ -316,7 +344,32 @@ static void hideTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void hideTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-//  TASKWORK_HIDE *work = wk;
+#ifdef HIDE_OBJ_ONLY_ONE
+  TASKWORK_HIDE *work = wk;
+  
+  if( work->anm_flag == TRUE && work->anm_end_flag == FALSE ){
+    FLD_G3DOBJ_CTRL_SetAnimeFrame(
+        work->head.obj_ctrl, work->obj_idx, 0, work->anm_frame );
+     
+    if( FLD_G3DOBJ_CTRL_AnimeObject(
+        work->head.obj_ctrl,work->obj_idx,FX32_ONE) == FALSE ){
+      work->anm_end_flag = TRUE;
+    }
+     
+    work->anm_frame =  FLD_G3DOBJ_CTRL_GetAnimeFrame(
+        work->head.obj_ctrl, work->obj_idx, 0 );
+  }else{
+    FLD_G3DOBJ_CTRL_SetAnimeFrame(
+        work->head.obj_ctrl, work->obj_idx, 0, work->anm_frame );
+  }
+  
+  {
+    VecFx32 pos;
+    FLDEFF_TASK_GetPos( task, &pos );
+    FLD_G3DOBJ_CTRL_SetObjPos( work->head.obj_ctrl, work->obj_idx, &pos );
+    FLD_G3DOBJ_CTRL_DrawObject( work->head.obj_ctrl, work->obj_idx );
+  }
+#endif
 }
 
 //--------------------------------------------------------------

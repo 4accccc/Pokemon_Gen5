@@ -562,6 +562,31 @@ void FLD_G3DOBJ_CTRL_SetAnimeFrame(
 
 //--------------------------------------------------------------
 /**
+ * オブジェアニメフレーム取得
+ * @param ctrl  fld_g3dobj_ctrl
+ * @param idx 指定するobjインデックス
+ * @param anm_no 何番目のアニメフレームを取得するか
+ * @retval fx32 フレーム
+ * @note アニメ指定が無い場合は0を返す
+ */
+//--------------------------------------------------------------
+fx32 FLD_G3DOBJ_CTRL_GetAnimeFrame(
+    FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx, int anm_no )
+{
+  int frame = 0;
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  GF_ASSERT( obj->useFlag != OBJ_USE_FALSE );
+  
+  if( obj->useFlag == OBJ_USE_TRUE ){
+    if( GFL_G3D_OBJECT_GetAnimeFrame(obj->pObj,anm_no,&frame) == FALSE ){
+      frame = 0;
+    }
+  }
+  return( (fx32)frame );
+}
+
+//--------------------------------------------------------------
+/**
  * オブジェクトをユーザー側から独自に描画する
  * @param ctrl FLD_G3DOBJ_CTRL
  * @param idx 指定するobjインデックス
@@ -615,6 +640,21 @@ void FLD_G3DOBJ_CTRL_SetFrameFlag(
 {
   FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
   obj->frameFlag = flag;
+}
+
+//--------------------------------------------------------------
+/**
+ * 1フレーム毎にクリアされるフレームフラグを取得
+ * @param ctrl FLD_G3DOBJ_CTRL
+ * @param idx 指定するobjインデックス
+ * @retval BOOL フレームフラグ
+ */
+//--------------------------------------------------------------
+BOOL FLD_G3DOBJ_CTRL_GetFrameFlag(  
+    const FLD_G3DOBJ_CTRL *ctrl, FLD_G3DOBJ_OBJIDX idx )
+{
+  FLD_G3DOBJ *obj = &ctrl->pObjTbl[idx];
+  return( obj->frameFlag );
 }
 
 //======================================================================
