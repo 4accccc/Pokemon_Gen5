@@ -1346,6 +1346,13 @@ BOOL BTLV_SCD_SelectYesNo_Wait( BTLV_SCD* wk, BtlYesNo* result )
   case 0:
     {
       int input = BTLV_INPUT_CheckInput( wk->biw, &YesNoTouchData, YesNoKeyData );
+#ifdef DEBUG_ONLY_FOR_hudson
+      // ©”š‘Îô Ÿ‚Ìƒ|ƒPƒ‚ƒ“‚ğo‚³‚È‚¢
+      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+      {
+        input = 1;
+      }
+#endif // DEBUG_ONLY_FOR_hudson
       if( input != GFL_UI_TP_HIT_NONE )
       {
         wk->yesno_result = input;
