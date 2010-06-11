@@ -291,16 +291,18 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
     else {
       *seq = SEQ_DOOR_IN_ANIME;
     }
-    break;
+    return GMEVENT_RES_CONTINUE_DIRECT;
 
   // カメラのトレース処理終了待ち
   case SEQ_WAIT_CAMERA_TRACE: 
     if( FIELD_CAMERA_CheckTraceSys( camera ) == FALSE ) { 
       *seq = SEQ_DOOR_IN_ANIME; 
+      return GMEVENT_RES_CONTINUE_DIRECT;
     }
     else if( FIELD_CAMERA_CheckTrace( camera ) == FALSE ) {
       FIELD_CAMERA_FreeTarget( camera );
       *seq = SEQ_DOOR_IN_ANIME;
+      return GMEVENT_RES_CONTINUE_DIRECT;
     }
     break;
 
@@ -308,7 +310,7 @@ static GMEVENT_RESULT EVENT_FUNC_EntranceIn_ExitTypeSPx( GMEVENT* event, int* se
   case SEQ_DOOR_IN_ANIME:
     GMEVENT_CallEvent( event, EVENT_FieldDoorInAnime( evdata ) );
     *seq = SEQ_EXIT;
-    break;
+    return GMEVENT_RES_CONTINUE_DIRECT;
 
   // イベント終了
   case SEQ_EXIT:
