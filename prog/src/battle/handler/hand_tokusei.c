@@ -5400,7 +5400,7 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,    handler_WaruiTeguse },  // ダメージ反応ハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,        handler_WaruiTeguse },  // ダメージ反応ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -5412,13 +5412,12 @@ static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 
   if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, targetPokeID) )
   {
-    if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
+    if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
     ){
       WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
       {
-
         const BTL_POKEPARAM* me = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
         const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
 
@@ -6236,13 +6235,10 @@ static void handler_Sinuti( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk,
   // 自分が攻撃側で
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    u8 myOrder, totalAction;
     // 順番最後なら威力増加
-    if( BTL_SVFTOOL_GetMyActionOrder(flowWk, pokeID, &myOrder, &totalAction) ){
-      if( (myOrder+1) == totalAction )
-      {
+    if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
+    {
         BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
-      }
     }
   }
 }

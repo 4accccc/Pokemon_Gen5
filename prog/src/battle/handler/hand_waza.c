@@ -4005,8 +4005,8 @@ static void handler_Sippegaesi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
-    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_WAZAPROC_DONE) )
+    // èáî‘ç≈å„Ç»ÇÁà–óÕëùâ¡
+    if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
     {
       HandCommon_MulWazaBasePower( 2 );
     }
