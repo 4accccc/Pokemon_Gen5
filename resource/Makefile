@@ -168,7 +168,8 @@ SUBDIRS	=	wmi \
 			fld3d_ci_se \
 			profanity_word \
 			symbol \
-			manual_image
+			manual_image \
+			pokeform
 
 
 include $(RESOURCE_MACRO)

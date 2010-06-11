@@ -417,6 +417,8 @@ static void	MUS_POKE_MakeMAW( const MUSICAL_POKE_PARAM *musPoke, MUS_MCSS_ADD_WO
 	int	rare	= musPoke->mcssParam.rare;
 	BOOL egg = FALSE;
   u8 dir = 0;
+  //フィールドのみのチェック
+	form_no = POKETOOL_CheckPokeFormNo_Field( musPoke->mcssParam.monsno , form_no );
   if( isBack == TRUE )
   {
     dir = 1;

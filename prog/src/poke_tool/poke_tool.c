@@ -4164,3 +4164,30 @@ u8  POKETOOL_CheckPokeFormNo( u16 mons_no, u8 form_no )
   }
 }
 
+//============================================================================================
+/**
+ *  指定されたポケモンナンバーから不正なフォルムナンバーかどうかチェックする
+ *  フィールドバージョン(バトル中しかフォルムチェンジしないやつら
+ *
+ * @param[in] mons_no チェックするポケモンナンバー
+ * @param[in] form_no チェックするためのフォルムナンバー
+ *
+ * @retval 正しい：そのままform_noを返す　不正：０を返す
+ */
+//============================================================================================
+#include "field_ng_form.cdat"
+u8 POKETOOL_CheckPokeFormNo_Field( u16 mons_no, u8 form_no )
+{
+  u16 i;
+  if( form_no > 0 )
+  {
+    for( i=0;i<NELEMS(fieldNgFormArr);i++ )
+    {
+      if( fieldNgFormArr[i] == mons_no )
+      {
+        return 0;
+      }
+    }
+  }
+  return form_no;
+}
