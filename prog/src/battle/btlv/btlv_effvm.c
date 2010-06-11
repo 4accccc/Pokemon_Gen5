@@ -120,7 +120,8 @@ typedef struct{
   u32               volume_already_down   :1;     //すでにボリュームダウンだったフラグ
   u32               nakigoe_wait_flag     :1;     //鳴き声再生ウエイト中
   u32               se_play_flag          :1;     //SEPLAYされたかフラグ
-  u32                                     :19;
+  u32               zoom_out_flag         :1;
+  u32                                     :18;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -1259,6 +1260,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     if( bevw->camera_ortho_on_flag )
     { 
       set_mcss_scale_move( FX_F32_TO_FX32( 0.65 ), FX_F32_TO_FX32( 0.725 ), frame, wait, 0 );
+      bevw->zoom_out_flag = 1;
     }
     break;
   case BTLEFF_CAMERA_POS_B_ORTHO:
@@ -1272,9 +1274,10 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   case BTLEFF_CAMERA_POS_INIT:
   default:
     BTLV_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
-    if( bevw->camera_ortho_on_flag )
+    if( bevw->zoom_out_flag )
     { 
       set_mcss_scale_move( FX_F32_TO_FX32( 1 ), FX_F32_TO_FX32( 1 ), frame, wait, 0 );
+      bevw->zoom_out_flag = 0;
     }
     break;
   }
