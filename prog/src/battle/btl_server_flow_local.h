@@ -149,6 +149,7 @@ typedef struct {
   u8 clientIdx;
   u8 pokeIdx;
   u8 endFlag;
+  u8 rotationFlag;
 }FRONT_POKE_SEEK_WORK;
 
 /**

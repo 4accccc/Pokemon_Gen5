@@ -2181,6 +2181,7 @@ static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WOR
   fpsw->clientIdx = 0;
   fpsw->pokeIdx = 0;
   fpsw->endFlag = TRUE;
+  fpsw->rotationFlag = FALSE;
 
   {
     SVCL_WORK* cw;
@@ -2205,6 +2206,16 @@ static void FRONT_POKE_SEEK_InitWork( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WOR
   }
 }
 /**
+ *  順番アクセス：ローテーションバトル時の後衛ポケモンも追加
+ */
+static void FRONT_POKE_SEEK_AddRotationBack( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk )
+{
+  if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_ROTATION )
+  {
+    fpsw->rotationFlag = TRUE;
+  }
+}
+/**
  *  順番アクセス：次のポケモンデータを取得（FALSEが返ったら終了）
  */
 static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK* wk, BTL_POKEPARAM** bpp )
@@ -2226,7 +2237,8 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
       cw = BTL_SERVER_GetClientWorkIfEnable( wk->server, fpsw->clientIdx );
       if( cw )
       {
-        while( fpsw->pokeIdx < cw->numCoverPos )
+        u8 posMax = (fpsw->rotationFlag == FALSE)? cw->numCoverPos : BTL_ROTATION_VISIBLE_POS_NUM;
+        while( fpsw->pokeIdx < posMax )
         {
           nextPoke = BTL_PARTY_GetMemberData( cw->party, fpsw->pokeIdx );
           if( IsBppExist(nextPoke) )
@@ -9110,6 +9122,7 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* po
   BTL_HANDLER_Waza_RemoveForceAll( poke );
 
   FRONT_POKE_SEEK_InitWork( &fps, wk );
+  FRONT_POKE_SEEK_AddRotationBack( &fps, wk );
   while( FRONT_POKE_SEEK_GetNext( &fps, wk, &bpp ) )
   {
     BPP_CureWazaSickDependPoke( bpp, dead_pokeID );
