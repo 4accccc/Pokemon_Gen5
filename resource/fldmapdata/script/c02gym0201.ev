@@ -1299,9 +1299,10 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 	IF $SCWK_ANSWER ==  0  THEN
 	
 		_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_08)
-			
+		_AB_KEYWAIT_MARK()
+		
 		IF $WK_SCENE_C02GYM0201 == 6 THEN
-
+			
 			_OBJ_ANIME( MMDL_ID_PLAYER,anm_player_gyoe )
 	    	_OBJ_ANIME_WAIT() 
 	    		
@@ -1339,7 +1340,6 @@ EVENT_START		 ev_bg_c02gym0201_category_19
 			//–{’I‚ª1“x‚µ‚©“®‚©‚È‚­‚·‚é
 			$WK_SCENE_C02GYM0201 = 7
 		ELSE
-	    		
 	    	_PLAINWIN_MSG_DOWN   ( msg_c02gym0101_book_15)
 	    		
 		ENDIF
