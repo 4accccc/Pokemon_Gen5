@@ -157,12 +157,16 @@ static const DEBUG_NUMINPUT_PARAM DNP_TrainerID_full = {
 static const DEBUG_NUMINPUT_PARAM DNP_ProfileID = {
  0x00000000, 0xffffffff, DebugGetMyProfileID, DebugSetMyProfileID,
 };
+static const DEBUG_NUMINPUT_PARAM DNP_Version = {
+ 0x00000000, 0xffffffff, DebugGetMyVersion, DebugSetMyVersion,
+};
 static const DEBUG_NUMINPUT_LIST DNI_PlayerList[] = {
   //gmm_id, param, dni_param
   { dni_player_01, 0, &DNP_TrainerID_high },
   { dni_player_02, 0, &DNP_TrainerID_low },
   { dni_player_03, 0, &DNP_TrainerID_full },
   { dni_player_04, 0, &DNP_ProfileID },
+  { dni_player_05, 0, &DNP_Version },
 };
 
 //////////////////////////////////////////////////////
