@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-04T16:28:37"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-11T12:26:15"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 	<comment>ナギー</comment>
 </head>
@@ -565,11 +565,11 @@
 		<language name="JPN" width="256">サトコ『だいしぜんに　かこまれて
 いんぎらぁっと　なるぞいね！▼
 ちゃわちゃわした　ブラックシティと
-おおちがい　ぞいねー！</language>
+おおちがい　ぞいねー！▼</language>
 		<language name="JPN_KANJI" width="256">サトコ『大自然に　囲まれて
 いんぎらぁっと　なるぞいね！▼
 ちゃわちゃわした　ブラックシティと
-大違い　ぞいねー！</language>
+大違い　ぞいねー！▼</language>
 	</row>
 
 	<row id="wc10_04_03" back-color="#ff8080,,,,,#ffff80,,,,,,,,,,,,,">
@@ -846,13 +846,11 @@
 	<row id="wc10_09_04" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
-		<language name="JPN" width="256">どうも　おせわに　なってます！▼
-さっき　ここで
+		<language name="JPN" width="256">さっき　ここで
 コリンクを　みましたよ！▼
 いやー　ここは　いるだけで
 きぶんは　リフレッシュ！　ですよ</language>
-		<language name="JPN_KANJI" width="256">どうも　お世話に　なってます！▼
-さっき　ここで
+		<language name="JPN_KANJI" width="256">さっき　ここで
 コリンクを　みましたよ！▼
 いやー　ここは　いるだけで
 気分は　リフレッシュ！　ですよ</language>
@@ -1021,11 +1019,11 @@
 		<language name="JPN" width="256">カルロス『おー！　こんにちは▼
 こんなに　みどりが　あるばしょは
 いろんなところを　たびをしたけど▽
-すごく　めずらしいよ！</language>
+すごく　めずらしいよ！▼</language>
 		<language name="JPN_KANJI" width="256">カルロス『おー！　こんにちは▼
 こんなに　緑がある　場所は
 いろんなところを　旅をしたけど▽
-すごく　珍しいよ！</language>
+すごく　珍しいよ！▼</language>
 	</row>
 
 	<row id="wc10_13_03" back-color="#80ff80,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -1133,7 +1131,7 @@
 	<row id="wc10_15_03" back-color="#ff8080,,,#80ff80,,#ffff80,#80ff80,,,,,,#80ff80,,,,,,">
 		<attribute name="キャラ指定">GENTLEMAN
 ツネカズ</attribute>
-		<language name="JPN" width="256">……ポケモンは　よろこんでいるが▽
+		<language name="JPN" width="256">……ポケモンは　よろこんでいるが
 わたしは　しげきに　うえているよ</language>
 		<language name="JPN_KANJI" width="256">……ポケモンは　喜んでいるが
 わたしは　刺激に　飢えているよ</language>
@@ -1577,21 +1575,21 @@
 		<language name="JPN" width="256">ヒロノリ『ここの　ヒトたちは
 みんな　しあわせそうで　いいっスね！▼
 オレの　ビジネスで　もっと
-しあわせに　しちゃいたいっス！</language>
+しあわせに　しちゃいたいっス！▼</language>
 		<language name="JPN_KANJI" width="256">ヒロノリ『ここの　ヒトたちは
 みんな　幸せそうで　いいっスね！▼
 オレの　ビジネスで　もっと
-幸せに　しちゃいたいっス！</language>
+幸せに　しちゃいたいっス！▼</language>
 	</row>
 
 	<row id="wc10_24_03" back-color=",,,#ff8080,,#ffff80,,,,,,,,,,,,,">
 		<attribute name="キャラ指定">BUSINESSMAN
 ヒロノリ</attribute>
-		<language name="JPN" width="256">ビジネスチャンスは　かんたんに
+		<language name="JPN" width="256">……ビジネスチャンスは　かんたんに
 ころがってくるもんじゃねーっスね……▼
 あー　ブラックシティのほうが
 オレに　あってるきが　するっス……</language>
-		<language name="JPN_KANJI" width="256">ビジネスチャンスは　簡単に
+		<language name="JPN_KANJI" width="256">……ビジネスチャンスは　簡単に
 転がってくるもんじゃねーっスね……▼
 あー　ブラックシティのほうが
 オレに　あってる気が　するっス……</language>
@@ -1740,7 +1738,7 @@
 まえに　ブラックシティで
 [1:00:トレーナー名:0]と　たたかったとき▼
 わたし　せいちょう　してないって
-おもったの</language>
+おもったの▼</language>
 		<language name="JPN_KANJI" width="256">ローザ『ここでは
 一日　一日を　生きることで▽
 成長を　感じるわ▼
