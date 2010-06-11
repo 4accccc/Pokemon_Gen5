@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-11T12:17:09"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-11T12:21:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -266,7 +266,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1621" top="148" right="2326" bottom="776" maximized="no" rayout="Vertical2">
+	<dialog left="1371" top="24" right="2076" bottom="652" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="56" right="1280" bottom="454" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -1460,7 +1460,7 @@
 きみ　ぼくの　故郷の
 [1:25:地域名:1]に▽
 来たくなったら　来てみてよ▼
-きっと　君にとって
+きっと　きみにとって
 おもしろい　旅になるよ　ぐふふ……</language>
 	</row>
 
@@ -1582,7 +1582,7 @@
 ポケモン　交換した？▽
 ぼ　ぼくは　[2:02:３桁:8]ヶ所……▼
 あ　あのさ
-……君って　ぼくの住んでる▽
+……きみって　ぼくの住んでる▽
 [1:25:地域名:1]に▽
 来たことって　ある……？▼
 [1:28:趣味:10]とか　好きな　人が
