@@ -3029,8 +3029,8 @@
 	</row>
 
 	<row id="badrider_04">
-		<language name="JPN" width="216">ジョニー</language>
-		<language name="JPN_KANJI" width="216">ジョニー</language>
+		<language name="JPN" width="216">サトシ</language>
+		<language name="JPN_KANJI" width="216">サトシ</language>
 	</row>
 
 	<row id="backpackerm_15">
@@ -3466,6 +3466,11 @@
 	<row id="bchamp2_01">
 		<language name="JPN" width="216">クダリ</language>
 		<language name="JPN_KANJI" width="216">クダリ</language>
+	</row>
+
+	<row id="heads_05">
+		<language name="JPN" width="216">ジョニー</language>
+		<language name="JPN_KANJI" width="216">ジョニー</language>
 	</row>
 
 	<flowchart-group-list>
