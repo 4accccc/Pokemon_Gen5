@@ -3428,7 +3428,7 @@ static void handler_NekoNiKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 volume = BPP_GetValue( bpp, BPP_LEVEL ) * 20;
+    u32 volume = BPP_GetValue( bpp, BPP_LEVEL ) * 5;
     if( BTL_SVFRET_AddBonusMoney(flowWk, volume, pokeID) )
     {
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
