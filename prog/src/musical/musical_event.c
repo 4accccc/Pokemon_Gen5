@@ -511,15 +511,8 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       {
         evWork->subSeq = 0;
         evWork->state = MES_WAITROOM_THIRD;
-        if( evWork->isNetErr == TRUE )
-        {
-          evWork->state = MES_ERROR_INIT;
-        }
-        else
-        {
-          MUSICAL_EVENT_CalcFanState( evWork );
-          MUSICAL_EVENT_SetSaveData( evWork );
-        }
+        MUSICAL_EVENT_CalcFanState( evWork );
+        MUSICAL_EVENT_SetSaveData( evWork );
       }
     }
     break;

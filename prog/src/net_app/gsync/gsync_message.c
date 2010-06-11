@@ -176,7 +176,7 @@ GSYNC_MESSAGE_WORK* GSYNC_MESSAGE_Init(HEAPID id,int msg_dat)
 
 
   
-#if PM_DEBUG
+#if DEBUG_ONLY_FOR_ohno
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
   DEBUG_PAUSE_SetEnable( TRUE );
 #endif

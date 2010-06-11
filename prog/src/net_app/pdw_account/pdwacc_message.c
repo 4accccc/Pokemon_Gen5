@@ -176,7 +176,7 @@ PDWACC_MESSAGE_WORK* PDWACC_MESSAGE_Init(HEAPID id,int msg_dat)
   GFL_ARC_UTIL_TransVramPalette(ARCID_FONT, NARC_font_default_nclr, PALTYPE_MAIN_BG,
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
-#if PM_DEBUG
+#if DEBUG_ONLY_FOR_ohno
   DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
   DEBUG_PAUSE_SetEnable( TRUE );
 #endif
