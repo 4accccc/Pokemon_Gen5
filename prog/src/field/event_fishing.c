@@ -110,6 +110,24 @@ BOOL FieldFishingCheckPos( GAMEDATA* gdata, FIELDMAP_WORK* fieldmap, VecFx32* ou
   dir = MMDL_GetDirDisp( mmdl );
 
   FIELD_PLAYER_GetDirPos( player, dir, &t_pos );
+
+  //レールマップでは釣り不可
+  if( FIELDMAP_GetBaseSystemType( fieldmap) == FLDMAP_BASESYS_RAIL ){
+    return FALSE;
+  }
+#ifdef DEBUG_ONLY_FOR_iwasawa
+  {
+    GAMESYS_WORK * gsys = FIELDMAP_GetGameSysWork( fieldmap );
+    PLAYER_WORK *player = GAMESYSTEM_GetMyPlayerWork( gsys );
+	  const VecFx32 *pos = PLAYERWORK_getPosition( player );
+    VecFx32 v_pos;
+    MMDL_GetVectorPos( mmdl, &v_pos );
+
+    OS_Printf(" p_pos( %08x, %08x, %08x ) mdl_pos( %08x, %08x, %08x ) vec_pos( %08x, %08x, %08x )\n",
+        pos->x,pos->y,pos->z, t_pos.x, t_pos.y, t_pos.z, v_pos.x, v_pos.y, v_pos.z );  
+  }
+#endif
+
   if( FLDMAPPER_GetGridData( mapper, &t_pos, &gridData) == FALSE){
     return FALSE;
   }
