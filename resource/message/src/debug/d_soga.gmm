@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="sogabe" host="W00140" date="2010-03-02T19:43:30"/>
+	<create user="sogabe" host="W00140" date="2010-06-10T19:52:08"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -580,6 +580,134 @@
 
 	<row id="EVMSG_STATUS_EFFECT">
 		<language name="JPN">ステータスエフェクト</language>
+	</row>
+
+	<row id="EVMSG_AA2BB">
+		<language name="JPN">AA→BB</language>
+	</row>
+
+	<row id="EVMSG_BB2AA">
+		<language name="JPN">BB→AA</language>
+	</row>
+
+	<row id="EVMSG_A2B">
+		<language name="JPN">A→B</language>
+	</row>
+
+	<row id="EVMSG_A2C">
+		<language name="JPN">A→C</language>
+	</row>
+
+	<row id="EVMSG_A2D">
+		<language name="JPN">A→D</language>
+	</row>
+
+	<row id="EVMSG_A2E">
+		<language name="JPN">A→E</language>
+	</row>
+
+	<row id="EVMSG_A2F">
+		<language name="JPN">A→F</language>
+	</row>
+
+	<row id="EVMSG_B2A">
+		<language name="JPN">B→A</language>
+	</row>
+
+	<row id="EVMSG_B2C">
+		<language name="JPN">B→C</language>
+	</row>
+
+	<row id="EVMSG_B2D">
+		<language name="JPN">B→D</language>
+	</row>
+
+	<row id="EVMSG_B2E">
+		<language name="JPN">B→E</language>
+	</row>
+
+	<row id="EVMSG_B2F">
+		<language name="JPN">B→F</language>
+	</row>
+
+	<row id="EVMSG_C2A">
+		<language name="JPN">C→A</language>
+	</row>
+
+	<row id="EVMSG_C2B">
+		<language name="JPN">C→B</language>
+	</row>
+
+	<row id="EVMSG_C2D">
+		<language name="JPN">C→D</language>
+	</row>
+
+	<row id="EVMSG_C2E">
+		<language name="JPN">C→E</language>
+	</row>
+
+	<row id="EVMSG_C2F">
+		<language name="JPN">C→F</language>
+	</row>
+
+	<row id="EVMSG_D2A">
+		<language name="JPN">D→A</language>
+	</row>
+
+	<row id="EVMSG_D2B">
+		<language name="JPN">D→B</language>
+	</row>
+
+	<row id="EVMSG_D2C">
+		<language name="JPN">D→C</language>
+	</row>
+
+	<row id="EVMSG_D2E">
+		<language name="JPN">D→E</language>
+	</row>
+
+	<row id="EVMSG_D2F">
+		<language name="JPN">D→F</language>
+	</row>
+
+	<row id="EVMSG_E2A">
+		<language name="JPN">E→A</language>
+	</row>
+
+	<row id="EVMSG_E2B">
+		<language name="JPN">E→B</language>
+	</row>
+
+	<row id="EVMSG_E2C">
+		<language name="JPN">E→C</language>
+	</row>
+
+	<row id="EVMSG_E2D">
+		<language name="JPN">E→D</language>
+	</row>
+
+	<row id="EVMSG_E2F">
+		<language name="JPN">E→F</language>
+	</row>
+
+	<row id="EVMSG_F2A">
+		<language name="JPN">F→A</language>
+	</row>
+
+	<row id="EVMSG_F2B">
+		<language name="JPN">F→B</language>
+	</row>
+
+	<row id="EVMSG_F2C">
+		<language name="JPN">F→C</language>
+	</row>
+
+	<row id="EVMSG_F2D">
+		<language name="JPN">F→D</language>
+	</row>
+
+	<row id="EVMSG_F2E">
+		<language name="JPN">F→E</language>
 	</row>
 
 	<flowchart-group-list>
