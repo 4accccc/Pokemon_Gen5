@@ -517,6 +517,11 @@ FIELD_SUBSCREEN_MODE FIELD_SUBSCREEN_CGearCheck(FIELD_SUBSCREEN_WORK* pWork, FIE
     if(!CGEAR_SV_GetCGearONOFF(CGEAR_SV_GetCGearSaveData(GAMEDATA_GetSaveControlWork(pGame)))){
       return FIELD_SUBSCREEN_NOGEAR;
     }
+    //—V——‘D“à‚Å‚Í•W€‚ÍNOGEAR‚Æ‚È‚é
+    if(ZONEDATA_IsPlBoat(FIELDMAP_GetZoneID(pWork->fieldmap)))
+    {
+      return FIELD_SUBSCREEN_NOGEAR;
+    }
   }
   return new_mode;
 }
