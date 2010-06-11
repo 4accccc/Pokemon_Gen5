@@ -687,7 +687,11 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
     {
       if( wkHudson.TrunCnt >= 2 )
       {
-        hit = 3; 
+        //‰º‰æ–Ê•ÏŒ`’†‚Í“ü—Í‚ð–³Ž‹
+        if( BTLV_INPUT_CheckExecute( wk->biw ) == FALSE )
+        {
+          hit = 3; 
+        }
       }
     }
 #endif // DEBUG_ONLY_FOR_hudson

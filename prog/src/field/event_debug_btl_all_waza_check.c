@@ -128,7 +128,6 @@ static GMEVENT_RESULT BtlAllWazaCheck( GMEVENT* event, int* seq, void* wk_adrs )
   switch( *seq )
   {
     case SEQ_INIT:
-      HOSAKA_Printf("イベント開始\n");
       wk->count = 1;
       *seq = SEQ_SETUP;
       break;
@@ -168,7 +167,7 @@ static GMEVENT_RESULT BtlAllWazaCheck( GMEVENT* event, int* seq, void* wk_adrs )
 
       BTL_FIELD_SITUATION_SetFromFieldStatus( &sit, gdata, fieldmap );
       BTL_SETUP_Wild( bp, gdata, pe, &sit, BTL_RULE_SINGLE, HEAPID_PROC );
-//      BTL_SETUP_Single_Trainer( bp, gdata, &sit, TRID_RIVAL_01, heapID );
+//      BTL_SETUP_Single_Trainer( bp, gdata, &sit, TRID_RIVAL_01, HEAPID_PROC );
 
       // HP/PP無限 絶対当たる
       BTL_SETUP_SetDebugFlag( bp, BTL_DEBUGFLAG_HP_CONST );
