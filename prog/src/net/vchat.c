@@ -74,7 +74,10 @@ typedef struct{
 	struct NNSSndStrm sSndStream;
 	VCTSession *session;
 	MICAutoParam micParam;
-	u16 vctTime;  //リクエストの時間計測
+  OSTick _tick_time;
+  int _difftime;
+
+  u16 vctTime;  //リクエストの時間計測
 	u8 bSendVoice;
 	u8 firstCallback;
 
@@ -96,8 +99,6 @@ static void ClearSession(VCTSession *session);
 // 音声系の初期化（最初の１回のみ）
 //
 
-static OSTick _tick_time;
-static int _difftime = 0;
 
 
 //----------------------------------------------------------------------------
@@ -149,7 +150,7 @@ static void InitFirst(void)
 	MI_CpuClearFast(_vWork->sSilentBuffer, sizeof(_vWork->sSilentBuffer) );
 	VCT_PRINT("Init sound system done.\n");
 
-	_difftime = 0;
+	_vWork->_difftime = 0;
 
 	VCT_EnableEchoCancel(TRUE);
 }
@@ -456,15 +457,15 @@ void myvct_main(BOOL offflg)
 		// ゲームフレームに一度呼び出すメイン関数。
 		OSTick      start;
 		start = OS_GetTick();
-		_difftime += OS_TicksToMicroSeconds32(start - _tick_time) - 1000 * 1000 / 60;
-		if( _difftime < -10000 ) _difftime = 0;
-		_tick_time = start;
+		_vWork->_difftime += OS_TicksToMicroSeconds32(start - _vWork->_tick_time) - 1000 * 1000 / 60;
+		if( _vWork->_difftime < -10000 ) _vWork->_difftime = 0;
+		_vWork->_tick_time = start;
 		VCT_Main();
-		while( _difftime >= 1000 * 1000 / 60 )
+		while( _vWork->_difftime >= 1000 * 1000 / 60 )
 		{
 //			NET_PRINT("!");
 			VCT_Main();
-			_difftime -= 1000 * 1000 / 60 ;
+			_vWork->_difftime -= 1000 * 1000 / 60 ;
 		}
 	}
 

@@ -1048,7 +1048,10 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _modeTVT3Wait,  // WIFIP2PMATCH_MODE_TVTMESSAGE3_WAIT
   _modeTVT4YesNo,    //  WIFIP2PMATCH_MODE_TVTMESSAGE4_YESNO
   _modeTVT4Wait,  // WIFIP2PMATCH_MODE_TVTMESSAGE4_WAIT
-
+  _playerDirectEndChild, //WIFIP2PMATCH_PLAYERDIRECT_END_CHILD
+  _playerDirectEndChildNext,//WIFIP2PMATCH_PLAYERDIRECT_END_CHILD_NEXT
+  _playerDirectInit2Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT2
+  _playerDirectInit3Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3
 };
 
 
@@ -2180,7 +2183,7 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       WifiP2PMatch_FriendListInit2( wk, seq );
       wk->friendNo = wk->pParentWork->friendNo;
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1           );
     }
     else{  //ëäéËÇ∆êÿíf
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTEND, WB_NET_WIFICLUB);

@@ -17,39 +17,6 @@ static void _vctcheckCommon( WIFIP2PMATCH_WORK *pWork)
 
 
 
-//------------------------------------------------------------------
-/**
- * @brief   まず子機が申し込みを受けるかどうか選択 ２回目は台詞が違う WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1
- * @param   wk
- * @retval  none
- */
-//------------------------------------------------------------------
-static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
-{
-  int gmmno,gmmidx;
-  u16 friendNo,status,gamemode;
-  WIFI_STATUS* p_status;
-  MCR_MOVEOBJ* p_player;
-  MCR_MOVEOBJ* p_npc;
-  u32 way;
-
- // OS_TPrintf("_playerDirectInit1Next %d\n",wk->friendNo);
-  
-  GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
-  if(!GFL_NET_IsParentMachine()){
-    _friendNameExpand(wk,  wk->friendNo - 1);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1011, FALSE);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT2);
-  }
-  else{
-    _friendNameExpand(wk,  wk->friendNo - 1);
-    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
-    WifiP2PMatchMessage_TimeIconStart(wk);
-    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
-  }
-  return seq;
-}
-
 
 //------------------------------------------------------------------
 /**
@@ -1963,6 +1930,51 @@ static int _playerDirectCancelEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 
 //------------------------------------------------------------------
 /**
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END_CHILD
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectEndChild( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
+
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END_CHILD_NEXT);
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END_CHILD_NEXT  子機が終了する場合せりふがさかさま
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectEndChildNext( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  
+  if((WIFIP2PMATCH_STATE_TALK==wk->state) || (WIFIP2PMATCH_STATE_MACHINE_RECV==wk->state)){
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);  //ともだちいそがしい
+  }
+  else{
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);  //かいわ終了
+  }
+  GFL_NET_StateWifiMatchEnd(TRUE);
+  wk->state = WIFIP2PMATCH_STATE_NONE;
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
+  return seq;
+}
+
+
+
+
+//------------------------------------------------------------------
+/**
  * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END
  * @param   wk
  * @retval  none
@@ -1982,7 +1994,7 @@ static int _playerDirectEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 //------------------------------------------------------------------
 /**
- * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END_NEXT
+ * @brief   指定モード終了 WIFIP2PMATCH_PLAYERDIRECT_END_NEXT  親機側の終了
  * @param   wk
  * @retval  none
  */
@@ -2271,4 +2283,88 @@ static int _playerMachineTalkEnd( WIFIP2PMATCH_WORK *wk, int seq )
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   ２回目は台詞が違う WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int gmmno,gmmidx;
+  u16 friendNo,status,gamemode;
+  WIFI_STATUS* p_status;
+  MCR_MOVEOBJ* p_player;
+  MCR_MOVEOBJ* p_npc;
+  u32 way;
+
+  GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //接続禁止
+  if(!GFL_NET_IsParentMachine()){
+    _friendNameExpand(wk,  wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_1011, FALSE);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT2);
+  }
+  else{
+    _friendNameExpand(wk,  wk->friendNo - 1);
+    WifiP2PMatchMessagePrint(wk, msg_wifilobby_073, FALSE);
+    WifiP2PMatchMessage_TimeIconStart(wk);
+    _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT);
+  }
+  return seq;
+}
+
+
+//------------------------------------------------------------------
+/**
+ * @brief   ２回目子機が申し込みを受けるかどうか選択 WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT2
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectInit2Next( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  if( !WifiP2PMatchMessageEndCheck(wk) ){
+    return seq;
+  }
+
+  _yenowinCreateM2(wk);
+
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3);
+  return seq;
+}
+
+//------------------------------------------------------------------
+/**
+ * @brief   ２回目子機が申し込みを受けるかどうか選択 WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3
+ * @param   wk
+ * @retval  none
+ */
+//------------------------------------------------------------------
+
+static int _playerDirectInit3Next( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  int ret;
+  u8 command;
+
+  GFL_FONTSYS_SetDefaultColor();
+  ret = _bmpMenu_YesNoSelectMain(wk);
+
+  if(ret == BMPMENU_NULL){  // まだ選択中
+    return seq;
+  }
+  else if(ret == 0){ // はいを選択した場合
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_INIT5;
+  }
+  else{  // いいえを選択した場合
+    wk->command = WIFIP2PMATCH_PLAYERDIRECT_END_CHILD;
+  }
+  EndMessageWindowOff(wk);
+  _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_WAIT_COMMAND);
+  return seq;
+}
+
 

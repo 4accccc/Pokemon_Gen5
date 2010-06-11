@@ -2253,17 +2253,14 @@ static void mydwc_updateFriendInfo( void )
       u8 nowstate = DWC_GetFriendStatusData(&_dWork->pFriendData[ index ],(char*)_dWork->friendinfo[index],&size);
       if(size < 1){//0‚â-1‚ª‚ ‚è‚¦‚é
         _dWork->friend_status[index] = DWC_STATUS_OFFLINE;
-#if PM_DEBUG
-        OS_TPrintf("FRIEND OFF %d %d\n",index, nowstate);
-#endif
       }
       else{
         _dWork->friend_status[index] = nowstate;
 #if PM_DEBUG
         GF_ASSERT(size == MYDWC_STATUS_DATA_SIZE_MAX);
-        if(backup!=nowstate){
-          OS_TPrintf("FRIEND CHANGE %d => %d  %d\n",backup, nowstate,index);
-        }
+///        if(backup!=nowstate){
+//          MYDWC_DEBUGPRINT("FRIEND CHANGE %d => %d  %d\n",backup, nowstate,index);
+//        }
 #endif
       }
     }
