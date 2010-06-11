@@ -315,7 +315,7 @@ static  void  GameInit(void)
 #if 0
   TestModeSet();  //←サンプルデバッグモード
 #else
-  GFL_PROC_SysCallProc(NO_OVERLAY_ID, &TitleControlProcData, NULL);
+  GFL_PROC_SysCallProc(FS_OVERLAY_ID(title_ctrl), &TitleControlProcData, NULL);
 //  GFL_PROC_SysCallProc(FS_OVERLAY_ID(title), &CorpProcData, NULL);
 #endif
 

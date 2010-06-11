@@ -129,7 +129,6 @@ SRCS  +=    $(SOUNDSRC) \
         system/bmp_cursor.c \
         system/file_util.c \
         item/item.c \
-        title/title_control.c \
         system/playtime_ctrl.c \
         system/palanm.c \
         system/wipe.c \
@@ -1116,11 +1115,20 @@ SRCS_OVERLAY_SOGABE_DEBUG		= test/soga/d_soga.c \
 								  test/soga/pokemon_viewer.c \
 								  test/soga/trainer_viewer.c
 
+# タイトルコントロール
+#===> SRCS_OVERLAY_TAYA_DEBUG
+#===> SRCS_OVERLAY_SOGABE_DEBUG
+#===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_UI_COMMON
+SRCS_OVERLAY_TITLE_CTRL  = title/title_control.c
+
+
 # タイトル
 #===> SRCS_OVERLAY_TAYA_DEBUG
 #===> SRCS_OVERLAY_SOGABE_DEBUG
 #===> SRCS_OVERLAY_DEV_WIFI
 #===> SRCS_OVERLAY_UI_COMMON
+#===> SRCS_OVERLAY_TITLE_CTRL
 SRCS_OVERLAY_TITLE  = title/title.c \
         title/startmenu.c \
         title/game_start.c \
@@ -1907,6 +1915,7 @@ SRCS_OVERLAY_WIFIBATTLEMATCH_PROC = net_app/wifi_match/wifibattlematch_subproc.c
 
 # コマンドデモ
 #===> SRCS_OVERLAY_DEV_WIFI
+#===> SRCS_OVERLAY_TITLE_CTRL
 #===> GROUP_OVERLAY_UNION_INTRUDE
 SRCS_OVERLAY_COMMAND_DEMO = demo/command_demo/command_demo.c \
 							demo/command_demo/cdemo_main.c \
