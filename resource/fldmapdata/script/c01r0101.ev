@@ -56,7 +56,7 @@ INIT_EVENT_END
 /*					FIELD_RECOVER_LABEL						*/
 /************************************************************/
 INIT_EVENT_START	ev_recover_c01r0101
-	//イベント状況によりOBJの表示位置変更
+/*	//イベント状況によりOBJの表示位置変更
 	
 	//分岐：ジムバッジ取得しているか、いないか
 	_GET_BADGE_FLAG( SCWK_TEMP0, BADGE_ID_01 )
@@ -70,7 +70,7 @@ INIT_EVENT_START	ev_recover_c01r0101
 	ELSE
 	
 	ENDIF
-
+*/
 INIT_EVENT_END
 
 
