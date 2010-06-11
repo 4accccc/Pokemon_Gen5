@@ -50,15 +50,14 @@
 #define BGID_C03_SIGN1_01                 2
 #define BGID_C03_SIGN1_03                 3
 #define BGID_C03_SIGN3_01                 4
-#define BGID_C03_SIGN3_02                 5
-#define BGID_C03_SIGN4_01                 6
-#define BGID_C03_SIGN5_01                 7
-#define BGID_C03_SIGN7_01                 8
-#define BGID_C03_SIGN6_01                 9
-#define BGID_C03_SIGN1_04                10
-#define BGID_C03_SIGN1_05                11
-#define BGID_C03_SIGN8_01                12
-#define BGID_C03_SIGN8_02                13
-#define BGID_C03_SIGN1_06                14
+#define BGID_C03_SIGN4_01                 5
+#define BGID_C03_SIGN5_01                 6
+#define BGID_C03_SIGN7_01                 7
+#define BGID_C03_SIGN6_01                 8
+#define BGID_C03_SIGN1_04                 9
+#define BGID_C03_SIGN1_05                10
+#define BGID_C03_SIGN8_01                11
+#define BGID_C03_SIGN8_02                12
+#define BGID_C03_SIGN1_06                13
 
 #endif //ZONE_C03_EVB_H
