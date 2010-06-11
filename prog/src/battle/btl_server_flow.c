@@ -5111,7 +5111,7 @@ static void scPut_DecrementPP( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, u8 
 static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
    BTL_POKEPARAM* attacker, BTL_POKESET* targets, const BTL_DMGAFF_REC* affRec, BOOL fDelayAttack )
 {
-  u32  dmg_sum;
+  u32  dmg_sum = 0;
 
   FlowFlg_Clear( wk, FLOWFLG_SET_WAZAEFFECT );
   scproc_Fight_DamageProcStart( wk, attacker, wazaParam );
@@ -5121,19 +5121,23 @@ static void scproc_Fight_Damage_Root( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
 
   scEvent_HitCheckParam( wk, attacker, wazaParam->wazaID, wk->hitCheckParam );
 
-  dmg_sum = 0;
+  // ダメージワザ回復化 コイツは現在「プレゼント」でしか使われていない
+  scproc_Fight_Damage_ToRecover( wk, attacker, wazaParam, targets );
 
-  if( HITCHECK_IsPluralHitWaza(wk->hitCheckParam)
-  &&  (BTL_POKESET_GetCountMax(targets) == 1)
-  ){
-    dmg_sum = scproc_Fight_Damage_PluralCount( wk, wazaParam, attacker, targets, affRec );
-  }
-  else{
-    dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec, fDelayAttack );
-  }
+  if( BTL_POKESET_GetCount(targets) )
+  {
+    if( HITCHECK_IsPluralHitWaza(wk->hitCheckParam)
+    &&  (BTL_POKESET_GetCountMax(targets) == 1)
+    ){
+      dmg_sum = scproc_Fight_Damage_PluralCount( wk, wazaParam, attacker, targets, affRec );
+    }
+    else{
+      dmg_sum = scproc_Fight_Damage_SingleCount( wk, wazaParam, attacker, targets, affRec, fDelayAttack );
+    }
 
-  if( dmg_sum ){
-    scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
+    if( dmg_sum ){
+      scproc_Fight_Damage_Kickback( wk, attacker, wazaParam->wazaID, dmg_sum );
+    }
   }
 
   scproc_Fight_DamageProcEnd( wk, wazaParam, attacker, wk->psetDamaged, dmg_sum, fDelayAttack );
@@ -5508,9 +5512,6 @@ static u32 scproc_Fight_Damage_side( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* 
   BtlTypeAff affAry[ BTL_POSIDX_MAX ];
   BTL_POKEPARAM* bpp;
   u8 damaged_poke_cnt;
-
-  // コイツは現在「プレゼント」でしか使われていない
-  scproc_Fight_Damage_ToRecover( wk, attacker, wazaParam, targets );
 
   damaged_poke_cnt = BTL_CALCDAMAGE_GetCount( dmgRec );
 
@@ -14812,7 +14813,7 @@ static u8 scproc_HandEx_hensin( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
  */
 static u8 scproc_HandEx_fakeBreak( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER* param_header )
 {
-  BTL_HANDEX_PARAM_HENSIN* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
+  BTL_HANDEX_PARAM_FAKE_BREAK* param = (BTL_HANDEX_PARAM_HENSIN*)param_header;
 
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
