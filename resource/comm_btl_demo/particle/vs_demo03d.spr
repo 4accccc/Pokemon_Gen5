@@ -52,8 +52,8 @@
 		rtt_max="852"
 		init_rtt="0"
 		emtr_life="171"
-		ptcl_life="50"
-		ptcl_life_r="44"
+		ptcl_life="40"
+		ptcl_life_r="0"
 		offset_x="0"
 		offset_y="0"
 		gen_intvl="1"
@@ -74,8 +74,8 @@
 		tex_name="kirakira.spt"
 	/>
 	<scl_anm
-		scl_s="4020"
-		scl_n="2193"
+		scl_s="3167"
+		scl_n="1827"
 		scl_e="365"
 		loop="0"
 		in="128"
