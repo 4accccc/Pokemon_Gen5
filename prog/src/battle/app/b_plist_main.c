@@ -38,6 +38,8 @@
 #include "b_plist_gra.naix"
 
 
+#include "debug/debug_hudson.h"
+
 //============================================================================================
 //  定数定義
 //============================================================================================
@@ -1876,6 +1878,13 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
   case BPLIST_UI_LIST_POKE6:
     if( BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
       wk->dat->sel_poke = (u8)ret;
+#ifdef DEBUG_ONLY_FOR_hudson
+      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+      {
+        // 強制的に4匹目を選択（バトンタッチ等対策）
+        wk->dat->sel_poke = BPLIST_UI_LIST_POKE4;
+      }
+#endif
       return TRUE;
     }
     break;
