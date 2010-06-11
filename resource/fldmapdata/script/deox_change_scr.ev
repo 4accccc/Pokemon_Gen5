@@ -46,8 +46,6 @@ EVENT_START ev_deox_change
       IF $DEO_NUM == 1 THEN   //1匹発見
         _GET_PARTY_POS( MONSNO_DEOKISISU, SCWK_ANSWER, SEL_POS )
         IF $SCWK_ANSWER == TRUE THEN
-          //システムウィンドウクローズ
-          _SYSWIN_CLOSE()
           //フォルムチェンジシーケンスコール
           _CALL form_change
         ELSE
