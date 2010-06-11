@@ -1066,6 +1066,159 @@ sub output_answer_data
     }
   }
 
+  # スキップした番号も追加しておく
+  my $p = 1; 
+  for( my $src_no=0; $src_no<@TargetGmm; $src_no++ )
+  {
+    my $start = 0;  # $start<= <=$end
+    my $end;
+    for(my $i=0; $i<$src_no; $i++)
+    {
+      $start += $SrcElems[$i];
+    }
+    $end = $start + $SrcElems[$src_no] -1;
+
+  	my $start_skip = ${$TargetGmm[$src_no]}[TGM_START_SKIP];
+  	my $end_skip = ${$TargetGmm[$src_no]}[TGM_END_SKIP];
+  	my $mid_skip_begin = ${$TargetGmm[$src_no]}[TGM_MID_SKIP_BEGIN];
+
+  	# ポケモン名などは先頭にダミー要素が入っているので、ここでカットしとく
+    for(my $i=0; $i<$start_skip; $i++)
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $i;       # 30
+      $p++; 
+      $answer_num++;
+    }
+    for(my $i=0; $i<$end_skip; $i++)
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $end - $i;         # 30
+      $p++; 
+      $answer_num++;
+    }
+
+  	my $skip1 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP1];
+  	my $skip2 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP2];
+  	my $skip3 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP3];
+  	my $skip4 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP4];
+  	my $skip5 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP5];
+  	my $skip6 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP6];
+  	my $skip7 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP7];
+  	my $skip8 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP8];
+  	my $skip9 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP9];
+  	my $skip10 = ${$TargetGmm[$src_no]}[TGM_FORCE_SKIP10];
+
+  	if( $skip1 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip1;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip2 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip2;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip3 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip3;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip4 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip4;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip5 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip5;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip6 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip6;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip7 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip7;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip8 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip8;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip9 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip9;   # 30
+      $p++; 
+      $answer_num++;
+    }
+    if( $skip10 != -1 )
+    {
+      my $define_name = sprintf( "skip%02d", $p );
+      $answer_tbl[$answer_num][0] = $define_name;      # answer_id_01
+      $answer_tbl[$answer_num][1] = "スキップたんご";  # ピカチュウ
+      $answer_tbl[$answer_num][2] = $start + $skip10;  # 30
+      $p++; 
+      $answer_num++;
+    }
+
+  	if( $mid_skip_begin != -1 )
+  	{
+  		my $mid_skip_end = ${$TargetGmm[$src_no]}[TGM_MID_SKIP_END];
+      for( my $i=$mid_skip_begin; $i<=$mid_skip_end; $i++ )
+      {
+        my $define_name = sprintf( "skip%02d", $p );
+        $answer_tbl[$answer_num][0] = $define_name;          # answer_id_01
+        $answer_tbl[$answer_num][1] = "スキップたんご";      # ピカチュウ
+        $answer_tbl[$answer_num][2] = $mid_skip_begin + $i;  # 30
+        $p++; 
+        $answer_num++;
+      }
+    }
+  }
+
 #=pod
   # $answer_dat_file_nameの内容確認
   for( my $i=0; $i<$answer_num; $i++ )

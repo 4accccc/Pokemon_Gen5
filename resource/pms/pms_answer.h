@@ -66,3 +66,15 @@
 #define mypms04 (1639) // ざんねん
 #define mypms05 (1395) // いちばん
 #define correct01 (1697) // ポケモン
+#define skip01 (0) // スキップたんご
+#define skip02 (651) // スキップたんご
+#define skip03 (650) // スキップたんご
+#define skip04 (652) // スキップたんご
+#define skip05 (1198) // スキップたんご
+#define skip06 (1199) // スキップたんご
+#define skip07 (1200) // スキップたんご
+#define skip08 (1205) // スキップたんご
+#define skip09 (1206) // スキップたんご
+#define skip10 (1207) // スキップたんご
+#define skip11 (1209) // スキップたんご
+#define skip12 (1229) // スキップたんご

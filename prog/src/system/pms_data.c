@@ -77,7 +77,7 @@ static const u8 SentenceIdMax[PMS_TYPE_MAX] =  // 本当は決め打ち手打ち入力ではな
 //==============================================================
 static u32 get_include_word_max( u32 sentence_type, u32 sentence_id , const HEAPID heapID );
 
-
+static BOOL is_skip_word( PMS_WORD word );
 
 
 //------------------------------------------------------------------
@@ -919,7 +919,8 @@ extern BOOL PMSDAT_CorrectWord( PMS_WORD* word, BOOL is_word_null_correct, BOOL 
     u32 word_id;
     u32 file_id;
     // 単語ならば、単語ナンバーがあっているか
-    if( !GetWordSorceID( *word, &file_id, &word_id ) )
+    if(    (is_skip_word(*word))
+        || (!GetWordSorceID( *word, &file_id, &word_id )) )
     {
       *word = PMSDAT_CORRECT_WORD;
       is_correct = FALSE;
@@ -966,5 +967,43 @@ extern BOOL PMSDAT_CorrectDecoId( PMS_DECO_ID* deco_id, BOOL is_decoid_null_corr
   }
 
   return is_correct;
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief          データがスキップ対象の単語かどかチェックを行う
+ *
+ *	@param[in,out]  word                  スキップチェックを行うデータ。
+ *
+ *	@return         データがスキップ対象の場合はTRUE、スキップ対象でない場合はFALSE
+ */
+//-----------------------------------------------------------------------------
+static BOOL is_skip_word( PMS_WORD word )
+{
+  const PMS_WORD skip_word_tbl[] =
+  {
+    skip01,
+    skip02,
+    skip03,
+    skip04,
+    skip05,
+    skip06,
+    skip07,
+    skip08,
+    skip09,
+    skip10,
+    skip11,
+    skip12,
+  };
+
+  u8 i;
+  for( i=0; i<NELEMS(skip_word_tbl); i++ )
+  {
+    if( word == skip_word_tbl[i] )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
