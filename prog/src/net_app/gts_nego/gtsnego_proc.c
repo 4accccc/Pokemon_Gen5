@@ -1288,6 +1288,8 @@ static void _levelSelect( GTSNEGO_WORK *pWork )
 {
   pWork->changeMode = _CHANGEMODE_SELECT_ANYONE;
 
+  //ƒ^ƒbƒ`ƒo[‚n‚a‚i‚Ì•\Ž¦  20100611 add Saito
+  TOUCHBAR_SetVisibleAll( GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TRUE );
 
   GTSNEGO_MESSAGE_DispClear(pWork->pMessageWork);
   GTSNEGO_DISP_LevelInputInit(pWork->pDispWork);
@@ -2117,6 +2119,9 @@ static void _modeSelectMenuInit(GTSNEGO_WORK* pWork)
 static int _buttonDecide(GTSNEGO_WORK* pWork, int key)
 {
   if(GTSNEGO_DISP_CrossIconFlash(pWork->pDispWork, key)){
+    //ƒ^ƒbƒ`ƒo[‚n‚a‚i‚Ì”ñ•\Ž¦  20100611 add Saito
+    TOUCHBAR_SetVisibleAll( GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), FALSE );
+
     PMSND_PlaySystemSE(_SE_DECIDE);
     return key;
   }
