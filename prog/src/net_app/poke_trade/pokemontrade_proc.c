@@ -1323,7 +1323,7 @@ BOOL POKEMONTRADE_IsMailPokemon(POKEMON_TRADE_WORK* pWork)
 
   item = PP_Get( pp , ID_PARA_item ,NULL);
 
-  OS_TPrintf("ƒ[ƒ‹%d FULL%d BOX%d \n", ITEM_CheckMail(item), pWork->friendMailBoxFULL, bBox);
+  //OS_TPrintf("ƒ[ƒ‹%d FULL%d BOX%d \n", ITEM_CheckMail(item), pWork->friendMailBoxFULL, bBox);
   if(ITEM_CheckMail(item)){
     if(pWork->friendMailBoxFULL && !bBox){
       return TRUE;
@@ -2707,7 +2707,7 @@ static BOOL _MoveSearchPoke(POKEMON_TRADE_WORK* pWork,int moji)
         monsno = PPP_Get(ppp,ID_PARA_monsno_egg,NULL);
         if(POKEMONTRADE_IsPokeLanguageMark(monsno, moji)){
           if(!PPP_Get(ppp,ID_PARA_tamago_flag,NULL)){
-            OS_TPrintf("‚Ý‚Â‚©‚Á‚½ BOX %d\n",line/6);
+            //OS_TPrintf("‚Ý‚Â‚©‚Á‚½ BOX %d\n",line/6);
             pWork->oldLine++;
             pWork->BoxScrollNum = _boxScrollLine2Num(line) - 32;
             pWork->bgscrollRenew = TRUE;

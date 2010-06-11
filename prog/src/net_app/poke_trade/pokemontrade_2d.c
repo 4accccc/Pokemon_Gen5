@@ -1130,6 +1130,8 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
   int linest = POKETRADE_boxScrollNum2Line(pWork);
   int lineend = linest + 10;
   int maincur;
+
+//  OS_TPrintf("line st %d %d %d %d\n",linest,lineend,pWork->TRADEBOX_LINEMAX,pWork->MainObjCursorLine);
   
   *line = linest + 2;
   if(*line > pWork->TRADEBOX_LINEMAX){  //てもちになる
@@ -1139,7 +1141,7 @@ BOOL POKETRADE_IsMainCursorDispIn(POKEMON_TRADE_WORK* pWork,int* line)
   if(lineend > pWork->TRADEBOX_LINEMAX){ //てもちになる
     maincur = pWork->MainObjCursorLine;
     if(pWork->MainObjCursorLine < 20){  //メインカーソルが一周している場合
-      maincur = pWork->MainObjCursorLine + 2 + pWork->TRADEBOX_LINEMAX; //計算の為に伸ばす
+      maincur = pWork->MainObjCursorLine + 1 + pWork->TRADEBOX_LINEMAX; //計算の為に伸ばす
     }
     if((linest <= maincur) && (maincur <= lineend)){
       return TRUE;
