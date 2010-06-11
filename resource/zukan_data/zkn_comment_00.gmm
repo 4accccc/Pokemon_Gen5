@@ -2002,7 +2002,7 @@
 		<language name="JPN">いちにちじゅう　みずの　なかで
 すごせるのは　くうきを　たっぷり
 すいこんで　ためておけるからだ。</language>
-		<language name="JPN_KANJI">一日中　水の　中で
+		<language name="JPN_KANJI">１日中　水の　中で
 過ごせるのは　空気を　たっぷり
 吸い込んで　ためておけるからだ。</language>
 	</row>
@@ -2281,8 +2281,8 @@
 		<language name="JPN">ずるがしこく　いっぴきが　おやを
 おびきよせ　もういっぴきが　タマゴを
 とるという　チームプレーも　みせる。</language>
-		<language name="JPN_KANJI">ずるがしこく　一匹が　親を
-おびき寄せ　もう一匹が　タマゴを
+		<language name="JPN_KANJI">ずるがしこく　１匹が　親を
+おびき寄せ　もう１匹が　タマゴを
 取るという　チームプレーも　見せる。</language>
 	</row>
 
@@ -3921,7 +3921,7 @@
 いっぴきになると　やかましく　なく。</language>
 		<language name="JPN_KANJI">自分の　弱さを　わきまえており
 いつも　群れで　暮らしている。
-一匹になると　やかましく　鳴く。</language>
+１匹になると　やかましく　鳴く。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_398">
@@ -4595,8 +4595,8 @@
 のると　いちども　はばたくことなく
 このほしを　いっしゅう　できる。</language>
 		<language name="JPN_KANJI">わずかな　風の流れに　うまく
-乗ると　一度も　羽ばたくことなく
-この星を　一周　できる。</language>
+乗ると　１度も　羽ばたくことなく
+この星を　１周　できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_473">
