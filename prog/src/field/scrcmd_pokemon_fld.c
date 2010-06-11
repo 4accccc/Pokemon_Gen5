@@ -119,7 +119,7 @@ VMCMD_RESULT EvCmdSetFavoritePoke( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk )
 {
-  int i;
+  int i, count;
   u16 monsnos[TEMOTI_POKEMAX];
   GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
   POKEPARTY * party = GAMEDATA_GetMyPokemon( gamedata );
@@ -129,12 +129,12 @@ VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk )
   {
     monsnos[i] = 0;
   }
-  for (i = 0; i < PokeParty_GetPokeCount( party ); i++)
+  for (i = 0, count = 0; i < PokeParty_GetPokeCount( party ); i++)
   {
     POKEMON_PARAM * pp = PokeParty_GetMemberPointer( party, i );
     if ( PP_Get( pp, ID_PARA_tamago_flag, NULL ) == FALSE )
     {
-      monsnos[i] = PP_Get( pp, ID_PARA_monsno, NULL);
+      monsnos[count++] = PP_Get( pp, ID_PARA_monsno, NULL);
     }
   }
   MISC_SetGymVictoryInfo( GAMEDATA_GetMiscWork(gamedata), badge_id, monsnos );
@@ -148,10 +148,10 @@ VMCMD_RESULT EvCmdSetGymVictoryInfo( VMHANDLE * core, void *wk )
 //--------------------------------------------------------------
 VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
 {
-  GAMEDATA * gamedata = SCRCMD_WORK_GetGameData( wk );
-  SCRCMD_WORK*       work = wk;
-  SCRIPT_WORK*         sc = SCRCMD_WORK_GetScriptWork( work );
-  WORDSET*        wordset = SCRIPT_GetWordSet( sc );
+  SCRCMD_WORK* work     = wk;
+  GAMEDATA *   gamedata = SCRCMD_WORK_GetGameData( work );
+  SCRIPT_WORK* sc       = SCRCMD_WORK_GetScriptWork( work );
+  WORDSET*     wordset  = SCRIPT_GetWordSet( sc );
 
   int i, count;
   u16 badge_id = SCRCMD_GetVMWorkValue( core, wk );
@@ -163,7 +163,7 @@ VMCMD_RESULT EvCmdGetGymVictoryInfo( VMHANDLE * core, void *wk )
   {
     if (monsnos[i] != 0)
     {
-      WORDSET_RegisterPokeMonsNameNo( wordset, i, monsnos[i] );
+      WORDSET_RegisterPokeMonsNameNo( wordset, count, monsnos[i] );
       count ++;
     }
   }
