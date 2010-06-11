@@ -1601,7 +1601,10 @@ static POKEMON_PARAM* MakePokeParam( GAMEDATA *gdata, ADD_POKE_PRM *prm )
   {
     //捕獲ボールセット
     int item_type = ITEM_GetParam( prm->Ball, ITEM_PRM_ITEM_TYPE, prm->HeapID );
-    if (item_type == ITEMTYPE_BALL) PP_Put( pp, ID_PARA_get_ball, prm->Ball );     // 捕獲ボールセット
+    if (item_type == ITEMTYPE_BALL){
+      //get_ballパラメータはBALLIDなので、アイテムナンバーから変換
+      PP_Put( pp, ID_PARA_get_ball, ITEM_GetBallID(prm->Ball) );     // 捕獲ボールセット
+    }
   }
 
   {

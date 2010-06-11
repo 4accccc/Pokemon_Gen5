@@ -15,6 +15,7 @@
 
 #include "poke_tool/poke_tool.h"
 #include "item/itemsym.h"
+#include "item/item.h"
 #include "waza_tool/wazano_def.h"
 #include "savedata/mystery_data.h"
 #include "poke_tool/poke_memo.h"
@@ -206,7 +207,7 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
   }
   else
   { 
-    PP_Put(pp, ID_PARA_get_ball, ITEM_MONSUTAABOORU );
+    PP_Put(pp, ID_PARA_get_ball, BALLID_MONSUTAABOORU );
   }
 
   if(pGift->get_level!=0){

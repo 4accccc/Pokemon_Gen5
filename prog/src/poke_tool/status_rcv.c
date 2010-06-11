@@ -890,31 +890,6 @@ static u8 Friend_Up( POKEMON_PARAM * pp, s32 now, s32 prm, u16 itemNo , u16 plac
   if( now == 0 && prm < 0 ){
     return FALSE;
   }
-/*
-  if( prm > 0 ){
-    // •ßŠlƒ{[ƒ‹
-    if( PP_Get( pp, ID_PARA_get_ball, NULL ) == ITEM_GOOZYASUBOORU ){
-      prm++;
-    }
-    // •ßŠlêŠ
-    if( PP_Get( pp, ID_PARA_get_place, NULL ) == place ){
-      prm++;
-    }
-    // ‘•”õŒø‰Ê
-    if( ITEM_GetParam(PP_Get(pp,ID_PARA_item,NULL),ITEM_PRM_EQUIP,heap)==SOUBI_NATUKIDOUP ){
-      prm = prm * 150 / 100;
-    }
-  }
-
-  prm += now;
-  if( prm > PTL_FRIEND_MAX ){
-    prm = PTL_FRIEND_MAX;
-  }
-  if( prm < 0 ){
-    prm = 0;
-  }
-  PP_Put( pp, ID_PARA_friend, prm );
-*/
   NATSUKI_CalcUseItem( pp , itemNo , place , heap );
   return TRUE;
 }

@@ -155,7 +155,7 @@ static  void	NATSUKI_CalcAct( POKEMON_PARAM *pp, const s8* natsuki_table, ZONEID
 	natsukitmp = natsuki_table[ ofs ];
 
 	// ゴージャスボールだともう1上がる
-	if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_ball, NULL ) == ITEM_GOOZYASUBOORU ) )
+	if( ( natsukitmp > 0 ) && ( PP_Get( pp, ID_PARA_get_ball, NULL ) == BALLID_GOOZYASUBOORU ) )
   {
 		natsukitmp++;
 	}

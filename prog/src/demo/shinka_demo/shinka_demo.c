@@ -44,6 +44,7 @@ FS_EXTERN_OVERLAY(battle_plist);
 #include "savedata/record.h"
 #include "savedata/mail.h"
 #include "item/itemsym.h"
+#include "item/item.h"
 #include "poke_tool/shinka_check.h"
 #include "print/global_msg.h"
 #include "app/app_keycursor.h"
@@ -2758,7 +2759,7 @@ static void ShinkaDemo_ShinkaCondCheckSpecialLevelup( SHINKA_DEMO_PARAM* param, 
       //-------------// ↓パラメータを設定する↓ //-------------//
       
       //取得ボールをモンスターボールに
-      PP_Put( nukenin_pp, ID_PARA_get_ball, ITEM_MONSUTAABOORU );
+      PP_Put( nukenin_pp, ID_PARA_get_ball, BALLID_MONSUTAABOORU );
       
       //装備アイテムをなくす
       PP_Put( nukenin_pp, ID_PARA_item, 0 );
