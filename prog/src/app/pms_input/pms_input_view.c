@@ -92,6 +92,11 @@ struct _PMS_INPUT_VIEW {
 	
   PRINT_QUE*  print_que;
 	GFL_FONT		*fontHandle;
+
+  // ”wŒiBG‚Ì“]‘—‚ðŠÇ—‚·‚é•Ï”
+  BOOL        back_screen_req_trans;   // TRUE‚Ì‚Æ‚«VBlank‚Å”wŒiBG“]‘—
+  BOOL        back_screen_is_wordwin;  // TRUE‚Ì‚Æ‚«’PŒêƒŠƒXƒgƒEƒBƒ“ƒhƒEAFALSE‚Ì‚Æ‚«’Êí‚Ì”wŒi
+  ARCHANDLE*  back_screen_handle;
 };
 
 //------------------------------------------------------
@@ -232,6 +237,13 @@ PMS_INPUT_VIEW*  PMSIView_Create(const PMS_INPUT_WORK* main_wk, const PMS_INPUT_
 
     // Å‰‚Í•ÒWƒGƒŠƒA‚ÉƒJ[ƒ\ƒ‹‚ª‚ ‚é
 	  vwk->status = PMSI_ST_EDIT;
+
+    // ”wŒiBG‚Ì“]‘—‚ðŠÇ—‚·‚é•Ï”
+    {
+      vwk->back_screen_req_trans  = FALSE;
+      vwk->back_screen_is_wordwin = FALSE;
+      vwk->back_screen_handle     = GFL_ARC_OpenDataHandle( ARCID_PMSI_GRAPHIC, HEAPID_PMS_INPUT_VIEW );
+    }
 	}
 
 	return vwk;
@@ -251,6 +263,11 @@ void PMSIView_Delete( PMS_INPUT_VIEW* vwk )
 	if( vwk )
 	{
 		int i;
+
+    // ”wŒiBG‚Ì“]‘—‚ðŠÇ—‚·‚é•Ï”
+    {
+      GFL_ARC_CloseDataHandle( vwk->back_screen_handle );
+    }	
 
 		for(i=0; i<STORE_COMMAND_MAX; i++)
 		{
@@ -335,7 +352,37 @@ static void PMSIView_MainTask( GFL_TCB *tcb, void* wk_adrs )
 static void PMSIView_VintrTask( GFL_TCB *tcb, void* wk_adrs )
 {
 	PMS_INPUT_VIEW* vwk = wk_adrs;
-	
+
+  // ”wŒiBG‚Ì“]‘—‚ðŠÇ—‚·‚é•Ï”
+  {
+    if( vwk->back_screen_req_trans )
+    {
+      u32 nscr, ncgr;
+
+      if( vwk->back_screen_is_wordwin )
+      {
+        nscr = NARC_pmsi_pms_bg_main3_NSCR;
+        ncgr = NARC_pmsi_pms_bg_main3_NCGR;
+      }
+      else
+      {
+        nscr = NARC_pmsi_pms_bg_main2_NSCR;
+        ncgr = NARC_pmsi_pms_bg_main2_NCGR;
+      }
+
+      // ”wŒi–Ê“]‘—
+	    //GFL_ARCHDL_UTIL_TransVramScreen(vwk->back_screen_handle, nscr,
+	    //	FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );  // ƒXƒNƒŠ[ƒ“‚ð‚±‚±‚Å“]‘—‚·‚é‚Æ‰æ–Ê‚ªˆêu•ö‚ê‚é‚Ì‚ÅAƒRƒƒ“ƒgƒAƒEƒgB
+      //GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(vwk->back_screen_handle, nscr,
+      //  FRM_MAIN_BACK, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+  	  
+      GFL_ARCHDL_UTIL_TransVramBgCharacter(vwk->back_screen_handle, ncgr,
+  	  	FRM_MAIN_BACK, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );
+
+      vwk->back_screen_req_trans  = FALSE;
+    }
+  }
+
 	GFL_BG_VBlankFunc();
 	
 	GFL_CLACT_SYS_VBlankFunc();
@@ -2175,6 +2222,7 @@ u32 PMSIView_GetScrollBarPosCount( PMS_INPUT_VIEW* vwk, u32 max )
 //-----------------------------------------------------------------------------
 void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin )
 {
+#if 0
   ARCHANDLE* p_handle;
   u32 nscr, ncgr;
 
@@ -2201,6 +2249,28 @@ void PMSIView_SetBackScreen( PMS_INPUT_VIEW* vwk, BOOL is_wordwin )
   GFL_ARC_CloseDataHandle( p_handle );
 	
   GFL_BG_LoadScreenReq( FRM_MAIN_BACK );
+#else
+  u32 nscr, ncgr;
+ 
+  if( is_wordwin )
+  {
+    nscr = NARC_pmsi_pms_bg_main3_NSCR;
+    ncgr = NARC_pmsi_pms_bg_main3_NCGR;
+  }
+  else
+  {
+    nscr = NARC_pmsi_pms_bg_main2_NSCR;
+    ncgr = NARC_pmsi_pms_bg_main2_NCGR;
+  }
+
+  // ”wŒi–Ê“]‘—
+  GFL_ARCHDL_UTIL_TransVramScreenCharOfsVBlank(vwk->back_screen_handle, nscr,
+      FRM_MAIN_BACK, 0, 0, 0, FALSE, HEAPID_PMS_INPUT_VIEW );  // ƒXƒNƒŠ[ƒ“‚Í‚±‚±‚ÅVBlank“]‘—‚µ‚Ä‚¨‚©‚È‚¢‚Æ‰æ–Ê‚ªˆêu•ö‚ê‚é
+
+  // ”wŒiBG‚Ì“]‘—‚ðŠÇ—‚·‚é•Ï”
+  vwk->back_screen_req_trans  = TRUE;
+  vwk->back_screen_is_wordwin = is_wordwin;
+#endif
 }
 
 
