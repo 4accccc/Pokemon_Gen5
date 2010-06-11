@@ -277,9 +277,7 @@ extern REGULATION_SAVEDATA* SaveData_GetRegulationSaveData(SAVE_CONTROL_WORK* pS
 //	デバッグ用
 //----------------------------------------------------------
 #ifdef PM_DEBUG
-extern void Regulation_SetDebugData( REGULATION_CARDDATA* pReg );
 extern void Regulation_PrintDebug( const REGULATION_CARDDATA* cpReg );
 #else
-#define Regulation_SetDebugData(x) /*  */
 #define Regulation_PrintDebug(x)  /*  */
 #endif //PM_DEBUG

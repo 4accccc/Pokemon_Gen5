@@ -177,12 +177,10 @@ SRCS  +=    $(SOUNDSRC) \
         gamesystem/pm_weather.c \
         system/bgwinfrm.c \
         poke_tool/gauge_tool.c \
-        system/gra_tool.c \
 				system/pokegra.c \
 				system/trgra.c \
 				system/poke2dgra.c \
 				system/tr2dgra.c \
-        system/nsbtx_to_clwk.c \
         system/pms_draw.c \
 				system/shortcut_data.c \
         app/bag/bag_param.c\
@@ -2033,6 +2031,9 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 
 
 #名前入力
+#gra_toolとnsbtx_to_clwkはシステムなので本来常駐にあるべきですが、
+#常駐がきつくなってきた＋この場所でしか読んでいなかったのでオーバーレイを移しました。
+#次回ver等で他にも必要になりましたら、審議の上常駐に戻してください
 #===> SRCS_OVERLAY_WIFINOTE
 #===> SRCS_OVERLAY_TITLE
 #===> SRCS_OVERLAY_BATTLE_RETURN
@@ -2040,6 +2041,8 @@ SRCS_OVERLAY_DEBUG_DATA = gamesystem/debug_data.c
 SRCS_OVERLAY_NAMEIN	= app/name_input/namein.c \
 											app/name_input/namein_graphic.c \
 											app/name_input/namein_data.c \
+                      system/gra_tool.c \
+                      system/nsbtx_to_clwk.c \
 											system/prof_word.c
 
 #進化デモ

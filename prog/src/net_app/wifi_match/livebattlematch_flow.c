@@ -230,6 +230,11 @@ static void DEBUGWIN_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk );
 #define DEBUGWIN_Exit( ... )  /*  */
 #endif //DEBUGWIN_USE
 
+
+#ifdef DEBUG_REGULATION_RECV_A_PASS
+static void Regulation_SetDebugData( REGULATION_CARDDATA* pReg );
+#endif
+
 //=============================================================================
 /**
  *					データ
@@ -2708,5 +2713,66 @@ static void DEBUGWIN_Exit( LIVEBATTLEMATCH_FLOW_WORK *p_wk )
   DEBUGWIN_REG_Exit();
 
   DEBUGWIN_ExitProc();
+}
+#endif
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  デバッグ用にデータを設定
+ *
+ *	@param	REGULATION_CARDDATA* pReg ワーク
+ */
+//-----------------------------------------------------------------------------
+#ifdef DEBUG_REGULATION_RECV_A_PASS
+static void Regulation_SetDebugData( REGULATION_CARDDATA* pReg )
+{ 
+  { 
+    REGULATION  *p_data = &pReg->regulation_buff;
+    p_data->cupNo   = 1;
+    p_data->ruleNo  = 0;
+    p_data->NUM_LO  = 1;
+    p_data->NUM_HI  = 6;
+    p_data->LEVEL   = 1;
+    p_data->LEVEL_RANGE = REGULATION_LEVEL_RANGE_NORMAL;
+    p_data->LEVEL_TOTAL = 600;
+    p_data->BOTH_POKE   = 1;
+    p_data->BOTH_ITEM   = 1;
+    GFL_STD_MemClear( p_data->VETO_POKE_BIT, REG_POKENUM_MAX_BYTE );
+    GFL_STD_MemClear( p_data->VETO_ITEM, REG_ITEMNUM_MAX_BYTE );
+    p_data->MUST_POKE   = 0;
+    p_data->MUST_POKE_FORM   = 0;
+    p_data->SHOOTER     = 0;
+    p_data->TIME_VS     = 99;
+    p_data->TIME_COMMAND= 99;
+    p_data->NICKNAME    = 1;
+    p_data->SHOW_POKE   = 0;
+    p_data->SHOW_POKE_TIME  = 99;
+    p_data->BATTLE_TYPE = REGULATION_BATTLE_SINGLE;
+    p_data->BTL_COUNT = 3;
+    GFL_STD_MemClear( p_data->VETO_SHOOTER_ITEM,SHOOTER_ITEM_BIT_TBL_MAX );
+  }
+  GFL_STD_MemClear( pReg->cupname, sizeof(STRCODE)*(WIFI_PLAYER_TIX_CUPNAME_MOJINUM + EOM_SIZE) );
+  pReg->cupname[ 0] = L'デ';
+  pReg->cupname[ 1] = L'バ';
+  pReg->cupname[ 2] = L'ッ';
+  pReg->cupname[ 3] = L'ク';
+  pReg->cupname[ 4] = L'た';
+  pReg->cupname[ 5] = L'い';
+  pReg->cupname[ 6] = L'か';
+  pReg->cupname[ 7] = L'い';
+  pReg->cupname[ 8] = 0xFFFF;
+  pReg->ver         = 0xFFFFFFFF;
+  pReg->no          = 1;
+  pReg->start_year  = 10;
+  pReg->start_month = 1;
+  pReg->start_day   = 22;
+  pReg->end_year    = 10;
+  pReg->end_month   = 12;
+  pReg->end_day     = 24;
+  pReg->status      = 0;
+  pReg->bgm_no      = 1;
+  pReg->code        = LANG_JAPAN;
+  pReg->crc         = GFL_STD_CrcCalc( pReg, sizeof(REGULATION_CARDDATA) - 2 );
 }
 #endif

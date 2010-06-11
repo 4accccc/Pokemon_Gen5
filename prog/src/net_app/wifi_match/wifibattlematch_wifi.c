@@ -411,13 +411,6 @@ static GFL_PROC_RESULT WIFIBATTLEMATCH_WIFI_PROC_Init( GFL_PROC *p_proc, int *p_
 
   p_wk->p_other_party     = PokeParty_AllocPartyWork( HEAPID_WIFIBATTLEMATCH_CORE );
 
-#ifdef DEBUG_REGULATION_DATA
-  {
-    SAVE_CONTROL_WORK *p_sv = GAMEDATA_GetSaveControlWork( p_param->p_param->p_game_data );
-    Regulation_SetDebugData( SaveData_GetRegulationCardData(p_sv) );
-  }
-#endif //DEBUG_REGULATION_DATA
-
   WIFIBATTLEMATCH_NETICON_SetDraw( p_wk->p_net, TRUE );
 
   //デバッグウィンドウ

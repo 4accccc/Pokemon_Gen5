@@ -202,7 +202,7 @@ static inline POKEMON_PARAM* Mystery_CreatePokemon(const GIFT_PACK_DATA* pPack, 
 
   PP_Put(pp, ID_PARA_form_no, pGift->form_no);  //ƒtƒHƒ‹ƒ€”Ô†‚Í‚·‚×‚Ä‹–‚·
   
-  if(pGift->get_ball!=0){
+  if(pGift->get_ball!=0 && pGift->get_ball <= BALLID_MAX ){
     PP_Put(pp, ID_PARA_get_ball, pGift->get_ball);
   }
   else
