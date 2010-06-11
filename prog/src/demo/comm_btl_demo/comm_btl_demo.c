@@ -1758,7 +1758,10 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
 
   if( id < unit->max )
   {
-    if( id == 0 ){ PMSND_PlaySE( _get_se_no(SE_BALL_IN, 0 ) ); } // ボール
+    // ボールSE
+    if( id == 0 && unit->posid==0){ 
+      PMSND_PlaySE( _get_se_no(SE_BALL_IN, 0 ) ); 
+    } 
 
     // パーティクル表示
     if( type_is_normal(unit->type) )
