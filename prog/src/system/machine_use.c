@@ -114,6 +114,16 @@ void MachineSystem_Init(void)
     PM_AppendPreExitCallback( &myInfo );
   }
 #endif//
+
+  //ソフトリセット時マイクがOFFにならなかったのを修正
+  {
+    PMAmpSwitch swBuf;
+    PM_GetAmp( &swBuf );
+    if( swBuf == PM_AMP_ON )
+    {
+      PM_SetAmp( PM_AMP_OFF );
+    }
+  }
 }
 
 //------------------------------------------------------------------

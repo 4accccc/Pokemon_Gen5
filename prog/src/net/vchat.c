@@ -750,7 +750,7 @@ void myvct_free(void){
 		VCT_Cleanup();
     {
   		u32 ret;
-  		ret = PM_SetAmp(PM_AMP_ON);
+  		ret = PM_SetAmp(PM_AMP_OFF);
   	}
 
 		// ƒƒ‚ƒŠ‚ğ‰ğ•ú
