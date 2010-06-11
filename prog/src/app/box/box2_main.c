@@ -6632,7 +6632,10 @@ int BOX2MAIN_VFuncGetPokeMoveBattleBoxMain( BOX2_SYS_WORK * syswk )
         put_pos = BOX2MAIN_GETPOS_NONE;
         syswk->app->mv_err_code = BOX2MAIN_ERR_CODE_ROCK;
       }
-      PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos );
+
+			if( PokeIconMoveBoxPartyDataMake( syswk, syswk->get_pos, put_pos ) == FALSE ){
+	      put_pos = BOX2MAIN_GETPOS_NONE;
+			}
       if( BOX2BGWFRM_PokeMenuOpenPutCheck( syswk->app->wfrm ) == FALSE ){
         BOX2OBJ_PokeCursorVanish( syswk, FALSE );
       }
