@@ -5036,7 +5036,9 @@ static int MainSeq_ItemBoxPartyChgError( BOX2_SYS_WORK * syswk )
 {
 	BOX2BMP_SysWinVanishTrans( syswk->app, BOX2BMPWIN_ID_MSG1 );
 	BOX2MAIN_ResetTouchBar( syswk );
-	CURSORMOVE_CursorOnOffSet( syswk->app->cmwk, TRUE );
+	if( CURSORMOVE_CursorOnOffGet( syswk->app->cmwk ) == TRUE ){
+		BOX2OBJ_Vanish( syswk->app, BOX2OBJ_ID_HAND_CURSOR, TRUE );
+	}
 	return BOX2SEQ_MAINSEQ_ITEMGET_MAIN;
 }
 
