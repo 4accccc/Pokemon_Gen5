@@ -27,7 +27,7 @@
 
 
 //============================================================================================
-//	定数定義
+//  定数定義
 //============================================================================================
 
 // シーケンス
@@ -85,7 +85,7 @@ typedef struct {
 
 }OSYABERI_WORK;
 
-#define TMP_STR_BUFF_SIZ    ( 1024 )		// テンポラリメッセージバッファサイズ
+#define TMP_STR_BUFF_SIZ    ( 1024 )    // テンポラリメッセージバッファサイズ
 
 // ペラップのウィンドウ定義
 #define POKEWIN_FRM   ( GFL_BG_FRAME1_M )
@@ -98,7 +98,7 @@ typedef struct {
 
 
 //============================================================================================
-//	プロトタイプ宣言
+//  プロトタイプ宣言
 //============================================================================================
 static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work );
 static void VoiceRec_CallBack( MICResult result, void * arg );
@@ -228,7 +228,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 //      PMSND_PauseBGM( TRUE );
       FLDMSGWIN_STREAM_ClearMessage( wk->msgWin );
       FLDMSGWIN_STREAM_PrintStart( wk->msgWin, 0, 0, perap_msg_01 );
-			GMEVENT_CallEvent( event, EVENT_FSND_PushBGM(wk->gsys,FSND_FADE_FAST) );
+      GMEVENT_CallEvent( event, EVENT_FSND_PushBGM(wk->gsys,FSND_FADE_FAST) );
       *seq = SEQ_START_MSG;
     }
     break;
@@ -247,7 +247,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
         SND_MIC_Exit();
         GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );   // スリープ許可
 //        PMSND_PauseBGM( FALSE );
-				GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
+        GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
         *seq = SEQ_REC_ERR;   // 失敗
       }
     }
@@ -259,7 +259,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
       SND_MIC_Exit();
       GFL_UI_SleepEnable( GFL_UI_SLEEP_MIC );   // スリープ許可
 //      PMSND_PauseBGM( FALSE );
-			GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
+      GMEVENT_CallEvent( event, EVENT_FSND_PopBGM(wk->gsys,FSND_FADE_NONE,FSND_FADE_SHORT) );
       *seq = SEQ_ANM;
     }
     break;
@@ -294,6 +294,7 @@ static GMEVENT_RESULT MainEvent( GMEVENT * event, int * seq, void * work )
 
   case SEQ_VOICE_WAIT:    // 鳴き声終了待ち
     if( PMVOICE_CheckPlay( wk->voicePlayer ) == FALSE ){
+      OS_Printf("おしゃべり強さ=%d\n", PERAPVOICE_GetWazaParam(wk->sv));
       *seq = SEQ_RELEASE;
     }
     break;
@@ -341,7 +342,7 @@ static void VoiceRec_CallBack( MICResult result, void * arg )
 /**
  * @brief   フィールド関連一時停止
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
  * @return  none
  */
@@ -359,7 +360,7 @@ static void FieldPauseOn( OSYABERI_WORK * wk )
 /**
  * @brief   フィールド関連一時停止解除
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
  * @return  none
  */
@@ -377,7 +378,7 @@ static void FieldPauseOff( OSYABERI_WORK * wk )
 /**
  * @brief   ペラップＯＢＪ作成
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
  * @return  none
  */
@@ -415,7 +416,7 @@ static void InitPerapObj( OSYABERI_WORK * wk )
 /**
  * @brief   ペラップＯＢＪ削除
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
  * @return  none
  */
@@ -433,10 +434,10 @@ static void ExitPerapObj( OSYABERI_WORK * wk )
 /**
  * @brief   ペラップＯＢＪアニメ
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
- * @retval	"TRUE = アニメ中"
- * @retval	"FALSE = それ以外"
+ * @retval  "TRUE = アニメ中"
+ * @retval  "FALSE = それ以外"
  */
 //--------------------------------------------------------------------------------------------
 static BOOL MainPerapAnm( OSYABERI_WORK * wk )
@@ -467,9 +468,9 @@ static BOOL MainPerapAnm( OSYABERI_WORK * wk )
 /**
  * @brief   ペラップウィンドウ表示
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void PutPokeWin( OSYABERI_WORK * wk )
@@ -493,9 +494,9 @@ static void PutPokeWin( OSYABERI_WORK * wk )
 /**
  * @brief   ペラップウィンドウ削除
  *
- * @param   wk		ワーク
+ * @param   wk    ワーク
  *
- * @return	none
+ * @return  none
  */
 //--------------------------------------------------------------------------------------------
 static void DelPokeWin( OSYABERI_WORK * wk )
