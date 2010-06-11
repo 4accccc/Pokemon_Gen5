@@ -158,6 +158,9 @@ const void * PERAPVOICE_GetVoiceData(const PERAPVOICE * pv)
   return pv->voicedata;
 }
 
+
+#define VOICE_REST_START  ( PERAPVOICE_LENGTH*8 )
+#define VOICE_REST_END    ( 8180 )    // TWLでできるサンプリングレートと同じ
 //==============================================================================
 /**
  * @brief   声データの展開
@@ -171,7 +174,7 @@ const void * PERAPVOICE_GetVoiceData(const PERAPVOICE * pv)
  * このデータを8bitに伸ばして2kにして格納する<br>
  * <br>
  * 10/04/11時点ではペラップボイスは4bit,8khz/4,1秒サンプリング=1k<br>
- * このデータを8bitに伸ばして2khz→8khz分格納して8kにして格納する<br>
+ * このデータを8bitに伸ばして2khz→8180バイト分格納する<br>
  */
 //==============================================================================
 void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
@@ -199,8 +202,10 @@ void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
     }
     count += 8;
   }
-  
-  for(i=8000;i<8180;i++){
+
+  // 1000バイトを8000バイトに展開しても180余りがでてしまうので、
+  // 無音で書き潰す
+  for(i=VOICE_REST_START;i<VOICE_REST_END;i++){
     des[i] = 0;
   }
 }
