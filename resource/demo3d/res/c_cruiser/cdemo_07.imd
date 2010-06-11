@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="unno" host="W00199" date="2010-04-28T21:24:08" source="c_cruiser_v24.mb"/>
+	<create user="unno" host="W00199" date="2010-06-11T16:04:05" source="c_cruiser_v31.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="unno" host="W00199" date="2010-04-28T21:24:08" source="c_cruiser_v24.mb"/>
+<original_create user="unno" host="W00199" date="2010-06-11T16:04:05" source="c_cruiser_v31.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -4836,212 +4836,212 @@
 			4040 4040 4040 2020 2020 0020 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 2000 2020 4020 4040 6040 6261 6363
-			6363 6163 4060 4040 4040 2020 0020 0000
+			0000 2000 2020 4020 4040 6040 6867 6a6a
+			6a6a 676a 4060 4040 4040 2020 0020 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			2000 2020 4040 6040 8461 ac85 cbcb ebcb
-			cbec cbcb 85ac 6284 4060 4040 2020 0020
+			2000 2020 4040 6040 8a67 a18f c2c2 e2c2
+			c2e1 c2c2 8fa1 688a 4060 4040 2020 0020
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			2020 4040 6140 a563 eccc eeee ebeb eceb
-			eeec ecec eceb ccec 84a5 4062 4040 2020
+			2020 4040 6740 af6a e1c1 e1ef e2ee e1e2
+			efe1 e1e1 e1e2 c1e1 8aaf 4068 4040 2020
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 2020
-			4020 6040 a483 eded eeed ecec ecee ecec
-			eeee eeed eeee ebec eaea 85cb 4062 2040
+			4020 6040 aa8a efef efef eee1 e2ee e2e2
+			efe1 efef efef e2e1 e3e3 8fc2 4068 2040
 			2020 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 2000 2020
-			6040 a563 edee eded eeee eeee eeee ecee
-			eeee eeee ecee e9ec e7e8 eae7 64ac 4060
+			6040 af6a efef efef e1ef e2e1 e2e2 e2e2
+			e1ee efef e1ef e4e1 e6e5 e3e6 6aa1 4060
 			2040 0020 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 2020 4040
-			8460 ecce eeee ebec eeeb ecee ecec eeee
-			eeed eded eeee e9ec e7e8 e7e7 cbeb 6285
+			8a60 e1cf efef eee1 e1ee e2e2 e2e2 e2e2
+			e1ee efef efef e4e1 e6e5 e6e6 c2e2 688f
 			4040 2020 0000 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 2000 4020 6140
-			eea4 eeee ecee eaea eceb ecec ebec ecec
-			edee eded ecee ebec e8e9 e7e7 ebe9 abe9
-			4063 2040 0020 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 2020 4040 a461
-			eded ecee eaec ebea ebec ecec eaec ebe9
-			edee eeee ecec edee eaee e8e8 ecea eaeb
-			64ab 4040 2020 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 4020 6140 efa4
-			eeed ecee ebeb eceb ebec ebec ebeb eceb
-			edee eded eeee eded edef ecee ecec ebec
-			cbe9 4063 2040 0020 0000 0000 0000 0000
-			0000 0000 0000 0000 2000 4020 a460 efe6
-			eeed ebec eceb ecec ecee eaea e9ea ecec
-			eeec eeed eceb eceb eeec eeee ecec e9eb
-			ebe9 63ab 4040 0020 0000 0000 0000 0000
-			0000 0000 0000 0000 2020 6040 e683 efe6
-			ecee ebeb eceb eeec ecee ebec e8ea e8e8
-			eae8 ecec e9eb e9e8 e9eb eaea e8ea e7e7
-			eae8 aceb 4061 2020 0000 0000 0000 0000
-			0000 0000 0000 2000 4020 8360 efe6 eeed
-			ebeb eceb ecec eeee eeee eaeb e9e9 e7e8
-			e8e7 ebe9 eaeb e7e8 e8e7 eaea e8ea e7e7
-			e9e8 eceb 6085 2040 0020 0000 0000 0000
-			0000 0000 0000 2000 4020 cf61 edef ebec
-			ecea eeee eeee eeee eaee e9e8 e8e8 e8e9
-			e8e8 e9e7 e8e9 e7e7 e7e7 e9e8 e9ea e7e8
-			e9e8 eeeb 64cc 4040 0020 0000 0000 0000
-			0000 0000 0000 2020 6040 ed84 eced ebeb
-			eeec eeed eeee eeee e9ee e8e8 e8e8 e8e9
-			e8e7 e8e8 e7e7 e7e7 e7e7 e8e8 e8ea e8e8
-			e8e7 ecea acec 4061 2020 0000 0000 0000
-			0000 0000 0000 2020 6240 edcf ebee ecea
-			ebeb ebec ecec ecec ebee e8e8 e8e8 e9e8
-			e8e8 e8e7 e7e7 e7e7 e7e7 e7e8 eaea e8e8
-			e8e8 eae9 ebeb 4084 2040 0000 0000 0000
-			0000 0000 0000 4020 8460 eeef eaeb eeeb
-			eaeb eaea ebea eaeb ebeb e9e9 e8e8 e9e8
-			e8e9 e8e8 e8e7 e7e7 e8e8 ebe9 ecec e9eb
-			e9e9 eaea ebeb 61ac 2040 0020 0000 0000
-			0000 0000 2000 4020 cf61 ecee eceb eaec
-			eaeb e9e9 ebea ebeb eaea e8ea e7e7 e7e7
-			eae8 e7ea e7e7 e7e7 e8e7 edea ecee ecec
-			ebec ecec ecea 64ec 2040 0020 0000 0000
-			0000 0000 2000 4040 ef83 ecee ecec e9eb
-			e9e9 e9e9 eaea ebea ecec eaec e7e7 e8e8
-			ecea e7ea e7e7 e7e8 e8e7 eee9 eeee eded
-			eeed ecee eeea 85ee 4060 0020 0000 0000
-			0000 0000 2000 6040 eda4 ebec eeee e9eb
-			e9e9 e9e9 e9e9 ebea ebeb eceb e8e9 e9e9
-			eae9 eaec e7e8 e7e8 e8e8 ebe8 eeee eeed
-			edee ecee ecea cded 4061 2020 0000 0000
-			0000 0000 2020 6140 eecd eceb ecee e7ea
-			e8e8 e9e9 e8e8 ebea eaeb eeec eaeb ece9
-			eaeb ecec e9eb e8e9 ebe9 eaeb eeeb eaec
-			edeb ecee eeec eded 4063 2020 0000 0000
-			0000 0000 2020 6340 ecee eeec eaee e7e8
-			e8e8 e8e8 e8e9 ebea ecec eeee eaeb eae9
-			eaea eeec ecee ebec edee eaee eceb eaec
-			ebea eeee edee efef 4084 2040 0000 0000
-			0000 0000 2020 8440 eaee edeb e9eb e7e8
-			e8e7 e8e8 e8e9 ecea ebeb ecec e9eb e7e8
-			eae7 eeeb eeee eeee efef ecee eeee ebee
-			eaea eeeb efed e6e6 40a4 2040 0000 0000
-			0000 0000 4020 8540 e8eb eeeb e8ec e7e7
-			e7e7 e8e7 eae8 e9ea e8e9 eceb e9eb e8e9
-			ebe9 efee edef eded e6ef edef efef eced
-			eceb eeed efed e6e6 61af 2040 0000 0000
-			0000 0000 4020 a560 eaea ecec eaec e7e8
-			e7e8 e8e7 e9e9 e9e9 e9e9 ecec e9ea ebea
-			eceb edee edef eded efef e6ef e6e6 ede6
-			eeed eded eded e6ef 61cd 2040 0000 0000
-			0000 0000 4020 ac61 eaea ecea e9ec e8e8
-			e7e7 e8e8 e9e8 e9e9 eaea eaeb e8e7 eceb
-			eeec edee eded eded efed efef e6ef efe6
-			edef eded eded e6ef 62cd 2040 0000 0000
-			0000 0000 4020 ac61 e9e8 ebe8 e9eb e9e8
-			e8e8 e8e8 e9e9 e9e9 ebea e9ea e9e8 ecec
-			ecec edee eded efed efed ede6 efef efef
-			efe6 edef efef efed 62cd 2040 0000 0000
-			0000 0000 4020 ab61 e9e8 eae8 e9ea e9e8
-			e8e8 e9e8 e9e9 eae9 ebeb eaeb e9e9 eceb
-			ebeb eeec eded efef eded eded efed efed
-			efe6 edef efed efed 62ce 2040 0000 0000
-			0000 0000 4020 ac61 e8e8 e9e8 e9e9 e9e9
-			e8e9 e9e8 e9e9 ebea ecec ebec e7e9 e9e9
-			e9ea eeec eded edef eded eded eded eded
-			efe6 eded efed efef 62cd 2040 0000 0000
-			0000 0000 4020 a540 e8e7 e9e8 e9e9 e9e9
-			e8e8 e9ea eaea eceb ecec ebec e7ea eae9
-			eceb eeee eded edee eded edef efed eded
-			efef edef efed efef 61ad 2040 0000 0000
-			0000 0000 4020 8540 e8e7 e9e8 e9e9 e8e9
-			e8e8 eaea ebea eeec ecee eaeb e9ea ebe9
-			edec eded eeee edee eded eded efef efed
-			efef edef efef efef 60af 2040 0000 0000
-			0000 0000 2020 8440 e8e7 e9e8 eaea e9ea
-			e9e8 eae9 eceb eeec eeef e9eb e9e9 ebe9
-			eeee eeee eeec eeee eded edee efef eded
-			efe6 efed efed efef 4084 2040 0000 0000
-			0000 0000 2020 6340 e7c9 e9e7 ebea e9ea
-			e8e9 eae8 ecec eeee ebee eaeb e9e9 ebea
-			eded eeee eeee edee edef eded efe6 efed
-			ede6 efef efed efef 4084 2020 0000 0000
-			0000 0000 2020 6140 e7aa e8e7 eee9 eaeb
-			e9ea e9e8 ecea ecec ecec ecec ebec ebeb
-			ebeb eeec eeec eded edee eded efe6 efef
-			efef efef efef cfef 4062 2020 0000 0000
-			0000 0000 2000 6040 e985 e7e7 eae8 e9ea
-			ebe9 e9ea eae9 ebea ecec ecec ebeb ebec
-			e8e9 ebea eceb eded edee efef efef e6ef
-			efef efef efed afef 4060 0020 0000 0000
-			0000 0000 2000 4020 ea63 e7e7 e8e7 e8e8
-			e9e8 ebea eaeb ebea ebea eaeb ebea eeec
-			ebeb eae9 ecea eded eded e6e6 e6e6 e6e6
-			e6ef edef efef 83ef 4040 0020 0000 0000
-			0000 0000 2000 4020 ac61 e8e9 e8e7 e8e8
-			e8e8 ece9 ecee eaea ebea e9ea ebe9 ebeb
-			eceb e9ea eae9 eeec efed e6e6 e6e6 e6e6
-			efef efed efef 62cf 2040 0020 0000 0000
-			0000 0000 0000 4020 8440 e8e9 e7e7 e7e8
-			e8e8 ebe8 ecee e9ea eaea e9ea e9e9 e9e9
-			eaea e9ea e9e9 ebea e6ee e6e6 e6e6 e6e6
-			efe6 efef efef 6084 2040 0000 0000 0000
-			0000 0000 0000 2020 6140 e7ab e7e7 e7e7
-			e7e7 e9e8 eaea e9ea e9e9 ebe9 e8ea e9e8
-			eaea e9ea e9e9 eae9 e6ee e6e6 e6e6 e6e6
-			e6e6 efef cfef 4062 2020 0000 0000 0000
-			0000 0000 0000 2000 4040 e983 e7e7 e7e7
-			e8e7 e7e7 e9e8 e8e8 e9e8 ece9 e9eb ebe8
-			e9ea e9ea e9ea ebe9 e6ed e6e6 e6e6 e6e6
-			e6e6 efef 86e6 4060 0020 0000 0000 0000
-			0000 0000 0000 2000 4020 8560 e8e9 e8e7
-			e8e8 e7e7 e7e7 e7e7 e8e7 e9e9 e9ea ece9
-			eaec eaeb e8e8 eceb e6ed e6e6 e6e6 e6e6
-			e6e6 e6e6 61a6 2040 0020 0000 0000 0000
-			0000 0000 0000 0000 2020 6240 ebae e8e8
-			e7e8 e8e7 e7e7 e7e7 e8e8 e8e8 e8e8 eae8
-			ebec ebeb eaea edee e6ef e6e6 e6e6 e6e6
-			e6e6 c6e6 4062 2040 0000 0000 0000 0000
-			0000 0000 0000 0000 2020 4040 cd62 eaec
-			e7e7 e8e7 e7e8 e7e7 e8e7 e8e9 e9e9 ebe9
-			eaeb eaea eeeb e6ef e6e6 e6e6 e6e6 e6e6
-			e6e6 82e6 4060 2020 0000 0000 0000 0000
-			0000 0000 0000 0000 2000 4020 6360 edcd
-			e8eb e7e7 e8e8 e8e8 e8e8 eceb eaeb ebe9
-			eaeb eaeb ecec efed e6ef e6e6 e6e6 e6e6
-			e6e6 6086 2040 0020 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 2020 6040 cd83
-			ebee e7e9 e7e7 e8e7 eae9 eeeb e9ee e8e7
-			eae8 ebec eceb efed efef e6e6 e6e6 e6e6
-			86e6 4060 2020 0000 0000 0000 0000 0000
-			0000 0000 0000 0000 0000 2000 4020 6360
-			eecd ebec e9ea eae8 ebea eeec e8ec e8e8
-			eae8 ecee edeb eded efef efef efe6 c6e6
-			6086 2040 0020 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 2000 4020 6740
+			e1aa e1e1 eee1 e3e2 e2e2 e2e2 e2e2 e2e2
+			efee efef e1ef e2e1 e5e4 e6e6 e2e4 a2e4
+			406a 2040 0020 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 2020 4040 aa67
+			efef eee1 e2ee e2e2 e2ee e2e2 e3e2 e2e3
+			efe1 efef e1e1 efef e3ef e5e5 e1e3 e3e2
+			6aa2 4040 2020 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 4020 6740 efaa
+			e1ef e2ee e2e2 e2e2 e2ee e2e2 e2e2 e2e2
+			efe1 efef efef efef efeb e1ef e1e1 e2e1
+			c2e4 406a 2040 0020 0000 0000 0000 0000
+			0000 0000 0000 0000 2000 4020 aa60 efeb
+			e1e1 e2e2 e2e2 eee2 e1e1 e3e3 ede3 e1ee
+			efe1 efef e1e2 e1e2 efe1 efef e1e1 e4e2
+			e2e4 6aa2 4040 0020 0000 0000 0000 0000
+			0000 0000 0000 0000 2020 6040 eb8a efeb
+			eee1 e2e2 e2e2 e1ee e1e1 e2e1 e5e3 e5e5
+			e3e5 e1e1 e4e2 e4e5 e4e2 e3e3 e5e3 e6e6
+			e3e5 a1e2 4067 2020 0000 0000 0000 0000
+			0000 0000 0000 2000 4020 8a60 ebeb efef
+			e2e2 e2e2 eee2 e1e1 efef e3e2 e4e4 e6e5
+			e5e6 e2e4 e3e2 e6e5 e5e6 e3e3 e5e3 e6e6
+			e4e5 e1e2 608f 2040 0020 0000 0000 0000
+			0000 0000 0000 2000 4020 cb67 efeb eee1
+			eee3 e1e1 e1e1 efe1 e3ef e4e5 e5e5 e5e4
+			e5e5 e4e6 e5e4 e6e6 e6e6 e4e5 e4e3 e6e5
+			e4e5 efe2 6ac1 4040 0020 0000 0000 0000
+			0000 0000 0000 2020 6040 ef8a efef eeee
+			efe1 efef efef efef e4ef e5e5 e5e5 e5e4
+			e5e6 e5e5 e6e6 e6e6 e6e6 e5e5 e5e3 e5e5
+			e5e6 e1e3 a1e1 4067 2020 0000 0000 0000
+			0000 0000 0000 2020 6840 efcb e1ef e1e3
+			e2e2 e2e1 e1e1 e1e1 e2ef e5e5 e5e5 e4e5
+			e5e5 e5e6 e6e6 e6e6 e6e6 e6e5 e3e3 e5e5
+			e5e5 e3e4 e2e2 408a 2040 0000 0000 0000
+			0000 0000 0000 4020 8a60 efeb e3e1 efe2
+			e3e2 e3e3 e2e3 e3e2 e2e2 e4e4 e5e5 e4e5
+			e5e4 e5e5 e5e6 e6e6 e5e5 e2e4 e1e1 e4e2
+			e4e4 e3e3 e2e2 67a1 2040 0020 0000 0000
+			0000 0000 2000 4020 cb67 e1ef e1ee e3e1
+			e3e2 e4e4 e2e3 e2e2 e3e3 e5e3 e6e6 e6e6
+			e3e5 e6e3 e6e6 e6e6 e5e6 efe3 e1ef e1e1
+			e2e1 e1e1 e1e3 6ae1 2040 0020 0000 0000
+			0000 0000 2000 4040 eb8a e1ef e1e1 e4e2
+			e4e4 e4e4 e3e3 e2e3 e1e1 e3e1 e5e5 e4e4
+			eee3 e5e3 e6e6 e6e5 e5e6 efe4 efef efef
+			efef e1ef efe3 8fef 4060 0020 0000 0000
+			0000 0000 2000 6040 efaa eee1 efef e4e2
+			e4e4 e4e4 e4e4 e2e3 e2e2 eee2 e2e2 e2e2
+			e2e2 e2e2 e6e4 e6e5 e5e5 e2e5 efef efef
+			efef e1ef e1e3 cfef 4067 2020 0000 0000
+			0000 0000 2020 6740 efcf e1e1 e1ef e6e3
+			e5e5 ede4 e5e5 e2e3 e3e2 e2e2 e2e2 e2e2
+			e2e2 e2e2 e4e2 e5e4 e3e5 e3e2 efe2 e3e1
+			efe2 e1ef efe1 efef 406a 2020 0000 0000
+			0000 0000 2020 6a40 e1ef efe1 e3ef e6e5
+			ede5 e2e2 e4e2 e2e3 eee1 e2e2 e2e2 e2e2
+			e2e2 eee2 e3ee e4ed e2ed e3ee e1e2 e3e1
+			e2e3 efef efef ebeb 408a 2040 0000 0000
+			0000 0000 2020 8a40 e2ef efee e4e2 e6e5
+			e1e4 efe1 eee1 e1e2 e2e2 e2e2 e2e2 e2e2
+			e2e2 e2e2 e3e2 e4e4 e3ed e1e3 efef e2ef
+			e3e3 efe2 ebef ebeb 40aa 2040 0000 0000
+			0000 0000 4020 8f40 e4e2 efe2 e5e1 e5e6
+			e1e2 efef e1ef e4ee ede4 e2e2 e2e2 e2e2
+			e2e2 e2e2 ede2 e4e4 ede4 e1e3 efef e1ef
+			e1ee efef ebeb ebeb 67ab 2040 0000 0000
+			0000 0000 4020 af60 e3e3 e1e1 e3e1 e5e5
+			e1ee efef efef e4e2 ede4 e2ee e2e2 e2e2
+			e2e2 e2e2 e4e2 e4e4 e4e4 efe3 efef efef
+			efef ebeb ebeb ebeb 67cb 2040 0000 0000
+			0000 0000 4020 a167 e3e3 e1e3 e4e1 e4e5
+			e1e2 efef e1ef e3e2 e3e3 e3e2 e2e3 e2e2
+			e2e2 eee2 e4e3 e4e4 e4e4 efe2 efef efef
+			ebef ebeb eceb ecec 68cb 2040 0000 0000
+			0000 0000 4020 a167 e4e5 e2e5 e4e2 e4e5
+			eeed e1e1 e1e1 e2e2 eee2 e4e3 e3e4 e2e2
+			e2e2 e1ee e4e2 e4e4 ede4 efee efef efef
+			ebef ebeb ecec ecec 68cb 2040 0000 0000
+			0000 0000 4020 a267 e4e5 e3e5 e4e3 e4e5
+			e4e5 e2e3 eeee eee2 e1e1 e3ee e4e4 eee2
+			e2e2 e1ee e3e1 eded e2ed efe1 efef efef
+			ebef ebeb ecec ecec 68cb 2040 0000 0000
+			0000 0000 4020 a167 e5e5 e4e5 e4e4 e4e4
+			e5e4 ede5 e2e2 e2e2 eeee e2e1 e6e4 e4e4
+			e4e3 efe1 e1ef e2e2 e1ee efef efef efef
+			ebef ebeb eceb ecec 68cb 2040 0000 0000
+			0000 0000 4020 af40 e5e6 e4e5 e4e4 e4e4
+			e5e5 ede3 e2e2 e2e2 e2e2 e2e2 e6e3 e3e4
+			e1e2 efef efef efef efef efef ebef ebeb
+			ebeb ebeb eceb ecec 69ab 2040 0000 0000
+			0000 0000 4020 8f40 e5e6 e4e5 eded e4ed
+			e5e5 e3e3 e2e2 eee2 e2ee e2e2 e4e3 e2e4
+			efe1 efef efef efef efef ebef ebeb ebeb
+			ebeb ebeb eceb ecec 69ab 2040 0000 0000
+			0000 0000 2020 8a40 e5e6 e4e5 e3e3 ede3
+			e4e4 e3e4 eee2 eeee e2ee e3e2 e4ed e2e4
+			efef efef efef efef efef ebeb ebeb ebeb
+			ebeb ecec ecec ecec 498b 2040 0000 0000
+			0000 0000 2020 6a40 e6c4 ede6 e3e3 e3e3
+			e5ed e3e5 eee1 eeee e2ee e2e2 e4ed e2e3
+			efef efef efef efef ebef ebeb ebeb ebeb
+			ebeb ecec ecec ecec 408b 2020 0000 0000
+			0000 0000 2020 6740 e6a3 e4e6 e2ed e3e3
+			e4e3 e4e5 e1e3 eee1 e2ee e2e2 e2ee eee2
+			efe1 efef efef efef ebef ebeb ebeb ebeb
+			ebeb eceb ecec ccec 4069 2020 0000 0000
+			0000 0000 2000 6040 e48f e5e6 e3e4 ede3
+			e2ed ede3 e2ed eeee eeee eeee e2e2 e1e1
+			efef efef efef efef ebef ebeb ebeb ebeb
+			ebeb eceb ecec acec 4069 0020 0000 0000
+			0000 0000 2000 4020 e36a e6e6 e4e5 e4e4
+			e4e5 e3e3 e3e3 e2e3 e2e3 e3e2 eee3 efe1
+			efef efef efef efef ebeb ebeb ebeb ebeb
+			ebeb eceb ecec 8cec 4049 0020 0000 0000
+			0000 0000 2000 4020 a167 e5e4 e5e6 e5e5
+			e5e5 e3ed e3e2 e3e3 e2e3 e4e3 e2e4 efe1
+			efef efef efef efef ebeb ebeb ebeb ebeb
+			ebeb eceb ecec 69cc 2040 0020 0000 0000
+			0000 0000 0000 4020 8a40 e5e4 e6e6 e6e5
+			e5e5 e3e4 e3e2 e3e3 ede3 e4e4 ede4 e1e2
+			efef efef efef efef ebeb ebeb ebeb ebeb
+			ebeb eceb ecec 698c 2040 0000 0000 0000
+			0000 0000 0000 2020 6740 e6a2 e6e6 e6e6
+			e6e6 ede4 e3e3 ede3 e4e4 e4e4 e4e4 e3e4
+			e1ee efef efef ebef ebeb ebeb ebeb ebeb
+			ebeb ecec ccec 406c 2020 0000 0000 0000
+			0000 0000 0000 2000 4040 e48a e6e6 e6e6
+			e5e6 e4e5 eded e4ed e4e4 e4e4 e4e4 e4e4
+			eee3 e1e1 efef ebef ebeb ebeb ebeb ebeb
+			eceb ecec 8cec 4069 0020 0000 0000 0000
+			0000 0000 0000 2000 4020 8f60 e5e4 e5e6
+			e5e5 e6e6 e5e5 e5e5 e4e4 e4e4 e4e4 e4e4
+			e2ed e1e1 efe1 ebeb ebeb ebeb ebeb ebeb
+			ecec ecec 69ac 2040 0020 0000 0000 0000
+			0000 0000 0000 0000 2020 6840 e2af e5e5
+			e6e5 e5e6 e6e6 e4e5 e4e4 e4e4 e4e4 e4e4
+			e2ed e1e1 efe1 ebeb ebeb ebeb ebeb ecec
+			ecec ccec 496c 2040 0000 0000 0000 0000
+			0000 0000 0000 0000 2020 4040 cf68 e3e1
+			e6e6 e5e6 e5e5 e4e4 e4e4 e4e4 e4e4 e4e4
+			e2ed e1e1 efe1 ebeb ebeb ebeb eceb ecec
+			ecec 8cec 4069 2020 0000 0000 0000 0000
+			0000 0000 0000 0000 2000 4020 6a60 efcf
+			e5e2 e6e6 ede4 e4e4 e4e4 e4e4 e4e4 e4e4
+			eee3 e1e1 efef ebeb ebeb ebeb ecec ecec
+			ecec 698c 2040 0020 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 2020 6040 cf8a
+			e2ef e6e4 ede4 e4e4 eded e4e4 e4e4 ede4
+			e1e2 e1e1 efef ebeb ebeb eceb ecec ecec
+			8cec 4969 2020 0000 0000 0000 0000 0000
+			0000 0000 0000 0000 0000 2000 4020 6a60
+			efcf eee1 e2ee eded eded eded eded e2ed
+			e1e1 efe1 ebef ebeb ebeb eceb ecec ccec
+			698c 2049 0020 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 2020 4040
-			ad63 eeeb ecee ebec ebec edec eaee e9e9
-			ebe9 eeec edee efed edef efed e6ef 82c6
-			4060 2020 0000 0000 0000 0000 0000 0000
+			af6a efe1 efef e2e1 e3e3 e3e3 e2e3 e1ee
+			efe1 efef ebeb ebeb ebeb ecec ecec 8ccc
+			4969 2020 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 2000 4020
-			6240 cd84 eded edef eeee eeee eeed ecec
-			eeec eeee efed edef efed eded a6ef 4062
+			6840 cf8a efef efef e1e1 e1ee e1e1 efef
+			ebef ebeb ebeb ebeb eceb ecec acec 496c
 			2040 0020 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 2020
-			4040 6360 efa4 eeee eded eded efed efef
-			eeef eeec eded eeed edee afed 6182 4040
+			4040 6a60 ebaa efef efeb efef ebef ebeb
+			ebeb ebeb ebeb ebeb ecec acec 6c8c 4049
 			2020 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 2000
-			2020 4040 6461 cfa4 e6ef e6e6 efef efef
-			eded edee eeed eeee adce 6183 4040 2040
+			2020 4040 6a67 cbaa ebeb ebeb ebeb ebeb
+			ebeb ebeb ebeb eceb accc 698c 4949 2040
 			0020 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			2000 4020 4040 6361 a684 cfc6 eded eded
-			edef eeee cded 84ad 6162 4040 2040 2020
+			2000 4020 4040 6a67 ab8a cbcb ebeb ebeb
+			ebeb ebeb cbeb 8bab 6969 4049 2040 2020
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 2020 4020 4040 6140 6363 8484 a484
-			84a4 8484 6363 4061 4040 2040 2020 0000
+			0000 2020 4020 4040 6840 6a6a 8a8a ab8b
+			8bab 8b8a 6868 4969 4040 2040 2020 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
-			0000 0000 2020 2020 4040 4040 4141 4242
-			4242 4141 4040 4040 2020 2020 0000 0000
+			0000 0000 2020 2020 4040 4040 4747 4848
+			4848 4747 4040 4040 2020 2020 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 0000 0000 0000 0000 0000
 			0000 0000 0000 2000 2020 2020 2020 4040
@@ -5269,8 +5269,8 @@
 		2063 2483 2483 2484 28a5 2ce6 3529 6f5a
 	</tex_palette>
 	<tex_palette index="13" name="moon_pl" color_size="16">
-		5fff 5ffe 5fde 5fbd 5f9c 575a 6b7c 4a94
-		4a95 4eb6 52d6 56f7 5b18 635a 5f39 675b
+		63ff 5f5a 5b3a 5739 5319 4ef8 4ef7 63ff
+		67fe 6bff 63bd 6bbd 6fde 5719 5b5a 637c
 	</tex_palette>
 </tex_palette_array>
 
@@ -5407,9 +5407,9 @@
 	<polygon index="0" name="polygon0"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.773438 -1.773438 0.000000"
-		volume_max="1.773438 1.773438 0.000000"
-		volume_r="2.508057"
+		volume_min="-1.648682 -1.648682 0.000000"
+		volume_max="1.648682 1.648682 0.000000"
+		volume_r="2.331543"
 		mtx_prim_size="1"
 		nrm_flag="off" clr_flag="on" tex_flag="on"
 	>
@@ -5420,13 +5420,13 @@
 					<mtx idx="0"/>
 					<tex st="0.000000 -64.000000"/>
 					<clr rgb="31 31 31"/>
-					<pos_xyz xyz="-1.773438 1.773438 0.000000"/>
+					<pos_xyz xyz="-1.648682 1.648682 0.000000"/>
 					<tex st="64.000000 -64.000000"/>
-					<pos_xy xy="1.773438 1.773438"/>
+					<pos_xy xy="1.648682 1.648682"/>
 					<tex st="64.000000 -128.000000"/>
-					<pos_xy xy="1.773438 -1.773438"/>
+					<pos_xy xy="1.648682 -1.648682"/>
 					<tex st="0.000000 -128.000000"/>
-					<pos_xy xy="-1.773438 -1.773438"/>
+					<pos_xy xy="-1.648682 -1.648682"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -6127,9 +6127,9 @@
 		display_size="1"
 		vertex_size="4" polygon_size="1"
 		triangle_size="0" quad_size="1"
-		volume_min="-1.773438 -1.773438 0.000000"
-		volume_max="1.773438 1.773438 0.000000"
-		volume_r="2.508057"
+		volume_min="-1.648682 -1.648682 0.000000"
+		volume_max="1.648682 1.648682 0.000000"
+		volume_r="2.331543"
 	>
 		<display index="0" material="3" polygon="0" priority="0"/>
 	</node>
