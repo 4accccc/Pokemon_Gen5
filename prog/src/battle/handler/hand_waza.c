@@ -307,6 +307,7 @@ static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems );
 static void handler_Korogaru_ExeFix( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Korugaru_Avoid( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Korogaru_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Korogaru_SeqEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void  common_Korogaru_Unlock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Korogaru_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_TripleKick( u32* numElems );
@@ -3731,8 +3732,8 @@ static const BtlEventHandlerTable*  ADD_Korogaru( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXE_START,          handler_Korogaru_ExeFix    },  // ワザ出し確定ハンドラ
     { BTL_EVENT_WAZA_EXECUTE_FAIL,       handler_Korogaru_NoEffect  },  // ワザ出し失敗確定ハンドラ
-    { BTL_EVENT_WAZA_AVOID,              handler_Korugaru_Avoid     },  // ワザはずれたハンドラ
     { BTL_EVENT_WAZA_EXECUTE_NO_EFFECT,  handler_Korogaru_NoEffect  },   // ワザ無効ハンドラ
+    { BTL_EVENT_WAZASEQ_END,             handler_Korogaru_SeqEnd    },
     { BTL_EVENT_WAZA_POWER_BASE,         handler_Korogaru_Pow       },
   };
   *numElems = NELEMS( HandlerTable );
@@ -3782,6 +3783,15 @@ static void handler_Korogaru_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     common_Korogaru_Unlock( myHandle, flowWk, pokeID, work );
   }
 }
+static void handler_Korogaru_SeqEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) == FALSE)
+  ){
+    common_Korogaru_Unlock( myHandle, flowWk, pokeID, work );
+  }
+}
+
 /**
  *  ころがるロック解除＆貼り付き解除共通
  */
@@ -5164,8 +5174,11 @@ static void handler_Trick( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 
       if( (selfItemID != ITEM_DUMMY_DATA) || (targetItemID != ITEM_DUMMY_DATA) )
       {
-        if( !ITEM_CheckMail(selfItemID) && !ITEM_CheckMail(targetItemID) )
-        {
+        if( (!ITEM_CheckMail(selfItemID))
+        &&  (!ITEM_CheckMail(targetItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(pokeID, targetItemID))
+        &&  (!HandCommon_CheckForbitItemPokeCombination(target_pokeID, selfItemID))
+        ){
           BTL_HANDEX_PARAM_SWAP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SWAP_ITEM, pokeID );
 
             param->pokeID = target_pokeID;

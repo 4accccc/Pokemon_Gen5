@@ -125,8 +125,8 @@ static void scproc_Fight_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPAR
 static void scEvent_DecideDelayWaza( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker );
 static void scproc_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
-static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
+static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaEnable );
+static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaEnable );
 static void scEvent_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
 static void scEvent_WazaReflect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPoke, const BTL_POKEPARAM* orgAtkPoke, WazaID waza );
 static BOOL scproc_Check_WazaRob( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza,
@@ -153,6 +153,8 @@ static BOOL scproc_checkNoEffect_sub( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, BtlEventType eventID );
 static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BtlEventType eventID,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, BTL_HANDEX_STR_PARAMS* customMsg, BOOL* fNoReaction );
+static void flowsub_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets );
 static BOOL scEvent_SkipAvoidCheck( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam );
 static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaID waza );
@@ -413,7 +415,6 @@ static void scEvent_CheckWazaExeFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
   WazaID waza, SV_WazaFailCause cause );
 static BtlWazaForceEnableMode scEvent_WazaExecuteStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BTL_POKESET* rec );
 static BOOL scEvent_CheckMamoruBreak( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, WazaID waza );
-static void scEvent_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8 targetCount, const u8* targetPokeID );
 static BOOL scEvent_CheckTameFail( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* target );
 static BOOL scEvent_CheckTameTurnSkip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza );
 static BOOL scEvent_TameStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, const BTL_POKESET* targetRec, WazaID waza, u8* hideTargetPokeID, BOOL* fFailMsgDisped );
@@ -2970,7 +2971,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     scproc_FreeFall_CheckRelease( wk, attacker, FALSE );
   }
 
-  scproc_EndWazaSeq( wk, attacker, actWaza );
+  scproc_EndWazaSeq( wk, attacker, actWaza, fWazaEnable );
 
   if( reqWaza.wazaID != WAZANO_NULL ){
     BTL_HANDLER_Waza_Remove( attacker, reqWaza.wazaID );
@@ -3352,11 +3353,10 @@ static void scEvent_StartWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* atta
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaEnable )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-  scEvent_EndWazaSeq( wk, attacker, waza );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+  scEvent_EndWazaSeq( wk, attacker, waza, fWazaEnable );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
@@ -3368,11 +3368,12 @@ static void scproc_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacke
  * @param   waza
  */
 //----------------------------------------------------------------------------------
-static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza )
+static void scEvent_EndWazaSeq( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, BOOL fWazaEnable )
 {
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_GEN_FLAG, fWazaEnable );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASEQ_END );
   BTL_EVENTVAR_Pop();
 }
@@ -3623,9 +3624,14 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     }
 
     // 対象ごとの無効チェック->回避チェック（原因表示はその先に任せる）
+
+    if( category != WAZADATA_CATEGORY_ICHIGEKI ){  // 一撃ワザは独自の回避判定を行うので
+      flowsub_CheckPokeHideAvoid( wk, wk->wazaParam, attacker, targetRec );
+    }
+
     flowsub_checkNotEffect( wk, wk->wazaParam, attacker, targetRec );
-    if( category != WAZADATA_CATEGORY_ICHIGEKI )  // 一撃ワザは独自の回避判定を行うので
-    {
+
+    if( category != WAZADATA_CATEGORY_ICHIGEKI ){  // 一撃ワザは独自の回避判定を行うので
       flowsub_checkWazaAvoid( wk, wk->wazaParam, attacker, targetRec );
     }
 
@@ -4057,6 +4063,31 @@ static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 
   return fNoEffect;
 }
+//--------------------------------------------------------------------------
+/**
+ *  「そらをとぶ」など画面から一時的に消えている状態で外れるケースをチェック
+ *  命中しなかった場合は targets から除外
+ */
+//--------------------------------------------------------------------------
+static void flowsub_CheckPokeHideAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam,
+  const BTL_POKEPARAM* attacker, BTL_POKESET* targets )
+{
+  BTL_POKEPARAM* defender;
+
+  BTL_POKESET_SeekStart( targets );
+
+  while( (defender = BTL_POKESET_SeekNext(targets)) != NULL )
+  {
+    if( IsMustHit(attacker, defender) ){
+      continue;
+    }
+    if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) )
+    {
+      BTL_POKESET_Remove( targets, defender );
+      scPut_WazaAvoid( wk, defender, wazaParam->wazaID );
+    }
+  }
+}
 
 //--------------------------------------------------------------------------
 /**
@@ -4071,8 +4102,6 @@ static BOOL scEvent_CheckNotEffect( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
 static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, const BTL_POKEPARAM* attacker, BTL_POKESET* targets )
 {
   BTL_POKEPARAM* bpp;
-  u8 pokeID[ BTL_POS_MAX ];
-  u8 avoid_count = 0;
 
   // 対象が最初からワザを打ったポケモン１体のワザは命中率などによる判定を行わない
   if( (BTL_POKESET_GetCountMax(targets) == 1)
@@ -4090,17 +4119,9 @@ static void flowsub_checkWazaAvoid( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* w
     if( IsTripleFarPos(wk, attacker, bpp, wazaParam->wazaID)
     ||  !scEvent_CheckHit(wk, attacker, bpp, wazaParam)
     ){
-      pokeID[ avoid_count++ ] = BPP_GetID( bpp );
       BTL_POKESET_Remove( targets, bpp );
       scPut_WazaAvoid( wk, bpp, wazaParam->wazaID );
     }
-  }
-  if( avoid_count )
-  {
-    u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-    scEvent_WazaAvoid( wk, attacker, wazaParam->wazaID, avoid_count, pokeID );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-    BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 }
 //----------------------------------------------------------------------------------
@@ -4157,8 +4178,6 @@ static BOOL IsTripleFarPos( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, 
   }
   return FALSE;
 }
-
-
 //--------------------------------------------------------------------------
 /**
  * [Event] 出したワザが対象に当たるか判定（一撃必殺以外のポケモン対象ワザ）
@@ -4178,9 +4197,9 @@ static BOOL scEvent_CheckHit( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker
     return TRUE;
   }
 
-  if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) ){
-    return FALSE;
-  }
+//  if( scEvent_CheckPokeHideAvoid(wk, attacker, defender, wazaParam->wazaID) ){
+//    return FALSE;
+//  }
 
   if( scEvent_IsCalcHitCancel(wk, attacker, defender, wazaParam->wazaID) ){
     return TRUE;
@@ -10425,32 +10444,6 @@ static BOOL scEvent_CheckMamoruBreak( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* 
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] ワザが外れた
- *
- * @param   wk
- * @param   attacker
- * @param   waza
- * @param   targetCount
- * @param   targetPokeID
- */
-//----------------------------------------------------------------------------------
-static void scEvent_WazaAvoid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, WazaID waza, u8 targetCount, const u8* targetPokeID )
-{
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_WAZAID, waza );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_TARGET_POKECNT, targetCount );
-    {
-      u32 i;
-      for(i=0; i<targetCount; ++i){
-        BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID_TARGET1+i, targetPokeID[i] );
-      }
-    }
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_AVOID );
-  BTL_EVENTVAR_Pop();
-}
-//----------------------------------------------------------------------------------
-/**
  * 溜めターン失敗判定
  *
  * @param   wk
@@ -14476,6 +14469,7 @@ static u8 scproc_HandEx_delayWazaDamage( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_P
   }
 
   // 対象ごとの無効チェック＆回避チェック
+  flowsub_CheckPokeHideAvoid( wk, &wazaParam, attacker, wk->psetTmp );
   flowsub_checkWazaAffineNoEffect( wk, &wazaParam, attacker, wk->psetTmp, &wk->dmgAffRec );
   flowsub_checkNotEffect( wk, &wazaParam, attacker, wk->psetTmp );
   flowsub_checkWazaAvoid( wk, &wazaParam, attacker, wk->psetTmp );
