@@ -47,6 +47,7 @@ static void _Update_IntrudeReadyCallback(UNION_APP_PTR uniapp);
 static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys);
 static void _Update_IntrudeUser(UNION_APP_PTR uniapp);
 static void _SendUpdate_AnswerIntrudeUser(UNION_APP_PTR uniapp);
+static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp);
 
 
 
@@ -180,6 +181,7 @@ void UnionAppSystem_Update(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
   
   
   if(GFL_NET_IsParentMachine() == TRUE){
+    _Update_IntrudeUserShutdown(uniapp);
     _SendUpdate_BasicStatus(uniapp);
     _SendUpdate_LeavePlayer(uniapp);
     _Update_IntrudeUser(uniapp);
@@ -376,6 +378,30 @@ static void _Update_LeaveCallback(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys)
             &unisys->my_situation.mycomm, uniapp->appmy[net_id].mac_address);
         }
         uniapp->recv_leave_bit &= 0xff ^ (1 << net_id);
+      }
+    }
+  }
+}
+
+//--------------------------------------------------------------
+/**
+ * 乱入者が乱入確立前に切断している場合はフラグを落とす
+ *
+ * @param   uniapp		
+ */
+//--------------------------------------------------------------
+static void _Update_IntrudeUserShutdown(UNION_APP_PTR uniapp)
+{
+  NetID net_id;
+  
+  for(net_id = 0; net_id < UNION_APP_MEMBER_MAX; net_id++){
+    if(uniapp->entry_reserve_bit & (1 << net_id)){
+      if(GFL_NET_IsConnectMember(net_id) == FALSE){
+        uniapp->entry_reserve_bit ^= 1 << net_id;
+        if(uniapp->entry_block == _ENTRY_TYPE_NUM && uniapp->intrude_capacity_count > 0){
+          uniapp->intrude_capacity_count--;
+        }
+        OS_TPrintf("乱入準備中のユーザーがいなくなりました net_id=%d, capa_count=%d\n", net_id, uniapp->intrude_capacity_count);
       }
     }
   }
