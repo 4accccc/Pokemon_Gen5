@@ -44,7 +44,7 @@
 //----------------------------------------------------------
 struct PERAPVOICE {
   BOOL exist_flag;                  ///< 「おしゃべり」で録音をしたので声データが存在する( TRUE or FALSE )
-  s8 voicedata[PERAPVOICE_LENGTH];  ///< 録音した声データ
+  u8 voicedata[PERAPVOICE_LENGTH];  ///< 録音した声データ
 };
 
 //============================================================================================
@@ -197,8 +197,11 @@ void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src )
     for(j=4;j<8;j++){
       des[count+j]   = tmp;   // 4回同じデータを格納
     }
-
     count += 8;
+  }
+  
+  for(i=8000;i<8180;i++){
+    des[i] = 0;
   }
 }
 
@@ -279,4 +282,41 @@ void PERAPVOICE_CheckPerapInPokeParty( PERAPVOICE *pv, POKEPARTY *party )
 
   // ペラップが手持ちにいなかったら声データ削除
   PERAPVOICE_ClearExistFlag( pv );
+}
+
+// 「おしゃべり」のこんらん確率を取得するための配列参照位置
+// この添字を参照している根拠は何も無い
+#define PERAPVOICE_WAZA_PARAM0_INDEX ( 100 )
+#define PERAPVOICE_WAZA_PARAM1_INDEX ( 500 )
+#define PERAPVOICE_WAZA_PARAM2_INDEX ( 700 )
+//--------------------------------------------------------------
+/**
+ * @brief 技のパラメータを取得
+ *
+ * @param perap   ぺラップデータのポインタ
+ *
+ * @retval  パラメータ= 0～2 録音してなかったら必ず0
+ */
+//--------------------------------------------------------------
+int PERAPVOICE_GetWazaParam( PERAPVOICE* pv )
+{
+  u8 num;
+
+  //声データが存在するかどうかのチェック
+  if( PERAPVOICE_GetExistFlag(pv) == TRUE ){
+    //要素[100][500][700]を見てパラメータを決定する
+    num = pv->voicedata[PERAPVOICE_WAZA_PARAM0_INDEX]
+        ^ pv->voicedata[PERAPVOICE_WAZA_PARAM1_INDEX]
+        ^ pv->voicedata[PERAPVOICE_WAZA_PARAM2_INDEX];
+//    OS_Printf( "voicedata[100] = %d\n", num1 );
+//    OS_Printf( "voicedata[500] = %d\n", num2 );
+//    OS_Printf( "voicedata[700] = %d\n", num3 );
+
+    if(num>=0 && num<100){
+      return 1;
+    }else if(num>=150 && num<256){
+      return 2;
+    }
+  }
+  return 0;
 }

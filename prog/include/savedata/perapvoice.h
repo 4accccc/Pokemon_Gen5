@@ -50,5 +50,6 @@ extern void PERAPVOICE_CopyData(PERAPVOICE * des, const PERAPVOICE * src);
 extern const void * PERAPVOICE_GetVoiceData(const PERAPVOICE * pv);
 extern void PERAPVOICE_ExpandVoiceData( s8 *des, const s8 *src );
 extern void PERAPVOICE_CheckPerapInPokeParty( PERAPVOICE *pv, POKEPARTY *party );
+extern int PERAPVOICE_GetWazaParam( PERAPVOICE* pv );
 
 #endif  __PERAPVOICE_H__
