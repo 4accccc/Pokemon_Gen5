@@ -437,6 +437,7 @@ int BTL_EVENT_FACTOR_GetWorkValue( const BTL_EVENT_FACTOR* factor, u8 workIdx )
 void BTL_EVENT_FACTOR_SetTmpItemFlag( BTL_EVENT_FACTOR* factor )
 {
   factor->tmpItemFlag = TRUE;
+  TAYA_Printf("TmpItem currentSP=%d\n", factor->currentStackPtr);
 }
 //=============================================================================================
 /**
@@ -477,7 +478,18 @@ void BTL_EVENT_FACTOR_SetWorkValue( BTL_EVENT_FACTOR* factor, u8 workIdx, int va
 //=============================================================================================
 void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
+  ++EventStackPtr;
   CallHandlersCore( flowWork, eventID, FALSE );
+  --EventStackPtr;
+
+  if( EventStackPtr == 0 )
+  {
+    BTL_EVENT_FACTOR* factor;
+    for( factor=FirstFactorPtr; factor!=NULL; factor = factor->next )
+    {
+      factor->currentStackPtr = 0;
+    }
+  }
 }
 //=============================================================================================
 /**
@@ -490,9 +502,7 @@ void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventI
 void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID )
 {
   ++EventStackPtr;
-
   CallHandlersCore( flowWork, eventID, TRUE );
-
   --EventStackPtr;
 
   if( EventStackPtr == 0 )

@@ -489,7 +489,7 @@ typedef enum {
 
 extern void BTL_EVENT_InitSystem( void );
 extern void BTL_EVENT_StartTurn( void );
-extern void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* server, BtlEventType type );
+extern void BTL_EVENT_CallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType type );
 extern void BTL_EVENT_ForceCallHandlers( BTL_SVFLOW_WORK* flowWork, BtlEventType eventID );
 extern void BTL_EVENT_RemoveIsolateFactors( void );
 

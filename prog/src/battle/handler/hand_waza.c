@@ -541,7 +541,7 @@ static void handler_Teleport_ExMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 static const BtlEventHandlerTable*  ADD_Nagetukeru( u32* numElems );
 static void handler_Nagetukeru_ExeCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_WazaPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nagetukeru_DmgProcStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Nagetukeru_Done( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_DenjiFuyuu( u32* numElems );
@@ -7700,7 +7700,7 @@ static const BtlEventHandlerTable*  ADD_Nagetukeru( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXECUTE_CHECK_2ND, handler_Nagetukeru_ExeCheck },
     { BTL_EVENT_WAZA_POWER_BASE,        handler_Nagetukeru_WazaPower},
-    { BTL_EVENT_WAZA_DMG_DETERMINE,     handler_Nagetukeru_DmgDetermine },
+    { BTL_EVENT_DAMAGEPROC_START,       handler_Nagetukeru_DmgProcStart },
     { BTL_EVENT_WAZA_DMG_REACTION,      handler_Nagetukeru_DmgAfter },
     { BTL_EVENT_WAZA_EXECUTE_DONE,      handler_Nagetukeru_Done     },
 
@@ -7734,7 +7734,7 @@ static void handler_Nagetukeru_WazaPower( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
   }
 }
-static void handler_Nagetukeru_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_Nagetukeru_DmgProcStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
@@ -7767,7 +7767,7 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       work[0] = 1;    // ダメージ与えて消費したフラグ
 
       // みがわりじゃなければ追加効果発動
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) != FALSE )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE )
       {
         int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
         if( equip )
