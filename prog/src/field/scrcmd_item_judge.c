@@ -81,7 +81,7 @@ VMCMD_RESULT EvCmdItemJudgeCheck( VMHANDLE *core, void *wk )
   int  i;
 
   GF_ASSERT( obj_type <= SCR_ITEM_JUDGE_OBJTYPE_KOUKO );
-  GF_ASSERT( item_no < ITEM_DATA_MAX );
+  GF_ASSERT( item_no <= ITEM_DATA_MAX );
 
   //TOMOYA_Printf( "item_no %d  obj_type %d\n", item_no, obj_type );
 
@@ -168,7 +168,7 @@ VMCMD_RESULT EvCmdItemJudgeSetWordSet( VMHANDLE *core, void *wk )
   int  i;
 
   GF_ASSERT( obj_type <= SCR_ITEM_JUDGE_OBJTYPE_KOUKO );
-  GF_ASSERT( item_no < ITEM_DATA_MAX );
+  GF_ASSERT( item_no <= ITEM_DATA_MAX );
 
   //TOMOYA_Printf( "item_no %d  obj_type %d\n", item_no, obj_type );
 
@@ -211,7 +211,7 @@ VMCMD_RESULT EvCmdItemJudgeAddMoney( VMHANDLE *core, void *wk )
   int  i;
 
   GF_ASSERT( obj_type <= SCR_ITEM_JUDGE_OBJTYPE_KOUKO );
-  GF_ASSERT( item_no < ITEM_DATA_MAX );
+  GF_ASSERT( item_no <= ITEM_DATA_MAX );
 
   //TOMOYA_Printf( "item_no %d  obj_type %d\n", item_no, obj_type );
 

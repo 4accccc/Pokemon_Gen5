@@ -196,7 +196,7 @@ u16 DREAMWORLD_SV_GetItem(DREAMWORLD_SAVEDATA* pSV,int index)
   if(index > DREAM_WORLD_DATA_MAX_ITEMBOX){
     return 0;
   }
-  if(pSV->itemID[index] >= ITEM_DATA_MAX){
+  if(pSV->itemID[index] > ITEM_DATA_MAX){
     return 0;
   }
   return pSV->itemID[index];
