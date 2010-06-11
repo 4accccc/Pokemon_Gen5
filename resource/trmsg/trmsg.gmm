@@ -14635,6 +14635,16 @@ puo accadere ancora di tutto!</language>
 やっぱり　勝てなかったね……</language>
 	</row>
 
+	<row id="TRID_HEADS_05_TRMSG_FIGHT_START">
+		<language name="JPN" width="216">そうこなくっちゃ！</language>
+		<language name="JPN_KANJI" width="216">そうこなくっちゃ！</language>
+	</row>
+
+	<row id="TRID_HEADS_05_TRMSG_FIGHT_LOSE">
+		<language name="JPN" width="216">ぐるぐる　まわりすぎ　なんだよ！</language>
+		<language name="JPN_KANJI" width="216">ぐるぐる　回りすぎなんだよ！</language>
+	</row>
+
 	<row id="TRID_CHAMPION_01_TRMSG_FIGHT_FIRST_DAMAGE">
 		<language name="JPN" width="216">かんがえに　かんがえぬいて
 えらんだ　わざなら　それでよい！</language>
