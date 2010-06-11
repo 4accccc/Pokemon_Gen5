@@ -319,6 +319,7 @@ typedef enum {
   DBGSTR_EVENT_SkipByNewComerFlg,
   DBGSTR_EVENT_SkipByCallingFlg,
   DBGSTR_EVENT_ClearNewComFlag,
+  DBGSTR_EVENT_SkipByCheckHandler,
   DBGSTR_EV_AddFactor,
   DBGSTR_EV_DelFactor,
   DBGSTR_EV_LinkInfoHeader,

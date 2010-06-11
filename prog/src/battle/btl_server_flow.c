@@ -451,6 +451,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
 static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender,
   const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag );
+static void scproc_KintyoukanMoved( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bppMoved );
 static fx32 scEvent_CalcTypeMatchRatio( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, PokeType waza_type );
 static void scEvent_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_POKEPARAM* attacker );
@@ -7061,8 +7062,13 @@ static void scproc_AddSickCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, BTL_
 
     if( BTL_CALC_IsBasicSickID(sick) ){
       scEvent_PokeSickFixed( wk, target, attacker, sick, sickCont );
-    }else if( sick == WAZASICK_IEKI ){
+    }else if( sick == WAZASICK_IEKI )
+    {
       scEvent_IekiFixed( wk, target );
+      if( BPP_GetValue(target, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KINCHOUKAN )
+      {
+        scproc_KintyoukanMoved( wk, target );
+      }
     }else {
       scEvent_WazaSickFixed( wk, target, attacker, sick );
     }
@@ -8215,7 +8221,6 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_ChangeTokuseiBefore( wk, atkPokeID, atk_tok, tgt_tok );
       scEvent_ChangeTokuseiBefore( wk, tgtPokeID, tgt_tok, atk_tok );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
     }
 
@@ -8234,21 +8239,55 @@ static void scput_Fight_Uncategory_SkillSwap( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_ChangeTokuseiAfter( wk, atkPokeID );
       scEvent_ChangeTokuseiAfter( wk, tgtPokeID );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
     }
 
-    if( atk_tok == POKETOKUSEI_BUKIYOU ){
-      scproc_CheckItemReaction( wk, attacker, BTL_ITEMREACTION_GEN );
+    // ぶきよう・きんちょうかんが入れ替わったらアイテム発動チェック
+    if( !BPP_CheckSick(attacker, WAZASICK_IEKI) )
+    {
+      if( atk_tok == POKETOKUSEI_BUKIYOU ){
+        scproc_CheckItemReaction( wk, attacker, BTL_ITEMREACTION_GEN );
+      }
+      if( atk_tok == POKETOKUSEI_KINCHOUKAN ){
+        scproc_KintyoukanMoved( wk, attacker );
+      }
     }
-    if( tgt_tok == POKETOKUSEI_BUKIYOU ){
-      scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_GEN );
+    if( !BPP_CheckSick(target, WAZASICK_IEKI) )
+    {
+      if( tgt_tok == POKETOKUSEI_BUKIYOU ){
+        scproc_CheckItemReaction( wk, target, BTL_ITEMREACTION_GEN );
+      }
+      if( tgt_tok == POKETOKUSEI_KINCHOUKAN ){
+        scproc_KintyoukanMoved( wk, target );
+      }
     }
   }
   else{
     SCQUE_PUT_MSG_STD( wk->que, BTL_STRID_STD_WazaFail );
   }
 }
+/**
+ *  とくせい「きんちょうかん」を持つポケモンが場から消えた・またはとくせいを失った時の処理
+ */
+static void scproc_KintyoukanMoved( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bppMoved )
+{
+  FRONT_POKE_SEEK_WORK  fps;
+  BTL_POKEPARAM* bpp;
+
+  u8 movedPokeID = BPP_GetID( bppMoved );
+  u8 pokeID;
+
+  FRONT_POKE_SEEK_InitWork( &fps, wk );
+  while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
+  {
+    pokeID = BPP_GetID( bpp );
+    if( !BTL_MAINUTIL_IsFriendPokeID(movedPokeID, pokeID) )
+    {
+      scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
+    }
+  }
+}
+
 //----------------------------------------------------------------------------------
 /**
  * みがわり - 作成
@@ -9147,6 +9186,15 @@ static void scproc_ClearPokeDependEffect( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* po
   }
   BTL_FIELD_RemoveDependPokeEffect( dead_pokeID );
   SCQUE_PUT_OP_DeleteDependPokeFieldEffect( wk->que, dead_pokeID );
+
+  if( !scproc_CheckShowdown(wk) )
+  {
+    u16 tokusei = BPP_GetValue( poke, BPP_TOKUSEI_EFFECTIVE );
+    if( tokusei == POKETOKUSEI_KINCHOUKAN )
+    {
+      scproc_KintyoukanMoved( wk, poke );
+    }
+  }
 }
 //----------------------------------------------------------------------------------
 /**
@@ -14227,9 +14275,16 @@ static u8 scproc_HandEx_tokuseiChange( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
       SCQUE_PUT_TOKWIN_OUT( wk->que, param_header->userPokeID );
     }
 
-    if( prevTokusei == POKETOKUSEI_BUKIYOU )
+    if( !BPP_CheckSick(bpp, WAZASICK_IEKI) )
     {
-      scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
+      if( prevTokusei == POKETOKUSEI_BUKIYOU )
+      {
+        scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_GEN );
+      }
+      if( prevTokusei == POKETOKUSEI_KINCHOUKAN )
+      {
+        scproc_KintyoukanMoved( wk, bpp );
+      }
     }
 
     return 1;
