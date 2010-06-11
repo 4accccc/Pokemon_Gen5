@@ -66,6 +66,7 @@ struct _SVCL_WORK {
 typedef struct {
 
   WazaID          wazaID;
+  WazaID          orgWazaID;    ///< ”h¶Œ³‚ÌƒƒUID
   PokeTypePair    userType;
   PokeType        wazaType;
   WazaDamageType  damageType;

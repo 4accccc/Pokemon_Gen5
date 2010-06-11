@@ -110,6 +110,7 @@ typedef enum {
   DBGSTR_CLIENT_OP_HPPlus,
   DBGSTR_CLIENT_OP_MemberIn,
   DBGSTR_CLIENT_StartWazaTargetSel,
+  DBGSTR_CLIENT_MoveAction,
 
   DBGSTR_BPP_NemuriWakeCheck,
   DBGSTR_BPP_WazaLinkOff,

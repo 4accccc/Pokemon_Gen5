@@ -6335,7 +6335,7 @@ static BOOL scProc_ACT_Move( BTL_CLIENT* wk, int* seq, const int* args )
       BTL_PARTY* party = BTL_POKECON_GetPartyData( wk->pokeCon, clientID );
       BTL_PARTY_SwapMembers( party, posIdx1, posIdx2 );
 
-      BTL_Printf("ÉÄÅ[Éuà íu: %d <-> %d\n", pos1, pos2 );
+      BTL_N_Printf( DBGSTR_CLIENT_MoveAction, pos1, pos2, vpos1, vpos2 );
 
       BTLV_ACT_MoveMember_Start( wk->viewCore, clientID, vpos1, vpos2, posIdx1, posIdx2 );
       (*seq)++;

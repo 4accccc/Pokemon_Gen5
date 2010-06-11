@@ -2864,6 +2864,7 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     {
       scEvent_GetWazaParam( wk, actWaza, attacker, wk->wazaParam );
       wk->wazaParam->fReqWaza = TRUE;
+      wk->wazaParam->orgWazaID = orgWaza;
     }
     else{
       *(wk->wazaParam) = *(wk->wazaParamOrg);
@@ -8349,6 +8350,7 @@ static void scEvent_WazaDamageReaction( BTL_SVFLOW_WORK* wk,
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, defPokeID );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_ORG_WAZAID, wazaParam->orgWazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_TYPEAFF, aff );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
@@ -10311,6 +10313,7 @@ static void scEvent_GetWazaParam( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL_PO
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZA_PARAM );
 
     param->wazaID      = waza;
+    param->orgWazaID   = waza;
     param->wazaType    = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_TYPE );
     param->userType    = BTL_EVENTVAR_GetValue( BTL_EVAR_USER_TYPE );
     param->damageType  = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE_TYPE );

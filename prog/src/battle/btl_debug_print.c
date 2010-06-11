@@ -165,6 +165,7 @@ const char* BTL_DEBUGPRINT_GetFormatStr( BtlDebugStrID strID )
   case DBGSTR_CLIENT_OP_HPPlus:            return "ポケモンHP回復 : bpp=%p, pokeID=%d, AddHP=%d, ResultHP=%d\n";
   case DBGSTR_CLIENT_OP_MemberIn:          return "メンバー入場 : pos %d<->%d  inPokeID=%d, inPokeHP=%d\n";
   case DBGSTR_CLIENT_StartWazaTargetSel:   return "対象選択開始へ\n";
+  case DBGSTR_CLIENT_MoveAction:           return "ムーブ位置 pos(%d<->%d) = vpos(%d<->%d)\n";
 
   case DBGSTR_PSET_Copy:          return "ポケセットコピー  adrs=%p, count=%d\n";
   case DBGSTR_PSET_Add:           return "ポケセット追加    adrs=%p, pokeID=%d, count=%d/%d\n";
