@@ -3043,8 +3043,17 @@ static void _scrollMainFunc(POKEMON_TRADE_WORK* pWork,BOOL bSE, BOOL bNetSend)
   }
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork) && bNetSend){  // “Á‚ÉŽ¸”s‚µ‚Ä‚à‚©‚Ü‚í‚È‚¢’ÊM ‘ŠŽè‚ÉˆÊ’u‚ð’m‚ç‚¹‚Ä‚¢‚é‚¾‚¯
-    GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
-                       _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
+
+    if(GFL_NET_IsWifiConnect()){
+      if( (pWork->BoxScrollNum % 16 == 0) ){
+        GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
+                           _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
+      }
+    }
+    else{
+      GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(),GFL_NET_SENDID_ALLUSER,
+                         _NETCMD_SCROLLBAR,2,&pWork->BoxScrollNum,FALSE,TRUE,TRUE);
+    }
   }
   else if(!POKEMONTRADEPROC_IsNetworkMode(pWork)){
     pWork->FriendBoxScrollNum = pWork->BoxScrollNum;
@@ -3529,10 +3538,13 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       return;
     }
     else{
-      _CatchPokemonPositionRewind(pWork);
-      _PokemonIconRenew(pWork);
-//      pWork->workPokeIndex = -1;
-//    pWork->workBoxno = -1;
+      if(pWork->workPokeIndex != -1 && pWork->workBoxno != -1){
+        _CatchPokemonPositionRewind(pWork);
+        _PokemonIconRenew(pWork);
+      }
+      else{
+        _CatchPokemonPositionRewind(pWork);
+      }
     }
     pWork->touchON = FALSE;
     pWork->bUpVec = FALSE;
