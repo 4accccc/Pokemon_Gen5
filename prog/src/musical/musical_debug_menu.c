@@ -67,6 +67,8 @@ static void MD_U_EnableNpc( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_D_EnableNpc( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_U_Npc( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_D_Npc( void* userWork , DEBUGWIN_ITEM* item );
+static void MD_U_EnableMax( void* userWork , DEBUGWIN_ITEM* item );
+static void MD_D_EnableMax( void* userWork , DEBUGWIN_ITEM* item );
 
 static const char StrArrOnOff[2][4] = {"OFF","ON"};
 
@@ -83,6 +85,7 @@ static void MUSICAL_DEBUG_InitMenu( MUSICAL_DEBUG_MENU_WORK *work )
   DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)0 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)1 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)2 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_EnableMax ,MD_D_EnableMax , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
 }
 
 
@@ -187,6 +190,21 @@ static void MD_D_Npc( void* userWork , DEBUGWIN_ITEM* item )
 {
   int pos = (int)userWork;
   DEBUGWIN_ITEM_SetNameV( item , "NPC%d[%d]",pos+1,musicalDebugWork->npc[pos]+1 );
+}
+
+static void MD_U_EnableMax( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUSICAL_DEBUG_MENU_WORK *work = userWork;
+  if( MUSICAL_DEBUG_UpdateValue_BOOL(&work->memMaxMode) )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MD_D_EnableMax( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUSICAL_DEBUG_MENU_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "MaxMemory[%s]",StrArrOnOff[work->memMaxMode] );
 }
 
 #endif

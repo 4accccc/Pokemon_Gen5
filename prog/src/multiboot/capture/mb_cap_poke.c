@@ -653,13 +653,28 @@ static void MB_CAP_POKE_StateHide(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWo
 static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork )
 {
   GFL_BBD_SYS *bbdSys = MB_CAPTURE_GetBbdSys( capWork );
+
+  //ハードポケとの区別
+  u16 lookTime;
+  u16 hideTime;
+  if( pokeWork->isHard == FALSE )
+  {
+    lookTime = MB_CAP_POKE_RUN_LOOK_TIME;
+    hideTime = MB_CAP_POKE_RUN_HIDE_TIME;
+  }
+  else
+  {
+    lookTime = MB_CAP_POKE_RUN_LOOK_TIME_H;
+    hideTime = MB_CAP_POKE_RUN_HIDE_TIME_H;
+  }
+
   if( pokeWork->cnt == 0)
   {
     PMSND_PlaySE( MB_SND_POKE_JUMP );
   }
 
   pokeWork->cnt += pokeWork->actSpeed;
-  if( pokeWork->cnt < MB_CAP_POKE_RUN_LOOK_TIME*MB_CAP_POKE_ACT_RATE )
+  if( pokeWork->cnt < lookTime*MB_CAP_POKE_ACT_RATE )
   {
     //飛ぶ
     const BOOL isDisp = TRUE;
@@ -669,7 +684,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     
     {
       //ジャンプの計算
-      const u16 rot = 0x8000*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME/MB_CAP_POKE_ACT_RATE;
+      const u16 rot = 0x8000*pokeWork->cnt/lookTime/MB_CAP_POKE_ACT_RATE;
       fx32 ofs;
       VecFx32 nextPos;
       pokeWork->height = FX_SinIdx( rot ) * MB_CAP_POKE_JUMP_HEIGHT;
@@ -686,7 +701,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
           MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx-1 , pokeWork->posYidx , &nextPos );
           ofs = nextPos.x - pokeWork->startPos.x;
         }
-        pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME/MB_CAP_POKE_ACT_RATE;
+        pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/lookTime/MB_CAP_POKE_ACT_RATE;
         pokeWork->pos.y = pokeWork->startPos.y;
         pokeWork->pos.z = pokeWork->startPos.z;
         break;
@@ -701,7 +716,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
           MB_CAPTURE_GetGrassObjectPos( pokeWork->posXidx+1 , pokeWork->posYidx , &nextPos );
           ofs = nextPos.x - pokeWork->startPos.x;
         }
-        pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME/MB_CAP_POKE_ACT_RATE;
+        pokeWork->pos.x = pokeWork->startPos.x + ofs*pokeWork->cnt/lookTime/MB_CAP_POKE_ACT_RATE;
         pokeWork->pos.y = pokeWork->startPos.y;
         pokeWork->pos.z = pokeWork->startPos.z;
         flipFlg = ( pokeWork->isNoFlip == FALSE ? TRUE : FALSE );
@@ -725,10 +740,10 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         }
 
         pokeWork->pos.x = pokeWork->startPos.x;
-        pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME/MB_CAP_POKE_ACT_RATE;
+        pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/lookTime/MB_CAP_POKE_ACT_RATE;
 
         if( pokeWork->posYidx <= 0 &&
-            pokeWork->cnt > MB_CAP_POKE_RUN_LOOK_TIME/2*MB_CAP_POKE_ACT_RATE )
+            pokeWork->cnt > lookTime/2*MB_CAP_POKE_ACT_RATE )
         {
           //最上段補正！！！
           pokeWork->pos.z = FX32_CONST(MB_CAP_OBJ_BASE_Z - MB_CAP_OBJ_LINEOFS_Z - MB_CAP_OBJ_LINEOFS_Z/2);
@@ -751,7 +766,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
         }
 
         pokeWork->pos.x = pokeWork->startPos.x;
-        pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/MB_CAP_POKE_RUN_LOOK_TIME/MB_CAP_POKE_ACT_RATE;
+        pokeWork->pos.y = pokeWork->startPos.y + ofs*pokeWork->cnt/lookTime/MB_CAP_POKE_ACT_RATE;
         pokeWork->pos.z = pokeWork->startPos.z;
         //下移動のときだけZ補正
         pokeWork->pos.z += FX32_CONST( MB_CAP_OBJ_LINEOFS_Z );
@@ -790,7 +805,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     
   }
   else
-  if( pokeWork->cnt >= MB_CAP_POKE_RUN_LOOK_TIME*MB_CAP_POKE_ACT_RATE &&
+  if( pokeWork->cnt >= lookTime*MB_CAP_POKE_ACT_RATE &&
       pokeWork->isRun == TRUE )
   {
     //着地
@@ -925,7 +940,7 @@ static void MB_CAP_POKE_StateRun(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWor
     PMSND_PlaySE( MB_SND_GRASS_SHAKE );
   }
   else
-  if( pokeWork->cnt >= (MB_CAP_POKE_RUN_LOOK_TIME+MB_CAP_POKE_RUN_HIDE_TIME)*MB_CAP_POKE_ACT_RATE )
+  if( pokeWork->cnt >= (lookTime+hideTime)*MB_CAP_POKE_ACT_RATE )
   {
     pokeWork->isRun = TRUE;
     pokeWork->cnt = 0;
@@ -1159,3 +1174,7 @@ void MB_CAP_POKE_ResetHideTime(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork 
   }
 }
 
+const BOOL MB_CAP_POKE_IsHard( MB_CAP_POKE *pokeWork )
+{
+  return pokeWork->isHard;
+}

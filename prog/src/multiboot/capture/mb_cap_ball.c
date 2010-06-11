@@ -422,25 +422,26 @@ static void MB_CAP_BALL_CheckHitPoke_Shooting( MB_CAPTURE_WORK *capWork , MB_CAP
         const s16 subY = FX_FX32_TO_F32(ballHit.pos->y - pokeHit.pos->y);
         const s16 subZ = FX_FX32_TO_F32(ballHit.height - pokeHit.height);
         const u8 absX = MATH_ABS( subX );
+        const BOOL isHard = MB_CAP_POKE_IsHard( pokeWork );
         MB_TPrintf("[%3d:%3d:%3d]",subX,subY,subZ);
         if( absX < 5 )
         {
-          MB_CAPTURE_AddScore( capWork , 100 , TRUE );
+          MB_CAPTURE_AddScore( capWork , 100 , TRUE , isHard );
           MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE3 );
-          MB_TPrintf("[100]\n");
+          MB_TPrintf("[100][%d]\n",isHard);
         }
         else
         if( absX < 10 )
         {
-          MB_CAPTURE_AddScore( capWork , 70 , TRUE );
+          MB_CAPTURE_AddScore( capWork , 70 , TRUE , isHard );
           MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE2 );
-          MB_TPrintf("[ 70]\n");
+          MB_TPrintf("[ 70][%d]\n",isHard);
         }
         else
         {
-          MB_CAPTURE_AddScore( capWork , 50 , TRUE );
+          MB_CAPTURE_AddScore( capWork , 50 , TRUE , isHard );
           MB_CAPTURE_CreateEffect( capWork , &effPos , MCET_CAPTURE_SMOKE );
-          MB_TPrintf("[ 50]\n");
+          MB_TPrintf("[ 50]\n",isHard);
         }
       }
       break;

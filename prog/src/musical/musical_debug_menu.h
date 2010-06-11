@@ -22,6 +22,7 @@ typedef struct
   MUSICAL_SCRIPT_WORK *scriptWork;
   BOOL enableArr;
   BOOL forceNpc;
+  BOOL memMaxMode;
   u16 arr[4];
   u16 npc[3];
 }MUSICAL_DEBUG_MENU_WORK;

@@ -138,6 +138,8 @@ extern int MB_CAP_POKE_HIDE_LOOK_TIME_H;
 extern int MB_CAP_POKE_HIDE_HIDE_TIME_H;
 extern int MB_CAP_POKE_RUN_LOOK_TIME;
 extern int MB_CAP_POKE_RUN_HIDE_TIME;
+extern int MB_CAP_POKE_RUN_LOOK_TIME_H;
+extern int MB_CAP_POKE_RUN_HIDE_TIME_H;
 extern int MB_CAP_POKE_DOWN_TIME;
 extern u16 MB_CAP_POKE_RATE1;
 extern u16 MB_CAP_POKE_RATE2;
@@ -153,6 +155,8 @@ extern u16 MB_CAP_POKE_RATE6;
 #define MB_CAP_POKE_HIDE_HIDE_TIME_H (60*2)
 #define MB_CAP_POKE_RUN_LOOK_TIME (80)
 #define MB_CAP_POKE_RUN_HIDE_TIME (40)
+#define MB_CAP_POKE_RUN_LOOK_TIME_H (60)
+#define MB_CAP_POKE_RUN_HIDE_TIME_H (60)
 #define MB_CAP_POKE_DOWN_TIME (60*3)
 #define MB_CAP_POKE_RATE1 (33)
 #define MB_CAP_POKE_RATE2 (25)
@@ -287,7 +291,7 @@ extern MB_CAP_OBJ* MB_CAPTURE_GetStarWork( MB_CAPTURE_WORK *work );
 extern MB_CAP_POKE* MB_CAPTURE_GetPokeWork( MB_CAPTURE_WORK *work , const u8 idx );
 extern const BOOL MB_CAPTURE_IsBonusTime( MB_CAPTURE_WORK *work );
 extern const u16 MB_CAPTURE_GetScore( MB_CAPTURE_WORK *work );
-extern void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime );
+extern void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime , const BOOL isHard );
 extern void MB_CAPTURE_HitStarFunc( MB_CAPTURE_WORK *work , MB_CAP_OBJ *starWork );
 extern POKEMON_PASO_PARAM* MB_CAPTURE_GetPPP( MB_CAPTURE_WORK *work , const u8 idx );
 extern const u8 MB_CAPTURE_GetLeastPoke( MB_CAPTURE_WORK *work );

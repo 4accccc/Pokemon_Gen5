@@ -1660,12 +1660,25 @@ const u16 MB_CAPTURE_GetScore( MB_CAPTURE_WORK *work )
 {
   return work->score;
 }
-void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime )
+void MB_CAPTURE_AddScore( MB_CAPTURE_WORK *work , const u16 addScore , const BOOL isAddTime  , const BOOL isHard )
 {
-  work->score += addScore;
+  u32 tempScore = addScore;
   if( isAddTime == TRUE )
   {
-    work->score += work->gameTime/(2*60);
+    tempScore += work->gameTime/(2*60);
+  }
+  
+  if( isHard == FALSE )
+  {
+    work->score += tempScore;
+  }
+  else
+  {
+    work->score += tempScore * 6/5;  //1.2”{
+  }
+  if( work->score >= 999 )
+  {
+    work->score = 999;
   }
 }
 //--------------------------------------------------------------
@@ -1798,6 +1811,8 @@ int MB_CAP_POKE_HIDE_LOOK_TIME_H = (60);
 int MB_CAP_POKE_HIDE_HIDE_TIME_H = (120);
 int MB_CAP_POKE_RUN_LOOK_TIME = (80);
 int MB_CAP_POKE_RUN_HIDE_TIME = (40);
+int MB_CAP_POKE_RUN_LOOK_TIME_H = (60);
+int MB_CAP_POKE_RUN_HIDE_TIME_H = (60);
 int MB_CAP_POKE_DOWN_TIME = (60*3);
 u16 MB_CAP_POKE_RATE1 = 33;
 u16 MB_CAP_POKE_RATE2 = 25;

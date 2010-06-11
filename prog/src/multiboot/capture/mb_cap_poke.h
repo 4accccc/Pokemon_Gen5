@@ -99,3 +99,4 @@ extern void MB_CAP_POKE_SetBefHitPoke( MB_CAP_POKE *pokeWork , const u8 no );
 extern const MB_CAP_POKE_DIR MB_CAP_POKE_GetPokeDir( MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_FlipDir( MB_CAP_POKE *pokeWork );
 extern void MB_CAP_POKE_ResetHideTime(MB_CAPTURE_WORK *capWork , MB_CAP_POKE *pokeWork );
+extern const BOOL MB_CAP_POKE_IsHard( MB_CAP_POKE *pokeWork );

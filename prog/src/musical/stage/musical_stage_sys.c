@@ -20,6 +20,7 @@
 #include "musical/stage/sta_local_def.h"
 #include "musical/stage/sta_acting.h"
 #include "test/ariizumi/ari_debug.h"
+#include "musical/musical_debug_menu.h"
 
 //======================================================================
 //  define
@@ -224,23 +225,30 @@ void MUSICAL_STAGE_SetData_Player( STAGE_INIT_WORK *initWork , const u8 idx , MU
 
   initWork->musPoke[idx] = musPara;
   initWork->musPoke[idx]->charaType = MUS_CHARA_PLAYER;
-/*
-  initWork->musPoke[idx]->mcssParam.monsno = 545;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
-*/
+#if PM_DEBUG
+  {
+    MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+    if( debWork != NULL && 
+        debWork->memMaxMode == TRUE )
+    {
+      initWork->musPoke[idx]->mcssParam.monsno = 545;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -255,23 +263,30 @@ void MUSICAL_STAGE_SetData_NPC( STAGE_INIT_WORK *initWork , const u8 idx , u16 p
   initWork->musPoke[idx] = MUSICAL_SYSTEM_InitMusPokeParam( pokeID , sex , 0 , 0 , perRand , heapId );
   initWork->musPoke[idx]->charaType = MUS_CHARA_NPC;
   initWork->musPoke[idx]->npcAppealTime = npcAppealTime;
-/*  
-  initWork->musPoke[idx]->mcssParam.monsno = 545;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
-*/
+#if PM_DEBUG
+  {
+    MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+    if( debWork != NULL && 
+        debWork->memMaxMode == TRUE )
+    {
+      initWork->musPoke[idx]->mcssParam.monsno = 545;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -284,23 +299,30 @@ void MUSICAL_STAGE_SetData_Comm( STAGE_INIT_WORK *initWork , const u8 idx , MUSI
 
   initWork->musPoke[idx] = musPara;
   initWork->musPoke[idx]->charaType = MUS_CHARA_COMM;
-/*  
-  initWork->musPoke[idx]->mcssParam.monsno = 545;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
-  initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
-*/
+#if PM_DEBUG
+  {
+    MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+    if( debWork != NULL && 
+        debWork->memMaxMode == TRUE )
+    {
+      initWork->musPoke[idx]->mcssParam.monsno = 545;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_R].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HAND_L].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_WAIST].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_FACE].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_HEAD].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_L].angle = 0;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].itemNo = 11;
+      initWork->musPoke[idx]->equip[MUS_POKE_EQU_EAR_R].angle = 0;
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
