@@ -299,6 +299,8 @@ static void handler_Kemuridama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 static void handler_Kemuridama_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_ADD_ITEM_OmamoriKoban( u32* numElems );
 static void handler_OmamoriKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  HAND_ADD_ITEM_HakkinDama( u32* numElems );
+static void handler_HakkinDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_TumetaiIwa( u32* numElems );
 static void handler_TumetaiIwa( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_SarasaraIwa( u32* numElems );
@@ -602,6 +604,7 @@ static const struct {
   { ITEM_KEMURIDAMA,        HAND_ADD_ITEM_Kemuridama        },
   { ITEM_OMAMORIKOBAN,      HAND_ADD_ITEM_OmamoriKoban      },
   { ITEM_KOUUNNOOKOU,       HAND_ADD_ITEM_OmamoriKoban      },
+  { ITEM_HAKKINDAMA,        HAND_ADD_ITEM_HakkinDama        },
 
 
   { ITEM_KARUISI,           HAND_ADD_ITEM_Karuisi         },  // かるいし
@@ -4070,6 +4073,28 @@ static void handler_OmamoriKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
     BTL_SVFRET_SetMoneyDblUp( flowWk, pokeID );
   }
 }
+//------------------------------------------------------------------------------
+/**
+ *  はっきんだま
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  HAND_ADD_ITEM_HakkinDama( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_WAZA_POWER,     handler_HakkinDama },
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// ワザ威力計算ハンドラ
+static void handler_HakkinDama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
+  {
+    BTL_EVENTVAR_MulValue( BTL_EVAR_WAZA_POWER_RATIO, FX32_CONST(1.3) );
+  }
+}
+
 
 
 
