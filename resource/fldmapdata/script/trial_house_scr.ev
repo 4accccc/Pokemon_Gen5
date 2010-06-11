@@ -58,7 +58,7 @@ EVENT_START ev_tri_house_reception
     ENDIF
 
     IF $dl_data_valid == TRUE THEN
-      _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )    //クローズいらず
       IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
         $download_flg = TRUE
@@ -107,7 +107,7 @@ EVENT_START ev_tri_house_reception
             _CALL charange
           ELSE                                      //殿堂入り前
             //ラストメッセージ「まだ早い」
-            _BALLOONWIN_OBJMSG_POS(msg_trialhouse_004, SCWK_TARGET_OBJID, POS_DL )
+            _BALLOONWIN_OBJMSG_POS(msg_trialhouse_004, SCWK_TARGET_OBJID, POS_DOWN )
              _LAST_KEYWAIT()
             _BALLOONWIN_CLOSE()
           ENDIF
@@ -128,7 +128,7 @@ EVENT_START ev_tri_house_reception
 
   IF $exit == TRUE THEN
     //「またこんど」
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_005, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_005, SCWK_TARGET_OBJID, POS_DOWN )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
   ENDIF
@@ -143,7 +143,7 @@ EVENT_END
 //説明
 explanation:
   //説明メッセージ
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_028, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_028, SCWK_TARGET_OBJID, POS_DOWN )
 _RET
 
 charange:
@@ -206,7 +206,7 @@ charange:
   //戦闘モードセット
   _TH_SET_PLAY_MODE( btl_mode )
   //「早速はじめる」
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_011, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_011, SCWK_TARGET_OBJID, POS_DOWN )
   _BALLOONWIN_CLOSE()//アプリに飛ぶのでクローズ
 
   //手持ちかバトルボックスか選ぶウィンドウ表示(メンバチェック込み)
@@ -219,6 +219,8 @@ charange:
   ELSIF $party_sel == SCR_BTL_PARTY_SELECT_NG THEN
     //参加できるポケモンがいません
     _BTL_UTIL_PARTY_REGULATION_NG_MSG_CALL( regulation )
+    //受付にラストメッセージを言わせるために、やめるフラグＯＮ
+    $exit = TRUE
     _RET
   ENDIF
 
@@ -250,7 +252,7 @@ charange:
   _ADD_RECORD( RECID_TRIALHOUSE_COUNT, 1 )
 
   //「でははじめるよ」
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_013, SCWK_TARGET_OBJID, POS_DOWN )
   _BALLOONWIN_CLOSE()   //アニメにつづくのでクローズ
 
   //受付係はける
@@ -285,7 +287,7 @@ charange:
     _TH_GET_RANK( before_rank )
 
     //「おつかれさま」
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_014, SCWK_TARGET_OBJID, POS_DOWN )
     _BALLOONWIN_CLOSE()   //アプリに飛ぶのでクローズ
 
     //すれ違い通信用データセット(遊び終わった後に変更　100426)
@@ -337,7 +339,7 @@ charange:
     ENDSWITCH
 
     //ラストメッセージ
-    _BALLOONWIN_OBJMSG_POS(rank_msg, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS(rank_msg, SCWK_TARGET_OBJID, POS_DOWN )
     _LAST_KEYWAIT()
     _BALLOONWIN_CLOSE()
 
@@ -403,7 +405,7 @@ recover_anm:
   $next += 1
   _NUMBER( 0, next, 1 )
   //「つぎは○人目」
-  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_029, SCWK_TARGET_OBJID, POS_DL )
+  _BALLOONWIN_OBJMSG_POS(msg_trialhouse_029, SCWK_TARGET_OBJID, POS_DOWN )
   _BALLOONWIN_CLOSE() //アニメつづくのでクローズ
 
   //自機左向く
@@ -426,7 +428,7 @@ download:
     $exit = TRUE
   ELSE
     //「特別な検定する?」
-    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_023, SCWK_TARGET_OBJID, POS_DL )
+    _BALLOONWIN_OBJMSG_POS(msg_trialhouse_023, SCWK_TARGET_OBJID, POS_DOWN )
     _YES_NO_WIN( SCWK_ANSWER )    //ここではクローズしない
     
     IF $SCWK_ANSWER == 0 THEN //特別な検定やる
@@ -448,13 +450,13 @@ download:
 
       IF $SCWK_ANSWER == TH_DL_RSLT_FAIL THEN
         //「ダウンロードするものがない」
-        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_024, SCWK_TARGET_OBJID, POS_DOWN )
         //メニュー選択やり直し
         $loop = TRUE
         _RET
       ELSIF $SCWK_ANSWER == TH_DL_RSLT_SETTLED THEN
         //「既にダウンロードした」
-        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_031, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_031, SCWK_TARGET_OBJID, POS_DOWN )
         //メニュー選択やり直し
         $loop = TRUE
         _RET
@@ -473,10 +475,10 @@ download:
         ENDIF
 
         //「ダウンロードしました」
-        _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS(dl_data_msg, SCWK_TARGET_OBJID, POS_DOWN )
       }
       //「今すぐ挑戦？」
-      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_026, SCWK_TARGET_OBJID, POS_DL )
+      _BALLOONWIN_OBJMSG_POS(msg_trialhouse_026, SCWK_TARGET_OBJID, POS_DOWN )
       _YES_NO_WIN( SCWK_ANSWER )
       _BALLOONWIN_CLOSE()
       IF $SCWK_ANSWER == 0 THEN //ダウンロード挑戦
@@ -484,7 +486,7 @@ download:
         _CALL charange
       ELSE                      //挑戦しない
         //ラストメッセージ「じゃああとで」
-        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_027, SCWK_TARGET_OBJID, POS_DL )
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_027, SCWK_TARGET_OBJID, POS_DOWN )
         _LAST_KEYWAIT()
         _BALLOONWIN_CLOSE()
       ENDIF
