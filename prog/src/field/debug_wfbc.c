@@ -104,6 +104,7 @@ static GMEVENT_RESULT ev_DEBUG_WFBC_100SetUp( GMEVENT* p_event, int* p_seq, void
 
 static GMEVENT_RESULT ev_DEBUG_WFBC_View( GMEVENT* p_event, int* p_seq, void* p_work );
 
+
 //----------------------------------------------------------------------------
 /**
  *	@brief  WFBCcontrollerを起動
@@ -377,6 +378,8 @@ static BOOL ev_DEBUG_WFBC_PeopleCheckNextID( u32 index, const EVENT_DEBUG_WFBC_P
  *	@brief  WFBC状態ビューアー
  */
 //-----------------------------------------------------------------------------
+extern u8 DEBUG_WFBC_RandData[FIELD_WFBC_BLOCK_SIZE_X][FIELD_WFBC_BLOCK_SIZE_X];
+extern u8 DEBUG_WFBC_LevelData[FIELD_WFBC_BLOCK_SIZE_X][FIELD_WFBC_BLOCK_SIZE_X];
 static GMEVENT_RESULT ev_DEBUG_WFBC_View( GMEVENT* p_event, int* p_seq, void* p_work )
 {
   EVENT_DEBUG_WFBC_VIEW* p_wk = p_work;
@@ -454,70 +457,101 @@ static GMEVENT_RESULT ev_DEBUG_WFBC_View( GMEVENT* p_event, int* p_seq, void* p_
 
     // ページ切り替え
     if( GFL_UI_TP_GetTrg() ){
-      p_wk->page = (p_wk->page + 1) % 2;
+      p_wk->page = (p_wk->page + 1) % 3;
       p_wk->change = TRUE;
     }
     
-    if( (GFL_STD_MemComp( p_wk->p_wfbc_data, &p_wk->wfbc_data_tmp, sizeof(FIELD_WFBC_CORE) ) != 0) || p_wk->change ){
-      const FIELD_WFBC_CORE_PEOPLE* cp_array;
-      int i;
-      s16 pos_x, pos_y;
-      u32 str_id;
-  
+    if( (p_wk->page == 2) && p_wk->change ){
+      int i, j;
+        
       GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_win ), 0xf );
 
-      // 表
-      if( p_wk->page == 0 ){
-        cp_array = p_wk->p_wfbc_data->people;
-      }
-      // 裏
-      else{
-        cp_array = p_wk->p_wfbc_data->back_people;
-      }
-
-      // タイトル描画
-      if( (p_wk->page==0) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY) ){
-        
-        GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT02, p_wk->p_strbuff );
-      }else if( (p_wk->page==1) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY) ){
-
-        GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT03, p_wk->p_strbuff );
-      }else if( (p_wk->page==0) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST) ){
-        
-        GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT00, p_wk->p_strbuff );
-      }else if( (p_wk->page==1) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST) ){
-        
-        GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT01, p_wk->p_strbuff );
-      }
+          
+      GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT07, p_wk->p_strbuff );
       PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_wk->p_win ), 0, 0, p_wk->p_strbuff, p_wk->p_font );
 
-      // 人データ描画
-      for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ ){
 
-        pos_x = (i / (FIELD_WFBC_PEOPLE_MAX/2) ) * 120;
-        pos_y = ((i % (FIELD_WFBC_PEOPLE_MAX/2) ) * 20) + 16;
+      GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT06, p_wk->p_strbuff_tmp );
+
+      for( i=0; i<FIELD_WFBC_BLOCK_SIZE_Z; i++ ){
         
-        // １人描画
-        WORDSET_RegisterNumber( p_wk->p_wordset, 0, i, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-        if( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_array[i] ) == FALSE ){
-          GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT05, p_wk->p_strbuff_tmp );
-        }else{
-          WORDSET_RegisterNumber( p_wk->p_wordset, 1, cp_array[i].npc_id, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-          WORDSET_RegisterNumber( p_wk->p_wordset, 2, cp_array[i].mood, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
-          GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT04, p_wk->p_strbuff_tmp );
+        for( j=0; j<FIELD_WFBC_BLOCK_SIZE_X; j++ ){
+
+          WORDSET_RegisterNumber( p_wk->p_wordset, 0, DEBUG_WFBC_LevelData[i][j], 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+          WORDSET_RegisterNumber( p_wk->p_wordset, 1, DEBUG_WFBC_RandData[i][j], 1, STR_NUM_DISP_LEFT, STR_NUM_CODE_HANKAKU );
+
+          WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuff, p_wk->p_strbuff_tmp );
+          PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_wk->p_win ), j*30, 20+(i*16), p_wk->p_strbuff, p_wk->p_font );
+          
         }
-      
-        WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuff, p_wk->p_strbuff_tmp );
-        PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_wk->p_win ), pos_x, pos_y, p_wk->p_strbuff, p_wk->p_font );
       }
 
-      //転送
       GFL_BMPWIN_TransVramCharacter( p_wk->p_win );
 
-
-      // データコピー
-      GFL_STD_MemCopy( p_wk->p_wfbc_data, &p_wk->wfbc_data_tmp, sizeof(FIELD_WFBC_CORE) );
       p_wk->change = FALSE;
+      
+    }else{
+      if( (GFL_STD_MemComp( p_wk->p_wfbc_data, &p_wk->wfbc_data_tmp, sizeof(FIELD_WFBC_CORE) ) != 0) || p_wk->change ){
+        const FIELD_WFBC_CORE_PEOPLE* cp_array;
+        int i;
+        s16 pos_x, pos_y;
+        u32 str_id;
+    
+        GFL_BMP_Clear( GFL_BMPWIN_GetBmp( p_wk->p_win ), 0xf );
+
+        // 表
+        if( p_wk->page == 0 ){
+          cp_array = p_wk->p_wfbc_data->people;
+        }
+        // 裏
+        else{
+          cp_array = p_wk->p_wfbc_data->back_people;
+        }
+
+        // タイトル描画
+        if( (p_wk->page==0) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY) ){
+          
+          GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT02, p_wk->p_strbuff );
+        }else if( (p_wk->page==1) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY) ){
+
+          GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT03, p_wk->p_strbuff );
+        }else if( (p_wk->page==0) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST) ){
+          
+          GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT00, p_wk->p_strbuff );
+        }else if( (p_wk->page==1) && (p_wk->p_wfbc_data->type == FIELD_WFBC_CORE_TYPE_WHITE_FOREST) ){
+          
+          GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT01, p_wk->p_strbuff );
+        }
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_wk->p_win ), 0, 0, p_wk->p_strbuff, p_wk->p_font );
+
+        // 人データ描画
+        for( i=0; i<FIELD_WFBC_PEOPLE_MAX; i++ ){
+
+          pos_x = (i / (FIELD_WFBC_PEOPLE_MAX/2) ) * 120;
+          pos_y = ((i % (FIELD_WFBC_PEOPLE_MAX/2) ) * 20) + 16;
+          
+          // １人描画
+          WORDSET_RegisterNumber( p_wk->p_wordset, 0, i, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+          if( FIELD_WFBC_CORE_PEOPLE_IsInData( &cp_array[i] ) == FALSE ){
+            GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT05, p_wk->p_strbuff_tmp );
+          }else{
+            WORDSET_RegisterNumber( p_wk->p_wordset, 1, cp_array[i].npc_id, 2, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+            WORDSET_RegisterNumber( p_wk->p_wordset, 2, cp_array[i].mood, 3, STR_NUM_DISP_LEFT, STR_NUM_CODE_DEFAULT );
+            GFL_MSG_GetString( p_wk->p_msgdata, WFBC_PRINT04, p_wk->p_strbuff_tmp );
+          }
+        
+          WORDSET_ExpandStr( p_wk->p_wordset, p_wk->p_strbuff, p_wk->p_strbuff_tmp );
+          PRINTSYS_Print( GFL_BMPWIN_GetBmp( p_wk->p_win ), pos_x, pos_y, p_wk->p_strbuff, p_wk->p_font );
+        }
+
+        //転送
+        GFL_BMPWIN_TransVramCharacter( p_wk->p_win );
+
+
+        // データコピー
+        GFL_STD_MemCopy( p_wk->p_wfbc_data, &p_wk->wfbc_data_tmp, sizeof(FIELD_WFBC_CORE) );
+        p_wk->change = FALSE;
+      }
     }
     break;
 

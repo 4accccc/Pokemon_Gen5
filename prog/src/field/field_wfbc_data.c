@@ -29,6 +29,10 @@ s16 DEBUG_FIELD_WFBC_MAKE_score = 0;
 u16 DEBUG_FIELD_WFBC_MAKE_flag = 0;
 #endif
 
+#ifdef PM_DEBUG
+s8 DEUBG_WFBC_BLOCK_LEVEL = -1;
+#endif
+
 
 //-----------------------------------------------------------------------------
 /**

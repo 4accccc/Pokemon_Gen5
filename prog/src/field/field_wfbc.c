@@ -28,7 +28,6 @@
 
 
 
-
 //-----------------------------------------------------------------------------
 /**
  *					定数宣言
@@ -216,6 +215,19 @@ struct _FIELD_WFBC
   // 動作モデルシステム
   MMDLSYS* p_mmdlsys;
 };
+
+
+
+
+
+#ifdef PM_DEBUG
+
+extern s8 DEUBG_WFBC_BLOCK_LEVEL;
+
+u8 DEBUG_WFBC_RandData[FIELD_WFBC_BLOCK_SIZE_Z][FIELD_WFBC_BLOCK_SIZE_X] = {0};
+u8 DEBUG_WFBC_LevelData[FIELD_WFBC_BLOCK_SIZE_Z][FIELD_WFBC_BLOCK_SIZE_X] = {0};
+
+#endif
 
 
 //-----------------------------------------------------------------------------
@@ -1486,10 +1498,16 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
           // 左上ブロックの情報をそのまま保存
           WFBC_NOW_MAPDATA_SetData( p_mapdata, j, i, block_tag, 
               p_mapdata->map_now[i - block_tag.pos_z][j - block_tag.pos_x].block_id );
+
+#ifdef PM_DEBUG
+          DEBUG_WFBC_RandData[i][j] = DEBUG_WFBC_RandData[i - block_tag.pos_z][j - block_tag.pos_x];
+          DEBUG_WFBC_LevelData[i][j] = DEBUG_WFBC_LevelData[i - block_tag.pos_z][j - block_tag.pos_x];
+#endif // PM_DEBUG
         }
         else
         {
           u32 block_lefttop_x, block_lefttop_z;
+          u32 rand_num;
           block_lefttop_x = j - block_tag.pos_x;
           block_lefttop_z = i - block_tag.pos_z;
           
@@ -1502,7 +1520,8 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
           // （OBJの人数×0.8）＋ランダム（０～１）
           score = p_wk->draw_people_num;
           score = (score * 8) / 10;
-          score += GFL_STD_Rand( &p_wk->randData, p_wk->block_rand_max );
+          rand_num = GFL_STD_Rand( &p_wk->randData, p_wk->block_rand_max );
+          score += rand_num;
 
           if( score >= (FIELD_WFBC_BLOCK_PATCH_MAX/2) )
           {
@@ -1516,6 +1535,17 @@ static void WFBC_DRAW_PARAM_MakeMapData( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC
           // 設定
           cp_patch_data = &cp_block->patch[ block_tag.block_no ];
           land_data_patch_id = cp_patch_data->patch[ score ];
+
+#ifdef PM_DEBUG
+          if( DEUBG_WFBC_BLOCK_LEVEL > 0 ){
+            score = DEUBG_WFBC_BLOCK_LEVEL;
+            land_data_patch_id = cp_patch_data->patch[ score ];
+            rand_num = 0;
+          }
+
+          DEBUG_WFBC_LevelData[ i ][ j ] = score;
+          DEBUG_WFBC_RandData[ i ][ j ] = rand_num;
+#endif // PM_DEBUG
 
 #ifdef FIELD_WFBC_MAKE_MAPDATA_DEBUG
           if( DEBUG_FIELD_WFBC_MAKE_flag )
@@ -1584,6 +1614,8 @@ static void DEBWIN_Update_WFItemSet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFItemSet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Update_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item );
 static void DEBWIN_Draw_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Update_WFBlockLevelSet( void* userWork , DEBUGWIN_ITEM* item );
+static void DEBWIN_Draw_WFBlockLevelSet( void* userWork , DEBUGWIN_ITEM* item );
 
 
 void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
@@ -1616,6 +1648,10 @@ void FIELD_FUNC_RANDOM_GENERATE_InitDebug( HEAPID heapId, void* p_gdata )
 
   DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFItemSet,DEBWIN_Draw_WFItemSet, 
                              p_gdata , 10 , heapId );
+
+  DEBUGWIN_AddItemToGroupEx( DEBWIN_Update_WFBlockLevelSet, DEBWIN_Draw_WFBlockLevelSet, 
+                             p_gdata , 10 , heapId );
+
 
 }
 
@@ -2238,6 +2274,43 @@ static void DEBWIN_Draw_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item )
   else
   {
     DEBUGWIN_ITEM_SetName( item , "WFPoke??" );
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ブロックレベル設定
+ */
+//-----------------------------------------------------------------------------
+static void DEBWIN_Update_WFBlockLevelSet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT )
+  {
+    DEUBG_WFBC_BLOCK_LEVEL --;
+    if( DEUBG_WFBC_BLOCK_LEVEL < -1 ){
+      DEUBG_WFBC_BLOCK_LEVEL = -1;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+  else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT )
+  {
+    DEUBG_WFBC_BLOCK_LEVEL ++;
+    if( DEUBG_WFBC_BLOCK_LEVEL >= FIELD_WFBC_BLOCK_PATCH_MAX  ){
+      DEUBG_WFBC_BLOCK_LEVEL = FIELD_WFBC_BLOCK_PATCH_MAX - 1;
+    }
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void DEBWIN_Draw_WFBlockLevelSet( void* userWork , DEBUGWIN_ITEM* item )
+{
+  if( DEUBG_WFBC_BLOCK_LEVEL >= 0 )
+  {
+    DEBUGWIN_ITEM_SetNameV( item , "WFBLOCK Level[%d]", DEUBG_WFBC_BLOCK_LEVEL );
+  }
+  else
+  {
+    DEBUGWIN_ITEM_SetName( item , "WFBLOCK Level Off" );
   }
 }
 
