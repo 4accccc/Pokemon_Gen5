@@ -767,7 +767,7 @@ static void CTVT_COMM_UpdateComm( COMM_TVT_WORK *work , CTVT_COMM_WORK *commWork
       commWork->connectNum = 1;
       commWork->beacon.connectNum = 1;
       
-      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork , FALSE );
+      CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork , FALSE , FALSE );
     }
   }
   else
@@ -1084,7 +1084,7 @@ static void CTVT_COMM_RefureshCommState( COMM_TVT_WORK *work , CTVT_COMM_WORK *c
   }
   {
     CTVT_CAMERA_WORK *camWork = COMM_TVT_GetCameraWork(work);
-    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork  , FALSE );
+    CTVT_CAMERA_SetWaitAllRefreshFlg( work , camWork  , FALSE , TRUE );
   }
 }
 
@@ -1297,7 +1297,7 @@ static void CTVT_COMM_PostFlg( const int netID, const int size , const void* pDa
       if( COMM_TVT_IsDoubleMode(commWork->parentWork) != pkt->value )
       {
         COMM_TVT_SetDoubleMode_Flag( commWork->parentWork , pkt->value );
-        CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , TRUE );
+        CTVT_CAMERA_SetWaitAllRefreshFlg( commWork->parentWork , camWork , TRUE , FALSE );
       }
     }
     break;

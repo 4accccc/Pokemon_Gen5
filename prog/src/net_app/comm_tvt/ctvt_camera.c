@@ -66,6 +66,7 @@ struct _CTVT_CAMERA_WORK
   u8   isUpdateBit;
   BOOL isWaitAllRefresh;
   BOOL isRefreshClear;
+  BOOL isRefreshClearName;
   BOOL isDispDouble;
   u8   waitAllConut;  //2‰ñ‘Ò‚½‚È‚¢‚Æ‚¢‚¯‚È‚¢
   u8   allClearCnt;   //ƒEƒBƒ“ƒhƒE‚ðŽg‚Á‚ÄÄ•`‰æ‚·‚é
@@ -129,6 +130,7 @@ CTVT_CAMERA_WORK* CTVT_CAMERA_Init( COMM_TVT_WORK *work , const HEAPID heapId )
   camWork->isWaitAllRefresh = FALSE;
   camWork->allClearCnt = 192;
   camWork->isRefreshClear = FALSE;
+  camWork->isRefreshClearName = FALSE;
   camWork->isDispDouble = FALSE;
   camWork->isWaitWindow = FALSE;
   camWork->scrBuf = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID(heapId) , CTVT_BUFFER_SCR_SIZE );
@@ -312,6 +314,11 @@ void CTVT_CAMERA_VBlank( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork )
           camWork->isWaitWindow = TRUE;
           G2_SetWnd0Position( 0,0,255,0 );
           G2_SetWnd1Position( 128,0,0,0 );
+        }
+        if( camWork->isRefreshClearName == TRUE )
+        {
+          camWork->isRefreshClearName = FALSE;
+          COMM_TVT_ClearName( work );
         }
         //ŠG‚ª‚»‚ë‚Á‚½‚ç‹–‰Â•”{Šp‚Ì”½‰f
         GFL_STD_MemFill32( G2_GetBG3ScrPtr() ,0x00000000 , CTVT_BUFFER_SCR_SIZE );
@@ -599,7 +606,7 @@ void CTVT_CAMERA_ResetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWor
 //--------------------------------------------------------------
 //	‘SˆõXV‘Ò‚¿ƒtƒ‰ƒO‚ð—§‚Ä‚é
 //--------------------------------------------------------------
-void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork  , const BOOL isClear )
+void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const BOOL isClear , const BOOL isClearName )
 {
   u8 i;
   CTVT_COMM_WORK *commWork = COMM_TVT_GetCommWork( work );
@@ -607,6 +614,10 @@ void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *c
   if( camWork->isRefreshClear == FALSE )
   {
     camWork->isRefreshClear = isClear;
+  }
+  if( camWork->isRefreshClearName == FALSE )
+  {
+    camWork->isRefreshClearName = isClearName;
   }
 
   camWork->isUpdateBit = 0;

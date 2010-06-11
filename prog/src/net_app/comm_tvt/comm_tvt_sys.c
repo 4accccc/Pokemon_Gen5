@@ -1218,6 +1218,16 @@ void COMM_TVT_RedrawName( COMM_TVT_WORK *work )
   //GFL_BG_LoadScreenV_Req( CTVT_FRAME_MAIN_MSG );
 }
 
+void COMM_TVT_ClearName( COMM_TVT_WORK *work )
+{
+  u8 i;
+  for( i=0;i<CTVT_MEMBER_NUM;i++ )
+  {
+    GFL_BMP_Clear( GFL_BMPWIN_GetBmp( work->nameWin[i] ) , 0x0 );
+    GFL_BMPWIN_TransVramCharacter( work->nameWin[i] );
+  }
+}
+
 //--------------------------------------------------------------------------
 //  会話アイコンの表示
 //--------------------------------------------------------------------------

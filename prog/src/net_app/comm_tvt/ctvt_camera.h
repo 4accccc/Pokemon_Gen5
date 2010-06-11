@@ -42,7 +42,7 @@ extern const BOOL CTVT_CAMERA_IsStopCapture( COMM_TVT_WORK *work , CTVT_CAMERA_W
 
 extern void CTVT_CAMERA_SetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx );
 extern void CTVT_CAMERA_ResetRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const u8 idx );
-extern void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const BOOL isClear );
+extern void CTVT_CAMERA_SetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork , const BOOL isClear , const BOOL isClearName );
 extern const BOOL CTVT_CAMERA_GetWaitAllRefreshFlg( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
 
 extern const u16 CTVT_CAMERA_GetPhotoSizeX( COMM_TVT_WORK *work , CTVT_CAMERA_WORK *camWork );
