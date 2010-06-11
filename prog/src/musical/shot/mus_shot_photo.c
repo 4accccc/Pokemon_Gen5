@@ -118,6 +118,7 @@ static void MUS_SHOT_PHOTO_SetupMessage( MUS_SHOT_PHOTO_WORK *work );
 
 void MUS_SHOT_PHOTO_InitDebug( MUS_SHOT_PHOTO_WORK *work );
 void MUS_SHOT_PHOTO_TermDebug( MUS_SHOT_PHOTO_WORK *work );
+static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work );
 
 //--------------------------------------------------------------
 //	初期化
@@ -293,6 +294,8 @@ void MUS_SHOT_PHOTO_UpdateSystem( MUS_SHOT_PHOTO_WORK *work )
   }
 #endif
   }
+  MUS_SHOT_DebugPolyDraw( work );
+
   GFL_G3D_DRAW_End();
 #if MUS_PHOTO_DRAW_TICK
   {
@@ -474,6 +477,9 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
   VecFx32 lightpos = {FX32_CONST(64.0f),FX32_CONST(128.0f),FX32_CONST(200.0f)};
   const fx32 XBase = FX32_CONST(256.0f/(MUSICAL_POKE_MAX+1));
   
+  fx32  posZArr[4];
+  fx32  posZBase = FX32_CONST(80.0f);
+  
   work->drawSys = MUS_POKE_DRAW_InitSystem( work->heapId );
   MUS_POKE_DRAW_SetTexAddres( work->drawSys , 0x20000 );
   work->itemDrawSys = MUS_ITEM_DRAW_InitSystem( work->bbdSys , MUSICAL_POKE_MAX*MUS_POKE_EQUIP_MAX, work->heapId );
@@ -493,7 +499,30 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     STA_POKE_SetDrawItem( work->pokeSys , work->pokeWork[i] , TRUE );
   }
   
+  //先にZ座標の計算
+  bit = 1;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    if( (work->shotData->spotBit & bit) == 0  )
+    {
+      posZArr[i] = posZBase;
+      posZBase += FX32_CONST(30.0f);
+    }
+    bit = bit<<1;
+  }
+  bit = 1;
+  for( i=0;i<MUSICAL_POKE_MAX;i++ )
+  {
+    if( work->shotData->spotBit & bit )
+    {
+      posZArr[i] = posZBase;
+      posZBase += FX32_CONST(30.0f);
+    }
+    bit = bit<<1;
+  }
+
   //ライトと目立ちポケの設定
+  bit = 1;
   work->lightSys = STA_LIGHT_InitSystem(work->heapId , NULL );
   for( i=0;i<MUSICAL_POKE_MAX;i++ )
   {
@@ -504,7 +533,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
       VecFx32 ofs = {0,-FX32_CONST(40.0f),0};
       pos.x = posXArr[i];
       pos.y = FX32_CONST(160.0f);
-      pos.z -= FX32_CONST(30.0f); //ひとキャラの厚みは30と見る
+      pos.z = posZArr[i];
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
       STA_POKE_SetPositionOffset( work->pokeSys , work->pokeWork[i] , &ofs );
 
@@ -519,7 +548,7 @@ static void MUS_SHOT_PHOTO_SetupPokemon( MUS_SHOT_PHOTO_WORK *work )
     {
       pos.x = posXArr[i];
       pos.y = FX32_CONST(160.0f);
-      pos.z -= FX32_CONST(30.0f); //ひとキャラの厚みは30と見る
+      pos.z = posZArr[i];
       STA_POKE_SetPosition( work->pokeSys , work->pokeWork[i] , &pos );
       lightpos.y = FX32_CONST(128.0f);
       
@@ -772,4 +801,91 @@ static void MUS_SHOT_Debug_DrawScroll( void* userWork , DEBUGWIN_ITEM* item )
   
 }
 
+
 #endif //MUS_PHOTO_USE_DEBUG
+
+
+static void MUS_SHOT_DebugPolyDraw( MUS_SHOT_PHOTO_WORK *work )
+{
+#if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
+  if( GFL_UI_KEY_GetCont() & PAD_BUTTON_R )
+  {
+    VecFx32 pos;
+    G3_PushMtx();
+    //カメラ設定取得
+    {
+      MtxFx33       mtxBillboard;
+      VecFx16       vecN;
+      VecFx32   vecNtmp;
+      MtxFx43   mtxCamera, mtxCameraInv;
+      static const VecFx32 cam_pos = MUSICAL_CAMERA_POS;
+      static const VecFx32 cam_target = MUSICAL_CAMERA_TRG;
+      static const VecFx32 cam_up = MUSICAL_CAMERA_UP;
+    
+      G3_LookAt( &cam_pos, &cam_up, &cam_target, &mtxCamera );  //mtxCameraには行列計算結果が返る
+      MTX_Inverse43( &mtxCamera, &mtxCameraInv );     //カメラ逆行列取得
+      MTX_Copy43To33( &mtxCameraInv, &mtxBillboard );   //カメラ逆行列から回転行列を取り出す
+
+      VEC_Subtract( &cam_pos, &cam_target, &vecNtmp );
+      VEC_Normalize( &vecNtmp, &vecNtmp );
+      VEC_Fx16Set( &vecN, vecNtmp.x, vecNtmp.y, vecNtmp.z );
+    }
+    {
+      static u8 polyCol = 0;
+      static fx32 polyOfs = FX32_CONST(100.0f);
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP )
+      {
+        polyOfs += FX32_ONE;
+        OS_FPrintf( 2,"PolyOfs[%.1f]\n",FX_FX32_TO_F32(polyOfs));
+      }
+      if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN )
+      {
+        polyOfs -= FX32_ONE;
+        OS_FPrintf( 2,"PolyOfs[%.1f]\n",FX_FX32_TO_F32(polyOfs));
+      }
+      //板ポリ
+      G3_PolygonAttr(GX_LIGHTMASK_NONE,       // no lights
+               GX_POLYGONMODE_MODULATE,     // modulation mode
+               GX_CULL_NONE,          // cull back
+               0,                // polygon ID(0 - 63)
+               31,     // alpha(0 - 31)
+               0                  // OR of GXPolygonAttrMisc's value
+               );
+      G3_TexImageParam( GX_TEXFMT_NONE ,
+                        GX_TEXGEN_NONE ,
+                        0 ,
+                        0 ,
+                        0 ,
+                        0 ,
+                        GX_TEXPLTTCOLOR0_USE ,
+                        0 );
+      pos.x = MUSICAL_POS_X(128.0f);
+      pos.y = MUSICAL_POS_Y(96.0f);
+      pos.z = polyOfs;
+
+      G3_Translate( pos.x, pos.y, pos.z );
+
+      {
+        const fx32 size = FX32_ONE;
+        G3_Begin(GX_BEGIN_QUADS);
+        G3_Color( GX_RGB( polyCol, polyCol, polyCol ) );
+        polyCol++;
+        if( polyCol > 31 )
+        {
+          polyCol = 0;
+        }
+
+        G3_Vtx( FX32_CONST(-7.8), FX32_CONST( 5.8), 0 );
+        G3_Vtx( FX32_CONST( 7.8), FX32_CONST( 5.8), 0 );
+        G3_Vtx( FX32_CONST( 7.8), FX32_CONST(-5.8), 0 );
+        G3_Vtx( FX32_CONST(-7.8), FX32_CONST(-5.8), 0 );
+
+        G3_End();
+      }
+    }
+    G3_PopMtx(1);
+    
+  }
+#endif //DEB_ARI
+  
+}
