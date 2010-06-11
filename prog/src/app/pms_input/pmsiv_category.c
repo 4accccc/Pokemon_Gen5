@@ -133,7 +133,7 @@ static const u8 msg_pms_category_str_id[CATEGORY_GROUP_MAX] =
   pms_category_02,
   pms_category_03,
   pms_category_04,
-  pms_category_05,
+  pms_category_12,
   pms_category_06,
   pms_category_13,
   pms_category_07,
