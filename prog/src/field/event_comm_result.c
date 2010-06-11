@@ -103,7 +103,7 @@ GMEVENT * EVENT_CommMissionResult(GAMESYS_WORK *gsys)
 	GFL_STD_MemClear( talk, sizeof(COMMTALK_EVENT_WORK) );
 	
 	talk->heapID = FIELDMAP_GetHeapID(fieldWork);
-	
+
 	return( event );
 }
 
@@ -168,6 +168,7 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
         //  ※BGMのPush,Popがある為、途中でイベントをやめるにはそこら辺のケアが必要になる
         {
           const MISSION_RESULT *mresult = MISSION_GetResultData(&intcomm->mission);
+          OCCUPY_INFO *my_occupy = GAMEDATA_GetMyOccupyInfo(gdata);
           
           GF_ASSERT(mresult != NULL);
           talk->mresult = *mresult;
@@ -176,6 +177,9 @@ static GMEVENT_RESULT CommMissionResultEvent( GMEVENT *event, int *seq, void *wk
           
           talk->mission_result = MISSION_CheckResultMissionMine(intcomm, &intcomm->mission);
           talk->point = MISSION_GetResultPoint(intcomm, &intcomm->mission);
+
+          OccupyInfo_LevelUpBlack(my_occupy, talk->add_black);
+          OccupyInfo_LevelUpWhite(my_occupy, talk->add_white);
         }
         (*seq)++;
       }

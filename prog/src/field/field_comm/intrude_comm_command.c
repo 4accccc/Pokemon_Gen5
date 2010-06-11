@@ -1369,11 +1369,11 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
   const MISSION_RESULT *mresult = pData;
   GAMEDATA *gamedata = GameCommSys_GetGameData(intcomm->game_comm);
-  OCCUPY_INFO *occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
+  OCCUPY_INFO *my_occupy = GAMEDATA_GetMyOccupyInfo(gamedata);
   BOOL complete = FALSE;
-  u8 white_num, black_num;
-  int add_white = MISSION_ACHIEVE_ADD_LEVEL;
-  int add_black = MISSION_ACHIEVE_ADD_LEVEL;
+  u8 white_num=0, black_num=0;
+  int add_white = 0;
+  int add_black = 0;
   
 #if 0 //返事を返さないと求めている側が永遠の待ちになるので 2010.04.23(金)
   if((intcomm->recv_profile & (1 << netID)) == 0){
@@ -1396,51 +1396,37 @@ static void _IntrudeRecv_MissionResult(const int netID, const int size, const vo
   if(mresult->mission_data.target_info.net_id 
       == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     if(mresult->mission_fail == TRUE){  //ミッション失敗の場合はリストを作り直す
-      MISSION_LIST_Create_Type(occupy, mresult->mission_data.cdata.type);
+      MISSION_LIST_Create_Type(my_occupy, mresult->mission_data.cdata.type);
       intcomm->send_occupy = TRUE;
     }
     else{ //達成者がいるので、ターゲットだった自分の占拠情報をクリア済みにする
       MISSION_SetMissionClear(gamedata, intcomm, mresult);
       intcomm->send_occupy = TRUE;
     }
-  }
 
-  //全占拠達成ならばミッションリストを作成しなおす
-  if(MISSION_LIST_Create_Complete(occupy, &white_num, &black_num) == TRUE){
-    intcomm->send_occupy = TRUE;
-    complete = TRUE;
-  }
-
-  //自分が達成者の場合はレベルアップ
-  if(MISSION_GetResultPoint(intcomm, &intcomm->mission) > 0){
-    if(complete == TRUE){
-      add_white = white_num;
-      add_black = black_num;
-      if(mresult->mission_data.monolith_type == MONOLITH_TYPE_BLACK){
-        add_black += MISSION_ACHIEVE_ADD_LEVEL;
-      }
-      else{
-        add_white += MISSION_ACHIEVE_ADD_LEVEL;
-      }
+    //全占拠達成ならばミッションリストを作成しなおす
+    if(MISSION_LIST_Create_Complete(my_occupy, &white_num, &black_num) == TRUE){
+      intcomm->send_occupy = TRUE;
+      complete = TRUE;
     }
-    
+
+    //占拠結果を達成者に対して送信
     if(mresult->mission_data.monolith_type == MONOLITH_TYPE_BLACK){
-      OccupyInfo_LevelUpBlack(occupy, add_black);
+      add_black = MISSION_ACHIEVE_ADD_LEVEL;
     }
     else{
-      OccupyInfo_LevelUpWhite(occupy, add_white);
+      add_white = MISSION_ACHIEVE_ADD_LEVEL;
     }
-    intcomm->send_occupy = TRUE;
-  }
-
-  //ターゲットだった場合は占拠結果を達成者に対して送信
-  if(mresult->mission_data.target_info.net_id == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    if(complete == TRUE){
+      add_black += black_num;
+      add_white += white_num;
+    }
     intcomm->send_occupy_result.add_white = add_white;
     intcomm->send_occupy_result.add_black = add_black;
     intcomm->send_occupy_result.occ = TRUE;
     intcomm->send_occupy_result_send_req = TRUE;
   }
-  
+
 #if 0
   if(MISSION_RecvCheck(&intcomm->mission) == FALSE 
       || MISSION_GetMissionEntry(&intcomm->mission) == FALSE){
