@@ -843,6 +843,8 @@ static void _changeDemo_ModelTrade27(POKEMON_TRADE_WORK* pWork)
     
     PokeParty_Init( pWork->pParentWork->pParty, TEMOTI_POKEMAX );
     PokeParty_Add( pWork->pParentWork->pParty, pp );
+    //i‰»‘O‚ð“o˜^
+    ZUKANSAVE_SetPokeGet( GAMEDATA_GetZukanSave( pWork->pGameData ), pp );
   }
 
 
