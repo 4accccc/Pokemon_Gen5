@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-13T17:46:39" source="wf_00_01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-06-11T19:33:19" source="wf_00_01.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-04-13T17:46:39" source="wf_00_01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-06-11T19:33:19" source="wf_00_01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -834,8 +834,8 @@
 
 <polygon_array size="11">
 	<polygon index="0" name="polygon0"
-		vertex_size="90" polygon_size="24"
-		triangle_size="4" quad_size="20"
+		vertex_size="98" polygon_size="26"
+		triangle_size="4" quad_size="22"
 		volume_min="-4.375000 -0.343750 -2.000000"
 		volume_max="2.000000 0.312500 3.000000"
 		volume_r="5.000488"
@@ -861,7 +861,23 @@
 					<tex st="-144.000000 80.000000"/>
 					<pos_xz xz="-1.125000 0.125000"/>
 				</primitive>
-				<primitive index="1" type="quads" vertex_size="72">
+				<primitive index="1" type="quads" vertex_size="80">
+					<tex st="0.000000 66.000000"/>
+					<pos_s xyz="0.000000 -0.078125 0.015625"/>
+					<tex st="128.000000 66.000000"/>
+					<pos_xy xy="1.000000 -0.078125"/>
+					<tex st="128.000000 -64.000000"/>
+					<pos_xz xz="1.000000 -1.000000"/>
+					<tex st="0.000000 -64.000000"/>
+					<pos_xy xy="0.000000 -0.078125"/>
+					<tex st="-2.000000 448.000000"/>
+					<pos_xz xz="-0.015625 3.000000"/>
+					<tex st="2.000000 448.000000"/>
+					<pos_xy xy="0.015625 -0.078125"/>
+					<tex st="2.000000 -64.000000"/>
+					<pos_xz xz="0.015625 -1.000000"/>
+					<tex st="-2.000000 -64.000000"/>
+					<pos_xy xy="-0.015625 -0.078125"/>
 					<tex st="-176.000000 160.000000"/>
 					<pos_s xyz="-1.375000 0.187500 0.750000"/>
 					<tex st="-141.000000 160.000000"/>
@@ -2518,8 +2534,8 @@
 		translate="0.000000 0.000000 0.000000"
 		visibility="on"
 		display_size="11"
-		vertex_size="677" polygon_size="175"
-		triangle_size="17" quad_size="158"
+		vertex_size="685" polygon_size="177"
+		triangle_size="17" quad_size="160"
 		volume_min="-4.500000 -0.546875 -3.625000"
 		volume_max="4.937500 0.789063 3.000000"
 		volume_r="6.149658"
@@ -2538,8 +2554,8 @@
 	</node>
 </node_array>
 
-<output_info vertex_size="677" polygon_size="175"
-	triangle_size="17" quad_size="158"/>
+<output_info vertex_size="685" polygon_size="177"
+	triangle_size="17" quad_size="160"/>
 
 </body>
 
