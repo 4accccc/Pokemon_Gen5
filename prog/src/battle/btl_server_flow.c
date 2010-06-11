@@ -2585,6 +2585,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
   bpp = BTL_PARTY_GetMemberData( party, posIdx );
   pokeID = BPP_GetID( bpp );
+  TAYA_Printf("MemberIn pokeID=%d\n", pokeID);
 
   BTL_MAIN_RegisterZukanSeeFlag( wk->mainModule, clientID, bpp );
 
@@ -2641,13 +2642,11 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
 
   while( FRONT_POKE_SEEK_GetNext(&fps, wk, &bpp) )
   {
+    u8 pokeID = BPP_GetID( bpp );
+    if( wk->pokeInFlag[ pokeID ] )
     {
-      u8 pokeID = BPP_GetID( bpp );
-      if( wk->pokeInFlag[ pokeID ] )
-      {
-        BTL_POKESET_Add( pokeSet, bpp );
-        wk->pokeInFlag[ pokeID ] = FALSE;
-      }
+      BTL_POKESET_Add( pokeSet, bpp );
+      wk->pokeInFlag[ pokeID ] = FALSE;
     }
   }
   BTL_POKESET_SortByAgility( pokeSet, wk );
@@ -2658,8 +2657,8 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   {
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+      TAYA_Printf("After MemberIN Event pokeID=%d\n", BPP_GetID(bpp) );
       scEvent_AfterMemberIn( wk, bpp );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
       if( scproc_HandEx_Result(wk) != HandExResult_NULL ){
         fMemberInEffect = TRUE;
@@ -8032,7 +8031,6 @@ static void scproc_ChangeWeatherAfter( BTL_SVFLOW_WORK* wk, BtlWeather weather )
 {
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
   scEvent_AfterChangeWeather( wk, weather );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 //----------------------------------------------------------------------------------
@@ -11917,6 +11915,22 @@ static void scEvent_CheckSideEffectParam( BTL_SVFLOW_WORK* wk, u8 userPokeID, Bt
     cont->raw = BTL_EVENTVAR_GetValue( BTL_EVAR_SICK_CONT );
   BTL_EVENTVAR_Pop();
 }
+//----------------------------------------------------------------------------------
+/**
+ * [Event] エアロック開始通知
+ *
+ * @param   wk
+ * @param   param->effect
+ * @param   param->side
+ * @param   &param->cont
+ */
+//----------------------------------------------------------------------------------
+static void scEvent_NotifyAirLock( BTL_SVFLOW_WORK* wk )
+{
+  BTL_EVENTVAR_Push();
+    BTL_EVENT_CallHandlers( wk, BTL_EVENT_NOTIFY_AIRLOCK );
+  BTL_EVENTVAR_Pop();
+}
 
 //----------------------------------------------------------------------------------------------------------
 // 相性ヒットカウンタ
@@ -13072,6 +13086,8 @@ void BTL_SVFRET_Event_AfterMemberIn( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* b
   scEvent_AfterMemberIn( wk, bpp );
 }
 
+
+
 //=============================================================================================
 /**
  * 戦闘結果判定処理
@@ -14102,38 +14118,33 @@ static u8 scproc_HandEx_changeWeather( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PAR
         scPut_TokWin_In( wk, pp_user );
       }
       scproc_ChangeWeatherCore( wk, param->weather, param->turn );
+      handexSub_putString( wk, &param->exStr );
       result = TRUE;
       if( param_header->tokwin_flag ){
         scPut_TokWin_Out( wk, pp_user );
       }
     }
   }
-  else
+  // エアロック
+  else if( param->fAirLock )
   {
-    BtlWeather prevWeather = BTL_FIELD_GetWeather();
-    if( prevWeather != BTL_WEATHER_NONE )
-    {
-      if( param_header->tokwin_flag ){
-        scPut_TokWin_In( wk, pp_user );
-      }
-
-      BTL_FIELD_ClearWeather();
-      SCQUE_PUT_ACT_WeatherEnd( wk->que, prevWeather );
-      result = TRUE;
-
-      if( param_header->tokwin_flag ){
-        scPut_TokWin_In( wk, pp_user );
-      }
-
+    if( param_header->tokwin_flag ){
+      scPut_TokWin_In( wk, pp_user );
     }
-    else{
-      result = FALSE;
-    }
-  }
-  if( result ){
+
     handexSub_putString( wk, &param->exStr );
-  }
+    {
+      u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+      scEvent_NotifyAirLock( wk );
+      BTL_Hem_PopState( &wk->HEManager, hem_state );
+    }
 
+    result = TRUE;
+
+    if( param_header->tokwin_flag ){
+      scPut_TokWin_Out( wk, pp_user );
+    }
+  }
 
   return result;
 }

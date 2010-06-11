@@ -144,6 +144,7 @@ typedef enum {
   BTL_EVENT_KORAERU_EXE,            ///<「こらえる」発動
   BTL_EVENT_TURNCHECK_BEGIN,        ///< ターンチェック（先頭）
   BTL_EVENT_TURNCHECK_END,          ///< ターンチェック（終端）
+  BTL_EVENT_NOTIFY_AIRLOCK,         ///< エアロック開始
   BTL_EVENT_WEATHER_CHECK,          ///< 天候のチェック
   BTL_EVENT_WEIGHT_RATIO,           ///< 体重変化率チェック
   BTL_EVENT_WAZA_WEATHER_TURNCNT,   ///< ワザによる天候変化時のターン数チェック

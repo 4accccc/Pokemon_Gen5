@@ -663,6 +663,7 @@ typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   BtlWeather               weather;
   u8                       turn;
+  u8                       fAirLock;
   BTL_HANDEX_STR_PARAMS    exStr;
 
 }BTL_HANDEX_PARAM_CHANGE_WEATHER;
