@@ -424,33 +424,33 @@
 	</row>
 
 	<row id="search_abc_06">
-		<language name="JPN" width="216">GPF</language>
-		<language name="JPN_KANJI" width="216">GPF</language>
-	</row>
-
-	<row id="search_abc_07">
 		<language name="JPN" width="216">GTS</language>
 		<language name="JPN_KANJI" width="216">GTS</language>
 	</row>
 
-	<row id="search_abc_08">
+	<row id="search_abc_07">
 		<language name="JPN" width="216">hallo</language>
 		<language name="JPN_KANJI" width="216">hallo</language>
 	</row>
 
-	<row id="search_abc_09">
+	<row id="search_abc_08">
 		<language name="JPN" width="216">hello</language>
 		<language name="JPN_KANJI" width="216">hello</language>
 	</row>
 
-	<row id="search_abc_10">
+	<row id="search_abc_09">
 		<language name="JPN" width="216">hola</language>
 		<language name="JPN_KANJI" width="216">hola</language>
 	</row>
 
-	<row id="search_abc_11">
+	<row id="search_abc_10">
 		<language name="JPN" width="216">PDW</language>
 		<language name="JPN_KANJI" width="216">PDW</language>
+	</row>
+
+	<row id="search_abc_11">
+		<language name="JPN" width="216">PGL</language>
+		<language name="JPN_KANJI" width="216">PGL</language>
 	</row>
 
 	<row id="search_abc_12">
