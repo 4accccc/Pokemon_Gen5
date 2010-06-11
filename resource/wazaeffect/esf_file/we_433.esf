@@ -7,6 +7,8 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_038_bashishi.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_433_wireroom.NSCR
 #001
 %00
+カメラ移動	追従	ZOOM_OUT	CM	0	0
+エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメストップ
 ポケモンアニメ	防御側	アニメストップ
 BGのパレットフェード	すべて	0	15	1	0:0:0
@@ -26,6 +28,7 @@ BGの表示/非表示	フィールド	表示
 BGの表示/非表示	お盆	表示
 BGの表示/非表示	エフェクト	非表示
 ポケモンアニメ	攻撃側	アニメスタート
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 ポケモンアニメ	防御側	アニメスタート
 エフェクト終了待ち	すべて
 エフェクト終了

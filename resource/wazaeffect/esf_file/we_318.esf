@@ -4,6 +4,8 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\w_425.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_318.spa
 #001
 %00
+カメラ移動	追従	3vs3防御	CM	0	CB
+エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメストップ
 SE再生	SEQ_SE_FLD_84	SE1	攻撃側	10:0:120	0:0:0
 SE動的変化	SE1	追従	ピッチ	0	1500	20	100:0:0
@@ -33,6 +35,7 @@ BGのパレットフェード	すべて	12	0	1	0:0:0
 エフェクト終了待ち	すべて
 ポケモンアニメ	攻撃側	アニメスタート
 ポケモンアニメ	防御側	アニメスタート
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 エフェクト終了
 &
