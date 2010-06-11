@@ -4213,9 +4213,11 @@ static BOOL OneselfSeq_ColosseumPokelistBattle(UNION_SYSTEM_PTR unisys, UNION_MY
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_SINGLE_FLAT:
       case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FLAT:
+        msg_id = msg_union_battle_01_29;  //3•C‘I‚ñ‚Å‰º‚³‚¢
+        break;
       case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE:
       case UNION_PLAY_CATEGORY_COLOSSEUM_MULTI_FREE_SHOOTER:
-        msg_id = msg_union_battle_01_29;  //3•C‘I‚ñ‚Å‰º‚³‚¢
+        msg_id = msg_union_battle_01_33;  //3•C‚Ü‚Å‘I‚ñ‚Å‰º‚³‚¢
         break;
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FLAT_SHOOTER:
       case UNION_PLAY_CATEGORY_COLOSSEUM_1VS1_DOUBLE_FLAT:
