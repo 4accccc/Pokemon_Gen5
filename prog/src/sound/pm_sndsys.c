@@ -147,7 +147,7 @@ static u32 heapRemainsAfterPlayer;
 static u32 heapRemainsAfterPresetSE;
 #endif
 
-#define THREAD_STACKSIZ   (0x1000)
+#define THREAD_STACKSIZ   (0x0400)
 OSThread    soundLoadThread;
 static u64  threadStack[ THREAD_STACKSIZ / sizeof(u64) ];
 THREAD_ARG  threadArg;
