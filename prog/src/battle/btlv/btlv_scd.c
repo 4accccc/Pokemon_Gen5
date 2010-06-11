@@ -1274,7 +1274,8 @@ static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk )
 
   case WAZA_TARGET_SIDE_FRIEND:         ///< Ž©•ª‘¤w’n
   case WAZA_TARGET_FRIEND_ALL:          ///< –¡•û‘¤‘Sƒ|ƒP
-    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_MYTEAM, basePos) );
+    //stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_AREA_MYTEAM, basePos) );
+    stw_setConfirmField( stw, wk->mainModule, EXPOS_MAKE(BTL_EXPOS_FULL_FRIENDS, basePos) );
     break;
 
   case WAZA_TARGET_SIDE_ENEMY:          ///< “G‘¤w’n
