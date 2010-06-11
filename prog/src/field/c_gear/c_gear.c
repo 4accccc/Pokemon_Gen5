@@ -155,6 +155,16 @@ static const u32 sc_CROSS_COLOR_RES_IDX[CROSS_COLOR_MAX] = {
 
 #define _CGEAR_TYPE_PATTERN_NUM (5)
 
+//-------------------------------------
+///	スリープ状態
+//=====================================
+typedef enum {
+  _CGEAR_SLEEP_NONE,
+  _CGEAR_SLEEP_START,
+  _CGEAR_SLEEP_END,
+
+} _CGEAR_SLEEP_STATE;
+
 
 typedef enum{
   _CLACT_PLT,
@@ -811,6 +821,7 @@ struct _C_GEAR_WORK {
   u8 intrude;    // 
   u8 ir_wifi_off;
   u8 ex_reader_cross_bttn_col_change;  // wireless強制カラー変更
+  u8 ex_reader_cross_bttn_col_change_wait;
 };
 
 
@@ -1675,6 +1686,7 @@ static void _PanelPalette_EXSet( C_GEAR_WORK* pWork, BOOL flag, BOOL ir_wifi_off
   pWork->ex_col_flag = flag;
   pWork->ex_col_change = TRUE;
   pWork->ex_reader_cross_bttn_col_change = TRUE;
+  pWork->ex_reader_cross_bttn_col_change_wait = 0;
   pWork->ir_wifi_off  = ir_wifi_off;
 }
 
@@ -4104,10 +4116,6 @@ static void _modeSelectMenuWait1(C_GEAR_WORK* pWork)
 
     _PanelPaletteAnimeColClear( pWork );
 
-  }else if(pWork->startCounter==1){
-
-    WIPE_SYS_Start( WIPE_PATTERN_S , WIPE_TYPE_FADEIN , WIPE_TYPE_FADEIN ,
-                    WIPE_FADE_BLACK , WIPE_DEF_DIV , WIPE_DEF_SYNC , pWork->heapID );
   }
 
   pWork->startCounter++;
@@ -4176,11 +4184,20 @@ static void _SLEEPGO_FUNC(void* pWk)
 {
   C_GEAR_WORK* pWork = pWk;
 
-  // もし、以前も演出中だったなら、WIPEをOFFにする。
-  if( WIPE_SYS_EndCheck() == FALSE ){
-    WIPE_SYS_ExeEnd();
-  }
-  WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+  // パレットフェード停止
+  _PFadeStop(pWork);
+  //パレット転送
+  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+
+  // OAMブラックアウト
+  _PFadeSetBlack(pWork);
+  // 枠部分を表示
+  _gearBootInitScreen( pWork ); // 1回表示するため。
+
+  //パレット転送
+  if( pWork->pfade_tcbsys ) GFL_TCB_Main( pWork->pfade_tcbsys );
+
+  pWork->GetOpenTrg=_CGEAR_SLEEP_START;
 }
 
 ///< スリープ復帰時に呼ばれる関数
@@ -4188,7 +4205,7 @@ static void _SLEEPRELEASE_FUNC(void* pWk)
 {
   C_GEAR_WORK* pWork = pWk;
 
-  pWork->GetOpenTrg=TRUE;
+  pWork->GetOpenTrg=_CGEAR_SLEEP_END;
 }
 
 //-------------------------------------
@@ -4404,6 +4421,10 @@ C_GEAR_WORK* CGEAR_FirstInit( CGEAR_SAVEDATA* pCGSV,FIELD_SUBSCREEN_WORK* pSub,G
 
 void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 {
+  if( pWork->GetOpenTrg == _CGEAR_SLEEP_START ){
+    return ;
+  }
+  
   // スリープチェック
   _cgear_SleepCheck( pWork, bAction );
 
@@ -4459,14 +4480,24 @@ void CGEAR_Main( C_GEAR_WORK* pWork,BOOL bAction )
 
     
   }
-  if( pWork->GetOpenTrg ){
-    pWork->GetOpenTrg=FALSE;
+
+  
+  if( pWork->GetOpenTrg == _CGEAR_SLEEP_END ){
+    pWork->GetOpenTrg=_CGEAR_SLEEP_NONE;
     if( SleepMode_IsSleep( pWork ) == FALSE ){
       _CHANGE_STATE(pWork,_modeSelectMenuWait1);
     }else{
-      FIELDMAP_WORK* fieldmap = GAMESYSTEM_GetFieldMapWork( pWork->pGameSys );
-      // スリープ中は簡単に終わらす。
-      FLD_VREQ_GXS_SetMasterBrightness( FIELDMAP_GetFldVReq( fieldmap ), 0);
+
+      // 起動演出中のスリープにも対応。
+      _gearEndStartUpObjAnime( pWork );
+      _gearAllObjDrawEnabel( pWork, TRUE );
+
+      //
+      _gearPanelBgCreate(pWork);	// パネル作成
+      // スリープカラー設定
+      _PFadeSetSleepBlack( pWork, SleepMode_IsSleep(pWork) );
+
+      _CHANGE_STATE(pWork,_modeSelectMenuWait);
     }
   }
   {
@@ -4978,14 +5009,19 @@ static void ReaderCrossBttn_Off( C_GEAR_WORK* pWork )
   if( SleepMode_IsSleep( pWork ) == FALSE ){
     
     if( pWork->ex_reader_cross_bttn_col_change ){
-      if( _PanelPalette_IsExMode(pWork) ){
-        // レーダー　crossボタンの色を黒くする。
-        _PFadeSetExBttnBlack( pWork, TRUE );
-      }else{
-        // 元に戻す。
-        _PFadeSetExBttnBlack( pWork, FALSE );
+
+      pWork->ex_reader_cross_bttn_col_change_wait ++;
+      
+      if( pWork->ex_reader_cross_bttn_col_change_wait >= _SLEEP_COLOR_CHANGE_WAIT ){
+        if( _PanelPalette_IsExMode(pWork) ){
+          // レーダー　crossボタンの色を黒くする。
+          _PFadeSetExBttnBlack( pWork, TRUE );
+        }else{
+          // 元に戻す。
+          _PFadeSetExBttnBlack( pWork, FALSE );
+        }
+        pWork->ex_reader_cross_bttn_col_change = FALSE;
       }
-      pWork->ex_reader_cross_bttn_col_change = FALSE;
     }
   }
 }
