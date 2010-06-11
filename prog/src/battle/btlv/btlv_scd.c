@@ -175,6 +175,13 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs );
 static void seltgt_init_setup_work( SEL_TARGET_WORK* stw, BTLV_SCD* wk );
 
 #ifdef DEBUG_ONLY_FOR_hudson
+
+typedef struct {
+  int TrunCnt;
+} HUDSON_WORK;
+
+static HUDSON_WORK wkHudson = {0};
+
 // A連打
 static BOOL UIFuncButtonA( GFL_UI_DEBUG_OVERWRITE* p_data, GFL_UI_DEBUG_OVERWRITE* p_data30 )
 {
@@ -544,7 +551,6 @@ void BTLV_SCD_ForceQuitSelect( BTLV_SCD* wk )
   spstack_init( wk );
 }
 
-
 #include "data\command_sel.cdat"
 
 static BOOL selectAction_init( int* seq, void* wk_adrs )
@@ -557,6 +563,14 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
   u16 members, hp, i, j;
 
   MI_CpuClear16( &bicp, sizeof( BTLV_INPUT_COMMAND_PARAM ) );
+
+#ifdef DEBUG_ONLY_FOR_hudson
+    // ターン数をカウント
+    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+    {
+      wkHudson.TrunCnt++;
+    }
+#endif // DEBUG_ONLY_FOR_hudson
 
   bicp.bagMode = wk->bagMode;
   bicp.shooterEnergy = wk->shooterEnergy;
@@ -667,6 +681,16 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
   switch( *seq ){
   case 0:
     hit = BTLV_INPUT_CheckInput( wk->biw, &BattleMenuTouchData, BattleMenuKeyData );
+#ifdef DEBUG_ONLY_FOR_hudson
+    // 2回目は逃げる
+    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+    {
+      if( wkHudson.TrunCnt >= 2 )
+      {
+        hit = 3; 
+      }
+    }
+#endif // DEBUG_ONLY_FOR_hudson
     if( hit != GFL_UI_TP_HIT_NONE )
     {
       static const u8 action[] = {
@@ -718,31 +742,6 @@ static BOOL selectWaza_init( int* seq, void* wk_adrs )
   u16 wazaCnt, wazaID, i;
   u8 PP, PPMax;
         
-#ifdef DEBUG_ONLY_FOR_hudson
-  // 2回目の技をテレポートにする
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
-  {
-    static int d_cnt = 0;
-    
-//    if( ++d_cnt >= WAZANO_MAX )
-    if( ++d_cnt >= 2 )
-    {
-      const BTL_POKEPARAM* bpp;
-
-      bpp = BTL_POKECON_GetFrontPokeDataConst( wk->pokeCon, BTL_MAIN_ViewPosToBtlPos( wk->mainModule, BTLV_MCSS_POS_AA ) );
-
-//    BPP_WAZA_UpdateID( (BTL_POKEPARAM*)bpp, 0, d_cnt, 0, TRUE );
-
-      {
-        POKEMON_PARAM* pp = (POKEMON_PARAM*)BPP_GetSrcData( bpp );
-        PP_SetWazaPos( pp, WAZANO_TEREPOOTO, 0 );
-//        BPP_CurePokeSick( (BTL_POKEPARAM*)bpp ); // 状態異常回復
-        BPP_ReflectByPP( (BTL_POKEPARAM*)bpp );
-      }
-    }
-  }
-#endif // DEBUG_ONLY_FOR_hudson
-
   wazaCnt = BPP_WAZA_GetCount( wk->bpp );
   biwp.henshin_flag = BPP_HENSIN_Check( wk->bpp );
   BTL_Printf("ワザ数:%d, pokeID=%d\n", wazaCnt, BPP_GetID(wk->bpp));
