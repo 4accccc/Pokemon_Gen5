@@ -424,6 +424,7 @@ static  void          EFFVM_ChangeVolume( BTLV_EFFVM_WORK* bevw, fx32 start_vol,
 static  int           EFFVM_GetVoicePlayerIndex( BTLV_EFFVM_WORK* bevw );
 static  void          EFFVM_CheckPokePosition( BTLV_EFFVM_WORK* bevw );
 
+static  void          set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame, int wait, int count );
 //static  void          check_linesover( GFL_EMIT_PTR emit, u32 flag );
 
 //TCB関数
@@ -761,6 +762,11 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
 
   if( param != NULL )
   { 
+    //シーケンスが持っているテーブルより指定が大きいときは、0にしてふっとびを回避
+    if( bevw->sequence[ TBL_CNT ] <= param->turn_count )
+    { 
+      param->turn_count = 0;
+    }
     table_ofs += ( TBL_MAX * param->turn_count );
   }
 
@@ -1059,6 +1065,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   if( ( cam_move_pos != BTLEFF_CAMERA_POS_INIT ) &&
       ( cam_move_pos != BTLEFF_CAMERA_POS_PLURAL_A ) &&
       ( cam_move_pos != BTLEFF_CAMERA_POS_PLURAL_D ) &&
+      ( cam_move_pos != BTLEFF_CAMERA_POS_ZOOM_OUT ) &&
       ( cam_move_pos != BTLEFF_CAMERA_POS_INIT_ORTHO ) )
   {
     EFFVM_ChangeCameraProjection( bevw );
@@ -1111,6 +1118,13 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
         }
         break;
       }
+    }
+    break;
+  case BTLEFF_CAMERA_POS_ZOOM_OUT:
+    if( BTLV_EFFECT_GetBtlRule() == BTL_RULE_SINGLE )
+    { 
+      //1vs1ならカメラ移動なし
+      return bevw->control_mode;
     }
     break;
   case BTLEFF_CAMERA_POS_INIT_ORTHO:
@@ -1242,6 +1256,10 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     cam_target.x  = cam_target_zoom_out.x;
     cam_target.y  = cam_target_zoom_out.y;
     cam_target.z  = cam_target_zoom_out.z;
+    if( bevw->camera_ortho_on_flag )
+    { 
+      set_mcss_scale_move( FX_F32_TO_FX32( 0.65 ), FX_F32_TO_FX32( 0.725 ), frame, wait, 0 );
+    }
     break;
   case BTLEFF_CAMERA_POS_B_ORTHO:
     cam_pos.x     = cam_pos_b_ortho.x;
@@ -1254,6 +1272,10 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   case BTLEFF_CAMERA_POS_INIT:
   default:
     BTLV_CAMERA_GetDefaultCameraPosition( &cam_pos, &cam_target );
+    if( bevw->camera_ortho_on_flag )
+    { 
+      set_mcss_scale_move( FX_F32_TO_FX32( 1 ), FX_F32_TO_FX32( 1 ), frame, wait, 0 );
+    }
     break;
   }
 
@@ -6589,6 +6611,37 @@ static  void  TCB_EFFVM_NakigoeEndCheck( GFL_TCB* tcb, void* work )
   }
   tnw->bevw->volume_already_down = 0;
   BTLV_EFFECT_FreeTCB( tcb );
+}
+
+//============================================================================================
+/**
+ * @brief カメラ移動にあわせてポケモンを拡縮
+ */
+//============================================================================================
+static  void  set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame, int wait, int count )
+{ 
+  BtlvMcssPos pos;
+
+  BTLV_MCSS_SetScaleOffset( BTLV_EFFECT_GetMcssWork(), mul_value_m, mul_value_e );
+
+  for( pos = BTLV_MCSS_POS_AA ; pos < BTLV_MCSS_POS_MAX ; pos++ )
+  {
+    if( BTLV_MCSS_CheckExist( BTLV_EFFECT_GetMcssWork(), pos ) )
+    { 
+      VecFx32 scale;
+      fx32 def_scale = BTLV_MCSS_GetPokeDefaultScaleEx( BTLV_EFFECT_GetMcssWork(), pos, BTLV_MCSS_PROJ_ORTHO );
+      if( pos & 1 )
+      { 
+        def_scale = FX_Mul( def_scale, mul_value_e );
+      }
+      else
+      { 
+        def_scale = FX_Mul( def_scale, mul_value_m );
+      }
+      VEC_Set( &scale, def_scale, def_scale, FX32_ONE );
+      BTLV_MCSS_MoveDefaultScale( BTLV_EFFECT_GetMcssWork(), pos, EFFTOOL_CALCTYPE_INTERPOLATION, &scale, frame, wait, count );
+    }
+  }
 }
 
 #ifdef PM_DEBUG
