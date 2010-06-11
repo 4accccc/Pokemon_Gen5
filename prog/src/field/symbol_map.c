@@ -51,7 +51,7 @@ SDK_COMPILER_ASSERT( SYMMAP_ENT_ID - 1 == SYMBOL_MAP_ID_ENTRANCE );
 //--------------------------------------------------------------
 static const u8 map_level1_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  8,  9,  10,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -63,8 +63,8 @@ static const u8 map_level1_0[SYMMAP_SIZE] = {
 };
 static const u8 map_level2_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  11, 12, 13,
-  8,  9,  10,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -75,9 +75,9 @@ static const u8 map_level2_0[SYMMAP_SIZE] = {
 };
 static const u8 map_level3_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -87,10 +87,10 @@ static const u8 map_level3_0[SYMMAP_SIZE] = {
 };
 static const u8 map_level4_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -99,11 +99,11 @@ static const u8 map_level4_0[SYMMAP_SIZE] = {
 };
 static const u8 map_level5_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  20, 21, 22,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  21, 20, 22,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -111,25 +111,25 @@ static const u8 map_level5_0[SYMMAP_SIZE] = {
 };
 static const u8 map_level6_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  23, 24, 25,
-  20, 21, 22,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  24, 23, 25,
+  21, 20, 22,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
 };
 static const u8 map_level7_0[SYMMAP_SIZE] = {
   0,  1,  0,
-  26, 27, 28,
-  23, 24, 25,
-  20, 21, 22,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  27, 26, 28,
+  24, 23, 25,
+  21, 20, 22,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
 };
@@ -137,7 +137,7 @@ static const u8 map_level7_0[SYMMAP_SIZE] = {
 static const u8 map_level1_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  8,  9,  10,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -149,8 +149,8 @@ static const u8 map_level1_1[SYMMAP_SIZE] = {
 static const u8 map_level2_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  11, 12, 13,
-  8,  9,  10,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -161,9 +161,9 @@ static const u8 map_level2_1[SYMMAP_SIZE] = {
 static const u8 map_level3_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -173,10 +173,10 @@ static const u8 map_level3_1[SYMMAP_SIZE] = {
 static const u8 map_level4_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -185,11 +185,11 @@ static const u8 map_level4_1[SYMMAP_SIZE] = {
 static const u8 map_level5_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  20, 21, 22,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  21, 20, 22,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
   0,  0,  0,
@@ -197,25 +197,25 @@ static const u8 map_level5_1[SYMMAP_SIZE] = {
 static const u8 map_level6_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  23, 24, 25,
-  20, 21, 22,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  24, 23, 25,
+  21, 20, 22,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
   0,  0,  0,
 };
 static const u8 map_level7_1[SYMMAP_SIZE] = {
   0,  1,  0,
   3,  2,  4,
-  26, 27, 28,
-  23, 24, 25,
-  20, 21, 22,
-  17, 18, 19,
-  14, 15, 16,
-  11, 12, 13,
-  8,  9,  10,
+  27, 26, 28,
+  24, 23, 25,
+  21, 20, 22,
+  18, 17, 19,
+  15, 14, 16,
+  12, 11, 13,
+  9,  8,  10,
   6,  5,  7,
 };
 
@@ -293,6 +293,7 @@ static u8 getIndex( const u8 * map, u8 now_lsid )
   for ( i = 0; i < SYMMAP_SIZE; i+=3 )
   {
     OS_TPrintf( "%2d %2d %2d\n", map[i+0],map[i+1],map[i+2] );
+    GF_ASSERT( map[i+0] == 0 || map[i+1] < map[i+0] );
   }
   OS_TPrintf( "search sid == %d\n", now_lsid );
 #endif
