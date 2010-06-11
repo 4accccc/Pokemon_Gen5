@@ -4369,6 +4369,28 @@ BOOL BTL_MAIN_SetPmvRef( const BTL_MAIN_MODULE* wk, BtlvMcssPos vpos, PMV_REF* p
 
   return FALSE;
 }
+//=============================================================================================
+/**
+ * ペラップボイスランク取得
+ *
+ * @param   wk
+ * @param   clientID
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+u32 BTL_MAIN_GetPerappVoicePower( const BTL_MAIN_MODULE* wk, u8 clientID )
+{
+  if( wk->perappVoice[ clientID ] )
+  {
+    if( PERAPVOICE_GetExistFlag(wk->perappVoice[clientID]) )
+    {
+      // @todo ペラップボイスランク取得関数ができるの待ち
+      return 1;
+    }
+  }
+  return 0;
+}
 
 
 //=============================================================================================

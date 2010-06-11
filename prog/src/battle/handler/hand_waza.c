@@ -2298,17 +2298,20 @@ static void handler_Osyaberi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetMonsNo(bpp) == MONSNO_PERAPPU )
     {
-      PokeSick sick = WAZASICK_KONRAN;
-      BPP_SICK_CONT cont;
-      const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      u32 rnd = PP_Get( pp, ID_PARA_personal_rnd, NULL );
-      u8 per = (rnd&1)? 10 : 30;
+      u32 rank = BTL_SVFTOOL_GetPerappVoicePower( flowWk, pokeID );
+      if( rank )
+      {
+        PokeSick sick = WAZASICK_KONRAN;
+        BPP_SICK_CONT cont;
+        const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
+        u32 per = (rank > 2)? 30 : 10;
 
-      BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &cont );
+        BTL_CALC_MakeDefaultWazaSickCont( sick, bpp, &cont );
 
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, sick );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICKID, sick );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_SICK_CONT, cont.raw );
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_ADD_PER, per );
+      }
     }
   }
 }
@@ -7764,7 +7767,7 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       work[0] = 1;    // ダメージ与えて消費したフラグ
 
       // みがわりじゃなければ追加効果発動
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) != FALSE )
       {
         int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
         if( equip )

@@ -156,6 +156,7 @@ extern u8 BTL_SVFTOOL_GetAllOpponentFrontPokeID( BTL_SVFLOW_WORK* wk, u8 basePok
 extern u16 BTL_SVFTOOL_GetTurnCount( BTL_SVFLOW_WORK* wk );
 extern u8 BTL_SVFTOOL_GetPokeChangeCount( BTL_SVFLOW_WORK* wk, u8 clientID );
 extern BOOL BTL_SVFTOOL_IsSimulationMode( BTL_SVFLOW_WORK* wk );
+extern u32 BTL_SVFTOOL_GetPerappVoicePower( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u8 BTL_SVFTOOL_GetClientCoverPosCount( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern u8 BTL_SVFTOOL_GetMyBenchIndex( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BOOL BTL_SVFTOOL_IsExistBenchPoke( BTL_SVFLOW_WORK* wk, u8 pokeID );

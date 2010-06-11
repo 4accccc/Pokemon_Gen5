@@ -12076,7 +12076,6 @@ u8 BTL_SVFTOOL_GetExistPokeID( BTL_SVFLOW_WORK* wk, BtlPokePos pos )
 {
   return BTL_POSPOKE_GetExistPokeID( &wk->pospokeWork, pos );
 }
-
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 場に出ている全ての相手側ポケモンIDを配列に格納する
@@ -12214,6 +12213,22 @@ BOOL BTL_SVFTOOL_IsSimulationMode( BTL_SVFLOW_WORK* wk )
 {
   return wk->simulationCounter != 0;
 }
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] ペラップボイスランク取得
+ *
+ * @param   wk
+ * @param   pokeID
+ *
+ * @retval  u32
+ */
+//--------------------------------------------------------------------------------------
+u32 BTL_SVFTOOL_GetPerappVoicePower( BTL_SVFLOW_WORK* wk, u8 pokeID )
+{
+  u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( pokeID );
+  return BTL_MAIN_GetPerappVoicePower( wk->mainModule, clientID );
+}
+
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 自クライアントが担当している戦闘位置の数を返す
