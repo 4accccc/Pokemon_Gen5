@@ -136,7 +136,7 @@ BOOL UnionAppSystem_SetEntryUser(UNION_APP_PTR uniapp, NetID net_id, const MYSTA
     }
   }
 
-  if(member_num + entry_num < uniapp->basic_status.member_max){
+  if(member_num + entry_num <= uniapp->basic_status.member_max){
     uniapp->entry_reserve_bit |= 1 << net_id;
     //MyStatus_Copy(myst, uniapp->mystatus[net_id]);
 
