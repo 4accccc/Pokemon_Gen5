@@ -1827,8 +1827,10 @@ static void Zukan_Info_CreateMessage( ZUKAN_INFO_WORK* work )
       {
         disp_id = ZKN_TYPE_000 + work->monsno;  // 種族判明
       }
+      //Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
+      //                      disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
       Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
-                            disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+                            disp_id, 0, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );  // センタリングに変更
     }
     
     // たかさ
@@ -1968,8 +1970,10 @@ static void Zukan_Info_CreateForeignMessage( ZUKAN_INFO_WORK* work, ZUKAN_INFO_L
       {
         disp_id = 0 + monsno_formno_pos;  // 種族判明
       }
+      //Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
+      //                      disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
       Zukan_Info_DrawStrId( work->heap_id, work->bmpwin[ZUKAN_INFO_MSG_NAME], msgdata_kind, work->print_que, work->font,
-                            disp_id, 8, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_LEFT, NULL );
+                            disp_id, 0, 22, PRINTSYS_LSB_Make(1,2,0), ZUKAN_INFO_ALIGN_CENTER, NULL );  // センタリングに変更
     }
 
     // たかさ
