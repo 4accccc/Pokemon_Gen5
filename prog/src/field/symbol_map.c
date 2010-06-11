@@ -35,12 +35,14 @@ enum {
   SYMMAP_SIZE = SYMMAP_MAX_HEIGHT * SYMMAP_MAX_WIDTH,
 
   SYMMAP_TOP_ID = 1,    ///<一番奥のID
-  SYMMAP_ENT_ID = 6,    ///<入り口のID
+  SYMMAP_ENT_ID = 5,    ///<入り口のID
 
-  SYMMAP_IDX_TOP = 1,
+  SYMMAP_IDX_TOP = 1,   ///<マップ配列での一番奥へのインデックス
 
   SYMMAP_SMALL_LEVEL_LIMIT = SYMBOL_MAP_LEVEL_SMALL_MAX + 1,
 };
+
+SDK_COMPILER_ASSERT( SYMMAP_ENT_ID - 1 == SYMBOL_MAP_ID_ENTRANCE );
 
 //==============================================================================
 //==============================================================================
@@ -50,7 +52,7 @@ enum {
 static const u8 map_level1_0[SYMMAP_SIZE] = {
   0,  1,  0,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -63,7 +65,7 @@ static const u8 map_level2_0[SYMMAP_SIZE] = {
   0,  1,  0,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -76,7 +78,7 @@ static const u8 map_level3_0[SYMMAP_SIZE] = {
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -89,7 +91,7 @@ static const u8 map_level4_0[SYMMAP_SIZE] = {
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -102,7 +104,7 @@ static const u8 map_level5_0[SYMMAP_SIZE] = {
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -115,7 +117,7 @@ static const u8 map_level6_0[SYMMAP_SIZE] = {
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
 };
@@ -128,15 +130,15 @@ static const u8 map_level7_0[SYMMAP_SIZE] = {
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
 };
 
 static const u8 map_level1_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -146,10 +148,10 @@ static const u8 map_level1_1[SYMMAP_SIZE] = {
 };
 static const u8 map_level2_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -158,11 +160,11 @@ static const u8 map_level2_1[SYMMAP_SIZE] = {
 };
 static const u8 map_level3_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
@@ -170,43 +172,43 @@ static const u8 map_level3_1[SYMMAP_SIZE] = {
 };
 static const u8 map_level4_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   17, 18, 19,
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
   0,  0,  0,
 };
 static const u8 map_level5_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   20, 21, 22,
   17, 18, 19,
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
   0,  0,  0,
 };
 static const u8 map_level6_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   23, 24, 25,
   20, 21, 22,
   17, 18, 19,
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
   0,  0,  0,
 };
 static const u8 map_level7_1[SYMMAP_SIZE] = {
   0,  1,  0,
-  2,  3,  4,
+  3,  2,  4,
   26, 27, 28,
   23, 24, 25,
   20, 21, 22,
@@ -214,7 +216,7 @@ static const u8 map_level7_1[SYMMAP_SIZE] = {
   14, 15, 16,
   11, 12, 13,
   8,  9,  10,
-  5,  6,  7,
+  6,  5,  7,
 };
 
 static const u8 * const symmap_tables[] = {
@@ -250,7 +252,8 @@ static inline SYMBOL_MAP_ID LSIDtoSYMMAPID( u8 lsid )
 //--------------------------------------------------------------
 static inline u8 SYMMAPIDtoLSID( SYMBOL_MAP_ID symmap_id )
 {
-  return symmap_id + 1;
+  u8 lsid = symmap_id + 1;
+  return lsid;
 }
 //--------------------------------------------------------------
 /// 左側にマップがあるか？
