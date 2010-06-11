@@ -2,7 +2,7 @@
 /**
  *
  *	@file		event_debug_btl_all_waza_check.c
- *	@brief
+ *	@brief  バトルで全技チェック
  *	@author		hosaka genya
  *	@data		2010.06.10
  *
@@ -129,8 +129,10 @@ static GMEVENT_RESULT BtlAllWazaCheck( GMEVENT* event, int* seq, void* wk_adrs )
   {
     case SEQ_INIT:
       wk->count = 1;
+      OS_TPrintf("全技チェック開始！\n");
       *seq = SEQ_SETUP;
       break;
+
     case SEQ_SETUP:
 
     // 自分のポケモンを強制上書き
@@ -199,6 +201,7 @@ static GMEVENT_RESULT BtlAllWazaCheck( GMEVENT* event, int* seq, void* wk_adrs )
       break;
 
     case SEQ_EXIT:
+      OS_TPrintf("全技チェック終了！\n");
       return GMEVENT_RES_FINISH;
     default : GF_ASSERT(0);
   }
