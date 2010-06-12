@@ -1668,7 +1668,8 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
           trainerParam_StorePlayer( &wk->trainerParam[i], wk->heapID, playerStatus );
 
           //Wifiの対戦相手が不正名だったら名前を置き換え
-          if( ( i != 0 ) && ( sp->WifiBadNameFlag ) )
+          //BTS:5210対処　tomoya
+          if( ( i != wk->myClientID ) && ( sp->WifiBadNameFlag ) )
           {
             STRCODE name[ BUFLEN_PERSON_NAME ];
             DWC_TOOL_SetBadNickName( name, BUFLEN_PERSON_NAME, wk->heapID );
