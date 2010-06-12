@@ -1085,7 +1085,7 @@
 テレビが　きれいに　うつらなくなる。</language>
 		<language name="JPN_KANJI">太陽の　黒点が　増えると
 なぜか　レアコイルが　多くなり
-テレビが　きれいに　うつらなくなる。</language>
+テレビが　きれいに　映らなくなる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_083">
@@ -1182,7 +1182,7 @@
 		<language name="JPN">くらやみにまぎれ　ガスのてを　のばし
 ひとのかたを　たたくのが　すき。
 さわられると　ふるえが　とまらない。</language>
-		<language name="JPN_KANJI">暗やみにまぎれ　ガスの手を　伸ばし
+		<language name="JPN_KANJI">くらやみにまぎれ　ガスの手を　伸ばし
 人の肩を　たたくのが　好き。
 触られると　震えが　止まらない。</language>
 	</row>
@@ -1191,7 +1191,7 @@
 		<language name="JPN">くらやみに　うかぶ　えがおの
 しょうたいは　ひとに　のろいを
 かけて　よろこぶ　ゲンガーだ。</language>
-		<language name="JPN_KANJI">暗やみに　浮かぶ　笑顔の
+		<language name="JPN_KANJI">くらやみに　浮かぶ　笑顔の
 正体は　人に　のろいを
 かけて　喜ぶ　ゲンガーだ。</language>
 	</row>
@@ -1723,7 +1723,7 @@
 		<language name="JPN">くびまわりの　つぼみから　におう
 スパイシーな　かおりは
 かいだ　ひとを　げんきに　させる。</language>
-		<language name="JPN_KANJI">首回りの　ツボミから　におう
+		<language name="JPN_KANJI">首回りの　つぼみから　におう
 スパイシーな　香りは
 かいだ　人を　元気に　させる。</language>
 	</row>
@@ -1824,7 +1824,7 @@
 くらやみでも　ひるのように　みえる。</language>
 		<language name="JPN_KANJI">特殊な　作りの　両目は
 わずかな　光さえ　あれば
-暗やみでも　昼のように　見える。</language>
+くらやみでも　昼のように　見える。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_165">
@@ -1850,7 +1850,7 @@
 はりめぐらして　わなを　しかける。
 えものが　かかるまで　じっと　まつ。</language>
 		<language name="JPN_KANJI">細くて　丈夫な　糸を
-張り巡らせて　ワナを　仕掛ける。
+張り巡らして　ワナを　仕掛ける。
 獲物が　かかるまで　じっと　待つ。</language>
 	</row>
 
@@ -1867,7 +1867,7 @@
 		<language name="JPN">りょうあしも　はねに　なったことで
 とぶのが　うまくなったかわりに
 あるいたりするのは　へたになった。</language>
-		<language name="JPN_KANJI">両足も　羽根に　なったことで
+		<language name="JPN_KANJI">両足も　羽に　なったことで
 飛ぶのが　うまくなった代わりに
 歩いたりするのは　下手になった。</language>
 	</row>
@@ -1940,7 +1940,7 @@
 きように　よけながら　ついばむ。
 とびはねるようにして　いどうする。</language>
 		<language name="JPN_KANJI">サボテンの　つぼみや　トゲを
-きように　避けながら　ついばむ。
+器用に　避けながら　ついばむ。
 飛び跳ねるようにして　移動する。</language>
 	</row>
 
@@ -2083,7 +2083,7 @@
 		<language name="JPN">ハネを　こうそくで　はためかせて
 くうちゅうで　ていし　しながら
 じぶんの　なわばりを　みはっている。</language>
-		<language name="JPN_KANJI">羽根を　高速で　はためかせて
+		<language name="JPN_KANJI">ハネを　高速で　はためかせて
 空中で　停止　しながら
 自分の　縄張りを　見張っている。</language>
 	</row>
@@ -2202,7 +2202,7 @@
 はねで　すこしだけ　とべる。</language>
 		<language name="JPN_KANJI">しっぽで　字面を　掘って
 迷路のような　巣穴を　作る。
-羽根で　少しだけ　飛べる。</language>
+羽で　少しだけ　飛べる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_207">
@@ -2903,7 +2903,7 @@
 ４まいの　はねで　うかびあがり
 ぜんごさゆうに　うごくことができる。</language>
 		<language name="JPN_KANJI">目玉模様の　触覚を　持つ。
-４枚の　羽根で　浮かび上がり
+４枚の　ハネで　浮かび上がり
 前後左右に　動くことができる。</language>
 	</row>
 
@@ -3064,7 +3064,7 @@
 		<language name="JPN">どうくつの　くらやみに　ひそむ。
 ほうせきを　たべているうちに
 めが　ほうせきに　なってしまった。</language>
-		<language name="JPN_KANJI">洞くつの　暗やみに　潜む。
+		<language name="JPN_KANJI">洞くつの　くらやみに　潜む。
 宝石を　食べているうちに
 目が　宝石に　なってしまった。</language>
 	</row>
@@ -3307,7 +3307,7 @@
 		<language name="JPN">はねを　はげしく　しんどうさせて
 ちょうおんぱを　だす。にんげんも
 ずつうを　おこすほど　きょうりょく。</language>
-		<language name="JPN_KANJI">羽根を　激しく　振動させて
+		<language name="JPN_KANJI">ハネを　激しく　振動させて
 超音波を　出す。人間も　頭痛を
 起こすほど　強力。</language>
 	</row>
@@ -3316,7 +3316,7 @@
 		<language name="JPN">きょうれつな　ハネの　はばたきで
 すなあらしを　おこす。
 さばくのせいれい　と　よばれる。</language>
-		<language name="JPN_KANJI">強烈な　羽根の　羽ばたきで
+		<language name="JPN_KANJI">強烈な　ハネの　羽ばたきで
 砂あらしを　起こす。
 砂漠の精霊と　呼ばれる。</language>
 	</row>
@@ -3345,7 +3345,7 @@
 よごれをみつけると　はねでふきとる。　</language>
 		<language name="JPN_KANJI">自分も　まわりも　きれいでないと
 落ち着かない　性格の　ポケモン。
-汚れを見つけると　羽根でふき取る。</language>
+汚れを見つけると　羽でふき取る。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_334">
@@ -3353,7 +3353,7 @@
 やわらかく　うつくしい　はねで
 そっと　つつみこみ　ハミングする。</language>
 		<language name="JPN_KANJI">心が　通い合った　人がいると
-やわらかく　美しい　羽根で
+やわらかく　美しい　羽で
 そっと　包み込み　ハミングする。</language>
 	</row>
 
