@@ -460,15 +460,11 @@ static GMEVENT_RESULT ev_CallLeaderBoard(
 
       work->param.gamedata = GAMESYSTEM_GetGameData( work->gsys );
 
-#if 0
+      //BTSF5355‘Îˆ
       bsw_wifi = GAMEDATA_GetBSubwayWifiData( work->param.gamedata );
-      work->param.rank_no   = BSUBWAY_WIFIDATA_GetLeaderRank();
-      work->param.train_no  = BSUBWAY_WIFIDATA_GetLeaderRoomNo();
-#else
-      // @TODO ‰¼‚Å‚·
-      work->param.rank_no   = 1;
-      work->param.train_no  = 1;
-#endif
+      work->param.rank_no   = BSUBWAY_WIFIDATA_GetLeaderRank( bsw_wifi );
+      work->param.train_no  = BSUBWAY_WIFIDATA_GetLeaderRoomNo( bsw_wifi );
+
       ev = EVENT_FieldSubProc( work->gsys, work->fieldmap,
 		          FS_OVERLAY_ID(leader_board), &LeaderBoardProcData, &work->param);
   		GMEVENT_CallEvent( event, ev );
