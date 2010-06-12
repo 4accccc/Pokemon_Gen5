@@ -5293,6 +5293,67 @@ static  void  EFFVM_InitEmitterPos( GFL_EMIT_PTR emit )
     break;
   }
 
+  //ポケモンとパーティクルのプライオリティがおかしいのでZのオフセット処理をする
+  { 
+    int cells_src = 0;
+    int cells_dst = 0;
+    BtlRule rule = BTLV_EFFECT_GetBtlRule();
+    //まずは一律でMCSS_DEFAULT_Z分手前に
+    src.z += MCSS_DEFAULT_Z * 5;
+    dst.z += MCSS_DEFAULT_Z * 5;
+    //戦闘ルールと立ち位置によって手前に描画しているので、その分オフセットを取る
+    switch( rule ){ 
+    //補正はいらない
+    case BTL_RULE_SINGLE:
+    case BTL_RULE_ROTATION:
+      break;
+    case BTL_RULE_DOUBLE:
+      switch( beeiw->src ){ 
+      case BTLV_MCSS_POS_B:
+        cells_src = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->src ) + 2;
+        break;
+      case BTLV_MCSS_POS_C:
+        cells_src = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->src );
+        break;
+      }
+      switch( beeiw->dst ){ 
+      case BTLV_MCSS_POS_B:
+        cells_dst = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->dst ) + 2;
+        break;
+      case BTLV_MCSS_POS_C:
+        cells_dst = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->dst );
+        break;
+      }
+      break;
+    case BTL_RULE_TRIPLE:
+      switch( beeiw->src ){ 
+      case BTLV_MCSS_POS_A:
+      case BTLV_MCSS_POS_E:
+        cells_src = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->src );
+        break;
+      case BTLV_MCSS_POS_D:
+        cells_src = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->src ) + 2;
+        break;
+      }
+      switch( beeiw->dst ){ 
+      case BTLV_MCSS_POS_A:
+      case BTLV_MCSS_POS_E:
+        cells_dst = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->dst );
+        break;
+      case BTLV_MCSS_POS_D:
+        cells_dst = BTLV_MCSS_GetCells( BTLV_EFFECT_GetMcssWork(), beeiw->dst ) + 2;
+        break;
+      }
+      break;
+    }
+    
+    src.x += MCSS_DEFAULT_Z	* ( cells_src / 2 );
+    src.z += MCSS_DEFAULT_Z	* cells_src;
+    dst.x += MCSS_DEFAULT_Z	* ( cells_dst / 2 );
+    dst.z += MCSS_DEFAULT_Z	* cells_dst;
+  }
+
+
   if( ( beeiw->dst != BTLEFF_CAMERA_POS_NONE ) && ( beeiw->dst != BTLEFF_PARTICLE_PLAY_SIDE_NONE ) )
   {
     BTLV_MCSS_GetPokeDefaultPos( BTLV_EFFECT_GetMcssWork(), &dst, beeiw->dst );

@@ -194,6 +194,7 @@ extern  u32             BTLV_MCSS_PlayVoice( BTLV_MCSS_WORK *bmw, int position, 
 extern  void            BTLV_MCSS_SetRotation( BTLV_MCSS_WORK* bmw, int side, int dir );
 extern  void            BTLV_MCSS_SetSideChange( BTLV_MCSS_WORK* bmw, BtlvMcssPos pos1, BtlvMcssPos pos2 );
 extern  int             BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int position );
+extern  u32             BTLV_MCSS_GetCells( BTLV_MCSS_WORK *bmw, int position );
 
 extern  void            BTLV_MCSS_MakeMAW( const POKEMON_PARAM *pp, MCSS_ADD_WORK *maw, int position );
 

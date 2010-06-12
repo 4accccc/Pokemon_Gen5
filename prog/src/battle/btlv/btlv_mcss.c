@@ -2082,6 +2082,25 @@ int   BTLV_MCSS_GetCaptureBall( BTLV_MCSS_WORK *bmw, int position )
 
 //============================================================================================
 /**
+ * @brief セル枚数取得
+ *
+ * @param[in] bmw       BTLV_MCSS管理ワークへのポインタ
+ * @param[in] position  取得したいポケモンの立ち位置
+ */
+//============================================================================================
+u32 BTLV_MCSS_GetCells( BTLV_MCSS_WORK *bmw, int position )
+{ 
+  int index = BTLV_MCSS_GetIndex( bmw, position );
+  GF_ASSERT( index != BTLV_MCSS_NO_INDEX );
+  if( index == BTLV_MCSS_NO_INDEX ) { return 0; }
+  GF_ASSERT( bmw->btlv_mcss[ index ].mcss != NULL );
+  if( bmw->btlv_mcss[ index ].mcss == NULL ) { return 0; }
+
+  return MCSS_GetCells( bmw->btlv_mcss[ index ].mcss );
+}
+
+//============================================================================================
+/**
  * @brief POKEMON_PARAMからMCSS_ADD_WORKを生成する
  *
  * @param[in]   pp        POKEMON_PARAM構造体へのポインタ
