@@ -371,6 +371,11 @@ static GFL_PROC_RESULT BR_RECORD_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
   GFL_BG_LoadScreenReq( BG_FRAME_M_FONT );
 
 	//ƒ‚ƒWƒ…[ƒ‹”jŠü
+  if( p_wk->p_text )
+  { 
+    BR_TEXT_Exit( p_wk->p_text, p_wk->p_param->p_res );
+    p_wk->p_text  = NULL;
+  }
   { 
     int i;
     for( i = 0; i < CLSYS_DRAW_MAX; i++ )

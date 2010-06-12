@@ -57,16 +57,29 @@ typedef enum
 	BR_BVSAVE_BTNID_MAX,
 } BR_BVSAVE_MAIN_BTNID;
 
-
 //=============================================================================
 /**
  *					構造体宣言
 */
 //=============================================================================
 //-------------------------------------
-///	バトルビデオ消去メインワーク
+///	バトルビデオ消去メインワーク  定義
+//=====================================
+typedef struct _BR_BVSAVE_WORK BR_BVSAVE_WORK;
+
+//-------------------------------------
+///	画面生成インターフェイス
 //=====================================
 typedef struct 
+{
+  void (*Br_BvSave_Create)(BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+  void (*Br_BvSave_Delete)(BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+} BR_BVSAVE_DISPLAY_INTERFACE;
+
+//-------------------------------------
+///	バトルビデオ消去メインワーク  実装
+//=====================================
+struct _BR_BVSAVE_WORK
 {
   BMPOAM_SYS_PTR		    p_bmpoam;	//BMPOAMシステム
   PRINT_QUE             *p_que;   //プリントキュー
@@ -84,7 +97,9 @@ typedef struct
   u16                   work1;
   u32                   cnt;
   u32                   text_cnt;
-} BR_BVSAVE_WORK;
+
+  BR_BVSAVE_DISPLAY_INTERFACE display;
+};
 
 
 //=============================================================================
@@ -110,17 +125,22 @@ static void Br_BvSave_Seq_OverWrite( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
 static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adrs );
 
 //-------------------------------------
+///	画面生成
+//=====================================
+static void BR_BVSAVE_CreateDisplay( BR_BVSAVE_DISPLAY_INTERFACE *p_diplay, BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+static void BR_BVSAVE_DeleteDisplay( BR_BVSAVE_DISPLAY_INTERFACE *p_diplay, BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+
+//-------------------------------------
 ///	画面作成
 //=====================================
 //上書き確認
-static void Br_BvSave_OverWrite_CreateDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
-static void Br_BvSave_OverWrite_DeleteDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+static BR_BVSAVE_DISPLAY_INTERFACE Br_BvSave_OverWrite_Create( void );
+
 //ダウンロード画面
-static void Br_BvSave_Download_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
-static void Br_BvSave_Download_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
+static BR_BVSAVE_DISPLAY_INTERFACE Br_BvSave_Download_Create( void );
+
 //保存画面
-static void Br_BvSave_Save_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
-static void Br_BvSave_Save_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
+static BR_BVSAVE_DISPLAY_INTERFACE Br_BvSave_Save_Create( void );
 
 //-------------------------------------
 ///	その他
@@ -208,6 +228,9 @@ static GFL_PROC_RESULT BR_BVSAVE_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void *
 {	
 	BR_BVSAVE_WORK				*p_wk	= p_wk_adrs;
 	BR_BVSAVE_PROC_PARAM	*p_param	= p_param_adrs;
+
+
+  BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
 
   { 
     int i;
@@ -334,7 +357,9 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
   { 
   case SEQ_CHANGE_MAIN:
     //作成
-    Br_BvSave_Download_CreateDisplay( p_wk, p_wk->p_param );
+    p_wk->display = Br_BvSave_Download_Create();
+    BR_BVSAVE_CreateDisplay( &p_wk->display, p_wk, p_wk->p_param );
+
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
 
@@ -470,7 +495,8 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     }
     break;
   case SEQ_FADEOUT_END:
-    Br_BvSave_Download_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
+
     BR_SEQ_SetNext( p_seqwk, Br_BvSave_Seq_SaveSelect );
     break;
 
@@ -489,7 +515,7 @@ static void Br_BvSave_Seq_VideoDownloadSave( BR_SEQ_WORK *p_seqwk, int *p_seq, v
     break;
   case SEQ_FADEOUT_END_RET:
     //破棄
-    Br_BvSave_Download_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
     BR_SEQ_End( p_seqwk );
     break;
   }
@@ -535,7 +561,8 @@ static void Br_BvSave_Seq_SaveSelect( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
   { 
   case SEQ_CHANGE_MAIN:
     //作成
-    Br_BvSave_Save_CreateDisplay( p_wk, p_wk->p_param );
+    p_wk->display = Br_BvSave_Save_Create();
+    BR_BVSAVE_CreateDisplay( &p_wk->display, p_wk, p_wk->p_param );
     *p_seq  = SEQ_CHANGE_FADEIN_START;
     break;
 
@@ -614,8 +641,7 @@ static void Br_BvSave_Seq_SaveSelect( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_FADEOUT_END:
     //破棄
-
-    Br_BvSave_Save_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
     BR_SEQ_SetNext( p_wk->p_seq, Br_BvSave_Seq_Save );
     break;
 
@@ -635,7 +661,8 @@ static void Br_BvSave_Seq_SaveSelect( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
     break;
 
   case SEQ_FADEOUT_END_OV:
-    Br_BvSave_Save_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
+
     BR_SEQ_SetNext( p_wk->p_seq, Br_BvSave_Seq_OverWrite );
     break;
 
@@ -656,7 +683,7 @@ static void Br_BvSave_Seq_SaveSelect( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_
 
   case SEQ_FADEOUT_MAIN_RET:
     //再構築
-    Br_BvSave_Save_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
     BR_SEQ_End( p_seqwk );
     break;
   }
@@ -695,7 +722,9 @@ static void Br_BvSave_Seq_OverWrite( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
   switch( *p_seq )
   { 
   case SEQ_CREATE_DISPLAY:
-    Br_BvSave_OverWrite_CreateDisplay( p_wk, p_wk->p_param );
+    p_wk->display = Br_BvSave_OverWrite_Create();
+    BR_BVSAVE_CreateDisplay( &p_wk->display, p_wk, p_wk->p_param );
+
     (*p_seq)++;
     break;
   case SEQ_FADEIN_START:
@@ -742,7 +771,7 @@ static void Br_BvSave_Seq_OverWrite( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
   case SEQ_FADEOUT_END:
-    Br_BvSave_OverWrite_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
     BR_SEQ_SetNext( p_seqwk, Br_BvSave_Seq_Save );
     break;
 
@@ -760,7 +789,7 @@ static void Br_BvSave_Seq_OverWrite( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_w
     }
     break;
   case SEQ_FADEOUT_END_RET:
-    Br_BvSave_OverWrite_DeleteDisplay( p_wk, p_wk->p_param );
+    BR_BVSAVE_DeleteDisplay( &p_wk->display, p_wk, p_wk->p_param );
     BR_SEQ_SetNext( p_seqwk, Br_BvSave_Seq_SaveSelect );
     break;
   }
@@ -930,6 +959,64 @@ static void Br_BvSave_Seq_Save( BR_SEQ_WORK *p_seqwk, int *p_seq, void *p_wk_adr
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
+ *	@brief  画面生成
+ *
+ *	@param	BR_BVSAVE_DISPLAY_INTERFACE *p_diplay 画面インターフェイス
+ *	@param	*p_wk      ワーク
+ *	@param	*p_param  引数
+ */
+//-----------------------------------------------------------------------------
+static void BR_BVSAVE_CreateDisplay( BR_BVSAVE_DISPLAY_INTERFACE *p_diplay, BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param )
+{
+  if( p_diplay->Br_BvSave_Create )
+  {
+    p_diplay->Br_BvSave_Create( p_wk, p_param );
+    p_diplay->Br_BvSave_Create  = NULL;
+  }
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  画面破棄
+ *
+ *	@param	BR_BVSAVE_DISPLAY_INTERFACE *p_diplay 画面インターフェイス
+ *	@param	*p_wk      ワーク
+ *	@param	*p_param  引数
+ */
+//-----------------------------------------------------------------------------
+static void BR_BVSAVE_DeleteDisplay( BR_BVSAVE_DISPLAY_INTERFACE *p_diplay, BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param )
+{
+  if( p_diplay->Br_BvSave_Delete )
+  {
+    p_diplay->Br_BvSave_Delete( p_wk, p_param );
+    p_diplay->Br_BvSave_Delete  = NULL;
+  }
+}
+
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  上書き画面用インターフェイス作成
+ *
+ *	@return 上書き画面
+ */
+//-----------------------------------------------------------------------------
+static void Br_BvSave_OverWrite_CreateDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+static void Br_BvSave_OverWrite_DeleteDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_PROC_PARAM *p_param );
+static BR_BVSAVE_DISPLAY_INTERFACE Br_BvSave_OverWrite_Create( void )
+{
+  static const BR_BVSAVE_DISPLAY_INTERFACE  overwrite =
+  {
+    Br_BvSave_OverWrite_CreateDisplay,
+    Br_BvSave_OverWrite_DeleteDisplay
+  };
+
+  return overwrite;
+}
+
+//----------------------------------------------------------------------------
+/**
  *	@brief  上書き確認画面作成
  *
  *	@param	BR_BVSAVE_WORK *p_wk  ワーク
@@ -1037,6 +1124,27 @@ static void Br_BvSave_OverWrite_DeleteDisplay( BR_BVSAVE_WORK *p_wk, BR_BVSAVE_P
   }
 }
 
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  ダウンロード用インターフェイス作成
+ *
+ *	@return ダウンロード要
+ */
+//-----------------------------------------------------------------------------
+static void Br_BvSave_Download_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
+static void Br_BvSave_Download_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
+static BR_BVSAVE_DISPLAY_INTERFACE Br_BvSave_Download_Create( void )
+{
+  static const BR_BVSAVE_DISPLAY_INTERFACE  download =
+  {
+    Br_BvSave_Download_CreateDisplay,
+    Br_BvSave_Download_DeleteDisplay
+  };
+
+  return download;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  ダウンロード用の絵を作成
@@ -1078,6 +1186,26 @@ static void Br_BvSave_Download_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_P
   }
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief  保存画面インターフェイス作成
+ *
+ *	@return 保存画面
+ */
+//-----------------------------------------------------------------------------
+static void Br_BvSave_Save_CreateDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
+
+static void Br_BvSave_Save_DeleteDisplay( BR_BVSAVE_WORK * p_wk, BR_BVSAVE_PROC_PARAM	*p_param );
+static BR_BVSAVE_DISPLAY_INTERFACE Br_BvSave_Save_Create( void )
+{
+  static const BR_BVSAVE_DISPLAY_INTERFACE  overwrite =
+  {
+    Br_BvSave_Save_CreateDisplay,
+    Br_BvSave_Save_DeleteDisplay
+  };
+
+  return overwrite;
+}
 //----------------------------------------------------------------------------
 /**
  *	@brief  保存選択画面作成
