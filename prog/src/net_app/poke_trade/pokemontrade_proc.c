@@ -238,7 +238,7 @@ void POKEMONTRADE_DEMOBGMChange(POKEMON_TRADE_WORK* pWork)
   if(pWork->demoBGM!=0){
     pWork->demoBGM++;
     if(pWork->demoBGM==2){
-      PMSND_FadeInBGM( 6 );
+      PMSND_FadeOutBGM( PMSND_FADE_FAST );
     }
     else if(pWork->demoBGM==8){
       PMSND_PauseBGM( TRUE );
