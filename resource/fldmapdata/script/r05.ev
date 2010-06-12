@@ -990,6 +990,9 @@ EVENT_START	ev_r05_musician_01
 	IF FLAG_OFF( FE_R05_MUSICIAN_WIN ) THEN
 		//戦闘前なら
 		
+		//トレーナー曲セット
+		_TRAINER_BGM_SET( TRID_MUSICIAN_01 )
+		
 		//びひけっ！おれのメロディー！
 		_BALLOONWIN_TALKOBJ_MSG( msg_r05_musician_01a )
 		_MSGWIN_CLOSE()
@@ -1010,7 +1013,7 @@ EVENT_START	ev_r05_musician_01
 		
 		//ミュージカルのグッズ番号をセット
 		$SCWK_TEMP0 = 84	//エレキギター
-		$SCWK_TEMP1 = TRUE	//キー待ち記号なし
+		$SCWK_TEMP1 = TRUE	//キー待ち記号あり
 		
 		//グッズ入手共通処理へ
 		_CHG_COMMON_SCR	SCRID_MUSICAL_ADD_GOODS
