@@ -186,6 +186,10 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   {
     APP_TASKMENU_CloseMenu( msgWork->yesNoWork );
   }
+  if( msgWork->yesNoBmpWin != NULL )
+  {
+    BmpMenu_YesNoMenuExit( msgWork->yesNoBmpWin );
+  }
   
   if( msgWork->timeIcon != NULL )
   {

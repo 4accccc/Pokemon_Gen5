@@ -773,6 +773,7 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
 
   //終了時ポケシフター専用
   case MPS_SEND_LEAST_BOX:
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
       BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
       const u16 leastBoxNum = BOXDAT_GetEmptySpaceTotal( boxMng );
