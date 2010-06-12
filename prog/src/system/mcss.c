@@ -25,8 +25,6 @@
 
 #define	MCSS_DEFAULT_SHIFT		( FX32_SHIFT - 4 )		//ポリゴン１辺の基準の長さにするシフト値
 #define	MCSS_DEFAULT_LINE		( 1 << MCSS_DEFAULT_SHIFT )	//ポリゴン１辺の基準の長さ
-#define	MCSS_DEFAULT_Z			( 1 << 8 )
-#define	MCSS_DEFAULT_Z_ORTHO	( 1 << 10 )
 #define MCSS_SCALE_OFFSET   ( 0x1c )
 
 #define	MCSS_CONST(x)	( x << MCSS_DEFAULT_SHIFT )
@@ -1422,6 +1420,18 @@ s16  MCSS_GetOffsetY( MCSS_WORK *mcss )
 u8  MCSS_GetFlyFlag( MCSS_WORK *mcss )
 {
 	return mcss->mcss_ncen->fly_flag;
+}
+
+//--------------------------------------------------------------------------
+/**
+ * @brief セルの枚数を取得
+ *
+ * @param[in]  mcss MCSSワーク構造体のポインタ
+ */
+//--------------------------------------------------------------------------
+u32 MCSS_GetCells( MCSS_WORK *mcss )
+{
+	return mcss->mcss_ncec->cells;
 }
 
 //--------------------------------------------------------------------------
