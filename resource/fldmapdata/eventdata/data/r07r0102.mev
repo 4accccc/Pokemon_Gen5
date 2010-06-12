@@ -1,5 +1,5 @@
 #event data
-#save date:2010/04/30 20:11:10
+#save date:2010/06/12 20:14:53
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\r07r0102.wms
 #SECTION START:OBJ_EVENT
@@ -261,6 +261,6 @@ EVENTDATA_POSTYPE_RAIL
 #size
 1 3
 #rail way
-DIR_UP
+DIR_RIGHT
 #Map Event List Data End
 #SECTION End:DOOR_EVENT
