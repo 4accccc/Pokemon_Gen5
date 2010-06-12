@@ -903,14 +903,14 @@ EVENT_START ev_musical_add_goods
   //ME再生
   _ME_PLAY(	SEQ_ME_ACCE )
   //メッセージ
-  _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DOWN )
+  _SYSWIN_MSG( msg_musical_fan_get_goods , POS_DEFAULT )
   _ME_WAIT()
   _AB_KEYWAIT_MARK()
 
   IF $SCWK_TEMP1 == TRUE THEN
-    _SYSWIN_MSG( msg_musical_fan_get_goods_03 , POS_DOWN )
+    _SYSWIN_MSG( msg_musical_fan_get_goods_03 , POS_DEFAULT )
   ELSE
-    _SYSWIN_MSG( msg_musical_fan_get_goods_02 , POS_DOWN )
+    _SYSWIN_MSG( msg_musical_fan_get_goods_02 , POS_DEFAULT )
     _LAST_KEYWAIT()
   ENDIF
 
