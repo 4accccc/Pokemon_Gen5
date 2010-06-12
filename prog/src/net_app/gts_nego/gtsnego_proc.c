@@ -1565,7 +1565,7 @@ static void _friendSelectDecide2( GTSNEGO_WORK *pWork )
   pWork->pAppTask = GTSNEGO_MESSAGE_MatchOrReturnStart(pWork->pMessageWork, GTSNEGO_YESNOTYPE_SYS);
   GTSNEGO_DISP_PaletteFade(pWork->pDispWork, TRUE, _PALETTEFADE_PATTERN2);
 
-  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
+//  GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
   GTSNEGO_DISP_SetAnmScrollBarObj(pWork->pDispWork, FALSE);
 
   _CHANGE_STATE(pWork,_friendSelectDecide3);
@@ -1700,7 +1700,8 @@ static void _friendSelectFlashDecide( GTSNEGO_WORK *pWork )
     APP_TASKMENU_WIN_Delete(pWork->pAppWin);
     pWork->pAppWin = NULL;
     pWork->selectFriendIndex = -1;  //リストの人全部
-  GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
+    GTSNEGO_DISP_CrossIconDisp(pWork->pDispWork,NULL,_CROSSCUR_TYPE_NONE);
+    GFL_BG_LoadScreenV_Req( GFL_BG_FRAME1_S );
     _CHANGE_STATE(pWork,_friendSelectDecide);
   }
 }
