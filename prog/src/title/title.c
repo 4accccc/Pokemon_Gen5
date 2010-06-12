@@ -944,9 +944,9 @@ static void mainG2Dcontrol(G2D_CONTROL* CG2d, HEAPID heapID)
 
   // BLACKは右にスクロール・WHITEは左にスクロール
   if(GetVersion()==VERSION_BLACK){
-    CG2d->scrol_work--;
-  }else{
     CG2d->scrol_work++;
+  }else{
+    CG2d->scrol_work--;
   }
 
 #if 0
