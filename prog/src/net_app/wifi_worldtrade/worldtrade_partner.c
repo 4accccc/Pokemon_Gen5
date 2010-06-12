@@ -860,7 +860,6 @@ static int SubSeq_End( WORLDTRADE_WORK *wk)
 
 	GFL_CLACT_WK_SetDrawEnable( wk->PartnerCursorActWork, 0 );
 
-    OS_TPrintf("aaa mode = %d\n", wk->sub_process_mode);
 	if( wk->sub_process_mode==MODE_PARTNER_RETURN ){
 //		WIPE_SYS_Start( WIPE_PATTERN_M, WIPE_TYPE_FADEOUT, WIPE_TYPE_FADEOUT, 
 //					WIPE_FADE_BLACK, WORLDTRADE_WIPE_SPPED, 1, HEAPID_WORLDTRADE );

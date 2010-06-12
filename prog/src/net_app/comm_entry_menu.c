@@ -689,7 +689,6 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       
       if(em->wait_user_bit == ready_user_bit){
         if(MATH_CountPopulation(((u32)em->recv_ready_bit)) < em->min_num){
-          OS_TPrintf("aaa bit=%d, %d\n", MATH_CountPopulation(((u32)em->recv_ready_bit)), em->min_num);
           em->seq = _SEQ_WAIT_GAMESTART_READY_NG;
         }
         else{
@@ -717,7 +716,6 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
   case _SEQ_SEND_GAMESTART_SYNC:
     if( em->game_start_num != GFL_NET_SystemGetConnectNum() || em->min_num > GFL_NET_SystemGetConnectNum())
     {
-      OS_TPrintf("aaa start=%d, %d\n", em->game_start_num, GFL_NET_SystemGetConnectNum());
       //誰かが抜けた・・・
       if(CemSend_GameCancel(em->mp_mode) == TRUE){
         em->wait_user_bit = em->member_info.member_bit; //_GetConnectMemberBit();

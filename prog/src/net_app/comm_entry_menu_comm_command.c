@@ -266,7 +266,6 @@ static void _CemRecv_GameStartReady(const int netID, const int size, const void*
 {
   COMM_ENTRY_MENU_PTR em = pWork;
 
-  OS_TPrintf("aaa RECV:StartReady\n");
   CommEntryMenu_SetForbitLeave(em);
 }
 
@@ -279,7 +278,6 @@ static void _CemRecv_GameStartReady(const int netID, const int size, const void*
 //==================================================================
 BOOL CemSend_GameStartReady(BOOL comm_mp)
 {
-  OS_TPrintf("aaa SEND:StartReady\n");
   if(comm_mp == TRUE){
     return GFL_NET_SendData(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), 
       ENTRYMENU_CMD_GAME_START_READY, 0, NULL);
