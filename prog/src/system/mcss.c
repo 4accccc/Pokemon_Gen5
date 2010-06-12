@@ -505,7 +505,7 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 							 image_p->vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_3DMAIN]);
 			for( i = 0 ; i < mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes ; i++ ){
         //半透明なら逆から描画するようにする
-        if( mcss->alpha != 31 )
+        if( ( mcss->alpha != 31 ) || ( mcss->reverse_draw ) )
         { 
           node = ( mcss->mcss_mcanim.pMultiCellDataBank->pMultiCellDataArray[anim_SRT_mc.index].numNodes - 1 ) - i;
         }
@@ -544,7 +544,8 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 				ncec = &mcss->mcss_ncec->ncec[anim_SRT.index];
 
 				//メパチ処理
-				if( ncec->mepachi_size_x ){
+				if( ( ncec->mepachi_size_x ) && ( mcss->reverse_draw == 0 ) )
+        { 
 					if( mcss->mepachi_flag ){
 						MCSS_DrawAct( mcss,
 									  ncec->mepachi_pos_x,
@@ -583,6 +584,36 @@ void	MCSS_Draw( MCSS_SYS_WORK *mcss_sys )
 	              ortho_mode,
 							  &pos_z_default, flipFlg, &scale_offset_work , 
 							  mcss_sys->projection_revise_off );
+				//メパチ処理
+				if( ( ncec->mepachi_size_x ) && ( mcss->reverse_draw == 1 ) )
+        { 
+					if( mcss->mepachi_flag ){
+						MCSS_DrawAct( mcss,
+									  ncec->mepachi_pos_x,
+									  ncec->mepachi_pos_y,
+									  ncec->mepachi_size_x,
+									  ncec->mepachi_size_y,
+									  ncec->mepachi_tex_s,
+									  ncec->mepachi_tex_t + ncec->mepachi_size_y,
+									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
+	                  ortho_mode,
+									  &pos_z_default, flipFlg, &scale_offset_work ,
+									  mcss_sys->projection_revise_off);
+					}
+					else{
+						MCSS_DrawAct( mcss,
+									  ncec->mepachi_pos_x,
+									  ncec->mepachi_pos_y,
+									  ncec->mepachi_size_x,
+									  ncec->mepachi_size_y,
+									  ncec->mepachi_tex_s,
+									  ncec->mepachi_tex_t,
+									  &anim_SRT, &anim_SRT_mc, &mcss_sys->shadow_palette_proxy, node,
+	                  ortho_mode,
+									  &pos_z_default, flipFlg, &scale_offset_work ,
+									  mcss_sys->projection_revise_off);
+					}
+				}
 			}
 		}
 	}
@@ -793,11 +824,11 @@ static	void	MCSS_DrawAct( MCSS_WORK *mcss,
 
 	if( mcss_ortho_mode == 0 &&
 	    projection_revise_off == 0 ){
-		*pos_z_default -= MCSS_DEFAULT_Z;
+		*pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z : MCSS_DEFAULT_Z;
     *scale_offset_work += MCSS_SCALE_OFFSET;
 	}
 	else{
-		*pos_z_default -= MCSS_DEFAULT_Z_ORTHO;
+		*pos_z_default -= ( mcss->reverse_draw | ( mcss->alpha != 31 ) ) ? -MCSS_DEFAULT_Z_ORTHO : MCSS_DEFAULT_Z_ORTHO;
 	}
 }
 
@@ -1830,6 +1861,20 @@ void   MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg
 { 
   mcss_sys->projection_revise_off = flg;
 }
+
+//--------------------------------------------------------------------------
+/**
+ * @brief MCSSのセル描画を逆から描画フラグのセット
+ *
+ * @param[in] mcss      MCSSワーク構造体のポインタ
+ * @param[in]	flag			セットするフラグ
+ */
+//--------------------------------------------------------------------------
+void	MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag )
+{ 
+  mcss->reverse_draw = flag;
+}
+
 //--------------------------------------------------------------------------
 //--------------------------------------------------------------------------
 

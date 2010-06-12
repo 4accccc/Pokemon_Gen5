@@ -109,7 +109,8 @@ struct _MCSS_WORK
 	u32														mosaic				      :4; //ÉÇÉUÉCÉN    
 	u32														fade_pltt_data_flag :1;    
 	u32														ortho_mode          :1;    
-	u32														                    :2;    
+	u32														reverse_draw        :1; //ãtÇ©ÇÁï`âÊ    
+	u32														                    :1;    
 	int														index;								//ìoò^INDEX
 	int														heapID;								//égópÇ∑ÇÈÉqÅ[ÉvID
   MCSS_ADD_WORK                 maw;
