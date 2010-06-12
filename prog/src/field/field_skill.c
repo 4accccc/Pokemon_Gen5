@@ -132,13 +132,13 @@ void FLDSKILL_InitCheckWork(
   scwk->front_mmdl = mmdl;
   
   if( mmdl != NULL ){
-    switch( MMDL_GetOBJCode(mmdl) ){
-    case ROCK:
+    u16 obj_code = MMDL_GetOBJCode( mmdl );
+
+    if( MMDL_CheckOBJCodeKairiki( obj_code ) ) {
       scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_KAIRIKI );
-      break;
-    case TREE:
+    } 
+    if( obj_code == TREE ) {
       scwk->enable_skill |= IDXBIT( FLDSKILL_IDX_IAIGIRI );
-      break;
     }
   }
   
