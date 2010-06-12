@@ -2040,10 +2040,16 @@ u32   POKETOOL_CalcPersonalRandSpec( u32 id, u16 mons_no, u16 form_no, PtlSexSpe
     break;
   case PTL_RARE_SPEC_FALSE:
     {
+#if 0
       u32 rare_false_rnd = ( ( ( id & 0xffff0000 ) >> 16 ) ^ ( id & 0x0000ffff ) ) & 0xff00;
       rare_false_rnd = ( rare_false_rnd ^ 0xff00 ) << 16;
       rnd &= 0x000000ff;
       rnd = rare_false_rnd | rnd;
+#endif
+      if( POKETOOL_CheckRare( id, rnd ) == TRUE )
+      { 
+        rnd ^= 0x10000000;
+      }
     }
     /* fallthru */
   case PTL_RARE_SPEC_BOTH:
