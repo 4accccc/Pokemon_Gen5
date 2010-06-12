@@ -37,6 +37,11 @@ static BOOL check_TrainerType(u8 tr_type);
 #endif  //PM_DEBUG
 #endif
 
+#ifdef PM_DEBUG
+//定義で独自セットアップのメモリ開放忘れチェック
+#define DEBUG_FBI_CHECK_BTLPRM_HEAPSIZE
+#endif
+
 //--------------------------------------------------------------
 /// ポケモンリスト選択イベント
 //--------------------------------------------------------------
@@ -403,7 +408,7 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
   HEAPID heapID = HEAPID_PROC;
   play_mode = inPlayMode;
   
-#ifdef PM_DEBUG  
+#ifdef DEBUG_FBI_CHECK_BTLPRM_HEAPSIZE
   { //独自セットアップのメモリ開放忘れチェック
     u32 size_before,size_after;
     

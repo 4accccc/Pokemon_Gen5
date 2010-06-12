@@ -3041,6 +3041,9 @@ _RET
 //--------------------------------------------------------------
 ev_bsw_retmap_receipt:
 {
+  //DEBUG
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 99, BSW_NULL, BSW_NULL )
+
   //プレイモード取得
   _BSUBWAY_TOOL( BSWTOOL_GET_DATA_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
@@ -3066,6 +3069,9 @@ ev_bsw_retmap_receipt:
   DEFAULT
     _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0102, 11, 0, 15, DIR_RIGHT )
   ENDSWITCH
+  
+  //DEBUG
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 100, BSW_NULL, BSW_NULL )
   
   _CHG_LOCAL_SCR
 }

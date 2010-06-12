@@ -385,6 +385,10 @@ sub_train_battle:
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL win_lose
   
+  //DEBUG
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 0, BSW_NULL, BSW_NULL )
+
+  //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //デバッグ　バトルスキップ
@@ -562,6 +566,9 @@ sub_train_battle_win_clear:
   //戦闘後のワーク開放
   _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //DEBUG
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 1, BSW_NULL, BSW_NULL )
+
   //マップ遷移
   _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0111, 75, 0, 12, DIR_DOWN )
 }
@@ -818,6 +825,9 @@ sub_train_battle_win_next_menu:
       //戦闘後のワーク開放
       _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
       
+      //DEBUG
+      _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 1, BSW_NULL, BSW_NULL )
+
       //マップチェンジ
       _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
       $loop = 0
@@ -839,6 +849,9 @@ sub_train_battle_win_next_menu:
         //戦闘後のワーク開放
         _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
         
+        //DEBUG
+        _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 1, BSW_NULL, BSW_NULL )
+
         //ワーク開放
         _BSUBWAY_WORK_RELEASE()
         
@@ -987,11 +1000,11 @@ sub_train_battle_win_next_menu_comm_multi:
         //戦闘後のワーク開放
         _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
         
+        //DEBUG
+        _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 1, BSW_NULL, BSW_NULL )
+
         //シーン制御を継続に
         $WK_OTHER_BSUBWAY_TRAIN = BSWAY_SCENE_TRAIN_CONTINUE
-        
-        //戦闘後のワーク開放
-        _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
         
         //マップチェンジ
         _MAP_CHANGE_NO_FADE( ZONE_ID_C04R0110, 7, 0, 4, DIR_UP )
@@ -1313,6 +1326,9 @@ sub_common_return_receipt_map:
   //戦闘後のワーク開放
   _BSUBWAY_TOOL( BSWSUB_FREE_BTLPRM, BSW_NULL, BSW_NULL, BSW_NULL )
   
+  //DEBUG
+  _BSUBWAY_TOOL( BSWTOOL_DEBUG_PRINT_HEAP_SIZE, 1, BSW_NULL, BSW_NULL )
+
   //マップ遷移　受付へ戻る
   _CHG_COMMON_SCR SCRID_BSW_RETMAP_RECEIPT
 }

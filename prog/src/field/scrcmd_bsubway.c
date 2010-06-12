@@ -879,6 +879,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //----TOOL DEBUG
   //DEBUG フラグチェック
   case BSWTOOL_DEBUG_CHK_FLAG:
+    #ifdef PM_DEBUG
     {
       u8 flag = BSUBWAY_SCOREDATA_DEBUG_GetFlag( scoreData );
       u16 check_flag = param0;
@@ -893,12 +894,27 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         GF_ASSERT( 0 );
       }
     }
+    #else
+    *ret_wk = FALSE;
+    #endif
     break;
   //DEBUG 数値出力
   case BSWTOOL_DEBUG_PRINT_NO:
+    #ifdef PM_DEBUG
     {
       KAGAYA_Printf( "========BSW DEBUG PRINT NO %d=======\n", param0 );
     }
+    #endif
+    break;
+  //DEBUG HEAPID_PROC空きサイズ出力
+  case BSWTOOL_DEBUG_PRINT_HEAP_SIZE:
+    #ifdef PM_DEBUG
+    {
+      KAGAYA_Printf( "========BSW_DEBUG_PRINT_HEAPID_PROC_FREE 0x%x:No.%d========\n",
+        GFL_HEAP_GetHeapFreeSize(HEAPID_PROC), param0 );
+      GFL_HEAP_DEBUG_PrintExistMemoryBlocks( HEAPID_PROC );
+    }
+    #endif
     break;
   //----ワーク依存
   //プレイモード別復帰位置セット
@@ -1540,6 +1556,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
   //----デバッグ
   //DEBUG 選択ポケモン強制セット
   case BSWSUB_DEBUG_SET_SELECT_POKE:
+    #ifdef PM_DEBUG
     {
       u16  i = 0;
       const POKEPARTY *party;
@@ -1555,6 +1572,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
         bsw_scr->mem_item[i] = PP_Get( pp, ID_PARA_item, NULL );  
       }
     }
+    #endif
     break;
   //----ERROR
   //未対応コマンドエラー
@@ -2433,7 +2451,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {BACKPACKERW,8,38,0,14,msg_c04r0111_backpackerw_3,0,ITEM_DUMMY_DATA},
   {BACKPACKERW,12,28,0,16,msg_c04r0111_backpackerw_4,0,ITEM_DUMMY_DATA},
   //おまわりさん
-  {POLICEMAN,2,43,0,15,msg_c04r0111_policeman_1,0,ITEM_DUMMY_DATA},
+  {POLICEMAN,2,44,0,15,msg_c04r0111_policeman_1,0,ITEM_DUMMY_DATA},
   {POLICEMAN,3,19,0,16,msg_c04r0111_policeman_2,0,ITEM_DUMMY_DATA},
   {POLICEMAN,5,50,0,16,msg_c04r0111_policeman_3,0,ITEM_DUMMY_DATA},
   {POLICEMAN,11,68,0,14,msg_c04r0111_policeman_4,0,ITEM_DUMMY_DATA}, //20
@@ -2454,7 +2472,7 @@ static const HOME_NPC_DATA data_HomeNpcTbl[] =
   {RAILMAN,3,45,0,14,msg_c04r0111_railman_1,0,ITEM_DUMMY_DATA},
   {RAILMAN,5,12,0,15,msg_c04r0111_railman_2,0,ITEM_DUMMY_DATA},
   {RAILMAN,6,78,0,15,msg_c04r0111_railman_3,0,ITEM_DUMMY_DATA},
-  {RAILMAN,7,18,0,14,msg_c04r0111_railman_4,0,ITEM_DUMMY_DATA},
+  {RAILMAN,7,19,0,16,msg_c04r0111_railman_4,0,ITEM_DUMMY_DATA},
   {RAILMAN,8,62,0,14,msg_c04r0111_railman_5,0,ITEM_DUMMY_DATA},
   {RAILMAN,15,61,0,17,msg_c04r0111_railman_6,0,ITEM_DUMMY_DATA},
   {RAILMAN,18,67,0,15,msg_c04r0111_railman_7,0,ITEM_DUMMY_DATA},
