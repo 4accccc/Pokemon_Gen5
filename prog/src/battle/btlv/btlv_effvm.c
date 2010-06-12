@@ -93,10 +93,10 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_yoshida)|\
     defined(DEBUG_ONLY_FOR_sogabe)
-//#define CAMERA_POS_PRINT
+#define CAMERA_POS_PRINT
 #endif
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define CAMERA_POS_PRINT_FX32
+#define CAMERA_POS_PRINT_FX32
 #endif
 #endif
 
@@ -1061,11 +1061,15 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
   static  VecFx32 cam_pos_zoom_out    = { 0x00008b33, 0x00007b33, 0x00017ccd };
   static  VecFx32 cam_target_zoom_out = { 0x00002000, 0x0000399a, 0x00006800 };
 
+  static  VecFx32 cam_pos_zoom_out_rotation    = { 0x00006b33, 0x00007b33, 0x0001eccd };
+  static  VecFx32 cam_target_zoom_out_rotation = { 0x00000000, 0x0000399a, 0x0000d800 };
+
   static  VecFx32 cam_pos_b_ortho     = { 0x00009b33, 0x00006b33, 0x000114cd };
   static  VecFx32 cam_target_b_ortho  = { 0x00003000, 0x0000299a, 0x00000000 };
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_CAMERA_MOVE\n");
+  OS_TPrintf("cam_move_pos:%d\n",cam_move_pos);
 #endif DEBUG_OS_PRINT
 
   //移動フレーム数を読み込み
@@ -1134,7 +1138,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
         if( ( pos == BTLV_MCSS_POS_C ) ||
             ( pos == BTLV_MCSS_POS_E ) )
         { 
-          cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT;
+          cam_move_pos = BTLEFF_CAMERA_POS_ZOOM_OUT_ROTATION;
         }
         break;
       }
@@ -1276,6 +1280,19 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
     cam_target.x  = cam_target_zoom_out.x;
     cam_target.y  = cam_target_zoom_out.y;
     cam_target.z  = cam_target_zoom_out.z;
+    if( bevw->camera_ortho_on_flag )
+    { 
+      set_mcss_scale_move( FX_F32_TO_FX32( 0.65 ), FX_F32_TO_FX32( 0.725 ), frame, wait, 0 );
+      bevw->zoom_out_flag = 1;
+    }
+    break;
+  case BTLEFF_CAMERA_POS_ZOOM_OUT_ROTATION:
+    cam_pos.x     = cam_pos_zoom_out_rotation.x;
+    cam_pos.y     = cam_pos_zoom_out_rotation.y;
+    cam_pos.z     = cam_pos_zoom_out_rotation.z;
+    cam_target.x  = cam_target_zoom_out_rotation.x;
+    cam_target.y  = cam_target_zoom_out_rotation.y;
+    cam_target.z  = cam_target_zoom_out_rotation.z;
     if( bevw->camera_ortho_on_flag )
     { 
       set_mcss_scale_move( FX_F32_TO_FX32( 0.65 ), FX_F32_TO_FX32( 0.725 ), frame, wait, 0 );
@@ -4095,7 +4112,17 @@ static VMCMD_RESULT VMEC_SEQ_JUMP( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_SEQ_JUMP\n");
 #endif DEBUG_OS_PRINT
 
+#ifdef PM_DEBUG
+  //デバッグ起動ではsequenceはNULLなのでスルー
+  if( bevw->debug_flag == FALSE )
+  { 
+    GFL_HEAP_FreeMemory( bevw->sequence );
+  }
+  //ロムの技エフェクトを起動することになるので、デバッグ起動フラグはオフ
+  bevw->debug_flag = FALSE;
+#else
   GFL_HEAP_FreeMemory( bevw->sequence );
+#endif
 
   if( seq_no < BTLEFF_SINGLE_ENCOUNT_1 )
   { 
@@ -6698,7 +6725,8 @@ static  void  set_mcss_scale_move( fx32 mul_value_m, fx32 mul_value_e, int frame
 void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, const VM_CODE *start, const DEBUG_PARTICLE_DATA *dpd, BTLV_EFFVM_PARAM* param, BTLV_EFFVM_EXECUTE_EFF_TYPE type )
 {
   BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
-  int *start_ofs = (int *)&start[ script_table[ from ][ to ] ] ;
+  int *start_ofs;
+  int table_ofs;
   int i;
 
   BTLV_EFFECT_FreeTCBGroup( GROUP_EFFVM );
@@ -6739,6 +6767,21 @@ void  BTLV_EFFVM_StartDebug( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, co
 #endif
     EFFVM_ChangeVolume( bevw, start_vol, end_vol, frame );
   }
+
+  if( ( from != BTLV_MCSS_POS_ERROR ) && ( to != BTLV_MCSS_POS_ERROR ) )
+  {
+    table_ofs = script_table[ from ][ to ];
+    GF_ASSERT( table_ofs != TBL_ERROR );
+    if( table_ofs == TBL_ERROR )
+    {
+      table_ofs = TBL_AA2BB;
+    }
+  }
+  else
+  {
+    table_ofs = TBL_AA2BB;
+  }
+  start_ofs = (int *)&start[ table_ofs ] ;
 
   bevw->attack_pos = from;
   bevw->defence_pos = to;
