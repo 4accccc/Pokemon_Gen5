@@ -724,6 +724,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
         MB_COMM_ReqDisconnect( work->commWork );
         work->state = MCS_WAIT_EXIT_COMM;
       }
+      MB_MOVIE_ErrCheck( work , FALSE );
     }
     break;
 
@@ -747,6 +748,7 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     {
       work->state = MCS_EXIT_GAME;
     }
+    MB_MOVIE_ErrCheck( work , FALSE );
     break;
 
   case MCS_EXIT_GAME:

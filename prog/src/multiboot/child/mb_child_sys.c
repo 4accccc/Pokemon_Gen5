@@ -812,6 +812,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         work->state = MCS_CHECK_ROM_CRC;
       }
     }
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
 
   case MCS_CHECK_ROM_CRC:
@@ -892,6 +893,10 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         work->state = MCS_WAIT_NEXT_GAME_CONFIRM;
       }
     }
+    else
+    {
+      MB_CHILD_ErrCheck( work , FALSE );
+    }
     break;
     
   case MCS_WAIT_NEXT_GAME_CONFIRM:
@@ -947,6 +952,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     {
       work->state = MCS_EXIT_GAME;
     }
+    MB_CHILD_ErrCheck( work , FALSE );
     break;
 
   case MCS_EXIT_GAME:
