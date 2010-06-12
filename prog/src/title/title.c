@@ -366,7 +366,7 @@ static void _key_check( TITLE_WORK *tw )
     return;
   }
   // ƒQ[ƒ€ŠJŽn
-  if( GFL_UI_TP_GetTrg() == TRUE || ( GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK ) ){
+  if(  GFL_UI_KEY_GetTrg() & NEXT_PROC_MASK){
     tw->mode = END_SELECT;
     tw->seq  = SEQ_VOICE_PLAY;
     tw->voiceIndex = PMVOICE_Play(  PLAY_MONSNO,  0,  64, FALSE,  
