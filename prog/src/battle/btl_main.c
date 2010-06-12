@@ -5506,7 +5506,6 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
       POKEMON_PARAM* pp;
       for(i=0; i<PokeParty_GetPokeCount(srcParty); ++i){
         pp = PokeParty_GetMemberPointer(srcParty, i);
-        BTL_Printf("  %p's exp=%d\n", pp, PP_Get(pp,ID_PARA_exp,NULL));
       }
     }
   }
@@ -5520,6 +5519,41 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
     PokeCon_RefrectBtlParty( &wk->pokeconForServer, wk, clientID, TRUE );
     srcParty = PokeCon_GetSrcParty( &wk->pokeconForServer, clientID );
     PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_ENEMY1 ] );
+  }
+
+  // デモ以外全て：状態異常コード書き戻し
+  if( wk->setupParam->competitor != BTL_COMPETITOR_DEMO_CAPTURE )
+  {
+    u32 clientID, p;
+    for(clientID=0; clientID<BTL_CLIENT_MAX; ++clientID)
+    {
+      for(p=0; p<TEMOTI_POKEMAX; ++p){
+        wk->setupParam->party_state[ clientID ][ p ] = BTL_POKESTATE_NORMAL;
+      }
+
+      if( BTL_MAIN_IsExistClient(wk, clientID) )
+      {
+        BTL_PARTY* party = BTL_POKECON_GetPartyData( &wk->pokeconForServer, clientID );
+        u32 numMembers = BTL_PARTY_GetMemberCount( party );
+        u8 orgPokeID = ClientBasePokeID[ clientID ];
+        u8 idx;
+
+        for(p=0; p<numMembers; ++p)
+        {
+          BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, p );
+          idx = BPP_GetID(bpp) - orgPokeID;
+
+          if( BPP_IsDead(bpp) ){
+            wk->setupParam->party_state[ clientID ][ idx ] = BTL_POKESTATE_DEAD;
+            OS_TPrintf("Client_%d, Idx=%d, しんでる\n", clientID, idx);
+          }
+          else if( BPP_GetPokeSick(bpp) != POKESICK_NULL ){
+            wk->setupParam->party_state[ clientID ][ idx ] = BTL_POKESTATE_SICK;
+            OS_TPrintf("Client_%d, Idx=%d, びょうき\n", clientID, idx);
+          }
+        }
+      }
+    }
   }
 }
 
