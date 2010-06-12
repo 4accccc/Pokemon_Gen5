@@ -270,12 +270,10 @@ static const int CommandData_GFLogo[] = {
 
 	COMM_DEBUG_PRINT,   1,
 
-	COMM_WAIT,			32,
+	COMM_WAIT,			42,
 
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
-
-	COMM_WAIT,			30,
 
     COMM_BGM_STOP,
 
@@ -298,7 +296,7 @@ static const int CommandData_OPMovie1[] = {
 
 	COMM_DEBUG_PRINT,   1,
 
-	COMM_WAIT,			32,
+	COMM_WAIT,			20,
 
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
@@ -321,8 +319,6 @@ static const int CommandData_OPMovie2[] = {
     COMM_BG_FRM_ANIME,  0,
 
 	COMM_DEBUG_PRINT,   1,
-
-	COMM_WAIT,			32,
 
 	COMM_BLACK_OUT,		1, 1,
 	COMM_FADE_MAIN,
