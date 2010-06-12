@@ -4023,7 +4023,7 @@ static void handler_OokinaNekko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static  const BtlEventHandlerTable*  HAND_ADD_ITEM_Kemuridama( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_SKIP_NIGERU_CALC,       handler_Kemuridama },  // にげるチェックハンドラ
+    { BTL_EVENT_SKIP_NIGERU_CALC,       handler_Kemuridama     }, // にげるチェックハンドラ
     { BTL_EVENT_NIGERU_EXMSG,           handler_Kemuridama_Msg }, // 逃げ特殊メッセージハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -4032,24 +4032,18 @@ static  const BtlEventHandlerTable*  HAND_ADD_ITEM_Kemuridama( u32* numElems )
 // にげるチェックハンドラ
 static void handler_Kemuridama( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
-  }
+  HandCommon_NigeruCalcSkip( myHandle, flowWk, pokeID, work );
 }
 // 逃げ特殊メッセージハンドラ
 static void handler_Kemuridama_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  if( HandCommon_CheckNigeruExMsg(myHandle, flowWk, pokeID) )
   {
-    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) )
-    {
-      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Kemuridama );
-        HANDEX_STR_AddArg( &param->str, pokeID );
-        HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-      BTL_SVF_HANDEX_Pop( flowWk, param );
-    }
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_UseItem_Kemuridama );
+      HANDEX_STR_AddArg( &param->str, pokeID );
+      HANDEX_STR_AddArg( &param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
 //------------------------------------------------------------------------------

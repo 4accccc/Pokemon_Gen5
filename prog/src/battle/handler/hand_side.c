@@ -596,7 +596,7 @@ static void handler_side_Makibisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
   {
-    if( !BTL_SVFTOOL_IsFlyingPoke(flowWk, pokeID) )
+    if( !BTL_SVFTOOL_IsFloatingPoke(flowWk, pokeID) )
     {
       u8 add_counter = getMyAddCounter( myHandle, mySide );
       u8 denom;
@@ -639,7 +639,7 @@ static void handler_side_Dokubisi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
   u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
   if( BTL_MAINUTIL_PokeIDtoSide(pokeID) == mySide )
   {
-    if( !BTL_SVFTOOL_IsFlyingPoke( flowWk, pokeID ) )
+    if( !BTL_SVFTOOL_IsFloatingPoke( flowWk, pokeID ) )
     {
       const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
 

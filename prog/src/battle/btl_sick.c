@@ -556,7 +556,7 @@ void BTL_SICKEVENT_CheckEscapeForbit( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPAR
   if( (BPP_CheckSick(bpp, WAZASICK_TOOSENBOU))
   ||  (BPP_CheckSick(bpp, WAZASICK_BIND))
   ){
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
   }
 }
 /**-------------------------------------------------------------

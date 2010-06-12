@@ -99,7 +99,6 @@ static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fForceNigeru );
-static BOOL scEvent_SkipNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scEvent_NigeruExMessage( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8 nextPokeIdx );
@@ -2356,21 +2355,18 @@ static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 {
   BOOL fSkipNigeruCalc = TRUE;
-  BOOL fForceNigeru = TRUE;
 
   if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD )
   {
     u8 escClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
     if( escClientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
       fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
-      fForceNigeru = FALSE;
     }
   }
 
   #ifdef PM_DEBUG
   // L or R 押しっぱなしで強制的に逃げる
   if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) || ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) ){
-    fForceNigeru = TRUE;
     fSkipNigeruCalc = TRUE;
   }
   #endif
@@ -2394,7 +2390,7 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     }
   }
 
-  return scproc_NigeruCore( wk, bpp, fForceNigeru );
+  return scproc_NigeruCore( wk, bpp, fSkipNigeruCalc );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -2412,8 +2408,8 @@ static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bp
   {
     BOOL result = FALSE;
     BTL_EVENTVAR_Push();
-      BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-      BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+      BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, result );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKIP_NIGERU_CALC );
       result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
     BTL_EVENTVAR_Pop();
@@ -2449,14 +2445,11 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
       // 逃げ禁止チェック
       if( !BPP_IsDead(bpp) )
       {
-        if( !scEvent_SkipNigeruForbid(wk, bpp) )
-        {
-          u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-          BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
-          BTL_Hem_PopState( &wk->HEManager, hem_state );
-          if( fForbid ){
-            return FALSE;
-          }
+        u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
+        BOOL fForbid = scEvent_CheckNigeruForbid( wk, bpp );
+        BTL_Hem_PopState( &wk->HEManager, hem_state );
+        if( fForbid ){
+          return FALSE;
         }
       }
     }
@@ -2496,27 +2489,6 @@ static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fFo
 }
 //----------------------------------------------------------------------------------
 /**
- * [Event] 逃げる封じのチェック処理をスキップするか判定
- *
- * @param   wk
- * @param   bpp
- *
- * @retval  BOOL    スキップするならTRUE
- */
-//----------------------------------------------------------------------------------
-static BOOL scEvent_SkipNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
-{
-  BOOL result = FALSE;
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetValue( BTL_EVAR_GEN_FLAG, result );
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_SKIP_NIGERU_FORBID );
-    result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
-  BTL_EVENTVAR_Pop();
-  return result;
-}
-//----------------------------------------------------------------------------------
-/**
  * [Event] 逃げる封じチェック処理
  *
  * @param   wk
@@ -2530,10 +2502,10 @@ static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM*
   BOOL result = FALSE;
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
-    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, result );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, result );
     BTL_SICKEVENT_CheckEscapeForbit( wk, bpp );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_NIGERU_FORBID );
-    result = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
+    result = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
   BTL_EVENTVAR_Pop();
   return result;
 }
@@ -12757,7 +12729,7 @@ u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp_t
  * @retval  BOOL
  */
 //--------------------------------------------------------------------------------------
-BOOL BTL_SVFTOOL_IsFlyingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
+BOOL BTL_SVFTOOL_IsFloatingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
   return scproc_CheckFloating( wk, bpp );

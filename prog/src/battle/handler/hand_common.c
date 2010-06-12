@@ -188,3 +188,32 @@ void HandCommon_MulWazaBasePower( u32 ratio )
   BTL_EVENTVAR_RewriteValue( BTL_EVAR_WAZA_POWER, pow );
 }
 
+//------------------------------------------------
+/**
+ * 逃げ計算スキップ共通（にげあし・けむりだま）
+ */
+//------------------------------------------------
+void HandCommon_NigeruCalcSkip( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  u8 escapePokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( BTL_MAINUTIL_IsFriendPokeID(escapePokeID, pokeID) )
+  {
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  }
+}
+/**
+ *  逃げ特殊メッセージ表示予約
+ */
+BOOL HandCommon_CheckNigeruExMsg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID )
+{
+  u8 escapePokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+  if( BTL_MAINUTIL_IsFriendPokeID(escapePokeID, pokeID) )
+  {
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) )
+    {
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+

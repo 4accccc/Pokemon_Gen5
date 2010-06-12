@@ -98,6 +98,7 @@ static void common_FlowerGift_FormChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
 static void handler_FlowerGift_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_FlowerGift_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_TokChange( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Power( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -171,6 +172,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Sunaokosi( u32* numElems );
 static void handler_Yukifurasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yukifurasi( u32* numElems );
 static void common_weather_change( BTL_SVFLOW_WORK* flowWk, u8 pokeID, BtlWeather weather );
+static void handler_AirLock_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_AirLock_ChangeWeather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_AirLock( u32* numElems );
 static void handler_IceBody( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -304,6 +306,7 @@ static void handler_Katayaburi_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Katayaburi( u32* numElems );
 static void handler_Tenkiya_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_Weather( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Tenkiya_AirLock( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_ChangeTok( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Tenkiya_TokOff( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void common_Tenkiya_Off( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID );
@@ -338,6 +341,12 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_MagicGuard( u32* numElems );
 static void handler_MagicGuard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Akusyuu( u32* numElems );
 static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  HAND_TOK_ADD_Kagefumi( u32* numElems );
+static void handler_Kagefumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  HAND_TOK_ADD_Arijigoku( u32* numElems );
+static void handler_Arijigoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static const BtlEventHandlerTable*  HAND_TOK_ADD_Jiryoku( u32* numElems );
+static void handler_Jiryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Karuwaza( u32* numElems );
 static void handler_Karuwaza_BeforeItemSet( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Karuwaza_Agility( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -571,6 +580,9 @@ BTL_EVENT_FACTOR*  BTL_HANDLER_TOKUSEI_Add( const BTL_POKEPARAM* pp )
     { POKETOKUSEI_MONOHIROI,        HAND_TOK_ADD_Monohiroi     },
     { POKETOKUSEI_KARUWAZA,         HAND_TOK_ADD_Karuwaza      },
     { POKETOKUSEI_AKUSYUU,          HAND_TOK_ADD_Akusyuu       },
+    { POKETOKUSEI_KAGEFUMI,         HAND_TOK_ADD_Kagefumi      },
+    { POKETOKUSEI_ARIJIGOKU,        HAND_TOK_ADD_Arijigoku     },
+    { POKETOKUSEI_JIRYOKU,          HAND_TOK_ADD_Jiryoku       },
 
     { POKETOKUSEI_WARUITEGUSE,      HAND_TOK_ADD_WaruiTeguse   },
     { POKETOKUSEI_TIKARAZUKU,       HAND_TOK_ADD_Tikarazuku    },
@@ -4628,14 +4640,26 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nightmare( u32* numElems )
 // にげるチェックハンドラ
 static void handler_Nigeasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
-    BTL_EVENTVAR_RewriteValue( BTL_EVAR_GEN_FLAG, TRUE );
+  HandCommon_NigeruCalcSkip( myHandle, flowWk, pokeID, work );
+}
+// にげ確定メッセージハンドラ
+static void handler_Nigeasi_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( HandCommon_CheckNigeruExMsg(myHandle, flowWk, pokeID) )
+  {
+    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+      param->header.tokwin_flag = TRUE;
+      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeSuccess );
+//          SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
+    BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
+
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nigeasi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_SKIP_NIGERU_CALC,       handler_Nigeasi },  // にげるチェックハンドラ
+    { BTL_EVENT_SKIP_NIGERU_CALC,     handler_Nigeasi       }, // にげるチェックハンドラ
+    { BTL_EVENT_NIGERU_EXMSG,         handler_Nigeasi_Msg   }, // 逃げ特殊メッセージハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -5295,6 +5319,128 @@ static void handler_Akusyuu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
     }
   }
 }
+//------------------------------------------------------------------------------
+/**
+ * とくせい「かげふみ」
+ *
+ * 相手が逃げるのを封じる
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  HAND_TOK_ADD_Kagefumi( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NIGERU_FORBID,  handler_Kagefumi }, // 逃げる禁止チェック
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// 逃げる禁止チェックハンドラ
+static void handler_Kagefumi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  u8 escPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+
+  if( !BTL_MAINUTIL_IsFriendPokeID(escPokeID, pokeID) )
+  {
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+    u8 pokeIDAry[ BTL_POSIDX_MAX ];
+    u8 cnt, i;
+
+    // 相手に１体でも「かげふみ」がいるなら無効
+    cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, pokeIDAry );
+    for(i=0; i<cnt; ++i)
+    {
+      const BTL_POKEPARAM* bppEnemy = BTL_SVFTOOL_GetPokeParam( flowWk, pokeIDAry[i] );
+      if( BPP_GetValue(bppEnemy, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_KAGEFUMI ){
+        return;
+      }
+    }
+
+    BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ * とくせい「ありじごく」
+ *
+ * 相手が逃げるのを封じる（ふゆうしているポケモンは除外）
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  HAND_TOK_ADD_Arijigoku( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NIGERU_FORBID,  handler_Arijigoku }, // 逃げる禁止チェック
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// 逃げる禁止チェックハンドラ
+static void handler_Arijigoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  u8 escPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+
+  if( !BTL_MAINUTIL_IsFriendPokeID(escPokeID, pokeID) )
+  {
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+    u8 pokeIDAry[ BTL_POSIDX_MAX ];
+    u8 cnt, i;
+
+    // 相手に１体でもふゆう状態でないポケがいれば有効
+    cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, pokeIDAry );
+    for(i=0; i<cnt; ++i)
+    {
+      if( !BTL_SVFTOOL_IsFloatingPoke(flowWk, pokeIDAry[i]) )
+      {
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+        break;;
+      }
+    }
+  }
+}
+//------------------------------------------------------------------------------
+/**
+ * とくせい「じりょく」
+ *
+ * 相手が逃げるのを封じる（ふゆうしているポケモンは除外）
+ */
+//------------------------------------------------------------------------------
+static const BtlEventHandlerTable*  HAND_TOK_ADD_Jiryoku( u32* numElems )
+{
+  static const BtlEventHandlerTable HandlerTable[] = {
+    { BTL_EVENT_NIGERU_FORBID,  handler_Jiryoku }, // 逃げる禁止チェック
+  };
+  *numElems = NELEMS(HandlerTable);
+  return HandlerTable;
+}
+// 逃げる禁止チェックハンドラ
+static void handler_Jiryoku( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  u8 escPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+
+  if( !BTL_MAINUTIL_IsFriendPokeID(escPokeID, pokeID) )
+  {
+    BtlPokePos myPos = BTL_SVFTOOL_GetExistFrontPokePos( flowWk, pokeID );
+    BtlExPos   expos = EXPOS_MAKE( BTL_EXPOS_FULL_ENEMY, myPos );
+    u8 pokeIDAry[ BTL_POSIDX_MAX ];
+    u8 cnt, i;
+
+
+    // 相手に１体でも「はがね」タイプがいたら有効
+    cnt = BTL_SVFTOOL_ExpandPokeID( flowWk, expos, pokeIDAry );
+    for(i=0; i<cnt; ++i)
+    {
+      const BTL_POKEPARAM* bppEnemy = BTL_SVFTOOL_GetPokeParam( flowWk, pokeIDAry[i] );
+      if( BPP_IsMatchType(bppEnemy, POKETYPE_HAGANE) )
+      {
+        BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
+      }
+    }
+  }
+}
+
+
+
 
 //------------------------------------------------------------------------------
 /**

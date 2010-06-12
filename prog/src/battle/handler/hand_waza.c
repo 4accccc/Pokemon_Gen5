@@ -9797,7 +9797,7 @@ static void handler_Utiotosu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     const BTL_POKEPARAM* bppTarget = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
     u8 msgFlag = FALSE;
 
-    if( (BTL_SVFTOOL_IsFlyingPoke(flowWk, targetPokeID))
+    if( (BTL_SVFTOOL_IsFloatingPoke(flowWk, targetPokeID))
     &&  (!BPP_CheckSick(bppTarget, WAZASICK_FREEFALL))
     &&  (!BTL_SVFTOOL_IsFreeFallUserPoke(flowWk, targetPokeID))
     ){
@@ -9940,6 +9940,7 @@ static void handler_MirrorType( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 
     {
       BTL_HANDEX_PARAM_MESSAGE* msg_p = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        msg_p->header.failSkipFlag = TRUE;
         HANDEX_STR_Setup( &msg_p->str, BTL_STRTYPE_SET, BTL_STRID_SET_MirrorType );
         HANDEX_STR_AddArg( &msg_p->str, pokeID );
         HANDEX_STR_AddArg( &msg_p->str, targetPokeID );

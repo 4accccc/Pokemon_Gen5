@@ -39,7 +39,6 @@ typedef enum {
   BTL_EVENT_WAZASEQ_REFRECT,        ///< ワザ跳ね返し確定
   BTL_EVENT_CHECK_CHANGE,           ///< いれかえチェック
   BTL_EVENT_SKIP_NIGERU_CALC,       ///< にげる確率計算スキップチェック
-  BTL_EVENT_SKIP_NIGERU_FORBID,     ///< にげる封じスキップチェック
   BTL_EVENT_NIGERU_FORBID,          ///< にげる封じチェック
   BTL_EVENT_NIGERU_EXMSG,           ///< にげる特殊メッセージ
   BTL_EVENT_CHECK_SP_PRIORITY,      ///< 特殊優先度チェック
