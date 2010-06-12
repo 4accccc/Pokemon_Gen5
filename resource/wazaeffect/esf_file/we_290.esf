@@ -3,9 +3,33 @@ $0001
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_001.spa
 #001
 %00
-パーティクルデータロード	w_001
-パーティクル再生	w_001	W_001_001_BALL_BURN	攻撃側	方向無し	0:0:0	1:1:1	1
-パーティクル再生	w_001	W_001_001_HIT_MARK	攻撃側	方向無し	0:0:0	1:1:1	1
-エフェクト終了待ち	すべて
-エフェクト終了
+シーケンスジャンプ	WAZANO_NOSIKAKARI
+&
+#002
+%00
+シーケンスジャンプ	WAZANO_DOROKAKE
+&
+#003
+%00
+シーケンスジャンプ	WAZANO_MADDOSYOTTO
+&
+#004
+%00
+シーケンスジャンプ	WAZANO_YUKINADARE
+&
+#005
+%00
+シーケンスジャンプ	WAZANO_KOORINOTUBUTE
+&
+#006
+%00
+シーケンスジャンプ	WAZANO_MIZUNOHADOU
+&
+#007
+%00
+シーケンスジャンプ	WAZANO_IWAOTOSI
+&
+#008
+%00
+シーケンスジャンプ	WAZANO_NIIDORUAAMU
 &
