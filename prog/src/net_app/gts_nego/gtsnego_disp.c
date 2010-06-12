@@ -518,9 +518,11 @@ static void _PaletteFadeSingle2(GTSNEGO_DISP_WORK* pWork, int type, int* start, 
   for(i=0;i<num;i++){
     switch(type){
     case FADE_SUB_OBJ:
+      DC_FlushRange( (void*)(addr+32*start[i]), palettenum[i] * 32 );
       GXS_LoadOBJPltt((void*)(addr+32*start[i]), start[i]*16*2, palettenum[i] * 32);
       break;
     case FADE_SUB_BG:
+      DC_FlushRange( (void*)(addr+32*start[i]), palettenum[i] * 32 );
       GXS_LoadBGPltt((void*)(addr+32*start[i]),  start[i]*16*2, palettenum[i] * 32);
       break;
     }
@@ -584,7 +586,9 @@ void GTSNEGO_DISP_PaletteFade(GTSNEGO_DISP_WORK* pWork,BOOL bFade, int palette)
     }
   }
   else{
+    DC_FlushRange( (void*)pWork->pVramOBJ, 16 * 32 );
     GXS_LoadOBJPltt((void*)pWork->pVramOBJ, 0, 16 * 32);
+    DC_FlushRange( (void*)pWork->pVramBG, 16 * 32 );
     GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 16 * 32);
   }
 
