@@ -96,7 +96,7 @@ static BOOL FRONT_POKE_SEEK_GetNext( FRONT_POKE_SEEK_WORK* fpsw, BTL_SVFLOW_WORK
 static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
 static void scproc_MoveCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx1, u8 posIdx2, BOOL fActCmd );
 static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
-static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp );
+static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fSkipNigeruCalc );
 static BOOL scEvent_SkipNigeruCalc( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BOOL scproc_NigeruCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fForceNigeru );
 static BOOL scEvent_CheckNigeruForbid( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
@@ -2319,7 +2319,7 @@ static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
   u8 playerClientID = BTL_MAIN_GetPlayerClientID( wk->mainModule );
 
-  BOOL result = scproc_NigeruCmdSub( wk, bpp );
+  BOOL result = scproc_NigeruCmdSub( wk, bpp, FALSE );
 
   if( result )
   {
@@ -2352,15 +2352,18 @@ static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
  *
  *  @retval “¦‚°‚ç‚ê‚½‚çTRUE, “¦‚°Ž¸”s‚ÅFALSE
  */
-static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
+static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL fSkipNigeruCalc )
 {
-  BOOL fSkipNigeruCalc = TRUE;
+  BOOL fForceNigeru = FALSE;
 
   if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD )
   {
     u8 escClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
     if( escClientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
-      fSkipNigeruCalc = scEvent_SkipNigeruCalc( wk, bpp );
+      fForceNigeru = scEvent_SkipNigeruCalc( wk, bpp );
+      if( fForceNigeru ){
+        fSkipNigeruCalc = TRUE;
+      }
     }
   }
 
@@ -2368,6 +2371,7 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   // L or R ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚Å‹­§“I‚É“¦‚°‚é
   if( ( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ) || ( GFL_UI_KEY_GetCont() & PAD_BUTTON_R ) ){
     fSkipNigeruCalc = TRUE;
+    fForceNigeru = TRUE;
   }
   #endif
 
@@ -2390,7 +2394,7 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
     }
   }
 
-  return scproc_NigeruCore( wk, bpp, fSkipNigeruCalc );
+  return scproc_NigeruCore( wk, bpp, fForceNigeru );
 }
 //----------------------------------------------------------------------------------
 /**
@@ -14164,6 +14168,8 @@ static BOOL handexSub_putString( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_STR_PARAM
   case BTL_STRTYPE_STD:
     scPut_Message_StdEx( wk, strParam->ID, strParam->argCnt, strParam->args );
     return TRUE;
+
+
   case BTL_STRTYPE_SET:
     scPut_Message_SetEx( wk, strParam->ID, strParam->argCnt, strParam->args );
     return TRUE;
@@ -14522,7 +14528,7 @@ static u8 scproc_HandEx_quitBattle( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 {
   BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, param_header->userPokeID );
 
-  if( scproc_NigeruCore(wk, bpp, TRUE) )
+  if( scproc_NigeruCmdSub(wk, bpp, TRUE) )
   {
     wk->flowResult = SVFLOW_RESULT_BTL_QUIT;
     return 1;

@@ -4650,7 +4650,6 @@ static void handler_Nigeasi_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
     BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
       param->header.tokwin_flag = TRUE;
       HANDEX_STR_Setup( &param->str, BTL_STRTYPE_STD, BTL_STRID_STD_EscapeSuccess );
-//          SCQUE_PUT_MSG_STD_SE( wk->que, BTL_STRID_STD_EscapeSuccess, SEQ_SE_NIGERU );
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }

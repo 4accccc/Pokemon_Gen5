@@ -3138,6 +3138,9 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, u8* pokeID, u16* tokuse
     if( BPP_GetValue(procPoke, BPP_TOKUSEI_EFFECTIVE) == POKETOKUSEI_NIGEASI ){
       return BTL_CANTESC_NULL;
     }
+  }
+  for(i=0; i<wk->numCoverPos; ++i)
+  {
     // 逃げ・交換禁止チェック共通部分
     {
       BtlCantEscapeCode code = checkForbidChangeEscapeCommon( wk, procPoke, pokeID, tokuseiID );
