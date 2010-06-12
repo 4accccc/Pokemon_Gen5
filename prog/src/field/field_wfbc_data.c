@@ -691,10 +691,13 @@ static void WFBC_CORE_PackPeopleArray( FIELD_WFBC_CORE_PEOPLE* p_array )
     {
       for( j=i+1; j<FIELD_WFBC_PEOPLE_MAX; j++ )
       {
-        GFL_STD_MemCopy( &p_array[j], &p_array[j-1], sizeof(FIELD_WFBC_CORE_PEOPLE) );
+        if( FIELD_WFBC_CORE_PEOPLE_IsInData( &p_array[j] ) ){
+          GFL_STD_MemCopy( &p_array[j], &p_array[i], sizeof(FIELD_WFBC_CORE_PEOPLE) );
+          // ワークをクリア
+          FIELD_WFBC_CORE_PEOPLE_Clear( &p_array[j] );
+          break;
+        }
       }
-      // 最後のワークをクリア
-      FIELD_WFBC_CORE_PEOPLE_Clear( &p_array[FIELD_WFBC_PEOPLE_MAX-1] );
     }
   }
 }
