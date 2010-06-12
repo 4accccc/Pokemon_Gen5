@@ -16,9 +16,6 @@
 // 簡易会話表示システム
 #include "system/pms_draw.h"
 
-//テクスチャをOAMに転送
-#include "system/nsbtx_to_clwk.h"
-
 //FONT
 #include "print/gf_font.h"
 #include "font/font.naix"
