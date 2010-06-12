@@ -268,6 +268,16 @@ extern void GFL_UI_SoftResetEnable( const u8 softResetBit);
 
 //------------------------------------------------------------------
 /**
+ * @brief   ソフトウエアリセット管理BITに禁止フラグが立っているか調べる
+ * @param   softResetBit リセット管理BIT
+ * @return  TRUE:禁止フラグが立っている
+ * @return  FALSE:禁止フラグは立っていない
+ */
+//------------------------------------------------------------------
+extern BOOL GFL_UI_CheckSoftResetDisable(const u8 softResetBit);
+
+//------------------------------------------------------------------
+/**
  * @brief   ソフトウエアリセット直前時に呼ばれる関数をセットする
  * @param   pFunc   ソフトウエアリセット直前時に呼ばれる関数
  * @param   pWork   呼ばれる際に渡すワーク
