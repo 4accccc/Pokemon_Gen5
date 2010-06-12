@@ -136,7 +136,8 @@ void MachineSystem_Init(void)
 void MachineSystem_Main(void)
 {
 #if (defined(SDK_TWL))
-  if(bHardResetFlg){  //ハードリセットコールバックが呼ばれた
+  //ハードリセットコールバックが呼ばれた
+  if(bHardResetFlg && GFL_UI_CheckSoftResetDisable(GFL_UI_SOFTRESET_SVLD) == FALSE){
     if(!PM_GetAutoExit()){  //自分が処理しなければいけない事を確認する
       MI_SetMainMemoryPriority(MI_PROCESSOR_ARM7);  //ARM7優先に切り替える
       PM_ReadyToExit();  //ハードリセット後処理開始（もどってこない）
