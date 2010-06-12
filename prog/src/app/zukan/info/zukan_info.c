@@ -665,7 +665,7 @@ ZUKAN_INFO_WORK* ZUKAN_INFO_Init(
   u16  formno       = (u16)PP_Get( a_pp, ID_PARA_form_no, NULL );
   u16  sex          = PP_GetSex( a_pp );
   u16  rare         = PP_CheckRare( a_pp );
-  u32  personal_rnd = (u16)PP_Get( a_pp, ID_PARA_personal_rnd, NULL );
+  u32  personal_rnd = PP_Get( a_pp, ID_PARA_personal_rnd, NULL );
   //if( fast ) PP_FastModeOff( a_pp, fast );
 
   return ZUKAN_INFO_InitFromMonsno(
