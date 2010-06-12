@@ -36,8 +36,8 @@ typedef enum{
 ///シーンパラメータ
 typedef struct _DEMO3D_SCENE_DATA{
   u16   camera_bin_id;
-  u16   zone_id;
   u16   bgm_no;
+  u16   zone_id;
  
   u16   frame_rate:1; //<フレームレート 0:60fps, 1:30fps
   u16   double_view_f:1;
