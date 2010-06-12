@@ -306,7 +306,7 @@ static void setupBySrcData( BTL_POKEPARAM* bpp, const POKEMON_PARAM* srcPP, BOOL
   bpp->tokusei = PP_Get( srcPP, ID_PARA_speabino, 0 );
   bpp->formNo = PP_Get( srcPP, ID_PARA_form_no, 0 );
 
-  bpp->weight = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->formNo, POKEPER_ID_weight ) / 10;
+  bpp->weight = POKETOOL_GetPersonalParam( bpp->coreParam.monsno, bpp->formNo, POKEPER_ID_weight );
   if( bpp->weight < BTL_POKE_WEIGHT_MIN ){
     bpp->weight = BTL_POKE_WEIGHT_MIN;
   }
@@ -2686,7 +2686,7 @@ void BPP_UpdateWazaProcResult( BTL_POKEPARAM* bpp, BtlPokePos actTargetPos, BOOL
 
 //=============================================================================================
 /**
- * 同じワザを連続何回出しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
+ * 同じワザを連続何回成功しているか返す（連続していない場合は0、連続中は1オリジンの値が返る）
  *
  * @param   pp
  *

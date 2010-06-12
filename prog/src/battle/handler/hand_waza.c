@@ -1590,7 +1590,11 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     {
       const BTL_POKEPARAM* target = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_TARGET1) );
       WazaID waza = BPP_GetPrevWazaID( target );
-      if( (!BTL_TABLES_IsMatchMonomaneFail(waza))
+      u16 counter = BPP_GetWazaContCounter( target );
+
+      if( (counter > 0)
+      &&  (waza != WAZANO_NULL)
+      &&  (!BTL_TABLES_IsMatchMonomaneFail(waza))
       &&  (BPP_WAZA_SearchIdx(self, waza) == PTL_WAZA_MAX)
       ){
         u8 wazaIdx = BPP_WAZA_SearchIdx( self, BTL_EVENT_FACTOR_GetSubID(myHandle) );
@@ -9983,21 +9987,26 @@ static const BtlEventHandlerTable*  ADD_BodyPurge( u32* numElems )
 }
 static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
+  enum {
+    PURGE_WEIGHT = 1000,    // 0.1kg単位
+  };
+
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u16 weight;
+    u32 weight;
 
   // SVFTOOL を介すと「かるいし」などの効果を受けてしまうのでダメ。元体重をチェックする。
 //    weight = BTL_SVFTOOL_GetWeight( flowWk, pokeID );
     weight = BPP_GetWeight( bpp );
+    TAYA_Printf("weight = %d, min=%d\n", BTL_POKE_WEIGHT_MIN);
 
     if( weight > BTL_POKE_WEIGHT_MIN )
     {
       BTL_HANDEX_PARAM_SET_WEIGHT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_WEIGHT, pokeID );
 
-        if( weight > (BTL_POKE_WEIGHT_MIN + 100) ){
-          weight -= 100;
+        if( weight > (BTL_POKE_WEIGHT_MIN + PURGE_WEIGHT) ){
+          weight -= PURGE_WEIGHT;
         }else{
           weight = BTL_POKE_WEIGHT_MIN;
         }

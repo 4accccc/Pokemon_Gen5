@@ -13724,14 +13724,10 @@ static u8 scproc_HandEx_addSick( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEA
         param->overWriteMode, param->fAlmost) )
       {
         if( param->header.tokwin_flag ){
-          TAYA_Printf("とくせいウィンドウオン .. %p\n", param);
           scPut_TokWin_In( wk, pp_user );
         }
 
         scproc_AddSickCore( wk, target, pp_user, param->sickID, param->sickCont, fDefaultMsg, &param->exStr );
-
-        TAYA_Printf("とくせいウィンドウ = %d .. %p\n", param->header.tokwin_flag, param);
-
 
         if( param->header.tokwin_flag ){
           scPut_TokWin_Out( wk, pp_user );
