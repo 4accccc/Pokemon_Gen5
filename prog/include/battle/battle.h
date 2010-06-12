@@ -173,7 +173,7 @@ typedef enum {
 //-----------------------------------------------------------------------------------
 enum {
   BSP_TRAINERDATA_ITEM_MAX = 4,
-  BSP_TRAINERID_SUBWAY = 0xffffffff,
+  BSP_TRAINERID_SUBWAY = 0xFFFF,
 };
 
 typedef struct {
