@@ -4215,7 +4215,7 @@ static void handler_Bouon( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Bouon( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_NOEFFECT_CHECK_L1,        handler_Bouon },  // 無効化チェックLv1ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,        handler_Bouon },  // 無効化チェックLv1ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
