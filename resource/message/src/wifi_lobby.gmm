@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohno" host="W00141" date="2010-06-12T14:37:40"/>
+	<create user="ohno" host="W00141" date="2010-06-12T16:55:46"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -339,7 +339,7 @@
 
 	<dialog left="485" top="318" right="1190" bottom="946" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="807" top="515" right="1280" bottom="913" visible="yes"/>
+		<tag-palette left="704" top="500" right="1177" bottom="898" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
@@ -910,17 +910,13 @@
 	</row>
 
 	<row id="msg_wifilobby_074" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN" width="216">たいせんや　こうかんの　ときの
-ＢＧＭを　オフに　しました▼</language>
-		<language name="JPN_KANJI" width="216">対戦や　交換の　ときの
-ＢＧＭを　ＯＦＦに　しました▼</language>
+		<language name="JPN" width="216">みちぼしゅうちゅう</language>
+		<language name="JPN_KANJI" width="216">みちぼしゅうちゅう</language>
 	</row>
 
 	<row id="msg_wifilobby_075" back-color="#808080,,,#808080,,#808080,#808080,,,#808080,,#808080,#808080,,,#808080,,">
-		<language name="JPN" width="216">たいせんや　こうかんの　ときの
-ＢＧＭを　オンに　しました▼</language>
-		<language name="JPN_KANJI" width="216">対戦や　交換の　ときの
-ＢＧＭを　ＯＮに　しました▼</language>
+		<language name="JPN" width="216">じょうたいかいじょ</language>
+		<language name="JPN_KANJI" width="216">じょうたいかいじょ</language>
 	</row>
 
 	<row id="msg_wifilobby_test_001" back-color="#808080,,,#808080,,#808080,#808080,#808080,,#808080,#808080,#808080,#808080,,,#808080,,">
