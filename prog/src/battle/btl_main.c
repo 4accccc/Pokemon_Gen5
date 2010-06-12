@@ -1030,7 +1030,7 @@ static BOOL setup_alone_double_multi( int* seq, void* work )
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
-
+  wk->ImServer = TRUE;
 
   // Client 作成
   for(i=0; i<BTL_CLIENT_MAX; ++i)
@@ -1114,6 +1114,7 @@ static BOOL setup_alone_triple( int* seq, void* work )
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+  wk->ImServer = TRUE;
 
   // Client 作成
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 3,
@@ -1171,6 +1172,7 @@ static BOOL setup_alone_rotation( int* seq, void* work )
 
   // Server 作成
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+  wk->ImServer = TRUE;
 
   // トレーナーデータ設定
   setupCommon_TrainerParam( wk, sp );
