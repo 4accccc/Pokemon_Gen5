@@ -3409,8 +3409,9 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_KaigaraNoSuzu( u32* numElems )
 }
 static void handler_KaigaraNoSuzu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_DELAY_ATTACK_FLAG) == FALSE)
+  ){
     u32 damage_sum = BTL_EVENTVAR_GetValue( BTL_EVAR_DAMAGE );
     damage_sum /= common_GetItemParam( myHandle, ITEM_PRM_ATTACK );
     if( damage_sum == 0 ){
