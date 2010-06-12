@@ -49,6 +49,12 @@ typedef struct _MCSS_NCEN_WORK	MCSS_NCEN_WORK;
 typedef struct _MCSS_WORK				MCSS_WORK;
 typedef struct _MCSS_SYS_WORK		MCSS_SYS_WORK;
 
+typedef enum
+{ 
+  MCSS_REVERSE_DRAW_OFF = 0,
+  MCSS_REVERSE_DRAW_ON,
+}MCSS_REVERSE_DRAW;
+
 typedef struct
 {
 	ARCID		arcID;
@@ -163,6 +169,7 @@ extern  void	          MCSS_SetAnimeFrame( MCSS_WORK *mcss, const fx32 frame );
 extern  u16             MCSS_GetAnimeNum( MCSS_WORK* mcss );
 extern  void	          MCSS_SetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK* mcss, u8 evy, u32 rgb );
 extern  void	          MCSS_ResetPaletteFadeBaseColor( MCSS_SYS_WORK* mcss_sys, MCSS_WORK *mcss );
+extern  void	          MCSS_SetReverseDraw( MCSS_WORK* mcss, MCSS_REVERSE_DRAW flag );
 extern  int	            MCSS_GetFadePlttDataFlag( MCSS_WORK *mcss );
 extern  void            MCSS_RestartAnime( MCSS_WORK *mcss );
 extern  void            MCSS_DisableProjectionReviseFlg( MCSS_SYS_WORK *mcss_sys , const BOOL flg );
