@@ -2937,9 +2937,9 @@ static void handler_MetalPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   {
     // ƒƒ^ƒ‚ƒ“‚È‚ç
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    u32 monsNo = BPP_GetMonsNo( bpp );
-    if( monsNo == MONSNO_METAMON )
-    {
+    if( (BPP_GetMonsNo(bpp) == MONSNO_METAMON)
+    &&  (!BPP_HENSIN_Check(bpp))
+    ){
       // ‚Ú‚¤‚¬‚å‚Q”{
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
@@ -2966,10 +2966,11 @@ static void handler_SpeedPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    // Ž©•ª‚ªƒƒ^ƒ‚ƒ“‚È‚ç‘f‘‚³‚Q”{
+    // Ž©•ª‚ªƒƒ^ƒ‚ƒ“‚Å•Ïg‘O‚È‚ç‘f‘‚³‚Q”{
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
-    if( BPP_GetMonsNo(bpp) == MONSNO_METAMON )
-    {
+    if( (BPP_GetMonsNo(bpp) == MONSNO_METAMON)
+    &&  (!BPP_HENSIN_Check(bpp))
+    ){
       BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
     }
   }
@@ -3624,24 +3625,12 @@ static void handler_AkaiIto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk
         param->sickID = WAZASICK_MEROMERO;
         param->sickCont = BPP_SICKCONT_MakePoke( pokeID );
         param->fStdMsgDisable = TRUE;
+
+        HANDEX_STR_Setup( &param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_MeromeroGetItem );
+        HANDEX_STR_AddArg( &param->exStr, atkPokeID );
+        HANDEX_STR_AddArg( &param->exStr, BTL_EVENT_FACTOR_GetSubID(myHandle) );
+
       BTL_SVF_HANDEX_Pop( flowWk, param );
-
-      // ‚¤‚Ü‚­‚¢‚Á‚½‚çƒAƒCƒeƒ€ƒGƒtƒFƒNƒg”­“®•ƒƒbƒZ[ƒW
-      {
-        BTL_HANDEX_PARAM_HEADER* header;
-        BTL_HANDEX_PARAM_MESSAGE* msg_param;
-
-        header = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ITEM_EFFECT, pokeID );
-          header->failSkipFlag = TRUE;
-        BTL_SVF_HANDEX_Pop( flowWk, header );
-
-        msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-          msg_param->header.failSkipFlag = TRUE;
-          HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MeromeroGetItem );
-          HANDEX_STR_AddArg( &msg_param->str, atkPokeID );
-          HANDEX_STR_AddArg( &msg_param->str, BTL_EVENT_FACTOR_GetSubID(myHandle) );
-        BTL_SVF_HANDEX_Pop( flowWk, msg_param );
-      }
     }
   }
 }
