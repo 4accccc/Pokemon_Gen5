@@ -177,8 +177,8 @@ PDWACC_MESSAGE_WORK* PDWACC_MESSAGE_Init(HEAPID id,int msg_dat)
                                 0x20*_BUTTON_MSG_PAL, 0x20, pWork->heapID);
 
 #if DEBUG_ONLY_FOR_ohno
-  DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
-  DEBUG_PAUSE_SetEnable( TRUE );
+//  DEBUGWIN_InitProc( GFL_BG_FRAME3_M , pWork->pFontHandle );
+//  DEBUG_PAUSE_SetEnable( TRUE );
 #endif
   return pWork;
 }
