@@ -501,7 +501,6 @@ void UnionAppSystem_SetMystatus(UNION_APP_PTR uniapp, UNION_SYSTEM_PTR unisys, N
   
   uniapp->appmy[net_id] = *pAppmy;
   uniapp->recv_mystatus_bit |= 1 << net_id;
-  OS_TPrintf("ccc MyStatus Recv netID=%d\n");
 
   if(net_id != GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
     UnionMyComm_PartyAddParam(&situ->mycomm, pAppmy->mac_address, 

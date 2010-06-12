@@ -266,7 +266,6 @@ static void _ColosseumRecv_PosPackage(const int netID, const int size, const voi
     return; //準備が出来ていないので受け取らない
   }
   
-  OS_TPrintf("eee 相手座標 受信 netId%d\n", netID);
   Colosseum_SetCommPlayerPos(clsys, netID, pData);
 }
 
@@ -279,7 +278,6 @@ static void _ColosseumRecv_PosPackage(const int netID, const int size, const voi
 //==================================================================
 BOOL ColosseumSend_PosPackage(COMM_PLAYER_PACKAGE *pos_package)
 {
-  OS_TPrintf("ccc 自分座標 送信\n");
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
     COLOSSEUM_CMD_POS_PACKAGE, sizeof(COMM_PLAYER_PACKAGE), 
     pos_package, FALSE, TRUE, TRUE);
