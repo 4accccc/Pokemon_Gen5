@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="hozumi_yukiko" host="W00211" date="2010-06-11T14:25:20"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-11T20:02:39"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,9 +362,9 @@
 		</language>
 	</columns>
 
-	<dialog left="152" top="122" right="834" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="20" top="122" right="702" bottom="750" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="507"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="674"/>
@@ -450,8 +450,8 @@
 	</row>
 
 	<row id="MSG_MB_PAERNT_08">
-		<language name="JPN" width="208">レポートに　かきこみました</language>
-		<language name="JPN_KANJI" width="208">レポートに　書き込みました</language>
+		<language name="JPN" width="208">レポートに　かきこみました[BE:02:ウェイト変更（単発）:60]</language>
+		<language name="JPN_KANJI" width="208">レポートに　書き込みました[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_09">
