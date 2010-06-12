@@ -2054,10 +2054,19 @@ static void MB_PARENT_UpdateMovieMode( MB_PARENT_WORK *work )
   {
   //子機のポケ集計待ち
   case MPMS_WAIT_COUNT_POKE:
-    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR )
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR ||
+        MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR_ANOTHER_COUNTRY )
     {
       //読み込みエラーが発生した
       MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_21 , MSGSPEED_GetWait() );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_ReqDisconnect( work->commWork );
+      work->state = MPS_MOVIE_WAIT_LAST_MSG;
+    }
+    if( MB_COMM_GetChildState(work->commWork) == MCCS_END_GAME_ERROR_BACKUP_LOAD )
+    {
+      //読み込みエラーが発生した
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_MOVIE_24 , MSGSPEED_GetWait() );
       MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       MB_COMM_ReqDisconnect( work->commWork );
       work->state = MPS_MOVIE_WAIT_LAST_MSG;

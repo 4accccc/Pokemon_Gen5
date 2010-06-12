@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-11T20:02:39"/>
+	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-12T18:37:23"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -362,9 +362,9 @@
 		</language>
 	</columns>
 
-	<dialog left="20" top="122" right="702" bottom="750" maximized="no" rayout="Vertical2">
+	<dialog left="172" top="148" right="854" bottom="776" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
-		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
+		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="507"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="674"/>
@@ -791,6 +791,20 @@ multiboot_childと一緒</comment>
 かいし　します</language>
 		<language name="JPN_KANJI" width="208">ＤＳワイヤレス通信を
 開始します</language>
+	</row>
+
+	<row id="MSG_MB_PAERNT_MOVIE_24" back-color=",,,#ffff80,,,,,,,,,,,,,,">
+		<comment>Ariizumi0612追加</comment>
+		<language name="JPN" width="208">レポートを　よみこむことが
+できませんでした
+レポートが　かかれていないか
+こわれている　かのうせいがあります▼
+てんそうマシンを　しゅうりょうします▼</language>
+		<language name="JPN_KANJI" width="208">レポートを　読み込むことが
+できませんでした
+レポートが　書かれていないか
+壊れている　可能性があります▼
+転送マシンを　終了します▼</language>
 	</row>
 
 	<flowchart-group-list>

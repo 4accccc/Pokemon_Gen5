@@ -220,7 +220,7 @@ static void MB_MOVIE_Init( MB_MOVIE_WORK *work )
 
   MB_MOVIE_InitGraphic( work );
   MB_MOVIE_LoadResource( work );
-  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_MOVIE_FRAME_MSG , MB_MOVIE_FRAME_MSG , FILE_MSGID_MB , TRUE , FALSE );
+  work->msgWork = MB_MSG_MessageInit( work->heapId , MB_MOVIE_FRAME_MSG , MB_MOVIE_FRAME_MSG , FILE_MSGID_MB , TRUE , TRUE );
   MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
   work->commWork = MB_COMM_CreateSystem( work->heapId );
   
@@ -458,11 +458,25 @@ static const BOOL MB_MOVIE_Main( MB_MOVIE_WORK *work )
     break;
     
   case MCS_LOAD_ERROR:
-    //“Ç‚Ýž‚ÝŽ¸”s
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_06 , work->initData->msgSpeed );
-    MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
-    MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
-    work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    {
+      u8 errType = MB_DATA_GetErrorState( work->dataWork );
+      switch( errType )
+      {
+      case DES_MISS_LOAD_BACKUP:
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR_BACKUP_LOAD );
+        break;
+      case DES_ANOTHER_COUNTRY:
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR_ANOTHER_COUNTRY );
+        break;
+      default:
+        MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+        break;
+      }
+      //“Ç‚Ýž‚ÝŽ¸”s
+      MB_MSG_MessageDisp( work->msgWork , MSG_MB_MOVIE_06 , work->initData->msgSpeed );
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    }
     break;
     
   //--------------------------------------------------------

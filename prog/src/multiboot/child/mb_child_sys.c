@@ -469,11 +469,26 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
     
   case MCS_LOAD_ERROR:
-    //“Ç‚Ýž‚ÝŽ¸”s
-    MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_10 , work->initData->msgSpeed );
-    MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
-    MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
-    work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    {
+      u8 errType = MB_DATA_GetErrorState( work->dataWork );
+      switch( errType )
+      {
+      case DES_MISS_LOAD_BACKUP:
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_15 , work->initData->msgSpeed );
+        break;
+      case DES_ANOTHER_COUNTRY:
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_16 , work->initData->msgSpeed );
+        break;
+      default:
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_10 , work->initData->msgSpeed );
+        break;
+      }
+
+      //“Ç‚Ýž‚ÝŽ¸”s
+      MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
+      MB_COMM_SetChildState( work->commWork , MCCS_END_GAME_ERROR );
+      work->state = MCS_WAIT_NEXT_GAME_ERROR_MSG;
+    }
     break;
     
   case MCS_POKE_LACK:
