@@ -22,7 +22,7 @@
 
 #ifdef PM_DEBUG
 
-//#define DEBUG_WH_BEACON_PRINT_ON (1)  // beacon切り替えタイミングを表示
+#define DEBUG_WH_BEACON_PRINT_ON (0)  // beacon切り替えタイミングを表示
 
 #if DEBUG_ONLY_FOR_ohno
 #define DEBUG_WH_BEACON_PRINT_ON  (0) // beacon切り替えタイミングを表示
@@ -248,7 +248,7 @@ BOOL GFL_NET_WLInitialize(HEAPID heapID,NetDevEndCallback callback, void* pUserW
 #endif
 	pNetWL->_sTgid = WM_GetNextTgid();
 
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("%d %d\n",WM_SIZE_USER_GAMEINFO , sizeof(_GF_BSS_DATA_INFO) );
 #endif
 	GF_ASSERT(WM_SIZE_USER_GAMEINFO == sizeof(_GF_BSS_DATA_INFO));
@@ -345,7 +345,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
     }
   }
 	if(pGF->GGID != ggid){
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 		NET_PRINT("beacon不一致\n");
 #endif
     return FALSE;
@@ -356,7 +356,7 @@ static BOOL _scanCheck(WMBssDesc *bssdesc)
 		}
 	}
 	else{
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 		NET_PRINT("ServiceID CMP %d %d",serviceNo, pGF->serviceNo);
 #endif
 		if(serviceNo != pGF->serviceNo){
@@ -407,7 +407,7 @@ static BOOL _scanCallback(WMBssDesc *bssdesc)
 		}
 		if (0==GFL_STD_MemComp(pNetWL->sBssDesc[i].bssid, bssdesc->bssid, WM_SIZE_BSSID)) {
 			// もう一度拾った場合にタイマー加算
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 			NET_PRINT("もう一度拾った場合にタイマー加算\n");
 #endif
 			pNetWL->bconUnCatchTime[i] = DEFAULT_TIMEOUT_FRAME;
@@ -488,7 +488,7 @@ BOOL GFL_NET_WL_scanCheck(WMBssDesc *bssdesc, u32 check_bit)
   
   if(check_bit & WL_SCAN_CHK_BIT_GGID){
   	if(pGF->GGID != ggid){
-  #ifdef DEBUG_WH_BEACON_PRINT_ON
+  #if DEBUG_WH_BEACON_PRINT_ON
   		NET_PRINT("beacon不一致\n");
   #endif
       return FALSE;
@@ -502,7 +502,7 @@ BOOL GFL_NET_WL_scanCheck(WMBssDesc *bssdesc, u32 check_bit)
   		}
   	}
   	else{
-  #ifdef DEBUG_WH_BEACON_PRINT_ON
+  #if DEBUG_WH_BEACON_PRINT_ON
   		NET_PRINT("ServiceID CMP %d %d",serviceNo, pGF->serviceNo);
   #endif
   		if(serviceNo != pGF->serviceNo){
@@ -612,7 +612,7 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 	_commInit(pNetWL);
 
 	if(bBconInit){
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 		NET_PRINT("ビーコンの初期化\n");
 #endif
     GFL_NET_WLChildBconDataInit(); // データの初期化
@@ -628,7 +628,7 @@ BOOL GFL_NET_WLChildInit(BOOL bBconInit)
 			return TRUE;
 		}
 	}
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 	NET_PRINT("IDLE状態ではないため初期化に失敗しました\n");
 #endif
 	return FALSE;
@@ -948,7 +948,7 @@ static void _WLParentBconCheck(void)
 		if(pNetWL->bconUnCatchTime[id] > 0){
 			pNetWL->bconUnCatchTime[id]--;
 			if(pNetWL->bconUnCatchTime[id] == 0){
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 				NET_PRINT("親機反応なし %d\n", id);
 #endif
 				pNetWL->bScanCallBack = TRUE;   // データを変更したのでTRUE
@@ -982,7 +982,7 @@ void NET_WHPIPE_BeaconSetInfo( void )
     GFLNetInitializeStruct* pInit = GFL_NET_GetNETInitStruct();
 
     if(pInit->beaconGetSizeFunc==NULL){
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
       NET_PRINT("beaconGetSizeFunc none");
 #endif
       return;
@@ -1085,7 +1085,7 @@ static void _stateProcess(u16 bitmap)
 	switch (state) {
 	case WH_SYSSTATE_STOP:
 		if(pNetWL->disconnectType == _DISCONNECT_END){
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 			NET_PRINT("WHEnd を呼んで終了しました\n");
 #endif
       _commEnd();  // ワークから何から全て開放
@@ -1768,7 +1768,7 @@ static void _parentMeasurechanneling(GFL_NETWL* pNetWL)
 		channel = WH_GetMeasureChannel();
 		if(pNetWL->keepChannel == 0xff){
 			pNetWL->keepChannel = channel;
-#ifdef DEBUG_WH_BEACON_PRINT_ON
+#if DEBUG_WH_BEACON_PRINT_ON
 			NET_PRINT("channelChange %d\n",channel);
 #endif
     }
@@ -2034,8 +2034,8 @@ static void _crossScanShootWait(GFL_NETWL* pNetWL)
 //			NET_PRINT("_crossScanShootWait WH_EndScan\n");
     WH_EndScan(); //スキャン終了
     _CHANGE_STATE(_crossScanShootEndWait);  // スキャン終了待ち
-#ifdef DEBUG_WH_BEACON_PRINT_ON
-    OS_TPrintf( "scan off\n" );
+#if DEBUG_WH_BEACON_PRINT_ON
+    NET_PRINT( "scan off\n" );
 #endif
   }
 }
@@ -2047,8 +2047,8 @@ static void _crossScanShootStart(GFL_NETWL* pNetWL)
     if(WH_StartScan(_scanCallback, NULL, 0)){
       pNetWL->CrossRand = 60+GFUser_GetPublicRand(40);
       _CHANGE_STATE(_crossScanShootWait);  // スキャン待ち
-#ifdef DEBUG_WH_BEACON_PRINT_ON
-      OS_TPrintf( "scan on\n" );
+#if DEBUG_WH_BEACON_PRINT_ON
+      NET_PRINT( "scan on\n" );
 #endif
 		}
 	}

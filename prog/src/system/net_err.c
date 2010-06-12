@@ -569,7 +569,7 @@ void NetErr_ExitNetSystem( void )
     GFL_NET_Exit(NULL);
     GFL_NET_IRCWIRELESS_ResetSystemError();  //ÔŠOüWIRLESSØ’f
     do{
-      GFL_NET_Main();
+      GFL_NET_ShutdownMain();
       Local_ErrUpdate();
       OS_WaitIrq(TRUE, OS_IE_V_BLANK);
 //      OS_TPrintf("GFL_NET_IsExit‚ÌŠ®—¹‚ğ‘Ò‚Á‚Ä‚¢‚Ü‚·\n");

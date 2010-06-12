@@ -215,16 +215,16 @@ static void _sendAckMain(void);
 static int _SendToAck(void *data, int size);
 
 
-#if DEBUGPRINT_ON
+#if PM_DEBUG
 
 static void _setStateDebug(int state,int line)
 {
-  NET_PRINT("rap%d\n",line);
+  NET_PRINT("rap %d %d\n",state,line);
   _dWork->state = state;
 }
 #define   _CHANGE_STATE(state)  _setStateDebug(state, __LINE__)
 
-#else  //DEBUGPRINT_ON
+#else  //PM_DEBUG
 
 static void _setState(int state)
 {
@@ -232,7 +232,7 @@ static void _setState(int state)
 }
 #define   _CHANGE_STATE(state)  _setState(state)
 
-#endif //DEBUGPRINT_ON
+#endif //PM_DEBUG
 
 
 
