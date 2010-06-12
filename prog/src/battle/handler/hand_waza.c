@@ -9990,7 +9990,7 @@ static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
   // SVFTOOL を介すと「かるいし」などの効果を受けてしまうのでダメ。元体重をチェックする。
 //    weight = BTL_SVFTOOL_GetWeight( flowWk, pokeID );
-    weight = BPP_GetWeight( flowWk, pokeID );
+    weight = BPP_GetWeight( bpp );
 
     if( weight > BTL_POKE_WEIGHT_MIN )
     {
