@@ -228,6 +228,7 @@ EVENT_START	ev_t01r0102_present_01
 	IF $WK_SCENE_T01R0102 < 2 THEN
 		_CALL	ev_first_pkeget
 	ELSE
+		//プレゼントを消すするタイミングの変更により、この処理に流れてくることはありません。
 		_SYSWIN_MSG( msg_t01r0102_presentbox_02, POS_DOWN )
 		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
