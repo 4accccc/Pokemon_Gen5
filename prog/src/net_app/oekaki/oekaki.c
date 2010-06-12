@@ -2081,11 +2081,27 @@ static int Oekaki_ForceEndWait( OEKAKI_WORK *wk, int seq )
 static int Oekaki_ForceEndSynchronize( OEKAKI_WORK *wk, int seq )
 {
   GFL_NETHANDLE *pNet = GFL_NET_HANDLE_GetCurrentHandle();
-  if(GFL_NET_HANDLE_IsTimeSync( pNet,OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE) || _get_connect_num(wk) == 1){
+  int net_id, now_bit = 0;
+  
+  // 途中で電源を切った子機がいないか監視
+  for(net_id = 0; net_id < 5; net_id++){
+    if(GFL_NET_IsConnectMember(net_id) == TRUE){
+      now_bit |= 1 << net_id;
+    }
+  }
+  
+  if(now_bit != wk->shareBit){
+    OS_Printf("強制終了抜け\n");
+  }
+  
+  // 通信同期待ち
+  if(GFL_NET_HANDLE_IsTimeSync( pNet,OEKAKI_SYNCHRONIZE_END, WB_NET_PICTURE) 
+  || _get_connect_num(wk) == 1 || now_bit != wk->shareBit){
     OS_Printf("終了時同期成功  seq = %d\n", seq);
     OS_Printf("コネクト人数%d\n",_get_connect_num(wk));
 //    wk->seq = OEKAKI_MODE_FORCE_END_WAIT_NOP;
-    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
+    WIPE_SYS_Start( WIPE_PATTERN_WMS, WIPE_TYPE_HOLEOUT, WIPE_TYPE_HOLEOUT, 
+                    WIPE_FADE_BLACK, 16, 1, HEAPID_OEKAKI );
     seq = SEQ_OUT;            //終了シーケンスへ
   }
   EndSequenceCommonFunc( wk );    //終了選択時の共通処理
