@@ -6,11 +6,15 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_se_013_ball_down.spa
 #001
 %00
 指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
+カメラ移動	追従	3vs3攻撃	CM	0	CB
+エフェクト終了待ち	すべて
 パーティクルデータロード	be_se_013_ball_down
 パーティクル再生（正射影）	be_se_013_ball_down	BE_SE_013_BALL_DOWN_SE_013_BALL_DOWN	攻撃側	方向無し	0:5:0	1:0.25:0.5	1
 制御モード変更	継続
 SE再生	SEQ_SE_BE_SE_13	SE1	攻撃側	0:0:127	0:0:0
 制御モード変更	逐次
+エフェクト終了待ち	すべて
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 ラベル	NO_EFFECT
 エフェクト終了

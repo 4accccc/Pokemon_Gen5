@@ -5,6 +5,8 @@ C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_352_seabed.NSCR
 #001
 %00
 指定されたワークを見て条件分岐	ATTACK_POKEMON_VANISH	==	1	NO_EFFECT
+カメラ移動	追従	3vs3攻撃	CM	0	CB
+エフェクト終了待ち	すべて
 BGのパレットフェード	すべて	0	12	0	0:0:0
 BGのロード	bg_352_seabed
 エフェクト終了待ち	すべて
@@ -31,6 +33,8 @@ BGのパレットフェード	エフェクト面	0	12	2	0:0:0
 BGの表示/非表示	お盆	表示
 BGの表示/非表示	フィールド	表示
 BGのパレットフェード	お盆＋フィールド	12	0	2	0:0:0
+エフェクト終了待ち	すべて
+カメラ移動	追従	初期位置（正射影）	CM	0	CB
 エフェクト終了待ち	すべて
 ラベル	NO_EFFECT
 エフェクト終了
