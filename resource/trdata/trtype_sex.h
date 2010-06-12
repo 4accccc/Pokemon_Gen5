@@ -89,10 +89,10 @@ static	const	u8	TrTypeSexTable[]={
 	PTL_SEX_FEMALE,		//マダム
 	PTL_SEX_MALE,		//ジェントルマン
 	PTL_SEX_FEMALE,		//プラズマだん♀
-	PTL_SEX_MALE,		//してんのう1
+	PTL_SEX_FEMALE,		//してんのう1
 	PTL_SEX_MALE,		//してんのう3
 	PTL_SEX_MALE,		//してんのう2
-	PTL_SEX_MALE,		//してんのう4
+	PTL_SEX_FEMALE,		//してんのう4
 	PTL_SEX_MALE,		//プラズマだん1
 	PTL_SEX_MALE,		//てつどういん
 	PTL_SEX_MALE,		//かいパンやろう
