@@ -51,7 +51,7 @@
 #define TOTAL_WAIT      (60*78)
 
 /// 上下画面を入れ替えるフレーム
-#define TITLE_FLIP_WAIT   ( 678 )
+#define TITLE_FLIP_WAIT   ( 678-12 )
 
 /// 伝説ポケモンが鳴くフレーム
 #define POKE_VOICE_FRAME    ( 5001 )
@@ -1006,6 +1006,7 @@ enum{
   G3DRES_02_BCA,
   G3DRES_03_BMD,
   G3DRES_03_BCA,
+  G3DRES_01_BTP,
 };
 
 //読み込む3Dリソース
@@ -1018,6 +1019,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_03_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_b_01_nsbtp, GFL_G3D_UTIL_RESARC },
 };
 // 黒：カメラデータ
 #define CAMERA_DATA_BIN_NAME  NARC_data_demo3d_title_b_camera_bin
@@ -1032,6 +1034,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_02_nsbca, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbmd, GFL_G3D_UTIL_RESARC },
   { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_03_nsbca, GFL_G3D_UTIL_RESARC },
+  { ARCID_DEMO3D_GRA, NARC_data_demo3d_title_w_01_nsbtp, GFL_G3D_UTIL_RESARC },
 };
 
 // 白：カメラデータ
@@ -1042,6 +1045,7 @@ static const GFL_G3D_UTIL_RES g3Dutil_resTbl[] = {
 //3Dアニメ
 static const GFL_G3D_UTIL_ANM g3Dutil_anm1Tbl[] = {
   { G3DRES_01_BCA, 0  },
+  { G3DRES_01_BTP, 0  },
 };
 static const GFL_G3D_UTIL_ANM g3Dutil_anm2Tbl[] = {
   { G3DRES_02_BCA, 0  },
@@ -1110,9 +1114,10 @@ static void setupG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
 
   //アニメーションを有効にする
   objIdx = GFL_G3D_UTIL_GetUnitObjIdx( CG3d->g3Dutil, CG3d->g3DutilUnitIdx );
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 0), 0); 
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 1), 0); 
-  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 2), 0); 
+  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 0), 0); // 0:ica
+  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 0), 1); // 0:ica
+  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 1), 0); // 1:ica
+  GFL_G3D_OBJECT_EnableAnime( GFL_G3D_UTIL_GetObjHandle(CG3d->g3Dutil, objIdx + 2), 0); // 1:ica
 
 
   // カメラ作成
@@ -1186,11 +1191,14 @@ static void mainG3Dcontrol(G3D_CONTROL* CG3d, HEAPID heapID)
   GFL_G3D_DRAW_End();
 
   // アニメフレーム進める
-  {
+  { // ica3つとitp1つ
     int i;
     for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
       g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
       GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 0, FX32_ONE );
+      if(i==0){
+        GFL_G3D_OBJECT_LoopAnimeFrame( g3Dobj, 1, FX32_ONE );
+      }
     }
   }
 }
@@ -1236,6 +1244,9 @@ static void setLegendPokeScene( G3D_CONTROL *CG3d, int anime_frame )
   for(i=0;i<NELEMS(g3Dutil_objTbl); i++){
     g3Dobj = GFL_G3D_UTIL_GetObjHandle( CG3d->g3Dutil, objIdx + i );
     GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, 0, &anmFrm );
+    if(i==0){
+      GFL_G3D_OBJECT_SetAnimeFrame( g3Dobj, 1, &anmFrm );
+    }
   }
   
 }
