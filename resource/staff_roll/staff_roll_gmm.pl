@@ -101,11 +101,25 @@ sub SUB_DataConv {
 		$line[0] =~ s/&/&amp;/g;		# "&"‚ğ"&amp;"‚É’u‚«Š·‚¦
 		$line[0] =~ s/A/,/g;			# "A"‚ğ","‚É’u‚«Š·‚¦
 
+#		$eE = "Ã‰<";
+#		$eE = $eE + 0;
+#		$aA = "<";
+#		$aA = $aA + 0;
+#       $eE = $eE - $aA;
+
+#		$line[0] =~ s/\?/&aelig;/g;			# "A"‚ğ","‚É’u‚«Š·‚¦
+
 #		print( $line[0] . "\t" );
 
 		if( $line[0] ne "" ){
 #			$text = encode( "utf8", decode( "shiftjis", $line[0] ) );	# Shift-Jis > UTF8
 			$text = encode( "utf8", decode( "cp932", $line[0] ) );	# Shift-Jis > UTF8
+
+			# "E'"‚±‚Ì•¶š‚ª"?"‚É‚È‚Á‚Ä‚µ‚Ü‚¤‚½‚ßA‹­ˆø‚É’u‚«Š·‚¦‚Ä‚Ü‚·B
+			# •¶šƒR[ƒh‚ğUTF8‚É•ÏŠ·‚µA"?"‚ğ’u‚«Š·‚¦‚éB
+			$eE = encode( "utf8", pack( "C", hex("C9") ) );
+			$text =~ s/\?/$eE/g;
+
 			if( $cnt < 10 ){
 				print( FP_CNV "\t<row id=\"STAFF_ROLL_STR_00" . $cnt ."\">\n" );
 			}elsif( $cnt < 100 ){
@@ -121,6 +135,8 @@ sub SUB_DataConv {
 	}
 
 	close( FP_CNV );
+
+#	print( $eE . "\n" );
 }
 
 
