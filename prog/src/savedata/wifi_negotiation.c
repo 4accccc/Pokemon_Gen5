@@ -57,6 +57,31 @@ void WIFI_NEGOTIATION_SV_Init(WIFI_NEGOTIATION_SAVEDATA* pSV)
 	GFL_STD_MemClear(pSV, WIFI_NEGOTIATION_SV_GetWorkSize());
 }
 
+
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief   人物一致チェック
+ * @param   WIFI_NEGOTIATION_SAVEDATAポインタ
+ * @param   playerID
+ * @return	一致したらTRUE
+ */
+//--------------------------------------------------------------------------------------------
+static int _CheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 playerID)
+{
+  int i;
+
+  for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
+    if(MyStatus_GetRomCode(&pSV->aMyStatus[ i ]) != 0){  //空かどうかの判定
+      if(MyStatus_GetID(&pSV->aMyStatus[ i ]) == playerID){
+        return i;
+      }
+    }
+  }
+  return -1;
+}
+
+
 //--------------------------------------------------------------------------------------------
 /**
  * @brief   Wi-Fiネゴシエーション用ともだちデータを先頭に保存
@@ -68,11 +93,14 @@ void WIFI_NEGOTIATION_SV_SetFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,const MYSTATUS
 {
   u32 playerID = MyStatus_GetID(pMyStatus);
   u32 size = MyStatus_GetWorkSize();
+  int no;
 
   if(playerID==0){
     return;
   }
-  if(WIFI_NEGOTIATION_SV_IsCheckFriend(pSV,playerID)){
+  no = _CheckFriend(pSV,playerID);
+  if(no != -1){ //一致している物はトレーナーVIEWだけ交換
+    MyStatus_SetTrainerView(&pSV->aMyStatus[no], MyStatus_GetTrainerView(pMyStatus));
     return;
   }
   STD_MoveMemory(&pSV->aMyStatus[1],&pSV->aMyStatus[0],(WIFI_NEGOTIATION_DATAMAX-1)*size);
@@ -150,14 +178,10 @@ BOOL WIFI_NEGOTIATION_SV_IsCheckFriend(WIFI_NEGOTIATION_SAVEDATA* pSV,u32 player
 {
   int i;
 
-  for(i=0;i<WIFI_NEGOTIATION_DATAMAX;i++){
-    if(MyStatus_GetRomCode(&pSV->aMyStatus[ i ]) != 0){  //空かどうかの判定
-      if(MyStatus_GetID(&pSV->aMyStatus[ i ]) == playerID){
-        return TRUE;
-      }
-    }
+  if(-1==_CheckFriend(pSV, playerID)){
+    return FALSE;
   }
-  return FALSE;
+  return TRUE;
 }
 
 //--------------------------------------------------------------------------------------------
