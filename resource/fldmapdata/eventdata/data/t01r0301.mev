@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/04 17:27:45
+#save date:2010/06/12 13:49:53
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\t01r0301.wms
 #SECTION START:OBJ_EVENT
@@ -49,7 +49,7 @@ T01R0301_MIDDLEWOMAN2_01
 #OBJ CODE Number
 MIDDLEWOMAN2
 #MOVE CODE Number
-MV_DIR_RND
+MV_DMY
 #EVENT TYPE Number
 EV_TYPE_NORMAL
 #Flag Name
