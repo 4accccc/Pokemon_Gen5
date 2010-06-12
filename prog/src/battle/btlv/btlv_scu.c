@@ -1198,13 +1198,9 @@ static BOOL btlin_wild_double( int* seq, void* wk_adrs )
     }
     break;
   case 8:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
       (*seq)++;
@@ -1527,21 +1523,15 @@ static BOOL btlinEffSub_OpponentTrainerIn1( BTLV_SCU* wk, int* seq, u8 clientID 
     if( BTLV_SCU_WaitMsg(wk) )
     {
       BTLV_EFFECT_AddByPos( subwk->vpos, BTLEFF_SINGLE_TRAINER_ENCOUNT_2 );
-#if 1 //BTS2559
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
-#endif
       (*seq)++;
     }
     break;
 
   case 4:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       return TRUE;
     }
   }
@@ -1621,13 +1611,9 @@ static BOOL btlinEffSub_OpponentTrainerIn2( BTLV_SCU* wk, int* seq, u8 clientID_
     break;
 
   case 4:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       return TRUE;
     }
   }
@@ -1688,13 +1674,9 @@ static BOOL btlinEff_OpponentPokeInSingle( BTLV_SCU* wk, int* seq )
     break;
 
   case 3:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos ] );
       (*seq)++;
     }
@@ -1785,13 +1767,9 @@ static BOOL btlinEffSub_OpponentPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID
     break;
 
   case 3:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       if( subwk->aliveCnt == 2 ){
         statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
@@ -1848,20 +1826,14 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       BTLV_EFFECT_AddByPos( subwk->vpos[0], BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
-#if 1  //BTS2559
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
-#endif
       (*seq)++;
     }
     break;
 
   case 2:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() )
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
-#endif
     {
       u16 strID = btlfinEffsub_getOpponentPokeInStrID( wk, 1 );
       BTL_STR_MakeStringStd( wk->strBufMain, strID, 2, clientID_2, subwk->pokeID[1] );
@@ -1873,26 +1845,6 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
     }
     break;
 
-#if 0 //BTS2559
-  case 3:
-    {
-      BOOL fMsgEnd = BTLV_SCU_WaitMsg( wk );
-      BOOL fEffectEnd = !BTLV_EFFECT_CheckExecute();
-
-      if( fMsgEnd && fEffectEnd )
-      {
-        msgWinVisible_Hide( &wk->msgwinVisibleWork );
-        (*seq)++;
-      }
-    }
-    break;
-
-  case 4:
-    statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
-    statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
-    (*seq)++;
-    break;
-#else
   case 3:
     if( BTLV_SCU_WaitMsg( wk )){
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
@@ -1908,7 +1860,6 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
       (*seq)++;
     }
     break;
-#endif
 
   case 5:
     return TRUE;
@@ -1985,13 +1936,9 @@ static BOOL btlinEff_OpponentPokeInTriple( BTLV_SCU* wk, int* seq )
     break;
 
   case 3:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       if( subwk->aliveCnt > 1 ){
         statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
@@ -2073,13 +2020,9 @@ static BOOL btlinEff_MyPokeInSingle( BTLV_SCU* wk, int* seq )
     break;
 
   case 4:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos ] );
       (*seq)++;
     }
@@ -2203,13 +2146,9 @@ static BOOL btlinEffSub_MyPokeIn_Solo( BTLV_SCU* wk, int* seq, u8 clientID )
     break;
 
   case 4:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       if( subwk->aliveCnt > 1){
         statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
@@ -2290,43 +2229,6 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
     }
     break;
 
-#if 0 //BTS2559
-  case 3:
-    if( BTLV_SCU_WaitMsg(wk) )
-    {
-      u8 pokeIdx = BTL_MAIN_GetPlayerMultiPos( wk->mainModule );
-
-      BTLV_EFFECT_DelBallGauge( BTLV_BALL_GAUGE_TYPE_MINE );
-      msgWinVisible_Hide( &wk->msgwinVisibleWork );
-#if 0
-      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
-      BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
-      BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
-#endif
-
-      BTL_STR_MakeStringStd( wk->strBufMain, BTL_STRID_STD_PutSingle, 1, subwk->pokeID[pokeIdx] );
-      BTLV_SCU_StartMsg( wk, wk->strBufMain, BTLV_MSGWAIT_STD, NULL );
-      (*seq)++;
-    }
-    break;
-
-  case 4:
-    {
-      BOOL fMsgEnd = BTLV_SCU_WaitMsg( wk );
-      BOOL fEffEnd = !BTLV_EFFECT_CheckExecute();
-
-      if( fMsgEnd && fEffEnd )
-      {
-        statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
-        statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
-        (*seq)++;
-      }
-    }
-    break;
-
-  case 5:
-    return TRUE;
-#else
   case 3:
     if( BTLV_SCU_WaitMsg(wk) )
     {
@@ -2360,7 +2262,6 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
       return TRUE;
     }
     break;
-#endif
   }
   return FALSE;
 }
@@ -2463,13 +2364,9 @@ static BOOL btlinEff_MyPokeInTriple( BTLV_SCU* wk, int* seq )
     break;
 
   case 4:
-#if 0 //BTS2559
-    if( !BTLV_EFFECT_CheckExecute() ){
-#else
     if( ( msgWinVisible_Update(&wk->msgwinVisibleWork) ) &&
         ( !BTLV_EFFECT_CheckExecute() ) )
     {
-#endif
       statwin_disp_start( &wk->statusWin[ subwk->pos[0] ] );
       if( subwk->aliveCnt > 1){
         statwin_disp_start( &wk->statusWin[ subwk->pos[1] ] );
