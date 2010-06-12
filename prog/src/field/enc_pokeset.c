@@ -614,7 +614,8 @@ static BOOL encpoke_CheckEncountAvoid( const ENCPOKE_FLD_PARAM *efp, u8 level )
     return FALSE;
   }
   //“Á«‚É‚æ‚éƒŒƒxƒ‹·í“¬‰ñ”ð
-  if(efp->spa_low_lv_rm && (efp->spray_lv - level) >= 5){
+  if( efp->spa_low_lv_rm &&
+      efp->spray_lv >= (level+5)){ 
     return TRUE;
   }
   if( efp->fishing_f == FALSE ){
