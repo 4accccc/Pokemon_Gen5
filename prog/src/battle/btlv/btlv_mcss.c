@@ -581,6 +581,34 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ index ].maw );
 
+  { 
+    MCSS_REVERSE_DRAW flag = MCSS_REVERSE_DRAW_OFF;
+
+    switch( BTLV_EFFECT_GetBtlRule() ){ 
+    case BTL_RULE_SINGLE:
+    case BTL_RULE_ROTATION:
+      break;
+    case BTL_RULE_DOUBLE:
+      switch( position ){ 
+      case BTLV_MCSS_POS_B:
+      case BTLV_MCSS_POS_C:
+        flag = MCSS_REVERSE_DRAW_ON;
+        break;
+      }
+      break;
+    case BTL_RULE_TRIPLE:
+      switch( position ){ 
+      case BTLV_MCSS_POS_A:
+      case BTLV_MCSS_POS_D:
+      case BTLV_MCSS_POS_E:
+        flag = MCSS_REVERSE_DRAW_ON;
+        break;
+      }
+      break;
+    }
+    MCSS_SetReverseDraw( bmw->btlv_mcss[ index ].mcss, flag );
+  }
+
   //ポケモンのナンバー、フォルム、体重データを取得しておく
   {
     bmw->btlv_mcss[ index ].param.mons_no = PP_Get( pp, ID_PARA_monsno, NULL );
@@ -1266,8 +1294,10 @@ void  BTLV_MCSS_SetSideChange( BTLV_MCSS_WORK* bmw, BtlvMcssPos pos1, BtlvMcssPo
     }
     for( i = 0 ; i < 2 ; i++ )
     { 
-    bmw->btlv_mcss[ index[ 0 ] ].position = pos2;
-    bmw->btlv_mcss[ index[ 1 ] ].position = pos1;
+      if( index[ i ] != BTLV_MCSS_NO_INDEX )
+      { 
+        bmw->btlv_mcss[ index[ i ] ].position = position[ i ^ 1 ];
+      }
     }
   }
 }
