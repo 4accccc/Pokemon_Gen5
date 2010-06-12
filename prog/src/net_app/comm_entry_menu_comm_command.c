@@ -37,6 +37,8 @@ static u8 * _RecvMemberInfo(int netID, void* pWork, int size);
 static void _CemRecv_Entry(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _CemRecv_EntryOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _CemRecv_EntryNG(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _CemRecv_GameStartReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _CemRecv_GameStartReadyOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _CemRecv_GameStart(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _CemRecv_GameCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _CemRecv_MemberInfo(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -50,6 +52,8 @@ const NetRecvFuncTable CommEntryMenu_CommPacketTbl[] = {
   {_CemRecv_Entry, NULL},               //ENTRYMENU_CMD_ENTRY
   {_CemRecv_EntryOK, NULL},             //ENTRYMENU_CMD_ENTRY_OK
   {_CemRecv_EntryNG, NULL},             //ENTRYMENU_CMD_ENTRY_NG
+  {_CemRecv_GameStartReady, NULL},      //ENTRYMENU_CMD_GAME_START_READY
+  {_CemRecv_GameStartReadyOK, NULL},    //ENTRYMENU_CMD_GAME_START_READY_OK
   {_CemRecv_GameStart, NULL},           //ENTRYMENU_CMD_GAME_START
   {_CemRecv_GameCancel, NULL},          //ENTRYMENU_CMD_GAME_CANCEL
   {_CemRecv_MemberInfo, _RecvMemberInfo}, //ENTRYMENU_CMD_MEMBER_INFO
@@ -241,6 +245,90 @@ BOOL CemSend_EntryNG(NetID send_id, BOOL comm_mp, const MYSTATUS *myst)
   else{
     return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_id, 
       ENTRYMENU_CMD_ENTRY_NG, MyStatus_GetWorkSize(), myst, FALSE, FALSE, FALSE);
+  }
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ゲーム開始前の離脱禁止を通知
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _CemRecv_GameStartReady(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  COMM_ENTRY_MENU_PTR em = pWork;
+
+  OS_TPrintf("aaa RECV:StartReady\n");
+  CommEntryMenu_SetForbitLeave(em);
+}
+
+//==================================================================
+/**
+ * データ送信：ゲーム開始を離脱禁止を通知(親機用)
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL CemSend_GameStartReady(BOOL comm_mp)
+{
+  OS_TPrintf("aaa SEND:StartReady\n");
+  if(comm_mp == TRUE){
+    return GFL_NET_SendData(GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER), 
+      ENTRYMENU_CMD_GAME_START_READY, 0, NULL);
+  }
+  else{
+    return GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), 
+      ENTRYMENU_CMD_GAME_START_READY, 0, NULL);
+  }
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：ゲーム開始前の離脱禁止が完了したことを親機に伝える
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _CemRecv_GameStartReadyOK(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  COMM_ENTRY_MENU_PTR em = pWork;
+  
+  OS_TPrintf("離脱禁止完了受信：net_id=%d\n", netID);
+  CommEntryMenu_SetGameStartReady(em, netID);
+}
+
+//==================================================================
+/**
+ * データ送信：ゲーム開始を通知前の離脱禁止が完了したことを親機に伝える
+ * @param   BOOL    TRUE:MP通信　FALSE:DS通信
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL CemSend_GameStartReadyOK(BOOL comm_mp)
+{
+  OS_TPrintf("SEND:StartReadyOK\n");
+  if(comm_mp == TRUE){
+    return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_SENDID_ALLUSER, 
+      ENTRYMENU_CMD_GAME_START_READY_OK, 0, NULL, FALSE, FALSE, FALSE);
+  }
+  else{
+    return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), GFL_NET_NO_PARENTMACHINE, 
+      ENTRYMENU_CMD_GAME_START_READY_OK, 0, NULL, FALSE, FALSE, FALSE);
   }
 }
 

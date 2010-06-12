@@ -90,8 +90,10 @@ extern COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WO
 extern u32 CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_Entry(COMM_ENTRY_MENU_PTR em, int netID, const MYSTATUS *myst, BOOL force_entry, const u8 *mac_address);
 extern COMM_ENTRY_RESULT CommEntryMenu_Update(COMM_ENTRY_MENU_PTR em);
+extern void CommEntryMenu_SetGameStartReady(COMM_ENTRY_MENU_PTR em, NetID net_id);
 extern void CommEntryMenu_SetGameStart(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_SetGameCancel(COMM_ENTRY_MENU_PTR em);
+extern void CommEntryMenu_SetForbitLeave(COMM_ENTRY_MENU_PTR em);
 extern COMM_ENTRY_ANSWER CommEntryMenu_GetAnswer(COMM_ENTRY_MENU_PTR em, int netID, BOOL exit_mode);
 extern void CommEntryMenu_SetSendFlag(COMM_ENTRY_MENU_PTR em, int netID);
 extern int CommEntryMenu_GetCompletionNum(COMM_ENTRY_MENU_PTR em);

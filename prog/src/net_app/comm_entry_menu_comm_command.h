@@ -23,6 +23,8 @@ enum COLOSSEUM_CMD{
   ENTRYMENU_CMD_ENTRY = ENTRYMENU_CMD_START,      ///<親へエントリーを通知
   ENTRYMENU_CMD_ENTRY_OK,                         ///<エントリーOK
   ENTRYMENU_CMD_ENTRY_NG,                         ///<エントリーNG
+  ENTRYMENU_CMD_GAME_START_READY,                 ///<ゲーム開始前の離脱禁止を通達
+  ENTRYMENU_CMD_GAME_START_READY_OK,              ///<ゲーム開始前の準備完了
   ENTRYMENU_CMD_GAME_START,                       ///<ゲーム開始を通知
   ENTRYMENU_CMD_GAME_CANCEL,                      ///<ゲームを中止します
   ENTRYMENU_CMD_MEMBER_INFO,                      ///<現在の参加者リスト
@@ -41,6 +43,8 @@ extern void CommEntryMenu_DelCommandTable(void);
 extern BOOL CemSend_Entry(const MYSTATUS *myst, BOOL force_entry, BOOL comm_mp);
 extern BOOL CemSend_EntryOK(NetID send_id, BOOL comm_mp, const MYSTATUS *myst);
 extern BOOL CemSend_EntryNG(NetID send_id, BOOL comm_mp, const MYSTATUS *myst);
+extern BOOL CemSend_GameStartReady(BOOL comm_mp);
+extern BOOL CemSend_GameStartReadyOK(BOOL comm_mp);
 extern BOOL CemSend_GameStart(BOOL comm_mp);
 extern BOOL CemSend_GameCancel(BOOL comm_mp);
 extern BOOL CemSend_MemberInfo(const ENTRYMENU_MEMBER_INFO *member_info, u8 send_bit, BOOL comm_mp);

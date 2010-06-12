@@ -222,6 +222,11 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   s8 draw_player_num;             ///<残り人数」の現在
   u8 game_start_num;              ///<開始時の人数
   u16 msg_req_id;                 ///<メッセージ描画リクエスト(メッセージID)
+  
+  u8 forbit_leave;                ///<TRUE:離脱禁止
+  u8 forbit_leave_answer_req;     ///<TRUE:離脱禁止しました、の返事を返す
+  u8 recv_ready_bit;              ///<ゲーム開始準備完了したユーザー(bit管理)
+  u8 padding;
 }COMM_ENTRY_MENU_SYSTEM;
 
 
@@ -523,6 +528,9 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     _SEQ_FINAL_CHECK,
     _SEQ_BREAKUP_CHECK,
     _SEQ_SEND_GAMESTART_SYNC,
+    _SEQ_SEND_GAMESTART_READY,
+    _SEQ_WAIT_GAMESTART_READY,
+    _SEQ_WAIT_GAMESTART_READY_NG,
     _SEQ_SEND_GAMESTART,
     _SEQ_SEND_GAMECANCEL,
     _SEQ_CANCEL_MSG,
@@ -614,7 +622,7 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       type = CommEntryMenu_DecideUpdate(em);
       if(type == DECIDE_TYPE_OK){
         GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
-        em->seq = _SEQ_SEND_GAMESTART;
+        em->seq = _SEQ_SEND_GAMESTART_READY;
       }
       else if(type == DECIDE_TYPE_NG){
         if( CommEntryMenu_GetCompletionNum(em) >= em->max_num )
@@ -650,18 +658,66 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
       }
     }
     break;
+  case _SEQ_SEND_GAMESTART_READY:
+    if(CemSend_GameStartReady(em->mp_mode) == TRUE){
+      CommEntryMenu_SetGameStartReady(em, GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()));
+      em->wait_user_bit = em->member_info.member_bit;
+      GFL_NET_SetNoChildErrorCheck(TRUE);
+      em->seq = _SEQ_WAIT_GAMESTART_READY;
+    }
+    break;
+  case _SEQ_WAIT_GAMESTART_READY:
+    {
+      NetID net_id;
+      u8 ready_user_bit = 1 << GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()); //自分
+      
+      for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
+        if(GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle()) != net_id){  //自分は無視
+          if(em->wait_user_bit & (1<<net_id)){
+            if(GFL_NET_IsConnectMember(net_id) == TRUE){
+              if(em->recv_ready_bit & (1<<net_id)){
+                ready_user_bit |= 1 << net_id;
+              }
+            }
+            else{ //準備完了を送信したメンバーがいなくなっているので終了
+              em->seq = _SEQ_WAIT_GAMESTART_READY_NG;
+              break;
+            }
+          }
+        }
+      }
+      
+      if(em->wait_user_bit == ready_user_bit){
+        if(MATH_CountPopulation(((u32)em->recv_ready_bit)) < em->min_num){
+          OS_TPrintf("aaa bit=%d, %d\n", MATH_CountPopulation(((u32)em->recv_ready_bit)), em->min_num);
+          em->seq = _SEQ_WAIT_GAMESTART_READY_NG;
+        }
+        else{
+          em->seq = _SEQ_SEND_GAMESTART;
+        }
+      }
+    }
+    break;
+  case _SEQ_WAIT_GAMESTART_READY_NG:  //ゲーム開始準備でNGなユーザーがいたので終了
+    if(CemSend_GameCancel(em->mp_mode) == TRUE){
+      em->wait_user_bit = em->member_info.member_bit; //_GetConnectMemberBit();
+      em->entry_result = COMM_ENTRY_RESULT_CANCEL;
+      em->seq = _SEQ_CANCEL_MSG;
+    }
+    break;
   case _SEQ_SEND_GAMESTART:
     if(CemSend_GameStart(em->mp_mode) == TRUE){
       em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
       em->seq = _SEQ_SEND_GAMESTART_SYNC;
-      em->game_start_num = GFL_NET_SystemGetConnectNum();
+      em->game_start_num = MATH_CountPopulation(((u32)em->recv_ready_bit));
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU);
     }
     break;
 
   case _SEQ_SEND_GAMESTART_SYNC:
-    if( em->game_start_num != GFL_NET_SystemGetConnectNum() || em->min_num > GFL_NET_SystemGetConnectNum() )
+    if( em->game_start_num != GFL_NET_SystemGetConnectNum() || em->min_num > GFL_NET_SystemGetConnectNum())
     {
+      OS_TPrintf("aaa start=%d, %d\n", em->game_start_num, GFL_NET_SystemGetConnectNum());
       //誰かが抜けた・・・
       if(CemSend_GameCancel(em->mp_mode) == TRUE){
         em->wait_user_bit = em->member_info.member_bit; //_GetConnectMemberBit();
@@ -671,7 +727,6 @@ static BOOL _Update_Parent(COMM_ENTRY_MENU_PTR em)
     }
     else if( GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),GAMESTART_SYNC_NO,WB_NET_COMM_ENTRY_MENU) == TRUE )
     {
-      GFL_NET_SetNoChildErrorCheck(TRUE);
       em->entry_result = COMM_ENTRY_RESULT_SUCCESS;
       em->seq = _SEQ_FINISH;
       
@@ -838,6 +893,9 @@ static BOOL _Update_Child(COMM_ENTRY_MENU_PTR em)
     }
     else
     {
+      if(em->forbit_leave_answer_req == TRUE && CemSend_GameStartReadyOK(em->mp_mode) == TRUE){
+        em->forbit_leave_answer_req = FALSE;
+      }
       _ChildEntryMember_ListRewriteUpdate(em);
       if(em->game_start == TRUE){
         _MemberInfo_Exit(em);
@@ -986,6 +1044,9 @@ static BOOL _Update_ChildParentConnect(COMM_ENTRY_MENU_PTR em)
     }
     else
     {
+      if(em->forbit_leave_answer_req == TRUE && CemSend_GameStartReadyOK(em->mp_mode) == TRUE){
+        em->forbit_leave_answer_req = FALSE;
+      }
       _ChildEntryMember_ListRewriteUpdate(em);
       if(em->game_start == TRUE){
         _MemberInfo_Exit(em);
@@ -1164,6 +1225,9 @@ static BOOL _Update_ChildParentDesignate(COMM_ENTRY_MENU_PTR em)
     }
     else
     {
+      if(em->forbit_leave_answer_req == TRUE && CemSend_GameStartReadyOK(em->mp_mode) == TRUE){
+        em->forbit_leave_answer_req = FALSE;
+      }
       _ChildEntryMember_ListRewriteUpdate(em);
       if(em->game_start == TRUE){
         _MemberInfo_Exit(em);
@@ -1681,6 +1745,19 @@ static BREAKUP_TYPE CommEntryMenu_BreakupUpdate(COMM_ENTRY_MENU_PTR em)
 
 //==================================================================
 /**
+ * ゲーム開始前の準備完了フラグをセット
+ *
+ * @param   em		
+ * @param   net_id  準備が完了した人のNetID
+ */
+//==================================================================
+void CommEntryMenu_SetGameStartReady(COMM_ENTRY_MENU_PTR em, NetID net_id)
+{
+  em->recv_ready_bit |= 1 << net_id;
+}
+
+//==================================================================
+/**
  * ゲーム開始フラグセット
  *
  * @param   em		
@@ -1703,6 +1780,19 @@ void CommEntryMenu_SetGameCancel(COMM_ENTRY_MENU_PTR em)
   em->game_cancel = TRUE;
 }
 
+//==================================================================
+/**
+ * 離脱禁止フラグをセット
+ *
+ * @param   em		
+ */
+//==================================================================
+void CommEntryMenu_SetForbitLeave(COMM_ENTRY_MENU_PTR em)
+{
+  em->forbit_leave = TRUE;
+  em->forbit_leave_answer_req = TRUE;
+  GFL_NET_SetNoChildErrorCheck(TRUE);
+}
 
 //==================================================================
 /**
@@ -2318,7 +2408,12 @@ static PARENT_SEARCH_LIST_SELECT _ParentSearchList_Update(COMM_ENTRY_MENU_PTR em
     {
       FLDMENUFUNC_YESNO ret;
       ret = FLDMENUFUNC_ProcYesNoMenu(yesno->menufunc);
-      if(ret == FLDMENUFUNC_YESNO_NULL)
+      if(FLDMSGBG_CheckFinishPrint( FIELDMAP_GetFldMsgBG(em->fieldWork) ) == TRUE
+          && em->forbit_leave == TRUE){
+        //選択可能な状態で離脱禁止フラグが立っている場合は強制でNOを選んだことにする
+        ret = FLDMENUFUNC_YESNO_NO;
+      }
+      if(ret == FLDMENUFUNC_YESNO_NULL && FLDMSGBG_CheckFinishPrint( FIELDMAP_GetFldMsgBG(em->fieldWork) ) == TRUE)
       {
         //終了待ちの間に親が進んだ！
         if(em->game_start == TRUE||
@@ -2574,7 +2669,14 @@ static PARENT_WAIT_CANCEL_STATE _ParentWait_UpdateCnacel( COMM_ENTRY_MENU_PTR em
   case _SEQ_SELECT:
     {
       FLDMENUFUNC_YESNO ret;
+      
       ret = FLDMENUFUNC_ProcYesNoMenu(yesno->menufunc);
+      if(FLDMSGBG_CheckFinishPrint( FIELDMAP_GetFldMsgBG(em->fieldWork) ) == TRUE
+          && em->forbit_leave == TRUE){
+        //選択可能な状態で離脱禁止フラグが立っている場合は強制でNOを選んだことにする
+        ret = FLDMENUFUNC_YESNO_NO;
+      }
+        
       if(ret != FLDMENUFUNC_YESNO_NULL)
       {
         FLDMENUFUNC_DeleteMenu(yesno->menufunc);
