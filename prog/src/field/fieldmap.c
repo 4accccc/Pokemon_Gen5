@@ -3515,7 +3515,11 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
     }
     else
 #endif
+    
     {
+      SET_CHECK("update_tail:fldeff draw");
+      FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
+    
       SET_CHECK("update_tail:g3dobj draw");
       FLD_G3DOBJ_CTRL_Draw( fieldWork->fieldG3dObjCtrl );
       
@@ -3528,9 +3532,6 @@ static void Draw3DNormalMode_tail( FIELDMAP_WORK * fieldWork )
           fieldWork->g3Dcamera, fieldWork->g3Dlightset );
     }
     
-    SET_CHECK("update_tail:fldeff draw");
-    FLDEFF_CTRL_Draw( fieldWork->fldeff_ctrl );
-
 #ifdef  PM_DEBUG
   if(fieldWork->debugWork){ FIELD_DEBUG_Draw( fieldWork->debugWork ); }
 #endif

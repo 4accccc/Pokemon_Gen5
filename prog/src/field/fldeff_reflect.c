@@ -26,12 +26,6 @@
 #define REF_SCALE_X_DOWN (-FX16_ONE/4)
 #define REF_SCALE_X_SPEED (FX16_ONE/64)
 
-#if 0 //dp
-#define REF_OFFS_Z (-FX32_ONE*7)
-#else //wb
-#define REF_OFFS_Z (FX32_ONE*12)
-#endif
-
 //======================================================================
 //  struct
 //======================================================================
@@ -46,6 +40,11 @@ typedef struct _TAG_FLDEFF_REFLECT FLDEFF_REFLECT;
 struct _TAG_FLDEFF_REFLECT
 {
   FLDEFF_CTRL *fectrl;
+
+#ifdef DEBUG_REFLECT_CHECK
+  int d_select;
+  VecFx32 d_offs[MMDL_BLACT_MDLSIZE_MAX];
+#endif
 };
 
 //--------------------------------------------------------------
@@ -88,8 +87,6 @@ static void reflectBlAct_Update(
     GFL_BBDACT_SYS *bbdactsys, int actID, void *wk );
 
 static const FLDEFF_TASK_HEADER data_reflectTaskHeader;
-static const fx32 data_offsetY[REFLECT_TYPE_MAX];
-static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX];
 
 #ifdef PM_DEBUG
 static BOOL debug_CheckMMdl( const MMDL *mmdl );
@@ -114,6 +111,10 @@ void * FLDEFF_REFLECT_Init( FLDEFF_CTRL *fectrl, HEAPID heapID )
   reflect->fectrl = fectrl;
   
   reflect_InitResource( reflect );
+
+#ifdef DEBUG_REFLECT_CHECK
+  reflect->d_select = MMDL_BLACT_MDLSIZE_MAX;
+#endif
   return( reflect );
 }
 
@@ -234,6 +235,7 @@ static void reflectTask_Delete( FLDEFF_TASK *task, void *wk )
   TASKWORK_REFLECT *work = wk;
   
   if( work->flag_initact ){
+    work->flag_initact = FALSE;
     MMDL_BLACTCONT_USER_DeleteActor( work->head.mmdlsys, &work->actWork );
   }
 }
@@ -275,6 +277,7 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
       MMDL_BLACTCONT_USER_AddActor( work->head.mmdlsys,
           param, &work->actWork, &pos,
           reflectTask_UpdateBlAct, work );
+      
       work->flag_initact = TRUE;
     }
   }
@@ -310,7 +313,7 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
 		work->scale_val_x = -work->scale_val_x;
 	}
 	 
-  reflectTask_UpdateBlAct( work->actWork.actID, work );
+//reflectTask_UpdateBlAct( work->actWork.actID, work );
 } 
 
 //--------------------------------------------------------------
@@ -323,7 +326,18 @@ static void reflectTask_Update( FLDEFF_TASK *task, void *wk )
 //--------------------------------------------------------------
 static void reflectTask_Draw( FLDEFF_TASK *task, void *wk )
 {
-// TASKWORK_REFLECT *work = wk;
+#if 1
+  TASKWORK_REFLECT *work = wk;
+  
+  //ここでアップデートすればいけると思う。
+  if( MMDL_CheckSameData(work->head.mmdl,&work->samedata) == TRUE ){
+    if( work->flag_initact ){ //初期化済み
+      if( work->actWork.actID != MMDL_BLACTID_NULL ){ //アクターあり
+        reflectTask_UpdateBlAct( work->actWork.actID, work );
+      }
+    }
+  }
+#endif
 }
 
 //--------------------------------------------------------------
@@ -334,6 +348,32 @@ static void reflectTask_Draw( FLDEFF_TASK *task, void *wk )
  * @retval nothing
  */
 //--------------------------------------------------------------
+static const fx32 data_TypeOffsetY[REFLECT_TYPE_MAX] =
+{
+  -(FX32_ONE*24+FX32_ONE),
+  -(FX32_ONE*32+FX32_ONE),
+  -(FX32_ONE*24+FX32_ONE),
+};
+
+//-0xe800, 0
+
+static const fx32 data_MdlOffsetY[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  -0x5800, //32x32
+  -0x5800/2, //16x16
+  -0x14800, //64x64
+};
+
+//#define REF_OFFS_Z (FX32_ONE*12)
+#define REF_OFFS_Z (0)
+
+static const fx32 data_MdlOffsetZ[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  0x7800, //32x32
+  0x7800/2, //16x32
+  0xc000, //64x64
+};
+
 static void reflectTask_UpdateBlAct( u16 actID, void *wk )
 {
   u16 ret;
@@ -353,7 +393,7 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   
   {
     fx32 y;
-    VecFx32 pos,offs;
+    VecFx32 pos,offs0,offs1;
     const MMDL *mmdl;
     const OBJCODE_PARAM *param;
     
@@ -361,23 +401,138 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     param = MMDL_GetOBJCodeParam( mmdl );
     
     MMDL_GetVectorPos( mmdl, &pos );
-    pos.z += data_offsetZ[param->mdl_size];
     
-    MMDL_GetVectorDrawOffsetPos( mmdl, &offs );
-    pos.x += offs.x;
-    pos.z -= offs.z;
+    MMDL_GetVectorDrawOffsetPos( mmdl, &offs0 );
+    offs0.y = -offs0.y; //yオフセットは無視する
+    offs0.z = -offs0.z; //flip
     
-	  if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == TRUE ){  //高さ取得
-      pos.y = y;
+    MMDL_GetVectorOuterDrawOffsetPos( mmdl, &offs1 );
+    offs1.y = -offs1.y; //flip
+    offs1.z = -offs1.z; //flip
+    
+    VEC_Add( &offs0, &offs1, &offs0 );
+    
+    offs0.y += data_TypeOffsetY[work->head.type];
+    offs0.y += data_MdlOffsetY[param->mdl_size];
+    offs0.z += data_MdlOffsetZ[param->mdl_size];
+    
+#ifdef DEBUG_REFLECT_CHECK
+    if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
+      int select;
+      int printf = 0;
+      int repeat = GFL_UI_KEY_GetRepeat();
+      int cont = GFL_UI_KEY_GetCont();
+      int trg = GFL_UI_KEY_GetTrg();
+      VecFx32 *d_offs;
+      
+      if( trg & PAD_BUTTON_START ){
+        int *pFlag = &work->head.eff_reflect->d_select;
+        
+        (*pFlag)++;
+        if( (*pFlag) > MMDL_BLACT_MDLSIZE_MAX ){
+          (*pFlag) = 0;
+        }
+        
+        KAGAYA_Printf( "reflect操作 " );
+        
+        switch( (*pFlag) ){
+        case MMDL_BLACT_MDLSIZE_32x32:
+          KAGAYA_Printf( "32x32\n" );
+          break;
+        case MMDL_BLACT_MDLSIZE_16x16:
+          KAGAYA_Printf( "16x16\n" );
+          break;
+        case MMDL_BLACT_MDLSIZE_64x64:
+          KAGAYA_Printf( "64x64\n" );
+          break;
+        default:
+          KAGAYA_Printf( "OFF\n" );
+        }
+      }
+      
+      if( work->head.eff_reflect->d_select < MMDL_BLACT_MDLSIZE_MAX ){
+        d_offs =
+          &work->head.eff_reflect->d_offs[work->head.eff_reflect->d_select];
+        
+        if( repeat & PAD_BUTTON_L ){
+          if( cont & PAD_BUTTON_B ){
+            d_offs->z -= 0x800;
+            printf = TRUE;
+          }else{
+            d_offs->y -= 0x800;
+            printf = TRUE;
+          }
+        }else if( repeat & PAD_BUTTON_R ){
+          if( cont & PAD_BUTTON_B ){
+            d_offs->z += 0x800;
+            printf = TRUE;
+          }else{
+            d_offs->y += 0x800;
+            printf = TRUE;
+          }
+        }
+      }
+      
+      if( (trg & PAD_BUTTON_A) || printf ){
+        int i;
+        d_offs = work->head.eff_reflect->d_offs;
+
+        for( i = 0; i < MMDL_BLACT_MDLSIZE_MAX; i++, d_offs++ ){
+          KAGAYA_Printf( "reflect " );
+          
+          switch( i ){
+          case MMDL_BLACT_MDLSIZE_32x32:
+            KAGAYA_Printf( "32x32 " );
+            break;
+          case MMDL_BLACT_MDLSIZE_16x16:
+            KAGAYA_Printf( "16x16 " );
+            break;
+          case MMDL_BLACT_MDLSIZE_64x64:
+            KAGAYA_Printf( "64x64 " );
+            break;
+          }
+
+          KAGAYA_Printf( "X=0x%x,Y=0x%x,Z=0x%x\n",
+              d_offs->x, d_offs->y, d_offs->z );
+        }
+      }
     }
     
-    pos.y += data_offsetY[work->head.type];
+    {
+      VecFx32 d_offs = work->head.eff_reflect->d_offs[param->mdl_size];
+      VEC_Add( &offs0, &d_offs, &offs0 );
+    }
+
+    #if 0
+    {
+      VecFx32 camPos,camUp,target,c_offs;
+      MtxFx43 mtx43;
+      MtxFx33 mtx33; 
+      FIELDMAP_WORK *fieldmap =
+        FLDEFF_CTRL_GetFieldMapWork( work->head.eff_reflect->fectrl );
+      FIELD_CAMERA *fld_cam =
+        FIELDMAP_GetFieldCamera( fieldmap );
+      const GFL_G3D_CAMERA * g3Dcamera =
+        FIELD_CAMERA_GetCameraPtr( fld_cam );
+      
+      GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+      GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+      GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+      
+      MTX_LookAt( &camPos, &camUp, &target, &mtx43 ); //カメラ行列取得
+      MTX_Copy43To33( &mtx43, &mtx33 ); //回転行列である3x3部分を取得
+      MTX_Inverse33( &mtx33, &mtx33 ); //反転し逆行列にする
+      
+      //逆行列で回転を無効化し平行化
+      MTX_MultVec33( &offs0, &mtx33, &c_offs );
+      offs0.x = c_offs.x;
+      offs0.y = c_offs.y;
+      offs0.z = c_offs.z;
+    }
+    #endif    
+#endif
     
-    MMDL_GetVectorOuterDrawOffsetPos( mmdl, &offs );
-    pos.x += offs.x;
-    pos.y -= offs.y;
-    pos.z -= offs.z;
-    
+    VEC_Add( &offs0, &pos, &pos );
     GFL_BBD_SetObjectTrans( bbdsys, actID, &pos );
   }
   
@@ -406,7 +561,33 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   }
 }
 
-#if 0 //old
+/*
+ * y軸補正だけですむならばズレない版
+ * WBのカメラアングルによるビルボード補正と水面地形モデルの造りでは
+ * Z方向の調整が必要なため難しい。
+ */
+#if 0
+static const fx32 data_TypeOffsetY[REFLECT_TYPE_MAX] =
+{
+  0,
+  0,
+  0,
+};
+
+static const fx32 data_MdlOffsetY[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  0, //32x32
+  0, //16x16
+  0, //64x64
+};
+
+static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
+{
+  0, //32x32
+  0, //16x32
+  0, //64x64
+};
+
 static void reflectTask_UpdateBlAct( u16 actID, void *wk )
 {
   u16 ret;
@@ -415,58 +596,119 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
   GFL_BBD_SYS *bbdsys = GFL_BBDACT_GetBBDSystem( bbdactsys );
   u32 m_actID = MMDL_CallDrawGetProc( work->head.mmdl, 0 );
   
-  GF_ASSERT( actID != MMDL_BLACTID_NULL ); //親モデルビルボード無し。
+  if( actID == MMDL_BLACTID_NULL ){ //親モデルビルボード無し。
+    GF_ASSERT( 0 );
+    return;
+  }
   
   ret = GFL_BBDACT_GetDrawEnable( bbdactsys, m_actID );
   GFL_BBDACT_SetDrawEnable( bbdactsys, actID, ret );
-  
-#if 0  
-  ret = GFL_BBDACT_GetAnimeEnable( bbdactsys, m_actID );
-  GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, ret );
-  
-  if( ret == TRUE ){
-    ret = GFL_BBDACT_GetAnimeIdx( bbdactsys, m_actID );
-    GFL_BBDACT_SetAnimeIdx( bbdactsys, actID, ret );
-    ret = GFL_BBDACT_GetAnimeFrmIdx( bbdactsys, m_actID );
-    GFL_BBDACT_SetAnimeFrmIdx( bbdactsys, actID, ret );
-  }
-#else
   GFL_BBDACT_SetAnimeEnable( bbdactsys, actID, FALSE );
-#endif
   
   {
-    fx32 x,y,z;
-    VecFx32 pos;
-    fx32 offs;
+    fx32 y;
+    VecFx32 pos,offs0,offs1;
     const MMDL *mmdl;
     const OBJCODE_PARAM *param;
     
     mmdl = work->head.mmdl;
     param = MMDL_GetOBJCodeParam( mmdl );
     
-    MMDL_GetVectorDrawOffsetPos( mmdl, &pos );
-    x = pos.x;
-    z = -pos.z;
-    
-    offs = data_offsetZ[param->mdl_size];
-    
     MMDL_GetVectorPos( mmdl, &pos );
-    pos.x += x;
-    pos.z += z + offs;
     
-    offs = data_offsetY[work->head.type];
-
-	  if( MMDL_GetMapPosHeight(mmdl,&pos,&y) == FALSE ){ 
-      //高さ取得エラー
-      #if 1
-      pos.y = 0;
-      #else
-      pos.y -= offs[0];
-      #endif
-    }else{
-      pos.y -= offs;
+    MMDL_GetVectorDrawOffsetPos( mmdl, &offs0 );
+    offs0.y = 0; //yオフセットは無視する
+    offs0.z = -offs0.z; //flip
+    
+    MMDL_GetVectorOuterDrawOffsetPos( mmdl, &offs1 );
+    offs1.y = -offs1.y; //flip
+    offs1.z = -offs1.z; //flip
+    
+    VEC_Add( &offs0, &offs1, &offs0 );
+    
+    offs0.y += data_TypeOffsetY[work->head.type];
+    offs0.y += data_MdlOffsetY[param->mdl_size];
+    offs0.z += data_MdlOffsetZ[param->mdl_size];
+    
+#ifdef DEBUG_REFLECT_CHECK
+    if( MMDL_GetOBJID(work->head.mmdl) == MMDL_ID_PLAYER ){
+      int printf = 0;
+      int repeat = GFL_UI_KEY_GetRepeat();
+      int cont = GFL_UI_KEY_GetCont();
+      int trg = GFL_UI_KEY_GetTrg();
+      VecFx32 *d_offs = &(work->head.eff_reflect->d_offs);
+      
+      if( trg & PAD_BUTTON_START ){
+        work->head.eff_reflect->d_select ^= 1;
+        KAGAYA_Printf( "リフレクト座標操作機能 " );
+        
+        if( work->head.eff_reflect->d_select ){
+          KAGAYA_Printf( "ON\n" );
+        }else{
+          KAGAYA_Printf( "OFF\n" );
+        }
+      }
+      
+      if( work->head.eff_reflect->d_select ){
+        if( repeat & PAD_BUTTON_L ){
+          if( cont & PAD_BUTTON_B ){
+            d_offs->z -= 0x800;
+            printf = TRUE;
+          }else{
+            d_offs->y -= 0x800;
+            printf = TRUE;
+          }
+        }else if( repeat & PAD_BUTTON_R ){
+          if( cont & PAD_BUTTON_B ){
+            d_offs->z += 0x800;
+            printf = TRUE;
+          }else{
+            d_offs->y += 0x800;
+            printf = TRUE;
+          }
+        }
+      }
+      
+      if( printf ){
+        KAGAYA_Printf( "リフレクト X=0x%x,Y=0x%x,Z=0x%x\n",
+            d_offs->x, d_offs->y, d_offs->z );
+      }
     }
     
+    {
+      VecFx32 *d_offs = &(work->head.eff_reflect->d_offs);
+      VEC_Add( &offs0, d_offs, &offs0 );
+    }
+    
+    #if 1
+    {
+      VecFx32 camPos,camUp,target,c_offs;
+      MtxFx43 mtx43;
+      MtxFx33 mtx33; 
+      FIELDMAP_WORK *fieldmap =
+        FLDEFF_CTRL_GetFieldMapWork( work->head.eff_reflect->fectrl );
+      FIELD_CAMERA *fld_cam =
+        FIELDMAP_GetFieldCamera( fieldmap );
+      const GFL_G3D_CAMERA * g3Dcamera =
+        FIELD_CAMERA_GetCameraPtr( fld_cam );
+      
+      GFL_G3D_CAMERA_GetPos( g3Dcamera, &camPos );
+      GFL_G3D_CAMERA_GetCamUp( g3Dcamera, &camUp );
+      GFL_G3D_CAMERA_GetTarget( g3Dcamera, &target );
+      
+      MTX_LookAt( &camPos, &camUp, &target, &mtx43 ); //カメラ行列取得
+      MTX_Copy43To33( &mtx43, &mtx33 ); //回転行列である3x3部分を取得
+      MTX_Inverse33( &mtx33, &mtx33 ); //反転し逆行列にする
+      
+      //逆行列で回転を無効化し平行化
+      MTX_MultVec33( &offs0, &mtx33, &c_offs );
+      offs0.x = c_offs.x;
+      offs0.y = c_offs.y;
+    }
+    #endif    
+#endif
+    
+    VEC_Add( &offs0, &pos, &pos );
     GFL_BBD_SetObjectTrans( bbdsys, actID, &pos );
   }
   
@@ -493,14 +735,6 @@ static void reflectTask_UpdateBlAct( u16 actID, void *wk )
     flip = GFL_BBD_GetObjectFlipS( bbdsys, m_idx ); //横Flip受け継ぐ
     GFL_BBD_SetObjectFlipS( bbdsys, idx, &flip );
   }
-  
-  #ifdef DEBUG_REFLECT_CHECK
-  if( MMDL_GetOBJID(work->head.mmdl) == 0xff ){
-    if( GFL_UI_KEY_GetCont() & PAD_BUTTON_A ){
-      KAGAYA_Printf( "自機横サイズ 0x%x\n", work->scale_x );
-    }
-  }
-  #endif
 }
 #endif
 
@@ -528,7 +762,8 @@ static const FLDEFF_TASK_HEADER data_reflectTaskHeader =
 //--------------------------------------------------------------
 /// 映り込み表示位置
 //--------------------------------------------------------------
-static const fx32 data_offsetY[REFLECT_TYPE_MAX] =
+#if 0 //old
+static const fx32 data_TypeOffsetY[REFLECT_TYPE_MAX] =
 {
   -(NUM_FX32(12*2)+NUM_FX32(1)),
   -(NUM_FX32(16*2)+NUM_FX32(1)),
@@ -539,8 +774,9 @@ static const fx32 data_offsetZ[MMDL_BLACT_MDLSIZE_MAX] =
 {
   REF_OFFS_Z, //32
   REF_OFFS_Z/2, //16
-  REF_OFFS_Z*2+FX32_ONE*1, //64
+  REF_OFFS_Z*2, //64
 };
+#endif
 
 //======================================================================
 //  define
