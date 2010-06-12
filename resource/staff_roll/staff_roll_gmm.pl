@@ -101,14 +101,6 @@ sub SUB_DataConv {
 		$line[0] =~ s/&/&amp;/g;		# "&"‚ğ"&amp;"‚É’u‚«Š·‚¦
 		$line[0] =~ s/A/,/g;			# "A"‚ğ","‚É’u‚«Š·‚¦
 
-#		$eE = "Ã‰<";
-#		$eE = $eE + 0;
-#		$aA = "<";
-#		$aA = $aA + 0;
-#       $eE = $eE - $aA;
-
-#		$line[0] =~ s/\?/&aelig;/g;			# "A"‚ğ","‚É’u‚«Š·‚¦
-
 #		print( $line[0] . "\t" );
 
 		if( $line[0] ne "" ){
@@ -135,8 +127,6 @@ sub SUB_DataConv {
 	}
 
 	close( FP_CNV );
-
-#	print( $eE . "\n" );
 }
 
 
