@@ -186,11 +186,12 @@ void MB_MSG_MessageTerm( MB_MSG_WORK *msgWork )
   {
     APP_TASKMENU_CloseMenu( msgWork->yesNoWork );
   }
+#ifndef MULTI_BOOT_MAKE  //’ÊíŽžˆ—
   if( msgWork->yesNoBmpWin != NULL )
   {
     BmpMenu_YesNoMenuExit( msgWork->yesNoBmpWin );
   }
-  
+#endif
   if( msgWork->timeIcon != NULL )
   {
     TIMEICON_Exit( msgWork->timeIcon );
@@ -671,11 +672,13 @@ const MB_MSG_YESNO_RET MB_MSG_UpdateYesNoUpper( MB_MSG_WORK *msgWork )
   const u32 ret = BmpMenu_YesNoSelectMain( msgWork->yesNoBmpWin );
   if( ret == 0 )
   {
+    msgWork->yesNoBmpWin = NULL;
     return MMYR_RET1;
   }
   else
   if( ret == BMPMENU_CANCEL )
   {
+    msgWork->yesNoBmpWin = NULL;
     return MMYR_RET2;
   }
   return MMYR_NONE;

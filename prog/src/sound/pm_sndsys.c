@@ -195,7 +195,9 @@ void  PMSND_InitMultiBoot( void* sndData )
 {
   // サウンドシステム初期化(マルチブート子機
   // 初期化データは32バイトアライメント
-  NNS_SndInit();
+  
+  //下外でやる
+  //NNS_SndInit();
   PmSndHeapHandle = NNS_SndHeapCreate(PmSoundHeap, SOUND_HEAP_SIZE);
 
   // サウンドの設定

@@ -71,7 +71,10 @@ void NitroMain(void)
 
   // 必要なTCBとか登録して…
   GameInit();
-
+  
+  //PMSND_Initをアプリの開始で呼ぶので、0フレームの蓋閉じ処理で
+  //吹っ飛ぶ。なので初期化だけ外に出した
+  NNS_SndInit();
 /*
 #ifdef PM_DEBUG
   DEBUG_PAUSE_Init();

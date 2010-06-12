@@ -115,6 +115,7 @@ void MachineSystem_Init(void)
   }
 #endif//
 
+#ifndef MULTI_BOOT_MAKE
   //ソフトリセット時マイクがOFFにならなかったのを修正
   {
     PMAmpSwitch swBuf;
@@ -124,6 +125,7 @@ void MachineSystem_Init(void)
       PM_SetAmp( PM_AMP_OFF );
     }
   }
+#endif//
 }
 
 //------------------------------------------------------------------
