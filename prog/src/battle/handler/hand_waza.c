@@ -3226,7 +3226,7 @@ static void handler_Daibakuhatsu_DmgDetermine( BTL_EVENT_FACTOR* myHandle, BTL_S
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     BTL_HANDEX_PARAM_KILL* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
-    param->pokeID = pokeID;
+      param->pokeID = pokeID;
     BTL_SVF_HANDEX_Pop( flowWk, param );
   }
 }
@@ -4015,8 +4015,8 @@ static void handler_Sippegaesi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    // 順番最後なら威力増加
-    if( HandCommon_IsPokeOrderLast(flowWk, pokeID) )
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) );
+    if( BPP_TURNFLAG_Get(bpp, BPP_TURNFLG_ACTION_DONE) )
     {
       HandCommon_MulWazaBasePower( 2 );
     }
@@ -7329,7 +7329,6 @@ static void handler_Negaigoto( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
-    BTL_HANDEX_PARAM_KILL* kill_param;
     BTL_HANDEX_PARAM_POSEFF_ADD* eff_param;
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_POSEFF_ADD, pokeID );
@@ -8553,8 +8552,10 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
       if( !BTL_TABLES_IsMitidureFailWaza(usedWaza) )
       {
         u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-        if( !BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
-        {
+        const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, atkPokeID );
+        if( (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID))
+        &&  (!BPP_IsDead(attacker))
+        ){
           BTL_HANDEX_PARAM_KILL* kill_param;
 
           kill_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_KILL, pokeID );
@@ -10250,8 +10251,10 @@ static void handler_GiftPass( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static const BtlEventHandlerTable*  ADD_Inotigake( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_PROC1,    handler_Inotigake_CalcDamage  },     // ダメージチェック
-    { BTL_EVENT_WAZADMG_SIDE_AFTER,    handler_Inotigake_AfterDamage },
+    { BTL_EVENT_WAZA_DMG_PROC1,       handler_Inotigake_CalcDamage      },  // ダメージ計算
+    { BTL_EVENT_WAZA_DMG_DETERMINE,   handler_Daibakuhatsu_DmgDetermine },  // ダメージ確定ハンドラ
+    { BTL_EVENT_WAZA_EXECUTE_DONE,    handler_Daibakuhatsu_ExeFix       },  // ワザ処理終了ハンドラ
+//    { BTL_EVENT_WAZADMG_SIDE_AFTER,    handler_Inotigake_AfterDamage     },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;

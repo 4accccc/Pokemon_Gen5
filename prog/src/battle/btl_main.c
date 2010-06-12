@@ -4416,6 +4416,7 @@ u32 BTL_MAIN_GetPerappVoicePower( const BTL_MAIN_MODULE* wk, u8 clientID )
 //=============================================================================================
 BOOL BTL_MAIN_CheckImServerMachine( BTL_MAIN_MODULE* wk )
 {
+  TAYA_Printf("ImServer=%d\n", wk->ImServer );
   return wk->ImServer;
 }
 //=============================================================================================

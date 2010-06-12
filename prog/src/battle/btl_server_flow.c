@@ -5695,7 +5695,6 @@ static void scproc_Fight_Damage_Determine( BTL_SVFLOW_WORK* wk,
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
 
   scEvent_WazaDamageDetermine( wk, attacker, defender, wazaParam );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
 
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
@@ -13949,9 +13948,10 @@ static u8 scproc_HandEx_kill( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEADER
   if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* pp_target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-    if( !BPP_IsDead(pp_target) ){
-      scproc_KillPokemon( wk, pp_target );
+    if( !BPP_IsDead(pp_target) )
+    {
       handexSub_putString( wk, &param->exStr );
+      scproc_KillPokemon( wk, pp_target );
       return 1;
     }
   }
