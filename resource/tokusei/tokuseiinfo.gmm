@@ -1492,9 +1492,9 @@
 
 	<row id="TOKUSEIINFO_157">
 		<language name="JPN" width="216">くさの　わざを　うけると
-とくこうが　あがる。</language>
+こうげきが　あがる。</language>
 		<language name="JPN_KANJI" width="216">くさの　技を　受けると
-特攻が　あがる。</language>
+攻撃が　あがる。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_158">
