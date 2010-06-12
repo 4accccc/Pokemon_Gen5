@@ -1887,6 +1887,18 @@ static void _notWazaChangePoke(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,_notWazaChangePoke2);
 }
 
+//“Á•Ê‚Èƒ|ƒPƒ‚ƒ“ŒŸ¸‚Éˆø‚Á‚©‚©‚Á‚½
+static void _notLegendChangePoke(POKEMON_TRADE_WORK* pWork)
+{
+  GFL_MSG_GetString( pWork->pMsgData, gtsnego_info_09, pWork->pMessageStrBuf );
+  POKETRADE_MESSAGE_WindowOpenCustom(pWork,TRUE,FALSE);
+//  GFL_MSG_GetString( pWork->pMsgData, POKETRADE_STR2_03, pWork->pMessageStrBuf );
+//  POKETRADE_MESSAGE_WindowOpen(pWork);
+  pWork->oldLine = -1;
+  IRC_POKETRADE_InitBoxIcon(pWork->pBox, pWork , FALSE );//Ä•`‰æ
+  _CHANGE_STATE(pWork,_notWazaChangePoke2);
+}
+
 static void _dispSubStateWait2(POKEMON_TRADE_WORK* pWork)
 {
 #if 0   //20100603 del    Saito
@@ -2050,9 +2062,16 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
   }
   if(bExit){
     if(selectno==0){         //‘ŠŽè‚ÉŒ©‚¹‚é
+      POKEMON_PASO_PARAM* ppp =
+        IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->underSelectBoxno, pWork->underSelectIndex,pWork);
       if(POKEMONTRADE_IsWazaPokemon(pWork,pWork->underSelectBoxno,pWork->underSelectIndex)){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
         POKE_GTS_VisibleFaceIcon(pWork,TRUE);
         _CHANGE_STATE(pWork,_notWazaChangePoke);
+      }
+      else if( POKE_GTS_BanPokeCheck(pWork,ppp) ){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
+        _CHANGE_STATE(pWork, _notLegendChangePoke);
+        POKE_GTS_VisibleFaceIcon(pWork,TRUE);
+//        _CHANGE_STATE(pWork,_notWazaChangePoke);
       }
       else if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
         pWork->selectIndex = pWork->underSelectIndex;
