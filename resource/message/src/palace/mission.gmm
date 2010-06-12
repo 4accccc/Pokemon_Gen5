@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-10T23:20:19"/>
+	<create user="ohmori" host="W00223" date="2010-06-12T18:54:58"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -494,17 +494,17 @@
 	<row id="plc_mis_05_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
-みんなが　まわっていた　ばしょにかくせ</language>
+みんなが　まわっていた　ばしょにかくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
-皆が　回っていた　場所に隠せ</language>
+皆が　回っていた　場所に隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_05" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
-じどうはんばいきの　まえに　かくせ</language>
+じどうはんばいきの　まえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
-自動販売機の　前に　隠せ</language>
+自動販売機の　前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_06" back-color="#ffff80,,,,,,,,,,,,,,,,,">
@@ -638,17 +638,17 @@
 	<row id="plc_mis_05_22" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　セッカシティの
-みんなが　まわっていた　ばしょにかくせ</language>
+みんなが　まわっていた　ばしょにかくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　セッカシティの
-皆が　回っていた　場所に隠せ</language>
+皆が　回っていた　場所に隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_23" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
-じどうはんばいきの　まえに　かくせ</language>
+じどうはんばいきの　まえに　かくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　ソウリュウシティの
-自動販売機の　前に　隠せ</language>
+自動販売機の　前に　隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_24" back-color="#ffff80,,,,,,,,,,,,,,,,,">
