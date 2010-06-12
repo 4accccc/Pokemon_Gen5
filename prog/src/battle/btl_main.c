@@ -1678,7 +1678,7 @@ static BOOL setupseq_comm_notify_player_data( BTL_MAIN_MODULE* wk, int* seq )
             wk->trainerParam[ i ].name = DWC_TOOL_CreateBadNickName( wk->heapID );
           }
 
-          Bspstore_PlayerStatus( wk, i, playerStatus );
+          Bspstore_PlayerStatus( wk, i, wk->trainerParam[ i ].playerStatus ); ///<BadName書き換え後のMyStatusを渡すように変更 tomoya
         }
       }
       BTL_Printf("プレイヤーデータ相互受信できました。\n");
