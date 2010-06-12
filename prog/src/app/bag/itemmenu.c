@@ -1858,7 +1858,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( pWork->pocketno >= BAG_POKE_MAX ){
       pWork->pocketno = 0;
     }
-//    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 	  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
     return;
@@ -1868,7 +1868,7 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( pWork->pocketno < 0 ){
       pWork->pocketno = BAG_POKE_MAX-1;
     }
-//    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
     return;
@@ -3534,7 +3534,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if(pWork->pocketno < 0){
       pWork->pocketno = BAG_POKE_MAX-1;
     }
-//    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_LEFT], APP_COMMON_BARICON_CURSOR_LEFT_ON );
+		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 		KTST_SetDraw( pWork, FALSE );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
     return;
@@ -3545,7 +3545,7 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     if(pWork->pocketno >= BAG_POKE_MAX){
       pWork->pocketno = 0;
     }
-//    GFL_CLACT_WK_SetAnmSeq( pWork->clwkBarIcon[BAR_ICON_RIGHT], APP_COMMON_BARICON_CURSOR_RIGHT_ON );
+		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 		KTST_SetDraw( pWork, FALSE );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
     return;
@@ -4132,7 +4132,7 @@ static void SetPageButtonAnime( FIELD_ITEMMENU_WORK * wk, u32 old, u16 type, Sta
   u32 anm;
 
   // ポケットカーソル移動
-  _pocketCursorChange( wk, old, wk->pocketno );
+//  _pocketCursorChange( wk, old, wk->pocketno );
   // ソートボタン表示切替
   SORT_ModeReset( wk );
   BTN_DrawCheckBox( wk );
