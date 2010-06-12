@@ -9072,6 +9072,7 @@ static BOOL scproc_CheckDeadCmd( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* poke )
         else if( !BTL_MAINUTIL_IsFriendClientID(clientID, playerClientID) )
         {
           BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_KILL_POKE );
+          BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_DAYCNT_KILL );
         }
       }
 
