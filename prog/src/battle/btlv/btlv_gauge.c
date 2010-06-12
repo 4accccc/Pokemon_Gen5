@@ -482,7 +482,7 @@ void  BTLV_GAUGE_Main( BTLV_GAUGE_WORK *bgw )
     }
     if( ( bgw->bgcl[ i ].hp_damage_clwk ) && ( bgw->bgcl[ i ].damage_wait_flag ) )
     { 
-      if( bgw->bgcl[ i ].damage_wait == 0 )
+      if( ( bgw->bgcl[ i ].damage_wait == 0 ) || ( bgw->bgcl[ i ].gauge_draw_enable == FALSE ) )
       { 
         GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ i ].hp_damage_clwk, FALSE );
         bgw->bgcl[ i ].damage_wait_flag = 0;
