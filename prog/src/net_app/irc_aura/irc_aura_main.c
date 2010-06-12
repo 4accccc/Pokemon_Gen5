@@ -569,6 +569,7 @@ struct _AURA_MAIN_WORK
 #endif //DEBUG_IRC_COMPATIBLE_ONLYPLAY
 
   u32       minus;
+  u32       msg_cnt;
 
   MSGWND_WORK     msgtitle; //タイトルメッセージ
 
@@ -2876,16 +2877,19 @@ static void SEQFUNC_Result( AURA_MAIN_WORK *p_wk, u16 *p_seq )
     break;
 
   case SEQ_CALC:
-    p_wk->p_param->score  = CalcScore( p_wk );
+    if( p_wk->msg_cnt++ >= COMPATIBLE_CONNECT_MSG_SYNC )
     {
-      AURANET_RESULT_DATA you;
-      AURANET_GetResultData( &p_wk->net, &you );
-      p_wk->p_param->minus  = p_wk->minus + you.minus;
-      p_wk->p_param->you_new_play = you.is_new_play;
+      p_wk->p_param->score  = CalcScore( p_wk );
+      {
+        AURANET_RESULT_DATA you;
+        AURANET_GetResultData( &p_wk->net, &you );
+        p_wk->p_param->minus  = p_wk->minus + you.minus;
+        p_wk->p_param->you_new_play = you.is_new_play;
+      }
+      p_wk->p_param->result = IRCAURA_RESULT_CLEAR;
+      *p_seq  = SEQ_END;
     }
-    p_wk->p_param->result = IRCAURA_RESULT_CLEAR;
-    *p_seq  = SEQ_END;
-    break;
+    return;
 
   case SEQ_END:
     SEQ_End( p_wk );

@@ -433,6 +433,7 @@ struct _IRC_MENU_MAIN_WORK
 	u32		start_ms;
 	u32		select;
 	u32		now_ms;
+  u32     msg_cnt;
 	BOOL	is_send;
 };
 
@@ -1925,9 +1926,12 @@ static void SEQFUNC_Connect( IRC_MENU_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_NEXTPROC:
-		p_wk->p_param->select	= IRCMENU_SELECT_COMPATIBLE;
-		SEQ_Change( p_wk, SEQFUNC_NextProc );
-		return;	//↓のアサートを通過しないため
+    if( p_wk->msg_cnt++ >= COMPATIBLE_CONNECT_MSG_SYNC )
+    {
+      p_wk->p_param->select	= IRCMENU_SELECT_COMPATIBLE;
+      SEQ_Change( p_wk, SEQFUNC_NextProc );
+    }
+    return;	//↓のアサートを通過しないため
 	};
 
 	//赤外線開始待ち

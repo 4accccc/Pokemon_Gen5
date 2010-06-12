@@ -311,7 +311,7 @@ enum
 } ;
 
 //-------------------------------------
-///	カうんどダウンの定数
+/// カウントダウンの定数
 //=====================================
 #define COUNTDOWN_NUM_OBJ_MAX   (3)
 #define COUNTDOWN_ONE_COUNT_MAX (60)
@@ -554,6 +554,11 @@ struct _RHYTHM_MAIN_WORK
 	u32		marker_cnt;	//マーカー表示時間
   BOOL  is_sub_seq; //サブシーケンス動作開始
   u16   sub_seq;    //動かしながら相手と接続できるようにするため
+  u16   msg_cnt;
+
+  //輝度変更Vtask
+  GFL_TCB *p_brightness_task;
+  BOOL    is_brightness_req;
 
 	//引数
 	IRC_RHYTHM_PARAM	*p_param;
@@ -631,7 +636,7 @@ static void RHYTHMSEARCH_Init( RHYTHMSEARCH_WORK *p_wk );
 static void RHYTHMSEARCH_Exit( RHYTHMSEARCH_WORK *p_wk );
 static void RHYTHMSEARCH_Start( RHYTHMSEARCH_WORK *p_wk );
 static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk );
-static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos );
+static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk );
 static BACKOBJ_COLOR RHYTHMSEARCH_PlaySEByRhythmSpeed( const RHYTHMSEARCH_WORK *cp_wk );
 //net
 static void RHYTHMNET_Init( RHYTHMNET_WORK *p_wk, COMPATIBLE_IRC_SYS *p_irc );
@@ -642,7 +647,7 @@ static void RHYTHMNET_GetResultData( const RHYTHMNET_WORK *cp_wk, RHYTHMSEARCH_W
 static void NETRECV_Result( const int netID, const int size, const void* cp_data, void* p_work, GFL_NETHANDLE* p_net_handle );
 static u8* NETRECV_GetBufferAddr(int netID, void* pWork, int size);
 //汎用
-static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg );
+static BOOL TP_GetRhythmTrg( GFL_POINT *p_trg );
 static u8		CalcScore( const RHYTHM_MAIN_WORK *cp_wk );
 static void RHYTHM_MainPltAnm( NNS_GFD_DST_TYPE type, u16 *p_buff, u16 cnt, u8 plt_num, u8 plt_col, GXRgb start, GXRgb end );
 //BACKOBJ
@@ -660,6 +665,9 @@ static void PLTFADE_Init( PLTFADE_WORK *p_wk, HEAPID heapID );
 static void PLTFADE_Exit( PLTFADE_WORK *p_wk );
 static void PLTFADE_Main( PLTFADE_WORK *p_wk );
 static void PLTFADE_Start( PLTFADE_WORK *p_wk );
+//ETC
+static void IrcRhythm_BrightnessVtask( GFL_TCB *p_tcb, void *p_wk_adrs );
+
 
 #ifdef PM_DEBUG
 static STRBUF * DEBUGPRINT_CreateWideChar( const u16 *cp_str, HEAPID heapID );
@@ -753,83 +761,6 @@ static const GFL_BG_BGCNT_HEADER sc_bgcnt_data[ GRAPHIC_BG_FRAME_MAX ] =
 		GX_BG_SCRBASE_0x1800, GX_BG_CHARBASE_0x14000, GFL_BG_CHRSIZ256_128x128,
 		GX_BG_EXTPLTT_01, 0, 0, 0, FALSE
 	},
-};
-
-//-------------------------------------
-///	タッチ範囲
-//=====================================
-static const GFL_POINT	sc_diamond_pos[]	=
-{	
-	{	
-		31, 47
-	},
-	{	
-		79, 47
-	},
-	{	
-		127, 47
-	},
-	{	
-		175, 47
-	},
-	{	
-		223, 47
-	},
-	{	
-		55, 71
-	},
-	{	
-		103, 71
-	},
-	{	
-		151, 71
-	},
-	{	
-		199, 71
-	},
-	{	
-		31, 95
-	},
-	{	
-		79, 95
-	},
-	{	
-		127, 95
-	},
-	{	
-		175, 95
-	},
-	{	
-		223, 95
-	},
-	{	
-		55, 119
-	},
-	{	
-		103, 119
-	},
-	{	
-		151, 119
-	},
-	{	
-		199, 119
-	},
-	{	
-		31, 143
-	},
-	{	
-		79, 143
-	},
-	{	
-		127, 143
-	},
-	{	
-		175, 143
-	},
-	{	
-		223, 143
-	},
-
 };
 
 //-------------------------------------
@@ -940,6 +871,9 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Init( GFL_PROC *p_proc, int *p_seq, void 
 
   //輝度変更
   G2_SetBlendBrightness( GX_BLEND_PLANEMASK_BG1 | GX_BLEND_PLANEMASK_BD, -8 );
+  
+
+  p_wk->p_brightness_task = GFUser_VIntr_CreateTCB(IrcRhythm_BrightnessVtask, p_wk, 0 );
 
 	SEQ_Change( p_wk, SEQFUNC_StartGame );
 	return GFL_PROC_RES_FINISH;
@@ -977,6 +911,7 @@ static GFL_PROC_RESULT IRC_RHYTHM_PROC_Exit( GFL_PROC *p_proc, int *p_seq, void 
 	}
 #endif
 
+  GFL_TCB_DeleteTask( p_wk->p_brightness_task );
 
 	{		
 		int i;
@@ -2350,7 +2285,7 @@ static void SEQFUNC_CountDown( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
   COUNTDOWN_Main( &p_wk->cntdown );
   if( COUNTDOWN_IsEnd( &p_wk->cntdown ) )
   { 
-    G2_BlendNone();
+    p_wk->is_brightness_req = TRUE;
     RHYTHMSEARCH_Start( &p_wk->search );
     PLTFADE_Start( &p_wk->pltfade );
     SEQ_Change( p_wk, SEQFUNC_MainGame );	
@@ -2385,20 +2320,17 @@ static void SEQFUNC_MainGame( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 	p_search	= &p_wk->search;
 
 
-	for( i = 0; i< NELEMS(sc_diamond_pos); i++ )
-	{
-		if( TP_GetDiamondTrg( &sc_diamond_pos[i], &trg_pos ) )
-		{	
-      BACKOBJ_COLOR color;
-			color = RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
-			BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos, color );
+  if( TP_GetRhythmTrg( &trg_pos ) )
+  {	
+    BACKOBJ_COLOR color;
+    color = RHYTHMSEARCH_PlaySEByRhythmSpeed( p_search );
+    BACKOBJ_StartEmit( &p_wk->backobj[BACKOBJ_SYS_MAIN], &trg_pos, color );
 
-      if( p_wk->sub_seq == 0 )
-      {
-        RHYTHMSEARCH_SetData( p_search, &sc_diamond_pos[i] );
-      }
-		}
-	}
+    if( p_wk->sub_seq == 0 )
+    {
+      RHYTHMSEARCH_SetData( p_search );
+    }
+  }
 
 	//計測終了チェック
 	if( RHYTHMSEARCH_IsEnd( p_search ) )
@@ -2511,14 +2443,19 @@ static void SEQFUNC_Result( RHYTHM_MAIN_WORK *p_wk, u16 *p_seq )
 		break;
 
 	case SEQ_CALC:
-		p_wk->p_param->score	= CalcScore( p_wk );
-    { 
-      RHYTHMSEARCH_WORK you;
-      RHYTHMNET_GetResultData( &p_wk->net, &you );
-      p_wk->p_param->cnt_diff  = MATH_IAbs( (s32)p_wk->search.data_idx - (s32)you.data_idx );
+    if( p_wk->msg_cnt++ >= COMPATIBLE_CONNECT_MSG_SYNC )
+    {
+      p_wk->p_param->score	= CalcScore( p_wk );
+      { 
+        RHYTHMSEARCH_WORK you;
+        RHYTHMNET_GetResultData( &p_wk->net, &you );
+        p_wk->p_param->cnt_diff  = MATH_IAbs( (s32)p_wk->search.data_idx - (s32)you.data_idx );
+      }
+      p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
+      *p_seq	= SEQ_END;
     }
-		p_wk->p_param->result	= IRCRHYTHM_RESULT_CLEAR;
-		*p_seq	= SEQ_END;
+
+		return;	//下記のアサートを通過しないため
 		break;
 
 	case SEQ_END:
@@ -2680,15 +2617,13 @@ static BOOL RHYTHMSEARCH_IsEnd( const RHYTHMSEARCH_WORK *cp_wk )
  *	@brief	リズムサーチ用計測	データ設定
  *
  *	@param	RHYTHMSEARCH_WORK *p_wk	ワーク
- *	@param	GFL_POINT *cp_pos				座標
  *
  */
 //-----------------------------------------------------------------------------
-static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk, const GFL_POINT *cp_pos )
+static void RHYTHMSEARCH_SetData( RHYTHMSEARCH_WORK *p_wk )
 {	
 	if( p_wk->data_idx < RHYTHMSEARCH_DATA_MAX )
 	{	
-		//	p_wk->data[ p_wk->data_idx ].pos						= *cp_pos;
 		p_wk->data[ p_wk->data_idx ].prog_ms				= OS_TicksToMilliSeconds(OS_GetTick())
 			- p_wk->start_time;
 
@@ -2951,18 +2886,15 @@ static u8* NETRECV_GetBufferAddr(int netID, void* p_work, int size)
 //=============================================================================
 //----------------------------------------------------------------------------
 /**
- *	@brief	ひし形内にTrgしたかどうか	(W＝Hの場合のみ)
+ *	@brief	リズム範囲内にTrgしたかどうか	
  *
- *	@param	const GFL_POINT *cp_point	座標
- *	@param	w													幅
- *	@param	h													高さ
  *	@param	*p_trg										座標受け取り
  *
  *	@retval	TRUEタッチした
  *	@retval	FALSEタッチしていない
  */
 //-----------------------------------------------------------------------------
-static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
+static BOOL TP_GetRhythmTrg( GFL_POINT *p_trg )
 {	
 	u32 x, y;
 	BOOL ret;
@@ -2972,47 +2904,14 @@ static BOOL TP_GetDiamondTrg( const GFL_POINT *cp_diamond, GFL_POINT *p_trg )
 	//
 	//
 	if( GFL_UI_TP_GetPointTrg( &x, &y ) )
-	{	
-		//４頂点を作成
-		GFL_POINT	top, left, right, bottom;
-		int i;
-		int dx, dy;
-		u8 ret;
-		GFL_POINT	v[5];	//左、上、右、下、左の順に頂点
-
-		v[0].x	= cp_diamond->x - TOUCH_DIAMOND_W/2;
-		v[0].y	= cp_diamond->y;
-		v[1].x	= cp_diamond->x;
-		v[1].y	= cp_diamond->y - TOUCH_DIAMOND_H/2;
-		v[2].x	= cp_diamond->x + TOUCH_DIAMOND_W/2;
-		v[2].y	= cp_diamond->y;
-		v[3].x	= cp_diamond->x;
-		v[3].y	= cp_diamond->y + TOUCH_DIAMOND_H/2;
-		v[4]		= v[0];
-
-		dx	= x;
-		dy	= y;
-
-		ret = 0;
-		for( i = 0; i < 4; i++ )
-		{	
-			if( (v[i+1].x - v[i].x)*(dy-v[i].y) - (dx-v[i].x)*(v[i+1].y-v[i].y) > 0 )
-			{	
-				ret++;
-			}
-		}
-
-		if( ret == 4)
-		{
-			//受け取りが存在したら代入して返す
-			if( p_trg )
-			{	
-				p_trg->x	= x;
-				p_trg->y	= y;
-			}
-			return TRUE;
-		}
-
+	{
+    if( 0 <= x && x <= 256 
+        && 0 <= y && y <= (192-24))
+    {
+      p_trg->x  = x;
+      p_trg->y  = y;
+      return TRUE;
+    }
 	}
 
 	return FALSE;
@@ -3583,6 +3482,26 @@ static void PLTFADE_Main( PLTFADE_WORK *p_wk )
 static void PLTFADE_Start( PLTFADE_WORK *p_wk )
 { 
   p_wk->is_start  = TRUE;
+}
+
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  Vタスク
+ *
+ *	@param	GFL_TCB *p_tcb  タスクコントロールブロック
+ *	@param	*p_wk_adrs      アドレス
+ */
+//-----------------------------------------------------------------------------
+static void IrcRhythm_BrightnessVtask( GFL_TCB *p_tcb, void *p_wk_adrs )
+{
+  RHYTHM_MAIN_WORK	*p_wk = p_wk_adrs;
+  
+  if( p_wk->is_brightness_req )
+  {
+    p_wk->is_brightness_req = FALSE;
+    G2_BlendNone();
+  }
 }
 
 #ifdef PM_DEBUG
