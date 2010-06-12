@@ -321,6 +321,7 @@ typedef struct
   BOOL isDevEvent;
   BOOL isDevMemo;
   BOOL isDevRibbon;
+  u32 addRibbon;
 #endif
 
 }PSTATUS_WORK;

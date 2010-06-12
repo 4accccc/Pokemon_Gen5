@@ -2275,6 +2275,8 @@ static void PSTD_D_Nickname( void* userWork , DEBUGWIN_ITEM* item );
 
 static void PSTD_U_pokerusu( void* userWork , DEBUGWIN_ITEM* item );
 static void PSTD_D_pokerusu( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_U_AddRibbon( void* userWork , DEBUGWIN_ITEM* item );
+static void PSTD_D_AddRibbon( void* userWork , DEBUGWIN_ITEM* item );
 
 static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 {
@@ -2298,6 +2300,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
   work->isDevEvent = FALSE;
   work->isDevMemo = FALSE;
   work->isDevRibbon = FALSE;
+  work->addRibbon = 0;
   
   DEBUGWIN_InitProc( PSTATUS_BG_SUB_STR , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 0,31,0 );
@@ -2330,6 +2333,7 @@ static void PSTATUS_InitDebug( PSTATUS_WORK *work )
 
   //Ý’è
   DEBUGWIN_AddItemToGroupEx( PSTD_U_pokerusu ,PSTD_D_pokerusu , (void*)work , SETTING_DEBUG_GROUP_NUMBER , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( PSTD_U_AddRibbon ,PSTD_D_AddRibbon , (void*)work , SETTING_DEBUG_GROUP_NUMBER , work->heapId );
 }
 
 
@@ -2692,6 +2696,35 @@ static void PSTD_D_pokerusu( void* userWork , DEBUGWIN_ITEM* item )
   POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
 	u32 pokerus = PP_Get( pp, ID_PARA_pokerus, NULL );
   DEBUGWIN_ITEM_SetNameV( item , "Pokerusu[%d]",pokerus );  
+}
+
+static void PSTD_U_AddRibbon( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  
+  if( PSTD_UpdateU32_Max( &work->addRibbon , 80 ) == TRUE )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+  if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+  {
+    POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+    u32 ppId = RIBBON_DataGet( work->addRibbon , RIBBON_PARA_POKEPARA );
+    u32 isHave = PP_Get( pp , ppId , NULL );
+    PP_Put( pp , ppId , !isHave );
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void PSTD_D_AddRibbon( void* userWork , DEBUGWIN_ITEM* item )
+{
+  PSTATUS_WORK *work = (PSTATUS_WORK*)userWork;
+  POKEMON_PARAM *pp = PSTATUS_UTIL_GetCurrentPP( work );
+  u32 ppId = RIBBON_DataGet( work->addRibbon , RIBBON_PARA_POKEPARA );
+  u32 isHave = PP_Get( pp , ppId , NULL );
+  
+  DEBUGWIN_ITEM_SetNameV( item , "AddRibbon[%d][%s]",work->addRibbon,(isHave?"o":"x") );  
+  
 }
 
 #endif //USE_STATUS_DEBUG

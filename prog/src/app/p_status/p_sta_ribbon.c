@@ -652,7 +652,11 @@ static void PSTATUS_RIBBON_SetCursorPosBar( PSTATUS_WORK *work , PSTATUS_RIBBON_
 static void PSTATUS_RIBBON_MoveBar( PSTATUS_WORK *work , PSTATUS_RIBBON_WORK *ribbonWork , s16 value)
 {
   //Å‘åˆÚ“®ˆÊ’u
-  const u32 maxValue = (ribbonWork->ribbonNum-PSTATUS_RIBBON_BAR_DIPS_NUM)*PSTATUS_RIBBON_BAR_HEIGHT;
+  s32 maxValue = (ribbonWork->ribbonNum-PSTATUS_RIBBON_BAR_DIPS_NUM)*PSTATUS_RIBBON_BAR_HEIGHT;
+  if( maxValue < 0 )
+  {
+    maxValue = 0;
+  }
   //Å‘å‘¬“x§ŒÀ
   if( value > PSTATUS_RIBBON_BAR_HEIGHT )
   {
