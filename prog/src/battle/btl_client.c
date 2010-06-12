@@ -2306,7 +2306,6 @@ static BOOL selact_SelectChangePokemon( BTL_CLIENT* wk, int* seq )
       ){
         fCantEsc = TRUE;
       }
-//      setupPokeSelParam( wk, BPL_MODE_NORMAL, wk->numCoverPos, &wk->pokeSelParam, &wk->pokeSelResult  );
       BTLV_StartPokeSelect( wk->viewCore, &wk->pokeSelParam, wk->procPokeIdx, fCantEsc, &wk->pokeSelResult );
       (*seq)++;
     }
@@ -3072,6 +3071,9 @@ static BOOL IsItemEffective( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 static BtlCantEscapeCode isForbidPokeChange( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID )
 {
+  *pokeID = BTL_POKEID_NULL;
+  *tokuseiID = POKETOKUSEI_NULL;
+
   // u‚«‚ê‚¢‚È‚Ê‚¯‚ª‚çv‚ğ‚Á‚Ä‚¢‚½‚çŠmÀ‚ÉOK
   if( IsItemEffective(wk, procPoke) )
   {
