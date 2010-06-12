@@ -210,6 +210,23 @@ typedef u8 BtlMultiMode;
 
 //--------------------------------------------------------------
 /**
+ *  バトル後ポケモン状態コード
+ */
+//--------------------------------------------------------------
+
+typedef enum {
+
+  BTL_POKESTATE_NORMAL = 0, ///< 異常なし
+  BTL_POKESTATE_SICK,       ///< 状態異常
+  BTL_POKESTATE_DEAD,       ///< ひん死
+
+}BtlPokeStatCode_tag;
+
+typedef u8 BtlPokeStatCode;
+
+
+//--------------------------------------------------------------
+/**
  *  デバッグフラグ
  */
 //--------------------------------------------------------------
@@ -317,6 +334,9 @@ typedef struct {
   u8 WifiBadNameFlag     : 1;  // Wifiで対戦相手が不正名だったらTRUE。それ以外はFALSE
 
   u8 fightPokeIndex[ TEMOTI_POKEMAX ];  // 戦闘に出たポケモンのパーティ内Indexと同じ位置がTRUEになる（それ以外はFALSE）
+
+  // ひん死・状態異常など結果格納
+  BtlPokeStatCode  party_state[ BTL_CLIENT_NUM ][ TEMOTI_POKEMAX ];
 
 }BATTLE_SETUP_PARAM;
 
