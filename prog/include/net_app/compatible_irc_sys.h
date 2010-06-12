@@ -48,6 +48,8 @@
 #define COMPATIBLE_MYSTATUS_SIZE    (MYSTATUS_SAVE_SIZE)
 
 
+#define COMPATIBLE_CONNECT_MSG_SYNC (30)
+
 //-------------------------------------
 ///		タイミング
 //=====================================
