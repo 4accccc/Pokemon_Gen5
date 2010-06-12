@@ -27,7 +27,7 @@ void BTL_POKESET_Clear( BTL_POKESET* set )
 /**
  *  ポケモン１体登録（ダメージ記録）
  */
-void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage )
+void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage, BOOL fMigawariDamage )
 {
   if( rec->count < NELEMS(rec->bpp) )
   {
@@ -41,6 +41,7 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
     }
     rec->bpp[ rec->count ] = bpp;
     rec->damage[ rec->count ] = damage;
+    rec->fMigawariDamage[ rec->count ] = fMigawariDamage;
     rec->count++;
     if( rec->count > rec->countMax ){
       rec->countMax = rec->count;
@@ -57,7 +58,7 @@ void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage
  */
 void BTL_POKESET_Add( BTL_POKESET* rec, BTL_POKEPARAM* bpp )
 {
-  BTL_POKESET_AddWithDamage( rec, bpp, 0 );
+  BTL_POKESET_AddWithDamage( rec, bpp, 0, FALSE );
 }
 /**
  *  ポケモン１体除外
@@ -114,7 +115,7 @@ BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec )
   }
 }
 /**
- *  ダメージ記録取得
+ *  ダメージ記録取得（実体・みがわりとも）
  */
 u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
 {
@@ -123,6 +124,23 @@ u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
   {
     if( rec->bpp[i] == bpp )
     {
+      return rec->damage[i];
+    }
+  }
+  GF_ASSERT(0); // ポケモン見つからない
+  return 0;
+}
+/**
+ *  ダメージ記録取得（実体のみ）
+ */
+u32 BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp )
+{
+  u32 i;
+  for(i=0; i<rec->count; ++i)
+  {
+    if( (rec->bpp[i] == bpp)
+    &&  (rec->fMigawariDamage[i] == FALSE)
+    ){
       return rec->damage[i];
     }
   }

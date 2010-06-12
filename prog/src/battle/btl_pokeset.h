@@ -23,6 +23,7 @@ typedef struct {
   BTL_POKEPARAM*  bpp[ BTL_POS_MAX ];
   u16             damage[ BTL_POS_MAX ];
   u16             sortWork[ BTL_POS_MAX ];
+  u8              fMigawariDamage[ BTL_POS_MAX ];
   u8              count;
   u8              countMax;
   u8              getIdx;
@@ -46,7 +47,7 @@ extern void BTL_POKESET_Clear( BTL_POKESET* set );
 /**
  *  ポケモン１体登録（ダメージ記録）
  */
-extern void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage );
+extern void BTL_POKESET_AddWithDamage( BTL_POKESET* rec, BTL_POKEPARAM* bpp, u16 damage, BOOL fMigawariHit );
 
 /**
  *  ポケモン１体登録
@@ -99,9 +100,15 @@ extern void BTL_POKESET_SeekStart( BTL_POKESET* rec );
 extern BTL_POKEPARAM* BTL_POKESET_SeekNext( BTL_POKESET* rec );
 
 /**
- *  ダメージ記録取得
+ *  ダメージ記録取得（実体・みがわりとも）
  */
 extern u32 BTL_POKESET_GetDamage( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp );
+
+/**
+ *  ダメージ記録取得（実体のみ）
+ */
+extern u32 BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp );
+
 
 /**
  *  現在登録されているポケモン総数を取得

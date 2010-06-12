@@ -5436,21 +5436,19 @@ static void handler_Monohiroi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_WaruiTeguse( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_WAZA_DMG_REACTION,        handler_WaruiTeguse },  // ダメージ反応ハンドラ
+    { BTL_EVENT_DAMAGEPROC_END,        handler_WaruiTeguse },  // ダメージワザ処理終了処理ハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
 }
-// ダメージ反応ハンドラ
+// ダメージワザ処理終了処理ハンドラ
 static void handler_WaruiTeguse( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
-
-  if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, targetPokeID) )
+  if( HandCommon_CheckTargetPokeID(pokeID) )
   {
-    if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID)
-    &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
-    ){
+    u8 targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+    if( !HandCommon_CheckCantStealPoke(flowWk, pokeID, targetPokeID) )
+    {
       WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
       if( WAZADATA_GetFlag(waza, WAZAFLAG_Touch) )
       {

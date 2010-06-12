@@ -243,6 +243,8 @@ static void scproc_Damage_Drain( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* waza
 static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_POKEPARAM* target, u16 drainHP );
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
   const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack );
+static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
+  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack, BOOL fRealHitOnly, BtlEventType eventID );
 static BOOL scEvent_CalcDamage( BTL_SVFLOW_WORK* wk,
     const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam,
     BtlTypeAff typeAff, fx32 targetDmgRatio, BOOL criticalFlag, BOOL fSimurationMode, u16* dstDamage );
@@ -5552,7 +5554,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     if( BPP_MIGAWARI_IsExist(bpp[i]) )
     {
       u16 add_damage = scproc_Migawari_Damage( wk, attacker, bpp[i], dmg[i], affAry[i], critical_flg[i], wazaParam );
-      BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], 0 );  // ダメージ0として記録
+      BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], add_damage, TRUE );  // ダメージ0として記録
       dmg_sum -= (dmg[i] - add_damage);
     }
   }
@@ -5589,7 +5591,7 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
   // ダメージ記録
   for(i=0; i<poke_cnt; ++i)
   {
-    BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], dmg[i] );
+    BTL_POKESET_AddWithDamage( wk->psetDamaged, bpp[i], dmg[i], FALSE );
     wazaDmgRec_Add( wk, atkPos, attacker, bpp[i], wazaParam, dmg[i] );
     BPP_TURNFLAG_Set( bpp[i], BPP_TURNFLG_DAMAGED );
   }
@@ -6213,61 +6215,50 @@ static BOOL scproc_DrainCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_
 static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
   const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack )
 {
-  u32 real_hit_cnt = 0;   // 実体にダメージを与えた数
-  u32 hit_cnt = 0;        // みがわり含めダメージを与えた数
-
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT );
+  scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END );
+}
+/**
+ *  Event] ダメージワザ処理終了（下請け）
+ */
+static void scEvent_DamageProcEndSub( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* attacker, BTL_POKESET* targets,
+  const SVFL_WAZAPARAM* wazaParam, BOOL fDelayAttack, BOOL fRealHitOnly, BtlEventType eventID )
+{
   const BTL_POKEPARAM* bpp;
-  u32 i, damage_sum;
+  u32 damage, damage_sum, target_cnt, hit_cnt, i;
 
-  hit_cnt = BTL_POKESET_GetCount( targets );
+  target_cnt = BTL_POKESET_GetCount( targets );
+  hit_cnt = damage_sum = 0;
 
   BTL_EVENTVAR_Push();
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_DELAY_ATTACK_FLAG, fDelayAttack );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
 
-    if( hit_cnt )
+    for(i=0; i<target_cnt; ++i)
     {
-      u32 damage;
-      for(i=0, damage_sum=0; i<hit_cnt; ++i)
-      {
-        bpp = BTL_POKESET_Get( targets, i );
+      bpp = BTL_POKESET_Get( targets, i );
+      if( fRealHitOnly ){
+        damage = BTL_POKESET_GetDamageReal( targets, bpp );
+      }else{
         damage = BTL_POKESET_GetDamage( targets, bpp );
-        if( damage )
-        {
-          damage_sum += damage;
-          BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+real_hit_cnt, BPP_GetID(bpp) );
-          ++real_hit_cnt;
-        }
+      }
+
+      if( damage )
+      {
+        damage_sum += damage;
+        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+hit_cnt, BPP_GetID(bpp) );
+        ++hit_cnt;
       }
     }
-    if( real_hit_cnt )
-    {
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, real_hit_cnt );
-      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
-    }
-  BTL_EVENTVAR_Pop();
-
-
-  BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(attacker) );
-    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DELAY_ATTACK_FLAG, fDelayAttack );
-
     if( hit_cnt )
     {
-      for(i=0, damage_sum=0; i<hit_cnt; ++i)
-      {
-        bpp = BTL_POKESET_Get( targets, i );
-        damage_sum += BTL_POKESET_GetDamage( targets, bpp );
-        BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_TARGET1+i, BPP_GetID(bpp) );
-      }
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_TARGET_POKECNT, hit_cnt );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE, damage_sum );
-      BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END_HIT );
+      BTL_EVENT_CallHandlers( wk, eventID );
     }
-    BTL_EVENT_CallHandlers( wk, BTL_EVENT_DAMAGEPROC_END );
-
   BTL_EVENTVAR_Pop();
 }
 
