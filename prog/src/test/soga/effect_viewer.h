@@ -292,6 +292,8 @@ static const MENU_SCREEN_PARAM	*msp[] = {
 //============================================================================================
 static const GFL_UI_TP_HITTBL DirTouchSingleHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
+  { 146,    192,    0,      255 },   
+
   { 0x00*8, 0x03*8, 0x02*8, 0x08*8 },   
   { 0x00*8, 0x03*8, 0x08*8, 0x0e*8 },
   { GFL_UI_TP_HIT_END, 0, 0, 0 },   
@@ -299,6 +301,8 @@ static const GFL_UI_TP_HITTBL DirTouchSingleHitTbl[] = {
 
 static const GFL_UI_TP_HITTBL DirTouchDoubleHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
+  { 146,    192,    0,      255 },   
+
   { 0x00*8, 0x03*8, 0x02*8, 0x08*8 },   
   { 0x00*8, 0x03*8, 0x08*8, 0x0e*8 },
   { 0x00*8, 0x03*8, 0x0e*8, 0x14*8 },
@@ -320,6 +324,8 @@ static const GFL_UI_TP_HITTBL DirTouchDoubleHitTbl[] = {
 
 static const GFL_UI_TP_HITTBL DirTouchTripleHitTbl[] = {
   //UP      DOWN    LEFT    RIGHT
+  { 146,    192,    0,      255 },   
+
   { 0x00*8, 0x03*8, 0x02*8, 0x08*8 },   
   { 0x00*8, 0x03*8, 0x08*8, 0x0e*8 },
   { 0x00*8, 0x03*8, 0x0e*8, 0x14*8 },

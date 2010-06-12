@@ -40,10 +40,6 @@
 
 #if PM_DEBUG
 
-#if defined( DEBUG_ONLY_FOR_fujiwara ) | defined( DEBUG_ONLY_FOR_toyama ) | defined( DEBUG_ONLY_FOR_sogabe )
-#define DIR_SELECT_MODE
-#endif
-
 #define PAD_BUTTON_EXIT ( PAD_BUTTON_L | PAD_BUTTON_R | PAD_BUTTON_START )
 
 #define CAMERA_SPEED    ( FX32_ONE * 2 )
@@ -63,6 +59,8 @@
 
 #define EFFECT_ENABLE_KEY  ( PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_X | PAD_BUTTON_Y )
 
+#define TURN_COUNT_MAX  ( 9 )
+
 enum{
   BACK_COL = 0,
   SHADOW_COL = 4,
@@ -70,6 +68,13 @@ enum{
   LETTER_COL_SELECT,
   LETTER_COL_CURSOR,
 };
+
+typedef enum
+{ 
+  EFFECT_TYPE_MCS = 0,
+  EFFECT_TYPE_WAZA,
+  EFFECT_TYPE_STATUS,
+}EFFECT_TYPE;
 
 #define G2D_BACKGROUND_COL  ( GX_RGB( 31, 31, 31 ) )
 #define G2D_FONT_COL        ( GX_RGB(  0,  0,  0 ) )
@@ -93,7 +98,6 @@ enum{
   SEQ_IDLE = 0,
   SEQ_LOAD_SEQUENCE_DATA,
   SEQ_LOAD_RESOURCE_DATA,
-  SEQ_EFFECT_ENABLE,
   SEQ_EFFECT_WAIT,
   SEQ_RECEIVE_ACTION,
   SEQ_EFFECT_VIEW,
@@ -109,7 +113,7 @@ enum{
 
 enum{
   EV_WAZANO_X = 44,
-  EV_WAZANO_Y = 90,
+  EV_WAZANO_Y = 90 + 56,
   EV_WAZANAME_X = 80,
 
   EV_STATUS_EFFECT_X = 68,
@@ -164,17 +168,19 @@ typedef struct
   int           answer;
 
   EV_DRAW_REQ   draw_req;
+  EV_DRAW_REQ   draw_req_old;
 
   void          *sequence_data;
   void          *resource_data;
 
   BOOL          viewer_mode;
   BOOL          gauge_mode;
-  BOOL          touch_mode;
 
   int           bgm_flag;
   int           bgm_fade_flag;
   int           pinch_bgm_flag;
+
+  int           turn_count;
 
   BtlRule       rule;
 
@@ -210,12 +216,14 @@ static  void  EffectViewerParticleEnd( EFFECT_VIEWER_WORK *evw );
 static  u32   *EffectViewerMakeSendData( EFFECT_VIEWER_WORK *evw, int param_start, int param_count );
 
 static  void  MoveCamera( EFFECT_VIEWER_WORK *evw );
+static  BOOL  check_touch_panel( EFFECT_VIEWER_WORK* evw, EFFECT_TYPE type );
 
 static  void  set_pokemon( EFFECT_VIEWER_WORK *evw );
 static  void  del_pokemon( EFFECT_VIEWER_WORK *evw );
 static  int   ev_pow( int x, int y );
 static  int   ev_param_get( EFFECT_VIEWER_WORK* evw, int param );
 static  void  pinch_bgm_check( EFFECT_VIEWER_WORK* evw );
+static  void  draw_dir_touch_screen( EFFECT_VIEWER_WORK* evw );
 
 static  const int pokemon_pos_table[][2]={
   { BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB },
@@ -425,19 +433,6 @@ static GFL_PROC_RESULT EffectViewerProcInit( GFL_PROC * proc, int * seq, void * 
     PMSND_PushBGM();
   }
 
-  { 
-#if 0
-    int cont = GFL_UI_KEY_GetCont();
-    if( cont & PAD_BUTTON_L )
-    { 
-      evw->touch_mode = TRUE;
-    }
-#endif
-#ifdef DIR_SELECT_MODE
-    evw->touch_mode = TRUE;
-#endif
-  }
-
   return GFL_PROC_RES_FINISH;
 }
 
@@ -547,36 +542,6 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
         set_pokemon( evw );
         evw->draw_req = DRAW_REQ_MENU_LIST;
       }
-      if( trg & PAD_BUTTON_DEBUG )
-      { 
-        evw->rule++;
-        if( evw->rule > BTL_RULE_ROTATION )
-        { 
-          evw->rule = BTL_RULE_SINGLE;
-        }
-        if( evw->rule == BTL_RULE_TRIPLE )
-        { 
-          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 1 );
-          BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
-        }
-        else if( evw->rule == BTL_RULE_ROTATION )
-        { 
-          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
-          BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 1 );
-        }
-        else
-        { 
-          BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
-          BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
-        }
-        BTLV_EFFECT_SetBtlRule( evw->rule );
-        del_pokemon( evw );
-        set_pokemon( evw );
-        if( evw->touch_mode )
-        { 
-          evw->draw_req = DRAW_REQ_MENU_LIST;
-        }
-      }
     }
   }
 
@@ -603,6 +568,34 @@ static GFL_PROC_RESULT EffectViewerProcMain( GFL_PROC * proc, int * seq, void * 
     evw->gauge_mode ^= 1;
     del_pokemon( evw );
     set_pokemon( evw );
+  }
+
+  if( trg & PAD_BUTTON_DEBUG )
+  { 
+    evw->rule++;
+    if( evw->rule > BTL_RULE_ROTATION )
+    { 
+      evw->rule = BTL_RULE_SINGLE;
+    }
+    if( evw->rule == BTL_RULE_TRIPLE )
+    { 
+      BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 1 );
+      BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
+    }
+    else if( evw->rule == BTL_RULE_ROTATION )
+    { 
+      BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
+      BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 1 );
+    }
+    else
+    { 
+      BTLV_MCSS_SetMcss3vs3( BTLV_EFFECT_GetMcssWork(), 0 );
+      BTLV_MCSS_SetMcssRotate( BTLV_EFFECT_GetMcssWork(), 0 );
+    }
+    BTLV_EFFECT_SetBtlRule( evw->rule );
+    del_pokemon( evw );
+    set_pokemon( evw );
+    evw->draw_req = evw->draw_req_old;
   }
 
   if( pad == PAD_BUTTON_EXIT ){
@@ -682,42 +675,22 @@ const GFL_PROC_DATA   EffectViewerProcData = {
 //======================================================================
 static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
 {
-  int cont = GFL_UI_KEY_GetCont();
-  int trg = GFL_UI_KEY_GetTrg();
-  int tp = GFL_UI_TP_GetTrg();
+  int cont  = GFL_UI_KEY_GetCont();
+  int trg   = GFL_UI_KEY_GetTrg();
+  int tp    = GFL_UI_TP_GetTrg();
 
   EffectViewerDrawMenuList( evw );
 
   switch( evw->seq_no ){
   default:
   case SEQ_IDLE:
-    if( trg & EFFECT_ENABLE_KEY )
-    {
-      evw->seq_no = SEQ_EFFECT_ENABLE;
-      evw->trg = trg;
-    }
-    else if( tp )
-    {
-      if( evw->touch_mode )
-      { 
-        int hit = GFL_UI_TP_HitTrg( DirTouchHitTbl[ evw->rule ] );
-
-        SOGABE_Printf( "hit:%d\n", hit );
-        if( ( hit != GFL_UI_TP_HIT_NONE ) && ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
-        {
-          BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), DirAttack[ evw->rule ][ hit ], DirDefence[ evw->rule ][ hit ],
-                                 evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
-          evw->seq_no = SEQ_EFFECT_WAIT;
-          evw->ret_seq_no = SEQ_IDLE;
-        }
-      }
-      else
-      {  
-        evw->waza_no = WAZANO_HATAKU;
-        evw->cursor_keta = 0;
-        evw->draw_req = DRAW_REQ_WAZA_NO;
-        evw->seq_no = SEQ_EFFECT_VIEW;
-      }
+    if( check_touch_panel( evw, EFFECT_TYPE_MCS ) == TRUE )
+    {  
+      evw->waza_no = WAZANO_HATAKU;
+      evw->cursor_keta = 0;
+      evw->turn_count = 0;
+      evw->draw_req = DRAW_REQ_WAZA_NO;
+      evw->seq_no = SEQ_EFFECT_VIEW;
     }
     EffectViewerRead( evw );
     break;
@@ -726,65 +699,6 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     break;
   case SEQ_LOAD_RESOURCE_DATA:
     EffectViewerResourceLoad( evw );
-    break;
-  case SEQ_EFFECT_ENABLE:
-    if( ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
-    {
-      if( evw->trg == PAD_BUTTON_A ){
-        if( evw->rule == BTL_RULE_SINGLE )
-        { 
-          BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
-        }
-        else
-        { 
-          BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_B, BTLV_MCSS_POS_A, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
-        }
-      }
-      else if( evw->trg == PAD_BUTTON_B ){
-        if( evw->rule == BTL_RULE_SINGLE )
-        { 
-          BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
-        }
-        else
-        { 
-          BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_A, BTLV_MCSS_POS_B, evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
-        }
-      }
-#if 1
-      else if( cont == PAD_BUTTON_Y ){
-        BTLV_EFFVM_PARAM param;
-
-        param.item_no = ITEM_MASUTAABOORU;
-        param.yure_cnt = GFUser_GetPublicRand( 4 );
-        param.get_success = FALSE;
-        param.get_critical = FALSE;
-
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
-      }
-      else if( cont == PAD_BUTTON_X ){
-        BTLV_EFFVM_PARAM param;
-
-        param.item_no = ITEM_MASUTAABOORU;
-        param.yure_cnt = 3;
-        param.get_success = TRUE;
-        param.get_critical = FALSE;
-
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
-      }
-      else if( cont == PAD_BUTTON_X | PAD_BUTTON_R ){
-        BTLV_EFFVM_PARAM param;
-
-        param.item_no = ITEM_MASUTAABOORU;
-        param.yure_cnt = 1;
-        param.get_success = TRUE;
-        param.get_critical = TRUE;
-
-        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->sequence_data, evw->resource_data, &param, evw->viewer_mode );
-      }
-#endif
-    }
-    evw->seq_no++;
-    evw->ret_seq_no = SEQ_IDLE;
     break;
   case SEQ_EFFECT_WAIT:
     if( BTLV_EFFECT_CheckExecute() == FALSE )
@@ -799,41 +713,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     break;
   case SEQ_EFFECT_VIEW:
-    if( trg == PAD_BUTTON_A ){
-      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, NULL );
-      evw->ret_seq_no = evw->seq_no;
-      evw->seq_no = SEQ_EFFECT_WAIT;
-    }
-    else if( trg == PAD_BUTTON_B ){
-      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
-      evw->ret_seq_no = evw->seq_no;
-      evw->seq_no = SEQ_EFFECT_WAIT;
-    }
-    else if( trg == PAD_BUTTON_X ){
-      BTLV_EFFVM_PARAM  param;
-      param.waza_range = 0;       ///<技の効果範囲
-      param.turn_count = 1;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
-      param.continue_count = 0;   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
-      param.yure_cnt = 0;         ///<ボールゆれるカウント
-      param.get_success = FALSE;  ///<捕獲成功かどうか
-      param.item_no = 0;          ///<ボールのアイテムナンバー
-      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, &param );
-      evw->ret_seq_no = evw->seq_no;
-      evw->seq_no = SEQ_EFFECT_WAIT;
-    }
-    else if( trg == PAD_BUTTON_Y ){
-      BTLV_EFFVM_PARAM  param;
-      param.waza_range = 0;       ///<技の効果範囲
-      param.turn_count = 1;       ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
-      param.continue_count = 0;   ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
-      param.yure_cnt = 0;         ///<ボールゆれるカウント
-      param.get_success = FALSE;  ///<捕獲成功かどうか
-      param.item_no = 0;          ///<ボールのアイテムナンバー
-      BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, &param );
-      evw->ret_seq_no = evw->seq_no;
-      evw->seq_no = SEQ_EFFECT_WAIT;
-    }
-    else if( EffectViewerEffectView( evw ) == TRUE )
+    if( EffectViewerEffectView( evw ) == TRUE )
     {
       evw->waza_no = BTLEFF_STATUS_EFFECT_START;
       evw->draw_req = DRAW_REQ_STATUS_EFFECT;
@@ -841,17 +721,7 @@ static  void  EffectViewerSequence( EFFECT_VIEWER_WORK *evw )
     }
     break;
   case SEQ_STATUS_EFFECT_VIEW:
-    if( trg == PAD_BUTTON_A ){
-      BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_BB, BTLV_MCSS_POS_AA, evw->waza_no, NULL );
-      evw->ret_seq_no = evw->seq_no;
-      evw->seq_no = SEQ_EFFECT_WAIT;
-    }
-    else if( trg == PAD_BUTTON_B ){
-      BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(), BTLV_MCSS_POS_AA, BTLV_MCSS_POS_BB, evw->waza_no, NULL );
-      evw->ret_seq_no = evw->seq_no;
-      evw->seq_no = SEQ_EFFECT_WAIT;
-    }
-    else if( EffectViewerStatusEffect( evw ) == TRUE )
+    if( EffectViewerStatusEffect( evw ) == TRUE )
     {
       evw->draw_req = DRAW_REQ_BGM_NO;
       evw->seq_no = SEQ_BGM_SELECT;
@@ -1147,7 +1017,18 @@ static  BOOL  EffectViewerEffectView( EFFECT_VIEWER_WORK *evw )
     evw->cursor_keta--;
     evw->draw_req = DRAW_REQ_WAZA_NO;
   }
-  return ( GFL_UI_TP_GetTrg() );
+  else if( ( trg == PAD_BUTTON_A ) && ( evw->turn_count < TURN_COUNT_MAX ) )
+  {
+    evw->turn_count++;
+    evw->draw_req = DRAW_REQ_WAZA_NO;
+  }
+  else if( ( trg == PAD_BUTTON_B ) && ( evw->turn_count > 0 ) )
+  {
+    evw->turn_count--;
+    evw->draw_req = DRAW_REQ_WAZA_NO;
+  }
+
+  return check_touch_panel( evw, EFFECT_TYPE_WAZA );
 }
 
 static  BOOL  EffectViewerStatusEffect( EFFECT_VIEWER_WORK *evw )
@@ -1182,7 +1063,8 @@ static  BOOL  EffectViewerStatusEffect( EFFECT_VIEWER_WORK *evw )
     }
     evw->draw_req = DRAW_REQ_STATUS_EFFECT;
   }
-  return ( GFL_UI_TP_GetTrg() );
+
+  return check_touch_panel( evw, EFFECT_TYPE_STATUS );
 }
 
 //======================================================================
@@ -1223,6 +1105,13 @@ static  void  EffectViewerDrawWazaNo( EFFECT_VIEWER_WORK *evw )
     waza_no %= div_num;
     div_num /= 10;
   }
+
+  GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
+  strbuf = GFL_MSG_CreateString( evw->msg,  EVMSG_NUM0 + evw->turn_count );
+  PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), EV_WAZANO_X, EV_WAZANO_Y + 16, strbuf, evw->font );
+  GFL_STR_DeleteBuffer( strbuf );
+
+  draw_dir_touch_screen( evw );
 }
 
 //======================================================================
@@ -1251,6 +1140,8 @@ static  void  EffectViewerDrawStatusEffect( EFFECT_VIEWER_WORK *evw )
     waza_no %= div_num;
     div_num /= 10;
   }
+
+  draw_dir_touch_screen( evw );
 }
 
 //======================================================================
@@ -1322,6 +1213,7 @@ static  void  EffectViewerDrawMenuList( EFFECT_VIEWER_WORK *evw )
     GFL_BMPWIN_MakeScreen( evw->bmpwin );
     GFL_BG_LoadScreenReq( GFL_BG_FRAME0_S );
 
+    evw->draw_req_old = evw->draw_req;
     evw->draw_req = DRAW_REQ_NONE;
   }
 }
@@ -1355,7 +1247,7 @@ static  void  EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
   STRBUF  *strbuf;
   const MENU_SCREEN_PARAM *msp_p = msp[ evw->menu_list ];
   const MENU_SCREEN_DATA *msd_p;
-  int ofs_y = ( evw->touch_mode ) ? 56 : 0;
+  int ofs_y = 56;
 
   GFL_FONTSYS_SetColor( LETTER_COL_NORMAL, SHADOW_COL, BACK_COL );
 
@@ -1383,53 +1275,8 @@ static  void  EffectViewerDrawMenuLabel( EFFECT_VIEWER_WORK *evw )
     GFL_HEAP_FreeMemory( str_src );
     GFL_HEAP_FreeMemory( str_dst );
     WORDSET_Delete( mons_info );
-    if( evw->touch_mode )
-    { 
-      int pos_x = 24;
-      int pos_y = 8;
-      switch( evw->rule ){ 
-      case BTL_RULE_SINGLE:
-        { 
-          int x;
-          for( x = 0 ; x < 2 ; x++ )
-          { 
-            STRBUF* str_src = GFL_MSG_CreateString( evw->msg, EVMSG_AA2BB + x );
-            PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y, str_src, evw->font );
-            GFL_HEAP_FreeMemory( str_src );
-          }
-        }
-        break;
-      case BTL_RULE_DOUBLE:
-      case BTL_RULE_TRIPLE:
-        { 
-          int x, y;
-          int x_max = ( evw->rule == BTL_RULE_DOUBLE ) ? 3 : 5;
-          int y_max = ( evw->rule == BTL_RULE_DOUBLE ) ? 4 : 6;
-          for( y = 0 ; y < y_max ; y++ )
-          { 
-            for( x = 0 ; x < x_max ; x++ )
-            { 
-              STRBUF* str_src = GFL_MSG_CreateString( evw->msg, ( EVMSG_A2B + 5 * y ) + x );
-              PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y + 24 * y, str_src, evw->font );
-              GFL_HEAP_FreeMemory( str_src );
-            }
-          }
-        }
-        break;
-      case BTL_RULE_ROTATION:
-        { 
-          int x;
-          for( x = 0 ; x < 2 ; x++ )
-          { 
-            STRBUF* str_src = GFL_MSG_CreateString( evw->msg, EVMSG_A2B + 5 * x );
-            PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y, str_src, evw->font );
-            GFL_HEAP_FreeMemory( str_src );
-          }
-        }
-        break;
-      }
-    }
   }
+  draw_dir_touch_screen( evw );
 }
 
 //======================================================================
@@ -1903,6 +1750,94 @@ static  void  pinch_bgm_check( EFFECT_VIEWER_WORK* evw )
       }
       evw->pinch_bgm_flag ^= 1;
     }
+  }
+}
+
+static  BOOL  check_touch_panel( EFFECT_VIEWER_WORK* evw, EFFECT_TYPE type )
+{
+  int hit = GFL_UI_TP_HitTrg( DirTouchHitTbl[ evw->rule ] );
+
+  if( ( hit != 0 ) && ( hit != GFL_UI_TP_HIT_NONE ) )
+  {
+    int hit_pos = hit - 1;
+    switch( type ){ 
+    case EFFECT_TYPE_MCS:
+      if( ( evw->sequence_data != NULL ) && ( evw->resource_data != NULL ) )
+      { 
+        BTLV_EFFVM_StartDebug( BTLV_EFFECT_GetVMHandle(),
+                               DirAttack[ evw->rule ][ hit_pos ], DirDefence[ evw->rule ][ hit_pos ],
+                               evw->sequence_data, evw->resource_data, NULL, evw->viewer_mode );
+      }
+      break;
+    case EFFECT_TYPE_WAZA:
+      { 
+        BTLV_EFFVM_PARAM  param;
+        param.waza_range = 0;                 ///<技の効果範囲
+        param.turn_count = evw->turn_count;   ///< ターンによって異なるエフェクトを出す場合のターン指定。（ex.そらをとぶ）
+        param.continue_count = 0;             ///< 連続して出すとエフェクトが異なる場合の連続カウンタ（ex. ころがる）
+        param.yure_cnt = 0;                   ///<ボールゆれるカウント
+        param.get_success = FALSE;            ///<捕獲成功かどうか
+        param.item_no = 0;                    ///<ボールのアイテムナンバー
+        BTLV_EFFVM_Start( BTLV_EFFECT_GetVMHandle(), DirAttack[ evw->rule ][ hit_pos ], DirDefence[ evw->rule ][ hit_pos ],
+                          evw->waza_no, &param );
+      }
+      break;
+    case EFFECT_TYPE_STATUS:
+      BTLV_EFFVM_StartThrough( BTLV_EFFECT_GetVMHandle(),
+                               DirAttack[ evw->rule ][ hit_pos ], DirDefence[ evw->rule ][ hit_pos ], evw->waza_no, NULL );
+      break;
+    }
+    evw->ret_seq_no = evw->seq_no;
+    evw->seq_no = SEQ_EFFECT_WAIT;
+  }
+
+  return ( hit == 0 );
+}
+
+static  void  draw_dir_touch_screen( EFFECT_VIEWER_WORK* evw )
+{ 
+  int pos_x = 24;
+  int pos_y = 8;
+  switch( evw->rule ){ 
+  case BTL_RULE_SINGLE:
+    { 
+      int x;
+      for( x = 0 ; x < 2 ; x++ )
+      { 
+        STRBUF* str_src = GFL_MSG_CreateString( evw->msg, EVMSG_AA2BB + x );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y, str_src, evw->font );
+        GFL_HEAP_FreeMemory( str_src );
+      }
+    }
+    break;
+  case BTL_RULE_DOUBLE:
+  case BTL_RULE_TRIPLE:
+    { 
+      int x, y;
+      int x_max = ( evw->rule == BTL_RULE_DOUBLE ) ? 3 : 5;
+      int y_max = ( evw->rule == BTL_RULE_DOUBLE ) ? 4 : 6;
+      for( y = 0 ; y < y_max ; y++ )
+      { 
+        for( x = 0 ; x < x_max ; x++ )
+        { 
+          STRBUF* str_src = GFL_MSG_CreateString( evw->msg, ( EVMSG_A2B + 5 * y ) + x );
+          PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y + 24 * y, str_src, evw->font );
+          GFL_HEAP_FreeMemory( str_src );
+        }
+      }
+    }
+    break;
+  case BTL_RULE_ROTATION:
+    { 
+      int x;
+      for( x = 0 ; x < 2 ; x++ )
+      { 
+        STRBUF* str_src = GFL_MSG_CreateString( evw->msg, EVMSG_A2B + 5 * x );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp( evw->bmpwin ), pos_x + 48 * x, pos_y, str_src, evw->font );
+        GFL_HEAP_FreeMemory( str_src );
+      }
+    }
+    break;
   }
 }
 
