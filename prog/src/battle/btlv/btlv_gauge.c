@@ -1205,8 +1205,11 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
     PutHPNumOBJ( bgw, bgcl, bgcl->hp );
     bgcl->hp_calc_req = 0;
     bgcl->hp_work = 0;
-    bgcl->damage_wait = BTLV_GAUGE_DAMAGE_WAIT;
-    bgcl->damage_wait_flag = 1;
+    if( bgcl->damage > 0 )
+    { 
+      bgcl->damage_wait = BTLV_GAUGE_DAMAGE_WAIT;
+      bgcl->damage_wait_flag = 1;
+    }
   }
   else{
     PutHPNumOBJ( bgw, bgcl, calc_hp );
