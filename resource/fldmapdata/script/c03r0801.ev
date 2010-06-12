@@ -128,7 +128,7 @@ EVENT_START ev_prg_c03r0801_timeup
 	_PL_BOAT_GAME_END()
 
 	//ブラックアウト
-	_MAP_FADE_BLACK_OUT()
+	_MAP_FADE_BLACK_OUT_SLOW()
 	_MAP_FADE_END_CHECK()
 
   //遊覧船終了
@@ -693,7 +693,7 @@ ev_long_talker:
 EVENT_START		ev_pos_c03r0801_move_01
   
   _SE_PLAY(SEQ_SE_KAIDAN)
-  _MAP_FADE_BLACK_OUT()
+  _MAP_FADE_BLACK_OUT_SLOW()
   _SE_WAIT()
   _MAP_FADE_END_CHECK()
   _FIELD_CLOSE()
@@ -702,7 +702,7 @@ EVENT_START		ev_pos_c03r0801_move_01
 
   _FIELD_OPEN()
   //船内に戻ってくる
-  _MAP_FADE_BLACK_IN()
+  _MAP_FADE_BLACK_IN_SLOW()
   //甲板から戻ってくるアニメ
  	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_out )
  	_OBJ_ANIME_WAIT()
