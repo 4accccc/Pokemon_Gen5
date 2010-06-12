@@ -260,6 +260,9 @@ EVENT_START		ev_pos_d04r0101_stop_01
 	//é©ã@ÅEàÍï‡Ç‡Ç«ÇÈ
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_back )
 	_OBJ_ANIME_WAIT()
+	
+	_OBJ_ANIME( D04R0101_STOP_01, anm_dir_u )
+	_OBJ_ANIME_WAIT()
 
 EVENT_END
 
@@ -278,3 +281,7 @@ _ANIME_LABEL	anm_stoper_stop
 _ANIME_LABEL	anm_dir_l
 	_ANIME_DATA	AC_DIR_L,1
 	_ANIME_DATA	ACMD_END,0	
+
+_ANIME_LABEL	anm_dir_u
+	_ANIME_DATA	AC_DIR_U,1
+	_ANIME_DATA	ACMD_END,0
