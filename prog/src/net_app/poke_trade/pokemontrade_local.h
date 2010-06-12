@@ -275,8 +275,8 @@ typedef enum
 typedef void (StateFunc)(POKEMON_TRADE_WORK* pState);
 
 
-
-
+// キャンセルを GTSNEGO_CANCEL_DISCONNECT_NUM やったら強制切断 GTSNEGO
+#define GTSNEGO_CANCEL_DISCONNECT_NUM (3)
 
 
 typedef enum
@@ -751,7 +751,7 @@ struct _POKEMON_TRADE_WORK{
   u8 bBackupStart;  //セーブのスタート このフラグが立ってたらエラー復帰不可能
   u8 pushSound;
   u8 vtask;   //20100603 add saito  dummyがあったので差し替えました。
-  u8 dummy1;
+  u8 triCancel;  //キャンセルを GTSNEGO_CANCEL_DISCONNECT_NUM やったら強制切断 GTSNEGO
   u8 dummy2;
   POKE_EASY_INFO pokeInfo[6+BOX_MAX_TRAY*BOX_MAX_COLUMN*BOX_MAX_RAW];
 } ;

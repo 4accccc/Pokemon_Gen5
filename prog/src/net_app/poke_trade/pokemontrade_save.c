@@ -1062,6 +1062,7 @@ static void _changeDemo_ModelTrade31(POKEMON_TRADE_WORK* pWork)
   POKETRADE_TOUCHBAR_Init(pWork);
 
   GFL_NET_ReloadIconTopOrBottom(TRUE, pWork->heapID);
+  pWork->triCancel=0;
   _CHANGE_STATE(pWork,IRC_POKMEONTRADE_ChangeFinish);
 
 }

@@ -922,6 +922,14 @@ static void _networkFriendsStandbyWait(POKEMON_TRADE_WORK* pWork)
   else if(pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_END){
     msgno = gtsnego_info_16;
     pWork->NegoWaitTime = _GTSINFO16_WAIT;
+    if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){  //GTSEƒlƒS‚Ì‚Ý‹­§Ø’fˆ—
+      pWork->triCancel++;
+      if(pWork->triCancel >= GTSNEGO_CANCEL_DISCONNECT_NUM){
+        POKEMONTRADE_CancelCall();
+        _CHANGE_STATE(pWork,POKEMONTRADE_PROC_FadeoutStart);
+        return;
+      }
+    }
   }
   GFL_MSG_GetString( pWork->pMsgData, msgno, pWork->pMessageStrBuf );
   POKETRADE_MESSAGE_WindowOpen(pWork);
