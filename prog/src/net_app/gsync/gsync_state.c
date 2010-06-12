@@ -1903,9 +1903,13 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
   else{          //ŽžŠÔ‚ðŠm”F‚·‚é
     GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
     RTCDate date, date2;
+    int savedata,nowday;
+
     GFDATE_GFDate2RTCDate(gd, &date);
     GFL_RTC_GetDate(&date2);
-    if(GFL_RTC_GetDaysOffset(&date) >= GFL_RTC_GetDaysOffset(&date2)){  //ˆê“ú‚½‚Á‚Ä‚È‚¢‚ÆŽ¸”s‚Ö
+    saveday = GFL_RTC_GetDaysOffset(&date);
+    nowday = GFL_RTC_GetDaysOffset(&date2);
+    if(saveday == nowday){  //“¯‚¶“ú‚Í‚¾‚ß
       _CHANGE_STATE(_wakeupActionFailed);
       return;
     }
