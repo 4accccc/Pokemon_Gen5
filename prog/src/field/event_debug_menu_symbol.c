@@ -44,6 +44,7 @@
 
 
 static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * p_wk );
+static BOOL debugMenuCallProc_SymbolPokeMultiCreate( DEBUG_MENU_EVENT_WORK * p_wk );
 //static BOOL debugMenuCallProc_SymbolPokeList( DEBUG_MENU_EVENT_WORK *wk );
 static BOOL debugMenuCallProc_SymbolPokeKeepLargeFull( DEBUG_MENU_EVENT_WORK * wk );
 static BOOL debugMenuCallProc_SymbolPokeKeepSmallFull( DEBUG_MENU_EVENT_WORK * wk );
@@ -83,6 +84,7 @@ static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, voi
 static const FLDMENUFUNC_LIST DATA_SubSymbolPokeList[] =
 {
   { DEBUG_FIELD_SYMBOL_11, debugMenuCallProc_SymbolPokeCreate },
+  { DEBUG_FIELD_SYMBOL_13, debugMenuCallProc_SymbolPokeMultiCreate },
   { DEBUG_FIELD_SYMBOL_05, debugMenuCallProc_SymbolPokeKeepLargeFull },
   { DEBUG_FIELD_SYMBOL_06, debugMenuCallProc_SymbolPokeKeepSmallFull },
   { DEBUG_FIELD_SYMBOL_07, debugMenuCallProc_SymbolPokeFreeLargeFull },
@@ -178,25 +180,27 @@ static GMEVENT_RESULT debugMenuSymbolPokeListEvent(GMEVENT *event, int *seq, voi
 #include "field/tpoke_data.h"
 //--------------------------------------------------------------
 /**
- * @brief シンボルポケモンを満タンにする
+ * @brief シンボルポケモンを1体追加する
  */
 //--------------------------------------------------------------
-static void addSymbolPokemons( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
+static void addSymbolPokemon_single( GAMEDATA* gamedata, SYMBOL_ZONE_TYPE zone_type )
 {
-  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
   SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
   SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
-  TPOKE_DATA * tpdata = TPOKE_DATA_Create( HEAPID_FIELDMAP );
   BOOL need_large;
+
+  if( SymbolSave_CheckSpace( symbol_save, zone_type ) == SYMBOL_SPACE_NONE ) {
+    return;
+  }
 
   if ( zone_type == SYMBOL_ZONE_TYPE_KEEP_LARGE || zone_type == SYMBOL_ZONE_TYPE_FREE_LARGE ) {
     need_large = TRUE;
   } else {
     need_large = FALSE;
   }
-  
-  while ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE )
+
   {
+    TPOKE_DATA * tpdata = TPOKE_DATA_Create( HEAPID_FIELDMAP );
     u16 monsno;
     u8 sex;
     u8 move_type = GFUser_GetPublicRand0( 8 );
@@ -205,9 +209,45 @@ static void addSymbolPokemons( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
       sex = POKETOOL_GetSex( monsno, 0, 0 );
     } while ( need_large != TPOKE_DATA_IsSizeBig( gamedata, tpdata, monsno, sex, 0 ) );
     SymbolSave_Field_Set( symbol_save, monsno, 0, sex, 0, move_type, zone_type );
+    TPOKE_DATA_Delete( tpdata );
   }
-  TPOKE_DATA_Delete( tpdata );
 }
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンを満タンにする
+ */
+//--------------------------------------------------------------
+static void addSymbolPokemons_full( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
+  SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
+
+  while ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE )
+  {
+    addSymbolPokemon_single( gamedata, zone_type );
+  }
+}
+//--------------------------------------------------------------
+/**
+ * @brief シンボルポケモンを任意の数だけ追加する
+ */
+//--------------------------------------------------------------
+static void addSymbolPokemons_multi( GAMESYS_WORK * gsys, SYMBOL_ZONE_TYPE zone_type, int num )
+{
+  GAMEDATA * gamedata = GAMESYSTEM_GetGameData( gsys );
+  SAVE_CONTROL_WORK * svctrl = GAMEDATA_GetSaveControlWork( gamedata );
+  SYMBOL_SAVE_WORK * symbol_save = SymbolSave_GetSymbolData( svctrl );
+  int add_count = 0;
+
+  while( ( SymbolSave_CheckSpace( symbol_save, zone_type ) != SYMBOL_SPACE_NONE ) &&
+         ( add_count < num ) )
+  {
+    addSymbolPokemon_single( gamedata, zone_type );
+    add_count++;
+  }
+} 
+
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static void countSymbolPoke( SYMBOL_SAVE_WORK * symbol_save, SYMBOL_ZONE_TYPE zone_type )
@@ -264,28 +304,28 @@ static GMEVENT_RESULT symbolPokeCountupEvent( GMEVENT * event, int *seq, void *w
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_SymbolPokeKeepLargeFull( DEBUG_MENU_EVENT_WORK * wk )
 {
-  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_KEEP_LARGE );
+  addSymbolPokemons_full( wk->gmSys, SYMBOL_ZONE_TYPE_KEEP_LARGE );
   return FALSE;
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_SymbolPokeKeepSmallFull( DEBUG_MENU_EVENT_WORK * wk )
 {
-  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_KEEP_SMALL );
+  addSymbolPokemons_full( wk->gmSys, SYMBOL_ZONE_TYPE_KEEP_SMALL );
   return FALSE;
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_SymbolPokeFreeLargeFull( DEBUG_MENU_EVENT_WORK * wk )
 {
-  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_LARGE );
+  addSymbolPokemons_full( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_LARGE );
   return FALSE;
 }
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 static BOOL debugMenuCallProc_SymbolPokeFreeSmallFull( DEBUG_MENU_EVENT_WORK * wk )
 {
-  addSymbolPokemons( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_SMALL );
+  addSymbolPokemons_full( wk->gmSys, SYMBOL_ZONE_TYPE_FREE_SMALL );
   return FALSE;
 }
 //--------------------------------------------------------------
@@ -433,6 +473,8 @@ static const BOOL debugMenuUpdateSkb( DEBUG_SKB_WORK *work )
 }
 
 static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void *wk );
+static GMEVENT_RESULT debugMenuSymbolpokeMultiCreate( GMEVENT *event, int *seq, void *wk );
+
 typedef struct
 {
   HEAPID heapId;
@@ -443,42 +485,51 @@ typedef struct
   GFL_MSGDATA  *msgHandle;
   GFL_FONT *fontHandle;
   GFL_BMPWIN *bmpWin;
+  WORDSET *wordset;
   
   u16 monsNo;
   u16 wazaNo;
   u16 sex;
   u16 place;
   u8  moveType;
-  
+  u16 addNum; 
+
   DEBUG_SKB_WORK *skbWork;
   
 }DEBUG_SYMBOL_POKE_CREATE;
 
+
+static void InitEventWork( DEBUG_SYMBOL_POKE_CREATE *work, DEBUG_MENU_EVENT_WORK *wk )
+{
+  GFL_STD_MemClear( work, sizeof(DEBUG_SYMBOL_POKE_CREATE) );
+
+  work->gmSys = wk->gmSys;
+  work->gmEvent = wk->gmEvent;
+  work->fieldWork = wk->fieldWork;
+  work->heapId = wk->heapID;
+  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
+  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_DEBUG_MESSAGE , NARC_debug_message_d_field_dat , work->heapId );
+
+  work->bmpWin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG , 1,19,30,4 ,11,GFL_BMP_CHRAREA_GET_B);
+  work->wordset = WORDSET_Create( work->heapId );
+}
+
+
+/**
+ * @brief 単独追加
+ */ 
 static BOOL debugMenuCallProc_SymbolPokeCreate( DEBUG_MENU_EVENT_WORK * wk )
 {
-  GAMESYS_WORK *gsys = wk->gmSys;
   GMEVENT *event = wk->gmEvent;
-  HEAPID heapID = wk->heapID;
-  FIELDMAP_WORK *fieldWork = wk->fieldWork;
   DEBUG_SYMBOL_POKE_CREATE *work;
 
   GMEVENT_Change( event, debugMenuSymbolpokeCreate, sizeof(DEBUG_SYMBOL_POKE_CREATE) );
 
   work = GMEVENT_GetEventWork( event );
-  GFL_STD_MemClear( work, sizeof(DEBUG_SYMBOL_POKE_CREATE) );
+  InitEventWork( work, wk );
 
-  work->gmSys = gsys;
-  work->gmEvent = event;
-  work->fieldWork = fieldWork;
-  work->heapId = heapID;
-  work->fontHandle = GFL_FONT_Create( ARCID_FONT , NARC_font_large_gftr , GFL_FONT_LOADTYPE_FILE , FALSE , work->heapId );
-  work->msgHandle = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL , ARCID_DEBUG_MESSAGE , NARC_debug_message_d_field_dat , work->heapId );
-
-  work->bmpWin = GFL_BMPWIN_Create( FLDBG_MFRM_MSG , 1,19,30,4 ,11,GFL_BMP_CHRAREA_GET_B);
-
-  return TRUE;
-
-}
+  return TRUE; 
+} 
 
 static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void *wk )
 {
@@ -515,7 +566,7 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
       GFL_STR_DeleteBuffer( str );
     }
     GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
-    work->skbWork = debugMenuInitSkb( work->heapId , NARC_message_wazaname_dat );
+    work->skbWork = debugMenuInitSkb( work->heapId , NARC_message_wazaname_dat ); 
     *seq += 1;
     break;
 
@@ -578,8 +629,8 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
       GFL_STR_DeleteBuffer( str );
     }
     GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
-    *seq += 1;
     work->place = 0;
+    *seq += 1;
     break;
   
   case 7:
@@ -620,8 +671,8 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
       GFL_STR_DeleteBuffer( str );
     }
     GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
-    *seq += 1;
     work->moveType = 0;
+    *seq += 1;
     break;
     
   case 9:
@@ -653,7 +704,7 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
       }
     }
     break;
-  
+
   case 10:
     {
       TPOKE_DATA * tpdata = TPOKE_DATA_Create(work->heapId);
@@ -683,6 +734,152 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
     GFL_BMPWIN_Delete( work->bmpWin );
     GFL_MSG_Delete( work->msgHandle );
     GFL_FONT_Delete( work->fontHandle );
+    WORDSET_Delete( work->wordset );
+    return GMEVENT_RES_FINISH;
+    break; 
+  }
+  
+  return GMEVENT_RES_CONTINUE;
+}
+
+
+/**
+ * @brief 複数追加
+ */
+static BOOL debugMenuCallProc_SymbolPokeMultiCreate( DEBUG_MENU_EVENT_WORK * wk )
+{
+  GMEVENT *event = wk->gmEvent;
+  DEBUG_SYMBOL_POKE_CREATE *work;
+
+  GMEVENT_Change( event, debugMenuSymbolpokeMultiCreate, sizeof(DEBUG_SYMBOL_POKE_CREATE) );
+
+  work = GMEVENT_GetEventWork( event );
+  InitEventWork( work, wk );
+
+  return TRUE; 
+}
+
+static GMEVENT_RESULT debugMenuSymbolpokeMultiCreate( GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_SYMBOL_POKE_CREATE *work = wk;
+
+  switch( *seq )
+  {
+  case 0:
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_04_01 );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    work->place = 0;
+    *seq += 1;
+    break;
+  
+  case 1:
+    {
+      BOOL isUpdate = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        *seq += 1;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        work->place = (work->place+3)%4;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        work->place = (work->place+1)%4;
+        isUpdate = TRUE;
+      }
+      if( isUpdate == TRUE )
+      {
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_04_01+work->place );
+        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str, work->fontHandle);
+        GFL_STR_DeleteBuffer( str );
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+      }
+    }
+    break;
+
+  case 2:
+    work->addNum = 1; 
+    GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+    {
+      STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_13_01 );
+      STRBUF *str_ex = GFL_STR_CreateBuffer( 256, work->heapId );
+      WORDSET_RegisterNumber( work->wordset, 0, work->addNum, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT ); 
+      WORDSET_ExpandStr( work->wordset, str_ex, str );
+      PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str_ex, work->fontHandle);
+      GFL_STR_DeleteBuffer( str );
+      GFL_STR_DeleteBuffer( str_ex );
+    }
+    GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+    *seq += 1;
+    break;
+
+  case 3:
+    {
+      BOOL isUpdate = FALSE;
+      if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A )
+      {
+        *seq += 1;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_UP )
+      {
+        work->addNum = (work->addNum+1)%SYMBOL_POKE_MAX;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
+      {
+        work->addNum = (work->addNum+SYMBOL_POKE_MAX-1)%SYMBOL_POKE_MAX;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_LEFT )
+      {
+        work->addNum = (work->addNum+SYMBOL_POKE_MAX-10)%SYMBOL_POKE_MAX;
+        isUpdate = TRUE;
+      }
+      else
+      if( GFL_UI_KEY_GetTrg() & PAD_KEY_RIGHT )
+      {
+        work->addNum = (work->addNum+10)%SYMBOL_POKE_MAX;
+        isUpdate = TRUE;
+      }
+      if( isUpdate == TRUE )
+      {
+        STRBUF *str = GFL_MSG_CreateString( work->msgHandle , DEBUG_FIELD_SYMBOL_13_01 );
+        STRBUF *str_ex = GFL_STR_CreateBuffer( 256, work->heapId );
+        WORDSET_RegisterNumber( work->wordset, 0, work->addNum, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT ); 
+        WORDSET_ExpandStr( work->wordset, str_ex, str );
+        GFL_BMP_Clear(GFL_BMPWIN_GetBmp(work->bmpWin), 0x0f );
+        PRINTSYS_Print( GFL_BMPWIN_GetBmp(work->bmpWin), 0, 0, str_ex, work->fontHandle);
+        GFL_STR_DeleteBuffer( str );
+        GFL_STR_DeleteBuffer( str_ex );
+        GFL_BMPWIN_MakeTransWindow_VBlank( work->bmpWin );
+      }
+    }
+    break;
+
+  case 4:
+    addSymbolPokemons_multi( work->gmSys, work->place, work->addNum );
+    *seq += 1;
+    break;
+  
+  case 5:
+    GFL_BMPWIN_ClearTransWindow_VBlank( work->bmpWin );
+    GFL_BMPWIN_Delete( work->bmpWin );
+    GFL_MSG_Delete( work->msgHandle );
+    GFL_FONT_Delete( work->fontHandle );
+    WORDSET_Delete( work->wordset );
     return GMEVENT_RES_FINISH;
     break;
 
@@ -690,6 +887,7 @@ static GMEVENT_RESULT debugMenuSymbolpokeCreate( GMEVENT *event, int *seq, void 
   
   return GMEVENT_RES_CONTINUE;
 }
+
 
 //======================================================================
 //======================================================================
