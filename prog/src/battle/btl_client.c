@@ -2527,6 +2527,11 @@ static BOOL selact_Escape( BTL_CLIENT* wk, int* seq )
           ClientSubProc_Set( wk, selact_Root );
         }
       }
+      // コマンド選択時間切れ対処
+      else if( CmdLimit_CheckOver(wk) )
+      {
+        ClientSubProc_Set( wk, selact_ForceQuit );
+      }
     }
     break;
 
@@ -3082,7 +3087,7 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, const BTL_POKEPARAM* pr
     return BTL_CANTESC_NULL;
   }
   #endif
-  
+
   #ifdef DEBUG_ONLY_FOR_hudson
   if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
   {
@@ -4116,8 +4121,11 @@ static void setupPokeSelParam( BTL_CLIENT* wk, u8 mode, u8 numSelect, BTL_POKESE
   BTL_POKESELECT_RESULT_Init( result, param );
 }
 
-
-// ポケモン選択画面結果 -> 決定アクションパラメータに変換
+//-----------------------------------------------------------------------------
+/**
+ * ポケモン選択画面結果 -> 決定アクションパラメータに変換
+ */
+//-----------------------------------------------------------------------------
 static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res )
 {
   // res->cnt=選択されたポケモン数,  wk->myChangePokeCnt=自分が担当する入れ替えリクエストポケモン数
@@ -4140,8 +4148,11 @@ static void storePokeSelResult( BTL_CLIENT* wk, const BTL_POKESELECT_RESULT* res
     wk->returnDataSize = sizeof(wk->actionParam[0]) * res->cnt;
   }
 }
-
-// 強制終了時のポケモン選択自動決定処理
+//-----------------------------------------------------------------------------
+/**
+ *  強制終了時のポケモン選択自動決定処理
+ */
+//-----------------------------------------------------------------------------
 static void storePokeSelResult_ForceQuit( BTL_CLIENT* wk )
 {
   const BTL_POKEPARAM* bpp;
