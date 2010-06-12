@@ -1416,7 +1416,8 @@ void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
   // 前のを削除する
   Zukan_Info_DeleteTypeicon( work, work->curr_swap_typeicon );
   Zukan_Info_DeleteMessage( work );
-  
+ 
+#if 0  //Message生成の順番を最後にしてみる
   // 次のを生成する
   if( lang == ZUKAN_INFO_LANG_NONE || work->monsno > FOREIGN_MONSNO_MAX )
   {
@@ -1428,6 +1429,19 @@ void ZUKAN_INFO_ChangeLang( ZUKAN_INFO_WORK* work,
   }
   Zukan_Info_CreateMultiLangTypeicon( work, lang, work->curr_swap_typeicon );
   Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
+#else
+  // 次のを生成する
+  Zukan_Info_CreateMultiLangTypeicon( work, lang, work->curr_swap_typeicon );
+  Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
+  if( lang == ZUKAN_INFO_LANG_NONE || work->monsno > FOREIGN_MONSNO_MAX )
+  {
+    Zukan_Info_CreateMessage( work );
+  }
+  else
+  {
+    Zukan_Info_CreateForeignMessage( work, lang );
+  }
+#endif
 }
 
 //-------------------------------------
@@ -2823,8 +2837,8 @@ static void Zukan_Info_CreateOthers( ZUKAN_INFO_WORK* work )
 }
 static void Zukan_Info_CreateForeignOthers( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LANG lang )
 {
-  // Message
-  Zukan_Info_CreateForeignMessage( work, lang );
+//Message生成の順番を最後にしてみる  // Message
+//Message生成の順番を最後にしてみる  Zukan_Info_CreateForeignMessage( work, lang );
 
   // タイプアイコン
   Zukan_Info_CreateMultiLangTypeicon( work, lang, work->curr_swap_typeicon );
@@ -2841,6 +2855,9 @@ static void Zukan_Info_CreateForeignOthers( ZUKAN_INFO_WORK* work, ZUKAN_INFO_LA
 
   // タイプアイコンとポケモンの足跡の表示/非表示を設定する
   Zukan_Info_SetDrawEnableTypeiconPokefoot( work, work->get_flag );
+
+  // Message
+  Zukan_Info_CreateForeignMessage( work, lang );
 }
 
 
