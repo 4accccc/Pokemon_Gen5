@@ -1903,7 +1903,7 @@ static void _ghttpPokemonListDownload(G_SYNC_WORK* pWork)
   else{          //ŽžŠÔ‚ðŠm”F‚·‚é
     GFDATE gd = DREAMWORLD_SV_GetTime(DREAMWORLD_SV_GetDreamWorldSaveData(pWork->pSaveData));
     RTCDate date, date2;
-    int savedata,nowday;
+    int saveday,nowday;
 
     GFDATE_GFDate2RTCDate(gd, &date);
     GFL_RTC_GetDate(&date2);
