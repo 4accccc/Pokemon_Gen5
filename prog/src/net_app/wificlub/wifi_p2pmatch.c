@@ -2348,16 +2348,19 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
   BOOL now_wait;
   MCR_MOVEOBJ* p_obj;
   WIFI_STATUS* p_status;
-  u32 status;
+  u8 status;
+  u8 gamemode;
 
   for(i = 0;i < WIFIP2PMATCH_MEMBER_MAX;i++){
 
     p_status = WifiFriendMatchStatusGet( i );
     status = _WifiMyStatusGet( wk, p_status );
+    gamemode = _WifiMyGameModeGet(wk, p_status);
     if(DWC_STATUS_OFFLINE == WifiDwc_getFriendStatus( i )){
       status = WIFI_GAME_NONE;
     }
     if((wk->matchStatusBackup[i]  != status) ||
+       (wk->matchGamemodeBackup[i]  != gamemode) ||
        (wk->matchVchatBackup[i]  != WIFI_STATUS_GetVChatStatus(p_status)) ){
 
       // オブジェクトワーク
@@ -2387,6 +2390,7 @@ static int _checkUserDataMatchStatus(WIFIP2PMATCH_WORK* wk)
         }
       }
       wk->matchStatusBackup[i] = status;
+      wk->matchGamemodeBackup[i] = gamemode;
       wk->matchVchatBackup[i] = WIFI_STATUS_GetVChatStatus(p_status);
       num++;
     }
@@ -3384,6 +3388,23 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
         return seq;
       }
+#if PM_DEBUG
+      if(PAD_BUTTON_Y & GFL_UI_KEY_GetTrg()){
+        if(WIFI_STATUS_GetGameMode(wk->pMatch) != WIFI_GAME_UNKNOWN+1){
+          _myStatusChange(wk, WIFI_STATUS_RECRUIT,WIFI_GAME_UNKNOWN+1);
+          WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_074, FALSE);
+        }
+        else{
+          _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
+          WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_075, FALSE);
+        }
+        PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
+        _userDataInfoDisp(wk);
+        _CHANGESTATE(wk,WIFIP2PMATCH_VCHATWIN_WAIT);
+        WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        return seq;
+      }
+#endif
     }
 
     // した画面も動かない
@@ -6278,7 +6299,7 @@ static void _myStatusChange(WIFIP2PMATCH_WORK *wk, int status,int gamemode)
   if((status == WIFI_STATUS_WAIT) && (gamemode==WIFI_GAME_LOGIN_WAIT)){
     WIFI_STATUS_ResetVChatMac(wk->pMatch);
   }
-  if((status == WIFI_STATUS_PLAYING) && (gamemode!=WIFI_GAME_UNIONMATCH)){
+  if((status == WIFI_STATUS_PLAYING) && (gamemode<WIFI_GAME_UNIONMATCH)){
     //バトルや対戦以外でも更新する為にここにした
     WifiList_SetLastPlayDate( wk->pList, GFL_NET_DWC_GetFriendIndex());
   }

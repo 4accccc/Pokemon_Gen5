@@ -445,8 +445,9 @@ struct _WIFIP2PMATCH_WORK{
   int friendMatchReadCount;		// ビーコンを受信した友達数
   u8 index2No[WIFIP2PMATCH_MEMBER_MAX];	// フレンドナンバー配列
   u8 index2NoBackUp[WIFIP2PMATCH_MEMBER_MAX];	// フレンドナンバー配列バックアップ
-  int matchStatusBackup[WIFIP2PMATCH_MEMBER_MAX];// 友達ビーコンデータが変わったかﾁｪｯｸ用
-  int matchVchatBackup[WIFIP2PMATCH_MEMBER_MAX];// 友達ビーコンデータが変わったかﾁｪｯｸ用
+  u8 matchStatusBackup[WIFIP2PMATCH_MEMBER_MAX];// 友達ビーコンデータが変わったかﾁｪｯｸ用
+  u8 matchGamemodeBackup[WIFIP2PMATCH_MEMBER_MAX];// 友達ビーコンデータが変わったかﾁｪｯｸ用
+  u8 matchVchatBackup[WIFIP2PMATCH_MEMBER_MAX];// 友達ビーコンデータが変わったかﾁｪｯｸ用
 //  NAMEIN_PARAM*		nameinParam;
   
   // メインリスト用ワーク
