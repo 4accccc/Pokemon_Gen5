@@ -1967,7 +1967,7 @@ static void Btl_Rec_Sel_FixUpdateTime( BTL_REC_SEL_PARAM* param, BTL_REC_SEL_WOR
     WORDSET_ExpandStr( wordset, strbuf, src_strbuf );
    
     bmp_data = GFL_BMPWIN_GetBmp( work->fix_bmpwin[FIX_TIME] );
-    PRINTSYS_PrintQueColor( work->print_que_fix_time, bmp_data, 2, 0, strbuf, work->font, color );
+    PRINTSYS_PrintQueColor( work->print_que_fix_time, bmp_data, 2, 2, strbuf, work->font, color );
     work->fix_finish[FIX_TIME] = FALSE;
 
     GFL_STR_DeleteBuffer( strbuf );
