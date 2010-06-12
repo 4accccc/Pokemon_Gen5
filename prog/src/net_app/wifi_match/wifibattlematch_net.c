@@ -45,17 +45,21 @@
 //=====================================
 #ifdef PM_DEBUG
 #define DEBUG_DEBUG_NET_Printf_ON //担当者のみのプリント表示をON
-#define DEBUGWIN_USE
+#define DEBUGWIN_OWNER_NET_ONLY   //担当者は自分としかつながらなくなる
+#define DEBUG_SC_RELEASE_CHECK    //SCの開放チェックチェック
+#define DEBUG_GDB_RELEASE_CHECK   //GDBの開放チェック
 #endif //PM_DEBUG
 
 //担当者は自分しかつながらなくなる
+#ifdef DEBUGWIN_OWNER_NET_ONLY
 #if defined(DEBUG_ONLY_FOR_shimoyamada)
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFF
 #elif defined(DEBUG_ONLY_FOR_toru_nagihashi)
 #undef  MATCHINGKEY
 #define MATCHINGKEY 0xFE
-#endif 
+#endif  //defined
+#endif // DEBUGWIN_OWNER_NET_ONLY
 
 //担当者のみのプリント表示
 #ifdef DEBUG_DEBUG_NET_Printf_ON
@@ -71,6 +75,26 @@
 #else //DEBUG_DEBUG_NET_Printf_ON
 #define DEBUG_NET_Printf(...)  /*  */
 #endif  //DEBUG_DEBUG_NET_Printf_ON
+
+//SCの開放チェックチェック
+#ifdef DEBUG_SC_RELEASE_CHECK
+static int sc_release_cnt   = 0;
+#define DEBUG_SC_RELEASE_Increment {DEBUG_NET_Printf( "sc_release cnt=%d\n", ++sc_release_cnt );}  
+#define DEBUG_SC_RELEASE_Decrement {DEBUG_NET_Printf( "sc_release cnt=%d\n", --sc_release_cnt );}  
+#else //DEBUG_SC_RELEASE_CHECK
+#define DEBUG_SC_RELEASE_Increment /*  */
+#define DEBUG_SC_RELEASE_Decrement /*  */
+#endif //DEBUG_SC_RELEASE_CHECK
+
+//GDBの開放チェック
+#ifdef DEBUG_GDB_RELEASE_CHECK
+static int gdb_release_cnt   = 0;
+#define DEBUG_GDB_RELEASE_Increment {DEBUG_NET_Printf( "gdb_release cnt=%d\n", ++gdb_release_cnt );}  
+#define DEBUG_GDB_RELEASE_Decrement {DEBUG_NET_Printf( "gdb_release cnt=%d\n", --gdb_release_cnt );}  
+#else //DEBUG_GDB_RELEASE_CHECK
+#define DEBUG_GDB_RELEASE_Increment /*  */
+#define DEBUG_GDB_RELEASE_Decrement /*  */
+#endif //DEBUG_GDB_RELEASE_CHECK
 
 
 
@@ -1435,7 +1459,7 @@ WIFIBATTLEMATCH_NET_SC_STATE WIFIBATTLEMATCH_SC_ProcessReport( WIFIBATTLEMATCH_N
       if( cp_error->errorType == DWC_ETYPE_DISCONNECT
           || cp_error->errorType == DWC_ETYPE_SHUTDOWN_FM )
       {
-        //切断エラーなのでシャットダウンはしなくてよい
+        //DwcRap_Sc_Finalize( p_wk );
         return WIFIBATTLEMATCH_NET_SC_STATE_FAILED;
       }
  

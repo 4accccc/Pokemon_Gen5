@@ -91,7 +91,7 @@ enum
 #define WIFIBATTLEMATCH_NET_SAKE_SERVER_WAIT_SYNC2 (60*60)
 #endif
 
-#define WBM_SC_HEAP_SIZE  (0x30000)
+#define WBM_SC_HEAP_SIZE  (0x60000)
 
 //=============================================================================
 /**
