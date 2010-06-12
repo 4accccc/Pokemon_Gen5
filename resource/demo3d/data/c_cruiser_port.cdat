@@ -14,7 +14,7 @@
 static const DEMO3D_SCENE_DATA data_c_cruiser_port_scene = {
 	NARC_data_demo3d_c_cruiser_port_camera_bin,	///<カメラID
 	DEMO3D_BGM_NONE,	///<BGM No
-	ZONE_ID_T01,	///<ゾーンID
+	ZONE_ID_C03P17,	///<ゾーンID
 	DEMO3D_FRAME_RATE_30FPS,	///<フレームレート定義
 	FALSE,	///<2画面連結
 	TRUE,FALSE,	///<αブレンドOn/Off,アンチエイリアスOn/Off
