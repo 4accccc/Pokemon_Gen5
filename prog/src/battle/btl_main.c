@@ -926,6 +926,7 @@ static BOOL setup_alone_double( int* seq, void* work )
 
   // Server ì¬
   wk->server = BTL_SERVER_Create( wk, &wk->randomContext, &wk->pokeconForServer, bagMode, wk->heapID );
+  wk->ImServer = TRUE;
 
   // Client ì¬
   wk->client[0] = BTL_CLIENT_Create( wk, &wk->pokeconForClient, BTL_COMM_NONE, sp->netHandle, 0, 2,
@@ -5499,7 +5500,6 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
       }
     }
 
-
     PokeParty_Copy( srcParty, wk->setupParam->party[ BTL_CLIENT_PLAYER ] );
     {
       u32 i;
@@ -5766,6 +5766,7 @@ static void Kentei_ClearField( BATTLE_SETUP_PARAM* sp )
   sp->WinPokeNum = 0;    //“|‚µ‚½ƒ|ƒPƒ‚ƒ“”
   sp->LosePokeNum = 0;   //“|‚³‚ê‚½ƒ|ƒPƒ‚ƒ“”
   sp->UseWazaNum = 0;    //Žg—p‚µ‚½‹Z‚Ì”
+  sp->HPSum = 0;
 }
 static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
 {
@@ -5795,6 +5796,7 @@ static void Bspstore_KenteiData( BTL_MAIN_MODULE* wk )
       for(i=0; i<memberCnt; ++i){
         BTL_POKEPARAM* bpp = BTL_PARTY_GetMemberData( party, i );
         sp->UseWazaNum += BPP_WAZA_GetUsedCount( bpp );
+        sp->HPSum += BPP_GetValue( bpp, BPP_HP );
       }
       sp->LosePokeNum = (memberCnt - aliveCnt);
 

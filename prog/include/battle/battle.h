@@ -298,6 +298,8 @@ typedef struct {
   u32         recDataSize;      ///< 録画データサイズ
   GFL_STD_RandContext  recRandContext;    ///< 録画データ用乱数コンテキスト
 
+  // -- バトル検定結果 --
+  u16  HPSum;       //生き残りポケモンのHP総和
   u8 TurnNum;       //かかったターン数
   u8 PokeChgNum;    //交代回数
   u8 VoidAtcNum;    //効果がない技を出した回数
