@@ -39,6 +39,24 @@
 #define NET_MEMORY_PRINT(...)           ((void) 0)
 #endif  // NET_MEMORY_DEBUG
 
+#ifdef PM_DEBUG
+#ifdef DEBUG_ONLY_FOR_toru_nagihashi
+#define DEBUG_SUBHEAP_CHECK,
+#endif //DEBUG_ONLY_FOR_toru_nagihashi
+#endif //PM_DEBUG
+
+#ifdef DEBUG_SUBHEAP_CHECK
+static int alloc_cnt  = 0;
+#define DEBUG_ALLOC_Increment {NAGI_Printf( "sub_heap alloc cnt=%d\n", ++alloc_cnt );}  
+#define DEBUG_ALLOC_Decrement {NAGI_Printf( "sub heap alloc cnt=%d\n", --alloc_cnt );}  
+#else   //DEBUG_SUBHEAP_CHECK
+#define DEBUG_ALLOC_Increment /*  */
+#define DEBUG_ALLOC_Decrement /*  */
+#endif  //DEBUG_SUBHEAP_CHECK
+
+
+
+#define DWCRAPCOMMON_SUBHEAP_GROUPID  0xea
 
 typedef struct{
 	NNSFndHeapHandle headHandle;
@@ -70,6 +88,11 @@ void DWC_RAPCOMMON_SetSubHeapID( DWCAllocType SubAllocType, u32 size, HEAPID hea
   pDwcRapWork->heapPtrSub    = GFL_HEAP_AllocMemory(heapID, size-0x80);
   pDwcRapWork->headHandleSub = NNS_FndCreateExpHeap( (void *)( ((u32)pDwcRapWork->heapPtrSub + 31) / 32 * 32 ), size-0x80-64); 
   pDwcRapWork->SubAllocType = SubAllocType;
+
+  NNS_FndSetAllocModeForExpHeap( pDwcRapWork->headHandleSub, NNS_FND_EXPHEAP_ALLOC_MODE_NEAR );
+  NNS_FndSetGroupIDForExpHeap(
+	      pDwcRapWork->headHandleSub,DWCRAPCOMMON_SUBHEAP_GROUPID );
+
 }
 
 //----------------------------------------------------------------------------
@@ -110,6 +133,7 @@ void* DWC_RAPCOMMON_Alloc( DWCAllocType name, u32 size, int align )
     ptr = NNS_FndAllocFromExpHeapEx( pDwcRapWork->headHandleSub, size, align );
     (void)OS_RestoreInterrupts(enable);
     NET_MEMORY_PRINT( "sub alloc memory size=%d rest=%d %d\n", size, NNS_FndGetTotalFreeSizeForExpHeap(pDwcRapWork->headHandleSub),name );
+    DEBUG_ALLOC_Increment
   }
   else
   { 
@@ -167,11 +191,16 @@ void DWC_RAPCOMMON_Free( DWCAllocType name, void *ptr, u32 size )
 
 
   //サブヒープが登録されていてかつ、指定したアロケートタイプだったら
-  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
+//  if( (pDwcRapWork->headHandleSub != NULL ) &&  (name == pDwcRapWork->SubAllocType ) )
+  if( DWCRAPCOMMON_SUBHEAP_GROUPID == NNS_FndGetGroupIDForMBlockExpHeap(ptr) )
   { 
-    OSIntrMode  enable = OS_DisableInterrupts();
-    NNS_FndFreeToExpHeap( pDwcRapWork->headHandleSub, ptr );
-    (void)OS_RestoreInterrupts(enable);
+    GF_ASSERT( pDwcRapWork->headHandleSub );
+    {
+      OSIntrMode  enable = OS_DisableInterrupts();
+      NNS_FndFreeToExpHeap( pDwcRapWork->headHandleSub, ptr );
+      (void)OS_RestoreInterrupts(enable);
+      DEBUG_ALLOC_Decrement
+    }
   }
   else
   {
