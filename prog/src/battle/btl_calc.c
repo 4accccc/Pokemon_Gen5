@@ -900,8 +900,8 @@ WazaSick BTL_CALC_CheckMentalSick( const BTL_POKEPARAM* bpp )
 // サイドエフェクト関連
 //=============================================================================================
 static const struct {
-  u16  waza;
-  u16  side;
+  u16  waza:11; //wazanoが2048,SIDEEFFの定義値が32を越えたら拡張の必要アリ
+  u16  side:5;
 }WazaSideDispatchTbl[] = {
   { WAZANO_RIHUREKUTAA,    BTL_SIDEEFF_REFRECTOR },      ///< 物理攻撃を半減
   { WAZANO_HIKARINOKABE,   BTL_SIDEEFF_HIKARINOKABE },   ///< 特殊攻撃を半減
@@ -1065,45 +1065,14 @@ u8 BTL_RULE_HandPokeIndex( BtlRule rule, u8 numCoverPos )
  */
 BOOL BTL_CALC_IsTrtypeGymLeader( u16 trType )
 {
-  static const u16 typeTbl[] = {
-    TRTYPE_LEADER1A,
-    TRTYPE_LEADER1B,
-    TRTYPE_LEADER1C,
-    TRTYPE_LEADER2,
-    TRTYPE_LEADER3,
-    TRTYPE_LEADER4,
-    TRTYPE_LEADER5,
-    TRTYPE_LEADER6,
-    TRTYPE_LEADER7,
-    TRTYPE_LEADER8A,
-    TRTYPE_LEADER8B,
-  };
-  u32 i;
-  for(i=0; i<NELEMS(typeTbl); ++i){
-    if( typeTbl[i] == trType ){
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return ( TT_TrainerTypeGrpGet( trType ) == TRTYPE_GRP_LEADER);
 }
 /**
  *  トレーナータイプが四天王に該当するか判定
  */
 BOOL BTL_CALC_IsTrtypeBig4( u16 trType )
 {
-  static const u16 typeTbl[] = {
-    TRTYPE_BIGFOUR1,
-    TRTYPE_BIGFOUR2,
-    TRTYPE_BIGFOUR3,
-    TRTYPE_BIGFOUR4,
-  };
-  u32 i;
-  for(i=0; i<NELEMS(typeTbl); ++i){
-    if( typeTbl[i] == trType ){
-      return TRUE;
-    }
-  }
-  return FALSE;
+  return ( TT_TrainerTypeGrpGet( trType ) == TRTYPE_GRP_BIGFOUR);
 }
 /**
  *  トレーナータイプがボス戦（なつき度上昇）に該当するか判定
