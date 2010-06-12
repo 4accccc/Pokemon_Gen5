@@ -37,6 +37,9 @@
 
 #define MCSS_CELL_ANIM_NONSTOP ( 0xff )    //マルチセルアニメが1周しても止める動作をしない
 
+#define	MCSS_DEFAULT_Z			  ( 1 << 8 )
+#define	MCSS_DEFAULT_Z_ORTHO	( 1 << 10 )
+
 #ifndef __ASM_NO_DEF_
 //--------------------------------------------------------------------------
 /**
@@ -148,6 +151,7 @@ extern  u16             MCSS_GetSizeY( MCSS_WORK *mcss );
 extern  s16             MCSS_GetOffsetX( MCSS_WORK *mcss );
 extern  s16             MCSS_GetOffsetY( MCSS_WORK *mcss );
 extern  u8              MCSS_GetFlyFlag( MCSS_WORK *mcss );
+extern  u32             MCSS_GetCells( MCSS_WORK *mcss );
 extern	void						MCSS_SetAnimCtrlCallBack( MCSS_WORK *mcss, u32 param, NNSG2dAnmCallBackPtr pFunc, u16 frameIdx );
 extern  void	          MCSS_SetTraverseMCNodesCallBack( MCSS_WORK *mcss, u32 param, NNSG2dMCTraverseNodeCallBack pFunc );
 extern	void						MCSS_SetPaletteFade( MCSS_WORK *mcss, u8 start_evy, u8 end_evy, s8 wait, u32 rgb );
