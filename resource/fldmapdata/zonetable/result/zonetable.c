@@ -13002,7 +13002,7 @@ static const ZONEDATA ZoneData[] = {
 		enc_dummy,
 		NARC_eventdata_r15r0401_bin,
     ZONE_ID_R15,
-		MAPNAME_R16,
+		MAPNAME_R15,
 		0,
 		WEATHER_NO_SUNNY,
     FALSE,
