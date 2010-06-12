@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-10T22:34:34"/>
+	<create user="matsumiya" host="W00224" date="2010-06-12T16:35:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,14 +263,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1307" top="202" right="1920" bottom="830" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
-		<band id="0" index="1" style="0000" width="605"/>
+		<band id="0" index="1" style="0000" width="530"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="289"/>
-		<band id="3" index="4" style="0000" width="147"/>
-		<band id="4" index="0" style="0000" width="605"/>
+		<band id="2" index="3" style="0000" width="543"/>
+		<band id="3" index="4" style="0000" width="152"/>
+		<band id="4" index="0" style="0000" width="697"/>
 		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
@@ -354,7 +354,7 @@
 		<language name="JPN_KANJI" width="256">おお？
 もう　[2:04:５桁:0]人も　倒したのか……▼
 おまえ……
-以外に　欲深い　奴だな[BE:00:ページ切り替え（行送り）]
+意外に　欲深い　奴だな[BE:00:ページ切り替え（行送り）]
 腹の底が　ギラギラしてるぜ[BE:01:ページ切り替え（クリア）]
 気に入った！
 その欲望　かなえてやるよ▼</language>
