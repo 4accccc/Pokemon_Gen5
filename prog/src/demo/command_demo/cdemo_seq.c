@@ -11,6 +11,7 @@
 #include "arc_def.h"
 #include "system/main.h"
 #include "system/wipe.h"
+#include "sound/pm_sndsys.h"
 
 #include "cdemo_main.h"
 #include "cdemo_seq.h"
@@ -22,6 +23,8 @@
 //	定数定義
 //============================================================================================
 #define	CDEMO_SKIP_KEY		(PAD_BUTTON_A|PAD_BUTTON_B|PAD_BUTTON_START)		// スキップボタン
+
+#define	SKIP_BGM_FADE_SPEED		( 8 )		// スキップ時のＢＧＭフェード速度
 
 #define	BGFRM_ANM_FILE_OPEN_TICK			( 66667 )		// 一つのファイルを読み込むための時間
 
@@ -84,6 +87,9 @@ BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 {
 	if( wk->dat->skip != COMMANDDEMO_SKIP_OFF ){
 		if( GFL_UI_KEY_GetTrg() & CDEMO_SKIP_KEY ){
+			if( PMSND_CheckPlayBGM() == TRUE ){
+			  PMSND_FadeOutBGM( SKIP_BGM_FADE_SPEED );
+			}
 			wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
 			wk->dat->ret = COMMANDDEMO_RET_SKIP;
 		}
@@ -91,6 +97,9 @@ BOOL CDEMOSEQ_Main( CDEMO_WORK * wk, int * seq )
 #ifdef PM_DEBUG
 	if( wk->dat->skip == COMMANDDEMO_SKIP_DEBUG ){
 		if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_SELECT ){
+			if( PMSND_CheckPlayBGM() == TRUE ){
+			  PMSND_FadeOutBGM( SKIP_BGM_FADE_SPEED );
+			}
 			wk->main_seq = CDEMOSEQ_MAIN_RELEASE;
 			wk->dat->ret = COMMANDDEMO_RET_SKIP_DEBUG;
 		}
@@ -161,6 +170,10 @@ static int MainSeq_Release( CDEMO_WORK * wk )
 	if( WIPE_SYS_EndCheck() == FALSE ){
 		return CDEMOSEQ_MAIN_RELEASE;
 	}
+	if( PMSND_CheckFadeOnBGM() == TRUE ){
+		return CDEMOSEQ_MAIN_RELEASE;
+	}
+	PMSND_StopBGM();
 
 	// 初期化していたら
 	if( wk->init_flg == TRUE ){
