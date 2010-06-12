@@ -64,11 +64,12 @@ static const DEMO3D_CMD_DATA demo3d_cmd_title_b_end_data[] = {
 
 static const u16 res_title_b_file_title_b_01[] = {
  NARC_data_demo3d_title_b_01_nsbmd,
+ NARC_data_demo3d_title_b_01_nsbtp,
  NARC_data_demo3d_title_b_01_nsbca,
 };
 
 static const DEMO3D_FILE_UNIT res_title_b_file_unit_title_b_01[] = {
- { res_title_b_file_title_b_01, 2 },
+ { res_title_b_file_title_b_01, 3 },
 };
 
 ///==================================

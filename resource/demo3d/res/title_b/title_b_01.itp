@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+
+<itp version="1.6.0">
+
+<head>
+	<create user="james_turner" host="W00212" date="2010-06-12T16:28:18" source="title_b_01.mb"/>
+	<title>Texture Pattern Animation Data for NINTENDO NITRO-System</title>
+	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+</head>
+
+<body>
+
+<tex_pattern_info
+	frame_size="5620"
+	tool_start_frame="0"
+	tool_end_frame="5619"
+	compress_material="on" material_size="8 8"
+/>
+
+<tex_pattern_list_data image_size="3" palette_size="3">
+	<image_name index="0" name="shin_eye.1"/>
+	<image_name index="1" name="shin_eye.3"/>
+	<image_name index="2" name="shin_eye.4"/>
+	<palette_name index="0" name="shin_eye.1_pl"/>
+	<palette_name index="1" name="shin_eye.3_pl"/>
+	<palette_name index="2" name="shin_eye.4_pl"/>
+</tex_pattern_list_data>
+
+<tex_pattern_data>
+	<frame_idx size="77">
+		0 86 88 90 92 424 426 428 430 600
+		602 604 606 865 867 870 871 1093 1095 1097
+		1099 1220 1222 1224 1226 1378 1380 1382 1384 1692
+		1694 1696 1698 1776 1778 1780 1782 2371 2373 2375
+		2377 2593 2595 2597 2599 3652 3654 3656 3658 3807
+		3809 3811 3813 4257 4259 4261 4263 4396 4398 4400
+		4402 4607 4609 4611 4613 4873 4875 4877 4879 5152
+		5154 5156 5158 5432 5434 5436 5438
+	</frame_idx>
+	<image_idx size="77">
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2
+	</image_idx>
+	<palette_idx size="77">
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2 1 0 1
+		2 1 0 1 2 1 0 1 2 1
+		0 1 2 1 0 1 2
+	</palette_idx>
+</tex_pattern_data>
+
+<tex_pattern_anm_array size="1">
+	<tex_pattern_anm index="0" material_name="shin_eye" data_size="77" data_head="0"/>
+</tex_pattern_anm_array>
+
+</body>
+
+</itp>
