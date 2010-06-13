@@ -1332,6 +1332,8 @@ void WorldTrade_InitSystem( WORLDTRADE_WORK *wk )
   }
 
   WorldTrade_WndSetting();
+  G2_BlendNone();
+  G2S_BlendNone();
 
   // VBlankŠÖ”ƒZƒbƒg
   if( wk->vblank_task == NULL )
