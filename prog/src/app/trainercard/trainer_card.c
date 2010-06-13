@@ -1716,7 +1716,7 @@ static int CheckKey(TR_CARD_WORK* wk)
   {
     if(wk->ScaleMode==0 && wk->TrCardData->OtherTrCard==FALSE){
       SetSActDrawSt( &wk->ObjWork, ACTS_BTN_END, 8, TRUE);
-      PMSND_PlaySE( SND_TRCARD_CANCEL );   //èIóπâπ
+      PMSND_PlaySE( SND_TRCARD_END );   //èIóπâπ
       return TRC_KEY_REQ_END_BUTTON;
     }
     
