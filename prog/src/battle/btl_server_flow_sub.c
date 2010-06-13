@@ -1988,7 +1988,7 @@ static BtlResult CheckResult_AliveBoth( BTL_SVFLOW_WORK* wk, const u8* alivePoke
   BTL_N_Printf( DBGSTR_SVFL_DeadPokeCount, deadPoke[0], deadPoke[1]);
 
   if( deadPoke[0] != deadPoke[1] ){
-    winSide = (deadPoke[0] > deadPoke[1])? 0 : 1;
+    winSide = (deadPoke[0] < deadPoke[1])? 0 : 1;
     return (winSide == playerSide)? BTL_RESULT_WIN : BTL_RESULT_LOSE;
   }
 
