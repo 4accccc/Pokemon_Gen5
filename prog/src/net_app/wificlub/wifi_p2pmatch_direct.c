@@ -1044,11 +1044,13 @@ static u32 _createRegulationType(WIFIP2PMATCH_WORK *wk, REG_CREATE_TYPE type )
   default:
     GF_ASSERT(0);
   case REG_CREATE_TYPE_DECIDE: ///<決定しているルールから作る
+   // NET_PRINT("決定しているルールから作る\n");
     battleMode  = wk->battleMode;
     battleRule  = wk->battleRule;
     shooter     = wk->pParentWork->shooter;
     break;
   case REG_CREATE_TYPE_SELECT: ///<選んでいるルールから作る
+ //   NET_PRINT("選んでいるルールから作る\n");
     battleMode  = wk->pParentWork->battleBoard.battleModeSelect;
     battleRule  = wk->pParentWork->battleBoard.battleRuleSelect;
     shooter     = wk->pParentWork->battleBoard.shooterSelect;

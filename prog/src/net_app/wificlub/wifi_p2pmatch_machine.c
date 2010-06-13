@@ -111,7 +111,7 @@ static int _playerMachineNoregParent( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerMachineBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
 {
   u32 fail_bit;
-  u32 regulation = _createRegulation(wk);
+  u32 regulation = _createRegulationType(wk, REG_CREATE_TYPE_SELECT);
   
   if(!_regulationCheck(wk)){
     // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
