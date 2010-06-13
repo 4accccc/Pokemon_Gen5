@@ -3390,8 +3390,8 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
       }
 #if PM_DEBUG
       if(PAD_BUTTON_Y & GFL_UI_KEY_GetTrg()){
-        if(WIFI_STATUS_GetGameMode(wk->pMatch) != WIFI_GAME_UNKNOWN+1){
-          _myStatusChange(wk, WIFI_STATUS_RECRUIT,WIFI_GAME_UNKNOWN+1);
+        if(WIFI_STATUS_GetGameMode(wk->pMatch) != WIFI_GAME_UNKNOWN){
+          _myStatusChange(wk, WIFI_STATUS_RECRUIT,WIFI_GAME_UNKNOWN);
           WifiP2PMatchMessagePrintDirect(wk, msg_wifilobby_074, FALSE);
         }
         else{

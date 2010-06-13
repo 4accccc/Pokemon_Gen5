@@ -831,7 +831,7 @@ void GSYNC_DISP_DreamSmokeBgStart(GSYNC_DISP_WORK* pWork)
 
   ARCHANDLE* p_handle = GFL_ARC_OpenDataHandle( ARCID_GSYNC, pWork->heapID );
 
-  G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD , 0, 16);
+  //G2_SetBlendAlpha( GX_BLEND_PLANEMASK_BG3, GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BD , 0, 16);
 
   GFL_ARCHDL_UTIL_TransVramScreenCharOfs(
     p_handle, NARC_gsync_downner_bg2_NSCR,
@@ -950,10 +950,10 @@ static void GSYNC_DISP_FriendPokeIconCreate(GSYNC_DISP_WORK* pWork, u32 index)
       pWork->aIconParam[index].pIcon=pIcon;
     }
   }
-  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
-                   GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
-                   8,8);
+//  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+  //                 GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
+    ///              GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
+     ///            8,8);
 }
 
 
@@ -1005,9 +1005,9 @@ static void GSYNC_DISP_ItemiconCreate(GSYNC_DISP_WORK* pWork, int index)
   }
 
 
-  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_NONE,
+  G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG3,
                    GX_BLEND_PLANEMASK_BG0|GX_BLEND_PLANEMASK_BG1|
-                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_BG3|GX_BLEND_PLANEMASK_BD,
+                   GX_BLEND_PLANEMASK_BG2|GX_BLEND_PLANEMASK_OBJ|GX_BLEND_PLANEMASK_BD,
                    8,8);
 }
 
@@ -1054,7 +1054,12 @@ static void _PokemonMove(ICON_MOVE_PARAM* pIcon)
         GFL_CLACT_WK_GetScale(pIcon->pIcon , &scale );
         scale.x -= 1<<4;
         scale.y -= 1<<4;
-        GFL_CLACT_WK_SetScale(pIcon->pIcon , &scale );
+        if((scale.x < 0) || (scale.y < 0)){
+          GSYNC_DISP_IconOff(pIcon);
+        }
+        else{
+          GFL_CLACT_WK_SetScale(pIcon->pIcon ,&scale);
+        }
       }
       if(pos.y > 50){
         GSYNC_DISP_IconOff(pIcon);
@@ -1068,37 +1073,54 @@ static void _PokemonMove(ICON_MOVE_PARAM* pIcon)
 
 void GSYNC_DISP_PokemonMove(GSYNC_DISP_WORK* pWork)
 {
-  int i,buf1=0,buf2=0;
+  int i,k,cnt=0;
   int rand;
+  BOOL flg = FALSE;
 
-  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);i++){
-    if(pWork->aIconParam[i].on){
+
+
+  for(i = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+    if(pWork->aIconParam[i].on && !pWork->aIconParam[i].end){
       _PokemonMove( &pWork->aIconParam[i] );
+      flg = TRUE;
     }
   }
+  if(flg==FALSE){
+    for(i = 0; i < DREAM_WORLD_DATA_MAX_ITEMBOX;i++){
+      rand = GFUser_GetPublicRand(DREAM_WORLD_DATA_MAX_ITEMBOX);
+      if((pWork->aIconParam[rand].on==FALSE) && (pWork->aIconParam[rand].no != 0) ){
 
+        OS_TPrintf("ÉAÉCÉeÉÄäGÇÃêÿÇËë÷Ç¶ %d\n",rand);
 
-  for(i = 0; i < (DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);i++){
-    if(pWork->aIconParam[i].on==TRUE){
-      if(pWork->aIconParam[i].end==FALSE){
-        buf1 |= 1 << (i % 2);
-      }
-    }
-  }
-  {
-    rand = GFUser_GetPublicRand(DREAM_WORLD_DATA_MAX_ITEMBOX+DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX);
-    buf2 = 1 << (rand % 2);
-
-    if((pWork->aIconParam[rand].on==FALSE) && (pWork->aIconParam[rand].no) != 0 && ((buf1&buf2)==0) ){
-
-      pWork->aIconParam[rand].on = TRUE;
-      pWork->aIconParam[rand].startx = 64 + GFUser_GetPublicRand(128);
-      pWork->aIconParam[rand].starty=0;
-      if(rand >= DREAM_WORLD_DATA_MAX_ITEMBOX){
-        GSYNC_DISP_FriendPokeIconCreate(pWork,rand);
-      }
-      else{
+        pWork->aIconParam[rand].on = TRUE;
+        pWork->aIconParam[rand].startx = 64 + GFUser_GetPublicRand(128);
+        pWork->aIconParam[rand].starty = 0;
         GSYNC_DISP_ItemiconCreate(pWork, rand);
+        break;
+      }
+    }
+  }
+
+  for(i = 0; i < DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
+    k = i + DREAM_WORLD_DATA_MAX_ITEMBOX;
+    if(pWork->aIconParam[k].on && !pWork->aIconParam[k].end){
+      _PokemonMove( &pWork->aIconParam[k] );
+      flg = TRUE;
+    }
+  }
+  if(flg==FALSE){
+    for(i = 0; i < DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX;i++){
+      k = i + DREAM_WORLD_DATA_MAX_ITEMBOX;
+      rand = GFUser_GetPublicRand(DREAM_WORLD_SERVER_DOWNLOADPOKE_MAX) + DREAM_WORLD_DATA_MAX_ITEMBOX;
+      if((pWork->aIconParam[rand].on==FALSE) && (pWork->aIconParam[rand].no != 0) ){
+
+        OS_TPrintf("Ç€ÇØäGÇÃêÿÇËë÷Ç¶ %d\n",rand);
+
+        pWork->aIconParam[rand].on = TRUE;
+        pWork->aIconParam[rand].startx = 64 + GFUser_GetPublicRand(128);
+        pWork->aIconParam[rand].starty = 0;
+        GSYNC_DISP_FriendPokeIconCreate(pWork,rand);
+        break;
       }
     }
   }
@@ -1152,6 +1174,9 @@ void GSYNC_DISP_DownloadFileRead(GSYNC_DISP_WORK* pWork)
         NNS_G2dGetUnpackedBGCharacterData( arcData, &pCharData );
         GFL_STD_MemCopy(pCharData->pRawData, pWork->aIconRes[i].aCgx, 4*8*4*4);
         GFL_HEAP_FreeMemory(arcData);
+
+        OS_TPrintf("ÉAÉCÉeÉÄìoò^ %d\n",i);
+
       }
     }
 #endif
@@ -1178,6 +1203,10 @@ void GSYNC_DISP_DownloadFileRead(GSYNC_DISP_WORK* pWork)
         GFL_STD_MemCopy(pCharData->pRawData,pWork->aIconRes[j].aCgx, 4*8*4*4);
         GFL_HEAP_FreeMemory(arcData);
         pWork->aIconRes[j].palno = pal;
+
+        OS_TPrintf("Ç€ÇØìoò^ %d\n",j);
+
+
       }
     }
     GFL_ARC_CloseDataHandle(arcHandlePoke);
@@ -1233,7 +1262,6 @@ static void _itemResChange(GSYNC_DISP_WORK* pWork,int no,  GFL_CLWK* pIcon)
 
 static void _DownloadPokemonIconCreate(GSYNC_DISP_WORK* pWork)
 {
-
   {
     GFL_CLWK_DATA cellInitData;
     ARCHANDLE *arcHandlePoke = GFL_ARC_OpenDataHandle( ARCID_POKEICON , pWork->heapID );
@@ -1247,7 +1275,7 @@ static void _DownloadPokemonIconCreate(GSYNC_DISP_WORK* pWork)
     cellInitData.pos_y = _POKEMON_CELLY;
     cellInitData.anmseq = 0;
     cellInitData.softpri = _POKEMON_CELL_PRI;
-    cellInitData.bgpri = 1;
+    cellInitData.bgpri = 2;
     pWork->downloadPoke = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                           pWork->cellRes[CHAR_DOWN_POKE],
                                                           pWork->cellRes[PLT_POKEICON],
@@ -1294,7 +1322,7 @@ static void _DownloadItemiconCreate(GSYNC_DISP_WORK* pWork)
     cellInitData.pos_y = 28;
     cellInitData.anmseq = 0;
     cellInitData.softpri = 0;
-    cellInitData.bgpri = 0;
+    cellInitData.bgpri = 2;
     pWork->downloadItem = GFL_CLACT_WK_Create( pWork->cellUnit ,
                                                pWork->cellRes[ITEM_CLACT_CHR],
                                                pWork->cellRes[ITEM_CLACT_PLT],
