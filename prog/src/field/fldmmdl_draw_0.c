@@ -10,6 +10,8 @@
 #include "fldmmdl_procdraw.h"
 
 #include "fieldmap.h" //FIELDMAP_GetBbdActYOffs
+#include "field/zonedata.h"
+
 //======================================================================
 //  define
 //======================================================================
@@ -22,7 +24,7 @@
 //--------------------------------------------------------------
 /// 連れ歩きポケモン表示オフセット
 //--------------------------------------------------------------
-#define MMDL_POKE_OFS_UPDOWN		(FX32_CONST(1))
+#define MMDL_POKE_OFS_UPDOWN		(FX32_CONST(2.1))
 #define MMDL_POKE_OFS_RIGHTLEFT	(FX32_CONST(0))
 #define MMDL_POKE_OFS_RIGHTLEFT_S	(FX32_CONST(2))
 
@@ -1357,21 +1359,102 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
 {
   VecFx32 vec,ofs;
   BOOL pause_f;
+  u16 zone_id;
+  s16 gx;
   const OBJCODE_PARAM* obj_prm;
-  
+#ifdef DEBUG_ONLY_FOR_iwasawa
+#if 0
+  static float test_z = 0, test_diff = 0.1;
+  static BOOL updown_f = 0;
+  static BOOL cont_f = 0;
+#endif
+#endif
+
   obj_prm = MMDL_GetOBJCodeParam( mmdl );
   
   VEC_Set(&vec,0,0,0);
 
   pause_f = MMDL_CheckDrawPause( mmdl );
   MMDL_GetVectorDrawOffsetPos( mmdl, &ofs );
+  gx = MMDL_GetGridPosX( mmdl );
+  zone_id = MMDL_GetZoneID( mmdl );
 
-  if( pause_f || ofs.y > 0){
+#ifdef DEBUG_ONLY_FOR_iwasawa
+#if 0
+  if(work->actID == 1){
+    int key = GFL_UI_KEY_GetTrg();
+    int cont = GFL_UI_KEY_GetCont();
+    int flag = 0;
+    if( cont_f ){
+      key = cont;
+    }
+    if( key & PAD_BUTTON_R){
+      test_z += test_diff;
+      flag = 1;
+    }else if( key & PAD_BUTTON_L){
+      test_z -= test_diff;
+      flag = 1;
+    }
+    key = GFL_UI_KEY_GetTrg();
+    if( key & PAD_BUTTON_START ){
+      test_z = 0;
+      flag = 1;
+    }else if( key & PAD_BUTTON_SELECT){
+      test_z = 2.0;
+      flag = 1;
+    }
+    if( cont & PAD_BUTTON_B ){
+      if(key & PAD_KEY_UP){
+        test_diff *= 10;
+        flag = 1;
+      }else if(key & PAD_KEY_DOWN){
+        test_diff /= 10;
+        flag = 1;
+      }
+    }
+    if( key & PAD_BUTTON_B ){
+      updown_f ^= 1;
+    }
+    if( key & PAD_BUTTON_Y){
+      cont_f ^= 1;
+    }
+    if(flag){
+      OS_Printf("test_z = %f Act = %d diff = %f\n",test_z,work->actID,test_diff);
+    }
+  }
+#endif
+#endif
+  if( pause_f ||
+      (ofs.y > 0 && obj_prm->draw_proc_no != MMDL_DRAWPROCNO_TPOKE_FLY)){
     //Yオフセットのみ引き継ぐ
     vec.y = ofs.y;
   }else if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
     vec.y -= FX32_CONST(1.5);
   }
+  if( ZONEDATA_IsBingo( zone_id)){
+    u8 idx = gx%3; 
+    if( idx == 0 ){
+      vec.z -= FX32_CONST(2.0);
+    }else if( idx == 2){
+      vec.z += FX32_CONST(2.0);
+    }
+  }
+#if 0
+	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
+    vec.z -= FX32_CONST(2.1);//FX32_CONST(test_z);
+  }
+  if((work->actID/4)%2 == 0){
+   if(updown_f){
+      vec.z += FX32_CONST(test_z);
+      vec.y -= FX32_CONST(1.0);
+    }
+  }else{
+   if(!updown_f){
+      vec.z += FX32_CONST(test_z);
+      vec.y -= FX32_CONST(1.0);
+    }
+  }
+#endif
   //向きからX/Z描画オフセットをセット
   TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
   
@@ -1385,22 +1468,6 @@ static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PA
   //方向から描画オフセットをつける
 	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
     outVec->z -= MMDL_POKE_OFS_UPDOWN;
-#if 0
-		switch(dir){
-		case DIR_UP:
-			outVec->z += MMDL_POKE_OFS_UPDOWN;
-			break;
-		case DIR_DOWN:
-			outVec->z -= MMDL_POKE_OFS_UPDOWN;
-			break;
-		case DIR_LEFT:
-			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT;
-			break;
-		case DIR_RIGHT:
-			outVec->x += MMDL_POKE_OFS_RIGHTLEFT;
-			break;
-    }
-#endif
 	}else{
 		switch(dir){
 		case DIR_LEFT:
