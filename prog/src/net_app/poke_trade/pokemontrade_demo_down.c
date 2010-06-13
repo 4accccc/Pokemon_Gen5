@@ -186,6 +186,7 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
   POKEMONTRADE_DEMO_PTC_Load1(pWork->pPokemonTradeDemo);
 
   _setNextAnim(pWork, _POKECHANGE_WHITEIN_START);
+  POKETRADE_SE_gtsSeStrat(pWork->anmCount);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_2);
 
   G2_SetBlendAlpha(GX_BLEND_PLANEMASK_BG0,GX_BLEND_PLANEMASK_BD,0,0);
@@ -194,11 +195,13 @@ static void _changeDemo_ModelTrade2(POKEMON_TRADE_WORK* pWork)
 
 static void _changeDemo_ModelTrade2_2(POKEMON_TRADE_WORK* pWork)
 {
+  POKETRADE_SE_gtsSeStrat(pWork->anmCount);
   POKEMONTRADE_DEMO_PTC_Load2(pWork->pPokemonTradeDemo);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade2_3);
 }
 static void _changeDemo_ModelTrade2_3(POKEMON_TRADE_WORK* pWork)
 {
+  POKETRADE_SE_gtsSeStrat(pWork->anmCount);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade3);
 }
 
