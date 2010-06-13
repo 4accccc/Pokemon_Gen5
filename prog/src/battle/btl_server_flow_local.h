@@ -349,6 +349,7 @@ struct _BTL_SVFLOW_WORK {
   BTL_LEVELUP_INFO        lvupInfo;
   CLIENTID_REC            clientIDRec;
   u32                     simulationCounter;
+  u32                     wazaRankEffSerial;
   u8                      cmdBuildStep;
   u8                      actOrderStep;
   u8                      turnCheckStep;

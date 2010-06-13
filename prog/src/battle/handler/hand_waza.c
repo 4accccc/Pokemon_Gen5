@@ -8642,7 +8642,7 @@ static void handler_Onnen_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
       const BTL_POKEPARAM* targetPoke = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
 
-      waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      waza = BTL_EVENTVAR_GetValue( BTL_EVAR_ORG_WAZAID );
       wazaIdx = BPP_WAZA_SearchIdx( targetPoke, waza );
       if( wazaIdx != PTL_WAZA_MAX )
       {

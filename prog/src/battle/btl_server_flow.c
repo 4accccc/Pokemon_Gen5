@@ -291,7 +291,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
 static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u32 idx,
   const BTL_POKEPARAM* attacker, const BTL_POKEPARAM* target, WazaRankEffect* effect, int* volume );
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, BOOL fAlmost, BOOL fStdMsg );
+  WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, u32 rankEffSerial, BOOL fAlmost, BOOL fStdMsg );
 static int scEvent_RankValueChange( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, WazaRankEffect rankType,
   u8 wazaUsePokeID, u16 itemID, int volume );
 static void scproc_Fight_EffectSick( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targetRec );
@@ -459,8 +459,8 @@ static u32 scEvent_GetWazaShrinkPer( BTL_SVFLOW_WORK* wk, WazaID waza, const BTL
 static BOOL scEvent_CheckShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target, u32 per );
 static void scEvent_FailShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target );
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, u8 wazaUsePokeID, int volume );
-static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+  WazaRankEffect effect, u8 wazaUsePokeID, int volume, u32 wazaRankEffSerial );
+static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u32 wazaRankEffSerial );
 static void scEvent_RankEffect_Fix( BTL_SVFLOW_WORK* wk, u8 atkPokeID,
   const BTL_POKEPARAM* bpp, WazaRankEffect rankType, int volume );
 static void scEvent_WazaRankEffectFixed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
@@ -613,6 +613,7 @@ static void clearWorks( BTL_SVFLOW_WORK* wk )
   wk->getPokePos = BTL_POS_NULL;
   wk->simulationCounter = 0;
   wk->turnCheckStep = 0;
+  wk->wazaRankEffSerial = 0;
 }
 
 void BTL_SVFLOW_QuitSystem( BTL_SVFLOW_WORK* wk )
@@ -7294,8 +7295,10 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
   u32 eff_cnt, i;
   u8 atkPokeID = BPP_GetID( attacker );
 
+  wk->wazaRankEffSerial++;
+
   eff_cnt = WAZADATA_GetRankEffectCount( wazaParam->wazaID );
-  BTL_Printf("ワザ:%dのエフェクト数=%d\n", wazaParam->wazaID, eff_cnt);
+//  BTL_Printf("ワザ:%dのエフェクト数=%d\n", wazaParam->wazaID, eff_cnt);
   for(i=0; i<eff_cnt; ++i)
   {
     WazaRankEffect  effect;
@@ -7307,7 +7310,8 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
     {
       if( effect != WAZA_RANKEFF_MULTI5 )
       {
-        fEffective = scproc_RankEffectCore( wk, atkPokeID, target, effect, volume, atkPokeID, ITEM_DUMMY_DATA, fAlmost, TRUE );
+        fEffective = scproc_RankEffectCore( wk, atkPokeID, target, effect, volume, atkPokeID,
+                ITEM_DUMMY_DATA, wk->wazaRankEffSerial, fAlmost, TRUE );
       }
       else
       {
@@ -7315,7 +7319,7 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
         for( e=WAZA_RANKEFF_ORIGIN; e<WAZA_RANKEFF_BASE_MAX; ++e )
         {
           if( scproc_RankEffectCore(wk, atkPokeID, target, e, volume, atkPokeID,
-              ITEM_DUMMY_DATA, fAlmost, TRUE)
+              ITEM_DUMMY_DATA, wk->wazaRankEffSerial, fAlmost, TRUE)
           ){
             fEffective = TRUE;
           }
@@ -7325,7 +7329,6 @@ static BOOL scproc_WazaRankEffect_Common( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPA
       {
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
         scEvent_WazaRankEffectFixed( wk, target, wazaParam->wazaID, effect, volume );
-//        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
         BTL_Hem_PopState( &wk->HEManager, hem_state );
         ret = TRUE;
       }
@@ -7391,7 +7394,7 @@ static void scEvent_GetWazaRankEffectValue( BTL_SVFLOW_WORK* wk, WazaID waza, u3
  */
 //--------------------------------------------------------------------------
 static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPARAM* target,
-  WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, BOOL fAlmost, BOOL fStdMsg )
+  WazaRankEffect effect, int volume, u8 wazaUsePokeID, u16 itemID, u32 rankEffSerial, BOOL fAlmost, BOOL fStdMsg )
 {
   volume = scEvent_RankValueChange( wk, target, effect, wazaUsePokeID, itemID, volume );
   BTL_N_Printf( DBGSTR_SVFL_RankEffCore, BPP_GetID(target), effect, volume, atkPokeID );
@@ -7420,15 +7423,13 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
   {
     BOOL ret = TRUE;
 
-    if( scEvent_CheckRankEffectSuccess(wk, target, effect, atkPokeID, volume) )
+    if( scEvent_CheckRankEffectSuccess(wk, target, effect, atkPokeID, volume, rankEffSerial) )
     {
       // ここまで来たらランク効果発生
-      BTL_Printf("ランク効果発生：type=%d, volume=%d, itemID=%d\n", effect, volume, itemID );
       scPut_RankEffect( wk, target, effect, volume, itemID, fStdMsg );
       {
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
         scEvent_RankEffect_Fix( wk, atkPokeID, target, effect, volume );
-//        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
         BTL_Hem_PopState( &wk->HEManager, hem_state );
       }
     }
@@ -7438,8 +7439,7 @@ static BOOL scproc_RankEffectCore( BTL_SVFLOW_WORK* wk, u8 atkPokeID, BTL_POKEPA
       if( fAlmost )
       {
         u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-        scEvent_RankEffect_Failed( wk, target );
-//        scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
+        scEvent_RankEffect_Failed( wk, target, rankEffSerial );
         BTL_Hem_PopState( &wk->HEManager, hem_state );
       }
       ret = FALSE;
@@ -11654,12 +11654,13 @@ static void scEvent_FailShrink( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target
  * @param   target
  * @param   effect
  * @param   volume
+ * @param   wazaRankEffSerial   ワザによる効果の場合、そのワザ１発ごとのシリアルナンバー(1～）
  *
  * @retval  BOOL      成功する場合TRUE
  */
 //--------------------------------------------------------------------------
 static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* target,
-  WazaRankEffect effect, u8 wazaUsePokeID, int volume )
+  WazaRankEffect effect, u8 wazaUsePokeID, int volume, u32 wazaRankEffSerial )
 {
   BOOL failFlag = FALSE;
 
@@ -11668,6 +11669,7 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, wazaUsePokeID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_STATUS_TYPE, effect );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_VOLUME, volume );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_SERIAL, wazaRankEffSerial );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_FAIL_FLAG, failFlag );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_LAST_CHECK );
     failFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_FAIL_FLAG );
@@ -11682,12 +11684,14 @@ static BOOL scEvent_CheckRankEffectSuccess( BTL_SVFLOW_WORK* wk, const BTL_POKEP
  *
  * @param   wk
  * @param   bpp
+ * @param   wazaRankEffSerial   ワザによる効果の場合、そのワザ１発ごとのシリアルナンバー(1～）
  */
 //----------------------------------------------------------------------------------
-static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+static void scEvent_RankEffect_Failed( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u32 wazaRankEffSerial )
 {
   BTL_EVENTVAR_Push();
-    BTL_EVENTVAR_SetValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(bpp) );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_SERIAL, wazaRankEffSerial );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_RANKEFF_FAILED );
   BTL_EVENTVAR_Pop();
 }
@@ -13804,7 +13808,7 @@ static u8 scproc_HandEx_rankEffect( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
       if( !BPP_IsDead(pp_target) )
       {
         if( scproc_RankEffectCore(wk, param_header->userPokeID, pp_target, param->rankType, param->rankVolume,
-          BTL_POKEID_NULL, itemID, param->fAlmost, !(param->fStdMsgDisable))
+          BTL_POKEID_NULL, itemID, 0, param->fAlmost, !(param->fStdMsgDisable))
         ){
           handexSub_putString( wk, &param->exStr );
           result = 1;

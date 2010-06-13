@@ -2021,7 +2021,8 @@ static void common_RankDownGuard_Check( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int*
     if( (rankType == WAZA_RANKEFF_MAX)
     ||  (BTL_EVENTVAR_GetValue(BTL_EVAR_STATUS_TYPE) == rankType)
     ){
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_VOLUME) < 0 ){
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_VOLUME) < 0 )
+      {
         work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
       }
     }
@@ -2042,16 +2043,24 @@ static void common_RankDownGuard_Fixed( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int*
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
   &&  (work[0])
   ){
-    BTL_HANDEX_PARAM_MESSAGE* param;
+    u32 wazaSerial = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_SERIAL );
 
-    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+    if( (wazaSerial == 0)
+    ||  (work[1] != wazaSerial)
+    ){
+      BTL_HANDEX_PARAM_MESSAGE* param;
 
-    param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
-      HANDEX_STR_AddArg( &param->str, pokeID );
-    BTL_SVF_HANDEX_Pop( flowWk, param );
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
 
-    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, strID );
+        HANDEX_STR_AddArg( &param->str, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+
+      work[1] = wazaSerial;
+    }
 
     work[0] = 0;
   }

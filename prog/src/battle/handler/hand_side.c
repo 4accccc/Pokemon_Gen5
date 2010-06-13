@@ -408,19 +408,26 @@ static void handler_side_SiroiKiri_CheckFail( BTL_EVENT_FACTOR* myHandle, BTL_SV
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID)
   ){
     work[0] = BTL_EVENTVAR_RewriteValue( BTL_EVAR_FAIL_FLAG, TRUE );
-    if( work[0] ){
-    }
   }
 }
 static void handler_side_SiroiKiri_FixFail( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 mySide, int* work )
 {
   if( work[0] )
   {
-    u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
-      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
-      HANDEX_STR_AddArg( &param->str, pokeID );
-    BTL_SVF_HANDEX_Pop( flowWk, param );
+    u32 wazaSerial = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZA_SERIAL );
+    if( (wazaSerial == 0)
+    ||  (work[1] != wazaSerial)
+    ){
+      u8 pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID );
+        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_SiroiKiri_Exe );
+        HANDEX_STR_AddArg( &param->str, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+
+      work[1] = wazaSerial;
+    }
+
+    work[0] = 0;
   }
 }
 //--------------------------------------------------------------------------------------
