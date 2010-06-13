@@ -691,7 +691,7 @@ static int MainSeq_MailMenuMain( MAILBOX_SYS_WORK * syswk )
     MBMAIN_SelBoxDel( syswk );
     {
       MAIL_DATA * md = syswk->app->mail[ syswk->lst_pos ];
-      OS_Printf("listpos = %d\n", syswk->lst_pos);
+//      OS_Printf("listpos = %d\n", syswk->lst_pos);
       PokeListWorkCreate( syswk, PL_MODE_MAILBOX, ITEM_MailNumGet(MailData_GetDesignNo(md)), 
                           syswk->lst_pos);
     }
@@ -1205,6 +1205,12 @@ FS_EXTERN_OVERLAY(pokelist);
 //--------------------------------------------------------------------------------------------
 static int MailPokeListCall( MAILBOX_SYS_WORK * syswk )
 {
+  PLIST_DATA * pld = (PLIST_DATA*)syswk->subProcWork;
+
+//  OS_Printf("今からもたせるポケモンは%d\n", syswk->ret_poke);
+
+  // 作成したメールを渡すポケモンの指定
+  pld->ret_sel = syswk->ret_poke;
   
   GFL_PROC_LOCAL_CallProc( syswk->mbProcSys, FS_OVERLAY_ID(pokelist), &PokeList_ProcData, syswk->subProcWork );
   return 0;
@@ -1247,6 +1253,8 @@ static int EraseMailPokeListExit( MAILBOX_SYS_WORK * syswk )
 
   syswk->ret_poke = pld->ret_sel;
   syswk->ret_mode = pld->ret_mode;
+
+//  OS_Printf("選択したポケモンは%d\n", syswk->ret_poke);
 
   GFL_HEAP_FreeMemory( syswk->subProcWork );
 
