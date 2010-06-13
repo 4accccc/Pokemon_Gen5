@@ -325,6 +325,38 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
         GF_ASSERT(0);
         bcw->demo_prm->result = COMM_BTL_DEMO_RESULT_DRAW;  //アサートしてもすすめるように
       }
+      
+      //ポケモン毎の状態設定
+      {
+        int max, tr_no, my_pos, my_party_start_id, enemy_party_start_id, client_no, party_no;
+        
+        if(bcw->btl_setup_prm->multiMode == 0){
+          max = COMM_BTL_DEMO_TRDATA_B;
+          my_party_start_id = COMM_BTL_DEMO_TRDATA_A;
+          enemy_party_start_id = COMM_BTL_DEMO_TRDATA_B;
+        }
+        else{
+          max = COMM_BTL_DEMO_TRDATA_D;
+          my_party_start_id = COMM_BTL_DEMO_TRDATA_A;
+          enemy_party_start_id = COMM_BTL_DEMO_TRDATA_C;
+        }
+        
+        my_pos = bcw->btl_setup_prm->commPos;
+        for(tr_no = 0; tr_no <= max; tr_no++){
+          if((tr_no & 1) == (my_pos & 1)){  //自分パーティ
+            client_no = BTL_CLIENT_PLAYER + (tr_no & 2);
+            for(party_no = 0; party_no < DEMO_POKEPARTY_MAX; party_no++){
+              bcw->demo_prm->trainer_data[my_party_start_id + (tr_no >> 1)].party_state[party_no] = bcw->btl_setup_prm->party_state[client_no][party_no];
+            }
+          }
+          else{ //敵パーティ
+            client_no = BTL_CLIENT_ENEMY1 + (tr_no & 2);
+            for(party_no = 0; party_no < DEMO_POKEPARTY_MAX; party_no++){
+              bcw->demo_prm->trainer_data[enemy_party_start_id + (tr_no >> 1)].party_state[party_no] = bcw->btl_setup_prm->party_state[client_no][party_no];
+            }
+          }
+        }
+      }
 
       if( bcw->btl_setup_prm->result == BTL_RESULT_COMM_ERROR )  // 通信エラーのときは後の処理を飛ばして終了し、コロシアムでエラーメッセージを出してもらう
       {
