@@ -166,6 +166,10 @@ typedef enum{
   INTSEND_BUFF_SIDE_MAX,
 }INTSEND_BUFF_SIDE;
 
+///話しかけが発生していない時のtalk_randコード
+#define TALK_RAND_NULL      (0)
+
+
 //==============================================================================
 //  型定義
 //==============================================================================
@@ -205,7 +209,8 @@ typedef struct{
 ///話しかける最初のデータ
 typedef struct{
   u8 talk_type;               ///<INTRUDE_TALK_TYPE
-  u8 padding[3];
+  u8 talk_rand;               ///<会話ランダム値
+  u8 padding[2];
   union{  //talk_typeによって変化する内容
     MISSION_DATA mdata;
   };
@@ -217,7 +222,17 @@ typedef struct{
   u8 answer_talk_netid;       ///<話しかけられている相手のNetID
   u8 talk_status;             ///<INTRUDE_TALK_STATUS_???
   u8 answer_talk_status;      ///<話しかけられている相手のINTRUDE_TALK_STATUS_???
+  u8 talk_rand;
+  u8 now_talk_rand;
+  u8 padding[2];
 }INTRUDE_TALK;
+
+///会話の返事データ
+typedef struct{
+  u8 talk_status;             ///<INTRUDE_TALK_STATUS_???
+  u8 talk_rand;
+  u8 padding[2];
+}INTRUDE_TALK_ANSWER;
 
 ///モノリスステータス(ミッションリスト以外でモノリス画面構築に必要なデータ)
 typedef struct{
@@ -238,6 +253,7 @@ typedef struct{
 
 ///侵入システムワーク
 typedef struct _INTRUDE_COMM_SYS{
+  GAMESYS_WORK *gsys;
   GAME_COMM_SYS_PTR game_comm;
   COMM_PLAYER_SYS_PTR cps;                          ///<通信プレイヤー制御ワークへのポインタ
   
@@ -277,7 +293,8 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 recv_symbol_flag:1;            ///<TRUE:シンボルデータを受信した
   u8 recv_symbol_change_flag:1;     ///<TRUE:シンボルデータの変更通知を受け取った
   u8 huge_send_bufside_profile:1;   ///<INTSEND_BUFF_SIDE
-  u8        :4;
+  u8 talked_event_reserve:1;        ///<TRUE:話しかけられたイベント予約
+  u8        :3;
   
 //  BOOL comm_act_vanish[FIELD_COMM_MEMBER_MAX];   ///<TRUE:非表示
   u8 invalid_netid;           ///<侵入先ROMのnet_id
@@ -291,10 +308,10 @@ typedef struct _INTRUDE_COMM_SYS{
   u8 profile_req_wait;        ///<プロフィール再要求するまでのウェイト
   u8 send_status;             ///<TRUE:自分の現在情報送信リクエスト
   
-  u8 answer_talk_ng_bit;      ///<話しかけられたが、対応できない場合のNG返事を返す(bit管理)
   u8 connect_map_count;       ///<連結したマップの数
   u8 member_num;              ///<参加人数(親機から受信)
   u8 member_send_req;         ///<TRUE:参加人数の送信を行う
+  u8 padding;
   
   u8 warp_town_tblno;         ///<ワープ先のテーブル番号
   u8 area_occupy_update;      ///<TRUE:侵入しているエリアの占拠情報を受信した(下画面やり取り)
@@ -334,6 +351,11 @@ typedef struct _INTRUDE_COMM_SYS{
   
   u32 mission_start_timeout:31;  ///<ミッション開始前までのタイムアウト時刻をカウント
   u32 mission_start_timeout_warning:1;  ///<「ミッション開始前のタイムアウトしそう」警告発生中
+  
+  u8 now_talk_rand;           ///<会話する時に投げ込むランダム値(既に終了している会話の判断で使用)
+  u8 answer_talk_ng[FIELD_COMM_MEMBER_MAX];///<話しかけられたが、対応できない場合のNG返事を返す
+  u8 send_talk_rand_disagreement[FIELD_COMM_MEMBER_MAX]; ///<会話返事NG(randが一致しなかった)
+  u8 padding2;
 }INTRUDE_COMM_SYS;
 
 

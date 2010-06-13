@@ -271,35 +271,6 @@ BOOL IntrudeField_CheckTalk(INTRUDE_COMM_SYS_PTR intcomm, const FIELD_PLAYER *fl
   return FALSE;
 }
 
-//==================================================================
-/**
- * 通信プレイヤーから話しかけられていないかチェック
- *
- * @param   intcomm		
- * @param   fld_player		
- * @param   hit_netid		  話しかけられている場合、対象プレイヤーのNetIDが代入される
- *
- * @retval  BOOL		TRUE:通信プレイヤーから話しかけられている　FALSE:話しかけられていない
- */
-//==================================================================
-BOOL IntrudeField_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
-{
-  s16 check_gx, check_gy, check_gz;
-  u32 out_index;
-  
-  if(intcomm == NULL || intcomm->cps == NULL){
-    return FALSE;
-  }
-  
-  //自分から話しかけていないのに値がNULL以外なのは話しかけられたから
-  if(intcomm->talk.talk_netid != INTRUDE_NETID_NULL){
-    *hit_netid = intcomm->talk.talk_netid;
-    return TRUE;
-  }
-  
-  return FALSE;
-}
-
 //==============================================================================
 //
 //  橋の特定位置まで来て、誰とも通信していないなら注意メッセージを出して自機を戻す

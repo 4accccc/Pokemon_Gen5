@@ -542,11 +542,11 @@ FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK
   enum{
     SEQ_FIRST_TALK,
     SEQ_TALK_SEND,
-    SEQ_TALK_WAIT,
     SEQ_TALK_RECV_WAIT,
     SEQ_TALK_NG,
     SEQ_TALK_NG_MSGWAIT,
     SEQ_TALK_NG_LAST,
+    SEQ_OK_ANSWER,
     SEQ_END_OK,
     SEQ_END_NG,
     SEQ_END_CANCEL,
@@ -562,26 +562,25 @@ FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK
       (*seq)++;
     }
     break;
-	case SEQ_TALK_WAIT:
-    if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
-			(*seq)++;
-		}
-		break;
 	case SEQ_TALK_RECV_WAIT:
 	  {
       INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
       switch(talk_status){
       case INTRUDE_TALK_STATUS_OK:
-        *seq = SEQ_END_OK;
+        *seq = SEQ_OK_ANSWER;
         break;
       case INTRUDE_TALK_STATUS_NG:
       case INTRUDE_TALK_STATUS_CANCEL:
         *seq = SEQ_TALK_NG;
         break;
       default:  //まだ返事が来ていない
-        if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
-            *seq = SEQ_END_CANCEL;
+        //キャンセルはメッセージが終わっていないと出来ない
+        if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
+          if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
+            if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid, intcomm->talk.talk_rand) == TRUE){
+              Intrude_TalkRandClose(intcomm);
+              *seq = SEQ_END_CANCEL;
+            }
           }
         }
         break;
@@ -590,8 +589,10 @@ FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK
 		break;
 
   case SEQ_TALK_NG:   //断られた
-    IntrudeEventPrint_StartStream(&ccew->iem, msg_intrude_002);
-		(*seq)++;
+    if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
+      IntrudeEventPrint_StartStream(&ccew->iem, msg_intrude_002);
+  		(*seq)++;
+  	}
     break;
   case SEQ_TALK_NG_MSGWAIT:
     if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
@@ -604,8 +605,17 @@ FIRST_TALK_RET EVENT_INTRUDE_FirstTalkSeq(INTRUDE_COMM_SYS_PTR intcomm, COMMTALK
 		}
 	  break;
 	
+	case SEQ_OK_ANSWER:
+	  if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
+	      INTRUDE_TALK_STATUS_OK, intcomm->talk.talk_rand) == TRUE){
+      *seq = SEQ_END_OK;
+    }
+    break;
 	case SEQ_END_OK:
-	  return FIRST_TALK_RET_OK;
+    if(IntrudeEventPrint_WaitStream(&ccew->iem) == TRUE){
+  	  return FIRST_TALK_RET_OK;
+  	}
+  	break;
 	case SEQ_END_NG:
 	  return FIRST_TALK_RET_NG;
 	case SEQ_END_CANCEL:

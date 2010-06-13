@@ -46,6 +46,7 @@
 
 
 
+
 //======================================================================
 //	typedef struct
 //======================================================================
@@ -55,7 +56,7 @@
 typedef struct{
   COMMTALK_COMMON_EVENT_WORK ccew;    //共通イベントワーク
 	u8 first_talk_seq;
-	u8 padding[3];
+	u8 padding[2];
 }EVENT_COMM_COMMON;
 
 typedef struct{
@@ -302,6 +303,8 @@ GMEVENT * EVENT_CommCommon_Talked(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork,
 	manage->talk_net_id = talk_net_id;
 	manage->heap_id = heap_id;
   
+  Intrude_ClearTalkedEventReserve(intcomm); //TalkEventが始まったので予約を解除
+  
 	return( event );
 }
 
@@ -451,6 +454,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     SEQ_WAIT_ACHIEVE_CHECK,
     SEQ_CHANGE_EVENT,
     SEQ_TALK_CANCEL,
+    SEQ_LASTKEY_FINISH,
     SEQ_FINISH,
   };
 	
@@ -461,7 +465,7 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     }
     if((*seq) <= SEQ_CHANGE_EVENT){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
-      *seq = SEQ_FINISH;
+      *seq = SEQ_LASTKEY_FINISH;
       return GMEVENT_RES_CONTINUE;
     }
   }
@@ -571,6 +575,11 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
 	case SEQ_TALK_CANCEL:   //会話キャンセル
 	  *seq = SEQ_FINISH;
 	  break;
+	case SEQ_LASTKEY_FINISH:
+	  if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_FINISH;
+    }
+    break;
 	case SEQ_FINISH:   //終了処理
   	//共通Finish処理
   	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
@@ -592,15 +601,18 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	EVENT_COMM_COMMON *talk = wk;
 	GAMESYS_WORK *gsys = GMEVENT_GetGameSysWork(event);
 	GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gsys);
+	GAMEDATA *gamedata = GAMESYSTEM_GetGameData(gsys);
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
     SEQ_SEND_ANSWER,
     SEQ_PLAYER_DIR_CHANGE,
     SEQ_PLAYER_DIR_CHANGE_WAIT,
+    SEQ_WAIT_TALK_ANSWER,
 	  SEQ_SEND_ACHIEVE_CHECK,
     SEQ_WAIT_ACHIEVE_CHECK,
     SEQ_ANSWER_SEND_WAIT,
+    SEQ_LASTKEY_FINISH,
     SEQ_FINISH,
   };
 	
@@ -609,9 +621,9 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == FALSE){
       return GMEVENT_RES_CONTINUE;  //メッセージ描画中は待つ
     }
-    if((*seq) < SEQ_FINISH){
+    if((*seq) < SEQ_LASTKEY_FINISH){
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
-      *seq = SEQ_FINISH;
+      *seq = SEQ_LASTKEY_FINISH;
       return GMEVENT_RES_CONTINUE;
     }
   }
@@ -623,8 +635,12 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	  *seq = SEQ_SEND_ANSWER;
 	  break;
 	case SEQ_SEND_ANSWER:   //返事を返す
-	  if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_status) == TRUE){
+	  if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
+	      intcomm->talk.talk_status, intcomm->talk.talk_rand) == TRUE){
+      //話しかけられました。返事を返しています
+      MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, intcomm->talk.talk_netid);
+      WORDSET_RegisterPlayerName( talk->ccew.iem.wordset, 0, target_myst );
+      IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_001);
       (*seq)++;
     }
     break;
@@ -654,6 +670,31 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	    (*seq)++;
   	}
 	  break;
+	case SEQ_WAIT_TALK_ANSWER:    //話しかけに応答した事の結果を相手から待つ
+    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
+      INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
+      BOOL talk_ng = FALSE;
+      
+      switch(talk_status){
+      case INTRUDE_TALK_STATUS_OK:
+        *seq = SEQ_SEND_ACHIEVE_CHECK;
+        break;
+      case INTRUDE_TALK_STATUS_NULL:
+        break;
+      case INTRUDE_TALK_STATUS_NG:
+      case INTRUDE_TALK_STATUS_CANCEL:
+      default:
+        talk_ng = TRUE;
+        break;
+      }
+      
+      if(talk_ng == TRUE){
+        //会話が切れました
+        IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_004);
+        *seq = SEQ_LASTKEY_FINISH;
+	    }
+	  }
+	  break;
 	case SEQ_SEND_ACHIEVE_CHECK:
 	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
       (*seq)++;
@@ -678,11 +719,19 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
     _EventChangeTalked(event, talk, intcomm);
   	return GMEVENT_RES_CONTINUE;
     
+	case SEQ_LASTKEY_FINISH:
+	  if(IntrudeEventPrint_LastKeyWait() == TRUE){
+      *seq = SEQ_FINISH;
+    }
+    break;
 	case SEQ_FINISH:   //終了処理
- 	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(talk->ccew.fieldWork));
-  	//共通Finish処理
-  	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
-    return GMEVENT_RES_FINISH;
+    if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
+   	  MMDLSYS_ClearPauseMoveProc(FIELDMAP_GetMMdlSys(talk->ccew.fieldWork));
+    	//共通Finish処理
+    	EVENT_CommCommon_Finish(intcomm, &talk->ccew);
+      return GMEVENT_RES_FINISH;
+    }
+    break;
   }
 	return GMEVENT_RES_CONTINUE;
 }

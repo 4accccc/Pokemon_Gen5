@@ -142,6 +142,7 @@ void * IntrudeComm_InitCommSystem( int *seq, void *pwk )
   }
   
   intcomm = GFL_HEAP_AllocClearMemory(HEAPID_APP_CONTROL, sizeof(INTRUDE_COMM_SYS));
+  intcomm->gsys = invalid_parent->gsys;
   intcomm->game_comm = invalid_parent->game_comm;
 	intcomm->comm_status = INTRUDE_COMM_STATUS_INIT_START;
   intcomm->cps = CommPlayer_Init(FIELD_COMM_MEMBER_MAX, invalid_parent->gsys, HEAPID_APP_CONTROL);

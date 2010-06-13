@@ -34,6 +34,7 @@ static void _IntrudeRecv_PlayerStatus(const int netID, const int size, const voi
 static void _IntrudeRecv_TimeoutWarning(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
+static void _IntrudeRecv_TalkRandDisagreement(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_TalkCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MonolithStatusReq(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
 static void _IntrudeRecv_MonolithStatus(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle);
@@ -82,6 +83,7 @@ const NetRecvFuncTable Intrude_CommPacketTbl[] = {
   {_IntrudeRecv_TimeoutWarning, NULL},         //INTRUDE_CMD_TIMEOUT_WARNING
   {_IntrudeRecv_Talk, NULL},                   //INTRUDE_CMD_TALK
   {_IntrudeRecv_TalkAnswer, NULL},             //INTRUDE_CMD_TALK_ANSWER
+  {_IntrudeRecv_TalkRandDisagreement, NULL},   //INTRUDE_CMD_TALK_RAND_DISAGREEMENT
   {_IntrudeRecv_TalkCancel, NULL},             //INTRUDE_CMD_TALK_CANCEL
   {_IntrudeRecv_MonolithStatusReq, NULL},      //INTRUDE_CMD_MONOLITH_STATUS_REQ
   {_IntrudeRecv_MonolithStatus, NULL},         //INTRUDE_CMD_MONOLITH_STATUS
@@ -585,7 +587,7 @@ static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData
   const INTRUDE_TALK_FIRST_ATTACK *first_attack = pData;
   
   OS_TPrintf("話しかけられた受信　net_id=%d, talk_type=%d\n", netID, first_attack->talk_type);
-  if(Intrude_SetTalkReq(intcomm, netID) == TRUE){
+  if(Intrude_SetTalkReq(intcomm, netID, first_attack->talk_rand) == TRUE){
     intcomm->recv_talk_first_attack = *first_attack;
   }
 }
@@ -600,17 +602,28 @@ static void _IntrudeRecv_Talk(const int netID, const int size, const void* pData
 BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, const MISSION_DATA *mdata, INTRUDE_TALK_TYPE intrude_talk_type)
 {
   INTRUDE_TALK_FIRST_ATTACK first_attack;
+  BOOL ret;
   
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
   
+  if(intcomm->now_talk_rand == TALK_RAND_NULL){
+    intcomm->now_talk_rand++;
+  }
+  
   GFL_STD_MemClear(&first_attack, sizeof(INTRUDE_TALK_FIRST_ATTACK));
   first_attack.talk_type = intrude_talk_type;
   first_attack.mdata = *mdata;
+  first_attack.talk_rand = intcomm->now_talk_rand;
 
-  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+  ret = GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
     INTRUDE_CMD_TALK, sizeof(INTRUDE_TALK_FIRST_ATTACK), &first_attack, FALSE, FALSE, FALSE);
+  if(ret == TRUE){
+    intcomm->talk.talk_rand = intcomm->now_talk_rand;
+    intcomm->talk.now_talk_rand = intcomm->now_talk_rand;
+  }
+  return ret;
 }
 
 //==============================================================================
@@ -630,10 +643,16 @@ BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, const MISSI
 static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
-  const INTRUDE_TALK_STATUS *answer = pData;
+  const INTRUDE_TALK_ANSWER *talkans = pData;
   
-  OS_TPrintf("話しかけの返事受信　net_id=%d, answer=%d\n", netID, *answer);
-  Intrude_SetTalkAnswer(intcomm, netID, *answer);
+  if(talkans->talk_rand == intcomm->talk.now_talk_rand){
+    OS_TPrintf("話しかけの返事受信　net_id=%d, talk_status=%d\n", netID, talkans->talk_status);
+    Intrude_SetTalkAnswer(intcomm, netID, talkans->talk_status, talkans->talk_rand);
+  }
+  else{
+    OS_TPrintf("話しかけの返事受信　randが違う為無視 netid=%d, my_rand=%d, recv_rand=%d\n", netID, intcomm->talk.talk_rand, talkans->talk_rand);
+    intcomm->send_talk_rand_disagreement[netID] = talkans->talk_rand;
+  }
 }
 
 //==================================================================
@@ -643,15 +662,72 @@ static void _IntrudeRecv_TalkAnswer(const int netID, const int size, const void*
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer)
+BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS talk_status, u8 talk_rand)
 {
+  INTRUDE_TALK_ANSWER talkans;
+  
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
   
-  OS_TPrintf("話しかけの返事送信 answer=%d\n", answer);
+  talkans.talk_status = talk_status;
+  talkans.talk_rand = talk_rand;
+  
+  OS_TPrintf("話しかけの返事送信 answer=%d rand=%d\n", talk_status, talk_rand);
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
-    INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_STATUS), &answer, FALSE, FALSE, FALSE);
+    INTRUDE_CMD_TALK_ANSWER, sizeof(INTRUDE_TALK_ANSWER), &talkans, FALSE, FALSE, FALSE);
+}
+
+//==============================================================================
+//  
+//==============================================================================
+//--------------------------------------------------------------
+/**
+ * @brief   コマンド受信：会話コードの不一致が発生した
+ * @param   netID      送ってきたID
+ * @param   size       パケットサイズ
+ * @param   pData      データ
+ * @param   pWork      ワークエリア
+ * @param   pHandle    受け取る側の通信ハンドル
+ * @retval  none  
+ */
+//--------------------------------------------------------------
+static void _IntrudeRecv_TalkRandDisagreement(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
+{
+  INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const u8 *talk_rand = pData;
+  
+  OS_TPrintf("RECV:talk_rand不一致：");
+
+  if(intcomm->talk.talk_netid == netID && intcomm->talk.talk_rand == *talk_rand){
+    OS_TPrintf("CANCELセット\n");
+    Intrude_SetTalkAnswer(intcomm, netID, INTRUDE_TALK_STATUS_CANCEL, *talk_rand);
+  }
+  else{
+    OS_TPrintf("無視\n");
+  }
+}
+
+//==================================================================
+/**
+ * データ送信：会話コードの不一致が発生した
+ * @param   
+ * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
+ */
+//==================================================================
+BOOL IntrudeSend_TalkRandDisagreement(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, u8 talk_rand)
+{
+  INTRUDE_TALK_ANSWER talkans;
+  
+  if(_OtherPlayerExistence() == FALSE){
+    return TRUE;
+  }
+
+  GF_ASSERT(talk_rand != TALK_RAND_NULL);
+  
+  OS_TPrintf("SEND:会話コード不一致 送信 net_id=%d, rand=%d\n", send_net_id, talk_rand);
+  return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
+    INTRUDE_CMD_TALK_RAND_DISAGREEMENT, sizeof(talk_rand), &talk_rand, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================
@@ -671,9 +747,10 @@ BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRU
 static void _IntrudeRecv_TalkCancel(const int netID, const int size, const void* pData, void* pWork, GFL_NETHANDLE* pNetHandle)
 {
   INTRUDE_COMM_SYS_PTR intcomm = pWork;
+  const u8 *talk_rand = pData;
   
   OS_TPrintf("話しかけキャンセル受信　net_id=%d\n", netID);
-  Intrude_SetTalkCancel(intcomm, netID);
+  Intrude_SetTalkCancel(intcomm, netID, *talk_rand);
 }
 
 //==================================================================
@@ -683,14 +760,14 @@ static void _IntrudeRecv_TalkCancel(const int netID, const int size, const void*
  * @retval  BOOL		TRUE:送信成功。　FALSE:失敗
  */
 //==================================================================
-BOOL IntrudeSend_TalkCancel(int send_net_id)
+BOOL IntrudeSend_TalkCancel(int send_net_id, u8 talk_rand)
 {
   if(_OtherPlayerExistence() == FALSE){
     return FALSE;
   }
 
   return GFL_NET_SendDataEx(GFL_NET_HANDLE_GetCurrentHandle(), send_net_id, 
-    INTRUDE_CMD_TALK_CANCEL, 0, NULL, FALSE, FALSE, FALSE);
+    INTRUDE_CMD_TALK_CANCEL, sizeof(talk_rand), &talk_rand, FALSE, FALSE, FALSE);
 }
 
 //==============================================================================

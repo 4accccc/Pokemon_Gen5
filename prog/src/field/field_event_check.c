@@ -459,7 +459,7 @@ static GMEVENT * FIELD_EVENT_CheckNormal(
         return EVENT_SymbolMapWarpEasy( gsys, DIR_NOT, GAMEDATA_GetSymbolMapID( req.gamedata ) );
       }
       //話しかけられていないかチェック
-      if(IntrudeField_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
+      if(Intrude_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
         FIELD_PLAYER_ForceStop( req.field_player );
         return EVENT_CommCommon_Talked(gsys, fieldWork, intcomm, fmmdl_player, talk_netid, req.heapID);
       }

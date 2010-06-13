@@ -276,7 +276,8 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
         break;
       default:  //まだ返事が来ていない
         if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid, intcomm->talk.talk_rand) == TRUE){
+            Intrude_TalkRandClose(intcomm);
             *seq = SEQ_TALK_CANCEL;
           }
         }
@@ -314,9 +315,10 @@ static GMEVENT_RESULT CommMissionBattle_MtoT_Talk( GMEVENT *event, int *seq, voi
     }
     else{ //同期待ちBキャンセル
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-        if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+        if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid, intcomm->talk.talk_rand) == TRUE){
           //ここでキャンセルしても相手には既にタイミングコマンドが届いている為、
           //先に進んでしまう。その為、通信切断へと処理を持っていく
+          Intrude_TalkRandClose(intcomm);
           *seq = SEQ_TALK_CANCEL;
         }
       }
@@ -515,8 +517,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
     
   case SEQ_BATTLE_YES:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_BATTLE) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
+        INTRUDE_TALK_STATUS_BATTLE) == TRUE){
       Intrude_SetTimeOutStopFlag(intcomm, TRUE);
       *seq = SEQ_BATTLE_YES_MSG;
     }
@@ -539,9 +541,10 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     }
     else{ //同期待ちBキャンセル
       if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-        if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+        if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid, intcomm->talk.talk_rand) == TRUE){
           //ここでキャンセルしても相手には既にタイミングコマンドが届いている為、
           //先に進んでしまう。その為、通信切断へと処理を持っていく
+          Intrude_TalkRandClose(intcomm);
           *seq = SEQ_TALK_CANCEL;
           GameCommSys_ExitReq(game_comm);
         }
@@ -584,8 +587,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_NG:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_NG) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
+        INTRUDE_TALK_STATUS_NG) == TRUE){
       //失敗なのでミッションを作り直す
       MISSION_LIST_Create_Type(
         GAMEDATA_GetMyOccupyInfo(GAMESYSTEM_GetGameData(gsys)), MISSION_TYPE_VICTORY);

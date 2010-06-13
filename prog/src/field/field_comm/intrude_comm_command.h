@@ -31,6 +31,7 @@ enum INTRUDE_CMD{
   INTRUDE_CMD_TIMEOUT_WARNING,                ///<「ミッションを開始しないからタイムアウトしそう」
   INTRUDE_CMD_TALK,                           ///<話しかける
   INTRUDE_CMD_TALK_ANSWER,                    ///<話しかけられたので自分の状況を返す
+  INTRUDE_CMD_TALK_RAND_DISAGREEMENT,         ///<会話コード不一致
   INTRUDE_CMD_TALK_CANCEL,                    ///<話しかけをキャンセル
   INTRUDE_CMD_MONOLITH_STATUS_REQ,            ///<モノリスステータス要求リクエスト
   INTRUDE_CMD_MONOLITH_STATUS,                ///<モノリスステータス
@@ -86,8 +87,9 @@ extern BOOL IntrudeSend_DeleteProfile(INTRUDE_COMM_SYS_PTR intcomm, int leave_ne
 extern BOOL IntrudeSend_PlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_STATUS *send_status);
 extern BOOL IntrudeSend_TimeoutWarning(void);
 extern BOOL IntrudeSend_Talk(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, const MISSION_DATA *mdata, INTRUDE_TALK_TYPE intrude_talk_type);
-extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer);
-extern BOOL IntrudeSend_TalkCancel(int send_net_id);
+extern BOOL IntrudeSend_TalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, INTRUDE_TALK_STATUS answer, u8 talk_rand);
+extern BOOL IntrudeSend_TalkRandDisagreement(INTRUDE_COMM_SYS_PTR intcomm, int send_net_id, u8 talk_rand);
+extern BOOL IntrudeSend_TalkCancel(int send_net_id, u8 talk_rand);
 extern BOOL IntrudeSend_MonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm, NetID send_netid);
 extern BOOL IntrudeSend_MonolithStatus(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit);
 extern BOOL IntrudeSend_MissionListReq(INTRUDE_COMM_SYS_PTR intcomm, u32 palace_area);

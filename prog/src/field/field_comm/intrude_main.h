@@ -85,11 +85,15 @@ extern void Intrude_SetProfile(
 extern void Intrude_SetPlayerStatus(
   INTRUDE_COMM_SYS_PTR intcomm, int net_id, const INTRUDE_STATUS *sta, BOOL first_status);
 extern void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid);
-extern BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
-extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status);
-extern void Intrude_SetTalkCancel(INTRUDE_COMM_SYS_PTR intcomm, int net_id);
+extern void Intrude_TalkRandClose(INTRUDE_COMM_SYS_PTR intcomm);
+extern BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id, u8 talk_rand);
+extern void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status, u8 talk_rand);
+extern void Intrude_SetTalkCancel(INTRUDE_COMM_SYS_PTR intcomm, int net_id, u8 talk_rand);
 extern INTRUDE_TALK_STATUS Intrude_GetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
 extern void Intrude_ClearTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm);
+extern void Intrude_SetTalkedEventReserve(INTRUDE_COMM_SYS_PTR intcomm);
+extern void Intrude_ClearTalkedEventReserve(INTRUDE_COMM_SYS_PTR intcomm);
+extern BOOL Intrude_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid);
 extern void Intrude_GetNormalDisguiseObjCode(const MYSTATUS *myst, u16 *objcode, u8 *disguise_type, u8 *disguise_sex);
 extern u16 Intrude_GetObjCode(const INTRUDE_STATUS *sta, const MYSTATUS *myst);
 extern BOOL Intrude_OtherPlayerExistence(void);

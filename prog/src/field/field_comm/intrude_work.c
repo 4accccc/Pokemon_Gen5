@@ -98,26 +98,6 @@ INTRUDE_COMM_SYS_PTR Intrude_Check_CommConnect(GAME_COMM_SYS_PTR game_comm)
 
 //==================================================================
 /**
- * アクションステータスを設定
- *
- * @param   game_comm		
- * @param   action		
- */
-//==================================================================
-void IntrudeWork_SetActionStatus(GAME_COMM_SYS_PTR game_comm, INTRUDE_ACTION action)
-{
-  INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
-  
-  if(intcomm == NULL){
-    return;
-  }
-  
-  Intrude_SetActionStatus(intcomm, action);
-  intcomm->send_status = TRUE;
-}
-
-//==================================================================
-/**
  * ワープするプレイヤー相手を設定
  *
  * @param   game_comm		

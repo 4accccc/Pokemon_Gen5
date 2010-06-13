@@ -54,6 +54,7 @@ static void Intrude_ConvertPlayerPos(INTRUDE_COMM_SYS_PTR intcomm, ZONEID mine_z
 static int Intrude_GetPalaceOffsetNo(const INTRUDE_COMM_SYS_PTR intcomm, int palace_area);
 static void _SendBufferCreate_SymbolData(INTRUDE_COMM_SYS_PTR intcomm,const SYMBOL_DATA_REQ *p_sdr);
 static void Intrude_UpdatePlayerStatus(INTRUDE_COMM_SYS_PTR intcomm, NetID net_id);
+static void Intrude_CancelCheckTalkedEventReserve(INTRUDE_COMM_SYS_PTR intcomm);
 
 //==============================================================================
 //  データ
@@ -142,6 +143,9 @@ void Intrude_Main(INTRUDE_COMM_SYS_PTR intcomm)
 
   //フィールドステータスのPROCアクションを反映
   Intrude_CheckFieldProcAction(intcomm);
+  
+  //話しかけられたイベントの予約キャンセルを監視
+  Intrude_CancelCheckTalkedEventReserve(intcomm);
 
   //プロフィール要求リクエストを受けているなら送信
   if(intcomm->profile_req == TRUE){
@@ -218,13 +222,11 @@ static void Intrude_CheckFieldProcAction(INTRUDE_COMM_SYS_PTR intcomm)
   case PROC_ACTION_FIELD:
     if(intcomm->intrude_status_mine.action_status == INTRUDE_ACTION_BATTLE){
       Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_FIELD);
-      intcomm->send_status = TRUE;
     }
     break;
   case PROC_ACTION_BATTLE:
     if(intcomm->intrude_status_mine.action_status == INTRUDE_ACTION_FIELD){
       Intrude_SetActionStatus(intcomm, INTRUDE_ACTION_BATTLE);
-      intcomm->send_status = TRUE;
     }
     break;
   }
@@ -292,14 +294,29 @@ static void Intrude_CheckTalkAnswerNG(INTRUDE_COMM_SYS_PTR intcomm)
   int net_id;
   
   for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
-    if(intcomm->answer_talk_ng_bit & (1 << net_id)){
+    if(intcomm->answer_talk_ng[net_id] != TALK_RAND_NULL){
       if(GFL_NET_IsConnectMember(net_id) == TRUE){
-        if(IntrudeSend_TalkAnswer(intcomm, net_id, INTRUDE_TALK_STATUS_NG) == TRUE){
-          intcomm->answer_talk_ng_bit ^= 1 << net_id;
+        if(IntrudeSend_TalkAnswer(
+            intcomm, net_id, INTRUDE_TALK_STATUS_NG, intcomm->answer_talk_ng[net_id]) == TRUE){
+          intcomm->answer_talk_ng[net_id] = TALK_RAND_NULL;
         }
       }
       else{
-        intcomm->answer_talk_ng_bit ^= 1 << net_id;
+        intcomm->answer_talk_ng[net_id] = TALK_RAND_NULL;
+      }
+    }
+  }
+
+  for(net_id = 0; net_id < FIELD_COMM_MEMBER_MAX; net_id++){
+    if(intcomm->send_talk_rand_disagreement[net_id] != TALK_RAND_NULL){
+      if(GFL_NET_IsConnectMember(net_id) == TRUE){
+        if(IntrudeSend_TalkRandDisagreement(
+            intcomm, net_id, intcomm->send_talk_rand_disagreement[net_id]) == TRUE){
+          intcomm->send_talk_rand_disagreement[net_id] = TALK_RAND_NULL;
+        }
+      }
+      else{
+        intcomm->send_talk_rand_disagreement[net_id] = TALK_RAND_NULL;
       }
     }
   }
@@ -433,6 +450,7 @@ static void Intrude_CheckMonolithStatusReq(INTRUDE_COMM_SYS_PTR intcomm)
 void Intrude_SetActionStatus(INTRUDE_COMM_SYS_PTR intcomm, INTRUDE_ACTION action)
 {
   intcomm->intrude_status_mine.action_status = action;
+  intcomm->send_status = TRUE;
   OS_TPrintf("set intrude action status = %d\n", action);
 }
 
@@ -849,7 +867,24 @@ void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid)
   GFL_STD_MemClear(&intcomm->talk, sizeof(INTRUDE_TALK));
   intcomm->talk.talk_netid = talk_netid;
   intcomm->talk.answer_talk_netid = INTRUDE_NETID_NULL;
+  intcomm->talk.talk_rand = TALK_RAND_NULL;
+  
+  Intrude_TalkRandClose(intcomm);
 }
+
+//==================================================================
+/**
+ * 話しかけが成立しないようにランダムコードを初期化する
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_TalkRandClose(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  intcomm->now_talk_rand++;
+  intcomm->talk.now_talk_rand = intcomm->now_talk_rand;
+}
+
 
 //==================================================================
 /**
@@ -860,31 +895,113 @@ void Intrude_InitTalkWork(INTRUDE_COMM_SYS_PTR intcomm, int talk_netid)
  * @retval  TRUE:話が出来る。　FALSE:話が出来ない
  */
 //==================================================================
-BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
+BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id, u8 talk_rand)
 {
   if((intcomm->recv_profile & (1 << net_id)) == 0){
     OS_TPrintf("話しかけられたけど、まだプロフィールを受信していないので断る\n");
-    intcomm->answer_talk_ng_bit |= 1 << net_id;
+    intcomm->answer_talk_ng[net_id] = talk_rand;
     return FALSE;
   }
 
+  GF_ASSERT(talk_rand != TALK_RAND_NULL);
+
   switch(intcomm->intrude_status_mine.action_status){
   case INTRUDE_ACTION_FIELD:
-    if(intcomm->talk.talk_netid == INTRUDE_NETID_NULL){
+    if(intcomm->talk.talk_netid == INTRUDE_NETID_NULL && intcomm->talk.talk_rand == TALK_RAND_NULL
+        && GAMESYSTEM_IsEventExists(intcomm->gsys) == FALSE){
       intcomm->talk.talk_netid = net_id;
       intcomm->talk.talk_status = INTRUDE_TALK_STATUS_OK;
+      intcomm->talk.talk_rand = talk_rand;
+      intcomm->talk.now_talk_rand = talk_rand;
+      Intrude_SetTalkedEventReserve(intcomm);
       OS_TPrintf("talk_ok\n");
       return TRUE;
     }
     else{
-      intcomm->answer_talk_ng_bit |= 1 << net_id;
+      intcomm->answer_talk_ng[net_id] = talk_rand;
       OS_TPrintf("talk_ng field\n");
     }
     break;
   default:
-    intcomm->answer_talk_ng_bit |= 1 << net_id;
+    intcomm->answer_talk_ng[net_id] = talk_rand;
     OS_TPrintf("talk_ng\n");
     break;
+  }
+  
+  return FALSE;
+}
+
+//==================================================================
+/**
+ * 話しかけられたイベントを予約
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_SetTalkedEventReserve(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  intcomm->talked_event_reserve = TRUE;
+}
+
+//==================================================================
+/**
+ * 話しかけられたイベントの予約をクリア
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+void Intrude_ClearTalkedEventReserve(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  intcomm->talked_event_reserve = FALSE;
+}
+
+//==================================================================
+/**
+ * 話しかけれたイベントが予約中に他のイベントが起動した場合は、
+ * 話しかけられたイベントの予約をキャンセルする
+ *
+ * @param   intcomm		
+ */
+//==================================================================
+static void Intrude_CancelCheckTalkedEventReserve(INTRUDE_COMM_SYS_PTR intcomm)
+{
+  u32 talk_netid;
+  
+  if(Intrude_CheckTalkedTo(intcomm, &talk_netid) == TRUE){
+    if(GAMESYSTEM_IsEventExists(intcomm->gsys) == TRUE){
+      if(intcomm->answer_talk_ng[intcomm->talk.talk_netid] == TALK_RAND_NULL){
+        intcomm->answer_talk_ng[intcomm->talk.talk_netid] = intcomm->talk.talk_rand;
+      }
+      Intrude_InitTalkWork(intcomm, INTRUDE_NETID_NULL);
+      Intrude_ClearTalkedEventReserve(intcomm);
+    }
+  }
+}
+
+//==================================================================
+/**
+ * 通信プレイヤーから話しかけられていないかチェック
+ *
+ * @param   intcomm		
+ * @param   fld_player		
+ * @param   hit_netid		  話しかけられている場合、対象プレイヤーのNetIDが代入される
+ *
+ * @retval  BOOL		TRUE:通信プレイヤーから話しかけられている　FALSE:話しかけられていない
+ */
+//==================================================================
+BOOL Intrude_CheckTalkedTo(INTRUDE_COMM_SYS_PTR intcomm, u32 *hit_netid)
+{
+  s16 check_gx, check_gy, check_gz;
+  u32 out_index;
+  
+  if(intcomm == NULL || intcomm->cps == NULL){
+    return FALSE;
+  }
+  
+  //自分から話しかけていないのに値がNULL以外なのは話しかけられたから
+  if(intcomm->talk.talk_netid != INTRUDE_NETID_NULL && intcomm->talked_event_reserve == TRUE){
+    *hit_netid = intcomm->talk.talk_netid;
+    return TRUE;
   }
   
   return FALSE;
@@ -899,16 +1016,19 @@ BOOL Intrude_SetTalkReq(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
  * @param   talk_status		会話ステータス
  */
 //==================================================================
-void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status)
+void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TALK_STATUS talk_status, u8 talk_rand)
 {
   //キャンセルはいつでも受け入れる
   if(talk_status != INTRUDE_TALK_STATUS_CANCEL){
     GF_ASSERT(intcomm->talk.answer_talk_status == INTRUDE_TALK_STATUS_NULL);
   }
   
-  if(intcomm->talk.talk_netid == net_id){
+  if(intcomm->talk.talk_netid == net_id && intcomm->talk.talk_rand == talk_rand){
     intcomm->talk.answer_talk_netid = net_id;
     intcomm->talk.answer_talk_status = talk_status;
+  }
+  else{
+    OS_TPrintf("answer 不一致 my %d, %d, recv %d, %d\n", intcomm->talk.talk_netid, intcomm->talk.talk_rand, net_id, talk_rand);
   }
 }
 
@@ -920,9 +1040,9 @@ void Intrude_SetTalkAnswer(INTRUDE_COMM_SYS_PTR intcomm, int net_id, INTRUDE_TAL
  * @param   net_id		
  */
 //==================================================================
-void Intrude_SetTalkCancel(INTRUDE_COMM_SYS_PTR intcomm, int net_id)
+void Intrude_SetTalkCancel(INTRUDE_COMM_SYS_PTR intcomm, int net_id, u8 talk_rand)
 {
-  Intrude_SetTalkAnswer(intcomm, net_id, INTRUDE_TALK_STATUS_CANCEL);
+  Intrude_SetTalkAnswer(intcomm, net_id, INTRUDE_TALK_STATUS_CANCEL, talk_rand);
 }
 
 //==================================================================

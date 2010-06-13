@@ -266,7 +266,8 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
         break;
       default:  //‚Ü‚¾•ÔŽ–‚ª—ˆ‚Ä‚¢‚È‚¢
         if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
-          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid) == TRUE){
+          if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid, intcomm->talk.talk_rand) == TRUE){
+            Intrude_TalkRandClose(intcomm);
             *seq = SEQ_TALK_CANCEL;
           }
         }
@@ -468,8 +469,8 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     break;
     
   case SEQ_CONCLUDED:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_OK) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
+        INTRUDE_TALK_STATUS_SHOP_OK) == TRUE){
       MISC_SubGold( GAMEDATA_GetMiscWork(gamedata), d_attr->price );
       MYITEM_AddItem(GAMEDATA_GetMyItem(gamedata), d_attr->item_no, 1, HEAPID_FIELDMAP);
       
@@ -480,8 +481,8 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     break;
 
   case SEQ_NG_SHORT_OF_MONEY:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_SHOT_OF_MONEY) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
+        INTRUDE_TALK_STATUS_SHOP_SHOT_OF_MONEY) == TRUE){
       IntrudeEventPrint_StartStream(&shop->ccew.iem, 
         MissionShopMsgID.target_short_of_money[shop->ccew.disguise_talk_type]);
       (*seq) = SEQ_LAST_MSG_WAIT;
@@ -489,8 +490,8 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     break;
 
   case SEQ_NG_ITEM_FULL:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_ITEM_FULL) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
+        INTRUDE_TALK_STATUS_SHOP_ITEM_FULL) == TRUE){
       IntrudeEventPrint_StartStream(&shop->ccew.iem, 
         MissionShopMsgID.target_item_full[shop->ccew.disguise_talk_type]);
       (*seq) = SEQ_LAST_MSG_WAIT;
@@ -498,8 +499,8 @@ static GMEVENT_RESULT CommMissionShop_TtoM_Talk( GMEVENT *event, int *seq, void 
     break;
 
   case SEQ_NG:
-    if(IntrudeSend_TalkAnswer(
-        intcomm, intcomm->talk.talk_netid, INTRUDE_TALK_STATUS_SHOP_NG) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
+        INTRUDE_TALK_STATUS_SHOP_NG) == TRUE){
       IntrudeEventPrint_StartStream(&shop->ccew.iem, 
         MissionShopMsgID.target_decline[shop->ccew.disguise_talk_type]);
       (*seq) = SEQ_LAST_MSG_WAIT;
