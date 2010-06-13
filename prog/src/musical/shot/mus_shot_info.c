@@ -546,7 +546,7 @@ static void MUS_SHOT_INFO_DispMessage( MUS_SHOT_INFO_WORK *infoWork , const u16 
 {
   if( infoWork->printHandle != NULL )
   {
-    ARI_TPrintf( NULL , "Message is not finish!!\n" );
+    MUS_TPrintf( NULL , "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( infoWork->printHandle );
     infoWork->printHandle = NULL;
   }

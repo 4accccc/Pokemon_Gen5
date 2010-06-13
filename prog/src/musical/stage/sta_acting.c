@@ -368,7 +368,7 @@ ACTING_WORK*  STA_ACT_InitActing( STAGE_INIT_WORK *initWork , HEAPID heapId )
   DEBUGWIN_InitProc( ACT_FRAME_MAIN_CURTAIN , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
 #endif  //USE_DEBUGWIN_SYSTEM
-//  ARI_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
+//  MUS_TPrintf("FreeHeap:[%x]\n", GFL_HEAP_GetHeapFreeSize( work->heapId ) );
 
   STA_ACT_LoadBg( work , 0 );
   
@@ -1302,7 +1302,7 @@ void STA_ACT_ShowMessage( ACTING_WORK *work , const u16 msgNo , const s32 msgSpd
   {
     //デバッグ時にした画面の文字切り替えにで文字がバグる事があったため
 //    GF_ASSERT_MSG( NULL , "Message is not finish!!\n" )
-    ARI_TPrintf( NULL , "Message is not finish!!\n" );
+    MUS_TPrintf( NULL , "Message is not finish!!\n" );
     PRINTSYS_PrintStreamDelete( work->printHandle );
     work->printHandle = NULL;
   }
@@ -1471,7 +1471,7 @@ void STA_ACT_CalcRank( ACTING_WORK *work )
         }
       }
     }
-    ARI_TPrintf("Rank[%d:%3d(+%2d)][%d]\n",i,work->initWork->musPoke[i]->point,work->tempPoint[i],work->pokeRank[i]);
+    MUS_TPrintf("Rank[%d:%3d(+%2d)][%d]\n",i,work->initWork->musPoke[i]->point,work->tempPoint[i],work->pokeRank[i]);
   }
 }
 
@@ -1481,7 +1481,7 @@ void STA_ACT_CalcRank( ACTING_WORK *work )
 //--------------------------------------------------------------
 void  STA_ACT_ReadyBgm( ACTING_WORK *work , const u16 seqNo )
 {
-  ARI_TPrintf("ReadyLinkSeqWaveData[%d]\n",seqNo);
+  MUS_TPrintf("ReadyLinkSeqWaveData[%d]\n",seqNo);
   work->isReadyExBgm = TRUE;
   PMDSND_PresetExtraMusic( work->bgmSeqData , work->bgmBankData , seqNo );
 }
@@ -1489,7 +1489,7 @@ void  STA_ACT_ReadyBgm( ACTING_WORK *work , const u16 seqNo )
 void  STA_ACT_StartBgm( ACTING_WORK *work , const u16 seqNo )
 {
   GF_ASSERT_MSG( work->isReadyExBgm == TRUE , "Download bgm is not ready!!!\nPlz [SCRIPT_ENUM_BgmReady]!!\n" );
-  ARI_TPrintf("PlayLinkSeqWaveData[%d]\n",seqNo);
+  MUS_TPrintf("PlayLinkSeqWaveData[%d]\n",seqNo);
   work->isPlayExBgm = TRUE;
   PMDSND_PlayExtraMusic(seqNo);
   //NNS_SndArcPlayerStartSeq( SOUNDMAN_GetHierarchyPlayerSndHandle(), SEQ_BGM_MSL_DL_01 );
@@ -1505,7 +1505,7 @@ void  STA_ACT_StopBgm( ACTING_WORK *work )
 
 void  STA_ACT_SetBgmLinkNumber(  ACTING_WORK *work , const u16 arcNum , const u16 dstNum , const u16 srcNum )
 {
-  ARI_TPrintf("LinkSeqWaveData[%d][%d][%d]\n",arcNum,dstNum,srcNum);
+  MUS_TPrintf("LinkSeqWaveData[%d][%d][%d]\n",arcNum,dstNum,srcNum);
   PMDSND_ChangeWaveData( arcNum , dstNum , work->bgmWaveData , srcNum );
 }
 
@@ -1533,7 +1533,7 @@ void STA_ACT_PlayCurtainCloseSe( ACTING_WORK *work )
       minPoint = point;
     }
   }
-  ARI_TPrintf("Curtain cloase SE point[%d]\n",minPoint);
+  MUS_TPrintf("Curtain cloase SE point[%d]\n",minPoint);
   if( minPoint >= 70 )
   {
     PMSND_PlaySE( STA_SE_CLAP_3 );
@@ -1690,7 +1690,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
       const u8 usePos = MUS_COMM_GetUseButtonPos( work->initWork->commWork , i );
       if( usePos != MUS_POKE_EQU_INVALID )
       {
-        ARI_TPrintf("Use item!![%d][%d]\n",i,usePos);
+        MUS_TPrintf("Use item!![%d][%d]\n",i,usePos);
         STA_POKE_UseItemFunc( work->pokeSys , work->pokeWork[i] , usePos );
         MUS_COMM_ResetUseButtonPos( work->initWork->commWork , i );
         
@@ -1716,7 +1716,7 @@ static void STA_ACT_UpdateUseItem( ACTING_WORK *work )
       //単独アピールに成功！
       if( work->isUseItemSolo == TRUE )
       {
-        ARI_TPrintf("<ItemBonus!!Player[%d][%d]>\n",work->useItemPoke,work->useItemPokePos);
+        MUS_TPrintf("<ItemBonus!!Player[%d][%d]>\n",work->useItemPoke,work->useItemPokePos);
         if( work->initWork->commWork == NULL )
         {
           const u32 seNo = STA_ACT_GetUseItemSe( work , work->useItemPoke , work->useItemPokePos );
@@ -1815,19 +1815,19 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
       if( musPoke->charaType != MUS_CHARA_NPC )
       {
         //NPCじゃない
-        ARI_TPrintf("NPC[%d] Use item[%d] Not NPC\n",i,type);
+        MUS_TPrintf("NPC[%d] Use item[%d] Not NPC\n",i,type);
         continue;
       }
       if( STA_ACT_IsUsingItem( work , i ) == TRUE )
       {
         //アイテム使用中
-        ARI_TPrintf("NPC[%d] Use item[%d] Not Using item\n",i,type);
+        MUS_TPrintf("NPC[%d] Use item[%d] Not Using item\n",i,type);
         continue;
       }
       if( work->npcUseItemCnt[i] > 0 )
       {
         //使用予約済み
-        ARI_TPrintf("NPC[%d] Use item[%d] Ready use\n",i,type);
+        MUS_TPrintf("NPC[%d] Use item[%d] Ready use\n",i,type);
         continue;
       }
       //アイテムチェック
@@ -1844,7 +1844,7 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
       if( isHaveItem[0] == FALSE && isHaveItem[1] == FALSE )
       {
         //アイテム無い!
-        ARI_TPrintf("NPC[%d] Use item[%d] No item\n",i,type);
+        MUS_TPrintf("NPC[%d] Use item[%d] No item\n",i,type);
         continue;
       }
       else
@@ -1873,7 +1873,7 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
             const u16 cnt = GFL_STD_MtRand(30) + 30;
             work->npcUseItemCnt[i] = cnt;
             work->npcUseItemPos[i] = usePos;
-            ARI_TPrintf("NPC[%d] Use item[ACTION][%d]\n",i,cnt);
+            MUS_TPrintf("NPC[%d] Use item[ACTION][%d]\n",i,cnt);
           }
         }
         break;
@@ -1885,7 +1885,7 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
             const u16 cnt = GFL_STD_MtRand(60) + 60;
             work->npcUseItemCnt[i] = cnt;
             work->npcUseItemPos[i] = usePos;
-            ARI_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
+            MUS_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
           }
         }
         if( musPoke->npcAppealTime == NPC_APPEAL_TIME_DISTURB_L )
@@ -1895,7 +1895,7 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
             const u16 cnt = GFL_STD_MtRand(60) + 60;
             work->npcUseItemCnt[i] = cnt;
             work->npcUseItemPos[i] = usePos;
-            ARI_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
+            MUS_TPrintf("NPC[%d] Use item[DISTURB][%d]\n",i,cnt);
           }
         }
         break;
@@ -1913,7 +1913,7 @@ void STA_ACT_CheckUseItemNpc( ACTING_WORK *work , const ACTING_NPC_ITEMUSE_TYPE 
             work->npcUseItemCnt[i] = musPoke->npcAppealTime + sub;
           }
           work->npcUseItemPos[i] = usePos;
-          ARI_TPrintf("NPC[%d] Use item[START ][%d]\n",i,work->npcUseItemCnt[i]);
+          MUS_TPrintf("NPC[%d] Use item[START ][%d]\n",i,work->npcUseItemCnt[i]);
         }
         break;
       }

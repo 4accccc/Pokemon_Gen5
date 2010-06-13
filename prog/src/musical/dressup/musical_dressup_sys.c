@@ -128,7 +128,7 @@ static GFL_PROC_RESULT DressUpProc_Main( GFL_PROC * proc, int * seq , void *pwk,
   case DUP_SEQ_INIT_FITTING:
     work->fitWork = DUP_FIT_InitFitting(work->fitInitWork,HEAPID_MUSICAL_DRESSUP);
     *seq = DUP_SEQ_LOOP_FITTING;
-    ARI_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
+    MUS_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
     if( work->initWork->commWork != NULL )
     {
       if( MUS_COMM_GetMode( work->initWork->commWork ) == MCM_PARENT )

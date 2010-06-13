@@ -552,12 +552,12 @@ void  MUS_MCSS_Draw( MUS_MCSS_SYS_WORK *mcss_sys , MusicalCellCallBack musCellCb
             ofsYF += FX32_CONST( anim_SRT.py );
 
             //ARI_Printf("[%.3f][%.3f][%.3f][%.3f]",F32_CONST(anim_SRT.sx),F32_CONST(anim_SRT_mc.sx),F32_CONST(anim_SRT.sy),F32_CONST(anim_SRT_mc.sy));
-            //ARI_TPrintf("[%x][%x]",anim_SRT_mc.rotZ,anim_SRT.rotZ);
-            //ARI_TPrintf("[%d][%d][%d][%d]\n",(int)F32_CONST(anim_SRT.px),(int)F32_CONST(anim_SRT_mc.px),(int)F32_CONST(anim_SRT.py),(int)F32_CONST(anim_SRT_mc.py));
+            //MUS_TPrintf("[%x][%x]",anim_SRT_mc.rotZ,anim_SRT.rotZ);
+            //MUS_TPrintf("[%d][%d][%d][%d]\n",(int)F32_CONST(anim_SRT.px),(int)F32_CONST(anim_SRT_mc.px),(int)F32_CONST(anim_SRT.py),(int)F32_CONST(anim_SRT_mc.py));
             //ARI_Printf("[%.3f][%.3f]\n",F32_CONST(ofsXS),F32_CONST(ofsYS));
 
-            //ARI_TPrintf("mcss[%d:%d]\n",(int)F32_CONST(pos.x),(int)F32_CONST(pos.y));
-            //ARI_TPrintf("mcss[%d:%d]:[%d:%d]:[%d:%d]\n",ofsx,ofsy,(int)F32_CONST(itemOfsx),(int)F32_CONST(itemOfsy),anim_SRT.px,anim_SRT.py);
+            //MUS_TPrintf("mcss[%d:%d]\n",(int)F32_CONST(pos.x),(int)F32_CONST(pos.y));
+            //MUS_TPrintf("mcss[%d:%d]:[%d:%d]:[%d:%d]\n",ofsx,ofsy,(int)F32_CONST(itemOfsx),(int)F32_CONST(itemOfsy),anim_SRT.px,anim_SRT.py);
             cellData.pos = pos;
             cellData.pos.y = -cellData.pos.y;
             cellData.ofs.x  = FX_Mul( ofsXF , mcss->scale.x/16 );
@@ -1087,7 +1087,7 @@ static  void  MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS
     int i;
     for( i=0;i<12;i++ )
     {
-      ARI_TPrintf("[%2d][%d][%d][%d][%d][%d]\n",i
+      MUS_TPrintf("[%2d][%d][%d][%d][%d][%d]\n",i
                 ,mcss->musInfo[i].objNo
                 ,mcss->musInfo[i].pltNo
                 ,mcss->musInfo[i].ofsX
@@ -1140,7 +1140,7 @@ static  void  MUS_MCSS_LoadResource( MUS_MCSS_SYS_WORK *mcss_sys, int count, MUS
       //パッチールぶち
       if( maw->ncec == NARC_pokegra_mus_pfwb_327_NCEC )
       {
-        ARI_TPrintf("パッチーる！[%08x]\n",maw->rand);
+        MUS_TPrintf("パッチーる！[%08x]\n",maw->rand);
         MCSS_TOOL_MakeBuchiCore( tlw->pCharData->pRawData , maw->rand );
       }
       

@@ -38,6 +38,9 @@
 
 #define MUS_COMM_SEND_APPEALBONUS_BUFF (8)
 
+#if PM_DEBUG
+#define MUS_COMM_DEBUG
+#endif
 //======================================================================
 //	enum
 //======================================================================
@@ -202,6 +205,12 @@ struct _MUS_COMM_WORK
   BOOL isReqSendState;
   BOOL isReqSendAppealBonus;
   u32  sendAppealBonusData[MUS_COMM_SEND_APPEALBONUS_BUFF]; // 
+
+#ifdef MUS_COMM_DEBUG
+  u32  syncWaitNo;
+  u32  doneWaitNo;
+  BOOL isUpdateDebMenu;
+#endif
 };
 
 //======================================================================
@@ -252,6 +261,11 @@ static BOOL MUS_COMM_BeacomCompare(GameServiceID GameServiceID1, GameServiceID G
 
 inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_STATE commState );
 static void MUS_COMM_DebugCheckCRC( void *data , const u32 size , const u8 code );
+
+#ifdef MUS_COMM_DEBUG
+static void MUS_COMM_DebugInit( MUS_COMM_WORK *work );
+static void MUS_COMM_DebugExit( MUS_COMM_WORK *work );
+#endif
 
 static const NetRecvFuncTable MusCommRecvTable[] = 
 {
@@ -322,10 +336,16 @@ void MUS_COMM_InitField( HEAPID heapId , GAMEDATA *gameData , GAME_COMM_SYS_PTR 
   work->isInitMusical = FALSE;
 
   GameCommSys_Boot( gameComm , GAME_COMM_NO_MUSICAL , work );
+#ifdef MUS_COMM_DEBUG
+  MUS_COMM_DebugInit( work );
+#endif
 }
 
 void MUS_COMM_ExitField( MUS_COMM_WORK *work )
 {
+#ifdef MUS_COMM_DEBUG
+  MUS_COMM_DebugExit( work );
+#endif
   MUS_COMM_ExitMusical( work );
   GameCommSys_ExitReq( work->gameComm );
 }
@@ -587,14 +607,17 @@ void MUS_COMM_UpdateComm( MUS_COMM_WORK* work )
     static u8 befState = 0xFF;
     if( befState != work->commState )
     {
-      ARI_TPrintf("MusCommState[%d]->[%d]\n",befState,work->commState);
+      MUS_TPrintf("MusCommState[%d]->[%d]\n",befState,work->commState);
       befState = work->commState;
+#ifdef MUS_COMM_DEBUG
+      work->isUpdateDebMenu = TRUE;
+#endif
     }
   }
 #endif
   if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE )
   {
-    ARI_TPrintf("mus_com_func ERROR!!!\n");
+    MUS_TPrintf("mus_com_func ERROR!!!\n");
     work->isErr = TRUE;
     if( GFL_NET_IsExit() == FALSE )
     {
@@ -984,7 +1007,11 @@ void MUS_COMM_SendTimingCommand( MUS_COMM_WORK *work , const u8 no )
 {
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   GFL_NET_HANDLE_TimeSyncStart( selfHandle , no , WB_NET_MUSICAL );
-  ARI_TPrintf("MusComm Send timming command[%d]\n",no);
+  MUS_TPrintf("MusComm Send timming command[%d]\n",no);
+#ifdef MUS_COMM_DEBUG
+  work->syncWaitNo = no;
+  work->isUpdateDebMenu = TRUE;
+#endif
 }
 
 const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no )
@@ -992,7 +1019,11 @@ const BOOL MUS_COMM_CheckTimingCommand( MUS_COMM_WORK *work , const u8 no )
   GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
   if( GFL_NET_HANDLE_IsTimeSync( selfHandle , no , WB_NET_MUSICAL ) == TRUE )
   {
-    ARI_TPrintf("MusComm Sync timming command[%d]\n",no);
+    MUS_TPrintf("MusComm Sync timming command[%d]\n",no);
+#ifdef MUS_COMM_DEBUG
+    work->doneWaitNo = no;
+    work->isUpdateDebMenu = TRUE;
+#endif
     return TRUE;
   }
   if( work->isErr == TRUE )
@@ -1082,14 +1113,14 @@ static const BOOL MUS_COMM_Send_Flag( MUS_COMM_WORK* work , const u8 flag , u32 
   MUS_COMM_FLG_PACKET pkt;
   pkt.flg = flag;
   pkt.value = value;
-  ARI_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
+  MUS_TPrintf("Send Flg[%d:%d].\n",pkt.flg,pkt.value);
 
   ret = GFL_NET_SendDataEx( selfHandle , target , 
                             MCST_FLG , sizeof( MUS_COMM_FLG_PACKET ) , 
                             (void*)&pkt , TRUE , FALSE , FALSE );
   if( ret == FALSE )
   {
-    ARI_TPrintf("Send Flg is failued!!\n");
+    MUS_TPrintf("Send Flg is failued!!\n");
   }
   return ret;
 }
@@ -1101,14 +1132,14 @@ static const BOOL MUS_COMM_Send_FlagServer( MUS_COMM_WORK* work , const u8 flag 
   MUS_COMM_FLG_PACKET pkt;
   pkt.flg = flag;
   pkt.value = value;
-  ARI_TPrintf("Send Flg Server[%d:%d].\n",pkt.flg,pkt.value);
+  MUS_TPrintf("Send Flg Server[%d:%d].\n",pkt.flg,pkt.value);
 
   ret = GFL_NET_SendDataEx( parentHandle , target , 
                             MCST_FLG , sizeof( MUS_COMM_FLG_PACKET ) , 
                             (void*)&pkt , TRUE , FALSE , FALSE );
   if( ret == FALSE )
   {
-    ARI_TPrintf("Send Flg is failued!!\n");
+    MUS_TPrintf("Send Flg is failued!!\n");
   }
   return ret;
 }
@@ -1120,7 +1151,7 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   MUS_COMM_FLG_PACKET *pkt = (MUS_COMM_FLG_PACKET*)pData;
 
-  ARI_TPrintf("Post Flg[%d:%d(0x%x)] To [%d].\n",pkt->flg,pkt->value,pkt->value,netID);
+  MUS_TPrintf("Post Flg[%d:%d(0x%x)] To [%d].\n",pkt->flg,pkt->value,pkt->value,netID);
   switch( pkt->flg )
   {
   case MCFT_START_GAME:
@@ -1131,14 +1162,14 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
     {
       u8 i;
       u32 bitMask = 0xF;
-      ARI_TPrintf("MusicalIndex:");
+      MUS_TPrintf("MusicalIndex:");
       for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
       {
         work->userData[i].musicalIdx = (pkt->value&bitMask)>>(i*4);
-        ARI_TPrintf("[%d]",work->userData[i].musicalIdx);
+        MUS_TPrintf("[%d]",work->userData[i].musicalIdx);
         bitMask = bitMask<<4;
       }
-      ARI_TPrintf("\n");
+      MUS_TPrintf("\n");
     }
     break;
 
@@ -1218,11 +1249,11 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
     {
       u8 i;
       u32 bitMask = 0xF;
-      ARI_TPrintf("PostUseButton:");
+      MUS_TPrintf("PostUseButton:");
       for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
       {
         const u8 bit = (pkt->value & bitMask)>>(i*4);
-        ARI_TPrintf("[%d]",bit);
+        MUS_TPrintf("[%d]",bit);
         if( bit != MUS_POKE_EQU_INVALID )
         {
           work->userData[i].useButtonPos = bit;
@@ -1230,7 +1261,7 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
         bitMask = bitMask<<4;
       }
       work->useButtonAttentionPoke = (pkt->value & 0xF0000)>>16;
-      ARI_TPrintf(":[%d]\n",work->useButtonAttentionPoke);
+      MUS_TPrintf(":[%d]\n",work->useButtonAttentionPoke);
     }
     break;
   
@@ -1257,7 +1288,7 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
       {
         PMSND_PlaySE( STA_SE_CLAP_2 );
       }
-      ARI_TPrintf("PostAppealBonus:[%d][%d][%d]\n",seType,idx,pos);
+      MUS_TPrintf("PostAppealBonus:[%d][%d][%d]\n",seType,idx,pos);
     }
     break;
   }
@@ -1270,7 +1301,7 @@ static void MUS_COMM_Post_Flag( const int netID, const int size , const void* pD
 //--------------------------------------------------------------
 static const BOOL MUS_COMM_Send_MyStatus( MUS_COMM_WORK *work )
 {
-  ARI_TPrintf("Send UserData \n");
+  MUS_TPrintf("Send UserData \n");
   if( work->selfUserData != NULL )
   {
     GFL_HEAP_FreeMemory( work->selfUserData );
@@ -1284,12 +1315,12 @@ static const BOOL MUS_COMM_Send_MyStatus( MUS_COMM_WORK *work )
     GFL_STD_MemCopy( work->ppp         , (void*)pppAdr      , POKETOOL_GetPPPWorkSize() );
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
 
-  ARI_TPrintf("-----Send User Data-----\n");
-  ARI_TPrintf("[%3d]",PPP_Get(work->ppp,ID_PARA_monsno,NULL));
-  ARI_TPrintf("[%5d]",MyStatus_GetID_Low(work->selfMyStatus));
-  ARI_TPrintf("[%5d]",work->miscData.sumPoint);
-  ARI_TPrintf("\n");
-  ARI_TPrintf("-----Send User Data-----\n");
+  MUS_TPrintf("-----Send User Data-----\n");
+  MUS_TPrintf("[%3d]",PPP_Get(work->ppp,ID_PARA_monsno,NULL));
+  MUS_TPrintf("[%5d]",MyStatus_GetID_Low(work->selfMyStatus));
+  MUS_TPrintf("[%5d]",work->miscData.sumPoint);
+  MUS_TPrintf("\n");
+  MUS_TPrintf("-----Send User Data-----\n");
 #endif
   }
 
@@ -1301,7 +1332,7 @@ static const BOOL MUS_COMM_Send_MyStatus( MUS_COMM_WORK *work )
                               work->selfUserData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send UserData is failued!!\n");
+      MUS_TPrintf("Send UserData is failued!!\n");
     }
     return ret;
   }
@@ -1311,14 +1342,14 @@ static void MUS_COMM_Post_MyStatus( const int netID, const int size , const void
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   work->userData[netID].isValidStatus = TRUE;
   work->userData[netID].isValid = TRUE;
-  ARI_TPrintf("MusComm Finish Post UserData[%d].\n",netID);
+  MUS_TPrintf("MusComm Finish Post UserData[%d].\n",netID);
 
 }
 
 static u8*    MUS_COMM_Post_MyStatusBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Start Post UserData[%d].\n",netID);
+  MUS_TPrintf("MusComm Start Post UserData[%d].\n",netID);
   work->userData[netID].isValidStatus = FALSE;
   return (u8*)work->userData[netID].userData;
 }
@@ -1335,7 +1366,7 @@ const BOOL MUS_COMM_Send_AllMyStatus( MUS_COMM_WORK *work  )
     GFL_STD_MemCopy( work->userData[i].userData , (void*)startAdr , MUS_COMM_USERDATA_SIZE );
   }
   
-  ARI_TPrintf("Send AllUserData \n");
+  MUS_TPrintf("Send AllUserData \n");
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
     BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
@@ -1343,7 +1374,7 @@ const BOOL MUS_COMM_Send_AllMyStatus( MUS_COMM_WORK *work  )
                               work->allUserData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send AllUserData is failued!!\n");
+      MUS_TPrintf("Send AllUserData is failued!!\n");
     }
     return ret;
   }
@@ -1352,7 +1383,7 @@ static void MUS_COMM_Post_AllMyStatus( const int netID, const int size , const v
 {
   u8 i;
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Finish Post AllUserData.\n");
+  MUS_TPrintf("MusComm Finish Post AllUserData.\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
     u32 startAdr = (u32)work->allUserData+MUS_COMM_USERDATA_SIZE*i;
@@ -1371,23 +1402,23 @@ static void MUS_COMM_Post_AllMyStatus( const int netID, const int size , const v
     }
   }
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-  ARI_TPrintf("-----Post All User Data-----\n");
+  MUS_TPrintf("-----Post All User Data-----\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
-    ARI_TPrintf("[%d]",i);
+    MUS_TPrintf("[%d]",i);
     if( work->userData[i].isValid == TRUE )
     {
-      ARI_TPrintf(":[%3d]",PPP_Get(work->userData[i].ppp,ID_PARA_monsno,NULL));
-      ARI_TPrintf("[%5d]",MyStatus_GetID_Low(work->userData[i].myStatus));
-      ARI_TPrintf("[%5d]",work->userData[i].miscData->sumPoint);
-      ARI_TPrintf("\n");
+      MUS_TPrintf(":[%3d]",PPP_Get(work->userData[i].ppp,ID_PARA_monsno,NULL));
+      MUS_TPrintf("[%5d]",MyStatus_GetID_Low(work->userData[i].myStatus));
+      MUS_TPrintf("[%5d]",work->userData[i].miscData->sumPoint);
+      MUS_TPrintf("\n");
     }
     else
     {
-      ARI_TPrintf("NPC\n");
+      MUS_TPrintf("NPC\n");
     }
   }
-  ARI_TPrintf("-----Post All User Data-----\n");
+  MUS_TPrintf("-----Post All User Data-----\n");
 #endif
   work->isPostAllUserData = TRUE;
 
@@ -1401,7 +1432,7 @@ static u8*    MUS_COMM_Post_AllMyStatusBuff( int netID, void* pWork , int size )
     work->userData[i].isValidStatus = FALSE;
   }
   work->isPostAllUserData = FALSE;
-  ARI_TPrintf("MusComm Start Post AllUserData.\n");
+  MUS_TPrintf("MusComm Start Post AllUserData.\n");
   return work->allUserData;
 }
 
@@ -1421,7 +1452,7 @@ const BOOL MUS_COMM_Send_MusPokeData( MUS_COMM_WORK *work , MUSICAL_POKE_PARAM *
     GFL_STD_MemCopy( musPoke->pokePara , (void*)pokeParaAdr , POKETOOL_GetWorkSize() );
   }
   
-  ARI_TPrintf("Send PokeData \n");
+  MUS_TPrintf("Send PokeData \n");
   {
     
     GFL_NETHANDLE *selfHandle = GFL_NET_HANDLE_GetCurrentHandle();
@@ -1430,7 +1461,7 @@ const BOOL MUS_COMM_Send_MusPokeData( MUS_COMM_WORK *work , MUSICAL_POKE_PARAM *
                               work->selfPokeData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send PokeData is failued!!\n");
+      MUS_TPrintf("Send PokeData is failued!!\n");
     }
     return ret;
   }
@@ -1439,7 +1470,7 @@ static void MUS_COMM_Post_MusPokeData( const int netID, const int size , const v
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   work->userData[netID].isValidData = TRUE;
-  ARI_TPrintf("MusComm Finish Post PokeData[%d].\n",netID);
+  MUS_TPrintf("MusComm Finish Post PokeData[%d].\n",netID);
   
   {
     u32 pokeParaAdr = (u32)work->userData[netID].pokeData+sizeof(MUSICAL_POKE_PARAM);
@@ -1451,7 +1482,7 @@ static void MUS_COMM_Post_MusPokeData( const int netID, const int size , const v
 static u8*    MUS_COMM_Post_MusPokeDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Start Post PokeData[%d].\n",netID);
+  MUS_TPrintf("MusComm Start Post PokeData[%d].\n",netID);
   work->userData[netID].isValidData = FALSE;
   return work->userData[netID].pokeData;
 }
@@ -1468,7 +1499,7 @@ const BOOL MUS_COMM_Send_AllMusPokeData( MUS_COMM_WORK *work  )
     GFL_STD_MemCopy( work->userData[i].pokeData , (void*)startAdr , MUS_COMM_POKEDATA_SIZE );
   }
   
-  ARI_TPrintf("Send AllPokeData \n");
+  MUS_TPrintf("Send AllPokeData \n");
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
     BOOL ret = GFL_NET_SendDataEx( parentHandle , GFL_NET_SENDID_ALLUSER , 
@@ -1476,7 +1507,7 @@ const BOOL MUS_COMM_Send_AllMusPokeData( MUS_COMM_WORK *work  )
                               work->allPokeData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send AllPokeData is failued!!\n");
+      MUS_TPrintf("Send AllPokeData is failued!!\n");
     }
     return ret;
   }
@@ -1485,7 +1516,7 @@ static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , cons
 {
   u8 i;
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Finish Post AllPokeData.\n");
+  MUS_TPrintf("MusComm Finish Post AllPokeData.\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
     if( MyStatus_CheckNameClear( work->userData[i].myStatus ) == FALSE )
@@ -1505,27 +1536,27 @@ static void MUS_COMM_Post_AllMusPokeData( const int netID, const int size , cons
     }
   }
 #if defined(DEBUG_ONLY_FOR_ariizumi_nobuhiko)
-  ARI_TPrintf("-----Post All Poke Data-----\n");
+  MUS_TPrintf("-----Post All Poke Data-----\n");
   for( i=0;i<MUSICAL_COMM_MEMBER_NUM;i++ )
   {
     MUSICAL_POKE_PARAM *musPoke = work->userData[i].pokeData;
-    ARI_TPrintf("[%d]",i);
+    MUS_TPrintf("[%d]",i);
     if( work->userData[i].isValid == TRUE )
     {
       u8 j;
-      ARI_TPrintf(":[%3d]|",PP_Get(musPoke->pokePara,ID_PARA_monsno,NULL));
+      MUS_TPrintf(":[%3d]|",PP_Get(musPoke->pokePara,ID_PARA_monsno,NULL));
       for( j=0 ; j<MUS_POKE_EQUIP_MAX ; j++ )
       {
-        ARI_TPrintf("[%3d]",musPoke->equip[j].itemNo);
+        MUS_TPrintf("[%3d]",musPoke->equip[j].itemNo);
       }
-      ARI_TPrintf("\n");
+      MUS_TPrintf("\n");
     }
     else
     {
-      ARI_TPrintf("NPC\n");
+      MUS_TPrintf("NPC\n");
     }
   }
-  ARI_TPrintf("-----Post All User Data-----\n");
+  MUS_TPrintf("-----Post All User Data-----\n");
 #endif
   work->isPostAllPokeData = TRUE;
 
@@ -1539,7 +1570,7 @@ static u8*    MUS_COMM_Post_AllMusPokeDataBuff( int netID, void* pWork , int siz
     work->userData[i].isValidData = FALSE;
   }
   work->isPostAllPokeData = FALSE;
-  ARI_TPrintf("MusComm Start Post AllPokeData.\n");
+  MUS_TPrintf("MusComm Start Post AllPokeData.\n");
   return work->allPokeData;
 }
 
@@ -1637,6 +1668,9 @@ static void MUS_COMM_Update_SendStrmData( MUS_COMM_WORK *work )
             //work->strmDivIdx++;
             work->divSendState = MCDS_SEND;
           }
+#ifdef MUS_COMM_DEBUG
+          work->isUpdateDebMenu = TRUE;
+#endif
         }
       }
       break;
@@ -1658,7 +1692,7 @@ const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
     dataSize = MUS_COMM_DIV_SIZE;
   }
   
-  ARI_TPrintf("Send StrmData[%d] \n",idx);
+  MUS_TPrintf("Send StrmData[%d] \n",idx);
   {
     
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
@@ -1668,7 +1702,7 @@ const BOOL MUS_COMM_Send_StrmData( MUS_COMM_WORK *work , const u8 idx )
                               startAdr , FALSE , TRUE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send PokeData is failued!!\n");
+      MUS_TPrintf("Send PokeData is failued!!\n");
     }
     return ret;
   }
@@ -1678,8 +1712,11 @@ static void MUS_COMM_Post_StrmData( const int netID, const int size , const void
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   work->strmDivIdx++;
   work->isSendingStrmData = FALSE;
+#ifdef MUS_COMM_DEBUG
+  work->isUpdateDebMenu = TRUE;
+#endif
 
-  ARI_TPrintf("MusComm Finish Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,work->distData->midiDataSize);
+  MUS_TPrintf("MusComm Finish Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,work->distData->midiDataSize);
   if( (work->strmDivIdx)*MUS_COMM_DIV_SIZE >= work->distData->midiDataSize )
   {
     //データを各ポインタに設定
@@ -1688,7 +1725,7 @@ static void MUS_COMM_Post_StrmData( const int netID, const int size , const void
     work->distData->midiBnkData  = (void*)((u32)work->distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) + midHeader->seqSize );
     work->distData->midiWaveData = (void*)((u32)work->distData->midiData + sizeof(MUS_DIST_MIDI_HEADER) + midHeader->seqSize + midHeader->bankSize );
 
-    ARI_TPrintf("MusComm FinishPostMidiData[%d][%d][%d].\n",midHeader->seqSize,midHeader->bankSize,midHeader->waveSize);
+    MUS_TPrintf("MusComm FinishPostMidiData[%d][%d][%d].\n",midHeader->seqSize,midHeader->bankSize,midHeader->waveSize);
   }
 
 
@@ -1698,7 +1735,7 @@ static u8*    MUS_COMM_Post_StrmDataBuff( int netID, void* pWork , int size )
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
   void *startAdd = (void*)(((u32)work->distData->midiData)+(work->strmDivIdx*MUS_COMM_DIV_SIZE));
   
-  ARI_TPrintf("MusComm Start Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,size);
+  MUS_TPrintf("MusComm Start Post StrmData[%d][%d][%d].\n",netID,work->strmDivIdx,size);
   return startAdd;
 }
 
@@ -1739,7 +1776,7 @@ const BOOL MUS_COMM_Send_ScriptSize( MUS_COMM_WORK *work )
 
 const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work )
 {
-  ARI_TPrintf("Send ProgramData \n");
+  MUS_TPrintf("Send ProgramData \n");
   MUS_COMM_DebugCheckCRC( work->distData->programData , work->distData->programDataSize , 2 );
 
   {
@@ -1749,7 +1786,7 @@ const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work )
                               work->distData->programData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send ProgramData is failued!!\n");
+      MUS_TPrintf("Send ProgramData is failued!!\n");
     }
     return ret;
   }
@@ -1758,7 +1795,7 @@ const BOOL MUS_COMM_Send_ProgramData( MUS_COMM_WORK *work )
 static void MUS_COMM_Post_ProgramData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Finish Post ProgramData.\n");
+  MUS_TPrintf("MusComm Finish Post ProgramData.\n");
   work->isPostProgramData = TRUE;
 
   MUS_COMM_DebugCheckCRC( work->distData->programData , work->distData->programDataSize , 12 );
@@ -1767,13 +1804,13 @@ static void MUS_COMM_Post_ProgramData( const int netID, const int size , const v
 static u8* MUS_COMM_Post_ProgramDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Start Post ProgramData.\n");
+  MUS_TPrintf("MusComm Start Post ProgramData.\n");
   return work->distData->programData;
 }
 
 const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work )
 {
-  ARI_TPrintf("Send MessageData \n");
+  MUS_TPrintf("Send MessageData \n");
   MUS_COMM_DebugCheckCRC( work->distData->messageData , work->distData->messageDataSize , 1 );
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
@@ -1782,7 +1819,7 @@ const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work )
                               work->distData->messageData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send MessageData is failued!!\n");
+      MUS_TPrintf("Send MessageData is failued!!\n");
     }
     return ret;
   }}
@@ -1790,7 +1827,7 @@ const BOOL MUS_COMM_Send_MessageData( MUS_COMM_WORK *work )
 static void MUS_COMM_Post_MessageData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Finish Post MessageData.\n");
+  MUS_TPrintf("MusComm Finish Post MessageData.\n");
   work->isPostMessageData = TRUE;
 
   MUS_COMM_DebugCheckCRC( work->distData->messageData , work->distData->messageDataSize , 11 );
@@ -1799,13 +1836,13 @@ static void MUS_COMM_Post_MessageData( const int netID, const int size , const v
 static u8*    MUS_COMM_Post_MessageDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Start Post MessageData.\n");
+  MUS_TPrintf("MusComm Start Post MessageData.\n");
   return work->distData->messageData;
 }
 
 const BOOL MUS_COMM_Send_ScriptData( MUS_COMM_WORK *work )
 {
-  ARI_TPrintf("Send ScriptData \n");
+  MUS_TPrintf("Send ScriptData \n");
   MUS_COMM_DebugCheckCRC( work->distData->scriptData , work->distData->scriptDataSize , 0 );
   {
     GFL_NETHANDLE *parentHandle = GFL_NET_GetNetHandle(GFL_NET_NETID_SERVER);
@@ -1814,7 +1851,7 @@ const BOOL MUS_COMM_Send_ScriptData( MUS_COMM_WORK *work )
                               work->distData->scriptData , TRUE , FALSE , TRUE );
     if( ret == FALSE )
     {
-      ARI_TPrintf("Send ScriptData is failued!!\n");
+      MUS_TPrintf("Send ScriptData is failued!!\n");
     }
     return ret;
   }
@@ -1823,7 +1860,7 @@ const BOOL MUS_COMM_Send_ScriptData( MUS_COMM_WORK *work )
 static void MUS_COMM_Post_ScriptData( const int netID, const int size , const void* pData , void* pWork , GFL_NETHANDLE *pNetHandle )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Finish Post ScriptData.\n");
+  MUS_TPrintf("MusComm Finish Post ScriptData.\n");
   work->isPostScriptData = TRUE;
 
   MUS_COMM_DebugCheckCRC( work->distData->scriptData , work->distData->scriptDataSize , 10 );
@@ -1832,7 +1869,7 @@ static void MUS_COMM_Post_ScriptData( const int netID, const int size , const vo
 static u8*    MUS_COMM_Post_ScriptDataBuff( int netID, void* pWork , int size )
 {
   MUS_COMM_WORK *work = (MUS_COMM_WORK*)pWork;
-  ARI_TPrintf("MusComm Start Post ScriptData.\n");
+  MUS_TPrintf("MusComm Start Post ScriptData.\n");
   return work->distData->scriptData;
 }
 
@@ -2060,7 +2097,7 @@ void MUS_COMM_ReqSendAppealBonusPoke( MUS_COMM_WORK* work , const u8 idx , const
 
 inline static void MUS_COMM_SetCommState( MUS_COMM_WORK *work , const MUS_COMM_STATE commState )
 {
-  ARI_TPrintf("MusCommState[%d]\n",commState);
+  MUS_TPrintf("MusCommState[%d]\n",commState);
   work->commState = commState;
 }
 
@@ -2111,3 +2148,73 @@ static void MUS_COMM_DebugCheckCRC( void *data , const u32 size , const u8 code 
   OS_TFPrintf(3,"MUS_COMM Finish check CRC[%d]\n",code);
 #endif
 }
+
+#pragma mark [> debug func
+#ifdef MUS_COMM_DEBUG
+
+#include "debug/debugwin_sys.h"
+#define MUSICAL_COMM_DEBUG_GROUP  (81)
+
+static void MCD_U_None( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_State( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_Sync( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_Strm( void* userWork , DEBUGWIN_ITEM* item );
+static void MCD_D_Flg1( void* userWork , DEBUGWIN_ITEM* item );
+
+static void MUS_COMM_DebugInit( MUS_COMM_WORK *work )
+{
+  DEBUGWIN_AddGroupToTop( MUSICAL_COMM_DEBUG_GROUP , "MUS_COMM" , HEAPID_PROC );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_None ,MCD_D_State , work , MUSICAL_COMM_DEBUG_GROUP , HEAPID_PROC );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_None ,MCD_D_Sync , work , MUSICAL_COMM_DEBUG_GROUP , HEAPID_PROC );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_None ,MCD_D_Strm , work , MUSICAL_COMM_DEBUG_GROUP , HEAPID_PROC );
+  DEBUGWIN_AddItemToGroupEx( MCD_U_None ,MCD_D_Flg1 , work , MUSICAL_COMM_DEBUG_GROUP , HEAPID_PROC );
+
+  work->syncWaitNo = 0;
+  work->doneWaitNo = 0;
+  work->isUpdateDebMenu = FALSE;
+}
+
+static void MUS_COMM_DebugExit( MUS_COMM_WORK *work )
+{
+  DEBUGWIN_RemoveGroup( MUSICAL_COMM_DEBUG_GROUP );
+}
+
+static void MCD_U_None( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_COMM_WORK *work = userWork;
+  if( work->isUpdateDebMenu == TRUE )
+  {
+    work->isUpdateDebMenu = FALSE;
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MCD_D_State( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_COMM_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "State[%d]",work->commState );
+}
+static void MCD_D_Sync( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_COMM_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Sync[%d:%d]",work->syncWaitNo,work->doneWaitNo );
+}
+static void MCD_D_Strm( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_COMM_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Strm[%d:%d]",work->divSendState,work->strmDivIdx );
+  
+}
+static void MCD_D_Flg1( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUS_COMM_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "Flg1[%c%c%c%c%c%c]"
+              ,(work->isPostProgramSize?'o':'x')
+              ,(work->isPostMessageSize?'o':'x')
+              ,(work->isPostScriptSize?'o':'x')
+              ,(work->isPostProgramData?'o':'x')
+              ,(work->isPostMessageData?'o':'x')
+              ,(work->isPostScriptData?'o':'x') );
+}
+
+#endif //MUS_COMM_DEBUG

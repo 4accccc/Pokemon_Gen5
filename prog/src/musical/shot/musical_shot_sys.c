@@ -102,8 +102,8 @@ static GFL_PROC_RESULT MusicalShotProc_Init( GFL_PROC * proc, int * seq , void *
 
   work = GFL_PROC_AllocWork( proc, sizeof(SHOT_LOCAL_WORK), HEAPID_MUSICAL_SHOT );
   work->heapId = HEAPID_MUSICAL_SHOT;
-  ARI_TPrintf("LeastHeap[0x%x]\n",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
-  ARI_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
+  MUS_TPrintf("LeastHeap[0x%x]\n",GFI_HEAP_GetHeapFreeSize(GFL_HEAPID_APP));
+  MUS_TPrintf("MUS_SHOT_DATA_SIZE[%d]\n",sizeof(MUSICAL_SHOT_DATA));
   if( pwk == NULL )
   {
     GFL_OVERLAY_Load( FS_OVERLAY_ID(musical) );

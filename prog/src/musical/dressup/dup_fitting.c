@@ -22,11 +22,11 @@
 #include "msg/msg_musical_common.h"
 #include "msg/msg_mus_item_name.h"
 
+#include "test/ariizumi/ari_debug.h"
 #include "field/field_sound.h"
 #include "print/printsys.h"
 #include "print/wordset.h"
 #include "infowin/infowin.h"
-#include "test/ariizumi/ari_debug.h"
 #include "savedata/musical_save.h"
 #include "system/bmp_winframe.h"
 #include "musical/musical_local.h"
@@ -38,6 +38,8 @@
 #include "dup_snd_def.h"
 #include "dup_fitting.h"
 #include "dup_fitting_item.h"
+
+#include "debug/debugwin_sys.h"
 
 //======================================================================
 //  define
@@ -542,7 +544,11 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   PMSND_PlayBGM( SEQ_BGM_MSL_DRESSUP );
 
   GFL_NET_ReloadIconTopOrBottom(FALSE , work->heapId );
-
+#if USE_DEBUGWIN_SYSTEM
+  DEBUGWIN_InitProc( FIT_FRAME_SUB_TOP , work->fontHandle );
+  DEBUGWIN_ChangeLetterColor( 31,31,31 );
+#endif  //USE_DEBUGWIN_SYSTEM
+ 
   return work;
 }
 
@@ -552,6 +558,10 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
 void  DUP_FIT_TermFitting( FITTING_WORK *work )
 {
   u8 i;
+
+#if USE_DEBUGWIN_SYSTEM
+  DEBUGWIN_ExitProc();
+#endif  //USE_DEBUGWIN_SYSTEM
   
   //Newを全部消す
   MUSICAL_SAVE_ResetNewItem(work->initWork->mus_save);
@@ -1342,7 +1352,7 @@ static void DUP_FIT_SetupItem( FITTING_WORK *work )
         const u8 r = (pltData[col] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
         const u8 g = (pltData[col] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
         const u8 b = (pltData[col] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
-        //ARI_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
+        //MUS_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
         pltData[col] = GX_RGB( r/8 , g/8 , b/8 );
       }
     }
@@ -1479,7 +1489,7 @@ static void DUP_FIT_SetupStartItem( FITTING_WORK *work , const u16 itemId )
   if( itemState == NULL )
   {
     //アイテムが捨てられた・・・？
-    ARI_TPrintf("ItemId[%d] is not found...\n",itemId);
+    MUS_TPrintf("ItemId[%d] is not found...\n",itemId);
     return;
   }
   
@@ -1611,7 +1621,7 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
   if(GFL_UI_KEY_GetTrg() & PAD_KEY_DOWN )
   {
     FIT_ITEM_WORK *item = DUP_FIT_ITEMGROUP_GetStartItem( work->itemGroupList );
-    ARI_TPrintf("---DumpResIdx---\n");
+    MUS_TPrintf("---DumpResIdx---\n");
     while( item != NULL )
     {
       MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,DUP_FIT_ITEM_GetItemDrawWork( item ) );
@@ -1619,7 +1629,7 @@ static void DUP_FIT_FittingMain(  FITTING_WORK *work )
       item = DUP_FIT_ITEM_GetNextItem(item);
     }
     MUS_ITEM_DRAW_Debug_DumpResData( work->itemDrawSys,work->shadowItem );
-    ARI_TPrintf("---DumpResIdx---\n");
+    MUS_TPrintf("---DumpResIdx---\n");
   }
   if( GFL_UI_KEY_GetTrg() & PAD_BUTTON_A &&
       work->isDemo == FALSE )
@@ -3066,7 +3076,7 @@ static void DUP_FIT_SortItemIdx( FITTING_WORK *work , const MUS_POKE_EQUIP_USER 
   {
     u16 biggerPri;
     biggerPri = DUP_FIT_CalcSortPriority( work , work->itemState[i] , ePos );
-    ARI_TPrintf("[%2d:%4d]\n",work->itemState[i]->itemId,biggerPri);
+    MUS_TPrintf("[%2d:%4d]\n",work->itemState[i]->itemId,biggerPri);
   }
 #endif
 }

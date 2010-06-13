@@ -12,7 +12,7 @@
 #include "musical/musical_system.h"
 
 #if 1
-#define DUP_TPrintf(...) (void)((ARI_TPrintf(__VA_ARGS__)))
+#define DUP_TPrintf(...) (void)((MUS_TPrintf(__VA_ARGS__)))
 #define DUP_Printf(...)  (void)((ARI_Printf(__VA_ARGS__)))
 #else
 #define DUP_TPrintf(...) ((void)0)

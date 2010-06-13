@@ -105,7 +105,7 @@ void STA_SCRIPT_ExitSystem( STA_SCRIPT_SYS *work )
       STA_SCRIPT_DeleteTcbTask( work , tcbObj );
       tcbObj = nextTcbObj;
       
-      ARI_TPrintf("TCB Delete!!\n");
+      MUS_TPrintf("TCB Delete!!\n");
     }
     
   }
@@ -124,7 +124,7 @@ void STA_SCRIPT_UpdateSystem( STA_SCRIPT_SYS *work )
   
   if( subVCount > 1 )
   {
-    //ARI_TPrintf("Script Delay[%d]!!\n",subVCount-1);
+    //MUS_TPrintf("Script Delay[%d]!!\n",subVCount-1);
 #if PM_DEBUG
     //コマ送りチェック用
     if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L )
@@ -288,11 +288,11 @@ STA_SCRIPT_TCB_OBJECT* STA_SCRIPT_CreateTcbTask( STA_SCRIPT_SYS *work , GFL_TCB_
   }
   else
   {
-    ARI_TPrintf("*******************************************************\n");
-    ARI_TPrintf("*******************************************************\n");
-    ARI_TPrintf("TCB登録数オーバー! 同時に動かすものを減らしてください。\n");
-    ARI_TPrintf("*******************************************************\n");
-    ARI_TPrintf("*******************************************************\n");
+    MUS_TPrintf("*******************************************************\n");
+    MUS_TPrintf("*******************************************************\n");
+    MUS_TPrintf("TCB登録数オーバー! 同時に動かすものを減らしてください。\n");
+    MUS_TPrintf("*******************************************************\n");
+    MUS_TPrintf("*******************************************************\n");
     GFL_HEAP_FreeMemory( tcbObj );
     return NULL;
   }

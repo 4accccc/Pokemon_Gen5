@@ -16,6 +16,7 @@
 #include "test/ariizumi/ari_debug.h"
 #include "dup_local_def.h"
 #include "musical/mus_item_draw.h"
+#include "musical/musical_local.h"
 #include "musical/dressup/dup_fitting_item.h"
 
 

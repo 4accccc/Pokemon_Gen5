@@ -69,7 +69,7 @@ static GFL_PROC_RESULT MusicalStageProc_Init( GFL_PROC * proc, int * seq , void 
 {
   int ePos;
   STAGE_LOCAL_WORK *work;
-  ARI_TPrintf("FreeHeap:[%x][%x]\n", 
+  MUS_TPrintf("FreeHeap:[%x][%x]\n", 
       GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ) ,
       GFI_HEAP_GetHeapAllocatableSize( GFL_HEAPID_APP ) );
   //ストリーミング配信分削ってテスト
@@ -157,7 +157,7 @@ static GFL_PROC_RESULT MusicalStageProc_Main( GFL_PROC * proc, int * seq , void 
   case STA_SEQ_INIT_ACTING:
     work->actWork = STA_ACT_InitActing( work->actInitWork , HEAPID_MUSICAL_STAGE );
     *seq = STA_SEQ_LOOP_ACTING;
-	ARI_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
+	MUS_TPrintf("HEAP[%x]\n",GFL_HEAP_GetHeapFreeSize( GFL_HEAPID_APP ));
     break;
     
   case STA_SEQ_LOOP_ACTING:

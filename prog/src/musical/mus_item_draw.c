@@ -516,7 +516,7 @@ void MUS_ITEM_DRAW_SetDarkPallet( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW_WOR
         const u8 r = (pltData[i] & GX_RGB_R_MASK)>>GX_RGB_R_SHIFT;
         const u8 g = (pltData[i] & GX_RGB_G_MASK)>>GX_RGB_G_SHIFT;
         const u8 b = (pltData[i] & GX_RGB_B_MASK)>>GX_RGB_B_SHIFT;
-        //ARI_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
+        //MUS_TPrintf("[%04x:%d:%d:%d]\n",pltData[i],r,g,b);
         transData[i] = GX_RGB( r/2 , g/2 , b/2 );
 
       }
@@ -662,7 +662,7 @@ void MUS_ITEM_DRAW_Debug_DumpResData( MUS_ITEM_DRAW_SYSTEM* work , MUS_ITEM_DRAW
 {
   u32 pltAdr;
   GFL_BBD_GetResourceTexPlttAdrs( work->bbdSys , itemWork->resIdx , &pltAdr );
-  ARI_TPrintf("[%2d][%8x]\n",itemWork->resIdx,pltAdr);
+  MUS_TPrintf("[%2d][%8x]\n",itemWork->resIdx,pltAdr);
 }
 #endif
 

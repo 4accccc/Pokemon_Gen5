@@ -179,7 +179,7 @@ GMEVENT* MUSICAL_CreateEvent( GAMESYS_WORK * gsys , GAMEDATA *gdata , const u8 p
   
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, GFL_HEAP_LOWID(HEAPID_MUSICAL_STRM) , 0x42000 );
 
-  ARI_TPrintf("CreateMusicalEvent[%d]\n",isComm);
+  MUS_TPrintf("CreateMusicalEvent[%d]\n",isComm);
   
   event = GMEVENT_Create(
       gsys, NULL, MUSICAL_MainEvent, sizeof(MUSICAL_EVENT_WORK) );
@@ -291,7 +291,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     static u8 befState = 0xFF;
     if( befState != evWork->state )
     {
-      ARI_TPrintf("MusEvState[%d]->[%d]\n",befState,evWork->state);
+      MUS_TPrintf("MusEvState[%d]->[%d]\n",befState,evWork->state);
       befState = evWork->state;
     }
   }
@@ -332,7 +332,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
             {
               const u32 id = MyStatus_GetID( myStatus );
               EtcSave_SetAcquaintance( etcSave , id );
-              ARI_TPrintf("set person[%d][%8x(%5d)]\n",i,id,(id&0x0000FFFF));
+              MUS_TPrintf("set person[%d][%8x(%5d)]\n",i,id,(id&0x0000FFFF));
             }
           }
         }
@@ -468,7 +468,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
   case MES_INIT_ACTING:
     {
       MUSICAL_EVENT_InitActing( evWork );
-      ARI_TPrintf("InitAct[%8x][%8x][%8x]\n",evWork->gsys,&MusicalStage_ProcData,evWork->actInitWork );
+      MUS_TPrintf("InitAct[%8x][%8x][%8x]\n",evWork->gsys,&MusicalStage_ProcData,evWork->actInitWork );
       GAMESYSTEM_CallProc( evWork->gsys , NO_OVERLAY_ID, &MusicalStage_ProcData, evWork->actInitWork );
       evWork->state = MES_TERM_ACTING;
     }
@@ -753,7 +753,7 @@ static void MUSICAL_EVENT_TermActing( MUSICAL_EVENT_WORK *evWork )
           const u8 conType = MUS_ITEM_DATA_GetItemConditionType( itemDataSys , musPoke->equip[j].itemNo );
           const u8 bonus = MUSICAL_PROGRAM_GetConOnePoint( evWork->progWork , conType );
           musPoke->point += bonus;
-          ARI_TPrintf("AddAppealBonus[%d:%d(%d)]\n",i,bonus,musPoke->point);
+          MUS_TPrintf("AddAppealBonus[%d:%d(%d)]\n",i,bonus,musPoke->point);
         }
       }
     }
@@ -901,12 +901,12 @@ static void MUSICAL_EVENT_InitMusicalShot( MUSICAL_EVENT_WORK *evWork )
         }
       }
     }
-    ARI_TPrintf("RANK:");
+    MUS_TPrintf("RANK:");
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
-      ARI_TPrintf("[%d:%d]",pointArr[i],evWork->rankIndex[i]);
+      MUS_TPrintf("[%d:%d]",pointArr[i],evWork->rankIndex[i]);
     }
-    ARI_TPrintf("\n");
+    MUS_TPrintf("\n");
   }
 }
 
@@ -1020,7 +1020,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
   }
   else
   {
-    ARI_TPrintf( "Comm point check!\n");
+    MUS_TPrintf( "Comm point check!\n");
     
     for( i=0;i<MUSICAL_POKE_MAX;i++ )
     {
@@ -1031,7 +1031,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
       {
         checkPoint += miscData->sumPoint;
         checkPoint += MUSICAL_EVENT_GetPoint( evWork , i );
-        ARI_TPrintf( "[%d:%d+%d]\n",i,MUSICAL_EVENT_GetPoint( evWork , i ),miscData->sumPoint );
+        MUS_TPrintf( "[%d:%d+%d]\n",i,MUSICAL_EVENT_GetPoint( evWork , i ),miscData->sumPoint );
       }
     }
   }
@@ -1044,12 +1044,12 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
       break;
     }
   }
-  ARI_TPrintf( "Total point[%d] rewardNum[%d]\n",checkPoint,num );
+  MUS_TPrintf( "Total point[%d] rewardNum[%d]\n",checkPoint,num );
   //景品テーブルの作成
   {
     
     const u8 type = MUSICAL_PROGRAM_GetRewardType( evWork->progWork );
-    ARI_TPrintf( "CheckReward type[%d]\n",type );
+    MUS_TPrintf( "CheckReward type[%d]\n",type );
     if( type < MUS_REWARD_TYPE )
     {
       //一応チェック
@@ -1061,11 +1061,11 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
         {
           rewardArr[rewardNum] = itemNo;
           rewardNum++;
-          ARI_TPrintf( "[%2d]",itemNo );
+          MUS_TPrintf( "[%2d]",itemNo );
         }
       }
     }
-    ARI_TPrintf( "\nTotal[%d]\n",rewardNum );
+    MUS_TPrintf( "\nTotal[%d]\n",rewardNum );
   }
   {
     const MUSICAL_CONDITION_TYPE conType = MUSICAL_PROGRAM_GetMaxConditionType( evWork->progWork );
@@ -1093,13 +1093,13 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
       const u8 idx = fanTempArr[i];
       MUSICAL_FAN_STATE* fanState = MUSICAL_SAVE_GetFanState( evWork->musSave , idx );
       const u8 point = MUSICAL_EVENT_GetPoint( evWork , evWork->selfIdx );
-      ARI_TPrintf("Fan[%d]",idx+1);
+      MUS_TPrintf("Fan[%d]",idx+1);
       //見た目の決定
       fanState->type = conType; //タイプを渡す
-      ARI_TPrintf("[%d]",fanState->type);
+      MUS_TPrintf("[%d]",fanState->type);
       //贈り物の抽選
       rand = GFUser_GetPublicRand0(100);
-      ARI_TPrintf("[%3d/100 (%d):",point,rand);
+      MUS_TPrintf("[%3d/100 (%d):",point,rand);
       if( rand < point )
       {
         if( rewardNum > 0 )
@@ -1107,7 +1107,7 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
           const u8 idx = GFUser_GetPublicRand0(rewardNum);
           fanState->giftType = MUSICAL_GIFT_TYPE_GOODS;
           fanState->giftValue = rewardArr[idx];
-          ARI_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
+          MUS_TPrintf("%d:%d",fanState->giftType,fanState->giftValue);
           for( j=idx;j<rewardNum-1;j++ )
           {
             rewardArr[j] = rewardArr[j+1];
@@ -1118,10 +1118,10 @@ static void MUSICAL_EVENT_CalcFanState( MUSICAL_EVENT_WORK *evWork )
         {
           //グッズがない！
           //現状アイテムは渡さない
-          ARI_TPrintf("goods none!");
+          MUS_TPrintf("goods none!");
         }
       }
-      ARI_TPrintf("]\n");
+      MUS_TPrintf("]\n");
     }
   }
   GFL_HEAP_FreeMemory(rewardArr);
@@ -1521,7 +1521,7 @@ void MUSICAL_EVENT_CheckNetErr( MUSICAL_EVENT_WORK *evWork )
     if( NetErr_App_CheckError() != NET_ERR_CHECK_NONE &&
         evWork->isNetErr == FALSE )
     {
-      ARI_TPrintf("Musical Error!!!\n");
+      MUS_TPrintf("Musical Error!!!\n");
       //NetErr_App_ReqErrorDisp();
       evWork->isNetErr = TRUE;
     }

@@ -12,6 +12,15 @@
 #include "gamesystem/game_data.h"
 
 
+//デバッグ用マクロ
+#if 1
+#define MUS_TPrintf(...) (void)((OS_TFPrintf(2,__VA_ARGS__)))
+#define MUS_Printf(...)  (void)((OS_FPrintf(2,__VA_ARGS__)))
+#else
+#define MUS_TPrintf(...) ((void)0)
+#define MUS_Printf(...)  ((void)0)
+#endif //DEB_ARI
+
 //デフォルトでROMに入っている配信データ
 #define MUS_PROGRAM_LOCAL_NUM (4)
 
