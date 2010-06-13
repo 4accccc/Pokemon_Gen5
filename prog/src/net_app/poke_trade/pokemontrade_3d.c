@@ -550,6 +550,25 @@ void POKEMONTRADE_DEMO_PTC_Load2( POKEMONTRADE_DEMO_WORK* pWork )
     }
   }
 }
+void POKEMONTRADE_DEMO_PTC_LoadOne_Init( POKEMONTRADE_DEMO_WORK* pWork )
+{
+  //ƒŠƒ\[ƒX“Ç‚Ýž‚Ý•“o˜^
+  pWork->effLoadCnt = 0;
+  pWork->effectRes = GFL_PTC_LoadArcResource(
+    ARCID_POKETRADEDEMO, NARC_tradedemo_demo_tex001_spa, GetHeapLowID(pWork->heapID));
+}
+const BOOL POKEMONTRADE_DEMO_PTC_LoadOne_Loop( POKEMONTRADE_DEMO_WORK* pWork )
+{
+  //ƒŠƒ\[ƒX“o˜^
+  GFL_PTC_SetResourceEx(pWork->ptc[pWork->effLoadCnt], pWork->effectRes, FALSE, GFUser_VIntr_GetTCBSYS());
+  pWork->effLoadCnt++;
+  if( pWork->effLoadCnt < PTC_KIND_NUM_MAX )
+  {
+    return FALSE;
+  }
+  return TRUE;
+
+}
 
 //============================================================================================
 /**
