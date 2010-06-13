@@ -3290,6 +3290,12 @@ static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
 {
   int i,j;
 
+  // èâä˙âª
+  for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
+    for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
+      prm->trainer_data[i].poke_result[j] = COMM_BTL_DEMO_POKE_NONE;
+    }
+  }
   // ÉVÉìÉOÉãêÌ
   if(prm->type==COMM_BTL_DEMO_TYPE_NORMAL_START){
     for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
