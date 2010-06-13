@@ -65,6 +65,7 @@
 
 static void _changeDemo_ModelTrade20(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork);
+static void _changeDemo_ModelTrade22_1(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade23(POKEMON_TRADE_WORK* pWork);
 static void _changeDemo_ModelTrade24(POKEMON_TRADE_WORK* pWork);
@@ -178,7 +179,7 @@ void POKMEONTRADE_SAVE_Init(POKEMON_TRADE_WORK* pWork)
   _CHANGE_STATE(pWork,_changeDemo_ModelTradeMeWait);
 }
 
-
+//完了時のせりふ
 static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp;
@@ -229,6 +230,7 @@ static void _changeDemo_ModelTradeMeWait(POKEMON_TRADE_WORK* pWork)
 
 }
 
+//自動で次のメッセージを出す
 static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
 {
   POKEMON_PARAM* pp;
@@ -263,19 +265,25 @@ static void _changeDemo_ModelTrade21(POKEMON_TRADE_WORK* pWork)
     POKETRADE_MESSAGE_WindowOpenCustom(pWork, TRUE, FALSE);
   }
 
+  _CHANGE_STATE(pWork,_changeDemo_ModelTrade22_1);
+}
+
+
+
+static void _changeDemo_ModelTrade22_1(POKEMON_TRADE_WORK* pWork)
+{
+  if(pWork->anmCount < 270){
+    return;
+  }
+  _endME(pWork);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade22);
 }
 
 static void _changeDemo_ModelTrade22(POKEMON_TRADE_WORK* pWork)
 {
-  if(pWork->anmCount < 400){
+  if(pWork->anmCount < 420){
     return;
   }
-
-//  POKETRADE_MESSAGE_ChangeStreamType(pWork,APP_PRINTSYS_COMMON_TYPE_KEY);
-
-  _endME(pWork);
-
   _setNextAnim(pWork, 0);
   _CHANGE_STATE(pWork,_changeDemo_ModelTrade23);
 }
