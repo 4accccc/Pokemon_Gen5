@@ -558,8 +558,8 @@ struct _WIFIP2PMATCH_WORK{
   REGULATION* pRegulation;
   u16 battleMode;  //バトルのモード
   u16 battleRule;  //バトルのルール
-  u16 battleModeSelect; //自分で選択したバトルモード
-  u16 battleRuleSelect; //自分で選択したバトルルール
+//  u16 battleModeSelect; //自分で選択したバトルモード
+//  u16 battleRuleSelect; //自分で選択したバトルルール
 //  u16 battleShooter;  //バトルのシューター
   u8 DirectModeNo;    // ダイレクトにはなしかけられている場合、話してきたやつのNO
   u8 DirectMacSet;  //話しかける為のMACをセットした人

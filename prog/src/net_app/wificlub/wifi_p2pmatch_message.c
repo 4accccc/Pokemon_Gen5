@@ -1459,9 +1459,9 @@ static void _battleCustomSelectMenu( WIFIP2PMATCH_WORK *wk, BOOL is_my_setup )
 
   if( is_my_setup )
   {
-    _parentCustomInfoMenuList[0].str_id = msg_wifilobby_1023 + wk->battleModeSelect;
-    _parentCustomInfoMenuList[1].str_id = msg_wifilobby_1028 + wk->battleRuleSelect;
-    _parentCustomInfoMenuList[2].str_id = msg_wifilobby_1030 + (1-wk->pParentWork->shooterSelect);
+    _parentCustomInfoMenuList[0].str_id = msg_wifilobby_1023 + wk->pParentWork->battleBoard.battleModeSelect;
+    _parentCustomInfoMenuList[1].str_id = msg_wifilobby_1028 + wk->pParentWork->battleBoard.battleRuleSelect;
+    _parentCustomInfoMenuList[2].str_id = msg_wifilobby_1030 + (1-wk->pParentWork->battleBoard.shooterSelect);
   }
   else
   {

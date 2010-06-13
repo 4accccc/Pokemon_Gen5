@@ -635,7 +635,7 @@ static void wifi_SetEventParam( GMEVENT* event, GAMESYS_WORK* gsys, FIELDMAP_WOR
   pClub->pMatchParam->pPokeParty[0] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
   pClub->pMatchParam->pPokeParty[1] = PokeParty_AllocPartyWork(GFL_HEAPID_APP);   //‚¨ŒÝ‚¢‚ÌParty‚ðŽóM
   pClub->pMatchParam->pRegulation = Regulation_AllocWork(GFL_HEAPID_APP);
-
+  pClub->pMatchParam->battleBoard.shooterSelect = 1;
 }
 
 //------------------------------------------------------------------

@@ -20,6 +20,14 @@
 //	定義
 //============================================================================================
 
+typedef struct{
+  u8 shooterSelect;   //自分で選択したシューター
+  u8 battleModeSelect; //自分で選択したバトルモード
+  u8 battleRuleSelect; //自分で選択したバトルルール
+  u8 dummy;
+} BATTLEBOARD_MODE;
+
+
 //------------------------------------------------------
 /**
  * WIFIともだちリストGFL_PROCパラメータ
@@ -33,13 +41,14 @@ typedef struct {
   int targetID;   // 対戦 交換する人が誰なのかが入っている
   POKEPARTY* pPokeParty[2];   //お互いのPartyを受信
   REGULATION* pRegulation;    //ROMから読み込み
+  BATTLEBOARD_MODE battleBoard;  //ばとるレギュレーション選択モード 自分の
   u8 matchno[WIFILIST_FRIEND_MAX];   //前回マッチングした時のno
   u8 VCTOn[2];   ///<CNM_WFP2PMF_STATUS  
   u8 vchatMain;  // VCHATをONOFFするメインフラグ 内部は相手によって変化する為
   u8 friendNo;  //対戦している人の番号
   u8 shooter;         //戦うようのシューター
-  u8 shooterSelect;   //自分で選択したシューター
   u8 bTalk;   //話したか募集か
+  u8 dummy2; 
   u8 dummy3; 
 }WIFIP2PMATCH_PROC_PARAM;
 

@@ -830,7 +830,7 @@ static int _playerDirectBattleMode2( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     wk->battleMode = ret;
-    wk->battleModeSelect  = ret;
+    wk->pParentWork->battleBoard.battleModeSelect  = ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
@@ -880,7 +880,7 @@ static int _playerDirectBattleRule2( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     wk->battleRule  = ret;
-    wk->battleRuleSelect  = ret;
+     wk->pParentWork->battleBoard.battleRuleSelect  = ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
@@ -930,7 +930,7 @@ static int _playerDirectBattleShooter2( WIFIP2PMATCH_WORK *wk, int seq )
     break;
   default:
     wk->pParentWork->shooter =  1-ret;
-    wk->pParentWork->shooterSelect =  1-ret;
+    wk->pParentWork->battleBoard.shooterSelect =  1-ret;
     break;
   }
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE1);
@@ -1049,9 +1049,9 @@ static u32 _createRegulationType(WIFIP2PMATCH_WORK *wk, REG_CREATE_TYPE type )
     shooter     = wk->pParentWork->shooter;
     break;
   case REG_CREATE_TYPE_SELECT: ///<選んでいるルールから作る
-    battleMode  = wk->battleModeSelect;
-    battleRule  = wk->battleRuleSelect;
-    shooter     = wk->pParentWork->shooterSelect;
+    battleMode  = wk->pParentWork->battleBoard.battleModeSelect;
+    battleRule  = wk->pParentWork->battleBoard.battleRuleSelect;
+    shooter     = wk->pParentWork->battleBoard.shooterSelect;
     break;
   }
 
@@ -1229,7 +1229,7 @@ static int _playerDirectBattleWatch( WIFIP2PMATCH_WORK *wk, int seq )
 {
   //現在選んでいるルールを見るため、選んでいるものから作成
   u32 regulation = _createRegulationType(wk,REG_CREATE_TYPE_SELECT);
-  _Menu_RegulationSetup(wk,0,wk->pParentWork->shooterSelect,REGWIN_TYPE_RULE);
+  _Menu_RegulationSetup(wk,0,wk->pParentWork->battleBoard.shooterSelect,REGWIN_TYPE_RULE);
   _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_BATTLE_WATCH2);
   return seq;
 }
