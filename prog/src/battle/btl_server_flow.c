@@ -2806,12 +2806,16 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
   reqWaza.targetPos = BTL_POS_NULL;
 
   /* アンコール状態で違うワザを選んでいた場合は強制書き換え */
-  if( BPP_CheckSick(attacker, WAZASICK_ENCORE) ){
-    WazaID encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(attacker, WAZASICK_ENCORE) );
-    if( (encoreWaza != action->fight.waza)
-    &&  (BPP_WAZA_GetPP_ByNumber(attacker, encoreWaza))
-    ){
-      action->fight.waza = encoreWaza;
+  if( BPP_CheckSick(attacker, WAZASICK_ENCORE) )
+  {
+    if( action->fight.waza != WAZANO_WARUAGAKI )
+    {
+      WazaID encoreWaza = BPP_SICKCONT_GetParam( BPP_GetSickCont(attacker, WAZASICK_ENCORE) );
+      if( (encoreWaza != action->fight.waza)
+      &&  (BPP_WAZA_GetPP_ByNumber(attacker, encoreWaza))
+      ){
+        action->fight.waza = encoreWaza;
+      }
     }
   }
 

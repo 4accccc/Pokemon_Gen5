@@ -2791,8 +2791,9 @@ static BOOL checkActionForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_A
  * ワザ選択不可状態であれば、アクション内容を自動生成する
  *
  * @param   wk
- * @param   bpp       判定対象ポケモンパラメータ
- * @param   action    [out] アクション内容生成先
+ * @param   bpp         判定対象ポケモンパラメータ
+ * @param   fUIMode     UI処理モード（出せるワザが１つでもあればアクション内容生成しない）
+ * @param   action      [out] アクション内容生成先
  *
  * @retval  BOOL      ワザ選択不可状態ならTRUE
  */
@@ -2800,37 +2801,26 @@ static BOOL checkActionForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_A
 static BOOL checkWazaForceSet( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, BTL_ACTION_PARAM* action )
 {
   u32 wazaCount = BPP_WAZA_GetCount( bpp );
-  u32 i;
-
-  // ちょうはつ状態（ダメージワザしか選べない）は、選べるワザを持っていなければ「わるあがき」セットでスキップ
-  if( BPP_CheckSick(bpp, WAZASICK_TYOUHATSU) )
-  {
-    for(i=0; i<wazaCount; ++i){
-      if( BPP_WAZA_GetPP(bpp, i) && WAZADATA_IsDamage(BPP_WAZA_GetID(bpp, i)) ){
-        break;
-      }
-    }
-    if( i == wazaCount ){
-      setWaruagakiAction( action, wk, bpp );
-      return TRUE;
-    }
-  }
+  u32 selectableCount, i;
 
   // 使えるワザのPPが全て0なら「わるあがき」
+  selectableCount = 0;
   for(i=0; i<wazaCount; ++i)
   {
     if( is_unselectable_waza( wk, bpp, BPP_WAZA_GetID(bpp,i), NULL ) ){
       continue;
     }
-    if( BPP_WAZA_GetPP(bpp, i) != 0 ){
-      break;
+    if( BPP_WAZA_GetPP(bpp, i) == 0 ){
+      continue;
     }
+    ++selectableCount;
   }
-  if( i == wazaCount ){
+
+  if( selectableCount == 0 )
+  {
     setWaruagakiAction( action, wk, bpp );
     return TRUE;
   }
-
 
   return FALSE;
 }
@@ -3964,15 +3954,6 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
         }
         #endif
 
-        // アンコール状態
-        if( BPP_CheckSick(wk->procPoke, WAZASICK_ENCORE) )
-        {
-          WazaID waza = BPP_SICKCONT_GetParam(BPP_GetSickCont(wk->procPoke, WAZASICK_ENCORE));
-          BtlPokePos pos = BTL_CALC_DecideWazaTargetAuto( wk->mainModule, wk->pokeCon, wk->procPoke, waza );
-          BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
-          (*seq) = SEQ_INC;
-          break;
-        }
         // ワザロック状態
         if( BPP_CheckSick(wk->procPoke, WAZASICK_WAZALOCK) ){
           WazaID waza = BPP_SICKCONT_GetParam(BPP_GetSickCont(wk->procPoke, WAZASICK_WAZALOCK));
@@ -3980,6 +3961,11 @@ static BOOL SubProc_AI_SelectAction( BTL_CLIENT* wk, int* seq )
           BTL_ACTION_SetFightParam( wk->procAction, waza, pos );
           (*seq) = SEQ_INC;
           break;
+        }
+
+        // わるあがきしか出せない判定
+        if( checkWazaForceSet(wk, wk->procPoke, wk->procAction) ){
+          (*seq) = SEQ_INC;
         }
 
         // ワザ選択AI
