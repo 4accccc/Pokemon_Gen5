@@ -4907,7 +4907,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_Huusen( u32* numElems )
     { BTL_EVENT_MEMBER_IN,           handler_Huusen_MemberIn       },   // メンバー入場ハンドラ
     { BTL_EVENT_CHECK_FLYING,        handler_Huusen_CheckFlying    },   // 飛行フラグチェックハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION,   handler_Huusen_DamageReaction },   // ダメージ反応ハンドラ
-    { BTL_EVENT_ITEMSET_FIXED,       handler_Huusen_ItemSetFixed   },   // アイテム書き換え完了ハンドラ
+//    { BTL_EVENT_ITEMSET_FIXED,       handler_Huusen_ItemSetFixed   },   // アイテム書き換え完了ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
