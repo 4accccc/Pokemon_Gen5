@@ -539,21 +539,23 @@ void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork)
  */
 //------------------------------------------------------------------------------
 
-void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected)
+void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected,BOOL bForce)
 {
   int sidex[] = {2, 19};
   int i=0,lv;
   int frame = GFL_BG_FRAME3_M;
   GFL_BMPWIN* pWin;
 
-  if(pWork->pokemonGTSSeq[side]==POKEMONTORADE_SEQ_NONE){
-    return;
-  }
-  if(!pWork->pokemonGTSStateMode){
-    return;
-  }
-  if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
-    return;
+  if(!bForce){
+    if(pWork->pokemonGTSSeq[side]==POKEMONTORADE_SEQ_NONE){
+      return;
+    }
+    if(!pWork->pokemonGTSStateMode){
+      return;
+    }
+    if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
+      return;
+    }
   }
 
   if(pWork->StatusWin[side]){
@@ -1805,6 +1807,9 @@ static void _Select6MessageInit8(POKEMON_TRADE_WORK* pWork)
   if((pWork->changeFactor[myID]==POKETRADE_FACTOR_TRI_SELECT) &&
      (pWork->changeFactor[targetID]==POKETRADE_FACTOR_TRI_SELECT)){
 
+    POKE_GTS_SelectStatusMessageDisp(pWork, 0, 1, TRUE);//‹­§‘‚«Š·‚¦
+    POKE_GTS_SelectStatusMessageDisp(pWork, 1, 1, TRUE);
+    
     if(pWork->type == POKEMONTRADE_TYPE_GTSNEGO){
       _CHANGE_STATE(pWork, _PokeEvilChkPre);
     }

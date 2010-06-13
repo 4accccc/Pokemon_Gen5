@@ -4397,7 +4397,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
 
     retCode = GFL_PROC_RES_CONTINUE;
     for(k=0;k<2;k++){
-      POKE_GTS_SelectStatusMessageDisp(pWork, k, pWork->pokemonGTSSeq[k]);
+      POKE_GTS_SelectStatusMessageDisp(pWork, k, pWork->pokemonGTSSeq[k], FALSE);
     }
   }
   //ポケモンセットをコール

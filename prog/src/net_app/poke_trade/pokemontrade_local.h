@@ -989,7 +989,7 @@ typedef enum {
 extern BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno);
 extern void POKE_GTS_CreatePokeIconResource(POKEMON_TRADE_WORK* pWork,int mainsub);
 extern void POKE_GTS_StatusMessageDisp(POKEMON_TRADE_WORK* pWork);
-extern void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected);
+extern void POKE_GTS_SelectStatusMessageDisp(POKEMON_TRADE_WORK* pWork, int side, BOOL bSelected, BOOL bForce);
 extern void POKE_GTS_SelectStatusMessageDelete(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_EndWork(POKEMON_TRADE_WORK* pWork);
 extern void POKE_GTS_InitWork(POKEMON_TRADE_WORK* pWork);
