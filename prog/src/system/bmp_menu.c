@@ -71,9 +71,6 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw );
 static void BmpMenuCursorPut( BMPMENU_WORK * mw );
 static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos );
 
-#if 0
-static void BmpWinOn( GFL_BMPWIN *bmpwin );
-#endif
 
 //======================================================================
 //  BMPメニュー
@@ -168,14 +165,7 @@ BMPMENU_WORK * BmpMenu_AddEx( const BMPMENU_HEADER * dat,
 //--------------------------------------------------------------
 BMPMENU_WORK * BmpMenu_Add( const BMPMENU_HEADER * dat, u8 pos, HEAPID heap_id )
 {
-#if 0
-  return BmpMenu_AddEx(
-    dat, FontHeaderGet(dat->font,FONT_HEADER_SIZE_X), 0,
-    pos, mode, PAD_BUTTON_CANCEL );
-#else
-  return BmpMenu_AddEx(
-    dat, dat->font_size_x, 0, pos, heap_id, PAD_BUTTON_CANCEL );
-#endif
+  return BmpMenu_AddEx( dat, dat->font_size_x, 0, pos, heap_id, PAD_BUTTON_CANCEL );
 }
 
 //--------------------------------------------------------------
@@ -390,28 +380,22 @@ static BOOL BmpMenuCursorMove( BMPMENU_WORK * mw, u8 mv, u16 se )
   }
 
   {
-    u8  px, py;
-    u8  col;
-#if 0 //old dp
-    col = FontHeaderGet( mw->hed.font, FONT_HEADER_B_COLOR );
-#else
-    {
-      u8 l,s;
-      GFL_FONTSYS_GetColor( &l, &s, &col );
-    }
-#endif
+    u8 px, py;
+/*
+    u8 l,s;
+    u8 col;
+
+    // 描画カラー取得
+    GFL_FONTSYS_GetColor( &l, &s, &col );
+*/
+    // カーソル描画位置取得
     CursorWritePosGet( mw, &px, &py, old );
 
-#if 0 //old dp
-    GF_BGL_BmpWinFill( mw->hed.win, col, px, py, 8, mw->sy );
-#else
-    //    GFL_BMP_Fill(
-    //      GFL_BMPWIN_GetBmp(mw->hed.win), px, py, mw->sx, mw->sy, col );
+    // BMP一旦消去
     GFL_BMP_Fill(
       GFL_BMPWIN_GetBmp(mw->hed.win), px, py, mw->sx, mw->sy, 0xff );
-#endif
   }
-
+  
   BmpMenuCursorPut( mw );
   PMSND_PlaySystemSE( se );
   return TRUE;
@@ -501,14 +485,10 @@ static u8 BmpMenuStrLen( BMPMENU_WORK * buf )
   u8  i, j;
 
   for( i=0; i<buf->hed.x_max*buf->hed.y_max; i++ ){
-#if 0 //old_dp
-    j = FontProc_GetPrintStrWidth(
-      buf->hed.font, buf->hed.menu[i].str, 0 );
-#else
-    j = PRINTSYS_GetStrWidth(
-      buf->hed.menu[i].str, buf->hed.font_handle, 0 );
-#endif
-    if( len < j ){ len = j; }
+    j = PRINTSYS_GetStrWidth( buf->hed.menu[i].str, buf->hed.font_handle, 0 );
+    if( len < j ){ 
+      len = j; 
+    }
   }
 
   return len;
@@ -529,30 +509,11 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw )
   u8  px, py, plus;
   u8  i, j;
 
-#if 0 //old dp
-  GF_BGL_BmpWinDataFill(
-    mw->hed.win, FontHeaderGet( mw->hed.font, FONT_HEADER_B_COLOR ) );
-
-  px = mw->px;
-  //  plus = px * ( mw->len + 2 );
-  plus = mw->len + mw->sx * 2;
-  for( i=0; i<mw->hed.x_max; i++ ){
-    for( j=0; j<mw->hed.y_max; j++ ){
-      str = mw->hed.menu[i*mw->hed.y_max+j].str;
-      py  = ( mw->sy + mw->hed.line_spc ) * j + mw->py;
-      GF_STR_PrintSimple( mw->hed.win, mw->hed.font, str, px, py, MSG_NO_PUT, NULL );
-    }
-    px += plus;
-  }
-#else
   {
-    //    u8 l,s,b;
-    //    Gfl_FONTSYS_GetColor( &l, &s, &b );
     GFL_BMP_Clear( GFL_BMPWIN_GetBmp(mw->hed.win), 0xff );
   }
 
   px = mw->px;
-  //  plus = px * ( mw->len + 2 );
   plus = mw->len + mw->sx * 2;
 
   for( i=0; i<mw->hed.x_max; i++ ){
@@ -565,7 +526,6 @@ static void BmpMenuStrPut( BMPMENU_WORK * mw )
     }
     px += plus;
   }
-#endif
 }
 
 //--------------------------------------------------------------------------------------------
@@ -607,7 +567,6 @@ static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
   *y = ( pos % mw->hed.y_max ) * ( mw->sy + mw->hed.line_spc ) + mw->py;
 }
 
-#if 1  //YESNOWINDOW
 //============================================================================================
 //  はい・いいえ処理
 //============================================================================================
@@ -659,10 +618,6 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   
   hed.b_trans   = FALSE;
 
-//  GFL_MSGDATA *msgdata; //表示に使用するメッセージバッファ
-
-  //  GFL_BG_BmpWinAddEx( ini, hed.win, data );
-  //BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
   pWk = BmpMenu_AddEx( &hed, 14, 0, pos, heap, PAD_BUTTON_CANCEL );
   GFL_BMPWIN_MakeScreen(hed.win);
   BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
@@ -673,75 +628,6 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
 
 }
 
-
-#if 0
-static BMPMENU_WORK * BmpMenu_YesNoSelectInitCore
-  ( GFL_BMPWIN* bmpwin, u16 cgx, u8 pal, u8 pos, HEAPID heap )
-{
-  BMPMENU_HEADER hed;
-  GFL_MSGDATA * man;
-  BMP_MENULIST_DATA * ld;
-  BMPMENU_WORK* pWk;
-
-  man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE , NARC_message_yesnomenu_dat, heap );
-  ld  = BmpMenuWork_ListCreate( 2, heap );
-  BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_yes, 0,heap );
-  BmpMenuWork_ListAddArchiveString( ld, man, msgid_yesno_no, BMPMENU_CANCEL,heap );
-  GFL_MSG_Delete( man );
-
-  GFL_STD_MemClear(&hed,sizeof(BMPMENU_HEADER));
-
-  hed.menu     = ld;
-  hed.win      = bmpwin;
-  hed.x_max    = 1;
-  hed.y_max    = 2;
-  hed.line_spc = 1;
-  hed.c_disp_f = 0;
-  hed.loop_f = 0;
-  hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
-
-  hed.font_handle = GFL_FONT_Create
-                (ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
-  hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
-  hed.font_size_x = 2+8;//hed.font_size_y; //←この値だと文字左端がカーソル移動で消えてしまう
-    // 2+8の理由(defineにしたほうがいい) 
-    // prog/src/system/bmp_cursor.c
-    // void BmpCursor_Print( const BMPCURSOR *bmpCursor, u32 x, u32 y,
-		//                 PRINT_UTIL *printUtil, PRINT_QUE *printQue, GFL_FONT *fontHandle )
-    // GFL_BMP_Print( bmpCursor->bmp, bmp, 0, 0, x+2, y+2, 8, 8, 0x0f );
-  PRINT_UTIL_Setup(hed.print_util, hed.win);
-  hed.print_que = PRINTSYS_QUE_Create( heap );
-//  GFL_MSGDATA *msgdata; //表示に使用するメッセージバッファ
-
-  //  GFL_BG_BmpWinAddEx( ini, hed.win, data );
-  //BmpMenuWinWrite( hed.win, WINDOW_TRANS_OFF, cgx, pal );
-  pWk = BmpMenu_AddEx( &hed, 14, 0, pos, heap, PAD_BUTTON_CANCEL );
-  GFL_BMPWIN_MakeScreen(hed.win);
-  BmpWinFrame_Write( hed.win, WINDOW_TRANS_ON, cgx, pal );
-
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(hed.win) );
-  GFL_BMPWIN_TransVramCharacter( hed.win );
-
-  return pWk;
-}
-
-
-BMPMENU_WORK * BmpMenu_YesNoSelectInit
-  ( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
-{
-  GFL_BMPWIN* bmpwin = GFL_BMPWIN_Create
-    ( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
-  return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
-}
-
-BMPMENU_WORK * BmpMenu_YesNoSelectInitFixPos
-  ( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
-{
-  GFL_BMPWIN* bmpwin = GFL_BMPWIN_CreateFixPos
-    ( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, data->chrnum );
-  return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
-}
-#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -775,30 +661,6 @@ u32 BmpMenu_YesNoSelectMain( BMPMENU_WORK * mw )
 }
 
 
-//--------------------------------------------------------------------------------------------
-/**
- * はい・いいえ選択ウィンドウ外部コントロール
- *
- * @param ini   BGLデータ
- * @param prm   コントロールパラメータ
- * @param heap  ヒープID
- *
- * @retval  "BMPMENU_NULL 選択されていない"
- * @retval  "0        はいを選択"
- * @retval  "BMPMENU_CANCEL いいえorキャンセル"
- */
-//--------------------------------------------------------------------------------------------
-#if 0
-u32 BmpYesNoSelectMainOutControl( BMPMENU_WORK * mw, u8 prm, HEAPID heap )
-{
-  u32 ret = BmpMenuMainOutControl( mw, prm );
-
-  if( ret != BMPMENU_NULL ){
-    BmpYesNoWinDel( mw, heap );
-  }
-  return  ret;
-}
-#endif
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -825,58 +687,10 @@ void BmpMenu_YesNoMenuExit( BMPMENU_WORK * mw )
 }
 
 
-//------------------------------------------------------------------
-/**
- * ウィンドウにカーソル画像を描画
- *
- * @param   win   ウィンドウ
- * @param   x   描画Ｘ座標（ドット）
- * @param   y   描画Ｙ座標（ドット）
- *
- */
-//------------------------------------------------------------------
-void BmpWin_DrawCursorImage(GFL_BMPWIN* win, u32 x, u32 y)
-{
-#if 0
-  static const u8 CursorBitmapImage[] = {
-    0xff,0xff,0xff,0x00,
-    0xff,0xff,0xff,0x00,
-    0x21,0xff,0xff,0x00,
-    0x11,0xf2,0xff,0x00,
-    0x11,0x21,0xff,0x00,
-    0x11,0x11,0xf2,0x00,
-    0x11,0x11,0x21,0x00,
-    0x11,0x11,0x22,0x00,
-
-    0x11,0x21,0xf2,0x00,
-    0x11,0x22,0xff,0x00,
-    0x21,0xf2,0xff,0x00,
-    0x22,0xff,0xff,0x00,
-    0x00,0x00,0x00,0x00,
-    0x00,0x00,0x00,0x00,
-    0x00,0x00,0x00,0x00,
-    0x00,0x00,0x00,0x00,
-  };
-
-  GFL_BMP_Print( win, (void*)CursorBitmapImage, 0, 0, 8, 16, x, y, 8, 16 );
-#endif
-}
-#endif //YESNOWINDOW
 
 //======================================================================
 //
 //======================================================================
-//--------------------------------------------------------------
-//  bitmap on
-//  GF_BGL_BmpWinOn()
-//--------------------------------------------------------------
-#if 0
-static void BmpWinOn( GFL_BMPWIN *bmpwin )
-{
-  GFL_BG_LoadScreenReq( GFL_BMPWIN_GetFrame(bmpwin) );
-  GFL_BMPWIN_TransVramCharacter( bmpwin );
-}
-#endif
 
 //--------------------------------------------------------------
 /**
