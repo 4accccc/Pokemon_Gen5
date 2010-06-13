@@ -328,6 +328,9 @@ FIELD_MENU_WORK* FIELD_MENU_InitMenu( const HEAPID heapId , const HEAPID tempHea
 
   GFL_BG_SetVisible( FIELD_MENU_BG_PLATE_M, VISIBLE_ON );
   
+  OS_Printf("TrainerView = %d\n", MyStatus_GetTrainerView( work->my ));
+
+  
   // スクロールインか？
   if( isScrollIn == TRUE )
   {

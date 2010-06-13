@@ -383,6 +383,8 @@ void RECORD_1day_Update( RECORD *rec )
   int i;
   u32 ret;
 
+  OS_Printf("NELEMS(oneday_update_tbl)=%d\n", NELEMS(oneday_update_tbl));
+
   // レコードデータ1日更新処理
   for(i=0;i<NELEMS(oneday_update_tbl);i++){
     // 最大値を超えている場合は登録

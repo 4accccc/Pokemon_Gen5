@@ -99,11 +99,11 @@ BMPMENU_WORK * BmpMenu_AddNoTrans( const BMPMENU_HEADER *dat,
   mw = (BMPMENU_WORK *)GFL_HEAP_AllocClearMemory(
     heap_id, sizeof(BMPMENU_WORK) );
 
-  mw->hed   = *dat;
+  mw->hed     = *dat;
   mw->cursor  = BmpCursor_Create( heap_id );
   mw->cancel  = cancel;
   mw->cur_pos = pos;
-  mw->len   = BmpMenuStrLen( mw );
+  mw->len     = BmpMenuStrLen( mw );
   mw->heap_id = heap_id;
 
   mw->px = px;
@@ -626,7 +626,6 @@ static void CursorWritePosGet( BMPMENU_WORK * mw, u8 * x, u8 * y, u8 pos )
  * @li  BMPウィンドウとBMPメニューワークをAllocで取得している
  */
 //--------------------------------------------------------------------------------------------
-#if 0
 BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u8 pal, u8 pos, HEAPID heap )
 {
   BMPMENU_HEADER hed;
@@ -673,9 +672,11 @@ BMPMENU_WORK * BmpMenu_YesNoSelectInit( const BMPWIN_YESNO_DAT *data, u16 cgx, u
   return pWk;
 
 }
-#endif
+
+
+#if 0
 static BMPMENU_WORK * BmpMenu_YesNoSelectInitCore
-	( GFL_BMPWIN* bmpwin, u16 cgx, u8 pal, u8 pos, HEAPID heap )
+  ( GFL_BMPWIN* bmpwin, u16 cgx, u8 pal, u8 pos, HEAPID heap )
 {
   BMPMENU_HEADER hed;
   GFL_MSGDATA * man;
@@ -700,7 +701,7 @@ static BMPMENU_WORK * BmpMenu_YesNoSelectInitCore
   hed.print_util = GFL_HEAP_AllocClearMemory(heap,sizeof(PRINT_UTIL));
 
   hed.font_handle = GFL_FONT_Create
-								(ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
+                (ARCID_FONT, NARC_font_large_gftr, GFL_FONT_LOADTYPE_FILE, FALSE, heap );
   hed.font_size_y = GFL_FONT_GetLineHeight(hed.font_handle);
   hed.font_size_x = 2+8;//hed.font_size_y; //←この値だと文字左端がカーソル移動で消えてしまう
     // 2+8の理由(defineにしたほうがいい) 
@@ -724,21 +725,23 @@ static BMPMENU_WORK * BmpMenu_YesNoSelectInitCore
   return pWk;
 }
 
+
 BMPMENU_WORK * BmpMenu_YesNoSelectInit
-	( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
+  ( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
 {
   GFL_BMPWIN* bmpwin = GFL_BMPWIN_Create
-		( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
-	return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
+    ( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, GFL_BMP_CHRAREA_GET_B );
+  return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
 }
 
 BMPMENU_WORK * BmpMenu_YesNoSelectInitFixPos
-	( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
+  ( const BMPWIN_YESNO_DAT *data, u16 winframecgx, u8 winframepal, u8 pos, HEAPID heap )
 {
   GFL_BMPWIN* bmpwin = GFL_BMPWIN_CreateFixPos
-		( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, data->chrnum );
-	return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
+    ( data->frmnum , data->pos_x, data->pos_y, 7, 4, data->palnum, data->chrnum );
+  return BmpMenu_YesNoSelectInitCore(bmpwin, winframecgx, winframepal, pos, heap);
 }
+#endif
 
 //--------------------------------------------------------------------------------------------
 /**

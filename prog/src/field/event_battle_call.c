@@ -1,10 +1,10 @@
 //=============================================================================
 /**
  *
- *	@file		event_battle_call.c
- *	@brief  イベント：バトル呼び出し
- *	@author	hosaka genya
- *	@data		2010.01.22
+ *  @file   event_battle_call.c
+ *  @brief  イベント：バトル呼び出し
+ *  @author hosaka genya
+ *  @data   2010.01.22
  *
  */
 //=============================================================================
@@ -62,7 +62,7 @@ const GFL_PROC_DATA CommBattleCommProcData =
 //==============================================================================
 typedef struct{
   GFL_PROCSYS* procsys_up; 
-	VS_MULTI_LIST_PARAM	listParam;
+  VS_MULTI_LIST_PARAM listParam;
 	BOOL battle_overlay_load;
 	BOOL battle_rec_load;
 }COMM_BTL_DEMO_PROC_WORK;
@@ -71,14 +71,14 @@ typedef struct{
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  通信バトル呼び出しPROC 初期化処理
+ *  @brief  通信バトル呼び出しPROC 初期化処理
  *
- *	@param	GFL_PROC *proc
- *	@param	*seq
- *	@param	pwk
- *	@param	mywk 
+ *  @param  GFL_PROC *proc
+ *  @param  *seq
+ *  @param  pwk
+ *  @param  mywk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
@@ -98,14 +98,14 @@ static GFL_PROC_RESULT CommBattleCallProc_Init(  GFL_PROC *proc, int *seq, void*
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  通信バトル呼び出しPROC 終了処理
+ *  @brief  通信バトル呼び出しPROC 終了処理
  *
- *	@param	GFL_PROC *proc
- *	@param	*seq
- *	@param	pwk
- *	@param	mywk 
+ *  @param  GFL_PROC *proc
+ *  @param  *seq
+ *  @param  pwk
+ *  @param  mywk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
@@ -129,14 +129,14 @@ static GFL_PROC_RESULT CommBattleCallProc_End(  GFL_PROC *proc, int *seq, void* 
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  通信バトル呼び出しPROC 主処理
+ *  @brief  通信バトル呼び出しPROC 主処理
  *
- *	@param	GFL_PROC *proc
- *	@param	*seq
- *	@param	pwk
- *	@param	mywk 
+ *  @param  GFL_PROC *proc
+ *  @param  *seq
+ *  @param  pwk
+ *  @param  mywk 
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void* pwk, void* mywk )
@@ -149,8 +149,8 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     SEQ_LIST_TIMING_INIT,
     SEQ_LIST_TIMING_WAIT,
 
-		SEQ_CALL_LIST_DEMO,				///< マルチ用リストデモ呼び出し
-		SEQ_WAIT_LIST_DEMO,
+    SEQ_CALL_LIST_DEMO,       ///< マルチ用リストデモ呼び出し
+    SEQ_WAIT_LIST_DEMO,
 
     SEQ_BATTLE_TIMING_INIT,
     SEQ_BATTLE_TIMING_WAIT,
@@ -209,43 +209,43 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
   case SEQ_WAIT_START_DEMO:
     if ( up_status != GFL_PROC_MAIN_VALID ){
       if( bcw->btl_setup_prm->multiMode == 0 ){
-				(*seq) = SEQ_BATTLE_TIMING_INIT;
-			}else{
-				(*seq) = SEQ_LIST_TIMING_INIT;
-			}
+        (*seq) = SEQ_BATTLE_TIMING_INIT;
+      }else{
+        (*seq) = SEQ_LIST_TIMING_INIT;
+      }
     }
     break;
 
-	case SEQ_LIST_TIMING_INIT:
-		GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_LIST_DEMO_TIMING );
-		(*seq) = SEQ_LIST_TIMING_WAIT;
-		break;
+  case SEQ_LIST_TIMING_INIT:
+    GFL_NET_TimingSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_LIST_DEMO_TIMING );
+    (*seq) = SEQ_LIST_TIMING_WAIT;
+    break;
 
-	case SEQ_LIST_TIMING_WAIT:
+  case SEQ_LIST_TIMING_WAIT:
     if( GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(),EVENT_BATTLE_LIST_DEMO_TIMING) ){
       (*seq) = SEQ_CALL_LIST_DEMO;
     }
-		break;
+    break;
 
-	case SEQ_CALL_LIST_DEMO:	// マルチ用リストデモ呼び出し
-		if( bcw->btl_setup_prm->commPos == 0 || bcw->btl_setup_prm->commPos == 1 ){
-			work->listParam.pos  = VS_MULTI_LIST_POS_LEFT;
-			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
-			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
-		}else{
-			work->listParam.pos  = VS_MULTI_LIST_POS_RIGHT;
-			work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
-			work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
-		}
+  case SEQ_CALL_LIST_DEMO:  // マルチ用リストデモ呼び出し
+    if( bcw->btl_setup_prm->commPos == 0 || bcw->btl_setup_prm->commPos == 1 ){
+      work->listParam.pos  = VS_MULTI_LIST_POS_LEFT;
+      work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
+      work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
+    }else{
+      work->listParam.pos  = VS_MULTI_LIST_POS_RIGHT;
+      work->listParam.myPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_B].party;
+      work->listParam.ptPP = bcw->demo_prm->trainer_data[COMM_BTL_DEMO_TRDATA_A].party;
+    }
     GFL_PROC_LOCAL_CallProc( work->procsys_up, FS_OVERLAY_ID(vs_multi_list), &VS_MULTI_LIST_ProcData, &work->listParam );
-		(*seq) = SEQ_WAIT_LIST_DEMO;
-		break;
+    (*seq) = SEQ_WAIT_LIST_DEMO;
+    break;
 
-	case SEQ_WAIT_LIST_DEMO:
+  case SEQ_WAIT_LIST_DEMO:
     if ( up_status != GFL_PROC_MAIN_VALID ){
       (*seq) = SEQ_BATTLE_TIMING_INIT;
     }
-		break;
+    break;
   
   case SEQ_BATTLE_TIMING_INIT:
     {
@@ -254,12 +254,15 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
       GFL_NET_AddCommandTable(GFL_NET_CMD_BATTLE, BtlRecvFuncTable, BTL_NETFUNCTBL_ELEMS, NULL);
 //    GFL_NET_HANDLE_TimeSyncStart( GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD );
       GFL_NET_TimingSyncStart(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING);
+      OS_Printf("battleオーバーレイロード\n");
+      OS_Printf("battle前通信同期開始\n");
       (*seq) = SEQ_BATTLE_TIMING_WAIT;
     }
     break;
   case SEQ_BATTLE_TIMING_WAIT:
 //  if(GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING, WB_NET_BATTLE_ADD_CMD) ){
     if(GFL_NET_IsTimingSync(GFL_NET_HANDLE_GetCurrentHandle(), EVENT_BATTLE_ADD_CMD_TBL_TIMING)){
+      OS_Printf("battle前通信同期完了\n");
       (*seq) = SEQ_BATTLE_INIT;
     }
     break;
@@ -268,6 +271,7 @@ static GFL_PROC_RESULT CommBattleCallProc_Main(  GFL_PROC *proc, int *seq, void*
     BattleRec_Init( HEAPID_BATTLE_CALL );                                // 録画
 //  GMEVENT_CallEvent(event, EVENT_FSND_PushPlayNextBGM(gsys, bcw->btl_setup_prm->musicDefault, FSND_FADE_SHORT, FSND_FADE_NONE)); 
     GFL_PROC_LOCAL_CallProc(work->procsys_up, NO_OVERLAY_ID, &BtlProcData, bcw->btl_setup_prm);
+    OS_Printf("battle前通信同期完了\n");
     (*seq) = SEQ_BATTLE_WAIT;
     break;
   case SEQ_BATTLE_WAIT:
@@ -408,8 +412,8 @@ static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * w
 
 //----------------------------------------------------------------------------
 /**
- *	@brief  イベント作成：通信バトル呼び出し
-///	GMEVENT_CreateOverlayEventCall関数用コールバック関数
+ *  @brief  イベント作成：通信バトル呼び出し
+/// GMEVENT_CreateOverlayEventCall関数用コールバック関数
  */
 //-----------------------------------------------------------------------------
 GMEVENT * EVENT_CallCommBattle(GAMESYS_WORK * gsys, void *work )
@@ -442,11 +446,11 @@ typedef struct{
 /**
  * イベント作成：通信バトル呼び出し
  *
- * @param   gsys		
- * @param   para		
- * @param   demo_prm		
+ * @param   gsys    
+ * @param   para    
+ * @param   demo_prm    
  *
- * @retval  GMEVENT *		
+ * @retval  GMEVENT *   
  */
 //==================================================================
 static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_setup_prm, COMM_BTL_DEMO_PARAM *demo_prm, BOOL error_auto_disp)
@@ -465,13 +469,13 @@ static GMEVENT * EVENT_CommBattle(GAMESYS_WORK * gsys, BATTLE_SETUP_PARAM *btl_s
 
 //-----------------------------------------------------------------------------
 /**
- *	@brief  イベント：通信バトル呼び出し
+ *  @brief  イベント：通信バトル呼び出し
  *
- *	@param	* event
- *	@param	*  seq
- *	@param	* work
+ *  @param  * event
+ *  @param  *  seq
+ *  @param  * work
  *
- *	@retval
+ *  @retval
  */
 //-----------------------------------------------------------------------------
 static GMEVENT_RESULT EVENT_CommBattleMain(GMEVENT * event, int *  seq, void * work)
