@@ -1323,7 +1323,7 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       {
         BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 ), TCB_Transform_CB );
       }
-      PaletteFadeReq( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+      PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
