@@ -921,6 +921,7 @@ static void _recvFriendBoxNum(const int netID, const int size, const void* pData
   }
   pWork->friendBoxNum = pRecvData[0];
   pWork->friendMailBoxFULL = pRecvData[1];
+  pWork->FriendBoxScrollNum = pWork->friendBoxNum*_BOXTRAY_MAX + _TEMOTITRAY_MAX - 80;
   NET_PRINT("メールボックス%d\n",pWork->friendMailBoxFULL);
 }
 
@@ -2341,6 +2342,8 @@ static void _touchState_BeforeTimeing2(POKEMON_TRADE_WORK* pWork)
     }
   }
   _CHANGE_STATE(pWork, _touchState_BeforeTimeing3);
+  //初期座標を送る
+  _scrollMainFunc(pWork,FALSE,TRUE);
 }
 
 
@@ -2423,6 +2426,7 @@ static void _touchState_BeforeTimeing1Send(POKEMON_TRADE_WORK* pWork)
   }
   else{
     pWork->friendBoxNum = pWork->BOX_TRAY_MAX;
+    pWork->FriendBoxScrollNum = pWork->friendBoxNum*_BOXTRAY_MAX + _TEMOTITRAY_MAX - 80;
     _CHANGE_STATE(pWork, _touchState_BeforeTimeing12);
   }
 }

@@ -1442,19 +1442,53 @@ static void _polygondraw(POKEMON_TRADE_WORK *pWork)
     
     int i;
     int tray_num = POKEMONTRADE_GetFriendBoxNum( pWork );
-    int scroll_max = (tray_num * BOX_TRAY_SCROLL_NUM) + PARTY_TRAY_SCROLL_NUM;  // BoxScrollの最大数
+    //計算の都合上、手持ちトレイをBOXと同じサイズと見る
+    int scroll_max = (tray_num * BOX_TRAY_SCROLL_NUM)+BOX_TRAY_SCROLL_NUM;  // BoxScrollの最大数
     int num = pWork->FriendBoxScrollNum;
     int roop = tray_num + 1;
     u32 rotate_add;
     u32 global_rotate;
     static fx32 circle_r = 0x13cd;
 
+    //手持ちトレイ補正
+    //手持ちトレイ幅96をBOX幅160に補正
+    if( num < (PARTY_TRAY_SCROLL_NUM) )
+    {
+      if( num < 48 )
+      {
+        num = (num)*112/48;
+      }
+      else
+      {
+        num += (112-48);
+      }
+    }
+    else
+    {
+      num += (BOX_TRAY_SCROLL_NUM-PARTY_TRAY_SCROLL_NUM);
+    }
+
+    //更なる手持ちトレイ補正
+    //手持ちトレイの幅が変わるので、最後の1つのBOX分を補正する80:80→112:48
+    if( num > tray_num*BOX_TRAY_SCROLL_NUM )
+    {
+      const u32 ofs = num - tray_num*BOX_TRAY_SCROLL_NUM;
+      if( ofs < 80 )
+      {
+        num = tray_num*BOX_TRAY_SCROLL_NUM + (ofs*112/80);
+      }
+      else
+      {
+        num = tray_num*BOX_TRAY_SCROLL_NUM + ((ofs-80)*48/80) + 112;
+      }
+    }
+
     // 半分ループを微調整 相手の画面でカーソルの中心の場所を移す
-    num += 128;
+    num += (256-BOX_TRAY_SCROLL_NUM)/2;
     num %= scroll_max;
 
-    global_rotate = (u64)(0x10000 * (u64)num) / (u64)scroll_max;
-
+    
+    global_rotate = (u64)(0x10000 * (u64)num) / (u64)(scroll_max);
     //TOMOYA_Printf( "num %d scroll_max %d\n", num, scroll_max );
 
     //TOMOYA_Printf( "global rotate %d num %d scroll_max %d\n", global_rotate / 182, num, scroll_max );
