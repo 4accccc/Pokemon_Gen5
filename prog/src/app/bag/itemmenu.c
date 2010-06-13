@@ -1858,7 +1858,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( pWork->pocketno >= BAG_POKE_MAX ){
       pWork->pocketno = 0;
     }
-		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 	  GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
     return;
@@ -1868,7 +1867,6 @@ static void _itemKindSelectMenu(FIELD_ITEMMENU_WORK* pWork)
     if( pWork->pocketno < 0 ){
       pWork->pocketno = BAG_POKE_MAX-1;
     }
-		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 		GFL_UI_SetTouchOrKey( GFL_APP_END_KEY );
     SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
     return;
@@ -3529,25 +3527,27 @@ static void _BttnCallBack( u32 bttnid, u32 event, void* p_work )
     }
   // ポケット切り替え左ボタン
   }else if(BUTTONID_LEFT == bttnid){
-    u32 oldpocket = pWork->pocketno;
-    pWork->pocketno--;
-    if(pWork->pocketno < 0){
-      pWork->pocketno = BAG_POKE_MAX-1;
-    }
-		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 		KTST_SetDraw( pWork, FALSE );
-    SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
+		{
+			u32 oldpocket = pWork->pocketno;
+	    pWork->pocketno--;
+	    if(pWork->pocketno < 0){
+	      pWork->pocketno = BAG_POKE_MAX-1;
+	    }
+	    SetPageButtonAnime( pWork, oldpocket, BAR_ICON_LEFT, _itemPocketChange );
+		}
     return;
   // ポケット切り替え右ボタン
   }else if(BUTTONID_RIGHT == bttnid){
-    u32 oldpocket = pWork->pocketno;
-    pWork->pocketno++;
-    if(pWork->pocketno >= BAG_POKE_MAX){
-      pWork->pocketno = 0;
-    }
-		_pocketCursorChange( pWork, oldpocket, pWork->pocketno );
 		KTST_SetDraw( pWork, FALSE );
-    SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
+		{
+			u32 oldpocket = pWork->pocketno;
+	    pWork->pocketno++;
+	    if(pWork->pocketno >= BAG_POKE_MAX){
+	      pWork->pocketno = 0;
+	    }
+	    SetPageButtonAnime( pWork, oldpocket, BAR_ICON_RIGHT, _itemPocketChange );
+		}
     return;
   // ソートボタン
   }else if(BUTTONID_SORT == bttnid){
@@ -4132,7 +4132,7 @@ static void SetPageButtonAnime( FIELD_ITEMMENU_WORK * wk, u32 old, u16 type, Sta
   u32 anm;
 
   // ポケットカーソル移動
-//  _pocketCursorChange( wk, old, wk->pocketno );
+  _pocketCursorChange( wk, old, wk->pocketno );
   // ソートボタン表示切替
   SORT_ModeReset( wk );
   BTN_DrawCheckBox( wk );
