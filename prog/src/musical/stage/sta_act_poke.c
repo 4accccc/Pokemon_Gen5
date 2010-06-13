@@ -373,7 +373,8 @@ static void STA_POKE_UpdateItemFunc( STA_POKE_SYS *work , STA_POKE_WORK *pokeWor
               pos.z = pokeWork->pokePos.z-FX32_CONST(20.0f);
             }
             else
-            if( MUS_ITEM_DRAW_IsFrontItem( pokeWork->itemWork[ePos] ) == TRUE )
+            if( ePosTemp == MUS_POKE_EQU_HAND_R ||
+                ePosTemp == MUS_POKE_EQU_HAND_L )
             {
               //前面用アイテム
               pos.z = pokeWork->pokePos.z+FX32_CONST(10.0f) - (pokeWork->pokeEquip[ePos]->priority*FX32_CONST(0.5f));

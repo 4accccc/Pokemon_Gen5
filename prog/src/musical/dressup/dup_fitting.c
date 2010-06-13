@@ -2539,7 +2539,9 @@ static void DUP_FIT_UpdateTpDropItemToEquip(  FITTING_WORK *work )
       pos.z = depthOfs+EQUIP_ITEM_DEPTH_BACK;
     }
     else
-    if( MUS_ITEM_DRAW_IsFrontItem( drawWork ) == TRUE )
+//    if( MUS_ITEM_DRAW_IsFrontItem( drawWork ) == TRUE )
+    if( DUP_FIT_ITEM_GetEquipPos( item ) == MUS_POKE_EQU_HAND_R ||
+        DUP_FIT_ITEM_GetEquipPos( item ) == MUS_POKE_EQU_HAND_L )
     {
       pos.z = depthOfs+EQUIP_ITEM_DEPTH_FRONT;
     }
@@ -2606,7 +2608,9 @@ static void DUP_FIT_UpdateTpCancelDropItem( FITTING_WORK *work )
       pos.z = EQUIP_ITEM_DEPTH_BACK;
     }
     else
-    if( MUS_ITEM_DRAW_IsFrontItem( itemDrawWork ) == TRUE )
+//    if( MUS_ITEM_DRAW_IsFrontItem( itemDrawWork ) == TRUE )
+    if( DUP_FIT_ITEM_GetEquipPos( work->holdItem ) == MUS_POKE_EQU_HAND_R ||
+        DUP_FIT_ITEM_GetEquipPos( work->holdItem ) == MUS_POKE_EQU_HAND_L )
     {
       pos.z = EQUIP_ITEM_DEPTH_FRONT;
     }
