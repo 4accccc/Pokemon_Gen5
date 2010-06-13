@@ -749,6 +749,9 @@ sub_receipt_challenge_multi_comm:
   DEFINE_LOCAL save_on
   DEFINE_LOCAL comm_id
   
+  //まずフラグを何も無い状態へ
+  _CALL sub_receipt_flag_clear
+  
   _BSUBWAY_TOOL( BSWSUB_GET_COMM_IRC_FLAG, BSW_NULL, BSW_NULL, irc )
   
   IF $irc == TRUE THEN
@@ -811,6 +814,7 @@ sub_receipt_challenge_multi_comm:
     _BSUBWAY_TOOL( BSWSUB_COMM_IRC_ENTRY_RESULT, BSW_NULL, BSW_NULL, ret )
     
     IF $ret != BSWAY_COMM_IRC_RESULT_OK THEN //エラー
+      _REBOOT_BEACON_SEARCH() //通信切断後のビーコンサーチ再開
       _CALL sub_bsw_common_exit
       _RET
     ENDIF
@@ -846,8 +850,16 @@ sub_receipt_challenge_multi_comm:
     ENDIF
     
     IF $SCWK_ANSWER == FALSE THEN //失敗
-      _CALL sub_bsw_common_comm_end
-      _CALL sub_bsw_common_exit
+      _BSUBWAY_TOOL( BSWSUB_COMM_CHK_NET_ERROR, BSW_NULL, BSW_NULL, comm_ret )
+      
+      IF $comm_ret == TRUE THEN //通信エラー
+        _CALL sub_bsw_common_comm_error_end
+        _CALL sub_bsw_common_exit_none_msg
+      ELSE //非参加
+        _CALL sub_bsw_common_comm_end
+        _CALL sub_bsw_common_exit
+      ENDIF
+      
       _RET
     ENDIF
   ENDIF    
@@ -1084,6 +1096,9 @@ sub_receipt_challenge_multi_comm:
  
   //現在位置セーブ
   _BSUBWAY_TOOL( BSWTOOL_PUSH_NOW_LOCATION, BSW_NULL, BSW_NULL, BSW_NULL )
+  
+  //フラグ初期化
+  _CALL sub_receipt_flag_set_geton_first
   
   //オートセーブ
   _CALL sub_bsw_common_auto_save

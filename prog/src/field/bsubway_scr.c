@@ -456,7 +456,8 @@ u16 BSUBWAY_SCRWORK_SetNGScore( GAMESYS_WORK *gsys )
       playData, BSWAY_PLAYDATA_ID_playmode, NULL );
   
   //現在の周回数リセット
-  BSUBWAY_PLAYDATA_ResetRoundNo( playData );
+  //連勝数はそのまま。ステージ数のみエラーに
+//  BSUBWAY_PLAYDATA_ResetRoundNo( playData );
   
   //ステージ数をエラーに
   BSUBWAY_SCOREDATA_ErrorStageNo( scoreData, play_mode );
