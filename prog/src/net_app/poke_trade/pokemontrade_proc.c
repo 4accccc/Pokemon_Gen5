@@ -474,9 +474,9 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,
   //  int pltNum;
 
 
-  NET_PRINT("‚Â‚©‚İ‚»‚Ì‚Q\n");
+//  NET_PRINT("‚Â‚©‚İ‚»‚Ì‚Q\n");
   pWork->pCatchCLWK = pCL;
-  pWork->pSelectCLWK = pCL;
+//  pWork->pSelectCLWK = pCL;
   GFL_CLACT_WK_GetPos(pWork->pCatchCLWK, &pWork->aCatchOldPos, CLSYS_DRAW_SUB);
 
   POKMEONTRADE2D_IconGray(pWork, pWork->pCatchCLWK, TRUE);
@@ -500,7 +500,7 @@ static void _CatchPokemonPositionActive(POKEMON_TRADE_WORK *pWork,GFL_CLWK* pCL,
                                  ppp);
 
       pWork->pCatchCLWK = pWork->curIcon[CELL_CUR_POKE_KEY];
-      pWork->pSelectCLWK = pWork->curIcon[CELL_CUR_POKE_KEY];
+   //   pWork->pSelectCLWK = pWork->curIcon[CELL_CUR_POKE_KEY];
 
     }
   }
@@ -2079,7 +2079,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       else if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
         pWork->selectIndex = pWork->underSelectIndex;
         pWork->selectBoxno = pWork->underSelectBoxno;
-        POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
+//        POKMEONTRADE2D_IconGray(pWork, pWork->pSelectCLWK, TRUE);
         _CHANGE_STATE(pWork, _changeMenuOpen);
       }
       else if( (POKE_GTS_IsFullMode(pWork) &&  (GFL_UI_CheckTouchOrKey() == GFL_APP_END_KEY) )){
@@ -2488,7 +2488,7 @@ void IRC_POKMEONTRADE_ChangeFinish(POKEMON_TRADE_WORK* pWork)
   pWork->selectIndex = -1;
   pWork->selectMoji = 0;
   pWork->pCatchCLWK = NULL;
-  pWork->pSelectCLWK = NULL;
+//  pWork->pSelectCLWK = NULL;
   pWork->pokemonThreeSet = FALSE;
   IRCPOKETRADE_PokeDeleteMcss(pWork, 0);
   IRCPOKETRADE_PokeDeleteMcss(pWork, 1);
@@ -3544,7 +3544,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
 
             _CatchPokemonPositionRewind(pWork);
 
-            pWork->pSelectCLWK=pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex];
+//            pWork->pSelectCLWK=pWork->pokeIcon[POKETRADE_Line2RingLineIconGet(pWork->MainObjCursorLine)][pWork->MainObjCursorIndex];
             IRC_POKETRADE_SetCursorXY(pWork);
             _TouchStateCommonDecide(pWork);  //Œˆ’è‚Ìˆ—
             return;
