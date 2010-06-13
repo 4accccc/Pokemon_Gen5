@@ -93,10 +93,10 @@ vu32  volume_up_frame_pv   = EFFVM_CHANGE_VOLUME_UP_FRAME_PV;
 #ifdef PM_DEBUG
 #if defined(DEBUG_ONLY_FOR_yoshida)|\
     defined(DEBUG_ONLY_FOR_sogabe)
-#define CAMERA_POS_PRINT
+//#define CAMERA_POS_PRINT
 #endif
 #ifdef DEBUG_ONLY_FOR_sogabe
-#define CAMERA_POS_PRINT_FX32
+//#define CAMERA_POS_PRINT_FX32
 #endif
 #endif
 
@@ -121,7 +121,8 @@ typedef struct{
   u32               nakigoe_wait_flag     :1;     //鳴き声再生ウエイト中
   u32               se_play_flag          :1;     //SEPLAYされたかフラグ
   u32               zoom_out_flag         :1;
-  u32                                     :18;
+  u32               zoom_out_flag_work    :1;     //技シーケンスで使用するZOOM_OUT_FLAG
+  u32                                     :17;
   u32               sequence_work;                //シーケンスで使用する汎用ワーク
 
   GFL_TCBSYS*       tcbsys;
@@ -815,9 +816,6 @@ void  BTLV_EFFVM_Start( VMHANDLE *vmh, BtlvMcssPos from, BtlvMcssPos to, WazaID 
   //ボールモードを初期化
   bevw->ball_mode = BTLEFF_USE_BALL;
 
-  //カメラ位置プッシュフラグを初期化
-  bevw->push_camera_flag = FALSE;
-
   VM_Start( vmh, &bevw->sequence[ (*start_ofs) ] );
 
 }
@@ -1069,7 +1067,7 @@ static VMCMD_RESULT VMEC_CAMERA_MOVE( VMHANDLE *vmh, void *context_work )
 
 #ifdef DEBUG_OS_PRINT
   OS_TPrintf("VMEC_CAMERA_MOVE\n");
-  OS_TPrintf("cam_move_pos:%d\n",cam_move_pos);
+  OS_TPrintf("cam_move_pos:%d push_camera_flag:%d\n",cam_move_pos,bevw->push_camera_flag);
 #endif DEBUG_OS_PRINT
 
   //移動フレーム数を読み込み
@@ -3701,6 +3699,12 @@ static VMCMD_RESULT VMEC_SET_PARAM( VMHANDLE *vmh, void *context_work )
   case BTLEFF_WORK_ITEM_NO:   ///<ボールのアイテムナンバー
     bevw->param.item_no = param;
     break;
+  case BTLEFF_WORK_ZOOM_OUT:
+    bevw->zoom_out_flag = param;
+    break;
+  case BTLEFF_WORK_PUSH_CAMERA_POS:
+    bevw->push_camera_flag = param;
+    break;
   default:
     //未知のパラメータです
     GF_ASSERT( 0 );
@@ -6026,6 +6030,12 @@ static  int  EFFVM_GetWork( BTLV_EFFVM_WORK* bevw, int param )
     break;
   case BTLEFF_WORK_ATTACK_FLY:
     ret = BTLV_MCSS_GetFlyFlag( BTLV_EFFECT_GetMcssWork(), bevw->attack_pos );
+    break;
+  case BTLEFF_WORK_ZOOM_OUT:
+    ret = bevw->zoom_out_flag;
+    break;
+  case BTLEFF_WORK_PUSH_CAMERA_POS:
+    ret = bevw->push_camera_flag;
     break;
   default:
     //未知のパラメータです
