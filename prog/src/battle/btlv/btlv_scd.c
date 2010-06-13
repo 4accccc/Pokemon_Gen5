@@ -870,10 +870,10 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
 
       BTL_ACTION_SetRotation( &wk->rotationSelParam->actRotation, dir );
       BTL_ACTION_SetFightParam( &wk->rotationSelParam->actWaza, waza, BTL_POS_NULL );
-      if( fWazaInfoMode ){
-        BTL_ACTION_FightParamToWazaInfoMode( &wk->rotationSelParam->actWaza );
-      }
       BTL_ACTION_SetFightParam( wk->destActionParam, waza, BTL_POS_NULL );
+      if( fWazaInfoMode ){
+        BTL_ACTION_FightParamToWazaInfoMode( wk->destActionParam );
+      }
     }
     return TRUE;
   }
