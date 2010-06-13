@@ -3,6 +3,7 @@ $0001
 c:\home\pokemon_wb\resource\particle\wazaeffect\be_000_ec001_1a.spa
 #001
 %00
+制御モード変更	継続
 カメラ移動	ダイレクト	POS_BB	0	0	0
 カメラ移動（角度指定）	ダイレクト	0	-8192	0	0	0
 立ち位置チェック	POS_BB	いない	NO_EXIST_BB_1
