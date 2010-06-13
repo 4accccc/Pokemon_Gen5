@@ -84,6 +84,10 @@ static BOOL MoveObjRand( DDEMOMAIN_WORK * wk, u32 id );
 
 static void RotationBgScene2( DDEMOMAIN_WORK * wk );
 
+#ifdef	PM_DEBUG
+static int Debug_CameraCheck( DDEMOMAIN_WORK * wk );
+#endif	// PM_DEBUG
+
 
 //============================================================================================
 //	グローバル
@@ -161,6 +165,12 @@ static int MainSeq_Init( DDEMOMAIN_WORK * wk )
 	DDEMOMAIN_InitSound( wk );
 
 	DDEMOMAIN_GetPokeMax( wk );
+
+#ifdef	PM_DEBUG
+	if( wk->debugMode == TRUE ){
+		return MAINSEQ_2ND_INIT;
+	}
+#endif
 
 	return MAINSEQ_1ST_INIT;
 }
@@ -553,6 +563,12 @@ static int MainSeq_2ndExit( DDEMOMAIN_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int MainSeq_2ndMain( DDEMOMAIN_WORK * wk )
 {
+#ifdef	PM_DEBUG
+	if( wk->debugMode == TRUE ){
+		return Debug_CameraCheck( wk );
+	}
+#endif
+
 	// 終了チェック
 	if( wk->endFlag == TRUE ){
 		if( WIPE_SYS_EndCheck() == TRUE && PMSND_CheckFadeOnBGM() == FALSE ){
@@ -810,3 +826,274 @@ static void RotationBgScene2( DDEMOMAIN_WORK * wk )
 	GFL_BG_SetRadianReq( GFL_BG_FRAME3_M, GFL_BG_RADION_INC, 1 );
 	GFL_BG_SetRadianReq( GFL_BG_FRAME3_S, GFL_BG_RADION_INC, 1 );
 }
+
+
+
+
+//============================================================================================
+#ifdef	PM_DEBUG
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+//============================================================================================
+#include "system/mcss_tool.h"
+#include "msg/msg_dendou_demo.h"
+
+static void Debug_AddMcss( DDEMOMAIN_WORK * wk )
+{
+	MCSS_ADD_WORK   add;
+	POKEMON_PARAM * pp;
+	VecFx32 scale = { FX_F32_TO_FX32(16), FX_F32_TO_FX32(16), FX32_ONE };
+
+	while( 1 ){
+		pp = PP_Create( wk->debugMons+1, 50, 0, HEAPID_DENDOU_DEMO_L );
+   if( PP_GetSex( pp ) == wk->debugNowSex ){
+		 break;
+		}
+		GFL_HEAP_FreeMemory( pp );
+	}
+	PP_ChangeFormNo( pp, wk->debugForm );
+
+	MCSS_TOOL_MakeMAWPP( pp, &add, MCSS_DIR_FRONT );
+
+	wk->mcssWork = MCSS_Add( wk->mcss, FX32_CONST(128+48), FX32_CONST(-96+48), 0, &add );
+	MCSS_SetScale( wk->mcssWork, &scale );
+	MCSS_SetAnmStopFlag( wk->mcssWork );
+
+	GFL_HEAP_FreeMemory( pp );
+}
+
+static void Debug_PokeDataGet( DDEMOMAIN_WORK * wk )
+{
+	POKEMON_PERSONAL_DATA * ppd = POKE_PERSONAL_OpenHandle( wk->debugMons+1, 0, HEAPID_DENDOU_DEMO_L );
+
+	wk->debugFormMax = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_form_max ) - 1;
+	wk->debugSex = POKE_PERSONAL_GetParam( ppd, POKEPER_ID_sex );
+
+	// 性別なし
+	if( wk->debugSex == POKEPER_SEX_UNKNOWN ){
+		wk->debugNowSex = PTL_SEX_UNKNOWN;
+	// ♂のみ
+	}else if( wk->debugSex == POKEPER_SEX_MALE ){
+		wk->debugNowSex = PTL_SEX_MALE;
+	// ♀のみ
+	}else if( wk->debugSex == POKEPER_SEX_FEMALE ){
+		wk->debugNowSex = PTL_SEX_FEMALE;
+	}else{
+		wk->debugNowSex = PTL_SEX_MALE;
+	}
+
+	POKE_PERSONAL_CloseHandle( ppd );
+}
+
+static void Debug_NextPokeGet( DDEMOMAIN_WORK * wk )
+{
+	// フォルムチェック
+	if( wk->debugForm >= wk->debugFormMax ){
+		wk->debugForm = 0;
+	}else{
+		wk->debugForm++;
+		return;
+	}
+
+	// 性別チェック
+	if( wk->debugNowSex == PTL_SEX_MALE ){
+		if( wk->debugSex != POKEPER_SEX_MALE ){
+			wk->debugNowSex = PTL_SEX_FEMALE;
+			return;
+		}
+	}
+
+	wk->debugMons = wk->debugNext;
+	wk->debugNext++;
+	if( wk->debugNext >= MONSNO_END ){
+		wk->debugNext -= MONSNO_END;
+	}
+	Debug_PokeDataGet( wk );
+}
+
+static void Debug_InfoPut( DDEMOMAIN_WORK * wk )
+{
+	STRBUF * str;
+	u32	x;
+
+	GFL_BMP_Clear( wk->fobj[DDEMOOBJ_FOAM_PLAYER].bmp, 0 );
+
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_DEBUG_01 );
+	WORDSET_RegisterNumber( wk->wset, 0, wk->debugMons+1, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_RegisterNumber( wk->wset, 1, wk->debugForm, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PRINTSYS_PrintColor( wk->fobj[DDEMOOBJ_FOAM_PLAYER].bmp, 8, 0, wk->exp, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+	GFL_STR_DeleteBuffer( str );
+
+	if( wk->debugNowSex == PTL_SEX_MALE ){
+		str = GFL_MSG_CreateString( wk->mman, DDEMO_DEBUG_02 );
+		PRINTSYS_PrintColor( wk->fobj[DDEMOOBJ_FOAM_PLAYER].bmp, 136, 0, str, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+		GFL_STR_DeleteBuffer( str );
+	}else if( wk->debugNowSex == PTL_SEX_FEMALE ){
+		str = GFL_MSG_CreateString( wk->mman, DDEMO_DEBUG_03 );
+		PRINTSYS_PrintColor( wk->fobj[DDEMOOBJ_FOAM_PLAYER].bmp, 136, 0, str, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+		GFL_STR_DeleteBuffer( str );
+	}
+
+	str = GFL_MSG_CreateString( wk->mman, DDEMO_DEBUG_04 );
+	WORDSET_RegisterNumber( wk->wset, 0, wk->debugNext+1, 3, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+	WORDSET_ExpandStr( wk->wset, wk->exp, str );
+	PRINTSYS_PrintColor( wk->fobj[DDEMOOBJ_FOAM_PLAYER].bmp, 152, 0, wk->exp, wk->font, PRINTSYS_LSB_Make(15,2,0) );
+	GFL_STR_DeleteBuffer( str );
+
+	BmpOam_ActorBmpTrans( wk->fobj[DDEMOOBJ_FOAM_PLAYER].oam );
+}
+
+static int Debug_CameraCheck( DDEMOMAIN_WORK * wk )
+{
+	// 終了チェック
+	if( wk->endFlag == TRUE ){
+		if( WIPE_SYS_EndCheck() == TRUE && PMSND_CheckFadeOnBGM() == FALSE ){
+			PMSND_StopBGM();
+			return MAINSEQ_2ND_EXIT;
+		}
+	}
+
+	if( GFL_UI_KEY_GetRepeat() & PAD_KEY_LEFT ){
+		wk->debugNext += 10;
+		if( wk->debugNext >= MONSNO_END ){
+			wk->debugNext -= MONSNO_END;
+		}
+		Debug_InfoPut( wk );
+	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_RIGHT ){
+		wk->debugNext -= 10;
+		if( wk->debugNext < 0 ){
+			wk->debugNext += MONSNO_END;
+		}
+		Debug_InfoPut( wk );
+	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_UP ){
+		wk->debugNext += 1;
+		if( wk->debugNext >= MONSNO_END ){
+			wk->debugNext -= MONSNO_END;
+		}
+		Debug_InfoPut( wk );
+	}else if( GFL_UI_KEY_GetRepeat() & PAD_KEY_DOWN ){
+		wk->debugNext -= 1;
+		if( wk->debugNext == 0 ){
+			wk->debugNext += MONSNO_END;
+		}
+		Debug_InfoPut( wk );
+	}
+
+	switch( wk->subSeq ){
+	case 0:		// 初期化
+		wk->subSeq++;
+		return SetWait( wk, DEF_2ND_START_WAIT );
+
+	case 1:
+		PMSND_PlaySE( SEQ_SE_DDEMO_03 );
+		wk->subSeq++;
+		break;
+
+	case 2:		// 主人公落下
+		if( wk->wait != DEF_2ND_PLAYER_FALL_COUNT ){
+			DDEMOOBJ_Move( wk, DDEMOOBJ_ID_PLAYER_M, 0, DEF_2ND_PLAYER_FALL_SPEED );
+			DDEMOOBJ_Move( wk, DDEMOOBJ_ID_PLAYER_S, 0, DEF_2ND_PLAYER_FALL_SPEED );
+			wk->wait++;
+		}else{
+			PMSND_PlaySE( SEQ_SE_ROTATION_B );
+			wk->subSeq++;
+			return SetWait( wk, DEF_2ND_WIN_OPEN_WAIT );
+		}
+		break;
+
+	case 3:		// ウィンドウオープン
+		DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_MES, TRUE );
+		DDEMOOBJ_SetVanish( wk, DDEMOOBJ_ID_2ND_INFO, TRUE );
+		DDEMOOBJ_SetAutoAnm( wk, DDEMOOBJ_ID_2ND_MES, 2 );
+		DDEMOOBJ_SetAutoAnm( wk, DDEMOOBJ_ID_2ND_INFO, 2 );
+		wk->subSeq++;
+		break;
+
+	case 4:		// ウィンドウ表示待ち
+		if( DDEMOOBJ_CheckAnm( wk, DDEMOOBJ_ID_2ND_MES ) == FALSE ){
+			PMSND_PlaySE( SEQ_SE_DDEMO_04 );
+			wk->subSeq++;
+			return SetWait( wk, DEF_2ND_WIN_PUT_WAIT );
+		}
+		break;
+
+	case 5:		// プレイヤー情報表示
+		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_PLAYER, TRUE );
+		wk->subSeq++;
+		return SetWait( wk, DEF_2ND_INFO_PUT_WAIT );
+
+	case 6:		// メッセージ表示
+		BOX2OBJ_FontOamVanish( wk, DDEMOOBJ_FOAM_MES2, TRUE );
+		wk->subSeq++;
+		break;
+
+	case 7:		// ウェイト
+		Debug_PokeDataGet( wk );
+		wk->wait = 0;
+		wk->subSeq++;
+		break;
+
+	// 終了待ち
+	case 8:
+		Debug_InfoPut( wk );
+		Debug_AddMcss( wk );
+		wk->wait = 0;
+		wk->subSeq++;
+		break;
+
+	case 9:
+		if( wk->wait != DEF_2ND_POKEIN_COUNT ){
+			DDEMOMAIN_MoveMcss( wk, DEF_2ND_POKEIN_SPEED );
+			wk->wait++;
+		}else{
+			MCSS_ResetAnmStopFlag( wk->mcssWork );
+			wk->wait = 0;
+			wk->subSeq++;
+		}
+		break;
+
+	case 10:
+		if( wk->wait != DEF_2ND_POKEOUT_WAIT ){
+			wk->wait++;
+		}else{
+			wk->wait = 0;
+			wk->subSeq++;
+		}
+		break;
+
+	case 11:
+		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A ){
+			MCSS_SetAnmStopFlag( wk->mcssWork );
+			wk->subSeq++;
+		}
+		break;
+
+	case 12:
+		if( wk->wait != DEF_2ND_POKEOUT_COUNT ){
+			DDEMOMAIN_MoveMcss( wk, DEF_2ND_POKEOUT_SPEED );
+			wk->wait++;
+		}else{
+			DDEMOMAIN_DelMcss( wk );
+			Debug_NextPokeGet( wk );
+			wk->wait = 0;
+			wk->subSeq = 8;
+		}
+		break;
+	}
+
+	if( wk->subSeq >= 8 && wk->endFlag == FALSE ){
+		if( ( GFL_UI_KEY_GetTrg() & PAD_BUTTON_B ) ||
+				GFL_UI_TP_GetTrg() == TRUE ){
+			wk->endFlag = TRUE;
+		  PMSND_FadeOutBGM( DEF_2ND_BGM_FADE );
+			SetFadeOut( wk, MAINSEQ_2ND_EXIT, DEF_2ND_FADE_DIV );
+		}
+	}
+
+	return MAINSEQ_2ND_MAIN;
+}
+
+#endif

@@ -99,6 +99,16 @@ typedef struct {
 
 	BOOL	endFlag;
 
+#ifdef	PM_DEBUG
+	BOOL	debugMode;
+	s16		debugMons;
+	s16		debugNext;
+	u8		debugForm;
+	u8		debugFormMax;
+	u8		debugSex;
+	u8		debugNowSex;
+#endif	// PM_DEBUG
+
 }DDEMOMAIN_WORK;
 
 typedef int (*pDDEMOMAIN_FUNC)(DDEMOMAIN_WORK*);

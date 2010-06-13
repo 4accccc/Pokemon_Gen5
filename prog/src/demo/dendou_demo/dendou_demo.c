@@ -60,6 +60,13 @@ static GFL_PROC_RESULT DendouDemoProc_Init( GFL_PROC * proc, int * seq, void * p
 
 	wk->dat = pwk;
 
+#ifdef	PM_DEBUG
+	if( GFL_UI_KEY_GetCont() & PAD_BUTTON_L ){
+		wk->debugMode = TRUE;
+		wk->debugNext = 1;
+	}
+#endif	// PM_DEBUG
+
 	return GFL_PROC_RES_FINISH;
 }
 
