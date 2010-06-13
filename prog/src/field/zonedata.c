@@ -598,24 +598,6 @@ BOOL ZONEDATA_IsRailOnlyMap( u16 zone_id )
    ZONE_ID_C03P13,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
-#if 0
-  switch(zone_id)
-  {
-  case ZONE_ID_C03:
-  case ZONE_ID_H01:
-  case ZONE_ID_D09:
-  case ZONE_ID_D08R0501:
-  case ZONE_ID_D08R0701:
-  case ZONE_ID_C04R0101:
-  case ZONE_ID_D20R0101:
-  case ZONE_ID_D20R0201:
-  case ZONE_ID_D20R0301:
-  case ZONE_ID_D20R0401:
-  case ZONE_ID_C03P13:
-    return TRUE;
-  }
-  return FALSE;
-#endif
 }
 
 //------------------------------------------------------------------
@@ -681,50 +663,6 @@ int ZONEDATA_GetRailDataID(u16 zone_id)
       return DATA_RailTbl[i].rail_id;
     }
   }
-#if 0
-  zone_id = ControlZoneID(zone_id);
-  switch (zone_id)
-  {
-  case ZONE_ID_C03:
-    return NARC_field_rail_setup_C03_bin;
-  case ZONE_ID_H01:
-    return NARC_field_rail_setup_H01_bin;
-  case ZONE_ID_C03P01:
-    return NARC_field_rail_setup_C03P02_bin;
-  case ZONE_ID_D09:
-    return NARC_field_rail_setup_D09_bin;
-  case ZONE_ID_R07R0101:
-    return NARC_field_rail_setup_R07R0101_bin;
-  case ZONE_ID_R07R0102:
-    return NARC_field_rail_setup_R07R0102_bin;
-  case ZONE_ID_R07R0103:
-    return NARC_field_rail_setup_R07R0103_bin;
-  case ZONE_ID_R07R0104:
-    return NARC_field_rail_setup_R07R0104_bin;
-  case ZONE_ID_C07GYM0101:
-    return NARC_field_rail_setup_C07GYM0101_bin;
-  case ZONE_ID_D08R0501:
-    return NARC_field_rail_setup_D08R0501_bin;
-  case ZONE_ID_D08R0701:
-    return NARC_field_rail_setup_D08R0701_bin;
-  case ZONE_ID_C04R0101:
-    return NARC_field_rail_setup_C04R0101_bin;
-  case ZONE_ID_C08GYM0101:
-    return NARC_field_rail_setup_C08GYM0101_bin;
-  case ZONE_ID_D20R0101:
-  case ZONE_ID_D20R0201:
-  case ZONE_ID_D20R0301:
-  case ZONE_ID_D20R0401:
-    return NARC_field_rail_setup_D20_bin;
-
-  case ZONE_ID_C03P13:
-    return NARC_field_rail_setup_C03P13_bin;
-  case ZONE_ID_H04:
-    return NARC_field_rail_setup_H04_bin;
-  case ZONE_ID_C09P01:
-    return NARC_field_rail_setup_C09P01_bin;
-  }
-#endif
   return ZONEDATA_NO_RAILDATA_ID;
 }
 
@@ -888,10 +826,6 @@ BOOL ZONEDATA_IsWfbc(u16 zone_id)
     ZONE_ID_PLCW10,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
-#if 0
-  zone_id = ControlZoneID(zone_id);
-  return ((zone_id == ZONE_ID_WC10) || (zone_id == ZONE_ID_BC10) || (zone_id == ZONE_ID_PLC10) || (zone_id == ZONE_ID_PLCW10));
-#endif
 }
 
 //------------------------------------------------------------------
@@ -1221,23 +1155,6 @@ u32 ZONEDATA_GetSceneAreaID(u16 zone_id)
     }
   }
 
-#if 0
-  zone_id = ControlZoneID(zone_id);
-
-  switch( zone_id )
-  {
-  case ZONE_ID_C04:
-    return NARC_grid_camera_scene_camera_scene_C04_dat;
-  case ZONE_ID_T05:
-    return NARC_grid_camera_scene_camera_scene_T05_dat;
-  case ZONE_ID_R04:
-    return NARC_grid_camera_scene_camera_scene_R04_dat;
-  case ZONE_ID_H04:
-    return NARC_grid_camera_scene_camera_scene_H04_dat;
-  case ZONE_ID_C09P02:
-    return NARC_grid_camera_scene_camera_scene_C09P02_dat;
-  }
-#endif
   return ZONEDATA_NO_SCENEAREA_ID;
 }
 
@@ -1276,21 +1193,6 @@ BOOL ZONEDATA_IsSeaTemple( u16 zone_id )
    ZONE_ID_D20R0801,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
-#if 0
-  switch( zone_id ){
-  case ZONE_ID_D20R0101:
-  case ZONE_ID_D20R0201:
-  case ZONE_ID_D20R0301:
-  case ZONE_ID_D20R0401:
-  case ZONE_ID_D20R0501:
-  case ZONE_ID_D20R0601:
-  case ZONE_ID_D20R0701:
-  case ZONE_ID_D20R0801:
-    return TRUE;
-  }
-
-  return FALSE;
-#endif
 }
 
 //------------------------------------------------------------------
@@ -1305,17 +1207,6 @@ BOOL ZONEDATA_IsSeaTempleDungeon( u16 zone_id )
     ZONE_ID_D20R0801,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
-#if 0
-  switch( zone_id ){
-  case ZONE_ID_D20R0501:
-  case ZONE_ID_D20R0601:
-  case ZONE_ID_D20R0701:
-  case ZONE_ID_D20R0801:
-    return TRUE;
-  }
-
-  return FALSE;
-#endif
 }
 
 // 2Fか？
@@ -1359,16 +1250,6 @@ BOOL ZONEDATA_IsC04RebattleZone( u16 zone_id )
     ZONE_ID_C04R0404,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
-#if 0
-  if( (zone_id == ZONE_ID_C04R0303) ||
-      (zone_id == ZONE_ID_C04R0304) ||
-      (zone_id == ZONE_ID_C04R0305) ||
-      (zone_id == ZONE_ID_C04R0403) ||
-      (zone_id == ZONE_ID_C04R0404) ){
-    return TRUE;
-  }
-  return FALSE;
-#endif
 }
 
 
@@ -1441,29 +1322,6 @@ BOOL ZONEDATA_IsChampionLord(u16 zone_id)
 {
   // @todo ZONE_GROUPが変わったらここも確認する必要があります。 2010.05.25
   return ( ZONEDATA_GetGroupID( zone_id ) ==  ZONE_ID_D09 );
-#if 0
-  // @todo ZONEIDが変わったらここも確認する必要があります。 2010.04.21
-  switch( zone_id ){
-  case ZONE_ID_D09:
-  case ZONE_ID_D09R0101:
-  case ZONE_ID_D09R0201:
-  case ZONE_ID_D09R0301:
-  case ZONE_ID_D09R0401:
-  case ZONE_ID_D09R0501:
-  case ZONE_ID_D09R0601:
-  case ZONE_ID_D09R0701:
-  case ZONE_ID_D09R0801:
-  case ZONE_ID_D09R0901:
-  case ZONE_ID_D09R1001:
-  case ZONE_ID_D09R1101:
-  case ZONE_ID_D09R1201:
-  case ZONE_ID_D09R1301:
-  case ZONE_ID_D09R1401:
-  case ZONE_ID_D09R1501:
-    return TRUE;
-  }
-  return FALSE;
-#endif
 }
 
 //------------------------------------------------------------------
@@ -1484,22 +1342,6 @@ BOOL ZONEDATA_IsBattleSubway( u16 zone_id )
    ZONE_ID_C04R0111,
   };
   return isTargetZone( zone_id, zone_tbl, NELEMS( zone_tbl ));
-#if 0  
-  zone_id = ControlZoneID(zone_id);
-  switch( zone_id ){
-  case ZONE_ID_C04R0102:
-  case ZONE_ID_C04R0103:
-  case ZONE_ID_C04R0104:
-  case ZONE_ID_C04R0105:
-  case ZONE_ID_C04R0106:
-  case ZONE_ID_C04R0107:
-  case ZONE_ID_C04R0108:
-  case ZONE_ID_C04R0110:
-  case ZONE_ID_C04R0111:
-    return TRUE;
-  }
-  return FALSE;
-#endif
 }
 
 //============================================================================================
