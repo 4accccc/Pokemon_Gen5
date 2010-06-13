@@ -509,6 +509,11 @@ static GFL_PROC_RESULT BTL_PROC_Quit( GFL_PROC* proc, int* seq, void* pwk, void*
       GFL_HEAP_FreeMemory( wk->ppIllusionZoroArc );
       wk->ppIllusionZoroArc = NULL;
     }
+    if( wk->AIDataContainer ){
+      BTL_NET_AIDC_Delete( wk->AIDataContainer );
+      wk->AIDataContainer = NULL;
+    }
+
     BTL_CALC_QuitSys();
     srcParty_Quit( wk );
     trainerParam_Clear( wk );
