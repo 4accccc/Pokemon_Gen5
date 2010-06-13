@@ -9538,7 +9538,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9572,7 +9572,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9606,7 +9606,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9640,7 +9640,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9674,7 +9674,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9708,7 +9708,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9742,7 +9742,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9776,7 +9776,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
@@ -9810,7 +9810,7 @@ static const ZONEDATA ZoneData[] = {
 		1,
 		WEATHER_NO_SUNNY,
     TRUE,
-		0,        // camera id
+		35,        // camera id
 		MC_TYPE_FIELD,  // map_chg_type
 		6,
 		TRUE,
