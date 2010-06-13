@@ -945,7 +945,7 @@ void CI_pv_FontOam_Create(CODEIN_WORK* wk, int no, int x, int y, int pal_offset)
   
   
   man = GFL_MSG_Create( GFL_MSG_LOAD_NORMAL, ARCID_MESSAGE, NARC_message_code_input_dat, HEAPID_CODEIN );
-  str = GFL_MSG_CreateString( man, msg_03 + no );
+  str = GFL_MSG_CreateString( man, msg_04 + no );
     
 
   ///< BMP
@@ -987,12 +987,6 @@ void CI_pv_FontOam_Create(CODEIN_WORK* wk, int no, int x, int y, int pal_offset)
   GFL_MSG_Delete(man);
 }
 
-// 数値入力画面の上に表示されるガイド文章
-static const int sentense_tbl[]={
-  msg_01,   // ともだちコードをいれてください
-  msg_02,   // トレインナンバーをいれてください
-  msg_05,   // ランクをいれてください
-};
 
 //=============================================================================================
 /**
@@ -1018,7 +1012,7 @@ void CI_pv_disp_BMP_WindowAdd( GFL_BMPWIN** win, int no, int frm,
   
   GFL_BMPWIN_MakeScreen( *win );
   
-  CI_pv_BMP_MsgSet( *win, sentense_tbl[no], fontHandle, max );
+  CI_pv_BMP_MsgSet( *win, msg_01+no, fontHandle, max );
 }
 
 

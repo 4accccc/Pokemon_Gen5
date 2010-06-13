@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-03-29T14:55:34"/>
+	<create user="mori" host="W00155" date="2010-06-13T13:58:25"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1519" top="208" right="2224" bottom="836" maximized="no" rayout="Vertical2">
+	<dialog left="1333" top="316" right="2038" bottom="936" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -334,11 +334,15 @@
 
 
 	<row id="msg_01">
+		<comment>数値入力モードに
+対応した説明文章</comment>
 		<language name="JPN">ともだちコードを　いれてください</language>
 		<language name="JPN_KANJI">ともだちコードを　入れてください</language>
 	</row>
 
 	<row id="msg_02">
+		<comment>数値入力モードに
+対応した説明文章</comment>
 		<language name="JPN">トレインナンバーを
 いれてください（０１－[2:01:２桁:0]）</language>
 		<language name="JPN_KANJI">トレインナンバーを
@@ -346,21 +350,28 @@
 	</row>
 
 	<row id="msg_03">
-		<language name="JPN">けす</language>
-		<language name="JPN_KANJI">消す</language>
-	</row>
-
-	<row id="msg_04">
-		<language name="JPN">おわり</language>
-		<language name="JPN_KANJI">終わり</language>
-	</row>
-
-	<row id="msg_05">
+		<comment>数値入力モードに
+対応した説明文章</comment>
 		<language name="JPN">ランクを　いれてください（０１－[2:01:２桁:0]）</language>
 		<language name="JPN_KANJI">ランクを　入れてください（０１－[2:01:２桁:0]）</language>
 	</row>
 
+	<row id="msg_04">
+		<comment>ボタンテキスト</comment>
+		<language name="JPN">けす</language>
+		<language name="JPN_KANJI">消す</language>
+	</row>
+
+	<row id="msg_05">
+		<comment>ボタンテキスト</comment>
+		<language name="JPN">おわり</language>
+		<language name="JPN_KANJI">終わり</language>
+	</row>
+
 	<row id="msg_06">
+		<comment>Wifiバトルサブウェイで
+入力できる範囲を
+超えていた時のエラー</comment>
 		<language name="JPN">そのトレインナンバーは　ありません
 [2:01:２桁:0]までの　すうじを　いれてください</language>
 		<language name="JPN_KANJI">そのトレインナンバーは　ありません
@@ -368,6 +379,9 @@
 	</row>
 
 	<row id="msg_07">
+		<comment>Wifiバトルサブウェイで
+入力できる範囲を
+超えていた時のエラー</comment>
 		<language name="JPN">そのランクは　ありません
 [2:01:２桁:0]までの　すうじを　いれてください</language>
 		<language name="JPN_KANJI">そのランクは　ありません

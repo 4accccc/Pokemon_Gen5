@@ -334,6 +334,7 @@ typedef struct {
   u32 timer;
   u8 is_start;
   u8 padding[3];
+  const COMM_BTL_POKE_RESULT *poke_result;
 } BALL_UNIT;
 
 //--------------------------------------------------------------
@@ -486,11 +487,13 @@ static CBD_SCENE_ID calc_first_scene( COMM_BTL_DEMO_PARAM* pwk );
 BOOL type_is_normal( u8 type );
 BOOL type_is_start( u8 type );
 
-static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d );
+static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, 
+                            COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, const COMM_BTL_POKE_RESULT *poke );
 static void BALL_UNIT_Exit( BALL_UNIT* unit );
 static void BALL_UNIT_Main( BALL_UNIT* unit );
 static void BALL_UNIT_SetStart( BALL_UNIT* unit );
-static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, int id );
+static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, 
+                                         const COMM_BTL_POKE_RESULT *poke, int id );
 
 static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, GFL_FONT* font );
 static void TRAINER_UNIT_Exit( TRAINER_UNIT* unit );
@@ -526,6 +529,7 @@ static void G3D_AnimeDel( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk );
+static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm );
 
   //-------------------------------------
 /// PROC
@@ -711,6 +715,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
   wk->pwk = prm;
   wk->type = wk->pwk->type;
   wk->result = wk->pwk->result;
+  _demo_param_setup( prm );
   
   //描画設定初期化
   wk->graphic = COMM_BTL_DEMO_GRAPHIC_Init( GX_DISP_SELECT_SUB_MAIN, wk->heapID );
@@ -1558,17 +1563,31 @@ BOOL type_is_start( u8 type )
  *  @brief  ポケパラからボールOBJのアニメIDを取得
  *
  *  @param  POKEMON_PARAM* pp 
+ *  @param  poke              COMM_BTL_POKE_RESULT型（生存・状態異常・瀕死）
  *
  *  @retval
  */
 //-----------------------------------------------------------------------------
-static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
+static u32 PokeParaToBallAnim( POKEMON_PARAM* pp, const COMM_BTL_POKE_RESULT poke )
 {
   if( pp == NULL )
   {
     return OBJ_ANM_ID_BALL_NULL; // ボールなし
   }
 
+  // バトル結果情報を元にボールアイコンの形状を返す
+  switch(poke){
+  case COMM_BTL_DEMO_POKE_NONE:     ///< いない
+    return OBJ_ANM_ID_BALL_NULL;
+  case COMM_BTL_DEMO_POKE_LIVE:     ///< 状態異常無しで生きてる
+    return OBJ_ANM_ID_BALL_NORMAL;
+  case COMM_BTL_DEMO_POKE_SICK:     ///< 状態異常
+    return OBJ_ANM_ID_BALL_SICK;
+  case COMM_BTL_DEMO_POKE_HINSHI:   ///< 瀕死
+    return OBJ_ANM_ID_BALL_DOWN;
+  }
+
+#if 0
   if( PP_Get( pp, ID_PARA_hp, NULL ) == 0 )
   {
     return OBJ_ANM_ID_BALL_DOWN; // 瀕死
@@ -1587,7 +1606,7 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
       return OBJ_ANM_ID_BALL_SICK; // 状態異常
     }
   }
-
+#endif
   GF_ASSERT(0);
 
   return OBJ_ANM_ID_BALL_NORMAL; // 絶対ここには来ない
@@ -1597,16 +1616,18 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp )
 /**
  *  @brief  ボールユニット初期化
  *
- *  @param  BALL_UNIT* unit
- *  @param  POKEPARTY* party
- *  @param  type
- *  @param  posid
- *  @param  obj 
+ *  @param  BALL_UNIT* unit     モンスターボールOBJ管理ワーク
+ *  @param  POKEPARTY* party    ポケモンパーティ配列
+ *  @param  type                戦闘種別
+ *  @param  posid               自分の場所ID
+ *  @param  obj                 デモ表示2DOBJワーク
+ *  @param  g3d                 パーティクル用ワーク
+ *  @param  poke[]              ポケモン毎の戦闘終了結果格納配列
  *
- *  @retval
  */
 //-----------------------------------------------------------------------------
-static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d )
+static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8 posid, 
+                            COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, const COMM_BTL_POKE_RESULT  *poke )
 {
   int i;
   int clwk_id;
@@ -1622,6 +1643,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
   unit->max = ( type_is_normal(type) ? 6 : 3 );
   unit->timer = 0;
   unit->g3d = g3d;
+  unit->poke_result = poke;
 
   OS_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
 
@@ -1686,7 +1708,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
         pp  = PokeParty_GetMemberPointer( party, clwk_id );
       }
 
-      anm = PokeParaToBallAnim( pp );
+      anm = PokeParaToBallAnim( pp, poke[clwk_id] );
 
       // 終了デモは空以外通常状態で上書き
       if( type_is_start(type) == FALSE )
@@ -1811,7 +1833,7 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
     else
     {
       // バトル後の状態を反映
-      BALL_UNIT_SetPartyCondition( unit, unit->party, id );
+      BALL_UNIT_SetPartyCondition( unit, unit->party, unit->poke_result, id );
     }
   }
   else
@@ -1920,7 +1942,8 @@ static void BALL_UNIT_SetStart( BALL_UNIT* unit )
  *  @retval
  */
 //-----------------------------------------------------------------------------
-static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, int id )
+static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party, 
+                                         const COMM_BTL_POKE_RESULT *poke, int id )
 {
   int num;
   int anm;
@@ -1937,7 +1960,7 @@ static void BALL_UNIT_SetPartyCondition( BALL_UNIT* unit, const POKEPARTY* party
     pp  = PokeParty_GetMemberPointer( unit->party, id );
   }
 
-  anm = PokeParaToBallAnim( pp );
+  anm = PokeParaToBallAnim( pp, poke[id] );
 
   GFL_CLACT_WK_SetAnmSeqDiff( unit->clwk[id], anm );
 }
@@ -2016,7 +2039,8 @@ static GFL_BMPWIN* TRAINERNAME_WIN_Create( u8 type, u8 posid )
  *  @retval
  */
 //-----------------------------------------------------------------------------
-static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, GFL_FONT* font )
+static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM_BTL_DEMO_TRAINER_DATA* data, 
+                               COMM_BTL_DEMO_OBJ_WORK* obj, COMM_BTL_DEMO_G3D_WORK* g3d, GFL_FONT* font )
 {
   u8 num;
 
@@ -2032,7 +2056,7 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   unit->timer = 0;
 
   // ボール初期化
-  BALL_UNIT_Init( &unit->ball, data->party, type, posid, obj, g3d );
+  BALL_UNIT_Init( &unit->ball, data->party, type, posid, obj, g3d, data->poke_result );
 
   // トレーナー名 生成
   unit->str_trname = GFL_STR_CreateBuffer( STR_TRNAME_SIZE, HEAPID_COMM_BTL_DEMO );
@@ -3254,3 +3278,31 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
 
 
 
+//----------------------------------------------------------------------------------
+/**
+ * @brief 対戦デモが開始前デモだったときは、Pokepartyの格納状況を監視して
+ *        ポケモンが入っている数分配列を埋める
+ *
+ * @param   prm   
+ */
+//----------------------------------------------------------------------------------
+static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
+{
+  int i,j;
+
+  // シングル戦
+  if(prm->type==COMM_BTL_DEMO_TYPE_NORMAL_START){
+    for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
+      for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
+        prm->trainer_data[i].poke_result[j] = COMM_BTL_DEMO_POKE_LIVE;
+      }
+    }
+  // マルチ戦
+  }else if(prm->type==COMM_BTL_DEMO_TYPE_MULTI_START){
+    for(i=0;i<COMM_BTL_DEMO_TRDATA_MAX;i++){
+      for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
+        prm->trainer_data[i].poke_result[j] = COMM_BTL_DEMO_POKE_LIVE;
+      }
+    }
+  }
+}
