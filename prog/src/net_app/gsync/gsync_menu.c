@@ -1007,6 +1007,7 @@ static void _PaletteFadeSingle(GAMESYNC_MENU* pWork, int type, int palettenum)
   SoftFadePfd(pP, type, 0, 16 * palettenum, 6, 0);
   addr = (u32)PaletteWorkTransWorkGet( pP, type );
 
+  DC_FlushRange((void*)addr, palettenum * 32);
   switch(type){
   case FADE_SUB_OBJ:
     GXS_LoadOBJPltt((void*)addr, 0, palettenum * 32);

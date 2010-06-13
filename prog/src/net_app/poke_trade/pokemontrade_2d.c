@@ -3510,6 +3510,7 @@ static void _PaletteFadeSingle3(POKEMON_TRADE_WORK* pWork, int type, int palette
 
   for(i = 0; i < 16 ; i++){
     if(paletteBIT & (0x1 << i)){
+      DC_FlushRange((void*)(addr+32*i), 32);
       switch(type){
       case FADE_SUB_OBJ:
         GXS_LoadOBJPltt((void*)(addr+32*i), i*16*2, 32);
@@ -3547,9 +3548,11 @@ void POKEMON_TRADE_PaletteFade(POKEMON_TRADE_WORK* pWork, BOOL bFade, int type, 
   }
   else{
     if( type == FADE_SUB_OBJ){
+      DC_FlushRange((void*)pWork->pVramOBJ, 16*32);
       GXS_LoadOBJPltt((void*)pWork->pVramOBJ, 0, 16 * 32);
     }
     else if( type == FADE_SUB_BG){
+      DC_FlushRange((void*)pWork->pVramBG, 16*32);
       GXS_LoadBGPltt((void*)pWork->pVramBG, 0, 16 * 32);
     }
   }

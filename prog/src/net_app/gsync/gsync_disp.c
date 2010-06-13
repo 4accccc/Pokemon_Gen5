@@ -1245,6 +1245,7 @@ static void _itemResChange(GSYNC_DISP_WORK* pWork,int no,  GFL_CLWK* pIcon)
                     (char*)((u32)obj_vram) + aproxy.vramLocation.baseAddrOfVram[NNS_G2D_VRAM_TYPE_2DMAIN],
                     4*8*4*4);
   }
+  DC_FlushRange(pWork->aIconRes[no].aPal, 16*2);
   GX_LoadOBJPltt(pWork->aIconRes[no].aPal, _OBJPLT_ITEM_OFFSET*16*2 ,16*2);
 }
 
