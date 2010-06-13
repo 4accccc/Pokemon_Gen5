@@ -805,6 +805,7 @@ static void POKETRADE_MESSAGE_ResetTypeIcon(POKEMON_TRADE_WORK *pWork)
 void POKETRADE_MESSAGE_ResetPokemonStatusMessage(POKEMON_TRADE_WORK *pWork)
 {
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusFaceMark);
   IRC_POKETRADE_PokeStatusIconReset(pWork);
   GXS_SetVisibleWnd( GX_WNDMASK_NONE );
   
@@ -939,6 +940,7 @@ void POKETRADE_MESSAGE_ChangePokemonMyStDisp(POKEMON_TRADE_WORK* pWork,int pagen
     _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusFaceMark);
     if(bEgg==FALSE){
       _pokeTechniqueMsgDisp(pp, pWork->MyInfoWin, 8,0, pWork);
 
@@ -1124,6 +1126,7 @@ void POKETRADE_MESSAGE_ResetPokemonMyStDisp(POKEMON_TRADE_WORK* pWork, BOOL bCle
   _UITemplate_BALLICON_DeleteCLWK(&pWork->aBallIcon[UI_BALL_SUBSTATUS]);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusFaceMark);
   if(pWork->MyInfoWin){
     GFL_BMP_Clear(GFL_BMPWIN_GetBmp(pWork->MyInfoWin), 0 );
     if(bClear){

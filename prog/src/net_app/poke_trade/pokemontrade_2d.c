@@ -47,6 +47,8 @@ static void IRC_POKETRADE_TrayExit(POKEMON_TRADE_WORK* pWork);
 static void _PokeIconCgxLoad(POKEMON_TRADE_WORK* pWork );
 static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork);
 
+static void SetInfectedPokerusMarkSub(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARAM* pp);
+
 
 
 static void _iconAllDrawDisable(POKEMON_TRADE_WORK* pWork);
@@ -2366,6 +2368,12 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
       return;
     }
     if(!rus){
+      //完治してるかもしれないので調べる
+      //ただし、サブ画面のときのみ（メインはIRC_POKETRADE_PokeStatusIconDispで表示している）    20100611 add Saito
+      if (!bMain)
+      {
+        SetInfectedPokerusMarkSub(pWork, side, pp);
+      }
       return;
     }
     
@@ -2399,6 +2407,55 @@ void IRC_POKETRADE_PokerusIconDisp(POKEMON_TRADE_WORK* pWork,int side,int bMain,
     }
   }
 }
+
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケルス顔アイコン表示（サブ画面）
+ * @param   POKEMON_TRADE_WORK work
+ * @param   side  画面表示  右なら１左なら０
+ * @param   POKEMON_PARAM 
+ * @retval  none
+ */
+//------------------------------------------------------------------------------
+
+static void SetInfectedPokerusMarkSub(POKEMON_TRADE_WORK* pWork,int side, POKEMON_PARAM* pp)
+{
+  _ITEMMARK_ICON_WORK* pIM = &pWork->aPokerusFaceMark;
+  UI_EASY_CLWK_RES_PARAM prm;
+  BOOL rus = POKERUS_CheckInfectedPP(pp);
+  int type = 13; //顔マーク
+
+  if (!rus) return;
+
+  if(pIM->clwk_poke_item){  //確保済み
+    if(!rus){
+      GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, FALSE );
+    }
+    else{
+      GFL_CLACT_WK_SetDrawEnable( pIM->clwk_poke_item, TRUE );
+    }
+    return;
+  }
+
+  prm.draw_type = CLSYS_DRAW_SUB;
+  prm.pltt_line = PLTID_OBJ_POKERUS_FACE_S;
+  prm.comp_flg  = UI_EASY_CLWK_RES_COMP_NONE;
+  prm.arc_id    = APP_COMMON_GetArcId();
+  prm.pltt_id   = APP_COMMON_GetPokeMarkPltArcIdx();
+  prm.ncg_id    = APP_COMMON_GetPokeMarkCharArcIdx( APP_COMMON_MAPPING_128K );
+  prm.cell_id   = APP_COMMON_GetPokeMarkCellArcIdx( APP_COMMON_MAPPING_128K );
+  prm.anm_id    = APP_COMMON_GetPokeMarkAnimeArcIdx( APP_COMMON_MAPPING_128K );
+  prm.pltt_src_ofs = 0;
+  prm.pltt_src_num = 1;
+    
+  UI_EASY_CLWK_LoadResource( &pIM->clres_poke_item, &prm, pWork->cellUnit, pWork->heapID );
+
+  pIM->clwk_poke_item =
+        UI_EASY_CLWK_CreateCLWK( &pIM->clres_poke_item, pWork->cellUnit,
+                                 13 * 8 + side * 16 * 8 + 4, 2*8+4, type, pWork->heapID );
+}
+
 
 //------------------------------------------------------------------------------
 /**

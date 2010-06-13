@@ -172,9 +172,11 @@ typedef enum
 #define _TOUCHBAR_OBJ_PALPOS  (0)  //タッチバーのパレット
 #define _OBJPLT_COMMON_OFFSET (0)   //アプリケーションメニュ
 #define _OBJPLT_COMMON  (TOUCHBAR_OBJ_PLT_NUM)  //サブ画面OBJパレット下画面バー 3本
+
 #define PLTID_OBJ_POKERUS_S (0xb) //
 #define PLTID_OBJ_POKEITEM_S (0xc) //
 #define PLTID_OBJ_BALLICON_S (0xd)  // 1本使用
+#define PLTID_OBJ_POKERUS_FACE_S (0xe) //顔マーク
 
 #define _OBJPLT_POKEICON_OFFSET (3*0x20)
 #define _OBJPLT_POKEICON  (3)  //ポケモンアイコン 3本
@@ -609,6 +611,7 @@ struct _POKEMON_TRADE_WORK{
   _TYPE_ICON_WORK aTypeIcon[4];  //ダブルバッファ
   _ITEMMARK_ICON_WORK aItemMark;
   _ITEMMARK_ICON_WORK aPokerusMark;
+  _ITEMMARK_ICON_WORK aPokerusFaceMark;   //下画面用顔マーク
   _STATE_ICON_WORK aPokeMark;
 
   TOUCHBAR_WORK* pTouchWork;
