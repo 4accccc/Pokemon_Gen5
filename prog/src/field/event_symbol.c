@@ -210,7 +210,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     SEQ_RESULT,
     SEQ_BGMPOP,
     SEQ_FIELD_OPEN,
-    //SEQ_FADEIN,
+    SEQ_WAIT_BGM_POP,
   };
 	
 	switch( *seq ){
@@ -289,7 +289,7 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
       PDCRET_FreeParam( esb->pdcret );
       GFL_OVERLAY_Unload( FS_OVERLAY_ID(pdc_return) );
     }
-	  // フィールドBGM復帰
+	  // フィールドBGM復帰リクエスト
     GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
     (*seq)++;
     break;
@@ -297,19 +297,14 @@ static GMEVENT_RESULT EventSymbolPokeBattle( GMEVENT *event, int *seq, void *wk 
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq)++;
     break;
-#if 0
-    フェードイン処理はスクリプト側でおこなう
-  case SEQ_FADEIN:
-    { // フェードイン
-      GMEVENT* fade_event;
-      fade_event = EVENT_FieldFadeIn_Black(gsys, esb->fieldWork, FIELD_FADE_WAIT);
-      GMEVENT_CallEvent(event, fade_event);
-    }
-		(*seq) ++;
-		break;
-#endif
+  case SEQ_WAIT_BGM_POP:
+    //フィールドBGM復帰待ち
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
+    (*seq)++;
+    break;
 
   default:
+    //画面フェードインは呼び出し元（スクリプト）で行うのでこれで終わり
     GFL_HEAP_FreeMemory(esb->pp);
     GFL_HEAP_FreeMemory(esb->pdc_setup);
     return GMEVENT_RES_FINISH;
