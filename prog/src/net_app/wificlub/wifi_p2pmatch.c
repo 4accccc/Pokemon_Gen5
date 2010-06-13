@@ -3534,6 +3534,7 @@ static int WifiP2PMatch_FriendListMain( WIFIP2PMATCH_WORK *wk, int seq )
         WIFI_MCR_PCAnmStart( &wk->matchroom );  // pcアニメ開始
         _CHANGESTATE(wk,WIFIP2PMATCH_MODE_SELECT_INIT);
         WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
+        wk->DirectMacSet=0;
         return seq;
       }
     }
