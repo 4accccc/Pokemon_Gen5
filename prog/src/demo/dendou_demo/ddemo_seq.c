@@ -1059,13 +1059,14 @@ static int Debug_CameraCheck( DDEMOMAIN_WORK * wk )
 		if( wk->wait != DEF_2ND_POKEOUT_WAIT ){
 			wk->wait++;
 		}else{
+			DDEMOMAIN_SetMcssCallBack( wk );
 			wk->wait = 0;
 			wk->subSeq++;
 		}
 		break;
 
 	case 11:
-		if( GFL_UI_KEY_GetRepeat() & PAD_BUTTON_A ){
+		if( wk->mcssAnmEndFlg == TRUE ){
 			MCSS_SetAnmStopFlag( wk->mcssWork );
 			wk->subSeq++;
 		}
