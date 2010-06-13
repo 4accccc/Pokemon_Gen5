@@ -4028,7 +4028,7 @@ void POKMEONTRADE_RemoveCoreResource(POKEMON_TRADE_WORK* pWork)
     }
   }
 
-  GFL_HEAP_DEBUG_PrintExistMemoryBlocks(pWork->heapID);
+ // GFL_HEAP_DEBUG_PrintExistMemoryBlocks(pWork->heapID);
 
 }
 
@@ -4266,7 +4266,8 @@ static void _commonFunc(POKEMONTRADE_DEMO_PARAM* pParent, POKEMON_TRADE_WORK *pW
   }
   pWork->pMy = pParent->pMy;
   pWork->pFriend = pParent->pNPC;
-
+  GFL_NET_ReloadIconTopOrBottom(FALSE, pWork->heapID);
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
 }
 
 
@@ -4284,10 +4285,7 @@ static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, voi
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_EVENT);
 
   _commonFunc(pParent, pWork);
-
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   
-
   _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
 
   return ret;
@@ -4309,7 +4307,9 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoRecvProcInit( GFL_PROC * proc, int * s
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSDOWN);
 
   _commonFunc(pParent, pWork);
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+
+//  IRC_POKETRADE_ResetSubDispGraphic(pWork);
+//  IRC_POKETRADE_SetSubdispGraphicDemo(pWork,0);  //’Êí”wŒi
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo);
 
   return ret;
@@ -4331,7 +4331,7 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoMidProcInit( GFL_PROC * proc, int * se
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSMID);
 
   _commonFunc(pParent, pWork);
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSMID_ChangeDemo);
 
   return ret;
@@ -4355,9 +4355,7 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoSendProcInit( GFL_PROC * proc, int * s
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSUP);
 
   _commonFunc(pParent, pWork);
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSUP_ChangeDemo);
-
   return ret;
 }
 
@@ -4375,7 +4373,6 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoProcInit( GFL_PROC * proc, int * seq, 
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSNEGODEMO);
 
   _commonFunc(pParent, pWork);
-  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSMID_ChangeDemo);
   // _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
   return ret;
