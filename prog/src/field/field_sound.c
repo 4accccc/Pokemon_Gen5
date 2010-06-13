@@ -309,6 +309,57 @@ GMEVENT* EVENT_FSND_PopBGM( GAMESYS_WORK* gameSystem, u16 fadeOutFrame, u16 fade
 
 //---------------------------------------------------------------------------------
 /**
+ * @brief BGM 復帰イベント ( 復帰待ちなし )
+ */
+//---------------------------------------------------------------------------------
+static GMEVENT_RESULT PopPlayBGMNoWaitEvent( GMEVENT* event, int* seq, void* wk )
+{
+  FSND_EVWORK* work;
+  FIELD_SOUND* fieldSound;
+
+  work = (FSND_EVWORK*)wk;
+  fieldSound = work->fieldSound;
+
+  switch( *seq ) {
+  case 0:  // リクエスト発行
+    FIELD_SOUND_RegisterRequest_POP( fieldSound, work->fadeOutFrame, work->fadeInFrame );
+    (*seq)++;
+    break;
+  case 1: 
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+} 
+
+//---------------------------------------------------------------------------------
+/**
+ * @brief BGM 復帰イベント ( 復帰待ちなし ) 取得
+ *
+ * @param gameSystem
+ * @param fadeOutFrame 再生中のBGMのフェードアウト フレーム数
+ * @param fadeInFrame  復帰したBGMのフェードイン フレーム数
+ * 
+ * @return BGM 復帰イベント
+ */
+//---------------------------------------------------------------------------------
+GMEVENT* EVENT_FSND_PopBGMNoWait( GAMESYS_WORK* gameSystem, u16 fadeOutFrame, u16 fadeInFrame )
+{
+  GMEVENT* event;
+  FSND_EVWORK* work;
+  GAMEDATA* gdata;
+
+  gdata = GAMESYSTEM_GetGameData( gameSystem );
+
+  event = GMEVENT_Create( gameSystem, NULL, PopPlayBGMNoWaitEvent, sizeof(FSND_EVWORK) );
+  work = GMEVENT_GetEventWork( event );
+  work->fieldSound = GAMEDATA_GetFieldSound( gdata );
+  work->fadeInFrame = fadeInFrame;
+  work->fadeOutFrame = fadeOutFrame;
+  return event;
+}
+
+//---------------------------------------------------------------------------------
+/**
  * @brief BGM 全復帰イベント処理関数
  */
 //---------------------------------------------------------------------------------
@@ -938,29 +989,6 @@ GMEVENT* EVENT_FSND_PushPlayBattleBGM( GAMESYS_WORK* gameSystem, u32 soundIdx )
 } 
 //---------------------------------------------------------------------------------
 /**
- * @brief 戦闘曲からのBGM復帰イベント処理関数
- */
-//---------------------------------------------------------------------------------
-static GMEVENT_RESULT PopPlayBGM_fromBattleEvent( GMEVENT* event, int* seq, void* wk )
-{
-  FSND_EVWORK* work;
-  FIELD_SOUND* fieldSound;
-
-  work = (FSND_EVWORK*)wk;
-  fieldSound = work->fieldSound;
-
-  switch( *seq ) {
-  case 0:  // リクエスト発行
-    FIELD_SOUND_RegisterRequest_POP( fieldSound, work->fadeOutFrame, work->fadeInFrame );
-    (*seq)++;
-    break;
-  case 1: 
-    return GMEVENT_RES_FINISH;
-  }
-  return GMEVENT_RES_CONTINUE;
-} 
-//---------------------------------------------------------------------------------
-/**
  * @brief 戦闘曲からベースBGMに復帰するイベントを生成する
  *
  * @param gameSystem
@@ -977,7 +1005,7 @@ GMEVENT* EVENT_FSND_PopPlayBGM_fromBattle( GAMESYS_WORK* gameSystem )
   gameData = GAMESYSTEM_GetGameData( gameSystem );
 
   // イベントを生成
-  event = GMEVENT_Create( gameSystem, NULL, PopPlayBGM_fromBattleEvent, sizeof(FSND_EVWORK) );
+  event = GMEVENT_Create( gameSystem, NULL, PopPlayBGMNoWaitEvent, sizeof(FSND_EVWORK) );
 
   // イベントワークを初期化
   work = GMEVENT_GetEventWork( event );

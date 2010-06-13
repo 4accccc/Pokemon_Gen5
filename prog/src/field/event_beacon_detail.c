@@ -39,8 +39,9 @@ enum _EVENT_CG_WIRELESS {
   _PUSH_BGM,
   _CALL_BEACON_DETAIL,
   _WAIT_BEACON_DETAIL,
+  _FIELD_OPEN,
   _FIELD_FADEIN,
-  _POP_BGM,
+  _BGM_WAIT,
   _FIELD_END,
 };
 
@@ -93,6 +94,10 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     if (GAMESYSTEM_IsProcExists(gsys) != GFL_PROC_MAIN_NULL){
       break;
     }
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGMNoWait(gsys, FSND_FADE_FAST, FSND_FADE_NORMAL));
+    (*seq)++;
+    break;
+  case _FIELD_OPEN:
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq)++;
     break;
@@ -109,8 +114,8 @@ static GMEVENT_RESULT EVENT_BeaconDetailMain(GMEVENT * event, int *  seq, void *
     }
     (*seq) ++;
     break;
-  case _POP_BGM:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NORMAL));
+  case _BGM_WAIT:
+    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMPop(gsys));
     (*seq) ++;
     break;
   case _FIELD_END: 
