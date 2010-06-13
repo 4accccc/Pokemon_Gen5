@@ -1356,6 +1356,7 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
 
       BR_MSGWIN_SetPos( p_wk->p_msgwin[i], 0, 0, BR_MSGWIN_POS_ABSOLUTE );
 
+      is_msg   = TRUE;
       switch(i)
       { 
       case BR_PROFILE_MSGWINID_M_NAME:   //●●●のプロフィール
@@ -1410,12 +1411,8 @@ BR_PROFILE_WORK * BR_PROFILE_CreateMainDisplay( const GDS_PROFILE_PTR cp_profile
           p_self    = GDS_Profile_GetSelfIntroduction( cp_profile, &pms, heapID );
           if( p_self )
           { 
-            p_strbuf  = GFL_STR_CreateBuffer( 128, heapID );
-            p_src     = GFL_MSG_CreateString( p_msg, sc_msgwin_data[i].msgID );
-            WORDSET_RegisterWord( p_word, 0, p_self, GDS_Profile_GetSex(cp_profile), TRUE, PM_LANG );
-            WORDSET_ExpandStr( p_word, p_strbuf, p_src );
+            p_strbuf  = GFL_STR_CreateCopyBuffer( p_self, heapID );
             GFL_STR_DeleteBuffer( p_self );
-            GFL_STR_DeleteBuffer( p_src );
           }
           else
           { 
