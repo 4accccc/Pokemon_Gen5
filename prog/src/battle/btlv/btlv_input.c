@@ -1580,8 +1580,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
       BTLV_INPUT_CreateBattleRecorderScreen( biw, bibrp );
 
-      SOGABE_Printf("stop_flag:%d\n",bibrp->stop_flag);
-
       switch( bibrp->stop_flag ){
       case BTLV_INPUT_BR_STOP_KEY:    //ƒL[‚É‚æ‚é’†’f
       case BTLV_INPUT_BR_STOP_BREAK:  //ƒf[ƒ^”j‰ó‚É‚æ‚é’†’f
@@ -4791,14 +4789,17 @@ static  int   BTLV_INPUT_CheckKeyBR( BTLV_INPUT_WORK* biw )
 
   if( rp & PAD_BUTTON_B )
   {
+    SePlayCancel( biw );
     return BTLV_INPUT_BR_SEL_STOP;
   }
   else if( rp & PAD_KEY_LEFT )
   {
+    SePlayDecide( biw );
     return BTLV_INPUT_BR_SEL_REW;
   }
   else if( rp & PAD_KEY_RIGHT )
   {
+    SePlayDecide( biw );
     return BTLV_INPUT_BR_SEL_FF;
   }
   return GFL_UI_TP_HIT_NONE;
@@ -5146,7 +5147,6 @@ static  void  BTLV_INPUT_FreeTCBAll( BTLV_INPUT_WORK* biw )
 //-----------------------------------------------------------------------------
 static  BOOL  get_cancel_flag( BTLV_INPUT_WORK* biw, const BTLV_INPUT_HITTBL* tbl, int pos )
 { 
-  SOGABE_Printf("tbl:0x%08x pos:%d\n",tbl,pos);
   if( ( biw->center_button_type == BTLV_INPUT_CENTER_BUTTON_ESCAPE ) ||
       ( biw->scr_type != BTLV_INPUT_SCRTYPE_COMMAND ) )
   { 
