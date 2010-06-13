@@ -8606,9 +8606,12 @@ static void handler_Michidure_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 static const BtlEventHandlerTable*  ADD_Onnen( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_UNCATEGORIZE_WAZA,           handler_Onnen_Ready      }, // 未分類ワザハンドラ
-    { BTL_EVENT_WAZA_DMG_REACTION,           handler_Onnen_WazaDamage }, // ワザダメージ処理後
-    { BTL_EVENT_TURNCHECK_BEGIN,             handler_Onnen_TurnCheck  }, // ターンチェック開始ハンドラ
+    { BTL_EVENT_UNCATEGORIZE_WAZA,       handler_Onnen_Ready         }, // 未分類ワザハンドラ
+    { BTL_EVENT_WAZA_DMG_REACTION,       handler_Onnen_WazaDamage    }, // ワザダメージ処理後
+    { BTL_EVENT_ACTPROC_START,           handler_Michidure_ActStart  }, // アクション処理開始ハンドラ
+
+//    ターンチェックで自殺は後攻で無意味なワザになっちゃうのでダメ
+//    { BTL_EVENT_TURNCHECK_BEGIN,             handler_Onnen_TurnCheck  }, // ターンチェック開始ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -8649,6 +8652,7 @@ static void handler_Onnen_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
           pp_param->pokeID = target_pokeID;
           pp_param->wazaIdx = wazaIdx;
           pp_param->volume = BPP_WAZA_GetPP( targetPoke, wazaIdx ) * -1;
+          pp_param->fDeadPokeEnable = TRUE;
         BTL_SVF_HANDEX_Pop( flowWk, pp_param );
 
         msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
@@ -8658,14 +8662,8 @@ static void handler_Onnen_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
         BTL_SVF_HANDEX_Pop( flowWk, msg_param );
       }
 
-      BTL_EVENT_FACTOR_Remove( myHandle );  // 道連れ成功で自殺
+      BTL_EVENT_FACTOR_Remove( myHandle );  // おんねん成功で自殺
     }
-  }
-}
-static void handler_Onnen_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
-{
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID ){
-    BTL_EVENT_FACTOR_Remove( myHandle );  // ターンチェックで強制自殺
   }
 }
 
