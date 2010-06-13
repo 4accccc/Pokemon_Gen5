@@ -435,8 +435,8 @@ static void scEvent_ItemEquip( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_ItemEquipTmp( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, u8 atkPokeID );
 static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
   BTL_POKEPARAM* attacker, BTL_POKEPARAM* defender, const SVFL_WAZAPARAM* wazaParam, BOOL fNoEffectMsg );
-static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
-static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
+static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fHikouCheck );
+static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fHikouCheck );
 static void scproc_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static void scEvent_WazaNoEffectByFlying( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp );
 static BtlTypeAff scEvent_CheckDamageAffinity( BTL_SVFLOW_WORK* wk,
@@ -4362,8 +4362,8 @@ static BOOL scproc_TameStartTurn( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
       targetPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(target) );
     }
     SCQUE_PUT_ACT_WazaEffect( wk->que, atPos, targetPos, waza, BTLV_WAZAEFF_TAME_START );
+//    scEvent_TameStartEffect( wk, atPos, waza );
   }
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 
   if( fSuccess )
@@ -8364,7 +8364,6 @@ static void scproc_WazaDamageReaction( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attac
   u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
 
   scEvent_WazaDamageReaction( wk, attacker, defender, wazaParam, affinity, damage, critical_flag, fMigawari );
-//  scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
   BTL_Hem_PopState( &wk->HEManager, hem_state );
 }
 //--------------------------------------------------------------------------
@@ -10992,19 +10991,6 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
     return BTL_TYPEAFF_100;
   }
 
-  // ふゆう状態のポケモンに地面ダメージワザは効果がない
-  if( wazaParam->wazaType == POKETYPE_JIMEN )
-  {
-    fFloating = scproc_CheckFloating(wk, defender);
-    if( fFloating )
-    {
-      if( fNoEffectMsg ){
-        scproc_WazaNoEffectByFlying( wk, defender );
-      }
-      return BTL_TYPEAFF_0;
-    }
-  }
-
   {
     BtlTypeAff affinity;
     PokeTypePair defPokeTypePair = BPP_GetPokeType( defender );
@@ -11018,20 +11004,48 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
       affinity = BTL_CALC_TypeAffMul( affinity, aff2 );
     }
 
-    if( affinity == BTL_TYPEAFF_0 )
+    // 相性有効
+    if( affinity != BTL_TYPEAFF_0 )
     {
-      // 地面ワザで相性無効の場合 = 飛行タイプなので、ふゆう状態にないなら等倍ヒット
-      if( (wazaParam->wazaType == POKETYPE_JIMEN) && !(fFloating) )
-      {
-        TAYA_Printf("地面で相性無効だけど浮いてないから当たるよ\n");
-        return BTL_TYPEAFF_100;
+      // 地面ワザ以外はそのまま
+      if( wazaParam->wazaType != POKETYPE_JIMEN ){
+        return affinity;
       }
-
-      if( fNoEffectMsg && (affinity == BTL_TYPEAFF_0) )
+      // 地面ワザでも「ふゆう状態」でなければそのまま
+      else
       {
-        scput_WazaNoEffect( wk, defender );
+        fFloating = scproc_CheckFloating( wk, defender, FALSE );
+        if( !fFloating ){
+          return affinity;
+        }
       }
     }
+    // 相性無効
+    else
+    {
+      // 地面ワザなら受けたポケ=飛行タイプのはずなので、「ふゆう状態」チェック
+      if( wazaParam->wazaType == POKETYPE_JIMEN )
+      {
+        // 「ふゆう状態」でないなら等倍ヒット
+        if( !scproc_CheckFloating(wk, defender, TRUE) ){
+          return BTL_TYPEAFF_100;
+        }
+      }
+    }
+
+    if( affinity == BTL_TYPEAFF_0 )
+    {
+      if( fNoEffectMsg )
+      {
+        if( !fFloating ){
+          scput_WazaNoEffect( wk, defender );
+        }
+        else{
+          scproc_WazaNoEffectByFlying( wk, defender );
+        }
+      }
+    }
+
     return affinity;
   }
 }
@@ -11043,12 +11057,12 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
  * @param   bpp
  */
 //----------------------------------------------------------------------------------
-static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fHikouCheck )
 {
   // じゅうりょくが効いていたら誰も浮けないのでチェックしない
   if( !BTL_FIELD_CheckEffect(BTL_FLDEFF_JURYOKU) )
   {
-    if( scEvent_CheckFloating(wk, bpp) ){
+    if( scEvent_CheckFloating(wk, bpp, fHikouCheck) ){
       return TRUE;
     }
   }
@@ -11060,16 +11074,17 @@ static BOOL scproc_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp 
  *
  * @param   wk
  * @param   bpp
+ * @param   fHikouCheck   タイプ「ひこう」をふゆう要素としてチェックするか？
  *
  * @retval  BOOL    有効であればTRUE
  */
 //----------------------------------------------------------------------------------
-static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp )
+static BOOL scEvent_CheckFloating( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp, BOOL fHikouCheck )
 {
   // ここでは"じゅうりょく"の有無をチェックしない。
-  // （"じゅうりょく発動直後に「じめんにおちた」テキスト表示のチェックに使いたいので）
+  // （じゅうりょく発動直後に「じめんにおちた」テキスト表示のチェックに使いたいので）
   {
-    u8 floatFlag = BPP_IsMatchType( bpp, POKETYPE_HIKOU );
+    u8 floatFlag = (fHikouCheck)? BPP_IsMatchType( bpp, POKETYPE_HIKOU ) : FALSE;
     u8 failFlag = FALSE;
 
     BTL_EVENTVAR_Push();
@@ -12747,7 +12762,7 @@ u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* bpp_t
 BOOL BTL_SVFTOOL_IsFloatingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
   const BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
-  return scproc_CheckFloating( wk, bpp );
+  return scproc_CheckFloating( wk, bpp, TRUE );
 }
 //--------------------------------------------------------------------------------------
 /**
@@ -14580,7 +14595,7 @@ static u8 scproc_HandEx_batonTouch( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_
 
   BPP_BatonTouchParam( target, user );
   SCQUE_PUT_OP_BatonTouch( wk->que, param->userPokeID, param->targetPokeID );
-  if( BPP_MIGAWARI_IsExist(user) )
+  if( BPP_MIGAWARI_IsExist(target) )
   {
     BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, param->targetPokeID );
     SCQUE_PUT_ACT_MigawariCreate( wk->que, pos );
@@ -14828,7 +14843,7 @@ static u8 scproc_HandEx_juryokuCheck( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARA
       scproc_TameHideCancel( wk, bpp, BPP_CONTFLG_SORAWOTOBU );
       fFall = TRUE;
     }
-    if( scEvent_CheckFloating(wk, bpp) )
+    if( scEvent_CheckFloating(wk, bpp, TRUE) )
     {
       fFall = TRUE;
     }
