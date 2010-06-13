@@ -3769,14 +3769,18 @@ static GFL_PROC_RESULT FieldItemMenuProc_Init( GFL_PROC * proc, int * seq, void 
 				if( cur == 0 && scr == 0 ){
 					break;
 				}
-				if( (cur+scr) >= max ){
-					if( scr != 0 ){
-						scr--;
-					}else{
-						cur--;
-					}
+				if( (scr+5) >= max && scr != 0 ){
+					scr--;
 				}else{
-					break;
+					if( (cur+scr) >= max ){
+						if( scr != 0 ){
+							scr--;
+						}else{
+							cur--;
+						}
+					}else{
+						break;
+					}
 				}
 			}
 			if( i == pWork->pocketno ){
