@@ -2833,8 +2833,13 @@ static void scproc_Fight( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, BTL_ACTI
     if( scproc_Fight_CheckWazaExecuteFail_1st(wk, attacker, orgWaza, fWazaLock ) ){ break; }
 
     // 派生ワザ呼び出しパラメータチェック＆失敗判定
-    if( !scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, &reqWaza) ){
+    if( !scEvent_GetReqWazaParam(wk, attacker, orgWaza, orgTargetPos, &reqWaza) )
+    {
       scPut_WazaMsg( wk, attacker, orgWaza );
+      scEvent_GetWazaParam( wk, orgWaza, attacker, wk->wazaParamOrg );
+      BTL_SVFSUB_RegisterTargets( wk, attacker, orgTargetPos, wk->wazaParamOrg, wk->psetTargetOrg );
+      scproc_decrementPPUsedWaza( wk, attacker, orgWaza, orgWazaIdx, wk->psetTargetOrg );
+      fPPDecrement = TRUE;
       scproc_WazaExecuteFailed( wk, attacker, orgWaza, SV_WAZAFAIL_OTHER );
       break;
     }
