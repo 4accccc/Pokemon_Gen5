@@ -2127,7 +2127,14 @@ static  void  camera_work_check( void )
 
     if( bew->camera_work_execute != BTLV_EFFECT_CWE_SHIFT_NO_STOP )
     { 
-      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )
+      { 
+        BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      }
+      else
+      { 
+        BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_INIT );
+      }
     }
     bew->camera_work_seq  = 0;
     bew->camera_work_wait = 0;
@@ -2139,7 +2146,7 @@ static  void  camera_work_check( void )
     if( ( trg ) || ( tp ) )
     { 
       BTLV_EFFECT_Stop();
-      BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+      BTLV_EFFECT_Add( BTLEFF_CAMERA_WORK_INIT );
       bew->camera_work_seq = 0;
       bew->camera_work_wait = 0;
     }
