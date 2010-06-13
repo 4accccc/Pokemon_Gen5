@@ -708,7 +708,7 @@ static void _cgearsave(G_SYNC_WORK* pWork)
     pWork->pCGearWork = GFL_HEAP_AllocMemory(pWork->heapID,SAVESIZE_EXTRA_CGEAR_PICTURE);
     pPic = (CGEAR_PICTURE_SAVEDATA*)pWork->pCGearWork;
 
-    OS_TPrintf("CGEARサイズ %x %x",size, SAVESIZE_EXTRA_CGEAR_PICTURE);
+//    OS_TPrintf("CGEARサイズ %x %x",size, SAVESIZE_EXTRA_CGEAR_PICTURE);
 
 
     SaveControl_Extra_LoadWork(pSave, SAVE_EXTRA_ID_CGEAR_PICUTRE, pWork->heapID,
@@ -942,13 +942,13 @@ static void _downloadcgear(G_SYNC_WORK* pWork)
 {
   switch(pWork->downloadType){
   case _DOWNLOAD_CGEAR:
-    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, CGEAR_PICTURE_SAVE_GetWorkSize() + 2); //CRC
+    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, CGEAR_PICTURE_SAVE_GetWorkSize() + 4); //CRC
     break;
   case _DOWNLOAD_MUSICAL:
     pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, 128*1024 ); //CRCこみで128K
     break;
   case _DOWNLOAD_ZUKAN:
-    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, ZUKANWP_SAVEDATA_GetWorkSize() + 2); //CRC
+    pWork->pDownload = GSYNC_DOWNLOAD_Create(pWork->heapID, ZUKANWP_SAVEDATA_GetWorkSize() + 4); //CRC
     break;
   }
 
@@ -2440,24 +2440,23 @@ static GFL_PROC_RESULT GSYNCProc_Main( GFL_PROC * proc, int * seq, void * pwk, v
   GSYNC_DISP_Main(pWork->pDispWork);
   GSYNC_MESSAGE_Main(pWork->pMessageWork);
 
-  if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
-    NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
-
-    if(pWork->bSaveDataAsync){
-      GAMEDATA_SaveAsyncCancel( pWork->pGameData );
-      pWork->bSaveDataAsync = FALSE;
-    }
-    _BoxPokeRemove(pWork);
-    if(pWork->errEnd){
-      NetErr_DispCall( TRUE );
-    }
-    if(WIPE_SYS_EndCheck()){  //他のワイプがかかってなければWIPE
+  if(WIPE_SYS_EndCheck()){
+    if(NET_ERR_CHECK_NONE != NetErr_App_CheckError()){
+      NHTTP_RAP_ErrorClean(pWork->pNHTTPRap);
+      if(pWork->bSaveDataAsync){
+        GAMEDATA_SaveAsyncCancel( pWork->pGameData );
+        pWork->bSaveDataAsync = FALSE;
+      }
+      _BoxPokeRemove(pWork);
+      if(pWork->errEnd){
+        NetErr_DispCall( TRUE );
+      }
       WIPE_SetBrightness(WIPE_DISP_MAIN,WIPE_FADE_BLACK);
       WIPE_SetBrightness(WIPE_DISP_SUB,WIPE_FADE_BLACK);
+      GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
+      pWork->pParent->selectType = GAMESYNC_RETURNMODE_ERROR;
+      ret = GFL_PROC_RES_FINISH;
     }
-    GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE, FALSE);
-    pWork->pParent->selectType = GAMESYNC_RETURNMODE_ERROR;
-    ret = GFL_PROC_RES_FINISH;
   }
   return ret;
 }
