@@ -2106,6 +2106,7 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
     }
     IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
     IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+    IRC_POKETRADE_ItemIconReset(&pWork->aPokerusFaceMark);
     POKETRADE_MESSAGE_ResetPokemonMyStDisp(pWork,TRUE);
     GFL_BG_LoadScreenV_Req( GFL_BG_FRAME2_S );
     IRC_POKETRADE_SubStatusEnd(pWork);
@@ -4393,6 +4394,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   if(state != NULL){
     state(pWork);
     pWork->anmCount++;
+
     retCode = GFL_PROC_RES_CONTINUE;
     for(k=0;k<2;k++){
       POKE_GTS_SelectStatusMessageDisp(pWork, k, pWork->pokemonGTSSeq[k]);
@@ -4500,6 +4502,7 @@ static GFL_PROC_RESULT PokemonTradeProcEnd( GFL_PROC * proc, int * seq, void * p
   GFL_HEAP_FreeMemory(pWork->pVramBG);
   IRC_POKETRADE_ItemIconReset(&pWork->aItemMark);
   IRC_POKETRADE_ItemIconReset(&pWork->aPokerusMark);
+  IRC_POKETRADE_ItemIconReset(&pWork->aPokerusFaceMark);
   IRC_POKETRADE_EndSubMojiBG(pWork);
   POKMEONTRADE_RemoveCoreResource(pWork);
 
