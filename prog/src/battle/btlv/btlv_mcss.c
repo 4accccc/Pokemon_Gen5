@@ -460,6 +460,7 @@ void  BTLV_MCSS_Main( BTLV_MCSS_WORK *bmw )
           { 
             switch( sick_anm ){ 
             case APP_COMMON_ST_ICON_NEMURI:      // –°‚è
+              BTLV_MCSS_ResetPaletteFadeBaseColor( bmw, pos );
               BTLV_MCSS_SetMepachiFlag( bmw, pos, BTLV_MCSS_MEPACHI_ALWAYS_ON );
               BTLV_MCSS_SetAnmSpeed( bmw, pos, FX32_ONE / 3 );
               bmw->btlv_mcss[ index ].sick_set_flag = 1;
