@@ -1228,6 +1228,9 @@ static  void  Gauge_CalcHP( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK* bgcl )
 //--------------------------------------------------------------
 static  void  Gauge_InitCalcEXP( BTLV_GAUGE_CLWK* bgcl, int add_exp )
 {
+  //ƒŒƒxƒ‹100‚È‚ç‚È‚É‚à‚µ‚È‚¢
+  if( bgcl->level == 100 ) return;
+
   bgcl->exp_work = BTLV_GAUGE_HP_WORK_INIT_VALUE;
 
   if( bgcl->exp + add_exp < 0 )
