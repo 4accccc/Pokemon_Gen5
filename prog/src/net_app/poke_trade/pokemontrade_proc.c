@@ -37,6 +37,8 @@
 #include "msg/msg_poke_trade.h"
 #include "msg/msg_chr.h"
 #include "msg/msg_trade_head.h"
+#include "msg/msg_wifi_system.h"
+
 
 #include "ircbattle.naix"
 #include "trade.naix"
@@ -4282,6 +4284,10 @@ static GFL_PROC_RESULT PokemonTradeDemoProcInit( GFL_PROC * proc, int * seq, voi
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_EVENT);
 
   _commonFunc(pParent, pWork);
+
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
+  
+
   _CHANGE_STATE(pWork,POKMEONTRADE_IRCDEMO_ChangeDemo);
 
   return ret;
@@ -4303,6 +4309,7 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoRecvProcInit( GFL_PROC * proc, int * s
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSDOWN);
 
   _commonFunc(pParent, pWork);
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSDOWN_ChangeDemo);
 
   return ret;
@@ -4324,6 +4331,7 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoMidProcInit( GFL_PROC * proc, int * se
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSMID);
 
   _commonFunc(pParent, pWork);
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSMID_ChangeDemo);
 
   return ret;
@@ -4347,6 +4355,7 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoSendProcInit( GFL_PROC * proc, int * s
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSUP);
 
   _commonFunc(pParent, pWork);
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSUP_ChangeDemo);
 
   return ret;
@@ -4366,6 +4375,7 @@ static GFL_PROC_RESULT PokemonTradeGTSDemoProcInit( GFL_PROC * proc, int * seq, 
   ret = PokemonTradeProcInit(proc, seq, &pParent->aParam, pWork, POKEMONTRADE_TYPE_GTSNEGODEMO);
 
   _commonFunc(pParent, pWork);
+  GFL_FADE_SetMasterBrightReq(GFL_FADE_MASTER_BRIGHT_BLACKOUT, 16, 0, _BRIGHTNESS_SYNC);
   _CHANGE_STATE(pWork,POKMEONTRADE_DEMO_GTSMID_ChangeDemo);
   // _CHANGE_STATE(pWork,IRC_POKMEONTRADE_STEP_ChangeDemo_PokeMove);
   return ret;
@@ -4464,7 +4474,12 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
         DWC_RAPCOMMON_ResetSubHeapID();
       }
       if(pWork->bBackupStart){ //セーブのスタート このフラグが立ってたらエラー復帰不可能
-        NetErr_DispCall( TRUE );
+        if(GFL_NET_IsWifiConnect()){
+          NetErr_App_FatalDispCallWifiMessage(dwc_message_0023);
+        }
+        else{
+          NetErr_DispCall( TRUE );
+        }
       }
       if(GFL_NET_IsWifiConnect()){
         GFL_NET_DWC_ERROR_ReqErrorDisp(TRUE,TRUE);

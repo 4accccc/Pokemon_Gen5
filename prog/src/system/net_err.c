@@ -263,6 +263,20 @@ BOOL NetErr_DispCall(BOOL fatal_error)
 
 //==================================================================
 /**
+ * Fatalエラー専用としてエラー画面を一発呼び出し  メッセージ指定WIFI専用
+ * @param   message  メッセージ番号
+ * @retval  TRUE:エラー画面を呼び出した
+ * @retval  FALSE:呼び出していない
+ */
+//==================================================================
+BOOL NetErr_App_FatalDispCallWifiMessage(int message)
+{
+  NetErrSystem.wifi_msg = message;
+  return NetErr_DispCall(TRUE);
+}
+
+//==================================================================
+/**
  * Fatalエラー専用としてエラー画面を一発呼び出し
  *
  * @param   none		
@@ -929,10 +943,10 @@ static void Local_ErrMessagePrint(BOOL fatal_error)
           msgno = dwc_error_0012;
         }
       }
-      if( fatal_error == TRUE )
-      {
-        msgno = dwc_error_0016;
-      }
+//      if( fatal_error == TRUE )
+//      {
+//        msgno = dwc_error_0016;
+//      }
 
 
       OS_TPrintf("エラーメッセージ %d \n",msgno);

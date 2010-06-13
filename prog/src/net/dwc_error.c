@@ -16,8 +16,12 @@
 #include "system/net_err.h"
 #include "net/dwc_rap.h"
 
+//メッセージ
+#include "msg\msg_wifi_system.h"
+
 //外部公開
 #include "net/dwc_error.h"
+
 //=============================================================================
 /**
  *					定数宣言
@@ -87,7 +91,7 @@ GFL_NET_DWC_ERROR_RESULT GFL_NET_DWC_ERROR_ReqErrorDisp( BOOL is_heavy, BOOL is_
 
       case DWC_ETYPE_FATAL:
         //Fatal
-        NetErr_DispCallFatal();
+        NetErr_App_FatalDispCallWifiMessage(dwc_error_0016);
         return GFL_NET_DWC_ERROR_RESULT_FATAL;
       }
     }
