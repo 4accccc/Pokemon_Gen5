@@ -2006,7 +2006,6 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 16, 0, 0, 0 );
       BTLV_MCSS_MoveMosaic( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_INTERPOLATION, 8, 8, 1, 0 );
       BTLV_EFFVM_SePlay( bew->vm_core, SEQ_SE_W048_01, BTLEFF_SEPLAY_SE1, BTLEFF_SEPAN_ATTACK, -500, 127, 0, 0, 0 );
-      BTLV_EFFVM_SePlay( bew->vm_core, SEQ_SE_DUMMY5, BTLEFF_SEPLAY_SE1, BTLEFF_SEPAN_ATTACK, 0, 0, 0, 0, 40 );
       BTLV_EFFVM_SeEffect( bew->vm_core, BTLEFF_SEPLAY_SE1, BTLEFF_SEEFFECT_INTERPOLATION, BTLEFF_SEEFFECT_VOLUME,
                            127, 0, 30, 10, 0, 0 );
       beht->seq_no++;
@@ -2026,6 +2025,7 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
   case 4:
     if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
     {
+      BTLV_EFFVM_SePlay( bew->vm_core, SEQ_SE_DUMMY5, BTLEFF_SEPLAY_SE1, BTLEFF_SEPAN_ATTACK, 0, 0, 0, 0, 0 );
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 31, 0, 0, 0 );
       if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) 
       { 
