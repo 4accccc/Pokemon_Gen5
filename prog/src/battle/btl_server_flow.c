@@ -2366,6 +2366,10 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
       }
     }
   }
+  else{
+    fSkipNigeruCalc = TRUE;
+    fForceNigeru = TRUE;
+  }
 
   #ifdef PM_DEBUG
   // L or R ‰Ÿ‚µ‚Á‚Ï‚È‚µ‚Å‹­§“I‚É“¦‚°‚é
@@ -5413,8 +5417,6 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     if( wk->hitCheckParam->fCheckEveryTime ){
       if( !scEvent_CheckHit(wk, attacker, bpp, wazaParam) ){ break; }
     }
-
-
   }
 
   if( hitCount>0 ){
