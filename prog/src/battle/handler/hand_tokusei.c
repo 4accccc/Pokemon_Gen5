@@ -3377,6 +3377,7 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       }
     }
 
+    // トレースできる対象がいればトレースする
     if( targetCnt )
     {
       u8 idx = (targetCnt==1)? 0 : BTL_CALC_GetRand( targetCnt );
@@ -3384,8 +3385,9 @@ static void handler_Trace( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, 
       nextTok = BPP_GetValue( bpp, BPP_TOKUSEI );
       targetPokeID = BPP_GetID( bpp );
     }
+    // いなければ待機状態へ
     else{
-      work[0] = 1; // 待機状態へ
+      work[0] = 1;
     }
   }
   // 相手が入場したタイミングに待機状態なら反応

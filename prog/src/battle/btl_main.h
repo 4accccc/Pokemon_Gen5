@@ -72,6 +72,7 @@ extern u8 BTL_MAIN_GetClientMultiPos( const BTL_MAIN_MODULE* wk, u8 clientID );
 
 extern BtlPokePos BTL_MAIN_GetEnablePosEnd( const BTL_MAIN_MODULE* wk );
 extern u32 BTL_MAIN_GetFrontPosNum( const BTL_MAIN_MODULE* wk );
+extern BOOL BTL_MAIN_IsFrontPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos );
 extern u16 BTL_MAIN_GetClientTrainerType( const BTL_MAIN_MODULE* wk, u8 clientID );
 extern const PMS_DATA* BTL_MAIN_GetClientPMSData( const BTL_MAIN_MODULE* wk, u8 clientID, BtlResult playerResult );
 extern u8 BTL_MAIN_GetPlayerClientID( const BTL_MAIN_MODULE* wk );

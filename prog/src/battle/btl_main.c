@@ -2431,16 +2431,27 @@ u32 BTL_MAIN_GetFrontPosNum( const BTL_MAIN_MODULE* wk )
     return 3;
 
   case BTL_RULE_ROTATION:
-    #ifdef ROTATION_NEW_SYSTEM
-      return 1;
-    #else
-      return 2;
-    #endif
+    return BTL_ROTATION_FRONTPOS_NUM;
 
   default:
     GF_ASSERT(0);
     return 1;
   }
+}
+//=============================================================================================
+/**
+ * 指定位置が前衛（ワザがあたる場所）かどうか判定
+ *
+ * @param   wk
+ * @param   pos
+ *
+ * @retval  BOOL
+ */
+//=============================================================================================
+BOOL BTL_MAIN_IsFrontPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
+{
+  u32 frontNum = BTL_MAIN_GetFrontPosNum( wk );
+  return (pos <= (frontNum * 2) );
 }
 
 //=============================================================================================
@@ -2658,7 +2669,7 @@ u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
   if( exType == BTL_EXPOS_DEFAULT )
   {
     dst[0] = basePos;
-    return 1;
+    return (dst[0] != BTL_POS_NULL)? 1 : 0;
   }
 
   if( basePos != BTL_POS_NULL )
@@ -2680,7 +2691,8 @@ u8 BTL_MAIN_ExpandBtlPos( const BTL_MAIN_MODULE* wk, BtlExPos exPos, u8* dst )
     }
   }
 
-  return BTL_POS_NULL;
+  dst[0] = BTL_POS_NULL;
+  return 0;
 }
 // シングル用
 static u8 expandPokePos_single( const BTL_MAIN_MODULE* wk, BtlExPos exType, u8 basePos, u8* dst )

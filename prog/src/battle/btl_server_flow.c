@@ -5325,8 +5325,6 @@ static u32 scproc_Fight_Damage_SingleCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
   fx32 dmg_ratio = (BTL_POKESET_GetCountMax(targets) == 1)? BTL_CALC_DMG_TARGET_RATIO_NONE : BTL_CALC_DMG_TARGET_RATIO_PLURAL;
   u32 dmg_sum = 0;
 
-//  TAYA_Printf("TargetCntMax=%d, ratio=%08x\n", BTL_POKESET_GetCountMax(targets), dmg_ratio );
-
 
   // 複数対象のワザか判定
   flagSet.hitPluralPoke = (BTL_POKESET_GetCount(targets) > 1);
@@ -6019,15 +6017,11 @@ static void scEvent_DamageProcStart( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* a
 //----------------------------------------------------------------------------------
 static void scproc_Fight_DamageProcEnd( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM* wazaParam, BTL_POKEPARAM* attacker, BTL_POKESET* targets, u32 dmgTotal, BOOL fDelayAttack )
 {
-//  scproc_Fight_Damage_Drain( wk, wazaParam->wazaID, attacker, targets );
   scproc_Fight_Damage_KoriCure( wk, wazaParam, attacker, targets );
 
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-
     scEvent_DamageProcEnd( wk, attacker, targets, wazaParam, fDelayAttack );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
-
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 }
@@ -12078,6 +12072,7 @@ const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID )
 //--------------------------------------------------------------------------------------
 /**
  * [ハンドラ用ツール] 指定ポケIDを持つポケモンが戦闘に出ているかチェックし、出ていたらその戦闘位置を返す
+ *                    （ローテーションの場合は前衛のみ）
  *
  * @param   server
  * @param   pokeID
@@ -12087,7 +12082,11 @@ const BTL_POKEPARAM* BTL_SVFTOOL_GetPokeParam( BTL_SVFLOW_WORK* wk, u8 pokeID )
 //--------------------------------------------------------------------------------------
 BtlPokePos BTL_SVFTOOL_GetExistFrontPokePos( BTL_SVFLOW_WORK* wk, u8 pokeID )
 {
-  return BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
+  BtlPokePos pos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID );
+  if( BTL_MAIN_IsFrontPos(wk->mainModule, pos) ){
+    return pos;
+  }
+  return BTL_POS_NULL;
 }
 //--------------------------------------------------------------------------------------
 /**

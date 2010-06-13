@@ -1836,11 +1836,9 @@ static void handler_KuroiKiri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
     }
     BTL_SVF_HANDEX_Pop( flowWk, reset_param );
 
-
     msg_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-    HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_RankReset );
+      HANDEX_STR_Setup( &msg_param->str, BTL_STRTYPE_STD, BTL_STRID_STD_RankReset );
     BTL_SVF_HANDEX_Pop( flowWk, msg_param );
-
   }
 }
 //----------------------------------------------------------------------------------
@@ -5714,7 +5712,6 @@ static void handler_Gaman_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
           }
         }
 
-//        TAYA_Printf("Ç™Ç‹ÇÒÇÃëŒè€=%d\n", targetPokeID);
 
         BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, targetPokeID );
         break;
@@ -8573,7 +8570,7 @@ static void handler_Michidure_WazaDamage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     if( BPP_IsDead(bpp) )
     {
       WazaID usedWaza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( !BTL_TABLES_IsMitidureFailWaza(usedWaza) )
+      if( !BTL_TABLES_IsDelayAttackWaza(usedWaza) )
       {
         u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
         const BTL_POKEPARAM* attacker = BTL_SVFTOOL_GetPokeParam( flowWk, atkPokeID );

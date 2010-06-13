@@ -32,9 +32,9 @@ extern BOOL BTL_TABLES_IsPressureEffectiveWaza( WazaID waza );
 extern BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza );
 
 /**
- *  ‚İ‚¿‚Ã‚ê¸”sƒƒU”»’è
+ *  ŠÔ·UŒ‚ƒƒU”»’è
  */
-extern BOOL BTL_TABLES_IsMitidureFailWaza( WazaID waza );
+extern BOOL BTL_TABLES_IsDelayAttackWaza( WazaID waza );
 
 
 /**

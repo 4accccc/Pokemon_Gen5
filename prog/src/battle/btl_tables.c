@@ -80,9 +80,9 @@ BOOL BTL_TABLES_IsSakidoriFailWaza( WazaID waza )
 }
 
 /**
- *  ‚Ý‚¿‚Ã‚êŽ¸”sƒƒU”»’è
+ *  ŽžŠÔ·UŒ‚ƒƒU”»’è
  */
-BOOL BTL_TABLES_IsMitidureFailWaza( WazaID waza )
+BOOL BTL_TABLES_IsDelayAttackWaza( WazaID waza )
 {
   static const u16 table[] = {
     WAZANO_NULL, WAZANO_MIRAIYOTI, WAZANO_HAMETUNONEGAI,
