@@ -465,10 +465,10 @@ sub_train_battle:
   CASE BSW_BTL_RESULT_WIN THEN          //勝ち
     _CALL sub_train_battle_win
   CASE BSW_BTL_RESULT_COMM_ERROR THEN   //通信エラー
-    _TIME_WAIT( 60 ) //やや待ってから受付に戻る
+    _TIME_WAIT( 40 ) //やや待ってから受付に戻る
     _CALL sub_common_retmap_comm_error
   DEFAULT                               //負け
-    _TIME_WAIT( 60 ) //２秒ほどまってから負け処理へ
+    _TIME_WAIT( 40 ) //やや待ってから負け処理へ
     _CALL sub_common_retmap_lose_retire
   ENDSWITCH
 }
@@ -516,7 +516,25 @@ sub_train_battle_win_clear:
   DEFINE_LOCAL play_mode
   DEFINE_LOCAL multi_flag
   DEFINE_LOCAL b_clear
-
+  
+  //一寸間
+  _TIME_WAIT( 40 )
+  
+  //戦闘録画済みフラグ取得
+  _BSUBWAY_TOOL( BSWSUB_GET_BTLREC_FINISH_FLAG, BSW_NULL, BSW_NULL, SCWK_ANSWER )
+  
+  //バトルビデオに記録するか？
+  IF $SCWK_ANSWER == FALSE THEN
+    _SYSWIN_MSG( msg_c04r0110_15, POS_DOWN )
+    _YES_NO_WIN( SCWK_ANSWER )
+    _SYSWIN_CLOSE()
+  
+    IF $SCWK_ANSWER == SCR_YES THEN
+      _CALL sub_common_btlrec
+    ENDIF
+  ENDIF
+  
+  //プレイモード取得
   _BSUBWAY_TOOL( BSWSUB_GET_PLAY_MODE, BSW_NULL, BSW_NULL, play_mode )
   
   //ボスクリアフラグOFF
