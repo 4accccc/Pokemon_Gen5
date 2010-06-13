@@ -62,7 +62,9 @@ typedef enum {
   COMM_BTL_DEMO_POKE_SICK,     ///< 状態異常
   COMM_BTL_DEMO_POKE_HINSHI,   ///< 瀕死
   COMM_BTL_DEMO_POKE_NONE,     ///< ポケモン無し
-} COMM_BTL_POKE_RESULT;
+} COMM_BTL_POKE_RESULT_tag;
+
+typedef u8 COMM_BTL_POKE_RESULT;
 
 #define TRAINER_NAME_BUF_LEN ( PERSON_NAME_SIZE*2+EOM_SIZE ) ///< プレイヤー名BUFの長さ
 #define DEMO_POKEPARTY_MAX   ( 6 )
@@ -81,7 +83,7 @@ typedef struct {
   const MYSTATUS* mystatus; ///< トレーナー名、性別を取得する
   u8    trsex;              ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSに置き換わるので廃止予定)
   u8    server_version;     ///< ROMのサーババージョン
-  COMM_BTL_POKE_RESULT  poke_result[DEMO_POKEPARTY_MAX]; ///< ポケモンの戦闘結果状態をもらうための配列
+  COMM_BTL_POKE_RESULT  party_state[DEMO_POKEPARTY_MAX]; ///< ポケモンの戦闘結果状態をもらうための配列
 } COMM_BTL_DEMO_TRAINER_DATA;
 
 //--------------------------------------------------------------

@@ -334,7 +334,7 @@ typedef struct {
   u32 timer;
   u8 is_start;
   u8 padding[3];
-  const COMM_BTL_POKE_RESULT *poke_result;
+  const COMM_BTL_POKE_RESULT *party_state;
 } BALL_UNIT;
 
 //--------------------------------------------------------------
@@ -1643,7 +1643,7 @@ static void BALL_UNIT_Init( BALL_UNIT* unit, const POKEPARTY* party, u8 type, u8
   unit->max = ( type_is_normal(type) ? 6 : 3 );
   unit->timer = 0;
   unit->g3d = g3d;
-  unit->poke_result = poke;
+  unit->party_state = poke;
 
   OS_Printf("max=%d pokenum=%d\n", unit->max, unit->num);
 
@@ -1833,7 +1833,7 @@ static void _ball_open( BALL_UNIT* unit, int start_sync )
     else
     {
       // バトル後の状態を反映
-      BALL_UNIT_SetPartyCondition( unit, unit->party, unit->poke_result, id );
+      BALL_UNIT_SetPartyCondition( unit, unit->party, unit->party_state, id );
     }
   }
   else
@@ -2056,7 +2056,7 @@ static void TRAINER_UNIT_Init( TRAINER_UNIT* unit, u8 type, u8 posid, const COMM
   unit->timer = 0;
 
   // ボール初期化
-  BALL_UNIT_Init( &unit->ball, data->party, type, posid, obj, g3d, data->poke_result );
+  BALL_UNIT_Init( &unit->ball, data->party, type, posid, obj, g3d, data->party_state );
 
   // トレーナー名 生成
   unit->str_trname = GFL_STR_CreateBuffer( STR_TRNAME_SIZE, HEAPID_COMM_BTL_DEMO );
@@ -3293,21 +3293,21 @@ static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
   // 初期化
   for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
     for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
-      prm->trainer_data[i].poke_result[j] = COMM_BTL_DEMO_POKE_NONE;
+      prm->trainer_data[i].party_state[j] = COMM_BTL_DEMO_POKE_NONE;
     }
   }
   // シングル戦
   if(prm->type==COMM_BTL_DEMO_TYPE_NORMAL_START){
     for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
       for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
-        prm->trainer_data[i].poke_result[j] = COMM_BTL_DEMO_POKE_LIVE;
+        prm->trainer_data[i].party_state[j] = COMM_BTL_DEMO_POKE_LIVE;
       }
     }
   // マルチ戦
   }else if(prm->type==COMM_BTL_DEMO_TYPE_MULTI_START){
     for(i=0;i<COMM_BTL_DEMO_TRDATA_MAX;i++){
       for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
-        prm->trainer_data[i].poke_result[j] = COMM_BTL_DEMO_POKE_LIVE;
+        prm->trainer_data[i].party_state[j] = COMM_BTL_DEMO_POKE_LIVE;
       }
     }
   }
