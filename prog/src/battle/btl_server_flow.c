@@ -13652,7 +13652,7 @@ static u8 scproc_HandEx_decrementPP( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM
 //  if( BTL_POSPOKE_IsExist(&wk->pospokeWork, param->pokeID) )
   {
     BTL_POKEPARAM* target = BTL_POKECON_GetPokeParam( wk->pokeCon, param->pokeID );
-    if( !BPP_IsDead(target) )
+    if( (!BPP_IsDead(target)) || (param->fDeadPokeEnable) )
     {
       if( scproc_decrementPP(wk, target, param->wazaIdx, param->volume) )
       {

@@ -144,7 +144,6 @@ u32 BTL_POKESET_GetDamageReal( const BTL_POKESET* rec, const BTL_POKEPARAM* bpp 
       return rec->damage[i];
     }
   }
-  GF_ASSERT(0); // ƒ|ƒPƒ‚ƒ“Œ©‚Â‚©‚ç‚È‚¢
   return 0;
 }
 /**
