@@ -21,6 +21,7 @@
 #define CANCEL_FLAG_MASK    ( 2 )
 #define CANCEL_FLAG_SHIFT   ( 1 )
 
+#define BTLV_INPUT_CANCEL_BUTTON      ( 4 )     //キャンセルボタンを押したときに返す値
 #define BTLV_INPUT_WARUAGAKI_BUTTON   ( 7 )     //わるあがきボタンを押したときに返す値
 
 //戦闘下画面OBJパレット内訳

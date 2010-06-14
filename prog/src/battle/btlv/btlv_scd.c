@@ -875,6 +875,14 @@ static BOOL selectRotationWaza_loop( int* seq, void* wk_adrs )
         BTL_ACTION_FightParamToWazaInfoMode( wk->destActionParam );
       }
     }
+    //一旦、くりだすことの出来ない技を選択したのち戻るボタンを押しても、
+    //繰り出すことが出来ないメッセージが出てしまう不具合の対処
+    //wk->destActionParam->gen.cmdがBTL_ACTION_NULLじゃないとアラートメッセージになるので、
+    //初期化しておく
+    else if( wazaIdx == BTLV_INPUT_CANCEL_BUTTON )
+    { 
+      BTL_ACTION_SetNULL( wk->destActionParam );
+    }
     return TRUE;
   }
   return FALSE;
