@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-09T16:36:40"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-06-14T14:27:38"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,7 +263,7 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="1286" top="97" right="1991" bottom="717" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="244" right="1280" bottom="642" visible="no"/>
 		<band id="0" index="1" style="0000" width="530"/>
@@ -335,9 +335,9 @@
 車両無しのとき</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">ざんねんだけど
-きょうは　でんしゃが　きてないんだ</language>
+きょうは　でんしゃが　きてないんだ▼</language>
 		<language name="JPN_KANJI" width="256">残念だけど
-今日は　電車が　きてないんだ</language>
+今日は　電車が　きてないんだ▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_01_02">
@@ -377,8 +377,8 @@
 		<comment>♂
 「いいえ」を選択</comment>
 		<attribute name="キャラ指定">作業員</attribute>
-		<language name="JPN" width="256">あらら　ざんねんだなあ</language>
-		<language name="JPN_KANJI" width="256">あらら　残念だなあ</language>
+		<language name="JPN" width="256">あらら　ざんねんだなあ▼</language>
+		<language name="JPN_KANJI" width="256">あらら　残念だなあ▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_03_01">
@@ -387,9 +387,9 @@
 車両無しのとき</comment>
 		<attribute name="キャラ指定">作業員</attribute>
 		<language name="JPN" width="256">はっはっは！
-そりゃ　そうだよな</language>
+そりゃ　そうだよな▼</language>
 		<language name="JPN_KANJI" width="256">はっはっは！
-そりゃ　そうだよな</language>
+そりゃ　そうだよな▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_railtalk1_00" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -693,14 +693,14 @@ Wi-Fi</comment>
 ……こんな　かんじで
 ぼくたち　エンジニアは▽
 しんけんに　ゆめを　みています▽
-いつか　げんじつに　なるようにと！</language>
+いつか　げんじつに　なるようにと！▼</language>
 		<language name="JPN_KANJI" width="256">こんなに　ハッキリ　みえるのに！
 ふれられないのが　モーソートレイン！▽
 まさに　オーバーテクノロジーーー！！▼
 ……とまあ　こんな感じで
 ぼくたち　エンジニアは▽
 真剣に　夢を　みています▽
-いつか　現実に　なるようにと！</language>
+いつか　現実に　なるようにと！▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -711,11 +711,11 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">シリンダーブリッジを
 しって　いるかい？▼
 あの　はしを　とおっているのは
-この　シングルトレイン　なんだ</language>
+この　シングルトレイン　なんだ▼</language>
 		<language name="JPN_KANJI" width="256">シリンダーブリッジを
 しって　いるかい？▼
 あの橋を　通っているのは
-この　シングルトレイン　なんだ</language>
+この　シングルトレイン　なんだ▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_02" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -727,12 +727,12 @@ Sシングル</comment>
 きのうだけでなく▽
 かんきょうも　かんがえているんだ▼
 むかしと　くらべると
-ものすごい　しんぽ　なのです</language>
+ものすごい　しんぽ　なのです▼</language>
 		<language name="JPN_KANJI" width="256">最近の　電車は　走行性能が
 高いのは　もちろん▽
 環境についても　考えているのさ▼
 昔と　比べると
-とっても　高性能　なのです</language>
+とっても　高性能　なのです▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_03" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -746,14 +746,14 @@ Sシングル</comment>
 ムダのない　うつくしい　せっけい！▼
 ダブルトレインが　うちだした
 あたらしい　せっけい　しそうは▽
-いまでも　たいせつに　されているよ</language>
+いまでも　たいせつに　されているよ▼</language>
 		<language name="JPN_KANJI" width="256">パーツの　数ってのは
 製造にかかる　お金や▽
 時間に　かかわってくるんだ▼
 無駄のない　美しい設計！▼
 ダブルトレインが　うちだした
 新しい　設計思想は▽
-いまでも　大切に　されているよ</language>
+いまでも　大切に　されているよ▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_04" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -766,13 +766,13 @@ Sダブル</comment>
 カラーリングが　ちがうだけ　なんだよ▼
 バトルサブウェイの　れきしに　のこる
 すぐれた　しゃりょうと　いえます▽
-んー　スンバラシイ！</language>
+んー　スンバラシイ！▼</language>
 		<language name="JPN_KANJI" width="256">スーパーシングルトレインとは
 同型の　車両を　採用しています▽
 カラーリングが　違うだけ　なんですね▼
 バトルサブウェイの　歴史に　残る
 優れた　車両と　いえます▽
-んー　スンバラシイ！</language>
+んー　スンバラシイ！▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_05" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -785,12 +785,12 @@ Sダブル</comment>
 スーパーシングルトレインや
 スーパーマルチトレインなどの▽
 りょうさん　しゃりょうが▽
-かんせい　したのです！</language>
+かんせい　したのです！▼</language>
 		<language name="JPN_KANJI" width="256">この車両の　開発で
 うまれた　技術によって▼
 スーパーシングルトレインや
 スーパーマルチトレインなどの▽
-量産車両が　完成したのです！</language>
+量産車両が　完成したのです！▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_06" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -803,14 +803,14 @@ Sマルチ</comment>
 うんたら　かんたらシステム　とか▽
 ほんなら　でんがなシステム　とか▼
 ……とにかく　さいしんの
-ぎじゅつが　フェスティバル　なんだ！</language>
+ぎじゅつが　フェスティバル　なんだ！▼</language>
 		<language name="JPN_KANJI" width="256">ほかにも　回生ブレーキの　搭載に
 車体傾斜システムの　改良！▽
 地震警報システムに▽
 トルネード監視装置　なんてのもあるね！▼
 ちょっと　ムダな
 機能も　ついちゃったけど……▼
-まあ　試験車両　だから！</language>
+まあ　試験車両　だから！▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_07" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -821,11 +821,11 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">もっと　はやく！
 もっと　とおくへ！▼
 ぼくたち　エンジニアの　スピリットが
-そそぎこまれて　いるんだ！</language>
+そそぎこまれて　いるんだ！▼</language>
 		<language name="JPN_KANJI" width="256">もっと速く！
 もっと遠くへ！▼
 僕たち　エンジニアの　スピリットが
-注ぎこまれて　いるんだ！</language>
+注ぎこまれて　いるんだ！▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_08" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -838,12 +838,12 @@ Wi-Fi</comment>
 ふるい　しゃりょう　だから
 せいびも　たいへん　らしいけど▼
 こどもの　ころから　のっていたからね
-ぼくは　この　でんしゃが　すきなんだ</language>
+ぼくは　この　でんしゃが　すきなんだ▼</language>
 		<language name="JPN_KANJI" width="256">シングルトレインと
 同型の　旧式車両なんだ▼
 整備が　ちょっと大変らしいけど
 子供の　ころから　乗っていたからね▽
-僕は　この車両が　好きなんだ</language>
+僕は　この車両が　好きなんだ▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_09" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -860,7 +860,7 @@ Wi-Fi</comment>
 イッシュから　はなれた
 べつの　ちほうでは▽
 いまでも　げんえき　らしいよ▼
-ああ……　のってみたい！</language>
+ああ……　のってみたい！▼</language>
 		<language name="JPN_KANJI" width="256">そのぶん　こまかな　パーツで
 構成された　車両は▼
 現代の　車両とは　また別の
@@ -870,7 +870,7 @@ Wi-Fi</comment>
 イッシュから　離れた
 別の　地方では▽
 今でも　現役らしいよ▼
-ああ……　乗ってみたい！</language>
+ああ……　乗ってみたい！▼</language>
 	</row>
 
 	<row id="msg_t05_railfan_end_10" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
@@ -886,7 +886,7 @@ Wi-Fi</comment>
 フリーゲージトレインと　いってね
 しゃりんを　スライドさせて▽
 どんなレールの　うえでも　はしれる▽
-すごい　しゃりょう　なのさ！</language>
+すごい　しゃりょう　なのさ！▼</language>
 		<language name="JPN_KANJI" width="256">じつは　レールの　幅は
 線路によって　違うものなんだ▼
 高速で　走行する　路線は
@@ -897,7 +897,7 @@ Wi-Fi</comment>
 どんな　レールの　上も
 車輪を　スライドさせて▽
 スイスイ　走る！　とっても▽
-テクニシャンな　トレインなのさ！</language>
+テクニシャンな　トレインなのさ！▼</language>
 	</row>
 
 	<row id="msg_t05_recept_01">

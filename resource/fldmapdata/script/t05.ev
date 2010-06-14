@@ -122,7 +122,6 @@ EVENT_START	ev_t05_railfan_01
 
 		//残念だけど今日は電車がきてないんだ
 		_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_01_01 )
-		_LAST_KEYWAIT()
 		_MSGWIN_CLOSE()
 
 	ELSE
@@ -170,7 +169,6 @@ EVENT_START	ev_t05_railfan_01
 			//車両なし
 				_BALLOONWIN_TALKOBJ_MSG( msg_t05_railfan_03_01 )
 			ENDIF
-			_LAST_KEYWAIT()
 			_MSGWIN_CLOSE()
 			
 		ENDIF
@@ -293,7 +291,6 @@ DEFINE_LOCAL	lwk_msg_num
 	
 	//終了メッセージ
 	_BALLOONWIN_TALKOBJ_MSG( lwk_msg_num )
-	_LAST_KEYWAIT()
 	_MSGWIN_CLOSE()
 
 }
