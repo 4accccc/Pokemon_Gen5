@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fuchino" host="W00152" date="2010-04-22T16:39:15" source="d0stair_d01.mb"/>
+	<create user="fuchino" host="W00152" date="2010-06-14T13:05:05"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
-	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
+	<generator name="NNS_3DMaterialEditor" version="2.8.0.20050620"/>
 </head>
 
 <body>
 
-<original_create user="fuchino" host="W00152" date="2010-04-22T16:39:15" source="d0stair_d01.mb"/>
+<original_create user="fuchino" host="W00152" date="2010-06-12T19:29:32" source="d0stair_d01.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -22,7 +22,7 @@
 	tex_matrix_mode="maya"
 	compress_node="merge" node_size="1 1"
 	compress_material="on" material_size="1 1"
-	output_texture="used"
+	output_texture="all"
 	force_full_weight="off"
 	use_primitive_strip="on"
 />
@@ -38,69 +38,69 @@
 		path="C:/home/wb_data3d/build_model/indoor/d0stair_d01/tex/d0stair_d01.tga"
 	>
 		<bitmap size="512">
-			9dee 0bbb 0000 0000 0000 0000 9bbb 5eed
-			5555 bbbb bbbb bbbb bbbb bbbb bbbb 5555
-			99de 0c99 0000 0000 0000 0000 999c 5ee9
-			5b55 bb99 bbbb bbbb bbbb bbbb 5bbb 555b
-			99ee a99d 0000 0000 0000 a000 9d99 5ed9
-			9455 9999 9999 9999 9999 9999 9999 5554
-			d9de a9dd 0000 0000 0000 a000 ddd9 5e99
-			8855 8888 8888 8888 8888 8888 8888 5558
-			d9de a9dd 0000 0000 0000 a000 ddd9 5eb9
-			8455 8888 8888 8888 8888 8888 8888 5554
-			d99d 0a9d 0000 0000 0000 0000 9d9a 5db9
+			9dee 0bbb 0000 0000 0000 0000 9bbb eeed
+			eeee dddd dddd dddd dddd dddd dddd eeee
+			99ee 0c99 0000 0000 0000 0000 999c eee9
+			dddd dddd dddd dddd dddd dddd dddd eddd
+			99de a99d 0000 0000 0000 a000 9d99 ded9
+			9999 9999 9999 9999 9999 9999 9999 d999
+			d9de a9dd 0000 0000 0000 a000 ddd9 de99
+			9455 9999 9999 9999 9999 9999 9999 d554
+			d9de a9dd 0000 0000 0000 a000 ddd9 9eb9
+			8855 8888 8888 8888 8888 8888 8888 9558
+			d99d 0a9d 0000 0000 0000 0000 9d9a 9db9
+			8455 8888 8888 8888 8888 8888 8888 9554
+			9b99 0ac9 0000 0000 0000 0000 99ca 5dbb
 			4355 8888 3348 3333 4333 8888 4888 5553
-			99d9 07c9 0000 0000 0000 0000 99c7 5dbb
+			cacb 00ac 0000 0000 0000 0000 bca0 5d9b
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			c7c9 007c 0000 0000 0000 0000 bc70 5d9b
+			aaab 000a 0000 0000 0000 0000 aaa0 5dba
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			777c 0007 0000 0000 0000 0000 7770 5bb7
+			c9cc 00aa 0000 0000 0000 0000 cca0 5dcc
 			b555 b999 bbbb bbbb bbbb 99bb b999 5555
-			c9cc 0077 0000 0000 0000 0000 cc60 5dcc
+			d99c 00ac 0000 0000 0000 0000 9ca0 5bc9
 			4555 9444 9999 9999 9999 9999 4449 555b
-			d99c 007c 0000 0000 0000 0000 9c70 5cc9
+			fd9c 0079 0000 0000 0000 0000 d9ca 5c9d
 			4455 4444 4444 4444 4444 4444 8444 5554
-			fd9c 0079 0000 0000 0000 0000 d9c7 5c9d
+			ff9c 0079 0000 0000 0000 0000 fdc7 5c9f
 			8855 8888 8888 8888 8888 8888 8888 5558
-			ff9c 0069 0000 0000 0000 0000 fdc7 5c9f
+			fd9b 0079 0000 0000 0000 0000 ffc7 5c9f
 			8855 8888 8888 8888 8888 8888 8888 5554
-			fd99 0069 0000 0000 0000 0000 ffc7 5c9f
+			d99b 007c 0000 0000 0000 0000 fdc7 5c9f
 			8455 8888 8888 8888 8888 8888 4888 5553
-			d999 006c 0000 0000 0000 0000 fdc7 5c9f
+			c99b 0007 0000 0000 0000 0000 dc70 5bc9
 			4355 bb44 bbbb bbbb bbbb bbbb 5555 5555
-			c999 0006 0000 0000 0000 0000 dc70 5bc9
+			7cbd 0667 0000 0000 0000 0000 ca76 5dbc
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			6c79 0666 0000 0000 0000 0000 c766 5d7c
+			779d 6777 0000 0000 0000 6600 7cc7 5ddb
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			77cd 6777 0000 0000 0000 6600 7cc7 5dd7
+			9ab9 77c9 0006 0000 0000 7760 999c 5dbc
 			5555 999b 9999 9999 9999 9999 5b99 5555
-			9a79 77c9 0006 0000 0000 7760 999c 5dbc
-			5555 4499 4444 4444 4444 4444 b994 5555
 			f9a9 7c9d 0067 0000 0000 c776 dfd9 5dc9
-			b555 8884 8888 8888 8888 8888 4888 5555
+			5555 4499 4444 4444 4444 4444 b994 5555
 			fd9d a9df 0067 6666 0066 9c76 dffd 5dc9
-			4555 8888 8888 8888 8888 8888 8888 5555
+			b555 8884 8888 8888 8888 8888 4888 5555
 			dd9d cdff 666a 7777 0677 99c6 dfff 5dc9
-			8555 8888 8888 8888 8888 8888 8888 5555
+			4555 8888 8888 8888 8888 8888 8888 5555
 			dd9d cddd 767c aaaa 677a 99c6 9ddd 5dc9
-			3555 3444 bbb3 bbbb bbbb 33bb 3444 5555
+			8555 8888 8888 8888 8888 8888 8888 5555
 			dd9d cddd a67c ddd9 67a9 9976 9999 5dcb
+			3555 3444 bbb3 bbbb bbbb 33bb 3444 5555
+			d9bd c9dd b67c dddd 7a9d 9c76 b999 5dbc
 			5555 bb55 bbbb bbbb bbbb bbbb 555b 5555
-			d9dd c9dd b67c dddd 7a9d 9c76 b999 5dbc
+			9bbd cc99 b67c dddd 79dd c766 5bbb 5dd5
 			5555 bbb5 bbbb bbbb bbbb bbbb 55bb 5555
-			9ddd cc99 b67c dddd 79dd c766 5bbb 5dd5
+			9bde ccc9 b67a dddd 79dd 7767 5555 5ddb
 			9b55 9999 9999 9999 9999 9999 9999 555b
-			9dde ccc9 b67a dddd 79dd 7767 5555 5ddb
-			4955 4444 4444 4444 4444 4444 4444 5559
 			c9de accc 5667 ddd9 79dd 7667 bb55 5edd
+			4955 4444 4444 4444 4444 4444 4444 5559
+			ddde 7ab9 6776 dd95 7c9d 5676 ddbc 5edd
 			8455 8888 8888 8888 8888 8888 8888 5554
-			ddde 7ab9 6776 dd95 7c9d 56c6 ddbc 5edd
+			ddee 7aab 5aa7 5557 7c55 ccbc dddb 5eed
 			8455 8888 8888 8888 8888 8888 8888 5554
-			ddee 7aab 5aa7 5557 7c55 c7bc dddb 5eed
+			deee bbbd aaab bbaa cbbb dbbb dddd 5eee
 			4355 8888 3334 8843 3488 8433 4888 5553
-			deee bbbd aaab bbaa cbbb dbdb dddd 5eee
-			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
-			eeee dddd dddd bbbb ddbb dddd eeed 5eee
+			eeee dddd bddd bbbb ddbb dddd eeed 5eee
 			5555 bbbb bbbb bbbb bbbb bbbb 5bbb 5555
 		</bitmap>
 	</tex_image>
@@ -132,7 +132,7 @@
 		emission="0 0 0"
 		shininess_table_flag="off"
 		tex_image_idx="0" tex_palette_idx="0"
-		tex_tiling="repeat repeat"
+		tex_tiling="clamp flip"
 		tex_scale="1.000000 1.000000"
 		tex_rotate="0.000000"
 		tex_translate="0.000000 0.000000"
@@ -160,19 +160,20 @@
 				<primitive index="0" type="quads" vertex_size="12">
 					<mtx idx="0"/>
 					<tex st="63.562500 0.250000"/>
-					<clr rgb="25 25 25"/>
+					<clr rgb="31 31 31"/>
 					<pos_s xyz="3.000000 6.000000 -3.000000"/>
-					<tex st="32.000000 0.250000"/>
+					<tex st="31.437500 0.250000"/>
 					<pos_xy xy="-3.000000 6.000000"/>
-					<tex st="32.000000 64.000000"/>
+					<tex st="31.437500 64.000000"/>
 					<clr rgb="0 0 0"/>
 					<pos_yz yz="0.000000 3.000000"/>
 					<tex st="63.562500 64.000000"/>
 					<pos_xy xy="3.000000 0.000000"/>
-					<tex st="33.937500 16.625000"/>
-					<clr rgb="19 19 19"/>
-					<pos_xy xy="-3.000000 5.625000"/>
-					<pos_xy xy="3.000000 5.625000"/>
+					<tex st="62.000000 0.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="-3.000000 6.000000"/>
+					<pos_xy xy="3.000000 6.000000"/>
+					<tex st="62.000000 29.000000"/>
 					<clr rgb="0 0 0"/>
 					<pos_xy xy="3.000000 0.000000"/>
 					<pos_xy xy="-3.000000 0.000000"/>
@@ -187,18 +188,17 @@
 					<pos_xy xy="3.000000 6.000000"/>
 				</primitive>
 				<primitive index="1" type="triangles" vertex_size="6">
-					<tex st="33.937500 16.625000"/>
-					<clr rgb="25 25 25"/>
+					<tex st="62.000000 0.000000"/>
 					<pos_xz xz="-3.000000 -3.000000"/>
-					<clr rgb="19 19 19"/>
-					<pos_yz yz="5.625000 3.000000"/>
+					<pos_xz xz="-3.000000 3.000000"/>
+					<tex st="62.000000 29.000000"/>
 					<clr rgb="0 0 0"/>
 					<pos_xy xy="-3.000000 0.000000"/>
 					<pos_xy xy="3.000000 0.000000"/>
-					<clr rgb="19 19 19"/>
-					<pos_xy xy="3.000000 5.625000"/>
-					<clr rgb="25 25 25"/>
-					<pos_yz yz="6.000000 -3.000000"/>
+					<tex st="62.000000 0.000000"/>
+					<clr rgb="31 31 31"/>
+					<pos_xy xy="3.000000 6.000000"/>
+					<pos_xz xz="3.000000 -3.000000"/>
 				</primitive>
 			</primitive_array>
 		</mtx_prim>
@@ -230,6 +230,25 @@
 
 <output_info vertex_size="18" polygon_size="5"
 	triangle_size="2" quad_size="3"/>
+
+<ex_nns_3dme>
+	<ex_model_info scene_name="デフォルトシーン" disp_pos="0.000000 60.000000"/>
+	<ex_tex_image_array size="1">
+		<ex_tex_image index="0" disp_pos="0.000000 300.000000"/>
+	</ex_tex_image_array>
+	<ex_tex_palette_array size="1">
+		<ex_tex_palette index="0" disp_pos="0.000000 360.000000"/>
+	</ex_tex_palette_array>
+	<ex_material_array size="1">
+		<ex_material index="0" disp_pos="0.000000 240.000000"/>
+	</ex_material_array>
+	<ex_polygon_array size="1">
+		<ex_polygon index="0" disp_pos="0.000000 180.000000"/>
+	</ex_polygon_array>
+	<ex_node_array size="1">
+		<ex_node index="0" disp_pos="0.000000 120.000000"/>
+	</ex_node_array>
+</ex_nns_3dme>
 
 </body>
 
