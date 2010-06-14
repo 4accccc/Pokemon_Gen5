@@ -72,6 +72,7 @@ static void _pokemonStatusStart(POKEMON_TRADE_WORK* pWork);
 static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork);
 static void _NEGO_Select6CancelWait3(POKEMON_TRADE_WORK* pWork);
 static void _select6PokeSubMask(POKEMON_TRADE_WORK* pWork);  //下画面マスク処理
+static BOOL POKEMONTRADE_SendPokemon(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp,int commandID);
 
 
 //６体のポケモン選択
@@ -410,20 +411,31 @@ void POKE_GTS_ReleasePokeIconResource(POKEMON_TRADE_WORK* pWork)
 BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxno)
 { //選択ポケモン表示
   GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
- // POKEMON_PASO_PARAM* ppp = IRCPOKEMONTRADE_GetPokeDataAddress(pWork->pBox, pWork->selectBoxno, pWork->selectIndex,pWork);
-//  POKEMON_PARAM* pp = PP_CreateByPPP(ppp,pWork->heapID);
-  POKEMON_PARAM* pp = POKEMONTRADE_CreatePokeData(pWork->pBox, pWork->selectBoxno, pWork->selectIndex, pWork);
+  POKEMON_PARAM* pp;
   int no;
+
+  pp = POKEMONTRADE_CreatePokeData(pWork->pBox, pWork->selectBoxno, pWork->selectIndex, pWork);
 
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     no = _addPokemon(pWork,0,index,boxno, pp);
     if(no != -1){
-      if( FALSE == GFL_NET_SendDataEx(pNet, GFL_NET_SENDID_ALLUSER, _NETCMD_THREE_SELECT1+no,
-                                      POKETOOL_GetWorkSize(),pWork->GTSSelectPP[0][no],
-                                      FALSE, FALSE, TRUE)){
+      if( FALSE == POKEMONTRADE_SendPokemon(pWork, pWork->GTSSelectPP[0][no], _NETCMD_THREE_SELECT1+no)){
+//      if( FALSE == GFL_NET_SendDataEx(pNet, GFL_NET_SENDID_ALLUSER, _NETCMD_THREE_SELECT1+no,
+//                                      POKETOOL_GetWorkSize(),pWork->GTSSelectPP[0][no],
+//                                      FALSE, FALSE, TRUE)){
         POKE_GTS_DeletePokemonDirect(pWork,0,no);  //取り消し
         GFL_HEAP_FreeMemory(pp);
+        OS_TPrintf("送信失敗\n");
         return FALSE;
+      }
+      {
+        int i=0;
+        u8* pChar = (u8*)pWork->GTSSelectPP[0][no];
+        OS_TPrintf("s\n");
+        for(i=0;i<POKETOOL_GetWorkSize();i++){
+          OS_TPrintf("%2x ",pChar[i]);
+        }
+        OS_TPrintf("\n");
       }
     }
   }
@@ -442,11 +454,6 @@ BOOL POKE_GTS_PokemonsetAndSendData(POKEMON_TRADE_WORK* pWork,int index,int boxn
   }
 #endif
   GFL_HEAP_FreeMemory(pp);
-
-//  if(pWork->pAppTask==NULL){
-  //  int msg[]={POKETRADE_STR2_26};
-    //POKETRADE_MESSAGE_AppMenuOpen(pWork,msg,elementof(msg));
-//  }
 
   return TRUE;
 }
@@ -1212,12 +1219,16 @@ static void _menuMyPokemonMenu(POKEMON_TRADE_WORK* pWork)
 
 static void _menuMyPokemonSendG(POKEMON_TRADE_WORK* pWork)
 {
+  if(pWork->pokemonSendDisableFlg == TRUE){
+    return;
+  }
   if(POKEMONTRADEPROC_IsNetworkMode(pWork)){
     if(!GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(),_NETCMD_SELECT_POKEMON,
                          POKETOOL_GetWorkSize(), IRC_POKEMONTRADE_GetRecvPP(pWork,0))){
       return;
     }
   }
+  pWork->pokemonSendDisableFlg = TRUE;
   _CHANGE_STATE(pWork,_menuMyPokemonMenu);
 }
 
@@ -2405,4 +2416,35 @@ void POKEMONTRADE_NEGO_SlideMain(POKEMON_TRADE_WORK* pWork)
   }
 }
 
+
+//------------------------------------------------------------------------------
+/**
+ * @brief   ポケモンデータを送る
+ * @param   POKEMON_PARAM* pp
+ * @retval  送信可能でTRUE
+ */
+//------------------------------------------------------------------------------
+
+static BOOL POKEMONTRADE_SendPokemon(POKEMON_TRADE_WORK* pWork,POKEMON_PARAM* pp,int commandID)
+{
+  BOOL ret;
+  GFL_NETHANDLE* pNet = GFL_NET_HANDLE_GetCurrentHandle();
+  int no;
+
+  if(pWork->pokemonSendDisableFlg){
+    return FALSE;
+  }
+
+  GFL_STD_MemCopy(pp,pWork->TempBuffer[_TEMPBUFF_SEND], POKETOOL_GetWorkSize());
+  ret = GFL_NET_SendDataEx(pNet,
+                           GFL_NET_SENDID_ALLUSER, commandID,
+                           POKETOOL_GetWorkSize(), pWork->TempBuffer[_TEMPBUFF_SEND],
+                           FALSE, FALSE, TRUE);
+  if(ret == FALSE){
+    return FALSE;
+  }
+  pWork->pokemonSendDisableFlg = TRUE;
+  return TRUE;
+  
+}
 

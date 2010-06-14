@@ -517,6 +517,16 @@ typedef struct
 } POKE_EASY_INFO;
 
 
+
+typedef enum{
+  _TEMPBUFF_ID0,
+  _TEMPBUFF_ID1,
+  _TEMPBUFF_SEND,
+  _TEMPBUFF_MAX,
+} _TEMPBUFF_ENUM;
+
+
+
 struct _POKEMON_TRADE_WORK{
   NHTTP_RAP_WORK* pNHTTP;
   PENMOVE_WORK aPanWork;
@@ -691,7 +701,7 @@ struct _POKEMON_TRADE_WORK{
 
   BOOL pokemonThreeSet;  //相手側のポケモンが３体セットされた
   
-  POKEMON_PARAM* TempBuffer[GTS_PLAYER_WORK_NUM]; //ポケモン受信用バッファ
+  POKEMON_PARAM* TempBuffer[_TEMPBUFF_MAX]; //ポケモン受信用バッファ+送信用バッファ
 
   BOOL bParent;
   BOOL bTouchReset;
@@ -755,7 +765,8 @@ struct _POKEMON_TRADE_WORK{
   u8 pushSound;
   u8 vtask;   //20100603 add saito  dummyがあったので差し替えました。
   u8 triCancel;  //キャンセルを GTSNEGO_CANCEL_DISCONNECT_NUM やったら強制切断 GTSNEGO
-  u8 dummy2;
+  u8 pokemonSendDisableFlg:4;  //ポケモンを相手に送信して良いかどうか
+  u8 pokemonEnableSendFlg:4;  //ポケモンを受け取ったという事を相手に送信する
   POKE_EASY_INFO pokeInfo[6+BOX_MAX_TRAY*BOX_MAX_COLUMN*BOX_MAX_RAW];
 } ;
 
@@ -983,6 +994,7 @@ typedef enum {
   _NETCMD_THREE_SELECT2_BOX,
   _NETCMD_THREE_SELECT3_BOX,
   _NETCMD_SELECT_POKEMON_BOX,
+  _NETCMD_SELECT_RETURN,
 } _POKEMON_TRADE_SENDCMD;
 
 

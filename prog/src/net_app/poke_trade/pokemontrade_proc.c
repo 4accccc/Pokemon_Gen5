@@ -125,6 +125,7 @@ static void _recvThreePokemon1Box(const int netID, const int size, const void* p
 static void _recvThreePokemon2Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvThreePokemon3Box(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 static void _recvSelectPokemonBox(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
+static void _recvPokemonDataReturn(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle);
 
 static void _createEasyPokeInfo(POKEMON_TRADE_WORK *pWork);
 
@@ -153,6 +154,7 @@ static const NetRecvFuncTable _PacketTbl[] = {
   {_recvThreePokemon2Box,   NULL},    ///_NETCMD_THREE_SELECT2_BOX ポケモン３匹みせあい BOXか手持ちか
   {_recvThreePokemon3Box,   NULL},    ///_NETCMD_THREE_SELECT3_BOX ポケモン３匹みせあい BOXか手持ちか
   {_recvSelectPokemonBox,   NULL},    ///_NETCMD_SELECT_POKEMON_BOX 2 ポケモン見せ合う BOXか手持ちか
+  {_recvPokemonDataReturn,   NULL},   ///_NETCMD_SELECT_RETURN  ポケモンデータを受け取った事を返す
 
 };
 
@@ -812,14 +814,25 @@ static void _recvThreePokemon(const int netID, const int size, const void* pData
   }
   GF_ASSERT(netID==0 || netID==1);
 
+  {
+    int i=0;
+    u8* pChar = (u8*)pWork->TempBuffer[netID];
+    for(i=0;i<POKETOOL_GetWorkSize();i++){
+      OS_TPrintf("%2x ",pChar[i]);
+    }
+    OS_TPrintf("\n");
+  }
+
   if(PP_Get( pWork->TempBuffer[netID], ID_PARA_poke_exist, NULL  )){
     POKE_GTS_DirectAddPokemon(pWork, num, pWork->TempBuffer[netID]);
     POKETRADE_2D_GTSPokemonIconSet(pWork, 1, num, pWork->TempBuffer[netID],TRUE, FALSE);
     POKEMONTRADE_NEGO_SlideInit(pWork, 1, pWork->TempBuffer[netID]);
+    
   }
   else{
     GF_ASSERT(0);
   }
+  pWork->pokemonEnableSendFlg=TRUE;//ポケモンを受け取ったという事を相手に送信する
 }
 
 
@@ -893,6 +906,20 @@ static void _recvSelectPokemonBox(const int netID, const int size, const void* p
   pWork->bRecvPokeBox[netID] = pRecvData[0];
 }
 
+//はじいている＋相手に見せる ポケモンを受け取った事を返す//_NETCMD_SELECT_RETURN
+static void _recvPokemonDataReturn(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
+{
+  POKEMON_TRADE_WORK *pWork = pWk;
+  const u8* pRecvData = pData;
+
+  if(pNetHandle != GFL_NET_HANDLE_GetCurrentHandle()){
+    return; //自分のハンドルと一致しない場合、親としてのデータ受信なので無視する
+  }
+  if(netID == GFL_NET_GetNetID(GFL_NET_HANDLE_GetCurrentHandle())){
+    return;//自分のは今は受け取らない
+  }
+  pWork->pokemonSendDisableFlg = FALSE;  //このフラグがTRUEの時は送信不可
+}
 
 //_NETCMD_POKEMONCOLOR
 static void _recvPokemonColor(const int netID, const int size, const void* pData, void* pWk, GFL_NETHANDLE* pNetHandle)
@@ -3572,7 +3599,7 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
         pWork->workBoxno = -1;
         pWork->workPokeIndex = -1;
  //       pWork->selectIndex = -1;
-  //      pWork->selectBoxno = -1;
+ //       pWork->selectBoxno = -1;
         _CatchPokemonRelease(pWork);
         _CHANGE_STATE(pWork,_notWazaChangePoke);
         return;
@@ -3818,8 +3845,11 @@ static void _VBlank( GFL_TCB *tcb, void *work )
 
 static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL bDebug)
 {
-  pWork->TempBuffer[0] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
-  pWork->TempBuffer[1] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
+  int i;
+  
+  for(i=0;i<elementof(pWork->TempBuffer);i++){
+    pWork->TempBuffer[i] = GFL_HEAP_AllocClearMemory( HEAPID_IRCBATTLE, POKETOOL_GetWorkSize() );
+  }
 
   if(pGameData){
     pWork->pGameData=pGameData;
@@ -3877,8 +3907,11 @@ static void _savedataHeapInit(POKEMON_TRADE_WORK* pWork,GAMEDATA* pGameData,BOOL
 
 static void _savedataHeapEnd(POKEMON_TRADE_WORK* pWork,BOOL bParentWork)
 {
-  GFL_HEAP_FreeMemory(pWork->TempBuffer[0]);
-  GFL_HEAP_FreeMemory(pWork->TempBuffer[1]);
+  int i;
+  
+  for(i=0;i<elementof(pWork->TempBuffer);i++){
+    GFL_HEAP_FreeMemory(pWork->TempBuffer[i]);
+  }
 
   if(bParentWork){
   }
@@ -4415,6 +4448,7 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
     if(!pWork->statusModeOn){
       POKE_MAIN_Pokemonset(pWork, 1, pWork->recvPoke[pWork->pokemonsetCall-1] );
       pWork->pokemonsetCall=0;
+      pWork->pokemonEnableSendFlg = TRUE;//ポケモンを受け取ったという事を相手に送信する
     }
     //読み込む事ができない場合は書かない
   }
@@ -4426,6 +4460,12 @@ static GFL_PROC_RESULT PokemonTradeProcMain( GFL_PROC * proc, int * seq, void * 
   }
   if(pWork->pAppWin){
     APP_TASKMENU_WIN_Update(pWork->pAppWin);
+  }
+
+  if(pWork->pokemonEnableSendFlg){
+    if(GFL_NET_SendData(GFL_NET_HANDLE_GetCurrentHandle(), _NETCMD_SELECT_RETURN, 0, NULL)){
+      pWork->pokemonEnableSendFlg = FALSE;
+    }
   }
 
   if(pWork->pMsgTcblSys){
