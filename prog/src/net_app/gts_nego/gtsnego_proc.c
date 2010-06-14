@@ -1948,6 +1948,8 @@ static void _friendSelectCancel( GTSNEGO_WORK *pWork )
   pWork->timer--;
   if(pWork->timer <= 0){
     GTSNEGO_MESSAGE_InfoMessageDisp(pWork->pMessageWork,GTSNEGO_037);
+    //ƒ^ƒbƒ`ƒo[‚n‚a‚i‚Ì•\Ž¦  20100614 add Saito
+    TOUCHBAR_SetVisibleAll( GTSNEGO_DISP_GetTouchWork(pWork->pDispWork), TRUE );
     _CHANGE_STATE(pWork,_modeSelectMenuWait);
   }
 }
