@@ -2323,6 +2323,8 @@ static GFL_PROC_RESULT GameSyncMenuProcInit( GFL_PROC * proc, int * seq, void * 
 
   GFL_HEAP_CreateHeap( GFL_HEAPID_APP, HEAPID_IRCBATTLE, 0x38000 );
 
+  G2_BlendNone();
+  G2S_BlendNone();
   
   pWork = GFL_PROC_AllocWork( proc, sizeof( GTSNEGO_WORK ), HEAPID_IRCBATTLE );
   GFL_STD_MemClear(pWork, sizeof(GTSNEGO_WORK));
