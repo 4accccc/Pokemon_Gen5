@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-06-14T19:30:28"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-06-14T23:53:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-953" top="107" right="-248" bottom="735" maximized="no" rayout="Vertical2">
+	<dialog left="-1032" top="116" right="-327" bottom="744" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -763,8 +763,8 @@
 	</row>
 
 	<row id="D_WITIMATCH_MSG_03">
-		<language name="JPN" width="256">X…じゅしん　Y…そうしん
-B…しゅうりょう</language>
+		<language name="JPN" width="256">X…受信　Y…送信　タッチ…入力
+B…終了　L・R…ページ切り替え</language>
 	</row>
 
 	<row id="D_WITIMATCH_MSG_04">
