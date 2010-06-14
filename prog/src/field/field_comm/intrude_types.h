@@ -275,14 +275,14 @@ typedef struct _INTRUDE_COMM_SYS{
   INTRUDE_PROFILE huge_send_profile;       ///<送信バッファ：プロフィール
   MISSION_DATA huge_send_mission_data;     ///<送信バッファ：ミッションデータ
   MISSION_RESULT huge_send_mission_result; ///<送信バッファ：ミッション結果
-  
+  FIELD_WFBC_CORE huge_send_wfbc_core;     ///<送信バッファ：WFBC
+
   //巨大データ受信バッファ(一つ一つはそれほど大きくはないが、これらが同時に受信されると
   //GFLIBの受信バッファがオーバーしてしまうので)
   MISSION_CHOICE_LIST huge_recv_choicelist;  ///<巨大データ受信バッファ：ミッション選択リスト
   INTRUDE_PROFILE huge_recv_profile[FIELD_COMM_MEMBER_MAX];   ///<巨大データ受信バッファ：プロフィール
   MISSION_DATA huge_recv_mission_data[FIELD_COMM_MEMBER_MAX]; ///<巨大データ受信バッファ：ミッションデータ
   MISSION_RESULT huge_recv_mission_result; ///<巨大データ受信バッファ：ミッション結果
-  
   
   INTRUDE_SYMBOL_WORK intrude_symbol;        ///<侵入先のシンボルワーク
   INTRUDE_SYMBOL_WORK intrude_send_symbol;   ///<送信バッファ：シンボルワーク

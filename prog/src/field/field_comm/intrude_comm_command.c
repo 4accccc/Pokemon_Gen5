@@ -2222,9 +2222,15 @@ BOOL IntrudeSend_Wfbc(INTRUDE_COMM_SYS_PTR intcomm, u32 send_netid_bit, const FI
     return FALSE;
   }
 
+  if(GFL_NET_IsInSendCommandQueue(GFL_NET_HANDLE_GetCurrentHandle(), INTRUDE_CMD_WFBC) == TRUE){
+    return FALSE;
+  }
+
+  GFL_STD_MemCopy(wfbc_core, &intcomm->huge_send_wfbc_core, sizeof(FIELD_WFBC_CORE));
+
   ret = GFL_NET_SendDataExBit(GFL_NET_HANDLE_GetCurrentHandle(), 
     send_netid_bit, INTRUDE_CMD_WFBC, sizeof(FIELD_WFBC_CORE), wfbc_core,
-    FALSE, FALSE, FALSE);
+    FALSE, FALSE, TRUE);
   if(ret == TRUE){
     OS_TPrintf("SEND：WFBCパラメータ send_netid_bit = %d\n", send_netid_bit);
   }
