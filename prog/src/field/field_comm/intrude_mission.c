@@ -1587,5 +1587,21 @@ void DEBUG_MISSION_TypeNoSet(OCCUPY_INFO *occupy, MISSION_TYPE mission_type, int
 {
   occupy->mlst.mission_no[mission_type] = no;
 }
+
+//==================================================================
+/**
+ * デバッグ用：ミッションタイプを指定してミッション番号を取得
+ *
+ * @param   occupy		      占拠情報へのポインタ
+ * @param   mission_type		MISSION_TYPE_xxx
+ * 
+ * @retval  ミッション番号
+ */
+//==================================================================
+int DEBUG_MISSION_TypeNoGet(const OCCUPY_INFO *occupy, MISSION_TYPE mission_type)
+{
+  return occupy->mlst.mission_no[mission_type];
+}
+
 #endif  //PM_DEBUG
 

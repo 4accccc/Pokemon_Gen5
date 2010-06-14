@@ -70,4 +70,5 @@ extern BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy, u8 *white_num, u8 
 #ifdef PM_DEBUG
 extern int DEBUG_MISSION_TypeSearch(MISSION_TYPE mission_type, int *no);
 extern void DEBUG_MISSION_TypeNoSet(OCCUPY_INFO *occupy, MISSION_TYPE mission_type, int no);
+extern int DEBUG_MISSION_TypeNoGet(const OCCUPY_INFO *occupy, MISSION_TYPE mission_type);
 #endif  //PM_DEBUG
