@@ -3,14 +3,14 @@
 <imd version="1.6.0">
 
 <head>
-	<create user="fujiwara_maiko" host="W00194" date="2010-06-07T17:55:31" source="map23_09.mb"/>
+	<create user="fujiwara_maiko" host="W00194" date="2010-06-14T14:06:00" source="map23_09.mb"/>
 	<title>Model Data for NINTENDO NITRO-System</title>
 	<generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 </head>
 
 <body>
 
-<original_create user="fujiwara_maiko" host="W00194" date="2010-06-07T17:55:31" source="map23_09.mb"/>
+<original_create user="fujiwara_maiko" host="W00194" date="2010-06-14T14:06:00" source="map23_09.mb"/>
 <original_generator name="Maya 6.5 NNS_Export" version="1.6.0.20060417"/>
 
 <model_info
@@ -27,7 +27,7 @@
 	use_primitive_strip="on"
 />
 
-<box_test pos_scale="7" xyz="-2.000000 -0.812500 -2.500000" whd="4.187500 1.062500 4.500000"/>
+<box_test pos_scale="7" xyz="-2.000000 -0.812500 -2.000000" whd="4.093750 1.062500 4.000000"/>
 
 <tex_image_array size="14">
 	<tex_image index="0" name="gake01a"
@@ -3171,9 +3171,9 @@
 	<polygon index="14" name="polygon14"
 		vertex_size="28" polygon_size="12"
 		triangle_size="4" quad_size="8"
-		volume_min="1.500000 0.000000 -5.000000"
-		volume_max="4.375000 0.250000 -0.500000"
-		volume_r="6.643799"
+		volume_min="1.500000 0.000000 -4.000000"
+		volume_max="4.187500 0.250000 -0.500000"
+		volume_r="5.662354"
 		mtx_prim_size="1"
 		nrm_flag="on" clr_flag="off" tex_flag="on"
 	>
@@ -3238,9 +3238,9 @@
 				</primitive>
 				<primitive index="3" type="quads" vertex_size="4">
 					<tex st="256.000000 32.000000"/>
-					<pos_s xyz="4.375000 0.000000 -0.500000"/>
+					<pos_s xyz="4.187500 0.000000 -0.500000"/>
 					<tex st="256.000000 -192.000000"/>
-					<pos_xz xz="4.375000 -5.000000"/>
+					<pos_xz xz="4.187500 -3.750000"/>
 					<tex st="208.000000 -96.000000"/>
 					<pos_xy xy="3.187500 0.000000"/>
 					<tex st="208.000000 32.000000"/>
@@ -3425,9 +3425,9 @@
 		display_size="16"
 		vertex_size="860" polygon_size="259"
 		triangle_size="60" quad_size="199"
-		volume_min="-4.000000 -1.625000 -5.000000"
-		volume_max="4.375000 0.500000 4.000000"
-		volume_r="6.643799"
+		volume_min="-4.000000 -1.625000 -4.000000"
+		volume_max="4.187500 0.500000 4.000000"
+		volume_r="5.885742"
 	>
 		<display index="0" material="0" polygon="5" priority="0"/>
 		<display index="1" material="1" polygon="8" priority="0"/>
