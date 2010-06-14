@@ -1520,8 +1520,8 @@ static BOOL _UniSub_ChatPlate_ChangeColor(UNION_SUBDISP_PTR unisub, int plate_no
   u16 change_palno, now_palno;
   
   scrn_buf = GFL_BG_GetScreenBufferAdrs(UNION_FRAME_S_PLATE);
-  scrn_buf += ((UNION_PLATE_START_X + UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) 
-    + (UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) * plate_no) / 2;
+  scrn_buf += ((UNION_PLATE_START_X + UNION_PLATE_SIZE_X * UNION_PLATE_START_Y) 
+    + (UNION_PLATE_SIZE_X * UNION_PLATE_SIZE_Y) * plate_no);
   now_palno = (*scrn_buf) >> 12;
   switch(now_palno){
   case UNION_SUBBG_PAL_MALE:
