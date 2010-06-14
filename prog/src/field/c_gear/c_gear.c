@@ -3849,6 +3849,8 @@ static void _typeAnimation(C_GEAR_WORK* pWork)
       pos.y = y+6+6+3;
       GFL_CLACT_WK_SetPos(pWork->cellType[i], &pos, CGEAR_REND_SUB);
 
+      //BTS:5510対処  マイナスにならないように対処。
+      x+=32;
       // X位置をプライオリティに。
       GFL_CLACT_WK_SetSoftPri( pWork->cellType[i], x/8 );
 
