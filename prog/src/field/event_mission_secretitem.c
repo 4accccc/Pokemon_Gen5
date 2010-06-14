@@ -628,8 +628,13 @@ static GMEVENT_RESULT Intrude_SecretItemArrivalEvent( GMEVENT *event, int *seq, 
     (*seq)++;
     break;
   case SEQ_ITEMDATA_SEND:
-    if(IntrudeSend_SecretItem(work->target_netid, &work->itemdata) == TRUE){
-      OS_TPrintf("隠しアイテム送信成功 target_netid=%d\n", work->target_netid);
+    if(work->success == TRUE){
+      if(IntrudeSend_SecretItem(work->target_netid, &work->itemdata) == TRUE){
+        OS_TPrintf("隠しアイテム送信成功 target_netid=%d\n", work->target_netid);
+        (*seq)++;
+      }
+    }
+    else{
       (*seq)++;
     }
     break;
