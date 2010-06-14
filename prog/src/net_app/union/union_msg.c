@@ -1218,7 +1218,7 @@ static void _SetPmsAisatsu(GAMEDATA * gamedata, u8 region)
 			PMSW_AISATSU_KO,  // äÿçëåÍ
 		};
 
-		if( (lang < NELEMS(AisatsuFlagTable)) && (AisatsuFlagTable[lang] >= 0) )
+		if(lang < NELEMS(AisatsuFlagTable))
 		{
 			PMSW_SetAisatsuFlag( pmssave,  AisatsuFlagTable[lang] );
 		}
@@ -1226,6 +1226,9 @@ static void _SetPmsAisatsu(GAMEDATA * gamedata, u8 region)
       PMSW_SetAisatsuFlag( pmssave,  PMSW_AISATSU_NO );
     }
 	}
+	else{
+    PMSW_SetAisatsuFlag( pmssave,  PMSW_AISATSU_NO );
+  }
 }
 
 //--------------------------------------------------------------
