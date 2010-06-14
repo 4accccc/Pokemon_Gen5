@@ -169,6 +169,7 @@ static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems );
 static void handler_MikuruNomi_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MikuruNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MikuruNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_JapoNomi( u32* numElems );
 static void handler_JapoNomi_Damage( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_RenbuNomi( u32* numElems );
@@ -2246,6 +2247,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
 //    { BTL_EVENT_TURNCHECK_END,         handler_MikuruNomi_TurnCheck  }, // ターンチェック
     { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_TurnCheck  },
     { BTL_EVENT_USE_ITEM,              handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
+    { BTL_EVENT_USE_ITEM_TMP,          handler_MikuruNomi_UseTmp     }, // アイテム使用ハンドラ
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2283,6 +2285,13 @@ static void handler_MikuruNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     TAYA_Printf("ミクルターン=%d\n", turns);
   }
 }
+static void handler_MikuruNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( work[WORKIDX_TMP_FLAG] ){
+    handler_MikuruNomi_Use( myHandle, flowWk, pokeID, work );
+  }
+}
+
 
 //------------------------------------------------------------------------------
 /**
@@ -2387,7 +2396,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_SiroiHerb( u32* numElems )
     { BTL_EVENT_CHECK_ITEM_REACTION, handler_SiroiHerb_TurnCheck },
     { BTL_EVENT_RANKEFF_FIXED,       handler_SiroiHerb_TurnCheck },
     { BTL_EVENT_USE_ITEM,            handler_SiroiHerb_Use   },
-    { BTL_EVENT_USE_ITEM_TMP,        handler_SiroiHerb_Use   },
+    { BTL_EVENT_USE_ITEM_TMP,        handler_SiroiHerb_UseTmp},
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -2446,7 +2455,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MentalHerb( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_CHECK_ITEM_REACTION,  handler_MentalHerb_React  }, // 状態異常チェックハンドラ
     { BTL_EVENT_USE_ITEM,             handler_MentalHerb_Use    },
-    { BTL_EVENT_USE_ITEM_TMP,         handler_MentalHerb_Use    },
+    { BTL_EVENT_USE_ITEM_TMP,         handler_MentalHerb_UseTmp },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3032,8 +3041,7 @@ static void handler_KokoroNoSizuku_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW
     if( (monsNo == MONSNO_RATHIASU) || (monsNo == MONSNO_RATHIOSU) )
     {
       // とくぼう上昇
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_SPECIAL )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
       }
@@ -3164,8 +3172,9 @@ static void handler_Kodawari_Common_WazaExe( BTL_EVENT_FACTOR* myHandle, BTL_SVF
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID )
   {
     WazaID  waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-    {
 
+    if( waza != WAZANO_WARUAGAKI )
+    {
       BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
         param->pokeID = pokeID;
         param->sickID = KODAWARI_SICKID;
