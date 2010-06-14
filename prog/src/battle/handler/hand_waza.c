@@ -2211,7 +2211,6 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
     }
     #endif
 
-    if( rnd < 30 )
     {
       enum {
         METHOD_SICK,    ///< ó‘ÔˆÙí
@@ -2279,38 +2278,41 @@ static void handler_HimituNoTikara( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 
       BTL_SVFRET_SetWazaEffectIndex( flowWk, wazaEff );
 
-      switch( method ){
-      case METHOD_SICK:
-        {
-          BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-            param->pokeID = targetPokeID;
-            param->sickID = method_arg;
-            BTL_CALC_MakeDefaultWazaSickCont( param->sickID, attacker, &param->sickCont );
-          BTL_SVF_HANDEX_Pop( flowWk, param );
-        }
-        break;
+      if( rnd < 30 )
+      {
+        switch( method ){
+        case METHOD_SICK:
+          {
+            BTL_HANDEX_PARAM_ADD_SICK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+              param->pokeID = targetPokeID;
+              param->sickID = method_arg;
+              BTL_CALC_MakeDefaultWazaSickCont( param->sickID, attacker, &param->sickCont );
+            BTL_SVF_HANDEX_Pop( flowWk, param );
+          }
+          break;
 
-      case METHOD_RANK:
-        {
-          BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
-            param->poke_cnt = 1;
-            param->pokeID[0] = targetPokeID;
-            param->rankType = method_arg;
-            param->rankVolume = -1;
-          BTL_SVF_HANDEX_Pop( flowWk, param );
-        }
-        break;
+        case METHOD_RANK:
+          {
+            BTL_HANDEX_PARAM_RANK_EFFECT* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_RANK_EFFECT, pokeID );
+              param->poke_cnt = 1;
+              param->pokeID[0] = targetPokeID;
+              param->rankType = method_arg;
+              param->rankVolume = -1;
+            BTL_SVF_HANDEX_Pop( flowWk, param );
+          }
+          break;
 
-      case METHOD_SHRINK:
-        {
-          BTL_HANDEX_PARAM_ADD_SHRINK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SHRINK, pokeID );
-            param->pokeID = targetPokeID;
-            param->per = 100;
-          BTL_SVF_HANDEX_Pop( flowWk, param );
+        case METHOD_SHRINK:
+          {
+            BTL_HANDEX_PARAM_ADD_SHRINK* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SHRINK, pokeID );
+              param->pokeID = targetPokeID;
+              param->per = 100;
+            BTL_SVF_HANDEX_Pop( flowWk, param );
+          }
+          break;
         }
-        break;
-      }
-    }/* if( rand < 30) */
+      }/* if( rnd < 30) */
+    }
   }
 }
 //----------------------------------------------------------------------------------
