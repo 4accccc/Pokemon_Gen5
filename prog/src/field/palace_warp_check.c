@@ -142,6 +142,9 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
       if ( (pos->gx == x)&&(pos->gz == z) )
       {
         NOZOMU_Printf( "Dont warp\n");
+        //”jŠü
+        FIELD_WFBC_PEOPLE_POS_Delete( ppos );
+        FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
         return FALSE;
       }
     }
@@ -152,12 +155,14 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
       if ( (pos->gx == x)&&(pos->gz == z) )
       {
         NOZOMU_Printf( "Dont warp\n");
+        //”jŠü
+        FIELD_WFBC_PEOPLE_POS_Delete( ppos );
+        FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
         return FALSE;
       }
     }
     //”jŠü
     FIELD_WFBC_PEOPLE_POS_Delete( ppos );
-
     FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
   }
 
