@@ -195,7 +195,7 @@ GMEVENT *TRIAL_HOUSE_CreateBtlEvt( GAMESYS_WORK * gsys, TRIAL_HOUSE_WORK_PTR ptr
 //--------------------------------------------------------------
 void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm )
 {
-  ptr->PointWork.TurnNum += prm->TurnNum;              //かかったターン数
+  ptr->PointWork.TurnNum += (prm->TurnNum+1);          //かかったターン数（+1する）
   ptr->PointWork.PokeChgNum += prm->PokeChgNum;        //交代回数
   ptr->PointWork.VoidAtcNum += prm->VoidAtcNum;        //効果がない技を出した回数
   ptr->PointWork.WeakAtcNum += prm->WeakAtcNum;        //ばつぐんの技を出した回数
@@ -221,17 +221,16 @@ void TRIAL_HOUSE_AddBtlPoint( TRIAL_HOUSE_WORK_PTR ptr, BATTLE_SETUP_PARAM *prm 
     hp_max = 0;
     for (i=0;i<poke_num;i++)
     {
-      int pokehp, pokehp_max;
+      int pokehp_max;
       POKEMON_PARAM *pp;
       pp = PokeParty_GetMemberPointer(party, i); 
-      //残りＨＰ取得
-      pokehp = PP_Get( pp, ID_PARA_hp, NULL);
       //最大ＨＰ取得
       pokehp_max = PP_Get( pp, ID_PARA_hpmax, NULL);
-      //足しこみ
-      hp += pokehp;
+      
+      //足しこみ;
       hp_max += pokehp_max;
     }
+    hp = prm->HPSum;      //生き残りポケモンのHP総和
     per = (hp * 100) / hp_max; //残りＨＰパーセント
     ptr->PointWork.RestHpPer += per;      //５戦あるので足しこんでいくと最大で500％になる
     NOZOMU_Printf( "per = %d, total_per = %d\n",per, ptr->PointWork.RestHpPer );
