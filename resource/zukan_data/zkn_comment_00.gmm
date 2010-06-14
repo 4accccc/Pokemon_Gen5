@@ -2612,11 +2612,11 @@
 
 	<row id="ZKN_COMMENT_00_252">
 		<language name="JPN">あしの　うらには　ちいさな　トゲが
-たくさん　ついているので　カベや
+たくさん　ついているので　かべや
 てんじょうを　あるくことが　できる。</language>
 		<language name="JPN_KANJI">足の　裏には　ちいさな　トゲが
 たくさん　ついているので
-カベや　天井を　歩くことが　できる。</language>
+壁や　天井を　歩くことが　できる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_253">
@@ -3539,10 +3539,10 @@
 
 	<row id="ZKN_COMMENT_00_355">
 		<language name="JPN">こどもの　なきごえが　だいすきで
-ぶあつい　カベも　とおりぬけて
+ぶあつい　かべも　とおりぬけて
 わるいこを　おどろかせ　なかせる。</language>
 		<language name="JPN_KANJI">子供の　泣き声が　大好きで
-分厚い　カベも　通り抜けて
+分厚い　壁も　通り抜けて
 悪い子を　驚かせ　泣かせる。</language>
 	</row>
 
@@ -3991,7 +3991,7 @@
 		<language name="JPN">かべのむこうも　みえる　ちからで
 にげた　えものを　おいつめるほかにも
 まいごの　こどもを　さがしたりする。</language>
-		<language name="JPN_KANJI">カベの向こうも　見える　力で
+		<language name="JPN_KANJI">壁の向こうも　見える　力で
 逃げた　獲物を　追いつめるほかにも
 迷子の　子供を　捜したりする。</language>
 	</row>
