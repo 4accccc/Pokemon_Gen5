@@ -19,9 +19,20 @@ end
 def MakeSearchCodeList(list_txt, code_ary)
   list_file = open(list_txt,"r")
   while line = list_file.gets
-    str = line.chomp("\n").chomp("\r")
+    base_str = line.chomp("\n").chomp("\r")
+    rc = base_str.include?("\(")
+    if rc == true then
+      m = /\(/.match(base_str)
+      str = m.pre_match
+    else
+      str = base_str
+    end
     code_ary << str
   end
+
+#  code_ary.each{|i|
+#    p i
+#  }
 end
 
 ev_file = open(ARGV[0],"r")
