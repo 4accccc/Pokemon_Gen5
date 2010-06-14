@@ -2098,11 +2098,11 @@
 	</row>
 
 	<row id="ITEMINFO_219">
-		<language name="JPN" width="256">もたせた　ポケモンが　メロメロの
-じょうたいに　なったときに
+		<language name="JPN" width="256">もたせた　ポケモンが　じゆうに
+わざを　だせなくなったときに
 いちどだけ　かいふくする。</language>
-		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　メロメロの
-状態に　なったときに
+		<language name="JPN_KANJI" width="256">持たせた　ポケモンが　自由に
+技を　だせなくなったときに
 １度だけ　回復する。</language>
 	</row>
 
