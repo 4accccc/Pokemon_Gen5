@@ -1554,7 +1554,7 @@ static BOOL WH_StateInStartScan(void)
 	_pWmInfo->sScanExParam.scanType = WM_SCANTYPE_PASSIVE;
 	_pWmInfo->sScanExParam.ssidLength = 0;
   if(_pWmInfo->scanFixNo==0){
-    MI_CpuFill8(_pWmInfo->sScanExParam.ssid, 0xFF, sizeof(_pWmInfo->sScanExParam.ssid));
+    MI_CpuFill8(_pWmInfo->sScanExParam.bssid, 0xFF, sizeof(_pWmInfo->sScanExParam.bssid));
   }
 
 	result = WM_StartScanEx(WH_StateOutStartScan, &_pWmInfo->sScanExParam);
@@ -1578,12 +1578,13 @@ static BOOL WH_StateInStartScan(void)
 void WIH_FixScanMode(int channel, void* pMac )
 {
   _pWmInfo->sChannelIndex = channel;
-  GFL_STD_MemCopy( pMac, _pWmInfo->sScanExParam.ssid, sizeof(_pWmInfo->sScanExParam.ssid));
+  GFL_STD_MemCopy( pMac, _pWmInfo->sScanExParam.bssid, sizeof(_pWmInfo->sScanExParam.bssid));
   WH_TRACE("channel fix %d mac %x%x%x%x%x%x\n",channel,
-             _pWmInfo->sScanExParam.ssid[0],_pWmInfo->sScanExParam.ssid[1],
-             _pWmInfo->sScanExParam.ssid[2],_pWmInfo->sScanExParam.ssid[3],
-             _pWmInfo->sScanExParam.ssid[4],_pWmInfo->sScanExParam.ssid[5]
+             _pWmInfo->sScanExParam.bssid[0],_pWmInfo->sScanExParam.bssid[1],
+             _pWmInfo->sScanExParam.bssid[2],_pWmInfo->sScanExParam.bssid[3],
+             _pWmInfo->sScanExParam.bssid[4],_pWmInfo->sScanExParam.bssid[5]
              );
+  _pWmInfo->scanFixNo=1;
 
 }
 

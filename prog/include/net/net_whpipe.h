@@ -294,6 +294,7 @@ extern void* GFL_NET_WLGetGFBss(int index);
  */
 //==============================================================================
 extern void GFL_NET_WLResetWMBssDesc(int index);
+extern void GFL_NET_WLResetWMBssDescAll(void);
 //==============================================================================
 /**
  * @brief    ビーコンデータを消す

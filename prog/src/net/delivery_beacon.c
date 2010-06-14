@@ -432,6 +432,9 @@ static void  _recvLoop(DELIVERY_BEACON_WORK* pWork)
     GFL_NET_WLFIXScan( i ); //スキャンを限定する
 
     GFL_STD_MemCopy( pBeacon, &pWork->aSendRecv[0][index],  sizeof(DELIVERY_BEACON));
+
+    GFL_NET_WLResetWMBssDescAll(); //今あるビーコンの消去
+
   }
 
 }

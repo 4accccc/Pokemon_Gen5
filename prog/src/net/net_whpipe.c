@@ -1475,6 +1475,25 @@ void GFL_NET_WLResetWMBssDesc(int index)
 
 //-------------------------------------------------------------
 /**
+ * @brief    ビーコンデータを全部消す
+ * @param    index ビーコンバッファに対するindex
+ * @retval   none
+ */
+//-------------------------------------------------------------
+
+void GFL_NET_WLResetWMBssDescAll(void)
+{
+  int i;
+  GFL_NETWL* pNetWL = _pNetWL;
+  if(pNetWL){
+    for(i=0;i<SCAN_PARENT_COUNT_MAX;i++){
+      pNetWL->bconUnCatchTime[i] = 0;
+    }
+	}
+}
+
+//-------------------------------------------------------------
+/**
  * @brief    ビーコンデータを消す
  * @param    index ビーコンバッファに対するindex
  * @retval   none
@@ -1483,10 +1502,7 @@ void GFL_NET_WLResetWMBssDesc(int index)
 
 void GFL_NET_WLResetGFBss(int index)
 {
-	GFL_NETWL* pNetWL = _pNetWL;
-	if(pNetWL && (pNetWL->bconUnCatchTime[index]!=0)){
-		pNetWL->bconUnCatchTime[index] = 0;
-	}
+  GFL_NET_WLResetWMBssDesc(index);
 }
 
 //-------------------------------------------------------------
