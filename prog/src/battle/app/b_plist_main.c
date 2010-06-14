@@ -1879,7 +1879,7 @@ static u8 BPL_PokemonSelect( BPLIST_WORK * wk )
     if( BattlePokeList_PokeSetCheck( wk, ret ) != 0 ){
       wk->dat->sel_poke = (u8)ret;
 #ifdef DEBUG_ONLY_FOR_hudson
-      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
       {
         // 強制的に4匹目を選択（バトンタッチ等対策）
         wk->dat->sel_poke = BPLIST_UI_LIST_POKE4;

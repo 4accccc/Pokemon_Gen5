@@ -2301,3 +2301,8 @@ SRCS_OVERLAY_DEBUG_NCL = test/ncl/d_font_view.c
 #===> SRCS_OVERLAY_BATTLE_PLIST
 SRCS_OVERLAY_DEBUG_ALL_WAZA_CHECK = field/event_debug_btl_all_waza_check.c
 
+# DEBUG_ALL_WAZA_CHECK2
+#===> SRCS_OVERLAY_BATTLE_PLIST
+SRCS_OVERLAY_DEBUG_ALL_WAZA_CHECK2 = field/event_debug_btl_all_waza_check2.c
+
+

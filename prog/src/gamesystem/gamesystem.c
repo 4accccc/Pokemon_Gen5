@@ -150,17 +150,22 @@ static GFL_PROC_RESULT GameMainProcInit(GFL_PROC * proc, int * seq, void * pwk, 
 
 #include "debug/debug_hudson.h"
 #include "field/event_debug_btl_all_waza_check.h" // for EVENT_DEBUG_BtlAllWazaCheck
+#include "field/event_debug_btl_all_waza_check2.h" // for EVENT_DEBUG_BtlAllWazaCheck2
 #include "field/event_debug_all_connect_check.h" // for EVENT_DEBUG_AllConnectCheck
 #include "field/event_debug_menu.h" // for EVENT_DEBUG_AllMapCheck
+
+#include "savedata/config.h"
 
 static void HudsonMain( GAMESYS_WORK* gsys )
 {
   static int debugcnt = 0;
   
+#if 0
   if( OS_GetArgc() < 2 )
   {
     return;
   }
+#endif
 
   if( debugcnt < 180 )
   {
@@ -194,8 +199,28 @@ static void HudsonMain( GAMESYS_WORK* gsys )
     {
       GMEVENT * new_event;
 
+#if 1      
+      {
+        // 技エフェクトOFF
+        GAMEDATA* gdata = GAMESYSTEM_GetGameData( gsys );
+        SAVE_CONTROL_WORK* sv = GAMEDATA_GetSaveControlWork( gdata );
+        CONFIG* cfg = SaveData_GetConfig( sv ); 
+
+        CONFIG_SetWazaEffectMode( cfg, WAZAEFF_MODE_OFF );
+      }
+#endif
+
       new_event = GMEVENT_CreateOverlayEventCall( gsys, 
           FS_OVERLAY_ID( debug_all_waza_check ), EVENT_DEBUG_BtlAllWazaCheck, NULL );
+      GAMESYSTEM_SetEvent( gsys, new_event );
+    }
+    // 全技チェック2(トリプルバトル)
+    else if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
+    {
+      GMEVENT * new_event;
+
+      new_event = GMEVENT_CreateOverlayEventCall( gsys, 
+          FS_OVERLAY_ID( debug_all_waza_check2 ), EVENT_DEBUG_BtlAllWazaCheck2, NULL );
       GAMESYSTEM_SetEvent( gsys, new_event );
     }
 

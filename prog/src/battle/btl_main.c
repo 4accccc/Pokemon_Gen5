@@ -40,6 +40,7 @@
 
 #include "net/dwc_tool.h"
 
+#include "debug/debug_hudson.h"
 
 /*--------------------------------------------------------------------------*/
 /* Consts                                                                   */
@@ -2527,6 +2528,12 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
       return BTL_ESCAPE_MODE_WILD;
     }
     #endif
+    #ifdef DEBUG_ONLY_FOR_hudson
+    // “¦‚°‚ê‚é‚æ‚¤‚É‚·‚é
+    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ){
+      return BTL_ESCAPE_MODE_WILD;
+    }
+    #endif //DEBUG_ONLY_FOR_hudson
     return BTL_ESCAPE_MODE_NG;
 
   case BTL_COMPETITOR_SUBWAY:

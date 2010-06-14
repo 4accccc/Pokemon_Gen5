@@ -42,7 +42,7 @@
 #include "btl_server_flow.h"
 #include "btl_server_flow_local.h"
 
-
+#include "debug/debug_hudson.h"
 
 /*--------------------------------------------------------------------------*/
 /* Prototypes                                                               */
@@ -2381,6 +2381,14 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
     fForceNigeru = TRUE;
   }
   #endif
+
+  #ifdef DEBUG_ONLY_FOR_hudson
+  // “¦‚°‚ê‚é‚æ‚¤‚É‚·‚é
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ){
+    fSkipNigeruCalc = TRUE;
+    fForceNigeru = TRUE;
+  }
+  #endif //DEBUG_ONLY_FOR_hudson
 
   if( !fSkipNigeruCalc )
   {

@@ -220,7 +220,8 @@ BTLV_SCD*  BTLV_SCD_Create( const BTLV_CORE* vcore, const BTL_MAIN_MODULE* mainM
   spstack_init( wk );
   
 #ifdef DEBUG_ONLY_FOR_hudson 
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  // Aボタン連打
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
   {
     GFL_UI_DEBUG_OVERWRITE_SetCallBack( UIFuncButtonA );
   }
@@ -325,7 +326,7 @@ void BTLV_SCD_Delete( BTLV_SCD* wk )
   //GFL_BMPWIN_Delete( wk->win );
       
 #ifdef DEBUG_ONLY_FOR_hudson
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
   {
     GFL_UI_DEBUG_OVERWRITE_SetCallBack( NULL );
   }
@@ -562,9 +563,10 @@ static BOOL selectAction_init( int* seq, void* wk_adrs )
 
 #ifdef DEBUG_ONLY_FOR_hudson
   // ターン数をカウント
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) || HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) )
   {
     wkHudson.TrunCnt++;
+    OS_TPrintf("TrunCnt=%d\n",wkHudson.TrunCnt);
   }
 #endif // DEBUG_ONLY_FOR_hudson
 
@@ -678,16 +680,14 @@ static BOOL selectActionRoot_loop( int* seq, void* wk_adrs )
   case 0:
     hit = BTLV_INPUT_CheckInput( wk->biw, &BattleMenuTouchData, BattleMenuKeyData );
 #ifdef DEBUG_ONLY_FOR_hudson
-    // 2回目は逃げる
-    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) )
+    //下画面変形中は入力を無視
+    if( BTLV_INPUT_CheckExecute( wk->biw ) == FALSE )
     {
-      if( wkHudson.TrunCnt >= 2 )
+      // 一定ターンで逃げる
+      if( ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA ) && wkHudson.TrunCnt >= 2 ) ||
+          ( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt >= 3*5+1 ) )
       {
-        //下画面変形中は入力を無視
-        if( BTLV_INPUT_CheckExecute( wk->biw ) == FALSE )
-        {
-          hit = 3; 
-        }
+        hit = 3; 
       }
     }
 #endif // DEBUG_ONLY_FOR_hudson
@@ -1203,6 +1203,24 @@ static BOOL selectTarget_loop( int* seq, void* wk_adrs )
       }
 
       hit = BTLV_INPUT_CheckInput( wk->biw, touch_data, key_data );
+
+#ifdef DEBUG_ONLY_FOR_hudson
+      //攻撃対象をスイッチ
+      if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) && wkHudson.TrunCnt < 16 )
+      {
+        static const u8 tbl[3][5] =
+        {
+          { 5, 3, 2, 3, 5 },
+          { 5, 3, 1, 4, 0 },
+          { 3, 1, 2, 1, 3 },
+        };
+        int id = wkHudson.TrunCnt-1;
+
+        hit = tbl[ id%3 ][ id/3 ];
+        OS_TPrintf("TAGET [%d]体目の[%d]番目 hit=%d\n",id%3, id/3, hit);
+      }
+#endif // DEBUG_ONLY_FOR_hudson
+
       if( hit != GFL_UI_TP_HIT_NONE )
       {
         BTL_Printf("hitBtn = %d\n", hit );
