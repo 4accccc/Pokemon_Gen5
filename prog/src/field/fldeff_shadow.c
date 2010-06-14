@@ -316,14 +316,30 @@ static void shadowTask_Draw( FLDEFF_TASK *task, void *wk )
 {
   TASKWORK_SHADOW *work = wk;
   int bbdIdx = work->bbdUnitIdx + 0;  //BBDのINDEX == BBDACTのUNITIDX + Unit内Idx
-  
+  const OBJCODE_PARAM* obj_prm = MMDL_GetOBJCodeParam( work->fmmdl );
+ 
   if( work->vanish_flag == FALSE ){
     int flag = TRUE;
     VecFx32 pos,offs;
     MMDL_GetVectorPos( work->fmmdl, &pos );
     MMDL_GetControlOffsetPos( work->fmmdl, &offs );
     VEC_Add( &pos, &offs, &pos );
-    
+  
+    /*
+     * ハイリンクの森のシンボルポケのための調整
+     * シンボルポケは、フリップを避けるためDrawOffsetに大き目のオフセットを
+     * 入れて描画しているので、影もDrawOffsetに追随する。
+     *
+     * 関連処理は fldmmdl_draw_0.c TsurePoke_SetAnmAndOffset()
+     */
+    if( obj_prm->draw_proc_no == MMDL_DRAWPROCNO_TPOKE ||
+        obj_prm->draw_proc_no == MMDL_DRAWPROCNO_TPOKE_FLY ){
+      //X,ZのDrawOffsetを引継ぎ、足元が影にめり込まないよう、ちょっと影の位置を通常より下げている
+      MMDL_GetVectorDrawOffsetPos( work->fmmdl, &offs );
+      offs.y = FX32_CONST(-0.5);
+      VEC_Add( &pos, &offs, &pos );
+    }
+
     GFL_BBD_SetObjectDrawEnable( work->eff_shadow->bbdsys, bbdIdx, &flag );
     pos.y += FX32_CONST(+1);
     GFL_BBD_SetObjectTrans( work->eff_shadow->bbdsys, bbdIdx, &pos );

@@ -24,8 +24,54 @@
 //--------------------------------------------------------------
 /// 連れ歩きポケモン表示オフセット
 //--------------------------------------------------------------
-#define MMDL_POKE_OFS_UPDOWN		(FX32_CONST(2.1))
-#define MMDL_POKE_OFS_RIGHTLEFT	(FX32_CONST(0))
+
+/* 
+ * 連れ歩き自動上下アニメ差分。
+ * 金銀では2.0fだったが1.5fなのはHGSS時の見た目にあわせて、金銀時の数値からWBカメラに合わせて調整した結果
+ */
+#define MMDL_POKE_OFS_UPDOWN_ANM  (FX32_CONST(1.5))
+
+/*
+ * ハイリンクの森で、X座標で2グリッド以内の位置にいるポケモンが重なった際に
+ * Zバッファによるフリップを起こさないよう、力技だがオブジェの(グリッドX%3)で出した値で
+ * Z軸方向に描画オフセットをかけている。
+ *
+ * 数値は森のカメラによって、ポケモン/自機とがフリップしないオフセット幅に調整した。
+ * カメラが変わるとオフセットの見え方も変化し、フリップする可能性があるので、
+ * カメラが変わった際は、数値も調整すること
+ *
+ * 配置イメージ
+ * |0|1|2|0|1|2|
+ * |~|-|_|~|-|_|
+ *
+ * DrawOffsetのみずらすと、Z+に対してオフセットがかかるグリッドに移動した際に
+ * 足元が浮いて見えてしまうため、field/fldeff_shadow.c shadowTask_Draw()内の
+ * 影描画処理で、連れ歩きポケモンはDrawOffsetのX/Z座標も加味した位置に影を出す調整をいれている。
+ *
+ * 計算で出した数値ではないです、ごめんなさい
+ */
+#define MMDL_POKE_OFS_SYMBOL_ALL_Z  (FX32_CONST(2.1))
+
+/*
+ * ハイリンクの森で、自機とポケモンがフリップを起こさないよう
+ * 64x64ポケモンに一律かけているz軸描画オフセット。
+ *
+ * 32x32ポケモンは、そのままのオフセットで自機とフリップしないので
+ * 64x64サイズのみに絞っている。
+ *
+ * カメラが変わるとオフセットの見え方も変化するので注意。
+ * 10.06.14現在 MMDL_POKE_OFS_SYMBOL_ALL_Z と同じ値だが、同じ数値であることに意味はない。
+ * ALL_Zとは目的が異なるので、別定義にしている。
+ */
+#define MMDL_POKE_OFS_SYMBOL_64x64_Z		(-FX32_CONST(2.1))
+
+/*
+ * 32x32ポケモンが左右向きの際にかけている描画オフセット値。
+ * 連れ歩き絵は金銀ルールで描かれているので、そのまま描画すると左右にちょっとずれてみえる。
+ * それをWBではできるだけ、見た目がグリッド中央に来るように描画オフセットをかけている。
+ *
+ * カメラが変わるとオフセットの見え方も変化するので注意
+ */
 #define MMDL_POKE_OFS_RIGHTLEFT_S	(FX32_CONST(2))
 
 //======================================================================
@@ -1364,7 +1410,7 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
   const OBJCODE_PARAM* obj_prm;
 #ifdef DEBUG_ONLY_FOR_iwasawa
 #if 0
-  static float test_z = 0, test_diff = 0.1;
+  static float test_z = 2.1, test_diff = 0.1;
   static BOOL updown_f = 0;
   static BOOL cont_f = 0;
 #endif
@@ -1425,20 +1471,42 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
 #endif
 #endif
   if( pause_f ||
-      (ofs.y > 0 && obj_prm->draw_proc_no != MMDL_DRAWPROCNO_TPOKE_FLY)){
-    //Yオフセットのみ引き継ぐ
+      (ofs.y > MMDL_POKE_OFS_UPDOWN_ANM && obj_prm->draw_proc_no != MMDL_DRAWPROCNO_TPOKE_FLY)){
+    /*
+     * ・ポーズ状態の時はYは維持
+     * ・また、ジャンプアニメに対応するため
+     * 　YオフセットがMMDL_POKE_OFS_UPDOWN_ANM以上で飛んでいるポケモンでない場合もYを維持する
+     */
     vec.y = ofs.y;
-  }else if( TsurePoke_CheckUpDown( work, dir, obj_prm )){
-    vec.y -= FX32_CONST(1.5);
+  }else if( TsurePoke_CheckUpDown( work, dir, obj_prm ) == FALSE ){
+    //上下アニメ用オフセット
+    vec.y += MMDL_POKE_OFS_UPDOWN_ANM;
   }
+
+  /*
+   * ハイリンクの森のシンボルポケに対してのみ有効なZ軸描画オフセット処理
+   * フリップを避けるため、(gridX%3)の値により、Zの描画座標をずらしている
+   *
+   * 処理の意図・詳細については、MMDL_POKE_OFS_SYMBOL_ALL_Z定義のコメントを参照のこと
+   */
   if( ZONEDATA_IsBingo( zone_id)){
-    u8 idx = gx%3; 
+    u8 idx = gx%3;
+
+    //シンボルポケ同士のフリップ対策
     if( idx == 0 ){
-      vec.z -= FX32_CONST(2.0);
+      vec.z -= MMDL_POKE_OFS_SYMBOL_ALL_Z;
     }else if( idx == 2){
-      vec.z += FX32_CONST(2.0);
+      vec.z += MMDL_POKE_OFS_SYMBOL_ALL_Z;
     }
+  
+    //自機とのフリップ対策。でっかいポケモンはさらに一律オフセットをかける
+	  if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
+      vec.z += MMDL_POKE_OFS_SYMBOL_64x64_Z;
+	  }
   }
+  //向きからX/Z描画オフセットをセット
+  TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
+
 #if 0
 	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
     vec.z -= FX32_CONST(2.1);//FX32_CONST(test_z);
@@ -1455,8 +1523,6 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
     }
   }
 #endif
-  //向きからX/Z描画オフセットをセット
-  TsurePoke_GetDrawOffsetFromDir( mmdl, dir, obj_prm, &vec );
   
   MMDL_SetVectorDrawOffsetPos( mmdl, &vec );
   
@@ -1465,10 +1531,13 @@ static void TsurePoke_SetAnmAndOffset( MMDL* mmdl, DRAW_BLACT_POKE_WORK* work, u
 
 static void TsurePoke_GetDrawOffsetFromDir( MMDL* mmdl, u8 dir, const OBJCODE_PARAM* obj_prm, VecFx32* outVec)
 {
-  //方向から描画オフセットをつける
-	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_64x64 ){
-    outVec->z -= MMDL_POKE_OFS_UPDOWN;
-	}else{
+  /*
+   * もともと連れ歩き絵なので、そのままだとマップグリッド中心からずれて見えるのを
+   * 補正するために、方向から描画オフセットをつけている。
+   *
+   * 大きいポケモンについては気にならなかったので、小さいポケモンだけ
+   */
+	if ( obj_prm->mdl_size==MMDL_BLACT_MDLSIZE_32x32 ){
 		switch(dir){
 		case DIR_LEFT:
 			outVec->x -= MMDL_POKE_OFS_RIGHTLEFT_S;
