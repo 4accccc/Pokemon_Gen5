@@ -460,7 +460,12 @@ download:
         //メニュー選択やり直し
         $loop = TRUE
         _RET
-
+      ELSIF $SCWK_ANSWER == TH_DL_RSLT_CANCEL THEN
+        //「キャンセル」
+        _BALLOONWIN_OBJMSG_POS(msg_trialhouse_035, SCWK_TARGET_OBJID, POS_DOWN )
+        //メニュー選択やり直し
+        $loop = TRUE
+        _RET  
       ENDIF
 
       {

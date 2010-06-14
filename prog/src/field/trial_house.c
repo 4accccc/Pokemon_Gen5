@@ -449,6 +449,13 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     }
     break;
   case BEACON_SEQ_SEARCH:
+    //ボタンキャンセル処理
+    if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ){
+      *(evt_wk->Ret) = TH_DL_RSLT_CANCEL;   //キャンセル
+      (*seq) = BEACON_SEQ_END;
+      break;
+    }
+
     //配信サービス検出のため、4秒間位配送メインをまわす
     {
       //配送メイン
@@ -458,6 +465,13 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     if ( evt_wk->Time > 30*BEACON_SEARCH_TIME ) (*seq) = BEACON_SEQ_CHECK;
     break;
   case BEACON_SEQ_CHECK:
+    //ボタンキャンセル処理
+    if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ){
+      *(evt_wk->Ret) = TH_DL_RSLT_CANCEL;   //キャンセル
+      (*seq) = BEACON_SEQ_END;
+      break;
+    }
+
     //配送メイン
     DELIVERY_BEACON_Main( evt_wk->BeaconWork );
     {
@@ -474,6 +488,13 @@ static GMEVENT_RESULT BeaconSearchEvt( GMEVENT *event, int *seq, void *wk )
     }
     break;
   case BEACON_SEQ_MAIN:
+    //ボタンキャンセル処理
+    if ( GFL_UI_KEY_GetTrg() == PAD_BUTTON_CANCEL ){
+      *(evt_wk->Ret) = TH_DL_RSLT_CANCEL;   //キャンセル
+      (*seq) = BEACON_SEQ_END;
+      break;
+    }
+
     //配送メイン
     DELIVERY_BEACON_Main( evt_wk->BeaconWork );
     //データ受け取り待ち

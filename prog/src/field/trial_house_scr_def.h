@@ -22,6 +22,7 @@
 #define TH_DL_RSLT_FAIL     (0)     //失敗
 #define TH_DL_RSLT_SUCCESS  (1)     //成功
 #define TH_DL_RSLT_SETTLED  (2)    //済み
+#define TH_DL_RSLT_CANCEL   (3)    //キャンセル
 
 #define TH_DL_DATA_CLEAR_TYPE_CLEAR (0)     //完全クリア
 #define TH_DL_DATA_CLEAR_TYPE_USED (1)      //使用したことにする
