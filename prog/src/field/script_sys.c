@@ -124,12 +124,13 @@ static void SCRVM_Delete( VMHANDLE* core );
 //
 //	●処理の流れ
 //		SCRIPT_SetEventScript(...)						イベント設定
-//		  SCRIPTSYS_Create()
-//		  SCRIPTWORK_Create(...)
 //		  createScriptEvent(...)
-//		    SCRIPT_AddVMachine(...)						VMマシーン追加
+//  		  SCRIPTSYS_Create()
+//  		  SCRIPTWORK_Create(...)
+//		    SCRIPT_AddVMachine(...)						VM追加
 //				↓
 //		scriptEvent(...)				イベント制御関数
+//		    SCRIPTSYS_Run(...)
 //				↓
 //		SCRIPTWORK_Delete(...)
 //		SCRIPTSYS_Delete(...)
@@ -405,7 +406,7 @@ static GMEVENT * createScriptEvent(
 	event = GMEVENT_Create( gsys, NULL, scriptEvent, sizeof(EVENT_SCRIPT_WORK) );
 	ev_sc = GMEVENT_GetEventWork( event );
   ev_sc->scrsys = SCRIPTSYS_Create( HEAPID_PROC );
-  ev_sc->sc = SCRIPTWORK_Create( HEAPID_PROC, gsys, event, scr_id, ret_script_wk);
+  ev_sc->sc = SCRIPTWORK_Create( HEAPID_PROC, gsys, event, scr_id, ret_script_wk, FALSE );
   SCRIPT_SetTargetObj( ev_sc->sc, obj );
 	
   zone_id = getZoneID( gsys );
@@ -596,7 +597,7 @@ void SCRIPT_CallSpecialScript( GAMESYS_WORK *gsys, SCRIPT_WORK * sc, HEAPID heap
   
   if ( sc == NULL )
   {
-    sc_local = SCRIPTWORK_Create( HEAPID_PROC, gsys, NULL, script_id, NULL);
+    sc_local = SCRIPTWORK_Create( HEAPID_PROC, gsys, NULL, script_id, NULL, TRUE );
     sc = sc_local;
   }
   
@@ -993,14 +994,15 @@ static VM_CODE * loadScriptCodeData( u32 scr_id, HEAPID heapID )
  * @param script_id
  * @return  BOOL  FALSEのとき、実行可能なスクリプト
  *
- * @todo
- * できたら厳密な範囲チェックを行って暴走しないように制限する
+ * @attention  将来への備忘録：
+ * @attention  マップのスクリプトを含めて、厳密な範囲チェックを行って暴走しないように制限する。
+ * @attention 現在はバイナリ差分が大きいこと、スクリプト取得構造の大きな改造となることから見送る。
  */
 //------------------------------------------------------------------
 BOOL SCRIPT_IsValidScriptID( u16 script_id )
 {
   if ( script_id == SCRID_DUMMY ) return FALSE;
-  if ( script_id >= ID_DEBUG_SCR_OFFSET_END )
+  if ( script_id >= ScriptArcTable[0].scr_id_end )
   {
     GF_ASSERT(0);
     return FALSE;

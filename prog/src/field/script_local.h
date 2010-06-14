@@ -59,13 +59,14 @@ typedef enum{
  * @param event
  * @param	scr_id		スクリプトID
  * @param	ret_wk		スクリプト結果を代入するワークのポインタ
+ * @param is_sp_flag   TRUE=特殊スクリプトを指定する
  * @return	SCRIPT_WORK			SCRIPT型のポインタ
  *
  * スクリプトコマンド全般からグローバルアクセス可能なデータを保持する
  */
 //--------------------------------------------------------------
 extern SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
-    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk);
+    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk, BOOL is_sp_flag );
 extern void SCRIPTWORK_Delete( SCRIPT_WORK * sc );
 
 //======================================================================

@@ -88,6 +88,8 @@ struct _TAG_SCRIPT_WORK
 
 	u16 *ret_script_wk;			//スクリプト結果を代入するワークのポインタ
 
+  BOOL is_sp_flag;    ///<特殊スクリプトかどうか？のフラグ　TRUE=特殊スクリプト
+
   //☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
   //script.c内で使用しない、外部公開用メンバ
   //  public R/W
@@ -154,13 +156,14 @@ static void initFldParam(SCRIPT_FLDPARAM * fparam, GAMESYS_WORK * gsys)
  * @param event
  * @param	scr_id		スクリプトID
  * @param	ret_wk		スクリプト結果を代入するワークのポインタ
+ * @param is_sp_flag  特殊スクリプトの時、TRUE
  * @return	SCRIPT_WORK			SCRIPT型のポインタ
  *
  * スクリプトコマンド全般からグローバルアクセス可能なデータを保持する
  */
 //--------------------------------------------------------------
 SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
-    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk)
+    GAMESYS_WORK * gsys, GMEVENT * event, u16 scr_id, void* ret_wk, BOOL is_sp_flag )
 {
   SCRIPT_WORK * sc;
 
@@ -173,12 +176,23 @@ SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
 	sc->start_scr_id  = scr_id;	//メインのスクリプトID
 	sc->target_obj = NULL;
 	sc->ret_script_wk = ret_wk;	//スクリプト結果を代入するワーク
+  sc->is_sp_flag = is_sp_flag;  //
   
   //メッセージ関連
-  sc->wordset = WORDSET_CreateEx(
-    WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, main_heapID );
-  sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
-  sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
+  if ( sc->is_sp_flag == FALSE )
+  {
+    sc->wordset = WORDSET_CreateEx(
+      WORDSET_SCRIPT_SETNUM, WORDSET_SCRIPT_BUFLEN, main_heapID );
+    sc->msg_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
+    sc->tmp_buf = GFL_STR_CreateBuffer( SCR_MSG_BUF_SIZE, main_heapID );
+  }
+  else
+  {
+    //特殊スクリプトの場合、メッセージ用のワークエリアは不要
+    sc->wordset = NULL;
+    sc->msg_buf = NULL;
+    sc->tmp_buf = NULL;
+  }
 
   sc->scrcmd_global = SCRCMD_GLOBAL_Create( sc, main_heapID );
 
@@ -199,9 +213,16 @@ SCRIPT_WORK * SCRIPTWORK_Create( HEAPID main_heapID,
 void SCRIPTWORK_Delete( SCRIPT_WORK * sc )
 {
   sc->magic_no = 0;
-  WORDSET_Delete( sc->wordset );
-  GFL_STR_DeleteBuffer( sc->msg_buf );
-  GFL_STR_DeleteBuffer( sc->tmp_buf );
+  if ( sc->wordset )
+  {
+    WORDSET_Delete( sc->wordset );
+  }
+  if ( sc->msg_buf ) {
+    GFL_STR_DeleteBuffer( sc->msg_buf );
+  }
+  if ( sc->tmp_buf ) {
+    GFL_STR_DeleteBuffer( sc->tmp_buf );
+  }
 
   SCRCMD_GLOBAL_Delete( sc->scrcmd_global );
 
@@ -260,6 +281,7 @@ void * SCRIPT_GetScrCmdGlobal( SCRIPT_WORK * sc )
 //--------------------------------------------------------------
 WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc )
 {
+  GF_ASSERT( sc->wordset );
   return sc->wordset;
 }
 //--------------------------------------------------------------
@@ -270,6 +292,7 @@ WORDSET * SCRIPT_GetWordSet( SCRIPT_WORK * sc )
 //--------------------------------------------------------------
 STRBUF * SCRIPT_GetMsgBuffer( SCRIPT_WORK * sc )
 {
+  GF_ASSERT( sc->msg_buf );
   return sc->msg_buf;
 }
 
@@ -281,6 +304,7 @@ STRBUF * SCRIPT_GetMsgBuffer( SCRIPT_WORK * sc )
 //--------------------------------------------------------------
 STRBUF * SCRIPT_GetMsgTempBuffer( SCRIPT_WORK * sc )
 {
+  GF_ASSERT( sc->tmp_buf );
   return sc->tmp_buf;
 }
 
