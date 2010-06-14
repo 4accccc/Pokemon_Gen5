@@ -530,6 +530,7 @@ static void G3D_AnimeExit( COMM_BTL_DEMO_G3D_WORK* g3d );
 static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d );
 static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk );
 static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm );
+static int TrainerData_GetBattleEnable( const COMM_BTL_DEMO_TRAINER_DATA* trdata );
 
   //-------------------------------------
 /// PROC
@@ -1208,7 +1209,21 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
   // 勝敗ユニット生成
   {
     u16 me,you;
+    
+    if( type_is_normal(wk->type) )
+    {
+      me  = TrainerData_GetBattleEnable( &wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_A ] );
+      you = TrainerData_GetBattleEnable( &wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_B ] );
+    }
+    else
+    {
+      me  = TrainerData_GetBattleEnable( &wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_A ] );
+      me += TrainerData_GetBattleEnable( &wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_B ] );
+      you  = TrainerData_GetBattleEnable( &wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_C ] );
+      you += TrainerData_GetBattleEnable( &wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_D ] );
+    }
 
+#if 0
     if( type_is_normal(wk->type) )
     {
       me  = PokeParty_GetPokeCountBattleEnable( wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_A ].party );
@@ -1221,6 +1236,7 @@ static BOOL SceneEndDemo_Init( UI_SCENE_CNT_PTR cnt, void *work )
       you  = PokeParty_GetPokeCountBattleEnable( wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_C ].party );
       you += PokeParty_GetPokeCountBattleEnable( wk->pwk->trainer_data[ COMM_BTL_DEMO_TRDATA_D ].party );
     }
+#endif 
 
     RESULT_UNIT_Init( &wk->result_unit, &wk->wk_obj, &wk->wk_g3d, me, you, wk->type );
   }
@@ -1570,11 +1586,6 @@ BOOL type_is_start( u8 type )
 //-----------------------------------------------------------------------------
 static u32 PokeParaToBallAnim( POKEMON_PARAM* pp, const COMM_BTL_POKE_RESULT poke )
 {
-  if( pp == NULL )
-  {
-    return OBJ_ANM_ID_BALL_NULL; // ボールなし
-  }
-
   // バトル結果情報を元にボールアイコンの形状を返す
   switch(poke){
   case COMM_BTL_DEMO_POKE_NONE:     ///< いない
@@ -1588,6 +1599,11 @@ static u32 PokeParaToBallAnim( POKEMON_PARAM* pp, const COMM_BTL_POKE_RESULT pok
   }
 
 #if 0
+  if( pp == NULL )
+  {
+    return OBJ_ANM_ID_BALL_NULL; // ボールなし
+  }
+
   if( PP_Get( pp, ID_PARA_hp, NULL ) == 0 )
   {
     return OBJ_ANM_ID_BALL_DOWN; // 瀕死
@@ -3276,8 +3292,6 @@ static BOOL G3D_AnimeMain( COMM_BTL_DEMO_G3D_WORK* g3d )
   }
 #endif
 
-
-
 //----------------------------------------------------------------------------------
 /**
  * @brief 対戦デモが開始前デモだったときは、Pokepartyの格納状況を監視して
@@ -3290,12 +3304,6 @@ static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
 {
   int i,j;
 
-  // 初期化
-  for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
-    for(j=0;j<PokeParty_GetPokeCount( prm->trainer_data[i].party );j++){
-      prm->trainer_data[i].party_state[j] = COMM_BTL_DEMO_POKE_NONE;
-    }
-  }
   // シングル戦
   if(prm->type==COMM_BTL_DEMO_TYPE_NORMAL_START){
     for(i=0;i<COMM_BTL_DEMO_TRDATA_C;i++){
@@ -3312,3 +3320,31 @@ static void _demo_param_setup( COMM_BTL_DEMO_PARAM *prm )
     }
   }
 }
+
+//-----------------------------------------------------------------------------
+/**
+ *	@brief  トレイナーデータから戦えるポケモンの残り数を取得
+ *
+ *	@param	const COMM_BTL_DEMO_TRAINER_DATA* trdata 
+ *
+ *	@retval 戦えるポケモンの残り数
+ */
+//-----------------------------------------------------------------------------
+static int TrainerData_GetBattleEnable( const COMM_BTL_DEMO_TRAINER_DATA* trdata )
+{
+  int i;
+  int ret = 0;
+  const POKEPARTY* party = trdata->party;
+  const COMM_BTL_POKE_RESULT* poke = trdata->party_state;
+  
+  for( i=0; i<PokeParty_GetPokeCount( party ); i++ )
+  {
+    if ( poke[i] == COMM_BTL_DEMO_POKE_LIVE || poke[i] == COMM_BTL_DEMO_POKE_SICK )
+    {
+      ret++;
+    }
+  }
+
+  return ret;
+}
+

@@ -58,10 +58,10 @@ enum
 /// 戦闘結果のID
 //==============================================================
 typedef enum {
-  COMM_BTL_DEMO_POKE_LIVE=0,   ///< 状態異常無しで生きてる
+  COMM_BTL_DEMO_POKE_NONE=0,   ///< ポケモン無し
+  COMM_BTL_DEMO_POKE_LIVE,     ///< 状態異常無しで生きてる
   COMM_BTL_DEMO_POKE_SICK,     ///< 状態異常
   COMM_BTL_DEMO_POKE_HINSHI,   ///< 瀕死
-  COMM_BTL_DEMO_POKE_NONE,     ///< ポケモン無し
 } COMM_BTL_POKE_RESULT_tag;
 
 typedef u8 COMM_BTL_POKE_RESULT;

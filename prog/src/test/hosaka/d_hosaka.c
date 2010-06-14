@@ -1091,13 +1091,14 @@ static void debug_param( COMM_BTL_DEMO_PARAM* prm )
         // ‘ÎíŒã‚Ìƒ|ƒPƒ‚ƒ“‚Ìó‘ÔˆÙí
         for( p=0; p<poke_cnt; p++ )
         {
-          POKEMON_PARAM* pp = PokeParty_GetMemberPointer( party, p );
           switch( GFUser_GetPublicRand(3) )
           {
-          case 0: PP_SetSick( pp, POKESICK_DOKU ); break; // “Å
-          case 1: PP_Put(pp, ID_PARA_hp, 0 ); break; // •m€
+          case 0: prm->trainer_data[i].party_state[p] = COMM_BTL_DEMO_POKE_LIVE; break;
+          case 1: prm->trainer_data[i].party_state[p] = COMM_BTL_DEMO_POKE_SICK; break;
+          case 2: prm->trainer_data[i].party_state[p] = COMM_BTL_DEMO_POKE_HINSHI; break;
+          default : GF_ASSERT(0);
           }
-          HOSAKA_Printf("poke [%d] condition=%d \n",p, PP_Get( pp, ID_PARA_condition, NULL ) );
+          OS_TPrintf("poke [%d] COMM_BTL_POKE_RESULT=%d \n",p, prm->trainer_data[i].party_state[p] );
         }
       }
 
