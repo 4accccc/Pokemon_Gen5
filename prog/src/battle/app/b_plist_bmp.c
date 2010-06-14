@@ -81,6 +81,8 @@
 #define BTN_PPSRA_PX  ( 80 )    // ボタン上の「/」表示X座標
 #define BTN_PPSRA_PY  ( 24 )    // ボタン上の「/」表示Y座標
 
+#define	WAZA_PX_CENTER	( 0xffff )		// 技名を中央表示する定義
+
 
 //============================================================================================
 //  プロトタイプ宣言
@@ -1081,18 +1083,20 @@ static void BPL_ItemPut( BPLIST_WORK * wk, u32 idx, u32 pos )
  * @param		widx  ウィンドウインデックス
  * @param		midx  メッセージインデックス
  * @param		fidx  フォントインデックス
+ * @param		px    X座標
  * @param		py    Y座標
  * @param		col   カラー
  *
  * @return  none
+ *
+ * @li	px = 	WAZA_PX_CENTER : 中央表示
  */
 //--------------------------------------------------------------------------------------------
-static void BPL_WazaNamePut( BPLIST_WORK * wk, u32 waza, u32 widx, u32 midx, u16 py, u32 col )
+static void BPL_WazaNamePut( BPLIST_WORK * wk, u32 waza, u32 widx, u32 midx, u16 px, u16 py, u32 col )
 {
   GFL_BMPWIN * win;
   STRBUF * exp;
   STRBUF * str;
-  u32 px;
 
   win = wk->add_win[widx].win;
 
@@ -1102,7 +1106,9 @@ static void BPL_WazaNamePut( BPLIST_WORK * wk, u32 waza, u32 widx, u32 midx, u16
   WORDSET_RegisterWazaName( wk->wset, 0, waza );
   WORDSET_ExpandStr( wk->wset, exp, str );
 
-  px = 0;
+	if( px == WAZA_PX_CENTER ){
+		px = ( GFL_BMPWIN_GetSizeX(win) * 8 - PRINTSYS_GetStrWidth(exp,wk->dat->font,0) ) / 2;
+	}
 
   PRINT_UTIL_PrintColor( &wk->add_win[widx], wk->que, px, py, exp, wk->dat->font, col );
 
@@ -2188,7 +2194,7 @@ static void BPL_StWazaSelPageBmpWrite( BPLIST_WORK * wk )
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_STW_SKILL1+i,
-      WazaMsgID_Tbl[i], STW_WAZANAME_PY, FCOL_P09WN );
+      WazaMsgID_Tbl[i], WAZA_PX_CENTER, STW_WAZANAME_PY, FCOL_P09WN );
 
     BPL_WazaButtonPPPut( wk, waza, WIN_STW_SKILL1+i );
   }
@@ -2250,7 +2256,7 @@ static void BPL_StWazaInfoPageBmpWrite( BPLIST_WORK * wk )
   BPL_PPPut( wk, WIN_P4_PP, P4_PP_PX, P4_PP_PY );
   BPL_WazaNamePut(
     wk, waza->id, WIN_P4_SKILL,
-    WazaMsgID_Tbl[wk->dat->sel_wp], P4_WAZANAME_PY, FCOL_P13WN );
+    WazaMsgID_Tbl[wk->dat->sel_wp], 0, P4_WAZANAME_PY, FCOL_P13WN );
   BPL_WazaHitStrPut( wk, WIN_P4_HIT );
   BPL_WazaHitNumPut( wk, WIN_P4_HITNUM, waza->hit );
   BPL_WazaPowStrPut( wk, WIN_P4_POW );
@@ -2290,14 +2296,14 @@ static void BPL_WazaDelSelPageBmpWrite( BPLIST_WORK * wk )
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P5_SKILL1+i,
-      WazaMsgID_Tbl[i], P5_WAZANAME_PY, FCOL_P09WN );
+      WazaMsgID_Tbl[i], WAZA_PX_CENTER, P5_WAZANAME_PY, FCOL_P09WN );
 
     BPL_WazaButtonPPPut( wk, waza, WIN_P5_SKILL1+i );
   }
 
   BPL_WazaNamePut(
     wk, wk->dat->chg_waza, WIN_P5_SKILL5,
-    WazaMsgID_Tbl[4], P5_WAZANAME_PY, FCOL_P09WN );
+    WazaMsgID_Tbl[4], WAZA_PX_CENTER, P5_WAZANAME_PY, FCOL_P09WN );
   {
     BPL_POKEWAZA  tmp;
 
@@ -2333,7 +2339,7 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P6_SKILL,
-      WazaMsgID_Tbl[wk->dat->sel_wp], P6_WAZANAME_PY, FCOL_P13WN );
+      WazaMsgID_Tbl[wk->dat->sel_wp], 0, P6_WAZANAME_PY, FCOL_P13WN );
     BPL_WazaHitNumPut( wk, WIN_P6_HITNUM, waza->hit );
     BPL_WazaPowNumPut( wk, WIN_P6_POWNUM, waza->pow );
     BPL_WazaInfoPut( wk, WIN_P6_INFO, waza->id );
@@ -2344,7 +2350,7 @@ static void BPL_Page6BmpWrite( BPLIST_WORK * wk )
 
     BPL_WazaNamePut(
       wk, wk->dat->chg_waza, WIN_P6_SKILL,
-      WazaMsgID_Tbl[4], P6_WAZANAME_PY, FCOL_P13WN );
+      WazaMsgID_Tbl[4], 0, P6_WAZANAME_PY, FCOL_P13WN );
     BPL_WazaInfoPut( wk, WIN_P6_INFO, wk->dat->chg_waza );
     BPL_WazaHitNumPut(
       wk, WIN_P6_HITNUM, WAZADATA_GetParam(wk->dat->chg_waza,WAZAPARAM_HITPER) );
@@ -2387,7 +2393,7 @@ static void BPL_PPRcvPageBmpWrite( BPLIST_WORK * wk )
 
     BPL_WazaNamePut(
       wk, waza->id, WIN_P7_SKILL1+i,
-      WazaMsgID_Tbl[i], P7_WAZANAME_PY, FCOL_P09WN );
+      WazaMsgID_Tbl[i], WAZA_PX_CENTER, P7_WAZANAME_PY, FCOL_P09WN );
     BPL_WazaButtonPPPut( wk, waza, WIN_P7_SKILL1+i );
   }
 
