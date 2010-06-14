@@ -1228,6 +1228,7 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
 
     for(i=0;i<BOX_VERTICAL_NUM;i++){
       GFL_CLACTPOS apos;
+      GFL_CLACTPOS poke_icon_mark_pos;    //20100614 add Saito
       y = 32+i*24;
       if(line == 0){
         x = 16+8+4;
@@ -1243,7 +1244,7 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
       x = x - pWork->BoxScrollNum + subnum;
       apos.x = x;
       apos.y = y;
-
+      poke_icon_mark_pos = apos;        //20100614 add Saito
 
       if(POKETRADE_NEGO_IsStatusLookAt(pWork,line,i) &&  !pWork->padMode){
         apos.y -= 8;
@@ -1255,7 +1256,11 @@ static void _POKETRADE_PokeIconPosSet(POKEMON_TRADE_WORK* pWork)
       
       GFL_CLACT_WK_SetPos(pWork->pokeIcon[no][i], &apos, CLSYS_DRAW_SUB);
       if(pWork->pokeIconMarkFlg[no][i]){
+#if 0   //20100614 del Saito
         GFL_CLACT_WK_GetPos(pWork->pokeIcon[no][i], &pWork->pokeIconMark[no][i], CLSYS_DRAW_SUB);
+#else
+        pWork->pokeIconMark[no][i] = poke_icon_mark_pos;
+#endif
       }
       apos.y = y + 3;
       GFL_CLACT_WK_SetPos(pWork->markIcon[no][i], &apos, CLSYS_DRAW_SUB);
@@ -2530,9 +2535,7 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
     else{
       type = marktbl[i*2+1];
     }
-    NOZOMU_Printf("%d valid\n",i);
     if(clwk){
-      NOZOMU_Printf("%d valid2\n",i);
       if(type==-1){
         GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
       }
@@ -2556,7 +2559,6 @@ void IRC_POKETRADE_PokeStatusIconDisp(POKEMON_TRADE_WORK* pWork, POKEMON_PARAM* 
       pWork->aPokeMark.clwk[i] =
         UI_EASY_CLWK_CreateCLWK( &pWork->aPokeMark.res, pWork->cellUnit, markpos[i]*8 , (12 * 8)+5, make_type, pWork->heapID );
       clwk = pWork->aPokeMark.clwk[i];
-      NOZOMU_Printf("%d create\n",i);
 #endif
       if(type==-1){
         GFL_CLACT_WK_SetDrawEnable( clwk, FALSE );
