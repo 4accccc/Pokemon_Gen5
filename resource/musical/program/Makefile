@@ -52,9 +52,6 @@ $(TARGETDIR)/mus_prog_data_03.narc: $(COPY_TARGET_PATH)/mus_prog_data_03.narc
 $(TARGETDIR)/mus_prog_data_04.narc: $(COPY_TARGET_PATH)/mus_prog_data_04.narc
 	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_04.narc $(TARGETDIR)
 
-$(TARGETDIR)/mus_prog_data_05.narc: $(COPY_TARGET_PATH)/mus_prog_data_05.narc
-	$(COPY) $(COPY_TARGET_PATH)/mus_prog_data_05.narc $(TARGETDIR)
-
 
 #------------------------------------------------------------------------------
 #	make clean ÉãÅ[Éã
@@ -66,6 +63,5 @@ clean:
 	rm -f $(TARGETDIR)/mus_prog_data_02.narc
 	rm -f $(TARGETDIR)/mus_prog_data_03.narc
 	rm -f $(TARGETDIR)/mus_prog_data_04.narc
-	rm -f $(TARGETDIR)/mus_prog_data_05.narc
 
 
