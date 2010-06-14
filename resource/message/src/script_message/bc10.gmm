@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="suginaka_katsunori" host="W00227" date="2010-06-04T16:28:42"/>
+	<create user="suginaka_katsunori" host="W00227" date="2010-06-14T19:40:51"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -763,9 +763,9 @@
 		<attribute name="キャラ指定">BUSINESSMAN
 トモタカ</attribute>
 		<language name="JPN" width="256">モノが　あふれてる　ブラックシティ！
-ここだと　しごとが　はかどりますね▽</language>
+ここだと　しごとが　はかどりますね</language>
 		<language name="JPN_KANJI" width="256">モノが　あふれてる　ブラックシティ！
-ここだと　仕事が　はかどりますね▽</language>
+ここだと　仕事が　はかどりますね</language>
 	</row>
 
 	<row id="bc10_10_01" back-color=",,,,,#ffff80,,,,,,,,,,,,,">
