@@ -2423,6 +2423,8 @@ FS_EXTERN_OVERLAY(battle);
     }
 
     setDebugParams( &wk->saveData, &wk->setupParam );
+    wk->setupParam.badgeCount = wk->saveData.badgeCount;
+    wk->setupParam.btl_status_flag |= BTL_STATUS_FLAG_CONFIG_SHARE;
     if( wk->saveData.fShooterMode )
     {
       wk->setupParam.shooterBitWork.shooter_use = TRUE;

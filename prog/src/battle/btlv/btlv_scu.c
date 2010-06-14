@@ -1879,11 +1879,11 @@ static BOOL btlinEffSub_OpponentPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_
 
   case 3:
     if( BTLV_SCU_WaitMsg( wk )){
-      
+
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       BTLV_EFFECT_AddByPos( subwk->vpos[0], BTLEFF_SINGLE_TRAINER_ENCOUNT_3 );
-      
+
       msgWinVisible_Hide( &wk->msgwinVisibleWork );
       (*seq)++;
     }
@@ -2280,7 +2280,7 @@ static BOOL btlinEffSub_MyPokeIn_Tag( BTLV_SCU* wk, int* seq, u8 clientID_1, u8 
     if( msgWinVisible_Update(&wk->msgwinVisibleWork) )
     {
       u8 pokeIdx = BTL_MAIN_GetPlayerMultiPos( wk->mainModule );
-#if 1 //BTS5243      
+#if 1 //BTS5243
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[0]), subwk->vpos[0] );
       BTLV_EFFECT_SetPokemon( BPP_GetViewSrcData(subwk->bpp[1]), subwk->vpos[1] );
       BTLV_EFFECT_Add( BTLEFF_SINGLE_ENCOUNT_3 );
@@ -2592,16 +2592,20 @@ BOOL BTLV_SCU_WaitMsg( BTLV_SCU* wk )
   case SEQ_WAIT_STREAM_RUNNING:
     if( wk->printStream )
     {
-      if( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B))
-      ||  (GFL_UI_TP_GetCont())
-      ){
-        if( !PRINTSYS_IsTempSpeedMode(wk->printStream) ){
-          PRINTSYS_PrintStream_StartTempSpeedMode( wk->printStream, MSGSPEED_GetWaitByConfigParam(MSGSPEED_FAST) );
+      // 非通信時はキー押しorタッチで「はやい」設定と同速に。
+      if( BTL_MAIN_GetCommMode(wk->mainModule) == BTL_COMM_NONE )
+      {
+        if( (GFL_UI_KEY_GetCont() & (PAD_BUTTON_A|PAD_BUTTON_B))
+        ||  (GFL_UI_TP_GetCont())
+        ){
+          if( !PRINTSYS_IsTempSpeedMode(wk->printStream) ){
+            PRINTSYS_PrintStream_StartTempSpeedMode( wk->printStream, MSGSPEED_GetWaitByConfigParam(MSGSPEED_FAST) );
+          }
         }
-      }
-      else{
-        if( PRINTSYS_IsTempSpeedMode(wk->printStream) ){
-          PRINTSYS_PrintStream_StopTempSpeedMode( wk->printStream );
+        else{
+          if( PRINTSYS_IsTempSpeedMode(wk->printStream) ){
+            PRINTSYS_PrintStream_StopTempSpeedMode( wk->printStream );
+          }
         }
       }
 

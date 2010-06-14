@@ -300,7 +300,6 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->setupParam = setup_param;
       wk->setupParam->capturedPokeIdx = TEMOTI_POKEMAX;
       wk->playerStatus = wk->setupParam->playerStatus[ BTL_CLIENT_PLAYER ];
-      wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
       wk->LimitTimeGame = wk->setupParam->LimitTimeGame;
       wk->LimitTimeCommand = wk->setupParam->LimitTimeCommand;
       wk->fGetMoneyFixed = FALSE;
@@ -313,6 +312,9 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
       wk->mainLoop = NULL;
       wk->viewCore = NULL;
       wk->serverResult = BTL_RESULT_MAX;  // 無効コードとして
+      wk->msgSpeed = CONFIG_GetMsgSpeed( wk->setupParam->configData );
+      wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
+
 
       PokeCon_Init( &wk->pokeconForClient, wk, FALSE );
       PokeCon_Init( &wk->pokeconForServer, wk, TRUE );
@@ -338,7 +340,7 @@ static GFL_PROC_RESULT BTL_PROC_Init( GFL_PROC* proc, int* seq, void* pwk, void*
 
 
       BTL_ESCAPEINFO_Clear( &wk->escapeInfo );
-      wk->fWazaEffectEnable = (CONFIG_GetWazaEffectMode(setup_param->configData) == WAZAEFF_MODE_ON);
+
       wk->changeMode = (CONFIG_GetBattleRule(setup_param->configData) == BATTLERULE_IREKAE)?
           BTL_CHANGEMODE_IREKAE : BTL_CHANGEMODE_KATINUKI;
 
@@ -1442,10 +1444,20 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
     // サーバマシンは各クライアントにサーバパラメータを通知する
     wk->serverNotifyParam.randomContext = wk->randomContext;
     wk->serverNotifyParam.debugFlagBit = wk->setupParam->DebugFlagBit;
-    wk->serverNotifyParam.msgSpeed = wk->msgSpeed;
-    wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
     wk->serverNotifyParam.LimitTimeGame = wk->setupParam->LimitTimeGame;
     wk->serverNotifyParam.LimitTimeCommand = wk->setupParam->LimitTimeCommand;
+
+      // Config Share モードならサーバマシンの設定を引き継ぎ
+    if( BTL_MAIN_GetSetupStatusFlag(wk, BTL_STATUS_FLAG_CONFIG_SHARE) )
+    {
+      wk->serverNotifyParam.msgSpeed = wk->msgSpeed;
+      wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
+    }else{
+      wk->serverNotifyParam.msgSpeed = MSGSPEED_NORMAL;
+      wk->serverNotifyParam.fWazaEffectEnable = TRUE;
+    }
+
+
     if( BTL_NET_NotifyServerParam(&wk->serverNotifyParam) ){
       ++(*seq);
     }

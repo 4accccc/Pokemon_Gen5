@@ -152,18 +152,19 @@ typedef struct {
 //-----------------------------------------------------------------------------------
 typedef enum {
   //フラグ数が16をこえるときはBATTLE_SETUP_PARAM->btl_status_flagの型をu16から拡張してください
-  BTL_STATUS_FLAG_FISHING = 0x0001,     ///<釣り戦闘ならTRUE
-  BTL_STATUS_FLAG_PCNAME_OPEN = 0x0002, ///<パソコンの名前がオープンされているか？
-  BTL_STATUS_FLAG_LEGEND = 0x0004,      ///<伝説級ポケモンとのエンカウントならTRUE(Btlエンカウントメッセージ変化)
-  BTL_STATUS_FLAG_MOVE_POKE = 0x0008,   ///<移動ポケモンとのエンカウントならTRUE
-  BTL_STATUS_FLAG_SYMBOL = 0x0010,      ///<PDW連動のシンボルエンカウントならTRUE
-  BTL_STATUS_FLAG_HIGH_LV_ENC = 0x0020, ///<野生ハイレベルエンカウントならTRUE
-  BTL_STATUS_FLAG_BOXFULL = 0x0040,     ///<手持ち・ボックスが満杯でもう捕獲できない時にTRUE
-  BTL_STATUS_FLAG_WILD_TALK = 0x0080,   ///<話しかけでの野生戦の時にTRUE(Btlエンカウントメッセージ変化)
-  BTL_STATUS_FLAG_NO_LOSE = 0x0100,     ///<ゲームオーバーにならないバトルならTRUE
-  BTL_STATUS_FLAG_LEGEND_EX = 0x0200,   ///<シナリオラストのシン・ム戦専用（経験値なし・倒したメッセージ表示なし）
-  BTL_STATUS_FLAG_CAMERA_WCS = 0x0400,  ///< WCS用カメラモード
-  BTL_STATUS_FLAG_CAMERA_OFF = 0x0800,  ///< カメラ動作オフ
+  BTL_STATUS_FLAG_FISHING = 0x0001,       ///<釣り戦闘ならTRUE
+  BTL_STATUS_FLAG_PCNAME_OPEN = 0x0002,   ///<パソコンの名前がオープンされているか？
+  BTL_STATUS_FLAG_LEGEND = 0x0004,        ///<伝説級ポケモンとのエンカウントならTRUE(Btlエンカウントメッセージ変化)
+  BTL_STATUS_FLAG_MOVE_POKE = 0x0008,     ///<移動ポケモンとのエンカウントならTRUE
+  BTL_STATUS_FLAG_SYMBOL = 0x0010,        ///<PDW連動のシンボルエンカウントならTRUE
+  BTL_STATUS_FLAG_HIGH_LV_ENC = 0x0020,   ///<野生ハイレベルエンカウントならTRUE
+  BTL_STATUS_FLAG_BOXFULL = 0x0040,       ///<手持ち・ボックスが満杯でもう捕獲できない時にTRUE
+  BTL_STATUS_FLAG_WILD_TALK = 0x0080,     ///<話しかけでの野生戦の時にTRUE(Btlエンカウントメッセージ変化)
+  BTL_STATUS_FLAG_NO_LOSE = 0x0100,       ///<ゲームオーバーにならないバトルならTRUE
+  BTL_STATUS_FLAG_LEGEND_EX = 0x0200,     ///<シナリオラストのシン・ム戦専用（経験値なし・倒したメッセージ表示なし）
+  BTL_STATUS_FLAG_CAMERA_WCS = 0x0400,    ///< WCS用カメラモード
+  BTL_STATUS_FLAG_CAMERA_OFF = 0x0800,    ///< カメラ動作オフ
+  BTL_STATUS_FLAG_CONFIG_SHARE = 0x1000,  ///< コンフィグ設定を親機のもので行う
 }BTL_STATUS_FLAG;
 
 //-----------------------------------------------------------------------------------
