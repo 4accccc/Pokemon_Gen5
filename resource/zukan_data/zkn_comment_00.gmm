@@ -2368,7 +2368,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_225">
-		<language name="JPN">しっぽで　えさを　つつんで　はこぶ。
+		<language name="JPN">しっぽで　エサを　つつんで　はこぶ。
 やまで　そうなんした　ひとに
 エサを　わけあたえる　しゅうせい。</language>
 		<language name="JPN_KANJI">しっぽで　エサを　包んで　運ぶ。
@@ -3138,7 +3138,7 @@
 いなずまを　おとして　こうげきする。</language>
 		<language name="JPN_KANJI">たてがみから　放電している。
 頭上に　雷雲を　作り
-いなずまを　落として　攻撃する。</language>
+稲妻を　落として　攻撃する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_311">
@@ -5041,7 +5041,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_522">
-		<language name="JPN">カミナリぐもで　そらが　おおわれると
+		<language name="JPN">かみなりぐもで　そらが　おおわれると
 あらわれる。たてがみで　カミナリを
 キャッチして　でんきを　ためる。</language>
 		<language name="JPN_KANJI">雷雲で　空が　おおわれると
@@ -5268,10 +5268,10 @@
 	<row id="ZKN_COMMENT_00_547">
 		<language name="JPN">つむじかぜに　のって　あらわれる。
 すきまから　いえに　はいりこみ
-イタズラを　していく　ポケモン。</language>
+いたずらを　していく　ポケモン。</language>
 		<language name="JPN_KANJI">つむじ風に　乗って　現われる。
 すきまから　家に　入り込み
-イタズラを　していく　ポケモン。</language>
+いたずらを　していく　ポケモン。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_548">
@@ -5428,7 +5428,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_00_565">
-		<language name="JPN">アゴの　ちからが　けたちがい。
+		<language name="JPN">あごの　ちからが　けたちがい。
 えものと　いっしょに　てっこつや
 いわも　かみくだいて　たべてしまう。</language>
 		<language name="JPN_KANJI">アゴの　力が　けたちがい。

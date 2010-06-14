@@ -2367,7 +2367,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_225">
-		<language name="JPN">しっぽで　えさを　つつんで　はこぶ。
+		<language name="JPN">しっぽで　エサを　つつんで　はこぶ。
 やまで　そうなんした　ひとに
 エサを　わけあたえる　しゅうせい。</language>
 		<language name="JPN_KANJI">しっぽで　エサを　包んで　運ぶ。
@@ -3137,7 +3137,7 @@
 いなずまを　おとして　こうげきする。</language>
 		<language name="JPN_KANJI">たてがみから　放電している。
 頭上に　雷雲を　作り
-いなずまを　落として　攻撃する。</language>
+稲妻を　落として　攻撃する。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_311">
@@ -4845,7 +4845,7 @@
 		<language name="JPN">あごの　ほのおで　こぶしを　もやして
 ほのおの　パンチを　くりだす。
 とても　なかまおもいの　ポケモン。</language>
-		<language name="JPN_KANJI">あごの　炎で　こぶしを　燃やして
+		<language name="JPN_KANJI">アゴの　炎で　こぶしを　燃やして
 炎の　パンチを　繰り出す。
 とても　仲間思いの　ポケモン。</language>
 	</row>
@@ -5049,7 +5049,7 @@
 	</row>
 
 	<row id="ZKN_COMMENT_01_523">
-		<language name="JPN">イナズマのような　しゅんぱつりょく。
+		<language name="JPN">いなずまのような　しゅんぱつりょく。
 ゼブライカが　ぜんそくりょくで
 はしると　らいめいが　ひびきわたる。</language>
 		<language name="JPN_KANJI">稲妻のような　瞬発力。
@@ -5493,7 +5493,7 @@
 		<language name="JPN">しっぽで　おたがいの　からだを
 なでて　あいさつ。しっぽの　ていれを
 かかさず　いつも　きれいにしている。</language>
-		<language name="JPN_KANJI">しっぽで　おたがいの　体を
+		<language name="JPN_KANJI">しっぽで　お互いの　体を
 なでて　あいさつ。しっぽの　手入れを
 欠かさず　いつも　きれいにしている。</language>
 	</row>
@@ -6139,7 +6139,7 @@
 
 	<row id="ZKN_COMMENT_01_644">
 		<language name="JPN">しっぽで　でんきを　つくりだす。
-ぜんしんを　カミナリぐもに　かくして
+ぜんしんを　かみなりぐもに　かくして
 イッシュちほうの　そらを　とぶ。</language>
 		<language name="JPN_KANJI">しっぽで　電気を　作り出す。
 全身を　雷雲に　隠して
