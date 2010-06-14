@@ -354,11 +354,15 @@ void SymbolSave_SetFreeZone(SYMBOL_SAVE_WORK *symbol_save,
     }
   }
   else if(zone_type == SYMBOL_ZONE_TYPE_FREE_SMALL)
-    if (no != SYMBOL_SPACE_NONE && no > SYMBOL_NO_START_FREE_SMALL + SMALL_MAP_EXPAND_NUM * 2){
-    symbol_save->map_level_small = (no - SYMBOL_NO_START_FREE_SMALL) / SMALL_MAP_EXPAND_NUM - 1;
-    if(symbol_save->map_level_small > SYMBOL_MAP_LEVEL_SMALL_MAX){
-      symbol_save->map_level_small = SYMBOL_MAP_LEVEL_SMALL_MAX;  //ˆê‰ž
-      GF_ASSERT_MSG(0, "no=%d", no - SYMBOL_NO_START_FREE_SMALL);
+  {
+    if (no != SYMBOL_SPACE_NONE && no >= SYMBOL_NO_START_FREE_SMALL + SMALL_MAP_EXPAND_NUM * 2)
+    {
+      symbol_save->map_level_small = (no - SYMBOL_NO_START_FREE_SMALL) / SMALL_MAP_EXPAND_NUM - 1;
+      if(symbol_save->map_level_small > SYMBOL_MAP_LEVEL_SMALL_MAX)
+      {
+        symbol_save->map_level_small = SYMBOL_MAP_LEVEL_SMALL_MAX;  //ˆê‰ž
+        GF_ASSERT_MSG(0, "no=%d", no - SYMBOL_NO_START_FREE_SMALL);
+      }
     }
   }
   SymbolSave_Local_Encode(symbol_save);
