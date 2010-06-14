@@ -126,6 +126,8 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
     heap_id = HEAPID_FIELDMAP;
     FIELD_PLAYER_GetGridPos( fld_player, &x, &y, &z );
     //読み込み
+    // ローダー生成
+    p_loader = FIELD_WFBC_PEOPLE_DATA_Create( 0, GFL_HEAP_LOWID(heap_id) );
     //type =   FIELD_WFBC_CORE_TYPE_BLACK_CITY,    // ブラックシティ
     //         FIELD_WFBC_CORE_TYPE_WHITE_FOREST,  // ホワイトフォレスト
     if (zone_id == ZONE_ID_BC10) type = FIELD_WFBC_CORE_TYPE_BLACK_CITY;
@@ -155,6 +157,8 @@ BOOL PLC_WP_CHK_Check(GAMESYS_WORK * gsys)
     }
     //破棄
     FIELD_WFBC_PEOPLE_POS_Delete( ppos );
+
+    FIELD_WFBC_PEOPLE_DATA_Delete( p_loader );
   }
 
   return TRUE;
