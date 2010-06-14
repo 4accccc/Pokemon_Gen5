@@ -3607,6 +3607,12 @@ void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 {
   TokwinSide side = PokePosToTokwinSide( wk->mainModule, pos );
 
+  //自分側の特性ウインドウを表示する場合は、ゲームタイマー表示を一旦消す
+  if( side == TOKWIN_SIDE_FRIEND )
+  { 
+    BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, FALSE, FALSE );
+  }
+
 //  BTLV_SCU_RestoreDefaultScreen( wk );
   tokwin_disp_first( &wk->tokWin[side], pos, fFlash );
 }
@@ -3628,6 +3634,11 @@ void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos )
 {
   BtlSide side = PokePosToTokwinSide( wk->mainModule, pos );
   tokwin_hide_first( &wk->tokWin[side] );
+  //消していたゲームタイマー表示を復活
+  if( side == TOKWIN_SIDE_FRIEND )
+  { 
+    BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, TRUE, FALSE );
+  }
 }
 BOOL BTLV_SCU_TokWin_HideWait( BTLV_SCU* wk, BtlPokePos pos )
 {
