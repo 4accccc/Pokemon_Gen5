@@ -725,15 +725,12 @@ static  void  gauge_load_resource( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_TYPE type, B
                                                        bgw->bgcl[ pos ].hpnum_charID, bgw->plttID[ pltt_id ],
                                                        bgw->bgcl[ pos ].hpnum_cellID,
                                                        &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
-    if( ( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_3vs3 ) ||
-        ( bgw->bgcl[ pos ].gauge_type == BTLV_GAUGE_TYPE_ROTATE ) )
-    { 
-      GFL_CLACT_WK_SetDrawEnable( bgw->bgcl[ pos ].hpnum_clwk, FALSE );
-    }
     bgw->bgcl[ pos ].hp_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                     bgw->bgcl[ pos ].hp_charID, bgw->plttID[ pltt_id ],
                                                     bgw->bgcl[ pos ].hp_cellID,
                                                     &gauge, CLSYS_DEFREND_MAIN, bgw->heapID );
+    set_hp_gauge_draw( bgw, pos, TRUE );
+
     bgw->bgcl[ pos ].status_clwk = GFL_CLACT_WK_Create( bgw->clunit,
                                                         bgw->status_charID, bgw->status_plttID,
                                                         bgw->status_cellID,
@@ -1651,6 +1648,11 @@ static  void  PutGaugeOBJ( BTLV_GAUGE_WORK* bgw, BTLV_GAUGE_CLWK *bgcl, BTLV_GAU
 
   switch(req){
   case BTLV_GAUGE_REQ_HP:
+    //”Žš•\Ž¦ƒ‚[ƒh‚È‚ç‰½‚à‚µ‚È‚¢
+    if( bgw->gauge_num_mode )
+    { 
+      break;
+    }
     GFL_CLACT_WK_GetImgProxy( bgcl->hp_clwk, &image );
     put_dot = PutGaugeProc( bgcl->hpmax, bgcl->hp, bgcl->damage, &bgcl->hp_work, gauge_chr, BTLV_GAUGE_HP_CHARMAX );
 
