@@ -1027,7 +1027,7 @@ void BTLV_UI_SelectTarget_ForceQuit( BTLV_CORE* core )
 static void ForceQuitSelect_Common( BTLV_CORE* core )
 {
   //カメラワークチェックを止めてカメラをデフォルト位置にする
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
+  BTLV_EFFECT_SetCameraWorkStop();
   BTLV_SCD_ForceQuitSelect( core->scrnD );
   mainproc_reset( core );
 }
@@ -2258,7 +2258,7 @@ BOOL BTLV_WaitCommWait( BTLV_CORE* wk )
 void BTLV_ResetCommWaitInfo( BTLV_CORE* wk )
 {
   //カメラワークチェックを止めてカメラをデフォルト位置にする
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
+  BTLV_EFFECT_SetCameraWorkStop();
   BTLV_SCU_ClearCommWaitInfo( wk->scrnU );
 }
 

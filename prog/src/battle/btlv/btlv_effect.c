@@ -1872,6 +1872,18 @@ void  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe )
 
 //----------------------------------------------------------------------------
 /**
+ *  @brief  カメラワークエフェクトを止める
+ */
+//-----------------------------------------------------------------------------
+void  BTLV_EFFECT_SetCameraWorkStop( void )
+{ 
+  BTLV_EFFECT_Stop();
+  BTLV_EFFECT_Add( BTLEFF_CAMERA_INIT );
+  bew->camera_work_execute = BTLV_EFFECT_CWE_NONE;
+}
+
+//----------------------------------------------------------------------------
+/**
  *  @brief  空いているTCBIndexを取得
  *
  *  @param[in]  bevw システム管理構造体
@@ -2140,7 +2152,6 @@ static  void  camera_work_check( void )
   if( bew->camera_work_execute >= BTLV_EFFECT_CWE_SHIFT_NONE )
   {
     BTLV_EFFECT_Stop();
-
     if( bew->camera_work_execute != BTLV_EFFECT_CWE_SHIFT_NO_STOP )
     { 
       if( bew->camera_work_execute == BTLV_EFFECT_CWE_SHIFT_NONE )

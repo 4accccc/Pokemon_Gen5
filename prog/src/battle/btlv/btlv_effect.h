@@ -75,30 +75,30 @@ enum{
   BTLEFF_NEMURI = BTLEFF_STATUS_EFFECT_START, //ねむり 
   BTLEFF_DOKU,                                //どく
   BTLEFF_YAKEDO,                              //やけど
-  BTLEFF_KOORI,                               //こおり
+  BTLEFF_KOORI,                               //こおり  600
   BTLEFF_MAHI,                                //まひ
   BTLEFF_KONRAN,                              //こんらん
-  BTLEFF_MEROMERO,                            //メロメロ  600
+  BTLEFF_MEROMERO,                            //メロメロ
   BTLEFF_LVUP,                                //レベルアップ
   BTLEFF_USE_ITEM,                            //ポケモンにアイテムを使用
   BTLEFF_SOUBI_ITEM,                          //装備道具発動 10
   BTLEFF_RARE,                                //レアエフェクト
   BTLEFF_STATUS_UP,                           //ステータス上昇
   BTLEFF_STATUS_DOWN,                         //ステータス下降
-  BTLEFF_HP_RECOVER,                          //HP回復
+  BTLEFF_HP_RECOVER,                          //HP回復  610
   BTLEFF_MIGAWARI_WAZA_BEFORE,                //みがわり時に技を繰り出す前エフェクト
   BTLEFF_MIGAWARI_WAZA_AFTER,                 //みがわり時に技を繰り出した後エフェクト
-  BTLEFF_ITEM_ESCAPE,                         //エネコのしっぽorピッピ人形  610
+  BTLEFF_ITEM_ESCAPE,                         //エネコのしっぽorピッピ人形
   BTLEFF_WEATHER_KIRI,                        //きり（シャチではないかも？）
   BTLEFF_WEATHER_AME,                         //あめ
   BTLEFF_WEATHER_ARARE,                       //あられ  20
   BTLEFF_WEATHER_SUNAARASHI,                  //すなあらし
   BTLEFF_WEATHER_HARE,                        //はれ
   BTLEFF_POKEMON_MODOSU,                      //ポケモン引っ込めるエフェクト
-  BTLEFF_POKEMON_KURIDASU,                    //ポケモン繰り出しエフェクト
+  BTLEFF_POKEMON_KURIDASU,                    //ポケモン繰り出しエフェクト  620
   BTLEFF_MIGAWARI_FALL,                       //みがわり落ちてくる
   BTLEFF_MIGAWARI_DEAD,                       //みがわり消滅
-  BTLEFF_TRAINER_IN,                          //トレーナーフレームイン  620
+  BTLEFF_TRAINER_IN,                          //トレーナーフレームイン
   BTLEFF_TRAINER_OUT,                         //トレーナーフレームアウト
   BTLEFF_KIAIPUNCH_TAME,                      //きあいパンチのタメエフェクト
   BTLEFF_NOROI,                               //のろい  30
@@ -333,6 +333,7 @@ extern  int               BTLV_EFFECT_SearchTCBIndex( GFL_TCB* tcb );
 extern  void              BTLV_EFFECT_FreeTCB( GFL_TCB* tcb );
 extern  void              BTLV_EFFECT_FreeTCBGroup( BTLV_EFFECT_TCB_GROUP group );
 extern  void              BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE cwe );
+extern  void              BTLV_EFFECT_SetCameraWorkStop( void );
 
 #ifdef PM_DEBUG
 extern  void        BTLV_EFFECT_SetPokemonDebug( const MCSS_ADD_DEBUG_WORK *madw, int position );
