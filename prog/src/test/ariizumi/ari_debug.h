@@ -27,7 +27,4 @@
 #endif //DEB_ARI
 
 #define F32_CONST(v)	FX_FX32_TO_F32(v)
-//とりあえず定義が無いのでフェードスピード定義
-#define ARI_FADE_SPD	(0)	//一段階変わると待つフレーム数だからこれで16フレーム
-
 #endif //ARI_DEBUG_H__

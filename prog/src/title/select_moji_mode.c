@@ -330,7 +330,7 @@ static void SEL_MODE_InitGraphic( SEL_MODE_WORK *work )
   *((u16 *)HW_BG_PLTT) = 0x7d8c;//RGB(12, 12, 31);
   *((u16 *)(HW_BG_PLTT+0x400)) = 0x7d8c;//RGB(12, 12, 31);
 
-  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT , 16 , 0 , ARI_FADE_SPD );
+  GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT , 16 , 0 , 0 );
   
 }
 
