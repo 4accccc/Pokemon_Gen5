@@ -1741,6 +1741,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_FlowerGift( u32* numElems )
     { BTL_EVENT_IEKI_FIXED,           handler_FlowerGift_TokOff   }, // いえき確定ハンドラ
     { BTL_EVENT_NOTIFY_AIRLOCK,       handler_FlowerGift_AirLock  },  // エアロック通知ハンドラ
     { BTL_EVENT_ACTPROC_END,          handler_FlowerGift_Weather  },
+    { BTL_EVENT_TURNCHECK_DONE,       handler_FlowerGift_Weather  },
     { BTL_EVENT_CHANGE_TOKUSEI_BEFORE,handler_FlowerGift_TokChange}, // とくせい書き換え直前ハンドラ
     { BTL_EVENT_ATTACKER_POWER,       handler_FlowerGift_Power    }, // 攻撃力決定のハンドラ
     { BTL_EVENT_DEFENDER_GUARD,       handler_FlowerGift_Guard    }, // 防御力決定のハンドラ
@@ -4883,6 +4884,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
     { BTL_EVENT_IEKI_FIXED,            handler_Tenkiya_TokOff    },  // いえき確定ハンドラ
     { BTL_EVENT_NOTIFY_AIRLOCK,        handler_Tenkiya_AirLock   },  // エアロック通知ハンドラ
     { BTL_EVENT_ACTPROC_END,           handler_Tenkiya_Weather   },
+    { BTL_EVENT_TURNCHECK_DONE,        handler_Tenkiya_Weather   },
     { BTL_EVENT_WEATHER_CHANGE_AFTER,  handler_Tenkiya_Weather   },  // 天候変化後ハンドラ
 
   };
@@ -6833,9 +6835,12 @@ static void handler_MagicMirror_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
-    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
-    HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
-    BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) )
+    {
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_IN, pokeID );
+      HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
+      BTL_SVF_HANDEX_PushRun( flowWk, BTL_HANDEX_TOKWIN_OUT, pokeID );
+    }
   }
 }
 

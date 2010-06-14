@@ -2306,6 +2306,7 @@ static void scproc_Move( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
   if( (posIdx == 0) || (posIdx == 2) )
   {
     scproc_MoveCore( wk, clientID, posIdx, 1, TRUE );
+    scPut_Message_Set( wk, bpp, BTL_STRID_SET_TripleMove );
   }
   else
   {
@@ -5639,7 +5640,6 @@ static u32 scproc_Fight_damage_side_core( BTL_SVFLOW_WORK* wk,
     scproc_Damage_Drain( wk, wazaParam, attacker, bpp[i], dmg[i] );
     scproc_WazaAdditionalEffect( wk, wazaParam, attacker, bpp[i], dmg[i], FALSE );
     scproc_WazaDamageReaction( wk, attacker, bpp[i], wazaParam, affAry[i], dmg[i], critical_flg[i], FALSE );
-    scproc_CheckItemReaction( wk, bpp[i], BTL_ITEMREACTION_HP );
   }
 
   // ひんしチェック
@@ -6241,6 +6241,17 @@ static void scEvent_DamageProcEnd( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* att
 {
   scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END_HIT_REAL );
   scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, FALSE, BTL_EVENT_DAMAGEPROC_END_HIT );
+
+  // ダメージ反応アイテム
+  {
+    BTL_POKEPARAM* bpp;
+    BTL_POKESET_SeekStart( targets );
+    while( (bpp = BTL_POKESET_SeekNext(targets)) != NULL )
+    {
+      scproc_CheckItemReaction( wk, bpp, BTL_ITEMREACTION_HP );
+    }
+  }
+
   scEvent_DamageProcEndSub( wk, attacker, targets, wazaParam, fDelayAttack, TRUE,  BTL_EVENT_DAMAGEPROC_END );
 }
 /**
@@ -6529,7 +6540,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
       hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
         scEvent_ItemEquip( wk, bpp );
-        if( scproc_HandEx_Result(wk) != HandExResult_NULL ){
+        if( scproc_HandEx_Result(wk) != HandExResult_Enable ){
           result = FALSE;
         }
       BTL_Hem_PopState( &wk->HEManager, hem_state_2nd );
@@ -8586,6 +8597,8 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     if( scproc_CheckShowdown(wk) ){ return FALSE; }
     /* fallthru */
   case 6:
+    scproc_turncheck_sub(wk, pokeSet, BTL_EVENT_TURNCHECK_DONE );
+
     // 全ポケモンのターンフラグをクリア
     wk->turnCheckStep++;
     {

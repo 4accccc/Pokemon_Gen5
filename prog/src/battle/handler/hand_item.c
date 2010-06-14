@@ -167,7 +167,7 @@ static void handler_IbanNomi_SpPriorityWorked( BTL_EVENT_FACTOR* myHandle, BTL_S
 static void handler_IbanNomi_ActStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems );
-static void handler_MikuruNomi_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_MikuruNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MikuruNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_MikuruNomi_UseTmp( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable* HAND_ADD_ITEM_JapoNomi( u32* numElems );
@@ -2144,8 +2144,9 @@ static void common_DamageReactCore( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 //--------------------------------------------------------------
 static BOOL common_DamageReactCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, u32 n )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
-  {
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_ITEM_REACTION) == BTL_ITEMREACTION_HP)
+  ){
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     u32 maxHP;
 
@@ -2244,8 +2245,7 @@ static void handler_IbanNomi_Use( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* f
 static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-//    { BTL_EVENT_TURNCHECK_END,         handler_MikuruNomi_TurnCheck  }, // ターンチェック
-    { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_TurnCheck  },
+    { BTL_EVENT_CHECK_ITEM_REACTION,   handler_MikuruNomi_Reaction  },
     { BTL_EVENT_USE_ITEM,              handler_MikuruNomi_Use        }, // アイテム使用ハンドラ
     { BTL_EVENT_USE_ITEM_TMP,          handler_MikuruNomi_UseTmp     }, // アイテム使用ハンドラ
   };
@@ -2253,7 +2253,7 @@ static const BtlEventHandlerTable* HAND_ADD_ITEM_MikuruNomi( u32* numElems )
   return HandlerTable;
 }
 // ターンチェック
-static void handler_MikuruNomi_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+static void handler_MikuruNomi_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
   {
