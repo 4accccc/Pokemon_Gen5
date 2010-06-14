@@ -2800,11 +2800,9 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
       situ->wait++;
       if(situ->wait > ONESELF_SERVER_TIMEOUT || (GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL)){
         situ->mycomm.intrude_exe = FALSE;
-        GFL_NET_ChangeGameService(WB_NET_UNION, UNION_CONNECT_PLAYER_NUM);  //GSIDを元に戻す
-        GFL_NET_ChangeoverModeSet(GFL_NET_CHANGEOVER_MODE_NORMAL, FALSE, NULL);
         UnionOneself_ReqStatus(unisys, UNION_STATUS_NORMAL);
         OS_TPrintf("親と接続出来なかった為キャンセルしました\n");
-        *seq = _SEQ_INTRUDE_NG_MSG;
+        *seq = _SEQ_MEMBER_OVER;
       }
     }
     break;
@@ -2832,7 +2830,6 @@ static BOOL OneselfSeq_IntrudeUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION
     }
     (*seq) = _SEQ_INTRUDE_MSG_WAIT_FINISH;
     break;
-    
   case _SEQ_INTRUDE_MSG_WAIT_FINISH:
     if(UnionMsg_TalkStream_Check(unisys) == TRUE){
       return TRUE;
