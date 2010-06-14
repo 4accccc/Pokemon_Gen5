@@ -208,6 +208,8 @@ void GOBJ_ELBOARD_Main( GOBJ_ELBOARD* elboard, fx32 frame )
 
   // 動作フレーム数更新
   elboard->frame += frame;
+
+  
 }
 
 
@@ -310,9 +312,8 @@ void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame )
   {
     NEWS* news = elboard->news[i];
     now_frame[i] = (set_frame % one_round_frame) - start_frame[i];
-    news->dispFlag = (0 <= now_frame[i]) && (now_frame[i] < FX_Whole(news->endFrame));
-    news->switchFlag = (FX_Whole(news->switchFrame) < now_frame[i]) &&
-      (now_frame[i] < FX_Whole(news->endFrame));
+    news->dispFlag = (0 < now_frame[i]) && (now_frame[i] < FX_Whole(news->endFrame));
+    news->switchFlag = (FX_Whole(news->switchFrame) < now_frame[i]) && (now_frame[i] < FX_Whole(news->endFrame));
     if( now_frame[i] < 0 ) now_frame[i] = 0;
     news->nowFrame = now_frame[i] << FX32_SHIFT;
     GFL_G3D_OBJECT_SetAnimeFrame( news->g3dObj, news->animeIndex, (int*)&news->nowFrame );
