@@ -25,7 +25,7 @@ enum
 { 
   BTLV_TIMER_GAME_TIME = 0,
   BTLV_TIMER_COMMAND_TIME,
-  BTLV_TIMER_SEPARATES,
+  BTLV_TIMER_SEPARATES_ANM,
   BTLV_TIMER_ZERO,
   BTLV_TIMER_ONE,
   BTLV_TIMER_TWO,
@@ -52,7 +52,7 @@ enum
   BTLV_TIMER_LABEL = 0,
   BTLV_TIMER_MINUTE_10,
   BTLV_TIMER_MINUTE_01,
-  BTLV_TIMER_SEPATATES,
+  BTLV_TIMER_SEPARATES,
   BTLV_TIMER_SECOND_10,
   BTLV_TIMER_SECOND_01,
   BTLV_TIMER_CLWK_MAX,
@@ -189,8 +189,8 @@ void  BTLV_TIMER_Create( BTLV_TIMER_WORK* btw, int game_time, int command_time )
     BTLV_TIMER_COMMAND_TIME_Y,
   };
   int timer_anm[ 2 ][ BTLV_TIMER_CLWK_MAX ] = { 
-    { BTLV_TIMER_GAME_TIME,    BTLV_TIMER_ZERO, BTLV_TIMER_ZERO, BTLV_TIMER_SEPARATES, BTLV_TIMER_ZERO, BTLV_TIMER_ZERO },
-    { BTLV_TIMER_COMMAND_TIME, BTLV_TIMER_ZERO, BTLV_TIMER_ZERO, BTLV_TIMER_SEPARATES, BTLV_TIMER_ZERO, BTLV_TIMER_ZERO },
+    { BTLV_TIMER_GAME_TIME,    BTLV_TIMER_ZERO, BTLV_TIMER_ZERO, BTLV_TIMER_SEPARATES_ANM, BTLV_TIMER_ZERO, BTLV_TIMER_ZERO },
+    { BTLV_TIMER_COMMAND_TIME, BTLV_TIMER_ZERO, BTLV_TIMER_ZERO, BTLV_TIMER_SEPARATES_ANM, BTLV_TIMER_ZERO, BTLV_TIMER_ZERO },
   };
   int i,j;
 
@@ -367,13 +367,14 @@ static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
   if( ( minute_10 == 0 ) && ( minute_01 == 0 ) )
   { 
     GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_01 ], FALSE );
-    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_SEPATATES ], FALSE );
+    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_SEPARATES ], FALSE );
   }
   else
   { 
     GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_01 ], TRUE );
-    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_SEPATATES ], TRUE );
+    GFL_CLACT_WK_SetDrawEnable( btw->btcl[ type ].clwk[ BTLV_TIMER_SEPARATES ], TRUE );
     GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_MINUTE_01 ], BTLV_TIMER_ZERO + minute_01 + btw->alert[ type ] );
+    GFL_CLACT_WK_SetAnmSeq( btw->btcl[ type ].clwk[ BTLV_TIMER_SEPARATES ], BTLV_TIMER_SEPARATES_ANM + btw->alert[ type ] );
   }
 
   if( ( minute_10 == 0 ) && ( minute_01 == 0 ) && ( second_10 == 0 ) )
