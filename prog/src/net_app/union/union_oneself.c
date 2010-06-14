@@ -36,6 +36,7 @@
 #include "savedata/battle_box_save.h"
 #include "net_app/union_app.h"
 #include "savedata/etc_save.h"
+#include "app/trainer_card.h"
 
 //#include "field/event_ircbattle.h"
 #include "net_app\irc_compatible.h"
@@ -4608,7 +4609,8 @@ static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SI
 static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq)
 {
   COLOSSEUM_SYSTEM_PTR clsys = unisys->colosseum_sys;
-
+  u32 msg_id;
+  
 #if 0 //通信しないのでチェックしない
   if(_UnionCheckError_ColosseumForceExit(unisys) == TRUE){
     UnionMsg_AllDel(unisys);
@@ -4619,15 +4621,49 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
   switch(*seq){
   case 0:
     _PlayerMinePause(unisys, fieldWork, TRUE);
+    
+    {
+      TR_CARD_RANK card_rank = TRAINERCARD_GetCardRank(unisys->uniparent->game_data);
+      if(card_rank < TR_CARD_RANK_BLACK){
+        msg_id = msg_union_card_01 + card_rank;
+      }
+      else if(card_rank == TR_CARD_RANK_BLACK){
+        int pm_version = MyStatus_GetRomCode(&clsys->basic_status[clsys->talk_obj_id].myst);
+        switch(pm_version){
+        case VERSION_BLACK:
+          msg_id = msg_union_card_07;
+          break;
+        case VERSION_WHITE:
+          msg_id = msg_union_card_06;
+          break;
+        default:
+          msg_id = msg_union_card_08;
+          break;
+        }
+      }
+      else{
+        msg_id = msg_union_card_08;
+      }
+    }
 
-    clsys->recvbuf.tr_card[clsys->talk_obj_id]->SignDisenable = TRUE;
-    unisys->parent_work = TRAINERCASR_CreateCallParam_CommData(
-      unisys->uniparent->game_data, clsys->recvbuf.tr_card[clsys->talk_obj_id], HEAPID_UNION);
-
-    UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD, unisys->parent_work);
+    UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_id);
     (*seq)++;
     break;
   case 1:
+    if(UnionMsg_TalkStream_Check(unisys) == TRUE){
+      if(GFL_UI_KEY_GetTrg() & (PAD_BUTTON_DECIDE | PAD_BUTTON_CANCEL)){
+        UnionMsg_AllDel(unisys);
+        
+        clsys->recvbuf.tr_card[clsys->talk_obj_id]->SignDisenable = TRUE;
+        unisys->parent_work = TRAINERCASR_CreateCallParam_CommData(unisys->uniparent->game_data, 
+          clsys->recvbuf.tr_card[clsys->talk_obj_id], HEAPID_UNION);
+
+        UnionSubProc_EventSet(unisys, UNION_SUBPROC_ID_COLOSSEUM_TRAINERCARD, unisys->parent_work);
+        (*seq)++;
+      }
+    }
+    break;
+  case 2:
     if(UnionSubProc_IsExits(unisys) == FALSE){
     #if 0//トレーナーカードのParentWorkはトレーナーカードのProc内で解放されるのでここでは解放しない
       GFL_HEAP_FreeMemory(unisys->parent_work);
@@ -4637,7 +4673,7 @@ static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION
       (*seq)++;
     }
     break;
-  case 2:
+  case 3:
     UnionOneself_ReqStatus(unisys, UNION_STATUS_COLOSSEUM_NORMAL);
     return TRUE;
   }
