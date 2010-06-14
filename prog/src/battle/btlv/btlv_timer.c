@@ -196,14 +196,18 @@ void  BTLV_TIMER_Create( BTLV_TIMER_WORK* btw, int game_time, int command_time )
 
   for( i = 0 ; i < BTLV_TIMER_TYPE_MAX ; i++ )
   { 
-    for( j = 0 ; j < BTLV_TIMER_CLWK_MAX ; j++ )
+    if( ( i == BTLV_TIMER_TYPE_GAME_TIME ) && ( game_time ) ||
+        ( i == BTLV_TIMER_TYPE_COMMAND_TIME ) && ( command_time ) )
     { 
-      timer.pos_x = timer_pos_x[ j ];
-      timer.pos_y = timer_pos_y[ i ];
-      timer.anmseq = timer_anm[ i ][ j ];
-      btw->btcl[ i ].clwk[ j ] = GFL_CLACT_WK_Create( btw->clunit[ i ], btw->charID, btw->plttID, btw->cellID,
-                                                      &timer, CLSYS_DEFREND_MAIN, btw->heapID );
-      GFL_CLACT_WK_SetAutoAnmFlag( btw->btcl[ i ].clwk[ j ], TRUE );
+      for( j = 0 ; j < BTLV_TIMER_CLWK_MAX ; j++ )
+      { 
+        timer.pos_x = timer_pos_x[ j ];
+        timer.pos_y = timer_pos_y[ i ];
+        timer.anmseq = timer_anm[ i ][ j ];
+        btw->btcl[ i ].clwk[ j ] = GFL_CLACT_WK_Create( btw->clunit[ i ], btw->charID, btw->plttID, btw->cellID,
+                                                        &timer, CLSYS_DEFREND_MAIN, btw->heapID );
+        GFL_CLACT_WK_SetAutoAnmFlag( btw->btcl[ i ].clwk[ j ], TRUE );
+      }
     }
   }
 
@@ -275,6 +279,12 @@ void  BTLV_TIMER_Delete( BTLV_TIMER_WORK* btw )
 //============================================================================================
 void  BTLV_TIMER_SetDrawEnable( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type, BOOL enable, BOOL init )
 { 
+  //タイマーが生成されていないなら、何せずにリターンする
+  if( btw->btcl[ type ].clwk[ BTLV_TIMER_LABEL ] == NULL ) 
+  { 
+    return;
+  }
+
   if( ( enable == TRUE ) && ( init == TRUE ))
   { 
     btw->tick[ type ] = OS_GetTick();
@@ -330,6 +340,12 @@ static  void  BTLV_TIMER_Draw( BTLV_TIMER_WORK* btw, BTLV_TIMER_TYPE type )
   int minute_01;
   int second_10;
   int second_01;
+
+  //タイマーが生成されていないなら、何せずにリターンする
+  if( btw->btcl[ type ].clwk[ BTLV_TIMER_LABEL ] == NULL ) 
+  { 
+    return;
+  }
 
   if( timer < 0 )
   { 
