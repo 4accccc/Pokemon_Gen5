@@ -1324,6 +1324,15 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
         BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformWaza2Standby, ttw, 1 ), TCB_Transform_CB );
       }
       PaletteFadeReqWrite( biw->pfd, PF_BIT_SUB_BG, STANDBY_PAL, 1, 0, STANDBY_FADE, STANDBY_FADE_COLOR, biw->tcbsys );
+
+      //カーソルを非表示にする（時間制限での強制終了時の対応）
+      if( GFL_CLACT_UNIT_GetDrawEnable( biw->cursor_clunit ) )
+      { 
+        biw->cursor_pos = 0;
+        biw->old_cursor_pos = CURSOR_NOMOVE;
+        biw->cursor_decide = 1;
+        GFL_CLACT_UNIT_SetDrawEnable( biw->cursor_clunit, FALSE );
+      }
     }
     break;
   case BTLV_INPUT_SCRTYPE_COMMAND:
