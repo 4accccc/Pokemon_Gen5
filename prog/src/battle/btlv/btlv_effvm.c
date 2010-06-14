@@ -65,7 +65,7 @@ enum{
 
 #ifdef PM_DEBUG
 #ifdef DEBUG_ONLY_FOR_sogabe
-//#define DEBUG_OS_PRINT
+#define DEBUG_OS_PRINT
 #endif
 #endif
 
@@ -853,6 +853,25 @@ void      BTLV_EFFVM_Restart( VMHANDLE *vmh )
   GF_ASSERT( bevw->pause_flag );
 
   bevw->pause_flag = 0;
+}
+
+//============================================================================================
+/**
+ * @brief 起動しているエフェクトNoを取得
+ *
+ * @param[in] vmh 仮想マシン制御構造体へのポインタ
+ */
+//============================================================================================
+int BTLV_EFFVM_GetExecuteEffectNo( VMHANDLE *vmh )
+{
+  BTLV_EFFVM_WORK *bevw = (BTLV_EFFVM_WORK *)VM_GetContext( vmh );
+
+  if( bevw->sequence )
+  {
+    return bevw->waza;
+  }
+
+  return 0;
 }
 
 //============================================================================================
@@ -3088,6 +3107,10 @@ static VMCMD_RESULT VMEC_WINDOW_MOVE( VMHANDLE *vmh, void *context_work )
   OS_TPrintf("VMEC_WINDOW_MOVE\n");
 #endif DEBUG_OS_PRINT
 
+  //加減算レジスタを書き換えてしまうので、BGをオフる
+  GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+  GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+
   BTLV_EFFECT_SetTCB( GFL_TCB_AddTask( bevw->tcbsys, TCB_EFFVM_WINDOW_MOVE, bevwm, 0 ), TCB_EFFVM_WINDOW_MOVE_CB, GROUP_EFFVM );
   bevw->window_move_flag = 1;
 
@@ -4309,7 +4332,7 @@ static VMCMD_RESULT VMEC_SEQ_END( VMHANDLE *vmh, void *context_work )
   }
 
   //サブルーチンコールが残っていてはいけない
-  GF_ASSERT( bevw->call_count == 0 );
+  GF_ASSERT_MSG( bevw->call_count == 0, "count:%d\n", bevw->call_count );
 
   //SEを強制的にストップ
   if( bevw->se_play_flag )

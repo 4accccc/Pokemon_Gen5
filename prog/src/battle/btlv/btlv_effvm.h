@@ -49,6 +49,7 @@ extern	void  		BTLV_EFFVM_Exit( VMHANDLE *core );
 extern	void  		BTLV_EFFVM_Start( VMHANDLE *core, BtlvMcssPos from, BtlvMcssPos to, WazaID waza, BTLV_EFFVM_PARAM* param );
 extern  void			BTLV_EFFVM_Stop( VMHANDLE *vmh );
 extern  void      BTLV_EFFVM_Restart( VMHANDLE *vmh );
+extern  int       BTLV_EFFVM_GetExecuteEffectNo( VMHANDLE *vmh );
 extern  BTLV_EFFVM_EXECUTE_EFF_TYPE BTLV_EFFVM_GetExecuteEffectType( VMHANDLE *vmh );
 extern  void      BTLV_EFFVM_ClearParam( BTLV_EFFVM_PARAM* param );
 extern  void      BTLV_EFFVM_SePlay( VMHANDLE* vmh, int se_no, int player, int pan, int pitch, int vol,
