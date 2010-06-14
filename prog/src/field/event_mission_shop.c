@@ -51,6 +51,7 @@ typedef struct
   COMMTALK_COMMON_EVENT_WORK ccew;
 	BOOL error;
 	BOOL success;
+	BOOL cancel;
 }EVENT_MISSION_SHOP;
 
 
@@ -268,6 +269,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
         if(GFL_UI_KEY_GetTrg() & PAD_BUTTON_CANCEL){
           if(IntrudeSend_TalkCancel(intcomm->talk.talk_netid, intcomm->talk.talk_rand) == TRUE){
             Intrude_TalkRandClose(intcomm);
+            shop->cancel = TRUE;
             *seq = SEQ_TALK_CANCEL;
           }
         }
@@ -331,7 +333,7 @@ static GMEVENT_RESULT CommMissionShop_MtoT_Talk( GMEVENT *event, int *seq, void 
       GMEVENT_ChangeEvent(event, EVENT_CommMissionResult(gsys));
       return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
     }
-    else{
+    else if(shop->cancel == FALSE){
       GMEVENT_ChangeEvent(
         event, EVENT_IntrudeForceWarpMyPalace(gsys, MISSION_FORCEWARP_MSGID_SHOP_NG));
       return GMEVENT_RES_CONTINUE;  //ChangeEventÇ≈èIóπÇ∑ÇÈÇΩÇﬂFINISHÇµÇ»Ç¢
