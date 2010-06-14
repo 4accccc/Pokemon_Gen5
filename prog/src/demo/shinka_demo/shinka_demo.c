@@ -2698,7 +2698,7 @@ static STRBUF* MakeStr( HEAPID heap_id,
       {
       case TAG_REGIST_TYPE_WORD:
         {
-          WORDSET_RegisterWord( wordset, i, type_data_set[i].data, 0, TRUE, 0 );  // ポケモンのニックネームしか渡す予定がないので、パラメータは固定値にしています
+          WORDSET_RegisterWord( wordset, i, type_data_set[i].data, 0, TRUE, 0 );  // ポケモンのニックネームしか渡さないので、パラメータは固定値にしています
         }
         break;
       case TAG_REGIST_TYPE_POKE_MONS_NAME:
