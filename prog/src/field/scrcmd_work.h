@@ -146,7 +146,7 @@ extern void SCRCMD_WORK_SetMMdlAnmTCB( SCRCMD_WORK *work, GFL_TCB *tcb );
 extern BOOL SCRCMD_WORK_CheckMMdlAnmTCB( SCRCMD_WORK *work );
 
 //メッセージデータ
-extern void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID );
+extern void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 arcID, u32 datID );
 
 //メニュー
 extern void SCRCMD_WORK_InitMenuWork( SCRCMD_WORK *work,
