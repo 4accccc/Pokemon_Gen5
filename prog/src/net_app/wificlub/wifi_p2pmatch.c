@@ -1668,6 +1668,7 @@ static void MCRSYS_AllDelMoveObjWork( WIFIP2PMATCH_WORK* wk )
   {
     wk->p_matchMoveObj[i] = NULL;
   }
+  MI_CpuClear8(wk->matchStatusBackup, sizeof(wk->matchStatusBackup));
 }
 
 //----------------------------------------------------------------------------
@@ -2609,10 +2610,11 @@ static int _retry( WIFIP2PMATCH_WORK *wk, int seq )
     }
 
     //        wk->friendMatchReadCount;
-    MI_CpuClear8(wk->index2No, WIFIP2PMATCH_MEMBER_MAX);
-    MI_CpuClear8(wk->index2NoBackUp, WIFIP2PMATCH_MEMBER_MAX);
-    MI_CpuClear8(wk->matchStatusBackup, WIFIP2PMATCH_MEMBER_MAX*sizeof(int));
-    MI_CpuClear8(wk->matchVchatBackup, WIFIP2PMATCH_MEMBER_MAX*sizeof(int));
+    MI_CpuClear8(wk->index2No, sizeof(wk->index2No));
+    MI_CpuClear8(wk->index2NoBackUp, sizeof(wk->index2NoBackUp));
+    MI_CpuClear8(wk->matchStatusBackup, sizeof(wk->matchStatusBackup));
+    MI_CpuClear8(wk->matchGamemodeBackup, sizeof(wk->matchGamemodeBackup));
+    MI_CpuClear8(wk->matchVchatBackup, sizeof(wk->matchVchatBackup));
 
 #if 0
     for(i=0;i < _OAM_NUM;i++){
@@ -2985,7 +2987,7 @@ static int WifiP2PMatch_FriendListInit2( WIFIP2PMATCH_WORK *wk, int seq )
 
   _windelandSEcall(wk);
 
-  MI_CpuClear8(wk->index2NoBackUp, WIFIP2PMATCH_MEMBER_MAX);
+  MI_CpuClear8(wk->index2NoBackUp, sizeof(wk->index2NoBackUp));
 
 
   if(wk->menulist){
@@ -3120,7 +3122,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
   out_flag = FALSE;
 
   // バックアップと比較する
-  if( GFL_STD_MemComp( wk->index2No, wk->index2NoBackUp, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX ) != 0 ){
+  if( GFL_STD_MemComp( wk->index2No, wk->index2NoBackUp, sizeof(wk->index2NoBackUp) ) != 0 ){
 
     // 人が変わった
     // バックアップ側にいて、最新版にいないやつはOUT
@@ -3189,7 +3191,7 @@ static int MCRSYS_ContFiendInOut( WIFIP2PMATCH_WORK* wk )
 
     // 最新版に変更
     // memcpy( wk->index2NoBackUp, wk->index2No, sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
-    GFL_STD_MemCopy(  wk->index2No, wk->index2NoBackUp,sizeof(u8)*WIFIP2PMATCH_MEMBER_MAX );
+    GFL_STD_MemCopy(  wk->index2No, wk->index2NoBackUp,sizeof(wk->index2NoBackUp) );
 
 
     if( in_flag || out_flag){
