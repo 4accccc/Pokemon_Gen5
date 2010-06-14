@@ -78,42 +78,42 @@ FS_EXTERN_OVERLAY( poke_status );
 enum {
   WIN_SPACE_M=0,
   WIN_SPACE_S,
-  WIN_STR_ATTACK,     // 「いりょく」
-  WIN_STR_HIT,      // 「めいちゅう」
-  WIN_PRM_ATTACK,     // 威力値
-  WIN_PRM_HIT,      // 命中値
-  WIN_BTL_INFO,     // 戦闘説明
+  WIN_STR_ATTACK, // 「いりょく」
+  WIN_STR_HIT,    // 「めいちゅう」
+  WIN_PRM_ATTACK, // 威力値
+  WIN_PRM_HIT,    // 命中値
+  WIN_BTL_INFO,   // 戦闘説明
   WIN_MSG,        // メッセージウィンドウ
   WIN_EXP,        // 説明ウィンドウ
   WIN_ABTN,       // 決定ボタンウィンドウ
   WIN_BACK,       // 戻るボタンウィンドウ
   WIN_LIST,       // 技リスト
-  WIN_YESNO,        // はい/いいえ
+  WIN_YESNO,      // はい/いいえ
 
-  WIN_TITLE,        // タイトル
-  WIN_MWAZA,        // 上　技リスト
-  WIN_MPRM,         // 上　ポケモン名とレベル
+  WIN_TITLE,      // タイトル
+  WIN_MWAZA,      // 上 技リスト
+  WIN_MPRM,       // 上 ポケモン名とレベル
 
   WIN_MAX
 };
 
 enum {
-  WO_CLA_ARROW_D = 0,     // リストカーソル下
-  WO_CLA_ARROW_U,     // リストカーソル上
-  WO_CLA_CURSOR,      // 選択カーソル
-  WO_CLA_KIND,      // 分類アイコン
-  WO_CLA_TYPE1,     // タイプアイコン１
-  WO_CLA_TYPE2,     // タイプアイコン２
-  WO_CLA_TYPE3,     // タイプアイコン３
-  WO_CLA_TYPE4,     // タイプアイコン４
+  WO_CLA_ARROW_D = 0,// リストカーソル下
+  WO_CLA_ARROW_U,    // リストカーソル上
+  WO_CLA_CURSOR,     // 選択カーソル
+  WO_CLA_KIND,       // 分類アイコン
+  WO_CLA_TYPE1,      // タイプアイコン１
+  WO_CLA_TYPE2,      // タイプアイコン２
+  WO_CLA_TYPE3,      // タイプアイコン３
+  WO_CLA_TYPE4,      // タイプアイコン４
 
-  WO_CLA_TYPE5,     // タイプアイコン１
-  WO_CLA_TYPE6,     // タイプアイコン２
-  WO_CLA_TYPE7,     // タイプアイコン３
-  WO_CLA_TYPE8,     // タイプアイコン４
+  WO_CLA_TYPE5,      // タイプアイコン１
+  WO_CLA_TYPE6,      // タイプアイコン２
+  WO_CLA_TYPE7,      // タイプアイコン３
+  WO_CLA_TYPE8,      // タイプアイコン４
 
-  WO_CLA_POKEGRA,   // ポケモン正面絵
-  WO_CLA_EXIT,      // 戻るボタン
+  WO_CLA_POKEGRA,    // ポケモン正面絵
+  WO_CLA_EXIT,       // 戻るボタン
 
   WO_CLA_MAX
 };
@@ -186,11 +186,11 @@ typedef struct {
   u8  sel_max;
 
   u8  midx;         // メッセージインデックス
-  u8  ynidx;          // はい・いいえID
+  u8  ynidx;        // はい・いいえID
 
   u8  cpos_x;       // カーソルポジション
   u8  cpos_y;       // カーソルポジション
-  u8  cur_pos;        // カーソルポジション
+  u8  cur_pos;      // カーソルポジション
 
   void* pSBufDParts;
   NNSG2dScreenData* pSDParts;
@@ -314,7 +314,6 @@ static void WO_3DRelease( WO_3DWORK * wk );
 static void WO_TypeIconChangeRequest( WO_WORK * wk, u16 waza, u16 res_offset );
 static void WO_TepeIconChangeVblank( WO_WORK *wk );
 static void WO_TypeIconInit( WO_WORK * wk );
-static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr );
 static void WO_KindIconChange( WO_WORK * wk, u16 waza );
 static void WO_SelCursorChange( WO_WORK * wk, u8 pos, u8 pal );
 static void WO_ScrollCursorPut( WO_WORK * wk ,u8 idx,BOOL anm_f);
@@ -514,59 +513,59 @@ static const CLACT_ENTRY_DATA ClactParamTbl[] =
     { WO_CHR_ID_CURSOR, WO_PAL_ID_OBJ, WO_CEL_ID_CURSOR, WO_CEL_ID_CURSOR, },
     2, 0
   },
-  { // 分類アイコン
+  { // 分類アイコン(下画面）
     KIND_ICON_PX, KIND_ICON_PY, 0,
     0, 0, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
-    { WO_CHR_ID_KIND, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
+    { WO_CHR_ID_KIND, WO_PAL_ID_TYPE, WO_CEL_ID_KIND, WO_CEL_ID_KIND, },
     2, 0
   },
   { // タイプアイコン１(下画面）
     TYPE_ICON1_PX, TYPE_ICON1_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
-    { WO_CHR_ID_TYPE1, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE,  },
+    { WO_CHR_ID_TYPE, WO_PAL_ID_TYPE, WO_CEL_ID_D_TYPE, WO_CEL_ID_D_TYPE,  },
     2, 0
   },
   { // タイプアイコン２(下画面）
     TYPE_ICON2_PX, TYPE_ICON2_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
-    { WO_CHR_ID_TYPE2, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE,  },
+    { WO_CHR_ID_TYPE, WO_PAL_ID_TYPE, WO_CEL_ID_D_TYPE, WO_CEL_ID_D_TYPE,  },
     2, 0
   },
   { // タイプアイコン３(下画面）
     TYPE_ICON3_PX, TYPE_ICON3_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
-    { WO_CHR_ID_TYPE3, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE,  },
+    { WO_CHR_ID_TYPE, WO_PAL_ID_TYPE, WO_CEL_ID_D_TYPE, WO_CEL_ID_D_TYPE,  },
     2, 0
   },
   { // タイプアイコン４(下画面）
     TYPE_ICON4_PX, TYPE_ICON4_PY, 0,
     0, 1, TICON_ACTPAL_IDX, CLSYS_DEFREND_SUB,
-    { WO_CHR_ID_TYPE4, WO_PAL_ID_TYPE, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE,  },
+    { WO_CHR_ID_TYPE, WO_PAL_ID_TYPE, WO_CEL_ID_D_TYPE, WO_CEL_ID_D_TYPE,  },
     2, 0
   },
 
   { // タイプアイコン５(上画面）
     TYPE_ICON5_PX, TYPE_ICON5_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
-    { WO_CHR_ID_TYPE5, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
+    { WO_CHR_ID_U_TYPE1, WO_PAL_ID_TYPE_M, WO_CEL_ID_U_TYPE, WO_CEL_ID_U_TYPE, },
     2, 0
   },
   { // タイプアイコン６(上画面）
     TYPE_ICON6_PX, TYPE_ICON6_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
-    { WO_CHR_ID_TYPE6, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
+    { WO_CHR_ID_U_TYPE2, WO_PAL_ID_TYPE_M, WO_CEL_ID_U_TYPE, WO_CEL_ID_U_TYPE, },
     2, 0
   },
   { // タイプアイコン７(上画面）
     TYPE_ICON7_PX, TYPE_ICON7_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
-    { WO_CHR_ID_TYPE7, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
+    { WO_CHR_ID_U_TYPE3, WO_PAL_ID_TYPE_M, WO_CEL_ID_U_TYPE, WO_CEL_ID_U_TYPE, },
     2, 0
   },
   { // タイプアイコン８(上画面）
     TYPE_ICON8_PX, TYPE_ICON8_PY, 0,
     0, 1, TICON_ACTPAL_IDX_M, CLSYS_DEFREND_MAIN,
-    { WO_CHR_ID_TYPE8, WO_PAL_ID_TYPE_M, WO_CEL_ID_TYPE, WO_CEL_ID_TYPE, },
+    { WO_CHR_ID_U_TYPE4, WO_PAL_ID_TYPE_M, WO_CEL_ID_U_TYPE, WO_CEL_ID_U_TYPE, },
     2, 0
   },
 
@@ -734,8 +733,6 @@ GFL_PROC_RESULT WazaOshieProc_End( GFL_PROC * proc, int *seq, void *pwk, void *m
   GFL_NET_WirelessIconEasyEnd();
 
   WO_DispExit( wk );
-
-//  GFL_TCB_DeleteTask( wk->vBlankTcb );
 
   GFL_TCBL_Exit( wk->pMsgTcblSys );
 
@@ -914,9 +911,6 @@ static void WO_DispExit( WO_WORK * wk )
   WO_3DRelease(&wk->p3d);
   WO_ObjFree( wk );
 
-//  MsgPrintTouchPanelFlagSet( MSG_TP_OFF );
-
-
   // VBlankFuncクリア
   GFL_TCB_DeleteTask( wk->vBlankTcb );
 }
@@ -952,17 +946,17 @@ static const GFL_DISP_VRAM waza_oshie_vram = {
     GX_VRAM_SUB_BG_128_C,     // サブ2DエンジンのBG
     GX_VRAM_SUB_BGEXTPLTT_NONE,   // サブ2DエンジンのBG拡張パレット
 
-    GX_VRAM_OBJ_16_G,       // メイン2DエンジンのOBJ
+    GX_VRAM_OBJ_64_E,       // メイン2DエンジンのOBJ
     GX_VRAM_OBJEXTPLTT_NONE,    // メイン2DエンジンのOBJ拡張パレット
 
-    GX_VRAM_SUB_OBJ_16_I,     // サブ2DエンジンのOBJ
+    GX_VRAM_SUB_OBJ_128_D,     // サブ2DエンジンのOBJ
     GX_VRAM_SUB_OBJEXTPLTT_NONE,  // サブ2DエンジンのOBJ拡張パレット
 
     GX_VRAM_TEX_0_A,        // テクスチャイメージスロット
     GX_VRAM_TEXPLTT_0_F,      // テクスチャパレットスロット
 
-    GX_OBJVRAMMODE_CHAR_1D_32K,
-    GX_OBJVRAMMODE_CHAR_1D_32K
+    GX_OBJVRAMMODE_CHAR_1D_64K,
+    GX_OBJVRAMMODE_CHAR_1D_64K
 
 };
 
@@ -1829,7 +1823,7 @@ static void WO_DefStrWrite( WO_WORK * wk )
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE5+i], 1 );
       
       // 技タイプアイコン書き換え
-      WO_TypeIconChangeRequest( wk, waza, i+LIST_NUM );
+      WO_TypeIconChangeRequest( wk, waza, i );
     }
     //技名
     GFL_MSG_GetString( waza_man, waza , wk->mbuf );
@@ -2547,8 +2541,6 @@ static void WO_ObjFree( WO_WORK * wk )
   for( i=0; i<WO_CLA_MAX; i++ ){
     GFL_CLACT_WK_Remove( wk->cap[i] );
   }
-//  CATS_ResourceDestructor_S( wk->clUnit, wk->crp );
-//  CATS_FreeMemory( wk->clUnit );
 
   //システム破棄
   GFL_CLACT_UNIT_Delete( wk->clUnit );
@@ -2586,23 +2578,22 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
                             CLSYS_DRAW_SUB, HEAPID_WAZAOSHIE );
 
   // 種類アイコン
-  wk->clres[0][WO_CHR_ID_KIND] = GFL_CLGRP_CGR_Register( c_handle,
-                                    APP_COMMON_GetWazaKindCharArcIdx(0), 0,
+  wk->clres[0][WO_CHR_ID_KIND] = GFL_CLGRP_CGR_Register( p_handle,
+                                    NARC_waza_oshie_gra_p_st_bunrui_NCGR, 0,
                                     CLSYS_DRAW_SUB, HEAPID_WAZAOSHIE );
 
 
-  // 技タイプアイコン
-  for( i=WO_CHR_ID_TYPE1; i<=WO_CHR_ID_TYPE_MAX; i++ ){
-    if(i < WO_CHR_ID_TYPE5){
-      wk->clres[0][i] = GFL_CLGRP_CGR_Register( c_handle,
-                                        APP_COMMON_GetPokeTypeCharArcIdx(0), 0,
-                                        CLSYS_DRAW_SUB, HEAPID_WAZAOSHIE );
-    }else{
-      wk->clres[0][i] = GFL_CLGRP_CGR_Register( c_handle,
-                                        APP_COMMON_GetPokeTypeCharArcIdx(0), 0,
-                                        CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
-    }
+  // 上画面技タイプアイコン(上画面の技タイプアイコンはキャラ転送で切り替える）
+  for( i=WO_CHR_ID_U_TYPE1; i<WO_CHR_ID_U_TYPE1+4; i++ ){
+    wk->clres[0][i] = GFL_CLGRP_CGR_Register( c_handle,
+                                      APP_COMMON_GetPokeTypeCharArcIdx(0), 0,
+                                      CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
   }
+
+  // 下画面タイプアイコン（下画面の技タイプアイコンは全種類転送しておきセル参照で切り替える）
+  wk->clres[0][WO_CHR_ID_TYPE] = GFL_CLGRP_CGR_Register( p_handle,
+                                      NARC_waza_oshie_gra_p_st_type_NCGR, 0,
+                                      CLSYS_DRAW_SUB, HEAPID_WAZAOSHIE );
 
   // パレット
   wk->clres[1][WO_PAL_ID_APP_COMMON] = GFL_CLGRP_PLTT_RegisterEx(
@@ -2626,17 +2617,29 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
   // セル
   wk->clres[2][WO_CEL_ID_APP_COMMON] = GFL_CLGRP_CELLANIM_Register(
                                         c_handle, 
-                                        APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_32K),
-                                        APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_32K), 
+                                        APP_COMMON_GetBarIconCellArcIdx(APP_COMMON_MAPPING_64K),
+                                        APP_COMMON_GetBarIconAnimeArcIdx(APP_COMMON_MAPPING_64K), 
                                         HEAPID_WAZAOSHIE );
   wk->clres[2][WO_CEL_ID_CURSOR] = GFL_CLGRP_CELLANIM_Register(
                                       p_handle, NARC_waza_oshie_gra_oam_dw_NCER,
                                       NARC_waza_oshie_gra_oam_dw_NANR, HEAPID_WAZAOSHIE );
 
-  wk->clres[2][WO_CEL_ID_TYPE] = GFL_CLGRP_CELLANIM_Register(
+  wk->clres[2][WO_CEL_ID_U_TYPE] = GFL_CLGRP_CELLANIM_Register(
                                       c_handle,
-                                      APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_32K),
-                                      APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_32K),
+                                      APP_COMMON_GetPokeTypeCellArcIdx(APP_COMMON_MAPPING_64K),
+                                      APP_COMMON_GetPokeTypeAnimeArcIdx(APP_COMMON_MAPPING_64K),
+                                      HEAPID_WAZAOSHIE );
+
+  wk->clres[2][WO_CEL_ID_D_TYPE] = GFL_CLGRP_CELLANIM_Register(
+                                      p_handle,
+                                      NARC_waza_oshie_gra_p_st_type_NCER,
+                                      NARC_waza_oshie_gra_p_st_type_NANR,
+                                      HEAPID_WAZAOSHIE );
+
+  wk->clres[2][WO_CEL_ID_KIND] = GFL_CLGRP_CELLANIM_Register(
+                                      p_handle,
+                                      NARC_waza_oshie_gra_p_st_bunrui_NCER,
+                                      NARC_waza_oshie_gra_p_st_bunrui_NANR,
                                       HEAPID_WAZAOSHIE );
 
 
@@ -2649,7 +2652,7 @@ static void WO_ResourceLoad( WO_WORK * wk, ARCHANDLE* p_handle )
   fast = PPP_FastModeOn( ppp );
   wk->clres[0][WO_CHR_ID_POKEGRA] = POKE2DGRA_OBJ_CGR_RegisterPPP( c_handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
   wk->clres[1][WO_PAL_ID_POKEGRA] = POKE2DGRA_OBJ_PLTT_RegisterPPP( c_handle, ppp, POKEGRA_DIR_FRONT, CLSYS_DRAW_MAIN, 4*32, HEAPID_WAZAOSHIE );
-  wk->clres[2][WO_CEL_ID_POKEGRA] = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_32K, CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
+  wk->clres[2][WO_CEL_ID_POKEGRA] = POKE2DGRA_OBJ_CELLANM_RegisterPPP( ppp, POKEGRA_DIR_FRONT, APP_COMMON_MAPPING_64K, CLSYS_DRAW_MAIN, HEAPID_WAZAOSHIE );
   PPP_FastModeOff( ppp, fast );
 
   GFL_ARC_CloseDataHandle( c_handle );
@@ -2691,9 +2694,14 @@ static void CGR_Replace( ARCHANDLE *handle, u32 res_index, u32 ArcId, BOOL compr
 //--------------------------------------------------------------------------------------------
 static void WO_TypeIconChangeRequest( WO_WORK * wk, u16 waza, u16 res_offset )
 {
-  u32 type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE );
-  wk->WazaIconReq[res_offset][0] = type;
-  wk->WazaIconReq[res_offset][1] = TRUE;
+    u32 type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE );
+    wk->WazaIconReq[res_offset][0] = type;
+    wk->WazaIconReq[res_offset][1] = TRUE;
+  
+    // パレットオフセット変更
+    GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_TYPE5+res_offset],
+                              APP_COMMON_GetPokeTypePltOffset(type),
+                              CLWK_PLTTOFFS_MODE_PLTT_TOP);
 }
 
 
@@ -2712,14 +2720,13 @@ static void WO_TepeIconChangeVblank( WO_WORK *wk )
   for(i=0;i<WAZATYPE_ICON_NUM;i++){
     if(wk->WazaIconReq[i][1]){
       u32 type = wk->WazaIconReq[i][0];
+
+      OS_Printf("icon[%d] rewrite\n",i);
+
       // キャラ転送
-      CGR_Replace( wk->TypeIconHandle, wk->clres[0][i+WO_CHR_ID_TYPE1],
+      CGR_Replace( wk->TypeIconHandle, wk->clres[0][i+WO_CHR_ID_U_TYPE1],
                    APP_COMMON_GetPokeTypeCharArcIdx(type), 0, HEAPID_WAZAOSHIE );
     
-      // パレットオフセット変更
-      GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_TYPE1+i],
-                                APP_COMMON_GetPokeTypePltOffset(type),
-                                CLWK_PLTTOFFS_MODE_PLTT_TOP);
       wk->WazaIconReq[i][1] = FALSE;
     }
   }
@@ -2746,65 +2753,16 @@ static void WO_TypeIconInit( WO_WORK * wk )
     if( wk->dat->scr + i >= wk->sel_max ){
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 0 );
     }else{
+      u8 waza = wk->dat->waza_tbl[wk->dat->scr+i];
+      u32 type = WAZADATA_GetParam( waza, WAZAPARAM_TYPE );
       GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 1 );
-      WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[wk->dat->scr+i], i );
-    }
-  }
-}
+//      WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[wk->dat->scr+i], i );
+      GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_TYPE1+i], type );
+      // パレットオフセット変更
+//      GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_TYPE1+i],
+//                                APP_COMMON_GetPokeTypePltOffset(type),
+//                                CLWK_PLTTOFFS_MODE_PLTT_TOP);
 
-//--------------------------------------------------------------------------------------------
-/**
- * タイプアイコンスクロール
- *
- * @param wk      ワーク
- * @param old_scr   今までのスクロールカウンタ
- * @param new_scr   新しいスクロールカウンタ
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
-{
-  u32 i;
-  GFL_CLACTPOS clpos;
-
-  if( old_scr < new_scr ){
-    for( i=0; i<LIST_NUM; i++ ){
-      GFL_CLACT_WK_GetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB);
-      if( clpos.y == TYPE_ICON1_PY ){
-        clpos.y = TYPE_ICON4_PY;
-        if( wk->dat->waza_tbl[new_scr+LIST_NUM_OFS] != WAZAOSHIE_TBL_MAX ){
-          WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[new_scr+LIST_NUM_OFS], i );
-        }
-      }else{
-        clpos.y -= SEL_CURSOR_SY;
-      }
-      GFL_CLACT_WK_SetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
-    }
-  }else if( old_scr > new_scr ){
-    for( i=0; i<LIST_NUM; i++ ){
-      GFL_CLACT_WK_GetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
-      if( clpos.y == TYPE_ICON4_PY ){
-        clpos.y = TYPE_ICON1_PY;
-        if( wk->dat->waza_tbl[new_scr] != WAZAOSHIE_TBL_MAX ){
-          WO_TypeIconChangeRequest( wk, wk->dat->waza_tbl[new_scr], i );
-        }
-      }else{
-        clpos.y += SEL_CURSOR_SY;
-      }
-      GFL_CLACT_WK_SetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
-    }
-  }else{
-    return;
-  }
-
-  for( i=0; i<LIST_NUM; i++ ){
-    GFL_CLACT_WK_GetPos( wk->cap[WO_CLA_TYPE1+i], &clpos, CLSYS_DEFREND_SUB );
-    clpos.y = ( clpos.y - TYPE_ICON1_PY ) / SEL_CURSOR_SY;
-    if( new_scr + clpos.y >= wk->sel_max ){
-      GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 0 );
-    }else{
-      GFL_CLACT_WK_SetDrawEnable( wk->cap[WO_CLA_TYPE1+i], 1 );
     }
   }
 }
@@ -2823,15 +2781,17 @@ static void WO_TypeIconScroll( WO_WORK * wk, u16 old_scr, u16 new_scr )
 static void WO_KindIconChange( WO_WORK * wk, u16 waza )
 {
   u32 kind = WAZADATA_GetParam( waza, WAZAPARAM_DAMAGE_TYPE );
-  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
+//  ARCHANDLE *handle = GFL_ARC_OpenDataHandle( APP_COMMON_GetArcId(), HEAPID_WAZAOSHIE );
 
-  CGR_Replace( handle, wk->clres[0][WO_CHR_ID_KIND],
-               APP_COMMON_GetWazaKindCharArcIdx(kind), 0, HEAPID_WAZAOSHIE );
+//  CGR_Replace( handle, wk->clres[0][WO_CHR_ID_KIND],
+//               APP_COMMON_GetWazaKindCharArcIdx(kind), 0, HEAPID_WAZAOSHIE );
 
-  GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_KIND],
-                            APP_COMMON_GetWazaKindPltOffset(kind), CLWK_PLTTOFFS_MODE_PLTT_TOP );
+//  GFL_CLACT_WK_SetPlttOffs( wk->cap[WO_CLA_KIND],
+//                            APP_COMMON_GetWazaKindPltOffset(kind), CLWK_PLTTOFFS_MODE_PLTT_TOP );
 
-  GFL_ARC_CloseDataHandle( handle );
+  GFL_CLACT_WK_SetAnmSeq( wk->cap[WO_CLA_KIND], kind );
+
+//  GFL_ARC_CloseDataHandle( handle );
 
 }
 
@@ -3133,12 +3093,6 @@ static int WO_SeqPstInit( WO_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static int WO_SeqPstCall( WO_WORK * wk )
 {
-  /*
-  u8 page[] = {
-    PST_PAGE_PARAM_B_SKILL,   // 「たたかうわざ」
-    PST_PAGE_MAX
-  };
-  */
 
   WO_DispExit( wk );
 
@@ -3151,17 +3105,8 @@ static int WO_SeqPstCall( WO_WORK * wk )
   wk->psd.waza = WO_SelWazaGet( wk );
   wk->psd.mode = PST_MODE_WAZAADD;
   wk->psd.page = PPT_INFO;
-//  wk->psd.ev_contest = 1;
-
-  //wk->psd.player_name = MyStatus_GetMyName( wk->dat->myst );
-  //wk->psd.player_id   = MyStatus_GetID( wk->dat->myst );
-  //wk->psd.player_sex  =  MyStatus_GetMySex( wk->dat->myst );
 
   wk->psd.zukan_mode = 0;
-//  wk->psd.pokethlon  = FALSE;
-
-
-//  PokeStatus_PageSet( &wk->psd, page );
 
 
   // WBでのPROC呼び出しはアプリと平行の存在になるので、
@@ -3169,7 +3114,6 @@ static int WO_SeqPstCall( WO_WORK * wk )
   GAMESYSTEM_CallProc( wk->dat->gsys,
                         FS_OVERLAY_ID(poke_status), &PokeStatus_ProcData, &wk->psd );
 
-//  wk->subProc = GFL_PROC_Create( &PokeStatusProcData, &wk->psd, HEAPID_WAZAOSHIE );
   return SEQ_PST_WAIT;
 }
 
@@ -3192,7 +3136,6 @@ static int WO_SeqPstWait( WO_WORK * wk )
     WO_DispInit( wk );
     WazaSelBgChange( wk, wk->dat->pos );
     WO_SelCursorChange( wk, wk->dat->pos, PALDW_CURSOR);
-//    WO_ScrollCursorOff( wk );
     if(wk->psd.ret_mode==PST_RET_DECIDE){
       wk->dat->del_pos = wk->psd.ret_sel;
     }else{

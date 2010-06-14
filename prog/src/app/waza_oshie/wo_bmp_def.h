@@ -229,15 +229,12 @@ enum {
   WO_CHR_ID_APP_COMMON = 0,   // リストカーソル
   WO_CHR_ID_CURSOR,           // 選択カーソル
   WO_CHR_ID_KIND,             // 分類アイコン
-  WO_CHR_ID_TYPE1,            // タイプアイコン1
-  WO_CHR_ID_TYPE2,            // タイプアイコン2
-  WO_CHR_ID_TYPE3,            // タイプアイコン3
-  WO_CHR_ID_TYPE4,            // タイプアイコン4
-  WO_CHR_ID_TYPE5,            // タイプアイコン5
-  WO_CHR_ID_TYPE6,            // タイプアイコン6
-  WO_CHR_ID_TYPE7,            // タイプアイコン7
-  WO_CHR_ID_TYPE8,            // タイプアイコン8
-  WO_CHR_ID_TYPE_MAX=WO_CHR_ID_TYPE8,
+  WO_CHR_ID_TYPE,            // タイプアイコン1
+  WO_CHR_ID_U_TYPE1,          // タイプアイコン1
+  WO_CHR_ID_U_TYPE2,          // タイプアイコン1
+  WO_CHR_ID_U_TYPE3,          // タイプアイコン1
+  WO_CHR_ID_U_TYPE4,          // タイプアイコン1
+  WO_CHR_ID_TYPE_MAX=WO_CHR_ID_U_TYPE4,
   WO_CHR_ID_POKEGRA,          // ポケモン正面絵
   WO_CHR_ID_MAX               // 最大
 };
@@ -256,20 +253,13 @@ enum {
 enum {
   WO_CEL_ID_APP_COMMON = 0,   // タッチバー共通素材
   WO_CEL_ID_CURSOR,           // 選択カーソル
-  WO_CEL_ID_TYPE,             // タイプアイコン
+  WO_CEL_ID_U_TYPE,             // タイプアイコン
+  WO_CEL_ID_D_TYPE,
+  WO_CEL_ID_KIND,
   WO_CEL_ID_POKEGRA,          // ポケモン正面絵
   WO_CEL_ID_MAX               // 最大
 };
 
-/*
-// セルアニメリソースID
-enum {
-  WO_ANM_ID_APP_COMMON = 0,     // リストカーソル
-  WO_ANM_ID_CURSOR,           // 選択カーソル
-  WO_ANM_ID_TYPE,             // タイプアイコン
-  WO_ANM_ID_MAX = WO_ANM_ID_TYPE - WO_ANM_ID_APP_COMMON + 1   // 最大
-};
-*/
 
 // アニメナンバー
 enum{
@@ -363,7 +353,7 @@ enum{
 #define LIST_NUM_OFS  (LIST_NUM-1)
 #define LIST_SY     (24)
 
-// 技タイプアイコンの数
+// 上画面技タイプアイコンの数
 #define WAZATYPE_ICON_NUM ( 8 )
 
 
