@@ -638,13 +638,11 @@ sub_receipt_challenge_multi:
     ENDIF
   ENDIF
   
-  //フラグ初期化
-  _CALL sub_receipt_flag_set_geton_first
-  
   IF $play_mode == BSWAY_MODE_MULTI || $play_mode == BSWAY_MODE_S_MULTI THEN
-    //AIマルチ
+    _CALL sub_receipt_flag_set_geton_first  //AIマルチ　フラグ初期化
+    
     _CALL sub_bsw_common_report //レポート
-
+    
     IF $SCWK_ANSWER == 1 THEN //キャンセル
       _RET
     ENDIF
@@ -682,11 +680,11 @@ sub_receipt_challenge_multi_ai:
   $SCWK_TEMP1 = msg_bsw_scr_62
   _CALL sub_bsw_common_bwin_partner
   
-  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
   _BMPMENU_MAKE_LIST( msg_bsw_scr_63, 0 ) //攻撃重視
   _BMPMENU_MAKE_LIST( msg_bsw_scr_64, 1 ) //防御重視
   _BMPMENU_MAKE_LIST( msg_bsw_scr_65, 2 ) //バランス重視
-  _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる
+  //_BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる->なくなりました
   _BMPMENU_START()
   
   SWITCH $SCWK_ANSWER
@@ -698,10 +696,11 @@ sub_receipt_challenge_multi_ai:
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 1, BSW_NULL, BSW_NULL )
     $SCWK_TEMP0 = msg_bsw_scr_67
     $SCWK_TEMP1 = msg_bsw_scr_70
-  CASE 2 THEN //バランス
+  DEFAULT //バランス
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 2, BSW_NULL, BSW_NULL )
     $SCWK_TEMP0 = msg_bsw_scr_68
     $SCWK_TEMP1 = msg_bsw_scr_71
+  /*
   DEFAULT //やめる
     $SCWK_TEMP0 = msg_bsw_scr_72
     $SCWK_TEMP1 = msg_bsw_scr_73
@@ -712,6 +711,7 @@ sub_receipt_challenge_multi_ai:
     _CALL sub_receipt_demo_partner_ret
     _CALL sub_bsw_common_exit
     _RET
+  */
   ENDSWITCH
   
   _CALL sub_bsw_common_bwin_partner
@@ -2589,7 +2589,7 @@ sub_bsw_common_renshou_msg:
     //連勝数取得
     _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, play_mode, BSW_NULL, count )
     _BSUBWAY_TOOL( BSWTOOL_GET_RENSHOU_CNT, comm_mode, BSW_NULL, comm_count )
-
+    
     IF $count > 9999 THEN
       $count = 9999
     ENDIF
@@ -2628,7 +2628,7 @@ sub_bsw_common_renshou_msg:
         $SCWK_TEMP0 = msg_bsw_scr_104
         _CALL sub_bsw_common_bwin_receipt
       ENDIF
-    ELSE //通信マルチのみ
+    ELSIF $comm_ret == TRUE THEN //通信マルチのみ
       IF $comm_count != 0 THEN
         _PLAYER_NAME( 0 )
         _NUMBER( 1, comm_count, 4 )
@@ -3174,11 +3174,11 @@ ev_bsw_select_ai_multi_pokemon:
   //どんなポケモンを参加させる？
   _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_103, msg_bsw_scr_102, obj_id, POS_DOWN )
   
-  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 1, SCWK_ANSWER )
+  _BMPMENU_INIT_RIGHT( MENU_X1, MENU_Y1, 0, 0, SCWK_ANSWER )
   _BMPMENU_MAKE_LIST( msg_bsw_scr_63, 0 ) //攻撃重視
   _BMPMENU_MAKE_LIST( msg_bsw_scr_64, 1 ) //防御重視
   _BMPMENU_MAKE_LIST( msg_bsw_scr_65, 2 ) //バランス重視
-  _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる
+//  _BMPMENU_MAKE_LIST( msg_bsw_scr_41, 3 ) //やめる->なくなりました
   _BMPMENU_START()
   
   SWITCH $SCWK_ANSWER
@@ -3190,12 +3190,14 @@ ev_bsw_select_ai_multi_pokemon:
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 1, BSW_NULL, BSW_NULL )
     _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_67, msg_bsw_scr_70, obj_id, POS_DOWN )
     $SCWK_ANSWER = TRUE
-  CASE 2 THEN //バランス
+  DEFAULT //バランス
     _BSUBWAY_TOOL( BSWSUB_SET_PARTNER_NO, 2, BSW_NULL, BSW_NULL )
     _BALLOONWIN_OBJMSG_MF( msg_bsw_scr_68, msg_bsw_scr_71, obj_id, POS_DOWN )
     $SCWK_ANSWER = TRUE
+  /*
   DEFAULT //やめる
     $SCWK_ANSWER = FALSE
+  */
   ENDSWITCH
   
   _MSGWIN_CLOSE()

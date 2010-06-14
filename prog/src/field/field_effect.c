@@ -912,7 +912,7 @@ void FLDEFF_CTRL_SetGrayScaleG3DResource(
 }
 
 //======================================================================
-//  data ‰¼ ‹Œfield_effect_data.c
+//  data ‹Œfield_effect_data.c
 //======================================================================
 #include "fldeff_shadow.h"
 #include "fldeff_kemuri.h"
