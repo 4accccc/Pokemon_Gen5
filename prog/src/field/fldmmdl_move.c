@@ -628,6 +628,22 @@ static void MMdl_MapAttrGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
     BOOL anm = TRUE;
+    u16 dir = MMDL_GetDirMove( mmdl );
+    FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now, data->season );
+    
+    if( dir == DIR_UP ){
+      return; //長短共に上方向は終了時にセットする
+    }
+    
+    FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, anm, type );
+  }
+}
+
+#if 0
+static void MMdl_MapAttrGrassProc_1( MMDL *mmdl, ATTRDATA *data )
+{
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
+    BOOL anm = TRUE;
     FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now, data->season );
     FLDEFF_GRASSLEN len = FLDEFF_GRASS_GetLenType( type );
     
@@ -644,7 +660,7 @@ static void MMdl_MapAttrGrassProc_1( MMDL *mmdl, ATTRDATA *data )
     FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, anm, type );
   }
 }
-
+#endif
 
 //--------------------------------------------------------------
 /**
@@ -659,6 +675,21 @@ static void MMdl_MapAttrGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 static void MMdl_MapAttrGrassProc_2( MMDL *mmdl, ATTRDATA *data )
 {
   if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
+    //BTS4949　草むらを歩いたとき不自然
+    //長短共に上方向は終了時にセットする
+    if( MMDL_GetDirMove(mmdl) == DIR_UP ){
+      BOOL anm = TRUE;
+      FLDEFF_GRASSTYPE type = getGrassType(
+          data->attr_val_now, data->season );
+      FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, anm, type );
+    }
+  }
+}
+
+#if 0
+static void MMdl_MapAttrGrassProc_2( MMDL *mmdl, ATTRDATA *data )
+{
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
     FLDEFF_GRASSTYPE type = getGrassType(
         data->attr_val_now, data->season );
     FLDEFF_GRASSLEN len = FLDEFF_GRASS_GetLenType( type );
@@ -670,6 +701,7 @@ static void MMdl_MapAttrGrassProc_2( MMDL *mmdl, ATTRDATA *data )
     }
   }
 }
+#endif
 
 //--------------------------------------------------------------
 /**

@@ -436,27 +436,22 @@ static BOOL check_MMdlPos( TASKWORK_GRASS *work )
   const MMDL *mmdl = work->head.fmmdl;
   int gx = MMDL_GetGridPosX( mmdl );
   int gz = MMDL_GetGridPosZ( mmdl );
-  u8 type = data_LongShortType[work->head.type];
+  u8 len = data_LongShortType[work->head.type];
   
   if( work->head.init_gx != gx || work->head.init_gz != gz ){
-#if 0
-    if( type != GRASS_SHORT ){ //long
-      return( FALSE );
+#if 1 //BTS4949　草むらを歩いたとき不自然
+    if( len == FLDEFF_GRASSLEN_SHORT ){ //短い草で
+      if( MMDL_GetDirMove(mmdl) == DIR_UP ){ //移動方向上向きならば
+        gx = MMDL_GetOldGridPosX( mmdl );
+        gz = MMDL_GetOldGridPosZ( mmdl );
+        
+        if( work->head.init_gx == gx || work->head.init_gz == gz ){
+          return( TRUE ); //完全に座標が切り替わるまで待つ。
+        }
+      }
     }
-    
-    if( MMDL_GetDirMove(mmdl) != DIR_UP ){
-      return( FALSE );
-    }
-    
-    gx = MMDL_GetOldGridPosX( mmdl );
-    gz = MMDL_GetOldGridPosZ( mmdl );
-    
-    if( work->head.init_gx != gx || work->head.init_gz != gz ){
-      return( FALSE );
-    }
-#else
-    return( FALSE );
 #endif
+    return( FALSE );
   }
   
   return( TRUE );
