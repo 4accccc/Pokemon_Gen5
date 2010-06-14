@@ -36,6 +36,9 @@ COMPILE_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=.bin) $(SCRIPTFILES:.ev=.bin)
 ARCHIVE_TARGETS = $(SCRIPTFILES:.ev=.bin) $(UNIQ_SCRIPTFILES:.ev=.bin)
 
 ifeq ($(PM_DEBUG),yes)		#デバッグビルドの場合
+COMPILE_TARGETS += $(UNIQ_DEBUG_EVENT_SCRFILES:.ev=.bin)
+ARCHIVE_TARGETS += $(UNIQ_DEBUG_EVENT_SCRFILES:.ev=.bin)
+
 DEBUG_SCR_LIST_BIN	= scr_debug/debug_list.bin
 DEBUG_SCR_LIST_H		= scr_debug/debug_list.h
 COMPILE_TARGETS += $(DEBUG_SCR_LIST_BIN)
@@ -100,7 +103,7 @@ endif
 
 ifeq ($(CONVERTUSER),true) #CONVERTUSER
 #*.bin
-%.bin: %.ev $(DEPENDHEADERS)
+%.bin: %.ev  $(DEPENDHEADERS)
 	@echo $<
 	@ruby filter/user.rb $< > temp_$*.s
 	@#$(MWAS) -E $(ADD_MACRO)  temp_$*.s -o $*.dis
@@ -148,6 +151,7 @@ diff:
 #	test
 #----------------------------------------------------------------------------
 test:
+	@echo $(COMPILE_TARGETS)
 	@#echo $(SCRIPTFILES)
-	@echo $(ARCHIVE_TARGETS) | ruby $(FILEPATH_CONVERTER) $(FILEPATH_CDAT)
+	@#echo $(ARCHIVE_TARGETS) | ruby $(FILEPATH_CONVERTER) $(FILEPATH_CDAT)
 

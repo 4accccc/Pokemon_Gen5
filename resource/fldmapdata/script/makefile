@@ -6,6 +6,9 @@
 
 .PHONY:	do-build	clean
 
+#共通マクロ
+include $(PROJECT_RSCDIR)/macro_define
+
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 #マップ依存のスクリプト（t01.ev,sp_t01.ev etc.）：定義ファイルは自動生成
@@ -17,10 +20,13 @@ include zone_script.list
 include uniq_script.list
 
 #
-HEADER_TARGETS	= $(UNIQ_SCRIPTFILES:.ev=_def.h) $(SCRIPTFILES:.ev=_def.h)
+HEADER_TARGETS	= $(UNIQ_SCRIPTFILES) $(SCRIPTFILES)
+ifeq ($(PM_DEBUG),yes)
+HEADER_TARGETS += $(UNIQ_DEBUG_EVENT_SCRFILES)
+endif
 
 do-build:
-		@ruby scr_tools/make_depend.rb $(UNIQ_SCRIPTFILES) $(SCRIPTFILES) > makefile_h.depend
+		@ruby scr_tools/make_depend.rb $(HEADER_TARGETS) > makefile_h.depend
 		make -f makefile_h do-build
 		make -f makefile_ev do-build
 
@@ -28,3 +34,5 @@ clean:
 		make -f makefile_h clean
 		make -f makefile_ev clean
 
+test:
+	echo "$(PM_DEBUG)"

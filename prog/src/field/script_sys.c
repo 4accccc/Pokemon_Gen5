@@ -33,6 +33,9 @@
 // scr_offset.cdat内で参照
 #include "../../../resource/fldmapdata/script/scrid_offset/scr_offset_id.h"
 #include "script_message.naix"  //NARC_script_message_
+#ifdef  PM_DEBUG
+#include "debug_message.naix"   //NARC_debug_message_
+#endif
 #include "arc/fieldmap/script_seq.naix" // NARC_script_seq_
 
 #include "script_debugger.h"
@@ -806,7 +809,7 @@ static u16 searchSceneScript( GAMEDATA * gamedata, const u8 * p, u8 key )
 //
 //
 //============================================================================================
-static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx );
+static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u16 * msg_arc, u16 * msg_idx );
 static VM_CODE * loadScriptCodeData( u32 scr_id, HEAPID heapID );
 
 //--------------------------------------------------------------
@@ -852,14 +855,15 @@ static VMHANDLE * SCRVM_Create(
 	VM_Init( core, work );
   {
     u16 scr_idx;
-    u32 msg_idx;
+    u16 msg_arc;
+    u16 msg_idx;
     u16 local_scr_id;
     //スクリプトデータ、メッセージデータ読み込み
-    local_scr_id = getScriptIndex( zone_id, scr_id, &scr_idx, &msg_idx );
+    local_scr_id = getScriptIndex( zone_id, scr_id, &scr_idx, &msg_arc, &msg_idx );
     core->pScript = loadScriptCodeData( scr_idx, main_heapID );
     if( is_sp_flag ==FALSE && msg_idx != SCRIPT_MSG_NON )
     {
-      SCRCMD_WORK_CreateMsgData( work, msg_idx );
+      SCRCMD_WORK_CreateMsgData( work, msg_arc, msg_idx );
     }
     VM_Start( core, core->pScript ); //仮想マシンにコード設定
     //スクリプトの先頭部分はテーブルになっているので、
@@ -892,7 +896,8 @@ typedef struct {
 	u16 scr_id_start;
   u16 scr_id_end;
 	u16 scr_arc_id;
-	u16 msg_arc_id;
+  u16 msg_arc;
+	u16 msg_idx;
 }SCRIPT_ARC_TABLE;
 
 //ScriptArcTableを定義するファイル
@@ -908,7 +913,7 @@ typedef struct {
  * @retval	"スクリプトIDからオフセットを引いた値"
  */
 //--------------------------------------------------------------
-static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx )
+static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u16 * msg_arc, u16 * msg_idx )
 {
   int i;
   u16 local_scr_id = scr_id;
@@ -928,10 +933,12 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx
     {
       GF_ASSERT_MSG(scr_id <= tbl[i].scr_id_end,"id=%d end=%d",scr_id,tbl[i].scr_id_end);
       *scr_idx = tbl[i].scr_arc_id;
-      *msg_idx = tbl[i].msg_arc_id;
+      //*msg_arc = ARCID_SCRIPT_MESSAGE;
+      *msg_arc = tbl[i].msg_arc;
+      *msg_idx = tbl[i].msg_idx;
       local_scr_id -= tbl[i].scr_id_start;
       SCRIPT_Printf( "共通スクリプト起動 scr_arc_idx = %d, msg_idx = %d, scr_id = %d\n",
-        tbl[i].scr_arc_id, tbl[i].msg_arc_id, local_scr_id );
+        tbl[i].scr_arc_id, tbl[i].msg_idx, local_scr_id );
       return local_scr_id;
     }
   }
@@ -942,6 +949,7 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx
     u16 idx_script = ZONEDATA_GetScriptArcID( zone_id );
     u16 idx_msg = ZONEDATA_GetMessageArcID( zone_id );
     *scr_idx = idx_script;
+    *msg_arc = ARCID_SCRIPT_MESSAGE;
     *msg_idx = idx_msg;
     local_scr_id -= ID_START_SCR_OFFSET;
     SCRIPT_Printf( "ゾーンスクリプト起動 scr_idx = %d, msg_idx = %d\n",
@@ -951,6 +959,7 @@ static u16 getScriptIndex( u32 zone_id, u16 scr_id, u16 * scr_idx, u32 * msg_idx
 
   //SCRID_NULL(0)が渡された時
   *scr_idx = NARC_script_seq_common_scr_bin;
+  *msg_arc = ARCID_SCRIPT_MESSAGE;
   *msg_idx = NARC_script_message_common_scr_dat;
   local_scr_id = 0;
   return local_scr_id;

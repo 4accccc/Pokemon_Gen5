@@ -3,7 +3,7 @@
  * @file  scr_offset.cdat
  * @bfief  スクリプトIDのオフセットとそれに対応するアーカイブの定義テーブル
  * @author  tamada GAMEFREAK inc.
- * @date  2010 04/10 (Sat) 19:04
+ * @date  2010 06/14 (Mon) 16:48
  *
  * このファイルはコンバータにより自動生成されています
  */
@@ -12,286 +12,335 @@
 //※スクリプトIDが大きい順に定義されているため、元データと並びが逆です
 static const SCRIPT_ARC_TABLE ScriptArcTable[] = {
 
+#ifdef PM_DEBUG
     {//デバッグ用共通スクリプト（この下にはファイルを追加しない！！）
       ID_DEBUG_SCR_OFFSET,            //(12000),
       ID_DEBUG_SCR_OFFSET_END,        //(12199),
       NARC_script_seq_debug_scr_bin,
-      NARC_script_message_debug_scr_dat
+      ARCID_DEBUG_MESSAGE,
+      NARC_debug_message_debug_scr_dat
     },
+#endif //PM_DEBUG
     {//
       ID_TV_SCR_OFFSET,               //(10520),
       ID_TV_SCR_OFFSET_END,           //(10524),
       NARC_script_seq_tv_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_tv_01_scr_dat
     },
     {//タマゲタケ対戦用スクリプト
       ID_TAMAGETAKE_SCR_OFFSET,       //(10510),
       ID_TAMAGETAKE_SCR_OFFSET_END,   //(10519),
       NARC_script_seq_tamagetake_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//観覧車対戦イベントスクリプト
       ID_WHEEL_SCR_OFFSET,            //(10500),
       ID_WHEEL_SCR_OFFSET_END,        //(10509),
       NARC_script_seq_wheel_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wheel_scr_dat
     },
     {//シンボルエンカウント（パレスの森）用スクリプト
       ID_SYMBOL_ENCOUNT_SCR_OFFSET,   //(10480),
       ID_SYMBOL_ENCOUNT_SCR_OFFSET_END,//(10499),
       NARC_script_seq_symbol_encount_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_symbol_encount_scr_dat
     },
     {//鑑定士イベント用スクリプト
       ID_APPRAISAL_SCR_OFFSET,        //(10470),
       ID_APPRAISAL_SCR_OFFSET_END,    //(10479),
       NARC_script_seq_appraisal_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_appraisal_scr_dat
     },
     {//海底神殿用スクリプト
       ID_SEATEMPLE_SCR_OFFSET,        //(10460),
       ID_SEATEMPLE_SCR_OFFSET_END,    //(10469),
       NARC_script_seq_seatemple_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_seatemple_scr_dat
     },
     {//ミュージカル用スクリプト
       ID_MUSICAL_SCR_OFFSET,          //(10440),
       ID_MUSICAL_SCR_OFFSET_END,      //(10459),
       NARC_script_seq_musical_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_musical_scr_dat
     },
     {//PDW家具屋用スクリプト
       ID_PDW_SCR_OFFSET,              //(10435),
       ID_PDW_SCR_OFFSET_END,          //(10439),
       NARC_script_seq_pdw_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pdw_scr_dat
     },
     {//トライアルハウス受付スクリプト
       ID_TRIAL_HOUSE_SCR_OFFSET,      //(10430),
       ID_TRIAL_HOUSE_SCR_OFFSET_END,  //(10434),
       NARC_script_seq_trial_house_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_trialhouse_dat
     },
     {//Gパワーイベントスクリプト
       ID_GPOWER_SCR_OFFSET,           //(10425),
       ID_GPOWER_SCR_OFFSET_END,       //(10429),
       NARC_script_seq_gpower_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_gpower_event_dat
     },
     {//エレベーター共通スクリプト
       ID_ELEVATOR_OFFSET,             //(10405),
       ID_ELEVATOR_OFFSET_END,         //(10424),
       NARC_script_seq_elevator_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_elevator_dat
     },
     {//自動販売機スクリプト
       ID_VENDING_MACHINE_OFFSET,      //(10400),
       ID_VENDING_MACHINE_OFFSET_END,  //(10404),
       NARC_script_seq_vending_machine_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_vender_scr_dat
     },
     {//不思議な贈り物配達員スクリプト
       ID_POSTMAN_SCR_OFFSET,          //(10395),
       ID_POSTMAN_SCR_OFFSET_END,      //(10399),
       NARC_script_seq_postman_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_postman_dat
     },
     {//家具屋（PDW)用スクリプト
       ID_PDW_POSTMAN_SCR_OFFSET,      //(10390),
       ID_PDW_POSTMAN_SCR_OFFSET_END,  //(10394),
       NARC_script_seq_pdw_postman_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pdw_postman_dat
     },
     {//ずかん評価スクリプト
       ID_HYOUKA_SCR_OFFSET,           //(10380),
       ID_HYOUKA_SCR_OFFSET_END,       //(10389),
       NARC_script_seq_hyouka_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_hyouka_scr_dat
     },
     {//群集用スクリプト
       ID_CROWD_PEOPLE_SCR_OFFSET,     //(10350),
       ID_CROWD_PEOPLE_SCR_OFFSET_END, //(10379),
       NARC_script_seq_crowd_people_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_crowd_people_scr_dat
     },
     {//バトルサブウェイ用スクリプト
       ID_BSUBWAY_SCR_OFFSET,          //(10330),
       ID_BSUBWAY_SCR_OFFSET_END,      //(10349),
       NARC_script_seq_bsubway_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_bsubway_scr_dat
     },
     {//ポケモンIDアイテムプレゼントスクリプト
       ID_ID_PRESENT_SCR_OFFSET,       //(10325),
       ID_ID_PRESENT_SCR_OFFSET_END,   //(10329),
       NARC_script_seq_id_present_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_id_present_scr_dat
     },
     {//ロトムフォルムチェンジ
       ID_ROTOM_CHANGE_SCR_OFFSET,     //(10315),
       ID_ROTOM_CHANGE_SCR_OFFSET_END, //(10324),
       NARC_script_seq_rotom_change_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_rotom_wb_scr_dat
     },
     {//ジャッジイベント
       ID_JUDGE_SCR_OFFSET,            //(10310),
       ID_JUDGE_SCR_OFFSET_END,        //(10314),
       NARC_script_seq_judge_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_judge_scr_dat
     },
     {//パルパーク
       ID_PALPARK_SCR_OFFSET,          //(10290),
       ID_PALPARK_SCR_OFFSET_END,      //(10309),
       NARC_script_seq_palpark_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_palpark_scr_dat
     },
     {//化石復元
       ID_FOSSIL_SCR_OFFSET,           //(10280),
       ID_FOSSIL_SCR_OFFSET_END,       //(10289),
       NARC_script_seq_fossil_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_kaseki_scr_dat
     },
     {//デオキシスフォルムチェンジ
       ID_DEOX_CHANGE_SCR_OFFSET,      //(10270),
       ID_DEOX_CHANGE_SCR_OFFSET_END,  //(10279),
       NARC_script_seq_deox_change_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_deox_change_scr_dat
     },
     {//各種対戦受付フロー共通スクリプト
       ID_BTL_UTIL_SCR_OFFSET,         //(10260),
       ID_BTL_UTIL_SCR_OFFSET_END,     //(10269),
       NARC_script_seq_btl_util_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_btl_util_scr_dat
     },
     {//ゲート用共通スクリプト
       ID_GATE_SCR_OFFSET,             //(10250),
       ID_GATE_SCR_OFFSET_END,         //(10259),
       NARC_script_seq_gate_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//C3中央部共通スクリプト
       ID_C3CENTER_SCR_OFFSET,         //(10200),
       ID_C3CENTER_SCR_OFFSET_END,     //(10249),
       NARC_script_seq_c3center_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_c3center_scr_dat
     },
     {//各種フィールドイベント用
       ID_FIELD_EV_SCR_OFFSET,         //(10130),
       ID_FIELD_EV_SCR_OFFSET_END,     //(10149),
       NARC_script_seq_field_ev_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_field_ev_scr_dat
     },
     {//フレンドリィショップ用スクリプト
       ID_SHOP_SCR_OFFSET,             //(10110),
       ID_SHOP_SCR_OFFSET_END,         //(10119),
       NARC_script_seq_shop_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_shop_scr_dat
     },
     {//WI-FI受付用スクリプト
       ID_WIFI_COUNTER_SCR_OFFSET,     //(10105),
       ID_WIFI_COUNTER_SCR_OFFSET_END, //(10109),
       NARC_script_seq_wifi_counter_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wifi_counter_scr_dat
     },
     {//WI-FIクラブ受付用スクリプト
       ID_WIFI_CLUB_SCR_OFFSET,        //(10100),
       ID_WIFI_CLUB_SCR_OFFSET_END,    //(10104),
       NARC_script_seq_wifi_club_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_wifi_club_scr_dat
     },
     {//ポケセンPC用スクリプト
       ID_PASOKON_OFFSET,              //(10090),
       ID_PASOKON_OFFSET_END,          //(10099),
       NARC_script_seq_pasokon_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pasokon_dat
     },
     {//秘伝技スクリプト
       ID_HIDEN_OFFSET,                //(10000),
       ID_HIDEN_OFFSET_END,            //(10089),
       NARC_script_seq_hiden_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_hiden_dat
     },
     {//初期化スクリプト
       ID_INIT_SCR_OFFSET,             //( 9600),
       ID_INIT_SCR_OFFSET_END,         //( 9699),
       NARC_script_seq_init_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//隠しアイテムスクリプト
       ID_HIDE_ITEM_OFFSET,            //( 8000),
       ID_HIDE_ITEM_OFFSET_END,        //( 8799),
       NARC_script_seq_hide_item_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//フィールドアイテムスクリプト
       ID_FLD_ITEM_OFFSET,             //( 7000),
       ID_FLD_ITEM_OFFSET_END,         //( 7799),
       NARC_script_seq_fld_item_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_item_get_scr_dat
     },
     {//2vs2トレーナースクリプト
       ID_TRAINER_2VS2_OFFSET,         //( 5000),
       ID_TRAINER_2VS2_OFFSET_END,     //( 6999),
       NARC_script_seq_trainer_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//トレーナースクリプト
       ID_TRAINER_OFFSET,              //( 3000),
       ID_TRAINER_OFFSET_END,          //( 4999),
       NARC_script_seq_trainer_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
     {//アイテム入手イベントコモン
       ID_ITEM_GET_SCR_OFFSET,         //( 2800),
       ID_ITEM_GET_SCR_OFFSET_END,     //( 2819),
       NARC_script_seq_item_get_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_item_get_scr_dat
     },
     {//BGアトリビュート話かけスクリプト
       ID_BG_ATTR_OFFSET,              //( 2500),
       ID_BG_ATTR_OFFSET_END,          //( 2799),
       NARC_script_seq_bg_attr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_bg_attr_dat
     },
     {//ポケモンわざおぼえ用
       ID_SKILL_TEACH_SCR_OFFSET,      //( 2280),
       ID_SKILL_TEACH_SCR_OFFSET_END,  //( 2299),
       NARC_script_seq_skill_teach_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_skill_teach_scr_dat
     },
     {//ポケモンわざ忘れなど用
       ID_POKE_WAZA_OFFSET,            //( 2260),
       ID_POKE_WAZA_OFFSET_END,        //( 2279),
       NARC_script_seq_poke_waza_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_poke_waza_dat
     },
     {//タマゴ孵化スクリプト
       ID_EGGEVENT_SCR_OFFSET,         //( 2250),
       ID_EGGEVENT_SCR_OFFSET_END,     //( 2259),
       NARC_script_seq_eggevent_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_egg_event_dat
     },
     {//姓名判断
       ID_NAMECHANGE_SCR_OFFSET,       //( 2225),
       ID_NAMECHANGE_SCR_OFFSET_END,   //( 2249),
       NARC_script_seq_namechange_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_namechange_scr_dat
     },
     {//育て屋用スクリプト
       ID_SODATEYA_SCR_OFFSET,         //( 2200),
       ID_SODATEYA_SCR_OFFSET_END,     //( 2224),
       NARC_script_seq_sodateya_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_sodateya_scr_dat
     },
     {//ポケセン用スクリプト
       ID_POKECEN_SCR_OFFSET,          //( 2100),
       ID_POKECEN_SCR_OFFSET_END,      //( 2199),
       NARC_script_seq_pokecen_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_pokecen_scr_dat
     },
     {//共通スクリプト
       ID_COMMON_SCR_OFFSET,           //( 2000),
       ID_COMMON_SCR_OFFSET_END,       //( 2099),
       NARC_script_seq_common_scr_bin,
+      ARCID_SCRIPT_MESSAGE,
       NARC_script_message_common_scr_dat
     },
 };

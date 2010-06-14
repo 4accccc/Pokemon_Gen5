@@ -138,9 +138,6 @@ tamagetake_scr_def.h: tamagetake_scr.ev
 tv_scr_def.h: tv_scr.ev
 	$(EV_DEF) tv_scr.ev $(SCR_OFFS_ID_H)
 
-debug_scr_def.h: debug_scr.ev
-	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
-
 bc10_def.h: bc10.ev
 	$(EV_DEF) bc10.ev $(SCR_OFFS_ID_H)
 
@@ -1421,4 +1418,7 @@ wc10pcr0101_def.h: wc10pcr0101.ev
 
 wc10r0101_def.h: wc10r0101.ev
 	$(EV_DEF) wc10r0101.ev $(SCR_OFFS_ID_H)
+
+debug_scr_def.h: debug_scr.ev
+	$(EV_DEF) debug_scr.ev $(SCR_OFFS_ID_H)
 

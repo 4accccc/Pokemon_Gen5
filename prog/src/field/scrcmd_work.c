@@ -595,10 +595,10 @@ static void mmdlAnimeTCB_Delete( SCRCMD_WORK *work )
  * @retval	nothing
  */
 //--------------------------------------------------------------
-void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 datID )
+void SCRCMD_WORK_CreateMsgData( SCRCMD_WORK *work, u32 arcID, u32 datID )
 {
 	GFL_MSGDATA *msgData = GFL_MSG_Create(
-		GFL_MSG_LOAD_NORMAL, ARCID_SCRIPT_MESSAGE, datID, work->heapID );
+		GFL_MSG_LOAD_NORMAL, arcID, datID, work->heapID );
 
   work->msgData = msgData;
   work->msg_naix_id = datID;

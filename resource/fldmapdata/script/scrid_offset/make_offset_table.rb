@@ -10,8 +10,13 @@
 
 $KCODE= "SJIS"
 
+# enum_const_setを使えるようにする
+require ENV["PROJECT_ROOT"] + 'tools/constant'
 
-SCRIPT_GMM_PATH = ENV["PROJECT_RSCDIR"] + "message/src/script_message/"
+SCRIPT_GMM_DIR  = "script_message"
+DEBUG_GMM_DIR = "debug"
+DEFAULT_GMM_PATH = ENV["PROJECT_RSCDIR"] + "message/src/"
+#SCRIPT_GMM_PATH = ENV["PROJECT_RSCDIR"] + "message/src/script_message/"
 SCRIPT_PATH = ENV["PROJECT_RSCDIR"] + "fldmapdata/script/"
 
 class ScrOfsConverterError < Exception; end
@@ -22,15 +27,17 @@ XLS2TAB = "ruby #{ENV["PROJECT_ROOT"]}tools/exceltool/xls2xml/tab_out.rb -c "
 # スクリプトオフセット指定のデータセット
 #----------------------------------------------------------------------------
 class ScrOfs
-  attr_reader :name, :startno, :max, :scriptfile, :msgfile, :eventuse, :comment
+  attr_reader :name, :startno, :max, :scriptfile, :msgfile, :msgarc, :eventuse, :debuguse, :comment
 
-  def initialize(name, startno, max, scriptfile, msgfile, eventuse, comment)
+  def initialize(name, startno, max, scriptfile, msgfile, msgarc, eventuse, debuguse, comment)
     @name = name
     @startno = startno
     @max = max
     @scriptfile = scriptfile
     @msgfile = msgfile
+    @msgarc = msgarc
     @eventuse = eventuse
+    @debuguse = debuguse
     @comment = comment
 
     STDERR.puts "MAKE SCRIPT OFFSET \"#{name}\", #{startno}-#{endno}"
@@ -45,14 +52,17 @@ end
 # ScrOfsをまとめる
 #----------------------------------------------------------------------------
 class ScrOfsData
-
-  COL_AREANAME  = 0
-  COL_STARTNO   = 1
-  COL_MAX       = 2
-  COL_SCRFILE   = 3
-  COL_MSGFILE   = 4
-  COL_EVENTUSE  = 5
-  COL_COMMENT   = 6
+  enum_const_set %w[
+    COL_AREANAME
+    COL_STARTNO
+    COL_MAX
+    COL_SCRFILE
+    COL_MSGFILE
+    COL_MSGARC
+    COL_EVENTUSE
+    COL_DEBUGMODE
+    COL_COMMENT
+  ]
 
   attr_reader :manager_filename, :ofsdatas, :define_count
 
@@ -82,7 +92,9 @@ class ScrOfsData
     raiseError(errorMsg,lincount) if column[COL_MAX] != "最大値"
     raiseError(errorMsg,lincount) if column[COL_SCRFILE] != "対象スクリプトファイル"
     raiseError(errorMsg,lincount) if column[COL_MSGFILE] != "対象メッセージファイル"
+    raiseError(errorMsg,lincount) if column[COL_MSGARC] != "対象メッセージアーカイブ"
     raiseError(errorMsg,lincount) if column[COL_EVENTUSE] != "イベント参照"
+    raiseError(errorMsg,lincount) if column[COL_DEBUGMODE] != "デバッグ用"
     raiseError(errorMsg,lincount) if column[COL_COMMENT] != "コメント"
 
     names = Hash.new
@@ -104,7 +116,9 @@ class ScrOfsData
       max = Integer(column[COL_MAX])
       scrfile = column[COL_SCRFILE]
       msgfile = column[COL_MSGFILE]
+      msgarc = column[COL_MSGARC]
       eventuse = column[COL_EVENTUSE]
+      debuguse = column[COL_DEBUGMODE]
 
       raiseError("領域名が重なっています.#{areaname}",linecount) if names.has_key?(areaname)
       names[areaname] = nil
@@ -112,8 +126,11 @@ class ScrOfsData
       raiseError("使用領域が前の部分に重なっています\n",linecount) if startno <= before_max
       before_max = startno + max - 1
 
+      if msgarc == "×"
+        msgarc = ""
+      end
       if msgfile != "×"
-        unless FileTest.exist?(SCRIPT_GMM_PATH + msgfile) then
+        unless FileTest.exist?(DEFAULT_GMM_PATH + msgarc + "/" + msgfile) then
           raiseError("指定されたgmmファイル#{msgfile}が存在しません", linecount)
         end
       else
@@ -132,12 +149,26 @@ class ScrOfsData
       else
         scrfile = nil
       end
-      if eventuse != "○" && eventuse != "×" then
+
+      case eventuse
+      when "○" then
+        eventuse = true
+      when "×" then
+        eventuse = false
+      else
         raiseError("イベント参照に無効な値(#{eventuse})が設定されています",linecount)
+      end
+      case debuguse
+      when "○" then
+        debuguse = true
+      when "×" then
+        debuguse = false
+      else
+        raiseError("デバッグ用指定に無効な値(#{debuguse})が設定されています",linecount)
       end
 
       comment = column[COL_COMMENT]
-      @ofsdatas << ScrOfs.new(areaname, startno, max, scrfile, msgfile, eventuse, comment)
+      @ofsdatas << ScrOfs.new(areaname, startno, max, scrfile, msgfile, msgarc, eventuse, debuguse, comment)
       @define_count += 1
     }
   end
@@ -229,13 +260,26 @@ scrData.ofsdatas.reverse_each{|data|
   data.msgfile
   if data.scriptfile != nil && data.msgfile != nil
     scridx = "NARC_script_seq_#{data.scriptfile.sub(/\.ev$/,"_bin")}"
-    msgidx = "NARC_script_message_#{data.msgfile.sub(/\.gmm/,"_dat")}"
+    if data.msgarc == "debug" then
+      msgarc = "ARCID_DEBUG_MESSAGE"
+      msgidx = "NARC_debug_message_#{data.msgfile.sub(/\.gmm/,"_dat")}"
+    else
+      msgarc = "ARCID_#{data.msgarc.upcase}"
+      msgidx = "NARC_#{data.msgarc}_#{data.msgfile.sub(/\.gmm/,"_dat")}"
+    end
+    if data.debuguse == true then
+      output += sprintf("#ifdef PM_DEBUG\n")
+    end
     output += sprintf("    {//#{data.comment}\n")
     output += sprintf("      %-32s//(%5d),\n", start_id, data.startno)
     output += sprintf("      %-32s//(%5d),\n", end_id, data.endno)
     output += sprintf("      %s,\n", scridx)
+    output += sprintf("      %s,\n", msgarc)
     output += sprintf("      %s\n", msgidx)
     output += sprintf("    },\n")
+    if data.debuguse == true then
+      output += sprintf("#endif //PM_DEBUG\n")
+    end
   end
 }
 output += tail_string
@@ -267,6 +311,7 @@ END_OF_STRING
 all_ev_list = "UNIQ_SCRIPTFILES = "
 top_ev_list = "UNIQ_TOP_EVENT_SCRFILES = "
 sub_ev_list = "UNIQ_SUB_EVENT_SCRFILES = "
+debug_ev_list = "UNIQ_DEBUG_EVENT_SCRFILES = "
 
 output = set_date_string( head_string, /DATE_STRING/ )
 
@@ -275,13 +320,17 @@ filenames = Hash.new
 scrData.ofsdatas.each{|data|
   filename = data.scriptfile
   if filename != nil && filenames.has_key?(filename) == false then
-    all_ev_list += sprintf("\\\n\t%s ", filename)
-    filenames[filename] = true
-
-    if data.eventuse == "○" then
-      top_ev_list += sprintf("\\\n\t%s ", filename)
+    if data.debuguse == true then
+      debug_ev_list += sprintf("\\\n\t%s ", filename)
     else
-      sub_ev_list += sprintf("\\\n\t%s ", filename)
+      all_ev_list += sprintf("\\\n\t%s ", filename)
+      filenames[filename] = true
+
+      if data.eventuse == true then
+        top_ev_list += sprintf("\\\n\t%s ", filename)
+      else
+        sub_ev_list += sprintf("\\\n\t%s ", filename)
+      end
     end
   end
 }
@@ -291,6 +340,8 @@ output += "#イベントデータで指定され直接呼ばれるスクリプトファイル\n"
 output += top_ev_list + "\n\n"
 output += "#プログラムやスクリプトから呼ばれるスクリプトファイル\n"
 output += sub_ev_list + "\n\n"
+output += "#デバッグ用のスクリプトファイル\n"
+output += debug_ev_list + "\n\n"
 output += tail_string
 return output
 
