@@ -5,11 +5,12 @@ C:\home\pokemon_wb\resource\particle\wazaeffect\be_m_ball_01_kaiten.spa
 C:\home\pokemon_wb\resource\particle\wazaeffect\be_ball_001_1.spa
 #001
 %00
+制御モード変更	継続
+汎用ワークに値をセット	3
+ポケモンバニッシュ	攻撃側	バニッシュオン
 カメラ移動	追従	3vs3攻撃	CM	0	CB
 エフェクト終了待ち	すべて
-汎用ワークに値をセット	3
 制御モード変更	継続
-ポケモンバニッシュ	攻撃側	バニッシュオン
 指定されたワークを見て条件分岐	攻撃側向き	==	0	SIDE_MINE
 ポケモン拡縮	攻撃側	ダイレクト	0	0	0	0	0
 指定されたワークを見て条件分岐	攻撃側跳ねる	==	1	NO_JUMP_1
