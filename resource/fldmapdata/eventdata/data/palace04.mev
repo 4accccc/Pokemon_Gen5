@@ -1,5 +1,5 @@
 #event data
-#save date:2010/03/21 18:59:34
+#save date:2010/06/14 21:07:56
 # linked worldmap file name
 C:\home\pokemon_wb\resource\fldmapdata\eventdata\data\palace04.wms
 #SECTION START:OBJ_EVENT
@@ -61,7 +61,7 @@ WK_OTHER_SYMMAP_POS
 #Pos Type
 EVENTDATA_POSTYPE_GRID
 #position
-168 0 -8
+168 0 8
 #size
 1 3
 #Map Event List Data End
