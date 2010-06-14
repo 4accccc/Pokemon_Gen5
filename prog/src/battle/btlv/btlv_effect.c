@@ -1993,14 +1993,22 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
 
   switch( beht->seq_no ){
   case 0:
-    if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) 
-    { 
-      BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_MIGAWARI_WAZA_BEFORE, NULL );
-      bew->execute_flag = TRUE;
-    }
+    BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_ZOOM_IN_ORTHO, NULL );
+    bew->execute_flag = TRUE;
     beht->seq_no++;
-    /*fallthru*/
+    break;
   case 1:
+    if( bew->execute_flag == FALSE )
+    { 
+      if( BTLV_MCSS_GetStatusFlag( bew->bmw, beht->vpos ) & BTLV_MCSS_STATUS_FLAG_MIGAWARI ) 
+      { 
+        BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_MIGAWARI_WAZA_BEFORE, NULL );
+        bew->execute_flag = TRUE;
+      }
+      beht->seq_no++;
+    }
+    break;
+  case 2:
     if( bew->execute_flag == FALSE )
     { 
       BTLV_MCSS_MoveAlpha( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_DIRECT, 16, 0, 0, 0 );
@@ -2011,18 +2019,18 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
       beht->seq_no++;
     }
     break;
-  case 2:
+  case 3:
     if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
     {
       BTLV_MCSS_OverwriteMAW( bew->bmw, beht->vpos, &beht->maw );
       beht->seq_no++;
     }
     break;
-  case 3:
+  case 4:
     BTLV_MCSS_MoveMosaic( bew->bmw, beht->vpos, EFFTOOL_CALCTYPE_INTERPOLATION, 0, 8, 1, 0 );
     beht->seq_no++;
     break;
-  case 4:
+  case 5:
     if( !BTLV_MCSS_CheckTCBExecute( bew->bmw, beht->vpos ) )
     {
       BTLV_EFFVM_SePlay( bew->vm_core, SEQ_SE_DUMMY5, BTLEFF_SEPLAY_SE1, BTLEFF_SEPAN_ATTACK, 0, 0, 0, 0, 0 );
@@ -2035,7 +2043,15 @@ static  void  TCB_BTLV_EFFECT_Henge( GFL_TCB *tcb, void *work )
       beht->seq_no++;
     }
     break;
-  case 5:
+  case 6:
+    if( bew->execute_flag == FALSE )
+    { 
+      BTLV_EFFVM_Start( bew->vm_core, beht->vpos, BTLV_MCSS_POS_ERROR, BTLEFF_CAMERA_INIT_ORTHO, NULL );
+      bew->execute_flag = TRUE;
+      beht->seq_no++;
+    }
+    break;
+  case 7:
     if( bew->execute_flag == FALSE )
     { 
       BTLV_EFFECT_FreeTCB( tcb );
