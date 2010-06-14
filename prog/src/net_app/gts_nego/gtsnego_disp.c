@@ -1246,8 +1246,26 @@ int GTSNEGO_DISP_FriendListUpChk(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pC
   return ChangeCode;
 }
 
+//----------------------------------------------------------------------------
+/**
+ *	@brief	カーソル位置をセット
+ *	@param	GTSNEGO_DISP_WORK
+ *	@return	none
+ */
+//-----------------------------------------------------------------------------
 
+void GTSNEGO_DISP_FriendListSetCurPos(GTSNEGO_DISP_WORK* pWork, SCROLLPANELCURSOR* pCur, const u32 curpos)
+{
+  NOZOMU_Printf("カーソル位置のセット %d\n",pCur->listmax);
+  if (curpos < pCur->listmax)
+  {
+    pCur->curpos = curpos;
+  }
 
+  if (pCur->curpos > 2) pCur->curpos = 2;
+  NOZOMU_Printf("CurPos = %d\n",pCur->curpos);
+
+}
 
 static void _CreateMenuBarObj(GTSNEGO_DISP_WORK* pWork)
 {
