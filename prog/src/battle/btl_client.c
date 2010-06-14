@@ -2853,6 +2853,11 @@ static void setWaruagakiAction( BTL_ACTION_PARAM* dst, BTL_CLIENT* wk, const BTL
 //----------------------------------------------------------------------------------
 static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, WazaID waza, BTLV_STRPARAM* strParam )
 {
+  //わるあがきが選ばれているなら無条件で繰り出す
+  if( waza == WAZANO_WARUAGAKI )
+  { 
+    return FALSE;
+  }
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
   if( IsItemEffective(wk, bpp) )
   {
