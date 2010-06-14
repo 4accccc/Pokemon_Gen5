@@ -81,7 +81,7 @@ typedef u8 COMM_BTL_POKE_RESULT;
 typedef struct {
   const POKEPARTY* party;   ///< 戦所時の所有ポケモンデータ(結果も受け取りたいので、BATTLE_SETUP_PARAM内のpartyと同じものである必要がある)
   const MYSTATUS* mystatus; ///< トレーナー名、性別を取得する
-  u8    trsex;              ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSに置き換わるので廃止予定)
+  u8    trsex;              ///< トレーナーの性別:PM_MALE or PM_FEMALE(MYSTATUSから取得してワークとして利用)
   u8    server_version;     ///< ROMのサーババージョン
   COMM_BTL_POKE_RESULT  party_state[DEMO_POKEPARTY_MAX]; ///< ポケモンの戦闘結果状態をもらうための配列
 } COMM_BTL_DEMO_TRAINER_DATA;
