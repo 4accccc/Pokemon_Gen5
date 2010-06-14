@@ -776,6 +776,7 @@ static GFL_PROC_RESULT CommBtlDemoProc_Init( GFL_PROC *proc, int *seq, void *pwk
 static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk, void *mywk )
 { 
   COMM_BTL_DEMO_MAIN_WORK* wk = mywk;
+  COMM_BTL_DEMO_PARAM * prm   = pwk;
 
 #ifdef DEBUG_SET_PARAM
   debug_param_del( pwk );
@@ -784,8 +785,10 @@ static GFL_PROC_RESULT CommBtlDemoProc_Exit( GFL_PROC *proc, int *seq, void *pwk
   GFL_BG_SetScrollReq( GFL_BG_FRAME3_M, GFL_BG_SCROLL_X_SET, 0 );
 
   // レコード埋込
-  _Set_RecordData(wk);
-  
+  if( prm->type == COMM_BTL_DEMO_TYPE_NORMAL_END 
+  ||  prm->type == COMM_BTL_DEMO_TYPE_MULTI_END ){
+    _Set_RecordData(wk);
+  }
   // シーンコントーラ削除
   UI_SCENE_CNT_Delete( wk->cntScene );
 
@@ -2458,7 +2461,7 @@ static void _set_record_result( RECORD *record, int id, COMM_BTL_DEMO_RESULT res
 //----------------------------------------------------------------------------------
 static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk )
 {
-    GameServiceID id;
+  GameServiceID id;
   // アサートにすると動作確認ができなくなるので
   if(wk->pwk->record==NULL){
     OS_Printf("----------------レコード構造体ポインタが入っていない\n");
@@ -2466,6 +2469,8 @@ static void _Set_RecordData( COMM_BTL_DEMO_MAIN_WORK *wk )
   }
   
   id = GFL_NET_GetGameServiceID();
+
+  OS_Printf("GAME Service ID = %d\n", id);
 
   // 対戦回数＋１と、勝敗数え上げ処理
   switch(id){
