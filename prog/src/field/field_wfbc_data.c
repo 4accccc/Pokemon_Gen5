@@ -438,9 +438,10 @@ void FIELD_WFBC_COMM_DATA_Oya_Main( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_myw
  *	@param	p_mywfbc    自分のWFBC
  *	@param	p_oyawfbc   親のWFBC
  *	@param  npc_id      NPCID
+ *	@param  heapID      テンポラリHEAPID
  */
 //-----------------------------------------------------------------------------
-void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, FIELD_WFBC_CORE* p_oyawfbc, const MYSTATUS* cp_mystatus, u16 npc_id )
+void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p_mywfbc, FIELD_WFBC_CORE* p_oyawfbc, const MYSTATUS* cp_mystatus, u16 npc_id, HEAPID heapID )
 {
   FIELD_WFBC_CORE_PEOPLE* p_people;
 
@@ -448,6 +449,30 @@ void FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( WFBC_COMM_DATA* p_wk, FIELD_WFBC_CORE* p
 
   // いないのはおかしい
   GF_ASSERT( p_people );
+
+  // 機嫌値、イベントマスクを初期化
+  // BTS
+  {
+    FIELD_WFBC_PEOPLE_DATA_LOAD* p_people_loader;
+    const FIELD_WFBC_PEOPLE_DATA* cp_people_data;
+    
+    p_people_loader = FIELD_WFBC_PEOPLE_DATA_Create( npc_id, heapID );
+
+    cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
+
+    // 機嫌値初期化
+    if( p_mywfbc->type == FIELD_WFBC_CORE_TYPE_BLACK_CITY ){
+      p_people->mood = cp_people_data->mood_bc;
+    }else{
+      p_people->mood = cp_people_data->mood_wf;
+    }
+
+    // イベントマスク初期化
+    p_people->one_day_msk = FIELD_WFBC_ONEDAY_MSK_INIT;
+
+    FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
+    
+  }
 
   // 登録
   FIELD_WFBC_CORE_AddPeople( p_mywfbc, cp_mystatus, p_people ); //OVERLAY_FIELDMAP

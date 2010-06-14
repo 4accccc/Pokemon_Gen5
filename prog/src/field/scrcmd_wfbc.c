@@ -855,7 +855,7 @@ static GMEVENT_RESULT EVENT_WFBC_Palece_Talk( GMEVENT* p_event, int* p_seq, void
     {
       const MYSTATUS* cp_mystatus = GAMEDATA_GetMyStatus( GAMESYSTEM_GetGameData(p_work->p_gsys) );
       // l‚ğˆÚ‚µ•Ï‚¦‚éB
-      FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( p_work->p_commsys, p_work->p_my, p_work->p_oya, cp_mystatus, p_work->npc_id );
+      FIELD_WFBC_COMM_DATA_Ko_ChangeNpc( p_work->p_commsys, p_work->p_my, p_work->p_oya, cp_mystatus, p_work->npc_id, p_work->heapID );
     }
     
     // ‚»‚Ìl‚ğÁ‚·
