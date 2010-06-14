@@ -2303,6 +2303,10 @@ static int _playerDirectInit1Next( WIFIP2PMATCH_WORK *wk, int seq )
   MCR_MOVEOBJ* p_npc;
   u32 way;
 
+
+  if(!GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB)){
+    return seq;
+  }
   GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(),FALSE);  //Ú‘±‹ÖŽ~
   if(!GFL_NET_IsParentMachine()){
     _friendNameExpand(wk,  wk->friendNo - 1);

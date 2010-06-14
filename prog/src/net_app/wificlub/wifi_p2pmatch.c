@@ -269,6 +269,7 @@ typedef struct{  // スクリーン用RECT構造体
 #define _TIMING_VCTEND  (18)// タイミングをそろえる
 #define _TIMING_VCTST  (19)// タイミングをそろえる
 #define _TIMING_DISCONNECT_END  (21)// タイミングをそろえる
+#define _TIMING_SECOND_MATCH  (24)// タイミングをそろえる
 
 #define _RECONECTING_WAIT_TIME (20)  //再接続時間
 
@@ -2184,7 +2185,8 @@ static int WifiP2PMatch_MainInit( WIFIP2PMATCH_WORK *wk, int seq )
       WifiP2PMatch_FriendListInit2( wk, seq );
       wk->friendNo = wk->pParentWork->friendNo;
       _myStatusChange(wk, WIFI_STATUS_PLAYING, WIFI_GAME_UNIONMATCH);
-      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1           );
+      GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB);
+      _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
     }
     else{  //相手と切断
       GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_VCTEND, WB_NET_WIFICLUB);
@@ -4030,6 +4032,7 @@ static int WifiP2PMatch_VCTDisconnectSend1(WIFIP2PMATCH_WORK *wk, int seq)
 static int WifiP2PMatch_VCTDisconnectSendEnd(WIFIP2PMATCH_WORK *wk, int seq)
 {
   if(DWCRAP_IsVChat()==FALSE){
+    GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle() ,_TIMING_SECOND_MATCH, WB_NET_WIFICLUB);
     _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT1);
   }
   return seq;
