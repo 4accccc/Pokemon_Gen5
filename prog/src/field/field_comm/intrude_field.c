@@ -1323,6 +1323,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   ZONEID zone_id = PLAYERWORK_getZoneID( plWork );
   u16 player_dir = PLAYERWORK_getDirection_Type(plWork);
   VecFx32 pos, new_pos;
+  fx32 palace_area_calc_x;
   GAME_COMM_SYS_PTR game_comm = GAMESYSTEM_GetGameCommSysPtr(gameSys);
   int i, now_area, new_area;
   BOOL warp = FALSE;
@@ -1345,6 +1346,7 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   
   FIELD_PLAYER_GetPos( pcActor, &pos );
   new_pos = pos;
+  palace_area_calc_x = pos.x;
   
   now_area = intcomm->intrude_status_mine.palace_area;
   new_area = now_area;
@@ -1356,16 +1358,25 @@ static void _PalaceFieldPlayerWarp(FIELDMAP_WORK *fieldWork, GAMESYS_WORK *gameS
   if(pos.x < left_end){// && player_dir == DIR_LEFT){
     new_pos.x = right_end - (left_end - pos.x);
     warp = TRUE;
-    OS_TPrintf("left warp now_pos.x = %d, new_pos.x = %d, left_end=%d, right_end=%d\n", pos.x>>FX32_SHIFT, new_pos.x>>FX32_SHIFT, left_end>>FX32_SHIFT, right_end>>FX32_SHIFT);
+    //OS_TPrintf("left warp now_pos.x = %d, new_pos.x = %d, left_end=%d, right_end=%d\n", pos.x>>FX32_SHIFT, new_pos.x>>FX32_SHIFT, left_end>>FX32_SHIFT, right_end>>FX32_SHIFT);
   }
   else if(pos.x > right_end){// && player_dir == DIR_RIGHT){
     new_pos.x = left_end + (pos.x - right_end);
     warp = TRUE;
-    OS_TPrintf("right warp now_pos.x = %d, new_pos.x = %d, left_end=%d, right_end=%d\n", pos.x>>FX32_SHIFT, new_pos.x>>FX32_SHIFT, left_end>>FX32_SHIFT, right_end>>FX32_SHIFT);
+    //OS_TPrintf("right warp now_pos.x = %d, new_pos.x = %d, left_end=%d, right_end=%d\n", pos.x>>FX32_SHIFT, new_pos.x>>FX32_SHIFT, left_end>>FX32_SHIFT, right_end>>FX32_SHIFT);
+  }
+  
+  if(warp == TRUE){
+    palace_area_calc_x = new_pos.x;
+    if(GAMESYSTEM_IsEventExists(gameSys) == TRUE){
+      //イベント起動中はまだワープさせない(バリアが見えなくなるので)
+      new_pos = pos;
+      warp = FALSE;
+    }
   }
   
   //現在の座標からパレスエリアを判定
-  new_area = pos.x / PALACE_MAP_LEN;
+  new_area = palace_area_calc_x / PALACE_MAP_LEN;
 
   if(warp == TRUE){
     FIELD_PLAYER_SetPos( pcActor, &new_pos );
