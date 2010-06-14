@@ -691,7 +691,8 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
       RECORD_Inc(record,RECID_POKESHIFTER_COUNT);
       work->playNum++;
       
-      MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_06 , MSGSPEED_GetWait() );
+      //要望でメッセージ切り替えをなくす
+      //MB_MSG_MessageDisp( work->msgWork , MSG_MB_PAERNT_06 , MSGSPEED_GetWait() );
       work->state = MPS_WAIT_SEND_POKE;
     }
     else

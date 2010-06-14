@@ -1830,6 +1830,16 @@ static GFL_PROC_RESULT MB_SELECT_ProcInit( GFL_PROC * proc, int * seq , void *pw
           PPP_Put( initWork->boxData[i][j] , ID_PARA_form_no , 1 );
         }
         else
+        if( i==0 && j == 1 )
+        {
+          //オリジンギラティナ
+          PPP_Setup( initWork->boxData[i][j] ,
+                     MONSNO_GIRATHINA ,
+                     100 ,
+                     PTL_SETUP_ID_AUTO );
+          PPP_Put( initWork->boxData[i][j] , ID_PARA_item , 112 );
+        }
+        else
         if( GFUser_GetPublicRand0(10) == 0 )
         //if( i == 0 || i == 1 || i == 17 )
         {

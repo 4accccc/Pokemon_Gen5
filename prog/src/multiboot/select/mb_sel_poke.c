@@ -13,6 +13,7 @@
 #include "system/gfl_use.h"
 
 #include "mb_select_gra.naix"
+#include "poke_tool/monsno_def.h"
 
 #include "multiboot/mb_poke_icon.h"
 #include "multiboot/mb_util.h"
@@ -180,30 +181,43 @@ void MB_SEL_POKE_SetPPP( MB_SELECT_WORK *selWork , MB_SEL_POKE *pokeWork , POKEM
     NNSG2dImagePaletteProxy tempPlt;
     NNSG2dCharacterData *tempNcg;
     u32 pltAdr;
-    void *tempRes = GFL_ARCHDL_UTIL_LoadOBJCharacter( iconArcHandle ,
-                                          MB_ICON_GetCharResId(pokeWork->ppp,type) ,
-                                          FALSE ,
-                                          &tempNcg ,
-                                          heapId );
-    GFL_CLGRP_CGR_Replace( pokeWork->cellResIdx , tempNcg );
-    NNS_G2dInitImagePaletteProxy( &tempPlt );
-    if( ret == MUCPR_OK )
-    {
-      pltAdr = GFL_CLGRP_PLTT_GetAddr( pokeWork->initWork->palResIdx , CLSYS_DRAW_MAIN );
-    }
-    else
-    {
-      pltAdr = GFL_CLGRP_PLTT_GetAddr( pokeWork->initWork->palNoneResIdx , CLSYS_DRAW_MAIN );
-    }
-    NNS_G2dSetImagePaletteLocation( &tempPlt , NNS_G2D_VRAM_TYPE_2DMAIN , pltAdr );
-    GFL_CLACT_WK_SetPlttProxy( pokeWork->pokeIcon , &tempPlt );
-    GFL_CLACT_WK_SetPlttOffs( pokeWork->pokeIcon , 
-                              MB_ICON_GetPalNumber(pokeWork->ppp) ,
-                              CLWK_PLTTOFFS_MODE_PLTT_TOP );
-    GFL_CLACT_WK_SetDrawEnable( pokeWork->pokeIcon , TRUE );
-    GFL_HEAP_FreeMemory( tempRes );
+    u32 resId = MB_ICON_GetCharResId(pokeWork->ppp,type);
     
-    MB_SEL_POKE_SetPri( selWork , pokeWork , pokeWork->type );
+    //ƒMƒ‰ƒeƒBƒi‘Î‰ž
+    if( PPP_Get( pokeWork->ppp , ID_PARA_monsno , NULL ) == MONSNO_GIRATHINA && 
+        PPP_Get( pokeWork->ppp , ID_PARA_item , NULL ) == 112 ) //”’‹à‹Ê
+    {
+      if( type != CARD_TYPE_DUMMY )
+      {
+        resId = 540;  //NARC_poke_icon_poke_icon_509_01_NCGR
+      }
+    }
+    {
+      void *tempRes = GFL_ARCHDL_UTIL_LoadOBJCharacter( iconArcHandle ,
+                                            resId ,
+                                            FALSE ,
+                                            &tempNcg ,
+                                            heapId );
+      GFL_CLGRP_CGR_Replace( pokeWork->cellResIdx , tempNcg );
+      NNS_G2dInitImagePaletteProxy( &tempPlt );
+      if( ret == MUCPR_OK )
+      {
+        pltAdr = GFL_CLGRP_PLTT_GetAddr( pokeWork->initWork->palResIdx , CLSYS_DRAW_MAIN );
+      }
+      else
+      {
+        pltAdr = GFL_CLGRP_PLTT_GetAddr( pokeWork->initWork->palNoneResIdx , CLSYS_DRAW_MAIN );
+      }
+      NNS_G2dSetImagePaletteLocation( &tempPlt , NNS_G2D_VRAM_TYPE_2DMAIN , pltAdr );
+      GFL_CLACT_WK_SetPlttProxy( pokeWork->pokeIcon , &tempPlt );
+      GFL_CLACT_WK_SetPlttOffs( pokeWork->pokeIcon , 
+                                MB_ICON_GetPalNumber(pokeWork->ppp) ,
+                                CLWK_PLTTOFFS_MODE_PLTT_TOP );
+      GFL_CLACT_WK_SetDrawEnable( pokeWork->pokeIcon , TRUE );
+      GFL_HEAP_FreeMemory( tempRes );
+      
+      MB_SEL_POKE_SetPri( selWork , pokeWork , pokeWork->type );
+    }
   }
   else
   {
