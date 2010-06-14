@@ -403,6 +403,8 @@ static void _changeDemo_ModelTrade2_jump(POKEMON_TRADE_WORK* pWork)
     }
     MCSS_ResetVanishFlag( pWork->pokeMcss[2] );
     MCSS_SetVanishFlag( pWork->pokeMcss[0] );
+    MCSS_ResetAnmStopFlag(pWork->pokeMcss[2]);
+
     pWork->pMoveMcss[0]->pMcss = pWork->pokeMcss[2];
   }
 
