@@ -97,7 +97,7 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
 #endif
   case 3:
     GMEVENT_CallEvent(event, 
-      EVENT_FSND_PushPlayNextBGM(gsys, cbw->para.musicDefault, FSND_FADE_FAST, FSND_FADE_NONE)); 
+        EVENT_FSND_PushPlayBattleBGM(gsys, cbw->para.musicDefault)); 
     (*seq)++;
     break;
   case 4:
@@ -119,12 +119,16 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     break;
   case 5:
     BATTLE_PARAM_Release( &cbw->para ); //ƒoƒgƒ‹SetupParam‰ð•ú
+    GMEVENT_CallEvent(event, EVENT_FSND_PopPlayBGM_fromBattle(gsys));
+    (*seq) ++;
+    break;
     
+  case 6:
     OS_TPrintf("_FIELD_OPEN\n");
     GMEVENT_CallEvent(event, EVENT_FieldOpen(gsys));
     (*seq) ++;
     break;
-  case 6:
+  case 7:
     OS_TPrintf("_FIELD_FADEIN\n");
     {
       GMEVENT* fade_event;
@@ -133,11 +137,11 @@ static GMEVENT_RESULT EVENT_ColosseumBattleMain(GMEVENT * event, int *  seq, voi
     }
     (*seq) ++;
     break;
-  case 7:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(gsys, FSND_FADE_FAST, FSND_FADE_NORMAL));
+  case 8:
+    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMPop(gsys));
     (*seq) ++;
     break;
-  case 8:
+  case 9:
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);

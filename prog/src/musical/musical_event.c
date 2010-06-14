@@ -1138,7 +1138,7 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
   switch( evWork->subSeq )
   {
   case 0:
-    GMEVENT_CallEvent(event, EVENT_FSND_PopBGM(evWork->gsys, FSND_FADE_NONE, FSND_FADE_NORMAL));
+    GMEVENT_CallEvent(event, EVENT_FSND_PopBGMNoWait(evWork->gsys, FSND_FADE_NONE, FSND_FADE_NORMAL));
     evWork->subSeq++; 
     break; 
   case 1:
@@ -1153,7 +1153,7 @@ static const BOOL MUSICAL_EVENT_InitField( GMEVENT *event, MUSICAL_EVENT_WORK *e
     }
     break;
   case 3:
-    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMFade(evWork->gsys));
+    GMEVENT_CallEvent(event, EVENT_FSND_WaitBGMPop(evWork->gsys));
     evWork->subSeq++;
     break;
   case 4:
