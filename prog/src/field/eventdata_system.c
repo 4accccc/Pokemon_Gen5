@@ -2444,6 +2444,15 @@ static void debugPrint_PosData( const POS_EVENT_DATA* cp_data )
 
 #endif //DEBUG_EVENTDATA_PRINT
 
+#ifdef PM_DEBUG
+const POS_EVENT_DATA * D_EVENTDATA_GetPosEventData( const EVENTDATA_SYSTEM *evdata )
+{
+  const POS_EVENT_DATA *data = evdata->pos_data;
+  return data;
+}
+
+#endif
+
 
 
 

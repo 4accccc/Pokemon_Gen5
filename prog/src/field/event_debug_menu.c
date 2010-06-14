@@ -5713,6 +5713,7 @@ static int getNextZoneID( ALL_MAP_CHECK_WORK* amcw )
 
 //--------------------------------------------------------------
 //--------------------------------------------------------------
+extern PLC_WP_CHK_CheckDebugPrint(GAMESYS_WORK * gsys);
 static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
 {
   ALL_MAP_CHECK_WORK * amcw = wk;
@@ -5765,6 +5766,10 @@ static GMEVENT_RESULT allMapCheckEvent( GMEVENT * event, int *seq, void * wk )
       //フィールドヒープの残りとＶＲＡＭの残りを計測
       DbgRestDataUpdate( FIELDMAP_GetZoneID( fieldmap ) );
       amcw->wait = 0;
+
+      //パレスワープ禁止場所をダンプ
+      PLC_WP_CHK_CheckDebugPrint(amcw->gsys);
+
       *seq = SEQ_FLY_CHECK/*SEQ_SEEK_ID*/;
     }
     break;
