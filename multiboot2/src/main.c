@@ -54,6 +54,8 @@ void NitroMain(void)
 {
   // ハード環境システム郡を初期化する関数
   MachineSystem_Init();
+
+  (void)OS_EnableIrq(); //なぜかMBだとデフォルトOFF
   // ＧＦＬ初期化
   GFLUser_Init();
 
@@ -63,7 +65,6 @@ void NitroMain(void)
   OS_SetIrqFunction(OS_IE_V_BLANK,SkeltonVBlankFunc);
 
   (void)OS_EnableIrqMask(OS_IE_H_BLANK|OS_IE_V_BLANK);
-  (void)OS_EnableIrq();
 
   (void)GX_HBlankIntr(TRUE);
   (void)GX_VBlankIntr(TRUE);

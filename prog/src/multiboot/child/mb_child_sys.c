@@ -567,8 +567,15 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       MB_CHILD_LoadResource( work );
       work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
       MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
-      MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
+      if( work->selInitWork.isCancel == FALSE )
+      {
+        MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
+        MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
+      }
+      else
+      {
+        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
+      }
       MB_CHILD_ErrCheck( work , TRUE );
       GFUser_SetVIntrFunc( MB_CHILD_VSync );
     }
@@ -586,10 +593,6 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
       if( work->selInitWork.isCancel == TRUE )
       {
         //ƒLƒƒƒ“ƒZƒ‹‚³‚ê‚½
-        MB_MSG_MessageHide( work->msgWork );
-        MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-        MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_07 , work->initData->msgSpeed );
-
         MB_COMM_SetChildState( work->commWork , MCCS_CANCEL_BOX );
         MB_COMM_ReqDisconnect( work->commWork );
         work->state = MCS_WAIT_EXIT_COMM;
@@ -764,6 +767,7 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
         MB_MSG_MessageDisp( work->msgWork , MSG_MB_CHILD_14 , work->initData->msgSpeed );
         MB_MSG_SetDispKeyCursor( work->msgWork , TRUE );
       }
+      MB_CHILD_ErrCheck( work , FALSE );
     }
     break;
   case MCS_TRANS_CONFIRM_NO_MSG:
