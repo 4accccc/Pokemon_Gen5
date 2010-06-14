@@ -3061,9 +3061,6 @@ static BOOL IsItemEffective( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp )
 //----------------------------------------------------------------------------------
 static BtlCantEscapeCode isForbidPokeChange( BTL_CLIENT* wk, const BTL_POKEPARAM* procPoke, u8* pokeID, u16* tokuseiID )
 {
-  *pokeID = BTL_POKEID_NULL;
-  *tokuseiID = POKETOKUSEI_NULL;
-
   // ÅuÇ´ÇÍÇ¢Ç»Ç ÇØÇ™ÇÁÅvÇéùÇ¡ÇƒÇ¢ÇΩÇÁämé¿Ç…OK
   if( IsItemEffective(wk, procPoke) )
   {
@@ -3080,6 +3077,8 @@ static BtlCantEscapeCode isForbidPokeChange( BTL_CLIENT* wk, const BTL_POKEPARAM
     }
   }
 
+  *pokeID = BTL_POKEID_NULL;
+  *tokuseiID = POKETOKUSEI_NULL;
   return BTL_CANTESC_NULL;
 }
 //----------------------------------------------------------------------------------

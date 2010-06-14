@@ -12801,6 +12801,24 @@ BtlWeather BTL_SVFTOOL_GetWeather( BTL_SVFLOW_WORK* wk )
 {
   return scEvent_GetWeather( wk );
 }
+//--------------------------------------------------------------------------------------
+/**
+ * [ハンドラ用ツール] トリプルで外れるワザチェック
+ *
+ * @param   wk
+ * @param   atkPokeID
+ * @param   defPokeID
+ * @param   waza
+ *
+ * @retval  BOOL    トリプルバトルの時、かつ外れる位置のワザならTRUE／それ以外FALSE
+ */
+//--------------------------------------------------------------------------------------
+BOOL BTL_SVFTOOL_CheckFarPoke( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza )
+{
+  const BTL_POKEPARAM* attacker = BTL_POKECON_GetPokeParam( wk->pokeCon, atkPokeID );
+  const BTL_POKEPARAM* defender = BTL_POKECON_GetPokeParam( wk->pokeCon, defPokeID );
+  return  IsTripleFarPos( wk, attacker, defender, waza );
+}
 
 //--------------------------------------------------------------------------------------
 /**

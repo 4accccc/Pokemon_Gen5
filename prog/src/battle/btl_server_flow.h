@@ -184,6 +184,7 @@ extern u16 BTL_SVFTOOL_CalcAgilityRank( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM
 extern BOOL BTL_SVFTOOL_IsFloatingPoke( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BOOL BTL_SVFTOOL_CheckItemUsable( BTL_SVFLOW_WORK* wk, u8 pokeID );
 extern BtlWeather BTL_SVFTOOL_GetWeather( BTL_SVFLOW_WORK* wk );
+extern BOOL BTL_SVFTOOL_CheckFarPoke( BTL_SVFLOW_WORK* wk, u8 atkPokeID, u8 defPokeID, WazaID waza );
 extern BOOL BTL_SVFTOOL_IsExistSideEffect( BTL_SVFLOW_WORK* wk, BtlSide side, BtlSideEffect sideEffect );
 extern BOOL BTL_SVFTOOL_GetDebugFlag( BTL_SVFLOW_WORK* wk, BtlDebugFlag flag );
 extern u32 BTL_SVFTOOL_GetSideEffectCount( BTL_SVFLOW_WORK* wk, BtlPokePos pos, BtlSideEffect sideEffect );

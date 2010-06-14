@@ -1727,7 +1727,20 @@ static void handler_KonoyubiTomare_Target( BTL_EVENT_FACTOR* myHandle, BTL_SVFLO
     if( (!BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID))
     &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) != WAZANO_HURIIFOORU)
     ){
-      BTL_EVENTVAR_RewriteValue( BTL_EVAR_POKEID_DEF, pokeID );
+      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      if( !BTL_SVFTOOL_CheckFarPoke(flowWk, atkPokeID, pokeID, waza) )
+      {
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
+        {
+          // HGSS‚Å‚Íˆø‚«Šñ‚¹‚Ä‚à‰½‚à•\Ž¦‚µ‚Ä‚¢‚È‚¢c
+          #if 0
+          BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+          HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
+          HANDEX_STR_AddArg( &param->str, pokeID );
+          BTL_SVF_HANDEX_Pop( flowWk, param );
+          #endif
+        }
+      }
     }
   }
 }

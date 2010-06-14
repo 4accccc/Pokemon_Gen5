@@ -318,7 +318,7 @@ static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems );
 static void handler_Hiraisin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType );
+static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType wazaType );
 static void handler_Kyuuban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kyuuban( u32* numElems );
 static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4904,7 +4904,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 // ワザターゲット引き寄せハンドラ
 static void handler_Yobimizu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WazaTargetChangeToMe( flowWk, pokeID, POKETYPE_MIZU );
+  common_WazaTargetChangeToMe( flowWk, pokeID, work, POKETYPE_MIZU );
 }
 // 無効化チェックハンドラ
 static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4934,13 +4934,22 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 // ワザターゲット決定ハンドラ
 static void handler_Hiraisin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WazaTargetChangeToMe( flowWk, pokeID, POKETYPE_DENKI );
+  common_WazaTargetChangeToMe( flowWk, pokeID, work, POKETYPE_DENKI );
 }
 // 無効化チェックハンドラ
 static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
   if( common_TypeNoEffect(flowWk, pokeID, POKETYPE_DENKI) )
   {
+    if( work[0] )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        param->header.tokwin_flag = TRUE;
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
+        HANDEX_STR_AddArg( &param->str, pokeID );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+      work[0] = 0;
+    }
     common_TypeNoEffect_Rankup( flowWk, pokeID, BPP_SP_ATTACK_RANK, 1 );
   }
 }
@@ -4955,21 +4964,21 @@ static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
  *
  */
 //--------------------------------------------------------------------------
-static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, PokeType wazaType )
+static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType wazaType )
 {
-  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) != pokeID )
+  u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
+
+  if( atkPokeID != pokeID )
   {
     if( BTL_EVENTVAR_GetValue(BTL_EVAR_WAZA_TYPE) == wazaType )
     {
-      if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
+      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+      if( !BTL_SVFTOOL_CheckFarPoke(flowWk, atkPokeID, pokeID, waza) )
       {
-#if 0
-        BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-        param->header.tokwin_flag = TRUE;
-        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
-        HANDEX_STR_AddArg( &param->str, pokeID );
-        BTL_SVF_HANDEX_Pop( flowWk, param );
-#endif
+        if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
+        {
+          work[0] = 1;
+        }
       }
     }
   }

@@ -3867,6 +3867,9 @@ u32 BTL_MAIN_GetBonusMoney( const BTL_MAIN_MODULE* wk )
   u32 bonus = wk->bonusMoney;
   if( wk->fMoneyDblUp ){
     bonus *= 2;
+    if( bonus > BTL_BONUS_MONEY_MAX ){
+      bonus = BTL_BONUS_MONEY_MAX;
+    }
   }
   return bonus;
 }
@@ -4511,7 +4514,7 @@ BOOL BTL_MAINUTIL_IsTripleCenterPos( BtlPokePos pos )
  * @param   myPos   自分位置
  * @param   farPos  [out] 相手の反対端にあたる位置を格納する変数ポインタ
  *
- * @retval  BOOL    取得できたらTRUE／取得できない（自分位置がCenterの）場合 FALSE
+ * @retval  BOOL    取得できたらTRUE／取得できない（自分位置がCenter）場合 FALSE
  */
 //-------------------------------------------------------------------
 BOOL BTL_MAINUTIL_GetTripleFarPos( BtlPokePos myPos, BtlPokePos* farPos )
