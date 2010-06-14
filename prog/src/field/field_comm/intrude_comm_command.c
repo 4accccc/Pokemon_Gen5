@@ -1006,7 +1006,8 @@ static void _MissionOrderConfirm(const int netID, const int size, const void* pD
   
   OS_TPrintf("受信：ミッション受注します net_id=%d\n", netID);
   entry_ret = MISSION_SetEntryNew(intcomm, &intcomm->mission, entry_req, netID);
-  if(entry_ret == TRUE && entry_req->cdata.type == MISSION_TYPE_VICTORY){
+  if(entry_ret == TRUE && (entry_req->cdata.type == MISSION_TYPE_VICTORY
+      || entry_req->cdata.type == MISSION_TYPE_ATTRIBUTE)){
     GFL_NET_SetClientConnect(GFL_NET_HANDLE_GetCurrentHandle(), FALSE);
     GFL_NET_WL_PauseBeacon(TRUE);
     intcomm->member_fix = TRUE;
