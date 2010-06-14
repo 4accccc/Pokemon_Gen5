@@ -4530,15 +4530,15 @@ static void handler_Ketaguri( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
     u32 heavy = BTL_SVFTOOL_GetWeight( flowWk, BPP_GetID(bpp) );
     u32 pow;
 
-    if( heavy >= 200 ){
+    if( heavy >= 2000 ){
       pow = 120;
-    }else if( heavy >= 100 ){
+    }else if( heavy >= 1000 ){
       pow = 100;
-    }else if( heavy >= 50 ){
+    }else if( heavy >= 500 ){
       pow = 80;
-    }else if( heavy >= 25 ){
+    }else if( heavy >= 250 ){
       pow = 60;
-    }else if( heavy >= 10 ){
+    }else if( heavy >= 100 ){
       pow = 40;
     }else{
       pow = 20;
@@ -10007,7 +10007,6 @@ static void handler_BodyPurge( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
   // SVFTOOL を介すと「かるいし」などの効果を受けてしまうのでダメ。元体重をチェックする。
 //    weight = BTL_SVFTOOL_GetWeight( flowWk, pokeID );
     weight = BPP_GetWeight( bpp );
-    TAYA_Printf("weight = %d, min=%d\n", BTL_POKE_WEIGHT_MIN);
 
     if( weight > BTL_POKE_WEIGHT_MIN )
     {
