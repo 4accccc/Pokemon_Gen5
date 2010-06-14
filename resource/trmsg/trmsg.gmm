@@ -4844,9 +4844,9 @@
 
 	<row id="TRID_WAITER_02_TRMSG_FIGHT_START">
 		<language name="JPN" width="216">わたくし　ポケモンしょうぶが
-とくいな　ウェイターで　ございます▼</language>
+とくいな　ウエーターで　ございます▼</language>
 		<language name="JPN_KANJI" width="216">わたくし　ポケモン勝負が
-得意な　ウェイターで　ございます▼</language>
+得意な　ウエーターで　ございます▼</language>
 	</row>
 
 	<row id="TRID_WAITER_02_TRMSG_FIGHT_LOSE">
