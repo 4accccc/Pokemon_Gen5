@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-02T18:12:17"/>
+	<create user="nakatsui" host="DB5YGPBX" date="2010-06-14T14:55:11"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -263,15 +263,15 @@
 		</language>
 	</columns>
 
-	<dialog left="1286" top="112" right="1991" bottom="740" maximized="no" rayout="Vertical2">
+	<dialog left="275" top="262" right="864" bottom="1020" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="389" right="1280" bottom="787" visible="yes"/>
-		<band id="0" index="1" style="0000" width="530"/>
+		<band id="0" index="1" style="0000" width="581"/>
 		<band id="1" index="2" style="0000" width="165"/>
-		<band id="2" index="3" style="0000" width="325"/>
-		<band id="3" index="4" style="0000" width="370"/>
-		<band id="4" index="0" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<band id="2" index="3" style="0000" width="265"/>
+		<band id="3" index="4" style="0000" width="147"/>
+		<band id="4" index="0" style="0000" width="591"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN" mode="Preview" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -559,7 +559,7 @@
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">テメー　どこの　だれに　きょかで
 ここ　とおるつもりだァ　コラ！？▼
-はなの　きんようびの　よるだけは
+はなの　きんようびの　ミッドナイトは
 ここは　オイラたち　ばくそうチーム▽
 ブラック[1:01:ポケモン種族名:0]の▽
 シマ　なんだよお！▼
@@ -568,7 +568,7 @@
 とっとと　マミーんとこへ　かえんなァ！</language>
 		<language name="JPN_KANJI" width="256">テメー　どこの　だれの　許可で
 ここ　通るつもりだァ　コラ！？▼
-花の　金曜日の　夜だけは
+花の　金曜日の　ミッドナイトは
 ここは　オイラたち　爆走チーム▽
 ブラック[1:01:ポケモン種族名:0]の▽
 シマ　なんだよお！▼
@@ -582,13 +582,13 @@
 会話後に戦闘へ
 勝利でmsg_h03_badrider1_04へ</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">なんだとお！　この　ダボが！
+		<language name="JPN" width="256">なんだとォ！　この　ダボが！
 ブラック[1:01:ポケモン種族名:0]の▽
 オイラ　なめてんじゃねーぞォ！▼
 テメーの　プリティー　ポケモンに
 たっぷり　じっくり　コッテリ▽
 くらわして　やんぞォ！▼</language>
-		<language name="JPN_KANJI" width="256">何だとお！　この　ダボが！
+		<language name="JPN_KANJI" width="256">何だとォ！　この　ダボが！
 ブラック[1:01:ポケモン種族名:0]の▽
 オイラ　なめてんじゃねーぞォ！▼
 テメーの　プリティー　ポケモンに
@@ -601,11 +601,11 @@
 イベント終了
 </comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">ケッ！　それで　いいんだよォ！
+		<language name="JPN" width="256">ハンッ！　それで　いいんだよォ！
 かがやく　あしたがある　チビっこは▽
 チャッチャと　おうちに　かえって▽
-おやこうこう　してるんだなァ！</language>
-		<language name="JPN_KANJI" width="256">ケッ！　それで　いいんだよォ！
+おやこうこうでも　してるんだなァ！</language>
+		<language name="JPN_KANJI" width="256">ハンッ！　それで　いいんだよォ！
 輝く　明日がある　チビっ子は▽
 チャッチャと　お家に　帰って▽
 親孝行でも　してるんだなァ！</language>
@@ -616,11 +616,11 @@
 イベント終了
 </comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">ケッ！　それで　いいんだよォ！
+		<language name="JPN" width="256">ハンッ！　それで　いいんだよォ！
 かがやく　あしたがある　チビっこは▽
 チャッチャと　おうちに　かえって▽
-おやこうこう　してるんだなァ！▼</language>
-		<language name="JPN_KANJI" width="256">ケッ！　それで　いいんだよォ！
+おやこうこうでも　してるんだなァ！▼</language>
+		<language name="JPN_KANJI" width="256">ハンッ！　それで　いいんだよォ！
 輝く　明日がある　チビっ子は▽
 チャッチャと　お家に　帰って▽
 親孝行でも　してるんだなァ！▼</language>
@@ -700,20 +700,21 @@
 さいごの　らくえん……▼
 きさまの　ような　ガキには
 えんのない　ばしょさ……▼
-それとも……
-ブラック[1:01:ポケモン種族名:0]の▽
+それとも　まさか　オマエ……▼
+ブラック[1:01:ポケモン種族名:0]の
 そうちょうである　このオレと▽
-タイマンでも　してみるか……？▼</language>
+しょうぶでも　するってのか……？▼</language>
 		<language name="JPN_KANJI" width="256">なんだ　オマエは……？▼
 ここは……▼
 ブラック[1:01:ポケモン種族名:0]の
-最後の　楽園……▼
+最後の　楽園（パラダイス）……▼
 貴様の　ような　ガキには
 縁のない　場所さ……▼
-それとも……
-ブラック[1:01:ポケモン種族名:0]の▽
-総長である　このオレと▽
-タイマンでも　してみるか……？▼</language>
+それとも　まさか　オマエ……▼
+ブラック[1:01:ポケモン種族名:0]の
+総長（ヘッド）である　このオレと▽
+勝負（タイマン）でも▽
+するってのか……？▼</language>
 	</row>
 
 	<row id="msg_h03_badrider2_02" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -721,16 +722,16 @@
 会話後に戦闘へ
 勝利でmsg_h03_badrider2_04へ</comment>
 		<attribute name="キャラ指定">BADRIDER</attribute>
-		<language name="JPN" width="256">グハハハ！　じょうとうだっ！
+		<language name="JPN" width="256">グハハハッ！　じょうとうだっ！
 いせいの　いい　ガキじゃねえかっ！▼
 ブラック[1:01:ポケモン種族名:0]を
-まとめる　そうちょうの　ちから……▽
-きさまに　みせて　やろうっ！▼</language>
-		<language name="JPN_KANJI" width="256">グハハハ！　上等だっ！
+たばねる　そうちょうの　ちから……▽
+オマエに　みせて　やろうっ！▼</language>
+		<language name="JPN_KANJI" width="256">グハハハッ！　上等だっ！
 威勢の　いい　ガキじゃねえかっ！▼
 ブラック[1:01:ポケモン種族名:0]を
-まとめる　総長の　力……▽
-貴様に　みせて　やろうっ！▼</language>
+束ねる　総長（ヘッド）の　力……▽
+オマエに　みせて　やろうっ！▼</language>
 	</row>
 
 	<row id="msg_h03_badrider2_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -743,13 +744,13 @@
 ここは　いきばのない　オレたち
 ブラック[1:01:ポケモン種族名:0]の▽
 ベスト　プレイス……▼
-だれにも　じゃまされたくないのさ……</language>
+だれにも　じゃまされたくねえのさ……</language>
 		<language name="JPN_KANJI" width="256">そうか……
 だったら　さっさと　消えてくれ……▼
 ここは　行き場のない　オレたち
 ブラック[1:01:ポケモン種族名:0]の▽
-ベスト　プレイス……▼
-だれにも　邪魔されたくないのさ……</language>
+居場所（ベスト　プレイス）……▼
+だれにも　邪魔されたくねえのさ……</language>
 	</row>
 
 	<row id="msg_h03_badrider2_04" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
@@ -759,32 +760,32 @@
 		<attribute name="キャラ指定">BADRIDER</attribute>
 		<language name="JPN" width="256">オマエ　なかなか　やるじゃねえか……
 きにいった……　みとめてやるぜ……▼
-そのあかしに……▼
-たった　いまから！
-オレたちの　チームは▽
+そのあかしに！▼
+たった　いまから！▼
+オレたちの　チームは
 ブラック[1:01:ポケモン種族名:0]に▽
-かいめい　することに　したぜ！▼
+かいめい　することに　きめたぜっ！▼
 そうだぜ！　タフで　ワイルドな
 オマエの　ポケモンの　なまえを▽
-いただいたのさ！▼
+いただくってわけよ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
 ブラック[1:01:ポケモン種族名:0]！
-グハハハッ！　コイツはいいぜっ！</language>
+グハハハッ！　コイツは　いいぜっ！</language>
 		<language name="JPN_KANJI" width="256">オマエ　なかなか　やるじゃねえか……
 気にいった……　認めてやるぜ……▼
 その証に……▼
-たった　今から！
-オレたちの　チームは▽
+たった　今から！▼
+オレたちの　チームは
 ブラック[1:01:ポケモン種族名:0]に▽
-改名することに　したぜ！▼
+改名することに　決めたぜっ！▼
 そうだぜ！　タフで　ワイルドな
 オマエの　ポケモンの　名前を▽
-頂いたのさ！▼
+頂くってわけよ！▼
 これで　オレたちの　チームは
 ますます　ワイルドに　なる！▼
 ブラック[1:01:ポケモン種族名:0]！
-グハハハッ！　コイツはいいぜっ！</language>
+グハハハッ！　コイツは　いいぜっ！</language>
 	</row>
 
 	<row id="msg_h03_badrider3_01" back-color="#ff8080,,,#ff8080,,#ff8080,#ff8080,,,,,,#ff8080,,,,,,">
