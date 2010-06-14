@@ -185,6 +185,7 @@ ev_event_check:
 		//バージョンをチェックする
 		_GET_PARTY_POKE_PARAM( LWK_POKE_ROM, LWK_SEL_POS, SCR_POKEPARA_GET_ROM)
 		
+		//コマンド内で、選ばれたポケモンがタマゴだった場合は、除外するようにしている。
 		//技を覚えているかチェックする
 		_CHECK_POKE_WAZA( LWK_WAZA_CHECK, WAZANO_ZYUUDEN, LWK_SEL_POS )
 		
