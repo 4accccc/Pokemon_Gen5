@@ -3249,6 +3249,11 @@ static void MCRSYS_ContFiendInOut2( WIFIP2PMATCH_WORK* wk )
       if( p_obj ){
         MCVSys_BttnSet( wk, wk->index2No[i], MCV_BTTN_FRIEND_TYPE_IN );
         MCRSYS_SetMoveObjWork( wk, p_obj );
+
+        wk->matchStatusBackup[i] = 0;
+        wk->matchGamemodeBackup[i] = 0;
+        wk->matchVchatBackup[i] = 0;
+
         in_flag = TRUE;
       }
     }
