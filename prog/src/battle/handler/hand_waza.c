@@ -1592,6 +1592,8 @@ static void handler_Monomane( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
       WazaID waza = BPP_GetPrevWazaID( target );
       u16 counter = BPP_GetWazaContCounter( target );
 
+      TAYA_Printf("prvWazaID=%d, counter=%d\n", waza, counter);
+
       if( (counter > 0)
       &&  (waza != WAZANO_NULL)
       &&  (!BTL_TABLES_IsMatchMonomaneFail(waza))
@@ -5056,7 +5058,13 @@ static void handler_MagicCoat_Wait( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 // マジックコート発動ハンドラ
 static void handler_MagicCoat_Reflect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_GEN_FLAG, TRUE) )
+    {
+      HandCommon_MagicCoat_Reaction( myHandle, flowWk, pokeID, work );
+    }
+  }
 }
 static void handler_MagicCoat_TurnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
@@ -7815,8 +7823,9 @@ static void handler_Nagetukeru_DmgAfter( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_
       work[0] = 1;    // ダメージ与えて消費したフラグ
 
       // みがわりじゃなければ追加効果発動
-      if( BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE )
-      {
+      if( (BTL_EVENTVAR_GetValue(BTL_EVAR_MIGAWARI_FLAG) == FALSE)
+      &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_RINPUNGUARD_FLG) == FALSE)
+      ){
         int equip = BTL_CALC_ITEM_GetParam( itemID, ITEM_PRM_NAGETUKERU_EFF );
         if( equip )
         {
