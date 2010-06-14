@@ -873,9 +873,12 @@ SvflowResult BTL_SVFLOW_StartAfterPokeIn( BTL_SVFLOW_WORK* wk, const BTL_SVCL_AC
 
   {
     u8 numDeadPokeAfter = BTL_DEADREC_GetCount( &wk->deadRec, 0 );
-    if( numDeadPoke == numDeadPokeAfter ){
+    if( numDeadPoke == numDeadPokeAfter )
+    {
+      scproc_CheckResetMove( wk );
       return SVFLOW_RESULT_DEFAULT;
-    }else{
+    }
+    else{
       if( scproc_CheckShowdown(wk) == FALSE)
       {
         scPut_IllusionSet( wk, &wk->clientIDRec );
@@ -3074,7 +3077,6 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
       scEvent_WazaRob( wk, robPoke, attacker, actWaza );
-//      scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
 
       // ワザパラメータ差し替え
@@ -8568,9 +8570,7 @@ static BOOL scproc_TurnCheck( BTL_SVFLOW_WORK* wk )
     }
 
     // トリプルバトル時、リセットムーブ処理
-    if( BTL_MAIN_GetRule(wk->mainModule) == BTL_RULE_TRIPLE ){
-      scproc_CheckResetMove( wk );
-    }
+    scproc_CheckResetMove( wk );
 
     // 分離イベントファクター削除
     BTL_EVENT_RemoveIsolateFactors();
@@ -8616,14 +8616,17 @@ static void scproc_CheckResetMove( BTL_SVFLOW_WORK* wk )
       BtlPokePos  pos1 = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID_1 );
       BtlPokePos  pos2 = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, pokeID_2 );
 
-      u8 posIdx1 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos1 );
-      u8 posIdx2 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos2 );
-
-      if( (posIdx1 == posIdx2) && (!BTL_MAINUTIL_IsTripleCenterPos(pos1) ) )
+      if( (pos1!=BTL_POS_NULL) && (pos2!=BTL_POS_NULL) )
       {
-        SCQUE_PUT_ACT_TripleResetMove( wk->que, clientID_1, posIdx1, clientID_2, posIdx2 );
-        scproc_MoveCore( wk, clientID_1, posIdx1, 1, FALSE );
-        scproc_MoveCore( wk, clientID_2, posIdx2, 1, FALSE );
+        u8 posIdx1 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos1 );
+        u8 posIdx2 = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, pos2 );
+
+        if( (posIdx1 == posIdx2) && (!BTL_MAINUTIL_IsTripleCenterPos(pos1) ) )
+        {
+          SCQUE_PUT_ACT_TripleResetMove( wk->que, clientID_1, posIdx1, clientID_2, posIdx2 );
+          scproc_MoveCore( wk, clientID_1, posIdx1, 1, FALSE );
+          scproc_MoveCore( wk, clientID_2, posIdx2, 1, FALSE );
+        }
       }
     }
   }

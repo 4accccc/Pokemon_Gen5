@@ -2464,7 +2464,7 @@ u32 BTL_MAIN_GetFrontPosNum( const BTL_MAIN_MODULE* wk )
 BOOL BTL_MAIN_IsFrontPos( const BTL_MAIN_MODULE* wk, BtlPokePos pos )
 {
   u32 frontNum = BTL_MAIN_GetFrontPosNum( wk );
-  return (pos <= (frontNum * 2) );
+  return (pos < (frontNum * 2) );
 }
 
 //=============================================================================================
