@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-06-10T20:48:57"/>
+	<create user="tetsuji_ohta" host="W00222" date="2010-06-14T17:12:09"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -3851,6 +3851,93 @@ msg_connect_union_08からの分岐メッセージ
 ジャンプして！</language>
 		<language name="JPN_KANJI" width="216" line="2">ぐるぐる交換したい人
 ジャンプして！</language>
+	</row>
+
+	<row id="msg_union_card_01" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ノーマルカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ノーマルカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_02" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ブロンズカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ブロンズカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_03" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……カッパーカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……カッパーカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_04" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……シルバーカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……シルバーカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_05" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ゴールドカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ゴールドカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_06" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う（ホワイトバージョンの場合）</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ホワイトカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ホワイトカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_07" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>対戦部屋で相手に話しかけたとき
+トレーナーカードを見せ合う（ブラックバージョンの場合）</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ブラックカードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……ブラックカードだ！</language>
+	</row>
+
+	<row id="msg_union_card_08" text-color="#000000,,,,,,#000000,#000000,,#000000,#000000,,,,,,," back-color=",,,,,,#c0c0c0,#80ffff,,#c0c0c0,#80ffff,,#c0c0c0,,,#c0c0c0,,">
+		<comment>上記以外の色があった場合</comment>
+		<language name="JPN" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……みたこともない　カードだ！</language>
+		<language name="JPN_KANJI" width="216" line="2">[1:00:トレーナー名:0]の　トレーナーカードを
+みせてもらった！[BE:01:ページ切り替え（クリア）]
+……みたこともない　カードだ！</language>
 	</row>
 
 	<flowchart-group-list>
