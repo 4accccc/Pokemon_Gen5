@@ -833,10 +833,13 @@ static const BOOL MB_PARENT_Main( MB_PARENT_WORK *work )
   //終了時映画配信専用ここまで
   
   case MPS_EXIT_COMM:
-    if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
+    if( MB_MSG_CheckPrintStreamIsFinish( work->msgWork ) == TRUE )
     {
-      MB_COMM_ExitComm( work->commWork );
-      work->state = MPS_WAIT_EXIT_COMM;
+      if( MB_COMM_IsDisconnect( work->commWork ) == TRUE )
+      {
+        MB_COMM_ExitComm( work->commWork );
+        work->state = MPS_WAIT_EXIT_COMM;
+      }
     }
     break;
   case MPS_WAIT_EXIT_COMM:

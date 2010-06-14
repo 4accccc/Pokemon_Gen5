@@ -464,10 +464,13 @@ void NetErr_DEBUG_ErrorSet(void)
   //WiFi
 #if defined( DEBUG_ONLY_FOR_ohno ) | defined( DEBUG_ONLY_FOR_matsuda ) | defined( DEBUG_ONLY_FOR_toru_nagihashi ) | defined( DEBUG_ONLY_FOR_ariizumi_nobuhiko ) | defined( DEBUG_ONLY_FOR_shimoyamada )
 
+#ifndef MULTI_BOOT_MAKE  //通常時処理
   if( GFL_NET_IsWifiConnect() )
   {
     GFL_NET_StateSetWifiError( -30000, DWC_ETYPE_DISCONNECT, 1, 0 );
   }
+#endif //MULTI_BOOT_MAKE
+
   NetErr_ErrorSet();
   OS_TPrintf( "ユーザーからエラー設定リクエストが発生しました\n" );
 #endif

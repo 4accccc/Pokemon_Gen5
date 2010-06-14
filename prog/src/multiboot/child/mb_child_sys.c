@@ -83,6 +83,7 @@ typedef enum
   //•ßŠlƒQ[ƒ€
   MCS_CAPTURE_FADEOUT,
   MCS_CAPTURE_FADEOUT_WAIT,
+  MCS_CAPTURE_INIT,
   MCS_CAPTURE_MAIN,
   MCS_CAPTURE_TERM,
   MCS_CAPTURE_FADEIN,
@@ -551,16 +552,26 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
     break;
     
   case MCS_SELECT_TERM:
-    work->state = MCS_SELECT_FADEIN;
+    if( MB_COMM_IsPostGameData( work->commWork ) == TRUE &&
+        work->selInitWork.isCancel == FALSE )
+    {
+      //“]‘—‚àI‚í‚Á‚ÄƒLƒƒƒ“ƒZƒ‹‚¶‚á‚È‚¢‚Ì‚Å‚¢‚«‚È‚èƒQ[ƒ€
+      work->state = MCS_CAPTURE_INIT;
+      MB_COMM_SetChildState( work->commWork , MCCS_CAP_GAME );
+    }
+    else
+    {
+      work->state = MCS_SELECT_FADEIN;
 
-    MB_CHILD_InitGraphic( work );
-    MB_CHILD_LoadResource( work );
-    work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
-    MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
-    MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
-    MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
-    MB_CHILD_ErrCheck( work , TRUE );
-    GFUser_SetVIntrFunc( MB_CHILD_VSync );
+      MB_CHILD_InitGraphic( work );
+      MB_CHILD_LoadResource( work );
+      work->msgWork = MB_MSG_MessageInit( work->heapId , MB_CHILD_FRAME_SUB_MSG , MB_CHILD_FRAME_SUB_MSG , FILE_MSGID_MB , FALSE , FALSE );
+      MB_MSG_MessageCreateWindow( work->msgWork , MMWT_NORMAL );
+      MB_MSG_MessageDispNoWait( work->msgWork , MSG_MB_CHILD_03 );
+      MB_MSG_SetDispTimeIcon( work->msgWork , TRUE );
+      MB_CHILD_ErrCheck( work , TRUE );
+      GFUser_SetVIntrFunc( MB_CHILD_VSync );
+    }
     break;
     
   case MCS_SELECT_FADEIN:
@@ -620,11 +631,19 @@ static const BOOL MB_CHILD_Main( MB_CHILD_WORK *work )
   case MCS_CAPTURE_FADEOUT_WAIT:
     if( WIPE_SYS_EndCheck() == TRUE )
     {
-      u8 i;
-      MB_COMM_INIT_DATA *commInit = MB_COMM_GetInitData( work->commWork );
       GFUser_ResetVIntrFunc();
       MB_MSG_MessageTerm( work->msgWork );
       MB_CHILD_TermGraphic( work );
+
+      work->state = MCS_CAPTURE_INIT;
+    }
+
+    break;
+  case MCS_CAPTURE_INIT:
+    if( WIPE_SYS_EndCheck() == TRUE )
+    {
+      u8 i;
+      MB_COMM_INIT_DATA *commInit = MB_COMM_GetInitData( work->commWork );
       PMSND_StopBGM();
       PMSND_Exit();
 
