@@ -293,6 +293,7 @@ static void handler_NekoNiKoban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 static const BtlEventHandlerTable*  ADD_Ikari( u32* numElems );
 static void handler_Ikari_Exe( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Ikari_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Ikari_Release( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static const BtlEventHandlerTable*  ADD_AquaRing( u32* numElems );
 static void handler_AquaRing( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_AquaRing_turnCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -3485,6 +3486,7 @@ static const BtlEventHandlerTable*  ADD_Ikari( u32* numElems )
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_WAZA_EXE_START,      handler_Ikari_Exe },    // ワザ出し確定ハンドラ
     { BTL_EVENT_WAZA_DMG_REACTION,   handler_Ikari_React },  // ダメージ反応ハンドラ
+    { BTL_EVENT_TURNCHECK_BEGIN,     handler_Ikari_Release },
   };
   *numElems = NELEMS( HandlerTable );
   return HandlerTable;
@@ -3522,9 +3524,17 @@ static void handler_Ikari_React( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
 
       BTL_SVF_HANDEX_Pop( flowWk, param );
     }
+  }
+}
+static void handler_Ikari_Release( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID )
+  {
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     BTL_HANDLER_Waza_RemoveForce( bpp, BTL_EVENT_FACTOR_GetSubID(myHandle) );
   }
 }
+
 //----------------------------------------------------------------------------------
 /**
  * アクアリング
