@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-12T18:37:23"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-14T22:02:40"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -456,9 +456,9 @@
 
 	<row id="MSG_MB_PAERNT_09">
 		<language name="JPN" width="208">ポケシフターを
-しゅうりょうしています</language>
+しゅうりょうしています[BE:02:ウェイト変更（単発）:60]</language>
 		<language name="JPN_KANJI" width="208">ポケシフターを
-終了しています</language>
+終了しています[BE:02:ウェイト変更（単発）:60]</language>
 	</row>
 
 	<row id="MSG_MB_PAERNT_10">
