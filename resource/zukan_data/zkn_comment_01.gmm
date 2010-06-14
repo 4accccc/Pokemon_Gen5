@@ -2281,7 +2281,7 @@
 おびきよせ　もういっぴきが　タマゴを
 とるという　チームプレーも　みせる。</language>
 		<language name="JPN_KANJI">ずるがしこく　１匹が　親を
-おびき寄せ　もう１匹が　タマゴを
+誘き寄せ　もう１匹が　タマゴを
 取るという　チームプレーも　見せる。</language>
 	</row>
 
@@ -3650,7 +3650,7 @@
 えものを　おびきよせ　つかまえる。</language>
 		<language name="JPN_KANJI">深海に　生息する　ポケモン。
 小魚の　形をした　しっぽで
-獲物を　おびき寄せ　捕まえる。</language>
+獲物を　誘き寄せ　捕まえる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_368">
@@ -4442,7 +4442,7 @@
 おびきよせては　ひとくちで　たべる。</language>
 		<language name="JPN_KANJI">湿地帯に　生える　木に巻きつき
 甘い香りの　だ液で　獲物を
-おびき寄せては　ひとくちで　食べる。</language>
+誘き寄せては　ひとくちで　食べる。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_01_456">
@@ -5654,7 +5654,7 @@
 	<row id="ZKN_COMMENT_01_590">
 		<language name="JPN">モンスターボールに　にた　もようで
 さそい　どくほうしを　ふきかける。
-なぜ　にているかは　ナゾである。</language>
+なぜ　にているかは　なぞである。</language>
 		<language name="JPN_KANJI">モンスターボールに　似た　模様で
 誘い　毒胞子を　吹きかける。
 なぜ　似ているかは　ナゾである。</language>
