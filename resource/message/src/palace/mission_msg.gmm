@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsuda" host="W00142" date="2010-06-13T18:21:35"/>
+	<create user="ohmori" host="W00223" date="2010-06-14T12:00:34"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -365,7 +365,7 @@
 		</language>
 	</columns>
 
-	<dialog left="498" top="140" right="1219" bottom="883" maximized="no" rayout="Vertical2">
+	<dialog left="555" top="309" right="1276" bottom="1052" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="0" top="207" right="473" bottom="831" visible="yes"/>
 		<band id="0" index="0" style="0000" width="546"/>
@@ -401,8 +401,8 @@
 
 	<row id="msg_intrude_001" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
 		<comment>話しかけられた</comment>
-		<language name="JPN" width="256">[1:00:トレーナー名:0]が　はなしかけてきました</language>
-		<language name="JPN_KANJI" width="256">[1:00:トレーナー名:0]が　話しかけてきました</language>
+		<language name="JPN" width="256">……だれかが　はなしかけてきました</language>
+		<language name="JPN_KANJI" width="256">……だれかが　話しかけてきました</language>
 	</row>
 
 	<row id="msg_intrude_002" back-color="#ffff80,,,,,,#ff8080,,,,,,,,,,,">
