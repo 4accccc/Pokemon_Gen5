@@ -14656,19 +14656,29 @@ static u8 scproc_HandEx_relive( BTL_SVFLOW_WORK* wk, const BTL_HANDEX_PARAM_HEAD
   BPP_HpPlus( target, param->recoverHP );
   SCQUE_PUT_OP_HpPlus( wk->que, param->pokeID, param->recoverHP );
   wk->pokeDeadFlag[param->pokeID] = FALSE;
+  handexSub_putString( wk, &param->exStr );
 
   {
     BtlPokePos targetPos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, param->pokeID );
     if( targetPos != BTL_POS_NULL )
     {
+      u8 clientID = BTL_MAINUTIL_PokeIDtoClientID( param->pokeID );
+      u8 posIdx = BTL_MAIN_BtlPosToPosIdx( wk->mainModule, targetPos );
+      /*
       BTL_POSPOKE_PokeIn( &wk->pospokeWork, targetPos, param->pokeID, wk->pokeCon );
       SCQUE_PUT_ACT_RelivePoke( wk->que, param->pokeID );
       BTL_HANDLER_TOKUSEI_Add( target );
       BTL_HANDLER_ITEM_Add( target );
+      */
+
+//      scproc_MemberInCore(
+      scproc_MemberInForChange( wk, clientID, posIdx, posIdx, TRUE );
+      scproc_AfterMemberIn( wk );
+
     }
   }
 
-  handexSub_putString( wk, &param->exStr );
+
   return 1;
 }
 /**
