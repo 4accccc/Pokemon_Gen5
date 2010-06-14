@@ -791,8 +791,7 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   }
   
   if(intsub->back_exit == TRUE || (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && Intrude_Check_CommConnect(game_comm) == NULL)){
-    FIELD_SUBSCREEN_ChangeForce( subscreen, FIELD_SUBSCREEN_NORMAL );
-    return NULL;
+    return EVENT_ChangeSubScreen_to_CGear(intsub->gsys, fieldWork, subscreen);
   }
 
   switch(intsub->event_req){

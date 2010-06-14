@@ -24,8 +24,22 @@
 #include "msg/msg_invasion.h"
 #include "msg/msg_mission_msg.h"
 #include "fieldmap/zone_id.h"
+#include "fld_vreq.h"
 
 
+//==============================================================================
+//  構造体定義
+//==============================================================================
+typedef struct{
+  FIELDMAP_WORK *fieldWork;
+  FIELD_SUBSCREEN_WORK *subscreen;
+}EVENT_CHANGESUBSCRN;
+
+
+//==============================================================================
+//  プロトタイプ宣言
+//==============================================================================
+static GMEVENT_RESULT EventChangeSubScreen_to_CGear( GMEVENT* event, int* seq, void* wk );
 
 
 
@@ -105,3 +119,62 @@ GMEVENT * EVENT_IntrudePlayerWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, 
 }
 
 
+//==================================================================
+/**
+ * 下画面を侵入用からCギアに戻す
+ *
+ * @param   gsys		
+ * @param   fieldWork		
+ * @param   partner     TRUE:協力者(表フィールドからパレスへ行く時のみ使用)
+ *
+ * @retval  GMEVENT *		
+ */
+//==================================================================
+GMEVENT * EVENT_ChangeSubScreen_to_CGear(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_SUBSCREEN_WORK *subscreen)
+{
+  GMEVENT * event;
+  EVENT_CHANGESUBSCRN *ecs;
+  
+  event = GMEVENT_Create( gsys, NULL, EventChangeSubScreen_to_CGear, sizeof(EVENT_CHANGESUBSCRN) );
+  
+  ecs = GMEVENT_GetEventWork( event );
+  // イベントワーク初期化
+  ecs->fieldWork = fieldWork;
+  ecs->subscreen = subscreen;
+
+  return event;
+}
+
+//--------------------------------------------------------------
+/**
+ * 下画面を侵入用からCギアに戻す
+ *
+ * @param   event		
+ * @param   seq		
+ * @param   wk		
+ *
+ * @retval  GMEVENT_RESULT		
+ */
+//--------------------------------------------------------------
+static GMEVENT_RESULT EventChangeSubScreen_to_CGear( GMEVENT* event, int* seq, void* wk )
+{
+  EVENT_CHANGESUBSCRN *ecs = wk;
+
+  switch(*seq){
+  case 0:
+    FLD_VREQ_GXS_SetMasterBrightness( FIELDMAP_GetFldVReq(ecs->fieldWork), -16 );
+    (*seq)++;
+    break;
+  case 1:
+    FIELD_SUBSCREEN_ChangeForce( ecs->subscreen, FIELD_SUBSCREEN_NORMAL );
+    (*seq)++;
+    break;
+  case 2:
+    FLD_VREQ_GXS_SetMasterBrightness( FIELDMAP_GetFldVReq(ecs->fieldWork), 0 );
+    (*seq)++;
+    break;
+  case 3:
+    return GMEVENT_RES_FINISH;
+  }
+  return GMEVENT_RES_CONTINUE;
+}

@@ -17,4 +17,5 @@ extern GMEVENT * EVENT_ChangeIntrudeSubScreen(
 extern GMEVENT * EVENT_IntrudeTownWarp(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, u16 zone_id, BOOL partner);
 extern GMEVENT * EVENT_IntrudePlayerWarp(
   GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, int player_netid);
+extern GMEVENT * EVENT_ChangeSubScreen_to_CGear(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, FIELD_SUBSCREEN_WORK *subscreen);
 
