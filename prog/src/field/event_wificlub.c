@@ -243,7 +243,7 @@ static void _battleSetting(EVENT_WIFICLUB_WORK* pClub,int gamemode)
   //ƒŒƒxƒ‹•â³‚ðÝ’è
   PokeRegulation_ModifyLevelPokeParty( pClub->pMatchParam->pRegulation, pClub->pMatchParam->pPokeParty[0]);
   PokeRegulation_ModifyLevelPokeParty( pClub->pMatchParam->pRegulation, pClub->pMatchParam->pPokeParty[1]);
-
+  pClub->para->recordData = GAMEDATA_GetRecordPtr(GAMESYSTEM_GetGameData(pClub->gsys));
 }
 
 
