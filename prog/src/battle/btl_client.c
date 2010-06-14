@@ -1162,7 +1162,6 @@ static BOOL SubProc_REC_Setup( BTL_CLIENT* wk, int* seq )
     {
       if( BTL_RECREADER_CheckBtlInChapter(wk->btlRecReader, wk->myID) )
       {
-        TAYA_Printf("バトル開始チャプタあり\n");
         RecPlayer_TurnIncReq( &wk->recPlayer );
       }
     }
@@ -2855,7 +2854,7 @@ static BOOL is_unselectable_waza( BTL_CLIENT* wk, const BTL_POKEPARAM* bpp, Waza
 {
   //わるあがきが選ばれているなら無条件で繰り出す
   if( waza == WAZANO_WARUAGAKI )
-  { 
+  {
     return FALSE;
   }
   // こだわりアイテム効果（最初に使ったワザしか選べない／ただしマジックルーム非発動時のみ）
@@ -3137,6 +3136,8 @@ static BtlCantEscapeCode isForbidEscape( BTL_CLIENT* wk, u8* pokeID, u16* tokuse
   }
   for(i=0; i<wk->numCoverPos; ++i)
   {
+    procPoke = BTL_PARTY_GetMemberDataConst( wk->myParty, i );
+
     // 逃げ・交換禁止チェック共通部分
     {
       BtlCantEscapeCode code = checkForbidChangeEscapeCommon( wk, procPoke, pokeID, tokuseiID );
@@ -3212,6 +3213,7 @@ static BtlCantEscapeCode checkForbidChangeEscapeCommon( BTL_CLIENT* wk, const BT
   ||  BPP_CheckSick( procPoke, WAZASICK_NEWOHARU )
   ){
      *pokeID = BPP_GetID( procPoke );
+     *tokuseiID = POKETOKUSEI_NULL;
      return BTL_CANTESC_TOOSENBOU;
   }
 
@@ -6434,11 +6436,10 @@ static BOOL scProc_ACT_ResetMove( BTL_CLIENT* wk, int* seq, const int* args )
 {
   switch( *seq ){
   case 0:
-//    BTLV_STRPARAM_Setup( &wk->strParam, BTL_STRTYPE_STD, BTL_STRID_STD_ResetMove );
-//    BTLV_StartMsg( wk->viewCore, &wk->strParam );
     BTLV_EFFECT_Add( BTLEFF_RESET_MOVE );
     (*seq)++;
     break;
+
   case 1:
 //    if( BTLV_WaitMsg(wk->viewCore) )
     if( !BTLV_EFFECT_CheckExecute() )
