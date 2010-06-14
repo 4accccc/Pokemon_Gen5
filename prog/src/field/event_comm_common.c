@@ -56,6 +56,7 @@
 typedef struct{
   COMMTALK_COMMON_EVENT_WORK ccew;    //共通イベントワーク
 	u8 first_talk_seq;
+	u8 mission_achieve_user;      ///<TRUE:ミッション達成者がいる
 	u8 padding[2];
 }EVENT_COMM_COMMON;
 
@@ -448,10 +449,10 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
-    SEQ_FIRST_TALK,
-    SEQ_TALK_OK,
     SEQ_SEND_ACHIEVE_CHECK,
     SEQ_WAIT_ACHIEVE_CHECK,
+    SEQ_FIRST_TALK,
+    SEQ_TALK_OK,
     SEQ_CHANGE_EVENT,
     SEQ_TALK_CANCEL,
     SEQ_LASTKEY_FINISH,
@@ -527,6 +528,25 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     }
     (*seq)++;
     break;
+  case SEQ_SEND_ACHIEVE_CHECK:    //認証前にミッション達成者の確認
+	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_WAIT_ACHIEVE_CHECK:
+    {
+      MISSION_ACHIEVE_USER ans = MISSION_GetAnswerAchieveUser(&intcomm->mission);
+      switch(ans){
+      case MISSION_ACHIEVE_USER_USE:  //達成者がいる
+        talk->mission_achieve_user = TRUE;
+        (*seq)++;
+        break;
+      case MISSION_ACHIEVE_USER_NONE:
+        (*seq)++;
+        break;
+      }
+    }
+    break;
 	case SEQ_FIRST_TALK:
 	  {
       FIRST_TALK_RET first_ret = EVENT_INTRUDE_FirstTalkSeq(intcomm, &talk->ccew, &talk->first_talk_seq);
@@ -546,26 +566,10 @@ static GMEVENT_RESULT EventCommCommonTalk( GMEVENT *event, int *seq, void *wk )
     break;
 
   case SEQ_TALK_OK:
+    if(talk->mission_achieve_user == TRUE){
+      talk->ccew.intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;  //通常会話にする
+    }
     (*seq)++;
-    break;
-  case SEQ_SEND_ACHIEVE_CHECK:
-	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
-      (*seq)++;
-    }
-    break;
-  case SEQ_WAIT_ACHIEVE_CHECK:
-    {
-      MISSION_ACHIEVE_USER ans = MISSION_GetAnswerAchieveUser(&intcomm->mission);
-      switch(ans){
-      case MISSION_ACHIEVE_USER_USE:  //達成者がいる
-        talk->ccew.intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;  //通常会話にする
-        (*seq)++;
-        break;
-      case MISSION_ACHIEVE_USER_NONE:
-        (*seq)++;
-        break;
-      }
-    }
     break;
   
   case SEQ_CHANGE_EVENT:    //各イベントへ枝分かれ
@@ -605,12 +609,12 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	INTRUDE_COMM_SYS_PTR intcomm;
 	enum{
     SEQ_INIT,
-    SEQ_SEND_ANSWER,
     SEQ_PLAYER_DIR_CHANGE,
     SEQ_PLAYER_DIR_CHANGE_WAIT,
-    SEQ_WAIT_TALK_ANSWER,
-	  SEQ_SEND_ACHIEVE_CHECK,
+    SEQ_SEND_ACHIEVE_CHECK,
     SEQ_WAIT_ACHIEVE_CHECK,
+    SEQ_SEND_ANSWER,
+    SEQ_WAIT_TALK_ANSWER,
     SEQ_ANSWER_SEND_WAIT,
     SEQ_LASTKEY_FINISH,
     SEQ_FINISH,
@@ -632,18 +636,17 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	case SEQ_INIT:
     Intrude_ClearTalkAnswer(intcomm);
     MMDLSYS_PauseMoveProc( FIELDMAP_GetMMdlSys( talk->ccew.fieldWork ) );
-	  *seq = SEQ_SEND_ANSWER;
-	  break;
-	case SEQ_SEND_ANSWER:   //返事を返す
-	  if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
-	      intcomm->talk.talk_status, intcomm->talk.talk_rand) == TRUE){
-      //話しかけられました。返事を返しています
+
+    //話しかけられました。返事を返しています
+    {
       MYSTATUS *target_myst = GAMEDATA_GetMyStatusPlayer(gamedata, intcomm->talk.talk_netid);
       WORDSET_RegisterPlayerName( talk->ccew.iem.wordset, 0, target_myst );
       IntrudeEventPrint_StartStream(&talk->ccew.iem, msg_intrude_001);
-      (*seq)++;
     }
-    break;
+
+	  (*seq)++;
+	  break;
+
   case SEQ_PLAYER_DIR_CHANGE: //話しかけ相手に振り向く
     if(MMDL_CheckPossibleAcmd(talk->ccew.fmmdl_player) == TRUE){
       u16 target_dir, anmcmd;
@@ -670,6 +673,33 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	    (*seq)++;
   	}
 	  break;
+
+	case SEQ_SEND_ACHIEVE_CHECK:  //認証前にミッション達成確認
+	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
+      (*seq)++;
+    }
+    break;
+  case SEQ_WAIT_ACHIEVE_CHECK:
+    {
+      MISSION_ACHIEVE_USER ans = MISSION_GetAnswerAchieveUser(&intcomm->mission);
+      switch(ans){
+      case MISSION_ACHIEVE_USER_USE:  //達成者がいる
+        talk->mission_achieve_user = TRUE;
+        (*seq)++;
+        break;
+      case MISSION_ACHIEVE_USER_NONE:
+        (*seq)++;
+        break;
+      }
+    }
+    break;
+
+	case SEQ_SEND_ANSWER:   //認証の返事を返す
+	  if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
+	      intcomm->talk.talk_status, intcomm->talk.talk_rand) == TRUE){
+      (*seq)++;
+    }
+    break;
 	case SEQ_WAIT_TALK_ANSWER:    //話しかけに応答した事の結果を相手から待つ
     if(IntrudeEventPrint_WaitStream(&talk->ccew.iem) == TRUE){
       INTRUDE_TALK_STATUS talk_status = Intrude_GetTalkAnswer(intcomm);
@@ -677,7 +707,10 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
       
       switch(talk_status){
       case INTRUDE_TALK_STATUS_OK:
-        *seq = SEQ_SEND_ACHIEVE_CHECK;
+        if(talk->mission_achieve_user == TRUE){
+          talk->ccew.intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;  //通常会話にする
+        }
+        *seq = SEQ_ANSWER_SEND_WAIT;
         break;
       case INTRUDE_TALK_STATUS_NULL:
         break;
@@ -695,25 +728,6 @@ static GMEVENT_RESULT EventCommCommonTalked( GMEVENT *event, int *seq, void *wk 
 	    }
 	  }
 	  break;
-	case SEQ_SEND_ACHIEVE_CHECK:
-	  if(IntrudeSend_MissionCheckAchieveUser(intcomm) == TRUE){
-      (*seq)++;
-    }
-    break;
-  case SEQ_WAIT_ACHIEVE_CHECK:
-    {
-      MISSION_ACHIEVE_USER ans = MISSION_GetAnswerAchieveUser(&intcomm->mission);
-      switch(ans){
-      case MISSION_ACHIEVE_USER_USE:  //達成者がいる
-        talk->ccew.intrude_talk_type = INTRUDE_TALK_TYPE_NORMAL;  //通常会話にする
-        (*seq)++;
-        break;
-      case MISSION_ACHIEVE_USER_NONE:
-        (*seq)++;
-        break;
-      }
-    }
-    break;
 
   case SEQ_ANSWER_SEND_WAIT:   //各イベントへ枝分かれ
     _EventChangeTalked(event, talk, intcomm);

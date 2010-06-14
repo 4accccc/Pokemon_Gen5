@@ -517,8 +517,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
     
   case SEQ_BATTLE_YES:
-    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
-        INTRUDE_TALK_STATUS_BATTLE) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
+        INTRUDE_TALK_STATUS_BATTLE, intcomm->talk.talk_rand) == TRUE){
       Intrude_SetTimeOutStopFlag(intcomm, TRUE);
       *seq = SEQ_BATTLE_YES_MSG;
     }
@@ -587,8 +587,8 @@ static GMEVENT_RESULT CommMissionBattle_TtoM_Talk( GMEVENT *event, int *seq, voi
     break;
 
   case SEQ_BATTLE_NG:
-    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, intcomm->talk.talk_rand, 
-        INTRUDE_TALK_STATUS_NG) == TRUE){
+    if(IntrudeSend_TalkAnswer(intcomm, intcomm->talk.talk_netid, 
+        INTRUDE_TALK_STATUS_NG, intcomm->talk.talk_rand) == TRUE){
       //¸”s‚È‚Ì‚Åƒ~ƒbƒVƒ‡ƒ“‚ğì‚è’¼‚·
       MISSION_LIST_Create_Type(
         GAMEDATA_GetMyOccupyInfo(GAMESYSTEM_GetGameData(gsys)), MISSION_TYPE_VICTORY);
