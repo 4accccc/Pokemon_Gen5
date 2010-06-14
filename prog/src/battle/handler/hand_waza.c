@@ -3806,7 +3806,7 @@ static void handler_Korogaru_NoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
 }
 static void handler_Korogaru_SeqEnd( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID)
+  if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_ATK) == pokeID)
   &&  (BTL_EVENTVAR_GetValue(BTL_EVAR_GEN_FLAG) == FALSE)
   ){
     common_Korogaru_Unlock( myHandle, flowWk, pokeID, work );

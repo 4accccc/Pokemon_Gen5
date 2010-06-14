@@ -1533,6 +1533,32 @@ BOOL BPP_CONTFLAG_Get( const BTL_POKEPARAM* pp, BppContFlag flagID )
 {
   return flgbuf_get( pp->contFlag, flagID );
 }
+//=============================================================================================
+/**
+ * ワザ（そらをとぶ・あなをほる等）により画面から消えている状態チェック
+ *
+ * @param   bpp
+ *
+ * @retval  BppContFlag
+ */
+//=============================================================================================
+BppContFlag  BPP_CONTFLAG_CheckWazaHide( const BTL_POKEPARAM* bpp )
+{
+  static const BppContFlag  hideState[] = {
+    BPP_CONTFLG_SORAWOTOBU, BPP_CONTFLG_ANAWOHORU, BPP_CONTFLG_DIVING, BPP_CONTFLG_SHADOWDIVE,
+  };
+  u32 i;
+
+  for(i=0; i<NELEMS(hideState); ++i)
+  {
+    if( BPP_CONTFLAG_Get(bpp, hideState[i]) )
+    {
+      return hideState[ i ];
+    }
+  }
+  return BPP_CONTFLG_NULL;
+}
+
 
 //=============================================================================================
 /**
@@ -2547,8 +2573,8 @@ void BPP_BatonTouchParam( BTL_POKEPARAM* target, BTL_POKEPARAM* user )
   clearWazaSickWork( user, FALSE );
   Effrank_Init( &user->varyParam );
   flgbuf_clear( user->contFlag, sizeof(user->contFlag) );
-
 }
+
 
 //=============================================================================================
 /**
@@ -2905,7 +2931,6 @@ BOOL BPP_WAZADMGREC_Get( const BTL_POKEPARAM* bpp, u8 turn_ridx, u8 rec_ridx, BP
   }
   return FALSE;
 }
-
 //=============================================================================================
 /**
  * カウンタ値をセット

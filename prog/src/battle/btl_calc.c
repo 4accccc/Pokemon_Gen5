@@ -1030,11 +1030,7 @@ u8 BTL_RULE_GetNumFrontPos( BtlRule rule )
     return 3;
 
   case BTL_RULE_ROTATION:
-  #ifdef ROTATION_NEW_SYSTEM
-    return 1;
-  #else
-    return 2;
-  #endif
+    return BTL_ROTATION_FRONTPOS_NUM;
   }
   GF_ASSERT(0);
   return 1;

@@ -5108,7 +5108,7 @@ static void handler_Bukiyou_IekiFixed( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WO
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( BPP_GetItem(bpp) != ITEM_DUMMY_DATA )
     {
-      BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+      BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
         param->pokeID = pokeID;
       BTL_SVF_HANDEX_Pop( flowWk, param );
     }
@@ -7057,8 +7057,8 @@ static void common_KinchoukanOff( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work 
     bpp = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID[i] );
     if( !BPP_IsDead(bpp) )
     {
-      BTL_HANDEX_PARAM_EQUIP_ITEM* param;
-      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+      BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP* param;
+      param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
         param->pokeID = targetPokeID[ i ];
       BTL_SVF_HANDEX_Pop( flowWk, param );
     }

@@ -330,7 +330,7 @@ static void cure_Sasiosae( BTL_SVFLOW_WORK* flowWk, const BTL_POKEPARAM* bpp )
 {
 //  BTL_HANDLER_ITEM_Add( bpp );
   u8 pokeID = BPP_GetID( bpp );
-  BTL_HANDEX_PARAM_EQUIP_ITEM* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_EQUIP_ITEM, pokeID );
+  BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHECK_ITEM_EQUIP, pokeID );
     param->pokeID = BPP_GetID( bpp );
   BTL_SVF_HANDEX_Pop( flowWk, param );
 }

@@ -1252,6 +1252,7 @@ void BTLV_ITEMSELECT_Start( BTLV_CORE* wk, u8 bagMode, u8 energy, u8 reserved_en
     wk->bagData.end_flg = FALSE;
 
 
+    /* ボール投げ禁止条件チェック */
     // 先頭のポケモン行動時しか投げられない
     if( !fFirstPokemon ){
       wk->bagData.ball_use = BBAG_BALLUSE_NOT_FIRST;

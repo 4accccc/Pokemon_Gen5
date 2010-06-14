@@ -319,7 +319,7 @@ typedef enum {
   BTL_HANDEX_POSEFF_ADD,          ///< 位置エフェクト追加
   BTL_HANDEX_CHANGE_TOKUSEI,      ///< とくせい書き換え
   BTL_HANDEX_SET_ITEM,            ///< アイテム書き換え
-  BTL_HANDEX_EQUIP_ITEM,          ///< アイテム装備効果発動チェック
+  BTL_HANDEX_CHECK_ITEM_EQUIP,    ///< アイテム装備効果発動チェック
   BTL_HANDEX_ITEM_SP,             ///< アイテム効果発動
   BTL_HANDEX_CONSUME_ITEM,        ///< 自分でアイテムを消費
   BTL_HANDEX_SWAP_ITEM,           ///< アイテム入れ替え
@@ -721,7 +721,7 @@ typedef struct {
 typedef struct {
   BTL_HANDEX_PARAM_HEADER  header;
   u8              pokeID;            ///< 対象ポケモンID
-}BTL_HANDEX_PARAM_EQUIP_ITEM;
+}BTL_HANDEX_PARAM_CHECK_ITEM_EQUIP;
 
 /**
  *  アイテム効果の特殊使用（ついばむ、なげつけるなど対応）
