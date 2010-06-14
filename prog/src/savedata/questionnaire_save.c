@@ -15,23 +15,6 @@
 #include "app/research_radar/question_id.h" //QUESTION_ID_xxxx
 
 
-//==============================================================================
-//  定数定義
-//==============================================================================
-///質問のバリエーション数
-#define QUESTIONNAIRE_ITEM_NUM       (30)
-///回答のバリエーション数(無回答を除く)
-#define QUESTIONNAIRE_ANSWER_NUM     (150)
-
-///本日の調査人数最大数
-#define QUESTIONNAIRE_TODAY_COUNT_MAX   (9999)
-///今までの調査人数最大数
-#define QUESTIONNAIRE_TOTAL_COUNT_MAX   (999999)
-
-///質問毎の本日の調査人数最大数
-#define QUESTIONNAIRE_TODAY_ANSWER_COUNT_MAX   (99)
-///質問毎の今までの調査人数最大数
-#define QUESTIONNAIRE_TOTAL_ANSWER_COUNT_MAX   (9999)
 
 //==============================================================================
 //  構造体定義
