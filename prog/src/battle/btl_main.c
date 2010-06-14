@@ -1453,7 +1453,7 @@ static BOOL setupseq_comm_determine_server( BTL_MAIN_MODULE* wk, int* seq )
       wk->serverNotifyParam.msgSpeed = wk->msgSpeed;
       wk->serverNotifyParam.fWazaEffectEnable = wk->fWazaEffectEnable;
     }else{
-      wk->serverNotifyParam.msgSpeed = MSGSPEED_NORMAL;
+      wk->serverNotifyParam.msgSpeed = MSGSPEED_FAST;
       wk->serverNotifyParam.fWazaEffectEnable = TRUE;
     }
 
