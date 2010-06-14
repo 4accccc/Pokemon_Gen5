@@ -76,7 +76,14 @@ enum {
   AITRAINER_MSG_MAX,
 };
 
-
+/**
+ *  録画再生時のタイムオーバー検出状態
+ */
+enum {
+  RECPLAY_TIMEOVER_NONE = 0,  ///< 検出なし
+  RECPLAY_TIMEOVER_IDLE,      ///< 検出後、描画クライアントではないのでアイドル状態
+  RECPLAY_TIMEOVER_QUIT,      ///< 検出後、描画クライアントなので終了リクエスト
+};
 
 /*--------------------------------------------------------------------------*/
 /* Typedefs                                                                 */
@@ -208,6 +215,7 @@ struct _BTL_CLIENT {
   u8   actionAddCount;
   u8   wazaInfoPokeIdx;
   u8   wazaInfoWazaIdx;
+  u8   recPlayTimerOverState;
 
   u8   fAITrainerBGMChanged : 1;
   u8   fCommError           : 1;
@@ -526,6 +534,7 @@ BTL_CLIENT* BTL_CLIENT_Create(
   wk->fForceQuitSelAct = FALSE;
   wk->fAITrainerBGMChanged = FALSE;
   wk->fCommError = FALSE;
+  wk->recPlayTimerOverState = RECPLAY_TIMEOVER_NONE;
 //  wk->shooterEnergy = BTL_SHOOTER_ENERGY_MAX;
 
   wk->bagMode = bagMode;
@@ -767,6 +776,18 @@ static BOOL ClientMain_Normal( BTL_CLIENT* wk )
   case SEQ_READ_ACMD:
     {
       BtlAdapterCmd  cmd = BTL_ADAPTER_RecvCmd(wk->adapter);
+
+      // 録画再生時のタイムオーバー検出
+      if( wk->myType == BTL_CLIENT_TYPE_RECPLAY )
+      {
+        switch( wk->recPlayTimerOverState ){
+        case RECPLAY_TIMEOVER_IDLE:
+          return FALSE;
+
+        case RECPLAY_TIMEOVER_QUIT:
+          return TRUE;
+        }
+      }
 
       setDummyReturnData( wk );
       if( cmd == BTL_ACMD_QUIT_BTL )
@@ -1477,6 +1498,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
         // 描画クライアントではないので終了
         }else{
           setNullActionRecplay( wk );
+          wk->recPlayTimerOverState = RECPLAY_TIMEOVER_IDLE;
           return TRUE;
         }
       }
@@ -1507,6 +1529,7 @@ static BOOL SubProc_REC_SelectAction( BTL_CLIENT* wk, int* seq )
   case 1:
     if( BTLV_WaitMsg(wk->viewCore) ){
       setNullActionRecplay( wk );
+      wk->recPlayTimerOverState = RECPLAY_TIMEOVER_QUIT;
       return TRUE;
     }
     break;
@@ -2150,7 +2173,7 @@ static BOOL selact_Fight( BTL_CLIENT* wk, int* seq )
         }
         else
         {
-          // アクションパラメータにローテ方向もセットする仮動作
+          // アクションパラメータにローテ方向もセットする
           #ifdef ROTATION_NEW_SYSTEM
           BtlRule rule = BTL_MAIN_GetRule( wk->mainModule );
           if( rule == BTL_RULE_ROTATION )
