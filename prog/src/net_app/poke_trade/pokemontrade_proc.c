@@ -2074,7 +2074,6 @@ static void _dispSubStateWait(POKEMON_TRADE_WORK* pWork)
       else if( POKE_GTS_BanPokeCheck(pWork,ppp) ){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
         _CHANGE_STATE(pWork, _notLegendChangePoke);
         POKE_GTS_VisibleFaceIcon(pWork,TRUE);
-//        _CHANGE_STATE(pWork,_notWazaChangePoke);
       }
       else if(!POKEMONTRADEPROC_IsTriSelect(pWork)){
         pWork->selectIndex = pWork->underSelectIndex;
@@ -3572,8 +3571,8 @@ void POKE_TRADE_PROC_TouchStateCommon(POKEMON_TRADE_WORK* pWork)
       if(POKEMONTRADE_IsWazaPokemon(pWork, pWork->workBoxno, pWork->workPokeIndex)){// ŒðŠ·‚Å‚«‚È‚¢‹Z‚à‚¿
         pWork->workBoxno = -1;
         pWork->workPokeIndex = -1;
-        pWork->selectIndex = -1;
-        pWork->selectBoxno = -1;
+ //       pWork->selectIndex = -1;
+  //      pWork->selectBoxno = -1;
         _CatchPokemonRelease(pWork);
         _CHANGE_STATE(pWork,_notWazaChangePoke);
         return;
