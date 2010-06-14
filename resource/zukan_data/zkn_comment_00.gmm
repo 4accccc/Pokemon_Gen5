@@ -572,7 +572,7 @@
 げんきを　わけることも　ある。</language>
 		<language name="JPN_KANJI">弱った　仲間の　ピカチュウに
 電気を流し　ショックを与えて
-元気を　わけることも　ある。</language>
+元気を　分けることも　ある。</language>
 	</row>
 
 	<row id="ZKN_COMMENT_00_026">
@@ -670,7 +670,7 @@
 ききわける　みみと　ようじんぶかさで
 めったに　ひとまえに　あらわれない。</language>
 		<language name="JPN_KANJI">１キロ先で　落ちた　針の音を
-聞きわける　耳と　用心深さで
+聞き分ける　耳と　用心深さで
 滅多に　人前に　現われない。</language>
 	</row>
 
@@ -2398,7 +2398,7 @@
 		<language name="JPN">さまざまな　なきごえを　つかいわけ
 なかまと　コミュニケーションしながら
 かりを　おこなう　かしこさをもつ。</language>
-		<language name="JPN_KANJI">様々な　鳴き声を　使いわけ
+		<language name="JPN_KANJI">様々な　鳴き声を　使い分け
 仲間と　コミュニケーションしながら
 狩りを　おこなう　賢さを持つ。</language>
 	</row>
@@ -2713,7 +2713,7 @@
 		<language name="JPN">ジグザグに　あるいて　くさかげや
 じめんに　うまっている　たからものを
 みつけるのが　とくいな　ポケモン。</language>
-		<language name="JPN_KANJI">ジグザグに　歩いて　草かげや
+		<language name="JPN_KANJI">ジグザグに　歩いて　草陰や
 地面に　埋まっている　宝物を
 見つけるのが　得意な　ポケモン。</language>
 	</row>
@@ -4810,8 +4810,8 @@
 		<language name="JPN">おいしげった　くさきの　かげを
 くぐりぬけ　こうげきを　さける。
 たくみな　ムチさばきで　はんげき。</language>
-		<language name="JPN_KANJI">生い茂った　草木の　かげを
-くぐりぬけて　攻撃を　避ける。
+		<language name="JPN_KANJI">生い茂った　草木の　陰を
+潜り抜けて　攻撃を　避ける。
 巧みな　ムチさばきで　反撃。</language>
 	</row>
 
@@ -4865,7 +4865,7 @@
 フタチマルに　よって　ちがう。
 ホタチの　ていれは　かかさない。</language>
 		<language name="JPN_KANJI">身につけた　ホタチさばきの　技は
-フタチマルに　よって　ちがう。
+フタチマルに　よって　違う。
 ホタチの　手入れは　欠かさない。</language>
 	</row>
 
@@ -4946,7 +4946,7 @@
 あたまの　はっぱを　わけあたえる。
 つかれを　とる　こうかが　あるのだ。</language>
 		<language name="JPN_KANJI">元気の　ない　ポケモンに
-頭の　葉っぱを　わけ与える。
+頭の　葉っぱを　分け与える。
 疲れを　取る　効果が　あるのだ。</language>
 	</row>
 
