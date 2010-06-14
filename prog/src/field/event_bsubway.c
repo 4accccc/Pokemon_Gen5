@@ -799,17 +799,27 @@ static GMEVENT_RESULT bsw_CommBattleMain(
         bsw_CommBattle(gsys,work->para,work->demo_prm) );
     (*seq)++;
     break;
-  case 5: //フィールド復帰
+  case 5: //フィールドBGM復帰
+    GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle(gsys) );
+    (*seq)++;
+    break;
+  case 6: //フィールド復帰
     #if 0
     BATTLE_PARAM_Delete( work->para ); //SETUP_PARAM解放はサブウェイ側で
     #endif
-#ifdef DEBUG_BSW_PRINT    
+    
+    #ifdef DEBUG_BSW_PRINT    
     KAGAYA_Printf("_FIELD_OPEN\n");
-#endif
+    #endif
+
     GMEVENT_CallEvent( event, EVENT_FieldOpen(gsys) );
     (*seq) ++;
     break;
-  case 6: //フェードイン
+  case 7: //BGMの復帰待ち
+    GMEVENT_CallEvent( event, EVENT_FSND_WaitBGMPop( gsys ) );
+    (*seq)++;
+    break;
+  case 8: //フェードイン
     {
       GMEVENT* fade_event = EVENT_FieldFadeIn_Black(
           gsys, work->fieldmap, FIELD_FADE_WAIT );
@@ -817,11 +827,7 @@ static GMEVENT_RESULT bsw_CommBattleMain(
     }
     (*seq)++;
     break;
-  case 7: //フィールドBGM復帰
-    GMEVENT_CallEvent( event, EVENT_FSND_PopPlayBGM_fromBattle(gsys) );
-    (*seq)++;
-    break;
-  case 8:
+  case 9:
     return GMEVENT_RES_FINISH;
   default:
     GF_ASSERT(0);

@@ -1128,6 +1128,7 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
       u16 round = BSUBWAY_PLAYDATA_GetRoundNo( playData );
       
       if( round ){ //ラウンドが存在する
+#if 0 //これだとゲーム続きからの際はスイッチが一つしか設定されない
         idx += round;
 
         if( idx < SWITCH_NUM ){
@@ -1135,6 +1136,17 @@ VMCMD_RESULT EvCmdBSubwayTool( VMHANDLE *core, void *wk )
           ISS_SWITCH_SYS *iss_sw = ISS_SYS_GetIssSwitchSystem( iss );
           ISS_SWITCH_SYS_SwitchOn( iss_sw, idx ); 
         }
+#else
+        ISS_SYS *iss = GAMESYSTEM_GetIssSystem( gsys );
+        ISS_SWITCH_SYS *iss_sw = ISS_SYS_GetIssSwitchSystem( iss );
+        u16 range = idx + round + 1;
+        
+        for( ; idx < range; idx++ ){
+          if( idx < SWITCH_NUM && idx != SWITCH_00 ){
+            ISS_SWITCH_SYS_SwitchOn( iss_sw, idx );
+          }
+        }
+#endif
       }
     }
     break;
