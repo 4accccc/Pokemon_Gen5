@@ -900,6 +900,7 @@ static void namipokeTask_RAIL_Draw( FLDEFF_TASK *task, void *wk )
   VecFx32 back_way;
   MtxFx33 rotate;
   MtxFx33 rotate_back;
+  RIPPLE_WORK *rip = &work->ripple_work;
 
   // is•ûŒü
   {
@@ -924,7 +925,6 @@ static void namipokeTask_RAIL_Draw( FLDEFF_TASK *task, void *wk )
   FLDEFF_TASK_GetPos( task, &st->trans );
   
   if( work->ripple_work.vanish_flag == FALSE ){ //”ò–—
-    RIPPLE_WORK *rip = &work->ripple_work;
     FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, FALSE );
     st = FLD_G3DOBJ_CTRL_GetObjStatus( obj_ctrl, rip->obj_idx );
     st->rotate  = rotate_back;
@@ -935,10 +935,13 @@ static void namipokeTask_RAIL_Draw( FLDEFF_TASK *task, void *wk )
     st->trans.z += rip->offs.z - FX_Mul( front_way.z, RIPPLE_OFFS_XZ );
     st->scale = rip->scale;
   }else{
-    RIPPLE_WORK *rip = &work->ripple_work;
 
     FLD_G3DOBJ_CTRL_SetObjVanishFlag( obj_ctrl, rip->obj_idx, TRUE );
   }
+
+  // ’¼Ú•`‰æ
+  FLD_G3DOBJ_CTRL_DrawObject( obj_ctrl, work->obj_idx );
+  FLD_G3DOBJ_CTRL_DrawObject( obj_ctrl, rip->obj_idx );
 }
 
 //--------------------------------------------------------------
