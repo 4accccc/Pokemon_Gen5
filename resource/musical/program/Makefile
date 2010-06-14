@@ -34,7 +34,7 @@ include	$(PROJECT_RSCDIR)\macro_define
 #------------------------------------------------------------------------------
 #	make do-build ÉãÅ[Éã
 #------------------------------------------------------------------------------
-do-build:	subdir $(TARGETDIR)/mus_prog_data_01.narc $(TARGETDIR)/mus_prog_data_02.narc  $(TARGETDIR)/mus_prog_data_03.narc  $(TARGETDIR)/mus_prog_data_04.narc  $(TARGETDIR)/mus_prog_data_05.narc
+do-build:	subdir $(TARGETDIR)/mus_prog_data_01.narc $(TARGETDIR)/mus_prog_data_02.narc  $(TARGETDIR)/mus_prog_data_03.narc  $(TARGETDIR)/mus_prog_data_04.narc
 
 subdir:
 	@$(MAKE_SUBDIR)
