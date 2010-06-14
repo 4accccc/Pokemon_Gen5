@@ -188,8 +188,9 @@ ev_event_check:
 		//技を覚えているかチェックする
 		_CHECK_POKE_WAZA( LWK_WAZA_CHECK, WAZANO_ZYUUDEN, LWK_SEL_POS )
 		
-		//必要なポケモンがいる
-		IF$SCWK_ANSWER == 1 && $LWK_WAZA_CHECK == 1 && $LWK_POKE_ROM != $LWK_ROM_VER THEN
+		//はいと答えている＋技を覚えている＋( 自分のロムがブラック＋ポケモンの出身がホワイト) OR ( 自分のロムがホワイト＋ポケモンの出身がブラック )
+		IF ( $SCWK_ANSWER == 1 && $LWK_WAZA_CHECK == 1 ) && ( ( $LWK_ROM_VER == VERSION_BLACK && $LWK_POKE_ROM == VERSION_WHITE ) || ( $LWK_ROM_VER == VERSION_WHITE && $LWK_POKE_ROM == VERSION_BLACK ) )  THEN
+		
 			//あありがとう！
 			_BALLOONWIN_OBJMSG_WB(msg_c08_man1_04w,msg_c08_man1_04b,C08R0402_MAN1_01,POS_DOWN)
 			_MSGWIN_CLOSE()
