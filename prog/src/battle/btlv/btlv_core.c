@@ -2449,50 +2449,22 @@ static BOOL subprocMoveMember( int* seq, void* wk_adrs )
   BTLV_CORE* wk = wk_adrs;
   MOVE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(MOVE_MEMBER_WORK) );
 
-  // @todo 今は単に該当個所の絵を消して、新しく出してるだけで、
-  // 演出的な動作がまったく入っていない。いずれちゃんと作る。
   switch( *seq ){
   case 0:
-#if 0
-    if( BTLV_EFFECT_CheckExist(subwk->vpos1) ){
-      BTLV_EFFECT_DelPokemon( subwk->vpos1 );
-    }
-    if( BTLV_EFFECT_CheckExist(subwk->vpos2) ){
-      BTLV_EFFECT_DelPokemon( subwk->vpos2 );
-    }
-#endif
     BTLV_EFFECT_SetSideChange( subwk->vpos1, subwk->vpos2 );
-    PlaySELocal( wk, SEQ_SE_CANCEL3 );  //@todo 超仮
+    PlaySELocal( wk, SEQ_SE_TRIPLE_S );
     (*seq)++;
     break;
 
   case 1:
     if( !BTLV_EFFECT_CheckExecute() )
     {
-#if 0
-      const BTL_PARTY* party = BTL_POKECON_GetPartyDataConst( wk->pokeCon, subwk->clientID );
-      const BTL_POKEPARAM* bpp;
-      bpp = BTL_PARTY_GetMemberDataConst( party, subwk->posIdx1 );
-      if( !BPP_IsDead(bpp) ){
-        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos1 );
-      }
-      bpp = BTL_PARTY_GetMemberDataConst( party, subwk->posIdx2 );
-      if( !BPP_IsDead(bpp) ){
-        BTLV_EFFECT_SetPokemon( BPP_GetSrcData(bpp), subwk->vpos2 );
-      }
-#endif
-      (*seq)++;
-    }
-    break;
-
-  case 2:
-    if( !BTLV_EFFECT_CheckExecute() ){
       BTLV_SCU_MoveGauge_Start( wk->scrnU, subwk->pos1, subwk->pos2 );
       (*seq)++;
     }
     break;
 
-  case 3:
+  case 2:
     if( BTLV_SCU_MoveGauge_Wait(wk->scrnU) ){
       return TRUE;
     }
@@ -2643,14 +2615,13 @@ BOOL BTLV_RotationMember_Wait( BTLV_CORE* wk )
 }
 static BOOL subprocRotateMember( int* seq, void* wk_adrs )
 {
-  // @todo 今は単に該当個所の絵を消して、新しく出してるだけで、
-  // 演出的な動作がまったく入っていない。いずれちゃんと作る。
   BTLV_CORE* wk = wk_adrs;
   ROTATE_MEMBER_WORK* subwk = getGenericWork( wk, sizeof(ROTATE_MEMBER_WORK) );
 
   switch( *seq ){
   case 0:
     BTLV_EFFECT_SetRotateEffect( subwk->dir, subwk->vpos1 & 1 );
+    PlaySELocal( wk, SEQ_SE_ROTATION_B ); //GFBTS1369対処 by iwasawa 10.06.14
     (*seq)++;
     break;
 
