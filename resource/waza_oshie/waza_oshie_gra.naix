@@ -32,7 +32,14 @@ enum {
 	NARC_waza_oshie_gra_waza_oboe_obj_NCLR = 18,
 	NARC_waza_oshie_gra_waza_oboe_bg_NCGR = 19,
 	NARC_waza_oshie_gra_waza_oboe_NSCR = 20,
-	NARC_waza_oshie_gra_waza_oboe_NCLR = 21
+	NARC_waza_oshie_gra_waza_oboe_NCLR = 21,
+	NARC_waza_oshie_gra_p_st_type_NCLR = 22,
+	NARC_waza_oshie_gra_p_st_type_NCGR = 23,
+	NARC_waza_oshie_gra_p_st_type_NCER = 24,
+	NARC_waza_oshie_gra_p_st_type_NANR = 25,
+	NARC_waza_oshie_gra_p_st_bunrui_NCGR = 26,
+	NARC_waza_oshie_gra_p_st_bunrui_NCER = 27,
+	NARC_waza_oshie_gra_p_st_bunrui_NANR = 28
 };
 
 /* NARC_WAZA_OSHIE_GRA_NAIX_ */
