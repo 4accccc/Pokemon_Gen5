@@ -500,8 +500,10 @@ void BSUBWAY_SCRWORK_SetLoseScore(
     bsw_SetCommonScore( bsw_scr, save, TRUE, renshou );
   }
 
+  #if 0 //ステージ数エラーのみ
   //周回数リセット
   BSUBWAY_PLAYDATA_ResetRoundNo( bsw_scr->playData );
+  #endif
   
   //ステージ数をエラーに
   BSUBWAY_SCOREDATA_ErrorStageNo( bsw_scr->scoreData, play_mode );
