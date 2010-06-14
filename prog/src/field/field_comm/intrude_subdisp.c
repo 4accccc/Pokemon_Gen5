@@ -2724,11 +2724,15 @@ static void _UpdatePalFlash_DecideCancelButton(INTRUDE_SUBDISP_PTR intsub)
 //--------------------------------------------------------------
 static BOOL _TimeNum_CheckEnable(INTRUDE_SUBDISP_PTR intsub)
 {
-  switch(intsub->comm.m_status){
-  case MISSION_STATUS_READY:     //ミッション開始待ち
-  case MISSION_STATUS_EXE:       //ミッション中
-  case MISSION_STATUS_RESULT:    //結果が届いている or 結果表示中
-    return TRUE;
+  GAMEDATA *gamedata = GAMESYSTEM_GetGameData(intsub->gsys);
+
+  if(GAMEDATA_GetIntrudeReverseArea(gamedata) == TRUE){
+    switch(intsub->comm.m_status){
+    case MISSION_STATUS_READY:     //ミッション開始待ち
+    case MISSION_STATUS_EXE:       //ミッション中
+    case MISSION_STATUS_RESULT:    //結果が届いている or 結果表示中
+      return TRUE;
+    }
   }
   return FALSE;
 }
