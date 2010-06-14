@@ -16,7 +16,6 @@
 #define SIGHN_H (8)
 
 #define DEFAULT_BADGE_SCRUCH  (140)
-#define TRAINERCARD_BADGE_NUM (  8)
 
 typedef struct TR_CARD_SV_DATA_tag
 {

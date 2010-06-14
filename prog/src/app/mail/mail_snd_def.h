@@ -1,6 +1,6 @@
 /**
  *  @file mail_snd_def.h
- *  @brief  メール画面用仮音定義
+ *  @brief  メール画面用SE定義
  *  @author Miyuki Iwasawa
  *  @date 06.02.17
  */

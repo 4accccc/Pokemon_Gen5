@@ -3093,7 +3093,7 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
     wk->shareBit = _get_connect_bit(wk);
     OS_TPrintf("接続人数が減ったのでshareNumを%d人に変更 bit=%x\n", _get_connect_num(wk), wk->shareBit);
     /*乱入中フラグ成立している状態で、人数が減った*/
-    if(wk->bookJoin){/*乱入予定ビットと比較し、それが落ちていた場合は、乱入者が電源を切ったとみなす*/
+    if(wk->bookJoin){ /*乱入待機ビットと比較し、それが落ちていた場合は、乱入者が電源を切ったとみなす*/
       if (!(wk->shareBit&wk->joinBit)){
         //リミット制限再設定
         ChangeConnectMax( wk, 1 );
@@ -3113,16 +3113,12 @@ static int ConnectNumControl( OEKAKI_WORK *wk )
   // 通信接続人数が画像共有人数よりも多くなった場合は離脱禁止フラグを立てる
   if(wk->shareNum < _get_connect_num(wk)){
 //    OS_Printf("ban_flag_on:%d,%d\n",wk->shareNum, _get_connect_num(wk));
-//    OS_Printf("乱入予定\n");
+//    OS_Printf("乱入待機\n");
     wk->banFlag = OEKAKI_BAN_ON;
     //乱入を期待する
     wk->bookJoin = 1;
     //乱入しようとしている人のビットを取得
     wk->joinBit = wk->shareBit^_get_connect_bit(wk);
-//    GF_ASSERT( (wk->joinBit == 2)||
-//          (wk->joinBit == 4)||
-//          (wk->joinBit == 8)||
-//          (wk->joinBit == 16) );
     
   }
 

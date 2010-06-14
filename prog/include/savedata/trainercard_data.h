@@ -22,6 +22,8 @@
 #define BADGE_POLISH_RATE   ( 48*2 )  
 #define BADGE_POLISH_MAX    ( BADGE_POLISH_RATE*5 )  
 
+// トレーナーカードで扱うバッジの数
+#define TRAINERCARD_BADGE_NUM (  8 )
 
 #include "savedata/save_control.h"
 #include "system/pms_data.h"

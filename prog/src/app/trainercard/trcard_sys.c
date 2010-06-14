@@ -536,9 +536,9 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
   cardData->BadgeFlag = 0;
   cardData->Version   = PM_VERSION;
 
-  //FIXME 正しいバッヂ個数の定義に(8個)
+  //バッヂフラグ取得
   flag = 1;
-  for( i=0; i<8; i++ )
+  for( i=0; i<TRAINERCARD_BADGE_NUM; i++ )
   {
     if( MISC_GetBadgeFlag( misc , i ) == TRUE )
     {
@@ -600,19 +600,27 @@ void TRAINERCARD_GetSelfData( TR_CARD_DATA *cardData , GAMEDATA *gameData , cons
     }
   }
   //通信回数  ワイヤレスコンテスト+ワイヤレス交換+WiFi交換+ワイヤレス対戦+WiFi対戦+ワイヤレスポルト
-  cardData->CommNum = RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE)+
-                      RECORD_Get(rec, RECID_COMM_BATTLE)+RECORD_Get(rec, RECID_WIFI_BATTLE);
-                      
+  cardData->CommNum = RECORD_Get(rec, RECID_COMM_TRADE)  + RECORD_Get(rec, RECID_COMM_BATTLE) +
+                      RECORD_Get(rec, RECID_WIFI_TRADE)  + RECORD_Get(rec, RECID_WIFI_BATTLE) +
+                      RECORD_Get(rec, RECID_IRC_TRADE)   + RECORD_Get(rec, RECID_IRC_BATTLE)  +
+                      RECORD_Get(rec, RECID_GURUGURU_COUNT );
   // 通信対戦回数
   cardData->CommBattleNum = RECORD_Get(rec, RECID_COMM_BATTLE) + 
                             RECORD_Get(rec, RECID_WIFI_BATTLE) +
                             RECORD_Get(rec, RECID_IRC_BATTLE);
   //勝ち数  ワイヤレス+WiFi
-  cardData->CommBattleWin = RECORD_Get(rec, RECID_COMM_BTL_WIN)+RECORD_Get(rec, RECID_WIFI_BTL_WIN);
+  cardData->CommBattleWin = RECORD_Get(rec, RECID_COMM_BTL_WIN) + 
+                            RECORD_Get(rec, RECID_WIFI_BTL_WIN) +
+                            RECORD_Get(rec, RECID_IRC_BTL_WIN);
   //負け数  ワイヤレス+WiFi
-  cardData->CommBattleLose = RECORD_Get(rec, RECID_COMM_BTL_LOSE)+RECORD_Get(rec, RECID_WIFI_BTL_LOSE);
+  cardData->CommBattleLose = RECORD_Get(rec, RECID_COMM_BTL_LOSE) + 
+                             RECORD_Get(rec, RECID_WIFI_BTL_LOSE) +
+                             RECORD_Get(rec, RECID_IRC_BTL_LOSE);
   //通信交換  ワイヤレス+WiFi
-  cardData->CommTrade = RECORD_Get(rec, RECID_COMM_TRADE)+RECORD_Get(rec, RECID_WIFI_TRADE);
+  cardData->CommTrade = RECORD_Get(rec, RECID_COMM_TRADE) + 
+                        RECORD_Get(rec, RECID_WIFI_TRADE) +
+                        RECORD_Get(rec, RECID_IRC_TRADE)  +
+                        RECORD_Get(rec, RECID_GURUGURU_COUNT);
 
   // 野生エンカウント回数
   cardData->EncountNum        = RECORD_Get(rec, RECID_BTL_ENCOUNT);        
