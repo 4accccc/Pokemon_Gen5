@@ -28,11 +28,18 @@
 
 
 //==============================================================================
+//  定数定義
+//==============================================================================
+///サブスクリーン切り替え実行前までのウェイト
+#define _EVENT_CHANGESUBSCREEN_WAIT   (15)
+
+//==============================================================================
 //  構造体定義
 //==============================================================================
 typedef struct{
   FIELDMAP_WORK *fieldWork;
   FIELD_SUBSCREEN_WORK *subscreen;
+  int wait;
 }EVENT_CHANGESUBSCRN;
 
 
@@ -162,8 +169,11 @@ static GMEVENT_RESULT EventChangeSubScreen_to_CGear( GMEVENT* event, int* seq, v
 
   switch(*seq){
   case 0:
-    FLD_VREQ_GXS_SetMasterBrightness( FIELDMAP_GetFldVReq(ecs->fieldWork), -16 );
-    (*seq)++;
+    ecs->wait++;
+    if(ecs->wait > _EVENT_CHANGESUBSCREEN_WAIT){
+      FLD_VREQ_GXS_SetMasterBrightness( FIELDMAP_GetFldVReq(ecs->fieldWork), -16 );
+      (*seq)++;
+    }
     break;
   case 1:
     FIELD_SUBSCREEN_ChangeForce( ecs->subscreen, FIELD_SUBSCREEN_NORMAL );

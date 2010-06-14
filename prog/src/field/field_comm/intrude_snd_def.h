@@ -16,3 +16,6 @@
 
 ///ミッションの時間が残りわずかな時のカウントダウン
 #define INTSE_MISSION_COUNTDOWN   (SEQ_SE_DECIDE5)
+
+///下画面の「もどる」ボタンを押した時の音
+#define INTSE_BUTTON_CANCEL     (SEQ_SE_CANCEL1)

@@ -397,11 +397,10 @@ typedef struct _INTRUDE_SUBDISP{
   u8 town_update_req;     ///<街アイコン更新リクエスト(TOWN_UPDATE_REQ_???)
   u8 now_bg_pal;          ///<現在のBGのパレット番号
   u8 wfbc_go;             ///<TRUE:WFBCへのワープを押した
-  u8 padding;
+  u8 wfbc_seq;
   
   s16 infomsg_wait;       ///<インフォメーションメッセージ更新ウェイト
-  u8 wfbc_seq;
-  u8 bar_type;            ///<BG_BAR_TYPE_xxx
+  s16 print_time;         ///<表示されている時間
   
   u8 title_print_type;    ///<_TITLE_PRINT_xxx
   u8 print_mission_status;  ///<現在表示しているミッション状況
@@ -414,11 +413,17 @@ typedef struct _INTRUDE_SUBDISP{
   
   u8 decide_pal_occ;
   u8 decide_pal_timer;     ///<タッチした時のパレットアニメ用タイマー
+  u8 decide_pal_button_occ;     ///<TRUE:「もどる」ボタンを押した時のパレットアニメ実行中
+  u8 decide_pal_button_timer;   ///<「もどる」ボタンをタッチした時のパレットアニメ用タイマー
+
   s16 player_pal_evy;     ///<
   s8 player_pal_dir;      ///<
   u8 player_pal_tblno;    ///<自分がいる所の街のテーブル番号
+  
   u8 player_pal_trans_req;  ///<TRUE:パレット転送リクエスト
   u8 vblank_trans;
+  u8 add_player_count;    ///<侵入下画面のInit後、増えたプレイヤーをカウント
+  u8 bar_type;            ///<BG_BAR_TYPE_xxx
 
   u16 player_pal_src[PLAYER_PALANM_COLOR_NUM];        ///<変化元
   u16 player_pal_next_src[PLAYER_PALANM_COLOR_NUM];   ///<変化後
@@ -430,10 +435,6 @@ typedef struct _INTRUDE_SUBDISP{
   u8 print_touch_player;  ///< 通信相手のアイコンをタッチした場合、その人物のNetID
   u8 mission_target_focus_netid;    ///<ミッションターゲットでフォーカス対象のプレイヤーNetID
   u8 mission_target_focus_wait;     ///<ミッションターゲットフォーカスアニメウェイト
-  
-  s16 print_time;         ///<表示されている時間
-  u8 add_player_count;    ///<侵入下画面のInit後、増えたプレイヤーをカウント
-  u8 padding2;
 }INTRUDE_SUBDISP;
 
 
@@ -485,6 +486,8 @@ static void _TimeScrn_Recover(INTRUDE_SUBDISP_PTR intsub, BOOL v_req);
 static BOOL _TutorialMissionNoRecv(INTRUDE_SUBDISP_PTR intsub);
 static void _IntSub_BGColorScreenChange(INTRUDE_SUBDISP_PTR intsub, int palace_area);
 static BOOL _IntSub_CheckSameZoneID(ZONEID my_zone_id, ZONEID target_zone_id, ZONEID target_reverse_zone_id);
+static void _SetPalFlash_DecideCancelButton(INTRUDE_SUBDISP_PTR intsub);
+static void _UpdatePalFlash_DecideCancelButton(INTRUDE_SUBDISP_PTR intsub);
 
 
 //==============================================================================
@@ -766,6 +769,8 @@ void INTRUDE_SUBDISP_Draw(INTRUDE_SUBDISP_PTR intsub, BOOL bActive)
     _IntSub_ActorUpdate_CursorL(intsub, area_occupy, my_zone_id);
     _IntSub_ActorUpdate_EntryButton(intsub, area_occupy);
     _IntSub_ActorUpdate_LvNum(intsub, area_occupy);
+    
+    _UpdatePalFlash_DecideCancelButton(intsub);
   }
 }
 
@@ -791,6 +796,8 @@ GMEVENT* INTRUDE_SUBDISP_EventCheck(INTRUDE_SUBDISP_PTR intsub, BOOL bEvReqOK, F
   }
   
   if(intsub->back_exit == TRUE || (GAMEDATA_GetIntrudeReverseArea(gamedata) == FALSE && Intrude_Check_CommConnect(game_comm) == NULL)){
+    PMSND_PlaySE(INTSE_BUTTON_CANCEL);
+    _SetPalFlash_DecideCancelButton(intsub);
     return EVENT_ChangeSubScreen_to_CGear(intsub->gsys, fieldWork, subscreen);
   }
 
@@ -2658,6 +2665,52 @@ static void _SetPalFade_PlayerTown(INTRUDE_SUBDISP_PTR intsub, int town_tblno)
   intsub->player_pal_tblno = town_tblno;
   intsub->player_pal_evy = 0;
   intsub->player_pal_dir = DIR_UP;
+}
+
+//--------------------------------------------------------------
+/**
+ * 「もどる」ボタンの決定パレットアニメを発動
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _SetPalFlash_DecideCancelButton(INTRUDE_SUBDISP_PTR intsub)
+{
+  int i;
+  
+  intsub->decide_pal_button_timer = 0;
+  intsub->decide_pal_button_occ = TRUE;
+  GFL_CLACT_WK_SetPlttOffs(intsub->act[INTSUB_ACTOR_ENTRY], 
+    INTSUB_ACTOR_PAL_TOUCH_NORMAL, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+}
+
+//--------------------------------------------------------------
+/**
+ * 「もどる」ボタンの決定パレットアニメを更新
+ *
+ * @param   intsub		
+ */
+//--------------------------------------------------------------
+static void _UpdatePalFlash_DecideCancelButton(INTRUDE_SUBDISP_PTR intsub)
+{
+  if(intsub->decide_pal_button_occ == FALSE){
+    return;
+  }
+  
+  if(intsub->decide_pal_button_timer % TOWN_DECIDE_PAL_FLASH_WAIT == 0){
+    int pal_offset;
+    if((intsub->decide_pal_button_timer / TOWN_DECIDE_PAL_FLASH_WAIT) & 1){
+      pal_offset = INTSUB_ACTOR_PAL_TOUCH_NORMAL;
+    }
+    else{
+      pal_offset = INTSUB_ACTOR_PAL_TOUCH_DECIDE;
+    }
+    GFL_CLACT_WK_SetPlttOffs(
+      intsub->act[INTSUB_ACTOR_ENTRY], pal_offset, CLWK_PLTTOFFS_MODE_PLTT_TOP);
+  }
+  if(intsub->decide_pal_button_timer < TOWN_DECIDE_PAL_FLASH_TIMER_MAX){
+    intsub->decide_pal_button_timer++;
+  }
 }
 
 //--------------------------------------------------------------
