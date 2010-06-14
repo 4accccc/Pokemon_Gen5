@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ohmori" host="W00223" date="2010-06-14T16:19:03"/>
+	<create user="ohmori" host="W00223" date="2010-06-14T17:30:41"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -486,9 +486,9 @@
 	<row id="plc_mis_05_03" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　フキヨセシティの
-おくにある　ひこうきの　まえにかくせ！</language>
+おくの　ひこうきの　まえにかくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　フキヨセシティの
-奥にある　飛行機の　前に隠せ！</language>
+奥の　飛行機の　前に隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_04" back-color="#ffff80,,,#ffff80,,#ffffff,,,,,,#ffffff,,,,,,">
@@ -630,9 +630,9 @@
 	<row id="plc_mis_05_21" back-color="#ffff80,,,,,,,,,,,,,,,,,">
 		<comment>ミッション５：「●●●●●を　だれかにつかまらないように　どうぐを　かくせ！」</comment>
 		<language name="JPN" width="256">[1:09:どうぐ名:0]を　フキヨセシティの
-おくにある　ひこうきの　まえにかくせ！</language>
+おくの　ひこうきの　まえにかくせ！</language>
 		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]を　フキヨセシティの
-奥にある　飛行機の　前に隠せ！</language>
+奥の　飛行機の　前に隠せ！</language>
 	</row>
 
 	<row id="plc_mis_05_22" back-color="#ffff80,,,,,,,,,,,,,,,,,">
