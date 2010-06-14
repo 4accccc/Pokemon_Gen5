@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="ariizumi_nobuhiko" host="W00147" date="2010-06-12T18:04:39"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-14T12:06:00"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -457,11 +457,11 @@
 
 転送 確認</comment>
 		<language name="JPN" width="208">つれてきた　ポケモンは
-もう　もとの　ちほうには▼
-もどせませんが
+もう　もとの　ばしょには▼
+もどれませんが
 ほんとうに　よろしいですか？</language>
 		<language name="JPN_KANJI" width="208">連れてきた　ポケモンは
-もう元の地方には　戻せませんが▽
+もう　元の場所には　戻れませんが▽
 本当に　よろしいですか？</language>
 	</row>
 
