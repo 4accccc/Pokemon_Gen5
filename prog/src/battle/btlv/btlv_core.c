@@ -726,7 +726,6 @@ static BOOL CmdProc_SetupDemo( BTLV_CORE* core, int* seq, void* workBuffer )
     {
       //戦闘エフェクト一時停止を解除
       BTLV_EFFECT_Restart();
-      PMSND_PlayBGM( SEQ_BGM_WIN1 );
       GFL_MSG_Delete( cdw->msg );
       (*seq)++;
     }
