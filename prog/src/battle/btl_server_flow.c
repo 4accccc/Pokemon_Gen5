@@ -2588,7 +2588,7 @@ static void scproc_MemberInCore( BTL_SVFLOW_WORK* wk, u8 clientID, u8 posIdx, u8
   }
   bpp = BTL_PARTY_GetMemberData( party, posIdx );
   pokeID = BPP_GetID( bpp );
-  TAYA_Printf("MemberIn pokeID=%d\n", pokeID);
+//  TAYA_Printf("MemberIn pokeID=%d\n", pokeID);
 
   BTL_MAIN_RegisterZukanSeeFlag( wk->mainModule, clientID, bpp );
 
@@ -2660,7 +2660,6 @@ static BOOL scproc_AfterMemberIn( BTL_SVFLOW_WORK* wk )
   {
     {
       u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
-      TAYA_Printf("After MemberIN Event pokeID=%d\n", BPP_GetID(bpp) );
       scEvent_AfterMemberIn( wk, bpp );
       BTL_Hem_PopState( &wk->HEManager, hem_state );
       if( scproc_HandEx_Result(wk) != HandExResult_NULL ){
@@ -3421,6 +3420,7 @@ static void scEvent_WazaReflect( BTL_SVFLOW_WORK* wk, const BTL_POKEPARAM* robPo
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID, BPP_GetID(robPoke) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_ATK, BPP_GetID(orgAtkPoke) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, waza );
+    BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_WAZASEQ_REFRECT );
   BTL_EVENTVAR_Pop();
 }
@@ -6504,7 +6504,7 @@ static BOOL scproc_UseItemEquip( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
       hem_state_2nd = BTL_Hem_PushStateUseItem( &wk->HEManager, itemID );
         scEvent_ItemEquip( wk, bpp );
-        if( scproc_HandEx_Result(wk) == HandExResult_NULL ){
+        if( scproc_HandEx_Result(wk) != HandExResult_NULL ){
           result = FALSE;
         }
       BTL_Hem_PopState( &wk->HEManager, hem_state_2nd );
@@ -11441,6 +11441,7 @@ static u16 scEvent_getAttackPower( BTL_SVFLOW_WORK* wk,
 
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
       BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+      BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, wazaParam->damageType );
       BTL_EVENTVAR_SetValue( BTL_EVAR_POWER, power );
       BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, FX32_ONE, FX32_CONST(0.1), FX32_CONST(32) );
       BTL_EVENT_CallHandlers( wk, BTL_EVENT_ATTACKER_POWER );

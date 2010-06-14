@@ -433,6 +433,7 @@ static GFL_PROC_RESULT BTL_PROC_Main( GFL_PROC* proc, int* seq, void* pwk, void*
     else
     {
       wk->setupParam->recPlayCompleteFlag = checkRecReadComplete( wk );
+      TAYA_Printf("録画データ最後まで読み込めたフラグ=%d\n", wk->setupParam->recPlayCompleteFlag);
     }
 
     return GFL_PROC_RES_FINISH;

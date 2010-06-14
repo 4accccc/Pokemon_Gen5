@@ -7413,9 +7413,10 @@ static BOOL scProc_ACT_FakeDisable( BTL_CLIENT* wk, int* seq, const int* args )
       u8 pokeID = args[0];
       BtlPokePos pos = BTL_MAIN_PokeIDtoPokePos( wk->mainModule, wk->pokeCon, pokeID );
       BTL_POKEPARAM* bpp = BTL_POKECON_GetPokeParam( wk->pokeCon, pokeID );
+      BOOL fSkipMode = BTL_CLIENT_IsChapterSkipMode( wk );
 
       BPP_FakeDisable( bpp );
-      BTLV_FakeDisable_Start( wk->viewCore, pos );
+      BTLV_FakeDisable_Start( wk->viewCore, pos, fSkipMode );
       (*seq)++;
     }
     break;

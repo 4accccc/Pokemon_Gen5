@@ -2297,9 +2297,9 @@ BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos )
  * @param   pos
  */
 //=============================================================================================
-void BTLV_FakeDisable_Start( BTLV_CORE* wk, BtlPokePos pos )
+void BTLV_FakeDisable_Start( BTLV_CORE* wk, BtlPokePos pos, BOOL fSkipMode )
 {
-  BTLV_SCU_FakeDisable_Start( wk->scrnU, pos );
+  BTLV_SCU_FakeDisable_Start( wk->scrnU, pos, fSkipMode );
 }
 //=============================================================================================
 /**

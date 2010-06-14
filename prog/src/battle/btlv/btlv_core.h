@@ -340,7 +340,7 @@ extern void BTLV_ResetCommWaitInfo( BTLV_CORE* wk );
 
 extern void BTLV_KinomiAct_Start( BTLV_CORE* wk, BtlPokePos pos );
 extern BOOL BTLV_KinomiAct_Wait( BTLV_CORE* wk, BtlPokePos pos );
-extern void BTLV_FakeDisable_Start( BTLV_CORE* wk, BtlPokePos pos );
+extern void BTLV_FakeDisable_Start( BTLV_CORE* wk, BtlPokePos pos, BOOL fSkipMode );
 extern BOOL BTLV_FakeDisable_Wait( BTLV_CORE* wk );
 
 extern void BTLV_ChangeForm_Start( BTLV_CORE* wk, BtlvMcssPos vpos );

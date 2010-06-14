@@ -3190,6 +3190,7 @@ typedef struct {
   BtlPokePos   pos;
   BtlvMcssPos  vpos;
   u32          seq;
+  BOOL         fSkipMode;
   u8*          pTaskCounter;
 
 }FAKEDISABLE_ACT_WORK;
@@ -3201,7 +3202,7 @@ typedef struct {
 /**
  *  イリュージョン解除動作：開始
  */
-void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos )
+void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos, BOOL fSkipMode )
 {
   if( pos != BTL_POS_NULL )
   {
@@ -3210,6 +3211,7 @@ void BTLV_SCU_FakeDisable_Start( BTLV_SCU* wk, BtlPokePos pos )
 
     twk->parentWork = wk;
     twk->pos = pos;
+    twk->fSkipMode = fSkipMode;
     twk->vpos = BTL_MAIN_BtlPosToViewPos( wk->mainModule, pos );
     twk->pTaskCounter = &wk->taskCounter[TASKTYPE_DEFAULT];
     twk->seq = 0;
@@ -3238,7 +3240,12 @@ static void taskFakeDisable( GFL_TCBL* tcbl, void* wk_adrs )
     {
       const BTL_POKEPARAM* bpp = BTL_POKECON_GetFrontPokeDataConst( wk->parentWork->pokeCon, wk->pos );
       const POKEMON_PARAM* pp = BPP_GetSrcData( bpp );
-      BTLV_EFFECT_Henge( pp, wk->vpos );
+
+      if( !(wk->fSkipMode) ){
+        BTLV_EFFECT_Henge( pp, wk->vpos );
+      }else{
+        BTLV_EFFECT_HengeShortCut( pp, wk->vpos );
+      }
       BTLV_EFFECT_DelGauge( wk->vpos );
       wk->seq++;
     }
@@ -3613,7 +3620,7 @@ void BTLV_SCU_TokWin_DispStart( BTLV_SCU* wk, BtlPokePos pos, BOOL fFlash )
 
   //自分側の特性ウインドウを表示する場合は、ゲームタイマー表示を一旦消す
   if( side == TOKWIN_SIDE_FRIEND )
-  { 
+  {
     BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, FALSE, FALSE );
   }
 
@@ -3640,7 +3647,7 @@ void BTLV_SCU_TokWin_HideStart( BTLV_SCU* wk, BtlPokePos pos )
   tokwin_hide_first( &wk->tokWin[side] );
   //消していたゲームタイマー表示を復活
   if( side == TOKWIN_SIDE_FRIEND )
-  { 
+  {
     BTLV_EFFECT_DrawEnableTimer( BTLV_TIMER_TYPE_GAME_TIME, TRUE, FALSE );
   }
 }
