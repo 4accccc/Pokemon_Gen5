@@ -2365,11 +2365,16 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
   if( BTL_MAIN_GetEscapeMode(wk->mainModule) == BTL_ESCAPE_MODE_WILD )
   {
     u8 escClientID = BTL_MAINUTIL_PokeIDtoClientID( BPP_GetID(bpp) );
-    if( escClientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) ){
+    if( escClientID == BTL_MAIN_GetPlayerClientID(wk->mainModule) )
+    {
       fForceNigeru = scEvent_SkipNigeruCalc( wk, bpp );
       if( fForceNigeru ){
         fSkipNigeruCalc = TRUE;
       }
+    }
+    // –ì¶ƒ|ƒPƒ‚ƒ“‚Í“¦‚°ŒvZ‚ğ–Æœ
+    else{
+      fSkipNigeruCalc = TRUE;
     }
   }
   else{
