@@ -787,6 +787,9 @@ void BattlePokeList_BmpWrite( BPLIST_WORK * wk, u32 page )
     BPL_Page1BmpWrite( wk );
 	  if( wk->dat->mode == BPL_MODE_ITEMUSE ){
 	    BPL_PokeSelStrPut( wk, mes_b_plist_01_601 );
+		// 瀕死入れ替え選択
+		}else if( wk->dat->mode == BPL_MODE_CHG_DEAD ){
+	    BPL_PokeSelStrPut( wk, mes_b_plist_01_603 );
 	  }else{
 	    BPL_PokeSelStrPut( wk, mes_b_plist_01_600 );
 	  }
@@ -794,7 +797,7 @@ void BattlePokeList_BmpWrite( BPLIST_WORK * wk, u32 page )
 
 	case BPLIST_PAGE_DEAD:			// 瀕死入れ替え選択ページ
     BPL_Page1BmpWrite( wk );
-    BPL_PokeSelStrPut( wk, mes_b_plist_01_602 );
+    BPL_PokeSelStrPut( wk, mes_b_plist_01_604 );
     break;
 
   case BPLIST_PAGE_POKE_CHG:    // ポケモン入れ替えページ
@@ -1153,7 +1156,7 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		「ポケモンを　えらんでください」表示
+ * @brief		「どの　ポケモンで　たたかう？」表示
  *
  * @param		wk    ワーク
  *
@@ -1162,12 +1165,12 @@ static void BPL_PokeSelStrPut( BPLIST_WORK * wk, u32 midx )
 //--------------------------------------------------------------------------------------------
 void BPLISTBMP_PokeSelInfoMesPut( BPLIST_WORK * wk )
 {
-	BPL_PokeSelStrPut( wk, mes_b_plist_01_600 );
+	BPL_PokeSelStrPut( wk, mes_b_plist_01_603 );
 }
 
 //--------------------------------------------------------------------------------------------
 /**
- * @brief		「どれと　いれかえる？」表示
+ * @brief		「どの　ポケモンを　もどす？」表示
  *
  * @param		wk    ワーク
  *
@@ -1176,31 +1179,10 @@ void BPLISTBMP_PokeSelInfoMesPut( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 void BPLISTBMP_DeadSelInfoMesPut( BPLIST_WORK * wk )
 {
-	BPL_PokeSelStrPut( wk, mes_b_plist_01_602 );
+	BPL_PokeSelStrPut( wk, mes_b_plist_01_604 );
 }
 
 
-//--------------------------------------------------------------------------------------------
-/**
- * @brief		「いれかえ」表示
- *
- * @param		wk    ワーク
- *
- * @return  none
- */
-//--------------------------------------------------------------------------------------------
-static void BPL_StrIrekaePut( BPLIST_WORK * wk )
-{
-  STRBUF * str;
-  u32 siz;
-
-  str = GFL_MSG_CreateString( wk->mman, mes_b_plist_02_501 );
-  siz = PRINTSYS_GetStrWidth( str, wk->dat->font, 0 );
-  PRINT_UTIL_PrintColor(
-    &wk->add_win[WIN_CHG_IREKAE], wk->que,
-    (WIN_CHG_IREKAE_SX*8-siz)/2, IREKAE_PY, str, wk->dat->font, FCOL_P09WN );
-  GFL_STR_DeleteBuffer( str );
-}
 
 //--------------------------------------------------------------------------------------------
 /**
@@ -2080,7 +2062,26 @@ static void BPL_ChgPageBmpWrite( BPLIST_WORK * wk )
 
   BPL_IrekaeNamePut( wk, wk->dat->sel_poke );
 
-  BPL_StrCommandPut( wk, WIN_CHG_IREKAE, mes_b_plist_02_501 );
+	{
+		u16	err;
+		u16	id;
+
+		err = BPLISTMAIN_CheckIrekaeError( wk );
+		// 瀕死
+		if( err == BPL_IREKAE_ERR_DEAD ){
+		  id = mes_b_plist_02_506;
+		// 出ている
+		}else if( err == BPL_IREKAE_ERR_BATTLE ){
+		  id = mes_b_plist_02_507;
+		// 選択済み
+		}else if( err == BPL_IREKAE_ERR_SELECT ){
+		  id = mes_b_plist_02_508;
+		// それ以外
+		}else{
+		  id = mes_b_plist_02_501;
+		}
+		BPL_StrCommandPut( wk, WIN_CHG_IREKAE, id );
+	}
 
   if( wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_poke) ].egg == 0 ){
     BPL_StrCommandPut( wk, WIN_CHG_STATUS, mes_b_plist_02_504 );

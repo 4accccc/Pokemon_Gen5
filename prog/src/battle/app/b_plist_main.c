@@ -2119,6 +2119,56 @@ static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page )
 
 //--------------------------------------------------------------------------------------------
 /**
+ * @brief		入れ替えエラーチェック
+ *
+ * @param		wk    ワーク
+ *
+ * @return	エラーコード
+ */
+//--------------------------------------------------------------------------------------------
+u8 BPLISTMAIN_CheckIrekaeError( BPLIST_WORK * wk )
+{
+  BPL_POKEDATA * dat;
+  u8  pos;
+
+  pos = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+  dat = &wk->poke[pos];
+
+  // 他人
+  if( BattlePokeList_MultiPosCheck( wk, pos ) == TRUE ){
+    return BPL_IREKAE_ERR_PARTNER;		// パートナーのポケモン
+  }
+
+  // 瀕死
+  if( dat->hp == 0 ){
+    return BPL_IREKAE_ERR_DEAD;				// 瀕死
+  }
+
+  // 出ている
+  if( FightPokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
+    return BPL_IREKAE_ERR_BATTLE;			// 出ている
+  }
+
+  // タマゴ
+  if( BPL_TamagoCheck( wk ) == TRUE ){
+    return BPL_IREKAE_ERR_EGG;				// タマゴ
+  }
+
+  // 選択されている
+  if( ChangePokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
+    return BPL_IREKAE_ERR_SELECT;			// 選択済み
+  }
+
+  // 技
+  if( wk->dat->chg_waza != 0 ){
+    return BPL_IREKAE_ERR_WAZA;				// 技・特性
+  }
+
+	return BPL_IREKAE_ERR_NONE;		// エラーなし
+}
+
+//--------------------------------------------------------------------------------------------
+/**
  * @brief		入れ替えチェック
  *
  * @param		wk    ワーク
@@ -2129,6 +2179,53 @@ static void BPL_PageChgBgScreenChg( BPLIST_WORK * wk, u8 page )
 //--------------------------------------------------------------------------------------------
 static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
 {
+	BPL_POKEDATA * dat;
+	STRBUF * str;
+	u8  pos;
+
+	pos = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+	dat = &wk->poke[pos];
+
+	switch( BPLISTMAIN_CheckIrekaeError( wk ) ){
+	case BPL_IREKAE_ERR_PARTNER:		// パートナーのポケモン
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m05 );
+		break;
+
+	case BPL_IREKAE_ERR_DEAD:				// 瀕死
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m02 );
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		break;
+
+	case BPL_IREKAE_ERR_BATTLE:			// 出ている
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m01 );
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		break;
+
+	case BPL_IREKAE_ERR_SELECT:			// 選択済み
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m18 );
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		break;
+
+	case BPL_IREKAE_ERR_EGG:				// タマゴ
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m04 );
+		break;
+
+	case BPL_IREKAE_ERR_WAZA:				// 技・特性
+		dat = &wk->poke[ BPLISTMAIN_GetListRow(wk,wk->dat->sel_pos_index) ];
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m03 );
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		break;
+
+	case BPL_IREKAE_ERR_NONE:				// エラーなし
+		return TRUE;
+	}
+
+	WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+	GFL_STR_DeleteBuffer( str );
+
+	return FALSE;
+
+/*
   BPL_POKEDATA * dat;
   STRBUF * str;
   u8  pos;
@@ -2189,6 +2286,7 @@ static u8 BPL_IrekaeCheck( BPLIST_WORK * wk )
   }
 
   return TRUE;
+*/
 }
 
 //--------------------------------------------------------------------------------------------
@@ -2581,6 +2679,56 @@ static int BPL_SeqPageChgDead( BPLIST_WORK * wk )
 //--------------------------------------------------------------------------------------------
 static BOOL CheckDeadChange( BPLIST_WORK * wk )
 {
+	BPL_POKEDATA * dat;
+	STRBUF * str;
+	u8	pos;
+
+  pos = BPLISTMAIN_GetListRow( wk, wk->dat->sel_poke );
+  dat = &wk->poke[pos];
+
+  // 他人
+  if( BattlePokeList_MultiPosCheck( wk, pos ) == TRUE ){
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m05 );
+		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+		GFL_STR_DeleteBuffer( str );
+		return FALSE;
+  }
+
+  // 入れ替え可能位置ではない
+  if( FightPosCheck( wk, wk->dat->sel_poke ) == FALSE ){
+		// 引っ込めたポケモン
+	  if( FightPosCheck( wk, pos ) == TRUE ){
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m22 );
+		}else{
+			str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m21 );
+		}
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+		GFL_STR_DeleteBuffer( str );
+		return FALSE;
+	}
+
+	// 戦闘に出したポケモン
+  if( ChangePokeCheck( wk, wk->dat->sel_poke ) == TRUE ){
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m01 );
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+		GFL_STR_DeleteBuffer( str );
+		return FALSE;
+	}
+
+	// それ以外でＨＰが０じゃなければ入れ替えの必要のないポケモン
+	if( dat->hp != 0 ){
+		str = GFL_MSG_CreateString( wk->mman, mes_b_plist_m01 );
+		WORDSET_RegisterPokeNickName( wk->wset, 0, dat->pp );
+		WORDSET_ExpandStr( wk->wset, wk->msg_buf, str );
+		GFL_STR_DeleteBuffer( str );
+		return FALSE;
+	}
+
+	return TRUE;
+
+/*
   BPL_POKEDATA * dat;
   STRBUF * str;
   u8  pos;
@@ -2615,6 +2763,7 @@ static BOOL CheckDeadChange( BPLIST_WORK * wk )
   }
 
   return TRUE;
+*/
 }
 
 //--------------------------------------------------------------------------------------------

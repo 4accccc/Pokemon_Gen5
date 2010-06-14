@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="tetsuji_ohta" host="W00222" date="2010-05-26T13:06:14"/>
+	<create user="hiro_nakamura" host="W00144" date="2010-06-14T17:40:37"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -398,6 +398,16 @@
 		<language name="JPN_KANJI" width="176">どれと　入れ替える？</language>
 	</row>
 
+	<row id="mes_b_plist_01_603" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="176">どの　ポケモンで　たたかう？</language>
+		<language name="JPN_KANJI" width="176">どの　ポケモンで　戦う？</language>
+	</row>
+
+	<row id="mes_b_plist_01_604" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="176">どの　ポケモンを　もどす？</language>
+		<language name="JPN_KANJI" width="176">どの　ポケモンを　戻す？</language>
+	</row>
+
 	<row id="mes_b_plist_01_701" back-color="#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,#ff0000,#ff0000,,,#ff0000,,">
 		<comment>ポケモン選択画面
 レベル表示</comment>
@@ -508,6 +518,21 @@ HP表示</comment>
 「わざをみる」ボタン名</comment>
 		<language name="JPN" width="176">わざをみる</language>
 		<language name="JPN_KANJI" width="176">わざをみる</language>
+	</row>
+
+	<row id="mes_b_plist_02_506" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="176">たたかえない</language>
+		<language name="JPN_KANJI" width="176">たたかえない</language>
+	</row>
+
+	<row id="mes_b_plist_02_507" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="176">せんとうちゅう</language>
+		<language name="JPN_KANJI" width="176">せんとうちゅう</language>
+	</row>
+
+	<row id="mes_b_plist_02_508" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<language name="JPN" width="176">たいきちゅう</language>
+		<language name="JPN_KANJI" width="176">たいきちゅう</language>
 	</row>
 
 	<row id="mes_b_plist_02_600">
@@ -1115,14 +1140,21 @@ HP表示</comment>
 [1:02:ポケモンニックネーム:0]には　使えません！</language>
 	</row>
 
-	<row id="mes_b_plist_m21">
+	<row id="mes_b_plist_m21" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
 		<comment>戦闘に出てないポケモンと入れ替えようとしたとき
 ０：ニックネーム
 </comment>
-		<language name="JPN" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]と
-いれかえることは　できません！</language>
-		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]と
-入れ替えることは　できません！</language>
+		<language name="JPN" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+もどすことが　できません！</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+戻すことが　できません！</language>
+	</row>
+
+	<row id="mes_b_plist_m22" back-color="#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,#8080ff,#8080ff,,,#8080ff,,">
+		<language name="JPN" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+すでに　もどっています</language>
+		<language name="JPN_KANJI" font=" 1:small" width="216" line="2">[1:02:ポケモンニックネーム:0]は
+すでに　戻っています</language>
 	</row>
 
 	<flowchart-group-list>

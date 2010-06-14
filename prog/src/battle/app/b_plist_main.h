@@ -436,6 +436,18 @@ typedef struct {
 typedef int (*pBPlistFunc)(BPLIST_WORK*);
 
 
+// 入れ替えエラーチェック
+enum {
+	BPL_IREKAE_ERR_NONE = 0,		// エラーなし
+	BPL_IREKAE_ERR_PARTNER,			// パートナーのポケモン
+	BPL_IREKAE_ERR_DEAD,				// 瀕死
+	BPL_IREKAE_ERR_BATTLE,			// 出ている
+	BPL_IREKAE_ERR_SELECT,			// 選択済み
+	BPL_IREKAE_ERR_EGG,					// タマゴ
+	BPL_IREKAE_ERR_WAZA,				// 技・特性
+};
+
+
 //============================================================================================
 //	プロトタイプ宣言
 //============================================================================================
@@ -505,3 +517,14 @@ extern u8 BPLISTMAIN_GetListRow( BPLIST_WORK * wk, u32 pos );
  */
 //--------------------------------------------------------------------------------------------
 extern BOOL BPLISTMAIN_GetNewLog( BPLIST_WORK * wk, u8 * pos1, u8 * pos2, BOOL del );
+
+//--------------------------------------------------------------------------------------------
+/**
+ * @brief		入れ替えエラーチェック
+ *
+ * @param		wk    ワーク
+ *
+ * @return	エラーコード
+ */
+//--------------------------------------------------------------------------------------------
+extern u8 BPLISTMAIN_CheckIrekaeError( BPLIST_WORK * wk );
