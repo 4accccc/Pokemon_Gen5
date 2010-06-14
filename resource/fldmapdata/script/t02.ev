@@ -366,7 +366,7 @@ EVENT_START		ev_scene_t02_speech_01
 	_OBJ_ANIME_WAIT()
 
 	//Ç»ÇÒÇ©Å@Ç–ÇÎÇŒÇ≈Å@ÇÕÇ∂Ç‹ÇÈÇÁÇµÇ¢Çº
-	_BALLOONWIN_OBJMSG_POS( msg_t02_boodle_06 , T02_BOODLE_02,POS_UL )
+	_BALLOONWIN_OBJMSG_POS( msg_t02_boodle_06 , T02_BOODLE_02,POS_UP )
 	_BALLOONWIN_CLOSE()
 
 	_OBJ_ANIME( MMDL_ID_PLAYER, anm_player_left )
