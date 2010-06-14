@@ -561,7 +561,7 @@ typedef struct{
   u16 scanWaitFrame;
 	/* 親機接続時に使用する設定 */
 	u8 sConnectionSsid[(WM_SIZE_CHILD_SSID/4)*4];
-  u16 scanFixNo;
+  u16 dummy;
   u8 pauseScan;
   u8 sWH_EndScan;  //EndScanを呼んだ後すぐにWH_Finalizeを呼ばれた場合の対処の為
 } _WM_INFO_STRUCT;
@@ -1553,9 +1553,9 @@ static BOOL WH_StateInStartScan(void)
 	_pWmInfo->sScanExParam.scanBufSize = WM_SIZE_SCAN_EX_BUF;
 	_pWmInfo->sScanExParam.scanType = WM_SCANTYPE_PASSIVE;
 	_pWmInfo->sScanExParam.ssidLength = 0;
-  if(_pWmInfo->scanFixNo==0){
-    MI_CpuFill8(_pWmInfo->sScanExParam.ssid, 0xFF, sizeof(_pWmInfo->sScanExParam.ssid));
-  }
+//  if(_pWmInfo->scanFixNo==0){
+//    MI_CpuFill8(_pWmInfo->sScanExParam.bssid, 0xFF, WM_SIZE_BSSID);
+//  }
 
 	result = WM_StartScanEx(WH_StateOutStartScan, &_pWmInfo->sScanExParam);
 
@@ -1578,12 +1578,13 @@ static BOOL WH_StateInStartScan(void)
 void WIH_FixScanMode(int channel, void* pMac )
 {
   _pWmInfo->sChannelIndex = channel;
-  GFL_STD_MemCopy( pMac, _pWmInfo->sScanExParam.ssid, sizeof(_pWmInfo->sScanExParam.ssid));
+  GFL_STD_MemCopy( pMac, _pWmInfo->sScanExParam.bssid, WM_SIZE_BSSID);
   WH_TRACE("channel fix %d mac %x%x%x%x%x%x\n",channel,
              _pWmInfo->sScanExParam.ssid[0],_pWmInfo->sScanExParam.ssid[1],
              _pWmInfo->sScanExParam.ssid[2],_pWmInfo->sScanExParam.ssid[3],
              _pWmInfo->sScanExParam.ssid[4],_pWmInfo->sScanExParam.ssid[5]
              );
+//  _pWmInfo->scanFixNo=1;
 
 }
 
