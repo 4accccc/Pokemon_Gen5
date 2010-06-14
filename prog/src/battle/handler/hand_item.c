@@ -2922,8 +2922,7 @@ static void handler_SinkaiNoUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     if( monsNo == MONSNO_PAARURU )
     {
       // Ç∆Ç≠Ç⁄Ç§ÇQî{
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_SPECIAL )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
       }
@@ -2948,14 +2947,13 @@ static void handler_MetalPowder( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* fl
   // é©ï™Ç™ñhå‰ë§Ç≈
   if( BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID_DEF) == pokeID )
   {
-    // ÉÅÉ^ÉÇÉìÇ»ÇÁ
+    // ÉÅÉ^ÉÇÉìÅiÇ÷ÇÒÇµÇÒëOÅjÇ»ÇÁ
     const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
     if( (BPP_GetMonsNo(bpp) == MONSNO_METAMON)
     &&  (!BPP_HENSIN_Check(bpp))
     ){
       // Ç⁄Ç§Ç¨ÇÂÇQî{
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(2) );
       }
@@ -3014,11 +3012,11 @@ static void handler_KokoroNoSizuku_Pow( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_W
     if( (monsNo == MONSNO_RATHIASU) || (monsNo == MONSNO_RATHIOSU) )
     {
       // Ç∆Ç≠Ç±Ç§è„è∏
-      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+//      WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
+//      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_SPECIAL )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, FX32_CONST(1.5) );
-
       }
     }
   }

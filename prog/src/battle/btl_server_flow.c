@@ -11443,6 +11443,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
   const SVFL_WAZAPARAM* wazaParam, BOOL criticalFlag )
 {
   BppValueID vid = (WAZADATA_GetDamageType(wazaParam->wazaID) == WAZADATA_DMG_SPECIAL)? BPP_SP_DEFENCE : BPP_DEFENCE;
+  WazaDamageType dmgType = wazaParam->damageType;
   fx32 ratio = FX32_CONST(1);
   u16 guard;
   u8 forceFlatFlag;
@@ -11453,10 +11454,13 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_VID, vid );
     BTL_EVENTVAR_SetValue( BTL_EVAR_VID_SWAP_CNT, 0 );
     BTL_EVENTVAR_SetRewriteOnceValue( BTL_EVAR_GEN_FLAG, FALSE );
-
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DEFENDER_GUARD_PREV );
-    if( BTL_EVENTVAR_GetValue(BTL_EVAR_VID_SWAP_CNT) & 1 ){
+
+    // “ÁŽê—vˆö‚É‚æ‚Á‚Ä–hŒäE“Á–h‚ðƒXƒƒbƒv‚µ‚Ä•]‰¿‚·‚é
+    if( BTL_EVENTVAR_GetValue(BTL_EVAR_VID_SWAP_CNT) & 1 )
+    {
       vid = (vid == BPP_DEFENCE)? BPP_SP_DEFENCE : BPP_DEFENCE;
+      dmgType = (vid == BPP_DEFENCE)? WAZADATA_DMG_PHYSIC : WAZADATA_DMG_SPECIAL;
     }
     forceFlatFlag = BTL_EVENTVAR_GetValue( BTL_EVAR_GEN_FLAG );
   BTL_EVENTVAR_Pop();
@@ -11485,6 +11489,7 @@ static u16 scEvent_getDefenderGuard( BTL_SVFLOW_WORK* wk,
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_POKEID_DEF, BPP_GetID(defender) );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZAID, wazaParam->wazaID );
     BTL_EVENTVAR_SetConstValue( BTL_EVAR_WAZA_TYPE, wazaParam->wazaType );
+    BTL_EVENTVAR_SetConstValue( BTL_EVAR_DAMAGE_TYPE, dmgType );
     BTL_EVENTVAR_SetValue( BTL_EVAR_GUARD, guard );
     BTL_EVENTVAR_SetMulValue( BTL_EVAR_RATIO, ratio, FX32_CONST(0.1), FX32_CONST(32) );
     BTL_EVENT_CallHandlers( wk, BTL_EVENT_DEFENDER_GUARD );

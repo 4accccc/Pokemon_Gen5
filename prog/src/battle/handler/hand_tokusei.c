@@ -1722,8 +1722,7 @@ static void handler_FlowerGift_Guard( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WOR
       if( BTL_MAINUTIL_IsFriendPokeID(pokeID, atkPokeID) )
       {
         // とくぼう1.5倍
-        WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-        if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_SPECIAL )
+        if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_SPECIAL )
         {
           BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FLOWERGIFT_GUARDRATIO );
         }
@@ -1888,8 +1887,8 @@ static void handler_FusiginaUroko( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* 
     if( BPP_GetPokeSick(bpp) != POKESICK_NULL )
     {
       WazaID waza = BTL_EVENTVAR_GetValue( BTL_EVAR_WAZAID );
-      // ダメージタイプが特殊の時、防御上昇
-      if( WAZADATA_GetDamageType(waza) == WAZADATA_DMG_PHYSIC )
+      // ダメージタイプが物理の時、防御上昇
+      if( BTL_EVENTVAR_GetValue(BTL_EVAR_DAMAGE_TYPE) == WAZADATA_DMG_PHYSIC )
       {
         BTL_EVENTVAR_MulValue( BTL_EVAR_RATIO, BTL_CALC_TOK_FUSIGINAUROKO_GDRATIO );
       }
