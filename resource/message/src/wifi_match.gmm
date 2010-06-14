@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00160" date="2010-06-08T16:17:37"/>
+	<create user="shimoyamada" host="W00184" date="2010-06-14T19:18:50"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -305,7 +305,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-1035" top="219" right="-330" bottom="815" maximized="no" rayout="Vertical2">
+	<dialog left="241" top="505" right="946" bottom="1133" maximized="no" rayout="Vertical2">
 		<comment-input left="677" top="589" right="1024" bottom="739" visible="no"/>
 		<tag-palette left="551" top="42" right="1024" bottom="440" visible="yes"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -736,34 +736,34 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 現在　開催されていません[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_10">
+	<row id="WIFIMATCH_WIFI_STR_10" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
-うわがき　します[BE:01:ページ切り替え（クリア）]
+こうしん　します[BE:01:ページ切り替え（クリア）]
 デジタルせんしゅしょうを
 うわがきしても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加するため
-デジタル選手証を[BE:00:ページ切り替え（行送り）]
-上書き　します[BE:01:ページ切り替え（クリア）]
+デジタル選手証を　更新します[BE:01:ページ切り替え（クリア）]
 デジタル選手証を
 上書きしても　よろしいですか？</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_11">
+	<row id="WIFIMATCH_WIFI_STR_11" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">Ｗｉ－Ｆｉたいかいに　さんかするため
 デジタルせんしゅしょうを[BE:00:ページ切り替え（行送り）]
-うわがき　します[BE:01:ページ切り替え（クリア）]
-いぜんの　とうろくした
-ポケモンの　ロックは　かいじょ　されます[BE:01:ページ切り替え（クリア）]
+こうしん　します[BE:01:ページ切り替え（クリア）]
+ぜんかいの　たいかいで　おこなった
+バトルボックスの　とうろくは[BE:00:ページ切り替え（行送り）]
+かいじょ　されます[BE:01:ページ切り替え（クリア）]
 デジタルせんしゅしょうを
 うわがきしても　よろしいですか？</language>
 		<language name="JPN_KANJI" width="256">Ｗｉ－Ｆｉ大会に　参加するため
-デジタル選手証を[BE:00:ページ切り替え（行送り）]
-上書き　します[BE:01:ページ切り替え（クリア）]
-以前の　登録した
-ポケモンの　ロックは　解除されます[BE:01:ページ切り替え（クリア）]
+デジタル選手証を　更新します[BE:01:ページ切り替え（クリア）]
+前回の　大会で　おこなった
+バトルボックスの　登録は[BE:00:ページ切り替え（行送り）]
+解除されます[BE:01:ページ切り替え（クリア）]
 デジタル選手証を
 上書きしても　よろしいですか？</language>
 	</row>
@@ -932,9 +932,9 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_WIFI_STR_26" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>WIFI大会</comment>
-		<language name="JPN" width="256">バトルボックスの　ロックを
+		<language name="JPN" width="256">バトルボックスの　とうろくを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">バトルボックスの　ロックを
+		<language name="JPN_KANJI" width="256">バトルボックスの　登録を
 解除しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -988,18 +988,20 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 みつかりました！</language>
 	</row>
 
-	<row id="WIFIMATCH_WIFI_STR_33">
+	<row id="WIFIMATCH_WIFI_STR_33" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>WIFI大会</comment>
 		<language name="JPN" width="256">たいせんの　けっかを
 サーバーに　おくりました[BE:01:ページ切り替え（クリア）]
 せいせきが　はんえいされるまで
-１０～１５ふんほど[BE:00:ページ切り替え（行送り）]
-じかんが　かかります[BE:01:ページ切り替え（クリア）]</language>
+すこし　じかんが　かかります[BE:01:ページ切り替え（クリア）]
+たいせんを　つづけながら
+はんえいを　おまちください[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">対戦の　結果を
 サーバーに　送りました[BE:01:ページ切り替え（クリア）]
 成績が　反映されるまで
-１０～１５分ほど[BE:00:ページ切り替え（行送り）]
-時間が　かかります[BE:01:ページ切り替え（クリア）]</language>
+少し　時間が　かかります[BE:01:ページ切り替え（クリア）]
+対戦を　続けながら
+反映を　お待ちください[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
 	<row id="WIFIMATCH_WIFI_STR_34">
@@ -1111,18 +1113,18 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_DPC_STR_00">
 		<comment>選手証チェック</comment>
-		<language name="JPN" width="256">この　たいかいに　さんかして
-ポケモン　とうろく　ちゅう　です</language>
-		<language name="JPN_KANJI" width="256">この　大会に　参加して
-ポケモン　登録中です</language>
+		<language name="JPN" width="256">この　たいかいに　さんかちゅう　です
+ポケモンを　とうろく　してください</language>
+		<language name="JPN_KANJI" width="256">この　大会に　参加中です
+ポケモンを　登録してください</language>
 	</row>
 
 	<row id="WIFIMATCH_DPC_STR_01">
 		<comment>選手証チェック</comment>
-		<language name="JPN" width="256">この　たいかいに
-さんかちゅう　です</language>
-		<language name="JPN_KANJI" width="256">この　大会に
-参加中です</language>
+		<language name="JPN" width="256">この　たいかいに　さんかちゅう　です
+バトルボックスを　ロックしています</language>
+		<language name="JPN_KANJI" width="256">この　大会に　参加中です
+バトルボックスを　ロックしています</language>
 	</row>
 
 	<row id="WIFIMATCH_DPC_STR_02">
@@ -1153,9 +1155,9 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 
 	<row id="WIFIMATCH_DPC_STR_05" back-color=",,,,,#ff0000,,,,,,#ff0000,,,,,,">
 		<comment>選手証チェック</comment>
-		<language name="JPN" width="256">バトルボックスの　ロックを
+		<language name="JPN" width="256">バトルボックスの　とうろくを
 かいじょ　しました[BE:01:ページ切り替え（クリア）]</language>
-		<language name="JPN_KANJI" width="256">バトルボックスの　ロックを
+		<language name="JPN_KANJI" width="256">バトルボックスの　登録を
 解除しました[BE:01:ページ切り替え（クリア）]</language>
 	</row>
 
@@ -1175,9 +1177,9 @@ http://www.pokemon-gl.com/[BE:01:ページ切り替え（クリア）]</language
 参加を　解除しました</language>
 	</row>
 
-	<row id="WIFIMATCH_DPC_STR_08">
+	<row id="WIFIMATCH_DPC_STR_08" back-color=",,,,,#ffff80,,,,,,#ffff80,,,,,,">
 		<comment>選手証チェック</comment>
-		<language name="JPN" width="256">デジタル　せんしゅしょうの
+		<language name="JPN" width="256">デジタルせんしゅしょうの
 データが　ありません[BE:01:ページ切り替え（クリア）]</language>
 		<language name="JPN_KANJI" width="256">デジタル選手証の
 データが　ありません[BE:01:ページ切り替え（クリア）]</language>
