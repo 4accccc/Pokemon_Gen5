@@ -1545,3 +1545,47 @@ BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy, u8 *white_num, u8 *black_
   MISSION_LIST_Create(occupy);
   return TRUE;
 }
+
+//==============================================================================
+//  デバッグ
+//==============================================================================
+#ifdef PM_DEBUG
+//==================================================================
+/**
+ * デバッグ用：指定ミッションタイプにセット可能なミッションNoを取得する
+ *
+ * @param   mission_type		MISSION_TYPE_xxx
+ * @param   no		          検索開始番号(最初は0初期化した状態にしておく事)
+ *
+ * @retval  int		セット可能なミッション番号(-1の場合はデータ終端)
+ */
+//==================================================================
+int DEBUG_MISSION_TypeSearch(MISSION_TYPE mission_type, int *no)
+{
+  int ret;
+  
+  for( ; *no < NELEMS(MissionConvDataListParam); (*no)++){
+    if(MissionConvDataListParam[*no].type == mission_type){
+      ret = *no;
+      (*no)++;
+      return ret;
+    }
+  }
+  return -1;
+}
+
+//==================================================================
+/**
+ * デバッグ用：ミッションタイプを指定して直接ミッション番号をセット
+ *
+ * @param   occupy		      占拠情報へのポインタ
+ * @param   mission_type		MISSION_TYPE_xxx
+ * @param   no		          ミッション番号
+ */
+//==================================================================
+void DEBUG_MISSION_TypeNoSet(OCCUPY_INFO *occupy, MISSION_TYPE mission_type, int no)
+{
+  occupy->mlst.mission_no[mission_type] = no;
+}
+#endif  //PM_DEBUG
+

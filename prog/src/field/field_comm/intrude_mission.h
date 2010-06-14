@@ -67,3 +67,7 @@ extern void MISSION_LIST_Create(OCCUPY_INFO *occupy);
 extern void MISSION_LIST_Create_Type(OCCUPY_INFO *occupy, MISSION_TYPE mission_type);
 extern BOOL MISSION_LIST_Create_Complete(OCCUPY_INFO *occupy, u8 *white_num, u8 *black_num);
 
+#ifdef PM_DEBUG
+extern int DEBUG_MISSION_TypeSearch(MISSION_TYPE mission_type, int *no);
+extern void DEBUG_MISSION_TypeNoSet(OCCUPY_INFO *occupy, MISSION_TYPE mission_type, int no);
+#endif  //PM_DEBUG
