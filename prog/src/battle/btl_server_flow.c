@@ -2122,6 +2122,7 @@ static void wazaEffCtrl_Init( WAZAEFF_CTRL* ctrl )
   ctrl->targetPos = BTL_POS_NULL;
   ctrl->effectIndex = 0;
   ctrl->fEnable = FALSE;
+  ctrl->fDone = FALSE;
 }
 /**
  *  ワザエフェクト発動管理：基本パラメータ設定
@@ -2133,6 +2134,7 @@ static void wazaEffCtrl_Setup( WAZAEFF_CTRL* ctrl, BTL_SVFLOW_WORK* wk, const BT
   ctrl->attackerPos = BTL_POSPOKE_GetPokeExistPos( &wk->pospokeWork, BPP_GetID(attacker) );
   ctrl->targetPos = BTL_POS_NULL;
   ctrl->fEnable = FALSE;
+  ctrl->fDone = FALSE;
 
   // ターゲットが単体なら明確なターゲット位置情報を記録
   if( target_max == 1 )
@@ -2156,12 +2158,31 @@ static inline void wazaEffCtrl_SetEnable( WAZAEFF_CTRL* ctrl )
   }
 }
 /**
+ *  ワザエフェクト発動管理：有効で、既に発動したことを通知（複数回ヒット）
+ */
+static inline void wazaEffCtrl_SetEnablePluralCount( WAZAEFF_CTRL* ctrl )
+{
+  if( ctrl->fEnable == FALSE )
+  {
+    ctrl->fEnable = TRUE;
+    ctrl->fDone = TRUE;
+  }
+}
+/**
  *  ワザエフェクト発動管理：発動確定するかチェック
  */
 static inline BOOL wazaEffCtrl_IsEnable( const WAZAEFF_CTRL* ctrl )
 {
   return ctrl->fEnable;
 }
+/**
+ *  ワザエフェクト発動管理：既にエフェクトコマンド生成済みチェック
+ */
+static inline BOOL wazaEffCtrl_IsDone( const WAZAEFF_CTRL* ctrl )
+{
+  return ctrl->fDone;
+}
+
 static inline void wazaEffCtrl_SetEffectIndex( WAZAEFF_CTRL* ctrl, u8 index )
 {
   ctrl->effectIndex = index;
@@ -3595,7 +3616,6 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     BtlWazaForceEnableMode enableMode = scEvent_WazaExecuteStart( wk, attacker, waza, targetRec );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
     if( enableMode != BTL_WAZAENABLE_NONE )
     {
@@ -3709,7 +3729,11 @@ static BOOL scproc_Fight_WazaExe( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, 
     // ワザ効果あり→エフェクトコマンド生成などへ
     if( wazaEffCtrl_IsEnable(wk->wazaEffCtrl) )
     {
-      scPut_WazaEffect( wk, waza, wk->wazaEffCtrl, que_reserve_pos );
+      if( !wazaEffCtrl_IsDone(wk->wazaEffCtrl) )
+      {
+        scPut_WazaEffect( wk, waza, wk->wazaEffCtrl, que_reserve_pos );
+      }
+
       BTL_WAZAREC_SetEffectiveLast( &wk->wazaRec );
 
       // 反動で動けなくなる処理
@@ -5419,8 +5443,9 @@ static u32 scproc_Fight_Damage_PluralCount( BTL_SVFLOW_WORK* wk, const SVFL_WAZA
     pokeSick = BPP_GetPokeSick( attacker );
 
     // ワザエフェクトコマンド生成
+    wazaEffCtrl_SetEnablePluralCount( wk->wazaEffCtrl );
     SCQUE_PUT_ACT_WazaEffect( wk->que,
-        wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
+          wk->wazaEffCtrl->attackerPos, wk->wazaEffCtrl->targetPos, wazaParam->wazaID, 0 );
 
 
     BTL_CALCDAMAGE_Set( wk, attacker, targets, wazaParam, affRec, BTL_CALC_DMG_TARGET_RATIO_NONE, wk->calcDmgEnemy );
