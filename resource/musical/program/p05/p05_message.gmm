@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="iwao_kazumasa" host="W00203" date="2010-05-03T16:33:30"/>
+	<create user="iwao_kazumasa" host="W00203" date="2010-06-14T12:47:52"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -358,6 +358,55 @@
 （メッセージが　はいります　）</language>
 		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
 （メッセージが　入ります　）</language>
+	</row>
+
+	<row id="MSG_04">
+		<language name="JPN" width="256">（ストーリーや　かしの）
+（メッセージが　はいります　）</language>
+		<language name="JPN_KANJI" width="256">（ストーリーや　歌詞の）
+（メッセージが　入ります　）</language>
+	</row>
+
+	<row id="MSG_05">
+		<language name="JPN" width="256">（メッセージは　ことなる　ラベルで）
+（どういつの　ものを　みせています）</language>
+		<language name="JPN_KANJI" width="256">（メッセージは　異なる　ラベルで）
+（同一の　ものを　見せています）</language>
+	</row>
+
+	<row id="MSG_06">
+		<language name="JPN" width="256">（メッセージは　ことなる　ラベルで）
+（どういつの　ものを　みせています）</language>
+		<language name="JPN_KANJI" width="256">（メッセージは　異なる　ラベルで）
+（同一の　ものを　見せています）</language>
+	</row>
+
+	<row id="MSG_07">
+		<language name="JPN" width="256">（メッセージは　ことなる　ラベルで）
+（どういつの　ものを　みせています）</language>
+		<language name="JPN_KANJI" width="256">（メッセージは　異なる　ラベルで）
+（同一の　ものを　見せています）</language>
+	</row>
+
+	<row id="MSG_08">
+		<language name="JPN" width="256">（メッセージは　ことなる　ラベルで）
+（どういつの　ものを　みせています）</language>
+		<language name="JPN_KANJI" width="256">（メッセージは　異なる　ラベルで）
+（同一の　ものを　見せています）</language>
+	</row>
+
+	<row id="MSG_09">
+		<language name="JPN" width="256">（メッセージは　ことなる　ラベルで）
+（どういつの　ものを　みせています）</language>
+		<language name="JPN_KANJI" width="256">（メッセージは　異なる　ラベルで）
+（同一の　ものを　見せています）</language>
+	</row>
+
+	<row id="MSG_10">
+		<language name="JPN" width="256">（メッセージは　ことなる　ラベルで）
+（どういつの　ものを　みせています）</language>
+		<language name="JPN_KANJI" width="256">（メッセージは　異なる　ラベルで）
+（同一の　ものを　見せています）</language>
 	</row>
 
 	<flowchart-group-list>
