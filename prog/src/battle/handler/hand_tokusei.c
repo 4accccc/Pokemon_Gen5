@@ -297,6 +297,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Moraibi( u32* numElems );
 static void handler_Nightmare( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nightmare( u32* numElems );
 static void handler_Nigeasi( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Nigeasi_Msg( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Nigeasi( u32* numElems );
 static void handler_Katayaburi_MemberIn( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static BOOL handler_Katayaburi_SkipCheck( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, BtlEventFactorType factorType, BtlEventType eventType, u16 subID, u8 pokeID );
@@ -317,8 +318,9 @@ static void handler_Yobimizu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowW
 static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems );
 static void handler_Hiraisin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
+static void handler_Hiraisin_WazaExeStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
-static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType wazaType );
+static BOOL common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType wazaType );
 static void handler_Kyuuban( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Kyuuban( u32* numElems );
 static void handler_HedoroEki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work );
@@ -4895,8 +4897,9 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Tenkiya( u32* numElems )
 static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
-    { BTL_EVENT_TEMPT_TARGET,          handler_Yobimizu               }, // ワザターゲット決定ハンドラ
-    { BTL_EVENT_NOEFFECT_CHECK_L3,     handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
+    { BTL_EVENT_TEMPT_TARGET,         handler_Yobimizu               }, // ワザターゲット決定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,       handler_Hiraisin_WazaExeStart  }, // ワザ実行開始ハンドラ
+    { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Yobimizu_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
   return HandlerTable;
@@ -4904,7 +4907,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Yobimizu( u32* numElems )
 // ワザターゲット引き寄せハンドラ
 static void handler_Yobimizu( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WazaTargetChangeToMe( flowWk, pokeID, work, POKETYPE_MIZU );
+  work[0] = common_WazaTargetChangeToMe( flowWk, pokeID, work, POKETYPE_MIZU );
 }
 // 無効化チェックハンドラ
 static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
@@ -4915,7 +4918,6 @@ static void handler_Yobimizu_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
   }
 }
 
-
 //------------------------------------------------------------------------------
 /**
  *  とくせい「ひらいしん」
@@ -4925,6 +4927,7 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 {
   static const BtlEventHandlerTable HandlerTable[] = {
     { BTL_EVENT_TEMPT_TARGET,         handler_Hiraisin               }, // ワザターゲット決定ハンドラ
+    { BTL_EVENT_WAZA_EXE_START,       handler_Hiraisin_WazaExeStart  }, // ワザ実行開始ハンドラ
     { BTL_EVENT_NOEFFECT_CHECK_L3,    handler_Hiraisin_CheckNoEffect }, // 無効化チェックハンドラ
   };
   *numElems = NELEMS(HandlerTable);
@@ -4934,22 +4937,29 @@ static  const BtlEventHandlerTable*  HAND_TOK_ADD_Hiraisin( u32* numElems )
 // ワザターゲット決定ハンドラ
 static void handler_Hiraisin( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  common_WazaTargetChangeToMe( flowWk, pokeID, work, POKETYPE_DENKI );
+  work[0] = common_WazaTargetChangeToMe( flowWk, pokeID, work, POKETYPE_DENKI );
 }
-// 無効化チェックハンドラ
-static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+// ワザ実行開始ハンドラ
+static void handler_Hiraisin_WazaExeStart( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
 {
-  if( common_TypeNoEffect(flowWk, pokeID, POKETYPE_DENKI) )
+  if( work[0] )
   {
-    if( work[0] )
+    if( HandCommon_CheckTargetPokeID(pokeID) )
     {
       BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
         param->header.tokwin_flag = TRUE;
         HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_WazaRecv );
         HANDEX_STR_AddArg( &param->str, pokeID );
       BTL_SVF_HANDEX_Pop( flowWk, param );
-      work[0] = 0;
     }
+    work[0] = 0;
+  }
+}
+// 無効化チェックハンドラ
+static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work )
+{
+  if( common_TypeNoEffect(flowWk, pokeID, POKETYPE_DENKI) )
+  {
     common_TypeNoEffect_Rankup( flowWk, pokeID, BPP_SP_ATTACK_RANK, 1 );
   }
 }
@@ -4964,7 +4974,7 @@ static void handler_Hiraisin_CheckNoEffect( BTL_EVENT_FACTOR* myHandle, BTL_SVFL
  *
  */
 //--------------------------------------------------------------------------
-static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType wazaType )
+static BOOL common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int* work, PokeType wazaType )
 {
   u8 atkPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_ATK );
 
@@ -4977,11 +4987,12 @@ static void common_WazaTargetChangeToMe( BTL_SVFLOW_WORK* flowWk, u8 pokeID, int
       {
         if( BTL_EVENTVAR_RewriteValue(BTL_EVAR_POKEID_DEF, pokeID) )
         {
-          work[0] = 1;
+          return TRUE;
         }
       }
     }
   }
+  return FALSE;
 }
 //------------------------------------------------------------------------------
 /**

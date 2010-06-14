@@ -1601,9 +1601,9 @@ void BTLV_ACT_MigawariDamageEffect_Start( BTLV_CORE* wk, WazaID wazaID, BtlPokeP
     subwk->defPokePos = migawariPos;
     subwk->timer = 0;
     subwk->wazaID = wazaID;
-  }
 
-  BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMigawariDamageEffect );
+    BTL_UTIL_SetupProc( &wk->subProc, wk, NULL, subprocMigawariDamageEffect );
+  }
 }
 //=============================================================================================
 /**
