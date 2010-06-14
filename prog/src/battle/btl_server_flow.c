@@ -11003,6 +11003,8 @@ static BtlTypeAff scProc_checkWazaDamageAffinity( BTL_SVFLOW_WORK* wk,
         if( !fFloating ){
           return affinity;
         }
+        // ‚Ó‚ä‚¤ó‘Ô‚È‚ç‘Š«–³Œø
+        affinity = BTL_TYPEAFF_0;
       }
     }
     // ‘Š«–³Œø
