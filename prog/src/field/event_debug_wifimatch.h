@@ -22,7 +22,6 @@ FS_EXTERN_OVERLAY(event_debug_wifimatch);
 //=====================================
 typedef struct {
   FIELDMAP_WORK* fieldmap;
-  DEBUG_WIFIBATTLEMATCH_MODE mode;
 } EV_DEBUG_WIFIMATCH;
 
 

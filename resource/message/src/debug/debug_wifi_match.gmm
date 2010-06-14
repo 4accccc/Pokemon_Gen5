@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="toru_nagihashi" host="W00170" date="2010-06-13T19:33:59"/>
+	<create user="toru_nagihashi" host="W00170" date="2010-06-14T19:30:28"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -294,7 +294,7 @@
 		</language>
 	</columns>
 
-	<dialog left="-747" top="71" right="-42" bottom="691" maximized="no" rayout="Vertical2">
+	<dialog left="-953" top="107" right="-248" bottom="735" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="736" top="133" right="1209" bottom="531" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
@@ -371,15 +371,15 @@
 	</row>
 
 	<row id="SAKE_DATA_12">
-		<language name="JPN" width="256">ねん</language>
+		<language name="JPN" width="256">年</language>
 	</row>
 
 	<row id="SAKE_DATA_13">
-		<language name="JPN" width="256">つき</language>
+		<language name="JPN" width="256">月</language>
 	</row>
 
 	<row id="SAKE_DATA_14">
-		<language name="JPN" width="256">ひ</language>
+		<language name="JPN" width="256">日</language>
 	</row>
 
 	<row id="SAKE_DATA_15">
@@ -395,7 +395,7 @@
 	</row>
 
 	<row id="SAKE_DATA_18">
-		<language name="JPN" width="256">プレイヤーID</language>
+		<language name="JPN" width="256">トレーナーID</language>
 	</row>
 
 	<row id="SAKE_DATA_19">
@@ -427,7 +427,7 @@
 	</row>
 
 	<row id="SAKE_DATA_26">
-		<language name="JPN" width="256">たいせんりれき</language>
+		<language name="JPN" width="256">たいせんりれきのじょうほう（しようポケモン）</language>
 	</row>
 
 	<row id="SAKE_DATA_27">
@@ -435,11 +435,11 @@
 	</row>
 
 	<row id="SAKE_DATA_28">
-		<language name="JPN" width="256">GSID</language>
+		<language name="JPN" width="256">ゲームシンクID</language>
 	</row>
 
 	<row id="SAKE_DATA_29">
-		<language name="JPN" width="256">PID</language>
+		<language name="JPN" width="256">プロファイルID</language>
 	</row>
 
 	<row id="SAKE_DATA_30">
@@ -447,11 +447,11 @@
 	</row>
 
 	<row id="SAKE_DATA_31">
-		<language name="JPN" width="256">フォルム</language>
+		<language name="JPN" width="256">FORM</language>
 	</row>
 
 	<row id="SAKE_DATA_32">
-		<language name="JPN" width="256">レベル</language>
+		<language name="JPN" width="256">LV</language>
 	</row>
 
 	<row id="SAKE_DATA_33">
@@ -467,15 +467,15 @@
 	</row>
 
 	<row id="SAKE_DATA_36">
-		<language name="JPN" width="256">たいせんび</language>
+		<language name="JPN" width="256">たいせんじかん</language>
 	</row>
 
 	<row id="SAKE_DATA_37">
-		<language name="JPN" width="256">じ</language>
+		<language name="JPN" width="256">時</language>
 	</row>
 
 	<row id="SAKE_DATA_38">
-		<language name="JPN" width="256">ふん</language>
+		<language name="JPN" width="256">分</language>
 	</row>
 
 	<row id="SAKE_DATA_39">
@@ -500,6 +500,276 @@
 
 	<row id="SAKE_DATA_44">
 		<language name="JPN" width="256">つぎのレコードいち</language>
+	</row>
+
+	<row id="SAKE_DATA_45">
+		<language name="JPN" width="256">ランダムマッチのじょうほう</language>
+	</row>
+
+	<row id="SAKE_DATA_46">
+		<language name="JPN" width="256">WIFIたいかいのじょうほう</language>
+	</row>
+
+	<row id="SAKE_DATA_47">
+		<language name="JPN" width="256">ローテーション</language>
+	</row>
+
+	<row id="SAKE_DATA_48">
+		<language name="JPN" width="256">とうろくポケモン</language>
+	</row>
+
+	<row id="SAKE_DATA_49">
+		<language name="JPN" width="256">秒</language>
+	</row>
+
+	<row id="CASETTE_00">
+		<language name="JPN" width="256">ブラック</language>
+	</row>
+
+	<row id="CASETTE_01">
+		<language name="JPN" width="256">ホワイト</language>
+	</row>
+
+	<row id="CASETTE_02">
+		<language name="JPN" width="256">Ｈゴールド</language>
+	</row>
+
+	<row id="CASETTE_03">
+		<language name="JPN" width="256">Ｓシルバー</language>
+	</row>
+
+	<row id="CASETTE_04">
+		<language name="JPN" width="256">ダイヤ</language>
+	</row>
+
+	<row id="CASETTE_05">
+		<language name="JPN" width="256">パール</language>
+	</row>
+
+	<row id="CASETTE_06">
+		<language name="JPN" width="256">プラチナ</language>
+	</row>
+
+	<row id="CASETTE_07">
+		<language name="JPN" width="256">ルビー</language>
+	</row>
+
+	<row id="CASETTE_08">
+		<language name="JPN" width="256">サファイア</language>
+	</row>
+
+	<row id="CASETTE_09">
+		<language name="JPN" width="256">エメラルド</language>
+	</row>
+
+	<row id="CASETTE_10">
+		<language name="JPN" width="256">Ｆレッド</language>
+	</row>
+
+	<row id="CASETTE_11">
+		<language name="JPN" width="256">Ｒグリーン</language>
+	</row>
+
+	<row id="CASETTE_12">
+		<language name="JPN" width="256">コロシアム</language>
+	</row>
+
+	<row id="LANGCODE_00">
+		<language name="JPN" width="256">にほん</language>
+	</row>
+
+	<row id="LANGCODE_01">
+		<language name="JPN" width="256">アメリカ</language>
+	</row>
+
+	<row id="LANGCODE_02">
+		<language name="JPN" width="256">フランス</language>
+	</row>
+
+	<row id="LANGCODE_03">
+		<language name="JPN" width="256">イタリア</language>
+	</row>
+
+	<row id="LANGCODE_04">
+		<language name="JPN" width="256">ドイツ</language>
+	</row>
+
+	<row id="LANGCODE_05">
+		<language name="JPN" width="256">スペイン</language>
+	</row>
+
+	<row id="VIEW_00">
+		<language name="JPN" width="256">たんパンこぞう♂</language>
+	</row>
+
+	<row id="VIEW_01">
+		<language name="JPN" width="256">エリートトレーナー♂</language>
+	</row>
+
+	<row id="VIEW_02">
+		<language name="JPN" width="256">ポケモンレンジャー♂</language>
+	</row>
+
+	<row id="VIEW_03">
+		<language name="JPN" width="256">ポケモンブリーダー♂</language>
+	</row>
+
+	<row id="VIEW_04">
+		<language name="JPN" width="256">けんきゅういん♂</language>
+	</row>
+
+	<row id="VIEW_05">
+		<language name="JPN" width="256">やまおとこ♂</language>
+	</row>
+
+	<row id="VIEW_06">
+		<language name="JPN" width="256">スキンヘッズ♂</language>
+	</row>
+
+	<row id="VIEW_07">
+		<language name="JPN" width="256">えんじ♂</language>
+	</row>
+
+	<row id="VIEW_08">
+		<language name="JPN" width="256">ミニスカート♀</language>
+	</row>
+
+	<row id="VIEW_09">
+		<language name="JPN" width="256">エリートトレーナー♀</language>
+	</row>
+
+	<row id="VIEW_10">
+		<language name="JPN" width="256">ポケモンレンジャー♀</language>
+	</row>
+
+	<row id="VIEW_11">
+		<language name="JPN" width="256">ポケモンブリーダー♀</language>
+	</row>
+
+	<row id="VIEW_12">
+		<language name="JPN" width="256">けんきゅういん♀</language>
+	</row>
+
+	<row id="VIEW_13">
+		<language name="JPN" width="256">パラソルおねえさん♀</language>
+	</row>
+
+	<row id="VIEW_14">
+		<language name="JPN" width="256">ナース♀</language>
+	</row>
+
+	<row id="VIEW_15">
+		<language name="JPN" width="256">えんじ♀</language>
+	</row>
+
+	<row id="SEX_00">
+		<language name="JPN" width="256">♂</language>
+	</row>
+
+	<row id="SEX_01">
+		<language name="JPN" width="256">♀</language>
+	</row>
+
+	<row id="SEX_02">
+		<language name="JPN" width="256">×</language>
+	</row>
+
+	<row id="SAKE_DATA_50">
+		<language name="JPN" width="256">りれきばんごう</language>
+	</row>
+
+	<row id="SAKE_DATA_51">
+		<language name="JPN" width="256">つぎのかきこみ</language>
+	</row>
+
+	<row id="SAKE_DATA_52">
+		<language name="JPN" width="256">←</language>
+	</row>
+
+	<row id="SAKE_DATA_53">
+		<language name="JPN" width="256">→</language>
+	</row>
+
+	<row id="SAKE_DATA_54">
+		<language name="JPN" width="256">たいせんりれきのじょうほう（たいせんけっか）</language>
+	</row>
+
+	<row id="SAKE_DATA_55">
+		<language name="JPN" width="256">たいせんじょうほう</language>
+	</row>
+
+	<row id="BTLTYPE_00">
+		<language name="JPN" width="256">シングル</language>
+	</row>
+
+	<row id="BTLTYPE_01">
+		<language name="JPN" width="256">ダブル</language>
+	</row>
+
+	<row id="BTLTYPE_02">
+		<language name="JPN" width="256">トリプル</language>
+	</row>
+
+	<row id="BTLTYPE_03">
+		<language name="JPN" width="256">ローテーション</language>
+	</row>
+
+	<row id="BTLTYPE_04">
+		<language name="JPN" width="256">マルチ</language>
+	</row>
+
+	<row id="BTLTYPE_05">
+		<language name="JPN" width="256">シューター</language>
+	</row>
+
+	<row id="BTLRESULT_00">
+		<language name="JPN" width="256">まけ</language>
+	</row>
+
+	<row id="BTLRESULT_01">
+		<language name="JPN" width="256">かち</language>
+	</row>
+
+	<row id="BTLRESULT_02">
+		<language name="JPN" width="256">ひきわけ</language>
+	</row>
+
+	<row id="BTLRESULT_03">
+		<language name="JPN" width="256">じぶんがにげた</language>
+	</row>
+
+	<row id="BTLRESULT_04">
+		<language name="JPN" width="256">あいてがにげた</language>
+	</row>
+
+	<row id="BTLRESULT_05">
+		<language name="JPN" width="256">つかまえた</language>
+	</row>
+
+	<row id="BTLRESULT_06">
+		<language name="JPN" width="256">つうしんエラー</language>
+	</row>
+
+	<row id="D_WITIMATCH_MSG_00">
+		<language name="JPN" width="256">つうしんたいきちゅうです……</language>
+	</row>
+
+	<row id="D_WITIMATCH_MSG_01">
+		<language name="JPN" width="256">そうしんちゅうです……</language>
+	</row>
+
+	<row id="D_WITIMATCH_MSG_02">
+		<language name="JPN" width="256">じゅしんちゅうです……</language>
+	</row>
+
+	<row id="D_WITIMATCH_MSG_03">
+		<language name="JPN" width="256">X…じゅしん　Y…そうしん
+B…しゅうりょう</language>
+	</row>
+
+	<row id="D_WITIMATCH_MSG_04">
+		<language name="JPN" width="256">エラーがはっせいしました
+でんげんをせつだんしてください</language>
 	</row>
 
 	<flowchart-group-list>

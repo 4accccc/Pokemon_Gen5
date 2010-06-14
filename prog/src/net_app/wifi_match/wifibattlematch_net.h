@@ -76,7 +76,8 @@ typedef enum
 //=====================================
 enum
 {
-  WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_CANCEL = 20,
+  WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_START = 20,
+  WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_CANCEL,
   WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_OK,
   WIFIBATTLEMATCH_NET_TIMINGSYNC_MATHING_SAKE,
 } ;
@@ -173,7 +174,6 @@ typedef struct
   u32                         save_idx;
 } WIFIBATTLEMATCH_GDB_RND_RECORD_DATA;
 
-
 //-------------------------------------
 ///	SAKEからのデータ受け取り
 //=====================================
@@ -188,6 +188,19 @@ typedef struct
   s32 record_save_idx;
   u8  pokeparty[ WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE ];
 } WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA;
+
+//-------------------------------------
+///	SAKEのすべての情報
+//=====================================
+typedef struct 
+{
+  WIFIBATTLEMATCH_GDB_RND_SCORE_DATA  rnd;    //ランダムマッチ用の情報
+  WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA wifi;   //WIFI大会用の情報
+  WBM_NET_DATETIME                    datetime; //ログイン日時
+  u8                                  mystatus[MYSTATUS_SAVE_SIZE]; //MYSTATUS
+  WIFIBATTLEMATCH_RECORD_DATA         record_data[6]; //履歴データ
+  u8                                  record_save_idx;       //履歴データインデックス
+} WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA;
 
 //-------------------------------------
 ///	プレイヤーデータ
@@ -342,7 +355,7 @@ typedef enum
   WIFIBATTLEMATCH_GDB_GET_PARTY,
   WIFIBATTLEMATCH_GDB_GET_LOGIN_DATE, //DATETIMEの受け取りバッファを設定してください
 
-  WIFIBATTLEMATCH_GDB_GET_DEBUGALL  = WIFIBATTLEMATCH_GDB_GET_RND_SCORE,
+  WIFIBATTLEMATCH_GDB_GET_DEBUGALL,
 }WIFIBATTLEMATCH_GDB_GETTYPE;
 
 //終了コード
@@ -365,7 +378,6 @@ extern WIFIBATTLEMATCH_GDB_RESULT WIFIBATTLEMATCH_GDB_Process( WIFIBATTLEMATCH_N
 typedef enum
 { 
   WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY,  //ポケモンのバッファは外側のものを使います + score初期化
-//  WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE,
   WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE, //データは、いりません（内部でログイン時間をバッファに貯めます）
   WIFIBATTLEMATCH_GDB_WRITE_MYINFO, //データは、いりません＋LOGIN_DATEも設定します
 

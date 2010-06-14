@@ -206,7 +206,7 @@ typedef enum
 
 #define RECV_BUFFER_SIZE  (0x1000)
 
-#define WBM_GDB_FIELD_TABLE_MAX (30)
+#define WBM_GDB_FIELD_TABLE_MAX (35)
 
 //-------------------------------------
 ///	マッチメイク
@@ -461,6 +461,7 @@ static void DwcRap_Gdb_Wifi_GetRecordsCallback(int record_num, DWCGdbField** rec
 static void DwcRap_Gdb_RecordID_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
 static void DwcRap_Gdb_PokeParty_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
 static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
+static void DwcRap_Gdb_SakeAll_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param);
 static void DwcRap_Gdb_Finalize( WIFIBATTLEMATCH_NET_WORK *p_wk );
 static void DwcRap_Gdb_SetMyInfo( WIFIBATTLEMATCH_NET_WORK *p_wk );
 
@@ -508,31 +509,6 @@ static BOOL UTIL_IsClear( void *p_adrs, u32 size );
 */
 //=============================================================================
 //-------------------------------------
-///	フィールドの型
-//=====================================
-static const int sc_field_type[]  =
-{ 
-  DWC_GDB_FIELD_TYPE_INT,//"ARENA_ELO_RATING_1V1_DOUBLE",
-  DWC_GDB_FIELD_TYPE_INT,//"ARENA_ELO_RATING_1V1_ROTATE",
-  DWC_GDB_FIELD_TYPE_INT,//"ARENA_ELO_RATING_1V1_SHOOTER",
-  DWC_GDB_FIELD_TYPE_INT,//"ARENA_ELO_RATING_1V1_SINGLE",
-  DWC_GDB_FIELD_TYPE_INT,//"ARENA_ELO_RATING_1V1_TRIPLE",
-  DWC_GDB_FIELD_TYPE_INT,//"ARENA_ELO_RATING_1V1_WIFICUP",
-  DWC_GDB_FIELD_TYPE_INT,//"CHEATS_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"COMPLETE_MATCHES_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"DISCONNECTS_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_DOUBLE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_DOUBLE_WIN_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_ROTATE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_ROTATE_WIN_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_SHOOTER_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_SHOOTER_WIN_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_SINGLE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_SINGLE_WIN_COUNTER"  ,
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_TRIPLE_LOSE_COUNTER",
-  DWC_GDB_FIELD_TYPE_INT,//"NUM_TRIPLE_WIN_COUNTER",
-};
-//-------------------------------------
 ///	マッチメイクキー文字列
 //    3文字固定
 //=====================================
@@ -569,7 +545,45 @@ static const NetRecvFuncTable sc_net_recv_tbl[] =
   {WifiBattleMatch_RecvFlag, NULL },
 };
 
-
+//-------------------------------------
+///	サケ全情報
+//=====================================
+static const char *sc_get_debugall_tbl[]  =
+{ 
+  "ARENA_ELO_RATING_1V1_DOUBLE",
+  "ARENA_ELO_RATING_1V1_ROTATE",
+  "ARENA_ELO_RATING_1V1_SHOOTER",
+  "ARENA_ELO_RATING_1V1_SINGLE",
+  "ARENA_ELO_RATING_1V1_TRIPLE",
+  "CHEATS_COUNTER",
+  "COMPLETE_MATCHES_COUNTER",
+  "DISCONNECTS_COUNTER",
+  "NUM_DOUBLE_LOSE_COUNTER",
+  "NUM_DOUBLE_WIN_COUNTER",
+  "NUM_ROTATE_LOSE_COUNTER",
+  "NUM_ROTATE_WIN_COUNTER",
+  "NUM_SHOOTER_LOSE_COUNTER",
+  "NUM_SHOOTER_WIN_COUNTER",
+  "NUM_SINGLE_LOSE_COUNTER",
+  "NUM_SINGLE_WIN_COUNTER",
+  "NUM_TRIPLE_LOSE_COUNTER",
+  "NUM_TRIPLE_WIN_COUNTER",
+  "ARENA_ELO_RATING_1V1_WIFICUP",
+  "CHEATS_WIFICUP_COUNTER",
+  "DISCONNECTS_WIFICUP_COUNTER",
+  "NUM_WIFICUP_LOSE_COUNTER",
+  "NUM_WIFICUP_WIN_COUNTER",
+  "WIFICUP_POKEMON_PARTY",
+  "LAST_LOGIN_DATETIME",
+  "MYSTATUS",
+  "RECORD_DATA_01",
+  "RECORD_DATA_02",
+  "RECORD_DATA_03",
+  "RECORD_DATA_04",
+  "RECORD_DATA_05",
+  "RECORD_DATA_06",
+  "RECORD_SAVE_IDX",
+};
 //=============================================================================
 /**
  *					初期化・破棄
@@ -3108,6 +3122,15 @@ void WIFIBATTLEMATCH_GDB_Start( WIFIBATTLEMATCH_NET_WORK *p_wk, int recordID, WI
       p_wk->gdb_get_record_callback = DwcRap_Gdb_LoginDate_GetRecordsCallback;
     }
     break;
+#ifdef PM_DEBUG
+  case WIFIBATTLEMATCH_GDB_GET_DEBUGALL:
+    {
+      p_wk->pp_table_name  = sc_get_debugall_tbl;
+      p_wk->table_name_num= NELEMS( sc_get_debugall_tbl );
+      p_wk->gdb_get_record_callback = DwcRap_Gdb_SakeAll_GetRecordsCallback;
+    }
+    break;
+#endif //PM_DEBUG
   }
 }
 
@@ -3636,6 +3659,69 @@ static void DwcRap_Gdb_LoginDate_GetRecordsCallback(int record_num, DWCGdbField*
     }
 }
 
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  サケの全データ取得コールバック
+ *
+ *	@param	record_num
+ *	@param	records
+ *	@param	user_param
+ */
+//-----------------------------------------------------------------------------
+static void DwcRap_Gdb_SakeAll_GetRecordsCallback(int record_num, DWCGdbField** records, void* user_param)
+{
+    int i,j;
+    WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *p_data = user_param;
+    GFL_STD_MemClear( p_data, sizeof(WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA) );
+
+    DwcRap_Gdb_LoginDate_GetRecordsCallback( record_num, records, &p_data->datetime );
+    DwcRap_Gdb_Wifi_GetRecordsCallback( record_num, records, &p_data->wifi );
+    DwcRap_Gdb_Rnd_GetRecordsCallback( record_num, records, &p_data->rnd );
+
+    //大会履歴取得
+    for (i = 0; i < record_num; i++)
+    {
+      DEBUG_NET_Printf("!!!=====gdb_Print:======\n" );
+      for (j = 0; j < 1; j++)   // user_param -> field_num
+      {
+        DWCGdbField* field  = &records[i][j];
+
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_01 ) )
+        { 
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[0], field->value.binary_data.size );
+        }
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_02 ) )
+        { 
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[1], field->value.binary_data.size );
+        }
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_03 ) )
+        { 
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[2], field->value.binary_data.size );
+        }
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_04 ) )
+        { 
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[3], field->value.binary_data.size );
+        }
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_05 ) )
+        { 
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[4], field->value.binary_data.size );
+        }
+        if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_DATA_06 ) )
+        { 
+          GFL_STD_MemCopy( field->value.binary_data.data, &p_data->record_data[5], field->value.binary_data.size );
+        }
+        else if( !GFL_STD_StrCmp( field->name, SAKE_STAT_RECORD_SAVE_IDX ) )
+        { 
+          p_data->record_save_idx  = field->value.int_s32;
+        }
+        print_field( field );
+        DEBUG_NET_Printf(" ");
+      }
+      DEBUG_NET_Printf("!!!====================\n");
+    }
+}
+
 #ifdef PM_DEBUG
 static void print_field(DWCGdbField* field) // レコードをデバッグ出力する。
 {
@@ -3690,20 +3776,158 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
 
   switch( type )
   { 
+#ifdef PM_DEBUG
   case WIFIBATTLEMATCH_GDB_WRITE_DEBUGALL:
     { 
       int i;
-      const WIFIBATTLEMATCH_GDB_RND_SCORE_DATA *cp_data  = cp_wk_adrs;
+      const WIFIBATTLEMATCH_GDB_SAKE_ALL_DATA *cp_data  = cp_wk_adrs;
+      p_wk->table_name_num  = NELEMS(sc_get_debugall_tbl);
 
-      p_wk->table_name_num  = ATLAS_RND_GetFieldNameNum();
-      for( i = 0; i < p_wk->table_name_num; i++ )
-      { 
-        p_wk->p_field_buff[i].name  = (char*)ATLAS_RND_GetFieldName()[i];
-        p_wk->p_field_buff[i].type  = sc_field_type[i];
-        p_wk->p_field_buff[i].value.int_s32 = cp_data->arry[i];
-      }
+      //ダブルレート
+      p_wk->p_field_buff[0].name          = (char*)sc_get_debugall_tbl[0];
+      p_wk->p_field_buff[0].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[0].value.int_s32 = cp_data->rnd.double_rate;
+      //ローテーションレート
+      p_wk->p_field_buff[1].name          = (char*)sc_get_debugall_tbl[1];
+      p_wk->p_field_buff[1].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[1].value.int_s32 = cp_data->rnd.rot_rate;
+      //シューターレート
+      p_wk->p_field_buff[2].name          = (char*)sc_get_debugall_tbl[2];
+      p_wk->p_field_buff[2].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[2].value.int_s32 = cp_data->rnd.shooter_rate;
+      //シングルレート
+      p_wk->p_field_buff[3].name          = (char*)sc_get_debugall_tbl[3];
+      p_wk->p_field_buff[3].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[3].value.int_s32 = cp_data->rnd.single_rate;
+      //トリプルレート
+      p_wk->p_field_buff[4].name          = (char*)sc_get_debugall_tbl[4];
+      p_wk->p_field_buff[4].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[4].value.int_s32 = cp_data->rnd.triple_rate;
+      //チート
+      p_wk->p_field_buff[5].name          = (char*)sc_get_debugall_tbl[5];
+      p_wk->p_field_buff[5].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[5].value.int_s32 = cp_data->rnd.cheat;
+      //マッチ
+      p_wk->p_field_buff[6].name          = (char*)sc_get_debugall_tbl[6];
+      p_wk->p_field_buff[6].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[6].value.int_s32 = cp_data->rnd.complete;
+      //切断
+      p_wk->p_field_buff[7].name          = (char*)sc_get_debugall_tbl[7];
+      p_wk->p_field_buff[7].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[7].value.int_s32 = cp_data->rnd.disconnect;
+      //ダブル負け
+      p_wk->p_field_buff[8].name          = (char*)sc_get_debugall_tbl[8];
+      p_wk->p_field_buff[8].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[8].value.int_s32 = cp_data->rnd.double_lose;
+      //ダブル勝ち
+      p_wk->p_field_buff[9].name          = (char*)sc_get_debugall_tbl[9];
+      p_wk->p_field_buff[9].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[9].value.int_s32 = cp_data->rnd.double_win;
+      //ロット負け
+      p_wk->p_field_buff[10].name          = (char*)sc_get_debugall_tbl[10];
+      p_wk->p_field_buff[10].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[10].value.int_s32 = cp_data->rnd.rot_lose;
+      //ロット勝ち
+      p_wk->p_field_buff[11].name          = (char*)sc_get_debugall_tbl[11];
+      p_wk->p_field_buff[11].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[11].value.int_s32 = cp_data->rnd.rot_win;
+      //シューター負け
+      p_wk->p_field_buff[12].name          = (char*)sc_get_debugall_tbl[12];
+      p_wk->p_field_buff[12].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[12].value.int_s32 = cp_data->rnd.shooter_lose;
+      //シューター勝ち
+      p_wk->p_field_buff[13].name          = (char*)sc_get_debugall_tbl[13];
+      p_wk->p_field_buff[13].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[13].value.int_s32 = cp_data->rnd.shooter_win;
+      //シングル負け
+      p_wk->p_field_buff[14].name          = (char*)sc_get_debugall_tbl[14];
+      p_wk->p_field_buff[14].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[14].value.int_s32 = cp_data->rnd.single_lose;
+      //シングル勝ち
+      p_wk->p_field_buff[15].name          = (char*)sc_get_debugall_tbl[15];
+      p_wk->p_field_buff[15].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[15].value.int_s32 = cp_data->rnd.single_win;
+      //トリプル負け
+      p_wk->p_field_buff[16].name          = (char*)sc_get_debugall_tbl[16];
+      p_wk->p_field_buff[16].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[16].value.int_s32 = cp_data->rnd.triple_lose;
+      //とるぷる勝ち
+      p_wk->p_field_buff[17].name          = (char*)sc_get_debugall_tbl[17];
+      p_wk->p_field_buff[17].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[17].value.int_s32 = cp_data->rnd.triple_win;
+      //WIFIレート
+      p_wk->p_field_buff[18].name          = (char*)sc_get_debugall_tbl[18];
+      p_wk->p_field_buff[18].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[18].value.int_s32 = cp_data->wifi.rate;
+      //WIFIチート
+      p_wk->p_field_buff[19].name          = (char*)sc_get_debugall_tbl[19];
+      p_wk->p_field_buff[19].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[19].value.int_s32 = cp_data->wifi.cheat;
+      //WIFI切断
+      p_wk->p_field_buff[20].name          = (char*)sc_get_debugall_tbl[20];
+      p_wk->p_field_buff[20].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[20].value.int_s32 = cp_data->wifi.disconnect;
+      //WIFIまけ
+      p_wk->p_field_buff[21].name          = (char*)sc_get_debugall_tbl[21];
+      p_wk->p_field_buff[21].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[21].value.int_s32 = cp_data->wifi.lose;
+      //WIFIかち
+      p_wk->p_field_buff[22].name          = (char*)sc_get_debugall_tbl[22];
+      p_wk->p_field_buff[22].type          = DWC_GDB_FIELD_TYPE_INT;
+      p_wk->p_field_buff[22].value.int_s32 = cp_data->wifi.win;
+      //パーティ
+      p_wk->p_field_buff[23].name          = (char*)sc_get_debugall_tbl[23];
+      p_wk->p_field_buff[23].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[23].value.binary_data.data = (u8*)cp_data->wifi.pokeparty;
+      p_wk->p_field_buff[23].value.binary_data.size = WIFIBATTLEMATCH_GDB_WIFI_POKEPARTY_SIZE;
+
+      //ログイン時間
+      p_wk->p_field_buff[24].name          = (char*)sc_get_debugall_tbl[24];
+      p_wk->p_field_buff[24].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[24].value.binary_data.data = (u8*)&cp_data->datetime;
+      p_wk->p_field_buff[24].value.binary_data.size = sizeof(WBM_NET_DATETIME);
+      //MYSTATUS
+      p_wk->p_field_buff[25].name          = (char*)sc_get_debugall_tbl[25];
+      p_wk->p_field_buff[25].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[25].value.binary_data.data = (u8*)cp_data->mystatus;
+      p_wk->p_field_buff[25].value.binary_data.size = MYSTATUS_SAVE_SIZE;
+      //戦績０１
+      p_wk->p_field_buff[26].name          = (char*)sc_get_debugall_tbl[26];
+      p_wk->p_field_buff[26].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[26].value.binary_data.data = (u8*)&cp_data->record_data[0];
+      p_wk->p_field_buff[26].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //戦績０２
+      p_wk->p_field_buff[27].name          = (char*)sc_get_debugall_tbl[27];
+      p_wk->p_field_buff[27].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[27].value.binary_data.data = (u8*)&cp_data->record_data[1];
+      p_wk->p_field_buff[27].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //戦績０３
+      p_wk->p_field_buff[28].name          = (char*)sc_get_debugall_tbl[28];
+      p_wk->p_field_buff[28].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[28].value.binary_data.data = (u8*)&cp_data->record_data[2];
+      p_wk->p_field_buff[28].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //戦績０４
+      p_wk->p_field_buff[29].name          = (char*)sc_get_debugall_tbl[29];
+      p_wk->p_field_buff[29].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[29].value.binary_data.data = (u8*)&cp_data->record_data[3];
+      p_wk->p_field_buff[29].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //戦績０５
+      p_wk->p_field_buff[30].name          = (char*)sc_get_debugall_tbl[30];
+      p_wk->p_field_buff[30].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[30].value.binary_data.data = (u8*)&cp_data->record_data[4];
+      p_wk->p_field_buff[30].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //戦績０６
+      p_wk->p_field_buff[31].name          = (char*)sc_get_debugall_tbl[31];
+      p_wk->p_field_buff[31].type          = DWC_GDB_FIELD_TYPE_BINARY_DATA;
+      p_wk->p_field_buff[31].value.binary_data.data = (u8*)&cp_data->record_data[5];
+      p_wk->p_field_buff[31].value.binary_data.size = sizeof(WIFIBATTLEMATCH_RECORD_DATA);
+      //戦績インデックス
+      p_wk->p_field_buff[32].name          = (char*)sc_get_debugall_tbl[32];
+      p_wk->p_field_buff[32].type          = DWC_GDB_FIELD_TYPE_BYTE;
+      p_wk->p_field_buff[32].value.int_u8  = cp_data->record_save_idx;
     }
     break;
+#endif
 
   case WIFIBATTLEMATCH_GDB_WRITE_POKEPARTY:
 
@@ -3734,35 +3958,6 @@ void WIFIBATTLEMATCH_GDB_StartWrite( WIFIBATTLEMATCH_NET_WORK *p_wk, WIFIBATTLEM
     p_wk->table_name_num  = 6;
 
     break;
-#if 0
-  case WIFIBATTLEMATCH_GDB_WRITE_WIFI_SCORE:
-    { 
-      const WIFIBATTLEMATCH_GDB_WIFI_SCORE_DATA *cp_data  = cp_wk_adrs;
-
-      p_wk->p_field_buff[0].name  = ATLAS_GET_STAT_NAME( ARENA_ELO_RATING_1V1_WIFICUP );
-      p_wk->p_field_buff[0].type  = DWC_GDB_FIELD_TYPE_INT;
-      p_wk->p_field_buff[0].value.int_s32 = cp_data->rate;
-
-      p_wk->p_field_buff[1].name  = ATLAS_GET_STAT_NAME( CHEATS_WIFICUP_COUNTER );
-      p_wk->p_field_buff[1].type  = DWC_GDB_FIELD_TYPE_INT;
-      p_wk->p_field_buff[1].value.int_s32 = cp_data->cheat;
-
-      p_wk->p_field_buff[2].name  = ATLAS_GET_STAT_NAME( DISCONNECTS_WIFICUP_COUNTER );
-      p_wk->p_field_buff[2].type  = DWC_GDB_FIELD_TYPE_INT;
-      p_wk->p_field_buff[2].value.int_s32 = cp_data->disconnect;
-
-      p_wk->p_field_buff[3].name  = ATLAS_GET_STAT_NAME( NUM_WIFICUP_LOSE_COUNTER );
-      p_wk->p_field_buff[3].type  = DWC_GDB_FIELD_TYPE_INT;
-      p_wk->p_field_buff[3].value.int_s32 = cp_data->lose;
-
-      p_wk->p_field_buff[4].name  = ATLAS_GET_STAT_NAME( NUM_WIFICUP_WIN_COUNTER );
-      p_wk->p_field_buff[4].type  = DWC_GDB_FIELD_TYPE_INT;
-      p_wk->p_field_buff[4].value.int_s32 = cp_data->win;
-
-      p_wk->table_name_num  = 5;
-    }
-    break;
-#endif
   case WIFIBATTLEMATCH_GDB_WRITE_LOGIN_DATE:
     { 
       WifiBattleMatch_SetDateTime( &p_wk->datetime );

@@ -3271,7 +3271,6 @@ static BOOL debugMenuCallProc_DebugSake( DEBUG_MENU_EVENT_WORK *p_wk )
   EV_DEBUG_WIFIMATCH param;
   
   param.fieldmap = p_wk->fieldWork;
-  param.mode     = DEBUG_WIFIBATTLEMATCH_MODE_SAKE;
 
   set_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
         FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );
@@ -3294,7 +3293,6 @@ static BOOL debugMenuCallProc_DebugAtlas( DEBUG_MENU_EVENT_WORK *p_wk )
   EV_DEBUG_WIFIMATCH param;
   
   param.fieldmap = p_wk->fieldWork;
-  param.mode     = DEBUG_WIFIBATTLEMATCH_MODE_ATLAS;
 
   set_event = GMEVENT_CreateOverlayEventCall( p_wk->gmSys, 
         FS_OVERLAY_ID(event_debug_wifimatch), EVENT_DEBUG_CallWifiMatch, &param );

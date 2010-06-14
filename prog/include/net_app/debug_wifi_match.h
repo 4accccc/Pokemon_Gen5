@@ -15,14 +15,6 @@
  *					定数宣言
 */
 //=============================================================================
-//-------------------------------------
-///	デバッグモード
-//=====================================
-typedef enum
-{
-  DEBUG_WIFIBATTLEMATCH_MODE_SAKE,  //データベースサーバーへのデータアクセスモード
-  DEBUG_WIFIBATTLEMATCH_MODE_ATLAS, //アトラスサーバーへのデータアクセスモード（※注意！2台でマッチングしないとできません！！）
-} DEBUG_WIFIBATTLEMATCH_MODE;
 
 //=============================================================================
 /**
@@ -34,7 +26,6 @@ typedef enum
 //=====================================
 typedef struct 
 {
-  DEBUG_WIFIBATTLEMATCH_MODE  mode;     //[in ]デバッグモード
   SAVE_CONTROL_WORK           *p_save;  //[in ]セーブ
   GAMEDATA                    *p_gamedata; //[in ]ゲームデータ
 } DEBUG_WIFIBATTLEMATCH_PARAM;
