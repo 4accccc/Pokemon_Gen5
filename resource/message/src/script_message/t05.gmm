@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="masafumi_saitou" host="W00225" date="2010-06-14T14:27:38"/>
+	<create user="masafumi_saitou" host="W00225" date="2010-06-14T18:32:04"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -905,8 +905,12 @@ Wi-Fi</comment>
 会話スタート
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">ライモンシティに　かえる？</language>
-		<language name="JPN_KANJI" width="256">ライモンシティに　かえる？</language>
+		<language name="JPN" width="256">ライモンシティいき　でんしゃが
+まもなく　はっしゃ　しますよ▼
+ごじょうしゃに　なりますか？</language>
+		<language name="JPN_KANJI" width="256">ライモンシティ行き　電車が
+まもなく　発車しますよ▼
+ご乗車に　なりますか？</language>
 	</row>
 
 	<row id="msg_t05_recept_02">
@@ -915,20 +919,22 @@ Wi-Fi</comment>
 続いて主人公
 電車の前に移動しマップ遷移</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">よし　それじゃあ
-でんしゃに　のってくれ▼</language>
-		<language name="JPN_KANJI" width="256">よし　それじゃあ
-電車に　乗ってくれ▼</language>
+		<language name="JPN" width="256">それでは　でんしゃに
+のって　おまちください▼</language>
+		<language name="JPN_KANJI" width="256">それでは　電車に
+乗って　お待ちください▼</language>
 	</row>
 
 	<row id="msg_t05_recept_03">
 		<comment>♂
 いいえ</comment>
 		<attribute name="キャラ指定">RAILMAN</attribute>
-		<language name="JPN" width="256">うんうん　なにも　ないけど
-ゆっくり　していってよ</language>
-		<language name="JPN_KANJI" width="256">うんうん　なにも　ないけど
-ゆっくり　していってよ</language>
+		<language name="JPN" width="256">しずかな　まち　ですからね！
+しばらく　ゆっくり▽
+してくと　いいですよ</language>
+		<language name="JPN_KANJI" width="256">静かで　よい町ですからね！
+しばらく　ゆっくり▽
+してくと　いいですよ</language>
 	</row>
 
 	<row id="msg_t05_exchange_sys_01" back-color="#80ff80,,,#80ff80,,#80ff80,#80ff80,,,,,,#80ff80,,,,,,">
@@ -954,15 +960,15 @@ Wi-Fi</comment>
 たびに　むちゅうで
 [1:09:どうぐ名:0]を　きらしてしまった▼
 そうだねえ……
-[1:09:どうぐ名:0]　[2:01:２桁:1]コと▽
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを▽
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 こうかん　しないかい？</language>
 		<language name="JPN_KANJI" width="256">やや……　困ったなあ▼
 旅に　夢中で
 [1:09:どうぐ名:0]を　きらしてしまった▼
 そうだねえ……
-[1:09:どうぐ名:0]　[2:01:２桁:1]コと▽
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを▽
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 交換しないかい？</language>
 	</row>
 
@@ -972,11 +978,11 @@ Wi-Fi</comment>
 ※マップ切り替えでリセット
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">BACKPACKERM</attribute>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+		<language name="JPN" width="256">きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 こうかん　しないかい？</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+		<language name="JPN_KANJI" width="256">きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 交換しないかい？</language>
 	</row>
 
@@ -1039,15 +1045,15 @@ Wi-Fi</comment>
 そこの　きみ！
 わたしと　ビジネスライクな▽
 どうぐこうかんを　しようじゃないか▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 こうかん　しないかい？</language>
 		<language name="JPN_KANJI" width="256">わたしは　[1:09:どうぐ名:0]コレクター！▼
 そこの　きみ！
 わたしと　ビジネスライクな▽
 道具交換を　しようじゃないか▼
-[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 交換しないかい？</language>
 	</row>
 
@@ -1057,11 +1063,11 @@ Wi-Fi</comment>
 ※マップ切り替えでリセット
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">BUSINESSMAN</attribute>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+		<language name="JPN" width="256">きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 こうかん　しないかい？</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+		<language name="JPN_KANJI" width="256">きみの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 交換しないかい？</language>
 	</row>
 
@@ -1128,14 +1134,14 @@ Wi-Fi</comment>
 		<language name="JPN" width="256">キミ　その　かおは
 わたしの　おめあての▽
 アレを　もってる　タイプよね▼
-キミの　[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+キミの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 こうかん　してくれないかな？</language>
 		<language name="JPN_KANJI" width="256">キミ　その顔は
 わたしの　おめあての▽
 アレを　持ってる　タイプよね▼
-キミの　[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+キミの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 交換して　くれないかな？</language>
 	</row>
 
@@ -1145,11 +1151,11 @@ Wi-Fi</comment>
 ※マップ切り替えでリセット
 はい／いいえ表示</comment>
 		<attribute name="キャラ指定">TRAINERW</attribute>
-		<language name="JPN" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+		<language name="JPN" width="256">キミの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 こうかん　してくれないかな？</language>
-		<language name="JPN_KANJI" width="256">[1:09:どうぐ名:0]　[2:01:２桁:1]コと
-[1:09:どうぐ名:2]　[2:01:２桁:3]コを▽
+		<language name="JPN_KANJI" width="256">キミの　[1:09:どうぐ名:0]　[2:01:２桁:1]コを
+[1:09:どうぐ名:2]　[2:01:２桁:3]コと▽
 交換して　くれないかな？</language>
 	</row>
 
@@ -1305,9 +1311,9 @@ Wi-Fi</comment>
 週末：車両アリ</comment>
 		<attribute name="キャラ指定">OLDMAN1</attribute>
 		<language name="JPN" width="256">きょうも　おおにぎわい
-きみも　ぶつぶつこうかん　かい？</language>
+きみも　どうぐ　こうかん　かい？</language>
 		<language name="JPN_KANJI" width="256">今日も　おおにぎわい
-きみも　ぶつぶつ交換　かい？</language>
+きみも　道具交換　かい？</language>
 	</row>
 
 	<row id="msg_t05_oldman1_03" back-color="#ffff80,,,#ffff80,,#ffff80,#ffff80,,,,,,#ffff80,,,,,,">
