@@ -121,6 +121,9 @@ static BOOL OneselfSeq_ColosseumLeaveYesNoUpdate(UNION_SYSTEM_PTR unisys, UNION_
 static BOOL OneselfSeq_ColosseumLeaveUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 static BOOL OneselfSeq_ColosseumTrainerCardUpdate(UNION_SYSTEM_PTR unisys, UNION_MY_SITUATION *situ, FIELDMAP_WORK *fieldWork, u8 *seq);
 
+static void _CommEntryMenuCallback_Entry(void *work, const MYSTATUS *myst, const u8 *mac_address);
+static void _CommEntryMenuCallback_Leave(void *work, const MYSTATUS *myst, const u8 *mac_address);
+
 
 //==============================================================================
 //  データ
@@ -3278,6 +3281,8 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
         UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select),
         UnionMsg_GetMemberMax(situ->mycomm.mainmenu_select), HEAPID_UNION,
         COMM_ENTRY_MODE_PARENT, COMM_ENTRY_GAMETYPE_COLOSSEUM, NULL);
+      CommEntryMenu_SetCallback_EntryLeave(clsys->entry_menu, unisys, 
+        _CommEntryMenuCallback_Entry, _CommEntryMenuCallback_Leave);
     }
     else{
 //      UnionMsg_TalkStream_PrintPack(unisys, fieldWork, msg_union_test_011);
@@ -3415,6 +3420,41 @@ static BOOL OneselfSeq_ColosseumMemberWaitUpdate(UNION_SYSTEM_PTR unisys, UNION_
   }
   
   return FALSE;
+}
+
+//--------------------------------------------------------------
+/**
+ * 募集画面：ユーザー入室コールバック
+ *
+ * @param   work		      UNION_SYSTEM_PTR
+ * @param   myst		      入室してきたプレイヤー
+ * @param   mac_address		入室してきたプレイヤーのMacAddress
+ */
+//--------------------------------------------------------------
+static void _CommEntryMenuCallback_Entry(void *work, const MYSTATUS *myst, const u8 *mac_address)
+{
+  UNION_SYSTEM_PTR unisys = work;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+
+  UnionMyComm_PartyAddParam(&situ->mycomm, mac_address, 
+    MyStatus_GetTrainerView(myst), MyStatus_GetMySex(myst));
+}
+
+//--------------------------------------------------------------
+/**
+ * 募集画面：ユーザー退室コールバック
+ *
+ * @param   work		      UNION_SYSTEM_PTR
+ * @param   myst		      退室したプレイヤー
+ * @param   mac_address		退室したプレイヤーのMacAddress
+ */
+//--------------------------------------------------------------
+static void _CommEntryMenuCallback_Leave(void *work, const MYSTATUS *myst, const u8 *mac_address)
+{
+  UNION_SYSTEM_PTR unisys = work;
+  UNION_MY_SITUATION *situ = &unisys->my_situation;
+
+  UnionMyComm_PartyDelParam(&situ->mycomm, mac_address);
 }
 
 //--------------------------------------------------------------

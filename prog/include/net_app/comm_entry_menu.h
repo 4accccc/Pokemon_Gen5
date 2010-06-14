@@ -46,6 +46,7 @@ typedef enum{
 //==============================================================================
 typedef struct _COMM_ENTRY_MENU_SYSTEM * COMM_ENTRY_MENU_PTR;
 typedef struct _ENTRYMENU_MEMBER_INFO ENTRYMENU_MEMBER_INFO;
+typedef void (*COMM_ENTRY_MENU_CALLBACK)(void *work, const MYSTATUS *myst, const u8 *mac_address);
 
 ///Žó‚¯“ü‚êŒ‹‰Ê
 typedef enum{
@@ -88,6 +89,7 @@ typedef struct{
 //==============================================================================
 extern COMM_ENTRY_MENU_PTR CommEntryMenu_Setup(const MYSTATUS *myst, FIELDMAP_WORK *fieldWork, int min_num, int max_num, HEAPID heap_id, COMM_ENTRY_MODE entry_mode, COMM_ENTRY_GAMETYPE game_type, const u8 *parent_mac_address);
 extern u32 CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em);
+extern void CommEntryMenu_SetCallback_EntryLeave(COMM_ENTRY_MENU_PTR em, void *work, COMM_ENTRY_MENU_CALLBACK entry_func, COMM_ENTRY_MENU_CALLBACK leave_func);
 extern void CommEntryMenu_Entry(COMM_ENTRY_MENU_PTR em, int netID, const MYSTATUS *myst, BOOL force_entry, const u8 *mac_address);
 extern COMM_ENTRY_RESULT CommEntryMenu_Update(COMM_ENTRY_MENU_PTR em);
 extern void CommEntryMenu_SetGameStartReady(COMM_ENTRY_MENU_PTR em, NetID net_id);

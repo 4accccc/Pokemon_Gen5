@@ -191,6 +191,10 @@ typedef struct _COMM_ENTRY_MENU_SYSTEM{
   GFLNetInitializeStruct netInitStruct;         ///<ネット終了時に確保しておく
   void  *netParentWork;                         ///<ネット終了時に確保しておく
   
+  void *callback_work;                          ///<コールバック時に引数として渡すユーザーポインタ
+  COMM_ENTRY_MENU_CALLBACK callback_entry;     ///<入室コールバック
+  COMM_ENTRY_MENU_CALLBACK callback_leave;     ///<退室コールバック
+  
   ENTRYMENU_MEMBER_INFO member_info;            ///<参加者情報(親機の場合は送信バッファとして使用)
   u8 member_info_recv;                          ///<TRUE:参加者情報を受信した
   u8 game_start;                                ///<TRUE:ゲーム開始受信
@@ -448,6 +452,23 @@ u32 CommEntryMenu_Exit(COMM_ENTRY_MENU_PTR em)
 
 //==================================================================
 /**
+ * ユーザーの入退室コールバック設定
+ *
+ * @param   em		
+ * @param   work          コールバック時に引数として渡すポインタ
+ * @param   entry_func		入室コールバック
+ * @param   leave_func		退室コールバック
+ */
+//==================================================================
+void CommEntryMenu_SetCallback_EntryLeave(COMM_ENTRY_MENU_PTR em, void *work, COMM_ENTRY_MENU_CALLBACK entry_func, COMM_ENTRY_MENU_CALLBACK leave_func)
+{
+  em->callback_work = work;
+  em->callback_entry = entry_func;
+  em->callback_leave = leave_func;
+}
+
+//==================================================================
+/**
  * プレイヤーエントリー
  *
  * @param   em		  
@@ -471,6 +492,10 @@ void CommEntryMenu_Entry(COMM_ENTRY_MENU_PTR em, int netID, const MYSTATUS *myst
   
   _SendBitClear(em, netID);
   _Req_SendMemberInfo(em);
+  
+  if(em->callback_entry != NULL){
+    em->callback_entry(em->callback_work, myst, mac_address);
+  }
 }
 
 //==================================================================
@@ -1383,6 +1408,10 @@ static void CommEntryMenu_LeaveUserUpdate(COMM_ENTRY_MENU_PTR em)
   for(net_id = 0; net_id < COMM_ENTRY_USER_MAX; net_id++){
     if(em->user[net_id].status != USER_STATUS_NULL && GFL_NET_IsConnectMember(net_id) == FALSE){
       OS_TPrintf("%d番のプレイヤーがいなくなった Connect=%d SystemNum=%d status=%d\n", net_id, GFL_NET_GetConnectNum(), GFL_NET_SystemGetConnectNum(), em->user[net_id].status);
+      if(em->callback_leave != NULL){
+        em->callback_leave(em->callback_work, 
+          &em->user[net_id].mystatus, em->user[net_id].mac_address);
+      }
       CommEntryMenu_EraseUser(em, net_id);
       _SendBitClear(em, net_id);
       _Req_SendMemberInfo(em);
