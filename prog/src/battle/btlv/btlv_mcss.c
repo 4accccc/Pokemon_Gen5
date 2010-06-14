@@ -582,6 +582,14 @@ void  BTLV_MCSS_Add( BTLV_MCSS_WORK *bmw, const POKEMON_PARAM *pp, int position 
   BTLV_MCSS_GetDefaultPos( bmw, &pos, position );
   bmw->btlv_mcss[ index ].mcss = MCSS_Add( bmw->mcss_sys, pos.x, pos.y, pos.z, &bmw->btlv_mcss[ index ].maw );
 
+  //影のオフセットを調整
+  { 
+    VecFx32 ofs;
+
+    VEC_Set( &ofs, 0, 0, -1024 );
+    MCSS_SetShadowOffset( bmw->btlv_mcss[ index ].mcss, &ofs );
+  }
+
   { 
     MCSS_REVERSE_DRAW flag = MCSS_REVERSE_DRAW_OFF;
 
