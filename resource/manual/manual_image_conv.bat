@@ -6,6 +6,7 @@ ntexconv 003_03_hushigina_card.bmp -no -bg -bgb -bgf direct
 ntexconv 004_01_mictest.bmp -no -bg -bgb -bgf direct
 ntexconv 006_01_pokecenter.bmp -no -bg -bgb -bgf direct
 ntexconv 007_01_pasocom.bmp -no -bg -bgb -bgf direct
+ntexconv 018_01_battlebox.bmp -no -bg -bgb -bgf direct
 ntexconv 028_02_ir.bmp -no -bg -bgb -bgf direct
 ntexconv 028_01_unionroom.bmp -no -bg -bgb -bgf direct
 ntexconv 009_01_wificlub.bmp -no -bg -bgb -bgf direct
@@ -39,12 +40,6 @@ ntexconv 029_02_linkbridge.bmp -no -bg -bgb -bgf direct
 ntexconv 029_03_shitagamen.bmp -no -bg -bgb -bgf direct
 ntexconv 029_04_mission.bmp -no -bg -bgb -bgf direct
 ntexconv 035_01_exit.bmp -no -bg -bgb -bgf direct
-ntexconv 016_01_dsimenu.bmp -no -bg -bgb -bgf direct
-ntexconv 016_02_erabu.bmp -no -bg -bgb -bgf direct
-ntexconv 017_01_sitagamen.bmp -no -bg -bgb -bgf direct
-ntexconv 017_02_uegamen.bmp -no -bg -bgb -bgf direct
-ntexconv 017_03_kemuri.bmp -no -bg -bgb -bgf direct
-ntexconv 018_01_battlebox.bmp -no -bg -bgb -bgf direct
 ntexconv 019_01_taisetu.bmp -no -bg -bgb -bgf direct
 ntexconv 019_02_motaseru.bmp -no -bg -bgb -bgf direct
 ntexconv 020_02_ura.bmp -no -bg -bgb -bgf direct
@@ -67,4 +62,7 @@ ntexconv 027_01_benrimenu.bmp -no -bg -bgb -bgf direct
 ntexconv 027_02_checkbox.bmp -no -bg -bgb -bgf direct
 ntexconv 027_03_checkbox2.bmp -no -bg -bgb -bgf direct
 ntexconv 027_04_select.bmp -no -bg -bgb -bgf direct
+ntexconv 017_01_sitagamen.bmp -no -bg -bgb -bgf direct
+ntexconv 017_02_uegamen.bmp -no -bg -bgb -bgf direct
+ntexconv 017_03_kemuri.bmp -no -bg -bgb -bgf direct
 ntexconv bg.bmp -no -bg -bgb -bgf direct

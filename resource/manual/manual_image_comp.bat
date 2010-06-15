@@ -6,6 +6,7 @@ ntrcomp -l -o 003_03_hushigina_card_lz77.nbfs 003_03_hushigina_card.nbfs
 ntrcomp -l -o 004_01_mictest_lz77.nbfs 004_01_mictest.nbfs
 ntrcomp -l -o 006_01_pokecenter_lz77.nbfs 006_01_pokecenter.nbfs
 ntrcomp -l -o 007_01_pasocom_lz77.nbfs 007_01_pasocom.nbfs
+ntrcomp -l -o 018_01_battlebox_lz77.nbfs 018_01_battlebox.nbfs
 ntrcomp -l -o 028_02_ir_lz77.nbfs 028_02_ir.nbfs
 ntrcomp -l -o 028_01_unionroom_lz77.nbfs 028_01_unionroom.nbfs
 ntrcomp -l -o 009_01_wificlub_lz77.nbfs 009_01_wificlub.nbfs
@@ -39,12 +40,6 @@ ntrcomp -l -o 029_02_linkbridge_lz77.nbfs 029_02_linkbridge.nbfs
 ntrcomp -l -o 029_03_shitagamen_lz77.nbfs 029_03_shitagamen.nbfs
 ntrcomp -l -o 029_04_mission_lz77.nbfs 029_04_mission.nbfs
 ntrcomp -l -o 035_01_exit_lz77.nbfs 035_01_exit.nbfs
-ntrcomp -l -o 016_01_dsimenu_lz77.nbfs 016_01_dsimenu.nbfs
-ntrcomp -l -o 016_02_erabu_lz77.nbfs 016_02_erabu.nbfs
-ntrcomp -l -o 017_01_sitagamen_lz77.nbfs 017_01_sitagamen.nbfs
-ntrcomp -l -o 017_02_uegamen_lz77.nbfs 017_02_uegamen.nbfs
-ntrcomp -l -o 017_03_kemuri_lz77.nbfs 017_03_kemuri.nbfs
-ntrcomp -l -o 018_01_battlebox_lz77.nbfs 018_01_battlebox.nbfs
 ntrcomp -l -o 019_01_taisetu_lz77.nbfs 019_01_taisetu.nbfs
 ntrcomp -l -o 019_02_motaseru_lz77.nbfs 019_02_motaseru.nbfs
 ntrcomp -l -o 020_02_ura_lz77.nbfs 020_02_ura.nbfs
@@ -67,4 +62,7 @@ ntrcomp -l -o 027_01_benrimenu_lz77.nbfs 027_01_benrimenu.nbfs
 ntrcomp -l -o 027_02_checkbox_lz77.nbfs 027_02_checkbox.nbfs
 ntrcomp -l -o 027_03_checkbox2_lz77.nbfs 027_03_checkbox2.nbfs
 ntrcomp -l -o 027_04_select_lz77.nbfs 027_04_select.nbfs
+ntrcomp -l -o 017_01_sitagamen_lz77.nbfs 017_01_sitagamen.nbfs
+ntrcomp -l -o 017_02_uegamen_lz77.nbfs 017_02_uegamen.nbfs
+ntrcomp -l -o 017_03_kemuri_lz77.nbfs 017_03_kemuri.nbfs
 ntrcomp -l -o bg_lz77.nbfs bg.nbfs
