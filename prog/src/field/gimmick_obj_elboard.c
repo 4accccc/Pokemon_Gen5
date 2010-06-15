@@ -314,17 +314,23 @@ void GOBJ_ELBOARD_SetFrame( GOBJ_ELBOARD* elboard, fx32 frame )
     now_frame[i] = (set_frame % one_round_frame) - start_frame[i];
     news->dispFlag = (0 < now_frame[i]) && (now_frame[i] < FX_Whole(news->endFrame));
     news->switchFlag = (FX_Whole(news->switchFrame) < now_frame[i]) && (now_frame[i] < FX_Whole(news->endFrame));
-    if( now_frame[i] < 0 ) now_frame[i] = 0;
+    if( now_frame[i] < 0 ) { now_frame[i] = 0; }
     news->nowFrame = now_frame[i] << FX32_SHIFT;
+
     GFL_G3D_OBJECT_SetAnimeFrame( news->g3dObj, news->animeIndex, (int*)&news->nowFrame );
-    if( news->dispFlag )
-    {
+    if( news->dispFlag ) {
       GFL_G3D_OBJECT_EnableAnime( news->g3dObj, news->animeIndex );
     }
-    else
-    {
+    else {
       GFL_G3D_OBJECT_DisableAnime( news->g3dObj, news->animeIndex );
     }
+  }
+
+  // 0フレーム開始なら, 最初のニュースを表示する
+  if( set_frame == 0 ) {
+    NEWS* news = elboard->news[0];
+    news->dispFlag = TRUE;
+    GFL_G3D_OBJECT_EnableAnime( news->g3dObj, news->animeIndex );
   }
 
   // ニューススイッチの状態を算出
