@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="matsumiya" host="W00224" date="2010-06-14T15:19:48"/>
+	<create user="hozumi_yukiko" host="W00211" date="2010-06-15T16:19:29"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -357,14 +357,14 @@
 		</language>
 	</columns>
 
-	<dialog left="1426" top="203" right="2131" bottom="831" maximized="no" rayout="Vertical2">
+	<dialog left="30" top="150" right="735" bottom="778" maximized="no" rayout="Vertical2">
 		<comment-input left="733" top="589" right="1080" bottom="739" visible="no"/>
 		<tag-palette left="807" top="198" right="1280" bottom="596" visible="no"/>
 		<band id="0" index="0" style="0000" width="530"/>
 		<band id="1" index="1" style="0000" width="165"/>
 		<band id="2" index="2" style="0000" width="697"/>
 		<band id="3" index="3" style="0000" width="697"/>
-		<edit entry="0" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
+		<edit entry="0" language="JPN" mode="Edit" spell-check="-1"/>
 		<edit entry="1" language="JPN_KANJI" mode="Edit" spell-check="-1"/>
 		<edit entry="2" language="JPN" mode="Source" spell-check="-1"/>
 		<edit entry="3" language="JPN" mode="Source" spell-check="-1"/>
@@ -6290,7 +6290,7 @@ SEE YOU SOON！</language>
 つりめいじん『そうなのよ！▼
 つりずきの　ひとは
 チーム　ツリーズに　はいらねぇと！▼
-はいって　おれらと　たのしく
+はいって　オレらと　たのしく
 つりしねぇと！▼
 アナウンサー『でも　つりって
 ひとりで　たのしみたい　ひとって▽
@@ -6315,7 +6315,7 @@ SEE YOU SOON！</language>
 釣り名人『そうなのよ！▼
 釣り好きの　人は
 チーム　ツリーズに　入らねぇと！▼
-んで　おれらと　楽しく
+んで　オレらと　楽しく
 釣りしねぇと！▼
 アナウンサー『でも　釣りって
 １人で　楽しみたい　人って▽
@@ -6391,7 +6391,7 @@ SEE YOU SOON！</language>
 おーーーきな　ごうてい　ですね！▼
 だんせい『オレの　コレクションが
 みえるかね？　かね？▼
-コレクションをには
+コレクションには
 これくらいの　ひろさが▽
 ひつようだと　おもわんかね？　かね？▼
 アナウンサー『そ……　そうですね
@@ -6410,7 +6410,7 @@ SEE YOU SOON！</language>
 大金持ちを　紹介しまぁす！▼
 こんにちわぁ！
 おーーーきな　豪邸ですね！▼
-男性『おれの　コレクションが
+男性『オレの　コレクションが
 見えるかね？　かね？▼
 コレクションには　これくらいの　広さが
 必要だと　思わんかね？　かね？▼
