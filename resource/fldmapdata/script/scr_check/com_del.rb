@@ -84,6 +84,7 @@ while line = ev_file.gets
     end
   else                        #「*/」検索中モード
     #「*/」を検索
+#    printf("コメント行 %s\n",str)
     sta_sra = str.index("*/")
     if sta_sra == nil then    #見つからない→この行は全部コメントなので書かない
       next

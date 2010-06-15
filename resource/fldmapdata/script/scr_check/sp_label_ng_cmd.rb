@@ -1,3 +1,64 @@
+require "call_label.rb"
+
+def CallFunc(hash, code_ary, call_label, call_find_code_ary)
+  local_ary = Array.new
+
+  #ハッシュからラベルに一致する配列を取得
+  ary = hash[call_label]
+  if ary == nil then
+    printf("not_label %s\n",call_label)
+    return
+  end
+
+  #配列を検索
+  ary.each{|str|
+    local_ary.clear
+    #検索コード調べる
+    rc = SearchCode(code_ary, str, local_ary)
+    if rc == true then
+      #_CALLか？
+      target = str.index("_CALL")
+      if target != nil then     #見つかった
+#        printf("str = %s\n",str)
+        m = /_/.match(str)
+        fix_str = "_" + m.post_match
+        m = /\s/.match(fix_str)
+        call_str = m.pre_match
+        label_str = m.post_match
+        call_str.gsub!(/\s/,"")
+        label_str.gsub!(/\s/,"")
+        if call_str == "_CALL" then
+#          printf("CALLを発見\n")
+          CallFunc(hash, code_ary, label_str, call_find_code_ary)
+        end
+      else        #_CALL 以外
+#        printf("CALL内で発見\n")
+        make_str = call_label + "-->" + local_ary[0]
+        call_find_code_ary << make_str
+      end
+    end
+  }
+end
+
+def CallFuncParent(hash, code_ary, str, call_find_code_ary)
+  #_CALLか？
+  target = str.index("_CALL")
+  if target != nil then     #見つかった
+#    printf("PARENT CALLを発見 %s\n",str)
+    m = /_/.match(str)
+    fix_str = "_" + m.post_match
+    m = /\s/.match(fix_str)
+    call_str = m.pre_match
+    label_str = m.post_match
+    call_str.gsub!(/\s/,"")
+    label_str.gsub!(/\s/,"")
+#    printf("PARENT CALL部分 %s\n",call_str)
+    if call_str == "_CALL" then
+      CallFunc(hash, code_ary, label_str, call_find_code_ary)
+    end
+  end
+end
+
 def AddLabel(ary, str, target_label)
   rc = str.index(target_label)
   if rc != nil then
@@ -9,7 +70,9 @@ def SearchCode(code_ary, str, find_code_ary)
   code_ary.each{|i|
     target = str.index(i)
     if target != nil then     #見つかった
-      find_code_ary << i
+      if find_code_ary != nil then
+        find_code_ary << i
+      end  
       return true
     end
   }
@@ -35,11 +98,18 @@ def MakeSearchCodeList(list_txt, code_ary)
 #  }
 end
 
-ev_file = open(ARGV[0],"r")
+
+
+ev_file_name = ARGV[0]
+s = SubLabelHash.new
+hash = s.MakeHash(ev_file_name)
+
+ev_file = open(ev_file_name,"r")
 
 list_txt = ARGV[1]
 
 target_label = ARGV[2]
+
 
 #検索したいコードのリスト作成
 code_ary = Array.new
@@ -48,7 +118,7 @@ MakeSearchCodeList(list_txt, code_ary)
 label = Array.new
 dump_ary = Array.new
 find_code_ary = Array.new
-
+call_find_code_ary = Array.new
 seq = 0
 find = false
 while line = ev_file.gets
@@ -102,6 +172,9 @@ while line = ev_file.gets
       #検索コード調べる
       if find == false then
         find = SearchCode(code_ary, str, find_code_ary)
+        if find == true then
+          CallFuncParent(hash, code_ary, str, call_find_code_ary)
+        end
       end
     end
   end
@@ -111,6 +184,14 @@ if dump_ary.length != 0 then
   printf("========%s========\n",ARGV[0])
   dump_ary.each_with_index{|label, idx|
     printf("%s ==> %s\n",label, find_code_ary[idx])
+  }
+end
+
+if call_find_code_ary.length != 0 then
+  printf("●-------CALL-------\n")
+
+  call_find_code_ary.each{|i|
+    p i
   }
 end
 
