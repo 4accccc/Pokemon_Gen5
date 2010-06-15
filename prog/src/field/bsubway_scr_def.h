@@ -127,7 +127,7 @@
 #define BSW_TR_ARCDATANO_ORG (1) ///<トレーナーデータアーカイブ開始番号
 #define BSW_PM_ARCDATANO_ORG (1) ///<ポケモンデータアーカイブ開始番号
 
-//トレーナーデータ番号
+//トレーナーデータ番号　ボス
 #define BSW_TR_DATANO_SINGLE (306) //シングル
 #define BSW_TR_DATANO_S_SINGLE (307) //スーパーシングル
 #define BSW_TR_DATANO_DOUBLE (308) //ダブル
@@ -136,6 +136,8 @@
 #define BSW_TR_DATANO_MULTI1 (311) //マルチ1
 #define BSW_TR_DATANO_S_MULTI0 (312) //スーパーマルチ0
 #define BSW_TR_DATANO_S_MULTI1 (313) //スーパーマルチ1
+
+#define BSW_TR_DATANO_MAX (300) //0-299 通常のトレーナーNo
 
 //--------------------------------------------------------------
 /// バトルサブウェイシーン制御
