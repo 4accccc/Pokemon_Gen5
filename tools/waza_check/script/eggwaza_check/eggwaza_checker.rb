@@ -35,7 +35,8 @@ class EggWazaChecker
     if @eggwaza_exist_flag then
       self.listup_eggwaza
       self.listup_mothers
-      self.delete_mother_belong_to_egg_group( "ñ≥ê∂êB" )
+      self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
+      self.delete_mothers_only_male
       self.listup_mothers_egg_group
       self.listup_fathers
       self.check_eggwaza_all
@@ -48,7 +49,8 @@ class EggWazaChecker
     if @eggwaza_exist_flag then
       @eggwaza_list = egg_waza_list
       self.listup_mothers
-      self.delete_mother_belong_to_egg_group( "ñ≥ê∂êB" )
+      self.delete_mothers_belong_to_egg_group( "ñ≥ê∂êB" )
+      self.delete_mothers_only_male
       self.listup_mothers_egg_group
       self.listup_fathers
       self.check_eggwaza_all
@@ -66,12 +68,24 @@ class EggWazaChecker
     @mother_list = $reverse_seed_poke_hash[ @mons_name ]
   end
 
-  def delete_mother_belong_to_egg_group( group_name )
+  def delete_mothers_belong_to_egg_group( group_name )
     if @mother_list == nil then return end 
     new_mother_list = Array.new
     @mother_list.each do |mother| 
       if @personal_accessor.get_egg_group1( mother ) != group_name &&
          @personal_accessor.get_egg_group2( mother ) != group_name then
+        new_mother_list << mother
+      end
+    end
+    @mother_list = new_mother_list
+  end
+
+  def delete_mothers_only_male 
+    if @mother_list == nil then return end 
+    new_mother_list = Array.new
+    @mother_list.each do |mother| 
+      gender_type = @personal_accessor.get_gender_type( mother ) 
+      if gender_type != "GENDER_TYPE_MALE_ONLY" then
         new_mother_list << mother
       end
     end

@@ -12,6 +12,7 @@ def OutputReverseSeedPokeHash_from_PersonalData( personal_filename, output_path 
   personal_parser = PersonalDataParser.new( personal_filename ) 
   reverse_seed_poke_hash = CreateReverseSeedPokeHash_from_PersonalData( personal_filename )
   reverse_seed_poke_hash = RegisterExceptionalBabyPokemon( reverse_seed_poke_hash )
+  reverse_seed_poke_hash = RegisterExceptionalSex( reverse_seed_poke_hash )
   out_data = CreateOutputData_of_ReverseSeedPokeHash( personal_parser, reverse_seed_poke_hash )
   OutputReverseSeedPokeHashData_to_File( out_data, output_path, "reverse_seed_poke_hash.rb" )
 end
@@ -75,6 +76,17 @@ def RegisterExceptionalBabyPokemon( reverse_seed_poke_hash )
   reverse_seed_poke_hash[ "ラッキー" ] << "ラッキー"
   reverse_seed_poke_hash[ "ラッキー" ] << "ハピナス"
   reverse_seed_poke_hash[ "チリーン" ] << "チリーン"
+  return reverse_seed_poke_hash
+end
+
+# 例外ケースを登録する ( 性別 )
+def RegisterExceptionalSex( reverse_seed_poke_hash )
+  reverse_seed_poke_hash[ "イルミーゼ" ] << "バルビート"
+  reverse_seed_poke_hash[ "バルビート" ] << "イルミーゼ"
+  reverse_seed_poke_hash[ "ニドラン♂" ] << "ニドラン♀"
+  reverse_seed_poke_hash[ "ニドラン♀" ] << "ニドラン♂"
+  reverse_seed_poke_hash[ "ニドラン♀" ] << "ニドリーノ"
+  reverse_seed_poke_hash[ "ニドラン♀" ] << "ニドキング"
   return reverse_seed_poke_hash
 end
 

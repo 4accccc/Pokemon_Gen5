@@ -7,6 +7,7 @@ require "teachwaza_hash.rb"
 require "reverse_evolve_poke_hash.rb"
 require "egg_group_hash.rb"
 require "egg_group_poke_list_hash.rb"
+require "gender_hash.rb"
 
 
 class PersonalAccessor 
@@ -186,6 +187,11 @@ class PersonalAccessor
     else
       return true
     end
+  end
+
+  def get_gender_type( mons_fullname )
+    gender_type = $gender_hash[ mons_fullname ]
+    return gender_type
   end
 
   def get_mons_fullname_list( mons_name )
