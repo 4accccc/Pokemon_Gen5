@@ -381,18 +381,18 @@ ev_boss_btl:
 //戦闘処理
 		_TRAINER_BTL_SET ( TRID_BOSS_02, 0 )
 		
-		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-		_CAMERA_END()		//カメラ操作終了
-	
-		_CAMERA_START()		//カメラ操作開始
-		_CAMERA_PURGE()		//カメラのバインドを解く
-		_CAMERA_MOVE( 9694,0,970837,42237952,0,38174720,1 )	//一番最後の引数は移動にかかるフレーム数
-		_CAMERA_WAIT_MOVE()	//カメラ移動待ち
-		
 		//敗戦チェック
 		_TRAINER_LOSE_CHECK( SCWK_ANSWER )
 		IF $SCWK_ANSWER == SCR_BATTLE_RESULT_WIN THEN
+
+			//カメラを戦闘前の状態に戻しておく。
+			_CAMERA_START()		//カメラ操作開始
+			_CAMERA_PURGE()		//カメラのバインドを解く
+			_CAMERA_MOVE( 9694,0,970837,42237952,0,38174720,1 )	//一番最後の引数は移動にかかるフレーム数
+			_CAMERA_WAIT_MOVE()	//カメラ移動待ち
+			
 			_TRAINER_WIN()			//勝ち(1)ならトレーナー勝利処理へ
+			
 		ELSE
 			_TRAINER_LOSE()			//負け(0)ならトレーナー敗北処理へ(ここでスクリプト終了します）
 		ENDIF
