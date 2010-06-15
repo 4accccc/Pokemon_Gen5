@@ -1069,6 +1069,10 @@ static void Egg_Demo_View_McssSetAnimeIndex( EGG_DEMO_VIEW_WORK* work, int index
         Egg_Demo_View_McssCallBackFunctor );
     work->mcss_anime_end = FALSE;
   }
+  else
+  {
+    MCSS_TOOL_SetAnmRestartCallback( work->mcss_wk );  // 1ループしたらアニメーションリセットを呼ぶためのコールバックセット
+  }
 }
 //-------------------------------------
 /// MCSSポケモン最終フレームで呼ばれるコールバック

@@ -2682,6 +2682,8 @@ static void Zukan_Detail_Form_PokeMcssCallBackFunctor( u32 data, fx32 currentFra
   {
     poke_call_back_data->stop = TRUE;
   }
+
+  MCSS_RestartAnime( work->poke_mcss_wk[poke_call_back_data->poke_idx].poke_wk );  // 1ループしたらアニメーションリセット
 }
 
 static void Zukan_Detail_Form_FlipFrontBack( ZUKAN_DETAIL_FORM_PARAM* param, ZUKAN_DETAIL_FORM_WORK* work, ZKNDTL_COMMON_WORK* cmn )

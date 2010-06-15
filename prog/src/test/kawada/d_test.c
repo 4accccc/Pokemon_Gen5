@@ -883,6 +883,7 @@ static void D_Test_CmnPokeChange(
     {
       MCSS_SetAnimeIndex( work->mcss_wk, 0 );
       MCSS_ResetAnmStopFlag( work->mcss_wk );
+      MCSS_TOOL_SetAnmRestartCallback( work->mcss_wk );  // 1ループしたらアニメーションリセットを呼ぶためのコールバックセット
     }
     else
     {
@@ -1053,6 +1054,7 @@ static void D_Test_CmnPokeAnmFlip( D_TEST_COMMON_WORK* work )
     {
       MCSS_SetAnimeIndex( work->mcss_wk, 0 );
       MCSS_ResetAnmStopFlag( work->mcss_wk );
+      MCSS_TOOL_SetAnmRestartCallback( work->mcss_wk );  // 1ループしたらアニメーションリセットを呼ぶためのコールバックセット
     }
     else
     {

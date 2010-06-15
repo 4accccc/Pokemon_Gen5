@@ -1165,16 +1165,16 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
         //MCSS_TOOL_MakeMAWPP( work->pp, &add_wk, MCSS_DIR_FRONT );
         work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
                                                       POKE_X_CENTER, POKE_Y, 0 );
-        MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
       }
       else
       {
         //MCSS_TOOL_MakeMAWPP( work->after_pp, &add_wk, MCSS_DIR_FRONT );
         work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->after_pp, MCSS_DIR_FRONT,
                                                       POKE_X_CENTER, POKE_Y, 0 );
-        MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
       }
       //work->poke_set[i].wk = MCSS_Add( work->mcss_sys_wk, POKE_X_CENTER, POKE_Y, 0, &add_wk );
+      MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
+      MCSS_TOOL_SetAnmRestartCallback( work->poke_set[i].wk );  // 1ループしたらアニメーションリセットを呼ぶためのコールバックセット
       MCSS_SetScale( work->poke_set[i].wk, &scale );
 
       if(i == POKE_BEFORE)
@@ -1204,6 +1204,7 @@ static void ShinkaDemo_View_PokeInit( SHINKADEMO_VIEW_WORK* work )
     work->poke_set[i].wk = MCSS_TOOL_AddPokeMcss( work->mcss_sys_wk, work->pp, MCSS_DIR_FRONT,
                                                   POKE_X_CENTER, POKE_Y, 0 );
     MCSS_SetShadowVanishFlag( work->poke_set[i].wk, TRUE );  // 影を消しておかないと、小さな点として影が表示されてしまう。 
+    MCSS_TOOL_SetAnmRestartCallback( work->poke_set[i].wk );  // 1ループしたらアニメーションリセットを呼ぶためのコールバックセット
     MCSS_SetScale( work->poke_set[i].wk, &scale );
   }
 
