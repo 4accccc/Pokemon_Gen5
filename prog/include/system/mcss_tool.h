@@ -31,3 +31,4 @@ extern  void  MCSS_TOOL_SetMakeBuchiCallback( MCSS_SYS_WORK* mcss_sys, u32 perso
 //MusicalMcss—p‚É•ª—£
 extern  void MCSS_TOOL_MakeBuchiCore( u8 *buf , u32 rnd );
 
+extern  void  MCSS_TOOL_SetAnmRestartCallback( MCSS_WORK* mcss );
