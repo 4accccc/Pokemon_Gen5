@@ -101,6 +101,7 @@ typedef enum
   MES_WAITROOM_THIRD,   //20
   MES_EXIT_WAITROOM_THIRD,
 
+  MES_ERROR_INIT_OPEN_FIELD,
   MES_ERROR_INIT,
   MES_ERROR_RETURN_HALL,
   MES_ERROR_REQ_DISP,
@@ -482,7 +483,7 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
       if( evWork->isNetErr == TRUE )
       {
         //フィールド開くため
-        evWork->state = MES_ENTER_WAITROOM_THIRD;
+        evWork->state = MES_ERROR_INIT_OPEN_FIELD;
       }
     }
     break;
@@ -568,6 +569,16 @@ static GMEVENT_RESULT MUSICAL_MainEvent( GMEVENT *event, int *seq, void *work )
     return GMEVENT_RES_FINISH;
     break;
 
+  case MES_ERROR_INIT_OPEN_FIELD:
+    {
+      const BOOL isFinish = MUSICAL_EVENT_InitField( event , evWork );
+      if( isFinish == TRUE )
+      {
+        evWork->state = MES_ERROR_INIT;
+      }
+    }
+    break;
+    
   case MES_ERROR_INIT:
     NetErr_App_ReqErrorDisp();
     evWork->state = MES_ERROR_RETURN_HALL;
