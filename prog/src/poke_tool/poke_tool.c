@@ -49,6 +49,8 @@ enum {
   PRAND_TOKUSEI_SHIFT = 16,   ///< 個性乱数：とくせい種類を決定するBitのIndex
   PRAND_TOKUSEI_MASK = (1 << PRAND_TOKUSEI_SHIFT ),
   PRAND_TOKUSEI_MASK_OLD = 1, ///< 個性乱数：とくせい種類を決定するBitのIndex(シャチより過去のバージョン）
+
+  BIRTH_FRIEND = 120,  ///< タマゴ孵化したときのなつき度
 };
 
 /*--------------------------------------------------------------------------*/
@@ -714,8 +716,9 @@ void  PPP_Birth( POKEMON_PASO_PARAM *ppp, const MYSTATUS* status, const u32 plac
 
   //なつき度を初期値にする
   {
-    u32 friend = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_friend );
-    PPP_Put( ppp, ID_PARA_friend, friend );
+    //u32 friend = POKETOOL_GetPersonalParam( mons_no, form_no, POKEPER_ID_friend );
+    //PPP_Put( ppp, ID_PARA_friend, friend );
+    PPP_Put( ppp, ID_PARA_friend, BIRTH_FRIEND );  // タマゴ孵化したときになつき度は固定値
   }
 
   //ニックネームをデフォルト名にする
