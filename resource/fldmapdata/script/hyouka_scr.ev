@@ -89,11 +89,13 @@ ev_zukan_daughter:
 //地方図鑑：見た数評価
 //--------------------------------------------------------------------
 sub_zukan_setup_local_see:
-    _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
-
-    IF $HYOUKA_COUNT >= 150 THEN
+    //見た図鑑コンプリートだったらフラグをセット
+    _GET_ZUKAN_COMPLETE( SCWK_ANSWER, SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE )
+    IF $SCWK_ANSWER == TRUE THEN
         _FLAG_SET( FE_ZUKAN_COMPLETE_LOCAL_SEE )
     ENDIF
+
+    _GET_ZUKAN_HYOUKA( SCR_ZUKAN_HYOUKA_MODE_LOCAL_SEE, HYOUKA_MSGID, HYOUKA_COUNT )
 
     _NUMBER( 0, HYOUKA_COUNT, 3 )
     _RET
