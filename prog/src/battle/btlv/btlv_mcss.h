@@ -116,6 +116,7 @@ typedef struct
   int             speed;
   int             rotate_wait_count;
   int             rotate_after_wait_count;
+  u32             tcb_id;
 }BTLV_MCSS_MOVE_CIRCLE_PARAM;
 
 typedef struct
@@ -128,6 +129,7 @@ typedef struct
   fx32            speed;            //ë¨ìx
   fx32            radius;           //îºåa
   int             frame;            //ÉtÉåÅ[ÉÄ
+  u32             tcb_id;
 }BTLV_MCSS_MOVE_SIN_PARAM;
 
 extern  BTLV_MCSS_WORK* BTLV_MCSS_Init( BtlRule rule, GFL_TCBSYS *tcb_sys, HEAPID heapID );
@@ -209,5 +211,6 @@ extern  void            BTLV_MCSS_SetMcss3vs3( BTLV_MCSS_WORK *bmw, int flag );
 extern  void            BTLV_MCSS_SetMcssRotate( BTLV_MCSS_WORK *bmw, int flag );
 extern  void            BTLV_MCSS_SetAnm1LoopFlag( BTLV_MCSS_WORK *bmw, int flag );
 extern  void            BTLV_MCSS_ClearExecute( BTLV_MCSS_WORK *bmw );
+extern  MCSS_SYS_WORK*  BTLV_MCSS_GetMcssSysWork( BTLV_MCSS_WORK *bmw );
 #endif
 
