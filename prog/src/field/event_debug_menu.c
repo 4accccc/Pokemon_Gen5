@@ -4581,6 +4581,7 @@ enum
   DEBUG_BSWAY_ANYSTAGE,
   DEBUG_BSWAY_CHANGE_WIFI_RANK,
   DEBUG_BSWAY_CLEAR_WIFI_ROOM,
+  DEBUG_BSWAY_SELECT_TRAINER,
 };
 
 static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
@@ -4622,6 +4623,7 @@ static const FLDMENUFUNC_LIST DATA_BSubwayMenuList[] =
   
   { DEBUG_FIELD_BSW_41, (void*)DEBUG_BSWAY_CHANGE_WIFI_RANK },
   { DEBUG_FIELD_BSW_42, (void*)DEBUG_BSWAY_CLEAR_WIFI_ROOM },
+  { DEBUG_FIELD_BSW_45, (void*)DEBUG_BSWAY_SELECT_TRAINER },
 };
 
 #define DEBUG_BSUBWAY_LIST_MAX ( NELEMS(DATA_BSubwayMenuList) )
@@ -4933,6 +4935,298 @@ static void debugMenuCallProc_BSubwayAnyStage(
   work->fieldWork = fieldWork;
   work->fldMsgBG = FIELDMAP_GetFldMsgBG( fieldWork );
 }
+
+
+static const FLDMENUFUNC_LIST DATA_BSubwaySelectTrainerMenuList[] =
+{
+  { DEBUG_FIELD_BSW_31, (void*)BSWAY_MODE_SINGLE },
+  { DEBUG_FIELD_BSW_32, (void*)BSWAY_MODE_DOUBLE },
+  { DEBUG_FIELD_BSW_33, (void*)BSWAY_MODE_MULTI },
+};
+
+#define DEBUG_BSUBWAY_SELECT_TRAINER_LIST_MAX ( NELEMS(DATA_BSubwaySelectTrainerMenuList) )
+
+static const DEBUG_MENU_INITIALIZER DebugBSubwaySelectTrainerMenuData = {
+  NARC_debug_message_d_field_dat,
+  DEBUG_BSUBWAY_SELECT_TRAINER_LIST_MAX,
+  DATA_BSubwaySelectTrainerMenuList,
+  &DATA_DebugMenuList_BSubway,
+  1, 1, 20, 12,
+  NULL,
+  NULL
+};
+
+typedef struct
+{
+  int seq_no;
+  HEAPID heapID;
+  GAMESYS_WORK *gmSys;
+  GMEVENT *gmEvent;
+  FIELDMAP_WORK *fieldWork;
+  FLDMSGBG *fldMsgBG;
+  
+  int play_mode;
+  int select_trainer_num;
+  int select_trainer_max;
+  u16 trainer_no[2];
+  int key_repeat;
+  int key_repeat_wait;
+  
+  STRBUF *strBuf;
+  STRBUF *strTempBuf;
+  GFL_MSGDATA *msgData;
+  WORDSET *wordSet;
+  FLDMSGWIN *msgWin;
+  FLDSYSWIN *sysWin;
+  FLDMENUFUNC *menuFunc;
+}DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK;
+
+//バトルサブウェイデバッグメニュー派生　トレーナーを選択
+static GMEVENT_RESULT debugMenuBSubwaySelectTrainerEvent(
+    GMEVENT *event, int *seq, void *wk )
+{
+  DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK  *work = wk;
+  
+  switch( (*seq) ){
+  case 0:
+    work->menuFunc = DEBUGFLDMENU_Init(
+        work->fieldWork, work->heapID,  &DebugBSubwaySelectTrainerMenuData );
+    (*seq)++;
+    break;
+  case 1:
+    {
+      u32 ret,param;
+      u16 dummy_ret;
+      GMEVENT *next_event = NULL;
+      ret = FLDMENUFUNC_ProcMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_NULL ){  //操作無し
+        break;
+      }
+      
+      FLDMENUFUNC_DeleteMenu( work->menuFunc );
+      
+      if( ret == FLDMENUFUNC_CANCEL ){  //キャンセル
+        return( GMEVENT_RES_FINISH );
+      }
+      
+      work->play_mode = ret;
+      (*seq)++;
+      break;
+    }
+  case 2:
+    {
+      FLDMSGBG * msgbg = FIELDMAP_GetFldMsgBG( work->fieldWork );
+        
+      work->strBuf = GFL_STR_CreateBuffer( 128, work->heapID );
+      work->strTempBuf = GFL_STR_CreateBuffer( 128, work->heapID );
+      work->msgData = DEBUGFLDMENU_CreateMSGDATA( work->fieldWork,
+          NARC_debug_message_d_field_dat );
+      work->wordSet = WORDSET_Create( work->heapID );
+      work->sysWin = FLDSYSWIN_AddTalkWin( msgbg, NULL );
+      work->msgWin = FLDMSGWIN_Add( msgbg, NULL, 1, 1, 8, 2 );
+      work->select_trainer_num = 0;
+      work->trainer_no[0] = 0;
+      work->trainer_no[1] = 0;
+      if( work->play_mode == BSWAY_MODE_MULTI ) {
+        work->select_trainer_max = 2;
+      }
+      else {
+        work->select_trainer_max = 1;
+      }
+    }
+    (*seq)++;
+    break;
+
+  case 3:
+    STRTOOL_SetNumber(
+        work->strBuf, 1, 5, // 1origineで表示
+        STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
+    FLDMSGWIN_ClearWindow( work->msgWin );
+    FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
+
+    if( work->play_mode == BSWAY_MODE_MULTI ) {
+      WORDSET_RegisterNumber( work->wordSet, 0, work->trainer_no[0]+1, 3,  // 1origineで表示
+          STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      WORDSET_RegisterNumber( work->wordSet, 1, work->trainer_no[1]+1, 3,  // 1origineで表示
+          STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      GFL_MSG_GetString( work->msgData, DEBUG_FIELD_BSW_47, work->strTempBuf );
+      WORDSET_ExpandStr( work->wordSet, work->strBuf, work->strTempBuf );
+    }
+    else {
+      WORDSET_RegisterNumber( work->wordSet, 0, work->trainer_no[0]+1, 3,  // 1origineで表示
+          STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+      GFL_MSG_GetString( work->msgData, DEBUG_FIELD_BSW_46, work->strTempBuf );
+      WORDSET_ExpandStr( work->wordSet, work->strBuf, work->strTempBuf );
+    }
+    FLDSYSWIN_ClearWindow( work->sysWin );
+    FLDSYSWIN_PrintStrBuf( work->sysWin, 1, 0, work->strBuf );
+    (*seq)++;
+    break;
+
+  case 4:
+    {
+      int add1 = 0, add10 = 0;
+      int trg = GFL_UI_KEY_GetTrg();
+      int cont = GFL_UI_KEY_GetCont();
+      int before_trainer_no = work->trainer_no[ work->select_trainer_num ];
+      int after_trainer_no = work->trainer_no[ work->select_trainer_num ];
+
+      if( trg & PAD_BUTTON_B ){
+        FLDSYSWIN_Delete( work->sysWin );
+        FLDMSGWIN_Delete( work->msgWin );
+        WORDSET_Delete( work->wordSet );
+        GFL_MSG_Delete( work->msgData );
+        GFL_STR_DeleteBuffer( work->strBuf );
+        GFL_STR_DeleteBuffer( work->strTempBuf );
+        return( GMEVENT_RES_FINISH );
+      } 
+      else if( trg & PAD_BUTTON_A ){ 
+        PMSND_PlaySE( SEQ_SE_DECIDE1 );
+        (work->select_trainer_num)++;
+        if( work->select_trainer_max <= work->select_trainer_num ) {
+          FLDSYSWIN_Delete( work->sysWin );
+          FLDMSGWIN_Delete( work->msgWin );
+          WORDSET_Delete( work->wordSet );
+          GFL_MSG_Delete( work->msgData );
+          GFL_STR_DeleteBuffer( work->strBuf );
+          GFL_STR_DeleteBuffer( work->strTempBuf );
+
+          BSUBWAY_SCRWORK_DebugCreateWorkTrNo( work->gmSys, work->play_mode, work->trainer_no );
+          SCRIPT_ChangeScript( event, SCRID_BSW_DEBUG_MAP_CHG_TRAIN, NULL, HEAPID_PROC );
+        } 
+        return( GMEVENT_RES_CONTINUE );
+      }
+      
+      if( cont && cont == work->key_repeat ){
+        if( work->key_repeat_wait < 30*10 ){
+          work->key_repeat_wait++;
+        }
+      }else{
+        work->key_repeat_wait = 0;
+      }
+
+      work->key_repeat = cont;
+
+      if( (trg & PAD_KEY_ALL) ){
+        add1 = 1;
+        add10 = 10;
+      }else if( work->key_repeat ){
+        int rep = work->key_repeat;
+        int wait = work->key_repeat_wait;
+
+        if( wait < 15 ){
+          //none
+        }else if( wait < 30*3 ){
+          if( wait % 6 == 0 ){
+            add1 = 1;
+            add10 = 10;
+          }
+        }else if( wait < 30*4 ){
+          if( wait % 4 == 0 ){
+            add1 = 1;
+            add10 = 10;
+          }
+        }else if( wait < 30*5 ){
+          if( wait % 2 == 0 ){
+            add1 = 1;
+            add10 = 10;
+          }
+        }else if( wait < 30*6 ){
+          add1 = 1;
+          add10 = 10;
+        }else if( wait < 30*7 ){
+          add1 = 2;
+          add10 = 20;
+        }else if( wait < 30*8 ){
+          add1 = 4;
+          add10 = 40;
+        }else if( wait < 30*9 ){
+          add1 = 8;
+          add10 = 80;
+        }else if( wait >= 30*9 ){
+          add1 = 16;
+          add10 = 160;
+        }
+      }
+
+      if( add1 || add10 ){
+        int check = trg & PAD_KEY_ALL;
+
+        if( check == 0 ){
+          check = cont;
+        }
+
+        if( (check & PAD_KEY_UP) ){
+          after_trainer_no -= add1;
+        }else if( (check & PAD_KEY_DOWN) ){
+          after_trainer_no += add1;
+        }else if( (check & PAD_KEY_LEFT) ){
+          after_trainer_no -= add10;
+        }else if( (check & PAD_KEY_RIGHT) ){
+          after_trainer_no += add10;
+        }
+      }
+
+      if( after_trainer_no < 0 ){
+        after_trainer_no = BSW_TR_DATANO_MAX - 1;
+      }
+      else if( BSW_TR_DATANO_MAX <= after_trainer_no){
+        after_trainer_no = 0;
+      }
+
+      if( after_trainer_no != before_trainer_no ){
+        work->trainer_no[ work->select_trainer_num ] = after_trainer_no;
+
+        STRTOOL_SetNumber(
+            work->strBuf, after_trainer_no+1, 5, // 1origineで表示
+            STR_NUM_DISP_SPACE, STR_NUM_CODE_DEFAULT  );
+        FLDMSGWIN_ClearWindow( work->msgWin );
+        FLDMSGWIN_PrintStrBuf( work->msgWin, 16, 1, work->strBuf );
+
+        if( work->play_mode == BSWAY_MODE_MULTI ) {
+          WORDSET_RegisterNumber( work->wordSet, 0, work->trainer_no[0]+1, 3,  // 1origineで表示
+              STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          WORDSET_RegisterNumber( work->wordSet, 1, work->trainer_no[1]+1, 3,  // 1origineで表示
+              STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          GFL_MSG_GetString( work->msgData, DEBUG_FIELD_BSW_47, work->strTempBuf );
+          WORDSET_ExpandStr( work->wordSet, work->strBuf, work->strTempBuf );
+        }
+        else {
+          WORDSET_RegisterNumber( work->wordSet, 0, work->trainer_no[0]+1, 3,  // 1origineで表示
+              STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+          GFL_MSG_GetString( work->msgData, DEBUG_FIELD_BSW_46, work->strTempBuf );
+          WORDSET_ExpandStr( work->wordSet, work->strBuf, work->strTempBuf );
+        }
+        FLDSYSWIN_ClearWindow( work->sysWin );
+        FLDSYSWIN_PrintStrBuf( work->sysWin, 1, 0, work->strBuf );
+      }
+    }
+  }
+
+  return( GMEVENT_RES_CONTINUE );
+}
+
+static void debugMenuCallProc_BSubwaySelectTrainer(
+    GMEVENT *event, DEBUG_BSUBWAY_EVENT_WORK *wk )
+{
+  GAMESYS_WORK *gsys = wk->gmSys;
+  HEAPID heapID = wk->heapID;
+  FIELDMAP_WORK *fieldWork = wk->fieldWork;
+  DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK *work;
+
+  GMEVENT_Change( event, debugMenuBSubwaySelectTrainerEvent,
+      sizeof(DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK) );
+  work = GMEVENT_GetEventWork( event );
+  GFL_STD_MemClear( work, sizeof(DEBUG_BSUBWAY_SELECT_TRAINER_EVENT_WORK) );
+  
+  work->heapID = heapID;
+  work->gmSys = gsys;
+  work->gmEvent = event;
+  work->fieldWork = fieldWork;
+  work->fldMsgBG = FIELDMAP_GetFldMsgBG( fieldWork );
+}
+
 
 static BOOL bsubway_CheckBattleZoneID( DEBUG_BSUBWAY_EVENT_WORK *work )
 {
@@ -5345,6 +5639,12 @@ static GMEVENT_RESULT debugMenuBSubwayEvent(
         BSUBWAY_SCRWORK_DebugClearWifiRoomData( work->gmSys );
         FLDSYSWIN_ClearWindow( work->sysWin );
         FLDSYSWIN_Print( work->sysWin, 1, 0, DEBUG_FIELD_BSW_43 );
+        break;
+      case DEBUG_BSWAY_SELECT_TRAINER: //トレーナー選択
+        if( bsubway_CheckBattleZoneID(work) == TRUE ){
+          chg_event = TRUE;
+          debugMenuCallProc_BSubwaySelectTrainer( event, work );
+        }
         break;
       default:
         break;
