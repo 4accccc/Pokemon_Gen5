@@ -1593,17 +1593,23 @@ static void CommEntryMenu_ExaminationUpdate(COMM_ENTRY_MENU_PTR em)
     }
     break;
   case 3:
-    if( CommEntryMenu_GetCompletionNum(em) > 1 &&
-        em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
-    {
-      em->msg_req_id = msg_connect_02_01_01;
-    }
-    else
-    {
-      em->msg_req_id = msg_connect_02_01;
-    }
     em->examination_occ = FALSE;
     yesno->seq = 0;
+
+    //連続で聞くためチェック
+    CommEntryMenu_UserStatusUpdate(em);
+    if( em->examination_occ == FALSE )
+    {
+      if( CommEntryMenu_GetCompletionNum(em) > 1 &&
+          em->game_type == COMM_ENTRY_GAMETYPE_MUSICAL )
+      {
+        em->msg_req_id = msg_connect_02_01_01;
+      }
+      else
+      {
+        em->msg_req_id = msg_connect_02_01;
+      }
+    }
     break;
   }
 }
@@ -2640,7 +2646,7 @@ static void _ParentSearchList_SetListString(COMM_ENTRY_MENU_PTR em)
   GFL_MSG_GetString( em->msgdata, msg_connect_search_000, strbuf_src );
   GFL_MSG_GetString( em->msgdata, msg_connect_search_001, strbuf_src_hit );
 	for( i = 0; i < PARENT_LIST_MAX; i++ ){
-    WORDSET_RegisterNumber( em->wordset, 0, i, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
+    WORDSET_RegisterNumber( em->wordset, 0, i+1, 2, STR_NUM_DISP_ZERO, STR_NUM_CODE_DEFAULT );
     if(em->parentsearch.parentuser[i].occ == TRUE){
       WORDSET_RegisterPlayerName( em->wordset, 1, &em->parentsearch.parentuser[i].mystatus );
       WORDSET_RegisterNumber( em->wordset, 2, 
