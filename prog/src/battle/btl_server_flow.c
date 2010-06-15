@@ -2350,9 +2350,12 @@ static BOOL scproc_NigeruCmd_Root( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp )
 
   if( result )
   {
+    // 逃げられたレコードは外部で処理 2010.06.15  taya
+    #if 0
     if( !BTL_MAINUTIL_IsFriendClientID(clientID, playerClientID) ){
       BTL_MAIN_RECORDDATA_Inc( wk->mainModule, RECID_NIGERARETA );
     }
+    #endif
     return TRUE;
   }
   else
@@ -4059,7 +4062,7 @@ static BOOL scproc_checkNoEffect_sub( BTL_SVFLOW_WORK* wk, const SVFL_WAZAPARAM*
   fNoEffect = scEvent_CheckNotEffect( wk, wazaParam, eventID, attacker, target, &wk->strParam, &fNoReaction );
   if( fNoEffect )
   {
-    // とりあえず文字を出すだけのリアクション
+    // 文字を出すだけのリアクション
     if( HANDEX_STR_IsEnable(&wk->strParam) ){
       handexSub_putString( wk, &wk->strParam );
       HANDEX_STR_Clear( &wk->strParam );
@@ -4942,7 +4945,6 @@ static void scproc_WazaExecuteFailed( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attack
   {
     u32 hem_state = BTL_Hem_PushState( &wk->HEManager );
     scEvent_CheckWazaExeFail( wk, attacker, waza, fail_cause );
-//    scproc_HandEx_Root( wk, ITEM_DUMMY_DATA );
     BTL_Hem_PopState( &wk->HEManager, hem_state );
   }
 }
