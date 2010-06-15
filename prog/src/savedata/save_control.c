@@ -467,6 +467,30 @@ void SaveData_SetOutsideExistFlag(SAVE_CONTROL_WORK * sv, BOOL outside_data_exis
 
 //---------------------------------------------------------------------------
 /**
+ * @brief	管理外セーブデータ破損フラグを取得
+ * @param	sv			セーブデータ構造へのポインタ
+ * @return	BOOL		TRUEのとき、セーブデータが存在する
+ */
+//---------------------------------------------------------------------------
+BOOL SaveData_GetOutsideBreakFlag(SAVE_CONTROL_WORK * sv)
+{
+	return sv->outside_data_break;
+}
+
+//---------------------------------------------------------------------------
+/**
+ * @brief	管理外セーブデータ破損フラグをセット
+ * @param	sv			              セーブデータ構造へのポインタ
+ * @param outside_data_break		TRUEのとき、セーブデータが存在する
+ */
+//---------------------------------------------------------------------------
+void SaveData_SetOutsideBreakFlag(SAVE_CONTROL_WORK * sv, BOOL outside_data_break)
+{
+	sv->outside_data_break = outside_data_break;
+}
+
+//---------------------------------------------------------------------------
+/**
  * @brief	セーブデータの初期化
  * @param	sv			セーブデータ構造へのポインタ
  *

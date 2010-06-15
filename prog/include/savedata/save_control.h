@@ -87,6 +87,8 @@ extern BOOL SaveData_GetExistFlag(SAVE_CONTROL_WORK * sv);
 extern BOOL SaveControl_IsOverwritingOtherData(SAVE_CONTROL_WORK * sv);
 extern BOOL SaveData_GetOutsideExistFlag(SAVE_CONTROL_WORK * sv);
 extern void SaveData_SetOutsideExistFlag(SAVE_CONTROL_WORK * sv, BOOL outside_data_exists);
+extern BOOL SaveData_GetOutsideBreakFlag(SAVE_CONTROL_WORK * sv);
+extern void SaveData_SetOutsideBreakFlag(SAVE_CONTROL_WORK * sv, BOOL outside_data_break);
 extern void SaveControl_ClearData(SAVE_CONTROL_WORK * ctrl);
 extern void SaveControl_Erase(SAVE_CONTROL_WORK *ctrl);
 extern void SaveControl_GetActualSize(SAVE_CONTROL_WORK *ctrl, u32 *actual_size, u32 *total_size);
