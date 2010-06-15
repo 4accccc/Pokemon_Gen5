@@ -626,14 +626,17 @@ static void MMdl_MapAttrGrassProc_0( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 {
-  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) )
+  {
     BOOL anm = TRUE;
     u16 dir = MMDL_GetDirMove( mmdl );
     FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now, data->season );
     
+    #if 1 //BTS4949　草むらを歩いたとき不自然
     if( dir == DIR_UP ){
-      return; //長短共に上方向は終了時にセットする
+      return; //上方向への移動の際は終了時にセットする
     }
+    #endif
     
     FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, anm, type );
   }
@@ -674,15 +677,18 @@ static void MMdl_MapAttrGrassProc_1( MMDL *mmdl, ATTRDATA *data )
 //--------------------------------------------------------------
 static void MMdl_MapAttrGrassProc_2( MMDL *mmdl, ATTRDATA *data )
 {
-  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) ){
-    //BTS4949　草むらを歩いたとき不自然
-    //長短共に上方向は終了時にセットする
-    if( MMDL_GetDirMove(mmdl) == DIR_UP ){
-      BOOL anm = TRUE;
-      FLDEFF_GRASSTYPE type = getGrassType(
-          data->attr_val_now, data->season );
+  if( (data->attr_flag_now & MAPATTR_FLAGBIT_GRASS) )
+  {
+    BOOL anm = TRUE;
+    u16 dir = MMDL_GetDirMove( mmdl );
+    FLDEFF_GRASSTYPE type = getGrassType( data->attr_val_now, data->season );
+    
+    #if 1 //BTS4949　草むらを歩いたとき不自然
+    //上方向への移動の際は終了時にセットする
+    if( dir == DIR_UP ){
       FLDEFF_GRASS_SetMMdl( data->fectrl, mmdl, anm, type );
     }
+    #endif
   }
 }
 

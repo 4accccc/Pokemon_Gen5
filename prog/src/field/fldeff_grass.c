@@ -350,6 +350,26 @@ static void grassTask_Update( FLDEFF_TASK *task, void *wk )
  
   switch( work->seq_no ){
   case 0: //アニメ終了待ち
+    #if 1 //BTS4949　草むらを歩いたとき不自然
+    {
+      //アニメ中でも、長い草で、下移動で座標が更新されたら即消し
+      u8 len = data_LongShortType[work->head.type];
+      
+      if( len == FLDEFF_GRASSLEN_LONG ){
+        MMDL *mmdl = work->head.fmmdl;
+        
+        if( MMDL_CheckSameData(mmdl,&work->samedata) == TRUE ){
+          if( check_MMdlPos(work) == FALSE ){
+            if( MMDL_GetDirMove(mmdl) == DIR_DOWN ){
+              FLDEFF_TASK_CallDelete( task );
+              return;
+            }
+          }
+        }
+      }
+    }
+    #endif
+
     if( GFL_BBDACT_GetAnimeLastCommand(bbdact_sys,work->act_id,&comm) ){
       work->seq_no++;
     }
@@ -439,18 +459,19 @@ static BOOL check_MMdlPos( TASKWORK_GRASS *work )
   u8 len = data_LongShortType[work->head.type];
   
   if( work->head.init_gx != gx || work->head.init_gz != gz ){
-#if 1 //BTS4949　草むらを歩いたとき不自然
-    if( len == FLDEFF_GRASSLEN_SHORT ){ //短い草で
-      if( MMDL_GetDirMove(mmdl) == DIR_UP ){ //移動方向上向きならば
+    #if 1 //BTS4949　草むらを歩いたとき不自然
+    //短い草で移動方向上向きならば、完全に座標が切り替わるまで待つ
+    if( len == FLDEFF_GRASSLEN_SHORT ){
+      if( MMDL_GetDirMove(mmdl) == DIR_UP ){
         gx = MMDL_GetOldGridPosX( mmdl );
         gz = MMDL_GetOldGridPosZ( mmdl );
         
         if( work->head.init_gx == gx || work->head.init_gz == gz ){
-          return( TRUE ); //完全に座標が切り替わるまで待つ。
+          return( TRUE );
         }
       }
     }
-#endif
+    #endif
     return( FALSE );
   }
   
