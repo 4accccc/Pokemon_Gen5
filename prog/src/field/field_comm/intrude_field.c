@@ -710,18 +710,31 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
   INTRUDE_COMM_SYS_PTR intcomm = Intrude_Check_CommConnect(game_comm);
   s32 now_gx;
   u16 event_dir = DIR_NOT;
+  fx32 calc_x = now_pos->x;
   
-  now_gx = FX32_TO_GRID(now_pos->x) % PALACE_MAP_LEN_GRID;
+  now_gx = FX32_TO_GRID(calc_x) % PALACE_MAP_LEN_GRID;
+  
   
   //パレスマップの橋で左側へ行こうとしている
   if(next_key_dir == DIR_LEFT){
-    if(now_gx == 0){
+    if(now_gx == 0 && calc_x >= FIELD_CONST_GRID_HALF_FX32_SIZE){
       event_dir = DIR_LEFT;
     }
   }
   else if(next_key_dir == DIR_RIGHT){
-    if(now_gx == PALACE_MAP_LEN_GRID - 1){
+    fx32 map_len = GRID_TO_FX32(PALACE_MAP_LEN_GRID);
+    fx32 map_offset;
+    if(calc_x < 0){
+      calc_x += map_len;
+      now_gx = FX32_TO_GRID(calc_x) % PALACE_MAP_LEN_GRID;
+    }
+    map_offset = calc_x % map_len;
+    if((now_gx == PALACE_MAP_LEN_GRID - 1) && map_offset <= map_len - FIELD_CONST_GRID_HALF_FX32_SIZE && map_offset > map_len - (FIELD_CONST_GRID_FX32_SIZE - FIELD_CONST_GRID_HALF_FX32_SIZE/2)){
       event_dir = DIR_RIGHT;
+      OS_TPrintf("ccc now_gx = %d, calc_x = %d, map_len = %d, parcent=%d, %d\n", now_gx, calc_x, map_len, calc_x % map_len, map_len - FIELD_CONST_GRID_HALF_FX32_SIZE);
+    }
+    else{
+      OS_TPrintf("bbb now_gx = %d, calc_x = %d, map_len = %d, parcent=%d, %d\n", now_gx, calc_x, map_len, calc_x % map_len, map_len - FIELD_CONST_GRID_HALF_FX32_SIZE);
     }
   }
   
@@ -736,6 +749,7 @@ GMEVENT * Intrude_CheckPushEvent(GAMESYS_WORK *gsys, FIELDMAP_WORK *fieldWork, F
       return EVENT_PalaceNGWin(gsys, fieldWork, pcActor, player_dir, event_dir, PALACE_NG_TYPE_MISSION_PLAY);
     }
     else{
+      OS_TPrintf("aaa now_gx=%d, now_pos_x=%d, whole=%d, grid=%d\n", now_gx, now_pos->x, FX_Whole(now_pos->x), FX32_TO_GRID(now_pos->x));
       return EVENT_PalaceBarrierMove(gsys, fieldWork, pcActor, event_dir);
     }
   }
