@@ -270,6 +270,7 @@ typedef struct{  // スクリーン用RECT構造体
 #define _TIMING_VCTST  (19)// タイミングをそろえる
 #define _TIMING_DISCONNECT_END  (21)// タイミングをそろえる
 #define _TIMING_SECOND_MATCH  (24)// タイミングをそろえる
+#define _TIMING_CEND (25)// タイミングをそろえる
 
 #define _RECONECTING_WAIT_TIME (20)  //再接続時間
 

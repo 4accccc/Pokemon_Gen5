@@ -1897,11 +1897,8 @@ static int _playerDirectWait( WIFIP2PMATCH_WORK *wk, int seq )
 static int _playerDirectCancelEnd( WIFIP2PMATCH_WORK *wk, int seq )
 {
   _myStatusChange(wk, WIFI_STATUS_WAIT,WIFI_GAME_LOGIN_WAIT);
-
+  GFL_NET_HANDLE_TimeSyncStart(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_CEND,WB_NET_WIFICLUB);
   wk->state = WIFIP2PMATCH_STATE_NONE;
-  GFL_NET_SetAutoErrorCheck(FALSE);
-  GFL_NET_SetNoChildErrorCheck(FALSE);
-
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_CANCELEND_NEXT);
   return seq;
 }
@@ -1916,6 +1913,11 @@ static int _playerDirectCancelEnd( WIFIP2PMATCH_WORK *wk, int seq )
 
 static int _playerDirectCancelEndNext( WIFIP2PMATCH_WORK *wk, int seq )
 {
+  if( !GFL_NET_HANDLE_IsTimeSync(GFL_NET_HANDLE_GetCurrentHandle(),_TIMING_CEND,WB_NET_WIFICLUB)){
+    return seq;
+  }
+  GFL_NET_SetAutoErrorCheck(FALSE);
+  GFL_NET_SetNoChildErrorCheck(FALSE);
 
   if(GFL_NET_IsParentMachine()){
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1016, FALSE);
@@ -1923,7 +1925,6 @@ static int _playerDirectCancelEndNext( WIFIP2PMATCH_WORK *wk, int seq )
   else{
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_1017, FALSE);
   }
-  GFL_NET_StateWifiMatchEnd(TRUE);
   _CHANGESTATE(wk,WIFIP2PMATCH_PLAYERDIRECT_END3);
   return seq;
 }
