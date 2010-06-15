@@ -2543,7 +2543,7 @@ BtlEscapeMode BTL_MAIN_GetEscapeMode( const BTL_MAIN_MODULE * wk )
     #endif
     #ifdef DEBUG_ONLY_FOR_hudson
     // 逃げれるようにする
-    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) || 
+    if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
         HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
     {
       return BTL_ESCAPE_MODE_WILD;
@@ -5566,9 +5566,10 @@ static void reflectPartyData( BTL_MAIN_MODULE* wk )
   // デモ以外全て：状態異常コード書き戻し
   if( wk->setupParam->competitor != BTL_COMPETITOR_DEMO_CAPTURE )
   {
-    u32 clientID, p;
-    for(clientID=0; clientID<BTL_CLIENT_MAX; ++clientID)
+    u32 p, id, clientID;
+    for(id=0; id<BTL_CLIENT_MAX; ++id)
     {
+      clientID = CommClientRelation( wk->myClientID, id );
       for(p=0; p<TEMOTI_POKEMAX; ++p){
         wk->setupParam->party_state[ clientID ][ p ] = BTL_POKESTATE_NORMAL;
       }

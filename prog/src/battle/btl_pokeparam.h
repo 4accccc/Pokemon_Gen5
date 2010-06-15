@@ -88,7 +88,8 @@ typedef enum {
   BPP_TURNFLG_DAMAGED,          ///< ダメージ喰らった
   BPP_TURNFLG_WAZAPROC_DONE,    ///< ワザ処理を修了した
   BPP_TURNFLG_SHRINK,           ///< ひるまされた
-  BPP_TURNFLG_MUST_SHRINK,      ///< ダメージで必ずひるむ
+  BPP_TURNFLG_KIAI_READY,       ///< 気合いパンチ待機（ダメージで必ずひるむ）
+  BPP_TURNFLG_KIAI_SHRINK,      ///< 気合いパンチ待機中ダメージ
   BPP_TURNFLG_MAMORU,           ///< “まもる”発動
   BPP_TURNFLG_ITEM_CONSUMED,    ///< アイテムを使用して無くなった
   BPP_TURNFLG_ITEM_CANT_USE,    ///< 装備アイテム使えない

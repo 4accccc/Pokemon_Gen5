@@ -8845,7 +8845,7 @@ static void handler_KiaiPunch( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flow
 
     param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_SET_TURNFLAG, pokeID );
       param->pokeID = pokeID;
-      param->flag = BPP_TURNFLG_MUST_SHRINK;
+      param->flag = BPP_TURNFLG_KIAI_READY;
     BTL_SVF_HANDEX_Pop( flowWk, param );
 
     eff_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_EFFECT, pokeID );

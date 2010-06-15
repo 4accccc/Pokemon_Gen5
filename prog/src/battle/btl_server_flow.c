@@ -2416,7 +2416,7 @@ static BOOL scproc_NigeruCmdSub( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, BOOL f
 
   #ifdef DEBUG_ONLY_FOR_hudson
   // 逃げれるようにする
-  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) || 
+  if( HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_WAZA2 ) ||
       HUDSON_IsTestCode( HUDSON_TESTCODE_ALL_POKE ) )
   {
     fSkipNigeruCalc = TRUE;
@@ -4615,6 +4615,11 @@ static BOOL scproc_Fight_CheckWazaExecuteFail_1st( BTL_SVFLOW_WORK* wk, BTL_POKE
     if( cause != SV_WAZAFAIL_NULL ){  break; }
 
 
+    // 集中切れ（きあいパンチ失敗）による失敗チェック
+    if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_KIAI_SHRINK) ){
+      cause = SV_WAZAFAIL_KIAI_SHRINK;
+      break;
+    }
     // ひるみによる失敗チェック
     if( BPP_TURNFLAG_Get(attacker, BPP_TURNFLG_SHRINK) ){
       cause = SV_WAZAFAIL_SHRINK;
@@ -4970,15 +4975,20 @@ static void scPut_WazaExecuteFailMsg( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* bpp, W
   case SV_WAZAFAIL_SHRINK:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_ShrinkExe, pokeID );
     break;
+  case SV_WAZAFAIL_KIAI_SHRINK:
+    SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KiaiShrink, pokeID );
+    break;
   case SV_WAZAFAIL_MEROMERO:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_MeromeroExe, pokeID );
     break;
   case SV_WAZAFAIL_KANASIBARI:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_KanasibariWarn, pokeID, waza );
     break;
+  /*
   case SV_WAZAFAIL_NAMAKE:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Namake, pokeID );
     break;
+  */
   case SV_WAZAFAIL_ENCORE:
     SCQUE_PUT_MSG_SET( wk->que, BTL_STRID_SET_Namake, pokeID );
     break;
@@ -6142,9 +6152,13 @@ static BOOL scproc_AddShrinkCore( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* target, u3
   BOOL fShrink;
 
 
-  if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_MUST_SHRINK) ){
-    fShrink = TRUE;
-  }else{
+  if( BPP_TURNFLAG_Get(target, BPP_TURNFLG_KIAI_READY) )
+  {
+    BPP_TURNFLAG_Set( target, BPP_TURNFLG_KIAI_SHRINK );
+    return TRUE;
+  }
+  else
+  {
     fShrink = scEvent_CheckShrink( wk, target, per );
   }
 
