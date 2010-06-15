@@ -7515,19 +7515,14 @@ static void handler_Ieki( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flowWk, u
   {
     BTL_HANDEX_PARAM_ADD_SICK       *sick_param;
     u8 target_pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 );
-    const BTL_POKEPARAM* target;
 
-    target = BTL_SVFTOOL_GetPokeParam( flowWk, target_pokeID );
-    if( BPP_GetValue(target, BPP_TOKUSEI) != POKETOKUSEI_NAMAKE )
-    {
-      sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
-        sick_param->pokeID = target_pokeID;
-        sick_param->sickID = WAZASICK_IEKI;
-        sick_param->sickCont = BPP_SICKCONT_MakePermanent();
-        HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Ieki );
-        HANDEX_STR_AddArg( &sick_param->exStr, target_pokeID );
-      BTL_SVF_HANDEX_Pop( flowWk, sick_param );
-    }
+    sick_param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_ADD_SICK, pokeID );
+      sick_param->pokeID = target_pokeID;
+      sick_param->sickID = WAZASICK_IEKI;
+      sick_param->sickCont = BPP_SICKCONT_MakePermanent();
+      HANDEX_STR_Setup( &sick_param->exStr, BTL_STRTYPE_SET, BTL_STRID_SET_Ieki );
+      HANDEX_STR_AddArg( &sick_param->exStr, target_pokeID );
+    BTL_SVF_HANDEX_Pop( flowWk, sick_param );
   }
 }
 //----------------------------------------------------------------------------------
@@ -9700,7 +9695,7 @@ static void handler_SimpleBeem( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK* flo
     {
       targetPokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
       target = BTL_SVFTOOL_GetPokeParam( flowWk, targetPokeID );
-      if( BPP_GetValue(target, BPP_TOKUSEI) == POKETOKUSEI_NAMAKE )
+      if( BPP_GetValue(target, BPP_TOKUSEI) != POKETOKUSEI_NAMAKE )
       {
         param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_CHANGE_TOKUSEI, pokeID );
           param->pokeID = BTL_EVENTVAR_GetValue( BTL_EVAR_POKEID_TARGET1 + i );
