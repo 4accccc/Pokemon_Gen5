@@ -1239,13 +1239,13 @@ void BTLV_INPUT_SetFadeIn( BTLV_INPUT_WORK* biw )
 {
   TCB_FADE_ACT* tfa = GFL_HEAP_AllocMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_FADE_ACT ) );
 
-  BTLV_INPUT_InitBG( biw );
-
   if( GXS_GetMasterBrightness() <= 0 ){
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_BLACKOUT_SUB, 16, 0, 0 );
   }else{
     GFL_FADE_SetMasterBrightReq( GFL_FADE_MASTER_BRIGHT_WHITEOUT_SUB, 16, 0, 0 );
   }
+
+  BTLV_INPUT_InitBG( biw );
 
   biw->fade_flag = BTLV_INPUT_FADE_IN;
 
@@ -1286,11 +1286,6 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
 
   switch( type ){
   case BTLV_INPUT_SCRTYPE_STANDBY:
-    if( biw->main_loop_tcb_flag == TRUE )
-    { 
-      BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NONE );
-    }
-
     biw->hit = GFL_UI_TP_HIT_NONE;
 
     if( biw->scr_type == BTLV_INPUT_SCRTYPE_STANDBY )
@@ -1311,6 +1306,11 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       TCB_TRANSFORM_WORK* ttw = GFL_HEAP_AllocClearMemory( GFL_HEAP_LOWID( biw->heapID ), sizeof( TCB_TRANSFORM_WORK ) );
       biw->tcb_execute_flag = 1;
       ttw->biw = biw;
+
+      if( biw->main_loop_tcb_flag == TRUE )
+      { 
+        BTLV_EFFECT_SetCameraWorkStop();
+      }
 
       BTLV_INPUT_DeleteBallGauge( biw );
       BTLV_INPUT_DeletePokeIcon( biw );
@@ -1463,9 +1463,8 @@ void BTLV_INPUT_CreateScreen( BTLV_INPUT_WORK* biw, BTLV_INPUT_SCRTYPE type, voi
       if( ( biw->main_loop_tcb_flag == TRUE ) &&
         ( ( biw->type == BTLV_INPUT_TYPE_DOUBLE ) || ( biw->type == BTLV_INPUT_TYPE_TRIPLE ) ) )
       { 
-        BTLV_EFFECT_Stop();
+        BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE_NO_STOP );
         BTLV_EFFECT_Add( BTLEFF_3vs3_CAMERA_ZOOMOUT );
-        BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NO_STOP );
       }
 
       if( biw->scr_type == BTLV_INPUT_SCRTYPE_DIR )
@@ -3266,9 +3265,8 @@ static  void  SetupRotateAction( BTLV_INPUT_WORK* biw, int dir )
   ttw->biw = biw;
   BTLV_INPUT_SetTCB( biw, GFL_TCB_AddTask( biw->tcbsys, TCB_TransformRotate2Rotate, ttw, 1 ), TCB_Transform_CB );
 
-  BTLV_EFFECT_Stop();
+  BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE_NO_STOP );
   BTLV_EFFECT_Add( eff );
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NO_STOP );
 #else
   int i, j;
   int old_rotate_pos = biw->rotate_flag;
@@ -5006,9 +5004,8 @@ static  void  BTLV_INPUT_PutShooterEnergy( BTLV_INPUT_WORK* biw, BTLV_INPUT_COMM
 //=============================================================================================
 static  void  BTLV_INPUT_SetFocus( BTLV_INPUT_WORK* biw )
 { 
-  BTLV_EFFECT_Stop();
+  BTLV_EFFECT_SetCameraWorkSwitch( BTLV_EFFECT_CWE_NO_STOP );
   BTLV_EFFECT_SetCameraFocus( biw->focus_pos, BTLEFF_CAMERA_MOVE_INTERPOLATION, 10, 0, 8 );
-  BTLV_EFFECT_SetCameraWorkExecute( BTLV_EFFECT_CWE_SHIFT_NO_STOP );
 }
 
 //=============================================================================================
