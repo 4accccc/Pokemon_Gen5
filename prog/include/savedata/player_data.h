@@ -32,6 +32,7 @@ extern void SaveData_SetNowSaveModeSetupOFF(SAVE_CONTROL_WORK *sv);
 //--------------------------------------------------------------
 extern BOOL SaveData_CheckExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id);
 extern void SaveData_SetExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id);
+extern void SaveData_ClearExtraMagicKey(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id);
 extern u32 * SaveData_GetExtraLinkPtr(SAVE_CONTROL_WORK *sv, SAVE_EXTRA_ID extra_id);
 
 #endif	//__PLAYER_DATA_H__
