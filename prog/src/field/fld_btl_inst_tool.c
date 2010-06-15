@@ -389,6 +389,24 @@ static const u16 BattleTowerPokemonItem[]={
 };
 
 //--------------------------------------------------------------
+//  デバッグ用文字列長チェック
+//--------------------------------------------------------------
+#ifdef PM_DEBUG
+static int d_strcode_len( const STRCODE *sz )
+{
+  int len = 0;
+  STRCODE eom = GFL_STR_GetEOMCode();
+  
+  while( *sz != eom ){
+    sz++;
+    len++;
+  }
+  
+  return( len );
+}
+#endif
+
+//--------------------------------------------------------------
 /**
  * BATTLE_SETUP_PARAM作成
  * @param gsys GAMESYS_WORK
@@ -541,15 +559,19 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
     //MyStatus
     dst->playerStatus[client] = mystatus;
+    
     //トレーナーデータ確保
+    #if 0 //自身のデータ自体はplayerStatusから
+          //引っ張ってくる為不要であった。
     dst->tr_data[client] = CreateBSPTrainerData( heapID );
     data = dst->tr_data[client];
-
+    
     MyStatus_CopyNameString(
         (const MYSTATUS*)mystatus, data->name );
     data->tr_type = TRTYPE_HERO +
       MyStatus_GetMySex((const MYSTATUS*)mystatus );
-
+    #endif
+    
     //ポケモンセット
     {
       int i;
@@ -606,6 +628,11 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
     //name
     GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
+#ifdef PM_DEBUG
+    KAGAYA_Printf( "BSW TR ENEMY1 NAME LEN %d(%d)\n",
+          GFL_STR_GetBufferLength(tr_data->name),
+          d_strcode_len(bsw_trainer->name) );
+#endif
 
     //win word
     PMSDAT_Clear( &tr_data->win_word );
@@ -650,10 +677,14 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
       tr_data->tr_id = bsw_trainer->player_id;
       tr_data->tr_type = bsw_trainer->tr_type;
       tr_data->ai_bit = 0x00000087;  //最強
-    
+      
       //トレーナーデータ　name
       GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
-    
+#ifdef PM_DEBUG
+      KAGAYA_Printf( "BSW TR ENEMY2 NAME LEN %d(%d)\n",
+          GFL_STR_GetBufferLength(tr_data->name),
+          d_strcode_len(bsw_trainer->name) );
+#endif
       //トレーナーデータ　word
       //特に設定無し
     
@@ -695,7 +726,11 @@ BATTLE_SETUP_PARAM * FBI_TOOL_CreateBattleParam(
 
       //トレーナーデータ　name
       GFL_STR_SetStringCode( tr_data->name, bsw_trainer->name );
-    
+#ifdef PM_DEBUG
+      KAGAYA_Printf( "BSW TR PARTNER NAME LEN %d(%d)\n",
+          GFL_STR_GetBufferLength(tr_data->name),
+          d_strcode_len(bsw_trainer->name) );
+#endif
       //トレーナーデータ　word
       PMSDAT_Clear( &tr_data->win_word );
       PMSDAT_Clear( &tr_data->lose_word );
