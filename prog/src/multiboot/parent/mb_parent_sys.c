@@ -1904,6 +1904,14 @@ static void MB_PARENT_SaveInitPoke( MB_PARENT_WORK *work )
   BOX_MANAGER *boxMng = GAMEDATA_GetBoxManager(work->initWork->gameData);
   ZUKAN_SAVEDATA* zukan_savedata = GAMEDATA_GetZukanSave( work->initWork->gameData );
   const u8 pokeNum = MB_COMM_GetPostPokeNum( work->commWork );
+
+  if( work->mode == MPM_POKE_SHIFTER )
+  {
+    RECORD *record = GAMEDATA_GetRecordPtr(work->initWork->gameData);
+    RECORD_Add(record,RECID_CAPTURE_POKE,pokeNum);
+    RECORD_Add(record,RECID_DAYCNT_CAPTURE,pokeNum);
+  }
+
   for( i=0;i<pokeNum;i++ )
   {
     POKEMON_PASO_PARAM *ppp = MB_COMM_GetPostPokeData( work->commWork , i );
