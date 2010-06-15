@@ -3263,6 +3263,7 @@ void BPP_MIGAWARI_Create( BTL_POKEPARAM* bpp, u16 migawariHP )
 {
   GF_ASSERT(bpp->migawariHP==0);
   bpp->migawariHP = migawariHP;
+  BPP_CureWazaSick( bpp, WAZASICK_BIND );
 }
 void BPP_MIGAWARI_Delete( BTL_POKEPARAM* bpp )
 {
