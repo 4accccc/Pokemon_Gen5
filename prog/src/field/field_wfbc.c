@@ -1448,15 +1448,20 @@ static void WFBC_DRAW_PARAM_SetUp( WFBC_DRAW_PARAM* p_wk, const FIELD_WFBC_CORE*
       pattern_num += cp_data->people[i].npc_id;
     }
   }
+
+  // •`‰æl•¨”
+  p_wk->draw_people_num = FIELD_WFBC_CORE_GetPeopleNum( cp_data, MAPMODE_NORMAL );
   
   GFL_STD_RandInit( &p_wk->randData, (u64)((cp_data->random_no << 32) + cp_data->random_no) );
-  p_wk->block_rand_max = 2 + random_max;
+  if( p_wk->draw_people_num == 0 ){
+    p_wk->block_rand_max = 1; // í‚É‚O
+  }else{
+    p_wk->block_rand_max = 2 + random_max;
+  }
   p_wk->block_pattern_num = pattern_num;
   p_wk->random_no = cp_data->random_no;
 
 
-  // •`‰æl•¨”
-  p_wk->draw_people_num = FIELD_WFBC_CORE_GetPeopleNum( cp_data, MAPMODE_NORMAL );
 }
 
 //----------------------------------------------------------------------------
@@ -2215,7 +2220,7 @@ static void DEBWIN_Update_WFPokeTargetSet( void* userWork , DEBUGWIN_ITEM* item 
       cp_people_data = FIELD_WFBC_PEOPLE_DATA_GetData( p_people_loader );
 
       //“o˜^
-      FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_wk, cp_people_data->enc_monsno[0] );
+      FIELD_WFBC_EVENT_SetWFPokeCatchEventMonsNo( p_wk, cp_people_data->enc_monsno[DEBUG_WFBC_GETPOKE_TARGET_poke_idx] );
       FIELD_WFBC_EVENT_SetWFPokeCatchEventItem( p_wk, cp_people_data->goods_wf );
 
       FIELD_WFBC_PEOPLE_DATA_Delete( p_people_loader );
