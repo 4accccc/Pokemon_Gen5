@@ -22,6 +22,7 @@ static void MUSICAL_DEBUG_InitMenu( MUSICAL_DEBUG_MENU_WORK *work );
 static MUSICAL_DEBUG_MENU_WORK *musicalDebugWork = NULL;
 
 #define MUSICAL_DEBUG_GROUP_TOP  (80)
+#define MUSICAL_DEBUG_GROUP_ARR  (82)
 
 void MUSICAL_DEBUG_InitDebugMenu( MUSICAL_SCRIPT_WORK *work , const HEAPID heapId )
 {
@@ -69,23 +70,27 @@ static void MD_U_Npc( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_D_Npc( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_U_EnableMax( void* userWork , DEBUGWIN_ITEM* item );
 static void MD_D_EnableMax( void* userWork , DEBUGWIN_ITEM* item );
+static void MD_U_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item );
+static void MD_D_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item );
 
 static const char StrArrOnOff[2][4] = {"OFF","ON"};
 
 static void MUSICAL_DEBUG_InitMenu( MUSICAL_DEBUG_MENU_WORK *work )
 {
   DEBUGWIN_AddGroupToTop( MUSICAL_DEBUG_GROUP_TOP , "MUSICAL" , work->heapId );
+  DEBUGWIN_AddGroupToGroup( MUSICAL_DEBUG_GROUP_ARR , "‚¶‚ã‚ñ‚Î‚ñ" , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
 
-  DEBUGWIN_AddItemToGroupEx( MD_U_EnableArr ,MD_D_EnableArr , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)0 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)1 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)2 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)3 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_EnableNpc ,MD_D_EnableNpc , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)0 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)1 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
-  DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)2 , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_EnableArr ,MD_D_EnableArr , (void*)work , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)0 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)1 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)2 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Arr ,MD_D_Arr , (void*)3 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_EnableNpc ,MD_D_EnableNpc , (void*)work , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)0 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)1 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_Npc ,MD_D_Npc , (void*)2 , MUSICAL_DEBUG_GROUP_ARR , work->heapId );
   DEBUGWIN_AddItemToGroupEx( MD_U_EnableMax ,MD_D_EnableMax , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
+  DEBUGWIN_AddItemToGroupEx( MD_U_EnableDupDebug ,MD_D_EnableDupDebug , (void*)work , MUSICAL_DEBUG_GROUP_TOP , work->heapId );
 }
 
 
@@ -205,6 +210,21 @@ static void MD_D_EnableMax( void* userWork , DEBUGWIN_ITEM* item )
 {
   MUSICAL_DEBUG_MENU_WORK *work = userWork;
   DEBUGWIN_ITEM_SetNameV( item , "MaxMemory[%s]",StrArrOnOff[work->memMaxMode] );
+}
+
+static void MD_U_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUSICAL_DEBUG_MENU_WORK *work = userWork;
+  if( MUSICAL_DEBUG_UpdateValue_BOOL(&work->dupDebug) )
+  {
+    DEBUGWIN_RefreshScreen();
+  }
+}
+
+static void MD_D_EnableDupDebug( void* userWork , DEBUGWIN_ITEM* item )
+{
+  MUSICAL_DEBUG_MENU_WORK *work = userWork;
+  DEBUGWIN_ITEM_SetNameV( item , "DressUpDebug[%s]",StrArrOnOff[work->dupDebug] );
 }
 
 #endif

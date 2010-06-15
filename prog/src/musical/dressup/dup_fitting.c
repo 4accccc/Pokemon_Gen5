@@ -40,6 +40,7 @@
 #include "dup_fitting_item.h"
 
 #include "debug/debugwin_sys.h"
+#include "musical/musical_debug_menu.h"
 
 //======================================================================
 //  define
@@ -360,6 +361,11 @@ struct _FITTING_WORK
   GFL_FONT *fontHandle;
   PRINT_QUE *printQue;
   GFL_BMPWIN *msgWin;
+  
+#if PM_DEBUG
+  BOOL breakCheck;
+#endif
+
 };
 
 //======================================================================
@@ -436,6 +442,8 @@ static void DUP_EFFECT_InitCell( FITTING_WORK *work );
 static void DUP_EFFECT_TermCell( FITTING_WORK *work );
 static void DUP_EFFECT_UpdateCell( FITTING_WORK *work );
 static void DUP_EFFECT_DispTouchEffect( FITTING_WORK *work );
+
+static void DUP_DEBUG_ScreenDraw( FITTING_WORK *work , const u8 idx );
 
 static const GFL_DISP_VRAM vramBank = {
   GX_VRAM_BG_64_E,       // メイン2DエンジンのBG
@@ -548,6 +556,9 @@ FITTING_WORK* DUP_FIT_InitFitting( FITTING_INIT_WORK *initWork , HEAPID heapId )
   DEBUGWIN_InitProc( FIT_FRAME_SUB_TOP , work->fontHandle );
   DEBUGWIN_ChangeLetterColor( 31,31,31 );
 #endif  //USE_DEBUGWIN_SYSTEM
+#if PM_DEBUG
+  work->breakCheck = FALSE;
+#endif
  
   return work;
 }
@@ -734,11 +745,26 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   case DUS_WAIT_COMM_STRM:
     if( MUS_COMM_CheckFinishSendStrm( work->initWork->commWork ) == TRUE )
     {
-        WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
-                        WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
-        PMSND_FadeOutBGM( FSND_FADE_NORMAL );
-        work->state = DUS_FADEOUT_WAIT;
-        work->isOpenCurtain = TRUE;
+      WIPE_SYS_Start( WIPE_PATTERN_WMS , WIPE_TYPE_FADEOUT , WIPE_TYPE_FADEOUT , 
+                      WIPE_FADE_WHITE , 18 , WIPE_DEF_SYNC , work->heapId );
+      PMSND_FadeOutBGM( FSND_FADE_NORMAL );
+      work->state = DUS_FADEOUT_WAIT;
+      work->isOpenCurtain = TRUE;
+#if PM_DEBUG
+      {
+        MUSICAL_DEBUG_MENU_WORK *debWork = MUSICAL_DEBUG_GetWork();
+        if( debWork->dupDebug == TRUE )
+        {
+          work->breakCheck = TRUE;
+          GFL_BG_SetScroll( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_SET , 0 );
+          GFL_BG_SetScroll( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_SET , 0 );
+          DUP_DEBUG_ScreenDraw( work , 0 );
+          GFL_BG_SetVisible( GFL_BG_FRAME0_M, VISIBLE_OFF );
+          GFL_BG_SetVisible( GFL_BG_FRAME1_M, VISIBLE_OFF );
+          GFL_BG_SetVisible( GFL_BG_FRAME2_M, VISIBLE_OFF );
+        }
+      }
+#endif
     }
     break;
   }
@@ -767,9 +793,14 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   work->bgScrollCnt++;
   if( work->bgScrollCnt > 1 )
   {
-    work->bgScrollCnt = 0;
-    GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_INC , 1 );
-    GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+#if PM_DEBUG
+    if( work->breakCheck == FALSE )
+#endif
+    {
+      work->bgScrollCnt = 0;
+      GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_X_INC , 1 );
+      GFL_BG_SetScrollReq( FIT_FRAME_MAIN_BG , GFL_BG_SCROLL_Y_DEC , 1 );
+    }
   }
   
   //カーテン開閉処理
@@ -806,28 +837,33 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
   {
     if( work->isDispMsg == TRUE )
     {
+      DUP_DEBUG_ScreenDraw( work , 1 );
       work->isDispMsg = FALSE;
       GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 3 );
       GFL_BG_SetPriority( FIT_FRAME_SUB_TOP , 0 );
       GFL_BG_SetPriority( GFL_BG_FRAME1_S , 1 );
       GFL_BG_SetPriority( GFL_BG_FRAME2_S , 2 );
       
+      DUP_DEBUG_ScreenDraw( work , 2 );
       GFL_ARC_UTIL_TransVramScreen( ARCID_DRESSUP_GRA , NARC_dressup_gra_test_bg_u_NSCR , 
                   FIT_FRAME_SUB_BG ,  0 , 0, FALSE , work->heapId );
       GFL_BG_LoadScreenV_Req( FIT_FRAME_SUB_BG );
       
       GFL_BMPWIN_Delete( work->msgWin );
       work->msgWin = NULL;
+      DUP_DEBUG_ScreenDraw( work , 3 );
     }
     else
     if( work->curtainScrollCnt > 0 )
     {
+      DUP_DEBUG_ScreenDraw( work , 64 + work->curtainScrollCnt );
       work->curtainScrollCnt -= DUP_CURTAIN_SCROLL_VALUE;
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_L , GFL_BG_SCROLL_X_SET , 128 - work->curtainScrollCnt );
       GFL_BG_SetScrollReq( FIT_FRAME_SUB_CURTAIN_R , GFL_BG_SCROLL_X_SET , -128 + work->curtainScrollCnt );
     }
   }
 
+  DUP_DEBUG_ScreenDraw( work , 4 );
   //アイテム保持の上段メッセージの更新
   if( work->isUpdateMsg == FALSE &&
        work->state == DUS_FITTING_MAIN )
@@ -846,6 +882,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       work->dispItemId = MUSICAL_ITEM_INVALID;
     }
   }
+  DUP_DEBUG_ScreenDraw( work , 5 );
 
   if( work->isUpdateMsg == TRUE &&
       PRINTSYS_QUE_IsFinished( work->printQue ) == TRUE )
@@ -857,10 +894,12 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
     GFL_BG_SetPriority( GFL_BG_FRAME2_S , 3 );
     GFL_BG_SetPriority( FIT_FRAME_SUB_MSG , 0 );
   }
+  DUP_DEBUG_ScreenDraw( work , 6 );
 
   //メッセージ
   PRINTSYS_QUE_Main( work->printQue );
   
+  DUP_DEBUG_ScreenDraw( work , 7 );
   //SE用
   if( work->listSeWaitCnt > 0 )
   {
@@ -883,6 +922,7 @@ FITTING_RETURN  DUP_FIT_LoopFitting( FITTING_WORK *work )
       }
     }
   }
+  DUP_DEBUG_ScreenDraw( work , 8 );
 
 #if DEB_ARI
   if( GFL_UI_KEY_GetCont() & PAD_BUTTON_SELECT &&
@@ -3891,4 +3931,15 @@ static void DUP_EFFECT_DispTouchEffect( FITTING_WORK *work )
   GFL_CLACT_WK_ResetAnm( work->clwkEffectTouch );
   GFL_CLACT_WK_SetDrawEnable( work->clwkEffectTouch, TRUE );
   GFL_CLACT_WK_SetPos( work->clwkEffectTouch , &pos , CLSYS_DEFREND_MAIN );
+}
+
+static void DUP_DEBUG_ScreenDraw( FITTING_WORK *work , const u8 idx )
+{
+#if PM_DEBUG
+  if( work->breakCheck == TRUE )
+  {
+    u16 *scrBuf = (u16*)G2_GetBG3ScrPtr();
+    scrBuf[idx] = 0;
+  }
+#endif
 }

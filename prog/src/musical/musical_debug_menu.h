@@ -23,6 +23,7 @@ typedef struct
   BOOL enableArr;
   BOOL forceNpc;
   BOOL memMaxMode;
+  BOOL dupDebug;
   u16 arr[4];
   u16 npc[3];
 }MUSICAL_DEBUG_MENU_WORK;
