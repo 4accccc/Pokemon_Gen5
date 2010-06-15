@@ -2082,6 +2082,9 @@ static void BPL_ChgPageBmpWrite( BPLIST_WORK * wk )
 		// 選択済み
 		}else if( err == BPL_IREKAE_ERR_SELECT ){
 		  id = mes_b_plist_02_508;
+		// パートナーのポケモン
+		}else if( err == BPL_IREKAE_ERR_PARTNER ){
+		  id = mes_b_plist_02_509;
 		// それ以外
 		}else{
 		  id = mes_b_plist_02_501;
