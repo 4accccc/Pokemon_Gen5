@@ -113,11 +113,8 @@ static int _playerMachineBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
   u32 fail_bit;
   u32 regulation = _createRegulationType(wk, REG_CREATE_TYPE_SELECT);
   
-  if(!_regulationCheck(wk)){
-    // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
+  if(!_regulationCheck(wk)){    // ‘I‚ÔŽ–‚ª‚Å‚«‚È‚¢
     WifiP2PMatchMessagePrint(wk, msg_wifilobby_100, FALSE);
-    //      _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
-    //      _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERMACHINE_NOREG_PARENT);
     _CHANGESTATE(wk, WIFIP2PMATCH_PLAYERDIRECT_NOREG_PARENT );
     return seq;
   }
@@ -136,9 +133,8 @@ static int _playerMachineBattleDecide( WIFIP2PMATCH_WORK *wk, int seq )
     };
     gamemode = modetbl[wk->battleMode*2+wk->battleRule];
     _myStatusChange(wk, WIFI_STATUS_RECRUIT ,gamemode);
-    _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST_MW);
-
-    WifiP2PMatch_CommWifiBattleStart( wk, -1 );
+    _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_FRIENDLIST_MW0);
+  //  WifiP2PMatch_CommWifiBattleStart( wk, -1 );
     FriendRequestWaitOn( wk, TRUE );
   }
   return seq;

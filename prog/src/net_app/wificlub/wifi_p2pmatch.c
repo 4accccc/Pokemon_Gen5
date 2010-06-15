@@ -850,7 +850,9 @@ static int _modeTVT2YesNo( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeTVT2Wait( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeTVT3YesNo( WIFIP2PMATCH_WORK* wk, int seq );
 static int _modeTVT3Wait( WIFIP2PMATCH_WORK* wk, int seq );
-
+static int _modeFriendList_MW0( WIFIP2PMATCH_WORK* wk, int seq );
+static int _playerDirectConnectWaitMsg( WIFIP2PMATCH_WORK *wk, int seq  );
+static int _childModeMatchMenuLoopMsg( WIFIP2PMATCH_WORK *wk, int seq );
 
 
 #include "wifi_p2pmatch_message.c"
@@ -1054,8 +1056,11 @@ static int (*FuncTable[])(WIFIP2PMATCH_WORK *wk, int seq)={
   _playerDirectEndChildNext,//WIFIP2PMATCH_PLAYERDIRECT_END_CHILD_NEXT
   _playerDirectInit2Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT2
   _playerDirectInit3Next,//WIFIP2PMATCH_PLAYERDIRECT_INIT_NEXT3
-};
+  _modeFriendList_MW0,//WIFIP2PMATCH_MODE_FRIENDLIST_MW0
+  _playerDirectConnectWaitMsg, //WIFIP2PMATCH_MODE_CONNECTWAIT_MSG
+  _childModeMatchMenuLoopMsg, //WIFIP2PMATCH_MODE_MATCH_LOOP_MSG
 
+};
 
 
 
@@ -3709,6 +3714,10 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
   if(PMSND_CheckPlaySE_byPlayerID( SE_CALL_SIGN_PLAYER )){
     return seq;
   }
+  {
+    u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
+    wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
+  }
   
   if(n>=0 && n < WIFIP2PMATCH_MEMBER_MAX){
     if( WifiP2PMatch_CommWifiBattleStart( wk, n ) ){
@@ -3720,20 +3729,17 @@ static int _callGameInit( WIFIP2PMATCH_WORK *wk, int seq )
       WifiP2PMatch_UserDispOff( wk, HEAPID_WIFIP2PMATCH );  // した画面初期化
 
       _friendNameExpand(wk, n);
-      WifiP2PMatchMessagePrint(wk,msg_wifilobby_082, FALSE);
-      WifiP2PMatchMessage_TimeIconStart(wk);
 
       wk->cancelEnableTimer = _CANCELENABLE_TIMER;
-      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_LOOP);
-      {
-        u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
-        wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
-      }
+      _CHANGESTATE(wk, WIFIP2PMATCH_MODE_MATCH_LOOP_MSG);
+//      {
+//        u8 callcount = WIFI_STATUS_GetCallCounter(WifiFriendMatchStatusGet( n ));
+//        wk->pParentWork->matchno[n] = callcount;   //前回マッチングした時のno
+//      }
       wk->DirectModeNo = wk->friendNo;
       return seq;
     }
   }
-
   _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST); //もとに戻る
 
   return seq;
@@ -4505,7 +4511,7 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
     }
     else{
       _windelandSEcall(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW0);
     }
     break;
   case WIFI_GAME_TRADE:
@@ -4515,13 +4521,12 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       BmpMenuWork_ListDelete( wk->submenulist );
       EndMessageWindowOff(wk);
       WifiP2PMatchMessagePrint(wk, msg_wifilobby_1013, FALSE);
-   //  PMSND_PlaySystemSE(SEQ_SE_CANCEL1);
       _CHANGESTATE(wk, WIFIP2PMATCH_MESSAGEEND_RETURNLIST);
+      return seq;
     }
     else{
-//     PMSND_PlaySystemSE(SEQ_SE_DECIDE1);
       _windelandSEcall(wk);
-      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+      _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW0);
     }
     break;
   case WIFI_GAME_TVT:
@@ -4537,19 +4542,26 @@ static int _parentModeSelectMenuWait( WIFIP2PMATCH_WORK *wk, int seq )
       }
       else{
         _windelandSEcall(wk);
-        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
+        _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW0);
       }
     }
     break;
   }
-  WifiP2PMatch_CommWifiBattleStart( wk, -1 );
-  _myStatusChange(wk, WIFI_STATUS_RECRUIT, ret );
-  if( wk->seq == WIFIP2PMATCH_MODE_FRIENDLIST_MW ){
-    FriendRequestWaitOn( wk, TRUE );       // 動作停止させる
+  FriendRequestWaitOn( wk, TRUE );       // 動作停止させる
+  _myStatusChange(wk, WIFI_STATUS_RECRUIT, ret );  //状態を変更
+  return seq;
+}
+
+//WIFIP2PMATCH_MODE_FRIENDLIST_MW0
+static int _modeFriendList_MW0( WIFIP2PMATCH_WORK* wk, int seq )
+{
+  if( WifiP2PMatchMessageEndCheck(wk) ){
+    WifiP2PMatch_CommWifiBattleStart( wk, -1 );
+    _CHANGESTATE(wk,WIFIP2PMATCH_MODE_FRIENDLIST_MW);
   }
   return seq;
-
 }
+
 
 //------------------------------------------------------------------
 /**
@@ -4974,6 +4986,14 @@ static int _childModeMatchMenuInit2( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
+//WIFIP2PMATCH_MODE_CONNECTWAIT_MSG
+static int _playerDirectConnectWaitMsg( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
+  WifiP2PMatchMessage_TimeIconStart(wk);
+  _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_CONNECTWAIT);
+  return seq;
+}
 
 
 static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
@@ -5013,12 +5033,8 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
         _commStateChange(wk,WIFI_STATUS_CALL, gamemode);
         _myStatusChange(wk, WIFI_STATUS_CALL, gamemode);  // 呼びかけ待機中になる
         _friendNameExpand(wk, friendNo - 1);
-        WifiP2PMatchMessagePrint(wk,msg_wifilobby_014, FALSE);
-        WifiP2PMatchMessage_TimeIconStart(wk);
-
         wk->DirectMacSet = friendNo;
-
-        _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_CONNECTWAIT);
+        _CHANGESTATE(wk,  WIFIP2PMATCH_MODE_CONNECTWAIT_MSG);
 
         message = 1;
       }else{
@@ -5033,7 +5049,7 @@ static BOOL _playerDirectConnectStart( WIFIP2PMATCH_WORK *wk )
 }
 
 
-
+//WIFIP2PMATCH_MODE_CONNECTWAIT
 static int _DirectConnectWait( WIFIP2PMATCH_WORK *wk, int seq  )
 {
   //BTS3795-aの対処 Saito
@@ -5400,7 +5416,14 @@ static int _childModeConnect( WIFIP2PMATCH_WORK *wk, int seq )
   return seq;
 }
 
-
+//WIFIP2PMATCH_MODE_MATCH_LOOP_MSG
+static int _childModeMatchMenuLoopMsg( WIFIP2PMATCH_WORK *wk, int seq )
+{
+  WifiP2PMatchMessagePrint(wk,msg_wifilobby_082, FALSE);
+  WifiP2PMatchMessage_TimeIconStart(wk);
+  _CHANGESTATE(wk,WIFIP2PMATCH_MODE_MATCH_LOOP);
+  return seq;
+}
 
 
 //WIFIP2PMATCH_MODE_MATCH_LOOP
