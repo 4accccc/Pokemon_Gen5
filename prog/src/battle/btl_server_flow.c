@@ -3111,6 +3111,14 @@ static void scproc_WazaRobRoot( BTL_SVFLOW_WORK* wk, BTL_POKEPARAM* attacker, Wa
 
       BTL_N_Printf( DBGSTR_SVFL_YokodoriExe, robPokeID, wk->wazaRobParam->targetPos[0] );
 
+      // かいふくふうじチェック
+      if( BPP_CheckSick(robPoke, WAZASICK_KAIHUKUHUUJI)
+      &&  (WAZADATA_GetFlag(actWaza, WAZAFLAG_KaifukuHuuji))
+      ){
+        scPut_WazaExecuteFailMsg( wk, robPoke, actWaza, SV_WAZAFAIL_KAIHUKUHUUJI );
+        return;
+      }
+
       BTL_HANDLER_Waza_Add( robPoke, actWaza );
       scproc_Fight_WazaExe( wk, robPoke, actWaza, wk->psetRobTarget );
       BTL_HANDLER_Waza_RemoveForce( robPoke, actWaza );
