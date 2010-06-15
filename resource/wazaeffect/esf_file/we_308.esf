@@ -1,8 +1,9 @@
 EFFSEQ
-$0003
+$0004
 C:\home\pokemon_wb\resource\particle\wazaeffect\w_308.spa
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_063_depthspd.NSCR
 C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_063_depthspd.NSCR
+C:\home\pokemon_wb\resource\wazaeffect\graphic\bg_413_depthspd.NSCR
 #001
 %00
 カメラ移動	追従	攻撃側	16	0	8
@@ -30,7 +31,7 @@ SEパン	SE2	追従	攻撃側	防御側	0	40:0:0
 エミッタ移動	w_308	W_308_308_BUBBLE_BEAM	直線	攻撃側	防御側	1:0:0	1:1:0
 エミッタ移動	w_308	W_308_308_WATER_BEAM1	直線	攻撃側	防御側	1:0:0	1:1:0
 エミッタ移動	w_308	W_308_308_WATER_BEAM2	直線	攻撃側	防御側	1:0:0	1:1:0
-BGのロード	bg_063_depthspd
+BGのロード	bg_413_depthspd
 BGの表示/非表示	エフェクト	表示
 BGのパレットフェード	すべて	15	0	0	0:0:0
 BGのスクロール	常に	-32	0	100	0	0
