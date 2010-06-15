@@ -171,11 +171,15 @@ void HandCommon_MagicCoat_Reaction( BTL_EVENT_FACTOR* myHandle, BTL_SVFLOW_WORK*
 {
   if( (BTL_EVENTVAR_GetValue(BTL_EVAR_POKEID) == pokeID) )
   {
-    BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
-      HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MagicCoatExe );
-      HANDEX_STR_AddArg( &param->str, pokeID );
-      HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
-    BTL_SVF_HANDEX_Pop( flowWk, param );
+    const BTL_POKEPARAM* bpp = BTL_SVFTOOL_GetPokeParam( flowWk, pokeID );
+    if( !BPP_CONTFLAG_CheckWazaHide(bpp) )
+    {
+      BTL_HANDEX_PARAM_MESSAGE* param = BTL_SVF_HANDEX_Push( flowWk, BTL_HANDEX_MESSAGE, pokeID );
+        HANDEX_STR_Setup( &param->str, BTL_STRTYPE_SET, BTL_STRID_SET_MagicCoatExe );
+        HANDEX_STR_AddArg( &param->str, pokeID );
+        HANDEX_STR_AddArg( &param->str, BTL_EVENTVAR_GetValue(BTL_EVAR_WAZAID) );
+      BTL_SVF_HANDEX_Pop( flowWk, param );
+    }
   }
 }
 
