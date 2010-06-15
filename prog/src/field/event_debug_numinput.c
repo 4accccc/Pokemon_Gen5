@@ -1000,6 +1000,11 @@ static void DebugSetTV(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param, u32 
 }
 
 
+//--------------------------------------------------------------
+/**
+ * @brief ペラップ混乱確率表示（表示のみ）
+ */
+//--------------------------------------------------------------
 static u32 dni_perap_tbl[]={0,10,30};
 static u32 DebugGetPerap(GAMESYS_WORK * gsys, GAMEDATA * gamedata, u32 param)
 {

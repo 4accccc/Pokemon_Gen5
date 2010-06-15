@@ -61,7 +61,7 @@ static const DEBUG_NUMINPUT_PARAM tv_param = {
  0, 170, DebugGetTV, DebugSetTV,
 };
 static const DEBUG_NUMINPUT_PARAM perap_param = {
- 0, 2, DebugGetPerap, DebugSetPerap,
+ 0, 30, DebugGetPerap, DebugSetPerap,
 };
 
 static const DEBUG_NUMINPUT_LIST DNI_FortuneList[] = {
