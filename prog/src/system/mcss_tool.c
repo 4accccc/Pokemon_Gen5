@@ -41,6 +41,7 @@ enum{
  */
 //============================================================================================
 static  BOOL  MCSS_TOOL_MakeBuchi( const MCSS_ADD_WORK* maw, TCB_LOADRESOURCE_WORK* tlw, u32 work );
+static  void  MCSS_TOOL_AnmRestart( u32 param, fx32 currentFrame );
 
 //============================================================================================
 /**
@@ -221,5 +222,32 @@ void MCSS_TOOL_MakeBuchiCore( u8 *buf , u32 rnd )
     }
     rnd = rnd >> 8;
   }  
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  1ループしたらアニメーションリセットを呼ぶためのコールバックセット
+ *
+ * @param[in] mcss  MCSS_WORK構造体
+ */
+//-----------------------------------------------------------------------------
+void  MCSS_TOOL_SetAnmRestartCallback( MCSS_WORK* mcss )
+{ 
+  MCSS_SetAnimCtrlCallBack( mcss, (u32)mcss, MCSS_TOOL_AnmRestart, 1 );
+}
+
+//----------------------------------------------------------------------------
+/**
+ *	@brief  1ループしたらアニメーションリセットするコールバックセット
+ *
+ * @param[in] mcss_sys      MCSSシステム管理構造体
+ * @param[in] personal_rnd  ブチの生成に必要な個性乱数
+ */
+//-----------------------------------------------------------------------------
+static  void  MCSS_TOOL_AnmRestart( u32 param, fx32 currentFrame )
+{ 
+  MCSS_WORK*  mcss = ( MCSS_WORK* )param;
+
+  MCSS_RestartAnime( mcss );
 }
 
