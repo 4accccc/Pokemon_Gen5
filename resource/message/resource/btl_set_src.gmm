@@ -4,7 +4,7 @@
 <gmml version="4.5">
 
 <head>
-	<create user="taya" host="W00146" date="2010-06-15T01:22:08"/>
+	<create user="morimoto" host="W00220" date="2010-06-15T14:36:30"/>
 	<generator name="MessageEditor" version="4.9.2.5"/>
 </head>
 
@@ -2204,7 +2204,7 @@
 		<language name="JPN" width="216">[1:02:ポケモンニックネーム:0]は　おたがいの
 どうぐを　いれかえた！</language>
 		<language name="JPN_KANJI" width="216">[1:02:ポケモンニックネーム:0]は
-お互いの　道具を入れ替えた！</language>
+おたがいの　道具を入れ替えた！</language>
 	</row>
 
 	<row id="BTL_STRID_SET_TrickGetItem">
