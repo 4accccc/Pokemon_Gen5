@@ -247,6 +247,7 @@ void NHTTP_RAP_ErrorClean(NHTTP_RAP_WORK* pWork)
       NHTTPDeleteConnection(pWork->handle);
       pWork->handle=NULL;
       NHTTPCleanup();
+      NET_PRINT("NHTTPCleanup\n");
     }
   }
 }
@@ -335,15 +336,13 @@ NHTTPError NHTTP_RAP_Process(NHTTP_RAP_WORK* pWork)
 //      int ret;
   //    ret = DWC_GetLastErrorEx( &errorCode, &ErrorType );  //‹A‚Á‚Ä‚±‚È‚©‚Á‚½
       GFL_NET_StateSetWifiError( 
-                error, 
-                error, 
+                error,
+                DWC_ETYPE_SHOW_ERROR,
                 error,             ERRORCODE_NHTTP );
       GFL_NET_StateSetError(error);
     }
 
-    NHTTPDeleteConnection(pWork->handle);
-    pWork->handle=NULL;
-    NHTTPCleanup();
+    NHTTP_RAP_ErrorClean(pWork);
     return err;
   }
   return err;
