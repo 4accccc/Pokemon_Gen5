@@ -789,13 +789,13 @@
 	</row>
 
 	<row id="worker1_08">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="hakaim1_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="hakaim1_04">
@@ -1024,8 +1024,8 @@
 	</row>
 
 	<row id="worker2_09">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="worker2_10">
@@ -1379,8 +1379,8 @@
 	</row>
 
 	<row id="juggling_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="juggling_04">
@@ -1414,8 +1414,8 @@
 	</row>
 
 	<row id="futago_03">
-		<language name="JPN" width="216">ハルとハル</language>
-		<language name="JPN_KANJI" width="216">ハルとハル</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="elitew_05">
@@ -1489,13 +1489,13 @@
 	</row>
 
 	<row id="boss_05">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="boss_1_06">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="hakaim1_05">
@@ -1734,8 +1734,8 @@
 	</row>
 
 	<row id="elitew_13">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="elitem_09">
@@ -1759,8 +1759,8 @@
 	</row>
 
 	<row id="elitem_13">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="veteranm_04">
@@ -1779,8 +1779,8 @@
 	</row>
 
 	<row id="hakaim1_10">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="hakaiw1_04">
@@ -1794,8 +1794,8 @@
 	</row>
 
 	<row id="elitew_14">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="elitem_14">
@@ -1804,13 +1804,13 @@
 	</row>
 
 	<row id="business1_06">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="waiter_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="prince_05">
@@ -1824,8 +1824,8 @@
 	</row>
 
 	<row id="princess_05">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="rival_10">
@@ -2879,8 +2879,8 @@
 	</row>
 
 	<row id="boss_1_07">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="support_10">
@@ -2944,18 +2944,18 @@
 	</row>
 
 	<row id="rival_16">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="rival_17">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="rival_18">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="elitew_18">
@@ -2999,13 +2999,13 @@
 	</row>
 
 	<row id="elitew_20">
-		<language name="JPN" width="216">ハルカ</language>
-		<language name="JPN_KANJI" width="216">ハルカ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="elitem_20">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="veteranw_1_07">
@@ -3029,8 +3029,8 @@
 	</row>
 
 	<row id="badrider_04">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="backpackerm_15">
@@ -3064,8 +3064,8 @@
 	</row>
 
 	<row id="elitem_21">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="mount_13">
@@ -3184,28 +3184,28 @@
 	</row>
 
 	<row id="boss_03">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="boss_04">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="boss_06">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="boss_07">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="veteranm_08">
-		<language name="JPN" width="216">サトシ</language>
-		<language name="JPN_KANJI" width="216">サトシ</language>
+		<language name="JPN" width="216">●</language>
+		<language name="JPN_KANJI" width="216">●</language>
 	</row>
 
 	<row id="bigfour1_02">

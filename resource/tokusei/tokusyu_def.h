@@ -134,7 +134,7 @@
 #define		TOKUSYU_HURAWAAGIHUTO				( 122 )		//フラワーギフト
 #define		TOKUSYU_NAITOMEA						( 123 )		//ナイトメア
 #define		TOKUSYU_WARUITEGUSE					( 124 )		//わるいてぐせ
-#define		TOKUSYU_TIKARADUKU					( 125 )		//ちからづく
+#define		TOKUSYU_TIKARAZUKU					( 125 )		//ちからずく
 #define		TOKUSYU_AMANOZYAKU					( 126 )		//あまのじゃく
 #define		TOKUSYU_KINTYOUKAN					( 127 )		//きんちょうかん
 #define		TOKUSYU_MAKENKI							( 128 )		//まけんき

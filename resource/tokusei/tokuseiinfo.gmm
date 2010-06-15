@@ -541,8 +541,8 @@
 	<row id="TOKUSEIINFO_021">
 		<language name="JPN" width="216">いれかえさせる　わざや
 どうぐが　きかない。</language>
-		<language name="JPN_KANJI" width="216">入れ替えさせる　技が
-効かない。</language>
+		<language name="JPN_KANJI" width="216">入れ替えさせる　技や
+道具が　効かない。</language>
 	</row>
 
 	<row id="TOKUSEIINFO_022">
